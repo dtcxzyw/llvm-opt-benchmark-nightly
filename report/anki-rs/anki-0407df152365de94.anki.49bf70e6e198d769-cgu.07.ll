@@ -205,7 +205,6 @@ bb.g:                                             ; preds = %"_ZN10serde_json2de
   br label %bb.j
 
 .loopexit:                                        ; preds = %bb.e, %bb.c
-  store i8 0, ptr %0, align 8
   invoke void @"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h06a2762e5e8eee94E"(ptr noalias noundef nonnull align 8 dereferenceable(64) %i.b)
           to label %"_ZN4core3ptr84drop_in_place$LT$serde_json..de..Deserializer$LT$serde_json..read..SliceRead$GT$$GT$17hfa32e6156369f352E.exit6" unwind label %bb.h
 
@@ -605,7 +604,6 @@ bb.g:                                             ; preds = %"_ZN10serde_json2de
   br label %bb.j
 
 .loopexit:                                        ; preds = %bb.e, %bb.c
-  store i8 0, ptr %0, align 8
   invoke void @"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h06a2762e5e8eee94E"(ptr noalias noundef nonnull align 8 dereferenceable(64) %i.b)
           to label %"_ZN4core3ptr84drop_in_place$LT$serde_json..de..Deserializer$LT$serde_json..read..SliceRead$GT$$GT$17hfa32e6156369f352E.exit6" unwind label %bb.h
 
@@ -1008,7 +1006,6 @@ bb.g:                                             ; preds = %"_ZN10serde_json2de
   br label %bb.j
 
 .loopexit:                                        ; preds = %bb.e, %bb.c
-  store i32 0, ptr %0, align 8
   invoke void @"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h06a2762e5e8eee94E"(ptr noalias noundef nonnull align 8 dereferenceable(64) %i.b)
           to label %"_ZN4core3ptr84drop_in_place$LT$serde_json..de..Deserializer$LT$serde_json..read..SliceRead$GT$$GT$17hfa32e6156369f352E.exit6" unwind label %bb.h
 
@@ -1285,7 +1282,6 @@ bb.g:                                             ; preds = %"_ZN10serde_json2de
   br label %bb.j
 
 .loopexit:                                        ; preds = %bb.e, %bb.c
-  store i8 0, ptr %0, align 8
   invoke void @"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h06a2762e5e8eee94E"(ptr noalias noundef nonnull align 8 dereferenceable(64) %i.b)
           to label %"_ZN4core3ptr84drop_in_place$LT$serde_json..de..Deserializer$LT$serde_json..read..SliceRead$GT$$GT$17hfa32e6156369f352E.exit6" unwind label %bb.h
 
@@ -1408,7 +1404,6 @@ bb.g:                                             ; preds = %"_ZN10serde_json2de
   br label %bb.j
 
 .loopexit:                                        ; preds = %bb.e, %bb.c
-  store i32 0, ptr %0, align 8
   invoke void @"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h06a2762e5e8eee94E"(ptr noalias noundef nonnull align 8 dereferenceable(64) %i.b)
           to label %"_ZN4core3ptr84drop_in_place$LT$serde_json..de..Deserializer$LT$serde_json..read..SliceRead$GT$$GT$17hfa32e6156369f352E.exit6" unwind label %bb.h
 
@@ -1811,7 +1806,6 @@ bb.f:                                             ; preds = %"_ZN10serde_json2de
   br label %bb.i
 
 .loopexit:                                        ; preds = %bb.d, %bb.b
-  store i8 0, ptr %0, align 8
   invoke void @"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h06a2762e5e8eee94E"(ptr noalias noundef nonnull align 8 dereferenceable(64) %i.b)
           to label %"_ZN4core3ptr84drop_in_place$LT$serde_json..de..Deserializer$LT$serde_json..read..SliceRead$GT$$GT$17hfa32e6156369f352E.exit6" unwind label %bb.g
 
@@ -2214,7 +2208,6 @@ bb.g:                                             ; preds = %"_ZN10serde_json2de
   br label %bb.j
 
 .loopexit:                                        ; preds = %bb.e, %bb.c
-  store i32 0, ptr %0, align 8
   invoke void @"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h06a2762e5e8eee94E"(ptr noalias noundef nonnull align 8 dereferenceable(64) %i.b)
           to label %"_ZN4core3ptr84drop_in_place$LT$serde_json..de..Deserializer$LT$serde_json..read..SliceRead$GT$$GT$17hfa32e6156369f352E.exit6" unwind label %bb.h
 
@@ -2337,7 +2330,6 @@ bb.g:                                             ; preds = %"_ZN10serde_json2de
   br label %bb.j
 
 .loopexit:                                        ; preds = %bb.e, %bb.c
-  store i32 0, ptr %0, align 8
   invoke void @"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h06a2762e5e8eee94E"(ptr noalias noundef nonnull align 8 dereferenceable(64) %i.b)
           to label %"_ZN4core3ptr84drop_in_place$LT$serde_json..de..Deserializer$LT$serde_json..read..SliceRead$GT$$GT$17hfa32e6156369f352E.exit6" unwind label %bb.h
 
@@ -2460,7 +2452,6 @@ bb.g:                                             ; preds = %"_ZN10serde_json2de
   br label %bb.j
 
 .loopexit:                                        ; preds = %bb.e, %bb.c
-  store i32 0, ptr %0, align 8
   invoke void @"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h06a2762e5e8eee94E"(ptr noalias noundef nonnull align 8 dereferenceable(64) %i.b)
           to label %"_ZN4core3ptr84drop_in_place$LT$serde_json..de..Deserializer$LT$serde_json..read..SliceRead$GT$$GT$17hfa32e6156369f352E.exit6" unwind label %bb.h
 
@@ -2863,7 +2854,6 @@ bb.g:                                             ; preds = %"_ZN10serde_json2de
   br label %bb.j
 
 .loopexit:                                        ; preds = %bb.e, %bb.c
-  store i32 0, ptr %0, align 8
   invoke void @"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h06a2762e5e8eee94E"(ptr noalias noundef nonnull align 8 dereferenceable(64) %i.b)
           to label %"_ZN4core3ptr84drop_in_place$LT$serde_json..de..Deserializer$LT$serde_json..read..SliceRead$GT$$GT$17hfa32e6156369f352E.exit6" unwind label %bb.h
 
@@ -3264,7 +3254,6 @@ bb.g:                                             ; preds = %"_ZN10serde_json2de
   br label %bb.j
 
 .loopexit:                                        ; preds = %bb.e, %bb.c
-  store i32 0, ptr %0, align 8
   invoke void @"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h06a2762e5e8eee94E"(ptr noalias noundef nonnull align 8 dereferenceable(64) %i.b)
           to label %"_ZN4core3ptr84drop_in_place$LT$serde_json..de..Deserializer$LT$serde_json..read..SliceRead$GT$$GT$17hfa32e6156369f352E.exit6" unwind label %bb.h
 
@@ -3667,7 +3656,6 @@ bb.f:                                             ; preds = %"_ZN10serde_json2de
   br label %bb.i
 
 .loopexit:                                        ; preds = %bb.d, %bb.b
-  store i32 0, ptr %0, align 8
   invoke void @"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h06a2762e5e8eee94E"(ptr noalias noundef nonnull align 8 dereferenceable(64) %i.b)
           to label %"_ZN4core3ptr84drop_in_place$LT$serde_json..de..Deserializer$LT$serde_json..read..SliceRead$GT$$GT$17hfa32e6156369f352E.exit6" unwind label %bb.g
 

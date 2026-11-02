@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.f, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 52 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 52
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -228,7 +228,6 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.p, label %_ZN10duckdb_re23DFA5Workq4markEv.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  store i8 0, ptr %i.g, align 4, !tbaa !99
   %i.q = load i32, ptr %i.c, align 8, !tbaa !98   ; 4 uses
   %i.r = add nsw i32 %i.q, 1
   store i32 %i.r, ptr %i.c, align 8, !tbaa !98
@@ -279,7 +278,7 @@ bb.a:
   store i32 %2, ptr %i.b, align 4, !tbaa !17
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 52 ; 4 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 52 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.g = xor i32 %3, -1
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 44
@@ -321,7 +320,6 @@ bb.c:                                             ; preds = %.backedge72
   br i1 %i.x, label %.backedge, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  store i8 0, ptr %i.e, align 4, !tbaa !99
   %i.y = load i32, ptr %i.r, align 8, !tbaa !98   ; 4 uses
   %i.z = add nsw i32 %i.y, 1
   store i32 %i.z, ptr %i.r, align 8, !tbaa !98
@@ -637,7 +635,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.f = load ptr, ptr %i.d, align 8, !tbaa !94
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 40
-  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 52 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 52
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.k = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -675,7 +673,6 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.ae, label %_ZN10duckdb_re23DFA5Workq4markEv.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  store i8 0, ptr %i.h, align 4, !tbaa !99
   %i.af = load i32, ptr %i.c, align 8, !tbaa !98  ; 4 uses
   %i.ag = add nsw i32 %i.af, 1
   store i32 %i.ag, ptr %i.c, align 8, !tbaa !98
@@ -1078,7 +1075,7 @@ bb.l:                                             ; preds = %_ZN10duckdb_re23DFA
   br i1 %i.bp, label %.lr.ph.i, label %_ZN10duckdb_re23DFA12StateToWorkqEPNS0_5StateEPNS0_5WorkqE.exit
 
 .lr.ph.i:                                         ; preds = %bb.l
-  %i.bq = getelementptr inbounds nuw i8, ptr %i.bj, i64 52 ; 2 uses
+  %i.bq = getelementptr inbounds nuw i8, ptr %i.bj, i64 52
   %i.br = getelementptr inbounds nuw i8, ptr %i.bj, i64 24
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bj, i64 32
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bj, i64 16
@@ -1101,7 +1098,6 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.bz, label %_ZN10duckdb_re23DFA5Workq4markEv.exit.i, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  store i8 0, ptr %i.bq, align 4, !tbaa !99
   %i.ca = load i32, ptr %i.bm, align 8, !tbaa !98 ; 4 uses
   %i.cb = add nsw i32 %i.ca, 1
   store i32 %i.cb, ptr %i.bm, align 8, !tbaa !98

@@ -205,7 +205,7 @@ _ZL13gmx_snew_implIbEvPKcS1_iRPT_m.exit.preheader: ; preds = %bb.bq
 
 bb.br:                                            ; preds = %.lr.ph1032, %_ZL13gmx_snew_implIbEvPKcS1_iRPT_m.exit
   %indvars.iv1339 = phi i64 [ 0, %.lr.ph1032 ], [ %indvars.iv.next1340, %_ZL13gmx_snew_implIbEvPKcS1_iRPT_m.exit ] ; 6 uses
-  %i.jk = getelementptr inbounds nuw i8, ptr %i.iz, i64 %indvars.iv1339 ; 10 uses
+  %i.jk = getelementptr inbounds nuw i8, ptr %i.iz, i64 %indvars.iv1339 ; 9 uses
   store i8 0, ptr %i.jk, align 1, !tbaa !36
   br label %bb.bs
 
@@ -457,7 +457,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit394: ; preds = %bb
   %.0221.idx1029 = phi i64 [ %.0221.add, %.critedge349 ], [ 0, %.critedge343.preheader ] ; 2 uses
   %i.lr = load i8, ptr %i.jk, align 1, !tbaa !36, !range !37, !noundef !38
   %i.ls = trunc nuw i8 %i.lr to i1
-  br i1 %i.ls, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit402, label %bb.cn
+  br i1 %i.ls, label %.critedge349, label %bb.cn
 
 bb.cn:                                            ; preds = %.critedge343
   %.0221.ptr1030 = getelementptr inbounds nuw i8, ptr @virialEnergyFieldNames, i64 %.0221.idx1029
@@ -532,15 +532,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i40
   call void @_ZdlPvm(ptr noundef %i.mi, i64 noundef %i.ml) #28
   br label %.critedge347
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit402: ; preds = %.critedge343
-  store i8 1, ptr %i.jk, align 1, !tbaa !36
-  br label %.critedge349
-
 .critedge347:                                     ; preds = %bb.ct, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i400
   call void @llvm.lifetime.end.p0(ptr nonnull %51) #27
   br label %.critedge349
 
-.critedge349:                                     ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit402, %.critedge347
+.critedge349:                                     ; preds = %.critedge343, %.critedge347
   %.0221.add = add nuw nsw i64 %.0221.idx1029, 8  ; 2 uses
   %.not = icmp eq i64 %.0221.add, 72
   br i1 %.not, label %_ZL13gmx_snew_implIbEvPKcS1_iRPT_m.exit, label %.critedge343

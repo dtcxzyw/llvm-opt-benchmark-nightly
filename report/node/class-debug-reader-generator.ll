@@ -204,7 +204,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8
   call void @_ZN2v88internal6torque6SizeOfB5cxx11EPKNS1_4TypeE(ptr dead_on_unwind nonnull writable sret(%"class.std::optional.290") align 8 %2, ptr noundef %i.b)
-  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 6 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 5 uses
   %i.d = load i8, ptr %i.c, align 8, !range !9, !noundef !10
   %i.e = trunc nuw i8 %i.d to i1
   br i1 %i.e, label %.thread, label %bb.b
@@ -311,10 +311,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit8: ; preds = %.bod
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
   %i.ai = load i8, ptr %i.c, align 8, !range !9, !noundef !10
   %i.aj = trunc nuw i8 %i.ai to i1
-  store i8 0, ptr %i.c, align 8
   br i1 %i.aj, label %bb.i, label %_ZNSt14_Optional_baseISt5tupleIJmNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEELb0ELb0EED2Ev.exit
 
 bb.i:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit8
+  store i8 0, ptr %i.c, align 8
   %i.ak = load ptr, ptr %2, align 8               ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.am = icmp eq ptr %i.ak, %i.al
@@ -333,7 +333,6 @@ _ZNSt14_Optional_baseISt5tupleIJmNSt7__cxx1112basic_stringIcSt11char_traitsIcESa
 .thread:                                          ; preds = %bb.a
   %i.ap = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.aq = load i64, ptr %i.ap, align 8
-  store i8 0, ptr %i.c, align 8
   br label %bb.j
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i: ; preds = %_ZN2v88internal6torque14MessageBuilder8PositionENS1_14SourcePositionE.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
@@ -341,11 +340,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #20
   %.pre = load i8, ptr %i.c, align 8, !range !9
   %i.ar = trunc nuw i8 %.pre to i1
-  store i8 0, ptr %i.c, align 8
   br i1 %i.ar, label %bb.j, label %_ZNSt14_Optional_baseISt5tupleIJmNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEELb0ELb0EED2Ev.exit11
 
 bb.j:                                             ; preds = %.thread, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i
   %.0425 = phi i64 [ %i.aq, %.thread ], [ 0, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i ] ; 2 uses
+  store i8 0, ptr %i.c, align 8
   %i.as = load ptr, ptr %2, align 8               ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.au = icmp eq ptr %i.as, %i.at

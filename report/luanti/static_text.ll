@@ -204,7 +204,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 432 ; 26 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !70   ; 3 uses
   %.not.i.i = icmp eq ptr %i.e, %i.c
-  br i1 %.not.i.i, label %_ZNSt6vectorI14EnrichedStringSaIS0_EE5clearEv.exit, label %.lr.ph.i.i.i.i
+  br i1 %.not.i.i, label %bb.d, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.a, %_ZSt8_DestroyI14EnrichedStringEvPT_.exit.i.i.i.i
   %.05.i.i.i.i = phi ptr [ %i.s, %_ZSt8_DestroyI14EnrichedStringEvPT_.exit.i.i.i.i ], [ %i.c, %bb.a ] ; 5 uses
@@ -238,27 +238,18 @@ _ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i.i
 _ZSt8_DestroyI14EnrichedStringEvPT_.exit.i.i.i.i: ; preds = %_ZNSt6vectorIN5video6SColorESaIS1_EED2Ev.exit.i.i.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i
   %i.s = getelementptr inbounds nuw i8, ptr %.05.i.i.i.i, i64 80 ; 2 uses
   %.not.i.i.i.i = icmp eq ptr %i.s, %i.e
-  br i1 %.not.i.i.i.i, label %_ZSt8_DestroyIP14EnrichedStringS0_EvT_S2_RSaIT0_E.exit.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !0
+  br i1 %.not.i.i.i.i, label %bb.c, label %.lr.ph.i.i.i.i, !llvm.loop !0
 
-_ZSt8_DestroyIP14EnrichedStringS0_EvT_S2_RSaIT0_E.exit.i.i: ; preds = %_ZSt8_DestroyI14EnrichedStringEvPT_.exit.i.i.i.i
+bb.c:                                             ; preds = %_ZSt8_DestroyI14EnrichedStringEvPT_.exit.i.i.i.i
   store ptr %i.c, ptr %i.d, align 8, !tbaa !70
-  br label %_ZNSt6vectorI14EnrichedStringSaIS0_EE5clearEv.exit
-
-_ZNSt6vectorI14EnrichedStringSaIS0_EE5clearEv.exit: ; preds = %bb.a, %_ZSt8_DestroyIP14EnrichedStringS0_EvT_S2_RSaIT0_E.exit.i.i
-  %18 = phi ptr [ %i.e, %bb.a ], [ %i.c, %_ZSt8_DestroyIP14EnrichedStringS0_EvT_S2_RSaIT0_E.exit.i.i ] ; 3 uses
-  %19 = getelementptr inbounds nuw i8, ptr %0, i64 400 ; 2 uses
-  %20 = load i8, ptr %19, align 8, !tbaa !86, !range !81, !noundef !82
-  %21 = trunc nuw i8 %20 to i1
-  br i1 %21, label %bb.c, label %bb.d
-
-bb.c:                                             ; preds = %_ZNSt6vectorI14EnrichedStringSaIS0_EE5clearEv.exit
-  store i8 1, ptr %19, align 8, !tbaa !86
   br label %bb.d
 
-bb.d:                                             ; preds = %_ZNSt6vectorI14EnrichedStringSaIS0_EE5clearEv.exit, %bb.c
-  %.sink = phi i8 [ 1, %bb.c ], [ 0, %_ZNSt6vectorI14EnrichedStringSaIS0_EE5clearEv.exit ]
+bb.d:                                             ; preds = %bb.a, %bb.c
+  %18 = phi ptr [ %i.e, %bb.a ], [ %i.c, %bb.c ]  ; 3 uses
+  %19 = getelementptr inbounds nuw i8, ptr %0, i64 400
+  %20 = load i8, ptr %19, align 8, !tbaa !86, !range !81, !noundef !82
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 318
-  store i8 %.sink, ptr %i.t, align 2, !tbaa !65
+  store i8 %20, ptr %i.t, align 2, !tbaa !65
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 317
   %i.v = load i8, ptr %i.u, align 1, !tbaa !64, !range !81, !noundef !82
   %i.w = trunc nuw i8 %i.v to i1

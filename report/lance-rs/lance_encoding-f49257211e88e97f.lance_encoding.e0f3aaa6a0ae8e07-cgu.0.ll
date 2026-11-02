@@ -205,9 +205,13 @@ bb.b:                                             ; preds = %bb.a
   tail call void %i.i(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %0, ptr noundef nonnull %i.f, ptr noalias noundef nonnull align 8 dereferenceable(32) %2), !inline_history !76500
   %i.j = load i64, ptr %0, align 8, !range !82, !alias.scope !76524, !noundef !75
   %i.k = trunc nuw i64 %i.j to i1
-  br i1 %i.k, label %.sink.split.i, label %bb.ai
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %.sroa.01.0.copyload.i = load ptr, ptr %3, align 8
+  %.not6.i = icmp ne ptr %.sroa.01.0.copyload.i, null
+  %or.cond.not = select i1 %i.k, i1 true, i1 %.not6.i
+  br i1 %or.cond.not, label %_RNvXs0_NtNtNtCs9p5Dg9WVwvP_12futures_util6stream6stream5chainINtB5_5ChainINtNtCscI6d9CVNmLh_4core3pin3PinINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtCsj3nLz3LBTXi_12futures_core6stream6Streamp4ItemNtNtCsjjpCCFGI3ul_14lance_encoding7decoder13ReadBatchTaskNtNtB1e_6marker4SendEL_EEINtNtB9_6unfold6UnfolduNCNvB37_23check_scheduler_on_drop0NCNCB4O_00EEB2f_9poll_nextB39_.exit, label %bb.aj
 
-bb.c:                                             ; preds = %_RNvMs5_NtCscI6d9CVNmLh_4core3pinINtB5_3PinQINtNtB7_6option6OptionIBv_INtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtCsj3nLz3LBTXi_12futures_core6stream6Streamp4ItemNtNtCsjjpCCFGI3ul_14lance_encoding7decoder13ReadBatchTaskNtNtB7_6marker4SendEL_EEEE3setB2z_.exit.i, %bb.a
+bb.c:                                             ; preds = %.sink.split.i, %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !76528)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !76529)
   %i.l = load i64, ptr %1, align 8, !range !134, !noalias !76530, !noundef !75
@@ -489,7 +493,7 @@ bb.ah:                                            ; preds = %bb.z, %.thread.i.i.
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7.sroa.6.i.i.i)
   store i8 3, ptr %i.u, align 8, !noalias !76532
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.3.i.i.i)
-  br label %.sink.split.i
+  br label %bb.ai
 
 _RNvMs5_NtCscI6d9CVNmLh_4core3pinINtB5_3PinQINtNtCs9p5Dg9WVwvP_12futures_util12unfold_state11UnfoldStateuNCNCNvNtCsjjpCCFGI3ul_14lance_encoding7decoder23check_scheduler_on_drop00EE3setB1M_.exit.i.i: ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCseXbohGRa9jr_5tokio7runtime4task4join10JoinHandleuEECsjjpCCFGI3ul_14lance_encoding.exit12.i.i.i, %bb.f
   %i.av = phi ptr [ %i.u, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCseXbohGRa9jr_5tokio7runtime4task4join10JoinHandleuEECsjjpCCFGI3ul_14lance_encoding.exit12.i.i.i ], [ %i.p, %bb.f ]
@@ -498,23 +502,22 @@ _RNvMs5_NtCscI6d9CVNmLh_4core3pinINtB5_3PinQINtNtCs9p5Dg9WVwvP_12futures_util12u
   store i64 2, ptr %1, align 8, !noalias !76550
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr null, ptr %i.aw, align 8, !alias.scope !76551
-  br label %.sink.split.i
+  br label %bb.ai
 
-bb.ai:                                            ; preds = %bb.b
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.01.0.copyload.i = load ptr, ptr %3, align 8, !alias.scope !76524
-  %.not6.i = icmp eq ptr %.sroa.01.0.copyload.i, null
-  br i1 %.not6.i, label %bb.aj, label %_RNvXs0_NtNtNtCs9p5Dg9WVwvP_12futures_util6stream6stream5chainINtB5_5ChainINtNtCscI6d9CVNmLh_4core3pin3PinINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtCsj3nLz3LBTXi_12futures_core6stream6Streamp4ItemNtNtCsjjpCCFGI3ul_14lance_encoding7decoder13ReadBatchTaskNtNtB1e_6marker4SendEL_EEINtNtB9_6unfold6UnfolduNCNvB37_23check_scheduler_on_drop0NCNCB4O_00EEB2f_9poll_nextB39_.exit
+bb.ai:                                            ; preds = %_RNvMs5_NtCscI6d9CVNmLh_4core3pinINtB5_3PinQINtNtCs9p5Dg9WVwvP_12futures_util12unfold_state11UnfoldStateuNCNCNvNtCsjjpCCFGI3ul_14lance_encoding7decoder23check_scheduler_on_drop00EE3setB1M_.exit.i.i, %bb.ah
+  %storemerge.i.i = phi i64 [ 1, %bb.ah ], [ 0, %_RNvMs5_NtCscI6d9CVNmLh_4core3pinINtB5_3PinQINtNtCs9p5Dg9WVwvP_12futures_util12unfold_state11UnfoldStateuNCNCNvNtCsjjpCCFGI3ul_14lance_encoding7decoder23check_scheduler_on_drop00EE3setB1M_.exit.i.i ]
+  store i64 %storemerge.i.i, ptr %0, align 8, !alias.scope !76551
+  br label %_RNvXs0_NtNtNtCs9p5Dg9WVwvP_12futures_util6stream6stream5chainINtB5_5ChainINtNtCscI6d9CVNmLh_4core3pin3PinINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtCsj3nLz3LBTXi_12futures_core6stream6Streamp4ItemNtNtCsjjpCCFGI3ul_14lance_encoding7decoder13ReadBatchTaskNtNtB1e_6marker4SendEL_EEINtNtB9_6unfold6UnfolduNCNvB37_23check_scheduler_on_drop0NCNCB4O_00EEB2f_9poll_nextB39_.exit
 
 _RNvXs8_NtCs40k4W9msRzi_5alloc5boxedINtB5_3BoxDNtNtCsj3nLz3LBTXi_12futures_core6stream6Streamp4ItemNtNtCsjjpCCFGI3ul_14lance_encoding7decoder13ReadBatchTaskNtNtCscI6d9CVNmLh_4core6marker4SendEL_ENtNtNtB2x_3ops4drop4Drop4dropB1C_.exit5.i.i.i.i: ; preds = %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i4.i.i.i.i, %bb.an
   store ptr null, ptr %i.e, align 8, !noalias !76526
   br label %common.resume.i
 
-bb.aj:                                            ; preds = %bb.ai
+bb.aj:                                            ; preds = %bb.b
   %.val8.i = load ptr, ptr %i.e, align 8, !noalias !76526, !noundef !75 ; 4 uses
   %.val9.i = load ptr, ptr %i.g, align 8, !noalias !76526 ; 6 uses
   %i.ax = icmp eq ptr %.val8.i, null
-  br i1 %i.ax, label %_RNvMs5_NtCscI6d9CVNmLh_4core3pinINtB5_3PinQINtNtB7_6option6OptionIBv_INtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtCsj3nLz3LBTXi_12futures_core6stream6Streamp4ItemNtNtCsjjpCCFGI3ul_14lance_encoding7decoder13ReadBatchTaskNtNtB7_6marker4SendEL_EEEE3setB2z_.exit.i, label %bb.ak
+  br i1 %i.ax, label %.sink.split.i, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val9.i) ]
@@ -530,13 +533,13 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   %i.az = getelementptr inbounds nuw i8, ptr %.val9.i, i64 8
   %i.ba = load i64, ptr %i.az, align 8, !range !76, !invariant.load !75, !noalias !76524 ; 2 uses
   %i.bb = icmp eq i64 %i.ba, 0
-  br i1 %i.bb, label %_RNvMs5_NtCscI6d9CVNmLh_4core3pinINtB5_3PinQINtNtB7_6option6OptionIBv_INtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtCsj3nLz3LBTXi_12futures_core6stream6Streamp4ItemNtNtCsjjpCCFGI3ul_14lance_encoding7decoder13ReadBatchTaskNtNtB7_6marker4SendEL_EEEE3setB2z_.exit.i, label %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i
+  br i1 %i.bb, label %.sink.split.i, label %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i
 
 _RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i: ; preds = %bb.am
   %i.bc = getelementptr inbounds nuw i8, ptr %.val9.i, i64 16
   %i.bd = load i64, ptr %i.bc, align 8, !range !93, !invariant.load !75, !noalias !76524
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.val8.i, i64 noundef %i.ba, i64 noundef range(i64 1, -9223372036854775807) %i.bd) #63, !noalias !76524
-  br label %_RNvMs5_NtCscI6d9CVNmLh_4core3pinINtB5_3PinQINtNtB7_6option6OptionIBv_INtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtCsj3nLz3LBTXi_12futures_core6stream6Streamp4ItemNtNtCsjjpCCFGI3ul_14lance_encoding7decoder13ReadBatchTaskNtNtB7_6marker4SendEL_EEEE3setB2z_.exit.i
+  br label %.sink.split.i
 
 bb.an:                                            ; preds = %bb.al
   %i.be = landingpad { ptr, i32 }
@@ -552,16 +555,11 @@ _RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9All
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.val8.i, i64 noundef %i.bg, i64 noundef range(i64 1, -9223372036854775807) %i.bj) #63, !noalias !76524
   br label %_RNvXs8_NtCs40k4W9msRzi_5alloc5boxedINtB5_3BoxDNtNtCsj3nLz3LBTXi_12futures_core6stream6Streamp4ItemNtNtCsjjpCCFGI3ul_14lance_encoding7decoder13ReadBatchTaskNtNtCscI6d9CVNmLh_4core6marker4SendEL_ENtNtNtB2x_3ops4drop4Drop4dropB1C_.exit5.i.i.i.i
 
-_RNvMs5_NtCscI6d9CVNmLh_4core3pinINtB5_3PinQINtNtB7_6option6OptionIBv_INtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtCsj3nLz3LBTXi_12futures_core6stream6Streamp4ItemNtNtCsjjpCCFGI3ul_14lance_encoding7decoder13ReadBatchTaskNtNtB7_6marker4SendEL_EEEE3setB2z_.exit.i: ; preds = %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i, %bb.am, %bb.aj
+.sink.split.i:                                    ; preds = %_RNvXs_NtCs40k4W9msRzi_5alloc5allocNtB4_6GlobalNtNtCscI6d9CVNmLh_4core5alloc9Allocator10deallocate.exit.i.i.i.i.i, %bb.am, %bb.aj
   store ptr null, ptr %i.e, align 8, !noalias !76526
   br label %bb.c
 
-.sink.split.i:                                    ; preds = %_RNvMs5_NtCscI6d9CVNmLh_4core3pinINtB5_3PinQINtNtCs9p5Dg9WVwvP_12futures_util12unfold_state11UnfoldStateuNCNCNvNtCsjjpCCFGI3ul_14lance_encoding7decoder23check_scheduler_on_drop00EE3setB1M_.exit.i.i, %bb.ah, %bb.b
-  %.sink.i = phi i64 [ 0, %_RNvMs5_NtCscI6d9CVNmLh_4core3pinINtB5_3PinQINtNtCs9p5Dg9WVwvP_12futures_util12unfold_state11UnfoldStateuNCNCNvNtCsjjpCCFGI3ul_14lance_encoding7decoder23check_scheduler_on_drop00EE3setB1M_.exit.i.i ], [ 1, %bb.ah ], [ 1, %bb.b ]
-  store i64 %.sink.i, ptr %0, align 8, !alias.scope !76524
-  br label %_RNvXs0_NtNtNtCs9p5Dg9WVwvP_12futures_util6stream6stream5chainINtB5_5ChainINtNtCscI6d9CVNmLh_4core3pin3PinINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtCsj3nLz3LBTXi_12futures_core6stream6Streamp4ItemNtNtCsjjpCCFGI3ul_14lance_encoding7decoder13ReadBatchTaskNtNtB1e_6marker4SendEL_EEINtNtB9_6unfold6UnfolduNCNvB37_23check_scheduler_on_drop0NCNCB4O_00EEB2f_9poll_nextB39_.exit
-
-_RNvXs0_NtNtNtCs9p5Dg9WVwvP_12futures_util6stream6stream5chainINtB5_5ChainINtNtCscI6d9CVNmLh_4core3pin3PinINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtCsj3nLz3LBTXi_12futures_core6stream6Streamp4ItemNtNtCsjjpCCFGI3ul_14lance_encoding7decoder13ReadBatchTaskNtNtB1e_6marker4SendEL_EEINtNtB9_6unfold6UnfolduNCNvB37_23check_scheduler_on_drop0NCNCB4O_00EEB2f_9poll_nextB39_.exit: ; preds = %bb.ai, %.sink.split.i
+_RNvXs0_NtNtNtCs9p5Dg9WVwvP_12futures_util6stream6stream5chainINtB5_5ChainINtNtCscI6d9CVNmLh_4core3pin3PinINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtCsj3nLz3LBTXi_12futures_core6stream6Streamp4ItemNtNtCsjjpCCFGI3ul_14lance_encoding7decoder13ReadBatchTaskNtNtB1e_6marker4SendEL_EEINtNtB9_6unfold6UnfolduNCNvB37_23check_scheduler_on_drop0NCNCB4O_00EEB2f_9poll_nextB39_.exit: ; preds = %bb.b, %bb.ai
   ret void
 }
 

@@ -204,11 +204,11 @@ _ZNSt7__cxx1110_List_baseIPN5scene10ISceneNodeESaIS3_EED2Ev.exit: ; preds = %.lr
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   %i.n = load i8, ptr %i.m, align 8, !tbaa !17, !range !106, !noundef !107
   %i.o = trunc nuw i8 %i.n to i1
-  store i8 0, ptr %i.m, align 8, !tbaa !17
   br i1 %i.o, label %bb.c, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.c:                                             ; preds = %_ZNSt7__cxx1110_List_baseIPN5scene10ISceneNodeESaIS3_EED2Ev.exit
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i8 0, ptr %i.m, align 8, !tbaa !17
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !111  ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.s = icmp eq ptr %i.q, %i.r
@@ -611,11 +611,11 @@ _ZNSt7__cxx1110_List_baseIPN5scene10ISceneNodeESaIS3_EED2Ev.exit.i: ; preds = %.
   %i.ft = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.fu = load i8, ptr %i.ft, align 8, !tbaa !17, !range !106, !noundef !107
   %i.fv = trunc nuw i8 %i.fu to i1
-  store i8 0, ptr %i.ft, align 8, !tbaa !17
   br i1 %i.fv, label %bb.an, label %_ZN5scene10ISceneNodeD2Ev.exit
 
 bb.an:                                            ; preds = %_ZNSt7__cxx1110_List_baseIPN5scene10ISceneNodeESaIS3_EED2Ev.exit.i
   %i.fw = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i8 0, ptr %i.ft, align 8, !tbaa !17
   %i.fx = load ptr, ptr %i.fw, align 8, !tbaa !111 ; 2 uses
   %i.fy = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.fz = icmp eq ptr %i.fx, %i.fy
@@ -1018,14 +1018,14 @@ bb.a:
   %3 = alloca %"class.std::optional", align 8     ; 16 uses
   %i.b = icmp eq ptr %2, null
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %spec.select = select i1 %i.b, ptr %i.c, ptr %2 ; 4 uses
+  %spec.select = select i1 %i.b, ptr %i.c, ptr %2 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #33
   %i.d = load ptr, ptr %spec.select, align 8, !tbaa !14
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 40
   %i.f = load ptr, ptr %i.e, align 8
   %i.g = tail call noundef nonnull align 8 dereferenceable(40) ptr %i.f(ptr noundef nonnull align 8 dereferenceable(218) %spec.select) ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 32
-  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 7 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %3, i64 32 ; 6 uses
   store i8 0, ptr %i.i, align 8, !tbaa !17
   %i.j = load i8, ptr %i.h, align 8, !tbaa !17, !range !106, !noundef !107
   %i.k = trunc nuw i8 %i.j to i1
@@ -1082,13 +1082,13 @@ bb.e:                                             ; preds = %._crit_edge.i.i.i.i
 
 bb.f:                                             ; preds = %bb.e
   %i.ac = icmp eq i64 %i.z, 0
-  br i1 %i.ac, label %_ZSteqINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS9_ESE_.exit.thread.thread, label %_ZSteqINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS9_ESE_.exit
+  br i1 %i.ac, label %bb.k, label %_ZSteqINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS9_ESE_.exit
 
 _ZSteqINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS9_ESE_.exit: ; preds = %bb.f
   %i.ad = load ptr, ptr %3, align 8, !tbaa !111
   %bcmp.i.i = call i32 @bcmp(ptr %i.ad, ptr nonnull %1, i64 %i.z)
   %i.ae = icmp eq i32 %bcmp.i.i, 0
-  br i1 %i.ae, label %_ZSteqINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS9_ESE_.exit.thread.thread, label %_ZSteqINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS9_ESE_.exit.thread24
+  br i1 %i.ae, label %bb.k, label %_ZSteqINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS9_ESE_.exit.thread24
 
 _ZSteqINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS9_ESE_.exit.thread24: ; preds = %bb.a, %bb.e, %_ZSteqINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS9_ESE_.exit
   %i.af = getelementptr inbounds nuw i8, ptr %spec.select, i64 152 ; 2 uses
@@ -1115,22 +1115,17 @@ bb.j:                                             ; preds = %bb.h
           cleanup
   %i.ak = load i8, ptr %i.i, align 8, !tbaa !17, !range !106, !noundef !107
   %i.al = trunc nuw i8 %i.ak to i1
-  store i8 0, ptr %i.i, align 8, !tbaa !17
   br i1 %i.al, label %bb.l, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit19
-
-_ZSteqINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS9_ESE_.exit.thread.thread: ; preds = %bb.f, %_ZSteqINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS9_ESE_.exit
-  store i8 0, ptr %i.i, align 8, !tbaa !17
-  br label %bb.k
 
 _ZSteqINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS9_ESE_.exit.thread: ; preds = %bb.i, %bb.g
   %.1.ph = phi ptr [ null, %bb.g ], [ %i.ai, %bb.i ] ; 2 uses
   %.pre = load i8, ptr %i.i, align 8, !tbaa !17, !range !106
   %i.am = trunc nuw i8 %.pre to i1
-  store i8 0, ptr %i.i, align 8, !tbaa !17
   br i1 %i.am, label %bb.k, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
-bb.k:                                             ; preds = %_ZSteqINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS9_ESE_.exit.thread.thread, %_ZSteqINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS9_ESE_.exit.thread
-  %.133 = phi ptr [ %spec.select, %_ZSteqINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS9_ESE_.exit.thread.thread ], [ %.1.ph, %_ZSteqINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS9_ESE_.exit.thread ] ; 2 uses
+bb.k:                                             ; preds = %_ZSteqINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS9_ESE_.exit, %bb.f, %_ZSteqINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS9_ESE_.exit.thread
+  %.133 = phi ptr [ %.1.ph, %_ZSteqINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS9_ESE_.exit.thread ], [ %spec.select, %bb.f ], [ %spec.select, %_ZSteqINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS9_ESE_.exit ] ; 2 uses
+  store i8 0, ptr %i.i, align 8, !tbaa !17
   %i.an = load ptr, ptr %3, align 8, !tbaa !111   ; 2 uses
   %i.ao = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.ap = icmp eq ptr %i.an, %i.ao
@@ -1148,6 +1143,7 @@ _ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb
   ret ptr %.132
 
 bb.l:                                             ; preds = %bb.j
+  store i8 0, ptr %i.i, align 8, !tbaa !17
   %i.as = load ptr, ptr %3, align 8, !tbaa !111   ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses
   %i.au = icmp eq ptr %i.as, %i.at
@@ -1170,10 +1166,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !17, !range !106, !noundef !107
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !17
   br i1 %i.c, label %bb.b, label %_ZNSt17_Optional_payloadINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !17
   %i.d = load ptr, ptr %0, align 8, !tbaa !111    ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.f = icmp eq ptr %i.d, %i.e
@@ -1576,10 +1572,10 @@ _ZNSt22_Optional_payload_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcE
   br label %_ZNSt22_Optional_payload_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8_M_resetEv.exit
 
 bb.g:                                             ; preds = %bb.c
-  store i8 0, ptr %i.b, align 8, !tbaa !17
   br i1 %i.d, label %bb.h, label %_ZNSt22_Optional_payload_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE8_M_resetEv.exit
 
 bb.h:                                             ; preds = %bb.g
+  store i8 0, ptr %i.b, align 8, !tbaa !17
   %i.u = load ptr, ptr %0, align 8, !tbaa !111    ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.w = icmp eq ptr %i.u, %i.v

@@ -134,7 +134,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %._cri
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(33) %i.ah, i8 0, i64 33, i1 false)
   store i8 %i.ae, ptr %i.ai, align 1, !tbaa !22
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
-  %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 3 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 7 uses
   %i.am = getelementptr inbounds nuw i8, ptr %5, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(41) %i.aj, i8 0, i64 41, i1 false)
@@ -152,7 +152,7 @@ bb.i:                                             ; preds = %bb.f, %.critedge30
   %indvars.iv = phi i64 [ 0, %bb.f ], [ %indvars.iv.next, %.critedge30 ] ; 2 uses
   %i.ao = load i8, ptr %i.ak, align 8, !tbaa !49, !range !23, !noundef !24
   %i.ap = trunc nuw i8 %i.ao to i1
-  br i1 %i.ap, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %bb.j
+  br i1 %i.ap, label %.critedge30, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
@@ -226,15 +226,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
   call void @_ZdlPvm(ptr noundef %i.bf, i64 noundef %i.bi) #16
   br label %.critedge28
 
-_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.i
-  store i8 1, ptr %i.ak, align 8, !tbaa !49
-  br label %.critedge30
-
 .critedge28:                                      ; preds = %bb.p, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
   br label %.critedge30
 
-.critedge30:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %.critedge28
+.critedge30:                                      ; preds = %bb.i, %.critedge28
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 82
   br i1 %exitcond.not, label %bb.g, label %bb.i, !llvm.loop !43

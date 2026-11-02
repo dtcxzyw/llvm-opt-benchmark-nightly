@@ -205,43 +205,39 @@ _RNvXs3_NtCsdIYt8sV98we_5bytes5bytesNtB5_5BytesNtNtNtB7_3buf8buf_impl3Buf7advanc
     #dbg_value(ptr %i.ay, !2966, !DIExpression(), !10936)
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.at, !dbg !11682
   store ptr %i.az, ptr %i.ax, align 8, !dbg !11683, !alias.scope !11522
-  %i.ba = getelementptr inbounds i8, ptr %.sroa.474.0169, i64 -8, !dbg !11684 ; 3 uses
+  %i.ba = getelementptr inbounds i8, ptr %.sroa.474.0169, i64 -8, !dbg !11684 ; 2 uses
   %i.bb = load i8, ptr %i.ba, align 8, !dbg !11684, !range !1633, !alias.scope !11516, !noundef !1053
   %i.bc = trunc nuw i8 %i.bb to i1, !dbg !11684
-  br i1 %i.bc, label %.thread.i, label %bb.e, !dbg !11684
-
-.thread.i:                                        ; preds = %_RNvXs3_NtCsdIYt8sV98we_5bytes5bytesNtB5_5BytesNtNtNtB7_3buf8buf_impl3Buf7advance.exit.i
-  store i8 1, ptr %i.ba, align 8, !dbg !11685, !alias.scope !11516
-  br label %.sink.split.i, !dbg !11686
+  br i1 %i.bc, label %.sink.split.i, label %bb.e, !dbg !11684
 
 bb.d:                                             ; preds = %.lr.ph
-  call void @llvm.experimental.noalias.scope.decl(metadata !11523), !dbg !11687
+  call void @llvm.experimental.noalias.scope.decl(metadata !11523), !dbg !11685
     #dbg_value(ptr %i.aq, !2974, !DIExpression(), !10942)
-  call void @llvm.experimental.noalias.scope.decl(metadata !11524), !dbg !11688
+  call void @llvm.experimental.noalias.scope.decl(metadata !11524), !dbg !11686
     #dbg_value(ptr %i.aq, !2978, !DIExpression(), !10946)
-  %i.bd = load ptr, ptr %i.aq, align 8, !dbg !11689, !alias.scope !11525, !nonnull !1053, !align !2981, !noundef !1053
-  %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 32, !dbg !11689
-  %i.bf = load ptr, ptr %i.be, align 8, !dbg !11689, !noalias !11525, !nonnull !1053, !noundef !1053
-  %i.bg = getelementptr inbounds i8, ptr %.sroa.474.0169, i64 -32, !dbg !11690
-  %i.bh = getelementptr inbounds i8, ptr %.sroa.474.0169, i64 -48, !dbg !11691
-  %i.bi = load ptr, ptr %i.bh, align 8, !dbg !11691, !alias.scope !11525, !noundef !1053
+  %i.bd = load ptr, ptr %i.aq, align 8, !dbg !11687, !alias.scope !11525, !nonnull !1053, !align !2981, !noundef !1053
+  %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 32, !dbg !11687
+  %i.bf = load ptr, ptr %i.be, align 8, !dbg !11687, !noalias !11525, !nonnull !1053, !noundef !1053
+  %i.bg = getelementptr inbounds i8, ptr %.sroa.474.0169, i64 -32, !dbg !11688
+  %i.bh = getelementptr inbounds i8, ptr %.sroa.474.0169, i64 -48, !dbg !11689
+  %i.bi = load ptr, ptr %i.bh, align 8, !dbg !11689, !alias.scope !11525, !noundef !1053
   invoke void %i.bf(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.bg, ptr noundef %i.bi, i64 noundef %i.av)
-          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsdIYt8sV98we_5bytes5bytes5BytesECshovLROGBtMy_11quinn_proto.exit.i unwind label %.thread138, !dbg !11689, !inline_history !444
+          to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsdIYt8sV98we_5bytes5bytes5BytesECshovLROGBtMy_11quinn_proto.exit.i unwind label %.thread138, !dbg !11687, !inline_history !444
 
 bb.e:                                             ; preds = %_RNvXs3_NtCsdIYt8sV98we_5bytes5bytesNtB5_5BytesNtNtNtB7_3buf8buf_impl3Buf7advance.exit.i
     #dbg_value(ptr %i.aq, !11520, !DIExpression(), !10948)
-  %i.bj = mul i64 %i.aw, 6, !dbg !11692
-  %i.bk = udiv i64 %i.bj, 5, !dbg !11692
-  %i.bl = getelementptr inbounds i8, ptr %.sroa.474.0169, i64 -16, !dbg !11693
-  %i.bm = load i64, ptr %i.bl, align 8, !dbg !11693, !alias.scope !11516, !noundef !1053
-  %i.bn = icmp uge i64 %i.bk, %i.bm, !dbg !11692  ; 2 uses
-  %i.bo = zext i1 %i.bn to i8, !dbg !11692
-  store i8 %i.bo, ptr %i.ba, align 8, !dbg !11685, !alias.scope !11516
-  br i1 %i.bn, label %.sink.split.i, label %_RNvMs0_NtNtCshovLROGBtMy_11quinn_proto10connection9assemblerNtB5_6Buffer19try_mark_defragment.exit, !dbg !11686
+  %i.bj = mul i64 %i.aw, 6, !dbg !11690
+  %i.bk = udiv i64 %i.bj, 5, !dbg !11690
+  %i.bl = getelementptr inbounds i8, ptr %.sroa.474.0169, i64 -16, !dbg !11691
+  %i.bm = load i64, ptr %i.bl, align 8, !dbg !11691, !alias.scope !11516, !noundef !1053
+  %i.bn = icmp uge i64 %i.bk, %i.bm, !dbg !11690  ; 2 uses
+  %i.bo = zext i1 %i.bn to i8, !dbg !11690
+  store i8 %i.bo, ptr %i.ba, align 8, !dbg !11692, !alias.scope !11516
+  br i1 %i.bn, label %.sink.split.i, label %_RNvMs0_NtNtCshovLROGBtMy_11quinn_proto10connection9assemblerNtB5_6Buffer19try_mark_defragment.exit, !dbg !11693
 
-.sink.split.i:                                    ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsdIYt8sV98we_5bytes5bytes5BytesECshovLROGBtMy_11quinn_proto.exit.i, %bb.e, %.thread.i
-  %.pre = phi i64 [ %.pre.pre, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsdIYt8sV98we_5bytes5bytes5BytesECshovLROGBtMy_11quinn_proto.exit.i ], [ %..i.i, %.thread.i ], [ %..i.i, %bb.e ], !dbg !11694
-  %.sink.i = phi i64 [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsdIYt8sV98we_5bytes5bytes5BytesECshovLROGBtMy_11quinn_proto.exit.i ], [ %i.aw, %.thread.i ], [ %i.aw, %bb.e ] ; 2 uses
+.sink.split.i:                                    ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsdIYt8sV98we_5bytes5bytes5BytesECshovLROGBtMy_11quinn_proto.exit.i, %bb.e, %_RNvXs3_NtCsdIYt8sV98we_5bytes5bytesNtB5_5BytesNtNtNtB7_3buf8buf_impl3Buf7advance.exit.i
+  %.pre = phi i64 [ %.pre.pre, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsdIYt8sV98we_5bytes5bytes5BytesECshovLROGBtMy_11quinn_proto.exit.i ], [ %..i.i, %_RNvXs3_NtCsdIYt8sV98we_5bytes5bytesNtB5_5BytesNtNtNtB7_3buf8buf_impl3Buf7advance.exit.i ], [ %..i.i, %bb.e ], !dbg !11694
+  %.sink.i = phi i64 [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsdIYt8sV98we_5bytes5bytes5BytesECshovLROGBtMy_11quinn_proto.exit.i ], [ %i.aw, %_RNvXs3_NtCsdIYt8sV98we_5bytes5bytesNtB5_5BytesNtNtNtB7_3buf8buf_impl3Buf7advance.exit.i ], [ %i.aw, %bb.e ] ; 2 uses
   %i.bp = getelementptr inbounds i8, ptr %.sroa.474.0169, i64 -16, !dbg !11695
   store i64 %.sink.i, ptr %i.bp, align 8, !dbg !11695, !alias.scope !11516
   br label %_RNvMs0_NtNtCshovLROGBtMy_11quinn_proto10connection9assemblerNtB5_6Buffer19try_mark_defragment.exit, !dbg !11696
@@ -250,15 +246,15 @@ bb.e:                                             ; preds = %_RNvXs3_NtCsdIYt8sV
   %i.bq = landingpad { ptr, i32 }
           cleanup
   %i.br = getelementptr inbounds i8, ptr %.sroa.474.0169, i64 -48
-  store ptr @5, ptr %i.aq, align 8, !dbg !11687, !alias.scope !11516
-  store ptr inttoptr (i64 1 to ptr), ptr %i.br, align 8, !dbg !11687, !alias.scope !11516
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.au, i8 0, i64 16, i1 false), !dbg !11687, !alias.scope !11516
+  store ptr @5, ptr %i.aq, align 8, !dbg !11685, !alias.scope !11516
+  store ptr inttoptr (i64 1 to ptr), ptr %i.br, align 8, !dbg !11685, !alias.scope !11516
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.au, i8 0, i64 16, i1 false), !dbg !11685, !alias.scope !11516
   br label %bb.an, !dbg !11697
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsdIYt8sV98we_5bytes5bytes5BytesECshovLROGBtMy_11quinn_proto.exit.i: ; preds = %bb.d
-  store <2 x ptr> <ptr @5, ptr inttoptr (i64 1 to ptr)>, ptr %i.aq, align 8, !dbg !11687, !alias.scope !11516
+  store <2 x ptr> <ptr @5, ptr inttoptr (i64 1 to ptr)>, ptr %i.aq, align 8, !dbg !11685, !alias.scope !11516
   %i.bs = getelementptr inbounds i8, ptr %.sroa.474.0169, i64 -8, !dbg !11698
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.au, i8 0, i64 16, i1 false), !dbg !11687, !alias.scope !11516
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.au, i8 0, i64 16, i1 false), !dbg !11685, !alias.scope !11516
   store i8 1, ptr %i.bs, align 8, !dbg !11698, !alias.scope !11516
   %.pre.pre = load i64, ptr %i.ar, align 8, !dbg !11694
   br label %.sink.split.i, !dbg !11696
@@ -661,15 +657,15 @@ begin_hunk_1_@llvm.umax.i64
 !11682 = !DILocation(line: 872, column: 18, scope: !440, inlinedAt: !10935)
 !11683 = !DILocation(line: 672, column: 9, scope: !439, inlinedAt: !10933)
 !11684 = !DILocation(line: 298, column: 29, scope: !10917, inlinedAt: !10918)
-!11685 = !DILocation(line: 298, column: 9, scope: !10917, inlinedAt: !10918)
-!11686 = !DILocation(line: 299, column: 12, scope: !10917, inlinedAt: !10918)
-!11687 = !DILocation(line: 290, column: 13, scope: !10917, inlinedAt: !10918)
-!11688 = !DILocation(line: 848, column: 1, scope: !442, inlinedAt: !10941)
-!11689 = !DILocation(line: 683, column: 18, scope: !443, inlinedAt: !10945)
-!11690 = !DILocation(line: 683, column: 37, scope: !443, inlinedAt: !10945)
-!11691 = !DILocation(line: 683, column: 53, scope: !443, inlinedAt: !10945)
-!11692 = !DILocation(line: 298, column: 50, scope: !10917, inlinedAt: !10918)
-!11693 = !DILocation(line: 298, column: 78, scope: !10917, inlinedAt: !10918)
+!11685 = !DILocation(line: 290, column: 13, scope: !10917, inlinedAt: !10918)
+!11686 = !DILocation(line: 848, column: 1, scope: !442, inlinedAt: !10941)
+!11687 = !DILocation(line: 683, column: 18, scope: !443, inlinedAt: !10945)
+!11688 = !DILocation(line: 683, column: 37, scope: !443, inlinedAt: !10945)
+!11689 = !DILocation(line: 683, column: 53, scope: !443, inlinedAt: !10945)
+!11690 = !DILocation(line: 298, column: 50, scope: !10917, inlinedAt: !10918)
+!11691 = !DILocation(line: 298, column: 78, scope: !10917, inlinedAt: !10918)
+!11692 = !DILocation(line: 298, column: 9, scope: !10917, inlinedAt: !10918)
+!11693 = !DILocation(line: 299, column: 12, scope: !10917, inlinedAt: !10918)
 !11694 = !DILocation(line: 115, column: 22, scope: !10848)
 !11695 = !DILocation(line: 0, scope: !10917, inlinedAt: !10918)
 !11696 = !DILocation(line: 303, column: 6, scope: !10916, inlinedAt: !10918)

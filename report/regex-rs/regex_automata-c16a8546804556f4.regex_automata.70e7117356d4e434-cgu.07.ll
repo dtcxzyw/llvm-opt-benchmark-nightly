@@ -204,7 +204,7 @@ _RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultjNtNtNtB4_3num5error15TryFromIntEr
 bb.d:                                             ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultjNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs9GYDdpCSJ4S_14regex_automata.exit.i14
   %i.ae = load i32, ptr %i.ac, align 4, !dbg !10669, !alias.scope !10494, !noundef !1030 ; 3 uses
     #dbg_value(i32 %i.ae, !10431, !DIExpression(), !9618)
-  %i.af = getelementptr inbounds nuw i8, ptr %3, i64 24, !dbg !10670 ; 2 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %3, i64 24, !dbg !10670
   %i.ag = load i64, ptr %i.af, align 8, !dbg !10670, !range !1556, !alias.scope !10494, !noundef !1030
   %i.ah = getelementptr inbounds nuw i8, ptr %3, i64 32, !dbg !10670 ; 2 uses
   %i.ai = trunc nuw i64 %i.ag to i1, !dbg !10671
@@ -607,7 +607,6 @@ bb.aj:                                            ; preds = %_RNvMs0_NtNtCs9GYDd
 
 bb.ak:                                            ; preds = %_RNvMs0_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_3DFA9match_len.exit
   %i.dp = add nuw i64 %i.cy, 1, !dbg !10767
-  store i64 1, ptr %i.af, align 8, !dbg !10768, !alias.scope !10494
   store i64 %i.dp, ptr %i.ah, align 8, !dbg !10768, !alias.scope !10494
   %.val110 = load ptr, ptr %i.cz, align 8, !dbg !10769 ; 2 uses
   %.val111 = load i64, ptr %i.da, align 8, !dbg !10769 ; 2 uses
@@ -1010,7 +1009,7 @@ _RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultjNtNtNtB4_3num5error15TryFromIntEr
 bb.cl:                                            ; preds = %_RNvMNtCsj6eKBz9Db1c_4core6resultINtB2_6ResultjNtNtNtB4_3num5error15TryFromIntErrorE6unwrapCs9GYDdpCSJ4S_14regex_automata.exit.i
   %i.jo = load i32, ptr %i.jm, align 4, !dbg !10934, !alias.scope !10608, !noundef !1030 ; 3 uses
     #dbg_value(i32 %i.jo, !10431, !DIExpression(), !10044)
-  %i.jp = getelementptr inbounds nuw i8, ptr %3, i64 24, !dbg !10935 ; 2 uses
+  %i.jp = getelementptr inbounds nuw i8, ptr %3, i64 24, !dbg !10935
   %i.jq = load i64, ptr %i.jp, align 8, !dbg !10935, !range !1556, !alias.scope !10608, !noundef !1030
   %i.jr = getelementptr inbounds nuw i8, ptr %3, i64 32, !dbg !10935 ; 2 uses
   %i.js = trunc nuw i64 %i.jq to i1, !dbg !10936
@@ -1369,7 +1368,6 @@ bb.dg:                                            ; preds = %_RNvMs0_NtNtCs9GYDd
 
 bb.dh:                                            ; preds = %_RNvMs0_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_3DFA9match_len.exit152
   %i.ml = add nuw i64 %i.lu, 1, !dbg !11011
-  store i64 1, ptr %i.jp, align 8, !dbg !11012, !alias.scope !10608
   store i64 %i.ml, ptr %i.jr, align 8, !dbg !11012, !alias.scope !10608
   %.val118 = load ptr, ptr %i.lw, align 8, !dbg !11013
   %.val119 = load i64, ptr %i.lx, align 8, !dbg !11013
@@ -1772,7 +1770,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.o = load i32, ptr %i.m, align 4, !dbg !11850, !noundef !1030 ; 4 uses
     #dbg_value(i32 %i.o, !11593, !DIExpression(), !11747)
-  %i.p = getelementptr inbounds nuw i8, ptr %3, i64 24, !dbg !11851 ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %3, i64 24, !dbg !11851
   %i.q = load i64, ptr %i.p, align 8, !dbg !11851, !range !1556, !noundef !1030
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 32, !dbg !11851 ; 2 uses
   %i.s = trunc nuw i64 %i.q to i1, !dbg !11852
@@ -2175,7 +2173,6 @@ bb.ai:                                            ; preds = %_RNvMs0_NtNtCs9GYDd
 
 bb.aj:                                            ; preds = %_RNvMs0_NtNtCs9GYDdpCSJ4S_14regex_automata6hybrid3dfaNtB5_3DFA9match_len.exit
   %i.de = add nuw i64 %i.co, 1, !dbg !11943
-  store i64 1, ptr %i.p, align 8, !dbg !11944
   store i64 %i.de, ptr %i.r, align 8, !dbg !11944
   %i.df = getelementptr inbounds nuw i8, ptr %0, i64 688, !dbg !11945
   %.val166 = load ptr, ptr %i.df, align 16, !dbg !11945, !nonnull !1030, !noundef !1030
