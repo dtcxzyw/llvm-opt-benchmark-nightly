@@ -1,0 +1,411 @@
+diff --git a/llvm/include/llvm/Transforms/Utils/SimplifyLibCalls.h b/llvm/include/llvm/Transforms/Utils/SimplifyLibCalls.h
+index 7298ad459a5da..b778ae83e1070 100644
+--- a/llvm/include/llvm/Transforms/Utils/SimplifyLibCalls.h
++++ b/llvm/include/llvm/Transforms/Utils/SimplifyLibCalls.h
+@@ -209,6 +209,7 @@ class LibCallSimplifier {
+   Value *optimizeFMod(CallInst *CI, IRBuilderBase &B);
+   Value *mergeSqrtToExp(CallInst *CI, IRBuilderBase &B);
+   Value *optimizeSinCosPi(CallInst *CI, bool IsSin, IRBuilderBase &B);
++  Value *optimizeSinCos(CallInst *CI, bool IsSin, IRBuilderBase &B);
+   Value *optimizeTrigInversionPairs(CallInst *CI, IRBuilderBase &B);
+   Value *optimizeSymmetric(CallInst *CI, LibFunc Func, IRBuilderBase &B);
+   Value *optimizeRemquo(CallInst *CI, IRBuilderBase &B);
+diff --git a/llvm/lib/Transforms/Utils/SimplifyLibCalls.cpp b/llvm/lib/Transforms/Utils/SimplifyLibCalls.cpp
+index 16fa62da2092f..0e9702df6d7ef 100644
+--- a/llvm/lib/Transforms/Utils/SimplifyLibCalls.cpp
++++ b/llvm/lib/Transforms/Utils/SimplifyLibCalls.cpp
+@@ -55,6 +55,11 @@ static cl::opt<bool>
+                          cl::desc("Enable unsafe double to float "
+                                   "shrinking for math lib calls"));
+ 
++static cl::opt<bool> EnableSinCosFusion(
++    "sincos-fusion", cl::Hidden, cl::init(true),
++    cl::desc("Combine a sin(x) call and a cos(x) call with the same argument "
++             "into a single sincos(x) call"));
++
+ // Enable conversion of operator new calls with a MemProf hot or cold hint
+ // to an operator new call that takes a hot/cold hint. Off by default since
+ // not all allocators currently support this extension.
+@@ -3277,6 +3282,129 @@ Value *LibCallSimplifier::optimizeSinCosPi(CallInst *CI, bool IsSin, IRBuilderBa
+   return IsSin ? Sin : Cos;
+ }
+ 
++/// Check that CI is a call to a one-argument floating-point function
++/// returning the same floating-point type, as expected for sin/cos.
++static bool hasSinCosPrototype(CallInst *CI) {
++  FunctionType *FTy = CI->getFunctionType();
++  Type *Ty = CI->getType();
++  return FTy->getNumParams() == 1 && FTy->getParamType(0) == Ty &&
++         Ty->isFloatingPointTy();
++}
++
++/// Returns true if A and B are in the same basic block and no instruction
++/// between them may access errno memory, so the errno write of the earlier
++/// call cannot be observed to move and the write of the later call cannot be
++/// observed to disappear. Accesses to memory local to the function (derived
++/// from an alloca) cannot access the errno global and are allowed, so that
++/// pairs like std::complex<double>(cos(x), sin(x)) -- which store the first
++/// result between the two calls -- can be fused.
++static bool haveNoInterveningErrnoAccess(CallInst *A, CallInst *B) {
++  if (A->getParent() != B->getParent())
++    return false;
++  CallInst *First = A->comesBefore(B) ? A : B;
++  CallInst *Second = First == A ? B : A;
++  for (auto It = std::next(First->getIterator()); &*It != Second; ++It) {
++    Instruction *I = &*It;
++    if (!I->mayReadOrWriteMemory())
++      continue;
++    if (auto *LI = dyn_cast<LoadInst>(I)) {
++      if (isa<AllocaInst>(getUnderlyingObject(LI->getPointerOperand())))
++        continue;
++      return false;
++    }
++    if (auto *SI = dyn_cast<StoreInst>(I)) {
++      if (isa<AllocaInst>(getUnderlyingObject(SI->getPointerOperand())))
++        continue;
++      return false;
++    }
++    // Anything else (calls, atomics, accesses to non-local memory) may
++    // access errno.
++    return false;
++  }
++  return true;
++}
++
++Value *LibCallSimplifier::optimizeSinCos(CallInst *CI, bool IsSin,
++                                         IRBuilderBase &B) {
++  if (!EnableSinCosFusion || !hasSinCosPrototype(CI) || !CI->doesNotThrow() ||
++      CI->isNoBuiltin() || CI->isStrictFP())
++    return nullptr;
++
++  Value *Arg = CI->getArgOperand(0);
++  if (isa<Constant>(Arg))
++    return nullptr;
++
++  // Look for a matching cos/sin call with the same argument.
++  Module *M = CI->getModule();
++  Function *F = CI->getFunction();
++  bool IsFloat = CI->getType()->isFloatTy();
++  CallInst *Match = nullptr;
++  for (User *U : Arg->users()) {
++    auto *Cand = dyn_cast<CallInst>(U);
++    if (!Cand || Cand == CI || Cand->use_empty() || Cand->getFunction() != F ||
++        Cand->isNoBuiltin())
++      continue;
++    Function *Callee = Cand->getCalledFunction();
++    if (!Callee)
++      continue;
++    LibFunc LF = TLI->getLibFunc(*Callee);
++    if (LF != (IsSin ? (IsFloat ? LibFunc_cosf : LibFunc_cos)
++                     : (IsFloat ? LibFunc_sinf : LibFunc_sin)))
++      continue;
++    if (!isLibFuncEmittable(M, TLI, LF) || !hasSinCosPrototype(Cand) ||
++        !Cand->doesNotThrow() || Cand->isStrictFP() ||
++        !haveNoInterveningErrnoAccess(CI, Cand))
++      continue;
++    Match = Cand;
++    break;
++  }
++  if (!Match)
++    return nullptr;
++
++  LibFunc SinCosLF = IsFloat ? LibFunc_sincosf : LibFunc_sincos;
++  if (!isLibFuncEmittable(M, TLI, SinCosLF))
++    return nullptr;
++
++  IRBuilderBase::InsertPointGuard Guard(B);
++
++  // Allocate storage for the results in the entry block.
++  B.SetInsertPoint(&*F->getEntryBlock().getFirstInsertionPt());
++  AllocaInst *SinAlloca = B.CreateAlloca(CI->getType(), nullptr, "sincos.sin");
++  AllocaInst *CosAlloca = B.CreateAlloca(CI->getType(), nullptr, "sincos.cos");
++
++  // Model the fused call's memory behaviour explicitly instead of copying the
++  // memory attribute from the sin/cos call: sincos reads the input argument,
++  // writes through both result pointers, and (like sin/cos) writes errno. A
++  // sin/cos call is often declared memory(errnomem: write); copying that would
++  // model the fused call as not writing the result slots, so the loads below
++  // would read uninitialized memory.
++  AttributeList Attrs = CI->getCalledFunction()->getAttributes();
++  MemoryEffects ME = MemoryEffects::argumentOrErrnoMemOnly(ModRefInfo::ModRef,
++                                                           ModRefInfo::Mod);
++  Attrs = Attrs.addFnAttribute(
++      M->getContext(), Attribute::getWithMemoryEffects(M->getContext(), ME));
++  FunctionCallee SinCosFn =
++      getOrInsertLibFunc(M, *TLI, SinCosLF, Attrs, B.getVoidTy(),
++                         Arg->getType(), B.getPtrTy(), B.getPtrTy());
++
++  // Emit the fused call at the earlier of the two calls; nothing between the
++  // two calls can observe errno, and both write the same errno value for the
++  // same input, so the write cannot be observed to move.
++  CallInst *Earlier = CI->comesBefore(Match) ? CI : Match;
++  // NOTE: the fused call returns void (results through pointers), so
++  // fast-math flags from the original calls cannot be attached to it;
++  // FMF only applies to FPMathOperators. This is conservative but sound.
++  B.SetInsertPoint(Earlier);
++  B.CreateCall(SinCosFn, {Arg, SinAlloca, CosAlloca});
++  Value *Sin = B.CreateLoad(CI->getType(), SinAlloca, "sin");
++  Value *Cos = B.CreateLoad(CI->getType(), CosAlloca, "cos");
++
++  // Replace and erase the matching call.
++  replaceAllUsesWith(Match, IsSin ? Cos : Sin);
++  eraseFromParent(Match);
++  return IsSin ? Sin : Cos;
++}
++
+ void LibCallSimplifier::classifyArgUse(
+     Value *Val, Function *F, bool IsFloat,
+     SmallVectorImpl<CallInst *> &SinCalls,
+@@ -4220,11 +4348,17 @@ Value *LibCallSimplifier::optimizeFloatingPointLibCall(CallInst *CI,
+   case LibFunc_cospi:
+     return optimizeSinCosPi(CI, /*IsSin*/false, Builder);
+   case LibFunc_sinf:
++    if (CI->doesNotAccessMemory())
++      return replaceUnaryCall(CI, Builder, Intrinsic::sin);
++    return optimizeSinCos(CI, /*IsSin*/ true, Builder);
+   case LibFunc_sinl:
+     if (CI->doesNotAccessMemory())
+       return replaceUnaryCall(CI, Builder, Intrinsic::sin);
+     return nullptr;
+   case LibFunc_cosf:
++    if (CI->doesNotAccessMemory())
++      return replaceUnaryCall(CI, Builder, Intrinsic::cos);
++    return optimizeSinCos(CI, /*IsSin*/ false, Builder);
+   case LibFunc_cosl:
+     if (CI->doesNotAccessMemory())
+       return replaceUnaryCall(CI, Builder, Intrinsic::cos);
+@@ -4334,7 +4468,7 @@ Value *LibCallSimplifier::optimizeFloatingPointLibCall(CallInst *CI,
+     if (CI->doesNotAccessMemory())
+       return replaceUnaryCall(
+           CI, Builder, Func == LibFunc_sin ? Intrinsic::sin : Intrinsic::cos);
+-    return nullptr;
++    return optimizeSinCos(CI, Func == LibFunc_sin, Builder);
+   case LibFunc_acos:
+   case LibFunc_acosh:
+   case LibFunc_asin:
+diff --git a/llvm/test/Transforms/InstCombine/sincos-libcall.ll b/llvm/test/Transforms/InstCombine/sincos-libcall.ll
+new file mode 100644
+index 0000000000000..e170d31cb3f0f
+--- /dev/null
++++ b/llvm/test/Transforms/InstCombine/sincos-libcall.ll
+@@ -0,0 +1,220 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py
++; RUN: opt -S -passes=instcombine -mtriple=x86_64-unknown-linux-gnu < %s | FileCheck %s
++
++; Two errno-writing libcalls on the same argument can be fused into a single
++; sincos call: the results are the same, and since nothing between the two
++; calls can observe or modify errno, the (identical) errno write of the two
++; calls cannot be observed to move or merge. The attribute set of the original
++; sin/cos calls is `memory(errnomem: write)`; the fused sincos call must model
++; that it also writes through its result pointers.
++
++attributes #0 = { nounwind willreturn memory(errnomem: write) }
++
++define double @fuse_sin_cos(double %x) {
++; CHECK-LABEL: @fuse_sin_cos(
++; CHECK-NEXT:    [[SINCOS_SIN:%.*]] = alloca double, align 8
++; CHECK-NEXT:    [[SINCOS_COS:%.*]] = alloca double, align 8
++; CHECK-NEXT:    call void @sincos(double [[X:%.*]], ptr nonnull [[SINCOS_SIN]], ptr nonnull [[SINCOS_COS]])
++; CHECK-NEXT:    [[SIN:%.*]] = load double, ptr [[SINCOS_SIN]], align 8
++; CHECK-NEXT:    [[COS:%.*]] = load double, ptr [[SINCOS_COS]], align 8
++; CHECK-NEXT:    [[R:%.*]] = fadd double [[SIN]], [[COS]]
++; CHECK-NEXT:    ret double [[R]]
++;
++  %s = call double @sin(double %x) #0
++  %c = call double @cos(double %x) #0
++  %r = fadd double %s, %c
++  ret double %r
++}
++
++define float @fuse_sinf_cosf(float %x) {
++; CHECK-LABEL: @fuse_sinf_cosf(
++; CHECK-NEXT:    [[SINCOS_SIN:%.*]] = alloca float, align 4
++; CHECK-NEXT:    [[SINCOS_COS:%.*]] = alloca float, align 4
++; CHECK-NEXT:    call void @sincosf(float [[X:%.*]], ptr nonnull [[SINCOS_SIN]], ptr nonnull [[SINCOS_COS]])
++; CHECK-NEXT:    [[SIN:%.*]] = load float, ptr [[SINCOS_SIN]], align 4
++; CHECK-NEXT:    [[COS:%.*]] = load float, ptr [[SINCOS_COS]], align 4
++; CHECK-NEXT:    [[R:%.*]] = fadd float [[SIN]], [[COS]]
++; CHECK-NEXT:    ret float [[R]]
++;
++  %s = call float @sinf(float %x) #0
++  %c = call float @cosf(float %x) #0
++  %r = fadd float %s, %c
++  ret float %r
++}
++
++; The pair in reverse order is also fused.
++define double @fuse_cos_sin(double %x) {
++; CHECK-LABEL: @fuse_cos_sin(
++; CHECK-NEXT:    [[SINCOS_SIN:%.*]] = alloca double, align 8
++; CHECK-NEXT:    [[SINCOS_COS:%.*]] = alloca double, align 8
++; CHECK-NEXT:    call void @sincos(double [[X:%.*]], ptr nonnull [[SINCOS_SIN]], ptr nonnull [[SINCOS_COS]])
++; CHECK-NEXT:    [[SIN:%.*]] = load double, ptr [[SINCOS_SIN]], align 8
++; CHECK-NEXT:    [[COS:%.*]] = load double, ptr [[SINCOS_COS]], align 8
++; CHECK-NEXT:    [[R:%.*]] = fadd double [[SIN]], [[COS]]
++; CHECK-NEXT:    ret double [[R]]
++;
++  %c = call double @cos(double %x) #0
++  %s = call double @sin(double %x) #0
++  %r = fadd double %s, %c
++  ret double %r
++}
++
++; A memory-accessing instruction between the two calls may observe or modify
++; errno, so there is no fusion.
++define i32 @intervening_load(double %x, ptr %p) {
++; CHECK-LABEL: @intervening_load(
++; CHECK-NEXT:    [[S:%.*]] = call double @sin(double [[X:%.*]]) #[[ATTR0:[0-9]+]]
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[P:%.*]], align 4
++; CHECK-NEXT:    [[C:%.*]] = call double @cos(double [[X]]) #[[ATTR0]]
++; CHECK-NEXT:    [[R:%.*]] = fcmp une double [[S]], [[C]]
++; CHECK-NEXT:    [[Z:%.*]] = zext i1 [[R]] to i32
++; CHECK-NEXT:    [[O:%.*]] = add i32 [[V]], [[Z]]
++; CHECK-NEXT:    ret i32 [[O]]
++;
++  %s = call double @sin(double %x) #0
++  %v = load i32, ptr %p
++  %c = call double @cos(double %x) #0
++  %r = fcmp une double %s, %c
++  %z = zext i1 %r to i32
++  %o = add i32 %v, %z
++  ret i32 %o
++}
++
++; A store to memory local to the function (e.g. the temporary of a
++; std::complex construction) cannot access errno, so the pair is fused.
++define double @intervening_alloca_store(double %x) {
++; CHECK-LABEL: @intervening_alloca_store(
++; CHECK-NEXT:    [[SINCOS_SIN:%.*]] = alloca double, align 8
++; CHECK-NEXT:    [[SINCOS_COS:%.*]] = alloca double, align 8
++; CHECK-NEXT:    call void @sincos(double [[X:%.*]], ptr nonnull [[SINCOS_SIN]], ptr nonnull [[SINCOS_COS]])
++; CHECK-NEXT:    [[SIN:%.*]] = load double, ptr [[SINCOS_SIN]], align 8
++; CHECK-NEXT:    [[COS:%.*]] = load double, ptr [[SINCOS_COS]], align 8
++; CHECK-NEXT:    [[R:%.*]] = fadd double [[SIN]], [[COS]]
++; CHECK-NEXT:    ret double [[R]]
++;
++  %slot = alloca double
++  %s = call double @sin(double %x) #0
++  store double %s, ptr %slot
++  %c = call double @cos(double %x) #0
++  %r = fadd double %s, %c
++  ret double %r
++}
++
++; A store to a global may modify errno, so there is no fusion.
++@unknown_global = global i32 0
++
++define double @intervening_global_store(double %x) {
++; CHECK-LABEL: @intervening_global_store(
++; CHECK-NEXT:    [[S:%.*]] = call double @sin(double [[X:%.*]]) #[[ATTR0]]
++; CHECK-NEXT:    store i32 7, ptr @unknown_global, align 4
++; CHECK-NEXT:    [[C:%.*]] = call double @cos(double [[X]]) #[[ATTR0]]
++; CHECK-NEXT:    [[R:%.*]] = fadd double [[S]], [[C]]
++; CHECK-NEXT:    ret double [[R]]
++;
++  %s = call double @sin(double %x) #0
++  store i32 7, ptr @unknown_global
++  %c = call double @cos(double %x) #0
++  %r = fadd double %s, %c
++  ret double %r
++}
++
++; nobuiltin calls are not libcalls.
++define double @nobuiltin(double %x) {
++; CHECK-LABEL: @nobuiltin(
++; CHECK-NEXT:    [[S:%.*]] = call double @sin(double [[X:%.*]]) #[[ATTR2:[0-9]+]]
++; CHECK-NEXT:    [[C:%.*]] = call double @cos(double [[X]]) #[[ATTR2]]
++; CHECK-NEXT:    [[R:%.*]] = fadd double [[S]], [[C]]
++; CHECK-NEXT:    ret double [[R]]
++;
++  %s = call double @sin(double %x) #0 nobuiltin
++  %c = call double @cos(double %x) #0 nobuiltin
++  %r = fadd double %s, %c
++  ret double %r
++}
++
++; A single call has no pair.
++define double @no_pair(double %x) {
++; CHECK-LABEL: @no_pair(
++; CHECK-NEXT:    [[S:%.*]] = call double @sin(double [[X:%.*]]) #[[ATTR0]]
++; CHECK-NEXT:    ret double [[S]]
++;
++  %s = call double @sin(double %x) #0
++  ret double %s
++}
++
++; The generated sincos declarations must model both the writes through the
++; result pointers and the errno write, even though the sin/cos calls only write
++; errno. (Copying the sin/cos memory attribute would make the loads read
++; uninitialized memory.)
++
++; A strictfp call must not be fused into a call that is not strictfp.
++define double @strictfp_pair(double %x) {
++; CHECK-LABEL: @strictfp_pair(
++; CHECK-NEXT:    [[S:%.*]] = call double @sin(double [[X:%.*]]) #[[ATTR0]]
++; CHECK-NEXT:    [[C:%.*]] = call double @cos(double [[X]]) #[[ATTR3:[0-9]+]]
++; CHECK-NEXT:    [[R:%.*]] = fadd double [[S]], [[C]]
++; CHECK-NEXT:    ret double [[R]]
++;
++  %s = call double @sin(double %x) #0
++  %c = call double @cos(double %x) #0 strictfp
++  %r = fadd double %s, %c
++  ret double %r
++}
++
++; Different arguments are not a pair.
++define double @different_args(double %x, double %y) {
++; CHECK-LABEL: @different_args(
++; CHECK-NEXT:    [[S:%.*]] = call double @sin(double [[X:%.*]]) #[[ATTR0]]
++; CHECK-NEXT:    [[C:%.*]] = call double @cos(double [[Y:%.*]]) #[[ATTR0]]
++; CHECK-NEXT:    [[R:%.*]] = fadd double [[S]], [[C]]
++; CHECK-NEXT:    ret double [[R]]
++;
++  %s = call double @sin(double %x) #0
++  %c = call double @cos(double %y) #0
++  %r = fadd double %s, %c
++  ret double %r
++}
++
++; A call between the two calls may access errno, so there is no fusion.
++define double @intervening_call(double %x) {
++; CHECK-LABEL: @intervening_call(
++; CHECK-NEXT:    [[S:%.*]] = call double @sin(double [[X:%.*]]) #[[ATTR0]]
++; CHECK-NEXT:    call void @opaque()
++; CHECK-NEXT:    [[C:%.*]] = call double @cos(double [[X]]) #[[ATTR0]]
++; CHECK-NEXT:    [[R:%.*]] = fadd double [[S]], [[C]]
++; CHECK-NEXT:    ret double [[R]]
++;
++  %s = call double @sin(double %x) #0
++  call void @opaque()
++  %c = call double @cos(double %x) #0
++  %r = fadd double %s, %c
++  ret double %r
++}
++
++; Only one side marked nobuiltin: no fusion.
++define double @one_sided_nobuiltin(double %x) {
++; CHECK-LABEL: @one_sided_nobuiltin(
++; CHECK-NEXT:    [[SIN:%.*]] = call double @sin(double [[X:%.*]]) #[[ATTR2]]
++; CHECK-NEXT:    [[COS:%.*]] = call double @cos(double [[X]]) #[[ATTR0]]
++; CHECK-NEXT:    [[R:%.*]] = fadd double [[SIN]], [[COS]]
++; CHECK-NEXT:    ret double [[R]]
++;
++  %s = call double @sin(double %x) #0 nobuiltin
++  %c = call double @cos(double %x) #0
++  %r = fadd double %s, %c
++  ret double %r
++}
++
++declare void @opaque()
++
++declare double @sin(double) #0
++declare double @cos(double) #0
++declare float @sinf(float) #0
++declare float @cosf(float) #0
++
++; The fused sincos declaration must model writes through both result pointers
++; (argmem: readwrite) in addition to the errno write; copying the
++; memory(errnomem: write) attribute from the sin/cos calls would leave the
++; loads above reading uninitialized memory.
++; CHECK: declare void @sincos(double, ptr, ptr) #[[SINCOSATTR:[0-9]+]]
++; CHECK: attributes #[[SINCOSATTR]] = { nounwind willreturn memory(argmem: readwrite, errnomem: write) }
