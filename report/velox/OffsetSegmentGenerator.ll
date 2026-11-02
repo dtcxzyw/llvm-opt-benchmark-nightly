@@ -28,14 +28,14 @@ bb.a:
   store double 0.000000e+00, ptr %0, align 8, !tbaa !25
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   store i32 1, ptr %i.a, align 8, !tbaa !26
-  %i.b = tail call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #9 ; 5 uses
+  %i.b = tail call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #10 ; 5 uses
   invoke void @_ZN4geos4geom23CoordinateArraySequenceC1Ev(ptr noundef nonnull align 8 dereferenceable(40) %i.b)
           to label %bb.c unwind label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPv(ptr noundef nonnull %i.b) #10
+  tail call void @_ZdlPv(ptr noundef nonnull %i.b) #11
   resume { ptr, i32 } %i.c
 
 bb.c:                                             ; preds = %bb.a
@@ -132,7 +132,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.c, %bb.d, %bb.e
   store double %3, ptr %i.f, align 8, !tbaa !28
   %i.at = fmul nnan double %i.an, 5.000000e-01
-  %i.au = tail call double @cos(double noundef %i.at) #11
+  %i.au = tail call double @cos(double noundef %i.at) #12
   %i.av = fsub double 1.000000e+00, %i.au
   %i.aw = fmul double %3, %i.av
   store double %i.aw, ptr %0, align 8, !tbaa !25
@@ -165,7 +165,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load double, ptr %i.b, align 8, !tbaa !35
   %i.d = fmul double %i.c, 5.000000e-01
-  %i.e = tail call double @cos(double noundef %i.d) #11
+  %i.e = tail call double @cos(double noundef %i.d) #12
   %i.f = fsub double 1.000000e+00, %i.e
   %i.g = fmul double %1, %i.f
   store double %i.g, ptr %0, align 8, !tbaa !25
@@ -187,7 +187,7 @@ _ZSt8_DestroyIPN4geos4geom10CoordinateES2_EvT_S4_RSaIT0_E.exit.i.i.i.i: ; preds 
   br label %_ZN4geos9operation6buffer19OffsetSegmentString5resetEv.exit
 
 bb.c:                                             ; preds = %bb.a
-  %i.n = tail call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #9 ; 3 uses
+  %i.n = tail call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #10 ; 3 uses
   invoke void @_ZN4geos4geom23CoordinateArraySequenceC1Ev(ptr noundef nonnull align 8 dereferenceable(40) %i.n)
           to label %bb.d unwind label %bb.e
 
@@ -199,7 +199,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.o = landingpad { ptr, i32 }
           cleanup
-  tail call void @_ZdlPv(ptr noundef nonnull %i.n) #10
+  tail call void @_ZdlPv(ptr noundef nonnull %i.n) #11
   resume { ptr, i32 } %i.o
 
 _ZN4geos9operation6buffer19OffsetSegmentString5resetEv.exit: ; preds = %bb.b, %_ZSt8_DestroyIPN4geos4geom10CoordinateES2_EvT_S4_RSaIT0_E.exit.i.i.i.i, %bb.d
@@ -419,6 +419,8 @@ declare noundef i32 @_ZN4geos9algorithm11Orientation5indexERKNS_4geom10Coordinat
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4geos9operation6buffer22OffsetSegmentGenerator12addCollinearEb(ptr noundef nonnull align 8 dereferenceable(484) %0, i1 noundef zeroext %1) local_unnamed_addr #0 align 2 {
 bb.a:
+  %sincos.sin = alloca double, align 8            ; 2 uses
+  %sincos.cos = alloca double, align 8            ; 2 uses
   %2 = alloca %"class.geos::geom::Coordinate", align 16 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 208
@@ -467,13 +469,13 @@ bb.f:                                             ; preds = %bb.b
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 240
   %i.aa = load double, ptr %i.z, align 8, !tbaa !50 ; 2 uses
   %i.ab = fsub double %i.y, %i.aa
-  %i.ac = tail call double @atan2(double noundef %i.ab, double noundef %i.w) #11 ; 3 uses
+  %i.ac = tail call double @atan2(double noundef %i.ab, double noundef %i.w) #12 ; 3 uses
   %i.ad = load double, ptr %i.r, align 8, !tbaa !49
   %i.ae = fsub double %i.ad, %i.v
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 432
   %i.ag = load double, ptr %i.af, align 8, !tbaa !50
   %i.ah = fsub double %i.ag, %i.aa
-  %i.ai = tail call double @atan2(double noundef %i.ah, double noundef %i.ae) #11 ; 2 uses
+  %i.ai = tail call double @atan2(double noundef %i.ah, double noundef %i.ae) #12 ; 2 uses
   %i.aj = fcmp ugt double %i.ac, %i.ai
   %i.ak = fadd double %i.ac, f0x401921FB54442D18
   %spec.select27.i = select i1 %i.aj, double %i.ac, double %i.ak ; 2 uses
@@ -492,7 +494,7 @@ bb.f:                                             ; preds = %bb.b
 bb.g:                                             ; preds = %bb.f
   %i.au = uitofp nneg i32 %i.as to double
   %i.av = fdiv double %i.an, %i.au
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
   %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 16
   store double +qnan, ptr %i.aw, align 16, !tbaa !30
   %i.ax = shufflevector <1 x double> %i.t, <1 x double> poison, <2 x i32> zeroinitializer
@@ -503,12 +505,13 @@ bb.g:                                             ; preds = %bb.f
   %i.ay = sub nsw i32 0, %.021.us.i
   %i.az = sitofp i32 %i.ay to double
   %i.ba = fmul double %i.av, %i.az
-  %i.bb = fadd double %spec.select27.i, %i.ba     ; 2 uses
-  %3 = call double @cos(double noundef %i.bb) #11
-  %4 = call double @sin(double noundef %i.bb) #11
+  %i.bb = fadd double %spec.select27.i, %i.ba
+  call void @sincos(double %i.bb, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8
+  %cos = load double, ptr %sincos.cos, align 8
   %i.bc = load <2 x double>, ptr %i.c, align 8, !tbaa !43
-  %i.bd = insertelement <2 x double> poison, double %3, i64 0
-  %i.be = insertelement <2 x double> %i.bd, double %4, i64 1
+  %i.bd = insertelement <2 x double> poison, double %cos, i64 0
+  %i.be = insertelement <2 x double> %i.bd, double %sin, i64 1
   %i.bf = fmul <2 x double> %i.ax, %i.be
   %i.bg = fadd <2 x double> %i.bc, %i.bf
   store <2 x double> %i.bg, ptr %2, align 16, !tbaa !43
@@ -518,7 +521,7 @@ bb.g:                                             ; preds = %bb.f
   br i1 %exitcond25.not.i, label %.split23.us.i, label %.split.us.i, !llvm.loop !0
 
 .split23.us.i:                                    ; preds = %.split.us.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
   br label %_ZN4geos9operation6buffer22OffsetSegmentGenerator17addDirectedFilletERKNS_4geom10CoordinateEddid.exit
 
 _ZN4geos9operation6buffer22OffsetSegmentGenerator17addDirectedFilletERKNS_4geom10CoordinateEddid.exit: ; preds = %bb.f, %.split23.us.i
@@ -571,7 +574,7 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 232
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 448
   call void @_ZN4geos9algorithm12Intersection12intersectionERKNS_4geom10CoordinateES5_S5_S5_(ptr dead_on_unwind nonnull writable sret(%"class.geos::geom::Coordinate") align 8 %3, ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull align 8 dereferenceable(24) %i.c, ptr noundef nonnull align 8 dereferenceable(24) %i.y)
   %i.z = load <2 x double>, ptr %3, align 16      ; 3 uses
@@ -627,7 +630,7 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZN4geos9operation6buffer22OffsetSegmentGenerator12addMitreJoinERKNS_4geom10CoordinateERKNS3_11LineSegmentES9_d.exit
 
 _ZN4geos9operation6buffer22OffsetSegmentGenerator12addMitreJoinERKNS_4geom10CoordinateERKNS3_11LineSegmentES9_d.exit: ; preds = %bb.h, %.critedge.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   br label %bb.m
 
 bb.i:                                             ; preds = %bb.c
@@ -661,10 +664,10 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 240
   %i.bh = load double, ptr %i.bg, align 8, !tbaa !50 ; 2 uses
   %i.bi = fsub double %i.ba, %i.bh
-  %i.bj = tail call double @atan2(double noundef %i.bi, double noundef %i.bf) #11 ; 4 uses
+  %i.bj = tail call double @atan2(double noundef %i.bi, double noundef %i.bf) #12 ; 4 uses
   %i.bk = fsub double %i.az, %i.be
   %i.bl = fsub double %i.ay, %i.bh
-  %i.bm = tail call double @atan2(double noundef %i.bl, double noundef %i.bk) #11 ; 3 uses
+  %i.bm = tail call double @atan2(double noundef %i.bl, double noundef %i.bk) #12 ; 3 uses
   %i.bn = icmp eq i32 %1, -1                      ; 2 uses
   %i.bo = fcmp ult double %i.bj, %i.bm
   %i.bp = fcmp ugt double %i.bj, %i.bm
@@ -729,7 +732,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.v, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
   %i.w = uitofp nneg i32 %i.u to double
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 2 uses
   %i.y = add nuw nsw i32 %i.u, 1
@@ -747,7 +750,7 @@ bb.e:                                             ; preds = %bb.d
   %i.aj = getelementptr inbounds nuw i8, ptr %3, i64 16
   store double +qnan, ptr %i.aj, align 16, !tbaa !30
   call void @_ZN4geos9operation6buffer19OffsetSegmentString5addPtERKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(24) %i.s, ptr noundef nonnull align 8 dereferenceable(24) %3)
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
   %i.ak = load i32, ptr %i.t, align 8, !tbaa !26  ; 2 uses
   %i.al = sitofp i32 %i.ak to double
   %i.am = add nsw i32 %i.ak, 1
@@ -765,8 +768,8 @@ bb.e:                                             ; preds = %bb.d
   %i.ax = getelementptr inbounds nuw i8, ptr %4, i64 16
   store double +qnan, ptr %i.ax, align 16, !tbaa !30
   call void @_ZN4geos9operation6buffer19OffsetSegmentString5addPtERKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(24) %i.s, ptr noundef nonnull align 8 dereferenceable(24) %4)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d
@@ -788,12 +791,16 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #3
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4geos9operation6buffer22OffsetSegmentGenerator13addLineEndCapERKNS_4geom10CoordinateES6_(ptr noundef nonnull align 8 dereferenceable(484) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %2) local_unnamed_addr #0 align 2 {
 bb.a:
+  %sincos.sin24 = alloca double, align 8          ; 2 uses
+  %sincos.cos25 = alloca double, align 8          ; 2 uses
   %3 = alloca %"class.geos::geom::Coordinate", align 16 ; 5 uses
+  %sincos.sin = alloca double, align 8            ; 2 uses
+  %sincos.cos = alloca double, align 8            ; 2 uses
   %4 = alloca %"class.geos::geom::LineSegment", align 8 ; 5 uses
   %5 = alloca %"class.geos::geom::LineSegment", align 8 ; 5 uses
   %6 = alloca %"class.geos::geom::Coordinate", align 16 ; 5 uses
   %7 = alloca %"class.geos::geom::Coordinate", align 16 ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
   %i.a = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.c = load double, ptr %i.b, align 8, !tbaa !28 ; 3 uses
@@ -823,7 +830,7 @@ bb.a:
   %i.y = getelementptr inbounds nuw i8, ptr %4, i64 32
   %i.z = shufflevector <2 x double> %i.t, <2 x double> <double poison, double +qnan>, <2 x i32> <i32 1, i32 3>
   store <2 x double> %i.z, ptr %i.y, align 8, !tbaa !43
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
   %i.ab = fneg double %i.c
   %i.ac = insertelement <2 x double> poison, double %i.ab, i64 0
@@ -849,7 +856,7 @@ bb.a:
   %i.au = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.av = shufflevector <2 x double> %i.ai, <2 x double> <double poison, double +qnan>, <2 x i32> <i32 1, i32 3>
   store <2 x double> %i.av, ptr %i.au, align 8, !tbaa !43
-  %i.aw = tail call double @atan2(double noundef %i.i, double noundef %i.g) #11 ; 4 uses
+  %i.aw = tail call double @atan2(double noundef %i.i, double noundef %i.g) #12 ; 3 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !46, !nonnull !47, !align !48
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 4
@@ -879,7 +886,7 @@ bb.c:                                             ; preds = %bb.b
   %i.bm = load <1 x double>, ptr %i.b, align 8
   %i.bn = uitofp nneg i32 %i.bk to double
   %i.bo = fdiv double %i.bf, %i.bn
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
   %i.bp = getelementptr inbounds nuw i8, ptr %3, i64 16
   store double +qnan, ptr %i.bp, align 16, !tbaa !30
   %i.bq = shufflevector <1 x double> %i.bm, <1 x double> poison, <2 x i32> zeroinitializer
@@ -890,12 +897,13 @@ bb.c:                                             ; preds = %bb.b
   %i.br = sub nsw i32 0, %.021.us.i
   %i.bs = sitofp i32 %i.br to double
   %i.bt = fmul double %i.bo, %i.bs
-  %i.bu = fadd double %i.bc, %i.bt                ; 2 uses
-  %8 = call double @cos(double noundef %i.bu) #11
-  %9 = call double @sin(double noundef %i.bu) #11
+  %i.bu = fadd double %i.bc, %i.bt
+  call void @sincos(double %i.bu, ptr nonnull %sincos.sin24, ptr nonnull %sincos.cos25)
+  %sin26 = load double, ptr %sincos.sin24, align 8
+  %cos27 = load double, ptr %sincos.cos25, align 8
   %i.bv = load <2 x double>, ptr %2, align 8, !tbaa !43
-  %i.bw = insertelement <2 x double> poison, double %8, i64 0
-  %i.bx = insertelement <2 x double> %i.bw, double %9, i64 1
+  %i.bw = insertelement <2 x double> poison, double %cos27, i64 0
+  %i.bx = insertelement <2 x double> %i.bw, double %sin26, i64 1
   %i.by = fmul <2 x double> %i.bq, %i.bx
   %i.bz = fadd <2 x double> %i.bv, %i.by
   store <2 x double> %i.bz, ptr %3, align 16, !tbaa !43
@@ -905,7 +913,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %exitcond25.not.i, label %.split23.us.i, label %.split.us.i, !llvm.loop !0
 
 .split23.us.i:                                    ; preds = %.split.us.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   br label %_ZN4geos9operation6buffer22OffsetSegmentGenerator17addDirectedFilletERKNS_4geom10CoordinateEddid.exit
 
 _ZN4geos9operation6buffer22OffsetSegmentGenerator17addDirectedFilletERKNS_4geom10CoordinateEddid.exit: ; preds = %bb.b, %.split23.us.i
@@ -922,19 +930,20 @@ bb.e:                                             ; preds = %bb.a
   %i.cc = shufflevector <2 x double> %i.ah, <2 x double> %i.ai, <2 x i32> <i32 0, i32 3>
   %i.cd = shufflevector <2 x double> %i.s, <2 x double> %i.t, <2 x i32> <i32 0, i32 3>
   %i.ce = tail call double @llvm.fabs.f64(double %i.c)
-  %10 = tail call double @cos(double noundef %i.aw) #11
-  %11 = tail call double @sin(double noundef %i.aw) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #11
+  call void @sincos(double %i.aw, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8
+  %cos = load double, ptr %sincos.cos, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
   %i.cf = insertelement <2 x double> poison, double %i.ce, i64 0
   %i.cg = shufflevector <2 x double> %i.cf, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ch = insertelement <2 x double> poison, double %10, i64 0
-  %i.ci = insertelement <2 x double> %i.ch, double %11, i64 1
+  %i.ch = insertelement <2 x double> poison, double %cos, i64 0
+  %i.ci = insertelement <2 x double> %i.ch, double %sin, i64 1
   %i.cj = fmul <2 x double> %i.cg, %i.ci          ; 2 uses
   %i.ck = fadd <2 x double> %i.cd, %i.cj
   store <2 x double> %i.ck, ptr %6, align 16, !tbaa !43
   %i.cl = getelementptr inbounds nuw i8, ptr %6, i64 16
   store double +qnan, ptr %i.cl, align 16, !tbaa !30
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #12
   %i.cm = fadd <2 x double> %i.cc, %i.cj
   store <2 x double> %i.cm, ptr %7, align 16, !tbaa !43
   %i.cn = getelementptr inbounds nuw i8, ptr %7, i64 16
@@ -942,13 +951,13 @@ bb.e:                                             ; preds = %bb.a
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   call void @_ZN4geos9operation6buffer19OffsetSegmentString5addPtERKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(24) %i.co, ptr noundef nonnull align 8 dereferenceable(24) %6)
   call void @_ZN4geos9operation6buffer19OffsetSegmentString5addPtERKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(24) %i.co, ptr noundef nonnull align 8 dereferenceable(24) %7)
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d, %_ZN4geos9operation6buffer22OffsetSegmentGenerator17addDirectedFilletERKNS_4geom10CoordinateEddid.exit, %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   ret void
 }
 
@@ -959,7 +968,7 @@ declare double @atan2(double noundef, double noundef) local_unnamed_addr #1
 define linkonce_odr void @_ZN4geos9operation6buffer19OffsetSegmentString5addPtERKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1) local_unnamed_addr #0 comdat align 2 {
 bb.a:
   %2 = alloca %"class.geos::geom::Coordinate", align 16 ; 8 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false), !tbaa.struct !44
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !41   ; 3 uses
@@ -1016,13 +1025,17 @@ _ZNK4geos9operation6buffer19OffsetSegmentString11isRedundantERKNS_4geom10Coordin
   br label %bb.c
 
 bb.c:                                             ; preds = %_ZNK4geos9operation6buffer19OffsetSegmentString11isRedundantERKNS_4geom10CoordinateE.exit, %_ZNK4geos9operation6buffer19OffsetSegmentString11isRedundantERKNS_4geom10CoordinateE.exit.thread
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
   ret void
 }
 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4geos9operation6buffer22OffsetSegmentGenerator17addDirectedFilletERKNS_4geom10CoordinateEddid(ptr noundef nonnull align 8 dereferenceable(484) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, double noundef %2, double noundef %3, i32 noundef %4, double noundef %5) local_unnamed_addr #0 align 2 {
 bb.a:
+  %sincos.sin28 = alloca double, align 8          ; 2 uses
+  %sincos.cos29 = alloca double, align 8          ; 2 uses
+  %sincos.sin = alloca double, align 8            ; 2 uses
+  %sincos.cos = alloca double, align 8            ; 2 uses
   %6 = alloca %"class.geos::geom::Coordinate", align 16 ; 8 uses
   %i.a = fsub double %2, %3
   %i.b = tail call double @llvm.fabs.f64(double %i.a) ; 2 uses
@@ -1038,7 +1051,7 @@ bb.b:                                             ; preds = %bb.a
   %i.i = icmp eq i32 %4, -1
   %i.j = uitofp nneg i32 %i.g to double
   %i.k = fdiv double %i.b, %i.j                   ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
   %i.l = getelementptr inbounds nuw i8, ptr %6, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %6, i8 0, i64 16, i1 false)
   store double +qnan, ptr %i.l, align 16, !tbaa !30
@@ -1060,12 +1073,13 @@ bb.b:                                             ; preds = %bb.a
   %i.r = sub nsw i32 0, %.021.us
   %i.s = sitofp i32 %i.r to double
   %i.t = fmul double %i.k, %i.s
-  %i.u = fadd double %2, %i.t                     ; 2 uses
-  %7 = call double @cos(double noundef %i.u) #11
-  %8 = call double @sin(double noundef %i.u) #11
+  %i.u = fadd double %2, %i.t
+  call void @sincos(double %i.u, ptr nonnull %sincos.sin28, ptr nonnull %sincos.cos29)
+  %sin30 = load double, ptr %sincos.sin28, align 8
+  %cos31 = load double, ptr %sincos.cos29, align 8
   %i.v = load <2 x double>, ptr %1, align 8, !tbaa !43
-  %i.w = insertelement <2 x double> poison, double %7, i64 0
-  %i.x = insertelement <2 x double> %i.w, double %8, i64 1
+  %i.w = insertelement <2 x double> poison, double %cos31, i64 0
+  %i.x = insertelement <2 x double> %i.w, double %sin30, i64 1
   %i.y = fmul <2 x double> %i.q, %i.x
   %i.z = fadd <2 x double> %i.v, %i.y
   store <2 x double> %i.z, ptr %6, align 16, !tbaa !43
@@ -1075,19 +1089,20 @@ bb.b:                                             ; preds = %bb.a
   br i1 %exitcond25.not, label %.split23.us, label %.split.us, !llvm.loop !0
 
 .split23.us:                                      ; preds = %.split, %.split.us
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   br label %bb.c
 
 .split:                                           ; preds = %.split.preheader, %.split
   %.021 = phi i32 [ %i.aj, %.split ], [ 0, %.split.preheader ] ; 2 uses
   %i.ab = uitofp nneg i32 %.021 to double
   %i.ac = fmul double %i.k, %i.ab
-  %i.ad = fadd double %2, %i.ac                   ; 2 uses
-  %9 = call double @cos(double noundef %i.ad) #11
-  %10 = call double @sin(double noundef %i.ad) #11
+  %i.ad = fadd double %2, %i.ac
+  call void @sincos(double %i.ad, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8
+  %cos = load double, ptr %sincos.cos, align 8
   %i.ae = load <2 x double>, ptr %1, align 8, !tbaa !43
-  %i.af = insertelement <2 x double> poison, double %9, i64 0
-  %i.ag = insertelement <2 x double> %i.af, double %10, i64 1
+  %i.af = insertelement <2 x double> poison, double %cos, i64 0
+  %i.ag = insertelement <2 x double> %i.af, double %sin, i64 1
   %i.ah = fmul <2 x double> %i.o, %i.ag
   %i.ai = fadd <2 x double> %i.ae, %i.ah
   store <2 x double> %i.ai, ptr %6, align 16, !tbaa !43
@@ -1117,13 +1132,13 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.g = load double, ptr %i.f, align 8, !tbaa !50 ; 2 uses
   %i.h = fsub double %i.e, %i.g
-  %i.i = tail call double @atan2(double noundef %i.h, double noundef %i.c) #11 ; 4 uses
+  %i.i = tail call double @atan2(double noundef %i.h, double noundef %i.c) #12 ; 4 uses
   %i.j = load double, ptr %3, align 8, !tbaa !49
   %i.k = fsub double %i.j, %i.b
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.m = load double, ptr %i.l, align 8, !tbaa !50
   %i.n = fsub double %i.m, %i.g
-  %i.o = tail call double @atan2(double noundef %i.n, double noundef %i.k) #11 ; 3 uses
+  %i.o = tail call double @atan2(double noundef %i.n, double noundef %i.k) #12 ; 3 uses
   %i.p = icmp eq i32 %4, -1                       ; 2 uses
   %i.q = fcmp ult double %i.i, %i.o
   %i.r = fcmp ugt double %i.i, %i.o
@@ -1141,9 +1156,11 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4geos9operation6buffer22OffsetSegmentGenerator12createCircleERKNS_4geom10CoordinateEd(ptr noundef nonnull align 8 dereferenceable(484) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, double noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
+  %sincos.sin = alloca double, align 8            ; 2 uses
+  %sincos.cos = alloca double, align 8            ; 2 uses
   %3 = alloca %"class.geos::geom::Coordinate", align 16 ; 5 uses
   %4 = alloca %"class.geos::geom::Coordinate", align 16 ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
   %i.a = load <2 x double>, ptr %1, align 8, !tbaa !43
   %i.b = insertelement <2 x double> <double poison, double -0.000000e+00>, double %2, i64 0
   %i.c = fadd <2 x double> %i.b, %i.a
@@ -1163,7 +1180,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.l = uitofp nneg i32 %i.j to double
   %i.m = fdiv nnan double f0x401921FB54442D18, %i.l
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 16
   store double +qnan, ptr %i.n, align 16, !tbaa !30
   %i.o = insertelement <2 x double> poison, double %2, i64 0
@@ -1175,12 +1192,13 @@ bb.b:                                             ; preds = %bb.a
   %i.q = sub nsw i32 0, %.021.us.i
   %i.r = sitofp i32 %i.q to double
   %i.s = fmul double %i.m, %i.r
-  %i.t = fadd double %i.s, 0.000000e+00           ; 2 uses
-  %5 = call double @cos(double noundef %i.t) #11
-  %6 = call double @sin(double noundef %i.t) #11
+  %i.t = fadd double %i.s, 0.000000e+00
+  call void @sincos(double %i.t, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8
+  %cos = load double, ptr %sincos.cos, align 8
   %i.u = load <2 x double>, ptr %1, align 8, !tbaa !43
-  %i.v = insertelement <2 x double> poison, double %5, i64 0
-  %i.w = insertelement <2 x double> %i.v, double %6, i64 1
+  %i.v = insertelement <2 x double> poison, double %cos, i64 0
+  %i.w = insertelement <2 x double> %i.v, double %sin, i64 1
   %i.x = fmul <2 x double> %i.p, %i.w
   %i.y = fadd <2 x double> %i.u, %i.x
   store <2 x double> %i.y, ptr %3, align 16, !tbaa !43
@@ -1190,7 +1208,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %exitcond25.not.i, label %.split23.us.i, label %.split.us.i, !llvm.loop !0
 
 .split23.us.i:                                    ; preds = %.split.us.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   br label %_ZN4geos9operation6buffer22OffsetSegmentGenerator17addDirectedFilletERKNS_4geom10CoordinateEddid.exit
 
 _ZN4geos9operation6buffer22OffsetSegmentGenerator17addDirectedFilletERKNS_4geom10CoordinateEddid.exit: ; preds = %bb.a, %.split23.us.i
@@ -1232,7 +1250,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN4geos9operation6buffer19OffsetSegmentString9closeRingEv.exit
 
 _ZN4geos9operation6buffer19OffsetSegmentString9closeRingEv.exit: ; preds = %_ZN4geos9operation6buffer22OffsetSegmentGenerator17addDirectedFilletERKNS_4geom10CoordinateEddid.exit, %bb.c, %bb.d
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   ret void
 }
 
@@ -1244,7 +1262,7 @@ bb.a:
   %5 = alloca %"class.geos::geom::Coordinate", align 16 ; 5 uses
   %6 = alloca %"class.geos::geom::Coordinate", align 16 ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 8 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load <2 x double>, ptr %1, align 8, !tbaa !43
   %i.d = insertelement <2 x double> poison, double %2, i64 0
@@ -1254,8 +1272,8 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 16
   store double +qnan, ptr %i.g, align 16, !tbaa !30
   call void @_ZN4geos9operation6buffer19OffsetSegmentString5addPtERKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %3)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
   %i.h = load double, ptr %1, align 8, !tbaa !49
   %i.i = fadd double %2, %i.h
   %i.j = load double, ptr %i.b, align 8, !tbaa !50
@@ -1266,16 +1284,16 @@ bb.a:
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 16
   store double +qnan, ptr %i.m, align 8, !tbaa !30
   call void @_ZN4geos9operation6buffer19OffsetSegmentString5addPtERKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %4)
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
   %i.n = load <2 x double>, ptr %1, align 8, !tbaa !43
   %i.o = fsub <2 x double> %i.n, %i.e
   store <2 x double> %i.o, ptr %5, align 16, !tbaa !43
   %i.p = getelementptr inbounds nuw i8, ptr %5, i64 16
   store double +qnan, ptr %i.p, align 16, !tbaa !30
   call void @_ZN4geos9operation6buffer19OffsetSegmentString5addPtERKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %5)
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
   %i.q = load <2 x double>, ptr %1, align 8, !tbaa !43 ; 2 uses
   %i.r = fsub <2 x double> %i.q, %i.e
   %i.s = fadd <2 x double> %i.q, %i.e
@@ -1284,7 +1302,7 @@ bb.a:
   %i.u = getelementptr inbounds nuw i8, ptr %6, i64 16
   store double +qnan, ptr %i.u, align 16, !tbaa !30
   call void @_ZN4geos9operation6buffer19OffsetSegmentString5addPtERKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %6)
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   %i.v = load ptr, ptr %i.a, align 8, !tbaa !27   ; 2 uses
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !54
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 48
@@ -1332,7 +1350,7 @@ declare void @_ZN4geos9algorithm15LineIntersector19computeIntersectionERKNS_4geo
 define void @_ZN4geos9operation6buffer22OffsetSegmentGenerator12addMitreJoinERKNS_4geom10CoordinateERKNS3_11LineSegmentES9_d(ptr noundef nonnull align 8 dereferenceable(484) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(48) %2, ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(48) %3, double noundef %4) local_unnamed_addr #0 align 2 {
 bb.a:
   %5 = alloca %"class.geos::geom::Coordinate", align 16 ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 376
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 400
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 424
@@ -1393,7 +1411,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %.critedge
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   ret void
 }
 
@@ -1412,6 +1430,8 @@ declare void @_ZN4geos9algorithm12Intersection12intersectionERKNS_4geom10Coordin
 ; Function Attrs: mustprogress uwtable
 define void @_ZN4geos9operation6buffer22OffsetSegmentGenerator19addLimitedMitreJoinERKNS_4geom11LineSegmentES6_dd(ptr noundef nonnull align 8 dereferenceable(484) %0, ptr nofree nonnull readnone align 8 captures(none) %1, ptr nofree nonnull readnone align 8 captures(none) %2, double noundef %3, double noundef %4) local_unnamed_addr #0 align 2 {
 bb.a:
+  %sincos.sin = alloca double, align 8            ; 2 uses
+  %sincos.cos = alloca double, align 8            ; 2 uses
   %5 = alloca %"class.geos::geom::LineSegment", align 8 ; 7 uses
   %6 = alloca %"class.geos::geom::Coordinate", align 8 ; 7 uses
   %7 = alloca %"class.geos::geom::Coordinate", align 8 ; 7 uses
@@ -1424,33 +1444,34 @@ bb.a:
   %i.g = fadd double %i.c, %i.f
   %i.h = tail call noundef double @_ZN4geos9algorithm5Angle9normalizeEd(double noundef %i.g)
   %i.i = fadd double %i.h, f0x400921FB54442D18
-  %i.j = tail call noundef double @_ZN4geos9algorithm5Angle9normalizeEd(double noundef %i.i) ; 2 uses
+  %i.j = tail call noundef double @_ZN4geos9algorithm5Angle9normalizeEd(double noundef %i.i)
   %i.k = fmul double %3, %4                       ; 2 uses
-  %i.l = tail call double @sin(double noundef %i.f) #11
+  %i.l = tail call double @sin(double noundef %i.f) #12
   %i.m = tail call double @llvm.fabs.f64(double %i.l)
   %i.n = fmul double %i.k, %i.m
   %i.o = fsub double %3, %i.n                     ; 2 uses
-  %8 = tail call double @cos(double noundef %i.j) #11
-  %9 = tail call double @sin(double noundef %i.j) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #11
+  call void @sincos(double %i.j, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8
+  %cos = load double, ptr %sincos.cos, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
   %i.p = getelementptr inbounds nuw i8, ptr %5, i64 24
   %i.q = load <2 x double>, ptr %i.b, align 8, !tbaa !43
   %i.r = insertelement <2 x double> poison, double %i.k, i64 0
   %i.s = shufflevector <2 x double> %i.r, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.t = insertelement <2 x double> poison, double %8, i64 0
-  %i.u = insertelement <2 x double> %i.t, double %9, i64 1
+  %i.t = insertelement <2 x double> poison, double %cos, i64 0
+  %i.u = insertelement <2 x double> %i.t, double %sin, i64 1
   %i.v = fmul <2 x double> %i.s, %i.u
   %i.w = fadd <2 x double> %i.q, %i.v
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %5, ptr noundef nonnull align 8 dereferenceable(24) %i.b, i64 24, i1 false), !tbaa.struct !44
   store <2 x double> %i.w, ptr %i.p, align 8, !tbaa !43
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 40
   store double +qnan, ptr %.sroa.5.0..sroa_idx, align 8, !tbaa !43
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
   %i.x = getelementptr inbounds nuw i8, ptr %6, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %6, i8 0, i64 16, i1 false)
   store double +qnan, ptr %i.x, align 8, !tbaa !30
   call void @_ZNK4geos4geom11LineSegment16pointAlongOffsetEddRNS0_10CoordinateE(ptr noundef nonnull align 8 dereferenceable(48) %5, double noundef 1.000000e+00, double noundef %i.o, ptr noundef nonnull align 8 dereferenceable(24) %6)
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #12
   %i.y = getelementptr inbounds nuw i8, ptr %7, i64 16
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %7, i8 0, i64 16, i1 false)
   store double +qnan, ptr %i.y, align 8, !tbaa !30
@@ -1464,9 +1485,9 @@ bb.a:
   %.27 = select i1 %i.ac, ptr %7, ptr %6
   call void @_ZN4geos9operation6buffer19OffsetSegmentString5addPtERKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(24) %i.ad, ptr noundef nonnull align 8 dereferenceable(24) %.)
   call void @_ZN4geos9operation6buffer19OffsetSegmentString5addPtERKNS_4geom10CoordinateE(ptr noundef nonnull align 8 dereferenceable(24) %i.ad, ptr noundef nonnull align 8 dereferenceable(24) %.27)
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
   ret void
 }
 
@@ -1490,8 +1511,11 @@ declare void @_ZN4geos4geom23CoordinateArraySequence3addERKNS0_10CoordinateEb(pt
 
 declare noundef double @_ZNK4geos4geom14PrecisionModel11makePreciseEd(ptr noundef nonnull align 8 dereferenceable(16), double noundef) local_unnamed_addr #4
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #8
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #8
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.sqrt.f64(double) #5
@@ -1507,10 +1531,11 @@ attributes #4 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #6 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #7 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #8 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #9 = { builtin allocsize(0) }
-attributes #10 = { builtin nounwind }
-attributes #11 = { nounwind }
+attributes #8 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+bmi2,+cmov,+crc32,+cx8,+f16c,+fma,+fxsr,+lzcnt,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #9 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #10 = { builtin allocsize(0) }
+attributes #11 = { builtin nounwind }
+attributes #12 = { nounwind }
 
 !llvm.module.flags = !{!5, !6}
 !llvm.ident = !{!7}

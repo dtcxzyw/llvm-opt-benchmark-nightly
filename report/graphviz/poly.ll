@@ -1,8 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/graphviz/original/poly?download=true
 inline.NumInlined: 35
 inline.NumDeleted: 12
-loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0_@makeAddPoly:bb.a
   %i.cc = load ptr, ptr @stderr, align 8, !tbaa !38
   %i.cd = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.cc, ptr noundef nonnull @.str.4, i64 noundef %i.ag, i64 noundef 16) #17 ; 0 uses
@@ -204,6 +202,8 @@ declare double @hypot(double noundef, double noundef) local_unnamed_addr #5
 ; Function Attrs: nounwind uwtable
 define internal fastcc noalias nonnull ptr @genRound(ptr noundef %0, ptr nofree noundef nonnull writeonly captures(none) %1, double noundef %2, double noundef %3) unnamed_addr #2 {
 bb.a:
+  %sincos.sin = alloca double, align 8            ; 2 uses
+  %sincos.cos = alloca double, align 8            ; 2 uses
   %i.a = tail call ptr @agget(ptr noundef %0, ptr noundef nonnull @.str.6) #15 ; 2 uses
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %.thread28.thread, label %.thread28
@@ -229,23 +229,17 @@ gv_calloc.exit.preheader:                         ; preds = %.thread28
   br i1 %.not32, label %gv_calloc.exit._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.thread28.thread, %gv_calloc.exit.preheader
-  %i.j = phi i64 [ %spec.select, %gv_calloc.exit.preheader ], [ 20, %.thread28.thread ] ; 7 uses
-  %i.k = phi ptr [ %i.f, %gv_calloc.exit.preheader ], [ %i.h, %.thread28.thread ] ; 5 uses
+  %i.j = phi i64 [ %spec.select, %gv_calloc.exit.preheader ], [ 20, %.thread28.thread ] ; 3 uses
+  %i.k = phi ptr [ %i.f, %gv_calloc.exit.preheader ], [ %i.h, %.thread28.thread ] ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !19
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 48
-  %i.o = uitofp nneg i64 %i.j to double           ; 3 uses
+  %i.o = uitofp nneg i64 %i.j to double
   %i.p = load <2 x double>, ptr %i.n, align 8, !tbaa !52
   %i.q = fmul <2 x double> %i.p, splat (double 5.000000e-01)
   %i.r = insertelement <2 x double> poison, double %2, i64 0
   %i.s = insertelement <2 x double> %i.r, double %3, i64 1
-  %i.t = fadd <2 x double> %i.s, %i.q             ; 3 uses
-  %xtraiter = and i64 %i.j, 1
-  %4 = icmp eq i64 %i.j, 1
-  br i1 %4, label %gv_calloc.exit.epil.preheader, label %.lr.ph.new
-
-.lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %i.j, -2
+  %i.t = fadd <2 x double> %i.s, %i.q
   br label %gv_calloc.exit
 
 bb.b:                                             ; preds = %.thread28.thread, %.thread28
@@ -256,63 +250,29 @@ bb.b:                                             ; preds = %.thread28.thread, %
   tail call fastcc void @graphviz_exit() #18
   unreachable
 
-gv_calloc.exit._crit_edge.loopexit.unr-lcssa:     ; preds = %gv_calloc.exit
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %gv_calloc.exit._crit_edge, label %gv_calloc.exit.epil.preheader
+gv_calloc.exit._crit_edge:                        ; preds = %gv_calloc.exit, %gv_calloc.exit.preheader
+  %4 = phi i64 [ 0, %gv_calloc.exit.preheader ], [ %i.j, %gv_calloc.exit ]
+  %5 = phi ptr [ %i.f, %gv_calloc.exit.preheader ], [ %i.k, %gv_calloc.exit ]
+  store i64 %4, ptr %1, align 8, !tbaa !35
+  ret ptr %5
 
-gv_calloc.exit.epil.preheader:                    ; preds = %gv_calloc.exit._crit_edge.loopexit.unr-lcssa, %.lr.ph
-  %.031.epil.init = phi i64 [ 0, %.lr.ph ], [ %30, %gv_calloc.exit._crit_edge.loopexit.unr-lcssa ] ; 2 uses
-  %lcmp.mod36 = trunc i64 %i.j to i1
-  tail call void @llvm.assume(i1 %lcmp.mod36)
-  %5 = uitofp nneg i64 %.031.epil.init to double
-  %6 = fdiv nnan double %5, %i.o
-  %7 = fmul nnan double %6, f0x400921FB54442D18
-  %8 = fmul nnan double %7, 2.000000e+00          ; 2 uses
-  %9 = tail call double @cos(double noundef %8) #15
-  %10 = getelementptr inbounds nuw [16 x i8], ptr %i.k, i64 %.031.epil.init
-  %11 = tail call double @sin(double noundef %8) #15
-  %12 = insertelement <2 x double> poison, double %9, i64 0
-  %13 = insertelement <2 x double> %12, double %11, i64 1
-  %14 = fmul <2 x double> %13, %i.t
-  store <2 x double> %14, ptr %10, align 8, !tbaa !52
-  br label %gv_calloc.exit._crit_edge
-
-gv_calloc.exit._crit_edge:                        ; preds = %gv_calloc.exit.epil.preheader, %gv_calloc.exit._crit_edge.loopexit.unr-lcssa, %gv_calloc.exit.preheader
-  %15 = phi i64 [ 0, %gv_calloc.exit.preheader ], [ %i.j, %gv_calloc.exit._crit_edge.loopexit.unr-lcssa ], [ %i.j, %gv_calloc.exit.epil.preheader ]
-  %16 = phi ptr [ %i.f, %gv_calloc.exit.preheader ], [ %i.k, %gv_calloc.exit._crit_edge.loopexit.unr-lcssa ], [ %i.k, %gv_calloc.exit.epil.preheader ]
-  store i64 %15, ptr %1, align 8, !tbaa !35
-  ret ptr %16
-
-gv_calloc.exit:                                   ; preds = %gv_calloc.exit, %.lr.ph.new
-  %.031 = phi i64 [ 0, %.lr.ph.new ], [ %30, %gv_calloc.exit ] ; 4 uses
-  %niter = phi i64 [ 0, %.lr.ph.new ], [ %niter.next.1, %gv_calloc.exit ]
-  %i.y = uitofp nneg i64 %.031 to double
+gv_calloc.exit:                                   ; preds = %.lr.ph, %gv_calloc.exit
+  %niter = phi i64 [ 0, %.lr.ph ], [ %niter.next.1, %gv_calloc.exit ] ; 3 uses
+  %i.y = uitofp nneg i64 %niter to double
   %i.z = fdiv double %i.y, %i.o
   %i.aa = fmul double %i.z, f0x400921FB54442D18
-  %i.ab = fmul double %i.aa, 2.000000e+00         ; 2 uses
-  %17 = tail call double @cos(double noundef %i.ab) #15
-  %18 = getelementptr inbounds nuw [16 x i8], ptr %i.k, i64 %.031
-  %19 = tail call double @sin(double noundef %i.ab) #15
-  %20 = insertelement <2 x double> poison, double %17, i64 0
-  %21 = insertelement <2 x double> %20, double %19, i64 1
-  %22 = fmul <2 x double> %21, %i.t
-  store <2 x double> %22, ptr %18, align 8, !tbaa !52
-  %23 = or disjoint i64 %.031, 1                  ; 2 uses
-  %24 = uitofp nneg i64 %23 to double
-  %25 = fdiv nnan double %24, %i.o
-  %26 = fmul nnan double %25, f0x400921FB54442D18
-  %27 = fmul nnan double %26, 2.000000e+00        ; 2 uses
-  %28 = tail call double @cos(double noundef %27) #15
-  %i.ac = getelementptr inbounds nuw [16 x i8], ptr %i.k, i64 %23
-  %29 = tail call double @sin(double noundef %27) #15
-  %i.ad = insertelement <2 x double> poison, double %28, i64 0
-  %i.ae = insertelement <2 x double> %i.ad, double %29, i64 1
+  %i.ab = fmul double %i.aa, 2.000000e+00
+  call void @sincos(double %i.ab, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8
+  %cos = load double, ptr %sincos.cos, align 8
+  %i.ac = getelementptr inbounds nuw [16 x i8], ptr %i.k, i64 %niter
+  %i.ad = insertelement <2 x double> poison, double %cos, i64 0
+  %i.ae = insertelement <2 x double> %i.ad, double %sin, i64 1
   %i.af = fmul <2 x double> %i.ae, %i.t
   store <2 x double> %i.af, ptr %i.ac, align 8, !tbaa !52
-  %30 = add nuw nsw i64 %.031, 2                  ; 2 uses
-  %niter.next.1 = add i64 %niter, 2               ; 2 uses
-  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %gv_calloc.exit._crit_edge.loopexit.unr-lcssa, label %gv_calloc.exit, !llvm.loop !61
+  %niter.next.1 = add nuw nsw i64 %niter, 1       ; 2 uses
+  %niter.ncmp.1 = icmp eq i64 %niter.next.1, %i.j
+  br i1 %niter.ncmp.1, label %gv_calloc.exit._crit_edge, label %gv_calloc.exit, !llvm.loop !61
 }
 
 declare void @agerrorf(ptr noundef, ...) local_unnamed_addr #4
@@ -715,12 +675,6 @@ declare i32 @strcmp(ptr noundef captures(none), ptr noundef captures(none)) loca
 
 declare ptr @agget(ptr noundef, ptr noundef) local_unnamed_addr #4
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #5
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #5
-
 ; Function Attrs: mustprogress nocallback nofree nounwind willreturn
 declare i64 @strtol(ptr noundef readonly, ptr noundef captures(none), i32 noundef) local_unnamed_addr #13
 
@@ -738,8 +692,8 @@ declare <2 x double> @llvm.minnum.v2f64(<2 x double>, <2 x double>) #6
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.maxnum.v2f64(<2 x double>, <2 x double>) #6
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #14
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) #14
 
 attributes #0 = { mustprogress nounwind willreturn memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -755,7 +709,7 @@ attributes #10 = { mustprogress nofree nounwind willreturn allockind("alloc,zero
 attributes #11 = { nofree noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #12 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #13 = { mustprogress nocallback nofree nounwind willreturn "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #14 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #14 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #15 = { nounwind }
 attributes #16 = { nounwind allocsize(0,1) }
 attributes #17 = { cold nounwind }

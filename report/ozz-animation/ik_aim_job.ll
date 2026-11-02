@@ -31,6 +31,8 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local noundef zeroext i1 @_ZNK3ozz9animation8IKAimJob3RunEv(ptr nofree noundef nonnull readonly align 16 captures(none) dereferenceable(112) %0) local_unnamed_addr #1 align 2 {
 bb.a:
+  %sincos.sin = alloca float, align 4             ; 2 uses
+  %sincos.cos = alloca float, align 4             ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !19   ; 5 uses
   %i.c = icmp ne ptr %i.b, null
@@ -377,13 +379,14 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   br i1 %i.jl, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  %i.jm = fmul float %i.jk, 5.000000e-01          ; 2 uses
-  %1 = tail call noundef float @sinf(float noundef %i.jm) #5
-  %2 = insertelement <4 x float> poison, float %1, i64 0
-  %3 = tail call noundef float @cosf(float noundef %i.jm) #5
-  %i.jn = shufflevector <4 x float> %2, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.jm = fmul float %i.jk, 5.000000e-01
+  call void @sincosf(float %i.jm, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load float, ptr %sincos.sin, align 4
+  %cos = load float, ptr %sincos.cos, align 4
+  %1 = insertelement <4 x float> poison, float %sin, i64 0
+  %i.jn = shufflevector <4 x float> %1, <4 x float> poison, <4 x i32> zeroinitializer
   %i.jo = fmul <4 x float> %.044, %i.jn           ; 2 uses
-  %i.jp = insertelement <4 x float> %i.jo, float %3, i64 0 ; 2 uses
+  %i.jp = insertelement <4 x float> %i.jo, float %cos, i64 0 ; 2 uses
   %i.jq = shufflevector <4 x float> %i.jo, <4 x float> %i.jp, <4 x i32> <i32 0, i32 1, i32 6, i32 4> ; 3 uses
   %i.jr = shufflevector <4 x float> %i.jp, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 2>
   %i.js = shufflevector <4 x float> %storemerge, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 2>
@@ -432,13 +435,13 @@ bb.r:                                             ; preds = %bb.p, %bb.q
 bb.s:                                             ; preds = %bb.r
   %i.la = insertelement <4 x float> poison, float %i.ky, i64 0
   %i.lb = shufflevector <4 x float> %i.la, <4 x float> poison, <4 x i32> zeroinitializer
-  %4 = tail call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> zeroinitializer, <4 x float> %i.lb)
+  %2 = call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> zeroinitializer, <4 x float> %i.lb)
   %i.lc = fadd <4 x float> %.sroa.052.0, <float -0.000000e+00, float -0.000000e+00, float -0.000000e+00, float -1.000000e+00>
-  %i.ld = fmul <4 x float> %i.lc, %4
+  %i.ld = fmul <4 x float> %i.lc, %2
   %i.le = fadd <4 x float> %i.ld, <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00> ; 3 uses
-  %5 = tail call <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.le, <4 x float> %i.le, i8 -1)
-  %6 = tail call noundef <4 x float> @llvm.x86.sse.rsqrt.ss(<4 x float> %5)
-  %i.lf = shufflevector <4 x float> %6, <4 x float> poison, <4 x i32> zeroinitializer
+  %3 = call <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.le, <4 x float> %i.le, i8 -1)
+  %4 = call noundef <4 x float> @llvm.x86.sse.rsqrt.ss(<4 x float> %3)
+  %i.lf = shufflevector <4 x float> %4, <4 x float> poison, <4 x i32> zeroinitializer
   %i.lg = fmul <4 x float> %i.le, %i.lf
   store <4 x float> %i.lg, ptr %i.e, align 16, !tbaa !10
   br label %bb.u
@@ -488,18 +491,14 @@ declare <4 x float> @llvm.x86.sse.min.ps(<4 x float>, <4 x float>) #2
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(none)
 declare <4 x float> @llvm.x86.sse.rsqrt.ss(<4 x float>) #2
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sinf(float noundef) local_unnamed_addr #4
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @cosf(float noundef) local_unnamed_addr #4
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincosf(float noundef, ptr, ptr) local_unnamed_addr #4
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(none) }
 attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #5 = { nounwind }
+attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

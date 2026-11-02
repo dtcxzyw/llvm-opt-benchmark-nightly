@@ -35,7 +35,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %bb.c, label %bb.d, !prof !13
 
 bb.c:                                             ; preds = %bb.b
-  %i.n = tail call noundef float @_ZNK9Imath_3_24Vec3IfE10lengthTinyEv(ptr noundef nonnull align 4 dereferenceable(12) %1) #8
+  %i.n = tail call noundef float @_ZNK9Imath_3_24Vec3IfE10lengthTinyEv(ptr noundef nonnull align 4 dereferenceable(12) %1) #9
   %.pre = load float, ptr %i.f, align 4, !tbaa !12
   br label %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit
 
@@ -47,7 +47,7 @@ _ZNK9Imath_3_24Vec3IfE6lengthEv.exit:             ; preds = %bb.c, %bb.d
   %i.o = phi float [ %.pre, %bb.c ], [ %i.g, %bb.d ] ; 2 uses
   %.0.i = phi float [ %i.n, %bb.c ], [ %sqrt.i, %bb.d ]
   %i.p = fdiv float %sqrt, %.0.i
-  %i.q = tail call noundef float @acosf(float noundef %i.p) #8
+  %i.q = tail call noundef float @acosf(float noundef %i.p) #9
   %i.r = fcmp ogt float %i.o, 0.000000e+00
   %i.s = fcmp olt float %i.o, 0.000000e+00
   %i.t = sitofp i1 %i.s to float
@@ -59,7 +59,7 @@ bb.e:                                             ; preds = %bb.a
   br i1 %i.m, label %bb.f, label %bb.g, !prof !13
 
 bb.f:                                             ; preds = %bb.e
-  %i.w = tail call noundef float @_ZNK9Imath_3_24Vec3IfE10lengthTinyEv(ptr noundef nonnull align 4 dereferenceable(12) %1) #8
+  %i.w = tail call noundef float @_ZNK9Imath_3_24Vec3IfE10lengthTinyEv(ptr noundef nonnull align 4 dereferenceable(12) %1) #9
   br label %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit19
 
 bb.g:                                             ; preds = %bb.e
@@ -69,7 +69,7 @@ bb.g:                                             ; preds = %bb.e
 _ZNK9Imath_3_24Vec3IfE6lengthEv.exit19:           ; preds = %bb.f, %bb.g
   %.0.i18 = phi float [ %i.w, %bb.f ], [ %sqrt.i17, %bb.g ]
   %i.x = fdiv float %i.g, %.0.i18
-  %i.y = tail call noundef float @asinf(float noundef %i.x) #8
+  %i.y = tail call noundef float @asinf(float noundef %i.x) #9
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit19, %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit
@@ -82,7 +82,7 @@ bb.h:                                             ; preds = %_ZNK9Imath_3_24Vec3
   br i1 %or.cond, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ad = tail call noundef float @atan2f(float noundef %.pre20, float noundef %i.aa) #8
+  %i.ad = tail call noundef float @atan2f(float noundef %.pre20, float noundef %i.aa) #9
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.h, %bb.i
@@ -186,7 +186,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %bb.c, label %bb.d, !prof !13
 
 bb.c:                                             ; preds = %bb.b
-  %i.n = tail call noundef float @_ZNK9Imath_3_24Vec3IfE10lengthTinyEv(ptr noundef nonnull align 4 dereferenceable(12) %2) #8, !noalias !29
+  %i.n = tail call noundef float @_ZNK9Imath_3_24Vec3IfE10lengthTinyEv(ptr noundef nonnull align 4 dereferenceable(12) %2) #9, !noalias !29
   %.pre.i = load float, ptr %i.f, align 4, !tbaa !12, !noalias !29
   br label %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i
 
@@ -198,7 +198,7 @@ _ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i:           ; preds = %bb.d, %bb.c
   %i.o = phi float [ %.pre.i, %bb.c ], [ %i.g, %bb.d ] ; 2 uses
   %.0.i.i = phi float [ %i.n, %bb.c ], [ %sqrt.i.i, %bb.d ]
   %i.p = fdiv float %sqrt.i, %.0.i.i
-  %i.q = tail call noundef float @acosf(float noundef %i.p) #8, !noalias !29
+  %i.q = tail call noundef float @acosf(float noundef %i.p) #9, !noalias !29
   %i.r = fcmp ogt float %i.o, 0.000000e+00
   %i.s = fcmp olt float %i.o, 0.000000e+00
   %i.t = sitofp i1 %i.s to float
@@ -210,7 +210,7 @@ bb.e:                                             ; preds = %bb.a
   br i1 %i.m, label %bb.f, label %bb.g, !prof !13
 
 bb.f:                                             ; preds = %bb.e
-  %i.w = tail call noundef float @_ZNK9Imath_3_24Vec3IfE10lengthTinyEv(ptr noundef nonnull align 4 dereferenceable(12) %2) #8, !noalias !29
+  %i.w = tail call noundef float @_ZNK9Imath_3_24Vec3IfE10lengthTinyEv(ptr noundef nonnull align 4 dereferenceable(12) %2) #9, !noalias !29
   br label %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit19.i
 
 bb.g:                                             ; preds = %bb.e
@@ -220,7 +220,7 @@ bb.g:                                             ; preds = %bb.e
 _ZNK9Imath_3_24Vec3IfE6lengthEv.exit19.i:         ; preds = %bb.g, %bb.f
   %.0.i18.i = phi float [ %i.w, %bb.f ], [ %sqrt.i17.i, %bb.g ]
   %i.x = fdiv float %i.g, %.0.i18.i
-  %i.y = tail call noundef float @asinf(float noundef %i.x) #8, !noalias !29
+  %i.y = tail call noundef float @asinf(float noundef %i.x) #9, !noalias !29
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit19.i, %_ZNK9Imath_3_24Vec3IfE6lengthEv.exit.i
@@ -233,7 +233,7 @@ bb.h:                                             ; preds = %_ZNK9Imath_3_24Vec3
   br i1 %or.cond.i, label %_ZN7Imf_3_410LatLongMap7latLongERKN9Imath_3_24Vec3IfEE.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ad = tail call noundef float @atan2f(float noundef %.pre20.i, float noundef %i.aa) #8, !noalias !29
+  %i.ad = tail call noundef float @atan2f(float noundef %.pre20.i, float noundef %i.aa) #9, !noalias !29
   br label %_ZN7Imf_3_410LatLongMap7latLongERKN9Imath_3_24Vec3IfEE.exit
 
 _ZN7Imf_3_410LatLongMap7latLongERKN9Imath_3_24Vec3IfEE.exit: ; preds = %bb.h, %bb.i
@@ -255,8 +255,9 @@ _ZN7Imf_3_410LatLongMap7latLongERKN9Imath_3_24Vec3IfEE.exit: ; preds = %bb.h, %b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) uwtable
-define void @_ZN7Imf_3_410LatLongMap9directionERKN9Imath_3_23BoxINS1_4Vec2IiEEEERKNS3_IfEE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.Imath_3_2::Vec3") align 4 captures(none) initializes((0, 12)) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %1, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %2) local_unnamed_addr #3 {
+define void @_ZN7Imf_3_410LatLongMap9directionERKN9Imath_3_23BoxINS1_4Vec2IiEEEERKNS3_IfEE(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.Imath_3_2::Vec3") align 4 captures(none) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %1, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %2) local_unnamed_addr #3 {
 bb.a:
+  %sincos.cos = alloca float, align 4             ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.c = load i32, ptr %i.b, align 4, !tbaa !19, !noalias !33 ; 2 uses
@@ -278,7 +279,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
-  %.014.i = phi float [ %i.o, %bb.b ], [ 0.000000e+00, %bb.a ] ; 3 uses
+  %.014.i = phi float [ %i.o, %bb.b ], [ 0.000000e+00, %bb.a ] ; 2 uses
   %i.p = load i32, ptr %i.a, align 4, !tbaa !21, !noalias !33 ; 2 uses
   %i.q = load i32, ptr %1, align 4, !tbaa !22, !noalias !33 ; 3 uses
   %i.r = icmp sgt i32 %i.p, %i.q
@@ -297,18 +298,17 @@ bb.d:                                             ; preds = %bb.c
 
 _ZN7Imf_3_410LatLongMap7latLongERKN9Imath_3_23BoxINS1_4Vec2IiEEEERKNS3_IfEE.exit: ; preds = %bb.c, %bb.d
   %.0.i = phi float [ %i.z, %bb.d ], [ 0.000000e+00, %bb.c ] ; 2 uses
-  %3 = tail call noundef float @sinf(float noundef %.0.i) #8
-  %i.aa = tail call noundef float @cosf(float noundef %.014.i) #8
-  %4 = fmul float %3, %i.aa
-  %5 = tail call noundef float @sinf(float noundef %.014.i) #8
-  %6 = tail call noundef float @cosf(float noundef %.0.i) #8
-  %7 = tail call noundef float @cosf(float noundef %.014.i) #8
-  %8 = fmul float %6, %7
+  %i.aa = tail call noundef float @sinf(float noundef %.0.i) #9
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 4
+  call void @sincosf(float %.014.i, ptr nonnull %3, ptr nonnull %sincos.cos)
+  %cos = load float, ptr %sincos.cos, align 4
+  %4 = fmul float %i.aa, %cos
+  %5 = call noundef float @cosf(float noundef %.0.i) #9
+  %6 = call noundef float @cosf(float noundef %.014.i) #9
+  %7 = fmul float %5, %6
   store float %4, ptr %0, align 4, !tbaa !11
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store float %5, ptr %9, align 4, !tbaa !12
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store float %8, ptr %i.ab, align 4, !tbaa !10
+  store float %7, ptr %i.ab, align 4, !tbaa !10
   ret void
 }
 
@@ -696,6 +696,9 @@ declare float @llvm.sqrt.f32(float) #1
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
 declare void @llvm.experimental.noalias.scope.decl(metadata) #7
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincosf(float noundef, ptr, ptr) local_unnamed_addr #8
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #1
 
@@ -713,7 +716,8 @@ attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #5 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #8 = { nounwind }
+attributes #8 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #9 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

@@ -45,26 +45,26 @@ bb.a:
   %i.h = alloca i64, align 8                      ; 4 uses
   %i.i = alloca i64, align 8                      ; 4 uses
   %i.j = alloca ptr, align 8                      ; 8 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #11
   store ptr null, ptr %i.c, align 8, !tbaa !21
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #11
   store double 0.000000e+00, ptr %i.e, align 8, !tbaa !11
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #10
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #11
   store ptr null, ptr %i.j, align 8, !tbaa !22
-  %i.k = call i32 @SUNContext_Create(i32 noundef 0, ptr noundef nonnull %i.j) #10 ; 2 uses
+  %i.k = call i32 @SUNContext_Create(i32 noundef 0, ptr noundef nonnull %i.j) #11 ; 2 uses
   %i.l = icmp slt i32 %i.k, 0
   br i1 %i.l, label %check_retval.exit, label %bb.b
 
 check_retval.exit:                                ; preds = %bb.a
   %i.m = load ptr, ptr @stderr, align 8, !tbaa !24
-  %i.n = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.m, ptr noundef nonnull @.str.26, ptr noundef nonnull @.str, i32 noundef %i.k) #11 ; 0 uses
+  %i.n = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.m, ptr noundef nonnull @.str.26, ptr noundef nonnull @.str, i32 noundef %i.k) #12 ; 0 uses
   br label %bb.p
 
 bb.b:                                             ; preds = %bb.a
@@ -72,13 +72,13 @@ bb.b:                                             ; preds = %bb.a
   %i.o = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.2, double noundef 1.000000e+00, double noundef 0.000000e+00, double noundef 2.000000e+00) ; 0 uses
   %i.p = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.3, double noundef 1.000000e-03, double noundef 1.000000e-04) ; 0 uses
   %i.q = load ptr, ptr %i.j, align 8, !tbaa !22
-  %i.r = call ptr @N_VNew_Serial(i64 noundef 3, ptr noundef %i.q) #10 ; 12 uses
+  %i.r = call ptr @N_VNew_Serial(i64 noundef 3, ptr noundef %i.q) #11 ; 12 uses
   %i.s = icmp eq ptr %i.r, null
   br i1 %i.s, label %check_retval.exit75, label %bb.c
 
 check_retval.exit75:                              ; preds = %bb.b
   %i.t = load ptr, ptr @stderr, align 8, !tbaa !24
-  %i.u = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.t, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.4) #11 ; 0 uses
+  %i.u = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.t, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.4) #12 ; 0 uses
   br label %bb.p
 
 bb.c:                                             ; preds = %bb.b
@@ -88,69 +88,69 @@ bb.c:                                             ; preds = %bb.b
   store <2 x double> <double 1.000000e+00, double 0.000000e+00>, ptr %i.x, align 8, !tbaa !11
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   store double 2.000000e+00, ptr %i.y, align 8, !tbaa !11
-  %i.z = call ptr @N_VClone(ptr noundef nonnull %i.r) #10 ; 3 uses
+  %i.z = call ptr @N_VClone(ptr noundef nonnull %i.r) #11 ; 3 uses
   %i.aa = load ptr, ptr %i.j, align 8, !tbaa !22
-  %i.ab = call ptr @ARKStepCreate(ptr noundef nonnull @ff, ptr noundef null, double noundef 0.000000e+00, ptr noundef nonnull %i.r, ptr noundef %i.aa) #10 ; 7 uses
+  %i.ab = call ptr @ARKStepCreate(ptr noundef nonnull @ff, ptr noundef null, double noundef 0.000000e+00, ptr noundef nonnull %i.r, ptr noundef %i.aa) #11 ; 7 uses
   store ptr %i.ab, ptr %i.b, align 8, !tbaa !25
   %i.ac = icmp eq ptr %i.ab, null
   br i1 %i.ac, label %check_retval.exit77, label %bb.d
 
 check_retval.exit77:                              ; preds = %bb.c
   %i.ad = load ptr, ptr @stderr, align 8, !tbaa !24
-  %i.ae = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ad, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.5) #11 ; 0 uses
+  %i.ae = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ad, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.5) #12 ; 0 uses
   br label %bb.p
 
 bb.d:                                             ; preds = %bb.c
-  %i.af = call i32 @ARKStepSetTableNum(ptr noundef nonnull %i.ab, i32 noundef -1, i32 noundef 12) #10 ; 2 uses
+  %i.af = call i32 @ARKStepSetTableNum(ptr noundef nonnull %i.ab, i32 noundef -1, i32 noundef 12) #11 ; 2 uses
   %i.ag = icmp slt i32 %i.af, 0
   br i1 %i.ag, label %check_retval.exit79, label %bb.e
 
 check_retval.exit79:                              ; preds = %bb.d
   %i.ah = load ptr, ptr @stderr, align 8, !tbaa !24
-  %i.ai = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ah, ptr noundef nonnull @.str.26, ptr noundef nonnull @.str.6, i32 noundef %i.af) #11 ; 0 uses
+  %i.ai = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ah, ptr noundef nonnull @.str.26, ptr noundef nonnull @.str.6, i32 noundef %i.af) #12 ; 0 uses
   br label %bb.p
 
 bb.e:                                             ; preds = %bb.d
-  %i.aj = call i32 @ARKodeSetFixedStep(ptr noundef nonnull %i.ab, double noundef 1.000000e-04) #10 ; 2 uses
+  %i.aj = call i32 @ARKodeSetFixedStep(ptr noundef nonnull %i.ab, double noundef 1.000000e-04) #11 ; 2 uses
   %i.ak = icmp slt i32 %i.aj, 0
   br i1 %i.ak, label %check_retval.exit81, label %bb.f
 
 check_retval.exit81:                              ; preds = %bb.e
   %i.al = load ptr, ptr @stderr, align 8, !tbaa !24
-  %i.am = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.al, ptr noundef nonnull @.str.26, ptr noundef nonnull @.str.7, i32 noundef %i.aj) #11 ; 0 uses
+  %i.am = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.al, ptr noundef nonnull @.str.26, ptr noundef nonnull @.str.7, i32 noundef %i.aj) #12 ; 0 uses
   br label %bb.p
 
 bb.f:                                             ; preds = %bb.e
-  %i.an = call i32 @ARKodeCreateMRIStepInnerStepper(ptr noundef nonnull %i.ab, ptr noundef nonnull %i.c) #10 ; 2 uses
+  %i.an = call i32 @ARKodeCreateMRIStepInnerStepper(ptr noundef nonnull %i.ab, ptr noundef nonnull %i.c) #11 ; 2 uses
   %i.ao = icmp slt i32 %i.an, 0
   br i1 %i.ao, label %check_retval.exit83, label %bb.g
 
 check_retval.exit83:                              ; preds = %bb.f
   %i.ap = load ptr, ptr @stderr, align 8, !tbaa !24
-  %i.aq = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ap, ptr noundef nonnull @.str.26, ptr noundef nonnull @.str.8, i32 noundef %i.an) #11 ; 0 uses
+  %i.aq = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ap, ptr noundef nonnull @.str.26, ptr noundef nonnull @.str.8, i32 noundef %i.an) #12 ; 0 uses
   br label %bb.p
 
 bb.g:                                             ; preds = %bb.f
   %i.ar = load ptr, ptr %i.c, align 8, !tbaa !21
   %i.as = load ptr, ptr %i.j, align 8, !tbaa !22
-  %i.at = call ptr @MRIStepCreate(ptr noundef nonnull @fs, ptr noundef null, double noundef 0.000000e+00, ptr noundef nonnull %i.r, ptr noundef %i.ar, ptr noundef %i.as) #10 ; 6 uses
+  %i.at = call ptr @MRIStepCreate(ptr noundef nonnull @fs, ptr noundef null, double noundef 0.000000e+00, ptr noundef nonnull %i.r, ptr noundef %i.ar, ptr noundef %i.as) #11 ; 6 uses
   store ptr %i.at, ptr %i.a, align 8, !tbaa !25
   %i.au = icmp eq ptr %i.at, null
   br i1 %i.au, label %check_retval.exit85, label %bb.h
 
 check_retval.exit85:                              ; preds = %bb.g
   %i.av = load ptr, ptr @stderr, align 8, !tbaa !24
-  %i.aw = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.av, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.9) #11 ; 0 uses
+  %i.aw = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.av, ptr noundef nonnull @.str.25, ptr noundef nonnull @.str.9) #12 ; 0 uses
   br label %bb.p
 
 bb.h:                                             ; preds = %bb.g
-  %i.ax = call i32 @ARKodeSetFixedStep(ptr noundef nonnull %i.at, double noundef 1.000000e-03) #10 ; 2 uses
+  %i.ax = call i32 @ARKodeSetFixedStep(ptr noundef nonnull %i.at, double noundef 1.000000e-03) #11 ; 2 uses
   %i.ay = icmp slt i32 %i.ax, 0
   br i1 %i.ay, label %check_retval.exit87, label %bb.i
 
 check_retval.exit87:                              ; preds = %bb.h
   %i.az = load ptr, ptr @stderr, align 8, !tbaa !24
-  %i.ba = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.az, ptr noundef nonnull @.str.26, ptr noundef nonnull @.str.7, i32 noundef %i.ax) #11 ; 0 uses
+  %i.ba = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.az, ptr noundef nonnull @.str.26, ptr noundef nonnull @.str.7, i32 noundef %i.ax) #12 ; 0 uses
   br label %bb.p
 
 bb.i:                                             ; preds = %bb.h
@@ -164,7 +164,7 @@ bb.i:                                             ; preds = %bb.h
   %i.bh = load double, ptr %i.bg, align 8, !tbaa !11
   %i.bi = getelementptr inbounds nuw i8, ptr %i.be, i64 16
   %i.bj = load double, ptr %i.bi, align 8, !tbaa !11
-  %i.bk = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.bb, ptr noundef nonnull @.str.13, double noundef 0.000000e+00, double noundef %i.bf, double noundef %i.bh, double noundef %i.bj, double noundef 0.000000e+00) #10 ; 0 uses
+  %i.bk = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.bb, ptr noundef nonnull @.str.13, double noundef 0.000000e+00, double noundef %i.bf, double noundef %i.bh, double noundef %i.bj, double noundef 0.000000e+00) #11 ; 0 uses
   store double 0.000000e+00, ptr %i.d, align 8, !tbaa !11
   %puts67 = call i32 @puts(ptr nonnull dereferenceable(1) @str.1) ; 0 uses
   %puts68 = call i32 @puts(ptr nonnull dereferenceable(1) @str.3) ; 0 uses
@@ -182,13 +182,13 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i, %bb.k
   %.0132 = phi i32 [ 0, %bb.i ], [ %i.cy, %bb.k ]
   %.058131 = phi double [ 1.000000e-01, %bb.i ], [ %i.cx, %bb.k ] ; 2 uses
-  %i.bu = call i32 @ARKodeEvolve(ptr noundef nonnull %i.at, double noundef %.058131, ptr noundef nonnull %i.r, ptr noundef nonnull %i.d, i32 noundef 1) #10 ; 2 uses
+  %i.bu = call i32 @ARKodeEvolve(ptr noundef nonnull %i.at, double noundef %.058131, ptr noundef nonnull %i.r, ptr noundef nonnull %i.d, i32 noundef 1) #11 ; 2 uses
   %i.bv = icmp slt i32 %i.bu, 0
   br i1 %i.bv, label %check_retval.exit89, label %bb.k
 
 check_retval.exit89:                              ; preds = %bb.j
   %i.bw = load ptr, ptr @stderr, align 8, !tbaa !24
-  %i.bx = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.bw, ptr noundef nonnull @.str.26, ptr noundef nonnull @.str.17, i32 noundef %i.bu) #11 ; 0 uses
+  %i.bx = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.bw, ptr noundef nonnull @.str.26, ptr noundef nonnull @.str.17, i32 noundef %i.bu) #12 ; 0 uses
   br label %.loopexit
 
 bb.k:                                             ; preds = %bb.j
@@ -218,7 +218,7 @@ bb.k:                                             ; preds = %bb.j
   %i.cr = load double, ptr %i.cq, align 8, !tbaa !11
   %i.cs = getelementptr inbounds nuw i8, ptr %i.co, i64 16
   %i.ct = load double, ptr %i.cs, align 8, !tbaa !11
-  %i.cu = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.bb, ptr noundef nonnull @.str.13, double noundef %i.cl, double noundef %i.cp, double noundef %i.cr, double noundef %i.ct, double noundef %i.cj) #10 ; 0 uses
+  %i.cu = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.bb, ptr noundef nonnull @.str.13, double noundef %i.cl, double noundef %i.cp, double noundef %i.cr, double noundef %i.ct, double noundef %i.cj) #11 ; 0 uses
   %i.cv = fadd double %.058131, 1.000000e-01      ; 2 uses
   %i.cw = fcmp ogt double %i.cv, 1.000000e+00
   %i.cx = select i1 %i.cw, double 1.000000e+00, double %i.cv
@@ -229,43 +229,43 @@ bb.k:                                             ; preds = %bb.j
 .loopexit:                                        ; preds = %bb.k, %check_retval.exit89
   %puts72 = call i32 @puts(ptr nonnull dereferenceable(1) @str.3) ; 0 uses
   %i.cz = call i32 @fclose(ptr noundef %i.bb)     ; 0 uses
-  %i.da = call i32 @ARKodeGetNumSteps(ptr noundef nonnull %i.at, ptr noundef nonnull %i.f) #10 ; 2 uses
+  %i.da = call i32 @ARKodeGetNumSteps(ptr noundef nonnull %i.at, ptr noundef nonnull %i.f) #11 ; 2 uses
   %i.db = icmp slt i32 %i.da, 0
   br i1 %i.db, label %bb.l, label %check_retval.exit95
 
 bb.l:                                             ; preds = %.loopexit
   %i.dc = load ptr, ptr @stderr, align 8, !tbaa !24
-  %i.dd = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.dc, ptr noundef nonnull @.str.26, ptr noundef nonnull @.str.20, i32 noundef %i.da) #11 ; 0 uses
+  %i.dd = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.dc, ptr noundef nonnull @.str.26, ptr noundef nonnull @.str.20, i32 noundef %i.da) #12 ; 0 uses
   br label %check_retval.exit95
 
 check_retval.exit95:                              ; preds = %.loopexit, %bb.l
-  %i.de = call i32 @ARKodeGetNumRhsEvals(ptr noundef nonnull %i.at, i32 noundef 0, ptr noundef nonnull %i.h) #10 ; 2 uses
+  %i.de = call i32 @ARKodeGetNumRhsEvals(ptr noundef nonnull %i.at, i32 noundef 0, ptr noundef nonnull %i.h) #11 ; 2 uses
   %i.df = icmp slt i32 %i.de, 0
   br i1 %i.df, label %bb.m, label %check_retval.exit97
 
 bb.m:                                             ; preds = %check_retval.exit95
   %i.dg = load ptr, ptr @stderr, align 8, !tbaa !24
-  %i.dh = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.dg, ptr noundef nonnull @.str.26, ptr noundef nonnull @.str.21, i32 noundef %i.de) #11 ; 0 uses
+  %i.dh = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.dg, ptr noundef nonnull @.str.26, ptr noundef nonnull @.str.21, i32 noundef %i.de) #12 ; 0 uses
   br label %check_retval.exit97
 
 check_retval.exit97:                              ; preds = %check_retval.exit95, %bb.m
-  %i.di = call i32 @ARKodeGetNumSteps(ptr noundef nonnull %i.ab, ptr noundef nonnull %i.g) #10 ; 2 uses
+  %i.di = call i32 @ARKodeGetNumSteps(ptr noundef nonnull %i.ab, ptr noundef nonnull %i.g) #11 ; 2 uses
   %i.dj = icmp slt i32 %i.di, 0
   br i1 %i.dj, label %bb.n, label %check_retval.exit99
 
 bb.n:                                             ; preds = %check_retval.exit97
   %i.dk = load ptr, ptr @stderr, align 8, !tbaa !24
-  %i.dl = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.dk, ptr noundef nonnull @.str.26, ptr noundef nonnull @.str.20, i32 noundef %i.di) #11 ; 0 uses
+  %i.dl = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.dk, ptr noundef nonnull @.str.26, ptr noundef nonnull @.str.20, i32 noundef %i.di) #12 ; 0 uses
   br label %check_retval.exit99
 
 check_retval.exit99:                              ; preds = %check_retval.exit97, %bb.n
-  %i.dm = call i32 @ARKodeGetNumRhsEvals(ptr noundef nonnull %i.ab, i32 noundef 0, ptr noundef nonnull %i.i) #10 ; 2 uses
+  %i.dm = call i32 @ARKodeGetNumRhsEvals(ptr noundef nonnull %i.ab, i32 noundef 0, ptr noundef nonnull %i.i) #11 ; 2 uses
   %i.dn = icmp slt i32 %i.dm, 0
   br i1 %i.dn, label %bb.o, label %check_retval.exit101
 
 bb.o:                                             ; preds = %check_retval.exit99
   %i.do = load ptr, ptr @stderr, align 8, !tbaa !24
-  %i.dp = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.do, ptr noundef nonnull @.str.26, ptr noundef nonnull @.str.21, i32 noundef %i.dm) #11 ; 0 uses
+  %i.dp = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.do, ptr noundef nonnull @.str.26, ptr noundef nonnull @.str.21, i32 noundef %i.dm) #12 ; 0 uses
   br label %check_retval.exit101
 
 check_retval.exit101:                             ; preds = %check_retval.exit99, %bb.o
@@ -276,26 +276,26 @@ check_retval.exit101:                             ; preds = %check_retval.exit99
   %i.dt = load i64, ptr %i.h, align 8, !tbaa !26
   %i.du = load i64, ptr %i.i, align 8, !tbaa !26
   %i.dv = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.24, i64 noundef %i.dt, i64 noundef %i.du) ; 0 uses
-  call void @N_VDestroy(ptr noundef nonnull %i.r) #10
-  call void @N_VDestroy(ptr noundef %i.z) #10
-  call void @ARKodeFree(ptr noundef nonnull %i.b) #10
-  %i.dw = call i32 @MRIStepInnerStepper_Free(ptr noundef nonnull %i.c) #10 ; 0 uses
-  call void @ARKodeFree(ptr noundef nonnull %i.a) #10
-  %i.dx = call i32 @SUNContext_Free(ptr noundef nonnull %i.j) #10 ; 0 uses
+  call void @N_VDestroy(ptr noundef nonnull %i.r) #11
+  call void @N_VDestroy(ptr noundef %i.z) #11
+  call void @ARKodeFree(ptr noundef nonnull %i.b) #11
+  %i.dw = call i32 @MRIStepInnerStepper_Free(ptr noundef nonnull %i.c) #11 ; 0 uses
+  call void @ARKodeFree(ptr noundef nonnull %i.a) #11
+  %i.dx = call i32 @SUNContext_Free(ptr noundef nonnull %i.j) #11 ; 0 uses
   br label %bb.p
 
 bb.p:                                             ; preds = %check_retval.exit87, %check_retval.exit85, %check_retval.exit83, %check_retval.exit81, %check_retval.exit79, %check_retval.exit77, %check_retval.exit75, %check_retval.exit, %check_retval.exit101
   %.059 = phi i32 [ 0, %check_retval.exit101 ], [ 1, %check_retval.exit ], [ 1, %check_retval.exit75 ], [ 1, %check_retval.exit77 ], [ 1, %check_retval.exit79 ], [ 1, %check_retval.exit81 ], [ 1, %check_retval.exit83 ], [ 1, %check_retval.exit85 ], [ 1, %check_retval.exit87 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   ret i32 %.059
 }
 
@@ -369,29 +369,32 @@ declare i32 @ARKodeEvolve(ptr noundef, double noundef, ptr noundef, ptr noundef,
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write, errnomem: write) uwtable
 define internal fastcc void @ans(double noundef %0, ptr nofree writeonly captures(none) initializes((0, 24)) %.0.val.16.val) unnamed_addr #5 {
 bb.a:
-  %i.a = fmul double %0, 5.000000e+01             ; 4 uses
-  %i.b = tail call double @cos(double noundef %i.a) #10
+  %sincos.sin = alloca double, align 8            ; 2 uses
+  %sincos.cos = alloca double, align 8            ; 2 uses
+  %i.a = fmul double %0, 5.000000e+01             ; 3 uses
+  %i.b = tail call double @cos(double noundef %i.a) #11
   store double %i.b, ptr %.0.val.16.val, align 8, !tbaa !11
-  %i.c = tail call double @sin(double noundef %i.a) #10
+  %i.c = tail call double @sin(double noundef %i.a) #11
   %i.d = getelementptr inbounds nuw i8, ptr %.0.val.16.val, i64 8
   store double %i.c, ptr %i.d, align 8, !tbaa !11
   %i.e = fneg double %0
-  %i.f = tail call double @exp(double noundef %i.e) #10
-  %1 = tail call double @cos(double noundef %i.a) #10
-  %2 = fmul double %1, f0xBF940FF7CFAFC021
-  %3 = tail call double @llvm.fmuladd.f64(double %i.f, double f0x4000281FEF9F5F80, double %2)
-  %4 = tail call double @sin(double noundef %i.a) #10
-  %5 = tail call double @llvm.fmuladd.f64(double %4, double f0x3F94E1996FAC799A, double %3)
+  %i.f = tail call double @exp(double noundef %i.e) #11
+  call void @sincos(double %i.a, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8
+  %cos = load double, ptr %sincos.cos, align 8
+  %1 = fmul double %cos, f0xBF940FF7CFAFC021
+  %2 = call double @llvm.fmuladd.f64(double %i.f, double f0x4000281FEF9F5F80, double %1)
+  %3 = call double @llvm.fmuladd.f64(double %sin, double f0x3F94E1996FAC799A, double %2)
   %i.g = getelementptr inbounds nuw i8, ptr %.0.val.16.val, i64 16
-  store double %5, ptr %i.g, align 8, !tbaa !11
+  store double %3, ptr %i.g, align 8, !tbaa !11
   ret void
 }
 
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @err(ptr noundef %0, ptr noundef %1, ptr nofree noundef nonnull writeonly captures(none) initializes((0, 8)) %2) unnamed_addr #0 {
 bb.a:
-  tail call void @N_VLinearSum(double noundef 1.000000e+00, ptr noundef %0, double noundef -1.000000e+00, ptr noundef %1, ptr noundef %1) #10
-  %i.a = tail call double @N_VMaxNorm(ptr noundef %1) #10
+  tail call void @N_VLinearSum(double noundef 1.000000e+00, ptr noundef %0, double noundef -1.000000e+00, ptr noundef %1, ptr noundef %1) #11
+  %i.a = tail call double @N_VMaxNorm(ptr noundef %1) #11
   store double %i.a, ptr %2, align 8, !tbaa !11
   ret void
 }
@@ -436,8 +439,11 @@ declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_add
 ; Function Attrs: nofree nounwind
 declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #8
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #9
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #7
@@ -451,9 +457,10 @@ attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #6 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #8 = { nofree nounwind }
-attributes #9 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #10 = { nounwind }
-attributes #11 = { cold nounwind }
+attributes #9 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #10 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #11 = { nounwind }
+attributes #12 = { cold nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

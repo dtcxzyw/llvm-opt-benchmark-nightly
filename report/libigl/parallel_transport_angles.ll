@@ -27,11 +27,13 @@ $_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELi1ELi0ELin1ELi1EEEE6resizeEll = co
 ; Function Attrs: mustprogress uwtable
 define weak_odr dso_local void @_ZN3igl25parallel_transport_anglesIN5Eigen6MatrixIdLin1ELin1ELi0ELin1ELin1EEENS2_IiLin1ELin1ELi0ELin1ELin1EEENS2_IdLin1ELi1ELi0ELin1ELi1EEEEEvRKNS1_10MatrixBaseIT_EERKNS6_IT0_EESA_RKS4_SG_RNS1_15PlainObjectBaseIT1_EE(ptr noundef nonnull align 1 dereferenceable(1) %0, ptr noundef nonnull align 1 dereferenceable(1) %1, ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(16) %5) local_unnamed_addr #0 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
+  %sincos.sin = alloca double, align 8            ; 2 uses
+  %sincos.cos = alloca double, align 8            ; 2 uses
   %6 = alloca %"class.Eigen::Matrix.3", align 8   ; 11 uses
   %7 = alloca %"class.Eigen::Matrix.45", align 8  ; 10 uses
   %i.a = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 5 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !24   ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, i8 0, i64 16, i1 false)
   %sext = shl i64 %i.b, 32                        ; 3 uses
   %i.c = ashr exact i64 %sext, 32                 ; 5 uses
@@ -100,20 +102,20 @@ bb.c:                                             ; preds = %bb.b, %.epil.prehea
 
 bb.d:                                             ; preds = %._crit_edge
   %i.v = load ptr, ptr %5, align 8, !tbaa !30
-  call void @free(ptr noundef %i.v) #11
+  call void @free(ptr noundef %i.v) #12
   %i.w = icmp sgt i64 %i.c, 0
   br i1 %i.w, label %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i.i.i, label %.sink.split.i.i.i
 
 _ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i.i.i: ; preds = %bb.d
   %i.x = lshr exact i64 %sext, 29
-  %i.y = call noalias ptr @malloc(i64 noundef %i.x) #12 ; 2 uses
+  %i.y = call noalias ptr @malloc(i64 noundef %i.x) #13 ; 2 uses
   %i.z = icmp eq ptr %i.y, null
   br i1 %i.z, label %bb.e, label %.sink.split.i.i.i
 
 bb.e:                                             ; preds = %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i.i.i.i
-  %i.aa = call ptr @__cxa_allocate_exception(i64 8) #11 ; 2 uses
+  %i.aa = call ptr @__cxa_allocate_exception(i64 8) #12 ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %i.aa, align 8, !tbaa !16
-  invoke void @__cxa_throw(ptr nonnull %i.aa, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #13
+  invoke void @__cxa_throw(ptr nonnull %i.aa, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #14
           to label %.noexc164 unwind label %bb.n
 
 .noexc164:                                        ; preds = %bb.e
@@ -201,8 +203,8 @@ bb.l:                                             ; preds = %bb.k, %bb.j
 
 ._crit_edge606:                                   ; preds = %bb.o, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEE7setZeroEl.exit
   %i.bd = phi ptr [ %.pre639, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELi1ELi0ELin1ELi1EEEE7setZeroEl.exit ], [ %i.nk, %bb.o ]
-  call void @free(ptr noundef %i.bd) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #11
+  call void @free(ptr noundef %i.bd) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   ret void
 
 bb.m:                                             ; preds = %.lr.ph605, %bb.o
@@ -389,7 +391,7 @@ _ZN5Eigen10MatrixBaseINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEE9normalizeEv.exit236: ;
   %i.ha = fmul double %i.bv, %i.fw
   %i.hb = fadd double %i.gz, %i.ha
   %i.hc = fadd double %i.gy, %i.hb
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #12
   %i.hd = getelementptr [4 x i8], ptr %i.da, i64 %i.bz ; 3 uses
   %i.he = load i32, ptr %i.hd, align 4, !tbaa !25
   %i.hf = sext i32 %i.he to i64
@@ -494,14 +496,15 @@ _ZN5Eigen10MatrixBaseINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEE9normalizeEv.exit236: ;
   %i.kt = load double, ptr %i.ks, align 8, !tbaa !32
   %i.ku = getelementptr i8, ptr %i.kr, i64 24
   %i.kv = load double, ptr %i.ku, align 8, !tbaa !32
-  %i.kw = call double @atan2(double noundef %i.kt, double noundef %i.kv) #11
-  %i.kx = fneg double %i.kw                       ; 3 uses
-  %8 = call double @cos(double noundef %i.kx) #11
-  %.sroa.7.32.vec.insert = insertelement <2 x double> <double 0.000000e+00, double poison>, double %8, i64 1 ; 2 uses
-  %9 = call double @sin(double noundef %i.kx) #11 ; 3 uses
-  %i.ky = fneg double %9
+  %i.kw = call double @atan2(double noundef %i.kt, double noundef %i.kv) #12
+  %i.kx = fneg double %i.kw                       ; 2 uses
+  call void @sincos(double %i.kx, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8    ; 3 uses
+  %cos = load double, ptr %sincos.cos, align 8
+  %.sroa.7.32.vec.insert = insertelement <2 x double> <double 0.000000e+00, double poison>, double %cos, i64 1 ; 2 uses
+  %i.ky = fneg double %sin
   %.sroa.12.56.vec.insert = insertelement <2 x double> <double 0.000000e+00, double poison>, double %i.ky, i64 1 ; 2 uses
-  %i.kz = call double @cos(double noundef %i.kx) #11 ; 2 uses
+  %i.kz = call double @cos(double noundef %i.kx) #12 ; 2 uses
   %i.la = shufflevector <2 x double> %i.ix, <2 x double> poison, <2 x i32> zeroinitializer
   %i.lb = fmul <2 x double> %i.la, <double 1.000000e+00, double 0.000000e+00>
   %i.lc = shufflevector <2 x double> %i.ix, <2 x double> poison, <2 x i32> <i32 1, i32 1>
@@ -512,7 +515,7 @@ _ZN5Eigen10MatrixBaseINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEE9normalizeEv.exit236: ;
   %i.lh = fmul <2 x double> %i.lg, %.sroa.12.56.vec.insert
   %i.li = fadd <2 x double> %i.le, %i.lh          ; 2 uses
   %i.lj = fmul double %i.kj, 0.000000e+00
-  %i.lk = fmul double %i.kl, %9
+  %i.lk = fmul double %i.kl, %sin
   %i.ll = fmul double %i.jc, %i.kz
   %i.lm = fadd double %i.lk, %i.ll
   %i.ln = fadd double %i.lj, %i.lm
@@ -527,7 +530,7 @@ _ZN5Eigen10MatrixBaseINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEE9normalizeEv.exit236: ;
   %i.lw = fmul <2 x double> %i.lv, %.sroa.12.56.vec.insert
   %i.lx = fadd <2 x double> %i.lw, %i.lt
   %i.ly = fmul double %i.lo, 0.000000e+00
-  %i.lz = fmul double %i.km, %9
+  %i.lz = fmul double %i.km, %sin
   %i.ma = fmul double %i.js, %i.kz
   %i.mb = fadd double %i.lz, %i.ma
   %i.mc = fadd double %i.mb, %i.ly
@@ -563,10 +566,10 @@ _ZN5Eigen10MatrixBaseINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEE9normalizeEv.exit236: ;
   %.sroa.0282.0 = select i1 %i.mu, <2 x double> %i.mx, <2 x double> %i.mg ; 2 uses
   %.sroa.0282.8.vec.extract = extractelement <2 x double> %.sroa.0282.0, i64 1
   %.sroa.0282.0.vec.extract = extractelement <2 x double> %.sroa.0282.0, i64 0
-  %i.my = call double @atan2(double noundef %.sroa.0282.8.vec.extract, double noundef %.sroa.0282.0.vec.extract) #11
+  %i.my = call double @atan2(double noundef %.sroa.0282.8.vec.extract, double noundef %.sroa.0282.0.vec.extract) #12
   %.sroa.0312.8.vec.extract = extractelement <2 x double> %.sroa.0312.0, i64 1
   %.sroa.0312.0.vec.extract = extractelement <2 x double> %.sroa.0312.0, i64 0
-  %i.mz = call double @atan2(double noundef %.sroa.0312.8.vec.extract, double noundef %.sroa.0312.0.vec.extract) #11
+  %i.mz = call double @atan2(double noundef %.sroa.0312.8.vec.extract, double noundef %.sroa.0312.0.vec.extract) #12
   %i.na = fsub double %i.my, %i.mz                ; 5 uses
   %i.nb = call double @llvm.fabs.f64(double %i.na)
   %i.nc = fcmp oeq double %i.nb, +inf
@@ -576,21 +579,21 @@ bb.n:                                             ; preds = %bb.e, %bb.a
   %i.nd = landingpad { ptr, i32 }
           cleanup
   %i.ne = load ptr, ptr %6, align 8, !tbaa !14
-  call void @free(ptr noundef %i.ne) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #11
+  call void @free(ptr noundef %i.ne) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   resume { ptr, i32 } %i.nd
 
 cdce.call598:                                     ; preds = %_ZN5Eigen10MatrixBaseINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEE9normalizeEv.exit236
-  %i.nf = call double @cos(double noundef %i.na) #11 ; 0 uses
-  %i.ng = call double @sin(double noundef %i.na) #11 ; 0 uses
-  %i.nh = call double @cos(double noundef %i.na) #11 ; 0 uses
+  %i.nf = call double @cos(double noundef %i.na) #12 ; 0 uses
+  %i.ng = call double @sin(double noundef %i.na) #12 ; 0 uses
+  %i.nh = call double @cos(double noundef %i.na) #12 ; 0 uses
   br label %cdce.end599
 
 cdce.end599:                                      ; preds = %_ZN5Eigen10MatrixBaseINS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEE9normalizeEv.exit236, %cdce.call598
   %i.ni = load ptr, ptr %5, align 8, !tbaa !30
   %i.nj = getelementptr inbounds nuw [8 x i8], ptr %i.ni, i64 %indvars.iv614
   store double %i.na, ptr %i.nj, align 8, !tbaa !32
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %7) #12
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.m, %cdce.end599
@@ -634,9 +637,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.c, label %_ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.e = tail call ptr @__cxa_allocate_exception(i64 8) #11 ; 2 uses
+  %i.e = tail call ptr @__cxa_allocate_exception(i64 8) #12 ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %i.e, align 8, !tbaa !16
-  tail call void @__cxa_throw(ptr nonnull %i.e, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #13
+  tail call void @__cxa_throw(ptr nonnull %i.e, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #14
   unreachable
 
 _ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit: ; preds = %bb.a, %bb.b
@@ -648,7 +651,7 @@ _ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit: ; pr
 
 bb.d:                                             ; preds = %_ZN5Eigen8internal28check_rows_cols_for_overflowILin1EE3runIlEEvT_S4_.exit
   %i.i = load ptr, ptr %0, align 8, !tbaa !14
-  tail call void @free(ptr noundef %i.i) #11
+  tail call void @free(ptr noundef %i.i) #12
   %i.j = icmp sgt i64 %i.f, 0
   br i1 %i.j, label %bb.e, label %.sink.split.i
 
@@ -657,21 +660,21 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.k, label %bb.f, label %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i
 
 bb.f:                                             ; preds = %bb.e
-  %i.l = tail call ptr @__cxa_allocate_exception(i64 8) #11 ; 2 uses
+  %i.l = tail call ptr @__cxa_allocate_exception(i64 8) #12 ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %i.l, align 8, !tbaa !16
-  tail call void @__cxa_throw(ptr nonnull %i.l, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #13
+  tail call void @__cxa_throw(ptr nonnull %i.l, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #14
   unreachable
 
 _ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i: ; preds = %bb.e
   %i.m = shl nuw i64 %i.f, 2
-  %i.n = tail call noalias ptr @malloc(i64 noundef %i.m) #12 ; 2 uses
+  %i.n = tail call noalias ptr @malloc(i64 noundef %i.m) #13 ; 2 uses
   %i.o = icmp eq ptr %i.n, null
   br i1 %i.o, label %bb.g, label %.sink.split.i
 
 bb.g:                                             ; preds = %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i
-  %i.p = tail call ptr @__cxa_allocate_exception(i64 8) #11 ; 2 uses
+  %i.p = tail call ptr @__cxa_allocate_exception(i64 8) #12 ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %i.p, align 8, !tbaa !16
-  tail call void @__cxa_throw(ptr nonnull %i.p, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #13
+  tail call void @__cxa_throw(ptr nonnull %i.p, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #14
   unreachable
 
 .sink.split.i:                                    ; preds = %_ZN5Eigen8internal23check_size_for_overflowIiEEvm.exit.i.i, %bb.d
@@ -704,6 +707,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.sqrt.f64(double) #8
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #10
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fabs.f64(double) #8
 
@@ -711,7 +717,7 @@ declare double @llvm.fabs.f64(double) #8
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #10
+declare void @llvm.assume(i1 noundef) #11
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -723,10 +729,11 @@ attributes #6 = { cold noreturn }
 attributes #7 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #9 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #10 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #11 = { nounwind }
-attributes #12 = { nounwind allocsize(0) }
-attributes #13 = { noreturn }
+attributes #10 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #11 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #12 = { nounwind }
+attributes #13 = { nounwind allocsize(0) }
+attributes #14 = { noreturn }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

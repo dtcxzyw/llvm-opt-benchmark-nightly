@@ -24,8 +24,10 @@ $_ZN5Eigen12DenseStorageIdLin1ELin1ELin1ELi0EE6resizeElll = comdat any
 ; Function Attrs: mustprogress nounwind uwtable
 define dso_local void @_ZN3igl10random_dirEv(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.Eigen::Matrix") align 8 captures(none) initializes((0, 24)) %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call i32 @rand() #11
-  %i.b = tail call i32 @rand() #11
+  %sincos.sin = alloca double, align 8            ; 2 uses
+  %sincos.cos = alloca double, align 8            ; 2 uses
+  %i.a = tail call i32 @rand() #12
+  %i.b = tail call i32 @rand() #12
   %i.c = insertelement <2 x i32> poison, i32 %i.a, i64 0
   %i.d = insertelement <2 x i32> %i.c, i32 %i.b, i64 1
   %i.e = sitofp <2 x i32> %i.d to <2 x double>
@@ -34,15 +36,16 @@ bb.a:
   %i.h = tail call double @llvm.fmuladd.f64(double %i.g, double 2.000000e+00, double -1.000000e+00) ; 3 uses
   %i.i = extractelement <2 x double> %i.f, i64 1
   %i.j = fmul nnan double %i.i, 2.000000e+00
-  %i.k = fmul nnan double %i.j, f0x400921FB54442D18 ; 2 uses
+  %i.k = fmul nnan double %i.j, f0x400921FB54442D18
   %i.l = fneg double %i.h
   %i.m = tail call double @llvm.fmuladd.f64(double %i.l, double %i.h, double 1.000000e+00)
-  %i.n = tail call double @sqrt(double noundef %i.m) #11 ; 2 uses
-  %1 = tail call double @cos(double noundef %i.k) #11
-  %2 = fmul double %i.n, %1
-  %3 = tail call double @sin(double noundef %i.k) #11
-  %i.o = fmul double %i.n, %3
-  store double %2, ptr %0, align 8, !tbaa !10
+  %i.n = tail call double @sqrt(double noundef %i.m) #12 ; 2 uses
+  call void @sincos(double %i.k, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8
+  %cos = load double, ptr %sincos.cos, align 8
+  %1 = fmul double %i.n, %cos
+  %i.o = fmul double %i.n, %sin
+  store double %1, ptr %0, align 8, !tbaa !10
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   store double %i.o, ptr %i.p, align 8, !tbaa !10
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -74,9 +77,11 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN3igl21random_dir_stratifiedEi(ptr dead_on_unwind noalias nonnull writable sret(%"class.Eigen::Matrix.3") align 8 initializes((0, 24)) %0, i32 noundef %1) local_unnamed_addr #5 personality ptr @__gxx_personality_v0 {
 _ZN5Eigen15PlainObjectBaseINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exit.i.i:
+  %sincos.sin.i = alloca double, align 8          ; 4 uses
+  %sincos.cos.i = alloca double, align 8          ; 4 uses
   %2 = alloca %"class.Eigen::Matrix", align 8     ; 11 uses
   %i.a = sitofp i32 %1 to double
-  %i.b = tail call double @sqrt(double noundef %i.a) #11
+  %i.b = tail call double @sqrt(double noundef %i.a) #12
   %i.c = tail call double @llvm.floor.f64(double %i.b) ; 6 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   %i.d = sext i32 %1 to i64                       ; 2 uses
@@ -108,8 +113,8 @@ bb.a:                                             ; preds = %.lr.ph.us, %bb.a
   %i.n = phi double [ 0.000000e+00, %.lr.ph.us ], [ %i.aq, %bb.a ]
   %.03246.us = phi i32 [ 0, %.lr.ph.us ], [ %i.ap, %bb.a ]
   %i.o = fdiv nnan double %i.n, %i.c
-  %i.p = tail call i32 @rand() #11
-  %i.q = tail call i32 @rand() #11
+  %i.p = tail call i32 @rand() #12
+  %i.q = tail call i32 @rand() #12
   %i.r = insertelement <2 x i32> poison, i32 %i.p, i64 0
   %i.s = insertelement <2 x i32> %i.r, i32 %i.q, i64 1
   %i.t = sitofp <2 x i32> %i.s to <2 x double>
@@ -124,13 +129,13 @@ bb.a:                                             ; preds = %.lr.ph.us, %bb.a
   %i.ac = fmul double %i.ab, f0x400921FB54442D18  ; 2 uses
   %i.ad = fneg double %i.z
   %i.ae = tail call double @llvm.fmuladd.f64(double %i.ad, double %i.z, double 1.000000e+00)
-  %i.af = tail call double @sqrt(double noundef %i.ae) #11 ; 2 uses
-  %i.ag = tail call double @cos(double noundef %i.ac) #11
+  %i.af = tail call double @sqrt(double noundef %i.ae) #12 ; 2 uses
+  %i.ag = tail call double @cos(double noundef %i.ac) #12
   %i.ah = load ptr, ptr %0, align 8, !tbaa !15
   %i.ai = getelementptr [8 x i8], ptr %i.ah, i64 %indvars.iv ; 3 uses
   %i.aj = fmul double %i.af, %i.ag
   store double %i.aj, ptr %i.ai, align 8, !tbaa !10
-  %i.ak = tail call double @sin(double noundef %i.ac) #11
+  %i.ak = tail call double @sin(double noundef %i.ac) #12
   %i.al = load i64, ptr %i.h, align 8, !tbaa !16  ; 2 uses
   %i.am = getelementptr [8 x i8], ptr %i.ai, i64 %i.al
   %i.an = fmul double %i.af, %i.ak
@@ -154,7 +159,7 @@ bb.b:                                             ; preds = %_ZN5Eigen15PlainObj
   %i.av = landingpad { ptr, i32 }
           cleanup
   %i.aw = load ptr, ptr %0, align 8, !tbaa !15
-  tail call void @free(ptr noundef %i.aw) #11
+  tail call void @free(ptr noundef %i.aw) #12
   resume { ptr, i32 } %i.av
 
 .preheader.loopexit:                              ; preds = %._crit_edge.us
@@ -176,29 +181,34 @@ bb.b:                                             ; preds = %_ZN5Eigen15PlainObj
 
 bb.c:                                             ; preds = %.lr.ph, %_ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSINS1_IdLi3ELi1ELi0ELi3ELi1EEEEERS3_RKNS_9DenseBaseIT_EE.exit
   %indvars.iv53 = phi i64 [ %i.bd, %.lr.ph ], [ %indvars.iv.next54, %_ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSINS1_IdLi3ELi1ELi0ELi3ELi1EEEEERS3_RKNS_9DenseBaseIT_EE.exit ] ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #11
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !29)
-  %3 = tail call i32 @rand() #11, !noalias !29
-  %4 = tail call i32 @rand() #11, !noalias !29
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
+  call void @llvm.experimental.noalias.scope.decl(metadata !29)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i)
+  %3 = call i32 @rand() #12, !noalias !29
+  %4 = call i32 @rand() #12, !noalias !29
   %i.be = insertelement <2 x i32> poison, i32 %3, i64 0
   %i.bf = insertelement <2 x i32> %i.be, i32 %4, i64 1
   %i.bg = sitofp <2 x i32> %i.bf to <2 x double>
   %i.bh = fdiv <2 x double> %i.bg, splat (double f0x41DFFFFFFFC00000) ; 2 uses
   %i.bi = extractelement <2 x double> %i.bh, i64 0
-  %5 = tail call double @llvm.fmuladd.f64(double %i.bi, double 2.000000e+00, double -1.000000e+00) ; 3 uses
+  %5 = call double @llvm.fmuladd.f64(double %i.bi, double 2.000000e+00, double -1.000000e+00) ; 3 uses
   %i.bj = extractelement <2 x double> %i.bh, i64 1
   %i.bk = fmul nnan double %i.bj, 2.000000e+00
-  %i.bl = fmul nnan double %i.bk, f0x400921FB54442D18 ; 2 uses
+  %i.bl = fmul nnan double %i.bk, f0x400921FB54442D18
   %i.bm = fneg double %5
-  %6 = tail call double @llvm.fmuladd.f64(double %i.bm, double %5, double 1.000000e+00)
-  %7 = tail call double @sqrt(double noundef %6) #11, !noalias !29 ; 2 uses
-  %8 = tail call double @cos(double noundef %i.bl) #11, !noalias !29
-  %9 = fmul double %7, %8
-  %10 = tail call double @sin(double noundef %i.bl) #11, !noalias !29
-  %i.bn = fmul double %7, %10
-  store double %9, ptr %2, align 8, !tbaa !10, !alias.scope !29
+  %6 = call double @llvm.fmuladd.f64(double %i.bm, double %5, double 1.000000e+00)
+  %7 = call double @sqrt(double noundef %6) #12, !noalias !29 ; 2 uses
+  call void @sincos(double %i.bl, ptr nonnull %sincos.sin.i, ptr nonnull %sincos.cos.i), !noalias !29
+  %sin.i = load double, ptr %sincos.sin.i, align 8, !noalias !29
+  %cos.i = load double, ptr %sincos.cos.i, align 8, !noalias !29
+  %8 = fmul double %7, %cos.i
+  %i.bn = fmul double %7, %sin.i
+  store double %8, ptr %2, align 8, !tbaa !10, !alias.scope !29
   store double %i.bn, ptr %i.az, align 8, !tbaa !10, !alias.scope !29
   store double %5, ptr %i.ba, align 8, !tbaa !10, !alias.scope !29
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i)
   %i.bo = load ptr, ptr %0, align 8, !tbaa !15, !noalias !30
   %i.bp = getelementptr inbounds [8 x i8], ptr %i.bo, i64 %indvars.iv53 ; 6 uses
   %i.bq = load i64, ptr %i.bb, align 8, !tbaa !17, !noalias !30 ; 7 uses
@@ -289,7 +299,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %exitcond.not.i.i.i.i.i.i.i.i.i.i.3, label %_ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSINS1_IdLi3ELi1ELi0ELi3ELi1EEEEERS3_RKNS_9DenseBaseIT_EE.exit, label %.lr.ph.i.i.i.i.i.i.i.i.i.i, !llvm.loop !26
 
 _ZN5Eigen5BlockINS_6MatrixIdLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSINS1_IdLi3ELi1ELi0ELi3ELi1EEEEERS3_RKNS_9DenseBaseIT_EE.exit: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i.i.i.i, %middle.block, %bb.c
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #12
   %indvars.iv.next54 = add nsw i64 %indvars.iv53, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next54 to i32
   %exitcond.not = icmp eq i32 %1, %lftr.wideiv
@@ -320,7 +330,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.f = load ptr, ptr %0, align 8, !tbaa !15
-  tail call void @free(ptr noundef %i.f) #11
+  tail call void @free(ptr noundef %i.f) #12
   %i.g = icmp sgt i64 %1, 0
   br i1 %i.g, label %bb.c, label %.sink.split
 
@@ -329,21 +339,21 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.h, label %bb.d, label %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = tail call ptr @__cxa_allocate_exception(i64 8) #11 ; 2 uses
+  %i.i = tail call ptr @__cxa_allocate_exception(i64 8) #12 ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %i.i, align 8, !tbaa !35
-  tail call void @__cxa_throw(ptr nonnull %i.i, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #12
+  tail call void @__cxa_throw(ptr nonnull %i.i, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #13
   unreachable
 
 _ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i: ; preds = %bb.c
   %i.j = shl nuw i64 %1, 3
-  %i.k = tail call noalias ptr @malloc(i64 noundef %i.j) #13 ; 2 uses
+  %i.k = tail call noalias ptr @malloc(i64 noundef %i.j) #14 ; 2 uses
   %i.l = icmp eq ptr %i.k, null
   br i1 %i.l, label %bb.e, label %.sink.split
 
 bb.e:                                             ; preds = %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i
-  %i.m = tail call ptr @__cxa_allocate_exception(i64 8) #11 ; 2 uses
+  %i.m = tail call ptr @__cxa_allocate_exception(i64 8) #12 ; 2 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt9bad_alloc, i64 16), ptr %i.m, align 8, !tbaa !35
-  tail call void @__cxa_throw(ptr nonnull %i.m, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #12
+  tail call void @__cxa_throw(ptr nonnull %i.m, ptr nonnull @_ZTISt9bad_alloc, ptr nonnull @_ZNSt9bad_allocD1Ev) #13
   unreachable
 
 .sink.split:                                      ; preds = %bb.b, %_ZN5Eigen8internal23check_size_for_overflowIdEEvm.exit.i
@@ -368,11 +378,14 @@ declare void @__cxa_throw(ptr, ptr, ptr) local_unnamed_addr #7
 ; Function Attrs: mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write)
 declare noalias noundef ptr @malloc(i64 noundef) local_unnamed_addr #8
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #9
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #9
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #10
+declare void @llvm.experimental.noalias.scope.decl(metadata) #11
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -383,11 +396,12 @@ attributes #5 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping
 attributes #6 = { mustprogress nounwind willreturn allockind("free") memory(argmem: readwrite, inaccessiblemem: readwrite) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { cold noreturn }
 attributes #8 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #10 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #11 = { nounwind }
-attributes #12 = { noreturn }
-attributes #13 = { nounwind allocsize(0) }
+attributes #9 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #10 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #11 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #12 = { nounwind }
+attributes #13 = { noreturn }
+attributes #14 = { nounwind allocsize(0) }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

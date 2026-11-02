@@ -8,14 +8,20 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define hidden range(i32 -1, 2) i32 @timelib_astro_rise_set_altitude(ptr noundef initializes((24, 48)) %0, double noundef %1, double noundef %2, double noundef %3, i32 noundef %4, ptr nofree noundef writeonly captures(none) %5, ptr nofree noundef writeonly captures(none) %6, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %7, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %8, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %9) local_unnamed_addr #0 {
 bb.a:
+  %sincos.sin18.i = alloca double, align 8        ; 4 uses
+  %sincos.cos19.i = alloca double, align 8        ; 4 uses
+  %sincos.sin.i.i = alloca double, align 8        ; 4 uses
+  %sincos.cos.i.i = alloca double, align 8        ; 4 uses
+  %sincos.sin.i = alloca double, align 8          ; 4 uses
+  %sincos.cos.i = alloca double, align 8          ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 4 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !19
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 12, ptr %i.c, align 8, !tbaa !20
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.d, i8 0, i64 16, i1 false)
-  tail call void @timelib_update_ts(ptr noundef %0, ptr noundef null) #6
-  %i.e = tail call ptr @timelib_time_ctor() #6    ; 6 uses
+  tail call void @timelib_update_ts(ptr noundef %0, ptr noundef null) #8
+  %i.e = tail call ptr @timelib_time_ctor() #8    ; 6 uses
   %i.f = load <2 x i64>, ptr %0, align 8, !tbaa !21
   store <2 x i64> %i.f, ptr %i.e, align 8, !tbaa !21
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -24,10 +30,10 @@ bb.a:
   store i64 %i.h, ptr %i.i, align 8, !tbaa !22
   %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.j, i8 0, i64 24, i1 false)
-  tail call void @timelib_update_ts(ptr noundef nonnull %i.e, ptr noundef null) #6
-  %i.k = getelementptr inbounds nuw i8, ptr %i.e, i64 192 ; 4 uses
+  tail call void @timelib_update_ts(ptr noundef nonnull %i.e, ptr noundef null) #8
+  %i.k = getelementptr inbounds nuw i8, ptr %i.e, i64 192 ; 5 uses
   %i.l = load i64, ptr %i.k, align 8, !tbaa !19
-  %i.m = sitofp i64 %i.l to double                ; 2 uses
+  %i.m = sitofp i64 %i.l to double
   %i.n = insertelement <2 x double> poison, double %i.m, i64 0
   %i.o = insertelement <2 x double> %i.n, double %1, i64 1
   %i.p = fdiv <2 x double> %i.o, <double 8.640000e+04, double 3.600000e+02> ; 2 uses
@@ -49,6 +55,12 @@ bb.a:
   %i.af = tail call double @llvm.floor.f64(double %i.ae)
   %i.ag = fmul double %i.af, 3.600000e+02
   %i.ah = fsub double %i.ad, %i.ag
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin18.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos19.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i.i)
   %i.ai = fmul double %i.v, f0x3FEF8A098DA5F901
   %i.aj = fadd double %i.ai, 3.560470e+02         ; 2 uses
   %i.ak = fmul double %i.aj, f0x3F66C16C16C16C17
@@ -60,57 +72,66 @@ bb.a:
   %i.aq = fmul double %i.v, 1.151000e-09
   %i.ar = fsub double 1.670900e-02, %i.aq         ; 5 uses
   %i.as = fmul double %i.ar, f0x404CA5DC1A63C1F8
-  %i.at = fmul double %i.an, f0x3F91DF46A2529D39  ; 2 uses
-  %10 = tail call double @sin(double noundef %i.at) #6
-  %11 = fmul double %10, %i.as
-  %12 = tail call double @cos(double noundef %i.at) #6
-  %i.au = fmul double %12, %i.ar
+  %i.at = fmul double %i.an, f0x3F91DF46A2529D39
+  call void @sincos(double %i.at, ptr nonnull %sincos.sin.i.i, ptr nonnull %sincos.cos.i.i)
+  %sin.i.i = load double, ptr %sincos.sin.i.i, align 8
+  %cos.i.i = load double, ptr %sincos.cos.i.i, align 8
+  %10 = fmul double %sin.i.i, %i.as
+  %i.au = fmul double %i.ar, %cos.i.i
   %i.av = fadd double %i.au, 1.000000e+00
-  %i.aw = fmul double %11, %i.av
-  %i.ax = fadd double %i.aw, %i.an
+  %i.aw = fmul double %10, %i.av
+  %i.ax = fadd double %i.an, %i.aw
   %i.ay = fmul double %i.ax, f0x3F91DF46A2529D39  ; 2 uses
-  %13 = tail call double @cos(double noundef %i.ay) #6
-  %i.az = fsub double %13, %i.ar                  ; 3 uses
+  %11 = call double @cos(double noundef %i.ay) #8
+  %i.az = fsub double %11, %i.ar                  ; 3 uses
   %i.ba = fmul double %i.ar, %i.ar
   %i.bb = fsub double 1.000000e+00, %i.ba
-  %14 = tail call double @sqrt(double noundef %i.bb) #6
-  %15 = tail call double @sin(double noundef %i.ay) #6
-  %i.bc = fmul double %14, %15                    ; 3 uses
+  %12 = call double @sqrt(double noundef %i.bb) #8
+  %13 = call double @sin(double noundef %i.ay) #8
+  %i.bc = fmul double %12, %13                    ; 3 uses
   %i.bd = fmul double %i.az, %i.az
   %i.be = fmul double %i.bc, %i.bc
-  %i.bf = fadd double %i.be, %i.bd
-  %sqrt.i.i = tail call double @llvm.sqrt.f64(double %i.bf) ; 3 uses
-  %16 = tail call double @atan2(double noundef %i.bc, double noundef %i.az) #6
-  %i.bg = fmul double %16, f0x404CA5DC1A63C1F8
-  %i.bh = fadd double %i.bg, %i.ap                ; 3 uses
+  %i.bf = fadd double %i.bd, %i.be
+  %sqrt.i.i = call double @llvm.sqrt.f64(double %i.bf) ; 3 uses
+  %14 = call double @atan2(double noundef %i.bc, double noundef %i.az) #8
+  %i.bg = fmul double %14, f0x404CA5DC1A63C1F8
+  %i.bh = fadd double %i.ap, %i.bg                ; 3 uses
   %i.bi = fcmp ult double %i.bh, 3.600000e+02
   %i.bj = fadd double %i.bh, -3.600000e+02
   %storemerge.i.i = select i1 %i.bi, double %i.bh, double %i.bj
-  %i.bk = fmul double %storemerge.i.i, f0x3F91DF46A2529D39 ; 2 uses
-  %17 = tail call double @cos(double noundef %i.bk) #6
-  %18 = fmul double %17, %sqrt.i.i                ; 3 uses
-  %19 = tail call double @sin(double noundef %i.bk) #6
-  %i.bl = fmul double %19, %sqrt.i.i              ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i.i)
+  %i.bk = fmul double %storemerge.i.i, f0x3F91DF46A2529D39
+  call void @sincos(double %i.bk, ptr nonnull %sincos.sin18.i, ptr nonnull %sincos.cos19.i)
+  %sin20.i = load double, ptr %sincos.sin18.i, align 8
+  %cos21.i = load double, ptr %sincos.cos19.i, align 8
+  %15 = fmul double %sqrt.i.i, %cos21.i           ; 3 uses
+  %i.bl = fmul double %sqrt.i.i, %sin20.i         ; 2 uses
   %i.bm = fmul double %i.v, 3.563000e-07
   %i.bn = fsub double 2.343930e+01, %i.bm
-  %i.bo = fmul double %i.bn, f0x3F91DF46A2529D39  ; 2 uses
-  %20 = tail call double @sin(double noundef %i.bo) #6
-  %21 = fmul double %20, %i.bl
-  %22 = tail call double @cos(double noundef %i.bo) #6
-  %i.bp = fmul double %22, %i.bl                  ; 3 uses
-  %23 = tail call double @atan2(double noundef %i.bp, double noundef %18) #6
-  %i.bq = fmul double %23, f0x404CA5DC1A63C1F8
-  %i.br = fmul double %18, %18
+  %i.bo = fmul double %i.bn, f0x3F91DF46A2529D39
+  call void @sincos(double %i.bo, ptr nonnull %sincos.sin.i, ptr nonnull %sincos.cos.i)
+  %sin.i = load double, ptr %sincos.sin.i, align 8
+  %cos.i = load double, ptr %sincos.cos.i, align 8
+  %16 = fmul double %i.bl, %sin.i
+  %i.bp = fmul double %i.bl, %cos.i               ; 3 uses
+  %17 = call double @atan2(double noundef %i.bp, double noundef %15) #8
+  %i.bq = fmul double %17, f0x404CA5DC1A63C1F8
+  %i.br = fmul double %15, %15
   %i.bs = fmul double %i.bp, %i.bp
   %i.bt = fadd double %i.br, %i.bs
-  %sqrt.i = tail call double @llvm.sqrt.f64(double %i.bt)
-  %24 = tail call double @atan2(double noundef %21, double noundef %sqrt.i) #6
-  %i.bu = fmul double %24, f0x404CA5DC1A63C1F8
+  %sqrt.i = call double @llvm.sqrt.f64(double %i.bt)
+  %18 = call double @atan2(double noundef %16, double noundef %sqrt.i) #8
+  %i.bu = fmul double %18, f0x404CA5DC1A63C1F8
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin18.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos19.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i)
   %i.bv = fsub double %i.ah, %i.bq                ; 2 uses
   %i.bw = fmul double %i.bv, f0x3F66C16C16C16C17
   %i.bx = fadd double %i.bw, 5.000000e-01
-  %25 = tail call double @llvm.floor.f64(double %i.bx)
-  %i.by = fmul double %25, 3.600000e+02
+  %19 = call double @llvm.floor.f64(double %i.bx)
+  %i.by = fmul double %19, 3.600000e+02
   %i.bz = fsub double %i.bv, %i.by
   %i.ca = fdiv double %i.bz, 1.500000e+01
   %i.cb = fsub double 1.200000e+01, %i.ca         ; 3 uses
@@ -119,19 +140,21 @@ bb.a:
   %i.cd = fsub double %3, %i.cc
   %.059 = select i1 %.not, double %3, double %i.cd
   %i.ce = fmul double %.059, f0x3F91DF46A2529D39
-  %26 = tail call double @sin(double noundef %i.ce) #6
+  %20 = call double @sin(double noundef %i.ce) #8
   %i.cf = fmul double %2, f0x3F91DF46A2529D39     ; 2 uses
-  %27 = tail call double @sin(double noundef %i.cf) #6
+  %21 = call double @sin(double noundef %i.cf) #8
   %i.cg = fmul double %i.bu, f0x3F91DF46A2529D39  ; 2 uses
-  %28 = tail call double @sin(double noundef %i.cg) #6
-  %i.ch = fmul double %27, %28
-  %i.ci = fsub double %26, %i.ch
-  %29 = tail call double @cos(double noundef %i.cf) #6
-  %30 = tail call double @cos(double noundef %i.cg) #6
-  %i.cj = fmul double %29, %30
+  %22 = call double @sin(double noundef %i.cg) #8
+  %i.ch = fmul double %21, %22
+  %i.ci = fsub double %20, %i.ch
+  %23 = call double @cos(double noundef %i.cf) #8
+  %24 = call double @cos(double noundef %i.cg) #8
+  %i.cj = fmul double %23, %24
   %i.ck = fdiv double %i.ci, %i.cj                ; 3 uses
+  %25 = load i64, ptr %i.k, align 8, !tbaa !19
+  %26 = sitofp i64 %25 to double
   %i.cl = fmul double %i.cb, 3.600000e+03         ; 2 uses
-  %i.cm = fadd double %i.cl, %i.m
+  %i.cm = fadd double %i.cl, %26
   %i.cn = fptosi double %i.cm to i64
   store i64 %i.cn, ptr %9, align 8, !tbaa !21
   %i.co = fcmp ult double %i.ck, 1.000000e+00
@@ -160,8 +183,8 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.c
-  %31 = tail call double @acos(double noundef %i.ck) #6
-  %i.cy = fmul double %31, f0x404CA5DC1A63C1F8
+  %27 = call double @acos(double noundef %i.ck) #8
+  %i.cy = fmul double %27, f0x404CA5DC1A63C1F8
   %i.cz = fdiv double %i.cy, 1.500000e+01         ; 2 uses
   %i.da = fsub double %i.cb, %i.cz                ; 2 uses
   %i.db = fmul double %i.da, 3.600000e+03
@@ -183,17 +206,20 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.d, %bb.e, %bb.b
   %.0 = phi i32 [ -1, %bb.b ], [ 1, %bb.d ], [ 0, %bb.e ]
-  tail call void @timelib_time_dtor(ptr noundef nonnull %i.e) #6
+  call void @timelib_time_dtor(ptr noundef nonnull %i.e) #8
   store i64 %i.b, ptr %i.a, align 8, !tbaa !19
   ret i32 %.0
 }
 
-declare void @timelib_update_ts(ptr noundef, ptr noundef) local_unnamed_addr #1
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 
-declare ptr @timelib_time_ctor() local_unnamed_addr #1
+declare void @timelib_update_ts(ptr noundef, ptr noundef) local_unnamed_addr #2
+
+declare ptr @timelib_time_ctor() local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden noundef double @timelib_ts_to_j2000(i64 noundef %0) local_unnamed_addr #2 {
+define hidden noundef double @timelib_ts_to_j2000(i64 noundef %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = sitofp i64 %0 to double
   %i.b = fdiv double %i.a, 8.640000e+04
@@ -203,18 +229,21 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #3
+declare double @sin(double noundef) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #3
+declare double @cos(double noundef) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @acos(double noundef) local_unnamed_addr #3
+declare double @acos(double noundef) local_unnamed_addr #4
 
-declare void @timelib_time_dtor(ptr noundef) local_unnamed_addr #1
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
+
+declare void @timelib_time_dtor(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden noundef double @timelib_ts_to_julianday(i64 noundef %0) local_unnamed_addr #2 {
+define hidden noundef double @timelib_ts_to_julianday(i64 noundef %0) local_unnamed_addr #3 {
 bb.a:
   %i.a = sitofp i64 %0 to double
   %i.b = fdiv double %i.a, 8.640000e+04
@@ -223,27 +252,32 @@ bb.a:
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.floor.f64(double) #4
+declare double @llvm.floor.f64(double) #5
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @atan2(double noundef, double noundef) local_unnamed_addr #3
+declare double @atan2(double noundef, double noundef) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sqrt(double noundef) local_unnamed_addr #3
+declare double @sqrt(double noundef) local_unnamed_addr #4
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.sqrt.f64(double) #4
+declare double @llvm.sqrt.f64(double) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #5
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #7
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #6 = { nounwind }
+attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
+attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #8 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}

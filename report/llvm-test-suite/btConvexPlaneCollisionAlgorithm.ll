@@ -204,6 +204,10 @@ declare noundef float @_ZNK20btPersistentManifold27getContactBreakingThresholdEv
 ; Function Attrs: uwtable
 define dso_local void @_ZN31btConvexPlaneCollisionAlgorithm16processCollisionEP17btCollisionObjectS1_RK16btDispatcherInfoP16btManifoldResult(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(44) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree nonnull readnone align 8 captures(none) %3, ptr noundef %4) unnamed_addr #4 align 2 {
 bb.a:
+  %sincos.sin.i.i25 = alloca float, align 4       ; 4 uses
+  %sincos.cos.i.i26 = alloca float, align 4       ; 4 uses
+  %sincos.sin.i.i = alloca float, align 4         ; 4 uses
+  %sincos.cos.i.i = alloca float, align 4         ; 4 uses
   %5 = alloca %class.btQuaternion, align 16       ; 4 uses
   %6 = alloca %class.btQuaternion, align 8        ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
@@ -279,20 +283,25 @@ _Z13btPlaneSpace1RK9btVector3RS_S2_.exit:         ; preds = %bb.d, %bb.e
   %i.at = fdiv float %i.as, %i.ar                 ; 2 uses
   %i.au = fcmp ogt float %i.at, f0x3EC90FDB
   %spec.store.select = select i1 %i.au, float f0x3EC90FDB, float %i.at
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i.i)
   %i.av = fmul float %.sroa.553.0, %.sroa.553.0
   %i.aw = tail call float @llvm.fmuladd.f32(float %.sroa.052.0, float %.sroa.052.0, float %i.av)
   %i.ax = tail call noundef float @llvm.fmuladd.f32(float %.sroa.854.0, float %.sroa.854.0, float %i.aw)
   %sqrt.i.i.i = tail call noundef float @llvm.sqrt.f32(float %i.ax)
-  %i.ay = fmul float %spec.store.select, 5.000000e-01 ; 2 uses
-  %7 = tail call noundef float @sinf(float noundef %i.ay) #9, !tbaa !7
-  %i.az = fdiv float %7, %sqrt.i.i.i              ; 2 uses
+  %i.ay = fmul float %spec.store.select, 5.000000e-01
+  call void @sincosf(float %i.ay, ptr nonnull %sincos.sin.i.i, ptr nonnull %sincos.cos.i.i)
+  %sin.i.i = load float, ptr %sincos.sin.i.i, align 4
+  %cos.i.i = load float, ptr %sincos.cos.i.i, align 4 ; 3 uses
+  %i.az = fdiv float %sin.i.i, %sqrt.i.i.i        ; 2 uses
   %i.ba = fmul float %.sroa.553.0, %i.az          ; 4 uses
   %i.bb = insertelement <2 x float> poison, float %i.az, i64 0
   %i.bc = shufflevector <2 x float> %i.bb, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bd = insertelement <2 x float> poison, float %.sroa.854.0, i64 0
   %i.be = insertelement <2 x float> %i.bd, float %.sroa.052.0, i64 1
   %i.bf = fmul <2 x float> %i.be, %i.bc           ; 5 uses
-  %8 = tail call noundef float @cosf(float noundef %i.ay) #9, !tbaa !7 ; 3 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i.i)
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
   %i.bh = load i32, ptr %i.bg, align 4, !tbaa !19 ; 2 uses
   %i.bi = icmp sgt i32 %i.bh, 0
@@ -303,7 +312,7 @@ _Z13btPlaneSpace1RK9btVector3RS_S2_.exit:         ; preds = %bb.d, %bb.e
   %i.bk = insertelement <2 x float> poison, float %i.ba, i64 1
   %i.bl = shufflevector <2 x float> %i.bf, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.bm = insertelement <2 x float> %i.bl, float %i.ba, i64 0
-  %i.bn = insertelement <2 x float> poison, float %8, i64 0
+  %i.bn = insertelement <2 x float> poison, float %cos.i.i, i64 0
   %i.bo = shufflevector <2 x float> %i.bn, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bp = extractelement <2 x float> %i.bf, i64 0 ; 2 uses
   %i.bq = extractelement <2 x float> %i.bf, i64 1 ; 2 uses
@@ -316,78 +325,83 @@ bb.f:                                             ; preds = %.lr.ph, %bb.f
   %i.bt = uitofp nneg i32 %.060 to float
   %i.bu = sitofp i32 %i.bs to float
   %i.bv = fdiv nnan float f0x40C90FDB, %i.bu
-  %9 = fmul float %i.bv, %i.bt
-  %i.bw = fmul float %9, 5.000000e-01             ; 2 uses
-  %10 = tail call noundef float @sinf(float noundef %i.bw) #9, !tbaa !7
-  %11 = tail call noundef float @cosf(float noundef %i.bw) #9, !tbaa !7 ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
+  %i.bw = fmul float %i.bv, %i.bt
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i.i25)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i.i26)
+  %7 = fmul float %i.bw, 5.000000e-01
   %i.bx = load <2 x float>, ptr %i.l, align 4, !tbaa !32 ; 4 uses
   %foldExtExtBinop = fmul <2 x float> %i.bx, %i.bx
   %i.by = extractelement <2 x float> %foldExtExtBinop, i64 1
   %i.bz = extractelement <2 x float> %i.bx, i64 0 ; 2 uses
-  %12 = tail call float @llvm.fmuladd.f32(float %i.bz, float %i.bz, float %i.by)
+  %8 = call float @llvm.fmuladd.f32(float %i.bz, float %i.bz, float %i.by)
   %i.ca = load float, ptr %i.t, align 4, !tbaa !32 ; 3 uses
-  %13 = tail call noundef float @llvm.fmuladd.f32(float %i.ca, float %i.ca, float %12)
-  %sqrt.i.i.i25 = tail call noundef float @llvm.sqrt.f32(float %13)
-  %i.cb = fdiv float %10, %sqrt.i.i.i25           ; 2 uses
+  %9 = call noundef float @llvm.fmuladd.f32(float %i.ca, float %i.ca, float %8)
+  %sqrt.i.i.i27 = call noundef float @llvm.sqrt.f32(float %9)
+  call void @sincosf(float %7, ptr nonnull %sincos.sin.i.i25, ptr nonnull %sincos.cos.i.i26)
+  %sin.i.i28 = load float, ptr %sincos.sin.i.i25, align 4
+  %cos.i.i29 = load float, ptr %sincos.cos.i.i26, align 4 ; 6 uses
+  %i.cb = fdiv float %sin.i.i28, %sqrt.i.i.i27    ; 2 uses
   %i.cc = insertelement <2 x float> poison, float %i.cb, i64 0
   %i.cd = shufflevector <2 x float> %i.cc, <2 x float> poison, <2 x i32> zeroinitializer
   %i.ce = fmul <2 x float> %i.bx, %i.cd           ; 6 uses
   %i.cf = extractelement <2 x float> %i.ce, i64 0 ; 4 uses
   %i.cg = fmul float %i.ca, %i.cb                 ; 8 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i.i25)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i.i26)
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
   %i.ch = fneg float %i.cf                        ; 2 uses
   %i.ci = shufflevector <2 x float> %i.ce, <2 x float> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
   %i.cj = insertelement <2 x float> %i.ci, float %i.cg, i64 0
   %i.ck = fneg <2 x float> %i.cj
   %i.cl = insertelement <2 x float> %i.ci, float %i.cg, i64 1
   %i.cm = fneg <2 x float> %i.cl                  ; 2 uses
-  %i.cn = fmul float %8, %i.ch
-  %14 = tail call float @llvm.fmuladd.f32(float %11, float %i.bq, float %i.cn)
+  %i.cn = fmul float %cos.i.i, %i.ch
+  %10 = call float @llvm.fmuladd.f32(float %cos.i.i29, float %i.bq, float %i.cn)
   %i.co = extractelement <2 x float> %i.cm, i64 0
-  %15 = tail call float @llvm.fmuladd.f32(float %i.co, float %i.bp, float %14)
-  %16 = tail call float @llvm.fmuladd.f32(float %i.cg, float %i.ba, float %15) ; 4 uses
+  %11 = call float @llvm.fmuladd.f32(float %i.co, float %i.bp, float %10)
+  %12 = call float @llvm.fmuladd.f32(float %i.cg, float %i.ba, float %11) ; 4 uses
   %i.cp = fmul <2 x float> %i.bo, %i.cm
-  %i.cq = insertelement <2 x float> poison, float %11, i64 0
+  %i.cq = insertelement <2 x float> poison, float %cos.i.i29, i64 0
   %i.cr = shufflevector <2 x float> %i.cq, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
-  %17 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cr, <2 x float> %i.bm, <2 x float> %i.cp)
-  %18 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ck, <2 x float> %i.br, <2 x float> %17)
-  %19 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ce, <2 x float> %i.bf, <2 x float> %18) ; 3 uses
-  %i.cs = extractelement <2 x float> %19, i64 1   ; 3 uses
+  %13 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cr, <2 x float> %i.bm, <2 x float> %i.cp)
+  %14 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ck, <2 x float> %i.br, <2 x float> %13)
+  %15 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ce, <2 x float> %i.bf, <2 x float> %14) ; 3 uses
+  %i.cs = extractelement <2 x float> %15, i64 1   ; 3 uses
   %i.ct = fmul float %i.bq, %i.cf
-  %20 = tail call float @llvm.fmuladd.f32(float %11, float %8, float %i.ct)
+  %16 = call float @llvm.fmuladd.f32(float %cos.i.i29, float %cos.i.i, float %i.ct)
   %i.cu = extractelement <2 x float> %i.ce, i64 1 ; 3 uses
-  %21 = tail call float @llvm.fmuladd.f32(float %i.cu, float %i.ba, float %20)
-  %22 = tail call float @llvm.fmuladd.f32(float %i.cg, float %i.bp, float %21) ; 3 uses
-  %i.cv = fmul float %11, %16
-  %23 = tail call float @llvm.fmuladd.f32(float %22, float %i.cf, float %i.cv)
-  %i.cw = extractelement <2 x float> %19, i64 0   ; 2 uses
-  %24 = tail call float @llvm.fmuladd.f32(float %i.cw, float %i.cg, float %23)
+  %17 = call float @llvm.fmuladd.f32(float %i.cu, float %i.ba, float %16)
+  %18 = call float @llvm.fmuladd.f32(float %i.cg, float %i.bp, float %17) ; 3 uses
+  %i.cv = fmul float %cos.i.i29, %12
+  %19 = call float @llvm.fmuladd.f32(float %18, float %i.cf, float %i.cv)
+  %i.cw = extractelement <2 x float> %15, i64 0   ; 2 uses
+  %20 = call float @llvm.fmuladd.f32(float %i.cw, float %i.cg, float %19)
   %i.cx = fneg float %i.cs
-  %i.cy = fneg <2 x float> %19                    ; 2 uses
-  %25 = tail call float @llvm.fmuladd.f32(float %i.cx, float %i.cu, float %24)
-  %i.cz = fmul float %11, %i.cw
-  %26 = tail call float @llvm.fmuladd.f32(float %22, float %i.cu, float %i.cz)
-  %27 = tail call float @llvm.fmuladd.f32(float %i.cs, float %i.cf, float %26)
-  %i.da = fneg float %16
-  %28 = tail call float @llvm.fmuladd.f32(float %i.da, float %i.cg, float %27)
-  %i.db = fmul float %11, %i.cs
-  %i.dc = fmul float %16, %i.ch
-  %i.dd = insertelement <2 x float> poison, float %22, i64 0
+  %i.cy = fneg <2 x float> %15                    ; 2 uses
+  %21 = call float @llvm.fmuladd.f32(float %i.cx, float %i.cu, float %20)
+  %i.cz = fmul float %cos.i.i29, %i.cw
+  %22 = call float @llvm.fmuladd.f32(float %18, float %i.cu, float %i.cz)
+  %23 = call float @llvm.fmuladd.f32(float %i.cs, float %i.cf, float %22)
+  %i.da = fneg float %12
+  %24 = call float @llvm.fmuladd.f32(float %i.da, float %i.cg, float %23)
+  %i.db = fmul float %cos.i.i29, %i.cs
+  %i.dc = fmul float %12, %i.ch
+  %i.dd = insertelement <2 x float> poison, float %18, i64 0
   %i.de = shufflevector <2 x float> %i.dd, <2 x float> poison, <2 x i32> zeroinitializer
   %i.df = insertelement <2 x float> %i.cr, float %i.cg, i64 0
   %i.dg = insertelement <2 x float> poison, float %i.db, i64 0
   %i.dh = insertelement <2 x float> %i.dg, float %i.dc, i64 1
-  %29 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.de, <2 x float> %i.df, <2 x float> %i.dh)
+  %25 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.de, <2 x float> %i.df, <2 x float> %i.dh)
   %i.di = shufflevector <2 x float> %i.cy, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
-  %i.dj = insertelement <2 x float> %i.di, float %16, i64 0
+  %i.dj = insertelement <2 x float> %i.di, float %12, i64 0
   %i.dk = shufflevector <2 x float> %i.ce, <2 x float> poison, <2 x i32> <i32 1, i32 1>
-  %30 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dj, <2 x float> %i.dk, <2 x float> %29)
+  %26 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.dj, <2 x float> %i.dk, <2 x float> %25)
   %i.dl = insertelement <2 x float> %i.ce, float %i.cg, i64 1
-  %31 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cy, <2 x float> %i.dl, <2 x float> %30)
-  %.sroa.0.0.vec.insert.i32 = insertelement <2 x float> poison, float %25, i64 0
-  %.sroa.0.4.vec.insert.i33 = insertelement <2 x float> %.sroa.0.0.vec.insert.i32, float %28, i64 1
+  %27 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cy, <2 x float> %i.dl, <2 x float> %26)
+  %.sroa.0.0.vec.insert.i32 = insertelement <2 x float> poison, float %21, i64 0
+  %.sroa.0.4.vec.insert.i33 = insertelement <2 x float> %.sroa.0.0.vec.insert.i32, float %24, i64 1
   store <2 x float> %.sroa.0.4.vec.insert.i33, ptr %6, align 8
-  store <2 x float> %31, ptr %i.bj, align 8
+  store <2 x float> %27, ptr %i.bj, align 8
   call void @_ZN31btConvexPlaneCollisionAlgorithm20collideSingleContactERK12btQuaternionP17btCollisionObjectS4_RK16btDispatcherInfoP16btManifoldResult(ptr noundef nonnull align 8 dereferenceable(44) %0, ptr noundef nonnull align 4 dereferenceable(16) %6, ptr noundef %1, ptr noundef %2, ptr nonnull align 8 poison, ptr noundef nonnull %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
   %i.dm = add nuw nsw i32 %.060, 1                ; 2 uses
@@ -425,7 +439,7 @@ bb.h:                                             ; preds = %bb.g
   %.5.i = select i1 %.not1.i, i64 80, i64 16
   %i.ec = getelementptr inbounds nuw i8, ptr %4, i64 %..i
   %i.ed = getelementptr inbounds nuw i8, ptr %4, i64 %.5.i
-  tail call void @_ZN20btPersistentManifold20refreshContactPointsERK11btTransformS2_(ptr noundef nonnull align 8 dereferenceable(744) %i.dv, ptr noundef nonnull align 4 dereferenceable(64) %i.ec, ptr noundef nonnull align 4 dereferenceable(64) %i.ed)
+  call void @_ZN20btPersistentManifold20refreshContactPointsERK11btTransformS2_(ptr noundef nonnull align 8 dereferenceable(744) %i.dv, ptr noundef nonnull align 4 dereferenceable(64) %i.ec, ptr noundef nonnull align 4 dereferenceable(64) %i.ed)
   br label %_ZN16btManifoldResult20refreshContactPointsEv.exit
 
 _ZN16btManifoldResult20refreshContactPointsEv.exit: ; preds = %.sink.split.i, %bb.h, %.loopexit, %bb.g, %bb.a
@@ -611,12 +625,6 @@ declare float @llvm.fmuladd.f32(float, float, float) #6
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fabs.f32(float) #6
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sinf(float noundef) local_unnamed_addr #7
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @cosf(float noundef) local_unnamed_addr #7
-
 declare void @_ZN20btPersistentManifold20refreshContactPointsERK11btTransformS2_(ptr noundef nonnull align 8 dereferenceable(744), ptr noundef nonnull align 4 dereferenceable(64), ptr noundef nonnull align 4 dereferenceable(64)) local_unnamed_addr #1
 
 declare noundef ptr @_Z22btAlignedAllocInternalmi(i64 noundef, i32 noundef) local_unnamed_addr #1
@@ -625,6 +633,9 @@ declare void @_Z21btAlignedFreeInternalPv(ptr noundef) local_unnamed_addr #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #6
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincosf(float noundef, ptr, ptr) local_unnamed_addr #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <3 x float> @llvm.fmuladd.v3f32(<3 x float>, <3 x float>, <3 x float>) #6
@@ -639,7 +650,7 @@ attributes #3 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-
 attributes #4 = { uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #7 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { builtin nounwind }
 attributes #9 = { nounwind }
 

@@ -204,6 +204,10 @@ declare void @hb_paint_sweep_gradient_tiles(ptr noundef, i32 noundef, i32 nounde
 ; Function Attrs: mustprogress nounwind uwtable
 define internal void @_ZL30hb_vector_svg_sweep_emit_patchfjfjPv(float noundef %0, i32 noundef %1, float noundef %2, i32 noundef %3, ptr nofree noundef readonly captures(none) %4) #9 {
 bb.a:
+  %sincos.sin65.i = alloca float, align 4         ; 4 uses
+  %sincos.cos66.i = alloca float, align 4         ; 4 uses
+  %sincos.sin.i = alloca float, align 4           ; 4 uses
+  %sincos.cos.i = alloca float, align 4           ; 4 uses
   %i.a = load ptr, ptr %4, align 8, !tbaa !79     ; 23 uses
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.c = load i32, ptr %i.b, align 8, !tbaa !80   ; 10 uses
@@ -223,52 +227,58 @@ bb.a:
   %i.q = shufflevector <4 x i8> %i.p, <4 x i8> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
   %i.r = uitofp <4 x i8> %i.q to <4 x float>
   %i.s = fdiv <4 x float> %i.r, splat (float 2.550000e+02)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin65.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos66.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i)
   %i.t = fsub float %2, %0                        ; 2 uses
   %i.u = tail call float @llvm.fabs.f32(float %i.t)
   %i.v = fdiv float %i.u, f0x3E490FDB
   %i.w = tail call float @llvm.ceil.f32(float %i.v)
   %i.x = fptosi float %i.w to i32
   %spec.store.select.i = tail call i32 @llvm.umax.i32(i32 %i.x, i32 1) ; 2 uses
-  %5 = tail call float @cosf(float noundef %0) #12
-  %6 = tail call float @sinf(float noundef %0) #12
+  call void @sincosf(float %0, ptr nonnull %sincos.sin.i, ptr nonnull %sincos.cos.i)
+  %sin.i = load float, ptr %sincos.sin.i, align 4
+  %cos.i = load float, ptr %sincos.cos.i, align 4
   %i.y = uitofp nneg i32 %spec.store.select.i to float
   %i.z = fsub <4 x float> %i.s, %i.m
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.e, %bb.a
   %.0264.i = phi i32 [ 0, %bb.a ], [ %i.dd, %bb.e ] ; 2 uses
-  %.sroa.11258.0263.i = phi float [ %6, %bb.a ], [ %10, %bb.e ] ; 4 uses
-  %.sroa.0257.0262.i = phi float [ %5, %bb.a ], [ %9, %bb.e ] ; 4 uses
+  %.sroa.11258.0263.i = phi float [ %sin.i, %bb.a ], [ %sin67.i, %bb.e ] ; 4 uses
+  %.sroa.0257.0262.i = phi float [ %cos.i, %bb.a ], [ %cos68.i, %bb.e ] ; 4 uses
   %.sroa.7256.0261.i = phi <2 x float> [ %i.o, %bb.a ], [ %i.ag, %bb.e ]
   %.sroa.0255.0260.i = phi <2 x float> [ %i.n, %bb.a ], [ %i.af, %bb.e ]
   %i.aa = uitofp nneg i32 %.0264.i to float
   %i.ab = fadd float %i.aa, 1.000000e+00
   %i.ac = fdiv float %i.ab, %i.y                  ; 2 uses
-  %7 = tail call noundef float @llvm.fmuladd.f32(float %i.t, float %i.ac, float %0) ; 2 uses
+  %5 = call noundef float @llvm.fmuladd.f32(float %i.t, float %i.ac, float %0)
   %i.ad = insertelement <4 x float> poison, float %i.ac, i64 0
   %i.ae = shufflevector <4 x float> %i.ad, <4 x float> poison, <4 x i32> zeroinitializer
-  %8 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.z, <4 x float> %i.ae, <4 x float> %i.m) ; 3 uses
-  %i.af = shufflevector <4 x float> %8, <4 x float> poison, <2 x i32> <i32 1, i32 0>
-  %i.ag = shufflevector <4 x float> %8, <4 x float> poison, <2 x i32> <i32 3, i32 2>
-  %9 = tail call float @cosf(float noundef %7) #12 ; 5 uses
-  %10 = tail call float @sinf(float noundef %7) #12 ; 5 uses
+  %6 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.z, <4 x float> %i.ae, <4 x float> %i.m) ; 3 uses
+  %i.af = shufflevector <4 x float> %6, <4 x float> poison, <2 x i32> <i32 1, i32 0>
+  %i.ag = shufflevector <4 x float> %6, <4 x float> poison, <2 x i32> <i32 3, i32 2>
+  call void @sincosf(float %5, ptr nonnull %sincos.sin65.i, ptr nonnull %sincos.cos66.i)
+  %sin67.i = load float, ptr %sincos.sin65.i, align 4 ; 5 uses
+  %cos68.i = load float, ptr %sincos.cos66.i, align 4 ; 5 uses
   %i.ah = fmul float %i.i, %.sroa.0257.0262.i
   %i.ai = fmul float %i.i, %.sroa.11258.0263.i
   %i.aj = fadd float %i.e, %i.ah
   %i.ak = fadd float %i.g, %i.ai
-  %i.al = fmul float %i.i, %9
-  %i.am = fmul float %i.i, %10
+  %i.al = fmul float %i.i, %cos68.i
+  %i.am = fmul float %i.i, %sin67.i
   %i.an = fadd float %i.e, %i.al
   %i.ao = fadd float %i.g, %i.am
-  %i.ap = fadd float %.sroa.0257.0262.i, %9       ; 3 uses
-  %i.aq = fadd float %.sroa.11258.0263.i, %10     ; 3 uses
+  %i.ap = fadd float %.sroa.0257.0262.i, %cos68.i ; 3 uses
+  %i.aq = fadd float %.sroa.11258.0263.i, %sin67.i ; 3 uses
   %i.ar = fmul float %i.aq, %i.aq
-  %11 = tail call noundef float @llvm.fmuladd.f32(float %i.ap, float %i.ap, float %i.ar) ; 2 uses
-  %i.as = fcmp oeq float %11, 0.000000e+00
+  %7 = call noundef float @llvm.fmuladd.f32(float %i.ap, float %i.ap, float %i.ar) ; 2 uses
+  %i.as = fcmp oeq float %7, 0.000000e+00
   br i1 %i.as, label %_ZL23hb_vector_svg_normalizeRK21hb_vector_svg_point_t.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %sqrt.i.i = tail call float @llvm.sqrt.f32(float %11)
+  %sqrt.i.i = call float @llvm.sqrt.f32(float %7)
   %i.at = fdiv float 1.000000e+00, %sqrt.i.i      ; 2 uses
   %i.au = fmul float %i.ap, %i.at
   %.sroa.0.0.vec.insert.i.i.i = insertelement <2 x float> poison, float %i.au, i64 0
@@ -281,16 +291,16 @@ _ZL23hb_vector_svg_normalizeRK21hb_vector_svg_point_t.exit.i: ; preds = %bb.c, %
   %.sroa.0225.4.vec.extract.i = extractelement <2 x float> %.sroa.0.0.i.i, i64 1 ; 3 uses
   %i.aw = fneg float %.sroa.0225.4.vec.extract.i
   %i.ax = insertelement <2 x float> poison, float %.sroa.11258.0263.i, i64 0
-  %i.ay = insertelement <2 x float> %i.ax, float %10, i64 1 ; 3 uses
+  %i.ay = insertelement <2 x float> %i.ax, float %sin67.i, i64 1 ; 3 uses
   %i.az = shufflevector <2 x float> %.sroa.0.0.i.i, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.ba = fmul <2 x float> %i.ay, %i.az
   %i.bb = insertelement <2 x float> poison, float %i.aw, i64 0
   %i.bc = shufflevector <2 x float> %i.bb, <2 x float> poison, <2 x i32> zeroinitializer
   %i.bd = insertelement <2 x float> poison, float %.sroa.0257.0262.i, i64 0
-  %i.be = insertelement <2 x float> %i.bd, float %9, i64 1 ; 3 uses
-  %12 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bc, <2 x float> %i.be, <2 x float> %i.ba) ; 2 uses
-  %13 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %12)
-  %i.bf = fcmp olt <2 x float> %13, splat (float f0x358637BD)
+  %i.be = insertelement <2 x float> %i.bd, float %cos68.i, i64 1 ; 3 uses
+  %8 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bc, <2 x float> %i.be, <2 x float> %i.ba) ; 2 uses
+  %9 = call <2 x float> @llvm.fabs.v2f32(<2 x float> %8)
+  %i.bf = fcmp olt <2 x float> %9, splat (float f0x358637BD)
   %i.bg = bitcast <2 x i1> %i.bf to i2
   %.not = icmp eq i2 %i.bg, 0
   br i1 %.not, label %bb.d, label %bb.e
@@ -301,8 +311,8 @@ bb.d:                                             ; preds = %_ZL23hb_vector_svg_
   %i.bi = shufflevector <2 x float> %.sroa.0.0.i.i, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.bj = fsub <2 x float> %i.ay, %i.bi
   %i.bk = fmul <2 x float> %i.ay, %i.bj
-  %14 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bh, <2 x float> %i.be, <2 x float> %i.bk)
-  %i.bl = fdiv <2 x float> %14, %12
+  %10 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.bh, <2 x float> %i.be, <2 x float> %i.bk)
+  %i.bl = fdiv <2 x float> %10, %8
   %i.bm = shufflevector <2 x float> %.sroa.0.0.i.i, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %i.bn = shufflevector <2 x float> %i.bl, <2 x float> poison, <4 x i32> <i32 0, i32 0, i32 1, i32 1>
   %i.bo = fmul <4 x float> %i.bm, %i.bn           ; 4 uses
@@ -324,8 +334,8 @@ bb.d:                                             ; preds = %_ZL23hb_vector_svg_
   %i.ce = fmul float %i.i, %i.cc
   %i.cf = fadd float %i.e, %i.cd
   %i.cg = fadd float %i.g, %i.ce
-  %i.ch = fsub float %i.bu, %9
-  %i.ci = fsub float %i.bw, %10
+  %i.ch = fsub float %i.bu, %cos68.i
+  %i.ci = fsub float %i.bw, %sin67.i
   %i.cj = fmul float %i.ch, 3.333300e-01
   %i.ck = fmul float %i.ci, 3.333300e-01
   %i.cl = fadd float %i.bu, %i.cj
@@ -335,42 +345,42 @@ bb.d:                                             ; preds = %_ZL23hb_vector_svg_
   %i.cp = fadd float %i.e, %i.cn
   %i.cq = fadd float %i.g, %i.co
   %i.cr = shufflevector <2 x float> %.sroa.0255.0260.i, <2 x float> %.sroa.7256.0261.i, <4 x i32> <i32 1, i32 0, i32 3, i32 2> ; 2 uses
-  %i.cs = fsub <4 x float> %8, %i.cr
-  %15 = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cs, <4 x float> splat (float 5.000000e-01), <4 x float> %i.cr) ; 3 uses
-  %i.ct = fcmp olt <4 x float> %15, zeroinitializer
-  %i.cu = fcmp ogt <4 x float> %15, splat (float 1.000000e+00)
-  %i.cv = select <4 x i1> %i.cu, <4 x float> splat (float 1.000000e+00), <4 x float> %15
+  %i.cs = fsub <4 x float> %6, %i.cr
+  %11 = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.cs, <4 x float> splat (float 5.000000e-01), <4 x float> %i.cr) ; 3 uses
+  %i.ct = fcmp olt <4 x float> %11, zeroinitializer
+  %i.cu = fcmp ogt <4 x float> %11, splat (float 1.000000e+00)
+  %i.cv = select <4 x i1> %i.cu, <4 x float> splat (float 1.000000e+00), <4 x float> %11
   %i.cw = fmul <4 x float> %i.cv, splat (float 2.550000e+02)
   %i.cx = fadd <4 x float> %i.cw, splat (float 5.000000e-01)
-  %16 = tail call <4 x float> @llvm.floor.v4f32(<4 x float> %i.cx)
-  %i.cy = select <4 x i1> %i.ct, <4 x float> zeroinitializer, <4 x float> %16
+  %12 = call <4 x float> @llvm.floor.v4f32(<4 x float> %i.cx)
+  %i.cy = select <4 x i1> %i.ct, <4 x float> zeroinitializer, <4 x float> %12
   %i.cz = fptoui <4 x float> %i.cy to <4 x i32>
   %i.da = shufflevector <4 x i32> %i.cz, <4 x i32> poison, <4 x i32> <i32 2, i32 1, i32 0, i32 3>
   %i.db = trunc <4 x i32> %i.da to <4 x i8>
   %i.dc = bitcast <4 x i8> %i.db to i32
-  %17 = tail call noundef zeroext i1 @_ZN15hb_vector_buf_t10append_strEPKc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, ptr noundef nonnull @.str.65) ; 0 uses
-  tail call void @_ZN15hb_vector_buf_t10append_numEfj(ptr noundef nonnull align 8 dereferenceable(20) %i.a, float noundef %i.e, i32 noundef %i.c)
-  %18 = tail call noundef zeroext i1 @_ZN15hb_vector_buf_t8append_cEc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, i8 noundef signext 44) ; 0 uses
-  tail call void @_ZN15hb_vector_buf_t10append_numEfj(ptr noundef nonnull align 8 dereferenceable(20) %i.a, float noundef %i.g, i32 noundef %i.c)
-  %19 = tail call noundef zeroext i1 @_ZN15hb_vector_buf_t10append_strEPKc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, ptr noundef nonnull @.str.66) ; 0 uses
-  tail call void @_ZN15hb_vector_buf_t10append_numEfj(ptr noundef nonnull align 8 dereferenceable(20) %i.a, float noundef %i.aj, i32 noundef %i.c)
-  %20 = tail call noundef zeroext i1 @_ZN15hb_vector_buf_t8append_cEc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, i8 noundef signext 44) ; 0 uses
-  tail call void @_ZN15hb_vector_buf_t10append_numEfj(ptr noundef nonnull align 8 dereferenceable(20) %i.a, float noundef %i.ak, i32 noundef %i.c)
-  %21 = tail call noundef zeroext i1 @_ZN15hb_vector_buf_t10append_strEPKc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, ptr noundef nonnull @.str.67) ; 0 uses
-  tail call void @_ZN15hb_vector_buf_t10append_numEfj(ptr noundef nonnull align 8 dereferenceable(20) %i.a, float noundef %i.cf, i32 noundef %i.c)
-  %22 = tail call noundef zeroext i1 @_ZN15hb_vector_buf_t8append_cEc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, i8 noundef signext 44) ; 0 uses
-  tail call void @_ZN15hb_vector_buf_t10append_numEfj(ptr noundef nonnull align 8 dereferenceable(20) %i.a, float noundef %i.cg, i32 noundef %i.c)
-  %23 = tail call noundef zeroext i1 @_ZN15hb_vector_buf_t8append_cEc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, i8 noundef signext 32) ; 0 uses
-  tail call void @_ZN15hb_vector_buf_t10append_numEfj(ptr noundef nonnull align 8 dereferenceable(20) %i.a, float noundef %i.cp, i32 noundef %i.c)
-  %24 = tail call noundef zeroext i1 @_ZN15hb_vector_buf_t8append_cEc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, i8 noundef signext 44) ; 0 uses
-  tail call void @_ZN15hb_vector_buf_t10append_numEfj(ptr noundef nonnull align 8 dereferenceable(20) %i.a, float noundef %i.cq, i32 noundef %i.c)
-  %25 = tail call noundef zeroext i1 @_ZN15hb_vector_buf_t8append_cEc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, i8 noundef signext 32) ; 0 uses
-  tail call void @_ZN15hb_vector_buf_t10append_numEfj(ptr noundef nonnull align 8 dereferenceable(20) %i.a, float noundef %i.an, i32 noundef %i.c)
-  %26 = tail call noundef zeroext i1 @_ZN15hb_vector_buf_t8append_cEc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, i8 noundef signext 44) ; 0 uses
-  tail call void @_ZN15hb_vector_buf_t10append_numEfj(ptr noundef nonnull align 8 dereferenceable(20) %i.a, float noundef %i.ao, i32 noundef %i.c)
-  %27 = tail call noundef zeroext i1 @_ZN15hb_vector_buf_t10append_strEPKc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, ptr noundef nonnull @.str.68) ; 0 uses
-  tail call void @_ZN15hb_vector_buf_t16append_svg_colorEjb(ptr noundef nonnull align 8 dereferenceable(20) %i.a, i32 noundef %i.dc, i1 noundef zeroext true)
-  %28 = tail call noundef zeroext i1 @_ZN15hb_vector_buf_t10append_strEPKc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, ptr noundef nonnull @.str.22) ; 0 uses
+  %13 = call noundef zeroext i1 @_ZN15hb_vector_buf_t10append_strEPKc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, ptr noundef nonnull @.str.65) ; 0 uses
+  call void @_ZN15hb_vector_buf_t10append_numEfj(ptr noundef nonnull align 8 dereferenceable(20) %i.a, float noundef %i.e, i32 noundef %i.c)
+  %14 = call noundef zeroext i1 @_ZN15hb_vector_buf_t8append_cEc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, i8 noundef signext 44) ; 0 uses
+  call void @_ZN15hb_vector_buf_t10append_numEfj(ptr noundef nonnull align 8 dereferenceable(20) %i.a, float noundef %i.g, i32 noundef %i.c)
+  %15 = call noundef zeroext i1 @_ZN15hb_vector_buf_t10append_strEPKc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, ptr noundef nonnull @.str.66) ; 0 uses
+  call void @_ZN15hb_vector_buf_t10append_numEfj(ptr noundef nonnull align 8 dereferenceable(20) %i.a, float noundef %i.aj, i32 noundef %i.c)
+  %16 = call noundef zeroext i1 @_ZN15hb_vector_buf_t8append_cEc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, i8 noundef signext 44) ; 0 uses
+  call void @_ZN15hb_vector_buf_t10append_numEfj(ptr noundef nonnull align 8 dereferenceable(20) %i.a, float noundef %i.ak, i32 noundef %i.c)
+  %17 = call noundef zeroext i1 @_ZN15hb_vector_buf_t10append_strEPKc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, ptr noundef nonnull @.str.67) ; 0 uses
+  call void @_ZN15hb_vector_buf_t10append_numEfj(ptr noundef nonnull align 8 dereferenceable(20) %i.a, float noundef %i.cf, i32 noundef %i.c)
+  %18 = call noundef zeroext i1 @_ZN15hb_vector_buf_t8append_cEc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, i8 noundef signext 44) ; 0 uses
+  call void @_ZN15hb_vector_buf_t10append_numEfj(ptr noundef nonnull align 8 dereferenceable(20) %i.a, float noundef %i.cg, i32 noundef %i.c)
+  %19 = call noundef zeroext i1 @_ZN15hb_vector_buf_t8append_cEc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, i8 noundef signext 32) ; 0 uses
+  call void @_ZN15hb_vector_buf_t10append_numEfj(ptr noundef nonnull align 8 dereferenceable(20) %i.a, float noundef %i.cp, i32 noundef %i.c)
+  %20 = call noundef zeroext i1 @_ZN15hb_vector_buf_t8append_cEc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, i8 noundef signext 44) ; 0 uses
+  call void @_ZN15hb_vector_buf_t10append_numEfj(ptr noundef nonnull align 8 dereferenceable(20) %i.a, float noundef %i.cq, i32 noundef %i.c)
+  %21 = call noundef zeroext i1 @_ZN15hb_vector_buf_t8append_cEc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, i8 noundef signext 32) ; 0 uses
+  call void @_ZN15hb_vector_buf_t10append_numEfj(ptr noundef nonnull align 8 dereferenceable(20) %i.a, float noundef %i.an, i32 noundef %i.c)
+  %22 = call noundef zeroext i1 @_ZN15hb_vector_buf_t8append_cEc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, i8 noundef signext 44) ; 0 uses
+  call void @_ZN15hb_vector_buf_t10append_numEfj(ptr noundef nonnull align 8 dereferenceable(20) %i.a, float noundef %i.ao, i32 noundef %i.c)
+  %23 = call noundef zeroext i1 @_ZN15hb_vector_buf_t10append_strEPKc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, ptr noundef nonnull @.str.68) ; 0 uses
+  call void @_ZN15hb_vector_buf_t16append_svg_colorEjb(ptr noundef nonnull align 8 dereferenceable(20) %i.a, i32 noundef %i.dc, i1 noundef zeroext true)
+  %24 = call noundef zeroext i1 @_ZN15hb_vector_buf_t10append_strEPKc(ptr noundef nonnull align 8 dereferenceable(20) %i.a, ptr noundef nonnull @.str.22) ; 0 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %_ZL23hb_vector_svg_normalizeRK21hb_vector_svg_point_t.exit.i
@@ -379,17 +389,15 @@ bb.e:                                             ; preds = %bb.d, %_ZL23hb_vect
   br i1 %exitcond.not.i, label %_ZL29hb_vector_svg_add_sweep_patchP15hb_vector_buf_tjffffRK20hb_vector_svg_rgba_tfS3_.exit, label %bb.b, !llvm.loop !503
 
 _ZL29hb_vector_svg_add_sweep_patchP15hb_vector_buf_tjffffRK20hb_vector_svg_rgba_tfS3_.exit: ; preds = %bb.e
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin65.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos66.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i)
   ret void
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.ceil.f32(float) #5
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @cosf(float noundef) local_unnamed_addr #10
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sinf(float noundef) local_unnamed_addr #10
 
 declare i32 @hb_set_has(ptr noundef, i32 noundef) local_unnamed_addr #2
 
@@ -406,6 +414,9 @@ declare i32 @llvm.umin.i32(i32, i32) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #5
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincosf(float noundef, ptr, ptr) local_unnamed_addr #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #5
@@ -435,7 +446,7 @@ attributes #6 = { nofree nounwind "no-trapping-math"="true" "stack-protector-buf
 attributes #7 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { mustprogress nounwind uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #10 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #11 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #12 = { nounwind }
 attributes #13 = { nounwind willreturn memory(read) }

@@ -11,6 +11,8 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define void @dorbdb1_(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr nofree noundef writeonly captures(none) %7, ptr nofree noundef writeonly captures(none) %8, ptr noundef %9, ptr noundef %10, ptr noundef %11, ptr noundef %12, ptr nofree noundef readonly captures(none) %13, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %14) local_unnamed_addr #0 {
 bb.a:
+  %sincos.sin = alloca double, align 8            ; 2 uses
+  %sincos.cos = alloca double, align 8            ; 2 uses
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca i32, align 4                      ; 22 uses
   %i.c = alloca i32, align 4                      ; 14 uses
@@ -19,14 +21,14 @@ bb.a:
   %i.f = alloca double, align 8                   ; 6 uses
   %i.g = alloca i32, align 4                      ; 3 uses
   %i.h = alloca i32, align 4                      ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #5
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #6
   %i.i = load i32, ptr %4, align 4, !tbaa !9      ; 4 uses
   %narrow = xor i32 %i.i, -1
   %i.j = sext i32 %narrow to i64
@@ -94,7 +96,7 @@ bb.f:                                             ; preds = %bb.e
   %.neg = phi i32 [ 1, %bb.a ], [ 3, %bb.c ], [ 5, %bb.d ], [ 2, %bb.b ], [ 7, %bb.e ], [ 14, %bb.f ]
   store i32 %.sink, ptr %14, align 4, !tbaa !9
   store i32 %.neg, ptr %i.a, align 4, !tbaa !9
-  %i.as = call i32 @xerbla_(ptr noundef nonnull @.str, ptr noundef nonnull %i.a, i32 noundef 7) #5 ; 0 uses
+  %i.as = call i32 @xerbla_(ptr noundef nonnull @.str, ptr noundef nonnull %i.a, i32 noundef 7) #6 ; 0 uses
   br label %.loopexit
 
 .thread:                                          ; preds = %bb.f
@@ -127,7 +129,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.i
   %i.bf = getelementptr [8 x i8], ptr %i.k, i64 %indvars.iv.next
   %i.bg = getelementptr [8 x i8], ptr %i.bf, i64 %i.ba
   %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %indvars.iv ; 2 uses
-  call void @dlarfgp_(ptr noundef nonnull %i.b, ptr noundef %i.be, ptr noundef %i.bg, ptr noundef nonnull @c__1, ptr noundef nonnull %i.bh) #5
+  call void @dlarfgp_(ptr noundef nonnull %i.b, ptr noundef %i.be, ptr noundef %i.bg, ptr noundef nonnull @c__1, ptr noundef nonnull %i.bh) #6
   %i.bi = load i32, ptr %0, align 4, !tbaa !9
   %i.bj = load i32, ptr %1, align 4, !tbaa !9
   %i.bk = add i32 %i.ay, %i.bi
@@ -141,16 +143,17 @@ bb.g:                                             ; preds = %.lr.ph, %bb.i
   %i.br = getelementptr [8 x i8], ptr %i.n, i64 %indvars.iv.next
   %i.bs = getelementptr [8 x i8], ptr %i.br, i64 %i.bm
   %i.bt = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv ; 2 uses
-  call void @dlarfgp_(ptr noundef nonnull %i.b, ptr noundef %i.bq, ptr noundef %i.bs, ptr noundef nonnull @c__1, ptr noundef nonnull %i.bt) #5
+  call void @dlarfgp_(ptr noundef nonnull %i.b, ptr noundef %i.bq, ptr noundef %i.bs, ptr noundef nonnull @c__1, ptr noundef nonnull %i.bt) #6
   %i.bu = load double, ptr %i.bq, align 8, !tbaa !11
   %i.bv = load double, ptr %i.be, align 8, !tbaa !11
-  %i.bw = call double @atan2(double noundef %i.bu, double noundef %i.bv) #5 ; 3 uses
+  %i.bw = call double @atan2(double noundef %i.bu, double noundef %i.bv) #6 ; 2 uses
   %i.bx = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv
   store double %i.bw, ptr %i.bx, align 8, !tbaa !11
-  %15 = call double @cos(double noundef %i.bw) #5
-  store double %15, ptr %i.e, align 8, !tbaa !11
-  %16 = call double @sin(double noundef %i.bw) #5
-  store double %16, ptr %i.f, align 8, !tbaa !11
+  call void @sincos(double %i.bw, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8
+  %cos = load double, ptr %sincos.cos, align 8
+  store double %cos, ptr %i.e, align 8, !tbaa !11
+  store double %sin, ptr %i.f, align 8, !tbaa !11
   store double 1.000000e+00, ptr %i.be, align 8, !tbaa !11
   store double 1.000000e+00, ptr %i.bq, align 8, !tbaa !11
   %i.by = load i32, ptr %1, align 4, !tbaa !9
@@ -163,7 +166,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.i
   %i.cd = sext i32 %i.cc to i64                   ; 2 uses
   %i.ce = getelementptr [8 x i8], ptr %i.k, i64 %indvars.iv
   %i.cf = getelementptr [8 x i8], ptr %i.ce, i64 %i.cd ; 2 uses
-  call void @dlarf_(ptr noundef nonnull @.str.1, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.be, ptr noundef nonnull @c__1, ptr noundef nonnull %i.bh, ptr noundef %i.cf, ptr noundef nonnull %4, ptr noundef nonnull %i.at) #5
+  call void @dlarf_(ptr noundef nonnull @.str.1, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.be, ptr noundef nonnull @c__1, ptr noundef nonnull %i.bh, ptr noundef %i.cf, ptr noundef nonnull %4, ptr noundef nonnull %i.at) #6
   %i.cg = load i32, ptr %0, align 4, !tbaa !9
   %i.ch = load i32, ptr %1, align 4, !tbaa !9
   %i.ci = add i32 %i.ay, %i.cg
@@ -176,7 +179,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.i
   %i.cn = sext i32 %i.cm to i64                   ; 2 uses
   %i.co = getelementptr [8 x i8], ptr %i.n, i64 %indvars.iv
   %i.cp = getelementptr [8 x i8], ptr %i.co, i64 %i.cn ; 7 uses
-  call void @dlarf_(ptr noundef nonnull @.str.1, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.bq, ptr noundef nonnull @c__1, ptr noundef nonnull %i.bt, ptr noundef %i.cp, ptr noundef nonnull %6, ptr noundef nonnull %i.at) #5
+  call void @dlarf_(ptr noundef nonnull @.str.1, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.bq, ptr noundef nonnull @c__1, ptr noundef nonnull %i.bt, ptr noundef %i.cp, ptr noundef nonnull %6, ptr noundef nonnull %i.at) #6
   %i.cq = load i32, ptr %2, align 4, !tbaa !9     ; 2 uses
   %i.cr = sext i32 %i.cq to i64
   %i.cs = icmp slt i64 %indvars.iv, %i.cr
@@ -190,7 +193,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.i
 bb.h:                                             ; preds = %bb.g
   %i.cu = sub nuw nsw i32 %i.cq, %indvars291
   store i32 %i.cu, ptr %i.b, align 4, !tbaa !9
-  call void @drot_(ptr noundef nonnull %i.b, ptr noundef nonnull %i.cf, ptr noundef nonnull %4, ptr noundef nonnull %i.cp, ptr noundef nonnull %6, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f) #5
+  call void @drot_(ptr noundef nonnull %i.b, ptr noundef nonnull %i.cf, ptr noundef nonnull %4, ptr noundef nonnull %i.cp, ptr noundef nonnull %6, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f) #6
   %i.cv = load i32, ptr %2, align 4, !tbaa !9
   %i.cw = sub nsw i32 %i.cv, %indvars291
   store i32 %i.cw, ptr %i.b, align 4, !tbaa !9
@@ -202,7 +205,7 @@ bb.h:                                             ; preds = %bb.g
   %i.dc = getelementptr [8 x i8], ptr %i.n, i64 %indvars.iv
   %i.dd = getelementptr [8 x i8], ptr %i.dc, i64 %i.db
   %i.de = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %indvars.iv ; 3 uses
-  call void @dlarfgp_(ptr noundef nonnull %i.b, ptr noundef nonnull %i.cp, ptr noundef %i.dd, ptr noundef nonnull %6, ptr noundef nonnull %i.de) #5
+  call void @dlarfgp_(ptr noundef nonnull %i.b, ptr noundef nonnull %i.cp, ptr noundef %i.dd, ptr noundef nonnull %6, ptr noundef nonnull %i.de) #6
   %i.df = load double, ptr %i.cp, align 8, !tbaa !11
   store double %i.df, ptr %i.f, align 8, !tbaa !11
   store double 1.000000e+00, ptr %i.cp, align 8, !tbaa !11
@@ -214,7 +217,7 @@ bb.h:                                             ; preds = %bb.g
   store i32 %i.dj, ptr %i.c, align 4, !tbaa !9
   %i.dk = getelementptr [8 x i8], ptr %i.k, i64 %indvars.iv.next
   %i.dl = getelementptr [8 x i8], ptr %i.dk, i64 %i.cd ; 3 uses
-  call void @dlarf_(ptr noundef nonnull @.str.2, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.cp, ptr noundef nonnull %6, ptr noundef nonnull %i.de, ptr noundef %i.dl, ptr noundef nonnull %4, ptr noundef nonnull %i.at) #5
+  call void @dlarf_(ptr noundef nonnull @.str.2, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.cp, ptr noundef nonnull %6, ptr noundef nonnull %i.de, ptr noundef %i.dl, ptr noundef nonnull %4, ptr noundef nonnull %i.at) #6
   %i.dm = load i32, ptr %0, align 4, !tbaa !9
   %i.dn = load i32, ptr %1, align 4, !tbaa !9
   %.neg282 = add i32 %i.dm, %.0260.neg289
@@ -225,23 +228,23 @@ bb.h:                                             ; preds = %bb.g
   store i32 %i.dq, ptr %i.c, align 4, !tbaa !9
   %i.dr = getelementptr [8 x i8], ptr %i.n, i64 %indvars.iv.next
   %i.ds = getelementptr [8 x i8], ptr %i.dr, i64 %i.cn ; 3 uses
-  call void @dlarf_(ptr noundef nonnull @.str.2, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.cp, ptr noundef nonnull %6, ptr noundef nonnull %i.de, ptr noundef %i.ds, ptr noundef nonnull %6, ptr noundef nonnull %i.at) #5
+  call void @dlarf_(ptr noundef nonnull @.str.2, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.cp, ptr noundef nonnull %6, ptr noundef nonnull %i.de, ptr noundef %i.ds, ptr noundef nonnull %6, ptr noundef nonnull %i.at) #6
   %i.dt = load i32, ptr %1, align 4, !tbaa !9
   %i.du = sub nsw i32 %i.dt, %indvars291
   store i32 %i.du, ptr %i.b, align 4, !tbaa !9
-  %i.dv = call double @dnrm2_(ptr noundef nonnull %i.b, ptr noundef %i.dl, ptr noundef nonnull @c__1) #5 ; 2 uses
+  %i.dv = call double @dnrm2_(ptr noundef nonnull %i.b, ptr noundef %i.dl, ptr noundef nonnull @c__1) #6 ; 2 uses
   %i.dw = load i32, ptr %0, align 4, !tbaa !9
   %i.dx = load i32, ptr %1, align 4, !tbaa !9
   %.neg284 = add i32 %i.dw, %.0260.neg289
   %i.dy = sub i32 %.neg284, %i.dx
   store i32 %i.dy, ptr %i.c, align 4, !tbaa !9
-  %i.dz = call double @dnrm2_(ptr noundef nonnull %i.c, ptr noundef %i.ds, ptr noundef nonnull @c__1) #5 ; 2 uses
+  %i.dz = call double @dnrm2_(ptr noundef nonnull %i.c, ptr noundef %i.ds, ptr noundef nonnull @c__1) #6 ; 2 uses
   %i.ea = fmul double %i.dz, %i.dz
   %i.eb = call double @llvm.fmuladd.f64(double %i.dv, double %i.dv, double %i.ea)
   %sqrt = call double @llvm.sqrt.f64(double %i.eb) ; 2 uses
   store double %sqrt, ptr %i.e, align 8, !tbaa !11
   %i.ec = load double, ptr %i.f, align 8, !tbaa !11
-  %i.ed = call double @atan2(double noundef %i.ec, double noundef %sqrt) #5
+  %i.ed = call double @atan2(double noundef %i.ec, double noundef %sqrt) #6
   %i.ee = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %indvars.iv
   store double %i.ed, ptr %i.ee, align 8, !tbaa !11
   %i.ef = load i32, ptr %1, align 4, !tbaa !9     ; 2 uses
@@ -261,7 +264,7 @@ bb.h:                                             ; preds = %bb.g
   %i.ep = getelementptr [8 x i8], ptr %i.eo, i64 %indvars.iv.next
   %i.eq = getelementptr [8 x i8], ptr %i.n, i64 %i.cz
   %i.er = getelementptr [8 x i8], ptr %i.eq, i64 %indvars.iv.next
-  call void @dorbdb5_(ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d, ptr noundef %i.dl, ptr noundef nonnull @c__1, ptr noundef %i.ds, ptr noundef nonnull @c__1, ptr noundef %i.ep, ptr noundef nonnull %4, ptr noundef %i.er, ptr noundef nonnull %6, ptr noundef nonnull %i.at, ptr noundef nonnull %i.h, ptr noundef nonnull %i.g) #5
+  call void @dorbdb5_(ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d, ptr noundef %i.dl, ptr noundef nonnull @c__1, ptr noundef %i.ds, ptr noundef nonnull @c__1, ptr noundef %i.ep, ptr noundef nonnull %4, ptr noundef %i.er, ptr noundef nonnull %6, ptr noundef nonnull %i.at, ptr noundef nonnull %i.h, ptr noundef nonnull %i.g) #6
   br label %bb.i
 
 bb.i:                                             ; preds = %._crit_edge, %bb.h
@@ -270,14 +273,14 @@ bb.i:                                             ; preds = %._crit_edge, %bb.h
   br i1 %.not266.not, label %bb.g, label %.loopexit, !llvm.loop !8
 
 .loopexit:                                        ; preds = %bb.i, %.thread, %.thread274
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret void
 }
 
@@ -290,12 +293,6 @@ declare void @dlarfgp_(ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr n
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @atan2(double noundef, double noundef) local_unnamed_addr #3
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #3
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #3
 
 declare void @dlarf_(ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
@@ -314,6 +311,9 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #4
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #5
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.sqrt.f64(double) #4
 
@@ -322,7 +322,8 @@ attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: re
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #3 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #5 = { nounwind }
+attributes #5 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

@@ -202,6 +202,8 @@ bb.a:
   %4 = alloca %"class.pugi::xml_attribute", align 8 ; 4 uses
   %5 = alloca %"class.pugi::xml_attribute", align 8 ; 4 uses
   %6 = alloca %"class.pugi::xml_attribute", align 8 ; 4 uses
+  %sincos.sin.i = alloca float, align 4           ; 4 uses
+  %sincos.cos.i = alloca float, align 4           ; 4 uses
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i64, align 8                      ; 6 uses
   %i.c = alloca i64, align 8                      ; 6 uses
@@ -604,7 +606,7 @@ bb.az:                                            ; preds = %bb.ay
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #28
   %i.gm = load <2 x ptr>, ptr %i.q, align 16
   store <2 x ptr> %i.gm, ptr %18, align 16
-  %i.gn = fmul float %i.gk, 5.000000e-01          ; 2 uses
+  %i.gn = fmul float %i.gk, 5.000000e-01
   br label %bb.ba
 
 bb.ba:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit128, %bb.az
@@ -719,6 +721,8 @@ bb.bo:                                            ; preds = %bb.bn
           to label %bb.bp unwind label %.loopexit.split-lp186.loopexit.split-lp.loopexit.split-lp ; 4 uses
 
 bb.bp:                                            ; preds = %bb.bo
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i)
   %i.ho = fmul float %i.hm, %i.hm
   %i.hp = call float @llvm.fmuladd.f32(float %i.hl, float %i.hl, float %i.ho)
   %i.hq = call noundef float @llvm.fmuladd.f32(float %i.hn, float %i.hn, float %i.hp) ; 2 uses
@@ -737,16 +741,19 @@ bb.bq:                                            ; preds = %_ZN10aiVector3tIfEd
   %.sroa.0.4.vec.extract.pre-phi.i = phi float [ %i.hm, %bb.bp ], [ %i.hu, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
   %.sroa.0.0.vec.extract.pre-phi.i = phi float [ %i.hl, %bb.bp ], [ %i.ht, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
   %.sroa.7.0.i = phi float [ %i.hn, %bb.bp ], [ %i.hv, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
-  %21 = call noundef float @sinf(float noundef %i.gn) #28
-  %22 = call noundef float @cosf(float noundef %i.gn) #28
-  %i.hw = insertelement <4 x float> poison, float %22, i64 0
-  %i.hx = insertelement <4 x float> %i.hw, float %.sroa.0.0.vec.extract.pre-phi.i, i64 1
-  %i.hy = insertelement <4 x float> %i.hx, float %.sroa.0.4.vec.extract.pre-phi.i, i64 2
-  %i.hz = insertelement <4 x float> %i.hy, float %.sroa.7.0.i, i64 3
-  %i.ia = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %21, i64 1
-  %23 = shufflevector <4 x float> %i.ia, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %24 = fmul <4 x float> %i.hz, %23
-  store <4 x float> %24, ptr %i.eg, align 4
+  call void @sincosf(float %i.gn, ptr nonnull %sincos.sin.i, ptr nonnull %sincos.cos.i)
+  %sin.i = load float, ptr %sincos.sin.i, align 4
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i)
+  %cos.i = load float, ptr %sincos.cos.i, align 4
+  %i.hw = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %sin.i, i64 1
+  %21 = shufflevector <4 x float> %i.hw, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
+  %i.hx = insertelement <4 x float> poison, float %cos.i, i64 0
+  %i.hy = insertelement <4 x float> %i.hx, float %.sroa.0.0.vec.extract.pre-phi.i, i64 1
+  %i.hz = insertelement <4 x float> %i.hy, float %.sroa.0.4.vec.extract.pre-phi.i, i64 2
+  %i.ia = insertelement <4 x float> %i.hz, float %.sroa.7.0.i, i64 3
+  %22 = fmul <4 x float> %21, %i.ia
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i)
+  store <4 x float> %22, ptr %i.eg, align 4
   %i.ib = load ptr, ptr %20, align 8              ; 2 uses
   %i.ic = icmp eq ptr %i.ib, %i.r
   br i1 %i.ic, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit128, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i126
@@ -1149,6 +1156,8 @@ declare void @_ZN6Assimp4Ogre20VertexAnimationTrackC1Ev(ptr noundef nonnull alig
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN6Assimp4Ogre17OgreXmlSerializer22ReadAnimationKeyFramesERN4pugi8xml_nodeEPNS0_9AnimationEPNS0_20VertexAnimationTrackE(ptr nofree nonnull readnone align 8 captures(none) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %2, ptr nofree noundef captures(none) %3) local_unnamed_addr #12 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
+  %sincos.sin.i = alloca float, align 4           ; 4 uses
+  %sincos.cos.i = alloca float, align 4           ; 4 uses
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i64, align 8                      ; 6 uses
   %i.c = alloca i64, align 8                      ; 6 uses
@@ -1438,7 +1447,7 @@ bb.y:                                             ; preds = %bb.x
   %i.cc = load <2 x ptr>, ptr %i.p, align 16
   store <2 x ptr> %i.cc, ptr %15, align 16
   %i.cd = fcmp une float %i.ca, 0.000000e+00
-  %i.ce = fmul float %i.ca, 5.000000e-01          ; 2 uses
+  %i.ce = fmul float %i.ca, 5.000000e-01
   br label %bb.z
 
 bb.z:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.y
@@ -1588,6 +1597,8 @@ bb.as:                                            ; preds = %bb.aq, %bb.ap, %bb.
 
 _ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread:     ; preds = %bb.an, %bb.ao, %bb.aq
   %.sroa.0123.0 = phi <2 x float> [ %.sroa.0123.0.vec.insert126, %bb.aq ], [ %.sroa.0123.0.vec.insert126, %bb.ao ], [ %.sroa.0123.4.vec.insert, %bb.an ] ; 5 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i)
   %.sroa.0.0.vec.extract8.i = extractelement <2 x float> %.sroa.0123.0, i64 0 ; 2 uses
   %foldExtExtBinop = fmul <2 x float> %.sroa.0123.0, %.sroa.0123.0
   %i.dn = extractelement <2 x float> %foldExtExtBinop, i64 1
@@ -1608,16 +1619,19 @@ _ZN10aiVector3tIfEdVEf.exit.i.i:                  ; preds = %_ZNK10aiVector3tIfE
 bb.at:                                            ; preds = %_ZN10aiVector3tIfEdVEf.exit.i.i, %_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread
   %.sroa.7.0.i = phi float [ %i.db, %_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread ], [ %i.dv, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
   %i.dw = phi <2 x float> [ %.sroa.0123.0, %_ZNK10aiVector3tIfE5EqualERKS0_f.exit.thread ], [ %i.du, %_ZN10aiVector3tIfEdVEf.exit.i.i ]
-  %17 = call noundef float @sinf(float noundef %i.ce) #28
-  %18 = call noundef float @cosf(float noundef %i.ce) #28
-  %i.dx = insertelement <4 x float> poison, float %18, i64 0
+  call void @sincosf(float %i.ce, ptr nonnull %sincos.sin.i, ptr nonnull %sincos.cos.i)
+  %sin.i = load float, ptr %sincos.sin.i, align 4
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i)
+  %cos.i = load float, ptr %sincos.cos.i, align 4
+  %i.dx = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %sin.i, i64 1
+  %17 = shufflevector <4 x float> %i.dx, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
+  %18 = insertelement <4 x float> poison, float %cos.i, i64 0
   %19 = shufflevector <2 x float> %i.dw, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %20 = shufflevector <4 x float> %i.dx, <4 x float> %19, <4 x i32> <i32 0, i32 4, i32 5, i32 poison>
-  %21 = insertelement <4 x float> %20, float %.sroa.7.0.i, i64 3
-  %i.dy = insertelement <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, float %17, i64 1
-  %22 = shufflevector <4 x float> %i.dy, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 1>
-  %23 = fmul <4 x float> %21, %22
-  store <4 x float> %23, ptr %i.t, align 4
+  %20 = shufflevector <4 x float> %18, <4 x float> %19, <4 x i32> <i32 0, i32 4, i32 5, i32 poison>
+  %i.dy = insertelement <4 x float> %20, float %.sroa.7.0.i, i64 3
+  %21 = fmul <4 x float> %17, %i.dy
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i)
+  store <4 x float> %21, ptr %i.t, align 4
   %.pre193 = load ptr, ptr %16, align 8
   br label %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit103.thread142
 
@@ -2019,12 +2033,6 @@ _ZN6Assimp9Formatter15basic_formatterIcSt11char_traitsIcESaIcEED2Ev.exit: ; pred
   call void @_ZN6Assimp9Formatter15basic_formatterIcSt11char_traitsIcESaIcEED2Ev(ptr noundef nonnull align 8 dead_on_return(376) dereferenceable(376) %4) #28
   resume { ptr, i32 } %i.r
 }
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sinf(float noundef) local_unnamed_addr #23
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @cosf(float noundef) local_unnamed_addr #23
 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN15DeadlyErrorBaseC2IJRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERA13_KcS8_ERA43_S9_EEN6Assimp9Formatter15basic_formatterIcS4_S5_EEOT0_DpOT_(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %1, ptr noundef nonnull align 1 dereferenceable(43) %2, ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull align 1 dereferenceable(13) %4, ptr noundef nonnull align 8 dereferenceable(32) %5) unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
@@ -2428,7 +2436,7 @@ _ZSt13__adjust_heapIN9__gnu_cxx17__normal_iteratorIPPN6Assimp4Ogre4BoneESt6vecto
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.ctlz.i64(i64, i1 immarg) #24
+declare i64 @llvm.ctlz.i64(i64, i1 immarg) #23
 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZN6Assimp6Logger13formatMessageIJRA2_KcRNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEERtEESA_NS_9Formatter15basic_formatterIcS8_S9_EEOT0_DpOT_(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(12) %1, ptr noundef %2, ptr noundef nonnull align 2 dereferenceable(2) %3, ptr noundef nonnull align 1 dereferenceable(2) %4, ptr noundef nonnull align 8 dereferenceable(32) %5) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
@@ -2620,22 +2628,25 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #25
+declare void @llvm.assume(i1 noundef) #24
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #26
+declare void @llvm.experimental.noalias.scope.decl(metadata) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #27
+declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #26
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #10
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincosf(float noundef, ptr, ptr) local_unnamed_addr #27
 
 attributes #0 = { mustprogress noreturn uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -2660,11 +2671,11 @@ attributes #19 = { noreturn "no-trapping-math"="true" "stack-protector-buffer-si
 attributes #20 = { mustprogress noinline nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #21 = { nofree nounwind }
 attributes #22 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #23 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #24 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #25 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #26 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #27 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #23 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #24 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #25 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #26 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #27 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #28 = { nounwind }
 attributes #29 = { noreturn }
 attributes #30 = { builtin nounwind }

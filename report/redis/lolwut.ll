@@ -204,6 +204,8 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #10
 ; Function Attrs: nofree norecurse nosync nounwind memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @lwDrawSquare(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, float noundef %3, float noundef %4, i32 noundef %5) local_unnamed_addr #9 {
 lwDrawLine.exit.preheader:
+  %sincos.sin = alloca double, align 8            ; 8 uses
+  %sincos.cos = alloca double, align 8            ; 8 uses
   %i.a = fpext float %3 to double
   %i.b = fdiv double %i.a, f0x3FF6A09E667A35E6
   %i.c = fptrunc double %i.b to float
@@ -214,79 +216,83 @@ lwDrawLine.exit.preheader:
   %i.h = sitofp i32 %1 to double                  ; 4 uses
   %i.i = sitofp i32 %2 to double                  ; 4 uses
   %.022 = fptrunc double %i.f to float
-  %i.j = fpext float %.022 to double              ; 3 uses
-  %6 = tail call double @sin(double noundef %i.j) #13, !tbaa !12
-  %7 = tail call double @llvm.fmuladd.f64(double %6, double %i.g, double %i.h)
-  %8 = tail call double @llvm.round.f64(double %7)
-  %9 = fptosi double %8 to i32                    ; 6 uses
-  %10 = tail call double @cos(double noundef %i.j) #13, !tbaa !12
-  %11 = tail call double @llvm.fmuladd.f64(double %10, double %i.g, double %i.i)
-  %12 = tail call double @llvm.round.f64(double %11)
-  %i.k = fptosi double %12 to i32                 ; 6 uses
+  %i.j = fpext float %.022 to double              ; 2 uses
+  call void @sincos(double %i.j, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8
+  %cos = load double, ptr %sincos.cos, align 8
+  %6 = call double @llvm.fmuladd.f64(double %sin, double %i.g, double %i.h)
+  %7 = call double @llvm.round.f64(double %6)
+  %8 = fptosi double %7 to i32                    ; 6 uses
+  %9 = call double @llvm.fmuladd.f64(double %cos, double %i.g, double %i.i)
+  %10 = call double @llvm.round.f64(double %9)
+  %i.k = fptosi double %10 to i32                 ; 6 uses
   %i.l = fadd double %i.j, f0x3FF921FB54442D18
   %.022.1 = fptrunc double %i.l to float
-  %i.m = fpext float %.022.1 to double            ; 3 uses
-  %13 = tail call double @sin(double noundef %i.m) #13, !tbaa !12
-  %14 = tail call double @llvm.fmuladd.f64(double %13, double %i.g, double %i.h)
-  %15 = tail call double @llvm.round.f64(double %14)
-  %16 = fptosi double %15 to i32                  ; 6 uses
-  %17 = tail call double @cos(double noundef %i.m) #13, !tbaa !12
-  %18 = tail call double @llvm.fmuladd.f64(double %17, double %i.g, double %i.i)
-  %19 = tail call double @llvm.round.f64(double %18)
-  %i.n = fptosi double %19 to i32                 ; 6 uses
+  %i.m = fpext float %.022.1 to double            ; 2 uses
+  call void @sincos(double %i.m, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin.1 = load double, ptr %sincos.sin, align 8
+  %cos.1 = load double, ptr %sincos.cos, align 8
+  %11 = call double @llvm.fmuladd.f64(double %sin.1, double %i.g, double %i.h)
+  %12 = call double @llvm.round.f64(double %11)
+  %13 = fptosi double %12 to i32                  ; 6 uses
+  %14 = call double @llvm.fmuladd.f64(double %cos.1, double %i.g, double %i.i)
+  %15 = call double @llvm.round.f64(double %14)
+  %i.n = fptosi double %15 to i32                 ; 6 uses
   %i.o = fadd double %i.m, f0x3FF921FB54442D18
   %.022.2 = fptrunc double %i.o to float
-  %i.p = fpext float %.022.2 to double            ; 3 uses
-  %20 = tail call double @sin(double noundef %i.p) #13, !tbaa !12
-  %21 = tail call double @llvm.fmuladd.f64(double %20, double %i.g, double %i.h)
-  %22 = tail call double @llvm.round.f64(double %21)
-  %23 = fptosi double %22 to i32                  ; 6 uses
-  %24 = tail call double @cos(double noundef %i.p) #13, !tbaa !12
-  %25 = tail call double @llvm.fmuladd.f64(double %24, double %i.g, double %i.i)
-  %26 = tail call double @llvm.round.f64(double %25)
-  %i.q = fptosi double %26 to i32                 ; 6 uses
+  %i.p = fpext float %.022.2 to double            ; 2 uses
+  call void @sincos(double %i.p, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin.2 = load double, ptr %sincos.sin, align 8
+  %cos.2 = load double, ptr %sincos.cos, align 8
+  %16 = call double @llvm.fmuladd.f64(double %sin.2, double %i.g, double %i.h)
+  %17 = call double @llvm.round.f64(double %16)
+  %18 = fptosi double %17 to i32                  ; 6 uses
+  %19 = call double @llvm.fmuladd.f64(double %cos.2, double %i.g, double %i.i)
+  %20 = call double @llvm.round.f64(double %19)
+  %i.q = fptosi double %20 to i32                 ; 6 uses
   %i.r = fadd double %i.p, f0x3FF921FB54442D18
   %.022.3 = fptrunc double %i.r to float
-  %i.s = fpext float %.022.3 to double            ; 2 uses
-  %27 = tail call double @sin(double noundef %i.s) #13, !tbaa !12
-  %28 = tail call double @llvm.fmuladd.f64(double %27, double %i.g, double %i.h)
-  %29 = tail call double @llvm.round.f64(double %28)
-  %30 = fptosi double %29 to i32                  ; 6 uses
-  %31 = tail call double @cos(double noundef %i.s) #13, !tbaa !12
-  %32 = tail call double @llvm.fmuladd.f64(double %31, double %i.g, double %i.i)
-  %33 = tail call double @llvm.round.f64(double %32)
-  %i.t = fptosi double %33 to i32                 ; 6 uses
+  %i.s = fpext float %.022.3 to double
+  call void @sincos(double %i.s, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin.3 = load double, ptr %sincos.sin, align 8
+  %cos.3 = load double, ptr %sincos.cos, align 8
+  %21 = call double @llvm.fmuladd.f64(double %sin.3, double %i.g, double %i.h)
+  %22 = call double @llvm.round.f64(double %21)
+  %23 = fptosi double %22 to i32                  ; 6 uses
+  %24 = call double @llvm.fmuladd.f64(double %cos.3, double %i.g, double %i.i)
+  %25 = call double @llvm.round.f64(double %24)
+  %i.t = fptosi double %25 to i32                 ; 6 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 4 uses
   %i.v = trunc i32 %5 to i8                       ; 4 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %i.x = sub nsw i32 %16, %9
-  %34 = tail call i32 @llvm.abs.i32(i32 %i.x, i1 true) ; 3 uses
+  %i.x = sub nsw i32 %13, %8
+  %26 = call i32 @llvm.abs.i32(i32 %i.x, i1 true) ; 3 uses
   %i.y = sub nsw i32 %i.n, %i.k
-  %35 = tail call i32 @llvm.abs.i32(i32 %i.y, i1 true) ; 3 uses
-  %i.z = icmp slt i32 %9, %16
+  %27 = call i32 @llvm.abs.i32(i32 %i.y, i1 true) ; 3 uses
+  %i.z = icmp slt i32 %8, %13
   %i.aa = select i1 %i.z, i32 1, i32 -1
   %i.ab = icmp slt i32 %i.k, %i.n
   %i.ac = select i1 %i.ab, i32 1, i32 -1
-  %i.ad = sub nsw i32 %34, %35
-  %i.ae = sub nsw i32 0, %35
+  %i.ad = sub nsw i32 %26, %27
+  %i.ae = sub nsw i32 0, %27
   br label %bb.p
 
 lwDrawLine.exit.loopexit:                         ; preds = %lwDrawPixel.exit.i
-  %i.af = sub nsw i32 %23, %16
-  %36 = tail call i32 @llvm.abs.i32(i32 %i.af, i1 true) ; 3 uses
+  %i.af = sub nsw i32 %18, %13
+  %28 = call i32 @llvm.abs.i32(i32 %i.af, i1 true) ; 3 uses
   %i.ag = sub nsw i32 %i.q, %i.n
-  %37 = tail call i32 @llvm.abs.i32(i32 %i.ag, i1 true) ; 3 uses
-  %i.ah = icmp slt i32 %16, %23
+  %29 = call i32 @llvm.abs.i32(i32 %i.ag, i1 true) ; 3 uses
+  %i.ah = icmp slt i32 %13, %18
   %i.ai = select i1 %i.ah, i32 1, i32 -1
   %i.aj = icmp slt i32 %i.n, %i.q
   %i.ak = select i1 %i.aj, i32 1, i32 -1
-  %i.al = sub nsw i32 %36, %37
-  %i.am = sub nsw i32 0, %37
+  %i.al = sub nsw i32 %28, %29
+  %i.am = sub nsw i32 0, %29
   br label %bb.a
 
 bb.a:                                             ; preds = %bb.e, %lwDrawLine.exit.loopexit
   %.032.i.1 = phi i32 [ %i.n, %lwDrawLine.exit.loopexit ], [ %.133.i.1, %bb.e ] ; 5 uses
-  %.030.i.1 = phi i32 [ %16, %lwDrawLine.exit.loopexit ], [ %.131.i.1, %bb.e ] ; 5 uses
+  %.030.i.1 = phi i32 [ %13, %lwDrawLine.exit.loopexit ], [ %.131.i.1, %bb.e ] ; 5 uses
   %.0.i.1 = phi i32 [ %i.al, %lwDrawLine.exit.loopexit ], [ %.2.i.1, %bb.e ] ; 2 uses
   %i.an = icmp slt i32 %.030.i.1, 0
   br i1 %i.an, label %lwDrawPixel.exit.i.1, label %bb.b
@@ -313,7 +319,7 @@ bb.d:                                             ; preds = %bb.c
   br label %lwDrawPixel.exit.i.1
 
 lwDrawPixel.exit.i.1:                             ; preds = %bb.d, %bb.c, %bb.b, %bb.a
-  %i.ax = icmp eq i32 %.030.i.1, %23
+  %i.ax = icmp eq i32 %.030.i.1, %18
   %i.ay = icmp eq i32 %.032.i.1, %i.q
   %or.cond.i.1 = and i1 %i.ay, %i.ax
   br i1 %or.cond.i.1, label %lwDrawLine.exit.loopexit.1, label %bb.e
@@ -323,31 +329,31 @@ bb.e:                                             ; preds = %lwDrawPixel.exit.i.
   %i.ba = icmp sgt i32 %i.az, %i.am               ; 2 uses
   %i.bb = select i1 %i.ba, i32 %i.ai, i32 0
   %.131.i.1 = add nsw i32 %i.bb, %.030.i.1
-  %i.bc = select i1 %i.ba, i32 %37, i32 0
+  %i.bc = select i1 %i.ba, i32 %29, i32 0
   %.1.i.1 = sub i32 %.0.i.1, %i.bc
-  %i.bd = icmp slt i32 %i.az, %36                 ; 2 uses
+  %i.bd = icmp slt i32 %i.az, %28                 ; 2 uses
   %i.be = select i1 %i.bd, i32 %i.ak, i32 0
   %.133.i.1 = add nsw i32 %i.be, %.032.i.1
-  %i.bf = select i1 %i.bd, i32 %36, i32 0
+  %i.bf = select i1 %i.bd, i32 %28, i32 0
   %.2.i.1 = add nsw i32 %.1.i.1, %i.bf
   br label %bb.a
 
 lwDrawLine.exit.loopexit.1:                       ; preds = %lwDrawPixel.exit.i.1
-  %i.bg = sub nsw i32 %30, %23
-  %38 = tail call i32 @llvm.abs.i32(i32 %i.bg, i1 true) ; 3 uses
+  %i.bg = sub nsw i32 %23, %18
+  %30 = call i32 @llvm.abs.i32(i32 %i.bg, i1 true) ; 3 uses
   %i.bh = sub nsw i32 %i.t, %i.q
-  %39 = tail call i32 @llvm.abs.i32(i32 %i.bh, i1 true) ; 3 uses
-  %i.bi = icmp slt i32 %23, %30
+  %31 = call i32 @llvm.abs.i32(i32 %i.bh, i1 true) ; 3 uses
+  %i.bi = icmp slt i32 %18, %23
   %i.bj = select i1 %i.bi, i32 1, i32 -1
   %i.bk = icmp slt i32 %i.q, %i.t
   %i.bl = select i1 %i.bk, i32 1, i32 -1
-  %i.bm = sub nsw i32 %38, %39
-  %i.bn = sub nsw i32 0, %39
+  %i.bm = sub nsw i32 %30, %31
+  %i.bn = sub nsw i32 0, %31
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.j, %lwDrawLine.exit.loopexit.1
   %.032.i.2 = phi i32 [ %i.q, %lwDrawLine.exit.loopexit.1 ], [ %.133.i.2, %bb.j ] ; 5 uses
-  %.030.i.2 = phi i32 [ %23, %lwDrawLine.exit.loopexit.1 ], [ %.131.i.2, %bb.j ] ; 5 uses
+  %.030.i.2 = phi i32 [ %18, %lwDrawLine.exit.loopexit.1 ], [ %.131.i.2, %bb.j ] ; 5 uses
   %.0.i.2 = phi i32 [ %i.bm, %lwDrawLine.exit.loopexit.1 ], [ %.2.i.2, %bb.j ] ; 2 uses
   %i.bo = icmp slt i32 %.030.i.2, 0
   br i1 %i.bo, label %lwDrawPixel.exit.i.2, label %bb.g
@@ -374,7 +380,7 @@ bb.i:                                             ; preds = %bb.h
   br label %lwDrawPixel.exit.i.2
 
 lwDrawPixel.exit.i.2:                             ; preds = %bb.i, %bb.h, %bb.g, %bb.f
-  %i.by = icmp eq i32 %.030.i.2, %30
+  %i.by = icmp eq i32 %.030.i.2, %23
   %i.bz = icmp eq i32 %.032.i.2, %i.t
   %or.cond.i.2 = and i1 %i.bz, %i.by
   br i1 %or.cond.i.2, label %lwDrawLine.exit.loopexit.2, label %bb.j
@@ -384,31 +390,31 @@ bb.j:                                             ; preds = %lwDrawPixel.exit.i.
   %i.cb = icmp sgt i32 %i.ca, %i.bn               ; 2 uses
   %i.cc = select i1 %i.cb, i32 %i.bj, i32 0
   %.131.i.2 = add nsw i32 %i.cc, %.030.i.2
-  %i.cd = select i1 %i.cb, i32 %39, i32 0
+  %i.cd = select i1 %i.cb, i32 %31, i32 0
   %.1.i.2 = sub i32 %.0.i.2, %i.cd
-  %i.ce = icmp slt i32 %i.ca, %38                 ; 2 uses
+  %i.ce = icmp slt i32 %i.ca, %30                 ; 2 uses
   %i.cf = select i1 %i.ce, i32 %i.bl, i32 0
   %.133.i.2 = add nsw i32 %i.cf, %.032.i.2
-  %i.cg = select i1 %i.ce, i32 %38, i32 0
+  %i.cg = select i1 %i.ce, i32 %30, i32 0
   %.2.i.2 = add nsw i32 %.1.i.2, %i.cg
   br label %bb.f
 
 lwDrawLine.exit.loopexit.2:                       ; preds = %lwDrawPixel.exit.i.2
-  %i.ch = sub nsw i32 %9, %30
-  %40 = tail call i32 @llvm.abs.i32(i32 %i.ch, i1 true) ; 3 uses
+  %i.ch = sub nsw i32 %8, %23
+  %32 = call i32 @llvm.abs.i32(i32 %i.ch, i1 true) ; 3 uses
   %i.ci = sub nsw i32 %i.k, %i.t
-  %41 = tail call i32 @llvm.abs.i32(i32 %i.ci, i1 true) ; 3 uses
-  %i.cj = icmp slt i32 %30, %9
+  %33 = call i32 @llvm.abs.i32(i32 %i.ci, i1 true) ; 3 uses
+  %i.cj = icmp slt i32 %23, %8
   %i.ck = select i1 %i.cj, i32 1, i32 -1
   %i.cl = icmp slt i32 %i.t, %i.k
   %i.cm = select i1 %i.cl, i32 1, i32 -1
-  %i.cn = sub nsw i32 %40, %41
-  %i.co = sub nsw i32 0, %41
+  %i.cn = sub nsw i32 %32, %33
+  %i.co = sub nsw i32 0, %33
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.o, %lwDrawLine.exit.loopexit.2
   %.032.i.3 = phi i32 [ %i.t, %lwDrawLine.exit.loopexit.2 ], [ %.133.i.3, %bb.o ] ; 5 uses
-  %.030.i.3 = phi i32 [ %30, %lwDrawLine.exit.loopexit.2 ], [ %.131.i.3, %bb.o ] ; 5 uses
+  %.030.i.3 = phi i32 [ %23, %lwDrawLine.exit.loopexit.2 ], [ %.131.i.3, %bb.o ] ; 5 uses
   %.0.i.3 = phi i32 [ %i.cn, %lwDrawLine.exit.loopexit.2 ], [ %.2.i.3, %bb.o ] ; 2 uses
   %i.cp = icmp slt i32 %.030.i.3, 0
   br i1 %i.cp, label %lwDrawPixel.exit.i.3, label %bb.l
@@ -435,7 +441,7 @@ bb.n:                                             ; preds = %bb.m
   br label %lwDrawPixel.exit.i.3
 
 lwDrawPixel.exit.i.3:                             ; preds = %bb.n, %bb.m, %bb.l, %bb.k
-  %i.cz = icmp eq i32 %.030.i.3, %9
+  %i.cz = icmp eq i32 %.030.i.3, %8
   %i.da = icmp eq i32 %.032.i.3, %i.k
   %or.cond.i.3 = and i1 %i.da, %i.cz
   br i1 %or.cond.i.3, label %lwDrawLine.exit.loopexit.3, label %bb.o
@@ -445,12 +451,12 @@ bb.o:                                             ; preds = %lwDrawPixel.exit.i.
   %i.dc = icmp sgt i32 %i.db, %i.co               ; 2 uses
   %i.dd = select i1 %i.dc, i32 %i.ck, i32 0
   %.131.i.3 = add nsw i32 %i.dd, %.030.i.3
-  %i.de = select i1 %i.dc, i32 %41, i32 0
+  %i.de = select i1 %i.dc, i32 %33, i32 0
   %.1.i.3 = sub i32 %.0.i.3, %i.de
-  %i.df = icmp slt i32 %i.db, %40                 ; 2 uses
+  %i.df = icmp slt i32 %i.db, %32                 ; 2 uses
   %i.dg = select i1 %i.df, i32 %i.cm, i32 0
   %.133.i.3 = add nsw i32 %i.dg, %.032.i.3
-  %i.dh = select i1 %i.df, i32 %40, i32 0
+  %i.dh = select i1 %i.df, i32 %32, i32 0
   %.2.i.3 = add nsw i32 %.1.i.3, %i.dh
   br label %bb.k
 
@@ -459,7 +465,7 @@ lwDrawLine.exit.loopexit.3:                       ; preds = %lwDrawPixel.exit.i.
 
 bb.p:                                             ; preds = %bb.t, %lwDrawLine.exit.preheader
   %.032.i = phi i32 [ %i.k, %lwDrawLine.exit.preheader ], [ %.133.i, %bb.t ] ; 5 uses
-  %.030.i = phi i32 [ %9, %lwDrawLine.exit.preheader ], [ %.131.i, %bb.t ] ; 5 uses
+  %.030.i = phi i32 [ %8, %lwDrawLine.exit.preheader ], [ %.131.i, %bb.t ] ; 5 uses
   %.0.i = phi i32 [ %i.ad, %lwDrawLine.exit.preheader ], [ %.2.i, %bb.t ] ; 2 uses
   %i.di = icmp slt i32 %.030.i, 0
   br i1 %i.di, label %lwDrawPixel.exit.i, label %bb.q
@@ -486,7 +492,7 @@ bb.s:                                             ; preds = %bb.r
   br label %lwDrawPixel.exit.i
 
 lwDrawPixel.exit.i:                               ; preds = %bb.s, %bb.r, %bb.q, %bb.p
-  %i.ds = icmp eq i32 %.030.i, %16
+  %i.ds = icmp eq i32 %.030.i, %13
   %i.dt = icmp eq i32 %.032.i, %i.n
   %or.cond.i = and i1 %i.dt, %i.ds
   br i1 %or.cond.i, label %lwDrawLine.exit.loopexit, label %bb.t
@@ -496,12 +502,12 @@ bb.t:                                             ; preds = %lwDrawPixel.exit.i
   %i.dv = icmp sgt i32 %i.du, %i.ae               ; 2 uses
   %i.dw = select i1 %i.dv, i32 %i.aa, i32 0
   %.131.i = add nsw i32 %i.dw, %.030.i
-  %i.dx = select i1 %i.dv, i32 %35, i32 0
+  %i.dx = select i1 %i.dv, i32 %27, i32 0
   %.1.i = sub i32 %.0.i, %i.dx
-  %i.dy = icmp slt i32 %i.du, %34                 ; 2 uses
+  %i.dy = icmp slt i32 %i.du, %26                 ; 2 uses
   %i.dz = select i1 %i.dy, i32 %i.ac, i32 0
   %.133.i = add nsw i32 %i.dz, %.032.i
-  %i.ea = select i1 %i.dy, i32 %34, i32 0
+  %i.ea = select i1 %i.dy, i32 %26, i32 0
   %.2.i = add nsw i32 %.1.i, %i.ea
   br label %bb.p
 }
@@ -509,17 +515,14 @@ bb.t:                                             ; preds = %lwDrawPixel.exit.i
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.round.f64(double) #11
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #12
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fmuladd.f64(double, double, double) #11
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #12
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.round.f32(float) #11
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #12
 
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -533,7 +536,7 @@ attributes #8 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #9 = { nofree norecurse nosync nounwind memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #10 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #11 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #12 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #12 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #13 = { nounwind }
 attributes #14 = { nounwind willreturn memory(read) }
 attributes #15 = { nounwind allocsize(0) }

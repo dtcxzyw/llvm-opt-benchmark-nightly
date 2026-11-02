@@ -195,6 +195,10 @@ bb.a:
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN7nanogui10ColorWheel4drawEP10NVGcontext(ptr noundef nonnull align 16 dereferenceable(224) %0, ptr noundef %1) unnamed_addr #5 align 2 {
 bb.a:
+  %sincos.sin167 = alloca float, align 4          ; 2 uses
+  %sincos.cos168 = alloca float, align 4          ; 2 uses
+  %sincos.sin = alloca float, align 4             ; 2 uses
+  %sincos.cos = alloca float, align 4             ; 2 uses
   %2 = alloca %struct.NVGpaint, align 8           ; 10 uses
   %3 = alloca %struct.NVGcolor, align 8           ; 3 uses
   %4 = alloca %struct.NVGpaint, align 8           ; 4 uses
@@ -306,7 +310,7 @@ bb.c:                                             ; preds = %bb.d
   call void @nvgLineTo(ptr noundef %1, float noundef %i.bp, float noundef %i.bo)
   call void @nvgLineTo(ptr noundef %1, float noundef %i.bp, float noundef %i.bn)
   call void @nvgClosePath(ptr noundef %1)
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
   %i.bq = call { <2 x float>, <2 x float> } @nvgHSLA(float noundef %i.m, float noundef 1.000000e+00, float noundef 5.000000e-01, i8 noundef zeroext -1) ; 2 uses
   %i.br = extractvalue { <2 x float>, <2 x float> } %i.bq, 0
   %i.bs = extractvalue { <2 x float>, <2 x float> } %i.bq, 1
@@ -315,10 +319,10 @@ bb.c:                                             ; preds = %bb.d
   %i.bv = extractvalue { <2 x float>, <2 x float> } %i.bt, 1
   call void @nvgLinearGradient(ptr dead_on_unwind nonnull writable sret(%struct.NVGpaint) align 4 %4, ptr noundef %1, float noundef %i.bi, float noundef 0.000000e+00, float noundef %i.bp, float noundef %i.bo, <2 x float> %i.br, <2 x float> %i.bs, <2 x float> %i.bu, <2 x float> %i.bv)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(76) %2, ptr noundef nonnull align 8 dereferenceable(76) %4, i64 76, i1 false), !tbaa.struct !56
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
   call void @nvgFillPaint(ptr noundef %1, ptr noundef nonnull byval(%struct.NVGpaint) align 8 %2)
   call void @nvgFill(ptr noundef %1)
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #14
   %i.bw = fadd float %i.bi, %i.bp
   %i.bx = fmul float %i.bw, 5.000000e-01
   %i.by = fadd nnan float %i.bo, 0.000000e+00
@@ -331,7 +335,7 @@ bb.c:                                             ; preds = %bb.d
   %i.cf = extractvalue { <2 x float>, <2 x float> } %i.cd, 1
   call void @nvgLinearGradient(ptr dead_on_unwind nonnull writable sret(%struct.NVGpaint) align 4 %5, ptr noundef %1, float noundef %i.bx, float noundef %i.bz, float noundef %i.bp, float noundef %i.bn, <2 x float> %i.cb, <2 x float> %i.cc, <2 x float> %i.ce, <2 x float> %i.cf)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(76) %2, ptr noundef nonnull align 8 dereferenceable(76) %5, i64 76, i1 false), !tbaa.struct !56
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #14
   call void @nvgFillPaint(ptr noundef %1, ptr noundef nonnull byval(%struct.NVGpaint) align 8 %2)
   call void @nvgFill(ptr noundef %1)
   %i.cg = call { <2 x float>, <2 x float> } @nvgRGBA(i8 noundef zeroext 0, i8 noundef zeroext 0, i8 noundef zeroext 0, i8 noundef zeroext 64) ; 2 uses
@@ -376,19 +380,21 @@ bb.d:                                             ; preds = %bb.b, %bb.d
   %i.de = fdiv nnan <2 x float> %i.dd, splat (float 6.000000e+00)
   %i.df = fmul nnan <2 x float> %i.de, splat (float f0x40490FDB)
   %i.dg = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.df, <2 x float> splat (float 2.000000e+00), <2 x float> %i.y) ; 3 uses
-  %i.dh = extractelement <2 x float> %i.dg, i64 0 ; 4 uses
-  %i.di = extractelement <2 x float> %i.dg, i64 1 ; 4 uses
+  %i.dh = extractelement <2 x float> %i.dg, i64 0 ; 3 uses
+  %i.di = extractelement <2 x float> %i.dg, i64 1 ; 3 uses
   call void @nvgArc(ptr noundef %1, float noundef %i.ab, float noundef %i.ac, float noundef %i.t, float noundef %i.dh, float noundef %i.di, i32 noundef 2)
   call void @nvgArc(ptr noundef %1, float noundef %i.ab, float noundef %i.ac, float noundef %i.s, float noundef %i.di, float noundef %i.dh, i32 noundef 1)
   call void @nvgClosePath(ptr noundef %1)
-  %6 = call float @cosf(float noundef %i.dh) #13
-  %7 = call float @sinf(float noundef %i.dh) #13
-  %8 = call float @cosf(float noundef %i.di) #13
-  %9 = call float @sinf(float noundef %i.di) #13
-  %i.dj = insertelement <4 x float> poison, float %6, i64 0
-  %i.dk = insertelement <4 x float> %i.dj, float %7, i64 1
-  %i.dl = insertelement <4 x float> %i.dk, float %8, i64 2
-  %i.dm = insertelement <4 x float> %i.dl, float %9, i64 3
+  call void @sincosf(float %i.dh, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load float, ptr %sincos.sin, align 4
+  %cos = load float, ptr %sincos.cos, align 4
+  call void @sincosf(float %i.di, ptr nonnull %sincos.sin167, ptr nonnull %sincos.cos168)
+  %sin169 = load float, ptr %sincos.sin167, align 4
+  %cos170 = load float, ptr %sincos.cos168, align 4
+  %i.dj = insertelement <4 x float> poison, float %cos, i64 0
+  %i.dk = insertelement <4 x float> %i.dj, float %sin, i64 1
+  %i.dl = insertelement <4 x float> %i.dk, float %cos170, i64 2
+  %i.dm = insertelement <4 x float> %i.dl, float %sin169, i64 3
   %i.dn = fmul <4 x float> %i.aa, %i.dm
   %i.do = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.dn, <4 x float> splat (float 5.000000e-01), <4 x float> %i.n) ; 4 uses
   %i.dp = fdiv <2 x float> %i.dg, splat (float f0x40C90FDB) ; 2 uses
@@ -430,12 +436,6 @@ declare void @nvgBeginPath(ptr noundef) local_unnamed_addr #1
 declare void @nvgArc(ptr noundef, float noundef, float noundef, float noundef, float noundef, float noundef, i32 noundef) local_unnamed_addr #1
 
 declare void @nvgClosePath(ptr noundef) local_unnamed_addr #1
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @cosf(float noundef) local_unnamed_addr #8
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sinf(float noundef) local_unnamed_addr #8
 
 declare void @nvgLinearGradient(ptr dead_on_unwind writable sret(%struct.NVGpaint) align 4, ptr noundef, float noundef, float noundef, float noundef, float noundef, <2 x float>, <2 x float>, <2 x float>, <2 x float>) local_unnamed_addr #1
 
@@ -513,6 +513,8 @@ declare noundef zeroext i1 @_ZN7nanogui6Widget18mouse_button_eventERKNS_5ArrayIi
 ; Function Attrs: mustprogress uwtable
 define hidden noundef range(i32 0, 3) i32 @_ZN7nanogui10ColorWheel15adjust_positionERKNS_5ArrayIiLm2EEENS0_6RegionE(ptr nofree noundef nonnull align 16 captures(none) dereferenceable(224) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(8) %1, i32 noundef %2) local_unnamed_addr #5 align 2 {
 bb.a:
+  %sincos.sin = alloca float, align 4             ; 2 uses
+  %sincos.cos = alloca float, align 4             ; 2 uses
   %3 = alloca %"class.nanogui::Color", align 8    ; 5 uses
   %4 = alloca %"class.nanogui::Color", align 8    ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -557,7 +559,7 @@ bb.d:                                             ; preds = %bb.b
   br i1 %.old1, label %bb.e, label %bb.m
 
 bb.e:                                             ; preds = %bb.c, %bb.d
-  %i.aa = tail call noundef float @atan2f(float noundef %i.t, float noundef %i.r) #13
+  %i.aa = tail call noundef float @atan2f(float noundef %i.t, float noundef %i.r) #14
   %i.ab = fdiv float %i.aa, f0x40C90FDB           ; 3 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 148
   %i.ad = fcmp olt float %i.ab, 0.000000e+00
@@ -570,7 +572,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   br i1 %.not111, label %bb.w, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #14
   %i.ah = fcmp olt float %storemerge, 0.000000e+00
   %i.ai = fadd float %storemerge, 1.000000e+00
   %.036.i.i = select i1 %i.ah, float %i.ai, float %storemerge ; 2 uses
@@ -643,32 +645,33 @@ _ZNKSt3__18functionIFvRKN7nanogui5ColorEEEclES4_.exit: ; preds = %bb.l, %bb.k, %
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 48
   %i.br = load ptr, ptr %i.bq, align 8
   call void %i.br(ptr noundef nonnull align 8 dereferenceable(8) %i.ag, ptr noundef nonnull align 4 dereferenceable(16) %3), !inline_history !59
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #14
   br label %bb.w
 
 bb.m:                                             ; preds = %bb.c, %bb.d, %bb.a
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 148
   %i.bt = load float, ptr %i.bs, align 4, !tbaa !45 ; 4 uses
   %i.bu = fmul float %i.bt, -2.000000e+00
-  %i.bv = fmul float %i.bu, f0x40490FDB           ; 2 uses
-  %5 = tail call noundef float @sinf(float noundef %i.bv) #13 ; 2 uses
-  %6 = tail call noundef float @cosf(float noundef %i.bv) #13 ; 2 uses
+  %i.bv = fmul float %i.bu, f0x40490FDB
+  call void @sincosf(float %i.bv, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load float, ptr %sincos.sin, align 4     ; 2 uses
+  %cos = load float, ptr %sincos.cos, align 4     ; 2 uses
   %i.bw = fneg float %i.t
-  %i.bx = insertelement <2 x float> poison, float %5, i64 0
+  %i.bx = insertelement <2 x float> poison, float %sin, i64 0
   %i.by = insertelement <2 x float> %i.bx, float %i.t, i64 1
   %i.bz = insertelement <2 x float> poison, float %i.bw, i64 0
-  %i.ca = insertelement <2 x float> %i.bz, float %6, i64 1
+  %i.ca = insertelement <2 x float> %i.bz, float %cos, i64 1
   %i.cb = fmul <2 x float> %i.by, %i.ca
-  %i.cc = insertelement <2 x float> poison, float %6, i64 0
-  %i.cd = insertelement <2 x float> %i.cc, float %5, i64 1
+  %i.cc = insertelement <2 x float> poison, float %cos, i64 0
+  %i.cd = insertelement <2 x float> %i.cc, float %sin, i64 1
   %i.ce = insertelement <2 x float> poison, float %i.r, i64 0
   %i.cf = shufflevector <2 x float> %i.ce, <2 x float> poison, <2 x i32> zeroinitializer
-  %7 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cd, <2 x float> %i.cf, <2 x float> %i.cb) ; 2 uses
+  %5 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.cd, <2 x float> %i.cf, <2 x float> %i.cb) ; 2 uses
   %i.cg = fadd float %i.p, -6.000000e+00          ; 2 uses
-  %i.ch = extractelement <2 x float> %7, i64 0
+  %i.ch = extractelement <2 x float> %5, i64 0
   %i.ci = fsub float %i.cg, %i.ch
   %i.cj = fpext float %i.ci to double
-  %i.ck = extractelement <2 x float> %7, i64 1
+  %i.ck = extractelement <2 x float> %5, i64 1
   %i.cl = fpext float %i.ck to double
   %i.cm = fmul nnan float %i.cg, 3.000000e+00
   %i.cn = fpext float %i.cm to double
@@ -676,10 +679,10 @@ bb.m:                                             ; preds = %bb.c, %bb.d, %bb.a
   %i.cp = shufflevector <2 x double> %i.co, <2 x double> poison, <2 x i32> zeroinitializer
   %i.cq = insertelement <2 x double> poison, double %i.cj, i64 0
   %i.cr = shufflevector <2 x double> %i.cq, <2 x double> poison, <2 x i32> zeroinitializer
-  %8 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.cp, <2 x double> <double f0x3FFBB67AE8584CAA, double f0xBFFBB67AE8584CAA>, <2 x double> %i.cr)
+  %6 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.cp, <2 x double> <double f0x3FFBB67AE8584CAA, double f0xBFFBB67AE8584CAA>, <2 x double> %i.cr)
   %i.cs = insertelement <2 x double> poison, double %i.cn, i64 0
   %i.ct = shufflevector <2 x double> %i.cs, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.cu = fdiv <2 x double> %8, %i.ct             ; 3 uses
+  %i.cu = fdiv <2 x double> %6, %i.ct             ; 3 uses
   %i.cv = fptrunc <2 x double> %i.cu to <2 x float> ; 3 uses
   %i.cw = extractelement <2 x float> %i.cv, i64 0
   %i.cx = fsub float 1.000000e+00, %i.cw
@@ -729,7 +732,7 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not112, label %bb.w, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
   %i.ea = fcmp olt float %i.bt, 0.000000e+00
   %i.eb = fadd float %i.bt, 1.000000e+00
   %.036.i.i68 = select i1 %i.ea, float %i.eb, float %i.bt ; 2 uses
@@ -737,9 +740,9 @@ bb.p:                                             ; preds = %bb.o
   %i.ed = fptosi float %i.ec to i32               ; 2 uses
   %i.ee = sitofp i32 %i.ed to float
   %i.ef = fneg float %i.ee
-  %9 = tail call float @llvm.fmuladd.f32(float %.036.i.i68, float 6.000000e+00, float %i.ef) ; 2 uses
-  %i.eg = fsub float 1.000000e+00, %9             ; 3 uses
-  %i.eh = fadd float %9, -1.000000e+00
+  %7 = call float @llvm.fmuladd.f32(float %.036.i.i68, float 6.000000e+00, float %i.ef) ; 2 uses
+  %i.eg = fsub float 1.000000e+00, %7             ; 3 uses
+  %i.eh = fadd float %7, -1.000000e+00
   %i.ei = fadd float %i.eh, 1.000000e+00          ; 3 uses
   %i.ej = srem i32 %i.ed, 6
   switch i32 %i.ej, label %_ZNKSt3__18functionIFvRKN7nanogui5ColorEEEclES4_.exit79 [
@@ -800,7 +803,7 @@ _ZNKSt3__18functionIFvRKN7nanogui5ColorEEEclES4_.exit79: ; preds = %bb.v, %bb.u,
   %i.fg = getelementptr inbounds nuw i8, ptr %i.ff, i64 48
   %i.fh = load ptr, ptr %i.fg, align 8
   call void %i.fh(ptr noundef nonnull align 8 dereferenceable(8) %i.dz, ptr noundef nonnull align 4 dereferenceable(16) %4), !inline_history !59
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
   br label %bb.w
 
 bb.w:                                             ; preds = %_ZNKSt3__18functionIFvRKN7nanogui5ColorEEEclES4_.exit79, %bb.o, %bb.n, %bb.m, %bb.e, %_ZNKSt3__18functionIFvRKN7nanogui5ColorEEEclES4_.exit
@@ -819,7 +822,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define hidden { <2 x float>, <2 x float> } @_ZNK7nanogui10ColorWheel5colorEv(ptr nofree noundef nonnull readonly align 16 captures(none) dereferenceable(224) %0) local_unnamed_addr #9 align 2 {
+define hidden { <2 x float>, <2 x float> } @_ZNK7nanogui10ColorWheel5colorEv(ptr nofree noundef nonnull readonly align 16 captures(none) dereferenceable(224) %0) local_unnamed_addr #8 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 148
   %i.b = load float, ptr %i.a, align 4, !tbaa !45 ; 3 uses
@@ -948,7 +951,7 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e,
 }
 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
-define linkonce_odr hidden void @_ZN7nanogui10ColorWheelD2Ev(ptr noundef nonnull align 16 dead_on_return(224) dereferenceable(224) %0) unnamed_addr #10 comdat align 2 {
+define linkonce_odr hidden void @_ZN7nanogui10ColorWheelD2Ev(ptr noundef nonnull align 16 dead_on_return(224) dereferenceable(224) %0) unnamed_addr #9 comdat align 2 {
 bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 120) (i8, ptr @_ZTVN7nanogui10ColorWheelE, i64 16), ptr %0, align 16, !tbaa !10
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 176
@@ -966,16 +969,16 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %i.c, align 8, !tbaa !10
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 %.sink2.i.i
   %i.g = load ptr, ptr %i.f, align 8
-  tail call void %i.g(ptr noundef nonnull align 8 dereferenceable(8) %i.c) #13, !inline_history !60
+  tail call void %i.g(ptr noundef nonnull align 8 dereferenceable(8) %i.c) #14, !inline_history !60
   br label %_ZNSt3__18functionIFvRKN7nanogui5ColorEEED2Ev.exit
 
 _ZNSt3__18functionIFvRKN7nanogui5ColorEEED2Ev.exit: ; preds = %bb.b, %.sink.split.i.i
-  tail call void @_ZN7nanogui6WidgetD2Ev(ptr noundef nonnull align 8 dead_on_return(148) dereferenceable(148) %0) #13
+  tail call void @_ZN7nanogui6WidgetD2Ev(ptr noundef nonnull align 8 dead_on_return(148) dereferenceable(148) %0) #14
   ret void
 }
 
 ; Function Attrs: inlinehint mustprogress nounwind uwtable
-define linkonce_odr hidden void @_ZN7nanogui10ColorWheelD0Ev(ptr noundef nonnull align 16 dereferenceable(224) %0) unnamed_addr #10 comdat align 2 {
+define linkonce_odr hidden void @_ZN7nanogui10ColorWheelD0Ev(ptr noundef nonnull align 16 dereferenceable(224) %0) unnamed_addr #9 comdat align 2 {
 bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 120) (i8, ptr @_ZTVN7nanogui10ColorWheelE, i64 16), ptr %0, align 16, !tbaa !10
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 176
@@ -993,12 +996,12 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %i.c, align 8, !tbaa !10
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 %.sink2.i.i.i
   %i.g = load ptr, ptr %i.f, align 8
-  tail call void %i.g(ptr noundef nonnull align 8 dereferenceable(8) %i.c) #13, !inline_history !61
+  tail call void %i.g(ptr noundef nonnull align 8 dereferenceable(8) %i.c) #14, !inline_history !61
   br label %_ZN7nanogui10ColorWheelD2Ev.exit
 
 _ZN7nanogui10ColorWheelD2Ev.exit:                 ; preds = %bb.b, %.sink.split.i.i.i
-  tail call void @_ZN7nanogui6WidgetD2Ev(ptr noundef nonnull align 16 dead_on_return(148) dereferenceable(224) %0) #13, !inline_history !62
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 224) #14
+  tail call void @_ZN7nanogui6WidgetD2Ev(ptr noundef nonnull align 16 dead_on_return(148) dereferenceable(224) %0) #14, !inline_history !62
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 224) #15
   ret void
 }
 
@@ -1021,13 +1024,16 @@ declare noundef zeroext i1 @_ZN7nanogui6Widget24keyboard_character_eventEj(ptr n
 declare void @_ZN7nanogui6Widget14perform_layoutEP10NVGcontext(ptr noundef nonnull align 8 dereferenceable(148), ptr noundef) unnamed_addr #1
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @atan2f(float noundef, float noundef) local_unnamed_addr #8
+declare float @atan2f(float noundef, float noundef) local_unnamed_addr #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #11
 
 ; Function Attrs: nobuiltin nounwind
 declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #12
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincosf(float noundef, ptr, ptr) local_unnamed_addr #13
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #7
@@ -1049,13 +1055,14 @@ attributes #4 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 attributes #5 = { mustprogress uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #8 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #8 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="64" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #9 = { inlinehint mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #10 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #11 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #12 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #13 = { nounwind }
-attributes #14 = { builtin nounwind }
+attributes #13 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #14 = { nounwind }
+attributes #15 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

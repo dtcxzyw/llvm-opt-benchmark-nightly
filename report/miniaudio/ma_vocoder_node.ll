@@ -145,7 +145,7 @@ voclib_reset_history.exit:                        ; preds = %._crit_edge.us.i
   %i.aq = uitofp i32 %i.ap to double
   %i.ar = fmul double %i.ao, %i.aq
   %i.as = fdiv double 1.000000e+00, %i.ar
-  %i.at = tail call double @pow(double noundef 1.000000e-02, double noundef %i.as) #11
+  %i.at = tail call double @pow(double noundef 1.000000e-02, double noundef %i.as) #12
   %i.au = fptrunc double %i.at to float           ; 6 uses
   store float %i.au, ptr %i.am, align 4, !tbaa !21
   %i.av = load i8, ptr %i.g, align 4, !tbaa !15   ; 3 uses
@@ -383,6 +383,10 @@ bb.b:                                             ; preds = %bb.b, %.epil.prehea
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite, errnomem: write) uwtable
 define internal fastcc void @voclib_initialize_filterbank(ptr nofree noundef captures(none) %0, i32 noundef range(i32 0, 2) %1) unnamed_addr #0 {
 bb.a:
+  %sincos.sin.i156 = alloca double, align 8       ; 4 uses
+  %sincos.cos.i157 = alloca double, align 8       ; 4 uses
+  %sincos.sin.i = alloca double, align 8          ; 4 uses
+  %sincos.cos.i = alloca double, align 8          ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 84872
   %i.b = load i32, ptr %i.a, align 4, !tbaa !14   ; 2 uses
   %i.c = uitofp i32 %i.b to double                ; 2 uses
@@ -393,7 +397,7 @@ bb.a:
   %i.g = load i8, ptr %i.f, align 4, !tbaa !15    ; 3 uses
   %i.h = uitofp i8 %i.g to double
   %i.i = fdiv double 1.000000e+00, %i.h
-  %i.j = tail call double @pow(double noundef %i.e, double noundef %i.i) #11 ; 2 uses
+  %i.j = tail call double @pow(double noundef %i.e, double noundef %i.i) #12 ; 2 uses
   %.not164 = icmp eq i8 %i.g, 0
   br i1 %.not164, label %._crit_edge163, label %.lr.ph162.a
 
@@ -405,7 +409,7 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 84868
   %i.o = load float, ptr %i.n, align 4, !tbaa !23 ; 2 uses
   %i.p = fcmp une float %i.o, 1.000000e+00
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 29568 ; 4 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 29568 ; 3 uses
   %i.r = fpext float %i.o to double
   %i.s = load i8, ptr %i.m, align 1, !tbaa !16    ; 2 uses
   %i.t = icmp ugt i8 %i.s, 1                      ; 2 uses
@@ -426,7 +430,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph162.a, %._crit_edge
-  %indvars.iv171 = phi i64 [ 0, %.lr.ph162.a ], [ %indvars.iv.next172, %._crit_edge ] ; 7 uses
+  %indvars.iv171 = phi i64 [ 0, %.lr.ph162.a ], [ %indvars.iv.next172, %._crit_edge ] ; 6 uses
   %.0151160 = phi double [ 0.000000e+00, %.lr.ph162.a ], [ %.1152, %._crit_edge ] ; 3 uses
   %i.y = fcmp ogt double %.0151160, 0.000000e+00
   %i.z = fmul double %i.j, %.0151160
@@ -441,24 +445,27 @@ bb.c:                                             ; preds = %bb.b
   %i.ae = insertelement <2 x double> poison, double %.1152, i64 0
   %i.af = insertelement <2 x double> %i.ae, double %i.ac, i64 1
   %i.ag = fptrunc <2 x double> %i.af to <2 x float>
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i)
   %i.ah = fpext <2 x float> %i.ag to <2 x double>
   %i.ai = fmul <2 x double> %i.ah, <double f0x401921FB54442D18, double f0x3FD62E42FEFA39EF> ; 2 uses
   %i.aj = extractelement <2 x double> %i.ai, i64 0
   %i.ak = fdiv double %i.aj, %i.l
   %i.al = fptrunc double %i.ak to float
-  %i.am = fpext float %i.al to double             ; 3 uses
-  %2 = tail call double @sin(double noundef %i.am) #11
-  %3 = fptrunc double %2 to float                 ; 2 uses
-  %4 = tail call double @cos(double noundef %i.am) #11
+  %i.am = fpext float %i.al to double             ; 2 uses
+  call void @sincos(double %i.am, ptr nonnull %sincos.sin.i, ptr nonnull %sincos.cos.i)
+  %sin.i = load double, ptr %sincos.sin.i, align 8
+  %cos.i = load double, ptr %sincos.cos.i, align 8
+  %2 = fptrunc double %sin.i to float             ; 2 uses
   %i.an = extractelement <2 x double> %i.ai, i64 1
   %i.ao = fmul double %i.an, %i.am
-  %i.ap = fpext float %3 to double
+  %i.ap = fpext float %2 to double
   %i.aq = fdiv double %i.ao, %i.ap
-  %5 = tail call double @sinh(double noundef %i.aq) #11
-  %i.ar = fptrunc double %5 to float
-  %i.as = fmul float %3, %i.ar                    ; 4 uses
+  %3 = call double @sinh(double noundef %i.aq) #12
+  %i.ar = fptrunc double %3 to float
+  %i.as = fmul float %2, %i.ar                    ; 4 uses
   %i.at = fsub float 1.000000e+00, %i.as
-  %i.au = fptrunc double %4 to float
+  %i.au = fptrunc double %cos.i to float
   %i.av = fmul float %i.au, -2.000000e+00
   %i.aw = fadd float %i.as, 1.000000e+00          ; 2 uses
   %i.ax = fneg float %i.as
@@ -472,6 +479,8 @@ bb.c:                                             ; preds = %bb.b
   %i.be = fdiv float %i.at, %i.aw                 ; 6 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ad, i64 16
   store float %i.be, ptr %i.bf, align 4, !tbaa !25
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i)
   br i1 %i.t, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.c
@@ -509,7 +518,7 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.epil.preheader:                            ; preds = %.loopexit.loopexit.unr-lcssa, %.lr.ph.preheader
   %indvars.iv.epil.init = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next.3, %.loopexit.loopexit.unr-lcssa ]
-  tail call void @llvm.assume(i1 %lcmp.mod179)
+  call void @llvm.assume(i1 %lcmp.mod179)
   br label %.lr.ph.epil
 
 .lr.ph.epil:                                      ; preds = %.lr.ph.epil, %.lr.ph.epil.preheader
@@ -528,28 +537,31 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.p, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %.loopexit
-  %i.bt = getelementptr inbounds nuw [288 x i8], ptr %i.q, i64 %indvars.iv171
+  %i.bt = getelementptr inbounds nuw [288 x i8], ptr %i.q, i64 %indvars.iv171 ; 2 uses
   %i.bu = fmul double %.1152, %i.r
   %i.bv = fptrunc double %i.bu to float
   %i.bw = fptrunc double %i.ac to float
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i156)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i157)
   %i.bx = fpext float %i.bv to double
   %i.by = fmul double %i.bx, f0x401921FB54442D18
   %i.bz = fdiv double %i.by, %i.l
   %i.ca = fptrunc double %i.bz to float
-  %i.cb = fpext float %i.ca to double             ; 3 uses
-  %6 = tail call double @sin(double noundef %i.cb) #11
-  %7 = fptrunc double %6 to float                 ; 2 uses
-  %8 = tail call double @cos(double noundef %i.cb) #11
+  %i.cb = fpext float %i.ca to double             ; 2 uses
+  call void @sincos(double %i.cb, ptr nonnull %sincos.sin.i156, ptr nonnull %sincos.cos.i157)
+  %sin.i158 = load double, ptr %sincos.sin.i156, align 8
+  %cos.i159 = load double, ptr %sincos.cos.i157, align 8
+  %4 = fptrunc double %sin.i158 to float          ; 2 uses
   %i.cc = fpext float %i.bw to double
   %i.cd = fmul double %i.cc, f0x3FD62E42FEFA39EF
   %i.ce = fmul double %i.cd, %i.cb
-  %i.cf = fpext float %7 to double
+  %i.cf = fpext float %4 to double
   %i.cg = fdiv double %i.ce, %i.cf
-  %9 = tail call double @sinh(double noundef %i.cg) #11
-  %i.ch = fptrunc double %9 to float
-  %i.ci = fmul float %7, %i.ch                    ; 4 uses
+  %5 = call double @sinh(double noundef %i.cg) #12
+  %i.ch = fptrunc double %5 to float
+  %i.ci = fmul float %4, %i.ch                    ; 4 uses
   %i.cj = fsub float 1.000000e+00, %i.ci
-  %i.ck = fptrunc double %8 to float
+  %i.ck = fptrunc double %cos.i159 to float
   %i.cl = fmul float %i.ck, -2.000000e+00
   %i.cm = fadd float %i.ci, 1.000000e+00          ; 2 uses
   %i.cn = fneg float %i.ci
@@ -560,24 +572,27 @@ bb.d:                                             ; preds = %.loopexit
   %i.cs = shufflevector <4 x float> %i.cr, <4 x float> poison, <4 x i32> zeroinitializer
   %i.ct = fdiv <4 x float> %i.cq, %i.cs           ; 2 uses
   store <4 x float> %i.ct, ptr %i.bt, align 4, !tbaa !12
-  %i.cu = fdiv float %i.cj, %i.cm
+  %i.cu = fdiv float %i.cj, %i.cm                 ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %i.bt, i64 16
+  store float %i.cu, ptr %6, align 4, !tbaa !25
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i156)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i157)
   br label %bb.f
 
 bb.e:                                             ; preds = %.loopexit
   %i.cv = getelementptr inbounds nuw [288 x i8], ptr %0, i64 %indvars.iv171 ; 2 uses
-  %i.cw = getelementptr inbounds nuw [288 x i8], ptr %i.q, i64 %indvars.iv171
+  %i.cw = getelementptr inbounds nuw [288 x i8], ptr %i.q, i64 %indvars.iv171 ; 2 uses
   %i.cx = load <4 x float>, ptr %i.cv, align 4, !tbaa !12 ; 2 uses
   store <4 x float> %i.cx, ptr %i.cw, align 4, !tbaa !12
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cv, i64 16
-  %i.cz = load float, ptr %i.cy, align 4, !tbaa !25
+  %i.cz = load float, ptr %i.cy, align 4, !tbaa !25 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.cw, i64 16
+  store float %i.cz, ptr %7, align 4, !tbaa !25
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.sink = phi float [ %i.cz, %bb.e ], [ %i.cu, %bb.d ] ; 8 uses
+  %.sink = phi float [ %i.cz, %bb.e ], [ %i.cu, %bb.d ] ; 7 uses
   %i.da = phi <4 x float> [ %i.cx, %bb.e ], [ %i.ct, %bb.d ] ; 7 uses
-  %10 = getelementptr inbounds nuw [288 x i8], ptr %i.q, i64 %indvars.iv171
-  %11 = getelementptr inbounds nuw i8, ptr %10, i64 16
-  store float %.sink, ptr %11, align 4, !tbaa !25
   %i.db = getelementptr inbounds nuw [288 x i8], ptr %i.q, i64 %indvars.iv171 ; 5 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %i.db, i64 27648 ; 4 uses
   store <4 x float> %i.da, ptr %i.dc, align 4, !tbaa !12
@@ -618,7 +633,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 .lr.ph158.epil.preheader:                         ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph158.preheader
   %indvars.iv166.epil.init = phi i64 [ 1, %.lr.ph158.preheader ], [ %indvars.iv.next167.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
-  tail call void @llvm.assume(i1 %lcmp.mod183)
+  call void @llvm.assume(i1 %lcmp.mod183)
   %i.dm = getelementptr inbounds nuw [36 x i8], ptr %i.db, i64 %indvars.iv166.epil.init ; 2 uses
   store <4 x float> %i.da, ptr %i.dm, align 4, !tbaa !12
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dm, i64 16
@@ -1021,7 +1036,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = uitofp i32 %i.g to double
   %i.i = fmul double %i.e, %i.h
   %i.j = fdiv double 1.000000e+00, %i.i
-  %i.k = tail call double @pow(double noundef 1.000000e-02, double noundef %i.j) #11
+  %i.k = tail call double @pow(double noundef 1.000000e-02, double noundef %i.j) #12
   %i.l = fptrunc double %i.k to float             ; 6 uses
   store float %i.l, ptr %i.d, align 4, !tbaa !21
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 84876
@@ -1123,7 +1138,7 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define void @ma_vocoder_node_config_init(ptr dead_on_unwind noalias nofree writable writeonly sret(%struct.ma_vocoder_node_config) align 8 captures(none) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #5 {
 bb.a:
-  tail call void @ma_node_config_init(ptr dead_on_unwind nonnull writable sret(%struct.ma_node_config) align 8 %0) #11
+  tail call void @ma_node_config_init(ptr dead_on_unwind nonnull writable sret(%struct.ma_node_config) align 8 %0) #12
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i32 %1, ptr %i.a, align 8, !tbaa !30
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 44
@@ -1149,9 +1164,9 @@ bb.a:
   %4 = alloca %struct.ma_node_config, align 8     ; 7 uses
   %i.a = alloca [2 x i32], align 4                ; 5 uses
   %i.b = alloca [1 x i32], align 4                ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   %i.c = icmp eq ptr %3, null
   br i1 %i.c, label %voclib_initialize.exit, label %bb.b
 
@@ -1300,7 +1315,7 @@ voclib_reset_history.exit.i:                      ; preds = %._crit_edge.us.i.i
   %i.bj = uitofp i32 %i.bi to double
   %i.bk = fmul double %i.bh, %i.bj
   %i.bl = fdiv double 1.000000e+00, %i.bk
-  %i.bm = tail call double @pow(double noundef 1.000000e-02, double noundef %i.bl) #11
+  %i.bm = tail call double @pow(double noundef 1.000000e-02, double noundef %i.bl) #12
   %i.bn = fptrunc double %i.bm to float           ; 6 uses
   store float %i.bn, ptr %i.bf, align 8, !tbaa !21
   %i.bo = load i8, ptr %i.w, align 4, !tbaa !15   ; 3 uses
@@ -1370,14 +1385,14 @@ bb.f:                                             ; preds = %bb.f, %.epil.prehea
   store ptr %i.a, ptr %i.cd, align 8, !tbaa !63
   %i.ce = getelementptr inbounds nuw i8, ptr %4, i64 32
   store ptr %i.b, ptr %i.ce, align 8, !tbaa !64
-  %i.cf = call i32 @ma_node_init(ptr noundef %0, ptr noundef nonnull %4, ptr noundef %2, ptr noundef nonnull %3) #11
+  %i.cf = call i32 @ma_node_init(ptr noundef %0, ptr noundef nonnull %4, ptr noundef %2, ptr noundef nonnull %3) #12
   br label %voclib_initialize.exit
 
 voclib_initialize.exit:                           ; preds = %bb.c, %.loopexit, %bb.b, %bb.a
   %.0 = phi i32 [ %i.cf, %.loopexit ], [ -2, %bb.a ], [ -2, %bb.b ], [ -2, %bb.c ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   ret i32 %.0
 }
 
@@ -1386,7 +1401,7 @@ declare i32 @ma_node_init(ptr noundef, ptr noundef, ptr noundef, ptr noundef) lo
 ; Function Attrs: nounwind uwtable
 define void @ma_vocoder_node_uninit(ptr noundef %0, ptr noundef %1) local_unnamed_addr #5 {
 bb.a:
-  tail call void @ma_node_uninit(ptr noundef %0, ptr noundef %1) #11
+  tail call void @ma_node_uninit(ptr noundef %0, ptr noundef %1) #12
   ret void
 }
 
@@ -1394,12 +1409,6 @@ declare void @ma_node_uninit(ptr noundef, ptr noundef) local_unnamed_addr #7
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @pow(double noundef, double noundef) local_unnamed_addr #8
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #8
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #8
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @sinh(double noundef) local_unnamed_addr #8
@@ -1420,8 +1429,11 @@ bb.a:
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fabs.f32(float) #3
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #10
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #10
+declare void @llvm.assume(i1 noundef) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #3
@@ -1436,8 +1448,9 @@ attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: wr
 attributes #7 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #11 = { nounwind }
+attributes #10 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #11 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #12 = { nounwind }
 
 !llvm.module.flags = !{!3, !4}
 !llvm.ident = !{!5}

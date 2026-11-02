@@ -51,9 +51,19 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   ret i1 %i.z
 }
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
+declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
+
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define dso_local noundef zeroext i1 @_ZNK3ozz9animation12IKTwoBoneJob3RunEv(ptr nofree noundef nonnull readonly align 16 captures(none) dereferenceable(112) %0) local_unnamed_addr #1 align 2 {
+define dso_local noundef zeroext i1 @_ZNK3ozz9animation12IKTwoBoneJob3RunEv(ptr nofree noundef nonnull readonly align 16 captures(none) dereferenceable(112) %0) local_unnamed_addr #2 align 2 {
 bb.a:
+  %sincos.sin.i10 = alloca float, align 4         ; 4 uses
+  %sincos.cos.i11 = alloca float, align 4         ; 4 uses
+  %sincos.sin.i = alloca float, align 4           ; 4 uses
+  %sincos.cos.i = alloca float, align 4           ; 4 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.b = load ptr, ptr %i.a, align 16, !tbaa !15  ; 5 uses
   %.not.i = icmp eq ptr %i.b, null
@@ -441,6 +451,8 @@ bb.h:                                             ; preds = %_ZN3ozz9animation12
 
 bb.i:                                             ; preds = %bb.h, %_ZN3ozz9animation12_GLOBAL__N_112SoftenTargetERKNS0_12IKTwoBoneJobERKNS1_15IKConstantSetupEPDv4_fS9_.exit
   %.val5 = load <4 x float>, ptr %i.m, align 16, !tbaa !18 ; 6 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i)
   %i.lr = fadd <4 x float> %i.jh, %i.ji
   %i.ls = fmul <4 x float> %i.jh, %i.ji           ; 2 uses
   %i.lt = tail call noundef <4 x float> @llvm.x86.sse.rsqrt.ss(<4 x float> %i.ls) ; 3 uses
@@ -461,7 +473,7 @@ bb.i:                                             ; preds = %bb.h, %_ZN3ozz9anim
   %i.mf = tail call noundef <4 x float> @llvm.x86.sse.min.ps(<4 x float> %i.me, <4 x float> splat (float 1.000000e+00))
   %i.mg = tail call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> splat (float -1.000000e+00), <4 x float> %i.mf) ; 2 uses
   %i.mh = extractelement <4 x float> %i.mg, i64 0
-  %i.mi = tail call noundef float @acosf(float noundef %i.mh) #6
+  %i.mi = tail call noundef float @acosf(float noundef %i.mh) #7
   %i.mj = shufflevector <4 x float> %i.jf, <4 x float> poison, <4 x i32> <i32 1, i32 2, i32 0, i32 3> ; 2 uses
   %i.mk = shufflevector <4 x float> %.val5, <4 x float> poison, <4 x i32> <i32 2, i32 0, i32 1, i32 3>
   %i.ml = fmul <4 x float> %i.mj, %.val5
@@ -471,7 +483,7 @@ bb.i:                                             ; preds = %bb.h, %_ZN3ozz9anim
   %i.mp = tail call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.mo, <4 x float> %i.ip, i8 127)
   %i.mq = fcmp olt <4 x float> %i.mp, zeroinitializer
   %i.mr = extractelement <4 x float> %i.mg, i64 1
-  %i.ms = tail call noundef float @acosf(float noundef %i.mr) #6
+  %i.ms = tail call noundef float @acosf(float noundef %i.mr) #7
   %i.mt = insertelement <4 x float> poison, float %i.ms, i64 0
   %i.mu = bitcast <4 x float> %i.mt to <4 x i32>
   %i.mv = select <4 x i1> %i.mq, <4 x i32> <i32 -2147483648, i32 poison, i32 poison, i32 poison>, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
@@ -479,14 +491,19 @@ bb.i:                                             ; preds = %bb.h, %_ZN3ozz9anim
   %i.mx = bitcast <4 x i32> %i.mw to <4 x float>
   %i.my = extractelement <4 x float> %i.mx, i64 0
   %i.mz = fsub float %i.mi, %i.my
-  %i.na = fmul float %i.mz, 5.000000e-01          ; 2 uses
-  %1 = tail call noundef float @sinf(float noundef %i.na) #6
-  %2 = insertelement <4 x float> poison, float %1, i64 0
-  %3 = tail call noundef float @cosf(float noundef %i.na) #6
-  %i.nb = shufflevector <4 x float> %2, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.na = fmul float %i.mz, 5.000000e-01
+  call void @sincosf(float %i.na, ptr nonnull %sincos.sin.i, ptr nonnull %sincos.cos.i)
+  %sin.i = load float, ptr %sincos.sin.i, align 4
+  %cos.i = load float, ptr %sincos.cos.i, align 4
+  %1 = insertelement <4 x float> poison, float %sin.i, i64 0
+  %i.nb = shufflevector <4 x float> %1, <4 x float> poison, <4 x i32> zeroinitializer
   %i.nc = fmul <4 x float> %.val5, %i.nb          ; 2 uses
-  %i.nd = insertelement <4 x float> %i.nc, float %3, i64 0 ; 2 uses
+  %i.nd = insertelement <4 x float> %i.nc, float %cos.i, i64 0 ; 2 uses
   %i.ne = shufflevector <4 x float> %i.nc, <4 x float> %i.nd, <4 x i32> <i32 0, i32 1, i32 6, i32 4> ; 3 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i10)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i11)
   %i.nf = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.ng = load <3 x float>, ptr %i.nf, align 16, !tbaa !18 ; 3 uses
   %i.nh = shufflevector <3 x float> %i.ng, <3 x float> poison, <4 x i32> zeroinitializer
@@ -533,29 +550,29 @@ bb.i:                                             ; preds = %bb.h, %_ZN3ozz9anim
   %i.ow = fadd <4 x float> %i.ov, %i.or
   %i.ox = fadd <4 x float> %i.ot, %i.ow
   %i.oy = fadd <4 x float> %i.iy, %i.ox           ; 9 uses
-  %4 = tail call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.oy, <4 x float> %i.oy, i8 127)
-  %5 = tail call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %.027, <4 x float> %.027, i8 127)
-  %i.oz = fmul <4 x float> %4, %5
+  %2 = call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.oy, <4 x float> %i.oy, i8 127)
+  %3 = call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %.027, <4 x float> %.027, i8 127)
+  %i.oz = fmul <4 x float> %2, %3
   %i.pa = extractelement <4 x float> %i.oz, i64 0
-  %6 = tail call float @llvm.sqrt.f32(float %i.pa) ; 3 uses
-  %i.pb = fcmp olt float %6, f0x358637BD
+  %4 = call float @llvm.sqrt.f32(float %i.pa)     ; 3 uses
+  %i.pb = fcmp olt float %4, f0x358637BD
   br i1 %i.pb, label %_ZN3ozz4math14SimdQuaternion11FromVectorsEDv4_fS2_.exit.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.pc = insertelement <4 x float> poison, float %6, i64 0
-  %7 = tail call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.oy, <4 x float> %.027, i8 127)
-  %i.pd = fadd <4 x float> %i.pc, %7              ; 2 uses
+  %i.pc = insertelement <4 x float> poison, float %4, i64 0
+  %5 = call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.oy, <4 x float> %.027, i8 127)
+  %i.pd = fadd <4 x float> %i.pc, %5              ; 2 uses
   %i.pe = extractelement <4 x float> %i.pd, i64 0
-  %i.pf = fmul float %6, f0x358637BD
+  %i.pf = fmul float %4, f0x358637BD
   %i.pg = fcmp olt float %i.pe, %i.pf
   br i1 %i.pg, label %bb.k, label %bb.n
 
 bb.k:                                             ; preds = %bb.j
   %.sroa.027.0.vec.extract.i = extractelement <4 x float> %i.oy, i64 0
-  %8 = tail call noundef float @llvm.fabs.f32(float %.sroa.027.0.vec.extract.i)
+  %6 = call noundef float @llvm.fabs.f32(float %.sroa.027.0.vec.extract.i)
   %.sroa.027.8.vec.extract.i = extractelement <4 x float> %i.oy, i64 2 ; 2 uses
-  %9 = tail call noundef float @llvm.fabs.f32(float %.sroa.027.8.vec.extract.i)
-  %i.ph = fcmp ogt float %8, %9
+  %7 = call noundef float @llvm.fabs.f32(float %.sroa.027.8.vec.extract.i)
+  %i.ph = fcmp ogt float %6, %7
   br i1 %i.ph, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
@@ -582,10 +599,10 @@ bb.n:                                             ; preds = %bb.j
 
 bb.o:                                             ; preds = %bb.n, %bb.m, %bb.l
   %.sroa.034.0.i = phi <4 x float> [ %i.pu, %bb.n ], [ %i.pk, %bb.l ], [ %i.pn, %bb.m ] ; 3 uses
-  %10 = tail call <4 x float> @llvm.x86.sse41.dpps(<4 x float> %.sroa.034.0.i, <4 x float> %.sroa.034.0.i, i8 -1)
-  %i.pv = extractelement <4 x float> %10, i64 0
-  %11 = tail call float @llvm.sqrt.f32(float %i.pv)
-  %i.pw = fdiv float 1.000000e+00, %11
+  %8 = call <4 x float> @llvm.x86.sse41.dpps(<4 x float> %.sroa.034.0.i, <4 x float> %.sroa.034.0.i, i8 -1)
+  %i.pv = extractelement <4 x float> %8, i64 0
+  %9 = call float @llvm.sqrt.f32(float %i.pv)
+  %i.pw = fdiv float 1.000000e+00, %9
   %i.px = insertelement <4 x float> poison, float %i.pw, i64 0
   %i.py = shufflevector <4 x float> %i.px, <4 x float> poison, <4 x i32> zeroinitializer
   %i.pz = fmul <4 x float> %.sroa.034.0.i, %i.py
@@ -604,7 +621,7 @@ bb.p:                                             ; preds = %_ZN3ozz4math14SimdQ
   %i.qf = fmul <4 x float> %i.qc, %i.qd
   %i.qg = shufflevector <4 x float> %i.qe, <4 x float> poison, <4 x i32> <i32 1, i32 2, i32 0, i32 3>
   %i.qh = fsub <4 x float> %i.qf, %i.qg           ; 3 uses
-  %12 = tail call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.qh, <4 x float> %i.qh, i8 127)
+  %10 = call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.qh, <4 x float> %i.qh, i8 127)
   %i.qi = shufflevector <4 x float> %.val5, <4 x float> poison, <4 x i32> zeroinitializer
   %i.qj = fmul <4 x float> %i.qi, %i.of
   %i.qk = shufflevector <4 x float> %.val5, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
@@ -637,53 +654,54 @@ bb.p:                                             ; preds = %_ZN3ozz4math14SimdQ
   %i.rl = fsub <4 x float> %i.rj, %i.rk           ; 2 uses
   %i.rm = fadd <4 x float> %i.qx, %i.rl
   %i.rn = fadd <4 x float> %i.rl, %i.rm           ; 4 uses
-  %13 = tail call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.rn, <4 x float> %i.rn, i8 127)
-  %i.ro = shufflevector <4 x float> %.0, <4 x float> %12, <4 x i32> <i32 0, i32 4, i32 poison, i32 poison>
-  %i.rp = shufflevector <4 x float> %13, <4 x float> %.0, <4 x i32> <i32 0, i32 poison, i32 7, i32 poison>
+  %11 = call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.rn, <4 x float> %i.rn, i8 127)
+  %i.ro = shufflevector <4 x float> %.0, <4 x float> %10, <4 x i32> <i32 0, i32 4, i32 poison, i32 poison>
+  %i.rp = shufflevector <4 x float> %11, <4 x float> %.0, <4 x i32> <i32 0, i32 poison, i32 7, i32 poison>
   %i.rq = shufflevector <4 x float> %i.ro, <4 x float> %i.rp, <4 x i32> <i32 0, i32 1, i32 4, i32 6> ; 2 uses
-  %14 = tail call noundef <4 x float> @llvm.x86.sse.rsqrt.ps(<4 x float> %i.rq) ; 3 uses
-  %i.rr = fmul <4 x float> %14, splat (float 5.000000e-01)
-  %i.rs = fmul <4 x float> %14, %i.rq
-  %i.rt = fmul <4 x float> %14, %i.rs
+  %12 = call noundef <4 x float> @llvm.x86.sse.rsqrt.ps(<4 x float> %i.rq) ; 3 uses
+  %i.rr = fmul <4 x float> %12, splat (float 5.000000e-01)
+  %i.rs = fmul <4 x float> %12, %i.rq
+  %i.rt = fmul <4 x float> %12, %i.rs
   %i.ru = fsub <4 x float> splat (float 3.000000e+00), %i.rt
   %i.rv = fmul <4 x float> %i.rr, %i.ru           ; 3 uses
   %i.rw = shufflevector <4 x float> %i.rv, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
   %i.rx = fmul <4 x float> %i.qh, %i.rw
   %i.ry = shufflevector <4 x float> %i.rv, <4 x float> poison, <4 x i32> <i32 2, i32 2, i32 2, i32 2>
   %i.rz = fmul <4 x float> %i.rn, %i.ry
-  %15 = tail call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.rx, <4 x float> %i.rz, i8 127)
+  %13 = call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.rx, <4 x float> %i.rz, i8 127)
   %i.sa = shufflevector <4 x float> %i.rv, <4 x float> poison, <4 x i32> zeroinitializer
   %i.sb = fmul <4 x float> %.027, %i.sa           ; 2 uses
-  %16 = tail call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.rn, <4 x float> %i.no, i8 127)
-  %i.sc = bitcast <4 x float> %16 to <4 x i32>
+  %14 = call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.rn, <4 x float> %i.no, i8 127)
+  %i.sc = bitcast <4 x float> %14 to <4 x i32>
   %i.sd = and <4 x i32> %i.sc, <i32 -2147483648, i32 poison, i32 poison, i32 poison>
   %i.se = shufflevector <4 x i32> %i.sd, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.sf = bitcast <4 x float> %i.sb to <4 x i32>
   %i.sg = xor <4 x i32> %i.se, %i.sf
   %i.sh = bitcast <4 x i32> %i.sg to <4 x float>
-  %17 = tail call noundef <4 x float> @llvm.x86.sse.min.ps(<4 x float> %15, <4 x float> splat (float 1.000000e+00))
-  %18 = tail call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> splat (float -1.000000e+00), <4 x float> %17)
-  %i.si = fadd <4 x float> %18, splat (float 1.000000e+00)
+  %15 = call noundef <4 x float> @llvm.x86.sse.min.ps(<4 x float> %13, <4 x float> splat (float 1.000000e+00))
+  %16 = call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> splat (float -1.000000e+00), <4 x float> %15)
+  %i.si = fadd <4 x float> %16, splat (float 1.000000e+00)
   %i.sj = fmul <4 x float> %i.si, splat (float 5.000000e-01) ; 2 uses
   %i.sk = fsub <4 x float> <float 1.000000e+00, float poison, float poison, float poison>, %i.sj
   %i.sl = shufflevector <4 x float> %i.sj, <4 x float> %i.sk, <4 x i32> <i32 0, i32 4, i32 2, i32 3>
-  %19 = tail call noundef <4 x float> @llvm.sqrt.v4f32(<4 x float> %i.sl) ; 2 uses
-  %i.sm = shufflevector <4 x float> %19, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
+  %17 = call noundef <4 x float> @llvm.sqrt.v4f32(<4 x float> %i.sl) ; 2 uses
+  %i.sm = shufflevector <4 x float> %17, <4 x float> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
   %i.sn = fmul <4 x float> %i.sm, %i.sh           ; 5 uses
-  %i.so = shufflevector <4 x float> %i.sn, <4 x float> %19, <4 x i32> <i32 0, i32 1, i32 2, i32 4> ; 4 uses
+  %i.so = shufflevector <4 x float> %i.sn, <4 x float> %17, <4 x i32> <i32 0, i32 1, i32 2, i32 4> ; 4 uses
   %i.sp = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.sq = load float, ptr %i.sp, align 16, !tbaa !31 ; 2 uses
   %i.sr = fcmp une float %i.sq, 0.000000e+00
   br i1 %i.sr, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  %i.ss = fmul float %i.sq, 5.000000e-01          ; 2 uses
-  %20 = tail call noundef float @sinf(float noundef %i.ss) #6
-  %21 = insertelement <4 x float> poison, float %20, i64 0
-  %22 = tail call noundef float @cosf(float noundef %i.ss) #6
-  %i.st = shufflevector <4 x float> %21, <4 x float> poison, <4 x i32> zeroinitializer
+  %i.ss = fmul float %i.sq, 5.000000e-01
+  call void @sincosf(float %i.ss, ptr nonnull %sincos.sin.i10, ptr nonnull %sincos.cos.i11)
+  %sin.i12 = load float, ptr %sincos.sin.i10, align 4
+  %cos.i13 = load float, ptr %sincos.cos.i11, align 4
+  %18 = insertelement <4 x float> poison, float %sin.i12, i64 0
+  %i.st = shufflevector <4 x float> %18, <4 x float> poison, <4 x i32> zeroinitializer
   %i.su = fmul <4 x float> %i.sb, %i.st           ; 2 uses
-  %i.sv = insertelement <4 x float> %i.su, float %22, i64 0 ; 2 uses
+  %i.sv = insertelement <4 x float> %i.su, float %cos.i13, i64 0 ; 2 uses
   %i.sw = shufflevector <4 x float> %i.su, <4 x float> %i.sv, <4 x i32> <i32 0, i32 1, i32 6, i32 4> ; 3 uses
   %i.sx = shufflevector <4 x float> %i.sv, <4 x float> poison, <4 x i32> <i32 0, i32 0, i32 0, i32 2>
   %i.sy = shufflevector <4 x float> %i.sn, <4 x float> poison, <4 x i32> <i32 0, i32 1, i32 2, i32 2>
@@ -744,6 +762,8 @@ bb.r:                                             ; preds = %bb.p
 
 _ZN3ozz9animation12_GLOBAL__N_117ComputeStartJointERKNS0_12IKTwoBoneJobERKNS1_15IKConstantSetupERKNS_4math14SimdQuaternionEDv4_fSC_.exit: ; preds = %_ZN3ozz4math14SimdQuaternion11FromVectorsEDv4_fS2_.exit.i, %bb.q, %bb.r
   %.sroa.040.1.i = phi <4 x float> [ %.sroa.0.0.i.i, %_ZN3ozz4math14SimdQuaternion11FromVectorsEDv4_fS2_.exit.i ], [ %i.uf, %bb.q ], [ %i.uw, %bb.r ] ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i10)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i11)
   %i.ux = fcmp olt <4 x float> %.sroa.040.1.i, zeroinitializer
   %i.uy = shufflevector <4 x i1> %i.ux, <4 x i1> poison, <4 x i32> <i32 3, i32 3, i32 3, i32 3>
   %i.uz = bitcast <4 x float> %.sroa.040.1.i to <4 x i32>
@@ -762,20 +782,20 @@ bb.s:                                             ; preds = %_ZN3ozz9animation12
   %i.vj = bitcast <4 x i32> %i.vb to <4 x float>
   %i.vk = insertelement <4 x float> poison, float %i.ab, i64 0
   %i.vl = shufflevector <4 x float> %i.vk, <4 x float> poison, <4 x i32> zeroinitializer
-  %23 = tail call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> zeroinitializer, <4 x float> %i.vl) ; 2 uses
+  %19 = call noundef <4 x float> @llvm.x86.sse.max.ps(<4 x float> zeroinitializer, <4 x float> %i.vl) ; 2 uses
   %i.vm = fadd <4 x float> %i.vj, <float -0.000000e+00, float -0.000000e+00, float -0.000000e+00, float -1.000000e+00>
-  %i.vn = fmul <4 x float> %i.vm, %23
+  %i.vn = fmul <4 x float> %i.vm, %19
   %i.vo = fadd <4 x float> %i.vn, <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00> ; 3 uses
   %i.vp = fadd <4 x float> %i.vi, <float -0.000000e+00, float -0.000000e+00, float -0.000000e+00, float -1.000000e+00>
-  %i.vq = fmul <4 x float> %i.vp, %23
+  %i.vq = fmul <4 x float> %i.vp, %19
   %i.vr = fadd <4 x float> %i.vq, <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float 1.000000e+00> ; 3 uses
-  %24 = tail call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.vo, <4 x float> %i.vo, i8 -1)
-  %25 = tail call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.vr, <4 x float> %i.vr, i8 -1)
-  %i.vs = shufflevector <4 x float> %24, <4 x float> %25, <4 x i32> <i32 0, i32 4, i32 2, i32 3> ; 2 uses
-  %26 = tail call noundef <4 x float> @llvm.x86.sse.rsqrt.ps(<4 x float> %i.vs) ; 3 uses
-  %i.vt = fmul <4 x float> %26, splat (float 5.000000e-01)
-  %i.vu = fmul <4 x float> %26, %i.vs
-  %i.vv = fmul <4 x float> %26, %i.vu
+  %20 = call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.vo, <4 x float> %i.vo, i8 -1)
+  %21 = call noundef <4 x float> @llvm.x86.sse41.dpps(<4 x float> %i.vr, <4 x float> %i.vr, i8 -1)
+  %i.vs = shufflevector <4 x float> %20, <4 x float> %21, <4 x i32> <i32 0, i32 4, i32 2, i32 3> ; 2 uses
+  %22 = call noundef <4 x float> @llvm.x86.sse.rsqrt.ps(<4 x float> %i.vs) ; 3 uses
+  %i.vt = fmul <4 x float> %22, splat (float 5.000000e-01)
+  %i.vu = fmul <4 x float> %22, %i.vs
+  %i.vv = fmul <4 x float> %22, %i.vu
   %i.vw = fsub <4 x float> splat (float 3.000000e+00), %i.vv
   %i.vx = fmul <4 x float> %i.vt, %i.vw           ; 2 uses
   %i.vy = shufflevector <4 x float> %i.vx, <4 x float> poison, <4 x i32> zeroinitializer
@@ -798,7 +818,7 @@ _ZN3ozz9animation12_GLOBAL__N_112WeightOutputERKNS0_12IKTwoBoneJobERKNS1_15IKCon
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #2
+declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(none)
 declare <4 x float> @llvm.x86.sse41.dpps(<4 x float>, <4 x float>, i8 immarg) #3
@@ -830,12 +850,6 @@ declare <4 x float> @llvm.x86.sse.rsqrt.ss(<4 x float>) #3
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare float @acosf(float noundef) local_unnamed_addr #5
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sinf(float noundef) local_unnamed_addr #5
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @cosf(float noundef) local_unnamed_addr #5
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #4
 
@@ -845,16 +859,20 @@ declare float @llvm.fabs.f32(float) #4
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(none)
 declare <4 x float> @llvm.x86.sse.rsqrt.ps(<4 x float>) #3
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincosf(float noundef, ptr, ptr) local_unnamed_addr #6
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fabs.v4f32(<4 x float>) #4
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
+attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
+attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="128" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(none) }
 attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #5 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
-attributes #6 = { nounwind }
+attributes #6 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+avx,+avx2,+cmov,+crc32,+cx8,+fxsr,+mmx,+popcnt,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave" "tune-cpu"="generic" }
+attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

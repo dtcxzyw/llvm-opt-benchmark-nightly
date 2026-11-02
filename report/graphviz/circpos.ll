@@ -25,6 +25,8 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @doBlock(ptr noundef %0, ptr noundef %1, double noundef %2, ptr noundef %3) unnamed_addr #0 {
 bb.a:
+  %sincos.sin.i.i = alloca double, align 8        ; 4 uses
+  %sincos.cos.i.i = alloca double, align 8        ; 4 uses
   %4 = alloca %struct.nodelist_t, align 8         ; 9 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
   %.02537 = load ptr, ptr %i.a, align 8, !tbaa !13 ; 2 uses
@@ -43,8 +45,8 @@ bb.a:
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %.0.lcssa = phi i64 [ 0, %bb.a ], [ %i.b, %.lr.ph ] ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #10
-  call void @layout_block(ptr dead_on_unwind nonnull writable sret(%struct.nodelist_t) align 8 %4, ptr noundef %0, ptr noundef nonnull %1, double noundef %2, ptr noundef %3) #10
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
+  call void @layout_block(ptr dead_on_unwind nonnull writable sret(%struct.nodelist_t) align 8 %4, ptr noundef %0, ptr noundef nonnull %1, double noundef %2, ptr noundef %3) #11
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 40
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.d, ptr noundef nonnull align 8 dereferenceable(48) %4, i64 48, i1 false), !tbaa.struct !52
   %i.e = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 3 uses
@@ -58,20 +60,20 @@ bb.b:                                             ; preds = %._crit_edge
 
 bb.c:                                             ; preds = %bb.b
   %i.f = load ptr, ptr @stderr, align 8, !tbaa !56
-  %i.g = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.f, ptr noundef nonnull @.str, i64 noundef range(i64 1, 0) %.0.lcssa, i64 noundef 56) #11 ; 0 uses
-  call fastcc void @graphviz_exit() #12
+  %i.g = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.f, ptr noundef nonnull @.str, i64 noundef range(i64 1, 0) %.0.lcssa, i64 noundef 56) #12 ; 0 uses
+  call fastcc void @graphviz_exit() #13
   unreachable
 
 bb.d:                                             ; preds = %bb.b
-  %i.h = call noalias ptr @calloc(i64 noundef range(i64 1, 0) %.0.lcssa, i64 noundef 56) #13 ; 19 uses
+  %i.h = call noalias ptr @calloc(i64 noundef range(i64 1, 0) %.0.lcssa, i64 noundef 56) #14 ; 19 uses
   %i.i = icmp eq ptr %i.h, null
   br i1 %i.i, label %bb.e, label %gv_calloc.exit.i
 
 bb.e:                                             ; preds = %bb.d
   %i.j = load ptr, ptr @stderr, align 8, !tbaa !56
   %i.k = mul nuw i64 %.0.lcssa, 56
-  %i.l = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.j, ptr noundef nonnull @.str.1, i64 noundef %i.k) #11 ; 0 uses
-  call fastcc void @graphviz_exit() #12
+  %i.l = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.j, ptr noundef nonnull @.str.1, i64 noundef %i.k) #12 ; 0 uses
+  call fastcc void @graphviz_exit() #13
   unreachable
 
 gv_calloc.exit.i:                                 ; preds = %bb.d
@@ -98,7 +100,7 @@ bb.f:                                             ; preds = %bb.g, %.lr.ph.split
   %.093.us.i = phi i64 [ 0, %.lr.ph.split.us.i ], [ %i.y, %bb.g ] ; 3 uses
   %.07392.us.i = phi i32 [ 0, %.lr.ph.split.us.i ], [ %.174.us.i, %bb.g ] ; 3 uses
   %i.u = load ptr, ptr %4, align 8, !tbaa !49
-  %i.v = call i64 @gv_list_get_(ptr noundef nonnull byval(%struct.list_t_) align 8 %4, i64 noundef %.093.us.i) #10
+  %i.v = call i64 @gv_list_get_(ptr noundef nonnull byval(%struct.list_t_) align 8 %4, i64 noundef %.093.us.i) #11
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %i.v
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !51   ; 2 uses
   %i.y = add nuw i64 %.093.us.i, 1                ; 2 uses
@@ -157,7 +159,7 @@ bb.g:                                             ; preds = %getInfo.exit.us.i, 
   %.07392.i = phi i32 [ %.174.i, %bb.l ], [ 0, %.lr.ph.i ] ; 3 uses
   %.07591.i = phi double [ %.176.i, %bb.l ], [ 0.000000e+00, %.lr.ph.i ]
   %i.as = load ptr, ptr %4, align 8, !tbaa !49
-  %i.at = call i64 @gv_list_get_(ptr noundef nonnull byval(%struct.list_t_) align 8 %4, i64 noundef %.093.i) #10
+  %i.at = call i64 @gv_list_get_(ptr noundef nonnull byval(%struct.list_t_) align 8 %4, i64 noundef %.093.i) #11
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %i.at
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !51 ; 3 uses
   %i.aw = add nuw i64 %.093.i, 1                  ; 2 uses
@@ -351,6 +353,8 @@ bb.p:                                             ; preds = %positionChildren.ex
   %.sroa.10.0100.i = phi double [ -1.000000e+00, %.lr.ph104.i ], [ %.079.lcssa.i.i, %positionChildren.exit.i ] ; 2 uses
   %.sroa.14.099.i = phi double [ -1.000000e+00, %.lr.ph104.i ], [ %.0.lcssa.i84.i, %positionChildren.exit.i ] ; 2 uses
   %i.fd = getelementptr inbounds nuw [56 x i8], ptr %i.h, i64 %indvars.iv.i ; 11 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i.i)
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fd, i64 40
   %i.ff = load double, ptr %i.fe, align 8, !tbaa !71
   %i.fg = getelementptr inbounds nuw i8, ptr %i.fd, i64 16
@@ -411,13 +415,13 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.ao, %.lr.ph.i82.i
-  %.091108.i.i = phi ptr [ %.fr.i, %.lr.ph.i82.i ], [ %.091.i.i, %bb.ao ] ; 9 uses
+  %.091108.i.i = phi ptr [ %.fr.i, %.lr.ph.i82.i ], [ %.091.i.i, %bb.ao ] ; 10 uses
   %.0107.i.i = phi double [ %.sroa.14.099.i, %.lr.ph.i82.i ], [ %.2.i.i, %bb.ao ] ; 4 uses
   %.079106.i.i = phi double [ %.sroa.10.0100.i, %.lr.ph.i82.i ], [ %.3.i.i, %bb.ao ] ; 6 uses
   %.082105.i.i = phi i32 [ 0, %.lr.ph.i82.i ], [ %.183.i.i, %bb.ao ] ; 3 uses
   %.084104.i.i = phi double [ 0.000000e+00, %.lr.ph.i82.i ], [ %.185.i.i, %bb.ao ] ; 3 uses
   %.188103.i.i = phi double [ %.087.i.i, %.lr.ph.i82.i ], [ %.5.i.i, %bb.ao ] ; 6 uses
-  %i.gq = load ptr, ptr %.091108.i.i, align 8, !tbaa !59 ; 6 uses
+  %i.gq = load ptr, ptr %.091108.i.i, align 8, !tbaa !59 ; 2 uses
   %.not98.i.i = icmp eq ptr %i.gq, null
   br i1 %.not98.i.i, label %bb.w, label %bb.v
 
@@ -436,8 +440,8 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   br i1 %.not99.i.i, label %bb.x, label %bb.ao
 
 bb.x:                                             ; preds = %bb.w
-  %i.gy = getelementptr i8, ptr %.091108.i.i, i64 56
-  %.val.i.i = load i64, ptr %i.gy, align 8, !tbaa !54 ; 2 uses
+  %i.gy = getelementptr i8, ptr %.091108.i.i, i64 56 ; 2 uses
+  %.val.i.i = load i64, ptr %i.gy, align 8, !tbaa !54
   %i.gz = icmp eq i64 %.val.i.i, 0
   br i1 %i.gz, label %bb.ao, label %bb.y
 
@@ -469,13 +473,14 @@ bb.ac:                                            ; preds = %bb.aa
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab, %bb.z
-  %.390.i.i = phi double [ %.289.i.i, %bb.z ], [ %i.hg, %bb.ab ], [ %i.hi, %bb.ac ] ; 7 uses
+  %.390.i.i = phi double [ %.289.i.i, %bb.z ], [ %i.hg, %bb.ab ], [ %i.hi, %bb.ac ] ; 6 uses
   %.281.i.i = phi double [ %.180.i.i, %bb.z ], [ %.079106.i.i, %bb.ab ], [ %.079106.i.i, %bb.ac ] ; 2 uses
   %.1.i85.i = phi double [ %.289.i.i, %bb.z ], [ %.0107.i.i, %bb.ab ], [ %.0107.i.i, %bb.ac ] ; 2 uses
-  %5 = call double @cos(double noundef %.390.i.i) #10
-  %6 = call double @sin(double noundef %.390.i.i) #10
-  %i.hj = insertelement <2 x double> poison, double %5, i64 0
-  %i.hk = insertelement <2 x double> %i.hj, double %6, i64 1
+  call void @sincos(double %.390.i.i, ptr nonnull %sincos.sin.i.i, ptr nonnull %sincos.cos.i.i)
+  %sin.i.i = load double, ptr %sincos.sin.i.i, align 8
+  %cos.i.i = load double, ptr %sincos.cos.i.i, align 8
+  %i.hj = insertelement <2 x double> poison, double %cos.i.i, i64 0
+  %i.hk = insertelement <2 x double> %i.hj, double %sin.i.i, i64 1
   %i.hl = fmul <2 x double> %i.gp, %i.hk          ; 6 uses
   %i.hm = getelementptr inbounds nuw i8, ptr %.091108.i.i, i64 16
   %i.hn = load ptr, ptr %i.hm, align 8, !tbaa !37 ; 2 uses
@@ -493,7 +498,8 @@ bb.ae:                                            ; preds = %bb.ad
   br label %getRotation.exit.i.i
 
 bb.af:                                            ; preds = %bb.ad
-  %i.hv = icmp eq i64 %.val.i.i, 2
+  %.val.i.i.i = load i64, ptr %i.gy, align 8, !tbaa !54
+  %i.hv = icmp eq i64 %.val.i.i.i, 2
   br i1 %i.hv, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.af
@@ -501,7 +507,8 @@ bb.ag:                                            ; preds = %bb.af
   br label %getRotation.exit.i.i
 
 bb.ah:                                            ; preds = %bb.af
-  %i.hx = getelementptr inbounds nuw i8, ptr %i.gq, i64 16 ; 2 uses
+  %5 = load ptr, ptr %.091108.i.i, align 8, !tbaa !59 ; 4 uses
+  %i.hx = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.hy = load ptr, ptr %i.hx, align 8, !tbaa !23
   %i.hz = getelementptr inbounds nuw i8, ptr %i.hy, i64 176
   %i.ia = load ptr, ptr %i.hz, align 8, !tbaa !38
@@ -509,16 +516,16 @@ bb.ah:                                            ; preds = %bb.af
   %i.ic = fadd <2 x double> %i.hl, %i.ib          ; 2 uses
   %i.id = extractelement <2 x double> %i.ic, i64 0
   %i.ie = extractelement <2 x double> %i.ic, i64 1
-  %i.if = call double @hypot(double noundef %i.id, double noundef %i.ie) #10
-  %i.ig = call ptr @agfstnode(ptr noundef %i.hn) #10 ; 2 uses
+  %i.if = call double @hypot(double noundef %i.id, double noundef %i.ie) #11
+  %i.ig = call ptr @agfstnode(ptr noundef %i.hn) #11 ; 2 uses
   %.not85.i.i.i = icmp eq ptr %i.ig, null
   br i1 %.not85.i.i.i, label %getRotation.exit.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.ah, %bb.aj
   %.06888.i.i.i = phi ptr [ %i.is, %bb.aj ], [ %i.ig, %bb.ah ] ; 4 uses
   %.06987.i.i.i = phi double [ %.271.i.i.i, %bb.aj ], [ %i.if, %bb.ah ] ; 3 uses
-  %.07286.i.i.i = phi ptr [ %.274.i.i.i, %bb.aj ], [ %i.gq, %bb.ah ] ; 2 uses
-  %i.ih = icmp eq ptr %.06888.i.i.i, %i.gq
+  %.07286.i.i.i = phi ptr [ %.274.i.i.i, %bb.aj ], [ %5, %bb.ah ] ; 2 uses
+  %i.ih = icmp eq ptr %.06888.i.i.i, %5
   br i1 %i.ih, label %bb.aj, label %bb.ai
 
 bb.ai:                                            ; preds = %.lr.ph.i.i.i
@@ -530,7 +537,7 @@ bb.ai:                                            ; preds = %.lr.ph.i.i.i
   %i.in = fadd <2 x double> %i.hl, %i.im          ; 2 uses
   %i.io = extractelement <2 x double> %i.in, i64 0
   %i.ip = extractelement <2 x double> %i.in, i64 1
-  %i.iq = call double @hypot(double noundef %i.io, double noundef %i.ip) #10 ; 2 uses
+  %i.iq = call double @hypot(double noundef %i.io, double noundef %i.ip) #11 ; 2 uses
   %i.ir = fcmp olt double %i.iq, %.06987.i.i.i    ; 2 uses
   %.173.i.i.i = select i1 %i.ir, ptr %.06888.i.i.i, ptr %.07286.i.i.i
   %.170.i.i.i = select i1 %i.ir, double %i.iq, double %.06987.i.i.i
@@ -539,12 +546,12 @@ bb.ai:                                            ; preds = %.lr.ph.i.i.i
 bb.aj:                                            ; preds = %bb.ai, %.lr.ph.i.i.i
   %.274.i.i.i = phi ptr [ %.07286.i.i.i, %.lr.ph.i.i.i ], [ %.173.i.i.i, %bb.ai ] ; 2 uses
   %.271.i.i.i = phi double [ %.06987.i.i.i, %.lr.ph.i.i.i ], [ %.170.i.i.i, %bb.ai ]
-  %i.is = call ptr @agnxtnode(ptr noundef %i.hn, ptr noundef nonnull %.06888.i.i.i) #10 ; 2 uses
+  %i.is = call ptr @agnxtnode(ptr noundef %i.hn, ptr noundef nonnull %.06888.i.i.i) #11 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.is, null
   br i1 %.not.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph.i.i.i, !llvm.loop !46
 
 ._crit_edge.i.i.i:                                ; preds = %bb.aj
-  %i.it = icmp eq ptr %i.gq, %.274.i.i.i
+  %i.it = icmp eq ptr %5, %.274.i.i.i
   br i1 %i.it, label %getRotation.exit.i.i, label %bb.ak
 
 bb.ak:                                            ; preds = %._crit_edge.i.i.i
@@ -567,18 +574,18 @@ bb.ak:                                            ; preds = %._crit_edge.i.i.i
 bb.al:                                            ; preds = %bb.ak
   %i.jg = extractelement <2 x double> %i.hl, i64 0
   %i.jh = extractelement <2 x double> %i.hl, i64 1
-  %i.ji = call double @hypot(double noundef %i.jg, double noundef %i.jh) #10
+  %i.ji = call double @hypot(double noundef %i.jg, double noundef %i.jh) #11
   %i.jj = getelementptr inbounds nuw i8, ptr %i.ja, i64 8
   %i.jk = load double, ptr %i.jj, align 8, !tbaa !36
   %i.jl = fadd double %i.ix, %i.jb
-  %i.jm = call double @atan2(double noundef %i.jk, double noundef %i.jl) #10 ; 2 uses
-  %i.jn = call double @cos(double noundef %i.jm) #10 ; 2 uses
+  %i.jm = call double @atan2(double noundef %i.jk, double noundef %i.jl) #11 ; 2 uses
+  %i.jn = call double @cos(double noundef %i.jm) #11 ; 2 uses
   %i.jo = fdiv double %i.iv, %i.jn
   %i.jp = fsub double %i.ix, %i.jo
   %i.jq = fsub double f0x3FF921FB54442D18, %i.jm
   %i.jr = fdiv double %i.jp, %i.ji
   %i.js = fmul double %i.jn, %i.jr
-  %i.jt = call double @asin(double noundef %i.js) #10
+  %i.jt = call double @asin(double noundef %i.js) #11
   %i.ju = fsub double %i.jq, %i.jt
   %i.jv = fadd double %.390.i.i, %i.ju
   br label %getRotation.exit.i.i
@@ -586,7 +593,7 @@ bb.al:                                            ; preds = %bb.ak
 bb.am:                                            ; preds = %bb.ak
   %i.jw = getelementptr inbounds nuw i8, ptr %i.ja, i64 8
   %i.jx = load double, ptr %i.jw, align 8, !tbaa !36
-  %i.jy = call double @atan2(double noundef %i.jx, double noundef %i.jb) #10
+  %i.jy = call double @atan2(double noundef %i.jx, double noundef %i.jb) #11
   %i.jz = fsub double f0x400921FB54442D18, %i.jy
   %i.ka = getelementptr inbounds nuw i8, ptr %i.iy, i64 152
   %i.kb = load ptr, ptr %i.ka, align 8, !tbaa !60
@@ -647,6 +654,8 @@ bb.aq:                                            ; preds = %bb.ap
 positionChildren.exit.i:                          ; preds = %bb.aq, %bb.ap, %._crit_edge.i.i
   %i.ku = fadd nsz double %.086.i.i, %i.gd
   %i.kv = call nsz double @llvm.maxnum.f64(double %.sroa.4.0101.i, double %i.ku) ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i.i)
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond116.not.i = icmp eq i64 %indvars.iv.next.i, %.073.lcssa140.ph.i
   br i1 %exitcond116.not.i, label %._crit_edge105.loopexit.i, label %bb.p, !llvm.loop !48
@@ -661,7 +670,7 @@ positionChildren.exit.i:                          ; preds = %bb.aq, %bb.ap, %._c
   %.075.lcssa137146.i = phi double [ %.075.lcssa.i, %._crit_edge105.loopexit.i ], [ %.075.lcssa.i, %.preheader.i ], [ 0.000000e+00, %gv_calloc.exit.i ]
   %.sroa.14.0.lcssa.i = phi double [ %i.ky, %._crit_edge105.loopexit.i ], [ f0xC01090FDAA22168C, %.preheader.i ], [ f0xC01090FDAA22168C, %gv_calloc.exit.i ]
   %.sroa.4.0.lcssa.i = phi double [ %i.kv, %._crit_edge105.loopexit.i ], [ %i.o, %.preheader.i ], [ %i.o, %gv_calloc.exit.i ]
-  call void @free(ptr noundef %i.h) #10
+  call void @free(ptr noundef %i.h) #11
   %i.kz = icmp eq i64 %.0.lcssa, 1
   br i1 %i.kz, label %bb.ar, label %position.exit
 
@@ -715,7 +724,7 @@ bb.aw:                                            ; preds = %bb.av
   br label %bb.ax
 
 bb.ax:                                            ; preds = %bb.av, %bb.aw, %bb.at, %bb.au, %bb.as
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
   ret void
 }
 
@@ -738,9 +747,11 @@ declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #3
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @applyDelta(ptr nofree noundef readonly captures(none) %0, double noundef %1, double noundef %2, double noundef %3) unnamed_addr #0 {
 bb.a:
+  %sincos.sin = alloca double, align 8            ; 2 uses
+  %sincos.cos = alloca double, align 8            ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !37   ; 2 uses
-  %i.c = tail call ptr @agfstnode(ptr noundef %i.b) #10 ; 2 uses
+  %i.c = tail call ptr @agfstnode(ptr noundef %i.b) #11 ; 2 uses
   %.not32 = icmp eq ptr %i.c, null
   br i1 %.not32, label %._crit_edge, label %.lr.ph.preheader
 
@@ -750,27 +761,31 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.03033 = phi ptr [ %9, %.lr.ph ], [ %i.c, %.lr.ph.preheader ] ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %.03033, i64 16
+  %.03033 = phi ptr [ %10, %.lr.ph ], [ %i.c, %.lr.ph.preheader ] ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %.03033, i64 16 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !23
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 176
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !38   ; 2 uses
-  %4 = tail call double @cos(double noundef %3) #10 ; 2 uses
-  %5 = tail call double @sin(double noundef %3) #10 ; 2 uses
-  %6 = fneg double %5
-  %7 = load <2 x double>, ptr %i.i, align 8, !tbaa !36 ; 2 uses
-  %i.j = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> <i32 1, i32 1>
-  %i.k = insertelement <2 x double> poison, double %6, i64 0
-  %i.l = insertelement <2 x double> %i.k, double %4, i64 1
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !38
+  %4 = load <2 x double>, ptr %i.i, align 8, !tbaa !36 ; 2 uses
+  call void @sincos(double %3, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8    ; 2 uses
+  %cos = load double, ptr %sincos.cos, align 8    ; 2 uses
+  %5 = fneg double %sin
+  %i.j = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.k = insertelement <2 x double> poison, double %5, i64 0
+  %i.l = insertelement <2 x double> %i.k, double %cos, i64 1
   %i.m = fmul <2 x double> %i.j, %i.l
-  %i.n = shufflevector <2 x double> %7, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.o = insertelement <2 x double> poison, double %4, i64 0
-  %i.p = insertelement <2 x double> %i.o, double %5, i64 1
-  %8 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.n, <2 x double> %i.p, <2 x double> %i.m)
-  %i.q = fadd <2 x double> %i.e, %8
-  store <2 x double> %i.q, ptr %i.i, align 8, !tbaa !36
-  %9 = tail call ptr @agnxtnode(ptr noundef %i.b, ptr noundef nonnull %.03033) #10 ; 2 uses
-  %.not = icmp eq ptr %9, null
+  %i.n = shufflevector <2 x double> %4, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.o = insertelement <2 x double> poison, double %cos, i64 0
+  %i.p = insertelement <2 x double> %i.o, double %sin, i64 1
+  %6 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.n, <2 x double> %i.p, <2 x double> %i.m)
+  %7 = load ptr, ptr %i.f, align 8, !tbaa !23
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 176
+  %9 = load ptr, ptr %8, align 8, !tbaa !38
+  %i.q = fadd <2 x double> %i.e, %6
+  store <2 x double> %i.q, ptr %9, align 8, !tbaa !36
+  %10 = call ptr @agnxtnode(ptr noundef %i.b, ptr noundef nonnull %.03033) #11 ; 2 uses
+  %.not = icmp eq ptr %10, null
   br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !76
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
@@ -781,7 +796,7 @@ bb.a:
 
 .lr.ph38:                                         ; preds = %._crit_edge, %.lr.ph38
   %.036 = phi ptr [ %.0, %.lr.ph38 ], [ %.034, %._crit_edge ] ; 2 uses
-  tail call fastcc void @applyDelta(ptr noundef nonnull %.036, double noundef %1, double noundef %2, double noundef %3)
+  call fastcc void @applyDelta(ptr noundef nonnull %.036, double noundef %1, double noundef %2, double noundef %3)
   %i.s = getelementptr inbounds nuw i8, ptr %.036, i64 8
   %.0 = load ptr, ptr %i.s, align 8, !tbaa !13    ; 2 uses
   %.not31 = icmp eq ptr %.0, null
@@ -797,7 +812,7 @@ declare noundef i32 @fprintf(ptr noundef captures(none), ptr noundef readonly ca
 ; Function Attrs: cold inlinehint nofree noreturn nounwind uwtable
 define internal fastcc void @graphviz_exit() unnamed_addr #5 {
 bb.a:
-  tail call void @exit(i32 noundef 1) #14
+  tail call void @exit(i32 noundef 1) #15
   unreachable
 }
 
@@ -817,9 +832,6 @@ declare double @llvm.fmuladd.f64(double, double, double) #8
 declare double @cos(double noundef) local_unnamed_addr #9
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #9
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @hypot(double noundef, double noundef) local_unnamed_addr #9
 
 declare ptr @agfstnode(ptr noundef) local_unnamed_addr #2
@@ -831,6 +843,9 @@ declare double @atan2(double noundef, double noundef) local_unnamed_addr #9
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare double @asin(double noundef) local_unnamed_addr #9
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #8
@@ -845,11 +860,12 @@ attributes #6 = { mustprogress nofree nounwind willreturn allockind("alloc,zeroe
 attributes #7 = { nofree noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #9 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #10 = { nounwind }
-attributes #11 = { cold nounwind }
-attributes #12 = { noreturn }
-attributes #13 = { nounwind allocsize(0,1) }
-attributes #14 = { cold noreturn nounwind }
+attributes #10 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #11 = { nounwind }
+attributes #12 = { cold nounwind }
+attributes #13 = { noreturn }
+attributes #14 = { nounwind allocsize(0,1) }
+attributes #15 = { cold noreturn nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

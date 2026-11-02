@@ -28,6 +28,18 @@ target triple = "x86_64-pc-linux-gnu"
 define void @dlatmt_(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3, ptr noundef %4, ptr noundef %5, ptr noundef %6, ptr noundef %7, ptr nofree noundef readonly captures(none) %8, ptr noundef %9, ptr nofree noundef readonly captures(none) %10, ptr nofree noundef readonly captures(none) %11, ptr noundef %12, ptr noundef %13, ptr noundef %14, ptr noundef %15, ptr nofree noundef captures(none) initializes((0, 4)) %16) local_unnamed_addr #0 {
 bb.a:
   %i.a = ptrtoaddr ptr %13 to i64                 ; 2 uses
+  %sincos.sin1164 = alloca double, align 8        ; 2 uses
+  %sincos.cos1165 = alloca double, align 8        ; 2 uses
+  %sincos.sin1155 = alloca double, align 8        ; 2 uses
+  %sincos.cos1156 = alloca double, align 8        ; 2 uses
+  %sincos.sin1142 = alloca double, align 8        ; 2 uses
+  %sincos.cos1143 = alloca double, align 8        ; 2 uses
+  %sincos.sin1130 = alloca double, align 8        ; 2 uses
+  %sincos.cos1131 = alloca double, align 8        ; 2 uses
+  %sincos.sin1117 = alloca double, align 8        ; 2 uses
+  %sincos.cos1118 = alloca double, align 8        ; 2 uses
+  %sincos.sin = alloca double, align 8            ; 2 uses
+  %sincos.cos = alloca double, align 8            ; 2 uses
   %i.b = alloca i32, align 4                      ; 25 uses
   %i.c = alloca i32, align 4                      ; 24 uses
   %i.d = alloca i32, align 4                      ; 24 uses
@@ -430,11 +442,12 @@ bb.bc:                                            ; preds = %.lr.ph1406, %._crit
   %indvars.iv1666.a = phi i64 [ 1, %.lr.ph1406 ], [ %indvars.iv.next1667.a, %._crit_edge1399 ] ; 5 uses
   store double 0.000000e+00, ptr %i.q, align 8, !tbaa !58
   %i.gz = call double @dlarnd_(ptr noundef nonnull @c__1, ptr noundef nonnull %3) #8
-  %i.ha = fmul double %i.gz, f0x401921FB54442D18  ; 2 uses
-  %17 = call double @cos(double noundef %i.ha) #8
-  store double %17, ptr %i.k, align 8, !tbaa !58
-  %18 = call double @sin(double noundef %i.ha) #8
-  store double %18, ptr %i.l, align 8, !tbaa !58
+  %i.ha = fmul double %i.gz, f0x401921FB54442D18
+  call void @sincos(double %i.ha, ptr nonnull %sincos.sin1164, ptr nonnull %sincos.cos1165)
+  %sin1166 = load double, ptr %sincos.sin1164, align 8
+  %cos1167 = load double, ptr %sincos.cos1165, align 8
+  store double %cos1167, ptr %i.k, align 8, !tbaa !58
+  store double %sin1166, ptr %i.l, align 8, !tbaa !58
   %i.hb = trunc nuw nsw i64 %indvars.iv1666.a to i32 ; 7 uses
   store i32 %i.hb, ptr %i.e, align 4, !tbaa !56
   %i.hc = load i32, ptr %0, align 4, !tbaa !56
@@ -611,11 +624,12 @@ bb.bj:                                            ; preds = %.lr.ph1433, %._crit
   %.510161430 = phi i32 [ %.410151438, %.lr.ph1433 ], [ %.61017.lcssa, %._crit_edge1426 ]
   store double 0.000000e+00, ptr %i.q, align 8, !tbaa !58
   %i.jp = call double @dlarnd_(ptr noundef nonnull @c__1, ptr noundef nonnull %3) #8
-  %i.jq = fmul double %i.jp, f0x401921FB54442D18  ; 2 uses
-  %19 = call double @cos(double noundef %i.jq) #8
-  store double %19, ptr %i.k, align 8, !tbaa !58
-  %20 = call double @sin(double noundef %i.jq) #8
-  store double %20, ptr %i.l, align 8, !tbaa !58
+  %i.jq = fmul double %i.jp, f0x401921FB54442D18
+  call void @sincos(double %i.jq, ptr nonnull %sincos.sin1155, ptr nonnull %sincos.cos1156)
+  %sin1157 = load double, ptr %sincos.sin1155, align 8
+  %cos1158 = load double, ptr %sincos.cos1156, align 8
+  store double %cos1158, ptr %i.k, align 8, !tbaa !58
+  store double %sin1157, ptr %i.l, align 8, !tbaa !58
   %i.jr = sub nsw i32 %.09651431, %i.jd           ; 5 uses
   store i32 %i.jr, ptr %i.e, align 4, !tbaa !56
   %i.js = call i32 @llvm.smax.i32(i32 %i.jr, i32 1) ; 5 uses
@@ -793,11 +807,12 @@ bb.br:                                            ; preds = %.lr.ph1468, %._crit
   %.19661457 = add nsw i32 %.1966.in1456, -1      ; 5 uses
   store double 0.000000e+00, ptr %i.q, align 8, !tbaa !58
   %i.mm = call double @dlarnd_(ptr noundef nonnull @c__1, ptr noundef nonnull %3) #8
-  %i.mn = fmul double %i.mm, f0x401921FB54442D18  ; 2 uses
-  %21 = call double @cos(double noundef %i.mn) #8
-  store double %21, ptr %i.k, align 8, !tbaa !58
-  %22 = call double @sin(double noundef %i.mn) #8
-  store double %22, ptr %i.l, align 8, !tbaa !58
+  %i.mn = fmul double %i.mm, f0x401921FB54442D18
+  call void @sincos(double %i.mn, ptr nonnull %sincos.sin1142, ptr nonnull %sincos.cos1143)
+  %sin1144 = load double, ptr %sincos.sin1142, align 8
+  %cos1145 = load double, ptr %sincos.cos1143, align 8
+  store double %cos1145, ptr %i.k, align 8, !tbaa !58
+  store double %sin1144, ptr %i.l, align 8, !tbaa !58
   %i.mo = sub i32 %.1966.in1456, %.11466
   %i.mp = call i32 @llvm.smax.i32(i32 %i.mo, i32 1) ; 3 uses
   %i.mq = icmp sgt i32 %.1966.in1456, 1
@@ -965,11 +980,12 @@ bb.bz:                                            ; preds = %.lr.ph1486, %.loope
   %.19541484 = add nsw i32 %.1954.in1483, -1      ; 6 uses
   store double 0.000000e+00, ptr %i.q, align 8, !tbaa !58
   %i.ou = call double @dlarnd_(ptr noundef nonnull @c__1, ptr noundef nonnull %3) #8
-  %i.ov = fmul double %i.ou, f0x401921FB54442D18  ; 2 uses
-  %23 = call double @cos(double noundef %i.ov) #8
-  store double %23, ptr %i.k, align 8, !tbaa !58
-  %24 = call double @sin(double noundef %i.ov) #8
-  store double %24, ptr %i.l, align 8, !tbaa !58
+  %i.ov = fmul double %i.ou, f0x401921FB54442D18
+  call void @sincos(double %i.ov, ptr nonnull %sincos.sin1130, ptr nonnull %sincos.cos1131)
+  %sin1132 = load double, ptr %sincos.sin1130, align 8
+  %cos1133 = load double, ptr %sincos.cos1131, align 8
+  store double %cos1133, ptr %i.k, align 8, !tbaa !58
+  store double %sin1132, ptr %i.l, align 8, !tbaa !58
   %i.ow = sub i32 %.1954.in1483, %.19401493
   %i.ox = call i32 @llvm.smax.i32(i32 %i.ow, i32 1) ; 3 uses
   %i.oy = icmp sgt i32 %.1954.in1483, 1
@@ -1166,11 +1182,12 @@ bb.cj:                                            ; preds = %.lr.ph1314, %.loope
   %i.sc = load double, ptr %i.sb, align 8, !tbaa !58
   store double %i.sc, ptr %i.j, align 8, !tbaa !58
   %i.sd = call double @dlarnd_(ptr noundef nonnull @c__1, ptr noundef nonnull %3) #8
-  %i.se = fmul double %i.sd, f0x401921FB54442D18  ; 2 uses
-  %25 = call double @cos(double noundef %i.se) #8
-  store double %25, ptr %i.k, align 8, !tbaa !58
-  %26 = call double @sin(double noundef %i.se) #8
-  store double %26, ptr %i.l, align 8, !tbaa !58
+  %i.se = fmul double %i.sd, f0x401921FB54442D18
+  call void @sincos(double %i.se, ptr nonnull %sincos.sin1117, ptr nonnull %sincos.cos1118)
+  %sin1119 = load double, ptr %sincos.sin1117, align 8
+  %cos1120 = load double, ptr %sincos.cos1118, align 8
+  store double %cos1120, ptr %i.k, align 8, !tbaa !58
+  store double %sin1119, ptr %i.l, align 8, !tbaa !58
   %i.sf = icmp samesign ugt i64 %indvars.iv1616, %indvars.iv1619
   %i.sg = zext i1 %i.sf to i32
   store i32 %i.sg, ptr %i.h, align 4, !tbaa !56
@@ -1514,11 +1531,12 @@ bb.cq:                                            ; preds = %.lr.ph1360, %.loope
   %i.yq = load double, ptr %i.yp, align 8, !tbaa !58
   store double %i.yq, ptr %i.j, align 8, !tbaa !58
   %i.yr = call double @dlarnd_(ptr noundef nonnull @c__1, ptr noundef nonnull %3) #8
-  %i.ys = fmul double %i.yr, f0x401921FB54442D18  ; 2 uses
-  %27 = call double @cos(double noundef %i.ys) #8
-  store double %27, ptr %i.k, align 8, !tbaa !58
-  %28 = call double @sin(double noundef %i.ys) #8
-  %i.yt = fneg double %28
+  %i.ys = fmul double %i.yr, f0x401921FB54442D18
+  call void @sincos(double %i.ys, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %sin = load double, ptr %sincos.sin, align 8
+  %cos = load double, ptr %sincos.cos, align 8
+  store double %cos, ptr %i.k, align 8, !tbaa !58
+  %i.yt = fneg double %sin
   store double %i.yt, ptr %i.l, align 8, !tbaa !58
   %i.yu = load i32, ptr %1, align 4, !tbaa !56
   %i.yv = sub nsw i32 %i.yu, %indvars
@@ -1921,12 +1939,6 @@ declare void @dcopy_(ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr nou
 
 declare double @dlarnd_(ptr noundef, ptr noundef) local_unnamed_addr #2
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #3
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #3
-
 declare void @dlarot_(ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
 declare void @dlartg_(ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
@@ -1939,16 +1951,19 @@ declare void @dlagsy_(ptr noundef, ptr noundef, ptr noundef, ptr noundef, ptr no
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smin.i32(i32, i32) #4
+declare i32 @llvm.smin.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.smax.i32(i32, i32) #4
+declare i32 @llvm.smax.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare double @llvm.fabs.f64(double) #4
+declare double @llvm.fabs.f64(double) #3
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.umin.i32(i32, i32) #4
+declare i32 @llvm.umin.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #5
@@ -1957,7 +1972,7 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #5
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #6
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.smin.i64(i64, i64) #4
+declare i64 @llvm.smin.i64(i64, i64) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x i32> @llvm.abs.v4i32(<4 x i32>, i1 immarg) #5
@@ -1968,8 +1983,8 @@ declare void @llvm.assume(i1 noundef) #7
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
-attributes #3 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
-attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #5 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #7 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }

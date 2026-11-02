@@ -18,7 +18,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define ptr @cmsGBDAlloc(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
-  %i.a = tail call ptr @_cmsMallocZero(ptr noundef %0, i32 noundef 8200) #6 ; 3 uses
+  %i.a = tail call ptr @_cmsMallocZero(ptr noundef %0, i32 noundef 8200) #7 ; 3 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.c, label %bb.b
 
@@ -46,7 +46,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.a = load ptr, ptr %0, align 8, !tbaa !13
-  tail call void @_cmsFree(ptr noundef %i.a, ptr noundef nonnull %0) #6
+  tail call void @_cmsFree(ptr noundef %i.a, ptr noundef nonnull %0) #7
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -59,7 +59,7 @@ declare void @_cmsFree(ptr noundef, ptr noundef) local_unnamed_addr #2
 define range(i32 0, 2) i32 @cmsGDBAddPoint(ptr nofree noundef captures(address) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
   %2 = alloca %struct.cmsSpherical, align 8       ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #7
   %i.a = call fastcc ptr @GetPoint(ptr noundef %0, ptr noundef %1, ptr noundef %2) ; 4 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.d, label %bb.b
@@ -83,7 +83,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %.sink.split, %bb.c, %bb.a
   %.0 = phi i32 [ 0, %bb.a ], [ 1, %bb.c ], [ 1, %.sink.split ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #7
   ret i32 %.0
 }
 
@@ -91,14 +91,14 @@ bb.d:                                             ; preds = %.sink.split, %bb.c,
 define internal fastcc ptr @GetPoint(ptr nofree noundef readonly captures(ret: address, provenance) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef nonnull writeonly captures(none) initializes((0, 8)) %2) unnamed_addr #0 {
 bb.a:
   %3 = alloca %struct.cmsVEC3, align 8            ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
   %i.a = load double, ptr %1, align 8, !tbaa !18
   %i.b = fadd double %i.a, -5.000000e+01
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.d = load double, ptr %i.c, align 8, !tbaa !20
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.f = load double, ptr %i.e, align 8, !tbaa !21
-  call void @_cmsVEC3init(ptr noundef nonnull %3, double noundef %i.b, double noundef %i.d, double noundef %i.f) #6
+  call void @_cmsVEC3init(ptr noundef nonnull %3, double noundef %i.b, double noundef %i.d, double noundef %i.f) #7
   %i.g = load double, ptr %3, align 8, !tbaa !22  ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.i = load double, ptr %i.h, align 8, !tbaa !22 ; 6 uses
@@ -124,7 +124,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond.i.i, label %_cmsAtan2.exit.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.s = call double @atan2(double noundef %i.i, double noundef %i.k) #6
+  %i.s = call double @atan2(double noundef %i.i, double noundef %i.k) #7
   %i.t = fmul double %i.s, 1.800000e+02
   %i.u = fdiv double %i.t, f0x400921FB54442D18    ; 3 uses
   %i.v = fcmp olt double %i.u, 0.000000e+00
@@ -149,7 +149,7 @@ _cmsAtan2.exit.i:                                 ; preds = %.lr.ph.i.i, %bb.c, 
 
 bb.d:                                             ; preds = %_cmsAtan2.exit.i
   %sqrt27.i = call double @llvm.sqrt.f64(double %i.aa)
-  %i.ad = call double @atan2(double noundef %sqrt27.i, double noundef %i.g) #6
+  %i.ad = call double @atan2(double noundef %sqrt27.i, double noundef %i.g) #7
   %i.ae = fmul double %i.ad, 1.800000e+02
   %i.af = fdiv double %i.ae, f0x400921FB54442D18  ; 3 uses
   %i.ag = fcmp olt double %i.af, 0.000000e+00
@@ -174,7 +174,7 @@ ToSpherical.exit:                                 ; preds = %.lr.ph.i24.i, %_cms
 
 bb.e:                                             ; preds = %ToSpherical.exit
   %i.ao = load ptr, ptr %0, align 8, !tbaa !13
-  call void (ptr, i32, ptr, ...) @cmsSignalError(ptr noundef %i.ao, i32 noundef 2, ptr noundef nonnull @.str) #6
+  call void (ptr, i32, ptr, ...) @cmsSignalError(ptr noundef %i.ao, i32 noundef 2, ptr noundef nonnull @.str) #7
   br label %bb.f
 
 QuantizeToSector.exit:                            ; preds = %ToSpherical.exit, %.thread
@@ -198,7 +198,7 @@ QuantizeToSector.exit:                            ; preds = %ToSpherical.exit, %
 
 bb.f:                                             ; preds = %QuantizeToSector.exit, %bb.e
   %.0 = phi ptr [ null, %bb.e ], [ %i.bc, %QuantizeToSector.exit ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
   ret ptr %.0
 }
 
@@ -209,7 +209,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 define range(i32 0, 2) i32 @cmsGDBCheckPoint(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 {
 bb.a:
   %2 = alloca %struct.cmsSpherical, align 8       ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #7
   %i.a = call fastcc ptr @GetPoint(ptr noundef %0, ptr noundef %1, ptr noundef %2) ; 3 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.d, label %bb.b
@@ -229,7 +229,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
   %.0 = phi i32 [ %i.i, %bb.c ], [ 0, %bb.a ], [ 0, %bb.b ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #7
   ret i32 %.0
 }
 
@@ -300,14 +300,26 @@ bb.a:                                             ; preds = %.preheader
 define internal fastcc void @InterpolateMissingSector(ptr noundef %0, i32 noundef range(i32 -2147483648, 16) %1, i32 noundef range(i32 -2147483648, 16) %2) unnamed_addr #0 {
 bb.a:
   %3 = alloca %struct.cmsVEC3, align 8            ; 5 uses
+  %sincos.sin18.i46 = alloca double, align 8      ; 4 uses
+  %sincos.cos19.i47 = alloca double, align 8      ; 4 uses
+  %sincos.sin.i48 = alloca double, align 8        ; 4 uses
+  %sincos.cos.i49 = alloca double, align 8        ; 4 uses
+  %sincos.sin18.i38 = alloca double, align 8      ; 4 uses
+  %sincos.cos19.i39 = alloca double, align 8      ; 4 uses
+  %sincos.sin.i40 = alloca double, align 8        ; 4 uses
+  %sincos.cos.i41 = alloca double, align 8        ; 4 uses
+  %sincos.sin18.i = alloca double, align 8        ; 4 uses
+  %sincos.cos19.i = alloca double, align 8        ; 4 uses
+  %sincos.sin.i = alloca double, align 8          ; 4 uses
+  %sincos.cos.i = alloca double, align 8          ; 4 uses
   %4 = alloca %struct.cmsVEC3, align 8            ; 6 uses
   %5 = alloca %struct.cmsLine, align 8            ; 8 uses
   %i.a = alloca [25 x ptr], align 16              ; 5 uses
   %6 = alloca %struct.cmsLine, align 8            ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #6
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #6
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #6
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #7
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = sext i32 %2 to i64
   %i.d = getelementptr inbounds [512 x i8], ptr %i.b, i64 %i.c
@@ -353,23 +365,33 @@ FindNearSectors.exit:                             ; preds = %bb.c
   %i.v = insertelement <2 x i32> poison, i32 %1, i64 0
   %i.w = insertelement <2 x i32> %i.v, i32 %2, i64 1
   %i.x = sitofp <2 x i32> %i.w to <2 x double>    ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin18.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos19.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i)
   %i.y = fadd nnan <2 x double> %i.x, splat (double 5.000000e-01)
   %i.z = fmul nnan <2 x double> %i.y, <double 3.600000e+02, double 1.800000e+02>
   %i.aa = fmul nnan <2 x double> %i.z, splat (double 6.250000e-02)
   %i.ab = fmul nnan <2 x double> %i.aa, splat (double f0x400921FB54442D18)
   %i.ac = fdiv <2 x double> %i.ab, splat (double 1.800000e+02) ; 2 uses
-  %i.ad = extractelement <2 x double> %i.ac, i64 0 ; 2 uses
-  %7 = tail call double @sin(double noundef %i.ad) #6
-  %8 = tail call double @cos(double noundef %i.ad) #6
-  %i.ae = extractelement <2 x double> %i.ac, i64 1 ; 2 uses
-  %9 = tail call double @sin(double noundef %i.ae) #6
-  %10 = tail call double @cos(double noundef %i.ae) #6
-  %i.af = fmul double %9, 5.000000e+01            ; 2 uses
-  %i.ag = fmul double %7, %i.af                   ; 2 uses
-  %i.ah = fmul double %8, %i.af                   ; 2 uses
-  %i.ai = fmul double %10, 5.000000e+01           ; 2 uses
-  call void @_cmsVEC3init(ptr noundef nonnull %4, double noundef 5.000000e+01, double noundef 0.000000e+00, double noundef 0.000000e+00) #6
-  call void @_cmsVEC3init(ptr noundef nonnull %5, double noundef %i.ai, double noundef %i.ag, double noundef %i.ah) #6
+  %i.ad = extractelement <2 x double> %i.ac, i64 0
+  call void @sincos(double %i.ad, ptr nonnull %sincos.sin.i, ptr nonnull %sincos.cos.i)
+  %sin.i = load double, ptr %sincos.sin.i, align 8
+  %cos.i = load double, ptr %sincos.cos.i, align 8
+  %i.ae = extractelement <2 x double> %i.ac, i64 1
+  call void @sincos(double %i.ae, ptr nonnull %sincos.sin18.i, ptr nonnull %sincos.cos19.i)
+  %sin20.i = load double, ptr %sincos.sin18.i, align 8
+  %cos21.i = load double, ptr %sincos.cos19.i, align 8
+  %i.af = fmul double %sin20.i, 5.000000e+01      ; 2 uses
+  %i.ag = fmul double %sin.i, %i.af               ; 2 uses
+  %i.ah = fmul double %cos.i, %i.af               ; 2 uses
+  %i.ai = fmul double %cos21.i, 5.000000e+01      ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin18.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos19.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i)
+  call void @_cmsVEC3init(ptr noundef nonnull %4, double noundef 5.000000e+01, double noundef 0.000000e+00, double noundef 0.000000e+00) #7
+  call void @_cmsVEC3init(ptr noundef nonnull %5, double noundef %i.ai, double noundef %i.ag, double noundef %i.ah) #7
   %i.aj = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 6 uses
   %i.ak = load double, ptr %4, align 8, !tbaa !22
   %i.al = fsub double %i.ak, %i.ai
@@ -379,7 +401,7 @@ FindNearSectors.exit:                             ; preds = %bb.c
   %i.ap = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.aq = load double, ptr %i.ap, align 8, !tbaa !22
   %i.ar = fsub double %i.aq, %i.ah
-  call void @_cmsVEC3init(ptr noundef nonnull %i.aj, double noundef %i.al, double noundef %i.ao, double noundef %i.ar) #6
+  call void @_cmsVEC3init(ptr noundef nonnull %i.aj, double noundef %i.al, double noundef %i.ao, double noundef %i.ar) #7
   %i.as = icmp sgt i32 %.1.i, 0
   br i1 %i.as, label %.lr.ph69, label %._crit_edge
 
@@ -429,53 +451,73 @@ bb.e:                                             ; preds = %.lr.ph, %ToSpherica
   %.sroa.0.161 = phi double [ %.sroa.0.067, %.lr.ph ], [ %.sroa.0.2, %ToSpherical.exit ] ; 2 uses
   %.sroa.6.160 = phi double [ %.sroa.6.066, %.lr.ph ], [ %.sroa.6.2, %ToSpherical.exit ]
   %.sroa.7.159 = phi double [ %.sroa.7.065, %.lr.ph ], [ %.sroa.7.2, %ToSpherical.exit ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin18.i38)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos19.i39)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i40)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i41)
   %i.bk = load double, ptr %i.bi, align 8, !tbaa !20
   %i.bl = fmul double %i.bk, f0x400921FB54442D18
-  %i.bm = fdiv double %i.bl, 1.800000e+02         ; 2 uses
-  %11 = call double @sin(double noundef %i.bm) #6
-  %12 = call double @cos(double noundef %i.bm) #6
+  %i.bm = fdiv double %i.bl, 1.800000e+02
+  call void @sincos(double %i.bm, ptr nonnull %sincos.sin.i40, ptr nonnull %sincos.cos.i41)
+  %sin.i42 = load double, ptr %sincos.sin.i40, align 8
+  %cos.i43 = load double, ptr %sincos.cos.i41, align 8
   %i.bn = load double, ptr %i.bj, align 8, !tbaa !21
   %i.bo = fmul double %i.bn, f0x400921FB54442D18
-  %i.bp = fdiv double %i.bo, 1.800000e+02         ; 2 uses
-  %13 = call double @sin(double noundef %i.bp) #6
-  %14 = call double @cos(double noundef %i.bp) #6
+  %i.bp = fdiv double %i.bo, 1.800000e+02
+  call void @sincos(double %i.bp, ptr nonnull %sincos.sin18.i38, ptr nonnull %sincos.cos19.i39)
+  %sin20.i44 = load double, ptr %sincos.sin18.i38, align 8
+  %cos21.i45 = load double, ptr %sincos.cos19.i39, align 8
   %i.bq = load double, ptr %i.bh, align 8, !tbaa !18 ; 2 uses
-  %i.br = fmul double %13, %i.bq                  ; 2 uses
-  %i.bs = fmul double %11, %i.br                  ; 2 uses
-  %i.bt = fmul double %12, %i.br                  ; 2 uses
-  %i.bu = fmul double %14, %i.bq                  ; 2 uses
+  %i.br = fmul double %sin20.i44, %i.bq           ; 2 uses
+  %i.bs = fmul double %sin.i42, %i.br             ; 2 uses
+  %i.bt = fmul double %cos.i43, %i.br             ; 2 uses
+  %i.bu = fmul double %cos21.i45, %i.bq           ; 2 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin18.i38)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos19.i39)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i40)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i41)
   %i.bv = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv77
   %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !31 ; 3 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin18.i46)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos19.i47)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.sin.i48)
+  call void @llvm.lifetime.start.p0(ptr nonnull %sincos.cos.i49)
   %i.by = getelementptr inbounds nuw i8, ptr %i.bw, i64 16
   %i.bz = load double, ptr %i.by, align 8, !tbaa !20
   %i.ca = fmul double %i.bz, f0x400921FB54442D18
-  %i.cb = fdiv double %i.ca, 1.800000e+02         ; 2 uses
-  %15 = call double @sin(double noundef %i.cb) #6
-  %16 = call double @cos(double noundef %i.cb) #6
+  %i.cb = fdiv double %i.ca, 1.800000e+02
+  call void @sincos(double %i.cb, ptr nonnull %sincos.sin.i48, ptr nonnull %sincos.cos.i49)
+  %sin.i50 = load double, ptr %sincos.sin.i48, align 8
+  %cos.i51 = load double, ptr %sincos.cos.i49, align 8
   %i.cc = getelementptr inbounds nuw i8, ptr %i.bw, i64 24
   %i.cd = load double, ptr %i.cc, align 8, !tbaa !21
   %i.ce = fmul double %i.cd, f0x400921FB54442D18
-  %i.cf = fdiv double %i.ce, 1.800000e+02         ; 2 uses
-  %17 = call double @sin(double noundef %i.cf) #6
-  %18 = call double @cos(double noundef %i.cf) #6
+  %i.cf = fdiv double %i.ce, 1.800000e+02
+  call void @sincos(double %i.cf, ptr nonnull %sincos.sin18.i46, ptr nonnull %sincos.cos19.i47)
+  %sin20.i52 = load double, ptr %sincos.sin18.i46, align 8
+  %cos21.i53 = load double, ptr %sincos.cos19.i47, align 8
   %i.cg = load double, ptr %i.bx, align 8, !tbaa !18 ; 2 uses
-  %i.ch = fmul double %17, %i.cg                  ; 2 uses
-  %i.ci = fmul double %15, %i.ch
-  %i.cj = fmul double %16, %i.ch
-  %i.ck = fmul double %18, %i.cg
-  call void @_cmsVEC3init(ptr noundef nonnull %6, double noundef %i.bu, double noundef %i.bs, double noundef %i.bt) #6
+  %i.ch = fmul double %sin20.i52, %i.cg           ; 2 uses
+  %i.ci = fmul double %sin.i50, %i.ch
+  %i.cj = fmul double %cos.i51, %i.ch
+  %i.ck = fmul double %cos21.i53, %i.cg
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin18.i46)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos19.i47)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.sin.i48)
+  call void @llvm.lifetime.end.p0(ptr nonnull %sincos.cos.i49)
+  call void @_cmsVEC3init(ptr noundef nonnull %6, double noundef %i.bu, double noundef %i.bs, double noundef %i.bt) #7
   %i.cl = fsub double %i.ck, %i.bu
   %i.cm = fsub double %i.ci, %i.bs
   %i.cn = fsub double %i.cj, %i.bt
-  call void @_cmsVEC3init(ptr noundef nonnull %i.at, double noundef %i.cl, double noundef %i.cm, double noundef %i.cn) #6
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
-  call void @_cmsVEC3minus(ptr noundef nonnull %3, ptr noundef nonnull %5, ptr noundef nonnull %6) #6
-  %i.co = call double @_cmsVEC3dot(ptr noundef nonnull %i.aj, ptr noundef nonnull %i.aj) #6 ; 6 uses
-  %i.cp = call double @_cmsVEC3dot(ptr noundef nonnull %i.aj, ptr noundef nonnull %i.at) #6 ; 6 uses
-  %i.cq = call double @_cmsVEC3dot(ptr noundef nonnull %i.at, ptr noundef nonnull %i.at) #6 ; 5 uses
-  %i.cr = call double @_cmsVEC3dot(ptr noundef nonnull %i.aj, ptr noundef nonnull %3) #6 ; 4 uses
-  %i.cs = call double @_cmsVEC3dot(ptr noundef nonnull %i.at, ptr noundef nonnull %3) #6 ; 5 uses
+  call void @_cmsVEC3init(ptr noundef nonnull %i.at, double noundef %i.cl, double noundef %i.cm, double noundef %i.cn) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #7
+  call void @_cmsVEC3minus(ptr noundef nonnull %3, ptr noundef nonnull %5, ptr noundef nonnull %6) #7
+  %i.co = call double @_cmsVEC3dot(ptr noundef nonnull %i.aj, ptr noundef nonnull %i.aj) #7 ; 6 uses
+  %i.cp = call double @_cmsVEC3dot(ptr noundef nonnull %i.aj, ptr noundef nonnull %i.at) #7 ; 6 uses
+  %i.cq = call double @_cmsVEC3dot(ptr noundef nonnull %i.at, ptr noundef nonnull %i.at) #7 ; 5 uses
+  %i.cr = call double @_cmsVEC3dot(ptr noundef nonnull %i.aj, ptr noundef nonnull %3) #7 ; 4 uses
+  %i.cs = call double @_cmsVEC3dot(ptr noundef nonnull %i.at, ptr noundef nonnull %3) #7 ; 5 uses
   %i.ct = fneg double %i.cp
   %i.cu = fmul double %i.cp, %i.ct
   %i.cv = call double @llvm.fmuladd.f64(double %i.co, double %i.cq, double %i.cu) ; 7 uses
@@ -548,7 +590,7 @@ ClosestLineToLine.exit:                           ; preds = %bb.j, %bb.k, %bb.l,
   %i.dw = insertelement <2 x double> poison, double %i.dq, i64 0
   %i.dx = shufflevector <2 x double> %i.dw, <2 x double> poison, <2 x i32> zeroinitializer
   %i.dy = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.dx, <2 x double> %i.dv, <2 x double> %i.du) ; 5 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #7
   %i.dz = extractelement <2 x double> %i.dy, i64 0 ; 3 uses
   %foldExtExtBinop = fmul <2 x double> %i.dy, %i.dy
   %i.ea = extractelement <2 x double> %foldExtExtBinop, i64 0
@@ -566,7 +608,7 @@ bb.o:                                             ; preds = %ClosestLineToLine.e
   br i1 %i.eh, label %_cmsAtan2.exit.i, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.ei = call double @atan2(double noundef %i.dz, double noundef %i.ec) #6
+  %i.ei = call double @atan2(double noundef %i.dz, double noundef %i.ec) #7
   %i.ej = fmul double %i.ei, 1.800000e+02
   %i.ek = fdiv double %i.ej, f0x400921FB54442D18  ; 3 uses
   %i.el = fcmp olt double %i.ek, 0.000000e+00
@@ -589,7 +631,7 @@ _cmsAtan2.exit.i:                                 ; preds = %.lr.ph.i.i, %bb.p, 
 
 bb.q:                                             ; preds = %_cmsAtan2.exit.i
   %sqrt27.i = call double @llvm.sqrt.f64(double %i.ep)
-  %i.es = call double @atan2(double noundef %sqrt27.i, double noundef %i.dt) #6
+  %i.es = call double @atan2(double noundef %sqrt27.i, double noundef %i.dt) #7
   %i.et = fmul double %i.es, 1.800000e+02
   %i.eu = fdiv double %i.et, f0x400921FB54442D18  ; 3 uses
   %i.ev = fcmp olt double %i.eu, 0.000000e+00
@@ -636,10 +678,10 @@ ToSpherical.exit:                                 ; preds = %.lr.ph.i24.i, %_cms
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.a, %._crit_edge
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #7
   ret void
 }
 
@@ -655,12 +697,6 @@ declare double @atan2(double noundef, double noundef) local_unnamed_addr #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.floor.f64(double) #3
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sin(double noundef) local_unnamed_addr #4
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @cos(double noundef) local_unnamed_addr #4
 
 declare void @_cmsVEC3minus(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
@@ -678,6 +714,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #3
 
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincos(double noundef, ptr, ptr) local_unnamed_addr #6
+
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #3
 
@@ -687,7 +726,8 @@ attributes #2 = { "frame-pointer"="all" "no-trapping-math"="true" "stack-protect
 attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #4 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #6 = { nounwind }
+attributes #6 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "frame-pointer"="all" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #7 = { nounwind }
 
 !llvm.module.flags = !{!1, !2, !3}
 !llvm.ident = !{!4}

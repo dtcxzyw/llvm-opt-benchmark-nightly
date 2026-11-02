@@ -204,6 +204,12 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %_ZNSt
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZNK6Assimp11AMFImporter30Postprocess_BuildConstellationER16AMFConstellationRSt6vectorIP6aiNodeSaIS5_EE(ptr noundef nonnull align 8 dereferenceable(224) %0, ptr nofree noundef nonnull readonly align 8 captures(address) dereferenceable(80) %1, ptr noundef nonnull align 8 dereferenceable(24) %2) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
+  %sincos.sin138 = alloca float, align 4          ; 2 uses
+  %sincos.cos139 = alloca float, align 4          ; 2 uses
+  %sincos.sin134 = alloca float, align 4          ; 2 uses
+  %sincos.cos135 = alloca float, align 4          ; 2 uses
+  %sincos.sin = alloca float, align 4             ; 2 uses
+  %sincos.cos = alloca float, align 4             ; 2 uses
   %3 = alloca %"class.std::__cxx11::list.84", align 8 ; 20 uses
   %i.a = alloca ptr, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
@@ -425,9 +431,11 @@ bb.o:                                             ; preds = %bb.n
   %i.eb = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.ea, <4 x float> zeroinitializer, <4 x float> %i.dz) ; 4 uses
   %i.ec = extractelement <2 x float> %i.dq, i64 0
   %i.ed = call float @llvm.fmuladd.f32(float %i.af, float %i.ec, float %i.cb)
+  %4 = fadd float %i.dr, %i.ed                    ; 4 uses
   store <2 x float> %i.dv, ptr %i.ak, align 4
   %i.ee = extractelement <4 x float> %i.eb, i64 0
   store float %i.ee, ptr %i.am, align 4
+  store float %4, ptr %i.an, align 8
   %i.ef = extractelement <2 x float> %i.dv, i64 1 ; 2 uses
   %i.eg = extractelement <2 x float> %i.dv, i64 0 ; 3 uses
   %i.eh = load float, ptr %i.aq, align 4          ; 3 uses
@@ -449,36 +457,35 @@ bb.o:                                             ; preds = %bb.n
   %i.eu = fmul float %i.et, 0.000000e+00          ; 2 uses
   %i.ev = extractelement <2 x float> %i.eo, i64 0
   %i.ew = fadd float %i.ev, %i.eu
-  %4 = fadd float %i.dr, %i.ed                    ; 4 uses
-  store float %4, ptr %i.an, align 8
-  %i.ex = load float, ptr %i.di, align 4          ; 2 uses
-  %5 = call noundef float @cosf(float noundef %i.ex) #21 ; 8 uses
-  %6 = call noundef float @sinf(float noundef %i.ex) #21 ; 2 uses
-  %i.ey = fneg float %6                           ; 4 uses
-  %i.ez = fmul float %i.dj, %5
+  %5 = load float, ptr %i.di, align 4
+  call void @sincosf(float %5, ptr nonnull %sincos.sin, ptr nonnull %sincos.cos)
+  %i.ex = load float, ptr %sincos.sin, align 4    ; 2 uses
+  %cos = load float, ptr %sincos.cos, align 4     ; 8 uses
+  %i.ey = fneg float %i.ex                        ; 4 uses
+  %i.ez = fmul float %i.dj, %cos
   %i.fa = call float @llvm.fmuladd.f32(float %i.dl, float 0.000000e+00, float %i.ez)
   %i.fb = fmul float %i.dj, %i.ey
   %i.fc = call float @llvm.fmuladd.f32(float %i.dl, float 0.000000e+00, float %i.fb)
-  %i.fd = call float @llvm.fmuladd.f32(float %5, float %i.bn, float %i.fc)
+  %i.fd = call float @llvm.fmuladd.f32(float %cos, float %i.bn, float %i.fc)
   %i.fe = call float @llvm.fmuladd.f32(float %i.br, float 0.000000e+00, float %i.fd) ; 3 uses
   %i.ff = fmul float %i.ef, %i.ey
   %i.fg = call float @llvm.fmuladd.f32(float %i.eg, float 0.000000e+00, float %i.ff)
   %i.fh = shufflevector <2 x float> %i.dv, <2 x float> %i.eo, <4 x i32> <i32 poison, i32 1, i32 3, i32 3>
   %i.fi = insertelement <4 x float> %i.fh, float %i.fg, i64 0
-  %i.fj = insertelement <4 x float> <float 1.000000e+00, float 0.000000e+00, float poison, float poison>, float %5, i64 2
+  %i.fj = insertelement <4 x float> <float 1.000000e+00, float 0.000000e+00, float poison, float poison>, float %cos, i64 2
   %i.fk = insertelement <4 x float> %i.fj, float %i.ey, i64 3
   %i.fl = fmul <4 x float> %i.fi, %i.fk           ; 2 uses
   %i.fm = extractelement <4 x float> %i.fl, i64 1
   %i.fn = fadd float %i.eg, %i.fm
-  %i.fo = fmul float %i.ef, %5
+  %i.fo = fmul float %i.ef, %cos
   %i.fp = call float @llvm.fmuladd.f32(float %i.eg, float 0.000000e+00, float %i.fo)
   %i.fq = shufflevector <2 x float> %i.dv, <2 x float> %i.eo, <4 x i32> <i32 poison, i32 0, i32 2, i32 2>
-  %i.fr = insertelement <4 x float> %i.fq, float %5, i64 0
+  %i.fr = insertelement <4 x float> %i.fq, float %cos, i64 0
   %i.fs = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.fr, <4 x float> %i.eb, <4 x float> %i.fl) ; 2 uses
   %i.ft = shufflevector <2 x float> %i.eo, <2 x float> poison, <4 x i32> <i32 0, i32 poison, i32 poison, i32 poison>
   %i.fu = shufflevector <4 x float> %i.eb, <4 x float> %i.ft, <4 x i32> <i32 poison, i32 0, i32 4, i32 poison>
   %i.fv = insertelement <4 x float> %i.fu, float %4, i64 0
-  %i.fw = insertelement <4 x float> %i.fv, float %5, i64 3
+  %i.fw = insertelement <4 x float> %i.fv, float %cos, i64 3
   %i.fx = insertelement <4 x float> <float 0.000000e+00, float 0.000000e+00, float 0.000000e+00, float poison>, float %i.eq, i64 3
   %i.fy = insertelement <4 x float> %i.fs, float %i.eu, i64 2
   %i.fz = call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.fw, <4 x float> %i.fx, <4 x float> %i.fy) ; 5 uses
@@ -488,7 +495,7 @@ bb.o:                                             ; preds = %bb.n
   %i.gd = fmul float %i.gc, 0.000000e+00          ; 2 uses
   %i.ge = extractelement <2 x float> %i.da, i64 0 ; 2 uses
   %i.gf = fadd float %i.ge, %i.gd
-  %i.gg = fmul float %i.gc, %5
+  %i.gg = fmul float %i.gc, %cos
   %i.gh = fmul float %i.gc, %i.ey
   %i.gi = shufflevector <2 x float> %i.da, <2 x float> poison, <4 x i32> <i32 poison, i32 poison, i32 0, i32 0>
   %i.gj = insertelement <4 x float> %i.gi, float %i.es, i64 0
@@ -500,7 +507,7 @@ bb.o:                                             ; preds = %bb.n
   %i.gp = extractelement <4 x float> %i.go, i64 1
   %i.gq = fadd float %i.es, %i.gp                 ; 3 uses
   %i.gr = extractelement <4 x float> %i.go, i64 3
-  %i.gs = call float @llvm.fmuladd.f32(float %5, float %i.dd, float %i.gr)
+  %i.gs = call float @llvm.fmuladd.f32(float %cos, float %i.dd, float %i.gr)
   %i.gt = call float @llvm.fmuladd.f32(float %i.dh, float 0.000000e+00, float %i.gs) ; 3 uses
   %i.gu = call float @llvm.fmuladd.f32(float %i.ge, float 0.000000e+00, float %i.gd)
   store float %i.fe, ptr %i.ai, align 4
@@ -514,7 +521,7 @@ bb.o:                                             ; preds = %bb.n
   store float %i.gt, ptr %i.au, align 4
   %i.gx = getelementptr inbounds nuw i8, ptr %i.r, i64 128
   %i.gy = getelementptr inbounds nuw i8, ptr %i.r, i64 132
-  %i.gz = insertelement <2 x float> <float 0.000000e+00, float poison>, float %6, i64 1 ; 4 uses
+  %i.gz = insertelement <2 x float> <float 0.000000e+00, float poison>, float %i.ex, i64 1 ; 4 uses
   %i.ha = insertelement <2 x float> poison, float %i.bn, i64 0
   %i.hb = shufflevector <2 x float> %i.ha, <2 x float> poison, <2 x i32> zeroinitializer
   %i.hc = insertelement <2 x float> poison, float %i.dm, i64 0
@@ -605,15 +612,16 @@ bb.o:                                             ; preds = %bb.n
   %i.ke = extractelement <4 x float> %i.jr, i64 3
   %i.kf = call float @llvm.fmuladd.f32(float %i.gt, float 0.000000e+00, float %i.ke)
   %i.kg = fadd float %i.iw, %i.kf                 ; 4 uses
-  %i.kh = load float, ptr %i.gx, align 8          ; 2 uses
-  %7 = call noundef float @cosf(float noundef %i.kh) #21 ; 2 uses
-  %8 = call noundef float @sinf(float noundef %i.kh) #21 ; 2 uses
-  %i.ki = fneg float %8
+  %i.kh = load float, ptr %i.gx, align 8
+  call void @sincosf(float %i.kh, ptr nonnull %sincos.sin134, ptr nonnull %sincos.cos135)
+  %sin136 = load float, ptr %sincos.sin134, align 4 ; 2 uses
+  %cos137 = load float, ptr %sincos.cos135, align 4 ; 2 uses
+  %i.ki = fneg float %sin136
   %i.kj = shufflevector <2 x float> %i.ji, <2 x float> poison, <3 x i32> zeroinitializer
-  %i.kk = insertelement <3 x float> <float poison, float poison, float 0.000000e+00>, float %8, i64 0
-  %i.kl = insertelement <3 x float> %i.kk, float %7, i64 1 ; 4 uses
+  %i.kk = insertelement <3 x float> <float poison, float poison, float 0.000000e+00>, float %sin136, i64 0
+  %i.kl = insertelement <3 x float> %i.kk, float %cos137, i64 1 ; 4 uses
   %i.km = call <3 x float> @llvm.fmuladd.v3f32(<3 x float> %i.kj, <3 x float> %i.kl, <3 x float> %i.jl)
-  %i.kn = insertelement <3 x float> <float poison, float poison, float 0.000000e+00>, float %7, i64 0
+  %i.kn = insertelement <3 x float> <float poison, float poison, float 0.000000e+00>, float %cos137, i64 0
   %i.ko = insertelement <3 x float> %i.kn, float %i.ki, i64 1 ; 4 uses
   %i.kp = insertelement <3 x float> poison, float %i.gt, i64 0
   %i.kq = shufflevector <3 x float> %i.kp, <3 x float> poison, <3 x i32> zeroinitializer
@@ -661,15 +669,16 @@ bb.o:                                             ; preds = %bb.n
   %i.ls = extractelement <3 x float> %i.ku, i64 0 ; 3 uses
   store float %i.ls, ptr %i.au, align 4
   store float %i.kg, ptr %i.av, align 8
-  %i.lt = load float, ptr %i.gy, align 4          ; 2 uses
-  %9 = call noundef float @cosf(float noundef %i.lt) #21 ; 2 uses
-  %10 = call noundef float @sinf(float noundef %i.lt) #21 ; 2 uses
-  %i.lu = fneg float %10
+  %i.lt = load float, ptr %i.gy, align 4
+  call void @sincosf(float %i.lt, ptr nonnull %sincos.sin138, ptr nonnull %sincos.cos139)
+  %sin140 = load float, ptr %sincos.sin138, align 4 ; 2 uses
+  %cos141 = load float, ptr %sincos.cos139, align 4 ; 2 uses
+  %i.lu = fneg float %sin140
   %i.lv = shufflevector <3 x float> %i.lj, <3 x float> poison, <2 x i32> <i32 2, i32 2>
-  %i.lw = insertelement <2 x float> poison, float %10, i64 0
-  %i.lx = insertelement <2 x float> %i.lw, float %9, i64 1 ; 4 uses
+  %i.lw = insertelement <2 x float> poison, float %sin140, i64 0
+  %i.lx = insertelement <2 x float> %i.lw, float %cos141, i64 1 ; 4 uses
   %i.ly = fmul <2 x float> %i.lv, %i.lx
-  %i.lz = insertelement <2 x float> poison, float %9, i64 0
+  %i.lz = insertelement <2 x float> poison, float %cos141, i64 0
   %i.ma = insertelement <2 x float> %i.lz, float %i.lu, i64 1 ; 4 uses
   %i.mb = shufflevector <3 x float> %i.lj, <3 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.mc = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ma, <2 x float> %i.mb, <2 x float> %i.ly)
@@ -1072,19 +1081,13 @@ _ZNSt7__cxx114listIN6Assimp11AMFImporter13SPP_CompositeESaIS3_EE14_M_create_node
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fmuladd.f32(float, float, float) #16
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @cosf(float noundef) local_unnamed_addr #17
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sinf(float noundef) local_unnamed_addr #17
-
 declare noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertImEERSoT_(ptr noundef nonnull align 8 dereferenceable(8), i64 noundef) local_unnamed_addr #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #18
+declare void @llvm.assume(i1 noundef) #17
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite)
-declare void @llvm.experimental.noalias.scope.decl(metadata) #19
+declare void @llvm.experimental.noalias.scope.decl(metadata) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #16
@@ -1093,7 +1096,10 @@ declare i64 @llvm.umin.i64(i64, i64) #16
 declare i64 @llvm.umax.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
-declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #20
+declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #19
+
+; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write)
+declare void @sincosf(float noundef, ptr, ptr) local_unnamed_addr #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <3 x float> @llvm.fmuladd.v3f32(<3 x float>, <3 x float>, <3 x float>) #16
@@ -1121,10 +1127,10 @@ attributes #13 = { mustprogress nocallback nofree nosync nounwind willreturn mem
 attributes #14 = { inlinehint mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #15 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: read) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #16 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #17 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #18 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #19 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
-attributes #20 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #17 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #18 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: readwrite) }
+attributes #19 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #20 = { mustprogress nocallback nofree nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #21 = { nounwind }
 attributes #22 = { noreturn }
 attributes #23 = { builtin nounwind }
