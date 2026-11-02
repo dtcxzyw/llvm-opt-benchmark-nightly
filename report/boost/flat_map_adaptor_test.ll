@@ -205,7 +205,7 @@ _ZN5boost7movelib10range_xbufIPSt4pairIiiEmNS0_7move_opEE11move_assignINS_9conta
   %i.bd = sub i64 %i.bc, %.015.i133.le            ; 2 uses
   %i.be = lshr i64 %i.bd, 3
   %i.bf = add nuw nsw i64 %i.be, 1                ; 2 uses
-  %min.iters.check135 = icmp ult i64 %i.bd, 184
+  %min.iters.check135 = icmp ult i64 %i.bd, 152
   br i1 %min.iters.check135, label %.lr.ph.i.i.i10.preheader202, label %vector.memcheck136
 
 vector.memcheck136:                               ; preds = %.lr.ph.i.i.i10.preheader
