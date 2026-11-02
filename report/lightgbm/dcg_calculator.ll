@@ -205,19 +205,22 @@ _ZNSt6vectorIiSaIiEEC2EmRKiRKS0_.exit:            ; preds = %.noexc27, %_ZNSt6ve
   %.02138 = phi i32 [ %i.ad, %.preheader.lr.ph ], [ %.133, %.critedge.thread ] ; 3 uses
   %.02437 = phi double [ 0.000000e+00, %.preheader.lr.ph ], [ %i.bf, %.critedge.thread ] ; 2 uses
   %i.au = icmp sgt i32 %.02138, 0
-  br i1 %i.au, label %.lr.ph36, label %.critedge
+  br i1 %i.au, label %.lr.ph36.preheader, label %.critedge
 
-.lr.ph36:                                         ; preds = %.preheader, %bb.b
-  %.135 = phi i32 [ %4, %bb.b ], [ %.02138, %.preheader ] ; 4 uses
-  %3 = zext nneg i32 %.135 to i64                 ; 2 uses
-  %i.av = getelementptr inbounds nuw [4 x i8], ptr %.sroa.028.0, i64 %3
+.lr.ph36.preheader:                               ; preds = %.preheader
+  %3 = zext nneg i32 %.02138 to i64
+  br label %.lr.ph36
+
+.lr.ph36:                                         ; preds = %.lr.ph36.preheader, %bb.b
+  %indvars.iv45 = phi i64 [ %3, %.lr.ph36.preheader ], [ %indvars.iv.next46, %bb.b ] ; 5 uses
+  %i.av = getelementptr inbounds nuw [4 x i8], ptr %.sroa.028.0, i64 %indvars.iv45
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !21 ; 2 uses
   %i.ax = icmp slt i32 %i.aw, 1
-  br i1 %i.ax, label %bb.b, label %.critedge.thread
+  br i1 %i.ax, label %bb.b, label %.critedge.thread.loopexit
 
 bb.b:                                             ; preds = %.lr.ph36
-  %4 = add nsw i32 %.135, -1
-  %i.ay = icmp sgt i32 %.135, 1
+  %indvars.iv.next46 = add nsw i64 %indvars.iv45, -1
+  %i.ay = icmp sgt i64 %indvars.iv45, 1
   br i1 %i.ay, label %.lr.ph36, label %.critedge..critedge.thread_crit_edge, !llvm.loop !54
 
 .critedge:                                        ; preds = %.preheader
@@ -228,10 +231,14 @@ bb.b:                                             ; preds = %.lr.ph36
   %.pre = load i32, ptr %.sroa.028.0, align 4, !tbaa !21
   br label %.critedge.thread
 
-.critedge.thread:                                 ; preds = %.lr.ph36, %.critedge..critedge.thread_crit_edge
-  %.pre-phi = phi i64 [ 0, %.critedge..critedge.thread_crit_edge ], [ %3, %.lr.ph36 ] ; 2 uses
-  %i.ba = phi i32 [ %.pre, %.critedge..critedge.thread_crit_edge ], [ %i.aw, %.lr.ph36 ]
-  %.133 = phi i32 [ 0, %.critedge..critedge.thread_crit_edge ], [ %.135, %.lr.ph36 ]
+.critedge.thread.loopexit:                        ; preds = %.lr.ph36
+  %4 = trunc nuw nsw i64 %indvars.iv45 to i32
+  br label %.critedge.thread
+
+.critedge.thread:                                 ; preds = %.critedge..critedge.thread_crit_edge, %.critedge.thread.loopexit
+  %.pre-phi = phi i64 [ 0, %.critedge..critedge.thread_crit_edge ], [ %indvars.iv45, %.critedge.thread.loopexit ] ; 2 uses
+  %i.ba = phi i32 [ %.pre, %.critedge..critedge.thread_crit_edge ], [ %i.aw, %.critedge.thread.loopexit ]
+  %.133 = phi i32 [ 0, %.critedge..critedge.thread_crit_edge ], [ %4, %.critedge.thread.loopexit ]
   %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.ae, i64 %indvars.iv45.a
   %i.bc = load double, ptr %i.bb, align 8, !tbaa !26
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %.pre-phi
@@ -409,19 +416,22 @@ bb.c:                                             ; preds = %.lr.ph62, %.critedg
   %.150 = phi i32 [ %.03259, %.preheader.lr.ph ], [ %.245, %.critedge.thread ] ; 4 uses
   %.13549 = phi double [ %.03457, %.preheader.lr.ph ], [ %i.bs, %.critedge.thread ] ; 2 uses
   %i.bh = icmp sgt i32 %.150, 0
-  br i1 %i.bh, label %.lr.ph48, label %.critedge
+  br i1 %i.bh, label %.lr.ph48.preheader, label %.critedge
 
-.lr.ph48:                                         ; preds = %.preheader, %bb.d
-  %.247 = phi i32 [ %5, %bb.d ], [ %.150, %.preheader ] ; 4 uses
-  %4 = zext nneg i32 %.247 to i64                 ; 2 uses
-  %i.bi = getelementptr inbounds nuw [4 x i8], ptr %.sroa.040.0, i64 %4
+.lr.ph48.preheader:                               ; preds = %.preheader
+  %4 = zext nneg i32 %.150 to i64
+  br label %.lr.ph48
+
+.lr.ph48:                                         ; preds = %.lr.ph48.preheader, %bb.d
+  %indvars.iv66 = phi i64 [ %4, %.lr.ph48.preheader ], [ %indvars.iv.next67, %bb.d ] ; 5 uses
+  %i.bi = getelementptr inbounds nuw [4 x i8], ptr %.sroa.040.0, i64 %indvars.iv66
   %i.bj = load i32, ptr %i.bi, align 4, !tbaa !21 ; 2 uses
   %i.bk = icmp slt i32 %i.bj, 1
-  br i1 %i.bk, label %bb.d, label %.critedge.thread
+  br i1 %i.bk, label %bb.d, label %.critedge.thread.loopexit
 
 bb.d:                                             ; preds = %.lr.ph48
-  %5 = add nsw i32 %.247, -1
-  %i.bl = icmp sgt i32 %.247, 1
+  %indvars.iv.next67 = add nsw i64 %indvars.iv66, -1
+  %i.bl = icmp sgt i64 %indvars.iv66, 1
   br i1 %i.bl, label %.lr.ph48, label %.critedge..critedge.thread_crit_edge, !llvm.loop !57
 
 .critedge:                                        ; preds = %.preheader
@@ -432,10 +442,14 @@ bb.d:                                             ; preds = %.lr.ph48
   %.pre = load i32, ptr %.sroa.040.0, align 4, !tbaa !21
   br label %.critedge.thread
 
-.critedge.thread:                                 ; preds = %.lr.ph48, %.critedge..critedge.thread_crit_edge
-  %.pre-phi = phi i64 [ 0, %.critedge..critedge.thread_crit_edge ], [ %4, %.lr.ph48 ] ; 2 uses
-  %i.bn = phi i32 [ %.pre, %.critedge..critedge.thread_crit_edge ], [ %i.bj, %.lr.ph48 ]
-  %.245 = phi i32 [ 0, %.critedge..critedge.thread_crit_edge ], [ %.247, %.lr.ph48 ] ; 2 uses
+.critedge.thread.loopexit:                        ; preds = %.lr.ph48
+  %5 = trunc nuw nsw i64 %indvars.iv66 to i32
+  br label %.critedge.thread
+
+.critedge.thread:                                 ; preds = %.critedge..critedge.thread_crit_edge, %.critedge.thread.loopexit
+  %.pre-phi = phi i64 [ 0, %.critedge..critedge.thread_crit_edge ], [ %indvars.iv66, %.critedge.thread.loopexit ] ; 2 uses
+  %i.bn = phi i32 [ %.pre, %.critedge..critedge.thread_crit_edge ], [ %i.bj, %.critedge.thread.loopexit ]
+  %.245 = phi i32 [ 0, %.critedge..critedge.thread_crit_edge ], [ %5, %.critedge.thread.loopexit ] ; 2 uses
   %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.bf, i64 %indvars.iv66.a
   %i.bp = load double, ptr %i.bo, align 8, !tbaa !26
   %i.bq = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %.pre-phi

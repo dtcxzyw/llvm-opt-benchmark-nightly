@@ -202,7 +202,7 @@ _ZNSt10lock_guardIN4llvm3sys12SmartRWMutexILb0EEEEC2ERS3_.exit: ; preds = %bb.a
   %i.g = ptrtoint ptr %i.e to i64
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = sub i64 %i.g, %i.h
-  %i.j = lshr exact i64 %i.i, 4
+  %i.j = lshr i64 %i.i, 4
   %i.k = trunc i64 %i.j to i32                    ; 4 uses
   %i.l = icmp eq ptr %1, null
   br i1 %i.l, label %.preheader, label %bb.j
@@ -272,19 +272,22 @@ _ZNSt12__shared_ptrIN12lldb_private10ThreadPlanELN9__gnu_cxx12_Lock_policyE2EED2
   br i1 %i.ae, label %bb.c, label %.critedge, !llvm.loop !128
 
 bb.j:                                             ; preds = %_ZNSt10lock_guardIN4llvm3sys12SmartRWMutexILb0EEEEC2ERS3_.exit
-  %i.af = add nsw i32 %i.k, -1                    ; 2 uses
+  %i.af = add i32 %i.k, -1                        ; 2 uses
   %i.ag = icmp sgt i32 %i.k, 1
-  br i1 %i.ag, label %.lr.ph, label %.critedge
+  br i1 %i.ag, label %.lr.ph.preheader, label %.critedge
+
+.lr.ph.preheader:                                 ; preds = %bb.j
+  %4 = zext nneg i32 %i.af to i64
+  br label %.lr.ph
 
 bb.k:                                             ; preds = %.lr.ph
-  %4 = add nsw i32 %.01635, -1
-  %i.ah = icmp sgt i32 %.01635, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.ah = icmp sgt i64 %indvars.iv, 1
   br i1 %i.ah, label %.lr.ph, label %.critedge, !llvm.loop !129
 
-.lr.ph:                                           ; preds = %bb.j, %bb.k
-  %.01635 = phi i32 [ %4, %bb.k ], [ %i.af, %bb.j ] ; 3 uses
-  %5 = zext nneg i32 %.01635 to i64
-  %i.ai = getelementptr inbounds nuw [16 x i8], ptr %i.f, i64 %5
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.k
+  %indvars.iv = phi i64 [ %4, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.k ] ; 3 uses
+  %i.ai = getelementptr inbounds nuw [16 x i8], ptr %i.f, i64 %indvars.iv
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !33
   %i.ak = icmp eq ptr %i.aj, %1
   br i1 %i.ak, label %.lr.ph38, label %bb.k

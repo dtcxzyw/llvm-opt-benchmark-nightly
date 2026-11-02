@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.bs = sext i32 %.1117 to i64
   %i.bt = getelementptr inbounds [16 x i8], ptr %1, i64 %i.bs ; 2 uses
   store ptr %i.ap, ptr %i.bt, align 16, !tbaa !43
-  %i.bu = add nsw i32 %.1117, 1                   ; 2 uses
+  %i.bu = add i32 %.1117, 1                       ; 3 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
   store i32 %i.f, ptr %i.bv, align 8, !tbaa !44
   %i.bw = icmp sgt i32 %.1117, 0
@@ -212,12 +212,14 @@ bb.e:                                             ; preds = %bb.c, %bb.d
 
 .lr.ph113:                                        ; preds = %._crit_edge
   %i.bx = icmp eq ptr %.096116, %i.af
+  %2 = zext i32 %i.bu to i64
+  %smin = tail call i32 @llvm.smin.i32(i32 %i.bu, i32 2)
+  %3 = add i32 %smin, -1
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph113, %bb.n
-  %.2111 = phi i32 [ %i.bu, %.lr.ph113 ], [ %3, %bb.n ] ; 4 uses
-  %2 = zext nneg i32 %.2111 to i64
-  %i.by = getelementptr [16 x i8], ptr %1, i64 %2 ; 4 uses
+  %indvars.iv = phi i64 [ %2, %.lr.ph113 ], [ %indvars.iv.next, %bb.n ] ; 3 uses
+  %i.by = getelementptr [16 x i8], ptr %1, i64 %indvars.iv ; 4 uses
   %i.bz = getelementptr i8, ptr %i.by, i64 -8
   %i.ca = load i32, ptr %i.bz, align 8, !tbaa !44 ; 2 uses
   %i.cb = getelementptr i8, ptr %i.by, i64 -32    ; 2 uses
@@ -225,6 +227,7 @@ bb.f:                                             ; preds = %.lr.ph113, %bb.n
   %i.cd = load i32, ptr %i.cc, align 8, !tbaa !44 ; 2 uses
   %i.ce = icmp eq i32 %i.ca, %i.cd
   %i.cf = select i1 %i.ce, i1 true, i1 %i.bx
+  %4 = trunc nuw i64 %indvars.iv to i32           ; 2 uses
   br i1 %i.cf, label %bb.g, label %.critedge
 
 bb.g:                                             ; preds = %bb.f
@@ -380,12 +383,12 @@ bb.n:                                             ; preds = %bb.m, %unate_inters
   tail call void (ptr, ...) @sf_free(ptr noundef nonnull %i.ch) #11
   store ptr %i.el, ptr %i.cb, align 16, !tbaa !43
   store i32 %i.em, ptr %i.cc, align 8, !tbaa !44
-  %3 = add nsw i32 %.2111, -1                     ; 2 uses
-  %i.fc = icmp sgt i32 %.2111, 2
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.fc = icmp sgt i32 %4, 2
   br i1 %i.fc, label %bb.f, label %.critedge
 
 .critedge:                                        ; preds = %bb.n, %bb.f, %._crit_edge
-  %.2.lcssa = phi i32 [ %i.bu, %._crit_edge ], [ %.2111, %bb.f ], [ %3, %bb.n ]
+  %.2.lcssa = phi i32 [ %i.bu, %._crit_edge ], [ %4, %bb.f ], [ %3, %bb.n ]
   %i.fd = load i32, ptr %i.h, align 8, !tbaa !20
   %i.fe = sext i32 %i.fd to i64
   %i.ff = getelementptr inbounds [4 x i8], ptr %.096116, i64 %i.fe ; 2 uses

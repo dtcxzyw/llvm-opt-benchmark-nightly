@@ -202,23 +202,26 @@ _ZNSt7__cxx119to_stringEy.exit:                   ; preds = %bb.h, %bb.i
   %i.ar = trunc i64 %i.aq to i32
   %.010 = add i32 %i.ar, -3                       ; 2 uses
   %i.as = icmp sgt i32 %.010, 0
-  br i1 %i.as, label %.lr.ph, label %._crit_edge
+  br i1 %i.as, label %.lr.ph.preheader, label %._crit_edge
 
-.lr.ph:                                           ; preds = %_ZNSt7__cxx119to_stringEy.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit
-  %.011 = phi i32 [ %.0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit ], [ %.010, %_ZNSt7__cxx119to_stringEy.exit ] ; 3 uses
-  %2 = zext nneg i32 %.011 to i64                 ; 3 uses
+.lr.ph.preheader:                                 ; preds = %_ZNSt7__cxx119to_stringEy.exit
+  %2 = zext nneg i32 %.010 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit
+  %indvars.iv = phi i64 [ %2, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit ] ; 5 uses
   %i.at = load i64, ptr %i.ap, align 8, !tbaa !36 ; 2 uses
-  %i.au = icmp ult i64 %i.at, %2
+  %i.au = icmp ult i64 %i.at, %indvars.iv
   br i1 %i.au, label %bb.j, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit
 
 bb.j:                                             ; preds = %.lr.ph
-  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.58, ptr noundef nonnull @.str.57, i64 noundef %2, i64 noundef %i.at) #21
+  tail call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.58, ptr noundef nonnull @.str.57, i64 noundef %indvars.iv, i64 noundef %i.at) #21
   unreachable
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit: ; preds = %.lr.ph
-  %i.av = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %2, i64 noundef 0, ptr noundef nonnull @.str.68, i64 noundef 1) #18 ; 0 uses
-  %.0 = add nsw i32 %.011, -3
-  %i.aw = icmp sgt i32 %.011, 3
+  %i.av = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef %indvars.iv, i64 noundef 0, ptr noundef nonnull @.str.68, i64 noundef 1) #18 ; 0 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv, -3
+  %i.aw = icmp sgt i64 %indvars.iv, 3
   br i1 %i.aw, label %.lr.ph, label %._crit_edge, !llvm.loop !454
 
 ._crit_edge:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6insertEmPKc.exit, %_ZNSt7__cxx119to_stringEy.exit

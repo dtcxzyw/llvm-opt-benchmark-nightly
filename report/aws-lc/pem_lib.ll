@@ -204,7 +204,7 @@ define range(i32 0, 2) i32 @PEM_read_bio(ptr noundef %0, ptr nofree noundef writ
 bb.a:
   %5 = alloca %struct.evp_encode_ctx_st, align 4  ; 5 uses
   %i.a = alloca i32, align 4                      ; 4 uses
-  %i.b = alloca i32, align 4                      ; 10 uses
+  %i.b = alloca i32, align 4                      ; 11 uses
   %i.c = alloca [256 x i8], align 16              ; 34 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
@@ -236,33 +236,35 @@ bb.c:                                             ; preds = %bb.a
 
 .preheader143.lr.ph:                              ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 11 ; 2 uses
+  br label %.preheader143
+
+.preheader143:                                    ; preds = %.preheader143.lr.ph, %.backedge
+  %6 = phi i32 [ %i.k, %.preheader143.lr.ph ], [ %i.ai, %.backedge ]
+  %7 = zext nneg i32 %6 to i64
   br label %.preheader143.a
 
 ._crit_edge:                                      ; preds = %.backedge, %bb.c
   call void @ERR_put_error(i32 noundef 9, i32 noundef 0, i32 noundef 110, ptr noundef nonnull @.str.8, i32 noundef 586) #8
   br label %.loopexit140
 
-.preheader143.a:                                  ; preds = %.preheader143.backedge, %.preheader143.lr.ph
-  %.0108146 = phi i32 [ %i.k, %.preheader143.lr.ph ], [ %.0108146.be, %.preheader143.backedge ] ; 4 uses
-  %6 = zext nneg i32 %.0108146 to i64
-  %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 %6
+.preheader143.a:                                  ; preds = %.preheader143, %bb.d
+  %indvars.iv = phi i64 [ %7, %.preheader143 ], [ %indvars.iv.next, %bb.d ] ; 4 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv
   %i.o = load i8, ptr %i.n, align 1, !tbaa !9
   %i.p = icmp slt i8 %i.o, 33
   br i1 %i.p, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %.preheader143.a
-  %7 = add nsw i32 %.0108146, -1
-  %i.q = icmp sgt i32 %.0108146, 0
-  br i1 %i.q, label %.preheader143.backedge, label %.critedge
-
-.preheader143.backedge:                           ; preds = %bb.d, %.backedge
-  %.0108146.be = phi i32 [ %7, %bb.d ], [ %i.ai, %.backedge ]
-  br label %.preheader143.a, !llvm.loop !20
+  %8 = trunc nuw i64 %indvars.iv to i32
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %i.q = icmp sgt i32 %8, 0
+  br i1 %i.q, label %.preheader143.a, label %.critedge, !llvm.loop !20
 
 .critedge:                                        ; preds = %bb.d, %.preheader143.a
-  %.0108.lcssa = phi i32 [ -1, %bb.d ], [ %.0108146, %.preheader143.a ]
-  %8 = sext i32 %.0108.lcssa to i64
-  %i.r = getelementptr i8, ptr %i.c, i64 %8       ; 2 uses
+  %.0108.lcssa = phi i64 [ -1, %bb.d ], [ %indvars.iv, %.preheader143.a ]
+  %sext180 = shl i64 %.0108.lcssa, 32
+  %9 = ashr exact i64 %sext180, 32
+  %i.r = getelementptr i8, ptr %i.c, i64 %9       ; 2 uses
   %i.s = getelementptr i8, ptr %i.r, i64 1
   store i8 10, ptr %i.s, align 1, !tbaa !9
   %i.t = getelementptr i8, ptr %i.r, i64 2
@@ -291,7 +293,7 @@ bb.e:                                             ; preds = %.critedge
 .backedge:                                        ; preds = %bb.e, %.critedge
   %i.ai = call i32 @BIO_gets(ptr noundef %0, ptr noundef nonnull %i.c, i32 noundef 254) #8 ; 2 uses
   %i.aj = icmp slt i32 %i.ai, 1
-  br i1 %i.aj, label %._crit_edge, label %.preheader143.backedge
+  br i1 %i.aj, label %._crit_edge, label %.preheader143
 
 bb.f:                                             ; preds = %bb.e
   %sext121 = add i64 %i.ae, 38654705664
@@ -331,28 +333,29 @@ bb.i:                                             ; preds = %OPENSSL_memcpy.exit
 .preheader141:                                    ; preds = %bb.i, %OPENSSL_memcpy.exit136
   %i.ax = phi i32 [ %i.bt, %OPENSSL_memcpy.exit136 ], [ %i.av, %bb.i ]
   %.0107148 = phi i32 [ %i.bk, %OPENSSL_memcpy.exit136 ], [ 0, %bb.i ] ; 4 uses
+  %10 = zext nneg i32 %i.ax to i64
   br label %bb.j
 
 bb.j:                                             ; preds = %.preheader141, %bb.k
-  %.1109147 = phi i32 [ %i.ax, %.preheader141 ], [ %10, %bb.k ] ; 4 uses
-  %9 = zext nneg i32 %.1109147 to i64
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.c, i64 %9
+  %indvars.iv160 = phi i64 [ %10, %.preheader141 ], [ %indvars.iv.next161, %bb.k ] ; 3 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv160
   %i.az = load i8, ptr %i.ay, align 1, !tbaa !9
   %i.ba = icmp slt i8 %i.az, 33
+  %11 = trunc nuw i64 %indvars.iv160 to i32       ; 2 uses
   br i1 %i.ba, label %bb.k, label %.critedge5
 
 bb.k:                                             ; preds = %bb.j
-  %10 = add nsw i32 %.1109147, -1
-  %i.bb = icmp sgt i32 %.1109147, 0
+  %indvars.iv.next161 = add nsw i64 %indvars.iv160, -1
+  %i.bb = icmp sgt i32 %11, 0
   br i1 %i.bb, label %bb.j, label %.critedge5, !llvm.loop !21
 
 .critedge5:                                       ; preds = %bb.k, %bb.j
-  %.1109.lcssa = phi i32 [ -1, %bb.k ], [ %.1109147, %bb.j ] ; 2 uses
+  %.1109.lcssa = phi i32 [ -1, %bb.k ], [ %11, %bb.j ] ; 2 uses
   %i.bc = sext i32 %.1109.lcssa to i64
   %i.bd = getelementptr i8, ptr %i.c, i64 %i.bc
   %i.be = getelementptr i8, ptr %i.bd, i64 1
   store i8 10, ptr %i.be, align 1, !tbaa !9
-  %i.bf = add nsw i32 %.1109.lcssa, 2             ; 2 uses
+  %i.bf = add nsw i32 %.1109.lcssa, 2             ; 3 uses
   %i.bg = zext nneg i32 %i.bf to i64              ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.bg
   store i8 0, ptr %i.bh, align 1, !tbaa !9
@@ -371,13 +374,20 @@ bb.l:                                             ; preds = %.critedge5
 bb.m:                                             ; preds = %bb.l
   %i.bo = call i32 @CRYPTO_memcmp(ptr noundef nonnull %i.c, ptr noundef nonnull @.str.13, i64 noundef 9) #8
   %i.bp = icmp eq i32 %i.bo, 0
-  br i1 %i.bp, label %._crit_edge149, label %OPENSSL_memcpy.exit136
+  br i1 %i.bp, label %._crit_edge149, label %12
 
-OPENSSL_memcpy.exit136:                           ; preds = %bb.m
-  %11 = load ptr, ptr %i.at, align 8, !tbaa !25
-  %12 = zext nneg i32 %.0107148 to i64
-  %13 = getelementptr inbounds nuw i8, ptr %11, i64 %12
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %13, ptr nonnull readonly align 16 %i.c, i64 range(i64 -2147483648, 2147483648) %i.bg, i1 false)
+12:                                               ; preds = %bb.m
+  %13 = icmp eq i32 %i.bf, 0
+  br i1 %13, label %OPENSSL_memcpy.exit136, label %14
+
+14:                                               ; preds = %12
+  %15 = load ptr, ptr %i.at, align 8, !tbaa !25
+  %16 = zext nneg i32 %.0107148 to i64
+  %17 = getelementptr inbounds nuw i8, ptr %15, i64 %16
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %17, ptr nonnull readonly align 16 %i.c, i64 range(i64 -2147483648, 2147483648) %i.bg, i1 false)
+  br label %OPENSSL_memcpy.exit136
+
+OPENSSL_memcpy.exit136:                           ; preds = %12, %14
   %i.bq = load ptr, ptr %i.at, align 8, !tbaa !25
   %i.br = zext nneg i32 %i.bk to i64
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bq, i64 %i.br
@@ -401,31 +411,38 @@ bb.n:                                             ; preds = %._crit_edge149
   br i1 %.not127, label %.preheader139, label %bb.s
 
 .preheader139:                                    ; preds = %bb.n, %OPENSSL_memcpy.exit137
-  %i.by = phi i32 [ %i.ct, %OPENSSL_memcpy.exit137 ], [ 0, %bb.n ] ; 5 uses
+  %i.by = phi i32 [ %i.ct, %OPENSSL_memcpy.exit137 ], [ 0, %bb.n ] ; 7 uses
   %i.bz = call i32 @BIO_gets(ptr noundef %0, ptr noundef nonnull %i.c, i32 noundef 254) #8 ; 2 uses
   %i.ca = icmp slt i32 %i.bz, 1
-  br i1 %i.ca, label %.loopexit, label %.preheader138
+  br i1 %i.ca, label %.loopexit, label %.preheader138.preheader
 
-.preheader138:                                    ; preds = %.preheader139, %bb.o
-  %.2156 = phi i32 [ %15, %bb.o ], [ %i.bz, %.preheader139 ] ; 4 uses
-  %14 = zext nneg i32 %.2156 to i64
-  %i.cb = getelementptr inbounds nuw i8, ptr %i.c, i64 %14
+.preheader138.preheader:                          ; preds = %.preheader139
+  %18 = zext nneg i32 %i.bz to i64
+  br label %.preheader138
+
+.preheader138:                                    ; preds = %.preheader138.preheader, %bb.o
+  %indvars.iv164 = phi i64 [ %18, %.preheader138.preheader ], [ %indvars.iv.next165, %bb.o ] ; 4 uses
+  %i.cb = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv164
   %i.cc = load i8, ptr %i.cb, align 1, !tbaa !9
   %i.cd = icmp slt i8 %i.cc, 33
-  br i1 %i.cd, label %bb.o, label %.critedge7
+  br i1 %i.cd, label %bb.o, label %.critedge7.split.loop.exit191
 
 bb.o:                                             ; preds = %.preheader138
-  %15 = add nsw i32 %.2156, -1
-  %i.ce = icmp sgt i32 %.2156, 0
+  %indvars.iv.next165 = add nsw i64 %indvars.iv164, -1
+  %i.ce = icmp sgt i64 %indvars.iv164, 0
   br i1 %i.ce, label %.preheader138, label %.critedge7, !llvm.loop !22
 
-.critedge7:                                       ; preds = %bb.o, %.preheader138
-  %.2.lcssa = phi i32 [ -1, %bb.o ], [ %.2156, %.preheader138 ] ; 4 uses
+.critedge7.split.loop.exit191:                    ; preds = %.preheader138
+  %19 = trunc nuw nsw i64 %indvars.iv164 to i32
+  br label %.critedge7
+
+.critedge7:                                       ; preds = %bb.o, %.critedge7.split.loop.exit191
+  %.2.lcssa = phi i32 [ %19, %.critedge7.split.loop.exit191 ], [ -1, %bb.o ] ; 4 uses
   %i.cf = sext i32 %.2.lcssa to i64
   %i.cg = getelementptr i8, ptr %i.c, i64 %i.cf
   %i.ch = getelementptr i8, ptr %i.cg, i64 1
   store i8 10, ptr %i.ch, align 1, !tbaa !9
-  %i.ci = add nsw i32 %.2.lcssa, 2                ; 3 uses
+  %i.ci = add nsw i32 %.2.lcssa, 2                ; 4 uses
   %i.cj = zext nneg i32 %i.ci to i64              ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.c, i64 %i.cj
   store i8 0, ptr %i.ck, align 1, !tbaa !9
@@ -442,44 +459,56 @@ bb.p:                                             ; preds = %.critedge7
   %i.cq = sext i32 %i.cp to i64
   %i.cr = call i64 @BUF_MEM_grow_clean(ptr noundef %i.f, i64 noundef %i.cq) #8
   %.not129 = icmp eq i64 %i.cr, 0
-  br i1 %.not129, label %.loopexit140, label %OPENSSL_memcpy.exit137
+  br i1 %.not129, label %.loopexit140, label %20
 
-OPENSSL_memcpy.exit137:                           ; preds = %bb.p
-  %16 = load ptr, ptr %i.bw, align 8, !tbaa !25
-  %17 = sext i32 %i.by to i64
-  %18 = getelementptr inbounds i8, ptr %16, i64 %17
-  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %18, ptr nonnull readonly align 16 %i.c, i64 range(i64 -2147483648, 2147483648) %i.cj, i1 false)
+20:                                               ; preds = %bb.p
+  %21 = icmp eq i32 %i.ci, 0
+  %22 = load ptr, ptr %i.bw, align 8, !tbaa !25
+  %23 = sext i32 %i.by to i64
+  %24 = getelementptr inbounds i8, ptr %22, i64 %23 ; 2 uses
+  br i1 %21, label %OPENSSL_memcpy.exit137.thread, label %OPENSSL_memcpy.exit137
+
+OPENSSL_memcpy.exit137.thread:                    ; preds = %20
+  store i8 0, ptr %24, align 1, !tbaa !9
+  store i32 %i.by, ptr %i.b, align 4, !tbaa !16
+  br label %bb.q
+
+OPENSSL_memcpy.exit137:                           ; preds = %20
+  call void @llvm.memcpy.p0.p0.i64(ptr align 1 %24, ptr nonnull readonly align 16 %i.c, i64 range(i64 -2147483648, 2147483648) %i.cj, i1 false)
   %i.cs = load ptr, ptr %i.bw, align 8, !tbaa !25
-  %i.ct = add nsw i32 %i.by, %i.ci                ; 5 uses
+  %i.ct = add nsw i32 %i.by, %i.ci                ; 4 uses
   %i.cu = sext i32 %i.ct to i64
   %i.cv = getelementptr inbounds i8, ptr %i.cs, i64 %i.cu
   store i8 0, ptr %i.cv, align 1, !tbaa !9
   store i32 %i.ct, ptr %i.b, align 4, !tbaa !16
   br i1 %.not128, label %.preheader139, label %bb.q
 
-bb.q:                                             ; preds = %OPENSSL_memcpy.exit137
+bb.q:                                             ; preds = %OPENSSL_memcpy.exit137, %OPENSSL_memcpy.exit137.thread
+  %25 = phi i32 [ %i.by, %OPENSSL_memcpy.exit137.thread ], [ %i.ct, %OPENSSL_memcpy.exit137 ] ; 2 uses
   store i8 0, ptr %i.c, align 16, !tbaa !9
   %i.cw = call i32 @BIO_gets(ptr noundef %0, ptr noundef nonnull %i.c, i32 noundef 254) #8 ; 2 uses
   %i.cx = icmp slt i32 %i.cw, 1
-  br i1 %i.cx, label %.loopexit, label %.preheader
+  br i1 %i.cx, label %.loopexit, label %.preheader.preheader
 
-.preheader:                                       ; preds = %bb.q, %bb.r
-  %.3157 = phi i32 [ %20, %bb.r ], [ %i.cw, %bb.q ] ; 4 uses
-  %19 = zext nneg i32 %.3157 to i64
-  %i.cy = getelementptr inbounds nuw i8, ptr %i.c, i64 %19
+.preheader.preheader:                             ; preds = %bb.q
+  %26 = zext nneg i32 %i.cw to i64
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.preheader, %bb.r
+  %indvars.iv167 = phi i64 [ %26, %.preheader.preheader ], [ %indvars.iv.next168, %bb.r ] ; 4 uses
+  %i.cy = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv167
   %i.cz = load i8, ptr %i.cy, align 1, !tbaa !9
   %i.da = icmp slt i8 %i.cz, 33
   br i1 %i.da, label %bb.r, label %.critedge9
 
 bb.r:                                             ; preds = %.preheader
-  %20 = add nsw i32 %.3157, -1
-  %i.db = icmp sgt i32 %.3157, 0
+  %indvars.iv.next168 = add nsw i64 %indvars.iv167, -1
+  %i.db = icmp sgt i64 %indvars.iv167, 0
   br i1 %i.db, label %.preheader, label %.critedge9, !llvm.loop !23
 
 .critedge9:                                       ; preds = %bb.r, %.preheader
-  %.3.lcssa = phi i32 [ -1, %bb.r ], [ %.3157, %.preheader ]
-  %21 = sext i32 %.3.lcssa to i64
-  %i.dc = getelementptr i8, ptr %i.c, i64 %21     ; 2 uses
+  %.3.lcssa = phi i64 [ -1, %bb.r ], [ %indvars.iv167, %.preheader ]
+  %i.dc = getelementptr i8, ptr %i.c, i64 %.3.lcssa ; 2 uses
   %i.dd = getelementptr i8, ptr %i.dc, i64 1
   store i8 10, ptr %i.dd, align 1, !tbaa !9
   %i.de = getelementptr i8, ptr %i.dc, i64 2
@@ -491,7 +520,7 @@ bb.s:                                             ; preds = %bb.n
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader139, %.critedge7, %.critedge9, %bb.q, %bb.s
-  %i.df = phi i32 [ %.0107.lcssa, %bb.s ], [ %i.ct, %bb.q ], [ %i.ct, %.critedge9 ], [ %i.by, %.critedge7 ], [ %i.by, %.preheader139 ]
+  %i.df = phi i32 [ %.0107.lcssa, %bb.s ], [ %25, %bb.q ], [ %25, %.critedge9 ], [ %i.by, %.critedge7 ], [ %i.by, %.preheader139 ]
   %.0104 = phi ptr [ %i.f, %bb.s ], [ %i.e, %bb.q ], [ %i.e, %.critedge9 ], [ %i.e, %.critedge7 ], [ %i.e, %.preheader139 ] ; 6 uses
   %.0 = phi ptr [ %i.e, %bb.s ], [ %i.f, %bb.q ], [ %i.f, %.critedge9 ], [ %i.f, %.critedge7 ], [ %i.f, %.preheader139 ] ; 6 uses
   %i.dg = load ptr, ptr %i.am, align 8, !tbaa !25

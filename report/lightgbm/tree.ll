@@ -205,24 +205,32 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.a
 
 _ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit.preheader: ; preds = %.split.i.i
   %.not94 = icmp eq i32 %.032, 0
-  br i1 %.not94, label %.critedge, label %.lr.ph
+  br i1 %.not94, label %.critedge, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %_ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit.preheader, %_ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit
-  %.188 = phi i32 [ %4, %_ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit ], [ %.032, %_ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit.preheader ] ; 3 uses
-  %3 = zext nneg i32 %.188 to i64
-  %i.al = getelementptr inbounds nuw i8, ptr %i.a, i64 %3
+.lr.ph.preheader:                                 ; preds = %_ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit.preheader
+  %3 = zext nneg i32 %.032 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit
+  %indvars.iv = phi i64 [ %3, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit ] ; 3 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
   %i.am = load i8, ptr %i.al, align 1, !tbaa !202
-  %.not118.not = icmp ne i8 %i.am, 48             ; 3 uses
-  br i1 %.not118.not, label %.critedge, label %_ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit
+  %.not121 = icmp eq i8 %i.am, 48
+  br i1 %.not121, label %_ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit, label %.critedge.loopexit.split.loop.exit118
 
 _ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit: ; preds = %.lr.ph
-  %4 = add nsw i32 %.188, -1                      ; 2 uses
-  %.not95 = icmp eq i32 %4, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %4 = and i64 %indvars.iv.next, 4294967295
+  %.not95 = icmp eq i64 %4, 0
   br i1 %.not95, label %.critedge, label %.lr.ph, !llvm.loop !957
 
-.critedge:                                        ; preds = %.lr.ph, %_ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit, %_ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit.preheader
-  %.1.lcssa = phi i32 [ 0, %_ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit.preheader ], [ 0, %_ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit ], [ %.188, %.lr.ph ] ; 4 uses
-  %.lcssa = phi i1 [ false, %_ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit.preheader ], [ %.not118.not, %_ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit ], [ %.not118.not, %.lr.ph ]
+.critedge.loopexit.split.loop.exit118:            ; preds = %.lr.ph
+  %5 = trunc nuw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %_ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit, %.critedge.loopexit.split.loop.exit118, %_ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit.preheader
+  %.1.lcssa = phi i32 [ 0, %_ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit.preheader ], [ %5, %.critedge.loopexit.split.loop.exit118 ], [ 0, %_ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit ] ; 4 uses
+  %.lcssa = phi i1 [ false, %_ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit.preheader ], [ true, %.critedge.loopexit.split.loop.exit118 ], [ false, %_ZN3fmt3v116detail13format_base2eIcoEEPT_iS4_T0_ib.exit ]
   %i.an = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 27 uses
   %i.ao = load i64, ptr %i.an, align 8, !tbaa !270 ; 2 uses
   %i.ap = add i64 %i.ao, 1                        ; 3 uses
@@ -625,24 +633,32 @@ bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
 
 _ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit.preheader: ; preds = %.split.i.i
   %.not92 = icmp eq i32 %.032, 0
-  br i1 %.not92, label %.critedge, label %.lr.ph
+  br i1 %.not92, label %.critedge, label %.lr.ph.preheader
 
-.lr.ph:                                           ; preds = %_ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit.preheader, %_ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit
-  %.186 = phi i32 [ %4, %_ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit ], [ %.032, %_ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit.preheader ] ; 3 uses
-  %3 = zext nneg i32 %.186 to i64
-  %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 %3
+.lr.ph.preheader:                                 ; preds = %_ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit.preheader
+  %3 = zext nneg i32 %.032 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit
+  %indvars.iv = phi i64 [ %3, %.lr.ph.preheader ], [ %indvars.iv.next, %_ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit ] ; 3 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv
   %i.ag = load i8, ptr %i.af, align 1, !tbaa !202
-  %.not118.not = icmp ne i8 %i.ag, 48             ; 3 uses
-  br i1 %.not118.not, label %.critedge, label %_ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit
+  %.not121 = icmp eq i8 %i.ag, 48
+  br i1 %.not121, label %_ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit, label %.critedge.loopexit.split.loop.exit118
 
 _ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit: ; preds = %.lr.ph
-  %4 = add nsw i32 %.186, -1                      ; 2 uses
-  %.not93 = icmp eq i32 %4, 0
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 2 uses
+  %4 = and i64 %indvars.iv.next, 4294967295
+  %.not93 = icmp eq i64 %4, 0
   br i1 %.not93, label %.critedge, label %.lr.ph, !llvm.loop !1139
 
-.critedge:                                        ; preds = %.lr.ph, %_ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit, %_ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit.preheader
-  %.1.lcssa = phi i32 [ 0, %_ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit.preheader ], [ 0, %_ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit ], [ %.186, %.lr.ph ] ; 4 uses
-  %.lcssa = phi i1 [ false, %_ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit.preheader ], [ %.not118.not, %_ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit ], [ %.not118.not, %.lr.ph ]
+.critedge.loopexit.split.loop.exit118:            ; preds = %.lr.ph
+  %5 = trunc nuw i64 %indvars.iv to i32
+  br label %.critedge
+
+.critedge:                                        ; preds = %_ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit, %.critedge.loopexit.split.loop.exit118, %_ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit.preheader
+  %.1.lcssa = phi i32 [ 0, %_ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit.preheader ], [ %5, %.critedge.loopexit.split.loop.exit118 ], [ 0, %_ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit ] ; 4 uses
+  %.lcssa = phi i1 [ false, %_ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit.preheader ], [ true, %.critedge.loopexit.split.loop.exit118 ], [ false, %_ZN3fmt3v116detail13format_base2eIcmEEPT_iS4_T0_ib.exit ]
   %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 27 uses
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !270 ; 2 uses
   %i.aj = add i64 %i.ai, 1                        ; 3 uses

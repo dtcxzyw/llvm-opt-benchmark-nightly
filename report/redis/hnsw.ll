@@ -205,17 +205,20 @@ bb.ai:                                            ; preds = %bb.ah
   store i32 0, ptr %i.kb, align 4, !tbaa !54
   %i.kc = load i32, ptr %1, align 8, !tbaa !25    ; 2 uses
   %i.kd = icmp sgt i32 %i.kc, -1
-  br i1 %i.kd, label %.lr.ph139.a, label %thread-pre-split.thread
+  br i1 %i.kd, label %.lr.ph139, label %thread-pre-split.thread
+
+.lr.ph139:                                        ; preds = %bb.ai
+  %2 = zext nneg i32 %i.kc to i64
+  br label %.lr.ph139.a
 
 bb.aj:                                            ; preds = %.lr.ph139.a
-  %2 = add nsw i32 %.077137, -1
-  %i.ke = icmp sgt i32 %.077137, 0
+  %indvars.iv.next163 = add nsw i64 %indvars.iv162, -1
+  %i.ke = icmp sgt i64 %indvars.iv162, 0
   br i1 %i.ke, label %.lr.ph139.a, label %thread-pre-split.thread, !llvm.loop !198
 
-.lr.ph139.a:                                      ; preds = %bb.ai, %bb.aj
-  %.077137 = phi i32 [ %2, %bb.aj ], [ %i.kc, %bb.ai ] ; 3 uses
-  %3 = zext nneg i32 %.077137 to i64
-  %i.kf = getelementptr inbounds nuw [24 x i8], ptr %i.e, i64 %3 ; 2 uses
+.lr.ph139.a:                                      ; preds = %.lr.ph139, %bb.aj
+  %indvars.iv162 = phi i64 [ %2, %.lr.ph139 ], [ %indvars.iv.next163, %bb.aj ] ; 3 uses
+  %i.kf = getelementptr inbounds nuw [24 x i8], ptr %i.e, i64 %indvars.iv162 ; 2 uses
   %i.kg = getelementptr inbounds nuw i8, ptr %i.kf, i64 8
   %i.kh = load i32, ptr %i.kg, align 8, !tbaa !63
   %.not91 = icmp eq i32 %i.kh, 0

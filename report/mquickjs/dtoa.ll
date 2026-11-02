@@ -202,20 +202,24 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph.i56
 mp_div1.exit:                                     ; preds = %bb.f
   %i.as = trunc nuw i64 %i.ar to i32              ; 3 uses
   %i.at = icmp sgt i32 %i.af, 1
-  br i1 %i.at, label %.lr.ph.i59, label %mpb_renorm.exit
+  br i1 %i.at, label %.lr.ph.preheader.i, label %mpb_renorm.exit
 
-.lr.ph.i59:                                       ; preds = %mp_div1.exit, %bb.g
-  %5 = phi i32 [ %7, %bb.g ], [ %i.af, %mp_div1.exit ] ; 3 uses
-  %6 = zext nneg i32 %5 to i64
-  %i.au = getelementptr [4 x i8], ptr %1, i64 %6
+.lr.ph.preheader.i:                               ; preds = %mp_div1.exit
+  %5 = zext nneg i32 %i.af to i64
+  br label %.lr.ph.i59
+
+.lr.ph.i59:                                       ; preds = %bb.g, %.lr.ph.preheader.i
+  %indvars.iv.i60 = phi i64 [ %5, %.lr.ph.preheader.i ], [ %indvars.iv.next.i61, %bb.g ] ; 3 uses
+  %i.au = getelementptr [4 x i8], ptr %1, i64 %indvars.iv.i60
   %i.av = load i32, ptr %i.au, align 4, !tbaa !19
   %i.aw = icmp eq i32 %i.av, 0
   br i1 %i.aw, label %bb.g, label %mpb_renorm.exit
 
 bb.g:                                             ; preds = %.lr.ph.i59
-  %7 = add nsw i32 %5, -1                         ; 2 uses
-  store i32 %7, ptr %1, align 4, !tbaa !19
-  %i.ax = icmp sgt i32 %5, 2
+  %indvars.iv.next.i61 = add nsw i64 %indvars.iv.i60, -1 ; 2 uses
+  %6 = trunc nuw nsw i64 %indvars.iv.next.i61 to i32
+  store i32 %6, ptr %1, align 4, !tbaa !19
+  %i.ax = icmp sgt i64 %indvars.iv.i60, 2
   br i1 %i.ax, label %.lr.ph.i59, label %mpb_renorm.exit, !llvm.loop !3
 
 mpb_renorm.exit:                                  ; preds = %.lr.ph.i59, %bb.g, %bb.e, %mp_div1.exit
@@ -474,20 +478,24 @@ pow_ui_inv.exit:                                  ; preds = %bb.p, %bb.o, %bb.m
   %i.bq = or i32 %i.bp, %.05894                   ; 2 uses
   %.pr.i = load i32, ptr %0, align 4, !tbaa !19   ; 2 uses
   %i.br = icmp sgt i32 %.pr.i, 1
-  br i1 %i.br, label %.lr.ph.i82, label %mpb_renorm.exit
+  br i1 %i.br, label %.lr.ph.preheader.i, label %mpb_renorm.exit
 
-.lr.ph.i82:                                       ; preds = %pow_ui_inv.exit, %bb.q
-  %6 = phi i32 [ %8, %bb.q ], [ %.pr.i, %pow_ui_inv.exit ] ; 3 uses
-  %7 = zext nneg i32 %6 to i64
-  %i.bs = getelementptr [4 x i8], ptr %0, i64 %7
+.lr.ph.preheader.i:                               ; preds = %pow_ui_inv.exit
+  %6 = zext nneg i32 %.pr.i to i64
+  br label %.lr.ph.i82
+
+.lr.ph.i82:                                       ; preds = %bb.q, %.lr.ph.preheader.i
+  %indvars.iv.i83 = phi i64 [ %6, %.lr.ph.preheader.i ], [ %indvars.iv.next.i84, %bb.q ] ; 3 uses
+  %i.bs = getelementptr [4 x i8], ptr %0, i64 %indvars.iv.i83
   %i.bt = load i32, ptr %i.bs, align 4, !tbaa !19
   %i.bu = icmp eq i32 %i.bt, 0
   br i1 %i.bu, label %bb.q, label %mpb_renorm.exit
 
 bb.q:                                             ; preds = %.lr.ph.i82
-  %8 = add nsw i32 %6, -1                         ; 2 uses
-  store i32 %8, ptr %0, align 4, !tbaa !19
-  %i.bv = icmp sgt i32 %6, 2
+  %indvars.iv.next.i84 = add nsw i64 %indvars.iv.i83, -1 ; 2 uses
+  %7 = trunc nuw nsw i64 %indvars.iv.next.i84 to i32
+  store i32 %7, ptr %0, align 4, !tbaa !19
+  %i.bv = icmp sgt i64 %indvars.iv.i83, 2
   br i1 %i.bv, label %.lr.ph.i82, label %mpb_renorm.exit, !llvm.loop !3
 
 mpb_renorm.exit:                                  ; preds = %.lr.ph.i82, %bb.q, %pow_ui_inv.exit
@@ -539,20 +547,24 @@ bb.d:                                             ; preds = %bb.c
   %i.n = add nsw i32 %i.m, 1                      ; 2 uses
   store i32 %i.n, ptr %0, align 4, !tbaa !19
   %i.o = icmp sgt i32 %i.m, 0
-  br i1 %i.o, label %.lr.ph.i, label %mpb_renorm.exit
+  br i1 %i.o, label %.lr.ph.preheader.i, label %mpb_renorm.exit
 
-.lr.ph.i:                                         ; preds = %bb.d, %bb.e
-  %3 = phi i32 [ %5, %bb.e ], [ %i.n, %bb.d ]     ; 3 uses
-  %4 = zext nneg i32 %3 to i64
-  %i.p = getelementptr [4 x i8], ptr %0, i64 %4
+.lr.ph.preheader.i:                               ; preds = %bb.d
+  %3 = zext nneg i32 %i.n to i64
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %bb.e, %.lr.ph.preheader.i
+  %indvars.iv.i = phi i64 [ %3, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.e ] ; 3 uses
+  %i.p = getelementptr [4 x i8], ptr %0, i64 %indvars.iv.i
   %i.q = load i32, ptr %i.p, align 4, !tbaa !19
   %i.r = icmp eq i32 %i.q, 0
   br i1 %i.r, label %bb.e, label %mpb_renorm.exit
 
 bb.e:                                             ; preds = %.lr.ph.i
-  %5 = add nsw i32 %3, -1                         ; 2 uses
-  store i32 %5, ptr %0, align 4, !tbaa !19
-  %i.s = icmp sgt i32 %3, 2
+  %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 2 uses
+  %4 = trunc nuw nsw i64 %indvars.iv.next.i to i32
+  store i32 %4, ptr %0, align 4, !tbaa !19
+  %i.s = icmp sgt i64 %indvars.iv.i, 2
   br i1 %i.s, label %.lr.ph.i, label %mpb_renorm.exit, !llvm.loop !3
 
 mpb_renorm.exit:                                  ; preds = %bb.e, %.lr.ph.i, %bb.d, %bb.c
@@ -719,33 +731,43 @@ bb.q:                                             ; preds = %.lr.ph128, %bb.q
   br i1 %i.br, label %.lr.ph.i107, label %mp_shr.exit, !llvm.loop !33
 
 mp_shr.exit:                                      ; preds = %.lr.ph.i107
-  %.pr.i108.pr = load i32, ptr %0, align 4, !tbaa !19 ; 3 uses
+  %.pr.i108.pr = load i32, ptr %0, align 4, !tbaa !19 ; 4 uses
   %i.bs = icmp sgt i32 %.pr.i108.pr, 1
   br i1 %i.bs, label %.lr.ph.i109, label %mpb_renorm.exit110
 
-.lr.ph.i109:                                      ; preds = %mp_shr.exit, %bb.r
-  %6 = phi i32 [ %7, %bb.r ], [ %.pr.i108.pr, %mp_shr.exit ] ; 4 uses
-  %i.bt = zext nneg i32 %6 to i64
+.lr.ph.i109:                                      ; preds = %mp_shr.exit
+  %i.bt = zext nneg i32 %.pr.i108.pr to i64       ; 2 uses
   %i.bu = getelementptr [4 x i8], ptr %0, i64 %i.bt
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !19
   %i.bw = icmp eq i32 %i.bv, 0
   br i1 %i.bw, label %bb.r, label %mpb_renorm.exit110
 
-bb.r:                                             ; preds = %.lr.ph.i109
-  %7 = add nsw i32 %6, -1                         ; 3 uses
-  store i32 %7, ptr %0, align 4, !tbaa !19
-  %i.bx = icmp sgt i32 %6, 2
-  br i1 %i.bx, label %.lr.ph.i109, label %mpb_renorm.exit110, !llvm.loop !3
+.lr.ph.i110:                                      ; preds = %bb.r
+  %5 = getelementptr [4 x i8], ptr %0, i64 %indvars.iv.next.i112
+  %6 = load i32, ptr %5, align 4, !tbaa !19
+  %7 = icmp eq i32 %6, 0
+  br i1 %7, label %bb.r, label %mpb_renorm.exit110, !llvm.loop !3
 
-mpb_renorm.exit110:                               ; preds = %bb.r, %.lr.ph.i109, %bb.p, %mp_shr.exit, %.loopexit
-  %8 = phi i32 [ 0, %bb.p ], [ %.pr.i108.pr, %mp_shr.exit ], [ %i.bm, %.loopexit ], [ %7, %bb.r ], [ %6, %.lr.ph.i109 ] ; 3 uses
+bb.r:                                             ; preds = %.lr.ph.i109, %.lr.ph.i110
+  %indvars.iv.i111168 = phi i64 [ %indvars.iv.next.i112, %.lr.ph.i110 ], [ %i.bt, %.lr.ph.i109 ] ; 2 uses
+  %indvars.iv.next.i112 = add nsw i64 %indvars.iv.i111168, -1 ; 3 uses
+  %8 = trunc nuw nsw i64 %indvars.iv.next.i112 to i32 ; 3 uses
+  store i32 %8, ptr %0, align 4, !tbaa !19
+  %i.bx = icmp sgt i64 %indvars.iv.i111168, 2
+  br i1 %i.bx, label %.lr.ph.i110, label %.mpb_renorm.exit113.loopexit_crit_edge, !llvm.loop !3
+
+.mpb_renorm.exit113.loopexit_crit_edge:           ; preds = %bb.r
+  br label %mpb_renorm.exit110, !llvm.loop !3
+
+mpb_renorm.exit110:                               ; preds = %.lr.ph.i110, %.lr.ph.i109, %.mpb_renorm.exit113.loopexit_crit_edge, %bb.p, %mp_shr.exit, %.loopexit
+  %9 = phi i32 [ 0, %bb.p ], [ %.pr.i108.pr, %mp_shr.exit ], [ %i.bm, %.loopexit ], [ %.pr.i108.pr, %.lr.ph.i109 ], [ %8, %.mpb_renorm.exit113.loopexit_crit_edge ], [ %8, %.lr.ph.i110 ] ; 3 uses
   %.not100 = icmp eq i32 %.0, 0
   br i1 %.not100, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %mpb_renorm.exit110
   %i.by = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
-  %i.bz = sext i32 %8 to i64                      ; 2 uses
-  %i.ca = icmp eq i32 %8, 0
+  %i.bz = sext i32 %9 to i64                      ; 2 uses
+  %i.ca = icmp eq i32 %9, 0
   br i1 %i.ca, label %mp_add_ui.exit.thread, label %.lr.ph.i111
 
 .lr.ph.i111:                                      ; preds = %bb.s, %.lr.ph.i111
@@ -764,7 +786,7 @@ mp_add_ui.exit:                                   ; preds = %.lr.ph.i111
   br i1 %i.ce, label %mp_add_ui.exit.thread, label %bb.t
 
 mp_add_ui.exit.thread:                            ; preds = %bb.s, %mp_add_ui.exit
-  %i.ch = add nsw i32 %8, 1
+  %i.ch = add nsw i32 %9, 1
   store i32 %i.ch, ptr %0, align 4, !tbaa !19
   %i.ci = getelementptr inbounds [4 x i8], ptr %i.by, i64 %i.bz
   store i32 1, ptr %i.ci, align 4, !tbaa !19
@@ -1167,20 +1189,24 @@ bb.h:                                             ; preds = %mp_mul1.exit, %._cr
   %i.y = add nsw i32 %i.x, 1                      ; 2 uses
   store i32 %i.y, ptr %0, align 4, !tbaa !19
   %i.z = icmp sgt i32 %i.x, 0
-  br i1 %i.z, label %.lr.ph.i23, label %mpb_renorm.exit
+  br i1 %i.z, label %.lr.ph.preheader.i, label %mpb_renorm.exit
 
-.lr.ph.i23:                                       ; preds = %bb.h, %bb.i
-  %3 = phi i32 [ %5, %bb.i ], [ %i.y, %bb.h ]     ; 3 uses
-  %4 = zext nneg i32 %3 to i64
-  %i.aa = getelementptr [4 x i8], ptr %0, i64 %4
+.lr.ph.preheader.i:                               ; preds = %bb.h
+  %3 = zext nneg i32 %i.y to i64
+  br label %.lr.ph.i23
+
+.lr.ph.i23:                                       ; preds = %bb.i, %.lr.ph.preheader.i
+  %indvars.iv.i24 = phi i64 [ %3, %.lr.ph.preheader.i ], [ %indvars.iv.next.i25, %bb.i ] ; 3 uses
+  %i.aa = getelementptr [4 x i8], ptr %0, i64 %indvars.iv.i24
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !19
   %i.ac = icmp eq i32 %i.ab, 0
   br i1 %i.ac, label %bb.i, label %mpb_renorm.exit
 
 bb.i:                                             ; preds = %.lr.ph.i23
-  %5 = add nsw i32 %3, -1                         ; 2 uses
-  store i32 %5, ptr %0, align 4, !tbaa !19
-  %i.ad = icmp sgt i32 %3, 2
+  %indvars.iv.next.i25 = add nsw i64 %indvars.iv.i24, -1 ; 2 uses
+  %4 = trunc nuw nsw i64 %indvars.iv.next.i25 to i32
+  store i32 %4, ptr %0, align 4, !tbaa !19
+  %i.ad = icmp sgt i64 %indvars.iv.i24, 2
   br i1 %i.ad, label %.lr.ph.i23, label %mpb_renorm.exit, !llvm.loop !3
 
 mpb_renorm.exit:                                  ; preds = %bb.i, %.lr.ph.i23, %bb.h, %bb.c
