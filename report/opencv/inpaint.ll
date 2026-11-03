@@ -204,8 +204,12 @@ bb.ady:                                           ; preds = %bb.adx
   %i.fqa = call noundef float @llvm.fmuladd.f32(float %i.fpz, float %i.fpz, float %i.foy) ; 5 uses
   %i.fqb = call nnan float @llvm.fmuladd.f32(float %i.fqa, float %i.fqa, float 1.000000e+00)
   %i.fqc = fdiv nnan float 1.000000e+00, %i.fqb   ; 3 uses
-  %i.fqd = getelementptr inbounds nuw i8, ptr %.sink.i512.i, i64 %indvars.iv.i1224 ; 3 uses
-  %i.fqe = getelementptr inbounds nuw i8, ptr %i.fpt, i64 1 ; 3 uses
+  %i.fqd = getelementptr inbounds nuw i8, ptr %.sink.i512.i, i64 %indvars.iv.i1224
+  %80 = load i8, ptr %i.fqd, align 1, !tbaa !21
+  %.not428.i = icmp eq i8 %80, 2                  ; 3 uses
+  %i.fqe = getelementptr inbounds nuw i8, ptr %i.fpt, i64 1
+  %81 = load i8, ptr %i.fqe, align 1, !tbaa !21
+  %.not431.i = icmp eq i8 %81, 2                  ; 3 uses
   %i.fqf = load i32, ptr %i.fgc, align 4, !tbaa !148
   %i.fqg = icmp slt i32 %i.fqf, 2                 ; 22 uses
   %i.fqh = load ptr, ptr %i.fgd, align 8, !tbaa !149 ; 22 uses
@@ -214,13 +218,11 @@ bb.ady:                                           ; preds = %bb.adx
   %.sink.idx.i555.i = select i1 %i.fqg, i64 0, i64 %i.fqj
   %.sink.i556.i = getelementptr inbounds nuw i8, ptr %i.fqh, i64 %.sink.idx.i555.i
   %i.fqk = getelementptr inbounds [3 x i8], ptr %.sink.i556.i, i64 %i.fpm ; 3 uses
-  %gep1982 = getelementptr i8, ptr %invariant.gep1981, i64 %indvars.iv.i1224 ; 3 uses
-  %i.fql = getelementptr inbounds i8, ptr %.sink.i510.i, i64 %i.fpm ; 3 uses
+  %gep1982 = getelementptr i8, ptr %invariant.gep1981, i64 %indvars.iv.i1224
+  %i.fql = getelementptr inbounds i8, ptr %.sink.i510.i, i64 %i.fpm
   %i.fqm = sext i1 %i.fpq to i64
   %i.fqn = add nsw i64 %indvars.iv.i1224, %i.fqm  ; 3 uses
-  %80 = load i8, ptr %i.fqd, align 1, !tbaa !21   ; 2 uses
-  %.not428.i = icmp eq i8 %80, 2
-  %i.fqo = load i8, ptr %gep1982, align 1, !tbaa !21 ; 2 uses
+  %i.fqo = load i8, ptr %gep1982, align 1, !tbaa !21
   %.not429.i = icmp eq i8 %i.fqo, 2               ; 2 uses
   br i1 %.not428.i, label %bb.aec, label %bb.adz
 
@@ -282,9 +284,8 @@ bb.aed:                                           ; preds = %bb.aec
   br label %bb.aee
 
 bb.aee:                                           ; preds = %bb.aed, %bb.aec, %bb.aeb, %bb.aea
+  %.not429.2.i = phi i1 [ false, %bb.aea ], [ false, %bb.aed ], [ true, %bb.aeb ], [ true, %bb.aec ] ; 4 uses
   %.sroa.0671.0.i = phi float [ %i.frg, %bb.aea ], [ %i.fru, %bb.aed ], [ %i.fri, %bb.aeb ], [ 0.000000e+00, %bb.aec ] ; 3 uses
-  %81 = load i8, ptr %i.fqe, align 1, !tbaa !21
-  %.not431.i = icmp eq i8 %81, 2
   %i.frv = load i8, ptr %i.fql, align 1, !tbaa !21
   %.not432.i = icmp eq i8 %i.frv, 2               ; 2 uses
   br i1 %.not431.i, label %bb.aei, label %bb.aef
@@ -338,6 +339,7 @@ bb.aej:                                           ; preds = %bb.aei
   br label %bb.aek
 
 bb.aek:                                           ; preds = %bb.aej, %bb.aei, %bb.aeh, %bb.aeg
+  %.not432.2.i = phi i1 [ false, %bb.aeg ], [ false, %bb.aej ], [ true, %bb.aeh ], [ true, %bb.aei ] ; 4 uses
   %.sroa.12672.0.i = phi float [ %i.fsl, %bb.aeg ], [ %i.fsy, %bb.aej ], [ %i.fsn, %bb.aeh ], [ 0.000000e+00, %bb.aei ] ; 3 uses
   %i.fsz = fneg float %.sroa.0671.0.i
   %i.fta = fmul float %.sroa.12672.0.i, %i.fox
@@ -351,25 +353,19 @@ bb.ael:                                           ; preds = %bb.aek
   %i.ftf = fmul float %.sroa.12672.0.i, %.sroa.12672.0.i
   %i.ftg = call float @llvm.fmuladd.f32(float %.sroa.0671.0.i, float %.sroa.0671.0.i, float %i.ftf)
   %i.fth = fmul float %i.fqa, %i.ftg
-  %i.fti = call noundef float @sqrtf(float noundef %i.fth) #20
+  %i.fti = call float @llvm.sqrt.f32(float %i.fth)
   %i.ftj = fdiv float %i.ftb, %i.fti
   %i.ftk = call float @llvm.fabs.f32(float %i.ftj)
-  %.pre798.i = load i8, ptr %i.fqd, align 1, !tbaa !21
-  %.pre2119 = load i8, ptr %gep1982, align 1, !tbaa !21
   br label %bb.aem
 
 bb.aem:                                           ; preds = %bb.ael, %bb.aek
-  %82 = phi i8 [ %.pre2119, %bb.ael ], [ %i.fqo, %bb.aek ] ; 2 uses
-  %83 = phi i8 [ %.pre798.i, %bb.ael ], [ %80, %bb.aek ] ; 2 uses
   %.0390.i = phi float [ %i.ftk, %bb.ael ], [ f0x358637BD, %bb.aek ]
   %i.ftl = fmul float %i.fqc, %.0390.i            ; 2 uses
   %i.ftm = load i8, ptr %i.fqk, align 1, !tbaa !21
   %i.ftn = uitofp i8 %i.ftm to float
   %i.fto = call float @llvm.fmuladd.f32(float %i.ftl, float %i.ftn, float %.sroa.0789.2.i)
   %i.ftp = fadd float %.sroa.0.2.i1223, %i.ftl
-  %.not428.1.i = icmp eq i8 %83, 2
-  %.not429.1.i = icmp eq i8 %82, 2                ; 2 uses
-  br i1 %.not428.1.i, label %bb.aeq, label %bb.aen
+  br i1 %.not428.i, label %bb.aeq, label %bb.aen
 
 bb.aen:                                           ; preds = %bb.aem
   %i.ftq = mul i64 %i.fqi, %i.fpd
@@ -388,7 +384,7 @@ bb.aen:                                           ; preds = %bb.aem
   %i.ftz = zext i8 %i.fty to i32                  ; 2 uses
   %i.fua = sub nsw i32 %i.ftu, %i.ftz
   %i.fub = call i32 @llvm.abs.i32(i32 %i.fua, i1 true) ; 2 uses
-  br i1 %.not429.1.i, label %bb.aep, label %bb.aeo
+  br i1 %.not429.2.i, label %bb.aep, label %bb.aeo
 
 bb.aeo:                                           ; preds = %bb.aen
   %i.fuc = mul i64 %i.fqi, %i.fpg
@@ -410,7 +406,7 @@ bb.aep:                                           ; preds = %bb.aen
   br label %bb.aes
 
 bb.aeq:                                           ; preds = %bb.aem
-  br i1 %.not429.1.i, label %bb.aes, label %bb.aer
+  br i1 %.not429.2.i, label %bb.aes, label %bb.aer
 
 bb.aer:                                           ; preds = %bb.aeq
   %i.fun = mul i64 %i.fqi, %i.fpe
@@ -435,11 +431,7 @@ bb.aer:                                           ; preds = %bb.aeq
 
 bb.aes:                                           ; preds = %bb.aer, %bb.aeq, %bb.aep, %bb.aeo
   %.sroa.0671.0.1.i = phi float [ %i.fuk, %bb.aeo ], [ %i.fva, %bb.aer ], [ %i.fum, %bb.aep ], [ 0.000000e+00, %bb.aeq ] ; 3 uses
-  %84 = load i8, ptr %i.fqe, align 1, !tbaa !21
-  %.not431.1.i = icmp eq i8 %84, 2
-  %85 = load i8, ptr %i.fql, align 1, !tbaa !21
-  %.not432.1.i = icmp eq i8 %85, 2                ; 2 uses
-  br i1 %.not431.1.i, label %bb.aew, label %bb.aet
+  br i1 %.not431.i, label %bb.aew, label %bb.aet
 
 bb.aet:                                           ; preds = %bb.aes
   %i.fvb = mul i64 %i.fqi, %i.fph
@@ -455,7 +447,7 @@ bb.aet:                                           ; preds = %bb.aes
   %i.fvj = zext i8 %i.fvi to i32                  ; 2 uses
   %i.fvk = sub nsw i32 %i.fvf, %i.fvj
   %i.fvl = call i32 @llvm.abs.i32(i32 %i.fvk, i1 true) ; 2 uses
-  br i1 %.not432.1.i, label %bb.aev, label %bb.aeu
+  br i1 %.not432.2.i, label %bb.aev, label %bb.aeu
 
 bb.aeu:                                           ; preds = %bb.aet
   %i.fvm = getelementptr i8, ptr %i.fvg, i64 -2
@@ -473,7 +465,7 @@ bb.aev:                                           ; preds = %bb.aet
   br label %bb.aey
 
 bb.aew:                                           ; preds = %bb.aes
-  br i1 %.not432.1.i, label %bb.aey, label %bb.aex
+  br i1 %.not432.2.i, label %bb.aey, label %bb.aex
 
 bb.aex:                                           ; preds = %bb.aew
   %i.fvv = mul i64 %i.fqi, %i.fph
@@ -506,16 +498,12 @@ bb.aez:                                           ; preds = %bb.aey
   %i.fwn = fmul float %.sroa.12672.0.1.i, %.sroa.12672.0.1.i
   %i.fwo = call float @llvm.fmuladd.f32(float %.sroa.0671.0.1.i, float %.sroa.0671.0.1.i, float %i.fwn)
   %i.fwp = fmul float %i.fqa, %i.fwo
-  %i.fwq = call noundef float @sqrtf(float noundef %i.fwp) #20
+  %i.fwq = call float @llvm.sqrt.f32(float %i.fwp)
   %i.fwr = fdiv float %i.fwj, %i.fwq
   %i.fws = call float @llvm.fabs.f32(float %i.fwr)
-  %.pre799.i = load i8, ptr %i.fqd, align 1, !tbaa !21
-  %.pre2120 = load i8, ptr %gep1982, align 1, !tbaa !21
   br label %bb.afa
 
 bb.afa:                                           ; preds = %bb.aez, %bb.aey
-  %86 = phi i8 [ %.pre2120, %bb.aez ], [ %82, %bb.aey ]
-  %87 = phi i8 [ %.pre799.i, %bb.aez ], [ %83, %bb.aey ]
   %.0390.1.i = phi float [ %i.fws, %bb.aez ], [ f0x358637BD, %bb.aey ]
   %i.fwt = fmul float %i.fqc, %.0390.1.i          ; 2 uses
   %i.fwu = getelementptr inbounds nuw i8, ptr %i.fqk, i64 1
@@ -523,9 +511,7 @@ bb.afa:                                           ; preds = %bb.aez, %bb.aey
   %i.fww = uitofp i8 %i.fwv to float
   %i.fwx = call float @llvm.fmuladd.f32(float %i.fwt, float %i.fww, float %.sroa.6791.2.i)
   %i.fwy = fadd float %.sroa.6.2.i1222, %i.fwt
-  %.not428.2.i = icmp eq i8 %87, 2
-  %.not429.2.i = icmp eq i8 %86, 2                ; 2 uses
-  br i1 %.not428.2.i, label %bb.afe, label %bb.afb
+  br i1 %.not428.i, label %bb.afe, label %bb.afb
 
 bb.afb:                                           ; preds = %bb.afa
   %i.fwz = mul i64 %i.fqi, %i.fpd
@@ -591,11 +577,7 @@ bb.aff:                                           ; preds = %bb.afe
 
 bb.afg:                                           ; preds = %bb.aff, %bb.afe, %bb.afd, %bb.afc
   %.sroa.0671.0.2.i = phi float [ %i.fxt, %bb.afc ], [ %i.fyj, %bb.aff ], [ %i.fxv, %bb.afd ], [ 0.000000e+00, %bb.afe ] ; 3 uses
-  %88 = load i8, ptr %i.fqe, align 1, !tbaa !21
-  %.not431.2.i = icmp eq i8 %88, 2
-  %89 = load i8, ptr %i.fql, align 1, !tbaa !21
-  %.not432.2.i = icmp eq i8 %89, 2                ; 2 uses
-  br i1 %.not431.2.i, label %bb.afk, label %bb.afh
+  br i1 %.not431.i, label %bb.afk, label %bb.afh
 
 bb.afh:                                           ; preds = %bb.afg
   %i.fyk = mul i64 %i.fqi, %i.fph
@@ -662,7 +644,7 @@ bb.afn:                                           ; preds = %bb.afm
   %i.fzw = fmul float %.sroa.12672.0.2.i, %.sroa.12672.0.2.i
   %i.fzx = call float @llvm.fmuladd.f32(float %.sroa.0671.0.2.i, float %.sroa.0671.0.2.i, float %i.fzw)
   %i.fzy = fmul float %i.fqa, %i.fzx
-  %i.fzz = call noundef float @sqrtf(float noundef %i.fzy) #20
+  %i.fzz = call float @llvm.sqrt.f32(float %i.fzy)
   %i.gaa = fdiv float %i.fzs, %i.fzz
   %i.gab = call float @llvm.fabs.f32(float %i.gaa)
   br label %.loopexit.loopexit.i1233
@@ -1065,7 +1047,7 @@ bb.ahu:                                           ; preds = %bb.aht
   %i.glt = fmul float %.sroa.12.0.i, %.sroa.12.0.i
   %i.glu = call float @llvm.fmuladd.f32(float %.sroa.0668.0.i, float %.sroa.0668.0.i, float %i.glt)
   %i.glv = fmul float %i.ghw, %i.glu
-  %i.glw = call noundef float @sqrtf(float noundef %i.glv) #20
+  %i.glw = call float @llvm.sqrt.f32(float %i.glv)
   %i.glx = fdiv float %i.glp, %i.glw
   %i.gly = call float @llvm.fabs.f32(float %i.glx)
   br label %bb.ahv
@@ -1468,8 +1450,12 @@ bb.ajo:                                           ; preds = %bb.ajn
   %i.gyo = call noundef float @llvm.fmuladd.f32(float %i.gyn, float %i.gyn, float %i.gxm) ; 5 uses
   %i.gyp = call nnan float @llvm.fmuladd.f32(float %i.gyo, float %i.gyo, float 1.000000e+00)
   %i.gyq = fdiv nnan float 1.000000e+00, %i.gyp   ; 3 uses
-  %i.gyr = getelementptr inbounds nuw i8, ptr %.sink.i512.i1439, i64 %indvars.iv.i1422 ; 3 uses
-  %i.gys = getelementptr inbounds nuw i8, ptr %i.gyh, i64 1 ; 3 uses
+  %i.gyr = getelementptr inbounds nuw i8, ptr %.sink.i512.i1439, i64 %indvars.iv.i1422
+  %82 = load i8, ptr %i.gyr, align 1, !tbaa !21
+  %.not428.i1442 = icmp eq i8 %82, 2              ; 3 uses
+  %i.gys = getelementptr inbounds nuw i8, ptr %i.gyh, i64 1
+  %83 = load i8, ptr %i.gys, align 1, !tbaa !21
+  %.not431.i1444 = icmp eq i8 %83, 2              ; 3 uses
   %i.gyt = load i32, ptr %i.goq, align 4, !tbaa !148
   %i.gyu = icmp slt i32 %i.gyt, 2                 ; 22 uses
   %i.gyv = load ptr, ptr %i.gor, align 8, !tbaa !149 ; 22 uses
@@ -1478,15 +1464,13 @@ bb.ajo:                                           ; preds = %bb.ajn
   %.sink.idx.i555.i1441 = select i1 %i.gyu, i64 0, i64 %i.gyx
   %.sink.i556.i1442 = getelementptr inbounds nuw i8, ptr %i.gyv, i64 %.sink.idx.i555.i1441
   %i.gyy = getelementptr inbounds [3 x i8], ptr %.sink.i556.i1442, i64 %i.gya ; 3 uses
-  %gep1980 = getelementptr i8, ptr %invariant.gep1979, i64 %indvars.iv.i1422 ; 3 uses
-  %i.gyz = getelementptr inbounds i8, ptr %.sink.i510.i1434, i64 %i.gya ; 3 uses
+  %gep1980 = getelementptr i8, ptr %invariant.gep1979, i64 %indvars.iv.i1422
+  %i.gyz = getelementptr inbounds i8, ptr %.sink.i510.i1434, i64 %i.gya
   %i.gza = sext i1 %i.gye to i64
   %i.gzb = add nsw i64 %indvars.iv.i1422, %i.gza  ; 3 uses
-  %90 = load i8, ptr %i.gyr, align 1, !tbaa !21   ; 2 uses
-  %.not428.i1445 = icmp eq i8 %90, 2
-  %i.gzc = load i8, ptr %gep1980, align 1, !tbaa !21 ; 2 uses
+  %i.gzc = load i8, ptr %gep1980, align 1, !tbaa !21
   %.not429.i1446 = icmp eq i8 %i.gzc, 2           ; 2 uses
-  br i1 %.not428.i1445, label %bb.ajs, label %bb.ajp
+  br i1 %.not428.i1442, label %bb.ajs, label %bb.ajp
 
 bb.ajp:                                           ; preds = %.preheader.i1437
   %i.gzd = mul i64 %i.gyw, %i.gxr
@@ -1546,12 +1530,11 @@ bb.ajt:                                           ; preds = %bb.ajs
   br label %bb.aju
 
 bb.aju:                                           ; preds = %bb.ajt, %bb.ajs, %bb.ajr, %bb.ajq
-  %.sroa.0671.0.i1453 = phi float [ %i.gzu, %bb.ajq ], [ %i.hai, %bb.ajt ], [ %i.gzw, %bb.ajr ], [ 0.000000e+00, %bb.ajs ] ; 3 uses
-  %91 = load i8, ptr %i.gys, align 1, !tbaa !21
-  %.not431.i1454 = icmp eq i8 %91, 2
+  %.not429.2.i1456 = phi i1 [ false, %bb.ajq ], [ false, %bb.ajt ], [ true, %bb.ajr ], [ true, %bb.ajs ] ; 4 uses
+  %.sroa.0671.0.i1457 = phi float [ %i.gzu, %bb.ajq ], [ %i.hai, %bb.ajt ], [ %i.gzw, %bb.ajr ], [ 0.000000e+00, %bb.ajs ] ; 3 uses
   %i.haj = load i8, ptr %i.gyz, align 1, !tbaa !21
   %.not432.i1455 = icmp eq i8 %i.haj, 2           ; 2 uses
-  br i1 %.not431.i1454, label %bb.ajy, label %bb.ajv
+  br i1 %.not431.i1444, label %bb.ajy, label %bb.ajv
 
 bb.ajv:                                           ; preds = %bb.aju
   %i.hak = mul i64 %i.gyw, %i.gxv
@@ -1602,8 +1585,9 @@ bb.ajz:                                           ; preds = %bb.ajy
   br label %bb.aka
 
 bb.aka:                                           ; preds = %bb.ajz, %bb.ajy, %bb.ajx, %bb.ajw
+  %.not432.2.i1461 = phi i1 [ false, %bb.ajw ], [ false, %bb.ajz ], [ true, %bb.ajx ], [ true, %bb.ajy ] ; 4 uses
   %.sroa.12672.0.i1458 = phi float [ %i.haz, %bb.ajw ], [ %i.hbm, %bb.ajz ], [ %i.hbb, %bb.ajx ], [ 0.000000e+00, %bb.ajy ] ; 3 uses
-  %i.hbn = fneg float %.sroa.0671.0.i1453
+  %i.hbn = fneg float %.sroa.0671.0.i1457
   %i.hbo = fmul float %.sroa.12672.0.i1458, %i.gxl
   %i.hbp = call noundef float @llvm.fmuladd.f32(float %i.gyn, float %i.hbn, float %i.hbo) ; 2 uses
   %i.hbq = call float @llvm.fabs.f32(float %i.hbp)
@@ -1613,27 +1597,21 @@ bb.aka:                                           ; preds = %bb.ajz, %bb.ajy, %b
 
 bb.akb:                                           ; preds = %bb.aka
   %i.hbt = fmul float %.sroa.12672.0.i1458, %.sroa.12672.0.i1458
-  %i.hbu = call float @llvm.fmuladd.f32(float %.sroa.0671.0.i1453, float %.sroa.0671.0.i1453, float %i.hbt)
+  %i.hbu = call float @llvm.fmuladd.f32(float %.sroa.0671.0.i1457, float %.sroa.0671.0.i1457, float %i.hbt)
   %i.hbv = fmul float %i.gyo, %i.hbu
-  %i.hbw = call noundef float @sqrtf(float noundef %i.hbv) #20
+  %i.hbw = call float @llvm.sqrt.f32(float %i.hbv)
   %i.hbx = fdiv float %i.hbp, %i.hbw
   %i.hby = call float @llvm.fabs.f32(float %i.hbx)
-  %.pre798.i1504 = load i8, ptr %i.gyr, align 1, !tbaa !21
-  %.pre2117 = load i8, ptr %gep1980, align 1, !tbaa !21
   br label %bb.akc
 
 bb.akc:                                           ; preds = %bb.akb, %bb.aka
-  %92 = phi i8 [ %.pre2117, %bb.akb ], [ %i.gzc, %bb.aka ] ; 2 uses
-  %93 = phi i8 [ %.pre798.i1504, %bb.akb ], [ %90, %bb.aka ] ; 2 uses
   %.0390.i1459 = phi float [ %i.hby, %bb.akb ], [ f0x358637BD, %bb.aka ]
   %i.hbz = fmul float %i.gyq, %.0390.i1459        ; 2 uses
   %i.hca = load i8, ptr %i.gyy, align 1, !tbaa !21
   %i.hcb = uitofp i8 %i.hca to float
   %i.hcc = call float @llvm.fmuladd.f32(float %i.hbz, float %i.hcb, float %.sroa.0789.2.i1416)
   %i.hcd = fadd float %.sroa.0.2.i1421, %i.hbz
-  %.not428.1.i1460 = icmp eq i8 %93, 2
-  %.not429.1.i1461 = icmp eq i8 %92, 2            ; 2 uses
-  br i1 %.not428.1.i1460, label %bb.akg, label %bb.akd
+  br i1 %.not428.i1442, label %bb.akg, label %bb.akd
 
 bb.akd:                                           ; preds = %bb.akc
   %i.hce = mul i64 %i.gyw, %i.gxr
@@ -1652,7 +1630,7 @@ bb.akd:                                           ; preds = %bb.akc
   %i.hcn = zext i8 %i.hcm to i32                  ; 2 uses
   %i.hco = sub nsw i32 %i.hci, %i.hcn
   %i.hcp = call i32 @llvm.abs.i32(i32 %i.hco, i1 true) ; 2 uses
-  br i1 %.not429.1.i1461, label %bb.akf, label %bb.ake
+  br i1 %.not429.2.i1456, label %bb.akf, label %bb.ake
 
 bb.ake:                                           ; preds = %bb.akd
   %i.hcq = mul i64 %i.gyw, %i.gxu
@@ -1674,7 +1652,7 @@ bb.akf:                                           ; preds = %bb.akd
   br label %bb.aki
 
 bb.akg:                                           ; preds = %bb.akc
-  br i1 %.not429.1.i1461, label %bb.aki, label %bb.akh
+  br i1 %.not429.2.i1456, label %bb.aki, label %bb.akh
 
 bb.akh:                                           ; preds = %bb.akg
   %i.hdb = mul i64 %i.gyw, %i.gxs
@@ -1699,11 +1677,7 @@ bb.akh:                                           ; preds = %bb.akg
 
 bb.aki:                                           ; preds = %bb.akh, %bb.akg, %bb.akf, %bb.ake
   %.sroa.0671.0.1.i1468 = phi float [ %i.hcy, %bb.ake ], [ %i.hdo, %bb.akh ], [ %i.hda, %bb.akf ], [ 0.000000e+00, %bb.akg ] ; 3 uses
-  %94 = load i8, ptr %i.gys, align 1, !tbaa !21
-  %.not431.1.i1469 = icmp eq i8 %94, 2
-  %95 = load i8, ptr %i.gyz, align 1, !tbaa !21
-  %.not432.1.i1470 = icmp eq i8 %95, 2            ; 2 uses
-  br i1 %.not431.1.i1469, label %bb.akm, label %bb.akj
+  br i1 %.not431.i1444, label %bb.akm, label %bb.akj
 
 bb.akj:                                           ; preds = %bb.aki
   %i.hdp = mul i64 %i.gyw, %i.gxv
@@ -1719,7 +1693,7 @@ bb.akj:                                           ; preds = %bb.aki
   %i.hdx = zext i8 %i.hdw to i32                  ; 2 uses
   %i.hdy = sub nsw i32 %i.hdt, %i.hdx
   %i.hdz = call i32 @llvm.abs.i32(i32 %i.hdy, i1 true) ; 2 uses
-  br i1 %.not432.1.i1470, label %bb.akl, label %bb.akk
+  br i1 %.not432.2.i1461, label %bb.akl, label %bb.akk
 
 bb.akk:                                           ; preds = %bb.akj
   %i.hea = getelementptr i8, ptr %i.hdu, i64 -2
@@ -1737,7 +1711,7 @@ bb.akl:                                           ; preds = %bb.akj
   br label %bb.ako
 
 bb.akm:                                           ; preds = %bb.aki
-  br i1 %.not432.1.i1470, label %bb.ako, label %bb.akn
+  br i1 %.not432.2.i1461, label %bb.ako, label %bb.akn
 
 bb.akn:                                           ; preds = %bb.akm
   %i.hej = mul i64 %i.gyw, %i.gxv
@@ -1770,16 +1744,12 @@ bb.akp:                                           ; preds = %bb.ako
   %i.hfb = fmul float %.sroa.12672.0.1.i1473, %.sroa.12672.0.1.i1473
   %i.hfc = call float @llvm.fmuladd.f32(float %.sroa.0671.0.1.i1468, float %.sroa.0671.0.1.i1468, float %i.hfb)
   %i.hfd = fmul float %i.gyo, %i.hfc
-  %i.hfe = call noundef float @sqrtf(float noundef %i.hfd) #20
+  %i.hfe = call float @llvm.sqrt.f32(float %i.hfd)
   %i.hff = fdiv float %i.hex, %i.hfe
   %i.hfg = call float @llvm.fabs.f32(float %i.hff)
-  %.pre799.i1497 = load i8, ptr %i.gyr, align 1, !tbaa !21
-  %.pre2118 = load i8, ptr %gep1980, align 1, !tbaa !21
   br label %bb.akq
 
 bb.akq:                                           ; preds = %bb.akp, %bb.ako
-  %96 = phi i8 [ %.pre2118, %bb.akp ], [ %92, %bb.ako ]
-  %97 = phi i8 [ %.pre799.i1497, %bb.akp ], [ %93, %bb.ako ]
   %.0390.1.i1474 = phi float [ %i.hfg, %bb.akp ], [ f0x358637BD, %bb.ako ]
   %i.hfh = fmul float %i.gyq, %.0390.1.i1474      ; 2 uses
   %i.hfi = getelementptr inbounds nuw i8, ptr %i.gyy, i64 1
@@ -1787,9 +1757,7 @@ bb.akq:                                           ; preds = %bb.akp, %bb.ako
   %i.hfk = uitofp i8 %i.hfj to float
   %i.hfl = call float @llvm.fmuladd.f32(float %i.hfh, float %i.hfk, float %.sroa.6791.2.i1417)
   %i.hfm = fadd float %.sroa.6.2.i1420, %i.hfh
-  %.not428.2.i1475 = icmp eq i8 %97, 2
-  %.not429.2.i1476 = icmp eq i8 %96, 2            ; 2 uses
-  br i1 %.not428.2.i1475, label %bb.aku, label %bb.akr
+  br i1 %.not428.i1442, label %bb.aku, label %bb.akr
 
 bb.akr:                                           ; preds = %bb.akq
   %i.hfn = mul i64 %i.gyw, %i.gxr
@@ -1808,7 +1776,7 @@ bb.akr:                                           ; preds = %bb.akq
   %i.hfw = zext i8 %i.hfv to i32                  ; 2 uses
   %i.hfx = sub nsw i32 %i.hfr, %i.hfw
   %i.hfy = call i32 @llvm.abs.i32(i32 %i.hfx, i1 true) ; 2 uses
-  br i1 %.not429.2.i1476, label %bb.akt, label %bb.aks
+  br i1 %.not429.2.i1456, label %bb.akt, label %bb.aks
 
 bb.aks:                                           ; preds = %bb.akr
   %i.hfz = mul i64 %i.gyw, %i.gxu
@@ -1830,7 +1798,7 @@ bb.akt:                                           ; preds = %bb.akr
   br label %bb.akw
 
 bb.aku:                                           ; preds = %bb.akq
-  br i1 %.not429.2.i1476, label %bb.akw, label %bb.akv
+  br i1 %.not429.2.i1456, label %bb.akw, label %bb.akv
 
 bb.akv:                                           ; preds = %bb.aku
   %i.hgk = mul i64 %i.gyw, %i.gxs
@@ -1855,11 +1823,7 @@ bb.akv:                                           ; preds = %bb.aku
 
 bb.akw:                                           ; preds = %bb.akv, %bb.aku, %bb.akt, %bb.aks
   %.sroa.0671.0.2.i1483 = phi float [ %i.hgh, %bb.aks ], [ %i.hgx, %bb.akv ], [ %i.hgj, %bb.akt ], [ 0.000000e+00, %bb.aku ] ; 3 uses
-  %98 = load i8, ptr %i.gys, align 1, !tbaa !21
-  %.not431.2.i1484 = icmp eq i8 %98, 2
-  %99 = load i8, ptr %i.gyz, align 1, !tbaa !21
-  %.not432.2.i1485 = icmp eq i8 %99, 2            ; 2 uses
-  br i1 %.not431.2.i1484, label %bb.ala, label %bb.akx
+  br i1 %.not431.i1444, label %bb.ala, label %bb.akx
 
 bb.akx:                                           ; preds = %bb.akw
   %i.hgy = mul i64 %i.gyw, %i.gxv
@@ -1875,7 +1839,7 @@ bb.akx:                                           ; preds = %bb.akw
   %i.hhg = zext i8 %i.hhf to i32                  ; 2 uses
   %i.hhh = sub nsw i32 %i.hhc, %i.hhg
   %i.hhi = call i32 @llvm.abs.i32(i32 %i.hhh, i1 true) ; 2 uses
-  br i1 %.not432.2.i1485, label %bb.akz, label %bb.aky
+  br i1 %.not432.2.i1461, label %bb.akz, label %bb.aky
 
 bb.aky:                                           ; preds = %bb.akx
   %i.hhj = getelementptr i8, ptr %i.hhd, i64 -1
@@ -1893,7 +1857,7 @@ bb.akz:                                           ; preds = %bb.akx
   br label %bb.alc
 
 bb.ala:                                           ; preds = %bb.akw
-  br i1 %.not432.2.i1485, label %bb.alc, label %bb.alb
+  br i1 %.not432.2.i1461, label %bb.alc, label %bb.alb
 
 bb.alb:                                           ; preds = %bb.ala
   %i.hhs = mul i64 %i.gyw, %i.gxv
@@ -1926,7 +1890,7 @@ bb.ald:                                           ; preds = %bb.alc
   %i.hik = fmul float %.sroa.12672.0.2.i1488, %.sroa.12672.0.2.i1488
   %i.hil = call float @llvm.fmuladd.f32(float %.sroa.0671.0.2.i1483, float %.sroa.0671.0.2.i1483, float %i.hik)
   %i.him = fmul float %i.gyo, %i.hil
-  %i.hin = call noundef float @sqrtf(float noundef %i.him) #20
+  %i.hin = call float @llvm.sqrt.f32(float %i.him)
   %i.hio = fdiv float %i.hig, %i.hin
   %i.hip = call float @llvm.fabs.f32(float %i.hio)
   br label %.loopexit.loopexit.i1489
@@ -2329,7 +2293,7 @@ bb.ank:                                           ; preds = %bb.anj
   %i.huh = fmul float %.sroa.12.0.i1330, %.sroa.12.0.i1330
   %i.hui = call float @llvm.fmuladd.f32(float %.sroa.0668.0.i1325, float %.sroa.0668.0.i1325, float %i.huh)
   %i.huj = fmul float %i.hqk, %i.hui
-  %i.huk = call noundef float @sqrtf(float noundef %i.huj) #20
+  %i.huk = call float @llvm.sqrt.f32(float %i.huj)
   %i.hul = fdiv float %i.hud, %i.huk
   %i.hum = call float @llvm.fabs.f32(float %i.hul)
   br label %bb.anl
@@ -2732,8 +2696,12 @@ bb.ape:                                           ; preds = %bb.apd
   %i.igz = call noundef float @llvm.fmuladd.f32(float %i.igy, float %i.igy, float %i.ifx) ; 5 uses
   %i.iha = call nnan float @llvm.fmuladd.f32(float %i.igz, float %i.igz, float 1.000000e+00)
   %i.ihb = fdiv nnan float 1.000000e+00, %i.iha   ; 3 uses
-  %i.ihc = getelementptr inbounds nuw i8, ptr %.sink.i512.i1717, i64 %indvars.iv.i1700 ; 3 uses
-  %i.ihd = getelementptr inbounds nuw i8, ptr %i.igs, i64 1 ; 3 uses
+  %i.ihc = getelementptr inbounds nuw i8, ptr %.sink.i512.i1717, i64 %indvars.iv.i1700
+  %84 = load i8, ptr %i.ihc, align 1, !tbaa !21
+  %.not428.i1716 = icmp eq i8 %84, 2              ; 3 uses
+  %i.ihd = getelementptr inbounds nuw i8, ptr %i.igs, i64 1
+  %85 = load i8, ptr %i.ihd, align 1, !tbaa !21
+  %.not431.i1718 = icmp eq i8 %85, 2              ; 3 uses
   %i.ihe = load i32, ptr %i.hxb, align 4, !tbaa !148
   %i.ihf = icmp slt i32 %i.ihe, 2                 ; 22 uses
   %i.ihg = load ptr, ptr %i.hxc, align 8, !tbaa !149 ; 22 uses
@@ -2742,15 +2710,13 @@ bb.ape:                                           ; preds = %bb.apd
   %.sink.idx.i555.i1719 = select i1 %i.ihf, i64 0, i64 %i.ihi
   %.sink.i556.i1720 = getelementptr inbounds nuw i8, ptr %i.ihg, i64 %.sink.idx.i555.i1719
   %i.ihj = getelementptr inbounds [3 x i8], ptr %.sink.i556.i1720, i64 %i.igl ; 3 uses
-  %gep = getelementptr i8, ptr %invariant.gep, i64 %indvars.iv.i1700 ; 3 uses
-  %i.ihk = getelementptr inbounds i8, ptr %.sink.i510.i1712, i64 %i.igl ; 3 uses
+  %gep = getelementptr i8, ptr %invariant.gep, i64 %indvars.iv.i1700
+  %i.ihk = getelementptr inbounds i8, ptr %.sink.i510.i1712, i64 %i.igl
   %i.ihl = sext i1 %i.igp to i64
   %i.ihm = add nsw i64 %indvars.iv.i1700, %i.ihl  ; 3 uses
-  %100 = load i8, ptr %i.ihc, align 1, !tbaa !21  ; 2 uses
-  %.not428.i1723 = icmp eq i8 %100, 2
-  %i.ihn = load i8, ptr %gep, align 1, !tbaa !21  ; 2 uses
+  %i.ihn = load i8, ptr %gep, align 1, !tbaa !21
   %.not429.i1724 = icmp eq i8 %i.ihn, 2           ; 2 uses
-  br i1 %.not428.i1723, label %bb.api, label %bb.apf
+  br i1 %.not428.i1716, label %bb.api, label %bb.apf
 
 bb.apf:                                           ; preds = %.preheader.i1715
   %i.iho = mul i64 %i.ihh, %i.igc
@@ -2810,12 +2776,11 @@ bb.apj:                                           ; preds = %bb.api
   br label %bb.apk
 
 bb.apk:                                           ; preds = %bb.apj, %bb.api, %bb.aph, %bb.apg
+  %.not429.2.i1730 = phi i1 [ false, %bb.apg ], [ false, %bb.apj ], [ true, %bb.aph ], [ true, %bb.api ] ; 4 uses
   %.sroa.0671.0.i1731 = phi float [ %i.iif, %bb.apg ], [ %i.iit, %bb.apj ], [ %i.iih, %bb.aph ], [ 0.000000e+00, %bb.api ] ; 3 uses
-  %101 = load i8, ptr %i.ihd, align 1, !tbaa !21
-  %.not431.i1732 = icmp eq i8 %101, 2
   %i.iiu = load i8, ptr %i.ihk, align 1, !tbaa !21
   %.not432.i1733 = icmp eq i8 %i.iiu, 2           ; 2 uses
-  br i1 %.not431.i1732, label %bb.apo, label %bb.apl
+  br i1 %.not431.i1718, label %bb.apo, label %bb.apl
 
 bb.apl:                                           ; preds = %bb.apk
   %i.iiv = mul i64 %i.ihh, %i.igg
@@ -2866,6 +2831,7 @@ bb.app:                                           ; preds = %bb.apo
   br label %bb.apq
 
 bb.apq:                                           ; preds = %bb.app, %bb.apo, %bb.apn, %bb.apm
+  %.not432.2.i1735 = phi i1 [ false, %bb.apm ], [ false, %bb.app ], [ true, %bb.apn ], [ true, %bb.apo ] ; 4 uses
   %.sroa.12672.0.i1736 = phi float [ %i.ijk, %bb.apm ], [ %i.ijx, %bb.app ], [ %i.ijm, %bb.apn ], [ 0.000000e+00, %bb.apo ] ; 3 uses
   %i.ijy = fneg float %.sroa.0671.0.i1731
   %i.ijz = fmul float %.sroa.12672.0.i1736, %i.ifw
@@ -2879,25 +2845,19 @@ bb.apr:                                           ; preds = %bb.apq
   %i.ike = fmul float %.sroa.12672.0.i1736, %.sroa.12672.0.i1736
   %i.ikf = call float @llvm.fmuladd.f32(float %.sroa.0671.0.i1731, float %.sroa.0671.0.i1731, float %i.ike)
   %i.ikg = fmul float %i.igz, %i.ikf
-  %i.ikh = call noundef float @sqrtf(float noundef %i.ikg) #20
+  %i.ikh = call float @llvm.sqrt.f32(float %i.ikg)
   %i.iki = fdiv float %i.ika, %i.ikh
   %i.ikj = call float @llvm.fabs.f32(float %i.iki)
-  %.pre798.i1782 = load i8, ptr %i.ihc, align 1, !tbaa !21
-  %.pre2115 = load i8, ptr %gep, align 1, !tbaa !21
   br label %bb.aps
 
 bb.aps:                                           ; preds = %bb.apr, %bb.apq
-  %102 = phi i8 [ %.pre2115, %bb.apr ], [ %i.ihn, %bb.apq ] ; 2 uses
-  %103 = phi i8 [ %.pre798.i1782, %bb.apr ], [ %100, %bb.apq ] ; 2 uses
   %.0390.i1737 = phi float [ %i.ikj, %bb.apr ], [ f0x358637BD, %bb.apq ]
   %i.ikk = fmul float %i.ihb, %.0390.i1737        ; 2 uses
   %i.ikl = load i8, ptr %i.ihj, align 1, !tbaa !21
   %i.ikm = uitofp i8 %i.ikl to float
   %i.ikn = call float @llvm.fmuladd.f32(float %i.ikk, float %i.ikm, float %.sroa.0789.2.i1694)
   %i.iko = fadd float %.sroa.0.2.i1699, %i.ikk
-  %.not428.1.i1738 = icmp eq i8 %103, 2
-  %.not429.1.i1739 = icmp eq i8 %102, 2           ; 2 uses
-  br i1 %.not428.1.i1738, label %bb.apw, label %bb.apt
+  br i1 %.not428.i1716, label %bb.apw, label %bb.apt
 
 bb.apt:                                           ; preds = %bb.aps
   %i.ikp = mul i64 %i.ihh, %i.igc
@@ -2916,7 +2876,7 @@ bb.apt:                                           ; preds = %bb.aps
   %i.iky = zext i8 %i.ikx to i32                  ; 2 uses
   %i.ikz = sub nsw i32 %i.ikt, %i.iky
   %i.ila = call i32 @llvm.abs.i32(i32 %i.ikz, i1 true) ; 2 uses
-  br i1 %.not429.1.i1739, label %bb.apv, label %bb.apu
+  br i1 %.not429.2.i1730, label %bb.apv, label %bb.apu
 
 bb.apu:                                           ; preds = %bb.apt
   %i.ilb = mul i64 %i.ihh, %i.igf
@@ -2938,7 +2898,7 @@ bb.apv:                                           ; preds = %bb.apt
   br label %bb.apy
 
 bb.apw:                                           ; preds = %bb.aps
-  br i1 %.not429.1.i1739, label %bb.apy, label %bb.apx
+  br i1 %.not429.2.i1730, label %bb.apy, label %bb.apx
 
 bb.apx:                                           ; preds = %bb.apw
   %i.ilm = mul i64 %i.ihh, %i.igd
@@ -2963,11 +2923,7 @@ bb.apx:                                           ; preds = %bb.apw
 
 bb.apy:                                           ; preds = %bb.apx, %bb.apw, %bb.apv, %bb.apu
   %.sroa.0671.0.1.i1746 = phi float [ %i.ilj, %bb.apu ], [ %i.ilz, %bb.apx ], [ %i.ill, %bb.apv ], [ 0.000000e+00, %bb.apw ] ; 3 uses
-  %104 = load i8, ptr %i.ihd, align 1, !tbaa !21
-  %.not431.1.i1747 = icmp eq i8 %104, 2
-  %105 = load i8, ptr %i.ihk, align 1, !tbaa !21
-  %.not432.1.i1748 = icmp eq i8 %105, 2           ; 2 uses
-  br i1 %.not431.1.i1747, label %bb.aqc, label %bb.apz
+  br i1 %.not431.i1718, label %bb.aqc, label %bb.apz
 
 bb.apz:                                           ; preds = %bb.apy
   %i.ima = mul i64 %i.ihh, %i.igg
@@ -2983,7 +2939,7 @@ bb.apz:                                           ; preds = %bb.apy
   %i.imi = zext i8 %i.imh to i32                  ; 2 uses
   %i.imj = sub nsw i32 %i.ime, %i.imi
   %i.imk = call i32 @llvm.abs.i32(i32 %i.imj, i1 true) ; 2 uses
-  br i1 %.not432.1.i1748, label %bb.aqb, label %bb.aqa
+  br i1 %.not432.2.i1735, label %bb.aqb, label %bb.aqa
 
 bb.aqa:                                           ; preds = %bb.apz
   %i.iml = getelementptr i8, ptr %i.imf, i64 -2
@@ -3001,7 +2957,7 @@ bb.aqb:                                           ; preds = %bb.apz
   br label %bb.aqe
 
 bb.aqc:                                           ; preds = %bb.apy
-  br i1 %.not432.1.i1748, label %bb.aqe, label %bb.aqd
+  br i1 %.not432.2.i1735, label %bb.aqe, label %bb.aqd
 
 bb.aqd:                                           ; preds = %bb.aqc
   %i.imu = mul i64 %i.ihh, %i.igg
@@ -3034,16 +2990,12 @@ bb.aqf:                                           ; preds = %bb.aqe
   %i.inm = fmul float %.sroa.12672.0.1.i1751, %.sroa.12672.0.1.i1751
   %i.inn = call float @llvm.fmuladd.f32(float %.sroa.0671.0.1.i1746, float %.sroa.0671.0.1.i1746, float %i.inm)
   %i.ino = fmul float %i.igz, %i.inn
-  %i.inp = call noundef float @sqrtf(float noundef %i.ino) #20
+  %i.inp = call float @llvm.sqrt.f32(float %i.ino)
   %i.inq = fdiv float %i.ini, %i.inp
   %i.inr = call float @llvm.fabs.f32(float %i.inq)
-  %.pre799.i1775 = load i8, ptr %i.ihc, align 1, !tbaa !21
-  %.pre2116 = load i8, ptr %gep, align 1, !tbaa !21
   br label %bb.aqg
 
 bb.aqg:                                           ; preds = %bb.aqf, %bb.aqe
-  %106 = phi i8 [ %.pre2116, %bb.aqf ], [ %102, %bb.aqe ]
-  %107 = phi i8 [ %.pre799.i1775, %bb.aqf ], [ %103, %bb.aqe ]
   %.0390.1.i1752 = phi float [ %i.inr, %bb.aqf ], [ f0x358637BD, %bb.aqe ]
   %i.ins = fmul float %i.ihb, %.0390.1.i1752      ; 2 uses
   %i.int = getelementptr inbounds nuw i8, ptr %i.ihj, i64 1
@@ -3051,9 +3003,7 @@ bb.aqg:                                           ; preds = %bb.aqf, %bb.aqe
   %i.inv = uitofp i8 %i.inu to float
   %i.inw = call float @llvm.fmuladd.f32(float %i.ins, float %i.inv, float %.sroa.6791.2.i1695)
   %i.inx = fadd float %.sroa.6.2.i1698, %i.ins
-  %.not428.2.i1753 = icmp eq i8 %107, 2
-  %.not429.2.i1754 = icmp eq i8 %106, 2           ; 2 uses
-  br i1 %.not428.2.i1753, label %bb.aqk, label %bb.aqh
+  br i1 %.not428.i1716, label %bb.aqk, label %bb.aqh
 
 bb.aqh:                                           ; preds = %bb.aqg
   %i.iny = mul i64 %i.ihh, %i.igc
@@ -3072,7 +3022,7 @@ bb.aqh:                                           ; preds = %bb.aqg
   %i.ioh = zext i8 %i.iog to i32                  ; 2 uses
   %i.ioi = sub nsw i32 %i.ioc, %i.ioh
   %i.ioj = call i32 @llvm.abs.i32(i32 %i.ioi, i1 true) ; 2 uses
-  br i1 %.not429.2.i1754, label %bb.aqj, label %bb.aqi
+  br i1 %.not429.2.i1730, label %bb.aqj, label %bb.aqi
 
 bb.aqi:                                           ; preds = %bb.aqh
   %i.iok = mul i64 %i.ihh, %i.igf
@@ -3094,7 +3044,7 @@ bb.aqj:                                           ; preds = %bb.aqh
   br label %bb.aqm
 
 bb.aqk:                                           ; preds = %bb.aqg
-  br i1 %.not429.2.i1754, label %bb.aqm, label %bb.aql
+  br i1 %.not429.2.i1730, label %bb.aqm, label %bb.aql
 
 bb.aql:                                           ; preds = %bb.aqk
   %i.iov = mul i64 %i.ihh, %i.igd
@@ -3119,11 +3069,7 @@ bb.aql:                                           ; preds = %bb.aqk
 
 bb.aqm:                                           ; preds = %bb.aql, %bb.aqk, %bb.aqj, %bb.aqi
   %.sroa.0671.0.2.i1761 = phi float [ %i.ios, %bb.aqi ], [ %i.ipi, %bb.aql ], [ %i.iou, %bb.aqj ], [ 0.000000e+00, %bb.aqk ] ; 3 uses
-  %108 = load i8, ptr %i.ihd, align 1, !tbaa !21
-  %.not431.2.i1762 = icmp eq i8 %108, 2
-  %109 = load i8, ptr %i.ihk, align 1, !tbaa !21
-  %.not432.2.i1763 = icmp eq i8 %109, 2           ; 2 uses
-  br i1 %.not431.2.i1762, label %bb.aqq, label %bb.aqn
+  br i1 %.not431.i1718, label %bb.aqq, label %bb.aqn
 
 bb.aqn:                                           ; preds = %bb.aqm
   %i.ipj = mul i64 %i.ihh, %i.igg
@@ -3139,7 +3085,7 @@ bb.aqn:                                           ; preds = %bb.aqm
   %i.ipr = zext i8 %i.ipq to i32                  ; 2 uses
   %i.ips = sub nsw i32 %i.ipn, %i.ipr
   %i.ipt = call i32 @llvm.abs.i32(i32 %i.ips, i1 true) ; 2 uses
-  br i1 %.not432.2.i1763, label %bb.aqp, label %bb.aqo
+  br i1 %.not432.2.i1735, label %bb.aqp, label %bb.aqo
 
 bb.aqo:                                           ; preds = %bb.aqn
   %i.ipu = getelementptr i8, ptr %i.ipo, i64 -1
@@ -3157,7 +3103,7 @@ bb.aqp:                                           ; preds = %bb.aqn
   br label %bb.aqs
 
 bb.aqq:                                           ; preds = %bb.aqm
-  br i1 %.not432.2.i1763, label %bb.aqs, label %bb.aqr
+  br i1 %.not432.2.i1735, label %bb.aqs, label %bb.aqr
 
 bb.aqr:                                           ; preds = %bb.aqq
   %i.iqd = mul i64 %i.ihh, %i.igg
@@ -3190,7 +3136,7 @@ bb.aqt:                                           ; preds = %bb.aqs
   %i.iqv = fmul float %.sroa.12672.0.2.i1766, %.sroa.12672.0.2.i1766
   %i.iqw = call float @llvm.fmuladd.f32(float %.sroa.0671.0.2.i1761, float %.sroa.0671.0.2.i1761, float %i.iqv)
   %i.iqx = fmul float %i.igz, %i.iqw
-  %i.iqy = call noundef float @sqrtf(float noundef %i.iqx) #20
+  %i.iqy = call float @llvm.sqrt.f32(float %i.iqx)
   %i.iqz = fdiv float %i.iqr, %i.iqy
   %i.ira = call float @llvm.fabs.f32(float %i.iqz)
   br label %.loopexit.loopexit.i1767
@@ -3593,7 +3539,7 @@ bb.ata:                                           ; preds = %bb.asz
   %i.jcc = fmul float %.sroa.12.0.i1608, %.sroa.12.0.i1608
   %i.jcd = call float @llvm.fmuladd.f32(float %.sroa.0668.0.i1603, float %.sroa.0668.0.i1603, float %i.jcc)
   %i.jce = fmul float %i.iyv, %i.jcd
-  %i.jcf = call noundef float @sqrtf(float noundef %i.jce) #20
+  %i.jcf = call float @llvm.sqrt.f32(float %i.jce)
   %i.jcg = fdiv float %i.jby, %i.jcf
   %i.jch = call float @llvm.fabs.f32(float %i.jcg)
   br label %bb.atb
@@ -3995,9 +3941,6 @@ declare double @llvm.fmuladd.f64(double, double, double) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fmuladd.f32(float, float, float) #16
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sqrtf(float noundef) local_unnamed_addr #17
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #18

@@ -205,7 +205,7 @@ bb.bj:                                            ; preds = %bb.bi
 .else.else:                                       ; preds = %.else
   %i.rn = call float @llvm.fmuladd.f32(float %i.rk, float 2.550000e+02, float 5.000000e-01)
   %i.ro = fptosi float %i.rn to i8
-  %i.rp = zext i8 %i.ro to i32
+  %i.rp = zext nneg i8 %i.ro to i32
   br label %.cont
 
 .cont:                                            ; preds = %.else.else, %.else, %bb.bj

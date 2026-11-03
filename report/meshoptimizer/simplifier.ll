@@ -205,7 +205,7 @@ bb.fk:                                            ; preds = %bb.fj
   %shift1224 = shufflevector <2 x float> %i.cmg, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop1225 = fmul <2 x float> %i.cmg, %shift1224
   %i.cmh = extractelement <2 x float> %foldExtExtBinop1225, i64 0
-  %i.cmi = call float @sqrtf(float noundef %i.cmh) #14
+  %i.cmi = call float @llvm.sqrt.f32(float %i.cmh)
   %i.cmj = fmul float %i.cmi, 2.500000e-01
   %i.cmk = fcmp ugt float %i.cmd, %i.cmj
   br i1 %i.cmk, label %bb.fl, label %_ZN7meshoptL16hasTriangleFlipsERKNS_13EdgeAdjacencyEPKNS_7Vector3EPKjjj.exit.i
@@ -608,7 +608,7 @@ bb.hi:                                            ; preds = %.lr.ph.i75.i
   %i.div = call float @llvm.fmuladd.f32(float %i.din, float %i.din, float %i.diu)
   %i.diw = call float @llvm.fmuladd.f32(float %i.dij, float %i.dij, float %i.div)
   %i.dix = fmul float %i.dit, %i.diw
-  %i.diy = call float @sqrtf(float noundef %i.dix) #14
+  %i.diy = call float @llvm.sqrt.f32(float %i.dix)
   %i.diz = fmul float %i.diy, 2.500000e-01
   %i.dja = fcmp ugt float %i.diq, %i.diz
   br i1 %i.dja, label %bb.hi, label %_ZN7meshoptL16hasTriangleFlipsERKNS_13EdgeAdjacencyEPKNS_7Vector3EjRS4_.exit.i

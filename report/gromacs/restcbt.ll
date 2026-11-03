@@ -19,7 +19,7 @@ bb.a:
   %i.g = fpext float %i.f to double
   %i.h = fmul double %i.g, f0x3F91DF46A2529D39
   %i.i = fsub double f0x400921FB54442D18, %i.h
-  %i.j = tail call double @cos(double noundef %i.i) #3 ; 2 uses
+  %i.j = tail call double @cos(double noundef %i.i) #4 ; 2 uses
   %i.k = load float, ptr %2, align 4, !tbaa !11   ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.m = load float, ptr %i.l, align 4, !tbaa !11 ; 3 uses
@@ -43,7 +43,7 @@ bb.a:
   %i.ae = tail call noundef float @llvm.fmuladd.f32(float %i.z, float %i.z, float %i.ad)
   %i.af = fpext float %i.ae to double             ; 2 uses
   %i.ag = fmul double %i.s, %i.af
-  %i.ah = tail call double @sqrt(double noundef %i.ag) #3
+  %i.ah = tail call double @llvm.sqrt.f64(double %i.ag)
   %i.ai = fdiv double 1.000000e+00, %i.ah         ; 2 uses
   %i.aj = fmul double %i.ai, %i.ab                ; 3 uses
   %i.ak = fneg double %i.aj                       ; 2 uses
@@ -79,9 +79,6 @@ declare double @llvm.fmuladd.f64(double, double, double) #2
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fmuladd.f32(float, float, float) #2
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sqrt(double noundef) local_unnamed_addr #1
-
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) uwtable
 define void @_Z25compute_factors_restrdihsiPK9t_iparamsPfS2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %5, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %6, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %7, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %8, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %9, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %10, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %11, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %12, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %13, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %14, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %15, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %16, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %17, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %18) local_unnamed_addr #0 {
 bb.a:
@@ -91,7 +88,7 @@ bb.a:
   %i.d = fpext float %i.c to double
   %i.e = fmul double %i.d, f0x3F91DF46A2529D39
   %i.f = fptrunc double %i.e to float
-  %i.g = tail call noundef float @cosf(float noundef %i.f) #3 ; 2 uses
+  %i.g = tail call noundef float @cosf(float noundef %i.f) #4 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %i.b, i64 4
   %i.i = load float, ptr %i.h, align 4, !tbaa !9  ; 2 uses
   %i.j = load float, ptr %2, align 4, !tbaa !11   ; 4 uses
@@ -223,11 +220,8 @@ bb.a:
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare float @cosf(float noundef) local_unnamed_addr #1
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sqrtf(float noundef) local_unnamed_addr #1
-
-; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) uwtable
-define void @_Z23compute_factors_cbtdihsiPK9t_iparamsPfS2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %5, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %6, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %7, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %8, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %9, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %10, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %11, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %12, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %13, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %14, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %15) local_unnamed_addr #0 {
+; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
+define void @_Z23compute_factors_cbtdihsiPK9t_iparamsPfS2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_S2_(i32 noundef %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, ptr nofree noundef readonly captures(none) %4, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %5, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %6, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %7, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %8, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %9, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %10, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %11, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %12, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %13, ptr nofree noundef writeonly captures(none) initializes((0, 12)) %14, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %15) local_unnamed_addr #3 {
 bb.a:
   %i.a = sext i32 %0 to i64
   %i.b = getelementptr inbounds [48 x i8], ptr %1, i64 %i.a ; 6 uses
@@ -292,10 +286,10 @@ bb.a:
   %sqrt277.a = tail call float @llvm.sqrt.f32(float %i.au)
   %i.av = fdiv float 1.000000e+00, %sqrt277.a     ; 2 uses
   %i.aw = fmul float %i.j, %i.r
-  %i.ax = tail call noundef float @sqrtf(float noundef %i.aw) #3
+  %i.ax = tail call float @llvm.sqrt.f32(float %i.aw)
   %i.ay = fdiv float 1.000000e+00, %i.ax          ; 2 uses
   %i.az = fmul float %i.r, %i.z
-  %i.ba = tail call noundef float @sqrtf(float noundef %i.az) #3
+  %i.ba = tail call float @llvm.sqrt.f32(float %i.az)
   %i.bb = fdiv float 1.000000e+00, %i.ba          ; 2 uses
   %i.bc = fmul float %i.al, %i.av                 ; 9 uses
   %i.bd = fmul float %i.ac, %i.ay                 ; 3 uses
@@ -671,12 +665,16 @@ bb.a:
 }
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #2
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite, errnomem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #1 = { mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
 attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
-attributes #3 = { nounwind }
+attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="skylake-avx512" "target-features"="+adx,+aes,+avx,+avx2,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512vl,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdrnd,+rdseed,+sahf,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+x87,+xsave,+xsavec,+xsaveopt,+xsaves" }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

@@ -202,7 +202,7 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %i.bh = fdiv fast <16 x float> splat (float 1.000000e+00), %i.bg
   %i.bi = bitcast <16 x float> %i.bh to <16 x i32>
   %i.bj = lshr <16 x i32> %i.bi, splat (i32 16)
-  %i.bk = trunc nuw <16 x i32> %i.bj to <16 x i16>
+  %i.bk = trunc nuw nsw <16 x i32> %i.bj to <16 x i16>
   store <16 x i16> %i.bk, ptr %next.gep, align 2, !tbaa !51
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.bl = icmp eq i64 %index.next, %n.vec
@@ -237,7 +237,7 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %i.bv = fdiv fast <4 x float> splat (float 1.000000e+00), %i.bu
   %i.bw = bitcast <4 x float> %i.bv to <4 x i32>
   %i.bx = lshr <4 x i32> %i.bw, splat (i32 16)
-  %i.by = trunc nuw <4 x i32> %i.bx to <4 x i16>
+  %i.by = trunc nuw nsw <4 x i32> %i.bx to <4 x i16>
   store <4 x i16> %i.by, ptr %next.gep91, align 2, !tbaa !51
   %index.next93 = add nuw i64 %index90, 4         ; 2 uses
   %i.bz = icmp eq i64 %index.next93, %n.vec89
@@ -285,7 +285,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.cv = fdiv fast float 1.000000e+00, %i.cu
   %i.cw = bitcast float %i.cv to i32
   %i.cx = lshr i32 %i.cw, 16
-  %i.cy = trunc nuw i32 %i.cx to i16
+  %i.cy = trunc nuw nsw i32 %i.cx to i16
   store i16 %i.cy, ptr %.23258, align 2, !tbaa !51
   %i.cz = getelementptr inbounds nuw i8, ptr %.23258, i64 2
   %i.da = add nuw nsw i32 %.259, 1                ; 2 uses

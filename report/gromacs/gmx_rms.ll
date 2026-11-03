@@ -205,8 +205,8 @@ bb.hl:                                            ; preds = %bb.hk
   %i.bgx = extractelement <2 x double> %i.bgn, i64 0
   %i.bgy = extractelement <2 x double> %i.bgn, i64 1
   %i.bgz = call double @llvm.fmuladd.f64(double %i.bgx, double %i.bgy, double %i.bgw)
-  %i.bha = call double @sqrt(double noundef %i.bgp) #20
-  %i.bhb = fdiv double 1.000000e+00, %i.bha
+  %i.bha = call nnan double @llvm.sqrt.f64(double %i.bgp)
+  %i.bhb = fdiv nnan double 1.000000e+00, %i.bha
   %i.bhc = fmul double %i.bgz, %i.bhb
   %i.bhd = fptrunc double %i.bhc to float
   br label %bb.hm
@@ -609,9 +609,6 @@ declare noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef, ptr noundef, i32 noun
 declare void @_Z12orient_princPK7t_atomsiPKiiPA3_fS5_Pf(ptr noundef, i32 noundef, ptr noundef, i32 noundef, ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #3
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sqrt(double noundef) local_unnamed_addr #8
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare float @sqrtf(float noundef) local_unnamed_addr #8
 
 declare void @_Z9save_freePKcS0_iPv(ptr noundef, ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #3
@@ -948,6 +945,9 @@ declare i32 @llvm.smin.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(write)
 declare void @llvm.masked.scatter.v8f32.v8p0(<8 x float>, <8 x ptr>, <8 x i1>) #18

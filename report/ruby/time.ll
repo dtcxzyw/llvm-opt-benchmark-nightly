@@ -204,8 +204,8 @@ rb_float_value_inline.exit.thread:                ; preds = %bb.e, %rb_float_val
 bb.i:                                             ; preds = %rb_float_value_inline.exit.thread
   %i.ac = tail call double @llvm.fmuladd.f64(double %i.z, double 1.000000e+09, double 5.000000e-01)
   %i.ad = fptosi double %i.ac to i32              ; 2 uses
-  %2 = sext i32 %i.ad to i64                      ; 2 uses
-  %3 = icmp sgt i32 %i.ad, 999999999
+  %2 = zext nneg i32 %i.ad to i64                 ; 2 uses
+  %3 = icmp ugt i32 %i.ad, 999999999
   br i1 %3, label %bb.j, label %bb.m
 
 bb.j:                                             ; preds = %bb.i

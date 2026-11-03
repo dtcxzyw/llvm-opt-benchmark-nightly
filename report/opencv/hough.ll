@@ -205,7 +205,7 @@ _ZNKSt6vectorIN2cv11hough_indexESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i.i: ; pred
   %i.av = sitofp i32 %i.am to double              ; 2 uses
   %i.aw = sitofp i32 %i.ao to double              ; 2 uses
   %i.ax = fmul nnan double %i.aw, %i.aw
-  %i.ay = call double @llvm.fmuladd.f64(double %i.av, double %i.av, double %i.ax)
+  %i.ay = call nnan double @llvm.fmuladd.f64(double %i.av, double %i.av, double %i.ax)
   %sqrt.i = call double @llvm.sqrt.f64(double %i.ay)
   %i.az = fpext <2 x float> %i.ap to <2 x double> ; 2 uses
   %i.ba = insertelement <2 x double> <double f0x401921FB54442D18, double poison>, double %sqrt.i, i64 1

@@ -203,7 +203,7 @@ bb.a:
   %i.e = tail call double @llvm.fmuladd.f64(double %i.d, double 2.000000e+00, double 6.000000e+00)
   %sqrt = tail call double @llvm.sqrt.f64(double %i.e)
   %i.f = fdiv double 1.000000e+00, %sqrt
-  %i.g = fmul double %i.d, %i.f                   ; 2 uses
+  %i.g = fmul double %i.d, %i.f                   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
   store ptr null, ptr %i.a, align 8, !tbaa !22
   %i.h = icmp eq i32 %4, 0
@@ -305,16 +305,15 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %.not67.us, label %.loopexit, label %.lr.ph.us, !llvm.loop !42
 
 .split:                                           ; preds = %bb.e
-  %5 = fadd double %i.g, 0.000000e+00             ; 3 uses
-  %i.be = fmul double %5, 4.000000e+00
-  %i.bf = fmul double %5, %i.be
+  %i.be = fmul double %i.g, 4.000000e+00
+  %i.bf = fmul double %i.g, %i.be
   %i.bg = fsub double 1.000000e+00, %i.bf
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.l, i8 0, i64 16, i1 false)
   %i.bh = tail call double @log(double noundef %i.r) #18, !tbaa !11 ; 2 uses
   %i.bi = tail call double @log(double noundef %i.bh) #18, !tbaa !11
   %i.bj = fmul double %i.bh, %i.bi
   %i.bk = tail call double @sqrt(double noundef %i.bj) #18, !tbaa !11
-  %i.bl = fmul double %5, %i.bk
+  %i.bl = fmul double %i.g, %i.bk
   %i.bm = tail call double @exp(double noundef %i.bl) #18, !tbaa !11 ; 0 uses
   %i.bn = fmul double %i.bg, 5.000000e-01
   %i.bo = tail call double @pow(double noundef %i.r, double noundef %i.bn) #18, !tbaa !11

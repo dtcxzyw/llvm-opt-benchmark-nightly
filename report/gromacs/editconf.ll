@@ -205,8 +205,8 @@ bb.gg:                                            ; preds = %bb.gf
   %i.akm = call double @llvm.fmuladd.f64(double %i.ajv, double %i.ajx, double 0.000000e+00)
   %i.akn = call double @llvm.fmuladd.f64(double %i.aka, double %i.akc, double %i.akm)
   %i.ako = call double @llvm.fmuladd.f64(double %i.akf, double %i.akh, double %i.akn)
-  %i.akp = call double @sqrt(double noundef %i.akk) #20
-  %i.akq = fdiv double 1.000000e+00, %i.akp
+  %i.akp = call nnan double @llvm.sqrt.f64(double %i.akk)
+  %i.akq = fdiv nnan double 1.000000e+00, %i.akp
   %i.akr = fmul double %i.ako, %i.akq
   %i.aks = fptrunc double %i.akr to float
   br label %_ZL14calc_rotmatrixPfS_PA3_f.exit
@@ -608,6 +608,9 @@ declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(write)
 declare void @llvm.masked.scatter.v8f32.v8p0(<8 x float>, <8 x ptr>, <8 x i1>) #19
