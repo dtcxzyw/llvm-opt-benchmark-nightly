@@ -1,0 +1,17 @@
+diff --git a/llvm/lib/IR/ConstantFold.cpp b/llvm/lib/IR/ConstantFold.cpp
+index 2f672a967f98a8..bd33f54df7abbb 100644
+--- a/llvm/lib/IR/ConstantFold.cpp
++++ b/llvm/lib/IR/ConstantFold.cpp
+@@ -469,7 +469,11 @@ Constant *llvm::ConstantFoldInsertElementInstruction(Constant *Val,
+       continue;
+     }
+ 
+-    Constant *C = ConstantExpr::getExtractElement(Val, ConstantInt::get(Ty, i));
++    Constant *C = Val->getAggregateElement(i);
++    if (!C)
++      C = ConstantFoldExtractElementInstruction(Val, ConstantInt::get(Ty, i));
++    if (!C)
++      return nullptr;
+     Result.push_back(C);
+   }
+ 
