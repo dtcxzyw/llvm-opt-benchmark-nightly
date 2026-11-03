@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %.tail90
   br label %bb.t
 
 bb.t:                                             ; preds = %.tail90.thread, %bb.s
-  %.1 = phi nsz double [ %.0, %.tail90.thread ], [ %i.bm, %bb.s ] ; 3 uses
+  %.1 = phi nsz double [ %.0, %.tail90.thread ], [ %i.bm, %bb.s ] ; 2 uses
   %i.br = load ptr, ptr %i.a, align 8, !tbaa !18  ; 2 uses
   %i.bs = icmp eq ptr %i.br, %i.q
   br i1 %i.bs, label %.critedge87, label %bb.u
@@ -213,9 +213,7 @@ bb.u:                                             ; preds = %bb.t
   %i.bt = load i8, ptr %i.br, align 1, !tbaa !19
   %i.bu = icmp ne i8 %i.bt, 0
   %i.bv = fcmp nsz ogt double %.1, 2.550000e+02
-  %4 = fcmp nsz olt double %.1, 0.000000e+00
-  %5 = or i1 %i.bv, %4
-  %or.cond8 = select i1 %i.bu, i1 true, i1 %5
+  %or.cond8 = select i1 %i.bu, i1 true, i1 %i.bv
   br i1 %or.cond8, label %.critedge87, label %bb.v
 
 .critedge87:                                      ; preds = %bb.u, %bb.t

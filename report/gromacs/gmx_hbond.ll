@@ -206,7 +206,7 @@ bb.cp:                                            ; preds = %_ZL15pbc_correct_ge
 .preheader.i269:                                  ; preds = %bb.cp
   %i.agt = getelementptr inbounds nuw i8, ptr %i.abn, i64 232
   %i.agu = load ptr, ptr %i.agt, align 8, !tbaa !70, !llvm.access.group !502
-  %i.agv = getelementptr inbounds nuw [4 x i8], ptr %i.agu, i64 %i.acg ; 2 uses
+  %i.agv = getelementptr inbounds nuw [4 x i8], ptr %i.agu, i64 %i.acg
   %i.agw = load i32, ptr %i.agv, align 4, !tbaa !61, !llvm.access.group !502 ; 2 uses
   %i.agx = icmp sgt i32 %i.agw, 0
   br i1 %i.agx, label %.lr.ph.i271, label %._crit_edge.i270
@@ -221,12 +221,12 @@ bb.cp:                                            ; preds = %_ZL15pbc_correct_ge
   %i.ahe = call double @llvm.fmuladd.f64(double %i.ahd, double %i.ahd, double %i.ahc)
   %i.ahf = fpext float %.sroa.24.0.i to double    ; 3 uses
   %i.ahg = call double @llvm.fmuladd.f64(double %i.ahf, double %i.ahf, double %i.ahe)
+  %wide.trip.count.i272 = zext nneg i32 %i.agw to i64
   %i.ahh = insertelement <2 x float> %i.adb, float %i.adc, i64 1
   %i.ahi = insertelement <2 x float> %i.add, float %i.ade, i64 1
   br label %bb.cq
 
 bb.cq:                                            ; preds = %bb.do, %.lr.ph.i271
-  %45 = phi i32 [ %i.agw, %.lr.ph.i271 ], [ %46, %bb.do ]
   %indvars.iv.i272 = phi i64 [ 0, %.lr.ph.i271 ], [ %indvars.iv.next.i277, %bb.do ] ; 2 uses
   %.089260.i = phi i8 [ 0, %.lr.ph.i271 ], [ %.2.i, %bb.do ] ; 2 uses
   %i.ahj = getelementptr inbounds nuw [4 x i8], ptr %i.aha, i64 %indvars.iv.i272
@@ -538,8 +538,8 @@ bb.dm:                                            ; preds = %_ZL15pbc_correct_ge
   %i.ani = call double @llvm.fmuladd.f64(double %i.amz, double %i.ahb, double 0.000000e+00)
   %i.anj = call double @llvm.fmuladd.f64(double %i.anc, double %i.ahd, double %i.ani)
   %i.ank = call double @llvm.fmuladd.f64(double %i.ane, double %i.ahf, double %i.anj)
-  %i.anl = call double @sqrt(double noundef %i.ang) #24, !llvm.access.group !502
-  %i.anm = fdiv double 1.000000e+00, %i.anl
+  %i.anl = call nnan double @llvm.sqrt.f64(double %i.ang)
+  %i.anm = fdiv nnan double 1.000000e+00, %i.anl
   %i.ann = fmul double %i.ank, %i.anm
   %i.ano = fptrunc double %i.ann to float
   br label %_ZL9cos_anglePKfS0_.exit.i
@@ -551,24 +551,18 @@ _ZL9cos_anglePKfS0_.exit.i:                       ; preds = %bb.dm, %_ZL15pbc_co
   %..026.i.i = select i1 %i.anq, float -1.000000e+00, float %.026.i.i
   %.027.i.i = select i1 %i.anp, float 1.000000e+00, float %..026.i.i ; 2 uses
   %i.anr = fcmp ult float %.027.i.i, %i.abq
-  br i1 %i.anr, label %_ZL9cos_anglePKfS0_.exit._crit_edge.i, label %bb.dn
-
-_ZL9cos_anglePKfS0_.exit._crit_edge.i:            ; preds = %_ZL9cos_anglePKfS0_.exit.i
-  %.pre275.i = load i32, ptr %i.agv, align 4, !tbaa !61, !llvm.access.group !502
-  br label %bb.do
+  br i1 %i.anr, label %bb.do, label %bb.dn
 
 bb.dn:                                            ; preds = %_ZL9cos_anglePKfS0_.exit.i
   %i.ans = call noundef float @sqrtf(float noundef %i.akj) #24, !llvm.access.group !502
   %i.ant = call noundef float @acosf(float noundef %.027.i.i) #24, !llvm.access.group !502
   br label %_ZL8is_hbondP16HydrogenBondDataiiiifffPA3_fbS2_PfS3_S3_bPibb.exit.thread405
 
-bb.do:                                            ; preds = %_ZL9cos_anglePKfS0_.exit._crit_edge.i, %.loopexit.i274
-  %46 = phi i32 [ %.pre275.i, %_ZL9cos_anglePKfS0_.exit._crit_edge.i ], [ %45, %.loopexit.i274 ] ; 2 uses
-  %.2.i = phi i8 [ %spec.select103.i, %_ZL9cos_anglePKfS0_.exit._crit_edge.i ], [ %.089260.i, %.loopexit.i274 ] ; 2 uses
+bb.do:                                            ; preds = %_ZL9cos_anglePKfS0_.exit.i, %.loopexit.i274
+  %.2.i = phi i8 [ %spec.select103.i, %_ZL9cos_anglePKfS0_.exit.i ], [ %.089260.i, %.loopexit.i274 ] ; 2 uses
   %indvars.iv.next.i277 = add nuw nsw i64 %indvars.iv.i272, 1 ; 2 uses
-  %47 = sext i32 %46 to i64
-  %48 = icmp slt i64 %indvars.iv.next.i277, %47
-  br i1 %48, label %bb.cq, label %._crit_edge.loopexit.i278, !llvm.loop !505
+  %exitcond.not.i279 = icmp eq i64 %indvars.iv.next.i277, %wide.trip.count.i272
+  br i1 %exitcond.not.i279, label %._crit_edge.loopexit.i278, label %bb.cq, !llvm.loop !505
 
 ._crit_edge.loopexit.i278:                        ; preds = %bb.do
   %i.anu = zext nneg i8 %.2.i to i32
@@ -971,9 +965,6 @@ bb.j:                                             ; preds = %_ZSt27__uninitializ
 declare noundef nonnull align 8 dereferenceable(8) ptr @_ZN3gmx17getProgramContextEv() local_unnamed_addr #6
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sqrt(double noundef) local_unnamed_addr #15
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare float @acosf(float noundef) local_unnamed_addr #15
 
 ; Function Attrs: nounwind
@@ -1374,6 +1365,9 @@ declare i64 @llvm.umin.i64(i64, i64) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #14

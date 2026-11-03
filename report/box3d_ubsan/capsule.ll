@@ -202,11 +202,9 @@ b3Normalize.exit:                                 ; preds = %bb.z, %bb.aa
   %.sroa.5.0.i = phi float [ %i.gq, %bb.aa ], [ 0.000000e+00, %bb.z ]
   %i.gr = fadd <2 x float> %.sroa.0308.0.copyload, %i.fy
   %i.gs = fadd float %.sroa.8.0.copyload, %i.ga
-  %i.gt = fdiv float %.2, %sqrt.i                 ; 3 uses
-  %7 = fcmp olt float %i.gt, 0.000000e+00
+  %i.gt = fdiv float %.2, %sqrt.i                 ; 2 uses
   %i.gu = fcmp olt float %i.cn, %i.gt
-  %8 = select i1 %i.gu, float %i.cn, float %i.gt
-  %i.gv = select i1 %7, float 0.000000e+00, float %8
+  %i.gv = select i1 %i.gu, float %i.cn, float %i.gt
   store <2 x float> %.sroa.07.0.i, ptr %0, align 4, !tbaa !12
   %.sroa.11.0..sroa_idx515 = getelementptr inbounds nuw i8, ptr %0, i64 8
   store float %.sroa.5.0.i, ptr %.sroa.11.0..sroa_idx515, align 4, !tbaa !12

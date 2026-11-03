@@ -27,7 +27,7 @@ bb.a:
   %i.h = getelementptr inbounds i8, ptr %7, i64 -8 ; 82 uses
   %i.i = getelementptr inbounds i8, ptr %4, i64 -8 ; 82 uses
   %i.j = getelementptr inbounds i8, ptr %3, i64 -8 ; 64 uses
-  %i.k = getelementptr i8, ptr %2, i64 -8         ; 28 uses
+  %i.k = getelementptr i8, ptr %2, i64 -8         ; 27 uses
   store i32 0, ptr %8, align 4, !tbaa !83
   %i.l = load i32, ptr %0, align 4, !tbaa !83
   switch i32 %i.l, label %bb.d [
@@ -56,8 +56,8 @@ bb.d:                                             ; preds = %bb.a
   %i.t = tail call double @dlamch_(ptr noundef nonnull @.str) #6 ; 5 uses
   %i.u = load double, ptr %5, align 8, !tbaa !85  ; 2 uses
   %i.v = fdiv double 1.000000e+00, %i.u           ; 15 uses
-  %i.w = load i32, ptr %1, align 4, !tbaa !83     ; 12 uses
-  %i.x = load i32, ptr %0, align 4, !tbaa !83
+  %i.w = load i32, ptr %1, align 4, !tbaa !83     ; 19 uses
+  %i.x = load i32, ptr %0, align 4, !tbaa !83     ; 9 uses
   %i.y = icmp eq i32 %i.w, %i.x
   br i1 %i.y, label %bb.e, label %bb.x
 
@@ -460,9 +460,9 @@ bb.x:                                             ; preds = %bb.d
   %i.adt = sext i32 %i.ads to i64                 ; 5 uses
   %i.adu = getelementptr inbounds [8 x i8], ptr %i.k, i64 %i.adt ; 3 uses
   %i.adv = load double, ptr %i.adu, align 8, !tbaa !85 ; 4 uses
-  %i.adw = sext i32 %i.w to i64
-  %i.adx = getelementptr inbounds [8 x i8], ptr %i.k, i64 %i.adw
-  %i.ady = load double, ptr %i.adx, align 8, !tbaa !85 ; 4 uses
+  %i.adw = sext i32 %i.w to i64                   ; 8 uses
+  %i.adx = getelementptr inbounds [8 x i8], ptr %i.k, i64 %i.adw ; 11 uses
+  %i.ady = load double, ptr %i.adx, align 8, !tbaa !85 ; 5 uses
   %i.adz = fsub double %i.adv, %i.ady
   %i.aea = fadd double %i.adv, %i.ady
   %i.aeb = fmul double %i.adz, %i.aea             ; 12 uses
@@ -470,22 +470,17 @@ bb.x:                                             ; preds = %bb.d
   %i.aed = fmul double %i.adv, %i.adv
   %i.aee = tail call double @llvm.fmuladd.f64(double %i.ady, double %i.ady, double %i.aed)
   %i.aef = fmul double %i.aee, 5.000000e-01
-  %i.aeg = tail call double @sqrt(double noundef %i.aef) #6 ; 3 uses
-  %9 = load i32, ptr %1, align 4, !tbaa !83       ; 8 uses
-  %10 = sext i32 %9 to i64                        ; 8 uses
-  %11 = getelementptr inbounds [8 x i8], ptr %i.k, i64 %10 ; 11 uses
-  %12 = load double, ptr %11, align 8, !tbaa !85
-  %i.aeh = fadd double %i.aeg, %12
+  %i.aeg = tail call double @llvm.sqrt.f64(double %i.aef) ; 3 uses
+  %i.aeh = fadd double %i.ady, %i.aeg
   %i.aei = fdiv double %i.aec, %i.aeh             ; 7 uses
-  %13 = load i32, ptr %0, align 4, !tbaa !83      ; 8 uses
-  %.not1665 = icmp slt i32 %13, 1
+  %.not1665 = icmp slt i32 %i.x, 1
   br i1 %.not1665, label %.preheader1664, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.x
-  %i.aej = add nuw i32 %13, 1
+  %i.aej = add nuw i32 %i.x, 1
   %wide.trip.count = zext i32 %i.aej to i64       ; 2 uses
-  %i.aek = zext nneg i32 %13 to i64               ; 2 uses
-  %min.iters.check = icmp ult i32 %13, 20
+  %i.aek = zext nneg i32 %i.x to i64              ; 2 uses
+  %min.iters.check = icmp ult i32 %i.x, 20
   br i1 %min.iters.check, label %.lr.ph.preheader2458, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph.preheader
@@ -493,14 +488,14 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.aem = add nsw i64 %i.ael, -8                 ; 3 uses
   %i.aen = getelementptr i8, ptr %7, i64 %i.aem   ; 3 uses
   %i.aeo = getelementptr i8, ptr %4, i64 %i.aem   ; 3 uses
-  %i.aep = shl nsw i64 %10, 3
+  %i.aep = shl nsw i64 %i.adw, 3
   %i.aeq = getelementptr i8, ptr %2, i64 %i.aep   ; 2 uses
   %i.aer = getelementptr i8, ptr %2, i64 %i.aem   ; 2 uses
   %bound0 = icmp ult ptr %7, %i.aeo
   %bound1 = icmp ult ptr %4, %i.aen
   %found.conflict = and i1 %bound0, %bound1
   %bound02114 = icmp ult ptr %7, %i.aeq
-  %bound12115 = icmp ult ptr %11, %i.aen
+  %bound12115 = icmp ult ptr %i.adx, %i.aen
   %found.conflict2116 = and i1 %bound02114, %bound12115
   %conflict.rdx = or i1 %found.conflict, %found.conflict2116
   %bound02117 = icmp ult ptr %7, %i.aer
@@ -508,7 +503,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %found.conflict2119 = and i1 %bound02117, %bound12118
   %conflict.rdx2120 = or i1 %conflict.rdx, %found.conflict2119
   %bound02121 = icmp ult ptr %4, %i.aeq
-  %bound12122 = icmp ult ptr %11, %i.aeo
+  %bound12122 = icmp ult ptr %i.adx, %i.aeo
   %found.conflict2123 = and i1 %bound02121, %bound12122
   %conflict.rdx2124 = or i1 %conflict.rdx2120, %found.conflict2123
   %bound02125 = icmp ult ptr %4, %i.aer
@@ -520,7 +515,7 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
 vector.ph:                                        ; preds = %vector.memcheck
   %n.vec = and i64 %i.aek, 2147483640             ; 3 uses
   %i.aes = or disjoint i64 %n.vec, 1
-  %i.aet = load double, ptr %11, align 8, !tbaa !85, !alias.scope !106
+  %i.aet = load double, ptr %i.adx, align 8, !tbaa !85, !alias.scope !106
   %broadcast.splatinsert2130 = insertelement <4 x double> poison, double %i.aet, i64 0
   %broadcast.splat2131 = shufflevector <4 x double> %broadcast.splatinsert2130, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
   %broadcast.splatinsert = insertelement <4 x double> poison, double %i.aei, i64 0
@@ -561,21 +556,21 @@ middle.block:                                     ; preds = %vector.body
 
 .lr.ph.preheader2458:                             ; preds = %vector.memcheck, %.lr.ph.preheader, %middle.block
   %indvars.iv.ph = phi i64 [ 1, %vector.memcheck ], [ 1, %.lr.ph.preheader ], [ %i.aes, %middle.block ] ; 6 uses
-  %i.afj = zext nneg i32 %13 to i64
-  %i.afk = and i32 %13, 1
+  %i.afj = zext nneg i32 %i.x to i64
+  %i.afk = and i32 %i.x, 1
   %lcmp.mod.not = icmp eq i32 %i.afk, 0
   br i1 %lcmp.mod.not, label %.lr.ph.prol.loopexit, label %.lr.ph.prol
 
 .lr.ph.prol:                                      ; preds = %.lr.ph.preheader2458
   %i.afl = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv.ph ; 2 uses
   %i.afm = load double, ptr %i.afl, align 8, !tbaa !85
-  %i.afn = load double, ptr %11, align 8, !tbaa !85
+  %i.afn = load double, ptr %i.adx, align 8, !tbaa !85
   %i.afo = fadd double %i.afm, %i.afn
   %i.afp = fadd double %i.aei, %i.afo
   %i.afq = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv.ph
   store double %i.afp, ptr %i.afq, align 8, !tbaa !85
   %i.afr = load double, ptr %i.afl, align 8, !tbaa !85
-  %i.afs = load double, ptr %11, align 8, !tbaa !85
+  %i.afs = load double, ptr %i.adx, align 8, !tbaa !85
   %i.aft = fsub double %i.afr, %i.afs
   %i.afu = fsub double %i.aft, %i.aei
   %i.afv = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv.ph
@@ -589,14 +584,14 @@ middle.block:                                     ; preds = %vector.body
   br i1 %i.afw, label %.preheader1664, label %.lr.ph
 
 .preheader1664:                                   ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %bb.x
-  %.not1595.not1667 = icmp sgt i32 %9, 1
+  %.not1595.not1667 = icmp sgt i32 %i.w, 1
   br i1 %.not1595.not1667, label %.lr.ph1670.preheader, label %._crit_edge
 
 .lr.ph1670.preheader:                             ; preds = %.preheader1664
-  %wide.trip.count1876 = zext nneg i32 %9 to i64
+  %wide.trip.count1876 = zext nneg i32 %i.w to i64
   %i.afx = add nsw i64 %wide.trip.count1876, -1   ; 2 uses
   %xtraiter2459 = and i64 %i.afx, 3               ; 3 uses
-  %i.afy = add nsw i32 %9, -2
+  %i.afy = add nsw i32 %i.w, -2
   %i.afz = icmp ult i32 %i.afy, 3
   br i1 %i.afz, label %.lr.ph1670.epil.preheader, label %.lr.ph1670.preheader.new
 
@@ -608,26 +603,26 @@ middle.block:                                     ; preds = %vector.body
   %indvars.iv = phi i64 [ %indvars.iv.next.1, %.lr.ph ], [ %indvars.iv.unr, %.lr.ph.prol.loopexit ] ; 7 uses
   %i.aga = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv ; 2 uses
   %i.agb = load double, ptr %i.aga, align 8, !tbaa !85
-  %i.agc = load double, ptr %11, align 8, !tbaa !85
+  %i.agc = load double, ptr %i.adx, align 8, !tbaa !85
   %i.agd = fadd double %i.agb, %i.agc
   %i.age = fadd double %i.aei, %i.agd
   %i.agf = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv
   store double %i.age, ptr %i.agf, align 8, !tbaa !85
   %i.agg = load double, ptr %i.aga, align 8, !tbaa !85
-  %i.agh = load double, ptr %11, align 8, !tbaa !85
+  %i.agh = load double, ptr %i.adx, align 8, !tbaa !85
   %i.agi = fsub double %i.agg, %i.agh
   %i.agj = fsub double %i.agi, %i.aei
   %i.agk = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %indvars.iv
   store double %i.agj, ptr %i.agk, align 8, !tbaa !85
   %i.agl = getelementptr [8 x i8], ptr %2, i64 %indvars.iv ; 2 uses
   %i.agm = load double, ptr %i.agl, align 8, !tbaa !85
-  %i.agn = load double, ptr %11, align 8, !tbaa !85
+  %i.agn = load double, ptr %i.adx, align 8, !tbaa !85
   %i.ago = fadd double %i.agm, %i.agn
   %i.agp = fadd double %i.aei, %i.ago
   %i.agq = getelementptr [8 x i8], ptr %7, i64 %indvars.iv
   store double %i.agp, ptr %i.agq, align 8, !tbaa !85
   %i.agr = load double, ptr %i.agl, align 8, !tbaa !85
-  %i.ags = load double, ptr %11, align 8, !tbaa !85
+  %i.ags = load double, ptr %i.adx, align 8, !tbaa !85
   %i.agt = fsub double %i.agr, %i.ags
   %i.agu = fsub double %i.agt, %i.aei
   %i.agv = getelementptr [8 x i8], ptr %4, i64 %indvars.iv
@@ -719,12 +714,12 @@ middle.block:                                     ; preds = %vector.body
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph1670.epil, %.preheader1664
   %.4.lcssa = phi double [ 0.000000e+00, %.preheader1664 ], [ %i.aij, %._crit_edge.loopexit.unr-lcssa ], [ %i.ait, %.lr.ph1670.epil ]
-  %i.aiu = add nsw i32 %9, 2                      ; 2 uses
-  %.not15961671 = icmp slt i32 %13, %i.aiu
+  %i.aiu = add nsw i32 %i.w, 2                    ; 2 uses
+  %.not15961671 = icmp slt i32 %i.x, %i.aiu
   br i1 %.not15961671, label %._crit_edge1676, label %.lr.ph1675.preheader
 
 .lr.ph1675.preheader:                             ; preds = %._crit_edge
-  %i.aiv = sext i32 %13 to i64                    ; 4 uses
+  %i.aiv = sext i32 %i.x to i64                   ; 4 uses
   %i.aiw = sext i32 %i.aiu to i64                 ; 3 uses
   %i.aix = add nsw i64 %i.aiv, 1
   %i.aiy = sub nsw i64 %i.aix, %i.aiw
@@ -814,12 +809,12 @@ middle.block:                                     ; preds = %vector.body
   %i.akz = fadd double %i.v, %.4.lcssa
   %i.ala = fadd double %i.akz, %.01483.lcssa      ; 10 uses
   store double %i.ala, ptr %i.a, align 8, !tbaa !85
-  %i.alb = getelementptr inbounds [8 x i8], ptr %i.j, i64 %10
+  %i.alb = getelementptr inbounds [8 x i8], ptr %i.j, i64 %i.adw
   %i.alc = load double, ptr %i.alb, align 8, !tbaa !85 ; 4 uses
   %i.ald = fmul double %i.alc, %i.alc             ; 3 uses
-  %i.ale = getelementptr inbounds [8 x i8], ptr %i.h, i64 %10
+  %i.ale = getelementptr inbounds [8 x i8], ptr %i.h, i64 %i.adw
   %i.alf = load double, ptr %i.ale, align 8, !tbaa !85
-  %i.alg = getelementptr inbounds [8 x i8], ptr %i.i, i64 %10
+  %i.alg = getelementptr inbounds [8 x i8], ptr %i.i, i64 %i.adw
   %i.alh = load double, ptr %i.alg, align 8, !tbaa !85
   %i.ali = fmul double %i.alf, %i.alh
   %i.alj = fdiv double %i.ald, %i.ali
@@ -839,7 +834,7 @@ middle.block:                                     ; preds = %vector.body
 
 bb.y:                                             ; preds = %._crit_edge1676
   store i32 1, ptr %i.f, align 4, !tbaa !83
-  %i.alw = load double, ptr %11, align 8, !tbaa !85 ; 4 uses
+  %i.alw = load double, ptr %i.adx, align 8, !tbaa !85 ; 4 uses
   %i.alx = fadd double %i.aeg, %i.alw
   %i.aly = fdiv double %i.aec, %i.alx             ; 5 uses
   %i.alz = tail call double @llvm.fmuladd.f64(double %i.ala, double %i.aeb, double %i.ald)
@@ -966,10 +961,10 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
 
 bb.ai:                                            ; preds = %bb.ab, %bb.ac, %bb.ad, %bb.ah
   %i.apk = phi double [ %i.alw, %bb.ab ], [ %i.alw, %bb.ac ], [ %i.alw, %bb.ad ], [ %i.any, %bb.ah ]
-  %.pre-phi = phi i64 [ %10, %bb.ab ], [ %10, %bb.ac ], [ %10, %bb.ad ], [ %i.adt, %bb.ah ] ; 8 uses
+  %.pre-phi = phi i64 [ %i.adw, %bb.ab ], [ %i.adw, %bb.ac ], [ %i.adw, %bb.ad ], [ %i.adt, %bb.ah ] ; 8 uses
   %.01538 = phi double [ 0.000000e+00, %bb.ab ], [ 0.000000e+00, %bb.ac ], [ 0.000000e+00, %bb.ad ], [ %i.aoa, %bb.ah ] ; 2 uses
   %.01522 = phi double [ %i.aly, %bb.ab ], [ %i.aly, %bb.ac ], [ %i.aly, %bb.ad ], [ 0.000000e+00, %bb.ah ] ; 2 uses
-  %.01498 = phi i32 [ %9, %bb.ab ], [ %9, %bb.ac ], [ %9, %bb.ad ], [ %i.ads, %bb.ah ] ; 14 uses
+  %.01498 = phi i32 [ %i.w, %bb.ab ], [ %i.w, %bb.ac ], [ %i.w, %bb.ad ], [ %i.ads, %bb.ah ] ; 14 uses
   %.21481 = phi double [ %i.ang, %bb.ab ], [ %i.ang, %bb.ac ], [ %i.anw, %bb.ad ], [ %i.apj, %bb.ah ] ; 18 uses
   %.not1611 = phi i1 [ true, %bb.ab ], [ true, %bb.ac ], [ false, %bb.ad ], [ true, %bb.ah ] ; 2 uses
   %i.apl = getelementptr [8 x i8], ptr %i.k, i64 %.pre-phi ; 9 uses
@@ -1371,6 +1366,9 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fabs.f64(double) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #3
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #5

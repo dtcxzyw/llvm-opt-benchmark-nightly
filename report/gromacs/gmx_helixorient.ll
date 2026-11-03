@@ -205,8 +205,8 @@ bb.dw:                                            ; preds = %.lr.ph636
   %i.yv = extractelement <2 x double> %i.yl, i64 0
   %i.yw = extractelement <2 x double> %i.yl, i64 1
   %i.yx = call double @llvm.fmuladd.f64(double %i.yv, double %i.yw, double %i.yu)
-  %i.yy = call double @sqrt(double noundef %i.yn) #14
-  %i.yz = fdiv double 1.000000e+00, %i.yy
+  %i.yy = call nnan double @llvm.sqrt.f64(double %i.yn)
+  %i.yz = fdiv nnan double 1.000000e+00, %i.yy
   %i.za = fmul double %i.yx, %i.yz
   %i.zb = fptrunc double %i.za to float
   br label %bb.dx
@@ -238,7 +238,7 @@ bb.dx:                                            ; preds = %bb.dw, %.lr.ph636
   %i.zu = call noundef float @llvm.fmuladd.f32(float %i.zt, float %i.zt, float %i.zs)
   %sqrt.i478 = call noundef float @llvm.sqrt.f32(float %i.zu)
   %i.zv = fmul float %sqrt.i477, %sqrt.i478
-  %i.zw = call noundef float @sqrtf(float noundef %i.zv) #14
+  %i.zw = call float @llvm.sqrt.f32(float %i.zv)
   %i.zx = fpext float %i.zw to double
   %i.zy = fpext float %.027.i to double
   %i.zz = fsub double 1.000000e+00, %i.zy
@@ -383,8 +383,8 @@ bb.dy:                                            ; preds = %.lr.ph639
   %i.adx = extractelement <2 x double> %i.adn, i64 0
   %i.ady = extractelement <2 x double> %i.adn, i64 1
   %i.adz = call double @llvm.fmuladd.f64(double %i.adx, double %i.ady, double %i.adw)
-  %i.aea = call double @sqrt(double noundef %i.adp) #14
-  %i.aeb = fdiv double 1.000000e+00, %i.aea
+  %i.aea = call nnan double @llvm.sqrt.f64(double %i.adp)
+  %i.aeb = fdiv nnan double 1.000000e+00, %i.aea
   %i.aec = fmul double %i.adz, %i.aeb
   %i.aed = fptrunc double %i.aec to float
   br label %bb.dz
@@ -787,13 +787,7 @@ declare noundef ptr @_Z11save_callocPKcS0_imm(ptr noundef, ptr noundef, i32 noun
 declare double @llvm.fmuladd.f64(double, double, double) #7
 
 ; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sqrt(double noundef) local_unnamed_addr #11
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
 declare float @acosf(float noundef) local_unnamed_addr #11
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare float @sqrtf(float noundef) local_unnamed_addr #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fabs.f32(float) #7
@@ -815,6 +809,9 @@ declare noundef i32 @fputc(i32 noundef, ptr noundef captures(none)) local_unname
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.sqrt.f32(float) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #7
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.fmuladd.v8f32(<8 x float>, <8 x float>, <8 x float>) #7

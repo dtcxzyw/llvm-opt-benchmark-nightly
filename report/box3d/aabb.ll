@@ -193,23 +193,19 @@ bb.n:                                             ; preds = %bb.l, %bb.m
   br i1 %i.dw, label %.critedge, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %7 = shufflevector <2 x float> %i.du, <2 x float> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
-  %8 = insertelement <4 x float> poison, float %sqrt.i, i64 0
-  %9 = shufflevector <4 x float> %8, <4 x float> poison, <4 x i32> zeroinitializer
-  %10 = fdiv <4 x float> %7, %9                   ; 4 uses
-  %11 = fcmp olt <4 x float> %10, <float 0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 1.000000e+00> ; 2 uses
-  %12 = fcmp ogt <4 x float> %10, <float 0.000000e+00, float 0.000000e+00, float 1.000000e+00, float 1.000000e+00> ; 2 uses
-  %i.dx = extractelement <4 x i1> %12, i64 3
-  %13 = extractelement <4 x float> %10, i64 1
-  %i.dy = select i1 %i.dx, float 1.000000e+00, float %13
-  %14 = extractelement <4 x i1> %11, i64 1
-  %i.dz = select i1 %14, float 0.000000e+00, float %i.dy
+  %7 = insertelement <2 x float> poison, float %sqrt.i, i64 0
+  %8 = shufflevector <2 x float> %7, <2 x float> poison, <2 x i32> zeroinitializer
+  %9 = fdiv <2 x float> %i.du, %8                 ; 3 uses
+  %10 = extractelement <2 x float> %9, i64 0      ; 2 uses
+  %11 = fcmp olt float %10, 0.000000e+00
+  %12 = fcmp ogt <2 x float> %9, splat (float 1.000000e+00) ; 2 uses
+  %i.dx = extractelement <2 x i1> %12, i64 0
+  %i.dy = select i1 %i.dx, float 1.000000e+00, float %10
+  %i.dz = select i1 %11, float 0.000000e+00, float %i.dy
   store float %i.dz, ptr %5, align 4, !tbaa !13
-  %i.ea = extractelement <4 x i1> %12, i64 2
-  %i.eb = extractelement <4 x float> %10, i64 0
-  %15 = select i1 %i.ea, float 1.000000e+00, float %i.eb
-  %16 = extractelement <4 x i1> %11, i64 0
-  %i.ec = select i1 %16, float 0.000000e+00, float %15
+  %i.ea = extractelement <2 x i1> %12, i64 1
+  %i.eb = extractelement <2 x float> %9, i64 1
+  %i.ec = select i1 %i.ea, float 1.000000e+00, float %i.eb
   br label %.critedge.sink.split
 
 .critedge.sink.split:                             ; preds = %bb.d, %bb.o
