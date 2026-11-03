@@ -204,7 +204,6 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   %i.zx = extractelement <2 x float> %i.zu, i64 0 ; 2 uses
   %i.zy = tail call float @llvm.fmuladd.f32(float %i.zx, float %i.zx, float %i.zw)
   %i.zz = tail call float @llvm.fmuladd.f32(float %i.zv, float %i.zv, float %i.zy) ; 2 uses
-  %sqrt.i187 = tail call float @llvm.sqrt.f32(float %i.zz)
   %i.aaa = shufflevector <2 x float> %i.zl, <2 x float> poison, <2 x i32> <i32 1, i32 1>
   %i.aab = fmul <2 x float> %i.aaa, %i.zb
   %i.aac = shufflevector <2 x float> %i.zl, <2 x float> poison, <2 x i32> zeroinitializer
@@ -231,19 +230,19 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   %i.aaw = extractelement <4 x float> %i.aam, i64 1 ; 3 uses
   %i.aax = tail call float @llvm.fmuladd.f32(float %i.aaw, float %i.aaw, float %i.aav)
   %i.aay = tail call float @llvm.fmuladd.f32(float %i.aao, float %i.aao, float %i.aax)
-  %i.aaz = fmul float %i.aat, %i.aay
-  %12 = tail call float @sqrtf(float noundef %i.aaz) #11 ; 3 uses
+  %i.aaz = fmul float %i.aat, %i.aay              ; 2 uses
   %i.aba = fmul float %i.aap, %i.aau
   %i.abb = tail call float @llvm.fmuladd.f32(float %i.aai, float %i.aaw, float %i.aba)
   %i.abc = tail call float @llvm.fmuladd.f32(float %i.aas, float %i.aao, float %i.abb)
-  %i.abd = fcmp oeq float %12, 0.000000e+00
+  %i.abd = fcmp oeq float %i.aaz, 0.000000e+00
   %i.abe = fcmp oeq float %i.zz, 0.000000e+00
-  %i.abf = insertelement <2 x float> poison, float %12, i64 0
-  %i.abg = insertelement <2 x float> %i.abf, float %sqrt.i187, i64 1
-  %i.abh = fdiv <2 x float> splat (float 1.000000e+00), %i.abg ; 2 uses
+  %i.abf = insertelement <2 x float> poison, float %i.aaz, i64 0
+  %i.abg = insertelement <2 x float> %i.abf, float %i.zz, i64 1
+  %12 = tail call <2 x float> @llvm.sqrt.v2f32(<2 x float> %i.abg) ; 2 uses
+  %i.abh = fdiv <2 x float> splat (float 1.000000e+00), %12 ; 2 uses
   %i.abi = extractelement <2 x float> %i.abh, i64 0
   %i.abj = select i1 %i.abd, float 0.000000e+00, float %i.abi
-  %i.abk = fmul float %i.abj, %i.abc              ; 2 uses
+  %i.abk = fmul float %i.abc, %i.abj              ; 2 uses
   %i.abl = tail call float @llvm.fabs.f32(float %i.abk) ; 2 uses
   %i.abm = fcmp ogt float %i.abl, 1.000000e+00
   %i.abn = select i1 %i.abm, float 1.000000e+00, float %i.abl ; 3 uses
@@ -258,7 +257,8 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   %i.abw = extractelement <2 x float> %i.abh, i64 1
   %i.abx = select i1 %i.abe, float 0.000000e+00, float %i.abw
   %i.aby = fmul float %i.abx, %i.abv              ; 2 uses
-  %i.abz = fmul float %12, %i.aby
+  %13 = extractelement <2 x float> %12, i64 0
+  %i.abz = fmul float %13, %i.aby
   %.0.i = select i1 %i.vx, float %i.abz, float %i.aby ; 2 uses
   %i.aca = load <2 x float>, ptr %i.wk, align 4, !tbaa !52
   %i.acb = insertelement <2 x float> poison, float %.0.i, i64 0
@@ -606,6 +606,9 @@ declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <2 x float> @llvm.sqrt.v2f32(<2 x float>) #4
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

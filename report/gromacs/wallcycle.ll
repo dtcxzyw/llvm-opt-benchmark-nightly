@@ -204,7 +204,11 @@ bb.q:                                             ; preds = %bb.am
   br i1 %i.cs, label %.preheader493.split.us.split.us, label %.preheader492.us
 
 .preheader493.split.us.split.us:                  ; preds = %.preheader493.split.us
-  br i1 %i.cq, label %.preheader492.us.us.us, label %.preheader492.us.us
+  br i1 %i.cq, label %.preheader492.us.us.us, label %.preheader492.us.us.preheader
+
+.preheader492.us.us.preheader:                    ; preds = %.preheader493.split.us.split.us
+  %21 = call double @llvm.fabs.f64(double %i.bk)
+  br label %.preheader492.us.us
 
 .preheader492.us.us.us:                           ; preds = %.preheader493.split.us.split.us, %.split.us.us.split.us.us.split.us.us
   %indvars.iv559 = phi i64 [ %indvars.iv.next560, %.split.us.us.split.us.us.split.us.us ], [ 0, %.preheader493.split.us.split.us ] ; 3 uses
@@ -268,8 +272,8 @@ _ZL12print_cyclesP8_IO_FILEdPKciiidd.exit.us.us.us.us.us.us: ; preds = %bb.v, %b
   %.not480.us.us.us = icmp eq i64 %indvars.iv.next560, 60
   br i1 %.not480.us.us.us, label %.loopexit494, label %.preheader492.us.us.us
 
-.preheader492.us.us:                              ; preds = %.preheader493.split.us.split.us, %.split.us.us.split.us.us.split
-  %indvars.iv553 = phi i64 [ %indvars.iv.next554, %.split.us.us.split.us.us.split ], [ 0, %.preheader493.split.us.split.us ] ; 3 uses
+.preheader492.us.us:                              ; preds = %.preheader492.us.us.preheader, %.split.us.us.split.us.us.split
+  %indvars.iv553 = phi i64 [ 0, %.preheader492.us.us.preheader ], [ %indvars.iv.next554, %.split.us.us.split.us.us.split ] ; 3 uses
   %i.dm = getelementptr inbounds nuw [8 x i8], ptr @__const._ZL17enumValuetoString16WallCycleCounter.wallCycleCounterNames, i64 %indvars.iv553
   %i.dn = load ptr, ptr %i.dm, align 8, !tbaa !224
   %.idx667 = mul nuw nsw i64 %indvars.iv553, 1440
@@ -286,7 +290,7 @@ bb.w:                                             ; preds = %_ZL12print_cyclesP8
   %i.du = load i32, ptr %i.dt, align 8, !tbaa !64 ; 2 uses
   %i.dv = getelementptr inbounds nuw i8, ptr %i.dt, i64 8
   %i.dw = load i64, ptr %i.dv, align 8, !tbaa !65 ; 2 uses
-  %i.dx = uitofp i64 %i.dw to double              ; 2 uses
+  %i.dx = uitofp i64 %i.dw to double
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #27
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #27
@@ -310,7 +314,6 @@ bb.z:                                             ; preds = %bb.x
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y
-  %21 = fmul double %i.bk, %i.dx
   %i.ea = fmul nnan double %i.dx, 1.000000e-09
   %i.eb = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %0, ptr noundef nonnull @.str.108, ptr noundef nonnull %i.j, ptr noundef nonnull %i.g, ptr noundef nonnull %i.h, ptr noundef nonnull %i.i, double noundef %21, double noundef %i.ea, double noundef 0.000000e+00) #27 ; 0 uses
   br label %_ZL12print_cyclesP8_IO_FILEdPKciiidd.exit.us.us.us.us
@@ -712,6 +715,9 @@ declare i64 @llvm.umin.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.usub.sat.i64(i64, i64) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.fabs.f64(double) #17
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(write)
 declare void @llvm.masked.scatter.v4i32.v4p0(<4 x i32>, <4 x ptr>, <4 x i1>) #25
