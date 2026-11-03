@@ -204,11 +204,12 @@ bb.s:                                             ; preds = %bb.l
 .lr.ph.i1.i.i.i.i:                                ; preds = %bb.s
   %i.cm = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.cn = load i64, ptr %i.cm, align 8, !alias.scope !79, !noundef !5
-  %i.co = load i64, ptr %i.h, align 8, !alias.scope !79 ; 4 uses
+  %i.co = load i64, ptr %i.h, align 8, !alias.scope !79
+  %.fr60.i.i.i.i.i = freeze i64 %i.co             ; 4 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.cq = load i64, ptr %i.cp, align 8, !alias.scope !79 ; 2 uses
   %i.cr = sub i64 %i.bo, %i.cq
-  %invariant.op = sub i64 1, %i.co
+  %invariant.op = sub i64 1, %.fr60.i.i.i.i.i
   br label %.lr.ph.split.i.i.i.i.i
 
 ._crit_edge.i.i.i.i.i:                            ; preds = %bb.v, %bb.s
@@ -233,7 +234,7 @@ bb.t:                                             ; preds = %.lr.ph.split.i.i.i.
   br label %bb.v
 
 bb.u:                                             ; preds = %.lr.ph.split.i.i.i.i.i
-  %..i.i3.i.i.i.i = tail call noundef i64 @llvm.umax.i64(i64 %i.cs, i64 %i.co) ; 2 uses
+  %..i.i3.i.i.i.i = tail call noundef i64 @llvm.umax.i64(i64 %i.cs, i64 %.fr60.i.i.i.i.i) ; 2 uses
   %i.dc = icmp ult i64 %..i.i3.i.i.i.i, %i.bo
   br i1 %i.dc, label %.lr.ph, label %.preheader36.i.i.i.i.i.preheader
 
@@ -252,7 +253,7 @@ bb.w:                                             ; preds = %.lr.ph
   br i1 %i.dg, label %.lr.ph, label %.preheader36.i.i.i.i.i.preheader
 
 .preheader36.i.i.i.i.i.preheader:                 ; preds = %bb.w, %bb.u
-  %i.dh = icmp ult i64 %i.cs, %i.co
+  %i.dh = icmp ult i64 %i.cs, %.fr60.i.i.i.i.i
   br i1 %i.dh, label %.lr.ph115, label %.split.us.i.i.i.i.i
 
 .lr.ph:                                           ; preds = %bb.u, %bb.w
@@ -278,7 +279,7 @@ bb.w:                                             ; preds = %.lr.ph
   br label %bb.ah
 
 .lr.ph115:                                        ; preds = %.preheader36.i.i.i.i.i.preheader, %.preheader36.i.i.i.i.i
-  %.sroa.2.0.i.i.i.i.i114 = phi i64 [ %i.dq, %.preheader36.i.i.i.i.i ], [ %i.co, %.preheader36.i.i.i.i.i.preheader ]
+  %.sroa.2.0.i.i.i.i.i114 = phi i64 [ %i.dq, %.preheader36.i.i.i.i.i ], [ %.fr60.i.i.i.i.i, %.preheader36.i.i.i.i.i.preheader ]
   %i.dq = add i64 %.sroa.2.0.i.i.i.i.i114, -1     ; 6 uses
   %i.dr = icmp ult i64 %i.dq, %i.bo
   br i1 %i.dr, label %bb.x, label %.split32.us.i.i.i.i.i
@@ -423,12 +424,16 @@ bb.ad:                                            ; preds = %bb.ac, %.split.us.u
   br i1 %.not.us.i.i.i.i.i, label %bb.af, label %.preheader35.i.i.i.i.i.preheader
 
 .preheader35.i.i.i.i.i.preheader:                 ; preds = %.lr.ph.split.us.i.i.i.i.i
-  br i1 %exitcond.not.i.i.i.i.i117.not, label %.lr.ph119, label %.preheader.i10.i.i.i.i
+  br i1 %exitcond.not.i.i.i.i.i117.not, label %.lr.ph119, label %.preheader.split.i13.i.i.i.i
 
 .preheader35.i.i.i.i.i:                           ; preds = %.lr.ph119
   %i.ft = add i64 %.sroa.04.0.us.i.i.i.i.i118, 1  ; 2 uses
   %exitcond.not.i.i.i.i.i = icmp eq i64 %i.ft, %umax.i.i.i.i.i
-  br i1 %exitcond.not.i.i.i.i.i, label %.preheader.i10.i.i.i.i, label %.lr.ph119
+  br i1 %exitcond.not.i.i.i.i.i, label %.preheader.split.i13.i.i.i.i, label %.lr.ph119
+
+.preheader.split.i13.i.i.i.i:                     ; preds = %.preheader35.i.i.i.i.i.preheader, %.preheader35.i.i.i.i.i
+  %.not34.i.i.i.i.i = icmp eq i64 %.fr63.i.i.i.i, 0
+  br i1 %.not34.i.i.i.i.i, label %.split.us.i12.i.i.i.i, label %.split32.us.i14.i.i.i.i
 
 .lr.ph119:                                        ; preds = %.preheader35.i.i.i.i.i.preheader, %.preheader35.i.i.i.i.i
   %.sroa.04.0.us.i.i.i.i.i118 = phi i64 [ %i.ft, %.preheader35.i.i.i.i.i ], [ %.fr63.i.i.i.i, %.preheader35.i.i.i.i.i.preheader ] ; 4 uses
@@ -441,14 +446,6 @@ bb.ad:                                            ; preds = %bb.ac, %.split.us.u
   %i.fz = load i8, ptr %i.fy, align 1, !alias.scope !83, !noalias !80, !noundef !5
   %.not21.us.i.i.i.i.i = icmp eq i8 %i.fv, %i.fz
   br i1 %.not21.us.i.i.i.i.i, label %.preheader35.i.i.i.i.i, label %bb.ae
-
-.preheader.i10.i.i.i.i:                           ; preds = %.preheader35.i.i.i.i.i.preheader, %.preheader35.i.i.i.i.i
-  %.not34.i.i.i.i.i = icmp eq i64 %.fr63.i.i.i.i, 0
-  br i1 %.not34.i.i.i.i.i, label %.split.us.i12.i.i.i.i, label %.split32.us.i11.i.i.i.i
-
-.split32.us.i11.i.i.i.i:                          ; preds = %.preheader.i10.i.i.i.i
-  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.eh, i64 noundef range(i64 0, -9223372036854775808) %i.bo, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #36, !noalias !86
-  unreachable
 
 bb.ae:                                            ; preds = %.lr.ph119
   %i.ga = add i64 %i.fm, %i.ei
@@ -470,11 +467,15 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   store i64 %.val1.i.i.i, ptr %i.bp, align 8, !alias.scope !85
   br label %bb.ai
 
-.split.us.i12.i.i.i.i:                            ; preds = %.preheader.i10.us.us.i.i.i.i.preheader, %.preheader.i10.us.us.i.i.i.i, %.preheader.i10.i.i.i.i
-  %.us-phi.i.i.i.i = phi i64 [ %i.fm, %.preheader.i10.i.i.i.i ], [ %i.ek, %.preheader.i10.us.us.i.i.i.i ], [ %i.ek, %.preheader.i10.us.us.i.i.i.i.preheader ] ; 2 uses
+.split.us.i12.i.i.i.i:                            ; preds = %.preheader.i10.us.us.i.i.i.i.preheader, %.preheader.i10.us.us.i.i.i.i, %.preheader.split.i13.i.i.i.i
+  %.us-phi.i.i.i.i = phi i64 [ %i.fm, %.preheader.split.i13.i.i.i.i ], [ %i.ek, %.preheader.i10.us.us.i.i.i.i ], [ %i.ek, %.preheader.i10.us.us.i.i.i.i.preheader ] ; 2 uses
   %i.gf = add i64 %.us-phi.i.i.i.i, %i.bo         ; 2 uses
   store i64 %i.gf, ptr %i.bp, align 8, !alias.scope !85
   br label %bb.ah
+
+.split32.us.i14.i.i.i.i:                          ; preds = %.preheader.split.i13.i.i.i.i
+  tail call void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.eh, i64 noundef range(i64 0, -9223372036854775808) %i.bo, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @11) #36, !noalias !86
+  unreachable
 
 bb.ah:                                            ; preds = %.split.us.i12.i.i.i.i, %.split.us.i.i.i.i.i, %.loopexit.i.i.i.i, %.loopexit51.i.i.i, %.loopexit51.thread.i.i.i
   %.sroa.8.0.ph.i.i.i = phi i64 [ %.val1.i.i.i, %.loopexit51.i.i.i ], [ %.lcssa46.i.i.i, %.loopexit.i.i.i.i ], [ %i.dp, %.split.us.i.i.i.i.i ], [ %i.gf, %.split.us.i12.i.i.i.i ], [ %.val1.i.i.i, %.loopexit51.thread.i.i.i ]

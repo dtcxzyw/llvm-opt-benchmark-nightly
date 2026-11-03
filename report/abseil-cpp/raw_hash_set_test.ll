@@ -205,7 +205,7 @@ bb.a:
   %26 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %27 = alloca %"class.std::basic_string_view", align 8 ; 3 uses
   %28 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
-  %29 = alloca %"struct.testing::internal::AssertionResultExpectation", align 8 ; 12 uses
+  %29 = alloca %"struct.testing::internal::AssertionResultExpectation", align 8 ; 13 uses
   %30 = alloca %"class.testing::Message", align 8 ; 8 uses
   %31 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %32 = alloca %"class.std::basic_string_view", align 8 ; 3 uses
@@ -608,15 +608,19 @@ bb.ca:                                            ; preds = %_ZNKSt14default_del
   %i.ir = and i64 %i.iq, 255
   %i.is = xor i64 %notmask.i.i.i.i.i.i336, -1     ; 2 uses
   %.val14.i.i337 = load ptr, ptr %i.i, align 8    ; 3 uses
+  br i1 %i.io, label %.lr.ph465.split.us.preheader, label %.lr.ph465.split
+
+.lr.ph465.split.us.preheader:                     ; preds = %.lr.ph465
   %.not.i.i.i355 = icmp ult i64 %.val1.i.i244.pre, 131072
-  br i1 %i.io, label %.lr.ph465.split.us.a, label %.lr.ph465.split
+  br i1 %.not.i.i.i355, label %.lr.ph465.split.us.a, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_10SizedValueILi24EEELb0ELb0EEEJEE10find_largeIS6_EENS8_8iteratorERKS6_m.exit.i348.us
 
-.lr.ph465.split.us.a:                             ; preds = %.lr.ph465, %.critedge112.us
-  %storemerge93464.us = phi i64 [ %i.ix, %.critedge112.us ], [ 0, %.lr.ph465 ] ; 3 uses
+.lr.ph465.split.us.a:                             ; preds = %.lr.ph465.split.us.preheader
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #43
-  br i1 %.not.i.i.i355, label %.split.us.sink.split, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_10SizedValueILi24EEELb0ELb0EEEJEE10find_largeIS6_EENS8_8iteratorERKS6_m.exit.i348.us
+  br label %.split.us.sink.split
 
-_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_10SizedValueILi24EEELb0ELb0EEEJEE10find_largeIS6_EENS8_8iteratorERKS6_m.exit.i348.us: ; preds = %.lr.ph465.split.us.a
+_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_10SizedValueILi24EEELb0ELb0EEEJEE10find_largeIS6_EENS8_8iteratorERKS6_m.exit.i348.us: ; preds = %.lr.ph465.split.us.preheader, %.critedge112.us
+  %storemerge93464.us = phi i64 [ %i.ix, %.critedge112.us ], [ 0, %.lr.ph465.split.us.preheader ] ; 3 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %29) #43
   %i.it = shl i64 %storemerge93464.us, 32
   %i.iu = ashr exact i64 %i.it, 32
   %.val5.i.i357.us = load i64, ptr %.val14.i.i337, align 8, !tbaa !166
@@ -631,7 +635,7 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111Val
   call void @llvm.lifetime.end.p0(ptr nonnull %29) #43
   %i.ix = add nuw i64 %storemerge93464.us, 1      ; 2 uses
   %exitcond488.not = icmp eq i64 %i.ix, %i.me
-  br i1 %exitcond488.not, label %.critedge118, label %.lr.ph465.split.us.a, !llvm.loop !11802
+  br i1 %exitcond488.not, label %.critedge118, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_10SizedValueILi24EEELb0ELb0EEEJEE10find_largeIS6_EENS8_8iteratorERKS6_m.exit.i348.us, !llvm.loop !11802
 
 .lr.ph462:                                        ; preds = %.critedge, %.critedge108
   %storemerge85460 = phi i64 [ %i.md, %.critedge108 ], [ 0, %.critedge ] ; 5 uses
@@ -990,8 +994,8 @@ bb.cz:                                            ; preds = %._crit_edge.i.i346
   %i.nm = add i64 %i.nl, %.sroa.629.0.i.i340
   br label %bb.cx, !llvm.loop !58
 
-.split.us.sink.split:                             ; preds = %.lr.ph465.split.us.a, %._crit_edge.i.i346
-  %.us-phi.ph = phi i64 [ %storemerge93464, %._crit_edge.i.i346 ], [ 0, %.lr.ph465.split.us.a ]
+.split.us.sink.split:                             ; preds = %._crit_edge.i.i346, %.lr.ph465.split.us.a
+  %.us-phi.ph = phi i64 [ 0, %.lr.ph465.split.us.a ], [ %storemerge93464, %._crit_edge.i.i346 ]
   store i8 0, ptr %29, align 8, !tbaa !179
   store ptr null, ptr %i.t, align 8, !tbaa !189
   store i8 1, ptr %i.u, align 8, !tbaa !191

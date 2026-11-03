@@ -204,6 +204,7 @@ _RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCsbqH9stoieM8_5alloc5boxed3BoxDG0_I
 ; Function Attrs: nounwind nonlazybind uwtable
 define hidden void @_RNvXs0_NtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector10static_vecINtB5_9StaticVecNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix6thread6ThreadKj80_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common(ptr noalias nofree noundef align 8 dereferenceable(4104) %0) unnamed_addr #0 {
 bb.a:
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !13468)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4096 ; 2 uses
   %.val.i = load i64, ptr %i.a, align 8, !alias.scope !13468, !noundef !8 ; 4 uses
   %.not5.i = icmp eq i64 %.val.i, 0
@@ -215,7 +216,7 @@ bb.a:
 
 .lr.ph.i.us:                                      ; preds = %.lr.ph.preheader.i, %.lr.ph.i.us
   %.sroa.0.06.i.us = phi i64 [ %i.b, %.lr.ph.i.us ], [ %.val.i, %.lr.ph.preheader.i ]
-  %i.b = add i64 %.sroa.0.06.i.us, -1             ; 3 uses
+  %i.b = add nsw i64 %.sroa.0.06.i.us, -1         ; 3 uses
   %i.c = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %i.b
   tail call void @_RNvXs5_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix6threadNtB5_6ThreadNtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.c) #24
   %.not.i.us = icmp eq i64 %i.b, 0
@@ -223,7 +224,7 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %.lr.ph.preheader.i
   %i.d = add i64 %.val.i, -1
-  tail call void @_RNvNtCs8Chj7Szqq0n_4core9panicking18panic_bounds_check(i64 noundef %i.d, i64 noundef 128, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1025) #27
+  tail call void @_RNvNtCs8Chj7Szqq0n_4core9panicking18panic_bounds_check(i64 noundef %i.d, i64 noundef 128, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1025) #27, !noalias !13468
   unreachable
 
 _RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector10static_vec9StaticVecNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix6thread6ThreadKj80_EINtB7_6VectorB1d_E5clearCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit: ; preds = %.lr.ph.i.us, %bb.a

@@ -202,11 +202,12 @@ bb.t:                                             ; preds = %bb.p
 .lr.ph.i8.i.i:                                    ; preds = %bb.t
   %i.dp = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.dq = load i64, ptr %i.dp, align 8, !alias.scope !1278, !noalias !1266, !noundef !4
-  %i.dr = load i64, ptr %i.ci, align 8, !alias.scope !1278, !noalias !1266 ; 4 uses
+  %i.dr = load i64, ptr %i.ci, align 8, !alias.scope !1278, !noalias !1266
+  %.fr60.i.i.i = freeze i64 %i.dr                 ; 4 uses
   %i.ds = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.dt = load i64, ptr %i.ds, align 8, !alias.scope !1278, !noalias !1266 ; 2 uses
   %i.du = sub i64 %i.ct, %i.dt
-  %invariant.op = sub i64 1, %i.dr
+  %invariant.op = sub i64 1, %.fr60.i.i.i
   br label %.lr.ph.split.i.i.i
 
 .lr.ph.split.i.i.i:                               ; preds = %bb.w, %.lr.ph.i8.i.i
@@ -227,7 +228,7 @@ bb.u:                                             ; preds = %.lr.ph.split.i.i.i
   br label %bb.w
 
 bb.v:                                             ; preds = %.lr.ph.split.i.i.i
-  %i.ed = tail call i64 @llvm.umax.i64(i64 %i.dr, i64 %.sink70.i.i22.i) ; 2 uses
+  %i.ed = tail call i64 @llvm.umax.i64(i64 %.fr60.i.i.i, i64 %.sink70.i.i22.i) ; 2 uses
   %i.ee = icmp ult i64 %i.ed, %i.ct
   br i1 %i.ee, label %.lr.ph, label %.preheader36.i.i.i.preheader
 
@@ -244,7 +245,7 @@ bb.x:                                             ; preds = %.lr.ph
   br i1 %i.ei, label %.lr.ph, label %.preheader36.i.i.i.preheader
 
 .preheader36.i.i.i.preheader:                     ; preds = %bb.x, %bb.v
-  %i.ej = icmp ult i64 %.sink70.i.i22.i, %i.dr
+  %i.ej = icmp ult i64 %.sink70.i.i22.i, %.fr60.i.i.i
   br i1 %i.ej, label %.lr.ph99, label %_RINvMNtCsf3Ta7LF998c_4core3stre4findReECs3v5ql5U6hxj_6fontir.exit.thread5
 
 .lr.ph:                                           ; preds = %bb.v, %bb.x
@@ -264,7 +265,7 @@ bb.x:                                             ; preds = %.lr.ph
   br i1 %i.eq, label %.lr.ph99, label %_RINvMNtCsf3Ta7LF998c_4core3stre4findReECs3v5ql5U6hxj_6fontir.exit.thread5
 
 .lr.ph99:                                         ; preds = %.preheader36.i.i.i.preheader, %.preheader36.i.i.i
-  %.sroa.2.0.i.i.i98 = phi i64 [ %i.er, %.preheader36.i.i.i ], [ %i.dr, %.preheader36.i.i.i.preheader ]
+  %.sroa.2.0.i.i.i98 = phi i64 [ %i.er, %.preheader36.i.i.i ], [ %.fr60.i.i.i, %.preheader36.i.i.i.preheader ]
   %i.er = add i64 %.sroa.2.0.i.i.i98, -1          ; 6 uses
   %i.es = icmp ult i64 %i.er, %i.ct
   br i1 %i.es, label %bb.y, label %.split32.us.i.i.i
@@ -408,12 +409,16 @@ bb.ae:                                            ; preds = %bb.ad, %.split.us.i
   br i1 %.not.us.i.i.i, label %bb.ag, label %.preheader35.i.i.i.preheader
 
 .preheader35.i.i.i.preheader:                     ; preds = %.lr.ph.split.us.i.i.i
-  br i1 %exitcond.not.i16.i.i101.not, label %.lr.ph103, label %.preheader.i18.i.i
+  br i1 %exitcond.not.i16.i.i101.not, label %.lr.ph103, label %.preheader.split.i20.i.i
 
 .preheader35.i.i.i:                               ; preds = %.lr.ph103
   %i.gq = add i64 %.sroa.04.0.us.i.i.i102, 1      ; 2 uses
   %exitcond.not.i16.i.i = icmp eq i64 %i.gq, %umax.i.i.i
-  br i1 %exitcond.not.i16.i.i, label %.preheader.i18.i.i, label %.lr.ph103
+  br i1 %exitcond.not.i16.i.i, label %.preheader.split.i20.i.i, label %.lr.ph103
+
+.preheader.split.i20.i.i:                         ; preds = %.preheader35.i.i.i.preheader, %.preheader35.i.i.i
+  %.not34.i.i.i = icmp eq i64 %.fr214.i.i, 0
+  br i1 %.not34.i.i.i, label %_RINvMNtCsf3Ta7LF998c_4core3stre4findReECs3v5ql5U6hxj_6fontir.exit.thread5, label %.split32.us.i21.i.i
 
 .lr.ph103:                                        ; preds = %.preheader35.i.i.i.preheader, %.preheader35.i.i.i
   %.sroa.04.0.us.i.i.i102 = phi i64 [ %i.gq, %.preheader35.i.i.i ], [ %.fr214.i.i, %.preheader35.i.i.i.preheader ] ; 4 uses
@@ -426,14 +431,6 @@ bb.ae:                                            ; preds = %bb.ad, %.split.us.i
   %i.gw = load i8, ptr %i.gv, align 1, !alias.scope !1281, !noalias !1273, !noundef !4
   %.not21.us.i.i.i = icmp eq i8 %i.gs, %i.gw
   br i1 %.not21.us.i.i.i, label %.preheader35.i.i.i, label %bb.af
-
-.preheader.i18.i.i:                               ; preds = %.preheader35.i.i.i.preheader, %.preheader35.i.i.i
-  %.not34.i.i.i = icmp eq i64 %.fr214.i.i, 0
-  br i1 %.not34.i.i.i, label %_RINvMNtCsf3Ta7LF998c_4core3stre4findReECs3v5ql5U6hxj_6fontir.exit.thread5, label %.split32.us.i19.i.i
-
-.split32.us.i19.i.i:                              ; preds = %.preheader.i18.i.i
-  tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.fi, i64 noundef range(i64 0, -9223372036854775808) %i.ct, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #25, !noalias !1284
-  unreachable
 
 bb.af:                                            ; preds = %.lr.ph103
   %.reass281.i.reass.i = add i64 %reass.sub98.i, %.sink.i17.i25.i
@@ -450,12 +447,16 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   %i.ha = icmp ult i64 %i.gz, %i.cp
   br i1 %i.ha, label %.lr.ph.split.us.i.i.i, label %_RINvMNtCsf3Ta7LF998c_4core3stre4findReECs3v5ql5U6hxj_6fontir.exit.thread
 
+.split32.us.i21.i.i:                              ; preds = %.preheader.split.i20.i.i
+  tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.fi, i64 noundef range(i64 0, -9223372036854775808) %i.ct, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #25, !noalias !1284
+  unreachable
+
 _RINvMNtCsf3Ta7LF998c_4core3stre4findReECs3v5ql5U6hxj_6fontir.exit.thread: ; preds = %bb.w, %bb.ah, %bb.ae, %bb.s, %.preheader.i.i, %bb.o, %bb.r, %bb.t, %bb.ab
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1266
   br label %bb.be
 
-_RINvMNtCsf3Ta7LF998c_4core3stre4findReECs3v5ql5U6hxj_6fontir.exit.thread5: ; preds = %.preheader36.i.i.i.preheader, %.preheader36.i.i.i, %.preheader.i18.us.i.i.us.preheader, %.preheader.i18.us.i.i.us, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3v5ql5U6hxj_6fontir.exit12.i.i.us.i.i, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3v5ql5U6hxj_6fontir.exit14.i.i.us.i.i, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3v5ql5U6hxj_6fontir.exit16.i.i.us.i.i, %bb.n, %bb.g, %bb.m, %.preheader.i18.i.i, %.loopexit42.i.i
-  %.ph = phi i64 [ %i.dm, %.loopexit42.i.i ], [ %.sink71.i.i19.i, %.preheader36.i.i.i ], [ %.sink.i17.i25.i, %.preheader.i18.i.i ], [ %i.n, %bb.m ], [ %.promoted156.i.i, %bb.g ], [ %i.bm, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3v5ql5U6hxj_6fontir.exit12.i.i.us.i.i ], [ %i.bm, %bb.n ], [ %i.bm, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3v5ql5U6hxj_6fontir.exit16.i.i.us.i.i ], [ %i.bm, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3v5ql5U6hxj_6fontir.exit14.i.i.us.i.i ], [ %.sink.i17.i25.i.us, %.preheader.i18.us.i.i.us.preheader ], [ %.sink.i17.i25.i.us, %.preheader.i18.us.i.i.us ], [ %.sink71.i.i19.i, %.preheader36.i.i.i.preheader ]
+_RINvMNtCsf3Ta7LF998c_4core3stre4findReECs3v5ql5U6hxj_6fontir.exit.thread5: ; preds = %.preheader36.i.i.i.preheader, %.preheader36.i.i.i, %.preheader.i18.us.i.i.us.preheader, %.preheader.i18.us.i.i.us, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3v5ql5U6hxj_6fontir.exit12.i.i.us.i.i, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3v5ql5U6hxj_6fontir.exit14.i.i.us.i.i, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3v5ql5U6hxj_6fontir.exit16.i.i.us.i.i, %bb.n, %bb.g, %bb.m, %.preheader.split.i20.i.i, %.loopexit42.i.i
+  %.ph = phi i64 [ %i.dm, %.loopexit42.i.i ], [ %.sink71.i.i19.i, %.preheader36.i.i.i ], [ %.sink.i17.i25.i, %.preheader.split.i20.i.i ], [ %i.n, %bb.m ], [ %.promoted156.i.i, %bb.g ], [ %i.bm, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3v5ql5U6hxj_6fontir.exit12.i.i.us.i.i ], [ %i.bm, %bb.n ], [ %i.bm, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3v5ql5U6hxj_6fontir.exit16.i.i.us.i.i ], [ %i.bm, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3v5ql5U6hxj_6fontir.exit14.i.i.us.i.i ], [ %.sink.i17.i25.i.us, %.preheader.i18.us.i.i.us.preheader ], [ %.sink.i17.i25.i.us, %.preheader.i18.us.i.i.us ], [ %.sink71.i.i19.i, %.preheader36.i.i.i.preheader ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1266
   br label %bb.ai
 

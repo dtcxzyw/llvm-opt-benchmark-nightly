@@ -90,7 +90,7 @@ bb.c:                                             ; preds = %bb.a
   call void @_RNvMsu_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcher3new(ptr noalias noundef nonnull sret([104 x i8]) align 8 captures(none) dereferenceable(104) %i.e, ptr noalias noundef nonnull readonly captures(address, read_provenance) %.sroa.0.0, i64 noundef %.sroa.7.1, ptr noalias noundef nonnull readonly captures(address, read_provenance) @0, i64 noundef 1)
   %.sroa.038.sroa.0.0.copyload = load i64, ptr %i.e, align 8
   %.sroa.038.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %.sroa.038.sroa.4.0.copyload = load i64, ptr %.sroa.038.sroa.4.0..sroa_idx, align 8 ; 28 uses
+  %.sroa.038.sroa.4.0.copyload = load i64, ptr %.sroa.038.sroa.4.0..sroa_idx, align 8 ; 29 uses
   %.sroa.038.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %.sroa.038.sroa.6.0.copyload = load i64, ptr %.sroa.038.sroa.6.0..sroa_idx, align 8 ; 6 uses
   %.sroa.038.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 32
@@ -316,8 +316,10 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCs1LivM9IBWqb_12object_store4path5
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.038.sroa.14.0.copyload) ]
   %i.cj = sub i64 %.sroa.038.sroa.15.0.copyload, %.sroa.038.sroa.6.0.copyload
   %umax49.i88.us = tail call i64 @llvm.umax.i64(i64 %.sroa.038.sroa.4.0.copyload, i64 range(i64 0, -9223372036854775808) %.sroa.038.sroa.15.0.copyload)
-  %i.ck = add i64 %.sroa.038.sroa.4.0.copyload, -1
+  %i.ck = add i64 %.sroa.038.sroa.4.0.copyload, -1 ; 2 uses
   %.first_iter = icmp ult i64 %i.ck, %.sroa.038.sroa.15.0.copyload
+  %.first_iter.fr = freeze i1 %.first_iter
+  %.not181.us = icmp eq i64 %.sroa.038.sroa.4.0.copyload, 0
   %invariant.op = sub i64 1, %.sroa.038.sroa.4.0.copyload
   %exitcond.not.i90.us375.not = icmp ult i64 %.sroa.038.sroa.4.0.copyload, %.sroa.038.sroa.15.0.copyload
   %invariant.op459 = sub i64 1, %.sroa.038.sroa.4.0.copyload
@@ -445,72 +447,83 @@ bb.af:                                            ; preds = %bb.v
   br i1 %i.ed, label %bb.al, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.lr.ph.i85.us
-  br i1 %exitcond.not.i90.us375.not, label %.lr.ph377, label %.preheader.us.preheader.a
+  br i1 %exitcond.not.i90.us375.not, label %bb.ai, label %.preheader.us.preheader
 
-.preheader:                                       ; preds = %bb.ag
-  %i.ee = add nuw i64 %.sroa.02.0.i89.us376, 1    ; 2 uses
+.preheader:                                       ; preds = %bb.aj
+  %i.ee = add nuw i64 %.sroa.02.0.i89.us379, 1    ; 2 uses
   %exitcond.not.i90.us = icmp eq i64 %i.ee, %umax49.i88.us
-  br i1 %exitcond.not.i90.us, label %.preheader.us.preheader.a, label %.lr.ph377
+  br i1 %exitcond.not.i90.us, label %.preheader.us.preheader, label %bb.ai
 
-.preheader.us.preheader.a:                        ; preds = %.preheader, %.preheader.preheader
-  br i1 %.not181.us378, label %.preheader.us.preheader._crit_edge, label %.lr.ph380.a
+.preheader.us.preheader:                          ; preds = %.preheader, %.preheader.preheader
+  br i1 %.first_iter.fr, label %.preheader.us.us.preheader, label %.lr.ph380.a
 
-.lr.ph377:                                        ; preds = %.preheader.preheader, %.preheader
-  %.sroa.02.0.i89.us376 = phi i64 [ %i.ee, %.preheader ], [ %.sroa.038.sroa.4.0.copyload, %.preheader.preheader ] ; 4 uses
-  %i.ef = add i64 %.sroa.02.0.i89.us376, %i.dw    ; 2 uses
+.preheader.us.us.preheader:                       ; preds = %.preheader.us.preheader
+  br i1 %.not181.us378, label %.preheader.us.preheader._crit_edge, label %.lr.ph377
+
+.preheader.us.preheader.a:                        ; preds = %bb.ag
+  %.not181.us.us = icmp eq i64 %3, 0
+  br i1 %.not181.us.us, label %.preheader.us.preheader._crit_edge, label %.lr.ph377
+
+.lr.ph377:                                        ; preds = %.preheader.us.us.preheader, %.preheader.us.preheader.a
+  %.sroa.02.0.i89.us376 = phi i64 [ %3, %.preheader.us.preheader.a ], [ %.sroa.038.sroa.4.0.copyload, %.preheader.us.us.preheader ]
+  %3 = add i64 %.sroa.02.0.i89.us376, -1          ; 4 uses
+  %i.ef = add i64 %3, %i.dw                       ; 3 uses
   %i.eg = icmp ult i64 %i.ef, %.sroa.038.sroa.13.0.copyload
-  br i1 %i.eg, label %bb.ag, label %.split239.us
+  br i1 %i.eg, label %bb.ag, label %bb.ah
 
 bb.ag:                                            ; preds = %.lr.ph377
-  %i.eh = getelementptr inbounds nuw i8, ptr %.sroa.038.sroa.14.0.copyload, i64 %.sroa.02.0.i89.us376
+  %i.eh = getelementptr inbounds nuw i8, ptr %.sroa.038.sroa.14.0.copyload, i64 %3
   %i.ei = load i8, ptr %i.eh, align 1, !alias.scope !53, !noundef !5
   %i.ej = getelementptr inbounds nuw i8, ptr %.sroa.038.sroa.12.0.copyload, i64 %i.ef
   %i.ek = load i8, ptr %i.ej, align 1, !alias.scope !52, !noundef !5
   %.not21.i92.us.a = icmp eq i8 %i.ei, %i.ek
-  br i1 %.not21.i92.us.a, label %.preheader, label %bb.ah
+  br i1 %.not21.i92.us.a, label %.preheader.us.preheader.a, label %.preheader.us
 
-bb.ah:                                            ; preds = %bb.ag
-  %.reass337.reass = add i64 %i.dw, %invariant.op459
-  %3 = add i64 %.reass337.reass, %.sroa.02.0.i89.us376
+bb.ah:                                            ; preds = %.lr.ph377
+  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.ef, i64 noundef range(i64 0, -9223372036854775808) %.sroa.038.sroa.13.0.copyload, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #21, !noalias !54
+  unreachable
+
+.preheader.us:                                    ; preds = %bb.ag
+  %4 = add i64 %.sroa.038.sroa.6.0.copyload, %i.dw
   br label %bb.am
 
-.preheader.us:                                    ; preds = %bb.aj
-  %.not181.us = icmp eq i64 %4, 0
-  br i1 %.not181.us, label %.preheader.us.preheader._crit_edge, label %.lr.ph380.a
+.lr.ph380.a:                                      ; preds = %.preheader.us.preheader
+  br i1 %.not181.us, label %.preheader.us.preheader._crit_edge, label %.split243.us
 
-.lr.ph380.a:                                      ; preds = %.preheader.us.preheader.a, %.preheader.us
-  %.sroa.2.0.i93.us379 = phi i64 [ %4, %.preheader.us ], [ %.sroa.038.sroa.4.0.copyload, %.preheader.us.preheader.a ]
-  %4 = add i64 %.sroa.2.0.i93.us379, -1           ; 5 uses
-  br i1 %.first_iter, label %bb.ai, label %.split243.us
-
-bb.ai:                                            ; preds = %.lr.ph380.a
-  %i.el = add i64 %4, %i.dw                       ; 3 uses
+bb.ai:                                            ; preds = %.preheader.preheader, %.preheader
+  %.sroa.02.0.i89.us379 = phi i64 [ %i.ee, %.preheader ], [ %.sroa.038.sroa.4.0.copyload, %.preheader.preheader ] ; 4 uses
+  %i.el = add i64 %.sroa.02.0.i89.us379, %i.dw    ; 2 uses
   %i.em = icmp ult i64 %i.el, %.sroa.038.sroa.13.0.copyload
-  br i1 %i.em, label %bb.aj, label %.split246.us
+  br i1 %i.em, label %bb.aj, label %.split239.us
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.en = getelementptr inbounds nuw i8, ptr %.sroa.038.sroa.14.0.copyload, i64 %4
+  %i.en = getelementptr inbounds nuw i8, ptr %.sroa.038.sroa.14.0.copyload, i64 %.sroa.02.0.i89.us379
   %i.eo = load i8, ptr %i.en, align 1, !alias.scope !53, !noundef !5
   %i.ep = getelementptr inbounds nuw i8, ptr %.sroa.038.sroa.12.0.copyload, i64 %i.el
   %i.eq = load i8, ptr %i.ep, align 1, !alias.scope !52, !noundef !5
   %.not.i94.us = icmp eq i8 %i.eo, %i.eq
-  br i1 %.not.i94.us, label %.preheader.us, label %bb.ak
+  br i1 %.not.i94.us, label %.preheader, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
-  %i.er = add i64 %.sroa.038.sroa.6.0.copyload, %i.dw
+  %.reass343.reass = add i64 %i.dw, %invariant.op459
+  %i.er = add i64 %.reass343.reass, %.sroa.02.0.i89.us379
   br label %bb.am
+
+.split243.us:                                     ; preds = %.lr.ph380.a
+  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.ck, i64 noundef range(i64 0, -9223372036854775808) %.sroa.038.sroa.15.0.copyload, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #21, !noalias !54
+  unreachable
 
 bb.al:                                            ; preds = %.lr.ph.i85.us
   %i.es = add i64 %i.dw, %.sroa.038.sroa.15.0.copyload
   br label %bb.am
 
-bb.am:                                            ; preds = %bb.al, %bb.ak, %bb.ah
-  %i.et = phi i64 [ %3, %bb.ah ], [ %i.es, %bb.al ], [ %i.er, %bb.ak ] ; 2 uses
+bb.am:                                            ; preds = %bb.al, %.preheader.us, %bb.ak
+  %i.et = phi i64 [ %i.er, %bb.ak ], [ %i.es, %bb.al ], [ %4, %.preheader.us ] ; 2 uses
   %i.eu = add i64 %i.et, %i.o                     ; 2 uses
   %i.ev = icmp ult i64 %i.eu, %.sroa.038.sroa.13.0.copyload
   br i1 %i.ev, label %.lr.ph.i85.us, label %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalReE4nextCsdrBSO4t3gk1_22influxdb3_test_helpers.exit.us
 
-.preheader.us.preheader._crit_edge:               ; preds = %.preheader.us.preheader.a, %.preheader.us
+.preheader.us.preheader._crit_edge:               ; preds = %.preheader.us.us.preheader, %.preheader.us.preheader.a, %.lr.ph380.a
   %i.ew = add i64 %i.dw, %.sroa.038.sroa.15.0.copyload ; 2 uses
   br label %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalReE4nextCsdrBSO4t3gk1_22influxdb3_test_helpers.exit.us
 
@@ -711,15 +724,7 @@ _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
 .loopexit19.i:                                    ; preds = %bb.as
   br i1 %.sroa.998.sroa.0.0222, label %_RNvMsf_NtNtCs4NRVxsYgnAr_4core3str4iterINtB5_13SplitInternalReE4nextCsdrBSO4t3gk1_22influxdb3_test_helpers.exit, label %bb.be
 
-.split243.us:                                     ; preds = %.lr.ph380.a
-  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %4, i64 noundef range(i64 0, -9223372036854775808) %.sroa.038.sroa.15.0.copyload, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #21, !noalias !54
-  unreachable
-
-.split246.us:                                     ; preds = %bb.ai
-  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.el, i64 noundef range(i64 0, -9223372036854775808) %.sroa.038.sroa.13.0.copyload, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #21, !noalias !54
-  unreachable
-
-.split239.us:                                     ; preds = %.lr.ph377
+.split239.us:                                     ; preds = %bb.ai
   %i.ho = add i64 %i.dw, %.sroa.038.sroa.4.0.copyload
   %umax.i91 = call i64 @llvm.umax.i64(i64 range(i64 0, -9223372036854775808) %.sroa.038.sroa.13.0.copyload, i64 %i.ho)
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %umax.i91, i64 noundef range(i64 0, -9223372036854775808) %.sroa.038.sroa.13.0.copyload, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #21, !noalias !54

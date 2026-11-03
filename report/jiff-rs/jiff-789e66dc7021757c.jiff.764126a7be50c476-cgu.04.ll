@@ -204,11 +204,12 @@ bb.r:                                             ; preds = %bb.n
   %i.cx = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.cy = load i64, ptr %i.cx, align 8, !alias.scope !56, !noundef !5
   %i.cz = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.da = load i64, ptr %i.cz, align 8, !alias.scope !56 ; 6 uses
+  %i.da = load i64, ptr %i.cz, align 8, !alias.scope !56
+  %.fr80.i.i = freeze i64 %i.da                   ; 6 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.dc = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.dd = load i64, ptr %i.dc, align 8, !alias.scope !56 ; 2 uses
-  %umax71.i.i = tail call i64 @llvm.umax.i64(i64 %i.da, i64 range(i64 0, -9223372036854775808) %i.cj) ; 2 uses
+  %umax71.i.i = tail call i64 @llvm.umax.i64(i64 %.fr80.i.i, i64 range(i64 0, -9223372036854775808) %i.cj) ; 2 uses
   %.promoted36.i.i = load i64, ptr %i.db, align 8, !alias.scope !56
   br label %.lr.ph.split.i.i
 
@@ -226,7 +227,7 @@ bb.r:                                             ; preds = %bb.n
   br i1 %.not.i.i, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph.split.i.i
-  %..i.i5.i = tail call noundef i64 @llvm.umin.i64(i64 %i.de, i64 %i.da) ; 2 uses
+  %..i.i5.i = tail call noundef i64 @llvm.umin.i64(i64 %i.de, i64 %.fr80.i.i) ; 2 uses
   %.not19.i.i17 = icmp eq i64 %..i.i5.i, 0
   br i1 %.not19.i.i17, label %.preheader46.i.i, label %.lr.ph19
 
@@ -242,8 +243,8 @@ bb.u:                                             ; preds = %bb.y
   br i1 %.not19.i.i, label %.preheader46.i.i, label %.lr.ph19
 
 .preheader46.i.i:                                 ; preds = %bb.u, %bb.s
-  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %i.de, i64 %i.da)
-  %exitcond.not.i.i20.not = icmp ult i64 %i.da, %i.de
+  %umax.i.i = tail call i64 @llvm.umax.i64(i64 %i.de, i64 %.fr80.i.i)
+  %exitcond.not.i.i20.not = icmp ult i64 %.fr80.i.i, %i.de
   br i1 %exitcond.not.i.i20.not, label %.lr.ph22, label %_RNvXsw_NtNtCs3oUPovFnLWP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher15next_match_back.exit
 
 .lr.ph19:                                         ; preds = %bb.s, %bb.u
@@ -258,7 +259,7 @@ bb.v:                                             ; preds = %bb.w
   br i1 %exitcond.not.i.i, label %_RNvXsw_NtNtCs3oUPovFnLWP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher15next_match_back.exit, label %.lr.ph22
 
 .lr.ph22:                                         ; preds = %.preheader46.i.i, %bb.v
-  %.sroa.09.0.i.i21 = phi i64 [ %i.dq, %bb.v ], [ %i.da, %.preheader46.i.i ] ; 4 uses
+  %.sroa.09.0.i.i21 = phi i64 [ %i.dq, %bb.v ], [ %.fr80.i.i, %.preheader46.i.i ] ; 4 uses
   %exitcond70.not.i.i = icmp eq i64 %.sroa.09.0.i.i21, %umax71.i.i
   br i1 %exitcond70.not.i.i, label %.split43.i.i, label %bb.w
 
@@ -297,7 +298,7 @@ bb.y:                                             ; preds = %.lr.ph19
   unreachable
 
 bb.z:                                             ; preds = %bb.y
-  %.neg.i.i = sub i64 %.sink99.i.i24, %i.da
+  %.neg.i.i = sub i64 %.sink99.i.i24, %.fr80.i.i
   %i.ee = add i64 %.neg.i.i, %i.do
   br label %bb.t
 
@@ -411,7 +412,7 @@ bb.ac:                                            ; preds = %bb.ab, %.split.us.u
   %i.fr = shl nuw i64 1, %i.fq
   %i.fs = and i64 %i.fr, %i.ei
   %.not.us.i.i34 = icmp eq i64 %i.fs, 0
-  br i1 %.not.us.i.i34, label %.lr.ph, label %.preheader45.i.preheader.i
+  br i1 %.not.us.i.i34, label %.lr.ph, label %.split.us.i12.i
 
 .lr.ph.split.us.i.us93.i:                         ; preds = %.lr.ph.split.us.i.us93.i.preheader, %bb.ae
   %i.ft = phi i64 [ %i.gj, %bb.ae ], [ %i.ef, %.lr.ph.split.us.i.us93.i.preheader ] ; 6 uses
@@ -463,17 +464,17 @@ bb.ae:                                            ; preds = %bb.ad, %.lr.ph.spli
   %i.gp = shl nuw i64 1, %i.go
   %i.gq = and i64 %i.gp, %i.ei
   %.not.us.i.i = icmp eq i64 %i.gq, 0
-  br i1 %.not.us.i.i, label %.lr.ph, label %.preheader45.i.preheader.i
-
-.preheader45.i.preheader.i:                       ; preds = %.lr.ph.split.us.i.i, %.lr.ph.split.us.i.i.preheader
-  tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %i.en, i64 noundef range(i64 0, -9223372036854775808) %i.cj, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #20, !noalias !62
-  unreachable
+  br i1 %.not.us.i.i, label %.lr.ph, label %.split.us.i12.i
 
 .lr.ph:                                           ; preds = %.lr.ph.split.us.i.i.preheader, %.lr.ph.split.us.i.i
   %i.gr = phi i64 [ %i.gs, %.lr.ph.split.us.i.i ], [ %i.ef, %.lr.ph.split.us.i.i.preheader ]
   %i.gs = sub i64 %i.gr, %i.cj                    ; 3 uses
   %i.gt = icmp ult i64 %i.gs, %i.cf
   br i1 %i.gt, label %.lr.ph.split.us.i.i, label %_RNvXsw_NtNtCs3oUPovFnLWP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher15next_match_back.exit
+
+.split.us.i12.i:                                  ; preds = %.lr.ph.split.us.i.i, %.lr.ph.split.us.i.i.preheader
+  tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %i.en, i64 noundef range(i64 0, -9223372036854775808) %i.cj, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @3) #20, !noalias !62
+  unreachable
 
 _RNvXsw_NtNtCs3oUPovFnLWP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher15next_match_back.exit: ; preds = %bb.t, %.preheader46.i.i, %bb.v, %.lr.ph, %bb.ae, %.preheader.i.us96.i.preheader, %.preheader.i.us96.i, %bb.ac, %.preheader.i.us.i.preheader, %.preheader.i.us.i, %bb.l, %_RNvXs2K_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCsa9sSWSfjDbm_4jiff.exit17.i.i.us.i, %_RNvXs2K_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCsa9sSWSfjDbm_4jiff.exit21.i.i.us.i, %_RNvXs2K_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCsa9sSWSfjDbm_4jiff.exit19.i.i.us.i, %.split.us.i, %bb.aa, %bb.r, %bb.g, %_RNvXsw_NtNtCs3oUPovFnLWP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit.us.i.peel, %.preheader.i, %bb.m, %bb.p
   %.sroa.4.1 = phi i64 [ undef, %.preheader.i ], [ undef, %bb.r ], [ undef, %.lr.ph ], [ undef, %bb.m ], [ %spec.select, %bb.p ], [ %i.eo, %.preheader.i.us.i ], [ undef, %bb.aa ], [ %i.ft, %bb.ae ], [ 0, %_RNvXsw_NtNtCs3oUPovFnLWP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit.us.i.peel ], [ 0, %.split.us.i ], [ %.promoted105.i, %bb.g ], [ %i.ft, %.preheader.i.us96.i ], [ %i.df, %bb.v ], [ %i.eo, %bb.ac ], [ %i.bd, %bb.l ], [ %i.bd, %_RNvXs2K_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCsa9sSWSfjDbm_4jiff.exit19.i.i.us.i ], [ %i.bd, %_RNvXs2K_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCsa9sSWSfjDbm_4jiff.exit21.i.i.us.i ], [ %i.bd, %_RNvXs2K_NtNtCs3oUPovFnLWP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCsa9sSWSfjDbm_4jiff.exit17.i.i.us.i ], [ %i.eo, %.preheader.i.us.i.preheader ], [ %i.ft, %.preheader.i.us96.i.preheader ], [ %i.df, %.preheader46.i.i ], [ %i.df, %bb.t ]

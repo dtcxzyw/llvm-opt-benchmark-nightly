@@ -205,39 +205,70 @@ bb.d:                                             ; preds = %bb.b
 
 bb.e:                                             ; preds = %bb.b
   %.sroa.0.0.i = tail call i64 @llvm.umin.i64(i64 %i.k, i64 %i.g)
-  %.sroa.01.0 = select i1 %6, i64 %i.g, i64 %.sroa.0.0.i ; 3 uses
-  %i.u = add i64 %.sroa.01.0, -1
+  %.sroa.01.0 = select i1 %6, i64 %i.g, i64 %.sroa.0.0.i
+  %.sroa.01.0.fr = freeze i64 %.sroa.01.0         ; 3 uses
+  %i.u = add i64 %.sroa.01.0.fr, -1               ; 2 uses
   %.first_iter = icmp ult i64 %i.u, %5
-  %.not110 = icmp eq i64 %.sroa.01.0, 0
+  %.not110 = icmp eq i64 %.sroa.01.0.fr, 0        ; 2 uses
+  br i1 %.first_iter, label %.split.us.preheader, label %.split
+
+.split.us.preheader:                              ; preds = %bb.e
+  br i1 %.not110, label %._crit_edge114, label %.lr.ph129
+
+.split.us:                                        ; preds = %10
+  %.not.us = icmp eq i64 %7, 0
+  br i1 %.not.us, label %._crit_edge114, label %.lr.ph129
+
+.lr.ph129:                                        ; preds = %.split.us.preheader, %.split.us
+  %.sroa.5.0.us128 = phi i64 [ %7, %.split.us ], [ %.sroa.01.0.fr, %.split.us.preheader ]
+  %7 = add i64 %.sroa.5.0.us128, -1               ; 5 uses
+  %8 = add i64 %7, %i.l                           ; 3 uses
+  %9 = icmp ult i64 %8, %3
+  br i1 %9, label %10, label %.split71.us
+
+10:                                               ; preds = %.lr.ph129
+  %11 = getelementptr inbounds nuw i8, ptr %4, i64 %7
+  %12 = load i8, ptr %11, align 1, !noundef !53
+  %13 = getelementptr inbounds nuw i8, ptr %2, i64 %8
+  %14 = load i8, ptr %13, align 1, !noundef !53
+  %.not23.us = icmp eq i8 %12, %14
+  br i1 %.not23.us, label %.split.us, label %.split73.us
+
+.split71.us:                                      ; preds = %.lr.ph129
+  tail call void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %8, i64 noundef %3, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @410) #70
+  unreachable
+
+.split73.us:                                      ; preds = %10
+  %.neg = add i64 %7, %i.m
+  %15 = sub i64 %.neg, %i.g                       ; 3 uses
+  store i64 %15, ptr %i.a, align 8
+  br i1 %6, label %bb.f, label %.sink.split
+
+.split:                                           ; preds = %bb.e
   br i1 %.not110, label %._crit_edge114, label %.lr.ph113
 
-.sink.split:                                      ; preds = %bb.d, %bb.n, %9
-  %.sink = phi i64 [ %i.j, %9 ], [ %5, %bb.n ], [ %5, %bb.d ] ; 2 uses
-  %.ph93 = phi i64 [ %10, %9 ], [ %i.aj, %bb.n ], [ %i.l, %bb.d ]
+.sink.split:                                      ; preds = %bb.d, %.split73.us, %bb.n
+  %.sink = phi i64 [ %i.j, %bb.n ], [ %5, %.split73.us ], [ %5, %bb.d ] ; 2 uses
+  %.ph93 = phi i64 [ %i.aj, %bb.n ], [ %15, %.split73.us ], [ %i.l, %bb.d ]
   store i64 %.sink, ptr %i.h, align 8
   br label %bb.f
 
-bb.f:                                             ; preds = %.sink.split, %bb.n, %9, %bb.d
-  %i.v = phi i64 [ %i.k, %bb.n ], [ %i.k, %9 ], [ %i.k, %bb.d ], [ %.sink, %.sink.split ]
-  %i.w = phi i64 [ %i.aj, %bb.n ], [ %10, %9 ], [ %i.l, %bb.d ], [ %.ph93, %.sink.split ] ; 2 uses
+bb.f:                                             ; preds = %.sink.split, %.split73.us, %bb.n, %bb.d
+  %i.v = phi i64 [ %i.k, %.split73.us ], [ %i.k, %bb.n ], [ %i.k, %bb.d ], [ %.sink, %.sink.split ]
+  %i.w = phi i64 [ %15, %.split73.us ], [ %i.aj, %bb.n ], [ %i.l, %bb.d ], [ %.ph93, %.sink.split ] ; 2 uses
   %i.x = sub i64 %i.w, %5                         ; 2 uses
   %i.y = icmp ult i64 %i.x, %3
   br i1 %i.y, label %bb.b, label %._crit_edge
 
-7:                                                ; preds = %15
-  %.not = icmp eq i64 %8, 0
-  br i1 %.not, label %._crit_edge114, label %.lr.ph113
-
-._crit_edge114:                                   ; preds = %7, %bb.e
+._crit_edge114:                                   ; preds = %.split.us, %.split.us.preheader, %.split
   %.sroa.07.0 = select i1 %6, i64 %5, i64 %i.k    ; 2 uses
   %umax69 = tail call i64 @llvm.umax.i64(i64 %.sroa.07.0, i64 %i.g)
   %exitcond.not115.not = icmp ult i64 %i.g, %.sroa.07.0
   br i1 %exitcond.not115.not, label %.lr.ph118, label %._crit_edge119
 
-.lr.ph113:                                        ; preds = %bb.e, %7
-  %.sroa.5.0111 = phi i64 [ %8, %7 ], [ %.sroa.01.0, %bb.e ]
-  %8 = add i64 %.sroa.5.0111, -1                  ; 6 uses
-  br i1 %.first_iter, label %11, label %14
+.lr.ph113:                                        ; preds = %.split
+  tail call void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %i.u, i64 noundef %5, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @409) #70
+  unreachable
 
 bb.g:                                             ; preds = %bb.l
   %exitcond.not = icmp eq i64 %i.z, %umax69
@@ -279,7 +310,7 @@ bb.l:                                             ; preds = %bb.j
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 %i.ac
   %i.ah = load i8, ptr %i.ag, align 1, !noundef !53
   %.not22 = icmp eq i8 %i.af, %i.ah
-  br i1 %.not22, label %bb.g, label %9
+  br i1 %.not22, label %bb.g, label %bb.n
 
 bb.m:                                             ; preds = %bb.j
   %i.ai = add i64 %i.g, %i.l
@@ -287,35 +318,8 @@ bb.m:                                             ; preds = %bb.j
   tail call void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %umax68, i64 noundef %3, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @408) #70
   unreachable
 
-9:                                                ; preds = %bb.l
-  %10 = sub i64 %i.m, %i.j                        ; 3 uses
-  store i64 %10, ptr %i.a, align 8
-  br i1 %6, label %bb.f, label %.sink.split
-
-11:                                               ; preds = %.lr.ph113
-  %12 = add i64 %8, %i.l                          ; 3 uses
-  %13 = icmp ult i64 %12, %3
-  br i1 %13, label %15, label %20
-
-14:                                               ; preds = %.lr.ph113
-  tail call void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %8, i64 noundef %5, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @409) #70
-  unreachable
-
-15:                                               ; preds = %11
-  %16 = getelementptr inbounds nuw i8, ptr %4, i64 %8
-  %17 = load i8, ptr %16, align 1, !noundef !53
-  %18 = getelementptr inbounds nuw i8, ptr %2, i64 %12
-  %19 = load i8, ptr %18, align 1, !noundef !53
-  %.not23 = icmp eq i8 %17, %19
-  br i1 %.not23, label %7, label %bb.n
-
-20:                                               ; preds = %11
-  tail call void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %12, i64 noundef %3, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @410) #70
-  unreachable
-
-bb.n:                                             ; preds = %15
-  %.neg = add i64 %8, %i.m
-  %i.aj = sub i64 %.neg, %i.g                     ; 3 uses
+bb.n:                                             ; preds = %bb.l
+  %i.aj = sub i64 %i.m, %i.j                      ; 3 uses
   store i64 %i.aj, ptr %i.a, align 8
   br i1 %6, label %bb.f, label %.sink.split
 }

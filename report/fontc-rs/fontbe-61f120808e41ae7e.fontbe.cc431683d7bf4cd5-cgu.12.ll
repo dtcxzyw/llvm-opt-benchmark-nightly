@@ -204,10 +204,11 @@ bb.bd:                                            ; preds = %bb.az
 
 .lr.ph.i8.i.i.i:                                  ; preds = %bb.bd
   %i.gt = load i64, ptr %i.cp, align 8, !alias.scope !2929, !noalias !2917, !noundef !5
-  %i.gu = load i64, ptr %i.ci, align 8, !alias.scope !2929, !noalias !2917 ; 4 uses
+  %i.gu = load i64, ptr %i.ci, align 8, !alias.scope !2929, !noalias !2917
+  %.fr60.i.i.i.i = freeze i64 %i.gu               ; 4 uses
   %i.gv = load i64, ptr %i.cq, align 8, !alias.scope !2929, !noalias !2917 ; 2 uses
   %i.gw = sub i64 %i.ga, %i.gv
-  %invariant.op = sub i64 1, %i.gu
+  %invariant.op = sub i64 1, %.fr60.i.i.i.i
   br label %.lr.ph.split.i.i.i.i
 
 .lr.ph.split.i.i.i.i:                             ; preds = %bb.bg, %.lr.ph.i8.i.i.i
@@ -228,7 +229,7 @@ bb.be:                                            ; preds = %.lr.ph.split.i.i.i.
   br label %bb.bg
 
 bb.bf:                                            ; preds = %.lr.ph.split.i.i.i.i
-  %i.hf = call i64 @llvm.umax.i64(i64 %i.gu, i64 %.sink70.i.i22.i.i) ; 2 uses
+  %i.hf = call i64 @llvm.umax.i64(i64 %.fr60.i.i.i.i, i64 %.sink70.i.i22.i.i) ; 2 uses
   %i.hg = icmp ult i64 %i.hf, %i.ga
   br i1 %i.hg, label %.lr.ph, label %.preheader36.i.i.i.i.preheader
 
@@ -245,7 +246,7 @@ bb.bh:                                            ; preds = %.lr.ph
   br i1 %i.hk, label %.lr.ph, label %.preheader36.i.i.i.i.preheader
 
 .preheader36.i.i.i.i.preheader:                   ; preds = %bb.bh, %bb.bf
-  %i.hl = icmp ult i64 %.sink70.i.i22.i.i, %i.gu
+  %i.hl = icmp ult i64 %.sink70.i.i22.i.i, %.fr60.i.i.i.i
   br i1 %i.hl, label %.lr.ph189, label %_RINvMNtCsf3Ta7LF998c_4core3stre4findReECshxhuDJfZv4T_6fontbe.exit.thread8.i
 
 .lr.ph:                                           ; preds = %bb.bf, %bb.bh
@@ -265,7 +266,7 @@ bb.bh:                                            ; preds = %.lr.ph
   br i1 %i.hs, label %.lr.ph189, label %_RINvMNtCsf3Ta7LF998c_4core3stre4findReECshxhuDJfZv4T_6fontbe.exit.thread8.i
 
 .lr.ph189:                                        ; preds = %.preheader36.i.i.i.i.preheader, %.preheader36.i.i.i.i
-  %.sroa.2.0.i.i.i.i188 = phi i64 [ %i.ht, %.preheader36.i.i.i.i ], [ %i.gu, %.preheader36.i.i.i.i.preheader ]
+  %.sroa.2.0.i.i.i.i188 = phi i64 [ %i.ht, %.preheader36.i.i.i.i ], [ %.fr60.i.i.i.i, %.preheader36.i.i.i.i.preheader ]
   %i.ht = add i64 %.sroa.2.0.i.i.i.i188, -1       ; 6 uses
   %i.hu = icmp ult i64 %i.ht, %i.ga
   br i1 %i.hu, label %bb.bi, label %.split32.us.i.i.i.i.invoke
@@ -281,8 +282,8 @@ bb.bi:                                            ; preds = %.lr.ph189
   %.not20.i.i.i.i = icmp eq i8 %i.hw, %i.ia
   br i1 %.not20.i.i.i.i, label %.preheader36.i.i.i.i, label %bb.bj
 
-.split32.us.i.i.i.i.invoke:                       ; preds = %.preheader.i18.i.i.i, %.lr.ph189
-  %i.ib = phi i64 [ %i.ht, %.lr.ph189 ], [ %i.ij, %.preheader.i18.i.i.i ]
+.split32.us.i.i.i.i.invoke:                       ; preds = %.preheader.split.i20.i.i.i, %.lr.ph189
+  %i.ib = phi i64 [ %i.ht, %.lr.ph189 ], [ %i.ij, %.preheader.split.i20.i.i.i ]
   invoke void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.ib, i64 noundef range(i64 0, -9223372036854775808) %i.ga, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #27
           to label %.split32.us.i.i.i.i.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -341,7 +342,7 @@ bb.bl:                                            ; preds = %bb.az
   br i1 %exitcond.not.i16.i.i.i, label %.preheader.i18.preheader.i.i.i, label %.lr.ph193
 
 .preheader.i18.preheader.i.i.i:                   ; preds = %.preheader35.i.i.i.i, %.preheader35.i.i.i.i.preheader
-  br i1 %.first_iter.i15.i.i.i, label %.preheader.i18.us.i.i.i.preheader, label %.preheader.i18.i.i.i
+  br i1 %.first_iter.i15.i.i.i, label %.preheader.i18.us.i.i.i.preheader, label %.preheader.split.i20.i.i.i
 
 .preheader.i18.us.i.i.i.preheader:                ; preds = %.preheader.i18.preheader.i.i.i
   br i1 %.not34.i.us.i.i.i194, label %_RINvMNtCsf3Ta7LF998c_4core3stre4findReECshxhuDJfZv4T_6fontbe.exit.thread8.i, label %.lr.ph196
@@ -367,6 +368,9 @@ bb.bl:                                            ; preds = %bb.az
   %i.iz = add i64 %.sink.i17.i25.i.i, %i.ii
   br label %bb.bo
 
+.preheader.split.i20.i.i.i:                       ; preds = %.preheader.i18.preheader.i.i.i
+  br i1 %.not34.i.us.i.i.i194, label %_RINvMNtCsf3Ta7LF998c_4core3stre4findReECshxhuDJfZv4T_6fontbe.exit.thread8.i, label %.split32.us.i.i.i.i.invoke
+
 .lr.ph193:                                        ; preds = %.preheader35.i.i.i.i.preheader, %.preheader35.i.i.i.i
   %.sroa.04.0.us.i.i.i.i192 = phi i64 [ %i.ir, %.preheader35.i.i.i.i ], [ %.fr214.i.i.i, %.preheader35.i.i.i.i.preheader ] ; 4 uses
   %i.ja = getelementptr inbounds nuw i8, ptr %i.fz, i64 %.sroa.04.0.us.i.i.i.i192
@@ -378,9 +382,6 @@ bb.bl:                                            ; preds = %bb.az
   %i.jf = load i8, ptr %i.je, align 1, !alias.scope !2931, !noalias !2925, !noundef !5
   %.not21.us.i.i.i.i = icmp eq i8 %i.jb, %i.jf
   br i1 %.not21.us.i.i.i.i, label %.preheader35.i.i.i.i, label %bb.bm
-
-.preheader.i18.i.i.i:                             ; preds = %.preheader.i18.preheader.i.i.i
-  br i1 %.not34.i.us.i.i.i194, label %_RINvMNtCsf3Ta7LF998c_4core3stre4findReECshxhuDJfZv4T_6fontbe.exit.thread8.i, label %.split32.us.i.i.i.i.invoke
 
 bb.bm:                                            ; preds = %.lr.ph193
   %.reass281.i.reass.i.reass.i.reass.reass = add i64 %.sink.i17.i25.i.i, %invariant.op242
@@ -401,8 +402,8 @@ _RINvMNtCsf3Ta7LF998c_4core3stre4findReECshxhuDJfZv4T_6fontbe.exit.thread.i: ; p
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2917
   br label %_RNvMNtCsgCecv3eZDcN_5alloc6stringNtB2_6String8truncate.exitthread-pre-split.i
 
-_RINvMNtCsf3Ta7LF998c_4core3stre4findReECshxhuDJfZv4T_6fontbe.exit.thread8.i: ; preds = %.preheader36.i.i.i.i.preheader, %.preheader.i18.us.i.i.i.preheader, %.preheader36.i.i.i.i, %.preheader.i18.us.i.i.i, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshxhuDJfZv4T_6fontbe.exit12.i.i.us.i.i.i, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshxhuDJfZv4T_6fontbe.exit14.i.i.us.i.i.i, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshxhuDJfZv4T_6fontbe.exit16.i.i.us.i.i.i, %bb.ax, %.preheader.i18.i.i.i, %.loopexit42.i.i.i, %bb.aw, %bb.aq
-  %.ph.i = phi i64 [ %i.gq, %.loopexit42.i.i.i ], [ %.sink.i17.i25.i.i, %.preheader.i18.us.i.i.i ], [ %.sink.i17.i25.i.i, %.preheader.i18.i.i.i ], [ %i.de, %bb.aw ], [ %.promoted156.i.i.i, %bb.aq ], [ %i.fb, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshxhuDJfZv4T_6fontbe.exit12.i.i.us.i.i.i ], [ %i.fb, %bb.ax ], [ %i.fb, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshxhuDJfZv4T_6fontbe.exit16.i.i.us.i.i.i ], [ %i.fb, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshxhuDJfZv4T_6fontbe.exit14.i.i.us.i.i.i ], [ %.sink71.i.i19.i.i, %.preheader36.i.i.i.i ], [ %.sink.i17.i25.i.i, %.preheader.i18.us.i.i.i.preheader ], [ %.sink71.i.i19.i.i, %.preheader36.i.i.i.i.preheader ]
+_RINvMNtCsf3Ta7LF998c_4core3stre4findReECshxhuDJfZv4T_6fontbe.exit.thread8.i: ; preds = %.preheader36.i.i.i.i.preheader, %.preheader.i18.us.i.i.i.preheader, %.preheader36.i.i.i.i, %.preheader.i18.us.i.i.i, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshxhuDJfZv4T_6fontbe.exit12.i.i.us.i.i.i, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshxhuDJfZv4T_6fontbe.exit14.i.i.us.i.i.i, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshxhuDJfZv4T_6fontbe.exit16.i.i.us.i.i.i, %bb.ax, %.preheader.split.i20.i.i.i, %.loopexit42.i.i.i, %bb.aw, %bb.aq
+  %.ph.i = phi i64 [ %i.gq, %.loopexit42.i.i.i ], [ %.sink.i17.i25.i.i, %.preheader.i18.us.i.i.i ], [ %.sink.i17.i25.i.i, %.preheader.split.i20.i.i.i ], [ %i.de, %bb.aw ], [ %.promoted156.i.i.i, %bb.aq ], [ %i.fb, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshxhuDJfZv4T_6fontbe.exit12.i.i.us.i.i.i ], [ %i.fb, %bb.ax ], [ %i.fb, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshxhuDJfZv4T_6fontbe.exit16.i.i.us.i.i.i ], [ %i.fb, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCshxhuDJfZv4T_6fontbe.exit14.i.i.us.i.i.i ], [ %.sink71.i.i19.i.i, %.preheader36.i.i.i.i ], [ %.sink.i17.i25.i.i, %.preheader.i18.us.i.i.i.preheader ], [ %.sink71.i.i19.i.i, %.preheader36.i.i.i.i.preheader ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2917
   br label %bb.bp
 

@@ -204,8 +204,8 @@ define hidden void @_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12Node
 bb.a:
   %i.a = alloca [40 x i8], align 8                ; 5 uses
   %i.b = alloca [40 x i8], align 8                ; 6 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 960 ; 5 uses
-  %i.d = load i8, ptr %i.c, align 8, !noundef !5  ; 4 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 960 ; 6 uses
+  %i.d = load i8, ptr %i.c, align 8, !noundef !5  ; 5 uses
   %i.e = zext i8 %i.d to i64                      ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 960 ; 3 uses
   %i.g = load i8, ptr %i.f, align 8, !noundef !5
@@ -213,7 +213,7 @@ bb.a:
   %i.i = add nuw nsw i64 %i.h, %i.e
   %i.j = lshr i64 %i.i, 1                         ; 4 uses
   %i.k = icmp samesign ugt i64 %i.j, %i.h
-  br i1 %i.k, label %.lr.ph, label %.preheader.a
+  br i1 %i.k, label %.lr.ph, label %.preheader
 
 .lr.ph:                                           ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 192
@@ -221,66 +221,73 @@ bb.a:
   %i.n = trunc nuw i64 %i.j to i8
   %.first_iter = icmp ult i8 %i.d, 25
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %.not.i.i18 = icmp eq i8 %i.d, 0
-  br i1 %.not.i.i18, label %._crit_edge21, label %.lr.ph20, !prof !143
+  br i1 %.first_iter, label %.preheader.a, label %_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren3pop.exit
 
-.preheader.loopexit:                              ; preds = %_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren3pop.exit
-  %.pre = zext i8 %10 to i64
-  br label %.preheader.a
+.preheader.a:                                     ; preds = %.lr.ph
+  %.not.i.i.us16 = icmp eq i8 %i.d, 0
+  br i1 %.not.i.i.us16, label %bb.c, label %.lr.ph20, !prof !143
 
-.preheader.a:                                     ; preds = %.preheader.loopexit, %bb.a
-  %.pre-phi = phi i64 [ %.pre, %.preheader.loopexit ], [ %i.h, %bb.a ]
-  %2 = phi i8 [ %indvars, %.preheader.loopexit ], [ %i.d, %bb.a ]
-  %3 = icmp samesign ult i64 %i.j, %.pre-phi
-  br i1 %3, label %.lr.ph2, label %._crit_edge
-
-.lr.ph2:                                          ; preds = %.preheader.a
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 192
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
-  %6 = trunc nuw i64 %i.j to i8
-  br label %bb.d
-
-bb.b:                                             ; preds = %_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren3pop.exit
+bb.b:                                             ; preds = %.lr.ph20
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %.not.i.i = icmp eq i64 %indvars.iv.next.a, 0
-  br i1 %.not.i.i, label %._crit_edge21, label %.lr.ph20, !prof !144
+  br i1 %.not.i.i, label %bb.c, label %.lr.ph20, !prof !144
 
-._crit_edge21:                                    ; preds = %bb.b, %.lr.ph
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @11, i64 noundef 32, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @31) #20, !noalias !145
-  unreachable
-
-.lr.ph20:                                         ; preds = %.lr.ph, %bb.b
-  %indvars.iv19 = phi i64 [ %indvars.iv.next.a, %bb.b ], [ %i.e, %.lr.ph ]
+.lr.ph20:                                         ; preds = %.preheader.a, %bb.b
+  %indvars.iv19 = phi i64 [ %indvars.iv.next.a, %bb.b ], [ %i.e, %.preheader.a ]
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !145)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !146)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !147)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !148)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !149)
-  %indvars.iv.next.a = add nsw i64 %indvars.iv19, -1 ; 6 uses
-  %indvars = trunc nuw i64 %indvars.iv.next.a to i8 ; 2 uses
-  store i8 %indvars, ptr %i.c, align 8, !alias.scope !150
-  br i1 %.first_iter, label %_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren3pop.exit, label %bb.c
-
-bb.c:                                             ; preds = %.lr.ph20
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %indvars.iv.next.a, i64 noundef 24, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @32) #20, !noalias !145
-  unreachable
-
-_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren3pop.exit: ; preds = %.lr.ph20
-  %7 = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %indvars.iv.next.a
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.b, ptr noundef nonnull align 8 dereferenceable(32) %7, i64 32, i1 false), !alias.scope !151, !noalias !5
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.next.a
-  %9 = load ptr, ptr %8, align 8, !alias.scope !150, !nonnull !5, !noundef !5
-  store ptr %9, ptr %i.m, align 8, !alias.scope !152
+  %indvars.iv.next.a = add nsw i64 %indvars.iv19, -1 ; 5 uses
+  %indvars = trunc nuw nsw i64 %indvars.iv.next.a to i8 ; 2 uses
+  store i8 %indvars, ptr %i.c, align 8, !alias.scope !149
+  %2 = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %indvars.iv.next.a
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.b, ptr noundef nonnull align 8 dereferenceable(32) %2, i64 32, i1 false), !alias.scope !150, !noalias !5
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.next.a
+  %4 = load ptr, ptr %3, align 8, !alias.scope !149, !nonnull !5, !noundef !5
+  store ptr %4, ptr %i.m, align 8, !alias.scope !151
   call void @_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren6insert(ptr noalias nofree noundef nonnull align 8 dereferenceable(968) %1, i64 noundef 0, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(40) %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
-  %10 = load i8, ptr %i.f, align 8, !noundef !5   ; 2 uses
-  %11 = icmp ult i8 %10, %i.n
-  br i1 %11, label %bb.b, label %.preheader.loopexit
+  %5 = load i8, ptr %i.f, align 8, !noundef !5    ; 2 uses
+  %6 = icmp ult i8 %5, %i.n
+  br i1 %6, label %bb.b, label %.preheader.loopexit.split.us
 
-._crit_edge:                                      ; preds = %_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren4push.exit, %.preheader.a
+.preheader.loopexit.split.us:                     ; preds = %.lr.ph20
+  %.pre = zext i8 %5 to i64
+  br label %.preheader
+
+.preheader:                                       ; preds = %.preheader.loopexit.split.us, %bb.a
+  %.pre-phi = phi i64 [ %.pre, %.preheader.loopexit.split.us ], [ %i.h, %bb.a ]
+  %7 = phi i8 [ %indvars, %.preheader.loopexit.split.us ], [ %i.d, %bb.a ]
+  %8 = icmp samesign ult i64 %i.j, %.pre-phi
+  br i1 %8, label %.lr.ph2, label %._crit_edge
+
+.lr.ph2:                                          ; preds = %.preheader
+  %9 = getelementptr inbounds nuw i8, ptr %0, i64 192
+  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 32 ; 3 uses
+  %11 = trunc nuw i64 %i.j to i8
+  br label %bb.d
+
+bb.c:                                             ; preds = %bb.b, %.preheader.a
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @11, i64 noundef 32, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @31) #20, !noalias !152
+  unreachable
+
+_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren3pop.exit: ; preds = %.lr.ph
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !145)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !146)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !147)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !148)
+  %indvars.iv.next = add i8 %i.d, -1              ; 2 uses
+  store i8 %indvars.iv.next, ptr %i.c, align 8, !alias.scope !149
+  %12 = zext i8 %indvars.iv.next to i64
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %12, i64 noundef 24, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @32) #20, !noalias !152
+  unreachable
+
+._crit_edge:                                      ; preds = %_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren4push.exit, %.preheader
   ret void
 
 bb.d:                                             ; preds = %.lr.ph2, %_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren4push.exit
-  %i.o = phi i8 [ %2, %.lr.ph2 ], [ %i.ac, %_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren4push.exit ] ; 2 uses
+  %i.o = phi i8 [ %7, %.lr.ph2 ], [ %i.ac, %_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren4push.exit ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call void @_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren6remove(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(968) %1, i64 noundef 0)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !153)
@@ -299,7 +306,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.d
   %i.q = zext nneg i8 %i.o to i64
-  %i.r = getelementptr inbounds nuw [32 x i8], ptr %4, i64 %i.q
+  %i.r = getelementptr inbounds nuw [32 x i8], ptr %9, i64 %i.q
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.r, ptr noundef nonnull readonly align 8 dereferenceable(40) %i.a, i64 32, i1 false), !alias.scope !158, !noalias !156
   %i.s = load i8, ptr %i.c, align 8, !alias.scope !159, !noundef !5 ; 2 uses
   %i.t = zext i8 %i.s to i64                      ; 2 uses
@@ -318,14 +325,14 @@ bb.i:                                             ; preds = %bb.e
           cleanup
   tail call void @llvm.experimental.noalias.scope.decl(metadata !160)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !161), !noalias !155
-  %i.v = load ptr, ptr %5, align 8, !alias.scope !162, !noalias !155, !nonnull !5, !noundef !5
+  %i.v = load ptr, ptr %10, align 8, !alias.scope !162, !noalias !155, !nonnull !5, !noundef !5
   %i.w = atomicrmw add ptr %i.v, i64 -1 release, align 8, !noalias !163
   %i.x = icmp eq i64 %i.w, 1
   br i1 %i.x, label %bb.j, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEEB1f_.exit.i
 
 bb.j:                                             ; preds = %bb.i
   fence acquire, !noalias !155
-  invoke void @_RNvMsn_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeE9drop_slowBM_(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(8) %5) #22
+  invoke void @_RNvMsn_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeE9drop_slowBM_(ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(8) %10) #22
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc4sync3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeEEB1f_.exit.i unwind label %bb.k, !noalias !153
 
 bb.k:                                             ; preds = %bb.j
@@ -335,7 +342,7 @@ bb.k:                                             ; preds = %bb.j
   unreachable
 
 _RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren4push.exit: ; preds = %bb.g
-  %i.z = load ptr, ptr %5, align 8, !alias.scope !165, !nonnull !5, !noundef !5
+  %i.z = load ptr, ptr %10, align 8, !alias.scope !165, !nonnull !5, !noundef !5
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.t
   store ptr %i.z, ptr %i.aa, align 8, !alias.scope !159
   %i.ab = load i8, ptr %i.c, align 8, !alias.scope !159, !noundef !5
@@ -343,7 +350,7 @@ _RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren4push.exit: 
   store i8 %i.ac, ptr %i.c, align 8, !alias.scope !159
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.ad = load i8, ptr %i.f, align 8, !noundef !5
-  %i.ae = icmp ugt i8 %i.ad, %6
+  %i.ae = icmp ugt i8 %i.ad, %11
   br i1 %i.ae, label %bb.d, label %._crit_edge
 }
 
@@ -746,11 +753,11 @@ attributes #25 = { cold }
 !125 = !{!112}
 !126 = !{!114}
 !127 = distinct !{!127, i1 true, !"_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren3pop"}
-!128 = distinct !{!128, !127, !"_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren3pop: argument 1"}
-!129 = distinct !{!129, !127, !"_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren3pop: argument 0"}
+!128 = distinct !{!128, !127, !"_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren3pop: argument 0"}
+!129 = distinct !{!129, !127, !"_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren3pop: argument 1"}
 !130 = distinct !{!130, i1 true, !"_RNvMNtNtNtCs2wCc12Mnjqg_5ropey4tree13node_children5innerNtB2_20NodeChildrenInternal3pop"}
-!131 = distinct !{!131, !130, !"_RNvMNtNtNtCs2wCc12Mnjqg_5ropey4tree13node_children5innerNtB2_20NodeChildrenInternal3pop: argument 1"}
-!132 = distinct !{!132, !130, !"_RNvMNtNtNtCs2wCc12Mnjqg_5ropey4tree13node_children5innerNtB2_20NodeChildrenInternal3pop: argument 0"}
+!131 = distinct !{!131, !130, !"_RNvMNtNtNtCs2wCc12Mnjqg_5ropey4tree13node_children5innerNtB2_20NodeChildrenInternal3pop: argument 0"}
+!132 = distinct !{!132, !130, !"_RNvMNtNtNtCs2wCc12Mnjqg_5ropey4tree13node_children5innerNtB2_20NodeChildrenInternal3pop: argument 1"}
 !133 = distinct !{!133, i1 true, !"_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren4push"}
 !134 = distinct !{!134, !133, !"_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren4push: argument 0"}
 !135 = distinct !{!135, !133, !"_RNvMNtNtCs2wCc12Mnjqg_5ropey4tree13node_childrenNtB2_12NodeChildren4push: argument 1"}
@@ -763,14 +770,14 @@ attributes #25 = { cold }
 !142 = distinct !{!142, !141, !"_RNvXsE_NtCsexYYUdYSQU6_5alloc4syncINtB5_3ArcNtNtNtCs2wCc12Mnjqg_5ropey4tree4node4NodeENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropBM_: argument 0"}
 !143 = !{!"branch_weights", i32 1, i32 127}
 !144 = !{!"branch_weights", i32 127, i32 255873}
-!145 = !{!132, !131, !129, !128}
+!145 = !{!128}
 !146 = !{!129}
-!147 = !{!128}
+!147 = !{!131}
 !148 = !{!132}
-!149 = !{!131}
-!150 = !{!131, !128}
-!151 = !{!129, !128}
-!152 = !{!132, !129}
+!149 = !{!132, !129}
+!150 = !{!128, !129}
+!151 = !{!131, !128}
+!152 = !{!131, !132, !128, !129}
 !153 = !{!134}
 !154 = !{!135}
 !155 = !{!137}

@@ -204,12 +204,17 @@ bb.a:
   br i1 %.not42, label %._crit_edge45, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.g = mul nsw i32 %5, %2                       ; 2 uses
+  %i.g = mul i32 %5, %2                           ; 3 uses
   %i.h = sub nsw i32 %1, %i.g
   %i.i = sext i32 %i.g to i64
   %i.j = icmp sgt i32 %5, 0
   %i.k = sext i32 %i.h to i64
-  br i1 %i.j, label %.lr.ph.split.us.preheader, label %._crit_edge45
+  br i1 %i.j, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
+
+.lr.ph.split.preheader:                           ; preds = %.lr.ph
+  %6 = icmp eq i32 %i.g, 0
+  tail call void @llvm.assume(i1 %6)
+  br label %._crit_edge
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
   %.not3639.us = icmp eq i32 %2, 0
@@ -323,7 +328,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %.not.us = icmp eq ptr %i.as, %i.f
   br i1 %.not.us, label %._crit_edge45, label %.lr.ph.split.us, !llvm.loop !212
 
-._crit_edge45:                                    ; preds = %._crit_edge.split.us.us, %.lr.ph, %bb.a
+._crit_edge45:                                    ; preds = %._crit_edge.split.us.us, %bb.a
   %i.at = mul nsw i32 %3, %2
   %i.au = sitofp i32 %i.at to float
   %i.av = fdiv nnan float 1.000000e+00, %i.au     ; 2 uses
@@ -367,7 +372,7 @@ middle.block75:                                   ; preds = %vector.body70
   %indvars.iv50.ph = phi i64 [ 0, %.lr.ph47.preheader ], [ %n.vec69, %middle.block75 ]
   br label %.lr.ph47
 
-._crit_edge:                                      ; preds = %.lr.ph47, %middle.block75, %._crit_edge45
+._crit_edge:                                      ; preds = %.lr.ph47, %middle.block75, %.lr.ph.split.preheader, %._crit_edge45
   ret void
 
 .lr.ph47:                                         ; preds = %.lr.ph47.preheader78, %.lr.ph47
@@ -399,11 +404,16 @@ bb.a:
   br i1 %.not42, label %._crit_edge45, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.h = mul nsw i32 %5, %2                       ; 2 uses
+  %i.h = mul i32 %5, %2                           ; 3 uses
   %i.i = sub nsw i32 %i.d, %i.h
   %i.j = icmp sgt i32 %5, 0
   %i.k = sext i32 %i.i to i64
-  br i1 %i.j, label %.lr.ph.split.us.preheader, label %._crit_edge45
+  br i1 %i.j, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
+
+.lr.ph.split.preheader:                           ; preds = %.lr.ph
+  %6 = icmp eq i32 %i.h, 0
+  tail call void @llvm.assume(i1 %6)
+  br label %._crit_edge
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
   %i.l = sext i32 %i.h to i64
@@ -447,7 +457,7 @@ bb.a:
   %.not.us = icmp eq ptr %i.v, %i.g
   br i1 %.not.us, label %._crit_edge45, label %.lr.ph.split.us, !llvm.loop !218
 
-._crit_edge45:                                    ; preds = %._crit_edge.split.us.us, %.lr.ph, %bb.a
+._crit_edge45:                                    ; preds = %._crit_edge.split.us.us, %bb.a
   %i.w = mul nsw i32 %3, %2
   %i.x = sitofp i32 %i.w to float
   %i.y = fdiv nnan float 1.000000e+00, %i.x
@@ -458,7 +468,7 @@ bb.a:
   %wide.trip.count55 = zext nneg i32 %5 to i64
   br label %.lr.ph47
 
-._crit_edge:                                      ; preds = %_ZN4Ptex4v2_48PtexHalfC2Ef.exit, %._crit_edge45
+._crit_edge:                                      ; preds = %_ZN4Ptex4v2_48PtexHalfC2Ef.exit, %.lr.ph.split.preheader, %._crit_edge45
   ret void
 
 .lr.ph47:                                         ; preds = %.lr.ph47.preheader, %_ZN4Ptex4v2_48PtexHalfC2Ef.exit
@@ -515,11 +525,16 @@ bb.a:
   br i1 %.not42, label %._crit_edge45, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.h = mul nsw i32 %5, %2                       ; 2 uses
+  %i.h = mul i32 %5, %2                           ; 3 uses
   %i.i = sub nsw i32 %i.d, %i.h
   %i.j = icmp sgt i32 %5, 0
   %i.k = sext i32 %i.i to i64
-  br i1 %i.j, label %.lr.ph.split.us.preheader, label %._crit_edge45
+  br i1 %i.j, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
+
+.lr.ph.split.preheader:                           ; preds = %.lr.ph
+  %6 = icmp eq i32 %i.h, 0
+  tail call void @llvm.assume(i1 %6)
+  br label %._crit_edge
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
   %i.l = sext i32 %i.h to i64
@@ -599,7 +614,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %.not.us = icmp eq ptr %i.ae, %i.g
   br i1 %.not.us, label %._crit_edge45, label %.lr.ph.split.us, !llvm.loop !223
 
-._crit_edge45:                                    ; preds = %._crit_edge.split.us.us, %.lr.ph, %bb.a
+._crit_edge45:                                    ; preds = %._crit_edge.split.us.us, %bb.a
   %i.af = mul nsw i32 %3, %2
   %i.ag = sitofp i32 %i.af to float
   %i.ah = fdiv nnan float 1.000000e+00, %i.ag     ; 2 uses
@@ -643,7 +658,7 @@ middle.block76:                                   ; preds = %vector.body71
   %indvars.iv52.ph = phi i64 [ 0, %.lr.ph47.preheader ], [ %n.vec70, %middle.block76 ]
   br label %.lr.ph47
 
-._crit_edge:                                      ; preds = %.lr.ph47, %middle.block76, %._crit_edge45
+._crit_edge:                                      ; preds = %.lr.ph47, %middle.block76, %.lr.ph.split.preheader, %._crit_edge45
   ret void
 
 .lr.ph47:                                         ; preds = %.lr.ph47.preheader79, %.lr.ph47
@@ -675,11 +690,16 @@ bb.a:
   br i1 %.not42, label %._crit_edge45, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.h = mul nsw i32 %5, %2                       ; 2 uses
+  %i.h = mul i32 %5, %2                           ; 3 uses
   %i.i = sub nsw i32 %i.d, %i.h
   %i.j = icmp sgt i32 %5, 0
   %i.k = sext i32 %i.i to i64
-  br i1 %i.j, label %.lr.ph.split.us.preheader, label %._crit_edge45
+  br i1 %i.j, label %.lr.ph.split.us.preheader, label %.lr.ph.split.preheader
+
+.lr.ph.split.preheader:                           ; preds = %.lr.ph
+  %6 = icmp eq i32 %i.h, 0
+  tail call void @llvm.assume(i1 %6)
+  br label %._crit_edge
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
   %i.l = sext i32 %i.h to i64
@@ -811,7 +831,7 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   %.not.us = icmp eq ptr %i.bc, %i.g
   br i1 %.not.us, label %._crit_edge45, label %.lr.ph.split.us, !llvm.loop !233
 
-._crit_edge45:                                    ; preds = %._crit_edge.split.us.us, %.lr.ph, %bb.a
+._crit_edge45:                                    ; preds = %._crit_edge.split.us.us, %bb.a
   %i.bd = mul nsw i32 %3, %2
   %i.be = sitofp i32 %i.bd to float
   %i.bf = fdiv nnan float 1.000000e+00, %i.be     ; 2 uses
@@ -853,7 +873,7 @@ middle.block77:                                   ; preds = %vector.body72
   %indvars.iv52.ph = phi i64 [ 0, %.lr.ph47.preheader ], [ %n.vec71, %middle.block77 ]
   br label %.lr.ph47
 
-._crit_edge:                                      ; preds = %.lr.ph47, %middle.block77, %._crit_edge45
+._crit_edge:                                      ; preds = %.lr.ph47, %middle.block77, %.lr.ph.split.preheader, %._crit_edge45
   ret void
 
 .lr.ph47:                                         ; preds = %.lr.ph47.preheader80, %.lr.ph47

@@ -205,20 +205,22 @@ bb.c:                                             ; preds = %bb.b
 define range(i32 0, 2) i32 @minTemp3_fast_moreThen5(ptr nofree noundef readonly captures(none) %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5, ptr nofree noundef writeonly captures(none) %6) local_unnamed_addr #5 {
 bb.a:
   %i.a = add nsw i32 %1, -6                       ; 5 uses
-  %.neg.a = shl i32 -4, %i.a
-  %.not34.not = icmp sle i32 %2, %3
-  %.not40 = icmp eq i32 %i.a, 31
-  %or.cond = select i1 %.not34.not, i1 true, i1 %.not40
-  br i1 %or.cond, label %._crit_edge36, label %.preheader.us.preheader
+  %.neg.a = shl nuw i32 1, %i.a
+  %.neg = shl i32 -4, %i.a
+  %.not34.not = icmp sgt i32 %2, %3
+  br i1 %.not34.not, label %.preheader.lr.ph, label %._crit_edge36
 
-.preheader.us.preheader:                          ; preds = %bb.a
-  %7 = shl nuw i32 1, %i.a
+.preheader.lr.ph:                                 ; preds = %bb.a
+  %.not40 = icmp eq i32 %i.a, 31
+  br i1 %.not40, label %.preheader, label %.preheader.us.preheader
+
+.preheader.us.preheader:                          ; preds = %.preheader.lr.ph
   %i.b = shl i32 %5, %i.a
   %i.c = shl i32 %4, %i.a
   %i.d = add nsw i32 %2, -1
   %i.e = sext i32 %i.c to i64
   %i.f = sext i32 %i.b to i64
-  %smax = tail call i32 @llvm.smax.i32(i32 %7, i32 1)
+  %smax = tail call i32 @llvm.smax.i32(i32 %.neg.a, i32 1)
   %wide.trip.count = zext nneg i32 %smax to i64
   br label %.preheader.us
 
@@ -248,9 +250,12 @@ bb.c:                                             ; preds = %bb.b
   br i1 %exitcond.not, label %._crit_edge.us, label %bb.b, !llvm.loop !16
 
 ._crit_edge.us:                                   ; preds = %bb.c
-  %i.o = add i32 %.02735.us, %.neg.a              ; 2 uses
+  %i.o = add i32 %.02735.us, %.neg                ; 2 uses
   %.not.us = icmp slt i32 %i.o, %3
   br i1 %.not.us, label %._crit_edge36, label %.preheader.us, !llvm.loop !17
+
+.preheader:                                       ; preds = %.preheader.lr.ph, %.preheader
+  br label %.preheader
 
 .split38.us:                                      ; preds = %bb.b
   %i.p = add nsw i32 %.02735.us, 1
@@ -654,7 +659,7 @@ bb.u:                                             ; preds = %bb.u, %.lr.ph.i109
   br label %arrangeQuoters_superFast_moreThen5.exit.sink.split
 
 bb.v:                                             ; preds = %bb.r
-  br i1 %.not.i, label %minTemp3_fast_moreThen5.exit, label %.preheader.us.preheader.i115
+  br i1 %.not.i, label %.preheader.i, label %.preheader.us.preheader.i115
 
 .preheader.us.preheader.i115:                     ; preds = %bb.v
   %i.ij = xor i32 %.027.i, 3
@@ -698,6 +703,9 @@ bb.x:                                             ; preds = %bb.w
   %.not.us.i = icmp slt i32 %i.iy, %.sink.i84
   br i1 %.not.us.i, label %minTemp3_fast_moreThen5.exit, label %.preheader.us.i118, !llvm.loop !17
 
+.preheader.i:                                     ; preds = %bb.v, %.preheader.i
+  br label %.preheader.i
+
 .split38.us.i:                                    ; preds = %bb.w
   %i.iz = add nuw nsw i32 %.02735.us.i, 1
   br label %minTemp3_fast_moreThen5.exit
@@ -706,10 +714,10 @@ bb.x:                                             ; preds = %bb.w
   %i.ja = add nuw nsw i32 %.02735.us.i, 1
   br label %minTemp3_fast_moreThen5.exit
 
-minTemp3_fast_moreThen5.exit:                     ; preds = %._crit_edge.us.i124, %bb.v, %.split38.us.i, %.split.us.i125
-  %.sink.i121 = phi i32 [ %i.iz, %.split38.us.i ], [ %i.ja, %.split.us.i125 ], [ 0, %bb.v ], [ 0, %._crit_edge.us.i124 ]
-  %.028.i = phi i32 [ 0, %.split38.us.i ], [ 1, %.split.us.i125 ], [ 0, %bb.v ], [ 0, %._crit_edge.us.i124 ] ; 2 uses
-  %i.jb = icmp sgt i32 %.sink.i121, %.sink.i84
+minTemp3_fast_moreThen5.exit:                     ; preds = %._crit_edge.us.i124, %.split38.us.i, %.split.us.i125
+  %.sink.i114 = phi i32 [ %i.iz, %.split38.us.i ], [ %i.ja, %.split.us.i125 ], [ 0, %._crit_edge.us.i124 ]
+  %.028.i = phi i32 [ 0, %.split38.us.i ], [ 1, %.split.us.i125 ], [ 0, %._crit_edge.us.i124 ] ; 2 uses
+  %i.jb = icmp sgt i32 %.sink.i114, %.sink.i84
   %i.jc = zext nneg i32 %.sink.i to i64           ; 4 uses
   br i1 %i.jb, label %bb.y, label %bb.ab
 
@@ -776,7 +784,7 @@ bb.aa:                                            ; preds = %bb.aa, %.lr.ph.i129
 
 ._crit_edge.i128:                                 ; preds = %bb.aa, %bb.z
   %i.kt = shl nuw nsw i64 %i.jc, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr nonnull align 16 %i.b, i64 %i.kt, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %0, ptr nonnull align 16 %i.b, i64 %i.kt, i1 false)
   %i.ku = load i32, ptr %4, align 4, !tbaa !30
   %i.kv = sub nsw i32 %i.jg, %i.jj
   %i.kw = tail call i32 @llvm.abs.i32(i32 %i.kv, i1 true)
@@ -849,7 +857,7 @@ bb.ad:                                            ; preds = %bb.ad, %.lr.ph.i136
 
 ._crit_edge.i135:                                 ; preds = %bb.ad, %bb.ac
   %i.mr = shl nuw nsw i64 %i.jc, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr nonnull align 16 %i.b, i64 %i.mr, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %0, ptr nonnull align 16 %i.b, i64 %i.mr, i1 false)
   %i.ms = load i32, ptr %4, align 4, !tbaa !30
   %i.mt = sub nsw i32 %i.ld, %i.lh
   %i.mu = tail call i32 @llvm.abs.i32(i32 %i.mt, i1 true)

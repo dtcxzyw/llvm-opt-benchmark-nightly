@@ -205,7 +205,7 @@ _RNvMs3_NtNtCs8frGy5WneL6_4fish6reader6readerNtB5_10ReaderData16active_edit_line
   %.sroa.04.0.i1022 = phi ptr [ %i.dp, %bb.n ], [ %.val683, %bb.m ], [ %.val683, %bb.l ] ; 3 uses
   %.sroa.0.0.i1023 = phi i1 [ true, %bb.n ], [ false, %bb.m ], [ false, %bb.l ] ; 2 uses
   %i.dq = getelementptr i8, ptr %.sroa.04.0.i1022, i64 120
-  %.val885 = load i64, ptr %i.dq, align 8, !noundef !14 ; 9 uses
+  %.val885 = load i64, ptr %i.dq, align 8, !noundef !14 ; 8 uses
   %i.dr = icmp eq i64 %.val885, 0
   br i1 %i.dr, label %_RNvMsd_NtNtCs8frGy5WneL6_4fish6reader6readerNtB5_10ReaderData30select_completion_in_direction.exit, label %bb.dv
 
@@ -608,48 +608,52 @@ bb.dv:                                            ; preds = %_RNvMs3_NtNtCs8frGy
   %.val737 = load ptr, ptr %i.qb, align 8, !nonnull !14, !noundef !14 ; 2 uses
   %i.qc = getelementptr i8, ptr %.sroa.04.0.i1022, i64 48
   %.val738 = load i64, ptr %i.qc, align 8, !noundef !14 ; 4 uses
-  %i.qd = add i64 %.val885, -1
+  %i.qd = add i64 %.val885, -1                    ; 3 uses
   %.first_iter = icmp ult i64 %i.qd, %.val738
-  %.sroa.014.02080 = add i64 %.val885, -1         ; 3 uses
-  %2 = icmp eq i64 %.sroa.014.02080, 0
-  br i1 %2, label %._crit_edge2085, label %.lr.ph2084.a
+  br i1 %.first_iter, label %bb.dw, label %bb.dx
 
-bb.dw:                                            ; preds = %bb.dx
-  %.sroa.014.0 = add i64 %.sroa.014.02082, -1     ; 3 uses
+bb.dw:                                            ; preds = %bb.dv
+  %.sroa.014.0 = add i64 %.val885, -1             ; 2 uses
   %i.qe = icmp eq i64 %.sroa.014.0, 0
-  br i1 %i.qe, label %._crit_edge2085, label %.lr.ph2084.a
+  br i1 %i.qe, label %.split1966.us, label %._crit_edge2085
 
-.lr.ph2084.a:                                     ; preds = %bb.dv, %bb.dw
-  %.sroa.014.02082 = phi i64 [ %.sroa.014.0, %bb.dw ], [ %.sroa.014.02080, %bb.dv ] ; 6 uses
-  %.sroa.014.0.in2081 = phi i64 [ %.sroa.014.02082, %bb.dw ], [ %.val885, %bb.dv ]
-  br i1 %.first_iter, label %bb.dx, label %bb.dy
+.lr.ph2084.a:                                     ; preds = %._crit_edge2085
+  %.sroa.014.0.us = add i64 %.sroa.014.0.us2083, -1 ; 2 uses
+  %2 = icmp eq i64 %.sroa.014.0.us, 0
+  br i1 %2, label %.split1966.us, label %._crit_edge2085
 
-._crit_edge2085:                                  ; preds = %bb.dw, %bb.dx, %bb.dv
-  %.sroa.014.0.in.lcssa = phi i64 [ %.val885, %bb.dv ], [ %.sroa.014.02082, %bb.dw ], [ %.sroa.014.0.in2081, %bb.dx ]
-  %.sroa.014.0.lcssa = phi i64 [ %.sroa.014.02080, %bb.dv ], [ %.sroa.014.0, %bb.dw ], [ %.sroa.014.02082, %bb.dx ] ; 4 uses
-  %3 = icmp ult i64 %.sroa.014.0.lcssa, %.val738
-  br i1 %3, label %bb.dz, label %bb.ea
+._crit_edge2085:                                  ; preds = %bb.dw, %.lr.ph2084.a
+  %.sroa.014.0.us2083 = phi i64 [ %.sroa.014.0.us, %.lr.ph2084.a ], [ %.sroa.014.0, %bb.dw ] ; 4 uses
+  %.sroa.014.0.in.us2082 = phi i64 [ %.sroa.014.0.us2083, %.lr.ph2084.a ], [ %.val885, %bb.dw ]
+  %3 = getelementptr inbounds nuw [4 x i8], ptr %.val737, i64 %.sroa.014.0.us2083
+  %4 = load i32, ptr %3, align 4, !range !31, !noundef !14
+  %5 = icmp eq i32 %4, 10
+  br i1 %5, label %.split1966.us, label %.lr.ph2084.a
 
-bb.dx:                                            ; preds = %.lr.ph2084.a
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %.val737, i64 %.sroa.014.02082
-  %5 = load i32, ptr %4, align 4, !range !31, !noundef !14
-  %i.qf = icmp eq i32 %5, 10
-  br i1 %i.qf, label %._crit_edge2085, label %bb.dw
+bb.dx:                                            ; preds = %bb.dv
+  %i.qf = icmp eq i64 %i.qd, 0
+  br i1 %i.qf, label %.split1966.us, label %bb.dy
 
-bb.dy:                                            ; preds = %.lr.ph2084.a
-  tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %.sroa.014.02082, i64 noundef %.val738, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @151) #40
+bb.dy:                                            ; preds = %bb.dx
+  tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %i.qd, i64 noundef %.val738, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @151) #40
   unreachable
 
-bb.dz:                                            ; preds = %._crit_edge2085
-  %i.qg = getelementptr inbounds nuw [4 x i8], ptr %.val737, i64 %.sroa.014.0.lcssa
+.split1966.us:                                    ; preds = %._crit_edge2085, %.lr.ph2084.a, %bb.dw, %bb.dx
+  %.us-phi = phi i64 [ 1, %bb.dx ], [ 1, %bb.dw ], [ 1, %.lr.ph2084.a ], [ %.sroa.014.0.in.us2082, %._crit_edge2085 ]
+  %.us-phi1967 = phi i64 [ 0, %bb.dx ], [ 0, %bb.dw ], [ 0, %.lr.ph2084.a ], [ %.sroa.014.0.us2083, %._crit_edge2085 ] ; 4 uses
+  %6 = icmp ult i64 %.us-phi1967, %.val738
+  br i1 %6, label %bb.dz, label %bb.ea
+
+bb.dz:                                            ; preds = %.split1966.us
+  %i.qg = getelementptr inbounds nuw [4 x i8], ptr %.val737, i64 %.us-phi1967
   %i.qh = load i32, ptr %i.qg, align 4, !range !31, !noundef !14
   %i.qi = icmp eq i32 %i.qh, 10
-  %.sroa.014.1 = select i1 %i.qi, i64 %.sroa.014.0.in.lcssa, i64 %.sroa.014.0.lcssa ; 2 uses
+  %.sroa.014.1 = select i1 %i.qi, i64 %.us-phi, i64 %.us-phi1967 ; 2 uses
   %.not403 = icmp ult i64 %.val885, %.sroa.014.1
   br i1 %.not403, label %bb.eb, label %bb.ec, !prof !22
 
-bb.ea:                                            ; preds = %._crit_edge2085
-  tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %.sroa.014.0.lcssa, i64 noundef %.val738, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @152) #40
+bb.ea:                                            ; preds = %.split1966.us
+  tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %.us-phi1967, i64 noundef %.val738, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @152) #40
   unreachable
 
 bb.eb:                                            ; preds = %bb.dz

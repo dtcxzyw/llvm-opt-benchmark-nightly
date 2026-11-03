@@ -202,7 +202,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
-  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 4 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 5 uses
   %i.h = load i32, ptr %i.g, align 8, !tbaa !384
   %.fr85 = freeze i32 %i.h                        ; 4 uses
   %i.i = add i32 %.fr85, 63                       ; 2 uses
@@ -241,16 +241,81 @@ _ZN4llvm9BitVectorC2Ejb.exit:                     ; preds = %_ZN4llvm9BitVectorC
   br i1 %.not7279, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %_ZN4llvm9BitVectorC2Ejb.exit
-  %i.s = load ptr, ptr %1, align 8                ; 5 uses
+  %i.s = load ptr, ptr %1, align 8                ; 7 uses
   %i.t = lshr i32 %.fr85, 6                       ; 2 uses
   %.not19.i = icmp eq i32 %i.t, 0
-  %wide.trip.count.i = zext nneg i32 %i.t to i64  ; 2 uses
+  %wide.trip.count.i = zext nneg i32 %i.t to i64  ; 3 uses
   %i.u = and i32 %.fr85, 63                       ; 2 uses
   %.not12.not.i = icmp eq i32 %i.u, 0             ; 2 uses
   %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %wide.trip.count.i ; 2 uses
   %i.w = zext nneg i32 %i.u to i64
   %notmask.i = shl nsw i64 -1, %i.w               ; 2 uses
-  br i1 %.not19.i, label %.lr.ph.split.us, label %.lr.ph.split
+  br i1 %.not19.i, label %.lr.ph.split.us, label %.lr.ph.split.preheader
+
+.lr.ph.split.preheader:                           ; preds = %.lr.ph
+  br i1 %.not12.not.i, label %.lr.ph.split.us91, label %.lr.ph.split
+
+.lr.ph.split.us91:                                ; preds = %.lr.ph.split.preheader, %_ZNK4llvm9BitVector3allEv.exit.thread57.loopexit.us
+  %.05080.us93 = phi ptr [ %15, %_ZNK4llvm9BitVector3allEv.exit.thread57.loopexit.us ], [ %0, %.lr.ph.split.preheader ] ; 3 uses
+  %2 = getelementptr inbounds i8, ptr %.05080.us93, i64 -96
+  %3 = getelementptr inbounds i8, ptr %.05080.us93, i64 -32
+  %4 = load ptr, ptr %3, align 8, !tbaa !134      ; 3 uses
+  %5 = load i8, ptr %4, align 8, !tbaa !117
+  %.not74.us94 = icmp eq i8 %5, 5
+  br i1 %.not74.us94, label %6, label %.thread
+
+6:                                                ; preds = %.lr.ph.split.us91
+  %7 = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %4, i64 32
+  %9 = load i32, ptr %8, align 8, !tbaa !382
+  %10 = icmp ult i32 %9, 65
+  %11 = load ptr, ptr %7, align 8
+  %spec.select.i.i36.us95 = select i1 %10, ptr %7, ptr %11
+  %.0.i.i.us96 = load i64, ptr %spec.select.i.i36.us95, align 8, !tbaa !172 ; 3 uses
+  %12 = load i32, ptr %i.g, align 8, !tbaa !384
+  %13 = zext i32 %12 to i64
+  %.not32.us97 = icmp ult i64 %.0.i.i.us96, %13
+  br i1 %.not32.us97, label %14, label %.thread
+
+14:                                               ; preds = %6
+  %15 = load ptr, ptr %2, align 8, !tbaa !134     ; 4 uses
+  %16 = load i8, ptr %15, align 8, !tbaa !117     ; 3 uses
+  %17 = icmp ugt i8 %16, 29
+  br i1 %17, label %_ZL11areInSameBBPKN4llvm5ValueES2_.exit.us98, label %.lr.ph.i.us
+
+_ZL11areInSameBBPKN4llvm5ValueES2_.exit.us98:     ; preds = %14
+  %18 = getelementptr inbounds nuw i8, ptr %15, i64 40
+  %19 = load ptr, ptr %18, align 8, !tbaa !145
+  %20 = getelementptr inbounds nuw i8, ptr %.05080.us93, i64 40
+  %21 = load ptr, ptr %20, align 8, !tbaa !145
+  %22 = icmp eq ptr %19, %21
+  br i1 %22, label %.lr.ph.i.us, label %.thread
+
+.lr.ph.i.us:                                      ; preds = %_ZL11areInSameBBPKN4llvm5ValueES2_.exit.us98, %14
+  %23 = and i64 %.0.i.i.us96, 63
+  %24 = shl nuw i64 1, %23
+  %25 = lshr i64 %.0.i.i.us96, 6
+  %26 = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %25 ; 2 uses
+  %27 = load i64, ptr %26, align 8, !tbaa !415
+  %28 = or i64 %27, %24
+  store i64 %28, ptr %26, align 8, !tbaa !415
+  br label %29
+
+29:                                               ; preds = %32, %.lr.ph.i.us
+  %indvars.iv.i.us = phi i64 [ 0, %.lr.ph.i.us ], [ %indvars.iv.next.i.us, %32 ] ; 2 uses
+  %30 = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %indvars.iv.i.us
+  %31 = load i64, ptr %30, align 8, !tbaa !415
+  %.not.i.us = icmp eq i64 %31, -1
+  br i1 %.not.i.us, label %32, label %_ZNK4llvm9BitVector3allEv.exit.thread57.loopexit.us
+
+32:                                               ; preds = %29
+  %indvars.iv.next.i.us = add nuw nsw i64 %indvars.iv.i.us, 1 ; 2 uses
+  %exitcond.not.i.us = icmp eq i64 %indvars.iv.next.i.us, %wide.trip.count.i
+  br i1 %exitcond.not.i.us, label %.thread, label %29, !llvm.loop !763
+
+_ZNK4llvm9BitVector3allEv.exit.thread57.loopexit.us: ; preds = %29
+  %.not72.us100 = icmp eq i8 %16, 94
+  br i1 %.not72.us100, label %.lr.ph.split.us91, label %._crit_edge
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
   br i1 %.not12.not.i, label %.lr.ph.split.us.split.us, label %.lr.ph.split.us.split
@@ -354,8 +419,8 @@ _ZNK4llvm9BitVector3allEv.exit.thread57.us:       ; preds = %._crit_edge.i.us
   %.not72.us = icmp eq i8 %i.bi, 94
   br i1 %.not72.us, label %.lr.ph.split.us.split, label %._crit_edge
 
-.lr.ph.split:                                     ; preds = %.lr.ph, %_ZNK4llvm9BitVector3allEv.exit.thread57
-  %.05080 = phi ptr [ %i.cj, %_ZNK4llvm9BitVector3allEv.exit.thread57 ], [ %0, %.lr.ph ] ; 3 uses
+.lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %_ZNK4llvm9BitVector3allEv.exit.thread57
+  %.05080 = phi ptr [ %i.cj, %_ZNK4llvm9BitVector3allEv.exit.thread57 ], [ %0, %.lr.ph.split.preheader ] ; 3 uses
   %i.by = getelementptr inbounds i8, ptr %.05080, i64 -96
   %i.bz = getelementptr inbounds i8, ptr %.05080, i64 -32
   %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !134 ; 3 uses
@@ -403,7 +468,7 @@ _ZL11areInSameBBPKN4llvm5ValueES2_.exit:          ; preds = %bb.h
 bb.i:                                             ; preds = %bb.j
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %._crit_edge.i.loopexit, label %bb.j, !llvm.loop !763
+  br i1 %exitcond.not.i, label %_ZNK4llvm9BitVector3allEv.exit, label %bb.j, !llvm.loop !763
 
 bb.j:                                             ; preds = %bb.i, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.i ] ; 2 uses
@@ -412,10 +477,7 @@ bb.j:                                             ; preds = %bb.i, %.lr.ph.i
   %.not.i = icmp eq i64 %i.cy, -1
   br i1 %.not.i, label %bb.i, label %_ZNK4llvm9BitVector3allEv.exit.thread57
 
-._crit_edge.i.loopexit:                           ; preds = %bb.i
-  br i1 %.not12.not.i, label %.thread, label %_ZNK4llvm9BitVector3allEv.exit
-
-_ZNK4llvm9BitVector3allEv.exit:                   ; preds = %._crit_edge.i.loopexit
+_ZNK4llvm9BitVector3allEv.exit:                   ; preds = %bb.i
   %i.cz = load i64, ptr %i.v, align 8, !tbaa !415
   %i.da = xor i64 %i.cz, %notmask.i
   %.fr = freeze i64 %i.da
@@ -426,14 +488,14 @@ _ZNK4llvm9BitVector3allEv.exit.thread57:          ; preds = %bb.j, %_ZNK4llvm9Bi
   %.not72 = icmp eq i8 %i.ck, 94
   br i1 %.not72, label %.lr.ph.split, label %._crit_edge
 
-._crit_edge:                                      ; preds = %_ZNK4llvm9BitVector3allEv.exit.thread57, %_ZNK4llvm9BitVector3allEv.exit.thread57.us, %_ZN4llvm9BitVectorC2Ejb.exit
-  %2 = phi i8 [ %i.r, %_ZN4llvm9BitVectorC2Ejb.exit ], [ %i.bi, %_ZNK4llvm9BitVector3allEv.exit.thread57.us ], [ %i.ck, %_ZNK4llvm9BitVector3allEv.exit.thread57 ] ; 2 uses
-  %.050.lcssa = phi ptr [ %0, %_ZN4llvm9BitVectorC2Ejb.exit ], [ %i.bh, %_ZNK4llvm9BitVector3allEv.exit.thread57.us ], [ %i.cj, %_ZNK4llvm9BitVector3allEv.exit.thread57 ] ; 4 uses
-  %i.dc = icmp ult i8 %2, 23
+._crit_edge:                                      ; preds = %_ZNK4llvm9BitVector3allEv.exit.thread57, %_ZNK4llvm9BitVector3allEv.exit.thread57.loopexit.us, %_ZNK4llvm9BitVector3allEv.exit.thread57.us, %_ZN4llvm9BitVectorC2Ejb.exit
+  %33 = phi i8 [ %i.r, %_ZN4llvm9BitVectorC2Ejb.exit ], [ %i.bi, %_ZNK4llvm9BitVector3allEv.exit.thread57.us ], [ %16, %_ZNK4llvm9BitVector3allEv.exit.thread57.loopexit.us ], [ %i.ck, %_ZNK4llvm9BitVector3allEv.exit.thread57 ] ; 2 uses
+  %.050.lcssa = phi ptr [ %0, %_ZN4llvm9BitVectorC2Ejb.exit ], [ %i.bh, %_ZNK4llvm9BitVector3allEv.exit.thread57.us ], [ %15, %_ZNK4llvm9BitVector3allEv.exit.thread57.loopexit.us ], [ %i.cj, %_ZNK4llvm9BitVector3allEv.exit.thread57 ] ; 4 uses
+  %i.dc = icmp ult i8 %33, 23
   br i1 %i.dc, label %.thread, label %bb.k
 
 bb.k:                                             ; preds = %._crit_edge
-  %.not76 = icmp eq i8 %2, 95
+  %.not76 = icmp eq i8 %33, 95
   br i1 %.not76, label %bb.l, label %.thread
 
 bb.l:                                             ; preds = %bb.k
@@ -470,8 +532,8 @@ bb.n:                                             ; preds = %_ZL11areInSameBBPKN
   %i.dv = icmp eq ptr %i.ds, %i.du
   br label %.thread
 
-.thread:                                          ; preds = %.lr.ph.split, %bb.g, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit, %._crit_edge.i.loopexit, %_ZNK4llvm9BitVector3allEv.exit, %.lr.ph.split.us.split, %bb.e, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit.us, %._crit_edge.i.us, %.lr.ph.split.us.split.us, %bb.c, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit.us.us, %._crit_edge.i.us.us, %bb.k, %bb.n, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit41.thread, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit41, %bb.l, %._crit_edge
-  %.5 = phi i1 [ true, %._crit_edge ], [ false, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit41.thread ], [ false, %bb.k ], [ true, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit41 ], [ true, %bb.l ], [ %i.dv, %bb.n ], [ false, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit.us ], [ true, %._crit_edge.i.us.us ], [ false, %bb.c ], [ false, %.lr.ph.split.us.split.us ], [ false, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit.us.us ], [ false, %.lr.ph.split.us.split ], [ false, %bb.e ], [ true, %._crit_edge.i.us ], [ false, %.lr.ph.split ], [ false, %bb.g ], [ true, %_ZNK4llvm9BitVector3allEv.exit ], [ true, %._crit_edge.i.loopexit ], [ false, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit ]
+.thread:                                          ; preds = %_ZNK4llvm9BitVector3allEv.exit, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit, %bb.g, %.lr.ph.split, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit.us98, %6, %.lr.ph.split.us91, %32, %.lr.ph.split.us.split, %bb.e, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit.us, %._crit_edge.i.us, %.lr.ph.split.us.split.us, %bb.c, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit.us.us, %._crit_edge.i.us.us, %bb.k, %bb.n, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit41.thread, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit41, %bb.l, %._crit_edge
+  %.5 = phi i1 [ true, %._crit_edge ], [ false, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit41.thread ], [ false, %bb.k ], [ true, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit41 ], [ true, %bb.l ], [ %i.dv, %bb.n ], [ false, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit.us ], [ true, %._crit_edge.i.us.us ], [ false, %bb.c ], [ false, %.lr.ph.split.us.split.us ], [ false, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit.us.us ], [ false, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit.us98 ], [ true, %32 ], [ false, %.lr.ph.split.us.split ], [ false, %bb.e ], [ true, %._crit_edge.i.us ], [ false, %.lr.ph.split.us91 ], [ false, %6 ], [ false, %bb.g ], [ true, %_ZNK4llvm9BitVector3allEv.exit ], [ false, %.lr.ph.split ], [ false, %_ZL11areInSameBBPKN4llvm5ValueES2_.exit ]
   %i.dw = load ptr, ptr %1, align 8, !tbaa !40    ; 2 uses
   %i.dx = icmp eq ptr %i.dw, %i.l
   br i1 %i.dx, label %_ZN4llvm9BitVectorD2Ev.exit, label %bb.o

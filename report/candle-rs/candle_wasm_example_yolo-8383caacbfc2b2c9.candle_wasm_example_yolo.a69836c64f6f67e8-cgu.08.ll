@@ -204,11 +204,12 @@ bb.aa:                                            ; preds = %bb.w
 .lr.ph.i8.i:                                      ; preds = %bb.aa
   %i.dy = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.dz = load i64, ptr %i.dy, align 8, !alias.scope !206, !noundef !5
-  %i.ea = load i64, ptr %i.cu, align 8, !alias.scope !206 ; 4 uses
+  %i.ea = load i64, ptr %i.cu, align 8, !alias.scope !206
+  %.fr60.i.i = freeze i64 %i.ea                   ; 4 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.ec = load i64, ptr %i.eb, align 8, !alias.scope !206 ; 2 uses
   %i.ed = sub i64 %i.df, %i.ec
-  %invariant.op = sub i64 1, %i.ea
+  %invariant.op = sub i64 1, %.fr60.i.i
   br label %.lr.ph.split.i.i
 
 .lr.ph.split.i.i:                                 ; preds = %bb.ad, %.lr.ph.i8.i
@@ -229,7 +230,7 @@ bb.ab:                                            ; preds = %.lr.ph.split.i.i
   br label %bb.ad
 
 bb.ac:                                            ; preds = %.lr.ph.split.i.i
-  %i.em = tail call i64 @llvm.umax.i64(i64 %i.ea, i64 %.sink70.i.i42) ; 2 uses
+  %i.em = tail call i64 @llvm.umax.i64(i64 %.fr60.i.i, i64 %.sink70.i.i42) ; 2 uses
   %i.en = icmp ult i64 %i.em, %i.df
   br i1 %i.en, label %.lr.ph154, label %.preheader36.i.i.preheader
 
@@ -246,7 +247,7 @@ bb.ae:                                            ; preds = %.lr.ph154
   br i1 %i.er, label %.lr.ph154, label %.preheader36.i.i.preheader
 
 .preheader36.i.i.preheader:                       ; preds = %bb.ae, %bb.ac
-  %i.es = icmp ult i64 %.sink70.i.i42, %i.ea
+  %i.es = icmp ult i64 %.sink70.i.i42, %.fr60.i.i
   br i1 %i.es, label %.lr.ph156, label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit
 
 .lr.ph154:                                        ; preds = %bb.ac, %bb.ae
@@ -266,7 +267,7 @@ bb.ae:                                            ; preds = %.lr.ph154
   br i1 %i.ez, label %.lr.ph156, label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit
 
 .lr.ph156:                                        ; preds = %.preheader36.i.i.preheader, %.preheader36.i.i
-  %.sroa.2.0.i.i155 = phi i64 [ %i.fa, %.preheader36.i.i ], [ %i.ea, %.preheader36.i.i.preheader ]
+  %.sroa.2.0.i.i155 = phi i64 [ %i.fa, %.preheader36.i.i ], [ %.fr60.i.i, %.preheader36.i.i.preheader ]
   %i.fa = add i64 %.sroa.2.0.i.i155, -1           ; 6 uses
   %i.fb = icmp ult i64 %i.fa, %i.df
   br i1 %i.fb, label %bb.af, label %.split32.us.i.i
@@ -340,7 +341,7 @@ bb.ai:                                            ; preds = %bb.w
   br i1 %exitcond.not.i16.i, label %.preheader.i18.preheader.i, label %.lr.ph159
 
 .preheader.i18.preheader.i:                       ; preds = %.preheader35.i.i, %.preheader35.i.i.preheader
-  br i1 %.first_iter.i15.i, label %.preheader.i18.us.i.preheader, label %.preheader.i18.i
+  br i1 %.first_iter.i15.i, label %.preheader.i18.us.i.preheader, label %.preheader.split.i20.i
 
 .preheader.i18.us.i.preheader:                    ; preds = %.preheader.i18.preheader.i
   br i1 %.not34.i.us.i160, label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, label %.lr.ph162
@@ -366,6 +367,9 @@ bb.ai:                                            ; preds = %bb.w
   %i.gh = add i64 %.sink.i17.i45, %i.fq
   br label %bb.al
 
+.preheader.split.i20.i:                           ; preds = %.preheader.i18.preheader.i
+  br i1 %.not34.i.us.i160, label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, label %.split32.us.i21.i
+
 .lr.ph159:                                        ; preds = %.preheader35.i.i.preheader, %.preheader35.i.i
   %.sroa.04.0.us.i.i158 = phi i64 [ %i.fz, %.preheader35.i.i ], [ %.fr214.i, %.preheader35.i.i.preheader ] ; 4 uses
   %i.gi = getelementptr inbounds nuw i8, ptr %i.dd, i64 %.sroa.04.0.us.i.i158
@@ -377,13 +381,6 @@ bb.ai:                                            ; preds = %bb.w
   %i.gn = load i8, ptr %i.gm, align 1, !alias.scope !209, !noalias !201, !noundef !5
   %.not21.us.i.i = icmp eq i8 %i.gj, %i.gn
   br i1 %.not21.us.i.i, label %.preheader35.i.i, label %bb.aj
-
-.preheader.i18.i:                                 ; preds = %.preheader.i18.preheader.i
-  br i1 %.not34.i.us.i160, label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, label %.split32.us.i19.i
-
-.split32.us.i19.i:                                ; preds = %.preheader.i18.i
-  tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.fr, i64 noundef range(i64 0, -9223372036854775808) %i.df, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #22, !noalias !212
-  unreachable
 
 bb.aj:                                            ; preds = %.lr.ph159
   %.reass281.i.reass.reass = add i64 %.sink.i17.i45, %invariant.op195
@@ -400,11 +397,15 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj, %.sp
   %i.gr = icmp ult i64 %i.gq, %i.db
   br i1 %i.gr, label %.lr.ph.split.us.i.i, label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit
 
+.split32.us.i21.i:                                ; preds = %.preheader.split.i20.i
+  tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.fr, i64 noundef range(i64 0, -9223372036854775808) %i.df, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #22, !noalias !212
+  unreachable
+
 _RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split: ; preds = %.lr.ph.i.i4, %bb.y, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCseiMiKruFR5A_24candle_wasm_example_yolo.exit16.i.i.us.i, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCseiMiKruFR5A_24candle_wasm_example_yolo.exit14.i.i.us.i, %_RNvXs2J_NtNtCsf3Ta7LF998c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCseiMiKruFR5A_24candle_wasm_example_yolo.exit12.i.i.us.i, %bb.u
   br label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit
 
-_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit: ; preds = %bb.ad, %.preheader36.i.i.preheader, %.preheader36.i.i, %bb.al, %.preheader.i18.us.i.preheader, %.preheader.i18.us.i, %bb.z, %bb.k, %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split, %.preheader.i18.i, %bb.ai, %bb.aa, %bb.y, %bb.n, %bb.t, %.preheader.i, %bb.v
-  %storemerge.i.sink.i = phi i8 [ %.promoted205.i, %bb.k ], [ 0, %bb.aa ], [ 0, %bb.v ], [ 0, %bb.ai ], [ 1, %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split ], [ 0, %bb.y ], [ 1, %.preheader.i18.us.i ], [ 0, %.preheader.i ], [ 1, %bb.n ], [ 1, %bb.t ], [ 1, %.preheader36.i.i ], [ 1, %.preheader.i18.i ], [ 1, %.preheader.i18.us.i.preheader ], [ 0, %bb.z ], [ 0, %bb.al ], [ 0, %bb.ad ], [ 1, %.preheader36.i.i.preheader ]
+_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit: ; preds = %bb.ad, %.preheader36.i.i.preheader, %.preheader36.i.i, %bb.al, %.preheader.i18.us.i.preheader, %.preheader.i18.us.i, %bb.z, %bb.k, %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split, %.preheader.split.i20.i, %bb.ai, %bb.aa, %bb.y, %bb.n, %bb.t, %.preheader.i, %bb.v
+  %storemerge.i.sink.i = phi i8 [ %.promoted205.i, %bb.k ], [ 0, %bb.aa ], [ 0, %bb.v ], [ 0, %bb.ai ], [ 1, %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split ], [ 0, %bb.y ], [ 1, %.preheader.i18.us.i ], [ 0, %.preheader.i ], [ 1, %bb.n ], [ 1, %bb.t ], [ 1, %.preheader36.i.i ], [ 1, %.preheader.split.i20.i ], [ 1, %.preheader.i18.us.i.preheader ], [ 0, %bb.z ], [ 0, %bb.al ], [ 0, %bb.ad ], [ 1, %.preheader36.i.i.preheader ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %_RNvNtNtCsf3Ta7LF998c_4core3str7pattern13simd_contains.exit.thread
 

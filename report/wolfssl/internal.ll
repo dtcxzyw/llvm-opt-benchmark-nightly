@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c,
 
 .preheader104.lr.ph.i:                            ; preds = %bb.f
   %.not.i = icmp eq i8 %i.ax, 0
-  br i1 %.not.i, label %MaskMac.exit, label %.preheader104.us.preheader.i
+  br i1 %.not.i, label %.preheader104.i, label %.preheader104.us.preheader.i
 
 .preheader104.us.preheader.i:                     ; preds = %.preheader104.lr.ph.i
   %i.bx = sext i32 %4 to i64                      ; 2 uses
@@ -254,6 +254,9 @@ bb.h:                                             ; preds = %bb.g
   %i.cq = icmp slt i64 %indvars.iv.next123.i, %i.bx
   %indvars.iv.next = sub i64 %indvars.iv, %i.bv
   br i1 %i.cq, label %.preheader104.us.i, label %._crit_edge.i, !llvm.loop !431
+
+.preheader104.i:                                  ; preds = %.preheader104.lr.ph.i, %.preheader104.i
+  br label %.preheader104.i
 
 ._crit_edge.i:                                    ; preds = %.critedge.us.i, %bb.f
   br i1 %i.bn, label %.preheader.i, label %bb.i
@@ -362,8 +365,8 @@ MaskMac.exit.loopexit.unr-lcssa:                  ; preds = %.lr.ph.i26
   %i.ep = or i8 %i.eo, %.087112.i.epil.init
   br label %MaskMac.exit
 
-MaskMac.exit:                                     ; preds = %.preheader102.i, %.preheader100.i, %.lr.ph.i26.epil.preheader, %MaskMac.exit.loopexit.unr-lcssa, %.preheader104.lr.ph.i, %.preheader.i, %bb.i
-  %.390.i = phi i8 [ 0, %bb.i ], [ %i.ep, %.lr.ph.i26.epil.preheader ], [ %i.dv, %.preheader100.i ], [ 0, %.preheader.i ], [ 0, %.preheader104.lr.ph.i ], [ %i.dl, %MaskMac.exit.loopexit.unr-lcssa ], [ %i.ef, %.preheader102.i ]
+MaskMac.exit:                                     ; preds = %.preheader102.i, %.preheader100.i, %.lr.ph.i26.epil.preheader, %MaskMac.exit.loopexit.unr-lcssa, %.preheader.i, %bb.i
+  %.390.i = phi i8 [ 0, %bb.i ], [ %i.dv, %.preheader100.i ], [ %i.ep, %.lr.ph.i26.epil.preheader ], [ 0, %.preheader.i ], [ %i.dl, %MaskMac.exit.loopexit.unr-lcssa ], [ %i.ef, %.preheader102.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)

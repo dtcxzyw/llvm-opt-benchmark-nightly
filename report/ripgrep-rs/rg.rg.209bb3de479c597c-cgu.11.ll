@@ -202,11 +202,12 @@ bb.w:                                             ; preds = %bb.r
 .lr.ph.i8:                                        ; preds = %bb.w
   %i.es = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.et = load i64, ptr %i.es, align 8, !alias.scope !12265, !noundef !306
-  %i.eu = load i64, ptr %i.df, align 8, !alias.scope !12265 ; 4 uses
+  %i.eu = load i64, ptr %i.df, align 8, !alias.scope !12265
+  %.fr60.i = freeze i64 %i.eu, !dbg !12379        ; 4 uses
   %i.ev = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.ew = load i64, ptr %i.ev, align 8, !alias.scope !12265 ; 2 uses
   %i.ex = sub i64 %i.dq, %i.ew
-  %invariant.op = sub i64 1, %i.eu, !dbg !12379
+  %invariant.op = sub i64 1, %.fr60.i, !dbg !12379
   br label %.lr.ph.split.i, !dbg !12379
 
 ._crit_edge.i:                                    ; preds = %bb.z, %bb.w
@@ -231,7 +232,7 @@ bb.x:                                             ; preds = %.lr.ph.split.i
   br label %bb.z, !dbg !12388
 
 bb.y:                                             ; preds = %.lr.ph.split.i
-  %..i.i10 = tail call noundef i64 @llvm.umax.i64(i64 %i.ey, i64 %i.eu), !dbg !12389 ; 2 uses
+  %..i.i10 = tail call noundef i64 @llvm.umax.i64(i64 %i.ey, i64 %.fr60.i), !dbg !12389 ; 2 uses
   %i.fi = icmp ult i64 %..i.i10, %i.dq, !dbg !12390
   br i1 %i.fi, label %.lr.ph306, label %.preheader36.i.preheader, !dbg !12391
 
@@ -250,7 +251,7 @@ bb.aa:                                            ; preds = %.lr.ph306
   br i1 %i.fm, label %.lr.ph306, label %.preheader36.i.preheader, !dbg !12391
 
 .preheader36.i.preheader:                         ; preds = %bb.aa, %bb.y
-  %i.fn = icmp ult i64 %i.ey, %i.eu, !dbg !12394
+  %i.fn = icmp ult i64 %i.ey, %.fr60.i, !dbg !12394
   br i1 %i.fn, label %.lr.ph308, label %.split.us.i11, !dbg !12395
 
 .lr.ph306:                                        ; preds = %bb.y, %bb.aa
@@ -280,7 +281,7 @@ bb.aa:                                            ; preds = %.lr.ph306
   br label %_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECs2NzvFoTxuAy_2rg.exit, !dbg !12405
 
 .lr.ph308:                                        ; preds = %.preheader36.i.preheader, %.preheader36.i
-  %.sroa.2.0.i307 = phi i64 [ %i.fy, %.preheader36.i ], [ %i.eu, %.preheader36.i.preheader ]
+  %.sroa.2.0.i307 = phi i64 [ %i.fy, %.preheader36.i ], [ %.fr60.i, %.preheader36.i.preheader ]
   %i.fy = add i64 %.sroa.2.0.i307, -1, !dbg !12406 ; 6 uses
   %i.fz = icmp ult i64 %i.fy, %i.dq, !dbg !12407
   br i1 %i.fz, label %bb.ab, label %.split32.us.i, !dbg !12407
@@ -355,7 +356,7 @@ bb.ae:                                            ; preds = %bb.r
   br i1 %exitcond.not.i17, label %.preheader.i19.preheader, label %.lr.ph312, !dbg !12426
 
 .preheader.i19.preheader:                         ; preds = %.preheader35.i, %.preheader35.i.preheader
-  br i1 %.first_iter.i16, label %.preheader.i19.us.preheader, label %.preheader.i19
+  br i1 %.first_iter.i16, label %.preheader.i19.us.preheader, label %.preheader.split.i21
 
 .preheader.i19.us.preheader:                      ; preds = %.preheader.i19.preheader
   br i1 %.not34.i.us313, label %.split.us.i21, label %.lr.ph315, !dbg !12429
@@ -381,6 +382,9 @@ bb.ae:                                            ; preds = %bb.r
   %i.hg = add i64 %i.gr, %i.go, !dbg !12438
   br label %bb.ah, !dbg !12439
 
+.preheader.split.i21:                             ; preds = %.preheader.i19.preheader
+  br i1 %.not34.i.us313, label %.split.us.i21, label %.split32.us.i22, !dbg !12429
+
 .lr.ph312:                                        ; preds = %.preheader35.i.preheader, %.preheader35.i
   %.sroa.04.0.us.i311 = phi i64 [ %i.gy, %.preheader35.i ], [ %.fr215, %.preheader35.i.preheader ] ; 4 uses
   %i.hh = getelementptr inbounds nuw i8, ptr %i.do, i64 %.sroa.04.0.us.i311, !dbg !12440
@@ -392,13 +396,6 @@ bb.ae:                                            ; preds = %bb.r
   %i.hm = load i8, ptr %i.hl, align 1, !dbg !12445, !alias.scope !12288, !noundef !306
   %.not21.us.i = icmp eq i8 %i.hi, %i.hm, !dbg !12440
   br i1 %.not21.us.i, label %.preheader35.i, label %bb.af, !dbg !12440
-
-.preheader.i19:                                   ; preds = %.preheader.i19.preheader
-  br i1 %.not34.i.us313, label %.split.us.i21, label %.split32.us.i20, !dbg !12429
-
-.split32.us.i20:                                  ; preds = %.preheader.i19
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.gp, i64 noundef range(i64 0, -9223372036854775808) %i.dq, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #23, !dbg !12432, !noalias !12290
-  unreachable, !dbg !12432
 
 bb.af:                                            ; preds = %.lr.ph312
   %.reass282.reass = add i64 %i.gr, %invariant.op359
@@ -420,14 +417,18 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af, %.sp
   store i64 %i.dm, ptr %i.dr, align 8, !dbg !12451, !alias.scope !12287
   br label %_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECs2NzvFoTxuAy_2rg.exit, !dbg !12452
 
-.split.us.i21:                                    ; preds = %.preheader.i19.us.preheader, %.preheader.i19.us, %.preheader.i19
+.split.us.i21:                                    ; preds = %.preheader.i19.us.preheader, %.preheader.i19.us, %.preheader.split.i21
   %i.hr = add i64 %i.gr, %i.dq, !dbg !12453       ; 2 uses
   store i64 %i.hr, ptr %i.dr, align 8, !dbg !12453, !alias.scope !12287
   %i.hs = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !12454
-  store i64 %i.gr, ptr %i.hs, align 8, !dbg !12454, !alias.scope !12291
+  store i64 %i.gr, ptr %i.hs, align 8, !dbg !12454, !alias.scope !12290
   %i.ht = getelementptr inbounds nuw i8, ptr %0, i64 16, !dbg !12454
-  store i64 %i.hr, ptr %i.ht, align 8, !dbg !12454, !alias.scope !12291
+  store i64 %i.hr, ptr %i.ht, align 8, !dbg !12454, !alias.scope !12290
   br label %_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECs2NzvFoTxuAy_2rg.exit, !dbg !12455
+
+.split32.us.i22:                                  ; preds = %.preheader.split.i21
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.gp, i64 noundef range(i64 0, -9223372036854775808) %i.dq, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #23, !dbg !12432, !noalias !12291
+  unreachable, !dbg !12432
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
@@ -830,8 +831,8 @@ begin_hunk_1_@llvm.umax.i64
 !12287 = !{!12218}
 !12288 = !{!12219}
 !12289 = !{!12220}
-!12290 = !{!12217, !12218, !12219, !12220}
-!12291 = !{!12242, !12217}
+!12290 = !{!12242, !12217}
+!12291 = !{!12217, !12218, !12219, !12220}
 !12292 = !DILocation(line: 1206, column: 15, scope: !12067)
 !12293 = !DILocation(line: 1206, column: 9, scope: !12067)
 !12294 = !DILocation(line: 1141, column: 20, scope: !12069, inlinedAt: !12070)

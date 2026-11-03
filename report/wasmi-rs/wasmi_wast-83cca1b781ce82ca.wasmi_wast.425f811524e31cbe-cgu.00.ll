@@ -204,11 +204,12 @@ bb.aj:                                            ; preds = %bb.af
 .lr.ph.i8.i.i:                                    ; preds = %bb.aj
   %i.ew = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %i.ex = load i64, ptr %i.ew, align 8, !alias.scope !464, !noalias !452, !noundef !4
-  %i.ey = load i64, ptr %i.ds, align 8, !alias.scope !464, !noalias !452 ; 4 uses
+  %i.ey = load i64, ptr %i.ds, align 8, !alias.scope !464, !noalias !452
+  %.fr60.i.i.i = freeze i64 %i.ey                 ; 4 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.fa = load i64, ptr %i.ez, align 8, !alias.scope !464, !noalias !452 ; 2 uses
   %i.fb = sub i64 %i.ed, %i.fa
-  %invariant.op = sub i64 1, %i.ey
+  %invariant.op = sub i64 1, %.fr60.i.i.i
   br label %.lr.ph.split.i.i.i
 
 .lr.ph.split.i.i.i:                               ; preds = %bb.am, %.lr.ph.i8.i.i
@@ -229,7 +230,7 @@ bb.ak:                                            ; preds = %.lr.ph.split.i.i.i
   br label %bb.am
 
 bb.al:                                            ; preds = %.lr.ph.split.i.i.i
-  %..i.i10.i.i = call noundef i64 @llvm.umax.i64(i64 %.sink70.i.i42.i, i64 %i.ey) ; 2 uses
+  %..i.i10.i.i = call noundef i64 @llvm.umax.i64(i64 %.sink70.i.i42.i, i64 %.fr60.i.i.i) ; 2 uses
   %i.fk = icmp ult i64 %..i.i10.i.i, %i.ed
   br i1 %i.fk, label %.lr.ph118, label %.preheader36.i.i.i.preheader
 
@@ -246,7 +247,7 @@ bb.an:                                            ; preds = %.lr.ph118
   br i1 %i.fo, label %.lr.ph118, label %.preheader36.i.i.i.preheader
 
 .preheader36.i.i.i.preheader:                     ; preds = %bb.an, %bb.al
-  %i.fp = icmp ult i64 %.sink70.i.i42.i, %i.ey
+  %i.fp = icmp ult i64 %.sink70.i.i42.i, %.fr60.i.i.i
   br i1 %i.fp, label %.lr.ph120, label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i
 
 .lr.ph118:                                        ; preds = %bb.al, %bb.an
@@ -266,7 +267,7 @@ bb.an:                                            ; preds = %.lr.ph118
   br i1 %i.fw, label %.lr.ph120, label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i
 
 .lr.ph120:                                        ; preds = %.preheader36.i.i.i.preheader, %.preheader36.i.i.i
-  %.sroa.2.0.i.i.i119 = phi i64 [ %i.fx, %.preheader36.i.i.i ], [ %i.ey, %.preheader36.i.i.i.preheader ]
+  %.sroa.2.0.i.i.i119 = phi i64 [ %i.fx, %.preheader36.i.i.i ], [ %.fr60.i.i.i, %.preheader36.i.i.i.preheader ]
   %i.fx = add i64 %.sroa.2.0.i.i.i119, -1         ; 6 uses
   %i.fy = icmp ult i64 %i.fx, %i.ed
   br i1 %i.fy, label %bb.ao, label %.invoke
@@ -336,7 +337,7 @@ bb.ar:                                            ; preds = %bb.af
   br i1 %exitcond.not.i17.i.i, label %.preheader.i19.preheader.i.i, label %.lr.ph123
 
 .preheader.i19.preheader.i.i:                     ; preds = %.preheader35.i.i.i, %.preheader35.i.i.i.preheader
-  br i1 %.first_iter.i16.i.i, label %.preheader.i19.us.i.i.preheader, label %.preheader.i19.i.i
+  br i1 %.first_iter.i16.i.i, label %.preheader.i19.us.i.i.preheader, label %.preheader.split.i21.i.i
 
 .preheader.i19.us.i.i.preheader:                  ; preds = %.preheader.i19.preheader.i.i
   br i1 %.not34.i.us.i.i124, label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i, label %.lr.ph126
@@ -362,6 +363,9 @@ bb.ar:                                            ; preds = %bb.af
   %i.he = add i64 %.sink.i18.i45.i, %i.gn
   br label %bb.au
 
+.preheader.split.i21.i.i:                         ; preds = %.preheader.i19.preheader.i.i
+  br i1 %.not34.i.us.i.i124, label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i, label %.invoke
+
 .lr.ph123:                                        ; preds = %.preheader35.i.i.i.preheader, %.preheader35.i.i.i
   %.sroa.04.0.us.i.i.i122 = phi i64 [ %i.gw, %.preheader35.i.i.i ], [ %.fr215.i.i, %.preheader35.i.i.i.preheader ] ; 4 uses
   %i.hf = getelementptr inbounds nuw i8, ptr %i.eb, i64 %.sroa.04.0.us.i.i.i122
@@ -373,9 +377,6 @@ bb.ar:                                            ; preds = %bb.af
   %i.hk = load i8, ptr %i.hj, align 1, !alias.scope !466, !noalias !460, !noundef !4
   %.not21.us.i.i.i = icmp eq i8 %i.hg, %i.hk
   br i1 %.not21.us.i.i.i, label %.preheader35.i.i.i, label %bb.as
-
-.preheader.i19.i.i:                               ; preds = %.preheader.i19.preheader.i.i
-  br i1 %.not34.i.us.i.i124, label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i, label %.invoke
 
 bb.as:                                            ; preds = %.lr.ph123
   %.reass282.i.reass.i.reass.reass = add i64 %.sink.i18.i45.i, %invariant.op163
@@ -395,8 +396,8 @@ bb.au:                                            ; preds = %bb.at, %bb.as, %.sp
 _RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split.i: ; preds = %.lr.ph.i.i4.i, %.noexc22, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs5HiJSMzJl2A_10wasmi_wast.exit12.i.i.us.i.i, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs5HiJSMzJl2A_10wasmi_wast.exit14.i.i.us.i.i, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs5HiJSMzJl2A_10wasmi_wast.exit16.i.i.us.i.i, %bb.ad
   br label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i
 
-_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i: ; preds = %bb.am, %.preheader36.i.i.i.preheader, %.preheader36.i.i.i, %bb.au, %.preheader.i19.us.i.i.preheader, %.preheader.i19.us.i.i, %bb.ai, %bb.t, %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split.i, %.preheader.i19.i.i, %bb.ar, %bb.aj, %.noexc22, %bb.ae, %bb.ac, %bb.w, %.preheader.i.i
-  %storemerge.i.sink.i.i = phi i8 [ 1, %.preheader.i19.us.i.i ], [ 0, %bb.aj ], [ 0, %bb.ae ], [ 0, %bb.ar ], [ 1, %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split.i ], [ 0, %.noexc22 ], [ 1, %.preheader36.i.i.i ], [ 0, %.preheader.i.i ], [ 1, %bb.w ], [ 1, %bb.ac ], [ 0, %bb.ai ], [ 1, %.preheader.i19.i.i ], [ %.promoted206.i.i, %bb.t ], [ 1, %.preheader.i19.us.i.i.preheader ], [ 0, %bb.au ], [ 0, %bb.am ], [ 1, %.preheader36.i.i.i.preheader ]
+_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i: ; preds = %bb.am, %.preheader36.i.i.i.preheader, %.preheader36.i.i.i, %bb.au, %.preheader.i19.us.i.i.preheader, %.preheader.i19.us.i.i, %bb.ai, %bb.t, %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split.i, %.preheader.split.i21.i.i, %bb.ar, %bb.aj, %.noexc22, %bb.ae, %bb.ac, %bb.w, %.preheader.i.i
+  %storemerge.i.sink.i.i = phi i8 [ 1, %.preheader.i19.us.i.i ], [ 0, %bb.aj ], [ 0, %bb.ae ], [ 0, %bb.ar ], [ 1, %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split.i ], [ 0, %.noexc22 ], [ 1, %.preheader36.i.i.i ], [ 0, %.preheader.i.i ], [ 1, %bb.w ], [ 1, %bb.ac ], [ 0, %bb.ai ], [ 1, %.preheader.split.i21.i.i ], [ %.promoted206.i.i, %bb.t ], [ 1, %.preheader.i19.us.i.i.preheader ], [ 0, %bb.au ], [ 0, %bb.am ], [ 1, %.preheader36.i.i.i.preheader ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !452
   br label %bb.bl
 
@@ -422,10 +423,10 @@ bb.ax:                                            ; preds = %.lr.ph, %bb.aw
   %i.hw = icmp ult i64 %i.hv, %i.aa
   br i1 %i.hw, label %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0Cs5HiJSMzJl2A_10wasmi_wast.exit.i.i.i, label %.invoke
 
-.invoke:                                          ; preds = %bb.ax, %.lr.ph120, %.preheader.i19.i.i
-  %i.hx = phi i64 [ %i.go, %.preheader.i19.i.i ], [ %i.fx, %.lr.ph120 ], [ %i.hv, %bb.ax ]
-  %i.hy = phi i64 [ %i.ed, %.preheader.i19.i.i ], [ %i.ed, %.lr.ph120 ], [ %i.aa, %bb.ax ]
-  %i.hz = phi ptr [ @1, %.preheader.i19.i.i ], [ @1, %.lr.ph120 ], [ @3, %bb.ax ]
+.invoke:                                          ; preds = %bb.ax, %.lr.ph120, %.preheader.split.i21.i.i
+  %i.hx = phi i64 [ %i.go, %.preheader.split.i21.i.i ], [ %i.fx, %.lr.ph120 ], [ %i.hv, %bb.ax ]
+  %i.hy = phi i64 [ %i.ed, %.preheader.split.i21.i.i ], [ %i.ed, %.lr.ph120 ], [ %i.aa, %bb.ax ]
+  %i.hz = phi ptr [ @1, %.preheader.split.i21.i.i ], [ @1, %.lr.ph120 ], [ @3, %bb.ax ]
   invoke void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.hx, i64 noundef range(i64 0, -9223372036854775808) %i.hy, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.hz) #25
           to label %.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 

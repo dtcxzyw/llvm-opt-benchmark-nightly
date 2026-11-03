@@ -205,7 +205,8 @@ bb.ar:                                            ; preds = %bb.ar, %.preheader2
           to label %bb.ba unwind label %bb.be     ; 0 uses
 
 bb.as:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i60, %.preheader.i
-  %indvars.iv231.i.a = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next232.i.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i60 ] ; 8 uses
+  %indvars.iv231.i.a = phi i64 [ 0, %.preheader.i ], [ %indvars.iv.next232.i.a, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i60 ] ; 7 uses
+  %indvars.iv231.i = phi i32 [ 0, %.preheader.i ], [ %indvars.iv.next232.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i60 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #17, !noalias !67
   store i64 0, ptr %i.hp, align 8, !noalias !67
   store i32 50397184, ptr %25, align 8, !tbaa !79, !noalias !67
@@ -234,8 +235,9 @@ _ZNSt8__detail14__to_chars_lenIjEEjT_i.exit.i.i:  ; preds = %bb.as
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #17, !noalias !67
   call void @llvm.experimental.noalias.scope.decl(metadata !90)
   %i.jh = icmp eq i64 %indvars.iv231.i.a, 0
-  %i.ji = icmp samesign ult i64 %indvars.iv231.i.a, 10
-  %42 = select i1 %i.ji, i64 2, i64 3
+  %i.ji = icmp samesign ult i32 %indvars.iv231.i, 100
+  %spec.select.i = select i1 %i.ji, i32 2, i32 3  ; 2 uses
+  %42 = zext nneg i32 %spec.select.i to i64
   %i.jj = select i1 %i.jh, i64 1, i64 %42
   store ptr %i.ht, ptr %28, align 8, !tbaa !35, !alias.scope !90, !noalias !67
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructEmc(ptr noundef nonnull align 8 dereferenceable(32) %28, i64 noundef %i.jj, i8 noundef signext 45)
@@ -246,11 +248,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit.i.i: ;
   %i.jl = icmp samesign ugt i64 %indvars.iv231.i.a, 9
   %i.jm = trunc i64 %indvars.iv231.i.a to i32
   %i.jn = mul i32 %i.jm, 10                       ; 2 uses
-  br i1 %i.jl, label %.lr.ph.i11.i.i, label %._crit_edge.i.i125.i
+  br i1 %i.jl, label %.lr.ph.preheader.i.i.i, label %._crit_edge.i.i125.i
 
-.lr.ph.i11.i.i:                                   ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit.i.i, %.lr.ph.i11.i.i
-  %.020.i.i.i = phi i32 [ %i.jq, %.lr.ph.i11.i.i ], [ %i.jn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit.i.i ] ; 3 uses
-  %.01819.i.i.i = phi i32 [ %i.kb, %.lr.ph.i11.i.i ], [ 2, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit.i.i ] ; 3 uses
+.lr.ph.preheader.i.i.i:                           ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEmcRKS3_.exit.i.i
+  %43 = add nsw i32 %spec.select.i, -1
+  br label %.lr.ph.i11.i.i
+
+.lr.ph.i11.i.i:                                   ; preds = %.lr.ph.i11.i.i, %.lr.ph.preheader.i.i.i
+  %.020.i.i.i = phi i32 [ %i.jq, %.lr.ph.i11.i.i ], [ %i.jn, %.lr.ph.preheader.i.i.i ] ; 3 uses
+  %.01819.i.i.i = phi i32 [ %i.kb, %.lr.ph.i11.i.i ], [ %43, %.lr.ph.preheader.i.i.i ] ; 3 uses
   %i.jo = urem i32 %.020.i.i.i, 100
   %i.jp = shl nuw nsw i32 %i.jo, 1
   %i.jq = udiv i32 %.020.i.i.i, 100               ; 2 uses
@@ -324,6 +330,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i60: ; preds = %b
   call void @llvm.lifetime.end.p0(ptr nonnull %28) #17, !noalias !67
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #17, !noalias !67
   %indvars.iv.next232.i.a = add nuw nsw i64 %indvars.iv231.i.a, 1 ; 2 uses
+  %indvars.iv.next232.i = add nuw nsw i32 %indvars.iv231.i, 10
   %exitcond234.not.i = icmp eq i64 %indvars.iv.next232.i.a, 36
   br i1 %exitcond234.not.i, label %.noexc.i.i, label %bb.as, !llvm.loop !31
 
