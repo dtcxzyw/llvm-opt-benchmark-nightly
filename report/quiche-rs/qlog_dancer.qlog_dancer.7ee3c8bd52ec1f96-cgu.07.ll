@@ -204,11 +204,16 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsaTqK
 .lr.ph.split.us.i.i:                              ; preds = %.lr.ph.i.i
   %.not.i15.i.i.us.i.i = icmp ne i64 %.pre13.i.i.i.i.i, %.promoted24.i.i
   %or.cond.not.i.i.i.us.i.i = select i1 %i.bq, i1 true, i1 %.not.i15.i.i.us.i.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !41964), !dbg !42080
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !41965), !dbg !42081
+  br i1 %or.cond.not.i.i.i.us.i.i, label %._crit_edge.split.us.split.us.i.i, label %_RNvXNtNtCsexYYUdYSQU6_5alloc3vec11spec_extendINtB4_3VecReEINtB2_10SpecExtendBR_INtNtNtCskKLDkoKarTP_4core3str4iter5SplitcEE11spec_extendCsaTqK2fWTXJW_11qlog_dancer.exit, !dbg !42080
+
+._crit_edge.split.us.split.us.i.i:                ; preds = %.lr.ph.split.us.i.i
+  %.sroa.0.1.i.i.us.i.i = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %.promoted24.i.i
+  %i.bs = sub nuw i64 %.pre13.i.i.i.i.i, %.promoted24.i.i
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !41964), !dbg !42081
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !41965), !dbg !42082
     #dbg_value(ptr poison, !41736, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41572)
     #dbg_value(i64 poison, !41736, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41572)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !41966), !dbg !42082
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !41966), !dbg !42083
     #dbg_value(ptr %i.bd, !41763, !DIExpression(), !41573)
     #dbg_value(i64 0, !41784, !DIExpression(), !41578)
     #dbg_value(i64 0, !41812, !DIExpression(), !41580)
@@ -226,33 +231,33 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsaTqK
     #dbg_value(i64 %i.bg, !41836, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41582)
     #dbg_value(i64 %i.bg, !41787, !DIExpression(), !41585)
     #dbg_value(ptr %i.b, !41891, !DIExpression(), !41587)
-  br i1 %or.cond.not.i.i.i.us.i.i, label %._crit_edge.split.us.split.us.i.i, label %_RNvXNtNtCsexYYUdYSQU6_5alloc3vec11spec_extendINtB4_3VecReEINtB2_10SpecExtendBR_INtNtNtCskKLDkoKarTP_4core3str4iter5SplitcEE11spec_extendCsaTqK2fWTXJW_11qlog_dancer.exit
-
-._crit_edge.split.us.split.us.i.i:                ; preds = %.lr.ph.split.us.i.i
-  %.sroa.0.1.i.i.us.i.i = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %.promoted24.i.i
-  %i.bs = sub nuw i64 %.pre13.i.i.i.i.i, %.promoted24.i.i
-    #dbg_value(ptr %i.ay, !41967, !DIExpression(), !41590)
-  %i.bt = getelementptr inbounds nuw i8, ptr %i.ay, i64 16, !dbg !42083
-    #dbg_value(ptr %i.bt, !41972, !DIExpression(), !41593)
-    #dbg_value(ptr %.sroa.0.1.i.i.us.i.i, !41973, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41593)
-    #dbg_value(i64 poison, !41973, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41593)
-  store ptr %.sroa.0.1.i.i.us.i.i, ptr %i.bt, align 8, !dbg !42084, !noalias !41962, !captures !41911
-  %i.bu = getelementptr inbounds nuw i8, ptr %i.ay, i64 24, !dbg !42084
-  store i64 %i.bs, ptr %i.bu, align 8, !dbg !42084, !noalias !41962
+    #dbg_value(ptr %.sroa.0.1.i.i.us.i.i, !41926, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41588)
+    #dbg_value(i64 poison, !41926, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41588)
+    #dbg_value(i64 1, !41927, !DIExpression(), !41589)
+    #dbg_value(i64 1, !41967, !DIExpression(), !41592)
+    #dbg_value(ptr %i.c, !41957, !DIExpression(), !41593)
+    #dbg_value(ptr %i.ay, !41970, !DIExpression(), !41592)
+  %i.bt = getelementptr inbounds nuw i8, ptr %i.ay, i64 16, !dbg !42084
+    #dbg_value(ptr %i.bt, !41972, !DIExpression(), !41596)
+    #dbg_value(ptr %.sroa.0.1.i.i.us.i.i, !41973, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41596)
+    #dbg_value(i64 poison, !41973, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41596)
+  store ptr %.sroa.0.1.i.i.us.i.i, ptr %i.bt, align 8, !dbg !42085, !noalias !41962, !captures !41911
+  %i.bu = getelementptr inbounds nuw i8, ptr %i.ay, i64 24, !dbg !42085
+  store i64 %i.bs, ptr %i.bu, align 8, !dbg !42085, !noalias !41962
     #dbg_value(i64 2, !41948, !DIExpression(), !41548)
-  store i64 2, ptr %.sroa.64.0..sroa_idx, align 8, !dbg !42085, !alias.scope !41975
-    #dbg_value(ptr %i.b, !41718, !DIExpression(), !41594)
-    #dbg_value(ptr %i.b, !41732, !DIExpression(), !41595)
+  store i64 2, ptr %.sroa.64.0..sroa_idx, align 8, !dbg !42086, !alias.scope !41975
+    #dbg_value(ptr %i.b, !41718, !DIExpression(), !41597)
+    #dbg_value(ptr %i.b, !41732, !DIExpression(), !41598)
   br label %_RNvXNtNtCsexYYUdYSQU6_5alloc3vec11spec_extendINtB4_3VecReEINtB2_10SpecExtendBR_INtNtNtCskKLDkoKarTP_4core3str4iter5SplitcEE11spec_extendCsaTqK2fWTXJW_11qlog_dancer.exit, !dbg !42078
 
 .lr.ph.split.i.i:                                 ; preds = %.noexc21, %.lr.ph.split.preheader.i.i
   %i.bv = phi i64 [ %i.cr, %.noexc21 ], [ %.promoted28.i.i, %.lr.ph.split.preheader.i.i ] ; 3 uses
   %.lcssa222627.i.i = phi i64 [ %.lcssa2225.i.i, %.noexc21 ], [ %.promoted24.i.i, %.lr.ph.split.preheader.i.i ] ; 4 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !41964), !dbg !42080
-  call void @llvm.experimental.noalias.scope.decl(metadata !41965), !dbg !42081
+  call void @llvm.experimental.noalias.scope.decl(metadata !41964), !dbg !42081
+  call void @llvm.experimental.noalias.scope.decl(metadata !41965), !dbg !42082
     #dbg_value(ptr poison, !41736, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41572)
     #dbg_value(i64 poison, !41736, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41572)
-  call void @llvm.experimental.noalias.scope.decl(metadata !41966), !dbg !42082
+  call void @llvm.experimental.noalias.scope.decl(metadata !41966), !dbg !42083
     #dbg_value(ptr %i.bd, !41763, !DIExpression(), !41573)
     #dbg_value(i64 0, !41784, !DIExpression(), !41578)
     #dbg_value(i64 0, !41812, !DIExpression(), !41580)
@@ -274,92 +279,92 @@ _RNvMs5_NtCsexYYUdYSQU6_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsaTqK
 
 .lr.ph.split.preheader.i.i.i.i.i:                 ; preds = %.lr.ph.split.i.i
   call void @llvm.assume(i1 %i.bl)
-  %.pre.i.i.i.i.i = load i8, ptr %i.bn, align 1, !dbg !42086, !alias.scope !41963 ; 2 uses
-  br label %.lr.ph.split.i.i.i.i.i, !dbg !42087
+  %.pre.i.i.i.i.i = load i8, ptr %i.bn, align 1, !dbg !42087, !alias.scope !41963 ; 2 uses
+  br label %.lr.ph.split.i.i.i.i.i, !dbg !42088
 
 .lr.ph.split.i.i.i.i.i:                           ; preds = %bb.j, %.lr.ph.split.preheader.i.i.i.i.i
   %i.bx = phi i64 [ %i.cl, %bb.j ], [ %i.bv, %.lr.ph.split.preheader.i.i.i.i.i ] ; 4 uses
     #dbg_value(i64 %i.bx, !41831, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41581)
-  %i.by = sub nuw i64 %i.bg, %i.bx, !dbg !42088   ; 4 uses
+  %i.by = sub nuw i64 %i.bg, %i.bx, !dbg !42089   ; 4 uses
     #dbg_value(i64 %i.by, !41837, !DIExpression(), !41582)
     #dbg_value(i64 %i.by, !41817, !DIExpression(), !41584)
-  %i.bz = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %i.bx, !dbg !42089 ; 2 uses
-    #dbg_value(ptr %i.bz, !41776, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41597)
-    #dbg_value(i64 %i.by, !41776, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41597)
-    #dbg_value(i8 %.pre.i.i.i.i.i, !41779, !DIExpression(), !41598)
-    #dbg_value(i8 %.pre.i.i.i.i.i, !41843, !DIExpression(), !41599)
-    #dbg_value(i8 %.pre.i.i.i.i.i, !41848, !DIExpression(), !41601)
-    #dbg_value(ptr %i.bz, !41844, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41599)
-    #dbg_value(ptr %i.bz, !41849, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41601)
-    #dbg_value(i64 %i.by, !41844, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41599)
-    #dbg_value(i64 %i.by, !41849, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41601)
-  %i.ca = icmp samesign ult i64 %i.by, 16, !dbg !42087
-  br i1 %i.ca, label %.preheader.i.i.i.i.i.i, label %bb.h, !dbg !42087
+  %i.bz = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %i.bx, !dbg !42090 ; 2 uses
+    #dbg_value(ptr %i.bz, !41776, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41600)
+    #dbg_value(i64 %i.by, !41776, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41600)
+    #dbg_value(i8 %.pre.i.i.i.i.i, !41779, !DIExpression(), !41601)
+    #dbg_value(i8 %.pre.i.i.i.i.i, !41843, !DIExpression(), !41602)
+    #dbg_value(i8 %.pre.i.i.i.i.i, !41848, !DIExpression(), !41604)
+    #dbg_value(ptr %i.bz, !41844, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41602)
+    #dbg_value(ptr %i.bz, !41849, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41604)
+    #dbg_value(i64 %i.by, !41844, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41602)
+    #dbg_value(i64 %i.by, !41849, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41604)
+  %i.ca = icmp samesign ult i64 %i.by, 16, !dbg !42088
+  br i1 %i.ca, label %.preheader.i.i.i.i.i.i, label %bb.h, !dbg !42088
 
 .preheader.i.i.i.i.i.i:                           ; preds = %.lr.ph.split.i.i.i.i.i
-    #dbg_value(i64 0, !41850, !DIExpression(), !41602)
-  %.not.i.i.i.i.i.i = icmp eq i64 %i.bg, %i.bx, !dbg !42090
-  br i1 %.not.i.i.i.i.i.i, label %_RNvMsf_NtNtCskKLDkoKarTP_4core3str4iterINtB5_13SplitInternalcE7get_endCsaTqK2fWTXJW_11qlog_dancer.exit.i.i.i.i, label %.lr.ph.i.i.i.i.i.i, !dbg !42090
+    #dbg_value(i64 0, !41850, !DIExpression(), !41605)
+  %.not.i.i.i.i.i.i = icmp eq i64 %i.bg, %i.bx, !dbg !42091
+  br i1 %.not.i.i.i.i.i.i, label %_RNvMsf_NtNtCskKLDkoKarTP_4core3str4iterINtB5_13SplitInternalcE7get_endCsaTqK2fWTXJW_11qlog_dancer.exit.i.i.i.i, label %.lr.ph.i.i.i.i.i.i, !dbg !42091
 
 bb.h:                                             ; preds = %.lr.ph.split.i.i.i.i.i
   %i.cb = invoke { i64, i64 } @_RNvNtNtCskKLDkoKarTP_4core5slice6memchr14memchr_aligned(i8 noundef %.pre.i.i.i.i.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.bz, i64 noundef range(i64 0, -9223372036854775808) %i.by)
-          to label %.noexc20 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !42091 ; 2 uses
+          to label %.noexc20 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !42092 ; 2 uses
 
 .noexc20:                                         ; preds = %bb.h
-  %i.cc = extractvalue { i64, i64 } %i.cb, 0, !dbg !42091
-  %i.cd = extractvalue { i64, i64 } %i.cb, 1, !dbg !42091
-    #dbg_value(i64 %i.cc, !41845, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41603)
-    #dbg_value(i64 %i.cd, !41845, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41603)
-  %i.ce = trunc nuw i64 %i.cc to i1, !dbg !42092
-  br i1 %i.ce, label %.loopexit.i.i.i.i.i, label %_RNvMsf_NtNtCskKLDkoKarTP_4core3str4iterINtB5_13SplitInternalcE7get_endCsaTqK2fWTXJW_11qlog_dancer.exit.i.i.i.i, !dbg !42092
+  %i.cc = extractvalue { i64, i64 } %i.cb, 0, !dbg !42092
+  %i.cd = extractvalue { i64, i64 } %i.cb, 1, !dbg !42092
+    #dbg_value(i64 %i.cc, !41845, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41606)
+    #dbg_value(i64 %i.cd, !41845, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41606)
+  %i.ce = trunc nuw i64 %i.cc to i1, !dbg !42093
+  br i1 %i.ce, label %.loopexit.i.i.i.i.i, label %_RNvMsf_NtNtCskKLDkoKarTP_4core3str4iterINtB5_13SplitInternalcE7get_endCsaTqK2fWTXJW_11qlog_dancer.exit.i.i.i.i, !dbg !42093
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %.preheader.i.i.i.i.i.i, %bb.i
   %.sroa.04.015.i.i.i.i.i.i = phi i64 [ %i.ci, %bb.i ], [ 0, %.preheader.i.i.i.i.i.i ] ; 3 uses
-    #dbg_value(i64 %.sroa.04.015.i.i.i.i.i.i, !41850, !DIExpression(), !41602)
-  %i.cf = getelementptr inbounds nuw i8, ptr %i.bz, i64 %.sroa.04.015.i.i.i.i.i.i, !dbg !42093
-  %i.cg = load i8, ptr %i.cf, align 1, !dbg !42093, !alias.scope !41976, !noalias !41977, !noundef !3895
-  %i.ch = icmp eq i8 %i.cg, %.pre.i.i.i.i.i, !dbg !42093
-  br i1 %i.ch, label %.loopexit.i.i.i.i.i, label %bb.i, !dbg !42093
+    #dbg_value(i64 %.sroa.04.015.i.i.i.i.i.i, !41850, !DIExpression(), !41605)
+  %i.cf = getelementptr inbounds nuw i8, ptr %i.bz, i64 %.sroa.04.015.i.i.i.i.i.i, !dbg !42094
+  %i.cg = load i8, ptr %i.cf, align 1, !dbg !42094, !alias.scope !41976, !noalias !41977, !noundef !3895
+  %i.ch = icmp eq i8 %i.cg, %.pre.i.i.i.i.i, !dbg !42094
+  br i1 %i.ch, label %.loopexit.i.i.i.i.i, label %bb.i, !dbg !42094
 
 bb.i:                                             ; preds = %.lr.ph.i.i.i.i.i.i
-  %i.ci = add nuw nsw i64 %.sroa.04.015.i.i.i.i.i.i, 1, !dbg !42094 ; 2 uses
-    #dbg_value(i64 %i.ci, !41850, !DIExpression(), !41602)
-  %exitcond.not.i.i.i.i.i.i = icmp eq i64 %i.ci, %i.by, !dbg !42090
-  br i1 %exitcond.not.i.i.i.i.i.i, label %_RNvMsf_NtNtCskKLDkoKarTP_4core3str4iterINtB5_13SplitInternalcE7get_endCsaTqK2fWTXJW_11qlog_dancer.exit.i.i.i.i, label %.lr.ph.i.i.i.i.i.i, !dbg !42090
+  %i.ci = add nuw nsw i64 %.sroa.04.015.i.i.i.i.i.i, 1, !dbg !42095 ; 2 uses
+    #dbg_value(i64 %i.ci, !41850, !DIExpression(), !41605)
+  %exitcond.not.i.i.i.i.i.i = icmp eq i64 %i.ci, %i.by, !dbg !42091
+  br i1 %exitcond.not.i.i.i.i.i.i, label %_RNvMsf_NtNtCskKLDkoKarTP_4core3str4iterINtB5_13SplitInternalcE7get_endCsaTqK2fWTXJW_11qlog_dancer.exit.i.i.i.i, label %.lr.ph.i.i.i.i.i.i, !dbg !42091
 
 .loopexit.i.i.i.i.i:                              ; preds = %.lr.ph.i.i.i.i.i.i, %.noexc20
-  %.sroa.5.0.i.i.i.i.i.i = phi i64 [ %i.cd, %.noexc20 ], [ %.sroa.04.015.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ], !dbg !42095 ; 2 uses
-    #dbg_value(i64 1, !41845, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41603)
-    #dbg_value(i64 %.sroa.5.0.i.i.i.i.i.i, !41845, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41603)
-    #dbg_value(i64 %.sroa.5.0.i.i.i.i.i.i, !41846, !DIExpression(), !41607)
-  %i.cj = icmp ult i64 %.sroa.5.0.i.i.i.i.i.i, %i.by, !dbg !42096
-    #dbg_value(i1 true, !41854, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !41609)
-  call void @llvm.assume(i1 %i.cj), !dbg !42097
-    #dbg_value(i64 1, !41845, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41603)
-    #dbg_value(i64 %.sroa.5.0.i.i.i.i.i.i, !41845, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41603)
-    #dbg_value(i64 %.sroa.5.0.i.i.i.i.i.i, !41780, !DIExpression(), !41610)
-  %i.ck = add i64 %i.bx, 1, !dbg !42098
-  %i.cl = add i64 %i.ck, %.sroa.5.0.i.i.i.i.i.i, !dbg !42099 ; 8 uses
-  %.not50.i.i.i.i.i = icmp ult i64 %i.cl, %i.bk, !dbg !42100
-    #dbg_value(!DIArgList(i64 %i.cl, i64 %i.bk), !41781, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_minus, DW_OP_stack_value), !41611)
-    #dbg_value(!DIArgList(i64 %i.cl, i64 %i.bk), !41831, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !41613)
-    #dbg_value(!DIArgList(i64 %i.cl, i64 %i.bk), !41836, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !41615)
-    #dbg_value(!DIArgList(i64 %i.cl, i64 %i.bk), !41788, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_minus, DW_OP_stack_value), !41617)
-    #dbg_value(!DIArgList(i64 %i.cl, i64 %i.bk), !41816, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_minus, DW_OP_stack_value), !41619)
-    #dbg_value(ptr %.val.i.i.i.i, !41820, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41613)
-    #dbg_value(ptr %.val.i.i.i.i, !41833, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41615)
-    #dbg_value(ptr %.val.i.i.i.i, !41815, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41619)
-    #dbg_value(!DIArgList(i64 poison, i64 %.sroa.5.0.i.i.i.i.i.i), !41831, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus_uconst, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !41613)
-    #dbg_value(!DIArgList(i64 poison, i64 %.sroa.5.0.i.i.i.i.i.i), !41836, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus_uconst, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !41615)
-    #dbg_value(!DIArgList(i64 poison, i64 %.sroa.5.0.i.i.i.i.i.i), !41787, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus_uconst, 1, DW_OP_plus, DW_OP_stack_value), !41617)
-    #dbg_value(i64 %.val13.i.i.i.i, !41820, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41613)
-    #dbg_value(i64 %.val13.i.i.i.i, !41833, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41615)
-    #dbg_value(i64 %.val13.i.i.i.i, !41815, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41619)
-    #dbg_value(i64 %i.bk, !41837, !DIExpression(), !41615)
-    #dbg_value(i64 %i.bk, !41817, !DIExpression(), !41619)
+  %.sroa.5.0.i.i.i.i.i.i = phi i64 [ %i.cd, %.noexc20 ], [ %.sroa.04.015.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ], !dbg !42096 ; 2 uses
+    #dbg_value(i64 1, !41845, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41606)
+    #dbg_value(i64 %.sroa.5.0.i.i.i.i.i.i, !41845, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41606)
+    #dbg_value(i64 %.sroa.5.0.i.i.i.i.i.i, !41846, !DIExpression(), !41610)
+  %i.cj = icmp ult i64 %.sroa.5.0.i.i.i.i.i.i, %i.by, !dbg !42097
+    #dbg_value(i1 true, !41854, !DIExpression(DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !41612)
+  call void @llvm.assume(i1 %i.cj), !dbg !42098
+    #dbg_value(i64 1, !41845, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41606)
+    #dbg_value(i64 %.sroa.5.0.i.i.i.i.i.i, !41845, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41606)
+    #dbg_value(i64 %.sroa.5.0.i.i.i.i.i.i, !41780, !DIExpression(), !41613)
+  %i.ck = add i64 %i.bx, 1, !dbg !42099
+  %i.cl = add i64 %i.ck, %.sroa.5.0.i.i.i.i.i.i, !dbg !42100 ; 8 uses
+  %.not50.i.i.i.i.i = icmp ult i64 %i.cl, %i.bk, !dbg !42101
+    #dbg_value(!DIArgList(i64 %i.cl, i64 %i.bk), !41781, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_minus, DW_OP_stack_value), !41614)
+    #dbg_value(!DIArgList(i64 %i.cl, i64 %i.bk), !41831, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !41616)
+    #dbg_value(!DIArgList(i64 %i.cl, i64 %i.bk), !41836, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_minus, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !41618)
+    #dbg_value(!DIArgList(i64 %i.cl, i64 %i.bk), !41788, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_minus, DW_OP_stack_value), !41620)
+    #dbg_value(!DIArgList(i64 %i.cl, i64 %i.bk), !41816, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_minus, DW_OP_stack_value), !41622)
+    #dbg_value(ptr %.val.i.i.i.i, !41820, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41616)
+    #dbg_value(ptr %.val.i.i.i.i, !41833, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41618)
+    #dbg_value(ptr %.val.i.i.i.i, !41815, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41622)
+    #dbg_value(!DIArgList(i64 poison, i64 %.sroa.5.0.i.i.i.i.i.i), !41831, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus_uconst, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !41616)
+    #dbg_value(!DIArgList(i64 poison, i64 %.sroa.5.0.i.i.i.i.i.i), !41836, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus_uconst, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 64, 64), !41618)
+    #dbg_value(!DIArgList(i64 poison, i64 %.sroa.5.0.i.i.i.i.i.i), !41787, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus_uconst, 1, DW_OP_plus, DW_OP_stack_value), !41620)
+    #dbg_value(i64 %.val13.i.i.i.i, !41820, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41616)
+    #dbg_value(i64 %.val13.i.i.i.i, !41833, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41618)
+    #dbg_value(i64 %.val13.i.i.i.i, !41815, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41622)
+    #dbg_value(i64 %i.bk, !41837, !DIExpression(), !41618)
+    #dbg_value(i64 %i.bk, !41817, !DIExpression(), !41622)
   %.not51.i.i.i.i.i = icmp ugt i64 %i.cl, %.val13.i.i.i.i
-  %or.cond.i.i.i.i.i = or i1 %.not50.i.i.i.i.i, %.not51.i.i.i.i.i, !dbg !42100
-  br i1 %or.cond.i.i.i.i.i, label %bb.j, label %bb.k, !dbg !42100
+  %or.cond.i.i.i.i.i = or i1 %.not50.i.i.i.i.i, %.not51.i.i.i.i.i, !dbg !42101
+  br i1 %or.cond.i.i.i.i.i, label %bb.j, label %bb.k, !dbg !42101
 
 bb.j:                                             ; preds = %bb.k, %.loopexit.i.i.i.i.i
     #dbg_value(ptr %.val.i.i.i.i, !41820, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41581)
@@ -384,43 +389,43 @@ bb.j:                                             ; preds = %bb.k, %.loopexit.i.
   br i1 %i.cm, label %_RNvMsf_NtNtCskKLDkoKarTP_4core3str4iterINtB5_13SplitInternalcE7get_endCsaTqK2fWTXJW_11qlog_dancer.exit.i.i.i.i, label %.lr.ph.split.i.i.i.i.i, !dbg !42079
 
 bb.k:                                             ; preds = %.loopexit.i.i.i.i.i
-  %i.cn = sub nuw i64 %i.cl, %i.bk, !dbg !42101   ; 2 uses
-    #dbg_value(i64 %i.cn, !41781, !DIExpression(), !41611)
-    #dbg_value(i64 %i.cn, !41831, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41613)
-    #dbg_value(i64 %i.cn, !41836, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41615)
-    #dbg_value(i64 %i.cn, !41788, !DIExpression(), !41617)
-    #dbg_value(i64 %i.cn, !41816, !DIExpression(), !41619)
-    #dbg_value(!DIArgList(ptr %.val.i.i.i.i, i64 %i.cn), !41782, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !41620)
-    #dbg_value(!DIArgList(ptr %.val.i.i.i.i, i64 %i.cn), !41862, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !41623)
-    #dbg_value(i64 %i.bk, !41782, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41620)
-    #dbg_value(i64 %i.bk, !41862, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41623)
-    #dbg_value(ptr poison, !41876, !DIExpression(), !41624)
+  %i.cn = sub nuw i64 %i.cl, %i.bk, !dbg !42102   ; 2 uses
+    #dbg_value(i64 %i.cn, !41781, !DIExpression(), !41614)
+    #dbg_value(i64 %i.cn, !41831, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41616)
+    #dbg_value(i64 %i.cn, !41836, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41618)
+    #dbg_value(i64 %i.cn, !41788, !DIExpression(), !41620)
+    #dbg_value(i64 %i.cn, !41816, !DIExpression(), !41622)
+    #dbg_value(!DIArgList(ptr %.val.i.i.i.i, i64 %i.cn), !41782, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !41623)
+    #dbg_value(!DIArgList(ptr %.val.i.i.i.i, i64 %i.cn), !41862, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !41626)
+    #dbg_value(i64 %i.bk, !41782, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41623)
+    #dbg_value(i64 %i.bk, !41862, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41626)
+    #dbg_value(ptr poison, !41876, !DIExpression(), !41627)
     #dbg_value(i64 %i.bk, !41787, !DIExpression(), !41578)
     #dbg_value(i64 %i.bk, !41817, !DIExpression(), !41580)
     #dbg_value(ptr %i.bh, !41815, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41580)
     #dbg_value(i64 4, !41815, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41580)
-  %i.co = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %i.cn, !dbg !42102
-    #dbg_value(ptr %i.co, !41782, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41620)
-    #dbg_value(ptr %i.co, !41862, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41623)
-    #dbg_value(ptr %i.bh, !41867, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41623)
-    #dbg_value(i64 %i.bk, !41867, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41623)
-    #dbg_value(ptr poison, !41877, !DIExpression(), !41625)
-    #dbg_value(i64 %i.bk, !41868, !DIExpression(), !41626)
-    #dbg_value(i64 %i.bk, !41881, !DIExpression(), !41628)
-    #dbg_value(i64 %i.bk, !41887, !DIExpression(), !41629)
-    #dbg_value(ptr %i.co, !41885, !DIExpression(), !41628)
-    #dbg_value(ptr %i.bh, !41886, !DIExpression(), !41628)
-  %bcmp.i.i.i.i.i = call i32 @bcmp(ptr nonnull %i.co, ptr nonnull %i.bh, i64 %i.bk), !dbg !42103, !noalias !41978
-  %i.cp = icmp eq i32 %bcmp.i.i.i.i.i, 0, !dbg !42103
-  br i1 %i.cp, label %select.unfold.i.i, label %bb.j, !dbg !42104
+  %i.co = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %i.cn, !dbg !42103
+    #dbg_value(ptr %i.co, !41782, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41623)
+    #dbg_value(ptr %i.co, !41862, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41626)
+    #dbg_value(ptr %i.bh, !41867, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41626)
+    #dbg_value(i64 %i.bk, !41867, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41626)
+    #dbg_value(ptr poison, !41877, !DIExpression(), !41628)
+    #dbg_value(i64 %i.bk, !41868, !DIExpression(), !41629)
+    #dbg_value(i64 %i.bk, !41881, !DIExpression(), !41631)
+    #dbg_value(i64 %i.bk, !41887, !DIExpression(), !41632)
+    #dbg_value(ptr %i.co, !41885, !DIExpression(), !41631)
+    #dbg_value(ptr %i.bh, !41886, !DIExpression(), !41631)
+  %bcmp.i.i.i.i.i = call i32 @bcmp(ptr nonnull %i.co, ptr nonnull %i.bh, i64 %i.bk), !dbg !42104, !noalias !41978
+  %i.cp = icmp eq i32 %bcmp.i.i.i.i.i, 0, !dbg !42104
+  br i1 %i.cp, label %select.unfold.i.i, label %bb.j, !dbg !42105
 
 _RNvMsf_NtNtCskKLDkoKarTP_4core3str4iterINtB5_13SplitInternalcE7get_endCsaTqK2fWTXJW_11qlog_dancer.exit.i.i.i.i: ; preds = %bb.j, %.noexc20, %.preheader.i.i.i.i.i.i, %bb.i, %.lr.ph.split.i.i
   %i.cq = phi i64 [ %i.bv, %.lr.ph.split.i.i ], [ %i.bg, %bb.i ], [ %i.bg, %.noexc20 ], [ %i.bg, %.preheader.i.i.i.i.i.i ], [ %i.cl, %bb.j ]
     #dbg_value(ptr %i.b, !41891, !DIExpression(), !41587)
-  store i8 1, ptr %i.bb, align 1, !dbg !42105, !alias.scope !41979
+  store i8 1, ptr %i.bb, align 1, !dbg !42106, !alias.scope !41979
   %.not.i15.i.i.i.i = icmp ne i64 %.pre13.i.i.i.i.i, %.lcssa222627.i.i
-  %or.cond.not.i.i.i.i.i = select i1 %i.bq, i1 true, i1 %.not.i15.i.i.i.i, !dbg !42106
-  br i1 %or.cond.not.i.i.i.i.i, label %select.unfold.i.i, label %_RNvXNtNtCsexYYUdYSQU6_5alloc3vec11spec_extendINtB4_3VecReEINtB2_10SpecExtendBR_INtNtNtCskKLDkoKarTP_4core3str4iter5SplitcEE11spec_extendCsaTqK2fWTXJW_11qlog_dancer.exit, !dbg !42107
+  %or.cond.not.i.i.i.i.i = select i1 %i.bq, i1 true, i1 %.not.i15.i.i.i.i, !dbg !42107
+  br i1 %or.cond.not.i.i.i.i.i, label %select.unfold.i.i, label %_RNvXNtNtCsexYYUdYSQU6_5alloc3vec11spec_extendINtB4_3VecReEINtB2_10SpecExtendBR_INtNtNtCskKLDkoKarTP_4core3str4iter5SplitcEE11spec_extendCsaTqK2fWTXJW_11qlog_dancer.exit, !dbg !42080
 
 select.unfold.i.i:                                ; preds = %bb.k, %_RNvMsf_NtNtCskKLDkoKarTP_4core3str4iterINtB5_13SplitInternalcE7get_endCsaTqK2fWTXJW_11qlog_dancer.exit.i.i.i.i
   %i.cr = phi i64 [ %i.cq, %_RNvMsf_NtNtCskKLDkoKarTP_4core3str4iterINtB5_13SplitInternalcE7get_endCsaTqK2fWTXJW_11qlog_dancer.exit.i.i.i.i ], [ %i.cl, %bb.k ]
@@ -429,14 +434,14 @@ select.unfold.i.i:                                ; preds = %bb.k, %_RNvMsf_NtNt
   %.pn.i.i = phi i64 [ %.pre13.i.i.i.i.i, %_RNvMsf_NtNtCskKLDkoKarTP_4core3str4iterINtB5_13SplitInternalcE7get_endCsaTqK2fWTXJW_11qlog_dancer.exit.i.i.i.i ], [ %i.cn, %bb.k ]
   %.sroa.4.1.i.i.i.i = sub nuw i64 %.pn.i.i, %.lcssa222627.i.i, !dbg !42108
   %.sroa.0.1.i.i.i.i = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %.lcssa222627.i.i, !dbg !42108
-    #dbg_value(ptr %.sroa.0.1.i.i.i.i, !41926, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41632)
-    #dbg_value(i64 %.sroa.4.1.i.i.i.i, !41926, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41632)
+    #dbg_value(ptr %.sroa.0.1.i.i.i.i, !41926, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41588)
+    #dbg_value(i64 %.sroa.4.1.i.i.i.i, !41926, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41588)
   %i.ct = load i64, ptr %.sroa.64.0..sroa_idx, align 8, !dbg !42109, !alias.scope !41975, !noundef !3895 ; 5 uses
-    #dbg_value(i64 %i.ct, !41927, !DIExpression(), !41633)
-    #dbg_value(i64 %i.ct, !41970, !DIExpression(), !41590)
+    #dbg_value(i64 %i.ct, !41927, !DIExpression(), !41589)
+    #dbg_value(i64 %i.ct, !41967, !DIExpression(), !41592)
   %i.cu = icmp ult i64 %i.ct, 576460752303423488, !dbg !42110
   call void @llvm.assume(i1 %i.cu), !dbg !42111
-    #dbg_value(ptr %i.c, !41957, !DIExpression(), !41634)
+    #dbg_value(ptr %i.c, !41957, !DIExpression(), !41593)
   %i.cv = load i64, ptr %i.c, align 8, !dbg !42112, !range !5707, !alias.scope !41975, !noundef !3895
   %i.cw = icmp eq i64 %i.ct, %i.cv, !dbg !42113
   br i1 %i.cw, label %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecReE7reserveCsaTqK2fWTXJW_11qlog_dancer.exit.i.i, label %.noexc21, !dbg !42113
@@ -458,19 +463,19 @@ _RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecReE7reserveCsaTqK2fWTXJW_11qlog_dance
 
 .noexc21:                                         ; preds = %_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecReE7reserveCsaTqK2fWTXJW_11qlog_dancer.exit.i.i, %select.unfold.i.i
   %i.cx = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !dbg !42115, !alias.scope !41975, !nonnull !3895, !noundef !3895
-    #dbg_value(ptr %i.cx, !41967, !DIExpression(), !41590)
-  %i.cy = getelementptr inbounds nuw [16 x i8], ptr %i.cx, i64 %i.ct, !dbg !42083 ; 2 uses
-    #dbg_value(ptr %i.cy, !41972, !DIExpression(), !41593)
-    #dbg_value(ptr %.sroa.0.1.i.i.i.i, !41973, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41593)
-    #dbg_value(i64 %.sroa.4.1.i.i.i.i, !41973, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41593)
-  store ptr %.sroa.0.1.i.i.i.i, ptr %i.cy, align 8, !dbg !42084, !noalias !41962, !captures !41911
-  %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 8, !dbg !42084
-  store i64 %.sroa.4.1.i.i.i.i, ptr %i.cz, align 8, !dbg !42084, !noalias !41962
+    #dbg_value(ptr %i.cx, !41970, !DIExpression(), !41592)
+  %i.cy = getelementptr inbounds nuw [16 x i8], ptr %i.cx, i64 %i.ct, !dbg !42084 ; 2 uses
+    #dbg_value(ptr %i.cy, !41972, !DIExpression(), !41596)
+    #dbg_value(ptr %.sroa.0.1.i.i.i.i, !41973, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !41596)
+    #dbg_value(i64 %.sroa.4.1.i.i.i.i, !41973, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !41596)
+  store ptr %.sroa.0.1.i.i.i.i, ptr %i.cy, align 8, !dbg !42085, !noalias !41962, !captures !41911
+  %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 8, !dbg !42085
+  store i64 %.sroa.4.1.i.i.i.i, ptr %i.cz, align 8, !dbg !42085, !noalias !41962
   %i.da = add nuw nsw i64 %i.ct, 1, !dbg !42116
     #dbg_value(i64 %i.da, !41948, !DIExpression(), !41548)
-  store i64 %i.da, ptr %.sroa.64.0..sroa_idx, align 8, !dbg !42085, !alias.scope !41975
-    #dbg_value(ptr %i.b, !41718, !DIExpression(), !41594)
-    #dbg_value(ptr %i.b, !41732, !DIExpression(), !41595)
+  store i64 %i.da, ptr %.sroa.64.0..sroa_idx, align 8, !dbg !42086, !alias.scope !41975
+    #dbg_value(ptr %i.b, !41718, !DIExpression(), !41597)
+    #dbg_value(ptr %i.b, !41732, !DIExpression(), !41598)
   br i1 %i.cs, label %_RNvXNtNtCsexYYUdYSQU6_5alloc3vec11spec_extendINtB4_3VecReEINtB2_10SpecExtendBR_INtNtNtCskKLDkoKarTP_4core3str4iter5SplitcEE11spec_extendCsaTqK2fWTXJW_11qlog_dancer.exit, label %.lr.ph.split.i.i, !dbg !42078
 
 bb.l:                                             ; preds = %bb.a, %_RNvMsf_NtNtCskKLDkoKarTP_4core3str4iterINtB5_13SplitInternalcE7get_endCsaTqK2fWTXJW_11qlog_dancer.exit.i.i
@@ -873,53 +878,53 @@ begin_hunk_1_@llvm.umax.i64
 !41585 = distinct !DILocation(line: 0, scope: !41430, inlinedAt: !41571)
 !41586 = distinct !DILocation(line: 670, column: 26, scope: !41401, inlinedAt: !41565)
 !41587 = distinct !DILocation(line: 0, scope: !41505, inlinedAt: !41586)
-!41588 = distinct !DISubprogram(name: "add<&str>", linkageName: "_RNvMNtNtCskKLDkoKarTP_4core3ptr7mut_ptrORe3addCsaTqK2fWTXJW_11qlog_dancer", scope: !5508, file: !5506, line: 937, type: !41969, scopeLine: 937, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !4, templateParams: !5473, retainedNodes: !41971)
-!41589 = distinct !DILocation(line: 4109, column: 46, scope: !41532, inlinedAt: !41535)
-!41590 = distinct !DILocation(line: 0, scope: !41588, inlinedAt: !41589)
-!41591 = distinct !DISubprogram(name: "write<&str>", linkageName: "_RINvNtCskKLDkoKarTP_4core3ptr5writeReECsaTqK2fWTXJW_11qlog_dancer", scope: !3990, file: !5739, line: 1941, type: !41906, scopeLine: 1941, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !4, templateParams: !5473, retainedNodes: !41974)
-!41592 = distinct !DILocation(line: 4109, column: 17, scope: !41532, inlinedAt: !41535)
-!41593 = distinct !DILocation(line: 0, scope: !41591, inlinedAt: !41592)
-!41594 = distinct !DILocation(line: 0, scope: !41394, inlinedAt: !41564)
-!41595 = distinct !DILocation(line: 0, scope: !41402, inlinedAt: !41565)
-!41596 = distinct !DILocation(line: 441, column: 34, scope: !41422, inlinedAt: !41568)
-!41597 = distinct !DILocation(line: 0, scope: !41426, inlinedAt: !41568)
-!41598 = distinct !DILocation(line: 0, scope: !41423, inlinedAt: !41568)
-!41599 = distinct !DILocation(line: 0, scope: !41458, inlinedAt: !41596)
-!41600 = distinct !DILocation(line: 28, column: 43, scope: !41458, inlinedAt: !41596)
-!41601 = distinct !DILocation(line: 0, scope: !41464, inlinedAt: !41600)
-!41602 = distinct !DILocation(line: 0, scope: !41463, inlinedAt: !41600)
-!41603 = distinct !DILocation(line: 0, scope: !41457, inlinedAt: !41596)
-!41604 = distinct !{!41604, i1 true, !"_RNvNtNtCskKLDkoKarTP_4core5slice6memchr6memchr"}
-!41605 = distinct !{!41605, !41604, !"_RNvNtNtCskKLDkoKarTP_4core5slice6memchr6memchr: argument 0"}
-!41606 = distinct !{!41606, !41566, !"_RNvXs_NtNtCskKLDkoKarTP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match: argument 0"}
-!41607 = distinct !DILocation(line: 0, scope: !41456, inlinedAt: !41596)
-!41608 = distinct !DILocation(line: 31, column: 18, scope: !41456, inlinedAt: !41596)
-!41609 = distinct !DILocation(line: 0, scope: !41473, inlinedAt: !41608)
-!41610 = distinct !DILocation(line: 0, scope: !41422, inlinedAt: !41568)
-!41611 = distinct !DILocation(line: 0, scope: !41421, inlinedAt: !41568)
-!41612 = distinct !DILocation(line: 462, column: 67, scope: !41420, inlinedAt: !41568)
-!41613 = distinct !DILocation(line: 0, scope: !41446, inlinedAt: !41612)
-!41614 = distinct !DILocation(line: 576, column: 15, scope: !41857, inlinedAt: !41612)
-!41615 = distinct !DILocation(line: 0, scope: !41449, inlinedAt: !41614)
-!41616 = distinct !DILocation(line: 337, column: 32, scope: !41858, inlinedAt: !41614)
-!41617 = distinct !DILocation(line: 0, scope: !41430, inlinedAt: !41616)
-!41618 = distinct !DILocation(line: 341, column: 29, scope: !41858, inlinedAt: !41614)
-!41619 = distinct !DILocation(line: 0, scope: !41439, inlinedAt: !41618)
-!41620 = distinct !DILocation(line: 0, scope: !41420, inlinedAt: !41568)
-!41621 = distinct !DILocation(line: 463, column: 28, scope: !41420, inlinedAt: !41568)
-!41622 = distinct !DILocation(line: 2399, column: 13, scope: !41489, inlinedAt: !41621)
-!41623 = distinct !DILocation(line: 0, scope: !41488, inlinedAt: !41622)
-!41624 = distinct !DILocation(line: 2398, column: 15, scope: !41489, inlinedAt: !41621)
-!41625 = distinct !DILocation(line: 2398, column: 22, scope: !41489, inlinedAt: !41621)
-!41626 = distinct !DILocation(line: 0, scope: !41487, inlinedAt: !41622)
-!41627 = distinct !DILocation(line: 24, column: 22, scope: !41487, inlinedAt: !41622)
-!41628 = distinct !DILocation(line: 0, scope: !41497, inlinedAt: !41627)
-!41629 = distinct !DILocation(line: 0, scope: !41496, inlinedAt: !41627)
-!41630 = distinct !{!41630, i1 true, !"_RNvMsf_NtNtCskKLDkoKarTP_4core3str4iterINtB5_13SplitInternalcE7get_endCsaTqK2fWTXJW_11qlog_dancer"}
-!41631 = distinct !{!41631, !41630, !"_RNvMsf_NtNtCskKLDkoKarTP_4core3str4iterINtB5_13SplitInternalcE7get_endCsaTqK2fWTXJW_11qlog_dancer: argument 0"}
-!41632 = distinct !DILocation(line: 0, scope: !41533, inlinedAt: !41535)
-!41633 = distinct !DILocation(line: 0, scope: !41532, inlinedAt: !41535)
-!41634 = distinct !DILocation(line: 308, column: 34, scope: !41553, inlinedAt: !41554)
+!41588 = distinct !DILocation(line: 0, scope: !41533, inlinedAt: !41535)
+!41589 = distinct !DILocation(line: 0, scope: !41532, inlinedAt: !41535)
+!41590 = distinct !DISubprogram(name: "add<&str>", linkageName: "_RNvMNtNtCskKLDkoKarTP_4core3ptr7mut_ptrORe3addCsaTqK2fWTXJW_11qlog_dancer", scope: !5508, file: !5506, line: 937, type: !41969, scopeLine: 937, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !4, templateParams: !5473, retainedNodes: !41971)
+!41591 = distinct !DILocation(line: 4109, column: 46, scope: !41532, inlinedAt: !41535)
+!41592 = distinct !DILocation(line: 0, scope: !41590, inlinedAt: !41591)
+!41593 = distinct !DILocation(line: 308, column: 34, scope: !41553, inlinedAt: !41554)
+!41594 = distinct !DISubprogram(name: "write<&str>", linkageName: "_RINvNtCskKLDkoKarTP_4core3ptr5writeReECsaTqK2fWTXJW_11qlog_dancer", scope: !3990, file: !5739, line: 1941, type: !41906, scopeLine: 1941, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !4, templateParams: !5473, retainedNodes: !41974)
+!41595 = distinct !DILocation(line: 4109, column: 17, scope: !41532, inlinedAt: !41535)
+!41596 = distinct !DILocation(line: 0, scope: !41594, inlinedAt: !41595)
+!41597 = distinct !DILocation(line: 0, scope: !41394, inlinedAt: !41564)
+!41598 = distinct !DILocation(line: 0, scope: !41402, inlinedAt: !41565)
+!41599 = distinct !DILocation(line: 441, column: 34, scope: !41422, inlinedAt: !41568)
+!41600 = distinct !DILocation(line: 0, scope: !41426, inlinedAt: !41568)
+!41601 = distinct !DILocation(line: 0, scope: !41423, inlinedAt: !41568)
+!41602 = distinct !DILocation(line: 0, scope: !41458, inlinedAt: !41599)
+!41603 = distinct !DILocation(line: 28, column: 43, scope: !41458, inlinedAt: !41599)
+!41604 = distinct !DILocation(line: 0, scope: !41464, inlinedAt: !41603)
+!41605 = distinct !DILocation(line: 0, scope: !41463, inlinedAt: !41603)
+!41606 = distinct !DILocation(line: 0, scope: !41457, inlinedAt: !41599)
+!41607 = distinct !{!41607, i1 true, !"_RNvNtNtCskKLDkoKarTP_4core5slice6memchr6memchr"}
+!41608 = distinct !{!41608, !41607, !"_RNvNtNtCskKLDkoKarTP_4core5slice6memchr6memchr: argument 0"}
+!41609 = distinct !{!41609, !41566, !"_RNvXs_NtNtCskKLDkoKarTP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match: argument 0"}
+!41610 = distinct !DILocation(line: 0, scope: !41456, inlinedAt: !41599)
+!41611 = distinct !DILocation(line: 31, column: 18, scope: !41456, inlinedAt: !41599)
+!41612 = distinct !DILocation(line: 0, scope: !41473, inlinedAt: !41611)
+!41613 = distinct !DILocation(line: 0, scope: !41422, inlinedAt: !41568)
+!41614 = distinct !DILocation(line: 0, scope: !41421, inlinedAt: !41568)
+!41615 = distinct !DILocation(line: 462, column: 67, scope: !41420, inlinedAt: !41568)
+!41616 = distinct !DILocation(line: 0, scope: !41446, inlinedAt: !41615)
+!41617 = distinct !DILocation(line: 576, column: 15, scope: !41857, inlinedAt: !41615)
+!41618 = distinct !DILocation(line: 0, scope: !41449, inlinedAt: !41617)
+!41619 = distinct !DILocation(line: 337, column: 32, scope: !41858, inlinedAt: !41617)
+!41620 = distinct !DILocation(line: 0, scope: !41430, inlinedAt: !41619)
+!41621 = distinct !DILocation(line: 341, column: 29, scope: !41858, inlinedAt: !41617)
+!41622 = distinct !DILocation(line: 0, scope: !41439, inlinedAt: !41621)
+!41623 = distinct !DILocation(line: 0, scope: !41420, inlinedAt: !41568)
+!41624 = distinct !DILocation(line: 463, column: 28, scope: !41420, inlinedAt: !41568)
+!41625 = distinct !DILocation(line: 2399, column: 13, scope: !41489, inlinedAt: !41624)
+!41626 = distinct !DILocation(line: 0, scope: !41488, inlinedAt: !41625)
+!41627 = distinct !DILocation(line: 2398, column: 15, scope: !41489, inlinedAt: !41624)
+!41628 = distinct !DILocation(line: 2398, column: 22, scope: !41489, inlinedAt: !41624)
+!41629 = distinct !DILocation(line: 0, scope: !41487, inlinedAt: !41625)
+!41630 = distinct !DILocation(line: 24, column: 22, scope: !41487, inlinedAt: !41625)
+!41631 = distinct !DILocation(line: 0, scope: !41497, inlinedAt: !41630)
+!41632 = distinct !DILocation(line: 0, scope: !41496, inlinedAt: !41630)
+!41633 = distinct !{!41633, i1 true, !"_RNvMsf_NtNtCskKLDkoKarTP_4core3str4iterINtB5_13SplitInternalcE7get_endCsaTqK2fWTXJW_11qlog_dancer"}
+!41634 = distinct !{!41634, !41633, !"_RNvMsf_NtNtCskKLDkoKarTP_4core3str4iterINtB5_13SplitInternalcE7get_endCsaTqK2fWTXJW_11qlog_dancer: argument 0"}
 !41635 = distinct !DILocation(line: 0, scope: !41531, inlinedAt: !41535)
 !41636 = distinct !DISubprogram(name: "reserve<&str, alloc::alloc::Global>", linkageName: "_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecReE7reserveCsaTqK2fWTXJW_11qlog_dancer", scope: !3149, file: !3896, line: 1460, type: !41946, scopeLine: 1460, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !4, templateParams: !15494, declaration: !41981, retainedNodes: !41983)
 !41637 = distinct !DILocation(line: 4106, column: 22, scope: !41531, inlinedAt: !41535)
@@ -1249,19 +1254,19 @@ begin_hunk_1_@llvm.umax.i64
 !41964 = !{!41561}
 !41965 = !{!41563}
 !41966 = !{!41567}
-!41967 = !DILocalVariable(name: "self", arg: 1, scope: !41588, file: !5506, line: 937, type: !41903)
+!41967 = !DILocalVariable(name: "count", arg: 2, scope: !41590, file: !5506, line: 937, type: !3869)
 !41968 = !{!41903, !41903, !3869, !5464}
 !41969 = !DISubroutineType(types: !41968)
-!41970 = !DILocalVariable(name: "count", arg: 2, scope: !41588, file: !5506, line: 937, type: !3869)
-!41971 = !{!41967, !41970}
-!41972 = !DILocalVariable(name: "dst", arg: 1, scope: !41591, file: !5739, line: 1941, type: !41903)
-!41973 = !DILocalVariable(name: "src", arg: 2, scope: !41591, file: !5739, line: 1941, type: !503)
+!41970 = !DILocalVariable(name: "self", arg: 1, scope: !41590, file: !5506, line: 937, type: !41903)
+!41971 = !{!41970, !41967}
+!41972 = !DILocalVariable(name: "dst", arg: 1, scope: !41594, file: !5739, line: 1941, type: !41903)
+!41973 = !DILocalVariable(name: "src", arg: 2, scope: !41594, file: !5739, line: 1941, type: !503)
 !41974 = !{!41972, !41973}
 !41975 = !{!41529, !41522}
-!41976 = !{!41605}
-!41977 = !{!41606, !41567, !41563, !41561, !41530, !41523}
-!41978 = !{!41606}
-!41979 = !{!41631, !41563, !41561, !41530, !41523}
+!41976 = !{!41608}
+!41977 = !{!41609, !41567, !41563, !41561, !41530, !41523}
+!41978 = !{!41609}
+!41979 = !{!41634, !41563, !41561, !41530, !41523}
 !41980 = !DILocalVariable(name: "self", arg: 1, scope: !41636, file: !3896, line: 1460, type: !15497)
 !41981 = !DISubprogram(name: "reserve<&str, alloc::alloc::Global>", linkageName: "_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecReE7reserveCsaTqK2fWTXJW_11qlog_dancer", scope: !3149, file: !3896, line: 1460, type: !41946, scopeLine: 1460, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !15494)
 !41982 = !DILocalVariable(name: "additional", arg: 2, scope: !41636, file: !3896, line: 1460, type: !3869)
@@ -1362,34 +1367,34 @@ begin_hunk_1_@llvm.umax.i64
 !42077 = !DILocation(line: 18, column: 14, scope: !41524, inlinedAt: !41525)
 !42078 = !DILocation(line: 658, column: 12, scope: !41402, inlinedAt: !41565)
 !42079 = !DILocation(line: 1122, column: 16, scope: !41430, inlinedAt: !41571)
-!42080 = !DILocation(line: 4102, column: 44, scope: !41533, inlinedAt: !41535)
-!42081 = !DILocation(line: 512, column: 24, scope: !41394, inlinedAt: !41564)
-!42082 = !DILocation(line: 663, column: 28, scope: !41401, inlinedAt: !41565)
-!42083 = !DILocation(line: 971, column: 18, scope: !41588, inlinedAt: !41589)
-!42084 = !DILocation(line: 1964, column: 41, scope: !41591, inlinedAt: !41592)
-!42085 = !DILocation(line: 2223, column: 9, scope: !41546, inlinedAt: !41547)
-!42086 = !DILocation(line: 440, column: 38, scope: !41426, inlinedAt: !41568)
-!42087 = !DILocation(line: 28, column: 12, scope: !41458, inlinedAt: !41596)
-!42088 = !DILocation(line: 1126, column: 31, scope: !41430, inlinedAt: !41571)
-!42089 = !DILocation(line: 90, column: 24, scope: !41439, inlinedAt: !41583)
-!42090 = !DILocation(line: 41, column: 11, scope: !41463, inlinedAt: !41600)
-!42091 = !DILocation(line: 28, column: 74, scope: !41458, inlinedAt: !41596)
-!42092 = !DILocation(line: 29, column: 12, scope: !41456, inlinedAt: !41596)
-!42093 = !DILocation(line: 42, column: 12, scope: !41463, inlinedAt: !41600)
-!42094 = !DILocation(line: 46, column: 9, scope: !41463, inlinedAt: !41600)
-!42095 = !DILocation(line: 28, scope: !41458, inlinedAt: !41596)
-!42096 = !DILocation(line: 31, column: 48, scope: !41456, inlinedAt: !41596)
-!42097 = !DILocation(line: 210, column: 9, scope: !41473, inlinedAt: !41608)
-!42098 = !DILocation(line: 459, column: 32, scope: !41422, inlinedAt: !41568)
-!42099 = !DILocation(line: 459, column: 17, scope: !41422, inlinedAt: !41568)
-!42100 = !DILocation(line: 460, column: 20, scope: !41422, inlinedAt: !41568)
-!42101 = !DILocation(line: 461, column: 38, scope: !41422, inlinedAt: !41568)
-!42102 = !DILocation(line: 90, column: 24, scope: !41439, inlinedAt: !41618)
-!42103 = !DILocation(line: 157, column: 13, scope: !41496, inlinedAt: !41627)
-!42104 = !DILocation(line: 463, column: 28, scope: !41420, inlinedAt: !41568)
-!42105 = !DILocation(line: 644, column: 13, scope: !41505, inlinedAt: !41586)
-!42106 = !DILocation(line: 646, column: 16, scope: !41505, inlinedAt: !41586)
-!42107 = !DILocation(line: 670, column: 26, scope: !41401, inlinedAt: !41565)
+!42080 = !DILocation(line: 670, column: 26, scope: !41401, inlinedAt: !41565)
+!42081 = !DILocation(line: 4102, column: 44, scope: !41533, inlinedAt: !41535)
+!42082 = !DILocation(line: 512, column: 24, scope: !41394, inlinedAt: !41564)
+!42083 = !DILocation(line: 663, column: 28, scope: !41401, inlinedAt: !41565)
+!42084 = !DILocation(line: 971, column: 18, scope: !41590, inlinedAt: !41591)
+!42085 = !DILocation(line: 1964, column: 41, scope: !41594, inlinedAt: !41595)
+!42086 = !DILocation(line: 2223, column: 9, scope: !41546, inlinedAt: !41547)
+!42087 = !DILocation(line: 440, column: 38, scope: !41426, inlinedAt: !41568)
+!42088 = !DILocation(line: 28, column: 12, scope: !41458, inlinedAt: !41599)
+!42089 = !DILocation(line: 1126, column: 31, scope: !41430, inlinedAt: !41571)
+!42090 = !DILocation(line: 90, column: 24, scope: !41439, inlinedAt: !41583)
+!42091 = !DILocation(line: 41, column: 11, scope: !41463, inlinedAt: !41603)
+!42092 = !DILocation(line: 28, column: 74, scope: !41458, inlinedAt: !41599)
+!42093 = !DILocation(line: 29, column: 12, scope: !41456, inlinedAt: !41599)
+!42094 = !DILocation(line: 42, column: 12, scope: !41463, inlinedAt: !41603)
+!42095 = !DILocation(line: 46, column: 9, scope: !41463, inlinedAt: !41603)
+!42096 = !DILocation(line: 28, scope: !41458, inlinedAt: !41599)
+!42097 = !DILocation(line: 31, column: 48, scope: !41456, inlinedAt: !41599)
+!42098 = !DILocation(line: 210, column: 9, scope: !41473, inlinedAt: !41611)
+!42099 = !DILocation(line: 459, column: 32, scope: !41422, inlinedAt: !41568)
+!42100 = !DILocation(line: 459, column: 17, scope: !41422, inlinedAt: !41568)
+!42101 = !DILocation(line: 460, column: 20, scope: !41422, inlinedAt: !41568)
+!42102 = !DILocation(line: 461, column: 38, scope: !41422, inlinedAt: !41568)
+!42103 = !DILocation(line: 90, column: 24, scope: !41439, inlinedAt: !41621)
+!42104 = !DILocation(line: 157, column: 13, scope: !41496, inlinedAt: !41630)
+!42105 = !DILocation(line: 463, column: 28, scope: !41420, inlinedAt: !41568)
+!42106 = !DILocation(line: 644, column: 13, scope: !41505, inlinedAt: !41586)
+!42107 = !DILocation(line: 646, column: 16, scope: !41505, inlinedAt: !41586)
 !42108 = !DILocation(line: 0, scope: !41401, inlinedAt: !41565)
 !42109 = !DILocation(line: 3100, column: 19, scope: !41537, inlinedAt: !41538)
 !42110 = !DILocation(line: 3105, column: 37, scope: !41537, inlinedAt: !41538)

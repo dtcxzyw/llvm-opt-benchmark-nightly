@@ -204,18 +204,21 @@ bb.k:                                             ; preds = %.lr.ph271
 .lr.ph.split.us.split.split.us.i:                 ; preds = %.lr.ph.split.us.split.i
   %i.dv = load i8, ptr %i.m, align 1, !alias.scope !88, !noalias !86, !noundef !4
   %i.dw = icmp sgt i8 %i.dv, -65
-  br i1 %i.dw, label %.lr.ph.split.us.split.split.us.split.us.split.i, label %.split100.us.i
+  br i1 %i.dw, label %.lr.ph.split.us.split.split.us.split.us.split.i, label %.lr.ph.split.us.split.split.us.split.i
 
 .lr.ph.split.us.split.split.us.split.us.split.i:  ; preds = %.lr.ph.split.us.split.split.us.i
   %i.dx = trunc nuw i8 %.promoted95.i to i1
   br i1 %i.dx, label %_RNvYNtNtNtCshzWfHUSfYae_4core3str7pattern11StrSearcherNtB4_8Searcher11next_rejectCsdcPuHeDsw6v_13project_model.exit.sink.split, label %_RNvYNtNtNtCshzWfHUSfYae_4core3str7pattern11StrSearcherNtB4_8Searcher11next_rejectCsdcPuHeDsw6v_13project_model.exit
 
+.lr.ph.split.us.split.split.us.split.i:           ; preds = %.lr.ph.split.us.split.split.us.i
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !83)
+  br label %.split100.us.i
+
 .lr.ph.split.us.split.split.split.us.split.i:     ; preds = %.lr.ph.split.us.split.i
   %i.dy = trunc nuw i8 %.promoted95.i to i1
   br i1 %i.dy, label %_RNvYNtNtNtCshzWfHUSfYae_4core3str7pattern11StrSearcherNtB4_8Searcher11next_rejectCsdcPuHeDsw6v_13project_model.exit.sink.split, label %_RNvYNtNtNtCshzWfHUSfYae_4core3str7pattern11StrSearcherNtB4_8Searcher11next_rejectCsdcPuHeDsw6v_13project_model.exit
 
-.split100.us.i:                                   ; preds = %.lr.ph.split.split.i.preheader.split, %.lr.ph.split.us.split.split.us.i, %.lr.ph.split.split.i.preheader.split.split.us
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !83)
+.split100.us.i:                                   ; preds = %.lr.ph.split.split.i.preheader.split, %.lr.ph.split.split.i.preheader.split.split.us, %.lr.ph.split.us.split.split.us.split.i
   tail call void @_RNvNtCshzWfHUSfYae_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.h, i64 noundef %i.j, i64 noundef %i.f, i64 noundef %i.j, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @122) #25, !noalias !86
   unreachable
 
@@ -618,14 +621,14 @@ bb.b:                                             ; preds = %bb.a
   %i.ad = add i64 %i.aa, -1                       ; 2 uses
   %i.ae = insertvalue { ptr, i64 } %i.ac, i64 %i.ad, 1
   %i.af = add i64 %i.aa, -2
+  br i1 %or.cond.not.i.i.i.i.i.us.i, label %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsdcPuHeDsw6v_13project_model.exit.i.i.i.i.us.us.i, label %.loopexit
+
+_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsdcPuHeDsw6v_13project_model.exit.i.i.i.i.us.us.i: ; preds = %.lr.ph.split.us.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !354)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !355)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !356)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !357)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !358)
-  br i1 %or.cond.not.i.i.i.i.i.us.i, label %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsdcPuHeDsw6v_13project_model.exit.i.i.i.i.us.us.i, label %.loopexit
-
-_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsdcPuHeDsw6v_13project_model.exit.i.i.i.i.us.us.i: ; preds = %.lr.ph.split.us.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !359
   store i32 10, ptr %i.b, align 4, !noalias !359
   %i.ag = call noundef zeroext i1 @_RNvMNtCshzWfHUSfYae_4core5sliceSh9ends_withCsdcPuHeDsw6v_13project_model(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.0.1.i.i.i.i.us.i, i64 noundef %i.aa, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.b, i64 noundef range(i64 1, 5) 1), !noalias !360

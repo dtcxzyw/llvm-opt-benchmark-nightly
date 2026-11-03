@@ -205,7 +205,7 @@ define internal fastcc noundef zeroext i1 @_RINvYINtNtNtCshzWfHUSfYae_4core3str4
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 65 ; 3 uses
   %.promoted = load i8, ptr %i.a, align 1, !alias.scope !166
-  %.promoted15 = load i64, ptr %0, align 8        ; 3 uses
+  %.promoted15 = load i64, ptr %0, align 8        ; 4 uses
   %i.b = trunc nuw i8 %.promoted to i1
   br i1 %i.b, label %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCseWOXHlIdeJf_8num_cpus.exit.i.i._crit_edge, label %.lr.ph
 
@@ -227,9 +227,9 @@ bb.a:
   %i.n = getelementptr i8, ptr %i.m, i64 -1
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.p = load i8, ptr %i.o, align 8, !range !15
-  %i.q = trunc nuw i8 %i.p to i1
+  %i.q = trunc nuw i8 %i.p to i1                  ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.pre2.i.i.i = load i64, ptr %.phi.trans.insert.i.i.i, align 8 ; 3 uses
+  %.pre2.i.i.i = load i64, ptr %.phi.trans.insert.i.i.i, align 8 ; 4 uses
   br i1 %.not.i.i.i, label %.lr.ph.split.us, label %.lr.ph.split.preheader
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
@@ -238,12 +238,17 @@ bb.a:
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
   store i8 1, ptr %i.a, align 1, !alias.scope !168
+  %.not.i3.i.i.us = icmp ne i64 %.pre2.i.i.i, %.promoted15
+  %or.cond.not.i.i.i.us = select i1 %i.q, i1 true, i1 %.not.i3.i.i.us
+  %.sroa.0.1.i.i.ph.us = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 %.promoted15 ; 2 uses
+  br i1 %or.cond.not.i.i.i.us, label %.lr.ph.split.us.split, label %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCseWOXHlIdeJf_8num_cpus.exit.i.i._crit_edge
+
+.lr.ph.split.us.split:                            ; preds = %.lr.ph.split.us
   %1 = sub nuw i64 %.pre2.i.i.i, %.promoted15
   %2 = icmp eq i64 %1, 3
   br i1 %2, label %.lr.ph.split.us.split.us.split.us, label %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCseWOXHlIdeJf_8num_cpus.exit.i.i._crit_edge.sink.split
 
-.lr.ph.split.us.split.us.split.us:                ; preds = %.lr.ph.split.us
-  %.sroa.0.1.i.i.ph.us = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 %.promoted15 ; 2 uses
+.lr.ph.split.us.split.us.split.us:                ; preds = %.lr.ph.split.us.split
   %i.r = load i16, ptr %.sroa.0.1.i.i.ph.us, align 1
   %i.s = xor i16 %i.r, 28771
   %i.t = getelementptr i8, ptr %.sroa.0.1.i.i.ph.us, i64 2
@@ -254,7 +259,7 @@ bb.a:
   %i.y = icmp ne i16 %i.x, 0
   %i.z = zext i1 %i.y to i32
   %i.aa = icmp eq i32 %i.z, 0
-  br label %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCseWOXHlIdeJf_8num_cpus.exit.i.i._crit_edge.sink.split
+  br i1 %i.aa, label %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCseWOXHlIdeJf_8num_cpus.exit.i.i._crit_edge, label %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCseWOXHlIdeJf_8num_cpus.exit.i.i._crit_edge.sink.split
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.backedge, %.lr.ph.split.preheader
   %i.ab = phi i64 [ %.promoted21, %.lr.ph.split.preheader ], [ %i.ay, %.lr.ph.split.backedge ] ; 3 uses
@@ -376,15 +381,14 @@ _RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3any5checkReNC
 .lr.ph.split.backedge:                            ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3any5checkReNCNvMs_NtCseWOXHlIdeJf_8num_cpus5linuxNtB1k_9MountInfo10parse_lines_0E0B1m_.exit.backedge, %.split
   br label %.lr.ph.split
 
-_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCseWOXHlIdeJf_8num_cpus.exit.i.i._crit_edge.sink.split: ; preds = %.lr.ph.split.us, %.lr.ph.split.us.split.us.split.us
-  %.not11.ph = phi i1 [ false, %.lr.ph.split.us ], [ %i.aa, %.lr.ph.split.us.split.us.split.us ]
+_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCseWOXHlIdeJf_8num_cpus.exit.i.i._crit_edge.sink.split: ; preds = %.lr.ph.split.us.split, %.lr.ph.split.us.split.us.split.us
   tail call void @llvm.experimental.noalias.scope.decl(metadata !169)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !170)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !171)
   br label %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCseWOXHlIdeJf_8num_cpus.exit.i.i._crit_edge
 
-_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCseWOXHlIdeJf_8num_cpus.exit.i.i._crit_edge: ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3any5checkReNCNvMs_NtCseWOXHlIdeJf_8num_cpus5linuxNtB1k_9MountInfo10parse_lines_0E0B1m_.exit.backedge, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCseWOXHlIdeJf_8num_cpus.exit.i.i, %.split, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCseWOXHlIdeJf_8num_cpus.exit.i.i._crit_edge.sink.split, %bb.a
-  %.not11 = phi i1 [ false, %bb.a ], [ %.not11.ph, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCseWOXHlIdeJf_8num_cpus.exit.i.i._crit_edge.sink.split ], [ false, %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3any5checkReNCNvMs_NtCseWOXHlIdeJf_8num_cpus5linuxNtB1k_9MountInfo10parse_lines_0E0B1m_.exit.backedge ], [ false, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCseWOXHlIdeJf_8num_cpus.exit.i.i ], [ %i.bk, %.split ]
+_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCseWOXHlIdeJf_8num_cpus.exit.i.i._crit_edge: ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3any5checkReNCNvMs_NtCseWOXHlIdeJf_8num_cpus5linuxNtB1k_9MountInfo10parse_lines_0E0B1m_.exit.backedge, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCseWOXHlIdeJf_8num_cpus.exit.i.i, %.split, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCseWOXHlIdeJf_8num_cpus.exit.i.i._crit_edge.sink.split, %.lr.ph.split.us.split.us.split.us, %.lr.ph.split.us, %bb.a
+  %.not11 = phi i1 [ false, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCseWOXHlIdeJf_8num_cpus.exit.i.i._crit_edge.sink.split ], [ true, %.lr.ph.split.us.split.us.split.us ], [ false, %bb.a ], [ false, %.lr.ph.split.us ], [ false, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCseWOXHlIdeJf_8num_cpus.exit.i.i ], [ %i.bk, %.split ], [ false, %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3any5checkReNCNvMs_NtCseWOXHlIdeJf_8num_cpus5linuxNtB1k_9MountInfo10parse_lines_0E0B1m_.exit.backedge ]
   ret i1 %.not11
 }
 

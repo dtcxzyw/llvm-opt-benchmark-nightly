@@ -157,7 +157,7 @@ bb.k:                                             ; preds = %bb.m, %bb.j
   %i.am = load i64, ptr %i.f, align 8
   %i.an = add i64 %i.al, %i.am
   %i.ao = icmp ult i64 %i.ai, %i.an
-  br i1 %i.ao, label %bb.l, label %bb.n
+  br i1 %i.ao, label %bb.l, label %.loopexit
 
 bb.l:                                             ; preds = %bb.k
   %i.ap = load ptr, ptr %i.a, align 8
@@ -186,7 +186,10 @@ bb.m:                                             ; preds = %bb.l
   store i64 %i.bf, ptr %i.c, align 8
   br label %bb.k, !llvm.loop !6
 
-bb.n:                                             ; preds = %bb.k, %bb.c
+.loopexit:                                        ; preds = %bb.k
+  br label %bb.n
+
+bb.n:                                             ; preds = %.loopexit, %bb.c
   ret void
 }
 
@@ -344,20 +347,23 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.k = call i32 @jent_measure_jitter(ptr noundef %i.j, i64 noundef 0, ptr noundef null) ; 0 uses
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.i, %bb.f, %bb.c
+bb.d:                                             ; preds = %bb.f, %bb.c
   %i.l = load ptr, ptr %i.a, align 8
   %i.m = call i32 @jent_health_failure(ptr noundef %i.l)
   %i.n = icmp ne i32 %i.m, 0
   %i.o = xor i1 %i.n, true
-  br i1 %i.o, label %bb.e, label %bb.j
+  br i1 %i.o, label %bb.e, label %bb.i
 
 bb.e:                                             ; preds = %bb.d
   %i.p = load ptr, ptr %i.a, align 8
   %i.q = call i32 @jent_measure_jitter(ptr noundef %i.p, i64 noundef 0, ptr noundef null)
   %i.r = icmp ne i32 %i.q, 0
-  br i1 %i.r, label %bb.f, label %bb.g
+  br i1 %i.r, label %2, label %bb.g
 
-bb.f:                                             ; preds = %bb.e
+2:                                                ; preds = %bb.e
+  br label %bb.f
+
+bb.f:                                             ; preds = %2, %bb.h
   br label %bb.d, !llvm.loop !8
 
 bb.g:                                             ; preds = %bb.e
@@ -367,19 +373,22 @@ bb.g:                                             ; preds = %bb.e
   %i.u = load i32, ptr %i.c, align 4
   %i.v = add i32 256, %i.u
   %i.w = load ptr, ptr %i.a, align 8
-  %2 = getelementptr inbounds nuw %struct.rand_data, ptr %i.w, i32 0, i32 3
-  %i.x = load i32, ptr %2, align 4
+  %3 = getelementptr inbounds nuw %struct.rand_data, ptr %i.w, i32 0, i32 3
+  %i.x = load i32, ptr %3, align 4
   %i.y = mul i32 %i.v, %i.x
   %i.z = icmp uge i32 %i.t, %i.y
-  br i1 %i.z, label %bb.h, label %bb.i
+  br i1 %i.z, label %4, label %bb.h
 
-bb.h:                                             ; preds = %bb.g
+4:                                                ; preds = %bb.g
   br label %bb.j
 
-bb.i:                                             ; preds = %bb.g
-  br label %bb.d, !llvm.loop !8
+bb.h:                                             ; preds = %bb.g
+  br label %bb.f
 
-bb.j:                                             ; preds = %bb.h, %bb.d
+bb.i:                                             ; preds = %bb.d
+  br label %bb.j
+
+bb.j:                                             ; preds = %bb.i, %4
   ret void
 }
 

@@ -200,7 +200,7 @@ bb.h:                                             ; preds = %bb.n, %bb.g
   %i.w = load i32, ptr %i.h, align 4
   %i.x = load i32, ptr %i.c, align 4
   %i.y = icmp ult i32 %i.w, %i.x
-  br i1 %i.y, label %bb.i, label %bb.o
+  br i1 %i.y, label %bb.i, label %.loopexit
 
 bb.i:                                             ; preds = %bb.h
   %i.z = load ptr, ptr %i.b, align 8
@@ -267,7 +267,10 @@ bb.n:                                             ; preds = %bb.m, %bb.k
   store i32 %i.bn, ptr %i.h, align 4
   br label %bb.h, !llvm.loop !15
 
-bb.o:                                             ; preds = %bb.l, %bb.h
+.loopexit:                                        ; preds = %bb.h
+  br label %bb.o
+
+bb.o:                                             ; preds = %.loopexit, %bb.l
   %i.bo = load i32, ptr %i.h, align 4
   %i.bp = load i32, ptr %i.c, align 4
   %i.bq = icmp eq i32 %i.bo, %i.bp

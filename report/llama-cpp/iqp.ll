@@ -205,9 +205,21 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #15
   %i.e = icmp sgt i64 %3, 0
-  br i1 %i.e, label %.preheader51.preheader, label %._crit_edge
+  br i1 %i.e, label %.preheader51.lr.ph, label %._crit_edge
 
-.preheader51.preheader:                           ; preds = %bb.a
+.preheader51.lr.ph:                               ; preds = %bb.a
+  switch i32 %0, label %_ZL21iqp_decode_superblock9ggml_typePKvPaS2_Pf.exit [
+    i32 16, label %.preheader51.preheader
+    i32 17, label %.preheader51.preheader
+    i32 22, label %.preheader51.preheader
+    i32 18, label %.preheader51.preheader
+    i32 21, label %.preheader51.preheader
+    i32 19, label %.preheader51.preheader
+    i32 29, label %.preheader51.preheader
+    i32 23, label %.preheader51.preheader
+  ]
+
+.preheader51.preheader:                           ; preds = %.preheader51.lr.ph, %.preheader51.lr.ph, %.preheader51.lr.ph, %.preheader51.lr.ph, %.preheader51.lr.ph, %.preheader51.lr.ph, %.preheader51.lr.ph, %.preheader51.lr.ph
   %gep.1.i = getelementptr inbounds nuw i8, ptr %i.a, i64 256
   %gep.2.i = getelementptr inbounds nuw i8, ptr %i.a, i64 512
   %gep.3.i = getelementptr inbounds nuw i8, ptr %i.a, i64 768
@@ -274,8 +286,8 @@ bb.a:
   br label %.preheader51
 
 .preheader51:                                     ; preds = %.preheader51.preheader, %.preheader
-  %.04157 = phi i64 [ %i.bjk, %.preheader ], [ 0, %.preheader51.preheader ] ; 2 uses
-  %.04256 = phi ptr [ %i.bjj, %.preheader ], [ %4, %.preheader51.preheader ] ; 68 uses
+  %.04157 = phi i64 [ 0, %.preheader51.preheader ], [ %i.bjk, %.preheader ] ; 2 uses
+  %.04256 = phi ptr [ %4, %.preheader51.preheader ], [ %i.bjj, %.preheader ] ; 68 uses
   %i.f = mul i64 %.04157, %i.d
   %invariant.gep = getelementptr i8, ptr %1, i64 %i.f
   br label %bb.b
@@ -303,7 +315,7 @@ bb.b:                                             ; preds = %.preheader51, %.loo
   tail call void @llvm.experimental.noalias.scope.decl(metadata !141)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !142)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !143)
-  switch i32 %0, label %_ZL21iqp_decode_superblock9ggml_typePKvPaS2_Pf.exit [
+  switch i32 %0, label %bb.i [
     i32 16, label %.loopexit.loopexit
     i32 17, label %bb.c
     i32 22, label %.loopexit.loopexit113
@@ -311,7 +323,6 @@ bb.b:                                             ; preds = %.preheader51, %.loo
     i32 21, label %.loopexit.loopexit115
     i32 19, label %.loopexit.loopexit116
     i32 29, label %bb.g
-    i32 23, label %bb.i
   ]
 
 .loopexit.loopexit:                               ; preds = %bb.b
@@ -714,7 +725,7 @@ bb.i:                                             ; preds = %bb.b
   store <16 x i8> %i.axa, ptr %i.awv, align 16, !tbaa !29, !alias.scope !231
   br label %.loopexit
 
-_ZL21iqp_decode_superblock9ggml_typePKvPaS2_Pf.exit: ; preds = %bb.b
+_ZL21iqp_decode_superblock9ggml_typePKvPaS2_Pf.exit: ; preds = %.preheader51.lr.ph
   tail call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str.1, i32 noundef 581, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3) #16
   unreachable
 
