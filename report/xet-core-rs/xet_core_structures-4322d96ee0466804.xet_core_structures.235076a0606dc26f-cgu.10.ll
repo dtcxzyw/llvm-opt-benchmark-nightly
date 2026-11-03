@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %_RNvNtNtCs6f1wo00zw
   %.sroa.0.063 = phi i64 [ %i.bd, %bb.o ], [ %i.ap, %bb.m ] ; 2 uses
   %i.bb = add nsw i64 %i.ba, -1                   ; 6 uses
   %i.bc = icmp ult i64 %i.bb, %1
-  br i1 %i.bc, label %bb.n, label %8
+  br i1 %i.bc, label %bb.n, label %.split.us.i.loopexit
 
 bb.n:                                             ; preds = %.lr.ph.i
   %i.bd = add nsw i64 %.sroa.0.063, -1            ; 4 uses
@@ -216,15 +216,15 @@ bb.n:                                             ; preds = %.lr.ph.i
   %i.bi = icmp eq i8 %i.bf, %i.bh
   br i1 %i.bi, label %bb.o, label %_RNvNtNtCs6f1wo00zwKs_8lz4_flex5block8compress15backtrack_match.exit.loopexit
 
-8:                                                ; preds = %.lr.ph.i
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.bb, i64 noundef range(i64 0, -9223372036854775808) %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @61) #19, !noalias !239
-  unreachable
-
 bb.o:                                             ; preds = %bb.n
   %i.bj = icmp ne i64 %i.bd, 0
   %i.bk = icmp ugt i64 %i.bb, %.sroa.022.0495
   %or.cond.i51 = and i1 %i.bj, %i.bk
   br i1 %or.cond.i51, label %.lr.ph.i, label %_RNvNtNtCs6f1wo00zwKs_8lz4_flex5block8compress15backtrack_match.exit.loopexit
+
+.split.us.i.loopexit:                             ; preds = %.lr.ph.i
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.bb, i64 noundef range(i64 0, -9223372036854775808) %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @61) #19, !noalias !239
+  unreachable
 
 _RNvNtNtCs6f1wo00zwKs_8lz4_flex5block8compress15backtrack_match.exit.loopexit: ; preds = %bb.o, %bb.n
   %i.bl = phi i64 [ %i.ba, %bb.n ], [ %i.bb, %bb.o ]
@@ -534,7 +534,7 @@ bb.n:                                             ; preds = %bb.l, %_RNvYNtNtNtC
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.backedge
   %i.ad = phi i64 [ %i.az, %.backedge ], [ %i.ac, %.lr.ph.preheader ] ; 3 uses
   %i.ae = phi i64 [ %i.ay, %.backedge ], [ 33, %.lr.ph.preheader ] ; 2 uses
-  %.promoted = phi i64 [ %i.ad, %.backedge ], [ %i.z, %.lr.ph.preheader ] ; 9 uses
+  %.promoted = phi i64 [ %i.ad, %.backedge ], [ %i.z, %.lr.ph.preheader ] ; 8 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !292)
   call void @llvm.experimental.noalias.scope.decl(metadata !293)
   %i.af = icmp ugt i64 %.promoted, -9
@@ -619,7 +619,7 @@ bb.r:                                             ; preds = %_RNvNtNtCs6f1wo00zw
   %.sroa.0.071.us = phi i64 [ %i.bh, %bb.t ], [ %storemerge, %.lr.ph.preheader.i ] ; 2 uses
   %i.bf = add nsw i64 %i.be, -1                   ; 6 uses
   %i.bg = icmp ult i64 %i.bf, %1
-  br i1 %i.bg, label %bb.s, label %.split188.us
+  br i1 %i.bg, label %bb.s, label %bb.u
 
 bb.s:                                             ; preds = %.lr.ph.i.us
   %i.bh = add i64 %.sroa.0.071.us, -1             ; 4 uses
@@ -628,37 +628,31 @@ bb.s:                                             ; preds = %.lr.ph.i.us
   %i.bk = getelementptr inbounds nuw i8, ptr %.sroa.05.0, i64 %i.bh
   %i.bl = load i8, ptr %i.bk, align 1, !alias.scope !297, !noundef !6
   %i.bm = icmp eq i8 %i.bj, %i.bl
-  br i1 %i.bm, label %bb.t, label %_RNvNtNtCs6f1wo00zwKs_8lz4_flex5block8compress15backtrack_match.exit.loopexit.split.us
+  br i1 %i.bm, label %bb.t, label %.split188.us
 
 bb.t:                                             ; preds = %bb.s
   %i.bn = icmp ne i64 %i.bh, 0
   %i.bo = icmp ugt i64 %i.bf, %.sroa.023.0627
   %or.cond.i59.us = and i1 %i.bn, %i.bo
-  br i1 %or.cond.i59.us, label %.lr.ph.i.us, label %_RNvNtNtCs6f1wo00zwKs_8lz4_flex5block8compress15backtrack_match.exit.loopexit.split.us
-
-_RNvNtNtCs6f1wo00zwKs_8lz4_flex5block8compress15backtrack_match.exit.loopexit.split.us: ; preds = %bb.t, %bb.s
-  %8 = phi i64 [ %i.be, %bb.s ], [ %i.bf, %bb.t ]
-  %.sroa.0.1.ph.us = phi i64 [ %.sroa.0.071.us, %bb.s ], [ %i.bh, %bb.t ]
-  %.pre = add nuw i64 %.sroa.0.1.ph.us, 4
-  br label %_RNvNtNtCs6f1wo00zwKs_8lz4_flex5block8compress15backtrack_match.exit
+  br i1 %or.cond.i59.us, label %.lr.ph.i.us, label %.split188.us
 
 .lr.ph.i:                                         ; preds = %.lr.ph.preheader.i
-  %9 = add nsw i64 %.promoted, -1                 ; 2 uses
-  %10 = icmp ult i64 %9, %1
-  br i1 %10, label %bb.u, label %.split188.us
-
-bb.u:                                             ; preds = %.lr.ph.i
   call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.bd, i64 noundef range(i64 0, -9223372036854775808) %.sroa.5.0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @62) #19, !noalias !298
   unreachable
 
-.split188.us:                                     ; preds = %.lr.ph.i.us, %.lr.ph.i
-  %.us-phi189 = phi i64 [ %9, %.lr.ph.i ], [ %i.bf, %.lr.ph.i.us ]
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %.us-phi189, i64 noundef range(i64 0, -9223372036854775808) %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @61) #19, !noalias !298
+bb.u:                                             ; preds = %.lr.ph.i.us
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.bf, i64 noundef range(i64 0, -9223372036854775808) %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @61) #19, !noalias !298
   unreachable
 
-_RNvNtNtCs6f1wo00zwKs_8lz4_flex5block8compress15backtrack_match.exit: ; preds = %_RNvNtNtCs6f1wo00zwKs_8lz4_flex5block8compress15backtrack_match.exit.loopexit.split.us, %bb.r
-  %.pre-phi = phi i64 [ %.pre, %_RNvNtNtCs6f1wo00zwKs_8lz4_flex5block8compress15backtrack_match.exit.loopexit.split.us ], [ %i.at, %bb.r ]
-  %i.bp = phi i64 [ %8, %_RNvNtNtCs6f1wo00zwKs_8lz4_flex5block8compress15backtrack_match.exit.loopexit.split.us ], [ %.promoted, %bb.r ] ; 5 uses
+.split188.us:                                     ; preds = %bb.t, %bb.s
+  %8 = phi i64 [ %i.be, %bb.s ], [ %i.bf, %bb.t ]
+  %.us-phi189 = phi i64 [ %.sroa.0.071.us, %bb.s ], [ %i.bh, %bb.t ]
+  %.pre = add nuw i64 %.us-phi189, 4
+  br label %_RNvNtNtCs6f1wo00zwKs_8lz4_flex5block8compress15backtrack_match.exit
+
+_RNvNtNtCs6f1wo00zwKs_8lz4_flex5block8compress15backtrack_match.exit: ; preds = %.split188.us, %bb.r
+  %.pre-phi = phi i64 [ %.pre, %.split188.us ], [ %i.at, %bb.r ]
+  %i.bp = phi i64 [ %8, %.split188.us ], [ %.promoted, %bb.r ] ; 5 uses
   %i.bq = sub i64 %i.bp, %.sroa.023.0627          ; 6 uses
   %i.br = add nuw i64 %i.bp, 4
   store i64 %i.br, ptr %i.b, align 8

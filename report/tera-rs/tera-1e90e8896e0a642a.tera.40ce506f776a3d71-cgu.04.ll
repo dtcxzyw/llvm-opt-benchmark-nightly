@@ -202,11 +202,12 @@ bb.v:                                             ; preds = %bb.r
 .lr.ph.i28.i.i.i:                                 ; preds = %bb.v
   %i.dd = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.de = load i64, ptr %i.dd, align 8, !alias.scope !24259, !noundef !1322
-  %i.df = load i64, ptr %i.g, align 8, !alias.scope !24259 ; 4 uses
+  %i.df = load i64, ptr %i.g, align 8, !alias.scope !24259
+  %.fr84.i.i.i.i = freeze i64 %i.df, !dbg !24411  ; 4 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.dh = load i64, ptr %i.dg, align 8, !alias.scope !24259 ; 2 uses
   %i.di = sub i64 %i.ci, %i.dh
-  %invariant.op = sub i64 1, %i.df, !dbg !24411
+  %invariant.op = sub i64 1, %.fr84.i.i.i.i, !dbg !24411
   br label %.lr.ph.split.i.i.i.i, !dbg !24411
 
 ._crit_edge.i.i.i.i:                              ; preds = %bb.y, %bb.v
@@ -237,7 +238,7 @@ bb.x:                                             ; preds = %.lr.ph.split.i.i.i.
     #dbg_value(i64 %i.df, !24264, !DIExpression(), !23900)
     #dbg_value(i64 %i.dj, !24262, !DIExpression(), !23897)
     #dbg_value(i64 %i.dj, !24265, !DIExpression(), !23900)
-  %i.dt = tail call i64 @llvm.umax.i64(i64 %i.df, i64 %i.dj), !dbg !24421 ; 2 uses
+  %i.dt = tail call i64 @llvm.umax.i64(i64 %.fr84.i.i.i.i, i64 %i.dj), !dbg !24421 ; 2 uses
     #dbg_value(i64 %i.dt, !24197, !DIExpression(), !23901)
     #dbg_value(i64 %i.dt, !24198, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !23902)
     #dbg_value(i64 %i.ci, !24198, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23902)
@@ -271,13 +272,13 @@ bb.z:                                             ; preds = %.lr.ph
   br i1 %i.dy, label %.lr.ph, label %.preheader60.i.i.i.i.preheader, !dbg !24423
 
 .preheader60.i.i.i.i.preheader:                   ; preds = %bb.z, %bb.x
-    #dbg_value(i64 %i.df, !24201, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23904)
+    #dbg_value(i64 %.fr84.i.i.i.i, !24201, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23904)
     #dbg_value(ptr undef, !24180, !DIExpression(), !23801)
     #dbg_value(ptr undef, !24169, !DIExpression(), !23799)
     #dbg_value(ptr undef, !24166, !DIExpression(), !23797)
     #dbg_value(ptr undef, !24163, !DIExpression(), !23795)
     #dbg_value(ptr undef, !24164, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !23905)
-  %i.dz = icmp ult i64 %i.dj, %i.df, !dbg !24426
+  %i.dz = icmp ult i64 %i.dj, %.fr84.i.i.i.i, !dbg !24426
   br i1 %i.dz, label %.lr.ph87, label %.split.us.i30.i.i.i, !dbg !24427
 
 .lr.ph:                                           ; preds = %bb.x, %bb.z
@@ -317,7 +318,7 @@ bb.z:                                             ; preds = %.lr.ph
   br label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i, !dbg !24436
 
 .lr.ph87:                                         ; preds = %.preheader60.i.i.i.i.preheader, %.preheader60.i.i.i.i
-  %.sroa.2.0.i.i.i.i86 = phi i64 [ %i.ei, %.preheader60.i.i.i.i ], [ %i.df, %.preheader60.i.i.i.i.preheader ]
+  %.sroa.2.0.i.i.i.i86 = phi i64 [ %i.ei, %.preheader60.i.i.i.i ], [ %.fr84.i.i.i.i, %.preheader60.i.i.i.i.preheader ]
     #dbg_value(i64 %.sroa.2.0.i.i.i.i86, !24201, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23904)
     #dbg_value(i64 %.sroa.2.0.i.i.i.i86, !24249, !DIExpression(), !23866)
     #dbg_value(i64 %.sroa.2.0.i.i.i.i86, !24252, !DIExpression(), !23871)
@@ -520,7 +521,7 @@ bb.ag:                                            ; preds = %bb.af, %.split.us.i
     #dbg_value(ptr undef, !24205, !DIExpression(), !23813)
     #dbg_value(ptr undef, !24163, !DIExpression(), !23808)
     #dbg_value(ptr undef, !24164, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !23917)
-  br i1 %exitcond.not.i36.i.i.i89.not, label %.lr.ph91, label %.preheader.i38.i.i.i, !dbg !24457
+  br i1 %exitcond.not.i36.i.i.i89.not, label %.lr.ph91, label %.preheader.split.i40.i.i.i, !dbg !24457
 
 .preheader59.i.i.i.i:                             ; preds = %.lr.ph91
   %i.gj = add i64 %.sroa.04.0.us.i.i.i.i90, 1, !dbg !24458 ; 2 uses
@@ -531,7 +532,17 @@ bb.ag:                                            ; preds = %bb.af, %.split.us.i
     #dbg_value(ptr undef, !24163, !DIExpression(), !23808)
     #dbg_value(ptr undef, !24164, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !23917)
   %exitcond.not.i36.i.i.i = icmp eq i64 %i.gj, %umax.i.i.i.i, !dbg !24459
-  br i1 %exitcond.not.i36.i.i.i, label %.preheader.i38.i.i.i, label %.lr.ph91, !dbg !24457
+  br i1 %exitcond.not.i36.i.i.i, label %.preheader.split.i40.i.i.i, label %.lr.ph91, !dbg !24457
+
+.preheader.split.i40.i.i.i:                       ; preds = %.preheader59.i.i.i.i.preheader, %.preheader59.i.i.i.i
+    #dbg_value(i64 %i.ew, !24201, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23918)
+    #dbg_value(ptr undef, !24180, !DIExpression(), !23800)
+    #dbg_value(ptr undef, !24169, !DIExpression(), !23798)
+    #dbg_value(ptr undef, !24166, !DIExpression(), !23796)
+    #dbg_value(ptr undef, !24163, !DIExpression(), !23789)
+    #dbg_value(ptr undef, !24164, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !23919)
+  %.not58.i.i.i.i = icmp eq i64 %.fr234.i.i.i, 0, !dbg !24469
+  br i1 %.not58.i.i.i.i, label %.split.us.i40.i.i.i, label %.split56.us.i41.i.i.i, !dbg !24460
 
 .lr.ph91:                                         ; preds = %.preheader59.i.i.i.i.preheader, %.preheader59.i.i.i.i
   %.sroa.04.0.us.i.i.i.i90 = phi i64 [ %i.gj, %.preheader59.i.i.i.i ], [ %.fr234.i.i.i, %.preheader59.i.i.i.i.preheader ] ; 4 uses
@@ -552,24 +563,6 @@ bb.ag:                                            ; preds = %bb.af, %.split.us.i
   %i.gp = load i8, ptr %i.go, align 1, !dbg !24466, !alias.scope !24270, !noalias !24254, !noundef !1322
   %.not45.us.i.i.i.i = icmp eq i8 %i.gl, %i.gp, !dbg !24461
   br i1 %.not45.us.i.i.i.i, label %.preheader59.i.i.i.i, label %bb.ah, !dbg !24461
-
-.preheader.i38.i.i.i:                             ; preds = %.preheader59.i.i.i.i.preheader, %.preheader59.i.i.i.i
-    #dbg_value(i64 %i.ew, !24201, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23918)
-    #dbg_value(ptr undef, !24180, !DIExpression(), !23800)
-    #dbg_value(ptr undef, !24169, !DIExpression(), !23798)
-    #dbg_value(ptr undef, !24166, !DIExpression(), !23796)
-    #dbg_value(ptr undef, !24163, !DIExpression(), !23789)
-    #dbg_value(ptr undef, !24164, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !23919)
-  %.not58.i.i.i.i = icmp eq i64 %.fr234.i.i.i, 0, !dbg !24469
-  br i1 %.not58.i.i.i.i, label %.split.us.i40.i.i.i, label %.split56.us.i39.i.i.i, !dbg !24460
-
-.split56.us.i39.i.i.i:                            ; preds = %.preheader.i38.i.i.i
-    #dbg_value(i64 %i.ew, !24249, !DIExpression(), !23864)
-    #dbg_value(i64 %i.ew, !24252, !DIExpression(), !23869)
-    #dbg_value(i64 %i.ez, !24201, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !23918)
-    #dbg_value(i64 %i.ez, !24202, !DIExpression(), !23922)
-  tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.ez, i64 noundef range(i64 0, -9223372036854775808) %i.ci, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #28, !dbg !24471, !noalias !24273
-  unreachable, !dbg !24471
 
 bb.ah:                                            ; preds = %.lr.ph91
   %.reass301.i.reass.i.i = add i64 %i.gc, %reass.sub91.i.i
@@ -593,11 +586,15 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   store i64 %.val13.i.i, ptr %i.cj, align 8, !dbg !24482, !alias.scope !24272
   br label %bb.ak, !dbg !24483
 
-.split.us.i40.i.i.i:                              ; preds = %.preheader.i38.us.i.i.us.i.preheader, %.preheader.i38.us.i.i.us.i, %.preheader.i38.i.i.i
-  %i.gu = phi i64 [ %i.gc, %.preheader.i38.i.i.i ], [ %i.fb, %.preheader.i38.us.i.i.us.i ], [ %i.fb, %.preheader.i38.us.i.i.us.i.preheader ] ; 2 uses
+.split.us.i40.i.i.i:                              ; preds = %.preheader.i38.us.i.i.us.i.preheader, %.preheader.i38.us.i.i.us.i, %.preheader.split.i40.i.i.i
+  %i.gu = phi i64 [ %i.gc, %.preheader.split.i40.i.i.i ], [ %i.fb, %.preheader.i38.us.i.i.us.i ], [ %i.fb, %.preheader.i38.us.i.i.us.i.preheader ] ; 2 uses
   %i.gv = add i64 %i.gu, %i.ci, !dbg !24484       ; 2 uses
   store i64 %i.gv, ptr %i.cj, align 8, !dbg !24484, !alias.scope !24272
   br label %_RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i, !dbg !24485
+
+.split56.us.i41.i.i.i:                            ; preds = %.preheader.split.i40.i.i.i
+  tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.ez, i64 noundef range(i64 0, -9223372036854775808) %i.ci, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #28, !dbg !24471, !noalias !24273
+  unreachable, !dbg !24471
 
 _RNvXsv_NtNtCsf3Ta7LF998c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i: ; preds = %.split.us.i40.i.i.i, %.split.us.i30.i.i.i, %.loopexit62.i.i.i, %.loopexit61.split.us.i.i.i, %.split185.us.i.i.i, %.split185.us.i.thread.i.i
   %.sroa.9.0.i.i = phi i64 [ %.val13.i.i, %.split185.us.i.i.i ], [ %i.eh, %.split.us.i30.i.i.i ], [ %.lcssa45.i.i, %.loopexit61.split.us.i.i.i ], [ %i.da, %.loopexit62.i.i.i ], [ %i.gv, %.split.us.i40.i.i.i ], [ %.val13.i.i, %.split185.us.i.thread.i.i ], !dbg !24486

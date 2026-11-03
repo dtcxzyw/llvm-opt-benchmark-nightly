@@ -205,12 +205,13 @@ define linkonce_odr hidden noundef i64 @_ZN5boost7movelib15detail_adaptive19inse
 bb.a:
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %2, i64 16) ; 5 uses
   %i.a = icmp ugt i64 %1, %.sroa.speculated
-  %.pre46 = load ptr, ptr %0, align 8, !tbaa !373, !noalias !398 ; 8 uses
+  %.pre46 = load ptr, ptr %0, align 8, !tbaa !373, !noalias !398 ; 7 uses
   br i1 %i.a, label %.lr.ph, label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit17
 
 .lr.ph:                                           ; preds = %bb.a
-  %.not.i.i14 = icmp eq i64 %2, 0
-  br i1 %.not.i.i14, label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit17.thread, label %.lr.ph.split
+  %.not.i.i14 = icmp ne i64 %2, 0
+  tail call void @llvm.assume(i1 %.not.i.i14)
+  br label %.lr.ph.split
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEENS2_22stable_vector_iteratorIPiLb0EEEEEvT0_SE_T_.exit
   %.044 = phi i64 [ %i.aa, %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEENS2_22stable_vector_iteratorIPiLb0EEEEEvT0_SE_T_.exit ], [ 0, %.lr.ph ] ; 3 uses
@@ -303,25 +304,23 @@ bb.g:                                             ; preds = %._crit_edge
   br label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit17
 
 _ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit17: ; preds = %bb.a, %._crit_edge, %bb.g
-  %.sroa.037.0 = phi ptr [ %.pre46, %._crit_edge ], [ %i.af, %bb.g ], [ %.pre46, %bb.a ] ; 2 uses
+  %.sroa.037.0 = phi ptr [ %.pre46, %._crit_edge ], [ %i.af, %bb.g ], [ %.pre46, %bb.a ] ; 4 uses
   %.not.i.i18 = icmp eq i64 %1, 0
   br i1 %.not.i.i18, label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit19, label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit17.thread
 
-_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit17.thread: ; preds = %.lr.ph, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit17
-  %.sroa.037.064 = phi ptr [ %.sroa.037.0, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit17 ], [ %.pre46, %.lr.ph ]
+_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit17.thread: ; preds = %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit17
   %i.ag = load ptr, ptr %.pre46, align 8, !tbaa !367, !noalias !8677
   %i.ah = getelementptr inbounds [8 x i8], ptr %i.ag, i64 %1
   %i.ai = load ptr, ptr %i.ah, align 8, !tbaa !365, !noalias !8677
   br label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit19
 
 _ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit19: ; preds = %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit17, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit17.thread
-  %.sroa.037.065 = phi ptr [ %.sroa.037.0, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit17 ], [ %.sroa.037.064, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit17.thread ] ; 4 uses
   %.sroa.0.0 = phi ptr [ %.pre46, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit17 ], [ %i.ai, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit17.thread ] ; 3 uses
-  %.not.i20 = icmp eq ptr %.sroa.037.065, %.sroa.0.0
+  %.not.i20 = icmp eq ptr %.sroa.037.0, %.sroa.0.0
   br i1 %.not.i20, label %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessIiEiNS_11move_detail8identityIiEEEENS2_22stable_vector_iteratorIPiLb0EEEEEvT0_SE_T_.exit36, label %bb.h
 
 bb.h:                                             ; preds = %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPiLb0EEEl.exit19
-  %i.aj = load ptr, ptr %.sroa.037.065, align 8, !tbaa !367
+  %i.aj = load ptr, ptr %.sroa.037.0, align 8, !tbaa !367
   %.sroa.012.0.in26.i21 = getelementptr inbounds nuw i8, ptr %i.aj, i64 8
   %.sroa.012.027.i22 = load ptr, ptr %.sroa.012.0.in26.i21, align 8, !tbaa !365 ; 2 uses
   %.not1928.i23 = icmp eq ptr %.sroa.012.027.i22, %.sroa.0.0
@@ -341,7 +340,7 @@ bb.h:                                             ; preds = %_ZN5boost9container
 
 bb.i:                                             ; preds = %.lr.ph30.i24
   store i32 %i.aq, ptr %i.ak, align 8, !tbaa !296
-  %.not2021.i29 = icmp eq ptr %i.an, %.sroa.037.065
+  %.not2021.i29 = icmp eq ptr %i.an, %.sroa.037.0
   br i1 %.not2021.i29, label %.critedge.i33, label %.lr.ph.i30
 
 .lr.ph.i30:                                       ; preds = %bb.i, %bb.j
@@ -367,7 +366,7 @@ bb.j:                                             ; preds = %.lr.ph.i30
   %i.ba = load ptr, ptr %.sroa.05.022.i32, align 8, !tbaa !367
   %i.bb = getelementptr inbounds i8, ptr %i.ba, i64 -8
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !365 ; 2 uses
-  %.not20.i35 = icmp eq ptr %i.au, %.sroa.037.065
+  %.not20.i35 = icmp eq ptr %i.au, %.sroa.037.0
   br i1 %.not20.i35, label %.critedge.i33, label %.lr.ph.i30, !llvm.loop !100
 
 bb.k:                                             ; preds = %.critedge.i33, %.lr.ph30.i24

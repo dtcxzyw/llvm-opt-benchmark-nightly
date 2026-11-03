@@ -205,7 +205,6 @@ ic_strlen.exit:                                   ; preds = %bb.c, %bb.d
 
 ic_strlen.exit79.lr.ph:                           ; preds = %ic_strlen.exit
   %i.e = tail call i64 @strlen(ptr noundef nonnull readonly dereferenceable(1) %0) #29 ; 4 uses
-  %.not175 = icmp ne i64 %.0.i, 0                 ; 2 uses
   %i.f = icmp samesign ugt i64 %.0.i, 1
   %i.g = add nsw i64 %1, -1                       ; 3 uses
   br i1 %i.f, label %ic_strlen.exit79.us.preheader, label %ic_strlen.exit79.lr.ph.split
@@ -222,7 +221,7 @@ ic_strlen.exit79.us.preheader:                    ; preds = %ic_strlen.exit79.lr
   %.052115.us202 = phi i64 [ %i.ar, %..loopexit_crit_edge.us ], [ 0, %ic_strlen.exit79.us.preheader ] ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 %.052115.us202
   %i.i = load i8, ptr %i.h, align 1, !tbaa !48    ; 3 uses
-  br i1 %.not175, label %.lr.ph.us, label %.preheader.us.preheader
+  br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph, %bb.e
   %.049109.us = phi i64 [ %i.m, %bb.e ], [ 0, %.lr.ph ] ; 3 uses
@@ -234,18 +233,15 @@ ic_strlen.exit79.us.preheader:                    ; preds = %ic_strlen.exit79.lr
 bb.e:                                             ; preds = %.lr.ph.us
   %i.m = add nuw nsw i64 %.049109.us, 2           ; 2 uses
   %i.n = icmp samesign ult i64 %i.m, %.0.i
-  br i1 %i.n, label %.lr.ph.us, label %.preheader.us.preheader, !llvm.loop !469
-
-.preheader.us.preheader:                          ; preds = %bb.e, %.lr.ph
-  br label %.preheader.us
+  br i1 %i.n, label %.lr.ph.us, label %.preheader.us, !llvm.loop !469
 
 bb.f:                                             ; preds = %.preheader.us
   %i.o = add nuw nsw i64 %.0110.us, 2             ; 2 uses
   %i.p = icmp samesign ult i64 %i.o, %.0.i
   br i1 %i.p, label %.preheader.us, label %..loopexit_crit_edge.us, !llvm.loop !470
 
-.preheader.us:                                    ; preds = %.preheader.us.preheader, %bb.f
-  %.0110.us = phi i64 [ %i.o, %bb.f ], [ 1, %.preheader.us.preheader ] ; 2 uses
+.preheader.us:                                    ; preds = %bb.e, %bb.f
+  %.0110.us = phi i64 [ %i.o, %bb.f ], [ 1, %bb.e ] ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 %.0110.us
   %i.r = load i8, ptr %i.q, align 1, !tbaa !48
   %i.s = icmp eq i8 %i.i, %i.r
@@ -310,6 +306,7 @@ bb.l:                                             ; preds = %.lr.ph.us
   br i1 %exitcond181.not, label %.thread98, label %.lr.ph
 
 ic_strlen.exit79.lr.ph.split:                     ; preds = %ic_strlen.exit79.lr.ph
+  %.not175 = icmp ne i64 %.0.i, 0
   %i.as = icmp sgt i64 %i.e, 0
   %or.cond = select i1 %.not175, i1 %i.as, i1 false
   br i1 %or.cond, label %.lr.ph.us130.preheader, label %.thread98

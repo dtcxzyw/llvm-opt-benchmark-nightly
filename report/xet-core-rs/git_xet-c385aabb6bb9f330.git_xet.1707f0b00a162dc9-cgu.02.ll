@@ -205,26 +205,32 @@ bb.l:                                             ; preds = %bb.i
   br i1 %i.cr, label %_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit.thread5, label %.lr.ph128.preheader
 
 .lr.ph128.preheader:                              ; preds = %.split.us81
-  %i.cs = add i64 %.promoted65, -1
+  %i.cs = add i64 %.promoted65, -1                ; 2 uses
   %.first_iter = icmp ult i64 %i.cs, %i.i
-  br label %.lr.ph128
+  br i1 %.first_iter, label %.lr.ph128, label %bb.n
 
-.lr.ph128:                                        ; preds = %.lr.ph128.preheader, %bb.n
-  %i.ct = phi i64 [ %i.cu, %bb.n ], [ %.promoted65, %.lr.ph128.preheader ] ; 5 uses
+.lr.ph128:                                        ; preds = %.lr.ph128.preheader, %bb.m
+  %i.ct = phi i64 [ %i.cu, %bb.m ], [ %.promoted65, %.lr.ph128.preheader ] ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !235)
-  %i.cu = add i64 %i.ct, -1                       ; 8 uses
-  br i1 %.first_iter, label %bb.m, label %.split83.us
-
-bb.m:                                             ; preds = %.lr.ph128
+  %i.cu = add i64 %i.ct, -1                       ; 7 uses
   %2 = getelementptr inbounds nuw i8, ptr %i.g, i64 %i.cu
   %3 = load i8, ptr %2, align 1, !noalias !240, !noundef !4 ; 2 uses
-  %i.cv = icmp eq i8 %3, %i.s
-  br i1 %i.cv, label %bb.n, label %.split87.us
+  %4 = icmp eq i8 %3, %i.s
+  br i1 %4, label %bb.m, label %.split87.us.split.us
 
-bb.n:                                             ; preds = %bb.m
+bb.m:                                             ; preds = %.lr.ph128
   store i64 %i.cu, ptr %i.p, align 8, !alias.scope !235
-  %4 = icmp eq i64 %i.cu, 0
-  br i1 %4, label %_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit.thread5, label %.lr.ph128
+  %i.cv = icmp eq i64 %i.cu, 0
+  br i1 %i.cv, label %_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit.thread5, label %.lr.ph128
+
+.split87.us.split.us:                             ; preds = %.lr.ph128
+  %5 = icmp sgt i8 %3, -65
+  br i1 %5, label %_RNvMNtCskKLDkoKarTP_4core3stre19floor_char_boundary.exit.i, label %bb.ac
+
+bb.n:                                             ; preds = %.lr.ph128.preheader
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !235)
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.cs, i64 noundef %i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #22, !noalias !240
+  unreachable
 
 .split.us93:                                      ; preds = %bb.a
   %i.cw = icmp eq i64 %.promoted, 0
@@ -386,15 +392,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z, %.spl
   store i64 %i.el, ptr %i.p, align 8, !alias.scope !235
   br label %_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit
 
-.split83.us:                                      ; preds = %.lr.ph128
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.cu, i64 noundef %i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #22, !noalias !240
-  unreachable
-
-.split87.us:                                      ; preds = %bb.m
-  %5 = icmp sgt i8 %3, -65
-  br i1 %5, label %_RNvMNtCskKLDkoKarTP_4core3stre19floor_char_boundary.exit.i, label %bb.ac
-
-bb.ac:                                            ; preds = %.split87.us
+bb.ac:                                            ; preds = %.split87.us.split.us
   %i.em = icmp ne i64 %i.cu, 0
   tail call void @llvm.assume(i1 %i.em)
   %i.en = add i64 %i.ct, -2                       ; 2 uses
@@ -414,8 +412,8 @@ bb.ad:                                            ; preds = %bb.ac
   %spec.select.i.i = select i1 %i.ev, i64 %i.es, i64 %i.ew
   br label %_RNvMNtCskKLDkoKarTP_4core3stre19floor_char_boundary.exit.i
 
-_RNvMNtCskKLDkoKarTP_4core3stre19floor_char_boundary.exit.i: ; preds = %bb.ad, %bb.ac, %.split87.us
-  %.sroa.0.0.i13.i = phi i64 [ %i.en, %bb.ac ], [ %spec.select.i.i, %bb.ad ], [ %i.cu, %.split87.us ] ; 2 uses
+_RNvMNtCskKLDkoKarTP_4core3stre19floor_char_boundary.exit.i: ; preds = %bb.ad, %bb.ac, %.split87.us.split.us
+  %.sroa.0.0.i13.i = phi i64 [ %i.en, %bb.ac ], [ %spec.select.i.i, %bb.ad ], [ %i.cu, %.split87.us.split.us ] ; 2 uses
   store i64 %.sroa.0.0.i13.i, ptr %i.p, align 8, !alias.scope !235
   br label %_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit
 
@@ -473,8 +471,8 @@ _RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearc
   store i64 %.sroa.12.0, ptr %i.fn, align 8
   br label %_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit.thread5
 
-_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit.thread5: ; preds = %bb.y, %bb.n, %.split.us, %.split.us93, %.split.us81, %.split80.us, %_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit
-  %storemerge = phi i64 [ 1, %_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit ], [ 0, %.split80.us ], [ 0, %bb.n ], [ 0, %.split.us81 ], [ 0, %.split.us93 ], [ 0, %.split.us ], [ 0, %bb.y ]
+_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit.thread5: ; preds = %bb.y, %bb.m, %.split.us, %.split.us93, %.split.us81, %.split80.us, %_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit
+  %storemerge = phi i64 [ 1, %_RNvXsw_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit ], [ 0, %.split80.us ], [ 0, %bb.m ], [ 0, %.split.us81 ], [ 0, %.split.us93 ], [ 0, %.split.us ], [ 0, %bb.y ]
   store i64 %storemerge, ptr %0, align 8
   ret void
 }
