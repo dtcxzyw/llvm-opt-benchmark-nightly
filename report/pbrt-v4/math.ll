@@ -204,11 +204,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.d,
 ; Function Attrs: mustprogress nounwind uwtable
 define weak_odr dso_local { <2 x float>, <2 x float> } @_ZNK4pbrt12SquareMatrixILi2EEplERKS1_(ptr noundef nonnull align 4 dereferenceable(16) %0, ptr noundef nonnull align 4 dereferenceable(16) %1) local_unnamed_addr #2 comdat align 2 {
 .preheader:
-  %.sroa.0.0.copyload = load <2 x float>, ptr %0, align 4
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.6.0.copyload = load <2 x float>, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !20
+  %2 = load <4 x float>, ptr %0, align 4
   %i.a = load <4 x float>, ptr %1, align 4, !tbaa !10
-  %2 = shufflevector <2 x float> %.sroa.0.0.copyload, <2 x float> %.sroa.6.0.copyload, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.b = fadd <4 x float> %i.a, %2                ; 2 uses
   %i.c = shufflevector <4 x float> %i.b, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.d = shufflevector <4 x float> %i.b, <4 x float> poison, <2 x i32> <i32 2, i32 3>
@@ -223,12 +220,9 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: mustprogress nounwind uwtable
 define weak_odr dso_local { <2 x float>, <2 x float> } @_ZNK4pbrt12SquareMatrixILi2EEmlEf(ptr noundef nonnull align 4 dereferenceable(16) %0, float noundef %1) local_unnamed_addr #2 comdat align 2 {
 .preheader:
-  %.sroa.0.0.copyload = load <2 x float>, ptr %0, align 4
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.6.0.copyload = load <2 x float>, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !20
+  %2 = load <4 x float>, ptr %0, align 4
   %i.a = insertelement <4 x float> poison, float %1, i64 0
   %i.b = shufflevector <4 x float> %i.a, <4 x float> poison, <4 x i32> zeroinitializer
-  %2 = shufflevector <2 x float> %.sroa.0.0.copyload, <2 x float> %.sroa.6.0.copyload, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   %i.c = fmul <4 x float> %i.b, %2                ; 2 uses
   %i.d = shufflevector <4 x float> %i.c, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.e = shufflevector <4 x float> %i.c, <4 x float> poison, <2 x i32> <i32 2, i32 3>
@@ -240,10 +234,7 @@ define weak_odr dso_local { <2 x float>, <2 x float> } @_ZNK4pbrt12SquareMatrixI
 ; Function Attrs: mustprogress nounwind uwtable
 define weak_odr dso_local { <2 x float>, <2 x float> } @_ZNK4pbrt12SquareMatrixILi2EEdvEf(ptr noundef nonnull align 4 dereferenceable(16) %0, float noundef %1) local_unnamed_addr #2 comdat align 2 {
 .preheader:
-  %.sroa.0.0.copyload = load <2 x float>, ptr %0, align 4
-  %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.sroa.6.0.copyload = load <2 x float>, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !20
-  %2 = shufflevector <2 x float> %.sroa.0.0.copyload, <2 x float> %.sroa.6.0.copyload, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %2 = load <4 x float>, ptr %0, align 4
   %i.a = insertelement <4 x float> poison, float %1, i64 0
   %i.b = shufflevector <4 x float> %i.a, <4 x float> poison, <4 x i32> zeroinitializer
   %i.c = fdiv <4 x float> %2, %i.b                ; 2 uses

@@ -202,11 +202,11 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 12
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 2 uses
   %min.iters.check = icmp ult i64 %3, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.memcheck
@@ -230,22 +230,20 @@ vector.ph:                                        ; preds = %vector.memcheck
   %i.n = shl i64 %n.vec, 4                        ; 2 uses
   %i.o = getelementptr i8, ptr %2, i64 %i.n
   %i.p = getelementptr i8, ptr %1, i64 %i.n
-  %4 = load <1 x float>, ptr %i.b, align 8
   %i.q = load <1 x float>, ptr %i.c, align 8
   %broadcast.splat33 = shufflevector <1 x float> %i.q, <1 x float> poison, <4 x i32> zeroinitializer
-  %5 = load <1 x float>, ptr %i.d, align 4
+  %4 = load <2 x float>, ptr %i.b, align 8
   %i.r = load float, ptr %i.e, align 4, !tbaa !13, !alias.scope !87
   %broadcast.splatinsert36 = insertelement <4 x float> poison, float %i.r, i64 0
   %broadcast.splat37 = shufflevector <4 x float> %broadcast.splatinsert36, <4 x float> poison, <4 x i32> zeroinitializer
-  %6 = load <1 x float>, ptr %i.f, align 8
   %i.s = load float, ptr %i.g, align 8, !tbaa !13, !alias.scope !87
   %broadcast.splatinsert40 = insertelement <4 x float> poison, float %i.s, i64 0
-  %7 = load <1 x float>, ptr %i.h, align 4
+  %5 = load <2 x float>, ptr %i.f, align 8
   %i.t = load float, ptr %i.i, align 4, !tbaa !13, !alias.scope !87
   %broadcast.splatinsert44 = insertelement <4 x float> poison, float %i.t, i64 0
-  %i.u = shufflevector <1 x float> %4, <1 x float> %5, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1>
+  %i.u = shufflevector <2 x float> %4, <2 x float> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1>
   %i.v = shufflevector <4 x float> %broadcast.splat33, <4 x float> %broadcast.splat37, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.w = shufflevector <1 x float> %6, <1 x float> %7, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1>
+  %i.w = shufflevector <2 x float> %5, <2 x float> poison, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1>
   %i.x = shufflevector <4 x float> %broadcast.splatinsert40, <4 x float> %broadcast.splatinsert44, <8 x i32> <i32 0, i32 0, i32 0, i32 0, i32 4, i32 4, i32 4, i32 4>
   br label %vector.body
 

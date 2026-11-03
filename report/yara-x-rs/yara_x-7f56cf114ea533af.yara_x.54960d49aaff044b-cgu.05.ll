@@ -205,9 +205,9 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.256.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 15
   %.sroa.301.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %.sroa.325.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 17
-  %.sroa.370.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 18 ; 2 uses
+  %.sroa.370.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 18
   %.sroa.394.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 19
-  %.sroa.439.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 20 ; 2 uses
+  %.sroa.439.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 20
   %.sroa.463.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 21
   %.sroa.508.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 22
   %.sroa.532.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 23
@@ -217,8 +217,7 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.670.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 27
   %.sroa.715.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 28
   %.sroa.739.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 29
-  %2 = load <16 x i8>, ptr %.sroa.16.0..sroa_idx, align 4 ; 2 uses
-  %3 = load <16 x i8>, ptr %.sroa.439.0..sroa_idx, align 4 ; 2 uses
+  %2 = load <32 x i8>, ptr %.sroa.16.0..sroa_idx, align 4 ; 2 uses
   %.sroa.784.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 30
   %.sroa.808.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 31
   %.sroa.853.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 32
@@ -231,9 +230,8 @@ bb.c:                                             ; preds = %bb.a
   %i.k = load <32 x i8>, ptr %.sroa.53.0..sroa_idx, align 1 ; 4 uses
   %.sroa.1060.0.copyload = load i8, ptr %.sroa.1060.0..sroa_idx, align 2 ; 22 uses
   %.sroa.1015.0.copyload = load i8, ptr %.sroa.1015.0..sroa_idx, align 1 ; 22 uses
-  %4 = load <16 x i8>, ptr %.sroa.125.0..sroa_idx, align 1 ; 20 uses
-  %i.l = load <16 x i8>, ptr %.sroa.370.0..sroa_idx, align 2 ; 2 uses
-  %5 = load <16 x i8>, ptr %.sroa.3.0..sroa_idx, align 2 ; 2 uses
+  %i.l = load <16 x i8>, ptr %.sroa.125.0..sroa_idx, align 1 ; 20 uses
+  %3 = load <32 x i8>, ptr %.sroa.3.0..sroa_idx, align 2 ; 2 uses
   %i.m = load <32 x i8>, ptr %.sroa.23.0..sroa_idx, align 1 ; 12 uses
   %.sroa.991.0.copyload = load i8, ptr %.sroa.991.0..sroa_idx, align 4 ; 16 uses
   %.sroa.946.0.copyload = load i8, ptr %.sroa.946.0..sroa_idx, align 1 ; 16 uses
@@ -378,8 +376,8 @@ bb.e:                                             ; preds = %bb.c
   %i.aa = icmp eq i8 %i.z, 42
   %i.ab = extractelement <8 x i8> %.fr, i64 1
   %i.ac = icmp eq i8 %i.ab, -122
-  %i.ad = shufflevector <16 x i8> %2, <16 x i8> %3, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15, i32 17, i32 19, i32 21, i32 23, i32 25>
-  %i.ae = shufflevector <16 x i8> %2, <16 x i8> %3, <16 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 6, i32 8, i32 10, i32 12, i32 14, i32 16, i32 18, i32 20, i32 22, i32 24>
+  %i.ad = shufflevector <32 x i8> %2, <32 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15, i32 17, i32 19, i32 21, i32 23, i32 25>
+  %i.ae = shufflevector <32 x i8> %2, <32 x i8> poison, <16 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 6, i32 8, i32 10, i32 12, i32 14, i32 16, i32 18, i32 20, i32 22, i32 24>
   %i.af = shufflevector <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i8> %i.ae, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
   %i.ag = or <16 x i8> %i.ad, %i.af
   %.fr3283 = freeze <16 x i8> %i.ag
@@ -424,8 +422,8 @@ bb.g:                                             ; preds = %bb.c
   ]
 
 bb.h:                                             ; preds = %bb.c
-  %i.ba = shufflevector <16 x i8> %5, <16 x i8> %i.l, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 8, i32 10, i32 12, i32 14, i32 16, i32 18, i32 20, i32 22, i32 24>
-  %i.bb = shufflevector <16 x i8> %5, <16 x i8> %i.l, <16 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 7, i32 9, i32 11, i32 13, i32 15, i32 17, i32 19, i32 21, i32 23>
+  %i.ba = shufflevector <32 x i8> %3, <32 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 8, i32 10, i32 12, i32 14, i32 16, i32 18, i32 20, i32 22, i32 24>
+  %i.bb = shufflevector <32 x i8> %3, <32 x i8> poison, <16 x i32> <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 7, i32 9, i32 11, i32 13, i32 15, i32 17, i32 19, i32 21, i32 23>
   %i.bc = shufflevector <16 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <16 x i8> %i.bb, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
   %i.bd = or <16 x i8> %i.ba, %i.bc
   %.fr3270 = freeze <16 x i8> %i.bd
@@ -594,8 +592,8 @@ bb.v:                                             ; preds = %bb.t
   ]
 
 bb.w:                                             ; preds = %bb.u
-  %i.dt = shufflevector <16 x i8> %4, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
-  %i.du = shufflevector <16 x i8> %4, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %i.dt = shufflevector <16 x i8> %i.l, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
+  %i.du = shufflevector <16 x i8> %i.l, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
   %i.dv = or <8 x i8> %i.dt, %i.du
   %.fr3280 = freeze <8 x i8> %i.dv
   %i.dw = or i8 %.sroa.715.0.copyload, %.sroa.670.0.copyload
@@ -624,8 +622,8 @@ bb.w:                                             ; preds = %bb.u
   br i1 %op.rdx3158, label %bb.z, label %bb.d
 
 bb.x:                                             ; preds = %bb.u
-  %i.ei = shufflevector <16 x i8> %4, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
-  %i.ej = shufflevector <16 x i8> %4, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %i.ei = shufflevector <16 x i8> %i.l, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
+  %i.ej = shufflevector <16 x i8> %i.l, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
   %i.ek = or <8 x i8> %i.ei, %i.ej
   %.fr3279 = freeze <8 x i8> %i.ek
   %i.el = or i8 %.sroa.715.0.copyload, %.sroa.670.0.copyload
@@ -654,8 +652,8 @@ bb.x:                                             ; preds = %bb.u
   br i1 %op.rdx3165, label %bb.aa, label %bb.d
 
 bb.y:                                             ; preds = %bb.u
-  %i.ex = shufflevector <16 x i8> %4, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
-  %i.ey = shufflevector <16 x i8> %4, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %i.ex = shufflevector <16 x i8> %i.l, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
+  %i.ey = shufflevector <16 x i8> %i.l, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
   %i.ez = or <8 x i8> %i.ex, %i.ey
   %.fr3278 = freeze <8 x i8> %i.ez
   %i.fa = or i8 %.sroa.715.0.copyload, %.sroa.670.0.copyload
@@ -708,8 +706,8 @@ bb.ab:                                            ; preds = %bb.y
   br label %bb.bu
 
 bb.ac:                                            ; preds = %bb.v
-  %i.fs = shufflevector <16 x i8> %4, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
-  %i.ft = shufflevector <16 x i8> %4, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %i.fs = shufflevector <16 x i8> %i.l, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
+  %i.ft = shufflevector <16 x i8> %i.l, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
   %i.fu = or <8 x i8> %i.fs, %i.ft
   %.fr3277 = freeze <8 x i8> %i.fu
   %i.fv = or i8 %.sroa.715.0.copyload, %.sroa.670.0.copyload
@@ -738,8 +736,8 @@ bb.ac:                                            ; preds = %bb.v
   br i1 %op.rdx3179, label %bb.ae, label %bb.d
 
 bb.ad:                                            ; preds = %bb.v
-  %i.gh = shufflevector <16 x i8> %4, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
-  %i.gi = shufflevector <16 x i8> %4, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %i.gh = shufflevector <16 x i8> %i.l, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
+  %i.gi = shufflevector <16 x i8> %i.l, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
   %i.gj = or <8 x i8> %i.gh, %i.gi
   %.fr3276 = freeze <8 x i8> %i.gj
   %i.gk = or i8 %.sroa.715.0.copyload, %.sroa.670.0.copyload
@@ -800,8 +798,8 @@ bb.ah:                                            ; preds = %bb.ag
   ]
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.hc = shufflevector <16 x i8> %4, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
-  %i.hd = shufflevector <16 x i8> %4, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %i.hc = shufflevector <16 x i8> %i.l, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
+  %i.hd = shufflevector <16 x i8> %i.l, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
   %i.he = or <8 x i8> %i.hc, %i.hd
   %.fr3275 = freeze <8 x i8> %i.he
   %i.hf = or i8 %.sroa.715.0.copyload, %.sroa.670.0.copyload
@@ -830,8 +828,8 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %op.rdx3193, label %bb.an, label %bb.d
 
 bb.aj:                                            ; preds = %bb.ah
-  %i.hr = shufflevector <16 x i8> %4, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
-  %i.hs = shufflevector <16 x i8> %4, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %i.hr = shufflevector <16 x i8> %i.l, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
+  %i.hs = shufflevector <16 x i8> %i.l, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
   %i.ht = or <8 x i8> %i.hr, %i.hs
   %.fr3274 = freeze <8 x i8> %i.ht
   %i.hu = or i8 %.sroa.715.0.copyload, %.sroa.670.0.copyload
@@ -860,8 +858,8 @@ bb.aj:                                            ; preds = %bb.ah
   br i1 %op.rdx3200, label %bb.q, label %bb.d
 
 bb.ak:                                            ; preds = %bb.ah
-  %i.ig = shufflevector <16 x i8> %4, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
-  %i.ih = shufflevector <16 x i8> %4, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %i.ig = shufflevector <16 x i8> %i.l, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
+  %i.ih = shufflevector <16 x i8> %i.l, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
   %i.ii = or <8 x i8> %i.ig, %i.ih
   %.fr3273 = freeze <8 x i8> %i.ii
   %i.ij = or i8 %.sroa.715.0.copyload, %.sroa.670.0.copyload
@@ -890,8 +888,8 @@ bb.ak:                                            ; preds = %bb.ah
   br i1 %op.rdx3207, label %bb.ao, label %bb.d
 
 bb.al:                                            ; preds = %bb.ah
-  %i.iv = shufflevector <16 x i8> %4, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
-  %i.iw = shufflevector <16 x i8> %4, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %i.iv = shufflevector <16 x i8> %i.l, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
+  %i.iw = shufflevector <16 x i8> %i.l, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
   %i.ix = or <8 x i8> %i.iv, %i.iw
   %.fr3272 = freeze <8 x i8> %i.ix
   %i.iy = or i8 %.sroa.715.0.copyload, %.sroa.670.0.copyload
@@ -920,8 +918,8 @@ bb.al:                                            ; preds = %bb.ah
   br i1 %op.rdx3214, label %bb.ap, label %bb.d
 
 bb.am:                                            ; preds = %bb.ah
-  %i.jk = shufflevector <16 x i8> %4, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
-  %i.jl = shufflevector <16 x i8> %4, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
+  %i.jk = shufflevector <16 x i8> %i.l, <16 x i8> poison, <8 x i32> <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
+  %i.jl = shufflevector <16 x i8> %i.l, <16 x i8> poison, <8 x i32> <i32 0, i32 2, i32 4, i32 6, i32 8, i32 10, i32 12, i32 14>
   %i.jm = or <8 x i8> %i.jk, %i.jl
   %.fr3271 = freeze <8 x i8> %i.jm
   %i.jn = or i8 %.sroa.715.0.copyload, %.sroa.670.0.copyload

@@ -75,16 +75,14 @@ bb.a:
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !14
   %i.f = sdiv i32 %2, 4
   %i.g = sext i32 %i.f to i64
-  %i.h = getelementptr inbounds nuw [160 x i8], ptr %i.e, i64 %i.g ; 10 uses
+  %i.h = getelementptr inbounds nuw [160 x i8], ptr %i.e, i64 %i.g ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
-  %3 = load <4 x float>, ptr %i.h, align 16, !tbaa !15 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  %5 = load <4 x float>, ptr %4, align 16, !tbaa !15 ; 2 uses
-  %i.i = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %3 = load <8 x float>, ptr %i.h, align 16, !tbaa !15 ; 2 uses
+  %i.i = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 32
   %i.k = load <4 x float>, ptr %i.j, align 16, !tbaa !15 ; 2 uses
   %i.l = shufflevector <4 x float> %i.k, <4 x float> <float 0.000000e+00, float 0.000000e+00, float poison, float poison>, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.m = shufflevector <4 x float> %3, <4 x float> %5, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %i.m = shufflevector <8 x float> %3, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
   %i.n = shufflevector <4 x float> %i.k, <4 x float> <float poison, float poison, float 0.000000e+00, float 0.000000e+00>, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
   %i.o = shufflevector <4 x float> %i.i, <4 x float> %i.l, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   store <4 x float> %i.o, ptr %i.a, align 16, !tbaa !15
@@ -122,15 +120,13 @@ bb.a:
   %i.an = getelementptr inbounds nuw i8, ptr %i.b, i64 48
   store <4 x float> %i.am, ptr %i.an, align 16, !tbaa !15
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
-  %6 = getelementptr inbounds nuw i8, ptr %i.h, i64 112
-  %7 = load <4 x float>, ptr %6, align 16, !tbaa !15 ; 2 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.h, i64 128
-  %8 = load <4 x float>, ptr %i.ao, align 16, !tbaa !15 ; 2 uses
-  %i.ap = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.h, i64 112
+  %4 = load <8 x float>, ptr %i.ao, align 16, !tbaa !15 ; 2 uses
+  %i.ap = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %i.h, i64 144
   %i.ar = load <4 x float>, ptr %i.aq, align 16, !tbaa !15 ; 2 uses
   %i.as = shufflevector <4 x float> %i.ar, <4 x float> <float 0.000000e+00, float 0.000000e+00, float poison, float poison>, <4 x i32> <i32 0, i32 4, i32 1, i32 5> ; 2 uses
-  %i.at = shufflevector <4 x float> %7, <4 x float> %8, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
+  %i.at = shufflevector <8 x float> %4, <8 x float> poison, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
   %i.au = shufflevector <4 x float> %i.ar, <4 x float> <float poison, float poison, float 0.000000e+00, float 0.000000e+00>, <4 x i32> <i32 2, i32 6, i32 3, i32 7> ; 2 uses
   %i.av = shufflevector <4 x float> %i.ap, <4 x float> %i.as, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
   store <4 x float> %i.av, ptr %i.c, align 16, !tbaa !15

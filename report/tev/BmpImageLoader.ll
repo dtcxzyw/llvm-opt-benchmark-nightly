@@ -205,7 +205,7 @@ define dso_local void @_ZNK3tev14BmpImageLoader21loadWithoutFileHeaderERNSt3__11
   %47 = alloca %"struct.std::__1::array", align 4 ; 5 uses
   %48 = alloca %"struct.std::__1::array", align 4 ; 5 uses
   %49 = alloca %class.anon.189, align 8           ; 3 uses
-  %i.i = tail call noalias noundef nonnull dereferenceable(1136) ptr @_Znwm(i64 noundef 1136) #39 ; 164 uses
+  %i.i = tail call noalias noundef nonnull dereferenceable(1136) ptr @_Znwm(i64 noundef 1136) #39 ; 163 uses
   store ptr @_ZNK3tev14BmpImageLoader21loadWithoutFileHeaderERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiNS1_8optionalImEEPN7nanogui5ArrayIiLm2EEEb.resume, ptr %i.i, align 8
   %destroy.addr = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   store ptr @_ZNK3tev14BmpImageLoader21loadWithoutFileHeaderERNSt3__119basic_istringstreamIcNS1_11char_traitsIcEENS1_9allocatorIcEEEERKNS1_4__fs10filesystem4pathENS1_17basic_string_viewIcS4_EERKNS_19ImageLoaderSettingsEiNS1_8optionalImEEPN7nanogui5ArrayIiLm2EEEb.destroy, ptr %destroy.addr, align 8
@@ -608,7 +608,6 @@ bb.eg:                                            ; preds = %_ZN4tlog7warningIJR
   store float %i.abs, ptr %.sroa.6798.0..sroa_idx, align 8
   store i8 1, ptr %i.abl, align 4, !tbaa !171
   %i.abw = getelementptr inbounds nuw i8, ptr %i.i, i64 956
-  %50 = getelementptr inbounds nuw i8, ptr %i.i, i64 972
   %i.abx = getelementptr inbounds nuw i8, ptr %i.i, i64 980
   %i.aby = load <2 x i32>, ptr %i.abx, align 4, !tbaa !120
   %i.abz = uitofp <2 x i32> %i.aby to <2 x float>
@@ -617,12 +616,11 @@ bb.eg:                                            ; preds = %_ZN4tlog7warningIJR
   %i.acc = load i32, ptr %i.acb, align 4, !tbaa !634
   %i.acd = uitofp i32 %i.acc to float
   %i.ace = fmul nnan float %i.acd, f0x30800000
-  %51 = load <4 x i32>, ptr %i.abw, align 4, !tbaa !120 ; 2 uses
-  %52 = load <4 x i32>, ptr %50, align 4          ; 2 uses
-  %i.acf = shufflevector <4 x i32> %51, <4 x i32> %52, <4 x i32> <i32 0, i32 1, i32 3, i32 4>
+  %50 = load <8 x i32>, ptr %i.abw, align 4       ; 2 uses
+  %i.acf = shufflevector <8 x i32> %50, <8 x i32> poison, <4 x i32> <i32 0, i32 1, i32 3, i32 4>
   %i.acg = uitofp <4 x i32> %i.acf to <4 x float>
   %i.ach = fmul nnan <4 x float> %i.acg, splat (float f0x30800000) ; 3 uses
-  %i.aci = shufflevector <4 x i32> %51, <4 x i32> %52, <2 x i32> <i32 2, i32 5>
+  %i.aci = shufflevector <8 x i32> %50, <8 x i32> poison, <2 x i32> <i32 2, i32 5>
   %i.acj = uitofp <2 x i32> %i.aci to <2 x float>
   %i.ack = fmul nnan <2 x float> %i.acj, splat (float f0x30800000)
   %i.acl = shufflevector <4 x float> %i.ach, <4 x float> poison, <2 x i32> <i32 0, i32 2>

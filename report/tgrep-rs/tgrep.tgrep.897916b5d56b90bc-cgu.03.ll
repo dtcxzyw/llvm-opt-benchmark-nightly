@@ -204,7 +204,7 @@ bb.a:
   %i.av = alloca [24 x i8], align 8               ; 4 uses
   %i.aw = alloca [24 x i8], align 8               ; 9 uses
   %i.ax = alloca [24 x i8], align 8               ; 6 uses
-  %i.ay = alloca [624 x i8], align 8              ; 67 uses
+  %i.ay = alloca [624 x i8], align 8              ; 66 uses
   %i.az = alloca [24 x i8], align 8               ; 9 uses
   %i.ba = alloca [24 x i8], align 8               ; 9 uses
   %i.bb = alloca [48 x i8], align 8               ; 5 uses
@@ -607,7 +607,6 @@ _RNvXs3_NtCsbNLsQi0JuJ4_5tgrep6searchNtB5_13SearchOptionsNtNtCsf3Ta7LF998c_4core
   %i.qz = trunc nuw i64 %i.mk to i1
   %.sroa.5.0.i.i = select i1 %i.qz, i64 %i.mm, i64 undef
   %i.ra = getelementptr inbounds nuw i8, ptr %i.ay, i64 610
-  %0 = getelementptr inbounds nuw i8, ptr %i.ay, i64 614
   %i.rb = getelementptr inbounds nuw i8, ptr %i.ay, i64 144
   %i.rc = load i64, ptr %i.rb, align 8, !range !16, !alias.scope !364, !noundef !5 ; 2 uses
   %i.rd = trunc nuw i64 %i.rc to i1
@@ -725,11 +724,10 @@ _RNvXs3_NtCsbNLsQi0JuJ4_5tgrep6searchNtB5_13SearchOptionsNtNtCsf3Ta7LF998c_4core
   %i.tj = getelementptr inbounds nuw i8, ptr %i.ac, i64 609
   %i.tk = getelementptr inbounds nuw i8, ptr %i.ac, i64 448
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.tk, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 24, i1 false), !noalias !366
-  %1 = load <4 x i8>, ptr %i.ra, align 2, !alias.scope !364
-  %2 = load <4 x i8>, ptr %0, align 2
-  %3 = shufflevector <4 x i8> %1, <4 x i8> %2, <8 x i32> <i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6>
-  %4 = insertelement <8 x i8> %3, i8 %i.qm, i64 0
-  store <8 x i8> %4, ptr %i.tj, align 1, !alias.scope !360, !noalias !359
+  %0 = load <8 x i8>, ptr %i.ra, align 2
+  %1 = insertelement <8 x i8> poison, i8 %i.qm, i64 0
+  %2 = shufflevector <8 x i8> %1, <8 x i8> %0, <8 x i32> <i32 0, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14>
+  store <8 x i8> %2, ptr %i.tj, align 1, !alias.scope !360, !noalias !359
   %i.tl = getelementptr inbounds nuw i8, ptr %i.ac, i64 144
   store i64 %i.rc, ptr %i.tl, align 8, !alias.scope !360, !noalias !359
   %i.tm = getelementptr inbounds nuw i8, ptr %i.ac, i64 152

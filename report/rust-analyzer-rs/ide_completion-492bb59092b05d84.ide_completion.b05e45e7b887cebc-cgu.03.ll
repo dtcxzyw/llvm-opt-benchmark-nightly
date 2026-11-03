@@ -204,7 +204,6 @@ bb.a:
   %.sroa.531.0.copyload = load i8, ptr %.sroa.531.0..sroa_idx, align 2
   %.sroa.632.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 131
   %.sroa.733.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 132
-  %.sroa.1137.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 136
   %.sroa.1541.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 140 ; 2 uses
   %.sroa.1541.0.copyload = load i8, ptr %.sroa.1541.0..sroa_idx, align 4
   %.sroa.1642.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 141 ; 2 uses
@@ -213,11 +212,10 @@ bb.a:
   store i8 %.sroa.029.0.copyload, ptr %i.a, align 8
   store i8 %.sroa.430.0.copyload, ptr %.sroa.430.0..sroa_idx, align 1
   store i8 %.sroa.531.0.copyload, ptr %.sroa.531.0..sroa_idx, align 2
-  %2 = load <4 x i8>, ptr %.sroa.733.0..sroa_idx, align 4
-  %3 = load <4 x i8>, ptr %.sroa.1137.0..sroa_idx, align 8
-  %4 = shufflevector <4 x i8> %2, <4 x i8> %3, <8 x i32> <i32 poison, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6>
-  %5 = insertelement <8 x i8> %4, i8 %.val, i64 0
-  store <8 x i8> %5, ptr %.sroa.632.0..sroa_idx, align 1
+  %2 = load <8 x i8>, ptr %.sroa.733.0..sroa_idx, align 4
+  %3 = insertelement <8 x i8> poison, i8 %.val, i64 0
+  %4 = shufflevector <8 x i8> %3, <8 x i8> %2, <8 x i32> <i32 0, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14>
+  store <8 x i8> %4, ptr %.sroa.632.0..sroa_idx, align 1
   store i8 %.sroa.1541.0.copyload, ptr %.sroa.1541.0..sroa_idx, align 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %.sroa.1642.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(3) %.sroa.16, i64 3, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.16)
