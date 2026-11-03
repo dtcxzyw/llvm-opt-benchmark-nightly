@@ -99,11 +99,11 @@ bb.f:                                             ; preds = %bb.e
   %i.bn = select i1 %i.bi, double 0.000000e+00, double 1.000000e+00
   %i.bo = tail call double @llvm.copysign.f64(double %i.bn, double %i.k) ; 2 uses
   %i.bp = fmul nnan double %i.b, %i.bo
-  %i.bq = tail call double @llvm.fma.f64(double %i.bm, double %i.a, double %i.bp)
+  %i.bq = tail call nnan double @llvm.fma.f64(double %i.bm, double %i.a, double %i.bp)
   %i.br = fmul double %i.bq, +inf
   %i.bs = fneg double %i.bm
   %i.bt = fmul nnan double %i.b, %i.bs
-  %i.bu = tail call double @llvm.fma.f64(double %i.bo, double %i.a, double %i.bt)
+  %i.bu = tail call nnan double @llvm.fma.f64(double %i.bo, double %i.a, double %i.bt)
   %i.bv = fmul double %i.bu, +inf
   br label %bb.i
 
@@ -123,10 +123,10 @@ bb.h:                                             ; preds = %bb.g
   %i.cc = select i1 %i.bx, double 0.000000e+00, double 1.000000e+00
   %i.cd = tail call double @llvm.copysign.f64(double %i.cc, double %i.b) ; 2 uses
   %i.ce = fmul nnan double %i.k, %i.cd
-  %i.cf = tail call double @llvm.fma.f64(double %i.i, double %i.cb, double %i.ce)
+  %i.cf = tail call nnan double @llvm.fma.f64(double %i.i, double %i.cb, double %i.ce)
   %i.cg = fmul double %i.cf, 0.000000e+00
   %i.ch = fmul nnan double %i.cd, %i.ae
-  %i.ci = tail call double @llvm.fma.f64(double %i.k, double %i.cb, double %i.ch)
+  %i.ci = tail call nnan double @llvm.fma.f64(double %i.k, double %i.cb, double %i.ch)
   %i.cj = fmul double %i.ci, 0.000000e+00
   br label %bb.i
 

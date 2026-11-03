@@ -201,7 +201,7 @@ bb.c:                                             ; preds = %gs_currentpoint.exi
   %shift = shufflevector <2 x double> %i.ad, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fmul <2 x double> %shift, %i.ad
   %i.ae = extractelement <2 x double> %foldExtExtBinop, i64 0
-  %i.af = call double @sqrt(double noundef %i.ae) #5, !tbaa !7
+  %i.af = call double @llvm.sqrt.f64(double %i.ae)
   %i.ag = shufflevector <4 x float> %i.y, <4 x float> poison, <2 x i32> <i32 3, i32 3>
   %i.ah = fneg <4 x float> %i.y
   %i.ai = shufflevector <4 x float> %i.y, <4 x float> %i.ah, <2 x i32> <i32 1, i32 4>
@@ -279,9 +279,6 @@ bb.j:                                             ; preds = %gs_currentpoint.exi
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #5
   ret i32 %.0
 }
-
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sqrt(double noundef) local_unnamed_addr #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fabs.f64(double) #4
@@ -401,6 +398,9 @@ bb.f:                                             ; preds = %bb.b, %bb.c, %bb.d,
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #5
   ret i32 %.014
 }
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #4

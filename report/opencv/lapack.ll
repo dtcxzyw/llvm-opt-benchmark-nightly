@@ -205,8 +205,8 @@ bb.l:                                             ; preds = %bb.k
 
 _ZN2cvL5hypotIfEET_S1_S1_.exit:                   ; preds = %bb.j, %bb.k, %bb.l
   %.0.i = phi float [ %i.go, %bb.j ], [ %i.gs, %bb.l ], [ 0.000000e+00, %bb.k ]
-  %i.gt = fadd float %i.gk, %.0.i                 ; 4 uses
-  %i.gu = tail call noundef float @llvm.fabs.f32(float %i.gt) ; 4 uses
+  %i.gt = fadd float %i.gk, %.0.i                 ; 5 uses
+  %i.gu = tail call noundef float @llvm.fabs.f32(float %i.gt) ; 3 uses
   %i.gv = fcmp ogt float %i.gc, %i.gu
   br i1 %i.gv, label %bb.m, label %bb.n
 
@@ -225,7 +225,7 @@ bb.o:                                             ; preds = %bb.n
   %i.ha = fdiv float %i.gc, %i.gu                 ; 2 uses
   %i.hb = tail call float @llvm.fmuladd.f32(float %i.ha, float %i.ha, float 1.000000e+00)
   %sqrt19.i377 = tail call float @llvm.sqrt.f32(float %i.hb)
-  %i.hc = fmul float %i.gu, %sqrt19.i377
+  %i.hc = fmul float %i.gt, %sqrt19.i377
   br label %_ZN2cvL5hypotIfEET_S1_S1_.exit380
 
 _ZN2cvL5hypotIfEET_S1_S1_.exit380:                ; preds = %bb.m, %bb.n, %bb.o
@@ -628,8 +628,8 @@ bb.l:                                             ; preds = %bb.k
 
 _ZN2cvL5hypotIdEET_S1_S1_.exit:                   ; preds = %bb.j, %bb.k, %bb.l
   %.0.i = phi double [ %i.go, %bb.j ], [ %i.gs, %bb.l ], [ 0.000000e+00, %bb.k ]
-  %i.gt = fadd double %i.gk, %.0.i                ; 4 uses
-  %i.gu = tail call noundef double @llvm.fabs.f64(double %i.gt) ; 4 uses
+  %i.gt = fadd double %i.gk, %.0.i                ; 5 uses
+  %i.gu = tail call noundef double @llvm.fabs.f64(double %i.gt) ; 3 uses
   %i.gv = fcmp ogt double %i.gc, %i.gu
   br i1 %i.gv, label %bb.m, label %bb.n
 
@@ -648,7 +648,7 @@ bb.o:                                             ; preds = %bb.n
   %i.ha = fdiv double %i.gc, %i.gu                ; 2 uses
   %i.hb = tail call double @llvm.fmuladd.f64(double %i.ha, double %i.ha, double 1.000000e+00)
   %sqrt19.i377 = tail call double @llvm.sqrt.f64(double %i.hb)
-  %i.hc = fmul double %i.gu, %sqrt19.i377
+  %i.hc = fmul double %i.gt, %sqrt19.i377
   br label %_ZN2cvL5hypotIdEET_S1_S1_.exit380
 
 _ZN2cvL5hypotIdEET_S1_S1_.exit380:                ; preds = %bb.m, %bb.n, %bb.o

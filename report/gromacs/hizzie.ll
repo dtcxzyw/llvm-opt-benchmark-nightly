@@ -205,8 +205,8 @@ bb.g:                                             ; preds = %bb.f
   %i.br = tail call double @llvm.fmuladd.f64(double %i.bd, double %i.be, double 0.000000e+00)
   %i.bs = tail call double @llvm.fmuladd.f64(double %i.bh, double %i.bi, double %i.br)
   %i.bt = tail call double @llvm.fmuladd.f64(double %i.bl, double %i.bm, double %i.bs)
-  %i.bu = tail call double @sqrt(double noundef %i.bp) #13
-  %i.bv = fdiv double 1.000000e+00, %i.bu
+  %i.bu = tail call nnan double @llvm.sqrt.f64(double %i.bp)
+  %i.bv = fdiv nnan double 1.000000e+00, %i.bu
   %i.bw = fmul double %i.bt, %i.bv
   %i.bx = fptrunc double %i.bw to float
   br label %_ZL9cos_anglePKfS0_.exit
@@ -382,9 +382,6 @@ declare float @acosf(float noundef) local_unnamed_addr #9
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.fmuladd.f64(double, double, double) #8
 
-; Function Attrs: mustprogress nocallback nofree nosync nounwind willreturn memory(errnomem: write)
-declare double @sqrt(double noundef) local_unnamed_addr #9
-
 declare void @_ZNSt10filesystem7__cxx114path5_ListC1Ev(ptr noundef nonnull align 8 dereferenceable(8)) unnamed_addr #2
 
 declare void @_ZNSt10filesystem7__cxx114path14_M_split_cmptsEv(ptr noundef nonnull align 8 dereferenceable(40)) local_unnamed_addr #2
@@ -407,6 +404,9 @@ declare void @_Z9save_freePKcS0_iPv(ptr noundef, ptr noundef, i32 noundef, ptr n
 
 ; Function Attrs: nofree nounwind
 declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i64 noundef, ptr noundef captures(none)) local_unnamed_addr #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare double @llvm.sqrt.f64(double) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #8

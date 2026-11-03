@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.d
   %i.cr = tail call noundef double @llvm.fmuladd.f64(double %i.cp, double %i.cp, double %i.cq)
   %sqrt.i135 = tail call double @llvm.sqrt.f64(double %i.cr)
   %i.cs = fmul double %sqrt.i135, 5.000000e-01
-  %i.ct = tail call double @sqrt(double noundef %i.cs) #40
+  %i.ct = tail call double @llvm.sqrt.f64(double %i.cs)
   %i.cu = fdiv double %i.ct, %sqrt.i
   %i.cv = load ptr, ptr %i.p, align 8, !tbaa !216
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 264
@@ -258,7 +258,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %i.ef = tail call noundef double @llvm.fmuladd.f64(double %i.ed, double %i.ed, double %i.ee)
   %sqrt.i136 = tail call double @llvm.sqrt.f64(double %i.ef)
   %i.eg = fmul double %sqrt.i136, 5.000000e-01
-  %i.eh = tail call double @sqrt(double noundef %i.eg) #40
+  %i.eh = tail call double @llvm.sqrt.f64(double %i.eg)
   %i.ei = fdiv double %i.eh, %sqrt.i
   %i.ej = fcmp olt double %i.ei, %i.dd
   br i1 %i.ej, label %.thread, label %bb.i

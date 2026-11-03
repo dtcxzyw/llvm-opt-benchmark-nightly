@@ -205,7 +205,7 @@ bb.bf:                                            ; preds = %_RNvMNtCscgRAwXFJnX
   unreachable, !dbg !16714
 
 bb.bg:                                            ; preds = %_RNvMNtCscgRAwXFJnXP_4core5sliceSh8split_atCsfISxE4fmY1Y_14polars_parquet.exit
-  %i.iq = sub i64 %.sroa.016.1, %i.ie, !dbg !16715
+  %i.iq = sub nuw i64 %.sroa.016.1, %i.ie, !dbg !16715
   call void @llvm.lifetime.end.p0(ptr nonnull %i.an), !dbg !16716
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ao), !dbg !16716
   br label %bb.be, !dbg !16717
@@ -608,7 +608,7 @@ bb.bb:                                            ; preds = %_RNvMNtCscgRAwXFJnX
   unreachable, !dbg !17247
 
 bb.bc:                                            ; preds = %_RNvMNtCscgRAwXFJnXP_4core5sliceSh8split_atCsfISxE4fmY1Y_14polars_parquet.exit
-  %i.gr = sub i64 %.sroa.016.1, %i.gj, !dbg !17248
+  %i.gr = sub nuw i64 %.sroa.016.1, %i.gj, !dbg !17248
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !dbg !17249
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !dbg !17249
   br label %bb.ba, !dbg !17250
@@ -1011,7 +1011,7 @@ bb.br:                                            ; preds = %_RNvMNtCscgRAwXFJnX
   unreachable, !dbg !17716
 
 bb.bs:                                            ; preds = %_RNvMNtCscgRAwXFJnXP_4core5sliceSh8split_atCsfISxE4fmY1Y_14polars_parquet.exit
-  %i.ih = sub i64 %.sroa.016.1, %i.hv, !dbg !17717
+  %i.ih = sub nuw i64 %.sroa.016.1, %i.hv, !dbg !17717
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y), !dbg !17718
   call void @llvm.lifetime.end.p0(ptr nonnull %i.z), !dbg !17718
   br label %bb.bq, !dbg !17719
@@ -1414,7 +1414,7 @@ bb.br:                                            ; preds = %_RNvMNtCscgRAwXFJnX
   unreachable, !dbg !18195
 
 bb.bs:                                            ; preds = %_RNvMNtCscgRAwXFJnXP_4core5sliceSh8split_atCsfISxE4fmY1Y_14polars_parquet.exit
-  %i.ih = sub i64 %.sroa.016.1, %i.hv, !dbg !18196
+  %i.ih = sub nuw i64 %.sroa.016.1, %i.hv, !dbg !18196
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y), !dbg !18197
   call void @llvm.lifetime.end.p0(ptr nonnull %i.z), !dbg !18197
   br label %bb.bq, !dbg !18198

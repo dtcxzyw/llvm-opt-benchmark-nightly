@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ad = fdiv fast float 1.000000e+00, %i.ac
   %i.ae = bitcast float %i.ad to i32
   %i.af = lshr i32 %i.ae, 16
-  %i.ag = trunc nuw i32 %i.af to i16
+  %i.ag = trunc nuw nsw i32 %i.af to i16
   store i16 %i.ag, ptr %i.x, align 2, !tbaa !51
   br i1 %exitcond.not, label %._crit_edge.us, label %bb.c
 
@@ -218,7 +218,7 @@ bb.c:                                             ; preds = %.noexc.us
   %i.an = fdiv fast float 1.000000e+00, %i.am
   %i.ao = bitcast float %i.an to i32
   %i.ap = lshr i32 %i.ao, 16
-  %i.aq = trunc nuw i32 %i.ap to i16
+  %i.aq = trunc nuw nsw i32 %i.ap to i16
   store i16 %i.aq, ptr %i.ah, align 2, !tbaa !51
   br i1 %exitcond.not.1, label %._crit_edge.us, label %bb.d
 
@@ -232,7 +232,7 @@ bb.d:                                             ; preds = %bb.c
   %i.ax = fdiv fast float 1.000000e+00, %i.aw
   %i.ay = bitcast float %i.ax to i32
   %i.az = lshr i32 %i.ay, 16
-  %i.ba = trunc nuw i32 %i.az to i16
+  %i.ba = trunc nuw nsw i32 %i.az to i16
   store i16 %i.ba, ptr %i.ar, align 2, !tbaa !51
   br label %._crit_edge.us
 
@@ -289,7 +289,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %i.by = fdiv fast <8 x float> splat (float 1.000000e+00), %i.bx
   %i.bz = bitcast <8 x float> %i.by to <8 x i32>
   %i.ca = lshr <8 x i32> %i.bz, splat (i32 16)
-  %i.cb = trunc nuw <8 x i32> %i.ca to <8 x i16>
+  %i.cb = trunc nuw nsw <8 x i32> %i.ca to <8 x i16>
   store <8 x i16> %i.cb, ptr %next.gep, align 2, !tbaa !51
   %index.next = add nuw i64 %index, 8             ; 2 uses
   %i.cc = icmp eq i64 %index.next, %n.vec
@@ -338,7 +338,7 @@ middle.block:                                     ; preds = %vector.body
   %i.cz = fdiv fast float 1.000000e+00, %i.cy
   %i.da = bitcast float %i.cz to i32
   %i.db = lshr i32 %i.da, 16
-  %i.dc = trunc nuw i32 %i.db to i16
+  %i.dc = trunc nuw nsw i32 %i.db to i16
   store i16 %i.dc, ptr %.12642, align 2, !tbaa !51
   %i.dd = getelementptr inbounds nuw i8, ptr %.12642, i64 2
   %i.de = add nuw nsw i32 %.143, 1                ; 2 uses

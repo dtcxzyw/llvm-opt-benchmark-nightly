@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.a
   %storemerge.in14 = fadd reassoc nsz arcp contract afn float %0, 5.000000e-01
   %storemerge15 = fptosi float %storemerge.in14 to i32 ; 2 uses
   store i32 %storemerge15, ptr %1, align 4, !tbaa !20
-  %i.b = uitofp reassoc nsz arcp contract afn i32 %storemerge15 to float
+  %i.b = uitofp reassoc nsz arcp contract afn nneg i32 %storemerge15 to float
   %i.c = load i32, ptr %2, align 4, !tbaa !20     ; 2 uses
   %i.d = uitofp reassoc nsz arcp contract afn i32 %i.c to float
   %i.e = fdiv reassoc nsz arcp contract afn float %i.b, %i.d
@@ -223,7 +223,7 @@ bb.c:                                             ; preds = %bb.a
   %storemerge.in = fadd reassoc nsz arcp contract afn float %i.l, 5.000000e-01
   %storemerge = fptosi float %storemerge.in to i32 ; 2 uses
   store i32 %storemerge, ptr %1, align 4, !tbaa !20
-  %i.m = uitofp reassoc nsz arcp contract afn i32 %storemerge to float
+  %i.m = uitofp reassoc nsz arcp contract afn nneg i32 %storemerge to float
   %i.n = load i32, ptr %2, align 4, !tbaa !20     ; 2 uses
   %i.o = uitofp reassoc nsz arcp contract afn i32 %i.n to float
   %i.p = fdiv reassoc nsz arcp contract afn float %i.m, %i.o
