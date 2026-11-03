@@ -205,8 +205,8 @@ bb.ag:                                            ; preds = %_ZNK3jxl11ImageBund
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br label %.lr.ph.us
 
-.lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %._crit_edge.us
-  %.065178.us = phi i64 [ %20, %._crit_edge.us ], [ 0, %.lr.ph.us.preheader ] ; 4 uses
+.lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %._crit_edge
+  %.065178.us = phi i64 [ %20, %._crit_edge ], [ 0, %.lr.ph.us.preheader ] ; 4 uses
   %i.lb = mul i64 %i.kg, %.065178.us
   %i.lc = getelementptr inbounds nuw i8, ptr %i.ke, i64 %i.lb ; 5 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.lc, i64 64) ]
@@ -242,7 +242,7 @@ vector.body:                                      ; preds = %.lr.ph.us, %vector.
   br i1 %i.lr, label %middle.block, label %vector.body, !llvm.loop !135
 
 middle.block:                                     ; preds = %vector.body
-  br i1 %cmp.n, label %._crit_edge.us, label %scalar.ph.preheader
+  br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph.us, %middle.block
   %.0177.us.ph = phi i64 [ %n.vec, %middle.block ], [ 0, %.lr.ph.us ] ; 6 uses
@@ -264,7 +264,12 @@ scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
 scalar.ph.prol.loopexit:                          ; preds = %scalar.ph.prol, %scalar.ph.preheader
   %.0177.us.unr = phi i64 [ %.0177.us.ph, %scalar.ph.preheader ], [ %i.lz, %scalar.ph.prol ]
   %i.ma = icmp eq i64 %.0.i172, %.neg
-  br i1 %i.ma, label %._crit_edge.us, label %scalar.ph
+  br i1 %i.ma, label %._crit_edge, label %scalar.ph
+
+._crit_edge:                                      ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
+  %20 = add nuw i64 %.065178.us, 1                ; 2 uses
+  %exitcond185.not = icmp eq i64 %20, %.0.i107
+  br i1 %exitcond185.not, label %._crit_edge181, label %.lr.ph.us, !llvm.loop !136
 
 scalar.ph:                                        ; preds = %scalar.ph.prol.loopexit, %scalar.ph
   %.0177.us = phi i64 [ %i.mq, %scalar.ph ], [ %.0177.us.unr, %scalar.ph.prol.loopexit ] ; 5 uses
@@ -287,14 +292,9 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   store float %i.mo, ptr %i.mp, align 4, !tbaa !112
   %i.mq = add nuw i64 %.0177.us, 2                ; 2 uses
   %exitcond.not.1 = icmp eq i64 %i.mq, %.0.i172
-  br i1 %exitcond.not.1, label %._crit_edge.us, label %scalar.ph, !llvm.loop !136
+  br i1 %exitcond.not.1, label %._crit_edge, label %scalar.ph, !llvm.loop !137
 
-._crit_edge.us:                                   ; preds = %scalar.ph.prol.loopexit, %scalar.ph, %middle.block
-  %20 = add nuw i64 %.065178.us, 1                ; 2 uses
-  %exitcond186.not = icmp eq i64 %20, %.0.i107
-  br i1 %exitcond186.not, label %._crit_edge181, label %.lr.ph.us, !llvm.loop !137
-
-._crit_edge181:                                   ; preds = %._crit_edge.us, %.lr.ph180, %bb.ag
+._crit_edge181:                                   ; preds = %._crit_edge, %.lr.ph180, %bb.ag
   %.pr = load i32, ptr %i.jr, align 8, !tbaa !108
   %i.mr = icmp eq i32 %.pr, 0
   br i1 %i.mr, label %bb.ah, label %_ZN3jxl8StatusOrINS_5PlaneIfEEED2Ev.exit
@@ -697,8 +697,8 @@ _ZN3jxlL19LinearToSrgb8DirectEd.exit39.i:         ; preds = %_ZNK3jxl11ImageBund
   %.not5.i = icmp eq i32 %i.ad, 0
   br i1 %.not5.i, label %_ZN3jxl12_GLOBAL__N_110AlphaBlendERKNS_6Image3IfEEmfRKNS_5PlaneIfEEPS2_.exit, label %.lr.ph.us.i
 
-.lr.ph.us.i:                                      ; preds = %.lr.ph3.i, %._crit_edge.us.i
-  %.02.us.i = phi i64 [ %2, %._crit_edge.us.i ], [ 0, %.lr.ph3.i ] ; 3 uses
+.lr.ph.us.i:                                      ; preds = %.lr.ph3.i, %._crit_edge.i
+  %.02.us.i = phi i64 [ %2, %._crit_edge.i ], [ 0, %.lr.ph3.i ] ; 3 uses
   %i.af = mul i64 %.02.us.i, %.val
   %i.ag = getelementptr inbounds nuw i8, ptr %.val7, i64 %i.af ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ag, i64 64) ]
@@ -706,6 +706,11 @@ _ZN3jxlL19LinearToSrgb8DirectEd.exit39.i:         ; preds = %_ZNK3jxl11ImageBund
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ac, i64 %i.ah ; 4 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.ai, i64 64) ]
   br label %bb.d
+
+._crit_edge.i:                                    ; preds = %bb.p
+  %2 = add nuw nsw i64 %.02.us.i, 1               ; 2 uses
+  %exitcond6.not.i = icmp eq i64 %2, %i.z
+  br i1 %exitcond6.not.i, label %_ZN3jxl12_GLOBAL__N_110AlphaBlendERKNS_6Image3IfEEmfRKNS_5PlaneIfEEPS2_.exit, label %.lr.ph.us.i, !llvm.loop !183
 
 bb.d:                                             ; preds = %bb.p, %.lr.ph.us.i
   %.0361.us.i = phi i64 [ 0, %.lr.ph.us.i ], [ %i.bo, %bb.p ] ; 5 uses
@@ -783,19 +788,14 @@ _ZN3jxlL19Srgb8ToLinearDirectEd.exit.us.i:        ; preds = %bb.o, %bb.n, %bb.m,
   br label %bb.p
 
 bb.p:                                             ; preds = %_ZN3jxlL19Srgb8ToLinearDirectEd.exit.us.i, %bb.f, %bb.d
-  %.sink.i = phi float [ %i.bm, %_ZN3jxlL19Srgb8ToLinearDirectEd.exit.us.i ], [ %i.ao, %bb.f ], [ %0, %bb.d ]
+  %.sink.i = phi float [ %i.ao, %bb.f ], [ %i.bm, %_ZN3jxlL19Srgb8ToLinearDirectEd.exit.us.i ], [ %0, %bb.d ]
   %i.bn = getelementptr inbounds nuw [4 x i8], ptr %i.ai, i64 %.0361.us.i
   store float %.sink.i, ptr %i.bn, align 4, !tbaa !112
   %i.bo = add nuw nsw i64 %.0361.us.i, 1          ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.bo, %i.ae
-  br i1 %exitcond.not.i, label %._crit_edge.us.i, label %bb.d, !llvm.loop !183
+  br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.d, !llvm.loop !184
 
-._crit_edge.us.i:                                 ; preds = %bb.p
-  %2 = add nuw nsw i64 %.02.us.i, 1               ; 2 uses
-  %exitcond7.not.i = icmp eq i64 %2, %i.z
-  br i1 %exitcond7.not.i, label %_ZN3jxl12_GLOBAL__N_110AlphaBlendERKNS_6Image3IfEEmfRKNS_5PlaneIfEEPS2_.exit, label %.lr.ph.us.i, !llvm.loop !184
-
-_ZN3jxl12_GLOBAL__N_110AlphaBlendERKNS_6Image3IfEEmfRKNS_5PlaneIfEEPS2_.exit: ; preds = %._crit_edge.us.i, %_ZN3jxlL19LinearToSrgb8DirectEd.exit39.i, %.lr.ph3.i
+_ZN3jxl12_GLOBAL__N_110AlphaBlendERKNS_6Image3IfEEmfRKNS_5PlaneIfEEPS2_.exit: ; preds = %._crit_edge.i, %_ZN3jxlL19LinearToSrgb8DirectEd.exit39.i, %.lr.ph3.i
   %i.bp = tail call noundef ptr @_ZN3jxl11ImageBundle5alphaEv(ptr noundef nonnull align 8 dereferenceable(504) %1) #17 ; 2 uses
   %i.bq = getelementptr i8, ptr %i.bp, i64 16
   %.val.1 = load i64, ptr %i.bq, align 8
@@ -912,17 +912,17 @@ _ZN3jxlL19Srgb8ToLinearDirectEd.exit.us.i.1:      ; preds = %bb.ac, %bb.ab, %bb.
   br label %bb.ad
 
 bb.ad:                                            ; preds = %_ZN3jxlL19Srgb8ToLinearDirectEd.exit.us.i.1, %bb.t, %bb.r
-  %.sink.i.1 = phi float [ %i.dj, %_ZN3jxlL19Srgb8ToLinearDirectEd.exit.us.i.1 ], [ %i.cl, %bb.t ], [ %0, %bb.r ]
+  %.sink.i.1 = phi float [ %i.cl, %bb.t ], [ %i.dj, %_ZN3jxlL19Srgb8ToLinearDirectEd.exit.us.i.1 ], [ %0, %bb.r ]
   %i.dk = getelementptr inbounds nuw [4 x i8], ptr %i.cf, i64 %.0361.us.i.1
   store float %.sink.i.1, ptr %i.dk, align 4, !tbaa !112
   %i.dl = add nuw nsw i64 %.0361.us.i.1, 1        ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %i.dl, %i.cb
-  br i1 %exitcond.not.i.1, label %._crit_edge.us.i.1, label %bb.r, !llvm.loop !183
+  br i1 %exitcond.not.i.1, label %._crit_edge.us.i.1, label %bb.r, !llvm.loop !184
 
 ._crit_edge.us.i.1:                               ; preds = %bb.ad
   %i.dm = add nuw nsw i64 %.02.us.i.1, 1          ; 2 uses
   %exitcond7.not.i.1 = icmp eq i64 %i.dm, %i.bw
-  br i1 %exitcond7.not.i.1, label %_ZN3jxl12_GLOBAL__N_110AlphaBlendERKNS_6Image3IfEEmfRKNS_5PlaneIfEEPS2_.exit.1, label %.lr.ph.us.i.1, !llvm.loop !184
+  br i1 %exitcond7.not.i.1, label %_ZN3jxl12_GLOBAL__N_110AlphaBlendERKNS_6Image3IfEEmfRKNS_5PlaneIfEEPS2_.exit.1, label %.lr.ph.us.i.1, !llvm.loop !183
 
 _ZN3jxl12_GLOBAL__N_110AlphaBlendERKNS_6Image3IfEEmfRKNS_5PlaneIfEEPS2_.exit.1: ; preds = %._crit_edge.us.i.1, %.lr.ph3.i.1, %_ZN3jxlL19LinearToSrgb8DirectEd.exit39.i.1
   %i.dn = tail call noundef ptr @_ZN3jxl11ImageBundle5alphaEv(ptr noundef nonnull align 8 dereferenceable(504) %1) #17 ; 2 uses
@@ -1041,17 +1041,17 @@ _ZN3jxlL19Srgb8ToLinearDirectEd.exit.us.i.2:      ; preds = %bb.aq, %bb.ap, %bb.
   br label %bb.ar
 
 bb.ar:                                            ; preds = %_ZN3jxlL19Srgb8ToLinearDirectEd.exit.us.i.2, %bb.ah, %bb.af
-  %.sink.i.2 = phi float [ %i.fh, %_ZN3jxlL19Srgb8ToLinearDirectEd.exit.us.i.2 ], [ %i.ej, %bb.ah ], [ %0, %bb.af ]
+  %.sink.i.2 = phi float [ %i.ej, %bb.ah ], [ %i.fh, %_ZN3jxlL19Srgb8ToLinearDirectEd.exit.us.i.2 ], [ %0, %bb.af ]
   %i.fi = getelementptr inbounds nuw [4 x i8], ptr %i.ed, i64 %.0361.us.i.2
   store float %.sink.i.2, ptr %i.fi, align 4, !tbaa !112
   %i.fj = add nuw nsw i64 %.0361.us.i.2, 1        ; 2 uses
   %exitcond.not.i.2 = icmp eq i64 %i.fj, %i.dz
-  br i1 %exitcond.not.i.2, label %._crit_edge.us.i.2, label %bb.af, !llvm.loop !183
+  br i1 %exitcond.not.i.2, label %._crit_edge.us.i.2, label %bb.af, !llvm.loop !184
 
 ._crit_edge.us.i.2:                               ; preds = %bb.ar
   %i.fk = add nuw nsw i64 %.02.us.i.2, 1          ; 2 uses
   %exitcond7.not.i.2 = icmp eq i64 %i.fk, %i.du
-  br i1 %exitcond7.not.i.2, label %_ZNK3jxl11ImageBundle8HasAlphaEv.exit.thread, label %.lr.ph.us.i.2, !llvm.loop !184
+  br i1 %exitcond7.not.i.2, label %_ZNK3jxl11ImageBundle8HasAlphaEv.exit.thread, label %.lr.ph.us.i.2, !llvm.loop !183
 
 _ZNK3jxl11ImageBundle8HasAlphaEv.exit.thread:     ; preds = %bb.b, %._crit_edge.us.i.2, %_ZN3jxlL19LinearToSrgb8DirectEd.exit39.i.2, %.lr.ph3.i.2, %bb.a
   ret void
@@ -1454,8 +1454,8 @@ attributes #22 = { noreturn nounwind "no-builtin-fread" "no-builtin-fwrite" }
 !133 = distinct !{!133, !131}
 !134 = distinct !{!134, !131}
 !135 = distinct !{!135, !113, !160, !161}
-!136 = distinct !{!136, !113, !160}
-!137 = distinct !{!137, !113}
+!136 = distinct !{!136, !113}
+!137 = distinct !{!137, !113, !160}
 !138 = distinct !{null, null, null}
 !139 = !{!121}
 !140 = !{!"_ZTSN3jxl10SizeHeaderE", !18, i64 0, !21, i64 8, !8, i64 12, !8, i64 16, !8, i64 20, !8, i64 24, !8, i64 28}

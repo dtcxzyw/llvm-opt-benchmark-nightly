@@ -204,7 +204,7 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !alias.scope !7806 ; 2 uses
   %i.l = load ptr, ptr %i.d, align 8, !alias.scope !7806 ; 2 uses
-  br i1 %i.f, label %.split.us.preheader.i.i, label %.split.i.i
+  br i1 %i.f, label %.split.us.preheader.i.i, label %.loopexit
 
 .split.us.preheader.i.i:                          ; preds = %bb.a
   %.promoted16.i.i = load ptr, ptr %i.i, align 8, !alias.scope !7806
@@ -279,10 +279,6 @@ _RNvXs9_NtNtNtCscI6d9CVNmLh_4core4iter8adapters4fuseINtB5_4FuseINtNtB7_7flatten7
   %i.x = load i64, ptr %.sroa.0.0.i.us.i.i, align 8, !range !94, !alias.scope !7814, !noalias !7806, !noundef !77
   %.not.i.us.i.i = icmp eq i64 %i.x, -1
   br i1 %.not.i.us.i.i, label %.split.us.i.i, label %_RNvXs9_NtNtNtCscI6d9CVNmLh_4core4iter8adapters7flattenINtB5_7FlattenIBR_INtNtNtBb_5slice4iter4IterINtNtCs40k4W9msRzi_5alloc3vec3VecINtNtBb_6option6OptionNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals15data_structures10ColumnTypeEEEEENtNtNtB9_6traits8iterator8Iterator4nextB2x_.exit
-
-.split.i.i:                                       ; preds = %bb.a
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !7807)
-  br label %.loopexit
 
 _RNvXs9_NtNtNtCscI6d9CVNmLh_4core4iter8adapters7flattenINtB5_7FlattenIBR_INtNtNtBb_5slice4iter4IterINtNtCs40k4W9msRzi_5alloc3vec3VecINtNtBb_6option6OptionNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals15data_structures10ColumnTypeEEEEENtNtNtB9_6traits8iterator8Iterator4nextB2x_.exit: ; preds = %_RNvXs9_NtNtNtCscI6d9CVNmLh_4core4iter8adapters4fuseINtB5_4FuseINtNtB7_7flatten7FlattenINtNtNtBb_5slice4iter4IterINtNtCs40k4W9msRzi_5alloc3vec3VecINtNtBb_6option6OptionNtNtNtCs2bNgeUs5Jlc_6diesel22infer_schema_internals15data_structures10ColumnTypeEEEEEINtB5_8FuseImplBY_E4nextB2L_.exit.us.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -400,7 +396,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecRNtNtNtCs2bNgeUs5Jlc_6diesel22infer_s
   %i.bf = add nuw nsw i64 %storemerge, 1
   br label %.split.us.preheader.i.i.us.i.i
 
-.loopexit:                                        ; preds = %bb.d, %.sink.split.i8.i.i.i.us.i.i, %.split.i.i
+.loopexit:                                        ; preds = %bb.d, %.sink.split.i8.i.i.i.us.i.i, %bb.a
   store i64 0, ptr %0, align 8
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr inttoptr (i64 8 to ptr), ptr %i.bg, align 8

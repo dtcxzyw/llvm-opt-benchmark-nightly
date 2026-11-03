@@ -205,7 +205,7 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtCs9vBodVtS8mO_24datafusion_physic
   %i.j = load i64, ptr %1, align 8, !range !393, !alias.scope !30252, !noundef !313 ; 3 uses
   %i.k = xor i64 %i.j, -9223372036854775808
   %i.l = icmp slt i64 %i.j, 0
-  %i.m = select i1 %i.l, i64 %i.k, i64 2          ; 10 uses
+  %i.m = select i1 %i.l, i64 %i.k, i64 2          ; 11 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 8
   %.val.i.i = load ptr, ptr %i.n, align 8, !alias.scope !30251, !nonnull !313 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -214,28 +214,18 @@ _RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtCs9vBodVtS8mO_24datafusion_physic
   %i.p = shl nuw nsw i64 %.val1.i.fr.i, 4         ; 2 uses
   %i.q = icmp eq i64 %.val1.i.fr.i, 0
   %i.r = getelementptr inbounds nuw [16 x i8], ptr %.val.i.i, i64 %.val1.i.fr.i
-  br i1 %i.q, label %.lr.ph.split.us.i, label %.lr.ph.split.i
+  %switch.i = icmp ult i64 %i.m, 3
+  tail call void @llvm.assume(i1 %switch.i)
+  br i1 %i.q, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.preheader.new, label %.lr.ph.split.i
 
-.lr.ph.split.us.i:                                ; preds = %.lr.ph.i
-  switch i64 %i.m, label %.lr.ph.split.us.split.i [
-    i64 0, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader.a
+_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.preheader.new: ; preds = %.lr.ph.i
+  switch i64 %i.m, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader.a [
+    i64 0, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader
     i64 1, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i.preheader
-    i64 2, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.preheader
   ]
 
-_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.preheader: ; preds = %.lr.ph.split.us.i
-  %3 = add nsw i64 %2, -1                         ; 2 uses
-  %4 = add nsw i64 %2, -2
-  %xtraiter78 = and i64 %3, 3                     ; 3 uses
-  %5 = icmp ult i64 %4, 3
-  br i1 %5, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.epil.preheader, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.preheader.new
-
-_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.preheader.new: ; preds = %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.preheader
-  %unroll_iter83 = and i64 %3, -4
-  br label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i
-
-_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i.preheader: ; preds = %.lr.ph.split.us.i
-  %i.s = sub i64 %2, %i.m
+_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i.preheader: ; preds = %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.preheader.new
+  %i.s = sub nsw i64 %2, %i.m
   %xtraiter85 = and i64 %i.s, 3                   ; 2 uses
   %lcmp.mod86.not = icmp eq i64 %xtraiter85, 0
   br i1 %lcmp.mod86.not, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i.prol.loopexit, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i.prol
@@ -260,11 +250,22 @@ _RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12Distribut
   %.lcssa63.unr = phi ptr [ poison, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i.preheader ], [ %i.u, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i.prol ]
   %.sroa.0.033.us.us86.i.unr = phi ptr [ %.sroa.10.0.i, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i.preheader ], [ %i.u, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i.prol ]
   %.sroa.03.032.us.us87.i.unr = phi i64 [ %i.m, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i.preheader ], [ %i.t, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i.prol ]
-  %i.v = sub i64 %i.m, %2
+  %i.v = sub nsw i64 %i.m, %2
   %i.w = icmp ugt i64 %i.v, -4
   br i1 %i.w, label %._crit_edge.thread.i, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i
 
-_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader.a: ; preds = %.lr.ph.split.us.i
+_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader: ; preds = %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.preheader.new
+  %3 = add nsw i64 %2, -1                         ; 2 uses
+  %4 = add nsw i64 %2, -2
+  %xtraiter81 = and i64 %3, 3                     ; 3 uses
+  %5 = icmp ult i64 %4, 3
+  br i1 %5, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.epil.preheader, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader.new
+
+_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader.new: ; preds = %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader
+  %unroll_iter86 = and i64 %3, -4
+  br label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i
+
+_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader.a: ; preds = %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.preheader.new
   %i.x = add nsw i64 %2, -1                       ; 2 uses
   %i.y = add nsw i64 %2, -2
   %xtraiter88 = and i64 %i.x, 3                   ; 3 uses
@@ -273,11 +274,11 @@ _RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12Distribut
 
 _RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader.new.a: ; preds = %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader.a
   %unroll_iter93 = and i64 %i.x, -4
-  br label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i
+  br label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i
 
-_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i: ; preds = %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader.new.a
-  %.sroa.0.033.us.us.i = phi ptr [ %.sroa.10.0.i, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader.new.a ], [ %i.ad, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i ] ; 13 uses
-  %niter94.a = phi i64 [ 0, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader.new.a ], [ %niter94.next.3.a, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i ]
+_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i: ; preds = %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader.new
+  %.sroa.0.033.us.us.i = phi ptr [ %.sroa.10.0.i, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader.new ], [ %i.ad, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i ] ; 13 uses
+  %niter94.a = phi i64 [ 0, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader.new ], [ %niter94.next.3.a, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !30253)
   store i64 -9223372036854775808, ptr %.sroa.0.033.us.us.i, align 8, !noalias !30254
   %.sroa.6.0..sroa.0.0.sroa_idx.us.us.i = getelementptr inbounds nuw i8, ptr %.sroa.0.033.us.us.i, i64 8
@@ -304,8 +305,8 @@ _RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12Distribut
   store i64 0, ptr %.sroa.723.0..sroa.0.0.sroa_idx.us.us.i.3, align 8, !noalias !30254
   %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.0.033.us.us.i, i64 96 ; 3 uses
   %niter94.next.3.a = add i64 %niter94.a, 4       ; 2 uses
-  %niter94.ncmp.3.a = icmp eq i64 %niter94.next.3.a, %unroll_iter93
-  br i1 %niter94.ncmp.3.a, label %._crit_edge.thread.i.loopexit.unr-lcssa, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i
+  %niter94.ncmp.3.a = icmp eq i64 %niter94.next.3.a, %unroll_iter86
+  br i1 %niter94.ncmp.3.a, label %._crit_edge.thread.i.loopexit64.unr-lcssa, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i
 
 _RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i: ; preds = %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i.prol.loopexit, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i
   %.sroa.0.033.us.us86.i = phi ptr [ %i.ai, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i ], [ %.sroa.0.033.us.us86.i.unr, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i.prol.loopexit ] ; 13 uses
@@ -339,9 +340,9 @@ _RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12Distribut
   %exitcond130.not.i.3 = icmp eq i64 %i.ah, %2
   br i1 %exitcond130.not.i.3, label %._crit_edge.thread.i, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i
 
-_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i: ; preds = %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.preheader.new
-  %.sroa.0.033.us.us98.i = phi ptr [ %.sroa.10.0.i, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.preheader.new ], [ %i.am, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i ] ; 13 uses
-  %niter84 = phi i64 [ 0, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.preheader.new ], [ %niter84.next.3, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i ]
+_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i: ; preds = %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader.new.a
+  %.sroa.0.033.us.us98.i = phi ptr [ %.sroa.10.0.i, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader.new.a ], [ %i.am, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i ] ; 13 uses
+  %niter84 = phi i64 [ 0, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader.new.a ], [ %niter84.next.3, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !30253)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !30255)
   store i64 0, ptr %.sroa.0.033.us.us98.i, align 8, !noalias !30254
@@ -369,21 +370,17 @@ _RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12Distribut
   store i64 0, ptr %.sroa.723.0..sroa.0.0.sroa_idx.us.us104.i.3, align 8, !noalias !30254
   %i.am = getelementptr inbounds nuw i8, ptr %.sroa.0.033.us.us98.i, i64 96 ; 3 uses
   %niter84.next.3 = add i64 %niter84, 4           ; 2 uses
-  %niter84.ncmp.3 = icmp eq i64 %niter84.next.3, %unroll_iter83
-  br i1 %niter84.ncmp.3, label %._crit_edge.thread.i.loopexit64.unr-lcssa, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i
-
-.lr.ph.split.us.split.i:                          ; preds = %.lr.ph.split.us.i
-  unreachable
+  %niter84.ncmp.3 = icmp eq i64 %niter84.next.3, %unroll_iter93
+  br i1 %niter84.ncmp.3, label %._crit_edge.thread.i.loopexit.unr-lcssa, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i
-  switch i64 %i.m, label %.lr.ph.split.split.i [
+  switch i64 %i.m, label %.lr.ph.split.split.us63.i [
     i64 0, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us39.i.preheader
     i64 1, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us53.i.preheader
-    i64 2, label %.lr.ph.split.split.us63.i
   ]
 
 _RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us53.i.preheader: ; preds = %.lr.ph.split.i
-  %i.an = sub i64 %2, %i.m
+  %i.an = sub nsw i64 %2, %i.m
   %xtraiter = and i64 %i.an, 7                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us53.i.prol.loopexit, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us53.i.prol
@@ -404,7 +401,7 @@ _RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12Distribut
   %.lcssa69.unr = phi ptr [ poison, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us53.i.preheader ], [ %i.ap, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us53.i.prol ]
   %.sroa.0.033.us50.i.unr = phi ptr [ %.sroa.10.0.i, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us53.i.preheader ], [ %i.ap, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us53.i.prol ]
   %.sroa.03.032.us51.i.unr = phi i64 [ %i.m, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us53.i.preheader ], [ %i.ao, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us53.i.prol ]
-  %i.aq = sub i64 %i.m, %2
+  %i.aq = sub nsw i64 %i.m, %2
   %i.ar = icmp ugt i64 %i.aq, -8
   br i1 %i.ar, label %._crit_edge.thread.i, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us53.i
 
@@ -467,24 +464,35 @@ _RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12Distribut
   %exitcond127.not.i.7 = icmp eq i64 %i.bk, %2
   br i1 %exitcond127.not.i.7, label %._crit_edge.thread.i, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us53.i
 
-.lr.ph.split.split.us63.i:                        ; preds = %.lr.ph.split.i, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.us.i
-  %.sroa.0.033.us64.i = phi ptr [ %i.bu, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.us.i ], [ %.sroa.10.0.i, %.lr.ph.split.i ] ; 4 uses
-  %.sroa.03.032.us65.i = phi i64 [ %i.bt, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.us.i ], [ 1, %.lr.ph.split.i ]
-  %storemerge31.us66.i = phi i64 [ %11, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.us.i ], [ 0, %.lr.ph.split.i ] ; 2 uses
+._crit_edge.i:                                    ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtCs9vBodVtS8mO_24datafusion_physical_expr12partitioning12DistributionE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i
+  %.not.i = icmp eq i64 %2, 0
+  br i1 %.not.i, label %bb.g, label %._crit_edge.thread.i
+
+.lr.ph.split.split.us63.i:                        ; preds = %.lr.ph.split.i, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.i
+  %.sroa.0.033.us64.i = phi ptr [ %9, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.i ], [ %.sroa.10.0.i, %.lr.ph.split.i ] ; 4 uses
+  %.sroa.03.032.us65.i = phi i64 [ %8, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.i ], [ 1, %.lr.ph.split.i ]
+  %storemerge31.us66.i = phi i64 [ %10, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.i ], [ 0, %.lr.ph.split.i ] ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !30253)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !30255)
   tail call void @_RNvCs9hJ03s5DiqP_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #71, !noalias !30256
   %i.bm = tail call noundef align 8 ptr @_RNvCs9hJ03s5DiqP_7___rustc12___rust_alloc(i64 noundef %i.p, i64 noundef range(i64 1, 17) 8) #71, !noalias !30256 ; 3 uses
   %i.bn = icmp eq ptr %i.bm, null
-  br i1 %i.bn, label %.split74.us.i, label %.lr.ph.i.i.i.us.i
+  br i1 %i.bn, label %6, label %.lr.ph.i.i.i.us.i
 
-.lr.ph.i.i.i.us.i:                                ; preds = %.lr.ph.split.split.us63.i, %bb.f
-  %.sroa.014.024.i.i.i.us.i = phi ptr [ %7, %bb.f ], [ %.val.i.i, %.lr.ph.split.split.us63.i ] ; 4 uses
-  %.sroa.7.023.i.i.i.us.i = phi i64 [ %6, %bb.f ], [ 0, %.lr.ph.split.split.us63.i ] ; 2 uses
-  %.sroa.10.022.i.i.i.us.i = phi i64 [ %i.bo, %bb.f ], [ %.val1.i.fr.i, %.lr.ph.split.split.us63.i ]
+6:                                                ; preds = %.lr.ph.split.split.us63.i
+  invoke void @_RNvNtCs40k4W9msRzi_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.p) #72
+          to label %.noexc14.i unwind label %bb.j, !noalias !30254
+
+.noexc14.i:                                       ; preds = %6
+  unreachable
+
+.lr.ph.i.i.i.us.i:                                ; preds = %.lr.ph.split.split.us63.i, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.us.i
+  %.sroa.014.024.i.i.i.us.i = phi ptr [ %.sroa.6.0..sroa.0.0.sroa_idx.us71.i, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.us.i ], [ %.val.i.i, %.lr.ph.split.split.us63.i ] ; 4 uses
+  %.sroa.7.023.i.i.i.us.i = phi i64 [ %i.bt, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.us.i ], [ 0, %.lr.ph.split.split.us63.i ] ; 2 uses
+  %.sroa.10.022.i.i.i.us.i = phi i64 [ %i.bo, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.us.i ], [ %.val1.i.fr.i, %.lr.ph.split.split.us63.i ]
   %i.bo = add nsw i64 %.sroa.10.022.i.i.i.us.i, -1 ; 2 uses
   %i.bp = icmp eq ptr %.sroa.014.024.i.i.i.us.i, %i.r
-  br i1 %i.bp, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.us.i, label %bb.e
+  br i1 %i.bp, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.i, label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph.i.i.i.us.i
   %.val.i.i.i.us.i = load ptr, ptr %.sroa.014.024.i.i.i.us.i, align 8, !alias.scope !30255, !noalias !30257, !nonnull !313, !noundef !313 ; 2 uses
@@ -492,48 +500,22 @@ bb.e:                                             ; preds = %.lr.ph.i.i.i.us.i
   %.val11.i.i.i.us.i = load ptr, ptr %i.bq, align 8, !alias.scope !30255, !noalias !30257 ; 2 uses
   %i.br = atomicrmw add ptr %.val.i.i.i.us.i, i64 1 monotonic, align 8, !noalias !30258
   %i.bs = icmp slt i64 %i.br, 0
-  br i1 %i.bs, label %.split78.us.i, label %bb.f
+  br i1 %i.bs, label %bb.f, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.us.i
 
 bb.f:                                             ; preds = %bb.e
-  %6 = add nuw nsw i64 %.sroa.7.023.i.i.i.us.i, 1
-  %7 = getelementptr inbounds nuw i8, ptr %.sroa.014.024.i.i.i.us.i, i64 16
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11.i.i.i.us.i) ]
-  %8 = getelementptr inbounds nuw [16 x i8], ptr %i.bm, i64 %.sroa.7.023.i.i.i.us.i ; 2 uses
-  store ptr %.val.i.i.i.us.i, ptr %8, align 8, !noalias !30258
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 8
-  store ptr %.val11.i.i.i.us.i, ptr %9, align 8, !noalias !30258
-  %10 = icmp eq i64 %i.bo, 0
-  br i1 %10, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.us.i, label %.lr.ph.i.i.i.us.i
-
-_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.us.i: ; preds = %bb.f, %.lr.ph.i.i.i.us.i
-  %i.bt = add nuw nsw i64 %.sroa.03.032.us65.i, 1 ; 2 uses
-  store i64 %.val1.i.fr.i, ptr %.sroa.0.033.us64.i, align 8, !noalias !30254
-  %.sroa.6.0..sroa.0.0.sroa_idx.us71.i = getelementptr inbounds nuw i8, ptr %.sroa.0.033.us64.i, i64 8
-  store ptr %i.bm, ptr %.sroa.6.0..sroa.0.0.sroa_idx.us71.i, align 8, !noalias !30254
-  %.sroa.723.0..sroa.0.0.sroa_idx.us72.i = getelementptr inbounds nuw i8, ptr %.sroa.0.033.us64.i, i64 16
-  store i64 %.val1.i.fr.i, ptr %.sroa.723.0..sroa.0.0.sroa_idx.us72.i, align 8, !noalias !30254
-  %i.bu = getelementptr inbounds nuw i8, ptr %.sroa.0.033.us64.i, i64 24 ; 2 uses
-  %11 = add nuw nsw i64 %storemerge31.us66.i, 1
-  %exitcond.not.i = icmp eq i64 %i.bt, %2
-  br i1 %exitcond.not.i, label %._crit_edge.thread.i, label %.lr.ph.split.split.us63.i
-
-._crit_edge.i:                                    ; preds = %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VecNtNtCs9vBodVtS8mO_24datafusion_physical_expr12partitioning12DistributionE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i
-  %.not.i = icmp eq i64 %2, 0
-  br i1 %.not.i, label %bb.g, label %._crit_edge.thread.i
-
-.lr.ph.split.split.i:                             ; preds = %.lr.ph.split.i
-  unreachable
-
-.split74.us.i:                                    ; preds = %.lr.ph.split.split.us63.i
-  invoke void @_RNvNtCs40k4W9msRzi_5alloc7raw_vec12handle_error(i64 noundef 8, i64 %i.p) #72
-          to label %.noexc14.i unwind label %bb.j, !noalias !30254
-
-.noexc14.i:                                       ; preds = %.split74.us.i
-  unreachable
-
-.split78.us.i:                                    ; preds = %bb.e
   tail call void @llvm.trap()
   unreachable
+
+_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.us.i: ; preds = %bb.e
+  %i.bt = add nuw nsw i64 %.sroa.7.023.i.i.i.us.i, 1
+  %.sroa.6.0..sroa.0.0.sroa_idx.us71.i = getelementptr inbounds nuw i8, ptr %.sroa.014.024.i.i.i.us.i, i64 16
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val11.i.i.i.us.i) ]
+  %7 = getelementptr inbounds nuw [16 x i8], ptr %i.bm, i64 %.sroa.7.023.i.i.i.us.i ; 2 uses
+  store ptr %.val.i.i.i.us.i, ptr %7, align 8, !noalias !30258
+  %i.bu = getelementptr inbounds nuw i8, ptr %7, i64 8
+  store ptr %.val11.i.i.i.us.i, ptr %i.bu, align 8, !noalias !30258
+  %exitcond.not.i = icmp eq i64 %i.bo, 0
+  br i1 %exitcond.not.i, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.i, label %.lr.ph.i.i.i.us.i
 
 bb.g:                                             ; preds = %._crit_edge.i
   store i64 0, ptr %i.h, align 8, !alias.scope !30250
@@ -545,12 +527,12 @@ bb.h:                                             ; preds = %bb.g
   invoke void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecINtNtBG_4sync3ArcDNtNtCsj4DjkV52PPz_31datafusion_physical_expr_common13physical_expr12PhysicalExprEL_EEECsc85D0lJ81Z_16lance_datafusion(ptr noalias noundef nonnull readonly align 8 dereferenceable(24) %1)
           to label %_RNvMs3_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecNtNtCs9vBodVtS8mO_24datafusion_physical_expr12partitioning12DistributionE11extend_withCsc85D0lJ81Z_16lance_datafusion.exit unwind label %bb.l
 
-._crit_edge.thread.i.loopexit.unr-lcssa:          ; preds = %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i
+._crit_edge.thread.i.loopexit.unr-lcssa:          ; preds = %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i
   %lcmp.mod90.not = icmp eq i64 %xtraiter88, 0
   br i1 %lcmp.mod90.not, label %._crit_edge.thread.i, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.epil.preheader.a
 
 _RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.epil.preheader.a: ; preds = %._crit_edge.thread.i.loopexit.unr-lcssa, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader.a
-  %.sroa.0.033.us.us.i.epil.init.a = phi ptr [ %.sroa.10.0.i, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader.a ], [ %i.ad, %._crit_edge.thread.i.loopexit.unr-lcssa ]
+  %.sroa.0.033.us.us.i.epil.init.a = phi ptr [ %.sroa.10.0.i, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader.a ], [ %i.am, %._crit_edge.thread.i.loopexit.unr-lcssa ]
   %lcmp.mod92 = icmp ne i64 %xtraiter88, 0
   tail call void @llvm.assume(i1 %lcmp.mod92)
   br label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.epil.a
@@ -559,7 +541,8 @@ _RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12Distribut
   %.sroa.0.033.us.us.i.epil.a = phi ptr [ %i.bw, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.epil.a ], [ %.sroa.0.033.us.us.i.epil.init.a, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.epil.preheader.a ] ; 4 uses
   %epil.iter89 = phi i64 [ %epil.iter89.next, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.epil.a ], [ 0, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.epil.preheader.a ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !30253)
-  store i64 -9223372036854775808, ptr %.sroa.0.033.us.us.i.epil.a, align 8, !noalias !30254
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !30255)
+  store i64 0, ptr %.sroa.0.033.us.us.i.epil.a, align 8, !noalias !30254
   %.sroa.6.0..sroa.0.0.sroa_idx.us.us.i.epil.a = getelementptr inbounds nuw i8, ptr %.sroa.0.033.us.us.i.epil.a, i64 8
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.6.0..sroa.0.0.sroa_idx.us.us.i.epil.a, align 8, !noalias !30254
   %.sroa.723.0..sroa.0.0.sroa_idx.us.us.i.epil.a = getelementptr inbounds nuw i8, ptr %.sroa.0.033.us.us.i.epil.a, i64 16
@@ -569,13 +552,13 @@ _RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12Distribut
   %epil.iter89.cmp.not = icmp eq i64 %epil.iter89.next, %xtraiter88
   br i1 %epil.iter89.cmp.not, label %._crit_edge.thread.i, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.epil.a, !llvm.loop !30244
 
-._crit_edge.thread.i.loopexit64.unr-lcssa:        ; preds = %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i
-  %lcmp.mod80.not = icmp eq i64 %xtraiter78, 0
+._crit_edge.thread.i.loopexit64.unr-lcssa:        ; preds = %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i
+  %lcmp.mod80.not = icmp eq i64 %xtraiter81, 0
   br i1 %lcmp.mod80.not, label %._crit_edge.thread.i, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.epil.preheader
 
-_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.epil.preheader: ; preds = %._crit_edge.thread.i.loopexit64.unr-lcssa, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.preheader
-  %.sroa.0.033.us.us98.i.epil.init = phi ptr [ %.sroa.10.0.i, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.preheader ], [ %i.am, %._crit_edge.thread.i.loopexit64.unr-lcssa ]
-  %lcmp.mod82 = icmp ne i64 %xtraiter78, 0
+_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.epil.preheader: ; preds = %._crit_edge.thread.i.loopexit64.unr-lcssa, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader
+  %.sroa.0.033.us.us98.i.epil.init = phi ptr [ %.sroa.10.0.i, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.preheader ], [ %i.ad, %._crit_edge.thread.i.loopexit64.unr-lcssa ]
+  %lcmp.mod82 = icmp ne i64 %xtraiter81, 0
   tail call void @llvm.assume(i1 %lcmp.mod82)
   br label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.epil
 
@@ -583,15 +566,14 @@ _RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12Distribut
   %.sroa.0.033.us.us98.i.epil = phi ptr [ %i.bx, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.epil ], [ %.sroa.0.033.us.us98.i.epil.init, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.epil.preheader ] ; 4 uses
   %epil.iter79 = phi i64 [ %epil.iter79.next, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.epil ], [ 0, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.epil.preheader ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !30253)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !30255)
-  store i64 0, ptr %.sroa.0.033.us.us98.i.epil, align 8, !noalias !30254
+  store i64 -9223372036854775808, ptr %.sroa.0.033.us.us98.i.epil, align 8, !noalias !30254
   %.sroa.6.0..sroa.0.0.sroa_idx.us.us103.i.epil = getelementptr inbounds nuw i8, ptr %.sroa.0.033.us.us98.i.epil, i64 8
   store ptr inttoptr (i64 8 to ptr), ptr %.sroa.6.0..sroa.0.0.sroa_idx.us.us103.i.epil, align 8, !noalias !30254
   %.sroa.723.0..sroa.0.0.sroa_idx.us.us104.i.epil = getelementptr inbounds nuw i8, ptr %.sroa.0.033.us.us98.i.epil, i64 16
   store i64 0, ptr %.sroa.723.0..sroa.0.0.sroa_idx.us.us104.i.epil, align 8, !noalias !30254
   %i.bx = getelementptr inbounds nuw i8, ptr %.sroa.0.033.us.us98.i.epil, i64 24 ; 2 uses
   %epil.iter79.next = add i64 %epil.iter79, 1     ; 2 uses
-  %epil.iter79.cmp.not = icmp eq i64 %epil.iter79.next, %xtraiter78
+  %epil.iter79.cmp.not = icmp eq i64 %epil.iter79.next, %xtraiter81
   br i1 %epil.iter79.cmp.not, label %._crit_edge.thread.i, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.epil, !llvm.loop !30245
 
 ._crit_edge.thread.i.loopexit66.unr-lcssa:        ; preds = %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us39.i
@@ -614,11 +596,23 @@ _RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12Distribut
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter74
   br i1 %epil.iter.cmp.not, label %._crit_edge.thread.i, label %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us39.i.epil, !llvm.loop !30246
 
-._crit_edge.thread.i:                             ; preds = %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.us.i, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us53.i.prol.loopexit, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us53.i, %._crit_edge.thread.i.loopexit66.unr-lcssa, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us39.i.epil, %._crit_edge.thread.i.loopexit64.unr-lcssa, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.epil, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i.prol.loopexit, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i, %._crit_edge.thread.i.loopexit.unr-lcssa, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.epil.a, %._crit_edge.i
-  %.sroa.0.0.lcssa140.i = phi ptr [ %.sroa.10.0.i, %._crit_edge.i ], [ %i.bl, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us53.i ], [ %i.bx, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.epil ], [ %i.ai, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i ], [ %i.bw, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.epil.a ], [ %i.by, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us39.i.epil ], [ %i.ad, %._crit_edge.thread.i.loopexit.unr-lcssa ], [ %.lcssa63.unr, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i.prol.loopexit ], [ %i.am, %._crit_edge.thread.i.loopexit64.unr-lcssa ], [ %i.bc, %._crit_edge.thread.i.loopexit66.unr-lcssa ], [ %.lcssa69.unr, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us53.i.prol.loopexit ], [ %i.bu, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.us.i ]
+._crit_edge.thread.i:                             ; preds = %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us53.i.prol.loopexit, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us53.i, %._crit_edge.thread.i.loopexit66.unr-lcssa, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us39.i.epil, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.i, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i.prol.loopexit, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i, %._crit_edge.thread.i.loopexit64.unr-lcssa, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.epil, %._crit_edge.thread.i.loopexit.unr-lcssa, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.epil.a, %._crit_edge.i
+  %.sroa.0.0.lcssa140.i = phi ptr [ %.sroa.10.0.i, %._crit_edge.i ], [ %i.bx, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us101.i.epil ], [ %i.ai, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i ], [ %i.by, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us39.i.epil ], [ %i.bw, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us.i.epil.a ], [ %9, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.i ], [ %i.am, %._crit_edge.thread.i.loopexit.unr-lcssa ], [ %i.ad, %._crit_edge.thread.i.loopexit64.unr-lcssa ], [ %.lcssa63.unr, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us.us89.i.prol.loopexit ], [ %i.bc, %._crit_edge.thread.i.loopexit66.unr-lcssa ], [ %.lcssa69.unr, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us53.i.prol.loopexit ], [ %i.bl, %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.us53.i ]
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.0.lcssa140.i, ptr noundef nonnull readonly align 8 dereferenceable(24) %1, i64 24, i1 false), !noalias !30250
   store i64 %2, ptr %i.h, align 8, !alias.scope !30250
   br label %_RNvMs3_NtCs40k4W9msRzi_5alloc3vecINtB5_3VecNtNtCs9vBodVtS8mO_24datafusion_physical_expr12partitioning12DistributionE11extend_withCsc85D0lJ81Z_16lance_datafusion.exit
+
+_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.i: ; preds = %_RNvXse_NtCs9vBodVtS8mO_24datafusion_physical_expr12partitioningNtB5_12DistributionNtNtCscI6d9CVNmLh_4core5clone5Clone5clone.exit.loopexit.us.i, %.lr.ph.i.i.i.us.i
+  %8 = add nuw nsw i64 %.sroa.03.032.us65.i, 1    ; 2 uses
+  store i64 %.val1.i.fr.i, ptr %.sroa.0.033.us64.i, align 8, !noalias !30254
+  %.sroa.6.0..sroa.0.0.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.033.us64.i, i64 8
+  store ptr %i.bm, ptr %.sroa.6.0..sroa.0.0.sroa_idx.i, align 8, !noalias !30254
+  %.sroa.723.0..sroa.0.0.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.033.us64.i, i64 16
+  store i64 %.val1.i.fr.i, ptr %.sroa.723.0..sroa.0.0.sroa_idx.i, align 8, !noalias !30254
+  %9 = getelementptr inbounds nuw i8, ptr %.sroa.0.033.us64.i, i64 24 ; 2 uses
+  %10 = add nuw nsw i64 %storemerge31.us66.i, 1
+  %exitcond97.not.i = icmp eq i64 %8, %2
+  br i1 %exitcond97.not.i, label %._crit_edge.thread.i, label %.lr.ph.split.split.us63.i
 
 bb.i:                                             ; preds = %bb.k
   %i.bz = landingpad { ptr, i32 }
@@ -626,7 +620,7 @@ bb.i:                                             ; preds = %bb.k
   tail call void @_RNvNtCscI6d9CVNmLh_4core9panicking16panic_in_cleanup() #70, !noalias !30254
   unreachable
 
-bb.j:                                             ; preds = %.split74.us.i
+bb.j:                                             ; preds = %6
   %i.ca = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
   store i64 %storemerge31.us66.i, ptr %i.h, align 8, !alias.scope !30250
@@ -1029,7 +1023,6 @@ bb.l:                                             ; preds = %.sink.split.i.i.us.
   br i1 %i.cw, label %_RNvYNtNtNtCscI6d9CVNmLh_4core3str7pattern11StrSearcherNtB4_15ReverseSearcher16next_reject_backCsc85D0lJ81Z_16lance_datafusion.exit.sink.split.i, label %_RNvMs_NtCs40k4W9msRzi_5alloc3vecINtB4_3VechE7reserveCsc85D0lJ81Z_16lance_datafusion.exit.i.thread
 
 .split133.us.i.i:                                 ; preds = %.lr.ph.split.split.i.preheader.split.i, %.lr.ph.split.split.i.preheader.split.us.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !88691)
   tail call void @_RNvNtCscI6d9CVNmLh_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.m, i64 noundef %i.o, i64 noundef 0, i64 noundef %i.k, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5830) #72, !noalias !88694
   unreachable
 

@@ -200,7 +200,7 @@ bb.a:
   store ptr %1, ptr %i.b, align 8
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.bw, %bb.bs, %bb.bn, %bb.bk, %bb.bi, %bb.bg, %bb.bc, %bb.av, %bb.am, %bb.ai, %bb.ae, %bb.aa, %bb.w, %bb.u, %bb.p, %bb.k, %bb.f, %bb.d, %bb.a
+bb.b:                                             ; preds = %bb.d, %bb.a
   %i.n = load ptr, ptr %i.a, align 8
   %2 = getelementptr inbounds nuw %struct.Token, ptr %i.n, i32 0, i32 0
   %i.o = load i32, ptr %2, align 16
@@ -210,9 +210,12 @@ bb.b:                                             ; preds = %bb.bw, %bb.bs, %bb.
 bb.c:                                             ; preds = %bb.b
   %i.q = load ptr, ptr %i.a, align 8
   %i.r = call zeroext i1 @expand_macro(ptr noundef %i.a, ptr noundef %i.q)
-  br i1 %i.r, label %bb.d, label %bb.e
+  br i1 %i.r, label %3, label %bb.e
 
-bb.d:                                             ; preds = %bb.c
+3:                                                ; preds = %bb.c
+  br label %bb.d
+
+bb.d:                                             ; preds = %3, %bb.f, %bb.k, %bb.p, %bb.u, %bb.w, %bb.aa, %bb.ae, %bb.ai, %bb.am, %bb.av, %bb.bc, %bb.bg, %bb.bi, %bb.bk, %bb.bn, %bb.bs, %bb.bw
   br label %bb.b, !llvm.loop !13
 
 bb.e:                                             ; preds = %bb.c
@@ -222,38 +225,38 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.e
   %i.u = load ptr, ptr %i.a, align 8
-  %3 = getelementptr inbounds nuw %struct.Token, ptr %i.u, i32 0, i32 8
-  %i.v = load ptr, ptr %3, align 16
-  %4 = getelementptr inbounds nuw %struct.File, ptr %i.v, i32 0, i32 4
-  %i.w = load i32, ptr %4, align 8
+  %4 = getelementptr inbounds nuw %struct.Token, ptr %i.u, i32 0, i32 8
+  %i.v = load ptr, ptr %4, align 16
+  %5 = getelementptr inbounds nuw %struct.File, ptr %i.v, i32 0, i32 4
+  %i.w = load i32, ptr %5, align 8
   %i.x = load ptr, ptr %i.a, align 8
-  %5 = getelementptr inbounds nuw %struct.Token, ptr %i.x, i32 0, i32 11
-  store i32 %i.w, ptr %5, align 4
+  %6 = getelementptr inbounds nuw %struct.Token, ptr %i.x, i32 0, i32 11
+  store i32 %i.w, ptr %6, align 4
   %i.y = load ptr, ptr %i.a, align 8
-  %6 = getelementptr inbounds nuw %struct.Token, ptr %i.y, i32 0, i32 8
-  %i.z = load ptr, ptr %6, align 16
-  %7 = getelementptr inbounds nuw %struct.File, ptr %i.z, i32 0, i32 3
-  %i.aa = load ptr, ptr %7, align 8
+  %7 = getelementptr inbounds nuw %struct.Token, ptr %i.y, i32 0, i32 8
+  %i.z = load ptr, ptr %7, align 16
+  %8 = getelementptr inbounds nuw %struct.File, ptr %i.z, i32 0, i32 3
+  %i.aa = load ptr, ptr %8, align 8
   %i.ab = load ptr, ptr %i.a, align 8
-  %8 = getelementptr inbounds nuw %struct.Token, ptr %i.ab, i32 0, i32 9
-  store ptr %i.aa, ptr %8, align 8
+  %9 = getelementptr inbounds nuw %struct.Token, ptr %i.ab, i32 0, i32 9
+  store ptr %i.aa, ptr %9, align 8
   %i.ac = load ptr, ptr %i.a, align 8             ; 2 uses
   %i.ad = load ptr, ptr %i.b, align 8
-  %9 = getelementptr inbounds nuw %struct.Token, ptr %i.ad, i32 0, i32 1
-  store ptr %i.ac, ptr %9, align 8
+  %10 = getelementptr inbounds nuw %struct.Token, ptr %i.ad, i32 0, i32 1
+  store ptr %i.ac, ptr %10, align 8
   store ptr %i.ac, ptr %i.b, align 8
   %i.ae = load ptr, ptr %i.a, align 8
-  %10 = getelementptr inbounds nuw %struct.Token, ptr %i.ae, i32 0, i32 1
-  %i.af = load ptr, ptr %10, align 8
+  %11 = getelementptr inbounds nuw %struct.Token, ptr %i.ae, i32 0, i32 1
+  %i.af = load ptr, ptr %11, align 8
   store ptr %i.af, ptr %i.a, align 8
-  br label %bb.b, !llvm.loop !13
+  br label %bb.d
 
 bb.g:                                             ; preds = %bb.e
   %i.ag = load ptr, ptr %i.a, align 8
   store ptr %i.ag, ptr %i.c, align 8
   %i.ah = load ptr, ptr %i.a, align 8
-  %11 = getelementptr inbounds nuw %struct.Token, ptr %i.ah, i32 0, i32 1
-  %i.ai = load ptr, ptr %11, align 8
+  %12 = getelementptr inbounds nuw %struct.Token, ptr %i.ah, i32 0, i32 1
+  %i.ai = load ptr, ptr %12, align 8
   store ptr %i.ai, ptr %i.a, align 8
   %i.aj = load ptr, ptr %i.a, align 8
   %i.ak = call zeroext i1 @equal(ptr noundef %i.aj, ptr noundef @.str.67)
@@ -261,8 +264,8 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g
   %i.al = load ptr, ptr %i.a, align 8
-  %12 = getelementptr inbounds nuw %struct.Token, ptr %i.al, i32 0, i32 1
-  %i.am = load ptr, ptr %12, align 8
+  %13 = getelementptr inbounds nuw %struct.Token, ptr %i.al, i32 0, i32 1
+  %i.am = load ptr, ptr %13, align 8
   %i.an = call ptr @read_include_filename(ptr noundef %i.a, ptr noundef %i.am, ptr noundef %i.d)
   store ptr %i.an, ptr %i.e, align 8
   %i.ao = load ptr, ptr %i.e, align 8
@@ -279,10 +282,10 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.av = load ptr, ptr %i.c, align 8
-  %13 = getelementptr inbounds nuw %struct.Token, ptr %i.av, i32 0, i32 8
-  %i.aw = load ptr, ptr %13, align 16
-  %14 = getelementptr inbounds nuw %struct.File, ptr %i.aw, i32 0, i32 0
-  %i.ax = load ptr, ptr %14, align 8
+  %14 = getelementptr inbounds nuw %struct.Token, ptr %i.av, i32 0, i32 8
+  %i.aw = load ptr, ptr %14, align 16
+  %15 = getelementptr inbounds nuw %struct.File, ptr %i.aw, i32 0, i32 0
+  %i.ax = load ptr, ptr %15, align 8
   %i.ay = call noalias ptr @strdup(ptr noundef %i.ax) #13
   %i.az = call ptr @dirname(ptr noundef %i.ay) #13
   %i.ba = load ptr, ptr %i.e, align 8
@@ -296,13 +299,13 @@ bb.k:                                             ; preds = %bb.j
   %i.be = load ptr, ptr %i.a, align 8
   %i.bf = load ptr, ptr %i.f, align 8
   %i.bg = load ptr, ptr %i.c, align 8
-  %15 = getelementptr inbounds nuw %struct.Token, ptr %i.bg, i32 0, i32 1
-  %i.bh = load ptr, ptr %15, align 8
-  %16 = getelementptr inbounds nuw %struct.Token, ptr %i.bh, i32 0, i32 1
-  %i.bi = load ptr, ptr %16, align 8
+  %16 = getelementptr inbounds nuw %struct.Token, ptr %i.bg, i32 0, i32 1
+  %i.bh = load ptr, ptr %16, align 8
+  %17 = getelementptr inbounds nuw %struct.Token, ptr %i.bh, i32 0, i32 1
+  %i.bi = load ptr, ptr %17, align 8
   %i.bj = call ptr @include_file(ptr noundef %i.be, ptr noundef %i.bf, ptr noundef %i.bi)
   store ptr %i.bj, ptr %i.a, align 8
-  br label %bb.b, !llvm.loop !13
+  br label %bb.d
 
 bb.l:                                             ; preds = %bb.j
   br label %bb.m
@@ -327,13 +330,13 @@ bb.o:                                             ; preds = %bb.m
 bb.p:                                             ; preds = %bb.o, %bb.n
   %i.br = phi ptr [ %i.bp, %bb.n ], [ %i.bq, %bb.o ]
   %i.bs = load ptr, ptr %i.c, align 8
-  %17 = getelementptr inbounds nuw %struct.Token, ptr %i.bs, i32 0, i32 1
-  %i.bt = load ptr, ptr %17, align 8
-  %18 = getelementptr inbounds nuw %struct.Token, ptr %i.bt, i32 0, i32 1
-  %i.bu = load ptr, ptr %18, align 8
+  %18 = getelementptr inbounds nuw %struct.Token, ptr %i.bs, i32 0, i32 1
+  %i.bt = load ptr, ptr %18, align 8
+  %19 = getelementptr inbounds nuw %struct.Token, ptr %i.bt, i32 0, i32 1
+  %i.bu = load ptr, ptr %19, align 8
   %i.bv = call ptr @include_file(ptr noundef %i.bm, ptr noundef %i.br, ptr noundef %i.bu)
   store ptr %i.bv, ptr %i.a, align 8
-  br label %bb.b, !llvm.loop !13
+  br label %bb.d
 
 bb.q:                                             ; preds = %bb.g
   %i.bw = load ptr, ptr %i.a, align 8
@@ -342,8 +345,8 @@ bb.q:                                             ; preds = %bb.g
 
 bb.r:                                             ; preds = %bb.q
   %i.by = load ptr, ptr %i.a, align 8
-  %19 = getelementptr inbounds nuw %struct.Token, ptr %i.by, i32 0, i32 1
-  %i.bz = load ptr, ptr %19, align 8
+  %20 = getelementptr inbounds nuw %struct.Token, ptr %i.by, i32 0, i32 1
+  %i.bz = load ptr, ptr %20, align 8
   %i.ca = call ptr @read_include_filename(ptr noundef %i.a, ptr noundef %i.bz, ptr noundef %i.h)
   store ptr %i.ca, ptr %i.i, align 8
   %i.cb = load ptr, ptr %i.i, align 8
@@ -365,13 +368,13 @@ bb.t:                                             ; preds = %bb.r
 bb.u:                                             ; preds = %bb.t, %bb.s
   %i.ci = phi ptr [ %i.cg, %bb.s ], [ %i.ch, %bb.t ]
   %i.cj = load ptr, ptr %i.c, align 8
-  %20 = getelementptr inbounds nuw %struct.Token, ptr %i.cj, i32 0, i32 1
-  %i.ck = load ptr, ptr %20, align 8
-  %21 = getelementptr inbounds nuw %struct.Token, ptr %i.ck, i32 0, i32 1
-  %i.cl = load ptr, ptr %21, align 8
+  %21 = getelementptr inbounds nuw %struct.Token, ptr %i.cj, i32 0, i32 1
+  %i.ck = load ptr, ptr %21, align 8
+  %22 = getelementptr inbounds nuw %struct.Token, ptr %i.ck, i32 0, i32 1
+  %i.cl = load ptr, ptr %22, align 8
   %i.cm = call ptr @include_file(ptr noundef %i.cd, ptr noundef %i.ci, ptr noundef %i.cl)
   store ptr %i.cm, ptr %i.a, align 8
-  br label %bb.b, !llvm.loop !13
+  br label %bb.d
 
 bb.v:                                             ; preds = %bb.q
   %i.cn = load ptr, ptr %i.a, align 8
@@ -380,10 +383,10 @@ bb.v:                                             ; preds = %bb.q
 
 bb.w:                                             ; preds = %bb.v
   %i.cp = load ptr, ptr %i.a, align 8
-  %22 = getelementptr inbounds nuw %struct.Token, ptr %i.cp, i32 0, i32 1
-  %i.cq = load ptr, ptr %22, align 8
+  %23 = getelementptr inbounds nuw %struct.Token, ptr %i.cp, i32 0, i32 1
+  %i.cq = load ptr, ptr %23, align 8
   call void @read_macro_definition(ptr noundef %i.a, ptr noundef %i.cq)
-  br label %bb.b, !llvm.loop !13
+  br label %bb.d
 
 bb.x:                                             ; preds = %bb.v
   %i.cr = load ptr, ptr %i.a, align 8
@@ -392,12 +395,12 @@ bb.x:                                             ; preds = %bb.v
 
 bb.y:                                             ; preds = %bb.x
   %i.ct = load ptr, ptr %i.a, align 8
-  %23 = getelementptr inbounds nuw %struct.Token, ptr %i.ct, i32 0, i32 1
-  %i.cu = load ptr, ptr %23, align 8
+  %24 = getelementptr inbounds nuw %struct.Token, ptr %i.ct, i32 0, i32 1
+  %i.cu = load ptr, ptr %24, align 8
   store ptr %i.cu, ptr %i.a, align 8
   %i.cv = load ptr, ptr %i.a, align 8
-  %24 = getelementptr inbounds nuw %struct.Token, ptr %i.cv, i32 0, i32 0
-  %i.cw = load i32, ptr %24, align 16
+  %25 = getelementptr inbounds nuw %struct.Token, ptr %i.cv, i32 0, i32 0
+  %i.cw = load i32, ptr %25, align 16
   %i.cx = icmp ne i32 %i.cw, 0
   br i1 %i.cx, label %bb.z, label %bb.aa
 
@@ -408,20 +411,20 @@ bb.z:                                             ; preds = %bb.y
 
 bb.aa:                                            ; preds = %bb.y
   %i.cz = load ptr, ptr %i.a, align 8
-  %25 = getelementptr inbounds nuw %struct.Token, ptr %i.cz, i32 0, i32 4
-  %i.da = load ptr, ptr %25, align 16
+  %26 = getelementptr inbounds nuw %struct.Token, ptr %i.cz, i32 0, i32 4
+  %i.da = load ptr, ptr %26, align 16
   %i.db = load ptr, ptr %i.a, align 8
-  %26 = getelementptr inbounds nuw %struct.Token, ptr %i.db, i32 0, i32 5
-  %i.dc = load i32, ptr %26, align 8
+  %27 = getelementptr inbounds nuw %struct.Token, ptr %i.db, i32 0, i32 5
+  %i.dc = load i32, ptr %27, align 8
   %i.dd = sext i32 %i.dc to i64
   %i.de = call noalias ptr @strndup(ptr noundef %i.da, i64 noundef %i.dd) #13
   call void @undef_macro(ptr noundef %i.de)
   %i.df = load ptr, ptr %i.a, align 8
-  %27 = getelementptr inbounds nuw %struct.Token, ptr %i.df, i32 0, i32 1
-  %i.dg = load ptr, ptr %27, align 8
+  %28 = getelementptr inbounds nuw %struct.Token, ptr %i.df, i32 0, i32 1
+  %i.dg = load ptr, ptr %28, align 8
   %i.dh = call ptr @skip_line(ptr noundef %i.dg)
   store ptr %i.dh, ptr %i.a, align 8
-  br label %bb.b, !llvm.loop !13
+  br label %bb.d
 
 bb.ab:                                            ; preds = %bb.x
   %i.di = load ptr, ptr %i.a, align 8
@@ -447,7 +450,7 @@ bb.ad:                                            ; preds = %bb.ac
   br label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad, %bb.ac
-  br label %bb.b, !llvm.loop !13
+  br label %bb.d
 
 bb.af:                                            ; preds = %bb.ab
   %i.du = load ptr, ptr %i.a, align 8
@@ -456,8 +459,8 @@ bb.af:                                            ; preds = %bb.ab
 
 bb.ag:                                            ; preds = %bb.af
   %i.dw = load ptr, ptr %i.a, align 8
-  %28 = getelementptr inbounds nuw %struct.Token, ptr %i.dw, i32 0, i32 1
-  %i.dx = load ptr, ptr %28, align 8
+  %29 = getelementptr inbounds nuw %struct.Token, ptr %i.dw, i32 0, i32 1
+  %i.dx = load ptr, ptr %29, align 8
   %i.dy = call ptr @find_macro(ptr noundef %i.dx)
   %i.dz = icmp ne ptr %i.dy, null
   %i.ea = zext i1 %i.dz to i8
@@ -467,10 +470,10 @@ bb.ag:                                            ; preds = %bb.af
   %i.ed = icmp ne i8 %i.ec, 0
   %i.ee = call ptr @push_cond_incl(ptr noundef %i.eb, i1 noundef zeroext %i.ed) ; 0 uses
   %i.ef = load ptr, ptr %i.a, align 8
-  %29 = getelementptr inbounds nuw %struct.Token, ptr %i.ef, i32 0, i32 1
-  %i.eg = load ptr, ptr %29, align 8
-  %30 = getelementptr inbounds nuw %struct.Token, ptr %i.eg, i32 0, i32 1
-  %i.eh = load ptr, ptr %30, align 8
+  %30 = getelementptr inbounds nuw %struct.Token, ptr %i.ef, i32 0, i32 1
+  %i.eg = load ptr, ptr %30, align 8
+  %31 = getelementptr inbounds nuw %struct.Token, ptr %i.eg, i32 0, i32 1
+  %i.eh = load ptr, ptr %31, align 8
   %i.ei = call ptr @skip_line(ptr noundef %i.eh)
   store ptr %i.ei, ptr %i.a, align 8
   %i.ej = load i8, ptr %i.l, align 1
@@ -484,7 +487,7 @@ bb.ah:                                            ; preds = %bb.ag
   br label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag
-  br label %bb.b, !llvm.loop !13
+  br label %bb.d
 
 bb.aj:                                            ; preds = %bb.af
   %i.en = load ptr, ptr %i.a, align 8
@@ -493,8 +496,8 @@ bb.aj:                                            ; preds = %bb.af
 
 bb.ak:                                            ; preds = %bb.aj
   %i.ep = load ptr, ptr %i.a, align 8
-  %31 = getelementptr inbounds nuw %struct.Token, ptr %i.ep, i32 0, i32 1
-  %i.eq = load ptr, ptr %31, align 8
+  %32 = getelementptr inbounds nuw %struct.Token, ptr %i.ep, i32 0, i32 1
+  %i.eq = load ptr, ptr %32, align 8
   %i.er = call ptr @find_macro(ptr noundef %i.eq)
   %i.es = icmp ne ptr %i.er, null
   %i.et = zext i1 %i.es to i8
@@ -505,10 +508,10 @@ bb.ak:                                            ; preds = %bb.aj
   %i.ex = xor i1 %i.ew, true
   %i.ey = call ptr @push_cond_incl(ptr noundef %i.eu, i1 noundef zeroext %i.ex) ; 0 uses
   %i.ez = load ptr, ptr %i.a, align 8
-  %32 = getelementptr inbounds nuw %struct.Token, ptr %i.ez, i32 0, i32 1
-  %i.fa = load ptr, ptr %32, align 8
-  %33 = getelementptr inbounds nuw %struct.Token, ptr %i.fa, i32 0, i32 1
-  %i.fb = load ptr, ptr %33, align 8
+  %33 = getelementptr inbounds nuw %struct.Token, ptr %i.ez, i32 0, i32 1
+  %i.fa = load ptr, ptr %33, align 8
+  %34 = getelementptr inbounds nuw %struct.Token, ptr %i.fa, i32 0, i32 1
+  %i.fb = load ptr, ptr %34, align 8
   %i.fc = call ptr @skip_line(ptr noundef %i.fb)
   store ptr %i.fc, ptr %i.a, align 8
   %i.fd = load i8, ptr %i.m, align 1
@@ -522,7 +525,7 @@ bb.al:                                            ; preds = %bb.ak
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %bb.ak
-  br label %bb.b, !llvm.loop !13
+  br label %bb.d
 
 bb.an:                                            ; preds = %bb.aj
   %i.fh = load ptr, ptr %i.a, align 8
@@ -536,8 +539,8 @@ bb.ao:                                            ; preds = %bb.an
 
 bb.ap:                                            ; preds = %bb.ao
   %i.fl = load ptr, ptr @cond_incl, align 8
-  %34 = getelementptr inbounds nuw %struct.CondIncl, ptr %i.fl, i32 0, i32 1
-  %i.fm = load i32, ptr %34, align 8
+  %35 = getelementptr inbounds nuw %struct.CondIncl, ptr %i.fl, i32 0, i32 1
+  %i.fm = load i32, ptr %35, align 8
   %i.fn = icmp eq i32 %i.fm, 2
   br i1 %i.fn, label %bb.aq, label %bb.ar
 
@@ -548,11 +551,11 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao
 
 bb.ar:                                            ; preds = %bb.ap
   %i.fp = load ptr, ptr @cond_incl, align 8
-  %35 = getelementptr inbounds nuw %struct.CondIncl, ptr %i.fp, i32 0, i32 1
-  store i32 1, ptr %35, align 8
+  %36 = getelementptr inbounds nuw %struct.CondIncl, ptr %i.fp, i32 0, i32 1
+  store i32 1, ptr %36, align 8
   %i.fq = load ptr, ptr @cond_incl, align 8
-  %36 = getelementptr inbounds nuw %struct.CondIncl, ptr %i.fq, i32 0, i32 3
-  %i.fr = load i8, ptr %36, align 8
+  %37 = getelementptr inbounds nuw %struct.CondIncl, ptr %i.fq, i32 0, i32 3
+  %i.fr = load i8, ptr %37, align 8
   %i.fs = icmp ne i8 %i.fr, 0
   br i1 %i.fs, label %bb.au, label %bb.as
 
@@ -564,8 +567,8 @@ bb.as:                                            ; preds = %bb.ar
 
 bb.at:                                            ; preds = %bb.as
   %i.fw = load ptr, ptr @cond_incl, align 8
-  %37 = getelementptr inbounds nuw %struct.CondIncl, ptr %i.fw, i32 0, i32 3
-  store i8 1, ptr %37, align 8
+  %38 = getelementptr inbounds nuw %struct.CondIncl, ptr %i.fw, i32 0, i32 3
+  store i8 1, ptr %38, align 8
   br label %bb.av
 
 bb.au:                                            ; preds = %bb.as, %bb.ar
@@ -575,7 +578,7 @@ bb.au:                                            ; preds = %bb.as, %bb.ar
   br label %bb.av
 
 bb.av:                                            ; preds = %bb.au, %bb.at
-  br label %bb.b, !llvm.loop !13
+  br label %bb.d
 
 bb.aw:                                            ; preds = %bb.an
   %i.fz = load ptr, ptr %i.a, align 8
@@ -589,8 +592,8 @@ bb.ax:                                            ; preds = %bb.aw
 
 bb.ay:                                            ; preds = %bb.ax
   %i.gd = load ptr, ptr @cond_incl, align 8
-  %38 = getelementptr inbounds nuw %struct.CondIncl, ptr %i.gd, i32 0, i32 1
-  %i.ge = load i32, ptr %38, align 8
+  %39 = getelementptr inbounds nuw %struct.CondIncl, ptr %i.gd, i32 0, i32 1
+  %i.ge = load i32, ptr %39, align 8
   %i.gf = icmp eq i32 %i.ge, 2
   br i1 %i.gf, label %bb.az, label %bb.ba
 
@@ -601,16 +604,16 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax
 
 bb.ba:                                            ; preds = %bb.ay
   %i.gh = load ptr, ptr @cond_incl, align 8
-  %39 = getelementptr inbounds nuw %struct.CondIncl, ptr %i.gh, i32 0, i32 1
-  store i32 2, ptr %39, align 8
+  %40 = getelementptr inbounds nuw %struct.CondIncl, ptr %i.gh, i32 0, i32 1
+  store i32 2, ptr %40, align 8
   %i.gi = load ptr, ptr %i.a, align 8
-  %40 = getelementptr inbounds nuw %struct.Token, ptr %i.gi, i32 0, i32 1
-  %i.gj = load ptr, ptr %40, align 8
+  %41 = getelementptr inbounds nuw %struct.Token, ptr %i.gi, i32 0, i32 1
+  %i.gj = load ptr, ptr %41, align 8
   %i.gk = call ptr @skip_line(ptr noundef %i.gj)
   store ptr %i.gk, ptr %i.a, align 8
   %i.gl = load ptr, ptr @cond_incl, align 8
-  %41 = getelementptr inbounds nuw %struct.CondIncl, ptr %i.gl, i32 0, i32 3
-  %i.gm = load i8, ptr %41, align 8
+  %42 = getelementptr inbounds nuw %struct.CondIncl, ptr %i.gl, i32 0, i32 3
+  %i.gm = load i8, ptr %42, align 8
   %i.gn = icmp ne i8 %i.gm, 0
   br i1 %i.gn, label %bb.bb, label %bb.bc
 
@@ -621,7 +624,7 @@ bb.bb:                                            ; preds = %bb.ba
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb, %bb.ba
-  br label %bb.b, !llvm.loop !13
+  br label %bb.d
 
 bb.bd:                                            ; preds = %bb.aw
   %i.gq = load ptr, ptr %i.a, align 8
@@ -640,15 +643,15 @@ bb.bf:                                            ; preds = %bb.be
 
 bb.bg:                                            ; preds = %bb.be
   %i.gv = load ptr, ptr @cond_incl, align 8
-  %42 = getelementptr inbounds nuw %struct.CondIncl, ptr %i.gv, i32 0, i32 0
-  %i.gw = load ptr, ptr %42, align 8
+  %43 = getelementptr inbounds nuw %struct.CondIncl, ptr %i.gv, i32 0, i32 0
+  %i.gw = load ptr, ptr %43, align 8
   store ptr %i.gw, ptr @cond_incl, align 8
   %i.gx = load ptr, ptr %i.a, align 8
-  %43 = getelementptr inbounds nuw %struct.Token, ptr %i.gx, i32 0, i32 1
-  %i.gy = load ptr, ptr %43, align 8
+  %44 = getelementptr inbounds nuw %struct.Token, ptr %i.gx, i32 0, i32 1
+  %i.gy = load ptr, ptr %44, align 8
   %i.gz = call ptr @skip_line(ptr noundef %i.gy)
   store ptr %i.gz, ptr %i.a, align 8
-  br label %bb.b, !llvm.loop !13
+  br label %bb.d
 
 bb.bh:                                            ; preds = %bb.bd
   %i.ha = load ptr, ptr %i.a, align 8
@@ -657,22 +660,22 @@ bb.bh:                                            ; preds = %bb.bd
 
 bb.bi:                                            ; preds = %bb.bh
   %i.hc = load ptr, ptr %i.a, align 8
-  %44 = getelementptr inbounds nuw %struct.Token, ptr %i.hc, i32 0, i32 1
-  %i.hd = load ptr, ptr %44, align 8
+  %45 = getelementptr inbounds nuw %struct.Token, ptr %i.hc, i32 0, i32 1
+  %i.hd = load ptr, ptr %45, align 8
   call void @read_line_marker(ptr noundef %i.a, ptr noundef %i.hd)
-  br label %bb.b, !llvm.loop !13
+  br label %bb.d
 
 bb.bj:                                            ; preds = %bb.bh
   %i.he = load ptr, ptr %i.a, align 8
-  %45 = getelementptr inbounds nuw %struct.Token, ptr %i.he, i32 0, i32 0
-  %i.hf = load i32, ptr %45, align 16
+  %46 = getelementptr inbounds nuw %struct.Token, ptr %i.he, i32 0, i32 0
+  %i.hf = load i32, ptr %46, align 16
   %i.hg = icmp eq i32 %i.hf, 5
   br i1 %i.hg, label %bb.bk, label %bb.bl
 
 bb.bk:                                            ; preds = %bb.bj
   %i.hh = load ptr, ptr %i.a, align 8
   call void @read_line_marker(ptr noundef %i.a, ptr noundef %i.hh)
-  br label %bb.b, !llvm.loop !13
+  br label %bb.d
 
 bb.bl:                                            ; preds = %bb.bj
   %i.hi = load ptr, ptr %i.a, align 8
@@ -681,26 +684,26 @@ bb.bl:                                            ; preds = %bb.bj
 
 bb.bm:                                            ; preds = %bb.bl
   %i.hk = load ptr, ptr %i.a, align 8
-  %46 = getelementptr inbounds nuw %struct.Token, ptr %i.hk, i32 0, i32 1
-  %i.hl = load ptr, ptr %46, align 8
+  %47 = getelementptr inbounds nuw %struct.Token, ptr %i.hk, i32 0, i32 1
+  %i.hl = load ptr, ptr %47, align 8
   %i.hm = call zeroext i1 @equal(ptr noundef %i.hl, ptr noundef @.str.83)
   br i1 %i.hm, label %bb.bn, label %bb.bo
 
 bb.bn:                                            ; preds = %bb.bm
   %i.hn = load ptr, ptr %i.a, align 8
-  %47 = getelementptr inbounds nuw %struct.Token, ptr %i.hn, i32 0, i32 8
-  %i.ho = load ptr, ptr %47, align 16
-  %48 = getelementptr inbounds nuw %struct.File, ptr %i.ho, i32 0, i32 0
-  %i.hp = load ptr, ptr %48, align 8
+  %48 = getelementptr inbounds nuw %struct.Token, ptr %i.hn, i32 0, i32 8
+  %i.ho = load ptr, ptr %48, align 16
+  %49 = getelementptr inbounds nuw %struct.File, ptr %i.ho, i32 0, i32 0
+  %i.hp = load ptr, ptr %49, align 8
   call void @hashmap_put(ptr noundef @pragma_once, ptr noundef %i.hp, ptr noundef inttoptr (i64 1 to ptr))
   %i.hq = load ptr, ptr %i.a, align 8
-  %49 = getelementptr inbounds nuw %struct.Token, ptr %i.hq, i32 0, i32 1
-  %i.hr = load ptr, ptr %49, align 8
-  %50 = getelementptr inbounds nuw %struct.Token, ptr %i.hr, i32 0, i32 1
-  %i.hs = load ptr, ptr %50, align 8
+  %50 = getelementptr inbounds nuw %struct.Token, ptr %i.hq, i32 0, i32 1
+  %i.hr = load ptr, ptr %50, align 8
+  %51 = getelementptr inbounds nuw %struct.Token, ptr %i.hr, i32 0, i32 1
+  %i.hs = load ptr, ptr %51, align 8
   %i.ht = call ptr @skip_line(ptr noundef %i.hs)
   store ptr %i.ht, ptr %i.a, align 8
-  br label %bb.b, !llvm.loop !13
+  br label %bb.d
 
 bb.bo:                                            ; preds = %bb.bm, %bb.bl
   %i.hu = load ptr, ptr %i.a, align 8
@@ -712,21 +715,21 @@ bb.bp:                                            ; preds = %bb.bo
 
 bb.bq:                                            ; preds = %bb.br, %bb.bp
   %i.hw = load ptr, ptr %i.a, align 8
-  %51 = getelementptr inbounds nuw %struct.Token, ptr %i.hw, i32 0, i32 1
-  %i.hx = load ptr, ptr %51, align 8
+  %52 = getelementptr inbounds nuw %struct.Token, ptr %i.hw, i32 0, i32 1
+  %i.hx = load ptr, ptr %52, align 8
   store ptr %i.hx, ptr %i.a, align 8
   br label %bb.br
 
 bb.br:                                            ; preds = %bb.bq
   %i.hy = load ptr, ptr %i.a, align 8
-  %52 = getelementptr inbounds nuw %struct.Token, ptr %i.hy, i32 0, i32 12
-  %i.hz = load i8, ptr %52, align 8
+  %53 = getelementptr inbounds nuw %struct.Token, ptr %i.hy, i32 0, i32 12
+  %i.hz = load i8, ptr %53, align 8
   %i.ia = icmp ne i8 %i.hz, 0
   %i.ib = xor i1 %i.ia, true
   br i1 %i.ib, label %bb.bq, label %bb.bs, !llvm.loop !14
 
 bb.bs:                                            ; preds = %bb.br
-  br label %bb.b, !llvm.loop !13
+  br label %bb.d
 
 bb.bt:                                            ; preds = %bb.bo
   %i.ic = load ptr, ptr %i.a, align 8
@@ -740,13 +743,13 @@ bb.bu:                                            ; preds = %bb.bt
 
 bb.bv:                                            ; preds = %bb.bt
   %i.if = load ptr, ptr %i.a, align 8
-  %53 = getelementptr inbounds nuw %struct.Token, ptr %i.if, i32 0, i32 12
-  %i.ig = load i8, ptr %53, align 8
+  %54 = getelementptr inbounds nuw %struct.Token, ptr %i.if, i32 0, i32 12
+  %i.ig = load i8, ptr %54, align 8
   %i.ih = icmp ne i8 %i.ig, 0
   br i1 %i.ih, label %bb.bw, label %bb.bx
 
 bb.bw:                                            ; preds = %bb.bv
-  br label %bb.b, !llvm.loop !13
+  br label %bb.d
 
 bb.bx:                                            ; preds = %bb.bv
   %i.ii = load ptr, ptr %i.a, align 8
@@ -756,10 +759,10 @@ bb.bx:                                            ; preds = %bb.bv
 bb.by:                                            ; preds = %bb.b
   %i.ij = load ptr, ptr %i.a, align 8
   %i.ik = load ptr, ptr %i.b, align 8
-  %54 = getelementptr inbounds nuw %struct.Token, ptr %i.ik, i32 0, i32 1
-  store ptr %i.ij, ptr %54, align 8
-  %55 = getelementptr inbounds nuw %struct.Token, ptr %1, i32 0, i32 1
-  %i.il = load ptr, ptr %55, align 8
+  %55 = getelementptr inbounds nuw %struct.Token, ptr %i.ik, i32 0, i32 1
+  store ptr %i.ij, ptr %55, align 8
+  %56 = getelementptr inbounds nuw %struct.Token, ptr %1, i32 0, i32 1
+  %i.il = load ptr, ptr %56, align 8
   ret ptr %i.il
 }
 
@@ -790,7 +793,7 @@ bb.a:
   store ptr %i.o, ptr %i.b, align 8
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.aa, %bb.e, %bb.a
+bb.b:                                             ; preds = %.backedge1, %bb.a
   %i.p = load ptr, ptr %i.b, align 8
   %1 = getelementptr inbounds nuw %struct.Token, ptr %i.p, i32 0, i32 0
   %i.q = load i32, ptr %1, align 16
@@ -818,6 +821,9 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %5 = getelementptr inbounds nuw %struct.Token, ptr %i.z, i32 0, i32 1
   %i.aa = load ptr, ptr %5, align 8
   store ptr %i.aa, ptr %i.b, align 8
+  br label %.backedge1
+
+.backedge1:                                       ; preds = %bb.e, %bb.aa
   br label %bb.b, !llvm.loop !15
 
 bb.f:                                             ; preds = %bb.d
@@ -960,14 +966,14 @@ bb.z:                                             ; preds = %bb.y
   br label %bb.y, !llvm.loop !18
 
 bb.aa:                                            ; preds = %bb.y
-  br label %bb.b, !llvm.loop !15
+  br label %.backedge1
 
 bb.ab:                                            ; preds = %bb.b
   %i.by = load ptr, ptr %i.a, align 8
   store ptr %i.by, ptr %i.h, align 8
   br label %bb.ac
 
-bb.ac:                                            ; preds = %bb.ar, %bb.af, %bb.ab
+bb.ac:                                            ; preds = %.backedge, %bb.ab
   %i.bz = load ptr, ptr %i.h, align 8
   %21 = getelementptr inbounds nuw %struct.Token, ptr %i.bz, i32 0, i32 0
   %i.ca = load i32, ptr %21, align 16
@@ -995,6 +1001,9 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
   %25 = getelementptr inbounds nuw %struct.Token, ptr %i.cj, i32 0, i32 1
   %i.ck = load ptr, ptr %25, align 8
   store ptr %i.ck, ptr %i.h, align 8
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.af, %bb.ar
   br label %bb.ac, !llvm.loop !19
 
 bb.ag:                                            ; preds = %bb.ae
@@ -1145,7 +1154,7 @@ bb.ar:                                            ; preds = %bb.ao
   store ptr %i.fb, ptr %51, align 8
   %i.fd = load ptr, ptr %i.i, align 8
   store ptr %i.fd, ptr %i.h, align 8
-  br label %bb.ac, !llvm.loop !19
+  br label %.backedge
 
 bb.as:                                            ; preds = %bb.ac
   ret void
@@ -1548,12 +1557,12 @@ bb.a:
   store ptr %0, ptr %i.a, align 8
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.m, %bb.g, %bb.a
+bb.b:                                             ; preds = %.backedge, %bb.a
   %i.b = load ptr, ptr %i.a, align 8
   %1 = getelementptr inbounds nuw %struct.Token, ptr %i.b, i32 0, i32 0
   %i.c = load i32, ptr %1, align 16
   %i.d = icmp ne i32 %i.c, 6
-  br i1 %i.d, label %bb.c, label %bb.n
+  br i1 %i.d, label %bb.c, label %.loopexit
 
 bb.c:                                             ; preds = %bb.b
   %i.e = load ptr, ptr %i.a, align 8
@@ -1589,6 +1598,9 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   %i.r = load ptr, ptr %6, align 8
   %i.s = call ptr @skip_cond_incl2(ptr noundef %i.r)
   store ptr %i.s, ptr %i.a, align 8
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.g, %bb.m
   br label %bb.b, !llvm.loop !31
 
 bb.h:                                             ; preds = %bb.f, %bb.c
@@ -1625,9 +1637,12 @@ bb.m:                                             ; preds = %bb.k, %bb.h
   %10 = getelementptr inbounds nuw %struct.Token, ptr %i.ae, i32 0, i32 1
   %i.af = load ptr, ptr %10, align 8
   store ptr %i.af, ptr %i.a, align 8
-  br label %bb.b, !llvm.loop !31
+  br label %.backedge
 
-bb.n:                                             ; preds = %bb.l, %bb.b
+.loopexit:                                        ; preds = %bb.b
+  br label %bb.n
+
+bb.n:                                             ; preds = %.loopexit, %bb.l
   %i.ag = load ptr, ptr %i.a, align 8
   ret ptr %i.ag
 }
@@ -2030,7 +2045,7 @@ bb.a:
   store ptr %2, ptr %i.c, align 8
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.bi, %bb.bh, %bb.bb, %bb.as, %bb.an, %bb.ac, %bb.ab, %bb.n, %bb.f, %bb.a
+bb.b:                                             ; preds = %.backedge, %bb.a
   %i.p = load ptr, ptr %i.a, align 8
   %3 = getelementptr inbounds nuw %struct.Token, ptr %i.p, i32 0, i32 0
   %i.q = load i32, ptr %3, align 16
@@ -2076,6 +2091,9 @@ bb.f:                                             ; preds = %bb.d
   %9 = getelementptr inbounds nuw %struct.Token, ptr %i.ai, i32 0, i32 1
   %i.aj = load ptr, ptr %9, align 8
   store ptr %i.aj, ptr %i.a, align 8
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.f, %bb.n, %bb.ab, %bb.ac, %bb.an, %bb.as, %bb.bb, %bb.bh, %bb.bi
   br label %bb.b, !llvm.loop !38
 
 bb.g:                                             ; preds = %bb.c
@@ -2146,7 +2164,7 @@ bb.m:                                             ; preds = %bb.k
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  br label %bb.b, !llvm.loop !38
+  br label %.backedge
 
 bb.o:                                             ; preds = %bb.j, %bb.i
   br label %bb.p
@@ -2249,7 +2267,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.v
   %34 = getelementptr inbounds nuw %struct.Token, ptr %i.cy, i32 0, i32 1
   %i.cz = load ptr, ptr %34, align 8
   store ptr %i.cz, ptr %i.a, align 8
-  br label %bb.b, !llvm.loop !38
+  br label %.backedge
 
 bb.ac:                                            ; preds = %bb.u
   %i.da = load ptr, ptr %i.c, align 8
@@ -2265,7 +2283,7 @@ bb.ac:                                            ; preds = %bb.u
   %37 = getelementptr inbounds nuw %struct.Token, ptr %i.dg, i32 0, i32 1
   %i.dh = load ptr, ptr %37, align 8
   store ptr %i.dh, ptr %i.a, align 8
-  br label %bb.b, !llvm.loop !38
+  br label %.backedge
 
 bb.ad:                                            ; preds = %bb.p
   %i.di = load ptr, ptr %i.b, align 8
@@ -2354,7 +2372,7 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   %48 = getelementptr inbounds nuw %struct.Token, ptr %i.ep, i32 0, i32 1
   %i.eq = load ptr, ptr %48, align 8
   store ptr %i.eq, ptr %i.a, align 8
-  br label %bb.b, !llvm.loop !38
+  br label %.backedge
 
 bb.ao:                                            ; preds = %bb.af
   %i.er = load ptr, ptr %i.h, align 8
@@ -2391,7 +2409,7 @@ bb.as:                                            ; preds = %bb.ap
   %53 = getelementptr inbounds nuw %struct.Token, ptr %i.fb, i32 0, i32 1
   %i.fc = load ptr, ptr %53, align 8
   store ptr %i.fc, ptr %i.a, align 8
-  br label %bb.b, !llvm.loop !38
+  br label %.backedge
 
 bb.at:                                            ; preds = %bb.ae, %bb.ad
   %i.fd = load ptr, ptr %i.a, align 8
@@ -2453,7 +2471,7 @@ bb.bb:                                            ; preds = %bb.ba, %bb.av
   %i.fx = load ptr, ptr %i.a, align 8
   %i.fy = call ptr @skip(ptr noundef %i.fx, ptr noundef @.str.88)
   store ptr %i.fy, ptr %i.a, align 8
-  br label %bb.b, !llvm.loop !38
+  br label %.backedge
 
 bb.bc:                                            ; preds = %bb.au, %bb.at
   %i.fz = load ptr, ptr %i.h, align 8
@@ -2512,7 +2530,7 @@ bb.bh:                                            ; preds = %bb.be
   %69 = getelementptr inbounds nuw %struct.Token, ptr %i.gw, i32 0, i32 1
   %i.gx = load ptr, ptr %69, align 8
   store ptr %i.gx, ptr %i.a, align 8
-  br label %bb.b, !llvm.loop !38
+  br label %.backedge
 
 bb.bi:                                            ; preds = %bb.bc
   %i.gy = load ptr, ptr %i.a, align 8
@@ -2525,7 +2543,7 @@ bb.bi:                                            ; preds = %bb.bc
   %71 = getelementptr inbounds nuw %struct.Token, ptr %i.hb, i32 0, i32 1
   %i.hc = load ptr, ptr %71, align 8
   store ptr %i.hc, ptr %i.a, align 8
-  br label %bb.b, !llvm.loop !38
+  br label %.backedge
 
 bb.bj:                                            ; preds = %bb.b
   %i.hd = load ptr, ptr %i.a, align 8
@@ -2928,7 +2946,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
 bb.j:                                             ; preds = %bb.h
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.v, %bb.m, %bb.j
+bb.k:                                             ; preds = %.backedge, %bb.j
   %i.ag = load ptr, ptr %i.b, align 8
   %11 = getelementptr inbounds nuw %struct.Token, ptr %i.ag, i32 0, i32 0
   %i.ah = load i32, ptr %11, align 16
@@ -2945,6 +2963,9 @@ bb.m:                                             ; preds = %bb.l
   %12 = getelementptr inbounds nuw %struct.Token, ptr %i.al, i32 0, i32 1
   %i.am = load ptr, ptr %12, align 8
   store ptr %i.am, ptr %i.b, align 8
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.m, %bb.v
   br label %bb.k, !llvm.loop !49
 
 bb.n:                                             ; preds = %bb.l
@@ -3001,7 +3022,7 @@ bb.u:                                             ; preds = %bb.s
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
-  br label %bb.k, !llvm.loop !49
+  br label %.backedge
 
 bb.w:                                             ; preds = %bb.k
   store ptr null, ptr %i.a, align 8
@@ -3171,7 +3192,7 @@ bb.a:
   store ptr %2, ptr %i.c, align 8
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.i, %bb.h, %bb.a
+bb.b:                                             ; preds = %.backedge, %bb.a
   %i.j = load ptr, ptr %i.b, align 8
   %3 = getelementptr inbounds nuw %struct.Token, ptr %i.j, i32 0, i32 0
   %i.k = load i32, ptr %3, align 16
@@ -3232,6 +3253,9 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %7 = getelementptr inbounds nuw %struct.Token, ptr %i.al, i32 0, i32 1
   store ptr %i.ak, ptr %7, align 8
   store ptr %i.ak, ptr %i.c, align 8
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.h, %bb.i
   br label %bb.b, !llvm.loop !51
 
 bb.i:                                             ; preds = %bb.c
@@ -3244,7 +3268,7 @@ bb.i:                                             ; preds = %bb.c
   %9 = getelementptr inbounds nuw %struct.Token, ptr %i.ao, i32 0, i32 1
   %i.ap = load ptr, ptr %9, align 8
   store ptr %i.ap, ptr %i.b, align 8
-  br label %bb.b, !llvm.loop !51
+  br label %.backedge
 
 bb.j:                                             ; preds = %bb.b
   %i.aq = load ptr, ptr %i.b, align 8
@@ -3268,7 +3292,7 @@ bb.a:
   store ptr %0, ptr %i.b, align 8
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.k, %bb.g, %bb.a
+bb.b:                                             ; preds = %.backedge, %bb.a
   %i.c = load ptr, ptr %i.b, align 8
   %1 = getelementptr inbounds nuw %struct.Token, ptr %i.c, i32 0, i32 0
   %i.d = load i32, ptr %1, align 16
@@ -3309,6 +3333,9 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d
   %i.s = load ptr, ptr %6, align 8
   %i.t = call ptr @skip_cond_incl2(ptr noundef %i.s)
   store ptr %i.t, ptr %i.b, align 8
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.g, %bb.k
   br label %bb.b, !llvm.loop !52
 
 bb.h:                                             ; preds = %bb.f, %bb.c
@@ -3337,7 +3364,7 @@ bb.k:                                             ; preds = %bb.i, %bb.h
   %10 = getelementptr inbounds nuw %struct.Token, ptr %i.ac, i32 0, i32 1
   %i.ad = load ptr, ptr %10, align 8
   store ptr %i.ad, ptr %i.b, align 8
-  br label %bb.b, !llvm.loop !52
+  br label %.backedge
 
 bb.l:                                             ; preds = %bb.b
   %i.ae = load ptr, ptr %i.b, align 8

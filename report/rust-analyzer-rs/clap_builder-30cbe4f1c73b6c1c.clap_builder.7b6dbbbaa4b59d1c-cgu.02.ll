@@ -202,12 +202,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.aa, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
-  br i1 %i.u, label %.lr.ph.split.us.split.us, label %.lr.ph.i.i.us
-
-.lr.ph.split.us.split.us:                         ; preds = %.lr.ph.split.us
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !267)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !268)
-  br label %.loopexit19.us
+  br i1 %i.u, label %.loopexit19.us, label %.lr.ph.i.i.us
 
 .lr.ph.i.i.us:                                    ; preds = %.lr.ph.split.us, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecRNtNtNtCsaB0tVqiIPBo_12clap_builder7builder3arg3ArgE8push_mutBM_.exit.us
   %i.af = phi i64 [ %i.ax, %_RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecRNtNtNtCsaB0tVqiIPBo_12clap_builder7builder3arg3ArgE8push_mutBM_.exit.us ], [ 0, %.lr.ph.split.us ] ; 3 uses
@@ -257,7 +252,7 @@ _RNvMsG_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecRNtNtNtCsaB0tVqiIPBo_12clap_builder7
   %i.ay = icmp eq ptr %i.ag, %i.n
   br i1 %i.ay, label %._crit_edge, label %.lr.ph.i.i.us
 
-.loopexit19.us:                                   ; preds = %_RNCNvMs5_NtNtCsaB0tVqiIPBo_12clap_builder7builder7commandNtB7_7Command4find0Bb_.exit.thread.i.i.us, %.lr.ph.split.us.split.us
+.loopexit19.us:                                   ; preds = %_RNCNvMs5_NtNtCsaB0tVqiIPBo_12clap_builder7builder7commandNtB7_7Command4find0Bb_.exit.thread.i.i.us, %.lr.ph.split.us
   call void @llvm.experimental.noalias.scope.decl(metadata !273)
   call void @llvm.experimental.noalias.scope.decl(metadata !274)
   br label %.loopexit

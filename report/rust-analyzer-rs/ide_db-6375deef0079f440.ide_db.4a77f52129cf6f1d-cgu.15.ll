@@ -205,18 +205,21 @@ bb.k:                                             ; preds = %.lr.ph271
 .lr.ph.split.us.split.split.us.i:                 ; preds = %.lr.ph.split.us.split.i
   %i.dv = load i8, ptr %i.m, align 1, !alias.scope !99, !noalias !97, !noundef !5
   %i.dw = icmp sgt i8 %i.dv, -65
-  br i1 %i.dw, label %.lr.ph.split.us.split.split.us.split.us.split.i, label %.split100.us.i
+  br i1 %i.dw, label %.lr.ph.split.us.split.split.us.split.us.split.i, label %.lr.ph.split.us.split.split.us.split.i
 
 .lr.ph.split.us.split.split.us.split.us.split.i:  ; preds = %.lr.ph.split.us.split.split.us.i
   %i.dx = trunc nuw i8 %.promoted95.i to i1
   br i1 %i.dx, label %_RNvYNtNtNtCshzWfHUSfYae_4core3str7pattern11StrSearcherNtB4_8Searcher11next_rejectCs6oosyzwIepl_6ide_db.exit.sink.split, label %_RNvYNtNtNtCshzWfHUSfYae_4core3str7pattern11StrSearcherNtB4_8Searcher11next_rejectCs6oosyzwIepl_6ide_db.exit
 
+.lr.ph.split.us.split.split.us.split.i:           ; preds = %.lr.ph.split.us.split.split.us.i
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !94)
+  br label %.split100.us.i
+
 .lr.ph.split.us.split.split.split.us.split.i:     ; preds = %.lr.ph.split.us.split.i
   %i.dy = trunc nuw i8 %.promoted95.i to i1
   br i1 %i.dy, label %_RNvYNtNtNtCshzWfHUSfYae_4core3str7pattern11StrSearcherNtB4_8Searcher11next_rejectCs6oosyzwIepl_6ide_db.exit.sink.split, label %_RNvYNtNtNtCshzWfHUSfYae_4core3str7pattern11StrSearcherNtB4_8Searcher11next_rejectCs6oosyzwIepl_6ide_db.exit
 
-.split100.us.i:                                   ; preds = %.lr.ph.split.split.i.preheader.split, %.lr.ph.split.us.split.split.us.i, %.lr.ph.split.split.i.preheader.split.split.us
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !94)
+.split100.us.i:                                   ; preds = %.lr.ph.split.split.i.preheader.split, %.lr.ph.split.split.i.preheader.split.split.us, %.lr.ph.split.us.split.split.us.split.i
   tail call void @_RNvNtCshzWfHUSfYae_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.h, i64 noundef %i.j, i64 noundef %i.f, i64 noundef %i.j, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @125) #38, !noalias !97
   unreachable
 

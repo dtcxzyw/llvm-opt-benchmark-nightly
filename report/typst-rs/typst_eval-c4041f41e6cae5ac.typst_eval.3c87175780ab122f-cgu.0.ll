@@ -205,14 +205,14 @@ _RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5cbCQMM
   %or.cond.not.i.i.i.i.i.us.i.i.i = select i1 %i.eo, i1 true, i1 %.not.i3.i.i.i.i.us.i.i.i
   %i.ev = sub nuw i64 %.pre2.i.i.i.i.i.i.i.i, %.promoted70.i.i.i ; 2 uses
   %.sroa.0.1.i.i.i.i.us.i.i.i = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.i, i64 %.promoted70.i.i.i ; 3 uses
+  br i1 %or.cond.not.i.i.i.i.i.us.i.i.i, label %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5cbCQMMIObr_10typst_eval.exit.i.i.i.i.us.us.i.i.i, label %.loopexit.i
+
+_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5cbCQMMIObr_10typst_eval.exit.i.i.i.i.us.us.i.i.i: ; preds = %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5cbCQMMIObr_10typst_eval.exit.i.i.i.i.us.lr.ph.i.i.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !16385), !noalias !16373
   tail call void @llvm.experimental.noalias.scope.decl(metadata !16386), !noalias !16373
   tail call void @llvm.experimental.noalias.scope.decl(metadata !16387), !noalias !16373
   tail call void @llvm.experimental.noalias.scope.decl(metadata !16388), !noalias !16373
   tail call void @llvm.experimental.noalias.scope.decl(metadata !16389), !noalias !16373
-  br i1 %or.cond.not.i.i.i.i.i.us.i.i.i, label %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5cbCQMMIObr_10typst_eval.exit.i.i.i.i.us.us.i.i.i, label %.loopexit.i
-
-_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5cbCQMMIObr_10typst_eval.exit.i.i.i.i.us.us.i.i.i: ; preds = %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5cbCQMMIObr_10typst_eval.exit.i.i.i.i.us.lr.ph.i.i.i
   switch i64 %i.ev, label %bb.ab [
     i64 0, label %bb.aa
     i64 1, label %bb.z

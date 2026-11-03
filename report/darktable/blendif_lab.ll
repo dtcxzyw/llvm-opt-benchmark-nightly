@@ -205,7 +205,7 @@ _copy_mask.exit.loopexit:                         ; preds = %.lr.ph.i148
   %exitcond202.not = icmp eq i64 %i.xw, %i.wv
   br i1 %exitcond202.not, label %.loopexit, label %.lr.ph.i148.preheader
 
-.loopexit:                                        ; preds = %_copy_mask.exit.loopexit, %.lr.ph179, %bb.ax, %.loopexit150, %bb.a
+.loopexit:                                        ; preds = %_copy_mask.exit.loopexit, %bb.ax, %.lr.ph179, %.loopexit150, %bb.a
   ret void
 }
 

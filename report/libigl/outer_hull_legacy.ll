@@ -205,37 +205,35 @@ bb.a:
   %i.h = load ptr, ptr %3, align 8, !tbaa !54
   %i.i = load ptr, ptr %2, align 8, !tbaa !180, !noalias !573 ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.k = load i64, ptr %i.j, align 8, !tbaa !228, !noalias !573 ; 22 uses
+  %i.k = load i64, ptr %i.j, align 8, !tbaa !228, !noalias !573 ; 21 uses
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.m = load i64, ptr %i.l, align 8, !tbaa !181, !noalias !574 ; 18 uses
   %i.n = sdiv i64 9223372036854775807, %i.k
   %i.o = icmp slt i64 %i.n, 1
-  %4 = icmp sgt i64 %i.k, 0
   %i.p = shl nuw i64 %i.k, 3                      ; 3 uses
   br i1 %i.o, label %.noexc, label %.preheader.lr.ph.split
 
 .preheader.lr.ph.split:                           ; preds = %.preheader.lr.ph
   %i.q = icmp samesign ugt i64 %i.k, 2305843009213693951
-  tail call void @llvm.assume(i1 %4)
   br i1 %i.q, label %.noexc55, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph.split
   %.idx = shl i64 %i.g, 3
-  %min.iters.check234 = icmp samesign ugt i64 %i.k, 3
+  %min.iters.check234 = icmp ugt i64 %i.k, 3
   %ident.check232.not = icmp eq i64 %i.m, 1
   %or.cond = select i1 %min.iters.check234, i1 %ident.check232.not, i1 false
   %n.vec236 = and i64 %i.k, 2305843009213693948   ; 3 uses
   %cmp.n243 = icmp eq i64 %i.k, %n.vec236
   %xtraiter = and i64 %i.k, 3                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %min.iters.check220 = icmp samesign ugt i64 %i.k, 3
+  %min.iters.check220 = icmp ugt i64 %i.k, 3
   %ident.check218.not = icmp eq i64 %i.m, 1
   %or.cond245 = select i1 %min.iters.check220, i1 %ident.check218.not, i1 false
   %n.vec222 = and i64 %i.k, 2305843009213693948   ; 3 uses
   %cmp.n229 = icmp eq i64 %i.k, %n.vec222
   %xtraiter260 = and i64 %i.k, 3                  ; 2 uses
   %lcmp.mod261.not = icmp eq i64 %xtraiter260, 0
-  %min.iters.check = icmp samesign ugt i64 %i.k, 3
+  %min.iters.check = icmp ugt i64 %i.k, 3
   %ident.check.not = icmp eq i64 %i.m, 1
   %or.cond246 = select i1 %min.iters.check, i1 %ident.check.not, i1 false
   %n.vec = and i64 %i.k, 2305843009213693948      ; 3 uses
@@ -245,11 +243,11 @@ bb.a:
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2
-  %.lcssa133165 = phi double [ %i.fx, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ], [ -1.000000e+26, %.preheader.preheader ] ; 3 uses
-  %.017156 = phi i64 [ %i.gd, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ], [ 0, %.preheader.preheader ] ; 2 uses
-  %.lcssa151155 = phi double [ %i.fu, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ], [ 1.000000e+26, %.preheader.preheader ] ; 3 uses
-  %i.r = phi <2 x double> [ %i.gc, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ], [ splat (double -1.000000e+26), %.preheader.preheader ] ; 4 uses
-  %i.s = phi <2 x double> [ %i.ga, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ], [ splat (double 1.000000e+26), %.preheader.preheader ] ; 4 uses
+  %.lcssa133165 = phi double [ -1.000000e+26, %.preheader.preheader ], [ %i.fx, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ] ; 3 uses
+  %.017156 = phi i64 [ 0, %.preheader.preheader ], [ %i.gd, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ] ; 2 uses
+  %.lcssa151155 = phi double [ 1.000000e+26, %.preheader.preheader ], [ %i.fu, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ] ; 3 uses
+  %i.r = phi <2 x double> [ splat (double -1.000000e+26), %.preheader.preheader ], [ %i.gc, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ] ; 4 uses
+  %i.s = phi <2 x double> [ splat (double 1.000000e+26), %.preheader.preheader ], [ %i.ga, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ] ; 4 uses
   %i.t = getelementptr [4 x i8], ptr %i.h, i64 %.017156 ; 3 uses
   %i.u = load i32, ptr %i.t, align 4, !tbaa !58
   %i.v = sext i32 %i.u to i64
@@ -634,37 +632,35 @@ bb.a:
   %i.h = load ptr, ptr %3, align 8, !tbaa !54
   %i.i = load ptr, ptr %2, align 8, !tbaa !180, !noalias !589 ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %i.k = load i64, ptr %i.j, align 8, !tbaa !228, !noalias !589 ; 22 uses
+  %i.k = load i64, ptr %i.j, align 8, !tbaa !228, !noalias !589 ; 21 uses
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.m = load i64, ptr %i.l, align 8, !tbaa !181, !noalias !590 ; 18 uses
   %i.n = sdiv i64 9223372036854775807, %i.k
   %i.o = icmp slt i64 %i.n, 1
-  %4 = icmp sgt i64 %i.k, 0
   %i.p = shl nuw i64 %i.k, 3                      ; 3 uses
   br i1 %i.o, label %.noexc, label %.preheader.lr.ph.split
 
 .preheader.lr.ph.split:                           ; preds = %.preheader.lr.ph
   %i.q = icmp samesign ugt i64 %i.k, 2305843009213693951
-  tail call void @llvm.assume(i1 %4)
   br i1 %i.q, label %.noexc55, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.preheader.lr.ph.split
   %.idx = shl i64 %i.g, 3
-  %min.iters.check234 = icmp samesign ugt i64 %i.k, 3
+  %min.iters.check234 = icmp ugt i64 %i.k, 3
   %ident.check232.not = icmp eq i64 %i.m, 1
   %or.cond = select i1 %min.iters.check234, i1 %ident.check232.not, i1 false
   %n.vec236 = and i64 %i.k, 2305843009213693948   ; 3 uses
   %cmp.n243 = icmp eq i64 %i.k, %n.vec236
   %xtraiter = and i64 %i.k, 3                     ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  %min.iters.check220 = icmp samesign ugt i64 %i.k, 3
+  %min.iters.check220 = icmp ugt i64 %i.k, 3
   %ident.check218.not = icmp eq i64 %i.m, 1
   %or.cond245 = select i1 %min.iters.check220, i1 %ident.check218.not, i1 false
   %n.vec222 = and i64 %i.k, 2305843009213693948   ; 3 uses
   %cmp.n229 = icmp eq i64 %i.k, %n.vec222
   %xtraiter260 = and i64 %i.k, 3                  ; 2 uses
   %lcmp.mod261.not = icmp eq i64 %xtraiter260, 0
-  %min.iters.check = icmp samesign ugt i64 %i.k, 3
+  %min.iters.check = icmp ugt i64 %i.k, 3
   %ident.check.not = icmp eq i64 %i.m, 1
   %or.cond246 = select i1 %min.iters.check, i1 %ident.check.not, i1 false
   %n.vec = and i64 %i.k, 2305843009213693948      ; 3 uses
@@ -674,11 +670,11 @@ bb.a:
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2
-  %.lcssa133165 = phi double [ %i.fx, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ], [ -1.000000e+26, %.preheader.preheader ] ; 3 uses
-  %.017156 = phi i64 [ %i.gd, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ], [ 0, %.preheader.preheader ] ; 2 uses
-  %.lcssa151155 = phi double [ %i.fu, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ], [ 1.000000e+26, %.preheader.preheader ] ; 3 uses
-  %i.r = phi <2 x double> [ %i.gc, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ], [ splat (double -1.000000e+26), %.preheader.preheader ] ; 4 uses
-  %i.s = phi <2 x double> [ %i.ga, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ], [ splat (double 1.000000e+26), %.preheader.preheader ] ; 4 uses
+  %.lcssa133165 = phi double [ -1.000000e+26, %.preheader.preheader ], [ %i.fx, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ] ; 3 uses
+  %.017156 = phi i64 [ 0, %.preheader.preheader ], [ %i.gd, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ] ; 2 uses
+  %.lcssa151155 = phi double [ 1.000000e+26, %.preheader.preheader ], [ %i.fu, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ] ; 3 uses
+  %i.r = phi <2 x double> [ splat (double -1.000000e+26), %.preheader.preheader ], [ %i.gc, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ] ; 4 uses
+  %i.s = phi <2 x double> [ splat (double 1.000000e+26), %.preheader.preheader ], [ %i.ga, %_ZN5Eigen15PlainObjectBaseINS_6MatrixIdLi1ELin1ELi1ELi1ELin1EEEE6resizeEll.exit.thread.2 ] ; 4 uses
   %i.t = getelementptr [4 x i8], ptr %i.h, i64 %.017156 ; 3 uses
   %i.u = load i32, ptr %i.t, align 4, !tbaa !58
   %i.v = sext i32 %i.u to i64

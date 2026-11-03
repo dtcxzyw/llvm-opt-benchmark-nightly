@@ -200,7 +200,7 @@ bb.cl:                                            ; preds = %bb.cp, %bb.ck
   %i.ie = load ptr, ptr %i.h, align 8
   %58 = getelementptr inbounds nuw %struct.pmix_list_t, ptr %2, i32 0, i32 1
   %i.if = icmp ne ptr %i.ie, %58
-  br i1 %i.if, label %bb.cm, label %bb.cq
+  br i1 %i.if, label %bb.cm, label %.loopexit
 
 bb.cm:                                            ; preds = %bb.cl
   %i.ig = load ptr, ptr %i.h, align 8
@@ -228,7 +228,10 @@ bb.cp:                                            ; preds = %bb.cn
   store ptr %i.io, ptr %i.h, align 8
   br label %bb.cl, !llvm.loop !5
 
-bb.cq:                                            ; preds = %bb.co, %bb.cl
+.loopexit:                                        ; preds = %bb.cl
+  br label %bb.cq
+
+bb.cq:                                            ; preds = %.loopexit, %bb.co
   %i.ip = load ptr, ptr %i.g, align 8
   %i.iq = icmp eq ptr null, %i.ip
   br i1 %i.iq, label %bb.cr, label %bb.cy
@@ -330,7 +333,7 @@ bb.dh:                                            ; preds = %bb.ee, %bb.dg
   %i.jp = load ptr, ptr %i.h, align 8
   %72 = getelementptr inbounds nuw %struct.pmix_list_t, ptr %2, i32 0, i32 1
   %i.jq = icmp ne ptr %i.jp, %72
-  br i1 %i.jq, label %bb.di, label %bb.ef
+  br i1 %i.jq, label %bb.di, label %.loopexit8
 
 bb.di:                                            ; preds = %bb.dh
   %i.jr = load ptr, ptr %i.m, align 8
@@ -478,7 +481,10 @@ bb.ee:                                            ; preds = %bb.ed
   store ptr %i.lv, ptr %i.h, align 8
   br label %bb.dh, !llvm.loop !8
 
-bb.ef:                                            ; preds = %bb.eb, %bb.dk, %bb.dh
+.loopexit8:                                       ; preds = %bb.dh
+  br label %bb.ef
+
+bb.ef:                                            ; preds = %.loopexit8, %bb.eb, %bb.dk
   br label %bb.eg
 
 bb.eg:                                            ; preds = %bb.ef, %bb.dc

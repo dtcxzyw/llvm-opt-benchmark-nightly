@@ -205,7 +205,6 @@ bb.n:                                             ; preds = %.sink.split.i.i.us.
   br i1 %i.do, label %_RNvYNtNtNtCs6JMX4GRUq9U_4core3str7pattern11StrSearcherNtB4_15ReverseSearcher16next_reject_backCsl8pJiQOn4hA_9coreutils.exit.sink.split.i, label %_RINvMNtCs6JMX4GRUq9U_4core3stre16trim_end_matchesReECsl8pJiQOn4hA_9coreutils.exit
 
 .split97.us.i.i:                                  ; preds = %.lr.ph.split.split.i.preheader.split.i, %.lr.ph.split.split.i.preheader.split.us.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !16217)
   tail call void @_RNvNtCs6JMX4GRUq9U_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.af, i64 noundef %i.ah, i64 noundef 0, i64 noundef %i.ad, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1472) #50, !noalias !16220
   unreachable
 

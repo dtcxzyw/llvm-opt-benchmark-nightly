@@ -206,14 +206,14 @@ _RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5z
   %or.cond.not.i.i.i.i.i.us.i = select i1 %i.v, i1 true, i1 %.not.i3.i.i.i.i.us.i
   %i.ac = sub nuw i64 %.pre2.i.i.i.i.i.i, %.promoted70.i ; 2 uses
   %.sroa.0.1.i.i.i.i.us.i = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i, i64 %.promoted70.i ; 3 uses
+  br i1 %or.cond.not.i.i.i.i.i.us.i, label %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst.exit.i.i.i.i.us.us.i, label %.loopexit
+
+_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst.exit.i.i.i.i.us.us.i: ; preds = %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst.exit.i.i.i.i.us.lr.ph.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5301)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5302)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5303)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5304)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !5305)
-  br i1 %or.cond.not.i.i.i.i.i.us.i, label %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst.exit.i.i.i.i.us.us.i, label %.loopexit
-
-_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst.exit.i.i.i.i.us.us.i: ; preds = %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst.exit.i.i.i.i.us.lr.ph.i
   switch i64 %i.ac, label %bb.e [
     i64 0, label %bb.d
     i64 1, label %bb.c
@@ -616,7 +616,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !38000)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !38001)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !38002)
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 65 ; 5 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 65 ; 4 uses
   %.promoted.i.i.i = load i8, ptr %i.a, align 1, !alias.scope !38003 ; 4 uses
   %.promoted17.i.i.i = load i64, ptr %1, align 8, !alias.scope !38004 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -660,48 +660,40 @@ bb.a:
 
 .split.us.split.us.split.us.i.i.i:                ; preds = %.split.us.split.us.i.i.i
   %i.r = trunc nuw i8 %.promoted.i.i.i to i1
-  br i1 %i.r, label %.loopexit, label %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst.exit.i.i.us.us.us.us.i.i.i
-
-_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst.exit.i.i.us.us.us.us.i.i.i: ; preds = %.split.us.split.us.split.us.i.i.i
-  store i8 1, ptr %i.a, align 1, !alias.scope !38005
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !38006)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !38007)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !38008)
-  br label %.loopexit
+  br i1 %i.r, label %.loopexit, label %.loopexit.sink.split
 
 .split.us.split.us.split.i.i.i:                   ; preds = %.split.us.split.us.i.i.i
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !38005)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !38006)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !38007)
   %i.s = trunc nuw i8 %.promoted.i.i.i to i1
   br i1 %i.s, label %.loopexit, label %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst.exit.i.i.us.us.i.i.i
 
 _RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst.exit.i.i.us.us.i.i.i: ; preds = %.split.us.split.us.split.i.i.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !38008)
-  store i8 1, ptr %i.a, align 1, !alias.scope !38005
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !38007)
+  store i8 1, ptr %i.a, align 1, !alias.scope !38008
   br label %_RNvXs1_NtCs1xwejQucwHj_5alloc5allocNtB5_6GlobalNtNtCs3oUPovFnLWP_4core5alloc9Allocator8allocate.exit.i.i.i.i.i
 
 .split.us.split.i.i.i:                            ; preds = %.split.us.i.i.i
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !38005)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !38006)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !38007)
   %i.t = trunc nuw i8 %.promoted.i.i.i to i1
   br i1 %i.t, label %.loopexit, label %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst.exit.i.i.us.i.i.i
 
 _RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst.exit.i.i.us.i.i.i: ; preds = %.split.us.split.i.i.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !38008)
-  store i8 1, ptr %i.a, align 1, !alias.scope !38005
-  br label %.loopexit
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !38007)
+  br label %.loopexit.sink.split
 
 .split.i.i.i:                                     ; preds = %select.unfold.i.i.i, %.split.preheader.i.i.i
   %i.u = phi i64 [ %i.as, %select.unfold.i.i.i ], [ %.promoted20.i.i.i, %.split.preheader.i.i.i ] ; 3 uses
   %.lcssa1519.i.i.i = phi i64 [ %.lcssa1518.i.i.i, %select.unfold.i.i.i ], [ %.promoted17.i.i.i, %.split.preheader.i.i.i ] ; 4 uses
   %i.v = phi i8 [ %i.at, %select.unfold.i.i.i ], [ %.promoted.i.i.i, %.split.preheader.i.i.i ]
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !38005)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !38006)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !38007)
   %i.w = trunc nuw i8 %i.v to i1
   br i1 %i.w, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %.split.i.i.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !38008)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !38007)
   %i.x = icmp ult i64 %i.f, %i.u
   br i1 %i.x, label %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst.exit.i.i.i.i.i, label %.lr.ph.split.preheader.i.i.i.i.i.i
 
@@ -773,7 +765,7 @@ _RNvXs_NtNtCs3oUPovFnLWP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10nex
 
 _RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst.exit.i.i.i.i.i: ; preds = %bb.e, %.loopexit15.i.i.i.i.i.i, %bb.b
   %i.ar = phi i64 [ %i.u, %bb.b ], [ %i.f, %.loopexit15.i.i.i.i.i.i ], [ %i.am, %bb.e ]
-  store i8 1, ptr %i.a, align 1, !alias.scope !38005
+  store i8 1, ptr %i.a, align 1, !alias.scope !38008
   %.not.i3.i.i.i.i.i = icmp ne i64 %.pre2.i.i.i.i.i.i, %.lcssa1519.i.i.i
   %or.cond.not.i.i.i.i.i.i = select i1 %i.p, i1 true, i1 %.not.i3.i.i.i.i.i
   br i1 %or.cond.not.i.i.i.i.i.i, label %select.unfold.i.i.i, label %.loopexit
@@ -809,7 +801,11 @@ _RNvYNvYNtNtCsaL1QbXo9JQH_3std4path7PathBufINtNtCs3oUPovFnLWP_4core7convert4From
   store i64 %.us-phi.i.i.i, ptr %.sroa.5.0..sroa_idx, align 8
   br label %bb.h
 
-.loopexit:                                        ; preds = %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst.exit.i.i.i.i.i, %.split.i.i.i, %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst.exit.i.i.us.i.i.i, %.split.us.split.i.i.i, %.split.us.split.us.split.i.i.i, %.split.us.split.us.split.us.i.i.i, %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst.exit.i.i.us.us.us.us.i.i.i
+.loopexit.sink.split:                             ; preds = %.split.us.split.us.split.us.i.i.i, %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst.exit.i.i.us.i.i.i
+  store i8 1, ptr %i.a, align 1, !alias.scope !38008
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst.exit.i.i.i.i.i, %.split.i.i.i, %.loopexit.sink.split, %.split.us.split.i.i.i, %.split.us.split.us.split.i.i.i, %.split.us.split.us.split.us.i.i.i
   store i64 -1, ptr %0, align 8
   br label %bb.h
 
@@ -1212,11 +1208,11 @@ begin_hunk_2_@llvm.vector.reduce.add.v2i64
 !37979 = distinct !{!37979, !37978, !"_RNvXsX_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_5SplitcENtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs9fPPV5zPXBl_5typst: argument 0"}
 !37980 = distinct !{!37980, i1 true, !"_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE4nextCs9fPPV5zPXBl_5typst"}
 !37981 = distinct !{!37981, !37980, !"_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE4nextCs9fPPV5zPXBl_5typst: argument 0"}
-!37982 = distinct !{!37982, i1 true, !"_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst"}
-!37983 = distinct !{!37983, !37982, !"_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst: argument 0"}
-!37984 = distinct !{!37984, i1 true, !"_RNvXs_NtNtCs3oUPovFnLWP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match"}
-!37985 = distinct !{!37985, !37984, !"_RNvXs_NtNtCs3oUPovFnLWP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match: argument 1"}
-!37986 = distinct !{!37986, !37984, !"_RNvXs_NtNtCs3oUPovFnLWP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match: argument 0"}
+!37982 = distinct !{!37982, i1 true, !"_RNvXs_NtNtCs3oUPovFnLWP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match"}
+!37983 = distinct !{!37983, !37982, !"_RNvXs_NtNtCs3oUPovFnLWP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match: argument 1"}
+!37984 = distinct !{!37984, i1 true, !"_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst"}
+!37985 = distinct !{!37985, !37984, !"_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs9fPPV5zPXBl_5typst: argument 0"}
+!37986 = distinct !{!37986, !37982, !"_RNvXs_NtNtCs3oUPovFnLWP_4core3str7patternNtB4_12CharSearcherNtB4_8Searcher10next_match: argument 0"}
 !37987 = distinct !{!37987, i1 true, !"_RNvNtNtCs3oUPovFnLWP_4core5slice6memchr6memchr"}
 !37988 = distinct !{!37988, !37987, !"_RNvNtNtCs3oUPovFnLWP_4core5slice6memchr6memchr: argument 0"}
 !37989 = distinct !{!37989, i1 true, !"_RNvYNvYNtNtCsaL1QbXo9JQH_3std4path7PathBufINtNtCs3oUPovFnLWP_4core7convert4FromReE4fromINtNtNtBJ_3ops8function5FnMutTB1f_EE8call_mutCs9fPPV5zPXBl_5typst"}
@@ -1235,12 +1231,12 @@ begin_hunk_2_@llvm.vector.reduce.add.v2i64
 !38002 = !{!37977}
 !38003 = !{!37981, !37979, !37977, !37975, !37973}
 !38004 = !{!37977, !37975, !37973}
-!38005 = !{!37983, !37981, !37979, !37977, !37975, !37973}
-!38006 = !{!37979}
-!38007 = !{!37981}
-!38008 = !{!37985}
-!38009 = !{!37985, !37981, !37979, !37977, !37975, !37973}
-!38010 = !{!37986, !37985, !37981, !37979, !37977, !37975, !37973}
+!38005 = !{!37979}
+!38006 = !{!37981}
+!38007 = !{!37983}
+!38008 = !{!37985, !37981, !37979, !37977, !37975, !37973}
+!38009 = !{!37983, !37981, !37979, !37977, !37975, !37973}
+!38010 = !{!37986, !37983, !37981, !37979, !37977, !37975, !37973}
 !38011 = !{!37988}
 !38012 = !{!37986}
 !38013 = !{!37999, !37997, !37996, !37994, !37993, !37991, !37990}

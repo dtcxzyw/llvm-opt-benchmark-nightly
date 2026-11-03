@@ -205,8 +205,8 @@ bb.ba:                                            ; preds = %bb.az
   %cmp.n344 = icmp eq i64 %n.vec339, %i.zm
   br label %.lr.ph.us.i363.i
 
-.lr.ph.us.i363.i:                                 ; preds = %.lr.ph.us.i363.i.preheader, %._crit_edge.us.i367.i
-  %.01012.us.i364.i = phi i64 [ %i.zt, %._crit_edge.us.i367.i ], [ 0, %.lr.ph.us.i363.i.preheader ] ; 2 uses
+.lr.ph.us.i363.i:                                 ; preds = %.lr.ph.us.i363.i.preheader, %scalar.ph336.a
+  %.01012.us.i364.i = phi i64 [ %i.zs, %scalar.ph336.a ], [ 0, %.lr.ph.us.i363.i.preheader ] ; 2 uses
   %i.zn = mul i64 %.01012.us.i364.i, %i.zk
   %i.zo = getelementptr inbounds nuw i8, ptr %i.zj, i64 %i.zn ; 3 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.zo, i64 64) ]
@@ -223,26 +223,26 @@ vector.body340:                                   ; preds = %.lr.ph.us.i363.i, %
   br i1 %i.zr, label %middle.block343, label %vector.body340, !llvm.loop !588
 
 middle.block343:                                  ; preds = %vector.body340
-  br i1 %cmp.n344, label %._crit_edge.us.i367.i, label %scalar.ph336.preheader
+  br i1 %cmp.n344, label %scalar.ph336.a, label %scalar.ph336.preheader
 
 scalar.ph336.preheader:                           ; preds = %.lr.ph.us.i363.i, %middle.block343
   %.011.us.i365.i.ph = phi i64 [ 0, %.lr.ph.us.i363.i ], [ %n.vec339, %middle.block343 ]
-  br label %scalar.ph336.a
+  br label %._crit_edge.us.i367.i
 
-scalar.ph336.a:                                   ; preds = %scalar.ph336.preheader, %scalar.ph336.a
-  %.011.us.i365.i = phi i64 [ %i.zs, %scalar.ph336.a ], [ %.011.us.i365.i.ph, %scalar.ph336.preheader ] ; 2 uses
-  %25 = getelementptr inbounds nuw [4 x i8], ptr %i.zo, i64 %.011.us.i365.i
+scalar.ph336.a:                                   ; preds = %._crit_edge.us.i367.i, %middle.block343
+  %i.zs = add nuw nsw i64 %.01012.us.i364.i, 1    ; 2 uses
+  %exitcond.not.i366.i.a = icmp eq i64 %i.zs, %i.ze
+  br i1 %exitcond.not.i366.i.a, label %_ZN3jxl9FillImageIfEEvT_PNS_5PlaneIS1_EE.exit369.i, label %.lr.ph.us.i363.i, !llvm.loop !578
+
+._crit_edge.us.i367.i:                            ; preds = %scalar.ph336.preheader, %._crit_edge.us.i367.i
+  %.011.i365.i = phi i64 [ %i.zt, %._crit_edge.us.i367.i ], [ %.011.us.i365.i.ph, %scalar.ph336.preheader ] ; 2 uses
+  %25 = getelementptr inbounds nuw [4 x i8], ptr %i.zo, i64 %.011.i365.i
   store float 2.550000e+02, ptr %25, align 4, !tbaa !121
-  %i.zs = add nuw nsw i64 %.011.us.i365.i, 1      ; 2 uses
-  %exitcond.not.i366.i.a = icmp eq i64 %i.zs, %i.zm
-  br i1 %exitcond.not.i366.i.a, label %._crit_edge.us.i367.i, label %scalar.ph336.a, !llvm.loop !589
+  %i.zt = add nuw nsw i64 %.011.i365.i, 1         ; 2 uses
+  %exitcond18.not.i368.i = icmp eq i64 %i.zt, %i.zm
+  br i1 %exitcond18.not.i368.i, label %scalar.ph336.a, label %._crit_edge.us.i367.i, !llvm.loop !589
 
-._crit_edge.us.i367.i:                            ; preds = %scalar.ph336.a, %middle.block343
-  %i.zt = add nuw nsw i64 %.01012.us.i364.i, 1    ; 2 uses
-  %exitcond18.not.i368.i = icmp eq i64 %i.zt, %i.ze
-  br i1 %exitcond18.not.i368.i, label %_ZN3jxl9FillImageIfEEvT_PNS_5PlaneIS1_EE.exit369.i, label %.lr.ph.us.i363.i, !llvm.loop !578
-
-_ZN3jxl9FillImageIfEEvT_PNS_5PlaneIS1_EE.exit369.i: ; preds = %._crit_edge.us.i367.i, %.lr.ph14.i361.i, %.preheader616.preheader.i
+_ZN3jxl9FillImageIfEEvT_PNS_5PlaneIS1_EE.exit369.i: ; preds = %scalar.ph336.a, %.lr.ph14.i361.i, %.preheader616.preheader.i
   %i.zu = load i32, ptr %i.dr, align 4, !tbaa !200 ; 3 uses
   %i.zv = zext i32 %i.zu to i64                   ; 2 uses
   %.not.i360.1.i = icmp eq i32 %i.zu, 0
@@ -562,8 +562,8 @@ bb.bc:                                            ; preds = %bb.ba, %bb.az, %bb.
   %cmp.n324 = icmp eq i64 %n.vec319, %i.aev
   br label %.lr.ph.us.i374.i
 
-.lr.ph.us.i374.i:                                 ; preds = %.lr.ph.us.i374.i.preheader, %._crit_edge.us.i378.i
-  %.01012.us.i375.i = phi i64 [ %i.afc, %._crit_edge.us.i378.i ], [ 0, %.lr.ph.us.i374.i.preheader ] ; 2 uses
+.lr.ph.us.i374.i:                                 ; preds = %.lr.ph.us.i374.i.preheader, %scalar.ph316.a
+  %.01012.us.i375.i = phi i64 [ %i.afb, %scalar.ph316.a ], [ 0, %.lr.ph.us.i374.i.preheader ] ; 2 uses
   %i.aew = mul i64 %.01012.us.i375.i, %i.aet
   %i.aex = getelementptr inbounds nuw i8, ptr %i.aes, i64 %i.aew ; 3 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.aex, i64 64) ]
@@ -580,26 +580,26 @@ vector.body320:                                   ; preds = %.lr.ph.us.i374.i, %
   br i1 %i.afa, label %middle.block323, label %vector.body320, !llvm.loop !596
 
 middle.block323:                                  ; preds = %vector.body320
-  br i1 %cmp.n324, label %._crit_edge.us.i378.i, label %scalar.ph316.preheader
+  br i1 %cmp.n324, label %scalar.ph316.a, label %scalar.ph316.preheader
 
 scalar.ph316.preheader:                           ; preds = %.lr.ph.us.i374.i, %middle.block323
   %.011.us.i376.i.ph = phi i64 [ 0, %.lr.ph.us.i374.i ], [ %n.vec319, %middle.block323 ]
-  br label %scalar.ph316.a
+  br label %._crit_edge.us.i378.i
 
-scalar.ph316.a:                                   ; preds = %scalar.ph316.preheader, %scalar.ph316.a
-  %.011.us.i376.i = phi i64 [ %i.afb, %scalar.ph316.a ], [ %.011.us.i376.i.ph, %scalar.ph316.preheader ] ; 2 uses
-  %26 = getelementptr inbounds nuw [4 x i8], ptr %i.aex, i64 %.011.us.i376.i
+scalar.ph316.a:                                   ; preds = %._crit_edge.us.i378.i, %middle.block323
+  %i.afb = add nuw nsw i64 %.01012.us.i375.i, 1   ; 2 uses
+  %exitcond.not.i377.i.a = icmp eq i64 %i.afb, %i.aem
+  br i1 %exitcond.not.i377.i.a, label %_ZN3jxl9FillImageIfEEvT_PNS_5PlaneIS1_EE.exit380.i, label %.lr.ph.us.i374.i, !llvm.loop !578
+
+._crit_edge.us.i378.i:                            ; preds = %scalar.ph316.preheader, %._crit_edge.us.i378.i
+  %.011.i376.i = phi i64 [ %i.afc, %._crit_edge.us.i378.i ], [ %.011.us.i376.i.ph, %scalar.ph316.preheader ] ; 2 uses
+  %26 = getelementptr inbounds nuw [4 x i8], ptr %i.aex, i64 %.011.i376.i
   store float 2.550000e+02, ptr %26, align 4, !tbaa !121
-  %i.afb = add nuw nsw i64 %.011.us.i376.i, 1     ; 2 uses
-  %exitcond.not.i377.i.a = icmp eq i64 %i.afb, %i.aev
-  br i1 %exitcond.not.i377.i.a, label %._crit_edge.us.i378.i, label %scalar.ph316.a, !llvm.loop !597
+  %i.afc = add nuw nsw i64 %.011.i376.i, 1        ; 2 uses
+  %exitcond18.not.i379.i = icmp eq i64 %i.afc, %i.aev
+  br i1 %exitcond18.not.i379.i, label %scalar.ph316.a, label %._crit_edge.us.i378.i, !llvm.loop !597
 
-._crit_edge.us.i378.i:                            ; preds = %scalar.ph316.a, %middle.block323
-  %i.afc = add nuw nsw i64 %.01012.us.i375.i, 1   ; 2 uses
-  %exitcond18.not.i379.i = icmp eq i64 %i.afc, %i.aem
-  br i1 %exitcond18.not.i379.i, label %_ZN3jxl9FillImageIfEEvT_PNS_5PlaneIS1_EE.exit380.i, label %.lr.ph.us.i374.i, !llvm.loop !578
-
-_ZN3jxl9FillImageIfEEvT_PNS_5PlaneIS1_EE.exit380.i: ; preds = %._crit_edge.us.i378.i, %.lr.ph14.i372.i, %.preheader614.i
+_ZN3jxl9FillImageIfEEvT_PNS_5PlaneIS1_EE.exit380.i: ; preds = %scalar.ph316.a, %.lr.ph14.i372.i, %.preheader614.i
   %i.afd = load i32, ptr %i.dr, align 4, !tbaa !200 ; 3 uses
   %i.afe = zext i32 %i.afd to i64                 ; 2 uses
   %.not.i371.1.i = icmp eq i32 %i.afd, 0
@@ -1002,8 +1002,8 @@ _ZN3jxl12_GLOBAL__N_114PredictorColorENS_9PredictorE.exit.i: ; preds = %.prehead
   %cmp.n304 = icmp eq i64 %n.vec297, %i.apw
   br label %.lr.ph.us.i396.i
 
-.lr.ph.us.i396.i:                                 ; preds = %.lr.ph.us.i396.i.preheader, %._crit_edge.us.i400.i
-  %.01012.us.i397.i = phi i64 [ %i.aqd, %._crit_edge.us.i400.i ], [ 0, %.lr.ph.us.i396.i.preheader ] ; 2 uses
+.lr.ph.us.i396.i:                                 ; preds = %.lr.ph.us.i396.i.preheader, %scalar.ph294.a
+  %.01012.us.i397.i = phi i64 [ %i.aqc, %scalar.ph294.a ], [ 0, %.lr.ph.us.i396.i.preheader ] ; 2 uses
   %i.apx = mul i64 %.01012.us.i397.i, %i.apu
   %i.apy = getelementptr inbounds nuw i8, ptr %i.apt, i64 %i.apx ; 3 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.apy, i64 64) ]
@@ -1020,26 +1020,26 @@ vector.body300:                                   ; preds = %.lr.ph.us.i396.i, %
   br i1 %i.aqb, label %middle.block303, label %vector.body300, !llvm.loop !609
 
 middle.block303:                                  ; preds = %vector.body300
-  br i1 %cmp.n304, label %._crit_edge.us.i400.i, label %scalar.ph294.preheader
+  br i1 %cmp.n304, label %scalar.ph294.a, label %scalar.ph294.preheader
 
 scalar.ph294.preheader:                           ; preds = %.lr.ph.us.i396.i, %middle.block303
   %.011.us.i398.i.ph = phi i64 [ 0, %.lr.ph.us.i396.i ], [ %n.vec297, %middle.block303 ]
-  br label %scalar.ph294.a
+  br label %._crit_edge.us.i400.i
 
-scalar.ph294.a:                                   ; preds = %scalar.ph294.preheader, %scalar.ph294.a
-  %.011.us.i398.i = phi i64 [ %i.aqc, %scalar.ph294.a ], [ %.011.us.i398.i.ph, %scalar.ph294.preheader ] ; 2 uses
-  %27 = getelementptr inbounds nuw [4 x i8], ptr %i.apy, i64 %.011.us.i398.i
+scalar.ph294.a:                                   ; preds = %._crit_edge.us.i400.i, %middle.block303
+  %i.aqc = add nuw nsw i64 %.01012.us.i397.i, 1   ; 2 uses
+  %exitcond.not.i399.i.a = icmp eq i64 %i.aqc, %i.aps
+  br i1 %exitcond.not.i399.i.a, label %_ZN3jxl9FillImageIfEEvT_PNS_5PlaneIS1_EE.exit402.loopexit.i, label %.lr.ph.us.i396.i, !llvm.loop !578
+
+._crit_edge.us.i400.i:                            ; preds = %scalar.ph294.preheader, %._crit_edge.us.i400.i
+  %.011.i398.i = phi i64 [ %i.aqd, %._crit_edge.us.i400.i ], [ %.011.us.i398.i.ph, %scalar.ph294.preheader ] ; 2 uses
+  %27 = getelementptr inbounds nuw [4 x i8], ptr %i.apy, i64 %.011.i398.i
   store float %.sroa.0.0.i.i, ptr %27, align 4, !tbaa !121
-  %i.aqc = add nuw nsw i64 %.011.us.i398.i, 1     ; 2 uses
-  %exitcond.not.i399.i.a = icmp eq i64 %i.aqc, %i.apw
-  br i1 %exitcond.not.i399.i.a, label %._crit_edge.us.i400.i, label %scalar.ph294.a, !llvm.loop !610
+  %i.aqd = add nuw nsw i64 %.011.i398.i, 1        ; 2 uses
+  %exitcond18.not.i401.i = icmp eq i64 %i.aqd, %i.apw
+  br i1 %exitcond18.not.i401.i, label %scalar.ph294.a, label %._crit_edge.us.i400.i, !llvm.loop !610
 
-._crit_edge.us.i400.i:                            ; preds = %scalar.ph294.a, %middle.block303
-  %i.aqd = add nuw nsw i64 %.01012.us.i397.i, 1   ; 2 uses
-  %exitcond18.not.i401.i = icmp eq i64 %i.aqd, %i.aps
-  br i1 %exitcond18.not.i401.i, label %_ZN3jxl9FillImageIfEEvT_PNS_5PlaneIS1_EE.exit402.loopexit.i, label %.lr.ph.us.i396.i, !llvm.loop !578
-
-_ZN3jxl9FillImageIfEEvT_PNS_5PlaneIS1_EE.exit402.loopexit.i: ; preds = %._crit_edge.us.i400.i
+_ZN3jxl9FillImageIfEEvT_PNS_5PlaneIS1_EE.exit402.loopexit.i: ; preds = %scalar.ph294.a
   %.pre857.i = load i32, ptr %i.yu, align 4, !tbaa !79
   br label %_ZN3jxl9FillImageIfEEvT_PNS_5PlaneIS1_EE.exit402.i
 

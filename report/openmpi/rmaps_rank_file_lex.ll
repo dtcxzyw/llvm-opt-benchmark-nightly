@@ -137,7 +137,7 @@ bb.n:                                             ; preds = %bb.bw, %bb.m
   store i32 %i.ai, ptr %i.b, align 4
   br label %bb.o
 
-bb.o:                                             ; preds = %bb.br, %bb.bm, %bb.n
+bb.o:                                             ; preds = %.backedge1, %bb.n
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.x, %bb.o
@@ -234,7 +234,7 @@ bb.x:                                             ; preds = %bb.w
 bb.y:                                             ; preds = %bb.x
   br label %bb.z
 
-bb.z:                                             ; preds = %bb.bs, %bb.bn, %bb.ad, %bb.y
+bb.z:                                             ; preds = %.backedge, %bb.y
   %i.co = load i32, ptr %i.b, align 4
   %i.cp = sext i32 %i.co to i64
   %i.cq = getelementptr inbounds [127 x i16], ptr @yy_accept, i64 0, i64 %i.cp
@@ -306,8 +306,8 @@ bb.ac:                                            ; preds = %bb.bq, %bb.ab
     i32 23, label %bb.ba
     i32 24, label %bb.bb
     i32 25, label %bb.bc
-    i32 27, label %bb.bh
-    i32 28, label %bb.bh
+    i32 27, label %bb.bg
+    i32 28, label %bb.bg
     i32 26, label %bb.bi
   ]
 
@@ -319,6 +319,9 @@ bb.ad:                                            ; preds = %bb.ac
   store ptr %i.dq, ptr %i.c, align 8
   %i.dr = load i32, ptr @yy_last_accepting_state, align 4
   store i32 %i.dr, ptr %i.b, align 4
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.ad, %bb.bn, %bb.bs
   br label %bb.z
 
 bb.ae:                                            ; preds = %bb.ac
@@ -468,18 +471,21 @@ bb.bd:                                            ; preds = %bb.bc
   %i.et = load ptr, ptr @prte_rmaps_rank_file_out, align 8
   %i.eu = call i64 @fwrite(ptr noundef %i.eq, i64 noundef %i.es, i64 noundef 1, ptr noundef %i.et)
   %i.ev = icmp ne i64 %i.eu, 0
-  br i1 %i.ev, label %bb.be, label %bb.bf
+  br i1 %i.ev, label %0, label %bb.be
 
-bb.be:                                            ; preds = %bb.bd
+0:                                                ; preds = %bb.bd
+  br label %bb.be
+
+bb.be:                                            ; preds = %0, %bb.bd
   br label %bb.bf
 
-bb.bf:                                            ; preds = %bb.be, %bb.bd
-  br label %bb.bg
-
-bb.bg:                                            ; preds = %bb.bf
+bb.bf:                                            ; preds = %bb.be
   br label %bb.bh
 
-bb.bh:                                            ; preds = %bb.bg, %bb.ac, %bb.ac
+bb.bg:                                            ; preds = %bb.ac, %bb.ac
+  br label %bb.bh
+
+bb.bh:                                            ; preds = %bb.bg, %bb.bf
   store i32 0, ptr %i.a, align 4
   br label %bb.bx
 
@@ -499,8 +505,8 @@ bb.bi:                                            ; preds = %bb.ac
   %i.fg = load i64, ptr @yy_buffer_stack_top, align 8
   %i.fh = getelementptr inbounds nuw ptr, ptr %i.ff, i64 %i.fg
   %i.fi = load ptr, ptr %i.fh, align 8
-  %0 = getelementptr inbounds nuw %struct.yy_buffer_state, ptr %i.fi, i32 0, i32 11
-  %i.fj = load i32, ptr %0, align 8
+  %1 = getelementptr inbounds nuw %struct.yy_buffer_state, ptr %i.fi, i32 0, i32 11
+  %i.fj = load i32, ptr %1, align 8
   %i.fk = icmp eq i32 %i.fj, 0
   br i1 %i.fk, label %bb.bj, label %bb.bk
 
@@ -509,22 +515,22 @@ bb.bj:                                            ; preds = %bb.bi
   %i.fm = load i64, ptr @yy_buffer_stack_top, align 8
   %i.fn = getelementptr inbounds nuw ptr, ptr %i.fl, i64 %i.fm
   %i.fo = load ptr, ptr %i.fn, align 8
-  %1 = getelementptr inbounds nuw %struct.yy_buffer_state, ptr %i.fo, i32 0, i32 4
-  %i.fp = load i32, ptr %1, align 4
+  %2 = getelementptr inbounds nuw %struct.yy_buffer_state, ptr %i.fo, i32 0, i32 4
+  %i.fp = load i32, ptr %2, align 4
   store i32 %i.fp, ptr @yy_n_chars, align 4
   %i.fq = load ptr, ptr @prte_rmaps_rank_file_in, align 8
   %i.fr = load ptr, ptr @yy_buffer_stack, align 8
   %i.fs = load i64, ptr @yy_buffer_stack_top, align 8
   %i.ft = getelementptr inbounds nuw ptr, ptr %i.fr, i64 %i.fs
   %i.fu = load ptr, ptr %i.ft, align 8
-  %2 = getelementptr inbounds nuw %struct.yy_buffer_state, ptr %i.fu, i32 0, i32 0
-  store ptr %i.fq, ptr %2, align 8
+  %3 = getelementptr inbounds nuw %struct.yy_buffer_state, ptr %i.fu, i32 0, i32 0
+  store ptr %i.fq, ptr %3, align 8
   %i.fv = load ptr, ptr @yy_buffer_stack, align 8
   %i.fw = load i64, ptr @yy_buffer_stack_top, align 8
   %i.fx = getelementptr inbounds nuw ptr, ptr %i.fv, i64 %i.fw
   %i.fy = load ptr, ptr %i.fx, align 8
-  %3 = getelementptr inbounds nuw %struct.yy_buffer_state, ptr %i.fy, i32 0, i32 11
-  store i32 1, ptr %3, align 8
+  %4 = getelementptr inbounds nuw %struct.yy_buffer_state, ptr %i.fy, i32 0, i32 11
+  store i32 1, ptr %4, align 8
   br label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj, %bb.bi
@@ -533,8 +539,8 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bi
   %i.gb = load i64, ptr @yy_buffer_stack_top, align 8
   %i.gc = getelementptr inbounds nuw ptr, ptr %i.ga, i64 %i.gb
   %i.gd = load ptr, ptr %i.gc, align 8
-  %4 = getelementptr inbounds nuw %struct.yy_buffer_state, ptr %i.gd, i32 0, i32 1
-  %i.ge = load ptr, ptr %4, align 8
+  %5 = getelementptr inbounds nuw %struct.yy_buffer_state, ptr %i.gd, i32 0, i32 1
+  %i.ge = load ptr, ptr %5, align 8
   %i.gf = load i32, ptr @yy_n_chars, align 4
   %i.gg = sext i32 %i.gf to i64
   %i.gh = getelementptr inbounds i8, ptr %i.ge, i64 %i.gg
@@ -566,12 +572,15 @@ bb.bm:                                            ; preds = %bb.bl
   store ptr %i.gv, ptr %i.c, align 8
   %i.gw = load i32, ptr %i.h, align 4
   store i32 %i.gw, ptr %i.b, align 4
+  br label %.backedge1
+
+.backedge1:                                       ; preds = %bb.bm, %bb.br
   br label %bb.o
 
 bb.bn:                                            ; preds = %bb.bl
   %i.gx = load ptr, ptr @yy_c_buf_p, align 8
   store ptr %i.gx, ptr %i.c, align 8
-  br label %bb.z
+  br label %.backedge
 
 bb.bo:                                            ; preds = %bb.bk
   %i.gy = call i32 @yy_get_next_buffer()
@@ -610,15 +619,15 @@ bb.br:                                            ; preds = %bb.bo
   %i.hn = load ptr, ptr @prte_rmaps_rank_file_text, align 8
   %i.ho = getelementptr inbounds nuw i8, ptr %i.hn, i64 0
   store ptr %i.ho, ptr %i.d, align 8
-  br label %bb.o
+  br label %.backedge1
 
 bb.bs:                                            ; preds = %bb.bo
   %i.hp = load ptr, ptr @yy_buffer_stack, align 8
   %i.hq = load i64, ptr @yy_buffer_stack_top, align 8
   %i.hr = getelementptr inbounds nuw ptr, ptr %i.hp, i64 %i.hq
   %i.hs = load ptr, ptr %i.hr, align 8
-  %5 = getelementptr inbounds nuw %struct.yy_buffer_state, ptr %i.hs, i32 0, i32 1
-  %i.ht = load ptr, ptr %5, align 8
+  %6 = getelementptr inbounds nuw %struct.yy_buffer_state, ptr %i.hs, i32 0, i32 1
+  %i.ht = load ptr, ptr %6, align 8
   %i.hu = load i32, ptr @yy_n_chars, align 4
   %i.hv = sext i32 %i.hu to i64
   %i.hw = getelementptr inbounds i8, ptr %i.ht, i64 %i.hv
@@ -630,7 +639,7 @@ bb.bs:                                            ; preds = %bb.bo
   %i.hz = load ptr, ptr @prte_rmaps_rank_file_text, align 8
   %i.ia = getelementptr inbounds nuw i8, ptr %i.hz, i64 0
   store ptr %i.ia, ptr %i.d, align 8
-  br label %bb.z
+  br label %.backedge
 
 bb.bt:                                            ; preds = %bb.bo
   br label %bb.bu

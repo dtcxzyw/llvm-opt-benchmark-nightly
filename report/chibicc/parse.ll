@@ -200,7 +200,7 @@ bb.a:
   store ptr null, ptr @globals, align 8
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.g, %bb.f, %bb.d, %bb.a
+bb.b:                                             ; preds = %.backedge, %bb.a
   %i.d = load ptr, ptr %i.a, align 8
   %2 = getelementptr inbounds nuw %struct.Token, ptr %i.d, i32 0, i32 0
   %i.e = load i32, ptr %2, align 16
@@ -222,6 +222,9 @@ bb.d:                                             ; preds = %bb.c
   %i.l = load ptr, ptr %i.b, align 8
   %i.m = call ptr @parse_typedef(ptr noundef %i.k, ptr noundef %i.l)
   store ptr %i.m, ptr %i.a, align 8
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.d, %bb.f, %bb.g
   br label %bb.b, !llvm.loop !9
 
 bb.e:                                             ; preds = %bb.c
@@ -234,14 +237,14 @@ bb.f:                                             ; preds = %bb.e
   %i.q = load ptr, ptr %i.b, align 8
   %i.r = call ptr @function(ptr noundef %i.p, ptr noundef %i.q, ptr noundef %1)
   store ptr %i.r, ptr %i.a, align 8
-  br label %bb.b, !llvm.loop !9
+  br label %.backedge
 
 bb.g:                                             ; preds = %bb.e
   %i.s = load ptr, ptr %i.a, align 8
   %i.t = load ptr, ptr %i.b, align 8
   %i.u = call ptr @global_variable(ptr noundef %i.s, ptr noundef %i.t, ptr noundef %1)
   store ptr %i.u, ptr %i.a, align 8
-  br label %bb.b, !llvm.loop !9
+  br label %.backedge
 
 bb.h:                                             ; preds = %bb.b
   %i.v = load ptr, ptr @globals, align 8
@@ -325,10 +328,10 @@ bb.a:
   store i8 0, ptr %i.f, align 1
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.dh, %bb.bn, %bb.at, %bb.am, %bb.ai, %bb.z, %bb.a
+bb.b:                                             ; preds = %.backedge, %bb.a
   %i.i = load ptr, ptr %i.b, align 8
   %i.j = call zeroext i1 @is_typename(ptr noundef %i.i)
-  br i1 %i.j, label %bb.c, label %bb.di
+  br i1 %i.j, label %bb.c, label %.loopexit
 
 bb.c:                                             ; preds = %bb.b
   %i.k = load ptr, ptr %i.b, align 8
@@ -473,6 +476,9 @@ bb.z:                                             ; preds = %bb.x, %bb.w
   %13 = getelementptr inbounds nuw %struct.Token, ptr %i.bk, i32 0, i32 1
   %i.bl = load ptr, ptr %13, align 8
   store ptr %i.bl, ptr %i.b, align 8
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.z, %bb.ai, %bb.am, %bb.at, %bb.bn, %bb.dh
   br label %bb.b, !llvm.loop !11
 
 bb.aa:                                            ; preds = %bb.h
@@ -516,7 +522,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %i.cb, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag, %bb.af, %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.aa
-  br label %bb.b, !llvm.loop !11
+  br label %.backedge
 
 bb.aj:                                            ; preds = %bb.ah
   %i.cc = load ptr, ptr %i.b, align 8
@@ -545,7 +551,7 @@ bb.al:                                            ; preds = %bb.ak
 
 bb.am:                                            ; preds = %bb.al, %bb.ak
   store i8 1, ptr %i.f, align 1
-  br label %bb.b, !llvm.loop !11
+  br label %.backedge
 
 bb.an:                                            ; preds = %bb.aj
   %i.cn = load ptr, ptr %i.b, align 8
@@ -595,7 +601,7 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   %i.df = load ptr, ptr %i.b, align 8
   %i.dg = call ptr @skip(ptr noundef %i.df, ptr noundef @.str.24)
   store ptr %i.dg, ptr %i.b, align 8
-  br label %bb.b, !llvm.loop !11
+  br label %.backedge
 
 bb.au:                                            ; preds = %bb.an
   %i.dh = load ptr, ptr %i.b, align 8
@@ -707,7 +713,7 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bc
   %i.es = load i32, ptr %i.e, align 4
   %i.et = add nsw i32 %i.es, 65536
   store i32 %i.et, ptr %i.e, align 4
-  br label %bb.b, !llvm.loop !11
+  br label %.backedge
 
 bb.bo:                                            ; preds = %bb.ay
   %i.eu = load ptr, ptr %i.b, align 8
@@ -961,9 +967,12 @@ bb.dh:                                            ; preds = %bb.df, %bb.de, %bb.
   %25 = getelementptr inbounds nuw %struct.Token, ptr %i.gx, i32 0, i32 1
   %i.gy = load ptr, ptr %25, align 8
   store ptr %i.gy, ptr %i.b, align 8
-  br label %bb.b, !llvm.loop !11
+  br label %.backedge
 
-bb.di:                                            ; preds = %bb.ba, %bb.b
+.loopexit:                                        ; preds = %bb.b
+  br label %bb.di
+
+bb.di:                                            ; preds = %.loopexit, %bb.ba
   %i.gz = load i8, ptr %i.f, align 1
   %i.ha = icmp ne i8 %i.gz, 0
   br i1 %i.ha, label %bb.dj, label %bb.dk
@@ -1366,7 +1375,7 @@ bb.e:                                             ; preds = %bb.i, %bb.d
   %5 = getelementptr inbounds nuw %struct.StringArray, ptr %4, i32 0, i32 2
   %i.m = load i32, ptr %5, align 4
   %i.n = icmp slt i32 %i.k, %i.m
-  br i1 %i.n, label %bb.f, label %bb.j
+  br i1 %i.n, label %bb.f, label %.loopexit
 
 bb.f:                                             ; preds = %bb.e
   %i.o = load ptr, ptr %i.a, align 8
@@ -1397,7 +1406,10 @@ bb.i:                                             ; preds = %bb.h
   store i32 %i.z, ptr %i.b, align 4
   br label %bb.e, !llvm.loop !14
 
-bb.j:                                             ; preds = %bb.e, %bb.c
+.loopexit:                                        ; preds = %bb.e
+  br label %bb.j
+
+bb.j:                                             ; preds = %.loopexit, %bb.c
   ret void
 }
 
@@ -1441,7 +1453,7 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.l, %bb.e
   %i.m = load ptr, ptr %i.c, align 8
   %i.n = icmp ne ptr %i.m, null
-  br i1 %i.n, label %bb.g, label %bb.m
+  br i1 %i.n, label %bb.g, label %.loopexit
 
 bb.g:                                             ; preds = %bb.f
   %i.o = load ptr, ptr %i.b, align 8
@@ -1480,7 +1492,10 @@ bb.l:                                             ; preds = %bb.k
   store ptr %i.ab, ptr %i.c, align 8
   br label %bb.f, !llvm.loop !15
 
-bb.m:                                             ; preds = %bb.j, %bb.f
+.loopexit:                                        ; preds = %bb.f
+  br label %bb.m
+
+bb.m:                                             ; preds = %.loopexit, %bb.j
   %i.ac = load ptr, ptr %i.c, align 8
   %i.ad = icmp ne ptr %i.ac, null
   br i1 %i.ad, label %bb.o, label %bb.n
@@ -1883,7 +1898,7 @@ bb.a:
   store ptr %i.f, ptr %i.c, align 8
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.e, %bb.c, %bb.a
+bb.b:                                             ; preds = %.backedge, %bb.a
   %i.g = load ptr, ptr %i.b, align 8
   store ptr %i.g, ptr %i.d, align 8
   %i.h = load ptr, ptr %i.b, align 8
@@ -1899,6 +1914,9 @@ bb.c:                                             ; preds = %bb.b
   %i.n = load ptr, ptr %i.d, align 8
   %i.o = call ptr @new_binary(i32 noundef 12, ptr noundef %i.j, ptr noundef %i.m, ptr noundef %i.n)
   store ptr %i.o, ptr %i.c, align 8
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.c, %bb.e
   br label %bb.b
 
 bb.d:                                             ; preds = %bb.b
@@ -1915,7 +1933,7 @@ bb.e:                                             ; preds = %bb.d
   %i.v = load ptr, ptr %i.d, align 8
   %i.w = call ptr @new_binary(i32 noundef 13, ptr noundef %i.r, ptr noundef %i.u, ptr noundef %i.v)
   store ptr %i.w, ptr %i.c, align 8
-  br label %bb.b
+  br label %.backedge
 
 bb.f:                                             ; preds = %bb.d
   %i.x = load ptr, ptr %i.b, align 8
@@ -1939,7 +1957,7 @@ bb.a:
   store ptr %i.f, ptr %i.c, align 8
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.i, %bb.g, %bb.e, %bb.c, %bb.a
+bb.b:                                             ; preds = %.backedge, %bb.a
   %i.g = load ptr, ptr %i.b, align 8
   store ptr %i.g, ptr %i.d, align 8
   %i.h = load ptr, ptr %i.b, align 8
@@ -1955,6 +1973,9 @@ bb.c:                                             ; preds = %bb.b
   %i.n = load ptr, ptr %i.d, align 8
   %i.o = call ptr @new_binary(i32 noundef 14, ptr noundef %i.j, ptr noundef %i.m, ptr noundef %i.n)
   store ptr %i.o, ptr %i.c, align 8
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.c, %bb.e, %bb.g, %bb.i
   br label %bb.b
 
 bb.d:                                             ; preds = %bb.b
@@ -1971,7 +1992,7 @@ bb.e:                                             ; preds = %bb.d
   %i.v = load ptr, ptr %i.d, align 8
   %i.w = call ptr @new_binary(i32 noundef 15, ptr noundef %i.r, ptr noundef %i.u, ptr noundef %i.v)
   store ptr %i.w, ptr %i.c, align 8
-  br label %bb.b
+  br label %.backedge
 
 bb.f:                                             ; preds = %bb.d
   %i.x = load ptr, ptr %i.b, align 8
@@ -1987,7 +2008,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ad = load ptr, ptr %i.d, align 8
   %i.ae = call ptr @new_binary(i32 noundef 14, ptr noundef %i.ab, ptr noundef %i.ac, ptr noundef %i.ad)
   store ptr %i.ae, ptr %i.c, align 8
-  br label %bb.b
+  br label %.backedge
 
 bb.h:                                             ; preds = %bb.f
   %i.af = load ptr, ptr %i.b, align 8
@@ -2003,7 +2024,7 @@ bb.i:                                             ; preds = %bb.h
   %i.al = load ptr, ptr %i.d, align 8
   %i.am = call ptr @new_binary(i32 noundef 15, ptr noundef %i.aj, ptr noundef %i.ak, ptr noundef %i.al)
   store ptr %i.am, ptr %i.c, align 8
-  br label %bb.b
+  br label %.backedge
 
 bb.j:                                             ; preds = %bb.h
   %i.an = load ptr, ptr %i.b, align 8
@@ -2027,7 +2048,7 @@ bb.a:
   store ptr %i.f, ptr %i.c, align 8
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.e, %bb.c, %bb.a
+bb.b:                                             ; preds = %.backedge, %bb.a
   %i.g = load ptr, ptr %i.b, align 8
   store ptr %i.g, ptr %i.d, align 8
   %i.h = load ptr, ptr %i.b, align 8
@@ -2043,6 +2064,9 @@ bb.c:                                             ; preds = %bb.b
   %i.n = load ptr, ptr %i.d, align 8
   %i.o = call ptr @new_binary(i32 noundef 10, ptr noundef %i.j, ptr noundef %i.m, ptr noundef %i.n)
   store ptr %i.o, ptr %i.c, align 8
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.c, %bb.e
   br label %bb.b
 
 bb.d:                                             ; preds = %bb.b
@@ -2059,7 +2083,7 @@ bb.e:                                             ; preds = %bb.d
   %i.v = load ptr, ptr %i.d, align 8
   %i.w = call ptr @new_binary(i32 noundef 11, ptr noundef %i.r, ptr noundef %i.u, ptr noundef %i.v)
   store ptr %i.w, ptr %i.c, align 8
-  br label %bb.b
+  br label %.backedge
 
 bb.f:                                             ; preds = %bb.d
   %i.x = load ptr, ptr %i.b, align 8
@@ -2083,7 +2107,7 @@ bb.a:
   store ptr %i.f, ptr %i.c, align 8
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.e, %bb.c, %bb.a
+bb.b:                                             ; preds = %.backedge, %bb.a
   %i.g = load ptr, ptr %i.b, align 8
   store ptr %i.g, ptr %i.d, align 8
   %i.h = load ptr, ptr %i.b, align 8
@@ -2099,6 +2123,9 @@ bb.c:                                             ; preds = %bb.b
   %i.n = load ptr, ptr %i.d, align 8
   %i.o = call ptr @new_add(ptr noundef %i.j, ptr noundef %i.m, ptr noundef %i.n)
   store ptr %i.o, ptr %i.c, align 8
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.c, %bb.e
   br label %bb.b
 
 bb.d:                                             ; preds = %bb.b
@@ -2115,7 +2142,7 @@ bb.e:                                             ; preds = %bb.d
   %i.v = load ptr, ptr %i.d, align 8
   %i.w = call ptr @new_sub(ptr noundef %i.r, ptr noundef %i.u, ptr noundef %i.v)
   store ptr %i.w, ptr %i.c, align 8
-  br label %bb.b
+  br label %.backedge
 
 bb.f:                                             ; preds = %bb.d
   %i.x = load ptr, ptr %i.b, align 8
@@ -2139,7 +2166,7 @@ bb.a:
   store ptr %i.f, ptr %i.c, align 8
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.g, %bb.e, %bb.c, %bb.a
+bb.b:                                             ; preds = %.backedge, %bb.a
   %i.g = load ptr, ptr %i.b, align 8
   store ptr %i.g, ptr %i.d, align 8
   %i.h = load ptr, ptr %i.b, align 8
@@ -2155,6 +2182,9 @@ bb.c:                                             ; preds = %bb.b
   %i.n = load ptr, ptr %i.d, align 8
   %i.o = call ptr @new_binary(i32 noundef 3, ptr noundef %i.j, ptr noundef %i.m, ptr noundef %i.n)
   store ptr %i.o, ptr %i.c, align 8
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.c, %bb.e, %bb.g
   br label %bb.b
 
 bb.d:                                             ; preds = %bb.b
@@ -2171,7 +2201,7 @@ bb.e:                                             ; preds = %bb.d
   %i.v = load ptr, ptr %i.d, align 8
   %i.w = call ptr @new_binary(i32 noundef 4, ptr noundef %i.r, ptr noundef %i.u, ptr noundef %i.v)
   store ptr %i.w, ptr %i.c, align 8
-  br label %bb.b
+  br label %.backedge
 
 bb.f:                                             ; preds = %bb.d
   %i.x = load ptr, ptr %i.b, align 8
@@ -2187,7 +2217,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ad = load ptr, ptr %i.d, align 8
   %i.ae = call ptr @new_binary(i32 noundef 6, ptr noundef %i.z, ptr noundef %i.ac, ptr noundef %i.ad)
   store ptr %i.ae, ptr %i.c, align 8
-  br label %bb.b
+  br label %.backedge
 
 bb.h:                                             ; preds = %bb.f
   %i.af = load ptr, ptr %i.b, align 8
@@ -2590,7 +2620,7 @@ bb.e:                                             ; preds = %bb.o, %bb.d
   %i.t = load ptr, ptr %i.c, align 8
   %i.u = call zeroext i1 @equal(ptr noundef %i.t, ptr noundef @.str.24)
   %i.v = xor i1 %i.u, true
-  br i1 %i.v, label %bb.f, label %bb.p
+  br i1 %i.v, label %bb.f, label %.loopexit
 
 bb.f:                                             ; preds = %bb.e
   %i.w = load ptr, ptr %i.e, align 8
@@ -2677,7 +2707,10 @@ bb.o:                                             ; preds = %bb.n, %bb.k
   store ptr %i.bd, ptr %i.e, align 8
   br label %bb.e, !llvm.loop !26
 
-bb.p:                                             ; preds = %bb.i, %bb.e
+.loopexit:                                        ; preds = %bb.e
+  br label %bb.p
+
+bb.p:                                             ; preds = %.loopexit, %bb.i
   %i.bf = load ptr, ptr %i.e, align 8
   %i.bg = icmp eq ptr %i.bf, %3
   br i1 %i.bg, label %bb.q, label %bb.r
@@ -3080,7 +3113,7 @@ bb.f:                                             ; preds = %bb.b, %bb.a
   store ptr %i.aw, ptr %i.j, align 8
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.r, %bb.p, %bb.n, %bb.l, %bb.j, %bb.h, %bb.f
+bb.g:                                             ; preds = %.backedge, %bb.f
   %i.ax = load ptr, ptr %i.c, align 8
   %i.ay = call zeroext i1 @equal(ptr noundef %i.ax, ptr noundef @.str.23)
   br i1 %i.ay, label %bb.h, label %bb.i
@@ -3092,6 +3125,9 @@ bb.h:                                             ; preds = %bb.g
   %i.bb = load ptr, ptr %i.j, align 8
   %i.bc = call ptr @funcall(ptr noundef %i.c, ptr noundef %i.ba, ptr noundef %i.bb)
   store ptr %i.bc, ptr %i.j, align 8
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.h, %bb.j, %bb.l, %bb.n, %bb.p, %bb.r
   br label %bb.g
 
 bb.i:                                             ; preds = %bb.g
@@ -3117,7 +3153,7 @@ bb.j:                                             ; preds = %bb.i
   %i.bp = load ptr, ptr %i.k, align 8
   %i.bq = call ptr @new_unary(i32 noundef 21, ptr noundef %i.bo, ptr noundef %i.bp)
   store ptr %i.bq, ptr %i.j, align 8
-  br label %bb.g
+  br label %.backedge
 
 bb.k:                                             ; preds = %bb.i
   %i.br = load ptr, ptr %i.c, align 8
@@ -3137,7 +3173,7 @@ bb.l:                                             ; preds = %bb.k
   %9 = getelementptr inbounds nuw %struct.Token, ptr %i.by, i32 0, i32 1
   %i.bz = load ptr, ptr %9, align 8
   store ptr %i.bz, ptr %i.c, align 8
-  br label %bb.g
+  br label %.backedge
 
 bb.m:                                             ; preds = %bb.k
   %i.ca = load ptr, ptr %i.c, align 8
@@ -3161,7 +3197,7 @@ bb.n:                                             ; preds = %bb.m
   %12 = getelementptr inbounds nuw %struct.Token, ptr %i.ck, i32 0, i32 1
   %i.cl = load ptr, ptr %12, align 8
   store ptr %i.cl, ptr %i.c, align 8
-  br label %bb.g
+  br label %.backedge
 
 bb.o:                                             ; preds = %bb.m
   %i.cm = load ptr, ptr %i.c, align 8
@@ -3177,7 +3213,7 @@ bb.p:                                             ; preds = %bb.o
   %13 = getelementptr inbounds nuw %struct.Token, ptr %i.cr, i32 0, i32 1
   %i.cs = load ptr, ptr %13, align 8
   store ptr %i.cs, ptr %i.c, align 8
-  br label %bb.g
+  br label %.backedge
 
 bb.q:                                             ; preds = %bb.o
   %i.ct = load ptr, ptr %i.c, align 8
@@ -3193,7 +3229,7 @@ bb.r:                                             ; preds = %bb.q
   %14 = getelementptr inbounds nuw %struct.Token, ptr %i.cy, i32 0, i32 1
   %i.cz = load ptr, ptr %14, align 8
   store ptr %i.cz, ptr %i.c, align 8
-  br label %bb.g
+  br label %.backedge
 
 bb.s:                                             ; preds = %bb.q
   %i.da = load ptr, ptr %i.c, align 8
@@ -3596,7 +3632,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.p, %bb.h
   %i.ba = load ptr, ptr %i.i, align 8
   %i.bb = icmp ne ptr %i.ba, null
-  br i1 %i.bb, label %bb.j, label %bb.q
+  br i1 %i.bb, label %bb.j, label %.loopexit
 
 bb.j:                                             ; preds = %bb.i
   %i.bc = load ptr, ptr %i.i, align 8
@@ -3709,7 +3745,10 @@ bb.p:                                             ; preds = %bb.o
   store ptr %i.do, ptr %i.i, align 8
   br label %bb.i, !llvm.loop !31
 
-bb.q:                                             ; preds = %bb.l, %bb.i
+.loopexit:                                        ; preds = %bb.i
+  br label %bb.q
+
+bb.q:                                             ; preds = %.loopexit, %bb.l
   %i.dp = load ptr, ptr %i.b, align 8
   store ptr %i.dp, ptr %i.a, align 8
   br label %bb.ae
@@ -4112,7 +4151,7 @@ bb.a:
   store i8 1, ptr %i.e, align 1
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.j, %bb.f, %bb.a
+bb.b:                                             ; preds = %.backedge, %bb.a
   %i.k = load ptr, ptr %i.a, align 8
   %i.l = load ptr, ptr %i.b, align 8
   %i.m = call zeroext i1 @consume_end(ptr noundef %i.k, ptr noundef %i.l)
@@ -4158,6 +4197,9 @@ bb.f:                                             ; preds = %bb.e
   %8 = getelementptr inbounds nuw %struct.Member, ptr %i.ag, i32 0, i32 0
   %i.ah = load ptr, ptr %8, align 8
   store ptr %i.ah, ptr %i.d, align 8
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.f, %bb.j
   br label %bb.b, !llvm.loop !42
 
 bb.g:                                             ; preds = %bb.e
@@ -4190,7 +4232,7 @@ bb.i:                                             ; preds = %bb.g
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
-  br label %bb.b, !llvm.loop !42
+  br label %.backedge
 
 bb.k:                                             ; preds = %bb.b
   ret void
@@ -4593,7 +4635,7 @@ bb.a:
   call void @enter_scope()
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.m, %bb.j, %bb.h, %bb.f, %bb.a
+bb.b:                                             ; preds = %.backedge, %bb.a
   %i.h = load ptr, ptr %i.b, align 8
   %i.i = call zeroext i1 @equal(ptr noundef %i.h, ptr noundef @.str.69)
   %i.j = xor i1 %i.i, true
@@ -4626,6 +4668,9 @@ bb.f:                                             ; preds = %bb.e
   %i.u = load ptr, ptr %i.e, align 8
   %i.v = call ptr @parse_typedef(ptr noundef %i.t, ptr noundef %i.u)
   store ptr %i.v, ptr %i.b, align 8
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.f, %bb.h, %bb.j, %bb.m
   br label %bb.b, !llvm.loop !50
 
 bb.g:                                             ; preds = %bb.e
@@ -4638,7 +4683,7 @@ bb.h:                                             ; preds = %bb.g
   %i.z = load ptr, ptr %i.e, align 8
   %i.aa = call ptr @function(ptr noundef %i.y, ptr noundef %i.z, ptr noundef %3)
   store ptr %i.aa, ptr %i.b, align 8
-  br label %bb.b, !llvm.loop !50
+  br label %.backedge
 
 bb.i:                                             ; preds = %bb.g
   %6 = getelementptr inbounds nuw %struct.VarAttr, ptr %3, i32 0, i32 2
@@ -4651,7 +4696,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ae = load ptr, ptr %i.e, align 8
   %i.af = call ptr @global_variable(ptr noundef %i.ad, ptr noundef %i.ae, ptr noundef %3)
   store ptr %i.af, ptr %i.b, align 8
-  br label %bb.b, !llvm.loop !50
+  br label %.backedge
 
 bb.k:                                             ; preds = %bb.i
   %i.ag = load ptr, ptr %i.b, align 8
@@ -4675,7 +4720,7 @@ bb.l:                                             ; preds = %bb.d, %bb.c
 bb.m:                                             ; preds = %bb.l, %bb.k
   %i.an = load ptr, ptr %i.d, align 8
   call void @add_type(ptr noundef %i.an)
-  br label %bb.b, !llvm.loop !50
+  br label %.backedge
 
 bb.n:                                             ; preds = %bb.b
   call void @leave_scope()
@@ -4886,7 +4931,7 @@ bb.f:                                             ; preds = %bb.e, %bb.b
   store ptr null, ptr %i.f, align 8
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.n, %bb.k, %bb.f
+bb.g:                                             ; preds = %bb.k, %bb.f
   %i.ac = load ptr, ptr %i.a, align 8
   %i.ad = load ptr, ptr %i.b, align 8
   %i.ae = call zeroext i1 @consume(ptr noundef %i.ac, ptr noundef %i.ad, ptr noundef @.str.24)
@@ -4912,14 +4957,17 @@ bb.i:                                             ; preds = %bb.h
   store ptr %i.ao, ptr %i.g, align 8
   %i.ap = load ptr, ptr %i.f, align 8
   %i.aq = icmp ne ptr %i.ap, null
-  br i1 %i.aq, label %bb.k, label %bb.j
+  br i1 %i.aq, label %7, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.ar = load ptr, ptr %i.g, align 8
   store ptr %i.ar, ptr %i.f, align 8
+  br label %7
+
+7:                                                ; preds = %bb.j, %bb.i
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.j, %bb.i
+bb.k:                                             ; preds = %7, %bb.n
   br label %bb.g, !llvm.loop !51
 
 bb.l:                                             ; preds = %bb.h
@@ -4943,7 +4991,7 @@ bb.m:                                             ; preds = %bb.l
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
-  br label %bb.g, !llvm.loop !51
+  br label %bb.k
 
 bb.o:                                             ; preds = %bb.g
   %i.bc = load ptr, ptr %i.f, align 8
@@ -5025,7 +5073,7 @@ bb.a:
   store i32 0, ptr %i.f, align 4
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.aa, %bb.q, %bb.m, %bb.a
+bb.b:                                             ; preds = %bb.m, %bb.a
   %i.o = load ptr, ptr %i.b, align 8
   %i.p = call zeroext i1 @equal(ptr noundef %i.o, ptr noundef @.str.99)
   %i.q = xor i1 %i.p, true
@@ -5100,7 +5148,7 @@ bb.k:                                             ; preds = %bb.j
   store ptr %i.ap, ptr %10, align 8
   %i.au = load ptr, ptr %i.b, align 8
   %i.av = call zeroext i1 @equal(ptr noundef %i.au, ptr noundef @.str.76)
-  br i1 %i.av, label %bb.l, label %bb.m
+  br i1 %i.av, label %bb.l, label %12
 
 bb.l:                                             ; preds = %bb.k
   %i.aw = load ptr, ptr %i.b, align 8
@@ -5108,9 +5156,12 @@ bb.l:                                             ; preds = %bb.k
   %i.ax = load ptr, ptr %11, align 8
   %i.ay = load ptr, ptr %i.h, align 8
   call void @gvar_initializer(ptr noundef %i.b, ptr noundef %i.ax, ptr noundef %i.ay)
+  br label %12
+
+12:                                               ; preds = %bb.l, %bb.k
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.l, %bb.k
+bb.m:                                             ; preds = %12, %bb.q, %bb.aa
   br label %bb.b, !llvm.loop !52
 
 bb.n:                                             ; preds = %bb.j, %bb.i
@@ -5120,12 +5171,12 @@ bb.n:                                             ; preds = %bb.j, %bb.i
   %i.bc = load ptr, ptr %i.b, align 8
   %i.bd = call ptr @new_unary(i32 noundef 38, ptr noundef %i.bb, ptr noundef %i.bc) ; 2 uses
   %i.be = load ptr, ptr %i.e, align 8
-  %12 = getelementptr inbounds nuw %struct.Node, ptr %i.be, i32 0, i32 1
-  store ptr %i.bd, ptr %12, align 8
+  %13 = getelementptr inbounds nuw %struct.Node, ptr %i.be, i32 0, i32 1
+  store ptr %i.bd, ptr %13, align 8
   store ptr %i.bd, ptr %i.e, align 8
   %i.bf = load ptr, ptr %i.g, align 8
-  %13 = getelementptr inbounds nuw %struct.Type, ptr %i.bf, i32 0, i32 0
-  %i.bg = load i32, ptr %13, align 8
+  %14 = getelementptr inbounds nuw %struct.Type, ptr %i.bf, i32 0, i32 0
+  %i.bg = load i32, ptr %14, align 8
   %i.bh = icmp eq i32 %i.bg, 13
   br i1 %i.bh, label %bb.o, label %bb.r
 
@@ -5141,22 +5192,22 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.o
   %i.bl = load ptr, ptr %i.g, align 8
-  %14 = getelementptr inbounds nuw %struct.Type, ptr %i.bl, i32 0, i32 7
-  %i.bm = load ptr, ptr %14, align 8
+  %15 = getelementptr inbounds nuw %struct.Type, ptr %i.bl, i32 0, i32 7
+  %i.bm = load ptr, ptr %15, align 8
   %i.bn = call ptr @get_ident(ptr noundef %i.bm)
   %i.bo = load ptr, ptr %i.g, align 8
   %i.bp = call ptr @new_lvar(ptr noundef %i.bn, ptr noundef %i.bo)
   store ptr %i.bp, ptr %i.i, align 8
   %i.bq = load ptr, ptr %i.g, align 8
-  %15 = getelementptr inbounds nuw %struct.Type, ptr %i.bq, i32 0, i32 7
-  %i.br = load ptr, ptr %15, align 8
+  %16 = getelementptr inbounds nuw %struct.Type, ptr %i.bq, i32 0, i32 7
+  %i.br = load ptr, ptr %16, align 8
   store ptr %i.br, ptr %i.j, align 8
   %i.bs = load ptr, ptr %i.i, align 8
   %i.bt = load ptr, ptr %i.j, align 8
   %i.bu = call ptr @new_vla_ptr(ptr noundef %i.bs, ptr noundef %i.bt)
   %i.bv = load ptr, ptr %i.g, align 8
-  %16 = getelementptr inbounds nuw %struct.Type, ptr %i.bv, i32 0, i32 11
-  %i.bw = load ptr, ptr %16, align 8
+  %17 = getelementptr inbounds nuw %struct.Type, ptr %i.bv, i32 0, i32 11
+  %i.bw = load ptr, ptr %17, align 8
   %i.bx = load ptr, ptr %i.j, align 8
   %i.by = call ptr @new_var_node(ptr noundef %i.bw, ptr noundef %i.bx)
   %i.bz = call ptr @new_alloca(ptr noundef %i.by)
@@ -5167,15 +5218,15 @@ bb.q:                                             ; preds = %bb.o
   %i.cd = load ptr, ptr %i.j, align 8
   %i.ce = call ptr @new_unary(i32 noundef 38, ptr noundef %i.cc, ptr noundef %i.cd) ; 2 uses
   %i.cf = load ptr, ptr %i.e, align 8
-  %17 = getelementptr inbounds nuw %struct.Node, ptr %i.cf, i32 0, i32 1
-  store ptr %i.ce, ptr %17, align 8
+  %18 = getelementptr inbounds nuw %struct.Node, ptr %i.cf, i32 0, i32 1
+  store ptr %i.ce, ptr %18, align 8
   store ptr %i.ce, ptr %i.e, align 8
-  br label %bb.b, !llvm.loop !52
+  br label %bb.m
 
 bb.r:                                             ; preds = %bb.n
   %i.cg = load ptr, ptr %i.g, align 8
-  %18 = getelementptr inbounds nuw %struct.Type, ptr %i.cg, i32 0, i32 7
-  %i.ch = load ptr, ptr %18, align 8
+  %19 = getelementptr inbounds nuw %struct.Type, ptr %i.cg, i32 0, i32 7
+  %i.ch = load ptr, ptr %19, align 8
   %i.ci = call ptr @get_ident(ptr noundef %i.ch)
   %i.cj = load ptr, ptr %i.g, align 8
   %i.ck = call ptr @new_lvar(ptr noundef %i.ci, ptr noundef %i.cj)
@@ -5186,18 +5237,18 @@ bb.r:                                             ; preds = %bb.n
 
 bb.s:                                             ; preds = %bb.r
   %i.cn = load ptr, ptr %i.d, align 8
-  %19 = getelementptr inbounds nuw %struct.VarAttr, ptr %i.cn, i32 0, i32 5
-  %i.co = load i32, ptr %19, align 4
+  %20 = getelementptr inbounds nuw %struct.VarAttr, ptr %i.cn, i32 0, i32 5
+  %i.co = load i32, ptr %20, align 4
   %i.cp = icmp ne i32 %i.co, 0
   br i1 %i.cp, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
   %i.cq = load ptr, ptr %i.d, align 8
-  %20 = getelementptr inbounds nuw %struct.VarAttr, ptr %i.cq, i32 0, i32 5
-  %i.cr = load i32, ptr %20, align 4
+  %21 = getelementptr inbounds nuw %struct.VarAttr, ptr %i.cq, i32 0, i32 5
+  %i.cr = load i32, ptr %21, align 4
   %i.cs = load ptr, ptr %i.l, align 8
-  %21 = getelementptr inbounds nuw %struct.Obj, ptr %i.cs, i32 0, i32 5
-  store i32 %i.cr, ptr %21, align 4
+  %22 = getelementptr inbounds nuw %struct.Obj, ptr %i.cs, i32 0, i32 5
+  store i32 %i.cr, ptr %22, align 4
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r
@@ -5207,8 +5258,8 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %bb.r
 
 bb.v:                                             ; preds = %bb.u
   %i.cv = load ptr, ptr %i.b, align 8
-  %22 = getelementptr inbounds nuw %struct.Token, ptr %i.cv, i32 0, i32 1
-  %i.cw = load ptr, ptr %22, align 8
+  %23 = getelementptr inbounds nuw %struct.Token, ptr %i.cv, i32 0, i32 1
+  %i.cw = load ptr, ptr %23, align 8
   %i.cx = load ptr, ptr %i.l, align 8
   %i.cy = call ptr @lvar_initializer(ptr noundef %i.b, ptr noundef %i.cw, ptr noundef %i.cx)
   store ptr %i.cy, ptr %i.m, align 8
@@ -5216,58 +5267,58 @@ bb.v:                                             ; preds = %bb.u
   %i.da = load ptr, ptr %i.b, align 8
   %i.db = call ptr @new_unary(i32 noundef 38, ptr noundef %i.cz, ptr noundef %i.da) ; 2 uses
   %i.dc = load ptr, ptr %i.e, align 8
-  %23 = getelementptr inbounds nuw %struct.Node, ptr %i.dc, i32 0, i32 1
-  store ptr %i.db, ptr %23, align 8
+  %24 = getelementptr inbounds nuw %struct.Node, ptr %i.dc, i32 0, i32 1
+  store ptr %i.db, ptr %24, align 8
   store ptr %i.db, ptr %i.e, align 8
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
   %i.dd = load ptr, ptr %i.l, align 8
-  %24 = getelementptr inbounds nuw %struct.Obj, ptr %i.dd, i32 0, i32 2
-  %i.de = load ptr, ptr %24, align 8
-  %25 = getelementptr inbounds nuw %struct.Type, ptr %i.de, i32 0, i32 1
-  %i.df = load i32, ptr %25, align 4
+  %25 = getelementptr inbounds nuw %struct.Obj, ptr %i.dd, i32 0, i32 2
+  %i.de = load ptr, ptr %25, align 8
+  %26 = getelementptr inbounds nuw %struct.Type, ptr %i.de, i32 0, i32 1
+  %i.df = load i32, ptr %26, align 4
   %i.dg = icmp slt i32 %i.df, 0
   br i1 %i.dg, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
   %i.dh = load ptr, ptr %i.g, align 8
-  %26 = getelementptr inbounds nuw %struct.Type, ptr %i.dh, i32 0, i32 7
-  %i.di = load ptr, ptr %26, align 8
+  %27 = getelementptr inbounds nuw %struct.Type, ptr %i.dh, i32 0, i32 7
+  %i.di = load ptr, ptr %27, align 8
   call void (ptr, ptr, ...) @error_tok(ptr noundef %i.di, ptr noundef @.str.103) #9
   unreachable
 
 bb.y:                                             ; preds = %bb.w
   %i.dj = load ptr, ptr %i.l, align 8
-  %27 = getelementptr inbounds nuw %struct.Obj, ptr %i.dj, i32 0, i32 2
-  %i.dk = load ptr, ptr %27, align 8
-  %28 = getelementptr inbounds nuw %struct.Type, ptr %i.dk, i32 0, i32 0
-  %i.dl = load i32, ptr %28, align 8
+  %28 = getelementptr inbounds nuw %struct.Obj, ptr %i.dj, i32 0, i32 2
+  %i.dk = load ptr, ptr %28, align 8
+  %29 = getelementptr inbounds nuw %struct.Type, ptr %i.dk, i32 0, i32 0
+  %i.dl = load i32, ptr %29, align 8
   %i.dm = icmp eq i32 %i.dl, 0
   br i1 %i.dm, label %bb.z, label %bb.aa
 
 bb.z:                                             ; preds = %bb.y
   %i.dn = load ptr, ptr %i.g, align 8
-  %29 = getelementptr inbounds nuw %struct.Type, ptr %i.dn, i32 0, i32 7
-  %i.do = load ptr, ptr %29, align 8
+  %30 = getelementptr inbounds nuw %struct.Type, ptr %i.dn, i32 0, i32 7
+  %i.do = load ptr, ptr %30, align 8
   call void (ptr, ptr, ...) @error_tok(ptr noundef %i.do, ptr noundef @.str.100) #9
   unreachable
 
 bb.aa:                                            ; preds = %bb.y
-  br label %bb.b, !llvm.loop !52
+  br label %bb.m
 
 bb.ab:                                            ; preds = %bb.b
   %i.dp = load ptr, ptr %i.b, align 8
   %i.dq = call ptr @new_node(i32 noundef 32, ptr noundef %i.dp)
   store ptr %i.dq, ptr %i.n, align 8
-  %30 = getelementptr inbounds nuw %struct.Node, ptr %4, i32 0, i32 1
-  %i.dr = load ptr, ptr %30, align 8
+  %31 = getelementptr inbounds nuw %struct.Node, ptr %4, i32 0, i32 1
+  %i.dr = load ptr, ptr %31, align 8
   %i.ds = load ptr, ptr %i.n, align 8
-  %31 = getelementptr inbounds nuw %struct.Node, ptr %i.ds, i32 0, i32 13
-  store ptr %i.dr, ptr %31, align 8
+  %32 = getelementptr inbounds nuw %struct.Node, ptr %i.ds, i32 0, i32 13
+  store ptr %i.dr, ptr %32, align 8
   %i.dt = load ptr, ptr %i.b, align 8
-  %32 = getelementptr inbounds nuw %struct.Token, ptr %i.dt, i32 0, i32 1
-  %i.du = load ptr, ptr %32, align 8
+  %33 = getelementptr inbounds nuw %struct.Token, ptr %i.dt, i32 0, i32 1
+  %i.du = load ptr, ptr %33, align 8
   %i.dv = load ptr, ptr %i.a, align 8
   store ptr %i.du, ptr %i.dv, align 8
   %i.dw = load ptr, ptr %i.n, align 8
@@ -5670,7 +5721,7 @@ bb.c:                                             ; preds = %bb.b
   store i8 1, ptr %i.c, align 1
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.j, %bb.h, %bb.c
+bb.d:                                             ; preds = %.backedge, %bb.c
   %i.j = load ptr, ptr %i.a, align 8
   %i.k = call zeroext i1 @consume(ptr noundef %i.a, ptr noundef %i.j, ptr noundef @.str.24)
   %i.l = xor i1 %i.k, true
@@ -5697,6 +5748,9 @@ bb.h:                                             ; preds = %bb.g
   %i.s = load ptr, ptr %i.b, align 8
   %2 = getelementptr inbounds nuw %struct.Type, ptr %i.s, i32 0, i32 14
   store i8 1, ptr %2, align 1
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.h, %bb.j
   br label %bb.d, !llvm.loop !57
 
 bb.i:                                             ; preds = %bb.g
@@ -5717,7 +5771,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ab = load ptr, ptr %i.a, align 8
   %i.ac = call ptr @skip(ptr noundef %i.ab, ptr noundef @.str.24)
   store ptr %i.ac, ptr %i.a, align 8
-  br label %bb.d, !llvm.loop !57
+  br label %.backedge
 
 bb.k:                                             ; preds = %bb.i
   %i.ad = load ptr, ptr %i.a, align 8
@@ -5833,7 +5887,7 @@ bb.a:
   store i32 0, ptr %i.e, align 4
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.t, %bb.i, %bb.a
+bb.b:                                             ; preds = %.backedge, %bb.a
   %i.j = load ptr, ptr %i.b, align 8
   %i.k = call zeroext i1 @equal(ptr noundef %i.j, ptr noundef @.str.69)
   %i.l = xor i1 %i.k, true
@@ -5904,6 +5958,9 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %14 = getelementptr inbounds nuw %struct.Member, ptr %i.al, i32 0, i32 0
   store ptr %i.ak, ptr %14, align 8
   store ptr %i.ak, ptr %i.d, align 8
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.i, %bb.t
   br label %bb.b, !llvm.loop !60
 
 bb.j:                                             ; preds = %bb.e, %bb.d
@@ -5998,7 +6055,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   br label %bb.k, !llvm.loop !61
 
 bb.t:                                             ; preds = %bb.k
-  br label %bb.b, !llvm.loop !60
+  br label %.backedge
 
 bb.u:                                             ; preds = %bb.b
   %i.bw = load ptr, ptr %i.d, align 8
@@ -6189,7 +6246,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.h, %bb.c
   %i.g = load ptr, ptr %i.b, align 8
   %i.h = icmp ne ptr %i.g, null
-  br i1 %i.h, label %bb.e, label %bb.i
+  br i1 %i.h, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %bb.d
   %i.i = load ptr, ptr %i.a, align 8
@@ -6221,7 +6278,10 @@ bb.h:                                             ; preds = %bb.g
   store ptr %i.s, ptr %i.b, align 8
   br label %bb.d, !llvm.loop !63
 
-bb.i:                                             ; preds = %bb.f, %bb.d
+.loopexit:                                        ; preds = %bb.d
+  br label %bb.i
+
+bb.i:                                             ; preds = %.loopexit, %bb.f
   %i.t = load ptr, ptr %i.a, align 8
   %5 = getelementptr inbounds nuw %struct.Node, ptr %i.t, i32 0, i32 20
   %i.u = load ptr, ptr %5, align 16

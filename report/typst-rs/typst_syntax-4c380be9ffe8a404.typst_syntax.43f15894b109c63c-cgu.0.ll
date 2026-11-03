@@ -205,14 +205,14 @@ bb.a:
   %or.cond.not.i.i.i.i.i.us = select i1 %i.p, i1 true, i1 %.not.i3.i.i.i.i.us
   %i.t = sub nuw i64 %.pre2.i.i.i.i.i, %.promoted11
   %.sroa.0.1.i.i.i.i.us = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %.promoted11
+  br i1 %or.cond.not.i.i.i.i.i.us, label %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5PEMdK7bMAG_12typst_syntax.exit.i.i.i.i.us.us, label %._crit_edge
+
+_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5PEMdK7bMAG_12typst_syntax.exit.i.i.i.i.us.us: ; preds = %.lr.ph.split.us
   tail call void @llvm.experimental.noalias.scope.decl(metadata !854)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !855)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !856)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !857)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !858)
-  br i1 %or.cond.not.i.i.i.i.i.us, label %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5PEMdK7bMAG_12typst_syntax.exit.i.i.i.i.us.us, label %._crit_edge
-
-_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5PEMdK7bMAG_12typst_syntax.exit.i.i.i.i.us.us: ; preds = %.lr.ph.split.us
   %i.u = load i64, ptr %i.q, align 8, !noundef !19 ; 5 uses
   %i.v = icmp ult i64 %i.u, 576460752303423488
   tail call void @llvm.assume(i1 %i.v)
@@ -615,7 +615,7 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %select.unfold
   %.sroa.4.1.i59 = sub nuw i64 %.pn212, %.lcssa154192
-  %i.eo = load i64, ptr %i.k, align 8, !noundef !19 ; 4 uses
+  %i.eo = load i64, ptr %i.k, align 8, !noundef !19 ; 5 uses
   %i.ep = icmp ult i64 %i.eo, 576460752303423488
   call void @llvm.assume(i1 %i.ep)
   %i.eq = icmp eq i64 %i.eo, 0
@@ -680,7 +680,7 @@ bb.af:                                            ; preds = %bb.ak, %bb.ac
   %i.fo = trunc nuw i8 %i.fn to i1                ; 2 uses
   %.phi.trans.insert.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %.pre2.i.i.i.i = load i64, ptr %.phi.trans.insert.i.i.i.i, align 8, !alias.scope !4206 ; 2 uses
-  br i1 %.not.i.i.i.i, label %.lr.ph.split.us.i.a, label %.lr.ph.split.preheader.i
+  br i1 %.not.i.i.i.i, label %.lr.ph.split.us.i, label %.lr.ph.split.preheader.i
 
 .lr.ph.split.preheader.i:                         ; preds = %.lr.ph.i83
   %i.fp = getelementptr inbounds nuw i8, ptr %i.d, i64 32
@@ -693,13 +693,15 @@ bb.af:                                            ; preds = %bb.ak, %bb.ac
   %.pre.i.i.i.i = load i8, ptr %i.fl, align 1, !alias.scope !4208 ; 2 uses
   br label %.lr.ph.split.preheader.i.i.i.i
 
-.lr.ph.split.us.i.a:                              ; preds = %.lr.ph.i83
+.lr.ph.split.us.i:                                ; preds = %.lr.ph.i83
   %.not.i3.i.i.us.i = icmp ne i64 %.pre2.i.i.i.i, %.promoted14.i
   %or.cond.not.i.i.i.us.i = select i1 %i.fo, i1 true, i1 %.not.i3.i.i.us.i
+  br i1 %or.cond.not.i.i.i.us.i, label %.lr.ph.split.us.i.a, label %_RINvYINtNtNtCs3oUPovFnLWP_4core3str4iter5SplitcENtNtNtNtBa_4iter6traits8iterator8Iterator4foldjNCINvNtNtBQ_8adapters3map8map_foldReNtNtCs5PEMdK7bMAG_12typst_syntax4path7SegmentjNvMs6_B27_B25_13new_uncheckedNCNvYINtB1A_3MapB3_B2P_EBK_5count0E0EB29_.exit
+
+.lr.ph.split.us.i.a:                              ; preds = %.lr.ph.split.us.i
   call void @llvm.experimental.noalias.scope.decl(metadata !4209)
   call void @llvm.experimental.noalias.scope.decl(metadata !4210)
   call void @llvm.experimental.noalias.scope.decl(metadata !4211)
-  %..i = zext i1 %or.cond.not.i.i.i.us.i to i64
   br label %_RINvYINtNtNtCs3oUPovFnLWP_4core3str4iter5SplitcENtNtNtNtBa_4iter6traits8iterator8Iterator4foldjNCINvNtNtBQ_8adapters3map8map_foldReNtNtCs5PEMdK7bMAG_12typst_syntax4path7SegmentjNvMs6_B27_B25_13new_uncheckedNCNvYINtB1A_3MapB3_B2P_EBK_5count0E0EB29_.exit
 
 .lr.ph.split.preheader.i.i.i.i:                   ; preds = %.lr.ph.split.preheader.i.i.i.i.lr.ph, %select.unfold.i
@@ -772,7 +774,8 @@ _RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5PEMdK7
   %.not.i3.i.i.i = icmp ne i64 %.pre2.i.i.i.i, %.lcssa1617.i143
   %or.cond.not.i.i.i.i = select i1 %i.fo, i1 true, i1 %.not.i3.i.i.i
   %i.gl = zext i1 %or.cond.not.i.i.i.i to i64
-  %spec.select.i.a = add i64 %.sroa.0.018.i147, %i.gl
+  %spec.select.i = add i64 %.sroa.0.018.i147, 1
+  %spec.select.i.a = add i64 %spec.select.i, %i.gl
   %.pre = load i64, ptr %i.k, align 8, !alias.scope !4215
   br label %_RINvYINtNtNtCs3oUPovFnLWP_4core3str4iter5SplitcENtNtNtNtBa_4iter6traits8iterator8Iterator4foldjNCINvNtNtBQ_8adapters3map8map_foldReNtNtCs5PEMdK7bMAG_12typst_syntax4path7SegmentjNvMs6_B27_B25_13new_uncheckedNCNvYINtB1A_3MapB3_B2P_EBK_5count0E0EB29_.exit
 
@@ -786,19 +789,18 @@ bb.ak:                                            ; preds = %bb.ac
   %i.go = icmp eq i32 %bcmp, 0
   br i1 %i.go, label %.backedge, label %bb.af
 
-_RINvYINtNtNtCs3oUPovFnLWP_4core3str4iter5SplitcENtNtNtNtBa_4iter6traits8iterator8Iterator4foldjNCINvNtNtBQ_8adapters3map8map_foldReNtNtCs5PEMdK7bMAG_12typst_syntax4path7SegmentjNvMs6_B27_B25_13new_uncheckedNCNvYINtB1A_3MapB3_B2P_EBK_5count0E0EB29_.exit: ; preds = %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5PEMdK7bMAG_12typst_syntax.exit.i.i.i, %.lr.ph.split.us.i.a, %bb.af
-  %3 = phi i64 [ %i.eo, %bb.af ], [ %.pre, %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5PEMdK7bMAG_12typst_syntax.exit.i.i.i ], [ %i.eo, %.lr.ph.split.us.i.a ] ; 4 uses
-  %.sroa.0.0.lcssa.i = phi i64 [ 0, %bb.af ], [ %spec.select.i.a, %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5PEMdK7bMAG_12typst_syntax.exit.i.i.i ], [ %..i, %.lr.ph.split.us.i.a ] ; 2 uses
+_RINvYINtNtNtCs3oUPovFnLWP_4core3str4iter5SplitcENtNtNtNtBa_4iter6traits8iterator8Iterator4foldjNCINvNtNtBQ_8adapters3map8map_foldReNtNtCs5PEMdK7bMAG_12typst_syntax4path7SegmentjNvMs6_B27_B25_13new_uncheckedNCNvYINtB1A_3MapB3_B2P_EBK_5count0E0EB29_.exit: ; preds = %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5PEMdK7bMAG_12typst_syntax.exit.i.i.i, %.lr.ph.split.us.i.a, %.lr.ph.split.us.i, %bb.af
+  %3 = phi i64 [ %i.eo, %bb.af ], [ %i.eo, %.lr.ph.split.us.i ], [ %i.eo, %.lr.ph.split.us.i.a ], [ %.pre, %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5PEMdK7bMAG_12typst_syntax.exit.i.i.i ] ; 4 uses
+  %.sroa.0.0.lcssa.i = phi i64 [ 1, %bb.af ], [ 1, %.lr.ph.split.us.i ], [ 2, %.lr.ph.split.us.i.a ], [ %spec.select.i.a, %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5PEMdK7bMAG_12typst_syntax.exit.i.i.i ] ; 7 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
-  %4 = add i64 %.sroa.0.0.lcssa.i, 1              ; 6 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !4216)
   %i.gp = load i64, ptr %i.g, align 8, !range !33, !alias.scope !4215, !noundef !19 ; 2 uses
   %i.gq = sub i64 %i.gp, %3
-  %i.gr = icmp ugt i64 %4, %i.gq
+  %i.gr = icmp ugt i64 %.sroa.0.0.lcssa.i, %i.gq
   br i1 %i.gr, label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecReE7reserveCs5PEMdK7bMAG_12typst_syntax.exit.thread.i, label %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecReE7reserveCs5PEMdK7bMAG_12typst_syntax.exit.i, !prof !23
 
 _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecReE7reserveCs5PEMdK7bMAG_12typst_syntax.exit.thread.i: ; preds = %_RINvYINtNtNtCs3oUPovFnLWP_4core3str4iter5SplitcENtNtNtNtBa_4iter6traits8iterator8Iterator4foldjNCINvNtNtBQ_8adapters3map8map_foldReNtNtCs5PEMdK7bMAG_12typst_syntax4path7SegmentjNvMs6_B27_B25_13new_uncheckedNCNvYINtB1A_3MapB3_B2P_EBK_5count0E0EB29_.exit
-  invoke fastcc void @_RINvNvMs2_NtCs1xwejQucwHj_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs5PEMdK7bMAG_12typst_syntax(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.g, i64 noundef %3, i64 noundef %4, i64 noundef 8, i64 noundef 16)
+  invoke fastcc void @_RINvNvMs2_NtCs1xwejQucwHj_5alloc7raw_vecINtB8_11RawVecInnerpE7reserve21do_reserve_and_handleNtNtBa_5alloc6GlobalECs5PEMdK7bMAG_12typst_syntax(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.g, i64 noundef %3, i64 noundef %.sroa.0.0.lcssa.i, i64 noundef 8, i64 noundef 16)
           to label %.noexc90 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc90:                                         ; preds = %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecReE7reserveCs5PEMdK7bMAG_12typst_syntax.exit.thread.i
@@ -806,19 +808,20 @@ _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecReE7reserveCs5PEMdK7bMAG_12typst_synt
   br label %.lr.ph.i.i.i87
 
 _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecReE7reserveCs5PEMdK7bMAG_12typst_syntax.exit.i: ; preds = %_RINvYINtNtNtCs3oUPovFnLWP_4core3str4iter5SplitcENtNtNtNtBa_4iter6traits8iterator8Iterator4foldjNCINvNtNtBQ_8adapters3map8map_foldReNtNtCs5PEMdK7bMAG_12typst_syntax4path7SegmentjNvMs6_B27_B25_13new_uncheckedNCNvYINtB1A_3MapB3_B2P_EBK_5count0E0EB29_.exit
-  %.not38 = icmp eq i64 %4, 0
+  %.not38 = icmp eq i64 %.sroa.0.0.lcssa.i, 0
   br i1 %.not38, label %.loopexit, label %.lr.ph.i.i.i87
 
 .lr.ph.i.i.i87:                                   ; preds = %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecReE7reserveCs5PEMdK7bMAG_12typst_syntax.exit.i, %.noexc90
   %i.gt = phi i64 [ %i.gs, %.noexc90 ], [ %3, %_RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecReE7reserveCs5PEMdK7bMAG_12typst_syntax.exit.i ] ; 2 uses
   %i.gu = load ptr, ptr %i.j, align 8, !alias.scope !4216, !nonnull !19, !noundef !19 ; 5 uses
-  %xtraiter = and i64 %4, 3                       ; 2 uses
+  %4 = add i64 %.sroa.0.0.lcssa.i, -1
+  %xtraiter = and i64 %.sroa.0.0.lcssa.i, 3       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph.split.i.i.i.prol.loopexit, label %.lr.ph.split.i.i.i.prol
 
 .lr.ph.split.i.i.i.prol:                          ; preds = %.lr.ph.i.i.i87, %.lr.ph.split.i.i.i.prol
   %i.gv = phi i64 [ %i.ha, %.lr.ph.split.i.i.i.prol ], [ %i.gt, %.lr.ph.i.i.i87 ] ; 2 uses
-  %i.gw = phi i64 [ %i.gx, %.lr.ph.split.i.i.i.prol ], [ %4, %.lr.ph.i.i.i87 ]
+  %i.gw = phi i64 [ %i.gx, %.lr.ph.split.i.i.i.prol ], [ %.sroa.0.0.lcssa.i, %.lr.ph.i.i.i87 ]
   %prol.iter = phi i64 [ %prol.iter.next, %.lr.ph.split.i.i.i.prol ], [ 0, %.lr.ph.i.i.i87 ]
   %i.gx = add i64 %i.gw, -1                       ; 2 uses
   %i.gy = getelementptr inbounds nuw [16 x i8], ptr %i.gu, i64 %i.gv ; 2 uses
@@ -833,8 +836,8 @@ _RNvMs_NtCs1xwejQucwHj_5alloc3vecINtB4_3VecReE7reserveCs5PEMdK7bMAG_12typst_synt
 .lr.ph.split.i.i.i.prol.loopexit:                 ; preds = %.lr.ph.split.i.i.i.prol, %.lr.ph.i.i.i87
   %.lcssa402.unr = phi i64 [ poison, %.lr.ph.i.i.i87 ], [ %i.ha, %.lr.ph.split.i.i.i.prol ]
   %.unr = phi i64 [ %i.gt, %.lr.ph.i.i.i87 ], [ %i.ha, %.lr.ph.split.i.i.i.prol ]
-  %.unr448 = phi i64 [ %4, %.lr.ph.i.i.i87 ], [ %i.gx, %.lr.ph.split.i.i.i.prol ]
-  %i.hb = icmp ult i64 %.sroa.0.0.lcssa.i, 3
+  %.unr448 = phi i64 [ %.sroa.0.0.lcssa.i, %.lr.ph.i.i.i87 ], [ %i.gx, %.lr.ph.split.i.i.i.prol ]
+  %i.hb = icmp ult i64 %4, 3
   br i1 %i.hb, label %.loopexit.loopexit, label %.lr.ph.split.i.i.i
 
 .lr.ph.split.i.i.i:                               ; preds = %.lr.ph.split.i.i.i.prol.loopexit, %.lr.ph.split.i.i.i
@@ -1237,11 +1240,11 @@ _RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5PEMdK7
   %or.cond.not.i.i.us = select i1 %i.ac, i1 true, i1 %.not.i3.i.us
   %i.ag = sub nuw i64 %.pre2.i.i, %.promoted66    ; 3 uses
   %.sroa.0.1.i.us = getelementptr inbounds nuw i8, ptr %.val.i, i64 %.promoted66 ; 3 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !4387)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !4388)
   br i1 %or.cond.not.i.i.us, label %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5PEMdK7bMAG_12typst_syntax.exit.i.us.us, label %.split80
 
 _RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5PEMdK7bMAG_12typst_syntax.exit.i.us.us: ; preds = %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5PEMdK7bMAG_12typst_syntax.exit.i.us.lr.ph
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !4387)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !4388)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !4389
@@ -1606,7 +1609,7 @@ _RNvXsq_NtCsakL8LGkl72C_4ecow6stringNtB5_9EcoStringINtNtCs3oUPovFnLWP_4core7conv
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !4389
   br label %bb.ac
 
-.split80:                                         ; preds = %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5PEMdK7bMAG_12typst_syntax.exit.i, %_RINvMsr_NtCsaL1QbXo9JQH_3std4pathNtB6_7PathBuf4pushRNtNtNtB8_3ffi6os_str5OsStrECs5PEMdK7bMAG_12typst_syntax.exit, %.split.us, %bb.e, %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5PEMdK7bMAG_12typst_syntax.exit.i.us.lr.ph
+.split80:                                         ; preds = %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5PEMdK7bMAG_12typst_syntax.exit.i, %_RINvMsr_NtCsaL1QbXo9JQH_3std4pathNtB6_7PathBuf4pushRNtNtNtB8_3ffi6os_str5OsStrECs5PEMdK7bMAG_12typst_syntax.exit, %.split.us, %_RNvMsf_NtNtCs3oUPovFnLWP_4core3str4iterINtB5_13SplitInternalcE7get_endCs5PEMdK7bMAG_12typst_syntax.exit.i.us.lr.ph, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.k, i64 24, i1 false)
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCsaL1QbXo9JQH_3std4path7PathBufECs5PEMdK7bMAG_12typst_syntax.exit29

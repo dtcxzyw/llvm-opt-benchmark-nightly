@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %.thread805
   %i.cz = load i64, ptr %i.cy, align 8, !tbaa !246
   %i.da = load i64, ptr %i.b, align 8, !tbaa !54  ; 2 uses
   %.not1109 = icmp eq i64 %i.da, 0
-  br label %bb.q
+  br i1 %.not1109, label %._crit_edge970, label %bb.q
 
 .lr.ph959:                                        ; preds = %bb.p, %_ZNSt3__121__tree_const_iteratorIiPNS_11__tree_nodeIiPvEElEppB8nn180100Ev.exit
   %indvars.iv = phi i64 [ %indvars.iv.next, %_ZNSt3__121__tree_const_iteratorIiPNS_11__tree_nodeIiPvEElEppB8nn180100Ev.exit ], [ 0, %bb.p ] ; 2 uses
@@ -240,14 +240,14 @@ _ZNSt3__121__tree_const_iteratorIiPNS_11__tree_nodeIiPvEElEppB8nn180100Ev.exit: 
   br i1 %.not848, label %.preheader876, label %.lr.ph959
 
 bb.q:                                             ; preds = %.lr.ph969, %._crit_edge967
-  %.0522968 = phi i64 [ 0, %.lr.ph969 ], [ %i.dr, %._crit_edge967 ] ; 2 uses
+  %.0522968 = phi i64 [ %i.dr, %._crit_edge967 ], [ 0, %.lr.ph969 ] ; 2 uses
   %i.dl = mul i64 %i.cz, %.0522968
   %i.dm = getelementptr inbounds nuw i8, ptr %i.cx, i64 %i.dl ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.dm, i64 64) ]
-  br i1 %.not1109, label %._crit_edge967, label %.preheader875
+  br label %.preheader875
 
 .preheader875:                                    ; preds = %bb.q, %.critedge
-  %.0525966 = phi i64 [ %i.du, %.critedge ], [ 0, %bb.q ] ; 2 uses
+  %.0525966 = phi i64 [ 0, %bb.q ], [ %i.du, %.critedge ] ; 2 uses
   %i.dn = getelementptr inbounds nuw [4 x i8], ptr %i.dm, i64 %.0525966 ; 2 uses
   %i.do = load i32, ptr %i.dn, align 4, !tbaa !35 ; 2 uses
   %i.dp = load i32, ptr %i.cs, align 64, !tbaa !35
@@ -261,7 +261,7 @@ bb.q:                                             ; preds = %.lr.ph969, %._crit_
   %exitcond1172.not1660 = icmp slt i32 %i.dq, 1
   br i1 %exitcond1172.not1660, label %.critedge, label %.lr.ph1662
 
-._crit_edge967:                                   ; preds = %.critedge, %bb.q
+._crit_edge967:                                   ; preds = %.critedge
   %i.dr = add nuw i64 %.0522968, 1                ; 2 uses
   %exitcond1174.not = icmp eq i64 %i.dr, %i.cu
   br i1 %exitcond1174.not, label %._crit_edge970, label %bb.q, !llvm.loop !167
@@ -289,7 +289,7 @@ bb.r:                                             ; preds = %.lr.ph1662
   %exitcond1173.not = icmp eq i64 %i.du, %i.da
   br i1 %exitcond1173.not, label %._crit_edge967, label %.preheader875, !llvm.loop !169
 
-._crit_edge970:                                   ; preds = %._crit_edge967, %.preheader876
+._crit_edge970:                                   ; preds = %._crit_edge967, %.lr.ph969, %.preheader876
   store i32 0, ptr %7, align 4, !tbaa !253
   %i.dv = load i64, ptr %i.q, align 8, !tbaa !240
   %i.dw = add i64 %i.dv, 1
@@ -466,12 +466,16 @@ bb.y:                                             ; preds = %.epil.preheader
   %i.gb = getelementptr inbounds nuw i8, ptr %i.fy, i64 16
   %i.gc = load i64, ptr %i.gb, align 8, !tbaa !246
   %i.gd = load i64, ptr %i.b, align 8, !tbaa !54  ; 5 uses
+  %lcmp.mod1748.not = icmp eq i64 %i.gd, 0
   %56 = load ptr, ptr %26, align 8                ; 3 uses
-  %xtraiter1747 = and i64 %i.gd, 1
-  %57 = icmp eq i64 %i.gd, 1                      ; 0 uses
-  %unroll_iter1750 = and i64 %i.gd, -2
-  %lcmp.mod1748.not = icmp eq i64 %xtraiter1747, 0
-  %lcmp.mod1749 = trunc i64 %i.gd to i1
+  br i1 %lcmp.mod1748.not, label %._crit_edge938, label %.lr.ph934.preheader
+
+.lr.ph934.preheader:                              ; preds = %.lr.ph937
+  %xtraiter1748 = and i64 %i.gd, 1
+  %57 = icmp eq i64 %i.gd, 1
+  %unroll_iter1751 = and i64 %i.gd, -2
+  %lcmp.mod1749.not = icmp eq i64 %xtraiter1748, 0
+  %lcmp.mod1750 = trunc i64 %i.gd to i1
   br label %bb.ae
 
 bb.z:                                             ; preds = %bb.ad, %.lr.ph931.new
@@ -520,22 +524,19 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.preheader879.loopexit.unr-lcssa, label %bb.z, !llvm.loop !174
 
-bb.ae:                                            ; preds = %.lr.ph937, %._crit_edge935
-  %.0560936 = phi i64 [ 0, %.lr.ph937 ], [ %i.hf, %._crit_edge935 ] ; 2 uses
+bb.ae:                                            ; preds = %.lr.ph934.preheader, %._crit_edge935
+  %.0560936 = phi i64 [ %i.hf, %._crit_edge935 ], [ 0, %.lr.ph934.preheader ] ; 2 uses
   %i.gw = mul i64 %i.gc, %.0560936
   %i.gx = getelementptr inbounds nuw i8, ptr %i.ga, i64 %i.gw ; 4 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.gx, i64 64) ]
-  switch i64 %i.gd, label %.lr.ph934 [
-    i64 0, label %._crit_edge935
-    i64 1, label %.lr.ph934.epil.preheader
-  ]
+  br i1 %57, label %.lr.ph934.epil.preheader, label %.lr.ph934
 
 ._crit_edge935.loopexit.unr-lcssa:                ; preds = %.lr.ph934
-  br i1 %lcmp.mod1748.not, label %._crit_edge935, label %.lr.ph934.epil.preheader
+  br i1 %lcmp.mod1749.not, label %._crit_edge935, label %.lr.ph934.epil.preheader
 
-.lr.ph934.epil.preheader:                         ; preds = %bb.ae, %._crit_edge935.loopexit.unr-lcssa
+.lr.ph934.epil.preheader:                         ; preds = %._crit_edge935.loopexit.unr-lcssa, %bb.ae
   %.0562932.epil.init = phi i64 [ 0, %bb.ae ], [ %i.hv, %._crit_edge935.loopexit.unr-lcssa ]
-  call void @llvm.assume(i1 %lcmp.mod1749)
+  call void @llvm.assume(i1 %lcmp.mod1750)
   %i.gy = getelementptr inbounds nuw [4 x i8], ptr %i.gx, i64 %.0562932.epil.init ; 2 uses
   %i.gz = load i32, ptr %i.gy, align 4, !tbaa !35
   %i.ha = load i32, ptr %i.d, align 4, !tbaa !35
@@ -546,7 +547,7 @@ bb.ae:                                            ; preds = %.lr.ph937, %._crit_
   store i32 %i.he, ptr %i.gy, align 4, !tbaa !35
   br label %._crit_edge935
 
-._crit_edge935:                                   ; preds = %.lr.ph934.epil.preheader, %._crit_edge935.loopexit.unr-lcssa, %bb.ae
+._crit_edge935:                                   ; preds = %._crit_edge935.loopexit.unr-lcssa, %.lr.ph934.epil.preheader
   %i.hf = add nuw i64 %.0560936, 1                ; 2 uses
   %exitcond1167.not = icmp eq i64 %i.hf, %i.fx
   br i1 %exitcond1167.not, label %._crit_edge938, label %bb.ae, !llvm.loop !175
@@ -573,10 +574,10 @@ bb.ae:                                            ; preds = %.lr.ph937, %._crit_
   store i32 %i.hu, ptr %i.ho, align 4, !tbaa !35
   %i.hv = add nuw i64 %.0562932, 2                ; 2 uses
   %niter1751.next.1 = add nuw i64 %niter1751, 2   ; 2 uses
-  %niter1751.ncmp.1 = icmp eq i64 %niter1751.next.1, %unroll_iter1750
+  %niter1751.ncmp.1 = icmp eq i64 %niter1751.next.1, %unroll_iter1751
   br i1 %niter1751.ncmp.1, label %._crit_edge935.loopexit.unr-lcssa, label %.lr.ph934, !llvm.loop !176
 
-._crit_edge938:                                   ; preds = %._crit_edge935, %.preheader879
+._crit_edge938:                                   ; preds = %._crit_edge935, %.lr.ph937, %.preheader879
   store i32 0, ptr %7, align 4, !tbaa !253
   %i.hw = load i64, ptr %i.q, align 8, !tbaa !240
   %i.hx = add i64 %i.hw, 1

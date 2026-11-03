@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
   %i.ba = load i64, ptr %i.az, align 8, !tbaa !30 ; 3 uses
   %.not116 = icmp eq i64 %i.ba, 0
   %.pre.pre = load i64, ptr %i.y, align 8, !tbaa !29 ; 10 uses
-  br i1 %.not116, label %._crit_edge114, label %.lr.ph113
+  br i1 %.not116, label %._crit_edge114.split, label %.lr.ph113
 
 .lr.ph113:                                        ; preds = %bb.c
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 40
@@ -221,10 +221,17 @@ bb.c:                                             ; preds = %bb.b
   %.not117 = icmp eq i64 %.pre.pre, 0
   %.idx = shl i64 %i.ay, 3                        ; 2 uses
   %.idx89 = mul i64 %i.ay, 12
-  br i1 %.not117, label %._crit_edge114, label %.lr.ph.us
+  br i1 %.not117, label %._crit_edge114.split, label %.lr.ph.us
 
-.lr.ph.us:                                        ; preds = %.lr.ph113, %._crit_edge.us
-  %.086111.us = phi i64 [ %i.bs, %._crit_edge.us ], [ 0, %.lr.ph113 ] ; 5 uses
+._crit_edge114.split:                             ; preds = %._crit_edge, %.lr.ph113, %bb.c
+  %7 = load i64, ptr %i.h, align 8, !tbaa !30
+  %8 = and i64 %7, 1
+  %.not = icmp eq i64 %8, 0
+  %.pre124 = load i64, ptr %i.ac, align 8, !tbaa !30 ; 2 uses
+  br i1 %.not, label %.loopexit, label %bb.l
+
+.lr.ph.us:                                        ; preds = %.lr.ph113, %._crit_edge
+  %.086111.us = phi i64 [ %i.bs, %._crit_edge ], [ 0, %.lr.ph113 ] ; 5 uses
   %i.bm = mul i64 %i.bd, %.086111.us
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bc, i64 %i.bm ; 3 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.bn, i64 64) ]
@@ -239,6 +246,10 @@ bb.c:                                             ; preds = %bb.b
   %.not90.us = icmp eq i64 %.086111.us, 0
   br label %bb.d
 
+._crit_edge:                                      ; preds = %_ZN3jxl14SmoothTendencyElll.exit.us
+  %exitcond122.not = icmp eq i64 %i.bs, %i.ba
+  br i1 %exitcond122.not, label %._crit_edge114.split, label %.lr.ph.us, !llvm.loop !72
+
 bb.d:                                             ; preds = %.lr.ph.us, %_ZN3jxl14SmoothTendencyElll.exit.us
   %.085110.us = phi i64 [ 0, %.lr.ph.us ], [ %i.ea, %_ZN3jxl14SmoothTendencyElll.exit.us ] ; 5 uses
   %i.bu = getelementptr inbounds nuw [4 x i8], ptr %i.bn, i64 %.085110.us ; 5 uses
@@ -252,18 +263,7 @@ bb.d:                                             ; preds = %.lr.ph.us, %_ZN3jxl
   %i.cc = ashr i32 %i.cb, 1                       ; 8 uses
   %i.cd = getelementptr inbounds nuw [4 x i8], ptr %i.bp, i64 %.085110.us
   store i32 %i.cc, ptr %i.cd, align 4, !tbaa !40
-  br i1 %i.bt, label %bb.e, label %7
-
-7:                                                ; preds = %bb.d
-  %8 = load i64, ptr %i.h, align 8, !tbaa !30
-  %9 = and i64 %8, 1
-  %.not87.us = icmp eq i64 %9, 0
-  br i1 %.not87.us, label %bb.f, label %10
-
-10:                                               ; preds = %7
-  %11 = getelementptr i8, ptr %i.bu, i64 %.idx
-  %12 = load i32, ptr %11, align 4, !tbaa !40
-  br label %bb.f
+  br i1 %i.bt, label %bb.e, label %9
 
 bb.e:                                             ; preds = %bb.d
   %i.ce = getelementptr i8, ptr %i.bu, i64 %.idx
@@ -277,8 +277,19 @@ bb.e:                                             ; preds = %bb.d
   %i.cm = ashr i32 %i.cl, 1
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %10, %7
-  %.084.us = phi i32 [ %i.cm, %bb.e ], [ %12, %10 ], [ %i.cc, %7 ] ; 3 uses
+9:                                                ; preds = %bb.d
+  %10 = load i64, ptr %i.h, align 8, !tbaa !30
+  %11 = and i64 %10, 1
+  %.not87 = icmp eq i64 %11, 0
+  br i1 %.not87, label %bb.f, label %12
+
+12:                                               ; preds = %9
+  %13 = getelementptr i8, ptr %i.bu, i64 %.idx
+  %14 = load i32, ptr %13, align 4, !tbaa !40
+  br label %bb.f
+
+bb.f:                                             ; preds = %9, %12, %bb.e
+  %.084.us = phi i32 [ %i.cm, %bb.e ], [ %14, %12 ], [ %i.cc, %9 ] ; 3 uses
   br i1 %.not90.us, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -287,7 +298,7 @@ bb.g:                                             ; preds = %bb.f
   %i.cp = load i32, ptr %i.co, align 4, !tbaa !40
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %bb.f
+bb.h:                                             ; preds = %bb.f, %bb.g
   %i.cq = phi i32 [ %i.cp, %bb.g ], [ %i.cc, %bb.f ] ; 3 uses
   %i.cr = sext i32 %i.cq to i64                   ; 4 uses
   %i.cs = sext i32 %i.cc to i64                   ; 6 uses
@@ -345,7 +356,7 @@ bb.k:                                             ; preds = %bb.j
   %spec.select56.i.us = select i1 %i.dv, i64 %i.du, i64 %spec.select54.i.us
   br label %_ZN3jxl14SmoothTendencyElll.exit.us
 
-_ZN3jxl14SmoothTendencyElll.exit.us:              ; preds = %bb.k, %bb.j, %bb.i
+_ZN3jxl14SmoothTendencyElll.exit.us:              ; preds = %bb.i, %bb.j, %bb.k
   %.2.i.us = phi i64 [ 0, %bb.j ], [ %spec.select56.i.us, %bb.k ], [ %spec.select55.i.us, %bb.i ]
   %i.dw = trunc i64 %.2.i.us to i32
   %i.dx = add i32 %i.bx, %i.dw
@@ -354,20 +365,9 @@ _ZN3jxl14SmoothTendencyElll.exit.us:              ; preds = %bb.k, %bb.j, %bb.i
   store i32 %i.dy, ptr %i.dz, align 4, !tbaa !40
   %i.ea = add nuw i64 %.085110.us, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.ea, %.pre.pre
-  br i1 %exitcond.not, label %._crit_edge.us, label %bb.d, !llvm.loop !72
+  br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !73
 
-._crit_edge.us:                                   ; preds = %_ZN3jxl14SmoothTendencyElll.exit.us
-  %exitcond121.not = icmp eq i64 %i.bs, %i.ba
-  br i1 %exitcond121.not, label %._crit_edge114, label %.lr.ph.us, !llvm.loop !73
-
-._crit_edge114:                                   ; preds = %._crit_edge.us, %.lr.ph113, %bb.c
-  %13 = load i64, ptr %i.h, align 8, !tbaa !30
-  %14 = and i64 %13, 1
-  %.not = icmp eq i64 %14, 0
-  %.pre124 = load i64, ptr %i.ac, align 8, !tbaa !30 ; 2 uses
-  br i1 %.not, label %.loopexit, label %bb.l
-
-bb.l:                                             ; preds = %._crit_edge114
+bb.l:                                             ; preds = %._crit_edge114.split
   %i.eb = add i64 %.pre124, -1                    ; 3 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %i.c, i64 40
   %i.ed = load ptr, ptr %i.ec, align 8, !tbaa !38 ; 2 uses
@@ -470,7 +470,7 @@ middle.block:                                     ; preds = %vector.body
   %exitcond123.not.3 = icmp eq i64 %i.ft, %.pre.pre
   br i1 %exitcond123.not.3, label %.loopexit, label %.lr.ph, !llvm.loop !76
 
-.loopexit:                                        ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %bb.l, %._crit_edge114
+.loopexit:                                        ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %bb.l, %._crit_edge114.split
   %i.fu = load ptr, ptr %0, align 8, !tbaa !15
   %i.fv = getelementptr inbounds nuw [88 x i8], ptr %i.fu, i64 %i.a ; 7 uses
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 56

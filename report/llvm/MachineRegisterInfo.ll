@@ -205,7 +205,7 @@ _ZN4llvm18MCSuperRegIteratorppEv.exit.i.i.i.i.i:  ; preds = %bb.b
   %.not.i.i.i.i.i.i.i = icmp eq i16 %i.al, 0
   br i1 %.not.i.i.i.i.i.i.i, label %.critedge, label %bb.b, !llvm.loop !454
 
-.critedge:                                        ; preds = %"_ZN4llvm6all_ofINS_14iterator_rangeINS_18MCSuperRegIteratorEEEZNKS_19MachineRegisterInfo17isReservedRegUnitENS_9MCRegUnitEE3$_0EEbOT_T0_.exit.loopexit", %_ZN4llvm18MCSuperRegIteratorppEv.exit.i.i.i.i.i, %.lr.ph, %bb.a
+.critedge:                                        ; preds = %"_ZN4llvm6all_ofINS_14iterator_rangeINS_18MCSuperRegIteratorEEEZNKS_19MachineRegisterInfo17isReservedRegUnitENS_9MCRegUnitEE3$_0EEbOT_T0_.exit.loopexit", %_ZN4llvm18MCSuperRegIteratorppEv.exit.i.i.i.i.i, %bb.a, %.lr.ph
   %i.an = phi i1 [ true, %.lr.ph ], [ false, %bb.a ], [ true, %_ZN4llvm18MCSuperRegIteratorppEv.exit.i.i.i.i.i ], [ false, %"_ZN4llvm6all_ofINS_14iterator_rangeINS_18MCSuperRegIteratorEEEZNKS_19MachineRegisterInfo17isReservedRegUnitENS_9MCRegUnitEE3$_0EEbOT_T0_.exit.loopexit" ]
   ret i1 %i.an
 }

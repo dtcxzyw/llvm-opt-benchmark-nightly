@@ -205,8 +205,8 @@ bb.p:                                             ; preds = %bb.n
   %cmp.n = icmp eq i64 %n.vec, %i.dt
   br label %.lr.ph.us.i
 
-.lr.ph.us.i:                                      ; preds = %.lr.ph.us.i.preheader, %._crit_edge.us.i
-  %.01012.us.i = phi i64 [ %i.ea, %._crit_edge.us.i ], [ 0, %.lr.ph.us.i.preheader ] ; 2 uses
+.lr.ph.us.i:                                      ; preds = %.lr.ph.us.i.preheader, %scalar.ph.a
+  %.01012.us.i = phi i64 [ %i.dz, %scalar.ph.a ], [ 0, %.lr.ph.us.i.preheader ] ; 2 uses
   %i.du = mul i64 %.01012.us.i, %i.dr
   %i.dv = getelementptr inbounds nuw i8, ptr %i.dp, i64 %i.du ; 3 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.dv, i64 64) ]
@@ -223,26 +223,26 @@ vector.body:                                      ; preds = %.lr.ph.us.i, %vecto
   br i1 %i.dy, label %middle.block, label %vector.body, !llvm.loop !1065
 
 middle.block:                                     ; preds = %vector.body
-  br i1 %cmp.n, label %._crit_edge.us.i, label %scalar.ph.preheader
+  br i1 %cmp.n, label %scalar.ph.a, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph.us.i, %middle.block
   %.011.us.i.ph = phi i64 [ 0, %.lr.ph.us.i ], [ %n.vec, %middle.block ]
-  br label %scalar.ph.a
+  br label %._crit_edge.us.i
 
-scalar.ph.a:                                      ; preds = %scalar.ph.preheader, %scalar.ph.a
-  %.011.us.i = phi i64 [ %i.dz, %scalar.ph.a ], [ %.011.us.i.ph, %scalar.ph.preheader ] ; 2 uses
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.dv, i64 %.011.us.i
+scalar.ph.a:                                      ; preds = %._crit_edge.us.i, %middle.block
+  %i.dz = add nuw nsw i64 %.01012.us.i, 1         ; 2 uses
+  %exitcond.not.i.a = icmp eq i64 %i.dz, %i.dn
+  br i1 %exitcond.not.i.a, label %_ZN3jxl9FillImageIfEEvT_PNS_5PlaneIS1_EE.exit, label %.lr.ph.us.i, !llvm.loop !1066
+
+._crit_edge.us.i:                                 ; preds = %scalar.ph.preheader, %._crit_edge.us.i
+  %.011.i = phi i64 [ %i.ea, %._crit_edge.us.i ], [ %.011.us.i.ph, %scalar.ph.preheader ] ; 2 uses
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %i.dv, i64 %.011.i
   store float 1.000000e+00, ptr %10, align 4, !tbaa !94
-  %i.dz = add nuw nsw i64 %.011.us.i, 1           ; 2 uses
-  %exitcond.not.i.a = icmp eq i64 %i.dz, %i.dt
-  br i1 %exitcond.not.i.a, label %._crit_edge.us.i, label %scalar.ph.a, !llvm.loop !1066
+  %i.ea = add nuw nsw i64 %.011.i, 1              ; 2 uses
+  %exitcond18.not.i = icmp eq i64 %i.ea, %i.dt
+  br i1 %exitcond18.not.i, label %scalar.ph.a, label %._crit_edge.us.i, !llvm.loop !1067
 
-._crit_edge.us.i:                                 ; preds = %scalar.ph.a, %middle.block
-  %i.ea = add nuw nsw i64 %.01012.us.i, 1         ; 2 uses
-  %exitcond18.not.i = icmp eq i64 %i.ea, %i.dn
-  br i1 %exitcond18.not.i, label %_ZN3jxl9FillImageIfEEvT_PNS_5PlaneIS1_EE.exit, label %.lr.ph.us.i, !llvm.loop !1067
-
-_ZN3jxl9FillImageIfEEvT_PNS_5PlaneIS1_EE.exit:    ; preds = %._crit_edge.us.i, %.lr.ph14.i, %bb.p, %bb.o, %_ZN3jxl11CopyImageToIfEENS_6StatusERKNS_5PlaneIT_EEPS4_.exit49.thread
+_ZN3jxl9FillImageIfEEvT_PNS_5PlaneIS1_EE.exit:    ; preds = %scalar.ph.a, %.lr.ph14.i, %bb.p, %bb.o, %_ZN3jxl11CopyImageToIfEENS_6StatusERKNS_5PlaneIT_EEPS4_.exit49.thread
   br label %_ZN3jxl11CopyImageToIfEENS_6StatusERKNS_5PlaneIT_EEPS4_.exit
 
 _ZN3jxl11CopyImageToIfEENS_6StatusERKNS_5PlaneIT_EEPS4_.exit: ; preds = %.preheader, %bb.o, %.loopexit, %bb.i, %bb.g, %_ZN3jxl9FillImageIfEEvT_PNS_5PlaneIS1_EE.exit
@@ -645,8 +645,8 @@ begin_hunk_1_@llvm.vector.reduce.add.v4i32
 !1063 = distinct !{!1063, i1 true, !"_ZN3jxl11CopyImageToIfEENS_6StatusERKNS_5PlaneIT_EEPS4_"}
 !1064 = distinct !{!1064, !1063, !"_ZN3jxl11CopyImageToIfEENS_6StatusERKNS_5PlaneIT_EEPS4_: argument 0"}
 !1065 = distinct !{!1065, !139, !296, !297}
-!1066 = distinct !{!1066, !139, !297, !296}
-!1067 = distinct !{!1067, !139}
+!1066 = distinct !{!1066, !139}
+!1067 = distinct !{!1067, !139, !297, !296}
 !1068 = !{!163, !31, i64 8}
 !1069 = !{!163, !31, i64 16}
 !1070 = !{!1057}

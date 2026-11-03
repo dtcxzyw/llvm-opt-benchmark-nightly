@@ -205,12 +205,19 @@ bb.ae:                                            ; preds = %bb.af, %bb.ac
   %.sroa.0.0.i47 = phi i64 [ %.sroa.0.0.i, %bb.ac ], [ %.sroa.16.0117346, %bb.af ] ; 2 uses
   %i.cp = getelementptr inbounds nuw [120 x i8], ptr %.sroa.0.0.ph124, i64 %.sroa.0.0.i47 ; 2 uses
   %i.cq = icmp ult ptr %.sroa.5.0.i46, %i.cp
-  br i1 %i.cq, label %.lr.ph.i54, label %._crit_edge.split.us.i
+  br i1 %i.cq, label %.lr.ph.i54, label %._crit_edge.i48
 
 .lr.ph.i54:                                       ; preds = %bb.ae
   %i.cr = load i64, ptr %i.as, align 8, !range !10, !alias.scope !2225, !noundef !11
   %i.cs = trunc nuw i64 %i.cr to i1
-  br i1 %i.cs, label %.lr.ph.split.us.i, label %.lr.ph.split.i, !prof !44
+  br i1 %i.cs, label %.lr.ph.split.us.i, label %8, !prof !44
+
+._crit_edge.i48:                                  ; preds = %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterB1t_B1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4v_E12closest_keysB1t_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i, %bb.ae
+  %.sroa.19.1.lcssa.i49 = phi ptr [ %.sroa.19.0.i44, %bb.ae ], [ %i.cy, %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterB1t_B1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4v_E12closest_keysB1t_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i ]
+  %.sroa.11.1.lcssa.i50 = phi i64 [ %.sroa.11.0.i45, %bb.ae ], [ %i.db, %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterB1t_B1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4v_E12closest_keysB1t_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i ] ; 10 uses
+  %.sroa.5.1.lcssa.i51 = phi ptr [ %.sroa.5.0.i46, %bb.ae ], [ %i.dc, %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterB1t_B1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4v_E12closest_keysB1t_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i ] ; 2 uses
+  %7 = icmp eq i64 %.sroa.0.0.i47, %.sroa.16.0117346
+  br i1 %7, label %bb.ag, label %bb.af
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i54, %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterB1t_B1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4v_E12closest_keysB1t_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i
   %.sroa.5.117.us.i = phi ptr [ %i.dc, %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterB1t_B1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4v_E12closest_keysB1t_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i ], [ %.sroa.5.0.i46, %.lr.ph.i54 ] ; 4 uses
@@ -226,68 +233,55 @@ bb.ae:                                            ; preds = %bb.af, %bb.ac
   call void @llvm.experimental.noalias.scope.decl(metadata !2233)
   %i.ct = load i64, ptr %.sroa.5.117.us.i, align 8, !range !10, !alias.scope !2234, !noundef !11
   %i.cu = trunc nuw i64 %i.ct to i1
-  br i1 %i.cu, label %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterB1t_B1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4v_E12closest_keysB1t_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i, label %.split.us.i, !prof !44
+  br i1 %i.cu, label %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterB1t_B1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4v_E12closest_keysB1t_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i, label %9, !prof !44
+
+8:                                                ; preds = %.lr.ph.i54
+  call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @40, i64 noundef 16, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @41) #44, !noalias !2235
+  unreachable
+
+9:                                                ; preds = %.lr.ph.split.us.i
+  call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @40, i64 noundef 16, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @42) #44, !noalias !2235
+  unreachable
 
 _RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterB1t_B1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4v_E12closest_keysB1t_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i: ; preds = %.lr.ph.split.us.i
   %i.cv = getelementptr inbounds nuw i8, ptr %.sroa.5.117.us.i, i64 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2235
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2236
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.us.i) ]
-  call void @_RINvMs8_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB6_8KeyBytes8distanceBM_ECs2Bxje7pdMIr_13libp2p_server(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(32) %.val.i.i.us.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(32) %i.co), !noalias !2236
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2235
+  call void @_RINvMs8_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB6_8KeyBytes8distanceBM_ECs2Bxje7pdMIr_13libp2p_server(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(32) %.val.i.i.us.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(32) %i.co), !noalias !2237
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2236
   call void @_RINvMs8_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB6_8KeyBytes8distanceBM_ECs2Bxje7pdMIr_13libp2p_server(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(32) %.val.i.i.us.i, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(32) %i.cv), !noalias !2224
   %i.cw = call noundef range(i8 -1, 2) i8 @_RNvXsL_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB5_4U256NtNtCskKLDkoKarTP_4core3cmp3Ord3cmp(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a), !noalias !2224
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !2235
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2235
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !2236
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2236
   %i.cx = icmp ne i8 %i.cw, -1                    ; 2 uses
   %i.cy = getelementptr inbounds i8, ptr %.sroa.19.115.us.i, i64 -120 ; 3 uses
   %.sroa.01.0.i.us.i = select i1 %i.cx, ptr %2, ptr %i.cy
   %i.cz = getelementptr inbounds nuw [120 x i8], ptr %.sroa.01.0.i.us.i, i64 %.sroa.11.116.us.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.cz, ptr noundef nonnull align 8 dereferenceable(120) %.sroa.5.117.us.i, i64 120, i1 false), !alias.scope !2237, !noalias !2238
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.cz, ptr noundef nonnull align 8 dereferenceable(120) %.sroa.5.117.us.i, i64 120, i1 false), !alias.scope !2238, !noalias !2239
   %i.da = zext i1 %i.cx to i64
   %i.db = add i64 %.sroa.11.116.us.i, %i.da       ; 2 uses
   %i.dc = getelementptr inbounds nuw i8, ptr %.sroa.5.117.us.i, i64 120 ; 3 uses
   %i.dd = icmp ult ptr %i.dc, %i.cp
-  br i1 %i.dd, label %.lr.ph.split.us.i, label %._crit_edge.split.us.i
+  br i1 %i.dd, label %.lr.ph.split.us.i, label %._crit_edge.i48
 
-._crit_edge.split.us.i:                           ; preds = %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterB1t_B1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4v_E12closest_keysB1t_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i, %bb.ae
-  %.sroa.19.1.lcssa.i48 = phi ptr [ %.sroa.19.0.i44, %bb.ae ], [ %i.cy, %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterB1t_B1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4v_E12closest_keysB1t_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i ]
-  %.sroa.11.1.lcssa.i49 = phi i64 [ %.sroa.11.0.i45, %bb.ae ], [ %i.db, %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterB1t_B1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4v_E12closest_keysB1t_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i ] ; 10 uses
-  %.sroa.5.1.lcssa.i50 = phi ptr [ %.sroa.5.0.i46, %bb.ae ], [ %i.dc, %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterB1t_B1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4v_E12closest_keysB1t_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i ] ; 2 uses
-  %7 = icmp eq i64 %.sroa.0.0.i47, %.sroa.16.0117346
-  br i1 %7, label %bb.ag, label %bb.af
-
-.lr.ph.split.i:                                   ; preds = %.lr.ph.i54
-  call void @llvm.experimental.noalias.scope.decl(metadata !2226)
-  call void @llvm.experimental.noalias.scope.decl(metadata !2227)
-  call void @llvm.experimental.noalias.scope.decl(metadata !2229)
-  call void @llvm.experimental.noalias.scope.decl(metadata !2230)
-  call void @llvm.experimental.noalias.scope.decl(metadata !2232)
-  call void @llvm.experimental.noalias.scope.decl(metadata !2233)
-  call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @40, i64 noundef 16, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @41) #44, !noalias !2239
-  unreachable
-
-.split.us.i:                                      ; preds = %.lr.ph.split.us.i
-  call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @40, i64 noundef 16, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @42) #44, !noalias !2239
-  unreachable
-
-bb.af:                                            ; preds = %._crit_edge.split.us.i
-  %i.de = getelementptr inbounds i8, ptr %.sroa.19.1.lcssa.i48, i64 -120
-  %i.df = getelementptr inbounds nuw [120 x i8], ptr %2, i64 %.sroa.11.1.lcssa.i49
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.df, ptr noundef nonnull align 8 dereferenceable(120) %.sroa.5.1.lcssa.i50, i64 120, i1 false), !alias.scope !2237, !noalias !2240
-  %i.dg = add i64 %.sroa.11.1.lcssa.i49, 1
-  %i.dh = getelementptr inbounds nuw i8, ptr %.sroa.5.1.lcssa.i50, i64 120
+bb.af:                                            ; preds = %._crit_edge.i48
+  %i.de = getelementptr inbounds i8, ptr %.sroa.19.1.lcssa.i49, i64 -120
+  %i.df = getelementptr inbounds nuw [120 x i8], ptr %2, i64 %.sroa.11.1.lcssa.i50
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.df, ptr noundef nonnull align 8 dereferenceable(120) %.sroa.5.1.lcssa.i51, i64 120, i1 false), !alias.scope !2238, !noalias !2240
+  %i.dg = add i64 %.sroa.11.1.lcssa.i50, 1
+  %i.dh = getelementptr inbounds nuw i8, ptr %.sroa.5.1.lcssa.i51, i64 120
   br label %bb.ae
 
-bb.ag:                                            ; preds = %._crit_edge.split.us.i
-  %i.di = mul nuw nsw i64 %.sroa.11.1.lcssa.i49, 120
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.0.0.ph124, ptr nonnull align 8 %2, i64 %i.di, i1 false), !alias.scope !2237
-  %i.dj = sub i64 %.sroa.16.0117346, %.sroa.11.1.lcssa.i49 ; 6 uses
-  %.not24.i51 = icmp eq i64 %.sroa.16.0117346, %.sroa.11.1.lcssa.i49
-  %i.dk = getelementptr [120 x i8], ptr %.sroa.0.0.ph124, i64 %.sroa.11.1.lcssa.i49 ; 4 uses
+bb.ag:                                            ; preds = %._crit_edge.i48
+  %i.di = mul nuw nsw i64 %.sroa.11.1.lcssa.i50, 120
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.0.0.ph124, ptr nonnull align 8 %2, i64 %i.di, i1 false), !alias.scope !2238
+  %i.dj = sub i64 %.sroa.16.0117346, %.sroa.11.1.lcssa.i50 ; 6 uses
+  %.not24.i51 = icmp eq i64 %.sroa.16.0117346, %.sroa.11.1.lcssa.i50
+  %i.dk = getelementptr [120 x i8], ptr %.sroa.0.0.ph124, i64 %.sroa.11.1.lcssa.i50 ; 4 uses
   br i1 %.not24.i51, label %.outer.thread, label %.lr.ph23.i.preheader
 
 .lr.ph23.i.preheader:                             ; preds = %bb.ag
-  %.neg469 = add i64 %.sroa.11.1.lcssa.i49, 1
+  %.neg469 = add i64 %.sroa.11.1.lcssa.i50, 1
   %xtraiter464 = and i64 %i.dj, 1
   %i.dl = icmp eq i64 %.sroa.16.0117346, %.neg469
   br i1 %i.dl, label %.lr.ph23.i.epil.preheader, label %.lr.ph23.i.preheader.new
@@ -302,13 +296,13 @@ bb.ag:                                            ; preds = %._crit_edge.split.u
   %i.dm = xor i64 %.sroa.06.022.i, -1
   %i.dn = getelementptr [120 x i8], ptr %i.cn, i64 %i.dm
   %i.do = getelementptr [120 x i8], ptr %i.dk, i64 %.sroa.06.022.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.do, ptr noundef nonnull align 8 dereferenceable(120) %i.dn, i64 120, i1 false), !alias.scope !2237
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.do, ptr noundef nonnull align 8 dereferenceable(120) %i.dn, i64 120, i1 false), !alias.scope !2238
   %i.dp = add nuw i64 %.sroa.06.022.i, 2          ; 2 uses
   %i.dq = xor i64 %.sroa.06.022.i, -2
   %i.dr = getelementptr [120 x i8], ptr %i.cn, i64 %i.dq
   %i.ds = getelementptr [120 x i8], ptr %i.dk, i64 %.sroa.06.022.i
   %i.dt = getelementptr i8, ptr %i.ds, i64 120
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.dt, ptr noundef nonnull align 8 dereferenceable(120) %i.dr, i64 120, i1 false), !alias.scope !2237
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.dt, ptr noundef nonnull align 8 dereferenceable(120) %i.dr, i64 120, i1 false), !alias.scope !2238
   %niter468.next.1 = add i64 %niter468, 2         ; 2 uses
   %niter468.ncmp.1 = icmp eq i64 %niter468.next.1, %unroll_iter467
   br i1 %niter468.ncmp.1, label %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionINtNtBa_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_7sort_byNCNvXs4_B1E_INtB1E_11ClosestIterB1z_B1z_NtNtB1G_9addresses9AddressesNCINvMs1_B1E_INtB1E_13KBucketsTableB1z_B4X_E12closest_keysB1z_E0B1z_ENtNtNtNtBa_4iter6traits8iterator8Iterator4nexts_0E0E0ECs2Bxje7pdMIr_13libp2p_server.exit.unr-lcssa, label %.lr.ph23.i
@@ -324,11 +318,11 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionIN
   %i.du = xor i64 %.sroa.06.022.i.epil.init, -1
   %i.dv = getelementptr [120 x i8], ptr %i.cn, i64 %i.du
   %i.dw = getelementptr [120 x i8], ptr %i.dk, i64 %.sroa.06.022.i.epil.init
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.dw, ptr noundef nonnull align 8 dereferenceable(120) %i.dv, i64 120, i1 false), !alias.scope !2237
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.dw, ptr noundef nonnull align 8 dereferenceable(120) %i.dv, i64 120, i1 false), !alias.scope !2238
   br label %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionINtNtBa_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_7sort_byNCNvXs4_B1E_INtB1E_11ClosestIterB1z_B1z_NtNtB1G_9addresses9AddressesNCINvMs1_B1E_INtB1E_13KBucketsTableB1z_B4X_E12closest_keysB1z_E0B1z_ENtNtNtNtBa_4iter6traits8iterator8Iterator4nexts_0E0E0ECs2Bxje7pdMIr_13libp2p_server.exit
 
 _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionINtNtBa_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_7sort_byNCNvXs4_B1E_INtB1E_11ClosestIterB1z_B1z_NtNtB1G_9addresses9AddressesNCINvMs1_B1E_INtB1E_13KBucketsTableB1z_B4X_E12closest_keysB1z_E0B1z_ENtNtNtNtBa_4iter6traits8iterator8Iterator4nexts_0E0E0ECs2Bxje7pdMIr_13libp2p_server.exit: ; preds = %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionINtNtBa_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_7sort_byNCNvXs4_B1E_INtB1E_11ClosestIterB1z_B1z_NtNtB1G_9addresses9AddressesNCINvMs1_B1E_INtB1E_13KBucketsTableB1z_B4X_E12closest_keysB1z_E0B1z_ENtNtNtNtBa_4iter6traits8iterator8Iterator4nexts_0E0E0ECs2Bxje7pdMIr_13libp2p_server.exit.unr-lcssa, %.lr.ph23.i.epil.preheader
-  %i.dx = icmp ugt i64 %.sroa.11.1.lcssa.i49, %.sroa.16.0117346
+  %i.dx = icmp ugt i64 %.sroa.11.1.lcssa.i50, %.sroa.16.0117346
   br i1 %i.dx, label %bb.ah, label %.outer, !prof !9
 
 .outer.thread:                                    ; preds = %bb.ag
@@ -336,13 +330,13 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionIN
   br label %.outer._crit_edge
 
 .outer:                                           ; preds = %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionINtNtBa_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_7sort_byNCNvXs4_B1E_INtB1E_11ClosestIterB1z_B1z_NtNtB1G_9addresses9AddressesNCINvMs1_B1E_INtB1E_13KBucketsTableB1z_B4X_E12closest_keysB1z_E0B1z_ENtNtNtNtBa_4iter6traits8iterator8Iterator4nexts_0E0E0ECs2Bxje7pdMIr_13libp2p_server.exit
-  %i.dy = getelementptr inbounds nuw [120 x i8], ptr %.sroa.0.0.ph124, i64 %.sroa.11.1.lcssa.i49 ; 2 uses
+  %i.dy = getelementptr inbounds nuw [120 x i8], ptr %.sroa.0.0.ph124, i64 %.sroa.11.1.lcssa.i50 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   %i.dz = icmp ult i64 %i.dj, 33
   br i1 %i.dz, label %.outer._crit_edge, label %.lr.ph
 
 bb.ah:                                            ; preds = %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionINtNtBa_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_7sort_byNCNvXs4_B1E_INtB1E_11ClosestIterB1z_B1z_NtNtB1G_9addresses9AddressesNCINvMs1_B1E_INtB1E_13KBucketsTableB1z_B4X_E12closest_keysB1z_E0B1z_ENtNtNtNtBa_4iter6traits8iterator8Iterator4nexts_0E0E0ECs2Bxje7pdMIr_13libp2p_server.exit
-  call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef %.sroa.11.1.lcssa.i49, i64 noundef %.sroa.16.0117346, i64 noundef %.sroa.16.0117346, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @15) #44
+  call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef %.sroa.11.1.lcssa.i50, i64 noundef %.sroa.16.0117346, i64 noundef %.sroa.16.0117346, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @15) #44
   unreachable
 }
 
@@ -722,12 +716,19 @@ bb.ae:                                            ; preds = %bb.af, %bb.ac
   %.sroa.0.0.i47 = phi i64 [ %.sroa.0.0.i, %bb.ac ], [ %.sroa.16.0117346, %bb.af ] ; 2 uses
   %i.cu = getelementptr inbounds nuw [120 x i8], ptr %.sroa.0.0.ph124, i64 %.sroa.0.0.i47 ; 2 uses
   %i.cv = icmp ult ptr %.sroa.5.0.i46, %i.cu
-  br i1 %i.cv, label %.lr.ph.i54, label %._crit_edge.split.us.i
+  br i1 %i.cv, label %.lr.ph.i54, label %._crit_edge.i48
 
 .lr.ph.i54:                                       ; preds = %bb.ae
   %i.cw = load i64, ptr %i.av, align 8, !range !10, !alias.scope !2347, !noundef !11
   %i.cx = trunc nuw i64 %i.cw to i1
-  br i1 %i.cx, label %.lr.ph.split.us.i, label %.lr.ph.split.i, !prof !44
+  br i1 %i.cx, label %.lr.ph.split.us.i, label %8, !prof !44
+
+._crit_edge.i48:                                  ; preds = %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterIB1u_NtNtB1A_6record3KeyEB1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4Q_E12closest_keysB4n_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i, %bb.ae
+  %.sroa.19.1.lcssa.i49 = phi ptr [ %.sroa.19.0.i44, %bb.ae ], [ %i.de, %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterIB1u_NtNtB1A_6record3KeyEB1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4Q_E12closest_keysB4n_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i ]
+  %.sroa.11.1.lcssa.i50 = phi i64 [ %.sroa.11.0.i45, %bb.ae ], [ %i.dh, %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterIB1u_NtNtB1A_6record3KeyEB1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4Q_E12closest_keysB4n_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i ] ; 10 uses
+  %.sroa.5.1.lcssa.i51 = phi ptr [ %.sroa.5.0.i46, %bb.ae ], [ %i.di, %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterIB1u_NtNtB1A_6record3KeyEB1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4Q_E12closest_keysB4n_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i ] ; 2 uses
+  %7 = icmp eq i64 %.sroa.0.0.i47, %.sroa.16.0117346
+  br i1 %7, label %bb.ag, label %bb.af
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i54, %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterIB1u_NtNtB1A_6record3KeyEB1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4Q_E12closest_keysB4n_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i
   %.sroa.5.117.us.i = phi ptr [ %i.di, %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterIB1u_NtNtB1A_6record3KeyEB1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4Q_E12closest_keysB4n_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i ], [ %.sroa.5.0.i46, %.lr.ph.i54 ] ; 4 uses
@@ -743,69 +744,56 @@ bb.ae:                                            ; preds = %bb.af, %bb.ac
   call void @llvm.experimental.noalias.scope.decl(metadata !2355)
   %i.cy = load i64, ptr %.sroa.5.117.us.i, align 8, !range !10, !alias.scope !2356, !noundef !11
   %i.cz = trunc nuw i64 %i.cy to i1
-  br i1 %i.cz, label %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterIB1u_NtNtB1A_6record3KeyEB1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4Q_E12closest_keysB4n_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i, label %.split.us.i, !prof !44
+  br i1 %i.cz, label %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterIB1u_NtNtB1A_6record3KeyEB1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4Q_E12closest_keysB4n_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i, label %9, !prof !44
+
+8:                                                ; preds = %.lr.ph.i54
+  call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @40, i64 noundef 16, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @41) #44, !noalias !2357
+  unreachable
+
+9:                                                ; preds = %.lr.ph.split.us.i
+  call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @40, i64 noundef 16, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @42) #44, !noalias !2357
+  unreachable
 
 _RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterIB1u_NtNtB1A_6record3KeyEB1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4Q_E12closest_keysB4n_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i: ; preds = %.lr.ph.split.us.i
   %i.da = getelementptr inbounds nuw i8, ptr %.sroa.5.117.us.i, i64 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2357
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2358
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.us.i) ]
   %i.db = getelementptr inbounds nuw i8, ptr %.val.i.i.us.i, i64 32 ; 2 uses
-  call void @_RINvMs8_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB6_8KeyBytes8distanceBM_ECs2Bxje7pdMIr_13libp2p_server(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(32) %i.db, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(32) %i.ct), !noalias !2358
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2357
+  call void @_RINvMs8_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB6_8KeyBytes8distanceBM_ECs2Bxje7pdMIr_13libp2p_server(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(32) %i.db, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(32) %i.ct), !noalias !2359
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !2358
   call void @_RINvMs8_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB6_8KeyBytes8distanceBM_ECs2Bxje7pdMIr_13libp2p_server(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.a, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(32) %i.db, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(32) %i.da), !noalias !2346
   %i.dc = call noundef range(i8 -1, 2) i8 @_RNvXsL_NtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3keyNtB5_4U256NtNtCskKLDkoKarTP_4core3cmp3Ord3cmp(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.a), !noalias !2346
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !2357
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2357
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !2358
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !2358
   %i.dd = icmp ne i8 %i.dc, -1                    ; 2 uses
   %i.de = getelementptr inbounds i8, ptr %.sroa.19.115.us.i, i64 -120 ; 3 uses
   %.sroa.01.0.i.us.i = select i1 %i.dd, ptr %2, ptr %i.de
   %i.df = getelementptr inbounds nuw [120 x i8], ptr %.sroa.01.0.i.us.i, i64 %.sroa.11.116.us.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.df, ptr noundef nonnull align 8 dereferenceable(120) %.sroa.5.117.us.i, i64 120, i1 false), !alias.scope !2359, !noalias !2360
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.df, ptr noundef nonnull align 8 dereferenceable(120) %.sroa.5.117.us.i, i64 120, i1 false), !alias.scope !2360, !noalias !2361
   %i.dg = zext i1 %i.dd to i64
   %i.dh = add i64 %.sroa.11.116.us.i, %i.dg       ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr %.sroa.5.117.us.i, i64 120 ; 3 uses
   %i.dj = icmp ult ptr %i.di, %i.cu
-  br i1 %i.dj, label %.lr.ph.split.us.i, label %._crit_edge.split.us.i
+  br i1 %i.dj, label %.lr.ph.split.us.i, label %._crit_edge.i48
 
-._crit_edge.split.us.i:                           ; preds = %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterIB1u_NtNtB1A_6record3KeyEB1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4Q_E12closest_keysB4n_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i, %bb.ae
-  %.sroa.19.1.lcssa.i48 = phi ptr [ %.sroa.19.0.i44, %bb.ae ], [ %i.de, %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterIB1u_NtNtB1A_6record3KeyEB1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4Q_E12closest_keysB4n_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i ]
-  %.sroa.11.1.lcssa.i49 = phi i64 [ %.sroa.11.0.i45, %bb.ae ], [ %i.dh, %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterIB1u_NtNtB1A_6record3KeyEB1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4Q_E12closest_keysB4n_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i ] ; 10 uses
-  %.sroa.5.1.lcssa.i50 = phi ptr [ %.sroa.5.0.i46, %bb.ae ], [ %i.di, %_RNCINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort9quicksortINtNtBc_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB17_7sort_byNCNvXs4_B1y_INtB1y_11ClosestIterIB1u_NtNtB1A_6record3KeyEB1t_NtNtB1A_9addresses9AddressesNCINvMs1_B1y_INtB1y_13KBucketsTableB1t_B4Q_E12closest_keysB4n_E0B1t_ENtNtNtNtBc_4iter6traits8iterator8Iterator4nexts_0E0E0Cs2Bxje7pdMIr_13libp2p_server.exit.us.i ] ; 2 uses
-  %7 = icmp eq i64 %.sroa.0.0.i47, %.sroa.16.0117346
-  br i1 %7, label %bb.ag, label %bb.af
-
-.lr.ph.split.i:                                   ; preds = %.lr.ph.i54
-  call void @llvm.experimental.noalias.scope.decl(metadata !2348)
-  call void @llvm.experimental.noalias.scope.decl(metadata !2349)
-  call void @llvm.experimental.noalias.scope.decl(metadata !2351)
-  call void @llvm.experimental.noalias.scope.decl(metadata !2352)
-  call void @llvm.experimental.noalias.scope.decl(metadata !2354)
-  call void @llvm.experimental.noalias.scope.decl(metadata !2355)
-  call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @40, i64 noundef 16, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @41) #44, !noalias !2361
-  unreachable
-
-.split.us.i:                                      ; preds = %.lr.ph.split.us.i
-  call void @_RNvNtCskKLDkoKarTP_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @40, i64 noundef 16, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @42) #44, !noalias !2361
-  unreachable
-
-bb.af:                                            ; preds = %._crit_edge.split.us.i
-  %i.dk = getelementptr inbounds i8, ptr %.sroa.19.1.lcssa.i48, i64 -120
-  %i.dl = getelementptr inbounds nuw [120 x i8], ptr %2, i64 %.sroa.11.1.lcssa.i49
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.dl, ptr noundef nonnull align 8 dereferenceable(120) %.sroa.5.1.lcssa.i50, i64 120, i1 false), !alias.scope !2359, !noalias !2362
-  %i.dm = add i64 %.sroa.11.1.lcssa.i49, 1
-  %i.dn = getelementptr inbounds nuw i8, ptr %.sroa.5.1.lcssa.i50, i64 120
+bb.af:                                            ; preds = %._crit_edge.i48
+  %i.dk = getelementptr inbounds i8, ptr %.sroa.19.1.lcssa.i49, i64 -120
+  %i.dl = getelementptr inbounds nuw [120 x i8], ptr %2, i64 %.sroa.11.1.lcssa.i50
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.dl, ptr noundef nonnull align 8 dereferenceable(120) %.sroa.5.1.lcssa.i51, i64 120, i1 false), !alias.scope !2360, !noalias !2362
+  %i.dm = add i64 %.sroa.11.1.lcssa.i50, 1
+  %i.dn = getelementptr inbounds nuw i8, ptr %.sroa.5.1.lcssa.i51, i64 120
   br label %bb.ae
 
-bb.ag:                                            ; preds = %._crit_edge.split.us.i
-  %i.do = mul nuw nsw i64 %.sroa.11.1.lcssa.i49, 120
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.0.0.ph124, ptr nonnull align 8 %2, i64 %i.do, i1 false), !alias.scope !2359
-  %i.dp = sub i64 %.sroa.16.0117346, %.sroa.11.1.lcssa.i49 ; 6 uses
-  %.not24.i51 = icmp eq i64 %.sroa.16.0117346, %.sroa.11.1.lcssa.i49
-  %i.dq = getelementptr [120 x i8], ptr %.sroa.0.0.ph124, i64 %.sroa.11.1.lcssa.i49 ; 4 uses
+bb.ag:                                            ; preds = %._crit_edge.i48
+  %i.do = mul nuw nsw i64 %.sroa.11.1.lcssa.i50, 120
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %.sroa.0.0.ph124, ptr nonnull align 8 %2, i64 %i.do, i1 false), !alias.scope !2360
+  %i.dp = sub i64 %.sroa.16.0117346, %.sroa.11.1.lcssa.i50 ; 6 uses
+  %.not24.i51 = icmp eq i64 %.sroa.16.0117346, %.sroa.11.1.lcssa.i50
+  %i.dq = getelementptr [120 x i8], ptr %.sroa.0.0.ph124, i64 %.sroa.11.1.lcssa.i50 ; 4 uses
   br i1 %.not24.i51, label %.outer.thread, label %.lr.ph23.i.preheader
 
 .lr.ph23.i.preheader:                             ; preds = %bb.ag
-  %.neg469 = add i64 %.sroa.11.1.lcssa.i49, 1
+  %.neg469 = add i64 %.sroa.11.1.lcssa.i50, 1
   %xtraiter464 = and i64 %i.dp, 1
   %i.dr = icmp eq i64 %.sroa.16.0117346, %.neg469
   br i1 %i.dr, label %.lr.ph23.i.epil.preheader, label %.lr.ph23.i.preheader.new
@@ -820,13 +808,13 @@ bb.ag:                                            ; preds = %._crit_edge.split.u
   %i.ds = xor i64 %.sroa.06.022.i, -1
   %i.dt = getelementptr [120 x i8], ptr %i.cs, i64 %i.ds
   %i.du = getelementptr [120 x i8], ptr %i.dq, i64 %.sroa.06.022.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.du, ptr noundef nonnull align 8 dereferenceable(120) %i.dt, i64 120, i1 false), !alias.scope !2359
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.du, ptr noundef nonnull align 8 dereferenceable(120) %i.dt, i64 120, i1 false), !alias.scope !2360
   %i.dv = add nuw i64 %.sroa.06.022.i, 2          ; 2 uses
   %i.dw = xor i64 %.sroa.06.022.i, -2
   %i.dx = getelementptr [120 x i8], ptr %i.cs, i64 %i.dw
   %i.dy = getelementptr [120 x i8], ptr %i.dq, i64 %.sroa.06.022.i
   %i.dz = getelementptr i8, ptr %i.dy, i64 120
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.dz, ptr noundef nonnull align 8 dereferenceable(120) %i.dx, i64 120, i1 false), !alias.scope !2359
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.dz, ptr noundef nonnull align 8 dereferenceable(120) %i.dx, i64 120, i1 false), !alias.scope !2360
   %niter468.next.1 = add i64 %niter468, 2         ; 2 uses
   %niter468.ncmp.1 = icmp eq i64 %niter468.next.1, %unroll_iter467
   br i1 %niter468.ncmp.1, label %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionINtNtBa_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_7sort_byNCNvXs4_B1E_INtB1E_11ClosestIterIB1A_NtNtB1G_6record3KeyEB1z_NtNtB1G_9addresses9AddressesNCINvMs1_B1E_INtB1E_13KBucketsTableB1z_B5i_E12closest_keysB4P_E0B1z_ENtNtNtNtBa_4iter6traits8iterator8Iterator4nexts_0E0E0ECs2Bxje7pdMIr_13libp2p_server.exit.unr-lcssa, label %.lr.ph23.i
@@ -842,11 +830,11 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionIN
   %i.ea = xor i64 %.sroa.06.022.i.epil.init, -1
   %i.eb = getelementptr [120 x i8], ptr %i.cs, i64 %i.ea
   %i.ec = getelementptr [120 x i8], ptr %i.dq, i64 %.sroa.06.022.i.epil.init
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.ec, ptr noundef nonnull align 8 dereferenceable(120) %i.eb, i64 120, i1 false), !alias.scope !2359
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(120) %i.ec, ptr noundef nonnull align 8 dereferenceable(120) %i.eb, i64 120, i1 false), !alias.scope !2360
   br label %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionINtNtBa_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_7sort_byNCNvXs4_B1E_INtB1E_11ClosestIterIB1A_NtNtB1G_6record3KeyEB1z_NtNtB1G_9addresses9AddressesNCINvMs1_B1E_INtB1E_13KBucketsTableB1z_B5i_E12closest_keysB4P_E0B1z_ENtNtNtNtBa_4iter6traits8iterator8Iterator4nexts_0E0E0ECs2Bxje7pdMIr_13libp2p_server.exit
 
 _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionINtNtBa_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_7sort_byNCNvXs4_B1E_INtB1E_11ClosestIterIB1A_NtNtB1G_6record3KeyEB1z_NtNtB1G_9addresses9AddressesNCINvMs1_B1E_INtB1E_13KBucketsTableB1z_B5i_E12closest_keysB4P_E0B1z_ENtNtNtNtBa_4iter6traits8iterator8Iterator4nexts_0E0E0ECs2Bxje7pdMIr_13libp2p_server.exit: ; preds = %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionINtNtBa_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_7sort_byNCNvXs4_B1E_INtB1E_11ClosestIterIB1A_NtNtB1G_6record3KeyEB1z_NtNtB1G_9addresses9AddressesNCINvMs1_B1E_INtB1E_13KBucketsTableB1z_B5i_E12closest_keysB4P_E0B1z_ENtNtNtNtBa_4iter6traits8iterator8Iterator4nexts_0E0E0ECs2Bxje7pdMIr_13libp2p_server.exit.unr-lcssa, %.lr.ph23.i.epil.preheader
-  %i.ed = icmp ugt i64 %.sroa.11.1.lcssa.i49, %.sroa.16.0117346
+  %i.ed = icmp ugt i64 %.sroa.11.1.lcssa.i50, %.sroa.16.0117346
   br i1 %i.ed, label %bb.ah, label %.outer, !prof !9
 
 .outer.thread:                                    ; preds = %bb.ag
@@ -854,13 +842,13 @@ _RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionIN
   br label %.outer._crit_edge
 
 .outer:                                           ; preds = %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionINtNtBa_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_7sort_byNCNvXs4_B1E_INtB1E_11ClosestIterIB1A_NtNtB1G_6record3KeyEB1z_NtNtB1G_9addresses9AddressesNCINvMs1_B1E_INtB1E_13KBucketsTableB1z_B5i_E12closest_keysB4P_E0B1z_ENtNtNtNtBa_4iter6traits8iterator8Iterator4nexts_0E0E0ECs2Bxje7pdMIr_13libp2p_server.exit
-  %i.ee = getelementptr inbounds nuw [120 x i8], ptr %.sroa.0.0.ph124, i64 %.sroa.11.1.lcssa.i49 ; 2 uses
+  %i.ee = getelementptr inbounds nuw [120 x i8], ptr %.sroa.0.0.ph124, i64 %.sroa.11.1.lcssa.i50 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   %i.ef = icmp ult i64 %i.dp, 33
   br i1 %i.ef, label %.outer._crit_edge, label %.lr.ph
 
 bb.ah:                                            ; preds = %_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6stable9quicksort16stable_partitionINtNtBa_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvB2_9quicksortB1d_NCINvMNtCsexYYUdYSQU6_5alloc5sliceSB1d_7sort_byNCNvXs4_B1E_INtB1E_11ClosestIterIB1A_NtNtB1G_6record3KeyEB1z_NtNtB1G_9addresses9AddressesNCINvMs1_B1E_INtB1E_13KBucketsTableB1z_B5i_E12closest_keysB4P_E0B1z_ENtNtNtNtBa_4iter6traits8iterator8Iterator4nexts_0E0E0ECs2Bxje7pdMIr_13libp2p_server.exit
-  call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef %.sroa.11.1.lcssa.i49, i64 noundef %.sroa.16.0117346, i64 noundef %.sroa.16.0117346, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @15) #44
+  call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef %.sroa.11.1.lcssa.i50, i64 noundef %.sroa.16.0117346, i64 noundef %.sroa.16.0117346, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @15) #44
   unreachable
 }
 
@@ -1263,11 +1251,11 @@ begin_hunk_1_@llvm.smax.i8
 !2232 = !{!2170}
 !2233 = !{!2173}
 !2234 = !{!2173, !2172, !2171, !2163}
-!2235 = !{!2170, !2173, !2168, !2172, !2171, !2166, !2163, !2164}
-!2236 = !{!2173, !2172, !2171, !2164}
-!2237 = !{!2163, !2164}
-!2238 = !{!2175}
-!2239 = !{!2170, !2173, !2168, !2172, !2171, !2166, !2164}
+!2235 = !{!2170, !2173, !2168, !2172, !2171, !2166, !2164}
+!2236 = !{!2170, !2173, !2168, !2172, !2171, !2166, !2163, !2164}
+!2237 = !{!2173, !2172, !2171, !2164}
+!2238 = !{!2163, !2164}
+!2239 = !{!2175}
 !2240 = !{!2177}
 !2241 = distinct !{!2241, i1 true, !"_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared5pivot12choose_pivotINtNtBa_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB15_7sort_byNCNvXs4_B1w_INtB1w_11ClosestIterIB1s_NtNtB1y_6record3KeyEB1r_NtNtB1y_9addresses9AddressesNCINvMs1_B1w_INtB1w_13KBucketsTableB1r_B4O_E12closest_keysB4l_E0B1r_ENtNtNtNtBa_4iter6traits8iterator8Iterator4nexts_0E0ECs2Bxje7pdMIr_13libp2p_server"}
 !2242 = distinct !{!2242, !2241, !"_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared5pivot12choose_pivotINtNtBa_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB15_7sort_byNCNvXs4_B1w_INtB1w_11ClosestIterIB1s_NtNtB1y_6record3KeyEB1r_NtNtB1y_9addresses9AddressesNCINvMs1_B1w_INtB1w_13KBucketsTableB1r_B4O_E12closest_keysB4l_E0B1r_ENtNtNtNtBa_4iter6traits8iterator8Iterator4nexts_0E0ECs2Bxje7pdMIr_13libp2p_server: argument 0"}
@@ -1385,11 +1373,11 @@ begin_hunk_1_@llvm.smax.i8
 !2354 = !{!2292}
 !2355 = !{!2295}
 !2356 = !{!2295, !2294, !2293, !2285}
-!2357 = !{!2292, !2295, !2290, !2294, !2293, !2288, !2285, !2286}
-!2358 = !{!2295, !2294, !2293, !2286}
-!2359 = !{!2285, !2286}
-!2360 = !{!2297}
-!2361 = !{!2292, !2295, !2290, !2294, !2293, !2288, !2286}
+!2357 = !{!2292, !2295, !2290, !2294, !2293, !2288, !2286}
+!2358 = !{!2292, !2295, !2290, !2294, !2293, !2288, !2285, !2286}
+!2359 = !{!2295, !2294, !2293, !2286}
+!2360 = !{!2285, !2286}
+!2361 = !{!2297}
 !2362 = !{!2299}
 !2363 = distinct !{!2363, i1 true, !"_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared5pivot12choose_pivotINtNtBa_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket5entry9EntryViewINtNtB1w_3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdENtNtB1y_9addresses9AddressesEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB15_7sort_byNCNvXs4_B1w_INtB1w_11ClosestIterIB2n_INtNtB44_3vec3VechEEB2m_B3s_NCINvMs1_B1w_INtB1w_13KBucketsTableB2m_B3s_E7closestB5d_E0B1r_ENtNtNtNtBa_4iter6traits8iterator8Iterator4nexts_0E0ECs2Bxje7pdMIr_13libp2p_server"}
 !2364 = distinct !{!2364, !2363, !"_RINvNtNtNtNtCskKLDkoKarTP_4core5slice4sort6shared5pivot12choose_pivotINtNtBa_6option6OptionINtNtNtCskC4O4hr3vz7_10libp2p_kad7kbucket5entry9EntryViewINtNtB1w_3key3KeyNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdENtNtB1y_9addresses9AddressesEENCINvMNtCsexYYUdYSQU6_5alloc5sliceSB15_7sort_byNCNvXs4_B1w_INtB1w_11ClosestIterIB2n_INtNtB44_3vec3VechEEB2m_B3s_NCINvMs1_B1w_INtB1w_13KBucketsTableB2m_B3s_E7closestB5d_E0B1r_ENtNtNtNtBa_4iter6traits8iterator8Iterator4nexts_0E0ECs2Bxje7pdMIr_13libp2p_server: argument 0"}

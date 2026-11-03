@@ -202,7 +202,7 @@ _RNvMNtCs4NRVxsYgnAr_4core5sliceSh12chunks_exactCsau3t54nuvpx_9jiff_core.exit: ;
   br i1 %.not8, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh12chunks_exactCsau3t54nuvpx_9jiff_core.exit
-  switch i64 %.0.val, label %.lr.ph.split.split [
+  switch i64 %.0.val, label %5 [
     i64 4, label %_RNvNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif6parser17from_be_bytes_i32.exit.us
     i64 8, label %_RNvNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif6parser17from_be_bytes_i64.exit.us
   ]
@@ -219,6 +219,10 @@ _RNvNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif6parser17from_be_bytes_i32.exit.us: ; 
   %.not.us = icmp ult i64 %i.o, 4
   br i1 %.not.us, label %._crit_edge, label %_RNvNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif6parser17from_be_bytes_i32.exit.us
 
+._crit_edge:                                      ; preds = %_RNvNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif6parser17from_be_bytes_i64.exit.us, %_RNvNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif6parser17from_be_bytes_i32.exit.us, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh12chunks_exactCsau3t54nuvpx_9jiff_core.exit
+  %4 = icmp eq i64 %i.k, 0
+  br i1 %4, label %bb.g, label %bb.h, !prof !8
+
 _RNvNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif6parser17from_be_bytes_i64.exit.us: ; preds = %.lr.ph, %_RNvNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif6parser17from_be_bytes_i64.exit.us
   %.sroa.02.010.us11 = phi ptr [ %i.r, %_RNvNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif6parser17from_be_bytes_i64.exit.us ], [ %2, %.lr.ph ] ; 2 uses
   %.sroa.5.09.us12 = phi i64 [ %i.s, %_RNvNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif6parser17from_be_bytes_i64.exit.us ], [ %i.l, %.lr.ph ]
@@ -233,15 +237,6 @@ _RNvNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif6parser17from_be_bytes_i64.exit.us: ; 
   %.not.us13 = icmp ult i64 %i.s, 8
   br i1 %.not.us13, label %._crit_edge, label %_RNvNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif6parser17from_be_bytes_i64.exit.us
 
-._crit_edge:                                      ; preds = %_RNvNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif6parser17from_be_bytes_i64.exit.us, %_RNvNtNtNtCsau3t54nuvpx_9jiff_core2tz4tzif6parser17from_be_bytes_i32.exit.us, %_RNvMNtCs4NRVxsYgnAr_4core5sliceSh12chunks_exactCsau3t54nuvpx_9jiff_core.exit
-  %4 = icmp eq i64 %i.k, 0
-  br i1 %4, label %bb.g, label %bb.h, !prof !8
-
-.lr.ph.split.split:                               ; preds = %.lr.ph
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !156)
-  call void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @2, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @41) #19, !noalias !157
-  unreachable
-
 bb.g:                                             ; preds = %._crit_edge
   store ptr %i.h, ptr %0, align 8
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -254,6 +249,10 @@ bb.h:                                             ; preds = %._crit_edge
 
 bb.i:                                             ; preds = %bb.c, %bb.d, %bb.g
   ret void
+
+5:                                                ; preds = %.lr.ph
+  call void @_RNvNtCs4NRVxsYgnAr_4core6result13unwrap_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @2, i64 noundef 43, ptr noundef nonnull %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @1, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @41) #19, !noalias !157
+  unreachable
 }
 
 ; Function Attrs: nonlazybind uwtable

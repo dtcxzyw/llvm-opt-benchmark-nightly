@@ -204,7 +204,7 @@ define hidden void @_RNvXNtNtCshzWfHUSfYae_4core4iter8adaptersINtB2_12GenericShu
 bb.a:
   %.sroa.410.i.i.i.i.i = alloca [48 x i8], align 8 ; 10 uses
   %i.a = alloca [56 x i8], align 8                ; 11 uses
-  %.sroa.6.i.i.i = alloca [48 x i8], align 8      ; 9 uses
+  %.sroa.6.i.i.i = alloca [48 x i8], align 8      ; 8 uses
   %.sroa.5 = alloca [48 x i8], align 8            ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !132)
@@ -253,7 +253,7 @@ bb.a:
   store i8 1, ptr %i.d, align 1, !alias.scope !139
   %.not.i3.i.i.us.i.i.i = icmp ne i64 %.pre2.i.i.i.i.i.i, %.promoted20.i.i.i
   %or.cond.not.i.i.i.us.i.i.i = select i1 %i.t, i1 true, i1 %.not.i3.i.i.us.i.i.i
-  br i1 %or.cond.not.i.i.i.us.i.i.i, label %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.us.us.i.i.i, label %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.us.i.i.i
+  br i1 %or.cond.not.i.i.i.us.i.i.i, label %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.us.us.i.i.i, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveEEB1m_.exit
 
 _RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.us.us.i.i.i: ; preds = %.lr.ph.split.us.i.i.i
   %.sroa.0.1.i.i.us.i.i.i = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i, i64 %.promoted20.i.i.i
@@ -276,17 +276,7 @@ _RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldReINtNtBa_6resul
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.410.i.i.i.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !143
   %.not.i.us.us.i.i.i = icmp eq i64 %.sroa.0.0.copyload.i.us.us.i.i.i, -3
-  br i1 %.not.i.us.us.i.i.i, label %._crit_edge.split.us.split.us.i.i.i, label %.loopexit
-
-._crit_edge.split.us.split.us.i.i.i:              ; preds = %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldReINtNtBa_6result6ResultNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveNtB1p_10ParseErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB2U_B1n_EENvYB1n_NtNtNtBa_3str6traits7FromStr8from_strNCINvXB6_INtB6_12GenericShuntINtB4_3MapINtNtB3U_4iter5SplitcEB3J_EIB12_NtNtBa_7convert10InfallibleB2z_EENtNtNtB8_6traits8iterator8Iterator8try_folduNCINvNvB67_12try_for_each4callB1n_B3y_NcNtB3y_5Break0E0B3y_E0E0B1t_.exit.us.us.i.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i.i.i)
-  br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveEEB1m_.exit
-
-_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.us.i.i.i: ; preds = %.lr.ph.split.us.i.i.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !140)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !141)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !142)
-  br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveEEB1m_.exit
+  br i1 %.not.i.us.us.i.i.i, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveEEB1m_.exit.sink.split, label %.loopexit
 
 .lr.ph.split.i.i.i:                               ; preds = %bb.n, %.lr.ph.split.preheader.i.i.i
   %i.y = phi i64 [ %i.av, %bb.n ], [ %.promoted24.i.i.i, %.lr.ph.split.preheader.i.i.i ] ; 3 uses
@@ -468,8 +458,7 @@ _RINvXNtNtCshzWfHUSfYae_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_3map3MapI
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.c, ptr noundef nonnull align 8 dereferenceable(24) %i.u, i64 24, i1 false), !noalias !158
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.410.i.i.i.i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !143
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i.i.i)
-  br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveEEB1m_.exit
+  br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveEEB1m_.exit.sink.split
 
 .loopexit:                                        ; preds = %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldReINtNtBa_6result6ResultNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveNtB1p_10ParseErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB2U_B1n_EENvYB1n_NtNtNtBa_3str6traits7FromStr8from_strNCINvXB6_INtB6_12GenericShuntINtB4_3MapINtNtB3U_4iter5SplitcEB3J_EIB12_NtNtBa_7convert10InfallibleB2z_EENtNtNtB8_6traits8iterator8Iterator8try_folduNCINvNvB67_12try_for_each4callB1n_B3y_NcNtB3y_5Break0E0B3y_E0E0B1t_.exit.i.i.i, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldReINtNtBa_6result6ResultNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveNtB1p_10ParseErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB2U_B1n_EENvYB1n_NtNtNtBa_3str6traits7FromStr8from_strNCINvXB6_INtB6_12GenericShuntINtB4_3MapINtNtB3U_4iter5SplitcEB3J_EIB12_NtNtBa_7convert10InfallibleB2z_EENtNtNtB8_6traits8iterator8Iterator8try_folduNCINvNvB67_12try_for_each4callB1n_B3y_NcNtB3y_5Break0E0B3y_E0E0B1t_.exit.us.us.i.i.i
   %.sroa.0.0.copyload.i17.i.i.i.ph = phi i64 [ %.sroa.0.0.copyload.i.us.us.i.i.i, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldReINtNtBa_6result6ResultNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveNtB1p_10ParseErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB2U_B1n_EENvYB1n_NtNtNtBa_3str6traits7FromStr8from_strNCINvXB6_INtB6_12GenericShuntINtB4_3MapINtNtB3U_4iter5SplitcEB3J_EIB12_NtNtBa_7convert10InfallibleB2z_EENtNtNtB8_6traits8iterator8Iterator8try_folduNCINvNvB67_12try_for_each4callB1n_B3y_NcNtB3y_5Break0E0B3y_E0E0B1t_.exit.us.us.i.i.i ], [ %.sroa.0.0.copyload.i.i.i.i, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldReINtNtBa_6result6ResultNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveNtB1p_10ParseErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB2U_B1n_EENvYB1n_NtNtNtBa_3str6traits7FromStr8from_strNCINvXB6_INtB6_12GenericShuntINtB4_3MapINtNtB3U_4iter5SplitcEB3J_EIB12_NtNtBa_7convert10InfallibleB2z_EENtNtNtB8_6traits8iterator8Iterator8try_folduNCINvNvB67_12try_for_each4callB1n_B3y_NcNtB3y_5Break0E0B3y_E0E0B1t_.exit.i.i.i ]
@@ -479,11 +468,15 @@ _RINvXNtNtCshzWfHUSfYae_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_3map3MapI
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.5, i64 48, i1 false)
   br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveEEB1m_.exit
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveEEB1m_.exit: ; preds = %bb.n, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.i.i.i, %_RINvXNtNtCshzWfHUSfYae_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_3map3MapINtNtNtB7_3str4iter5SplitcENvYNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveNtNtB1j_6traits7FromStr8from_strEINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtB1K_10ParseErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB4y_12try_for_each4callB1I_INtNtNtB7_3ops12control_flow11ControlFlowB1I_ENcNtB5O_5Break0E0B5O_EB1O_.exit, %._crit_edge.split.us.split.us.i.i.i, %bb.a, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.us.i.i.i, %.loopexit
-  %storemerge = phi i64 [ %.sroa.0.0.copyload.i17.i.i.i.ph, %.loopexit ], [ -2, %._crit_edge.split.us.split.us.i.i.i ], [ -2, %_RINvXNtNtCshzWfHUSfYae_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_3map3MapINtNtNtB7_3str4iter5SplitcENvYNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveNtNtB1j_6traits7FromStr8from_strEINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtB1K_10ParseErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB4y_12try_for_each4callB1I_INtNtNtB7_3ops12control_flow11ControlFlowB1I_ENcNtB5O_5Break0E0B5O_EB1O_.exit ], [ -2, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.us.i.i.i ], [ -2, %bb.a ], [ -2, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.i.i.i ], [ -2, %bb.n ]
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveEEB1m_.exit: ; preds = %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.i.i.i, %bb.n, %.lr.ph.split.us.i.i.i, %bb.a, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveEEB1m_.exit.sink.split, %.loopexit
+  %storemerge = phi i64 [ %.sroa.0.0.copyload.i17.i.i.i.ph, %.loopexit ], [ -2, %bb.a ], [ -2, %.lr.ph.split.us.i.i.i ], [ -2, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveEEB1m_.exit.sink.split ], [ -2, %bb.n ], [ -2, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.i.i.i ]
   store i64 %storemerge, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
   ret void
+
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveEEB1m_.exit.sink.split: ; preds = %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters3map12map_try_foldReINtNtBa_6result6ResultNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveNtB1p_10ParseErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB2U_B1n_EENvYB1n_NtNtNtBa_3str6traits7FromStr8from_strNCINvXB6_INtB6_12GenericShuntINtB4_3MapINtNtB3U_4iter5SplitcEB3J_EIB12_NtNtBa_7convert10InfallibleB2z_EENtNtNtB8_6traits8iterator8Iterator8try_folduNCINvNvB67_12try_for_each4callB1n_B3y_NcNtB3y_5Break0E0B3y_E0E0B1t_.exit.us.us.i.i.i, %_RINvXNtNtCshzWfHUSfYae_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_3map3MapINtNtNtB7_3str4iter5SplitcENvYNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveNtNtB1j_6traits7FromStr8from_strEINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtB1K_10ParseErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB4y_12try_for_each4callB1I_INtNtNtB7_3ops12control_flow11ControlFlowB1I_ENcNtB5O_5Break0E0B5O_EB1O_.exit
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6.i.i.i)
+  br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtB4_3ops12control_flow11ControlFlowNtNtNtCsity1gTxgZvF_18tracing_subscriber6filter9directive15StaticDirectiveEEB1m_.exit
 }
 
 ; Function Attrs: nonlazybind uwtable

@@ -205,9 +205,6 @@ bb.a:
 
 "_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17h60f9459070e34218E.exit.i.i.us.us.us.us.us.i.i": ; preds = %.split.us.split.us.split.us.split.us.i.i
   store i8 1, ptr %i.a, align 1, !alias.scope !361
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !362)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !363)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !364)
   br label %_ZN4core4iter6traits8iterator8Iterator4find17h8cba85aecf40790bE.exit
 
 .split.us.split.us.split.us.split.i.i:            ; preds = %.split.us.split.us.split.us.i.i
@@ -239,9 +236,6 @@ bb.a:
 
 .lr.ph.i.i.i.us.us.us.us.i.i:                     ; preds = %.split.us.split.split.us.split.us.i.i
   store i8 1, ptr %i.a, align 1, !alias.scope !361
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !362)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !363)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !364)
   br label %_ZN4core4iter6traits8iterator8Iterator4find17h8cba85aecf40790bE.exit
 
 .split.us.split.split.us.split.i.i:               ; preds = %.split.us.split.split.us.i.i
@@ -644,7 +638,7 @@ bb.qt:                                            ; preds = %.noexc10.i.i.i.i.i.
   call void @llvm.experimental.noalias.scope.decl(metadata !7572)
   call void @llvm.experimental.noalias.scope.decl(metadata !7573), !noalias !7565
   call void @llvm.experimental.noalias.scope.decl(metadata !7574), !noalias !7565
-  %.promoted.i.i.i.i = load i8, ptr %i.axf, align 1, !alias.scope !7575, !noalias !7576 ; 8 uses
+  %.promoted.i.i.i.i = load i8, ptr %i.axf, align 1, !alias.scope !7575, !noalias !7576 ; 6 uses
   %.promoted19.i.i.i.i = load i64, ptr %i.ej, align 8, !alias.scope !7577, !noalias !7576 ; 7 uses
   %.val.i.i.i.i.i.i213 = load ptr, ptr %i.axg, align 8, !alias.scope !7577, !noalias !7576, !nonnull !13, !align !16 ; 5 uses
   %.val1.i.i.i.i.i.i = load i64, ptr %i.axh, align 8, !alias.scope !7577, !noalias !7576 ; 3 uses
@@ -772,47 +766,39 @@ select.unfold.i.i.i.i.us:                         ; preds = %bb.qx, %"_ZN4core3s
   %.fr44.i.i.i.i = freeze i64 %i.bcw              ; 2 uses
   %.not.i.us.i.i.i.i = icmp eq i64 %.fr44.i.i.i.i, 0 ; 2 uses
   %.fr.i.i.i.i = freeze i1 %i.bcv
-  br i1 %.fr.i.i.i.i, label %.split.us.split.us.i.i.i.i, label %.split.us.split.i.i.i.i
+  br i1 %.fr.i.i.i.i, label %.split.us.split.us.split.us.i.i.i.i.a, label %.split.us.split.split.us.i.i.i.i.a
 
-.split.us.split.us.i.i.i.i:                       ; preds = %.split.us.i.i.i.i
-  br i1 %or.cond.not.i.i.i.us.i.i.i.i, label %.split.us.split.us.split.us.i.i.i.i.a, label %.split.us.split.us.split.i.i.i.i
-
-.split.us.split.us.split.us.i.i.i.i.a:            ; preds = %.split.us.split.us.i.i.i.i
-  br i1 %.not.i.us.i.i.i.i, label %.split.us.split.us.split.us.split.us.i.i.i.i, label %.split.us.split.us.split.us.split.i.i.i.i
+.split.us.split.us.split.us.i.i.i.i.a:            ; preds = %.split.us.i.i.i.i
+  br i1 %or.cond.not.i.i.i.us.i.i.i.i, label %.split.us.split.us.split.us.split.us.i.i.i.i, label %.split.us.split.us.split.i.i.i.i
 
 .split.us.split.us.split.us.split.us.i.i.i.i:     ; preds = %.split.us.split.us.split.us.i.i.i.i.a
-  %0 = trunc nuw i8 %.promoted.i.i.i.i to i1
-  br i1 %0, label %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.i", label %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.sink.split.sink.split.i"
+  br i1 %.not.i.us.i.i.i.i, label %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.i", label %.split.us.split.us.split.us.split.i.i.i.i
 
-.split.us.split.us.split.us.split.i.i.i.i:        ; preds = %.split.us.split.us.split.us.i.i.i.i.a
+.split.us.split.us.split.us.split.i.i.i.i:        ; preds = %.split.us.split.us.split.us.split.us.i.i.i.i
   call void @llvm.experimental.noalias.scope.decl(metadata !7578), !noalias !7565
   call void @llvm.experimental.noalias.scope.decl(metadata !7579), !noalias !7565
   %i.bcx = trunc nuw i8 %.promoted.i.i.i.i to i1
   br i1 %i.bcx, label %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.i", label %.split26.us.sink.split.i.i.i.i
 
-.split.us.split.us.split.i.i.i.i:                 ; preds = %.split.us.split.us.i.i.i.i
+.split.us.split.us.split.i.i.i.i:                 ; preds = %.split.us.split.us.split.us.i.i.i.i.a
   call void @llvm.experimental.noalias.scope.decl(metadata !7578), !noalias !7565
   call void @llvm.experimental.noalias.scope.decl(metadata !7579), !noalias !7565
   %i.bcy = trunc nuw i8 %.promoted.i.i.i.i to i1
   br i1 %i.bcy, label %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.i", label %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.sink.split.i"
 
-.split.us.split.i.i.i.i:                          ; preds = %.split.us.i.i.i.i
-  br i1 %or.cond.not.i.i.i.us.i.i.i.i, label %.split.us.split.split.us.i.i.i.i.a, label %.split.us.split.split.i.i.i.i
-
-.split.us.split.split.us.i.i.i.i.a:               ; preds = %.split.us.split.i.i.i.i
-  br i1 %.not.i.us.i.i.i.i, label %.split.us.split.split.us.split.us.i.i.i.i, label %.split.us.split.split.us.split.i.i.i.i
+.split.us.split.split.us.i.i.i.i.a:               ; preds = %.split.us.i.i.i.i
+  br i1 %or.cond.not.i.i.i.us.i.i.i.i, label %.split.us.split.split.us.split.us.i.i.i.i, label %.split.us.split.split.i.i.i.i
 
 .split.us.split.split.us.split.us.i.i.i.i:        ; preds = %.split.us.split.split.us.i.i.i.i.a
-  %1 = trunc nuw i8 %.promoted.i.i.i.i to i1
-  br i1 %1, label %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.i", label %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.sink.split.sink.split.i"
+  br i1 %.not.i.us.i.i.i.i, label %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.i", label %.split.us.split.split.us.split.i.i.i.i
 
-.split.us.split.split.us.split.i.i.i.i:           ; preds = %.split.us.split.split.us.i.i.i.i.a
+.split.us.split.split.us.split.i.i.i.i:           ; preds = %.split.us.split.split.us.split.us.i.i.i.i
   call void @llvm.experimental.noalias.scope.decl(metadata !7578), !noalias !7565
   call void @llvm.experimental.noalias.scope.decl(metadata !7579), !noalias !7565
   %i.bcz = trunc nuw i8 %.promoted.i.i.i.i to i1
   br i1 %i.bcz, label %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.i", label %.split26.us.sink.split.i.i.i.i
 
-.split.us.split.split.i.i.i.i:                    ; preds = %.split.us.split.i.i.i.i
+.split.us.split.split.i.i.i.i:                    ; preds = %.split.us.split.split.us.i.i.i.i.a
   call void @llvm.experimental.noalias.scope.decl(metadata !7578), !noalias !7565
   call void @llvm.experimental.noalias.scope.decl(metadata !7579), !noalias !7565
   %i.bda = trunc nuw i8 %.promoted.i.i.i.i to i1
@@ -972,19 +958,14 @@ bb.re:                                            ; preds = %.loopexit.split-lp.
   call void @_RNvCskdKJRKLKjqM_7___rustc14___rust_dealloc(ptr noundef nonnull %.val9.i.i.i.i.i.i, i64 noundef %.val10.i.i.i.i.i.i, i64 noundef range(i64 1, -9223372036854775807) 8) #37, !noalias !7565
   br label %.body.i209
 
-"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.sink.split.sink.split.i": ; preds = %.split.us.split.split.us.split.us.i.i.i.i, %.split.us.split.us.split.us.split.us.i.i.i.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !7578), !noalias !7565
-  call void @llvm.experimental.noalias.scope.decl(metadata !7579), !noalias !7565
-  br label %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.sink.split.i"
-
-"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.sink.split.i": ; preds = %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.sink.split.sink.split.i", %.split.us.split.split.i.i.i.i, %.split.us.split.us.split.i.i.i.i
+"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.sink.split.i": ; preds = %.split.us.split.split.i.i.i.i, %.split.us.split.us.split.i.i.i.i
   call void @llvm.experimental.noalias.scope.decl(metadata !7580), !noalias !7565
   br label %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.i"
 
-"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.i": ; preds = %.split.us.split.split.us.split.i.i.i.i, %.split.us.split.us.split.us.split.i.i.i.i, %.split.i.i.i.i, %"_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17h60f9459070e34218E.exit.i.i.i.i.i.i", %.split.i.i.i.i.us, %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.sink.split.i", %.split.us.split.split.i.i.i.i, %.split.us.split.split.us.split.us.i.i.i.i, %.split.us.split.us.split.i.i.i.i, %.split.us.split.us.split.us.split.us.i.i.i.i, %.noexc.i.i.i.i.i.i211
-  %.sroa.10.0.copyload.i.i = phi i64 [ 1, %.noexc.i.i.i.i.i.i211 ], [ %i.bbm, %.split.us.split.split.us.split.us.i.i.i.i ], [ %i.bbm, %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.sink.split.i" ], [ %i.bbm, %.split.us.split.us.split.i.i.i.i ], [ %i.bbm, %.split.us.split.split.i.i.i.i ], [ %i.bbm, %.split.i.i.i.i ], [ %i.bbm, %.split.us.split.us.split.us.split.us.i.i.i.i ], [ %i.bbm, %.split.i.i.i.i.us ], [ %i.bbm, %"_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17h60f9459070e34218E.exit.i.i.i.i.i.i" ], [ %i.bbm, %.split.us.split.us.split.us.split.i.i.i.i ], [ %i.bbm, %.split.us.split.split.us.split.i.i.i.i ]
-  %.sroa.6.0.copyload.i.i = phi ptr [ %i.baj, %.noexc.i.i.i.i.i.i211 ], [ %.sroa.8164.1.i, %.split.us.split.split.us.split.us.i.i.i.i ], [ %.sroa.8164.1.i, %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.sink.split.i" ], [ %.sroa.8164.1.i, %.split.us.split.us.split.i.i.i.i ], [ %.sroa.8164.1.i, %.split.us.split.split.i.i.i.i ], [ %.sroa.8164.1.i, %.split.i.i.i.i ], [ %.sroa.8164.1.i, %.split.us.split.us.split.us.split.us.i.i.i.i ], [ %.sroa.8164.1.i, %.split.i.i.i.i.us ], [ %.sroa.8164.1.i, %"_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17h60f9459070e34218E.exit.i.i.i.i.i.i" ], [ %.sroa.8164.1.i, %.split.us.split.us.split.us.split.i.i.i.i ], [ %.sroa.8164.1.i, %.split.us.split.split.us.split.i.i.i.i ]
-  %.sroa.0.0.copyload.i.i = phi i64 [ 4, %.noexc.i.i.i.i.i.i211 ], [ %.sroa.0160.1.i, %.split.us.split.split.us.split.us.i.i.i.i ], [ %.sroa.0160.1.i, %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.sink.split.i" ], [ %.sroa.0160.1.i, %.split.us.split.us.split.i.i.i.i ], [ %.sroa.0160.1.i, %.split.us.split.split.i.i.i.i ], [ %.sroa.0160.1.i, %.split.i.i.i.i ], [ %.sroa.0160.1.i, %.split.us.split.us.split.us.split.us.i.i.i.i ], [ %.sroa.0160.1.i, %.split.i.i.i.i.us ], [ %.sroa.0160.1.i, %"_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17h60f9459070e34218E.exit.i.i.i.i.i.i" ], [ %.sroa.0160.1.i, %.split.us.split.us.split.us.split.i.i.i.i ], [ %.sroa.0160.1.i, %.split.us.split.split.us.split.i.i.i.i ]
+"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.i": ; preds = %.split.us.split.split.us.split.i.i.i.i, %.split.us.split.split.us.split.us.i.i.i.i, %.split.us.split.us.split.us.split.i.i.i.i, %.split.us.split.us.split.us.split.us.i.i.i.i, %.split.i.i.i.i, %"_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17h60f9459070e34218E.exit.i.i.i.i.i.i", %.split.i.i.i.i.us, %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.sink.split.i", %.split.us.split.split.i.i.i.i, %.split.us.split.us.split.i.i.i.i, %.noexc.i.i.i.i.i.i211
+  %.sroa.10.0.copyload.i.i = phi i64 [ 1, %.noexc.i.i.i.i.i.i211 ], [ %i.bbm, %.split.us.split.split.i.i.i.i ], [ %i.bbm, %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.sink.split.i" ], [ %i.bbm, %.split.us.split.us.split.i.i.i.i ], [ %i.bbm, %.split.i.i.i.i ], [ %i.bbm, %.split.i.i.i.i.us ], [ %i.bbm, %"_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17h60f9459070e34218E.exit.i.i.i.i.i.i" ], [ %i.bbm, %.split.us.split.us.split.us.split.us.i.i.i.i ], [ %i.bbm, %.split.us.split.us.split.us.split.i.i.i.i ], [ %i.bbm, %.split.us.split.split.us.split.us.i.i.i.i ], [ %i.bbm, %.split.us.split.split.us.split.i.i.i.i ]
+  %.sroa.6.0.copyload.i.i = phi ptr [ %i.baj, %.noexc.i.i.i.i.i.i211 ], [ %.sroa.8164.1.i, %.split.us.split.split.i.i.i.i ], [ %.sroa.8164.1.i, %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.sink.split.i" ], [ %.sroa.8164.1.i, %.split.us.split.us.split.i.i.i.i ], [ %.sroa.8164.1.i, %.split.i.i.i.i ], [ %.sroa.8164.1.i, %.split.i.i.i.i.us ], [ %.sroa.8164.1.i, %"_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17h60f9459070e34218E.exit.i.i.i.i.i.i" ], [ %.sroa.8164.1.i, %.split.us.split.us.split.us.split.us.i.i.i.i ], [ %.sroa.8164.1.i, %.split.us.split.us.split.us.split.i.i.i.i ], [ %.sroa.8164.1.i, %.split.us.split.split.us.split.us.i.i.i.i ], [ %.sroa.8164.1.i, %.split.us.split.split.us.split.i.i.i.i ]
+  %.sroa.0.0.copyload.i.i = phi i64 [ 4, %.noexc.i.i.i.i.i.i211 ], [ %.sroa.0160.1.i, %.split.us.split.split.i.i.i.i ], [ %.sroa.0160.1.i, %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17hb8c231f28f5bcdf2E.exit.i.i.i.i.i.sink.split.i" ], [ %.sroa.0160.1.i, %.split.us.split.us.split.i.i.i.i ], [ %.sroa.0160.1.i, %.split.i.i.i.i ], [ %.sroa.0160.1.i, %.split.i.i.i.i.us ], [ %.sroa.0160.1.i, %"_ZN4core3str4iter22SplitInternal$LT$P$GT$7get_end17h60f9459070e34218E.exit.i.i.i.i.i.i" ], [ %.sroa.0160.1.i, %.split.us.split.us.split.us.split.us.i.i.i.i ], [ %.sroa.0160.1.i, %.split.us.split.us.split.us.split.i.i.i.i ], [ %.sroa.0160.1.i, %.split.us.split.split.us.split.us.i.i.i.i ], [ %.sroa.0160.1.i, %.split.us.split.split.us.split.i.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ej), !noalias !7566
   br label %_ZN4core4iter6traits8iterator8Iterator7collect17hc57511c88c03fb62E.exit.i.i
 

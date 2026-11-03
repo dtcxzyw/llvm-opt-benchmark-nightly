@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.bj = load i64, ptr %i.bi, align 8, !tbaa !183
   br label %.lr.ph.us.us
 
-.lr.ph.us.us:                                     ; preds = %..critedge74_crit_edge.us.us, %.preheader.us.preheader
+.lr.ph.us.us:                                     ; preds = %.preheader.us.preheader, %..critedge74_crit_edge.us.us
   %.064116.us.us = phi i64 [ 0, %.preheader.us.preheader ], [ %i.bs, %..critedge74_crit_edge.us.us ] ; 3 uses
   %i.bk = mul i64 %i.bj, %.064116.us.us
   %i.bl = getelementptr inbounds nuw i8, ptr %i.bh, i64 %i.bk ; 2 uses
@@ -214,7 +214,12 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.bn = getelementptr [4 x i8], ptr %i.be, i64 %i.bm
   br label %bb.j
 
-bb.j:                                             ; preds = %10, %.lr.ph.us.us
+10:                                               ; preds = %bb.j
+  %11 = add nuw i64 %.063113.us.us, 1             ; 2 uses
+  %exitcond.not = icmp eq i64 %11, %1
+  br i1 %exitcond.not, label %..critedge74_crit_edge.us.us, label %bb.j, !llvm.loop !522
+
+bb.j:                                             ; preds = %.lr.ph.us.us, %10
   %.063113.us.us = phi i64 [ 0, %.lr.ph.us.us ], [ %11, %10 ] ; 3 uses
   %i.bo = getelementptr inbounds nuw [4 x i8], ptr %i.bl, i64 %.063113.us.us
   %i.bp = load i32, ptr %i.bo, align 4, !tbaa !19 ; 2 uses
@@ -222,11 +227,6 @@ bb.j:                                             ; preds = %10, %.lr.ph.us.us
   store i32 %i.bp, ptr %i.bq, align 4, !tbaa !19
   %i.br = icmp slt i32 %i.bp, 1
   br i1 %i.br, label %.critedge, label %10
-
-10:                                               ; preds = %bb.j
-  %11 = add nuw i64 %.063113.us.us, 1             ; 2 uses
-  %exitcond.not = icmp eq i64 %11, %1
-  br i1 %exitcond.not, label %..critedge74_crit_edge.us.us, label %bb.j, !llvm.loop !522
 
 ..critedge74_crit_edge.us.us:                     ; preds = %10
   %i.bs = add nuw i64 %.064116.us.us, 1           ; 2 uses
@@ -307,7 +307,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %exitcond123.2.not, label %.critedge, label %.lr.ph.us.us.2, !llvm.loop !523
 
 .critedge:                                        ; preds = %bb.j, %bb.k, %..critedge74_crit_edge.us.us.2, %bb.m, %bb.i, %bb.h, %bb.f, %_ZNK3jxl15ModularStreamId2IDERKNS_15FrameDimensionsE.exit, %bb.e
-  %.sroa.092.0 = phi i32 [ 0, %..critedge74_crit_edge.us.us.2 ], [ 1, %bb.h ], [ %i.ao, %bb.f ], [ %i.am, %_ZNK3jxl15ModularStreamId2IDERKNS_15FrameDimensionsE.exit ], [ 1, %bb.e ], [ 1, %bb.k ], [ 0, %bb.i ], [ 1, %bb.m ], [ 1, %bb.j ] ; 3 uses
+  %.sroa.092.0 = phi i32 [ 0, %..critedge74_crit_edge.us.us.2 ], [ 1, %bb.h ], [ %i.ao, %bb.f ], [ %i.am, %_ZNK3jxl15ModularStreamId2IDERKNS_15FrameDimensionsE.exit ], [ 1, %bb.e ], [ 0, %bb.i ], [ 1, %bb.m ], [ 1, %bb.k ], [ 1, %bb.j ] ; 3 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %9, i64 104
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !168 ; 4 uses
   %.not.i.i.i.i = icmp eq ptr %i.cy, null

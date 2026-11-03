@@ -200,7 +200,7 @@ bb.a:
   store i32 1, ptr %i.b, align 4
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.gn, %bb.gc, %bb.fo, %bb.a
+bb.b:                                             ; preds = %.backedge1, %bb.a
   %i.ds = load ptr, ptr %i.a, align 8
   %4 = getelementptr inbounds nuw %struct.lua_State, ptr %i.ds, i32 0, i32 8
   %i.dt = load ptr, ptr %4, align 8
@@ -225,7 +225,7 @@ bb.b:                                             ; preds = %bb.gn, %bb.gc, %bb.
   store ptr %i.ec, ptr %i.e, align 8
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.ix, %bb.iw, %bb.ij, %bb.hz, %bb.hy, %bb.hh, %bb.he, %bb.gs, %bb.gd, %bb.fr, %bb.fk, %bb.fd, %bb.ew, %bb.en, %bb.ee, %bb.dt, %bb.ds, %bb.dp, %bb.di, %bb.dd, %bb.cz, %bb.co, %bb.cd, %bb.bs, %bb.bh, %bb.aw, %bb.al, %bb.ah, %bb.ae, %bb.x, %bb.s, %bb.r, %bb.n, %bb.m, %bb.l, %bb.h, %bb.e, %bb.d, %bb.b
+bb.c:                                             ; preds = %.backedge, %bb.b
   %i.ed = load ptr, ptr %i.f, align 8             ; 2 uses
   %i.ee = getelementptr inbounds nuw i32, ptr %i.ed, i32 1
   store ptr %i.ee, ptr %i.f, align 8
@@ -302,6 +302,9 @@ bb.d:                                             ; preds = %bb.c
   %i.ex = load ptr, ptr %i.j, align 8
   %16 = getelementptr inbounds nuw %struct.lua_TValue, ptr %i.ex, i32 0, i32 1
   store i32 %i.ew, ptr %16, align 8
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.d, %bb.e, %bb.h, %bb.l, %bb.m, %bb.n, %bb.r, %bb.s, %bb.x, %bb.ae, %bb.ah, %bb.al, %bb.aw, %bb.bh, %bb.bs, %bb.cd, %bb.co, %bb.cz, %bb.dd, %bb.di, %bb.dp, %bb.ds, %bb.dt, %bb.ee, %bb.en, %bb.ew, %bb.fd, %bb.fk, %bb.fr, %bb.gd, %bb.gs, %bb.he, %bb.hh, %bb.hy, %bb.hz, %bb.ij, %bb.iw, %bb.ix
   br label %bb.c
 
 bb.e:                                             ; preds = %bb.c
@@ -324,7 +327,7 @@ bb.e:                                             ; preds = %bb.c
   %i.fh = load ptr, ptr %i.l, align 8
   %21 = getelementptr inbounds nuw %struct.lua_TValue, ptr %i.fh, i32 0, i32 1
   store i32 %i.fg, ptr %21, align 8
-  br label %bb.c
+  br label %.backedge
 
 bb.f:                                             ; preds = %bb.c
   %i.fi = load ptr, ptr %i.h, align 8
@@ -350,7 +353,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  br label %bb.c
+  br label %.backedge
 
 bb.i:                                             ; preds = %bb.c
   %i.ft = load ptr, ptr %i.d, align 8
@@ -376,7 +379,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ga, label %bb.j, label %bb.l, !llvm.loop !27
 
 bb.l:                                             ; preds = %bb.k
-  br label %bb.c
+  br label %.backedge
 
 bb.m:                                             ; preds = %bb.c
   %i.gb = load i32, ptr %i.g, align 4
@@ -404,7 +407,7 @@ bb.m:                                             ; preds = %bb.c
   %i.go = load ptr, ptr %i.q, align 8
   %32 = getelementptr inbounds nuw %struct.lua_TValue, ptr %i.go, i32 0, i32 1
   store i32 %i.gn, ptr %32, align 8
-  br label %bb.c
+  br label %.backedge
 
 bb.n:                                             ; preds = %bb.c
   %i.gp = load ptr, ptr %i.e, align 8
@@ -435,7 +438,7 @@ bb.n:                                             ; preds = %bb.c
   %38 = getelementptr inbounds nuw %struct.lua_State, ptr %i.hc, i32 0, i32 5
   %i.hd = load ptr, ptr %38, align 8
   store ptr %i.hd, ptr %i.d, align 8
-  br label %bb.c
+  br label %.backedge
 
 bb.o:                                             ; preds = %bb.c
   %i.he = load ptr, ptr %i.f, align 8
@@ -482,7 +485,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   %43 = getelementptr inbounds nuw %struct.lua_State, ptr %i.id, i32 0, i32 5
   %i.ie = load ptr, ptr %43, align 8
   store ptr %i.ie, ptr %i.d, align 8
-  br label %bb.c
+  br label %.backedge
 
 bb.s:                                             ; preds = %bb.c
   store ptr %3, ptr %i.t, align 8
@@ -511,7 +514,7 @@ bb.s:                                             ; preds = %bb.c
   %49 = getelementptr inbounds nuw %struct.lua_State, ptr %i.ir, i32 0, i32 5
   %i.is = load ptr, ptr %49, align 8
   store ptr %i.is, ptr %i.d, align 8
-  br label %bb.c
+  br label %.backedge
 
 bb.t:                                             ; preds = %bb.c
   %i.it = load ptr, ptr %i.c, align 8
@@ -575,7 +578,7 @@ bb.w:                                             ; preds = %bb.v
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u, %bb.t
-  br label %bb.c
+  br label %.backedge
 
 bb.y:                                             ; preds = %bb.c
   %i.jz = load ptr, ptr %i.f, align 8
@@ -642,7 +645,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %66 = getelementptr inbounds nuw %struct.lua_State, ptr %i.li, i32 0, i32 5
   %i.lj = load ptr, ptr %66, align 8
   store ptr %i.lj, ptr %i.d, align 8
-  br label %bb.c
+  br label %.backedge
 
 bb.af:                                            ; preds = %bb.c
   %i.lk = load i32, ptr %i.g, align 4
@@ -693,7 +696,7 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   %74 = getelementptr inbounds nuw %struct.lua_State, ptr %i.mi, i32 0, i32 5
   %i.mj = load ptr, ptr %74, align 8
   store ptr %i.mj, ptr %i.d, align 8
-  br label %bb.c
+  br label %.backedge
 
 bb.ai:                                            ; preds = %bb.c
   %i.mk = load ptr, ptr %i.d, align 8
@@ -758,7 +761,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   %84 = getelementptr inbounds nuw %struct.lua_State, ptr %i.nr, i32 0, i32 5
   %i.ns = load ptr, ptr %84, align 8
   store ptr %i.ns, ptr %i.d, align 8
-  br label %bb.c
+  br label %.backedge
 
 bb.am:                                            ; preds = %bb.c
   %i.nt = load i32, ptr %i.g, align 4
@@ -868,7 +871,7 @@ bb.av:                                            ; preds = %bb.at, %bb.as
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av, %bb.au
-  br label %bb.c
+  br label %.backedge
 
 bb.ax:                                            ; preds = %bb.c
   %i.pw = load i32, ptr %i.g, align 4
@@ -978,7 +981,7 @@ bb.bg:                                            ; preds = %bb.be, %bb.bd
   br label %bb.bh
 
 bb.bh:                                            ; preds = %bb.bg, %bb.bf
-  br label %bb.c
+  br label %.backedge
 
 bb.bi:                                            ; preds = %bb.c
   %i.rz = load i32, ptr %i.g, align 4
@@ -1088,7 +1091,7 @@ bb.br:                                            ; preds = %bb.bp, %bb.bo
   br label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br, %bb.bq
-  br label %bb.c
+  br label %.backedge
 
 bb.bt:                                            ; preds = %bb.c
   %i.uc = load i32, ptr %i.g, align 4
@@ -1198,7 +1201,7 @@ bb.cc:                                            ; preds = %bb.ca, %bb.bz
   br label %bb.cd
 
 bb.cd:                                            ; preds = %bb.cc, %bb.cb
-  br label %bb.c
+  br label %.backedge
 
 bb.ce:                                            ; preds = %bb.c
   %i.wf = load i32, ptr %i.g, align 4
@@ -1313,7 +1316,7 @@ bb.cn:                                            ; preds = %bb.cl, %bb.ck
   br label %bb.co
 
 bb.co:                                            ; preds = %bb.cn, %bb.cm
-  br label %bb.c
+  br label %.backedge
 
 bb.cp:                                            ; preds = %bb.c
   %i.yn = load i32, ptr %i.g, align 4
@@ -1423,7 +1426,7 @@ bb.cy:                                            ; preds = %bb.cw, %bb.cv
   br label %bb.cz
 
 bb.cz:                                            ; preds = %bb.cy, %bb.cx
-  br label %bb.c
+  br label %.backedge
 
 bb.da:                                            ; preds = %bb.c
   %i.aaq = load ptr, ptr %i.d, align 8
@@ -1472,7 +1475,7 @@ bb.dc:                                            ; preds = %bb.da
   br label %bb.dd
 
 bb.dd:                                            ; preds = %bb.dc, %bb.db
-  br label %bb.c
+  br label %.backedge
 
 bb.de:                                            ; preds = %bb.c
   %i.abm = load ptr, ptr %i.d, align 8
@@ -1524,7 +1527,7 @@ bb.di:                                            ; preds = %bb.dh, %bb.de
   %i.ack = load ptr, ptr %i.bl, align 8
   %171 = getelementptr inbounds nuw %struct.lua_TValue, ptr %i.ack, i32 0, i32 1
   store i32 1, ptr %171, align 8
-  br label %bb.c
+  br label %.backedge
 
 bb.dj:                                            ; preds = %bb.c
   %i.acl = load ptr, ptr %i.d, align 8
@@ -1600,7 +1603,7 @@ bb.do:                                            ; preds = %bb.dn, %bb.dm
   br label %bb.dp
 
 bb.dp:                                            ; preds = %bb.do, %bb.dl, %bb.dk
-  br label %bb.c
+  br label %.backedge
 
 bb.dq:                                            ; preds = %bb.c
   %i.adq = load i32, ptr %i.g, align 4
@@ -1667,7 +1670,7 @@ bb.ds:                                            ; preds = %bb.dr, %bb.dq
   %i.aez = load ptr, ptr %i.bs, align 8
   %194 = getelementptr inbounds nuw %struct.lua_TValue, ptr %i.aez, i32 0, i32 1
   store i32 %i.aey, ptr %194, align 8
-  br label %bb.c
+  br label %.backedge
 
 bb.dt:                                            ; preds = %bb.c
   %i.afa = load i32, ptr %i.g, align 4
@@ -1677,7 +1680,7 @@ bb.dt:                                            ; preds = %bb.c
   %i.afe = sext i32 %i.afc to i64
   %i.aff = getelementptr inbounds i32, ptr %i.afd, i64 %i.afe
   store ptr %i.aff, ptr %i.f, align 8
-  br label %bb.c
+  br label %.backedge
 
 bb.du:                                            ; preds = %bb.c
   %i.afg = load i32, ptr %i.g, align 4
@@ -1784,7 +1787,7 @@ bb.ee:                                            ; preds = %bb.ed, %bb.ec
   %i.ahm = load ptr, ptr %i.f, align 8
   %i.ahn = getelementptr inbounds nuw i32, ptr %i.ahm, i32 1
   store ptr %i.ahn, ptr %i.f, align 8
-  br label %bb.c
+  br label %.backedge
 
 bb.ef:                                            ; preds = %bb.c
   %i.aho = load ptr, ptr %i.f, align 8
@@ -1871,7 +1874,7 @@ bb.en:                                            ; preds = %bb.em, %bb.el
   %i.ajk = load ptr, ptr %i.f, align 8
   %i.ajl = getelementptr inbounds nuw i32, ptr %i.ajk, i32 1
   store ptr %i.ajl, ptr %i.f, align 8
-  br label %bb.c
+  br label %.backedge
 
 bb.eo:                                            ; preds = %bb.c
   %i.ajm = load ptr, ptr %i.f, align 8
@@ -1958,7 +1961,7 @@ bb.ew:                                            ; preds = %bb.ev, %bb.eu
   %i.ali = load ptr, ptr %i.f, align 8
   %i.alj = getelementptr inbounds nuw i32, ptr %i.ali, i32 1
   store ptr %i.alj, ptr %i.f, align 8
-  br label %bb.c
+  br label %.backedge
 
 bb.ex:                                            ; preds = %bb.c
   %i.alk = load ptr, ptr %i.h, align 8
@@ -2009,7 +2012,7 @@ bb.fd:                                            ; preds = %bb.fc, %bb.fb
   %i.amh = load ptr, ptr %i.f, align 8
   %i.ami = getelementptr inbounds nuw i32, ptr %i.amh, i32 1
   store ptr %i.ami, ptr %i.f, align 8
-  br label %bb.c
+  br label %.backedge
 
 bb.fe:                                            ; preds = %bb.c
   %i.amj = load ptr, ptr %i.d, align 8
@@ -2081,7 +2084,7 @@ bb.fk:                                            ; preds = %bb.fj, %bb.fi
   %i.anr = load ptr, ptr %i.f, align 8
   %i.ans = getelementptr inbounds nuw i32, ptr %i.anr, i32 1
   store ptr %i.ans, ptr %i.f, align 8
-  br label %bb.c
+  br label %.backedge
 
 bb.fl:                                            ; preds = %bb.c
   %i.ant = load i32, ptr %i.g, align 4
@@ -2124,6 +2127,9 @@ bb.fo:                                            ; preds = %bb.fn
   %i.aol = load i32, ptr %i.b, align 4
   %i.aom = add nsw i32 %i.aol, 1
   store i32 %i.aom, ptr %i.b, align 4
+  br label %.backedge1
+
+.backedge1:                                       ; preds = %bb.fo, %bb.gc, %bb.gn
   br label %bb.b
 
 bb.fp:                                            ; preds = %bb.fn
@@ -2147,7 +2153,7 @@ bb.fr:                                            ; preds = %bb.fq, %bb.fp
   %232 = getelementptr inbounds nuw %struct.lua_State, ptr %i.aot, i32 0, i32 5
   %i.aou = load ptr, ptr %232, align 8
   store ptr %i.aou, ptr %i.d, align 8
-  br label %bb.c
+  br label %.backedge
 
 bb.fs:                                            ; preds = %bb.fn
   br label %bb.iy
@@ -2303,14 +2309,14 @@ bb.gc:                                            ; preds = %bb.fz
   %i.ark = load ptr, ptr %263, align 8
   %264 = getelementptr inbounds %struct.CallInfo, ptr %i.ark, i32 -1
   store ptr %264, ptr %263, align 8
-  br label %bb.b
+  br label %.backedge1
 
 bb.gd:                                            ; preds = %bb.fv
   %i.arl = load ptr, ptr %i.a, align 8
   %265 = getelementptr inbounds nuw %struct.lua_State, ptr %i.arl, i32 0, i32 5
   %i.arm = load ptr, ptr %265, align 8
   store ptr %i.arm, ptr %i.d, align 8
-  br label %bb.c
+  br label %.backedge
 
 bb.ge:                                            ; preds = %bb.fv
   br label %bb.iy
@@ -2382,7 +2388,7 @@ bb.gm:                                            ; preds = %bb.gl
   br label %bb.gn
 
 bb.gn:                                            ; preds = %bb.gm, %bb.gl
-  br label %bb.b
+  br label %.backedge1
 
 bb.go:                                            ; preds = %bb.c
   %i.aso = load ptr, ptr %i.h, align 8
@@ -2447,7 +2453,7 @@ bb.gr:                                            ; preds = %bb.gq, %bb.gp
   br label %bb.gs
 
 bb.gs:                                            ; preds = %bb.gr, %bb.gq, %bb.gp
-  br label %bb.c
+  br label %.backedge
 
 bb.gt:                                            ; preds = %bb.c
   %i.ats = load ptr, ptr %i.h, align 8
@@ -2552,7 +2558,7 @@ bb.he:                                            ; preds = %bb.hd, %bb.gv
   %i.avh = sext i32 %i.avf to i64
   %i.avi = getelementptr inbounds i32, ptr %i.avg, i64 %i.avh
   store ptr %i.avi, ptr %i.f, align 8
-  br label %bb.c
+  br label %.backedge
 
 bb.hf:                                            ; preds = %bb.c
   %i.avj = load ptr, ptr %i.h, align 8
@@ -2679,7 +2685,7 @@ bb.hh:                                            ; preds = %bb.hg, %bb.hf
   %i.axq = load ptr, ptr %i.f, align 8
   %i.axr = getelementptr inbounds nuw i32, ptr %i.axq, i32 1
   store ptr %i.axr, ptr %i.f, align 8
-  br label %bb.c
+  br label %.backedge
 
 bb.hi:                                            ; preds = %bb.c
   %i.axs = load i32, ptr %i.g, align 4
@@ -2839,13 +2845,13 @@ bb.hx:                                            ; preds = %bb.hw
   br label %bb.hr, !llvm.loop !29
 
 bb.hy:                                            ; preds = %bb.hr
-  br label %bb.c
+  br label %.backedge
 
 bb.hz:                                            ; preds = %bb.c
   %i.baq = load ptr, ptr %i.a, align 8
   %i.bar = load ptr, ptr %i.h, align 8
   call void @luaF_close(ptr noundef %i.baq, ptr noundef %i.bar)
-  br label %bb.c
+  br label %.backedge
 
 bb.ia:                                            ; preds = %bb.c
   %i.bas = load ptr, ptr %i.c, align 8
@@ -2975,7 +2981,7 @@ bb.ij:                                            ; preds = %bb.ii, %bb.ih
   %360 = getelementptr inbounds nuw %struct.lua_State, ptr %i.bdg, i32 0, i32 5
   %i.bdh = load ptr, ptr %360, align 8
   store ptr %i.bdh, ptr %i.d, align 8
-  br label %bb.c
+  br label %.backedge
 
 bb.ik:                                            ; preds = %bb.c
   %i.bdi = load i32, ptr %i.g, align 4
@@ -3127,10 +3133,10 @@ bb.iv:                                            ; preds = %bb.iu
   br label %bb.iq, !llvm.loop !31
 
 bb.iw:                                            ; preds = %bb.iq
-  br label %bb.c
+  br label %.backedge
 
 bb.ix:                                            ; preds = %bb.hn, %bb.c
-  br label %bb.c
+  br label %.backedge
 
 bb.iy:                                            ; preds = %bb.gk, %bb.ge, %bb.fs
   ret void
@@ -3198,9 +3204,12 @@ bb.f:                                             ; preds = %bb.d
 bb.g:                                             ; preds = %bb.f
   %i.ab = load i64, ptr %i.c, align 8
   %i.ac = icmp sgt i64 %i.ab, 0
-  br i1 %i.ac, label %bb.d, label %bb.h, !llvm.loop !32
+  br i1 %i.ac, label %bb.d, label %.loopexit, !llvm.loop !32
 
-bb.h:                                             ; preds = %bb.g, %bb.e
+.loopexit:                                        ; preds = %bb.g
+  br label %bb.h
+
+bb.h:                                             ; preds = %.loopexit, %bb.e
   %i.ad = load ptr, ptr %i.b, align 8
   %7 = getelementptr inbounds nuw %struct.global_State, ptr %i.ad, i32 0, i32 4
   %i.ae = load i8, ptr %7, align 1
@@ -3603,7 +3612,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.n, %bb.a
   %i.i = load i32, ptr %i.c, align 4
   %i.j = icmp sle i32 %i.i, 30
-  br i1 %i.j, label %bb.c, label %bb.o
+  br i1 %i.j, label %bb.c, label %.loopexit
 
 bb.c:                                             ; preds = %bb.b
   store i32 0, ptr %i.g, align 4
@@ -3693,7 +3702,10 @@ bb.n:                                             ; preds = %bb.m
   store i32 %i.av, ptr %i.d, align 4
   br label %bb.b, !llvm.loop !51
 
-bb.o:                                             ; preds = %bb.e, %bb.b
+.loopexit:                                        ; preds = %bb.b
+  br label %bb.o
+
+bb.o:                                             ; preds = %.loopexit, %bb.e
   %i.aw = load i32, ptr %i.e, align 4
   ret i32 %i.aw
 }
@@ -3840,7 +3852,7 @@ bb.b:                                             ; preds = %bb.j, %bb.a
   %i.j = load ptr, ptr %i.b, align 8
   %i.k = load i32, ptr %i.j, align 4
   %i.l = icmp slt i32 %i.i, %i.k
-  br i1 %i.l, label %bb.c, label %bb.k
+  br i1 %i.l, label %bb.c, label %.loopexit
 
 bb.c:                                             ; preds = %bb.b
   %i.m = load ptr, ptr %i.a, align 8
@@ -3898,7 +3910,10 @@ bb.j:                                             ; preds = %bb.i
   store i32 %i.am, ptr %i.d, align 4
   br label %bb.b, !llvm.loop !53
 
-bb.k:                                             ; preds = %bb.h, %bb.b
+.loopexit:                                        ; preds = %bb.b
+  br label %bb.k
+
+bb.k:                                             ; preds = %.loopexit, %bb.h
   %i.an = load i32, ptr %i.g, align 4
   %i.ao = load ptr, ptr %i.b, align 8
   store i32 %i.an, ptr %i.ao, align 4
@@ -4301,7 +4316,7 @@ bb.a:
   store i64 0, ptr %3, align 8
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.cf, %bb.y, %bb.n, %bb.c, %bb.a
+bb.b:                                             ; preds = %.backedge, %bb.a
   %i.j = load ptr, ptr %i.b, align 8
   %4 = getelementptr inbounds nuw %struct.LexState, ptr %i.j, i32 0, i32 0
   %i.k = load i32, ptr %4, align 8
@@ -4323,6 +4338,9 @@ bb.b:                                             ; preds = %bb.cf, %bb.y, %bb.n
 bb.c:                                             ; preds = %bb.b, %bb.b
   %i.l = load ptr, ptr %i.b, align 8
   call void @inclinenumber(ptr noundef %i.l)
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.c, %bb.n, %bb.y, %bb.cf
   br label %bb.b
 
 bb.d:                                             ; preds = %bb.b
@@ -4433,7 +4451,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bh = load ptr, ptr %21, align 8
   %22 = getelementptr inbounds nuw %struct.Mbuffer, ptr %i.bh, i32 0, i32 1
   store i64 0, ptr %22, align 8
-  br label %bb.b
+  br label %.backedge
 
 bb.o:                                             ; preds = %bb.m
   br label %bb.p
@@ -4504,7 +4522,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   br label %bb.q, !llvm.loop !94
 
 bb.y:                                             ; preds = %bb.t
-  br label %bb.b
+  br label %.backedge
 
 bb.z:                                             ; preds = %bb.b
   %i.ci = load ptr, ptr %i.b, align 8
@@ -4907,7 +4925,7 @@ bb.cf:                                            ; preds = %bb.ce, %bb.cd
   %i.kq = load ptr, ptr %i.b, align 8
   %99 = getelementptr inbounds nuw %struct.LexState, ptr %i.kq, i32 0, i32 0
   store i32 %i.kp, ptr %99, align 8
-  br label %bb.b
+  br label %.backedge
 
 bb.cg:                                            ; preds = %bb.cb
   %i.kr = call ptr @__ctype_b_loc() #26
@@ -5310,7 +5328,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   store i32 %i.w, ptr %9, align 8
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.au, %bb.ap, %bb.al, %bb.u, %bb.t, %bb.h, %bb.g, %bb.d
+bb.e:                                             ; preds = %.backedge, %bb.d
   %i.y = load ptr, ptr %i.a, align 8
   %10 = getelementptr inbounds nuw %struct.LexState, ptr %i.y, i32 0, i32 0
   %i.z = load i32, ptr %10, align 8
@@ -5332,12 +5350,15 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.ae = load ptr, ptr %i.a, align 8
   call void @luaX_lexerror(ptr noundef %i.ae, ptr noundef @.str.142, i32 noundef 287)
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.g, %bb.h, %bb.t, %bb.u, %bb.al, %bb.ap, %bb.au
   br label %bb.e, !llvm.loop !97
 
 bb.h:                                             ; preds = %bb.f, %bb.f
   %i.af = load ptr, ptr %i.a, align 8
   call void @luaX_lexerror(ptr noundef %i.af, ptr noundef @.str.142, i32 noundef 286)
-  br label %bb.e, !llvm.loop !97
+  br label %.backedge
 
 bb.i:                                             ; preds = %bb.f
   %i.ag = load ptr, ptr %i.a, align 8
@@ -5423,10 +5444,10 @@ bb.t:                                             ; preds = %bb.l, %bb.l
   call void @save(ptr noundef %i.ay, i32 noundef 10)
   %i.az = load ptr, ptr %i.a, align 8
   call void @inclinenumber(ptr noundef %i.az)
-  br label %bb.e, !llvm.loop !97
+  br label %.backedge
 
 bb.u:                                             ; preds = %bb.l
-  br label %bb.e, !llvm.loop !97
+  br label %.backedge
 
 bb.v:                                             ; preds = %bb.l
   %i.ba = call ptr @__ctype_b_loc() #26
@@ -5576,7 +5597,7 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %bb.z
-  br label %bb.e, !llvm.loop !97
+  br label %.backedge
 
 bb.am:                                            ; preds = %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m
   %i.ds = load ptr, ptr %i.a, align 8
@@ -5616,7 +5637,7 @@ bb.ap:                                            ; preds = %bb.ao, %bb.an
   %i.ej = load ptr, ptr %i.a, align 8
   %40 = getelementptr inbounds nuw %struct.LexState, ptr %i.ej, i32 0, i32 0
   store i32 %i.ei, ptr %40, align 8
-  br label %bb.e, !llvm.loop !97
+  br label %.backedge
 
 bb.aq:                                            ; preds = %bb.f
   %i.ek = load ptr, ptr %i.a, align 8
@@ -5661,7 +5682,7 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at
-  br label %bb.e, !llvm.loop !97
+  br label %.backedge
 
 bb.av:                                            ; preds = %bb.e
   %i.fd = load ptr, ptr %i.a, align 8
@@ -6064,9 +6085,12 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m, %bb.l
   %i.am = phi i1 [ true, %bb.l ], [ %i.al, %bb.m ]
-  br i1 %i.am, label %bb.b, label %bb.o, !llvm.loop !111
+  br i1 %i.am, label %bb.b, label %.loopexit, !llvm.loop !111
 
-bb.o:                                             ; preds = %bb.n, %bb.c
+.loopexit:                                        ; preds = %bb.n
+  br label %bb.o
+
+bb.o:                                             ; preds = %.loopexit, %bb.c
   %i.an = load ptr, ptr %i.a, align 8
   %i.ao = load i32, ptr %i.d, align 4
   call void @check_match(ptr noundef %i.an, i32 noundef 125, i32 noundef 123, i32 noundef %i.ao)
@@ -6469,9 +6493,12 @@ bb.h:                                             ; preds = %bb.g
   %4 = getelementptr inbounds nuw %struct.luaL_Buffer, ptr %i.ag, i32 0, i32 1
   %i.ah = load i32, ptr %4, align 8
   %i.ai = icmp slt i32 %i.af, %i.ah
-  br i1 %i.ai, label %bb.c, label %bb.i, !llvm.loop !135
+  br i1 %i.ai, label %bb.c, label %.loopexit, !llvm.loop !135
 
-bb.i:                                             ; preds = %bb.h, %bb.f
+.loopexit:                                        ; preds = %bb.h
+  br label %bb.i
+
+bb.i:                                             ; preds = %.loopexit, %bb.f
   %i.aj = load ptr, ptr %i.b, align 8
   %i.ak = load i32, ptr %i.c, align 4
   call void @lua_concat(ptr noundef %i.aj, i32 noundef %i.ak)
@@ -6554,7 +6581,7 @@ bb.b:                                             ; preds = %bb.ag, %bb.a
   %i.f = load i32, ptr %i.b, align 4
   %i.g = load i32, ptr %i.c, align 4
   %i.h = icmp slt i32 %i.f, %i.g
-  br i1 %i.h, label %bb.c, label %bb.ah
+  br i1 %i.h, label %bb.c, label %.loopexit
 
 bb.c:                                             ; preds = %bb.b
   %i.i = load ptr, ptr %i.a, align 8
@@ -6801,7 +6828,10 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   call void @auxsort(ptr noundef %i.dr, i32 noundef %i.ds, i32 noundef %i.dt)
   br label %bb.b, !llvm.loop !138
 
-bb.ah:                                            ; preds = %bb.o, %bb.g, %bb.b
+.loopexit:                                        ; preds = %bb.b
+  br label %bb.ah
+
+bb.ah:                                            ; preds = %.loopexit, %bb.o, %bb.g
   ret void
 }
 
@@ -7204,7 +7234,7 @@ bb.a:
   call void @luaL_buffinit(ptr noundef %i.t, ptr noundef %1)
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.z, %bb.u, %bb.r, %bb.a
+bb.b:                                             ; preds = %.backedge, %bb.a
   %i.u = load ptr, ptr %i.f, align 8
   %i.v = load ptr, ptr %i.g, align 8
   %i.w = icmp ult ptr %i.u, %i.v
@@ -7371,6 +7401,9 @@ bb.r:                                             ; preds = %bb.m
   %i.cy = load ptr, ptr %i.b, align 8
   %i.cz = load i32, ptr %i.d, align 4
   call void @addquoted(ptr noundef %i.cy, ptr noundef %1, i32 noundef %i.cz)
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.r, %bb.u, %bb.z
   br label %bb.b, !llvm.loop !144
 
 bb.s:                                             ; preds = %bb.m
@@ -7393,7 +7426,7 @@ bb.u:                                             ; preds = %bb.t
   %i.dj = load i32, ptr %i.d, align 4
   call void @lua_pushvalue(ptr noundef %i.di, i32 noundef %i.dj)
   call void @luaL_addvalue(ptr noundef %1)
-  br label %bb.b, !llvm.loop !144
+  br label %.backedge
 
 bb.v:                                             ; preds = %bb.t, %bb.s
   %i.dk = getelementptr inbounds nuw [512 x i8], ptr %i.i, i64 0, i64 0
@@ -7423,7 +7456,7 @@ bb.y:                                             ; preds = %bb.x, %bb.j
   br label %bb.z
 
 bb.z:                                             ; preds = %bb.y, %bb.f
-  br label %bb.b, !llvm.loop !144
+  br label %.backedge
 
 bb.aa:                                            ; preds = %bb.b
   call void @luaL_pushresult(ptr noundef %1)
@@ -7545,11 +7578,11 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f,
   store ptr %i.at, ptr %5, align 8
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.x, %bb.i
+bb.j:                                             ; preds = %bb.w, %bb.i
   %i.au = load i32, ptr %i.h, align 4
   %i.av = load i32, ptr %i.f, align 4
   %i.aw = icmp slt i32 %i.au, %i.av
-  br i1 %i.aw, label %bb.k, label %bb.y
+  br i1 %i.aw, label %bb.k, label %bb.x
 
 bb.k:                                             ; preds = %bb.j
   %6 = getelementptr inbounds nuw %struct.MatchState, ptr %1, i32 0, i32 3
@@ -7631,18 +7664,21 @@ bb.u:                                             ; preds = %bb.s
 bb.v:                                             ; preds = %bb.u, %bb.o
   %i.cc = load i32, ptr %i.g, align 4
   %i.cd = icmp ne i32 %i.cc, 0
-  br i1 %i.cd, label %bb.w, label %bb.x
+  br i1 %i.cd, label %11, label %bb.w
 
-bb.w:                                             ; preds = %bb.v
+11:                                               ; preds = %bb.v
   br label %bb.y
 
-bb.x:                                             ; preds = %bb.v
+bb.w:                                             ; preds = %bb.v
   br label %bb.j, !llvm.loop !145
 
-bb.y:                                             ; preds = %bb.w, %bb.t, %bb.j
+bb.x:                                             ; preds = %bb.j
+  br label %bb.y
+
+bb.y:                                             ; preds = %bb.x, %11, %bb.t
   %i.ce = load ptr, ptr %i.c, align 8
-  %11 = getelementptr inbounds nuw %struct.MatchState, ptr %1, i32 0, i32 1
-  %i.cf = load ptr, ptr %11, align 8
+  %12 = getelementptr inbounds nuw %struct.MatchState, ptr %1, i32 0, i32 1
+  %i.cf = load ptr, ptr %12, align 8
   %i.cg = load ptr, ptr %i.c, align 8
   %i.ch = ptrtoint ptr %i.cf to i64
   %i.ci = ptrtoint ptr %i.cg to i64
@@ -8045,7 +8081,7 @@ bb.a:
   store ptr %2, ptr %i.d, align 8
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.av, %bb.am, %bb.w, %bb.s, %bb.j, %bb.a
+bb.b:                                             ; preds = %.backedge, %bb.a
   %i.j = load ptr, ptr %i.d, align 8
   %i.k = load i8, ptr %i.j, align 1
   %i.l = sext i8 %i.k to i32
@@ -8121,6 +8157,9 @@ bb.j:                                             ; preds = %bb.h
   %i.ar = load ptr, ptr %i.d, align 8
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 4
   store ptr %i.as, ptr %i.d, align 8
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.j, %bb.s, %bb.w, %bb.am, %bb.av
   br label %bb.b
 
 bb.k:                                             ; preds = %bb.g
@@ -8193,7 +8232,7 @@ bb.r:                                             ; preds = %bb.q, %bb.p
 bb.s:                                             ; preds = %bb.q
   %i.ce = load ptr, ptr %i.e, align 8
   store ptr %i.ce, ptr %i.d, align 8
-  br label %bb.b
+  br label %.backedge
 
 bb.t:                                             ; preds = %bb.g
   %i.cf = call ptr @__ctype_b_loc() #26
@@ -8231,7 +8270,7 @@ bb.w:                                             ; preds = %bb.u
   %i.da = load ptr, ptr %i.d, align 8
   %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 2
   store ptr %i.db, ptr %i.d, align 8
-  br label %bb.b
+  br label %.backedge
 
 bb.x:                                             ; preds = %bb.t
   br label %bb.ag
@@ -8336,7 +8375,7 @@ bb.am:                                            ; preds = %bb.ak, %bb.aj
   %i.er = load ptr, ptr %i.g, align 8
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 1
   store ptr %i.es, ptr %i.d, align 8
-  br label %bb.b
+  br label %.backedge
 
 bb.an:                                            ; preds = %bb.ai
   %i.et = load ptr, ptr %i.b, align 8
@@ -8393,7 +8432,7 @@ bb.av:                                            ; preds = %bb.at
   store ptr %i.fp, ptr %i.c, align 8
   %i.fq = load ptr, ptr %i.g, align 8
   store ptr %i.fq, ptr %i.d, align 8
-  br label %bb.b
+  br label %.backedge
 
 bb.aw:                                            ; preds = %bb.au, %bb.as, %bb.ar, %bb.an, %bb.al, %bb.ad, %bb.y, %bb.v, %bb.r, %bb.i, %bb.f, %bb.e, %bb.d
   %i.fr = load ptr, ptr %i.a, align 8

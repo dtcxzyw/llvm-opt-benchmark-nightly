@@ -204,31 +204,29 @@ bb.f:                                             ; preds = %_RNCINvNvXsi_NtNtNt
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !106)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !107)
-  %.promoted.i.i9.i.i.i = load ptr, ptr %i.o, align 8, !alias.scope !108 ; 3 uses
+  %.promoted.i.i9.i.i.i = load ptr, ptr %i.o, align 8, !alias.scope !108 ; 4 uses
   %.not13.not.i.i.i.i.i = icmp eq ptr %.promoted.i.i9.i.i.i, null
   br i1 %.not13.not.i.i.i.i.i, label %bb.h, label %.lr.ph.i.i10.i.i.i
 
 .lr.ph.i.i10.i.i.i:                               ; preds = %bb.f
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.q = load i64, ptr %i.p, align 8, !alias.scope !108 ; 2 uses
-  %.idx.i.i.i.i.i.i = shl nuw nsw i64 %i.q, 4
+  %.idx.i.i.i.i.i.i = shl nuw nsw i64 %i.q, 4     ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %.not.i.i.i.i.i.i.i.i = icmp eq i64 %i.q, 0
-  %2 = getelementptr i8, ptr %.promoted.i.i9.i.i.i, i64 %.idx.i.i.i.i.i.i ; 3 uses
   br i1 %.not.i.i.i.i.i.i.i.i, label %_RNCINvNvMsg_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtBa_13FlattenCompatppE13iter_try_fold7flattenRSReuINtNtNtBg_3ops12control_flow11ControlFlowuENCINvNvXsi_Ba_BV_NtNtNtBe_6traits8iterator8Iterator8try_fold7flattenINtNtNtBg_5slice4iter4IterB1I_EuB1L_QNCINvNtBc_6copied13copy_try_foldB1I_uB1L_NCINvNvB2J_3any5checkB1I_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB5k_13SemanticModel15is_builtin_name0E0E0E0E0B5m_.exit.backedge.us.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i
 
 _RNCINvNvMsg_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtBa_13FlattenCompatppE13iter_try_fold7flattenRSReuINtNtNtBg_3ops12control_flow11ControlFlowuENCINvNvXsi_Ba_BV_NtNtNtBe_6traits8iterator8Iterator8try_fold7flattenINtNtNtBg_5slice4iter4IterB1I_EuB1L_QNCINvNtBc_6copied13copy_try_foldB1I_uB1L_NCINvNvB2J_3any5checkB1I_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB5k_13SemanticModel15is_builtin_name0E0E0E0E0B5m_.exit.backedge.us.i.i.i.i.i: ; preds = %.lr.ph.i.i10.i.i.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !109)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !110)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !111)
+  %2 = getelementptr i8, ptr %.promoted.i.i9.i.i.i, i64 %.idx.i.i.i.i.i.i
   br label %_RNCINvNvMsg_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtBa_13FlattenCompatppE13iter_try_fold7flattenRSReuINtNtNtBg_3ops12control_flow11ControlFlowuENCINvNvXsi_Ba_BV_NtNtNtBe_6traits8iterator8Iterator8try_fold7flattenINtNtNtBg_5slice4iter4IterB1I_EuB1L_QNCINvNtBc_6copied13copy_try_foldB1I_uB1L_NCINvNvB2J_3any5checkB1I_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB5k_13SemanticModel15is_builtin_name0E0E0E0E0B5m_.exit..loopexit_crit_edge.i.i.i.i.i
 
 .lr.ph.i.i.i.i.i.i.i.i:                           ; preds = %.lr.ph.i.i10.i.i.i
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.t = load i64, ptr %i.s, align 8, !noalias !112, !noundef !4 ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !109)
+  %i.t = load i64, ptr %i.s, align 8, !noalias !109, !noundef !4 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !110)
+  %3 = getelementptr i8, ptr %.promoted.i.i9.i.i.i, i64 %.idx.i.i.i.i.i.i ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !111)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !112)
   %i.u = load ptr, ptr %1, align 8, !nonnull !4
   br label %bb.g
 
@@ -236,22 +234,23 @@ bb.g:                                             ; preds = %_RNvXs1_NtNtNtCs4NR
   %i.v = phi ptr [ %.promoted.i.i9.i.i.i, %.lr.ph.i.i.i.i.i.i.i.i ], [ %i.w, %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQQNCINvNtNtNtBb_4iter8adapters6copied13copy_try_foldReuINtNtB9_12control_flow11ControlFlowuENCINvNvNtNtNtBY_6traits8iterator8Iterator3any5checkB1D_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB3h_13SemanticModel15is_builtin_name0E0E0INtB7_5FnMutTuRB1D_EE8call_mutB3j_.exit.backedge.i.i.i.i.i.i.i.i ] ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 16 ; 3 uses
   %i.x = getelementptr i8, ptr %i.v, i64 8
-  %.val7.i.i.i.i.i.i.i.i = load i64, ptr %i.x, align 8, !alias.scope !109, !noalias !113, !noundef !4
+  %.val7.i.i.i.i.i.i.i.i = load i64, ptr %i.x, align 8, !alias.scope !110, !noalias !113, !noundef !4
   %i.y = icmp eq i64 %.val7.i.i.i.i.i.i.i.i, %i.t
   br i1 %i.y, label %.split.i.i.i.i.i.i.i.i, label %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQQNCINvNtNtNtBb_4iter8adapters6copied13copy_try_foldReuINtNtB9_12control_flow11ControlFlowuENCINvNvNtNtNtBY_6traits8iterator8Iterator3any5checkB1D_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB3h_13SemanticModel15is_builtin_name0E0E0INtB7_5FnMutTuRB1D_EE8call_mutB3j_.exit.backedge.i.i.i.i.i.i.i.i
 
 .split.i.i.i.i.i.i.i.i:                           ; preds = %bb.g
-  %.val6.i.i.i.i.i.i.i.i = load ptr, ptr %i.v, align 8, !alias.scope !109, !noalias !113, !nonnull !4, !noundef !4
+  %.val6.i.i.i.i.i.i.i.i = load ptr, ptr %i.v, align 8, !alias.scope !110, !noalias !113, !nonnull !4, !noundef !4
   %bcmp.i.i.i.i.i.i.i.i.i.i.i.i.i = tail call i32 @bcmp(ptr nonnull readonly %.val6.i.i.i.i.i.i.i.i, ptr nonnull %i.u, i64 %i.t), !noalias !113
   %i.z = icmp eq i32 %bcmp.i.i.i.i.i.i.i.i.i.i.i.i.i, 0
   br i1 %i.z, label %bb.i, label %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQQNCINvNtNtNtBb_4iter8adapters6copied13copy_try_foldReuINtNtB9_12control_flow11ControlFlowuENCINvNvNtNtNtBY_6traits8iterator8Iterator3any5checkB1D_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB3h_13SemanticModel15is_builtin_name0E0E0INtB7_5FnMutTuRB1D_EE8call_mutB3j_.exit.backedge.i.i.i.i.i.i.i.i
 
 _RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQQNCINvNtNtNtBb_4iter8adapters6copied13copy_try_foldReuINtNtB9_12control_flow11ControlFlowuENCINvNvNtNtNtBY_6traits8iterator8Iterator3any5checkB1D_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB3h_13SemanticModel15is_builtin_name0E0E0INtB7_5FnMutTuRB1D_EE8call_mutB3j_.exit.backedge.i.i.i.i.i.i.i.i: ; preds = %.split.i.i.i.i.i.i.i.i, %bb.g
-  %.not16.i.i.i.i.i.i.i.i = icmp eq ptr %i.w, %2
+  %.not16.i.i.i.i.i.i.i.i = icmp eq ptr %i.w, %3
   br i1 %.not16.i.i.i.i.i.i.i.i, label %_RNCINvNvMsg_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtBa_13FlattenCompatppE13iter_try_fold7flattenRSReuINtNtNtBg_3ops12control_flow11ControlFlowuENCINvNvXsi_Ba_BV_NtNtNtBe_6traits8iterator8Iterator8try_fold7flattenINtNtNtBg_5slice4iter4IterB1I_EuB1L_QNCINvNtBc_6copied13copy_try_foldB1I_uB1L_NCINvNvB2J_3any5checkB1I_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB5k_13SemanticModel15is_builtin_name0E0E0E0E0B5m_.exit..loopexit_crit_edge.i.i.i.i.i, label %bb.g
 
 _RNCINvNvMsg_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtBa_13FlattenCompatppE13iter_try_fold7flattenRSReuINtNtNtBg_3ops12control_flow11ControlFlowuENCINvNvXsi_Ba_BV_NtNtNtBe_6traits8iterator8Iterator8try_fold7flattenINtNtNtBg_5slice4iter4IterB1I_EuB1L_QNCINvNtBc_6copied13copy_try_foldB1I_uB1L_NCINvNvB2J_3any5checkB1I_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB5k_13SemanticModel15is_builtin_name0E0E0E0E0B5m_.exit..loopexit_crit_edge.i.i.i.i.i: ; preds = %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQQNCINvNtNtNtBb_4iter8adapters6copied13copy_try_foldReuINtNtB9_12control_flow11ControlFlowuENCINvNvNtNtNtBY_6traits8iterator8Iterator3any5checkB1D_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB3h_13SemanticModel15is_builtin_name0E0E0INtB7_5FnMutTuRB1D_EE8call_mutB3j_.exit.backedge.i.i.i.i.i.i.i.i, %_RNCINvNvMsg_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtBa_13FlattenCompatppE13iter_try_fold7flattenRSReuINtNtNtBg_3ops12control_flow11ControlFlowuENCINvNvXsi_Ba_BV_NtNtNtBe_6traits8iterator8Iterator8try_fold7flattenINtNtNtBg_5slice4iter4IterB1I_EuB1L_QNCINvNtBc_6copied13copy_try_foldB1I_uB1L_NCINvNvB2J_3any5checkB1I_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB5k_13SemanticModel15is_builtin_name0E0E0E0E0B5m_.exit.backedge.us.i.i.i.i.i
-  store ptr %2, ptr %i.r, align 8, !alias.scope !114, !noalias !109
+  %.us-phi.i.i.i.i.i = phi ptr [ %2, %_RNCINvNvMsg_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtBa_13FlattenCompatppE13iter_try_fold7flattenRSReuINtNtNtBg_3ops12control_flow11ControlFlowuENCINvNvXsi_Ba_BV_NtNtNtBe_6traits8iterator8Iterator8try_fold7flattenINtNtNtBg_5slice4iter4IterB1I_EuB1L_QNCINvNtBc_6copied13copy_try_foldB1I_uB1L_NCINvNvB2J_3any5checkB1I_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB5k_13SemanticModel15is_builtin_name0E0E0E0E0B5m_.exit.backedge.us.i.i.i.i.i ], [ %3, %_RNvXs1_NtNtNtCs4NRVxsYgnAr_4core3ops8function5implsQQNCINvNtNtNtBb_4iter8adapters6copied13copy_try_foldReuINtNtB9_12control_flow11ControlFlowuENCINvNvNtNtNtBY_6traits8iterator8Iterator3any5checkB1D_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB3h_13SemanticModel15is_builtin_name0E0E0INtB7_5FnMutTuRB1D_EE8call_mutB3j_.exit.backedge.i.i.i.i.i.i.i.i ]
+  store ptr %.us-phi.i.i.i.i.i, ptr %i.r, align 8, !alias.scope !114, !noalias !110
   br label %bb.h
 
 bb.h:                                             ; preds = %_RNCINvNvMsg_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtBa_13FlattenCompatppE13iter_try_fold7flattenRSReuINtNtNtBg_3ops12control_flow11ControlFlowuENCINvNvXsi_Ba_BV_NtNtNtBe_6traits8iterator8Iterator8try_fold7flattenINtNtNtBg_5slice4iter4IterB1I_EuB1L_QNCINvNtBc_6copied13copy_try_foldB1I_uB1L_NCINvNvB2J_3any5checkB1I_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB5k_13SemanticModel15is_builtin_name0E0E0E0E0B5m_.exit..loopexit_crit_edge.i.i.i.i.i, %bb.f
@@ -259,9 +258,9 @@ bb.h:                                             ; preds = %_RNCINvNvMsg_NtNtNt
   br label %bb.j
 
 bb.i:                                             ; preds = %.split.i.i.i.i.i.i.i.i
-  store ptr %2, ptr %i.r, align 8, !alias.scope !114, !noalias !109
+  store ptr %3, ptr %i.r, align 8, !alias.scope !114, !noalias !110
   store ptr null, ptr %i.o, align 8, !alias.scope !108
-  store ptr %i.w, ptr %i.b, align 8, !alias.scope !115, !noalias !109
+  store ptr %i.w, ptr %i.b, align 8, !alias.scope !115, !noalias !110
   br label %_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterReENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtBS_8adapters6copied13copy_try_foldBJ_uINtNtNtBa_3ops12control_flow11ControlFlowuENCINvNvBM_3any5checkBJ_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB3x_13SemanticModel15is_builtin_name0E0E0B2m_EB3z_.exit.thread
 
 bb.j:                                             ; preds = %bb.h, %_RNCINvNvXsi_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtBa_13FlattenCompatppENtNtNtBe_6traits8iterator8Iterator8try_fold7flattenINtNtNtBg_5slice4iter4IterReEuINtNtNtBg_3ops12control_flow11ControlFlowuEQNCINvNtBc_6copied13copy_try_foldB2y_uB2C_NCINvNvB1j_3any5checkB2y_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB4v_13SemanticModel15is_builtin_name0E0E0E0B4x_.exit.thread.i.i.i
@@ -664,18 +663,18 @@ attributes #20 = { cold }
 !56 = distinct !{!56, !54, !"_RINvYINtNtCs4NRVxsYgnAr_4core6option8IntoIterRSReENtNtNtNtB8_4iter6traits8iterator8Iterator8try_folduNCINvNvMsg_NtNtBS_8adapters7flattenINtB1M_13FlattenCompatppE13iter_try_fold7flattenBH_uINtNtNtB8_3ops12control_flow11ControlFlowuENCINvNvXsi_B1M_B2a_BM_8try_fold7flattenINtNtNtB8_5slice4iter4IterBJ_EuB30_QNCINvNtB1O_6copied13copy_try_foldBJ_uB30_NCINvNvBM_3any5checkBJ_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB63_13SemanticModel15is_builtin_name0E0E0E0E0B30_EB65_: argument 2"}
 !57 = distinct !{!57, i1 true, !"_RNvXsy_NtCs4NRVxsYgnAr_4core6optionINtB5_8IntoIterRSReENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCs7bpTdHNYxeX_20ruff_python_semantic"}
 !58 = distinct !{!58, !57, !"_RNvXsy_NtCs4NRVxsYgnAr_4core6optionINtB5_8IntoIterRSReENtNtNtNtB7_4iter6traits8iterator8Iterator4nextCs7bpTdHNYxeX_20ruff_python_semantic: argument 0"}
-!59 = distinct !{!59, i1 true, !"_RNCINvNvMsg_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtBa_13FlattenCompatppE13iter_try_fold7flattenRSReuINtNtNtBg_3ops12control_flow11ControlFlowuENCINvNvXsi_Ba_BV_NtNtNtBe_6traits8iterator8Iterator8try_fold7flattenINtNtNtBg_5slice4iter4IterB1I_EuB1L_QNCINvNtBc_6copied13copy_try_foldB1I_uB1L_NCINvNvB2J_3any5checkB1I_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB5k_13SemanticModel15is_builtin_name0E0E0E0E0B5m_"}
-!60 = distinct !{!60, !59, !"_RNCINvNvMsg_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtBa_13FlattenCompatppE13iter_try_fold7flattenRSReuINtNtNtBg_3ops12control_flow11ControlFlowuENCINvNvXsi_Ba_BV_NtNtNtBe_6traits8iterator8Iterator8try_fold7flattenINtNtNtBg_5slice4iter4IterB1I_EuB1L_QNCINvNtBc_6copied13copy_try_foldB1I_uB1L_NCINvNvB2J_3any5checkB1I_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB5k_13SemanticModel15is_builtin_name0E0E0E0E0B5m_: argument 0"}
-!61 = distinct !{!61, i1 true, !"_RNCINvNvXsi_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtBa_13FlattenCompatppENtNtNtBe_6traits8iterator8Iterator8try_fold7flattenINtNtNtBg_5slice4iter4IterReEuINtNtNtBg_3ops12control_flow11ControlFlowuEQNCINvNtBc_6copied13copy_try_foldB2y_uB2C_NCINvNvB1j_3any5checkB2y_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB4v_13SemanticModel15is_builtin_name0E0E0E0B4x_"}
-!62 = distinct !{!62, !61, !"_RNCINvNvXsi_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtBa_13FlattenCompatppENtNtNtBe_6traits8iterator8Iterator8try_fold7flattenINtNtNtBg_5slice4iter4IterReEuINtNtNtBg_3ops12control_flow11ControlFlowuEQNCINvNtBc_6copied13copy_try_foldB2y_uB2C_NCINvNvB1j_3any5checkB2y_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB4v_13SemanticModel15is_builtin_name0E0E0E0B4x_: argument 0"}
-!63 = distinct !{!63, i1 true, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterReENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduQQNCINvNtNtBS_8adapters6copied13copy_try_foldBJ_uINtNtNtBa_3ops12control_flow11ControlFlowuENCINvNvBM_3any5checkBJ_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB3z_13SemanticModel15is_builtin_name0E0E0B2o_EB3B_"}
-!64 = distinct !{!64, !63, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterReENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduQQNCINvNtNtBS_8adapters6copied13copy_try_foldBJ_uINtNtNtBa_3ops12control_flow11ControlFlowuENCINvNvBM_3any5checkBJ_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB3z_13SemanticModel15is_builtin_name0E0E0B2o_EB3B_: argument 0"}
-!65 = distinct !{!65, !54, !"_RINvYINtNtCs4NRVxsYgnAr_4core6option8IntoIterRSReENtNtNtNtB8_4iter6traits8iterator8Iterator8try_folduNCINvNvMsg_NtNtBS_8adapters7flattenINtB1M_13FlattenCompatppE13iter_try_fold7flattenBH_uINtNtNtB8_3ops12control_flow11ControlFlowuENCINvNvXsi_B1M_B2a_BM_8try_fold7flattenINtNtNtB8_5slice4iter4IterBJ_EuB30_QNCINvNtB1O_6copied13copy_try_foldBJ_uB30_NCINvNvBM_3any5checkBJ_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB63_13SemanticModel15is_builtin_name0E0E0E0E0B30_EB65_: argument 1"}
-!66 = distinct !{!66, !63, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterReENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduQQNCINvNtNtBS_8adapters6copied13copy_try_foldBJ_uINtNtNtBa_3ops12control_flow11ControlFlowuENCINvNvBM_3any5checkBJ_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB3z_13SemanticModel15is_builtin_name0E0E0B2o_EB3B_: argument 1"}
-!67 = distinct !{!67, i1 true, !"_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3any5checkReNCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB1k_13SemanticModel15is_builtin_name0E0B1m_"}
-!68 = distinct !{!68, !67, !"_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3any5checkReNCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB1k_13SemanticModel15is_builtin_name0E0B1m_: argument 0"}
-!69 = distinct !{!69, i1 true, !"_RNCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB6_13SemanticModel15is_builtin_name0B8_"}
-!70 = distinct !{!70, !69, !"_RNCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB6_13SemanticModel15is_builtin_name0B8_: argument 0"}
+!59 = distinct !{!59, !54, !"_RINvYINtNtCs4NRVxsYgnAr_4core6option8IntoIterRSReENtNtNtNtB8_4iter6traits8iterator8Iterator8try_folduNCINvNvMsg_NtNtBS_8adapters7flattenINtB1M_13FlattenCompatppE13iter_try_fold7flattenBH_uINtNtNtB8_3ops12control_flow11ControlFlowuENCINvNvXsi_B1M_B2a_BM_8try_fold7flattenINtNtNtB8_5slice4iter4IterBJ_EuB30_QNCINvNtB1O_6copied13copy_try_foldBJ_uB30_NCINvNvBM_3any5checkBJ_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB63_13SemanticModel15is_builtin_name0E0E0E0E0B30_EB65_: argument 1"}
+!60 = distinct !{!60, i1 true, !"_RNCINvNvXsi_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtBa_13FlattenCompatppENtNtNtBe_6traits8iterator8Iterator8try_fold7flattenINtNtNtBg_5slice4iter4IterReEuINtNtNtBg_3ops12control_flow11ControlFlowuEQNCINvNtBc_6copied13copy_try_foldB2y_uB2C_NCINvNvB1j_3any5checkB2y_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB4v_13SemanticModel15is_builtin_name0E0E0E0B4x_"}
+!61 = distinct !{!61, !60, !"_RNCINvNvXsi_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtBa_13FlattenCompatppENtNtNtBe_6traits8iterator8Iterator8try_fold7flattenINtNtNtBg_5slice4iter4IterReEuINtNtNtBg_3ops12control_flow11ControlFlowuEQNCINvNtBc_6copied13copy_try_foldB2y_uB2C_NCINvNvB1j_3any5checkB2y_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB4v_13SemanticModel15is_builtin_name0E0E0E0B4x_: argument 0"}
+!62 = distinct !{!62, i1 true, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterReENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduQQNCINvNtNtBS_8adapters6copied13copy_try_foldBJ_uINtNtNtBa_3ops12control_flow11ControlFlowuENCINvNvBM_3any5checkBJ_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB3z_13SemanticModel15is_builtin_name0E0E0B2o_EB3B_"}
+!63 = distinct !{!63, !62, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterReENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduQQNCINvNtNtBS_8adapters6copied13copy_try_foldBJ_uINtNtNtBa_3ops12control_flow11ControlFlowuENCINvNvBM_3any5checkBJ_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB3z_13SemanticModel15is_builtin_name0E0E0B2o_EB3B_: argument 1"}
+!64 = distinct !{!64, !62, !"_RINvYINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterReENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduQQNCINvNtNtBS_8adapters6copied13copy_try_foldBJ_uINtNtNtBa_3ops12control_flow11ControlFlowuENCINvNvBM_3any5checkBJ_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB3z_13SemanticModel15is_builtin_name0E0E0B2o_EB3B_: argument 0"}
+!65 = distinct !{!65, i1 true, !"_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3any5checkReNCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB1k_13SemanticModel15is_builtin_name0E0B1m_"}
+!66 = distinct !{!66, !65, !"_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator3any5checkReNCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB1k_13SemanticModel15is_builtin_name0E0B1m_: argument 0"}
+!67 = distinct !{!67, i1 true, !"_RNCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB6_13SemanticModel15is_builtin_name0B8_"}
+!68 = distinct !{!68, !67, !"_RNCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB6_13SemanticModel15is_builtin_name0B8_: argument 0"}
+!69 = distinct !{!69, i1 true, !"_RNCINvNvMsg_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtBa_13FlattenCompatppE13iter_try_fold7flattenRSReuINtNtNtBg_3ops12control_flow11ControlFlowuENCINvNvXsi_Ba_BV_NtNtNtBe_6traits8iterator8Iterator8try_fold7flattenINtNtNtBg_5slice4iter4IterB1I_EuB1L_QNCINvNtBc_6copied13copy_try_foldB1I_uB1L_NCINvNvB2J_3any5checkB1I_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB5k_13SemanticModel15is_builtin_name0E0E0E0E0B5m_"}
+!70 = distinct !{!70, !69, !"_RNCINvNvMsg_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flattenINtBa_13FlattenCompatppE13iter_try_fold7flattenRSReuINtNtNtBg_3ops12control_flow11ControlFlowuENCINvNvXsi_Ba_BV_NtNtNtBe_6traits8iterator8Iterator8try_fold7flattenINtNtNtBg_5slice4iter4IterB1I_EuB1L_QNCINvNtBc_6copied13copy_try_foldB1I_uB1L_NCINvNvB2J_3any5checkB1I_NCNvMs_NtCs7bpTdHNYxeX_20ruff_python_semantic5modelNtB5k_13SemanticModel15is_builtin_name0E0E0E0E0B5m_: argument 0"}
 !71 = distinct !{!71, i1 true, !"_RNvMNtCs4NRVxsYgnAr_4core6optionINtB2_6OptionINtNtNtB4_5slice4iter4IterReEE6insertCs7bpTdHNYxeX_20ruff_python_semantic"}
 !72 = distinct !{!72, !71, !"_RNvMNtCs4NRVxsYgnAr_4core6optionINtB2_6OptionINtNtNtB4_5slice4iter4IterReEE6insertCs7bpTdHNYxeX_20ruff_python_semantic: argument 0"}
 !73 = distinct !{!73, i1 true, !"_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterReENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs7bpTdHNYxeX_20ruff_python_semantic"}
@@ -714,13 +713,13 @@ attributes #20 = { cold }
 !106 = !{!55}
 !107 = !{!56}
 !108 = !{!58, !55, !52, !38, !36, !34}
-!109 = !{!60}
-!110 = !{!62}
-!111 = !{!64}
-!112 = !{!70, !68, !64, !66, !62, !55, !65, !56, !52, !53, !38, !45, !36, !34}
-!113 = !{!64, !66, !62, !55, !65, !56, !52, !53, !38, !45, !36, !34}
+!109 = !{!68, !66, !64, !63, !61, !55, !59, !56, !52, !53, !38, !45, !36, !34}
+!110 = !{!70}
+!111 = !{!61}
+!112 = !{!64}
+!113 = !{!64, !63, !61, !55, !59, !56, !52, !53, !38, !45, !36, !34}
 !114 = !{!72, !56, !53, !38, !36, !34}
-!115 = !{!74, !64, !62, !56, !53, !38, !36, !34}
+!115 = !{!74, !64, !61, !56, !53, !38, !36, !34}
 !116 = !{!76}
 !117 = !{!78}
 !118 = !{!80, !78, !76, !38, !36, !34}

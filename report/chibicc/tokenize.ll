@@ -200,7 +200,7 @@ bb.a:
   store ptr %i.s, ptr %i.f, align 8
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.h, %bb.d, %bb.a
+bb.b:                                             ; preds = %.backedge, %bb.a
   %i.t = load ptr, ptr %i.f, align 8
   %i.u = load ptr, ptr %i.c, align 8
   %i.v = icmp ult ptr %i.t, %i.u
@@ -225,6 +225,9 @@ bb.d:                                             ; preds = %bb.c
   %i.ah = sext i32 %i.af to i64
   %i.ai = getelementptr inbounds i16, ptr %i.ae, i64 %i.ah
   store i16 %i.ad, ptr %i.ai, align 2
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.d, %bb.h
   br label %bb.b, !llvm.loop !14
 
 bb.e:                                             ; preds = %bb.c
@@ -277,7 +280,7 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  br label %bb.b, !llvm.loop !14
+  br label %.backedge
 
 bb.i:                                             ; preds = %bb.b
   %i.bp = load ptr, ptr %i.a, align 8
@@ -417,7 +420,7 @@ bb.a:
   store i1 false, ptr @has_space, align 1
   br label %bb.b
 
-bb.b:                                             ; preds = %bb.ba, %bb.ay, %bb.aw, %bb.au, %bb.as, %bb.aq, %bb.ao, %bb.am, %bb.ak, %bb.ai, %bb.ag, %bb.ae, %bb.o, %bb.m, %bb.k, %bb.g, %bb.a
+bb.b:                                             ; preds = %.backedge, %bb.a
   %i.k = load ptr, ptr %i.b, align 8
   %i.l = load i8, ptr %i.k, align 1
   %i.m = icmp ne i8 %i.l, 0
@@ -449,6 +452,9 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   store i1 true, ptr @has_space, align 1
+  br label %.backedge
+
+.backedge:                                        ; preds = %bb.g, %bb.k, %bb.m, %bb.o, %bb.ae, %bb.ag, %bb.ai, %bb.ak, %bb.am, %bb.ao, %bb.aq, %bb.as, %bb.au, %bb.aw, %bb.ay, %bb.ba
   br label %bb.b, !llvm.loop !17
 
 bb.h:                                             ; preds = %bb.c
@@ -475,7 +481,7 @@ bb.k:                                             ; preds = %bb.i
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 2
   store ptr %i.ag, ptr %i.b, align 8
   store i1 true, ptr @has_space, align 1
-  br label %bb.b, !llvm.loop !17
+  br label %.backedge
 
 bb.l:                                             ; preds = %bb.h
   %i.ah = load ptr, ptr %i.b, align 8
@@ -490,7 +496,7 @@ bb.m:                                             ; preds = %bb.l
   store ptr %i.am, ptr %i.b, align 8
   store i1 true, ptr @at_bol, align 1
   store i1 false, ptr @has_space, align 1
-  br label %bb.b, !llvm.loop !17
+  br label %.backedge
 
 bb.n:                                             ; preds = %bb.l
   %i.an = call ptr @__ctype_b_loc() #19
@@ -511,7 +517,7 @@ bb.o:                                             ; preds = %bb.n
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i32 1
   store ptr %i.az, ptr %i.b, align 8
   store i1 true, ptr @has_space, align 1
-  br label %bb.b, !llvm.loop !17
+  br label %.backedge
 
 bb.p:                                             ; preds = %bb.n
   %i.ba = call ptr @__ctype_b_loc() #19
@@ -640,7 +646,7 @@ bb.ae:                                            ; preds = %bb.ab
   %3 = getelementptr inbounds nuw %struct.Token, ptr %i.dv, i32 0, i32 1
   store ptr %i.du, ptr %3, align 8
   store ptr %i.du, ptr %i.c, align 8
-  br label %bb.b, !llvm.loop !17
+  br label %.backedge
 
 bb.af:                                            ; preds = %bb.r, %bb.q
   %i.dw = load ptr, ptr %i.b, align 8
@@ -664,7 +670,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.eh = sext i32 %i.ef to i64
   %i.ei = getelementptr inbounds i8, ptr %i.eg, i64 %i.eh
   store ptr %i.ei, ptr %i.b, align 8
-  br label %bb.b, !llvm.loop !17
+  br label %.backedge
 
 bb.ah:                                            ; preds = %bb.af
   %i.ej = load ptr, ptr %i.b, align 8
@@ -687,7 +693,7 @@ bb.ai:                                            ; preds = %bb.ah
   %i.et = sext i32 %i.er to i64
   %i.eu = getelementptr inbounds i8, ptr %i.es, i64 %i.et
   store ptr %i.eu, ptr %i.b, align 8
-  br label %bb.b, !llvm.loop !17
+  br label %.backedge
 
 bb.aj:                                            ; preds = %bb.ah
   %i.ev = load ptr, ptr %i.b, align 8
@@ -710,7 +716,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.ff = sext i32 %i.fd to i64
   %i.fg = getelementptr inbounds i8, ptr %i.fe, i64 %i.ff
   store ptr %i.fg, ptr %i.b, align 8
-  br label %bb.b, !llvm.loop !17
+  br label %.backedge
 
 bb.al:                                            ; preds = %bb.aj
   %i.fh = load ptr, ptr %i.b, align 8
@@ -734,7 +740,7 @@ bb.am:                                            ; preds = %bb.al
   %i.fs = sext i32 %i.fq to i64
   %i.ft = getelementptr inbounds i8, ptr %i.fr, i64 %i.fs
   store ptr %i.ft, ptr %i.b, align 8
-  br label %bb.b, !llvm.loop !17
+  br label %.backedge
 
 bb.an:                                            ; preds = %bb.al
   %i.fu = load ptr, ptr %i.b, align 8
@@ -758,7 +764,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.gf = sext i32 %i.gd to i64
   %i.gg = getelementptr inbounds i8, ptr %i.ge, i64 %i.gf
   store ptr %i.gg, ptr %i.b, align 8
-  br label %bb.b, !llvm.loop !17
+  br label %.backedge
 
 bb.ap:                                            ; preds = %bb.an
   %i.gh = load ptr, ptr %i.b, align 8
@@ -791,7 +797,7 @@ bb.aq:                                            ; preds = %bb.ap
   %i.gy = sext i32 %i.gw to i64
   %i.gz = getelementptr inbounds i8, ptr %i.gx, i64 %i.gy
   store ptr %i.gz, ptr %i.b, align 8
-  br label %bb.b, !llvm.loop !17
+  br label %.backedge
 
 bb.ar:                                            ; preds = %bb.ap
   %i.ha = load ptr, ptr %i.b, align 8
@@ -820,7 +826,7 @@ bb.as:                                            ; preds = %bb.ar
   %i.ho = sext i32 %i.hm to i64
   %i.hp = getelementptr inbounds i8, ptr %i.hn, i64 %i.ho
   store ptr %i.hp, ptr %i.b, align 8
-  br label %bb.b, !llvm.loop !17
+  br label %.backedge
 
 bb.at:                                            ; preds = %bb.ar
   %i.hq = load ptr, ptr %i.b, align 8
@@ -844,7 +850,7 @@ bb.au:                                            ; preds = %bb.at
   %i.ib = sext i32 %i.hz to i64
   %i.ic = getelementptr inbounds i8, ptr %i.ia, i64 %i.ib
   store ptr %i.ic, ptr %i.b, align 8
-  br label %bb.b, !llvm.loop !17
+  br label %.backedge
 
 bb.av:                                            ; preds = %bb.at
   %i.id = load ptr, ptr %i.b, align 8
@@ -868,7 +874,7 @@ bb.aw:                                            ; preds = %bb.av
   %i.io = sext i32 %i.im to i64
   %i.ip = getelementptr inbounds i8, ptr %i.in, i64 %i.io
   store ptr %i.ip, ptr %i.b, align 8
-  br label %bb.b, !llvm.loop !17
+  br label %.backedge
 
 bb.ax:                                            ; preds = %bb.av
   %i.iq = load ptr, ptr %i.b, align 8
@@ -896,7 +902,7 @@ bb.ay:                                            ; preds = %bb.ax
   %i.je = sext i32 %i.jc to i64
   %i.jf = getelementptr inbounds i8, ptr %i.jd, i64 %i.je
   store ptr %i.jf, ptr %i.b, align 8
-  br label %bb.b, !llvm.loop !17
+  br label %.backedge
 
 bb.az:                                            ; preds = %bb.ax
   %i.jg = load ptr, ptr %i.b, align 8
@@ -924,7 +930,7 @@ bb.ba:                                            ; preds = %bb.az
   %i.ju = sext i32 %i.js to i64
   %i.jv = getelementptr inbounds i8, ptr %i.jt, i64 %i.ju
   store ptr %i.jv, ptr %i.b, align 8
-  br label %bb.b, !llvm.loop !17
+  br label %.backedge
 
 bb.bb:                                            ; preds = %bb.az
   %i.jw = load ptr, ptr %i.b, align 8

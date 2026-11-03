@@ -205,12 +205,12 @@ bb.a:
   %or.cond.not.i.i.i.us.i = or i1 %.not.i3.i.i.us.fr.i, %i.v
   %i.y = sub nuw i64 %.pre2.i.i.i.i, %.promoted25.i ; 6 uses
   %.sroa.0.1.i.i.us.i = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 %.promoted25.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !222)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !223)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !224)
   br i1 %or.cond.not.i.i.i.us.i, label %.lr.ph.split.us.split.us.i, label %_RINvYINtNtNtCs8Chj7Szqq0n_4core3str4iter5SplitcENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtBQ_8adapters3map12map_try_foldReNtNtCsigunbJSLHCW_3std4path7PathBufuINtNtNtBa_3ops12control_flow11ControlFlowB2e_ENvYB2e_INtNtBa_7convert4FromB2c_E4fromNCINvNvBK_4find5checkB2e_QNCNvXs_NtCshX8c74mBP8L_12iceoryx2_cli7commandNtB4H_15HostEnvironmentNtB4H_11Environment13install_paths0E0E0B2O_EB4J_.exit
 
 .lr.ph.split.us.split.us.i:                       ; preds = %.lr.ph.split.us.i
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !222)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !223)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !224)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !225
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !226

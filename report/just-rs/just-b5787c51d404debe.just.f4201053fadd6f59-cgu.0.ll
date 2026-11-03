@@ -205,11 +205,7 @@ bb.dg:                                            ; preds = %bb.et, %bb.de
   %i.xw = getelementptr inbounds nuw i8, ptr %i.xn, i64 %i.xp ; 8 uses
   %i.xx = icmp eq i64 %i.xr, %i.xo                ; 4 uses
   %i.xy = getelementptr inbounds nuw i8, ptr %i.xn, i64 %i.xr ; 4 uses
-  br i1 %or.cond.i.i.i.i.i70, label %.lr.ph.i67.split.us, label %.lr.ph.i67.split, !prof !31
-
-.lr.ph.i67.split.us:                              ; preds = %.lr.ph.i67
-  call void @llvm.experimental.noalias.scope.decl(metadata !25314)
-  br label %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread3.i.i.i.i71
+  br i1 %or.cond.i.i.i.i.i70, label %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread3.i.i.i.i71, label %.lr.ph.i67.split, !prof !31
 
 .lr.ph.i67.split:                                 ; preds = %.lr.ph.i67, %_RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just7binding7Binding11sort_by_keyReNCNvMNtBD_8justfileNtB1w_8Justfile3runs0_0E0BD_.exit57.i
   %.sroa.9.1168.i = phi ptr [ %i.adm, %_RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just7binding7Binding11sort_by_keyReNCNvMNtBD_8justfileNtB1w_8Justfile3runs0_0E0BD_.exit57.i ], [ %.sroa.9.0.i55, %.lr.ph.i67 ] ; 5 uses
@@ -236,7 +232,7 @@ _RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.i.i.i.i72: ; preds = %b
   %i.yd = icmp sgt i8 %i.yc, -65
   br i1 %i.yd, label %_RNCNvMNtCskXtk6F4WjxZ_4just8justfileNtB4_8Justfile3runs0_0B6_.exit.i.i73, label %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread3.i.i.i.i71, !prof !33
 
-_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread3.i.i.i.i71: ; preds = %bb.dj, %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.i.i.i.i72, %.lr.ph.i67.split.us
+_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread3.i.i.i.i71: ; preds = %.lr.ph.i67, %bb.dj, %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.i.i.i.i72
   call void @_RNvNtCsj6eKBz9Db1c_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.xn, i64 noundef %i.xo, i64 noundef %i.xp, i64 noundef %i.xr, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @869) #74, !noalias !25317
   unreachable
 
@@ -586,11 +582,7 @@ _RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just7binding7Binding11s
   %i.aed = getelementptr inbounds nuw i8, ptr %i.adr, i64 %i.adv ; 2 uses
   %i.aee = icmp eq i64 %i.ady, %i.adt
   %i.aef = getelementptr inbounds nuw i8, ptr %i.adr, i64 %i.ady
-  br i1 %or.cond.i.i.i.i58.i, label %.lr.ph175.i.us, label %.lr.ph175.i, !prof !31
-
-.lr.ph175.i.us:                                   ; preds = %.lr.ph175.i.preheader
-  call void @llvm.experimental.noalias.scope.decl(metadata !25344)
-  br label %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread3.i.i.i59.i
+  br i1 %or.cond.i.i.i.i58.i, label %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread3.i.i.i59.i, label %.lr.ph175.i, !prof !31
 
 ._crit_edge176.i:                                 ; preds = %_RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just7binding7Binding11sort_by_keyReNCNvMNtBD_8justfileNtB1w_8Justfile3runs0_0E0BD_.exit67.i, %._crit_edge.i57
   %.sroa.43.2.lcssa.i61 = phi ptr [ %.sroa.43.1.lcssa.i58, %._crit_edge.i57 ], [ %i.afm, %_RNCINvMNtCs4wP2HXfJTCR_5alloc5sliceSRNtNtCskXtk6F4WjxZ_4just7binding7Binding11sort_by_keyReNCNvMNtBD_8justfileNtB1w_8Justfile3runs0_0E0BD_.exit67.i ]
@@ -624,7 +616,7 @@ _RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.i.i.i60.i: ; preds = %b
   %i.ael = icmp sgt i8 %i.aek, -65
   br i1 %i.ael, label %_RNCNvMNtCskXtk6F4WjxZ_4just8justfileNtB4_8Justfile3runs0_0B6_.exit.i61.i, label %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread3.i.i.i59.i, !prof !33
 
-_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread3.i.i.i59.i: ; preds = %bb.eo, %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.i.i.i60.i, %.lr.ph175.i.us
+_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.thread3.i.i.i59.i: ; preds = %.lr.ph175.i.preheader, %bb.eo, %_RNvNtNtCsj6eKBz9Db1c_4core3str6traits11check_range.exit.i.i.i60.i
   call void @_RNvNtCsj6eKBz9Db1c_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.adr, i64 noundef %i.adt, i64 noundef %i.adv, i64 noundef %i.ady, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @869) #74, !noalias !25346
   unreachable
 
@@ -1027,11 +1019,7 @@ bb.gp:                                            ; preds = %bb.gm, %bb.nr, %bb.
   %.idx.i = mul nuw nsw i64 %i.anb, 24
   %i.anc = getelementptr inbounds nuw i8, ptr %i.amz, i64 %.idx.i
   %.not.i.i814 = icmp eq i64 %i.anb, 0            ; 2 uses
-  br i1 %.not.i.i814, label %.lr.ph2980.split.us, label %.lr.ph.i.i815.preheader
-
-.lr.ph2980.split.us:                              ; preds = %.lr.ph2980
-  call void @llvm.experimental.noalias.scope.decl(metadata !63140)
-  br label %.loopexit2288
+  br i1 %.not.i.i814, label %.loopexit2288, label %.lr.ph.i.i815.preheader
 
 _RNvXsf_NtNtCsj6eKBz9Db1c_4core5slice3cmpNtNtCs4wP2HXfJTCR_5alloc6string6StringNtB5_13SliceContains14slice_containsCskXtk6F4WjxZ_4just.exit.loopexit: ; preds = %.split.i.i
   %i.and = icmp eq ptr %i.ane, %i.amx
@@ -1107,8 +1095,8 @@ bb.gs:                                            ; preds = %.loopexit2288
   call void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtBG_6string6StringEECskXtk6F4WjxZ_4just(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.bv) #71
   br label %bb.gn
 
-.loopexit2288:                                    ; preds = %_RNCNvXsf_NtNtCsj6eKBz9Db1c_4core5slice3cmpNtNtCs4wP2HXfJTCR_5alloc6string6StringNtB7_13SliceContains14slice_contains0CskXtk6F4WjxZ_4just.exit.backedge.i.i, %.lr.ph2980.split.us
-  %.sroa.051.02694 = phi ptr [ %3, %.lr.ph2980.split.us ], [ %.sroa.051.02978, %_RNCNvXsf_NtNtCsj6eKBz9Db1c_4core5slice3cmpNtNtCs4wP2HXfJTCR_5alloc6string6StringNtB7_13SliceContains14slice_contains0CskXtk6F4WjxZ_4just.exit.backedge.i.i ]
+.loopexit2288:                                    ; preds = %_RNCNvXsf_NtNtCsj6eKBz9Db1c_4core5slice3cmpNtNtCs4wP2HXfJTCR_5alloc6string6StringNtB7_13SliceContains14slice_contains0CskXtk6F4WjxZ_4just.exit.backedge.i.i, %.lr.ph2980
+  %.sroa.051.02694 = phi ptr [ %3, %.lr.ph2980 ], [ %.sroa.051.02978, %_RNCNvXsf_NtNtCsj6eKBz9Db1c_4core5slice3cmpNtNtCs4wP2HXfJTCR_5alloc6string6StringNtB7_13SliceContains14slice_contains0CskXtk6F4WjxZ_4just.exit.backedge.i.i ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bu)
   invoke void @_RNvXs4_NtCs4wP2HXfJTCR_5alloc6stringNtB5_6StringNtNtCsj6eKBz9Db1c_4core5clone5Clone5clone(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.bu, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %.sroa.051.02694)
           to label %bb.gt unwind label %bb.gs
@@ -1511,7 +1499,6 @@ bb.j:                                             ; preds = %.sink.split.i.i.us.
   br i1 %i.cp, label %_RNvYNtNtNtCsj6eKBz9Db1c_4core3str7pattern11StrSearcherNtB4_15ReverseSearcher16next_reject_backCskXtk6F4WjxZ_4just.exit.sink.split.i, label %.thread
 
 .split97.us.i.i:                                  ; preds = %.lr.ph.split.split.i.preheader.split.i, %.lr.ph.split.split.i.preheader.split.us.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !74471)
   tail call void @_RNvNtCsj6eKBz9Db1c_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.g, i64 noundef %i.i, i64 noundef 0, i64 noundef %i.e, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2882) #74, !noalias !74474
   unreachable
 
@@ -1914,14 +1901,14 @@ _RNvMs5_NtCs4wP2HXfJTCR_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCskXtk
 .lr.ph.split.us.i.i.i:                            ; preds = %.lr.ph.i.i.i
   %.not.i3.i.i.us.i.i.i = icmp ne i64 %.pre2.i.i.i.i.i.i, %.promoted10.i.i.i
   %or.cond.not.i.i.i.us.i.i.i = select i1 %i.ap, i1 true, i1 %.not.i3.i.i.us.i.i.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !76023)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !76024)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !76025)
   br i1 %or.cond.not.i.i.i.us.i.i.i, label %._crit_edge.split.us.split.us.i.i.i, label %.lr.ph.i.i.i.i.i30.preheader
 
 ._crit_edge.split.us.split.us.i.i.i:              ; preds = %.lr.ph.split.us.i.i.i
   %.sroa.0.1.i.i.us.i.i.i = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i, i64 %.promoted10.i.i.i
   %i.ar = sub nuw i64 %.pre2.i.i.i.i.i.i, %.promoted10.i.i.i
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !76023)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !76024)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !76025)
   %i.as = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   store ptr %.sroa.0.1.i.i.us.i.i.i, ptr %i.as, align 8, !noalias !76026, !captures !36
   %i.at = getelementptr inbounds nuw i8, ptr %i.x, i64 24

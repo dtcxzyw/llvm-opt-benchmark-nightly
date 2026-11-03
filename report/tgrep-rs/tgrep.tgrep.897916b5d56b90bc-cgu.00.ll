@@ -205,63 +205,40 @@ bb.a:
   store i8 1, ptr %i.a, align 1, !alias.scope !862
   %.not.i3.i.i.us = icmp ne i64 %.pre2.i.i.i, %.promoted21
   %or.cond.not.i.i.i.us = select i1 %i.q, i1 true, i1 %.not.i3.i.i.us
-  %i.r = sub nuw i64 %.pre2.i.i.i, %.promoted21   ; 2 uses
+  %i.r = sub nuw i64 %.pre2.i.i.i, %.promoted21   ; 3 uses
   %.sroa.0.1.i.i.us = getelementptr inbounds nuw i8, ptr %.val.i.i, i64 %.promoted21 ; 5 uses
-  br i1 %or.cond.not.i.i.i.us, label %.lr.ph.split.us.split.us, label %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i.us
+  br i1 %or.cond.not.i.i.i.us, label %.lr.ph.split.us.split.us, label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge
 
 .lr.ph.split.us.split.us:                         ; preds = %.lr.ph.split.us
-  switch i64 %i.r, label %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i.us.us [
-    i64 0, label %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i.us.us.us
-    i64 1, label %.lr.ph.split.us.split.us.split.us56
-    i64 2, label %.lr.ph.split.us.split.us.split.us65
-  ]
+  %switch = icmp ult i64 %i.r, 3
+  br i1 %switch, label %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i.us.us.us, label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge
 
 _RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i.us.us.us: ; preds = %.lr.ph.split.us.split.us
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !863)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !864)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !865)
-  br label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge
+  switch i64 %i.r, label %.lr.ph.split.us.split.us.split.us65 [
+    i64 0, label %.lr.ph.split.backedge.a
+    i64 1, label %.lr.ph.split.us.split.us.split.us56
+  ]
 
-.lr.ph.split.us.split.us.split.us56:              ; preds = %.lr.ph.split.us.split.us
-  %lhsc.i.i.i.us.us.us = load i8, ptr %.sroa.0.1.i.i.us, align 1, !alias.scope !866
+.lr.ph.split.us.split.us.split.us56:              ; preds = %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i.us.us.us
+  %lhsc.i.i.i.us.us.us = load i8, ptr %.sroa.0.1.i.i.us, align 1, !alias.scope !863
   %lhsc.i.i.fr.i.us.us.us = freeze i8 %lhsc.i.i.i.us.us.us
   %.not.i.i.not.i.us.us.us = icmp eq i8 %lhsc.i.i.fr.i.us.us.us, 46
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !863)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !864)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !865)
-  %..sroa.0.1.i.i.us = select i1 %.not.i.i.not.i.us.us.us, ptr null, ptr %.sroa.0.1.i.i.us
-  br label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge
+  br i1 %.not.i.i.not.i.us.us.us, label %.lr.ph.split.backedge.a, label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge
 
-.lr.ph.split.us.split.us.split.us65:              ; preds = %.lr.ph.split.us.split.us
+.lr.ph.split.us.split.us.split.us65:              ; preds = %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i.us.us.us
   %i.s = load i16, ptr %.sroa.0.1.i.i.us, align 1
   %i.t = icmp ne i16 %i.s, 11822
   %i.u = zext i1 %i.t to i32
   %bcmp.i.i.fr.i.us.us.us = freeze i32 %i.u
   %.not.i.us.us.us = icmp eq i32 %bcmp.i.i.fr.i.us.us.us, 0
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !863)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !864)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !865)
-  %..sroa.0.1.i.i.us94 = select i1 %.not.i.us.us.us, ptr null, ptr %.sroa.0.1.i.i.us
-  br label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge
+  br i1 %.not.i.us.us.us, label %.lr.ph.split.backedge.a, label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge
 
-_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i.us.us: ; preds = %.lr.ph.split.us.split.us
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !863)
+.lr.ph.split:                                     ; preds = %.lr.ph.split.backedge, %.lr.ph.split.preheader
+  %i.v = phi i64 [ %.promoted34, %.lr.ph.split.preheader ], [ %i.ar, %.lr.ph.split.backedge ] ; 3 uses
+  %.lcssa192324 = phi i64 [ %.promoted21, %.lr.ph.split.preheader ], [ %.lcssa1922, %.lr.ph.split.backedge ] ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !864)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !865)
-  br label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge
-
-_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i.us: ; preds = %.lr.ph.split.us
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !863)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !864)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !865)
-  br label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge
-
-.lr.ph.split:                                     ; preds = %.lr.ph.split.backedge.a, %.lr.ph.split.preheader
-  %i.v = phi i64 [ %.promoted34, %.lr.ph.split.preheader ], [ %i.ar, %.lr.ph.split.backedge.a ] ; 3 uses
-  %.lcssa192324 = phi i64 [ %.promoted21, %.lr.ph.split.preheader ], [ %.lcssa1922, %.lr.ph.split.backedge.a ] ; 4 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !863)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !864)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !865)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !866)
   %i.w = icmp ult i64 %i.g, %i.v
   br i1 %i.w, label %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i, label %.lr.ph.split.preheader.i.i.i
 
@@ -352,11 +329,11 @@ select.unfold:                                    ; preds = %_RNvMsf_NtNtCsf3Ta7
   ]
 
 .split.i:                                         ; preds = %select.unfold
-  %lhsc.i.i.i = load i8, ptr %.sroa.0.1.i.i, align 1, !alias.scope !866
+  %lhsc.i.i.i = load i8, ptr %.sroa.0.1.i.i, align 1, !alias.scope !863
   %lhsc.i.i.fr.i = freeze i8 %lhsc.i.i.i
   %.not.i.i.not.i = icmp ne i8 %lhsc.i.i.fr.i, 46 ; 2 uses
   %brmerge = or i1 %.not.i.i.not.i, %i.as
-  br i1 %brmerge, label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge.loopexit.split.loop.exit12, label %.lr.ph.split.backedge.a
+  br i1 %brmerge, label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge.loopexit.split.loop.exit12, label %.lr.ph.split.backedge
 
 _RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i: ; preds = %select.unfold
   %i.at = load i16, ptr %.sroa.0.1.i.i, align 1
@@ -365,13 +342,19 @@ _RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5
   %bcmp.i.i.fr.i = freeze i32 %i.av
   %.not.i = icmp ne i32 %bcmp.i.i.fr.i, 0         ; 2 uses
   %brmerge95 = or i1 %.not.i, %i.as
-  br i1 %brmerge95, label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge.loopexit.split.loop.exit, label %.lr.ph.split.backedge.a
+  br i1 %brmerge95, label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge.loopexit.split.loop.exit, label %.lr.ph.split.backedge
 
 _RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4find5checkReQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0E0B1l_.exit: ; preds = %select.unfold
-  br i1 %i.as, label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge, label %.lr.ph.split.backedge.a
+  br i1 %i.as, label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge, label %.lr.ph.split.backedge
 
-.lr.ph.split.backedge.a:                          ; preds = %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4find5checkReQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0E0B1l_.exit, %.split.i, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i
+.lr.ph.split.backedge:                            ; preds = %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4find5checkReQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0E0B1l_.exit, %.split.i, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i
   br label %.lr.ph.split
+
+.lr.ph.split.backedge.a:                          ; preds = %.lr.ph.split.us.split.us.split.us65, %.lr.ph.split.us.split.us.split.us56, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i.us.us.us
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !864)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !865)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !866)
+  br label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge
 
 _RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge.loopexit.split.loop.exit: ; preds = %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i
   %.sroa.0.1.i.i.mux97.le = select i1 %.not.i, ptr %.sroa.0.1.i.i, ptr null
@@ -381,9 +364,9 @@ _RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5
   %.sroa.0.1.i.i.mux.le = select i1 %.not.i.i.not.i, ptr %.sroa.0.1.i.i, ptr null
   br label %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge
 
-_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge: ; preds = %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge.loopexit.split.loop.exit, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge.loopexit.split.loop.exit12, %select.unfold, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i, %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4find5checkReQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0E0B1l_.exit, %.lr.ph.split.us.split.us.split.us65, %.lr.ph.split.us.split.us.split.us56, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i.us.us.us, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i.us, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i.us.us, %bb.a
-  %.sroa.3.0 = phi i64 [ undef, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i.us ], [ 1, %.lr.ph.split.us.split.us.split.us56 ], [ undef, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i.us.us.us ], [ 2, %.lr.ph.split.us.split.us.split.us65 ], [ undef, %bb.a ], [ %i.r, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i.us.us ], [ 1, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge.loopexit.split.loop.exit12 ], [ undef, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i ], [ 2, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge.loopexit.split.loop.exit ], [ %.sroa.4.1.i.i, %select.unfold ], [ undef, %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4find5checkReQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0E0B1l_.exit ]
-  %.sroa.0.0 = phi ptr [ null, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i.us ], [ %..sroa.0.1.i.i.us, %.lr.ph.split.us.split.us.split.us56 ], [ null, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i.us.us.us ], [ %..sroa.0.1.i.i.us94, %.lr.ph.split.us.split.us.split.us65 ], [ null, %bb.a ], [ %.sroa.0.1.i.i.us, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i.us.us ], [ %.sroa.0.1.i.i.mux.le, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge.loopexit.split.loop.exit12 ], [ null, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i ], [ %.sroa.0.1.i.i.mux97.le, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge.loopexit.split.loop.exit ], [ %.sroa.0.1.i.i, %select.unfold ], [ null, %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4find5checkReQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0E0B1l_.exit ]
+_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge: ; preds = %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge.loopexit.split.loop.exit, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge.loopexit.split.loop.exit12, %select.unfold, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i, %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4find5checkReQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0E0B1l_.exit, %.lr.ph.split.backedge.a, %.lr.ph.split.us, %.lr.ph.split.us.split.us, %.lr.ph.split.us.split.us.split.us56, %.lr.ph.split.us.split.us.split.us65, %bb.a
+  %.sroa.3.0 = phi i64 [ undef, %.lr.ph.split.us ], [ 1, %.lr.ph.split.us.split.us.split.us56 ], [ %i.r, %.lr.ph.split.us.split.us ], [ undef, %.lr.ph.split.backedge.a ], [ undef, %bb.a ], [ 2, %.lr.ph.split.us.split.us.split.us65 ], [ 2, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge.loopexit.split.loop.exit ], [ undef, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i ], [ %.sroa.4.1.i.i, %select.unfold ], [ 1, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge.loopexit.split.loop.exit12 ], [ undef, %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4find5checkReQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0E0B1l_.exit ]
+  %.sroa.0.0 = phi ptr [ null, %.lr.ph.split.us ], [ %.sroa.0.1.i.i.us, %.lr.ph.split.us.split.us.split.us56 ], [ %.sroa.0.1.i.i.us, %.lr.ph.split.us.split.us ], [ null, %.lr.ph.split.backedge.a ], [ null, %bb.a ], [ %.sroa.0.1.i.i.us, %.lr.ph.split.us.split.us.split.us65 ], [ %.sroa.0.1.i.i.mux97.le, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge.loopexit.split.loop.exit ], [ null, %_RNvMsf_NtNtCsf3Ta7LF998c_4core3str4iterINtB5_13SplitInternalcE7get_endCsbNLsQi0JuJ4_5tgrep.exit.i.i ], [ %.sroa.0.1.i.i, %select.unfold ], [ %.sroa.0.1.i.i.mux.le, %_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0INtB7_5FnMutTRReEE8call_mutBU_.exit.i._crit_edge.loopexit.split.loop.exit12 ], [ null, %_RNCINvNvNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4find5checkReQNCNvNtCsbNLsQi0JuJ4_5tgrep5serve25should_skip_watcher_entry0E0B1l_.exit ]
   %i.aw = insertvalue { ptr, i64 } poison, ptr %.sroa.0.0, 0
   %i.ax = insertvalue { ptr, i64 } %i.aw, i64 %.sroa.3.0, 1
   ret { ptr, i64 } %i.ax
@@ -786,10 +769,10 @@ begin_hunk_1_@llvm.umin.i128
 !860 = !{!850, !848}
 !861 = !{!852, !850, !848}
 !862 = !{!854, !850, !848}
-!863 = !{!848}
-!864 = !{!850}
-!865 = !{!852}
-!866 = !{!856}
+!863 = !{!856}
+!864 = !{!848}
+!865 = !{!850}
+!866 = !{!852}
 !867 = !{!857, !852, !850, !848}
 !868 = !{!859}
 !869 = !{!857}

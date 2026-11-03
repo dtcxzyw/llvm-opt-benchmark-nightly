@@ -205,7 +205,7 @@ _RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload), "nonnull"(ptr %.sroa.44.0.copyload) ]
   %i.e = icmp eq i8 %2, -128
   %i.f = sub nsw i8 0, %2                         ; 5 uses
-  br i1 %i.e, label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.us, label %iter.check
+  br i1 %i.e, label %3, label %iter.check
 
 iter.check:                                       ; preds = %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.lr.ph
   %i.g = sub i64 %.sroa.7.0.copyload, %.sroa.55.0.copyload ; 7 uses
@@ -320,11 +320,6 @@ _RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   %i.ap = icmp eq i64 %.sroa.7.0.copyload, %.neg
   br i1 %i.ap, label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.thread, label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit
 
-_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.us: ; preds = %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.lr.ph
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !243)
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_neg_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #23, !noalias !243
-  unreachable
-
 _RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit: ; preds = %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.prol.loopexit, %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit
   %.sroa.55.010 = phi i64 [ %i.ax, %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit ], [ %.sroa.55.010.unr, %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.prol.loopexit ] ; 4 uses
   %i.aq = add nuw i64 %.sroa.55.010, 1            ; 2 uses
@@ -348,6 +343,10 @@ _RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   store i8 %i.bd, ptr %i.ay, align 1, !alias.scope !245
   %exitcond.not.1 = icmp eq i64 %i.ax, %.sroa.7.0.copyload
   br i1 %exitcond.not.1, label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.thread, label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit, !llvm.loop !241
+
+3:                                                ; preds = %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.lr.ph
+  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_neg_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #23, !noalias !243
+  unreachable
 
 _RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.thread: ; preds = %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.prol.loopexit, %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit, %middle.block, %vec.epilog.middle.block, %bb.a
   ret void
@@ -406,7 +405,7 @@ _RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.copyload.i.i), "nonnull"(ptr %.sroa.44.0.copyload.i.i) ]
   %i.g = icmp eq i8 %3, -128
   %i.h = sub nsw i8 0, %3                         ; 6 uses
-  br i1 %i.g, label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.us.i.i, label %iter.check
+  br i1 %i.g, label %4, label %iter.check
 
 iter.check:                                       ; preds = %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.lr.ph.i.i
   %i.i = sub i64 %.sroa.7.0.copyload.i.i, %.sroa.55.0.copyload.i.i ; 7 uses
@@ -521,11 +520,6 @@ _RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   %i.ar = icmp eq i64 %.sroa.7.0.copyload.i.i, %.neg
   br i1 %i.ar, label %_RNvXsd_Cs7yXBOrgAdI3_6subtleAhj20_NtB5_23ConditionallySelectable18conditional_selectCs807GXlIGG3x_7zkgroup.exit.thread, label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.i.i
 
-_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.us.i.i: ; preds = %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.lr.ph.i.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !268)
-  call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_neg_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #23, !noalias !271
-  unreachable
-
 _RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.i.i: ; preds = %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.i.i.prol.loopexit, %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.i.i
   %.sroa.55.010.i.i = phi i64 [ %i.az, %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.i.i ], [ %.sroa.55.010.i.i.unr, %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.i.i.prol.loopexit ] ; 4 uses
   %i.as = add nuw i64 %.sroa.55.010.i.i, 1        ; 2 uses
@@ -542,23 +536,27 @@ _RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4it
   %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.0.0.copyload.i.i, i64 %i.as ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.sroa.44.0.copyload.i.i, i64 %i.as
   %.val.i.i.1 = load i8, ptr %i.bb, align 1, !noalias !265
-  %i.bc = load i8, ptr %i.ba, align 1, !alias.scope !272, !noalias !265, !noundef !5 ; 2 uses
+  %i.bc = load i8, ptr %i.ba, align 1, !alias.scope !271, !noalias !265, !noundef !5 ; 2 uses
   %i.bd = xor i8 %i.bc, %.val.i.i.1
   %i.be = and i8 %i.bd, %i.h
   %i.bf = xor i8 %i.be, %i.bc
-  store i8 %i.bf, ptr %i.ba, align 1, !alias.scope !272, !noalias !265
+  store i8 %i.bf, ptr %i.ba, align 1, !alias.scope !271, !noalias !265
   %exitcond.not.i.i.1 = icmp eq i64 %i.az, %.sroa.7.0.copyload.i.i
   br i1 %exitcond.not.i.i.1, label %_RNvXsd_Cs7yXBOrgAdI3_6subtleAhj20_NtB5_23ConditionallySelectable18conditional_selectCs807GXlIGG3x_7zkgroup.exit.thread, label %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.i.i, !llvm.loop !262
 
 _RNvXsd_Cs7yXBOrgAdI3_6subtleAhj20_NtB5_23ConditionallySelectable18conditional_selectCs807GXlIGG3x_7zkgroup.exit.thread: ; preds = %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.i.i.prol.loopexit, %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.i.i, %vec.epilog.middle.block, %middle.block
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !263
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.c, ptr noundef nonnull align 1 dereferenceable(32) %i.b, i64 32, i1 false), !noalias !273
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.c, ptr noundef nonnull align 1 dereferenceable(32) %i.b, i64 32, i1 false), !noalias !272
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !263
   br label %bb.b
 
+4:                                                ; preds = %_RNvXs3_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtBZ_4IterhEEINtB5_7ZipImplBW_B1r_E4nextCs807GXlIGG3x_7zkgroup.exit.lr.ph.i.i
+  call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_neg_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @4) #23, !noalias !273
+  unreachable
+
 _RNvXsd_Cs7yXBOrgAdI3_6subtleAhj20_NtB5_23ConditionallySelectable18conditional_selectCs807GXlIGG3x_7zkgroup.exit: ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !263
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.c, ptr noundef nonnull align 1 dereferenceable(32) %i.b, i64 32, i1 false), !noalias !273
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(32) %i.c, ptr noundef nonnull align 1 dereferenceable(32) %i.b, i64 32, i1 false), !noalias !272
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !263
   %i.bg = icmp eq i8 %3, -128
   br i1 %i.bg, label %bb.c, label %_RNvXsd_Cs7yXBOrgAdI3_6subtleAhj20_NtB5_23ConditionallySelectable18conditional_selectCs807GXlIGG3x_7zkgroup.exit._crit_edge
@@ -961,9 +959,9 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !268 = !{!256}
 !269 = !{!256, !257}
 !270 = !{!249, !248, !254}
-!271 = !{!256, !249, !248}
-!272 = !{!261}
-!273 = !{!248, !247}
+!271 = !{!261}
+!272 = !{!248, !247}
+!273 = !{!256, !249, !248}
 !274 = distinct !{!274, i1 true, !"_RNCNvNtNtCs807GXlIGG3x_7zkgroup6crypto22profile_key_commitment13SYSTEM_PARAMS0B7_"}
 !275 = distinct !{!275, !274, !"_RNCNvNtNtCs807GXlIGG3x_7zkgroup6crypto22profile_key_commitment13SYSTEM_PARAMS0B7_: argument 0"}
 !276 = distinct !{!276, i1 true, !"_RNvMNtCsgxBkk5gSRhY_4core6resultINtB2_6ResultNtNtNtCs807GXlIGG3x_7zkgroup6crypto22profile_key_commitment12SystemParamsNtNtNtBN_6common6errors29ZkGroupDeserializationFailureE6expectBN_"}

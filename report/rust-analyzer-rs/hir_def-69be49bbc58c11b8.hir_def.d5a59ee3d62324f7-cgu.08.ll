@@ -205,7 +205,7 @@ bb.a:
 .lr.ph.split.us.i.i:                              ; preds = %.lr.ph.i.i
   %.not.i3.i.i.us.i.i = icmp ne i64 %.pre2.i.i.i.i.i, %.promoted9.i.i
   %or.cond.not.i.i.i.us.i.i = select i1 %i.p, i1 true, i1 %.not.i3.i.i.us.i.i
-  br i1 %or.cond.not.i.i.i.us.i.i, label %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsileJQcQObtj_7hir_def.exit.i.i.us.us.i.i, label %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsileJQcQObtj_7hir_def.exit.i.i.us.i.i
+  br i1 %or.cond.not.i.i.i.us.i.i, label %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsileJQcQObtj_7hir_def.exit.i.i.us.us.i.i, label %_RINvXs0_NtNtNtCshzWfHUSfYae_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_3str4iter5SplitcENvMs2_NtCs39E2wp1vf7X_6intern6symbolNtB1u_6Symbol6internENtNtNtBa_6traits8iterator8Iterator4folduNCINvB6_8map_foldB1Y_TB1Y_uEuNCINvXs8_NtCsfjX3T6UU9IB_9hashbrown3setINtB3z_7HashSetB1Y_NtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEINtNtB2n_7collect6ExtendB1Y_E6extendBN_E0NCINvNvB2j_8for_each4callB3i_NCINvXs1i_NtB3B_3mapINtB6m_7HashMapB1Y_uB4m_EIB55_B3i_E6extendIBO_BN_B3q_EE0E0E0ECsileJQcQObtj_7hir_def.exit
 
 _RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsileJQcQObtj_7hir_def.exit.i.i.us.us.i.i: ; preds = %.lr.ph.split.us.i.i
   %.sroa.0.1.i.i.us.i.i = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %.promoted9.i.i
@@ -214,14 +214,7 @@ _RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsileJQcQ
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1097)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1098)
   %i.t = tail call noundef nonnull ptr @_RNvMs2_NtCs39E2wp1vf7X_6intern6symbolNtB5_6Symbol6intern(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.0.1.i.i.us.i.i, i64 noundef %i.s), !noalias !1099
-  %2 = tail call noundef zeroext i1 @_RNvMs1_NtCsfjX3T6UU9IB_9hashbrown3mapINtB5_7HashMapNtNtCs39E2wp1vf7X_6intern6symbol6SymboluNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherE6insertCsileJQcQObtj_7hir_def(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.t), !noalias !1094 ; 0 uses
-  br label %_RINvXs0_NtNtNtCshzWfHUSfYae_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_3str4iter5SplitcENvMs2_NtCs39E2wp1vf7X_6intern6symbolNtB1u_6Symbol6internENtNtNtBa_6traits8iterator8Iterator4folduNCINvB6_8map_foldB1Y_TB1Y_uEuNCINvXs8_NtCsfjX3T6UU9IB_9hashbrown3setINtB3z_7HashSetB1Y_NtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEINtNtB2n_7collect6ExtendB1Y_E6extendBN_E0NCINvNvB2j_8for_each4callB3i_NCINvXs1i_NtB3B_3mapINtB6m_7HashMapB1Y_uB4m_EIB55_B3i_E6extendIBO_BN_B3q_EE0E0E0ECsileJQcQObtj_7hir_def.exit
-
-_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsileJQcQObtj_7hir_def.exit.i.i.us.i.i: ; preds = %.lr.ph.split.us.i.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !1096)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !1097)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !1098)
-  br label %_RINvXs0_NtNtNtCshzWfHUSfYae_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_3str4iter5SplitcENvMs2_NtCs39E2wp1vf7X_6intern6symbolNtB1u_6Symbol6internENtNtNtBa_6traits8iterator8Iterator4folduNCINvB6_8map_foldB1Y_TB1Y_uEuNCINvXs8_NtCsfjX3T6UU9IB_9hashbrown3setINtB3z_7HashSetB1Y_NtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEINtNtB2n_7collect6ExtendB1Y_E6extendBN_E0NCINvNvB2j_8for_each4callB3i_NCINvXs1i_NtB3B_3mapINtB6m_7HashMapB1Y_uB4m_EIB55_B3i_E6extendIBO_BN_B3q_EE0E0E0ECsileJQcQObtj_7hir_def.exit
+  br label %._crit_edge.sink.split.i.i
 
 .lr.ph.split.preheader.i.i.i.i.i:                 ; preds = %select.unfold.i.i, %.lr.ph.split.preheader.i.i.i.i.lr.ph.i
   %.lcssa71112.i5.i = phi i64 [ %.promoted9.i.i, %.lr.ph.split.preheader.i.i.i.i.lr.ph.i ], [ %i.ak, %select.unfold.i.i ] ; 4 uses
@@ -309,10 +302,14 @@ select.unfold.i.i:                                ; preds = %bb.f
   %.sroa.4.1.i.i.c.i.i = sub nuw i64 %.pre2.i.i.i.i.i, %.lcssa71112.i4.i
   %.sroa.0.1.i.i.c.i.i = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %.lcssa71112.i4.i
   %i.as = tail call noundef nonnull ptr @_RNvMs2_NtCs39E2wp1vf7X_6intern6symbolNtB5_6Symbol6intern(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.0.1.i.i.c.i.i, i64 noundef %.sroa.4.1.i.i.c.i.i), !noalias !1094
-  %3 = tail call noundef zeroext i1 @_RNvMs1_NtCsfjX3T6UU9IB_9hashbrown3mapINtB5_7HashMapNtNtCs39E2wp1vf7X_6intern6symbol6SymboluNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherE6insertCsileJQcQObtj_7hir_def(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %i.as), !noalias !1094 ; 0 uses
+  br label %._crit_edge.sink.split.i.i
+
+._crit_edge.sink.split.i.i:                       ; preds = %._crit_edge.loopexit.critedge.i.i, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsileJQcQObtj_7hir_def.exit.i.i.us.us.i.i
+  %.sink.i.i = phi ptr [ %i.as, %._crit_edge.loopexit.critedge.i.i ], [ %i.t, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsileJQcQObtj_7hir_def.exit.i.i.us.us.i.i ]
+  %2 = tail call noundef zeroext i1 @_RNvMs1_NtCsfjX3T6UU9IB_9hashbrown3mapINtB5_7HashMapNtNtCs39E2wp1vf7X_6intern6symbol6SymboluNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherE6insertCsileJQcQObtj_7hir_def(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull %.sink.i.i), !noalias !1094 ; 0 uses
   br label %_RINvXs0_NtNtNtCshzWfHUSfYae_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_3str4iter5SplitcENvMs2_NtCs39E2wp1vf7X_6intern6symbolNtB1u_6Symbol6internENtNtNtBa_6traits8iterator8Iterator4folduNCINvB6_8map_foldB1Y_TB1Y_uEuNCINvXs8_NtCsfjX3T6UU9IB_9hashbrown3setINtB3z_7HashSetB1Y_NtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEINtNtB2n_7collect6ExtendB1Y_E6extendBN_E0NCINvNvB2j_8for_each4callB3i_NCINvXs1i_NtB3B_3mapINtB6m_7HashMapB1Y_uB4m_EIB55_B3i_E6extendIBO_BN_B3q_EE0E0E0ECsileJQcQObtj_7hir_def.exit
 
-_RINvXs0_NtNtNtCshzWfHUSfYae_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_3str4iter5SplitcENvMs2_NtCs39E2wp1vf7X_6intern6symbolNtB1u_6Symbol6internENtNtNtBa_6traits8iterator8Iterator4folduNCINvB6_8map_foldB1Y_TB1Y_uEuNCINvXs8_NtCsfjX3T6UU9IB_9hashbrown3setINtB3z_7HashSetB1Y_NtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEINtNtB2n_7collect6ExtendB1Y_E6extendBN_E0NCINvNvB2j_8for_each4callB3i_NCINvXs1i_NtB3B_3mapINtB6m_7HashMapB1Y_uB4m_EIB55_B3i_E6extendIBO_BN_B3q_EE0E0E0ECsileJQcQObtj_7hir_def.exit: ; preds = %bb.a, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsileJQcQObtj_7hir_def.exit.i.i.us.us.i.i, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsileJQcQObtj_7hir_def.exit.i.i.us.i.i, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsileJQcQObtj_7hir_def.exit.i.i.i.i, %._crit_edge.loopexit.critedge.i.i
+_RINvXs0_NtNtNtCshzWfHUSfYae_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_3str4iter5SplitcENvMs2_NtCs39E2wp1vf7X_6intern6symbolNtB1u_6Symbol6internENtNtNtBa_6traits8iterator8Iterator4folduNCINvB6_8map_foldB1Y_TB1Y_uEuNCINvXs8_NtCsfjX3T6UU9IB_9hashbrown3setINtB3z_7HashSetB1Y_NtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEINtNtB2n_7collect6ExtendB1Y_E6extendBN_E0NCINvNvB2j_8for_each4callB3i_NCINvXs1i_NtB3B_3mapINtB6m_7HashMapB1Y_uB4m_EIB55_B3i_E6extendIBO_BN_B3q_EE0E0E0ECsileJQcQObtj_7hir_def.exit: ; preds = %bb.a, %.lr.ph.split.us.i.i, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsileJQcQObtj_7hir_def.exit.i.i.i.i, %._crit_edge.sink.split.i.i
   ret void
 }
 

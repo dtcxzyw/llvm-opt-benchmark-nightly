@@ -204,17 +204,11 @@ bb.a:
   %i.n = icmp ult i8 %i.l, 5
   %i.o = getelementptr i8, ptr %i.j, i64 %i.m
   %i.p = getelementptr i8, ptr %i.o, i64 -1
-  br i1 %.not.i.i.i.i, label %.split.us.i, label %.split.preheader.i
+  br i1 %.not.i.i.i.i, label %_RINvYINtNtNtCsf3Ta7LF998c_4core3str4iter12MatchIndicescENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtBY_8adapters3map12map_try_foldTjReEjuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMNtCsbzNSmZPCnTx_10tgrep_core10visibilityNtB3d_14PathVisibility10is_visible0QNCINvNvBS_3all5checkjNCB3a_s_0E0E0B2r_EB3f_.exit, label %.split.preheader.i
 
 .split.preheader.i:                               ; preds = %bb.a
   %.promoted.i = load i64, ptr %i.f, align 8, !alias.scope !341
   br label %.split.i
-
-.split.us.i:                                      ; preds = %bb.a
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !342)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !343)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !344)
-  br label %_RINvYINtNtNtCsf3Ta7LF998c_4core3str4iter12MatchIndicescENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtBY_8adapters3map12map_try_foldTjReEjuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMNtCsbzNSmZPCnTx_10tgrep_core10visibilityNtB3d_14PathVisibility10is_visible0QNCINvNvBS_3all5checkjNCB3a_s_0E0E0B2r_EB3f_.exit
 
 .split.i:                                         ; preds = %_RNvXs1r_NtNtCsf3Ta7LF998c_4core3str4iterINtB6_12MatchIndicescENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit.i, %.split.preheader.i
   %i.q = phi i64 [ %i.af, %_RNvXs1r_NtNtCsf3Ta7LF998c_4core3str4iterINtB6_12MatchIndicescENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit.i ], [ %.promoted.i, %.split.preheader.i ] ; 2 uses
@@ -295,8 +289,8 @@ _RNvXs1r_NtNtCsf3Ta7LF998c_4core3str4iterINtB6_12MatchIndicescENtNtNtNtBa_4iter6
   %i.an = call noundef zeroext i1 @_RNvXs1_NtNtNtCsf3Ta7LF998c_4core3ops8function5implsQNCINvNvNtNtNtNtBb_4iter6traits8iterator8Iterator3all5checkjNCNvMNtCsbzNSmZPCnTx_10tgrep_core10visibilityNtB1Q_14PathVisibility10is_visibles_0E0INtB7_5FnMutTujEE8call_mutB1S_(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.a, i64 noundef %i.am), !noalias !350
   br i1 %i.an, label %_RINvYINtNtNtCsf3Ta7LF998c_4core3str4iter12MatchIndicescENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtBY_8adapters3map12map_try_foldTjReEjuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMNtCsbzNSmZPCnTx_10tgrep_core10visibilityNtB3d_14PathVisibility10is_visible0QNCINvNvBS_3all5checkjNCB3a_s_0E0E0B2r_EB3f_.exit, label %.split.i
 
-_RINvYINtNtNtCsf3Ta7LF998c_4core3str4iter12MatchIndicescENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtBY_8adapters3map12map_try_foldTjReEjuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMNtCsbzNSmZPCnTx_10tgrep_core10visibilityNtB3d_14PathVisibility10is_visible0QNCINvNvBS_3all5checkjNCB3a_s_0E0E0B2r_EB3f_.exit: ; preds = %.split.i, %_RNvXs1r_NtNtCsf3Ta7LF998c_4core3str4iterINtB6_12MatchIndicescENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit.i, %bb.d, %.split.us.i, %.loopexit15.i.i.i.i
-  %.not10.i = phi i1 [ false, %.loopexit15.i.i.i.i ], [ false, %bb.d ], [ false, %.split.us.i ], [ %.not.i.not.not, %_RNvXs1r_NtNtCsf3Ta7LF998c_4core3str4iterINtB6_12MatchIndicescENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit.i ], [ %.not.i.not.not, %.split.i ]
+_RINvYINtNtNtCsf3Ta7LF998c_4core3str4iter12MatchIndicescENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtBY_8adapters3map12map_try_foldTjReEjuINtNtNtBa_3ops12control_flow11ControlFlowuENCNvMNtCsbzNSmZPCnTx_10tgrep_core10visibilityNtB3d_14PathVisibility10is_visible0QNCINvNvBS_3all5checkjNCB3a_s_0E0E0B2r_EB3f_.exit: ; preds = %.split.i, %_RNvXs1r_NtNtCsf3Ta7LF998c_4core3str4iterINtB6_12MatchIndicescENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit.i, %bb.d, %bb.a, %.loopexit15.i.i.i.i
+  %.not10.i = phi i1 [ false, %.loopexit15.i.i.i.i ], [ false, %bb.d ], [ false, %bb.a ], [ %.not.i.not.not, %_RNvXs1r_NtNtCsf3Ta7LF998c_4core3str4iterINtB6_12MatchIndicescENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsbzNSmZPCnTx_10tgrep_core.exit.i ], [ %.not.i.not.not, %.split.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %.not10.i
 }
