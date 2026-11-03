@@ -204,11 +204,12 @@ bb.aw:                                            ; preds = %bb.as
 .lr.ph.i8.i.i.i.i.i.i:                            ; preds = %bb.aw
   %i.fy = getelementptr inbounds nuw i8, ptr %i.e, i64 32
   %i.fz = load i64, ptr %i.fy, align 8, !alias.scope !126, !noalias !113, !noundef !5
-  %i.ga = load i64, ptr %i.eq, align 8, !alias.scope !126, !noalias !113 ; 4 uses
+  %i.ga = load i64, ptr %i.eq, align 8, !alias.scope !126, !noalias !113
+  %.fr60.i.i.i.i.i.i.i = freeze i64 %i.ga         ; 4 uses
   %i.gb = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   %i.gc = load i64, ptr %i.gb, align 8, !alias.scope !126, !noalias !113 ; 2 uses
   %i.gd = sub i64 %i.fb, %i.gc
-  %invariant.op = sub i64 1, %i.ga
+  %invariant.op = sub i64 1, %.fr60.i.i.i.i.i.i.i
   br label %.lr.ph.split.i.i.i.i.i.i.i
 
 .lr.ph.split.i.i.i.i.i.i.i:                       ; preds = %bb.az, %.lr.ph.i8.i.i.i.i.i.i
@@ -229,7 +230,7 @@ bb.ax:                                            ; preds = %.lr.ph.split.i.i.i.
   br label %bb.az
 
 bb.ay:                                            ; preds = %.lr.ph.split.i.i.i.i.i.i.i
-  %..i.i10.i.i.i.i.i.i = tail call noundef i64 @llvm.umax.i64(i64 %.sink70.i.i25.i.i.i.i.i, i64 %i.ga) ; 2 uses
+  %..i.i10.i.i.i.i.i.i = tail call noundef i64 @llvm.umax.i64(i64 %.sink70.i.i25.i.i.i.i.i, i64 %.fr60.i.i.i.i.i.i.i) ; 2 uses
   %i.gm = icmp ult i64 %..i.i10.i.i.i.i.i.i, %i.fb
   br i1 %i.gm, label %.lr.ph, label %.preheader36.i.i.i.i.i.i.i.preheader
 
@@ -246,7 +247,7 @@ bb.ba:                                            ; preds = %.lr.ph
   br i1 %i.gq, label %.lr.ph, label %.preheader36.i.i.i.i.i.i.i.preheader
 
 .preheader36.i.i.i.i.i.i.i.preheader:             ; preds = %bb.ba, %bb.ay
-  %i.gr = icmp ult i64 %.sink70.i.i25.i.i.i.i.i, %i.ga
+  %i.gr = icmp ult i64 %.sink70.i.i25.i.i.i.i.i, %.fr60.i.i.i.i.i.i.i
   br i1 %i.gr, label %.lr.ph186, label %.split.us.i11.i.i.i.i.i.i
 
 .lr.ph:                                           ; preds = %bb.ay, %bb.ba
@@ -270,10 +271,10 @@ bb.ba:                                            ; preds = %.lr.ph
   br label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionReE8and_thenTBI_BI_ENCNCINvMs2_Cs6m2LFPinx2P_9async_lspNtB1d_7Message4readQINtNtB5_3pin3PinQINtNtNtCs9j2PgAuXC7p_12futures_util2io10buf_reader9BufReaderNtNtNtB1d_5stdio10tokio_impl14TokioPipeStdinEEE00ECsddkiMbsmfqo_5yr_ls.exit.thread219.i.i
 
 .lr.ph186:                                        ; preds = %.preheader36.i.i.i.i.i.i.i.preheader, %.preheader36.i.i.i.i.i.i.i
-  %.sroa.2.0.i.i.i.i.i.i.i185 = phi i64 [ %i.ha, %.preheader36.i.i.i.i.i.i.i ], [ %i.ga, %.preheader36.i.i.i.i.i.i.i.preheader ]
+  %.sroa.2.0.i.i.i.i.i.i.i185 = phi i64 [ %i.ha, %.preheader36.i.i.i.i.i.i.i ], [ %.fr60.i.i.i.i.i.i.i, %.preheader36.i.i.i.i.i.i.i.preheader ]
   %i.ha = add i64 %.sroa.2.0.i.i.i.i.i.i.i185, -1 ; 6 uses
   %i.hb = icmp ult i64 %i.ha, %i.fb
-  br i1 %i.hb, label %bb.bb, label %.split32.us.i20.i.i.i.i.invoke.i.i
+  br i1 %i.hb, label %bb.bb, label %.split32.us.i22.i.i.i.i.invoke.i.i
 
 bb.bb:                                            ; preds = %.lr.ph186
   %i.hc = getelementptr inbounds nuw i8, ptr %i.ez, i64 %i.ha
@@ -410,12 +411,16 @@ bb.bh:                                            ; preds = %bb.bg, %.split.us.i
   br i1 %.not.us.i.i.i.i.i.i.i, label %bb.bj, label %.preheader35.i.i.i.i.i.i.i.preheader
 
 .preheader35.i.i.i.i.i.i.i.preheader:             ; preds = %.lr.ph.split.us.i.i.i.i.i.i.i
-  br i1 %exitcond.not.i17.i.i.i.i.i.i188.not, label %.lr.ph190, label %.preheader.i19.i.i.i.i.i.i
+  br i1 %exitcond.not.i17.i.i.i.i.i.i188.not, label %.lr.ph190, label %.preheader.split.i21.i.i.i.i.i.i
 
 .preheader35.i.i.i.i.i.i.i:                       ; preds = %.lr.ph190
   %i.iz = add i64 %.sroa.04.0.us.i.i.i.i.i.i.i189, 1 ; 2 uses
   %exitcond.not.i17.i.i.i.i.i.i = icmp eq i64 %i.iz, %umax.i.i.i.i.i.i.i
-  br i1 %exitcond.not.i17.i.i.i.i.i.i, label %.preheader.i19.i.i.i.i.i.i, label %.lr.ph190
+  br i1 %exitcond.not.i17.i.i.i.i.i.i, label %.preheader.split.i21.i.i.i.i.i.i, label %.lr.ph190
+
+.preheader.split.i21.i.i.i.i.i.i:                 ; preds = %.preheader35.i.i.i.i.i.i.i.preheader, %.preheader35.i.i.i.i.i.i.i
+  %.not34.i.i.i.i.i.i.i = icmp eq i64 %.fr215.i.i.i.i.i.i, 0
+  br i1 %.not34.i.i.i.i.i.i.i, label %.split.us.i21.i.i.i.i.i.i, label %.split32.us.i22.i.i.i.i.invoke.i.i
 
 .lr.ph190:                                        ; preds = %.preheader35.i.i.i.i.i.i.i.preheader, %.preheader35.i.i.i.i.i.i.i
   %.sroa.04.0.us.i.i.i.i.i.i.i189 = phi i64 [ %i.iz, %.preheader35.i.i.i.i.i.i.i ], [ %.fr215.i.i.i.i.i.i, %.preheader35.i.i.i.i.i.i.i.preheader ] ; 4 uses
@@ -428,18 +433,6 @@ bb.bh:                                            ; preds = %bb.bg, %.split.us.i
   %i.jf = load i8, ptr %i.je, align 1, !alias.scope !128, !noalias !122, !noundef !5
   %.not21.us.i.i.i.i.i.i.i = icmp eq i8 %i.jb, %i.jf
   br i1 %.not21.us.i.i.i.i.i.i.i, label %.preheader35.i.i.i.i.i.i.i, label %bb.bi
-
-.preheader.i19.i.i.i.i.i.i:                       ; preds = %.preheader35.i.i.i.i.i.i.i.preheader, %.preheader35.i.i.i.i.i.i.i
-  %.not34.i.i.i.i.i.i.i = icmp eq i64 %.fr215.i.i.i.i.i.i, 0
-  br i1 %.not34.i.i.i.i.i.i.i, label %.split.us.i21.i.i.i.i.i.i, label %.split32.us.i20.i.i.i.i.invoke.i.i
-
-.split32.us.i20.i.i.i.i.invoke.i.i:               ; preds = %.lr.ph186, %.preheader.i19.i.i.i.i.i.i
-  %3 = phi i64 [ %i.hr, %.preheader.i19.i.i.i.i.i.i ], [ %i.ha, %.lr.ph186 ]
-  invoke void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %3, i64 noundef range(i64 0, -9223372036854775808) %i.fb, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #18
-          to label %.split32.us.i20.i.i.i.i.cont.i.i unwind label %bb.cm, !noalias !109
-
-.split32.us.i20.i.i.i.i.cont.i.i:                 ; preds = %.split32.us.i20.i.i.i.i.invoke.i.i
-  unreachable
 
 bb.bi:                                            ; preds = %.lr.ph190
   %.reass282.i.reass.i.i.i.i.i = add i64 %.sink.i18.i28.i.i.i.i.i, %reass.sub95.i.i.i.i.i
@@ -456,10 +449,18 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bi
   %i.jj = icmp ult i64 %i.ji, %i.ex
   br i1 %i.jj, label %.lr.ph.split.us.i.i.i.i.i.i.i, label %.loopexit44.i.i.i.i.i.i
 
-.split.us.i21.i.i.i.i.i.i:                        ; preds = %.preheader.i19.us.i.i.us.i.i.i.i.preheader, %.preheader.i19.us.i.i.us.i.i.i.i, %.preheader.i19.i.i.i.i.i.i
-  %.sink.i18.i28.i7.i.i.i.i = phi i64 [ %.sink.i18.i28.i.i.i.i.i, %.preheader.i19.i.i.i.i.i.i ], [ %.sink.i18.i28.i.us.i.i.i.i, %.preheader.i19.us.i.i.us.i.i.i.i ], [ %.sink.i18.i28.i.us.i.i.i.i, %.preheader.i19.us.i.i.us.i.i.i.i.preheader ] ; 2 uses
+.split.us.i21.i.i.i.i.i.i:                        ; preds = %.preheader.i19.us.i.i.us.i.i.i.i.preheader, %.preheader.i19.us.i.i.us.i.i.i.i, %.preheader.split.i21.i.i.i.i.i.i
+  %.sink.i18.i28.i7.i.i.i.i = phi i64 [ %.sink.i18.i28.i.i.i.i.i, %.preheader.split.i21.i.i.i.i.i.i ], [ %.sink.i18.i28.i.us.i.i.i.i, %.preheader.i19.us.i.i.us.i.i.i.i ], [ %.sink.i18.i28.i.us.i.i.i.i, %.preheader.i19.us.i.i.us.i.i.i.i.preheader ] ; 2 uses
   %i.jk = add i64 %.sink.i18.i28.i7.i.i.i.i, %i.fb
   br label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionReE8and_thenTBI_BI_ENCNCINvMs2_Cs6m2LFPinx2P_9async_lspNtB1d_7Message4readQINtNtB5_3pin3PinQINtNtNtCs9j2PgAuXC7p_12futures_util2io10buf_reader9BufReaderNtNtNtB1d_5stdio10tokio_impl14TokioPipeStdinEEE00ECsddkiMbsmfqo_5yr_ls.exit.thread219.i.i
+
+.split32.us.i22.i.i.i.i.invoke.i.i:               ; preds = %.lr.ph186, %.preheader.split.i21.i.i.i.i.i.i
+  %3 = phi i64 [ %i.hr, %.preheader.split.i21.i.i.i.i.i.i ], [ %i.ha, %.lr.ph186 ]
+  invoke void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %3, i64 noundef range(i64 0, -9223372036854775808) %i.fb, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #18
+          to label %.split32.us.i22.i.i.i.i.cont.i.i unwind label %bb.cm, !noalias !109
+
+.split32.us.i22.i.i.i.i.cont.i.i:                 ; preds = %.split32.us.i22.i.i.i.i.invoke.i.i
+  unreachable
 
 .loopexit44.i.i.i.i.i.i:                          ; preds = %bb.az, %bb.bk, %bb.bh, %bb.av, %bb.be, %bb.aw, %.noexc82.i.i, %bb.ar, %.split166.us.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !113
@@ -850,9 +851,9 @@ bb.cl:                                            ; preds = %.noexc77.i.i
   %i.ot = ptrtoint ptr %i.or to i64
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsddkiMbsmfqo_5yr_ls.exit119.i.i
 
-bb.cm:                                            ; preds = %bb.dq, %bb.dj, %bb.cj, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionReE8and_thenTBI_BI_ENCNCINvMs2_Cs6m2LFPinx2P_9async_lspNtB1d_7Message4readQINtNtB5_3pin3PinQINtNtNtCs9j2PgAuXC7p_12futures_util2io10buf_reader9BufReaderNtNtNtB1d_5stdio10tokio_impl14TokioPipeStdinEEE00ECsddkiMbsmfqo_5yr_ls.exit.thread.i.i, %.split32.us.i20.i.i.i.i.invoke.i.i, %bb.au, %.split.us161.i.i.i.i.i.i, %bb.ad, %_RNvXs1y_NtCsexYYUdYSQU6_5alloc6stringNtB6_6StringINtNtCskKLDkoKarTP_4core3cmp9PartialEqReE2eq.exit.thread.i.i, %bb.ab, %bb.aa, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsddkiMbsmfqo_5yr_ls.exit.i.i.i
-  %i.ou = phi ptr [ %i.ag, %bb.aa ], [ %i.ag, %bb.ab ], [ %i.ag, %bb.cj ], [ %i.pa, %bb.dj ], [ %i.pa, %bb.dq ], [ %i.ag, %_RNvXs1y_NtCsexYYUdYSQU6_5alloc6stringNtB6_6StringINtNtCskKLDkoKarTP_4core3cmp9PartialEqReE2eq.exit.thread.i.i ], [ %i.ag, %bb.ad ], [ %i.ag, %.split.us161.i.i.i.i.i.i ], [ %i.ag, %bb.au ], [ %i.ag, %.split32.us.i20.i.i.i.i.invoke.i.i ], [ %i.ag, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionReE8and_thenTBI_BI_ENCNCINvMs2_Cs6m2LFPinx2P_9async_lspNtB1d_7Message4readQINtNtB5_3pin3PinQINtNtNtCs9j2PgAuXC7p_12futures_util2io10buf_reader9BufReaderNtNtNtB1d_5stdio10tokio_impl14TokioPipeStdinEEE00ECsddkiMbsmfqo_5yr_ls.exit.thread.i.i ], [ %i.ag, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsddkiMbsmfqo_5yr_ls.exit.i.i.i ]
-  %i.ov = phi ptr [ %i.ah, %bb.aa ], [ %i.ah, %bb.ab ], [ %i.ah, %bb.cj ], [ %i.pb, %bb.dj ], [ %i.pb, %bb.dq ], [ %i.ah, %_RNvXs1y_NtCsexYYUdYSQU6_5alloc6stringNtB6_6StringINtNtCskKLDkoKarTP_4core3cmp9PartialEqReE2eq.exit.thread.i.i ], [ %i.ah, %bb.ad ], [ %i.ah, %.split.us161.i.i.i.i.i.i ], [ %i.ah, %bb.au ], [ %i.ah, %.split32.us.i20.i.i.i.i.invoke.i.i ], [ %i.ah, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionReE8and_thenTBI_BI_ENCNCINvMs2_Cs6m2LFPinx2P_9async_lspNtB1d_7Message4readQINtNtB5_3pin3PinQINtNtNtCs9j2PgAuXC7p_12futures_util2io10buf_reader9BufReaderNtNtNtB1d_5stdio10tokio_impl14TokioPipeStdinEEE00ECsddkiMbsmfqo_5yr_ls.exit.thread.i.i ], [ %i.ah, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsddkiMbsmfqo_5yr_ls.exit.i.i.i ]
+bb.cm:                                            ; preds = %bb.dq, %bb.dj, %bb.cj, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionReE8and_thenTBI_BI_ENCNCINvMs2_Cs6m2LFPinx2P_9async_lspNtB1d_7Message4readQINtNtB5_3pin3PinQINtNtNtCs9j2PgAuXC7p_12futures_util2io10buf_reader9BufReaderNtNtNtB1d_5stdio10tokio_impl14TokioPipeStdinEEE00ECsddkiMbsmfqo_5yr_ls.exit.thread.i.i, %.split32.us.i22.i.i.i.i.invoke.i.i, %bb.au, %.split.us161.i.i.i.i.i.i, %bb.ad, %_RNvXs1y_NtCsexYYUdYSQU6_5alloc6stringNtB6_6StringINtNtCskKLDkoKarTP_4core3cmp9PartialEqReE2eq.exit.thread.i.i, %bb.ab, %bb.aa, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsddkiMbsmfqo_5yr_ls.exit.i.i.i
+  %i.ou = phi ptr [ %i.ag, %bb.aa ], [ %i.ag, %bb.ab ], [ %i.ag, %bb.cj ], [ %i.pa, %bb.dj ], [ %i.pa, %bb.dq ], [ %i.ag, %_RNvXs1y_NtCsexYYUdYSQU6_5alloc6stringNtB6_6StringINtNtCskKLDkoKarTP_4core3cmp9PartialEqReE2eq.exit.thread.i.i ], [ %i.ag, %bb.ad ], [ %i.ag, %.split.us161.i.i.i.i.i.i ], [ %i.ag, %bb.au ], [ %i.ag, %.split32.us.i22.i.i.i.i.invoke.i.i ], [ %i.ag, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionReE8and_thenTBI_BI_ENCNCINvMs2_Cs6m2LFPinx2P_9async_lspNtB1d_7Message4readQINtNtB5_3pin3PinQINtNtNtCs9j2PgAuXC7p_12futures_util2io10buf_reader9BufReaderNtNtNtB1d_5stdio10tokio_impl14TokioPipeStdinEEE00ECsddkiMbsmfqo_5yr_ls.exit.thread.i.i ], [ %i.ag, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsddkiMbsmfqo_5yr_ls.exit.i.i.i ]
+  %i.ov = phi ptr [ %i.ah, %bb.aa ], [ %i.ah, %bb.ab ], [ %i.ah, %bb.cj ], [ %i.pb, %bb.dj ], [ %i.pb, %bb.dq ], [ %i.ah, %_RNvXs1y_NtCsexYYUdYSQU6_5alloc6stringNtB6_6StringINtNtCskKLDkoKarTP_4core3cmp9PartialEqReE2eq.exit.thread.i.i ], [ %i.ah, %bb.ad ], [ %i.ah, %.split.us161.i.i.i.i.i.i ], [ %i.ah, %bb.au ], [ %i.ah, %.split32.us.i22.i.i.i.i.invoke.i.i ], [ %i.ah, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionReE8and_thenTBI_BI_ENCNCINvMs2_Cs6m2LFPinx2P_9async_lspNtB1d_7Message4readQINtNtB5_3pin3PinQINtNtNtCs9j2PgAuXC7p_12futures_util2io10buf_reader9BufReaderNtNtNtB1d_5stdio10tokio_impl14TokioPipeStdinEEE00ECsddkiMbsmfqo_5yr_ls.exit.thread.i.i ], [ %i.ah, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECsddkiMbsmfqo_5yr_ls.exit.i.i.i ]
   %i.ow = landingpad { ptr, i32 }
           cleanup
   br label %.body107.i.i

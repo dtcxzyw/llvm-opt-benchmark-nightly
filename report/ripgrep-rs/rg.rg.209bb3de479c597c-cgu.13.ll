@@ -204,11 +204,12 @@ bb.ai:                                            ; preds = %bb.ae
 .lr.ph.i8.i:                                      ; preds = %bb.ai
   %i.ht = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.hu = load i64, ptr %i.ht, align 8, !alias.scope !13862, !noundef !413
-  %i.hv = load i64, ptr %i.gp, align 8, !alias.scope !13862 ; 4 uses
+  %i.hv = load i64, ptr %i.gp, align 8, !alias.scope !13862
+  %.fr60.i.i = freeze i64 %i.hv, !dbg !14022      ; 4 uses
   %i.hw = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.hx = load i64, ptr %i.hw, align 8, !alias.scope !13862 ; 2 uses
   %i.hy = sub i64 %i.ha, %i.hx
-  %invariant.op = sub i64 1, %i.hv, !dbg !14022
+  %invariant.op = sub i64 1, %.fr60.i.i, !dbg !14022
   br label %.lr.ph.split.i.i, !dbg !14022
 
 .lr.ph.split.i.i:                                 ; preds = %bb.al, %.lr.ph.i8.i
@@ -229,7 +230,7 @@ bb.aj:                                            ; preds = %.lr.ph.split.i.i
   br label %bb.al, !dbg !14029
 
 bb.ak:                                            ; preds = %.lr.ph.split.i.i
-  %..i.i10.i = tail call noundef i64 @llvm.umax.i64(i64 %.sink70.i.i35, i64 %i.hv), !dbg !14030 ; 2 uses
+  %..i.i10.i = tail call noundef i64 @llvm.umax.i64(i64 %.sink70.i.i35, i64 %.fr60.i.i), !dbg !14030 ; 2 uses
   %i.ih = icmp ult i64 %..i.i10.i, %i.ha, !dbg !14031
   br i1 %i.ih, label %.lr.ph, label %.preheader36.i.i.preheader, !dbg !14032
 
@@ -246,7 +247,7 @@ bb.am:                                            ; preds = %.lr.ph
   br i1 %i.il, label %.lr.ph, label %.preheader36.i.i.preheader, !dbg !14032
 
 .preheader36.i.i.preheader:                       ; preds = %bb.am, %bb.ak
-  %i.im = icmp ult i64 %.sink70.i.i35, %i.hv, !dbg !14034
+  %i.im = icmp ult i64 %.sink70.i.i35, %.fr60.i.i, !dbg !14034
   br i1 %i.im, label %.lr.ph137, label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, !dbg !14035
 
 .lr.ph:                                           ; preds = %bb.ak, %bb.am
@@ -266,7 +267,7 @@ bb.am:                                            ; preds = %.lr.ph
   br i1 %i.it, label %.lr.ph137, label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, !dbg !14035
 
 .lr.ph137:                                        ; preds = %.preheader36.i.i.preheader, %.preheader36.i.i
-  %.sroa.2.0.i.i136 = phi i64 [ %i.iu, %.preheader36.i.i ], [ %i.hv, %.preheader36.i.i.preheader ]
+  %.sroa.2.0.i.i136 = phi i64 [ %i.iu, %.preheader36.i.i ], [ %.fr60.i.i, %.preheader36.i.i.preheader ]
   %i.iu = add i64 %.sroa.2.0.i.i136, -1, !dbg !14042 ; 6 uses
   %i.iv = icmp ult i64 %i.iu, %i.ha, !dbg !14043
   br i1 %i.iv, label %bb.an, label %.split32.us.i.i, !dbg !14043
@@ -340,7 +341,7 @@ bb.aq:                                            ; preds = %bb.ae
   br i1 %exitcond.not.i17.i, label %.preheader.i19.preheader.i, label %.lr.ph140, !dbg !14062
 
 .preheader.i19.preheader.i:                       ; preds = %.preheader35.i.i, %.preheader35.i.i.preheader
-  br i1 %.first_iter.i16.i, label %.preheader.i19.us.i.preheader, label %.preheader.i19.i
+  br i1 %.first_iter.i16.i, label %.preheader.i19.us.i.preheader, label %.preheader.split.i21.i
 
 .preheader.i19.us.i.preheader:                    ; preds = %.preheader.i19.preheader.i
   br i1 %.not34.i.us.i141, label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, label %.lr.ph143, !dbg !14065
@@ -366,6 +367,9 @@ bb.aq:                                            ; preds = %bb.ae
   %i.kb = add i64 %.sink.i18.i38, %i.jk, !dbg !14074
   br label %bb.at, !dbg !14075
 
+.preheader.split.i21.i:                           ; preds = %.preheader.i19.preheader.i
+  br i1 %.not34.i.us.i141, label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, label %.split32.us.i22.i, !dbg !14065
+
 .lr.ph140:                                        ; preds = %.preheader35.i.i.preheader, %.preheader35.i.i
   %.sroa.04.0.us.i.i139 = phi i64 [ %i.jt, %.preheader35.i.i ], [ %.fr215.i, %.preheader35.i.i.preheader ] ; 4 uses
   %i.kc = getelementptr inbounds nuw i8, ptr %i.gy, i64 %.sroa.04.0.us.i.i139, !dbg !14076
@@ -377,13 +381,6 @@ bb.aq:                                            ; preds = %bb.ae
   %i.kh = load i8, ptr %i.kg, align 1, !dbg !14081, !alias.scope !13870, !noalias !13857, !noundef !413
   %.not21.us.i.i = icmp eq i8 %i.kd, %i.kh, !dbg !14076
   br i1 %.not21.us.i.i, label %.preheader35.i.i, label %bb.ar, !dbg !14076
-
-.preheader.i19.i:                                 ; preds = %.preheader.i19.preheader.i
-  br i1 %.not34.i.us.i141, label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, label %.split32.us.i20.i, !dbg !14065
-
-.split32.us.i20.i:                                ; preds = %.preheader.i19.i
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.jl, i64 noundef range(i64 0, -9223372036854775808) %i.ha, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @9) #36, !dbg !14068, !noalias !13873
-  unreachable, !dbg !14068
 
 bb.ar:                                            ; preds = %.lr.ph140
   %.reass282.i.reass.reass = add i64 %.sink.i18.i38, %invariant.op170
@@ -400,11 +397,15 @@ bb.at:                                            ; preds = %bb.as, %bb.ar, %.sp
   %i.kl = icmp ult i64 %i.kk, %i.gw, !dbg !14055
   br i1 %i.kl, label %.lr.ph.split.us.i.i3, label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, !dbg !14055
 
+.split32.us.i22.i:                                ; preds = %.preheader.split.i21.i
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.jl, i64 noundef range(i64 0, -9223372036854775808) %i.ha, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @9) #36, !dbg !14068, !noalias !13873
+  unreachable, !dbg !14068
+
 _RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split: ; preds = %.lr.ph.i.i, %bb.ag, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2NzvFoTxuAy_2rg.exit16.i.i.us.i, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2NzvFoTxuAy_2rg.exit14.i.i.us.i, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs2NzvFoTxuAy_2rg.exit12.i.i.us.i, %bb.ac
   br label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, !dbg !14086
 
-_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit: ; preds = %bb.al, %.preheader36.i.i.preheader, %.preheader36.i.i, %bb.at, %.preheader.i19.us.i.preheader, %.preheader.i19.us.i, %bb.ah, %bb.s, %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split, %.preheader.i19.i, %bb.aq, %bb.ai, %bb.ag, %bb.v, %bb.ab, %.preheader.i5, %bb.ad
-  %storemerge.i.sink.i = phi i8 [ %.promoted206.i, %bb.s ], [ 0, %bb.ai ], [ 0, %bb.ad ], [ 0, %bb.aq ], [ 1, %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split ], [ 0, %bb.ag ], [ 1, %.preheader.i19.us.i ], [ 0, %.preheader.i5 ], [ 1, %bb.v ], [ 1, %bb.ab ], [ 1, %.preheader36.i.i ], [ 1, %.preheader.i19.i ], [ 1, %.preheader.i19.us.i.preheader ], [ 0, %bb.ah ], [ 0, %bb.at ], [ 0, %bb.al ], [ 1, %.preheader36.i.i.preheader ]
+_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit: ; preds = %bb.al, %.preheader36.i.i.preheader, %.preheader36.i.i, %bb.at, %.preheader.i19.us.i.preheader, %.preheader.i19.us.i, %bb.ah, %bb.s, %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split, %.preheader.split.i21.i, %bb.aq, %bb.ai, %bb.ag, %bb.v, %bb.ab, %.preheader.i5, %bb.ad
+  %storemerge.i.sink.i = phi i8 [ %.promoted206.i, %bb.s ], [ 0, %bb.ai ], [ 0, %bb.ad ], [ 0, %bb.aq ], [ 1, %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split ], [ 0, %bb.ag ], [ 1, %.preheader.i19.us.i ], [ 0, %.preheader.i5 ], [ 1, %bb.v ], [ 1, %bb.ab ], [ 1, %.preheader36.i.i ], [ 1, %.preheader.split.i21.i ], [ 1, %.preheader.i19.us.i.preheader ], [ 0, %bb.ah ], [ 0, %bb.at ], [ 0, %bb.al ], [ 1, %.preheader36.i.i.preheader ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !14086
   br label %_RNvNtNtCskKLDkoKarTP_4core3str7pattern13simd_contains.exit.thread, !dbg !14086
 

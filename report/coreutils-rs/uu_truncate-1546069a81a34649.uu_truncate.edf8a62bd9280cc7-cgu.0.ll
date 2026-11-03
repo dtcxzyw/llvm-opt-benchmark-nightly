@@ -205,11 +205,12 @@ bb.cf:                                            ; preds = %bb.bz
 .lr.ph.i1.i.i.i.i.i:                              ; preds = %bb.cf
   %i.st = getelementptr inbounds nuw i8, ptr %i.ar, i64 32
   %i.su = load i64, ptr %i.st, align 8, !alias.scope !701, !noalias !689, !noundef !4
-  %i.sv = load i64, ptr %i.ph, align 8, !alias.scope !701, !noalias !689 ; 4 uses
+  %i.sv = load i64, ptr %i.ph, align 8, !alias.scope !701, !noalias !689
+  %.fr60.i.i.i.i.i.i = freeze i64 %i.sv           ; 4 uses
   %i.sw = getelementptr inbounds nuw i8, ptr %i.ar, i64 24
   %i.sx = load i64, ptr %i.sw, align 8, !alias.scope !701, !noalias !689 ; 2 uses
   %i.sy = sub i64 %i.rw, %i.sx
-  %invariant.op = sub i64 1, %i.sv
+  %invariant.op = sub i64 1, %.fr60.i.i.i.i.i.i
   br label %.lr.ph.split.i.i.i.i.i.i
 
 .lr.ph.split.i.i.i.i.i.i:                         ; preds = %bb.ci, %.lr.ph.i1.i.i.i.i.i
@@ -230,7 +231,7 @@ bb.cg:                                            ; preds = %.lr.ph.split.i.i.i.
   br label %bb.ci
 
 bb.ch:                                            ; preds = %.lr.ph.split.i.i.i.i.i.i
-  %..i.i3.i.i.i.i.i = call noundef i64 @llvm.umax.i64(i64 %.sink.i4.i32.i.i.i.i, i64 %i.sv) ; 2 uses
+  %..i.i3.i.i.i.i.i = call noundef i64 @llvm.umax.i64(i64 %.sink.i4.i32.i.i.i.i, i64 %.fr60.i.i.i.i.i.i) ; 2 uses
   %i.ti = icmp ult i64 %..i.i3.i.i.i.i.i, %i.rw
   br i1 %i.ti, label %.lr.ph633, label %.preheader36.i.i.i.i.i.i.preheader
 
@@ -247,7 +248,7 @@ bb.cj:                                            ; preds = %.lr.ph633
   br i1 %i.tn, label %.lr.ph633, label %.preheader36.i.i.i.i.i.i.preheader
 
 .preheader36.i.i.i.i.i.i.preheader:               ; preds = %bb.cj, %bb.ch
-  %i.to = icmp ult i64 %.sink.i4.i32.i.i.i.i, %i.sv
+  %i.to = icmp ult i64 %.sink.i4.i32.i.i.i.i, %.fr60.i.i.i.i.i.i
   br i1 %i.to, label %.lr.ph635, label %_RNvCskqImE9wpq17_11uu_truncate11is_modifier.exit.thread85.i
 
 .lr.ph633:                                        ; preds = %bb.ch, %bb.cj
@@ -267,7 +268,7 @@ bb.cj:                                            ; preds = %.lr.ph633
   br i1 %i.tv, label %.lr.ph635, label %_RNvCskqImE9wpq17_11uu_truncate11is_modifier.exit.thread85.i
 
 .lr.ph635:                                        ; preds = %.preheader36.i.i.i.i.i.i.preheader, %.preheader36.i.i.i.i.i.i
-  %.sroa.2.0.i.i.i.i.i.i634 = phi i64 [ %i.tw, %.preheader36.i.i.i.i.i.i ], [ %i.sv, %.preheader36.i.i.i.i.i.i.preheader ]
+  %.sroa.2.0.i.i.i.i.i.i634 = phi i64 [ %i.tw, %.preheader36.i.i.i.i.i.i ], [ %.fr60.i.i.i.i.i.i, %.preheader36.i.i.i.i.i.i.preheader ]
   %i.tw = add i64 %.sroa.2.0.i.i.i.i.i.i634, -1   ; 6 uses
   %i.tx = icmp ult i64 %i.tw, %i.rw
   br i1 %i.tx, label %bb.ck, label %.split32.us.i.i.i.i.i.i
@@ -411,12 +412,16 @@ bb.cq:                                            ; preds = %bb.cp, %.split.us.u
   br i1 %.not.us.i.i.i.i.i.i, label %bb.cs, label %.preheader35.i.i.i.i.i.i.preheader
 
 .preheader35.i.i.i.i.i.i.preheader:               ; preds = %.lr.ph.split.us.i.i4.i.i.i.i
-  br i1 %exitcond.not.i.i.i.i.i.i636.not, label %.lr.ph638, label %.preheader.i10.i.i.i.i.i
+  br i1 %exitcond.not.i.i.i.i.i.i636.not, label %.lr.ph638, label %.preheader.split.i13.i.i.i.i.i
 
 .preheader35.i.i.i.i.i.i:                         ; preds = %.lr.ph638
   %i.wa = add i64 %.sroa.04.0.us.i.i.i.i.i.i637, 1 ; 2 uses
   %exitcond.not.i.i.i.i.i.i = icmp eq i64 %i.wa, %umax.i.i.i.i.i.i
-  br i1 %exitcond.not.i.i.i.i.i.i, label %.preheader.i10.i.i.i.i.i, label %.lr.ph638
+  br i1 %exitcond.not.i.i.i.i.i.i, label %.preheader.split.i13.i.i.i.i.i, label %.lr.ph638
+
+.preheader.split.i13.i.i.i.i.i:                   ; preds = %.preheader35.i.i.i.i.i.i.preheader, %.preheader35.i.i.i.i.i.i
+  %.not34.i.i.i.i.i.i = icmp eq i64 %.fr63.i.i.i.i.i, 0
+  br i1 %.not34.i.i.i.i.i.i, label %_RNvCskqImE9wpq17_11uu_truncate11is_modifier.exit.thread85.i, label %.split32.us.i14.i.i.i.i.i
 
 .lr.ph638:                                        ; preds = %.preheader35.i.i.i.i.i.i.preheader, %.preheader35.i.i.i.i.i.i
   %.sroa.04.0.us.i.i.i.i.i.i637 = phi i64 [ %i.wa, %.preheader35.i.i.i.i.i.i ], [ %.fr63.i.i.i.i.i, %.preheader35.i.i.i.i.i.i.preheader ] ; 4 uses
@@ -429,14 +434,6 @@ bb.cq:                                            ; preds = %bb.cp, %.split.us.u
   %i.wg = load i8, ptr %i.wf, align 1, !alias.scope !705, !noalias !702, !noundef !4
   %.not21.us.i.i.i.i.i.i = icmp eq i8 %i.wc, %i.wg
   br i1 %.not21.us.i.i.i.i.i.i, label %.preheader35.i.i.i.i.i.i, label %bb.cr
-
-.preheader.i10.i.i.i.i.i:                         ; preds = %.preheader35.i.i.i.i.i.i.preheader, %.preheader35.i.i.i.i.i.i
-  %.not34.i.i.i.i.i.i = icmp eq i64 %.fr63.i.i.i.i.i, 0
-  br i1 %.not34.i.i.i.i.i.i, label %_RNvCskqImE9wpq17_11uu_truncate11is_modifier.exit.thread85.i, label %.split32.us.i11.i.i.i.i.i
-
-.split32.us.i11.i.i.i.i.i:                        ; preds = %.preheader.i10.i.i.i.i.i
-  call void @_RNvNtCs6JMX4GRUq9U_4core9panicking18panic_bounds_check(i64 noundef %i.un, i64 noundef range(i64 0, -9223372036854775808) %i.rw, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #23, !noalias !708
-  unreachable
 
 bb.cr:                                            ; preds = %.lr.ph638
   %i.wh = add i64 %i.vt, %i.uo
@@ -453,6 +450,10 @@ bb.ct:                                            ; preds = %bb.cs, %bb.cr
   %i.wm = icmp ult i64 %i.wl, %i.rs
   br i1 %i.wm, label %.lr.ph.split.us.i.i4.i.i.i.i, label %_RNvCskqImE9wpq17_11uu_truncate11is_modifier.exit.thread88.i
 
+.split32.us.i14.i.i.i.i.i:                        ; preds = %.preheader.split.i13.i.i.i.i.i
+  call void @_RNvNtCs6JMX4GRUq9U_4core9panicking18panic_bounds_check(i64 noundef %i.un, i64 noundef range(i64 0, -9223372036854775808) %i.rw, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #23, !noalias !708
+  unreachable
+
 .thread69.i:                                      ; preds = %bb.bl, %bb.bk
   %i.wn = trunc nuw nsw i32 %.sroa.4.0.i36.ph.i to i8
   switch i8 %i.wn, label %_RNvCskqImE9wpq17_11uu_truncate11is_modifier.exit.thread74.i [
@@ -464,7 +465,7 @@ bb.ct:                                            ; preds = %bb.cs, %bb.cr
     i8 37, label %_RNvCskqImE9wpq17_11uu_truncate11is_modifier.exit.thread.i
   ]
 
-_RNvCskqImE9wpq17_11uu_truncate11is_modifier.exit.thread85.i: ; preds = %.preheader36.i.i.i.i.i.i.preheader, %.preheader36.i.i.i.i.i.i, %.preheader.i10.us.us.i.i.i.i.i.preheader, %.preheader.i10.us.us.i.i.i.i.i, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCskqImE9wpq17_11uu_truncate.exit12.i.i.i.i.i.i44.i, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCskqImE9wpq17_11uu_truncate.exit14.i.i.i.i.i.i46.i, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCskqImE9wpq17_11uu_truncate.exit16.i.i.i.i.i.i47.i, %bb.ce, %.preheader.i10.i.i.i.i.i, %bb.cd, %bb.bv
+_RNvCskqImE9wpq17_11uu_truncate11is_modifier.exit.thread85.i: ; preds = %.preheader36.i.i.i.i.i.i.preheader, %.preheader36.i.i.i.i.i.i, %.preheader.i10.us.us.i.i.i.i.i.preheader, %.preheader.i10.us.us.i.i.i.i.i, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCskqImE9wpq17_11uu_truncate.exit12.i.i.i.i.i.i44.i, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCskqImE9wpq17_11uu_truncate.exit14.i.i.i.i.i.i46.i, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCskqImE9wpq17_11uu_truncate.exit16.i.i.i.i.i.i47.i, %bb.ce, %.preheader.split.i13.i.i.i.i.i, %bb.cd, %bb.bv
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ar), !noalias !689
   br label %_RNvCskqImE9wpq17_11uu_truncate11is_modifier.exit.thread.sink.split.i
 

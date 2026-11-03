@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 1965
 inline.NumDeleted: 321
 loop-unroll.NumCompletelyUnrolled: 8
-loop-unroll.NumRuntimeUnrolled: 90
-loop-unroll.NumUnrolled: 98
+loop-unroll.NumRuntimeUnrolled: 91
+loop-unroll.NumUnrolled: 99
 begin_hunk_0_@_RINvNtNtCsa5QsYiPB8Gl_5image8imageops9filter_1d23filter_symmetric_columnffEB6_:bb.a
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0183.0.copyload) ]
   %i.ji = icmp samesign ult i64 %i.h, %1
@@ -205,7 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %i.r
-  %i.t = load i32, ptr %i.s, align 4, !noundef !9 ; 20 uses
+  %i.t = load i32, ptr %i.s, align 4, !noundef !9 ; 23 uses
   %i.u = and i64 %3, 9223372036854775776          ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 %i.u ; 3 uses
   %i.w = icmp samesign eq i64 %i.u, 0
@@ -608,50 +608,121 @@ bb.ag:                                            ; preds = %bb.ad
   %i.xy = and i64 %3, 3
   %i.xz = getelementptr inbounds nuw i8, ptr %i.vx, i64 %i.xy
   call void @_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E3newCsa5QsYiPB8Gl_5image(ptr noalias nofree noundef nonnull sret([48 x i8]) align 8 captures(none) dereferenceable(48) %i.d, ptr noundef nonnull %i.vx, ptr noundef nonnull %i.xz, i64 noundef %.sroa.015.2.lcssa, i64 noundef %i.q)
-  %.sroa.0374.0.copyload = load ptr, ptr %i.d, align 8 ; 2 uses
+  %.sroa.0374.0.copyload = load ptr, ptr %i.d, align 8 ; 5 uses
   %.sroa.4376.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  %.sroa.4376.0.copyload = load i64, ptr %.sroa.4376.0..sroa_idx, align 8 ; 2 uses
+  %.sroa.4376.0.copyload = load i64, ptr %.sroa.4376.0..sroa_idx, align 8 ; 5 uses
   %.sroa.5378.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  %.sroa.5378.0.copyload = load i64, ptr %.sroa.5378.0..sroa_idx, align 8 ; 3 uses
+  %.sroa.5378.0.copyload = load i64, ptr %.sroa.5378.0..sroa_idx, align 8 ; 8 uses
   %.sroa.7379.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 40
-  %.sroa.7379.0.copyload = load i64, ptr %.sroa.7379.0..sroa_idx, align 8 ; 2 uses
+  %.sroa.7379.0.copyload = load i64, ptr %.sroa.7379.0..sroa_idx, align 8 ; 4 uses
   %i.ya = icmp ult i64 %.sroa.5378.0.copyload, %.sroa.7379.0.copyload
   br i1 %i.ya, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.thread
 
 _RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph: ; preds = %._crit_edge705
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0374.0.copyload) ]
   %i.yb = icmp samesign ult i64 %i.r, %1
-  %i.yc = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.r ; 2 uses
+  %i.yc = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %i.r ; 4 uses
   %i.yd = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %6
+  br i1 %i.yb, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split, label %bb.ah
+
+_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph
   %8 = icmp eq i64 %i.r, 0
-  br i1 %i.yb, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.a, label %bb.ah
+  %9 = getelementptr inbounds nuw i8, ptr %i.yc, i64 8
+  %10 = load i64, ptr %9, align 8, !noundef !9    ; 6 uses
+  br i1 %8, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us.preheader, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit
 
-_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.a: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph
-  %i.ye = getelementptr inbounds nuw i8, ptr %i.yc, i64 8
-  %9 = load i64, ptr %i.ye, align 8, !noundef !9  ; 3 uses
-  br label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit
+_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us.preheader: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split
+  %11 = sub i64 %.sroa.7379.0.copyload, %.sroa.5378.0.copyload
+  %12 = freeze i64 %11                            ; 2 uses
+  %xtraiter456 = and i64 %12, 1
+  %lcmp.mod457.not = icmp eq i64 %xtraiter456, 0
+  br i1 %lcmp.mod457.not, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us.prol.loopexit, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us.prol
 
-_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.a, %._crit_edge713
-  %.sroa.5378.0717 = phi i64 [ %.sroa.5378.0.copyload, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.a ], [ %i.yf, %._crit_edge713 ] ; 3 uses
+_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us.prol: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us.preheader
+  %13 = add nuw i64 %.sroa.5378.0.copyload, %.sroa.4376.0.copyload ; 3 uses
+  %or.cond207.not.us.prol = icmp ult i64 %13, %10
+  br i1 %or.cond207.not.us.prol, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.a, label %bb.ai, !prof !11
+
+_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.a: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us.prol
+  %14 = getelementptr inbounds nuw i8, ptr %.sroa.0374.0.copyload, i64 %.sroa.5378.0.copyload
+  %15 = add i64 %.sroa.5378.0.copyload, 1
+  %16 = load ptr, ptr %i.yc, align 8, !nonnull !9, !noundef !9
+  %i.ye = getelementptr inbounds nuw i8, ptr %16, i64 %13
+  %17 = load i8, ptr %i.ye, align 1, !noundef !9
+  %18 = zext i8 %17 to i32
+  %19 = mul i32 %i.t, %18
+  %20 = add i32 %19, 16384
+  %21 = lshr i32 %20, 15
+  %..i267.us.prol = call noundef range(i32 0, 65536) i32 @llvm.umin.i32(i32 range(i32 0, 131072) %21, i32 255)
+  %22 = trunc nuw i32 %..i267.us.prol to i8
+  store i8 %22, ptr %14, align 1
+  br label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us.prol.loopexit
+
+_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us.prol.loopexit: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.a, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us.preheader
+  %.sroa.5378.0717.us.unr = phi i64 [ %.sroa.5378.0.copyload, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us.preheader ], [ %15, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split.a ]
+  %23 = icmp eq i64 %12, 1
+  br i1 %23, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.thread, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us
+
+_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us.prol.loopexit, %._crit_edge713.us.1
+  %.sroa.5378.0717.us = phi i64 [ %37, %._crit_edge713.us.1 ], [ %.sroa.5378.0717.us.unr, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us.prol.loopexit ] ; 4 uses
+  %24 = add nuw i64 %.sroa.5378.0717.us, %.sroa.4376.0.copyload ; 3 uses
+  %or.cond207.not.us = icmp ult i64 %24, %10
+  br i1 %or.cond207.not.us, label %._crit_edge713.us, label %bb.ai, !prof !11
+
+._crit_edge713.us:                                ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us
+  %25 = getelementptr inbounds nuw i8, ptr %.sroa.0374.0.copyload, i64 %.sroa.5378.0717.us
+  %26 = add i64 %.sroa.5378.0717.us, 1            ; 2 uses
+  %27 = load ptr, ptr %i.yc, align 8, !nonnull !9, !noundef !9 ; 2 uses
+  %28 = getelementptr inbounds nuw i8, ptr %27, i64 %24
+  %29 = load i8, ptr %28, align 1, !noundef !9
+  %30 = zext i8 %29 to i32
+  %31 = mul i32 %i.t, %30
+  %32 = add i32 %31, 16384
+  %33 = lshr i32 %32, 15
+  %..i267.us = call noundef range(i32 0, 65536) i32 @llvm.umin.i32(i32 range(i32 0, 131072) %33, i32 255)
+  %34 = trunc nuw i32 %..i267.us to i8
+  store i8 %34, ptr %25, align 1
+  %35 = add nuw i64 %26, %.sroa.4376.0.copyload   ; 3 uses
+  %or.cond207.not.us.1 = icmp ult i64 %35, %10
+  br i1 %or.cond207.not.us.1, label %._crit_edge713.us.1, label %bb.ai, !prof !11
+
+._crit_edge713.us.1:                              ; preds = %._crit_edge713.us
+  %36 = getelementptr inbounds nuw i8, ptr %.sroa.0374.0.copyload, i64 %26
+  %37 = add i64 %.sroa.5378.0717.us, 2            ; 2 uses
+  %38 = getelementptr inbounds nuw i8, ptr %27, i64 %35
+  %39 = load i8, ptr %38, align 1, !noundef !9
+  %40 = zext i8 %39 to i32
+  %41 = mul i32 %i.t, %40
+  %42 = add i32 %41, 16384
+  %43 = lshr i32 %42, 15
+  %..i267.us.1 = call noundef range(i32 0, 65536) i32 @llvm.umin.i32(i32 range(i32 0, 131072) %43, i32 255)
+  %44 = trunc nuw i32 %..i267.us.1 to i8
+  store i8 %44, ptr %36, align 1
+  %exitcond846.us.not.1 = icmp eq i64 %37, %.sroa.7379.0.copyload
+  br i1 %exitcond846.us.not.1, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.thread, label %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us
+
+_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit: ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split, %._crit_edge713
+  %.sroa.5378.0717 = phi i64 [ %i.yf, %._crit_edge713 ], [ %.sroa.5378.0.copyload, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph.split ] ; 3 uses
   %i.yf = add i64 %.sroa.5378.0717, 1             ; 2 uses
   %i.yg = getelementptr inbounds nuw i8, ptr %.sroa.0374.0.copyload, i64 %.sroa.5378.0717
   %i.yh = add nuw i64 %.sroa.5378.0717, %.sroa.4376.0.copyload ; 8 uses
   %i.yi = add i64 %i.yh, 1                        ; 4 uses
-  %or.cond207.not = icmp ult i64 %i.yh, %9
+  %or.cond207.not = icmp ult i64 %i.yh, %10
   br i1 %or.cond207.not, label %bb.aj, label %bb.ai, !prof !11
 
-_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.thread: ; preds = %._crit_edge713, %._crit_edge705
+_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.thread: ; preds = %._crit_edge713, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us.prol.loopexit, %._crit_edge713.us.1, %._crit_edge705
   ret void
 
 bb.ah:                                            ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.lr.ph
   call void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.r, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @52) #13
   unreachable
 
-bb.ai:                                            ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit
+bb.ai:                                            ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us.prol, %._crit_edge713.us, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us
+  %.us-phi = phi i64 [ %35, %._crit_edge713.us ], [ %13, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us.prol ], [ %24, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit.us ], [ %i.yh, %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit ]
   %i.yj = add i64 %.sroa.4376.0.copyload, %.sroa.5378.0.copyload
-  %umax = call i64 @llvm.umax.i64(i64 %9, i64 %i.yj)
+  %umax = call i64 @llvm.umax.i64(i64 %10, i64 %i.yj)
   %i.yk = add i64 %umax, 1
-  call void @_RNvNtNtCsj6eKBz9Db1c_4core5slice5index16slice_index_fail(i64 noundef %i.yh, i64 noundef %i.yk, i64 noundef %9, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @57) #13
+  call void @_RNvNtNtCsj6eKBz9Db1c_4core5slice5index16slice_index_fail(i64 noundef %.us-phi, i64 noundef %i.yk, i64 noundef %10, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @57) #13
   unreachable
 
 bb.aj:                                            ; preds = %_RNvXs3_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters3zipINtB5_3ZipINtNtNtBb_5slice4iter7IterMuthEINtNtNtBb_3ops5range5RangejEEINtB5_7ZipImplBW_B1r_E4nextCsa5QsYiPB8Gl_5image.exit
@@ -659,8 +730,8 @@ bb.aj:                                            ; preds = %_RNvXs3_NtNtNtCsj6e
   %i.ym = getelementptr inbounds nuw i8, ptr %i.yl, i64 %i.yh
   %i.yn = load i8, ptr %i.ym, align 1, !noundef !9
   %i.yo = zext i8 %i.yn to i32
-  %i.yp = mul i32 %i.t, %i.yo                     ; 2 uses
-  br i1 %8, label %._crit_edge713, label %.lr.ph712
+  %i.yp = mul i32 %i.t, %i.yo
+  br label %.lr.ph712
 
 .lr.ph712:                                        ; preds = %bb.aj, %bb.as
   %.sroa.0105.0710 = phi i32 [ %i.zr, %bb.as ], [ %i.yp, %bb.aj ] ; 2 uses
@@ -680,9 +751,9 @@ bb.ak:                                            ; preds = %.lr.ph712
   %exitcond845.not = icmp eq i64 %.sroa.10383.0709, %1
   br i1 %exitcond845.not, label %bb.am, label %bb.al
 
-._crit_edge713:                                   ; preds = %.lr.ph712, %bb.as, %bb.aj
-  %.sroa.0105.0.lcssa = phi i32 [ %i.yp, %bb.aj ], [ %i.zr, %bb.as ], [ %.sroa.0105.0710, %.lr.ph712 ]
-  %i.yx = add i32 %.sroa.0105.0.lcssa, 16384
+._crit_edge713:                                   ; preds = %bb.as, %.lr.ph712
+  %.sroa.0105.0.lcssa.ph = phi i32 [ %.sroa.0105.0710, %.lr.ph712 ], [ %i.zr, %bb.as ]
+  %i.yx = add i32 %.sroa.0105.0.lcssa.ph, 16384
   %i.yy = lshr i32 %i.yx, 15
   %..i267 = call noundef range(i32 0, 65536) i32 @llvm.umin.i32(i32 range(i32 0, 131072) %i.yy, i32 255)
   %i.yz = trunc nuw i32 %..i267 to i8

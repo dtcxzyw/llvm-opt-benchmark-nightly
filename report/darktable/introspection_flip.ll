@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/introspection_flip?download=true
 inline.NumInlined: 22
 inline.NumDeleted: 10
-loop-unroll.NumCompletelyUnrolled: 7
-loop-unroll.NumUnrolled: 7
+loop-unroll.NumCompletelyUnrolled: 10
+loop-unroll.NumUnrolled: 10
 begin_hunk_0_@distort_backtransform:bb.a
   store <16 x float> %interleaved.vec79, ptr %i.dm, align 4, !tbaa !57
   %index.next = add nuw i64 %index, 16            ; 2 uses
@@ -204,17 +204,17 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = load ptr, ptr %i.a, align 16, !tbaa !54
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %3, ptr noundef nonnull align 4 dereferenceable(20) %2, i64 20, i1 false), !tbaa.struct !65
-  %i.c = load i32, ptr %2, align 4, !tbaa !173    ; 9 uses
+  %i.c = load i32, ptr %2, align 4, !tbaa !173    ; 12 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !174  ; 8 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !174  ; 12 uses
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.g = load i32, ptr %i.f, align 4, !tbaa !63
   %i.h = add i32 %i.c, -1
-  %i.i = add i32 %i.h, %i.g                       ; 8 uses
+  %i.i = add i32 %i.h, %i.g                       ; 12 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 12
   %i.k = load i32, ptr %i.j, align 4, !tbaa !64
   %i.l = add i32 %i.e, -1
-  %i.m = add i32 %i.l, %i.k                       ; 8 uses
+  %i.m = add i32 %i.l, %i.k                       ; 12 uses
   %i.n = load i32, ptr %i.b, align 4, !tbaa !56
   %.fr78 = freeze i32 %i.n                        ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 164
@@ -223,37 +223,69 @@ bb.a:
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.s = load float, ptr %i.r, align 4, !tbaa !176 ; 2 uses
   %i.t = fmul reassoc nsz arcp contract afn float %i.s, %i.q
-  %i.u = fptosi float %i.t to i32                 ; 6 uses
+  %i.u = fptosi float %i.t to i32                 ; 7 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 168
   %i.w = load i32, ptr %i.v, align 8, !tbaa !177
   %i.x = sitofp reassoc nsz arcp contract afn i32 %i.w to float
   %i.y = fmul reassoc nsz arcp contract afn float %i.s, %i.x
-  %i.z = fptosi float %i.y to i32                 ; 5 uses
+  %i.z = fptosi float %i.y to i32                 ; 7 uses
   %i.aa = and i32 %.fr78, 4
   %.not.i = icmp eq i32 %i.aa, 0
   %i.ab = and i32 %.fr78, 2
-  %.not20.i = icmp eq i32 %i.ab, 0                ; 3 uses
+  %.not20.i = icmp eq i32 %i.ab, 0                ; 2 uses
   %i.ac = and i32 %.fr78, 1
   %.not21.i = icmp eq i32 %i.ac, 0                ; 4 uses
-  br i1 %.not.i, label %backtransform.exit.us.preheader.a, label %.split
+  br i1 %.not.i, label %backtransform.exit.us.preheader, label %.split
 
-backtransform.exit.us.preheader.a:                ; preds = %bb.a
-  %4 = xor i32 %i.c, -1
-  %5 = add i32 %i.u, %4
-  %.sroa.029.0.us = select i1 %.not20.i, i32 %i.c, i32 %5 ; 2 uses
+backtransform.exit.us.preheader:                  ; preds = %bb.a
+  br i1 %.not20.i, label %backtransform.exit.us.preheader.split.us, label %backtransform.exit.us.preheader.split
+
+backtransform.exit.us.preheader.split.us:         ; preds = %backtransform.exit.us.preheader
+  br i1 %.not21.i, label %backtransform.exit.us.preheader.split.us.split.us, label %backtransform.exit.us.preheader.split.us.split
+
+backtransform.exit.us.preheader.split.us.split.us: ; preds = %backtransform.exit.us.preheader.split.us
+  %..i.us.us.us.1 = tail call i32 @llvm.smin.i32(i32 %i.c, i32 %i.i)
+  %4 = tail call i32 @llvm.smax.i32(i32 %i.c, i32 %i.i)
+  %5 = tail call i32 @llvm.smin.i32(i32 %i.e, i32 %i.m)
+  %6 = tail call i32 @llvm.smax.i32(i32 %i.e, i32 %i.m)
+  br label %.split37.us
+
+backtransform.exit.us.preheader.split.us.split:   ; preds = %backtransform.exit.us.preheader.split.us
+  %7 = xor i32 %i.e, -1
+  %8 = add i32 %i.z, %7                           ; 2 uses
+  %..i.us.us.1 = tail call i32 @llvm.smin.i32(i32 %i.c, i32 %i.i)
+  %9 = tail call i32 @llvm.smax.i32(i32 %i.c, i32 %i.i)
+  %10 = xor i32 %i.m, -1
+  %11 = add i32 %i.z, %10                         ; 2 uses
+  %12 = tail call i32 @llvm.smin.i32(i32 %8, i32 %11)
+  %13 = tail call i32 @llvm.smax.i32(i32 %8, i32 %11)
+  br label %.split37.us
+
+backtransform.exit.us.preheader.split:            ; preds = %backtransform.exit.us.preheader
+  %14 = xor i32 %i.c, -1
+  %15 = add i32 %i.u, %14                         ; 4 uses
+  br i1 %.not21.i, label %backtransform.exit.us.preheader.split.split.us, label %backtransform.exit.us.preheader.a
+
+backtransform.exit.us.preheader.split.split.us:   ; preds = %backtransform.exit.us.preheader.split
+  %16 = xor i32 %i.i, -1
+  %17 = add i32 %i.u, %16                         ; 2 uses
+  %..i.us.us108.1 = tail call i32 @llvm.smin.i32(i32 %15, i32 %17)
+  %18 = tail call i32 @llvm.smax.i32(i32 %15, i32 %17)
+  %19 = tail call i32 @llvm.smin.i32(i32 %i.e, i32 %i.m)
+  %20 = tail call i32 @llvm.smax.i32(i32 %i.e, i32 %i.m)
+  br label %.split37.us
+
+backtransform.exit.us.preheader.a:                ; preds = %backtransform.exit.us.preheader.split
   %i.ad = xor i32 %i.e, -1
-  %i.ae = add i32 %i.z, %i.ad
-  %.sroa.5.0.us = select i1 %.not21.i, i32 %i.e, i32 %i.ae ; 2 uses
+  %i.ae = add i32 %i.z, %i.ad                     ; 2 uses
   %i.af = xor i32 %i.i, -1
-  %i.ag = add i32 %i.u, %i.af
-  %.sroa.029.0.us.1 = select i1 %.not20.i, i32 %i.i, i32 %i.ag ; 2 uses
-  %..i.us.1 = tail call i32 @llvm.smin.i32(i32 %.sroa.029.0.us, i32 %.sroa.029.0.us.1)
-  %i.ah = tail call i32 @llvm.smax.i32(i32 %.sroa.029.0.us, i32 %.sroa.029.0.us.1)
+  %i.ag = add i32 %i.u, %i.af                     ; 2 uses
+  %..i.us.1 = tail call i32 @llvm.smin.i32(i32 %15, i32 %i.ag)
+  %i.ah = tail call i32 @llvm.smax.i32(i32 %15, i32 %i.ag)
   %i.ai = xor i32 %i.m, -1
-  %i.aj = add i32 %i.z, %i.ai
-  %.sroa.5.0.us.2 = select i1 %.not21.i, i32 %i.m, i32 %i.aj ; 2 uses
-  %i.ak = tail call i32 @llvm.smin.i32(i32 %.sroa.5.0.us, i32 %.sroa.5.0.us.2)
-  %i.al = tail call i32 @llvm.smax.i32(i32 %.sroa.5.0.us, i32 %.sroa.5.0.us.2)
+  %i.aj = add i32 %i.z, %i.ai                     ; 2 uses
+  %i.ak = tail call i32 @llvm.smin.i32(i32 %i.ae, i32 %i.aj)
+  %i.al = tail call i32 @llvm.smax.i32(i32 %i.ae, i32 %i.aj)
   br label %.split37.us
 
 .split:                                           ; preds = %bb.a
@@ -307,11 +339,11 @@ backtransform.exit.us57.preheader:                ; preds = %.split.split
   %i.bl = tail call i32 @llvm.smax.i32(i32 %i.ax, i32 %i.bk)
   br label %.split37.us
 
-.split37.us:                                      ; preds = %backtransform.exit.preheader, %backtransform.exit.us57.preheader, %backtransform.exit.us41.preheader, %backtransform.exit.us41.us.preheader, %backtransform.exit.us.preheader.a
-  %.us-phi = phi i32 [ %i.bi, %backtransform.exit.us57.preheader ], [ %i.au, %backtransform.exit.us41.us.preheader ], [ %i.al, %backtransform.exit.us.preheader.a ], [ %i.ar, %backtransform.exit.us41.preheader ], [ %i.bd, %backtransform.exit.preheader ]
-  %.us-phi38 = phi i32 [ %i.bl, %backtransform.exit.us57.preheader ], [ %i.av, %backtransform.exit.us41.us.preheader ], [ %i.ah, %backtransform.exit.us.preheader.a ], [ %i.as, %backtransform.exit.us41.preheader ], [ %i.bg, %backtransform.exit.preheader ]
-  %.us-phi39 = phi i32 [ %i.bh, %backtransform.exit.us57.preheader ], [ %i.at, %backtransform.exit.us41.us.preheader ], [ %i.ak, %backtransform.exit.us.preheader.a ], [ %i.aq, %backtransform.exit.us41.preheader ], [ %i.bc, %backtransform.exit.preheader ] ; 2 uses
-  %.us-phi40 = phi i32 [ %..i.us64.2, %backtransform.exit.us57.preheader ], [ %..i.us48.us.2, %backtransform.exit.us41.us.preheader ], [ %..i.us.1, %backtransform.exit.us.preheader.a ], [ %..i.us48.2, %backtransform.exit.us41.preheader ], [ %..i.2, %backtransform.exit.preheader ] ; 2 uses
+.split37.us:                                      ; preds = %backtransform.exit.us.preheader.split.us.split.us, %backtransform.exit.us.preheader.split.us.split, %backtransform.exit.us.preheader.split.split.us, %backtransform.exit.us.preheader.a, %backtransform.exit.preheader, %backtransform.exit.us57.preheader, %backtransform.exit.us41.preheader, %backtransform.exit.us41.us.preheader
+  %.us-phi = phi i32 [ %i.bi, %backtransform.exit.us57.preheader ], [ %i.au, %backtransform.exit.us41.us.preheader ], [ %i.bd, %backtransform.exit.preheader ], [ %i.ar, %backtransform.exit.us41.preheader ], [ %6, %backtransform.exit.us.preheader.split.us.split.us ], [ %13, %backtransform.exit.us.preheader.split.us.split ], [ %i.al, %backtransform.exit.us.preheader.a ], [ %20, %backtransform.exit.us.preheader.split.split.us ]
+  %.us-phi38 = phi i32 [ %i.bl, %backtransform.exit.us57.preheader ], [ %i.av, %backtransform.exit.us41.us.preheader ], [ %i.bg, %backtransform.exit.preheader ], [ %i.as, %backtransform.exit.us41.preheader ], [ %4, %backtransform.exit.us.preheader.split.us.split.us ], [ %9, %backtransform.exit.us.preheader.split.us.split ], [ %i.ah, %backtransform.exit.us.preheader.a ], [ %18, %backtransform.exit.us.preheader.split.split.us ]
+  %.us-phi39 = phi i32 [ %i.bh, %backtransform.exit.us57.preheader ], [ %i.at, %backtransform.exit.us41.us.preheader ], [ %i.bc, %backtransform.exit.preheader ], [ %i.aq, %backtransform.exit.us41.preheader ], [ %5, %backtransform.exit.us.preheader.split.us.split.us ], [ %12, %backtransform.exit.us.preheader.split.us.split ], [ %i.ak, %backtransform.exit.us.preheader.a ], [ %19, %backtransform.exit.us.preheader.split.split.us ] ; 2 uses
+  %.us-phi40 = phi i32 [ %..i.us64.2, %backtransform.exit.us57.preheader ], [ %..i.us48.us.2, %backtransform.exit.us41.us.preheader ], [ %..i.2, %backtransform.exit.preheader ], [ %..i.us48.2, %backtransform.exit.us41.preheader ], [ %..i.us.us.us.1, %backtransform.exit.us.preheader.split.us.split.us ], [ %..i.us.us.1, %backtransform.exit.us.preheader.split.us.split ], [ %..i.us.1, %backtransform.exit.us.preheader.a ], [ %..i.us.us108.1, %backtransform.exit.us.preheader.split.split.us ] ; 2 uses
   store i32 %.us-phi40, ptr %3, align 4, !tbaa !173
   %i.bm = getelementptr inbounds nuw i8, ptr %3, i64 4
   store i32 %.us-phi39, ptr %i.bm, align 4, !tbaa !174

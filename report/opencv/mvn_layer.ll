@@ -1,8 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/opencv/original/mvn_layer?download=true
 inline.NumInlined: 215
 inline.NumDeleted: 123
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 2
-loop-unroll.NumUnrolled: 2
+loop-unroll.NumUnrolled: 3
 begin_hunk_0_@_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_:bb.a
   store i64 %i.g, ptr %i.b, align 8, !tbaa !23
   br label %._crit_edge.i
@@ -204,7 +205,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #22
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %5, i8 0, i64 24, i1 false)
   invoke void @_ZNK2cv11_InputArray12getMatVectorERSt6vectorINS_3MatESaIS2_EE(ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %5)
-          to label %.peel.begin unwind label %bb.d
+          to label %.peel.begin unwind label %11
 
 .peel.begin:                                      ; preds = %bb.a
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 161
@@ -213,19 +214,18 @@ bb.a:
   %i.d = load ptr, ptr %5, align 8, !tbaa !67     ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 72
   %i.f = load i32, ptr %i.e, align 4, !tbaa !68
-  %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 84
-  %6 = load i32, ptr %i.g, align 4, !tbaa !63     ; 2 uses
-  br i1 %i.c, label %bb.e, label %.peel.newph
+  %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 84 ; 2 uses
+  br i1 %i.c, label %.peel.newph, label %bb.d
 
 .peel.newph:                                      ; preds = %.peel.begin
-  %exitcond.not = icmp slt i32 %i.f, 2
-  br i1 %exitcond.not, label %.loopexit, label %.loopexit23
+  %6 = load i32, ptr %i.g, align 4, !tbaa !63
+  br label %bb.e
 
-.loopexit:                                        ; preds = %.peel.newph
+.loopexit:                                        ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #22
   invoke void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2IS3_EEPKcRKS3_(ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull @.str.10, ptr noundef nonnull align 1 dereferenceable(1) %4)
-          to label %.noexc unwind label %bb.d
+          to label %.noexc unwind label %11
 
 .noexc:                                           ; preds = %.loopexit
   invoke void @_ZN2cv5errorENS_5Error4CodeERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcSB_i(i32 noundef -215, ptr noundef nonnull align 8 dereferenceable(32) %3, ptr noundef nonnull @__func__._ZN2cv8MatShapeixEm, ptr noundef nonnull @.str.11, i32 noundef 97) #23
@@ -251,29 +251,34 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i: ; preds = %bb.c, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #22
-  br label %.body.a
+  br label %.loopexit23
 
-bb.d:                                             ; preds = %.loopexit, %bb.a, %bb.e
-  %7 = landingpad { ptr, i32 }
+bb.d:                                             ; preds = %.peel.begin
+  %exitcond.not.1 = icmp slt i32 %i.f, 2
+  br i1 %exitcond.not.1, label %.loopexit, label %.body.a
+
+.body.a:                                          ; preds = %bb.d
+  %7 = load i32, ptr %i.g, align 4, !tbaa !63
+  %8 = getelementptr inbounds nuw i8, ptr %i.d, i64 88
+  %9 = load i32, ptr %8, align 4, !tbaa !63
+  %10 = mul nsw i32 %9, %7
+  br label %bb.e
+
+11:                                               ; preds = %.loopexit, %bb.a, %bb.e
+  %12 = landingpad { ptr, i32 }
           cleanup
-  br label %.body.a
+  br label %.loopexit23
 
-.body.a:                                          ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %bb.d
-  %eh.lpad-body = phi { ptr, i32 } [ %7, %bb.d ], [ %i.h, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ]
+.loopexit23:                                      ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i, %11
+  %eh.lpad-body = phi { ptr, i32 } [ %12, %11 ], [ %i.h, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i ]
   call void @_ZNSt6vectorIN2cv3MatESaIS1_EED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %5) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
   resume { ptr, i32 } %eh.lpad-body
 
-.loopexit23:                                      ; preds = %.peel.newph
-  %8 = getelementptr inbounds nuw i8, ptr %i.d, i64 88
-  %9 = load i32, ptr %8, align 4, !tbaa !63
-  %10 = mul nsw i32 %9, %6
-  br label %bb.e
-
-bb.e:                                             ; preds = %.loopexit23, %.peel.begin
-  %.lcssa = phi i32 [ %6, %.peel.begin ], [ %10, %.loopexit23 ]
+bb.e:                                             ; preds = %.body.a, %.peel.newph
+  %.lcssa = phi i32 [ %6, %.peel.newph ], [ %10, %.body.a ]
   %i.n = invoke noundef i64 @_ZNK2cv3Mat5totalEv(ptr noundef nonnull align 8 dereferenceable(208) %i.d)
-          to label %bb.f unwind label %bb.d
+          to label %bb.f unwind label %11
 
 bb.f:                                             ; preds = %bb.e
   %i.o = sext i32 %.lcssa to i64

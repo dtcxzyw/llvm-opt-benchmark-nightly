@@ -204,7 +204,7 @@ bb.sa:                                            ; preds = %bb.rz
   invoke void @_RNvMs_NtNtCsbCXxVlMkWND_6webrtc3api12media_engineNtB4_11MediaEngine18get_codecs_by_kind(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.bq, ptr noundef nonnull align 8 %i.bem, i8 noundef %i.bel)
           to label %bb.sb unwind label %bb.tn, !noalias !10459
 
-.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.st, %bb.sc, %.split32.us.i20.i.i.i.i.invoke.i.i, %.split.us161.i.i.i.i.i.i
+.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.st, %bb.sc, %.split32.us.i22.i.i.i.i.invoke.i.i, %.split.us161.i.i.i.i.i.i
   %lpad.loopexit.split-lp3006 = landingpad { ptr, i32 }
           cleanup
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtNtCsbCXxVlMkWND_6webrtc15rtp_transceiver9rtp_codec21RTCRtpCodecParametersEECs4KPtkQIfQGm_13libp2p_webrtc(ptr noalias nofree noundef align 8 dereferenceable(24) %i.bq) #29
@@ -485,10 +485,11 @@ bb.sv:                                            ; preds = %bb.sr
 
 .lr.ph.i8.i.i.i.i.i.i:                            ; preds = %bb.sv
   %i.biy = load i64, ptr %i.bex, align 8, !alias.scope !10497, !noalias !10485, !noundef !17
-  %i.biz = load i64, ptr %i.beq, align 8, !alias.scope !10497, !noalias !10485 ; 4 uses
+  %i.biz = load i64, ptr %i.beq, align 8, !alias.scope !10497, !noalias !10485
+  %.fr60.i.i.i.i.i.i.i = freeze i64 %i.biz        ; 4 uses
   %i.bja = load i64, ptr %i.bey, align 8, !alias.scope !10497, !noalias !10485 ; 2 uses
   %i.bjb = sub i64 %i.bie, %i.bja
-  %invariant.op = sub i64 1, %i.biz
+  %invariant.op = sub i64 1, %.fr60.i.i.i.i.i.i.i
   br label %.lr.ph.split.i.i.i.i.i.i.i
 
 .lr.ph.split.i.i.i.i.i.i.i:                       ; preds = %bb.sy, %.lr.ph.i8.i.i.i.i.i.i
@@ -509,7 +510,7 @@ bb.sw:                                            ; preds = %.lr.ph.split.i.i.i.
   br label %bb.sy
 
 bb.sx:                                            ; preds = %.lr.ph.split.i.i.i.i.i.i.i
-  %..i.i10.i.i.i.i.i.i = call noundef i64 @llvm.umax.i64(i64 %.sink70.i.i25.i.i.i.i.i, i64 %i.biz) ; 2 uses
+  %..i.i10.i.i.i.i.i.i = call noundef i64 @llvm.umax.i64(i64 %.sink70.i.i25.i.i.i.i.i, i64 %.fr60.i.i.i.i.i.i.i) ; 2 uses
   %i.bjk = icmp ult i64 %..i.i10.i.i.i.i.i.i, %i.bie
   br i1 %i.bjk, label %.lr.ph2820, label %.preheader36.i.i.i.i.i.i.i.preheader
 
@@ -526,7 +527,7 @@ bb.sz:                                            ; preds = %.lr.ph2820
   br i1 %i.bjo, label %.lr.ph2820, label %.preheader36.i.i.i.i.i.i.i.preheader
 
 .preheader36.i.i.i.i.i.i.i.preheader:             ; preds = %bb.sz, %bb.sx
-  %i.bjp = icmp ult i64 %.sink70.i.i25.i.i.i.i.i, %i.biz
+  %i.bjp = icmp ult i64 %.sink70.i.i25.i.i.i.i.i, %.fr60.i.i.i.i.i.i.i
   br i1 %i.bjp, label %.lr.ph2822, label %.split.us.i11.i.i.i.i.i.i
 
 .lr.ph2820:                                       ; preds = %bb.sx, %bb.sz
@@ -550,10 +551,10 @@ bb.sz:                                            ; preds = %.lr.ph2820
   br label %_RINvMNtCskKLDkoKarTP_4core3stre10split_onceReECs4KPtkQIfQGm_13libp2p_webrtc.exit.i.i.i.i
 
 .lr.ph2822:                                       ; preds = %.preheader36.i.i.i.i.i.i.i.preheader, %.preheader36.i.i.i.i.i.i.i
-  %.sroa.2.0.i.i.i.i.i.i.i2821 = phi i64 [ %i.bjy, %.preheader36.i.i.i.i.i.i.i ], [ %i.biz, %.preheader36.i.i.i.i.i.i.i.preheader ]
+  %.sroa.2.0.i.i.i.i.i.i.i2821 = phi i64 [ %i.bjy, %.preheader36.i.i.i.i.i.i.i ], [ %.fr60.i.i.i.i.i.i.i, %.preheader36.i.i.i.i.i.i.i.preheader ]
   %i.bjy = add i64 %.sroa.2.0.i.i.i.i.i.i.i2821, -1 ; 6 uses
   %i.bjz = icmp ult i64 %i.bjy, %i.bie
-  br i1 %i.bjz, label %bb.ta, label %.split32.us.i20.i.i.i.i.invoke.i.i
+  br i1 %i.bjz, label %bb.ta, label %.split32.us.i22.i.i.i.i.invoke.i.i
 
 bb.ta:                                            ; preds = %.lr.ph2822
   %i.bka = getelementptr inbounds nuw i8, ptr %i.bid, i64 %i.bjy
@@ -688,12 +689,16 @@ bb.tg:                                            ; preds = %bb.tf, %.split.us.i
   br i1 %.not.us.i.i.i.i.i.i.i, label %bb.ti, label %.preheader35.i.i.i.i.i.i.i.preheader
 
 .preheader35.i.i.i.i.i.i.i.preheader:             ; preds = %.lr.ph.split.us.i.i.i.i.i.i.i
-  br i1 %exitcond.not.i17.i.i.i.i.i.i2824.not, label %.lr.ph2826, label %.preheader.i19.i.i.i.i.i.i
+  br i1 %exitcond.not.i17.i.i.i.i.i.i2824.not, label %.lr.ph2826, label %.preheader.split.i21.i.i.i.i.i.i
 
 .preheader35.i.i.i.i.i.i.i:                       ; preds = %.lr.ph2826
   %i.blv = add i64 %.sroa.04.0.us.i.i.i.i.i.i.i2825, 1 ; 2 uses
   %exitcond.not.i17.i.i.i.i.i.i = icmp eq i64 %i.blv, %umax.i.i.i.i.i.i.i
-  br i1 %exitcond.not.i17.i.i.i.i.i.i, label %.preheader.i19.i.i.i.i.i.i, label %.lr.ph2826
+  br i1 %exitcond.not.i17.i.i.i.i.i.i, label %.preheader.split.i21.i.i.i.i.i.i, label %.lr.ph2826
+
+.preheader.split.i21.i.i.i.i.i.i:                 ; preds = %.preheader35.i.i.i.i.i.i.i.preheader, %.preheader35.i.i.i.i.i.i.i
+  %.not34.i.i.i.i.i.i.i = icmp eq i64 %.fr215.i.i.i.i.i.i, 0
+  br i1 %.not34.i.i.i.i.i.i.i, label %.split.us.i21.i.i.i.i.i.i, label %.split32.us.i22.i.i.i.i.invoke.i.i
 
 .lr.ph2826:                                       ; preds = %.preheader35.i.i.i.i.i.i.i.preheader, %.preheader35.i.i.i.i.i.i.i
   %.sroa.04.0.us.i.i.i.i.i.i.i2825 = phi i64 [ %i.blv, %.preheader35.i.i.i.i.i.i.i ], [ %.fr215.i.i.i.i.i.i, %.preheader35.i.i.i.i.i.i.i.preheader ] ; 4 uses
@@ -706,18 +711,6 @@ bb.tg:                                            ; preds = %bb.tf, %.split.us.i
   %i.bmb = load i8, ptr %i.bma, align 1, !alias.scope !10499, !noalias !10493, !noundef !17
   %.not21.us.i.i.i.i.i.i.i = icmp eq i8 %i.blx, %i.bmb
   br i1 %.not21.us.i.i.i.i.i.i.i, label %.preheader35.i.i.i.i.i.i.i, label %bb.th
-
-.preheader.i19.i.i.i.i.i.i:                       ; preds = %.preheader35.i.i.i.i.i.i.i.preheader, %.preheader35.i.i.i.i.i.i.i
-  %.not34.i.i.i.i.i.i.i = icmp eq i64 %.fr215.i.i.i.i.i.i, 0
-  br i1 %.not34.i.i.i.i.i.i.i, label %.split.us.i21.i.i.i.i.i.i, label %.split32.us.i20.i.i.i.i.invoke.i.i
-
-.split32.us.i20.i.i.i.i.invoke.i.i:               ; preds = %.preheader.i19.i.i.i.i.i.i, %.lr.ph2822
-  %3 = phi i64 [ %i.bjy, %.lr.ph2822 ], [ %i.bkn, %.preheader.i19.i.i.i.i.i.i ]
-  invoke void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %3, i64 noundef range(i64 0, -9223372036854775808) %i.bie, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #31
-          to label %.split32.us.i20.i.i.i.i.cont.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !10459
-
-.split32.us.i20.i.i.i.i.cont.i.i:                 ; preds = %.split32.us.i20.i.i.i.i.invoke.i.i
-  unreachable
 
 bb.th:                                            ; preds = %.lr.ph2826
   %.reass282.i.reass.i.i.i.i.i = add i64 %.sink.i18.i28.i.i.i.i.i, %reass.sub95.i.i.i.i.i
@@ -734,10 +727,18 @@ bb.tj:                                            ; preds = %bb.ti, %bb.th
   %i.bmf = icmp ult i64 %i.bme, %i.bic
   br i1 %i.bmf, label %.lr.ph.split.us.i.i.i.i.i.i.i, label %_RINvMNtCskKLDkoKarTP_4core3stre10split_onceReECs4KPtkQIfQGm_13libp2p_webrtc.exit.thread.i.i.i.i
 
-.split.us.i21.i.i.i.i.i.i:                        ; preds = %.preheader.i19.us.i.i.us.i.i.i.i.preheader, %.preheader.i19.us.i.i.us.i.i.i.i, %.preheader.i19.i.i.i.i.i.i
-  %.sink.i18.i28.i13.i.i.i.i = phi i64 [ %.sink.i18.i28.i.i.i.i.i, %.preheader.i19.i.i.i.i.i.i ], [ %.sink.i18.i28.i.us.i.i.i.i, %.preheader.i19.us.i.i.us.i.i.i.i ], [ %.sink.i18.i28.i.us.i.i.i.i, %.preheader.i19.us.i.i.us.i.i.i.i.preheader ]
+.split.us.i21.i.i.i.i.i.i:                        ; preds = %.preheader.i19.us.i.i.us.i.i.i.i.preheader, %.preheader.i19.us.i.i.us.i.i.i.i, %.preheader.split.i21.i.i.i.i.i.i
+  %.sink.i18.i28.i13.i.i.i.i = phi i64 [ %.sink.i18.i28.i.i.i.i.i, %.preheader.split.i21.i.i.i.i.i.i ], [ %.sink.i18.i28.i.us.i.i.i.i, %.preheader.i19.us.i.i.us.i.i.i.i ], [ %.sink.i18.i28.i.us.i.i.i.i, %.preheader.i19.us.i.i.us.i.i.i.i.preheader ]
   %i.bmg = add i64 %.sink.i18.i28.i13.i.i.i.i, %i.bie
   br label %_RINvMNtCskKLDkoKarTP_4core3stre10split_onceReECs4KPtkQIfQGm_13libp2p_webrtc.exit.i.i.i.i
+
+.split32.us.i22.i.i.i.i.invoke.i.i:               ; preds = %.preheader.split.i21.i.i.i.i.i.i, %.lr.ph2822
+  %3 = phi i64 [ %i.bjy, %.lr.ph2822 ], [ %i.bkn, %.preheader.split.i21.i.i.i.i.i.i ]
+  invoke void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %3, i64 noundef range(i64 0, -9223372036854775808) %i.bie, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #31
+          to label %.split32.us.i22.i.i.i.i.cont.i.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !10459
+
+.split32.us.i22.i.i.i.i.cont.i.i:                 ; preds = %.split32.us.i22.i.i.i.i.invoke.i.i
+  unreachable
 
 _RINvMNtCskKLDkoKarTP_4core3stre10split_onceReECs4KPtkQIfQGm_13libp2p_webrtc.exit.thread.i.i.i.i: ; preds = %bb.sy, %bb.tj, %bb.tg, %bb.su, %bb.td, %bb.sv, %.noexc99.i.i, %bb.sq, %.split166.us.i.i.i.i.i.i, %.preheader.i.i.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.av), !noalias !10485

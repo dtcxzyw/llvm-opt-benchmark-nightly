@@ -204,11 +204,11 @@ bb.bg:                                            ; preds = %bb.bf
 
 .lr.ph.split.split.preheader.i:                   ; preds = %.lr.ph.split.i262
   %i.pt = sext i32 %i.pb to i64
-  %i.pu = icmp sgt i32 %i.pb, 0
-  br i1 %i.pu, label %.lr.ph542.a, label %b3QueryEdgeDirectionHullAndCapsule.exit
+  %i.pu = icmp sgt i32 %i.pb, 0                   ; 2 uses
+  br i1 %.not564, label %.lr.ph.split.split.preheader.split.us.i, label %.lr.ph542.a, !prof !32
 
 .lr.ph542.a:                                      ; preds = %.lr.ph.split.split.preheader.i
-  br i1 %.not564, label %.lr.ph542.split.us, label %.lr.ph542.split.preheader, !prof !32
+  br i1 %i.pu, label %.lr.ph542.split.preheader, label %b3QueryEdgeDirectionHullAndCapsule.exit
 
 .lr.ph542.split.preheader:                        ; preds = %.lr.ph542.a
   %i.pv = shufflevector <2 x float> %i.oc, <2 x float> poison, <2 x i32> <i32 1, i32 0>
@@ -216,7 +216,10 @@ bb.bg:                                            ; preds = %bb.bf
   %i.px = shufflevector <2 x float> %i.pw, <2 x float> poison, <2 x i32> zeroinitializer
   br label %.lr.ph542.split
 
-.lr.ph542.split.us:                               ; preds = %.lr.ph542.a
+.lr.ph.split.split.preheader.split.us.i:          ; preds = %.lr.ph.split.split.preheader.i
+  br i1 %i.pu, label %.lr.ph542.split.us, label %b3QueryEdgeDirectionHullAndCapsule.exit
+
+.lr.ph542.split.us:                               ; preds = %.lr.ph.split.split.preheader.split.us.i
   %i.py = add i64 %i.pc, 4, !nosanitize !9        ; 2 uses
   %i.pz = icmp ne i64 %i.py, 0
   %i.qa = icmp ult ptr %.0.i.i258, inttoptr (i64 -4 to ptr)
@@ -246,7 +249,7 @@ bb.bj:                                            ; preds = %bb.bi
   %i.qo = shl nuw nsw i64 %i.qn, 4                ; 2 uses
   %i.qp = icmp eq i8 %i.qm, 0
   %i.qq = icmp uge i64 %i.qo, %i.pe, !nosanitize !9
-  %i.qr = and i1 %i.qq, %i.qp, !nosanitize !9
+  %i.qr = and i1 %i.qp, %i.qq, !nosanitize !9
   br i1 %i.qr, label %.split560, label %.split557.us, !prof !10, !nosanitize !9
 
 .lr.ph.split.split.us.i:                          ; preds = %.lr.ph.split.i262
@@ -283,7 +286,7 @@ bb.bk:                                            ; preds = %.lr.ph542.split
   %i.rb = and i1 %i.ra, %i.qz, !nosanitize !9
   br i1 %i.rb, label %bb.bl, label %.split462.us.i, !prof !10, !nosanitize !9
 
-.split462.us.i:                                   ; preds = %bb.bk, %.lr.ph542.split.us, %.lr.ph.split.split.us.i, %bb.bf
+.split462.us.i:                                   ; preds = %bb.bk, %.lr.ph.split.split.us.i, %.lr.ph542.split.us, %bb.bf
   %.us-phi463.i = phi i64 [ %i.pc, %bb.bf ], [ 0, %.lr.ph.split.split.us.i ], [ %i.pc, %.lr.ph542.split.us ], [ %i.qx, %bb.bk ]
   %.us-phi464.i = phi i64 [ %i.pk, %bb.bf ], [ 4, %.lr.ph.split.split.us.i ], [ %i.py, %.lr.ph542.split.us ], [ %i.qy, %bb.bk ]
   call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @230, i64 %.us-phi463.i, i64 %.us-phi464.i) #10, !noalias !91, !nosanitize !9
@@ -462,12 +465,12 @@ bb.bz:                                            ; preds = %bb.by
   call void @__ubsan_handle_add_overflow_abort(ptr nonnull @237, i64 2147483646, i64 2) #10, !noalias !91, !nosanitize !9
   unreachable, !nosanitize !9
 
-b3QueryEdgeDirectionHullAndCapsule.exit:          ; preds = %.lr.ph.split.split.i, %.lr.ph.split.split.preheader.i, %.lr.ph.split.us.i272, %.lr.ph.split.split.us.i
-  %.us-phi.i265 = phi i32 [ -1, %.lr.ph.split.us.i272 ], [ -1, %.lr.ph.split.split.us.i ], [ -1, %.lr.ph.split.split.preheader.i ], [ %.3116.i, %.lr.ph.split.split.i ]
-  %.us-phi453.i = phi i32 [ -1, %.lr.ph.split.us.i272 ], [ -1, %.lr.ph.split.split.us.i ], [ -1, %.lr.ph.split.split.preheader.i ], [ %.3112.i, %.lr.ph.split.split.i ] ; 2 uses
-  %.us-phi454.i = phi float [ f0xFF7FFFFF, %.lr.ph.split.us.i272 ], [ f0xFF7FFFFF, %.lr.ph.split.split.us.i ], [ f0xFF7FFFFF, %.lr.ph.split.split.preheader.i ], [ %.3.i, %.lr.ph.split.split.i ] ; 3 uses
-  %.us-phi455.i = phi <2 x float> [ zeroinitializer, %.lr.ph.split.us.i272 ], [ zeroinitializer, %.lr.ph.split.split.us.i ], [ zeroinitializer, %.lr.ph.split.split.preheader.i ], [ %.sroa.0101.3.i, %.lr.ph.split.split.i ]
-  %.us-phi456.i = phi float [ 0.000000e+00, %.lr.ph.split.us.i272 ], [ 0.000000e+00, %.lr.ph.split.split.us.i ], [ 0.000000e+00, %.lr.ph.split.split.preheader.i ], [ %.sroa.5102.3.i, %.lr.ph.split.split.i ]
+b3QueryEdgeDirectionHullAndCapsule.exit:          ; preds = %.lr.ph.split.split.i, %.lr.ph542.a, %.lr.ph.split.us.i272, %.lr.ph.split.split.preheader.split.us.i, %.lr.ph.split.split.us.i
+  %.us-phi.i265 = phi i32 [ -1, %.lr.ph.split.us.i272 ], [ -1, %.lr.ph.split.split.us.i ], [ -1, %.lr.ph.split.split.preheader.split.us.i ], [ -1, %.lr.ph542.a ], [ %.3116.i, %.lr.ph.split.split.i ]
+  %.us-phi453.i = phi i32 [ -1, %.lr.ph.split.us.i272 ], [ -1, %.lr.ph.split.split.us.i ], [ -1, %.lr.ph.split.split.preheader.split.us.i ], [ -1, %.lr.ph542.a ], [ %.3112.i, %.lr.ph.split.split.i ] ; 2 uses
+  %.us-phi454.i = phi float [ f0xFF7FFFFF, %.lr.ph.split.us.i272 ], [ f0xFF7FFFFF, %.lr.ph.split.split.us.i ], [ f0xFF7FFFFF, %.lr.ph.split.split.preheader.split.us.i ], [ f0xFF7FFFFF, %.lr.ph542.a ], [ %.3.i, %.lr.ph.split.split.i ] ; 3 uses
+  %.us-phi455.i = phi <2 x float> [ zeroinitializer, %.lr.ph.split.us.i272 ], [ zeroinitializer, %.lr.ph.split.split.us.i ], [ zeroinitializer, %.lr.ph.split.split.preheader.split.us.i ], [ zeroinitializer, %.lr.ph542.a ], [ %.sroa.0101.3.i, %.lr.ph.split.split.i ]
+  %.us-phi456.i = phi float [ 0.000000e+00, %.lr.ph.split.us.i272 ], [ 0.000000e+00, %.lr.ph.split.split.us.i ], [ 0.000000e+00, %.lr.ph.split.split.preheader.split.us.i ], [ 0.000000e+00, %.lr.ph542.a ], [ %.sroa.5102.3.i, %.lr.ph.split.split.i ]
   store <2 x float> %.us-phi455.i, ptr %11, align 8, !tbaa !12, !alias.scope !91
   %.sroa.5102.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %11, i64 8
   store float %.us-phi456.i, ptr %.sroa.5102.0..sroa_idx.i, align 8, !tbaa !12, !alias.scope !91

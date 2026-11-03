@@ -204,9 +204,9 @@ bb.a:
   br i1 %i.c, label %.lr.ph, label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ES5_.exit
 
 .lr.ph:                                           ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !50
-  %.fr = freeze ptr %i.e                          ; 3 uses
+  %.fr = freeze ptr %i.e                          ; 4 uses
   %i.f = ptrtoint ptr %.fr to i64                 ; 2 uses
   %i.g = and i64 %i.f, 1
   %i.h = icmp eq i64 %i.g, 0                      ; 2 uses
@@ -214,17 +214,29 @@ bb.a:
   %i.j = inttoptr i64 %i.i to ptr
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8 ; 2 uses
   %i.l = icmp eq i64 %.fr74, 0
-  br i1 %i.l, label %.lr.ph.split.us.preheader.a, label %.lr.ph.split
+  br i1 %i.l, label %.lr.ph.split.us.preheader, label %.lr.ph.split
 
-.lr.ph.split.us.preheader.a:                      ; preds = %.lr.ph
-  %wide.trip.count88 = zext nneg i32 %i.b to i64
-  br label %.lr.ph.split.us
+.lr.ph.split.us.preheader:                        ; preds = %.lr.ph
+  %wide.trip.count88 = zext nneg i32 %i.b to i64  ; 2 uses
+  br i1 %i.h, label %.lr.ph.split.us.preheader.a, label %.lr.ph.split.us
 
-.lr.ph.split.us:                                  ; preds = %.lr.ph.split.us, %.lr.ph.split.us.preheader.a
-  %indvars.iv85 = phi i64 [ 0, %.lr.ph.split.us.preheader.a ], [ %indvars.iv.next86, %.lr.ph.split.us ] ; 2 uses
+.lr.ph.split.us.preheader.a:                      ; preds = %.lr.ph.split.us.preheader
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.fr, i64 8
+  %.pre90 = load i64, ptr %.phi.trans.insert, align 8, !tbaa !44
+  %3 = icmp eq i64 %.pre90, 0                     ; 2 uses
+  br label %.lr.ph.split.us.us
+
+.lr.ph.split.us.us:                               ; preds = %.lr.ph.split.us.us, %.lr.ph.split.us.preheader.a
+  %indvars.iv85.us = phi i64 [ 0, %.lr.ph.split.us.preheader.a ], [ %indvars.iv.next86.us, %.lr.ph.split.us.us ]
+  %indvars.iv.next86.us = add nuw nsw i64 %indvars.iv85.us, 1 ; 2 uses
+  %exitcond89.us.not = icmp eq i64 %indvars.iv.next86.us, %wide.trip.count88
+  %or.cond = select i1 %3, i1 true, i1 %exitcond89.us.not
+  br i1 %or.cond, label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ES5_.exit, label %.lr.ph.split.us.us, !llvm.loop !266
+
+.lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %.lr.ph.split.us
+  %indvars.iv85 = phi i64 [ %indvars.iv.next86, %.lr.ph.split.us ], [ 0, %.lr.ph.split.us.preheader ] ; 2 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv85
-  %.0.i.i.i.i.i.us = select i1 %i.h, ptr %i.d, ptr %i.m
-  %i.n = load ptr, ptr %.0.i.i.i.i.i.us, align 8, !tbaa !51
+  %i.n = load ptr, ptr %i.m, align 8, !tbaa !51
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   %i.p = load i64, ptr %i.o, align 8, !tbaa !44
   %i.q = icmp eq i64 %i.p, 0                      ; 2 uses
@@ -316,9 +328,9 @@ _ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ES5_.exit, label %.lr.ph.split.split, !llvm.loop !266
 
-_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ES5_.exit: ; preds = %.critedge, %_ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit.i19, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %.lr.ph.split.us, %.lr.ph.split.split.us.split.split, %.lr.ph.split.split.us.split.us.split.split.split, %.lr.ph.split.split.us.split.us.split.split.us, %.lr.ph.split.split.us.split.us.split.split, %.lr.ph.split.split.us.split, %bb.a
-  %3 = phi i1 [ %i.z, %.lr.ph.split.split.us.split.us.split.split.split ], [ %i.ab, %.lr.ph.split.split.us.split.split ], [ false, %bb.a ], [ false, %.lr.ph.split.split.us.split.us.split.split ], [ %i.q, %.lr.ph.split.us ], [ %i.x, %.lr.ph.split.split.us.split.us.split.split.us ], [ false, %.lr.ph.split.split.us.split ], [ true, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i ], [ false, %.critedge ], [ true, %_ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit.i19 ]
-  ret i1 %3
+_ZSteqIcSt11char_traitsIcEEbSt17basic_string_viewIT_T0_ES5_.exit: ; preds = %.critedge, %_ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit.i19, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i, %.lr.ph.split.us, %.lr.ph.split.us.us, %.lr.ph.split.split.us.split.split, %.lr.ph.split.split.us.split.us.split.split.split, %.lr.ph.split.split.us.split.us.split.split.us, %.lr.ph.split.split.us.split.us.split.split, %.lr.ph.split.split.us.split, %bb.a
+  %4 = phi i1 [ %i.ab, %.lr.ph.split.split.us.split.split ], [ %i.q, %.lr.ph.split.us ], [ false, %bb.a ], [ false, %.lr.ph.split.split.us.split.us.split.split ], [ %3, %.lr.ph.split.us.us ], [ %i.x, %.lr.ph.split.split.us.split.us.split.split.us ], [ false, %.lr.ph.split.split.us.split ], [ %i.z, %.lr.ph.split.split.us.split.us.split.split.split ], [ false, %.critedge ], [ true, %_ZN4absl12lts_2025051210StartsWithESt17basic_string_viewIcSt11char_traitsIcEES4_.exit.i19 ], [ true, %_ZNSt11char_traitsIcE7compareEPKcS2_m.exit.i.i ]
+  ret i1 %4
 }
 
 ; Function Attrs: mustprogress uwtable

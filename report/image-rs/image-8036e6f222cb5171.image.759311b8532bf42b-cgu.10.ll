@@ -205,11 +205,12 @@ bb.x:                                             ; preds = %bb.r
 .lr.ph.i1.i:                                      ; preds = %bb.x
   %i.dg = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.dh = load i64, ptr %i.dg, align 8, !alias.scope !1742, !noundef !5
-  %i.di = load i64, ptr %i.u, align 8, !alias.scope !1742 ; 4 uses
+  %i.di = load i64, ptr %i.u, align 8, !alias.scope !1742
+  %.fr60.i.i = freeze i64 %i.di                   ; 4 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.dk = load i64, ptr %i.dj, align 8, !alias.scope !1742 ; 2 uses
   %i.dl = sub i64 %i.cj, %i.dk
-  %invariant.op = sub i64 1, %i.di
+  %invariant.op = sub i64 1, %.fr60.i.i
   br label %.lr.ph.split.i.i
 
 .lr.ph.split.i.i:                                 ; preds = %bb.aa, %.lr.ph.i1.i
@@ -230,7 +231,7 @@ bb.y:                                             ; preds = %.lr.ph.split.i.i
   br label %bb.aa
 
 bb.z:                                             ; preds = %.lr.ph.split.i.i
-  %..i.i3.i = tail call noundef i64 @llvm.umax.i64(i64 %.sink70.i.i46, i64 %i.di) ; 2 uses
+  %..i.i3.i = tail call noundef i64 @llvm.umax.i64(i64 %.sink70.i.i46, i64 %.fr60.i.i) ; 2 uses
   %i.du = icmp ult i64 %..i.i3.i, %i.cj
   br i1 %i.du, label %.lr.ph155, label %.preheader36.i.i.preheader
 
@@ -247,7 +248,7 @@ bb.ab:                                            ; preds = %.lr.ph155
   br i1 %i.dy, label %.lr.ph155, label %.preheader36.i.i.preheader
 
 .preheader36.i.i.preheader:                       ; preds = %bb.ab, %bb.z
-  %i.dz = icmp ult i64 %.sink70.i.i46, %i.di
+  %i.dz = icmp ult i64 %.sink70.i.i46, %.fr60.i.i
   br i1 %i.dz, label %.lr.ph157, label %_RNvXsv_NtNtCsj6eKBz9Db1c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit
 
 .lr.ph155:                                        ; preds = %bb.z, %bb.ab
@@ -267,7 +268,7 @@ bb.ab:                                            ; preds = %.lr.ph155
   br i1 %i.eg, label %.lr.ph157, label %_RNvXsv_NtNtCsj6eKBz9Db1c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit
 
 .lr.ph157:                                        ; preds = %.preheader36.i.i.preheader, %.preheader36.i.i
-  %.sroa.2.0.i.i156 = phi i64 [ %i.eh, %.preheader36.i.i ], [ %i.di, %.preheader36.i.i.preheader ]
+  %.sroa.2.0.i.i156 = phi i64 [ %i.eh, %.preheader36.i.i ], [ %.fr60.i.i, %.preheader36.i.i.preheader ]
   %i.eh = add i64 %.sroa.2.0.i.i156, -1           ; 6 uses
   %i.ei = icmp ult i64 %i.eh, %i.cj
   br i1 %i.ei, label %bb.ac, label %.split32.us.i.i
@@ -411,12 +412,16 @@ bb.ai:                                            ; preds = %bb.ah, %.split.us.u
   br i1 %.not.us.i.i, label %bb.ak, label %.preheader35.i.i.preheader
 
 .preheader35.i.i.preheader:                       ; preds = %.lr.ph.split.us.i.i
-  br i1 %exitcond.not.i.i3158.not, label %.lr.ph160, label %.preheader.i10.i
+  br i1 %exitcond.not.i.i3158.not, label %.lr.ph160, label %.preheader.split.i13.i
 
 .preheader35.i.i:                                 ; preds = %.lr.ph160
   %i.gi = add i64 %.sroa.04.0.us.i.i159, 1        ; 2 uses
   %exitcond.not.i.i3 = icmp eq i64 %i.gi, %umax.i.i
-  br i1 %exitcond.not.i.i3, label %.preheader.i10.i, label %.lr.ph160
+  br i1 %exitcond.not.i.i3, label %.preheader.split.i13.i, label %.lr.ph160
+
+.preheader.split.i13.i:                           ; preds = %.preheader35.i.i.preheader, %.preheader35.i.i
+  %.not34.i.i = icmp eq i64 %.fr63.i, 0
+  br i1 %.not34.i.i, label %_RNvXsv_NtNtCsj6eKBz9Db1c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, label %.split32.us.i14.i
 
 .lr.ph160:                                        ; preds = %.preheader35.i.i.preheader, %.preheader35.i.i
   %.sroa.04.0.us.i.i159 = phi i64 [ %i.gi, %.preheader35.i.i ], [ %.fr63.i, %.preheader35.i.i.preheader ] ; 4 uses
@@ -429,14 +434,6 @@ bb.ai:                                            ; preds = %bb.ah, %.split.us.u
   %i.go = load i8, ptr %i.gn, align 1, !alias.scope !1746, !noalias !1743, !noundef !5
   %.not21.us.i.i = icmp eq i8 %i.gk, %i.go
   br i1 %.not21.us.i.i, label %.preheader35.i.i, label %bb.aj
-
-.preheader.i10.i:                                 ; preds = %.preheader35.i.i.preheader, %.preheader35.i.i
-  %.not34.i.i = icmp eq i64 %.fr63.i, 0
-  br i1 %.not34.i.i, label %_RNvXsv_NtNtCsj6eKBz9Db1c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, label %.split32.us.i11.i
-
-.split32.us.i11.i:                                ; preds = %.preheader.i10.i
-  tail call void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.ey, i64 noundef range(i64 0, -9223372036854775808) %i.cj, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @7) #32, !noalias !1749
-  unreachable
 
 bb.aj:                                            ; preds = %.lr.ph160
   %i.gp = add i64 %.sink.i9.i49, %i.ez
@@ -453,8 +450,12 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   %i.gt = icmp ult i64 %i.gs, %i.cf
   br i1 %i.gt, label %.lr.ph.split.us.i.i, label %_RNvXsv_NtNtCsj6eKBz9Db1c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit
 
-_RNvXsv_NtNtCsj6eKBz9Db1c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit: ; preds = %bb.aa, %.preheader36.i.i.preheader, %.preheader36.i.i, %bb.al, %bb.ai, %.preheader.i10.us.us.i.preheader, %.preheader.i10.us.us.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit16.i.i.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit14.i.i.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit12.i.i.i, %bb.w, %bb.k, %.preheader.i10.i, %bb.af, %bb.x, %bb.n, %bb.v, %.preheader.i
-  %storemerge.i.sink.i = phi i8 [ 0, %bb.af ], [ 0, %bb.x ], [ 1, %bb.n ], [ 0, %bb.ai ], [ 0, %.preheader.i ], [ 1, %bb.v ], [ 1, %.preheader.i10.i ], [ 0, %bb.al ], [ %.promoted52.i, %bb.k ], [ 1, %.preheader.i10.us.us.i ], [ 1, %.preheader36.i.i ], [ 1, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit16.i.i.i ], [ 1, %bb.w ], [ 1, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit12.i.i.i ], [ 1, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit14.i.i.i ], [ 1, %.preheader.i10.us.us.i.preheader ], [ 0, %bb.aa ], [ 1, %.preheader36.i.i.preheader ]
+.split32.us.i14.i:                                ; preds = %.preheader.split.i13.i
+  tail call void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.ey, i64 noundef range(i64 0, -9223372036854775808) %i.cj, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @7) #32, !noalias !1749
+  unreachable
+
+_RNvXsv_NtNtCsj6eKBz9Db1c_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit: ; preds = %bb.aa, %.preheader36.i.i.preheader, %.preheader36.i.i, %bb.al, %bb.ai, %.preheader.i10.us.us.i.preheader, %.preheader.i10.us.us.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit16.i.i.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit14.i.i.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit12.i.i.i, %bb.w, %bb.k, %.preheader.split.i13.i, %bb.af, %bb.x, %bb.n, %bb.v, %.preheader.i
+  %storemerge.i.sink.i = phi i8 [ 0, %bb.af ], [ 0, %bb.x ], [ 1, %bb.n ], [ 0, %bb.ai ], [ 0, %.preheader.i ], [ 1, %bb.v ], [ 1, %.preheader.split.i13.i ], [ 0, %bb.al ], [ %.promoted52.i, %bb.k ], [ 1, %.preheader.i10.us.us.i ], [ 1, %.preheader36.i.i ], [ 1, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit16.i.i.i ], [ 1, %bb.w ], [ 1, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit12.i.i.i ], [ 1, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit14.i.i.i ], [ 1, %.preheader.i10.us.us.i.preheader ], [ 0, %bb.aa ], [ 1, %.preheader36.i.i.preheader ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %_RNvNtNtCsj6eKBz9Db1c_4core3str7pattern13simd_contains.exit.thread
 

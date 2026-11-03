@@ -204,13 +204,14 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c, %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.p = load i32, ptr %i.o, align 4, !tbaa !147  ; 5 uses
-  %i.q = icmp eq i32 %i.p, 40
-  %i.r = icmp eq i32 %i.p, 34
+  %i.p = load i32, ptr %i.o, align 4, !tbaa !147
+  %.fr = freeze i32 %i.p                          ; 5 uses
+  %i.q = icmp eq i32 %.fr, 40
+  %i.r = icmp eq i32 %.fr, 34
   %i.s = or i1 %i.q, %i.r
-  %i.t = select i1 %i.s, i32 1, i32 -1            ; 3 uses
+  %i.t = select i1 %i.s, i32 1, i32 -1            ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 400 ; 3 uses
-  %i.v = load i32, ptr %i.u, align 8, !tbaa !119  ; 6 uses
+  %i.v = load i32, ptr %i.u, align 8, !tbaa !119  ; 7 uses
   %.not = icmp eq i32 %4, 0
   br i1 %.not, label %.thread51, label %.lr.ph
 
@@ -227,7 +228,7 @@ bb.d:                                             ; preds = %bb.c, %bb.a
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
   %i.ad = zext i32 %i.t to i64                    ; 4 uses
-  switch i32 %i.p, label %.thread51 [
+  switch i32 %.fr, label %.thread51 [
     i32 40, label %.lr.ph.split.us.split.us
     i32 34, label %.lr.ph.split.us.split.us
   ]
@@ -295,20 +296,29 @@ _ZN3gui11CGUIEditBox14getLineFromPosEi.exit.thread.us.us: ; preds = %_ZN3gui11CG
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   %i.be = load ptr, ptr %i.ac, align 8, !tbaa !114
-  %i.bf = load ptr, ptr %i.ab, align 8, !tbaa !89 ; 6 uses
+  %i.bf = load ptr, ptr %i.ab, align 8, !tbaa !89 ; 9 uses
   %i.bg = ptrtoint ptr %i.be to i64
   %i.bh = ptrtoint ptr %i.bf to i64
   %i.bi = sub i64 %i.bg, %i.bh                    ; 2 uses
   %i.bj = lshr exact i64 %i.bi, 2                 ; 2 uses
-  %i.bk = trunc i64 %i.bj to i32                  ; 4 uses
+  %i.bk = trunc i64 %i.bj to i32                  ; 5 uses
   %i.bl = icmp sgt i32 %i.bk, 0
-  %i.bm = ashr exact i64 %i.bi, 2                 ; 5 uses
-  %wide.trip.count.i = and i64 %i.bj, 2147483647
-  br i1 %i.bl, label %.preheader.i.us.a, label %.lr.ph.split.split
+  %i.bm = ashr exact i64 %i.bi, 2                 ; 8 uses
+  %wide.trip.count.i = and i64 %i.bj, 2147483647  ; 2 uses
+  br i1 %i.bl, label %.preheader.i.us.preheader, label %.lr.ph.split.split
 
-.preheader.i.us.a:                                ; preds = %.lr.ph.split, %bb.j
-  %.03170.us93.a = phi i32 [ %i.co, %bb.j ], [ 0, %.lr.ph.split ] ; 3 uses
-  %.03269.us94.a = phi i32 [ %i.cn, %bb.j ], [ %i.v, %.lr.ph.split ] ; 4 uses
+.preheader.i.us.preheader:                        ; preds = %.lr.ph.split
+  switch i32 %.fr, label %.preheader.i.us [
+    i32 40, label %.preheader.i.us.us.preheader
+    i32 34, label %.preheader.i.us.us.preheader
+  ]
+
+.preheader.i.us.us.preheader:                     ; preds = %.preheader.i.us.preheader, %.preheader.i.us.preheader
+  br label %.preheader.i.us.a
+
+.preheader.i.us.a:                                ; preds = %.preheader.i.us.us.preheader, %bb.g
+  %.03170.us93.a = phi i32 [ %30, %bb.g ], [ 0, %.preheader.i.us.us.preheader ] ; 2 uses
+  %.03269.us94.a = phi i32 [ %29, %bb.g ], [ %i.v, %.preheader.i.us.us.preheader ] ; 3 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.f, %.preheader.i.us.a
@@ -332,39 +342,93 @@ bb.f:                                             ; preds = %_ZN4core5arrayIiEix
   br label %_ZN3gui11CGUIEditBox14getLineFromPosEi.exit.us.a
 
 _ZN3gui11CGUIEditBox14getLineFromPosEi.exit.us.a: ; preds = %bb.f, %._crit_edge.loopexit.split.loop.exit14.i.us.a
-  %.06.in.i.us.a = phi i32 [ %i.bq, %._crit_edge.loopexit.split.loop.exit14.i.us.a ], [ %i.bk, %bb.f ] ; 3 uses
+  %.06.in.i.us.a = phi i32 [ %i.bq, %._crit_edge.loopexit.split.loop.exit14.i.us.a ], [ %i.bk, %bb.f ] ; 2 uses
   %.06.i.us.a = add nsw i32 %.06.in.i.us.a, -1    ; 2 uses
-  switch i32 %i.p, label %bb.h [
-    i32 40, label %bb.g
-    i32 34, label %bb.g
-  ]
-
-bb.g:                                             ; preds = %_ZN3gui11CGUIEditBox14getLineFromPosEi.exit.us.a, %_ZN3gui11CGUIEditBox14getLineFromPosEi.exit.us.a
   %5 = load ptr, ptr %i.aa, align 8, !tbaa !112
-  %6 = load ptr, ptr %i.z, align 8, !tbaa !111
+  %6 = load ptr, ptr %i.z, align 8, !tbaa !111    ; 2 uses
   %7 = ptrtoint ptr %5 to i64
   %8 = ptrtoint ptr %6 to i64
-  %9 = sub i64 %7, %8
+  %9 = sub i64 %7, %8                             ; 2 uses
   %10 = lshr exact i64 %9, 5
   %11 = trunc i64 %10 to i32
-  %.not.us95 = icmp slt i32 %.06.in.i.us.a, %11
-  br i1 %.not.us95, label %bb.i, label %.split.us
+  %.not.us95.us = icmp slt i32 %.06.in.i.us.a, %11
+  br i1 %.not.us95.us, label %12, label %.split.us
 
-bb.h:                                             ; preds = %_ZN3gui11CGUIEditBox14getLineFromPosEi.exit.us.a
-  %i.br = icmp slt i32 %.06.in.i.us.a, 2
+12:                                               ; preds = %_ZN3gui11CGUIEditBox14getLineFromPosEi.exit.us.a
+  %13 = zext i32 %.06.i.us.a to i64               ; 2 uses
+  %14 = icmp ugt i64 %i.bm, %13
+  br i1 %14, label %_ZN4core5arrayIiEixEj.exit.us96.us, label %.split75.us
+
+_ZN4core5arrayIiEixEj.exit.us96.us:               ; preds = %12
+  %15 = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %13
+  %16 = load i32, ptr %15, align 4, !tbaa !72
+  %17 = sub nsw i32 %.03269.us94.a, %16
+  %18 = add nsw i32 %.06.i.us.a, %i.t
+  %19 = zext i32 %18 to i64                       ; 4 uses
+  %20 = ashr exact i64 %9, 5
+  %21 = icmp ugt i64 %20, %19
+  br i1 %21, label %_ZN4core5arrayINS_6stringIwEEEixEj.exit.us97.us, label %.split77.us
+
+_ZN4core5arrayINS_6stringIwEEEixEj.exit.us97.us:  ; preds = %_ZN4core5arrayIiEixEj.exit.us96.us
+  %22 = icmp ugt i64 %i.bm, %19
+  br i1 %22, label %bb.g, label %.split79.us
+
+bb.g:                                             ; preds = %_ZN4core5arrayINS_6stringIwEEEixEj.exit.us97.us
+  %23 = getelementptr inbounds nuw [32 x i8], ptr %6, i64 %19
+  %24 = getelementptr inbounds nuw i8, ptr %23, i64 8
+  %25 = load i64, ptr %24, align 8, !tbaa !75
+  %26 = trunc i64 %25 to i32
+  %27 = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %19
+  %28 = load i32, ptr %27, align 4, !tbaa !72
+  %.sroa.speculated42.us98.us = tail call i32 @llvm.smin.i32(i32 %17, i32 %26)
+  %.sroa.speculated.us99.us = tail call i32 @llvm.smax.i32(i32 %.sroa.speculated42.us98.us, i32 0)
+  %29 = add nsw i32 %.sroa.speculated.us99.us, %28 ; 2 uses
+  %30 = add nuw i32 %.03170.us93.a, 1             ; 2 uses
+  %exitcond147.us.not = icmp eq i32 %30, %4
+  br i1 %exitcond147.us.not, label %.thread51, label %.preheader.i.us.a, !llvm.loop !185
+
+.preheader.i.us:                                  ; preds = %.preheader.i.us.preheader, %bb.j
+  %.03170.us93 = phi i32 [ %i.co, %bb.j ], [ 0, %.preheader.i.us.preheader ] ; 2 uses
+  %.03269.us94 = phi i32 [ %i.cn, %bb.j ], [ %i.v, %.preheader.i.us.preheader ] ; 3 uses
+  br label %31
+
+31:                                               ; preds = %35, %.preheader.i.us
+  %indvars.iv.i.us = phi i64 [ 0, %.preheader.i.us ], [ %indvars.iv.next.i.us, %35 ] ; 4 uses
+  %exitcond.not.i.us = icmp eq i64 %indvars.iv.i.us, %i.bm
+  br i1 %exitcond.not.i.us, label %.split101.us, label %_ZN4core5arrayIiEixEj.exit.i.us
+
+_ZN4core5arrayIiEixEj.exit.i.us:                  ; preds = %31
+  %32 = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %indvars.iv.i.us
+  %33 = load i32, ptr %32, align 4, !tbaa !72
+  %34 = icmp sgt i32 %33, %.03269.us94
+  br i1 %34, label %._crit_edge.loopexit.split.loop.exit14.i.us, label %35
+
+35:                                               ; preds = %_ZN4core5arrayIiEixEj.exit.i.us
+  %indvars.iv.next.i.us = add nuw nsw i64 %indvars.iv.i.us, 1 ; 2 uses
+  %exitcond12.not.i.us = icmp eq i64 %indvars.iv.next.i.us, %wide.trip.count.i
+  br i1 %exitcond12.not.i.us, label %bb.h, label %31, !llvm.loop !3
+
+._crit_edge.loopexit.split.loop.exit14.i.us:      ; preds = %_ZN4core5arrayIiEixEj.exit.i.us
+  %36 = trunc nuw nsw i64 %indvars.iv.i.us to i32
+  br label %bb.h
+
+bb.h:                                             ; preds = %35, %._crit_edge.loopexit.split.loop.exit14.i.us
+  %.06.in.i.us = phi i32 [ %36, %._crit_edge.loopexit.split.loop.exit14.i.us ], [ %i.bk, %35 ] ; 2 uses
+  %.06.i.us = add nsw i32 %.06.in.i.us, -1        ; 2 uses
+  %i.br = icmp slt i32 %.06.in.i.us, 2
   br i1 %i.br, label %.thread.loopexit, label %bb.i
 
-bb.i:                                             ; preds = %bb.h, %bb.g
-  %i.bs = zext i32 %.06.i.us.a to i64             ; 2 uses
+bb.i:                                             ; preds = %bb.h
+  %i.bs = zext nneg i32 %.06.i.us to i64          ; 2 uses
   %i.bt = icmp ugt i64 %i.bm, %i.bs
   br i1 %i.bt, label %_ZN4core5arrayIiEixEj.exit.us96, label %.split75.us
 
 _ZN4core5arrayIiEixEj.exit.us96:                  ; preds = %bb.i
   %i.bu = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %i.bs
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !72
-  %i.bw = sub nsw i32 %.03269.us94.a, %i.bv
-  %i.bx = add nsw i32 %.06.i.us.a, %i.t
-  %i.by = zext i32 %i.bx to i64                   ; 4 uses
+  %i.bw = sub nsw i32 %.03269.us94, %i.bv
+  %i.bx = add nsw i32 %.06.i.us, %i.t
+  %i.by = zext nneg i32 %i.bx to i64              ; 4 uses
   %i.bz = load ptr, ptr %i.aa, align 8, !tbaa !112
   %i.ca = load ptr, ptr %i.z, align 8, !tbaa !111 ; 2 uses
   %i.cb = ptrtoint ptr %i.bz to i64
@@ -388,16 +452,16 @@ bb.j:                                             ; preds = %_ZN4core5arrayINS_6
   %.sroa.speculated42.us98 = tail call i32 @llvm.smin.i32(i32 %i.bw, i32 %i.ck)
   %.sroa.speculated.us99 = tail call i32 @llvm.smax.i32(i32 %.sroa.speculated42.us98, i32 0)
   %i.cn = add nsw i32 %.sroa.speculated.us99, %i.cm ; 2 uses
-  %i.co = add nuw i32 %.03170.us93.a, 1           ; 2 uses
+  %i.co = add nuw i32 %.03170.us93, 1             ; 2 uses
   %exitcond147.not = icmp eq i32 %i.co, %4
-  br i1 %exitcond147.not, label %.thread51, label %.preheader.i.us.a, !llvm.loop !185
+  br i1 %exitcond147.not, label %.thread51, label %.preheader.i.us, !llvm.loop !185
 
 .lr.ph.split.split:                               ; preds = %.lr.ph.split
   %.06.i = add nsw i32 %i.bk, -1                  ; 2 uses
   %i.cp = zext i32 %.06.i to i64                  ; 2 uses
   %i.cq = add nsw i32 %.06.i, %i.t
   %i.cr = zext i32 %i.cq to i64                   ; 4 uses
-  switch i32 %i.p, label %.thread51 [
+  switch i32 %.fr, label %.thread51 [
     i32 40, label %.lr.ph.split.split.split.us
     i32 34, label %.lr.ph.split.split.split.us
   ]
@@ -458,11 +522,11 @@ bb.j:                                             ; preds = %_ZN4core5arrayINS_6
   %niter.ncmp.1 = icmp eq i32 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.thread51.loopexit211.unr-lcssa, label %.preheader.i.us110, !llvm.loop !185
 
-.split101.us:                                     ; preds = %bb.e
+.split101.us:                                     ; preds = %bb.e, %31
   tail call void @__assert_fail(ptr noundef nonnull @.str.9, ptr noundef nonnull @.str.10, i32 noundef 192, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4core5arrayIiEixEj) #30
   unreachable
 
-.split.us:                                        ; preds = %bb.g
+.split.us:                                        ; preds = %_ZN3gui11CGUIEditBox14getLineFromPosEi.exit.us.a
   %i.do = icmp eq i32 %.03170.us93.a, 0
   br i1 %i.do, label %.split.us.thread, label %.thread51
 
@@ -473,19 +537,19 @@ bb.j:                                             ; preds = %_ZN4core5arrayINS_6
   br label %.thread51
 
 .thread.loopexit:                                 ; preds = %bb.h
-  %i.ds = icmp eq i32 %.03170.us93.a, 0
-  %i.dt = select i1 %i.ds, i32 0, i32 %.03269.us94.a
+  %i.ds = icmp eq i32 %.03170.us93, 0
+  %i.dt = select i1 %i.ds, i32 0, i32 %.03269.us94
   br label %.thread51
 
-.split75.us:                                      ; preds = %bb.i, %.lr.ph.split.split.split.us.split, %.lr.ph.split.us.split.us.split
+.split75.us:                                      ; preds = %12, %bb.i, %.lr.ph.split.split.split.us.split, %.lr.ph.split.us.split.us.split
   tail call void @__assert_fail(ptr noundef nonnull @.str.9, ptr noundef nonnull @.str.10, i32 noundef 192, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4core5arrayIiEixEj) #30
   unreachable
 
-.split77.us:                                      ; preds = %_ZN4core5arrayIiEixEj.exit.us96, %.lr.ph.split.split.split.us.split.split, %.lr.ph.split.us.split.us.split.split
+.split77.us:                                      ; preds = %_ZN4core5arrayIiEixEj.exit.us96.us, %_ZN4core5arrayIiEixEj.exit.us96, %.lr.ph.split.split.split.us.split.split, %.lr.ph.split.us.split.us.split.split
   tail call void @__assert_fail(ptr noundef nonnull @.str.9, ptr noundef nonnull @.str.10, i32 noundef 192, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4core5arrayINS_6stringIwEEEixEj) #30
   unreachable
 
-.split79.us:                                      ; preds = %_ZN4core5arrayINS_6stringIwEEEixEj.exit.us97, %.lr.ph.split.split.split.us.split.split.split, %.lr.ph.split.us.split.us.split.split.split
+.split79.us:                                      ; preds = %_ZN4core5arrayINS_6stringIwEEEixEj.exit.us97.us, %_ZN4core5arrayINS_6stringIwEEEixEj.exit.us97, %.lr.ph.split.split.split.us.split.split.split, %.lr.ph.split.us.split.us.split.split.split
   tail call void @__assert_fail(ptr noundef nonnull @.str.9, ptr noundef nonnull @.str.10, i32 noundef 192, ptr noundef nonnull @__PRETTY_FUNCTION__._ZN4core5arrayIiEixEj) #30
   unreachable
 
@@ -517,8 +581,8 @@ _ZN3gui11CGUIEditBox14getLineFromPosEi.exit.thread.us.us.epil.preheader: ; preds
   %i.dx = add nsw i32 %.sroa.speculated.us117.epil, %i.dk
   br label %.thread51
 
-.thread51:                                        ; preds = %.preheader.i.us110.epil.preheader, %.thread51.loopexit211.unr-lcssa, %bb.j, %_ZN3gui11CGUIEditBox14getLineFromPosEi.exit.thread.us.us.epil.preheader, %.thread51.loopexit.unr-lcssa, %.lr.ph.split.us, %.thread.loopexit, %.lr.ph.split.split, %bb.d, %.split.us, %.split.us.thread
-  %.4 = phi i32 [ %i.cn, %bb.j ], [ %.03269.us94.a, %.split.us ], [ %i.dr, %.split.us.thread ], [ %i.v, %bb.d ], [ %i.dv, %_ZN3gui11CGUIEditBox14getLineFromPosEi.exit.thread.us.us.epil.preheader ], [ 0, %.lr.ph.split.split ], [ 0, %.lr.ph.split.us ], [ %i.dt, %.thread.loopexit ], [ %i.bd, %.thread51.loopexit.unr-lcssa ], [ %i.dn, %.thread51.loopexit211.unr-lcssa ], [ %i.dx, %.preheader.i.us110.epil.preheader ] ; 4 uses
+.thread51:                                        ; preds = %.preheader.i.us110.epil.preheader, %.thread51.loopexit211.unr-lcssa, %bb.g, %bb.j, %_ZN3gui11CGUIEditBox14getLineFromPosEi.exit.thread.us.us.epil.preheader, %.thread51.loopexit.unr-lcssa, %.lr.ph.split.us, %.thread.loopexit, %.lr.ph.split.split, %bb.d, %.split.us, %.split.us.thread
+  %.4 = phi i32 [ %i.cn, %bb.j ], [ %.03269.us94.a, %.split.us ], [ %i.dr, %.split.us.thread ], [ %i.v, %bb.d ], [ %i.dv, %_ZN3gui11CGUIEditBox14getLineFromPosEi.exit.thread.us.us.epil.preheader ], [ 0, %.lr.ph.split.split ], [ 0, %.lr.ph.split.us ], [ %i.dt, %.thread.loopexit ], [ %29, %bb.g ], [ %i.bd, %.thread51.loopexit.unr-lcssa ], [ %i.dn, %.thread51.loopexit211.unr-lcssa ], [ %i.dx, %.preheader.i.us110.epil.preheader ] ; 4 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.dz = load i8, ptr %i.dy, align 4
   %i.ea = and i8 %i.dz, 2

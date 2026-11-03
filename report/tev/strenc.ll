@@ -4,7 +4,6 @@ inline.NumDeleted: 6
 loop-unroll.NumCompletelyUnrolled: 12
 loop-unroll.NumRuntimeUnrolled: 37
 loop-unroll.NumUnrolled: 49
-loop-unroll.NumUnrolledNotLatch: 1
 begin_hunk_0_@ImageStrEncInit:bb.a
   store ptr @processMacroblock, ptr %i.ed, align 8, !tbaa !109
   %i.ee = getelementptr inbounds nuw i8, ptr %calloc, i64 34720
@@ -206,10 +205,16 @@ bb.c:                                             ; preds = %.lr.ph, %bb.c
   %.not19 = icmp eq ptr %.fr18, null
   %i.u = load i64, ptr %0, align 8, !tbaa !106
   %.not22.i.us = icmp eq i64 %i.u, 35944          ; 2 uses
-  br i1 %.not19, label %.split.us, label %.split.preheader
+  br i1 %.not19, label %.split.us, label %.split.i.preheader
 
-.split.preheader:                                 ; preds = %._crit_edge
-  br i1 %.not22.i.us, label %1, label %StrEncTerm.exit
+.split.i.preheader:                               ; preds = %._crit_edge
+  br i1 %.not22.i.us, label %.split.preheader, label %StrEncTerm.exit
+
+.split.preheader:                                 ; preds = %.split.i.preheader
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 34364
+  %2 = load i32, ptr %1, align 4, !tbaa !96
+  %.not23.i = icmp eq i32 %2, 0
+  br i1 %.not23.i, label %.split.1, label %bb.j
 
 .split.us:                                        ; preds = %._crit_edge
   br i1 %.not22.i.us, label %bb.d, label %StrEncTerm.exit
@@ -247,13 +252,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.d
   tail call void @freeTileInfo(ptr noundef nonnull %0) #17
   br label %StrEncTerm.exit
 
-1:                                                ; preds = %.split.preheader
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 34364
-  %3 = load i32, ptr %2, align 4, !tbaa !96
-  %.not23.i = icmp eq i32 %3, 0
-  br i1 %.not23.i, label %.split.1, label %bb.j
-
-bb.j:                                             ; preds = %1
+bb.j:                                             ; preds = %.split.preheader
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 35376
   %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !98 ; 2 uses
   %.not24.i = icmp eq ptr %i.ad, null
@@ -273,7 +272,7 @@ bb.m:                                             ; preds = %bb.l
   tail call void @free(ptr noundef nonnull %i.af) #17
   br label %.split.1
 
-.split.1:                                         ; preds = %bb.m, %bb.l, %1
+.split.1:                                         ; preds = %bb.m, %bb.l, %.split.preheader
   tail call void @freePredInfo(ptr noundef nonnull %0) #17
   %i.ag = tail call i32 @StrIOEncTerm(ptr noundef nonnull %0) ; 0 uses
   tail call void @FreeCodingContextEnc(ptr noundef nonnull %0) #17
@@ -323,7 +322,7 @@ StrEncTerm.exit.split.critedge:                   ; preds = %bb.n, %bb.q, %bb.r
   store i8 %i.au, ptr %i.as, align 1, !tbaa !107
   br label %StrEncTerm.exit
 
-StrEncTerm.exit:                                  ; preds = %.split.preheader, %.split.1, %StrEncTerm.exit.split.critedge, %.split.us, %bb.i
+StrEncTerm.exit:                                  ; preds = %.split.1, %.split.i.preheader, %.split.us, %bb.i, %StrEncTerm.exit.split.critedge
   tail call void @free(ptr noundef nonnull %0) #17
   br label %bb.s
 

@@ -202,7 +202,8 @@ bb.ce:                                            ; preds = %bb.cd
 
 .preheader:                                       ; preds = %.preheader500
   %i.nj = load i32, ptr %i.nc, align 4, !tbaa !97
-  %.not647 = icmp eq i32 %i.nj, 0
+  %.fr624 = freeze i32 %i.nj
+  %.not647 = icmp eq i32 %.fr624, 0
   %i.nk = load ptr, ptr %i.nd, align 8, !tbaa !80
   %i.nl = load i8, ptr %i.ne, align 4, !tbaa !60
   %i.nm = sext i8 %i.nl to i64                    ; 2 uses
@@ -221,11 +222,14 @@ bb.ce:                                            ; preds = %bb.cd
   %i.nz = load i32, ptr %i.nx, align 4, !tbaa !7
   %i.oa = add i32 %i.ny, -128
   %i.ob = add i32 %i.oa, %i.nz
-  %or.cond56 = icmp ult i32 %i.ob, -256
-  br i1 %or.cond56, label %.loopexit556, label %bb.cf
+  %or.cond56 = icmp ult i32 %i.ob, -256           ; 2 uses
+  br i1 %.not647, label %.preheader.split.us, label %bb.cf
+
+.preheader.split.us:                              ; preds = %.preheader
+  br i1 %or.cond56, label %.loopexit556, label %.critedge
 
 bb.cf:                                            ; preds = %.preheader
-  br i1 %.not647, label %.critedge, label %bb.cg
+  br i1 %or.cond56, label %.loopexit556, label %bb.cg
 
 bb.cg:                                            ; preds = %bb.cf
   %i.oc = getelementptr inbounds nuw i8, ptr %i.ns, i64 4
@@ -247,7 +251,7 @@ bb.ch:                                            ; preds = %bb.cg
   %or.cond56.2645 = icmp ult i32 %i.on, -256
   br i1 %or.cond56.2645, label %.loopexit556, label %.critedge
 
-.critedge:                                        ; preds = %bb.cf, %bb.ch, %.preheader500
+.critedge:                                        ; preds = %.preheader.split.us, %bb.ch, %.preheader500
   %i.oo = getelementptr inbounds nuw i8, ptr %i.na, i64 1
   %i.op = load i8, ptr %i.oo, align 1, !tbaa !60
   %i.oq = icmp eq i8 %i.op, 2
@@ -255,7 +259,8 @@ bb.ch:                                            ; preds = %bb.cg
 
 .preheader.1:                                     ; preds = %.critedge
   %i.or = load i32, ptr %i.nc, align 4, !tbaa !97
-  %.not648 = icmp eq i32 %i.or, 0
+  %.fr = freeze i32 %i.or
+  %.not648 = icmp eq i32 %.fr, 0
   %i.os = load ptr, ptr %i.nd, align 8, !tbaa !80
   %i.ot = getelementptr inbounds nuw i8, ptr %i.ne, i64 1
   %i.ou = load i8, ptr %i.ot, align 1, !tbaa !60
@@ -276,11 +281,14 @@ bb.ch:                                            ; preds = %bb.cg
   %i.pj = load i32, ptr %i.ph, align 4, !tbaa !7
   %i.pk = add i32 %i.pi, -128
   %i.pl = add i32 %i.pk, %i.pj
-  %or.cond56.1 = icmp ult i32 %i.pl, -256
-  br i1 %or.cond56.1, label %.loopexit556, label %bb.ci
+  %or.cond56.1 = icmp ult i32 %i.pl, -256         ; 2 uses
+  br i1 %.not648, label %.preheader.split.us.1, label %bb.ci
+
+.preheader.split.us.1:                            ; preds = %.preheader.1
+  br i1 %or.cond56.1, label %.loopexit556, label %.critedge.1
 
 bb.ci:                                            ; preds = %.preheader.1
-  br i1 %.not648, label %.critedge.1, label %bb.cj
+  br i1 %or.cond56.1, label %.loopexit556, label %bb.cj
 
 bb.cj:                                            ; preds = %bb.ci
   %i.pm = getelementptr inbounds nuw i8, ptr %i.pc, i64 4
@@ -302,7 +310,7 @@ bb.ck:                                            ; preds = %bb.cj
   %or.cond56.1.2 = icmp ult i32 %i.px, -256
   br i1 %or.cond56.1.2, label %.loopexit556, label %.critedge.1
 
-.critedge.1:                                      ; preds = %bb.ci, %bb.ck, %.critedge
+.critedge.1:                                      ; preds = %.preheader.split.us.1, %bb.ck, %.critedge
   %i.py = getelementptr inbounds nuw i8, ptr %i.na, i64 2
   %i.pz = load i8, ptr %i.py, align 2, !tbaa !60
   %i.qa = icmp eq i8 %i.pz, 2
@@ -310,7 +318,8 @@ bb.ck:                                            ; preds = %bb.cj
 
 .preheader.2:                                     ; preds = %.critedge.1
   %i.qb = load i32, ptr %i.nc, align 4, !tbaa !97
-  %.not649 = icmp eq i32 %i.qb, 0
+  %.fr627 = freeze i32 %i.qb
+  %.not649 = icmp eq i32 %.fr627, 0
   %i.qc = load ptr, ptr %i.nd, align 8, !tbaa !80
   %i.qd = getelementptr inbounds nuw i8, ptr %i.ne, i64 2
   %i.qe = load i8, ptr %i.qd, align 2, !tbaa !60
@@ -331,11 +340,14 @@ bb.ck:                                            ; preds = %bb.cj
   %i.qt = load i32, ptr %i.qr, align 4, !tbaa !7
   %i.qu = add i32 %i.qs, -128
   %i.qv = add i32 %i.qu, %i.qt
-  %or.cond56.2 = icmp ult i32 %i.qv, -256
-  br i1 %or.cond56.2, label %.loopexit556, label %bb.cl
+  %or.cond56.2 = icmp ult i32 %i.qv, -256         ; 2 uses
+  br i1 %.not649, label %.preheader.split.us.2, label %bb.cl
+
+.preheader.split.us.2:                            ; preds = %.preheader.2
+  br i1 %or.cond56.2, label %.loopexit556, label %.critedge.2
 
 bb.cl:                                            ; preds = %.preheader.2
-  br i1 %.not649, label %.critedge.2, label %bb.cm
+  br i1 %or.cond56.2, label %.loopexit556, label %bb.cm
 
 bb.cm:                                            ; preds = %bb.cl
   %i.qw = getelementptr inbounds nuw i8, ptr %i.qm, i64 4
@@ -357,7 +369,7 @@ bb.cn:                                            ; preds = %bb.cm
   %or.cond56.2.2 = icmp ult i32 %i.rh, -256
   br i1 %or.cond56.2.2, label %.loopexit556, label %.critedge.2
 
-.critedge.2:                                      ; preds = %bb.cl, %bb.cn, %.critedge.1
+.critedge.2:                                      ; preds = %.preheader.split.us.2, %bb.cn, %.critedge.1
   %i.ri = getelementptr inbounds nuw i8, ptr %i.na, i64 3
   %i.rj = load i8, ptr %i.ri, align 1, !tbaa !60
   %i.rk = icmp eq i8 %i.rj, 2
@@ -365,7 +377,8 @@ bb.cn:                                            ; preds = %bb.cm
 
 .preheader.3:                                     ; preds = %.critedge.2
   %i.rl = load i32, ptr %i.nc, align 4, !tbaa !97
-  %.not650 = icmp eq i32 %i.rl, 0
+  %.fr629 = freeze i32 %i.rl
+  %.not650 = icmp eq i32 %.fr629, 0
   %i.rm = load ptr, ptr %i.nd, align 8, !tbaa !80
   %i.rn = getelementptr inbounds nuw i8, ptr %i.ne, i64 3
   %i.ro = load i8, ptr %i.rn, align 1, !tbaa !60
@@ -386,11 +399,14 @@ bb.cn:                                            ; preds = %bb.cm
   %i.sd = load i32, ptr %i.sb, align 4, !tbaa !7
   %i.se = add i32 %i.sc, -128
   %i.sf = add i32 %i.se, %i.sd
-  %or.cond56.3 = icmp ult i32 %i.sf, -256
-  br i1 %or.cond56.3, label %.loopexit556, label %bb.co
+  %or.cond56.3 = icmp ult i32 %i.sf, -256         ; 2 uses
+  br i1 %.not650, label %.preheader.split.us.3, label %bb.co
+
+.preheader.split.us.3:                            ; preds = %.preheader.3
+  br i1 %or.cond56.3, label %.loopexit556, label %.critedge484
 
 bb.co:                                            ; preds = %.preheader.3
-  br i1 %.not650, label %.critedge484, label %bb.cp
+  br i1 %or.cond56.3, label %.loopexit556, label %bb.cp
 
 bb.cp:                                            ; preds = %bb.co
   %i.sg = getelementptr inbounds nuw i8, ptr %i.rw, i64 4
@@ -412,7 +428,7 @@ bb.cq:                                            ; preds = %bb.cp
   %or.cond56.3.2 = icmp ult i32 %i.sr, -256
   br i1 %or.cond56.3.2, label %.loopexit556, label %.critedge484
 
-.loopexit556:                                     ; preds = %.preheader, %bb.cg, %bb.ch, %.preheader.1, %bb.cj, %bb.ck, %.preheader.2, %bb.cm, %bb.cn, %.preheader.3, %bb.cp, %bb.cq
+.loopexit556:                                     ; preds = %bb.ch, %bb.cg, %bb.cf, %bb.ck, %bb.cj, %bb.ci, %bb.cn, %bb.cm, %bb.cl, %bb.cq, %bb.cp, %bb.co, %.preheader.split.us, %.preheader.split.us.1, %.preheader.split.us.2, %.preheader.split.us.3
   %i.ss = getelementptr inbounds nuw i8, ptr %.pre574, i64 2120
   %i.st = load i32, ptr %i.ss, align 8, !tbaa !59
   %i.su = icmp ne i32 %i.st, 0
@@ -433,7 +449,7 @@ bb.cs:                                            ; preds = %bb.cr
   store i16 %i.ta, ptr %i.sx, align 2, !tbaa !50
   br label %.critedge484.thread
 
-.critedge484:                                     ; preds = %bb.co, %bb.cq, %.critedge.2, %bb.ce, %bb.cd
+.critedge484:                                     ; preds = %.critedge.2, %bb.cq, %.preheader.split.us.3, %bb.ce, %bb.cd
   %i.tb = sext i32 %i.lv to i64                   ; 2 uses
   %i.tc = getelementptr inbounds [2 x i8], ptr %i.bl, i64 %i.tb
   %i.td = load i16, ptr %i.tc, align 2, !tbaa !50

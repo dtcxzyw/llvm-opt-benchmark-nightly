@@ -204,11 +204,12 @@ bb.t:                                             ; preds = %bb.p
 .lr.ph.i8.i.i:                                    ; preds = %bb.t
   %i.dl = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.dm = load i64, ptr %i.dl, align 8, !alias.scope !296, !noalias !281, !noundef !6
-  %i.dn = load i64, ptr %i.cd, align 8, !alias.scope !296, !noalias !281 ; 4 uses
+  %i.dn = load i64, ptr %i.cd, align 8, !alias.scope !296, !noalias !281
+  %.fr60.i.i.i = freeze i64 %i.dn                 ; 4 uses
   %i.do = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.dp = load i64, ptr %i.do, align 8, !alias.scope !296, !noalias !281 ; 2 uses
   %i.dq = sub i64 %i.co, %i.dp
-  %invariant.op = sub i64 1, %i.dn
+  %invariant.op = sub i64 1, %.fr60.i.i.i
   br label %.lr.ph.split.i.i.i
 
 .lr.ph.split.i.i.i:                               ; preds = %bb.w, %.lr.ph.i8.i.i
@@ -229,7 +230,7 @@ bb.u:                                             ; preds = %.lr.ph.split.i.i.i
   br label %bb.w
 
 bb.v:                                             ; preds = %.lr.ph.split.i.i.i
-  %..i.i10.i.i = tail call noundef i64 @llvm.umax.i64(i64 %.sink70.i.i25.i, i64 %i.dn) ; 2 uses
+  %..i.i10.i.i = tail call noundef i64 @llvm.umax.i64(i64 %.sink70.i.i25.i, i64 %.fr60.i.i.i) ; 2 uses
   %i.dz = icmp ult i64 %..i.i10.i.i, %i.co
   br i1 %i.dz, label %.lr.ph, label %.preheader36.i.i.i.preheader
 
@@ -246,7 +247,7 @@ bb.x:                                             ; preds = %.lr.ph
   br i1 %i.ed, label %.lr.ph, label %.preheader36.i.i.i.preheader
 
 .preheader36.i.i.i.preheader:                     ; preds = %bb.x, %bb.v
-  %i.ee = icmp ult i64 %.sink70.i.i25.i, %i.dn
+  %i.ee = icmp ult i64 %.sink70.i.i25.i, %.fr60.i.i.i
   br i1 %i.ee, label %.lr.ph86, label %.split.us.i11.i.i
 
 .lr.ph:                                           ; preds = %bb.v, %bb.x
@@ -270,7 +271,7 @@ bb.x:                                             ; preds = %.lr.ph
   br label %_RINvMNtCs3oUPovFnLWP_4core3stre10split_onceReECs3tZ2SXJA1qv_8jiff_cli.exit.thread6
 
 .lr.ph86:                                         ; preds = %.preheader36.i.i.i.preheader, %.preheader36.i.i.i
-  %.sroa.2.0.i.i.i85 = phi i64 [ %i.en, %.preheader36.i.i.i ], [ %i.dn, %.preheader36.i.i.i.preheader ]
+  %.sroa.2.0.i.i.i85 = phi i64 [ %i.en, %.preheader36.i.i.i ], [ %.fr60.i.i.i, %.preheader36.i.i.i.preheader ]
   %i.en = add i64 %.sroa.2.0.i.i.i85, -1          ; 6 uses
   %i.eo = icmp ult i64 %i.en, %i.co
   br i1 %i.eo, label %bb.y, label %.split32.us.i.i.i
@@ -414,12 +415,16 @@ bb.ae:                                            ; preds = %bb.ad, %.split.us.i
   br i1 %.not.us.i.i.i, label %bb.ag, label %.preheader35.i.i.i.preheader
 
 .preheader35.i.i.i.preheader:                     ; preds = %.lr.ph.split.us.i.i.i
-  br i1 %exitcond.not.i17.i.i88.not, label %.lr.ph90, label %.preheader.i19.i.i
+  br i1 %exitcond.not.i17.i.i88.not, label %.lr.ph90, label %.preheader.split.i21.i.i
 
 .preheader35.i.i.i:                               ; preds = %.lr.ph90
   %i.gm = add i64 %.sroa.04.0.us.i.i.i89, 1       ; 2 uses
   %exitcond.not.i17.i.i = icmp eq i64 %i.gm, %umax.i.i.i
-  br i1 %exitcond.not.i17.i.i, label %.preheader.i19.i.i, label %.lr.ph90
+  br i1 %exitcond.not.i17.i.i, label %.preheader.split.i21.i.i, label %.lr.ph90
+
+.preheader.split.i21.i.i:                         ; preds = %.preheader35.i.i.i.preheader, %.preheader35.i.i.i
+  %.not34.i.i.i = icmp eq i64 %.fr215.i.i, 0
+  br i1 %.not34.i.i.i, label %.split.us.i21.i.i, label %.split32.us.i22.i.i
 
 .lr.ph90:                                         ; preds = %.preheader35.i.i.i.preheader, %.preheader35.i.i.i
   %.sroa.04.0.us.i.i.i89 = phi i64 [ %i.gm, %.preheader35.i.i.i ], [ %.fr215.i.i, %.preheader35.i.i.i.preheader ] ; 4 uses
@@ -432,14 +437,6 @@ bb.ae:                                            ; preds = %bb.ad, %.split.us.i
   %i.gs = load i8, ptr %i.gr, align 1, !alias.scope !299, !noalias !291, !noundef !6
   %.not21.us.i.i.i = icmp eq i8 %i.go, %i.gs
   br i1 %.not21.us.i.i.i, label %.preheader35.i.i.i, label %bb.af
-
-.preheader.i19.i.i:                               ; preds = %.preheader35.i.i.i.preheader, %.preheader35.i.i.i
-  %.not34.i.i.i = icmp eq i64 %.fr215.i.i, 0
-  br i1 %.not34.i.i.i, label %.split.us.i21.i.i, label %.split32.us.i20.i.i
-
-.split32.us.i20.i.i:                              ; preds = %.preheader.i19.i.i
-  tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %i.fe, i64 noundef range(i64 0, -9223372036854775808) %i.co, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #28, !noalias !302
-  unreachable
 
 bb.af:                                            ; preds = %.lr.ph90
   %.reass282.i.reass.i = add i64 %reass.sub95.i, %.sink.i18.i28.i
@@ -456,10 +453,14 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af
   %i.gw = icmp ult i64 %i.gv, %i.ck
   br i1 %i.gw, label %.lr.ph.split.us.i.i.i, label %_RINvMNtCs3oUPovFnLWP_4core3stre10split_onceReECs3tZ2SXJA1qv_8jiff_cli.exit.thread
 
-.split.us.i21.i.i:                                ; preds = %.preheader.i19.us.i.i.us.preheader, %.preheader.i19.us.i.i.us, %.preheader.i19.i.i
-  %.sink.i18.i28.i16 = phi i64 [ %.sink.i18.i28.i, %.preheader.i19.i.i ], [ %.sink.i18.i28.i.us, %.preheader.i19.us.i.i.us ], [ %.sink.i18.i28.i.us, %.preheader.i19.us.i.i.us.preheader ]
+.split.us.i21.i.i:                                ; preds = %.preheader.i19.us.i.i.us.preheader, %.preheader.i19.us.i.i.us, %.preheader.split.i21.i.i
+  %.sink.i18.i28.i16 = phi i64 [ %.sink.i18.i28.i, %.preheader.split.i21.i.i ], [ %.sink.i18.i28.i.us, %.preheader.i19.us.i.i.us ], [ %.sink.i18.i28.i.us, %.preheader.i19.us.i.i.us.preheader ]
   %i.gx = add i64 %.sink.i18.i28.i16, %i.co
   br label %_RINvMNtCs3oUPovFnLWP_4core3stre10split_onceReECs3tZ2SXJA1qv_8jiff_cli.exit.thread6
+
+.split32.us.i22.i.i:                              ; preds = %.preheader.split.i21.i.i
+  tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %i.fe, i64 noundef range(i64 0, -9223372036854775808) %i.co, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #28, !noalias !302
+  unreachable
 
 _RINvMNtCs3oUPovFnLWP_4core3stre10split_onceReECs3tZ2SXJA1qv_8jiff_cli.exit.thread: ; preds = %bb.w, %bb.ah, %bb.ae, %bb.s, %.preheader.i.i, %.split166.us.i.i, %bb.o, %bb.r, %bb.t, %bb.ab
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !281

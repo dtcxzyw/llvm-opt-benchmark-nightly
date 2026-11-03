@@ -205,44 +205,47 @@ bb.b:                                             ; preds = %._crit_edge
 
 .split:                                           ; preds = %bb.b
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.m
-  %i.p = load i64, ptr %i.o, align 8, !noundef !4 ; 4 uses
+  %i.p = load i64, ptr %i.o, align 8, !noundef !4 ; 5 uses
   %.first_iter = icmp ult i64 %i.m, %i.d
-  %.not65 = icmp eq i64 %i.m, 0
-  br i1 %.not65, label %.loopexit, label %.lr.ph68
+  %.not65 = icmp eq i64 %i.m, 0                   ; 2 uses
+  br i1 %.first_iter, label %bb.c, label %.split.split
+
+bb.c:                                             ; preds = %.split
+  br i1 %.not65, label %.loopexit, label %bb.d
+
+.lr.ph68:                                         ; preds = %bb.d
+  %.not.us = icmp eq i64 %i.q, 0
+  br i1 %.not.us, label %.loopexit, label %bb.d
+
+bb.d:                                             ; preds = %bb.c, %.lr.ph68
+  %.sroa.06.0.us68 = phi i64 [ %i.q, %.lr.ph68 ], [ %i.m, %bb.c ] ; 2 uses
+  %.sroa.012.0.us67 = phi i64 [ %i.t, %.lr.ph68 ], [ %i.p, %bb.c ]
+  %i.q = add i64 %.sroa.06.0.us68, -1             ; 3 uses
+  %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.sroa.06.0.us68
+  %i.s = load i64, ptr %i.r, align 8, !noundef !4
+  %i.t = mul i64 %i.s, %.sroa.012.0.us67          ; 2 uses
+  %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.q
+  %i.v = load i64, ptr %i.u, align 8, !noundef !4
+  %.not29 = icmp eq i64 %i.v, %i.t
+  br i1 %.not29, label %.lr.ph68, label %.loopexit
+
+.split.split:                                     ; preds = %.split
+  br i1 %.not65, label %.loopexit, label %bb.e
 
 2:                                                ; preds = %bb.b
   tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.m, i64 noundef %i.h, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @99) #28
   unreachable
 
-bb.c:                                             ; preds = %bb.d
-  %.not = icmp eq i64 %i.q, 0
-  br i1 %.not, label %.loopexit, label %.lr.ph68
+bb.e:                                             ; preds = %.split.split
+  tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.m, i64 noundef %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @100) #28
+  unreachable
 
-.lr.ph68:                                         ; preds = %.split, %bb.c
-  %.sroa.06.067 = phi i64 [ %i.q, %bb.c ], [ %i.m, %.split ] ; 2 uses
-  %.sroa.012.066 = phi i64 [ %i.t, %bb.c ], [ %i.p, %.split ]
-  br i1 %.first_iter, label %bb.d, label %bb.e
-
-.loopexit:                                        ; preds = %bb.f, %bb.c, %bb.d, %.split, %._crit_edge
-  %.sroa.5.0 = phi i64 [ %i.p, %.split ], [ %.sroa.01.0.lcssa, %._crit_edge ], [ %i.p, %bb.c ], [ %i.p, %bb.d ], [ undef, %bb.f ]
-  %.sroa.0.0 = phi i64 [ 1, %.split ], [ 1, %._crit_edge ], [ 0, %bb.d ], [ 1, %bb.c ], [ 0, %bb.f ]
+.loopexit:                                        ; preds = %bb.f, %.lr.ph68, %bb.d, %bb.c, %.split.split, %._crit_edge
+  %.sroa.5.0 = phi i64 [ %i.p, %bb.c ], [ %.sroa.01.0.lcssa, %._crit_edge ], [ %i.p, %.split.split ], [ %i.p, %.lr.ph68 ], [ %i.p, %bb.d ], [ undef, %bb.f ]
+  %.sroa.0.0 = phi i64 [ 1, %bb.c ], [ 1, %._crit_edge ], [ 1, %.split.split ], [ 0, %bb.d ], [ 1, %.lr.ph68 ], [ 0, %bb.f ]
   %3 = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0
   %4 = insertvalue { i64, i64 } %3, i64 %.sroa.5.0, 1
   ret { i64, i64 } %4
-
-bb.d:                                             ; preds = %.lr.ph68
-  %i.q = add i64 %.sroa.06.067, -1                ; 3 uses
-  %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.b, i64 %.sroa.06.067
-  %i.s = load i64, ptr %i.r, align 8, !noundef !4
-  %i.t = mul i64 %i.s, %.sroa.012.066             ; 2 uses
-  %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.q
-  %i.v = load i64, ptr %i.u, align 8, !noundef !4
-  %.not29 = icmp eq i64 %i.v, %i.t
-  br i1 %.not29, label %bb.c, label %.loopexit
-
-bb.e:                                             ; preds = %.lr.ph68
-  tail call void @_RNvNtCsf3Ta7LF998c_4core9panicking18panic_bounds_check(i64 noundef %i.m, i64 noundef %i.d, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @100) #28
-  unreachable
 
 bb.f:                                             ; preds = %.lr.ph
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %i.f, i64 %i.k

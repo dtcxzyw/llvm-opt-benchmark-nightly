@@ -205,19 +205,22 @@ select.unfold._crit_edge.i.i.i.i.i:               ; preds = %.critedge.preheader
 .lr.ph117.split.i.i.i.i.i:                        ; preds = %.lr.ph117.i.i.i.i.i, %.critedge.select.unfold.loopexit_crit_edge.i.i.i.i.i
   %.sroa.018.1116.i.i.i.i.i = phi i64 [ %i.xr, %.critedge.select.unfold.loopexit_crit_edge.i.i.i.i.i ], [ %spec.select.i.i.i.i.i, %.lr.ph117.i.i.i.i.i ] ; 5 uses
   %i.xr = add i64 %.sroa.018.1116.i.i.i.i.i, -1   ; 6 uses
-  br i1 %.not.i.i.i.i4.i.i, label %.critedge.preheader.i.i.i.i.i.a, label %bb.cv
+  br i1 %.not.i.i.i.i4.i.i, label %.critedge.preheader.i.i.i.i.i, label %bb.cv
 
-.critedge.preheader.i.i.i.i.i.a:                  ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit.i.i.i7.i.i, %.split.i.i.i14.i.i, %.lr.ph117.split.i.i.i.i.i
+.critedge.preheader.i.i.i.i.i:                    ; preds = %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit.i.i.i7.i.i, %.split.i.i.i14.i.i, %.lr.ph117.split.i.i.i.i.i
   %4 = add i64 %i.xr, %i.wq                       ; 3 uses
   %5 = icmp ult i64 %4, %i.wz
-  %6 = getelementptr inbounds nuw [16 x i8], ptr %i.xb, i64 %4 ; 2 uses
-  %i.xs = getelementptr inbounds nuw i8, ptr %6, i64 8
-  %7 = getelementptr inbounds nuw [24 x i8], ptr %i.xb, i64 %4 ; 2 uses
-  %8 = getelementptr i8, ptr %7, i64 8
-  %i.xt = getelementptr i8, ptr %7, i64 16
-  %.121.i.i.i.i.i = select i1 %i.wy, ptr %8, ptr %6
-  %.120.i.i.i.i.i = select i1 %i.wy, ptr %i.xt, ptr %i.xs
-  br i1 %5, label %.critedge.preheader.i.split.i.i.i.i, label %.invoke.i.split.i.i.i.i
+  br i1 %5, label %.critedge.preheader.i.i.i.i.i.a, label %.invoke.i.split.i.i.i.i
+
+.critedge.preheader.i.i.i.i.i.a:                  ; preds = %.critedge.preheader.i.i.i.i.i
+  %6 = getelementptr inbounds nuw [24 x i8], ptr %i.xb, i64 %4 ; 2 uses
+  %i.xs = getelementptr i8, ptr %6, i64 16
+  %7 = getelementptr i8, ptr %6, i64 8
+  %8 = getelementptr inbounds nuw [16 x i8], ptr %i.xb, i64 %4 ; 2 uses
+  %i.xt = getelementptr inbounds nuw i8, ptr %8, i64 8
+  %.121.i.i.i.i.i = select i1 %i.wy, ptr %7, ptr %8
+  %.120.i.i.i.i.i = select i1 %i.wy, ptr %i.xs, ptr %i.xt
+  br label %.critedge.preheader.i.split.i.i.i.i
 
 bb.cv:                                            ; preds = %.lr.ph117.split.i.i.i.i.i
   %i.xu = invoke { i64, i32 } @_RNvMNtCsaKJjC64KgbL_3std4timeNtB2_7Instant3now()
@@ -233,7 +236,7 @@ bb.cv:                                            ; preds = %.lr.ph117.split.i.i
   %i.xy = icmp ult i32 %i.xx, 1000000000
   call void @llvm.assume(i1 %i.xy)
   %i.xz = icmp samesign ugt i32 %i.xx, %.sroa.4.0
-  br i1 %i.xz, label %.split119.us.i.i.i.i.i, label %.critedge.preheader.i.i.i.i.i.a
+  br i1 %i.xz, label %.split119.us.i.i.i.i.i, label %.critedge.preheader.i.i.i.i.i
 
 .loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.cv, %bb.do, %.lr.ph117.split.us.split.i.i.i.i.i, %.invoke.i.split.i.i.i.i
   %lpad.loopexit.split-lp462 = landingpad { ptr, i32 }
@@ -243,7 +246,7 @@ bb.cv:                                            ; preds = %.lr.ph117.split.i.i
 
 _RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit.i.i.i7.i.i: ; preds = %.noexc.i.i.i6.i.i
   %i.ya = icmp sgt i64 %i.xv, %.sroa.01.0
-  br i1 %i.ya, label %.split119.us.i.i.i.i.i, label %.critedge.preheader.i.i.i.i.i.a
+  br i1 %i.ya, label %.split119.us.i.i.i.i.i, label %.critedge.preheader.i.i.i.i.i
 
 .split119.us.thread.i.i.i.i.i:                    ; preds = %.split.us.i.i.i.i.i, %_RNvNtCsdftwklc2oBO_7similar16deadline_support17deadline_exceeded.exit.us.i.i.i.i.i
   store i64 0, ptr %i.an, align 8, !alias.scope !1049, !noalias !1048
@@ -309,8 +312,8 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtNtNtCs4wP2HXfJTCR_5alloc11collectio
   call void @llvm.lifetime.end.p0(ptr nonnull %i.al), !noalias !1061
   br label %_RINvNtNtCsdftwklc2oBO_7similar10algorithms3lcs10make_tableINtNtB6_4text12TextDiffSideeEBU_EB6_.exit.i.i.i.i
 
-.critedge.preheader.i.split.i.i.i.i:              ; preds = %.critedge.preheader.i.i.i.i.i.a, %.critedge.i.i.i11.i.i
-  %.sroa.026.0114.i.i.i.i.i = phi i64 [ %i.yf, %.critedge.i.i.i11.i.i ], [ %.sroa.013.0.i.i.i.i.i, %.critedge.preheader.i.i.i.i.i.a ] ; 3 uses
+.critedge.preheader.i.split.i.i.i.i:              ; preds = %.critedge.i.i.i11.i.i, %.critedge.preheader.i.i.i.i.i.a
+  %.sroa.026.0114.i.i.i.i.i = phi i64 [ %.sroa.013.0.i.i.i.i.i, %.critedge.preheader.i.i.i.i.i.a ], [ %i.yf, %.critedge.i.i.i11.i.i ] ; 3 uses
   %i.yf = add i64 %.sroa.026.0114.i.i.i.i.i, -1   ; 5 uses
   %.sroa.0.1.i.i.i.i.i8.i.i = load ptr, ptr %.121.i.i.i.i.i, align 8, !noalias !1063, !nonnull !5, !noundef !5
   %.sroa.5.1.i.i.i.i.i9.i.i = load i64, ptr %.120.i.i.i.i.i, align 8, !noalias !1063, !noundef !5 ; 2 uses
@@ -335,8 +338,8 @@ bb.db:                                            ; preds = %bb.cy
   %i.ym = getelementptr i8, ptr %i.yk, i64 16
   br label %bb.dc
 
-.invoke.i.split.i.i.i.i:                          ; preds = %.critedge.preheader.i.i.i.i.i.a, %bb.cz, %bb.cy
-  %.split.i.i.i.i = phi ptr [ @12, %bb.cz ], [ @12, %bb.cy ], [ @11, %.critedge.preheader.i.i.i.i.i.a ]
+.invoke.i.split.i.i.i.i:                          ; preds = %.critedge.preheader.i.i.i.i.i, %bb.cz, %bb.cy
+  %.split.i.i.i.i = phi ptr [ @12, %bb.cz ], [ @12, %bb.cy ], [ @11, %.critedge.preheader.i.i.i.i.i ]
   invoke void @_RNvNtCsj6eKBz9Db1c_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @201, i64 noundef 19, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %.split.i.i.i.i) #37
           to label %.cont.i.i.i.i.i unwind label %.loopexit.split-lp.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !1055
 

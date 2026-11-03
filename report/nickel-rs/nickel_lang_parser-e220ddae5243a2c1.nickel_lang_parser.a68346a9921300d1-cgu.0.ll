@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 "_ZN55_$LT$$RF$str$u20$as$u20$core..str..pattern..Pattern$GT$13into_searcher17hd8e29eddd8da5a41E.exit": ; preds = %"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17h4a2f313bb5199067E.exit"
   %.sroa.0114.0.copyload = load i64, ptr %i.a, align 8
   %.sroa.4115.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %.sroa.4115.0.copyload = load i64, ptr %.sroa.4115.0..sroa_idx, align 8 ; 25 uses
+  %.sroa.4115.0.copyload = load i64, ptr %.sroa.4115.0..sroa_idx, align 8 ; 26 uses
   %.sroa.6117.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %.sroa.6117.0.copyload = load i64, ptr %.sroa.6117.0..sroa_idx, align 8 ; 5 uses
   %.sroa.7118.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32
@@ -231,8 +231,10 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.12123.0.copyload), "nonnull"(ptr %.sroa.14.0.copyload) ]
   %i.i = sub i64 %.sroa.15.0.copyload, %.sroa.6117.0.copyload
   %umax50.i.us = call i64 @llvm.umax.i64(i64 %.sroa.4115.0.copyload, i64 %.sroa.15.0.copyload)
-  %i.j = add i64 %.sroa.4115.0.copyload, -1
+  %i.j = add i64 %.sroa.4115.0.copyload, -1       ; 2 uses
   %.first_iter = icmp ult i64 %i.j, %.sroa.15.0.copyload
+  %.first_iter.fr = freeze i1 %.first_iter
+  %.not147.us = icmp eq i64 %.sroa.4115.0.copyload, 0
   %invariant.op = sub i64 1, %.sroa.4115.0.copyload
   %exitcond.not.i.us63.not = icmp ult i64 %.sroa.4115.0.copyload, %.sroa.15.0.copyload
   %invariant.op188 = sub i64 1, %.sroa.4115.0.copyload
@@ -347,7 +349,7 @@ bb.o:                                             ; preds = %bb.e
 
 .lr.ph.i44.us:                                    ; preds = %bb.o, %bb.v
   %i.av = phi i64 [ %i.bv, %bb.v ], [ %i.n, %bb.o ]
-  %i.aw = phi i64 [ %i.bu, %bb.v ], [ %.sroa.18.0.us, %bb.o ] ; 8 uses
+  %i.aw = phi i64 [ %i.bu, %bb.v ], [ %.sroa.18.0.us, %bb.o ] ; 9 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %.sroa.12123.0.copyload, i64 %i.av
   %i.ay = load i8, ptr %i.ax, align 1, !alias.scope !498148, !noundef !19
   %i.az = and i8 %i.ay, 63
@@ -358,74 +360,77 @@ bb.o:                                             ; preds = %bb.e
   br i1 %i.bd, label %bb.u, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %.lr.ph.i44.us
-  br i1 %exitcond.not.i.us63.not, label %.lr.ph65, label %.preheader.us.preheader.a
+  br i1 %exitcond.not.i.us63.not, label %bb.r, label %.preheader.us.preheader
 
-.preheader:                                       ; preds = %bb.p
-  %i.be = add nuw i64 %.sroa.02.0.i.us64, 1       ; 2 uses
+.preheader:                                       ; preds = %bb.s
+  %i.be = add nuw i64 %.sroa.02.0.i.us68, 1       ; 2 uses
   %exitcond.not.i.us = icmp eq i64 %i.be, %umax50.i.us
-  br i1 %exitcond.not.i.us, label %.preheader.us.preheader.a, label %.lr.ph65
+  br i1 %exitcond.not.i.us, label %.preheader.us.preheader, label %bb.r
 
-.preheader.us.preheader.a:                        ; preds = %.preheader, %.preheader.preheader
-  br i1 %.not147.us66, label %.loopexit.i.us, label %.lr.ph68
+.preheader.us.preheader:                          ; preds = %.preheader, %.preheader.preheader
+  br i1 %.first_iter.fr, label %.preheader.us.us.preheader, label %.lr.ph68
 
-.lr.ph65:                                         ; preds = %.preheader.preheader, %.preheader
-  %.sroa.02.0.i.us64 = phi i64 [ %i.be, %.preheader ], [ %.sroa.4115.0.copyload, %.preheader.preheader ] ; 4 uses
-  %i.bf = add i64 %.sroa.02.0.i.us64, %i.aw       ; 2 uses
+.preheader.us.us.preheader:                       ; preds = %.preheader.us.preheader
+  br i1 %.not147.us66, label %.loopexit.i.us, label %.lr.ph65
+
+.preheader.us.preheader.a:                        ; preds = %bb.p
+  %.not147.us.us = icmp eq i64 %6, 0
+  br i1 %.not147.us.us, label %.loopexit.i.us, label %.lr.ph65
+
+.lr.ph65:                                         ; preds = %.preheader.us.us.preheader, %.preheader.us.preheader.a
+  %.sroa.02.0.i.us64 = phi i64 [ %6, %.preheader.us.preheader.a ], [ %.sroa.4115.0.copyload, %.preheader.us.us.preheader ]
+  %6 = add i64 %.sroa.02.0.i.us64, -1             ; 4 uses
+  %i.bf = add i64 %6, %i.aw                       ; 3 uses
   %i.bg = icmp ult i64 %i.bf, %.sroa.13124.0.copyload
-  br i1 %i.bg, label %bb.p, label %.split213.us
+  br i1 %i.bg, label %bb.p, label %.split.us.invoke
 
 bb.p:                                             ; preds = %.lr.ph65
-  %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.14.0.copyload, i64 %.sroa.02.0.i.us64
+  %i.bh = getelementptr inbounds nuw i8, ptr %.sroa.14.0.copyload, i64 %6
   %i.bi = load i8, ptr %i.bh, align 1, !alias.scope !498149, !noundef !19
   %i.bj = getelementptr inbounds nuw i8, ptr %.sroa.12123.0.copyload, i64 %i.bf
   %i.bk = load i8, ptr %i.bj, align 1, !alias.scope !498148, !noundef !19
   %.not22.i.us.a = icmp eq i8 %i.bi, %i.bk
-  br i1 %.not22.i.us.a, label %.preheader, label %bb.q
+  br i1 %.not22.i.us.a, label %.preheader.us.preheader.a, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  %.reass374.reass = add i64 %i.aw, %invariant.op188
-  %i.bl = add i64 %.reass374.reass, %.sroa.02.0.i.us64
+  %i.bl = add i64 %.sroa.6117.0.copyload, %i.aw
   br label %bb.v
 
-.preheader.us:                                    ; preds = %bb.s
-  %.not147.us = icmp eq i64 %6, 0
-  br i1 %.not147.us, label %.loopexit.i.us, label %.lr.ph68
+.lr.ph68:                                         ; preds = %.preheader.us.preheader
+  br i1 %.not147.us, label %.loopexit.i.us, label %.split.us.invoke
 
-.lr.ph68:                                         ; preds = %.preheader.us.preheader.a, %.preheader.us
-  %.sroa.57.0.i.us67 = phi i64 [ %6, %.preheader.us ], [ %.sroa.4115.0.copyload, %.preheader.us.preheader.a ]
-  %6 = add i64 %.sroa.57.0.i.us67, -1             ; 5 uses
-  br i1 %.first_iter, label %bb.r, label %.split.us.invoke
-
-bb.r:                                             ; preds = %.lr.ph68
-  %i.bm = add i64 %6, %i.aw                       ; 3 uses
+bb.r:                                             ; preds = %.preheader.preheader, %.preheader
+  %.sroa.02.0.i.us68 = phi i64 [ %i.be, %.preheader ], [ %.sroa.4115.0.copyload, %.preheader.preheader ] ; 4 uses
+  %i.bm = add i64 %.sroa.02.0.i.us68, %i.aw       ; 2 uses
   %i.bn = icmp ult i64 %i.bm, %.sroa.13124.0.copyload
-  br i1 %i.bn, label %bb.s, label %.split.us.invoke
+  br i1 %i.bn, label %bb.s, label %.split213.us
 
 bb.s:                                             ; preds = %bb.r
-  %i.bo = getelementptr inbounds nuw i8, ptr %.sroa.14.0.copyload, i64 %6
+  %i.bo = getelementptr inbounds nuw i8, ptr %.sroa.14.0.copyload, i64 %.sroa.02.0.i.us68
   %i.bp = load i8, ptr %i.bo, align 1, !alias.scope !498149, !noundef !19
   %i.bq = getelementptr inbounds nuw i8, ptr %.sroa.12123.0.copyload, i64 %i.bm
   %i.br = load i8, ptr %i.bq, align 1, !alias.scope !498148, !noundef !19
   %.not.i.us = icmp eq i8 %i.bp, %i.br
-  br i1 %.not.i.us, label %.preheader.us, label %bb.t
+  br i1 %.not.i.us, label %.preheader, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.bs = add i64 %.sroa.6117.0.copyload, %i.aw
+  %.reass380.reass = add i64 %i.aw, %invariant.op188
+  %i.bs = add i64 %.reass380.reass, %.sroa.02.0.i.us68
   br label %bb.v
 
 bb.u:                                             ; preds = %.lr.ph.i44.us
   %i.bt = add i64 %i.aw, %.sroa.15.0.copyload
   br label %bb.v
 
-bb.v:                                             ; preds = %bb.u, %bb.t, %bb.q
-  %i.bu = phi i64 [ %i.bl, %bb.q ], [ %i.bs, %bb.t ], [ %i.bt, %bb.u ] ; 2 uses
+bb.v:                                             ; preds = %bb.u, %bb.q, %bb.t
+  %i.bu = phi i64 [ %i.bs, %bb.t ], [ %i.bl, %bb.q ], [ %i.bt, %bb.u ] ; 2 uses
   %i.bv = add i64 %i.bu, %i.h                     ; 2 uses
   %i.bw = icmp ult i64 %i.bv, %.sroa.13124.0.copyload
   br i1 %i.bw, label %.lr.ph.i44.us, label %.critedge25
 
-.loopexit.i.us:                                   ; preds = %.preheader149.us.preheader, %.preheader.us.preheader.a, %.preheader149.us, %.preheader.us
-  %.sroa.7126.1.us = phi i64 [ %i.aw, %.preheader.us ], [ %i.r, %.preheader149.us ], [ %i.aw, %.preheader.us.preheader.a ], [ %i.r, %.preheader149.us.preheader ] ; 2 uses
-  %.sroa.3079.1.us = phi i64 [ -1, %.preheader.us ], [ 0, %.preheader149.us ], [ -1, %.preheader.us.preheader.a ], [ 0, %.preheader149.us.preheader ]
+.loopexit.i.us:                                   ; preds = %.preheader149.us.preheader, %.preheader.us.us.preheader, %.preheader149.us, %.preheader.us.preheader.a, %.lr.ph68
+  %.sroa.7126.1.us = phi i64 [ %i.aw, %.preheader.us.preheader.a ], [ %i.aw, %.lr.ph68 ], [ %i.r, %.preheader149.us ], [ %i.aw, %.preheader.us.us.preheader ], [ %i.r, %.preheader149.us.preheader ] ; 2 uses
+  %.sroa.3079.1.us = phi i64 [ -1, %.preheader.us.preheader.a ], [ -1, %.lr.ph68 ], [ 0, %.preheader149.us ], [ -1, %.preheader.us.us.preheader ], [ 0, %.preheader149.us.preheader ]
   %.sroa.11127.1.us = add i64 %.sroa.7126.1.us, %.sroa.15.0.copyload ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 %.sroa.08.0.us
   call void @llvm.experimental.noalias.scope.decl(metadata !498150)
@@ -828,17 +833,17 @@ bb.bd:                                            ; preds = %bb.bc
   %umax.i57 = call i64 @llvm.umax.i64(i64 %.sroa.13124.0.copyload, i64 %i.ih)
   br label %.split.us.invoke
 
-.split.us.invoke:                                 ; preds = %bb.k, %.lr.ph61, %bb.r, %.lr.ph68, %.split213.us, %.split.us
-  %i.ii = phi i64 [ %umax.i57, %.split.us ], [ %umax.i, %.split213.us ], [ %6, %.lr.ph68 ], [ %i.bm, %bb.r ], [ %i.aj, %.lr.ph61 ], [ %i.al, %bb.k ]
-  %i.ij = phi i64 [ %.sroa.13124.0.copyload, %.split.us ], [ %.sroa.13124.0.copyload, %.split213.us ], [ %.sroa.15.0.copyload, %.lr.ph68 ], [ %.sroa.13124.0.copyload, %bb.r ], [ %.sroa.15.0.copyload, %.lr.ph61 ], [ %.sroa.13124.0.copyload, %bb.k ]
-  %i.ik = phi ptr [ @10205, %.split.us ], [ @10205, %.split213.us ], [ @10203, %.lr.ph68 ], [ @10204, %bb.r ], [ @10203, %.lr.ph61 ], [ @10204, %bb.k ]
+.split.us.invoke:                                 ; preds = %.lr.ph68, %bb.k, %.lr.ph61, %.lr.ph65, %.split213.us, %.split.us
+  %i.ii = phi i64 [ %umax.i57, %.split.us ], [ %i.aj, %.lr.ph61 ], [ %i.bf, %.lr.ph65 ], [ %umax.i, %.split213.us ], [ %i.al, %bb.k ], [ %i.j, %.lr.ph68 ]
+  %i.ij = phi i64 [ %.sroa.13124.0.copyload, %.split.us ], [ %.sroa.15.0.copyload, %.lr.ph61 ], [ %.sroa.13124.0.copyload, %.lr.ph65 ], [ %.sroa.13124.0.copyload, %.split213.us ], [ %.sroa.13124.0.copyload, %bb.k ], [ %.sroa.15.0.copyload, %.lr.ph68 ]
+  %i.ik = phi ptr [ @10205, %.split.us ], [ @10203, %.lr.ph61 ], [ @10204, %.lr.ph65 ], [ @10205, %.split213.us ], [ @10204, %bb.k ], [ @10203, %.lr.ph68 ]
   invoke void @_ZN4core9panicking18panic_bounds_check17hbc09f5d79f1a5789E(i64 noundef %i.ii, i64 noundef %i.ij, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ik) #52
           to label %.split.us.cont unwind label %.loopexit.split.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp
 
 .split.us.cont:                                   ; preds = %.split.us.invoke
   unreachable
 
-.split213.us:                                     ; preds = %.lr.ph65
+.split213.us:                                     ; preds = %bb.r
   %i.il = add i64 %i.aw, %.sroa.4115.0.copyload
   %umax.i = call i64 @llvm.umax.i64(i64 %.sroa.13124.0.copyload, i64 %i.il)
   br label %.split.us.invoke

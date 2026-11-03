@@ -205,31 +205,38 @@ _ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit.
 
 .lr.ph332:                                        ; preds = %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit, %.lr.ph354
   %i.dy = phi ptr [ %.fr7.i.i, %.lr.ph354 ], [ %.fr364, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit ] ; 3 uses
-  %i.dz = phi ptr [ %i.dw, %.lr.ph354 ], [ %i.fy, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit ] ; 2 uses
+  %i.dz = phi ptr [ %i.dw, %.lr.ph354 ], [ %i.fy, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit ] ; 3 uses
   %.sroa.6305.0352 = phi i32 [ %.sroa.2.0.i439, %.lr.ph354 ], [ %.sroa.6305.1, %_ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit ] ; 9 uses
-  %.sroa.8.8.insert.ext = zext i32 %.sroa.6305.0352 to i64 ; 5 uses
+  %.sroa.8.8.insert.ext = zext i32 %.sroa.6305.0352 to i64 ; 6 uses
   %i.ea = getelementptr inbounds nuw [8 x i8], ptr %i.dz, i64 %.sroa.8.8.insert.ext
-  %i.eb = load ptr, ptr %i.ea, align 8, !tbaa !90
+  %i.eb = load ptr, ptr %i.ea, align 8, !tbaa !90 ; 2 uses
   %i.ec = icmp eq ptr %i.dy, null
   %i.ed = getelementptr inbounds i8, ptr %i.dy, i64 -4
   %i.ee = load ptr, ptr %i.dx, align 8
-  br label %bb.s
+  br i1 %i.ec, label %.lr.ph332.split.us, label %bb.s
+
+.lr.ph332.split.us:                               ; preds = %.lr.ph332
+  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.dz, i64 %.sroa.8.8.insert.ext
+  %13 = load ptr, ptr %12, align 8, !tbaa !90     ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 4
+  %15 = load i32, ptr %14, align 4
+  %16 = and i32 %15, 65535
+  %17 = icmp eq i32 %16, 1
+  %spec.select = select i1 %17, ptr %i.eb, ptr %13
+  br label %.lr.ph342.preheader
 
 bb.s:                                             ; preds = %.lr.ph332, %_ZN15obj_equiv_classI4expr11ast_managerE8iteratorppEv.exit
-  %.sroa.6285.8.extract.trunc330 = phi i32 [ %.sroa.6305.0352, %.lr.ph332 ], [ %.0.i.i, %_ZN15obj_equiv_classI4expr11ast_managerE8iteratorppEv.exit ] ; 3 uses
-  %.sroa.6285.0329 = phi i64 [ %.sroa.8.8.insert.ext, %.lr.ph332 ], [ %.sroa.6285.8.insert.ext, %_ZN15obj_equiv_classI4expr11ast_managerE8iteratorppEv.exit ] ; 2 uses
+  %.sroa.6285.8.extract.trunc330 = phi i32 [ %.0.i.i, %_ZN15obj_equiv_classI4expr11ast_managerE8iteratorppEv.exit ], [ %.sroa.6305.0352, %.lr.ph332 ] ; 2 uses
+  %.sroa.6285.0329 = phi i64 [ %.sroa.6285.8.insert.ext, %_ZN15obj_equiv_classI4expr11ast_managerE8iteratorppEv.exit ], [ %.sroa.8.8.insert.ext, %.lr.ph332 ] ; 2 uses
   %i.ef = getelementptr inbounds nuw [8 x i8], ptr %i.dz, i64 %.sroa.6285.0329
   %i.eg = load ptr, ptr %i.ef, align 8, !tbaa !90 ; 2 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %i.eg, i64 4
   %i.ei = load i32, ptr %i.eh, align 4
   %i.ej = and i32 %i.ei, 65535
   %i.ek = icmp eq i32 %i.ej, 1
-  br i1 %i.ek, label %12, label %.lr.ph342.preheader
+  br i1 %i.ek, label %_ZNK16basic_union_find12get_num_varsEv.exit.i.i, label %.lr.ph342.preheader
 
-12:                                               ; preds = %bb.s
-  br i1 %i.ec, label %_ZN15obj_equiv_classI4expr11ast_managerE8iteratorppEv.exit, label %_ZNK16basic_union_find12get_num_varsEv.exit.i.i
-
-_ZNK16basic_union_find12get_num_varsEv.exit.i.i:  ; preds = %12
+_ZNK16basic_union_find12get_num_varsEv.exit.i.i:  ; preds = %bb.s
   %i.el = load i32, ptr %i.ed, align 4, !tbaa !77
   %.not.i.i164 = icmp ugt i32 %i.el, %.sroa.6285.8.extract.trunc330
   br i1 %.not.i.i164, label %bb.t, label %_ZN15obj_equiv_classI4expr11ast_managerE8iteratorppEv.exit
@@ -239,14 +246,14 @@ bb.t:                                             ; preds = %_ZNK16basic_union_f
   %i.en = load i32, ptr %i.em, align 4, !tbaa !77
   br label %_ZN15obj_equiv_classI4expr11ast_managerE8iteratorppEv.exit
 
-_ZN15obj_equiv_classI4expr11ast_managerE8iteratorppEv.exit: ; preds = %12, %_ZNK16basic_union_find12get_num_varsEv.exit.i.i, %bb.t
-  %.0.i.i = phi i32 [ %i.en, %bb.t ], [ %.sroa.6285.8.extract.trunc330, %_ZNK16basic_union_find12get_num_varsEv.exit.i.i ], [ %.sroa.6285.8.extract.trunc330, %12 ] ; 3 uses
+_ZN15obj_equiv_classI4expr11ast_managerE8iteratorppEv.exit: ; preds = %_ZNK16basic_union_find12get_num_varsEv.exit.i.i, %bb.t
+  %.0.i.i = phi i32 [ %i.en, %bb.t ], [ %.sroa.6285.8.extract.trunc330, %_ZNK16basic_union_find12get_num_varsEv.exit.i.i ] ; 3 uses
   %.sroa.6285.8.insert.ext = zext i32 %.0.i.i to i64
   %.not361 = icmp eq i32 %.sroa.6305.0352, %.0.i.i
   br i1 %.not361, label %.lr.ph342.preheader, label %bb.s
 
-.lr.ph342.preheader:                              ; preds = %_ZN15obj_equiv_classI4expr11ast_managerE8iteratorppEv.exit, %bb.s
-  %.2105.ph = phi ptr [ %i.eg, %bb.s ], [ %i.eb, %_ZN15obj_equiv_classI4expr11ast_managerE8iteratorppEv.exit ] ; 2 uses
+.lr.ph342.preheader:                              ; preds = %bb.s, %_ZN15obj_equiv_classI4expr11ast_managerE8iteratorppEv.exit, %.lr.ph332.split.us
+  %.us-phi = phi ptr [ %spec.select, %.lr.ph332.split.us ], [ %i.eg, %bb.s ], [ %i.eb, %_ZN15obj_equiv_classI4expr11ast_managerE8iteratorppEv.exit ] ; 2 uses
   %.pre380 = load ptr, ptr %i.j, align 8, !tbaa !79
   br label %.lr.ph342
 
@@ -302,7 +309,7 @@ _ZN15obj_equiv_classI4expr11ast_managerE8iteratorppEv.exit190: ; preds = %.crite
 bb.v:                                             ; preds = %_ZNK15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE4sizeEv.exit
   %i.fi = getelementptr inbounds nuw [8 x i8], ptr %i.eu, i64 %indvars.iv376
   %i.fj = load ptr, ptr %i.fi, align 8, !tbaa !90
-  %i.fk = invoke noundef ptr @_ZN7datalog19mk_array_eq_rewrite7replaceEP4exprS2_S2_(ptr noundef nonnull align 8 dereferenceable(84) %0, ptr noundef %i.fj, ptr noundef %.2105.ph, ptr noundef %i.es)
+  %i.fk = invoke noundef ptr @_ZN7datalog19mk_array_eq_rewrite7replaceEP4exprS2_S2_(ptr noundef nonnull align 8 dereferenceable(84) %0, ptr noundef %i.fj, ptr noundef %.us-phi, ptr noundef %i.es)
           to label %bb.w unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 3 uses
 
 bb.w:                                             ; preds = %bb.v
@@ -441,7 +448,7 @@ _ZN15obj_equiv_classI4expr11ast_managerE14equiv_iteratorppEv.exit: ; preds = %_Z
   %i.gu = getelementptr inbounds nuw [8 x i8], ptr %i.gt, i64 %.sroa.6.0345
   %i.gv = load ptr, ptr %i.gu, align 8, !tbaa !90
   %i.gw = load ptr, ptr %i.g, align 8, !tbaa !78, !nonnull !69, !align !70
-  %i.gx = invoke noundef ptr @_ZN11ast_manager6mk_appEiiP4exprS1_(ptr noundef nonnull align 8 dereferenceable(952) %i.gw, i32 noundef 0, i32 noundef 2, ptr noundef %i.gv, ptr noundef %.2105.ph)
+  %i.gx = invoke noundef ptr @_ZN11ast_manager6mk_appEiiP4exprS1_(ptr noundef nonnull align 8 dereferenceable(952) %i.gw, i32 noundef 0, i32 noundef 2, ptr noundef %i.gv, ptr noundef %.us-phi)
           to label %_ZN11ast_manager5mk_eqEP4exprS1_.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 3 uses
 
 _ZN11ast_manager5mk_eqEP4exprS1_.exit:            ; preds = %.lr.ph347

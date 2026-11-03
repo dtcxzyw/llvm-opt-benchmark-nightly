@@ -204,11 +204,12 @@ bb.q:                                             ; preds = %bb.k
 .lr.ph.i1.i:                                      ; preds = %bb.q
   %i.cp = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.cq = load i64, ptr %i.cp, align 8, !alias.scope !63, !noundef !6
-  %i.cr = load i64, ptr %i.d, align 8, !alias.scope !63 ; 4 uses
+  %i.cr = load i64, ptr %i.d, align 8, !alias.scope !63
+  %.fr60.i.i = freeze i64 %i.cr                   ; 4 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.ct = load i64, ptr %i.cs, align 8, !alias.scope !63 ; 2 uses
   %i.cu = sub i64 %i.bs, %i.ct
-  %invariant.op = sub i64 1, %i.cr
+  %invariant.op = sub i64 1, %.fr60.i.i
   br label %.lr.ph.split.i.i
 
 .lr.ph.split.i.i:                                 ; preds = %bb.t, %.lr.ph.i1.i
@@ -229,7 +230,7 @@ bb.r:                                             ; preds = %.lr.ph.split.i.i
   br label %bb.t
 
 bb.s:                                             ; preds = %.lr.ph.split.i.i
-  %..i.i3.i = tail call noundef i64 @llvm.umax.i64(i64 %.sink.i4.i30, i64 %i.cr) ; 2 uses
+  %..i.i3.i = tail call noundef i64 @llvm.umax.i64(i64 %.sink.i4.i30, i64 %.fr60.i.i) ; 2 uses
   %i.de = icmp ult i64 %..i.i3.i, %i.bs
   br i1 %i.de, label %.lr.ph, label %.preheader36.i.i.preheader
 
@@ -246,7 +247,7 @@ bb.u:                                             ; preds = %.lr.ph
   br i1 %i.dj, label %.lr.ph, label %.preheader36.i.i.preheader
 
 .preheader36.i.i.preheader:                       ; preds = %bb.u, %bb.s
-  %i.dk = icmp ult i64 %.sink.i4.i30, %i.cr
+  %i.dk = icmp ult i64 %.sink.i4.i30, %.fr60.i.i
   br i1 %i.dk, label %.lr.ph18, label %_RNvXsv_NtNtCs6JMX4GRUq9U_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit
 
 .lr.ph:                                           ; preds = %bb.s, %bb.u
@@ -266,7 +267,7 @@ bb.u:                                             ; preds = %.lr.ph
   br i1 %i.dr, label %.lr.ph18, label %_RNvXsv_NtNtCs6JMX4GRUq9U_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit
 
 .lr.ph18:                                         ; preds = %.preheader36.i.i.preheader, %.preheader36.i.i
-  %.sroa.2.0.i.i17 = phi i64 [ %i.ds, %.preheader36.i.i ], [ %i.cr, %.preheader36.i.i.preheader ]
+  %.sroa.2.0.i.i17 = phi i64 [ %i.ds, %.preheader36.i.i ], [ %.fr60.i.i, %.preheader36.i.i.preheader ]
   %i.ds = add i64 %.sroa.2.0.i.i17, -1            ; 6 uses
   %i.dt = icmp ult i64 %i.ds, %i.bs
   br i1 %i.dt, label %bb.v, label %.split32.us.i.i
@@ -410,12 +411,16 @@ bb.ab:                                            ; preds = %bb.aa, %.split.us.u
   br i1 %.not.us.i.i, label %bb.ad, label %.preheader35.i.i.preheader
 
 .preheader35.i.i.preheader:                       ; preds = %.lr.ph.split.us.i.i
-  br i1 %exitcond.not.i.i20.not, label %.lr.ph22, label %.preheader.i10.i
+  br i1 %exitcond.not.i.i20.not, label %.lr.ph22, label %.preheader.split.i13.i
 
 .preheader35.i.i:                                 ; preds = %.lr.ph22
   %i.fw = add i64 %.sroa.04.0.us.i.i21, 1         ; 2 uses
   %exitcond.not.i.i = icmp eq i64 %i.fw, %umax.i.i
-  br i1 %exitcond.not.i.i, label %.preheader.i10.i, label %.lr.ph22
+  br i1 %exitcond.not.i.i, label %.preheader.split.i13.i, label %.lr.ph22
+
+.preheader.split.i13.i:                           ; preds = %.preheader35.i.i.preheader, %.preheader35.i.i
+  %.not34.i.i = icmp eq i64 %.fr63.i, 0
+  br i1 %.not34.i.i, label %_RNvXsv_NtNtCs6JMX4GRUq9U_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, label %.split32.us.i14.i
 
 .lr.ph22:                                         ; preds = %.preheader35.i.i.preheader, %.preheader35.i.i
   %.sroa.04.0.us.i.i21 = phi i64 [ %i.fw, %.preheader35.i.i ], [ %.fr63.i, %.preheader35.i.i.preheader ] ; 4 uses
@@ -428,14 +433,6 @@ bb.ab:                                            ; preds = %bb.aa, %.split.us.u
   %i.gc = load i8, ptr %i.gb, align 1, !alias.scope !67, !noalias !64, !noundef !6
   %.not21.us.i.i = icmp eq i8 %i.fy, %i.gc
   br i1 %.not21.us.i.i, label %.preheader35.i.i, label %bb.ac
-
-.preheader.i10.i:                                 ; preds = %.preheader35.i.i.preheader, %.preheader35.i.i
-  %.not34.i.i = icmp eq i64 %.fr63.i, 0
-  br i1 %.not34.i.i, label %_RNvXsv_NtNtCs6JMX4GRUq9U_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit, label %.split32.us.i11.i
-
-.split32.us.i11.i:                                ; preds = %.preheader.i10.i
-  tail call void @_RNvNtCs6JMX4GRUq9U_4core9panicking18panic_bounds_check(i64 noundef %i.ej, i64 noundef range(i64 0, -9223372036854775808) %i.bs, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @30) #34, !noalias !70
-  unreachable
 
 bb.ac:                                            ; preds = %.lr.ph22
   %i.gd = add i64 %i.fp, %i.ek
@@ -452,9 +449,13 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %i.gi = icmp ult i64 %i.gh, %i.bo
   br i1 %i.gi, label %.lr.ph.split.us.i.i, label %_RNvXsv_NtNtCs6JMX4GRUq9U_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit
 
-_RNvXsv_NtNtCs6JMX4GRUq9U_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit: ; preds = %bb.t, %.preheader36.i.i.preheader, %.preheader36.i.i, %bb.ae, %bb.ab, %.preheader.i10.us.us.i.preheader, %.preheader.i10.us.us.i, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiibOIv6tv3q_7uu_date.exit16.i.i.i, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiibOIv6tv3q_7uu_date.exit14.i.i.i, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiibOIv6tv3q_7uu_date.exit12.i.i.i, %bb.p, %.loopexit69, %.preheader.i10.i, %bb.y, %bb.q, %bb.g, %bb.o, %.preheader.i
-  %.sroa.4.0 = phi i64 [ %i.em, %bb.ab ], [ undef, %bb.y ], [ undef, %bb.ae ], [ undef, %bb.q ], [ undef, %.preheader.i ], [ %i.l, %bb.o ], [ %i.fp, %.preheader.i10.i ], [ %i.l, %.loopexit69 ], [ %.promoted.i, %bb.g ], [ %i.em, %.preheader.i10.us.us.i ], [ %i.cw, %.preheader36.i.i ], [ %i.bv, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiibOIv6tv3q_7uu_date.exit16.i.i.i ], [ %i.bv, %bb.p ], [ %i.bv, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiibOIv6tv3q_7uu_date.exit12.i.i.i ], [ %i.bv, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiibOIv6tv3q_7uu_date.exit14.i.i.i ], [ %i.em, %.preheader.i10.us.us.i.preheader ], [ %i.cw, %.preheader36.i.i.preheader ], [ %i.cw, %bb.t ]
-  %storemerge.i.sink.i = phi i64 [ 0, %bb.ab ], [ 0, %bb.y ], [ 0, %bb.ae ], [ 0, %bb.q ], [ 0, %.preheader.i ], [ 1, %bb.o ], [ 1, %.preheader.i10.i ], [ %spec.select104, %.loopexit69 ], [ 1, %bb.g ], [ 1, %.preheader.i10.us.us.i ], [ 1, %.preheader36.i.i ], [ 1, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiibOIv6tv3q_7uu_date.exit16.i.i.i ], [ 1, %bb.p ], [ 1, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiibOIv6tv3q_7uu_date.exit12.i.i.i ], [ 1, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiibOIv6tv3q_7uu_date.exit14.i.i.i ], [ 1, %.preheader.i10.us.us.i.preheader ], [ 0, %bb.t ], [ 1, %.preheader36.i.i.preheader ]
+.split32.us.i14.i:                                ; preds = %.preheader.split.i13.i
+  tail call void @_RNvNtCs6JMX4GRUq9U_4core9panicking18panic_bounds_check(i64 noundef %i.ej, i64 noundef range(i64 0, -9223372036854775808) %i.bs, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @30) #34, !noalias !70
+  unreachable
+
+_RNvXsv_NtNtCs6JMX4GRUq9U_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit: ; preds = %bb.t, %.preheader36.i.i.preheader, %.preheader36.i.i, %bb.ae, %bb.ab, %.preheader.i10.us.us.i.preheader, %.preheader.i10.us.us.i, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiibOIv6tv3q_7uu_date.exit16.i.i.i, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiibOIv6tv3q_7uu_date.exit14.i.i.i, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiibOIv6tv3q_7uu_date.exit12.i.i.i, %bb.p, %.loopexit69, %.preheader.split.i13.i, %bb.y, %bb.q, %bb.g, %bb.o, %.preheader.i
+  %.sroa.4.0 = phi i64 [ %i.em, %bb.ab ], [ undef, %bb.y ], [ undef, %bb.ae ], [ undef, %bb.q ], [ undef, %.preheader.i ], [ %i.l, %bb.o ], [ %i.fp, %.preheader.split.i13.i ], [ %i.l, %.loopexit69 ], [ %.promoted.i, %bb.g ], [ %i.em, %.preheader.i10.us.us.i ], [ %i.cw, %.preheader36.i.i ], [ %i.bv, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiibOIv6tv3q_7uu_date.exit16.i.i.i ], [ %i.bv, %bb.p ], [ %i.bv, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiibOIv6tv3q_7uu_date.exit12.i.i.i ], [ %i.bv, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiibOIv6tv3q_7uu_date.exit14.i.i.i ], [ %i.em, %.preheader.i10.us.us.i.preheader ], [ %i.cw, %.preheader36.i.i.preheader ], [ %i.cw, %bb.t ]
+  %storemerge.i.sink.i = phi i64 [ 0, %bb.ab ], [ 0, %bb.y ], [ 0, %bb.ae ], [ 0, %bb.q ], [ 0, %.preheader.i ], [ 1, %bb.o ], [ 1, %.preheader.split.i13.i ], [ %spec.select104, %.loopexit69 ], [ 1, %bb.g ], [ 1, %.preheader.i10.us.us.i ], [ 1, %.preheader36.i.i ], [ 1, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiibOIv6tv3q_7uu_date.exit16.i.i.i ], [ 1, %bb.p ], [ 1, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiibOIv6tv3q_7uu_date.exit12.i.i.i ], [ 1, %_RNvXs2J_NtNtCs6JMX4GRUq9U_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsiibOIv6tv3q_7uu_date.exit14.i.i.i ], [ 1, %.preheader.i10.us.us.i.preheader ], [ 0, %bb.t ], [ 1, %.preheader36.i.i.preheader ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   %i.gj = insertvalue { i64, i64 } poison, i64 %storemerge.i.sink.i, 0
   %i.gk = insertvalue { i64, i64 } %i.gj, i64 %.sroa.4.0, 1

@@ -204,11 +204,12 @@ bb.aa:                                            ; preds = %bb.w
 .lr.ph.i28.i.i.i:                                 ; preds = %bb.aa
   %i.ek = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.el = load i64, ptr %i.ek, align 8, !alias.scope !19555, !noalias !19221, !noundef !1445
-  %i.em = load i64, ptr %i.dg, align 8, !alias.scope !19555, !noalias !19221 ; 4 uses
+  %i.em = load i64, ptr %i.dg, align 8, !alias.scope !19555, !noalias !19221
+  %.fr84.i.i.i.i = freeze i64 %i.em, !dbg !20021  ; 4 uses
   %i.en = getelementptr inbounds nuw i8, ptr %i.b, i64 24
   %i.eo = load i64, ptr %i.en, align 8, !alias.scope !19555, !noalias !19221 ; 2 uses
   %i.ep = sub i64 %i.dr, %i.eo
-  %invariant.op = sub i64 1, %i.em, !dbg !20021
+  %invariant.op = sub i64 1, %.fr84.i.i.i.i, !dbg !20021
   br label %.lr.ph.split.i.i.i.i, !dbg !20021
 
 .lr.ph.split.i.i.i.i:                             ; preds = %bb.ad, %.lr.ph.i28.i.i.i
@@ -235,7 +236,7 @@ bb.ac:                                            ; preds = %.lr.ph.split.i.i.i.
     #dbg_value(i64 %.sink94.i.i53.i.i, !19557, !DIExpression(), !18674)
     #dbg_value(ptr undef, !2940, !DIExpression(DW_OP_deref), !18676)
     #dbg_value(ptr undef, !2942, !DIExpression(DW_OP_deref), !18676)
-  %..i.i30.i.i.i = tail call noundef i64 @llvm.umax.i64(i64 %.sink94.i.i53.i.i, i64 %i.em), !dbg !20029 ; 2 uses
+  %..i.i30.i.i.i = tail call noundef i64 @llvm.umax.i64(i64 %.sink94.i.i53.i.i, i64 %.fr84.i.i.i.i), !dbg !20029 ; 2 uses
     #dbg_value(i64 %..i.i30.i.i.i, !19492, !DIExpression(), !18677)
     #dbg_value(i64 %..i.i30.i.i.i, !19493, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !18678)
     #dbg_value(i64 %i.dr, !19493, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !18678)
@@ -267,13 +268,13 @@ bb.ae:                                            ; preds = %.lr.ph118
   br i1 %i.fc, label %.lr.ph118, label %.preheader60.i.i.i.i.preheader, !dbg !20031
 
 .preheader60.i.i.i.i.preheader:                   ; preds = %bb.ae, %bb.ac
-    #dbg_value(i64 %i.em, !19496, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !18680)
+    #dbg_value(i64 %.fr84.i.i.i.i, !19496, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !18680)
     #dbg_value(ptr undef, !19474, !DIExpression(), !18583)
     #dbg_value(ptr undef, !19460, !DIExpression(), !18581)
     #dbg_value(ptr undef, !19457, !DIExpression(), !18579)
     #dbg_value(ptr undef, !19448, !DIExpression(), !18577)
     #dbg_value(ptr undef, !19449, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !18681)
-  %i.fd = icmp ult i64 %.sink94.i.i53.i.i, %i.em, !dbg !20033
+  %i.fd = icmp ult i64 %.sink94.i.i53.i.i, %.fr84.i.i.i.i, !dbg !20033
   br i1 %i.fd, label %.lr.ph120, label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i, !dbg !20034
 
 .lr.ph118:                                        ; preds = %bb.ac, %bb.ae
@@ -307,7 +308,7 @@ bb.ae:                                            ; preds = %.lr.ph118
   br i1 %i.fk, label %.lr.ph120, label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i, !dbg !20034
 
 .lr.ph120:                                        ; preds = %.preheader60.i.i.i.i.preheader, %.preheader60.i.i.i.i
-  %.sroa.2.0.i.i.i.i119 = phi i64 [ %i.fl, %.preheader60.i.i.i.i ], [ %i.em, %.preheader60.i.i.i.i.preheader ]
+  %.sroa.2.0.i.i.i.i119 = phi i64 [ %i.fl, %.preheader60.i.i.i.i ], [ %.fr84.i.i.i.i, %.preheader60.i.i.i.i.preheader ]
     #dbg_value(i64 %.sroa.2.0.i.i.i.i119, !19496, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !18680)
     #dbg_value(i64 %.sroa.2.0.i.i.i.i119, !19545, !DIExpression(), !18648)
     #dbg_value(i64 %.sroa.2.0.i.i.i.i119, !19548, !DIExpression(), !18653)
@@ -409,7 +410,7 @@ bb.ai:                                            ; preds = %bb.w
     #dbg_value(ptr undef, !19448, !DIExpression(), !18571)
     #dbg_value(ptr undef, !19449, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !18693)
     #dbg_value(ptr undef, !19449, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !18693)
-  br i1 %.first_iter.i36.i.i.i, label %.preheader.i39.us.i.i.i.preheader, label %.preheader.i39.i.i.i
+  br i1 %.first_iter.i36.i.i.i, label %.preheader.i39.us.i.i.i.preheader, label %.preheader.split.i41.i.i.i
 
 .preheader.i39.us.i.i.i.preheader:                ; preds = %.preheader.i39.preheader.i.i.i
     #dbg_value(i64 %.fr235.i.i.i, !19496, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !18694)
@@ -449,6 +450,10 @@ bb.ai:                                            ; preds = %bb.w
   %i.gs = add i64 %.sink.i38.i56.i.i, %i.gb, !dbg !20073
   br label %bb.al, !dbg !20074
 
+.preheader.split.i41.i.i.i:                       ; preds = %.preheader.i39.preheader.i.i.i
+    #dbg_value(i64 %i.fz, !19496, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !18694)
+  br i1 %.not58.i.us.i.i.i124, label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i, label %.invoke.i, !dbg !20064
+
 .lr.ph123:                                        ; preds = %.preheader59.i.i.i.i.preheader, %.preheader59.i.i.i.i
   %.sroa.04.0.us.i.i.i.i122 = phi i64 [ %i.gk, %.preheader59.i.i.i.i ], [ %.fr235.i.i.i, %.preheader59.i.i.i.i.preheader ] ; 4 uses
     #dbg_value(i64 %.sroa.04.0.us.i.i.i.i122, !19493, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !18691)
@@ -468,10 +473,6 @@ bb.ai:                                            ; preds = %bb.w
   %i.gy = load i8, ptr %i.gx, align 1, !dbg !20080, !alias.scope !19560, !noalias !19551, !noundef !1445
   %.not45.us.i.i.i.i = icmp eq i8 %i.gu, %i.gy, !dbg !20075
   br i1 %.not45.us.i.i.i.i, label %.preheader59.i.i.i.i, label %bb.aj, !dbg !20075
-
-.preheader.i39.i.i.i:                             ; preds = %.preheader.i39.preheader.i.i.i
-    #dbg_value(i64 %i.fz, !19496, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !18694)
-  br i1 %.not58.i.us.i.i.i124, label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i, label %.invoke.i, !dbg !20064
 
 bb.aj:                                            ; preds = %.lr.ph123
   %.reass302.i.reass.i.reass.i.reass.reass = add i64 %.sink.i38.i56.i.i, %invariant.op163
@@ -493,8 +494,8 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj, %.sp
 _RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split.i.i: ; preds = %.lr.ph.i.i15.i.i, %.noexc9.i, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsjfnSKV9Rz3v_3h3i.exit26.i.i.us.i.i.i, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsjfnSKV9Rz3v_3h3i.exit28.i.i.us.i.i.i, %_RNvXs2J_NtNtCskKLDkoKarTP_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsjfnSKV9Rz3v_3h3i.exit30.i.i.us.i.i.i, %bb.u
   br label %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i, !dbg !20085
 
-_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i: ; preds = %bb.ad, %.preheader60.i.i.i.i.preheader, %.preheader60.i.i.i.i, %bb.al, %.preheader.i39.us.i.i.i.preheader, %.preheader.i39.us.i.i.i, %bb.z, %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split.i.i, %.preheader.i39.i.i.i, %bb.ai, %bb.aa, %.noexc9.i, %bb.v, %bb.t, %bb.n, %bb.k, %.preheader.i.i.i
-  %storemerge.i.sink.i.i.i = phi i8 [ 1, %.preheader60.i.i.i.i ], [ 0, %bb.aa ], [ 0, %bb.v ], [ 0, %bb.ai ], [ 1, %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split.i.i ], [ 0, %.noexc9.i ], [ 1, %.preheader.i39.us.i.i.i ], [ 0, %.preheader.i.i.i ], [ 1, %bb.n ], [ 1, %bb.t ], [ 1, %.preheader.i39.us.i.i.i.preheader ], [ 1, %.preheader.i39.i.i.i ], [ %.promoted226.i.i.i, %bb.k ], [ 0, %bb.z ], [ 0, %bb.al ], [ 0, %bb.ad ], [ 1, %.preheader60.i.i.i.i.preheader ]
+_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.i.i: ; preds = %bb.ad, %.preheader60.i.i.i.i.preheader, %.preheader60.i.i.i.i, %bb.al, %.preheader.i39.us.i.i.i.preheader, %.preheader.i39.us.i.i.i, %bb.z, %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split.i.i, %.preheader.split.i41.i.i.i, %bb.ai, %bb.aa, %.noexc9.i, %bb.v, %bb.t, %bb.n, %bb.k, %.preheader.i.i.i
+  %storemerge.i.sink.i.i.i = phi i8 [ 1, %.preheader60.i.i.i.i ], [ 0, %bb.aa ], [ 0, %bb.v ], [ 0, %bb.ai ], [ 1, %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_match.exit.sink.split.i.i ], [ 0, %.noexc9.i ], [ 1, %.preheader.i39.us.i.i.i ], [ 0, %.preheader.i.i.i ], [ 1, %bb.n ], [ 1, %bb.t ], [ 1, %.preheader.i39.us.i.i.i.preheader ], [ 1, %.preheader.split.i41.i.i.i ], [ %.promoted226.i.i.i, %bb.k ], [ 0, %bb.z ], [ 0, %bb.al ], [ 0, %bb.ad ], [ 1, %.preheader60.i.i.i.i.preheader ]
     #dbg_value(i8 %storemerge.i.sink.i.i.i, !19131, !DIExpression(), !18698)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !20085, !noalias !19221
   br label %.loopexit.i, !dbg !20085
@@ -589,10 +590,10 @@ bb.ao:                                            ; preds = %.lr.ph, %bb.an
   %i.hk = icmp ult i64 %i.hj, %i.o, !dbg !20094
   br i1 %i.hk, label %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkjNCNvNtNtBe_3str7pattern13simd_contains0E0CsjfnSKV9Rz3v_3h3i.exit.i.i.i.i, label %.invoke.i, !dbg !20094
 
-.invoke.i:                                        ; preds = %bb.ao, %.lr.ph120, %.preheader.i39.i.i.i
-  %i.hl = phi i64 [ %i.gc, %.preheader.i39.i.i.i ], [ %i.fl, %.lr.ph120 ], [ %i.hj, %bb.ao ]
-  %i.hm = phi i64 [ %i.dr, %.preheader.i39.i.i.i ], [ %i.dr, %.lr.ph120 ], [ %i.o, %bb.ao ]
-  %i.hn = phi ptr [ @26, %.preheader.i39.i.i.i ], [ @26, %.lr.ph120 ], [ @29, %bb.ao ]
+.invoke.i:                                        ; preds = %bb.ao, %.lr.ph120, %.preheader.split.i41.i.i.i
+  %i.hl = phi i64 [ %i.gc, %.preheader.split.i41.i.i.i ], [ %i.fl, %.lr.ph120 ], [ %i.hj, %bb.ao ]
+  %i.hm = phi i64 [ %i.dr, %.preheader.split.i41.i.i.i ], [ %i.dr, %.lr.ph120 ], [ %i.o, %bb.ao ]
+  %i.hn = phi ptr [ @26, %.preheader.split.i41.i.i.i ], [ @26, %.lr.ph120 ], [ @29, %bb.ao ]
   invoke void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %i.hl, i64 noundef range(i64 0, -9223372036854775808) %i.hm, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.hn) #32
           to label %.cont.i unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !20095
 

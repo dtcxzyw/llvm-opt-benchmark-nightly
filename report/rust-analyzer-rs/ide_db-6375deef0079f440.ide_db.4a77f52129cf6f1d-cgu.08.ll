@@ -205,11 +205,12 @@ bb.n:                                             ; preds = %bb.k
   %i.cz = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   %i.da = load i64, ptr %i.cz, align 8, !alias.scope !2092, !noalias !2080, !noundef !6
   %i.db = getelementptr inbounds nuw i8, ptr %i.a, i64 16
-  %i.dc = load i64, ptr %i.db, align 8, !alias.scope !2092, !noalias !2080 ; 6 uses
+  %i.dc = load i64, ptr %i.db, align 8, !alias.scope !2092, !noalias !2080
+  %.fr80.i.i.i.i = freeze i64 %i.dc               ; 6 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   %i.de = getelementptr inbounds nuw i8, ptr %i.a, i64 24
   %i.df = load i64, ptr %i.de, align 8, !alias.scope !2092, !noalias !2080 ; 2 uses
-  %umax71.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.dc, i64 range(i64 0, -9223372036854775808) %i.ce) ; 2 uses
+  %umax71.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %.fr80.i.i.i.i, i64 range(i64 0, -9223372036854775808) %i.ce) ; 2 uses
   %.promoted36.i.i.i.i = load i64, ptr %i.dd, align 8, !alias.scope !2092, !noalias !2080
   br label %.lr.ph.split.i.i.i.i
 
@@ -227,7 +228,7 @@ bb.n:                                             ; preds = %bb.k
   br i1 %.not.i.i.i.i, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %.lr.ph.split.i.i.i.i
-  %..i.i2.i.i.i = tail call noundef i64 @llvm.umin.i64(i64 %i.dg, i64 %i.dc) ; 2 uses
+  %..i.i2.i.i.i = tail call noundef i64 @llvm.umin.i64(i64 %i.dg, i64 %.fr80.i.i.i.i) ; 2 uses
   %.not19.i.i.i.i116 = icmp eq i64 %..i.i2.i.i.i, 0
   br i1 %.not19.i.i.i.i116, label %.preheader46.i.i.i.i, label %.lr.ph
 
@@ -243,8 +244,8 @@ bb.q:                                             ; preds = %bb.u
   br i1 %.not19.i.i.i.i, label %.preheader46.i.i.i.i, label %.lr.ph
 
 .preheader46.i.i.i.i:                             ; preds = %bb.q, %bb.o
-  %umax.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.dg, i64 %i.dc)
-  %exitcond.not.i.i.i.i118.not = icmp ult i64 %i.dc, %i.dg
+  %umax.i.i.i.i = tail call i64 @llvm.umax.i64(i64 %i.dg, i64 %.fr80.i.i.i.i)
+  %exitcond.not.i.i.i.i118.not = icmp ult i64 %.fr80.i.i.i.i, %i.dg
   br i1 %exitcond.not.i.i.i.i118.not, label %.lr.ph120, label %.loopexit.i
 
 .lr.ph:                                           ; preds = %bb.o, %bb.q
@@ -259,7 +260,7 @@ bb.r:                                             ; preds = %bb.s
   br i1 %exitcond.not.i.i.i.i, label %.loopexit.i, label %.lr.ph120
 
 .lr.ph120:                                        ; preds = %.preheader46.i.i.i.i, %bb.r
-  %.sroa.09.0.i.i.i.i119 = phi i64 [ %i.ds, %bb.r ], [ %i.dc, %.preheader46.i.i.i.i ] ; 4 uses
+  %.sroa.09.0.i.i.i.i119 = phi i64 [ %i.ds, %bb.r ], [ %.fr80.i.i.i.i, %.preheader46.i.i.i.i ] ; 4 uses
   %exitcond70.not.i.i.i.i = icmp eq i64 %.sroa.09.0.i.i.i.i119, %umax71.i.i.i.i
   br i1 %exitcond70.not.i.i.i.i, label %.preheader45.i.preheader.i.i.i.invoke, label %bb.s
 
@@ -290,7 +291,7 @@ bb.u:                                             ; preds = %.lr.ph
   br i1 %.not21.i.i.i.i, label %bb.q, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %.neg.i.i.i.i = sub i64 %.sink99.i.i42.i.i, %i.dc
+  %.neg.i.i.i.i = sub i64 %.sink99.i.i42.i.i, %.fr80.i.i.i.i
   %i.eg = add i64 %.neg.i.i.i.i, %i.dq
   br label %bb.p
 
@@ -458,6 +459,12 @@ bb.aa:                                            ; preds = %bb.z, %.lr.ph.split
   %.not.us.i.i.i.i = icmp eq i64 %i.gs, 0
   br i1 %.not.us.i.i.i.i, label %.lr.ph53.i.i, label %.preheader45.i.preheader.i.i.i.invoke
 
+.lr.ph53.i.i:                                     ; preds = %.lr.ph.split.us.i.i.preheader.i.i, %.lr.ph.split.us.i.i.i.i
+  %2 = phi i64 [ %3, %.lr.ph.split.us.i.i.i.i ], [ %i.eh, %.lr.ph.split.us.i.i.preheader.i.i ]
+  %3 = sub i64 %2, %i.ce                          ; 3 uses
+  %4 = icmp ult i64 %3, %i.ca
+  br i1 %4, label %.lr.ph.split.us.i.i.i.i, label %.loopexit51.i
+
 .preheader45.i.preheader.i.i.i.invoke:            ; preds = %.lr.ph, %.lr.ph120, %.lr.ph.split.us.i.i.i.i, %.lr.ph.split.us.i.i.preheader.i.i
   %i.gt = phi i64 [ %i.ep, %.lr.ph.split.us.i.i.i.i ], [ %umax71.i.i.i.i, %.lr.ph120 ], [ %i.ep, %.lr.ph.split.us.i.i.preheader.i.i ], [ %i.dq, %.lr.ph ]
   %i.gu = phi ptr [ @28, %.lr.ph.split.us.i.i.i.i ], [ @27, %.lr.ph120 ], [ @28, %.lr.ph.split.us.i.i.preheader.i.i ], [ @28, %.lr.ph ]
@@ -466,12 +473,6 @@ bb.aa:                                            ; preds = %bb.z, %.lr.ph.split
 
 .preheader45.i.preheader.i.i.i.cont:              ; preds = %.preheader45.i.preheader.i.i.i.invoke
   unreachable
-
-.lr.ph53.i.i:                                     ; preds = %.lr.ph.split.us.i.i.preheader.i.i, %.lr.ph.split.us.i.i.i.i
-  %2 = phi i64 [ %3, %.lr.ph.split.us.i.i.i.i ], [ %i.eh, %.lr.ph.split.us.i.i.preheader.i.i ]
-  %3 = sub i64 %2, %i.ce                          ; 3 uses
-  %4 = icmp ult i64 %3, %i.ca
-  br i1 %4, label %.lr.ph.split.us.i.i.i.i, label %.loopexit51.i
 
 .loopexit.i:                                      ; preds = %.preheader46.i.i.i.i, %bb.r, %.preheader.i.us65.i.i.i.preheader, %.preheader.i.us65.i.i.i, %.preheader.i.us.i.i.i.preheader, %.preheader.i.us.i.i.i, %bb.m, %_RNvXs2K_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs6oosyzwIepl_6ide_db.exit17.i.i.i.i.i, %_RNvXs2K_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs6oosyzwIepl_6ide_db.exit19.i.i.i.i.i, %_RNvXs2K_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs6oosyzwIepl_6ide_db.exit21.i.i.i.i.i, %._crit_edge.i.i, %_RNvXsw_NtNtCshzWfHUSfYae_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit.i.peel.i.i, %bb.g
   %.sroa.9.0.ph.i.i = phi i64 [ 0, %._crit_edge.i.i ], [ 0, %_RNvXsw_NtNtCshzWfHUSfYae_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit.i.peel.i.i ], [ %.sink.i9.us.i56.i.i, %.preheader.i.us.i.i.i.preheader ], [ %.sink99.i.i42.i.i, %bb.r ], [ %.promoted60.i.i.i, %bb.g ], [ %i.bs, %bb.m ], [ %i.bs, %_RNvXs2K_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs6oosyzwIepl_6ide_db.exit21.i.i.i.i.i ], [ %i.bs, %_RNvXs2K_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs6oosyzwIepl_6ide_db.exit19.i.i.i.i.i ], [ %i.bs, %_RNvXs2K_NtNtCshzWfHUSfYae_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs6oosyzwIepl_6ide_db.exit17.i.i.i.i.i ], [ %i.fw, %.preheader.i.us65.i.i.i.preheader ], [ %.sink.i9.us.i56.i.i, %.preheader.i.us.i.i.i ], [ %i.fw, %.preheader.i.us65.i.i.i ], [ %.sink99.i.i42.i.i, %.preheader46.i.i.i.i ] ; 3 uses

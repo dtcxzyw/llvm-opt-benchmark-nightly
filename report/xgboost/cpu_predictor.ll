@@ -205,8 +205,8 @@ bb.do:                                            ; preds = %bb.dm
   %i.uy = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.uz = getelementptr inbounds nuw i8, ptr %0, i64 40
   %.not.i8.i.i.i.i.i.i.i = icmp eq i64 %4, 0      ; 2 uses
+  %15 = icmp eq i64 %2, 0                         ; 2 uses
   %wide.trip.count.i142 = and i64 %i.uu, 2147483647
-  %exitcond.not.i.i.i.i.i.i.i.i143 = icmp eq i64 %2, 0 ; 2 uses
   %i.va = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   %i.vb = mul i64 %.sroa.0416.0.copyload, %1
   %invariant.gep.i = getelementptr [4 x i8], ptr %.sroa.5419.0.copyload, i64 %i.vb ; 2 uses
@@ -273,11 +273,7 @@ bb.dw:                                            ; preds = %_ZNK7xgboost6common
   %i.vr = getelementptr inbounds nuw i8, ptr %i.ve, i64 32 ; 2 uses
   %i.vs = getelementptr inbounds nuw i8, ptr %i.ve, i64 40 ; 2 uses
   %.in.i.i.i156 = getelementptr inbounds nuw i8, ptr %i.ve, i64 24 ; 2 uses
-  br i1 %exitcond.not.i.i.i.i.i.i.i.i143, label %15, label %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i.i.i.i.i.i.i.i157, !prof !173
-
-15:                                               ; preds = %.lr.ph.i.i.i.i.i.i.i.i154
-  call void @_ZSt9terminatev() #35
-  unreachable
+  br i1 %15, label %16, label %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i.i.i.i.i.i.i.i157, !prof !173
 
 _ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i.i.i.i.i.i.i.i157: ; preds = %.lr.ph.i.i.i.i.i.i.i.i154
   %i.vt = getelementptr inbounds nuw i8, ptr %i.ve, i64 48
@@ -288,6 +284,10 @@ _ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i.i.
   %i.vy = load i32, ptr %i.vx, align 4, !tbaa !401 ; 4 uses
   %i.vz = icmp eq i32 %i.vy, -1                   ; 2 uses
   br i1 %i.vv, label %bb.dx, label %bb.el
+
+16:                                               ; preds = %.lr.ph.i.i.i.i.i.i.i.i154
+  call void @_ZSt9terminatev() #35
+  unreachable
 
 bb.dx:                                            ; preds = %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i.i.i.i.i.i.i.i157
   br i1 %i.vz, label %_ZN7xgboost9predictor6scalar18PredValueByOneTreeILb1EEEfRKNS_7RegTree4FVecERKNS_4tree14ScalarTreeViewERKNS3_22CategoricalSplitMatrixEi.exit.i167, label %.lr.ph.i.i.preheader.i177
@@ -601,11 +601,7 @@ bb.ew:                                            ; preds = %_ZNK7xgboost6common
 .lr.ph.i9.i.i.i.i.i.i.i185:                       ; preds = %bb.ew
   %i.abn = sext i32 %i.vo to i64
   %i.abo = mul i64 %.sroa.4417.0.copyload, %i.abn
-  br i1 %exitcond.not.i.i.i.i.i.i.i.i143, label %16, label %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i12.i.i.i.i.i.i.i186, !prof !173
-
-16:                                               ; preds = %.lr.ph.i9.i.i.i.i.i.i.i185
-  call void @_ZSt9terminatev() #35
-  unreachable
+  br i1 %15, label %17, label %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i12.i.i.i.i.i.i.i186, !prof !173
 
 _ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i12.i.i.i.i.i.i.i186: ; preds = %.lr.ph.i9.i.i.i.i.i.i.i185
   %i.abp = getelementptr inbounds nuw i8, ptr %i.ve, i64 48
@@ -617,6 +613,10 @@ _ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i12.
   %i.abt = load i32, ptr %i.abs, align 4, !tbaa !401 ; 3 uses
   %i.abu = icmp eq i32 %i.abt, -1                 ; 2 uses
   br i1 %i.abr, label %bb.ex, label %bb.fa
+
+17:                                               ; preds = %.lr.ph.i9.i.i.i.i.i.i.i185
+  call void @_ZSt9terminatev() #35
+  unreachable
 
 bb.ex:                                            ; preds = %_ZNK7xgboost6common4SpanINS_7RegTree4FVecELm18446744073709551615EEixEm.exit.i12.i.i.i.i.i.i.i186
   br i1 %i.abu, label %_ZN7xgboost9predictor6scalar18PredValueByOneTreeILb0EEEfRKNS_7RegTree4FVecERKNS_4tree14ScalarTreeViewERKNS3_22CategoricalSplitMatrixEi.exit.i.i.i.i.i.i.i.i190, label %.lr.ph.i.i.i.i.i.i.i.i.i.i192

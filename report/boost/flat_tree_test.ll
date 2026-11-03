@@ -204,12 +204,13 @@ define linkonce_odr hidden noundef i64 @_ZN5boost7movelib15detail_adaptive19inse
 bb.a:
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %2, i64 16) ; 5 uses
   %i.a = icmp ugt i64 %1, %.sroa.speculated
-  %.pre46 = load ptr, ptr %0, align 8, !tbaa !450, !noalias !485 ; 8 uses
+  %.pre46 = load ptr, ptr %0, align 8, !tbaa !450, !noalias !485 ; 7 uses
   br i1 %i.a, label %.lr.ph, label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit17
 
 .lr.ph:                                           ; preds = %bb.a
-  %.not.i.i14 = icmp eq i64 %2, 0
-  br i1 %.not.i.i14, label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit17.thread, label %.lr.ph.split
+  %.not.i.i14 = icmp ne i64 %2, 0
+  tail call void @llvm.assume(i1 %.not.i.i14)
+  br label %.lr.ph.split
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessINS2_4test24movable_and_copyable_intEES7_NS_11move_detail8identityIS7_EEEENS2_22stable_vector_iteratorIPS7_Lb0EEEEEvT0_SG_T_.exit
   %.044 = phi i64 [ %i.ab, %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessINS2_4test24movable_and_copyable_intEES7_NS_11move_detail8identityIS7_EEEENS2_22stable_vector_iteratorIPS7_Lb0EEEEEvT0_SG_T_.exit ], [ 0, %.lr.ph ] ; 3 uses
@@ -306,25 +307,23 @@ bb.g:                                             ; preds = %._crit_edge
   br label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit17
 
 _ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit17: ; preds = %bb.a, %._crit_edge, %bb.g
-  %.sroa.037.0 = phi ptr [ %.pre46, %._crit_edge ], [ %i.ag, %bb.g ], [ %.pre46, %bb.a ] ; 2 uses
+  %.sroa.037.0 = phi ptr [ %.pre46, %._crit_edge ], [ %i.ag, %bb.g ], [ %.pre46, %bb.a ] ; 4 uses
   %.not.i.i18 = icmp eq i64 %1, 0
   br i1 %.not.i.i18, label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit19, label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit17.thread
 
-_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit17.thread: ; preds = %.lr.ph, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit17
-  %.sroa.037.062 = phi ptr [ %.sroa.037.0, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit17 ], [ %.pre46, %.lr.ph ]
+_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit17.thread: ; preds = %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit17
   %i.ah = load ptr, ptr %.pre46, align 8, !tbaa !395, !noalias !17150
   %i.ai = getelementptr inbounds [8 x i8], ptr %i.ah, i64 %1
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !391, !noalias !17150
   br label %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit19
 
 _ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit19: ; preds = %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit17, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit17.thread
-  %.sroa.037.063 = phi ptr [ %.sroa.037.0, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit17 ], [ %.sroa.037.062, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit17.thread ] ; 4 uses
   %.sroa.0.0 = phi ptr [ %.pre46, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit17 ], [ %i.aj, %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit17.thread ] ; 3 uses
-  %.not.i20 = icmp eq ptr %.sroa.037.063, %.sroa.0.0
+  %.not.i20 = icmp eq ptr %.sroa.037.0, %.sroa.0.0
   br i1 %.not.i20, label %_ZN5boost7movelib14insertion_sortINS_9container3dtl23flat_tree_value_compareISt4lessINS2_4test24movable_and_copyable_intEES7_NS_11move_detail8identityIS7_EEEENS2_22stable_vector_iteratorIPS7_Lb0EEEEEvT0_SG_T_.exit36, label %bb.h
 
 bb.h:                                             ; preds = %_ZN5boost9containerplERKNS0_22stable_vector_iteratorIPNS0_4test24movable_and_copyable_intELb0EEEl.exit19
-  %i.ak = load ptr, ptr %.sroa.037.063, align 8, !tbaa !395
+  %i.ak = load ptr, ptr %.sroa.037.0, align 8, !tbaa !395
   %.sroa.013.0.in27.i21 = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   %.sroa.013.028.i22 = load ptr, ptr %.sroa.013.0.in27.i21, align 8, !tbaa !391 ; 2 uses
   %.not2029.i23 = icmp eq ptr %.sroa.013.028.i22, %.sroa.0.0
@@ -347,7 +346,7 @@ bb.i:                                             ; preds = %.lr.ph31.i24
   %i.at = load i32, ptr %i.ap, align 4, !tbaa !343
   store i32 %i.at, ptr %i.al, align 8, !tbaa !343
   store i32 0, ptr %i.ap, align 4, !tbaa !343
-  %.not2122.i29 = icmp eq ptr %i.ao, %.sroa.037.063
+  %.not2122.i29 = icmp eq ptr %i.ao, %.sroa.037.0
   br i1 %.not2122.i29, label %.critedge.i33, label %.lr.ph.i30
 
 .lr.ph.i30:                                       ; preds = %bb.i, %bb.j
@@ -374,7 +373,7 @@ bb.j:                                             ; preds = %.lr.ph.i30
   %i.bc = load ptr, ptr %.sroa.06.023.i32, align 8, !tbaa !395
   %i.bd = getelementptr inbounds i8, ptr %i.bc, i64 -8
   %i.be = load ptr, ptr %i.bd, align 8, !tbaa !391 ; 2 uses
-  %.not21.i35 = icmp eq ptr %i.aw, %.sroa.037.063
+  %.not21.i35 = icmp eq ptr %i.aw, %.sroa.037.0
   br i1 %.not21.i35, label %.critedge.i33, label %.lr.ph.i30, !llvm.loop !300
 
 bb.k:                                             ; preds = %.critedge.i33, %.lr.ph31.i24

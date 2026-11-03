@@ -205,11 +205,12 @@ bb.q:                                             ; preds = %bb.k
 .lr.ph.i1.i.i.i:                                  ; preds = %bb.q
   %i.dg = getelementptr inbounds nuw i8, ptr %i.d, i64 32
   %i.dh = load i64, ptr %i.dg, align 8, !alias.scope !836, !noalias !823, !noundef !5
-  %i.di = load i64, ptr %i.u, align 8, !alias.scope !836, !noalias !823 ; 4 uses
+  %i.di = load i64, ptr %i.u, align 8, !alias.scope !836, !noalias !823
+  %.fr60.i.i.i.i = freeze i64 %i.di               ; 4 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %i.dk = load i64, ptr %i.dj, align 8, !alias.scope !836, !noalias !823 ; 2 uses
   %i.dl = sub i64 %i.cj, %i.dk
-  %invariant.op = sub i64 1, %i.di
+  %invariant.op = sub i64 1, %.fr60.i.i.i.i
   br label %.lr.ph.split.i.i.i.i
 
 .lr.ph.split.i.i.i.i:                             ; preds = %bb.t, %.lr.ph.i1.i.i.i
@@ -230,7 +231,7 @@ bb.r:                                             ; preds = %.lr.ph.split.i.i.i.
   br label %bb.t
 
 bb.s:                                             ; preds = %.lr.ph.split.i.i.i.i
-  %..i.i3.i.i.i = tail call noundef i64 @llvm.umax.i64(i64 %.sink70.i.i29.i.i, i64 %i.di) ; 2 uses
+  %..i.i3.i.i.i = tail call noundef i64 @llvm.umax.i64(i64 %.sink70.i.i29.i.i, i64 %.fr60.i.i.i.i) ; 2 uses
   %i.du = icmp ult i64 %..i.i3.i.i.i, %i.cj
   br i1 %i.du, label %.lr.ph, label %.preheader36.i.i.i.i.preheader
 
@@ -247,7 +248,7 @@ bb.u:                                             ; preds = %.lr.ph
   br i1 %i.dy, label %.lr.ph, label %.preheader36.i.i.i.i.preheader
 
 .preheader36.i.i.i.i.preheader:                   ; preds = %bb.u, %bb.s
-  %i.dz = icmp ult i64 %.sink70.i.i29.i.i, %i.di
+  %i.dz = icmp ult i64 %.sink70.i.i29.i.i, %.fr60.i.i.i.i
   br i1 %i.dz, label %.lr.ph213, label %_RINvMNtCsj6eKBz9Db1c_4core3stre4findReECsa5QsYiPB8Gl_5image.exit.i
 
 .lr.ph:                                           ; preds = %bb.s, %bb.u
@@ -267,7 +268,7 @@ bb.u:                                             ; preds = %.lr.ph
   br i1 %i.eg, label %.lr.ph213, label %_RINvMNtCsj6eKBz9Db1c_4core3stre4findReECsa5QsYiPB8Gl_5image.exit.i
 
 .lr.ph213:                                        ; preds = %.preheader36.i.i.i.i.preheader, %.preheader36.i.i.i.i
-  %.sroa.2.0.i.i.i.i212 = phi i64 [ %i.eh, %.preheader36.i.i.i.i ], [ %i.di, %.preheader36.i.i.i.i.preheader ]
+  %.sroa.2.0.i.i.i.i212 = phi i64 [ %i.eh, %.preheader36.i.i.i.i ], [ %.fr60.i.i.i.i, %.preheader36.i.i.i.i.preheader ]
   %i.eh = add i64 %.sroa.2.0.i.i.i.i212, -1       ; 6 uses
   %i.ei = icmp ult i64 %i.eh, %i.cj
   br i1 %i.ei, label %bb.v, label %.split32.us.i.i.i.i
@@ -411,12 +412,16 @@ bb.ab:                                            ; preds = %bb.aa, %.split.us.u
   br i1 %.not.us.i.i.i.i, label %bb.ad, label %.preheader35.i.i.i.i.preheader
 
 .preheader35.i.i.i.i.preheader:                   ; preds = %.lr.ph.split.us.i.i.i.i
-  br i1 %exitcond.not.i.i.i.i215.not, label %.lr.ph217, label %.preheader.i10.i.i.i
+  br i1 %exitcond.not.i.i.i.i215.not, label %.lr.ph217, label %.preheader.split.i13.i.i.i
 
 .preheader35.i.i.i.i:                             ; preds = %.lr.ph217
   %i.gi = add i64 %.sroa.04.0.us.i.i.i.i216, 1    ; 2 uses
   %exitcond.not.i.i.i.i = icmp eq i64 %i.gi, %umax.i.i.i.i
-  br i1 %exitcond.not.i.i.i.i, label %.preheader.i10.i.i.i, label %.lr.ph217
+  br i1 %exitcond.not.i.i.i.i, label %.preheader.split.i13.i.i.i, label %.lr.ph217
+
+.preheader.split.i13.i.i.i:                       ; preds = %.preheader35.i.i.i.i.preheader, %.preheader35.i.i.i.i
+  %.not34.i.i.i.i = icmp eq i64 %.fr63.i.i.i, 0
+  br i1 %.not34.i.i.i.i, label %_RINvMNtCsj6eKBz9Db1c_4core3stre4findReECsa5QsYiPB8Gl_5image.exit.i, label %.split32.us.i14.i.i.i
 
 .lr.ph217:                                        ; preds = %.preheader35.i.i.i.i.preheader, %.preheader35.i.i.i.i
   %.sroa.04.0.us.i.i.i.i216 = phi i64 [ %i.gi, %.preheader35.i.i.i.i ], [ %.fr63.i.i.i, %.preheader35.i.i.i.i.preheader ] ; 4 uses
@@ -429,14 +434,6 @@ bb.ab:                                            ; preds = %bb.aa, %.split.us.u
   %i.go = load i8, ptr %i.gn, align 1, !alias.scope !840, !noalias !837, !noundef !5
   %.not21.us.i.i.i.i = icmp eq i8 %i.gk, %i.go
   br i1 %.not21.us.i.i.i.i, label %.preheader35.i.i.i.i, label %bb.ac
-
-.preheader.i10.i.i.i:                             ; preds = %.preheader35.i.i.i.i.preheader, %.preheader35.i.i.i.i
-  %.not34.i.i.i.i = icmp eq i64 %.fr63.i.i.i, 0
-  br i1 %.not34.i.i.i.i, label %_RINvMNtCsj6eKBz9Db1c_4core3stre4findReECsa5QsYiPB8Gl_5image.exit.i, label %.split32.us.i11.i.i.i
-
-.split32.us.i11.i.i.i:                            ; preds = %.preheader.i10.i.i.i
-  tail call void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.ey, i64 noundef range(i64 0, -9223372036854775808) %i.cj, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #28, !noalias !843
-  unreachable
 
 bb.ac:                                            ; preds = %.lr.ph217
   %i.gp = add i64 %.sink.i9.i32.i.i, %i.ez
@@ -453,13 +450,17 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   %i.gt = icmp ult i64 %i.gs, %i.cf
   br i1 %i.gt, label %.lr.ph.split.us.i.i.i.i, label %_RINvMNtCsj6eKBz9Db1c_4core3stre4findReECsa5QsYiPB8Gl_5image.exit.thread.i
 
+.split32.us.i14.i.i.i:                            ; preds = %.preheader.split.i13.i.i.i
+  tail call void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %i.ey, i64 noundef range(i64 0, -9223372036854775808) %i.cj, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #28, !noalias !843
+  unreachable
+
 _RINvMNtCsj6eKBz9Db1c_4core3stre4findReECsa5QsYiPB8Gl_5image.exit.thread.i: ; preds = %bb.t, %bb.ae, %bb.ab, %bb.y, %bb.q, %.preheader.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !823
   br label %.thread
 
-_RINvMNtCsj6eKBz9Db1c_4core3stre4findReECsa5QsYiPB8Gl_5image.exit.i: ; preds = %.preheader36.i.i.i.i.preheader, %.preheader36.i.i.i.i, %.preheader.i10.us.us.i.i.i.preheader, %.preheader.i10.us.us.i.i.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit12.i.i.i.i.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit14.i.i.i.i.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit16.i.i.i.i.i, %bb.p, %.preheader.i10.i.i.i, %bb.o, %bb.g, %bb.d
-  %.sroa.4.0.i.i = phi i64 [ %.promoted.i.i.i, %bb.d ], [ %i.cm, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit12.i.i.i.i.i ], [ %.sink71.i.i26.i.i, %.preheader36.i.i.i.i ], [ %.promoted.i.i.i, %bb.g ], [ %.sink.i9.i32.i.i, %.preheader.i10.i.i.i ], [ %i.ac, %bb.o ], [ %i.cm, %bb.p ], [ %i.cm, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit16.i.i.i.i.i ], [ %i.cm, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit14.i.i.i.i.i ], [ %.sink.i9.us.i34.i.i, %.preheader.i10.us.us.i.i.i.preheader ], [ %.sink.i9.us.i34.i.i, %.preheader.i10.us.us.i.i.i ], [ %.sink71.i.i26.i.i, %.preheader36.i.i.i.i.preheader ] ; 8 uses
-  %storemerge.i.sink.i.i.i = phi i1 [ %i.ad, %bb.d ], [ true, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit12.i.i.i.i.i ], [ true, %.preheader36.i.i.i.i ], [ true, %bb.g ], [ true, %.preheader.i10.i.i.i ], [ true, %bb.o ], [ true, %bb.p ], [ true, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit16.i.i.i.i.i ], [ true, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit14.i.i.i.i.i ], [ true, %.preheader.i10.us.us.i.i.i.preheader ], [ true, %.preheader.i10.us.us.i.i.i ], [ true, %.preheader36.i.i.i.i.preheader ]
+_RINvMNtCsj6eKBz9Db1c_4core3stre4findReECsa5QsYiPB8Gl_5image.exit.i: ; preds = %.preheader36.i.i.i.i.preheader, %.preheader36.i.i.i.i, %.preheader.i10.us.us.i.i.i.preheader, %.preheader.i10.us.us.i.i.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit12.i.i.i.i.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit14.i.i.i.i.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit16.i.i.i.i.i, %bb.p, %.preheader.split.i13.i.i.i, %bb.o, %bb.g, %bb.d
+  %.sroa.4.0.i.i = phi i64 [ %.promoted.i.i.i, %bb.d ], [ %i.cm, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit12.i.i.i.i.i ], [ %.sink71.i.i26.i.i, %.preheader36.i.i.i.i ], [ %.promoted.i.i.i, %bb.g ], [ %.sink.i9.i32.i.i, %.preheader.split.i13.i.i.i ], [ %i.ac, %bb.o ], [ %i.cm, %bb.p ], [ %i.cm, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit16.i.i.i.i.i ], [ %i.cm, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit14.i.i.i.i.i ], [ %.sink.i9.us.i34.i.i, %.preheader.i10.us.us.i.i.i.preheader ], [ %.sink.i9.us.i34.i.i, %.preheader.i10.us.us.i.i.i ], [ %.sink71.i.i26.i.i, %.preheader36.i.i.i.i.preheader ] ; 8 uses
+  %storemerge.i.sink.i.i.i = phi i1 [ %i.ad, %bb.d ], [ true, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit12.i.i.i.i.i ], [ true, %.preheader36.i.i.i.i ], [ true, %bb.g ], [ true, %.preheader.split.i13.i.i.i ], [ true, %bb.o ], [ true, %bb.p ], [ true, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit16.i.i.i.i.i ], [ true, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit14.i.i.i.i.i ], [ true, %.preheader.i10.us.us.i.i.i.preheader ], [ true, %.preheader.i10.us.us.i.i.i ], [ true, %.preheader36.i.i.i.i.preheader ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !823
   %i.gu = icmp ne i64 %.sroa.4.0.i.i, 0
   %or.cond.not.i = and i1 %storemerge.i.sink.i.i.i, %i.gu

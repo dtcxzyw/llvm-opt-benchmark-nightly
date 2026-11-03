@@ -202,8 +202,8 @@ bb.v:                                             ; preds = %bb.u, %bb.t, %.spli
   br i1 %i.dg, label %.lr.ph.i45.us.i.i.i.i, label %.loopexit.i.i.i.i
 
 .loopexit.i.us.i.i.i.i:                           ; preds = %.preheader131.us.i.i.i.i.preheader, %.preheader.us.i.us.i.i.i.preheader, %.preheader131.us.i.i.i.i, %.preheader.us.i.us.i.i.i, %.preheader.us.i.preheader.split.i.i.i
-  %.sroa.7109.1.us.i.i.i.i = phi i64 [ %i.cf, %.preheader.us.i.preheader.split.i.i.i ], [ %i.cf, %.preheader.us.i.us.i.i.i ], [ %i.ba, %.preheader131.us.i.i.i.i ], [ %i.cf, %.preheader.us.i.us.i.i.i.preheader ], [ %i.ba, %.preheader131.us.i.i.i.i.preheader ] ; 3 uses
-  %.sroa.3072.1.us.i.i.i.i = phi i64 [ -1, %.preheader.us.i.preheader.split.i.i.i ], [ -1, %.preheader.us.i.us.i.i.i ], [ 0, %.preheader131.us.i.i.i.i ], [ -1, %.preheader.us.i.us.i.i.i.preheader ], [ 0, %.preheader131.us.i.i.i.i.preheader ]
+  %.sroa.7109.1.us.i.i.i.i = phi i64 [ %i.cf, %.preheader.us.i.us.i.i.i ], [ %i.cf, %.preheader.us.i.preheader.split.i.i.i ], [ %i.ba, %.preheader131.us.i.i.i.i ], [ %i.cf, %.preheader.us.i.us.i.i.i.preheader ], [ %i.ba, %.preheader131.us.i.i.i.i.preheader ] ; 3 uses
+  %.sroa.3072.1.us.i.i.i.i = phi i64 [ -1, %.preheader.us.i.us.i.i.i ], [ -1, %.preheader.us.i.preheader.split.i.i.i ], [ 0, %.preheader131.us.i.i.i.i ], [ -1, %.preheader.us.i.us.i.i.i.preheader ], [ 0, %.preheader131.us.i.i.i.i.preheader ]
   %.sroa.11110.1.us.i.i.i.i = add i64 %.sroa.7109.1.us.i.i.i.i, %.sroa.15.0.copyload.i.i.i.i ; 2 uses
   %i.dh = getelementptr inbounds nuw i8, ptr %i.ab, i64 %.sroa.04.0.us.i.i.i.i
   %gepdiff.us.i.i.i.i = sub nuw nsw i64 %.sroa.7109.1.us.i.i.i.i, %.sroa.04.0.us.i.i.i.i ; 3 uses
@@ -606,9 +606,9 @@ _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   br label %.split198.us.invoke.i.i.i.i
 
 .split198.us.invoke.i.i.i.i:                      ; preds = %.preheader.us.i.preheader.split.i.i.i, %bb.m, %.lr.ph440, %.lr.ph447, %.split187.us.i.i.i.i, %.split198.us.i.i.i.i
-  %i.jg = phi i64 [ %umax.i51.i.i.i.i, %.split198.us.i.i.i.i ], [ %umax.i.i.i.i.i, %.split187.us.i.i.i.i ], [ %i.cp, %.lr.ph447 ], [ %i.bs, %.lr.ph440 ], [ %i.bu, %bb.m ], [ %i.au, %.preheader.us.i.preheader.split.i.i.i ]
-  %i.jh = phi i64 [ %.sroa.13107.0.copyload.i.i.i.i, %.split198.us.i.i.i.i ], [ %.sroa.13107.0.copyload.i.i.i.i, %.split187.us.i.i.i.i ], [ %.sroa.13107.0.copyload.i.i.i.i, %.lr.ph447 ], [ %.sroa.15.0.copyload.i.i.i.i, %.lr.ph440 ], [ %.sroa.13107.0.copyload.i.i.i.i, %bb.m ], [ %.sroa.15.0.copyload.i.i.i.i, %.preheader.us.i.preheader.split.i.i.i ]
-  %i.ji = phi ptr [ @3, %.split198.us.i.i.i.i ], [ @3, %.split187.us.i.i.i.i ], [ @2, %.lr.ph447 ], [ @1, %.lr.ph440 ], [ @2, %bb.m ], [ @1, %.preheader.us.i.preheader.split.i.i.i ]
+  %i.jg = phi i64 [ %umax.i51.i.i.i.i, %.split198.us.i.i.i.i ], [ %i.cp, %.lr.ph447 ], [ %i.bu, %bb.m ], [ %umax.i.i.i.i.i, %.split187.us.i.i.i.i ], [ %i.bs, %.lr.ph440 ], [ %i.au, %.preheader.us.i.preheader.split.i.i.i ]
+  %i.jh = phi i64 [ %.sroa.13107.0.copyload.i.i.i.i, %.split198.us.i.i.i.i ], [ %.sroa.13107.0.copyload.i.i.i.i, %.lr.ph447 ], [ %.sroa.13107.0.copyload.i.i.i.i, %bb.m ], [ %.sroa.13107.0.copyload.i.i.i.i, %.split187.us.i.i.i.i ], [ %.sroa.15.0.copyload.i.i.i.i, %.lr.ph440 ], [ %.sroa.15.0.copyload.i.i.i.i, %.preheader.us.i.preheader.split.i.i.i ]
+  %i.ji = phi ptr [ @3, %.split198.us.i.i.i.i ], [ @2, %.lr.ph447 ], [ @2, %bb.m ], [ @3, %.split187.us.i.i.i.i ], [ @1, %.lr.ph440 ], [ @1, %.preheader.us.i.preheader.split.i.i.i ]
   invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.jg, i64 noundef range(i64 0, -9223372036854775808) %i.jh, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ji) #26
           to label %.split198.us.cont.i.i.i.i unwind label %.loopexit134.split.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !337
 

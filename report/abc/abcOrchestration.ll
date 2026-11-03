@@ -204,7 +204,7 @@ Abc_ManResubDivsS.exit:                           ; preds = %Abc_ManResubDivsS.e
   %i.afn = getelementptr i8, ptr %i.afk, i64 8
   %.val166.i = load ptr, ptr %i.afn, align 8, !tbaa !51 ; 3 uses
   %i.afo = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.afp = zext nneg i32 %.val162.i to i64        ; 4 uses
+  %i.afp = zext nneg i32 %.val162.i to i64        ; 3 uses
   br label %bb.em
 
 bb.eb:                                            ; preds = %.critedge2.loopexit.i, %.lr.ph217.i
@@ -463,7 +463,7 @@ bb.el:                                            ; preds = %bb.ek
   store i32 %spec.store.select.i, ptr %i.akb, align 8
   br label %Abc_ManResubDivs1.exit
 
-.critedge.loopexit.i:                             ; preds = %bb.ep, %14, %bb.em
+.critedge.loopexit.i:                             ; preds = %bb.ep, %.thread172.i.preheader, %bb.em
   %indvars.iv.next316.i = add nuw nsw i64 %indvars.iv315.i, 1
   %exitcond326.not.i = icmp eq i64 %indvars.iv.next323.i, %i.afp
   br i1 %exitcond326.not.i, label %.loopexit, label %bb.em, !llvm.loop !231
@@ -495,10 +495,10 @@ bb.em:                                            ; preds = %.critedge.loopexit.
 
 .thread172.i.preheader:                           ; preds = %.lr.ph235.i
   %i.akq = icmp eq i32 %.fr297, 0
-  br label %.thread172.i
+  br i1 %i.akq, label %.loopexit.thread.i.loopexit208.split, label %.critedge.loopexit.i
 
-.thread172.i.us:                                  ; preds = %.thread172.i.us.preheader, %14
-  %indvars.iv317.i.us = phi i64 [ %indvars.iv.next318.i.us, %14 ], [ %indvars.iv315.i, %.thread172.i.us.preheader ] ; 2 uses
+.thread172.i.us:                                  ; preds = %.thread172.i.us.preheader, %bb.ep
+  %indvars.iv317.i.us = phi i64 [ %indvars.iv.next318.i, %bb.ep ], [ %indvars.iv315.i, %.thread172.i.us.preheader ] ; 2 uses
   %i.akr = getelementptr inbounds nuw [8 x i8], ptr %.val166.i, i64 %indvars.iv317.i.us
   %i.aks = load ptr, ptr %i.akr, align 8, !tbaa !52
   %i.akt = ptrtoint ptr %i.aks to i64             ; 2 uses
@@ -558,24 +558,15 @@ bb.eo:                                            ; preds = %.lr.ph230.i.us
   %.9.i.us.in = phi i64 [ %indvars.iv310.i.us, %.lr.ph230.i.us ], [ %indvars.iv305.i.us, %.preheader174.i.us ]
   %.9.i.us = trunc i64 %.9.i.us.in to i32
   %i.alx = icmp eq i32 %.fr297, %.9.i.us
-  br i1 %i.alx, label %.loopexit.thread.i, label %14
+  br i1 %i.alx, label %.loopexit.thread.i, label %bb.ep
 
-14:                                               ; preds = %.loopexit.i.us
-  %indvars.iv.next318.i.us = add nuw nsw i64 %indvars.iv317.i.us, 1 ; 2 uses
-  %exitcond321.not.i.us = icmp eq i64 %indvars.iv.next318.i.us, %i.afp
-  br i1 %exitcond321.not.i.us, label %.critedge.loopexit.i, label %.thread172.i.us, !llvm.loop !234
-
-bb.ep:                                            ; preds = %.thread172.i
-  %indvars.iv.next318.i = add nuw nsw i64 %indvars.iv317.i, 1 ; 2 uses
+bb.ep:                                            ; preds = %.loopexit.i.us
+  %indvars.iv.next318.i = add nuw nsw i64 %indvars.iv317.i.us, 1 ; 2 uses
   %exitcond321.not.i = icmp eq i64 %indvars.iv.next318.i, %i.afp
-  br i1 %exitcond321.not.i, label %.critedge.loopexit.i, label %.thread172.i, !llvm.loop !234
+  br i1 %exitcond321.not.i, label %.critedge.loopexit.i, label %.thread172.i.us, !llvm.loop !234
 
-.thread172.i:                                     ; preds = %.thread172.i.preheader, %bb.ep
-  %indvars.iv317.i = phi i64 [ %indvars.iv.next318.i, %bb.ep ], [ %indvars.iv315.i, %.thread172.i.preheader ] ; 2 uses
-  br i1 %i.akq, label %.loopexit.thread.i.loopexit208.split, label %bb.ep
-
-.loopexit.thread.i.loopexit208.split:             ; preds = %.thread172.i
-  %i.aly = getelementptr inbounds nuw [8 x i8], ptr %.val166.i, i64 %indvars.iv317.i
+.loopexit.thread.i.loopexit208.split:             ; preds = %.thread172.i.preheader
+  %i.aly = getelementptr inbounds nuw [8 x i8], ptr %.val166.i, i64 %indvars.iv315.i
   %i.alz = load ptr, ptr %i.aly, align 8, !tbaa !52
   %i.ama = ptrtoint ptr %i.alz to i64             ; 2 uses
   %i.amb = trunc i64 %i.ama to i32

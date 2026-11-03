@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %apply_round_stamp.e
   %.fr145.i.i = freeze i32 %i.bu                  ; 2 uses
   %i.bv = icmp eq i32 %.fr145.i.i, 2
   %i.bw = fneg reassoc nsz arcp contract afn float %i.bs
-  %i.bx = select reassoc nsz arcp contract afn i1 %i.bv, float %i.bw, float %i.bs
+  %i.bx = select reassoc nsz arcp contract afn i1 %i.bv, float %i.bw, float %i.bs ; 2 uses
   %i.by = mul i64 %i.bm, 10                       ; 7 uses
   %i.bz = trunc i64 %i.by to i32                  ; 6 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bb, i64 24
@@ -417,8 +417,9 @@ bb.k:                                             ; preds = %build_lookup_table.
   br i1 %i.fv, label %.split140.us.us.i.i, label %.split140.preheader.i.i
 
 .split140.preheader.i.i:                          ; preds = %bb.k
-  %i.fx = uitofp reassoc nsz arcp contract afn i64 %i.bm to float
-  %factor.op.fmul.i = fdiv reassoc nsz arcp contract afn float %i.bx, %i.fx ; 3 uses
+  %i.fx = uitofp reassoc nsz arcp contract afn i64 %i.bm to float ; 2 uses
+  %invariant.op88.i = fdiv reassoc nsz arcp contract afn float %i.bx, %i.fx ; 2 uses
+  %factor.op.fmul.i = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %i.fx
   br label %.split140.i.i
 
 .split140.us.us.i.i:                              ; preds = %bb.k, %.critedge.split.us.us.i.i
@@ -543,7 +544,7 @@ bb.o:                                             ; preds = %.split.us.us.i.i, %
   br label %.split140.i.split.i
 
 .split140.i.split.us.preheader.i:                 ; preds = %.split140.i.i
-  %invariant.op.i = fmul reassoc nsz arcp contract afn float %factor.op.fmul.i, %i.hz
+  %invariant.op.i = fmul reassoc nsz arcp contract afn float %invariant.op88.i, %i.hz
   %i.ii = insertelement <2 x float> poison, float %invariant.op.i, i64 1
   br label %.split140.i.split.us.i
 
@@ -563,7 +564,7 @@ bb.p:                                             ; preds = %.split140.i.split.u
   %i.iq = getelementptr inbounds nuw [8 x i8], ptr %i.ie, i64 %.0139.i.us.i ; 2 uses
   %i.ir = getelementptr inbounds nuw [4 x i8], ptr %i.cj, i64 %i.ip
   %i.is = load float, ptr %i.ir, align 4, !tbaa !13, !noalias !214
-  %.reass.us.i = fmul reassoc nsz arcp contract afn float %factor.op.fmul.i, %i.ij
+  %.reass.us.i = fmul reassoc nsz arcp contract afn float %invariant.op88.i, %i.ij
   %i.it = insertelement <2 x float> %i.ii, float %.reass.us.i, i64 0
   %i.iu = insertelement <2 x float> poison, float %i.is, i64 0
   %i.iv = shufflevector <2 x float> %i.iu, <2 x float> poison, <2 x i32> zeroinitializer
@@ -606,7 +607,8 @@ bb.r:                                             ; preds = %.split140.i.split.i
   %i.jo = getelementptr inbounds nuw [8 x i8], ptr %i.if, i64 %.0139.i.i ; 2 uses
   %i.jp = getelementptr inbounds nuw [4 x i8], ptr %i.cj, i64 %i.jm
   %i.jq = load float, ptr %i.jp, align 4, !tbaa !13, !noalias !214
-  %.reass.i = fmul reassoc nsz arcp contract afn float %i.jq, %factor.op.fmul.i ; 3 uses
+  %10 = fmul reassoc nsz arcp contract afn float %i.bx, %i.jq
+  %.reass.i = fmul reassoc nsz arcp contract afn float %10, %factor.op.fmul.i ; 3 uses
   %i.jr = insertelement <2 x float> poison, float %.reass.i, i64 0
   %i.js = shufflevector <2 x float> %i.jr, <2 x float> poison, <2 x i32> zeroinitializer
   %i.jt = insertelement <2 x float> %i.ih, float %i.jg, i64 0

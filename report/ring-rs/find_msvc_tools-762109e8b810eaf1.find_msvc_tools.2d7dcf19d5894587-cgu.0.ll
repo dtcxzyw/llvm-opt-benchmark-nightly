@@ -205,8 +205,8 @@ bb.u:                                             ; preds = %bb.a
   store i64 %.sroa.2.1.ph, ptr %i.cf, align 8
   br label %_RINvMsx_NtNtCs3oUPovFnLWP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECs3U9i7nQCKwt_15find_msvc_tools.exit
 
-_RINvMsx_NtNtCs3oUPovFnLWP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECs3U9i7nQCKwt_15find_msvc_tools.exit: ; preds = %bb.p, %.preheader48, %.preheader.preheader._crit_edge, %._crit_edge.i14, %.preheader45.preheader._crit_edge, %._crit_edge.i, %bb.t, %_RNvNtNtCs3oUPovFnLWP_4core5slice6memchr6memchrCs3U9i7nQCKwt_15find_msvc_tools.exit.thread38, %_RNvNtNtCs3oUPovFnLWP_4core5slice6memchr6memchrCs3U9i7nQCKwt_15find_msvc_tools.exit.thread, %.loopexit50
-  %storemerge.i.sink = phi i64 [ 0, %bb.t ], [ 1, %.preheader45.preheader._crit_edge ], [ 1, %_RNvNtNtCs3oUPovFnLWP_4core5slice6memchr6memchrCs3U9i7nQCKwt_15find_msvc_tools.exit.thread38 ], [ 0, %_RNvNtNtCs3oUPovFnLWP_4core5slice6memchr6memchrCs3U9i7nQCKwt_15find_msvc_tools.exit.thread ], [ 1, %.loopexit50 ], [ 1, %.preheader.preheader._crit_edge ], [ 0, %._crit_edge.i ], [ 0, %._crit_edge.i14 ], [ 0, %.preheader48 ], [ 0, %bb.p ]
+_RINvMsx_NtNtCs3oUPovFnLWP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECs3U9i7nQCKwt_15find_msvc_tools.exit: ; preds = %bb.p, %.preheader48, %bb.am, %._crit_edge.i14, %.preheader45.preheader._crit_edge, %._crit_edge.i, %bb.t, %_RNvNtNtCs3oUPovFnLWP_4core5slice6memchr6memchrCs3U9i7nQCKwt_15find_msvc_tools.exit.thread38, %_RNvNtNtCs3oUPovFnLWP_4core5slice6memchr6memchrCs3U9i7nQCKwt_15find_msvc_tools.exit.thread, %.loopexit50
+  %storemerge.i.sink = phi i64 [ 0, %bb.t ], [ 1, %.preheader45.preheader._crit_edge ], [ 1, %_RNvNtNtCs3oUPovFnLWP_4core5slice6memchr6memchrCs3U9i7nQCKwt_15find_msvc_tools.exit.thread38 ], [ 0, %_RNvNtNtCs3oUPovFnLWP_4core5slice6memchr6memchrCs3U9i7nQCKwt_15find_msvc_tools.exit.thread ], [ 1, %.loopexit50 ], [ 1, %bb.am ], [ 0, %._crit_edge.i ], [ 0, %._crit_edge.i14 ], [ 0, %.preheader48 ], [ 0, %bb.p ]
   store i64 %storemerge.i.sink, ptr %0, align 8
   ret void
 
@@ -406,8 +406,8 @@ bb.aj:                                            ; preds = %bb.ah
   %exitcond.not.i21322.not = icmp ult i64 %i.ez, %i.bz
   br i1 %exitcond.not.i21322.not, label %.lr.ph324, label %.preheader.preheader
 
-bb.ak:                                            ; preds = %bb.ao, %6, %bb.ai
-  %.sink = phi i64 [ %i.fp, %bb.ao ], [ %8, %6 ], [ %i.ey, %bb.ai ] ; 3 uses
+bb.ak:                                            ; preds = %bb.ao, %.lr.ph327, %bb.ai
+  %.sink = phi i64 [ %i.fp, %bb.ao ], [ %i.fh, %.lr.ph327 ], [ %i.ey, %bb.ai ] ; 3 uses
   store i64 %.sink, ptr %i.ca, align 8
   %i.fb = add i64 %.sink, %i.cb                   ; 2 uses
   %i.fc = icmp ult i64 %i.fb, %i.bv
@@ -419,45 +419,49 @@ bb.al:                                            ; preds = %.lr.ph324
   br i1 %exitcond.not.i21, label %.preheader.preheader, label %.lr.ph324
 
 .preheader.preheader:                             ; preds = %bb.al, %bb.aj
-  %i.fe = add i64 %i.ez, -1
+  %i.fe = add i64 %i.ez, -1                       ; 2 uses
   %.first_iter = icmp ult i64 %i.fe, %i.bz
-  %.not42325 = icmp eq i64 %i.ez, 0
-  br i1 %.not42325, label %.preheader.preheader._crit_edge, label %.lr.ph327
+  %.first_iter.fr = freeze i1 %.first_iter
+  %.not42325 = icmp eq i64 %i.ez, 0               ; 2 uses
+  br i1 %.first_iter.fr, label %.preheader.us.preheader, label %.preheader.preheader.split
 
-.preheader:                                       ; preds = %bb.am
-  %.not42 = icmp eq i64 %i.fh, 0
-  br i1 %.not42, label %.preheader.preheader._crit_edge, label %.lr.ph327
+.preheader.us.preheader:                          ; preds = %.preheader.preheader
+  br i1 %.not42325, label %bb.am, label %.preheader.preheader._crit_edge
 
-.preheader.preheader._crit_edge:                  ; preds = %.preheader.preheader, %.preheader
-  %2 = add i64 %i.er, %i.bz                       ; 2 uses
-  store i64 %2, ptr %i.ca, align 8
-  %i.ff = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.er, ptr %i.ff, align 8, !alias.scope !94
-  %i.fg = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %2, ptr %i.fg, align 8, !alias.scope !94
+.preheader:                                       ; preds = %.preheader.preheader._crit_edge
+  %.not42 = icmp eq i64 %2, 0
+  br i1 %.not42, label %bb.am, label %.preheader.preheader._crit_edge
+
+.preheader.preheader._crit_edge:                  ; preds = %.preheader.us.preheader, %.preheader
+  %.sroa.2.0.i23.us338 = phi i64 [ %2, %.preheader ], [ %i.ez, %.preheader.us.preheader ]
+  %2 = add i64 %.sroa.2.0.i23.us338, -1           ; 4 uses
+  %i.ff = getelementptr inbounds nuw i8, ptr %i.bx, i64 %2
+  %3 = load i8, ptr %i.ff, align 1
+  %i.fg = getelementptr i8, ptr %i.fa, i64 %2
+  %4 = load i8, ptr %i.fg, align 1
+  %.not17.i24.us = icmp eq i8 %3, %4
+  br i1 %.not17.i24.us, label %.preheader, label %.lr.ph327
+
+.lr.ph327:                                        ; preds = %.preheader.preheader._crit_edge
+  %5 = load i64, ptr %i.ep, align 8
+  %i.fh = add i64 %5, %i.er
+  br label %bb.ak
+
+.preheader.preheader.split:                       ; preds = %.preheader.preheader
+  br i1 %.not42325, label %bb.am, label %bb.an
+
+bb.am:                                            ; preds = %.preheader.us.preheader, %.preheader, %.preheader.preheader.split
+  %6 = add i64 %i.er, %i.bz                       ; 2 uses
+  store i64 %6, ptr %i.ca, align 8
+  %i.fi = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 %i.er, ptr %i.fi, align 8, !alias.scope !94
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 %6, ptr %7, align 8, !alias.scope !94
   br label %_RINvMsx_NtNtCs3oUPovFnLWP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECs3U9i7nQCKwt_15find_msvc_tools.exit
 
-.lr.ph327:                                        ; preds = %.preheader.preheader, %.preheader
-  %.sroa.2.0.i23326 = phi i64 [ %i.fh, %.preheader ], [ %i.ez, %.preheader.preheader ]
-  %i.fh = add i64 %.sroa.2.0.i23326, -1           ; 5 uses
-  br i1 %.first_iter, label %bb.am, label %bb.an
-
-bb.am:                                            ; preds = %.lr.ph327
-  %3 = getelementptr inbounds nuw i8, ptr %i.bx, i64 %i.fh
-  %4 = load i8, ptr %3, align 1
-  %i.fi = getelementptr i8, ptr %i.fa, i64 %i.fh
-  %5 = load i8, ptr %i.fi, align 1
-  %.not17.i24 = icmp eq i8 %4, %5
-  br i1 %.not17.i24, label %.preheader, label %6
-
-bb.an:                                            ; preds = %.lr.ph327
-  tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 %i.fh, i64 %i.bz, ptr nonnull align 8 @3) #33
+bb.an:                                            ; preds = %.preheader.preheader.split
+  tail call void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 %i.fe, i64 %i.bz, ptr nonnull align 8 @3) #33
   unreachable
-
-6:                                                ; preds = %bb.am
-  %7 = load i64, ptr %i.ep, align 8
-  %8 = add i64 %7, %i.er
-  br label %bb.ak
 
 .lr.ph324:                                        ; preds = %bb.aj, %bb.al
   %.sroa.02.0.i20323 = phi i64 [ %i.fd, %bb.al ], [ %i.ez, %bb.aj ] ; 4 uses

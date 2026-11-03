@@ -205,7 +205,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.g = load i32, ptr %i.f, align 8, !tbaa !60
   %i.h = add i32 %i.e, %i.g                       ; 3 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 4 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 5 uses
   %i.j = load i32, ptr %i.i, align 4, !tbaa !76
   %i.k = add i32 %i.h, %i.j                       ; 3 uses
   %i.l = zext i32 %i.k to i64                     ; 3 uses
@@ -289,36 +289,41 @@ bb.d:                                             ; preds = %bb.c
 
 _ZN4mlir10presburger12DivisionReprC2Ejj.exit:     ; preds = %._crit_edge, %bb.b, %bb.c, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #17
-  %.not = icmp eq ptr %2, null
-  %i.ah = load i32, ptr %i.i, align 4, !tbaa !76  ; 2 uses
+  %i.ah = load i32, ptr %i.i, align 4, !tbaa !76  ; 3 uses
   %.not37 = icmp eq i32 %i.ah, 0
-  br i1 %.not37, label %.split.us, label %.lr.ph34.a
+  br i1 %.not37, label %.split.us, label %_ZN4mlir10presburger12DivisionReprC2Ejj.exit.split.preheader
 
-_ZN4mlir10presburger12DivisionReprC2Ejj.exit.splitthread-pre-split.a: ; preds = %._crit_edge35
+_ZN4mlir10presburger12DivisionReprC2Ejj.exit.split.preheader: ; preds = %_ZN4mlir10presburger12DivisionReprC2Ejj.exit
+  %.not = icmp eq ptr %2, null
+  br i1 %.not, label %.lr.ph34.a, label %.lr.ph34
+
+_ZN4mlir10presburger12DivisionReprC2Ejj.exit.splitthread-pre-split.a: ; preds = %bb.j, %._crit_edge35.loopexit.us
   %.pr = load i32, ptr %i.i, align 4, !tbaa !76   ; 2 uses
   %.not38.a = icmp eq i32 %.pr, 0
   br i1 %.not38.a, label %.split.us, label %.lr.ph34.a
 
-.lr.ph34.a:                                       ; preds = %_ZN4mlir10presburger12DivisionReprC2Ejj.exit, %_ZN4mlir10presburger12DivisionReprC2Ejj.exit.splitthread-pre-split.a
-  %i.ai = phi i32 [ %.pr, %_ZN4mlir10presburger12DivisionReprC2Ejj.exit.splitthread-pre-split.a ], [ %i.ah, %_ZN4mlir10presburger12DivisionReprC2Ejj.exit ]
+.lr.ph34.a:                                       ; preds = %_ZN4mlir10presburger12DivisionReprC2Ejj.exit.split.preheader, %_ZN4mlir10presburger12DivisionReprC2Ejj.exit.splitthread-pre-split.a
+  %i.ai = phi i32 [ %.pr, %_ZN4mlir10presburger12DivisionReprC2Ejj.exit.splitthread-pre-split.a ], [ %i.ah, %_ZN4mlir10presburger12DivisionReprC2Ejj.exit.split.preheader ]
   %wide.trip.count43 = zext i32 %i.ai to i64      ; 2 uses
-  br i1 %.not, label %.lr.ph34.split.us.preheader, label %.lr.ph34.split
-
-.lr.ph34.split.us.preheader:                      ; preds = %.lr.ph34.a
   %.pre48 = load ptr, ptr %4, align 8, !tbaa !92
+  br label %.lr.ph34.split.us.preheader
+
+.lr.ph34.split.us.preheader:                      ; preds = %bb.j, %.lr.ph34.a
+  %.ph = phi ptr [ %7, %bb.j ], [ %.pre48, %.lr.ph34.a ]
+  %indvars.iv41.us.ph = phi i64 [ %indvars.iv.next42, %bb.j ], [ 0, %.lr.ph34.a ]
+  %.02431.us.us.ph = phi i1 [ true, %bb.j ], [ false, %.lr.ph34.a ]
   br label %.lr.ph34.split.us
 
-.lr.ph34.split.us:                                ; preds = %.lr.ph34.split.us.preheader, %bb.j
-  %i.aj = phi ptr [ %.pre48, %.lr.ph34.split.us.preheader ], [ %8, %bb.j ] ; 3 uses
-  %indvars.iv41 = phi i64 [ 0, %.lr.ph34.split.us.preheader ], [ %indvars.iv.next42, %bb.j ] ; 4 uses
-  %.02431.us = phi i1 [ false, %.lr.ph34.split.us.preheader ], [ %.2.us, %bb.j ] ; 2 uses
+.lr.ph34.split.us:                                ; preds = %.lr.ph34.split.us.preheader, %5
+  %i.aj = phi ptr [ %6, %5 ], [ %.ph, %.lr.ph34.split.us.preheader ] ; 3 uses
+  %indvars.iv41 = phi i64 [ %indvars.iv.next42.us, %5 ], [ %indvars.iv41.us.ph, %.lr.ph34.split.us.preheader ] ; 5 uses
   %i.ak = trunc nuw i64 %indvars.iv41 to i32      ; 2 uses
   %i.al = add i32 %i.t, %i.ak                     ; 2 uses
   %i.am = zext i32 %i.al to i64                   ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.am
   %i.ao = load i8, ptr %i.an, align 1, !tbaa !95, !range !56, !noundef !57
   %i.ap = trunc nuw i8 %i.ao to i1
-  br i1 %i.ap, label %bb.j, label %bb.e
+  br i1 %i.ap, label %5, label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph34.split.us
   %i.aq = load i64, ptr %i.n, align 8, !tbaa !94
@@ -331,13 +336,7 @@ bb.e:                                             ; preds = %.lr.ph34.split.us
   %.fca.0.extract.us = extractvalue { i64, i32 } %i.aw, 0
   %i.ax = and i64 %.fca.0.extract.us, 4294967295
   %.not29.us = icmp eq i64 %i.ax, 2
-  br i1 %.not29.us, label %bb.f, label %5
-
-5:                                                ; preds = %bb.e
-  %6 = load ptr, ptr %4, align 8, !tbaa !92       ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 %i.am
-  store i8 1, ptr %7, align 1, !tbaa !95
-  br label %bb.j
+  br i1 %.not29.us, label %bb.f, label %bb.j
 
 bb.f:                                             ; preds = %bb.e
   %i.ay = load ptr, ptr %i.x, align 8, !tbaa !41
@@ -364,22 +363,45 @@ _ZN4mlir10presburger12DivisionRepr9clearReprEj.exit.us: ; preds = %bb.i, %bb.h, 
   store i64 0, ptr %i.az, align 8, !tbaa !72
   store i32 0, ptr %i.ba, align 8, !tbaa !72
   %.pre47 = load ptr, ptr %4, align 8, !tbaa !92
-  br label %bb.j
+  br label %5
 
-bb.j:                                             ; preds = %5, %_ZN4mlir10presburger12DivisionRepr9clearReprEj.exit.us, %.lr.ph34.split.us
-  %8 = phi ptr [ %i.aj, %.lr.ph34.split.us ], [ %.pre47, %_ZN4mlir10presburger12DivisionRepr9clearReprEj.exit.us ], [ %6, %5 ]
-  %.2.us = phi i1 [ %.02431.us, %.lr.ph34.split.us ], [ %.02431.us, %_ZN4mlir10presburger12DivisionRepr9clearReprEj.exit.us ], [ true, %5 ] ; 2 uses
+5:                                                ; preds = %_ZN4mlir10presburger12DivisionRepr9clearReprEj.exit.us, %.lr.ph34.split.us
+  %6 = phi ptr [ %i.aj, %.lr.ph34.split.us ], [ %.pre47, %_ZN4mlir10presburger12DivisionRepr9clearReprEj.exit.us ]
+  %indvars.iv.next42.us = add nuw nsw i64 %indvars.iv41, 1 ; 2 uses
+  %exitcond44.us.not = icmp eq i64 %indvars.iv.next42.us, %wide.trip.count43
+  br i1 %exitcond44.us.not, label %._crit_edge35.loopexit.us, label %.lr.ph34.split.us, !llvm.loop !258
+
+bb.j:                                             ; preds = %bb.e
+  %7 = load ptr, ptr %4, align 8, !tbaa !92       ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %7, i64 %i.am
+  store i8 1, ptr %8, align 1, !tbaa !95
   %indvars.iv.next42 = add nuw nsw i64 %indvars.iv41, 1 ; 2 uses
   %exitcond44.not = icmp eq i64 %indvars.iv.next42, %wide.trip.count43
-  br i1 %exitcond44.not, label %._crit_edge35, label %.lr.ph34.split.us, !llvm.loop !258
+  br i1 %exitcond44.not, label %_ZN4mlir10presburger12DivisionReprC2Ejj.exit.splitthread-pre-split.a, label %.lr.ph34.split.us.preheader, !llvm.loop !258
 
-._crit_edge35:                                    ; preds = %9, %bb.j
-  %.024.lcssa = phi i1 [ %.2.us, %bb.j ], [ %.2, %9 ]
-  br i1 %.024.lcssa, label %_ZN4mlir10presburger12DivisionReprC2Ejj.exit.splitthread-pre-split.a, label %.split.us, !llvm.loop !259
+._crit_edge35.loopexit.us:                        ; preds = %5
+  br i1 %.02431.us.us.ph, label %_ZN4mlir10presburger12DivisionReprC2Ejj.exit.splitthread-pre-split.a, label %.split.us, !llvm.loop !259
 
-.lr.ph34.split:                                   ; preds = %.lr.ph34.a, %9
-  %indvars.iv = phi i64 [ %indvars.iv.next, %9 ], [ 0, %.lr.ph34.a ] ; 5 uses
-  %.02431 = phi i1 [ %.2, %9 ], [ false, %.lr.ph34.a ] ; 2 uses
+_ZN4mlir10presburger12DivisionReprC2Ejj.exit.splitthread-pre-split: ; preds = %bb.p, %._crit_edge35.loopexit39
+  %.pr72 = load i32, ptr %i.i, align 4, !tbaa !76 ; 2 uses
+  %.not38 = icmp eq i32 %.pr72, 0
+  br i1 %.not38, label %.split.us, label %.lr.ph34
+
+.lr.ph34:                                         ; preds = %_ZN4mlir10presburger12DivisionReprC2Ejj.exit.split.preheader, %_ZN4mlir10presburger12DivisionReprC2Ejj.exit.splitthread-pre-split
+  %9 = phi i32 [ %.pr72, %_ZN4mlir10presburger12DivisionReprC2Ejj.exit.splitthread-pre-split ], [ %i.ah, %_ZN4mlir10presburger12DivisionReprC2Ejj.exit.split.preheader ]
+  %wide.trip.count = zext i32 %9 to i64           ; 2 uses
+  br label %._crit_edge35
+
+._crit_edge35:                                    ; preds = %bb.p, %.lr.ph34
+  %indvars.iv.ph = phi i64 [ %indvars.iv.next75, %bb.p ], [ 0, %.lr.ph34 ]
+  %.024.lcssa = phi i1 [ true, %bb.p ], [ false, %.lr.ph34 ]
+  br label %.lr.ph34.split
+
+._crit_edge35.loopexit39:                         ; preds = %10
+  br i1 %.024.lcssa, label %_ZN4mlir10presburger12DivisionReprC2Ejj.exit.splitthread-pre-split, label %.split.us, !llvm.loop !259
+
+.lr.ph34.split:                                   ; preds = %._crit_edge35, %10
+  %indvars.iv = phi i64 [ %indvars.iv.next, %10 ], [ %indvars.iv.ph, %._crit_edge35 ] ; 6 uses
   %i.bf = trunc nuw i64 %indvars.iv to i32        ; 2 uses
   %i.bg = add i32 %i.t, %i.bf                     ; 2 uses
   %i.bh = zext i32 %i.bg to i64                   ; 2 uses
@@ -387,7 +409,7 @@ bb.j:                                             ; preds = %5, %_ZN4mlir10presb
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 %i.bh
   %i.bk = load i8, ptr %i.bj, align 1, !tbaa !95, !range !56, !noundef !57
   %i.bl = trunc nuw i8 %i.bk to i1
-  br i1 %i.bl, label %9, label %bb.k
+  br i1 %i.bl, label %10, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph34.split
   %i.bm = load i64, ptr %i.n, align 8, !tbaa !94
@@ -426,7 +448,12 @@ bb.o:                                             ; preds = %bb.n
 _ZN4mlir10presburger12DivisionRepr9clearReprEj.exit: ; preds = %bb.l, %bb.m, %bb.n, %bb.o
   store i64 0, ptr %i.bv, align 8, !tbaa !72
   store i32 0, ptr %i.bw, align 8, !tbaa !72
-  br label %9
+  br label %10
+
+10:                                               ; preds = %_ZN4mlir10presburger12DivisionRepr9clearReprEj.exit, %.lr.ph34.split
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %._crit_edge35.loopexit39, label %.lr.ph34.split, !llvm.loop !258
 
 bb.p:                                             ; preds = %bb.k
   %.fca.1.extract = extractvalue { i64, i32 } %i.bs, 1
@@ -438,15 +465,11 @@ bb.p:                                             ; preds = %bb.k
   store i64 %.fca.0.extract, ptr %i.ce, align 4
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ce, i64 8
   store i32 %.fca.1.extract, ptr %.sroa.5.0..sroa_idx, align 4, !tbaa !72
-  br label %9
+  %indvars.iv.next75 = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not76 = icmp eq i64 %indvars.iv.next75, %wide.trip.count
+  br i1 %exitcond.not76, label %_ZN4mlir10presburger12DivisionReprC2Ejj.exit.splitthread-pre-split, label %._crit_edge35, !llvm.loop !258
 
-9:                                                ; preds = %_ZN4mlir10presburger12DivisionRepr9clearReprEj.exit, %bb.p, %.lr.ph34.split
-  %.2 = phi i1 [ %.02431, %.lr.ph34.split ], [ %.02431, %_ZN4mlir10presburger12DivisionRepr9clearReprEj.exit ], [ true, %bb.p ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count43
-  br i1 %exitcond.not, label %._crit_edge35, label %.lr.ph34.split, !llvm.loop !258
-
-.split.us:                                        ; preds = %._crit_edge35, %_ZN4mlir10presburger12DivisionReprC2Ejj.exit.splitthread-pre-split.a, %_ZN4mlir10presburger12DivisionReprC2Ejj.exit
+.split.us:                                        ; preds = %_ZN4mlir10presburger12DivisionReprC2Ejj.exit.splitthread-pre-split, %._crit_edge35.loopexit39, %._crit_edge35.loopexit.us, %_ZN4mlir10presburger12DivisionReprC2Ejj.exit.splitthread-pre-split.a, %_ZN4mlir10presburger12DivisionReprC2Ejj.exit
   %i.cf = load ptr, ptr %4, align 8, !tbaa !92    ; 2 uses
   %i.cg = icmp eq ptr %i.cf, %i.m
   br i1 %i.cg, label %_ZN4llvm11SmallVectorIbLj8EED2Ev.exit, label %bb.q

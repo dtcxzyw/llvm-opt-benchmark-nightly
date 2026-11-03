@@ -202,7 +202,7 @@ bb.cj:                                            ; preds = %bb.k, %bb.k
   %i.mq = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.mr = load ptr, ptr %i.mq, align 8            ; 4 uses
   %i.ms = load ptr, ptr %i.i, align 8             ; 2 uses
-  %i.mt = call ptr @list_copy(ptr noundef %i.mp) #8 ; 4 uses
+  %i.mt = call ptr @list_copy(ptr noundef %i.mp) #8 ; 5 uses
   call fastcc void @check_duplicates_in_publist(ptr noundef readonly %i.mr, ptr noundef null)
   %.not42.i = icmp eq ptr %i.mr, null
   br i1 %.not42.i, label %.critedge.i, label %.lr.ph76.i
@@ -211,11 +211,14 @@ bb.cj:                                            ; preds = %bb.k, %bb.k
   %i.mu = getelementptr inbounds nuw i8, ptr %i.mr, i64 4 ; 3 uses
   %i.mv = getelementptr inbounds nuw i8, ptr %i.mr, i64 16 ; 2 uses
   %i.mw = load i32, ptr %i.mu, align 4
-  %i.mx = icmp sgt i32 %i.mw, 0
-  br i1 %i.mx, label %.lr.ph.a, label %.critedge.i
+  %i.mx = icmp sgt i32 %i.mw, 0                   ; 2 uses
+  br i1 %i.mn, label %.lr.ph.a, label %.lr.ph76.split.i.preheader
+
+.lr.ph76.split.i.preheader:                       ; preds = %.lr.ph76.i
+  br i1 %i.mx, label %.lr.ph.split, label %.critedge.i
 
 .lr.ph.a:                                         ; preds = %.lr.ph76.i
-  br i1 %i.mn, label %.lr.ph.split.us, label %.lr.ph.split
+  br i1 %i.mx, label %.lr.ph.split.us, label %.critedge.i
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph.a, %.critedge49.i.us
   %.03874.i278.us = phi ptr [ %i.no, %.critedge49.i.us ], [ %i.mt, %.lr.ph.a ] ; 4 uses
@@ -264,9 +267,9 @@ bb.cl:                                            ; preds = %bb.ck
   %i.nr = icmp slt i64 %indvars.iv.next83.i.us, %i.nq
   br i1 %i.nr, label %.lr.ph.split.us, label %.critedge.i
 
-.lr.ph.split:                                     ; preds = %.lr.ph.a, %.thread59.i
-  %.03874.i278 = phi ptr [ %i.ol, %.thread59.i ], [ %i.mt, %.lr.ph.a ] ; 4 uses
-  %indvars.iv82.i277 = phi i64 [ %indvars.iv.next83.i, %.thread59.i ], [ 0, %.lr.ph.a ] ; 2 uses
+.lr.ph.split:                                     ; preds = %.lr.ph76.split.i.preheader, %.thread59.i
+  %.03874.i278 = phi ptr [ %i.ol, %.thread59.i ], [ %i.mt, %.lr.ph76.split.i.preheader ] ; 4 uses
+  %indvars.iv82.i277 = phi i64 [ %indvars.iv.next83.i, %.thread59.i ], [ 0, %.lr.ph76.split.i.preheader ] ; 2 uses
   %i.ns = load ptr, ptr %i.mv, align 8
   %i.nt = getelementptr inbounds nuw [8 x i8], ptr %i.ns, i64 %indvars.iv82.i277
   %i.nu = load ptr, ptr %i.nt, align 8
@@ -287,8 +290,8 @@ bb.cl:                                            ; preds = %bb.ck
   %wide.trip.count.i = zext nneg i32 %i.ny to i64
   br label %bb.cm
 
-.critedge.i:                                      ; preds = %.thread59.i, %.critedge49.i.us, %.lr.ph76.i, %bb.cj
-  %.038.lcssa.i = phi ptr [ %i.mt, %bb.cj ], [ %i.mt, %.lr.ph76.i ], [ %i.no, %.critedge49.i.us ], [ %i.ol, %.thread59.i ] ; 4 uses
+.critedge.i:                                      ; preds = %.thread59.i, %.critedge49.i.us, %.lr.ph76.split.i.preheader, %.lr.ph.a, %bb.cj
+  %.038.lcssa.i = phi ptr [ %i.mt, %bb.cj ], [ %i.no, %.critedge49.i.us ], [ %i.mt, %.lr.ph.a ], [ %i.mt, %.lr.ph76.split.i.preheader ], [ %i.ol, %.thread59.i ] ; 4 uses
   %.not44.i = icmp eq ptr %.038.lcssa.i, null
   br i1 %.not44.i, label %bb.co, label %publicationListToArray.exit245
 
@@ -323,7 +326,7 @@ bb.cn:                                            ; preds = %bb.cm
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
   br i1 %exitcond.not.i, label %.critedge49.i, label %bb.cm
 
-.critedge49.i:                                    ; preds = %.lr.ph.split, %.lr.ph.i, %bb.cn
+.critedge49.i:                                    ; preds = %.lr.ph.i, %.lr.ph.split, %bb.cn
   %i.op = call zeroext i1 @errstart_cold(i32 noundef 21, ptr noundef null) #9 ; 0 uses
   %i.oq = call i32 @errcode(i32 noundef 117833860) #8 ; 0 uses
   %i.or = call i32 (ptr, ...) @errmsg(ptr noundef nonnull @.str.145, ptr noundef %i.nw, ptr noundef %i.ms) #8 ; 0 uses

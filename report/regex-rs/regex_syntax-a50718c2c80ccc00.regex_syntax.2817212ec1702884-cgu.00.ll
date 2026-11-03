@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.c
   tail call void @_RNvNtCsj6eKBz9Db1c_4core4cell22panic_already_borrowed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @101) #25, !dbg !21126
   unreachable, !dbg !21126
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.bn, %bb.cj, %bb.dz, %bb.dy, %bb.w, %bb.v, %bb.z, %bb.x, %.split56.us.i22.i.i.invoke, %.invoke648, %.invoke, %bb.eo, %bb.en, %bb.em, %bb.el, %bb.eg, %bb.ds, %.loopexit.i, %bb.ae, %bb.t, %bb.o, %_RNvMs2_NtNtCs3roNzt6HBWW_12regex_syntax3ast5parseINtB5_7ParserIQNtB5_6ParserE19bump_and_bump_spaceB9_.exit.thread, %bb.h, %bb.g, %bb.ee, %select.unfold492, %.thread490, %select.unfold472, %bb.br, %select.unfold, %bb.ad, %bb.ac, %bb.aa, %bb.i, %bb.e
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.bn, %bb.cj, %bb.dz, %bb.dy, %bb.w, %bb.v, %bb.z, %bb.x, %.split56.us.i25.i.i.invoke, %.invoke648, %.invoke, %bb.eo, %bb.en, %bb.em, %bb.el, %bb.eg, %bb.ds, %.loopexit.i, %bb.ae, %bb.t, %bb.o, %_RNvMs2_NtNtCs3roNzt6HBWW_12regex_syntax3ast5parseINtB5_7ParserIQNtB5_6ParserE19bump_and_bump_spaceB9_.exit.thread, %bb.h, %bb.g, %bb.ee, %select.unfold492, %.thread490, %select.unfold472, %bb.br, %select.unfold, %bb.ad, %bb.ac, %bb.aa, %bb.i, %bb.e
   %lpad.loopexit.split-lp722 = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp
@@ -607,11 +607,12 @@ bb.au:                                            ; preds = %bb.ao
 .lr.ph.i12.i.i:                                   ; preds = %bb.au
   %i.fl = getelementptr inbounds nuw i8, ptr %i.c, i64 32
   %i.fm = load i64, ptr %i.fl, align 8, !alias.scope !20733, !noalias !20527, !noundef !978
-  %i.fn = load i64, ptr %i.bz, align 8, !alias.scope !20733, !noalias !20527 ; 4 uses
+  %i.fn = load i64, ptr %i.bz, align 8, !alias.scope !20733, !noalias !20527
+  %.fr84.i.i.i = freeze i64 %i.fn, !dbg !21256    ; 4 uses
   %i.fo = getelementptr inbounds nuw i8, ptr %i.c, i64 24
   %i.fp = load i64, ptr %i.fo, align 8, !alias.scope !20733, !noalias !20527 ; 2 uses
   %i.fq = sub i64 %i.eo, %i.fp
-  %invariant.op = sub i64 1, %i.fn, !dbg !21256
+  %invariant.op = sub i64 1, %.fr84.i.i.i, !dbg !21256
   br label %.lr.ph.split.i.i.i, !dbg !21256
 
 .lr.ph.split.i.i.i:                               ; preds = %bb.ax, %.lr.ph.i12.i.i
@@ -638,7 +639,7 @@ bb.aw:                                            ; preds = %.lr.ph.split.i.i.i
     #dbg_value(i64 %.sink94.i.i29.i, !20736, !DIExpression(), !19598)
     #dbg_value(ptr undef, !20738, !DIExpression(DW_OP_deref), !19601)
     #dbg_value(ptr undef, !20740, !DIExpression(DW_OP_deref), !19601)
-  %..i.i14.i.i = tail call noundef i64 @llvm.umax.i64(i64 %.sink94.i.i29.i, i64 %i.fn), !dbg !21264 ; 2 uses
+  %..i.i14.i.i = tail call noundef i64 @llvm.umax.i64(i64 %.sink94.i.i29.i, i64 %.fr84.i.i.i), !dbg !21264 ; 2 uses
     #dbg_value(i64 %..i.i14.i.i, !20672, !DIExpression(), !19602)
     #dbg_value(i64 %..i.i14.i.i, !20673, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !19603)
     #dbg_value(i64 %i.eo, !20673, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19603)
@@ -670,13 +671,13 @@ bb.ay:                                            ; preds = %.lr.ph
   br i1 %i.gd, label %.lr.ph, label %.preheader60.i.i.i.preheader, !dbg !21266
 
 .preheader60.i.i.i.preheader:                     ; preds = %bb.ay, %bb.aw
-    #dbg_value(i64 %i.fn, !20676, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19605)
+    #dbg_value(i64 %.fr84.i.i.i, !20676, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19605)
     #dbg_value(ptr undef, !20655, !DIExpression(), !19513)
     #dbg_value(ptr undef, !20646, !DIExpression(), !19511)
     #dbg_value(ptr undef, !20643, !DIExpression(), !19509)
     #dbg_value(ptr undef, !20640, !DIExpression(), !19507)
     #dbg_value(ptr undef, !20641, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !19606)
-  %i.ge = icmp ult i64 %.sink94.i.i29.i, %i.fn, !dbg !21268
+  %i.ge = icmp ult i64 %.sink94.i.i29.i, %.fr84.i.i.i, !dbg !21268
   br i1 %i.ge, label %.lr.ph676, label %.thread, !dbg !21269
 
 .lr.ph:                                           ; preds = %bb.aw, %bb.ay
@@ -710,7 +711,7 @@ bb.ay:                                            ; preds = %.lr.ph
   br i1 %i.gl, label %.lr.ph676, label %.thread, !dbg !21269
 
 .lr.ph676:                                        ; preds = %.preheader60.i.i.i.preheader, %.preheader60.i.i.i
-  %.sroa.2.0.i.i.i675 = phi i64 [ %i.gm, %.preheader60.i.i.i ], [ %i.fn, %.preheader60.i.i.i.preheader ]
+  %.sroa.2.0.i.i.i675 = phi i64 [ %i.gm, %.preheader60.i.i.i ], [ %.fr84.i.i.i, %.preheader60.i.i.i.preheader ]
     #dbg_value(i64 %.sroa.2.0.i.i.i675, !20676, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19605)
     #dbg_value(i64 %.sroa.2.0.i.i.i675, !20722, !DIExpression(), !19578)
     #dbg_value(i64 %.sroa.2.0.i.i.i675, !20725, !DIExpression(), !19583)
@@ -718,7 +719,7 @@ bb.ay:                                            ; preds = %.lr.ph
     #dbg_value(i64 %i.gm, !20676, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19605)
     #dbg_value(i64 %i.gm, !20677, !DIExpression(), !19609)
   %i.gn = icmp ult i64 %i.gm, %i.eo, !dbg !21277
-  br i1 %i.gn, label %bb.az, label %.split56.us.i22.i.i.invoke, !dbg !21277
+  br i1 %i.gn, label %bb.az, label %.split56.us.i25.i.i.invoke, !dbg !21277
 
 bb.az:                                            ; preds = %.lr.ph676
   %i.go = getelementptr inbounds nuw i8, ptr %i.em, i64 %i.gm, !dbg !21277
@@ -908,7 +909,7 @@ bb.bf:                                            ; preds = %bb.be, %.split.us.u
     #dbg_value(ptr undef, !20680, !DIExpression(), !19525)
     #dbg_value(ptr undef, !20640, !DIExpression(), !19520)
     #dbg_value(ptr undef, !20641, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !19617)
-  br i1 %exitcond.not.i.i.i678.not, label %.lr.ph680, label %.preheader.i21.i.i, !dbg !21296
+  br i1 %exitcond.not.i.i.i678.not, label %.lr.ph680, label %.preheader.split.i24.i.i, !dbg !21296
 
 .preheader59.i.i.i:                               ; preds = %.lr.ph680
   %i.in = add i64 %.sroa.04.0.us.i.i.i679, 1, !dbg !21297 ; 2 uses
@@ -919,7 +920,17 @@ bb.bf:                                            ; preds = %bb.be, %.split.us.u
     #dbg_value(ptr undef, !20640, !DIExpression(), !19520)
     #dbg_value(ptr undef, !20641, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !19617)
   %exitcond.not.i.i.i = icmp eq i64 %i.in, %umax.i.i.i, !dbg !21298
-  br i1 %exitcond.not.i.i.i, label %.preheader.i21.i.i, label %.lr.ph680, !dbg !21296
+  br i1 %exitcond.not.i.i.i, label %.preheader.split.i24.i.i, label %.lr.ph680, !dbg !21296
+
+.preheader.split.i24.i.i:                         ; preds = %.preheader59.i.i.i.preheader, %.preheader59.i.i.i
+    #dbg_value(i64 %i.ha, !20676, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19618)
+    #dbg_value(ptr undef, !20655, !DIExpression(), !19512)
+    #dbg_value(ptr undef, !20646, !DIExpression(), !19510)
+    #dbg_value(ptr undef, !20643, !DIExpression(), !19508)
+    #dbg_value(ptr undef, !20640, !DIExpression(), !19501)
+    #dbg_value(ptr undef, !20641, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !19619)
+  %.not58.i.i.i = icmp eq i64 %.fr74.i.i, 0, !dbg !21309
+  br i1 %.not58.i.i.i, label %.thread, label %.split56.us.i25.i.i.invoke, !dbg !21299
 
 .lr.ph680:                                        ; preds = %.preheader59.i.i.i.preheader, %.preheader59.i.i.i
   %.sroa.04.0.us.i.i.i679 = phi i64 [ %i.in, %.preheader59.i.i.i ], [ %.fr74.i.i, %.preheader59.i.i.i.preheader ] ; 4 uses
@@ -941,24 +952,6 @@ bb.bf:                                            ; preds = %bb.be, %.split.us.u
   %.not45.us.i.i.i = icmp eq i8 %i.ip, %i.it, !dbg !21300
   br i1 %.not45.us.i.i.i, label %.preheader59.i.i.i, label %bb.bg, !dbg !21300
 
-.preheader.i21.i.i:                               ; preds = %.preheader59.i.i.i.preheader, %.preheader59.i.i.i
-    #dbg_value(i64 %i.ha, !20676, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !19618)
-    #dbg_value(ptr undef, !20655, !DIExpression(), !19512)
-    #dbg_value(ptr undef, !20646, !DIExpression(), !19510)
-    #dbg_value(ptr undef, !20643, !DIExpression(), !19508)
-    #dbg_value(ptr undef, !20640, !DIExpression(), !19501)
-    #dbg_value(ptr undef, !20641, !DIExpression(DW_OP_plus_uconst, 8, DW_OP_stack_value), !19619)
-  %.not58.i.i.i = icmp eq i64 %.fr74.i.i, 0, !dbg !21309
-  br i1 %.not58.i.i.i, label %.thread, label %.split56.us.i22.i.i.invoke, !dbg !21299
-
-.split56.us.i22.i.i.invoke:                       ; preds = %.lr.ph676, %.preheader.i21.i.i
-  %2 = phi i64 [ %i.hd, %.preheader.i21.i.i ], [ %i.gm, %.lr.ph676 ]
-  invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %2, i64 noundef range(i64 0, -9223372036854775808) %i.eo, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #25
-          to label %.split56.us.i22.i.i.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !21321
-
-.split56.us.i22.i.i.cont:                         ; preds = %.split56.us.i22.i.i.invoke
-  unreachable
-
 bb.bg:                                            ; preds = %.lr.ph680
   %i.iu = add i64 %.sink.i20.i32.i, %i.he, !dbg !21306
   %i.iv = add i64 %i.iu, %.sroa.04.0.us.i.i.i679, !dbg !21307
@@ -976,8 +969,16 @@ bb.bi:                                            ; preds = %bb.bh, %bb.bg
   %i.iy = icmp ult i64 %i.ix, %i.ek, !dbg !21289
   br i1 %i.iy, label %.lr.ph.split.us.i.i.i, label %.thread438, !dbg !21289
 
-.thread:                                          ; preds = %.preheader60.i.i.i.preheader, %.preheader60.i.i.i, %.preheader.i21.us.us.i.i.preheader, %.preheader.i21.us.us.i.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3roNzt6HBWW_12regex_syntax.exit26.i.i.i.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3roNzt6HBWW_12regex_syntax.exit28.i.i.i.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3roNzt6HBWW_12regex_syntax.exit30.i.i.i.i, %bb.at, %bb.as, %bb.ak, %.preheader.i21.i.i
-  %.sroa.4.0.i.ph = phi i64 [ %.sink.i20.i32.i, %.preheader.i21.i.i ], [ %.promoted.i.i, %bb.ak ], [ %i.er, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3roNzt6HBWW_12regex_syntax.exit26.i.i.i.i ], [ %i.ch, %bb.as ], [ %.sink95.i.i26.i, %.preheader60.i.i.i ], [ %i.er, %bb.at ], [ %i.er, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3roNzt6HBWW_12regex_syntax.exit30.i.i.i.i ], [ %i.er, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3roNzt6HBWW_12regex_syntax.exit28.i.i.i.i ], [ %.sink.i20.us.i34.i, %.preheader.i21.us.us.i.i.preheader ], [ %.sink.i20.us.i34.i, %.preheader.i21.us.us.i.i ], [ %.sink95.i.i26.i, %.preheader60.i.i.i.preheader ]
+.split56.us.i25.i.i.invoke:                       ; preds = %.lr.ph676, %.preheader.split.i24.i.i
+  %2 = phi i64 [ %i.hd, %.preheader.split.i24.i.i ], [ %i.gm, %.lr.ph676 ]
+  invoke void @_RNvNtCsj6eKBz9Db1c_4core9panicking18panic_bounds_check(i64 noundef %2, i64 noundef range(i64 0, -9223372036854775808) %i.eo, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1) #25
+          to label %.split56.us.i25.i.i.cont unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !dbg !21321
+
+.split56.us.i25.i.i.cont:                         ; preds = %.split56.us.i25.i.i.invoke
+  unreachable
+
+.thread:                                          ; preds = %.preheader60.i.i.i.preheader, %.preheader60.i.i.i, %.preheader.i21.us.us.i.i.preheader, %.preheader.i21.us.us.i.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3roNzt6HBWW_12regex_syntax.exit26.i.i.i.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3roNzt6HBWW_12regex_syntax.exit28.i.i.i.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3roNzt6HBWW_12regex_syntax.exit30.i.i.i.i, %bb.at, %bb.as, %bb.ak, %.preheader.split.i24.i.i
+  %.sroa.4.0.i.ph = phi i64 [ %.sink.i20.i32.i, %.preheader.split.i24.i.i ], [ %.promoted.i.i, %bb.ak ], [ %i.er, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3roNzt6HBWW_12regex_syntax.exit26.i.i.i.i ], [ %i.ch, %bb.as ], [ %.sink95.i.i26.i, %.preheader60.i.i.i ], [ %i.er, %bb.at ], [ %i.er, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3roNzt6HBWW_12regex_syntax.exit30.i.i.i.i ], [ %i.er, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3roNzt6HBWW_12regex_syntax.exit28.i.i.i.i ], [ %.sink.i20.us.i34.i, %.preheader.i21.us.us.i.i.preheader ], [ %.sink.i20.us.i34.i, %.preheader.i21.us.us.i.i ], [ %.sink95.i.i26.i, %.preheader60.i.i.i.preheader ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !dbg !21322, !noalias !20527
   br label %bb.bk, !dbg !21323
 

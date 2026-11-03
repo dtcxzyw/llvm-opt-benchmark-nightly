@@ -205,6 +205,7 @@ _RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueINtNtCsgizmiBVULPI_13serde_spanned7spann
 ; Function Attrs: nounwind nonlazybind uwtable
 define hidden void @_RNvXs0_NtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector10static_vecINtB5_9StaticVecNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix6thread6ThreadKj80_ENtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4dropCskqqG2IB5b71_21iceoryx2_tests_common(ptr noalias nofree noundef align 8 dereferenceable(4104) %0) unnamed_addr #0 {
 bb.a:
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !974)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4096 ; 2 uses
   %.val.i = load i64, ptr %i.a, align 8, !alias.scope !974, !noundef !4 ; 4 uses
   %.not5.i = icmp eq i64 %.val.i, 0
@@ -216,7 +217,7 @@ bb.a:
 
 .lr.ph.i.us:                                      ; preds = %.lr.ph.preheader.i, %.lr.ph.i.us
   %.sroa.0.06.i.us = phi i64 [ %i.b, %.lr.ph.i.us ], [ %.val.i, %.lr.ph.preheader.i ]
-  %i.b = add i64 %.sroa.0.06.i.us, -1             ; 3 uses
+  %i.b = add nsw i64 %.sroa.0.06.i.us, -1         ; 3 uses
   %i.c = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %i.b
   tail call void @_RNvXs5_NtCslxWRlZ2j4ks_17iceoryx2_bb_posix6threadNtB5_6ThreadNtNtNtCs8Chj7Szqq0n_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.c) #17
   %.not.i.us = icmp eq i64 %i.b, 0
@@ -224,7 +225,7 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %.lr.ph.preheader.i
   %i.d = add i64 %.val.i, -1
-  tail call void @_RNvNtCs8Chj7Szqq0n_4core9panicking18panic_bounds_check(i64 noundef %i.d, i64 noundef 128, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @201) #18
+  tail call void @_RNvNtCs8Chj7Szqq0n_4core9panicking18panic_bounds_check(i64 noundef %i.d, i64 noundef 128, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @201) #18, !noalias !974
   unreachable
 
 _RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector10static_vec9StaticVecNtNtCslxWRlZ2j4ks_17iceoryx2_bb_posix6thread6ThreadKj80_EINtB7_6VectorB1d_E5clearCskqqG2IB5b71_21iceoryx2_tests_common.exit: ; preds = %.lr.ph.i.us, %bb.a
@@ -627,7 +628,7 @@ bb.a:
   %i.d = add i64 %.val.i, -1                      ; 2 uses
   %.first_iter.i = icmp ult i64 %i.d, %.val6.i
   %.not.i = icmp eq i64 %.val.i, 0
-  %or.cond = or i1 %.first_iter.i, %.not.i
+  %or.cond = or i1 %.not.i, %.first_iter.i
   br i1 %or.cond, label %_RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14PolymorphicVecINtNtCs1xtDLGvwb7z_23iceoryx2_bb_concurrency4cell10UnsafeCellINtNtCs8Chj7Szqq0n_4core6option6OptionNtNtB9_7slotmap10SlotMapKeyEENtNtCsglnFQv1SDtP_18iceoryx2_bb_memory14heap_allocator13HeapAllocatorEINtB7_6VectorB1o_E5clearCskqqG2IB5b71_21iceoryx2_tests_common.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -664,7 +665,7 @@ bb.a:
   %i.d = add i64 %.val.i, -1                      ; 2 uses
   %.first_iter.i = icmp ult i64 %i.d, %.val6.i
   %.not.i = icmp eq i64 %.val.i, 0
-  %or.cond = or i1 %.first_iter.i, %.not.i
+  %or.cond = or i1 %.not.i, %.first_iter.i
   br i1 %or.cond, label %_RNvYINtNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container6vector15polymorphic_vec14PolymorphicVecNtNtB9_7slotmap10SlotMapKeyNtNtCsglnFQv1SDtP_18iceoryx2_bb_memory14heap_allocator13HeapAllocatorEINtB7_6VectorB1o_E5clearCskqqG2IB5b71_21iceoryx2_tests_common.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a

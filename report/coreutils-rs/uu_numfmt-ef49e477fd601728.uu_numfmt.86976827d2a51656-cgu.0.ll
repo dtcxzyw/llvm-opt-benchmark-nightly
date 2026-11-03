@@ -204,11 +204,12 @@ bb.s:                                             ; preds = %bb.k
 .lr.ph.i1:                                        ; preds = %bb.s
   %i.du = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.dv = load i64, ptr %i.du, align 8, !alias.scope !3014, !noundef !4
-  %i.dw = load i64, ptr %i.c, align 8, !alias.scope !3014 ; 4 uses
+  %i.dw = load i64, ptr %i.c, align 8, !alias.scope !3014
+  %.fr60.i = freeze i64 %i.dw                     ; 4 uses
   %i.dx = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.dy = load i64, ptr %i.dx, align 8, !alias.scope !3014 ; 2 uses
   %i.dz = sub i64 %i.cg, %i.dy
-  %invariant.op = sub i64 1, %i.dw
+  %invariant.op = sub i64 1, %.fr60.i
   br label %.lr.ph.split.i
 
 ._crit_edge.i:                                    ; preds = %bb.v, %bb.s
@@ -234,7 +235,7 @@ bb.t:                                             ; preds = %.lr.ph.split.i
   br label %bb.v
 
 bb.u:                                             ; preds = %.lr.ph.split.i
-  %..i.i3 = tail call noundef i64 @llvm.umax.i64(i64 %i.ea, i64 %i.dw) ; 2 uses
+  %..i.i3 = tail call noundef i64 @llvm.umax.i64(i64 %i.ea, i64 %.fr60.i) ; 2 uses
   %i.ek = icmp ult i64 %..i.i3, %i.cg
   br i1 %i.ek, label %.lr.ph153, label %.preheader36.i.preheader
 
@@ -252,7 +253,7 @@ bb.w:                                             ; preds = %.lr.ph153
   br i1 %i.ep, label %.lr.ph153, label %.preheader36.i.preheader
 
 .preheader36.i.preheader:                         ; preds = %bb.w, %bb.u
-  %i.eq = icmp ult i64 %i.ea, %i.dw
+  %i.eq = icmp ult i64 %i.ea, %.fr60.i
   br i1 %i.eq, label %.lr.ph155.a, label %.split.us.i
 
 .lr.ph153:                                        ; preds = %bb.u, %bb.w
@@ -282,7 +283,7 @@ bb.w:                                             ; preds = %.lr.ph153
   br label %_RINvMsx_NtNtCs6JMX4GRUq9U_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsbyqtxyC5WYI_9uu_numfmt.exit
 
 .lr.ph155.a:                                      ; preds = %.preheader36.i.preheader, %.preheader36.i
-  %.sroa.2.0.i154 = phi i64 [ %i.fb, %.preheader36.i ], [ %i.dw, %.preheader36.i.preheader ]
+  %.sroa.2.0.i154 = phi i64 [ %i.fb, %.preheader36.i ], [ %.fr60.i, %.preheader36.i.preheader ]
   %i.fb = add i64 %.sroa.2.0.i154, -1             ; 6 uses
   %i.fc = icmp ult i64 %i.fb, %i.cg
   br i1 %i.fc, label %bb.x, label %.split32.us.i
@@ -429,12 +430,16 @@ bb.ad:                                            ; preds = %bb.ac, %.split.us.u
   br i1 %.not.us.i, label %bb.af, label %.preheader35.i.preheader
 
 .preheader35.i.preheader:                         ; preds = %.lr.ph.split.us.i
-  br i1 %exitcond.not.i157.not, label %.lr.ph159, label %.preheader.i10
+  br i1 %exitcond.not.i157.not, label %.lr.ph159, label %.preheader.split.i13
 
 .preheader35.i:                                   ; preds = %.lr.ph159
   %i.hf = add i64 %.sroa.04.0.us.i158, 1          ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.hf, %umax.i
-  br i1 %exitcond.not.i, label %.preheader.i10, label %.lr.ph159
+  br i1 %exitcond.not.i, label %.preheader.split.i13, label %.lr.ph159
+
+.preheader.split.i13:                             ; preds = %.preheader35.i.preheader, %.preheader35.i
+  %.not34.i = icmp eq i64 %.fr63, 0
+  br i1 %.not34.i, label %.split.us.i12, label %.split32.us.i14
 
 .lr.ph159:                                        ; preds = %.preheader35.i.preheader, %.preheader35.i
   %.sroa.04.0.us.i158 = phi i64 [ %i.hf, %.preheader35.i ], [ %.fr63, %.preheader35.i.preheader ] ; 4 uses
@@ -447,14 +452,6 @@ bb.ad:                                            ; preds = %bb.ac, %.split.us.u
   %i.hl = load i8, ptr %i.hk, align 1, !alias.scope !3021, !noundef !4
   %.not21.us.i = icmp eq i8 %i.hh, %i.hl
   br i1 %.not21.us.i, label %.preheader35.i, label %bb.ae
-
-.preheader.i10:                                   ; preds = %.preheader35.i.preheader, %.preheader35.i
-  %.not34.i = icmp eq i64 %.fr63, 0
-  br i1 %.not34.i, label %.split.us.i12, label %.split32.us.i11
-
-.split32.us.i11:                                  ; preds = %.preheader.i10
-  tail call void @_RNvNtCs6JMX4GRUq9U_4core9panicking18panic_bounds_check(i64 noundef %i.fs, i64 noundef range(i64 0, -9223372036854775808) %i.cg, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #27, !noalias !3023
-  unreachable
 
 bb.ae:                                            ; preds = %.lr.ph159
   %i.hm = add i64 %i.ft, %i.gy
@@ -475,15 +472,19 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
   store i64 %i.cc, ptr %i.ch, align 8, !alias.scope !3020
   br label %_RINvMsx_NtNtCs6JMX4GRUq9U_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsbyqtxyC5WYI_9uu_numfmt.exit
 
-.split.us.i12:                                    ; preds = %.preheader.i10.us.us.preheader, %.preheader.i10.us.us, %.preheader.i10
-  %.us-phi = phi i64 [ %i.gy, %.preheader.i10 ], [ %i.fv, %.preheader.i10.us.us ], [ %i.fv, %.preheader.i10.us.us.preheader ] ; 2 uses
+.split.us.i12:                                    ; preds = %.preheader.i10.us.us.preheader, %.preheader.i10.us.us, %.preheader.split.i13
+  %.us-phi = phi i64 [ %i.gy, %.preheader.split.i13 ], [ %i.fv, %.preheader.i10.us.us ], [ %i.fv, %.preheader.i10.us.us.preheader ] ; 2 uses
   %i.hs = add i64 %.us-phi, %i.cg                 ; 2 uses
   store i64 %i.hs, ptr %i.ch, align 8, !alias.scope !3020
   %i.ht = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %.us-phi, ptr %i.ht, align 8, !alias.scope !3024
+  store i64 %.us-phi, ptr %i.ht, align 8, !alias.scope !3023
   %i.hu = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %i.hs, ptr %i.hu, align 8, !alias.scope !3024
+  store i64 %i.hs, ptr %i.hu, align 8, !alias.scope !3023
   br label %_RINvMsx_NtNtCs6JMX4GRUq9U_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsbyqtxyC5WYI_9uu_numfmt.exit
+
+.split32.us.i14:                                  ; preds = %.preheader.split.i13
+  tail call void @_RNvNtCs6JMX4GRUq9U_4core9panicking18panic_bounds_check(i64 noundef %i.fs, i64 noundef range(i64 0, -9223372036854775808) %i.cg, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @12) #27, !noalias !3024
+  unreachable
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
@@ -886,7 +887,7 @@ begin_hunk_1_@llvm.ctpop.i32
 !3020 = !{!3001}
 !3021 = !{!3002}
 !3022 = !{!3003}
-!3023 = !{!3000, !3001, !3002, !3003}
-!3024 = !{!3005, !3000}
+!3023 = !{!3005, !3000}
+!3024 = !{!3000, !3001, !3002, !3003}
 !3025 = distinct !{null}
 end_hunk_1

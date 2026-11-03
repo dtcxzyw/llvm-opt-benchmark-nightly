@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.a
   %i.o = icmp ult i64 %1, %3
   br i1 %i.o, label %bb.c, label %bb.d
 
-_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchrCsjmyNHyKimsw_18build_script_build.exit: ; preds = %.preheader.preheader, %bb.at, %.preheader, %.lr.ph.i, %bb.bb, %.loopexit.i, %.loopexit11.i, %bb.aq, %bb.g, %bb.d, %bb.a, %bb.bs, %bb.br
-  %.sroa.0.0 = phi i1 [ true, %bb.a ], [ false, %bb.d ], [ %i.ks, %bb.br ], [ true, %.preheader ], [ %i.kt, %bb.bs ], [ %i.w, %bb.g ], [ true, %.loopexit11.i ], [ false, %.loopexit.i ], [ %i.fw, %bb.bb ], [ false, %bb.aq ], [ %i.z, %.lr.ph.i ], [ true, %.preheader.preheader ], [ false, %bb.at ]
+_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchrCsjmyNHyKimsw_18build_script_build.exit: ; preds = %.lr.ph272.a, %bb.at, %.preheader, %.lr.ph.i, %bb.bb, %.loopexit.i, %.loopexit11.i, %.preheader.preheader.split, %bb.aq, %bb.g, %bb.d, %bb.a, %bb.bs, %bb.br
+  %.sroa.0.0 = phi i1 [ true, %bb.a ], [ false, %bb.d ], [ %i.ks, %bb.br ], [ true, %.preheader ], [ %i.kt, %bb.bs ], [ %i.w, %bb.g ], [ true, %.loopexit11.i ], [ false, %.loopexit.i ], [ %i.fw, %bb.bb ], [ false, %bb.aq ], [ %i.z, %.lr.ph.i ], [ true, %.preheader.preheader.split ], [ true, %.lr.ph272.a ], [ false, %bb.at ]
   ret i1 %.sroa.0.0
 
 bb.c:                                             ; preds = %bb.b
@@ -557,10 +557,11 @@ bb.aq:                                            ; preds = %bb.i
   %i.es = load i64, ptr %i.ad, align 8            ; 8 uses
   %umax.i = call i64 @llvm.umax.i64(i64 %i.es, i64 %i.ax)
   %i.et = load i64, ptr %i.eq, align 8
-  %i.eu = add i64 %i.es, -1
+  %i.eu = add i64 %i.es, -1                       ; 2 uses
   %.first_iter = icmp ult i64 %i.eu, %i.ax
+  %.first_iter.fr = freeze i1 %.first_iter
   %exitcond.not.i11270.not = icmp ult i64 %i.es, %i.ax
-  %.not273 = icmp eq i64 %i.es, 0
+  %.not273 = icmp eq i64 %i.es, 0                 ; 2 uses
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.at, %.lr.ph.i10
@@ -576,7 +577,7 @@ bb.ar:                                            ; preds = %bb.at, %.lr.ph.i10
   br i1 %i.fd, label %bb.as, label %.preheader72.preheader
 
 .preheader72.preheader:                           ; preds = %bb.ar
-  br i1 %exitcond.not.i11270.not, label %.lr.ph272.a, label %.preheader.preheader
+  br i1 %exitcond.not.i11270.not, label %.lr.ph269, label %.preheader.preheader
 
 bb.as:                                            ; preds = %bb.ar
   %i.fe = add i64 %i.ev, %i.ax
@@ -591,37 +592,27 @@ bb.at:                                            ; preds = %bb.ba, %bb.ax, %bb.
 
 .preheader72:                                     ; preds = %bb.ay
   %exitcond.not.i11 = icmp eq i64 %i.fo, %umax.i
-  br i1 %exitcond.not.i11, label %.preheader.preheader, label %.lr.ph272.a
+  br i1 %exitcond.not.i11, label %.preheader.preheader, label %.lr.ph269
 
 .preheader.preheader:                             ; preds = %.preheader72, %.preheader72.preheader
-  br i1 %.not273, label %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchrCsjmyNHyKimsw_18build_script_build.exit, label %.lr.ph275
+  br i1 %.first_iter.fr, label %.lr.ph272.a, label %.preheader.preheader.split
 
-.lr.ph272.a:                                      ; preds = %.preheader72.preheader, %.preheader72
-  %.sroa.02.0.i271 = phi i64 [ %i.fo, %.preheader72 ], [ %i.es, %.preheader72.preheader ] ; 3 uses
-  %4 = add i64 %i.ev, %.sroa.02.0.i271            ; 2 uses
-  %5 = icmp ult i64 %4, %i.au
-  br i1 %5, label %bb.ay, label %bb.az
+.lr.ph272.a:                                      ; preds = %.preheader.preheader
+  br i1 %.not273, label %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchrCsjmyNHyKimsw_18build_script_build.exit, label %bb.au
 
 .preheader:                                       ; preds = %bb.av
-  %.not = icmp eq i64 %6, 0
-  br i1 %.not, label %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchrCsjmyNHyKimsw_18build_script_build.exit, label %.lr.ph275
+  %.not = icmp eq i64 %4, 0
+  br i1 %.not, label %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchrCsjmyNHyKimsw_18build_script_build.exit, label %bb.au
 
-.lr.ph275:                                        ; preds = %.preheader.preheader, %.preheader
-  %.sroa.2.0.i274 = phi i64 [ %6, %.preheader ], [ %i.es, %.preheader.preheader ]
-  %6 = add i64 %.sroa.2.0.i274, -1                ; 5 uses
-  br i1 %.first_iter, label %bb.au, label %7
-
-bb.au:                                            ; preds = %.lr.ph275
-  %i.fh = add i64 %i.ev, %6                       ; 3 uses
+bb.au:                                            ; preds = %.lr.ph272.a, %.preheader
+  %.sroa.2.0.i.us271 = phi i64 [ %4, %.preheader ], [ %i.es, %.lr.ph272.a ]
+  %4 = add i64 %.sroa.2.0.i.us271, -1             ; 4 uses
+  %i.fh = add i64 %i.ev, %4                       ; 3 uses
   %i.fi = icmp ult i64 %i.fh, %i.au
   br i1 %i.fi, label %bb.av, label %bb.aw
 
-7:                                                ; preds = %.lr.ph275
-  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 %6, i64 %i.ax, ptr nonnull align 8 @3) #19, !noalias !39
-  unreachable
-
 bb.av:                                            ; preds = %bb.au
-  %i.fj = getelementptr inbounds nuw i8, ptr %i.av, i64 %6
+  %i.fj = getelementptr inbounds nuw i8, ptr %i.av, i64 %4
   %i.fk = load i8, ptr %i.fj, align 1, !noalias !39
   %i.fl = getelementptr inbounds nuw i8, ptr %i.as, i64 %i.fh
   %i.fm = load i8, ptr %i.fl, align 1, !noalias !39
@@ -636,16 +627,29 @@ bb.ax:                                            ; preds = %bb.av
   %i.fn = add i64 %i.et, %i.ev
   br label %bb.at
 
-bb.ay:                                            ; preds = %.lr.ph272.a
-  %i.fo = add nuw i64 %.sroa.02.0.i271, 1         ; 3 uses
-  %i.fp = getelementptr inbounds nuw i8, ptr %i.av, i64 %.sroa.02.0.i271
+.preheader.preheader.split:                       ; preds = %.preheader.preheader
+  br i1 %.not273, label %_RNvNtNtCs4NRVxsYgnAr_4core5slice6memchr6memchrCsjmyNHyKimsw_18build_script_build.exit, label %7
+
+.lr.ph269:                                        ; preds = %.preheader72.preheader, %.preheader72
+  %.sroa.02.0.i268 = phi i64 [ %i.fo, %.preheader72 ], [ %i.es, %.preheader72.preheader ] ; 3 uses
+  %5 = add i64 %i.ev, %.sroa.02.0.i268            ; 2 uses
+  %6 = icmp ult i64 %5, %i.au
+  br i1 %6, label %bb.ay, label %bb.az
+
+7:                                                ; preds = %.preheader.preheader.split
+  call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 %i.eu, i64 %i.ax, ptr nonnull align 8 @3) #19, !noalias !39
+  unreachable
+
+bb.ay:                                            ; preds = %.lr.ph269
+  %i.fo = add nuw i64 %.sroa.02.0.i268, 1         ; 3 uses
+  %i.fp = getelementptr inbounds nuw i8, ptr %i.av, i64 %.sroa.02.0.i268
   %i.fq = load i8, ptr %i.fp, align 1, !noalias !39
-  %i.fr = getelementptr inbounds nuw i8, ptr %i.as, i64 %4
+  %i.fr = getelementptr inbounds nuw i8, ptr %i.as, i64 %5
   %i.fs = load i8, ptr %i.fr, align 1, !noalias !39
   %.not21.i = icmp eq i8 %i.fq, %i.fs
   br i1 %.not21.i, label %.preheader72, label %bb.ba
 
-bb.az:                                            ; preds = %.lr.ph272.a
+bb.az:                                            ; preds = %.lr.ph269
   %i.ft = add i64 %i.es, %i.ev
   %umax120 = call i64 @llvm.umax.i64(i64 %i.au, i64 %i.ft)
   call void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 %umax120, i64 %i.au, ptr nonnull align 8 @5) #19, !noalias !39

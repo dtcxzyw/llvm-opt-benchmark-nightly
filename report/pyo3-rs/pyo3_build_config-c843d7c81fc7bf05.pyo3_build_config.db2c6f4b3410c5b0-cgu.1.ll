@@ -204,8 +204,8 @@ bb.y:                                             ; preds = %bb.a
   store i64 %i.cm, ptr %i.cp, align 8
   br label %_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsiOEEQt9hBE2_17pyo3_build_config.exit
 
-_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsiOEEQt9hBE2_17pyo3_build_config.exit: ; preds = %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCsiOEEQt9hBE2_17pyo3_build_config.exit, %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCsiOEEQt9hBE2_17pyo3_build_config.exit.thread, %.preheader29.preheader._crit_edge, %._crit_edge.i7, %._crit_edge163, %._crit_edge.i, %bb.x, %bb.aa, %bb.ab, %.loopexit26
-  %storemerge.i.sink = phi i64 [ 0, %bb.x ], [ 1, %._crit_edge163 ], [ 1, %bb.aa ], [ 0, %bb.ab ], [ 1, %.loopexit26 ], [ 1, %.preheader29.preheader._crit_edge ], [ 0, %._crit_edge.i ], [ 0, %._crit_edge.i7 ], [ 0, %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCsiOEEQt9hBE2_17pyo3_build_config.exit.thread ], [ 0, %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCsiOEEQt9hBE2_17pyo3_build_config.exit ]
+_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsiOEEQt9hBE2_17pyo3_build_config.exit: ; preds = %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCsiOEEQt9hBE2_17pyo3_build_config.exit, %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCsiOEEQt9hBE2_17pyo3_build_config.exit.thread, %bb.as, %._crit_edge.i7, %._crit_edge163, %._crit_edge.i, %bb.x, %bb.aa, %bb.ab, %.loopexit26
+  %storemerge.i.sink = phi i64 [ 0, %bb.x ], [ 1, %._crit_edge163 ], [ 1, %bb.aa ], [ 0, %bb.ab ], [ 1, %.loopexit26 ], [ 1, %bb.as ], [ 0, %._crit_edge.i ], [ 0, %._crit_edge.i7 ], [ 0, %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCsiOEEQt9hBE2_17pyo3_build_config.exit.thread ], [ 0, %_RNvXsv_NtNtCskKLDkoKarTP_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCsiOEEQt9hBE2_17pyo3_build_config.exit ]
   store i64 %storemerge.i.sink, ptr %0, align 8
   ret void
 
@@ -387,14 +387,14 @@ bb.ao:                                            ; preds = %bb.an
   br label %bb.aq
 
 bb.ap:                                            ; preds = %bb.an
-  %i.fl = load i64, ptr %i.bv, align 8            ; 7 uses
+  %i.fl = load i64, ptr %i.bv, align 8            ; 8 uses
   %umax.i12 = tail call i64 @llvm.umax.i64(i64 %i.fl, i64 %i.cg)
   %i.fm = getelementptr i8, ptr %i.ca, i64 %i.fd
   %exitcond.not.i14165.not = icmp ult i64 %i.fl, %i.cg
   br i1 %exitcond.not.i14165.not, label %.lr.ph168, label %.preheader29.preheader
 
-bb.aq:                                            ; preds = %bb.au, %7, %bb.ao
-  %.sink = phi i64 [ %i.ga, %bb.au ], [ %9, %7 ], [ %i.fk, %bb.ao ] ; 3 uses
+bb.aq:                                            ; preds = %bb.au, %.lr.ph171, %bb.ao
+  %.sink = phi i64 [ %i.ga, %bb.au ], [ %i.fs, %.lr.ph171 ], [ %i.fk, %bb.ao ] ; 3 uses
   store i64 %.sink, ptr %i.ch, align 8
   %i.fn = add i64 %.sink, %i.ci                   ; 2 uses
   %i.fo = icmp ult i64 %i.fn, %i.cc
@@ -405,46 +405,51 @@ bb.ar:                                            ; preds = %.lr.ph168
   br i1 %exitcond.not.i14, label %.preheader29.preheader, label %.lr.ph168
 
 .preheader29.preheader:                           ; preds = %bb.ar, %bb.ap
-  %i.fp = add i64 %i.fl, -1
+  %i.fp = add i64 %i.fl, -1                       ; 2 uses
   %.first_iter = icmp ult i64 %i.fp, %i.cg
+  %.first_iter.fr = freeze i1 %.first_iter
+  br i1 %.first_iter.fr, label %.preheader29.preheader.split.us, label %.preheader29.preheader.split
+
+.preheader29.preheader.split.us:                  ; preds = %.preheader29.preheader
   %2 = getelementptr i8, ptr %i.ca, i64 %i.fd
-  %.not24169 = icmp eq i64 %i.fl, 0
-  br i1 %.not24169, label %.preheader29.preheader._crit_edge, label %.lr.ph171
+  %.not24.us176 = icmp eq i64 %i.fl, 0
+  br i1 %.not24.us176, label %bb.as, label %.preheader29.preheader._crit_edge
 
-.preheader29:                                     ; preds = %bb.as
-  %.not24.a = icmp eq i64 %i.fs, 0
-  br i1 %.not24.a, label %.preheader29.preheader._crit_edge, label %.lr.ph171
+.preheader29:                                     ; preds = %.preheader29.preheader._crit_edge
+  %.not24.a = icmp eq i64 %3, 0
+  br i1 %.not24.a, label %bb.as, label %.preheader29.preheader._crit_edge
 
-.preheader29.preheader._crit_edge:                ; preds = %.preheader29.preheader, %.preheader29
-  %3 = add i64 %i.fd, %i.cg                       ; 2 uses
-  store i64 %3, ptr %i.ch, align 8
-  %i.fq = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.fd, ptr %i.fq, align 8, !alias.scope !18
-  %i.fr = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %3, ptr %i.fr, align 8, !alias.scope !18
+.preheader29.preheader._crit_edge:                ; preds = %.preheader29.preheader.split.us, %.preheader29
+  %.sroa.2.0.i16.us177 = phi i64 [ %3, %.preheader29 ], [ %i.fl, %.preheader29.preheader.split.us ]
+  %3 = add i64 %.sroa.2.0.i16.us177, -1           ; 4 uses
+  %i.fq = getelementptr inbounds nuw i8, ptr %i.ce, i64 %3
+  %4 = load i8, ptr %i.fq, align 1
+  %i.fr = getelementptr i8, ptr %2, i64 %3
+  %5 = load i8, ptr %i.fr, align 1
+  %.not17.i17.us = icmp eq i8 %4, %5
+  br i1 %.not17.i17.us, label %.preheader29, label %.lr.ph171
+
+.lr.ph171:                                        ; preds = %.preheader29.preheader._crit_edge
+  %6 = load i64, ptr %i.fa, align 8
+  %i.fs = add i64 %6, %i.fd
+  br label %bb.aq
+
+.preheader29.preheader.split:                     ; preds = %.preheader29.preheader
+  %.not24 = icmp eq i64 %i.fl, 0
+  br i1 %.not24, label %bb.as, label %bb.at
+
+bb.as:                                            ; preds = %.preheader29.preheader.split.us, %.preheader29, %.preheader29.preheader.split
+  %7 = add i64 %i.fd, %i.cg                       ; 2 uses
+  store i64 %7, ptr %i.ch, align 8
+  %i.ft = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store i64 %i.fd, ptr %i.ft, align 8, !alias.scope !18
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store i64 %7, ptr %8, align 8, !alias.scope !18
   br label %_RINvMsx_NtNtCskKLDkoKarTP_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_9MatchOnlyECsiOEEQt9hBE2_17pyo3_build_config.exit
 
-.lr.ph171:                                        ; preds = %.preheader29.preheader, %.preheader29
-  %.sroa.2.0.i16170 = phi i64 [ %i.fs, %.preheader29 ], [ %i.fl, %.preheader29.preheader ]
-  %i.fs = add i64 %.sroa.2.0.i16170, -1           ; 5 uses
-  br i1 %.first_iter, label %bb.as, label %bb.at
-
-bb.as:                                            ; preds = %.lr.ph171
-  %4 = getelementptr inbounds nuw i8, ptr %i.ce, i64 %i.fs
-  %5 = load i8, ptr %4, align 1
-  %i.ft = getelementptr i8, ptr %2, i64 %i.fs
-  %6 = load i8, ptr %i.ft, align 1
-  %.not17.i17 = icmp eq i8 %5, %6
-  br i1 %.not17.i17, label %.preheader29, label %7
-
-bb.at:                                            ; preds = %.lr.ph171
-  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 %i.fs, i64 %i.cg, ptr nonnull align 8 @4) #25
+bb.at:                                            ; preds = %.preheader29.preheader.split
+  tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 %i.fp, i64 %i.cg, ptr nonnull align 8 @4) #25
   unreachable
-
-7:                                                ; preds = %bb.as
-  %8 = load i64, ptr %i.fa, align 8
-  %9 = add i64 %8, %i.fd
-  br label %bb.aq
 
 .lr.ph168:                                        ; preds = %bb.ap, %bb.ar
   %.sroa.02.0.i13166 = phi i64 [ %i.fu, %bb.ar ], [ %i.fl, %bb.ap ] ; 3 uses
