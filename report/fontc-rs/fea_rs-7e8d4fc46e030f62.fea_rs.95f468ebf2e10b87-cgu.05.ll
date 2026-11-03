@@ -202,11 +202,7 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
-  br i1 %.not.i.i, label %.split.us.i, label %.split.i
-
-.split.us.i:                                      ; preds = %bb.b
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !852)
-  br label %_RINvYNtNtCscScJTt9VrQp_6fea_rs10token_tree9ChildIterNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator8try_foldINtNtNtBW_3num7nonzero7NonZerojENCNvXs_NvBO_10advance_byB3_NtB2v_13SpecAdvanceBy15spec_advance_by0INtNtBW_6option6OptionB1S_EEB7_.exit
+  br i1 %.not.i.i, label %_RINvYNtNtCscScJTt9VrQp_6fea_rs10token_tree9ChildIterNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator8try_foldINtNtNtBW_3num7nonzero7NonZerojENCNvXs_NvBO_10advance_byB3_NtB2v_13SpecAdvanceBy15spec_advance_by0INtNtBW_6option6OptionB1S_EEB7_.exit, label %.split.i
 
 .split.i:                                         ; preds = %bb.b
   %.promoted10.i = load i64, ptr %i.d, align 8, !alias.scope !850
@@ -288,8 +284,8 @@ bb.k:                                             ; preds = %_RNvXs0_NtCscScJTt9
   %i.ah = icmp eq i64 %i.ag, 0
   br i1 %i.ah, label %_RINvYNtNtCscScJTt9VrQp_6fea_rs10token_tree9ChildIterNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator8try_foldINtNtNtBW_3num7nonzero7NonZerojENCNvXs_NvBO_10advance_byB3_NtB2v_13SpecAdvanceBy15spec_advance_by0INtNtBW_6option6OptionB1S_EEB7_.exit, label %bb.c
 
-_RINvYNtNtCscScJTt9VrQp_6fea_rs10token_tree9ChildIterNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator8try_foldINtNtNtBW_3num7nonzero7NonZerojENCNvXs_NvBO_10advance_byB3_NtB2v_13SpecAdvanceBy15spec_advance_by0INtNtBW_6option6OptionB1S_EEB7_.exit: ; preds = %bb.k, %_RNvXs0_NtCscScJTt9VrQp_6fea_rs10token_treeNtB5_9ChildIterNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4next.exit.i, %.split.us.i, %bb.a
-  %.sroa.0.1 = phi i64 [ 0, %bb.a ], [ %1, %.split.us.i ], [ 0, %bb.k ], [ %i.l, %_RNvXs0_NtCscScJTt9VrQp_6fea_rs10token_treeNtB5_9ChildIterNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4next.exit.i ]
+_RINvYNtNtCscScJTt9VrQp_6fea_rs10token_tree9ChildIterNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator8try_foldINtNtNtBW_3num7nonzero7NonZerojENCNvXs_NvBO_10advance_byB3_NtB2v_13SpecAdvanceBy15spec_advance_by0INtNtBW_6option6OptionB1S_EEB7_.exit: ; preds = %bb.k, %_RNvXs0_NtCscScJTt9VrQp_6fea_rs10token_treeNtB5_9ChildIterNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4next.exit.i, %bb.b, %bb.a
+  %.sroa.0.1 = phi i64 [ 0, %bb.a ], [ %1, %bb.b ], [ 0, %bb.k ], [ %i.l, %_RNvXs0_NtCscScJTt9VrQp_6fea_rs10token_treeNtB5_9ChildIterNtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4next.exit.i ]
   ret i64 %.sroa.0.1
 }
 

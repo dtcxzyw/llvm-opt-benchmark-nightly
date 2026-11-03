@@ -205,7 +205,6 @@ _RNvXs1_NtNtNtCshzWfHUSfYae_4core3ops8function5implsQQQQNCINvNtNtNtBb_4iter8adap
   br label %_RINvYINtNtCshzWfHUSfYae_4core6option8IntoIterTNtCsileJQcQObtj_7hir_def14GenericParamIdNtNtNtBK_3hir8generics19GenericParamDataRefEENtNtNtNtB8_4iter6traits8iterator8Iterator4folduQQQQNCINvNtNtB2b_8adapters3map8map_foldBH_TBI_INtB6_6OptionRNtB1o_17LifetimeParamDataEEuNCNvMNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8genericsNtB4l_8Generics4iter0QNCINvNvXs_NtB31_9enumerateINtB5C_9EnumeratepEB25_4fold9enumerateB3w_uNCINvNvB25_8for_each4callTjB3w_ENCINvMss_NtB4n_11generic_argNtB7e_11GenericArgs12fill_builderNCINvMs6_NtCs8Xq8PKFYOms_3hir9semanticsNtB8d_13SemanticsImpl25resolve_trait_impl_methodANtB8f_4Typej1_E0INtNtCs474hSbRjvii_8arrayvec8arrayvec8ArrayVecNtB7e_10GenericArgKja_EE0E0E0E0ECslLuZgPVt6hg_3ide.exit.i.i.i
 
 .lr.ph.split.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !2923)
   tail call void @_RNvNtCshzWfHUSfYae_4core9panicking9panic_fmt(ptr noundef nonnull @18, ptr noundef nonnull inttoptr (i64 31 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #35, !noalias !2925
   unreachable
 
@@ -439,7 +438,6 @@ _RNvXs1_NtNtNtCshzWfHUSfYae_4core3ops8function5implsQQQQNCINvNtNtNtBb_4iter8adap
   br label %_RINvYINtNtCshzWfHUSfYae_4core6option8IntoIterTNtCsileJQcQObtj_7hir_def14GenericParamIdNtNtNtBK_3hir8generics19GenericParamDataRefEENtNtNtNtB8_4iter6traits8iterator8Iterator4folduQQQQNCINvNtNtB2b_8adapters3map8map_foldBH_TBI_INtB6_6OptionRNtB1o_17LifetimeParamDataEEuNCNvMNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8genericsNtB4l_8Generics4iter0QNCINvNvXs_NtB31_9enumerateINtB5C_9EnumeratepEB25_4fold9enumerateB3w_uNCINvNvB25_8for_each4callTjB3w_ENCINvMss_NtB4n_11generic_argNtB7e_11GenericArgs12fill_builderNCINvMs6_NtCs8Xq8PKFYOms_3hir9semanticsNtB8d_13SemanticsImpl25resolve_trait_impl_methodANtB8f_4Typej1_E0INtNtCsbSS6DM8SDEO_5alloc3vec3VecNtB7e_10GenericArgEE0E0E0E0ECslLuZgPVt6hg_3ide.exit.i.i.i
 
 .lr.ph.split.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !3095)
   tail call void @_RNvNtCshzWfHUSfYae_4core9panicking9panic_fmt(ptr noundef nonnull @18, ptr noundef nonnull inttoptr (i64 31 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #35, !noalias !3097
   unreachable
 
@@ -675,7 +673,6 @@ _RNvXs1_NtNtNtCshzWfHUSfYae_4core3ops8function5implsQQQQNCINvNtNtNtBb_4iter8adap
   br label %_RINvYINtNtCshzWfHUSfYae_4core6option8IntoIterTNtCsileJQcQObtj_7hir_def14GenericParamIdNtNtNtBK_3hir8generics19GenericParamDataRefEENtNtNtNtB8_4iter6traits8iterator8Iterator4folduQQQQNCINvNtNtB2b_8adapters3map8map_foldBH_TBI_INtB6_6OptionRNtB1o_17LifetimeParamDataEEuNCNvMNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8genericsNtB4l_8Generics4iter0QNCINvNvXs_NtB31_9enumerateINtB5C_9EnumeratepEB25_4fold9enumerateB3w_uNCINvNvB25_8for_each4callTjB3w_ENCINvMss_NtB4n_11generic_argNtB7e_11GenericArgs12fill_builderNCINvMs6_NtCs8Xq8PKFYOms_3hir9semanticsNtB8d_13SemanticsImpl25resolve_trait_impl_methodANtB8f_4Typej2_E0INtNtCs474hSbRjvii_8arrayvec8arrayvec8ArrayVecNtB7e_10GenericArgKja_EE0E0E0E0ECslLuZgPVt6hg_3ide.exit.i.i.i
 
 .lr.ph.split.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !3267)
   tail call void @_RNvNtCshzWfHUSfYae_4core9panicking9panic_fmt(ptr noundef nonnull @18, ptr noundef nonnull inttoptr (i64 31 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #35, !noalias !3269
   unreachable
 
@@ -913,7 +910,6 @@ _RNvXs1_NtNtNtCshzWfHUSfYae_4core3ops8function5implsQQQQNCINvNtNtNtBb_4iter8adap
   br label %_RINvYINtNtCshzWfHUSfYae_4core6option8IntoIterTNtCsileJQcQObtj_7hir_def14GenericParamIdNtNtNtBK_3hir8generics19GenericParamDataRefEENtNtNtNtB8_4iter6traits8iterator8Iterator4folduQQQQNCINvNtNtB2b_8adapters3map8map_foldBH_TBI_INtB6_6OptionRNtB1o_17LifetimeParamDataEEuNCNvMNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8genericsNtB4l_8Generics4iter0QNCINvNvXs_NtB31_9enumerateINtB5C_9EnumeratepEB25_4fold9enumerateB3w_uNCINvNvB25_8for_each4callTjB3w_ENCINvMss_NtB4n_11generic_argNtB7e_11GenericArgs12fill_builderNCINvMs6_NtCs8Xq8PKFYOms_3hir9semanticsNtB8d_13SemanticsImpl25resolve_trait_impl_methodANtB8f_4Typej2_E0INtNtCsbSS6DM8SDEO_5alloc3vec3VecNtB7e_10GenericArgEE0E0E0E0ECslLuZgPVt6hg_3ide.exit.i.i.i
 
 .lr.ph.split.i.i.i.i:                             ; preds = %.lr.ph.i.i.i.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !3439)
   tail call void @_RNvNtCshzWfHUSfYae_4core9panicking9panic_fmt(ptr noundef nonnull @18, ptr noundef nonnull inttoptr (i64 31 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @20) #35, !noalias !3441
   unreachable
 

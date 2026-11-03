@@ -205,16 +205,11 @@ bb.t:                                             ; preds = %bb.x, %bb.v, %bb.s
   %i.cl = load i64, ptr %i.bj, align 8, !alias.scope !38543, !noalias !38542, !noundef !145 ; 3 uses
   %.not.i.i.i.i.i.i.i = icmp ugt i64 %i.cj, %i.cl
   %i.cm = load ptr, ptr %i.bh, align 8, !alias.scope !38541, !noalias !38542, !nonnull !145
-  br i1 %.not.i.i.i.i.i.i.i, label %.lr.ph.split.us.i.i.i.i.i.i, label %.lr.ph.split.preheader.i.i.i.i.i.i, !prof !172
+  br i1 %.not.i.i.i.i.i.i.i, label %2, label %.lr.ph.split.preheader.i.i.i.i.i.i, !prof !172
 
 .lr.ph.split.preheader.i.i.i.i.i.i:               ; preds = %.lr.ph.i.i.i.i.i.i
   %.promoted80.i.i.i.i.i.i = load i64, ptr %i.bt, align 8, !alias.scope !38541, !noalias !38542
   br label %.lr.ph.split.i.i.i.i.i.i
-
-.lr.ph.split.us.i.i.i.i.i.i:                      ; preds = %.lr.ph.i.i.i.i.i.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !38544)
-  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef %.promoted.i.i.i.i.i.i, i64 noundef %i.cj, i64 noundef %i.cl, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @120) #62, !noalias !38545
-  unreachable
 
 bb.u:                                             ; preds = %bb.s
   %i.cn = call fastcc { i64, ptr } @_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEECs7XnEB7DeNXr_7sslocal(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.bh, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.bg) #52, !noalias !38542 ; 2 uses
@@ -244,7 +239,7 @@ bb.y:                                             ; preds = %bb.v
   br i1 %i.cv, label %bb.z, label %_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer9poll_copyINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedENtNtNtNtB1e_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.thread29.i.i.i.i.i
 
 bb.z:                                             ; preds = %bb.y
-  %i.cw = call { i64, ptr } @_RNvXs5_NtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_streamNtB5_21AutoProxyClientStreamNtNtNtCsczhfDQ1qNkX_5tokio2io11async_write10AsyncWrite10poll_flush(ptr noalias nofree noundef nonnull align 16 dereferenceable(3520) %i.bf, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1) #52, !noalias !38546 ; 2 uses
+  %i.cw = call { i64, ptr } @_RNvXs5_NtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_streamNtB5_21AutoProxyClientStreamNtNtNtCsczhfDQ1qNkX_5tokio2io11async_write10AsyncWrite10poll_flush(ptr noalias nofree noundef nonnull align 16 dereferenceable(3520) %i.bf, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1) #52, !noalias !38544 ; 2 uses
   %i.cx = extractvalue { i64, ptr } %i.cw, 0
   %i.cy = trunc nuw i64 %i.cx to i1
   br i1 %i.cy, label %_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer9poll_copyINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedENtNtNtNtB1e_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.thread29.i.i.i.i.i, label %bb.aa
@@ -268,14 +263,18 @@ bb.ab:                                            ; preds = %bb.aa
 .lr.ph.split.i.i.i.i.i.i:                         ; preds = %bb.aj, %.lr.ph.split.preheader.i.i.i.i.i.i
   %i.dc = phi i64 [ %i.ea, %bb.aj ], [ %.promoted80.i.i.i.i.i.i, %.lr.ph.split.preheader.i.i.i.i.i.i ]
   %i.dd = phi i64 [ %i.dz, %bb.aj ], [ %.promoted.i.i.i.i.i.i, %.lr.ph.split.preheader.i.i.i.i.i.i ] ; 3 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !38544)
+  call void @llvm.experimental.noalias.scope.decl(metadata !38545)
   %i.de = sub nuw i64 %i.cj, %i.dd
   %i.df = getelementptr inbounds nuw i8, ptr %i.cm, i64 %i.dd
-  %i.dg = call { i64, ptr } @_RNvXs5_NtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_streamNtB5_21AutoProxyClientStreamNtNtNtCsczhfDQ1qNkX_5tokio2io11async_write10AsyncWrite10poll_write(ptr noalias nofree noundef nonnull align 16 dereferenceable(3520) %i.bf, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.df, i64 noundef %i.de) #52, !noalias !38547 ; 2 uses
+  %i.dg = call { i64, ptr } @_RNvXs5_NtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_streamNtB5_21AutoProxyClientStreamNtNtNtCsczhfDQ1qNkX_5tokio2io11async_write10AsyncWrite10poll_write(ptr noalias nofree noundef nonnull align 16 dereferenceable(3520) %i.bf, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.df, i64 noundef %i.de) #52, !noalias !38546 ; 2 uses
   %i.dh = extractvalue { i64, ptr } %i.dg, 0      ; 2 uses
   %i.di = extractvalue { i64, ptr } %i.dg, 1      ; 3 uses
   %i.dj = icmp eq i64 %i.dh, 2
   br i1 %i.dj, label %bb.ac, label %bb.ag
+
+2:                                                ; preds = %.lr.ph.i.i.i.i.i.i
+  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef %.promoted.i.i.i.i.i.i, i64 noundef %i.cj, i64 noundef %i.cl, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @120) #62, !noalias !38547
+  unreachable
 
 bb.ac:                                            ; preds = %.lr.ph.split.i.i.i.i.i.i
   %i.dk = load i8, ptr %i.br, align 8, !range !148, !alias.scope !38543, !noalias !38542, !noundef !145
@@ -294,7 +293,7 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %or.cond48.i.i.i.i.i.i, label %_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer9poll_copyINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedENtNtNtNtB1e_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.thread29.i.i.i.i.i, label %.thread.i.i.i.i.i.i
 
 bb.ae:                                            ; preds = %._crit_edge.i.i.i.i.i.i
-  %i.dr = call { i64, ptr } @_RNvXs5_NtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_streamNtB5_21AutoProxyClientStreamNtNtNtCsczhfDQ1qNkX_5tokio2io11async_write10AsyncWrite10poll_flush(ptr noalias nofree noundef nonnull align 16 dereferenceable(3520) %i.bf, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1) #52, !noalias !38546 ; 2 uses
+  %i.dr = call { i64, ptr } @_RNvXs5_NtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_streamNtB5_21AutoProxyClientStreamNtNtNtCsczhfDQ1qNkX_5tokio2io11async_write10AsyncWrite10poll_flush(ptr noalias nofree noundef nonnull align 16 dereferenceable(3520) %i.bf, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1) #52, !noalias !38544 ; 2 uses
   %i.ds = extractvalue { i64, ptr } %i.dr, 0
   %i.dt = trunc nuw i64 %i.ds to i1
   br i1 %i.dt, label %_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer9poll_copyINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedENtNtNtNtB1e_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.thread29.i.i.i.i.i, label %bb.af
@@ -320,7 +319,7 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %i.dx, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.dy = call noundef nonnull ptr @_RINvMNtNtCsgCecv3eZDcN_5alloc2io5errorNtNtNtCsf3Ta7LF998c_4core2io5error5Error3newReECs5Xr050g3D4S_3std(i8 noundef 23, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @121, i64 noundef 27) #59, !noalias !38546
+  %i.dy = call noundef nonnull ptr @_RINvMNtNtCsgCecv3eZDcN_5alloc2io5errorNtNtNtCsf3Ta7LF998c_4core2io5error5Error3newReECs5Xr050g3D4S_3std(i8 noundef 23, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @121, i64 noundef 27) #59, !noalias !38544
   br label %.loopexit37.i.i.i.i.i
 
 bb.aj:                                            ; preds = %bb.ah
@@ -333,7 +332,7 @@ bb.aj:                                            ; preds = %bb.ah
   br i1 %i.eb, label %.lr.ph.split.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i
 
 _RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer9poll_copyINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedENtNtNtNtB1e_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.thread29.i.i.i.i.i: ; preds = %bb.ae, %bb.ad, %bb.ac, %bb.ab, %bb.z, %bb.y
-  call void @_RNvXs4_NtNtCsczhfDQ1qNkX_5tokio4task4coopNtB5_16RestoreOnPendingNtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull dereferenceable(2) %i.j) #52, !noalias !38546
+  call void @_RNvXs4_NtNtCsczhfDQ1qNkX_5tokio4task4coopNtB5_16RestoreOnPendingNtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull dereferenceable(2) %i.j) #52, !noalias !38544
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !38538
   br label %_RINvNtNtNtCsczhfDQ1qNkX_5tokio2io4util18copy_bidirectional22transfer_one_directionINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedENtNtNtNtB1p_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.thread.i.i.i.i
 
@@ -345,14 +344,14 @@ bb.ak:                                            ; preds = %bb.l
 
 .loopexit37.i.i.i.i.i:                            ; preds = %bb.af, %bb.w, %bb.ai, %.thread.i.i.i.i.i.i, %bb.aa
   %.sroa.12.2.i.ph.i.i.i.i.i = phi ptr [ %i.ct, %bb.w ], [ %.sroa.5.1.i47.i.i.i.i.i.i, %.thread.i.i.i.i.i.i ], [ %i.cz, %bb.aa ], [ %i.dy, %bb.ai ], [ %i.du, %bb.af ]
-  call void @_RNvXs4_NtNtCsczhfDQ1qNkX_5tokio4task4coopNtB5_16RestoreOnPendingNtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull dereferenceable(2) %i.j) #52, !noalias !38546
+  call void @_RNvXs4_NtNtCsczhfDQ1qNkX_5tokio4task4coopNtB5_16RestoreOnPendingNtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull dereferenceable(2) %i.j) #52, !noalias !38544
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !38538
   br label %.loopexit75.i.i.i.i
 
 bb.al:                                            ; preds = %bb.af
   store i8 0, ptr %i.j, align 1, !noalias !38538
   %i.ef = load i64, ptr %i.bt, align 8, !alias.scope !38541, !noalias !38542, !noundef !145
-  call void @_RNvXs4_NtNtCsczhfDQ1qNkX_5tokio4task4coopNtB5_16RestoreOnPendingNtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull dereferenceable(2) %i.j) #52, !noalias !38546
+  call void @_RNvXs4_NtNtCsczhfDQ1qNkX_5tokio4task4coopNtB5_16RestoreOnPendingNtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull dereferenceable(2) %i.j) #52, !noalias !38544
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !38538
   call void @llvm.experimental.noalias.scope.decl(metadata !38549)
   %i.eg = load i8, ptr %i.bi, align 1, !range !197, !alias.scope !38550, !noalias !38542, !noundef !145
@@ -528,21 +527,16 @@ bb.az:                                            ; preds = %bb.bg, %bb.bd, %bb.
 
 .lr.ph.i.i57.i.i.i.i:                             ; preds = %bb.az
   %.not.i41.i.i.i.i.i.i = icmp ugt i64 %i.gc, %.val1.i21.i38.i.i.i.i
-  br i1 %.not.i41.i.i.i.i.i.i, label %.lr.ph.split.us.i.i59.i.i.i.i, label %.lr.ph.split.i.i58.i.i.i.i, !prof !172
-
-.lr.ph.split.us.i.i59.i.i.i.i:                    ; preds = %.lr.ph.i.i57.i.i.i.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !38562)
-  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef %i.fu, i64 noundef %i.gc, i64 noundef %.val1.i21.i38.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @120) #62, !noalias !38563
-  unreachable
+  br i1 %.not.i41.i.i.i.i.i.i, label %3, label %.lr.ph.split.i.i58.i.i.i.i, !prof !172
 
 bb.ba:                                            ; preds = %bb.ay
-  call void @llvm.experimental.noalias.scope.decl(metadata !38564)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !38565
-  store ptr %i.fp, ptr %i.f, align 8, !noalias !38565
-  store i64 %.val1.i21.i38.i.i.i.i, ptr %i.ey, align 8, !noalias !38565
-  store i64 %.val1.i21.i38.i.i.i.i, ptr %i.fa, align 8, !noalias !38565
-  store i64 %i.fw, ptr %i.ez, align 8, !noalias !38565
-  %i.ge = call { i64, ptr } @_RNvXs4_NtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_streamNtB5_21AutoProxyClientStreamNtNtNtCsczhfDQ1qNkX_5tokio2io10async_read9AsyncRead9poll_read(ptr noalias nofree noundef nonnull align 16 dereferenceable(3520) %i.bf, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.f) #52, !noalias !38566 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !38562)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !38563
+  store ptr %i.fp, ptr %i.f, align 8, !noalias !38563
+  store i64 %.val1.i21.i38.i.i.i.i, ptr %i.ey, align 8, !noalias !38563
+  store i64 %.val1.i21.i38.i.i.i.i, ptr %i.fa, align 8, !noalias !38563
+  store i64 %i.fw, ptr %i.ez, align 8, !noalias !38563
+  %i.ge = call { i64, ptr } @_RNvXs4_NtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_streamNtB5_21AutoProxyClientStreamNtNtNtCsczhfDQ1qNkX_5tokio2io10async_read9AsyncRead9poll_read(ptr noalias nofree noundef nonnull align 16 dereferenceable(3520) %i.bf, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.f) #52, !noalias !38564 ; 2 uses
   %i.gf = extractvalue { i64, ptr } %i.ge, 0
   %i.gg = trunc nuw i64 %i.gf to i1               ; 2 uses
   %i.gh = extractvalue { i64, ptr } %i.ge, 1      ; 2 uses
@@ -551,25 +545,25 @@ bb.ba:                                            ; preds = %bb.ay
   br i1 %or.cond.not.i.i.i.i.i.i.i, label %_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i.i.i, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba
-  %i.gi = load i64, ptr %i.ey, align 8, !noalias !38565, !noundef !145 ; 2 uses
-  %i.gj = load i64, ptr %i.ez, align 8, !noalias !38565, !noundef !145 ; 5 uses
+  %i.gi = load i64, ptr %i.ey, align 8, !noalias !38563, !noundef !145 ; 2 uses
+  %i.gj = load i64, ptr %i.ez, align 8, !noalias !38563, !noundef !145 ; 5 uses
   %.not7.i.i.i.i.i.i.i = icmp ugt i64 %i.gj, %i.gi
   br i1 %.not7.i.i.i.i.i.i.i, label %bb.bc, label %.thread.i.i50.i.i.i.i, !prof !172
 
 .thread.i.i50.i.i.i.i:                            ; preds = %bb.bb
   %i.gk = icmp eq i64 %i.fw, %i.gj
   %i.gl = zext i1 %i.gk to i8                     ; 4 uses
-  store i8 %i.gl, ptr %i.ex, align 8, !alias.scope !38567, !noalias !38542
-  store i64 %i.gj, ptr %i.ew, align 8, !alias.scope !38567, !noalias !38542
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !38565
+  store i8 %i.gl, ptr %i.ex, align 8, !alias.scope !38565, !noalias !38542
+  store i64 %i.gj, ptr %i.ew, align 8, !alias.scope !38565, !noalias !38542
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !38563
   br label %bb.bg
 
 bb.bc:                                            ; preds = %bb.bb
-  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.gj, i64 noundef %i.gi, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @119) #62, !noalias !38566
+  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.gj, i64 noundef %i.gi, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @119) #62, !noalias !38564
   unreachable
 
 _RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i.i.i: ; preds = %bb.ba
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !38565
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !38563
   br i1 %i.gg, label %bb.bd, label %bb.be
 
 bb.bd:                                            ; preds = %_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i.i.i
@@ -622,14 +616,18 @@ bb.bk:                                            ; preds = %bb.bj
 .lr.ph.split.i.i58.i.i.i.i:                       ; preds = %.lr.ph.i.i57.i.i.i.i, %bb.bu
   %i.ha = phi i64 [ %i.ig, %bb.bu ], [ %.promoted102129.i.i.i.i.i.i, %.lr.ph.i.i57.i.i.i.i ]
   %i.hb = phi i64 [ %i.if, %bb.bu ], [ %i.fu, %.lr.ph.i.i57.i.i.i.i ] ; 3 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !38562)
+  call void @llvm.experimental.noalias.scope.decl(metadata !38566)
   %i.hc = sub nuw i64 %i.gc, %i.hb
   %i.hd = getelementptr inbounds nuw i8, ptr %i.fp, i64 %i.hb
-  %i.he = call { i64, ptr } @_RNvXs0_NtCsaI3lGUjttVO_5hyper7upgradeNtB5_8UpgradedNtNtNtB7_2rt2io5Write10poll_write(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.bg, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.hd, i64 noundef range(i64 0, -9223372036854775808) %i.hc) #52, !noalias !38568 ; 2 uses
+  %i.he = call { i64, ptr } @_RNvXs0_NtCsaI3lGUjttVO_5hyper7upgradeNtB5_8UpgradedNtNtNtB7_2rt2io5Write10poll_write(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.bg, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.hd, i64 noundef range(i64 0, -9223372036854775808) %i.hc) #52, !noalias !38567 ; 2 uses
   %i.hf = extractvalue { i64, ptr } %i.he, 0      ; 2 uses
   %i.hg = extractvalue { i64, ptr } %i.he, 1      ; 3 uses
   %i.hh = icmp eq i64 %i.hf, 2
   br i1 %i.hh, label %bb.bl, label %bb.br
+
+3:                                                ; preds = %.lr.ph.i.i57.i.i.i.i
+  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef %i.fu, i64 noundef %i.gc, i64 noundef %.val1.i21.i38.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @120) #62, !noalias !38568
+  unreachable
 
 bb.bl:                                            ; preds = %.lr.ph.split.i.i58.i.i.i.i
   %i.hi = trunc nuw i8 %i.ga to i1
@@ -1033,21 +1031,16 @@ bb.t:                                             ; preds = %bb.aa, %bb.x, %bb.s
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %bb.t
   %.not.i41.i.i.i.i.i.i = icmp ugt i64 %i.cz, %.val1.i21.i.i.i.i.i
-  br i1 %.not.i41.i.i.i.i.i.i, label %.lr.ph.split.us.i.i.i.i.i.i, label %.lr.ph.split.i.i.i.i.i.i, !prof !172
-
-.lr.ph.split.us.i.i.i.i.i.i:                      ; preds = %.lr.ph.i.i.i.i.i.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !38707)
-  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef %i.cr, i64 noundef %i.cz, i64 noundef %.val1.i21.i.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @120) #62, !noalias !38708
-  unreachable
+  br i1 %.not.i41.i.i.i.i.i.i, label %2, label %.lr.ph.split.i.i.i.i.i.i, !prof !172
 
 bb.u:                                             ; preds = %bb.s
-  call void @llvm.experimental.noalias.scope.decl(metadata !38709)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !38710
-  store ptr %i.cm, ptr %i.j, align 8, !noalias !38710
-  store i64 %.val1.i21.i.i.i.i.i, ptr %i.bv, align 8, !noalias !38710
-  store i64 %.val1.i21.i.i.i.i.i, ptr %i.bx, align 8, !noalias !38710
-  store i64 %i.ct, ptr %i.bw, align 8, !noalias !38710
-  %i.db = call { i64, ptr } @_RNvXs1_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcpNtB5_13TcpConnectionNtNtNtCsczhfDQ1qNkX_5tokio2io10async_read9AsyncRead9poll_read(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.bi, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.j) #52, !noalias !38711 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !38707)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !38708
+  store ptr %i.cm, ptr %i.j, align 8, !noalias !38708
+  store i64 %.val1.i21.i.i.i.i.i, ptr %i.bv, align 8, !noalias !38708
+  store i64 %.val1.i21.i.i.i.i.i, ptr %i.bx, align 8, !noalias !38708
+  store i64 %i.ct, ptr %i.bw, align 8, !noalias !38708
+  %i.db = call { i64, ptr } @_RNvXs1_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcpNtB5_13TcpConnectionNtNtNtCsczhfDQ1qNkX_5tokio2io10async_read9AsyncRead9poll_read(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.bi, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.j) #52, !noalias !38709 ; 2 uses
   %i.dc = extractvalue { i64, ptr } %i.db, 0
   %i.dd = trunc nuw i64 %i.dc to i1               ; 2 uses
   %i.de = extractvalue { i64, ptr } %i.db, 1      ; 2 uses
@@ -1056,25 +1049,25 @@ bb.u:                                             ; preds = %bb.s
   br i1 %or.cond.not.i.i.i.i.i.i.i, label %_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i.i.i, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.df = load i64, ptr %i.bv, align 8, !noalias !38710, !noundef !145 ; 2 uses
-  %i.dg = load i64, ptr %i.bw, align 8, !noalias !38710, !noundef !145 ; 5 uses
+  %i.df = load i64, ptr %i.bv, align 8, !noalias !38708, !noundef !145 ; 2 uses
+  %i.dg = load i64, ptr %i.bw, align 8, !noalias !38708, !noundef !145 ; 5 uses
   %.not7.i.i.i.i.i.i.i = icmp ugt i64 %i.dg, %i.df
   br i1 %.not7.i.i.i.i.i.i.i, label %bb.w, label %.thread.i.i.i.i.i.i, !prof !172
 
 .thread.i.i.i.i.i.i:                              ; preds = %bb.v
   %i.dh = icmp eq i64 %i.ct, %i.dg
   %i.di = zext i1 %i.dh to i8                     ; 4 uses
-  store i8 %i.di, ptr %i.bu, align 8, !alias.scope !38712, !noalias !38706
-  store i64 %i.dg, ptr %i.bt, align 8, !alias.scope !38712, !noalias !38706
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !38710
+  store i8 %i.di, ptr %i.bu, align 8, !alias.scope !38710, !noalias !38706
+  store i64 %i.dg, ptr %i.bt, align 8, !alias.scope !38710, !noalias !38706
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !38708
   br label %bb.aa
 
 bb.w:                                             ; preds = %bb.v
-  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.dg, i64 noundef %i.df, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @119) #62, !noalias !38711
+  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.dg, i64 noundef %i.df, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @119) #62, !noalias !38709
   unreachable
 
 _RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i.i.i: ; preds = %bb.u
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !38710
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !38708
   br i1 %i.dd, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i.i.i
@@ -1127,14 +1120,18 @@ bb.ae:                                            ; preds = %bb.ad
 .lr.ph.split.i.i.i.i.i.i:                         ; preds = %.lr.ph.i.i.i.i.i.i, %bb.ao
   %i.dx = phi i64 [ %i.fd, %bb.ao ], [ %.promoted102129.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ]
   %i.dy = phi i64 [ %i.fc, %bb.ao ], [ %i.cr, %.lr.ph.i.i.i.i.i.i ] ; 3 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !38707)
+  call void @llvm.experimental.noalias.scope.decl(metadata !38711)
   %i.dz = sub nuw i64 %i.cz, %i.dy
   %i.ea = getelementptr inbounds nuw i8, ptr %i.cm, i64 %i.dy
-  %i.eb = call { i64, ptr } @_RNvXs5_NtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_streamNtB5_21AutoProxyClientStreamNtNtNtCsczhfDQ1qNkX_5tokio2io11async_write10AsyncWrite10poll_write(ptr noalias nofree noundef nonnull align 16 dereferenceable(3520) %i.bh, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ea, i64 noundef %i.dz) #52, !noalias !38713 ; 2 uses
+  %i.eb = call { i64, ptr } @_RNvXs5_NtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_streamNtB5_21AutoProxyClientStreamNtNtNtCsczhfDQ1qNkX_5tokio2io11async_write10AsyncWrite10poll_write(ptr noalias nofree noundef nonnull align 16 dereferenceable(3520) %i.bh, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ea, i64 noundef %i.dz) #52, !noalias !38712 ; 2 uses
   %i.ec = extractvalue { i64, ptr } %i.eb, 0      ; 2 uses
   %i.ed = extractvalue { i64, ptr } %i.eb, 1      ; 3 uses
   %i.ee = icmp eq i64 %i.ec, 2
   br i1 %i.ee, label %bb.af, label %bb.al
+
+2:                                                ; preds = %.lr.ph.i.i.i.i.i.i
+  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef %i.cr, i64 noundef %i.cz, i64 noundef %.val1.i21.i.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @120) #62, !noalias !38713
+  unreachable
 
 bb.af:                                            ; preds = %.lr.ph.split.i.i.i.i.i.i
   %i.ef = trunc nuw i8 %i.cx to i1
@@ -1408,21 +1405,16 @@ bb.bc:                                            ; preds = %bb.bj, %bb.bg, %bb.
 
 .lr.ph.i.i60.i.i.i.i:                             ; preds = %bb.bc
   %.not.i39.i.i.i.i.i.i = icmp ugt i64 %i.hc, %.val1.i21.i39.i.i.i.i
-  br i1 %.not.i39.i.i.i.i.i.i, label %.lr.ph.split.us.i.i68.i.i.i.i, label %.lr.ph.split.i.i61.i.i.i.i, !prof !172
-
-.lr.ph.split.us.i.i68.i.i.i.i:                    ; preds = %.lr.ph.i.i60.i.i.i.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !38728)
-  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef %i.gu, i64 noundef %i.hc, i64 noundef %.val1.i21.i39.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @120) #62, !noalias !38729
-  unreachable
+  br i1 %.not.i39.i.i.i.i.i.i, label %3, label %.lr.ph.split.i.i61.i.i.i.i, !prof !172
 
 bb.bd:                                            ; preds = %bb.bb
-  call void @llvm.experimental.noalias.scope.decl(metadata !38730)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !38731
-  store ptr %i.gp, ptr %i.f, align 8, !noalias !38731
-  store i64 %.val1.i21.i39.i.i.i.i, ptr %i.fy, align 8, !noalias !38731
-  store i64 %.val1.i21.i39.i.i.i.i, ptr %i.ga, align 8, !noalias !38731
-  store i64 %i.gw, ptr %i.fz, align 8, !noalias !38731
-  %i.he = call { i64, ptr } @_RNvXs4_NtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_streamNtB5_21AutoProxyClientStreamNtNtNtCsczhfDQ1qNkX_5tokio2io10async_read9AsyncRead9poll_read(ptr noalias nofree noundef nonnull align 16 dereferenceable(3520) %i.bh, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.f) #52, !noalias !38732 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !38728)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !38729
+  store ptr %i.gp, ptr %i.f, align 8, !noalias !38729
+  store i64 %.val1.i21.i39.i.i.i.i, ptr %i.fy, align 8, !noalias !38729
+  store i64 %.val1.i21.i39.i.i.i.i, ptr %i.ga, align 8, !noalias !38729
+  store i64 %i.gw, ptr %i.fz, align 8, !noalias !38729
+  %i.he = call { i64, ptr } @_RNvXs4_NtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_streamNtB5_21AutoProxyClientStreamNtNtNtCsczhfDQ1qNkX_5tokio2io10async_read9AsyncRead9poll_read(ptr noalias nofree noundef nonnull align 16 dereferenceable(3520) %i.bh, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.f) #52, !noalias !38730 ; 2 uses
   %i.hf = extractvalue { i64, ptr } %i.he, 0
   %i.hg = trunc nuw i64 %i.hf to i1               ; 2 uses
   %i.hh = extractvalue { i64, ptr } %i.he, 1      ; 2 uses
@@ -1431,25 +1423,25 @@ bb.bd:                                            ; preds = %bb.bb
   br i1 %or.cond.not.i.i.i53.i.i.i.i, label %_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i.i.i, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
-  %i.hi = load i64, ptr %i.fy, align 8, !noalias !38731, !noundef !145 ; 2 uses
-  %i.hj = load i64, ptr %i.fz, align 8, !noalias !38731, !noundef !145 ; 5 uses
+  %i.hi = load i64, ptr %i.fy, align 8, !noalias !38729, !noundef !145 ; 2 uses
+  %i.hj = load i64, ptr %i.fz, align 8, !noalias !38729, !noundef !145 ; 5 uses
   %.not7.i.i.i54.i.i.i.i = icmp ugt i64 %i.hj, %i.hi
   br i1 %.not7.i.i.i54.i.i.i.i, label %bb.bf, label %.thread.i.i55.i.i.i.i, !prof !172
 
 .thread.i.i55.i.i.i.i:                            ; preds = %bb.be
   %i.hk = icmp eq i64 %i.gw, %i.hj
   %i.hl = zext i1 %i.hk to i8                     ; 4 uses
-  store i8 %i.hl, ptr %i.fx, align 8, !alias.scope !38733, !noalias !38706
-  store i64 %i.hj, ptr %i.fw, align 8, !alias.scope !38733, !noalias !38706
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !38731
+  store i8 %i.hl, ptr %i.fx, align 8, !alias.scope !38731, !noalias !38706
+  store i64 %i.hj, ptr %i.fw, align 8, !alias.scope !38731, !noalias !38706
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !38729
   br label %bb.bj
 
 bb.bf:                                            ; preds = %bb.be
-  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.hj, i64 noundef %i.hi, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @119) #62, !noalias !38732
+  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.hj, i64 noundef %i.hi, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @119) #62, !noalias !38730
   unreachable
 
 _RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i.i.i: ; preds = %bb.bd
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !38731
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !38729
   br i1 %i.hg, label %bb.bg, label %bb.bh
 
 bb.bg:                                            ; preds = %_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i.i.i
@@ -1491,14 +1483,18 @@ bb.bl:                                            ; preds = %bb.bk
 .lr.ph.split.i.i61.i.i.i.i:                       ; preds = %.lr.ph.i.i60.i.i.i.i, %bb.bt
   %i.hw = phi i64 [ %i.iy, %bb.bt ], [ %.promoted100127.i.i.i.i.i.i, %.lr.ph.i.i60.i.i.i.i ]
   %i.hx = phi i64 [ %i.ix, %bb.bt ], [ %i.gu, %.lr.ph.i.i60.i.i.i.i ] ; 3 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !38728)
+  call void @llvm.experimental.noalias.scope.decl(metadata !38732)
   %i.hy = sub nuw i64 %i.hc, %i.hx
   %i.hz = getelementptr inbounds nuw i8, ptr %i.gp, i64 %i.hx
-  %i.ia = call { i64, ptr } @_RNvXs2_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcpNtB5_13TcpConnectionNtNtNtCsczhfDQ1qNkX_5tokio2io11async_write10AsyncWrite10poll_write(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.bi, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.hz, i64 noundef %i.hy) #52, !noalias !38734 ; 2 uses
+  %i.ia = call { i64, ptr } @_RNvXs2_NtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcpNtB5_13TcpConnectionNtNtNtCsczhfDQ1qNkX_5tokio2io11async_write10AsyncWrite10poll_write(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.bi, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.hz, i64 noundef %i.hy) #52, !noalias !38733 ; 2 uses
   %i.ib = extractvalue { i64, ptr } %i.ia, 0      ; 2 uses
   %i.ic = extractvalue { i64, ptr } %i.ia, 1      ; 3 uses
   %i.id = icmp eq i64 %i.ib, 2
   br i1 %i.id, label %bb.bm, label %bb.bq
+
+3:                                                ; preds = %.lr.ph.i.i60.i.i.i.i
+  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef %i.gu, i64 noundef %i.hc, i64 noundef %.val1.i21.i39.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @120) #62, !noalias !38734
+  unreachable
 
 bb.bm:                                            ; preds = %.lr.ph.split.i.i61.i.i.i.i
   %i.ie = trunc nuw i8 %i.ha to i1
@@ -1902,21 +1898,16 @@ bb.t:                                             ; preds = %bb.aa, %bb.x, %bb.s
 
 .lr.ph.i.i.i.i.i.i:                               ; preds = %bb.t
   %.not.i41.i.i.i.i.i.i = icmp ugt i64 %i.cz, %.val1.i21.i.i.i.i.i
-  br i1 %.not.i41.i.i.i.i.i.i, label %.lr.ph.split.us.i.i.i.i.i.i, label %.lr.ph.split.i.i.i.i.i.i, !prof !172
-
-.lr.ph.split.us.i.i.i.i.i.i:                      ; preds = %.lr.ph.i.i.i.i.i.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !38874)
-  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef %i.cr, i64 noundef %i.cz, i64 noundef %.val1.i21.i.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @120) #62, !noalias !38875
-  unreachable
+  br i1 %.not.i41.i.i.i.i.i.i, label %2, label %.lr.ph.split.i.i.i.i.i.i, !prof !172
 
 bb.u:                                             ; preds = %bb.s
-  call void @llvm.experimental.noalias.scope.decl(metadata !38876)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !38877
-  store ptr %i.cm, ptr %i.j, align 8, !noalias !38877
-  store i64 %.val1.i21.i.i.i.i.i, ptr %i.bv, align 8, !noalias !38877
-  store i64 %.val1.i21.i.i.i.i.i, ptr %i.bx, align 8, !noalias !38877
-  store i64 %i.ct, ptr %i.bw, align 8, !noalias !38877
-  %i.db = call { i64, ptr } @_RNvXs0_NtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6streamNtB5_9TcpStreamNtNtNtBb_2io10async_read9AsyncRead9poll_read(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.bi, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.j) #52, !noalias !38878 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !38874)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !38875
+  store ptr %i.cm, ptr %i.j, align 8, !noalias !38875
+  store i64 %.val1.i21.i.i.i.i.i, ptr %i.bv, align 8, !noalias !38875
+  store i64 %.val1.i21.i.i.i.i.i, ptr %i.bx, align 8, !noalias !38875
+  store i64 %i.ct, ptr %i.bw, align 8, !noalias !38875
+  %i.db = call { i64, ptr } @_RNvXs0_NtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6streamNtB5_9TcpStreamNtNtNtBb_2io10async_read9AsyncRead9poll_read(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.bi, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.j) #52, !noalias !38876 ; 2 uses
   %i.dc = extractvalue { i64, ptr } %i.db, 0
   %i.dd = trunc nuw i64 %i.dc to i1               ; 2 uses
   %i.de = extractvalue { i64, ptr } %i.db, 1      ; 2 uses
@@ -1925,25 +1916,25 @@ bb.u:                                             ; preds = %bb.s
   br i1 %or.cond.not.i.i.i.i.i.i.i, label %_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i.i.i, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.df = load i64, ptr %i.bv, align 8, !noalias !38877, !noundef !145 ; 2 uses
-  %i.dg = load i64, ptr %i.bw, align 8, !noalias !38877, !noundef !145 ; 5 uses
+  %i.df = load i64, ptr %i.bv, align 8, !noalias !38875, !noundef !145 ; 2 uses
+  %i.dg = load i64, ptr %i.bw, align 8, !noalias !38875, !noundef !145 ; 5 uses
   %.not7.i.i.i.i.i.i.i = icmp ugt i64 %i.dg, %i.df
   br i1 %.not7.i.i.i.i.i.i.i, label %bb.w, label %.thread.i.i.i.i.i.i, !prof !172
 
 .thread.i.i.i.i.i.i:                              ; preds = %bb.v
   %i.dh = icmp eq i64 %i.ct, %i.dg
   %i.di = zext i1 %i.dh to i8                     ; 4 uses
-  store i8 %i.di, ptr %i.bu, align 8, !alias.scope !38879, !noalias !38873
-  store i64 %i.dg, ptr %i.bt, align 8, !alias.scope !38879, !noalias !38873
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !38877
+  store i8 %i.di, ptr %i.bu, align 8, !alias.scope !38877, !noalias !38873
+  store i64 %i.dg, ptr %i.bt, align 8, !alias.scope !38877, !noalias !38873
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !38875
   br label %bb.aa
 
 bb.w:                                             ; preds = %bb.v
-  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.dg, i64 noundef %i.df, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @119) #62, !noalias !38878
+  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.dg, i64 noundef %i.df, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @119) #62, !noalias !38876
   unreachable
 
 _RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i.i.i: ; preds = %bb.u
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !38877
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !38875
   br i1 %i.dd, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i.i.i
@@ -1996,14 +1987,18 @@ bb.ae:                                            ; preds = %bb.ad
 .lr.ph.split.i.i.i.i.i.i:                         ; preds = %.lr.ph.i.i.i.i.i.i, %bb.ao
   %i.dx = phi i64 [ %i.fd, %bb.ao ], [ %.promoted102129.i.i.i.i.i.i, %.lr.ph.i.i.i.i.i.i ]
   %i.dy = phi i64 [ %i.fc, %bb.ao ], [ %i.cr, %.lr.ph.i.i.i.i.i.i ] ; 3 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !38874)
+  call void @llvm.experimental.noalias.scope.decl(metadata !38878)
   %i.dz = sub nuw i64 %i.cz, %i.dy
   %i.ea = getelementptr inbounds nuw i8, ptr %i.cm, i64 %i.dy
-  %i.eb = call { i64, ptr } @_RNvXs5_NtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_streamNtB5_21AutoProxyClientStreamNtNtNtCsczhfDQ1qNkX_5tokio2io11async_write10AsyncWrite10poll_write(ptr noalias nofree noundef nonnull align 16 dereferenceable(3520) %i.bh, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ea, i64 noundef %i.dz) #52, !noalias !38880 ; 2 uses
+  %i.eb = call { i64, ptr } @_RNvXs5_NtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_streamNtB5_21AutoProxyClientStreamNtNtNtCsczhfDQ1qNkX_5tokio2io11async_write10AsyncWrite10poll_write(ptr noalias nofree noundef nonnull align 16 dereferenceable(3520) %i.bh, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.ea, i64 noundef %i.dz) #52, !noalias !38879 ; 2 uses
   %i.ec = extractvalue { i64, ptr } %i.eb, 0      ; 2 uses
   %i.ed = extractvalue { i64, ptr } %i.eb, 1      ; 3 uses
   %i.ee = icmp eq i64 %i.ec, 2
   br i1 %i.ee, label %bb.af, label %bb.al
+
+2:                                                ; preds = %.lr.ph.i.i.i.i.i.i
+  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef %i.cr, i64 noundef %i.cz, i64 noundef %.val1.i21.i.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @120) #62, !noalias !38880
+  unreachable
 
 bb.af:                                            ; preds = %.lr.ph.split.i.i.i.i.i.i
   %i.ef = trunc nuw i8 %i.cx to i1
@@ -2277,21 +2272,16 @@ bb.bc:                                            ; preds = %bb.bj, %bb.bg, %bb.
 
 .lr.ph.i.i60.i.i.i.i:                             ; preds = %bb.bc
   %.not.i39.i.i.i.i.i.i = icmp ugt i64 %i.hc, %.val1.i21.i39.i.i.i.i
-  br i1 %.not.i39.i.i.i.i.i.i, label %.lr.ph.split.us.i.i68.i.i.i.i, label %.lr.ph.split.i.i61.i.i.i.i, !prof !172
-
-.lr.ph.split.us.i.i68.i.i.i.i:                    ; preds = %.lr.ph.i.i60.i.i.i.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !38895)
-  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef %i.gu, i64 noundef %i.hc, i64 noundef %.val1.i21.i39.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @120) #62, !noalias !38896
-  unreachable
+  br i1 %.not.i39.i.i.i.i.i.i, label %3, label %.lr.ph.split.i.i61.i.i.i.i, !prof !172
 
 bb.bd:                                            ; preds = %bb.bb
-  call void @llvm.experimental.noalias.scope.decl(metadata !38897)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !38898
-  store ptr %i.gp, ptr %i.f, align 8, !noalias !38898
-  store i64 %.val1.i21.i39.i.i.i.i, ptr %i.fy, align 8, !noalias !38898
-  store i64 %.val1.i21.i39.i.i.i.i, ptr %i.ga, align 8, !noalias !38898
-  store i64 %i.gw, ptr %i.fz, align 8, !noalias !38898
-  %i.he = call { i64, ptr } @_RNvXs4_NtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_streamNtB5_21AutoProxyClientStreamNtNtNtCsczhfDQ1qNkX_5tokio2io10async_read9AsyncRead9poll_read(ptr noalias nofree noundef nonnull align 16 dereferenceable(3520) %i.bh, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.f) #52, !noalias !38899 ; 2 uses
+  call void @llvm.experimental.noalias.scope.decl(metadata !38895)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !38896
+  store ptr %i.gp, ptr %i.f, align 8, !noalias !38896
+  store i64 %.val1.i21.i39.i.i.i.i, ptr %i.fy, align 8, !noalias !38896
+  store i64 %.val1.i21.i39.i.i.i.i, ptr %i.ga, align 8, !noalias !38896
+  store i64 %i.gw, ptr %i.fz, align 8, !noalias !38896
+  %i.he = call { i64, ptr } @_RNvXs4_NtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_streamNtB5_21AutoProxyClientStreamNtNtNtCsczhfDQ1qNkX_5tokio2io10async_read9AsyncRead9poll_read(ptr noalias nofree noundef nonnull align 16 dereferenceable(3520) %i.bh, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.f) #52, !noalias !38897 ; 2 uses
   %i.hf = extractvalue { i64, ptr } %i.he, 0
   %i.hg = trunc nuw i64 %i.hf to i1               ; 2 uses
   %i.hh = extractvalue { i64, ptr } %i.he, 1      ; 2 uses
@@ -2300,25 +2290,25 @@ bb.bd:                                            ; preds = %bb.bb
   br i1 %or.cond.not.i.i.i53.i.i.i.i, label %_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i.i.i, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
-  %i.hi = load i64, ptr %i.fy, align 8, !noalias !38898, !noundef !145 ; 2 uses
-  %i.hj = load i64, ptr %i.fz, align 8, !noalias !38898, !noundef !145 ; 5 uses
+  %i.hi = load i64, ptr %i.fy, align 8, !noalias !38896, !noundef !145 ; 2 uses
+  %i.hj = load i64, ptr %i.fz, align 8, !noalias !38896, !noundef !145 ; 5 uses
   %.not7.i.i.i54.i.i.i.i = icmp ugt i64 %i.hj, %i.hi
   br i1 %.not7.i.i.i54.i.i.i.i, label %bb.bf, label %.thread.i.i55.i.i.i.i, !prof !172
 
 .thread.i.i55.i.i.i.i:                            ; preds = %bb.be
   %i.hk = icmp eq i64 %i.gw, %i.hj
   %i.hl = zext i1 %i.hk to i8                     ; 4 uses
-  store i8 %i.hl, ptr %i.fx, align 8, !alias.scope !38900, !noalias !38873
-  store i64 %i.hj, ptr %i.fw, align 8, !alias.scope !38900, !noalias !38873
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !38898
+  store i8 %i.hl, ptr %i.fx, align 8, !alias.scope !38898, !noalias !38873
+  store i64 %i.hj, ptr %i.fw, align 8, !alias.scope !38898, !noalias !38873
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !38896
   br label %bb.bj
 
 bb.bf:                                            ; preds = %bb.be
-  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.hj, i64 noundef %i.hi, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @119) #62, !noalias !38899
+  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.hj, i64 noundef %i.hi, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @119) #62, !noalias !38897
   unreachable
 
 _RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i.i.i: ; preds = %bb.bd
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !38898
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !38896
   br i1 %i.hg, label %bb.bg, label %bb.bh
 
 bb.bg:                                            ; preds = %_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal.exit.i.i.i.i.i.i
@@ -2360,14 +2350,18 @@ bb.bl:                                            ; preds = %bb.bk
 .lr.ph.split.i.i61.i.i.i.i:                       ; preds = %.lr.ph.i.i60.i.i.i.i, %bb.bt
   %i.hw = phi i64 [ %i.iy, %bb.bt ], [ %.promoted100127.i.i.i.i.i.i, %.lr.ph.i.i60.i.i.i.i ]
   %i.hx = phi i64 [ %i.ix, %bb.bt ], [ %i.gu, %.lr.ph.i.i60.i.i.i.i ] ; 3 uses
-  call void @llvm.experimental.noalias.scope.decl(metadata !38895)
+  call void @llvm.experimental.noalias.scope.decl(metadata !38899)
   %i.hy = sub nuw i64 %i.hc, %i.hx
   %i.hz = getelementptr inbounds nuw i8, ptr %i.gp, i64 %i.hx
-  %i.ia = call { i64, ptr } @_RNvXs1_NtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6streamNtB5_9TcpStreamNtNtNtBb_2io11async_write10AsyncWrite10poll_write(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.bi, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.hz, i64 noundef %i.hy) #52, !noalias !38901 ; 2 uses
+  %i.ia = call { i64, ptr } @_RNvXs1_NtNtNtCsczhfDQ1qNkX_5tokio3net3tcp6streamNtB5_9TcpStreamNtNtNtBb_2io11async_write10AsyncWrite10poll_write(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.bi, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.hz, i64 noundef %i.hy) #52, !noalias !38900 ; 2 uses
   %i.ib = extractvalue { i64, ptr } %i.ia, 0      ; 2 uses
   %i.ic = extractvalue { i64, ptr } %i.ia, 1      ; 3 uses
   %i.id = icmp eq i64 %i.ib, 2
   br i1 %i.id, label %bb.bm, label %bb.bq
+
+3:                                                ; preds = %.lr.ph.i.i60.i.i.i.i
+  call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef %i.gu, i64 noundef %i.hc, i64 noundef %.val1.i21.i39.i.i.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @120) #62, !noalias !38901
+  unreachable
 
 bb.bm:                                            ; preds = %.lr.ph.split.i.i61.i.i.i.i
   %i.ie = trunc nuw i8 %i.ha to i1
@@ -2771,8 +2765,8 @@ begin_hunk_3_@llvm.ucmp.i32.i32
 !38455 = distinct !{!38455, !38448, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer9poll_copyINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedENtNtNtNtB1e_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 1"}
 !38456 = distinct !{!38456, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedENtNtNtNtB1k_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal"}
 !38457 = distinct !{!38457, !38456, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedENtNtNtNtB1k_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 0"}
-!38458 = distinct !{!38458, !38456, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedENtNtNtNtB1k_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 3"}
-!38459 = distinct !{!38459, !38456, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedENtNtNtNtB1k_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
+!38458 = distinct !{!38458, !38456, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedENtNtNtNtB1k_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
+!38459 = distinct !{!38459, !38456, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedENtNtNtNtB1k_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 3"}
 !38460 = distinct !{!38460, !38456, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufINtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedENtNtNtNtB1k_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 1"}
 !38461 = distinct !{!38461, i1 true, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtNtCsczhfDQ1qNkX_5tokio2io4util18copy_bidirectional13TransferStateECs7XnEB7DeNXr_7sslocal"}
 !38462 = distinct !{!38462, !38461, !"_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtNtNtCsczhfDQ1qNkX_5tokio2io4util18copy_bidirectional13TransferStateECs7XnEB7DeNXr_7sslocal: argument 0"}
@@ -2796,15 +2790,15 @@ begin_hunk_3_@llvm.ucmp.i32.i32
 !38480 = distinct !{!38480, !38475, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer9poll_copyNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamINtNtNtB1f_4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEECs7XnEB7DeNXr_7sslocal: argument 3"}
 !38481 = distinct !{!38481, !38475, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer9poll_copyNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamINtNtNtB1f_4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEECs7XnEB7DeNXr_7sslocal: argument 2"}
 !38482 = distinct !{!38482, !38475, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer9poll_copyNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamINtNtNtB1f_4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEECs7XnEB7DeNXr_7sslocal: argument 1"}
-!38483 = distinct !{!38483, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamINtNtNtB1l_4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEECs7XnEB7DeNXr_7sslocal"}
-!38484 = distinct !{!38484, !38483, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamINtNtNtB1l_4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEECs7XnEB7DeNXr_7sslocal: argument 0"}
-!38485 = distinct !{!38485, !38483, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamINtNtNtB1l_4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEECs7XnEB7DeNXr_7sslocal: argument 3"}
-!38486 = distinct !{!38486, !38483, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamINtNtNtB1l_4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEECs7XnEB7DeNXr_7sslocal: argument 2"}
-!38487 = distinct !{!38487, !38483, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamINtNtNtB1l_4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEECs7XnEB7DeNXr_7sslocal: argument 1"}
-!38488 = distinct !{!38488, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal"}
-!38489 = distinct !{!38489, !38488, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 0"}
-!38490 = distinct !{!38490, !38488, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
-!38491 = distinct !{!38491, !38488, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 1"}
+!38483 = distinct !{!38483, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal"}
+!38484 = distinct !{!38484, !38483, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 0"}
+!38485 = distinct !{!38485, !38483, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
+!38486 = distinct !{!38486, !38483, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 1"}
+!38487 = distinct !{!38487, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamINtNtNtB1l_4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEECs7XnEB7DeNXr_7sslocal"}
+!38488 = distinct !{!38488, !38487, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamINtNtNtB1l_4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEECs7XnEB7DeNXr_7sslocal: argument 0"}
+!38489 = distinct !{!38489, !38487, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamINtNtNtB1l_4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEECs7XnEB7DeNXr_7sslocal: argument 2"}
+!38490 = distinct !{!38490, !38487, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamINtNtNtB1l_4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEECs7XnEB7DeNXr_7sslocal: argument 3"}
+!38491 = distinct !{!38491, !38487, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamINtNtNtB1l_4http8tokio_rt7TokioIoNtNtCsaI3lGUjttVO_5hyper7upgrade8UpgradedEECs7XnEB7DeNXr_7sslocal: argument 1"}
 !38492 = distinct !{!38492, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal"}
 !38493 = distinct !{!38493, !38492, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 0"}
 !38494 = distinct !{!38494, !38492, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
@@ -2857,10 +2851,10 @@ begin_hunk_3_@llvm.ucmp.i32.i32
 !38541 = !{!38449, !38443}
 !38542 = !{!38447, !38441, !38445, !38439, !38437, !38434}
 !38543 = !{!38457, !38449, !38443}
-!38544 = !{!38457}
-!38545 = !{!38457, !38460, !38459, !38458, !38449, !38443, !38447, !38441, !38445, !38439, !38437, !38434}
-!38546 = !{!38449, !38443, !38447, !38441, !38445, !38439, !38437, !38434}
-!38547 = !{!38457, !38459, !38449, !38443, !38447, !38441, !38445, !38439, !38437, !38434}
+!38544 = !{!38449, !38443, !38447, !38441, !38445, !38439, !38437, !38434}
+!38545 = !{!38457}
+!38546 = !{!38457, !38458, !38449, !38443, !38447, !38441, !38445, !38439, !38437, !38434}
+!38547 = !{!38457, !38460, !38458, !38459, !38449, !38443, !38447, !38441, !38445, !38439, !38437, !38434}
 !38548 = !{!38443, !38447, !38441, !38445, !38439, !38437, !38434}
 !38549 = !{!38462}
 !38550 = !{!38462, !38443}
@@ -2876,16 +2870,16 @@ begin_hunk_3_@llvm.ucmp.i32.i32
 !38560 = !{!38476, !38474, !38447, !38441, !38445, !38439, !38437, !38434}
 !38561 = !{!38476, !38474}
 !38562 = !{!38484}
-!38563 = !{!38484, !38487, !38486, !38485, !38476, !38474, !38447, !38441, !38445, !38439, !38437, !38434}
-!38564 = !{!38489}
-!38565 = !{!38489, !38491, !38490, !38476, !38482, !38481, !38480, !38479, !38474, !38478, !38477, !38447, !38441, !38446, !38445, !38439, !38444, !38437, !38436, !38434, !38433}
-!38566 = !{!38489, !38476, !38474, !38447, !38441, !38445, !38439, !38437, !38434}
-!38567 = !{!38489, !38476, !38474}
-!38568 = !{!38484, !38486, !38476, !38474, !38447, !38441, !38445, !38439, !38437, !38434}
+!38563 = !{!38484, !38486, !38485, !38476, !38482, !38481, !38480, !38479, !38474, !38478, !38477, !38447, !38441, !38446, !38445, !38439, !38444, !38437, !38436, !38434, !38433}
+!38564 = !{!38484, !38476, !38474, !38447, !38441, !38445, !38439, !38437, !38434}
+!38565 = !{!38484, !38476, !38474}
+!38566 = !{!38488}
+!38567 = !{!38488, !38489, !38476, !38474, !38447, !38441, !38445, !38439, !38437, !38434}
+!38568 = !{!38488, !38491, !38489, !38490, !38476, !38474, !38447, !38441, !38445, !38439, !38437, !38434}
 !38569 = !{!38493}
-!38570 = !{!38493, !38495, !38494, !38484, !38487, !38486, !38485, !38476, !38482, !38481, !38480, !38479, !38474, !38478, !38477, !38447, !38441, !38446, !38445, !38439, !38444, !38437, !38436, !38434, !38433}
-!38571 = !{!38493, !38484, !38476, !38474, !38447, !38441, !38445, !38439, !38437, !38434}
-!38572 = !{!38493, !38484, !38476, !38474}
+!38570 = !{!38493, !38495, !38494, !38488, !38491, !38489, !38490, !38476, !38482, !38481, !38480, !38479, !38474, !38478, !38477, !38447, !38441, !38446, !38445, !38439, !38444, !38437, !38436, !38434, !38433}
+!38571 = !{!38493, !38488, !38476, !38474, !38447, !38441, !38445, !38439, !38437, !38434}
+!38572 = !{!38493, !38488, !38476, !38474}
 !38573 = !{!38474, !38447, !38441, !38445, !38439, !38437, !38434}
 !38574 = !{!38499, !38497, !38474, !38447, !38441, !38445, !38439, !38437, !38434}
 !38575 = !{!38501}
@@ -2930,15 +2924,15 @@ begin_hunk_3_@llvm.ucmp.i32.i32
 !38614 = distinct !{!38614, !38609, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer9poll_copyNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionNtNtNtNtB1d_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 3"}
 !38615 = distinct !{!38615, !38609, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer9poll_copyNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionNtNtNtNtB1d_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
 !38616 = distinct !{!38616, !38609, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer9poll_copyNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionNtNtNtNtB1d_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 1"}
-!38617 = distinct !{!38617, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionNtNtNtNtB1j_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal"}
-!38618 = distinct !{!38618, !38617, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionNtNtNtNtB1j_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 0"}
-!38619 = distinct !{!38619, !38617, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionNtNtNtNtB1j_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 3"}
-!38620 = distinct !{!38620, !38617, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionNtNtNtNtB1j_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
-!38621 = distinct !{!38621, !38617, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionNtNtNtNtB1j_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 1"}
-!38622 = distinct !{!38622, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal"}
-!38623 = distinct !{!38623, !38622, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal: argument 0"}
-!38624 = distinct !{!38624, !38622, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal: argument 2"}
-!38625 = distinct !{!38625, !38622, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal: argument 1"}
+!38617 = distinct !{!38617, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal"}
+!38618 = distinct !{!38618, !38617, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal: argument 0"}
+!38619 = distinct !{!38619, !38617, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal: argument 2"}
+!38620 = distinct !{!38620, !38617, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal: argument 1"}
+!38621 = distinct !{!38621, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionNtNtNtNtB1j_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal"}
+!38622 = distinct !{!38622, !38621, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionNtNtNtNtB1j_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 0"}
+!38623 = distinct !{!38623, !38621, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionNtNtNtNtB1j_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
+!38624 = distinct !{!38624, !38621, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionNtNtNtNtB1j_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 3"}
+!38625 = distinct !{!38625, !38621, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionNtNtNtNtB1j_3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 1"}
 !38626 = distinct !{!38626, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal"}
 !38627 = distinct !{!38627, !38626, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal: argument 0"}
 !38628 = distinct !{!38628, !38626, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal: argument 2"}
@@ -2961,15 +2955,15 @@ begin_hunk_3_@llvm.ucmp.i32.i32
 !38645 = distinct !{!38645, !38640, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer9poll_copyNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtB1f_3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal: argument 3"}
 !38646 = distinct !{!38646, !38640, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer9poll_copyNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtB1f_3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal: argument 2"}
 !38647 = distinct !{!38647, !38640, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer9poll_copyNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtB1f_3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal: argument 1"}
-!38648 = distinct !{!38648, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtB1l_3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal"}
-!38649 = distinct !{!38649, !38648, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtB1l_3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal: argument 0"}
-!38650 = distinct !{!38650, !38648, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtB1l_3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal: argument 3"}
-!38651 = distinct !{!38651, !38648, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtB1l_3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal: argument 2"}
-!38652 = distinct !{!38652, !38648, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtB1l_3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal: argument 1"}
-!38653 = distinct !{!38653, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal"}
-!38654 = distinct !{!38654, !38653, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 0"}
-!38655 = distinct !{!38655, !38653, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
-!38656 = distinct !{!38656, !38653, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 1"}
+!38648 = distinct !{!38648, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal"}
+!38649 = distinct !{!38649, !38648, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 0"}
+!38650 = distinct !{!38650, !38648, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
+!38651 = distinct !{!38651, !38648, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 1"}
+!38652 = distinct !{!38652, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtB1l_3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal"}
+!38653 = distinct !{!38653, !38652, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtB1l_3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal: argument 0"}
+!38654 = distinct !{!38654, !38652, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtB1l_3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal: argument 2"}
+!38655 = distinct !{!38655, !38652, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtB1l_3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal: argument 3"}
+!38656 = distinct !{!38656, !38652, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtB1l_3tun3tcp13TcpConnectionECs7XnEB7DeNXr_7sslocal: argument 1"}
 !38657 = distinct !{!38657, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal"}
 !38658 = distinct !{!38658, !38657, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 0"}
 !38659 = distinct !{!38659, !38657, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
@@ -3021,16 +3015,16 @@ begin_hunk_3_@llvm.ucmp.i32.i32
 !38705 = !{!38610, !38604}
 !38706 = !{!38608, !38602, !38606, !38600, !38598, !38595}
 !38707 = !{!38618}
-!38708 = !{!38618, !38621, !38620, !38619, !38610, !38604, !38608, !38602, !38606, !38600, !38598, !38595}
-!38709 = !{!38623}
-!38710 = !{!38623, !38625, !38624, !38610, !38616, !38615, !38614, !38613, !38604, !38612, !38611, !38608, !38602, !38607, !38606, !38600, !38605, !38598, !38597, !38595, !38594}
-!38711 = !{!38623, !38610, !38604, !38608, !38602, !38606, !38600, !38598, !38595}
-!38712 = !{!38623, !38610, !38604}
-!38713 = !{!38618, !38620, !38610, !38604, !38608, !38602, !38606, !38600, !38598, !38595}
+!38708 = !{!38618, !38620, !38619, !38610, !38616, !38615, !38614, !38613, !38604, !38612, !38611, !38608, !38602, !38607, !38606, !38600, !38605, !38598, !38597, !38595, !38594}
+!38709 = !{!38618, !38610, !38604, !38608, !38602, !38606, !38600, !38598, !38595}
+!38710 = !{!38618, !38610, !38604}
+!38711 = !{!38622}
+!38712 = !{!38622, !38623, !38610, !38604, !38608, !38602, !38606, !38600, !38598, !38595}
+!38713 = !{!38622, !38625, !38623, !38624, !38610, !38604, !38608, !38602, !38606, !38600, !38598, !38595}
 !38714 = !{!38627}
-!38715 = !{!38627, !38629, !38628, !38618, !38621, !38620, !38619, !38610, !38616, !38615, !38614, !38613, !38604, !38612, !38611, !38608, !38602, !38607, !38606, !38600, !38605, !38598, !38597, !38595, !38594}
-!38716 = !{!38627, !38618, !38610, !38604, !38608, !38602, !38606, !38600, !38598, !38595}
-!38717 = !{!38627, !38618, !38610, !38604}
+!38715 = !{!38627, !38629, !38628, !38622, !38625, !38623, !38624, !38610, !38616, !38615, !38614, !38613, !38604, !38612, !38611, !38608, !38602, !38607, !38606, !38600, !38605, !38598, !38597, !38595, !38594}
+!38716 = !{!38627, !38622, !38610, !38604, !38608, !38602, !38606, !38600, !38598, !38595}
+!38717 = !{!38627, !38622, !38610, !38604}
 !38718 = !{!38604, !38608, !38602, !38606, !38600, !38598, !38595}
 !38719 = !{!38633, !38631, !38604, !38608, !38602, !38606, !38600, !38598, !38595}
 !38720 = !{!38635}
@@ -3042,16 +3036,16 @@ begin_hunk_3_@llvm.ucmp.i32.i32
 !38726 = !{!38641, !38646, !38645, !38639, !38608, !38602, !38606, !38600, !38598, !38595}
 !38727 = !{!38641, !38639}
 !38728 = !{!38649}
-!38729 = !{!38649, !38652, !38651, !38650, !38641, !38639, !38608, !38602, !38606, !38600, !38598, !38595}
-!38730 = !{!38654}
-!38731 = !{!38654, !38656, !38655, !38641, !38647, !38646, !38645, !38644, !38639, !38643, !38642, !38608, !38602, !38607, !38606, !38600, !38605, !38598, !38597, !38595, !38594}
-!38732 = !{!38654, !38641, !38639, !38608, !38602, !38606, !38600, !38598, !38595}
-!38733 = !{!38654, !38641, !38639}
-!38734 = !{!38649, !38651, !38641, !38639, !38608, !38602, !38606, !38600, !38598, !38595}
+!38729 = !{!38649, !38651, !38650, !38641, !38647, !38646, !38645, !38644, !38639, !38643, !38642, !38608, !38602, !38607, !38606, !38600, !38605, !38598, !38597, !38595, !38594}
+!38730 = !{!38649, !38641, !38639, !38608, !38602, !38606, !38600, !38598, !38595}
+!38731 = !{!38649, !38641, !38639}
+!38732 = !{!38653}
+!38733 = !{!38653, !38654, !38641, !38639, !38608, !38602, !38606, !38600, !38598, !38595}
+!38734 = !{!38653, !38656, !38654, !38655, !38641, !38639, !38608, !38602, !38606, !38600, !38598, !38595}
 !38735 = !{!38658}
-!38736 = !{!38658, !38660, !38659, !38649, !38652, !38651, !38650, !38641, !38647, !38646, !38645, !38644, !38639, !38643, !38642, !38608, !38602, !38607, !38606, !38600, !38605, !38598, !38597, !38595, !38594}
-!38737 = !{!38658, !38649, !38641, !38639, !38608, !38602, !38606, !38600, !38598, !38595}
-!38738 = !{!38658, !38649, !38641, !38639}
+!38736 = !{!38658, !38660, !38659, !38653, !38656, !38654, !38655, !38641, !38647, !38646, !38645, !38644, !38639, !38643, !38642, !38608, !38602, !38607, !38606, !38600, !38605, !38598, !38597, !38595, !38594}
+!38737 = !{!38658, !38653, !38641, !38639, !38608, !38602, !38606, !38600, !38598, !38595}
+!38738 = !{!38658, !38653, !38641, !38639}
 !38739 = !{!38641, !38639, !38608, !38602, !38606, !38600, !38598, !38595}
 !38740 = !{!38639, !38608, !38602, !38606, !38600, !38598, !38595}
 !38741 = !{!38664, !38662, !38639, !38608, !38602, !38606, !38600, !38598, !38595}
@@ -3097,15 +3091,15 @@ begin_hunk_3_@llvm.ucmp.i32.i32
 !38781 = distinct !{!38781, !38776, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer9poll_copyNtNtNtNtB9_3net3tcp6stream9TcpStreamNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 3"}
 !38782 = distinct !{!38782, !38776, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer9poll_copyNtNtNtNtB9_3net3tcp6stream9TcpStreamNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
 !38783 = distinct !{!38783, !38776, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer9poll_copyNtNtNtNtB9_3net3tcp6stream9TcpStreamNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 1"}
-!38784 = distinct !{!38784, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal"}
-!38785 = distinct !{!38785, !38784, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 0"}
-!38786 = distinct !{!38786, !38784, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 3"}
-!38787 = distinct !{!38787, !38784, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
-!38788 = distinct !{!38788, !38784, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 1"}
-!38789 = distinct !{!38789, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal"}
-!38790 = distinct !{!38790, !38789, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal: argument 0"}
-!38791 = distinct !{!38791, !38789, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
-!38792 = distinct !{!38792, !38789, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal: argument 1"}
+!38784 = distinct !{!38784, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal"}
+!38785 = distinct !{!38785, !38784, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal: argument 0"}
+!38786 = distinct !{!38786, !38784, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
+!38787 = distinct !{!38787, !38784, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal: argument 1"}
+!38788 = distinct !{!38788, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal"}
+!38789 = distinct !{!38789, !38788, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 0"}
+!38790 = distinct !{!38790, !38788, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
+!38791 = distinct !{!38791, !38788, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 3"}
+!38792 = distinct !{!38792, !38788, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 1"}
 !38793 = distinct !{!38793, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal"}
 !38794 = distinct !{!38794, !38793, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal: argument 0"}
 !38795 = distinct !{!38795, !38793, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
@@ -3128,15 +3122,15 @@ begin_hunk_3_@llvm.ucmp.i32.i32
 !38812 = distinct !{!38812, !38807, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer9poll_copyNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal: argument 3"}
 !38813 = distinct !{!38813, !38807, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer9poll_copyNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
 !38814 = distinct !{!38814, !38807, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer9poll_copyNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal: argument 1"}
-!38815 = distinct !{!38815, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal"}
-!38816 = distinct !{!38816, !38815, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal: argument 0"}
-!38817 = distinct !{!38817, !38815, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal: argument 3"}
-!38818 = distinct !{!38818, !38815, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
-!38819 = distinct !{!38819, !38815, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal: argument 1"}
-!38820 = distinct !{!38820, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal"}
-!38821 = distinct !{!38821, !38820, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 0"}
-!38822 = distinct !{!38822, !38820, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
-!38823 = distinct !{!38823, !38820, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 1"}
+!38815 = distinct !{!38815, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal"}
+!38816 = distinct !{!38816, !38815, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 0"}
+!38817 = distinct !{!38817, !38815, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
+!38818 = distinct !{!38818, !38815, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 1"}
+!38819 = distinct !{!38819, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal"}
+!38820 = distinct !{!38820, !38819, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal: argument 0"}
+!38821 = distinct !{!38821, !38819, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
+!38822 = distinct !{!38822, !38819, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal: argument 3"}
+!38823 = distinct !{!38823, !38819, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer14poll_write_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamNtNtNtNtB9_3net3tcp6stream9TcpStreamECs7XnEB7DeNXr_7sslocal: argument 1"}
 !38824 = distinct !{!38824, i1 true, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal"}
 !38825 = distinct !{!38825, !38824, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 0"}
 !38826 = distinct !{!38826, !38824, !"_RINvMNtNtNtCsczhfDQ1qNkX_5tokio2io4util4copyNtB3_10CopyBuffer13poll_fill_bufNtNtNtNtNtCs8UFHSMUhzWe_19shadowsocks_service5local3net3tcp17auto_proxy_stream21AutoProxyClientStreamECs7XnEB7DeNXr_7sslocal: argument 2"}
@@ -3188,16 +3182,16 @@ begin_hunk_3_@llvm.ucmp.i32.i32
 !38872 = !{!38777, !38771}
 !38873 = !{!38775, !38769, !38773, !38767, !38765, !38762}
 !38874 = !{!38785}
-!38875 = !{!38785, !38788, !38787, !38786, !38777, !38771, !38775, !38769, !38773, !38767, !38765, !38762}
-!38876 = !{!38790}
-!38877 = !{!38790, !38792, !38791, !38777, !38783, !38782, !38781, !38780, !38771, !38779, !38778, !38775, !38769, !38774, !38773, !38767, !38772, !38765, !38764, !38762, !38761}
-!38878 = !{!38790, !38777, !38771, !38775, !38769, !38773, !38767, !38765, !38762}
-!38879 = !{!38790, !38777, !38771}
-!38880 = !{!38785, !38787, !38777, !38771, !38775, !38769, !38773, !38767, !38765, !38762}
+!38875 = !{!38785, !38787, !38786, !38777, !38783, !38782, !38781, !38780, !38771, !38779, !38778, !38775, !38769, !38774, !38773, !38767, !38772, !38765, !38764, !38762, !38761}
+!38876 = !{!38785, !38777, !38771, !38775, !38769, !38773, !38767, !38765, !38762}
+!38877 = !{!38785, !38777, !38771}
+!38878 = !{!38789}
+!38879 = !{!38789, !38790, !38777, !38771, !38775, !38769, !38773, !38767, !38765, !38762}
+!38880 = !{!38789, !38792, !38790, !38791, !38777, !38771, !38775, !38769, !38773, !38767, !38765, !38762}
 !38881 = !{!38794}
-!38882 = !{!38794, !38796, !38795, !38785, !38788, !38787, !38786, !38777, !38783, !38782, !38781, !38780, !38771, !38779, !38778, !38775, !38769, !38774, !38773, !38767, !38772, !38765, !38764, !38762, !38761}
-!38883 = !{!38794, !38785, !38777, !38771, !38775, !38769, !38773, !38767, !38765, !38762}
-!38884 = !{!38794, !38785, !38777, !38771}
+!38882 = !{!38794, !38796, !38795, !38789, !38792, !38790, !38791, !38777, !38783, !38782, !38781, !38780, !38771, !38779, !38778, !38775, !38769, !38774, !38773, !38767, !38772, !38765, !38764, !38762, !38761}
+!38883 = !{!38794, !38789, !38777, !38771, !38775, !38769, !38773, !38767, !38765, !38762}
+!38884 = !{!38794, !38789, !38777, !38771}
 !38885 = !{!38771, !38775, !38769, !38773, !38767, !38765, !38762}
 !38886 = !{!38800, !38798, !38771, !38775, !38769, !38773, !38767, !38765, !38762}
 !38887 = !{!38802}
@@ -3209,16 +3203,16 @@ begin_hunk_3_@llvm.ucmp.i32.i32
 !38893 = !{!38808, !38813, !38812, !38806, !38775, !38769, !38773, !38767, !38765, !38762}
 !38894 = !{!38808, !38806}
 !38895 = !{!38816}
-!38896 = !{!38816, !38819, !38818, !38817, !38808, !38806, !38775, !38769, !38773, !38767, !38765, !38762}
-!38897 = !{!38821}
-!38898 = !{!38821, !38823, !38822, !38808, !38814, !38813, !38812, !38811, !38806, !38810, !38809, !38775, !38769, !38774, !38773, !38767, !38772, !38765, !38764, !38762, !38761}
-!38899 = !{!38821, !38808, !38806, !38775, !38769, !38773, !38767, !38765, !38762}
-!38900 = !{!38821, !38808, !38806}
-!38901 = !{!38816, !38818, !38808, !38806, !38775, !38769, !38773, !38767, !38765, !38762}
+!38896 = !{!38816, !38818, !38817, !38808, !38814, !38813, !38812, !38811, !38806, !38810, !38809, !38775, !38769, !38774, !38773, !38767, !38772, !38765, !38764, !38762, !38761}
+!38897 = !{!38816, !38808, !38806, !38775, !38769, !38773, !38767, !38765, !38762}
+!38898 = !{!38816, !38808, !38806}
+!38899 = !{!38820}
+!38900 = !{!38820, !38821, !38808, !38806, !38775, !38769, !38773, !38767, !38765, !38762}
+!38901 = !{!38820, !38823, !38821, !38822, !38808, !38806, !38775, !38769, !38773, !38767, !38765, !38762}
 !38902 = !{!38825}
-!38903 = !{!38825, !38827, !38826, !38816, !38819, !38818, !38817, !38808, !38814, !38813, !38812, !38811, !38806, !38810, !38809, !38775, !38769, !38774, !38773, !38767, !38772, !38765, !38764, !38762, !38761}
-!38904 = !{!38825, !38816, !38808, !38806, !38775, !38769, !38773, !38767, !38765, !38762}
-!38905 = !{!38825, !38816, !38808, !38806}
+!38903 = !{!38825, !38827, !38826, !38820, !38823, !38821, !38822, !38808, !38814, !38813, !38812, !38811, !38806, !38810, !38809, !38775, !38769, !38774, !38773, !38767, !38772, !38765, !38764, !38762, !38761}
+!38904 = !{!38825, !38820, !38808, !38806, !38775, !38769, !38773, !38767, !38765, !38762}
+!38905 = !{!38825, !38820, !38808, !38806}
 !38906 = !{!38808, !38806, !38775, !38769, !38773, !38767, !38765, !38762}
 !38907 = !{!38806, !38775, !38769, !38773, !38767, !38765, !38762}
 !38908 = !{!38831, !38829, !38806, !38775, !38769, !38773, !38767, !38765, !38762}

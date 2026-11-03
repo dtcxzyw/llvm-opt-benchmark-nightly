@@ -205,11 +205,7 @@ _RINvXs2Q_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_7IterMutINtNtCsgIpRO4v45SJ_7ba
   %i.cn = icmp eq i64 %i.cm, 0
   %i.co = load i64, ptr %i.bc, align 8, !alias.scope !297 ; 2 uses
   %i.cp = load ptr, ptr %i.w, align 8, !alias.scope !297, !nonnull !7 ; 2 uses
-  br i1 %i.cn, label %.lr.ph.split.us.i, label %.lr.ph.split.i
-
-.lr.ph.split.us.i:                                ; preds = %.lr.ph.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !300)
-  br label %select.unfold.i.i
+  br i1 %i.cn, label %select.unfold.i.i, label %.lr.ph.split.i
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i, %_RNCNvMsk_NtCsgIpRO4v45SJ_7base_db5inputNtB7_17CrateGraphBuilder6extends_0B9_.exit.i
   %.sroa.0.04.i = phi ptr [ %i.cq, %_RNCNvMsk_NtCsgIpRO4v45SJ_7base_db5inputNtB7_17CrateGraphBuilder6extends_0B9_.exit.i ], [ %i.ch, %.lr.ph.i ] ; 2 uses
@@ -269,7 +265,7 @@ bb.v:                                             ; preds = %._crit_edge.i.i.i.i
   %i.do = add i64 %.sroa.01.0.i.i.i.i.i, %i.dn
   br label %bb.t
 
-select.unfold.i.i:                                ; preds = %._crit_edge.i.i.i.i, %.lr.ph.split.us.i
+select.unfold.i.i:                                ; preds = %.lr.ph.i, %._crit_edge.i.i.i.i
   invoke void @_RNvNtCshzWfHUSfYae_4core6option13expect_failed(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @9, i64 noundef 22, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @10) #33
           to label %.noexc29 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 

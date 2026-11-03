@@ -202,15 +202,11 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.d = load ptr, ptr %i.c, align 8, !alias.scope !559, !nonnull !6
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  br i1 %.not.i.i.i, label %.split.us.i.i, label %.split.preheader.i.i
+  br i1 %.not.i.i.i, label %.loopexit, label %.split.preheader.i.i
 
 .split.preheader.i.i:                             ; preds = %bb.a
   %.promoted.i.i = load ptr, ptr %i.e, align 8, !alias.scope !559
   br label %.split.i.i
-
-.split.us.i.i:                                    ; preds = %bb.a
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !560)
-  br label %.loopexit
 
 .split.i.i:                                       ; preds = %bb.b, %.split.preheader.i.i
   %i.f = phi ptr [ %i.h, %bb.b ], [ %.promoted.i.i, %.split.preheader.i.i ] ; 3 uses
@@ -230,7 +226,7 @@ _RNvXs9_NtNtNtCskKLDkoKarTP_4core4iter8adapters7flattenINtB5_7FlattenINtNtNtCsex
   tail call fastcc void @_RNvXse8_NtCs607s0NAIaWN_7segment5typesNtB6_6FilterNtNtCskKLDkoKarTP_4core5clone5Clone5clone(ptr noalias nofree noundef align 8 captures(none) dereferenceable(104) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(104) %i.i) #25
   br label %bb.c
 
-.loopexit:                                        ; preds = %.split.i.i, %.split.us.i.i
+.loopexit:                                        ; preds = %.split.i.i, %bb.a
   store i64 -2, ptr %0, align 8
   br label %bb.c
 

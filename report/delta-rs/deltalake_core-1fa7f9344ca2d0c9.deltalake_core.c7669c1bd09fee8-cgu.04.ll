@@ -204,13 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %.idx.i.i.i.i = mul nuw nsw i64 %i.p, 24
   %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 %.idx.i.i.i.i ; 2 uses
   %.not.i.i.i.i.i = icmp eq i64 %i.p, 0           ; 2 uses
-  br i1 %.not.i.i.i.i.i, label %.lr.ph.split.us.i, label %.lr.ph.i.i.i.i.i
-
-.lr.ph.split.us.i:                                ; preds = %.lr.ph.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !16261)
-  call void @llvm.experimental.noalias.scope.decl(metadata !16262)
-  call void @llvm.experimental.noalias.scope.decl(metadata !16263)
-  br label %.loopexit68
+  br i1 %.not.i.i.i.i.i, label %.loopexit68, label %.lr.ph.i.i.i.i.i
 
 _RNCINvNvNtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator3all5checkRRNtNtCsjhHCjzi9uUI_17datafusion_common6column6ColumnNCNvNtNtNtNtNtCs14kWLkQVSKO_14deltalake_core16delta_datafusion14table_provider4next4scan4plan17process_predicate0E0B2g_.exit.loopexit.i: ; preds = %.split.i.i.i.i.i
   %i.r = invoke { ptr, ptr } @_RNvXsG_NtCs3gpiEk3WpjL_9hashbrown3mapINtB5_4IterRNtNtCsjhHCjzi9uUI_17datafusion_common6column6ColumnuENtNtNtNtCsbvkFyIu7lgC_4core4iter6traits8iterator8Iterator4nextCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(40) %i.j)
@@ -258,7 +252,7 @@ _RNCNvXsf_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs6Po7BT7Nknu_5alloc6string6Strin
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   br label %bb.f
 
-.loopexit68:                                      ; preds = %_RNCNvXsf_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs6Po7BT7Nknu_5alloc6string6StringNtB7_13SliceContains14slice_contains0Cs14kWLkQVSKO_14deltalake_core.exit.backedge.i.i.i.i.i, %.lr.ph.split.us.i
+.loopexit68:                                      ; preds = %_RNCNvXsf_NtNtCsbvkFyIu7lgC_4core5slice3cmpNtNtCs6Po7BT7Nknu_5alloc6string6StringNtB7_13SliceContains14slice_contains0Cs14kWLkQVSKO_14deltalake_core.exit.backedge.i.i.i.i.i, %.lr.ph.i
   call void @_RNvXsg_NtCs3gpiEk3WpjL_9hashbrown3rawINtB5_8RawTableTRNtNtCsjhHCjzi9uUI_17datafusion_common6column6ColumnuEENtNtNtCsbvkFyIu7lgC_4core3ops4drop4Drop4dropCs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 8 dereferenceable(48) %i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)

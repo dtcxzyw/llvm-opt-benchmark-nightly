@@ -205,16 +205,9 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define hidden void @_ZN6hermes14TerminatorInst12setSuccessorEjPNS_10BasicBlockE(ptr noundef nonnull align 8 dereferenceable(132) %0, i32 noundef %1, ptr noundef %2) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load i8, ptr %i.a, align 8, !tbaa !19    ; 4 uses
-  %3 = icmp eq i8 %i.b, 77
-  %4 = icmp ne i8 %i.b, 78
-  %5 = icmp ne i8 %i.b, 79
-  br i1 %3, label %bb.b, label %.split
-
-.split:                                           ; preds = %bb.a
-  tail call void @llvm.assume(i1 %4)
-  tail call void @llvm.assume(i1 %5)
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !19
   switch i8 %i.b, label %.loopexit [
+    i8 77, label %bb.b
     i8 80, label %bb.c
     i8 81, label %bb.d
     i8 82, label %bb.e
@@ -232,7 +225,7 @@ bb.b:                                             ; preds = %bb.a
   tail call void @_ZN6hermes11Instruction10setOperandEPNS_5ValueEj(ptr noundef nonnull align 8 dereferenceable(132) %0, ptr noundef %spec.select.i82, i32 noundef %1) #15
   br label %.loopexit
 
-bb.c:                                             ; preds = %.split
+bb.c:                                             ; preds = %bb.a
   %i.e = icmp eq ptr %2, null
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 16
   %spec.select.i86 = select i1 %i.e, ptr null, ptr %i.f
@@ -241,7 +234,7 @@ bb.c:                                             ; preds = %.split
   tail call void @_ZN6hermes11Instruction10setOperandEPNS_5ValueEj(ptr noundef nonnull align 8 dereferenceable(132) %0, ptr noundef %spec.select.i86, i32 noundef %i.h) #15
   br label %.loopexit
 
-bb.d:                                             ; preds = %.split
+bb.d:                                             ; preds = %bb.a
   %i.i = icmp eq ptr %2, null
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 16
   %spec.select.i88 = select i1 %i.i, ptr null, ptr %i.j
@@ -249,7 +242,7 @@ bb.d:                                             ; preds = %.split
   tail call void @_ZN6hermes11Instruction10setOperandEPNS_5ValueEj(ptr noundef nonnull align 8 dereferenceable(132) %0, ptr noundef %spec.select.i88, i32 noundef %i.k) #15
   br label %.loopexit
 
-bb.e:                                             ; preds = %.split
+bb.e:                                             ; preds = %bb.a
   %i.l = icmp eq i32 %1, 0
   %spec.select.i90 = select i1 %i.l, i32 4, i32 5
   %i.m = icmp eq ptr %2, null
@@ -258,7 +251,7 @@ bb.e:                                             ; preds = %.split
   tail call void @_ZN6hermes11Instruction10setOperandEPNS_5ValueEj(ptr noundef nonnull align 8 dereferenceable(132) %0, ptr noundef %spec.select1.i, i32 noundef %spec.select.i90) #15
   br label %.loopexit
 
-bb.f:                                             ; preds = %.split
+bb.f:                                             ; preds = %bb.a
   %i.o = icmp eq i32 %1, 0
   %spec.select.i92 = select i1 %i.o, i32 5, i32 6
   %i.p = icmp eq ptr %2, null
@@ -267,7 +260,7 @@ bb.f:                                             ; preds = %.split
   tail call void @_ZN6hermes11Instruction10setOperandEPNS_5ValueEj(ptr noundef nonnull align 8 dereferenceable(132) %0, ptr noundef %spec.select1.i93, i32 noundef %spec.select.i92) #15
   br label %.loopexit
 
-bb.g:                                             ; preds = %.split
+bb.g:                                             ; preds = %bb.a
   %i.r = icmp eq i32 %1, 0
   %spec.select.i95 = select i1 %i.r, i32 3, i32 4
   %i.s = icmp eq ptr %2, null
@@ -276,14 +269,14 @@ bb.g:                                             ; preds = %.split
   tail call void @_ZN6hermes11Instruction10setOperandEPNS_5ValueEj(ptr noundef nonnull align 8 dereferenceable(132) %0, ptr noundef %spec.select1.i96, i32 noundef %spec.select.i95) #15
   br label %.loopexit
 
-bb.h:                                             ; preds = %.split
+bb.h:                                             ; preds = %bb.a
   %i.u = icmp eq ptr %2, null
   %i.v = getelementptr inbounds nuw i8, ptr %2, i64 16
   %spec.select.i98 = select i1 %i.u, ptr null, ptr %i.v
   tail call void @_ZN6hermes11Instruction10setOperandEPNS_5ValueEj(ptr noundef nonnull align 8 dereferenceable(132) %0, ptr noundef %spec.select.i98, i32 noundef %1) #15
   br label %.loopexit
 
-bb.i:                                             ; preds = %.split
+bb.i:                                             ; preds = %bb.a
   %i.w = icmp eq ptr %2, null
   %i.x = getelementptr inbounds nuw i8, ptr %2, i64 16
   %spec.select.i100 = select i1 %i.w, ptr null, ptr %i.x
@@ -291,7 +284,7 @@ bb.i:                                             ; preds = %.split
   tail call void @_ZN6hermes11Instruction10setOperandEPNS_5ValueEj(ptr noundef nonnull align 8 dereferenceable(136) %0, ptr noundef %spec.select.i100, i32 noundef %i.y) #15
   br label %.loopexit
 
-bb.j:                                             ; preds = %.split
+bb.j:                                             ; preds = %bb.a
   %i.z = icmp eq i32 %1, 0
   %i.aa = icmp eq ptr %2, null
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -302,7 +295,7 @@ bb.j:                                             ; preds = %.split
   tail call void @_ZN6hermes11Instruction10setOperandEPNS_5ValueEj(ptr noundef nonnull align 8 dereferenceable(132) %0, ptr noundef %spec.select.i102, i32 noundef %.sink.i) #15
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.split, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
+.loopexit:                                        ; preds = %bb.a, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e, %bb.d, %bb.c, %bb.b
   ret void
 }
 

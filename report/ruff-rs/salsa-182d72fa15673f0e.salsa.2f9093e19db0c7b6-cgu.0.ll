@@ -205,11 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.l = load i64, ptr %i.k, align 8, !alias.scope !4049 ; 2 uses
   %i.m = load ptr, ptr %i.g, align 8, !alias.scope !4049, !nonnull !23 ; 2 uses
-  br i1 %i.j, label %_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit.thread35, label %.split.i.i
-
-_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit.thread35: ; preds = %bb.b
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !4050)
-  br label %bb.f
+  br i1 %i.j, label %bb.f, label %.split.i.i
 
 .split.i.i:                                       ; preds = %bb.b, %_RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapNtNtNtCs2AWtUsOyxgP_3std6thread2id8ThreadIdNtNtNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graph4edge4EdgeNtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherE3getBO_EB1D_.exit.i.i
   %storemerge.i.i = phi i64 [ %i.am, %_RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapNtNtNtCs2AWtUsOyxgP_3std6thread2id8ThreadIdNtNtNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graph4edge4EdgeNtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherE3getBO_EB1D_.exit.i.i ], [ %i.d, %bb.b ] ; 3 uses
@@ -273,7 +269,7 @@ _RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10d
   %i.ao = icmp eq i64 %storemerge.i.i, %i.b
   br i1 %i.ao, label %_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit.thread, label %bb.f
 
-bb.f:                                             ; preds = %_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit.thread35, %_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit
+bb.f:                                             ; preds = %bb.b, %_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #61, !noalias !4053
   %i.ap = tail call noundef align 8 dereferenceable_or_null(48) ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef 48, i64 noundef range(i64 1, -9223372036854775807) 8) #61, !noalias !4053 ; 7 uses
   %i.aq = icmp eq ptr %i.ap, null
@@ -676,11 +672,7 @@ bb.g:                                             ; preds = %bb.d
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.o = load i64, ptr %i.n, align 8, !alias.scope !5519 ; 2 uses
   %i.p = load ptr, ptr %i.f, align 8, !alias.scope !5519, !nonnull !23 ; 2 uses
-  br i1 %i.m, label %_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit.thread33, label %.split.i.i
-
-_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit.thread33: ; preds = %bb.g
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !5520)
-  br label %bb.l
+  br i1 %i.m, label %bb.l, label %.split.i.i
 
 .split.i.i:                                       ; preds = %bb.g, %_RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapNtNtNtCs2AWtUsOyxgP_3std6thread2id8ThreadIdNtNtNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graph4edge4EdgeNtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherE3getBO_EB1D_.exit.i.i
   %storemerge.i.i = phi i64 [ %i.ap, %_RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapNtNtNtCs2AWtUsOyxgP_3std6thread2id8ThreadIdNtNtNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graph4edge4EdgeNtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherE3getBO_EB1D_.exit.i.i ], [ %i.g, %bb.g ] ; 3 uses
@@ -753,7 +745,7 @@ _RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10d
   %i.at = icmp eq i64 %storemerge.i.i, %2
   br i1 %i.at, label %_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit.thread, label %bb.l
 
-bb.l:                                             ; preds = %_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit.thread33, %_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit
+bb.l:                                             ; preds = %bb.g, %_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit
   tail call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #61, !noalias !5523
   %i.au = tail call noundef align 8 dereferenceable_or_null(40) ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef 40, i64 noundef range(i64 1, -9223372036854775807) 8) #61, !noalias !5523 ; 6 uses
   %i.av = icmp eq ptr %i.au, null
@@ -1156,11 +1148,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.t = load i64, ptr %i.s, align 8, !alias.scope !5669 ; 2 uses
   %i.u = load ptr, ptr %i.o, align 8, !alias.scope !5669, !nonnull !23 ; 2 uses
-  br i1 %i.r, label %_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit.thread36, label %.split.i.i
-
-_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit.thread36: ; preds = %bb.g
-  call void @llvm.experimental.noalias.scope.decl(metadata !5670)
-  br label %bb.k
+  br i1 %i.r, label %bb.k, label %.split.i.i
 
 .split.i.i:                                       ; preds = %bb.g, %_RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapNtNtNtCs2AWtUsOyxgP_3std6thread2id8ThreadIdNtNtNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graph4edge4EdgeNtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherE3getBO_EB1D_.exit.i.i
   %storemerge.i.i = phi i64 [ %i.au, %_RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapNtNtNtCs2AWtUsOyxgP_3std6thread2id8ThreadIdNtNtNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graph4edge4EdgeNtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherE3getBO_EB1D_.exit.i.i ], [ %2, %bb.g ] ; 3 uses
@@ -1224,7 +1212,7 @@ _RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10d
   %i.aw = icmp eq i64 %storemerge.i.i, %i.g
   br i1 %i.aw, label %_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit.thread, label %bb.k
 
-bb.k:                                             ; preds = %_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit.thread36, %_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit
+bb.k:                                             ; preds = %bb.g, %_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit
   call void @_RNvCs9wFQrvczXsK_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #61, !noalias !5673
   %i.ax = call noundef align 8 dereferenceable_or_null(48) ptr @_RNvCs9wFQrvczXsK_7___rustc12___rust_alloc(i64 noundef 48, i64 noundef range(i64 1, -9223372036854775807) 8) #61, !noalias !5673 ; 7 uses
   %i.ay = icmp eq ptr %i.ax, null
@@ -1627,11 +1615,7 @@ bb.cq:                                            ; preds = %_RNvMNtNtCs45bxiIjz
   %i.yt = getelementptr inbounds nuw i8, ptr %i.j, i64 176
   %i.yu = load i64, ptr %i.yt, align 8, !alias.scope !6704, !noalias !6611 ; 2 uses
   %i.yv = load ptr, ptr %i.eg, align 8, !alias.scope !6704, !noalias !6611, !nonnull !23 ; 2 uses
-  br i1 %i.ys, label %_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit.thread509.i.i, label %.split.i.i.i.i
-
-_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit.thread509.i.i: ; preds = %bb.cq
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !6705)
-  br label %bb.cu
+  br i1 %i.ys, label %bb.cu, label %.split.i.i.i.i
 
 .split.i.i.i.i:                                   ; preds = %bb.cq, %_RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapNtNtNtCs2AWtUsOyxgP_3std6thread2id8ThreadIdNtNtNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graph4edge4EdgeNtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherE3getBO_EB1D_.exit.i.i.i.i
   %storemerge.i.i.i.i = phi i64 [ %i.zv, %_RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapNtNtNtCs2AWtUsOyxgP_3std6thread2id8ThreadIdNtNtNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graph4edge4EdgeNtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherE3getBO_EB1D_.exit.i.i.i.i ], [ %.sroa.05.0.i.i, %bb.cq ] ; 3 uses
@@ -1695,7 +1679,7 @@ _RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10d
   %i.zx = icmp eq i64 %storemerge.i.i.i.i, %i.ef
   br i1 %i.zx, label %_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit.thread.i.i, label %bb.cu
 
-bb.cu:                                            ; preds = %_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit.i.i, %_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit.thread509.i.i
+bb.cu:                                            ; preds = %_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph10depends_on.exit.i.i, %bb.cq
   %i.zy = invoke fastcc noundef i8 @_RINvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB3_15DependencyGraph8block_onINtNtCsejIXhd4qXh6_8lock_api5mutex10MutexGuardNtNtCs6ZNDpZDiPlA_11parking_lot9raw_mutex8RawMutexINtNtNtNtCs2AWtUsOyxgP_3std11collections4hash3map7HashMapNtNtB7_2id2IdNtNtNtB7_8function4sync9SyncStateNtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherEEEB7_(ptr noundef nonnull align 8 %i.dy, i64 noundef range(i64 1, 0) %i.ef, i64 %i.ae, i32 %i.l, i64 noundef %.sroa.05.0.i.i, ptr noundef nonnull align 8 %i.bz)
           to label %_RNvMNtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB2_15DependencyGraph13transfer_lock.exit.i unwind label %bb.cz, !noalias !6603 ; 0 uses
 
@@ -2098,12 +2082,7 @@ _RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapNtNtCs45bxiIjzMqg_5salsa3ke
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.be = load i64, ptr %i.bd, align 8            ; 2 uses
   %i.bf = load ptr, ptr %0, align 8, !nonnull !23 ; 2 uses
-  br i1 %i.bc, label %.lr.ph.split.us, label %.lr.ph.split
-
-.lr.ph.split.us:                                  ; preds = %.lr.ph
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !7923)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !7924)
-  br label %select.unfold5
+  br i1 %i.bc, label %select.unfold5, label %.lr.ph.split
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %_RNvMs_NtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB4_5Edges7get_mut.exit
   %.sroa.02.022 = phi ptr [ %i.cf, %_RNvMs_NtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB4_5Edges7get_mut.exit ], [ %.sink10.i, %.lr.ph ] ; 2 uses
@@ -2166,7 +2145,7 @@ _RNvMs_NtNtCs45bxiIjzMqg_5salsa7runtime16dependency_graphNtB4_5Edges7get_mut.exi
   %i.cg = icmp eq ptr %i.cf, %i.ay
   br i1 %i.cg, label %_RINvMs1_NtCsgQfI1edjipl_9hashbrown3mapINtB6_7HashMapNtNtCs45bxiIjzMqg_5salsa3key16DatabaseKeyIndexINtCsheqz6YZvxwl_8smallvec8SmallVecANtNtNtCs2AWtUsOyxgP_3std6thread2id8ThreadIdj4_ENtCsjp5HOZs6k8V_10rustc_hash13FxBuildHasherE3getBO_EBS_.exit.thread, label %.lr.ph.split
 
-select.unfold5:                                   ; preds = %._crit_edge.i.i.i, %.lr.ph.split.us
+select.unfold5:                                   ; preds = %._crit_edge.i.i.i, %.lr.ph
   tail call void @_RNvNtCs4NRVxsYgnAr_4core6option13unwrap_failed(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @233) #60
   unreachable
 

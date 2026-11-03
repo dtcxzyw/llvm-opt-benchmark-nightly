@@ -204,8 +204,7 @@ bb.g:                                             ; preds = %bb.a, %_RINvYINtNtN
 ; Function Attrs: nonlazybind uwtable
 define hidden noundef zeroext i1 @_RNvXs4_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB5_7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestENtNtCskKLDkoKarTP_4core3cmp9PartialEq2eqCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %0, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
 bb.a:
-  %2 = alloca [40 x i8], align 8                  ; 7 uses
-  %i.a = alloca [40 x i8], align 8                ; 4 uses
+  %i.a = alloca [40 x i8], align 8                ; 7 uses
   %i.b = alloca [40 x i8], align 8                ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.d = load i64, ptr %i.c, align 8, !noundef !5 ; 2 uses
@@ -216,10 +215,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  call void @_RNvMs0_NtCsjqcU1oJFKXj_9hashbrown3mapINtB5_7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE4iterCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %0)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.b, ptr noundef nonnull align 8 dereferenceable(40) %i.a, i64 40, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
+  call void @_RNvMs0_NtCsjqcU1oJFKXj_9hashbrown3mapINtB5_7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE4iterCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %0)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !462)
   %i.g = call { ptr, ptr } @_RNvXsG_NtCsjqcU1oJFKXj_9hashbrown3mapINtB5_4IterNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.b), !noalias !462 ; 2 uses
   %i.h = extractvalue { ptr, ptr } %i.g, 0        ; 2 uses
@@ -232,12 +228,7 @@ bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.l = load i64, ptr %i.k, align 8, !alias.scope !462 ; 2 uses
   %i.m = load ptr, ptr %1, align 8, !alias.scope !462, !nonnull !5 ; 2 uses
-  br i1 %i.i, label %.lr.ph.split.us.i, label %.lr.ph.split.i
-
-.lr.ph.split.us.i:                                ; preds = %.lr.ph.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !463)
-  call void @llvm.experimental.noalias.scope.decl(metadata !464)
-  br label %_RINvYINtNtNtNtCsG258MDvU3F_3std11collections4hash3map4IterNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB2B_3all5checkTRBU_RB1w_ENCNvXs4_B6_INtB6_7HashMapBU_B1w_ENtNtB2J_3cmp9PartialEq2eq0E0INtNtNtB2J_3ops12control_flow11ControlFlowuEECsl8OoimOLbh_6qdrant.exit
+  br i1 %i.i, label %_RINvYINtNtNtNtCsG258MDvU3F_3std11collections4hash3map4IterNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB2B_3all5checkTRBU_RB1w_ENCNvXs4_B6_INtB6_7HashMapBU_B1w_ENtNtB2J_3cmp9PartialEq2eq0E0INtNtNtB2J_3ops12control_flow11ControlFlowuEECsl8OoimOLbh_6qdrant.exit, label %.lr.ph.split.i
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i, %.backedge.i
   %i.n = phi ptr [ %i.bq, %.backedge.i ], [ %i.h, %.lr.ph.i ] ; 2 uses
@@ -333,8 +324,8 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.bg = getelementptr inbounds i8, ptr %i.ad, i64 -56
   %i.bh = getelementptr inbounds nuw i8, ptr %i.p, i64 24
-  call void @llvm.lifetime.start.p0(ptr nonnull %2), !noalias !476
-  call void @_RNvMs0_NtCsjqcU1oJFKXj_9hashbrown3mapINtB5_7HashMapNtNtCsG258MDvU3F_3std4path7PathBufNtNtNtCs607s0NAIaWN_7segment10data_types8manifest11FileVersionNtNtNtBR_4hash6random11RandomStateE4iterCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %2, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.bh), !noalias !475
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !476
+  call void @_RNvMs0_NtCsjqcU1oJFKXj_9hashbrown3mapINtB5_7HashMapNtNtCsG258MDvU3F_3std4path7PathBufNtNtNtCs607s0NAIaWN_7segment10data_types8manifest11FileVersionNtNtNtBR_4hash6random11RandomStateE4iterCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.bh), !noalias !475
   call void @llvm.experimental.noalias.scope.decl(metadata !477)
   %i.bi = icmp eq i64 %i.bd, 0
   %i.bj = getelementptr inbounds i8, ptr %i.ad, i64 -24
@@ -344,10 +335,10 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.bi, label %.split.us.i.i.i.i.i.i, label %.split.i.i.i.i.i.i
 
 .split.us.i.i.i.i.i.i:                            ; preds = %bb.i
-  %i.bn = call { ptr, ptr } @_RNvXsG_NtCsjqcU1oJFKXj_9hashbrown3mapINtB5_4IterNtNtCsG258MDvU3F_3std4path7PathBufNtNtNtCs607s0NAIaWN_7segment10data_types8manifest11FileVersionENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %2), !noalias !478
+  %i.bn = call { ptr, ptr } @_RNvXsG_NtCsjqcU1oJFKXj_9hashbrown3mapINtB5_4IterNtNtCsG258MDvU3F_3std4path7PathBufNtNtNtCs607s0NAIaWN_7segment10data_types8manifest11FileVersionENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.a), !noalias !478
   %i.bo = extractvalue { ptr, ptr } %i.bn, 0
   %.not.us.not.i.not.i.i.i.i.not.i = icmp eq ptr %i.bo, null
-  call void @llvm.lifetime.end.p0(ptr nonnull %2), !noalias !476
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !476
   br i1 %.not.us.not.i.not.i.i.i.i.not.i, label %.backedge.i, label %_RINvYINtNtNtNtCsG258MDvU3F_3std11collections4hash3map4IterNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB2B_3all5checkTRBU_RB1w_ENCNvXs4_B6_INtB6_7HashMapBU_B1w_ENtNtB2J_3cmp9PartialEq2eq0E0INtNtNtB2J_3ops12control_flow11ControlFlowuEECsl8OoimOLbh_6qdrant.exit
 
 .backedge.i:                                      ; preds = %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3all5checkTRNtNtCsexYYUdYSQU6_5alloc6string6StringRNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestENCNvXs4_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB33_7HashMapB1d_B1Q_ENtNtBe_3cmp9PartialEq2eq0E0Csl8OoimOLbh_6qdrant.exit.i, %.split.us.i.i.i.i.i.i
@@ -357,7 +348,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not.not.i, label %_RINvYINtNtNtNtCsG258MDvU3F_3std11collections4hash3map4IterNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB2B_3all5checkTRBU_RB1w_ENCNvXs4_B6_INtB6_7HashMapBU_B1w_ENtNtB2J_3cmp9PartialEq2eq0E0INtNtNtB2J_3ops12control_flow11ControlFlowuEECsl8OoimOLbh_6qdrant.exit, label %.lr.ph.split.i
 
 .split.i.i.i.i.i.i:                               ; preds = %bb.i, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3all5checkTRNtNtCsG258MDvU3F_3std4path7PathBufRNtNtNtCs607s0NAIaWN_7segment10data_types8manifest11FileVersionENCNvXs4_NtNtNtB1h_11collections4hash3mapINtB2V_7HashMapB1d_B1M_ENtNtBe_3cmp9PartialEq2eq0E0Csl8OoimOLbh_6qdrant.exit.i.i.i.i.i.i
-  %i.br = call { ptr, ptr } @_RNvXsG_NtCsjqcU1oJFKXj_9hashbrown3mapINtB5_4IterNtNtCsG258MDvU3F_3std4path7PathBufNtNtNtCs607s0NAIaWN_7segment10data_types8manifest11FileVersionENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %2) ; 2 uses
+  %i.br = call { ptr, ptr } @_RNvXsG_NtCsjqcU1oJFKXj_9hashbrown3mapINtB5_4IterNtNtCsG258MDvU3F_3std4path7PathBufNtNtNtCs607s0NAIaWN_7segment10data_types8manifest11FileVersionENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.a) ; 2 uses
   %i.bs = extractvalue { ptr, ptr } %i.br, 0      ; 3 uses
   %.not.not.not.i.i.i.i.not.i.i = icmp eq ptr %i.bs, null
   br i1 %.not.not.not.i.i.i.i.not.i.i, label %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3all5checkTRNtNtCsexYYUdYSQU6_5alloc6string6StringRNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestENCNvXs4_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB33_7HashMapB1d_B1Q_ENtNtBe_3cmp9PartialEq2eq0E0Csl8OoimOLbh_6qdrant.exit.i, label %bb.j
@@ -430,15 +421,15 @@ _RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3all5checkTRNt
   br i1 %spec.select.i.i.not.i.i.i.i.i.i.i, label %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3all5checkTRNtNtCsexYYUdYSQU6_5alloc6string6StringRNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestENCNvXs4_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB33_7HashMapB1d_B1Q_ENtNtBe_3cmp9PartialEq2eq0E0Csl8OoimOLbh_6qdrant.exit.thread8.i, label %.split.i.i.i.i.i.i
 
 _RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3all5checkTRNtNtCsexYYUdYSQU6_5alloc6string6StringRNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestENCNvXs4_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB33_7HashMapB1d_B1Q_ENtNtBe_3cmp9PartialEq2eq0E0Csl8OoimOLbh_6qdrant.exit.thread8.i: ; preds = %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3all5checkTRNtNtCsG258MDvU3F_3std4path7PathBufRNtNtNtCs607s0NAIaWN_7segment10data_types8manifest11FileVersionENCNvXs4_NtNtNtB1h_11collections4hash3mapINtB2V_7HashMapB1d_B1M_ENtNtBe_3cmp9PartialEq2eq0E0Csl8OoimOLbh_6qdrant.exit.i.i.i.i.i.i, %_RINvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB6_7HashMapNtNtCsG258MDvU3F_3std4path7PathBufNtNtNtCs607s0NAIaWN_7segment10data_types8manifest11FileVersionNtNtNtBS_4hash6random11RandomStateE3getBO_ECsl8OoimOLbh_6qdrant.exit.i.i.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i.i.i.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %2), !noalias !476
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !476
   br label %_RINvYINtNtNtNtCsG258MDvU3F_3std11collections4hash3map4IterNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB2B_3all5checkTRBU_RB1w_ENCNvXs4_B6_INtB6_7HashMapBU_B1w_ENtNtB2J_3cmp9PartialEq2eq0E0INtNtNtB2J_3ops12control_flow11ControlFlowuEECsl8OoimOLbh_6qdrant.exit
 
 _RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3all5checkTRNtNtCsexYYUdYSQU6_5alloc6string6StringRNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestENCNvXs4_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB33_7HashMapB1d_B1Q_ENtNtBe_3cmp9PartialEq2eq0E0Csl8OoimOLbh_6qdrant.exit.i: ; preds = %.split.i.i.i.i.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %2), !noalias !476
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !476
   br label %.backedge.i
 
-_RINvYINtNtNtNtCsG258MDvU3F_3std11collections4hash3map4IterNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB2B_3all5checkTRBU_RB1w_ENCNvXs4_B6_INtB6_7HashMapBU_B1w_ENtNtB2J_3cmp9PartialEq2eq0E0INtNtNtB2J_3ops12control_flow11ControlFlowuEECsl8OoimOLbh_6qdrant.exit: ; preds = %_RINvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB6_7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE3getBO_ECsl8OoimOLbh_6qdrant.exit.i.i.i, %bb.f, %bb.g, %bb.h, %.split.us.i.i.i.i.i.i, %.backedge.i, %._crit_edge.i.i.i.i.i, %bb.b, %.lr.ph.split.us.i, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3all5checkTRNtNtCsexYYUdYSQU6_5alloc6string6StringRNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestENCNvXs4_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB33_7HashMapB1d_B1Q_ENtNtBe_3cmp9PartialEq2eq0E0Csl8OoimOLbh_6qdrant.exit.thread8.i
-  %i.cw = phi i1 [ false, %.lr.ph.split.us.i ], [ false, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3all5checkTRNtNtCsexYYUdYSQU6_5alloc6string6StringRNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestENCNvXs4_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB33_7HashMapB1d_B1Q_ENtNtBe_3cmp9PartialEq2eq0E0Csl8OoimOLbh_6qdrant.exit.thread8.i ], [ true, %bb.b ], [ false, %._crit_edge.i.i.i.i.i ], [ false, %bb.g ], [ false, %bb.f ], [ false, %bb.h ], [ false, %.split.us.i.i.i.i.i.i ], [ true, %.backedge.i ], [ false, %_RINvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB6_7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE3getBO_ECsl8OoimOLbh_6qdrant.exit.i.i.i ]
+_RINvYINtNtNtNtCsG258MDvU3F_3std11collections4hash3map4IterNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB2B_3all5checkTRBU_RB1w_ENCNvXs4_B6_INtB6_7HashMapBU_B1w_ENtNtB2J_3cmp9PartialEq2eq0E0INtNtNtB2J_3ops12control_flow11ControlFlowuEECsl8OoimOLbh_6qdrant.exit: ; preds = %_RINvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB6_7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE3getBO_ECsl8OoimOLbh_6qdrant.exit.i.i.i, %bb.f, %bb.g, %bb.h, %.split.us.i.i.i.i.i.i, %.backedge.i, %._crit_edge.i.i.i.i.i, %bb.b, %.lr.ph.i, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3all5checkTRNtNtCsexYYUdYSQU6_5alloc6string6StringRNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestENCNvXs4_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB33_7HashMapB1d_B1Q_ENtNtBe_3cmp9PartialEq2eq0E0Csl8OoimOLbh_6qdrant.exit.thread8.i
+  %i.cw = phi i1 [ false, %.lr.ph.i ], [ false, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3all5checkTRNtNtCsexYYUdYSQU6_5alloc6string6StringRNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestENCNvXs4_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB33_7HashMapB1d_B1Q_ENtNtBe_3cmp9PartialEq2eq0E0Csl8OoimOLbh_6qdrant.exit.thread8.i ], [ true, %bb.b ], [ false, %._crit_edge.i.i.i.i.i ], [ false, %_RINvMs1_NtCsjqcU1oJFKXj_9hashbrown3mapINtB6_7HashMapNtNtCsexYYUdYSQU6_5alloc6string6StringNtNtNtCs607s0NAIaWN_7segment10data_types8manifest15SegmentManifestNtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE3getBO_ECsl8OoimOLbh_6qdrant.exit.i.i.i ], [ false, %bb.g ], [ false, %bb.f ], [ false, %bb.h ], [ false, %.split.us.i.i.i.i.i.i ], [ true, %.backedge.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   br label %bb.n
 
@@ -778,12 +769,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.k = load i64, ptr %i.j, align 8, !alias.scope !562 ; 2 uses
   %i.l = load ptr, ptr %1, align 8, !alias.scope !562, !nonnull !5 ; 2 uses
-  br i1 %i.h, label %.lr.ph.split.us.i, label %.lr.ph.split.i
-
-.lr.ph.split.us.i:                                ; preds = %.lr.ph.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !563)
-  call void @llvm.experimental.noalias.scope.decl(metadata !564)
-  br label %_RINvYINtNtNtNtCsG258MDvU3F_3std11collections4hash3map4ItermNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant25ShardCleanStatusTelemetryENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1X_3all5checkTRmRBV_ENCNvXs4_B6_INtB6_7HashMapmBV_ENtNtB25_3cmp9PartialEq2eq0E0INtNtNtB25_3ops12control_flow11ControlFlowuEECsl8OoimOLbh_6qdrant.exit
+  br i1 %i.h, label %_RINvYINtNtNtNtCsG258MDvU3F_3std11collections4hash3map4ItermNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant25ShardCleanStatusTelemetryENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1X_3all5checkTRmRBV_ENCNvXs4_B6_INtB6_7HashMapmBV_ENtNtB25_3cmp9PartialEq2eq0E0INtNtNtB25_3ops12control_flow11ControlFlowuEECsl8OoimOLbh_6qdrant.exit, label %.lr.ph.split.i
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i, %.backedge.i
   %i.m = phi ptr [ %i.bq, %.backedge.i ], [ %i.g, %.lr.ph.i ] ; 2 uses
@@ -916,8 +902,8 @@ _RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3all5checkTRmR
   %.not.not.i = icmp eq ptr %i.bq, null
   br i1 %.not.not.i, label %_RINvYINtNtNtNtCsG258MDvU3F_3std11collections4hash3map4ItermNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant25ShardCleanStatusTelemetryENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1X_3all5checkTRmRBV_ENCNvXs4_B6_INtB6_7HashMapmBV_ENtNtB25_3cmp9PartialEq2eq0E0INtNtNtB25_3ops12control_flow11ControlFlowuEECsl8OoimOLbh_6qdrant.exit, label %.lr.ph.split.i
 
-_RINvYINtNtNtNtCsG258MDvU3F_3std11collections4hash3map4ItermNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant25ShardCleanStatusTelemetryENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1X_3all5checkTRmRBV_ENCNvXs4_B6_INtB6_7HashMapmBV_ENtNtB25_3cmp9PartialEq2eq0E0INtNtNtB25_3ops12control_flow11ControlFlowuEECsl8OoimOLbh_6qdrant.exit: ; preds = %bb.f, %.split31.i, %bb.i, %.split.i, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3all5checkTRmRNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant25ShardCleanStatusTelemetryENCNvXs4_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB2p_7HashMapmB1f_ENtNtBe_3cmp9PartialEq2eq0E0Csl8OoimOLbh_6qdrant.exit.i, %.backedge.i, %._crit_edge.i.i.i.i.i, %bb.b, %.lr.ph.split.us.i
-  %i.br = phi i1 [ false, %.lr.ph.split.us.i ], [ true, %bb.b ], [ false, %._crit_edge.i.i.i.i.i ], [ false, %bb.i ], [ false, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3all5checkTRmRNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant25ShardCleanStatusTelemetryENCNvXs4_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB2p_7HashMapmB1f_ENtNtBe_3cmp9PartialEq2eq0E0Csl8OoimOLbh_6qdrant.exit.i ], [ true, %.backedge.i ], [ false, %bb.f ], [ false, %.split.i ], [ false, %.split31.i ]
+_RINvYINtNtNtNtCsG258MDvU3F_3std11collections4hash3map4ItermNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant25ShardCleanStatusTelemetryENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator8try_folduNCINvNvB1X_3all5checkTRmRBV_ENCNvXs4_B6_INtB6_7HashMapmBV_ENtNtB25_3cmp9PartialEq2eq0E0INtNtNtB25_3ops12control_flow11ControlFlowuEECsl8OoimOLbh_6qdrant.exit: ; preds = %bb.f, %.split31.i, %bb.i, %.split.i, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3all5checkTRmRNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant25ShardCleanStatusTelemetryENCNvXs4_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB2p_7HashMapmB1f_ENtNtBe_3cmp9PartialEq2eq0E0Csl8OoimOLbh_6qdrant.exit.i, %.backedge.i, %._crit_edge.i.i.i.i.i, %bb.b, %.lr.ph.i
+  %i.br = phi i1 [ false, %.lr.ph.i ], [ true, %bb.b ], [ false, %._crit_edge.i.i.i.i.i ], [ false, %bb.f ], [ false, %bb.i ], [ false, %_RNCINvNvNtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator3all5checkTRmRNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant25ShardCleanStatusTelemetryENCNvXs4_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB2p_7HashMapmB1f_ENtNtBe_3cmp9PartialEq2eq0E0Csl8OoimOLbh_6qdrant.exit.i ], [ true, %.backedge.i ], [ false, %.split.i ], [ false, %.split31.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.j
 

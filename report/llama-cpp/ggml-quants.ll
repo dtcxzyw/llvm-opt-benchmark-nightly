@@ -205,70 +205,75 @@ bb.j:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !384)
   br label %.preheader34.i27.us
 
-.preheader34.i27.us:                              ; preds = %bb.p, %.preheader34.preheader.i25.us
-  %indvars.iv48.i28.us = phi i64 [ 0, %.preheader34.preheader.i25.us ], [ %indvars.iv.next49.i42.us, %bb.p ] ; 3 uses
+.preheader34.i27.us:                              ; preds = %42, %.preheader34.preheader.i25.us
+  %indvars.iv48.i28.us = phi i64 [ 0, %.preheader34.preheader.i25.us ], [ %indvars.iv.next49.i42, %42 ] ; 3 uses
   %invariant.gep.i29.idx.us = shl nuw nsw i64 %indvars.iv48.i28.us, 9
   %invariant.gep.i29.us = getelementptr inbounds nuw i8, ptr %.02346.us, i64 %invariant.gep.i29.idx.us ; 6 uses
-  br label %bb.k
+  br label %.preheader.i35.us
 
-bb.k:                                             ; preds = %bb.k, %.preheader34.i27.us
-  %indvars.iv.i30.us = phi i64 [ 0, %.preheader34.i27.us ], [ %indvars.iv.next.i33.us.3, %bb.k ] ; 5 uses
-  %.03235.i31.us = phi float [ 0.000000e+00, %.preheader34.i27.us ], [ %18, %bb.k ]
-  %gep.i32.us = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep.i29.us, i64 %indvars.iv.i30.us
-  %5 = load float, ptr %gep.i32.us, align 4, !tbaa !36, !alias.scope !383
+bb.k:                                             ; preds = %.preheader.i35.us
+  %5 = fmul float %41, 7.812500e-03               ; 2 uses
   %6 = tail call float @llvm.fabs.f32(float %5)
-  %7 = fadd float %.03235.i31.us, %6
-  %8 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep.i29.us, i64 %indvars.iv.i30.us
-  %gep.i32.us.1 = getelementptr inbounds nuw i8, ptr %8, i64 4
-  %9 = load float, ptr %gep.i32.us.1, align 4, !tbaa !36, !alias.scope !383
-  %10 = tail call float @llvm.fabs.f32(float %9)
-  %i.br = fadd float %7, %10
-  %11 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep.i29.us, i64 %indvars.iv.i30.us
-  %gep.i32.us.2 = getelementptr inbounds nuw i8, ptr %11, i64 8
-  %12 = load float, ptr %gep.i32.us.2, align 4, !tbaa !36, !alias.scope !383
-  %13 = tail call float @llvm.fabs.f32(float %12)
-  %14 = fadd float %i.br, %13
-  %15 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep.i29.us, i64 %indvars.iv.i30.us
-  %gep.i32.us.3 = getelementptr inbounds nuw i8, ptr %15, i64 12
-  %16 = load float, ptr %gep.i32.us.3, align 4, !tbaa !36, !alias.scope !383
-  %17 = tail call float @llvm.fabs.f32(float %16)
-  %18 = fadd float %14, %17                       ; 2 uses
-  %indvars.iv.next.i33.us.3 = add nuw nsw i64 %indvars.iv.i30.us, 4 ; 2 uses
-  %exitcond.not.i34.us.3 = icmp eq i64 %indvars.iv.next.i33.us.3, 128
-  br i1 %exitcond.not.i34.us.3, label %.preheader.i35.us, label %bb.k, !llvm.loop !0
-
-.preheader.i35.us:                                ; preds = %bb.k
-  %19 = fmul float %18, 7.812500e-03              ; 2 uses
-  %20 = tail call float @llvm.fabs.f32(float %19)
-  %21 = fmul float %20, f0x77800000
-  %22 = fmul float %21, f0x08800000
-  %23 = bitcast float %19 to i32                  ; 2 uses
-  %24 = shl i32 %23, 1                            ; 2 uses
-  %25 = tail call i32 @llvm.umax.i32(i32 %24, i32 1895825408)
-  %spec.store.select.i.i36.us = lshr exact i32 %25, 1
-  %26 = and i32 %spec.store.select.i.i36.us, 2139095040
-  %27 = add nuw i32 %26, 125829120
-  %28 = bitcast i32 %27 to float
-  %i.bs = fadd float %22, %28
-  %29 = bitcast float %i.bs to i32                ; 2 uses
-  %30 = lshr i32 %29, 13
-  %31 = and i32 %30, 31744
-  %32 = and i32 %29, 4095
-  %33 = add nuw nsw i32 %31, %32
-  %34 = lshr i32 %23, 16
-  %35 = and i32 %34, 32768
-  %36 = icmp ugt i32 %24, -16777216
-  %37 = select i1 %36, i32 32256, i32 %33
-  %38 = or i32 %37, %35
-  %39 = trunc nuw i32 %38 to i16
-  %40 = getelementptr inbounds nuw [18 x i8], ptr %.02147.us, i64 %indvars.iv48.i28.us ; 2 uses
-  store i16 %39, ptr %40, align 2, !tbaa !33, !alias.scope !384
-  %41 = getelementptr inbounds nuw i8, ptr %40, i64 2 ; 3 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(16) %41, i8 0, i64 16, i1 false), !tbaa !34, !alias.scope !384
+  %7 = fmul float %6, f0x77800000
+  %8 = fmul float %7, f0x08800000
+  %9 = bitcast float %5 to i32                    ; 2 uses
+  %10 = shl i32 %9, 1                             ; 2 uses
+  %11 = tail call i32 @llvm.umax.i32(i32 %10, i32 1895825408)
+  %spec.store.select.i.i36 = lshr exact i32 %11, 1
+  %12 = and i32 %spec.store.select.i.i36, 2139095040
+  %13 = add nuw i32 %12, 125829120
+  %14 = bitcast i32 %13 to float
+  %i.br = fadd float %8, %14
+  %15 = bitcast float %i.br to i32                ; 2 uses
+  %16 = lshr i32 %15, 13
+  %17 = and i32 %16, 31744
+  %18 = and i32 %15, 4095
+  %19 = add nuw nsw i32 %17, %18
+  %20 = lshr i32 %9, 16
+  %21 = and i32 %20, 32768
+  %22 = icmp ugt i32 %10, -16777216
+  %23 = select i1 %22, i32 32256, i32 %19
+  %24 = or i32 %23, %21
+  %25 = trunc nuw i32 %24 to i16
+  %26 = getelementptr inbounds nuw [18 x i8], ptr %.02147.us, i64 %indvars.iv48.i28.us ; 2 uses
+  store i16 %25, ptr %26, align 2, !tbaa !33, !alias.scope !384
+  %27 = getelementptr inbounds nuw i8, ptr %26, i64 2 ; 3 uses
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(16) %27, i8 0, i64 16, i1 false), !tbaa !34, !alias.scope !384
   br label %bb.l
 
-bb.l:                                             ; preds = %42, %.preheader.i35.us
-  %indvars.iv44.i38.us = phi i64 [ 0, %.preheader.i35.us ], [ %indvars.iv.next45.i40.us.1, %42 ] ; 6 uses
+.preheader.i35.us:                                ; preds = %.preheader.i35.us, %.preheader34.i27.us
+  %indvars.iv.i30 = phi i64 [ 0, %.preheader34.i27.us ], [ %indvars.iv.next.i33.3, %.preheader.i35.us ] ; 5 uses
+  %.03235.i31 = phi float [ 0.000000e+00, %.preheader34.i27.us ], [ %41, %.preheader.i35.us ]
+  %gep.i32 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep.i29.us, i64 %indvars.iv.i30
+  %28 = load float, ptr %gep.i32, align 4, !tbaa !36, !alias.scope !383
+  %29 = tail call float @llvm.fabs.f32(float %28)
+  %30 = fadd float %.03235.i31, %29
+  %31 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep.i29.us, i64 %indvars.iv.i30
+  %gep.i32.1 = getelementptr inbounds nuw i8, ptr %31, i64 4
+  %32 = load float, ptr %gep.i32.1, align 4, !tbaa !36, !alias.scope !383
+  %33 = tail call float @llvm.fabs.f32(float %32)
+  %i.bs = fadd float %30, %33
+  %34 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep.i29.us, i64 %indvars.iv.i30
+  %gep.i32.2 = getelementptr inbounds nuw i8, ptr %34, i64 8
+  %35 = load float, ptr %gep.i32.2, align 4, !tbaa !36, !alias.scope !383
+  %36 = tail call float @llvm.fabs.f32(float %35)
+  %37 = fadd float %i.bs, %36
+  %38 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep.i29.us, i64 %indvars.iv.i30
+  %gep.i32.3 = getelementptr inbounds nuw i8, ptr %38, i64 12
+  %39 = load float, ptr %gep.i32.3, align 4, !tbaa !36, !alias.scope !383
+  %40 = tail call float @llvm.fabs.f32(float %39)
+  %41 = fadd float %37, %40                       ; 2 uses
+  %indvars.iv.next.i33.3 = add nuw nsw i64 %indvars.iv.i30, 4 ; 2 uses
+  %exitcond.not.i34.3 = icmp eq i64 %indvars.iv.next.i33.3, 128
+  br i1 %exitcond.not.i34.3, label %bb.k, label %.preheader.i35.us, !llvm.loop !0
+
+42:                                               ; preds = %bb.p
+  %indvars.iv.next49.i42 = add nuw nsw i64 %indvars.iv48.i28.us, 1 ; 2 uses
+  %exitcond51.not.i43 = icmp eq i64 %indvars.iv.next49.i42, %wide.trip.count.i26
+  br i1 %exitcond51.not.i43, label %quantize_row_q1_0_ref.exit44.loopexit.us, label %.preheader34.i27.us, !llvm.loop !1
+
+bb.l:                                             ; preds = %bb.p, %bb.k
+  %indvars.iv44.i38.us = phi i64 [ 0, %bb.k ], [ %indvars.iv.next49.i42.us, %bb.p ] ; 6 uses
   %gep53.i39.us = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep.i29.us, i64 %indvars.iv44.i38.us
   %i.bt = load float, ptr %gep53.i39.us, align 4, !tbaa !36, !alias.scope !383
   %i.bu = fcmp ult float %i.bt, 0.000000e+00
@@ -280,7 +285,7 @@ bb.m:                                             ; preds = %bb.l
   %i.bx = lshr i64 %indvars.iv44.i38.us, 3
   %i.by = shl nuw nsw i8 1, %i.bw
   %i.bz = and i64 %i.bx, 536870911
-  %i.ca = getelementptr inbounds nuw i8, ptr %41, i64 %i.bz ; 2 uses
+  %i.ca = getelementptr inbounds nuw i8, ptr %27, i64 %i.bz ; 2 uses
   %i.cb = load i8, ptr %i.ca, align 1, !tbaa !34, !alias.scope !384
   %i.cc = or i8 %i.cb, %i.by
   store i8 %i.cc, ptr %i.ca, align 1, !tbaa !34, !alias.scope !384
@@ -291,7 +296,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %gep53.i39.us.1 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep.i29.us, i64 %indvars.iv.next45.i40.us
   %i.cd = load float, ptr %gep53.i39.us.1, align 4, !tbaa !36, !alias.scope !383
   %i.ce = fcmp ult float %i.cd, 0.000000e+00
-  br i1 %i.ce, label %42, label %bb.o
+  br i1 %i.ce, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.cf = trunc i64 %indvars.iv.next45.i40.us to i8
@@ -299,31 +304,26 @@ bb.o:                                             ; preds = %bb.n
   %i.ch = lshr i64 %indvars.iv44.i38.us, 3
   %i.ci = shl nuw i8 1, %i.cg
   %i.cj = and i64 %i.ch, 536870911
-  %i.ck = getelementptr inbounds nuw i8, ptr %41, i64 %i.cj ; 2 uses
+  %i.ck = getelementptr inbounds nuw i8, ptr %27, i64 %i.cj ; 2 uses
   %i.cl = load i8, ptr %i.ck, align 1, !tbaa !34, !alias.scope !384
   %i.cm = or i8 %i.cl, %i.ci
   store i8 %i.cm, ptr %i.ck, align 1, !tbaa !34, !alias.scope !384
-  br label %42
+  br label %bb.p
 
-42:                                               ; preds = %bb.o, %bb.n
-  %indvars.iv.next45.i40.us.1 = add nuw nsw i64 %indvars.iv44.i38.us, 2 ; 2 uses
-  %exitcond47.not.i41.us.1 = icmp eq i64 %indvars.iv.next45.i40.us.1, 128
-  br i1 %exitcond47.not.i41.us.1, label %bb.p, label %bb.l, !llvm.loop !2
+bb.p:                                             ; preds = %bb.o, %bb.n
+  %indvars.iv.next49.i42.us = add nuw nsw i64 %indvars.iv44.i38.us, 2 ; 2 uses
+  %exitcond51.not.i43.us = icmp eq i64 %indvars.iv.next49.i42.us, 128
+  br i1 %exitcond51.not.i43.us, label %42, label %bb.l, !llvm.loop !2
 
-bb.p:                                             ; preds = %42
-  %indvars.iv.next49.i42.us = add nuw nsw i64 %indvars.iv48.i28.us, 1 ; 2 uses
-  %exitcond51.not.i43.us = icmp eq i64 %indvars.iv.next49.i42.us, %wide.trip.count.i26
-  br i1 %exitcond51.not.i43.us, label %quantize_row_q1_0_ref.exit44.loopexit.us, label %.preheader34.i27.us, !llvm.loop !1
-
-quantize_row_q1_0_ref.exit44.loopexit.us:         ; preds = %bb.p
+quantize_row_q1_0_ref.exit44.loopexit.us:         ; preds = %42
   %i.cn = getelementptr inbounds [4 x i8], ptr %.02346.us, i64 %3
   %i.co = getelementptr inbounds nuw i8, ptr %.02147.us, i64 %i.bm
   %i.cp = add nuw nsw i64 %.048.us, 1             ; 2 uses
   %exitcond.not = icmp eq i64 %i.cp, %2
   br i1 %exitcond.not, label %.loopexit, label %.preheader34.preheader.i25.us, !llvm.loop !380
 
-.loopexit:                                        ; preds = %quantize_row_q1_0_ref.exit44.loopexit.us, %.lr.ph, %bb.j, %quantize_row_q1_0_ref.exit
-  %.pn = phi i64 [ %i.bl, %quantize_row_q1_0_ref.exit ], [ %i.bm, %bb.j ], [ %i.bm, %.lr.ph ], [ %i.bm, %quantize_row_q1_0_ref.exit44.loopexit.us ]
+.loopexit:                                        ; preds = %quantize_row_q1_0_ref.exit44.loopexit.us, %bb.j, %.lr.ph, %quantize_row_q1_0_ref.exit
+  %.pn = phi i64 [ %i.bl, %quantize_row_q1_0_ref.exit ], [ %i.bm, %.lr.ph ], [ %i.bm, %bb.j ], [ %i.bm, %quantize_row_q1_0_ref.exit44.loopexit.us ]
   %.022 = mul i64 %.pn, %2
   ret i64 %.022
 }
@@ -454,33 +454,15 @@ bb.f:                                             ; preds = %bb.a
   br label %.preheader44.i27.us
 
 .preheader44.i27.us:                              ; preds = %13, %.preheader44.preheader.i25.us
-  %indvars.iv58.i28.us = phi i64 [ 0, %.preheader44.preheader.i25.us ], [ %indvars.iv.next59.i44.us, %13 ] ; 3 uses
+  %indvars.iv58.i28.us = phi i64 [ 0, %.preheader44.preheader.i25.us ], [ %indvars.iv.next59.i44, %13 ] ; 3 uses
   %invariant.gep.i29.idx.us = shl nuw nsw i64 %indvars.iv58.i28.us, 8
   %invariant.gep.i29.us = getelementptr inbounds nuw i8, ptr %.02347.us, i64 %invariant.gep.i29.idx.us ; 3 uses
   br label %5
 
-5:                                                ; preds = %5, %.preheader44.i27.us
-  %indvars.iv.i30.us = phi i64 [ 0, %.preheader44.i27.us ], [ %indvars.iv.next.i34.us.1, %5 ] ; 3 uses
-  %.03946.i31.us = phi float [ 0.000000e+00, %.preheader44.i27.us ], [ %.1.i33.us.1, %5 ] ; 2 uses
-  %gep.i32.us = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep.i29.us, i64 %indvars.iv.i30.us
-  %6 = load float, ptr %gep.i32.us, align 4, !tbaa !36, !alias.scope !394
-  %7 = tail call float @llvm.fabs.f32(float %6)   ; 2 uses
-  %8 = fcmp ogt float %7, %.03946.i31.us
-  %.1.i33.us = select i1 %8, float %7, float %.03946.i31.us ; 2 uses
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep.i29.us, i64 %indvars.iv.i30.us
-  %gep.i32.us.1 = getelementptr inbounds nuw i8, ptr %9, i64 4
-  %10 = load float, ptr %gep.i32.us.1, align 4, !tbaa !36, !alias.scope !394
-  %11 = tail call float @llvm.fabs.f32(float %10) ; 2 uses
-  %12 = fcmp ogt float %11, %.1.i33.us
-  %.1.i33.us.1 = select i1 %12, float %11, float %.1.i33.us ; 5 uses
-  %indvars.iv.next.i34.us.1 = add nuw nsw i64 %indvars.iv.i30.us, 2 ; 2 uses
-  %exitcond.not.i35.us.1 = icmp eq i64 %indvars.iv.next.i34.us.1, 64
-  br i1 %exitcond.not.i35.us.1, label %.preheader.i36.us, label %5, !llvm.loop !3
-
 .preheader.i36.us:                                ; preds = %5
-  %i.bd = fmul float %.1.i33.us.1, f0x77800000
+  %i.bd = fmul float %.1.i33.1, f0x77800000
   %i.be = fmul float %i.bd, f0x08800000
-  %i.bf = bitcast float %.1.i33.us.1 to i32       ; 2 uses
+  %i.bf = bitcast float %.1.i33.1 to i32          ; 2 uses
   %i.bg = shl nuw i32 %i.bf, 1
   %i.bh = tail call i32 @llvm.umax.i32(i32 %i.bg, i32 1895825408)
   %spec.store.select.i.i37.us = lshr exact i32 %i.bh, 1
@@ -500,10 +482,33 @@ bb.f:                                             ; preds = %bb.a
   store i16 %i.bt, ptr %i.bu, align 2, !tbaa !33, !alias.scope !395
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 2 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 2 dereferenceable(16) %i.bv, i8 0, i64 16, i1 false), !tbaa !34, !alias.scope !395
-  %i.bw = fcmp ogt float %.1.i33.us.1, 0.000000e+00
-  %i.bx = fdiv float 1.000000e+00, %.1.i33.us.1
+  %i.bw = fcmp ogt float %.1.i33.1, 0.000000e+00
+  %i.bx = fdiv float 1.000000e+00, %.1.i33.1
   %i.by = select i1 %i.bw, float %i.bx, float 0.000000e+00
   br label %bb.g
+
+5:                                                ; preds = %5, %.preheader44.i27.us
+  %indvars.iv.i30 = phi i64 [ 0, %.preheader44.i27.us ], [ %indvars.iv.next.i34.1, %5 ] ; 3 uses
+  %.03946.i31 = phi float [ 0.000000e+00, %.preheader44.i27.us ], [ %.1.i33.1, %5 ] ; 2 uses
+  %gep.i32 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep.i29.us, i64 %indvars.iv.i30
+  %6 = load float, ptr %gep.i32, align 4, !tbaa !36, !alias.scope !394
+  %7 = tail call float @llvm.fabs.f32(float %6)   ; 2 uses
+  %8 = fcmp ogt float %7, %.03946.i31
+  %.1.i33 = select i1 %8, float %7, float %.03946.i31 ; 2 uses
+  %9 = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep.i29.us, i64 %indvars.iv.i30
+  %gep.i32.1 = getelementptr inbounds nuw i8, ptr %9, i64 4
+  %10 = load float, ptr %gep.i32.1, align 4, !tbaa !36, !alias.scope !394
+  %11 = tail call float @llvm.fabs.f32(float %10) ; 2 uses
+  %12 = fcmp ogt float %11, %.1.i33
+  %.1.i33.1 = select i1 %12, float %11, float %.1.i33 ; 5 uses
+  %indvars.iv.next.i34.1 = add nuw nsw i64 %indvars.iv.i30, 2 ; 2 uses
+  %exitcond.not.i35.1 = icmp eq i64 %indvars.iv.next.i34.1, 64
+  br i1 %exitcond.not.i35.1, label %.preheader.i36.us, label %5, !llvm.loop !3
+
+13:                                               ; preds = %bb.g
+  %indvars.iv.next59.i44 = add nuw nsw i64 %indvars.iv58.i28.us, 1 ; 2 uses
+  %exitcond61.not.i45 = icmp eq i64 %indvars.iv.next59.i44, %wide.trip.count.i26
+  br i1 %exitcond61.not.i45, label %quantize_row_q2_0_ref.exit46.loopexit.us, label %.preheader44.i27.us, !llvm.loop !4
 
 bb.g:                                             ; preds = %bb.g, %.preheader.i36.us
   %indvars.iv54.i39.us = phi i64 [ 0, %.preheader.i36.us ], [ %indvars.iv.next55.i42.us, %bb.g ] ; 4 uses
@@ -530,11 +535,6 @@ bb.g:                                             ; preds = %bb.g, %.preheader.i
   %exitcond57.not.i43.us = icmp eq i64 %indvars.iv.next55.i42.us, 64
   br i1 %exitcond57.not.i43.us, label %13, label %bb.g, !llvm.loop !5
 
-13:                                               ; preds = %bb.g
-  %indvars.iv.next59.i44.us = add nuw nsw i64 %indvars.iv58.i28.us, 1 ; 2 uses
-  %exitcond61.not.i45.us = icmp eq i64 %indvars.iv.next59.i44.us, %wide.trip.count.i26
-  br i1 %exitcond61.not.i45.us, label %quantize_row_q2_0_ref.exit46.loopexit.us, label %.preheader44.i27.us, !llvm.loop !4
-
 quantize_row_q2_0_ref.exit46.loopexit.us:         ; preds = %13
   %i.cp = getelementptr inbounds [4 x i8], ptr %.02347.us, i64 %3
   %i.cq = getelementptr inbounds nuw i8, ptr %.02148.us, i64 %i.ay
@@ -542,8 +542,8 @@ quantize_row_q2_0_ref.exit46.loopexit.us:         ; preds = %13
   %exitcond.not = icmp eq i64 %i.cr, %2
   br i1 %exitcond.not, label %.loopexit, label %.preheader44.preheader.i25.us, !llvm.loop !391
 
-.loopexit:                                        ; preds = %quantize_row_q2_0_ref.exit46.loopexit.us, %.lr.ph, %bb.f, %quantize_row_q2_0_ref.exit
-  %.pn = phi i64 [ %i.ax, %quantize_row_q2_0_ref.exit ], [ %i.ay, %bb.f ], [ %i.ay, %.lr.ph ], [ %i.ay, %quantize_row_q2_0_ref.exit46.loopexit.us ]
+.loopexit:                                        ; preds = %quantize_row_q2_0_ref.exit46.loopexit.us, %bb.f, %.lr.ph, %quantize_row_q2_0_ref.exit
+  %.pn = phi i64 [ %i.ax, %quantize_row_q2_0_ref.exit ], [ %i.ay, %.lr.ph ], [ %i.ay, %bb.f ], [ %i.ay, %quantize_row_q2_0_ref.exit46.loopexit.us ]
   %.022 = mul i64 %.pn, %2
   ret i64 %.022
 }
@@ -946,7 +946,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.k = ashr exact i64 %3, 8                     ; 4 uses
   %i.l = icmp sgt i64 %2, 0
-  br i1 %i.l, label %.lr.ph, label %._crit_edge
+  br i1 %i.l, label %.lr.ph, label %.lr.ph.split.split.split.us.split.split.us
 
 .lr.ph:                                           ; preds = %bb.c
   %.not.i = icmp eq ptr %4, null
@@ -1031,14 +1031,7 @@ bb.c:                                             ; preds = %bb.a
   %i.cm = getelementptr inbounds nuw i8, ptr %i.h, i64 52
   %i.cn = getelementptr inbounds nuw i8, ptr %i.h, i64 60
   %i.co = mul nsw i64 %i.k, 66
-  br i1 %.not.i, label %.lr.ph.split.us, label %.lr.ph.split
-
-.lr.ph.split.us:                                  ; preds = %.lr.ph
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !541)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !542)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !543)
-  tail call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 3302, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.10) #24, !noalias !544
-  unreachable
+  br i1 %.not.i, label %._crit_edge, label %.lr.ph.split
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   %i.cp = icmp sgt i64 %i.k, 0
@@ -1441,7 +1434,7 @@ quantize_row_iq2_xxs_impl.exit.loopexit.us:       ; preds = %bb.af
   %i.aci = getelementptr inbounds nuw i8, ptr %.01561.us64, i64 %i.co
   %i.acj = add nuw nsw i64 %.062.us63, 1          ; 2 uses
   %exitcond96.not = icmp eq i64 %i.acj, %2
-  br i1 %exitcond96.not, label %._crit_edge, label %.lr.ph.split.split.us, !llvm.loop !540
+  br i1 %exitcond96.not, label %.lr.ph.split.split.split.us.split.split.us, label %.lr.ph.split.split.us, !llvm.loop !540
 
 .lr.ph.split.split:                               ; preds = %.lr.ph.split
   %i.ack = load ptr, ptr @iq2_data, align 16, !tbaa !73, !noalias !544
@@ -1451,29 +1444,21 @@ quantize_row_iq2_xxs_impl.exit.loopexit.us:       ; preds = %bb.af
 .lr.ph.split.split.split.us:                      ; preds = %.lr.ph.split.split
   %i.acm = load ptr, ptr getelementptr inbounds nuw (i8, ptr @iq2_data, i64 8), align 8, !tbaa !76, !noalias !544
   %.not332.i.us80 = icmp eq ptr %i.acm, null
-  br i1 %.not332.i.us80, label %.lr.ph.split.split.split.us.split.us, label %.lr.ph.split.split.split.us.split
-
-.lr.ph.split.split.split.us.split.us:             ; preds = %.lr.ph.split.split.split.us
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !541)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !542)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !543)
-  br label %.split68.us.a
+  br i1 %.not332.i.us80, label %.split68.us.a, label %.lr.ph.split.split.split.us.split
 
 .lr.ph.split.split.split.us.split:                ; preds = %.lr.ph.split.split.split.us
   %i.acn = load ptr, ptr getelementptr inbounds nuw (i8, ptr @iq2_data, i64 16), align 16, !tbaa !78, !noalias !544
   %.not333.i.us81 = icmp eq ptr %i.acn, null
-  br i1 %.not333.i.us81, label %.lr.ph.split.split.split.us.split.split.us, label %._crit_edge
+  br i1 %.not333.i.us81, label %.split70.us, label %.lr.ph.split.split.split.us.split.split.us
 
-.lr.ph.split.split.split.us.split.split.us:       ; preds = %.lr.ph.split.split.split.us.split
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !541)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !542)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !543)
-  br label %.split70.us
-
-._crit_edge:                                      ; preds = %quantize_row_iq2_xxs_impl.exit.loopexit.us, %.lr.ph.split.split.split.us.split, %bb.c
+.lr.ph.split.split.split.us.split.split.us:       ; preds = %quantize_row_iq2_xxs_impl.exit.loopexit.us, %.lr.ph.split.split.split.us.split, %bb.c
   %5 = mul i64 %2, 66
   %6 = mul i64 %5, %i.k
   ret i64 %6
+
+._crit_edge:                                      ; preds = %.lr.ph
+  tail call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 3302, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.10) #24, !noalias !544
+  unreachable
 
 .split.us66.loopexit87:                           ; preds = %.lr.ph.split.split
   tail call void @llvm.experimental.noalias.scope.decl(metadata !541)
@@ -1485,11 +1470,11 @@ quantize_row_iq2_xxs_impl.exit.loopexit.us:       ; preds = %bb.af
   tail call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 3303, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.12) #24, !noalias !544
   unreachable
 
-.split68.us.a:                                    ; preds = %bb.d, %.lr.ph.split.split.split.us.split.us
+.split68.us.a:                                    ; preds = %bb.d, %.lr.ph.split.split.split.us
   tail call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 3304, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.13) #24, !noalias !544
   unreachable
 
-.split70.us:                                      ; preds = %bb.e, %.lr.ph.split.split.split.us.split.split.us
+.split70.us:                                      ; preds = %bb.e, %.lr.ph.split.split.split.us.split
   tail call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 3305, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.14) #24, !noalias !544
   unreachable
 
@@ -1654,7 +1639,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.i = ashr exact i64 %3, 8                     ; 4 uses
   %i.j = icmp sgt i64 %2, 0
-  br i1 %i.j, label %.lr.ph, label %._crit_edge
+  br i1 %i.j, label %.lr.ph, label %.lr.ph.split.split.split.us.split.split.us
 
 .lr.ph:                                           ; preds = %bb.c
   %.not.i = icmp eq ptr %4, null
@@ -1689,14 +1674,7 @@ bb.c:                                             ; preds = %bb.a
   %i.am = getelementptr inbounds nuw i8, ptr %i.d, i64 4
   %i.an = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.ao = mul nsw i64 %i.i, 74
-  br i1 %.not.i, label %.lr.ph.split.us, label %.lr.ph.split
-
-.lr.ph.split.us:                                  ; preds = %.lr.ph
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !557)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !558)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !559)
-  tail call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 3480, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.10) #24, !noalias !560
-  unreachable
+  br i1 %.not.i, label %._crit_edge, label %.lr.ph.split
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   %i.ap = icmp sgt i64 %i.i, 0
@@ -2099,7 +2077,7 @@ quantize_row_iq2_xs_impl.exit.loopexit.us:        ; preds = %bb.ae
   %i.agx = getelementptr inbounds nuw i8, ptr %.01554.us57, i64 %i.ao
   %i.agy = add nuw nsw i64 %.055.us56, 1          ; 2 uses
   %exitcond86.not = icmp eq i64 %i.agy, %2
-  br i1 %exitcond86.not, label %._crit_edge, label %.lr.ph.split.split.us, !llvm.loop !556
+  br i1 %exitcond86.not, label %.lr.ph.split.split.split.us.split.split.us, label %.lr.ph.split.split.us, !llvm.loop !556
 
 .lr.ph.split.split:                               ; preds = %.lr.ph.split
   %i.agz = load ptr, ptr getelementptr inbounds nuw (i8, ptr @iq2_data, i64 32), align 16, !tbaa !76, !noalias !560
@@ -2109,29 +2087,21 @@ quantize_row_iq2_xs_impl.exit.loopexit.us:        ; preds = %bb.ae
 .lr.ph.split.split.split.us:                      ; preds = %.lr.ph.split.split
   %i.ahb = load ptr, ptr getelementptr inbounds nuw (i8, ptr @iq2_data, i64 24), align 8, !tbaa !73, !noalias !560
   %.not348.i.us73 = icmp eq ptr %i.ahb, null
-  br i1 %.not348.i.us73, label %.lr.ph.split.split.split.us.split.us, label %.lr.ph.split.split.split.us.split
-
-.lr.ph.split.split.split.us.split.us:             ; preds = %.lr.ph.split.split.split.us
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !557)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !558)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !559)
-  br label %.split61.us.a
+  br i1 %.not348.i.us73, label %.split61.us.a, label %.lr.ph.split.split.split.us.split
 
 .lr.ph.split.split.split.us.split:                ; preds = %.lr.ph.split.split.split.us
   %i.ahc = load ptr, ptr getelementptr inbounds nuw (i8, ptr @iq2_data, i64 40), align 8, !tbaa !78, !noalias !560
   %.not349.i.us74 = icmp eq ptr %i.ahc, null
-  br i1 %.not349.i.us74, label %.lr.ph.split.split.split.us.split.split.us, label %._crit_edge
+  br i1 %.not349.i.us74, label %.split63.us, label %.lr.ph.split.split.split.us.split.split.us
 
-.lr.ph.split.split.split.us.split.split.us:       ; preds = %.lr.ph.split.split.split.us.split
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !557)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !558)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !559)
-  br label %.split63.us
-
-._crit_edge:                                      ; preds = %quantize_row_iq2_xs_impl.exit.loopexit.us, %.lr.ph.split.split.split.us.split, %bb.c
+.lr.ph.split.split.split.us.split.split.us:       ; preds = %quantize_row_iq2_xs_impl.exit.loopexit.us, %.lr.ph.split.split.split.us.split, %bb.c
   %5 = mul i64 %2, 74
   %6 = mul i64 %5, %i.i
   ret i64 %6
+
+._crit_edge:                                      ; preds = %.lr.ph
+  tail call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 3480, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.10) #24, !noalias !560
+  unreachable
 
 .split.us59.loopexit80:                           ; preds = %.lr.ph.split.split
   tail call void @llvm.experimental.noalias.scope.decl(metadata !557)
@@ -2143,11 +2113,11 @@ quantize_row_iq2_xs_impl.exit.loopexit.us:        ; preds = %bb.ae
   tail call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 3481, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.13) #24, !noalias !560
   unreachable
 
-.split61.us.a:                                    ; preds = %bb.d, %.lr.ph.split.split.split.us.split.us
+.split61.us.a:                                    ; preds = %bb.d, %.lr.ph.split.split.split.us
   tail call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 3482, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.12) #24, !noalias !560
   unreachable
 
-.split63.us:                                      ; preds = %bb.e, %.lr.ph.split.split.split.us.split.split.us
+.split63.us:                                      ; preds = %bb.e, %.lr.ph.split.split.split.us.split
   tail call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 3483, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.14) #24, !noalias !560
   unreachable
 
@@ -2550,33 +2520,15 @@ quantize_row_iq3_s_impl.exit.loopexit.us:         ; preds = %.loopexit470.i.us
   %i.amk = load ptr, ptr getelementptr inbounds nuw (i8, ptr @iq3_data, i64 40), align 8, !tbaa !84, !noalias !637
   %.not.i = icmp eq ptr %i.amj, null
   %.not425.i = icmp eq ptr %i.amk, null
-  br i1 %.not.i, label %.lr.ph.split.split.us, label %.lr.ph.split.split
-
-.lr.ph.split.split.us:                            ; preds = %.lr.ph.split
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !634)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !635)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !636)
-  br label %.split.us
+  br i1 %.not.i, label %.split.us, label %.lr.ph.split.split
 
 .lr.ph.split.split:                               ; preds = %.lr.ph.split
   %i.aml = load ptr, ptr getelementptr inbounds nuw (i8, ptr @iq3_data, i64 32), align 16, !tbaa !83, !noalias !637
   %.not424.i = icmp eq ptr %i.aml, null
-  br i1 %.not424.i, label %.lr.ph.split.split.split.us, label %.lr.ph.split.split.split
-
-.lr.ph.split.split.split.us:                      ; preds = %.lr.ph.split.split
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !634)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !635)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !636)
-  br label %.split84.us
+  br i1 %.not424.i, label %.split84.us, label %.lr.ph.split.split.split
 
 .lr.ph.split.split.split:                         ; preds = %.lr.ph.split.split
-  br i1 %.not425.i, label %.lr.ph.split.split.split.split.us, label %._crit_edge
-
-.lr.ph.split.split.split.split.us:                ; preds = %.lr.ph.split.split.split
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !634)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !635)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !636)
-  br label %.split86.us
+  br i1 %.not425.i, label %.split86.us, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %quantize_row_iq3_s_impl.exit.loopexit.us, %.lr.ph.split.split.split, %bb.c
   %i.amm = mul i64 %2, 110
@@ -2590,15 +2542,15 @@ quantize_row_iq3_s_impl.exit.loopexit.us:         ; preds = %.loopexit470.i.us
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   ret i64 %i.amn
 
-.split.us:                                        ; preds = %.lr.ph.split.us, %.lr.ph.split.split.us
+.split.us:                                        ; preds = %.lr.ph.split.us, %.lr.ph.split
   tail call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 4188, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.25) #24, !noalias !637
   unreachable
 
-.split84.us:                                      ; preds = %bb.d, %.lr.ph.split.split.split.us
+.split84.us:                                      ; preds = %bb.d, %.lr.ph.split.split
   tail call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 4189, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.26) #24, !noalias !637
   unreachable
 
-.split86.us:                                      ; preds = %bb.e, %.lr.ph.split.split.split.split.us
+.split86.us:                                      ; preds = %bb.e, %.lr.ph.split.split.split
   tail call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 4190, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.27) #24, !noalias !637
   unreachable
 
@@ -2816,14 +2768,7 @@ bb.c:                                             ; preds = %bb.a
   %i.cv = getelementptr inbounds nuw i8, ptr %i.g, i64 4
   %i.cw = getelementptr inbounds nuw i8, ptr %i.g, i64 6 ; 2 uses
   %i.cx = mul nsw i64 %i.k, 50
-  br i1 %.not.i, label %.lr.ph.split.us, label %.lr.ph.split
-
-.lr.ph.split.us:                                  ; preds = %.lr.ph
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !665)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !666)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !667)
-  tail call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 4524, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.10) #24, !noalias !668
-  unreachable
+  br i1 %.not.i, label %5, label %.lr.ph.split
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   %i.cy = icmp sgt i64 %i.k, 0
@@ -3226,33 +3171,15 @@ quantize_row_iq1_s_impl.exit.loopexit.us:         ; preds = %.loopexit.i.us
   %i.aed = load ptr, ptr getelementptr inbounds nuw (i8, ptr @iq2_data, i64 64), align 16, !tbaa !78, !noalias !668
   %.not370.i = icmp eq ptr %i.aec, null
   %.not372.i = icmp eq ptr %i.aed, null
-  br i1 %.not370.i, label %.lr.ph.split.split.split.us, label %.lr.ph.split.split.split
-
-.lr.ph.split.split.split.us:                      ; preds = %.lr.ph.split.split
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !665)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !666)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !667)
-  br label %.split.us26
+  br i1 %.not370.i, label %.split.us26, label %.lr.ph.split.split.split
 
 .lr.ph.split.split.split:                         ; preds = %.lr.ph.split.split
   %i.aee = load ptr, ptr getelementptr inbounds nuw (i8, ptr @iq2_data, i64 56), align 8, !tbaa !76, !noalias !668
   %.not371.i = icmp eq ptr %i.aee, null
-  br i1 %.not371.i, label %.lr.ph.split.split.split.split.us, label %.lr.ph.split.split.split.split
-
-.lr.ph.split.split.split.split.us:                ; preds = %.lr.ph.split.split.split
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !665)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !666)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !667)
-  br label %.split28.us.a
+  br i1 %.not371.i, label %.split28.us.a, label %.lr.ph.split.split.split.split
 
 .lr.ph.split.split.split.split:                   ; preds = %.lr.ph.split.split.split
-  br i1 %.not372.i, label %.lr.ph.split.split.split.split.split.us, label %._crit_edge
-
-.lr.ph.split.split.split.split.split.us:          ; preds = %.lr.ph.split.split.split.split
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !665)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !666)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !667)
-  br label %.split30.us
+  br i1 %.not372.i, label %.split30.us, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %quantize_row_iq1_s_impl.exit.loopexit.us, %.lr.ph.split.split.split.split, %bb.c
   %i.aef = mul i64 %2, 50
@@ -3267,15 +3194,19 @@ quantize_row_iq1_s_impl.exit.loopexit.us:         ; preds = %.loopexit.i.us
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   ret i64 %i.aeg
 
-.split.us26:                                      ; preds = %.lr.ph.split.split.us, %.lr.ph.split.split.split.us
+5:                                                ; preds = %.lr.ph
+  tail call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 4524, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.10) #24, !noalias !668
+  unreachable
+
+.split.us26:                                      ; preds = %.lr.ph.split.split.us, %.lr.ph.split.split
   call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 4525, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.12) #24, !noalias !668
   unreachable
 
-.split28.us.a:                                    ; preds = %bb.d, %.lr.ph.split.split.split.split.us
+.split28.us.a:                                    ; preds = %bb.d, %.lr.ph.split.split.split
   call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 4526, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.13) #24, !noalias !668
   unreachable
 
-.split30.us:                                      ; preds = %bb.e, %.lr.ph.split.split.split.split.split.us
+.split30.us:                                      ; preds = %bb.e, %.lr.ph.split.split.split.split
   call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 4527, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.14) #24, !noalias !668
   unreachable
 
@@ -3678,33 +3609,15 @@ quantize_row_iq1_m_impl.exit.loopexit.us:         ; preds = %bb.au
   %i.ary = load ptr, ptr getelementptr inbounds nuw (i8, ptr @iq2_data, i64 64), align 16, !tbaa !78, !noalias !695
   %.not.i = icmp eq ptr %i.arx, null
   %.not571.i = icmp eq ptr %i.ary, null
-  br i1 %.not.i, label %.lr.ph.split.split.us, label %.lr.ph.split.split
-
-.lr.ph.split.split.us:                            ; preds = %.lr.ph.split
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !692)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !693)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !694)
-  br label %.split.us
+  br i1 %.not.i, label %.split.us, label %.lr.ph.split.split
 
 .lr.ph.split.split:                               ; preds = %.lr.ph.split
   %i.arz = load ptr, ptr getelementptr inbounds nuw (i8, ptr @iq2_data, i64 56), align 8, !tbaa !76, !noalias !695
   %.not570.i = icmp eq ptr %i.arz, null
-  br i1 %.not570.i, label %.lr.ph.split.split.split.us, label %.lr.ph.split.split.split
-
-.lr.ph.split.split.split.us:                      ; preds = %.lr.ph.split.split
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !692)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !693)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !694)
-  br label %.split66.us
+  br i1 %.not570.i, label %.split66.us, label %.lr.ph.split.split.split
 
 .lr.ph.split.split.split:                         ; preds = %.lr.ph.split.split
-  br i1 %.not571.i, label %.lr.ph.split.split.split.split.us, label %._crit_edge
-
-.lr.ph.split.split.split.split.us:                ; preds = %.lr.ph.split.split.split
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !692)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !693)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !694)
-  br label %.split68.us
+  br i1 %.not571.i, label %.split68.us, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %quantize_row_iq1_m_impl.exit.loopexit.us, %.lr.ph.split.split.split, %bb.c
   %i.asa = mul i64 %2, 56
@@ -3716,15 +3629,15 @@ quantize_row_iq1_m_impl.exit.loopexit.us:         ; preds = %bb.au
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   ret i64 %i.asb
 
-.split.us:                                        ; preds = %.lr.ph.split.us, %.lr.ph.split.split.us
+.split.us:                                        ; preds = %.lr.ph.split.us, %.lr.ph.split
   call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 4707, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.12) #24, !noalias !696
   unreachable
 
-.split66.us:                                      ; preds = %bb.d, %.lr.ph.split.split.split.us
+.split66.us:                                      ; preds = %bb.d, %.lr.ph.split.split
   call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 4708, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.13) #24, !noalias !696
   unreachable
 
-.split68.us:                                      ; preds = %bb.e, %.lr.ph.split.split.split.split.us
+.split68.us:                                      ; preds = %bb.e, %.lr.ph.split.split.split
   call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 4709, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.14) #24, !noalias !696
   unreachable
 
@@ -4127,24 +4040,12 @@ quantize_row_iq2_s_impl.exit.loopexit.us:         ; preds = %.loopexit340.i.us
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split
   %i.ael = load ptr, ptr getelementptr inbounds nuw (i8, ptr @iq2_data, i64 72), align 8, !tbaa !73, !noalias !730
   %.not324.i.us65 = icmp eq ptr %i.ael, null
-  br i1 %.not324.i.us65, label %.lr.ph.split.split.us.split.us, label %.lr.ph.split.split.us.split
-
-.lr.ph.split.split.us.split.us:                   ; preds = %.lr.ph.split.split.us
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !727)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !728)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !729)
-  br label %.split53.us
+  br i1 %.not324.i.us65, label %.split53.us, label %.lr.ph.split.split.us.split
 
 .lr.ph.split.split.us.split:                      ; preds = %.lr.ph.split.split.us
   %i.aem = load ptr, ptr getelementptr inbounds nuw (i8, ptr @iq2_data, i64 88), align 8, !tbaa !78, !noalias !730
   %.not325.i.us66 = icmp eq ptr %i.aem, null
-  br i1 %.not325.i.us66, label %.lr.ph.split.split.us.split.split.us, label %._crit_edge
-
-.lr.ph.split.split.us.split.split.us:             ; preds = %.lr.ph.split.split.us.split
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !727)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !728)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !729)
-  br label %.split55.us
+  br i1 %.not325.i.us66, label %.split55.us, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %quantize_row_iq2_s_impl.exit.loopexit.us, %.lr.ph.split.split.us.split, %bb.c
   %i.aen = mul i64 %2, 82
@@ -4161,11 +4062,11 @@ quantize_row_iq2_s_impl.exit.loopexit.us:         ; preds = %.loopexit340.i.us
   tail call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 5150, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.13) #24, !noalias !730
   unreachable
 
-.split53.us:                                      ; preds = %bb.d, %.lr.ph.split.split.us.split.us
+.split53.us:                                      ; preds = %bb.d, %.lr.ph.split.split.us
   tail call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 5151, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.12) #24, !noalias !730
   unreachable
 
-.split55.us:                                      ; preds = %bb.e, %.lr.ph.split.split.us.split.split.us
+.split55.us:                                      ; preds = %bb.e, %.lr.ph.split.split.us.split
   tail call void (ptr, i32, ptr, ...) @ggml_abort(ptr noundef nonnull @.str, i32 noundef 5152, ptr noundef nonnull @.str.1, ptr noundef nonnull @.str.14) #24, !noalias !730
   unreachable
 

@@ -202,7 +202,6 @@ bb.j:                                             ; preds = %.sink.split.i.i.us.
   br i1 %i.cp, label %_RNvYNtNtNtCshzWfHUSfYae_4core3str7pattern11StrSearcherNtB4_15ReverseSearcher16next_reject_backCsity1gTxgZvF_18tracing_subscriber.exit.sink.split, label %_RNvYNtNtNtCshzWfHUSfYae_4core3str7pattern11StrSearcherNtB4_15ReverseSearcher16next_reject_backCsity1gTxgZvF_18tracing_subscriber.exit
 
 .split97.us.i:                                    ; preds = %.lr.ph.split.split.i.preheader.split, %.lr.ph.split.split.i.preheader.split.us
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !31)
   tail call void @_RNvNtCshzWfHUSfYae_4core3str16slice_error_fail(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.g, i64 noundef %i.i, i64 noundef 0, i64 noundef %i.e, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @15) #14, !noalias !34
   unreachable
 
@@ -286,7 +285,7 @@ bb.a:
   store i8 1, ptr %i.e, align 1, !alias.scope !88
   %.not.i3.i.i.us.i.i.i = icmp ne i64 %.pre2.i.i.i.i.i.i, %.promoted20.i.i.i12
   %or.cond.not.i.i.i.us.i.i.i = select i1 %i.w, i1 true, i1 %.not.i3.i.i.us.i.i.i
-  br i1 %or.cond.not.i.i.i.us.i.i.i, label %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.us.us.i.i.i, label %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.us.i.i.i
+  br i1 %or.cond.not.i.i.i.us.i.i.i, label %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.us.us.i.i.i, label %.loopexit
 
 _RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.us.us.i.i.i: ; preds = %.lr.ph.split.us.i.i.i
   %.sroa.0.1.i.i.us.i.i.i = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i, i64 %.promoted20.i.i.i12
@@ -298,16 +297,10 @@ _RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTx
   call void @_RNvXs1_NtNtNtCshzWfHUSfYae_4core3ops8function5implsQNCNvXsb_NtNtCsity1gTxgZvF_18tracing_subscriber6filter9directiveNtBW_15StaticDirectiveNtNtNtBb_3str6traits7FromStr8from_strs_0INtB7_5FnMutTReEE8call_mutB10_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.sroa.0.1.i.i.us.i.i.i, i64 noundef %i.x), !noalias !93
   %i.y = load i64, ptr %i.a, align 8, !range !7, !noalias !92, !noundef !5 ; 2 uses
   %.not.i.us.us.i.i.i = icmp eq i64 %i.y, -1
-  br i1 %.not.i.us.us.i.i.i, label %._crit_edge.split.us.split.us.i.i.i, label %.loopexit5
+  br i1 %.not.i.us.us.i.i.i, label %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.us.i.i.i, label %.loopexit5
 
-._crit_edge.split.us.split.us.i.i.i:              ; preds = %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.us.us.i.i.i
+_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.us.i.i.i: ; preds = %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.us.us.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !92
-  br label %.loopexit
-
-_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.us.i.i.i: ; preds = %.lr.ph.split.us.i.i.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !89)
-  call void @llvm.experimental.noalias.scope.decl(metadata !90)
-  call void @llvm.experimental.noalias.scope.decl(metadata !91)
   br label %.loopexit
 
 .lr.ph.split.i.i.i:                               ; preds = %bb.g, %.lr.ph.split.preheader.i.i.i
@@ -431,7 +424,7 @@ bb.g:                                             ; preds = %select.unfold.i.i.i
   %i.bc = icmp eq i64 %i.az, %i.bb
   br i1 %i.bc, label %bb.i, label %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsity1gTxgZvF_18tracing_subscriber.exit
 
-.loopexit:                                        ; preds = %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsity1gTxgZvF_18tracing_subscriber.exit, %bb.g, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.i.i.i, %bb.a, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.us.i.i.i, %._crit_edge.split.us.split.us.i.i.i
+.loopexit:                                        ; preds = %.lr.ph.split.us.i.i.i, %_RNvMs_NtCsbSS6DM8SDEO_5alloc3vecINtB4_3VecNtNtB6_6string6StringE7reserveCsity1gTxgZvF_18tracing_subscriber.exit, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.i.i.i, %bb.g, %bb.a, %_RNvMsf_NtNtCshzWfHUSfYae_4core3str4iterINtB5_13SplitInternalcE7get_endCsity1gTxgZvF_18tracing_subscriber.exit.i.i.us.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !97
   ret void
 

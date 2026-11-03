@@ -206,7 +206,7 @@ bb.a:
   %i.d = load i64, ptr %i.c, align 8, !alias.scope !95684, !noundef !145 ; 11 uses
   %i.e = icmp eq i64 %i.d, 0
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  br i1 %i.e, label %.lr.ph.split.us.i, label %"_ZN84_$LT$arraydeque..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h2e7ad6c55ead323eE.exit.preheader.i"
+  br i1 %i.e, label %1, label %"_ZN84_$LT$arraydeque..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h2e7ad6c55ead323eE.exit.preheader.i"
 
 "_ZN84_$LT$arraydeque..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h2e7ad6c55ead323eE.exit.preheader.i": ; preds = %.lr.ph.i
   %.promoted7.i = load i64, ptr %i.f, align 8, !alias.scope !95683 ; 2 uses
@@ -236,11 +236,6 @@ bb.a:
   %i.n = icmp ult i64 %.promoted.i, 4
   br i1 %i.n, label %._crit_edge.i, label %"_ZN84_$LT$arraydeque..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h2e7ad6c55ead323eE.exit.i"
 
-.lr.ph.split.us.i:                                ; preds = %.lr.ph.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !95685)
-  tail call void @_ZN4core9panicking11panic_const23panic_const_rem_by_zero17h3e6118cf5f85921cE(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2855) #82, !noalias !95684
-  unreachable
-
 "_ZN84_$LT$arraydeque..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h2e7ad6c55ead323eE.exit.i": ; preds = %"_ZN84_$LT$arraydeque..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h2e7ad6c55ead323eE.exit.i.prol.loopexit", %"_ZN84_$LT$arraydeque..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h2e7ad6c55ead323eE.exit.i"
   %i.o = phi i64 [ %i.ae, %"_ZN84_$LT$arraydeque..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h2e7ad6c55ead323eE.exit.i" ], [ %.unr, %"_ZN84_$LT$arraydeque..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h2e7ad6c55ead323eE.exit.i.prol.loopexit" ] ; 2 uses
   %i.p = phi i64 [ %i.af, %"_ZN84_$LT$arraydeque..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h2e7ad6c55ead323eE.exit.i" ], [ %.unr14, %"_ZN84_$LT$arraydeque..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h2e7ad6c55ead323eE.exit.i.prol.loopexit" ]
@@ -268,6 +263,10 @@ bb.a:
   tail call void @llvm.assume(i1 %i.ag)
   %i.ah = icmp eq i64 %i.af, 0
   br i1 %i.ah, label %._crit_edge.i, label %"_ZN84_$LT$arraydeque..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h2e7ad6c55ead323eE.exit.i"
+
+1:                                                ; preds = %.lr.ph.i
+  tail call void @_ZN4core9panicking11panic_const23panic_const_rem_by_zero17h3e6118cf5f85921cE(ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2855) #82, !noalias !95684
+  unreachable
 
 ._crit_edge.i:                                    ; preds = %"_ZN84_$LT$arraydeque..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h2e7ad6c55ead323eE.exit.i", %"_ZN84_$LT$arraydeque..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h2e7ad6c55ead323eE.exit.i.prol.loopexit"
   %.lcssa = phi i64 [ %.lcssa.unr, %"_ZN84_$LT$arraydeque..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h2e7ad6c55ead323eE.exit.i.prol.loopexit" ], [ %i.ae, %"_ZN84_$LT$arraydeque..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h2e7ad6c55ead323eE.exit.i" ]

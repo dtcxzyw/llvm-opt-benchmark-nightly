@@ -103,7 +103,7 @@ bb.a:
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
   %i.r = trunc nuw i64 %.promoted to i1
-  br i1 %i.r, label %.lr.ph.split.us.split.us, label %.lr.ph.split.us.split
+  br i1 %i.r, label %.lr.ph.split.us.split.us, label %..critedge_crit_edge.split.us
 
 .lr.ph.split.us.split.us:                         ; preds = %.lr.ph.split.us
   %.not.i.i.i.not.i.i.us.us19 = icmp eq i64 %i.i, %.promoted12
@@ -128,16 +128,12 @@ bb.b:                                             ; preds = %_RINvNtNtNtCsgxBkk5
   tail call void @llvm.assume(i1 %.not.i.i.i.not.i.i.us.us.peel)
   br label %.split.us
 
-.lr.ph.split.us.split:                            ; preds = %.lr.ph.split.us
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !34)
-  br label %..critedge_crit_edge.split.us
-
 .split.us:                                        ; preds = %bb.b, %.lr.ph.split.us.split.us
-  store i64 0, ptr %1, align 8, !alias.scope !35
+  store i64 0, ptr %1, align 8, !alias.scope !34
   br label %..critedge_crit_edge.split.us
 
-..critedge_crit_edge.split.us:                    ; preds = %.lr.ph.split.us.split, %.split.us
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !36)
+..critedge_crit_edge.split.us:                    ; preds = %.lr.ph.split.us, %.split.us
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !35)
   br label %.critedge
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %_RNvXs_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters5chainINtB4_5ChainINtNtNtBa_5array4iter8IntoIterhKj1_EINtNtNtCs6i54tJFfzR_5alloc3vec9into_iter8IntoIterhEENtNtNtB8_6traits8iterator8Iterator4nextCs54uEYnqmHDA_13signal_crypto.exit
@@ -145,7 +141,7 @@ bb.b:                                             ; preds = %_RINvNtNtNtCsgxBkk5
   %i.z = phi i64 [ %i.ag, %_RNvXs_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters5chainINtB4_5ChainINtNtNtBa_5array4iter8IntoIterhKj1_EINtNtNtCs6i54tJFfzR_5alloc3vec9into_iter8IntoIterhEENtNtNtB8_6traits8iterator8Iterator4nextCs54uEYnqmHDA_13signal_crypto.exit ], [ %.promoted12, %.lr.ph.split.preheader ] ; 3 uses
   %.sroa.01.07 = phi i64 [ %i.ai, %_RNvXs_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters5chainINtB4_5ChainINtNtNtBa_5array4iter8IntoIterhKj1_EINtNtNtCs6i54tJFfzR_5alloc3vec9into_iter8IntoIterhEENtNtNtB8_6traits8iterator8Iterator4nextCs54uEYnqmHDA_13signal_crypto.exit ], [ %i.d, %.lr.ph.split.preheader ] ; 2 uses
   %i.aa = phi i64 [ %i.ah, %_RNvXs_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters5chainINtB4_5ChainINtNtNtBa_5array4iter8IntoIterhKj1_EINtNtNtCs6i54tJFfzR_5alloc3vec9into_iter8IntoIterhEENtNtNtB8_6traits8iterator8Iterator4nextCs54uEYnqmHDA_13signal_crypto.exit ], [ %.promoted, %.lr.ph.split.preheader ]
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !34)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !36)
   %i.ab = trunc nuw i64 %i.aa to i1
   br i1 %i.ab, label %bb.c, label %bb.e
 
@@ -154,7 +150,7 @@ bb.c:                                             ; preds = %.lr.ph.split
   br i1 %.not.i.i.i.not.i.i, label %bb.d, label %_RINvNtNtNtCsgxBkk5gSRhY_4core4iter8adapters5chain17and_then_or_clearINtNtNtB8_5array4iter8IntoIterhKj1_EhNvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs54uEYnqmHDA_13signal_crypto.exit.i
 
 bb.d:                                             ; preds = %bb.c
-  store i64 0, ptr %1, align 8, !alias.scope !35
+  store i64 0, ptr %1, align 8, !alias.scope !34
   br label %bb.e
 
 _RINvNtNtNtCsgxBkk5gSRhY_4core4iter8adapters5chain17and_then_or_clearINtNtNtB8_5array4iter8IntoIterhKj1_EhNvYB14_NtNtNtB6_6traits8iterator8Iterator4nextECs54uEYnqmHDA_13signal_crypto.exit.i: ; preds = %bb.c
@@ -165,7 +161,7 @@ _RINvNtNtNtCsgxBkk5gSRhY_4core4iter8adapters5chain17and_then_or_clearINtNtNtB8_5
   br label %_RNvXs_NtNtNtCsgxBkk5gSRhY_4core4iter8adapters5chainINtB4_5ChainINtNtNtBa_5array4iter8IntoIterhKj1_EINtNtNtCs6i54tJFfzR_5alloc3vec9into_iter8IntoIterhEENtNtNtB8_6traits8iterator8Iterator4nextCs54uEYnqmHDA_13signal_crypto.exit
 
 bb.e:                                             ; preds = %bb.d, %.lr.ph.split
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !36)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !35)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !38)
   %.not3.i.i.i = icmp eq ptr %i.y, %i.o
   br i1 %.not3.i.i.i, label %.critedge, label %bb.f
@@ -568,9 +564,9 @@ attributes #19 = { cold }
 !31 = distinct !{!31, i1 true, !"_RNvXs4_NtNtCs6i54tJFfzR_5alloc3vec9into_iterINtB5_8IntoIterhENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits8iterator8Iterator4nextCs54uEYnqmHDA_13signal_crypto"}
 !32 = distinct !{!32, !31, !"_RNvXs4_NtNtCs6i54tJFfzR_5alloc3vec9into_iterINtB5_8IntoIterhENtNtNtNtCsgxBkk5gSRhY_4core4iter6traits8iterator8Iterator4nextCs54uEYnqmHDA_13signal_crypto: argument 0"}
 !33 = !{!26, !24, !22, !20, !18}
-!34 = !{!18}
-!35 = !{!20, !18}
-!36 = !{!28}
+!34 = !{!20, !18}
+!35 = !{!28}
+!36 = !{!18}
 !37 = !{!30}
 !38 = !{!32}
 !39 = !{!32, !28, !30, !18}

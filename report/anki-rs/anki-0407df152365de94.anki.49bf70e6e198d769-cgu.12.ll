@@ -205,12 +205,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   br i1 %.not.i.i.i, label %.thread19, label %.split.preheader.i.i
 
-.split.preheader.i.i:                             ; preds = %bb.a
-  %.promoted.i.i = load ptr, ptr %i.g, align 8, !alias.scope !1326
-  br label %.split.i.i
-
 .thread19:                                        ; preds = %bb.a
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !1327)
   store i64 0, ptr %0, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr inttoptr (i64 2 to ptr), ptr %i.h, align 8
@@ -218,6 +213,10 @@ bb.a:
   store i64 0, ptr %i.i, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %"_ZN4core3ptr137drop_in_place$LT$core..iter..adapters..flatten..Flatten$LT$alloc..vec..into_iter..IntoIter$LT$core..option..Option$LT$u16$GT$$GT$$GT$$GT$17h06603127ee5d64e1E.exit"
+
+.split.preheader.i.i:                             ; preds = %bb.a
+  %.promoted.i.i = load ptr, ptr %i.g, align 8, !alias.scope !1326
+  br label %.split.i.i
 
 .split.i.i:                                       ; preds = %bb.b, %.split.preheader.i.i
   %i.j = phi ptr [ %i.l, %bb.b ], [ %.promoted.i.i, %.split.preheader.i.i ] ; 4 uses
@@ -289,7 +288,7 @@ bb.f:                                             ; preds = %.noexc
   %i.aa = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   %i.ab = load ptr, ptr %i.b, align 8, !alias.scope !1335, !noundef !14
   %.not.i.i.i12.i.i = icmp eq ptr %i.ab, null
-  br i1 %.not.i.i.i12.i.i, label %.thread10.i.i, label %.split.preheader.i.i.lr.ph.i.i
+  br i1 %.not.i.i.i12.i.i, label %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17h117db779bb31975fE.exit", label %.split.preheader.i.i.lr.ph.i.i
 
 .split.preheader.i.i.lr.ph.i.i:                   ; preds = %bb.f
   %i.ac = getelementptr inbounds nuw i8, ptr %i.b, i64 24
@@ -303,10 +302,6 @@ bb.f:                                             ; preds = %.noexc
   call void @llvm.experimental.noalias.scope.decl(metadata !1338)
   call void @llvm.experimental.noalias.scope.decl(metadata !1339)
   br label %.split.i.i.i.i
-
-.thread10.i.i:                                    ; preds = %bb.f
-  call void @llvm.experimental.noalias.scope.decl(metadata !1340)
-  br label %"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17h117db779bb31975fE.exit"
 
 .split.i.i.i.i:                                   ; preds = %bb.g, %.split.preheader.i.i.i.i
   %i.af = phi ptr [ %i.ah, %bb.g ], [ %.promoted.i.i.i.i, %.split.preheader.i.i.i.i ] ; 4 uses
@@ -369,7 +364,7 @@ bb.m:                                             ; preds = %bb.i
   invoke void @"_ZN77_$LT$alloc..raw_vec..RawVec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17hce2e7982f9276536E"(ptr noalias noundef nonnull align 8 dereferenceable(24) %i.c)
           to label %"_ZN4core3ptr137drop_in_place$LT$core..iter..adapters..flatten..Flatten$LT$alloc..vec..into_iter..IntoIter$LT$core..option..Option$LT$u16$GT$$GT$$GT$$GT$17h06603127ee5d64e1E.exit11" unwind label %bb.n
 
-"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17h117db779bb31975fE.exit": ; preds = %.thread10.i.i, %bb.i
+"_ZN97_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$alloc..vec..spec_extend..SpecExtend$LT$T$C$I$GT$$GT$11spec_extend17h117db779bb31975fE.exit": ; preds = %bb.f, %bb.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)

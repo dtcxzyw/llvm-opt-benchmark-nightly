@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.s, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$12chunks_exact17h42243817928ef77fE.exit"
-  switch i64 %.0.val, label %.lr.ph.split.split [
+  switch i64 %.0.val, label %5 [
     i64 4, label %_ZN4jiff6shared4tzif17from_be_bytes_i3217h44d4e4b18690b629E.exit.us
     i64 8, label %_ZN4jiff6shared4tzif17from_be_bytes_i6417hd5843ce25972a629E.exit.us
   ]
@@ -234,25 +234,24 @@ _ZN4jiff6shared4tzif17from_be_bytes_i6417hd5843ce25972a629E.exit.us: ; preds = %
   %or.cond.us16 = icmp ult i64 %i.ab, 631107230402
   br i1 %or.cond.us16, label %bb.h, label %bb.g
 
+._crit_edge:                                      ; preds = %bb.h, %_ZN4jiff6shared4tzif17from_be_bytes_i3217h44d4e4b18690b629E.exit.us, %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$12chunks_exact17h42243817928ef77fE.exit"
+  %4 = icmp eq i64 %i.p, 0
+  br i1 %4, label %bb.i, label %bb.j, !prof !16
+
+5:                                                ; preds = %.lr.ph
+  call void @_ZN4core6result13unwrap_failed17h0501379eaec3e720E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @52, i64 noundef 43, ptr noundef nonnull align 1 %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @53, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @368) #45, !noalias !10623
+  unreachable
+
 bb.g:                                             ; preds = %_ZN4jiff6shared4tzif17from_be_bytes_i6417hd5843ce25972a629E.exit.us
   %i.ac = tail call i64 @llvm.smax.i64(i64 %i.aa, i64 -377705023201)
   %.sroa.0.0.i32.us17 = tail call noundef range(i64 -377705023201, 253402207201) i64 @llvm.smin.i64(i64 %i.ac, i64 253402207200)
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %_ZN4jiff6shared4tzif17from_be_bytes_i6417hd5843ce25972a629E.exit.us
+bb.h:                                             ; preds = %_ZN4jiff6shared4tzif17from_be_bytes_i6417hd5843ce25972a629E.exit.us, %bb.g
   %.sroa.014.1.us18 = phi i64 [ %i.aa, %_ZN4jiff6shared4tzif17from_be_bytes_i6417hd5843ce25972a629E.exit.us ], [ %.sroa.0.0.i32.us17, %bb.g ]
   tail call fastcc void @"_ZN4jiff6shared4tzif243_$LT$impl$u20$jiff..shared..TzifTransitions$LT$alloc..vec..Vec$LT$i64$GT$$C$alloc..vec..Vec$LT$jiff..shared..TzifDateTime$GT$$C$alloc..vec..Vec$LT$jiff..shared..TzifDateTime$GT$$C$alloc..vec..Vec$LT$jiff..shared..TzifTransitionInfo$GT$$GT$$GT$19add_with_type_index17h93473856702afd88E"(ptr noalias noundef nonnull align 8 dereferenceable(96) %i.r, i64 noundef %.sroa.014.1.us18)
   %i.ad = icmp ult i64 %i.z, 8
   br i1 %i.ad, label %._crit_edge, label %_ZN4jiff6shared4tzif17from_be_bytes_i6417hd5843ce25972a629E.exit.us
-
-.lr.ph.split.split:                               ; preds = %.lr.ph
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !10622)
-  call void @_ZN4core6result13unwrap_failed17h0501379eaec3e720E(ptr noalias noundef nonnull readonly align 1 captures(address, read_provenance) @52, i64 noundef 43, ptr noundef nonnull align 1 %i.a, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @53, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @368) #45, !noalias !10623
-  unreachable
-
-._crit_edge:                                      ; preds = %bb.h, %_ZN4jiff6shared4tzif17from_be_bytes_i3217h44d4e4b18690b629E.exit.us, %"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$12chunks_exact17h42243817928ef77fE.exit"
-  %4 = icmp eq i64 %i.p, 0
-  br i1 %4, label %bb.i, label %bb.j, !prof !16
 
 bb.i:                                             ; preds = %._crit_edge
   store ptr %i.i, ptr %0, align 8

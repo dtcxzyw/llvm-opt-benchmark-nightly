@@ -202,14 +202,7 @@ _RNvNtCs3ZkgueCtkyH_14ruff_workspace7options21candidate_has_overlap.exit.i.loope
   br i1 %.not.not.not.i.not.i.us.i, label %_RNvNtCs3ZkgueCtkyH_14ruff_workspace7options32conflicting_lazy_import_settings.exit, label %_RNCNvNtCs3ZkgueCtkyH_14ruff_workspace7options28overlapping_import_selectors0B5_.exit.i.i.us.i
 
 _RNCNvNtCs3ZkgueCtkyH_14ruff_workspace7options28overlapping_import_selectors0B5_.exit.i.lr.ph.split.us.i.i: ; preds = %_RNCNvNtCs3ZkgueCtkyH_14ruff_workspace7options28overlapping_import_selectors0B5_.exit.i.lr.ph.i.i
-  br i1 %.not.i.i2.i.i.i, label %_RNCNvNtCs3ZkgueCtkyH_14ruff_workspace7options28overlapping_import_selectors0B5_.exit.i.us.us.i.i, label %_RNCNvNtCs3ZkgueCtkyH_14ruff_workspace7options28overlapping_import_selectors0B5_.exit.i.us.i.i, !prof !610
-
-_RNCNvNtCs3ZkgueCtkyH_14ruff_workspace7options28overlapping_import_selectors0B5_.exit.i.us.us.i.i: ; preds = %_RNCNvNtCs3ZkgueCtkyH_14ruff_workspace7options28overlapping_import_selectors0B5_.exit.i.lr.ph.split.us.i.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !617)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !618)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !619), !noalias !620
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !628), !noalias !620
-  br label %.loopexit80
+  br i1 %.not.i.i2.i.i.i, label %.loopexit80, label %_RNCNvNtCs3ZkgueCtkyH_14ruff_workspace7options28overlapping_import_selectors0B5_.exit.i.us.i.i, !prof !610
 
 _RNCNvNtCs3ZkgueCtkyH_14ruff_workspace7options28overlapping_import_selectors0B5_.exit.i.us.i.i: ; preds = %_RNCNvNtCs3ZkgueCtkyH_14ruff_workspace7options28overlapping_import_selectors0B5_.exit.i.lr.ph.split.us.i.i, %_RNvNtCs3ZkgueCtkyH_14ruff_workspace7options21candidate_has_overlap.exit.loopexit.us.i.i
   %i.au = phi ptr [ %i.av, %_RNvNtCs3ZkgueCtkyH_14ruff_workspace7options21candidate_has_overlap.exit.loopexit.us.i.i ], [ %i.u, %_RNCNvNtCs3ZkgueCtkyH_14ruff_workspace7options28overlapping_import_selectors0B5_.exit.i.lr.ph.split.us.i.i ] ; 3 uses
@@ -608,7 +601,7 @@ _RNvNtCs3ZkgueCtkyH_14ruff_workspace7options32conflicting_lazy_import_settings.e
   %.not44 = icmp eq ptr %.sroa.011.0.copyload, null
   br i1 %.not44, label %bb.ad, label %bb.ac
 
-.loopexit80:                                      ; preds = %_RNvNtCs3ZkgueCtkyH_14ruff_workspace7options17is_fully_excluded.exit.i.i.i.i, %_RNCNvNtCs3ZkgueCtkyH_14ruff_workspace7options17is_fully_excluded0B5_.exit.backedge.i.i6.i.i.i.i, %_RNCNvNtCs3ZkgueCtkyH_14ruff_workspace7options17is_fully_excluded0B5_.exit.backedge.i.i6.i.i.i, %_RNCNvNtCs3ZkgueCtkyH_14ruff_workspace7options17is_fully_excluded0B5_.exit.backedge.i.i6.i.us.i.i, %bb.i, %_RNCNvNtCs3ZkgueCtkyH_14ruff_workspace7options28overlapping_import_selectors0B5_.exit.i.us.us.i.i, %_RNvNtCs3ZkgueCtkyH_14ruff_workspace7options17is_fully_excluded.exit.i.loopexit.i.us.i
+.loopexit80:                                      ; preds = %_RNvNtCs3ZkgueCtkyH_14ruff_workspace7options17is_fully_excluded.exit.i.i.i.i, %_RNCNvNtCs3ZkgueCtkyH_14ruff_workspace7options17is_fully_excluded0B5_.exit.backedge.i.i6.i.i.i.i, %_RNCNvNtCs3ZkgueCtkyH_14ruff_workspace7options17is_fully_excluded0B5_.exit.backedge.i.i6.i.i.i, %_RNCNvNtCs3ZkgueCtkyH_14ruff_workspace7options17is_fully_excluded0B5_.exit.backedge.i.i6.i.us.i.i, %bb.i, %_RNCNvNtCs3ZkgueCtkyH_14ruff_workspace7options28overlapping_import_selectors0B5_.exit.i.lr.ph.split.us.i.i, %_RNvNtCs3ZkgueCtkyH_14ruff_workspace7options17is_fully_excluded.exit.i.loopexit.i.us.i
   %i.em = invoke noundef nonnull ptr @_RINvMNtCsiXichZnxgbf_6anyhow5errorNtB5_5Error3msgReECs3ZkgueCtkyH_14ruff_workspace(ptr noalias noundef nonnull readonly captures(address, read_provenance) @344, i64 noundef 72)
           to label %_RNvNtCsiXichZnxgbf_6anyhow9___private10format_err.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 

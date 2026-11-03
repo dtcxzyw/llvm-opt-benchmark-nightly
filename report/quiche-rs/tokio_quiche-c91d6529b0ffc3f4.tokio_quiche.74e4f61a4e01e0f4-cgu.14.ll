@@ -204,73 +204,73 @@ bb.c:                                             ; preds = %bb.b
   %i.r = getelementptr i8, ptr %i.m, i64 -1040
   %i.s = getelementptr i8, ptr %i.m, i64 -16
   %i.t = getelementptr i8, ptr %i.m, i64 -8       ; 2 uses
-  br i1 %i.n, label %.lr.ph.split.us.i, label %.lr.ph.split.i
+  br i1 %i.n, label %.lr.ph.split.us.i, label %.lr.ph.split.i, !dbg !11325
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i
   %i.u = icmp eq i64 %.0.val1.fr.i, 0
   br i1 %i.u, label %.lr.ph.split.us.split.us.i, label %.lr.ph.split.us.split.split.us.i
 
 .lr.ph.split.us.split.us.i:                       ; preds = %.lr.ph.split.us.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !11288), !dbg !11325
-    #dbg_value(ptr %i.m, !11289, !DIExpression(), !11191)
-    #dbg_value(i64 poison, !11293, !DIExpression(), !11191)
-    #dbg_value(ptr %2, !11294, !DIExpression(), !11191)
-  %i.v = call { i64, i64 } @_RNvXs6_NtNtCs3O5oxBhiT4j_10tokio_util4time11delay_queueINtB5_5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeENtNtNtB7_5wheel5stack5Stack3popB19_(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.o, ptr noalias nofree noundef nonnull align 8 dereferenceable(104) %2), !dbg !11326 ; 2 uses
-  %i.w = extractvalue { i64, i64 } %i.v, 0, !dbg !11326
-    #dbg_value(i64 %i.w, !11295, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11192)
-    #dbg_value(i64 poison, !11295, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11192)
+  call void @llvm.experimental.noalias.scope.decl(metadata !11296), !dbg !11326
+    #dbg_value(ptr %i.m, !11291, !DIExpression(), !11191)
+    #dbg_value(i64 poison, !11292, !DIExpression(), !11191)
+    #dbg_value(ptr %2, !11293, !DIExpression(), !11191)
+  %i.v = call { i64, i64 } @_RNvXs6_NtNtCs3O5oxBhiT4j_10tokio_util4time11delay_queueINtB5_5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeENtNtNtB7_5wheel5stack5Stack3popB19_(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.o, ptr noalias nofree noundef nonnull align 8 dereferenceable(104) %2), !dbg !11327 ; 2 uses
+  %i.w = extractvalue { i64, i64 } %i.v, 0, !dbg !11327
+    #dbg_value(i64 %i.w, !11294, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11192)
+    #dbg_value(i64 poison, !11294, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11192)
   switch i64 %i.w, label %_RNvMNtNtCs3O5oxBhiT4j_10tokio_util4time5wheelINtB2_5WheelINtNtB4_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE15poll_expirationB1q_.exit [
     i64 1, label %bb.d
     i64 0, label %.loopexit
-  ], !dbg !11327
+  ], !dbg !11328
 
 bb.d:                                             ; preds = %.lr.ph.split.us.split.us.i
-  %.val.i.i.us.us.i = load i64, ptr %i.o, align 8, !dbg !11328, !range !6006, !alias.scope !11288, !noalias !11297, !noundef !1613
+  %.val.i.i.us.us.i = load i64, ptr %i.o, align 8, !dbg !11329, !range !6006, !alias.scope !11296, !noalias !11297, !noundef !1613
     #dbg_value(ptr poison, !6010, !DIExpression(), !11198)
     #dbg_value(ptr poison, !6016, !DIExpression(), !11200)
     #dbg_value(ptr poison, !6021, !DIExpression(), !11202)
-  %.not.i.i.i.us.us.i = icmp eq i64 %.val.i.i.us.us.i, 0, !dbg !11329
-  br i1 %.not.i.i.i.us.us.i, label %bb.e, label %_RNvMNtNtCs3O5oxBhiT4j_10tokio_util4time5wheelINtB2_5WheelINtNtB4_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE15poll_expirationB1q_.exit, !dbg !11330
+  %.not.i.i.i.us.us.i = icmp eq i64 %.val.i.i.us.us.i, 0, !dbg !11330
+  br i1 %.not.i.i.i.us.us.i, label %bb.e, label %_RNvMNtNtCs3O5oxBhiT4j_10tokio_util4time5wheelINtB2_5WheelINtNtB4_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE15poll_expirationB1q_.exit, !dbg !11331
 
 bb.e:                                             ; preds = %bb.d
-  %i.x = load i64, ptr %i.q, align 8, !dbg !11331, !alias.scope !11288, !noalias !11297, !noundef !1613
-  %i.y = xor i64 %i.x, %i.p, !dbg !11331
-  store i64 %i.y, ptr %i.q, align 8, !dbg !11331, !alias.scope !11288, !noalias !11297
-  br label %_RNvMNtNtCs3O5oxBhiT4j_10tokio_util4time5wheelINtB2_5WheelINtNtB4_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE15poll_expirationB1q_.exit, !dbg !11332
+  %i.x = load i64, ptr %i.q, align 8, !dbg !11332, !alias.scope !11296, !noalias !11297, !noundef !1613
+  %i.y = xor i64 %i.x, %i.p, !dbg !11332
+  store i64 %i.y, ptr %i.q, align 8, !dbg !11332, !alias.scope !11296, !noalias !11297
+  br label %_RNvMNtNtCs3O5oxBhiT4j_10tokio_util4time5wheelINtB2_5WheelINtNtB4_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE15poll_expirationB1q_.exit, !dbg !11333
 
 .lr.ph.split.us.split.split.us.i:                 ; preds = %.lr.ph.split.us.i, %_RNvMNtNtCs3O5oxBhiT4j_10tokio_util4time5wheelINtB2_5WheelINtNtB4_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE9pop_entryB1q_.exit.thread.us.us11.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !11288), !dbg !11325
-    #dbg_value(ptr %i.m, !11289, !DIExpression(), !11191)
-    #dbg_value(i64 poison, !11293, !DIExpression(), !11191)
-    #dbg_value(ptr %2, !11294, !DIExpression(), !11191)
-  %i.z = call { i64, i64 } @_RNvXs6_NtNtCs3O5oxBhiT4j_10tokio_util4time11delay_queueINtB5_5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeENtNtNtB7_5wheel5stack5Stack3popB19_(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.o, ptr noalias nofree noundef nonnull align 8 dereferenceable(104) %2), !dbg !11326 ; 2 uses
-  %i.aa = extractvalue { i64, i64 } %i.z, 0, !dbg !11326
-    #dbg_value(i64 %i.aa, !11295, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11192)
-    #dbg_value(i64 poison, !11295, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11192)
+  call void @llvm.experimental.noalias.scope.decl(metadata !11296), !dbg !11326
+    #dbg_value(ptr %i.m, !11291, !DIExpression(), !11191)
+    #dbg_value(i64 poison, !11292, !DIExpression(), !11191)
+    #dbg_value(ptr %2, !11293, !DIExpression(), !11191)
+  %i.z = call { i64, i64 } @_RNvXs6_NtNtCs3O5oxBhiT4j_10tokio_util4time11delay_queueINtB5_5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeENtNtNtB7_5wheel5stack5Stack3popB19_(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.o, ptr noalias nofree noundef nonnull align 8 dereferenceable(104) %2), !dbg !11327 ; 2 uses
+  %i.aa = extractvalue { i64, i64 } %i.z, 0, !dbg !11327
+    #dbg_value(i64 %i.aa, !11294, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !11192)
+    #dbg_value(i64 poison, !11294, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !11192)
   switch i64 %i.aa, label %_RNvMNtNtCs3O5oxBhiT4j_10tokio_util4time5wheelINtB2_5WheelINtNtB4_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE9pop_entryB1q_.exit.thread.us.us11.i [
     i64 1, label %bb.f
     i64 0, label %.loopexit
-  ], !dbg !11327
+  ], !dbg !11328
 
 bb.f:                                             ; preds = %.lr.ph.split.us.split.split.us.i
-  %.val.i.i.us.us9.i = load i64, ptr %i.o, align 8, !dbg !11328, !range !6006, !alias.scope !11288, !noalias !11297, !noundef !1613
+  %.val.i.i.us.us9.i = load i64, ptr %i.o, align 8, !dbg !11329, !range !6006, !alias.scope !11296, !noalias !11297, !noundef !1613
     #dbg_value(ptr poison, !6010, !DIExpression(), !11198)
     #dbg_value(ptr poison, !6016, !DIExpression(), !11200)
     #dbg_value(ptr poison, !6021, !DIExpression(), !11202)
-  %.not.i.i.i.us.us10.i = icmp eq i64 %.val.i.i.us.us9.i, 0, !dbg !11329
-  br i1 %.not.i.i.i.us.us10.i, label %bb.g, label %_RNvMNtNtCs3O5oxBhiT4j_10tokio_util4time5wheelINtB2_5WheelINtNtB4_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE9pop_entryB1q_.exit.thread.us.us11.i, !dbg !11330
+  %.not.i.i.i.us.us10.i = icmp eq i64 %.val.i.i.us.us9.i, 0, !dbg !11330
+  br i1 %.not.i.i.i.us.us10.i, label %bb.g, label %_RNvMNtNtCs3O5oxBhiT4j_10tokio_util4time5wheelINtB2_5WheelINtNtB4_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE9pop_entryB1q_.exit.thread.us.us11.i, !dbg !11331
 
 bb.g:                                             ; preds = %bb.f
-  %i.ab = load i64, ptr %i.q, align 8, !dbg !11331, !alias.scope !11288, !noalias !11297, !noundef !1613
-  %i.ac = xor i64 %i.ab, %i.p, !dbg !11331
-  store i64 %i.ac, ptr %i.q, align 8, !dbg !11331, !alias.scope !11288, !noalias !11297
-  br label %_RNvMNtNtCs3O5oxBhiT4j_10tokio_util4time5wheelINtB2_5WheelINtNtB4_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE9pop_entryB1q_.exit.thread.us.us11.i, !dbg !11332
+  %i.ab = load i64, ptr %i.q, align 8, !dbg !11332, !alias.scope !11296, !noalias !11297, !noundef !1613
+  %i.ac = xor i64 %i.ab, %i.p, !dbg !11332
+  store i64 %i.ac, ptr %i.q, align 8, !dbg !11332, !alias.scope !11296, !noalias !11297
+  br label %_RNvMNtNtCs3O5oxBhiT4j_10tokio_util4time5wheelINtB2_5WheelINtNtB4_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE9pop_entryB1q_.exit.thread.us.us11.i, !dbg !11333
 
 _RNvMNtNtCs3O5oxBhiT4j_10tokio_util4time5wheelINtB2_5WheelINtNtB4_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE9pop_entryB1q_.exit.thread.us.us11.i: ; preds = %bb.g, %bb.f, %.lr.ph.split.us.split.split.us.i
-  %i.ad = extractvalue { i64, i64 } %i.z, 1, !dbg !11333 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !dbg !11334, !noalias !11298
-  store i64 %i.ad, ptr %i.e, align 8, !dbg !11334, !noalias !11298
-  %i.ae = call noundef i64 @_RNvXs6_NtNtCs3O5oxBhiT4j_10tokio_util4time11delay_queueINtB5_5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeENtNtNtB7_5wheel5stack5Stack4whenB19_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.e, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(104) %2), !dbg !11335
+  %i.ad = extractvalue { i64, i64 } %i.z, 1, !dbg !11334 ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !dbg !11335, !noalias !11298
+  store i64 %i.ad, ptr %i.e, align 8, !dbg !11335, !noalias !11298
+  %i.ae = call noundef i64 @_RNvXs6_NtNtCs3O5oxBhiT4j_10tokio_util4time11delay_queueINtB5_5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeENtNtNtB7_5wheel5stack5Stack4whenB19_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.e, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(104) %2), !dbg !11336
     #dbg_value(i64 %i.ae, !11280, !DIExpression(), !11203)
     #dbg_value(i64 poison, !11281, !DIExpression(DW_OP_constu, 1, DW_OP_minus, DW_OP_stack_value), !11204)
     #dbg_value(ptr %i.r, !6026, !DIExpression(), !11206)
@@ -281,40 +281,36 @@ _RNvMNtNtCs3O5oxBhiT4j_10tokio_util4time5wheelINtB2_5WheelINtNtB4_11delay_queue5
     #dbg_value(i64 poison, !6038, !DIExpression(), !11208)
     #dbg_value(i64 poison, !6033, !DIExpression(), !11209)
     #dbg_value(i64 poison, !6040, !DIExpression(), !11211)
-  %i.af = load i64, ptr %i.s, align 8, !dbg !11336, !alias.scope !11299, !noalias !11298, !noundef !1613
+  %i.af = load i64, ptr %i.s, align 8, !dbg !11337, !alias.scope !11299, !noalias !11298, !noundef !1613
     #dbg_value(i64 %i.af, !6038, !DIExpression(), !11208)
-  %i.ag = mul i64 %i.af, 6, !dbg !11337
-  %i.ah = and i64 %i.ag, 62, !dbg !11338
-  %i.ai = lshr i64 %i.ae, %i.ah, !dbg !11338
-  %i.aj = and i64 %i.ai, 63, !dbg !11339          ; 2 uses
+  %i.ag = mul i64 %i.af, 6, !dbg !11338
+  %i.ah = and i64 %i.ag, 62, !dbg !11339
+  %i.ai = lshr i64 %i.ae, %i.ah, !dbg !11339
+  %i.aj = and i64 %i.ai, 63, !dbg !11340          ; 2 uses
     #dbg_value(i64 %i.aj, !6033, !DIExpression(), !11209)
     #dbg_value(i64 %i.aj, !6040, !DIExpression(), !11211)
-  %i.ak = getelementptr inbounds nuw [16 x i8], ptr %i.r, i64 %i.aj, !dbg !11340
-  call void @_RNvXs6_NtNtCs3O5oxBhiT4j_10tokio_util4time11delay_queueINtB5_5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeENtNtNtB7_5wheel5stack5Stack4pushB19_(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.ak, i64 noundef %i.ad, ptr noalias nofree noundef nonnull align 8 dereferenceable(104) %2), !dbg !11341
-  %i.al = shl nuw i64 1, %i.aj, !dbg !11342
-  %i.am = load i64, ptr %i.t, align 8, !dbg !11343, !alias.scope !11299, !noalias !11298, !noundef !1613
-  %i.an = or i64 %i.al, %i.am, !dbg !11343
-  store i64 %i.an, ptr %i.t, align 8, !dbg !11343, !alias.scope !11299, !noalias !11298
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !dbg !11344, !noalias !11298
+  %i.ak = getelementptr inbounds nuw [16 x i8], ptr %i.r, i64 %i.aj, !dbg !11341
+  call void @_RNvXs6_NtNtCs3O5oxBhiT4j_10tokio_util4time11delay_queueINtB5_5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeENtNtNtB7_5wheel5stack5Stack4pushB19_(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.ak, i64 noundef %i.ad, ptr noalias nofree noundef nonnull align 8 dereferenceable(104) %2), !dbg !11342
+  %i.al = shl nuw i64 1, %i.aj, !dbg !11343
+  %i.am = load i64, ptr %i.t, align 8, !dbg !11344, !alias.scope !11299, !noalias !11298, !noundef !1613
+  %i.an = or i64 %i.al, %i.am, !dbg !11344
+  store i64 %i.an, ptr %i.t, align 8, !dbg !11344, !alias.scope !11299, !noalias !11298
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !dbg !11345, !noalias !11298
     #dbg_value(ptr poison, !11283, !DIExpression(), !11185)
     #dbg_value(ptr poison, !11285, !DIExpression(), !11185)
     #dbg_value(ptr %2, !11286, !DIExpression(), !11185)
   br label %.lr.ph.split.us.split.split.us.i, !dbg !11324
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !11288), !dbg !11325
-    #dbg_value(ptr %i.m, !11289, !DIExpression(), !11191)
-    #dbg_value(i64 %.sroa.8.0.copyload, !11293, !DIExpression(), !11191)
-    #dbg_value(ptr %2, !11294, !DIExpression(), !11191)
-  call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %.sroa.8.0.copyload, i64 noundef 64, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @33) #28, !dbg !11345, !noalias !11300
-  unreachable, !dbg !11345
+  call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %.sroa.8.0.copyload, i64 noundef 64, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @33) #28, !dbg !11325, !noalias !11300
+  unreachable, !dbg !11325
 
 bb.h:                                             ; preds = %bb.c
   call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %.0.val1.fr.i, i64 noundef %.val10, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @30) #28, !dbg !11324, !noalias !11297
   unreachable, !dbg !11324
 
 _RNvMNtNtCs3O5oxBhiT4j_10tokio_util4time5wheelINtB2_5WheelINtNtB4_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE15poll_expirationB1q_.exit: ; preds = %.lr.ph.split.us.split.us.i, %bb.d, %bb.e
-  %i.ao = extractvalue { i64, i64 } %i.v, 1, !dbg !11333
+  %i.ao = extractvalue { i64, i64 } %i.v, 1, !dbg !11334
   %i.ap = insertvalue { i64, i64 } { i64 1, i64 poison }, i64 %i.ao, 1, !dbg !11346
   br label %bb.l, !dbg !11347
 
@@ -717,18 +713,18 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !11183 = distinct !DISubprogram(name: "pop_entry<tokio_util::time::delay_queue::Stack<tokio_quiche::http3::settings::Http3TimeoutType>>", linkageName: "_RNvMNtNtCs3O5oxBhiT4j_10tokio_util4time5wheelINtB2_5WheelINtNtB4_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE9pop_entryB1q_", scope: !1197, file: !5879, line: 250, type: !11269, scopeLine: 250, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !461, templateParams: !5921, declaration: !11284, retainedNodes: !11287)
 !11184 = distinct !DILocation(line: 220, column: 37, scope: !11178, inlinedAt: !11180)
 !11185 = distinct !DILocation(line: 0, scope: !11183, inlinedAt: !11184)
-!11186 = distinct !{!11186, i1 true, !"_RNvMNtNtNtCs3O5oxBhiT4j_10tokio_util4time5wheel5levelINtB2_5LevelINtNtB6_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE14pop_entry_slotB1y_"}
-!11187 = distinct !{!11187, !11186, !"_RNvMNtNtNtCs3O5oxBhiT4j_10tokio_util4time5wheel5levelINtB2_5LevelINtNtB6_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE14pop_entry_slotB1y_: argument 0"}
-!11188 = distinct !DILexicalBlock(scope: !11189, file: !5939, line: 139, column: 9)
-!11189 = distinct !DISubprogram(name: "pop_entry_slot<tokio_util::time::delay_queue::Stack<tokio_quiche::http3::settings::Http3TimeoutType>>", linkageName: "_RNvMNtNtNtCs3O5oxBhiT4j_10tokio_util4time5wheel5levelINtB2_5LevelINtNtB6_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE14pop_entry_slotB1y_", scope: !1195, file: !5939, line: 138, type: !11291, scopeLine: 138, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !461, templateParams: !5921, declaration: !11292, retainedNodes: !11296)
-!11190 = distinct !DILocation(line: 251, column: 39, scope: !11183, inlinedAt: !11184)
-!11191 = distinct !DILocation(line: 0, scope: !11189, inlinedAt: !11190)
-!11192 = distinct !DILocation(line: 0, scope: !11188, inlinedAt: !11190)
+!11186 = distinct !DILexicalBlock(scope: !11187, file: !5939, line: 139, column: 9)
+!11187 = distinct !DISubprogram(name: "pop_entry_slot<tokio_util::time::delay_queue::Stack<tokio_quiche::http3::settings::Http3TimeoutType>>", linkageName: "_RNvMNtNtNtCs3O5oxBhiT4j_10tokio_util4time5wheel5levelINtB2_5LevelINtNtB6_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE14pop_entry_slotB1y_", scope: !1195, file: !5939, line: 138, type: !11289, scopeLine: 138, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagDefinition | DISPFlagOptimized, unit: !461, templateParams: !5921, declaration: !11290, retainedNodes: !11295)
+!11188 = distinct !DILocation(line: 251, column: 39, scope: !11183, inlinedAt: !11184)
+!11189 = distinct !{!11189, i1 true, !"_RNvMNtNtNtCs3O5oxBhiT4j_10tokio_util4time5wheel5levelINtB2_5LevelINtNtB6_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE14pop_entry_slotB1y_"}
+!11190 = distinct !{!11190, !11189, !"_RNvMNtNtNtCs3O5oxBhiT4j_10tokio_util4time5wheel5levelINtB2_5LevelINtNtB6_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE14pop_entry_slotB1y_: argument 0"}
+!11191 = distinct !DILocation(line: 0, scope: !11187, inlinedAt: !11188)
+!11192 = distinct !DILocation(line: 0, scope: !11186, inlinedAt: !11188)
 !11193 = distinct !{!11193, i1 true, !"_RNvMNtNtCs3O5oxBhiT4j_10tokio_util4time5wheelINtB2_5WheelINtNtB4_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE15poll_expirationB1q_"}
 !11194 = distinct !{!11194, !11193, !"_RNvMNtNtCs3O5oxBhiT4j_10tokio_util4time5wheelINtB2_5WheelINtNtB4_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE15poll_expirationB1q_: argument 0"}
 !11195 = distinct !{!11195, i1 true, !"_RNvMNtNtCs3O5oxBhiT4j_10tokio_util4time5wheelINtB2_5WheelINtNtB4_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE9pop_entryB1q_"}
 !11196 = distinct !{!11196, !11195, !"_RNvMNtNtCs3O5oxBhiT4j_10tokio_util4time5wheelINtB2_5WheelINtNtB4_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE9pop_entryB1q_: argument 0"}
-!11197 = distinct !DILocation(line: 141, column: 45, scope: !11188, inlinedAt: !11190)
+!11197 = distinct !DILocation(line: 141, column: 45, scope: !11186, inlinedAt: !11188)
 !11198 = distinct !DILocation(line: 0, scope: !1219, inlinedAt: !11197)
 !11199 = distinct !DILocation(line: 1220, column: 19, scope: !1219, inlinedAt: !11197)
 !11200 = distinct !DILocation(line: 682, column: 26, scope: !1220, inlinedAt: !11199)
@@ -745,7 +741,7 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !11211 = distinct !DILocation(line: 0, scope: !1225, inlinedAt: !11210)
 !11212 = distinct !{!11212, i1 true, !"_RNvMNtNtNtCs3O5oxBhiT4j_10tokio_util4time5wheel5levelINtB2_5LevelINtNtB6_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE9add_entryB1y_"}
 !11213 = distinct !{!11213, !11212, !"_RNvMNtNtNtCs3O5oxBhiT4j_10tokio_util4time5wheel5levelINtB2_5LevelINtNtB6_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE9add_entryB1y_: argument 0"}
-!11214 = distinct !{!11214, !11186, !"_RNvMNtNtNtCs3O5oxBhiT4j_10tokio_util4time5wheel5levelINtB2_5LevelINtNtB6_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE14pop_entry_slotB1y_: argument 1"}
+!11214 = distinct !{!11214, !11189, !"_RNvMNtNtNtCs3O5oxBhiT4j_10tokio_util4time5wheel5levelINtB2_5LevelINtNtB6_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE14pop_entry_slotB1y_: argument 1"}
 !11215 = distinct !{!11215, i1 true, !"_RNvMNtNtCs3O5oxBhiT4j_10tokio_util4time5wheelINtB2_5WheelINtNtB4_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE11set_elapsedB1q_"}
 !11216 = distinct !{!11216, !11215, !"_RNvMNtNtCs3O5oxBhiT4j_10tokio_util4time5wheelINtB2_5WheelINtNtB4_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE11set_elapsedB1q_: argument 0"}
 !11217 = distinct !DILexicalBlock(scope: !11218, file: !5940, line: 61, column: 38)
@@ -818,19 +814,19 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !11285 = !DILocalVariable(name: "expiration", arg: 2, scope: !11183, file: !5879, line: 250, type: !11235)
 !11286 = !DILocalVariable(name: "store", arg: 3, scope: !11183, file: !5879, line: 250, type: !5949)
 !11287 = !{!11283, !11285, !11286}
-!11288 = !{!11187}
-!11289 = !DILocalVariable(name: "self", arg: 1, scope: !11189, file: !5939, line: 138, type: !6007)
-!11290 = !{!1193, !6007, !1607, !5949}
-!11291 = !DISubroutineType(types: !11290)
-!11292 = !DISubprogram(name: "pop_entry_slot<tokio_util::time::delay_queue::Stack<tokio_quiche::http3::settings::Http3TimeoutType>>", linkageName: "_RNvMNtNtNtCs3O5oxBhiT4j_10tokio_util4time5wheel5levelINtB2_5LevelINtNtB6_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE14pop_entry_slotB1y_", scope: !1195, file: !5939, line: 138, type: !11291, scopeLine: 138, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !5921)
-!11293 = !DILocalVariable(name: "slot", arg: 2, scope: !11189, file: !5939, line: 138, type: !1607)
-!11294 = !DILocalVariable(name: "store", arg: 3, scope: !11189, file: !5939, line: 138, type: !5949)
-!11295 = !DILocalVariable(name: "ret", scope: !11188, file: !5939, line: 139, type: !1193, align: 64)
-!11296 = !{!11289, !11293, !11294, !11295}
+!11288 = !{!1193, !6007, !1607, !5949}
+!11289 = !DISubroutineType(types: !11288)
+!11290 = !DISubprogram(name: "pop_entry_slot<tokio_util::time::delay_queue::Stack<tokio_quiche::http3::settings::Http3TimeoutType>>", linkageName: "_RNvMNtNtNtCs3O5oxBhiT4j_10tokio_util4time5wheel5levelINtB2_5LevelINtNtB6_11delay_queue5StackNtNtNtCsa2e0UnRrdBM_12tokio_quiche5http38settings16Http3TimeoutTypeEE14pop_entry_slotB1y_", scope: !1195, file: !5939, line: 138, type: !11289, scopeLine: 138, flags: DIFlagPrototyped, spFlags: DISPFlagLocalToUnit | DISPFlagOptimized, templateParams: !5921)
+!11291 = !DILocalVariable(name: "self", arg: 1, scope: !11187, file: !5939, line: 138, type: !6007)
+!11292 = !DILocalVariable(name: "slot", arg: 2, scope: !11187, file: !5939, line: 138, type: !1607)
+!11293 = !DILocalVariable(name: "store", arg: 3, scope: !11187, file: !5939, line: 138, type: !5949)
+!11294 = !DILocalVariable(name: "ret", scope: !11186, file: !5939, line: 139, type: !1193, align: 64)
+!11295 = !{!11291, !11292, !11293, !11294}
+!11296 = !{!11190}
 !11297 = !{!11196, !11194}
 !11298 = !{!11194}
 !11299 = !{!11213}
-!11300 = !{!11187, !11214, !11196, !11194}
+!11300 = !{!11190, !11214, !11196, !11194}
 !11301 = !{!11216}
 !11302 = !DILocalVariable(name: "when", arg: 2, scope: !11219, file: !5879, line: 237, type: !1355)
 !11303 = !{null, !5948, !1355}
@@ -855,27 +851,27 @@ begin_hunk_1_@llvm.experimental.noalias.scope.decl
 !11322 = !DILocation(line: 158, column: 14, scope: !11169)
 !11323 = !DILocation(line: 162, column: 46, scope: !11166)
 !11324 = !DILocation(line: 251, column: 9, scope: !11183, inlinedAt: !11184)
-!11325 = !DILocation(line: 251, column: 39, scope: !11183, inlinedAt: !11184)
-!11326 = !DILocation(line: 139, column: 35, scope: !11189, inlinedAt: !11190)
-!11327 = !DILocation(line: 141, column: 12, scope: !11188, inlinedAt: !11190)
-!11328 = !DILocation(line: 141, column: 45, scope: !11188, inlinedAt: !11190)
-!11329 = !DILocation(line: 434, column: 9, scope: !6024, inlinedAt: !11201)
-!11330 = !DILocation(line: 141, column: 29, scope: !11188, inlinedAt: !11190)
-!11331 = !DILocation(line: 145, column: 13, scope: !11188, inlinedAt: !11190)
-!11332 = !DILocation(line: 141, column: 9, scope: !11188, inlinedAt: !11190)
-!11333 = !DILocation(line: 220, column: 37, scope: !11178, inlinedAt: !11180)
-!11334 = !DILocation(line: 220, column: 24, scope: !11178, inlinedAt: !11180)
-!11335 = !DILocation(line: 226, column: 28, scope: !11178, inlinedAt: !11180)
-!11336 = !DILocation(line: 118, column: 35, scope: !1223, inlinedAt: !11205)
-!11337 = !DILocation(line: 178, column: 19, scope: !1224, inlinedAt: !11207)
-!11338 = !DILocation(line: 178, column: 6, scope: !1224, inlinedAt: !11207)
-!11339 = !DILocation(line: 178, column: 5, scope: !1224, inlinedAt: !11207)
-!11340 = !DILocation(line: 120, column: 9, scope: !1222, inlinedAt: !11205)
-!11341 = !DILocation(line: 120, column: 25, scope: !1222, inlinedAt: !11205)
-!11342 = !DILocation(line: 165, column: 5, scope: !1225, inlinedAt: !11210)
-!11343 = !DILocation(line: 121, column: 9, scope: !1222, inlinedAt: !11205)
-!11344 = !DILocation(line: 232, column: 9, scope: !11179, inlinedAt: !11180)
-!11345 = !DILocation(line: 139, column: 19, scope: !11189, inlinedAt: !11190)
+!11325 = !DILocation(line: 139, column: 19, scope: !11187, inlinedAt: !11188)
+!11326 = !DILocation(line: 251, column: 39, scope: !11183, inlinedAt: !11184)
+!11327 = !DILocation(line: 139, column: 35, scope: !11187, inlinedAt: !11188)
+!11328 = !DILocation(line: 141, column: 12, scope: !11186, inlinedAt: !11188)
+!11329 = !DILocation(line: 141, column: 45, scope: !11186, inlinedAt: !11188)
+!11330 = !DILocation(line: 434, column: 9, scope: !6024, inlinedAt: !11201)
+!11331 = !DILocation(line: 141, column: 29, scope: !11186, inlinedAt: !11188)
+!11332 = !DILocation(line: 145, column: 13, scope: !11186, inlinedAt: !11188)
+!11333 = !DILocation(line: 141, column: 9, scope: !11186, inlinedAt: !11188)
+!11334 = !DILocation(line: 220, column: 37, scope: !11178, inlinedAt: !11180)
+!11335 = !DILocation(line: 220, column: 24, scope: !11178, inlinedAt: !11180)
+!11336 = !DILocation(line: 226, column: 28, scope: !11178, inlinedAt: !11180)
+!11337 = !DILocation(line: 118, column: 35, scope: !1223, inlinedAt: !11205)
+!11338 = !DILocation(line: 178, column: 19, scope: !1224, inlinedAt: !11207)
+!11339 = !DILocation(line: 178, column: 6, scope: !1224, inlinedAt: !11207)
+!11340 = !DILocation(line: 178, column: 5, scope: !1224, inlinedAt: !11207)
+!11341 = !DILocation(line: 120, column: 9, scope: !1222, inlinedAt: !11205)
+!11342 = !DILocation(line: 120, column: 25, scope: !1222, inlinedAt: !11205)
+!11343 = !DILocation(line: 165, column: 5, scope: !1225, inlinedAt: !11210)
+!11344 = !DILocation(line: 121, column: 9, scope: !1222, inlinedAt: !11205)
+!11345 = !DILocation(line: 232, column: 9, scope: !11179, inlinedAt: !11180)
 !11346 = !DILocation(line: 235, column: 6, scope: !11179, inlinedAt: !11180)
 !11347 = !DILocation(line: 162, column: 28, scope: !11166)
 !11348 = !DILocation(line: 173, column: 26, scope: !11168)

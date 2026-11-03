@@ -204,12 +204,7 @@ bb.e:                                             ; preds = %bb.f
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val2.i81 = load ptr, ptr %i.s, align 8
   %.sroa.452.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  br i1 %.not.i80, label %.lr.ph.split.us, label %.lr.ph.split, !prof !33
-
-.lr.ph.split.us:                                  ; preds = %.lr.ph
-  call void @llvm.experimental.noalias.scope.decl(metadata !29660)
-  call void @_RNvNtNtCs8Chj7Szqq0n_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.q, i64 noundef %.val3.i79, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1792) #18, !noalias !29660
-  unreachable
+  br i1 %.not.i80, label %2, label %.lr.ph.split, !prof !33
 
 bb.f:                                             ; preds = %bb.c
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -235,6 +230,10 @@ bb.g:                                             ; preds = %bb.f, %bb.a, %._cri
   store ptr @_RNvXsb_NtCs1xtDLGvwb7z_23iceoryx2_bb_concurrency4cellINtB5_10UnsafeCellINtNtCs8Chj7Szqq0n_4core6option6OptionNtNtCs5kzjBmDVxDj_21iceoryx2_bb_container7slotmap10SlotMapKeyEENtNtB1c_3fmt5Debug3fmtCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common, ptr %.sroa.452.0..sroa_idx, align 8
   %i.w = call noundef zeroext i1 @_RNvNtCs8Chj7Szqq0n_4core3fmt5write(ptr noundef nonnull %i.m, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.o, ptr noundef nonnull @1565, ptr noundef nonnull %i.a) #17
   br i1 %i.w, label %bb.h, label %bb.i
+
+2:                                                ; preds = %.lr.ph
+  call void @_RNvNtNtCs8Chj7Szqq0n_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.q, i64 noundef %.val3.i79, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @1792) #18, !noalias !29660
+  unreachable
 
 ._crit_edge:                                      ; preds = %bb.i, %bb.b, %bb.e
   %i.x = getelementptr inbounds nuw i8, ptr %i.o, i64 24
