@@ -205,83 +205,24 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
 define range(i32 0, -1) i32 @Bdc_SpfdHashValue(i64 noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %.sroa.0.0.extract.trunc = trunc i64 %0 to i32
-  %2 = trunc i64 %0 to i32
-  %3 = lshr i32 %2, 8
-  %4 = trunc i64 %0 to i32
-  %5 = lshr i32 %4, 16
-  %6 = trunc i64 %0 to i32
-  %7 = lshr i32 %6, 24
-  %.sroa.5.0.extract.shift = lshr i64 %0, 32
-  %.sroa.5.0.extract.trunc = trunc nuw i64 %.sroa.5.0.extract.shift to i32
-  %.sroa.6.0.extract.shift = lshr i64 %0, 40
-  %.sroa.6.0.extract.trunc = trunc nuw nsw i64 %.sroa.6.0.extract.shift to i32
-  %.sroa.7.0.extract.shift = lshr i64 %0, 48
-  %.sroa.7.0.extract.trunc = trunc nuw nsw i64 %.sroa.7.0.extract.shift to i32
-  %.sroa.8.0.extract.shift = lshr i64 %0, 56
-  %.sroa.8.0.extract.trunc = trunc nuw nsw i64 %.sroa.8.0.extract.shift to i32
-  %8 = and i32 %.sroa.0.0.extract.trunc, 255
-  %9 = mul nuw i32 %8, 12582917
-  %10 = and i32 %3, 255
-  %11 = mul i32 %10, 25165843
-  %12 = xor i32 %11, %9
-  %13 = and i32 %5, 255
-  %14 = mul i32 %13, 50331653
-  %15 = xor i32 %14, %12
-  %16 = mul i32 %7, 100663319
-  %17 = xor i32 %16, %15
-  %18 = and i32 %.sroa.5.0.extract.trunc, 255
-  %19 = mul i32 %18, 201326611
-  %20 = xor i32 %19, %17
-  %21 = and i32 %.sroa.6.0.extract.trunc, 255
-  %22 = mul i32 %21, 402653189
-  %23 = xor i32 %22, %20
-  %24 = and i32 %.sroa.7.0.extract.trunc, 255
-  %25 = mul i32 %24, 805306457
-  %26 = xor i32 %25, %23
-  %27 = mul i32 %.sroa.8.0.extract.trunc, 1610612741
-  %28 = xor i32 %27, %26
-  %i.a = urem i32 %28, %1
+  %2 = bitcast i64 %0 to <8 x i8>
+  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 1, i32 0, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
+  %4 = zext <8 x i8> %3 to <8 x i32>
+  %5 = mul <8 x i32> %4, <i32 25165843, i32 12582917, i32 50331653, i32 100663319, i32 201326611, i32 402653189, i32 805306457, i32 1610612741>
+  %6 = tail call i32 @llvm.vector.reduce.xor.v8i32(<8 x i32> %5)
+  %i.a = urem i32 %6, %1
   ret i32 %i.a
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: read) uwtable
 define ptr @Bdc_SpfdHashLookup(ptr nofree noundef readonly captures(ret: address, provenance) %0, i32 noundef %1, i64 noundef %2) local_unnamed_addr #9 {
 bb.a:
-  %.sroa.0.0.extract.trunc.i = trunc i64 %2 to i32 ; 4 uses
-  %3 = lshr i32 %.sroa.0.0.extract.trunc.i, 8
-  %4 = lshr i32 %.sroa.0.0.extract.trunc.i, 16
-  %5 = lshr i32 %.sroa.0.0.extract.trunc.i, 24
-  %.sroa.5.0.extract.shift.i = lshr i64 %2, 32
-  %.sroa.5.0.extract.trunc.i = trunc nuw i64 %.sroa.5.0.extract.shift.i to i32
-  %.sroa.6.0.extract.shift.i = lshr i64 %2, 40
-  %.sroa.6.0.extract.trunc.i = trunc nuw nsw i64 %.sroa.6.0.extract.shift.i to i32
-  %.sroa.7.0.extract.shift.i = lshr i64 %2, 48
-  %.sroa.7.0.extract.trunc.i = trunc nuw nsw i64 %.sroa.7.0.extract.shift.i to i32
-  %.sroa.8.0.extract.shift.i = lshr i64 %2, 56
-  %.sroa.8.0.extract.trunc.i = trunc nuw nsw i64 %.sroa.8.0.extract.shift.i to i32
-  %6 = and i32 %.sroa.0.0.extract.trunc.i, 255
-  %7 = mul nuw i32 %6, 12582917
-  %8 = and i32 %3, 255
-  %9 = mul i32 %8, 25165843
-  %10 = and i32 %4, 255
-  %11 = mul i32 %10, 50331653
-  %12 = mul i32 %5, 100663319
-  %13 = and i32 %.sroa.5.0.extract.trunc.i, 255
-  %14 = mul i32 %13, 201326611
-  %15 = and i32 %.sroa.6.0.extract.trunc.i, 255
-  %16 = mul i32 %15, 402653189
-  %17 = and i32 %.sroa.7.0.extract.trunc.i, 255
-  %18 = mul i32 %17, 805306457
-  %19 = mul i32 %.sroa.8.0.extract.trunc.i, 1610612741
-  %20 = xor i32 %12, %7
-  %21 = xor i32 %20, %19
-  %22 = xor i32 %21, %9
-  %23 = xor i32 %22, %11
-  %24 = xor i32 %23, %14
-  %25 = xor i32 %24, %16
-  %26 = xor i32 %25, %18
-  %i.a = urem i32 %26, %1
+  %3 = bitcast i64 %2 to <8 x i8>
+  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 3, i32 0, i32 7, i32 1, i32 2, i32 4, i32 5, i32 6>
+  %5 = zext <8 x i8> %4 to <8 x i32>
+  %6 = mul <8 x i32> %5, <i32 100663319, i32 12582917, i32 1610612741, i32 25165843, i32 50331653, i32 201326611, i32 402653189, i32 805306457>
+  %7 = tail call i32 @llvm.vector.reduce.xor.v8i32(<8 x i32> %6)
+  %i.a = urem i32 %7, %1
   %i.b = sext i32 %i.a to i64
   %i.c = getelementptr inbounds [24 x i8], ptr %0, i64 %i.b
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 12 ; 2 uses
@@ -422,43 +363,15 @@ bb.d:                                             ; preds = %Vec_IntPush.exit, %
   %i.as = or disjoint i64 %i.ar, 536870911
   store i64 %i.as, ptr %.1279, align 8
   %i.at = getelementptr inbounds nuw [8 x i8], ptr @Truths, i64 %indvars.iv
-  %i.au = load i64, ptr %i.at, align 8, !tbaa !16 ; 8 uses
+  %i.au = load i64, ptr %i.at, align 8, !tbaa !16 ; 4 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.pn278, i64 40
   store i64 %i.au, ptr %i.av, align 8, !tbaa !33
-  %.sroa.0.0.extract.trunc.i.i = trunc i64 %i.au to i32 ; 4 uses
-  %5 = lshr i32 %.sroa.0.0.extract.trunc.i.i, 8
-  %6 = lshr i32 %.sroa.0.0.extract.trunc.i.i, 16
-  %7 = lshr i32 %.sroa.0.0.extract.trunc.i.i, 24
-  %.sroa.5.0.extract.shift.i.i = lshr i64 %i.au, 32
-  %.sroa.5.0.extract.trunc.i.i = trunc nuw i64 %.sroa.5.0.extract.shift.i.i to i32
-  %.sroa.6.0.extract.shift.i.i = lshr i64 %i.au, 40
-  %.sroa.6.0.extract.trunc.i.i = trunc nuw nsw i64 %.sroa.6.0.extract.shift.i.i to i32
-  %.sroa.7.0.extract.shift.i.i = lshr i64 %i.au, 48
-  %.sroa.7.0.extract.trunc.i.i = trunc nuw nsw i64 %.sroa.7.0.extract.shift.i.i to i32
-  %.sroa.8.0.extract.shift.i.i = lshr i64 %i.au, 56
-  %.sroa.8.0.extract.trunc.i.i = trunc nuw nsw i64 %.sroa.8.0.extract.shift.i.i to i32
-  %8 = and i32 %.sroa.0.0.extract.trunc.i.i, 255
-  %9 = mul nuw i32 %8, 12582917
-  %10 = and i32 %5, 255
-  %11 = mul i32 %10, 25165843
-  %12 = and i32 %6, 255
-  %13 = mul i32 %12, 50331653
-  %14 = mul i32 %7, 100663319
-  %15 = and i32 %.sroa.5.0.extract.trunc.i.i, 255
-  %16 = mul i32 %15, 201326611
-  %17 = and i32 %.sroa.6.0.extract.trunc.i.i, 255
-  %18 = mul i32 %17, 402653189
-  %19 = and i32 %.sroa.7.0.extract.trunc.i.i, 255
-  %20 = mul i32 %19, 805306457
-  %21 = mul i32 %.sroa.8.0.extract.trunc.i.i, 1610612741
-  %22 = xor i32 %14, %9
-  %23 = xor i32 %22, %21
-  %24 = xor i32 %23, %11
-  %25 = xor i32 %24, %13
-  %26 = xor i32 %25, %16
-  %27 = xor i32 %26, %18
-  %28 = xor i32 %27, %20
-  %i.aw = urem i32 %28, 201326611
+  %5 = bitcast i64 %i.au to <8 x i8>
+  %6 = shufflevector <8 x i8> %5, <8 x i8> poison, <8 x i32> <i32 3, i32 0, i32 7, i32 1, i32 2, i32 4, i32 5, i32 6>
+  %7 = zext <8 x i8> %6 to <8 x i32>
+  %8 = mul <8 x i32> %7, <i32 100663319, i32 12582917, i32 1610612741, i32 25165843, i32 50331653, i32 201326611, i32 402653189, i32 805306457>
+  %9 = call i32 @llvm.vector.reduce.xor.v8i32(<8 x i32> %8)
+  %i.aw = urem i32 %9, 201326611
   %i.ax = zext nneg i32 %i.aw to i64
   %i.ay = getelementptr inbounds nuw [24 x i8], ptr %i.g, i64 %i.ax
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 12 ; 2 uses
@@ -766,45 +679,17 @@ bb.z:                                             ; preds = %.preheader.us, %Bdc
   %i.fe = select i1 %.not166.us, i64 %i.fd, i64 %i.fc ; 4 uses
   %i.ff = and i64 %i.fe, 1
   %sext.us = sub nsw i64 0, %i.ff                 ; 2 uses
-  %.0.us = xor i64 %i.fe, %sext.us                ; 8 uses
+  %.0.us = xor i64 %i.fe, %sext.us                ; 4 uses
   %i.fg = icmp eq i64 %i.fe, %sext.us
   br i1 %i.fg, label %Bdc_SpfdHashLookup.exit216.us, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %.sroa.0.0.extract.trunc.i.i201.us = trunc i64 %.0.us to i32 ; 4 uses
-  %29 = lshr i32 %.sroa.0.0.extract.trunc.i.i201.us, 8
-  %30 = lshr i32 %.sroa.0.0.extract.trunc.i.i201.us, 16
-  %31 = lshr i32 %.sroa.0.0.extract.trunc.i.i201.us, 24
-  %.sroa.5.0.extract.shift.i.i202.us = lshr i64 %.0.us, 32
-  %.sroa.5.0.extract.trunc.i.i203.us = trunc nuw i64 %.sroa.5.0.extract.shift.i.i202.us to i32
-  %.sroa.6.0.extract.shift.i.i204.us = lshr i64 %.0.us, 40
-  %.sroa.6.0.extract.trunc.i.i205.us = trunc nuw nsw i64 %.sroa.6.0.extract.shift.i.i204.us to i32
-  %.sroa.7.0.extract.shift.i.i206.us = lshr i64 %.0.us, 48
-  %.sroa.7.0.extract.trunc.i.i207.us = trunc nuw nsw i64 %.sroa.7.0.extract.shift.i.i206.us to i32
-  %.sroa.8.0.extract.shift.i.i208.us = lshr i64 %.0.us, 56
-  %.sroa.8.0.extract.trunc.i.i209.us = trunc nuw nsw i64 %.sroa.8.0.extract.shift.i.i208.us to i32
-  %32 = and i32 %.sroa.0.0.extract.trunc.i.i201.us, 255
-  %33 = mul nuw i32 %32, 12582917
-  %34 = and i32 %29, 255
-  %35 = mul i32 %34, 25165843
-  %36 = and i32 %30, 255
-  %37 = mul i32 %36, 50331653
-  %38 = mul i32 %31, 100663319
-  %39 = and i32 %.sroa.5.0.extract.trunc.i.i203.us, 255
-  %40 = mul i32 %39, 201326611
-  %41 = and i32 %.sroa.6.0.extract.trunc.i.i205.us, 255
-  %42 = mul i32 %41, 402653189
-  %43 = and i32 %.sroa.7.0.extract.trunc.i.i207.us, 255
-  %44 = mul i32 %43, 805306457
-  %45 = mul i32 %.sroa.8.0.extract.trunc.i.i209.us, 1610612741
-  %46 = xor i32 %38, %33
-  %47 = xor i32 %46, %45
-  %48 = xor i32 %47, %35
-  %49 = xor i32 %48, %37
-  %50 = xor i32 %49, %40
-  %51 = xor i32 %50, %42
-  %52 = xor i32 %51, %44
-  %i.fh = urem i32 %52, 201326611
+  %10 = bitcast i64 %.0.us to <8 x i8>
+  %11 = shufflevector <8 x i8> %10, <8 x i8> poison, <8 x i32> <i32 3, i32 0, i32 7, i32 1, i32 2, i32 4, i32 5, i32 6>
+  %12 = zext <8 x i8> %11 to <8 x i32>
+  %13 = mul <8 x i32> %12, <i32 100663319, i32 12582917, i32 1610612741, i32 25165843, i32 50331653, i32 201326611, i32 402653189, i32 805306457>
+  %14 = call i32 @llvm.vector.reduce.xor.v8i32(<8 x i32> %13)
+  %i.fh = urem i32 %14, 201326611
   %i.fi = zext nneg i32 %i.fh to i64
   %i.fj = getelementptr inbounds nuw [24 x i8], ptr %i.g, i64 %i.fi
   %i.fk = getelementptr inbounds nuw i8, ptr %i.fj, i64 12 ; 2 uses
@@ -1205,6 +1090,9 @@ declare i64 @llvm.vector.reduce.add.v4i64(<4 x i64>) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.vector.reduce.xor.v8i32(<8 x i32>) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v2i32(<2 x i32>) #20

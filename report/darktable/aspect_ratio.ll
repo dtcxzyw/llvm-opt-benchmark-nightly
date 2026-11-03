@@ -1,7 +1,7 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/aspect_ratio?download=true
-loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 3
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 3
+loop-unroll.NumUnrolled: 4
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -55,9 +55,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.ad, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.ae = tail call ptr @__cxa_allocate_exception(i64 4) #4 ; 2 uses
+  %i.ae = tail call ptr @__cxa_allocate_exception(i64 4) #7 ; 2 uses
   store i32 10, ptr %i.ae, align 16, !tbaa !75
-  tail call void @__cxa_throw(ptr nonnull %i.ae, ptr nonnull @_ZTI17LibRaw_exceptions, ptr null) #5
+  tail call void @__cxa_throw(ptr nonnull %i.ae, ptr nonnull @_ZTI17LibRaw_exceptions, ptr null) #8
   unreachable
 
 bb.d:                                             ; preds = %bb.b
@@ -76,9 +76,9 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not61, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.am = tail call ptr @__cxa_allocate_exception(i64 4) #4 ; 2 uses
+  %i.am = tail call ptr @__cxa_allocate_exception(i64 4) #7 ; 2 uses
   store i32 6, ptr %i.am, align 16, !tbaa !75
-  tail call void @__cxa_throw(ptr nonnull %i.am, ptr nonnull @_ZTI17LibRaw_exceptions, ptr null) #5
+  tail call void @__cxa_throw(ptr nonnull %i.am, ptr nonnull @_ZTI17LibRaw_exceptions, ptr null) #8
   unreachable
 
 bb.g:                                             ; preds = %bb.e, %bb.d
@@ -293,9 +293,9 @@ bb.l:                                             ; preds = %._crit_edge68.split
   br i1 %.not63, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.fm = tail call ptr @__cxa_allocate_exception(i64 4) #4 ; 2 uses
+  %i.fm = tail call ptr @__cxa_allocate_exception(i64 4) #7 ; 2 uses
   store i32 6, ptr %i.fm, align 16, !tbaa !75
-  tail call void @__cxa_throw(ptr nonnull %i.fm, ptr nonnull @_ZTI17LibRaw_exceptions, ptr null) #5
+  tail call void @__cxa_throw(ptr nonnull %i.fm, ptr nonnull @_ZTI17LibRaw_exceptions, ptr null) #8
   unreachable
 
 bb.n:                                             ; preds = %._crit_edge68.split, %bb.l, %bb.a
@@ -338,9 +338,9 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.j = tail call ptr @__cxa_allocate_exception(i64 4) #4 ; 2 uses
+  %i.j = tail call ptr @__cxa_allocate_exception(i64 4) #7 ; 2 uses
   store i32 6, ptr %i.j, align 16, !tbaa !75
-  tail call void @__cxa_throw(ptr nonnull %i.j, ptr nonnull @_ZTI17LibRaw_exceptions, ptr null) #5
+  tail call void @__cxa_throw(ptr nonnull %i.j, ptr nonnull @_ZTI17LibRaw_exceptions, ptr null) #8
   unreachable
 
 bb.e:                                             ; preds = %._crit_edge123, %bb.b
@@ -529,7 +529,8 @@ bb.k:                                             ; preds = %bb.e
   %i.ed = zext i16 %i.ec to i64
   %i.ee = zext i16 %i.ea to i64
   %i.ef = shl nuw nsw i64 %i.ee, 3
-  %i.eg = tail call noundef ptr @_ZN6LibRaw6callocEmm(ptr noundef nonnull align 8 dereferenceable(768512) %0, i64 noundef %i.ed, i64 noundef %i.ef) ; 2 uses
+  %i.eg = tail call noundef ptr @_ZN6LibRaw6callocEmm(ptr noundef nonnull align 8 dereferenceable(768512) %0, i64 noundef %i.ed, i64 noundef %i.ef) ; 3 uses
+  %1 = ptrtoaddr ptr %i.eg to i64
   %.not104 = icmp eq i16 %i.ea, 0
   br i1 %.not104, label %._crit_edge89, label %.lr.ph
 
@@ -538,28 +539,32 @@ bb.k:                                             ; preds = %bb.e
   %i.ei = getelementptr inbounds nuw i8, ptr %0, i64 540
   %i.ej = load double, ptr %i.b, align 8, !tbaa !93
   %i.ek = fdiv reassoc nsz arcp contract afn double 1.000000e+00, %i.ej
-  %i.el = zext i16 %i.ea to i64                   ; 2 uses
+  %i.el = zext i16 %i.ea to i64                   ; 3 uses
   %.pre124 = load i16, ptr %i.eb, align 4, !tbaa !73
+  %2 = shl nuw nsw i64 %i.el, 3
   br label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph, %._crit_edge84.split
   %i.em = phi i16 [ %.pre124, %.lr.ph ], [ %i.gt, %._crit_edge84.split ] ; 2 uses
-  %indvars.iv112 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next113, %._crit_edge84.split ] ; 2 uses
+  %indvars.iv112 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next113, %._crit_edge84.split ] ; 3 uses
   %.187 = phi double [ 0.000000e+00, %.lr.ph ], [ %i.gu, %._crit_edge84.split ] ; 3 uses
+  %3 = shl nuw nsw i64 %indvars.iv112, 3
+  %4 = add i64 %3, %1
   %i.en = fptosi double %.187 to i32              ; 3 uses
   %i.eo = sitofp reassoc nsz arcp contract afn i32 %i.en to double
   %i.ep = fsub reassoc nsz arcp contract afn double %.187, %i.eo
   %i.eq = fptosi double %i.ep to i32
-  %i.er = sitofp reassoc nsz arcp contract afn i32 %i.eq to double ; 4 uses
+  %i.er = sitofp reassoc nsz arcp contract afn i32 %i.eq to double ; 5 uses
   %.not105 = icmp eq i16 %i.em, 0
   br i1 %.not105, label %._crit_edge84.split, label %.preheader79.lr.ph
 
 .preheader79.lr.ph:                               ; preds = %bb.l
-  %i.es = load i32, ptr %i.ei, align 4, !tbaa !80 ; 4 uses
+  %i.es = load i32, ptr %i.ei, align 4, !tbaa !80 ; 5 uses
   %i.et = icmp sgt i32 %i.es, 0
   br i1 %i.et, label %.preheader79.preheader, label %._crit_edge84.split
 
 .preheader79.preheader:                           ; preds = %.preheader79.lr.ph
+  %invariant.smin = tail call i32 @llvm.smin.i32(i32 %i.es, i32 4)
   %i.eu = sext i32 %i.en to i64
   %i.ev = getelementptr inbounds [8 x i8], ptr %i.eh, i64 %i.eu ; 2 uses
   %i.ew = add nsw i32 %i.en, 1
@@ -569,30 +574,62 @@ bb.l:                                             ; preds = %.lr.ph, %._crit_edg
   %spec.select.idx = select i1 %i.ez, i64 8, i64 0
   %spec.select = getelementptr inbounds nuw i8, ptr %i.ev, i64 %spec.select.idx
   %invariant.gep = getelementptr inbounds nuw [8 x i8], ptr %i.eg, i64 %indvars.iv112
+  %wide.trip.count = zext nneg i32 %invariant.smin to i64
+  %broadcast.splatinsert140 = insertelement <4 x double> poison, double %i.er, i64 0
+  %broadcast.splat141 = shufflevector <4 x double> %broadcast.splatinsert140, <4 x double> poison, <4 x i32> zeroinitializer
+  %trip.count.minus.1 = add nsw i64 %wide.trip.count, -1
+  %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %trip.count.minus.1, i64 0
+  %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer
+  %5 = icmp uge <4 x i64> %broadcast.splat, <i64 0, i64 1, i64 2, i64 3> ; 3 uses
   %exitcond.not = icmp eq i32 %i.es, 1
   %exitcond.not.1 = icmp eq i32 %i.es, 2
   %exitcond.not.2 = icmp eq i32 %i.es, 3
   br label %.preheader79
 
 .preheader79:                                     ; preds = %.preheader79.preheader, %._crit_edge
-  %indvars.iv109 = phi i64 [ 0, %.preheader79.preheader ], [ %indvars.iv.next110, %._crit_edge ] ; 2 uses
-  %.382 = phi ptr [ %spec.select, %.preheader79.preheader ], [ %i.gp, %._crit_edge ] ; 5 uses
-  %.16981 = phi ptr [ %i.ev, %.preheader79.preheader ], [ %i.go, %._crit_edge ] ; 5 uses
+  %indvars.iv109 = phi i64 [ 0, %.preheader79.preheader ], [ %indvars.iv.next110, %._crit_edge ] ; 3 uses
+  %.382 = phi ptr [ %spec.select, %.preheader79.preheader ], [ %i.gp, %._crit_edge ] ; 7 uses
+  %.16981 = phi ptr [ %i.ev, %.preheader79.preheader ], [ %i.go, %._crit_edge ] ; 7 uses
   %i.fa = mul nuw nsw i64 %indvars.iv109, %i.el
-  %gep = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %i.fa ; 4 uses
-  %1 = load i16, ptr %.16981, align 2, !tbaa !81
-  %2 = uitofp i16 %1 to double                    ; 2 uses
-  %3 = load i16, ptr %.382, align 2, !tbaa !81
-  %4 = uitofp i16 %3 to double
-  %5 = fsub reassoc nnan nsz arcp contract afn double %4, %2
-  %6 = fmul reassoc nsz arcp contract afn double %5, %i.er
-  %7 = fadd reassoc nsz arcp contract afn double %2, 5.000000e-01
-  %8 = fadd reassoc nsz arcp contract afn double %7, %6
-  %9 = fptoui double %8 to i16
-  store i16 %9, ptr %gep, align 2, !tbaa !81
+  %gep = getelementptr inbounds nuw [8 x i8], ptr %invariant.gep, i64 %i.fa ; 5 uses
+  %.16981138 = ptrtoaddr ptr %.16981 to i64
+  %.382137 = ptrtoaddr ptr %.382 to i64
+  %6 = mul nuw nsw i64 %indvars.iv109, %2
+  %7 = add nuw i64 %4, %6                         ; 2 uses
+  %8 = sub i64 %.382137, %7
+  %diff.check = icmp ugt i64 %8, -8
+  %9 = sub i64 %.16981138, %7
+  %diff.check139 = icmp ugt i64 %9, -8
+  %conflict.rdx = or i1 %diff.check, %diff.check139
+  br i1 %conflict.rdx, label %scalar.ph, label %vector.body
+
+vector.body:                                      ; preds = %.preheader79
+  %wide.masked.load = tail call <4 x i16> @llvm.masked.load.v4i16.p0(ptr align 2 %.16981, <4 x i1> %5, <4 x i16> poison), !tbaa !81
+  %10 = uitofp <4 x i16> %wide.masked.load to <4 x double> ; 2 uses
+  %wide.masked.load142 = tail call <4 x i16> @llvm.masked.load.v4i16.p0(ptr align 2 %.382, <4 x i1> %5, <4 x i16> poison), !tbaa !81
+  %11 = uitofp <4 x i16> %wide.masked.load142 to <4 x double>
+  %12 = fsub reassoc nnan nsz arcp contract afn <4 x double> %11, %10
+  %13 = fmul reassoc nsz arcp contract afn <4 x double> %12, %broadcast.splat141
+  %14 = fadd reassoc nsz arcp contract afn <4 x double> %10, splat (double 5.000000e-01)
+  %15 = fadd reassoc nsz arcp contract afn <4 x double> %14, %13
+  %16 = fptoui <4 x double> %15 to <4 x i16>
+  tail call void @llvm.masked.store.v4i16.p0(<4 x i16> %16, ptr align 2 %gep, <4 x i1> %5), !tbaa !81
+  br label %._crit_edge
+
+scalar.ph:                                        ; preds = %.preheader79
+  %17 = load i16, ptr %.16981, align 2, !tbaa !81
+  %18 = uitofp i16 %17 to double                  ; 2 uses
+  %19 = load i16, ptr %.382, align 2, !tbaa !81
+  %20 = uitofp i16 %19 to double
+  %21 = fsub reassoc nnan nsz arcp contract afn double %20, %18
+  %22 = fmul reassoc nsz arcp contract afn double %21, %i.er
+  %23 = fadd reassoc nsz arcp contract afn double %18, 5.000000e-01
+  %24 = fadd reassoc nsz arcp contract afn double %23, %22
+  %25 = fptoui double %24 to i16
+  store i16 %25, ptr %gep, align 2, !tbaa !81
   br i1 %exitcond.not, label %._crit_edge, label %bb.m
 
-bb.m:                                             ; preds = %.preheader79
+bb.m:                                             ; preds = %scalar.ph
   %i.fb = getelementptr inbounds nuw i8, ptr %.16981, i64 2
   %i.fc = load i16, ptr %i.fb, align 2, !tbaa !81
   %i.fd = uitofp i16 %i.fc to double              ; 2 uses
@@ -640,7 +677,7 @@ bb.o:                                             ; preds = %bb.n
   store i16 %i.gj, ptr %i.gk, align 2, !tbaa !81
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %bb.o, %bb.n, %bb.m, %.preheader79
+._crit_edge:                                      ; preds = %scalar.ph, %bb.m, %bb.n, %bb.o, %vector.body
   %indvars.iv.next110 = add nuw nsw i64 %indvars.iv109, 1 ; 2 uses
   %i.gl = load i16, ptr %i.dv, align 2, !tbaa !78
   %i.gm = zext i16 %i.gl to i64
@@ -680,24 +717,36 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not78, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  %i.ha = tail call ptr @__cxa_allocate_exception(i64 4) #4 ; 2 uses
+  %i.ha = tail call ptr @__cxa_allocate_exception(i64 4) #7 ; 2 uses
   store i32 6, ptr %i.ha, align 16, !tbaa !75
-  tail call void @__cxa_throw(ptr nonnull %i.ha, ptr nonnull @_ZTI17LibRaw_exceptions, ptr null) #5
+  tail call void @__cxa_throw(ptr nonnull %i.ha, ptr nonnull @_ZTI17LibRaw_exceptions, ptr null) #8
   unreachable
 
 bb.s:                                             ; preds = %bb.p, %bb.q, %bb.a
   ret void
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #3
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #3
+declare void @llvm.assume(i1 noundef) #4
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare <4 x i16> @llvm.masked.load.v4i16.p0(ptr captures(none), <4 x i1>, <4 x i16>) #5
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
+declare void @llvm.masked.store.v4i16.p0(<4 x i16>, ptr captures(none), <4 x i1>) #6
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
 attributes #1 = { cold noreturn }
 attributes #2 = { "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
-attributes #3 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #4 = { nounwind }
-attributes #5 = { noreturn }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #5 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #6 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
+attributes #7 = { nounwind }
+attributes #8 = { noreturn }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}

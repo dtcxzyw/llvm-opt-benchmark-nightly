@@ -205,7 +205,7 @@ bb.a:
   %i.bs = alloca [24 x i8], align 8               ; 6 uses
   %i.bt = alloca [24 x i8], align 8               ; 17 uses
   %i.bu = alloca [48 x i8], align 8               ; 9 uses
-  %i.bv = alloca [8 x i8], align 8                ; 17 uses
+  %i.bv = alloca [8 x i8], align 8                ; 14 uses
   store i64 %1, ptr %i.bv, align 8
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 10 uses
   %i.bx = load i64, ptr %i.bw, align 8, !noundef !10 ; 5 uses
@@ -608,45 +608,32 @@ bb.dg:                                            ; preds = %bb.de
 bb.dh:                                            ; preds = %bb.dg
   %i.mo = getelementptr inbounds nuw [4 x i8], ptr %i.mh, i64 %i.mm
   %i.mp = load i32, ptr %i.mo, align 4, !range !24, !noundef !10 ; 2 uses
-  %i.mq = call noundef i64 @_RNvMs1_NtCs8frGy5WneL6_4fish3keyNtB5_3Key16from_single_char(i32 noundef %i.mp) ; 5 uses
+  %i.mq = call noundef i64 @_RNvMs1_NtCs8frGy5WneL6_4fish3keyNtB5_3Key16from_single_char(i32 noundef %i.mp) ; 2 uses
   %.sroa.01.0.extract.trunc = trunc i64 %i.mq to i32
-  %.sroa.5.0.extract.shift = lshr i64 %i.mq, 32
-  %.sroa.5.0.extract.trunc = trunc i64 %.sroa.5.0.extract.shift to i8
-  %.sroa.6.0.extract.shift = lshr i64 %i.mq, 40
-  %.sroa.6.0.extract.trunc = trunc i64 %.sroa.6.0.extract.shift to i8
-  %.sroa.7.0.extract.shift = lshr i64 %i.mq, 48
-  %.sroa.7.0.extract.trunc = trunc i64 %.sroa.7.0.extract.shift to i8
-  %.sroa.8.0.extract.shift = lshr i64 %i.mq, 56
-  %.sroa.8.0.extract.trunc = trunc nuw i64 %.sroa.8.0.extract.shift to i8
   %i.mr = load i32, ptr %i.bv, align 8, !range !24, !alias.scope !2394, !noundef !10 ; 2 uses
   %i.ms = icmp eq i32 %i.mr, %.sroa.01.0.extract.trunc
   %i.mt = getelementptr inbounds nuw i8, ptr %i.bv, i64 4
-  %3 = load i8, ptr %i.mt, align 4, !range !15    ; 2 uses
-  %4 = icmp eq i8 %3, %.sroa.5.0.extract.trunc
-  %or.cond = select i1 %i.ms, i1 %4, i1 false
-  %5 = getelementptr inbounds nuw i8, ptr %i.bv, i64 5
-  %6 = load i8, ptr %5, align 1, !range !15       ; 2 uses
-  %7 = icmp eq i8 %6, %.sroa.6.0.extract.trunc
-  %or.cond20 = select i1 %or.cond, i1 %7, i1 false
-  %8 = getelementptr inbounds nuw i8, ptr %i.bv, i64 6
-  %9 = load i8, ptr %8, align 2, !range !15       ; 2 uses
-  %10 = icmp eq i8 %9, %.sroa.7.0.extract.trunc
-  %or.cond23 = select i1 %or.cond20, i1 %10, i1 false
-  %11 = getelementptr inbounds nuw i8, ptr %i.bv, i64 7
-  %12 = load i8, ptr %11, align 1, !range !15     ; 2 uses
-  %i.mu = icmp eq i8 %12, %.sroa.8.0.extract.trunc
-  %or.cond26 = select i1 %or.cond23, i1 %i.mu, i1 false
-  br i1 %or.cond26, label %bb.dj, label %_RNvXsr_NtCs8frGy5WneL6_4fish3keyNtB5_3KeyNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit.thread
+  %3 = load <4 x i8>, ptr %i.mt, align 4          ; 5 uses
+  %4 = bitcast i64 %i.mq to <8 x i8>
+  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %6 = icmp eq <4 x i8> %3, %5
+  %7 = freeze <4 x i1> %6
+  %8 = bitcast <4 x i1> %7 to i4
+  %i.mu = icmp eq i4 %8, -1
+  %op.rdx = and i1 %i.mu, %i.ms
+  br i1 %op.rdx, label %bb.dj, label %_RNvXsr_NtCs8frGy5WneL6_4fish3keyNtB5_3KeyNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit.thread
 
 bb.di:                                            ; preds = %bb.dg
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking18panic_bounds_check(i64 noundef %i.mm, i64 noundef %i.jj, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @206) #53
   unreachable
 
 _RNvXsr_NtCs8frGy5WneL6_4fish3keyNtB5_3KeyNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit.thread: ; preds = %bb.dh
-  %13 = trunc nuw i8 %3 to i1
-  %i.mv = xor i1 %13, true
-  %14 = trunc nuw i8 %6 to i1
-  %or.cond24 = select i1 %i.mv, i1 %14, i1 false
+  %9 = bitcast <4 x i8> %3 to <32 x i1>
+  %10 = extractelement <32 x i1> %9, i64 0
+  %i.mv = xor i1 %10, true
+  %11 = bitcast <4 x i8> %3 to <32 x i1>
+  %12 = extractelement <32 x i1> %11, i64 8
+  %or.cond24 = select i1 %i.mv, i1 %12, i1 false
   br i1 %or.cond24, label %bb.dk, label %bb.ba
 
 bb.dj:                                            ; preds = %bb.dh
@@ -655,9 +642,11 @@ bb.dj:                                            ; preds = %bb.dh
   br i1 %i.mx, label %bb.fl, label %bb.fk
 
 bb.dk:                                            ; preds = %_RNvXsr_NtCs8frGy5WneL6_4fish3keyNtB5_3KeyNtNtCs3oUPovFnLWP_4core3cmp9PartialEq2eq.exit.thread
-  %15 = trunc nuw i8 %9 to i1
-  %16 = trunc nuw i8 %12 to i1
-  %i.my = select i1 %15, i1 true, i1 %16
+  %13 = bitcast <4 x i8> %3 to <32 x i1>
+  %14 = extractelement <32 x i1> %13, i64 16
+  %15 = bitcast <4 x i8> %3 to <32 x i1>
+  %16 = extractelement <32 x i1> %15, i64 24
+  %i.my = select i1 %14, i1 true, i1 %16
   %i.mz = icmp ne i32 %i.mp, 27
   %or.cond10.not = or i1 %i.mz, %i.my
   br i1 %or.cond10.not, label %bb.ba, label %bb.dl

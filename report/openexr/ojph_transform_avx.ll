@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openexr/original/ojph_transform_avx?download=true
 inline.NumInlined: 13
 inline.NumDeleted: 6
-loop-unroll.NumRuntimeUnrolled: 5
-loop-unroll.NumUnrolled: 5
+loop-unroll.NumRuntimeUnrolled: 6
+loop-unroll.NumUnrolled: 6
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -163,37 +163,70 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.i.preheader:                               ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !9
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !9    ; 3 uses
   %.pn94 = select i1 %5, ptr %2, ptr %1
   %.in93 = getelementptr inbounds nuw i8, ptr %.pn94, i64 16
-  %i.e = load ptr, ptr %.in93, align 8, !tbaa !9
+  %i.e = load ptr, ptr %.in93, align 8, !tbaa !9  ; 3 uses
   %. = select i1 %5, ptr %1, ptr %2
   %.in = getelementptr inbounds nuw i8, ptr %., i64 16
-  %i.f = load ptr, ptr %.in, align 8, !tbaa !9
-  br label %.lr.ph.i
+  %i.f = load ptr, ptr %.in, align 8, !tbaa !9    ; 3 uses
+  %6 = add nuw i32 %4, 31
+  %7 = and i32 %6, 16
+  %lcmp.mod.not.not = icmp eq i32 %7, 0
+  br i1 %lcmp.mod.not.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
 
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
-  %.024.i = phi ptr [ %i.n, %.lr.ph.i ], [ %i.f, %.lr.ph.i.preheader ] ; 2 uses
-  %.01823.i = phi ptr [ %i.o, %.lr.ph.i ], [ %i.e, %.lr.ph.i.preheader ] ; 2 uses
-  %.01922.i = phi ptr [ %i.m, %.lr.ph.i ], [ %i.d, %.lr.ph.i.preheader ] ; 3 uses
-  %.02021.i = phi i32 [ %i.l, %.lr.ph.i ], [ %4, %.lr.ph.i.preheader ] ; 2 uses
-  %6 = load <8 x float>, ptr %.01922.i, align 32, !tbaa !9 ; 2 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %.01922.i, i64 32
-  %7 = load <8 x float>, ptr %i.g, align 32, !tbaa !9 ; 2 uses
-  %i.h = shufflevector <8 x float> %6, <8 x float> %7, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
-  %i.i = shufflevector <8 x float> %6, <8 x float> %7, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
+.lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader
+  %8 = load <16 x float>, ptr %i.d, align 32, !tbaa !9 ; 2 uses
+  %9 = shufflevector <16 x float> %8, <16 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
+  %10 = shufflevector <16 x float> %8, <16 x float> poison, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
+  %11 = shufflevector <8 x float> %9, <8 x float> %10, <8 x i32> <i32 0, i32 2, i32 8, i32 10, i32 4, i32 6, i32 12, i32 14>
+  %12 = shufflevector <8 x float> %9, <8 x float> %10, <8 x i32> <i32 1, i32 3, i32 9, i32 11, i32 5, i32 7, i32 13, i32 15>
+  store <8 x float> %11, ptr %i.f, align 32, !tbaa !9
+  store <8 x float> %12, ptr %i.e, align 32, !tbaa !9
+  %13 = add nsw i32 %4, -16
+  %14 = getelementptr inbounds nuw i8, ptr %i.d, i64 64
+  %15 = getelementptr inbounds nuw i8, ptr %i.f, i64 32
+  %16 = getelementptr inbounds nuw i8, ptr %i.e, i64 32
+  br label %.lr.ph.i.prol.loopexit
+
+.lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %.lr.ph.i.preheader
+  %.024.i.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %15, %.lr.ph.i.prol ]
+  %.01823.i.unr = phi ptr [ %i.e, %.lr.ph.i.preheader ], [ %16, %.lr.ph.i.prol ]
+  %.01922.i.unr = phi ptr [ %i.d, %.lr.ph.i.preheader ], [ %14, %.lr.ph.i.prol ]
+  %.02021.i.unr = phi i32 [ %4, %.lr.ph.i.preheader ], [ %13, %.lr.ph.i.prol ]
+  %17 = icmp ult i32 %4, 17
+  br i1 %17, label %_ZN4ojph5localL18avx_deinterleave32EPfS1_S1_i.exit, label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i
+  %.024.i = phi ptr [ %i.n, %.lr.ph.i ], [ %.024.i.unr, %.lr.ph.i.prol.loopexit ] ; 3 uses
+  %.01823.i = phi ptr [ %i.o, %.lr.ph.i ], [ %.01823.i.unr, %.lr.ph.i.prol.loopexit ] ; 3 uses
+  %.01922.i = phi ptr [ %i.m, %.lr.ph.i ], [ %.01922.i.unr, %.lr.ph.i.prol.loopexit ] ; 3 uses
+  %.02021.i = phi i32 [ %i.l, %.lr.ph.i ], [ %.02021.i.unr, %.lr.ph.i.prol.loopexit ] ; 2 uses
+  %18 = load <16 x float>, ptr %.01922.i, align 32, !tbaa !9 ; 2 uses
+  %19 = shufflevector <16 x float> %18, <16 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
+  %20 = shufflevector <16 x float> %18, <16 x float> poison, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
+  %21 = shufflevector <8 x float> %19, <8 x float> %20, <8 x i32> <i32 0, i32 2, i32 8, i32 10, i32 4, i32 6, i32 12, i32 14>
+  %22 = shufflevector <8 x float> %19, <8 x float> %20, <8 x i32> <i32 1, i32 3, i32 9, i32 11, i32 5, i32 7, i32 13, i32 15>
+  store <8 x float> %21, ptr %.024.i, align 32, !tbaa !9
+  store <8 x float> %22, ptr %.01823.i, align 32, !tbaa !9
+  %23 = getelementptr inbounds nuw i8, ptr %.01922.i, i64 64
+  %24 = getelementptr inbounds nuw i8, ptr %.024.i, i64 32
+  %i.g = getelementptr inbounds nuw i8, ptr %.01823.i, i64 32
+  %25 = load <16 x float>, ptr %23, align 32, !tbaa !9 ; 2 uses
+  %i.h = shufflevector <16 x float> %25, <16 x float> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 10, i32 11> ; 2 uses
+  %i.i = shufflevector <16 x float> %25, <16 x float> poison, <8 x i32> <i32 4, i32 5, i32 6, i32 7, i32 12, i32 13, i32 14, i32 15> ; 2 uses
   %i.j = shufflevector <8 x float> %i.h, <8 x float> %i.i, <8 x i32> <i32 0, i32 2, i32 8, i32 10, i32 4, i32 6, i32 12, i32 14>
   %i.k = shufflevector <8 x float> %i.h, <8 x float> %i.i, <8 x i32> <i32 1, i32 3, i32 9, i32 11, i32 5, i32 7, i32 13, i32 15>
-  store <8 x float> %i.j, ptr %.024.i, align 32, !tbaa !9
-  store <8 x float> %i.k, ptr %.01823.i, align 32, !tbaa !9
-  %i.l = add nsw i32 %.02021.i, -16
-  %i.m = getelementptr inbounds nuw i8, ptr %.01922.i, i64 64
-  %i.n = getelementptr inbounds nuw i8, ptr %.024.i, i64 32
-  %i.o = getelementptr inbounds nuw i8, ptr %.01823.i, i64 32
-  %8 = icmp samesign ugt i32 %.02021.i, 16
-  br i1 %8, label %.lr.ph.i, label %_ZN4ojph5localL18avx_deinterleave32EPfS1_S1_i.exit, !llvm.loop !24
+  store <8 x float> %i.j, ptr %24, align 32, !tbaa !9
+  store <8 x float> %i.k, ptr %i.g, align 32, !tbaa !9
+  %i.l = add nsw i32 %.02021.i, -32
+  %i.m = getelementptr inbounds nuw i8, ptr %.01922.i, i64 128
+  %i.n = getelementptr inbounds nuw i8, ptr %.024.i, i64 64
+  %i.o = getelementptr inbounds nuw i8, ptr %.01823.i, i64 64
+  %26 = icmp sgt i32 %.02021.i, 32
+  br i1 %26, label %.lr.ph.i, label %_ZN4ojph5localL18avx_deinterleave32EPfS1_S1_i.exit, !llvm.loop !24
 
-_ZN4ojph5localL18avx_deinterleave32EPfS1_S1_i.exit: ; preds = %.lr.ph.i, %bb.b
+_ZN4ojph5localL18avx_deinterleave32EPfS1_S1_i.exit: ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !9    ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 16

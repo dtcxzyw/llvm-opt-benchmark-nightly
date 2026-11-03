@@ -204,11 +204,11 @@ define void @ff_simple_idct_int16_12bit(ptr nofree noundef captures(none) %0) lo
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @ff_simple_idct_put_int32_10bit(ptr nofree noundef writeonly captures(none) %0, i64 noundef %1, ptr nofree noundef captures(none) %2) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load i32, ptr %2, align 4, !tbaa !19
+  %i.a = load i32, ptr %2, align 4, !tbaa !20
   %i.b = shl i32 %i.a, 14
   %i.c = or disjoint i32 %i.b, 4096               ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !19   ; 2 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !20   ; 2 uses
   %i.f = mul i32 %i.e, 21407                      ; 2 uses
   %i.g = add i32 %i.c, %i.f                       ; 2 uses
   %i.h = mul i32 %i.e, 8867                       ; 2 uses
@@ -216,10 +216,10 @@ bb.a:
   %i.j = sub i32 %i.c, %i.h                       ; 2 uses
   %i.k = sub i32 %i.c, %i.f                       ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
-  %i.m = load i32, ptr %i.l, align 4, !tbaa !19   ; 4 uses
+  %i.m = load i32, ptr %i.l, align 4, !tbaa !20   ; 4 uses
   %i.n = mul i32 %i.m, 22725
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 12 ; 2 uses
-  %i.p = load i32, ptr %i.o, align 4, !tbaa !19   ; 4 uses
+  %i.p = load i32, ptr %i.o, align 4, !tbaa !20   ; 4 uses
   %i.q = mul i32 %i.p, 19265
   %i.r = add i32 %i.q, %i.n                       ; 2 uses
   %i.s = mul i32 %i.m, 19265
@@ -287,36 +287,36 @@ idctRowCondDC_int32_10bit.exit:                   ; preds = %bb.a, %bb.b
   %.0.i = phi i32 [ %i.bn, %bb.b ], [ %i.aa, %bb.a ] ; 2 uses
   %i.bo = add i32 %.088.i, %.092.i
   %i.bp = ashr i32 %i.bo, 13
-  store i32 %i.bp, ptr %2, align 8, !tbaa !19
+  store i32 %i.bp, ptr %2, align 8, !tbaa !20
   %i.bq = sub i32 %.092.i, %.088.i
   %i.br = ashr i32 %i.bq, 13
   %i.bs = getelementptr inbounds nuw i8, ptr %2, i64 28
-  store i32 %i.br, ptr %i.bs, align 4, !tbaa !19
+  store i32 %i.br, ptr %i.bs, align 4, !tbaa !20
   %i.bt = add i32 %.087.i, %.091.i
   %i.bu = ashr i32 %i.bt, 13
-  store i32 %i.bu, ptr %i.l, align 4, !tbaa !19
+  store i32 %i.bu, ptr %i.l, align 4, !tbaa !20
   %i.bv = sub i32 %.091.i, %.087.i
   %i.bw = ashr i32 %i.bv, 13
-  store i32 %i.bw, ptr %i.ad, align 8, !tbaa !19
+  store i32 %i.bw, ptr %i.ad, align 8, !tbaa !20
   %i.bx = add i32 %.086.i, %.090.i
   %i.by = ashr i32 %i.bx, 13
-  store i32 %i.by, ptr %i.d, align 8, !tbaa !19
+  store i32 %i.by, ptr %i.d, align 8, !tbaa !20
   %i.bz = sub i32 %.090.i, %.086.i
   %i.ca = ashr i32 %i.bz, 13
   %i.cb = getelementptr inbounds nuw i8, ptr %2, i64 20
-  store i32 %i.ca, ptr %i.cb, align 4, !tbaa !19
+  store i32 %i.ca, ptr %i.cb, align 4, !tbaa !20
   %i.cc = add i32 %.0.i, %.089.i
   %i.cd = ashr i32 %i.cc, 13
-  store i32 %i.cd, ptr %i.o, align 4, !tbaa !19
+  store i32 %i.cd, ptr %i.o, align 4, !tbaa !20
   %i.ce = sub i32 %.089.i, %.0.i
   %i.cf = ashr i32 %i.ce, 13
-  store i32 %i.cf, ptr %i.ab, align 8, !tbaa !19
+  store i32 %i.cf, ptr %i.ab, align 8, !tbaa !20
   %i.cg = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
-  %i.ch = load i32, ptr %i.cg, align 8, !tbaa !19
+  %i.ch = load i32, ptr %i.cg, align 8, !tbaa !20
   %i.ci = shl i32 %i.ch, 14
   %i.cj = or disjoint i32 %i.ci, 4096             ; 4 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
-  %i.cl = load i32, ptr %i.ck, align 8, !tbaa !19 ; 2 uses
+  %i.cl = load i32, ptr %i.ck, align 8, !tbaa !20 ; 2 uses
   %i.cm = mul i32 %i.cl, 21407                    ; 2 uses
   %i.cn = add i32 %i.cj, %i.cm                    ; 2 uses
   %i.co = mul i32 %i.cl, 8867                     ; 2 uses
@@ -324,10 +324,10 @@ idctRowCondDC_int32_10bit.exit:                   ; preds = %bb.a, %bb.b
   %i.cq = sub i32 %i.cj, %i.co                    ; 2 uses
   %i.cr = sub i32 %i.cj, %i.cm                    ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %2, i64 36 ; 2 uses
-  %i.ct = load i32, ptr %i.cs, align 4, !tbaa !19 ; 4 uses
+  %i.ct = load i32, ptr %i.cs, align 4, !tbaa !20 ; 4 uses
   %i.cu = mul i32 %i.ct, 22725
   %i.cv = getelementptr inbounds nuw i8, ptr %2, i64 44 ; 2 uses
-  %i.cw = load i32, ptr %i.cv, align 4, !tbaa !19 ; 4 uses
+  %i.cw = load i32, ptr %i.cv, align 4, !tbaa !20 ; 4 uses
   %i.cx = mul i32 %i.cw, 19265
   %i.cy = add i32 %i.cx, %i.cu                    ; 2 uses
   %i.cz = mul i32 %i.ct, 19265
@@ -395,36 +395,36 @@ idctRowCondDC_int32_10bit.exit.1:                 ; preds = %bb.c, %idctRowCondD
   %.0.i.1 = phi i32 [ %i.eu, %bb.c ], [ %i.dh, %idctRowCondDC_int32_10bit.exit ] ; 2 uses
   %i.ev = add i32 %.088.i.1, %.092.i.1
   %i.ew = ashr i32 %i.ev, 13
-  store i32 %i.ew, ptr %i.cg, align 8, !tbaa !19
+  store i32 %i.ew, ptr %i.cg, align 8, !tbaa !20
   %i.ex = sub i32 %.092.i.1, %.088.i.1
   %i.ey = ashr i32 %i.ex, 13
   %i.ez = getelementptr inbounds nuw i8, ptr %2, i64 60
-  store i32 %i.ey, ptr %i.ez, align 4, !tbaa !19
+  store i32 %i.ey, ptr %i.ez, align 4, !tbaa !20
   %i.fa = add i32 %.087.i.1, %.091.i.1
   %i.fb = ashr i32 %i.fa, 13
-  store i32 %i.fb, ptr %i.cs, align 4, !tbaa !19
+  store i32 %i.fb, ptr %i.cs, align 4, !tbaa !20
   %i.fc = sub i32 %.091.i.1, %.087.i.1
   %i.fd = ashr i32 %i.fc, 13
-  store i32 %i.fd, ptr %i.dk, align 8, !tbaa !19
+  store i32 %i.fd, ptr %i.dk, align 8, !tbaa !20
   %i.fe = add i32 %.086.i.1, %.090.i.1
   %i.ff = ashr i32 %i.fe, 13
-  store i32 %i.ff, ptr %i.ck, align 8, !tbaa !19
+  store i32 %i.ff, ptr %i.ck, align 8, !tbaa !20
   %i.fg = sub i32 %.090.i.1, %.086.i.1
   %i.fh = ashr i32 %i.fg, 13
   %i.fi = getelementptr inbounds nuw i8, ptr %2, i64 52
-  store i32 %i.fh, ptr %i.fi, align 4, !tbaa !19
+  store i32 %i.fh, ptr %i.fi, align 4, !tbaa !20
   %i.fj = add i32 %.0.i.1, %.089.i.1
   %i.fk = ashr i32 %i.fj, 13
-  store i32 %i.fk, ptr %i.cv, align 4, !tbaa !19
+  store i32 %i.fk, ptr %i.cv, align 4, !tbaa !20
   %i.fl = sub i32 %.089.i.1, %.0.i.1
   %i.fm = ashr i32 %i.fl, 13
-  store i32 %i.fm, ptr %i.di, align 8, !tbaa !19
+  store i32 %i.fm, ptr %i.di, align 8, !tbaa !20
   %i.fn = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 2 uses
-  %i.fo = load i32, ptr %i.fn, align 8, !tbaa !19
+  %i.fo = load i32, ptr %i.fn, align 8, !tbaa !20
   %i.fp = shl i32 %i.fo, 14
   %i.fq = or disjoint i32 %i.fp, 4096             ; 4 uses
   %i.fr = getelementptr inbounds nuw i8, ptr %2, i64 72 ; 2 uses
-  %i.fs = load i32, ptr %i.fr, align 8, !tbaa !19 ; 2 uses
+  %i.fs = load i32, ptr %i.fr, align 8, !tbaa !20 ; 2 uses
   %i.ft = mul i32 %i.fs, 21407                    ; 2 uses
   %i.fu = add i32 %i.fq, %i.ft                    ; 2 uses
   %i.fv = mul i32 %i.fs, 8867                     ; 2 uses
@@ -432,10 +432,10 @@ idctRowCondDC_int32_10bit.exit.1:                 ; preds = %bb.c, %idctRowCondD
   %i.fx = sub i32 %i.fq, %i.fv                    ; 2 uses
   %i.fy = sub i32 %i.fq, %i.ft                    ; 2 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %2, i64 68 ; 2 uses
-  %i.ga = load i32, ptr %i.fz, align 4, !tbaa !19 ; 4 uses
+  %i.ga = load i32, ptr %i.fz, align 4, !tbaa !20 ; 4 uses
   %i.gb = mul i32 %i.ga, 22725
   %i.gc = getelementptr inbounds nuw i8, ptr %2, i64 76 ; 2 uses
-  %i.gd = load i32, ptr %i.gc, align 4, !tbaa !19 ; 4 uses
+  %i.gd = load i32, ptr %i.gc, align 4, !tbaa !20 ; 4 uses
   %i.ge = mul i32 %i.gd, 19265
   %i.gf = add i32 %i.ge, %i.gb                    ; 2 uses
   %i.gg = mul i32 %i.ga, 19265
@@ -503,36 +503,36 @@ idctRowCondDC_int32_10bit.exit.2:                 ; preds = %bb.d, %idctRowCondD
   %.0.i.2 = phi i32 [ %i.ib, %bb.d ], [ %i.go, %idctRowCondDC_int32_10bit.exit.1 ] ; 2 uses
   %i.ic = add i32 %.088.i.2, %.092.i.2
   %i.id = ashr i32 %i.ic, 13
-  store i32 %i.id, ptr %i.fn, align 8, !tbaa !19
+  store i32 %i.id, ptr %i.fn, align 8, !tbaa !20
   %i.ie = sub i32 %.092.i.2, %.088.i.2
   %i.if = ashr i32 %i.ie, 13
   %i.ig = getelementptr inbounds nuw i8, ptr %2, i64 92
-  store i32 %i.if, ptr %i.ig, align 4, !tbaa !19
+  store i32 %i.if, ptr %i.ig, align 4, !tbaa !20
   %i.ih = add i32 %.087.i.2, %.091.i.2
   %i.ii = ashr i32 %i.ih, 13
-  store i32 %i.ii, ptr %i.fz, align 4, !tbaa !19
+  store i32 %i.ii, ptr %i.fz, align 4, !tbaa !20
   %i.ij = sub i32 %.091.i.2, %.087.i.2
   %i.ik = ashr i32 %i.ij, 13
-  store i32 %i.ik, ptr %i.gr, align 8, !tbaa !19
+  store i32 %i.ik, ptr %i.gr, align 8, !tbaa !20
   %i.il = add i32 %.086.i.2, %.090.i.2
   %i.im = ashr i32 %i.il, 13
-  store i32 %i.im, ptr %i.fr, align 8, !tbaa !19
+  store i32 %i.im, ptr %i.fr, align 8, !tbaa !20
   %i.in = sub i32 %.090.i.2, %.086.i.2
   %i.io = ashr i32 %i.in, 13
   %i.ip = getelementptr inbounds nuw i8, ptr %2, i64 84
-  store i32 %i.io, ptr %i.ip, align 4, !tbaa !19
+  store i32 %i.io, ptr %i.ip, align 4, !tbaa !20
   %i.iq = add i32 %.0.i.2, %.089.i.2
   %i.ir = ashr i32 %i.iq, 13
-  store i32 %i.ir, ptr %i.gc, align 4, !tbaa !19
+  store i32 %i.ir, ptr %i.gc, align 4, !tbaa !20
   %i.is = sub i32 %.089.i.2, %.0.i.2
   %i.it = ashr i32 %i.is, 13
-  store i32 %i.it, ptr %i.gp, align 8, !tbaa !19
+  store i32 %i.it, ptr %i.gp, align 8, !tbaa !20
   %i.iu = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 2 uses
-  %i.iv = load i32, ptr %i.iu, align 8, !tbaa !19
+  %i.iv = load i32, ptr %i.iu, align 8, !tbaa !20
   %i.iw = shl i32 %i.iv, 14
   %i.ix = or disjoint i32 %i.iw, 4096             ; 4 uses
   %i.iy = getelementptr inbounds nuw i8, ptr %2, i64 104 ; 2 uses
-  %i.iz = load i32, ptr %i.iy, align 8, !tbaa !19 ; 2 uses
+  %i.iz = load i32, ptr %i.iy, align 8, !tbaa !20 ; 2 uses
   %i.ja = mul i32 %i.iz, 21407                    ; 2 uses
   %i.jb = add i32 %i.ix, %i.ja                    ; 2 uses
   %i.jc = mul i32 %i.iz, 8867                     ; 2 uses
@@ -540,10 +540,10 @@ idctRowCondDC_int32_10bit.exit.2:                 ; preds = %bb.d, %idctRowCondD
   %i.je = sub i32 %i.ix, %i.jc                    ; 2 uses
   %i.jf = sub i32 %i.ix, %i.ja                    ; 2 uses
   %i.jg = getelementptr inbounds nuw i8, ptr %2, i64 100 ; 2 uses
-  %i.jh = load i32, ptr %i.jg, align 4, !tbaa !19 ; 4 uses
+  %i.jh = load i32, ptr %i.jg, align 4, !tbaa !20 ; 4 uses
   %i.ji = mul i32 %i.jh, 22725
   %i.jj = getelementptr inbounds nuw i8, ptr %2, i64 108 ; 2 uses
-  %i.jk = load i32, ptr %i.jj, align 4, !tbaa !19 ; 4 uses
+  %i.jk = load i32, ptr %i.jj, align 4, !tbaa !20 ; 4 uses
   %i.jl = mul i32 %i.jk, 19265
   %i.jm = add i32 %i.jl, %i.ji                    ; 2 uses
   %i.jn = mul i32 %i.jh, 19265
@@ -611,36 +611,36 @@ idctRowCondDC_int32_10bit.exit.3:                 ; preds = %bb.e, %idctRowCondD
   %.0.i.3 = phi i32 [ %i.li, %bb.e ], [ %i.jv, %idctRowCondDC_int32_10bit.exit.2 ] ; 2 uses
   %i.lj = add i32 %.088.i.3, %.092.i.3
   %i.lk = ashr i32 %i.lj, 13
-  store i32 %i.lk, ptr %i.iu, align 8, !tbaa !19
+  store i32 %i.lk, ptr %i.iu, align 8, !tbaa !20
   %i.ll = sub i32 %.092.i.3, %.088.i.3
   %i.lm = ashr i32 %i.ll, 13
   %i.ln = getelementptr inbounds nuw i8, ptr %2, i64 124
-  store i32 %i.lm, ptr %i.ln, align 4, !tbaa !19
+  store i32 %i.lm, ptr %i.ln, align 4, !tbaa !20
   %i.lo = add i32 %.087.i.3, %.091.i.3
   %i.lp = ashr i32 %i.lo, 13
-  store i32 %i.lp, ptr %i.jg, align 4, !tbaa !19
+  store i32 %i.lp, ptr %i.jg, align 4, !tbaa !20
   %i.lq = sub i32 %.091.i.3, %.087.i.3
   %i.lr = ashr i32 %i.lq, 13
-  store i32 %i.lr, ptr %i.jy, align 8, !tbaa !19
+  store i32 %i.lr, ptr %i.jy, align 8, !tbaa !20
   %i.ls = add i32 %.086.i.3, %.090.i.3
   %i.lt = ashr i32 %i.ls, 13
-  store i32 %i.lt, ptr %i.iy, align 8, !tbaa !19
+  store i32 %i.lt, ptr %i.iy, align 8, !tbaa !20
   %i.lu = sub i32 %.090.i.3, %.086.i.3
   %i.lv = ashr i32 %i.lu, 13
   %i.lw = getelementptr inbounds nuw i8, ptr %2, i64 116
-  store i32 %i.lv, ptr %i.lw, align 4, !tbaa !19
+  store i32 %i.lv, ptr %i.lw, align 4, !tbaa !20
   %i.lx = add i32 %.0.i.3, %.089.i.3
   %i.ly = ashr i32 %i.lx, 13
-  store i32 %i.ly, ptr %i.jj, align 4, !tbaa !19
+  store i32 %i.ly, ptr %i.jj, align 4, !tbaa !20
   %i.lz = sub i32 %.089.i.3, %.0.i.3
   %i.ma = ashr i32 %i.lz, 13
-  store i32 %i.ma, ptr %i.jw, align 8, !tbaa !19
+  store i32 %i.ma, ptr %i.jw, align 8, !tbaa !20
   %i.mb = getelementptr inbounds nuw i8, ptr %2, i64 128 ; 2 uses
-  %i.mc = load i32, ptr %i.mb, align 8, !tbaa !19
+  %i.mc = load i32, ptr %i.mb, align 8, !tbaa !20
   %i.md = shl i32 %i.mc, 14
   %i.me = or disjoint i32 %i.md, 4096             ; 4 uses
   %i.mf = getelementptr inbounds nuw i8, ptr %2, i64 136 ; 2 uses
-  %i.mg = load i32, ptr %i.mf, align 8, !tbaa !19 ; 2 uses
+  %i.mg = load i32, ptr %i.mf, align 8, !tbaa !20 ; 2 uses
   %i.mh = mul i32 %i.mg, 21407                    ; 2 uses
   %i.mi = add i32 %i.me, %i.mh                    ; 2 uses
   %i.mj = mul i32 %i.mg, 8867                     ; 2 uses
@@ -648,10 +648,10 @@ idctRowCondDC_int32_10bit.exit.3:                 ; preds = %bb.e, %idctRowCondD
   %i.ml = sub i32 %i.me, %i.mj                    ; 2 uses
   %i.mm = sub i32 %i.me, %i.mh                    ; 2 uses
   %i.mn = getelementptr inbounds nuw i8, ptr %2, i64 132 ; 2 uses
-  %i.mo = load i32, ptr %i.mn, align 4, !tbaa !19 ; 4 uses
+  %i.mo = load i32, ptr %i.mn, align 4, !tbaa !20 ; 4 uses
   %i.mp = mul i32 %i.mo, 22725
   %i.mq = getelementptr inbounds nuw i8, ptr %2, i64 140 ; 2 uses
-  %i.mr = load i32, ptr %i.mq, align 4, !tbaa !19 ; 4 uses
+  %i.mr = load i32, ptr %i.mq, align 4, !tbaa !20 ; 4 uses
   %i.ms = mul i32 %i.mr, 19265
   %i.mt = add i32 %i.ms, %i.mp                    ; 2 uses
   %i.mu = mul i32 %i.mo, 19265
@@ -719,36 +719,36 @@ idctRowCondDC_int32_10bit.exit.4:                 ; preds = %bb.f, %idctRowCondD
   %.0.i.4 = phi i32 [ %i.op, %bb.f ], [ %i.nc, %idctRowCondDC_int32_10bit.exit.3 ] ; 2 uses
   %i.oq = add i32 %.088.i.4, %.092.i.4
   %i.or = ashr i32 %i.oq, 13
-  store i32 %i.or, ptr %i.mb, align 8, !tbaa !19
+  store i32 %i.or, ptr %i.mb, align 8, !tbaa !20
   %i.os = sub i32 %.092.i.4, %.088.i.4
   %i.ot = ashr i32 %i.os, 13
   %i.ou = getelementptr inbounds nuw i8, ptr %2, i64 156
-  store i32 %i.ot, ptr %i.ou, align 4, !tbaa !19
+  store i32 %i.ot, ptr %i.ou, align 4, !tbaa !20
   %i.ov = add i32 %.087.i.4, %.091.i.4
   %i.ow = ashr i32 %i.ov, 13
-  store i32 %i.ow, ptr %i.mn, align 4, !tbaa !19
+  store i32 %i.ow, ptr %i.mn, align 4, !tbaa !20
   %i.ox = sub i32 %.091.i.4, %.087.i.4
   %i.oy = ashr i32 %i.ox, 13
-  store i32 %i.oy, ptr %i.nf, align 8, !tbaa !19
+  store i32 %i.oy, ptr %i.nf, align 8, !tbaa !20
   %i.oz = add i32 %.086.i.4, %.090.i.4
   %i.pa = ashr i32 %i.oz, 13
-  store i32 %i.pa, ptr %i.mf, align 8, !tbaa !19
+  store i32 %i.pa, ptr %i.mf, align 8, !tbaa !20
   %i.pb = sub i32 %.090.i.4, %.086.i.4
   %i.pc = ashr i32 %i.pb, 13
   %i.pd = getelementptr inbounds nuw i8, ptr %2, i64 148
-  store i32 %i.pc, ptr %i.pd, align 4, !tbaa !19
+  store i32 %i.pc, ptr %i.pd, align 4, !tbaa !20
   %i.pe = add i32 %.0.i.4, %.089.i.4
   %i.pf = ashr i32 %i.pe, 13
-  store i32 %i.pf, ptr %i.mq, align 4, !tbaa !19
+  store i32 %i.pf, ptr %i.mq, align 4, !tbaa !20
   %i.pg = sub i32 %.089.i.4, %.0.i.4
   %i.ph = ashr i32 %i.pg, 13
-  store i32 %i.ph, ptr %i.nd, align 8, !tbaa !19
+  store i32 %i.ph, ptr %i.nd, align 8, !tbaa !20
   %i.pi = getelementptr inbounds nuw i8, ptr %2, i64 160 ; 2 uses
-  %i.pj = load i32, ptr %i.pi, align 8, !tbaa !19
+  %i.pj = load i32, ptr %i.pi, align 8, !tbaa !20
   %i.pk = shl i32 %i.pj, 14
   %i.pl = or disjoint i32 %i.pk, 4096             ; 4 uses
   %i.pm = getelementptr inbounds nuw i8, ptr %2, i64 168 ; 2 uses
-  %i.pn = load i32, ptr %i.pm, align 8, !tbaa !19 ; 2 uses
+  %i.pn = load i32, ptr %i.pm, align 8, !tbaa !20 ; 2 uses
   %i.po = mul i32 %i.pn, 21407                    ; 2 uses
   %i.pp = add i32 %i.pl, %i.po                    ; 2 uses
   %i.pq = mul i32 %i.pn, 8867                     ; 2 uses
@@ -756,10 +756,10 @@ idctRowCondDC_int32_10bit.exit.4:                 ; preds = %bb.f, %idctRowCondD
   %i.ps = sub i32 %i.pl, %i.pq                    ; 2 uses
   %i.pt = sub i32 %i.pl, %i.po                    ; 2 uses
   %i.pu = getelementptr inbounds nuw i8, ptr %2, i64 164 ; 2 uses
-  %i.pv = load i32, ptr %i.pu, align 4, !tbaa !19 ; 4 uses
+  %i.pv = load i32, ptr %i.pu, align 4, !tbaa !20 ; 4 uses
   %i.pw = mul i32 %i.pv, 22725
   %i.px = getelementptr inbounds nuw i8, ptr %2, i64 172 ; 2 uses
-  %i.py = load i32, ptr %i.px, align 4, !tbaa !19 ; 4 uses
+  %i.py = load i32, ptr %i.px, align 4, !tbaa !20 ; 4 uses
   %i.pz = mul i32 %i.py, 19265
   %i.qa = add i32 %i.pz, %i.pw                    ; 2 uses
   %i.qb = mul i32 %i.pv, 19265
@@ -827,36 +827,36 @@ idctRowCondDC_int32_10bit.exit.5:                 ; preds = %bb.g, %idctRowCondD
   %.0.i.5 = phi i32 [ %i.rw, %bb.g ], [ %i.qj, %idctRowCondDC_int32_10bit.exit.4 ] ; 2 uses
   %i.rx = add i32 %.088.i.5, %.092.i.5
   %i.ry = ashr i32 %i.rx, 13
-  store i32 %i.ry, ptr %i.pi, align 8, !tbaa !19
+  store i32 %i.ry, ptr %i.pi, align 8, !tbaa !20
   %i.rz = sub i32 %.092.i.5, %.088.i.5
   %i.sa = ashr i32 %i.rz, 13
   %i.sb = getelementptr inbounds nuw i8, ptr %2, i64 188
-  store i32 %i.sa, ptr %i.sb, align 4, !tbaa !19
+  store i32 %i.sa, ptr %i.sb, align 4, !tbaa !20
   %i.sc = add i32 %.087.i.5, %.091.i.5
   %i.sd = ashr i32 %i.sc, 13
-  store i32 %i.sd, ptr %i.pu, align 4, !tbaa !19
+  store i32 %i.sd, ptr %i.pu, align 4, !tbaa !20
   %i.se = sub i32 %.091.i.5, %.087.i.5
   %i.sf = ashr i32 %i.se, 13
-  store i32 %i.sf, ptr %i.qm, align 8, !tbaa !19
+  store i32 %i.sf, ptr %i.qm, align 8, !tbaa !20
   %i.sg = add i32 %.086.i.5, %.090.i.5
   %i.sh = ashr i32 %i.sg, 13
-  store i32 %i.sh, ptr %i.pm, align 8, !tbaa !19
+  store i32 %i.sh, ptr %i.pm, align 8, !tbaa !20
   %i.si = sub i32 %.090.i.5, %.086.i.5
   %i.sj = ashr i32 %i.si, 13
   %i.sk = getelementptr inbounds nuw i8, ptr %2, i64 180
-  store i32 %i.sj, ptr %i.sk, align 4, !tbaa !19
+  store i32 %i.sj, ptr %i.sk, align 4, !tbaa !20
   %i.sl = add i32 %.0.i.5, %.089.i.5
   %i.sm = ashr i32 %i.sl, 13
-  store i32 %i.sm, ptr %i.px, align 4, !tbaa !19
+  store i32 %i.sm, ptr %i.px, align 4, !tbaa !20
   %i.sn = sub i32 %.089.i.5, %.0.i.5
   %i.so = ashr i32 %i.sn, 13
-  store i32 %i.so, ptr %i.qk, align 8, !tbaa !19
+  store i32 %i.so, ptr %i.qk, align 8, !tbaa !20
   %i.sp = getelementptr inbounds nuw i8, ptr %2, i64 192 ; 2 uses
-  %i.sq = load i32, ptr %i.sp, align 8, !tbaa !19
+  %i.sq = load i32, ptr %i.sp, align 8, !tbaa !20
   %i.sr = shl i32 %i.sq, 14
   %i.ss = or disjoint i32 %i.sr, 4096             ; 4 uses
   %i.st = getelementptr inbounds nuw i8, ptr %2, i64 200 ; 2 uses
-  %i.su = load i32, ptr %i.st, align 8, !tbaa !19 ; 2 uses
+  %i.su = load i32, ptr %i.st, align 8, !tbaa !20 ; 2 uses
   %i.sv = mul i32 %i.su, 21407                    ; 2 uses
   %i.sw = add i32 %i.ss, %i.sv                    ; 2 uses
   %i.sx = mul i32 %i.su, 8867                     ; 2 uses
@@ -864,10 +864,10 @@ idctRowCondDC_int32_10bit.exit.5:                 ; preds = %bb.g, %idctRowCondD
   %i.sz = sub i32 %i.ss, %i.sx                    ; 2 uses
   %i.ta = sub i32 %i.ss, %i.sv                    ; 2 uses
   %i.tb = getelementptr inbounds nuw i8, ptr %2, i64 196 ; 2 uses
-  %i.tc = load i32, ptr %i.tb, align 4, !tbaa !19 ; 4 uses
+  %i.tc = load i32, ptr %i.tb, align 4, !tbaa !20 ; 4 uses
   %i.td = mul i32 %i.tc, 22725
   %i.te = getelementptr inbounds nuw i8, ptr %2, i64 204 ; 2 uses
-  %i.tf = load i32, ptr %i.te, align 4, !tbaa !19 ; 4 uses
+  %i.tf = load i32, ptr %i.te, align 4, !tbaa !20 ; 4 uses
   %i.tg = mul i32 %i.tf, 19265
   %i.th = add i32 %i.tg, %i.td                    ; 2 uses
   %i.ti = mul i32 %i.tc, 19265
@@ -935,36 +935,36 @@ idctRowCondDC_int32_10bit.exit.6:                 ; preds = %bb.h, %idctRowCondD
   %.0.i.6 = phi i32 [ %i.vd, %bb.h ], [ %i.tq, %idctRowCondDC_int32_10bit.exit.5 ] ; 2 uses
   %i.ve = add i32 %.088.i.6, %.092.i.6
   %i.vf = ashr i32 %i.ve, 13
-  store i32 %i.vf, ptr %i.sp, align 8, !tbaa !19
+  store i32 %i.vf, ptr %i.sp, align 8, !tbaa !20
   %i.vg = sub i32 %.092.i.6, %.088.i.6
   %i.vh = ashr i32 %i.vg, 13
   %i.vi = getelementptr inbounds nuw i8, ptr %2, i64 220
-  store i32 %i.vh, ptr %i.vi, align 4, !tbaa !19
+  store i32 %i.vh, ptr %i.vi, align 4, !tbaa !20
   %i.vj = add i32 %.087.i.6, %.091.i.6
   %i.vk = ashr i32 %i.vj, 13
-  store i32 %i.vk, ptr %i.tb, align 4, !tbaa !19
+  store i32 %i.vk, ptr %i.tb, align 4, !tbaa !20
   %i.vl = sub i32 %.091.i.6, %.087.i.6
   %i.vm = ashr i32 %i.vl, 13
-  store i32 %i.vm, ptr %i.tt, align 8, !tbaa !19
+  store i32 %i.vm, ptr %i.tt, align 8, !tbaa !20
   %i.vn = add i32 %.086.i.6, %.090.i.6
   %i.vo = ashr i32 %i.vn, 13
-  store i32 %i.vo, ptr %i.st, align 8, !tbaa !19
+  store i32 %i.vo, ptr %i.st, align 8, !tbaa !20
   %i.vp = sub i32 %.090.i.6, %.086.i.6
   %i.vq = ashr i32 %i.vp, 13
   %i.vr = getelementptr inbounds nuw i8, ptr %2, i64 212
-  store i32 %i.vq, ptr %i.vr, align 4, !tbaa !19
+  store i32 %i.vq, ptr %i.vr, align 4, !tbaa !20
   %i.vs = add i32 %.0.i.6, %.089.i.6
   %i.vt = ashr i32 %i.vs, 13
-  store i32 %i.vt, ptr %i.te, align 4, !tbaa !19
+  store i32 %i.vt, ptr %i.te, align 4, !tbaa !20
   %i.vu = sub i32 %.089.i.6, %.0.i.6
   %i.vv = ashr i32 %i.vu, 13
-  store i32 %i.vv, ptr %i.tr, align 8, !tbaa !19
+  store i32 %i.vv, ptr %i.tr, align 8, !tbaa !20
   %i.vw = getelementptr inbounds nuw i8, ptr %2, i64 224 ; 2 uses
-  %i.vx = load i32, ptr %i.vw, align 8, !tbaa !19
+  %i.vx = load i32, ptr %i.vw, align 8, !tbaa !20
   %i.vy = shl i32 %i.vx, 14
   %i.vz = or disjoint i32 %i.vy, 4096             ; 4 uses
   %i.wa = getelementptr inbounds nuw i8, ptr %2, i64 232 ; 2 uses
-  %i.wb = load i32, ptr %i.wa, align 8, !tbaa !19 ; 2 uses
+  %i.wb = load i32, ptr %i.wa, align 8, !tbaa !20 ; 2 uses
   %i.wc = mul i32 %i.wb, 21407                    ; 2 uses
   %i.wd = add i32 %i.vz, %i.wc                    ; 2 uses
   %i.we = mul i32 %i.wb, 8867                     ; 2 uses
@@ -972,10 +972,10 @@ idctRowCondDC_int32_10bit.exit.6:                 ; preds = %bb.h, %idctRowCondD
   %i.wg = sub i32 %i.vz, %i.we                    ; 2 uses
   %i.wh = sub i32 %i.vz, %i.wc                    ; 2 uses
   %i.wi = getelementptr inbounds nuw i8, ptr %2, i64 228 ; 2 uses
-  %i.wj = load i32, ptr %i.wi, align 4, !tbaa !19 ; 4 uses
+  %i.wj = load i32, ptr %i.wi, align 4, !tbaa !20 ; 4 uses
   %i.wk = mul i32 %i.wj, 22725
   %i.wl = getelementptr inbounds nuw i8, ptr %2, i64 236 ; 2 uses
-  %i.wm = load i32, ptr %i.wl, align 4, !tbaa !19 ; 4 uses
+  %i.wm = load i32, ptr %i.wl, align 4, !tbaa !20 ; 4 uses
   %i.wn = mul i32 %i.wm, 19265
   %i.wo = add i32 %i.wn, %i.wk                    ; 2 uses
   %i.wp = mul i32 %i.wj, 19265
@@ -1043,46 +1043,191 @@ idctRowCondDC_int32_10bit.exit.7:                 ; preds = %bb.i, %idctRowCondD
   %.0.i.7 = phi i32 [ %i.yk, %bb.i ], [ %i.wx, %idctRowCondDC_int32_10bit.exit.6 ] ; 2 uses
   %i.yl = add i32 %.088.i.7, %.092.i.7
   %i.ym = ashr i32 %i.yl, 13
-  store i32 %i.ym, ptr %i.vw, align 8, !tbaa !19
+  store i32 %i.ym, ptr %i.vw, align 8, !tbaa !20
   %i.yn = sub i32 %.092.i.7, %.088.i.7
   %i.yo = ashr i32 %i.yn, 13
   %i.yp = getelementptr inbounds nuw i8, ptr %2, i64 252
-  store i32 %i.yo, ptr %i.yp, align 4, !tbaa !19
+  store i32 %i.yo, ptr %i.yp, align 4, !tbaa !20
   %i.yq = add i32 %.087.i.7, %.091.i.7
   %i.yr = ashr i32 %i.yq, 13
-  store i32 %i.yr, ptr %i.wi, align 4, !tbaa !19
+  store i32 %i.yr, ptr %i.wi, align 4, !tbaa !20
   %i.ys = sub i32 %.091.i.7, %.087.i.7
   %i.yt = ashr i32 %i.ys, 13
-  store i32 %i.yt, ptr %i.xa, align 8, !tbaa !19
+  store i32 %i.yt, ptr %i.xa, align 8, !tbaa !20
   %i.yu = add i32 %.086.i.7, %.090.i.7
   %i.yv = ashr i32 %i.yu, 13
-  store i32 %i.yv, ptr %i.wa, align 8, !tbaa !19
+  store i32 %i.yv, ptr %i.wa, align 8, !tbaa !20
   %i.yw = sub i32 %.090.i.7, %.086.i.7
   %i.yx = ashr i32 %i.yw, 13
   %i.yy = getelementptr inbounds nuw i8, ptr %2, i64 244
-  store i32 %i.yx, ptr %i.yy, align 4, !tbaa !19
+  store i32 %i.yx, ptr %i.yy, align 4, !tbaa !20
   %i.yz = add i32 %.0.i.7, %.089.i.7
   %i.za = ashr i32 %i.yz, 13
-  store i32 %i.za, ptr %i.wl, align 4, !tbaa !19
+  store i32 %i.za, ptr %i.wl, align 4, !tbaa !20
   %i.zb = sub i32 %.089.i.7, %.0.i.7
   %i.zc = ashr i32 %i.zb, 13
-  store i32 %i.zc, ptr %i.wy, align 8, !tbaa !19
-  %i.zd = lshr i64 %1, 1                          ; 7 uses
-  br label %.preheader
+  store i32 %i.zc, ptr %i.wy, align 8, !tbaa !20
+  %i.zd = lshr i64 %1, 1                          ; 19 uses
+  %3 = and i64 %1, -2
+  %4 = add i64 %3, -1
+  %diff.check = icmp ult i64 %4, 7
+  %5 = shl i64 %i.zd, 2
+  %6 = add i64 %5, -1
+  %diff.check34 = icmp ult i64 %6, 7
+  %conflict.rdx = or i1 %diff.check, %diff.check34
+  %7 = mul i64 %i.zd, 6
+  %8 = add i64 %7, -1
+  %diff.check35 = icmp ult i64 %8, 7
+  %conflict.rdx36 = or i1 %conflict.rdx, %diff.check35
+  %9 = mul i64 %i.zd, 10
+  %10 = add i64 %9, -1
+  %diff.check39 = icmp ult i64 %10, 7
+  %conflict.rdx40 = or i1 %conflict.rdx36, %diff.check39
+  %11 = mul i64 %i.zd, 12
+  %12 = add i64 %11, -1
+  %diff.check41 = icmp ult i64 %12, 7
+  %conflict.rdx42 = or i1 %conflict.rdx40, %diff.check41
+  %13 = mul i64 %i.zd, 14
+  %14 = add i64 %13, -1
+  %diff.check43 = icmp ult i64 %14, 7
+  %conflict.rdx44 = or i1 %conflict.rdx42, %diff.check43
+  br i1 %conflict.rdx44, label %.preheader, label %vector.body
+
+vector.body:                                      ; preds = %idctRowCondDC_int32_10bit.exit.7, %vector.body
+  %index = phi i64 [ %index.next, %vector.body ], [ 0, %idctRowCondDC_int32_10bit.exit.7 ] ; 3 uses
+  %15 = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %index ; 2 uses
+  %16 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %index ; 8 uses
+  %wide.load = load <4 x i32>, ptr %16, align 4, !tbaa !20
+  %17 = shl <4 x i32> %wide.load, splat (i32 14)
+  %18 = add <4 x i32> %17, splat (i32 1048576)    ; 4 uses
+  %19 = getelementptr inbounds nuw i8, ptr %16, i64 64
+  %wide.load45 = load <4 x i32>, ptr %19, align 4, !tbaa !20 ; 4 uses
+  %20 = mul <4 x i32> %wide.load45, splat (i32 21407)
+  %21 = add <4 x i32> %18, %20
+  %22 = mul <4 x i32> %wide.load45, splat (i32 8867)
+  %23 = add <4 x i32> %18, %22
+  %24 = mul <4 x i32> %wide.load45, splat (i32 -8867)
+  %25 = add <4 x i32> %18, %24
+  %26 = mul <4 x i32> %wide.load45, splat (i32 -21407)
+  %27 = add <4 x i32> %18, %26
+  %28 = getelementptr inbounds nuw i8, ptr %16, i64 32
+  %wide.load46 = load <4 x i32>, ptr %28, align 4, !tbaa !20 ; 4 uses
+  %29 = mul <4 x i32> %wide.load46, splat (i32 22725)
+  %30 = mul <4 x i32> %wide.load46, splat (i32 19265)
+  %31 = mul <4 x i32> %wide.load46, splat (i32 12873)
+  %32 = mul <4 x i32> %wide.load46, splat (i32 4520)
+  %33 = getelementptr inbounds nuw i8, ptr %16, i64 96
+  %wide.load47 = load <4 x i32>, ptr %33, align 4, !tbaa !20 ; 4 uses
+  %34 = mul <4 x i32> %wide.load47, splat (i32 19265)
+  %35 = add <4 x i32> %34, %29
+  %36 = mul <4 x i32> %wide.load47, splat (i32 -4520)
+  %37 = add <4 x i32> %36, %30
+  %38 = mul <4 x i32> %wide.load47, splat (i32 -22725)
+  %39 = add <4 x i32> %38, %31
+  %40 = mul <4 x i32> %wide.load47, splat (i32 -12873)
+  %41 = add <4 x i32> %40, %32
+  %42 = getelementptr inbounds nuw i8, ptr %16, i64 128
+  %wide.load48 = load <4 x i32>, ptr %42, align 4, !tbaa !20 ; 2 uses
+  %43 = shl <4 x i32> %wide.load48, splat (i32 14) ; 2 uses
+  %44 = add <4 x i32> %43, %21
+  %45 = mul <4 x i32> %wide.load48, splat (i32 -16384) ; 2 uses
+  %46 = add <4 x i32> %45, %23
+  %47 = add <4 x i32> %45, %25
+  %48 = add <4 x i32> %43, %27
+  %49 = getelementptr inbounds nuw i8, ptr %16, i64 160
+  %wide.load52 = load <4 x i32>, ptr %49, align 4, !tbaa !20 ; 4 uses
+  %50 = mul <4 x i32> %wide.load52, splat (i32 12873)
+  %51 = add <4 x i32> %50, %35
+  %52 = mul <4 x i32> %wide.load52, splat (i32 -22725)
+  %53 = add <4 x i32> %52, %37
+  %54 = mul <4 x i32> %wide.load52, splat (i32 4520)
+  %55 = add <4 x i32> %54, %39
+  %56 = mul <4 x i32> %wide.load52, splat (i32 19265)
+  %57 = add <4 x i32> %56, %41
+  %58 = getelementptr inbounds nuw i8, ptr %16, i64 192
+  %wide.load57 = load <4 x i32>, ptr %58, align 4, !tbaa !20 ; 4 uses
+  %59 = mul <4 x i32> %wide.load57, splat (i32 8867)
+  %60 = add <4 x i32> %59, %44                    ; 2 uses
+  %61 = mul <4 x i32> %wide.load57, splat (i32 -21407)
+  %62 = add <4 x i32> %61, %46                    ; 2 uses
+  %63 = mul <4 x i32> %wide.load57, splat (i32 21407)
+  %64 = add <4 x i32> %63, %47                    ; 2 uses
+  %65 = mul <4 x i32> %wide.load57, splat (i32 -8867)
+  %66 = add <4 x i32> %65, %48                    ; 2 uses
+  %67 = getelementptr inbounds nuw i8, ptr %16, i64 224
+  %wide.load62 = load <4 x i32>, ptr %67, align 4, !tbaa !20 ; 4 uses
+  %68 = mul <4 x i32> %wide.load62, splat (i32 4520)
+  %69 = add <4 x i32> %68, %51                    ; 2 uses
+  %70 = mul <4 x i32> %wide.load62, splat (i32 -12873)
+  %71 = add <4 x i32> %70, %53                    ; 2 uses
+  %72 = mul <4 x i32> %wide.load62, splat (i32 19265)
+  %73 = add <4 x i32> %72, %55                    ; 2 uses
+  %74 = mul <4 x i32> %wide.load62, splat (i32 -22725)
+  %75 = add <4 x i32> %74, %57                    ; 2 uses
+  %76 = add <4 x i32> %69, %60
+  %77 = ashr <4 x i32> %76, splat (i32 21)
+  %78 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %77, <4 x i32> zeroinitializer)
+  %79 = trunc nuw nsw <4 x i32> %78 to <4 x i16>
+  store <4 x i16> %79, ptr %15, align 2, !tbaa !10
+  %80 = getelementptr inbounds nuw [2 x i8], ptr %15, i64 %i.zd ; 2 uses
+  %81 = add <4 x i32> %71, %62
+  %82 = ashr <4 x i32> %81, splat (i32 21)
+  %83 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %82, <4 x i32> zeroinitializer)
+  %84 = trunc nuw nsw <4 x i32> %83 to <4 x i16>
+  store <4 x i16> %84, ptr %80, align 2, !tbaa !10
+  %85 = getelementptr inbounds nuw [2 x i8], ptr %80, i64 %i.zd ; 2 uses
+  %86 = add <4 x i32> %73, %64
+  %87 = ashr <4 x i32> %86, splat (i32 21)
+  %88 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %87, <4 x i32> zeroinitializer)
+  %89 = trunc nuw nsw <4 x i32> %88 to <4 x i16>
+  store <4 x i16> %89, ptr %85, align 2, !tbaa !10
+  %90 = getelementptr inbounds nuw [2 x i8], ptr %85, i64 %i.zd ; 2 uses
+  %91 = add <4 x i32> %75, %66
+  %92 = ashr <4 x i32> %91, splat (i32 21)
+  %93 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %92, <4 x i32> zeroinitializer)
+  %94 = trunc nuw nsw <4 x i32> %93 to <4 x i16>
+  store <4 x i16> %94, ptr %90, align 2, !tbaa !10
+  %95 = getelementptr inbounds nuw [2 x i8], ptr %90, i64 %i.zd ; 2 uses
+  %96 = sub <4 x i32> %66, %75
+  %97 = ashr <4 x i32> %96, splat (i32 21)
+  %98 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %97, <4 x i32> zeroinitializer)
+  %99 = trunc nuw nsw <4 x i32> %98 to <4 x i16>
+  store <4 x i16> %99, ptr %95, align 2, !tbaa !10
+  %100 = getelementptr inbounds nuw [2 x i8], ptr %95, i64 %i.zd ; 2 uses
+  %101 = sub <4 x i32> %64, %73
+  %102 = ashr <4 x i32> %101, splat (i32 21)
+  %103 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %102, <4 x i32> zeroinitializer)
+  %104 = trunc nuw nsw <4 x i32> %103 to <4 x i16>
+  store <4 x i16> %104, ptr %100, align 2, !tbaa !10
+  %105 = getelementptr inbounds nuw [2 x i8], ptr %100, i64 %i.zd ; 2 uses
+  %106 = sub <4 x i32> %62, %71
+  %107 = ashr <4 x i32> %106, splat (i32 21)
+  %108 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %107, <4 x i32> zeroinitializer)
+  %109 = trunc nuw nsw <4 x i32> %108 to <4 x i16>
+  store <4 x i16> %109, ptr %105, align 2, !tbaa !10
+  %110 = getelementptr inbounds nuw [2 x i8], ptr %105, i64 %i.zd
+  %111 = sub <4 x i32> %60, %69
+  %112 = ashr <4 x i32> %111, splat (i32 21)
+  %113 = tail call <4 x i32> @llvm.smax.v4i32(<4 x i32> %112, <4 x i32> zeroinitializer)
+  %114 = trunc nuw nsw <4 x i32> %113 to <4 x i16>
+  store <4 x i16> %114, ptr %110, align 2, !tbaa !10
+  %index.next = add nuw i64 %index, 4             ; 2 uses
+  %115 = icmp eq i64 %index.next, 8
+  br i1 %115, label %bb.q, label %vector.body, !llvm.loop !18
 
 .preheader:                                       ; preds = %idctRowCondDC_int32_10bit.exit.7, %idctSparseColPut_int32_10bit.exit
-  %indvars.iv = phi i64 [ 0, %idctRowCondDC_int32_10bit.exit.7 ], [ %indvars.iv.next, %idctSparseColPut_int32_10bit.exit ] ; 3 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %idctSparseColPut_int32_10bit.exit ], [ 0, %idctRowCondDC_int32_10bit.exit.7 ] ; 3 uses
   %i.ze = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %indvars.iv ; 2 uses
   %i.zf = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv ; 8 uses
-  %i.zg = load i32, ptr %i.zf, align 4, !tbaa !19
+  %i.zg = load i32, ptr %i.zf, align 4, !tbaa !20
   %i.zh = shl i32 %i.zg, 14
   %i.zi = add i32 %i.zh, 1048576
   %i.zj = getelementptr inbounds nuw i8, ptr %i.zf, i64 64
-  %i.zk = load i32, ptr %i.zj, align 4, !tbaa !19
+  %i.zk = load i32, ptr %i.zj, align 4, !tbaa !20
   %i.zl = getelementptr inbounds nuw i8, ptr %i.zf, i64 32
-  %i.zm = load i32, ptr %i.zl, align 4, !tbaa !19
+  %i.zm = load i32, ptr %i.zl, align 4, !tbaa !20
   %i.zn = getelementptr inbounds nuw i8, ptr %i.zf, i64 96
-  %i.zo = load i32, ptr %i.zn, align 4, !tbaa !19
+  %i.zo = load i32, ptr %i.zn, align 4, !tbaa !20
   %i.zp = insertelement <4 x i32> poison, i32 %i.zk, i64 0
   %i.zq = shufflevector <4 x i32> %i.zp, <4 x i32> poison, <4 x i32> zeroinitializer
   %i.zr = mul <4 x i32> %i.zq, <i32 -21407, i32 -8867, i32 8867, i32 21407>
@@ -1097,7 +1242,7 @@ idctRowCondDC_int32_10bit.exit.7:                 ; preds = %bb.i, %idctRowCondD
   %i.aaa = mul <4 x i32> %i.zz, <i32 -12873, i32 -22725, i32 -4520, i32 19265>
   %i.aab = add <4 x i32> %i.aaa, %i.zx            ; 2 uses
   %i.aac = getelementptr inbounds nuw i8, ptr %i.zf, i64 128
-  %i.aad = load i32, ptr %i.aac, align 4, !tbaa !19 ; 2 uses
+  %i.aad = load i32, ptr %i.aac, align 4, !tbaa !20 ; 2 uses
   %.not.i13 = icmp eq i32 %i.aad, 0
   br i1 %.not.i13, label %bb.k, label %bb.j
 
@@ -1111,7 +1256,7 @@ bb.j:                                             ; preds = %.preheader
 bb.k:                                             ; preds = %bb.j, %.preheader
   %i.aai = phi <4 x i32> [ %i.aah, %bb.j ], [ %i.zu, %.preheader ] ; 2 uses
   %i.aaj = getelementptr inbounds nuw i8, ptr %i.zf, i64 160
-  %i.aak = load i32, ptr %i.aaj, align 4, !tbaa !19 ; 2 uses
+  %i.aak = load i32, ptr %i.aaj, align 4, !tbaa !20 ; 2 uses
   %.not115.i = icmp eq i32 %i.aak, 0
   br i1 %.not115.i, label %bb.m, label %bb.l
 
@@ -1125,7 +1270,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l, %bb.k
   %i.aap = phi <4 x i32> [ %i.aao, %bb.l ], [ %i.aab, %bb.k ] ; 2 uses
   %i.aaq = getelementptr inbounds nuw i8, ptr %i.zf, i64 192
-  %i.aar = load i32, ptr %i.aaq, align 4, !tbaa !19 ; 2 uses
+  %i.aar = load i32, ptr %i.aaq, align 4, !tbaa !20 ; 2 uses
   %.not116.i = icmp eq i32 %i.aar, 0
   br i1 %.not116.i, label %bb.o, label %bb.n
 
@@ -1139,7 +1284,7 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n, %bb.m
   %i.aaw = phi <4 x i32> [ %i.aav, %bb.n ], [ %i.aai, %bb.m ] ; 2 uses
   %i.aax = getelementptr inbounds nuw i8, ptr %i.zf, i64 224
-  %i.aay = load i32, ptr %i.aax, align 4, !tbaa !19 ; 2 uses
+  %i.aay = load i32, ptr %i.aax, align 4, !tbaa !20 ; 2 uses
   %.not117.i = icmp eq i32 %i.aay, 0
   br i1 %.not117.i, label %idctSparseColPut_int32_10bit.exit, label %bb.p
 
@@ -1183,9 +1328,9 @@ idctSparseColPut_int32_10bit.exit:                ; preds = %bb.o, %bb.p
   store i16 %i.aby, ptr %i.abm, align 2, !tbaa !10
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 8
-  br i1 %exitcond.not, label %bb.q, label %.preheader, !llvm.loop !18
+  br i1 %exitcond.not, label %bb.q, label %.preheader, !llvm.loop !19
 
-bb.q:                                             ; preds = %idctSparseColPut_int32_10bit.exit
+bb.q:                                             ; preds = %vector.body, %idctSparseColPut_int32_10bit.exit
   ret void
 }
 
@@ -1348,7 +1493,7 @@ bb.a:                                             ; preds = %.preheader94.prehea
   store i8 %.0.i.i93, ptr %i.da, align 1, !tbaa !11
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 8
-  br i1 %exitcond.not, label %bb.b, label %bb.a, !llvm.loop !20
+  br i1 %exitcond.not, label %bb.b, label %bb.a, !llvm.loop !23
 
 bb.b:                                             ; preds = %bb.a
   ret void
@@ -1434,7 +1579,7 @@ define void @ff_simple_idct84_add(ptr nofree noundef captures(none) %0, i64 noun
   store i8 %.0.i.i, ptr %i.av, align 1, !tbaa !11
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 8
-  br i1 %exitcond.not, label %bb.a, label %.preheader, !llvm.loop !21
+  br i1 %exitcond.not, label %bb.a, label %.preheader, !llvm.loop !24
 
 bb.a:                                             ; preds = %.preheader
   ret void
@@ -1837,6 +1982,9 @@ declare i32 @llvm.smax.i32(i32, i32) #3
 declare i32 @llvm.umin.i32(i32, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <4 x i32> @llvm.smax.v4i32(<4 x i32>, <4 x i32>) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x i16> @llvm.smax.v8i16(<8 x i16>, <8 x i16>) #3
 
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1866,8 +2014,11 @@ attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !15 = distinct !{!15, !12}
 !16 = distinct !{!16, !12}
 !17 = distinct !{!17, !12}
-!18 = distinct !{!18, !12}
-!19 = !{!6, !6, i64 0}
-!20 = distinct !{!20, !12}
-!21 = distinct !{!21, !12}
+!18 = distinct !{!18, !12, !21, !22}
+!19 = distinct !{!19, !12, !21}
+!20 = !{!6, !6, i64 0}
+!21 = !{!"llvm.loop.isvectorized", i32 1}
+!22 = !{!"llvm.loop.unroll.runtime.disable"}
+!23 = distinct !{!23, !12}
+!24 = distinct !{!24, !12}
 end_hunk_1

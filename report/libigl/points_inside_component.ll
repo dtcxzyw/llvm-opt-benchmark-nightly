@@ -205,23 +205,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
   %i.l = load ptr, ptr %1, align 8, !tbaa !136
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 80
-  %i.n = load atomic ptr, ptr %i.m acquire, align 8 ; 4 uses
+  %i.n = load atomic ptr, ptr %i.m acquire, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !2683)
-  %.sroa.024.0.copyload.i.i.i = load <2 x double>, ptr %i.n, align 16, !tbaa !140, !noalias !2683 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.n, i64 16
-  %.sroa.019.0.copyload.i.i.i = load <2 x double>, ptr %8, align 16, !tbaa !140, !noalias !2683 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.n, i64 32
-  %.sroa.014.0.copyload.i.i.i = load <2 x double>, ptr %9, align 16, !tbaa !140, !noalias !2683 ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.n, i64 48
-  %.sroa.09.0.copyload.i.i.i = load <2 x double>, ptr %10, align 16, !tbaa !140, !noalias !2683 ; 2 uses
-  %11 = shufflevector <2 x double> %.sroa.024.0.copyload.i.i.i, <2 x double> %.sroa.019.0.copyload.i.i.i, <2 x i32> <i32 0, i32 2>
-  %12 = shufflevector <2 x double> %.sroa.014.0.copyload.i.i.i, <2 x double> %.sroa.09.0.copyload.i.i.i, <2 x i32> <i32 0, i32 2>
-  %13 = shufflevector <2 x double> %11, <2 x double> %12, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %14 = fneg <4 x double> %13                     ; 5 uses
-  %15 = shufflevector <2 x double> %.sroa.024.0.copyload.i.i.i, <2 x double> %.sroa.019.0.copyload.i.i.i, <2 x i32> <i32 1, i32 3>
-  %16 = shufflevector <2 x double> %.sroa.014.0.copyload.i.i.i, <2 x double> %.sroa.09.0.copyload.i.i.i, <2 x i32> <i32 1, i32 3>
-  %17 = shufflevector <2 x double> %15, <2 x double> %16, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.o = fcmp oeq <4 x double> %17, %14
+  %8 = load <8 x double>, ptr %i.n, align 16, !tbaa !140, !noalias !2683 ; 2 uses
+  %9 = fneg <8 x double> %8                       ; 5 uses
+  %10 = shufflevector <8 x double> %9, <8 x double> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %11 = shufflevector <8 x double> %8, <8 x double> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %i.o = fcmp oeq <4 x double> %11, %10
   %i.p = freeze <4 x i1> %i.o
   %i.q = bitcast <4 x i1> %i.p to i4
   %i.r = icmp eq i4 %i.q, -1
@@ -232,16 +222,16 @@ bb.b:                                             ; preds = %._crit_edge
   br label %_ZNK4CGAL7Plane_3INS_5EpeckEE13oriented_sideERKNS_7Point_3IS1_EE.exit
 
 bb.c:                                             ; preds = %._crit_edge
-  %i.t = extractelement <4 x double> %14, i64 0
+  %i.t = extractelement <8 x double> %9, i64 0
   store double %i.t, ptr %5, align 8, !alias.scope !2683
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.u = extractelement <4 x double> %14, i64 1
+  %i.u = extractelement <8 x double> %9, i64 2
   store double %i.u, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !alias.scope !2683
   %.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.v = extractelement <4 x double> %14, i64 2
+  %i.v = extractelement <8 x double> %9, i64 4
   store double %i.v, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !alias.scope !2683
   %.sroa.6.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %i.w = extractelement <4 x double> %14, i64 3
+  %i.w = extractelement <8 x double> %9, i64 6
   store double %i.w, ptr %.sroa.6.0..sroa_idx.i.i.i, align 8, !alias.scope !2683
   %i.x = getelementptr inbounds nuw i8, ptr %5, i64 32
   store i8 1, ptr %i.x, align 8, !tbaa !509, !alias.scope !2683
@@ -311,23 +301,13 @@ bb.i:                                             ; preds = %.lr.ph, %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
   %i.aw = load ptr, ptr %1, align 8, !tbaa !136
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 80
-  %i.ay = load atomic ptr, ptr %i.ax acquire, align 8 ; 4 uses
+  %i.ay = load atomic ptr, ptr %i.ax acquire, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !2686)
-  %.sroa.024.0.copyload.i.i.i15 = load <2 x double>, ptr %i.ay, align 16, !tbaa !140, !noalias !2686 ; 2 uses
-  %18 = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
-  %.sroa.019.0.copyload.i.i.i18 = load <2 x double>, ptr %18, align 16, !tbaa !140, !noalias !2686 ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %i.ay, i64 32
-  %.sroa.014.0.copyload.i.i.i21 = load <2 x double>, ptr %19, align 16, !tbaa !140, !noalias !2686 ; 2 uses
-  %20 = getelementptr inbounds nuw i8, ptr %i.ay, i64 48
-  %.sroa.09.0.copyload.i.i.i24 = load <2 x double>, ptr %20, align 16, !tbaa !140, !noalias !2686 ; 2 uses
-  %21 = shufflevector <2 x double> %.sroa.024.0.copyload.i.i.i15, <2 x double> %.sroa.019.0.copyload.i.i.i18, <2 x i32> <i32 0, i32 2>
-  %22 = shufflevector <2 x double> %.sroa.014.0.copyload.i.i.i21, <2 x double> %.sroa.09.0.copyload.i.i.i24, <2 x i32> <i32 0, i32 2>
-  %23 = shufflevector <2 x double> %21, <2 x double> %22, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %24 = fneg <4 x double> %23                     ; 5 uses
-  %25 = shufflevector <2 x double> %.sroa.024.0.copyload.i.i.i15, <2 x double> %.sroa.019.0.copyload.i.i.i18, <2 x i32> <i32 1, i32 3>
-  %26 = shufflevector <2 x double> %.sroa.014.0.copyload.i.i.i21, <2 x double> %.sroa.09.0.copyload.i.i.i24, <2 x i32> <i32 1, i32 3>
-  %27 = shufflevector <2 x double> %25, <2 x double> %26, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.az = fcmp oeq <4 x double> %27, %24
+  %12 = load <8 x double>, ptr %i.ay, align 16, !tbaa !140, !noalias !2686 ; 2 uses
+  %13 = fneg <8 x double> %12                     ; 5 uses
+  %14 = shufflevector <8 x double> %13, <8 x double> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %15 = shufflevector <8 x double> %12, <8 x double> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %i.az = fcmp oeq <4 x double> %15, %14
   %i.ba = freeze <4 x i1> %i.az
   %i.bb = bitcast <4 x i1> %i.ba to i4
   %i.bc = icmp eq i4 %i.bb, -1
@@ -338,13 +318,13 @@ bb.j:                                             ; preds = %bb.i
   br label %_ZNK4CGAL7Plane_3INS_5EpeckEE13oriented_sideERKNS_7Point_3IS1_EE.exit37
 
 bb.k:                                             ; preds = %bb.i
-  %i.be = extractelement <4 x double> %24, i64 0
+  %i.be = extractelement <8 x double> %13, i64 0
   store double %i.be, ptr %2, align 8, !alias.scope !2686
-  %i.bf = extractelement <4 x double> %24, i64 1
+  %i.bf = extractelement <8 x double> %13, i64 2
   store double %i.bf, ptr %.sroa.4.0..sroa_idx.i.i.i31, align 8, !alias.scope !2686
-  %i.bg = extractelement <4 x double> %24, i64 2
+  %i.bg = extractelement <8 x double> %13, i64 4
   store double %i.bg, ptr %.sroa.5.0..sroa_idx.i.i.i32, align 8, !alias.scope !2686
-  %i.bh = extractelement <4 x double> %24, i64 3
+  %i.bh = extractelement <8 x double> %13, i64 6
   store double %i.bh, ptr %.sroa.6.0..sroa_idx.i.i.i33, align 8, !alias.scope !2686
   store i8 1, ptr %i.e, align 8, !tbaa !509, !alias.scope !2686
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
@@ -747,23 +727,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
   %i.l = load ptr, ptr %1, align 8, !tbaa !136
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 80
-  %i.n = load atomic ptr, ptr %i.m acquire, align 8 ; 4 uses
+  %i.n = load atomic ptr, ptr %i.m acquire, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !2998)
-  %.sroa.024.0.copyload.i.i.i = load <2 x double>, ptr %i.n, align 16, !tbaa !140, !noalias !2998 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.n, i64 16
-  %.sroa.019.0.copyload.i.i.i = load <2 x double>, ptr %8, align 16, !tbaa !140, !noalias !2998 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.n, i64 32
-  %.sroa.014.0.copyload.i.i.i = load <2 x double>, ptr %9, align 16, !tbaa !140, !noalias !2998 ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.n, i64 48
-  %.sroa.09.0.copyload.i.i.i = load <2 x double>, ptr %10, align 16, !tbaa !140, !noalias !2998 ; 2 uses
-  %11 = shufflevector <2 x double> %.sroa.024.0.copyload.i.i.i, <2 x double> %.sroa.019.0.copyload.i.i.i, <2 x i32> <i32 0, i32 2>
-  %12 = shufflevector <2 x double> %.sroa.014.0.copyload.i.i.i, <2 x double> %.sroa.09.0.copyload.i.i.i, <2 x i32> <i32 0, i32 2>
-  %13 = shufflevector <2 x double> %11, <2 x double> %12, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %14 = fneg <4 x double> %13                     ; 5 uses
-  %15 = shufflevector <2 x double> %.sroa.024.0.copyload.i.i.i, <2 x double> %.sroa.019.0.copyload.i.i.i, <2 x i32> <i32 1, i32 3>
-  %16 = shufflevector <2 x double> %.sroa.014.0.copyload.i.i.i, <2 x double> %.sroa.09.0.copyload.i.i.i, <2 x i32> <i32 1, i32 3>
-  %17 = shufflevector <2 x double> %15, <2 x double> %16, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.o = fcmp oeq <4 x double> %17, %14
+  %8 = load <8 x double>, ptr %i.n, align 16, !tbaa !140, !noalias !2998 ; 2 uses
+  %9 = fneg <8 x double> %8                       ; 5 uses
+  %10 = shufflevector <8 x double> %9, <8 x double> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %11 = shufflevector <8 x double> %8, <8 x double> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %i.o = fcmp oeq <4 x double> %11, %10
   %i.p = freeze <4 x i1> %i.o
   %i.q = bitcast <4 x i1> %i.p to i4
   %i.r = icmp eq i4 %i.q, -1
@@ -774,16 +744,16 @@ bb.b:                                             ; preds = %._crit_edge
   br label %_ZNK4CGAL7Plane_3INS_5EpeckEE13oriented_sideERKNS_7Point_3IS1_EE.exit
 
 bb.c:                                             ; preds = %._crit_edge
-  %i.t = extractelement <4 x double> %14, i64 0
+  %i.t = extractelement <8 x double> %9, i64 0
   store double %i.t, ptr %5, align 8, !alias.scope !2998
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.u = extractelement <4 x double> %14, i64 1
+  %i.u = extractelement <8 x double> %9, i64 2
   store double %i.u, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !alias.scope !2998
   %.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.v = extractelement <4 x double> %14, i64 2
+  %i.v = extractelement <8 x double> %9, i64 4
   store double %i.v, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !alias.scope !2998
   %.sroa.6.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %i.w = extractelement <4 x double> %14, i64 3
+  %i.w = extractelement <8 x double> %9, i64 6
   store double %i.w, ptr %.sroa.6.0..sroa_idx.i.i.i, align 8, !alias.scope !2998
   %i.x = getelementptr inbounds nuw i8, ptr %5, i64 32
   store i8 1, ptr %i.x, align 8, !tbaa !509, !alias.scope !2998
@@ -853,23 +823,13 @@ bb.i:                                             ; preds = %.lr.ph, %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
   %i.aw = load ptr, ptr %1, align 8, !tbaa !136
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 80
-  %i.ay = load atomic ptr, ptr %i.ax acquire, align 8 ; 4 uses
+  %i.ay = load atomic ptr, ptr %i.ax acquire, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !3001)
-  %.sroa.024.0.copyload.i.i.i15 = load <2 x double>, ptr %i.ay, align 16, !tbaa !140, !noalias !3001 ; 2 uses
-  %18 = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
-  %.sroa.019.0.copyload.i.i.i18 = load <2 x double>, ptr %18, align 16, !tbaa !140, !noalias !3001 ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %i.ay, i64 32
-  %.sroa.014.0.copyload.i.i.i21 = load <2 x double>, ptr %19, align 16, !tbaa !140, !noalias !3001 ; 2 uses
-  %20 = getelementptr inbounds nuw i8, ptr %i.ay, i64 48
-  %.sroa.09.0.copyload.i.i.i24 = load <2 x double>, ptr %20, align 16, !tbaa !140, !noalias !3001 ; 2 uses
-  %21 = shufflevector <2 x double> %.sroa.024.0.copyload.i.i.i15, <2 x double> %.sroa.019.0.copyload.i.i.i18, <2 x i32> <i32 0, i32 2>
-  %22 = shufflevector <2 x double> %.sroa.014.0.copyload.i.i.i21, <2 x double> %.sroa.09.0.copyload.i.i.i24, <2 x i32> <i32 0, i32 2>
-  %23 = shufflevector <2 x double> %21, <2 x double> %22, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %24 = fneg <4 x double> %23                     ; 5 uses
-  %25 = shufflevector <2 x double> %.sroa.024.0.copyload.i.i.i15, <2 x double> %.sroa.019.0.copyload.i.i.i18, <2 x i32> <i32 1, i32 3>
-  %26 = shufflevector <2 x double> %.sroa.014.0.copyload.i.i.i21, <2 x double> %.sroa.09.0.copyload.i.i.i24, <2 x i32> <i32 1, i32 3>
-  %27 = shufflevector <2 x double> %25, <2 x double> %26, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.az = fcmp oeq <4 x double> %27, %24
+  %12 = load <8 x double>, ptr %i.ay, align 16, !tbaa !140, !noalias !3001 ; 2 uses
+  %13 = fneg <8 x double> %12                     ; 5 uses
+  %14 = shufflevector <8 x double> %13, <8 x double> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %15 = shufflevector <8 x double> %12, <8 x double> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %i.az = fcmp oeq <4 x double> %15, %14
   %i.ba = freeze <4 x i1> %i.az
   %i.bb = bitcast <4 x i1> %i.ba to i4
   %i.bc = icmp eq i4 %i.bb, -1
@@ -880,13 +840,13 @@ bb.j:                                             ; preds = %bb.i
   br label %_ZNK4CGAL7Plane_3INS_5EpeckEE13oriented_sideERKNS_7Point_3IS1_EE.exit37
 
 bb.k:                                             ; preds = %bb.i
-  %i.be = extractelement <4 x double> %24, i64 0
+  %i.be = extractelement <8 x double> %13, i64 0
   store double %i.be, ptr %2, align 8, !alias.scope !3001
-  %i.bf = extractelement <4 x double> %24, i64 1
+  %i.bf = extractelement <8 x double> %13, i64 2
   store double %i.bf, ptr %.sroa.4.0..sroa_idx.i.i.i31, align 8, !alias.scope !3001
-  %i.bg = extractelement <4 x double> %24, i64 2
+  %i.bg = extractelement <8 x double> %13, i64 4
   store double %i.bg, ptr %.sroa.5.0..sroa_idx.i.i.i32, align 8, !alias.scope !3001
-  %i.bh = extractelement <4 x double> %24, i64 3
+  %i.bh = extractelement <8 x double> %13, i64 6
   store double %i.bh, ptr %.sroa.6.0..sroa_idx.i.i.i33, align 8, !alias.scope !3001
   store i8 1, ptr %i.e, align 8, !tbaa !509, !alias.scope !3001
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
@@ -1289,23 +1249,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
   %i.l = load ptr, ptr %1, align 8, !tbaa !136
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 80
-  %i.n = load atomic ptr, ptr %i.m acquire, align 8 ; 4 uses
+  %i.n = load atomic ptr, ptr %i.m acquire, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !3241)
-  %.sroa.024.0.copyload.i.i.i = load <2 x double>, ptr %i.n, align 16, !tbaa !140, !noalias !3241 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.n, i64 16
-  %.sroa.019.0.copyload.i.i.i = load <2 x double>, ptr %8, align 16, !tbaa !140, !noalias !3241 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.n, i64 32
-  %.sroa.014.0.copyload.i.i.i = load <2 x double>, ptr %9, align 16, !tbaa !140, !noalias !3241 ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.n, i64 48
-  %.sroa.09.0.copyload.i.i.i = load <2 x double>, ptr %10, align 16, !tbaa !140, !noalias !3241 ; 2 uses
-  %11 = shufflevector <2 x double> %.sroa.024.0.copyload.i.i.i, <2 x double> %.sroa.019.0.copyload.i.i.i, <2 x i32> <i32 0, i32 2>
-  %12 = shufflevector <2 x double> %.sroa.014.0.copyload.i.i.i, <2 x double> %.sroa.09.0.copyload.i.i.i, <2 x i32> <i32 0, i32 2>
-  %13 = shufflevector <2 x double> %11, <2 x double> %12, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %14 = fneg <4 x double> %13                     ; 5 uses
-  %15 = shufflevector <2 x double> %.sroa.024.0.copyload.i.i.i, <2 x double> %.sroa.019.0.copyload.i.i.i, <2 x i32> <i32 1, i32 3>
-  %16 = shufflevector <2 x double> %.sroa.014.0.copyload.i.i.i, <2 x double> %.sroa.09.0.copyload.i.i.i, <2 x i32> <i32 1, i32 3>
-  %17 = shufflevector <2 x double> %15, <2 x double> %16, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.o = fcmp oeq <4 x double> %17, %14
+  %8 = load <8 x double>, ptr %i.n, align 16, !tbaa !140, !noalias !3241 ; 2 uses
+  %9 = fneg <8 x double> %8                       ; 5 uses
+  %10 = shufflevector <8 x double> %9, <8 x double> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %11 = shufflevector <8 x double> %8, <8 x double> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %i.o = fcmp oeq <4 x double> %11, %10
   %i.p = freeze <4 x i1> %i.o
   %i.q = bitcast <4 x i1> %i.p to i4
   %i.r = icmp eq i4 %i.q, -1
@@ -1316,16 +1266,16 @@ bb.b:                                             ; preds = %._crit_edge
   br label %_ZNK4CGAL7Plane_3INS_5EpeckEE13oriented_sideERKNS_7Point_3IS1_EE.exit
 
 bb.c:                                             ; preds = %._crit_edge
-  %i.t = extractelement <4 x double> %14, i64 0
+  %i.t = extractelement <8 x double> %9, i64 0
   store double %i.t, ptr %5, align 8, !alias.scope !3241
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.u = extractelement <4 x double> %14, i64 1
+  %i.u = extractelement <8 x double> %9, i64 2
   store double %i.u, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !alias.scope !3241
   %.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.v = extractelement <4 x double> %14, i64 2
+  %i.v = extractelement <8 x double> %9, i64 4
   store double %i.v, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !alias.scope !3241
   %.sroa.6.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %i.w = extractelement <4 x double> %14, i64 3
+  %i.w = extractelement <8 x double> %9, i64 6
   store double %i.w, ptr %.sroa.6.0..sroa_idx.i.i.i, align 8, !alias.scope !3241
   %i.x = getelementptr inbounds nuw i8, ptr %5, i64 32
   store i8 1, ptr %i.x, align 8, !tbaa !509, !alias.scope !3241
@@ -1395,23 +1345,13 @@ bb.i:                                             ; preds = %.lr.ph, %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
   %i.aw = load ptr, ptr %1, align 8, !tbaa !136
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 80
-  %i.ay = load atomic ptr, ptr %i.ax acquire, align 8 ; 4 uses
+  %i.ay = load atomic ptr, ptr %i.ax acquire, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !3244)
-  %.sroa.024.0.copyload.i.i.i15 = load <2 x double>, ptr %i.ay, align 16, !tbaa !140, !noalias !3244 ; 2 uses
-  %18 = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
-  %.sroa.019.0.copyload.i.i.i18 = load <2 x double>, ptr %18, align 16, !tbaa !140, !noalias !3244 ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %i.ay, i64 32
-  %.sroa.014.0.copyload.i.i.i21 = load <2 x double>, ptr %19, align 16, !tbaa !140, !noalias !3244 ; 2 uses
-  %20 = getelementptr inbounds nuw i8, ptr %i.ay, i64 48
-  %.sroa.09.0.copyload.i.i.i24 = load <2 x double>, ptr %20, align 16, !tbaa !140, !noalias !3244 ; 2 uses
-  %21 = shufflevector <2 x double> %.sroa.024.0.copyload.i.i.i15, <2 x double> %.sroa.019.0.copyload.i.i.i18, <2 x i32> <i32 0, i32 2>
-  %22 = shufflevector <2 x double> %.sroa.014.0.copyload.i.i.i21, <2 x double> %.sroa.09.0.copyload.i.i.i24, <2 x i32> <i32 0, i32 2>
-  %23 = shufflevector <2 x double> %21, <2 x double> %22, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %24 = fneg <4 x double> %23                     ; 5 uses
-  %25 = shufflevector <2 x double> %.sroa.024.0.copyload.i.i.i15, <2 x double> %.sroa.019.0.copyload.i.i.i18, <2 x i32> <i32 1, i32 3>
-  %26 = shufflevector <2 x double> %.sroa.014.0.copyload.i.i.i21, <2 x double> %.sroa.09.0.copyload.i.i.i24, <2 x i32> <i32 1, i32 3>
-  %27 = shufflevector <2 x double> %25, <2 x double> %26, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.az = fcmp oeq <4 x double> %27, %24
+  %12 = load <8 x double>, ptr %i.ay, align 16, !tbaa !140, !noalias !3244 ; 2 uses
+  %13 = fneg <8 x double> %12                     ; 5 uses
+  %14 = shufflevector <8 x double> %13, <8 x double> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %15 = shufflevector <8 x double> %12, <8 x double> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %i.az = fcmp oeq <4 x double> %15, %14
   %i.ba = freeze <4 x i1> %i.az
   %i.bb = bitcast <4 x i1> %i.ba to i4
   %i.bc = icmp eq i4 %i.bb, -1
@@ -1422,13 +1362,13 @@ bb.j:                                             ; preds = %bb.i
   br label %_ZNK4CGAL7Plane_3INS_5EpeckEE13oriented_sideERKNS_7Point_3IS1_EE.exit37
 
 bb.k:                                             ; preds = %bb.i
-  %i.be = extractelement <4 x double> %24, i64 0
+  %i.be = extractelement <8 x double> %13, i64 0
   store double %i.be, ptr %2, align 8, !alias.scope !3244
-  %i.bf = extractelement <4 x double> %24, i64 1
+  %i.bf = extractelement <8 x double> %13, i64 2
   store double %i.bf, ptr %.sroa.4.0..sroa_idx.i.i.i31, align 8, !alias.scope !3244
-  %i.bg = extractelement <4 x double> %24, i64 2
+  %i.bg = extractelement <8 x double> %13, i64 4
   store double %i.bg, ptr %.sroa.5.0..sroa_idx.i.i.i32, align 8, !alias.scope !3244
-  %i.bh = extractelement <4 x double> %24, i64 3
+  %i.bh = extractelement <8 x double> %13, i64 6
   store double %i.bh, ptr %.sroa.6.0..sroa_idx.i.i.i33, align 8, !alias.scope !3244
   store i8 1, ptr %i.e, align 8, !tbaa !509, !alias.scope !3244
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
@@ -1831,23 +1771,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
   %i.l = load ptr, ptr %1, align 8, !tbaa !136
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 80
-  %i.n = load atomic ptr, ptr %i.m acquire, align 8 ; 4 uses
+  %i.n = load atomic ptr, ptr %i.m acquire, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !3555)
-  %.sroa.024.0.copyload.i.i.i = load <2 x double>, ptr %i.n, align 16, !tbaa !140, !noalias !3555 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.n, i64 16
-  %.sroa.019.0.copyload.i.i.i = load <2 x double>, ptr %8, align 16, !tbaa !140, !noalias !3555 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.n, i64 32
-  %.sroa.014.0.copyload.i.i.i = load <2 x double>, ptr %9, align 16, !tbaa !140, !noalias !3555 ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.n, i64 48
-  %.sroa.09.0.copyload.i.i.i = load <2 x double>, ptr %10, align 16, !tbaa !140, !noalias !3555 ; 2 uses
-  %11 = shufflevector <2 x double> %.sroa.024.0.copyload.i.i.i, <2 x double> %.sroa.019.0.copyload.i.i.i, <2 x i32> <i32 0, i32 2>
-  %12 = shufflevector <2 x double> %.sroa.014.0.copyload.i.i.i, <2 x double> %.sroa.09.0.copyload.i.i.i, <2 x i32> <i32 0, i32 2>
-  %13 = shufflevector <2 x double> %11, <2 x double> %12, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %14 = fneg <4 x double> %13                     ; 5 uses
-  %15 = shufflevector <2 x double> %.sroa.024.0.copyload.i.i.i, <2 x double> %.sroa.019.0.copyload.i.i.i, <2 x i32> <i32 1, i32 3>
-  %16 = shufflevector <2 x double> %.sroa.014.0.copyload.i.i.i, <2 x double> %.sroa.09.0.copyload.i.i.i, <2 x i32> <i32 1, i32 3>
-  %17 = shufflevector <2 x double> %15, <2 x double> %16, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.o = fcmp oeq <4 x double> %17, %14
+  %8 = load <8 x double>, ptr %i.n, align 16, !tbaa !140, !noalias !3555 ; 2 uses
+  %9 = fneg <8 x double> %8                       ; 5 uses
+  %10 = shufflevector <8 x double> %9, <8 x double> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %11 = shufflevector <8 x double> %8, <8 x double> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %i.o = fcmp oeq <4 x double> %11, %10
   %i.p = freeze <4 x i1> %i.o
   %i.q = bitcast <4 x i1> %i.p to i4
   %i.r = icmp eq i4 %i.q, -1
@@ -1858,16 +1788,16 @@ bb.b:                                             ; preds = %._crit_edge
   br label %_ZNK4CGAL7Plane_3INS_5EpeckEE13oriented_sideERKNS_7Point_3IS1_EE.exit
 
 bb.c:                                             ; preds = %._crit_edge
-  %i.t = extractelement <4 x double> %14, i64 0
+  %i.t = extractelement <8 x double> %9, i64 0
   store double %i.t, ptr %5, align 8, !alias.scope !3555
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.u = extractelement <4 x double> %14, i64 1
+  %i.u = extractelement <8 x double> %9, i64 2
   store double %i.u, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !alias.scope !3555
   %.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.v = extractelement <4 x double> %14, i64 2
+  %i.v = extractelement <8 x double> %9, i64 4
   store double %i.v, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !alias.scope !3555
   %.sroa.6.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %i.w = extractelement <4 x double> %14, i64 3
+  %i.w = extractelement <8 x double> %9, i64 6
   store double %i.w, ptr %.sroa.6.0..sroa_idx.i.i.i, align 8, !alias.scope !3555
   %i.x = getelementptr inbounds nuw i8, ptr %5, i64 32
   store i8 1, ptr %i.x, align 8, !tbaa !509, !alias.scope !3555
@@ -1937,23 +1867,13 @@ bb.i:                                             ; preds = %.lr.ph, %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
   %i.aw = load ptr, ptr %1, align 8, !tbaa !136
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 80
-  %i.ay = load atomic ptr, ptr %i.ax acquire, align 8 ; 4 uses
+  %i.ay = load atomic ptr, ptr %i.ax acquire, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !3558)
-  %.sroa.024.0.copyload.i.i.i15 = load <2 x double>, ptr %i.ay, align 16, !tbaa !140, !noalias !3558 ; 2 uses
-  %18 = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
-  %.sroa.019.0.copyload.i.i.i18 = load <2 x double>, ptr %18, align 16, !tbaa !140, !noalias !3558 ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %i.ay, i64 32
-  %.sroa.014.0.copyload.i.i.i21 = load <2 x double>, ptr %19, align 16, !tbaa !140, !noalias !3558 ; 2 uses
-  %20 = getelementptr inbounds nuw i8, ptr %i.ay, i64 48
-  %.sroa.09.0.copyload.i.i.i24 = load <2 x double>, ptr %20, align 16, !tbaa !140, !noalias !3558 ; 2 uses
-  %21 = shufflevector <2 x double> %.sroa.024.0.copyload.i.i.i15, <2 x double> %.sroa.019.0.copyload.i.i.i18, <2 x i32> <i32 0, i32 2>
-  %22 = shufflevector <2 x double> %.sroa.014.0.copyload.i.i.i21, <2 x double> %.sroa.09.0.copyload.i.i.i24, <2 x i32> <i32 0, i32 2>
-  %23 = shufflevector <2 x double> %21, <2 x double> %22, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %24 = fneg <4 x double> %23                     ; 5 uses
-  %25 = shufflevector <2 x double> %.sroa.024.0.copyload.i.i.i15, <2 x double> %.sroa.019.0.copyload.i.i.i18, <2 x i32> <i32 1, i32 3>
-  %26 = shufflevector <2 x double> %.sroa.014.0.copyload.i.i.i21, <2 x double> %.sroa.09.0.copyload.i.i.i24, <2 x i32> <i32 1, i32 3>
-  %27 = shufflevector <2 x double> %25, <2 x double> %26, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.az = fcmp oeq <4 x double> %27, %24
+  %12 = load <8 x double>, ptr %i.ay, align 16, !tbaa !140, !noalias !3558 ; 2 uses
+  %13 = fneg <8 x double> %12                     ; 5 uses
+  %14 = shufflevector <8 x double> %13, <8 x double> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %15 = shufflevector <8 x double> %12, <8 x double> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %i.az = fcmp oeq <4 x double> %15, %14
   %i.ba = freeze <4 x i1> %i.az
   %i.bb = bitcast <4 x i1> %i.ba to i4
   %i.bc = icmp eq i4 %i.bb, -1
@@ -1964,13 +1884,13 @@ bb.j:                                             ; preds = %bb.i
   br label %_ZNK4CGAL7Plane_3INS_5EpeckEE13oriented_sideERKNS_7Point_3IS1_EE.exit37
 
 bb.k:                                             ; preds = %bb.i
-  %i.be = extractelement <4 x double> %24, i64 0
+  %i.be = extractelement <8 x double> %13, i64 0
   store double %i.be, ptr %2, align 8, !alias.scope !3558
-  %i.bf = extractelement <4 x double> %24, i64 1
+  %i.bf = extractelement <8 x double> %13, i64 2
   store double %i.bf, ptr %.sroa.4.0..sroa_idx.i.i.i31, align 8, !alias.scope !3558
-  %i.bg = extractelement <4 x double> %24, i64 2
+  %i.bg = extractelement <8 x double> %13, i64 4
   store double %i.bg, ptr %.sroa.5.0..sroa_idx.i.i.i32, align 8, !alias.scope !3558
-  %i.bh = extractelement <4 x double> %24, i64 3
+  %i.bh = extractelement <8 x double> %13, i64 6
   store double %i.bh, ptr %.sroa.6.0..sroa_idx.i.i.i33, align 8, !alias.scope !3558
   store i8 1, ptr %i.e, align 8, !tbaa !509, !alias.scope !3558
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21
@@ -2373,23 +2293,13 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
   %i.l = load ptr, ptr %1, align 8, !tbaa !136
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 80
-  %i.n = load atomic ptr, ptr %i.m acquire, align 8 ; 4 uses
+  %i.n = load atomic ptr, ptr %i.m acquire, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !3865)
-  %.sroa.024.0.copyload.i.i.i = load <2 x double>, ptr %i.n, align 16, !tbaa !140, !noalias !3865 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.n, i64 16
-  %.sroa.019.0.copyload.i.i.i = load <2 x double>, ptr %8, align 16, !tbaa !140, !noalias !3865 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.n, i64 32
-  %.sroa.014.0.copyload.i.i.i = load <2 x double>, ptr %9, align 16, !tbaa !140, !noalias !3865 ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.n, i64 48
-  %.sroa.09.0.copyload.i.i.i = load <2 x double>, ptr %10, align 16, !tbaa !140, !noalias !3865 ; 2 uses
-  %11 = shufflevector <2 x double> %.sroa.024.0.copyload.i.i.i, <2 x double> %.sroa.019.0.copyload.i.i.i, <2 x i32> <i32 0, i32 2>
-  %12 = shufflevector <2 x double> %.sroa.014.0.copyload.i.i.i, <2 x double> %.sroa.09.0.copyload.i.i.i, <2 x i32> <i32 0, i32 2>
-  %13 = shufflevector <2 x double> %11, <2 x double> %12, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %14 = fneg <4 x double> %13                     ; 5 uses
-  %15 = shufflevector <2 x double> %.sroa.024.0.copyload.i.i.i, <2 x double> %.sroa.019.0.copyload.i.i.i, <2 x i32> <i32 1, i32 3>
-  %16 = shufflevector <2 x double> %.sroa.014.0.copyload.i.i.i, <2 x double> %.sroa.09.0.copyload.i.i.i, <2 x i32> <i32 1, i32 3>
-  %17 = shufflevector <2 x double> %15, <2 x double> %16, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.o = fcmp oeq <4 x double> %17, %14
+  %8 = load <8 x double>, ptr %i.n, align 16, !tbaa !140, !noalias !3865 ; 2 uses
+  %9 = fneg <8 x double> %8                       ; 5 uses
+  %10 = shufflevector <8 x double> %9, <8 x double> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %11 = shufflevector <8 x double> %8, <8 x double> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %i.o = fcmp oeq <4 x double> %11, %10
   %i.p = freeze <4 x i1> %i.o
   %i.q = bitcast <4 x i1> %i.p to i4
   %i.r = icmp eq i4 %i.q, -1
@@ -2400,16 +2310,16 @@ bb.b:                                             ; preds = %._crit_edge
   br label %_ZNK4CGAL7Plane_3INS_5EpeckEE13oriented_sideERKNS_7Point_3IS1_EE.exit
 
 bb.c:                                             ; preds = %._crit_edge
-  %i.t = extractelement <4 x double> %14, i64 0
+  %i.t = extractelement <8 x double> %9, i64 0
   store double %i.t, ptr %5, align 8, !alias.scope !3865
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.u = extractelement <4 x double> %14, i64 1
+  %i.u = extractelement <8 x double> %9, i64 2
   store double %i.u, ptr %.sroa.4.0..sroa_idx.i.i.i, align 8, !alias.scope !3865
   %.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.v = extractelement <4 x double> %14, i64 2
+  %i.v = extractelement <8 x double> %9, i64 4
   store double %i.v, ptr %.sroa.5.0..sroa_idx.i.i.i, align 8, !alias.scope !3865
   %.sroa.6.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %i.w = extractelement <4 x double> %14, i64 3
+  %i.w = extractelement <8 x double> %9, i64 6
   store double %i.w, ptr %.sroa.6.0..sroa_idx.i.i.i, align 8, !alias.scope !3865
   %i.x = getelementptr inbounds nuw i8, ptr %5, i64 32
   store i8 1, ptr %i.x, align 8, !tbaa !509, !alias.scope !3865
@@ -2479,23 +2389,13 @@ bb.i:                                             ; preds = %.lr.ph, %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21
   %i.aw = load ptr, ptr %1, align 8, !tbaa !136
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 80
-  %i.ay = load atomic ptr, ptr %i.ax acquire, align 8 ; 4 uses
+  %i.ay = load atomic ptr, ptr %i.ax acquire, align 8
   call void @llvm.experimental.noalias.scope.decl(metadata !3868)
-  %.sroa.024.0.copyload.i.i.i15 = load <2 x double>, ptr %i.ay, align 16, !tbaa !140, !noalias !3868 ; 2 uses
-  %18 = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
-  %.sroa.019.0.copyload.i.i.i18 = load <2 x double>, ptr %18, align 16, !tbaa !140, !noalias !3868 ; 2 uses
-  %19 = getelementptr inbounds nuw i8, ptr %i.ay, i64 32
-  %.sroa.014.0.copyload.i.i.i21 = load <2 x double>, ptr %19, align 16, !tbaa !140, !noalias !3868 ; 2 uses
-  %20 = getelementptr inbounds nuw i8, ptr %i.ay, i64 48
-  %.sroa.09.0.copyload.i.i.i24 = load <2 x double>, ptr %20, align 16, !tbaa !140, !noalias !3868 ; 2 uses
-  %21 = shufflevector <2 x double> %.sroa.024.0.copyload.i.i.i15, <2 x double> %.sroa.019.0.copyload.i.i.i18, <2 x i32> <i32 0, i32 2>
-  %22 = shufflevector <2 x double> %.sroa.014.0.copyload.i.i.i21, <2 x double> %.sroa.09.0.copyload.i.i.i24, <2 x i32> <i32 0, i32 2>
-  %23 = shufflevector <2 x double> %21, <2 x double> %22, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %24 = fneg <4 x double> %23                     ; 5 uses
-  %25 = shufflevector <2 x double> %.sroa.024.0.copyload.i.i.i15, <2 x double> %.sroa.019.0.copyload.i.i.i18, <2 x i32> <i32 1, i32 3>
-  %26 = shufflevector <2 x double> %.sroa.014.0.copyload.i.i.i21, <2 x double> %.sroa.09.0.copyload.i.i.i24, <2 x i32> <i32 1, i32 3>
-  %27 = shufflevector <2 x double> %25, <2 x double> %26, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  %i.az = fcmp oeq <4 x double> %27, %24
+  %12 = load <8 x double>, ptr %i.ay, align 16, !tbaa !140, !noalias !3868 ; 2 uses
+  %13 = fneg <8 x double> %12                     ; 5 uses
+  %14 = shufflevector <8 x double> %13, <8 x double> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %15 = shufflevector <8 x double> %12, <8 x double> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  %i.az = fcmp oeq <4 x double> %15, %14
   %i.ba = freeze <4 x i1> %i.az
   %i.bb = bitcast <4 x i1> %i.ba to i4
   %i.bc = icmp eq i4 %i.bb, -1
@@ -2506,13 +2406,13 @@ bb.j:                                             ; preds = %bb.i
   br label %_ZNK4CGAL7Plane_3INS_5EpeckEE13oriented_sideERKNS_7Point_3IS1_EE.exit37
 
 bb.k:                                             ; preds = %bb.i
-  %i.be = extractelement <4 x double> %24, i64 0
+  %i.be = extractelement <8 x double> %13, i64 0
   store double %i.be, ptr %2, align 8, !alias.scope !3868
-  %i.bf = extractelement <4 x double> %24, i64 1
+  %i.bf = extractelement <8 x double> %13, i64 2
   store double %i.bf, ptr %.sroa.4.0..sroa_idx.i.i.i31, align 8, !alias.scope !3868
-  %i.bg = extractelement <4 x double> %24, i64 2
+  %i.bg = extractelement <8 x double> %13, i64 4
   store double %i.bg, ptr %.sroa.5.0..sroa_idx.i.i.i32, align 8, !alias.scope !3868
-  %i.bh = extractelement <4 x double> %24, i64 3
+  %i.bh = extractelement <8 x double> %13, i64 6
   store double %i.bh, ptr %.sroa.6.0..sroa_idx.i.i.i33, align 8, !alias.scope !3868
   store i8 1, ptr %i.e, align 8, !tbaa !509, !alias.scope !3868
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #21

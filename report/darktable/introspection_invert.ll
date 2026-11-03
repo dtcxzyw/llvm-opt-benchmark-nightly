@@ -74,7 +74,7 @@ bb.a:
   br i1 %i.b, label %bb.b, label %bb.i
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #20 ; 5 uses
+  %i.c = tail call noalias dereferenceable_or_null(16) ptr @malloc(i64 noundef 16) #21 ; 5 uses
   %i.d = load <2 x float>, ptr %1, align 4, !tbaa !12
   store <2 x float> %i.d, ptr %i.c, align 4, !tbaa !12
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -317,7 +317,7 @@ define void @process(ptr nofree noundef readnone captures(none) %0, ptr nofree n
 bb.a:
   %i.a = ptrtoaddr ptr %2 to i64
   %i.b = ptrtoaddr ptr %3 to i64
-  %i.c = alloca [4 x float], align 16             ; 36 uses
+  %i.c = alloca [4 x float], align 16             ; 37 uses
   %i.d = alloca [3 x [4 x float]], align 16       ; 15 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.f = load ptr, ptr %i.e, align 16, !tbaa !119 ; 3 uses
@@ -338,7 +338,7 @@ bb.a:
   %i.t = fmul reassoc nsz arcp contract afn <4 x float> %i.o, %i.s
   store <4 x float> %i.t, ptr %i.c, align 16, !tbaa !12
   %i.u = getelementptr inbounds nuw i8, ptr %i.h, i64 184
-  %i.v = load i32, ptr %i.u, align 8, !tbaa !143  ; 10 uses
+  %i.v = load i32, ptr %i.u, align 8, !tbaa !143  ; 11 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.h, i64 188 ; 24 uses
   %i.x = getelementptr inbounds nuw i8, ptr %5, i64 12
   %i.y = load i32, ptr %i.x, align 4, !tbaa !144  ; 4 uses
@@ -741,7 +741,7 @@ bb.g:                                             ; preds = %FCxtrans.exit383, %
 
 bb.h:                                             ; preds = %bb.a
   %i.ph = load i32, ptr %5, align 4, !tbaa !148   ; 2 uses
-  %i.pi = zext i32 %i.ph to i64                   ; 6 uses
+  %i.pi = zext i32 %i.ph to i64                   ; 7 uses
   %i.pj = getelementptr inbounds nuw i8, ptr %5, i64 4
   %i.pk = load i32, ptr %i.pj, align 4, !tbaa !149
   %i.pl = sext i32 %i.pk to i64
@@ -752,12 +752,21 @@ bb.h:                                             ; preds = %bb.a
   %i.pm = add nsw i64 %i.ac, -3                   ; 2 uses
   %i.pn = trunc i32 %.fr437 to i2
   %wide.trip.count = zext i32 %i.y to i64
+  %6 = sub i64 %i.b, %i.a                         ; 2 uses
   %i.po = trunc i32 %i.ph to i1                   ; 2 uses
+  %7 = add i64 %6, -1
+  %diff.check512 = icmp ult i64 %7, 15
+  %broadcast.splatinsert520 = insertelement <4 x i32> poison, i32 %i.v, i64 0
+  %broadcast.splat521 = shufflevector <4 x i32> %broadcast.splatinsert520, <4 x i32> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert516 = insertelement <4 x i64> poison, i64 %i.pi, i64 0
+  %broadcast.splat517 = shufflevector <4 x i64> %broadcast.splatinsert516, <4 x i64> poison, <4 x i32> zeroinitializer
+  %8 = add nuw nsw <4 x i64> %broadcast.splat517, <i64 0, i64 1, i64 2, i64 3>
+  %9 = and <4 x i64> %8, splat (i64 1)
   %i.pp = and i64 %i.pi, 1
   %i.pq = and i64 %i.pi, 1
   %i.pr = and i64 %i.pi, 1
-  %6 = sub i64 %i.a, %i.b
-  %diff.check = icmp ugt i64 %6, -32
+  %10 = add i64 %6, -1
+  %diff.check = icmp ult i64 %10, 31
   %broadcast.splatinsert = insertelement <8 x i64> poison, i64 %i.pi, i64 0
   %broadcast.splat = shufflevector <8 x i64> %broadcast.splatinsert, <8 x i64> poison, <8 x i32> zeroinitializer
   %broadcast.splatinsert504 = insertelement <8 x i32> poison, i32 %i.v, i64 0
@@ -780,18 +789,47 @@ bb.i:                                             ; preds = %.lr.ph434, %._crit_
   %indvars.iv459 = phi i64 [ 0, %.lr.ph434 ], [ %indvars.iv.next460, %._crit_edge431 ] ; 3 uses
   %indvars.iv453 = phi i2 [ 0, %.lr.ph434 ], [ %indvars.iv.next454, %._crit_edge431 ] ; 2 uses
   %i.pv = zext i2 %indvars.iv453 to i64
-  %umin455 = call i64 @llvm.umin.i64(i64 %i.ac, i64 %i.pv) ; 5 uses
-  %i.pw = mul nsw i64 %indvars.iv459, %i.ac       ; 11 uses
+  %umin455 = call i64 @llvm.umin.i64(i64 %i.ac, i64 %i.pv) ; 7 uses
+  %i.pw = mul nsw i64 %indvars.iv459, %i.ac       ; 13 uses
   %i.px = sub i64 0, %i.pw
   %i.py = and i64 %i.px, 3
   %invariant.umin418 = call i64 @llvm.umin.i64(i64 %i.py, i64 %i.ac)
   %.not440 = icmp eq i64 %invariant.umin418, 0
   %.pre478 = add nsw i64 %indvars.iv459, %i.pl
   %.pre479 = shl nsw i64 %.pre478, 1
-  %.pre481 = and i64 %.pre479, 14                 ; 8 uses
-  br i1 %.not440, label %._crit_edge422, label %.lr.ph421
+  %.pre481 = and i64 %.pre479, 14                 ; 9 uses
+  br i1 %.not440, label %._crit_edge422, label %vector.memcheck511
 
-.lr.ph421:                                        ; preds = %bb.i
+vector.memcheck511:                               ; preds = %bb.i
+  br i1 %diff.check512, label %.lr.ph421, label %vector.body522
+
+vector.body522:                                   ; preds = %vector.memcheck511
+  %broadcast.splatinsert518 = insertelement <4 x i64> poison, i64 %.pre481, i64 0
+  %broadcast.splat519 = shufflevector <4 x i64> %broadcast.splatinsert518, <4 x i64> poison, <4 x i32> zeroinitializer
+  %trip.count.minus.1 = add nsw i64 %umin455, -1
+  %broadcast.splatinsert514 = insertelement <4 x i64> poison, i64 %trip.count.minus.1, i64 0
+  %broadcast.splat515 = shufflevector <4 x i64> %broadcast.splatinsert514, <4 x i64> poison, <4 x i32> zeroinitializer
+  %11 = icmp uge <4 x i64> %broadcast.splat515, <i64 0, i64 1, i64 2, i64 3> ; 3 uses
+  %12 = or disjoint <4 x i64> %9, %broadcast.splat519
+  %13 = trunc nuw nsw <4 x i64> %12 to <4 x i32>
+  %14 = shl nuw nsw <4 x i32> %13, splat (i32 1)
+  %15 = lshr <4 x i32> %broadcast.splat521, %14
+  %16 = and <4 x i32> %15, splat (i32 3)
+  %17 = zext nneg <4 x i32> %16 to <4 x i64>
+  %wide.gep523 = getelementptr inbounds nuw [4 x i8], ptr %i.c, <4 x i64> %17
+  %wide.masked.gather524 = call <4 x float> @llvm.masked.gather.v4f32.v4p0(<4 x ptr> align 4 %wide.gep523, <4 x i1> %11, <4 x float> poison), !tbaa !12 ; 2 uses
+  %18 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.pw
+  %wide.masked.load = call <4 x float> @llvm.masked.load.v4f32.p0(ptr align 4 %18, <4 x i1> %11, <4 x float> poison), !tbaa !12 ; 2 uses
+  %19 = fsub reassoc nsz arcp contract afn <4 x float> %wide.masked.gather524, %wide.masked.load ; 2 uses
+  %20 = fcmp reassoc nsz arcp contract afn ogt <4 x float> %19, splat (float 1.000000e+00)
+  %21 = fcmp reassoc nsz arcp contract afn olt <4 x float> %wide.masked.gather524, %wide.masked.load
+  %22 = select reassoc nsz arcp contract afn <4 x i1> %21, <4 x float> zeroinitializer, <4 x float> %19
+  %23 = select reassoc nsz arcp contract afn <4 x i1> %20, <4 x float> splat (float 1.000000e+00), <4 x float> %22
+  %24 = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.pw
+  call void @llvm.masked.store.v4f32.p0(<4 x float> %23, ptr align 4 %24, <4 x i1> %11), !tbaa !12
+  br label %._crit_edge422
+
+.lr.ph421:                                        ; preds = %vector.memcheck511
   %i.pz = or disjoint i64 %i.pp, %.pre481
   %.tr.i = trunc nuw nsw i64 %i.pz to i32
   %i.qa = shl nuw nsw i32 %.tr.i, 1
@@ -856,8 +894,8 @@ bb.i:                                             ; preds = %.lr.ph434, %._crit_
   store float %i.rq, ptr %i.rr, align 4, !tbaa !12
   br label %._crit_edge422
 
-._crit_edge422:                                   ; preds = %.lr.ph421, %.lr.ph421.1, %.lr.ph421.2, %bb.i
-  %.0299.lcssa = phi i64 [ 0, %bb.i ], [ %umin455, %.lr.ph421.2 ], [ %umin455, %.lr.ph421.1 ], [ %umin455, %.lr.ph421 ] ; 4 uses
+._crit_edge422:                                   ; preds = %.lr.ph421, %.lr.ph421.1, %.lr.ph421.2, %vector.body522, %bb.i
+  %.0299.lcssa = phi i64 [ 0, %bb.i ], [ %umin455, %vector.body522 ], [ %umin455, %.lr.ph421.2 ], [ %umin455, %.lr.ph421.1 ], [ %umin455, %.lr.ph421 ] ; 4 uses
   %i.rs = icmp ult i64 %.0299.lcssa, %i.pm
   br i1 %i.rs, label %.lr.ph427, label %.preheader395
 
@@ -1207,7 +1245,7 @@ declare void @dtgtk_reset_label_set_text(ptr noundef, ptr noundef) local_unnamed
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(write, inaccessiblemem: readwrite, target_mem: none) uwtable
 define void @init_global(ptr nofree noundef writeonly captures(none) initializes((520, 528)) %0) local_unnamed_addr #7 {
 bb.a:
-  %i.a = tail call noalias dereferenceable_or_null(8) ptr @malloc(i64 noundef 8) #20 ; 3 uses
+  %i.a = tail call noalias dereferenceable_or_null(8) ptr @malloc(i64 noundef 8) #21 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 520
   store ptr %i.a, ptr %i.b, align 8, !tbaa !132
   store i32 -999, ptr %i.a, align 4, !tbaa !156
@@ -1290,7 +1328,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 ; Function Attrs: nounwind uwtable
 define void @init_pipe(ptr nofree noundef readnone captures(none) %0, ptr nofree noundef readnone captures(none) %1, ptr nofree noundef writeonly captures(none) initializes((16, 24)) %2) local_unnamed_addr #1 {
 bb.a:
-  %i.a = tail call noalias dereferenceable_or_null(16) ptr @g_malloc0(i64 noundef 16) #20
+  %i.a = tail call noalias dereferenceable_or_null(16) ptr @g_malloc0(i64 noundef 16) #21
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 16
   store ptr %i.a, ptr %i.b, align 16, !tbaa !119
   ret void
@@ -1558,12 +1596,12 @@ bb.b:                                             ; preds = %bb.a, %.preheader.p
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define ptr @get_p(ptr nofree noundef readnone captures(ret: address, provenance) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #13 {
 bb.a:
-  %i.a = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(9) @.str.17) #21
+  %i.a = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(9) @.str.17) #22
   %.not = icmp eq i32 %i.a, 0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(6) @.str.18) #21
+  %i.b = tail call i32 @strcmp(ptr noundef nonnull dereferenceable(1) %1, ptr noundef nonnull dereferenceable(6) @.str.18) #22
   %.not6 = icmp eq i32 %i.b, 0
   %. = select i1 %.not6, ptr %0, ptr null
   br label %bb.c
@@ -1623,8 +1661,17 @@ declare i64 @llvm.umin.i64(i64, i64) #17
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
 declare <8 x float> @llvm.masked.gather.v8f32.v8p0(<8 x ptr>, <8 x i1>, <8 x float>) #18
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
+declare <4 x float> @llvm.masked.gather.v4f32.v4p0(<4 x ptr>, <4 x i1>, <4 x float>) #18
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare <4 x float> @llvm.masked.load.v4f32.p0(ptr captures(none), <4 x i1>, <4 x float>) #19
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
+declare void @llvm.masked.store.v4f32.p0(<4 x float>, ptr captures(none), <4 x i1>) #16
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #19
+declare void @llvm.assume(i1 noundef) #20
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
@@ -1645,9 +1692,10 @@ attributes #15 = { nounwind }
 attributes #16 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #17 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 attributes #18 = { nocallback nofree nosync nounwind willreturn memory(read) }
-attributes #19 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #20 = { nounwind allocsize(0) }
-attributes #21 = { nounwind willreturn memory(read) }
+attributes #19 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
+attributes #20 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #21 = { nounwind allocsize(0) }
+attributes #22 = { nounwind willreturn memory(read) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}

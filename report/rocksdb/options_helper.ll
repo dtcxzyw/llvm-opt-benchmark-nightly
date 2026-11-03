@@ -204,11 +204,8 @@ _ZNSt10shared_ptrIN7rocksdb5CacheEEaSERKS2_.exit: ; preds = %_ZNSt10shared_ptrIN
   %i.kv = getelementptr inbounds nuw i8, ptr %2, i64 544
   %i.kw = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.kx = load i8, ptr %i.kw, align 4, !tbaa !502, !range !138, !noundef !139
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 388
-  %4 = load <4 x i8>, ptr %i.ku, align 8, !tbaa !54
-  %5 = load <4 x i8>, ptr %3, align 4
-  %6 = shufflevector <4 x i8> %4, <4 x i8> %5, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 poison>
-  %i.ky = insertelement <8 x i8> %6, i8 %i.kx, i64 7
+  %3 = load <8 x i8>, ptr %i.ku, align 8
+  %i.ky = insertelement <8 x i8> %3, i8 %i.kx, i64 7
   %i.kz = shufflevector <8 x i8> %i.ky, <8 x i8> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 7, i32 3, i32 4, i32 5, i32 6>
   store <8 x i8> %i.kz, ptr %i.kv, align 8, !tbaa !71
   %i.la = getelementptr inbounds nuw i8, ptr %0, i64 391

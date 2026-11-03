@@ -32,7 +32,7 @@ bb.a:
 define dso_local noundef zeroext i1 @_ZNK3ozz9animation8IKAimJob3RunEv(ptr nofree noundef nonnull readonly align 16 captures(none) dereferenceable(112) %0) local_unnamed_addr #1 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !19   ; 5 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !19   ; 3 uses
   %i.c = icmp ne ptr %i.b, null
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.e = load ptr, ptr %i.d, align 16, !tbaa !20  ; 4 uses
@@ -53,17 +53,13 @@ bb.a:
   br i1 %i.s, label %bb.b, label %bb.u
 
 bb.b:                                             ; preds = %bb.a
-  %1 = load <4 x float>, ptr %i.b, align 16, !tbaa !10, !noalias !21 ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 16
-  %3 = load <4 x float>, ptr %2, align 16, !tbaa !10, !noalias !21 ; 2 uses
-  %i.t = shufflevector <4 x float> %1, <4 x float> %3, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 3 uses
+  %1 = load <8 x float>, ptr %i.b, align 16, !tbaa !10, !noalias !21 ; 2 uses
+  %i.t = shufflevector <8 x float> %1, <8 x float> poison, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 3 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 32
-  %4 = load <4 x float>, ptr %i.u, align 16, !tbaa !10, !noalias !21 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.b, i64 48
-  %6 = load <4 x float>, ptr %5, align 16, !tbaa !10, !noalias !21 ; 2 uses
-  %i.v = shufflevector <4 x float> %4, <4 x float> %6, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 3 uses
-  %i.w = shufflevector <4 x float> %1, <4 x float> %3, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 4 uses
-  %i.x = shufflevector <4 x float> %4, <4 x float> %6, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 4 uses
+  %2 = load <8 x float>, ptr %i.u, align 16, !tbaa !10, !noalias !21 ; 2 uses
+  %i.v = shufflevector <8 x float> %2, <8 x float> poison, <4 x i32> <i32 0, i32 1, i32 4, i32 5> ; 3 uses
+  %i.w = shufflevector <8 x float> %1, <8 x float> poison, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 4 uses
+  %i.x = shufflevector <8 x float> %2, <8 x float> poison, <4 x i32> <i32 2, i32 3, i32 6, i32 7> ; 4 uses
   %i.y = shufflevector <4 x float> %i.t, <4 x float> %i.v, <4 x i32> <i32 0, i32 2, i32 4, i32 6> ; 10 uses
   %i.z = shufflevector <4 x float> %i.v, <4 x float> %i.t, <4 x i32> <i32 1, i32 3, i32 5, i32 7> ; 8 uses
   %i.aa = shufflevector <4 x float> %i.w, <4 x float> %i.x, <4 x i32> <i32 0, i32 2, i32 4, i32 6> ; 2 uses

@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/paramdict?download=true
 inline.NumInlined: 2392
 inline.NumDeleted: 900
-loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumCompletelyUnrolled: 4
 loop-unroll.NumRuntimeUnrolled: 16
-loop-unroll.NumUnrolled: 18
+loop-unroll.NumUnrolled: 20
 begin_hunk_0
 $_ZN4pbrt6detail21stringPrintfRecursiveIRfJRKfEEEvPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPKcOT_DpOT0_ = comdat any
 
@@ -205,6 +205,8 @@ declare ptr @llvm.invariant.start.p0(i64 immarg, ptr captures(none)) #0
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN4pbrt19ParameterDictionaryC2ENS_13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS3_EEEEPKNS_13RGBColorSpaceE(ptr noundef nonnull align 8 dereferenceable(108) initializes((0, 16), (80, 96)) %0, ptr nofree noundef align 8 captures(none) dereferenceable(96) %1, ptr noundef %2) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
+  %3 = ptrtoaddr ptr %1 to i64
+  %4 = ptrtoaddr ptr %0 to i64
   %i.a = load i64, ptr %1, align 8, !tbaa !20
   store i64 %i.a, ptr %0, align 8, !tbaa !20
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -213,7 +215,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.c, i8 0, i64 16, i1 false)
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 3 uses
-  %i.f = load i64, ptr %i.d, align 8, !tbaa !27   ; 17 uses
+  %i.f = load i64, ptr %i.d, align 8, !tbaa !27   ; 21 uses
   %i.g = load <2 x i64>, ptr %i.e, align 8, !tbaa !28
   store <2 x i64> %i.g, ptr %i.c, align 8, !tbaa !28
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
@@ -224,7 +226,7 @@ bb.a:
 
 .preheader.i:                                     ; preds = %bb.a
   %.not.i = icmp eq i64 %i.f, 0
-  br i1 %.not.i, label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit.thread, label %.lr.ph.i.a
+  br i1 %.not.i, label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit.thread, label %.lr.ph.i
 
 _ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit.thread: ; preds = %.preheader.i
   store i64 0, ptr %i.e, align 8, !tbaa !29
@@ -235,15 +237,40 @@ _ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_alloca
   store i32 0, ptr %i.l, align 8, !tbaa !33
   br label %_ZSt7reverseIPPN4pbrt15ParsedParameterEEvT_S4_.exit
 
-.lr.ph.i.a:                                       ; preds = %.preheader.i
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %5 = load ptr, ptr %3, align 8, !tbaa !35
-  store ptr %5, ptr %4, align 8, !tbaa !35
-  %exitcond.not.i.a = icmp eq i64 %i.f, 1
-  br i1 %exitcond.not.i.a, label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit, label %bb.b
+.lr.ph.i:                                         ; preds = %.preheader.i
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %7 = sub i64 %3, %4
+  %diff.check = icmp ugt i64 %7, -32
+  br i1 %diff.check, label %scalar.ph, label %.lr.ph.i.a
 
-bb.b:                                             ; preds = %.lr.ph.i.a
+.lr.ph.i.a:                                       ; preds = %.lr.ph.i
+  %trip.count.minus.1 = add nsw i64 %i.f, -1
+  %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %trip.count.minus.1, i64 0
+  %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
+  %n.rnd.up = add nuw nsw i64 %i.f, 3
+  %n.vec = and i64 %n.rnd.up, 28
+  %8 = icmp uge <4 x i64> %broadcast.splat, <i64 0, i64 1, i64 2, i64 3>
+  %unmaskedload = load <4 x ptr>, ptr %6, align 8, !tbaa !35
+  tail call void @llvm.masked.store.v4p0.p0(<4 x ptr> %unmaskedload, ptr align 8 %5, <4 x i1> %8), !tbaa !35
+  %exitcond.not.i.a = icmp eq i64 %n.vec, 4
+  br i1 %exitcond.not.i.a, label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit, label %vector.body.1
+
+vector.body.1:                                    ; preds = %.lr.ph.i.a
+  %9 = icmp ugt <4 x i64> %broadcast.splat, <i64 3, i64 4, i64 5, i64 6> ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %11 = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %wide.masked.load.1 = tail call <4 x ptr> @llvm.masked.load.v4p0.p0(ptr nonnull align 8 %11, <4 x i1> %9, <4 x ptr> poison), !tbaa !35
+  tail call void @llvm.masked.store.v4p0.p0(<4 x ptr> %wide.masked.load.1, ptr align 8 %10, <4 x i1> %9), !tbaa !35
+  br label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit
+
+scalar.ph:                                        ; preds = %.lr.ph.i
+  %12 = load ptr, ptr %6, align 8, !tbaa !35
+  store ptr %12, ptr %5, align 8, !tbaa !35
+  %exitcond.not.i = icmp eq i64 %i.f, 1
+  br i1 %exitcond.not.i, label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit, label %bb.b
+
+bb.b:                                             ; preds = %scalar.ph
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !35
@@ -304,16 +331,16 @@ bb.i:                                             ; preds = %bb.a
   %.pre = load i64, ptr %i.ah, align 8, !tbaa !27
   br label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit
 
-_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit: ; preds = %.lr.ph.i.a, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i
-  %6 = phi i64 [ %.pre, %bb.i ], [ %i.f, %bb.h ], [ %i.f, %bb.g ], [ %i.f, %bb.f ], [ %i.f, %bb.e ], [ %i.f, %bb.d ], [ %i.f, %bb.c ], [ %i.f, %bb.b ], [ %i.f, %.lr.ph.i.a ] ; 3 uses
+_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit: ; preds = %.lr.ph.i.a, %vector.body.1, %scalar.ph, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %bb.i
+  %13 = phi i64 [ %.pre, %bb.i ], [ %i.f, %scalar.ph ], [ %i.f, %bb.h ], [ %i.f, %bb.g ], [ %i.f, %bb.f ], [ %i.f, %bb.e ], [ %i.f, %bb.d ], [ %i.f, %bb.c ], [ %i.f, %bb.b ], [ %i.f, %vector.body.1 ], [ %i.f, %.lr.ph.i.a ] ; 3 uses
   store i64 0, ptr %i.e, align 8, !tbaa !29
   store ptr null, ptr %i.h, align 8, !tbaa !26
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 96
   store ptr %2, ptr %i.ai, align 8, !tbaa !32
-  %i.aj = trunc i64 %6 to i32
+  %i.aj = trunc i64 %13 to i32
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 104
   store i32 %i.aj, ptr %i.ak, align 8, !tbaa !33
-  %i.al = icmp ugt i64 %6, 1
+  %i.al = icmp ugt i64 %13, 1
   br i1 %i.al, label %.lr.ph.i.i.preheader, label %_ZSt7reverseIPPN4pbrt15ParsedParameterEEvT_S4_.exit
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit
@@ -321,7 +348,7 @@ _ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_alloca
   %.not.i4 = icmp eq ptr %i.am, null
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ao = select i1 %.not.i4, ptr %i.an, ptr %i.am ; 2 uses
-  %.idx = shl nuw nsw i64 %6, 3
+  %.idx = shl nuw nsw i64 %13, 3
   %i.ap = getelementptr i8, ptr %i.ao, i64 %.idx
   %.012.i.i = getelementptr i8, ptr %i.ap, i64 -8
   br label %.lr.ph.i.i
@@ -636,8 +663,10 @@ bb.c:                                             ; preds = %bb.b
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN4pbrt19ParameterDictionaryC2ENS_13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS3_EEEERKS8_PKNS_13RGBColorSpaceE(ptr noundef nonnull align 8 dereferenceable(108) initializes((0, 16), (80, 96)) %0, ptr nofree noundef align 8 captures(none) dereferenceable(96) %1, ptr noundef nonnull align 8 dereferenceable(96) %2, ptr noundef %3) unnamed_addr #1 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %4 = alloca %"class.std::reverse_iterator", align 8 ; 2 uses
-  %5 = alloca %"class.std::reverse_iterator", align 8 ; 2 uses
+  %4 = ptrtoaddr ptr %1 to i64
+  %5 = ptrtoaddr ptr %0 to i64
+  %6 = alloca %"class.std::reverse_iterator", align 8 ; 2 uses
+  %7 = alloca %"class.std::reverse_iterator", align 8 ; 2 uses
   %i.a = load i64, ptr %1, align 8, !tbaa !20
   store i64 %i.a, ptr %0, align 8, !tbaa !20
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
@@ -646,7 +675,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.c, i8 0, i64 16, i1 false)
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 2 uses
-  %i.f = load i64, ptr %i.d, align 8, !tbaa !27   ; 17 uses
+  %i.f = load i64, ptr %i.d, align 8, !tbaa !27   ; 21 uses
   %i.g = load <2 x i64>, ptr %i.e, align 8, !tbaa !28
   store <2 x i64> %i.g, ptr %i.c, align 8, !tbaa !28
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -657,17 +686,42 @@ bb.a:
 
 .preheader.i:                                     ; preds = %bb.a
   %.not.i = icmp eq i64 %i.f, 0
-  br i1 %.not.i, label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit, label %.lr.ph.i.a
+  br i1 %.not.i, label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit, label %.lr.ph.i
 
-.lr.ph.i.a:                                       ; preds = %.preheader.i
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %8 = load ptr, ptr %6, align 8, !tbaa !35
-  store ptr %8, ptr %7, align 8, !tbaa !35
-  %exitcond.not.i.a = icmp eq i64 %i.f, 1
-  br i1 %exitcond.not.i.a, label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit, label %bb.b
+.lr.ph.i:                                         ; preds = %.preheader.i
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
+  %10 = sub i64 %4, %5
+  %diff.check = icmp ugt i64 %10, -32
+  br i1 %diff.check, label %scalar.ph, label %.lr.ph.i.a
 
-bb.b:                                             ; preds = %.lr.ph.i.a
+.lr.ph.i.a:                                       ; preds = %.lr.ph.i
+  %trip.count.minus.1 = add nsw i64 %i.f, -1
+  %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %trip.count.minus.1, i64 0
+  %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
+  %n.rnd.up = add nuw nsw i64 %i.f, 3
+  %n.vec = and i64 %n.rnd.up, 28
+  %11 = icmp uge <4 x i64> %broadcast.splat, <i64 0, i64 1, i64 2, i64 3> ; 2 uses
+  %wide.masked.load = tail call <4 x ptr> @llvm.masked.load.v4p0.p0(ptr nonnull align 8 %9, <4 x i1> %11, <4 x ptr> poison), !tbaa !35
+  tail call void @llvm.masked.store.v4p0.p0(<4 x ptr> %wide.masked.load, ptr align 8 %8, <4 x i1> %11), !tbaa !35
+  %exitcond.not.i.a = icmp eq i64 %n.vec, 4
+  br i1 %exitcond.not.i.a, label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit, label %vector.body.1
+
+vector.body.1:                                    ; preds = %.lr.ph.i.a
+  %12 = icmp ugt <4 x i64> %broadcast.splat, <i64 3, i64 4, i64 5, i64 6> ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 48
+  %14 = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %wide.masked.load.1 = tail call <4 x ptr> @llvm.masked.load.v4p0.p0(ptr nonnull align 8 %14, <4 x i1> %12, <4 x ptr> poison), !tbaa !35
+  tail call void @llvm.masked.store.v4p0.p0(<4 x ptr> %wide.masked.load.1, ptr align 8 %13, <4 x i1> %12), !tbaa !35
+  br label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit
+
+scalar.ph:                                        ; preds = %.lr.ph.i
+  %15 = load ptr, ptr %9, align 8, !tbaa !35
+  store ptr %15, ptr %8, align 8, !tbaa !35
+  %exitcond.not.i = icmp eq i64 %i.f, 1
+  br i1 %exitcond.not.i, label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit, label %bb.b
+
+bb.b:                                             ; preds = %scalar.ph
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !35
@@ -728,22 +782,22 @@ bb.i:                                             ; preds = %bb.a
   %.pre = load i64, ptr %i.af, align 8, !tbaa !27
   br label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit
 
-_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit: ; preds = %.lr.ph.i.a, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %.preheader.i, %bb.i
-  %9 = phi i64 [ %.pre, %bb.i ], [ 0, %.preheader.i ], [ %i.f, %bb.h ], [ %i.f, %bb.g ], [ %i.f, %bb.f ], [ %i.f, %bb.e ], [ %i.f, %bb.d ], [ %i.f, %bb.c ], [ %i.f, %bb.b ], [ %i.f, %.lr.ph.i.a ] ; 3 uses
+_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit: ; preds = %.lr.ph.i.a, %vector.body.1, %scalar.ph, %bb.b, %bb.c, %bb.d, %bb.e, %bb.f, %bb.g, %bb.h, %.preheader.i, %bb.i
+  %16 = phi i64 [ %.pre, %bb.i ], [ 0, %.preheader.i ], [ %i.f, %scalar.ph ], [ %i.f, %bb.h ], [ %i.f, %bb.g ], [ %i.f, %bb.f ], [ %i.f, %bb.e ], [ %i.f, %bb.d ], [ %i.f, %bb.c ], [ %i.f, %bb.b ], [ %i.f, %vector.body.1 ], [ %i.f, %.lr.ph.i.a ] ; 3 uses
   store i64 0, ptr %i.e, align 8, !tbaa !29
   store ptr null, ptr %i.h, align 8, !tbaa !26
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 96
   store ptr %3, ptr %i.ag, align 8, !tbaa !32
-  %i.ah = trunc i64 %9 to i32
+  %i.ah = trunc i64 %16 to i32
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 104
   store i32 %i.ah, ptr %i.ai, align 8, !tbaa !33
   %i.aj = load ptr, ptr %i.b, align 8, !tbaa !26  ; 2 uses
   %.not.i6 = icmp eq ptr %i.aj, null
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.al = select i1 %.not.i6, ptr %i.ak, ptr %i.aj ; 2 uses
-  %.idx = shl nuw nsw i64 %9, 3
+  %.idx = shl nuw nsw i64 %16, 3
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 %.idx ; 2 uses
-  %i.an = icmp ugt i64 %9, 1
+  %i.an = icmp ugt i64 %16, 1
   br i1 %i.an, label %.lr.ph.i.i.preheader, label %_ZSt7reverseIPPN4pbrt15ParsedParameterEEvT_S4_.exit
 
 .lr.ph.i.i.preheader:                             ; preds = %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit
@@ -789,9 +843,9 @@ bb.m:                                             ; preds = %_ZSt7reverseIPPN4pb
   %i.ax = getelementptr inbounds nuw i8, ptr %2, i64 88
   %i.ay = load i64, ptr %i.ax, align 8, !tbaa !27, !noalias !155
   %i.az = getelementptr inbounds nuw [8 x i8], ptr %i.aw, i64 %i.ay
-  store ptr %i.az, ptr %4, align 8, !tbaa !63, !alias.scope !155
-  store ptr %i.aw, ptr %5, align 8, !tbaa !63, !alias.scope !156
-  %i.ba = invoke noundef ptr @_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEE6insertISt16reverse_iteratorIPKS2_EEEPS2_SB_T_SE_(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %i.am, ptr nofree noundef nonnull align 8 dead_on_return dereferenceable(8) %4, ptr nofree noundef nonnull align 8 dead_on_return dereferenceable(8) %5)
+  store ptr %i.az, ptr %6, align 8, !tbaa !63, !alias.scope !155
+  store ptr %i.aw, ptr %7, align 8, !tbaa !63, !alias.scope !156
+  %i.ba = invoke noundef ptr @_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEE6insertISt16reverse_iteratorIPKS2_EEEPS2_SB_T_SE_(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull %i.am, ptr nofree noundef nonnull align 8 dead_on_return dereferenceable(8) %6, ptr nofree noundef nonnull align 8 dead_on_return dereferenceable(8) %7)
           to label %bb.n unwind label %bb.l       ; 0 uses
 
 bb.n:                                             ; preds = %bb.m
@@ -1193,6 +1247,12 @@ declare i64 @llvm.smin.i64(i64, i64) #21
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #0
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare <4 x ptr> @llvm.masked.load.v4p0.p0(ptr captures(none), <4 x i1>, <4 x ptr>) #26
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
+declare void @llvm.masked.store.v4p0.p0(<4 x ptr>, ptr captures(none), <4 x i1>) #10
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="icelake-server" "target-features"="+64bit,+adx,+aes,+avx,+avx2,+avx512bitalg,+avx512bw,+avx512cd,+avx512dq,+avx512f,+avx512ifma,+avx512vbmi,+avx512vbmi2,+avx512vl,+avx512vnni,+avx512vpopcntdq,+bmi,+bmi2,+clflushopt,+clwb,+cmov,+crc32,+cx16,+cx8,+f16c,+fma,+fsgsbase,+fxsr,+gfni,+invpcid,+lzcnt,+mmx,+movbe,+pclmul,+pku,+popcnt,+prfchw,+rdpid,+rdrnd,+rdseed,+sahf,+sha,+sse,+sse2,+sse3,+sse4.1,+sse4.2,+ssse3,+vaes,+vpclmulqdq,+wbnoinvd,+x87,+xsave,+xsavec,+xsaveopt,+xsaves,-amx-avx512,-amx-bf16,-amx-complex,-amx-fp16,-amx-fp8,-amx-int8,-amx-movrs,-amx-tile,-avx10.1,-avx10.2,-avx512bf16,-avx512bmm,-avx512fp16,-avx512vp2intersect,-avxifma,-avxneconvert,-avxvnni,-avxvnniint16,-avxvnniint8,-ccmp,-cf,-cldemote,-clzero,-cmpccxadd,-egpr,-enqcmd,-fma4,-hreset,-jmpabs,-kl,-lwp,-movdir64b,-movdiri,-movrs,-mwaitx,-ndd,-nf,-pconfig,-ppx,-prefetchi,-ptwrite,-push2pop2,-raoint,-rdpru,-rtm,-serialize,-sgx,-sha512,-shstk,-sm3,-sm4,-sse4a,-tbm,-tsxldtrk,-uintr,-usermsr,-waitpkg,-widekl,-xop,-zu" }
