@@ -204,7 +204,7 @@ _RNvXsf_NtNtCskKLDkoKarTP_4core5slice3cmpNtNtNtCsjx2R6KBUtVL_6rustls4msgs9handsh
   %.not.i = icmp samesign eq i64 %i.cw, 0
   %i.cz = load ptr, ptr %i.bd, align 8, !nonnull !1955 ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 %i.cn
-  br i1 %.not.i, label %.loopexit, label %.lr.ph.i.preheader
+  br i1 %.not.i, label %.loopexit, label %.lr.ph.i.preheader, !dbg !13328
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph216
   %.not.not.not.i.not.not.not.i.not.not.not.i.not.i.not241 = icmp samesign eq i64 %i.cn, 0

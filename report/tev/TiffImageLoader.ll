@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.b, %bb.c
   %.not.i.i = icmp eq i64 %i.y, 0
   br i1 %.not.i.i, label %._crit_edge, label %.from..preheader47.i.i
 
-._crit_edge:                                      ; preds = %"_ZZZZN3tev13readTiffImageERKNS_8TiffDataEP4tiffbbNSt3__117basic_string_viewIcNS5_11char_traitsIcEEEERKNS_19ImageLoaderSettingsEiENK3$_3clEvENKUlTyPT_E_clIjEENS_4TaskIvEESF_ENKUlmE_clEm.exit.loopexit23", %"_ZZZZN3tev13readTiffImageERKNS_8TiffDataEP4tiffbbNSt3__117basic_string_viewIcNS5_11char_traitsIcEEEERKNS_19ImageLoaderSettingsEiENK3$_3clEvENKUlTyPT_E_clIjEENS_4TaskIvEESF_ENKUlmE_clEm.exit.loopexit.us", %.lr.ph.split, %.lr.ph.split.us, %.preheader.lr.ph.i.i.us.us.preheader, %bb.e
+._crit_edge:                                      ; preds = %"_ZZZZN3tev13readTiffImageERKNS_8TiffDataEP4tiffbbNSt3__117basic_string_viewIcNS5_11char_traitsIcEEEERKNS_19ImageLoaderSettingsEiENK3$_3clEvENKUlTyPT_E_clIjEENS_4TaskIvEESF_ENKUlmE_clEm.exit.loopexit23", %"_ZZZZN3tev13readTiffImageERKNS_8TiffDataEP4tiffbbNSt3__117basic_string_viewIcNS5_11char_traitsIcEEEERKNS_19ImageLoaderSettingsEiENK3$_3clEvENKUlTyPT_E_clIjEENS_4TaskIvEESF_ENKUlmE_clEm.exit.loopexit.us", %.preheader.lr.ph.i.i.us.us.preheader, %.lr.ph.split.us, %.lr.ph.split, %bb.e
   invoke void @_ZNSt3__17promiseIvE9set_valueEv(ptr noundef nonnull align 8 dereferenceable(8) %.reload.addr93)
           to label %_ZN3tev15TaskPromiseBaseIvE11return_voidEv.exit unwind label %bb.f
 
@@ -608,7 +608,7 @@ bb.e:                                             ; preds = %bb.b, %bb.c
   %.not.i.i = icmp eq i64 %i.y, 0
   br i1 %.not.i.i, label %._crit_edge, label %.from..preheader50.i.i
 
-._crit_edge:                                      ; preds = %"_ZZZZN3tev13readTiffImageERKNS_8TiffDataEP4tiffbbNSt3__117basic_string_viewIcNS5_11char_traitsIcEEEERKNS_19ImageLoaderSettingsEiENK3$_3clEvENKUlTyPT_E_clIiEENS_4TaskIvEESF_ENKUlmE_clEm.exit.loopexit23", %"_ZZZZN3tev13readTiffImageERKNS_8TiffDataEP4tiffbbNSt3__117basic_string_viewIcNS5_11char_traitsIcEEEERKNS_19ImageLoaderSettingsEiENK3$_3clEvENKUlTyPT_E_clIiEENS_4TaskIvEESF_ENKUlmE_clEm.exit.loopexit.us", %.lr.ph.split, %.lr.ph.split.us, %.preheader.lr.ph.i.i.us.us.preheader, %bb.e
+._crit_edge:                                      ; preds = %"_ZZZZN3tev13readTiffImageERKNS_8TiffDataEP4tiffbbNSt3__117basic_string_viewIcNS5_11char_traitsIcEEEERKNS_19ImageLoaderSettingsEiENK3$_3clEvENKUlTyPT_E_clIiEENS_4TaskIvEESF_ENKUlmE_clEm.exit.loopexit23", %"_ZZZZN3tev13readTiffImageERKNS_8TiffDataEP4tiffbbNSt3__117basic_string_viewIcNS5_11char_traitsIcEEEERKNS_19ImageLoaderSettingsEiENK3$_3clEvENKUlTyPT_E_clIiEENS_4TaskIvEESF_ENKUlmE_clEm.exit.loopexit.us", %.preheader.lr.ph.i.i.us.us.preheader, %.lr.ph.split.us, %.lr.ph.split, %bb.e
   invoke void @_ZNSt3__17promiseIvE9set_valueEv(ptr noundef nonnull align 8 dereferenceable(8) %.reload.addr93)
           to label %_ZN3tev15TaskPromiseBaseIvE11return_voidEv.exit unwind label %bb.f
 

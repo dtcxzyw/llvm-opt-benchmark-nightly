@@ -205,14 +205,14 @@ _RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsltEA
 .lr.ph.split.us.i.i:                              ; preds = %.lr.ph.i.i
   %.not.i3.i.i.us.i.i = icmp ne i64 %.pre2.i.i.i.i.i, %.promoted11.i.i
   %or.cond.not.i.i.i.us.i.i = select i1 %i.bq, i1 true, i1 %.not.i3.i.i.us.i.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !9566)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !9567)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !9568)
   br i1 %or.cond.not.i.i.i.us.i.i, label %._crit_edge.split.us.split.us.i.i, label %_RNvXNtNtCsgCecv3eZDcN_5alloc3vec11spec_extendINtB4_3VecReEINtB2_10SpecExtendBR_INtNtNtCsf3Ta7LF998c_4core3str4iter5SplitcEE11spec_extendCsltEA4u8Pgfu_11candle_core.exit
 
 ._crit_edge.split.us.split.us.i.i:                ; preds = %.lr.ph.split.us.i.i
   %.sroa.0.1.i.i.us.i.i = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i, i64 %.promoted11.i.i
   %i.bs = sub nuw i64 %.pre2.i.i.i.i.i, %.promoted11.i.i
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !9566)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !9567)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !9568)
   %i.bt = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
   store ptr %.sroa.0.1.i.i.us.i.i, ptr %i.bt, align 8, !noalias !9564, !captures !25
   %i.bu = getelementptr inbounds nuw i8, ptr %i.ay, i64 24
