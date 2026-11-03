@@ -205,16 +205,16 @@ bb.g:                                             ; preds = %bb.e, %bb.f
   br i1 %.not.i.i.i.not, label %.critedge20, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.g
-  %4 = getelementptr inbounds nuw [40 x i8], ptr %i.v, i64 %i.u
-  %5 = load i32, ptr %1, align 4, !tbaa !77
+  %4 = load i32, ptr %1, align 4, !tbaa !77
+  %5 = getelementptr inbounds nuw [40 x i8], ptr %i.v, i64 %i.u
   br label %.backedge
 
 .backedge:                                        ; preds = %.critedge, %.lr.ph
-  %.pn = phi ptr [ %4, %.lr.ph ], [ %.sroa.028.033, %.critedge ] ; 3 uses
+  %.pn = phi ptr [ %5, %.lr.ph ], [ %.sroa.028.033, %.critedge ] ; 3 uses
   %.sroa.028.033 = getelementptr inbounds i8, ptr %.pn, i64 -40 ; 3 uses
   %i.w = getelementptr inbounds i8, ptr %.pn, i64 -8
   %i.x = load i32, ptr %i.w, align 8, !tbaa !75
-  %.not = icmp eq i32 %i.x, %5
+  %.not = icmp eq i32 %i.x, %4
   br i1 %.not, label %bb.h, label %.critedge
 
 bb.h:                                             ; preds = %.backedge
