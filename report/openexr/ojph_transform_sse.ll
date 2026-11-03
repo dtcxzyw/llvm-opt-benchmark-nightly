@@ -163,68 +163,87 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.i.preheader:                               ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !9    ; 4 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !9    ; 2 uses
   %.pn94 = select i1 %5, ptr %2, ptr %1
   %.in93 = getelementptr inbounds nuw i8, ptr %.pn94, i64 16
-  %i.e = load ptr, ptr %.in93, align 8, !tbaa !9  ; 3 uses
+  %i.e = load ptr, ptr %.in93, align 8, !tbaa !9  ; 2 uses
   %. = select i1 %5, ptr %1, ptr %2
   %.in = getelementptr inbounds nuw i8, ptr %., i64 16
-  %i.f = load ptr, ptr %.in, align 8, !tbaa !9    ; 3 uses
-  %i.g = add nuw i32 %4, 15
-  %i.h = and i32 %i.g, 8
+  %i.f = load ptr, ptr %.in, align 8, !tbaa !9    ; 2 uses
+  %6 = add nsw i32 %4, -1
+  %7 = lshr i32 %6, 3
+  %i.g = add nuw nsw i32 %7, 1
+  %i.h = and i32 %i.g, 3                          ; 2 uses
   %lcmp.mod.not.not = icmp eq i32 %i.h, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.prol, label %.lr.ph.i.prol.loopexit
+  br i1 %lcmp.mod.not.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol
 
-.lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader
-  %6 = load <4 x float>, ptr %i.d, align 16, !tbaa !9 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
-  %8 = load <4 x float>, ptr %7, align 16, !tbaa !9 ; 2 uses
-  %i.i = shufflevector <4 x float> %6, <4 x float> %8, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
-  %i.j = shufflevector <4 x float> %6, <4 x float> %8, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
-  store <4 x float> %i.i, ptr %i.f, align 16, !tbaa !9
-  store <4 x float> %i.j, ptr %i.e, align 16, !tbaa !9
-  %i.k = add nsw i32 %4, -8
-  %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 32
-  %i.m = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %i.n = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  br label %.lr.ph.i.prol.loopexit
+.lr.ph.i.prol:                                    ; preds = %.lr.ph.i.preheader, %.lr.ph.i.prol
+  %.020.i.prol = phi ptr [ %i.m, %.lr.ph.i.prol ], [ %i.f, %.lr.ph.i.preheader ] ; 2 uses
+  %.01419.i.prol = phi ptr [ %i.n, %.lr.ph.i.prol ], [ %i.e, %.lr.ph.i.preheader ] ; 2 uses
+  %.01518.i.prol = phi ptr [ %i.l, %.lr.ph.i.prol ], [ %i.d, %.lr.ph.i.preheader ] ; 2 uses
+  %.01617.i.prol = phi i32 [ %i.k, %.lr.ph.i.prol ], [ %4, %.lr.ph.i.preheader ]
+  %prol.iter = phi i32 [ %prol.iter.next, %.lr.ph.i.prol ], [ 0, %.lr.ph.i.preheader ]
+  %8 = load <8 x float>, ptr %.01518.i.prol, align 16, !tbaa !9 ; 2 uses
+  %i.i = shufflevector <8 x float> %8, <8 x float> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %i.j = shufflevector <8 x float> %8, <8 x float> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  store <4 x float> %i.i, ptr %.020.i.prol, align 16, !tbaa !9
+  store <4 x float> %i.j, ptr %.01419.i.prol, align 16, !tbaa !9
+  %i.k = add nsw i32 %.01617.i.prol, -8           ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %.01518.i.prol, i64 32 ; 2 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %.020.i.prol, i64 16 ; 2 uses
+  %i.n = getelementptr inbounds nuw i8, ptr %.01419.i.prol, i64 16 ; 2 uses
+  %prol.iter.next = add i32 %prol.iter, 1         ; 2 uses
+  %prol.iter.cmp.not = icmp eq i32 %prol.iter.next, %i.h
+  br i1 %prol.iter.cmp.not, label %.lr.ph.i.prol.loopexit, label %.lr.ph.i.prol, !llvm.loop !24
 
 .lr.ph.i.prol.loopexit:                           ; preds = %.lr.ph.i.prol, %.lr.ph.i.preheader
   %.020.i.unr = phi ptr [ %i.f, %.lr.ph.i.preheader ], [ %i.m, %.lr.ph.i.prol ]
   %.01419.i.unr = phi ptr [ %i.e, %.lr.ph.i.preheader ], [ %i.n, %.lr.ph.i.prol ]
   %.01518.i.unr = phi ptr [ %i.d, %.lr.ph.i.preheader ], [ %i.l, %.lr.ph.i.prol ]
   %.01617.i.unr = phi i32 [ %4, %.lr.ph.i.preheader ], [ %i.k, %.lr.ph.i.prol ]
-  %i.o = icmp ult i32 %4, 9
+  %i.o = icmp ult i32 %4, 25
   br i1 %i.o, label %_ZN4ojph5localL18sse_deinterleave32EPfS1_S1_i.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i
-  %.020.i = phi ptr [ %i.aa, %.lr.ph.i ], [ %.020.i.unr, %.lr.ph.i.prol.loopexit ] ; 3 uses
-  %.01419.i = phi ptr [ %i.ab, %.lr.ph.i ], [ %.01419.i.unr, %.lr.ph.i.prol.loopexit ] ; 3 uses
+  %.020.i = phi ptr [ %i.aa, %.lr.ph.i ], [ %.020.i.unr, %.lr.ph.i.prol.loopexit ] ; 5 uses
+  %.01419.i = phi ptr [ %i.ab, %.lr.ph.i ], [ %.01419.i.unr, %.lr.ph.i.prol.loopexit ] ; 5 uses
   %.01518.i = phi ptr [ %i.z, %.lr.ph.i ], [ %.01518.i.unr, %.lr.ph.i.prol.loopexit ] ; 5 uses
   %.01617.i = phi i32 [ %i.y, %.lr.ph.i ], [ %.01617.i.unr, %.lr.ph.i.prol.loopexit ] ; 2 uses
-  %9 = load <4 x float>, ptr %.01518.i, align 16, !tbaa !9 ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %.01518.i, i64 16
-  %10 = load <4 x float>, ptr %i.p, align 16, !tbaa !9 ; 2 uses
-  %i.q = shufflevector <4 x float> %9, <4 x float> %10, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
-  %i.r = shufflevector <4 x float> %9, <4 x float> %10, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
-  store <4 x float> %i.q, ptr %.020.i, align 16, !tbaa !9
-  store <4 x float> %i.r, ptr %.01419.i, align 16, !tbaa !9
-  %i.s = getelementptr inbounds nuw i8, ptr %.01518.i, i64 32
-  %i.t = getelementptr inbounds nuw i8, ptr %.020.i, i64 16
-  %i.u = getelementptr inbounds nuw i8, ptr %.01419.i, i64 16
-  %11 = load <4 x float>, ptr %i.s, align 16, !tbaa !9 ; 2 uses
-  %i.v = getelementptr inbounds nuw i8, ptr %.01518.i, i64 48
-  %12 = load <4 x float>, ptr %i.v, align 16, !tbaa !9 ; 2 uses
-  %i.w = shufflevector <4 x float> %11, <4 x float> %12, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
-  %i.x = shufflevector <4 x float> %11, <4 x float> %12, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
-  store <4 x float> %i.w, ptr %i.t, align 16, !tbaa !9
-  store <4 x float> %i.x, ptr %i.u, align 16, !tbaa !9
-  %i.y = add nsw i32 %.01617.i, -16
-  %i.z = getelementptr inbounds nuw i8, ptr %.01518.i, i64 64
-  %i.aa = getelementptr inbounds nuw i8, ptr %.020.i, i64 32
-  %i.ab = getelementptr inbounds nuw i8, ptr %.01419.i, i64 32
-  %i.ac = icmp sgt i32 %.01617.i, 16
-  br i1 %i.ac, label %.lr.ph.i, label %_ZN4ojph5localL18sse_deinterleave32EPfS1_S1_i.exit, !llvm.loop !24
+  %9 = load <8 x float>, ptr %.01518.i, align 16, !tbaa !9 ; 2 uses
+  %10 = shufflevector <8 x float> %9, <8 x float> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %11 = shufflevector <8 x float> %9, <8 x float> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  store <4 x float> %10, ptr %.020.i, align 16, !tbaa !9
+  store <4 x float> %11, ptr %.01419.i, align 16, !tbaa !9
+  %12 = getelementptr inbounds nuw i8, ptr %.01518.i, i64 32
+  %13 = getelementptr inbounds nuw i8, ptr %.020.i, i64 16
+  %i.p = getelementptr inbounds nuw i8, ptr %.01419.i, i64 16
+  %14 = load <8 x float>, ptr %12, align 16, !tbaa !9 ; 2 uses
+  %i.q = shufflevector <8 x float> %14, <8 x float> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %i.r = shufflevector <8 x float> %14, <8 x float> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  store <4 x float> %i.q, ptr %13, align 16, !tbaa !9
+  store <4 x float> %i.r, ptr %i.p, align 16, !tbaa !9
+  %15 = getelementptr inbounds nuw i8, ptr %.01518.i, i64 64
+  %i.s = getelementptr inbounds nuw i8, ptr %.020.i, i64 32
+  %i.t = getelementptr inbounds nuw i8, ptr %.01419.i, i64 32
+  %16 = load <8 x float>, ptr %15, align 16, !tbaa !9 ; 2 uses
+  %17 = shufflevector <8 x float> %16, <8 x float> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %18 = shufflevector <8 x float> %16, <8 x float> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  store <4 x float> %17, ptr %i.s, align 16, !tbaa !9
+  store <4 x float> %18, ptr %i.t, align 16, !tbaa !9
+  %i.u = getelementptr inbounds nuw i8, ptr %.01518.i, i64 96
+  %19 = getelementptr inbounds nuw i8, ptr %.020.i, i64 48
+  %i.v = getelementptr inbounds nuw i8, ptr %.01419.i, i64 48
+  %20 = load <8 x float>, ptr %i.u, align 16, !tbaa !9 ; 2 uses
+  %i.w = shufflevector <8 x float> %20, <8 x float> poison, <4 x i32> <i32 0, i32 2, i32 4, i32 6>
+  %i.x = shufflevector <8 x float> %20, <8 x float> poison, <4 x i32> <i32 1, i32 3, i32 5, i32 7>
+  store <4 x float> %i.w, ptr %19, align 16, !tbaa !9
+  store <4 x float> %i.x, ptr %i.v, align 16, !tbaa !9
+  %i.y = add nsw i32 %.01617.i, -32
+  %i.z = getelementptr inbounds nuw i8, ptr %.01518.i, i64 128
+  %i.aa = getelementptr inbounds nuw i8, ptr %.020.i, i64 64
+  %i.ab = getelementptr inbounds nuw i8, ptr %.01419.i, i64 64
+  %i.ac = icmp sgt i32 %.01617.i, 32
+  br i1 %i.ac, label %.lr.ph.i, label %_ZN4ojph5localL18sse_deinterleave32EPfS1_S1_i.exit, !llvm.loop !25
 
 _ZN4ojph5localL18sse_deinterleave32EPfS1_S1_i.exit: ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %bb.b
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 16
@@ -280,7 +299,7 @@ _ZN4ojph5localL18sse_deinterleave32EPfS1_S1_i.exit: ; preds = %.lr.ph.i.prol.loo
   %i.bc = getelementptr inbounds nuw i8, ptr %.09.i.prol, i64 16 ; 2 uses
   %prol.iter.next.a = add i32 %prol.iter.a, 1     ; 2 uses
   %prol.iter.cmp.not.a = icmp eq i32 %prol.iter.next.a, %xtraiter133
-  br i1 %prol.iter.cmp.not.a, label %.lr.ph.i95.prol.loopexit, label %.lr.ph.i95.prol, !llvm.loop !25
+  br i1 %prol.iter.cmp.not.a, label %.lr.ph.i95.prol.loopexit, label %.lr.ph.i95.prol, !llvm.loop !26
 
 .lr.ph.i95.prol.loopexit:                         ; preds = %.lr.ph.i95.prol, %.lr.ph.i95.preheader
   %.09.i.unr = phi ptr [ %.083.lcssa, %.lr.ph.i95.preheader ], [ %i.bc, %.lr.ph.i95.prol ]
@@ -336,7 +355,7 @@ _ZN4ojph5localL18sse_multiply_constEPffi.exit:    ; preds = %.lr.ph.i95.prol.loo
   %i.ca = getelementptr inbounds nuw i8, ptr %.09.i97.prol, i64 16 ; 2 uses
   %prol.iter137.next = add i32 %prol.iter137, 1   ; 2 uses
   %prol.iter137.cmp.not = icmp eq i32 %prol.iter137.next, %xtraiter135
-  br i1 %prol.iter137.cmp.not, label %.lr.ph.i96.prol.loopexit, label %.lr.ph.i96.prol, !llvm.loop !26
+  br i1 %prol.iter137.cmp.not, label %.lr.ph.i96.prol.loopexit, label %.lr.ph.i96.prol, !llvm.loop !27
 
 .lr.ph.i96.prol.loopexit:                         ; preds = %.lr.ph.i96.prol, %.lr.ph.i96.preheader
   %.09.i97.unr = phi ptr [ %.082.lcssa, %.lr.ph.i96.preheader ], [ %i.ca, %.lr.ph.i96.prol ]
@@ -415,7 +434,7 @@ bb.c:                                             ; preds = %.lr.ph118, %.loopex
   %i.dm = getelementptr inbounds nuw i8, ptr %.090107, i64 16
   %i.dn = getelementptr inbounds nuw i8, ptr %.088108, i64 16
   %i.do = icmp sgt i32 %.087109, 4
-  br i1 %i.do, label %.lr.ph110, label %.loopexit, !llvm.loop !27
+  br i1 %i.do, label %.lr.ph110, label %.loopexit, !llvm.loop !28
 
 .lr.ph:                                           ; preds = %.preheader102, %.lr.ph
   %.1106 = phi i32 [ %i.dw, %.lr.ph ], [ %.085113, %.preheader102 ] ; 2 uses
@@ -433,12 +452,12 @@ bb.c:                                             ; preds = %.lr.ph118, %.loopex
   %i.dx = getelementptr inbounds nuw i8, ptr %.191104, i64 16
   %i.dy = getelementptr inbounds nuw i8, ptr %.189105, i64 16
   %i.dz = icmp sgt i32 %.1106, 4
-  br i1 %i.dz, label %.lr.ph, label %.loopexit, !llvm.loop !28
+  br i1 %i.dz, label %.lr.ph, label %.loopexit, !llvm.loop !29
 
 .loopexit:                                        ; preds = %.lr.ph, %.lr.ph110, %.preheader102, %.preheader
   %i.ea = xor i1 %.0.in117, true
   %.not.wide = icmp eq i64 %i.cq, 0
-  br i1 %.not.wide, label %._crit_edge, label %bb.c, !llvm.loop !29
+  br i1 %.not.wide, label %._crit_edge, label %bb.c, !llvm.loop !30
 
 _ZN4ojph5localL18sse_multiply_constEPffi.exit99.sink.split: ; preds = %bb.a
   %i.eb = getelementptr inbounds nuw i8, ptr %3, i64 16
@@ -586,7 +605,7 @@ _ZN4ojph5localL18sse_multiply_constEPffi.exit98:  ; preds = %.lr.ph.i95, %_ZN4oj
   %i.bl = getelementptr inbounds nuw i8, ptr %.01419.i, i64 32
   %i.bm = getelementptr inbounds nuw i8, ptr %.01518.i, i64 32
   %i.bn = icmp sgt i32 %.01617.i, 16
-  br i1 %i.bn, label %.lr.ph.i99, label %_ZN4ojph5localL16sse_interleave32EPfS1_S1_i.exit, !llvm.loop !30
+  br i1 %i.bn, label %.lr.ph.i99, label %_ZN4ojph5localL16sse_interleave32EPfS1_S1_i.exit, !llvm.loop !31
 
 bb.c:                                             ; preds = %.lr.ph116, %.loopexit
   %indvars.iv = phi i64 [ 0, %.lr.ph116 ], [ %indvars.iv.next, %.loopexit ] ; 2 uses
@@ -635,7 +654,7 @@ bb.c:                                             ; preds = %.lr.ph116, %.loopex
   %i.cj = getelementptr inbounds nuw i8, ptr %.091106, i64 16
   %i.ck = getelementptr inbounds nuw i8, ptr %.089107, i64 16
   %i.cl = icmp sgt i32 %.088108, 4
-  br i1 %i.cl, label %.lr.ph109, label %.loopexit, !llvm.loop !31
+  br i1 %i.cl, label %.lr.ph109, label %.loopexit, !llvm.loop !32
 
 .lr.ph:                                           ; preds = %.preheader101, %.lr.ph
   %.1105 = phi i32 [ %i.ct, %.lr.ph ], [ %.085112, %.preheader101 ] ; 2 uses
@@ -653,13 +672,13 @@ bb.c:                                             ; preds = %.lr.ph116, %.loopex
   %i.cu = getelementptr inbounds nuw i8, ptr %.192103, i64 16
   %i.cv = getelementptr inbounds nuw i8, ptr %.190104, i64 16
   %i.cw = icmp sgt i32 %.1105, 4
-  br i1 %i.cw, label %.lr.ph, label %.loopexit, !llvm.loop !32
+  br i1 %i.cw, label %.lr.ph, label %.loopexit, !llvm.loop !33
 
 .loopexit:                                        ; preds = %.lr.ph, %.lr.ph109, %.preheader101, %.preheader
   %i.cx = xor i1 %.0.in115, true
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !33
+  br i1 %exitcond.not, label %._crit_edge, label %bb.c, !llvm.loop !34
 
 bb.d:                                             ; preds = %bb.a
   br i1 %5, label %bb.e, label %bb.f
@@ -718,14 +737,15 @@ attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(readwrite
 !21 = !{!13, !13, i64 0}
 !22 = distinct !{!22, !10}
 !23 = distinct !{!23, !11}
-!24 = distinct !{!24, !10}
-!25 = distinct !{!25, !11}
+!24 = distinct !{!24, !11}
+!25 = distinct !{!25, !10}
 !26 = distinct !{!26, !11}
-!27 = distinct !{!27, !10}
+!27 = distinct !{!27, !11}
 !28 = distinct !{!28, !10}
 !29 = distinct !{!29, !10}
 !30 = distinct !{!30, !10}
 !31 = distinct !{!31, !10}
 !32 = distinct !{!32, !10}
 !33 = distinct !{!33, !10}
+!34 = distinct !{!34, !10}
 end_hunk_0

@@ -205,7 +205,8 @@ bb.a:
   %i.d = alloca i32, align 4                      ; 5 uses
   %i.e = alloca [4 x float], align 16             ; 3 uses
   %3 = alloca %struct._color_harmony_t, align 4   ; 5 uses
-  %i.f = alloca [4 x float], align 16             ; 9 uses
+  %i.f = alloca [4 x float], align 16             ; 11 uses
+  %4 = ptrtoaddr ptr %i.f to i64
   %i.g = alloca i32, align 4                      ; 7 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 704
   %i.i = load ptr, ptr %i.h, align 16, !tbaa !53  ; 38 uses
@@ -214,7 +215,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 680 ; 2 uses
-  %i.k = load ptr, ptr %i.j, align 8, !tbaa !75   ; 16 uses
+  %i.k = load ptr, ptr %i.j, align 8, !tbaa !75   ; 17 uses
+  %5 = ptrtoaddr ptr %i.k to i64
   %i.l = load i32, ptr %i.k, align 4, !tbaa !34
   %i.m = icmp eq i32 %i.l, 9                      ; 4 uses
   %i.n = zext i1 %i.m to i32                      ; 2 uses
@@ -242,28 +244,56 @@ bb.d:                                             ; preds = %bb.c
   %i.v = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.w = load i32, ptr %i.v, align 4, !tbaa !119
   call void @dt_lib_histogram_get_sector_angles(ptr noundef %i.t, i32 noundef %i.u, i32 noundef %i.w, ptr noundef nonnull %i.f, ptr noundef nonnull %i.g) #25
-  %i.x = load i32, ptr %i.g, align 4, !tbaa !30   ; 8 uses
+  %i.x = load i32, ptr %i.g, align 4, !tbaa !30   ; 10 uses
   %i.y = icmp slt i32 %i.x, 1
-  br i1 %i.y, label %bb.e, label %.lr.ph.i.a
+  br i1 %i.y, label %bb.e, label %.lr.ph.i
 
-.lr.ph.i.a:                                       ; preds = %bb.d
-  %4 = getelementptr inbounds nuw i8, ptr %i.k, i64 20
-  %5 = load float, ptr %i.f, align 16, !tbaa !31
-  %6 = fmul reassoc nsz arcp contract afn float %5, 7.200000e+02 ; 2 uses
-  %7 = fptosi float %6 to i32                     ; 2 uses
-  %8 = srem i32 %7, 720                           ; 2 uses
-  %9 = trunc nsw i32 %8 to i16
-  %.lhs.trunc.i.i = add nsw i16 %9, 1
-  %10 = srem i16 %.lhs.trunc.i.i, 720
-  %11 = sext i32 %8 to i64
-  %12 = getelementptr inbounds [4 x i8], ptr @s_ryb_to_ucs_lut, i64 %11
-  %13 = load float, ptr %12, align 4, !tbaa !31   ; 5 uses
-  %14 = sext i16 %10 to i64
-  %15 = getelementptr inbounds [4 x i8], ptr @s_ryb_to_ucs_lut, i64 %14
-  %16 = load float, ptr %15, align 4, !tbaa !31   ; 4 uses
-  %17 = fsub reassoc nsz arcp contract afn float %16, %13
-  %18 = fcmp reassoc nsz arcp contract afn ogt float %17, 5.000000e-01
-  br i1 %18, label %bb.f, label %bb.g
+.lr.ph.i:                                         ; preds = %bb.d
+  %6 = getelementptr inbounds nuw i8, ptr %i.k, i64 20 ; 2 uses
+  %7 = sub i64 %5, %4
+  %8 = add i64 %7, 19
+  %diff.check = icmp ult i64 %8, 15
+  br i1 %diff.check, label %scalar.ph, label %.lr.ph.i.a
+
+.lr.ph.i.a:                                       ; preds = %.lr.ph.i
+  %9 = call i32 @llvm.umin.i32(i32 %i.x, i32 4)
+  %wide.trip.count.i = zext nneg i32 %9 to i64
+  %trip.count.minus.1 = add nsw i64 %wide.trip.count.i, -1
+  %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %trip.count.minus.1, i64 0
+  %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer
+  %10 = icmp uge <4 x i64> %broadcast.splat, <i64 0, i64 1, i64 2, i64 3> ; 3 uses
+  %unmaskedload = load <4 x float>, ptr %i.f, align 16, !tbaa !31
+  %11 = fmul reassoc nsz arcp contract afn <4 x float> %unmaskedload, splat (float 7.200000e+02) ; 2 uses
+  %12 = fptosi <4 x float> %11 to <4 x i32>       ; 2 uses
+  %13 = srem <4 x i32> %12, splat (i32 720)       ; 2 uses
+  %14 = trunc nsw <4 x i32> %13 to <4 x i16>
+  %15 = add nsw <4 x i16> %14, splat (i16 1)
+  %16 = srem <4 x i16> %15, splat (i16 720)
+  %17 = sext <4 x i32> %13 to <4 x i64>
+  %wide.gep = getelementptr inbounds [4 x i8], ptr @s_ryb_to_ucs_lut, <4 x i64> %17
+  %wide.masked.gather = call <4 x float> @llvm.masked.gather.v4f32.v4p0(<4 x ptr> align 4 %wide.gep, <4 x i1> %10, <4 x float> poison), !tbaa !31 ; 4 uses
+  %18 = sext <4 x i16> %16 to <4 x i64>
+  %wide.gep69 = getelementptr inbounds [4 x i8], ptr @s_ryb_to_ucs_lut, <4 x i64> %18
+  %wide.masked.gather70 = call <4 x float> @llvm.masked.gather.v4f32.v4p0(<4 x ptr> align 4 %wide.gep69, <4 x i1> %10, <4 x float> poison), !tbaa !31 ; 4 uses
+  %19 = fsub reassoc nsz arcp contract afn <4 x float> %wide.masked.gather70, %wide.masked.gather
+  %20 = fcmp reassoc nsz arcp contract afn ogt <4 x float> %19, splat (float 5.000000e-01) ; 2 uses
+  %21 = fsub reassoc nsz arcp contract afn <4 x float> %wide.masked.gather, %wide.masked.gather70
+  %22 = fcmp reassoc nsz arcp contract afn ule <4 x float> %21, splat (float 5.000000e-01)
+  %23 = fadd reassoc nsz arcp contract afn <4 x float> %wide.masked.gather, splat (float -1.000000e+00)
+  %24 = fadd reassoc nsz arcp contract afn <4 x float> %wide.masked.gather70, splat (float -1.000000e+00)
+  %predphi = select nsz <4 x i1> %20, <4 x float> %24, <4 x float> %wide.masked.gather70
+  %25 = or <4 x i1> %20, %22
+  %predphi71 = select nsz <4 x i1> %25, <4 x float> %wide.masked.gather, <4 x float> %23 ; 2 uses
+  %26 = sitofp reassoc nsz arcp contract afn <4 x i32> %12 to <4 x float>
+  %27 = fsub reassoc nsz arcp contract afn <4 x float> %11, %26
+  %28 = fsub reassoc nsz arcp contract afn <4 x float> %predphi, %predphi71
+  %29 = fmul reassoc nsz arcp contract afn <4 x float> %28, %27
+  %30 = fadd reassoc nsz arcp contract afn <4 x float> %29, %predphi71 ; 3 uses
+  %31 = fcmp reassoc nsz arcp contract afn olt <4 x float> %30, zeroinitializer
+  %32 = fadd reassoc nsz arcp contract afn <4 x float> %30, splat (float 1.000000e+00)
+  %33 = select nsz <4 x i1> %31, <4 x float> %32, <4 x float> %30
+  call void @llvm.masked.store.v4f32.p0(<4 x float> %33, ptr align 4 %6, <4 x i1> %10), !tbaa !31
+  br label %.loopexit.i
 
 bb.e:                                             ; preds = %bb.d
   %i.z = getelementptr inbounds nuw i8, ptr %i.k, i64 4
@@ -285,29 +315,47 @@ bb.e:                                             ; preds = %bb.d
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.ae, ptr nonnull align 16 %i.f, i64 %i.ag, i1 false), !tbaa !31
   br label %.loopexit.i
 
-bb.f:                                             ; preds = %.lr.ph.i.a
-  %i.ah = fadd reassoc nsz arcp contract afn float %16, -1.000000e+00
+scalar.ph:                                        ; preds = %.lr.ph.i
+  %34 = load float, ptr %i.f, align 16, !tbaa !31
+  %35 = fmul reassoc nsz arcp contract afn float %34, 7.200000e+02 ; 2 uses
+  %36 = fptosi float %35 to i32                   ; 2 uses
+  %37 = srem i32 %36, 720                         ; 2 uses
+  %38 = trunc nsw i32 %37 to i16
+  %.lhs.trunc.i.i = add nsw i16 %38, 1
+  %39 = srem i16 %.lhs.trunc.i.i, 720
+  %40 = sext i32 %37 to i64
+  %41 = getelementptr inbounds [4 x i8], ptr @s_ryb_to_ucs_lut, i64 %40
+  %42 = load float, ptr %41, align 4, !tbaa !31   ; 5 uses
+  %43 = sext i16 %39 to i64
+  %44 = getelementptr inbounds [4 x i8], ptr @s_ryb_to_ucs_lut, i64 %43
+  %45 = load float, ptr %44, align 4, !tbaa !31   ; 4 uses
+  %46 = fsub reassoc nsz arcp contract afn float %45, %42
+  %47 = fcmp reassoc nsz arcp contract afn ogt float %46, 5.000000e-01
+  br i1 %47, label %bb.f, label %bb.g
+
+bb.f:                                             ; preds = %scalar.ph
+  %i.ah = fadd reassoc nsz arcp contract afn float %45, -1.000000e+00
   br label %_ryb_to_ucs_fast.exit.i
 
-bb.g:                                             ; preds = %.lr.ph.i.a
-  %i.ai = fsub reassoc nsz arcp contract afn float %13, %16
+bb.g:                                             ; preds = %scalar.ph
+  %i.ai = fsub reassoc nsz arcp contract afn float %42, %45
   %i.aj = fcmp reassoc nsz arcp contract afn ogt float %i.ai, 5.000000e-01
-  %i.ak = fadd reassoc nsz arcp contract afn float %13, -1.000000e+00
-  %spec.select.i.i.i = select nsz i1 %i.aj, float %i.ak, float %13
+  %i.ak = fadd reassoc nsz arcp contract afn float %42, -1.000000e+00
+  %spec.select.i.i.i = select nsz i1 %i.aj, float %i.ak, float %42
   br label %_ryb_to_ucs_fast.exit.i
 
 _ryb_to_ucs_fast.exit.i:                          ; preds = %bb.g, %bb.f
-  %.014.i.i.i = phi nsz float [ %i.ah, %bb.f ], [ %16, %bb.g ]
-  %.013.i.i.i = phi nsz float [ %13, %bb.f ], [ %spec.select.i.i.i, %bb.g ] ; 2 uses
-  %i.al = sitofp reassoc nsz arcp contract afn i32 %7 to float
-  %i.am = fsub reassoc nsz arcp contract afn float %6, %i.al
+  %.014.i.i.i = phi nsz float [ %i.ah, %bb.f ], [ %45, %bb.g ]
+  %.013.i.i.i = phi nsz float [ %42, %bb.f ], [ %spec.select.i.i.i, %bb.g ] ; 2 uses
+  %i.al = sitofp reassoc nsz arcp contract afn i32 %36 to float
+  %i.am = fsub reassoc nsz arcp contract afn float %35, %i.al
   %i.an = fsub reassoc nsz arcp contract afn float %.014.i.i.i, %.013.i.i.i
   %i.ao = fmul reassoc nsz arcp contract afn float %i.an, %i.am
   %i.ap = fadd reassoc nsz arcp contract afn float %i.ao, %.013.i.i.i ; 3 uses
   %i.aq = fcmp reassoc nsz arcp contract afn olt float %i.ap, 0.000000e+00
   %i.ar = fadd reassoc nsz arcp contract afn float %i.ap, 1.000000e+00
   %spec.select16.i.i.i = select nsz i1 %i.aq, float %i.ar, float %i.ap
-  store float %spec.select16.i.i.i, ptr %4, align 4, !tbaa !31
+  store float %spec.select16.i.i.i, ptr %6, align 4, !tbaa !31
   %exitcond.not.i = icmp eq i32 %i.x, 1
   br i1 %exitcond.not.i, label %.loopexit.i, label %bb.h
 
@@ -448,13 +496,13 @@ _ryb_to_ucs_fast.exit.i.3:                        ; preds = %bb.p, %bb.o
   store float %spec.select16.i.i.i.3, ptr %i.du, align 4, !tbaa !31
   br label %.loopexit.i
 
-.loopexit.i:                                      ; preds = %_ryb_to_ucs_fast.exit.i, %_ryb_to_ucs_fast.exit.i.1, %_ryb_to_ucs_fast.exit.i.2, %_ryb_to_ucs_fast.exit.i.3, %.lr.ph3.i
-  %19 = phi i32 [ %i.ab, %.lr.ph3.i ], [ %i.x, %_ryb_to_ucs_fast.exit.i.3 ], [ %i.x, %_ryb_to_ucs_fast.exit.i.2 ], [ %i.x, %_ryb_to_ucs_fast.exit.i.1 ], [ %i.x, %_ryb_to_ucs_fast.exit.i ] ; 2 uses
-  %i.dv = call i32 @llvm.smax.i32(i32 %19, i32 2)
+.loopexit.i:                                      ; preds = %_ryb_to_ucs_fast.exit.i, %_ryb_to_ucs_fast.exit.i.1, %_ryb_to_ucs_fast.exit.i.2, %_ryb_to_ucs_fast.exit.i.3, %.lr.ph.i.a, %.lr.ph3.i
+  %48 = phi i32 [ %i.ab, %.lr.ph3.i ], [ %i.x, %.lr.ph.i.a ], [ %i.x, %_ryb_to_ucs_fast.exit.i.3 ], [ %i.x, %_ryb_to_ucs_fast.exit.i.2 ], [ %i.x, %_ryb_to_ucs_fast.exit.i.1 ], [ %i.x, %_ryb_to_ucs_fast.exit.i ] ; 2 uses
+  %i.dv = call i32 @llvm.smax.i32(i32 %48, i32 2)
   %i.dw = call i32 @llvm.umin.i32(i32 %i.dv, i32 4)
   %i.dx = getelementptr inbounds nuw i8, ptr %i.k, i64 36 ; 3 uses
   store i32 %i.dw, ptr %i.dx, align 4, !tbaa !36
-  %i.dy = icmp slt i32 %19, 2
+  %i.dy = icmp slt i32 %48, 2
   br i1 %i.dy, label %bb.q, label %_init_custom_nodes_from_rule.exit
 
 bb.q:                                             ; preds = %.loopexit.i, %.loopexit.thread.i
@@ -856,6 +904,12 @@ declare <2 x float> @llvm.fabs.v2f32(<2 x float>) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.maxnum.v2f32(<2 x float>, <2 x float>) #8
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(read)
+declare <4 x float> @llvm.masked.gather.v4f32.v4p0(<4 x ptr>, <4 x i1>, <4 x float>) #24
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
+declare void @llvm.masked.store.v4f32.p0(<4 x float>, ptr captures(none), <4 x i1>) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.vector.reduce.fadd.v3f32(float, <3 x float>) #8

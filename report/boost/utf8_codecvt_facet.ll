@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/boost/original/utf8_codecvt_facet?download=true
 inline.NumInlined: 10
 inline.NumDeleted: 6
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumCompletelyUnrolled: 2
+loop-unroll.NumUnrolled: 2
 begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
@@ -45,15 +45,15 @@ declare void @_ZNSt7codecvtIwc11__mbstate_tED2Ev(ptr noundef nonnull align 8 dea
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN5boost7archive6detail18utf8_codecvt_facetD2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %0) unnamed_addr #3 align 2 {
 bb.a:
-  tail call void @_ZNSt7codecvtIwc11__mbstate_tED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %0) #8
+  tail call void @_ZNSt7codecvtIwc11__mbstate_tED2Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %0) #11
   ret void
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
 define void @_ZN5boost7archive6detail18utf8_codecvt_facetD0Ev(ptr noundef nonnull align 8 dereferenceable(24) %0) unnamed_addr #3 align 2 {
 bb.a:
-  tail call void @_ZN5boost7archive6detail18utf8_codecvt_facetD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %0) #8
-  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 24) #9
+  tail call void @_ZN5boost7archive6detail18utf8_codecvt_facetD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(24) %0) #11
+  tail call void @_ZdlPvm(ptr noundef nonnull %0, i64 noundef 24) #12
   ret void
 }
 
@@ -196,14 +196,22 @@ bb.k:                                             ; preds = %._crit_edge.thread,
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define noundef range(i32 0, 2) i32 @_ZNK5boost7archive6detail18utf8_codecvt_facet6do_outER11__mbstate_tPKwS6_RS6_PcS8_RS8_(ptr nofree nonnull readnone align 8 captures(none) %0, ptr nofree nonnull readnone align 4 captures(none) %1, ptr noundef %2, ptr nofree noundef readnone captures(address) %3, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(8) %4, ptr noundef %5, ptr nofree noundef readnone captures(address) %6, ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(8) %7) unnamed_addr #5 align 2 {
 bb.a:
+  %8 = ptrtoaddr ptr %6 to i64                    ; 2 uses
   %i.a = icmp ne ptr %2, %3
   %i.b = icmp ne ptr %5, %6
   %i.c = and i1 %i.a, %i.b
-  br i1 %i.c, label %.lr.ph64, label %._crit_edge65
+  br i1 %i.c, label %.lr.ph64.preheader, label %._crit_edge65
 
-.lr.ph64:                                         ; preds = %bb.a, %bb.f
-  %.04662 = phi ptr [ %i.cc, %bb.f ], [ %2, %bb.a ] ; 10 uses
-  %.04861 = phi ptr [ %.149.lcssa, %bb.f ], [ %5, %bb.a ] ; 9 uses
+.lr.ph64.preheader:                               ; preds = %bb.a
+  %9 = add i64 %8, -2
+  %10 = add i64 %8, -2
+  br label %.lr.ph64
+
+.lr.ph64:                                         ; preds = %.lr.ph64.preheader, %bb.f
+  %indvar = phi i64 [ %indvar.next, %bb.f ], [ 0, %.lr.ph64.preheader ] ; 2 uses
+  %.04662 = phi ptr [ %i.cc, %bb.f ], [ %2, %.lr.ph64.preheader ] ; 12 uses
+  %.04861 = phi ptr [ %.149.lcssa, %bb.f ], [ %5, %.lr.ph64.preheader ] ; 18 uses
+  %.0486197 = ptrtoaddr ptr %.04861 to i64        ; 2 uses
   %i.d = load i32, ptr %.04662, align 4, !tbaa !17 ; 6 uses
   %i.e = icmp slt i32 %i.d, 128
   br i1 %i.e, label %_ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit, label %bb.b
@@ -226,8 +234,8 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit
 
 _ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit: ; preds = %.lr.ph64, %bb.b, %bb.c, %bb.d, %bb.e
-  %.0.i.i = phi i32 [ 3, %bb.d ], [ 0, %.lr.ph64 ], [ 1, %bb.b ], [ 2, %bb.c ], [ %..i.i, %bb.e ] ; 8 uses
-  %i.j = mul nuw nsw i32 %.0.i.i, 6               ; 8 uses
+  %.0.i.i = phi i32 [ 3, %bb.d ], [ 0, %.lr.ph64 ], [ 1, %bb.b ], [ 2, %bb.c ], [ %..i.i, %bb.e ] ; 10 uses
+  %i.j = mul nuw nsw i32 %.0.i.i, 6               ; 9 uses
   %i.k = zext nneg i32 %.0.i.i to i64
   %i.l = getelementptr inbounds nuw [4 x i8], ptr @_ZZN5boost7archive6detail6detail25get_octet1_modifier_tableEvE21octet1_modifier_table, i64 %i.k
   %i.m = load i32, ptr %i.l, align 4, !tbaa !17
@@ -236,13 +244,149 @@ _ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit: ;
   %i.p = add i32 %i.o, %i.m
   %i.q = trunc i32 %i.p to i8
   store i8 %i.q, ptr %.04861, align 1, !tbaa !10
-  %.14955 = getelementptr inbounds nuw i8, ptr %.04861, i64 1 ; 3 uses
+  %.14955 = getelementptr i8, ptr %.04861, i64 1  ; 6 uses
   %i.r = icmp ne i32 %.0.i.i, 0                   ; 2 uses
   %i.s = icmp ne ptr %.14955, %6
-  %8 = select i1 %i.r, i1 %i.s, i1 false
-  br i1 %8, label %.lr.ph, label %._crit_edge
+  %11 = and i1 %i.r, %i.s
+  br i1 %11, label %.lr.ph.preheader, label %._crit_edge
 
-.lr.ph:                                           ; preds = %_ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit
+.lr.ph.preheader:                                 ; preds = %_ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit
+  %12 = add nsw i32 %.0.i.i, -1
+  %13 = zext i32 %12 to i64                       ; 2 uses
+  %14 = sub i64 %9, %.0486197
+  %15 = tail call i64 @llvm.umin.i64(i64 %14, i64 %13)
+  %16 = getelementptr i8, ptr %.04861, i64 %15
+  %17 = getelementptr i8, ptr %16, i64 2
+  %18 = shl i64 %indvar, 2
+  %19 = getelementptr i8, ptr %2, i64 %18
+  %20 = getelementptr i8, ptr %19, i64 4
+  %bound0 = icmp ult ptr %.14955, %20
+  %bound1 = icmp ult ptr %.04662, %17
+  %found.conflict = and i1 %bound0, %bound1
+  br i1 %found.conflict, label %.lr.ph, label %vector.ph
+
+vector.ph:                                        ; preds = %.lr.ph.preheader
+  %21 = sub i64 %10, %.0486197
+  %22 = tail call i64 @llvm.umin.i64(i64 %21, i64 %13) ; 4 uses
+  %n.rnd.up = add nuw nsw i64 %22, 4
+  %n.vec = and i64 %n.rnd.up, 8589934588
+  %23 = getelementptr i8, ptr %.14955, i64 %22
+  %24 = getelementptr i8, ptr %23, i64 1
+  %25 = load i32, ptr %.04662, align 4, !tbaa !17, !alias.scope !25
+  %broadcast.splatinsert107 = insertelement <4 x i32> poison, i32 %25, i64 0
+  %broadcast.splat108 = shufflevector <4 x i32> %broadcast.splatinsert107, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %22, i64 0
+  %broadcast.splat = shufflevector <4 x i64> %broadcast.splatinsert, <4 x i64> poison, <4 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert100 = insertelement <4 x i32> poison, i32 %i.j, i64 0
+  %broadcast.splat101 = shufflevector <4 x i32> %broadcast.splatinsert100, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses
+  %26 = icmp samesign uge <4 x i64> %broadcast.splat, <i64 0, i64 1, i64 2, i64 3> ; 6 uses
+  %next.gep104 = getelementptr i8, ptr %.04861, i64 2
+  %next.gep105 = getelementptr i8, ptr %.04861, i64 3
+  %next.gep106 = getelementptr i8, ptr %.04861, i64 4
+  %27 = add nsw <4 x i32> %broadcast.splat101, <i32 -6, i32 -12, i32 -18, i32 -24>
+  %28 = shl nuw <4 x i32> splat (i32 1), %27
+  %29 = tail call <4 x i32> @llvm.masked.sdiv.v4i32(<4 x i32> %broadcast.splat108, <4 x i32> %28, <4 x i1> %26)
+  %30 = srem <4 x i32> %29, splat (i32 64)
+  %31 = trunc nsw <4 x i32> %30 to <4 x i8>
+  %32 = xor <4 x i8> %31, splat (i8 -128)         ; 4 uses
+  %33 = extractelement <4 x i1> %26, i64 0
+  br i1 %33, label %pred.store.if, label %pred.store.continue
+
+pred.store.if:                                    ; preds = %vector.ph
+  %34 = extractelement <4 x i8> %32, i64 0
+  store i8 %34, ptr %.14955, align 1, !tbaa !10, !alias.scope !26, !noalias !25
+  br label %pred.store.continue
+
+pred.store.continue:                              ; preds = %pred.store.if, %vector.ph
+  %35 = extractelement <4 x i1> %26, i64 1
+  br i1 %35, label %pred.store.if109, label %pred.store.continue110
+
+pred.store.if109:                                 ; preds = %pred.store.continue
+  %36 = extractelement <4 x i8> %32, i64 1
+  store i8 %36, ptr %next.gep104, align 1, !tbaa !10, !alias.scope !26, !noalias !25
+  br label %pred.store.continue110
+
+pred.store.continue110:                           ; preds = %pred.store.if109, %pred.store.continue
+  %37 = extractelement <4 x i1> %26, i64 2
+  br i1 %37, label %pred.store.if111, label %pred.store.continue112
+
+pred.store.if111:                                 ; preds = %pred.store.continue110
+  %38 = extractelement <4 x i8> %32, i64 2
+  store i8 %38, ptr %next.gep105, align 1, !tbaa !10, !alias.scope !26, !noalias !25
+  br label %pred.store.continue112
+
+pred.store.continue112:                           ; preds = %pred.store.if111, %pred.store.continue110
+  %39 = extractelement <4 x i1> %26, i64 3
+  br i1 %39, label %pred.store.if113, label %pred.store.continue114
+
+pred.store.if113:                                 ; preds = %pred.store.continue112
+  %40 = extractelement <4 x i8> %32, i64 3
+  store i8 %40, ptr %next.gep106, align 1, !tbaa !10, !alias.scope !26, !noalias !25
+  br label %pred.store.continue114
+
+pred.store.continue114:                           ; preds = %pred.store.if113, %pred.store.continue112
+  %41 = icmp eq i64 %n.vec, 4
+  br i1 %41, label %middle.block, label %vector.body.1
+
+vector.body.1:                                    ; preds = %pred.store.continue114
+  %42 = icmp samesign ugt <4 x i64> %broadcast.splat, <i64 3, i64 4, i64 5, i64 6> ; 7 uses
+  %next.gep104.1 = getelementptr i8, ptr %.04861, i64 6
+  %next.gep105.1 = getelementptr i8, ptr %.04861, i64 7
+  %next.gep106.1 = getelementptr i8, ptr %.04861, i64 8
+  %43 = add nsw <4 x i32> %broadcast.splat101, <i32 -30, i32 -36, i32 -42, i32 -48>
+  %44 = shl nuw <4 x i32> splat (i32 1), %43
+  %45 = tail call <4 x i32> @llvm.masked.sdiv.v4i32(<4 x i32> %broadcast.splat108, <4 x i32> %44, <4 x i1> %42)
+  %46 = srem <4 x i32> %45, splat (i32 64)
+  %47 = trunc nsw <4 x i32> %46 to <4 x i8>
+  %48 = xor <4 x i8> %47, splat (i8 -128)         ; 4 uses
+  %49 = extractelement <4 x i1> %42, i64 0
+  br i1 %49, label %pred.store.if.1, label %pred.store.continue.1
+
+pred.store.if.1:                                  ; preds = %vector.body.1
+  %next.gep.1 = getelementptr i8, ptr %.04861, i64 5
+  %50 = extractelement <4 x i8> %48, i64 0
+  store i8 %50, ptr %next.gep.1, align 1, !tbaa !10, !alias.scope !26, !noalias !25
+  br label %pred.store.continue.1
+
+pred.store.continue.1:                            ; preds = %pred.store.if.1, %vector.body.1
+  %51 = extractelement <4 x i1> %42, i64 1
+  br i1 %51, label %pred.store.if109.1, label %pred.store.continue110.1
+
+pred.store.if109.1:                               ; preds = %pred.store.continue.1
+  %52 = extractelement <4 x i8> %48, i64 1
+  store i8 %52, ptr %next.gep104.1, align 1, !tbaa !10, !alias.scope !26, !noalias !25
+  br label %pred.store.continue110.1
+
+pred.store.continue110.1:                         ; preds = %pred.store.if109.1, %pred.store.continue.1
+  %53 = extractelement <4 x i1> %42, i64 2
+  br i1 %53, label %pred.store.if111.1, label %pred.store.continue112.1
+
+pred.store.if111.1:                               ; preds = %pred.store.continue110.1
+  %54 = extractelement <4 x i8> %48, i64 2
+  store i8 %54, ptr %next.gep105.1, align 1, !tbaa !10, !alias.scope !26, !noalias !25
+  br label %pred.store.continue112.1
+
+pred.store.continue112.1:                         ; preds = %pred.store.if111.1, %pred.store.continue110.1
+  %55 = extractelement <4 x i1> %42, i64 3
+  br i1 %55, label %pred.store.if113.1, label %middle.block
+
+pred.store.if113.1:                               ; preds = %pred.store.continue112.1
+  %56 = extractelement <4 x i8> %48, i64 3
+  store i8 %56, ptr %next.gep106.1, align 1, !tbaa !10, !alias.scope !26, !noalias !25
+  br label %middle.block
+
+middle.block:                                     ; preds = %pred.store.continue112.1, %pred.store.if113.1, %pred.store.continue114
+  %vec.ind.lcssa = phi <4 x i32> [ <i32 0, i32 1, i32 2, i32 3>, %pred.store.continue114 ], [ <i32 4, i32 5, i32 6, i32 7>, %pred.store.if113.1 ], [ <i32 4, i32 5, i32 6, i32 7>, %pred.store.continue112.1 ]
+  %.lcssa118 = phi <4 x i1> [ %26, %pred.store.continue114 ], [ %42, %pred.store.if113.1 ], [ %42, %pred.store.continue112.1 ]
+  %57 = xor <4 x i1> %.lcssa118, splat (i1 true)
+  %first.inactive.lane = tail call i64 @llvm.experimental.cttz.elts.i64.v4i1(<4 x i1> %57, i1 false)
+  %last.active.lane = add i64 %first.inactive.lane, -1
+  %58 = extractelement <4 x i32> %vec.ind.lcssa, i64 %last.active.lane
+  %59 = add nuw nsw i32 %58, 1
+  %60 = icmp ne i32 %59, %.0.i.i
+  br label %._crit_edge.loopexit
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader
   %i.t = add nsw i32 %i.j, -6
   %i.u = load i32, ptr %.04662, align 4, !tbaa !17
   %i.v = shl nuw i32 1, %i.t
@@ -251,11 +395,11 @@ _ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit: ;
   %i.y = trunc nsw i32 %i.x to i8
   %i.z = xor i8 %i.y, -128
   store i8 %i.z, ptr %.14955, align 1, !tbaa !10
-  %.149 = getelementptr inbounds nuw i8, ptr %.04861, i64 2 ; 3 uses
+  %.149 = getelementptr i8, ptr %.04861, i64 2    ; 3 uses
   %i.aa = icmp ne i32 %.0.i.i, 1                  ; 2 uses
   %i.ab = icmp ne ptr %.149, %6
-  %9 = select i1 %i.aa, i1 %i.ab, i1 false
-  br i1 %9, label %.lr.ph.1, label %._crit_edge
+  %61 = and i1 %i.aa, %i.ab
+  br i1 %61, label %.lr.ph.1, label %._crit_edge.loopexit
 
 .lr.ph.1:                                         ; preds = %.lr.ph
   %i.ac = add nsw i32 %i.j, -12
@@ -266,11 +410,11 @@ _ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit: ;
   %i.ah = trunc nsw i32 %i.ag to i8
   %i.ai = xor i8 %i.ah, -128
   store i8 %i.ai, ptr %.149, align 1, !tbaa !10
-  %.149.1 = getelementptr inbounds nuw i8, ptr %.04861, i64 3 ; 3 uses
+  %.149.1 = getelementptr i8, ptr %.04861, i64 3  ; 3 uses
   %i.aj = icmp ne i32 %.0.i.i, 2                  ; 2 uses
   %i.ak = icmp ne ptr %.149.1, %6
-  %10 = select i1 %i.aj, i1 %i.ak, i1 false
-  br i1 %10, label %.lr.ph.2, label %._crit_edge
+  %62 = and i1 %i.aj, %i.ak
+  br i1 %62, label %.lr.ph.2, label %._crit_edge.loopexit
 
 .lr.ph.2:                                         ; preds = %.lr.ph.1
   %i.al = add nsw i32 %i.j, -18
@@ -281,11 +425,11 @@ _ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit: ;
   %i.aq = trunc nsw i32 %i.ap to i8
   %i.ar = xor i8 %i.aq, -128
   store i8 %i.ar, ptr %.149.1, align 1, !tbaa !10
-  %.149.2 = getelementptr inbounds nuw i8, ptr %.04861, i64 4 ; 3 uses
+  %.149.2 = getelementptr i8, ptr %.04861, i64 4  ; 3 uses
   %i.as = icmp ne i32 %.0.i.i, 3                  ; 2 uses
   %i.at = icmp ne ptr %.149.2, %6
-  %11 = select i1 %i.as, i1 %i.at, i1 false
-  br i1 %11, label %.lr.ph.3, label %._crit_edge
+  %63 = and i1 %i.as, %i.at
+  br i1 %63, label %.lr.ph.3, label %._crit_edge.loopexit
 
 .lr.ph.3:                                         ; preds = %.lr.ph.2
   %i.au = add nsw i32 %i.j, -24
@@ -296,11 +440,11 @@ _ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit: ;
   %i.az = trunc nsw i32 %i.ay to i8
   %i.ba = xor i8 %i.az, -128
   store i8 %i.ba, ptr %.149.2, align 1, !tbaa !10
-  %.149.3 = getelementptr inbounds nuw i8, ptr %.04861, i64 5 ; 3 uses
+  %.149.3 = getelementptr i8, ptr %.04861, i64 5  ; 3 uses
   %i.bb = icmp ne i32 %.0.i.i, 4                  ; 2 uses
   %i.bc = icmp ne ptr %.149.3, %6
-  %12 = select i1 %i.bb, i1 %i.bc, i1 false
-  br i1 %12, label %.lr.ph.4, label %._crit_edge
+  %64 = and i1 %i.bb, %i.bc
+  br i1 %64, label %.lr.ph.4, label %._crit_edge.loopexit
 
 .lr.ph.4:                                         ; preds = %.lr.ph.3
   %i.bd = add nsw i32 %i.j, -30
@@ -311,11 +455,11 @@ _ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit: ;
   %i.bi = trunc nsw i32 %i.bh to i8
   %i.bj = xor i8 %i.bi, -128
   store i8 %i.bj, ptr %.149.3, align 1, !tbaa !10
-  %.149.4 = getelementptr inbounds nuw i8, ptr %.04861, i64 6 ; 3 uses
+  %.149.4 = getelementptr i8, ptr %.04861, i64 6  ; 3 uses
   %i.bk = icmp ne i32 %.0.i.i, 5                  ; 2 uses
   %i.bl = icmp ne ptr %.149.4, %6
-  %13 = select i1 %i.bk, i1 %i.bl, i1 false
-  br i1 %13, label %.lr.ph.5, label %._crit_edge
+  %65 = and i1 %i.bk, %i.bl
+  br i1 %65, label %.lr.ph.5, label %._crit_edge.loopexit
 
 .lr.ph.5:                                         ; preds = %.lr.ph.4
   %i.bm = add nsw i32 %i.j, -36
@@ -326,9 +470,9 @@ _ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit: ;
   %i.br = trunc nsw i32 %i.bq to i8
   %i.bs = xor i8 %i.br, -128
   store i8 %i.bs, ptr %.149.4, align 1, !tbaa !10
-  %.149.5 = getelementptr inbounds nuw i8, ptr %.04861, i64 7 ; 3 uses
+  %.149.5 = getelementptr i8, ptr %.04861, i64 7  ; 3 uses
   %.not = icmp eq ptr %.149.5, %6
-  br i1 %.not, label %._crit_edge, label %.lr.ph.6
+  br i1 %.not, label %._crit_edge.loopexit, label %.lr.ph.6
 
 .lr.ph.6:                                         ; preds = %.lr.ph.5
   %i.bt = add nsw i32 %i.j, -42
@@ -339,20 +483,29 @@ _ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit: ;
   %i.by = trunc nsw i32 %i.bx to i8
   %i.bz = xor i8 %i.by, -128
   store i8 %i.bz, ptr %.149.5, align 1, !tbaa !10
-  %.149.6 = getelementptr inbounds nuw i8, ptr %.04861, i64 8
+  %.149.6 = getelementptr i8, ptr %.04861, i64 8
+  br label %._crit_edge.loopexit
+
+._crit_edge.loopexit:                             ; preds = %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %.lr.ph.5, %.lr.ph.6, %middle.block
+  %.057.lcssa = phi i64 [ %22, %middle.block ], [ 0, %.lr.ph ], [ 1, %.lr.ph.1 ], [ 2, %.lr.ph.2 ], [ 3, %.lr.ph.3 ], [ 4, %.lr.ph.4 ], [ 5, %.lr.ph.5 ], [ 6, %.lr.ph.6 ]
+  %.149.lcssa89 = phi ptr [ %24, %middle.block ], [ %.149, %.lr.ph ], [ %.149.1, %.lr.ph.1 ], [ %.149.2, %.lr.ph.2 ], [ %.149.3, %.lr.ph.3 ], [ %.149.4, %.lr.ph.4 ], [ %.149.5, %.lr.ph.5 ], [ %.149.6, %.lr.ph.6 ]
+  %.lcssa88 = phi i1 [ %60, %middle.block ], [ %i.aa, %.lr.ph ], [ %i.aj, %.lr.ph.1 ], [ %i.as, %.lr.ph.2 ], [ %i.bb, %.lr.ph.3 ], [ %i.bk, %.lr.ph.4 ], [ true, %.lr.ph.5 ], [ true, %.lr.ph.6 ]
+  %66 = add nsw i64 %.057.lcssa, 2
+  %67 = and i64 %66, 4294967295
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %.lr.ph, %.lr.ph.1, %.lr.ph.2, %.lr.ph.3, %.lr.ph.4, %.lr.ph.5, %.lr.ph.6, %_ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit
-  %.0.lcssa.neg = phi i64 [ -1, %_ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit ], [ -2, %.lr.ph ], [ -3, %.lr.ph.1 ], [ -4, %.lr.ph.2 ], [ -5, %.lr.ph.3 ], [ -6, %.lr.ph.4 ], [ -7, %.lr.ph.5 ], [ -8, %.lr.ph.6 ]
-  %.149.lcssa = phi ptr [ %.14955, %_ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit ], [ %.149, %.lr.ph ], [ %.149.1, %.lr.ph.1 ], [ %.149.2, %.lr.ph.2 ], [ %.149.3, %.lr.ph.3 ], [ %.149.4, %.lr.ph.4 ], [ %.149.5, %.lr.ph.5 ], [ %.149.6, %.lr.ph.6 ] ; 4 uses
-  %.lcssa = phi i1 [ %i.r, %_ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit ], [ %i.aa, %.lr.ph ], [ %i.aj, %.lr.ph.1 ], [ %i.as, %.lr.ph.2 ], [ %i.bb, %.lr.ph.3 ], [ %i.bk, %.lr.ph.4 ], [ true, %.lr.ph.5 ], [ true, %.lr.ph.6 ]
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit
+  %.0.lcssa = phi i64 [ 1, %_ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit ], [ %67, %._crit_edge.loopexit ]
+  %.149.lcssa = phi ptr [ %.14955, %_ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit ], [ %.149.lcssa89, %._crit_edge.loopexit ] ; 4 uses
+  %.lcssa = phi i1 [ %i.r, %_ZN5boost7archive6detail18utf8_codecvt_facet24get_cont_octet_out_countEw.exit ], [ %.lcssa88, %._crit_edge.loopexit ]
   %i.ca = icmp eq ptr %.149.lcssa, %6             ; 2 uses
   %brmerge.not = and i1 %i.ca, %.lcssa
   br i1 %brmerge.not, label %.critedge, label %bb.f
 
 .critedge:                                        ; preds = %._crit_edge
   store ptr %.04662, ptr %4, align 8, !tbaa !15
-  %i.cb = getelementptr inbounds i8, ptr %.149.lcssa, i64 %.0.lcssa.neg
+  %68 = sub nsw i64 0, %.0.lcssa
+  %i.cb = getelementptr inbounds i8, ptr %.149.lcssa, i64 %68
   store ptr %i.cb, ptr %7, align 8, !tbaa !13
   br label %bb.g
 
@@ -360,7 +513,8 @@ bb.f:                                             ; preds = %._crit_edge
   %i.cc = getelementptr inbounds nuw i8, ptr %.04662, i64 4 ; 3 uses
   %i.cd = icmp eq ptr %i.cc, %3
   %.not81 = or i1 %i.cd, %i.ca
-  br i1 %.not81, label %._crit_edge65, label %.lr.ph64, !llvm.loop !21
+  %indvar.next = add i64 %indvar, 1
+  br i1 %.not81, label %._crit_edge65, label %.lr.ph64, !llvm.loop !24
 
 ._crit_edge65:                                    ; preds = %bb.f, %bb.a
   %.048.lcssa = phi ptr [ %5, %bb.a ], [ %.149.lcssa, %bb.f ]
@@ -457,7 +611,7 @@ bb.g:                                             ; preds = %_ZN5boost7archive6d
   %i.p = icmp ult i64 %i.o, %4
   %i.q = icmp ult ptr %i.n, %3
   %i.r = select i1 %i.p, i1 %i.q, i1 false
-  br i1 %i.r, label %bb.b, label %._crit_edge, !llvm.loop !22
+  br i1 %i.r, label %bb.b, label %._crit_edge, !llvm.loop !27
 
 ._crit_edge:                                      ; preds = %_ZN5boost7archive6detail18utf8_codecvt_facet15get_octet_countEh.exit, %bb.g, %bb.a
   %.015.lcssa = phi ptr [ %2, %bb.a ], [ %i.n, %bb.g ], [ %.01518, %_ZN5boost7archive6detail18utf8_codecvt_facet15get_octet_countEh.exit ]
@@ -535,6 +689,15 @@ bb.a:
   ret i32 %i.d
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.umin.i64(i64, i64) #8
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(none)
+declare <4 x i32> @llvm.masked.sdiv.v4i32(<4 x i32>, <4 x i32>, <4 x i1>) #9
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.experimental.cttz.elts.i64.v4i1(<4 x i1>, i1 immarg) #10
+
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -543,8 +706,11 @@ attributes #4 = { nobuiltin nounwind "no-trapping-math"="true" "stack-protector-
 attributes #5 = { mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #8 = { nounwind }
-attributes #9 = { builtin nounwind }
+attributes #8 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #9 = { nocallback nofree nosync nounwind willreturn memory(none) }
+attributes #10 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #11 = { nounwind }
+attributes #12 = { builtin nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}
@@ -571,6 +737,11 @@ attributes #9 = { builtin nounwind }
 !18 = !{!"llvm.loop.mustprogress"}
 !19 = distinct !{!19, !18}
 !20 = distinct !{!20, !18}
-!21 = distinct !{!21, !18}
-!22 = distinct !{!22, !18}
+!21 = distinct !{!21, i1 false, !"LVerDomain"}
+!22 = distinct !{!22, !21}
+!23 = distinct !{!23, !21}
+!24 = distinct !{!24, !18}
+!25 = !{!22}
+!26 = !{!23}
+!27 = distinct !{!27, !18}
 end_hunk_0

@@ -200,18 +200,124 @@ bb.a:
   %i.a = sext i32 %2 to i64
   %i.b = getelementptr inbounds i8, ptr @ff_h263_loop_filter_strength, i64 %i.a
   %i.c = load i8, ptr %i.b, align 1, !tbaa !9
-  %i.d = zext i8 %i.c to i32                      ; 4 uses
+  %i.d = zext i8 %i.c to i32                      ; 5 uses
   %i.e = shl nsw i32 %1, 1
-  %i.f = mul nsw i32 %i.d, -2                     ; 2 uses
-  %i.g = sub nsw i32 0, %i.d
-  %i.h = shl nuw nsw i32 %i.d, 1                  ; 2 uses
-  %i.i = sext i32 %i.e to i64
-  %i.j = sext i32 %1 to i64                       ; 2 uses
-  %invariant.gep.a = getelementptr i8, ptr %0, i64 %i.j
-  br label %bb.b
+  %i.f = mul nsw i32 %i.d, -2                     ; 3 uses
+  %i.g = sub nsw i32 0, %i.d                      ; 2 uses
+  %i.h = shl nuw nsw i32 %i.d, 1                  ; 3 uses
+  %i.i = sext i32 %i.e to i64                     ; 4 uses
+  %i.j = sext i32 %1 to i64                       ; 6 uses
+  %invariant.gep = getelementptr i8, ptr %0, i64 %i.j ; 6 uses
+  %3 = sub nsw i64 0, %i.j
+  %4 = getelementptr i8, ptr %0, i64 %3           ; 3 uses
+  %5 = sub nsw i64 8, %i.j
+  %6 = getelementptr i8, ptr %0, i64 %5           ; 3 uses
+  %7 = getelementptr i8, ptr %0, i64 8            ; 3 uses
+  %8 = sub nsw i64 0, %i.i
+  %9 = getelementptr i8, ptr %0, i64 %8           ; 3 uses
+  %10 = sub nsw i64 8, %i.i
+  %11 = getelementptr i8, ptr %0, i64 %10         ; 3 uses
+  %12 = getelementptr i8, ptr %0, i64 %i.j
+  %invariant.gep.a = getelementptr i8, ptr %12, i64 8 ; 3 uses
+  %bound0 = icmp ult ptr %4, %7
+  %bound1 = icmp ult ptr %0, %6
+  %found.conflict = and i1 %bound0, %bound1
+  %bound0102 = icmp ult ptr %4, %11
+  %bound1103 = icmp ult ptr %9, %6
+  %found.conflict104 = and i1 %bound0102, %bound1103
+  %conflict.rdx = or i1 %found.conflict, %found.conflict104
+  %bound0105 = icmp ult ptr %4, %invariant.gep.a
+  %bound1106 = icmp ult ptr %invariant.gep, %6
+  %found.conflict107 = and i1 %bound0105, %bound1106
+  %conflict.rdx108 = or i1 %conflict.rdx, %found.conflict107
+  %bound0109 = icmp ult ptr %0, %11
+  %bound1110 = icmp ult ptr %9, %7
+  %found.conflict111 = and i1 %bound0109, %bound1110
+  %conflict.rdx112 = or i1 %conflict.rdx108, %found.conflict111
+  %bound0113 = icmp ult ptr %0, %invariant.gep.a
+  %bound1114 = icmp ult ptr %invariant.gep, %7
+  %found.conflict115 = and i1 %bound0113, %bound1114
+  %conflict.rdx116 = or i1 %conflict.rdx112, %found.conflict115
+  %bound0117 = icmp ult ptr %9, %invariant.gep.a
+  %bound1118 = icmp ult ptr %invariant.gep, %11
+  %found.conflict119 = and i1 %bound0117, %bound1118
+  %conflict.rdx120 = or i1 %conflict.rdx116, %found.conflict119
+  br i1 %conflict.rdx120, label %bb.b, label %vector.body
+
+vector.body:                                      ; preds = %bb.a
+  %broadcast.splatinsert125 = insertelement <8 x i32> poison, i32 %i.h, i64 0
+  %broadcast.splat126 = shufflevector <8 x i32> %broadcast.splatinsert125, <8 x i32> poison, <8 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert123 = insertelement <8 x i32> poison, i32 %i.g, i64 0
+  %broadcast.splat124 = shufflevector <8 x i32> %broadcast.splatinsert123, <8 x i32> poison, <8 x i32> zeroinitializer
+  %broadcast.splatinsert121 = insertelement <8 x i32> poison, i32 %i.f, i64 0
+  %broadcast.splat122 = shufflevector <8 x i32> %broadcast.splatinsert121, <8 x i32> poison, <8 x i32> zeroinitializer ; 2 uses
+  %broadcast.splatinsert = insertelement <8 x i32> poison, i32 %i.d, i64 0
+  %broadcast.splat = shufflevector <8 x i32> %broadcast.splatinsert, <8 x i32> poison, <8 x i32> zeroinitializer
+  %13 = sub nsw i64 0, %i.i
+  %14 = getelementptr inbounds i8, ptr %0, i64 %13 ; 2 uses
+  %wide.load = load <8 x i8>, ptr %14, align 1, !tbaa !9, !alias.scope !22, !noalias !23 ; 2 uses
+  %15 = zext <8 x i8> %wide.load to <8 x i32>
+  %16 = sub nsw i64 0, %i.j
+  %17 = getelementptr inbounds i8, ptr %0, i64 %16 ; 2 uses
+  %wide.load127 = load <8 x i8>, ptr %17, align 1, !tbaa !9, !alias.scope !24, !noalias !25
+  %18 = zext <8 x i8> %wide.load127 to <8 x i32>  ; 2 uses
+  %wide.load128 = load <8 x i8>, ptr %0, align 1, !tbaa !9, !alias.scope !26, !noalias !27
+  %19 = zext <8 x i8> %wide.load128 to <8 x i32>  ; 2 uses
+  %wide.load129 = load <8 x i8>, ptr %invariant.gep, align 1, !tbaa !9, !alias.scope !23 ; 2 uses
+  %20 = zext <8 x i8> %wide.load129 to <8 x i32>
+  %21 = sub nsw <8 x i32> %15, %20                ; 2 uses
+  %22 = sub nsw <8 x i32> %19, %18
+  %23 = shl nsw <8 x i32> %22, splat (i32 2)
+  %24 = add nsw <8 x i32> %21, %23
+  %25 = trunc nsw <8 x i32> %24 to <8 x i16>
+  %26 = sdiv <8 x i16> %25, splat (i16 8)
+  %27 = sext <8 x i16> %26 to <8 x i32>           ; 7 uses
+  %28 = icmp sle <8 x i32> %broadcast.splat122, %27 ; 2 uses
+  %29 = icmp sle <8 x i32> %broadcast.splat124, %27 ; 2 uses
+  %30 = select <8 x i1> %28, <8 x i1> %29, <8 x i1> zeroinitializer
+  %31 = icmp sgt <8 x i32> %broadcast.splat, %27
+  %32 = icmp sgt <8 x i32> %broadcast.splat126, %27
+  %33 = sub nsw <8 x i32> %broadcast.splat126, %27
+  %34 = select <8 x i1> %32, <8 x i32> %33, <8 x i32> zeroinitializer
+  %35 = sub nsw <8 x i32> %broadcast.splat122, %27
+  %36 = select <8 x i1> %30, <8 x i1> %31, <8 x i1> zeroinitializer
+  %predphi = select <8 x i1> %36, <8 x i32> %27, <8 x i32> %34
+  %predphi130 = select <8 x i1> %29, <8 x i32> %predphi, <8 x i32> %35
+  %predphi131 = select <8 x i1> %28, <8 x i32> %predphi130, <8 x i32> zeroinitializer ; 3 uses
+  %37 = add nsw <8 x i32> %predphi131, %18        ; 3 uses
+  %38 = sub nsw <8 x i32> %19, %predphi131        ; 3 uses
+  %39 = and <8 x i32> %37, splat (i32 256)
+  %40 = icmp eq <8 x i32> %39, zeroinitializer
+  %41 = icmp sgt <8 x i32> %37, splat (i32 -1)
+  %42 = sext <8 x i1> %41 to <8 x i32>
+  %43 = select <8 x i1> %40, <8 x i32> %37, <8 x i32> %42
+  %44 = and <8 x i32> %38, splat (i32 256)
+  %45 = icmp eq <8 x i32> %44, zeroinitializer
+  %46 = icmp sgt <8 x i32> %38, splat (i32 -1)
+  %47 = sext <8 x i1> %46 to <8 x i32>
+  %48 = select <8 x i1> %45, <8 x i32> %38, <8 x i32> %47
+  %49 = trunc <8 x i32> %43 to <8 x i8>
+  store <8 x i8> %49, ptr %17, align 1, !tbaa !9, !alias.scope !24, !noalias !25
+  %50 = trunc <8 x i32> %48 to <8 x i8>
+  store <8 x i8> %50, ptr %0, align 1, !tbaa !9, !alias.scope !26, !noalias !27
+  %51 = tail call <8 x i32> @llvm.abs.v8i32(<8 x i32> %predphi131, i1 true)
+  %52 = lshr <8 x i32> %51, splat (i32 1)         ; 2 uses
+  %53 = trunc nsw <8 x i32> %21 to <8 x i16>
+  %54 = sdiv <8 x i16> %53, splat (i16 4)
+  %55 = sext <8 x i16> %54 to <8 x i32>           ; 2 uses
+  %56 = sub nsw <8 x i32> zeroinitializer, %52    ; 2 uses
+  %57 = icmp slt <8 x i32> %55, %56
+  %58 = tail call <8 x i32> @llvm.smin.v8i32(<8 x i32> %52, <8 x i32> %55)
+  %59 = select <8 x i1> %57, <8 x i32> %56, <8 x i32> %58
+  %60 = trunc <8 x i32> %59 to <8 x i8>           ; 2 uses
+  %61 = sub <8 x i8> %wide.load, %60
+  store <8 x i8> %61, ptr %14, align 1, !tbaa !9, !alias.scope !22, !noalias !23
+  %62 = add <8 x i8> %wide.load129, %60
+  store <8 x i8> %62, ptr %invariant.gep, align 1, !tbaa !9, !alias.scope !23
+  br label %bb.h
 
 bb.b:                                             ; preds = %bb.a, %bb.g
-  %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.g ] ; 5 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.g ], [ 0, %bb.a ] ; 5 uses
   %i.k = sub nsw i64 %indvars.iv, %i.i
   %i.l = getelementptr inbounds i8, ptr %0, i64 %i.k ; 2 uses
   %i.m = load i8, ptr %i.l, align 1, !tbaa !9     ; 2 uses
@@ -223,7 +329,7 @@ bb.b:                                             ; preds = %bb.a, %bb.g
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 %indvars.iv ; 2 uses
   %i.t = load i8, ptr %i.s, align 1, !tbaa !9
   %i.u = zext i8 %i.t to i32                      ; 2 uses
-  %gep = getelementptr i8, ptr %invariant.gep.a, i64 %indvars.iv ; 2 uses
+  %gep = getelementptr i8, ptr %invariant.gep, i64 %indvars.iv ; 2 uses
   %i.v = load i8, ptr %gep, align 1, !tbaa !9     ; 2 uses
   %i.w = zext i8 %i.v to i32
   %i.x = sub nsw i32 %i.n, %i.w                   ; 2 uses
@@ -288,9 +394,9 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.b,
   store i8 %i.ax, ptr %gep, align 1, !tbaa !9
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 8
-  br i1 %exitcond.not, label %bb.h, label %bb.b, !llvm.loop !16
+  br i1 %exitcond.not, label %bb.h, label %bb.b, !llvm.loop !21
 
-bb.h:                                             ; preds = %bb.g
+bb.h:                                             ; preds = %bb.g, %vector.body
   ret void
 }
 
@@ -299,6 +405,12 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #3
+
+; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x i32> @llvm.abs.v8i32(<8 x i32>, i1 immarg) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare <8 x i32> @llvm.smin.v8i32(<8 x i32>, <8 x i32>) #3
 
 attributes #0 = { cold mustprogress nofree norecurse nosync nounwind optsize willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -325,5 +437,17 @@ attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !13 = !{!12, !11, i64 0}
 !14 = !{!12, !11, i64 8}
 !15 = distinct !{!15, !10}
-!16 = distinct !{!16, !10}
+!16 = distinct !{!16, i1 false, !"LVerDomain"}
+!17 = distinct !{!17, !16}
+!18 = distinct !{!18, !16}
+!19 = distinct !{!19, !16}
+!20 = distinct !{!20, !16}
+!21 = distinct !{!21, !10, !28}
+!22 = !{!17}
+!23 = !{!18}
+!24 = !{!19}
+!25 = !{!20, !17, !18}
+!26 = !{!20}
+!27 = !{!17, !18}
+!28 = !{!"llvm.loop.isvectorized", i32 1}
 end_hunk_0

@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/utils_dcraw?download=true
 inline.NumInlined: 9
 inline.NumDeleted: 2
-loop-unroll.NumCompletelyUnrolled: 41
-loop-unroll.NumUnrolled: 42
+loop-unroll.NumCompletelyUnrolled: 42
+loop-unroll.NumUnrolled: 43
 begin_hunk_0_@_ZN6LibRaw18crop_masked_pixelsEv:bb.a
   %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 544
   %i.ca = getelementptr inbounds nuw i8, ptr %0, i64 193784
@@ -204,11 +204,11 @@ declare void @_ZN6LibRaw17broadcom_load_rawEv(ptr noundef nonnull align 8 derefe
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define void @_ZN6LibRaw13pseudoinverseEPA3_dS1_i(ptr nofree nonnull readnone align 8 captures(none) %0, ptr nofree noundef readonly captures(none) %1, ptr nofree noundef writeonly captures(none) %2, i32 noundef %3) local_unnamed_addr #14 align 2 {
 bb.a:
+  %invariant.smin = tail call i32 @llvm.smin.i32(i32 %3, i32 4) ; 2 uses
   %i.a = icmp sgt i32 %3, 0                       ; 2 uses
   br i1 %i.a, label %.preheader74.us.preheader, label %.preheader71
 
 .preheader74.us.preheader:                        ; preds = %bb.a
-  %invariant.smin = tail call i32 @llvm.smin.i32(i32 %3, i32 4)
   %wide.trip.count = zext nneg i32 %invariant.smin to i64 ; 9 uses
   %trip.count.minus.1 = add nsw i64 %wide.trip.count, -1
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %trip.count.minus.1, i64 0
@@ -384,27 +384,104 @@ bb.a:
   %i.cx = fdiv reassoc nsz arcp contract afn double %i.co, %i.cm
   %i.cy = fdiv reassoc nsz arcp contract afn double %i.cr, %i.cm
   %i.cz = fdiv reassoc nsz arcp contract afn double %i.cu, %i.cm
-  %.sroa.261.3 = select nsz i1 %i.cw, double %i.cz, double %i.cu ; 6 uses
-  %.sroa.247.3 = select nsz i1 %i.cw, double %i.cy, double %i.cr ; 6 uses
-  %.sroa.233.3 = select nsz i1 %i.cw, double %i.cx, double %i.co ; 6 uses
+  %.sroa.261.3 = select nsz i1 %i.cw, double %i.cz, double %i.cu ; 7 uses
+  %.sroa.247.3 = select nsz i1 %i.cw, double %i.cy, double %i.cr ; 7 uses
+  %.sroa.233.3 = select nsz i1 %i.cw, double %i.cx, double %i.co ; 7 uses
   %i.da = fmul reassoc nsz arcp contract afn double %.sroa.233.3, %i.cd
   %i.db = fadd reassoc nsz arcp contract afn double %i.cf, %i.da
-  %i.dc = fsub reassoc nsz arcp contract afn double %i.bd, %i.db ; 4 uses
+  %i.dc = fsub reassoc nsz arcp contract afn double %i.bd, %i.db ; 5 uses
   %i.dd = fmul reassoc nsz arcp contract afn double %.sroa.247.3, %i.cd
   %i.de = fadd reassoc nsz arcp contract afn double %i.ch, %i.dd
-  %i.df = fsub reassoc nsz arcp contract afn double %i.bf, %i.de ; 4 uses
+  %i.df = fsub reassoc nsz arcp contract afn double %i.bf, %i.de ; 5 uses
   %i.dg = fmul reassoc nsz arcp contract afn double %.sroa.261.3, %i.cd
   %i.dh = fadd reassoc nsz arcp contract afn double %i.cj, %i.dg
-  %i.di = fsub reassoc nsz arcp contract afn double %i.bf, %i.dh ; 4 uses
+  %i.di = fsub reassoc nsz arcp contract afn double %i.bf, %i.dh ; 5 uses
   %i.dj = fmul reassoc nsz arcp contract afn double %.sroa.233.3, %i.cb
-  %i.dk = fsub reassoc nsz arcp contract afn double %i.ce, %i.dj ; 4 uses
+  %i.dk = fsub reassoc nsz arcp contract afn double %i.ce, %i.dj ; 5 uses
   %i.dl = fmul reassoc nsz arcp contract afn double %.sroa.247.3, %i.cb
-  %i.dm = fsub reassoc nsz arcp contract afn double %i.cg, %i.dl ; 4 uses
+  %i.dm = fsub reassoc nsz arcp contract afn double %i.cg, %i.dl ; 5 uses
   %i.dn = fmul reassoc nsz arcp contract afn double %.sroa.261.3, %i.cb
-  %i.do = fsub reassoc nsz arcp contract afn double %i.ci, %i.dn ; 4 uses
-  br i1 %i.a, label %.preheader, label %._crit_edge
+  %i.do = fsub reassoc nsz arcp contract afn double %i.ci, %i.dn ; 5 uses
+  br i1 %i.a, label %.preheader.preheader, label %._crit_edge
 
-.preheader:                                       ; preds = %.preheader71
+.preheader.preheader:                             ; preds = %.preheader71
+  %wide.trip.count146 = zext nneg i32 %invariant.smin to i64 ; 2 uses
+  %4 = mul nuw nsw i64 %wide.trip.count146, 24    ; 2 uses
+  %5 = getelementptr i8, ptr %2, i64 %4
+  %6 = getelementptr i8, ptr %1, i64 %4
+  %bound0 = icmp ult ptr %2, %6
+  %bound1 = icmp ult ptr %1, %5
+  %found.conflict = and i1 %bound0, %bound1
+  br i1 %found.conflict, label %.preheader, label %vector.body454
+
+vector.body454:                                   ; preds = %.preheader.preheader
+  %broadcast.splatinsert452 = insertelement <4 x double> poison, double %.sroa.261.3, i64 0
+  %broadcast.splat453 = shufflevector <4 x double> %broadcast.splatinsert452, <4 x double> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert450 = insertelement <4 x double> poison, double %.sroa.247.3, i64 0
+  %broadcast.splat451 = shufflevector <4 x double> %broadcast.splatinsert450, <4 x double> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert448 = insertelement <4 x double> poison, double %.sroa.233.3, i64 0
+  %broadcast.splat449 = shufflevector <4 x double> %broadcast.splatinsert448, <4 x double> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert446 = insertelement <4 x double> poison, double %i.do, i64 0
+  %broadcast.splat447 = shufflevector <4 x double> %broadcast.splatinsert446, <4 x double> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert444 = insertelement <4 x double> poison, double %i.dm, i64 0
+  %broadcast.splat445 = shufflevector <4 x double> %broadcast.splatinsert444, <4 x double> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert442 = insertelement <4 x double> poison, double %i.dk, i64 0
+  %broadcast.splat443 = shufflevector <4 x double> %broadcast.splatinsert442, <4 x double> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert440 = insertelement <4 x double> poison, double %i.di, i64 0
+  %broadcast.splat441 = shufflevector <4 x double> %broadcast.splatinsert440, <4 x double> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert438 = insertelement <4 x double> poison, double %i.df, i64 0
+  %broadcast.splat439 = shufflevector <4 x double> %broadcast.splatinsert438, <4 x double> poison, <4 x i32> zeroinitializer
+  %broadcast.splatinsert436 = insertelement <4 x double> poison, double %i.dc, i64 0
+  %broadcast.splat437 = shufflevector <4 x double> %broadcast.splatinsert436, <4 x double> poison, <4 x i32> zeroinitializer
+  %trip.count.minus.1433 = add nsw i64 %wide.trip.count146, -1
+  %broadcast.splatinsert434 = insertelement <4 x i64> poison, i64 %trip.count.minus.1433, i64 0
+  %broadcast.splat435 = shufflevector <4 x i64> %broadcast.splatinsert434, <4 x i64> poison, <4 x i32> zeroinitializer
+  %7 = icmp uge <4 x i64> %broadcast.splat435, <i64 0, i64 1, i64 2, i64 3> ; 21 uses
+  %wide.gep457 = getelementptr inbounds nuw [24 x i8], ptr %2, <4 x i64> <i64 0, i64 1, i64 2, i64 3> ; 6 uses
+  %wide.gep458 = getelementptr inbounds nuw [24 x i8], ptr %1, <4 x i64> <i64 0, i64 1, i64 2, i64 3> ; 5 uses
+  tail call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> zeroinitializer, <4 x ptr> align 8 %wide.gep457, <4 x i1> %7), !tbaa !82, !alias.scope !135, !noalias !136
+  %wide.masked.gather459 = tail call <4 x double> @llvm.masked.gather.v4f64.v4p0(<4 x ptr> align 8 %wide.gep458, <4 x i1> %7, <4 x double> poison), !tbaa !82, !alias.scope !136
+  %8 = fmul reassoc nsz arcp contract afn <4 x double> %wide.masked.gather459, %broadcast.splat437 ; 2 uses
+  tail call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %8, <4 x ptr> align 8 %wide.gep457, <4 x i1> %7), !tbaa !82, !alias.scope !135, !noalias !136
+  %wide.gep460 = getelementptr inbounds nuw i8, <4 x ptr> %wide.gep458, i64 8 ; 3 uses
+  %wide.masked.gather461 = tail call <4 x double> @llvm.masked.gather.v4f64.v4p0(<4 x ptr> align 8 %wide.gep460, <4 x i1> %7, <4 x double> poison), !tbaa !82, !alias.scope !136
+  %9 = fmul reassoc nsz arcp contract afn <4 x double> %wide.masked.gather461, %broadcast.splat439
+  %10 = fadd reassoc nsz arcp contract afn <4 x double> %8, %9 ; 2 uses
+  tail call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %10, <4 x ptr> align 8 %wide.gep457, <4 x i1> %7), !tbaa !82, !alias.scope !135, !noalias !136
+  %wide.gep462 = getelementptr inbounds nuw i8, <4 x ptr> %wide.gep458, i64 16 ; 3 uses
+  %wide.masked.gather463 = tail call <4 x double> @llvm.masked.gather.v4f64.v4p0(<4 x ptr> align 8 %wide.gep462, <4 x i1> %7, <4 x double> poison), !tbaa !82, !alias.scope !136
+  %11 = fmul reassoc nsz arcp contract afn <4 x double> %wide.masked.gather463, %broadcast.splat441
+  %12 = fadd reassoc nsz arcp contract afn <4 x double> %10, %11
+  tail call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %12, <4 x ptr> align 8 %wide.gep457, <4 x i1> %7), !tbaa !82, !alias.scope !135, !noalias !136
+  %wide.gep464 = getelementptr inbounds nuw i8, <4 x ptr> %wide.gep457, i64 8 ; 4 uses
+  tail call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> zeroinitializer, <4 x ptr> align 8 %wide.gep464, <4 x i1> %7), !tbaa !82, !alias.scope !135, !noalias !136
+  %wide.masked.gather465 = tail call <4 x double> @llvm.masked.gather.v4f64.v4p0(<4 x ptr> align 8 %wide.gep458, <4 x i1> %7, <4 x double> poison), !tbaa !82, !alias.scope !136
+  %13 = fmul reassoc nsz arcp contract afn <4 x double> %wide.masked.gather465, %broadcast.splat443 ; 2 uses
+  tail call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %13, <4 x ptr> align 8 %wide.gep464, <4 x i1> %7), !tbaa !82, !alias.scope !135, !noalias !136
+  %wide.masked.gather466 = tail call <4 x double> @llvm.masked.gather.v4f64.v4p0(<4 x ptr> align 8 %wide.gep460, <4 x i1> %7, <4 x double> poison), !tbaa !82, !alias.scope !136
+  %14 = fmul reassoc nsz arcp contract afn <4 x double> %wide.masked.gather466, %broadcast.splat445
+  %15 = fadd reassoc nsz arcp contract afn <4 x double> %13, %14 ; 2 uses
+  tail call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %15, <4 x ptr> align 8 %wide.gep464, <4 x i1> %7), !tbaa !82, !alias.scope !135, !noalias !136
+  %wide.masked.gather467 = tail call <4 x double> @llvm.masked.gather.v4f64.v4p0(<4 x ptr> align 8 %wide.gep462, <4 x i1> %7, <4 x double> poison), !tbaa !82, !alias.scope !136
+  %16 = fmul reassoc nsz arcp contract afn <4 x double> %wide.masked.gather467, %broadcast.splat447
+  %17 = fadd reassoc nsz arcp contract afn <4 x double> %15, %16
+  tail call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %17, <4 x ptr> align 8 %wide.gep464, <4 x i1> %7), !tbaa !82, !alias.scope !135, !noalias !136
+  %wide.gep468 = getelementptr inbounds nuw i8, <4 x ptr> %wide.gep457, i64 16 ; 4 uses
+  tail call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> zeroinitializer, <4 x ptr> align 8 %wide.gep468, <4 x i1> %7), !tbaa !82, !alias.scope !135, !noalias !136
+  %wide.masked.gather469 = tail call <4 x double> @llvm.masked.gather.v4f64.v4p0(<4 x ptr> align 8 %wide.gep458, <4 x i1> %7, <4 x double> poison), !tbaa !82, !alias.scope !136
+  %18 = fmul reassoc nsz arcp contract afn <4 x double> %wide.masked.gather469, %broadcast.splat449 ; 2 uses
+  tail call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %18, <4 x ptr> align 8 %wide.gep468, <4 x i1> %7), !tbaa !82, !alias.scope !135, !noalias !136
+  %wide.masked.gather470 = tail call <4 x double> @llvm.masked.gather.v4f64.v4p0(<4 x ptr> align 8 %wide.gep460, <4 x i1> %7, <4 x double> poison), !tbaa !82, !alias.scope !136
+  %19 = fmul reassoc nsz arcp contract afn <4 x double> %wide.masked.gather470, %broadcast.splat451
+  %20 = fadd reassoc nsz arcp contract afn <4 x double> %18, %19 ; 2 uses
+  tail call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %20, <4 x ptr> align 8 %wide.gep468, <4 x i1> %7), !tbaa !82, !alias.scope !135, !noalias !136
+  %wide.masked.gather471 = tail call <4 x double> @llvm.masked.gather.v4f64.v4p0(<4 x ptr> align 8 %wide.gep462, <4 x i1> %7, <4 x double> poison), !tbaa !82, !alias.scope !136
+  %21 = fmul reassoc nsz arcp contract afn <4 x double> %wide.masked.gather471, %broadcast.splat453
+  %22 = fadd reassoc nsz arcp contract afn <4 x double> %20, %21
+  tail call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %22, <4 x ptr> align 8 %wide.gep468, <4 x i1> %7), !tbaa !82, !alias.scope !135, !noalias !136
+  br label %._crit_edge
+
+.preheader:                                       ; preds = %.preheader.preheader
   store double 0.000000e+00, ptr %2, align 8, !tbaa !82
   %i.dp = load double, ptr %1, align 8, !tbaa !82
   %i.dq = fmul reassoc nsz arcp contract afn double %i.dp, %i.dc ; 2 uses
@@ -585,7 +662,7 @@ bb.a:
   store double %i.ic, ptr %i.hu, align 8, !tbaa !82
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %.preheader, %.preheader.1, %.preheader.2, %.preheader.3, %.preheader71
+._crit_edge:                                      ; preds = %.preheader, %.preheader.1, %.preheader.2, %.preheader.3, %vector.body454, %.preheader71
   ret void
 }
 
@@ -600,7 +677,7 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #19
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 540
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !132  ; 7 uses
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !137  ; 7 uses
   %i.e = icmp sgt i32 %i.d, 0
   br i1 %i.e, label %.preheader56.preheader, label %._crit_edge.thread
 
@@ -824,16 +901,16 @@ bb.e:                                             ; preds = %.preheader52.3, %.p
 define void @_ZN6LibRaw8tiff_getExPjS0_S0_Px(ptr noundef nonnull align 8 dereferenceable(768512) %0, i64 noundef %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef captures(none) %3, ptr nofree noundef captures(none) %4, ptr nofree noundef writeonly captures(none) %5) local_unnamed_addr #10 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 381592 ; 4 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !134  ; 2 uses
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !136
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !139  ; 2 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !141
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 40
   %i.e = load ptr, ptr %i.d, align 8
-  %i.f = tail call noundef i64 %i.e(ptr noundef nonnull align 8 dereferenceable(8) %i.b), !call_target !144
-  %i.g = load ptr, ptr %i.a, align 8, !tbaa !134  ; 2 uses
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !136
+  %i.f = tail call noundef i64 %i.e(ptr noundef nonnull align 8 dereferenceable(8) %i.b), !call_target !149
+  %i.g = load ptr, ptr %i.a, align 8, !tbaa !139  ; 2 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !141
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 48
   %i.j = load ptr, ptr %i.i, align 8
-  %i.k = tail call noundef i64 %i.j(ptr noundef nonnull align 8 dereferenceable(8) %i.g), !call_target !145 ; 2 uses
+  %i.k = tail call noundef i64 %i.j(ptr noundef nonnull align 8 dereferenceable(8) %i.g), !call_target !150 ; 2 uses
   %i.l = icmp slt i64 %i.k, 12
   %i.m = sub nsw i64 %i.k, %i.f
   %i.n = icmp slt i64 %i.m, 12
@@ -855,23 +932,23 @@ bb.c:                                             ; preds = %bb.a
   store i32 %i.s, ptr %3, align 4, !tbaa !81
   %i.t = tail call noundef i32 @_ZN6LibRaw4get4Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   store i32 %i.t, ptr %4, align 4, !tbaa !81
-  %i.u = load ptr, ptr %i.a, align 8, !tbaa !134  ; 2 uses
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !136
+  %i.u = load ptr, ptr %i.a, align 8, !tbaa !139  ; 2 uses
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !141
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 40
   %i.x = load ptr, ptr %i.w, align 8
-  %i.y = tail call noundef i64 %i.x(ptr noundef nonnull align 8 dereferenceable(8) %i.u), !call_target !144
+  %i.y = tail call noundef i64 %i.x(ptr noundef nonnull align 8 dereferenceable(8) %i.u), !call_target !149
   %i.z = add nsw i64 %i.y, 4
-  store i64 %i.z, ptr %5, align 8, !tbaa !146
+  store i64 %i.z, ptr %5, align 8, !tbaa !151
   %i.aa = load i32, ptr %4, align 4, !tbaa !81
   %i.ab = load i32, ptr %3, align 4, !tbaa !81    ; 2 uses
   %i.ac = icmp ult i32 %i.ab, 19
   %spec.select = select i1 %i.ac, i32 %i.ab, i32 0 ; 2 uses
-  %i.ad = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN6LibRaw22tagtype_dataunit_bytesE, i64 8), align 8, !tbaa !148 ; 2 uses
+  %i.ad = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZN6LibRaw22tagtype_dataunit_bytesE, i64 8), align 8, !tbaa !153 ; 2 uses
   %i.ae = icmp ult i32 %spec.select, %i.ad
   br i1 %i.ae, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.af = load ptr, ptr @_ZN6LibRaw22tagtype_dataunit_bytesE, align 8, !tbaa !149
+  %i.af = load ptr, ptr @_ZN6LibRaw22tagtype_dataunit_bytesE, align 8, !tbaa !154
   %i.ag = zext i32 %spec.select to i64
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.af, i64 %i.ag
   %i.ai = load i32, ptr %i.ah, align 4, !tbaa !81
@@ -882,7 +959,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not.i, label %_ZNK21libraw_static_table_tixEj.exit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.aj = load ptr, ptr @_ZN6LibRaw22tagtype_dataunit_bytesE, align 8, !tbaa !149 ; 2 uses
+  %i.aj = load ptr, ptr @_ZN6LibRaw22tagtype_dataunit_bytesE, align 8, !tbaa !154 ; 2 uses
   %.not6.i = icmp eq ptr %i.aj, null
   br i1 %.not6.i, label %_ZNK21libraw_static_table_tixEj.exit, label %bb.g
 
@@ -897,14 +974,14 @@ _ZNK21libraw_static_table_tixEj.exit:             ; preds = %bb.d, %bb.e, %bb.f,
   br i1 %i.am, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %_ZNK21libraw_static_table_tixEj.exit
-  %i.an = load ptr, ptr %i.a, align 8, !tbaa !134 ; 2 uses
+  %i.an = load ptr, ptr %i.a, align 8, !tbaa !139 ; 2 uses
   %i.ao = tail call noundef i32 @_ZN6LibRaw4get4Ev(ptr noundef nonnull align 8 dereferenceable(768512) %0)
   %i.ap = zext i32 %i.ao to i64
   %i.aq = add nsw i64 %1, %i.ap
-  %i.ar = load ptr, ptr %i.an, align 8, !tbaa !136
+  %i.ar = load ptr, ptr %i.an, align 8, !tbaa !141
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 32
   %i.at = load ptr, ptr %i.as, align 8
-  %i.au = tail call noundef i32 %i.at(ptr noundef nonnull align 8 dereferenceable(8) %i.an, i64 noundef %i.aq, i32 noundef 0), !call_target !153 ; 0 uses
+  %i.au = tail call noundef i32 %i.at(ptr noundef nonnull align 8 dereferenceable(8) %i.an, i64 noundef %i.aq, i32 noundef 0), !call_target !158 ; 0 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %_ZNK21libraw_static_table_tixEj.exit
@@ -1100,26 +1177,31 @@ attributes #20 = { noreturn }
 !129 = !{!72, !8, i64 381860}
 !130 = !{!72, !13, i64 18}
 !131 = !{!72, !13, i64 16}
-!132 = !{!72, !8, i64 540}
-!133 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "LibRaw_abstract_datastream", file: !137, line: 95, size: 64, flags: DIFlagFwdDecl | DIFlagNonTrivial, identifier: "_ZTS26LibRaw_abstract_datastream")
-!134 = !{!72, !59, i64 381592}
-!135 = !{!"vtable pointer", !6, i64 0}
-!136 = !{!135, !135, i64 0}
-!137 = !DIFile(filename: "src/external/LibRaw/libraw/libraw_datastream.h", directory: "/opt-bench/work/darktable/darktable", checksumkind: CSK_MD5, checksum: "505b914805f57d87ebbd6647c463dab8")
-!138 = !DIFile(filename: "src/external/LibRaw/libraw/libraw_types.h", directory: "/opt-bench/work/darktable/darktable", checksumkind: CSK_MD5, checksum: "b83e9769365a38f23d349f0ab8a63a99")
-!139 = !DIBasicType(name: "long long", size: 64, encoding: DW_ATE_signed)
-!140 = !DIDerivedType(tag: DW_TAG_typedef, name: "INT64", file: !138, line: 109, baseType: !139)
-!141 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !133, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!142 = !{!140, !141}
-!143 = !DISubroutineType(types: !142)
-!144 = !DISubprogram(name: "tell", linkageName: "_ZN26LibRaw_abstract_datastream4tellEv", scope: !133, file: !137, line: 103, type: !143, scopeLine: 103, containingType: !133, virtualIndex: 5, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
-!145 = !DISubprogram(name: "size", linkageName: "_ZN26LibRaw_abstract_datastream4sizeEv", scope: !133, file: !137, line: 104, type: !143, scopeLine: 104, containingType: !133, virtualIndex: 6, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
-!146 = !{!21, !21, i64 0}
-!147 = !{!"_ZTS21libraw_static_table_t", !62, i64 0, !8, i64 8}
-!148 = !{!147, !8, i64 8}
-!149 = !{!147, !62, i64 0}
-!150 = !DIBasicType(name: "int", size: 32, encoding: DW_ATE_signed)
-!151 = !{!150, !141, !140, !150}
-!152 = !DISubroutineType(types: !151)
-!153 = !DISubprogram(name: "seek", linkageName: "_ZN26LibRaw_abstract_datastream4seekExi", scope: !133, file: !137, line: 102, type: !152, scopeLine: 102, containingType: !133, virtualIndex: 4, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
+!132 = distinct !{!132, i1 false, !"LVerDomain"}
+!133 = distinct !{!133, !132}
+!134 = distinct !{!134, !132}
+!135 = !{!133}
+!136 = !{!134}
+!137 = !{!72, !8, i64 540}
+!138 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "LibRaw_abstract_datastream", file: !142, line: 95, size: 64, flags: DIFlagFwdDecl | DIFlagNonTrivial, identifier: "_ZTS26LibRaw_abstract_datastream")
+!139 = !{!72, !59, i64 381592}
+!140 = !{!"vtable pointer", !6, i64 0}
+!141 = !{!140, !140, i64 0}
+!142 = !DIFile(filename: "src/external/LibRaw/libraw/libraw_datastream.h", directory: "/opt-bench/work/darktable/darktable", checksumkind: CSK_MD5, checksum: "505b914805f57d87ebbd6647c463dab8")
+!143 = !DIFile(filename: "src/external/LibRaw/libraw/libraw_types.h", directory: "/opt-bench/work/darktable/darktable", checksumkind: CSK_MD5, checksum: "b83e9769365a38f23d349f0ab8a63a99")
+!144 = !DIBasicType(name: "long long", size: 64, encoding: DW_ATE_signed)
+!145 = !DIDerivedType(tag: DW_TAG_typedef, name: "INT64", file: !143, line: 109, baseType: !144)
+!146 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !138, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!147 = !{!145, !146}
+!148 = !DISubroutineType(types: !147)
+!149 = !DISubprogram(name: "tell", linkageName: "_ZN26LibRaw_abstract_datastream4tellEv", scope: !138, file: !142, line: 103, type: !148, scopeLine: 103, containingType: !138, virtualIndex: 5, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
+!150 = !DISubprogram(name: "size", linkageName: "_ZN26LibRaw_abstract_datastream4sizeEv", scope: !138, file: !142, line: 104, type: !148, scopeLine: 104, containingType: !138, virtualIndex: 6, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
+!151 = !{!21, !21, i64 0}
+!152 = !{!"_ZTS21libraw_static_table_t", !62, i64 0, !8, i64 8}
+!153 = !{!152, !8, i64 8}
+!154 = !{!152, !62, i64 0}
+!155 = !DIBasicType(name: "int", size: 32, encoding: DW_ATE_signed)
+!156 = !{!155, !146, !145, !155}
+!157 = !DISubroutineType(types: !156)
+!158 = !DISubprogram(name: "seek", linkageName: "_ZN26LibRaw_abstract_datastream4seekExi", scope: !138, file: !142, line: 102, type: !157, scopeLine: 102, containingType: !138, virtualIndex: 4, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
 end_hunk_0

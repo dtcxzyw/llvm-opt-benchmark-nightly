@@ -205,6 +205,8 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define hidden i32 @duckdb_fsst_import(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #9 {
 bb.a:
+  %2 = ptrtoaddr ptr %0 to i64
+  %3 = ptrtoaddr ptr %1 to i64
   %.0.copyload = load i64, ptr %1, align 1
   %.mask = and i64 %.0.copyload, -4294967296
   %.not = icmp eq i64 %.mask, 86716326009110528
@@ -547,79 +549,107 @@ bb.a:
   %.1.lcssa.5 = phi i32 [ %.1.lcssa.4, %._crit_edge52.4 ], [ %i.fp, %._crit_edge52.loopexit.5 ] ; 2 uses
   %i.fw = trunc nuw nsw i64 %.sroa.14.0.extract.shift to i32
   %.not61.6 = icmp eq i64 %.sroa.14.0.extract.shift, 0
-  br i1 %.not61.6, label %._crit_edge52.6, label %.lr.ph51.6.a
+  br i1 %.not61.6, label %._crit_edge52.6, label %.lr.ph51.6
 
-.lr.ph51.6.a:                                     ; preds = %._crit_edge52.5
-  %i.fx = zext nneg i32 %.141.lcssa.5 to i64
-  br label %.lr.ph.preheader.6.a
+.lr.ph51.6:                                       ; preds = %._crit_edge52.5
+  %4 = zext i32 %.141.lcssa.5 to i64              ; 2 uses
+  %5 = shl nuw nsw i64 %4, 3
+  %6 = add i64 %5, %2
+  %7 = add i64 %6, 264
+  br label %.lr.ph.preheader.6
 
-.lr.ph.preheader.6.a:                             ; preds = %.lr.ph51.6.a, %.lr.ph.preheader.6.a
-  %indvars.iv68 = phi i64 [ %indvars.iv.next69, %.lr.ph.preheader.6.a ], [ %i.fx, %.lr.ph51.6.a ] ; 3 uses
-  %.03750.6 = phi i32 [ %5, %.lr.ph.preheader.6.a ], [ 0, %.lr.ph51.6.a ]
-  %.149.6 = phi i32 [ %4, %.lr.ph.preheader.6.a ], [ %.1.lcssa.5, %.lr.ph51.6.a ] ; 9 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.g, i64 %indvars.iv68
-  store i8 8, ptr %2, align 1, !tbaa !12
-  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv68 ; 9 uses
-  store i64 0, ptr %3, align 8, !tbaa !137
+.lr.ph.preheader.6:                               ; preds = %.lr.ph51.6, %._crit_edge.6
+  %indvar = phi i64 [ 0, %.lr.ph51.6 ], [ %indvar.next, %._crit_edge.6 ] ; 2 uses
+  %indvars.iv68 = phi i64 [ %4, %.lr.ph51.6 ], [ %indvars.iv.next69, %._crit_edge.6 ] ; 3 uses
+  %.03750.6 = phi i32 [ 0, %.lr.ph51.6 ], [ %17, %._crit_edge.6 ]
+  %.149.6 = phi i32 [ %.1.lcssa.5, %.lr.ph51.6 ], [ %.lcssa110, %._crit_edge.6 ] ; 12 uses
+  %8 = getelementptr inbounds nuw i8, ptr %i.g, i64 %indvars.iv68
+  store i8 8, ptr %8, align 1, !tbaa !12
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv68 ; 10 uses
+  store i64 0, ptr %9, align 8, !tbaa !137
+  %10 = icmp ugt i32 %.149.6, -8
+  br i1 %10, label %.lr.ph.preheader.6.a, label %vector.memcheck
+
+vector.memcheck:                                  ; preds = %.lr.ph.preheader.6
+  %11 = shl nuw nsw i64 %indvar, 3
+  %12 = add i64 %7, %11
+  %13 = zext i32 %.149.6 to i64
+  %14 = add i64 %3, %13
+  %15 = sub i64 %14, %12
+  %diff.check = icmp ugt i64 %15, -8
+  br i1 %diff.check, label %.lr.ph.preheader.6.a, label %.lr.ph51.6.a
+
+.lr.ph51.6.a:                                     ; preds = %vector.memcheck
+  %i.fx = zext i32 %.149.6 to i64
+  %16 = getelementptr inbounds nuw i8, ptr %1, i64 %i.fx
+  %wide.load = load <8 x i8>, ptr %16, align 1, !tbaa !12
+  store <8 x i8> %wide.load, ptr %9, align 8, !tbaa !12
+  br label %._crit_edge.6
+
+.lr.ph.preheader.6.a:                             ; preds = %.lr.ph.preheader.6, %vector.memcheck
   %i.fy = add i32 %.149.6, 1
   %i.fz = zext i32 %.149.6 to i64
   %i.ga = getelementptr inbounds nuw i8, ptr %1, i64 %i.fz
   %i.gb = load i8, ptr %i.ga, align 1, !tbaa !12
-  store i8 %i.gb, ptr %3, align 8, !tbaa !12
+  store i8 %i.gb, ptr %9, align 8, !tbaa !12
   %i.gc = add i32 %.149.6, 2
   %i.gd = zext i32 %i.fy to i64
   %i.ge = getelementptr inbounds nuw i8, ptr %1, i64 %i.gd
   %i.gf = load i8, ptr %i.ge, align 1, !tbaa !12
-  %i.gg = getelementptr inbounds nuw i8, ptr %3, i64 1
+  %i.gg = getelementptr inbounds nuw i8, ptr %9, i64 1
   store i8 %i.gf, ptr %i.gg, align 1, !tbaa !12
   %i.gh = add i32 %.149.6, 3
   %i.gi = zext i32 %i.gc to i64
   %i.gj = getelementptr inbounds nuw i8, ptr %1, i64 %i.gi
   %i.gk = load i8, ptr %i.gj, align 1, !tbaa !12
-  %i.gl = getelementptr inbounds nuw i8, ptr %3, i64 2
+  %i.gl = getelementptr inbounds nuw i8, ptr %9, i64 2
   store i8 %i.gk, ptr %i.gl, align 2, !tbaa !12
   %i.gm = add i32 %.149.6, 4
   %i.gn = zext i32 %i.gh to i64
   %i.go = getelementptr inbounds nuw i8, ptr %1, i64 %i.gn
   %i.gp = load i8, ptr %i.go, align 1, !tbaa !12
-  %i.gq = getelementptr inbounds nuw i8, ptr %3, i64 3
+  %i.gq = getelementptr inbounds nuw i8, ptr %9, i64 3
   store i8 %i.gp, ptr %i.gq, align 1, !tbaa !12
   %i.gr = add i32 %.149.6, 5
   %i.gs = zext i32 %i.gm to i64
   %i.gt = getelementptr inbounds nuw i8, ptr %1, i64 %i.gs
   %i.gu = load i8, ptr %i.gt, align 1, !tbaa !12
-  %i.gv = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %i.gv = getelementptr inbounds nuw i8, ptr %9, i64 4
   store i8 %i.gu, ptr %i.gv, align 4, !tbaa !12
   %i.gw = add i32 %.149.6, 6
   %i.gx = zext i32 %i.gr to i64
   %i.gy = getelementptr inbounds nuw i8, ptr %1, i64 %i.gx
   %i.gz = load i8, ptr %i.gy, align 1, !tbaa !12
-  %i.ha = getelementptr inbounds nuw i8, ptr %3, i64 5
+  %i.ha = getelementptr inbounds nuw i8, ptr %9, i64 5
   store i8 %i.gz, ptr %i.ha, align 1, !tbaa !12
   %i.hb = add i32 %.149.6, 7
   %i.hc = zext i32 %i.gw to i64
   %i.hd = getelementptr inbounds nuw i8, ptr %1, i64 %i.hc
   %i.he = load i8, ptr %i.hd, align 1, !tbaa !12
-  %i.hf = getelementptr inbounds nuw i8, ptr %3, i64 6
+  %i.hf = getelementptr inbounds nuw i8, ptr %9, i64 6
   store i8 %i.he, ptr %i.hf, align 2, !tbaa !12
-  %4 = add i32 %.149.6, 8                         ; 2 uses
   %i.hg = zext i32 %i.hb to i64
   %i.hh = getelementptr inbounds nuw i8, ptr %1, i64 %i.hg
   %i.hi = load i8, ptr %i.hh, align 1, !tbaa !12
-  %i.hj = getelementptr inbounds nuw i8, ptr %3, i64 7
+  %i.hj = getelementptr inbounds nuw i8, ptr %9, i64 7
   store i8 %i.hi, ptr %i.hj, align 1, !tbaa !12
-  %5 = add nuw nsw i32 %.03750.6, 1               ; 2 uses
-  %indvars.iv.next69 = add nuw nsw i64 %indvars.iv68, 1 ; 2 uses
-  %exitcond.6.not = icmp eq i32 %5, %i.fw
-  br i1 %exitcond.6.not, label %._crit_edge52.loopexit.6, label %.lr.ph.preheader.6.a, !llvm.loop !131
+  br label %._crit_edge.6
 
-._crit_edge52.loopexit.6:                         ; preds = %.lr.ph.preheader.6.a
+._crit_edge.6:                                    ; preds = %.lr.ph.preheader.6.a, %.lr.ph51.6.a
+  %.lcssa110 = add i32 %.149.6, 8                 ; 2 uses
+  %17 = add nuw nsw i32 %.03750.6, 1              ; 2 uses
+  %indvars.iv.next69 = add nuw nsw i64 %indvars.iv68, 1 ; 2 uses
+  %exitcond.6.not = icmp eq i32 %17, %i.fw
+  %indvar.next = add i64 %indvar, 1
+  br i1 %exitcond.6.not, label %._crit_edge52.loopexit.6, label %.lr.ph.preheader.6, !llvm.loop !131
+
+._crit_edge52.loopexit.6:                         ; preds = %._crit_edge.6
   %i.hk = trunc nuw nsw i64 %indvars.iv.next69 to i32
   br label %._crit_edge52.6
 
 ._crit_edge52.6:                                  ; preds = %._crit_edge52.loopexit.6, %._crit_edge52.5
   %.141.lcssa.6 = phi i32 [ %.141.lcssa.5, %._crit_edge52.5 ], [ %i.hk, %._crit_edge52.loopexit.6 ] ; 2 uses
-  %.1.lcssa.6 = phi i32 [ %.1.lcssa.5, %._crit_edge52.5 ], [ %4, %._crit_edge52.loopexit.6 ] ; 3 uses
+  %.1.lcssa.6 = phi i32 [ %.1.lcssa.5, %._crit_edge52.5 ], [ %.lcssa110, %._crit_edge52.loopexit.6 ] ; 3 uses
   %i.hl = zext i8 %spec.select to i32             ; 2 uses
   %.not61.7 = icmp eq i8 %i.j, %.sroa.0.0.extract.trunc
   br i1 %.not61.7, label %._crit_edge52.7, label %.lr.ph51.7

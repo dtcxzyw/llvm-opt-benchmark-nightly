@@ -1,9 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/pbrt-v4/original/image_test?download=true
 inline.NumInlined: 4995
 inline.NumDeleted: 987
-loop-unroll.NumCompletelyUnrolled: 59
+loop-unroll.NumCompletelyUnrolled: 60
 loop-unroll.NumRuntimeUnrolled: 37
-loop-unroll.NumUnrolled: 96
+loop-unroll.NumUnrolled: 97
 begin_hunk_0_@_ZN7testing8internal11CmpHelperLEIffEENS_15AssertionResultEPKcS4_RKT_RKT0_:bb.a
   br label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
 
@@ -205,7 +205,8 @@ _ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i:
   %i.ab = load ptr, ptr %i.w, align 8, !tbaa !53
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 16
   %i.ad = load ptr, ptr %i.ac, align 8
-  %i.ae = tail call noundef ptr %i.ad(ptr noundef nonnull align 8 dereferenceable(8) %i.w, i64 noundef 36, i64 noundef 4), !inline_history !12 ; 11 uses
+  %i.ae = tail call noundef ptr %i.ad(ptr noundef nonnull align 8 dereferenceable(8) %i.w, i64 noundef 36, i64 noundef 4), !inline_history !12 ; 14 uses
+  %38 = ptrtoaddr ptr %i.ae to i64
   store i64 9, ptr %i.z, align 8, !tbaa !67
   store ptr %i.ae, ptr %i.y, align 8, !tbaa !66
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(36) %i.ae, ptr noundef nonnull align 4 dereferenceable(36) @constinit, i64 36, i1 false)
@@ -222,9 +223,10 @@ _ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i:
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 16
   %i.am = load ptr, ptr %i.al, align 8
   %i.an = invoke noundef ptr %i.am(ptr noundef nonnull align 8 dereferenceable(8) %i.af, i64 noundef 36, i64 noundef 4)
-          to label %.noexc unwind label %bb.f, !inline_history !7 ; 22 uses
+          to label %.noexc unwind label %bb.f, !inline_history !7 ; 24 uses
 
 .noexc:                                           ; preds = %_ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i
+  %39 = ptrtoaddr ptr %i.an to i64                ; 2 uses
   %.pre.i = load i64, ptr %i.aj, align 8, !tbaa !64 ; 11 uses
   %.pre.i.pre.i = load ptr, ptr %i.ah, align 8, !tbaa !66 ; 14 uses
   %.not13.i.i = icmp eq i64 %.pre.i, 0
@@ -232,9 +234,8 @@ _ZN4pstd3pmr21polymorphic_allocatorIfE15allocate_objectIfEEPT_m.exit.i.i:
 
 iter.check:                                       ; preds = %.noexc
   %.pre.i.pre.i400 = ptrtoaddr ptr %.pre.i.pre.i to i64
-  %38 = ptrtoaddr ptr %i.an to i64
   %min.iters.check = icmp ult i64 %.pre.i, 4
-  %i.ao = sub i64 %.pre.i.pre.i400, %38
+  %i.ao = sub i64 %.pre.i.pre.i400, %39
   %diff.check = icmp ugt i64 %i.ao, -128
   %or.cond = select i1 %min.iters.check, i1 true, i1 %diff.check
   br i1 %or.cond, label %.lr.ph.i.i96.preheader, label %vector.main.loop.iter.check
@@ -324,7 +325,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
 
 ._crit_edge.i.i:                                  ; preds = %.noexc
   %.not.i.i.i.i.i = icmp eq ptr %.pre.i.pre.i, null
-  br i1 %.not.i.i.i.i.i, label %.lr.ph.i.a, label %._crit_edge.thread.i.i
+  br i1 %.not.i.i.i.i.i, label %.lr.ph.i, label %._crit_edge.thread.i.i
 
 ._crit_edge.thread.i.i:                           ; preds = %.lr.ph.i.i96.prol.loopexit, %.lr.ph.i.i96, %middle.block, %vec.epilog.middle.block, %._crit_edge.i.i
   %i.bi = load i64, ptr %i.ai, align 8, !tbaa !67
@@ -334,7 +335,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 24
   %i.bn = load ptr, ptr %i.bm, align 8
   invoke void %i.bn(ptr noundef nonnull align 8 dereferenceable(8) %i.bk, ptr noundef nonnull %.pre.i.pre.i, i64 noundef %i.bj, i64 noundef 4)
-          to label %.lr.ph.i.a unwind label %bb.f, !inline_history !7
+          to label %.lr.ph.i unwind label %bb.f, !inline_history !7
 
 .lr.ph.i.i96:                                     ; preds = %.lr.ph.i.i96.prol.loopexit, %.lr.ph.i.i96
   %indvars.iv.i.i = phi i64 [ %indvars.iv.next.i.i.7, %.lr.ph.i.i96 ], [ %indvars.iv.i.i.unr, %.lr.ph.i.i96.prol.loopexit ] ; 10 uses
@@ -381,9 +382,23 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %exitcond.not.i.i.7 = icmp eq i64 %indvars.iv.next.i.i.7, %.pre.i
   br i1 %exitcond.not.i.i.7, label %._crit_edge.thread.i.i, label %.lr.ph.i.i96, !llvm.loop !489
 
-.lr.ph.i.a:                                       ; preds = %._crit_edge.i.i, %._crit_edge.thread.i.i
+.lr.ph.i:                                         ; preds = %._crit_edge.i.i, %._crit_edge.thread.i.i
   store i64 9, ptr %i.ai, align 8, !tbaa !67
   store ptr %i.an, ptr %i.ah, align 8, !tbaa !66
+  %40 = sub i64 %38, %39
+  %diff.check413 = icmp ugt i64 %40, -32
+  br i1 %diff.check413, label %.lr.ph.i.a, label %vector.body415
+
+vector.body415:                                   ; preds = %.lr.ph.i
+  %unmaskedload = load <8 x float>, ptr %i.ae, align 4, !tbaa !77
+  store <8 x float> %unmaskedload, ptr %i.an, align 4, !tbaa !77
+  %41 = getelementptr inbounds nuw i8, ptr %i.an, i64 32
+  %42 = getelementptr inbounds nuw i8, ptr %i.ae, i64 32
+  %wide.masked.load.1 = tail call <8 x float> @llvm.masked.load.v8f32.p0(ptr nonnull align 4 %42, <8 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false>, <8 x float> poison), !tbaa !77
+  tail call void @llvm.masked.store.v8f32.p0(<8 x float> %wide.masked.load.1, ptr align 4 %41, <8 x i1> <i1 true, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false, i1 false>), !tbaa !77
+  br label %._crit_edge.i.i98
+
+.lr.ph.i.a:                                       ; preds = %.lr.ph.i
   %i.cm = load float, ptr %i.ae, align 4, !tbaa !77
   store float %i.cm, ptr %i.an, align 4, !tbaa !77
   %i.cn = getelementptr inbounds nuw i8, ptr %i.an, i64 4
@@ -418,19 +433,22 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.dj = getelementptr inbounds nuw i8, ptr %i.ae, i64 32
   %i.dk = load float, ptr %i.dj, align 4, !tbaa !77
   store float %i.dk, ptr %i.di, align 4, !tbaa !77
+  br label %._crit_edge.i.i98
+
+._crit_edge.i.i98:                                ; preds = %vector.body415, %.lr.ph.i.a
   store i64 9, ptr %i.aj, align 8, !tbaa !64
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #25
-  %39 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
-  store ptr %39, ptr %4, align 8, !tbaa !31
-  store i8 89, ptr %39, align 8, !tbaa !32
-  %40 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i64 1, ptr %40, align 8, !tbaa !34
-  %41 = getelementptr inbounds nuw i8, ptr %4, i64 17
-  store i8 0, ptr %41, align 1, !tbaa !32
+  %43 = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
+  store ptr %43, ptr %4, align 8, !tbaa !31
+  store i8 89, ptr %43, align 8, !tbaa !32
+  %44 = getelementptr inbounds nuw i8, ptr %4, i64 8
+  store i64 1, ptr %44, align 8, !tbaa !34
+  %45 = getelementptr inbounds nuw i8, ptr %4, i64 17
+  store i8 0, ptr %45, align 1, !tbaa !32
   invoke void @_ZN4pbrt5ImageC1EN4pstd6vectorIfNS1_3pmr21polymorphic_allocatorIfEEEENS_6Point2IiEENS1_4spanIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE(ptr noundef nonnull align 8 dereferenceable(152) %2, ptr nofree noundef nonnull align 8 dereferenceable(32) %3, i64 12884901891, ptr nonnull %4, i64 1)
           to label %bb.a unwind label %bb.g
 
-bb.a:                                             ; preds = %.lr.ph.i.a
+bb.a:                                             ; preds = %._crit_edge.i.i98
   %i.dl = load ptr, ptr %4, align 8, !tbaa !35    ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %4, i64 16 ; 2 uses
   %i.dn = icmp eq ptr %i.dl, %i.dm
@@ -491,7 +509,7 @@ bb.f:                                             ; preds = %._crit_edge.thread.
           cleanup
   br label %bb.jb
 
-bb.g:                                             ; preds = %.lr.ph.i.a
+bb.g:                                             ; preds = %._crit_edge.i.i98
   %i.ed = landingpad { ptr, i32 }
           cleanup
   %i.ee = load ptr, ptr %4, align 8, !tbaa !35    ; 2 uses
@@ -893,6 +911,12 @@ declare float @llvm.copysign.f32(float, float) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x i32> @llvm.fshr.v2i32(<2 x i32>, <2 x i32>, <2 x i32>) #18
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
+declare <8 x float> @llvm.masked.load.v8f32.p0(ptr captures(none), <8 x i1>, <8 x float>) #24
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
+declare void @llvm.masked.store.v8f32.p0(<8 x float>, ptr captures(none), <8 x i1>) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <8 x float> @llvm.fabs.v8f32(<8 x float>) #18
