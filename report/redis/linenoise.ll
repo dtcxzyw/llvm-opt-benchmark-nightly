@@ -202,21 +202,16 @@ bb.e:                                             ; preds = %bb.d
 ; Function Attrs: nounwind optsize uwtable
 define dso_local void @linenoisePrintKeyCodes() local_unnamed_addr #9 {
 bb.a:
-  %.sroa.0 = alloca i32, align 4                  ; 7 uses
   %i.a = alloca i8, align 1                       ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
   %puts = tail call i32 @puts(ptr nonnull dereferenceable(1) @str) ; 0 uses
   %i.b = tail call fastcc i32 @enableRawMode() #29
   %i.c = icmp eq i32 %i.b, -1
-  br i1 %i.c, label %disableRawMode.exit, label %0
+  br i1 %i.c, label %disableRawMode.exit, label %bb.b
 
-0:                                                ; preds = %bb.a
-  store i32 538976288, ptr %.sroa.0, align 4
-  %.sroa.0.1..sroa_idx4 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 1
-  %.sroa.0.3..sroa_idx5 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 3
-  br label %bb.b
-
-bb.b:                                             ; preds = %bb.e, %0
+bb.b:                                             ; preds = %bb.a, %bb.e
+  %.sroa.9.0 = phi i8 [ %.sroa.9.1, %bb.e ], [ 32, %bb.a ] ; 3 uses
+  %.sroa.7.0 = phi i8 [ %.sroa.7.1, %bb.e ], [ 32, %bb.a ] ; 3 uses
+  %.sroa.5.0 = phi i8 [ %.sroa.5.1, %bb.e ], [ 32, %bb.a ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28
   %i.d = call i64 @read(i32 noundef 0, ptr noundef nonnull %i.a, i64 noundef 1) #24
   %i.e = trunc i64 %i.d to i32
@@ -224,18 +219,25 @@ bb.b:                                             ; preds = %bb.e, %0
   br i1 %i.f, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(3) %.sroa.0, ptr noundef nonnull align 1 dereferenceable(3) %.sroa.0.1..sroa_idx4, i64 3, i1 false)
-  %1 = load i8, ptr %i.a, align 1, !tbaa !25      ; 3 uses
-  store i8 %1, ptr %.sroa.0.3..sroa_idx5, align 1, !tbaa !25
-  %.sroa.0.0..sroa.0.0.lhsv = load i32, ptr %.sroa.0, align 4
-  %.not3 = icmp eq i32 %.sroa.0.0..sroa.0.0.lhsv, 1953068401
+  %0 = load i8, ptr %i.a, align 1, !tbaa !25      ; 4 uses
+  %.sroa.9.0.insert.ext = zext i8 %0 to i32
+  %.sroa.9.0.insert.shift = shl nuw i32 %.sroa.9.0.insert.ext, 24
+  %.sroa.7.0.insert.ext = zext i8 %.sroa.9.0 to i32
+  %.sroa.7.0.insert.shift = shl nuw nsw i32 %.sroa.7.0.insert.ext, 16
+  %.sroa.7.0.insert.insert = or disjoint i32 %.sroa.9.0.insert.shift, %.sroa.7.0.insert.shift
+  %.sroa.5.0.insert.ext = zext i8 %.sroa.7.0 to i32
+  %.sroa.5.0.insert.shift = shl nuw nsw i32 %.sroa.5.0.insert.ext, 8
+  %.sroa.5.0.insert.insert = or disjoint i32 %.sroa.7.0.insert.insert, %.sroa.5.0.insert.shift
+  %.sroa.0.0.insert.ext = zext i8 %.sroa.5.0 to i32
+  %.sroa.0.0.insert.insert = or disjoint i32 %.sroa.5.0.insert.insert, %.sroa.0.0.insert.ext
+  %.not3 = icmp eq i32 %.sroa.0.0.insert.insert, 1953068401
   br i1 %.not3, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.g = tail call ptr @__ctype_b_loc() #31
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !54
-  %i.i = sext i8 %1 to i32                        ; 3 uses
-  %i.j = sext i8 %1 to i64
+  %i.i = sext i8 %0 to i32                        ; 3 uses
+  %i.j = sext i8 %0 to i64
   %i.k = getelementptr inbounds [2 x i8], ptr %i.h, i64 %i.j
   %i.l = load i16, ptr %i.k, align 2, !tbaa !56
   %i.m = and i16 %i.l, 16384
@@ -248,6 +250,9 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.b, %bb.d
+  %.sroa.9.1 = phi i8 [ %.sroa.9.0, %bb.b ], [ %0, %bb.d ]
+  %.sroa.7.1 = phi i8 [ %.sroa.7.0, %bb.b ], [ %.sroa.9.0, %bb.d ]
+  %.sroa.5.1 = phi i8 [ %.sroa.5.0, %bb.b ], [ %.sroa.7.0, %bb.d ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
   br label %bb.b
 
@@ -266,7 +271,6 @@ bb.h:                                             ; preds = %bb.g
   br label %disableRawMode.exit
 
 disableRawMode.exit:                              ; preds = %bb.h, %bb.g, %bb.f, %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   ret void
 }
 

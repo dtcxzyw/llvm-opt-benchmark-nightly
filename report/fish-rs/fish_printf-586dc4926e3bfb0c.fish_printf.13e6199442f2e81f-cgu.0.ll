@@ -205,24 +205,24 @@ bb.i:                                             ; preds = %_RNvMNtNtCs1HV6ixfL
           to label %.noexc18 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc18:                                         ; preds = %bb.i
-  %.sroa.0.0.copyload.i = load ptr, ptr %i.c, align 8, !noalias !123
-  %.sroa.2.0.copyload.i = load ptr, ptr %.sroa.2.0..sroa_idx.i, align 8, !noalias !123
-  %.sroa.3.0.copyload.i = load ptr, ptr %.sroa.3.0..sroa_idx.i, align 8, !noalias !123
-  %.sroa.4.0.copyload.i = load ptr, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !123
+  %.sroa.012.0.copyload.i = load i64, ptr %i.c, align 8, !noalias !123
+  %.sroa.2.0.copyload.i = load i64, ptr %.sroa.2.0..sroa_idx.i, align 8, !noalias !123
+  %.sroa.3.0.copyload.i = load i64, ptr %.sroa.3.0..sroa_idx.i, align 8, !noalias !123
+  %.sroa.4.0.copyload.i = load i64, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !123
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !123
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.q, %.noexc18
-  %.sroa.0.sroa.5.0.i = phi ptr [ %.sroa.2.0.copyload.i, %.noexc18 ], [ %.sroa.0.sroa.5.1.i, %bb.q ] ; 3 uses
-  %.sroa.0.sroa.0.0.i = phi ptr [ %.sroa.0.0.copyload.i, %.noexc18 ], [ %.sroa.0.sroa.0.1.i, %bb.q ] ; 3 uses
-  %.sroa.6.sroa.6.0.i = phi ptr [ %.sroa.4.0.copyload.i, %.noexc18 ], [ %i.az, %bb.q ] ; 4 uses
-  %.sroa.6.sroa.0.0.i = phi ptr [ %.sroa.3.0.copyload.i, %.noexc18 ], [ %.sroa.6.sroa.0.1.i, %bb.q ] ; 2 uses
+  %.sroa.10.0.i = phi i64 [ %.sroa.4.0.copyload.i, %.noexc18 ], [ %4, %bb.q ] ; 4 uses
+  %.sroa.7.0.i = phi i64 [ %.sroa.3.0.copyload.i, %.noexc18 ], [ %.sroa.7.1.i, %bb.q ] ; 2 uses
+  %.sroa.5.0.i = phi i64 [ %.sroa.2.0.copyload.i, %.noexc18 ], [ %.sroa.5.1.i, %bb.q ] ; 3 uses
+  %.sroa.0.013.i = phi i64 [ %.sroa.012.0.copyload.i, %.noexc18 ], [ %.sroa.0.1.i, %bb.q ] ; 3 uses
   %.sroa.03.0.i = phi i32 [ 0, %.noexc18 ], [ %i.bi, %bb.q ] ; 3 uses
-  %i.ag = icmp eq ptr %.sroa.6.sroa.0.0.i, %.sroa.6.sroa.6.0.i
+  %i.ag = icmp eq i64 %.sroa.7.0.i, %.sroa.10.0.i
   br i1 %i.ag, label %bb.k, label %bb.q
 
 bb.k:                                             ; preds = %bb.j
-  %i.ah = icmp eq ptr %.sroa.0.sroa.0.0.i, %.sroa.0.sroa.5.0.i
+  %i.ah = icmp eq i64 %.sroa.0.013.i, %.sroa.5.0.i
   br i1 %i.ah, label %bb.l, label %bb.q
 
 bb.l:                                             ; preds = %bb.k
@@ -286,16 +286,18 @@ _RNvMNtNtCs1HV6ixfL8cZ_11fish_printf6fmt_fp7decimalNtB2_7Decimal19trim_trailing_
   br i1 %.not.i, label %_RNvMNtNtCs1HV6ixfL8cZ_11fish_printf6fmt_fp7decimalNtB2_7Decimal10shift_left.exit, label %bb.i
 
 bb.q:                                             ; preds = %bb.k, %bb.j
-  %.sroa.0.sroa.5.1.i = phi ptr [ %.sroa.6.sroa.6.0.i, %bb.k ], [ %.sroa.0.sroa.5.0.i, %bb.j ]
-  %.sroa.0.sroa.0.1.i = phi ptr [ %.sroa.6.sroa.6.0.i, %bb.k ], [ %.sroa.0.sroa.0.0.i, %bb.j ]
-  %.sroa.6.sroa.0.1.i = phi ptr [ %.sroa.0.sroa.0.0.i, %bb.k ], [ %.sroa.6.sroa.0.0.i, %bb.j ]
-  %.sink12.i.i = phi ptr [ %.sroa.0.sroa.5.0.i, %bb.k ], [ %.sroa.6.sroa.6.0.i, %bb.j ]
+  %.sroa.7.1.i = phi i64 [ %.sroa.0.013.i, %bb.k ], [ %.sroa.7.0.i, %bb.j ]
+  %.sroa.5.1.i = phi i64 [ %.sroa.10.0.i, %bb.k ], [ %.sroa.5.0.i, %bb.j ]
+  %.sroa.0.1.i = phi i64 [ %.sroa.10.0.i, %bb.k ], [ %.sroa.0.013.i, %bb.j ]
+  %.sink12.i.in.i = phi i64 [ %.sroa.5.0.i, %bb.k ], [ %.sroa.10.0.i, %bb.j ]
+  %.sink12.i.i = inttoptr i64 %.sink12.i.in.i to ptr
   %i.az = getelementptr inbounds i8, ptr %.sink12.i.i, i64 -4 ; 3 uses
   %i.ba = load i32, ptr %i.az, align 4, !noundef !5
   %i.bb = zext i32 %i.ba to i64
   %i.bc = shl nuw nsw i64 %i.bb, %..i.i
   %i.bd = zext i32 %.sroa.03.0.i to i64
   %i.be = add nuw nsw i64 %i.bc, %i.bd            ; 2 uses
+  %4 = ptrtoint ptr %i.az to i64
   %i.bf = urem i64 %i.be, 1000000000
   %i.bg = trunc nuw nsw i64 %i.bf to i32
   store i32 %i.bg, ptr %i.az, align 4

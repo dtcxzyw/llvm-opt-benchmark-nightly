@@ -205,43 +205,45 @@ _RNvMNtNtCscjxkGEBy879_6bitvec5slice3apiNtB4_8BitSlice4fillCs7gfv9tzbXmh_6yara_x
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !2514
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @_RNvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB5_8VecDequeTjhhlEE4iterCs7gfv9tzbXmh_6yara_x(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.e, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.f)
-  %.sroa.0.sroa.0.0.copyload = load ptr, ptr %i.e, align 8
+  %.sroa.0.0.copyload = load i64, ptr %i.e, align 8
   %.sroa.0.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %.sroa.0.sroa.7.0.copyload = load ptr, ptr %.sroa.0.sroa.7.0..sroa_idx, align 8
+  %.sroa.7.0.copyload = load i64, ptr %.sroa.0.sroa.7.0..sroa_idx, align 8
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  %.sroa.9.sroa.0.0.copyload = load ptr, ptr %.sroa.9.0..sroa_idx, align 8
+  %.sroa.10.0.copyload = load i64, ptr %.sroa.9.0..sroa_idx, align 8
   %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 24
-  %.sroa.9.sroa.5.0.copyload = load ptr, ptr %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx, align 8
+  %.sroa.12.0.copyload = load i64, ptr %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx, align 8
   %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   br label %.outer
 
 .outer:                                           ; preds = %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultQNtNtCscjxkGEBy879_6bitvec5slice8BitSliceINtNtNtBM_3ptr4span12BitSpanErrorjEE6unwrapCs7gfv9tzbXmh_6yara_x.exit, %_RNvMNtNtCscjxkGEBy879_6bitvec5slice3apiNtB4_8BitSlice4fillCs7gfv9tzbXmh_6yara_x.exit
-  %.sroa.0.sroa.7.0.ph = phi ptr [ %.sroa.0.sroa.7.1, %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultQNtNtCscjxkGEBy879_6bitvec5slice8BitSliceINtNtNtBM_3ptr4span12BitSpanErrorjEE6unwrapCs7gfv9tzbXmh_6yara_x.exit ], [ %.sroa.0.sroa.7.0.copyload, %_RNvMNtNtCscjxkGEBy879_6bitvec5slice3apiNtB4_8BitSlice4fillCs7gfv9tzbXmh_6yara_x.exit ]
-  %.sroa.0.sroa.0.0.ph = phi ptr [ %i.aa, %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultQNtNtCscjxkGEBy879_6bitvec5slice8BitSliceINtNtNtBM_3ptr4span12BitSpanErrorjEE6unwrapCs7gfv9tzbXmh_6yara_x.exit ], [ %.sroa.0.sroa.0.0.copyload, %_RNvMNtNtCscjxkGEBy879_6bitvec5slice3apiNtB4_8BitSlice4fillCs7gfv9tzbXmh_6yara_x.exit ]
-  %.sroa.9.sroa.5.0.ph = phi ptr [ %.sroa.9.sroa.5.1, %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultQNtNtCscjxkGEBy879_6bitvec5slice8BitSliceINtNtNtBM_3ptr4span12BitSpanErrorjEE6unwrapCs7gfv9tzbXmh_6yara_x.exit ], [ %.sroa.9.sroa.5.0.copyload, %_RNvMNtNtCscjxkGEBy879_6bitvec5slice3apiNtB4_8BitSlice4fillCs7gfv9tzbXmh_6yara_x.exit ]
-  %.sroa.9.sroa.0.0.ph = phi ptr [ %.sroa.9.sroa.0.1, %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultQNtNtCscjxkGEBy879_6bitvec5slice8BitSliceINtNtNtBM_3ptr4span12BitSpanErrorjEE6unwrapCs7gfv9tzbXmh_6yara_x.exit ], [ %.sroa.9.sroa.0.0.copyload, %_RNvMNtNtCscjxkGEBy879_6bitvec5slice3apiNtB4_8BitSlice4fillCs7gfv9tzbXmh_6yara_x.exit ]
+  %.sroa.12.0.ph = phi i64 [ %.sroa.12.1, %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultQNtNtCscjxkGEBy879_6bitvec5slice8BitSliceINtNtNtBM_3ptr4span12BitSpanErrorjEE6unwrapCs7gfv9tzbXmh_6yara_x.exit ], [ %.sroa.12.0.copyload, %_RNvMNtNtCscjxkGEBy879_6bitvec5slice3apiNtB4_8BitSlice4fillCs7gfv9tzbXmh_6yara_x.exit ]
+  %.sroa.10.0.ph = phi i64 [ %.sroa.10.1, %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultQNtNtCscjxkGEBy879_6bitvec5slice8BitSliceINtNtNtBM_3ptr4span12BitSpanErrorjEE6unwrapCs7gfv9tzbXmh_6yara_x.exit ], [ %.sroa.10.0.copyload, %_RNvMNtNtCscjxkGEBy879_6bitvec5slice3apiNtB4_8BitSlice4fillCs7gfv9tzbXmh_6yara_x.exit ]
+  %.sroa.7.0.ph = phi i64 [ %.sroa.7.1, %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultQNtNtCscjxkGEBy879_6bitvec5slice8BitSliceINtNtNtBM_3ptr4span12BitSpanErrorjEE6unwrapCs7gfv9tzbXmh_6yara_x.exit ], [ %.sroa.7.0.copyload, %_RNvMNtNtCscjxkGEBy879_6bitvec5slice3apiNtB4_8BitSlice4fillCs7gfv9tzbXmh_6yara_x.exit ]
+  %.sroa.0.038.ph = phi i64 [ %1, %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultQNtNtCscjxkGEBy879_6bitvec5slice8BitSliceINtNtNtBM_3ptr4span12BitSpanErrorjEE6unwrapCs7gfv9tzbXmh_6yara_x.exit ], [ %.sroa.0.0.copyload, %_RNvMNtNtCscjxkGEBy879_6bitvec5slice3apiNtB4_8BitSlice4fillCs7gfv9tzbXmh_6yara_x.exit ]
   %.sroa.04.0.ph = phi i32 [ %i.bg, %_RNvMNtCskKLDkoKarTP_4core6resultINtB2_6ResultQNtNtCscjxkGEBy879_6bitvec5slice8BitSliceINtNtNtBM_3ptr4span12BitSpanErrorjEE6unwrapCs7gfv9tzbXmh_6yara_x.exit ], [ 0, %_RNvMNtNtCscjxkGEBy879_6bitvec5slice3apiNtB4_8BitSlice4fillCs7gfv9tzbXmh_6yara_x.exit ] ; 3 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %.backedge, %.outer
-  %.sroa.0.sroa.7.0 = phi ptr [ %.sroa.0.sroa.7.0.ph, %.outer ], [ %.sroa.0.sroa.7.1, %.backedge ] ; 3 uses
-  %.sroa.0.sroa.0.0 = phi ptr [ %.sroa.0.sroa.0.0.ph, %.outer ], [ %i.aa, %.backedge ] ; 3 uses
-  %.sroa.9.sroa.5.0 = phi ptr [ %.sroa.9.sroa.5.0.ph, %.outer ], [ %.sroa.9.sroa.5.1, %.backedge ] ; 3 uses
-  %.sroa.9.sroa.0.0 = phi ptr [ %.sroa.9.sroa.0.0.ph, %.outer ], [ %.sroa.9.sroa.0.1, %.backedge ] ; 3 uses
-  %i.y = icmp eq ptr %.sroa.0.sroa.0.0, %.sroa.0.sroa.7.0
+  %.sroa.12.0 = phi i64 [ %.sroa.12.0.ph, %.outer ], [ %.sroa.12.1, %.backedge ] ; 3 uses
+  %.sroa.10.0 = phi i64 [ %.sroa.10.0.ph, %.outer ], [ %.sroa.10.1, %.backedge ] ; 3 uses
+  %.sroa.7.0 = phi i64 [ %.sroa.7.0.ph, %.outer ], [ %.sroa.7.1, %.backedge ] ; 4 uses
+  %.sroa.0.038 = phi i64 [ %.sroa.0.038.ph, %.outer ], [ %1, %.backedge ] ; 2 uses
+  %i.y = icmp eq i64 %.sroa.0.038, %.sroa.7.0
   br i1 %i.y, label %bb.g, label %_RNvXs2_NtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque4iterINtB5_4IterTjhhlEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs7gfv9tzbXmh_6yara_x.exit
 
 bb.g:                                             ; preds = %bb.f
-  %i.z = icmp eq ptr %.sroa.9.sroa.0.0, %.sroa.9.sroa.5.0
+  %i.z = icmp eq i64 %.sroa.10.0, %.sroa.12.0
   br i1 %i.z, label %_RNvXs2_NtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque4iterINtB5_4IterTjhhlEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs7gfv9tzbXmh_6yara_x.exit.thread, label %_RNvXs2_NtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque4iterINtB5_4IterTjhhlEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs7gfv9tzbXmh_6yara_x.exit
 
 _RNvXs2_NtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque4iterINtB5_4IterTjhhlEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs7gfv9tzbXmh_6yara_x.exit: ; preds = %bb.f, %bb.g
-  %.sroa.0.sroa.7.1 = phi ptr [ %.sroa.9.sroa.5.0, %bb.g ], [ %.sroa.0.sroa.7.0, %bb.f ] ; 2 uses
-  %.sroa.9.sroa.5.1 = phi ptr [ %.sroa.0.sroa.7.0, %bb.g ], [ %.sroa.9.sroa.5.0, %bb.f ] ; 2 uses
-  %.sroa.9.sroa.0.1 = phi ptr [ %.sroa.0.sroa.0.0, %bb.g ], [ %.sroa.9.sroa.0.0, %bb.f ] ; 2 uses
-  %.sink6.i = phi ptr [ %.sroa.9.sroa.0.0, %bb.g ], [ %.sroa.0.sroa.0.0, %bb.f ] ; 4 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %.sink6.i, i64 16 ; 2 uses
-  %.not = icmp eq ptr %.sink6.i, null
+  %.sroa.12.1 = phi i64 [ %.sroa.7.0, %bb.g ], [ %.sroa.12.0, %bb.f ] ; 2 uses
+  %.sroa.10.1 = phi i64 [ %.sroa.7.0, %bb.g ], [ %.sroa.10.0, %bb.f ] ; 2 uses
+  %.sroa.7.1 = phi i64 [ %.sroa.12.0, %bb.g ], [ %.sroa.7.0, %bb.f ] ; 2 uses
+  %.sink6.i.in = phi i64 [ %.sroa.10.0, %bb.g ], [ %.sroa.0.038, %bb.f ] ; 2 uses
+  %.sink6.i = inttoptr i64 %.sink6.i.in to ptr    ; 3 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %.sink6.i, i64 16
+  %1 = ptrtoint ptr %i.aa to i64                  ; 2 uses
+  %.not = icmp eq i64 %.sink6.i.in, 0
   br i1 %.not, label %_RNvXs2_NtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque4iterINtB5_4IterTjhhlEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs7gfv9tzbXmh_6yara_x.exit.thread, label %bb.h
 
 bb.h:                                             ; preds = %_RNvXs2_NtNtNtCsexYYUdYSQU6_5alloc11collections9vec_deque4iterINtB5_4IterTjhhlEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs7gfv9tzbXmh_6yara_x.exit

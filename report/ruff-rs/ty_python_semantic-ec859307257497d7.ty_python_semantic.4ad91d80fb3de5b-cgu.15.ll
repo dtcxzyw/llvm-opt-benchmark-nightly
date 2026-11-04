@@ -205,7 +205,7 @@ bb.a:
   %i.k = alloca [32 x i8], align 8                ; 5 uses
   %i.l = alloca [72 x i8], align 8                ; 11 uses
   %i.m = alloca [32 x i8], align 8                ; 5 uses
-  %i.n = alloca [16 x i8], align 4                ; 6 uses
+  %i.n = alloca [16 x i8], align 4                ; 5 uses
   %i.o = alloca [32 x i8], align 8                ; 8 uses
   %i.p = alloca [24 x i8], align 8                ; 16 uses
   %i.q = alloca [16 x i8], align 4                ; 2 uses
@@ -370,13 +370,13 @@ bb.p:                                             ; preds = %bb.n
   br label %.body.thread
 
 bb.q:                                             ; preds = %bb.p
-  %.sroa.047.sroa.0.0.copyload = load ptr, ptr %i.o, align 8
+  %.sroa.048.0.copyload = load i64, ptr %i.o, align 8
   %.sroa.047.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.o, i64 8
-  %.sroa.047.sroa.8.0.copyload = load ptr, ptr %.sroa.047.sroa.8.0..sroa_idx, align 8
+  %.sroa.850.0.copyload = load i64, ptr %.sroa.047.sroa.8.0..sroa_idx, align 8
   %.sroa.1051.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.o, i64 16
-  %.sroa.1051.sroa.0.0.copyload = load ptr, ptr %.sroa.1051.0..sroa_idx, align 8
+  %.sroa.11.0.copyload = load i64, ptr %.sroa.1051.0..sroa_idx, align 8
   %.sroa.1051.sroa.6.0..sroa.1051.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %i.o, i64 24
-  %.sroa.1051.sroa.6.0.copyload = load ptr, ptr %.sroa.1051.sroa.6.0..sroa.1051.0..sroa_idx.sroa_idx, align 8
+  %.sroa.13.0.copyload = load i64, ptr %.sroa.1051.sroa.6.0..sroa.1051.0..sroa_idx.sroa_idx, align 8
   %i.bk = getelementptr inbounds nuw i8, ptr %i.h, i64 4
   %i.bl = getelementptr inbounds nuw i8, ptr %i.g, i64 4
   %i.bm = getelementptr inbounds nuw i8, ptr %i.g, i64 8
@@ -398,30 +398,32 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.ar, %bb.q
-  %.sroa.047.sroa.8.0 = phi ptr [ %.sroa.047.sroa.8.0.copyload, %bb.q ], [ %.sroa.047.sroa.8.1, %bb.ar ] ; 3 uses
-  %.sroa.047.sroa.0.0 = phi ptr [ %.sroa.047.sroa.0.0.copyload, %bb.q ], [ %i.bx, %bb.ar ] ; 3 uses
-  %.sroa.1051.sroa.6.0 = phi ptr [ %.sroa.1051.sroa.6.0.copyload, %bb.q ], [ %.sroa.1051.sroa.6.1, %bb.ar ] ; 3 uses
-  %.sroa.1051.sroa.0.0 = phi ptr [ %.sroa.1051.sroa.0.0.copyload, %bb.q ], [ %.sroa.1051.sroa.0.1, %bb.ar ] ; 3 uses
-  %i.bv = icmp eq ptr %.sroa.047.sroa.0.0, %.sroa.047.sroa.8.0
+  %.sroa.13.0 = phi i64 [ %.sroa.13.0.copyload, %bb.q ], [ %.sroa.13.1, %bb.ar ] ; 3 uses
+  %.sroa.11.0 = phi i64 [ %.sroa.11.0.copyload, %bb.q ], [ %.sroa.11.1, %bb.ar ] ; 3 uses
+  %.sroa.850.0 = phi i64 [ %.sroa.850.0.copyload, %bb.q ], [ %.sroa.850.1, %bb.ar ] ; 4 uses
+  %.sroa.048.0 = phi i64 [ %.sroa.048.0.copyload, %bb.q ], [ %7, %bb.ar ] ; 2 uses
+  %i.bv = icmp eq i64 %.sroa.048.0, %.sroa.850.0
   br i1 %i.bv, label %bb.s, label %_RNvXs2_NtNtNtCscdodAO9FK5_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10class_base9ClassBaseENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextB1d_.exit
 
 bb.s:                                             ; preds = %bb.r
-  %i.bw = icmp eq ptr %.sroa.1051.sroa.0.0, %.sroa.1051.sroa.6.0
+  %i.bw = icmp eq i64 %.sroa.11.0, %.sroa.13.0
   br i1 %i.bw, label %_RNvXs2_NtNtNtCscdodAO9FK5_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10class_base9ClassBaseENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextB1d_.exit.thread, label %_RNvXs2_NtNtNtCscdodAO9FK5_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10class_base9ClassBaseENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextB1d_.exit
 
 _RNvXs2_NtNtNtCscdodAO9FK5_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10class_base9ClassBaseENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextB1d_.exit: ; preds = %bb.r, %bb.s
-  %.sroa.047.sroa.8.1 = phi ptr [ %.sroa.1051.sroa.6.0, %bb.s ], [ %.sroa.047.sroa.8.0, %bb.r ]
-  %.sroa.1051.sroa.6.1 = phi ptr [ %.sroa.047.sroa.8.0, %bb.s ], [ %.sroa.1051.sroa.6.0, %bb.r ]
-  %.sroa.1051.sroa.0.1 = phi ptr [ %.sroa.047.sroa.0.0, %bb.s ], [ %.sroa.1051.sroa.0.0, %bb.r ]
-  %.sink6.i = phi ptr [ %.sroa.1051.sroa.0.0, %bb.s ], [ %.sroa.047.sroa.0.0, %bb.r ] ; 3 uses
+  %.sroa.13.1 = phi i64 [ %.sroa.850.0, %bb.s ], [ %.sroa.13.0, %bb.r ]
+  %.sroa.11.1 = phi i64 [ %.sroa.850.0, %bb.s ], [ %.sroa.11.0, %bb.r ]
+  %.sroa.850.1 = phi i64 [ %.sroa.13.0, %bb.s ], [ %.sroa.850.0, %bb.r ]
+  %.sink6.i.in = phi i64 [ %.sroa.11.0, %bb.s ], [ %.sroa.048.0, %bb.r ] ; 2 uses
+  %.sink6.i = inttoptr i64 %.sink6.i.in to ptr    ; 3 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %.sink6.i, i64 16
-  %.not22 = icmp eq ptr %.sink6.i, null
+  %7 = ptrtoint ptr %i.bx to i64
+  %.not22 = icmp eq i64 %.sink6.i.in, 0
   br i1 %.not22, label %_RNvXs2_NtNtNtCscdodAO9FK5_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10class_base9ClassBaseENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextB1d_.exit.thread, label %bb.t
 
 bb.t:                                             ; preds = %_RNvXs2_NtNtNtCscdodAO9FK5_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsoTR8nlGN3X_18ty_python_semantic5types10class_base9ClassBaseENtNtNtNtCs4NRVxsYgnAr_4core4iter6traits8iterator8Iterator4nextB1d_.exit
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.n, ptr noundef nonnull align 4 dereferenceable(16) %.sink6.i, i64 16, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.h, ptr noundef nonnull align 4 dereferenceable(16) %i.n, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.h, ptr noundef nonnull align 4 dereferenceable(16) %.sink6.i, i64 16, i1 false)
   call void @llvm.experimental.noalias.scope.decl(metadata !8244)
   %i.by = load i8, ptr %i.h, align 4, !range !53, !alias.scope !8244, !noundef !8
   %i.bz = icmp eq i8 %i.by, 3

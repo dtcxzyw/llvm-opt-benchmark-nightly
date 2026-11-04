@@ -205,37 +205,39 @@ bb.a:
 define hidden noundef nonnull align 8 ptr @_RINvMs6_NtNtCs8Chj7Szqq0n_4core3fmt8buildersNtB6_9DebugList7entriesRNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsINtNtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iter4IterB14_EECs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common(ptr noalias nofree noundef returned align 8 dereferenceable(16) %0, ptr noalias nofree noundef readonly align 8 captures(none) dead_on_return dereferenceable(32) %1) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
-  %.sroa.0.0.copyload = load ptr, ptr %1, align 8, !alias.scope !300
+  %.sroa.05.0.copyload = load i64, ptr %1, align 8, !alias.scope !300
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sroa.4.0.copyload = load ptr, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !300
+  %.sroa.4.0.copyload = load i64, ptr %.sroa.4.0..sroa_idx, align 8, !alias.scope !300
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.sroa.5.0.copyload = load ptr, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !300
+  %.sroa.5.0.copyload = load i64, ptr %.sroa.5.0..sroa_idx, align 8, !alias.scope !300
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %.sroa.6.0.copyload = load ptr, ptr %.sroa.6.0..sroa_idx, align 8, !alias.scope !300
+  %.sroa.6.0.copyload = load i64, ptr %.sroa.6.0..sroa_idx, align 8, !alias.scope !300
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %bb.a
-  %.sroa.0.sroa.7.0 = phi ptr [ %.sroa.4.0.copyload, %bb.a ], [ %.sroa.0.sroa.7.1, %bb.d ] ; 3 uses
-  %.sroa.0.sroa.0.0 = phi ptr [ %.sroa.0.0.copyload, %bb.a ], [ %i.d, %bb.d ] ; 3 uses
-  %.sroa.9.sroa.5.0 = phi ptr [ %.sroa.6.0.copyload, %bb.a ], [ %.sroa.9.sroa.5.1, %bb.d ] ; 3 uses
-  %.sroa.9.sroa.0.0 = phi ptr [ %.sroa.5.0.copyload, %bb.a ], [ %.sroa.9.sroa.0.1, %bb.d ] ; 3 uses
-  %i.b = icmp eq ptr %.sroa.0.sroa.0.0, %.sroa.0.sroa.7.0
+  %.sroa.12.0 = phi i64 [ %.sroa.6.0.copyload, %bb.a ], [ %.sroa.12.1, %bb.d ] ; 3 uses
+  %.sroa.10.0 = phi i64 [ %.sroa.5.0.copyload, %bb.a ], [ %.sroa.10.1, %bb.d ] ; 3 uses
+  %.sroa.7.0 = phi i64 [ %.sroa.4.0.copyload, %bb.a ], [ %.sroa.7.1, %bb.d ] ; 4 uses
+  %.sroa.0.0 = phi i64 [ %.sroa.05.0.copyload, %bb.a ], [ %2, %bb.d ] ; 2 uses
+  %i.b = icmp eq i64 %.sroa.0.0, %.sroa.7.0
   br i1 %i.b, label %bb.c, label %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
 
 bb.c:                                             ; preds = %bb.b
-  %i.c = icmp eq ptr %.sroa.9.sroa.0.0, %.sroa.9.sroa.5.0
+  %i.c = icmp eq i64 %.sroa.10.0, %.sroa.12.0
   br i1 %i.c, label %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread, label %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
 
 _RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit: ; preds = %bb.b, %bb.c
-  %.sroa.0.sroa.7.1 = phi ptr [ %.sroa.9.sroa.5.0, %bb.c ], [ %.sroa.0.sroa.7.0, %bb.b ]
-  %.sroa.9.sroa.5.1 = phi ptr [ %.sroa.0.sroa.7.0, %bb.c ], [ %.sroa.9.sroa.5.0, %bb.b ]
-  %.sroa.9.sroa.0.1 = phi ptr [ %.sroa.0.sroa.0.0, %bb.c ], [ %.sroa.9.sroa.0.0, %bb.b ]
-  %.sink6.i = phi ptr [ %.sroa.9.sroa.0.0, %bb.c ], [ %.sroa.0.sroa.0.0, %bb.b ] ; 3 uses
-  %.not = icmp eq ptr %.sink6.i, null
+  %.sroa.12.1 = phi i64 [ %.sroa.7.0, %bb.c ], [ %.sroa.12.0, %bb.b ]
+  %.sroa.10.1 = phi i64 [ %.sroa.7.0, %bb.c ], [ %.sroa.10.0, %bb.b ]
+  %.sroa.7.1 = phi i64 [ %.sroa.12.0, %bb.c ], [ %.sroa.7.0, %bb.b ]
+  %.sink6.i.in = phi i64 [ %.sroa.10.0, %bb.c ], [ %.sroa.0.0, %bb.b ] ; 2 uses
+  %.not = icmp eq i64 %.sink6.i.in, 0
   br i1 %.not, label %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
+  %.sink6.i = inttoptr i64 %.sink6.i.in to ptr    ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %.sink6.i, i64 4688
+  %2 = ptrtoint ptr %i.d to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %.sink6.i, ptr %i.a, align 8, !captures !9
   %i.e = call noundef nonnull align 8 ptr @_RNvMs6_NtNtCs8Chj7Szqq0n_4core3fmt8buildersNtB5_9DebugList5entry(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @26) #22 ; 0 uses
@@ -638,10 +640,10 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @_RNvMs4_NtNtCsbqH9stoieM8_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsE4iterCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.g, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %0) #22
-  %.sroa.066.sroa.0.0.copyload = load ptr, ptr %i.g, align 8
-  %.sroa.066.sroa.8.0.copyload = load ptr, ptr %.sroa.066.sroa.8.0..sroa_idx, align 8
-  %.sroa.10.sroa.0.0.copyload = load ptr, ptr %.sroa.10.0..sroa_idx, align 8
-  %.sroa.10.sroa.6.0.copyload = load ptr, ptr %.sroa.10.sroa.6.0..sroa.10.0..sroa_idx.sroa_idx, align 8
+  %.sroa.067.0.copyload = load i64, ptr %i.g, align 8
+  %.sroa.8.0.copyload = load i64, ptr %.sroa.066.sroa.8.0..sroa_idx, align 8
+  %.sroa.11.0.copyload = load i64, ptr %.sroa.10.0..sroa_idx, align 8
+  %.sroa.13.0.copyload = load i64, ptr %.sroa.10.sroa.6.0..sroa.10.0..sroa_idx.sroa_idx, align 8
   br label %.backedge
 
 bb.j:                                             ; preds = %bb.h
@@ -649,24 +651,26 @@ bb.j:                                             ; preds = %bb.h
   unreachable
 
 .backedge:                                        ; preds = %.backedge.backedge, %bb.i
-  %.sroa.066.sroa.8.0 = phi ptr [ %.sroa.066.sroa.8.0.copyload, %bb.i ], [ %.sroa.066.sroa.8.1, %.backedge.backedge ] ; 3 uses
-  %.sroa.066.sroa.0.0 = phi ptr [ %.sroa.066.sroa.0.0.copyload, %bb.i ], [ %i.bq, %.backedge.backedge ] ; 3 uses
-  %.sroa.10.sroa.6.0 = phi ptr [ %.sroa.10.sroa.6.0.copyload, %bb.i ], [ %.sroa.10.sroa.6.1, %.backedge.backedge ] ; 3 uses
-  %.sroa.10.sroa.0.0 = phi ptr [ %.sroa.10.sroa.0.0.copyload, %bb.i ], [ %.sroa.10.sroa.0.1, %.backedge.backedge ] ; 3 uses
-  %i.bo = icmp eq ptr %.sroa.066.sroa.0.0, %.sroa.066.sroa.8.0
+  %.sroa.13.0 = phi i64 [ %.sroa.13.0.copyload, %bb.i ], [ %.sroa.13.1, %.backedge.backedge ] ; 3 uses
+  %.sroa.11.0 = phi i64 [ %.sroa.11.0.copyload, %bb.i ], [ %.sroa.11.1, %.backedge.backedge ] ; 3 uses
+  %.sroa.8.0 = phi i64 [ %.sroa.8.0.copyload, %bb.i ], [ %.sroa.8.1, %.backedge.backedge ] ; 4 uses
+  %.sroa.067.0 = phi i64 [ %.sroa.067.0.copyload, %bb.i ], [ %2, %.backedge.backedge ] ; 2 uses
+  %i.bo = icmp eq i64 %.sroa.067.0, %.sroa.8.0
   br i1 %i.bo, label %bb.k, label %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
 
 bb.k:                                             ; preds = %.backedge
-  %i.bp = icmp eq ptr %.sroa.10.sroa.0.0, %.sroa.10.sroa.6.0
+  %i.bp = icmp eq i64 %.sroa.11.0, %.sroa.13.0
   br i1 %i.bp, label %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread, label %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
 
 _RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit: ; preds = %.backedge, %bb.k
-  %.sroa.066.sroa.8.1 = phi ptr [ %.sroa.10.sroa.6.0, %bb.k ], [ %.sroa.066.sroa.8.0, %.backedge ]
-  %.sroa.10.sroa.6.1 = phi ptr [ %.sroa.066.sroa.8.0, %bb.k ], [ %.sroa.10.sroa.6.0, %.backedge ]
-  %.sroa.10.sroa.0.1 = phi ptr [ %.sroa.066.sroa.0.0, %bb.k ], [ %.sroa.10.sroa.0.0, %.backedge ]
-  %.sink6.i = phi ptr [ %.sroa.10.sroa.0.0, %bb.k ], [ %.sroa.066.sroa.0.0, %.backedge ] ; 9 uses
+  %.sroa.13.1 = phi i64 [ %.sroa.8.0, %bb.k ], [ %.sroa.13.0, %.backedge ]
+  %.sroa.11.1 = phi i64 [ %.sroa.8.0, %bb.k ], [ %.sroa.11.0, %.backedge ]
+  %.sroa.8.1 = phi i64 [ %.sroa.13.0, %bb.k ], [ %.sroa.8.0, %.backedge ]
+  %.sink6.i.in = phi i64 [ %.sroa.11.0, %bb.k ], [ %.sroa.067.0, %.backedge ] ; 2 uses
+  %.sink6.i = inttoptr i64 %.sink6.i.in to ptr    ; 8 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %.sink6.i, i64 4688
-  %.not62 = icmp eq ptr %.sink6.i, null
+  %2 = ptrtoint ptr %i.bq to i64
+  %.not62 = icmp eq i64 %.sink6.i.in, 0
   br i1 %.not62, label %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread, label %bb.l
 
 bb.l:                                             ; preds = %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
@@ -981,10 +985,10 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @_RNvMs4_NtNtCsbqH9stoieM8_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsE4iterCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.g, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %0) #22
-  %.sroa.066.sroa.0.0.copyload = load ptr, ptr %i.g, align 8
-  %.sroa.066.sroa.8.0.copyload = load ptr, ptr %.sroa.066.sroa.8.0..sroa_idx, align 8
-  %.sroa.10.sroa.0.0.copyload = load ptr, ptr %.sroa.10.0..sroa_idx, align 8
-  %.sroa.10.sroa.6.0.copyload = load ptr, ptr %.sroa.10.sroa.6.0..sroa.10.0..sroa_idx.sroa_idx, align 8
+  %.sroa.067.0.copyload = load i64, ptr %i.g, align 8
+  %.sroa.8.0.copyload = load i64, ptr %.sroa.066.sroa.8.0..sroa_idx, align 8
+  %.sroa.11.0.copyload = load i64, ptr %.sroa.10.0..sroa_idx, align 8
+  %.sroa.13.0.copyload = load i64, ptr %.sroa.10.sroa.6.0..sroa.10.0..sroa_idx.sroa_idx, align 8
   br label %.backedge
 
 bb.j:                                             ; preds = %bb.h
@@ -992,24 +996,26 @@ bb.j:                                             ; preds = %bb.h
   unreachable
 
 .backedge:                                        ; preds = %.backedge.backedge, %bb.i
-  %.sroa.066.sroa.8.0 = phi ptr [ %.sroa.066.sroa.8.0.copyload, %bb.i ], [ %.sroa.066.sroa.8.1, %.backedge.backedge ] ; 3 uses
-  %.sroa.066.sroa.0.0 = phi ptr [ %.sroa.066.sroa.0.0.copyload, %bb.i ], [ %i.bq, %.backedge.backedge ] ; 3 uses
-  %.sroa.10.sroa.6.0 = phi ptr [ %.sroa.10.sroa.6.0.copyload, %bb.i ], [ %.sroa.10.sroa.6.1, %.backedge.backedge ] ; 3 uses
-  %.sroa.10.sroa.0.0 = phi ptr [ %.sroa.10.sroa.0.0.copyload, %bb.i ], [ %.sroa.10.sroa.0.1, %.backedge.backedge ] ; 3 uses
-  %i.bo = icmp eq ptr %.sroa.066.sroa.0.0, %.sroa.066.sroa.8.0
+  %.sroa.13.0 = phi i64 [ %.sroa.13.0.copyload, %bb.i ], [ %.sroa.13.1, %.backedge.backedge ] ; 3 uses
+  %.sroa.11.0 = phi i64 [ %.sroa.11.0.copyload, %bb.i ], [ %.sroa.11.1, %.backedge.backedge ] ; 3 uses
+  %.sroa.8.0 = phi i64 [ %.sroa.8.0.copyload, %bb.i ], [ %.sroa.8.1, %.backedge.backedge ] ; 4 uses
+  %.sroa.067.0 = phi i64 [ %.sroa.067.0.copyload, %bb.i ], [ %2, %.backedge.backedge ] ; 2 uses
+  %i.bo = icmp eq i64 %.sroa.067.0, %.sroa.8.0
   br i1 %i.bo, label %bb.k, label %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
 
 bb.k:                                             ; preds = %.backedge
-  %i.bp = icmp eq ptr %.sroa.10.sroa.0.0, %.sroa.10.sroa.6.0
+  %i.bp = icmp eq i64 %.sroa.11.0, %.sroa.13.0
   br i1 %i.bp, label %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread, label %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
 
 _RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit: ; preds = %.backedge, %bb.k
-  %.sroa.066.sroa.8.1 = phi ptr [ %.sroa.10.sroa.6.0, %bb.k ], [ %.sroa.066.sroa.8.0, %.backedge ]
-  %.sroa.10.sroa.6.1 = phi ptr [ %.sroa.066.sroa.8.0, %bb.k ], [ %.sroa.10.sroa.6.0, %.backedge ]
-  %.sroa.10.sroa.0.1 = phi ptr [ %.sroa.066.sroa.0.0, %bb.k ], [ %.sroa.10.sroa.0.0, %.backedge ]
-  %.sink6.i = phi ptr [ %.sroa.10.sroa.0.0, %bb.k ], [ %.sroa.066.sroa.0.0, %.backedge ] ; 9 uses
+  %.sroa.13.1 = phi i64 [ %.sroa.8.0, %bb.k ], [ %.sroa.13.0, %.backedge ]
+  %.sroa.11.1 = phi i64 [ %.sroa.8.0, %bb.k ], [ %.sroa.11.0, %.backedge ]
+  %.sroa.8.1 = phi i64 [ %.sroa.13.0, %bb.k ], [ %.sroa.8.0, %.backedge ]
+  %.sink6.i.in = phi i64 [ %.sroa.11.0, %bb.k ], [ %.sroa.067.0, %.backedge ] ; 2 uses
+  %.sink6.i = inttoptr i64 %.sink6.i.in to ptr    ; 8 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %.sink6.i, i64 4688
-  %.not62 = icmp eq ptr %.sink6.i, null
+  %2 = ptrtoint ptr %i.bq to i64
+  %.not62 = icmp eq i64 %.sink6.i.in, 0
   br i1 %.not62, label %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread, label %bb.l
 
 bb.l:                                             ; preds = %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
@@ -1324,10 +1330,10 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @_RNvMs4_NtNtCsbqH9stoieM8_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsE4iterCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.g, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %0) #22
-  %.sroa.066.sroa.0.0.copyload = load ptr, ptr %i.g, align 8
-  %.sroa.066.sroa.8.0.copyload = load ptr, ptr %.sroa.066.sroa.8.0..sroa_idx, align 8
-  %.sroa.10.sroa.0.0.copyload = load ptr, ptr %.sroa.10.0..sroa_idx, align 8
-  %.sroa.10.sroa.6.0.copyload = load ptr, ptr %.sroa.10.sroa.6.0..sroa.10.0..sroa_idx.sroa_idx, align 8
+  %.sroa.067.0.copyload = load i64, ptr %i.g, align 8
+  %.sroa.8.0.copyload = load i64, ptr %.sroa.066.sroa.8.0..sroa_idx, align 8
+  %.sroa.11.0.copyload = load i64, ptr %.sroa.10.0..sroa_idx, align 8
+  %.sroa.13.0.copyload = load i64, ptr %.sroa.10.sroa.6.0..sroa.10.0..sroa_idx.sroa_idx, align 8
   br label %.backedge
 
 bb.j:                                             ; preds = %bb.h
@@ -1335,24 +1341,26 @@ bb.j:                                             ; preds = %bb.h
   unreachable
 
 .backedge:                                        ; preds = %.backedge.backedge, %bb.i
-  %.sroa.066.sroa.8.0 = phi ptr [ %.sroa.066.sroa.8.0.copyload, %bb.i ], [ %.sroa.066.sroa.8.1, %.backedge.backedge ] ; 3 uses
-  %.sroa.066.sroa.0.0 = phi ptr [ %.sroa.066.sroa.0.0.copyload, %bb.i ], [ %i.bq, %.backedge.backedge ] ; 3 uses
-  %.sroa.10.sroa.6.0 = phi ptr [ %.sroa.10.sroa.6.0.copyload, %bb.i ], [ %.sroa.10.sroa.6.1, %.backedge.backedge ] ; 3 uses
-  %.sroa.10.sroa.0.0 = phi ptr [ %.sroa.10.sroa.0.0.copyload, %bb.i ], [ %.sroa.10.sroa.0.1, %.backedge.backedge ] ; 3 uses
-  %i.bo = icmp eq ptr %.sroa.066.sroa.0.0, %.sroa.066.sroa.8.0
+  %.sroa.13.0 = phi i64 [ %.sroa.13.0.copyload, %bb.i ], [ %.sroa.13.1, %.backedge.backedge ] ; 3 uses
+  %.sroa.11.0 = phi i64 [ %.sroa.11.0.copyload, %bb.i ], [ %.sroa.11.1, %.backedge.backedge ] ; 3 uses
+  %.sroa.8.0 = phi i64 [ %.sroa.8.0.copyload, %bb.i ], [ %.sroa.8.1, %.backedge.backedge ] ; 4 uses
+  %.sroa.067.0 = phi i64 [ %.sroa.067.0.copyload, %bb.i ], [ %2, %.backedge.backedge ] ; 2 uses
+  %i.bo = icmp eq i64 %.sroa.067.0, %.sroa.8.0
   br i1 %i.bo, label %bb.k, label %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
 
 bb.k:                                             ; preds = %.backedge
-  %i.bp = icmp eq ptr %.sroa.10.sroa.0.0, %.sroa.10.sroa.6.0
+  %i.bp = icmp eq i64 %.sroa.11.0, %.sroa.13.0
   br i1 %i.bp, label %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread, label %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
 
 _RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit: ; preds = %.backedge, %bb.k
-  %.sroa.066.sroa.8.1 = phi ptr [ %.sroa.10.sroa.6.0, %bb.k ], [ %.sroa.066.sroa.8.0, %.backedge ]
-  %.sroa.10.sroa.6.1 = phi ptr [ %.sroa.066.sroa.8.0, %bb.k ], [ %.sroa.10.sroa.6.0, %.backedge ]
-  %.sroa.10.sroa.0.1 = phi ptr [ %.sroa.066.sroa.0.0, %bb.k ], [ %.sroa.10.sroa.0.0, %.backedge ]
-  %.sink6.i = phi ptr [ %.sroa.10.sroa.0.0, %bb.k ], [ %.sroa.066.sroa.0.0, %.backedge ] ; 9 uses
+  %.sroa.13.1 = phi i64 [ %.sroa.8.0, %bb.k ], [ %.sroa.13.0, %.backedge ]
+  %.sroa.11.1 = phi i64 [ %.sroa.8.0, %bb.k ], [ %.sroa.11.0, %.backedge ]
+  %.sroa.8.1 = phi i64 [ %.sroa.13.0, %bb.k ], [ %.sroa.8.0, %.backedge ]
+  %.sink6.i.in = phi i64 [ %.sroa.11.0, %bb.k ], [ %.sroa.067.0, %.backedge ] ; 2 uses
+  %.sink6.i = inttoptr i64 %.sink6.i.in to ptr    ; 8 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %.sink6.i, i64 4688
-  %.not62 = icmp eq ptr %.sink6.i, null
+  %2 = ptrtoint ptr %i.bq to i64
+  %.not62 = icmp eq i64 %.sink6.i.in, 0
   br i1 %.not62, label %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread, label %bb.l
 
 bb.l:                                             ; preds = %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
@@ -1667,10 +1675,10 @@ bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @_RNvMs4_NtNtCsbqH9stoieM8_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsE4iterCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.g, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %0) #22
-  %.sroa.066.sroa.0.0.copyload = load ptr, ptr %i.g, align 8
-  %.sroa.066.sroa.8.0.copyload = load ptr, ptr %.sroa.066.sroa.8.0..sroa_idx, align 8
-  %.sroa.10.sroa.0.0.copyload = load ptr, ptr %.sroa.10.0..sroa_idx, align 8
-  %.sroa.10.sroa.6.0.copyload = load ptr, ptr %.sroa.10.sroa.6.0..sroa.10.0..sroa_idx.sroa_idx, align 8
+  %.sroa.067.0.copyload = load i64, ptr %i.g, align 8
+  %.sroa.8.0.copyload = load i64, ptr %.sroa.066.sroa.8.0..sroa_idx, align 8
+  %.sroa.11.0.copyload = load i64, ptr %.sroa.10.0..sroa_idx, align 8
+  %.sroa.13.0.copyload = load i64, ptr %.sroa.10.sroa.6.0..sroa.10.0..sroa_idx.sroa_idx, align 8
   br label %.backedge
 
 bb.j:                                             ; preds = %bb.h
@@ -1678,24 +1686,26 @@ bb.j:                                             ; preds = %bb.h
   unreachable
 
 .backedge:                                        ; preds = %.backedge.backedge, %bb.i
-  %.sroa.066.sroa.8.0 = phi ptr [ %.sroa.066.sroa.8.0.copyload, %bb.i ], [ %.sroa.066.sroa.8.1, %.backedge.backedge ] ; 3 uses
-  %.sroa.066.sroa.0.0 = phi ptr [ %.sroa.066.sroa.0.0.copyload, %bb.i ], [ %i.bq, %.backedge.backedge ] ; 3 uses
-  %.sroa.10.sroa.6.0 = phi ptr [ %.sroa.10.sroa.6.0.copyload, %bb.i ], [ %.sroa.10.sroa.6.1, %.backedge.backedge ] ; 3 uses
-  %.sroa.10.sroa.0.0 = phi ptr [ %.sroa.10.sroa.0.0.copyload, %bb.i ], [ %.sroa.10.sroa.0.1, %.backedge.backedge ] ; 3 uses
-  %i.bo = icmp eq ptr %.sroa.066.sroa.0.0, %.sroa.066.sroa.8.0
+  %.sroa.13.0 = phi i64 [ %.sroa.13.0.copyload, %bb.i ], [ %.sroa.13.1, %.backedge.backedge ] ; 3 uses
+  %.sroa.11.0 = phi i64 [ %.sroa.11.0.copyload, %bb.i ], [ %.sroa.11.1, %.backedge.backedge ] ; 3 uses
+  %.sroa.8.0 = phi i64 [ %.sroa.8.0.copyload, %bb.i ], [ %.sroa.8.1, %.backedge.backedge ] ; 4 uses
+  %.sroa.067.0 = phi i64 [ %.sroa.067.0.copyload, %bb.i ], [ %2, %.backedge.backedge ] ; 2 uses
+  %i.bo = icmp eq i64 %.sroa.067.0, %.sroa.8.0
   br i1 %i.bo, label %bb.k, label %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
 
 bb.k:                                             ; preds = %.backedge
-  %i.bp = icmp eq ptr %.sroa.10.sroa.0.0, %.sroa.10.sroa.6.0
+  %i.bp = icmp eq i64 %.sroa.11.0, %.sroa.13.0
   br i1 %i.bp, label %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread, label %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
 
 _RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit: ; preds = %.backedge, %bb.k
-  %.sroa.066.sroa.8.1 = phi ptr [ %.sroa.10.sroa.6.0, %bb.k ], [ %.sroa.066.sroa.8.0, %.backedge ]
-  %.sroa.10.sroa.6.1 = phi ptr [ %.sroa.066.sroa.8.0, %bb.k ], [ %.sroa.10.sroa.6.0, %.backedge ]
-  %.sroa.10.sroa.0.1 = phi ptr [ %.sroa.066.sroa.0.0, %bb.k ], [ %.sroa.10.sroa.0.0, %.backedge ]
-  %.sink6.i = phi ptr [ %.sroa.10.sroa.0.0, %bb.k ], [ %.sroa.066.sroa.0.0, %.backedge ] ; 9 uses
+  %.sroa.13.1 = phi i64 [ %.sroa.8.0, %bb.k ], [ %.sroa.13.0, %.backedge ]
+  %.sroa.11.1 = phi i64 [ %.sroa.8.0, %bb.k ], [ %.sroa.11.0, %.backedge ]
+  %.sroa.8.1 = phi i64 [ %.sroa.13.0, %bb.k ], [ %.sroa.8.0, %.backedge ]
+  %.sink6.i.in = phi i64 [ %.sroa.11.0, %bb.k ], [ %.sroa.067.0, %.backedge ] ; 2 uses
+  %.sink6.i = inttoptr i64 %.sink6.i.in to ptr    ; 8 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %.sink6.i, i64 4688
-  %.not62 = icmp eq ptr %.sink6.i, null
+  %2 = ptrtoint ptr %i.bq to i64
+  %.not62 = icmp eq i64 %.sink6.i.in, 0
   br i1 %.not62, label %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit.thread, label %bb.l
 
 bb.l:                                             ; preds = %_RNvXs2_NtNtNtCsbqH9stoieM8_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtCsiSQMAyN9m0A_26iceoryx2_conformance_tests4node4node7DetailsENtNtNtNtCs8Chj7Szqq0n_4core4iter6traits8iterator8Iterator4nextCs4KxsrW0yyQ2_33iceoryx2_conformance_tests_common.exit
