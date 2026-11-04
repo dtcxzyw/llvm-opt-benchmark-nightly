@@ -204,12 +204,11 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !293
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 20
   %i.g = load <2 x i32>, ptr %i.f, align 4, !tbaa !188
-  %4 = and <2 x i32> %i.g, <i32 2, i32 4>
-  %5 = icmp ne <2 x i32> %4, zeroinitializer      ; 2 uses
-  %6 = extractelement <2 x i1> %5, i64 0
-  %7 = extractelement <2 x i1> %5, i64 1
-  %8 = select i1 %6, i1 true, i1 %7
-  br i1 %8, label %bb.c, label %bb.h
+  %.fr9 = freeze <2 x i32> %i.g
+  %4 = and <2 x i32> %.fr9, <i32 2, i32 4>
+  %.scalar = bitcast <2 x i32> %4 to i64
+  %.not = icmp eq i64 %.scalar, 0
+  br i1 %.not, label %bb.h, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #21

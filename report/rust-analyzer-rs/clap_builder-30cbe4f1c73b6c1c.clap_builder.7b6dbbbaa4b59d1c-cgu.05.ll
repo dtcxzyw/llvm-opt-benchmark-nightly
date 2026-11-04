@@ -202,11 +202,10 @@ bb.ce:                                            ; preds = %_RINvYINtNtNtCsaB0t
   %i.ho = load ptr, ptr %i.bw, align 8, !nonnull !5, !align !6, !noundef !5
   %i.hp = getelementptr i8, ptr %i.ho, i64 676
   %i.hq = load <2 x i32>, ptr %i.hp, align 4
-  %2 = and <2 x i32> %i.hq, splat (i32 4096)
-  %3 = icmp ne <2 x i32> %2, zeroinitializer      ; 2 uses
-  %4 = extractelement <2 x i1> %3, i64 0
-  %5 = extractelement <2 x i1> %3, i64 1
-  %.sroa.0.0.i59 = select i1 %4, i1 true, i1 %5
+  %.fr546 = freeze <2 x i32> %i.hq
+  %2 = and <2 x i32> %.fr546, splat (i32 4096)
+  %.scalar = bitcast <2 x i32> %2 to i64
+  %.sroa.0.0.i59 = icmp ne i64 %.scalar, 0
   %brmerge.not = and i1 %.not.i, %.sroa.0.0.i59
   br i1 %brmerge.not, label %bb.fs, label %bb.cf
 
@@ -504,12 +503,11 @@ bb.cx:                                            ; preds = %bb.cv
   %i.kz = load ptr, ptr %i.bw, align 8, !alias.scope !136, !nonnull !5, !align !6, !noundef !5 ; 3 uses
   %i.la = getelementptr i8, ptr %i.kz, i64 676
   %i.lb = load <2 x i32>, ptr %i.la, align 4
-  %6 = and <2 x i32> %i.lb, splat (i32 16)
-  %7 = icmp ne <2 x i32> %6, zeroinitializer      ; 2 uses
-  %8 = extractelement <2 x i1> %7, i64 0
-  %9 = extractelement <2 x i1> %7, i64 1
-  %.sroa.0.0.i86.i = select i1 %8, i1 true, i1 %9
-  br i1 %.sroa.0.0.i86.i, label %.loopexit.i, label %bb.cy
+  %.fr547 = freeze <2 x i32> %i.lb
+  %3 = and <2 x i32> %.fr547, splat (i32 16)
+  %.scalar548 = bitcast <2 x i32> %3 to i64
+  %.sroa.0.0.i86.i.not = icmp eq i64 %.scalar548, 0
+  br i1 %.sroa.0.0.i86.i.not, label %bb.cy, label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %bb.db, %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6filter15filter_try_foldRNtNtNtCsaB0tVqiIPBo_12clap_builder7builder3arg3ArguINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs2_NtB1a_7commandNtB2N_7Command15get_positionals0NCINvNvNtNtNtB8_6traits8iterator8Iterator4find5checkB15_QNCNvMNtNtB1c_6parser9validatorNtB4x_9Validator17validate_requireds4_0E0E0B1c_.exit.i.i, %bb.cy, %bb.cx
   %i.lc = load i64, ptr %i.jf, align 8, !noalias !138, !noundef !5 ; 2 uses

@@ -205,18 +205,19 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag, %bb.
   %i.hl = insertelement <2 x float> %i.hk, float %i.hj, i64 1
   %i.hm = fdiv nsz <2 x float> %i.hl, splat (float 6.000000e+00)
   %i.hn = fadd nsz <2 x float> %i.hm, splat (float 5.000000e-01)
-  %i.ho = fptosi <2 x float> %i.hn to <2 x i32>   ; 7 uses
+  %i.ho = fptosi <2 x float> %i.hn to <2 x i32>
+  %.fr492 = freeze <2 x i32> %i.ho                ; 7 uses
   %i.hp = extractelement <2 x i32> %i.hh, i64 0   ; 3 uses
   %i.hq = extractelement <2 x i32> %i.hh, i64 1   ; 3 uses
   %i.hr = icmp samesign ugt i32 %i.hp, %i.hq
   %i.hs = tail call i32 @llvm.umin.i32(i32 %i.hp, i32 %i.hq)
   %i.ht = tail call i32 @llvm.umax.i32(i32 %i.hs, i32 1)
   %i.hu = uitofp nneg i32 %i.ht to float
-  %i.hv = extractelement <2 x i32> %i.ho, i64 1   ; 10 uses
+  %i.hv = extractelement <2 x i32> %.fr492, i64 1 ; 10 uses
   %i.hw = tail call i32 @llvm.umax.i32(i32 %i.hp, i32 %i.hq) ; 2 uses
   %i.hx = uitofp nneg i32 %i.hw to float
   %i.hy = fdiv nsz float %i.hx, %i.hu
-  %i.hz = extractelement <2 x i32> %i.ho, i64 0   ; 10 uses
+  %i.hz = extractelement <2 x i32> %.fr492, i64 0 ; 10 uses
   %i.ia = icmp samesign ugt i32 %i.hz, %i.hv      ; 7 uses
   %i.ib = tail call i32 @llvm.umax.i32(i32 %i.hz, i32 %i.hv) ; 2 uses
   %i.ic = uitofp nsz nneg i32 %i.ib to float
@@ -244,11 +245,10 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %or.cond375, label %bb.au, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
-  %i.it = icmp samesign ugt <2 x i32> %i.ho, splat (i32 999) ; 2 uses
-  %4 = extractelement <2 x i1> %i.it, i64 0
-  %5 = extractelement <2 x i1> %i.it, i64 1
-  %or.cond11 = select i1 %4, i1 true, i1 %5
-  br i1 %or.cond11, label %bb.al, label %bb.an
+  %i.it = icmp ugt <2 x i32> %.fr492, splat (i32 999)
+  %4 = bitcast <2 x i1> %i.it to i2
+  %or.cond11.not = icmp eq i2 %4, 0
+  br i1 %or.cond11.not, label %bb.an, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
   %i.iu = mul nuw nsw i32 %i.hz, 3
@@ -263,11 +263,10 @@ bb.am:                                            ; preds = %bb.al
   br i1 %i.iz, label %bb.au, label %bb.an
 
 bb.an:                                            ; preds = %bb.ak, %bb.am
-  %i.ja = icmp samesign ugt <2 x i32> %i.ho, splat (i32 1999) ; 2 uses
-  %6 = extractelement <2 x i1> %i.ja, i64 0
-  %7 = extractelement <2 x i1> %i.ja, i64 1
-  %or.cond13 = select i1 %6, i1 true, i1 %7
-  br i1 %or.cond13, label %bb.ao, label %bb.aq
+  %i.ja = icmp ugt <2 x i32> %.fr492, splat (i32 1999)
+  %5 = bitcast <2 x i1> %i.ja to i2
+  %or.cond13.not = icmp eq i2 %5, 0
+  br i1 %or.cond13.not, label %bb.aq, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an
   %i.jb = mul nuw nsw i32 %i.hz, 5
@@ -282,10 +281,9 @@ bb.ap:                                            ; preds = %bb.ao
   br i1 %i.jg, label %bb.au, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.an, %bb.ap
-  %i.jh = icmp samesign ugt <2 x i32> %i.ho, splat (i32 3999) ; 2 uses
-  %8 = extractelement <2 x i1> %i.jh, i64 0
-  %9 = extractelement <2 x i1> %i.jh, i64 1
-  %or.cond15 = select i1 %8, i1 true, i1 %9
+  %i.jh = icmp ugt <2 x i32> %.fr492, splat (i32 3999)
+  %6 = bitcast <2 x i1> %i.jh to i2
+  %or.cond15 = icmp ne i2 %6, 0
   %i.ji = extractelement <2 x float> %i.im, i64 0
   %i.jj = fcmp nsz ogt float %i.ji, %i.hy
   %or.cond376 = select i1 %or.cond15, i1 %i.jj, i1 false
@@ -300,13 +298,13 @@ bb.ar:                                            ; preds = %bb.aq
   br i1 %or.cond377, label %bb.as, label %bb.at
 
 bb.as:                                            ; preds = %bb.ar
-  %i.jo = shl nuw nsw <2 x i32> %i.ho, splat (i32 1)
-  %i.jp = shufflevector <2 x i32> %i.ho, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
-  %i.jq = icmp samesign ult <2 x i32> %i.jo, %i.jp ; 2 uses
-  %10 = extractelement <2 x i1> %i.jq, i64 0
-  %11 = extractelement <2 x i1> %i.jq, i64 1
-  %or.cond379 = select i1 %10, i1 true, i1 %11
-  br i1 %or.cond379, label %bb.au, label %bb.at
+  %i.jo = shl nuw nsw <2 x i32> %.fr492, splat (i32 1)
+  %i.jp = shufflevector <2 x i32> %.fr492, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
+  %i.jq = icmp samesign ult <2 x i32> %i.jo, %i.jp
+  %7 = freeze <2 x i1> %i.jq
+  %8 = bitcast <2 x i1> %7 to i2
+  %or.cond379.not = icmp eq i2 %8, 0
+  br i1 %or.cond379.not, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %bb.as, %bb.ar
   br label %bb.au

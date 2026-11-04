@@ -202,11 +202,10 @@ bb.b:                                             ; preds = %.lr.ph.i
 .split.i:                                         ; preds = %bb.b, %.lr.ph.i
   %i.l = getelementptr inbounds nuw i8, ptr %i.f, i64 764
   %i.m = load <2 x i32>, ptr %i.l, align 4, !alias.scope !1347, !noalias !1348
-  %1 = and <2 x i32> %i.m, splat (i32 8388608)
-  %2 = icmp eq <2 x i32> %1, zeroinitializer      ; 2 uses
-  %3 = extractelement <2 x i1> %2, i64 0
-  %4 = extractelement <2 x i1> %2, i64 1
-  %.sroa.01.0.i.i = select i1 %3, i1 %4, i1 false
+  %.fr1 = freeze <2 x i32> %i.m
+  %1 = and <2 x i32> %.fr1, splat (i32 8388608)
+  %.scalar = bitcast <2 x i32> %1 to i64
+  %.sroa.01.0.i.i = icmp eq i64 %.scalar, 0
   br i1 %.sroa.01.0.i.i, label %_RINvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB7_4IterNtNtNtCsdjW2DEjcQy2_12clap_builder7builder7command7CommandENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvMs5_BS_BQ_23has_visible_subcommands0EBW_.exit, label %_RNCNvMs5_NtNtCsdjW2DEjcQy2_12clap_builder7builder7commandNtB7_7Command23has_visible_subcommands0Bb_.exit.backedge.i
 
 _RNCNvMs5_NtNtCsdjW2DEjcQy2_12clap_builder7builder7commandNtB7_7Command23has_visible_subcommands0Bb_.exit.backedge.i: ; preds = %.split.i, %bb.b

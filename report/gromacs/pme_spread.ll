@@ -205,28 +205,26 @@ bb.q:                                             ; preds = %_ZL35spread_coeffic
   %i.bjg = load <2 x i32>, ptr %i.s, align 4, !tbaa !105
   %i.bjh = load <2 x i32>, ptr %i.bja, align 4, !tbaa !105 ; 3 uses
   %i.bji = sub nsw <2 x i32> %i.bjg, %i.bjh
-  %i.bjj = call <2 x i32> @llvm.smin.v2i32(<2 x i32> %i.bji, <2 x i32> %i.bjf) ; 3 uses
+  %i.bjj = call <2 x i32> @llvm.smin.v2i32(<2 x i32> %i.bji, <2 x i32> %i.bjf)
+  %.fr = freeze <2 x i32> %i.bjj                  ; 3 uses
   %i.bjk = getelementptr inbounds nuw i8, ptr %i.bim, i64 56
   %i.bjl = load ptr, ptr %i.bjk, align 8, !tbaa !194
   %i.bjm = load ptr, ptr %i.bjl, align 8, !tbaa !195 ; 2 uses
   %i.bjn = ptrtoaddr ptr %i.bjm to i64
   %i.bjo = icmp sgt i32 %.sroa.speculated.i, 0
-  br i1 %i.bjo, label %.preheader.lr.ph.i, label %_ZL15copy_local_gridP14PmeAndFftGridsi.exit
+  %9 = icmp slt <2 x i32> %.fr, splat (i32 1)
+  %10 = bitcast <2 x i1> %9 to i2
+  %brmerge.i.not = icmp eq i2 %10, 0
+  %or.cond = and i1 %i.bjo, %brmerge.i.not
+  br i1 %or.cond, label %.preheader.preheader.i, label %_ZL15copy_local_gridP14PmeAndFftGridsi.exit
 
-.preheader.lr.ph.i:                               ; preds = %.noexc
-  %9 = icmp slt <2 x i32> %i.bjj, splat (i32 1)   ; 2 uses
-  %10 = extractelement <2 x i1> %9, i64 0
-  %11 = extractelement <2 x i1> %9, i64 1
-  %brmerge.i = select i1 %10, i1 true, i1 %11
-  br i1 %brmerge.i, label %_ZL15copy_local_gridP14PmeAndFftGridsi.exit, label %.preheader.preheader.i
-
-.preheader.preheader.i:                           ; preds = %.preheader.lr.ph.i
+.preheader.preheader.i:                           ; preds = %.noexc
   %i.bjp = sext i32 %i.biq to i64                 ; 3 uses
   %i.bjq = sext i32 %i.bio to i64                 ; 2 uses
   %wide.trip.count69.i = zext nneg i32 %.sroa.speculated.i to i64
-  %i.bjr = extractelement <2 x i32> %i.bjj, i64 0
+  %i.bjr = extractelement <2 x i32> %.fr, i64 0
   %wide.trip.count64.i = zext nneg i32 %i.bjr to i64
-  %i.bjs = extractelement <2 x i32> %i.bjj, i64 1 ; 3 uses
+  %i.bjs = extractelement <2 x i32> %.fr, i64 1   ; 3 uses
   %wide.trip.count.i48 = zext i32 %i.bjs to i64   ; 8 uses
   %i.bjt = mul nsw i64 %i.bjp, -4
   %i.bju = sub i64 %i.bie, %i.bjn
@@ -405,7 +403,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   %exitcond70.not.i = icmp eq i64 %indvars.iv.next67.i, %wide.trip.count69.i
   br i1 %exitcond70.not.i, label %_ZL15copy_local_gridP14PmeAndFftGridsi.exit, label %.preheader.i49, !llvm.loop !317
 
-_ZL15copy_local_gridP14PmeAndFftGridsi.exit:      ; preds = %._crit_edge53.i, %.noexc, %.preheader.lr.ph.i
+_ZL15copy_local_gridP14PmeAndFftGridsi.exit:      ; preds = %._crit_edge53.i, %.noexc
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3

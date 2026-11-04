@@ -204,10 +204,10 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !7030)
   %i.o = load <2 x i32>, ptr %2, align 8, !alias.scope !7031
   %i.p = load <2 x i32>, ptr %3, align 8, !alias.scope !7032
-  %i.q = icmp eq <2 x i32> %i.o, %i.p             ; 2 uses
-  %4 = extractelement <2 x i1> %i.q, i64 0
-  %5 = extractelement <2 x i1> %i.q, i64 1
-  %.sroa.0.0.i.i.i.i.i = select i1 %5, i1 %4, i1 false
+  %i.q = icmp eq <2 x i32> %i.o, %i.p
+  %4 = freeze <2 x i1> %i.q
+  %5 = bitcast <2 x i1> %4 to i2
+  %.sroa.0.0.i.i.i.i.i = icmp eq i2 %5, -1
   br i1 %.sroa.0.0.i.i.i.i.i, label %_RNvXs1B_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9predicateINtB6_19ExistentialTraitRefNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1o_.exit.i.i, label %_RNvXs1B_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9predicateINtB6_19ExistentialTraitRefNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1o_.exit.thread.i.i
 
 _RNvXs1B_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9predicateINtB6_19ExistentialTraitRefNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1o_.exit.i.i: ; preds = %bb.a
@@ -610,10 +610,10 @@ bb.f:                                             ; preds = %bb.e
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8632)
   %i.j = load <2 x i32>, ptr %i.h, align 8, !alias.scope !8633
   %i.k = load <2 x i32>, ptr %i.i, align 8, !alias.scope !8634
-  %i.l = icmp eq <2 x i32> %i.j, %i.k             ; 2 uses
-  %2 = extractelement <2 x i1> %i.l, i64 0
-  %3 = extractelement <2 x i1> %i.l, i64 1
-  %.sroa.0.0.i.i.i.i.i.i = select i1 %3, i1 %2, i1 false
+  %i.l = icmp eq <2 x i32> %i.j, %i.k
+  %2 = freeze <2 x i1> %i.l
+  %3 = bitcast <2 x i1> %2 to i2
+  %.sroa.0.0.i.i.i.i.i.i = icmp eq i2 %3, -1
   br i1 %.sroa.0.0.i.i.i.i.i.i, label %bb.g, label %_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit
 
 bb.g:                                             ; preds = %bb.f
@@ -703,10 +703,10 @@ bb.m:                                             ; preds = %bb.e
   tail call void @llvm.experimental.noalias.scope.decl(metadata !8642)
   %i.au = load <2 x i32>, ptr %i.as, align 8, !alias.scope !8643
   %i.av = load <2 x i32>, ptr %i.at, align 8, !alias.scope !8644
-  %i.aw = icmp eq <2 x i32> %i.au, %i.av          ; 2 uses
-  %4 = extractelement <2 x i1> %i.aw, i64 0
-  %5 = extractelement <2 x i1> %i.aw, i64 1
-  %.sroa.0.0.i.i.i26.i.i.i = select i1 %5, i1 %4, i1 false
+  %i.aw = icmp eq <2 x i32> %i.au, %i.av
+  %4 = freeze <2 x i1> %i.aw
+  %5 = bitcast <2 x i1> %4 to i2
+  %.sroa.0.0.i.i.i26.i.i.i = icmp eq i2 %5, -1
   br i1 %.sroa.0.0.i.i.i26.i.i.i, label %bb.n, label %_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit
 
 bb.n:                                             ; preds = %bb.m
@@ -754,10 +754,10 @@ bb.n:                                             ; preds = %bb.m
   %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.bq = load <2 x i32>, ptr %i.bo, align 8, !alias.scope !8627
   %i.br = load <2 x i32>, ptr %i.bp, align 8, !alias.scope !8628
-  %i.bs = icmp eq <2 x i32> %i.bq, %i.br          ; 2 uses
-  %6 = extractelement <2 x i1> %i.bs, i64 0
-  %7 = extractelement <2 x i1> %i.bs, i64 1
-  %.sroa.0.0.i.i.i.i = select i1 %7, i1 %6, i1 false
+  %i.bs = icmp eq <2 x i32> %i.bq, %i.br
+  %6 = freeze <2 x i1> %i.bs
+  %7 = bitcast <2 x i1> %6 to i2
+  %.sroa.0.0.i.i.i.i = icmp eq i2 %7, -1
   br i1 %.sroa.0.0.i.i.i.i, label %_RNvXsa_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir14predicate_kindINtB5_13PredicateKindNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1n_.exit.thread4.i, label %_RNvXsK_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binderINtB5_6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_14predicate_kind13PredicateKindB10_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB16_.exit
 
 bb.o:                                             ; preds = %bb.b
@@ -1160,7 +1160,7 @@ bb.i:                                             ; preds = %bb.f
   store i8 -1, ptr %0, align 8
   br label %bb.q
 
-bb.j:                                             ; preds = %4, %bb.g, %bb.l, %bb.k, %bb.e
+bb.j:                                             ; preds = %bb.g, %bb.l, %bb.k, %bb.e
   tail call void @_RINvNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6relate7combine17super_combine_tysNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9InferCtxtNtNtB1h_8interner10DbInternerNtNtNtB1f_6relate7lattice9LatticeOpEB1j_(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %0, ptr noundef nonnull align 8 %i.e, ptr noalias nofree noundef nonnull align 8 dereferenceable(136) %1, ptr noundef nonnull %i.f, ptr noundef nonnull %i.g)
   br label %bb.q
 
@@ -1174,16 +1174,14 @@ bb.l:                                             ; preds = %bb.e
   %or.cond = select i1 %i.z, i1 %i.aa, i1 false
   %i.ab = icmp eq i32 %.sroa.434.0.copyload, 2
   %or.cond9 = select i1 %or.cond, i1 %i.ab, i1 false
-  br i1 %or.cond9, label %4, label %bb.j
+  %4 = icmp eq <2 x i32> %i.h, %i.i
+  %5 = freeze <2 x i1> %4
+  %6 = bitcast <2 x i1> %5 to i2
+  %.sroa.0.0.i.i = icmp eq i2 %6, -1
+  %or.cond53 = and i1 %or.cond9, %.sroa.0.0.i.i
+  br i1 %or.cond53, label %bb.m, label %bb.j
 
-4:                                                ; preds = %bb.l
-  %5 = icmp eq <2 x i32> %i.h, %i.i               ; 2 uses
-  %6 = extractelement <2 x i1> %5, i64 0
-  %7 = extractelement <2 x i1> %5, i64 1
-  %.sroa.0.0.i.i = select i1 %7, i1 %6, i1 false
-  br i1 %.sroa.0.0.i.i, label %bb.m, label %bb.j
-
-bb.m:                                             ; preds = %4
+bb.m:                                             ; preds = %bb.l
   tail call void @_RINvNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6relate7combine17super_combine_tysNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9InferCtxtNtNtB1h_8interner10DbInternerNtNtNtB1f_6relate7lattice9LatticeOpEB1j_(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %0, ptr noundef nonnull align 8 %i.e, ptr noalias nofree noundef nonnull align 8 dereferenceable(136) %1, ptr noundef nonnull %i.f, ptr noundef nonnull %i.g)
   br label %bb.q
 
@@ -1463,10 +1461,10 @@ bb.d:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.l = load <2 x i32>, ptr %i.j, align 4
   %i.m = load <2 x i32>, ptr %i.k, align 4
-  %i.n = icmp eq <2 x i32> %i.l, %i.m             ; 2 uses
-  %2 = extractelement <2 x i1> %i.n, i64 0
-  %3 = extractelement <2 x i1> %i.n, i64 1
-  %.sroa.0.0.i.i = select i1 %3, i1 %2, i1 false
+  %i.n = icmp eq <2 x i32> %i.l, %i.m
+  %2 = freeze <2 x i1> %i.n
+  %3 = bitcast <2 x i1> %2 to i2
+  %.sroa.0.0.i.i = icmp eq i2 %3, -1
   br label %_RNvXs5C_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver6def_idNtB6_21GeneralConstIdWrapperNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
 
 bb.e:                                             ; preds = %bb.b
@@ -1474,10 +1472,10 @@ bb.e:                                             ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.q = load <2 x i32>, ptr %i.o, align 4
   %i.r = load <2 x i32>, ptr %i.p, align 4
-  %i.s = icmp eq <2 x i32> %i.q, %i.r             ; 2 uses
-  %4 = extractelement <2 x i1> %i.s, i64 0
-  %5 = extractelement <2 x i1> %i.s, i64 1
-  %.sroa.0.0.i.i30 = select i1 %5, i1 %4, i1 false
+  %i.s = icmp eq <2 x i32> %i.q, %i.r
+  %4 = freeze <2 x i1> %i.s
+  %5 = bitcast <2 x i1> %4 to i2
+  %.sroa.0.0.i.i30 = icmp eq i2 %5, -1
   br label %_RNvXs5C_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver6def_idNtB6_21GeneralConstIdWrapperNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
 
 bb.f:                                             ; preds = %bb.b
@@ -1485,10 +1483,10 @@ bb.f:                                             ; preds = %bb.b
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.v = load <2 x i32>, ptr %i.t, align 4
   %i.w = load <2 x i32>, ptr %i.u, align 4
-  %i.x = icmp eq <2 x i32> %i.v, %i.w             ; 2 uses
-  %6 = extractelement <2 x i1> %i.x, i64 0
-  %7 = extractelement <2 x i1> %i.x, i64 1
-  %.sroa.0.0.i.i31 = select i1 %7, i1 %6, i1 false
+  %i.x = icmp eq <2 x i32> %i.v, %i.w
+  %6 = freeze <2 x i1> %i.x
+  %7 = bitcast <2 x i1> %6 to i2
+  %.sroa.0.0.i.i31 = icmp eq i2 %7, -1
   br label %_RNvXs5C_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver6def_idNtB6_21GeneralConstIdWrapperNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
 
 bb.g:                                             ; preds = %bb.b
@@ -1496,10 +1494,10 @@ bb.g:                                             ; preds = %bb.b
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.aa = load <2 x i32>, ptr %i.y, align 4
   %i.ab = load <2 x i32>, ptr %i.z, align 4
-  %i.ac = icmp eq <2 x i32> %i.aa, %i.ab          ; 2 uses
-  %8 = extractelement <2 x i1> %i.ac, i64 0
-  %9 = extractelement <2 x i1> %i.ac, i64 1
-  %.sroa.0.0.i.i32 = select i1 %9, i1 %8, i1 false
+  %i.ac = icmp eq <2 x i32> %i.aa, %i.ab
+  %8 = freeze <2 x i1> %i.ac
+  %9 = bitcast <2 x i1> %8 to i2
+  %.sroa.0.0.i.i32 = icmp eq i2 %9, -1
   br label %_RNvXs5C_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver6def_idNtB6_21GeneralConstIdWrapperNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
 
 bb.h:                                             ; preds = %bb.b
@@ -1563,10 +1561,10 @@ bb.p:                                             ; preds = %bb.b
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ba = load <2 x i32>, ptr %i.ay, align 4
   %i.bb = load <2 x i32>, ptr %i.az, align 4
-  %i.bc = icmp eq <2 x i32> %i.ba, %i.bb          ; 2 uses
-  %10 = extractelement <2 x i1> %i.bc, i64 0
-  %11 = extractelement <2 x i1> %i.bc, i64 1
-  %.sroa.0.0.i.i33 = select i1 %11, i1 %10, i1 false
+  %i.bc = icmp eq <2 x i32> %i.ba, %i.bb
+  %10 = freeze <2 x i1> %i.bc
+  %11 = bitcast <2 x i1> %10 to i2
+  %.sroa.0.0.i.i33 = icmp eq i2 %11, -1
   br label %_RNvXs5C_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver6def_idNtB6_21GeneralConstIdWrapperNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
 
 bb.q:                                             ; preds = %bb.b
@@ -1574,10 +1572,10 @@ bb.q:                                             ; preds = %bb.b
   %i.be = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bf = load <2 x i32>, ptr %i.bd, align 4
   %i.bg = load <2 x i32>, ptr %i.be, align 4
-  %i.bh = icmp eq <2 x i32> %i.bf, %i.bg          ; 2 uses
-  %12 = extractelement <2 x i1> %i.bh, i64 0
-  %13 = extractelement <2 x i1> %i.bh, i64 1
-  %.sroa.0.0.i.i34 = select i1 %13, i1 %12, i1 false
+  %i.bh = icmp eq <2 x i32> %i.bf, %i.bg
+  %12 = freeze <2 x i1> %i.bh
+  %13 = bitcast <2 x i1> %12 to i2
+  %.sroa.0.0.i.i34 = icmp eq i2 %13, -1
   br label %_RNvXs5C_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver6def_idNtB6_21GeneralConstIdWrapperNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
 
 bb.r:                                             ; preds = %bb.b
@@ -1585,10 +1583,10 @@ bb.r:                                             ; preds = %bb.b
   %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bk = load <2 x i32>, ptr %i.bi, align 4
   %i.bl = load <2 x i32>, ptr %i.bj, align 4
-  %i.bm = icmp eq <2 x i32> %i.bk, %i.bl          ; 2 uses
-  %14 = extractelement <2 x i1> %i.bm, i64 0
-  %15 = extractelement <2 x i1> %i.bm, i64 1
-  %.sroa.0.0.i.i35 = select i1 %15, i1 %14, i1 false
+  %i.bm = icmp eq <2 x i32> %i.bk, %i.bl
+  %14 = freeze <2 x i1> %i.bm
+  %15 = bitcast <2 x i1> %14 to i2
+  %.sroa.0.0.i.i35 = icmp eq i2 %15, -1
   br label %_RNvXs5C_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver6def_idNtB6_21GeneralConstIdWrapperNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
 }
 
@@ -1991,10 +1989,10 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.r = load <2 x i32>, ptr %i.e, align 8, !alias.scope !10105
   %i.s = load <2 x i32>, ptr %i.f, align 8, !alias.scope !10106
-  %i.t = icmp eq <2 x i32> %i.r, %i.s             ; 2 uses
-  %3 = extractelement <2 x i1> %i.t, i64 0
-  %4 = extractelement <2 x i1> %i.t, i64 1
-  %.sroa.0.0.i.i.i.i.i = select i1 %4, i1 %3, i1 false
+  %i.t = icmp eq <2 x i32> %i.r, %i.s
+  %3 = freeze <2 x i1> %i.t
+  %4 = bitcast <2 x i1> %3 to i2
+  %.sroa.0.0.i.i.i.i.i = icmp eq i2 %4, -1
   br i1 %.sroa.0.0.i.i.i.i.i, label %.split.i.i, label %_RNvYINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binder6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_9predicate20ExistentialPredicateBU_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB10_.exit.thread
 
 bb.f:                                             ; preds = %bb.c
@@ -2063,10 +2061,10 @@ bb.j:                                             ; preds = %_RNvXs3b_NtNtCs8K4c
 _RNvXs1w_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9predicateINtB6_20ExistentialPredicateNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1p_.exit.i.i: ; preds = %bb.c
   %i.as = load <2 x i32>, ptr %i.e, align 8, !alias.scope !10105
   %i.at = load <2 x i32>, ptr %i.f, align 8, !alias.scope !10106
-  %i.au = icmp eq <2 x i32> %i.as, %i.at          ; 2 uses
-  %5 = extractelement <2 x i1> %i.au, i64 0
-  %6 = extractelement <2 x i1> %i.au, i64 1
-  %.sroa.0.0.i.i12.i.i.i = select i1 %6, i1 %5, i1 false
+  %i.au = icmp eq <2 x i32> %i.as, %i.at
+  %5 = freeze <2 x i1> %i.au
+  %6 = bitcast <2 x i1> %5 to i2
+  %.sroa.0.0.i.i12.i.i.i = icmp eq i2 %6, -1
   br i1 %.sroa.0.0.i.i12.i.i.i, label %_RNvYINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binder6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_9predicate20ExistentialPredicateBU_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB10_.exit, label %_RNvYINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binder6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_9predicate20ExistentialPredicateBU_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB10_.exit.thread
 
 _RNvYINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir6binder6BinderNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtB7_9predicate20ExistentialPredicateBU_EENtNtCshzWfHUSfYae_4core3cmp9PartialEq2neB10_.exit: ; preds = %.split3.i.i, %.split.i.i, %_RNvXs1w_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9predicateINtB6_20ExistentialPredicateNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2eqB1p_.exit.i.i

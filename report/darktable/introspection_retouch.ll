@@ -205,20 +205,18 @@ rt_extend_roi_in_for_clone.exit.outer:            ; preds = %.critedge56.i, %rt_
   %.ph124 = phi <2 x i32> [ %i.fi, %rt_compute_roi_in.exit ], [ %i.lu, %.critedge56.i ] ; 5 uses
   %.ph125 = phi <2 x i32> [ splat (i32 -1), %rt_compute_roi_in.exit ], [ %.ph123, %.critedge56.i ]
   %.ph126 = phi <2 x i32> [ splat (i32 -1), %rt_compute_roi_in.exit ], [ %.ph124, %.critedge56.i ]
-  %i.fk = icmp eq <2 x i32> %.ph124, %.ph126      ; 2 uses
-  %4 = extractelement <2 x i1> %i.fk, i64 0
-  %5 = extractelement <2 x i1> %i.fk, i64 1
-  %or.cond.peel = select i1 %4, i1 %5, i1 false
-  br i1 %or.cond.peel, label %6, label %.critedge.peel
+  %4 = icmp eq <2 x i32> %.ph124, %.ph126
+  %5 = freeze <2 x i1> %4
+  %6 = bitcast <2 x i1> %5 to i2
+  %or.cond.peel = icmp eq i2 %6, -1
+  %i.fk = icmp eq <2 x i32> %.ph123, %.ph125
+  %7 = freeze <2 x i1> %i.fk
+  %8 = bitcast <2 x i1> %7 to i2
+  %or.cond56.peel = icmp eq i2 %8, -1
+  %or.cond = and i1 %or.cond.peel, %or.cond56.peel
+  br i1 %or.cond, label %.loopexit, label %.critedge.peel
 
-6:                                                ; preds = %rt_extend_roi_in_for_clone.exit.outer
-  %7 = icmp eq <2 x i32> %.ph123, %.ph125         ; 2 uses
-  %8 = extractelement <2 x i1> %7, i64 0
-  %9 = extractelement <2 x i1> %7, i64 1
-  %or.cond56.peel = select i1 %8, i1 %9, i1 false
-  br i1 %or.cond56.peel, label %.loopexit, label %.critedge.peel
-
-.critedge.peel:                                   ; preds = %6, %rt_extend_roi_in_for_clone.exit.outer
+.critedge.peel:                                   ; preds = %rt_extend_roi_in_for_clone.exit.outer
   %i.fl = load ptr, ptr %i.w, align 16, !tbaa !199 ; 2 uses
   %i.fm = load ptr, ptr %i.y, align 8, !tbaa !242
   %i.fn = load ptr, ptr %i.aa, align 8, !tbaa !243
@@ -552,7 +550,7 @@ rt_masks_get_delta_to_destination.exit.thread.i.i: ; preds = %bb.ah, %bb.ag, %bb
   %.not50.i = icmp eq ptr %.042.i, null
   br i1 %.not50.i, label %rt_extend_roi_in_for_clone.exit.outer, label %.lr.ph.i60
 
-.loopexit:                                        ; preds = %6, %.critedge.peel, %bb.r, %.preheader.i59.peel
+.loopexit:                                        ; preds = %rt_extend_roi_in_for_clone.exit.outer, %.critedge.peel, %bb.r, %.preheader.i59.peel
   %i.lw = getelementptr inbounds nuw i8, ptr %1, i64 144
   %i.lx = load float, ptr %i.fj, align 4, !tbaa !245
   %i.ly = extractelement <2 x i32> %.ph123, i64 0 ; 2 uses
@@ -955,19 +953,19 @@ bb.aa:                                            ; preds = %rt_masks_get_delta_
   %i.fs = call <2 x i32> @llvm.smin.v2i32(<2 x i32> %i.fp, <2 x i32> %i.fr)
   %i.ft = add <2 x i32> %i.fr, %i.ej
   %i.fu = call <2 x i32> @llvm.smin.v2i32(<2 x i32> %i.fs, <2 x i32> %i.ft) ; 3 uses
-  %i.fv = sub nsw <2 x i32> %i.fu, %i.fl          ; 5 uses
-  %i.fw = shufflevector <2 x i32> %i.fl, <2 x i32> %i.fv, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.fv = sub nsw <2 x i32> %i.fu, %i.fl
+  %.fr = freeze <2 x i32> %i.fv                   ; 5 uses
+  %i.fw = shufflevector <2 x i32> %i.fl, <2 x i32> %.fr, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
   store <4 x i32> %i.fw, ptr %4, align 16, !tbaa !13
-  %i.fx = icmp slt <2 x i32> %i.fv, splat (i32 1) ; 2 uses
-  %5 = extractelement <2 x i1> %i.fx, i64 0
-  %6 = extractelement <2 x i1> %i.fx, i64 1
-  %or.cond.i155 = select i1 %5, i1 true, i1 %6
-  br i1 %or.cond.i155, label %rt_build_scaled_mask.exit, label %bb.ab
+  %i.fx = icmp slt <2 x i32> %.fr, splat (i32 1)
+  %5 = bitcast <2 x i1> %i.fx to i2
+  %or.cond.i155.not = icmp eq i2 %5, 0
+  br i1 %or.cond.i155.not, label %bb.ab, label %rt_build_scaled_mask.exit
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.fy = extractelement <2 x i32> %i.fv, i64 0   ; 2 uses
+  %i.fy = extractelement <2 x i32> %.fr, i64 0    ; 2 uses
   %i.fz = zext nneg i32 %i.fy to i64              ; 2 uses
-  %i.ga = extractelement <2 x i32> %i.fv, i64 1
+  %i.ga = extractelement <2 x i32> %.fr, i64 1
   %i.gb = zext nneg i32 %i.ga to i64              ; 2 uses
   %i.gc = shl nuw nsw i64 %i.fz, 2
   %i.gd = mul nuw i64 %i.gc, %i.gb
@@ -1137,11 +1135,11 @@ bb.al:                                            ; preds = %bb.ak
   %i.iu = add i32 %i.dq, -3
   %i.iv = icmp ult i32 %i.iu, 2
   %or.cond9 = or i1 %i.iv, %or.cond5
-  %i.iw = icmp sgt <2 x i32> %i.fv, splat (i32 2) ; 2 uses
+  %i.iw = icmp sgt <2 x i32> %.fr, splat (i32 2)  ; 2 uses
   %i.ix = extractelement <2 x i1> %i.iw, i64 0
   %or.cond12 = and i1 %or.cond9, %i.ix
   %i.iy = extractelement <2 x i1> %i.iw, i64 1
-  %or.cond15 = select i1 %or.cond12, i1 %i.iy, i1 false
+  %or.cond15 = and i1 %or.cond12, %i.iy
   br i1 %or.cond15, label %bb.am, label %bb.ax
 
 bb.am:                                            ; preds = %bb.al

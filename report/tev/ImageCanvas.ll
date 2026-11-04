@@ -205,12 +205,11 @@ _ZNK3tev5Image8containsEN7nanogui5ArrayIiLm2EEE.exit: ; preds = %bb.r
   %i.do = load <2 x i32>, ptr %i.dn, align 4, !tbaa !204
   %i.dp = load <2 x i32>, ptr %i.dm, align 4, !tbaa !204
   %i.dq = sub nsw <2 x i32> %i.do, %i.dp
-  %i.dr = icmp sgt <2 x i32> %i.dq, %i.dj         ; 2 uses
-  %7 = extractelement <2 x i1> %i.dr, i64 0
-  %8 = extractelement <2 x i1> %i.dr, i64 1
-  %spec.select.i = select i1 %7, i1 %8, i1 false
-  %cond.fr = freeze i1 %spec.select.i
-  br i1 %cond.fr, label %bb.s, label %_ZNK3tev5Image8containsEN7nanogui5ArrayIiLm2EEE.exit.thread
+  %i.dr = icmp sgt <2 x i32> %i.dq, %i.dj
+  %7 = freeze <2 x i1> %i.dr
+  %8 = bitcast <2 x i1> %7 to i2
+  %spec.select.i = icmp eq i2 %8, -1
+  br i1 %spec.select.i, label %bb.s, label %_ZNK3tev5Image8containsEN7nanogui5ArrayIiLm2EEE.exit.thread
 
 bb.s:                                             ; preds = %_ZNK3tev5Image8containsEN7nanogui5ArrayIiLm2EEE.exit
   br label %_ZNK3tev5Image8containsEN7nanogui5ArrayIiLm2EEE.exit.thread

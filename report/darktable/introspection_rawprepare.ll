@@ -205,11 +205,10 @@ define noundef i32 @distort_transform(ptr nofree noundef readnone captures(none)
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = load ptr, ptr %i.a, align 16, !tbaa !80
-  %i.c = load <2 x i32>, ptr %i.b, align 8, !tbaa !14 ; 2 uses
-  %4 = icmp eq <2 x i32> %i.c, zeroinitializer    ; 2 uses
-  %5 = extractelement <2 x i1> %4, i64 0
-  %6 = extractelement <2 x i1> %4, i64 1
-  %or.cond = select i1 %5, i1 %6, i1 false
+  %i.c = load <2 x i32>, ptr %i.b, align 8, !tbaa !14
+  %.fr = freeze <2 x i32> %i.c                    ; 2 uses
+  %.fr.scalar = bitcast <2 x i32> %.fr to i64
+  %or.cond = icmp eq i64 %.fr.scalar, 0
   br i1 %or.cond, label %.loopexit, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.a
@@ -218,7 +217,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.g = load float, ptr %i.f, align 8, !tbaa !82
   %i.h = fdiv reassoc nsz arcp contract afn float %i.e, %i.g
-  %i.i = sitofp reassoc nsz arcp contract afn <2 x i32> %i.c to <2 x float>
+  %i.i = sitofp reassoc nsz arcp contract afn <2 x i32> %.fr to <2 x float>
   %i.j = insertelement <2 x float> poison, float %i.h, i64 0
   %i.k = shufflevector <2 x float> %i.j, <2 x float> poison, <2 x i32> zeroinitializer
   %i.l = fmul reassoc nsz arcp contract afn <2 x float> %i.k, %i.i ; 5 uses
@@ -327,11 +326,10 @@ define noundef i32 @distort_backtransform(ptr nofree noundef readnone captures(n
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = load ptr, ptr %i.a, align 16, !tbaa !80
-  %i.c = load <2 x i32>, ptr %i.b, align 8, !tbaa !14 ; 2 uses
-  %4 = icmp eq <2 x i32> %i.c, zeroinitializer    ; 2 uses
-  %5 = extractelement <2 x i1> %4, i64 0
-  %6 = extractelement <2 x i1> %4, i64 1
-  %or.cond = select i1 %5, i1 %6, i1 false
+  %i.c = load <2 x i32>, ptr %i.b, align 8, !tbaa !14
+  %.fr = freeze <2 x i32> %i.c                    ; 2 uses
+  %.fr.scalar = bitcast <2 x i32> %.fr to i64
+  %or.cond = icmp eq i64 %.fr.scalar, 0
   br i1 %or.cond, label %.loopexit, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.a
@@ -340,7 +338,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.g = load float, ptr %i.f, align 8, !tbaa !82
   %i.h = fdiv reassoc nsz arcp contract afn float %i.e, %i.g
-  %i.i = sitofp reassoc nsz arcp contract afn <2 x i32> %i.c to <2 x float>
+  %i.i = sitofp reassoc nsz arcp contract afn <2 x i32> %.fr to <2 x float>
   %i.j = insertelement <2 x float> poison, float %i.h, i64 0
   %i.k = shufflevector <2 x float> %i.j, <2 x float> poison, <2 x i32> zeroinitializer
   %i.l = fmul reassoc nsz arcp contract afn <2 x float> %i.k, %i.i ; 5 uses

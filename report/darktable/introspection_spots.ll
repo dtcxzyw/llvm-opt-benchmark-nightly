@@ -205,7 +205,8 @@ masks_point_calc_delta.exit59.i:                  ; preds = %bb.v
 
 masks_get_delta.exit:                             ; preds = %masks_point_calc_delta.exit.i, %masks_point_calc_delta.exit55.i, %masks_point_calc_delta.exit59.i
   %.0.i272 = phi i32 [ %i.no, %masks_point_calc_delta.exit.i ], [ %i.pg, %masks_point_calc_delta.exit59.i ], [ %i.ok, %masks_point_calc_delta.exit55.i ]
-  %i.pm = phi <2 x i32> [ %i.nt, %masks_point_calc_delta.exit.i ], [ %i.pl, %masks_point_calc_delta.exit59.i ], [ %i.op, %masks_point_calc_delta.exit55.i ] ; 3 uses
+  %i.pm = phi <2 x i32> [ %i.nt, %masks_point_calc_delta.exit.i ], [ %i.pl, %masks_point_calc_delta.exit59.i ], [ %i.op, %masks_point_calc_delta.exit55.i ]
+  %.fr = freeze <2 x i32> %i.pm                   ; 3 uses
   %.not250.not = icmp eq i32 %.0.i272, 0
   br i1 %.not250.not, label %masks_get_delta.exit.thread, label %bb.w
 
@@ -214,11 +215,9 @@ masks_get_delta.exit.thread:                      ; preds = %bb.v, %masks_get_de
   br label %.loopexit307
 
 bb.w:                                             ; preds = %masks_get_delta.exit
-  %7 = icmp ne <2 x i32> %i.pm, zeroinitializer   ; 2 uses
-  %8 = extractelement <2 x i1> %7, i64 0
-  %9 = extractelement <2 x i1> %7, i64 1
-  %or.cond = select i1 %8, i1 true, i1 %9
-  br i1 %or.cond, label %.preheader306, label %..loopexit307_crit_edge
+  %.fr.scalar = bitcast <2 x i32> %.fr to i64
+  %or.cond.not = icmp eq i64 %.fr.scalar, 0
+  br i1 %or.cond.not, label %..loopexit307_crit_edge, label %.preheader306
 
 ..loopexit307_crit_edge:                          ; preds = %bb.w
   %.pre375 = load ptr, ptr %i.i, align 8, !tbaa !200
@@ -240,12 +239,12 @@ bb.w:                                             ; preds = %masks_get_delta.exi
   %i.pu = icmp sge i32 %.0222324, %i.pt
   %i.pv = load i32, ptr %i.l, align 4
   %i.pw = getelementptr inbounds nuw i8, ptr %i.av, i64 12
-  %i.px = extractelement <2 x i32> %i.pm, i64 0
+  %i.px = extractelement <2 x i32> %.fr, i64 0
   %i.py = sext i32 %i.px to i64                   ; 2 uses
   %i.pz = sext i32 %.0222324 to i64
   %i.qa = sext i32 %.0223327 to i64
   %i.qb = sext i32 %i.pr to i64                   ; 2 uses
-  %i.qc = extractelement <2 x i32> %i.pm, i64 1   ; 2 uses
+  %i.qc = extractelement <2 x i32> %.fr, i64 1    ; 2 uses
   %i.qd = sext i32 %i.qc to i64
   br label %bb.x
 

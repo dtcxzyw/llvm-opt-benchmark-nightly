@@ -205,11 +205,11 @@ bb.a:
   %i.e = sitofp <2 x i32> %i.d to <2 x float>
   %i.f = shufflevector <1 x float> %i.b, <1 x float> poison, <2 x i32> zeroinitializer
   %i.g = fmul <2 x float> %i.f, %i.e
-  %i.h = fptosi <2 x float> %i.g to <2 x i32>     ; 2 uses
-  %3 = icmp slt <2 x i32> %i.h, splat (i32 6)     ; 2 uses
-  %4 = extractelement <2 x i1> %3, i64 0
-  %5 = extractelement <2 x i1> %3, i64 1
-  %or.cond49 = select i1 %5, i1 %4, i1 false
+  %i.h = fptosi <2 x float> %i.g to <2 x i32>
+  %.fr = freeze <2 x i32> %i.h                    ; 2 uses
+  %3 = icmp sgt <2 x i32> %.fr, splat (i32 5)
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond49 = icmp eq i2 %4, 0
   br i1 %or.cond49, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
@@ -222,7 +222,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.r
-  %i.o = phi <2 x i32> [ %i.h, %.lr.ph ], [ %i.q, %bb.r ] ; 2 uses
+  %i.o = phi <2 x i32> [ %.fr, %.lr.ph ], [ %i.q, %bb.r ] ; 2 uses
   %i.p = sdiv <2 x i32> %i.o, splat (i32 2)
   %i.q = tail call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.p, <2 x i32> splat (i32 1)) ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
@@ -365,10 +365,9 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.q, %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #18
-  %6 = icmp slt <2 x i32> %i.o, splat (i32 12)    ; 2 uses
-  %7 = extractelement <2 x i1> %6, i64 0
-  %8 = extractelement <2 x i1> %6, i64 1
-  %or.cond = select i1 %8, i1 %7, i1 false
+  %5 = icmp sgt <2 x i32> %i.o, splat (i32 11)
+  %6 = bitcast <2 x i1> %5 to i2
+  %or.cond = icmp eq i2 %6, 0
   br i1 %or.cond, label %._crit_edge, label %bb.b, !llvm.loop !191
 
 ._crit_edge:                                      ; preds = %bb.r, %bb.a

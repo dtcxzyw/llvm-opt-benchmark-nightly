@@ -202,18 +202,16 @@ bb.a:
   %i.p = tail call ptr @OPENSSL_sk_value(ptr noundef %i.j, i32 noundef %.05277.us.us) #10 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 28
   %i.r = load <2 x i32>, ptr %i.q, align 4, !tbaa !93
-  %4 = and <2 x i32> %i.r, <i32 132, i32 8>
-  %5 = icmp ne <2 x i32> %4, zeroinitializer      ; 2 uses
-  %6 = extractelement <2 x i1> %5, i64 0
-  %7 = extractelement <2 x i1> %5, i64 1
-  %8 = select i1 %6, i1 true, i1 %7               ; 2 uses
+  %.fr125 = freeze <2 x i32> %i.r
+  %4 = and <2 x i32> %.fr125, <i32 132, i32 8>
+  %.scalar126 = bitcast <2 x i32> %4 to i64
+  %5 = icmp ne i64 %.scalar126, 0                 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.p, i64 44
   %i.t = load i32, ptr %i.s, align 4, !tbaa !177
   %i.u = icmp sgt i32 %i.t, 771
-  %or.cond3.us.us = select i1 %8, i1 true, i1 %i.u
-  %or.cond64.us.us = select i1 %i.n, i1 %or.cond3.us.us, i1 false
-  %or.cond5.us.us = select i1 %i.o, i1 %8, i1 false
-  %or.cond65.us.us = select i1 %or.cond64.us.us, i1 true, i1 %or.cond5.us.us
+  %or.cond64.us.us = select i1 %5, i1 true, i1 %i.u
+  %or.cond5.us.us = and i1 %i.o, %5
+  %or.cond65.us.us = select i1 %i.n, i1 %or.cond64.us.us, i1 %or.cond5.us.us
   br i1 %or.cond65.us.us, label %.thread.thread, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.split.us.split.us
@@ -247,20 +245,18 @@ bb.c:                                             ; preds = %.lr.ph.split.us.spl
   %i.af = tail call ptr @OPENSSL_sk_value(ptr noundef %i.j, i32 noundef %.05277.us78) #10 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 28
   %i.ah = load <2 x i32>, ptr %i.ag, align 4, !tbaa !93
-  %9 = and <2 x i32> %i.ah, <i32 132, i32 8>
-  %10 = icmp ne <2 x i32> %9, zeroinitializer     ; 2 uses
-  %11 = extractelement <2 x i1> %10, i64 0
-  %12 = extractelement <2 x i1> %10, i64 1
-  %13 = select i1 %11, i1 true, i1 %12            ; 2 uses
+  %.fr123 = freeze <2 x i32> %i.ah
+  %6 = and <2 x i32> %.fr123, <i32 132, i32 8>
+  %.scalar = bitcast <2 x i32> %6 to i64
+  %7 = icmp ne i64 %.scalar, 0                    ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.af, i64 52
   %i.aj = load i32, ptr %i.ai, align 4, !tbaa !179 ; 2 uses
   %i.ak = icmp ne i32 %i.aj, 256
   %i.al = icmp slt i32 %i.aj, 65277
   %spec.select.us = and i1 %i.ak, %i.al
-  %or.cond3.us81 = select i1 %13, i1 true, i1 %spec.select.us
-  %or.cond64.us82 = select i1 %i.n, i1 %or.cond3.us81, i1 false
-  %or.cond5.us83 = select i1 %i.o, i1 %13, i1 false
-  %or.cond65.us84 = select i1 %or.cond64.us82, i1 true, i1 %or.cond5.us83
+  %or.cond64.us82 = select i1 %7, i1 true, i1 %spec.select.us
+  %or.cond5.us83 = and i1 %i.o, %7
+  %or.cond65.us84 = select i1 %i.n, i1 %or.cond64.us82, i1 %or.cond5.us83
   br i1 %or.cond65.us84, label %.thread.thread, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph.split.split.us

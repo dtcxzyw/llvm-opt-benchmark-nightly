@@ -205,13 +205,12 @@ bb.kh:                                            ; preds = %.thread426.i.i
   %i.bnz = load <2 x float>, ptr %i.bnu, align 4, !tbaa !75
   %i.boa = fadd <2 x float> %i.bnz, %i.bny        ; 2 uses
   store <2 x float> %i.boa, ptr %i.bnu, align 4, !tbaa !75
-  %i.bob = fptosi <2 x float> %i.boa to <2 x i32> ; 2 uses
-  %2 = sitofp <2 x i32> %i.bob to <2 x float>     ; 2 uses
-  %3 = icmp ne <2 x i32> %i.bob, zeroinitializer  ; 2 uses
-  %4 = extractelement <2 x i1> %3, i64 0
-  %5 = extractelement <2 x i1> %3, i64 1
-  %or.cond15.i.i = select i1 %4, i1 true, i1 %5
-  br i1 %or.cond15.i.i, label %bb.ki, label %bb.km
+  %i.bob = fptosi <2 x float> %i.boa to <2 x i32>
+  %.fr = freeze <2 x i32> %i.bob                  ; 2 uses
+  %2 = sitofp <2 x i32> %.fr to <2 x float>       ; 2 uses
+  %.fr.scalar = bitcast <2 x i32> %.fr to i64
+  %or.cond15.i.i.not = icmp eq i64 %.fr.scalar, 0
+  br i1 %or.cond15.i.i.not, label %bb.km, label %bb.ki
 
 bb.ki:                                            ; preds = %bb.kh
   %i.boc = getelementptr inbounds nuw i8, ptr %i.bmr, i64 960
@@ -614,15 +613,14 @@ bb.jh:                                            ; preds = %.thread977
   store <2 x float> %i.beh, ptr %i.bdu, align 4, !tbaa !75
   %i.bei = call noundef i32 @_ZN5ImGui11GetColorU32Eif(i32 noundef 33, float noundef 1.000000e+00), !inline_history !1430
   store i32 %i.bei, ptr %i.i, align 16, !tbaa !237
-  %i.bej = fptosi <2 x float> %i.beh to <2 x i32> ; 2 uses
-  %31 = icmp ne <2 x i32> %i.bej, zeroinitializer ; 2 uses
-  %32 = extractelement <2 x i1> %31, i64 0
-  %33 = extractelement <2 x i1> %31, i64 1
-  %or.cond19.i = select i1 %32, i1 true, i1 %33
-  br i1 %or.cond19.i, label %bb.ji, label %bb.jj
+  %i.bej = fptosi <2 x float> %i.beh to <2 x i32>
+  %.fr = freeze <2 x i32> %i.bej                  ; 2 uses
+  %.fr.scalar = bitcast <2 x i32> %.fr to i64
+  %or.cond19.i.not = icmp eq i64 %.fr.scalar, 0
+  br i1 %or.cond19.i.not, label %bb.jj, label %bb.ji
 
 bb.ji:                                            ; preds = %bb.jh
-  %i.bek = sitofp <2 x i32> %i.bej to <2 x float> ; 2 uses
+  %i.bek = sitofp <2 x i32> %.fr to <2 x float>   ; 2 uses
   %i.bel = getelementptr inbounds nuw i8, ptr %i.akc, i64 56
   %i.bem = load <2 x float>, ptr %i.bel, align 8, !tbaa !75
   %i.ben = fadd <2 x float> %i.bem, %i.bek
@@ -1025,10 +1023,10 @@ bb.k:                                             ; preds = %bb.j, %.thread.i
   %i.cj = fmul <2 x float> %i.ci, <float 5.000000e-01, float 1.000000e+00>
   %i.ck = fsub <2 x float> %i.ch, %i.cj           ; 3 uses
   %i.cl = fadd <2 x float> %i.ci, %i.ck           ; 2 uses
-  %i.cm = fcmp oge <2 x float> %i.ck, %i.q        ; 2 uses
-  %6 = extractelement <2 x i1> %i.cm, i64 0
-  %7 = extractelement <2 x i1> %i.cm, i64 1
-  %or.cond.not106 = select i1 %6, i1 %7, i1 false
+  %i.cm = fcmp oge <2 x float> %i.ck, %i.q
+  %6 = freeze <2 x i1> %i.cm
+  %7 = bitcast <2 x i1> %6 to i2
+  %or.cond.not106 = icmp eq i2 %7, -1
   %i.cn = extractelement <2 x float> %i.r, i64 0
   %i.co = extractelement <2 x float> %i.cl, i64 0
   %i.cp = fcmp ole float %i.co, %i.cn

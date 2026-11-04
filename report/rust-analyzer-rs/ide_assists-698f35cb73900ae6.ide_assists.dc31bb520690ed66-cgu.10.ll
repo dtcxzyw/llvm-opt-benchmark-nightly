@@ -205,21 +205,19 @@ bb.u:                                             ; preds = %_RNvMs1x_Cs8Xq8PKFY
   %.sroa.811.0..sroa_idx.i16.i.i.i = getelementptr inbounds nuw i8, ptr %.val.i.i.i, i64 16
   %.sroa.811.sroa.0.0.copyload.i17.i.i.i = load i8, ptr %.sroa.811.0..sroa_idx.i16.i.i.i, align 8, !noalias !1170
   %switch.idx.cast.i18.i.i.i = zext i8 %.sroa.811.sroa.0.0.copyload.i17.i.i.i to i32
-  %i.bk = icmp eq i32 %.sroa.0.0.i.i.i, %switch.idx.cast.i18.i.i.i
-  br i1 %i.bk, label %4, label %bb.v
+  %4 = icmp eq i32 %.sroa.0.0.i.i.i, %switch.idx.cast.i18.i.i.i
+  %5 = icmp eq <2 x i32> %i.bd, %i.bj
+  %6 = freeze <2 x i1> %5
+  %7 = bitcast <2 x i1> %6 to i2
+  %i.bk = icmp eq i2 %7, -1
+  %or.cond = and i1 %4, %i.bk
+  br i1 %or.cond, label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionTNtNtCsiU5vK8fN4ZC_11ide_assists5utils23ReferenceConversionTypebEE7or_elseNCNvBL_22convert_reference_types1_0EBN_.exit, label %bb.v
 
-4:                                                ; preds = %bb.u
-  %5 = icmp eq <2 x i32> %i.bd, %i.bj             ; 2 uses
-  %6 = extractelement <2 x i1> %5, i64 0
-  %7 = extractelement <2 x i1> %5, i64 1
-  %or.cond.i.i.i = select i1 %7, i1 %6, i1 false
-  br i1 %or.cond.i.i.i, label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionTNtNtCsiU5vK8fN4ZC_11ide_assists5utils23ReferenceConversionTypebEE7or_elseNCNvBL_22convert_reference_types1_0EBN_.exit, label %bb.v
-
-_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionTNtNtCsiU5vK8fN4ZC_11ide_assists5utils23ReferenceConversionTypebEE7or_elseNCNvBL_22convert_reference_types1_0EBN_.exit: ; preds = %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit21.thread.i.i.i, %4
+_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionTNtNtCsiU5vK8fN4ZC_11ide_assists5utils23ReferenceConversionTypebEE7or_elseNCNvBL_22convert_reference_types1_0EBN_.exit: ; preds = %bb.u, %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit21.thread.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1169
   br label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionTNtNtCsiU5vK8fN4ZC_11ide_assists5utils23ReferenceConversionTypebEE7or_elseNCNvBL_22convert_reference_types2_0EBN_.exit.thread
 
-bb.v:                                             ; preds = %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit21.i.i.i, %4, %bb.u, %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit21.thread.i.i.i, %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit.i.i.i
+bb.v:                                             ; preds = %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit21.i.i.i, %bb.u, %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit21.thread.i.i.i, %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1169
   %.sroa.09.0.copyload.i.i.i.i40 = load i32, ptr %.val.i.i, align 8, !noalias !1171 ; 2 uses
   %i.bl = icmp ne i32 %.sroa.09.0.copyload.i.i.i.i40, 27
@@ -268,17 +266,15 @@ bb.x:                                             ; preds = %_RNvMs1x_Cs8Xq8PKFY
   %.sroa.811.0..sroa_idx.i16.i.i.i58 = getelementptr inbounds nuw i8, ptr %.val.i.i.i46, i64 16
   %.sroa.811.sroa.0.0.copyload.i17.i.i.i59 = load i8, ptr %.sroa.811.0..sroa_idx.i16.i.i.i58, align 8, !noalias !1174
   %switch.idx.cast.i18.i.i.i60 = zext i8 %.sroa.811.sroa.0.0.copyload.i17.i.i.i59 to i32
-  %i.bv = icmp eq i32 %.sroa.0.0.i.i.i44, %switch.idx.cast.i18.i.i.i60
-  br i1 %i.bv, label %8, label %bb.y
+  %8 = icmp eq i32 %.sroa.0.0.i.i.i44, %switch.idx.cast.i18.i.i.i60
+  %9 = icmp eq <2 x i32> %i.bo, %i.bu
+  %10 = freeze <2 x i1> %9
+  %11 = bitcast <2 x i1> %10 to i2
+  %i.bv = icmp eq i2 %11, -1
+  %or.cond130 = and i1 %8, %i.bv
+  br i1 %or.cond130, label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionTNtNtCsiU5vK8fN4ZC_11ide_assists5utils23ReferenceConversionTypebEE7or_elseNCNvBL_22convert_reference_types2_0EBN_.exit, label %bb.y
 
-8:                                                ; preds = %bb.x
-  %9 = icmp eq <2 x i32> %i.bo, %i.bu             ; 2 uses
-  %10 = extractelement <2 x i1> %9, i64 0
-  %11 = extractelement <2 x i1> %9, i64 1
-  %or.cond.i.i.i61 = select i1 %11, i1 %10, i1 false
-  br i1 %or.cond.i.i.i61, label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionTNtNtCsiU5vK8fN4ZC_11ide_assists5utils23ReferenceConversionTypebEE7or_elseNCNvBL_22convert_reference_types2_0EBN_.exit, label %bb.y
-
-_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionTNtNtCsiU5vK8fN4ZC_11ide_assists5utils23ReferenceConversionTypebEE7or_elseNCNvBL_22convert_reference_types2_0EBN_.exit: ; preds = %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit21.thread.i.i.i48, %8
+_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionTNtNtCsiU5vK8fN4ZC_11ide_assists5utils23ReferenceConversionTypebEE7or_elseNCNvBL_22convert_reference_types2_0EBN_.exit: ; preds = %bb.x, %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit21.thread.i.i.i48
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1172
   br label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionTNtNtCsiU5vK8fN4ZC_11ide_assists5utils23ReferenceConversionTypebEE7or_elseNCNvBL_22convert_reference_types2_0EBN_.exit.thread
 
@@ -293,7 +289,7 @@ _RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionTNtNtCsiU5vK8fN4ZC_11ide_assists5
   store i8 %.sroa.0.0.i38115, ptr %.sroa.54.0..sroa_idx, align 1
   br label %bb.z
 
-bb.y:                                             ; preds = %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit21.i.i.i52, %8, %bb.x, %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit21.thread.i.i.i48, %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit.i.i.i41
+bb.y:                                             ; preds = %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit21.i.i.i52, %bb.x, %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit21.thread.i.i.i48, %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit.i.i.i41
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1172
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i32 -1, ptr %i.bw, align 8
@@ -696,10 +692,10 @@ bb.a:
   %i.c = getelementptr inbounds nuw [16 x i8], ptr %1, i64 %.sroa.01.08
   %i.d = load <2 x ptr>, ptr %i.b, align 8
   %i.e = load <2 x ptr>, ptr %i.c, align 8
-  %i.f = icmp eq <2 x ptr> %i.d, %i.e             ; 2 uses
-  %3 = extractelement <2 x i1> %i.f, i64 0
-  %4 = extractelement <2 x i1> %i.f, i64 1
-  %spec.select.i.not.i.not = select i1 %3, i1 %4, i1 false ; 2 uses
+  %i.f = icmp eq <2 x ptr> %i.d, %i.e
+  %3 = freeze <2 x i1> %i.f
+  %4 = bitcast <2 x i1> %3 to i2
+  %spec.select.i.not.i.not = icmp eq i2 %4, -1    ; 2 uses
   %i.g = add nuw i64 %.sroa.01.08, 1              ; 2 uses
   %exitcond.not = icmp ne i64 %i.g, %2
   %or.cond.not = select i1 %spec.select.i.not.i.not, i1 %exitcond.not, i1 false
@@ -756,10 +752,10 @@ bb.b:                                             ; preds = %_RNvXs8_NtCshzWfHUS
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2112)
   %i.e = load <2 x i32>, ptr %i.c, align 4, !alias.scope !2113
   %i.f = load <2 x i32>, ptr %i.d, align 4, !alias.scope !2114
-  %i.g = icmp eq <2 x i32> %i.e, %i.f             ; 2 uses
-  %3 = extractelement <2 x i1> %i.g, i64 0
-  %4 = extractelement <2 x i1> %i.g, i64 1
-  %.sroa.0.0.i.i.i.i.i = select i1 %4, i1 %3, i1 false
+  %i.g = icmp eq <2 x i32> %i.e, %i.f
+  %3 = freeze <2 x i1> %i.g
+  %4 = bitcast <2 x i1> %3 to i2
+  %.sroa.0.0.i.i.i.i.i = icmp eq i2 %4, -1
   br i1 %.sroa.0.0.i.i.i.i.i, label %_RNvYINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9opaque_ty13OpaqueTypeKeyNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2neCsiU5vK8fN4ZC_11ide_assists.exit.i, label %_RNvXs8_NtCshzWfHUSfYae_4core5tupleTINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9opaque_ty13OpaqueTypeKeyNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtB1E_2ty2TyENtNtB7_3cmp9PartialEq2neCsiU5vK8fN4ZC_11ide_assists.exit.thread
 
 _RNvYINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9opaque_ty13OpaqueTypeKeyNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtCshzWfHUSfYae_4core3cmp9PartialEq2neCsiU5vK8fN4ZC_11ide_assists.exit.i: ; preds = %.lr.ph

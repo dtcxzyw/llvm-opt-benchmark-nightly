@@ -202,17 +202,16 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.l
   %i.x = load ptr, ptr %i.b, align 8, !tbaa !100  ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 4
-  %i.z = load <2 x i32>, ptr %i.y, align 4, !tbaa !61 ; 2 uses
-  %i.aa = and <2 x i32> %i.z, splat (i32 65535)
+  %i.z = load <2 x i32>, ptr %i.y, align 4, !tbaa !61
+  %.fr = freeze <2 x i32> %i.z                    ; 2 uses
+  %i.aa = and <2 x i32> %.fr, splat (i32 65535)
   store <2 x i32> %i.aa, ptr %2, align 4, !tbaa !61
   %i.ab = getelementptr inbounds nuw i8, ptr %i.x, i64 12
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !102 ; 2 uses
   %i.ad = and i32 %i.ac, 65535                    ; 2 uses
   store i32 %i.ad, ptr %i.d, align 4, !tbaa !98
-  %3 = icmp eq <2 x i32> %i.z, <i32 1, i32 4>     ; 2 uses
-  %4 = extractelement <2 x i1> %3, i64 0
-  %5 = extractelement <2 x i1> %3, i64 1
-  %or.cond = select i1 %4, i1 %5, i1 false
+  %.fr.scalar = bitcast <2 x i32> %.fr to i64
+  %or.cond = icmp eq i64 %.fr.scalar, 17179869185
   %i.ae = icmp eq i32 %i.ac, 1
   %or.cond65 = select i1 %or.cond, i1 %i.ae, i1 false
   br i1 %or.cond65, label %.critedge, label %bb.ab

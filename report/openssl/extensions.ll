@@ -204,21 +204,18 @@ bb.d:                                             ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 2696
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !135  ; 2 uses
   %.not23 = icmp eq ptr %i.l, null
-  br i1 %.not23, label %.critedge, label %3
+  br i1 %.not23, label %.critedge, label %bb.e
 
-3:                                                ; preds = %bb.d
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 2688
-  %5 = load i64, ptr %4, align 8, !tbaa !185      ; 3 uses
-  %.not24 = icmp eq i64 %5, 0
-  br i1 %.not24, label %.critedge, label %bb.e
-
-bb.e:                                             ; preds = %3
-  %6 = and <2 x i32> %i.f, <i32 4, i32 8>
-  %7 = icmp eq <2 x i32> %6, zeroinitializer      ; 2 uses
-  %8 = extractelement <2 x i1> %7, i64 0
-  %9 = extractelement <2 x i1> %7, i64 1
-  %or.cond = select i1 %8, i1 %9, i1 false
-  br i1 %or.cond, label %.critedge, label %.preheader
+bb.e:                                             ; preds = %bb.d
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 2688
+  %4 = load i64, ptr %3, align 8, !tbaa !185      ; 3 uses
+  %.not24 = icmp eq i64 %4, 0
+  %.fr36 = freeze <2 x i32> %i.f
+  %5 = and <2 x i32> %.fr36, <i32 4, i32 8>
+  %.scalar = bitcast <2 x i32> %5 to i64
+  %or.cond = icmp eq i64 %.scalar, 0
+  %or.cond39 = or i1 %.not24, %or.cond
+  br i1 %or.cond39, label %.critedge, label %.preheader
 
 .preheader:                                       ; preds = %bb.e, %bb.f
   %.029 = phi ptr [ %i.o, %bb.f ], [ %i.l, %bb.e ] ; 2 uses
@@ -230,11 +227,11 @@ bb.e:                                             ; preds = %3
 bb.f:                                             ; preds = %.preheader
   %i.o = getelementptr inbounds nuw i8, ptr %.029, i64 1
   %i.p = add nuw i64 %.01828, 1                   ; 2 uses
-  %exitcond.not = icmp eq i64 %i.p, %5
+  %exitcond.not = icmp eq i64 %i.p, %4
   br i1 %exitcond.not, label %.thread, label %.preheader, !llvm.loop !181
 
 bb.g:                                             ; preds = %.preheader
-  %.not27 = icmp eq i64 %.01828, %5
+  %.not27 = icmp eq i64 %.01828, %4
   br i1 %.not27, label %.thread, label %.critedge
 
 .thread:                                          ; preds = %bb.f, %bb.g
@@ -243,8 +240,8 @@ bb.g:                                             ; preds = %.preheader
   tail call void (ptr, i32, i32, ptr, ...) @ossl_statem_fatal(ptr noundef %0, i32 noundef 47, i32 noundef 157, ptr noundef null) #9
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.b, %bb.c, %bb.d, %3, %bb.e, %bb.g, %.thread, %bb.a
-  %.1 = phi i32 [ 0, %.thread ], [ 1, %bb.a ], [ 1, %bb.g ], [ 1, %bb.e ], [ 1, %3 ], [ 1, %bb.d ], [ 1, %bb.c ], [ 1, %bb.b ]
+.critedge:                                        ; preds = %bb.b, %bb.c, %bb.d, %bb.e, %bb.g, %.thread, %bb.a
+  %.1 = phi i32 [ 0, %.thread ], [ 1, %bb.a ], [ 1, %bb.g ], [ 1, %bb.b ], [ 1, %bb.e ], [ 1, %bb.d ], [ 1, %bb.c ]
   ret i32 %.1
 }
 
