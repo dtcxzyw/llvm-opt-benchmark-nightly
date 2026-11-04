@@ -204,21 +204,20 @@ BufferGetPage.exit.i:                             ; preds = %bb.m, %bb.l
   %.val.i = load i16, ptr %i.bj, align 4          ; 2 uses
   %i.bk = icmp ult i16 %.val.i, 25
   %i.bl = zext i16 %.val.i to i32
-  %i.bm = add nuw nsw i32 %i.bl, 262120           ; 2 uses
-  %8 = and i32 %i.bm, 262140
-  %.not7883.i = icmp eq i32 %8, 0
+  %i.bm = add nuw nsw i32 %i.bl, 262120
+  %8 = lshr i32 %i.bm, 2
+  %9 = trunc i32 %8 to i16                        ; 2 uses
+  %.not7883.i = icmp eq i16 %9, 0
   %.not78.i = select i1 %i.bk, i1 true, i1 %.not7883.i
   br i1 %.not78.i, label %BitmapHeapScanNextBlock.exit, label %.lr.ph81.i
 
 .lr.ph81.i:                                       ; preds = %BufferGetPage.exit.i
-  %9 = lshr i32 %i.bm, 2
   %i.bn = getelementptr i8, ptr %.0.i.i.i, i64 20
   %i.bo = lshr i32 %i.ae, 16
   %i.bp = trunc nuw i32 %i.bo to i16
   %i.bq = trunc i32 %i.ae to i16
-  %10 = and i32 %9, 65535
-  %11 = add nuw nsw i32 %10, 1
-  %wide.trip.count89.i = zext nneg i32 %11 to i64
+  %umax.i = add nuw nsw i16 %9, 1
+  %wide.trip.count89.i = zext i16 %umax.i to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.s, %.lr.ph81.i

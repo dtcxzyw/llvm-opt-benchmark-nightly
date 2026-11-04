@@ -205,7 +205,7 @@ bb.do:                                            ; preds = %bb.dk
   %i.mm = getelementptr inbounds nuw i8, ptr %i.lg, i64 300
   store i32 0, ptr %i.mm, align 4, !tbaa !132
   %i.mn = call i64 @ffio_read_varlen(ptr noundef %i.li) #12
-  %.fr220.i = freeze i64 %i.mn                    ; 8 uses
+  %.fr220.i = freeze i64 %i.mn                    ; 6 uses
   %i.mo = add i64 %.fr220.i, -1
   %or.cond.i58 = icmp ult i64 %i.mo, 268435454
   br i1 %or.cond.i58, label %bb.dq, label %bb.dp
@@ -215,9 +215,9 @@ bb.dp:                                            ; preds = %bb.do
   br label %.loopexit186.i
 
 bb.dq:                                            ; preds = %bb.do
-  %i.mp = trunc nuw nsw i64 %.fr220.i to i32      ; 3 uses
+  %i.mp = trunc nuw nsw i64 %.fr220.i to i32      ; 4 uses
   %i.mq = call ptr @av_malloc_array(i64 noundef %.fr220.i, i64 noundef 8) #12 ; 13 uses
-  %i.mr = add nuw nsw i32 %i.mp, 1                ; 3 uses
+  %i.mr = add nuw nsw i32 %i.mp, 1                ; 4 uses
   %i.ms = zext nneg i32 %i.mr to i64              ; 2 uses
   %i.mt = call ptr @av_malloc_array(i64 noundef %i.ms, i64 noundef 1) #12 ; 15 uses
   %i.mu = icmp ne ptr %i.mq, null
@@ -274,7 +274,7 @@ bb.ds:                                            ; preds = %.lr.ph.i59
 
 bb.dt:                                            ; preds = %.loopexit179.i, %.preheader183.i
   %.0130214.i = phi i64 [ -1, %.preheader183.i ], [ %.1131.lcssa.i, %.loopexit179.i ] ; 2 uses
-  %.0141213.i = phi i32 [ 0, %.preheader183.i ], [ %.1142.lcssa.i, %.loopexit179.i ] ; 8 uses
+  %.0141213.i = phi i32 [ 0, %.preheader183.i ], [ %.1142.lcssa.i, %.loopexit179.i ] ; 10 uses
   %i.ni = call i64 @ffio_read_varlen(ptr noundef %i.li) #12 ; 4 uses
   %i.nj = lshr i64 %i.ni, 1                       ; 4 uses
   %i.nk = and i64 %i.ni, 1
@@ -323,28 +323,33 @@ bb.dv:                                            ; preds = %bb.dt
   br i1 %.not158203.i, label %.loopexit181.i, label %.lr.ph206.preheader.i
 
 .lr.ph206.preheader.i:                            ; preds = %.preheader180.i
-  %i.nu = zext nneg i32 %.0141213.i to i64        ; 2 uses
-  %.not159.not.i361 = icmp slt i64 %.fr220.i, %i.nu
-  br i1 %.not159.not.i361, label %.lr.ph206.preheader.i._crit_edge, label %.lr.ph364.a
+  %smax.i = call i32 @llvm.smax.i32(i32 %.0141213.i, i32 %i.mr)
+  %i.nu = zext nneg i32 %smax.i to i64
+  %exitcond244.i361.not.not = icmp sgt i32 %.0141213.i, %i.mp
+  br i1 %exitcond244.i361.not.not, label %.lr.ph206.preheader.i._crit_edge, label %.lr.ph364
+
+.lr.ph364:                                        ; preds = %.lr.ph206.preheader.i
+  %1 = zext nneg i32 %.0141213.i to i64
+  br label %.lr.ph364.a
 
 bb.dw:                                            ; preds = %bb.dv
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.lg, i32 noundef 16, ptr noundef nonnull @.str.61, i64 noundef %i.nj) #12
   br label %.loopexit186.i
 
 .lr.ph206.i:                                      ; preds = %.lr.ph364.a
-  %.not159.not.i.not = icmp slt i64 %indvars.iv240.i362, %.fr220.i
-  br i1 %.not159.not.i.not, label %.lr.ph364.a, label %.lr.ph206.preheader.i._crit_edge, !llvm.loop !102
+  %exitcond244.i = icmp eq i64 %indvars.iv.next241.i, %i.nu
+  br i1 %exitcond244.i, label %.lr.ph206.preheader.i._crit_edge, label %.lr.ph364.a, !llvm.loop !102
 
 .lr.ph206.preheader.i._crit_edge:                 ; preds = %.lr.ph206.preheader.i, %.lr.ph206.i
   call void (ptr, i32, ptr, ...) @av_log(ptr noundef %i.lg, i32 noundef 16, ptr noundef nonnull @.str.62) #12
   br label %.loopexit186.i
 
-.lr.ph364.a:                                      ; preds = %.lr.ph206.preheader.i, %.lr.ph206.i
-  %.1129204.i363 = phi i64 [ %i.ny, %.lr.ph206.i ], [ %i.nj, %.lr.ph206.preheader.i ] ; 2 uses
-  %indvars.iv240.i362 = phi i64 [ %indvars.iv.next241.i, %.lr.ph206.i ], [ %i.nu, %.lr.ph206.preheader.i ] ; 3 uses
+.lr.ph364.a:                                      ; preds = %.lr.ph364, %.lr.ph206.i
+  %.1129204.i363 = phi i64 [ %i.nj, %.lr.ph364 ], [ %i.ny, %.lr.ph206.i ] ; 2 uses
+  %indvars.iv240.i362 = phi i64 [ %1, %.lr.ph364 ], [ %indvars.iv.next241.i, %.lr.ph206.i ] ; 2 uses
   %i.nv = trunc i64 %.1129204.i363 to i8
   %i.nw = and i8 %i.nv, 1
-  %indvars.iv.next241.i = add nuw nsw i64 %indvars.iv240.i362, 1 ; 2 uses
+  %indvars.iv.next241.i = add nuw nsw i64 %indvars.iv240.i362, 1 ; 3 uses
   %i.nx = getelementptr inbounds nuw i8, ptr %i.mt, i64 %indvars.iv240.i362
   store i8 %i.nw, ptr %i.nx, align 1, !tbaa !15
   %i.ny = lshr i64 %.1129204.i363, 1              ; 2 uses
@@ -746,6 +751,9 @@ declare i64 @llvm.abs.i64(i64, i1 immarg) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #11

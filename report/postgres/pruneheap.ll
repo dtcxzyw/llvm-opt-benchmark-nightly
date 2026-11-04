@@ -204,12 +204,13 @@ bb.a:
 
 .lr.ph82:                                         ; preds = %bb.a
   %i.g = getelementptr i8, ptr %0, i64 20         ; 3 uses
+  %umax = add nuw nsw i16 %i.f, 1
+  %wide.trip.count = zext i16 %umax to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph82, %HeapTupleHeaderIsHotUpdated.exit.thread
-  %.05581 = phi i16 [ 1, %.lr.ph82 ], [ %3, %HeapTupleHeaderIsHotUpdated.exit.thread ] ; 4 uses
-  %2 = zext i16 %.05581 to i64                    ; 2 uses
-  %i.h = getelementptr [4 x i8], ptr %i.g, i64 %2
+  %indvars.iv = phi i64 [ 1, %.lr.ph82 ], [ %indvars.iv.next, %HeapTupleHeaderIsHotUpdated.exit.thread ] ; 5 uses
+  %i.h = getelementptr [4 x i8], ptr %i.g, i64 %indvars.iv
   %i.i = load i32, ptr %i.h, align 4              ; 3 uses
   %i.j = lshr i32 %i.i, 15
   %i.k = and i32 %i.j, 3
@@ -230,9 +231,10 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.p, label %HeapTupleHeaderIsHotUpdated.exit.thread, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.q = getelementptr [2 x i8], ptr %1, i64 %2
+  %i.q = getelementptr [2 x i8], ptr %1, i64 %indvars.iv
   %i.r = getelementptr i8, ptr %i.q, i64 -2
-  store i16 %.05581, ptr %i.r, align 2
+  %2 = trunc nuw i64 %indvars.iv to i16
+  store i16 %2, ptr %i.r, align 2
   %i.s = load i16, ptr %i.o, align 2
   %i.t = and i16 %i.s, 16384
   %.not.i = icmp eq i16 %i.t, 0
@@ -280,12 +282,16 @@ HeapTupleHeaderGetUpdateXid.exit:                 ; preds = %bb.h, %bb.g, %bb.i
   %i.ai = load i32, ptr %i.ah, align 4            ; 2 uses
   %i.aj = and i32 %i.ai, 98304
   %i.ak = icmp eq i32 %i.aj, 32768
-  br i1 %i.ak, label %.lr.ph, label %HeapTupleHeaderIsHotUpdated.exit.thread
+  br i1 %i.ak, label %.lr.ph.preheader, label %HeapTupleHeaderIsHotUpdated.exit.thread
 
-.lr.ph:                                           ; preds = %HeapTupleHeaderGetUpdateXid.exit, %HeapTupleHeaderGetUpdateXid.exit73
-  %i.al = phi i32 [ %i.bm, %HeapTupleHeaderGetUpdateXid.exit73 ], [ %i.ai, %HeapTupleHeaderGetUpdateXid.exit ]
-  %i.am = phi i64 [ %i.bk, %HeapTupleHeaderGetUpdateXid.exit73 ], [ %i.ag, %HeapTupleHeaderGetUpdateXid.exit ]
-  %.177 = phi i32 [ %.0.i72, %HeapTupleHeaderGetUpdateXid.exit73 ], [ %.0, %HeapTupleHeaderGetUpdateXid.exit ] ; 2 uses
+.lr.ph.preheader:                                 ; preds = %HeapTupleHeaderGetUpdateXid.exit
+  %3 = trunc nuw i64 %indvars.iv to i16
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %HeapTupleHeaderGetUpdateXid.exit73
+  %i.al = phi i32 [ %i.bm, %HeapTupleHeaderGetUpdateXid.exit73 ], [ %i.ai, %.lr.ph.preheader ]
+  %i.am = phi i64 [ %i.bk, %HeapTupleHeaderGetUpdateXid.exit73 ], [ %i.ag, %.lr.ph.preheader ]
+  %.177 = phi i32 [ %.0.i72, %HeapTupleHeaderGetUpdateXid.exit73 ], [ %.0, %.lr.ph.preheader ] ; 2 uses
   %i.an = and i32 %i.al, 32767
   %i.ao = zext nneg i32 %i.an to i64
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 %i.ao ; 7 uses
@@ -311,7 +317,7 @@ HeapTupleHeaderGetXmin.exit:                      ; preds = %bb.j, %bb.k
 bb.l:                                             ; preds = %HeapTupleHeaderGetXmin.exit, %.lr.ph
   %i.av = getelementptr [2 x i8], ptr %1, i64 %i.am
   %i.aw = getelementptr i8, ptr %i.av, i64 -2
-  store i16 %.05581, ptr %i.aw, align 2
+  store i16 %3, ptr %i.aw, align 2
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ap, i64 18
   %i.ay = load i16, ptr %i.ax, align 2
   %i.az = and i16 %i.ay, 16384
@@ -354,9 +360,9 @@ HeapTupleHeaderGetUpdateXid.exit73:               ; preds = %bb.o, %bb.p
   br i1 %i.bo, label %.lr.ph, label %HeapTupleHeaderIsHotUpdated.exit.thread
 
 HeapTupleHeaderIsHotUpdated.exit.thread:          ; preds = %HeapTupleHeaderGetXmin.exit, %HeapTupleHeaderGetUpdateXid.exit73, %bb.m, %bb.l, %HeapTupleHeaderGetUpdateXid.exit, %bb.d, %bb.e, %bb.b, %bb.b, %bb.c
-  %3 = add i16 %.05581, 1                         ; 2 uses
-  %.not = icmp ugt i16 %3, %i.f
-  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !27
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond, label %._crit_edge, label %bb.b, !llvm.loop !27
 
 ._crit_edge:                                      ; preds = %HeapTupleHeaderIsHotUpdated.exit.thread, %bb.a
   ret void

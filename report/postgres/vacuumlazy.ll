@@ -204,19 +204,21 @@ lazy_scan_new_or_empty.exit.thread189.i:          ; preds = %lazy_scan_new_or_em
   %i.mu = lshr i32 %i.kt, 16
   %i.mv = trunc nuw i32 %i.mu to i16
   %i.mw = trunc i32 %i.kt to i16
+  %umax.i.i = add nuw nsw i16 %i.ms, 1
+  %wide.trip.count.i.i = zext i16 %umax.i.i to i64
   br label %bb.bg
 
 bb.bg:                                            ; preds = %bb.bq, %.lr.ph.i.i
+  %indvars.iv.i.i = phi i64 [ 1, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.bq ] ; 3 uses
   %.060120.i.i = phi i1 [ false, %.lr.ph.i.i ], [ %.1.ph.i.i, %bb.bq ] ; 2 uses
-  %.061119.i.i = phi i32 [ 0, %.lr.ph.i.i ], [ %.263.ph.i.i, %bb.bq ] ; 7 uses
-  %.064118.i.i.a = phi i32 [ 0, %.lr.ph.i.i ], [ %.266.ph.i.i, %bb.bq ] ; 7 uses
-  %.067117.i.i.a = phi i32 [ 0, %.lr.ph.i.i ], [ %.269.ph.i.i, %bb.bq ] ; 7 uses
-  %.070116.i.i.a = phi i32 [ 0, %.lr.ph.i.i ], [ %.171.ph.i.i, %bb.bq ] ; 8 uses
-  %.072115.i.i = phi i16 [ 1, %.lr.ph.i.i ], [ %17, %bb.bq ] ; 5 uses
+  %.064118.i.i.a = phi i32 [ 0, %.lr.ph.i.i ], [ %.263.ph.i.i, %bb.bq ] ; 7 uses
+  %.067117.i.i.a = phi i32 [ 0, %.lr.ph.i.i ], [ %.266.ph.i.i, %bb.bq ] ; 7 uses
+  %.070116.i.i.a = phi i32 [ 0, %.lr.ph.i.i ], [ %.269.ph.i.i, %bb.bq ] ; 7 uses
+  %.070116.i.i = phi i32 [ 0, %.lr.ph.i.i ], [ %.171.ph.i.i, %bb.bq ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #6
-  store i16 %.072115.i.i, ptr %i.is, align 4
-  %16 = zext i16 %.072115.i.i to i64
-  %i.mx = getelementptr [4 x i8], ptr %i.mt, i64 %16 ; 2 uses
+  %16 = trunc nuw i64 %indvars.iv.i.i to i16      ; 3 uses
+  store i16 %16, ptr %i.is, align 4
+  %i.mx = getelementptr [4 x i8], ptr %i.mt, i64 %indvars.iv.i.i ; 2 uses
   %i.my = load i32, ptr %i.mx, align 4            ; 2 uses
   %i.mz = lshr i32 %i.my, 15
   %i.na = and i32 %i.mz, 3
@@ -231,10 +233,10 @@ bb.bh:                                            ; preds = %bb.bg
   br label %bb.bq
 
 bb.bi:                                            ; preds = %bb.bg
-  %i.nb = add i32 %.070116.i.i.a, 1
-  %i.nc = sext i32 %.070116.i.i.a to i64
+  %i.nb = add i32 %.070116.i.i, 1
+  %i.nc = sext i32 %.070116.i.i to i64
   %i.nd = getelementptr inbounds [2 x i8], ptr %i.k, i64 %i.nc
-  store i16 %.072115.i.i, ptr %i.nd, align 2
+  store i16 %16, ptr %i.nd, align 2
   br label %bb.bq
 
 default.unreachable:                              ; preds = %bb.bg
@@ -255,7 +257,7 @@ bb.bk:                                            ; preds = %bb.bj
 bb.bl:                                            ; preds = %bb.bk, %bb.bj
   store i16 %i.mv, ptr %i.it, align 4
   store i16 %i.mw, ptr %i.iu, align 2
-  store i16 %.072115.i.i, ptr %i.iv, align 8
+  store i16 %16, ptr %i.iv, align 8
   %.val80.i.i = load i32, ptr %i.mx, align 4      ; 2 uses
   %i.nk = and i32 %.val80.i.i, 32767
   %i.nl = zext nneg i32 %i.nk to i64
@@ -278,15 +280,15 @@ bb.bl:                                            ; preds = %bb.bk, %bb.bj
   ]
 
 bb.bm:                                            ; preds = %bb.bl, %bb.bl
-  %i.nt = add i32 %.067117.i.i.a, 1
+  %i.nt = add i32 %.070116.i.i.a, 1
   br label %bb.bq
 
 bb.bn:                                            ; preds = %bb.bl
-  %i.nu = add i32 %.061119.i.i, 1
+  %i.nu = add i32 %.064118.i.i.a, 1
   br label %bb.bq
 
 bb.bo:                                            ; preds = %bb.bl
-  %i.nv = add i32 %.064118.i.i.a, 1
+  %i.nv = add i32 %.067117.i.i.a, 1
   br label %bb.bq
 
 bb.bp:                                            ; preds = %bb.bl
@@ -296,15 +298,15 @@ bb.bp:                                            ; preds = %bb.bl
   unreachable
 
 bb.bq:                                            ; preds = %bb.bo, %bb.bn, %bb.bm, %bb.bl, %bb.bi, %bb.bh, %bb.bg
-  %.171.ph.i.i = phi i32 [ %.070116.i.i.a, %bb.bl ], [ %.070116.i.i.a, %bb.bm ], [ %.070116.i.i.a, %bb.bn ], [ %.070116.i.i.a, %bb.bo ], [ %.070116.i.i.a, %bb.bg ], [ %i.nb, %bb.bi ], [ %.070116.i.i.a, %bb.bh ] ; 5 uses
-  %.269.ph.i.i = phi i32 [ %.067117.i.i.a, %bb.bl ], [ %i.nt, %bb.bm ], [ %.067117.i.i.a, %bb.bn ], [ %.067117.i.i.a, %bb.bo ], [ %.067117.i.i.a, %bb.bg ], [ %.067117.i.i.a, %bb.bi ], [ %.067117.i.i.a, %bb.bh ] ; 2 uses
-  %.266.ph.i.i = phi i32 [ %.064118.i.i.a, %bb.bl ], [ %.064118.i.i.a, %bb.bm ], [ %.064118.i.i.a, %bb.bn ], [ %i.nv, %bb.bo ], [ %.064118.i.i.a, %bb.bg ], [ %.064118.i.i.a, %bb.bi ], [ %.064118.i.i.a, %bb.bh ] ; 2 uses
-  %.263.ph.i.i = phi i32 [ %.061119.i.i, %bb.bl ], [ %.061119.i.i, %bb.bm ], [ %i.nu, %bb.bn ], [ %.061119.i.i, %bb.bo ], [ %.061119.i.i, %bb.bg ], [ %.061119.i.i, %bb.bi ], [ %.061119.i.i, %bb.bh ] ; 4 uses
+  %.171.ph.i.i = phi i32 [ %.070116.i.i, %bb.bl ], [ %.070116.i.i, %bb.bm ], [ %.070116.i.i, %bb.bn ], [ %.070116.i.i, %bb.bo ], [ %.070116.i.i, %bb.bg ], [ %i.nb, %bb.bi ], [ %.070116.i.i, %bb.bh ] ; 5 uses
+  %.269.ph.i.i = phi i32 [ %.070116.i.i.a, %bb.bl ], [ %i.nt, %bb.bm ], [ %.070116.i.i.a, %bb.bn ], [ %.070116.i.i.a, %bb.bo ], [ %.070116.i.i.a, %bb.bg ], [ %.070116.i.i.a, %bb.bi ], [ %.070116.i.i.a, %bb.bh ] ; 2 uses
+  %.266.ph.i.i = phi i32 [ %.067117.i.i.a, %bb.bl ], [ %.067117.i.i.a, %bb.bm ], [ %.067117.i.i.a, %bb.bn ], [ %i.nv, %bb.bo ], [ %.067117.i.i.a, %bb.bg ], [ %.067117.i.i.a, %bb.bi ], [ %.067117.i.i.a, %bb.bh ] ; 2 uses
+  %.263.ph.i.i = phi i32 [ %.064118.i.i.a, %bb.bl ], [ %.064118.i.i.a, %bb.bm ], [ %i.nu, %bb.bn ], [ %.064118.i.i.a, %bb.bo ], [ %.064118.i.i.a, %bb.bg ], [ %.064118.i.i.a, %bb.bi ], [ %.064118.i.i.a, %bb.bh ] ; 4 uses
   %.1.ph.i.i = phi i1 [ true, %bb.bl ], [ true, %bb.bm ], [ true, %bb.bn ], [ true, %bb.bo ], [ %.060120.i.i, %bb.bg ], [ %.060120.i.i, %bb.bi ], [ true, %bb.bh ] ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #6
-  %17 = add i16 %.072115.i.i, 1                   ; 2 uses
-  %.not.i141.i = icmp ugt i16 %17, %i.ms
-  br i1 %.not.i141.i, label %._crit_edge.i.i, label %bb.bg, !llvm.loop !9
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
+  %exitcond.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
+  br i1 %exitcond.i.i, label %._crit_edge.i.i, label %bb.bg, !llvm.loop !9
 
 ._crit_edge.i.i:                                  ; preds = %bb.bq
   %.pre.i.i = load i32, ptr %i.i, align 4
@@ -707,17 +709,18 @@ bb.ew:                                            ; preds = %bb.ev
 
 .lr.ph.i.i274:                                    ; preds = %bb.ew
   %i.aaf = getelementptr i8, ptr %.0.i.i.i.i, i64 20
+  %umax.i.i275 = add nuw nsw i16 %i.aae, 1
+  %wide.trip.count.i.i276 = zext nneg i16 %umax.i.i275 to i64
   br label %bb.ey
 
 bb.ex:                                            ; preds = %bb.ey
-  %18 = add i16 %.06292.i.i, 1                    ; 2 uses
-  %.not70.not.i.i = icmp ugt i16 %18, %i.aae
-  br i1 %.not70.not.i.i, label %.critedge.i.i, label %bb.ey, !llvm.loop !14
+  %indvars.iv.next.i.i278 = add nuw nsw i64 %indvars.iv.i.i277, 1 ; 2 uses
+  %exitcond.i.i279 = icmp eq i64 %indvars.iv.next.i.i278, %wide.trip.count.i.i276
+  br i1 %exitcond.i.i279, label %.critedge.i.i, label %bb.ey, !llvm.loop !14
 
 bb.ey:                                            ; preds = %bb.ex, %.lr.ph.i.i274
-  %.06292.i.i = phi i16 [ 1, %.lr.ph.i.i274 ], [ %18, %bb.ex ] ; 2 uses
-  %19 = zext i16 %.06292.i.i to i64
-  %i.aag = getelementptr [4 x i8], ptr %i.aaf, i64 %19
+  %indvars.iv.i.i277 = phi i64 [ 1, %.lr.ph.i.i274 ], [ %indvars.iv.next.i.i278, %bb.ex ] ; 2 uses
+  %i.aag = getelementptr [4 x i8], ptr %i.aaf, i64 %indvars.iv.i.i277
   %i.aah = load i32, ptr %i.aag, align 4
   %i.aai = and i32 %i.aah, 98304
   %.not71.i.i = icmp eq i32 %i.aai, 0
@@ -1120,31 +1123,35 @@ BufferGetPage.exit.i.i.i:                         ; preds = %bb.s, %bb.r
   %.val.i.i.i = load i16, ptr %i.fk, align 4      ; 2 uses
   %i.fl = icmp ult i16 %.val.i.i.i, 25
   %i.fm = zext i16 %.val.i.i.i to i32
-  %i.fn = add nuw nsw i32 %i.fm, 262120
-  %3 = lshr i32 %i.fn, 2
-  %4 = trunc i32 %3 to i16                        ; 2 uses
-  %.not7576.i.i.i = icmp eq i16 %4, 0
+  %i.fn = add nuw nsw i32 %i.fm, 262120           ; 2 uses
+  %3 = and i32 %i.fn, 262140
+  %.not7576.i.i.i = icmp eq i32 %3, 0
   %.not75.i.i.i = select i1 %i.fl, i1 true, i1 %.not7576.i.i.i
   br i1 %.not75.i.i.i, label %.loopexit.i.thread.i.i, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %BufferGetPage.exit.i.i.i
+  %4 = lshr i32 %i.fn, 2
   %i.fo = getelementptr i8, ptr %.0.i.i.i.i.i, i64 20
   %i.fp = lshr i32 %i.fj, 16
   %i.fq = trunc nuw i32 %i.fp to i16
   %i.fr = trunc i32 %i.fj to i16
   %i.fs = getelementptr inbounds nuw i8, ptr %i.ex, i64 72
+  %.mask.i.i.i = and i32 %4, 65535
+  %5 = call i32 @llvm.umax.i32(i32 %.mask.i.i.i, i32 1)
+  %narrow.i.i = add nuw nsw i32 %5, 1
+  %6 = zext nneg i32 %narrow.i.i to i64
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.ae, %.lr.ph.i.i.i
   %.061.i.i = phi i8 [ 1, %.lr.ph.i.i.i ], [ %.162.i.i, %bb.ae ] ; 4 uses
   %.059.i.i = phi i32 [ 0, %.lr.ph.i.i.i ], [ %.160.i.i, %bb.ae ] ; 8 uses
+  %indvars.iv.i.i.i = phi i64 [ 1, %.lr.ph.i.i.i ], [ %indvars.iv.next.i.i.i, %bb.ae ] ; 4 uses
   %.05074.i.i.i = phi i32 [ 0, %.lr.ph.i.i.i ], [ %.1.ph.i.i.i, %bb.ae ] ; 7 uses
-  %.05373.i.i.i = phi i16 [ 1, %.lr.ph.i.i.i ], [ %6, %bb.ae ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
-  store i16 %.05373.i.i.i, ptr %i.dg, align 4
-  %5 = zext i16 %.05373.i.i.i to i64
-  %i.ft = getelementptr [4 x i8], ptr %i.fo, i64 %5
+  %7 = trunc nuw i64 %indvars.iv.i.i.i to i16     ; 2 uses
+  store i16 %7, ptr %i.dg, align 4
+  %i.ft = getelementptr [4 x i8], ptr %i.fo, i64 %indvars.iv.i.i.i
   %i.fu = load i32, ptr %i.ft, align 4            ; 4 uses
   %i.fv = lshr i32 %i.fu, 15
   %i.fw = and i32 %i.fv, 3
@@ -1156,7 +1163,7 @@ bb.t:                                             ; preds = %bb.ae, %.lr.ph.i.i.
 bb.u:                                             ; preds = %bb.t
   store i16 %i.fq, ptr %i.dv, align 4
   store i16 %i.fr, ptr %i.dw, align 2
-  store i16 %.05373.i.i.i, ptr %i.dx, align 8
+  store i16 %7, ptr %i.dx, align 8
   %i.fx = and i32 %i.fu, 98304
   %i.fy = icmp eq i32 %i.fx, 98304
   br i1 %i.fy, label %bb.v, label %bb.y
@@ -1169,7 +1176,8 @@ bb.w:                                             ; preds = %bb.v
   %i.fz = sext i32 %.05074.i.i.i to i64
   %i.ga = getelementptr inbounds [2 x i8], ptr %i.e, i64 %i.fz
   %i.gb = load i16, ptr %i.ga, align 2
-  %.not60.i.i.i = icmp eq i16 %i.gb, %.05373.i.i.i
+  %8 = zext i16 %i.gb to i64
+  %.not60.i.i.i = icmp eq i64 %indvars.iv.i.i.i, %8
   br i1 %.not60.i.i.i, label %bb.x, label %heap_page_would_be_all_visible.exit.sink.split.i.i
 
 bb.x:                                             ; preds = %bb.w
@@ -1243,9 +1251,9 @@ bb.ae:                                            ; preds = %bb.ac, %HeapTupleHe
   %.1.ph.i.i.i = phi i32 [ %i.gc, %bb.x ], [ %.05074.i.i.i, %bb.t ], [ %.05074.i.i.i, %bb.ac ], [ %.05074.i.i.i, %HeapTupleHeaderGetXmin.exit.i.i.i ], [ %.05074.i.i.i, %bb.t ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #6
-  %6 = add i16 %.05373.i.i.i, 1                   ; 2 uses
-  %.not85.i.i.i = icmp ugt i16 %6, %4
-  br i1 %.not85.i.i.i, label %.loopexit.i.i.i, label %bb.t, !llvm.loop !20
+  %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
+  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %6
+  br i1 %exitcond.not.i.i, label %.loopexit.i.i.i, label %bb.t, !llvm.loop !20
 
 .loopexit.i.i.i:                                  ; preds = %bb.ae
   %i.gy = icmp ugt i32 %.160.i.i, 2
@@ -1646,6 +1654,9 @@ declare i32 @errcontext_msg(ptr noundef, ...) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #9

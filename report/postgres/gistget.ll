@@ -202,12 +202,13 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.cj = getelementptr inbounds nuw i8, ptr %i.d, i64 24
   %i.ck = getelementptr inbounds nuw i8, ptr %i.d, i64 40
   %i.cl = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  %umax = add nuw nsw i16 %i.bw, 1
+  %wide.trip.count = zext i16 %umax to i64
   br label %bb.m
 
 bb.m:                                             ; preds = %.lr.ph, %bb.bi
-  %.0161 = phi i16 [ 1, %.lr.ph ], [ %8, %bb.bi ] ; 5 uses
-  %7 = zext i16 %.0161 to i64
-  %i.cm = getelementptr [4 x i8], ptr %i.bx, i64 %7
+  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %bb.bi ] ; 5 uses
+  %i.cm = getelementptr [4 x i8], ptr %i.bx, i64 %indvars.iv
   %i.cn = load i8, ptr %i.by, align 1, !range !4, !noundef !5
   %i.co = trunc nuw i8 %i.cn to i1
   %.val131.pre = load i32, ptr %i.cm, align 4     ; 2 uses
@@ -243,6 +244,7 @@ bb.n:                                             ; preds = %bb.m
   %i.dg = getelementptr inbounds nuw i8, ptr %i.cz, i64 16
   %i.dh = getelementptr i8, ptr %i.ct, i64 6
   %i.di = getelementptr inbounds nuw i8, ptr %i.ct, i64 8 ; 2 uses
+  %7 = trunc nuw i64 %indvars.iv to i16
   br label %bb.r
 
 bb.o:                                             ; preds = %bb.n
@@ -414,7 +416,7 @@ bb.af:                                            ; preds = %index_getattr.exit1
   %i.ge = load i16, ptr %i.ec, align 4
   %i.gf = sext i16 %i.ge to i32
   %i.gg = add nsw i32 %i.gf, -1
-  call void @gistdentryinit(ptr noundef nonnull %i.cz, i32 noundef %i.gg, ptr noundef nonnull %5, i64 noundef %.1.i136, ptr noundef %i.dc, ptr noundef nonnull %.0.i.i, i16 noundef zeroext %.0161, i1 noundef zeroext false, i1 noundef zeroext false) #7
+  call void @gistdentryinit(ptr noundef nonnull %i.cz, i32 noundef %i.gg, ptr noundef nonnull %5, i64 noundef %.1.i136, ptr noundef %i.dc, ptr noundef nonnull %.0.i.i, i16 noundef zeroext %7, i1 noundef zeroext false, i1 noundef zeroext false) #7
   store i8 1, ptr %i.a, align 1
   %i.gh = getelementptr inbounds nuw i8, ptr %.08393.i, i64 16
   %i.gi = getelementptr inbounds nuw i8, ptr %.08393.i, i64 12
@@ -463,6 +465,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.hd = getelementptr inbounds nuw i8, ptr %i.cz, i64 16
   %i.he = getelementptr i8, ptr %i.ct, i64 6
   %i.hf = getelementptr inbounds nuw i8, ptr %i.ct, i64 8 ; 2 uses
+  %8 = trunc nuw i64 %indvars.iv to i16
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.av, %.lr.ph99.i
@@ -579,7 +582,7 @@ bb.au:                                            ; preds = %index_getattr.exit
   %i.iz = load i16, ptr %i.hg, align 4
   %i.ja = sext i16 %i.iz to i32
   %i.jb = add nsw i32 %i.ja, -1
-  call void @gistdentryinit(ptr noundef nonnull %i.cz, i32 noundef %i.jb, ptr noundef nonnull %6, i64 noundef %.1.i, ptr noundef %i.dc, ptr noundef nonnull %.0.i.i, i16 noundef zeroext %.0161, i1 noundef zeroext false, i1 noundef zeroext false) #7
+  call void @gistdentryinit(ptr noundef nonnull %i.cz, i32 noundef %i.jb, ptr noundef nonnull %6, i64 noundef %.1.i, ptr noundef %i.dc, ptr noundef nonnull %.0.i.i, i16 noundef zeroext %8, i1 noundef zeroext false, i1 noundef zeroext false) #7
   store i8 0, ptr %i.b, align 1
   %i.jc = getelementptr inbounds nuw i8, ptr %.28595.i, i64 16
   %i.jd = getelementptr inbounds nuw i8, ptr %.28595.i, i64 12
@@ -664,7 +667,8 @@ bb.ba:                                            ; preds = %bb.az
   %i.kv = getelementptr inbounds nuw i8, ptr %i.ku, i64 6
   store i8 %.3, ptr %i.kv, align 2
   %i.kw = getelementptr inbounds nuw i8, ptr %i.ku, i64 16
-  store i16 %.0161, ptr %i.kw, align 8
+  %9 = trunc nuw i64 %indvars.iv to i16
+  store i16 %9, ptr %i.kw, align 8
   %i.kx = load i8, ptr %i.ci, align 8, !range !4, !noundef !5
   %i.ky = trunc nuw i8 %i.kx to i1
   br i1 %i.ky, label %bb.bb, label %bb.bc
@@ -757,9 +761,9 @@ bb.bh:                                            ; preds = %bb.be, %bb.bf, %bb.
   br label %bb.bi
 
 bb.bi:                                            ; preds = %bb.m, %.critedge, %bb.ax, %bb.bh, %bb.bc
-  %8 = add i16 %.0161, 1                          ; 2 uses
-  %.not126 = icmp ugt i16 %8, %i.bw
-  br i1 %.not126, label %._crit_edge, label %bb.m, !llvm.loop !16
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond, label %._crit_edge, label %bb.m, !llvm.loop !16
 
 ._crit_edge:                                      ; preds = %bb.bi, %bb.l
   call void @UnlockReleaseBuffer(i32 noundef %i.j) #7

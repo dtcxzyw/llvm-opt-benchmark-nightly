@@ -205,6 +205,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.w = getelementptr i8, ptr %0, i64 88
   %i.x = getelementptr i8, ptr %1, i64 32         ; 3 uses
   %i.y = getelementptr i8, ptr %0, i64 28         ; 2 uses
+  %6 = add nuw nsw i32 %4, 1
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.e
@@ -212,7 +213,7 @@ bb.f:                                             ; preds = %bb.e
   br label %free_debug_processing.exit
 
 bb.g:                                             ; preds = %bb.y, %.lr.ph.i
-  %i.z = phi i32 [ 1, %.lr.ph.i ], [ %i.db, %bb.y ] ; 4 uses
+  %i.z = phi i32 [ 1, %.lr.ph.i ], [ %i.db, %bb.y ] ; 5 uses
   %.04285.i = phi ptr [ %2, %.lr.ph.i ], [ %i.da, %bb.y ] ; 23 uses
   %i.aa = load i32, ptr %i.e, align 8             ; 3 uses
   %i.ab = and i32 %i.aa, 1
@@ -415,16 +416,16 @@ bb.y:                                             ; preds = %init_object.exit.i
   %i.cz = inttoptr i64 %i.cy to ptr
   %.sroa.0.0.copyload.i.i = load i64, ptr %i.cz, align 8
   %i.da = inttoptr i64 %.sroa.0.0.copyload.i.i to ptr ; 2 uses
-  %i.db = add i32 %i.z, 1                         ; 3 uses
-  %.not70.i = icmp sgt i32 %i.db, %4
-  br i1 %.not70.i, label %.split.i.thread, label %bb.g
+  %i.db = add nuw nsw i32 %i.z, 1
+  %exitcond = icmp eq i32 %i.z, %4
+  br i1 %exitcond, label %.split.i.thread, label %bb.g
 
 init_object.exit._crit_edge.i:                    ; preds = %init_object.exit.i
   %.not55.i = icmp eq i32 %i.z, %4
   br i1 %.not55.i, label %bb.z, label %.split.i
 
 .split.i.thread:                                  ; preds = %bb.y
-  tail call void (ptr, ptr, ptr, ...) @slab_err(ptr noundef readonly %0, ptr noundef %1, ptr noundef @.str.64, i32 noundef %4, i32 noundef %i.db) #34, !srcloc !460
+  tail call void (ptr, ptr, ptr, ...) @slab_err(ptr noundef readonly %0, ptr noundef %1, ptr noundef @.str.64, i32 noundef %4, i32 noundef %6) #34, !srcloc !460
   br label %free_debug_processing.exit
 
 .split.thread.i:                                  ; preds = %.preheader.i

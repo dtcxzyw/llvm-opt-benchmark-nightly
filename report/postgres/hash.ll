@@ -204,8 +204,8 @@ BufferGetPage.exit:                               ; preds = %bb.e, %bb.f
   %i.w = icmp ult i16 %.val, 25
   %i.x = zext i16 %.val to i32
   %i.y = add nuw nsw i32 %i.x, 262120
-  %i.z = lshr i32 %i.y, 2                         ; 3 uses
-  %i.aa = trunc i32 %i.z to i16                   ; 2 uses
+  %i.z = lshr i32 %i.y, 2
+  %i.aa = trunc i32 %i.z to i16                   ; 4 uses
   %.not133137 = icmp eq i16 %i.aa, 0
   %.not133 = select i1 %i.w, i1 true, i1 %.not133137
   br i1 %.not133, label %._crit_edge.thread, label %.lr.ph
@@ -215,18 +215,18 @@ BufferGetPage.exit:                               ; preds = %bb.e, %bb.f
   br i1 %.not118, label %.lr.ph.split.us, label %.lr.ph.split.preheader
 
 .lr.ph.split.preheader:                           ; preds = %.lr.ph
-  %14 = and i32 %i.z, 65535
-  %15 = add nuw nsw i32 %14, 1
-  %wide.trip.count = zext nneg i32 %15 to i64
+  %14 = call i16 @llvm.umax.i16(i16 %i.aa, i16 1)
+  %umax = add nuw i16 %14, 1
+  %wide.trip.count = zext i16 %umax to i64
   br label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
   br i1 %10, label %.lr.ph.split.us.split.us.preheader, label %.lr.ph.split.us.split
 
 .lr.ph.split.us.split.us.preheader:               ; preds = %.lr.ph.split.us
-  %16 = and i32 %i.z, 65535
-  %17 = add nuw nsw i32 %16, 1
-  %wide.trip.count144 = zext nneg i32 %17 to i64
+  %15 = call i16 @llvm.umax.i16(i16 %i.aa, i16 1)
+  %umax145 = add nuw i16 %15, 1
+  %wide.trip.count144 = zext i16 %umax145 to i64
   br label %.lr.ph.split.us.split.us
 
 .lr.ph.split.us.split.us:                         ; preds = %.lr.ph.split.us.split.us.preheader, %bb.h

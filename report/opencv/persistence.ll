@@ -205,18 +205,16 @@ _ZNSt6vectorIcSaIcEE9push_backEOc.exit:           ; preds = %bb.ac, %_ZNSt6vecto
   %i.ff = load ptr, ptr %i.cm, align 8, !tbaa !112 ; 2 uses
   %i.fg = ptrtoint ptr %i.fe to i64
   %i.fh = ptrtoint ptr %i.ff to i64
-  %i.fi = sub i64 %i.fg, %i.fh
-  %i.fj = trunc i64 %i.fi to i32                  ; 4 uses
-  %8 = icmp sgt i32 %i.fj, 0
-  br i1 %8, label %.preheader, label %.thread
+  %i.fi = sub i64 %i.fg, %i.fh                    ; 2 uses
+  %i.fj = trunc i64 %i.fi to i32                  ; 2 uses
+  %or.cond = icmp slt i32 %i.fj, 4
+  br i1 %or.cond, label %.thread, label %.lr.ph120
 
-.preheader:                                       ; preds = %.loopexit
-  %9 = add nsw i32 %i.fj, -4
-  %.not71118 = icmp samesign ult i32 %i.fj, 4
-  br i1 %.not71118, label %.thread, label %.lr.ph120
-
-.lr.ph120:                                        ; preds = %.preheader
+.lr.ph120:                                        ; preds = %.loopexit
   %i.fk = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 9 uses
+  %8 = shl i64 %i.fi, 32
+  %sext = add nsw i64 %8, -17179869184
+  %9 = ashr exact i64 %sext, 32
   %.pre136 = load ptr, ptr %i.g, align 8, !tbaa !209
   br label %bb.ah
 
@@ -439,12 +437,12 @@ _ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS
 
 _ZNSt6vectorIhSaIhEE9push_backEOh.exit96:         ; preds = %bb.as, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i95
   %i.iy = phi ptr [ %i.ig, %bb.as ], [ %i.it, %_ZNSt6vectorIhSaIhEE17_M_realloc_insertIJhEEEvN9__gnu_cxx17__normal_iteratorIPhS1_EEDpOT_.exit.i.i95 ]
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4 ; 3 uses
-  %10 = trunc nuw i64 %indvars.iv.next to i32     ; 4 uses
-  %.not71 = icmp slt i32 %9, %10
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 4 ; 4 uses
+  %.not71 = icmp sgt i64 %indvars.iv.next, %9
   br i1 %.not71, label %._crit_edge121, label %bb.ah, !llvm.loop !376
 
 ._crit_edge121:                                   ; preds = %_ZNSt6vectorIhSaIhEE9push_backEOh.exit96
+  %10 = trunc nuw nsw i64 %indvars.iv.next to i32 ; 3 uses
   %i.iz = load ptr, ptr %i.cm, align 8, !tbaa !112
   %i.ja = getelementptr i8, ptr %i.iz, i64 %indvars.iv.next ; 2 uses
   %i.jb = getelementptr i8, ptr %i.ja, i64 -1
@@ -472,8 +470,8 @@ bb.ax:                                            ; preds = %.threadcondstore.sp
   store ptr %simplifycfg.merge, ptr %i.g, align 8, !tbaa !209
   br label %.thread
 
-.thread:                                          ; preds = %bb.ax, %.threadcondstore.split, %.preheader, %.loopexit, %._crit_edge121
-  %.157107 = phi i32 [ 0, %.loopexit ], [ %10, %._crit_edge121 ], [ 0, %.preheader ], [ %10, %.threadcondstore.split ], [ %10, %bb.ax ] ; 2 uses
+.thread:                                          ; preds = %bb.ax, %.threadcondstore.split, %.loopexit, %._crit_edge121
+  %.157107 = phi i32 [ 0, %.loopexit ], [ %10, %._crit_edge121 ], [ %10, %.threadcondstore.split ], [ %10, %bb.ax ] ; 2 uses
   %i.jl = sub nsw i32 %i.fj, %.157107             ; 4 uses
   %i.jm = icmp sgt i32 %i.jl, 0
   br i1 %i.jm, label %.lr.ph123.preheader, label %.thread.._crit_edge124_crit_edge

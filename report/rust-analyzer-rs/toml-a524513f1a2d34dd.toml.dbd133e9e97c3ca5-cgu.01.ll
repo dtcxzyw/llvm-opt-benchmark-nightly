@@ -202,9 +202,9 @@ bb.af:                                            ; preds = %_RNvXs_NtNtCshzWfHU
   br label %bb.ap
 
 bb.ag:                                            ; preds = %bb.ap
-  %i.es = add nuw i64 %.sroa.0242.0382, 1
-  %.not.i.not = icmp ult i64 %.sroa.0242.0382, %i.by
-  br i1 %.not.i.not, label %bb.ap, label %bb.ah
+  %i.es = add i64 %.sroa.0242.0382, 1
+  %exitcond = icmp eq i64 %.sroa.0242.0382, %i.by
+  br i1 %exitcond, label %bb.ah, label %bb.ap
 
 bb.ah:                                            ; preds = %bb.ag
   %i.et = call noundef zeroext i1 %i.er(ptr noundef nonnull %i.em, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @13, i64 noundef 2) #20
@@ -229,9 +229,9 @@ bb.aj:                                            ; preds = %bb.ai
   br i1 %i.ev, label %.loopexit, label %.preheader373
 
 bb.ak:                                            ; preds = %.preheader373
-  %i.ew = add nuw i64 %.sroa.0243.0383, 1
-  %.not.i232.not = icmp ult i64 %.sroa.0243.0383, %i.by
-  br i1 %.not.i232.not, label %.preheader373, label %bb.al
+  %i.ew = add i64 %.sroa.0243.0383, 1
+  %exitcond323 = icmp eq i64 %.sroa.0243.0383, %i.by
+  br i1 %exitcond323, label %bb.al, label %.preheader373
 
 bb.al:                                            ; preds = %bb.ak
   %i.ex = call noundef zeroext i1 %i.er(ptr noundef nonnull %i.em, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @16, i64 noundef 1) #20

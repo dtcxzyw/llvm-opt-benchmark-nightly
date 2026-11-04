@@ -204,14 +204,15 @@ gistDeCompressAtt.exit:                           ; preds = %gistdentryinit.exit
   %i.bg = ptrtoint ptr %4 to i64                  ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %3, i64 6184
   %i.bi = ptrtoint ptr %i.a to i64
+  %umax = add nuw nsw i16 %i.ax, 1
+  %wide.trip.count = zext i16 %umax to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph110, %bb.al
+  %indvars.iv115 = phi i64 [ 1, %.lr.ph110 ], [ %indvars.iv.next116, %bb.al ] ; 5 uses
   %.053109 = phi i32 [ -1, %.lr.ph110 ], [ %.9.ph, %bb.al ] ; 2 uses
-  %.057108 = phi i16 [ 1, %.lr.ph110 ], [ %7, %bb.al ] ; 8 uses
   %.058107 = phi i16 [ 1, %.lr.ph110 ], [ %.563, %bb.al ] ; 2 uses
-  %6 = zext i16 %.057108 to i64
-  %i.bj = getelementptr [4 x i8], ptr %i.ay, i64 %6
+  %i.bj = getelementptr [4 x i8], ptr %i.ay, i64 %indvars.iv115
   %.val76 = load i32, ptr %i.bj, align 4
   %i.bk = and i32 %.val76, 32767
   %i.bl = zext nneg i32 %i.bk to i64
@@ -225,6 +226,7 @@ bb.g:                                             ; preds = %.lr.ph110, %bb.al
 .lr.ph:                                           ; preds = %bb.g
   %i.br = getelementptr i8, ptr %i.bm, i64 6
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bm, i64 8 ; 2 uses
+  %6 = trunc nuw i64 %indvars.iv115 to i16        ; 4 uses
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph, %select.unfold
@@ -329,7 +331,7 @@ bb.u:                                             ; preds = %bb.r, %bb.t, %bb.l,
   store i64 %.1.i.ph, ptr %4, align 8
   store ptr %0, ptr %i.ba, align 8
   store ptr %1, ptr %i.bb, align 8
-  store i16 %.057108, ptr %i.bc, align 8
+  store i16 %6, ptr %i.bc, align 8
   store i8 0, ptr %i.bd, align 2
   %i.di = getelementptr inbounds nuw [48 x i8], ptr %i.be, i64 %indvars.iv ; 2 uses
   %i.dj = getelementptr inbounds nuw i8, ptr %i.di, i64 8
@@ -362,7 +364,7 @@ bb.x:                                             ; preds = %bb.s
   store i64 0, ptr %4, align 8
   store ptr %0, ptr %i.ba, align 8
   store ptr %1, ptr %i.bb, align 8
-  store i16 %.057108, ptr %i.bc, align 8
+  store i16 %6, ptr %i.bc, align 8
   br label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %bb.x, %bb.w
@@ -452,7 +454,7 @@ bb.ad:                                            ; preds = %gistpenalty.exit
 select.unfold:                                    ; preds = %.select.unfold_crit_edge, %bb.ac, %bb.ab
   %.pre-phi = phi i32 [ %.pre, %.select.unfold_crit_edge ], [ %i.eu, %bb.ac ], [ %i.eu, %bb.ab ]
   %i.fb = phi i16 [ %.pre115, %.select.unfold_crit_edge ], [ %i.et, %bb.ac ], [ %i.et, %bb.ab ]
-  %.361 = phi i16 [ %.15994, %.select.unfold_crit_edge ], [ %.057108, %bb.ac ], [ %.057108, %bb.ab ] ; 2 uses
+  %.361 = phi i16 [ %.15994, %.select.unfold_crit_edge ], [ %6, %bb.ac ], [ %6, %bb.ab ] ; 2 uses
   %.356 = phi i32 [ %.15495, %.select.unfold_crit_edge ], [ -1, %bb.ac ], [ -1, %bb.ab ] ; 2 uses
   %i.fc = sext i32 %.pre-phi to i64
   %i.fd = icmp slt i64 %indvars.iv.next, %i.fc
@@ -466,7 +468,8 @@ select.unfold:                                    ; preds = %.select.unfold_crit
   %.3 = phi i1 [ true, %bb.g ], [ false, %..thread.loopexit_crit_edge ], [ %spec.select, %select.unfold ]
   %i.ff = sext i16 %i.fe to i32
   %i.fg = icmp ne i32 %.050.lcssa, %i.ff
-  %.not68 = icmp eq i16 %.159.lcssa, %.057108
+  %7 = zext i16 %.159.lcssa to i64
+  %.not68 = icmp eq i64 %indvars.iv115, %7
   %or.cond69 = select i1 %i.fg, i1 true, i1 %.not68
   br i1 %or.cond69, label %bb.ah, label %bb.ae
 
@@ -482,7 +485,8 @@ bb.af:                                            ; preds = %bb.ae
 bb.ag:                                            ; preds = %bb.af, %bb.ae
   %.5 = phi i32 [ %i.fj, %bb.af ], [ %.154.lcssa, %bb.ae ]
   %i.fk = icmp eq i32 %.5, 0                      ; 2 uses
-  %spec.select70 = select i1 %i.fk, i16 %.057108, i16 %.159.lcssa
+  %8 = trunc nuw i64 %indvars.iv115 to i16
+  %spec.select70 = select i1 %i.fk, i16 %8, i16 %.159.lcssa
   %spec.select71 = select i1 %i.fk, i32 -1, i32 1
   br label %bb.ah
 
@@ -507,9 +511,9 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
 
 bb.al:                                            ; preds = %bb.ak, %bb.ah
   %.9.ph = phi i32 [ %.6, %bb.ah ], [ 0, %bb.ak ]
-  %7 = add i16 %.057108, 1                        ; 2 uses
-  %.not = icmp ugt i16 %7, %i.ax
-  br i1 %.not, label %._crit_edge, label %bb.g, !llvm.loop !30
+  %indvars.iv.next116 = add nuw nsw i64 %indvars.iv115, 1 ; 2 uses
+  %exitcond = icmp eq i64 %indvars.iv.next116, %wide.trip.count
+  br i1 %exitcond, label %._crit_edge, label %bb.g, !llvm.loop !30
 
 ._crit_edge:                                      ; preds = %bb.al, %bb.ak, %gistDeCompressAtt.exit
   %.664 = phi i16 [ 1, %gistDeCompressAtt.exit ], [ %.563, %bb.ak ], [ %.563, %bb.al ]

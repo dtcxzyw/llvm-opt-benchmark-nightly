@@ -205,13 +205,13 @@ thread-pre-split:                                 ; preds = %bb.a
   br label %bb.k
 
 bb.k:                                             ; preds = %thread-pre-split, %..loopexit97_crit_edge
-  %i.aw = phi i32 [ %.pr, %thread-pre-split ], [ %i.ac, %..loopexit97_crit_edge ] ; 3 uses
+  %i.aw = phi i32 [ %.pr, %thread-pre-split ], [ %i.ac, %..loopexit97_crit_edge ] ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !30616)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !30617)
   %i.ax = load i32, ptr %i.e, align 4, !alias.scope !30616, !noundef !177 ; 2 uses
   %i.ay = zext i32 %i.ax to i64                   ; 4 uses
-  %i.az = zext i32 %i.aw to i64                   ; 4 uses
-  %i.ba = add nuw nsw i64 %i.az, 1                ; 6 uses
+  %i.az = zext i32 %i.aw to i64                   ; 3 uses
+  %i.ba = add nuw nsw i64 %i.az, 1                ; 5 uses
   %i.bb = icmp samesign uge i64 %i.ba, %i.ay
   %i.bc = icmp ult i32 %i.aw, 720
   %or.cond.i = and i1 %i.bc, %i.bb
@@ -408,6 +408,8 @@ _RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i
 .lr.ph52.preheader.i:                             ; preds = %._crit_edge43.i
   %i.dn = getelementptr i8, ptr %6, i64 %.idx.i
   %scevgep.i = getelementptr i8, ptr %i.dn, i64 258
+  %9 = add nuw nsw i32 %i.aw, 1
+  %10 = zext nneg i32 %9 to i64                   ; 2 uses
   br label %.lr.ph52.i
 
 .lr.ph52.i:                                       ; preds = %._crit_edge48.i, %.lr.ph52.preheader.i
@@ -415,7 +417,7 @@ _RNvNtCsl4v216RJbSI_19brotli_decompressor10bit_reader18BrotliSafeReadBits.exit.i
   %.sroa.011.049.i = phi ptr [ %i.n, %.lr.ph52.preheader.i ], [ %i.do, %._crit_edge48.i ] ; 2 uses
   %i.do = getelementptr inbounds nuw i8, ptr %.sroa.011.049.i, i64 2 ; 2 uses
   %i.dp = add nuw nsw i64 %indvars.iv76.i, 1      ; 2 uses
-  %exitcond79.i = icmp eq i64 %indvars.iv76.i, %i.ba
+  %exitcond79.i = icmp eq i64 %indvars.iv76.i, %10
   br i1 %exitcond79.i, label %bb.ad, label %bb.ac, !prof !186
 
 bb.ac:                                            ; preds = %.lr.ph52.i
@@ -428,7 +430,7 @@ bb.ac:                                            ; preds = %.lr.ph52.i
   br label %bb.af
 
 bb.ad:                                            ; preds = %.lr.ph52.i
-  %i.dt = add nuw nsw i64 %i.az, 2
+  %i.dt = add nuw nsw i64 %10, 1
   tail call void @_RNvNtNtCsf3Ta7LF998c_4core5slice5index16slice_index_fail(i64 noundef %i.dt, i64 noundef %i.ba, i64 noundef 720, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @427) #62, !noalias !30618
   unreachable
 

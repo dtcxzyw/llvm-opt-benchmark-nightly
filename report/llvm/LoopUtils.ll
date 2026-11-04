@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %._crit_edge, %_ZNSt
   %.061147 = phi i64 [ 0, %._crit_edge ], [ %.3, %_ZNSt6vectorISt4pairImN4llvm8ArrayRefIPN4mlir9OperationEEEESaIS7_EE12emplace_backIJRmRS_IS5_SaIS5_EEEEERS7_DpOT_.exit ] ; 3 uses
   %.sroa.0100.0146 = phi ptr [ null, %._crit_edge ], [ %.sroa.0100.4, %_ZNSt6vectorISt4pairImN4llvm8ArrayRefIPN4mlir9OperationEEEESaIS7_EE12emplace_backIJRmRS_IS5_SaIS5_EEEEERS7_DpOT_.exit ] ; 5 uses
   %.sroa.099.0145 = phi ptr [ null, %._crit_edge ], [ %.sroa.099.4, %_ZNSt6vectorISt4pairImN4llvm8ArrayRefIPN4mlir9OperationEEEESaIS7_EE12emplace_backIJRmRS_IS5_SaIS5_EEEEERS7_DpOT_.exit ] ; 4 uses
-  %.0124142 = phi i64 [ 0, %._crit_edge ], [ %i.ig, %_ZNSt6vectorISt4pairImN4llvm8ArrayRefIPN4mlir9OperationEEEESaIS7_EE12emplace_backIJRmRS_IS5_SaIS5_EEEEERS7_DpOT_.exit ] ; 7 uses
+  %.0124142 = phi i64 [ 0, %._crit_edge ], [ %i.ig, %_ZNSt6vectorISt4pairImN4llvm8ArrayRefIPN4mlir9OperationEEEESaIS7_EE12emplace_backIJRmRS_IS5_SaIS5_EEEEERS7_DpOT_.exit ] ; 8 uses
   %i.fp = phi ptr [ null, %._crit_edge ], [ %i.if, %_ZNSt6vectorISt4pairImN4llvm8ArrayRefIPN4mlir9OperationEEEESaIS7_EE12emplace_backIJRmRS_IS5_SaIS5_EEEEERS7_DpOT_.exit ] ; 10 uses
   %i.fq = getelementptr inbounds nuw [24 x i8], ptr %i.cf, i64 %.0124142 ; 2 uses
   %i.fr = load ptr, ptr %i.fq, align 8, !tbaa !106 ; 5 uses
@@ -425,9 +425,9 @@ _ZNSt6vectorISt4pairImN4llvm8ArrayRefIPN4mlir9OperationEEEESaIS7_EE12emplace_bac
   %.sroa.099.4 = phi ptr [ %.sroa.099.0145, %bb.n ], [ %.sroa.099.3, %bb.w ], [ %.sroa.099.3, %_ZNSt6vectorISt4pairImN4llvm8ArrayRefIPN4mlir9OperationEEEESaIS7_EE17_M_realloc_insertIJRmRS_IS5_SaIS5_EEEEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit ] ; 2 uses
   %.sroa.0100.4 = phi ptr [ %.sroa.0100.0146, %bb.n ], [ %.sroa.0100.3, %bb.w ], [ %.sroa.0100.3, %_ZNSt6vectorISt4pairImN4llvm8ArrayRefIPN4mlir9OperationEEEESaIS7_EE17_M_realloc_insertIJRmRS_IS5_SaIS5_EEEEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit ] ; 3 uses
   %.3 = phi i64 [ %.061147, %bb.n ], [ %.2, %bb.w ], [ %.2, %_ZNSt6vectorISt4pairImN4llvm8ArrayRefIPN4mlir9OperationEEEESaIS7_EE17_M_realloc_insertIJRmRS_IS5_SaIS5_EEEEEvN9__gnu_cxx17__normal_iteratorIPS7_S9_EEDpOT_.exit ] ; 2 uses
-  %i.ig = add i64 %.0124142, 1                    ; 2 uses
-  %.not130 = icmp ugt i64 %i.ig, %i.bu
-  br i1 %.not130, label %bb.m, label %bb.n, !llvm.loop !306
+  %i.ig = add nuw i64 %.0124142, 1
+  %exitcond = icmp eq i64 %.0124142, %i.bu
+  br i1 %exitcond, label %bb.m, label %bb.n, !llvm.loop !306
 
 ._crit_edge153:                                   ; preds = %.lr.ph152, %bb.m
   %.sroa.099.5.lcssa = phi ptr [ %.sroa.099.4, %bb.m ], [ %i.ip, %.lr.ph152 ]

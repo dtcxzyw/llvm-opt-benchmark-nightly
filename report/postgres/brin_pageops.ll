@@ -202,17 +202,18 @@ bb.d:                                             ; preds = %BufferGetPage.exit
 
 .critedge.lr.ph:                                  ; preds = %bb.d
   %i.t = getelementptr i8, ptr %.0.i.i, i64 20
+  %umax = add nuw nsw i16 %i.s, 1
+  %wide.trip.count = zext i16 %umax to i64
   br label %.critedge
 
 bb.e:                                             ; preds = %.critedge
-  %2 = add i16 %.01419, 1                         ; 2 uses
-  %.not = icmp ugt i16 %2, %i.s
-  br i1 %.not, label %.loopexit, label %.critedge, !llvm.loop !10
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond, label %.loopexit, label %.critedge, !llvm.loop !10
 
 .critedge:                                        ; preds = %.critedge.lr.ph, %bb.e
-  %.01419 = phi i16 [ 1, %.critedge.lr.ph ], [ %2, %bb.e ] ; 2 uses
-  %3 = zext i16 %.01419 to i64
-  %i.u = getelementptr [4 x i8], ptr %i.t, i64 %3
+  %indvars.iv = phi i64 [ 1, %.critedge.lr.ph ], [ %indvars.iv.next, %bb.e ] ; 2 uses
+  %i.u = getelementptr [4 x i8], ptr %i.t, i64 %indvars.iv
   %i.v = load i32, ptr %i.u, align 4
   %i.w = and i32 %i.v, 98304
   %.not16 = icmp eq i32 %i.w, 0

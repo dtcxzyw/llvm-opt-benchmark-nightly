@@ -205,7 +205,7 @@ bb.dyg:                                           ; preds = %bb.dyf, %._crit_edg
   br i1 %or.cond8.not.i, label %bb.eag, label %bb.dyh
 
 bb.dyh:                                           ; preds = %bb.dyg
-  %i.hsx = sub i64 %.sroa.0.1.lcssa.i, %.sroa.0198.1.lcssa.i ; 5 uses
+  %i.hsx = sub nsw i64 %.sroa.0.1.lcssa.i, %.sroa.0198.1.lcssa.i ; 4 uses
   %i.hsy = shl nuw nsw i32 %.0501.lcssa.i, 3
   %i.hsz = zext nneg i32 %i.hsy to i64
   %i.hta = icmp slt i64 %i.hsx, %i.hsz
@@ -220,7 +220,7 @@ bb.dyi:                                           ; preds = %bb.dyh
 
 .lr.ph586.i.preheader.a:                          ; preds = %bb.dyi
   %i.hte = add i64 %.sroa.0.1.lcssa.i, 1
-  %i.htf = sub i64 %i.hte, %.sroa.0198.1.lcssa.i  ; 3 uses
+  %i.htf = sub i64 %i.hte, %.sroa.0198.1.lcssa.i  ; 4 uses
   %min.iters.check2872 = icmp ult i64 %i.htf, 8
   br i1 %min.iters.check2872, label %.lr.ph586.i.preheader3109, label %vector.ph2873
 
@@ -249,11 +249,11 @@ middle.block2878:                                 ; preds = %vector.body2875
   br label %.lr.ph586.i
 
 .lr.ph586.i:                                      ; preds = %.lr.ph586.i.preheader3109, %.lr.ph586.i
-  %indvars.iv.i1621 = phi i64 [ %indvars.iv.next.i1622, %.lr.ph586.i ], [ %indvars.iv.i1621.ph, %.lr.ph586.i.preheader3109 ] ; 3 uses
+  %indvars.iv.i1621 = phi i64 [ %indvars.iv.next.i1622, %.lr.ph586.i ], [ %indvars.iv.i1621.ph, %.lr.ph586.i.preheader3109 ] ; 2 uses
   %i.htj = getelementptr inbounds nuw [4 x i8], ptr %i.htd, i64 %indvars.iv.i1621
   store i32 %.0503.lcssa.i, ptr %i.htj, align 4, !tbaa !63
-  %indvars.iv.next.i1622 = add nuw nsw i64 %indvars.iv.i1621, 1
-  %exitcond.i = icmp eq i64 %indvars.iv.i1621, %i.hsx
+  %indvars.iv.next.i1622 = add nuw nsw i64 %indvars.iv.i1621, 1 ; 2 uses
+  %exitcond.i = icmp eq i64 %indvars.iv.next.i1622, %i.htf
   br i1 %exitcond.i, label %._crit_edge587.i, label %.lr.ph586.i, !llvm.loop !211
 
 ._crit_edge587.i:                                 ; preds = %.lr.ph586.i, %middle.block2878, %bb.dyi
@@ -494,8 +494,8 @@ bb.dzq:                                           ; preds = %bb.dzp, %bb.dzo
   %i.hwk = sub i64 %i.hwj, %.sroa.0198.1.lcssa.i
   br label %.lr.ph597.i
 
-.lr.ph597.i:                                      ; preds = %.lr.ph597.i.preheader, %bb.eaf
-  %indvars.iv606.i = phi i64 [ %indvars.iv.next607.i, %bb.eaf ], [ 0, %.lr.ph597.i.preheader ] ; 2 uses
+.lr.ph597.i:                                      ; preds = %bb.eaf, %.lr.ph597.i.preheader
+  %indvars.iv606.i = phi i64 [ 0, %.lr.ph597.i.preheader ], [ %indvars.iv.next607.i, %bb.eaf ] ; 2 uses
   %i.hwl = getelementptr inbounds nuw [4 x i8], ptr %i.htd, i64 %indvars.iv606.i
   %i.hwm = load i32, ptr %i.hwl, align 4, !tbaa !63 ; 3 uses
   %.not553.i = icmp eq i32 %i.hwm, 0
@@ -630,7 +630,7 @@ bb.eae:                                           ; preds = %.lr.ph597.i
   br label %bb.eaf
 
 bb.eaf:                                           ; preds = %bb.eae, %.critedge.i1623, %bb.ead, %bb.eac, %ir_jmp_addr.exit.i1626
-  %indvars.iv.next607.i = add nuw i64 %indvars.iv606.i, 1 ; 2 uses
+  %indvars.iv.next607.i = add nuw nsw i64 %indvars.iv606.i, 1 ; 2 uses
   %exitcond2454.not = icmp eq i64 %indvars.iv.next607.i, %i.hwk
   br i1 %exitcond2454.not, label %._crit_edge598.i, label %.lr.ph597.i, !llvm.loop !214
 

@@ -202,18 +202,17 @@ BufferGetPage.exit:                               ; preds = %bb.d, %bb.e
   %.val = load i16, ptr %i.ab, align 4            ; 2 uses
   %i.ac = icmp ult i16 %.val, 25
   %i.ad = zext i16 %.val to i32
-  %i.ae = add nuw nsw i32 %i.ad, 262120           ; 2 uses
-  %8 = and i32 %i.ae, 262140
-  %.not6062 = icmp eq i32 %8, 0
+  %i.ae = add nuw nsw i32 %i.ad, 262120
+  %8 = lshr i32 %i.ae, 2
+  %9 = trunc i32 %8 to i16                        ; 2 uses
+  %.not6062 = icmp eq i16 %9, 0
   %.not60 = select i1 %i.ac, i1 true, i1 %.not6062
   br i1 %.not60, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %BufferGetPage.exit
-  %9 = lshr i32 %i.ae, 2
   %i.af = getelementptr i8, ptr %.0.i.i, i64 20
-  %10 = and i32 %9, 65535
-  %11 = add nuw nsw i32 %10, 1
-  %wide.trip.count = zext nneg i32 %11 to i64
+  %umax = add nuw nsw i16 %9, 1
+  %wide.trip.count = zext i16 %umax to i64
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %bb.f
@@ -381,18 +380,17 @@ bb.f:                                             ; preds = %bb.aj, %BufferGetPa
   %.0146.val = load i16, ptr %i.ai, align 4       ; 2 uses
   %i.aj = icmp ult i16 %.0146.val, 25
   %i.ak = zext i16 %.0146.val to i32
-  %i.al = add nuw nsw i32 %i.ak, 262120           ; 2 uses
-  %11 = and i32 %i.al, 262140
-  %.not182198 = icmp eq i32 %11, 0
+  %i.al = add nuw nsw i32 %i.ak, 262120
+  %11 = lshr i32 %i.al, 2
+  %12 = trunc i32 %11 to i16                      ; 2 uses
+  %.not182198 = icmp eq i16 %12, 0
   %.not182 = select i1 %i.aj, i1 true, i1 %.not182198
   br i1 %.not182, label %._crit_edge190, label %.lr.ph189
 
 .lr.ph189:                                        ; preds = %bb.f
-  %12 = lshr i32 %i.al, 2
   %i.am = getelementptr i8, ptr %.0146, i64 20
-  %13 = and i32 %12, 65535
-  %14 = add nuw nsw i32 %13, 1
-  %wide.trip.count205 = zext nneg i32 %14 to i64
+  %umax = add nuw nsw i16 %12, 1
+  %wide.trip.count205 = zext i16 %umax to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph189, %bb.t

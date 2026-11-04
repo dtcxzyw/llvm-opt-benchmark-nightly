@@ -204,19 +204,18 @@ bb.h:                                             ; preds = %bb.g
   %.val72 = load i16, ptr %i.ar, align 4          ; 2 uses
   %i.as = icmp ult i16 %.val72, 25
   %i.at = zext i16 %.val72 to i32
-  %i.au = add nuw nsw i32 %i.at, 262120           ; 2 uses
-  %8 = and i32 %i.au, 262140
-  %.not102113 = icmp eq i32 %8, 0
+  %i.au = add nuw nsw i32 %i.at, 262120
+  %8 = lshr i32 %i.au, 2
+  %9 = trunc i32 %8 to i16                        ; 2 uses
+  %.not102113 = icmp eq i16 %9, 0
   %.not102 = select i1 %i.as, i1 true, i1 %.not102113
   br i1 %.not102, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.h
-  %9 = lshr i32 %i.au, 2
   %i.av = getelementptr i8, ptr %.0.i.i, i64 20
   %i.aw = getelementptr i8, ptr %0, i64 64        ; 2 uses
-  %10 = and i32 %9, 65535
-  %11 = add nuw nsw i32 %10, 1
-  %wide.trip.count = zext nneg i32 %11 to i64
+  %umax = add nuw nsw i16 %9, 1
+  %wide.trip.count = zext i16 %umax to i64
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %gistMemorizeAllDownlinks.exit
@@ -262,18 +261,17 @@ BufferGetPage.exit.i:                             ; preds = %bb.k, %bb.j
   %.val16.i = load i16, ptr %i.bu, align 4        ; 2 uses
   %i.bv = icmp ult i16 %.val16.i, 25
   %i.bw = zext i16 %.val16.i to i32
-  %i.bx = add nuw nsw i32 %i.bw, 262120           ; 2 uses
-  %12 = and i32 %i.bx, 262140
-  %.not1719.i = icmp eq i32 %12, 0
+  %i.bx = add nuw nsw i32 %i.bw, 262120
+  %10 = lshr i32 %i.bx, 2
+  %11 = trunc i32 %10 to i16                      ; 2 uses
+  %.not1719.i = icmp eq i16 %11, 0
   %.not17.i = select i1 %i.bv, i1 true, i1 %.not1719.i
   br i1 %.not17.i, label %gistMemorizeAllDownlinks.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %BufferGetPage.exit.i
-  %13 = lshr i32 %i.bx, 2
   %i.by = getelementptr i8, ptr %.0.i.i.i, i64 20
-  %14 = and i32 %13, 65535
-  %15 = add nuw nsw i32 %14, 1
-  %wide.trip.count.i = zext nneg i32 %15 to i64
+  %umax.i = add nuw nsw i16 %11, 1
+  %wide.trip.count.i = zext i16 %umax.i to i64
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.l, %.lr.ph.i
@@ -545,18 +543,17 @@ BufferGetPage.exit.i80.us:                        ; preds = %bb.aa, %bb.z
   %.val16.i82.us = load i16, ptr %i.gh, align 4   ; 2 uses
   %i.gi = icmp ult i16 %.val16.i82.us, 25
   %i.gj = zext i16 %.val16.i82.us to i32
-  %i.gk = add nuw nsw i32 %i.gj, 262120           ; 2 uses
-  %16 = and i32 %i.gk, 262140
-  %.not1719.i83.us = icmp eq i32 %16, 0
+  %i.gk = add nuw nsw i32 %i.gj, 262120
+  %12 = lshr i32 %i.gk, 2
+  %13 = trunc i32 %12 to i16                      ; 2 uses
+  %.not1719.i83.us = icmp eq i16 %13, 0
   %.not17.i84.us = select i1 %i.gi, i1 true, i1 %.not1719.i83.us
   br i1 %.not17.i84.us, label %gistMemorizeAllDownlinks.exit95.us, label %.lr.ph.i85.us
 
 .lr.ph.i85.us:                                    ; preds = %BufferGetPage.exit.i80.us
-  %17 = lshr i32 %i.gk, 2
   %i.gl = getelementptr i8, ptr %.0.i.i.i81.us, i64 20
-  %18 = and i32 %17, 65535
-  %19 = add nuw nsw i32 %18, 1
-  %wide.trip.count.i86.us = zext nneg i32 %19 to i64
+  %umax.i86.us = add nuw nsw i16 %13, 1
+  %wide.trip.count.i86.us = zext i16 %umax.i86.us to i64
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.ab, %.lr.ph.i85.us
