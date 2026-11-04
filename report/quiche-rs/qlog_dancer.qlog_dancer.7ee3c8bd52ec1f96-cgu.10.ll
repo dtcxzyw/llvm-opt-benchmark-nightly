@@ -205,8 +205,8 @@ bb.a:
     #dbg_value(ptr poison, !30469, !DIExpression(DW_OP_LLVM_fragment, 0, 32), !30507)
     #dbg_value(ptr poison, !30469, !DIExpression(DW_OP_LLVM_fragment, 32, 32), !30507)
   %i.p = alloca [24 x i8], align 8                ; 14 uses
-    #dbg_value(ptr undef, !30472, !DIExpression(), !30508)
-    #dbg_value(ptr undef, !30471, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !30509)
+    #dbg_value(ptr poison, !30472, !DIExpression(), !30508)
+    #dbg_value(ptr poison, !30471, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !30509)
   %i.q = alloca [8 x i8], align 8                 ; 9 uses
   %i.r = alloca [8 x i8], align 8                 ; 7 uses
     #dbg_value(ptr %1, !30459, !DIExpression(), !30510)
@@ -609,8 +609,8 @@ bb.at:                                            ; preds = %._crit_edge338, %._
   %i.hm = getelementptr inbounds nuw i8, ptr %i.hk, i64 12, !dbg !30954
   store i32 %i.hg, ptr %i.hm, align 4, !dbg !30954
   store i64 2, ptr %i.gu, align 8, !dbg !30955, !alias.scope !30735
-    #dbg_value(double %i.gr, !30467, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !30690)
     #dbg_value(double %i.gs, !30467, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !30690)
+    #dbg_value(double %i.gr, !30467, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !30690)
     #dbg_value(double %i.gm, !30467, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !30690)
     #dbg_value(double %i.gp, !30467, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !30690)
     #dbg_value(!DIArgList(ptr undef, i64 16), !30469, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !30507)
@@ -705,8 +705,8 @@ bb.ax:                                            ; preds = %._crit_edge342, %bb
   store i32 %i.ib, ptr %i.if, align 4, !dbg !30954
   store i64 4, ptr %i.gu, align 8, !dbg !30955, !alias.scope !30735
     #dbg_value(!DIArgList(ptr undef, i64 32), !30471, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !30509)
-    #dbg_value(double %i.gm, !30467, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !30690)
     #dbg_value(double %i.gp, !30467, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !30690)
+    #dbg_value(double %i.gm, !30467, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !30690)
     #dbg_value(double %i.gr, !30467, !DIExpression(DW_OP_LLVM_fragment, 128, 64), !30690)
     #dbg_value(double %i.gs, !30467, !DIExpression(DW_OP_LLVM_fragment, 192, 64), !30690)
     #dbg_value(!DIArgList(ptr undef, i64 16), !30469, !DIExpression(DW_OP_LLVM_arg, 0, DW_OP_LLVM_arg, 1, DW_OP_plus, DW_OP_stack_value, DW_OP_LLVM_fragment, 0, 64), !30507)

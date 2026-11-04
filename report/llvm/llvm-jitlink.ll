@@ -204,12 +204,12 @@ bb.bd:                                            ; preds = %_ZNK4llvm9StringRef
   br label %bb.be
 
 bb.be:                                            ; preds = %bb.bd, %_ZNK4llvm9StringRef5splitEc.exit62.i, %_ZNK4llvm9StringRef5splitEc.exit62.thread.i
-  %.sroa.0129.sroa.9.0.i = phi i64 [ %.sroa.speculated.i.i.i58.i, %_ZNK4llvm9StringRef5splitEc.exit62.i ], [ 0, %_ZNK4llvm9StringRef5splitEc.exit62.thread.i ], [ 0, %bb.bd ] ; 3 uses
-  %.sroa.0129.sroa.0.0.i = phi ptr [ %i.tp, %_ZNK4llvm9StringRef5splitEc.exit62.i ], [ null, %_ZNK4llvm9StringRef5splitEc.exit62.thread.i ], [ %i.tr, %bb.bd ] ; 2 uses
-  %.sroa.13133.sroa.0.0.i = phi ptr [ %i.tr, %_ZNK4llvm9StringRef5splitEc.exit62.i ], [ %.sroa.0129.sroa.0.0.copyload.i, %_ZNK4llvm9StringRef5splitEc.exit62.thread.i ], [ %i.tp, %bb.bd ]
-  %.sroa.13133.sroa.8.0.i = phi i64 [ %i.ts, %_ZNK4llvm9StringRef5splitEc.exit62.i ], [ %.sroa.0129.sroa.9.0.copyload.i, %_ZNK4llvm9StringRef5splitEc.exit62.thread.i ], [ %.sroa.speculated.i.i.i58.i, %bb.bd ]
+  %.sroa.14.0.i = phi ptr [ %i.tr, %_ZNK4llvm9StringRef5splitEc.exit62.i ], [ %.sroa.0129.sroa.0.0.copyload.i, %_ZNK4llvm9StringRef5splitEc.exit62.thread.i ], [ %i.tp, %bb.bd ]
+  %.sroa.19.0.i = phi i64 [ %i.ts, %_ZNK4llvm9StringRef5splitEc.exit62.i ], [ %.sroa.0129.sroa.9.0.copyload.i, %_ZNK4llvm9StringRef5splitEc.exit62.thread.i ], [ %.sroa.speculated.i.i.i58.i, %bb.bd ]
+  %.sroa.9129.0.i = phi i64 [ %.sroa.speculated.i.i.i58.i, %_ZNK4llvm9StringRef5splitEc.exit62.i ], [ 0, %_ZNK4llvm9StringRef5splitEc.exit62.thread.i ], [ 0, %bb.bd ] ; 3 uses
+  %.sroa.0127.0.i = phi ptr [ %i.tp, %_ZNK4llvm9StringRef5splitEc.exit62.i ], [ null, %_ZNK4llvm9StringRef5splitEc.exit62.thread.i ], [ %i.tr, %bb.bd ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %126) #38, !noalias !2872
-  call fastcc void @"_ZZL10addAliasesRN4llvm7SessionERKSt3mapIjPNS_3orc8JITDylibESt4lessIjESaISt4pairIKjS5_EEEENK3$_1clENS_9StringRefE"(ptr dead_on_unwind noalias writable align 8 %126, ptr noundef nonnull align 8 dereferenceable(24) %123, ptr %.sroa.0129.sroa.0.0.i, i64 %.sroa.0129.sroa.9.0.i), !noalias !2872
+  call fastcc void @"_ZZL10addAliasesRN4llvm7SessionERKSt3mapIjPNS_3orc8JITDylibESt4lessIjESaISt4pairIKjS5_EEEENK3$_1clENS_9StringRefE"(ptr dead_on_unwind noalias writable align 8 %126, ptr noundef nonnull align 8 dereferenceable(24) %123, ptr %.sroa.0127.0.i, i64 %.sroa.9129.0.i), !noalias !2872
   %i.tu = load i8, ptr %i.rh, align 8, !noalias !2872
   %i.tv = trunc i8 %i.tu to i1
   br i1 %i.tv, label %.critedge56.i, label %bb.bf
@@ -252,17 +252,17 @@ bb.bg:                                            ; preds = %_ZNK4llvm9StringRef
   br i1 %i.ug, label %.thread.i, label %bb.bh
 
 .thread.i:                                        ; preds = %bb.bg, %_ZNK4llvm9StringRef5splitEc.exit68.i, %_ZNK4llvm9StringRef5splitEc.exit68.thread.i
+  %.sroa.0115.0167.i = phi ptr [ %i.ub, %bb.bg ], [ null, %_ZNK4llvm9StringRef5splitEc.exit68.thread.i ], [ %i.ud, %_ZNK4llvm9StringRef5splitEc.exit68.i ]
   %.sroa.11.sroa.7.0175.i = phi i64 [ %i.ue, %bb.bg ], [ %.sroa.0114.sroa.8.0.copyload.i, %_ZNK4llvm9StringRef5splitEc.exit68.thread.i ], [ %.sroa.speculated.i.i.i64.i, %_ZNK4llvm9StringRef5splitEc.exit68.i ]
   %.sroa.11.sroa.0.0173.i = phi ptr [ %i.ud, %bb.bg ], [ %.sroa.0114.sroa.0.0.copyload.i, %_ZNK4llvm9StringRef5splitEc.exit68.thread.i ], [ %i.ub, %_ZNK4llvm9StringRef5splitEc.exit68.i ]
-  %.sroa.0114.sroa.0.0171.i = phi ptr [ %i.ub, %bb.bg ], [ null, %_ZNK4llvm9StringRef5splitEc.exit68.thread.i ], [ %i.ud, %_ZNK4llvm9StringRef5splitEc.exit68.i ]
-  %i.uh = icmp eq i64 %.sroa.0129.sroa.9.0.i, 0
-  %spec.select176.i = select i1 %i.uh, ptr %.sroa.0114.sroa.0.0171.i, ptr %.sroa.0129.sroa.0.0.i
+  %i.uh = icmp eq i64 %.sroa.9129.0.i, 0
+  %spec.select176.i = select i1 %i.uh, ptr %.sroa.0115.0167.i, ptr %.sroa.0127.0.i
   br label %bb.bh
 
 bb.bh:                                            ; preds = %.thread.i, %bb.bg
   %.sroa.11.sroa.7.0174.i = phi i64 [ %.sroa.11.sroa.7.0175.i, %.thread.i ], [ %i.ue, %bb.bg ]
   %.sroa.11.sroa.0.0172.i = phi ptr [ %.sroa.11.sroa.0.0173.i, %.thread.i ], [ %i.ud, %bb.bg ]
-  %.sroa.0114.sroa.8.1.i = phi i64 [ %.sroa.0129.sroa.9.0.i, %.thread.i ], [ %.sroa.speculated.i.i.i64.i, %bb.bg ]
+  %.sroa.0114.sroa.8.1.i = phi i64 [ %.sroa.9129.0.i, %.thread.i ], [ %.sroa.speculated.i.i.i64.i, %bb.bg ]
   %.sroa.0114.sroa.0.1.i = phi ptr [ %spec.select176.i, %.thread.i ], [ %i.ub, %bb.bg ]
   call void @llvm.lifetime.start.p0(ptr nonnull %127) #38, !noalias !2872
   call fastcc void @"_ZZL10addAliasesRN4llvm7SessionERKSt3mapIjPNS_3orc8JITDylibESt4lessIjESaISt4pairIKjS5_EEEENK3$_1clENS_9StringRefE"(ptr dead_on_unwind noalias writable align 8 %127, ptr noundef nonnull align 8 dereferenceable(24) %123, ptr %.sroa.0114.sroa.0.1.i, i64 %.sroa.0114.sroa.8.1.i), !noalias !2872
@@ -289,7 +289,7 @@ bb.bi:                                            ; preds = %bb.bh
   %i.us = load ptr, ptr %i.rj, align 8, !tbaa !185, !noalias !2897
   %i.ut = getelementptr inbounds nuw i8, ptr %i.us, i64 8
   %i.uu = load ptr, ptr %i.ut, align 8, !tbaa !380, !noalias !2898
-  call void @_ZN4llvm3orc16SymbolStringPool6internENS_9StringRefE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::orc::SymbolStringPtr") align 8 %130, ptr noundef nonnull align 8 dereferenceable(64) %i.uu, ptr %.sroa.13133.sroa.0.0.i, i64 %.sroa.13133.sroa.8.0.i), !noalias !2872
+  call void @_ZN4llvm3orc16SymbolStringPool6internENS_9StringRefE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::orc::SymbolStringPtr") align 8 %130, ptr noundef nonnull align 8 dereferenceable(64) %i.uu, ptr %.sroa.14.0.i, i64 %.sroa.19.0.i), !noalias !2872
   %i.uv = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_8DenseMapINS_3orc15SymbolStringPtrENS2_19SymbolAliasMapEntryENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S4_EEEES3_S4_S6_S9_E24lookupOrInsertIntoBucketIS3_JEEESt4pairIPS9_bEOT_DpOT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.ur, ptr noundef nonnull align 8 dereferenceable(8) %130), !noalias !2872
   %.fca.0.extract.i72.i = extractvalue { ptr, i8 } %i.uv, 0 ; 2 uses
   %i.uw = getelementptr inbounds nuw i8, ptr %.fca.0.extract.i72.i, i64 8 ; 2 uses
