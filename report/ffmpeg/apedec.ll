@@ -205,58 +205,41 @@ update_rice.exit:                                 ; preds = %bb.af, %.sink.split
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc void @long_filter_ehigh_3830(ptr nofree noundef captures(none) %0, i32 noundef range(i32 -2147483648, 2147483392) %1) unnamed_addr #9 {
 bb.a:
-  %2 = alloca [8 x i32], align 16                 ; 9 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %2, i8 0, i64 32, i1 false)
   %i.a = icmp sgt i32 %1, 0
   br i1 %i.a, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %wide.trip.count = zext nneg i32 %1 to i64
-  %.4..4..sroa_idx31 = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %.16..16..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %.8..8..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 4
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %.0. = phi i32 [ 0, %.lr.ph.preheader ], [ %i.d, %.lr.ph ]
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
-  %i.b = phi <8 x i32> [ zeroinitializer, %.lr.ph.preheader ], [ %i.l, %.lr.ph ] ; 2 uses
+  %2 = phi <8 x i32> [ zeroinitializer, %.lr.ph.preheader ], [ %i.l, %.lr.ph ] ; 2 uses
+  %i.b = phi <8 x i32> [ zeroinitializer, %.lr.ph.preheader ], [ %4, %.lr.ph ] ; 3 uses
   %i.c = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %indvars.iv ; 2 uses
-  %i.d = load i32, ptr %i.c, align 4, !tbaa !59   ; 5 uses
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !59   ; 4 uses
   %.lobit.i = lshr i32 %i.d, 31
   %i.e = icmp sgt i32 %i.d, 0
   %.neg.i = sext i1 %i.e to i32
   %i.f = add nsw i32 %.lobit.i, %.neg.i
-  %.4..4. = load i32, ptr %.4..4..sroa_idx31, align 4, !tbaa !59
-  %.16. = load <4 x i32>, ptr %.16..16..sroa_idx, align 16, !tbaa !59
-  %.8. = load <2 x i32>, ptr %.8..8..sroa_idx, align 8, !tbaa !59
-  %3 = insertelement <8 x i32> poison, i32 %.4..4., i64 6
-  %4 = insertelement <8 x i32> %3, i32 %.0., i64 7
-  %5 = shufflevector <4 x i32> %.16., <4 x i32> poison, <8 x i32> <i32 2, i32 3, i32 1, i32 0, i32 poison, i32 poison, i32 poison, i32 poison>
-  %6 = shufflevector <8 x i32> %5, <8 x i32> %4, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 14, i32 15>
-  %7 = shufflevector <2 x i32> %.8., <2 x i32> poison, <8 x i32> <i32 1, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %8 = shufflevector <8 x i32> %6, <8 x i32> %7, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 8, i32 9, i32 6, i32 7> ; 2 uses
-  %i.g = ashr <8 x i32> %8, splat (i32 31)
+  %i.g = ashr <8 x i32> %i.b, splat (i32 31)
   %i.h = or <8 x i32> %i.g, splat (i32 1)
   %i.i = insertelement <8 x i32> poison, i32 %i.f, i64 0
   %i.j = shufflevector <8 x i32> %i.i, <8 x i32> poison, <8 x i32> zeroinitializer
   %i.k = mul nsw <8 x i32> %i.h, %i.j
-  %i.l = add <8 x i32> %i.k, %i.b
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(28) %.4..4..sroa_idx, ptr noundef nonnull align 16 dereferenceable(28) %2, i64 28, i1 false), !tbaa !59
-  %i.m = mul <8 x i32> %i.b, %8
+  %i.l = add <8 x i32> %i.k, %2
+  %i.m = mul <8 x i32> %2, %i.b
   %i.n = tail call i32 @llvm.vector.reduce.add.v8i32(<8 x i32> %i.m)
-  store i32 %i.d, ptr %2, align 16, !tbaa !59
   %i.o = ashr i32 %i.n, 9
   %i.p = sub i32 %i.d, %i.o
   store i32 %i.p, ptr %i.c, align 4, !tbaa !59
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  %3 = insertelement <8 x i32> poison, i32 %i.d, i64 0
+  %4 = shufflevector <8 x i32> %i.b, <8 x i32> %3, <8 x i32> <i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8>
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !254
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
   ret void
 }
 

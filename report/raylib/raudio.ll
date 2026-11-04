@@ -142,7 +142,6 @@ target triple = "x86_64-pc-linux-gnu"
 %struct.drmp3_metadata = type { i32, ptr, i64 }
 %struct.drmp3dec_frame_info = type { i32, i32, i32, i32, i32 }
 %struct.drmp3_L3_gr_info = type { ptr, i16, i16, i16, i8, i8, i8, i8, i8, [3 x i8], [3 x i8], [3 x i8], i8, i8, i8, i8 }
-%struct.drmp3__seeking_mp3_frame_info = type { i64, i64 }
 %struct.drmp3 = type { %struct.drmp3dec, i32, i32, ptr, ptr, ptr, ptr, ptr, %struct.drmp3_allocation_callbacks, i32, i32, i32, i32, [9216 x i8], i64, i64, i64, i64, ptr, i32, i32, i32, i64, i32, i32, i64, i64, i64, ptr, i32, %struct.anon.62 }
 %struct.drmp3dec = type { [2 x [288 x float]], [960 x float], i32, i32, [4 x i8], [511 x i8], %struct.drmp3dec_scratch }
 %struct.drmp3dec_scratch = type { %struct.drmp3_bs, [2815 x i8], [4 x %struct.drmp3_L3_gr_info], [2 x [576 x float]], [40 x float], [33 x [64 x float]], [2 x [39 x i8]] }
@@ -545,7 +544,6 @@ define hidden range(i32 0, 2) i32 @drmp3_calculate_seek_points(ptr noundef %0, p
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   %i.b = alloca i64, align 8                      ; 4 uses
-  %3 = alloca [3 x %struct.drmp3__seeking_mp3_frame_info], align 16 ; 16 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #61
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #61
   %i.c = icmp eq ptr %0, null
@@ -577,7 +575,6 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.s
 
 bb.f:                                             ; preds = %bb.d
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
   %i.m = zext i32 %i.f to i64
   %i.n = add i64 %i.k, -1
   %i.o = icmp ult i64 %i.n, %i.m
@@ -601,7 +598,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ac = load ptr, ptr %i.ab, align 8
   %i.ad = call i32 %i.aa(ptr noundef %i.ac, i32 noundef range(i32 0, -2147483648) %i.y, i32 noundef 0) #61, !inline_history !14
   %.not.i.i.i = icmp eq i32 %i.ad, 0
-  br i1 %.not.i.i.i, label %.critedge93, label %bb.h
+  br i1 %.not.i.i.i, label %bb.t, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 32248
@@ -615,7 +612,7 @@ bb.i:                                             ; preds = %bb.f
   %i.ai = load ptr, ptr %i.ah, align 8
   %i.aj = call i32 %i.ag(ptr noundef %i.ai, i32 noundef 2147483647, i32 noundef 0) #61, !inline_history !14
   %.not.i18.i.i = icmp eq i32 %i.aj, 0
-  br i1 %.not.i18.i.i, label %.critedge93, label %.lr.ph.i.i
+  br i1 %.not.i18.i.i, label %bb.t, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.i
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 32248 ; 5 uses
@@ -631,7 +628,7 @@ bb.i:                                             ; preds = %bb.f
   %i.ap = load ptr, ptr %i.ah, align 8
   %i.aq = call i32 %i.ao(ptr noundef %i.ap, i32 noundef range(i32 0, -2147483648) %i.an, i32 noundef 1) #61, !inline_history !14
   %.not.i21.i.i = icmp eq i32 %i.aq, 0
-  br i1 %.not.i21.i.i, label %.critedge93, label %.thread.i.i
+  br i1 %.not.i21.i.i, label %bb.t, label %.thread.i.i
 
 .thread.i.i:                                      ; preds = %._crit_edge.i
   %i.ar = load i64, ptr %i.ak, align 8
@@ -645,7 +642,7 @@ bb.i:                                             ; preds = %bb.f
   %i.av = load ptr, ptr %i.ah, align 8
   %i.aw = call i32 %i.au(ptr noundef %i.av, i32 noundef 2147483647, i32 noundef 1) #61, !inline_history !14
   %.not.i24.i.i = icmp eq i32 %i.aw, 0
-  br i1 %.not.i24.i.i, label %.critedge93, label %bb.j
+  br i1 %.not.i24.i.i, label %bb.t, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph.i
   %i.ax = load i64, ptr %i.ak, align 8
@@ -656,25 +653,24 @@ bb.j:                                             ; preds = %.lr.ph.i
   br i1 %i.ba, label %._crit_edge.i, label %.lr.ph.i
 
 drmp3_seek_to_start_of_stream.exit:               ; preds = %bb.h, %.thread.i.i
-  %i.bb = phi i64 [ %i.w, %bb.h ], [ %i.as, %.thread.i.i ] ; 2 uses
+  %i.bb = phi i64 [ %i.w, %bb.h ], [ %i.as, %.thread.i.i ]
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 23016 ; 2 uses
   store i32 0, ptr %i.bc, align 8
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 23020 ; 2 uses
   store i32 0, ptr %i.bd, align 4
   store i64 0, ptr %i.h, align 8
-  %i.be = getelementptr inbounds nuw i8, ptr %0, i64 32312 ; 5 uses
+  %i.be = getelementptr inbounds nuw i8, ptr %0, i64 32312 ; 6 uses
   store i64 0, ptr %i.be, align 8
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 32344 ; 2 uses
   store i32 0, ptr %i.bf, align 8
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 6152 ; 2 uses
   store i8 0, ptr %i.bg, align 8
-  %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 32248 ; 8 uses
+  %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 32248 ; 9 uses
   %i.bi = getelementptr i8, ptr %0, i64 22932     ; 4 uses
   %i.bj = getelementptr i8, ptr %0, i64 23012     ; 4 uses
-  store i64 %i.bb, ptr %3, align 16
   %i.bk = call fastcc i32 @drmp3_decode_next_frame_ex(ptr noundef %0, ptr noundef null, ptr noundef null, ptr noundef null) ; 2 uses
   %.not92 = icmp eq i32 %i.bk, 0
-  br i1 %.not92, label %.critedge93, label %bb.k
+  br i1 %.not92, label %bb.t, label %bb.k
 
 .lr.ph:                                           ; preds = %.preheader129
   %i.bl = uitofp i32 %i.cq to float
@@ -693,11 +689,7 @@ drmp3_seek_to_start_of_stream.exit:               ; preds = %bb.h, %.thread.i.i
   %i.bw = uitofp i32 %i.bt to float
   %i.bx = fsub float %i.bs, %i.bw
   %wide.trip.count = zext i32 %.076 to i64
-  %.16..16..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %.32..32..sroa_idx221 = getelementptr inbounds nuw i8, ptr %3, i64 32
-  %.40..40..sroa_idx222 = getelementptr inbounds nuw i8, ptr %3, i64 40
-  %.24..24..sroa_idx220 = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %.24..24..sroa_idx219 = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %extract.t218 = zext i32 %i.cd to i64
   br label %bb.m
 
 bb.k:                                             ; preds = %drmp3_seek_to_start_of_stream.exit
@@ -708,20 +700,16 @@ bb.k:                                             ; preds = %drmp3_seek_to_start
   %i.ca = fdiv float %i.by, %i.bz
   %i.cb = uitofp nneg i32 %i.bk to float
   %i.cc = fdiv float %i.cb, %i.ca                 ; 2 uses
-  %i.cd = fptoui float %i.cc to i32               ; 2 uses
-  %4 = zext i32 %i.cd to i64                      ; 3 uses
+  %i.cd = fptoui float %i.cc to i32               ; 3 uses
   %i.ce = load i64, ptr %i.bh, align 8
   %i.cf = load i64, ptr %i.be, align 8
   %i.cg = sub i64 %i.ce, %i.cf
-  %.16..16..sroa_idx218 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  store i64 %i.cg, ptr %.16..16..sroa_idx218, align 16
-  %.24..24..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 24
-  store i64 %4, ptr %.24..24..sroa_idx, align 8
   %i.ch = call fastcc i32 @drmp3_decode_next_frame_ex(ptr noundef %0, ptr noundef null, ptr noundef null, ptr noundef null) ; 2 uses
   %.not92.1 = icmp eq i32 %i.ch, 0
-  br i1 %.not92.1, label %.critedge93, label %bb.l
+  br i1 %.not92.1, label %bb.t, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
+  %3 = zext i32 %i.cd to i64
   %i.ci = uitofp i32 %i.cd to float
   %i.cj = fsub float %i.cc, %i.ci
   %.val95.1 = load i32, ptr %i.bi, align 4
@@ -734,99 +722,87 @@ bb.l:                                             ; preds = %bb.k
   %i.cp = fadd float %i.cj, %i.co                 ; 2 uses
   %i.cq = fptoui float %i.cp to i32               ; 2 uses
   %i.cr = zext i32 %i.cq to i64
-  %i.cs = add nuw nsw i64 %4, %i.cr               ; 2 uses
+  %i.cs = add nuw nsw i64 %3, %i.cr               ; 2 uses
   %i.ct = load i64, ptr %i.bh, align 8
   %i.cu = load i64, ptr %i.be, align 8
   %i.cv = sub i64 %i.ct, %i.cu
-  %.32..32..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 32
-  store i64 %i.cv, ptr %.32..32..sroa_idx, align 16
-  %.40..40..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 40
-  store i64 %i.cs, ptr %.40..40..sroa_idx, align 8
   %i.cw = call fastcc i32 @drmp3_decode_next_frame_ex(ptr noundef %0, ptr noundef null, ptr noundef null, ptr noundef null) ; 2 uses
   %.not92.2 = icmp eq i32 %i.cw, 0
-  br i1 %.not92.2, label %.critedge93, label %.preheader129
+  br i1 %.not92.2, label %bb.t, label %.preheader129
 
 .preheader129:                                    ; preds = %bb.l
   %.not151 = icmp eq i32 %.076, 0
   br i1 %.not151, label %._crit_edge150, label %.lr.ph
 
 bb.m:                                             ; preds = %.lr.ph, %bb.o
-  %.24.165172 = phi i64 [ %4, %.lr.ph ], [ %.24..sink, %bb.o ]
-  %.0.169 = phi i64 [ %i.bb, %.lr.ph ], [ %.0.170, %bb.o ]
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.o ] ; 4 uses
+  %.sroa.14.0.off64 = phi i64 [ %i.cs, %.lr.ph ], [ %.sroa.14.3.off64, %bb.o ] ; 3 uses
+  %.sroa.14.0.off0 = phi i64 [ %i.cv, %.lr.ph ], [ %.sroa.14.3.off0, %bb.o ] ; 3 uses
+  %.sroa.8.0.off0 = phi i64 [ %i.cg, %.lr.ph ], [ %.sroa.8.3.off0, %bb.o ] ; 3 uses
+  %.24.165172 = phi i64 [ %extract.t218, %.lr.ph ], [ %.sroa.14.1.off64.lcssa.sink, %bb.o ]
+  %.0.169 = phi i64 [ %i.bb, %.lr.ph ], [ %.sroa.8.1.off0.lcssa.sink, %bb.o ]
+  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.o ] ; 2 uses
   %.074148 = phi i64 [ 0, %.lr.ph ], [ %i.cx, %bb.o ]
-  %.1115147 = phi float [ %i.bx, %.lr.ph ], [ %.2133, %bb.o ] ; 2 uses
-  %.1118146 = phi i64 [ %i.bv, %.lr.ph ], [ %.2119135, %bb.o ] ; 3 uses
-  %i.cx = add i64 %.074148, %i.u                  ; 6 uses
+  %.1115147 = phi float [ %i.bx, %.lr.ph ], [ %.2133, %bb.o ] ; 3 uses
+  %.1118146 = phi i64 [ %i.bv, %.lr.ph ], [ %.2119135, %bb.o ] ; 5 uses
+  %i.cx = add i64 %.074148, %i.u                  ; 5 uses
   %i.cy = icmp ult i64 %i.cx, %.1118146
-  br i1 %i.cy, label %._crit_edge, label %.preheader.a
+  br i1 %i.cy, label %bb.o, label %.preheader.a
 
-.preheader.a:                                     ; preds = %bb.m, %bb.n
-  %.2144 = phi float [ %i.dm, %bb.n ], [ %.1115147, %bb.m ] ; 2 uses
-  %.2119143 = phi i64 [ %i.do, %bb.n ], [ %.1118146, %bb.m ] ; 3 uses
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %3, ptr noundef nonnull align 16 dereferenceable(32) %.16..16..sroa_idx, i64 32, i1 false)
+.preheader.a:                                     ; preds = %bb.m
   %i.cz = load i64, ptr %i.bh, align 8
   %i.da = load i64, ptr %i.be, align 8
-  %i.db = sub i64 %i.cz, %i.da
-  store i64 %i.db, ptr %.32..32..sroa_idx221, align 16
-  store i64 %.2119143, ptr %.40..40..sroa_idx222, align 8
+  %i.db = sub i64 %i.cz, %i.da                    ; 2 uses
   %i.dc = call fastcc i32 @drmp3_decode_next_frame_ex(ptr noundef %0, ptr noundef null, ptr noundef null, ptr noundef null) ; 2 uses
   %i.dd = icmp eq i32 %i.dc, 0
-  br i1 %i.dd, label %.thread, label %bb.n
+  br i1 %i.dd, label %bb.o, label %bb.n
 
-._crit_edge.loopexit:                             ; preds = %bb.n
-  %.0..0..pre = load i64, ptr %3, align 16
-  %.24..24.165.pre = load i64, ptr %.24..24..sroa_idx220, align 8
-  br label %._crit_edge
+.thread:                                          ; preds = %bb.n
+  %.0..0.163 = load i64, ptr %i.bh, align 8
+  %4 = load i64, ptr %i.be, align 8
+  %5 = sub i64 %.0..0.163, %4                     ; 2 uses
+  %6 = call fastcc i32 @drmp3_decode_next_frame_ex(ptr noundef %0, ptr noundef null, ptr noundef null, ptr noundef null) ; 2 uses
+  %7 = icmp eq i32 %6, 0
+  br i1 %7, label %bb.o, label %bb.n
 
-._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.m
-  %.24.165 = phi i64 [ %.24.165172, %bb.m ], [ %.24..24.165.pre, %._crit_edge.loopexit ]
-  %.0. = phi i64 [ %.0.169, %bb.m ], [ %.0..0..pre, %._crit_edge.loopexit ] ; 2 uses
-  %.2119.lcssa = phi i64 [ %.1118146, %bb.m ], [ %i.do, %._crit_edge.loopexit ]
-  %.2.lcssa = phi float [ %.1115147, %bb.m ], [ %i.dm, %._crit_edge.loopexit ]
-  %5 = getelementptr inbounds nuw [24 x i8], ptr %2, i64 %indvars.iv ; 3 uses
-  store i64 %.0., ptr %5, align 8
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store i64 %i.cx, ptr %6, align 8
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 16
-  store i16 2, ptr %7, align 8
-  br label %bb.o
-
-.thread:                                          ; preds = %.preheader.a
-  %.0..0.163 = load i64, ptr %3, align 16         ; 2 uses
-  %8 = getelementptr inbounds nuw [24 x i8], ptr %2, i64 %indvars.iv ; 3 uses
-  store i64 %.0..0.163, ptr %8, align 8
-  %9 = getelementptr inbounds nuw i8, ptr %8, i64 8
-  store i64 %i.cx, ptr %9, align 8
-  %10 = getelementptr inbounds nuw i8, ptr %8, i64 16
-  store i16 2, ptr %10, align 8
-  %.24..24. = load i64, ptr %.24..24..sroa_idx219, align 8
-  br label %bb.o
-
-bb.n:                                             ; preds = %.preheader.a
+bb.n:                                             ; preds = %.preheader.a, %.thread
+  %8 = phi i32 [ %6, %.thread ], [ %i.dc, %.preheader.a ]
+  %9 = phi i64 [ %5, %.thread ], [ %i.db, %.preheader.a ] ; 3 uses
+  %.2119143270 = phi i64 [ %i.do, %.thread ], [ %.1118146, %.preheader.a ] ; 4 uses
+  %.2144269 = phi float [ %i.dm, %.thread ], [ %.1115147, %.preheader.a ]
+  %.sroa.8.1.off0268 = phi i64 [ %.sroa.14.1.off0267, %.thread ], [ %.sroa.8.0.off0, %.preheader.a ]
+  %.sroa.14.1.off0267 = phi i64 [ %9, %.thread ], [ %.sroa.14.0.off0, %.preheader.a ] ; 3 uses
+  %.sroa.14.1.off64266 = phi i64 [ %.2119143270, %.thread ], [ %.sroa.14.0.off64, %.preheader.a ]
   %.val = load i32, ptr %i.bi, align 4
   %.val94 = load i32, ptr %i.bj, align 4
   %i.de = uitofp i32 %.val94 to float
   %i.df = uitofp i32 %.val to float
   %i.dg = fdiv float %i.de, %i.df
-  %i.dh = uitofp nneg i32 %i.dc to float
+  %i.dh = uitofp nneg i32 %8 to float
   %i.di = fdiv float %i.dh, %i.dg
-  %i.dj = fadd float %.2144, %i.di                ; 2 uses
+  %i.dj = fadd float %.2144269, %i.di             ; 2 uses
   %i.dk = fptoui float %i.dj to i32               ; 2 uses
   %i.dl = uitofp i32 %i.dk to float
-  %i.dm = fsub float %i.dj, %i.dl                 ; 2 uses
+  %i.dm = fsub float %i.dj, %i.dl                 ; 3 uses
   %i.dn = zext i32 %i.dk to i64
-  %i.do = add i64 %.2119143, %i.dn                ; 3 uses
+  %i.do = add i64 %.2119143270, %i.dn             ; 5 uses
   %i.dp = icmp ult i64 %i.cx, %i.do
-  br i1 %i.dp, label %._crit_edge.loopexit, label %.preheader.a
+  br i1 %i.dp, label %bb.o, label %.thread
 
-bb.o:                                             ; preds = %.thread, %._crit_edge
-  %.24..sink = phi i64 [ %.24..24., %.thread ], [ %.24.165, %._crit_edge ] ; 2 uses
-  %.0.170 = phi i64 [ %.0..0.163, %.thread ], [ %.0., %._crit_edge ]
-  %.2119135 = phi i64 [ %.2119143, %.thread ], [ %.2119.lcssa, %._crit_edge ]
-  %.2133 = phi float [ %.2144, %.thread ], [ %.2.lcssa, %._crit_edge ]
-  %i.dq = getelementptr inbounds nuw [24 x i8], ptr %2, i64 %indvars.iv
-  %i.dr = sub i64 %i.cx, %.24..sink
+bb.o:                                             ; preds = %bb.n, %.thread, %.preheader.a, %bb.m
+  %.sroa.8.1.off0.lcssa.sink = phi i64 [ %.0.169, %bb.m ], [ %.sroa.8.0.off0, %.preheader.a ], [ %.sroa.14.1.off0267, %.thread ], [ %.sroa.8.1.off0268, %bb.n ] ; 2 uses
+  %.sroa.14.1.off64.lcssa.sink = phi i64 [ %.24.165172, %bb.m ], [ %.sroa.14.0.off64, %.preheader.a ], [ %.2119143270, %.thread ], [ %.sroa.14.1.off64266, %bb.n ] ; 2 uses
+  %.sroa.14.3.off64 = phi i64 [ %.sroa.14.0.off64, %bb.m ], [ %.1118146, %.preheader.a ], [ %i.do, %.thread ], [ %.2119143270, %bb.n ]
+  %.sroa.14.3.off0 = phi i64 [ %.sroa.14.0.off0, %bb.m ], [ %i.db, %.preheader.a ], [ %5, %.thread ], [ %9, %bb.n ]
+  %.sroa.8.3.off0 = phi i64 [ %.sroa.8.0.off0, %bb.m ], [ %.sroa.14.0.off0, %.preheader.a ], [ %9, %.thread ], [ %.sroa.14.1.off0267, %bb.n ]
+  %.2119135 = phi i64 [ %.1118146, %bb.m ], [ %.1118146, %.preheader.a ], [ %i.do, %.thread ], [ %i.do, %bb.n ]
+  %.2133 = phi float [ %.1115147, %bb.m ], [ %.1115147, %.preheader.a ], [ %i.dm, %.thread ], [ %i.dm, %bb.n ]
+  %i.dq = getelementptr inbounds nuw [24 x i8], ptr %2, i64 %indvars.iv ; 4 uses
+  store i64 %.sroa.8.1.off0.lcssa.sink, ptr %i.dq, align 8
+  %10 = getelementptr inbounds nuw i8, ptr %i.dq, i64 8
+  store i64 %i.cx, ptr %10, align 8
+  %11 = getelementptr inbounds nuw i8, ptr %i.dq, i64 16
+  store i16 2, ptr %11, align 8
+  %i.dr = sub i64 %i.cx, %.sroa.14.1.off64.lcssa.sink
   %i.ds = trunc i64 %i.dr to i16
   %i.dt = getelementptr inbounds nuw i8, ptr %i.dq, i64 18
   store i16 %i.ds, ptr %i.dt, align 2
@@ -847,7 +823,7 @@ bb.p:                                             ; preds = %._crit_edge150
   %i.ea = load ptr, ptr %i.dz, align 8
   %i.eb = call i32 %i.dy(ptr noundef %i.ea, i32 noundef range(i32 0, -2147483648) %i.dw, i32 noundef 0) #61, !inline_history !14
   %.not.i.i.i107 = icmp eq i32 %i.eb, 0
-  br i1 %.not.i.i.i107, label %.critedge93, label %.critedge
+  br i1 %.not.i.i.i107, label %bb.t, label %.critedge
 
 bb.q:                                             ; preds = %._crit_edge150
   %i.ec = getelementptr inbounds nuw i8, ptr %0, i64 22944 ; 3 uses
@@ -856,7 +832,7 @@ bb.q:                                             ; preds = %._crit_edge150
   %i.ef = load ptr, ptr %i.ee, align 8
   %i.eg = call i32 %i.ed(ptr noundef %i.ef, i32 noundef 2147483647, i32 noundef 0) #61, !inline_history !14
   %.not.i18.i.i97 = icmp eq i32 %i.eg, 0
-  br i1 %.not.i18.i.i97, label %.critedge93, label %.lr.ph.i.i98
+  br i1 %.not.i18.i.i97, label %bb.t, label %.lr.ph.i.i98
 
 .lr.ph.i.i98:                                     ; preds = %bb.q
   store i64 2147483647, ptr %i.bh, align 8
@@ -871,7 +847,7 @@ bb.q:                                             ; preds = %._crit_edge150
   %i.el = load ptr, ptr %i.ee, align 8
   %i.em = call i32 %i.ek(ptr noundef %i.el, i32 noundef range(i32 0, -2147483648) %i.ej, i32 noundef 1) #61, !inline_history !14
   %.not.i21.i.i103 = icmp eq i32 %i.em, 0
-  br i1 %.not.i21.i.i103, label %.critedge93, label %.thread.i.i104
+  br i1 %.not.i21.i.i103, label %bb.t, label %.thread.i.i104
 
 .thread.i.i104:                                   ; preds = %._crit_edge.i101
   %i.en = load i64, ptr %i.bh, align 8
@@ -884,7 +860,7 @@ bb.q:                                             ; preds = %._crit_edge150
   %i.er = load ptr, ptr %i.ee, align 8
   %i.es = call i32 %i.eq(ptr noundef %i.er, i32 noundef 2147483647, i32 noundef 1) #61, !inline_history !14
   %.not.i24.i.i100 = icmp eq i32 %i.es, 0
-  br i1 %.not.i24.i.i100, label %.critedge93, label %bb.r
+  br i1 %.not.i24.i.i100, label %bb.t, label %bb.r
 
 bb.r:                                             ; preds = %.lr.ph.i99
   %i.et = load i64, ptr %i.bh, align 8
@@ -905,7 +881,6 @@ bb.r:                                             ; preds = %.lr.ph.i99
   store i8 0, ptr %i.bg, align 8
   %i.ex = call i32 @drmp3_seek_to_pcm_frame(ptr noundef nonnull %0, i64 noundef %i.i)
   %.not91.not = icmp eq i32 %i.ex, 0
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br i1 %.not91.not, label %bb.t, label %bb.s
 
 bb.s:                                             ; preds = %.critedge, %bb.e
@@ -913,12 +888,8 @@ bb.s:                                             ; preds = %.critedge, %bb.e
   store i32 %.177, ptr %1, align 4
   br label %bb.t
 
-.critedge93:                                      ; preds = %.lr.ph.i, %.lr.ph.i99, %drmp3_seek_to_start_of_stream.exit, %bb.k, %bb.l, %._crit_edge.i101, %bb.q, %bb.p, %._crit_edge.i, %bb.i, %bb.g
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  br label %bb.t
-
-bb.t:                                             ; preds = %.critedge93, %bb.c, %bb.b, %bb.a, %.critedge, %bb.s
-  %.3 = phi i32 [ 0, %bb.b ], [ 0, %bb.a ], [ 1, %bb.s ], [ 0, %.critedge ], [ 0, %bb.c ], [ 0, %.critedge93 ]
+bb.t:                                             ; preds = %.lr.ph.i, %.lr.ph.i99, %bb.g, %bb.i, %._crit_edge.i, %bb.p, %bb.q, %._crit_edge.i101, %bb.l, %bb.k, %drmp3_seek_to_start_of_stream.exit, %bb.c, %bb.b, %bb.a, %.critedge, %bb.s
+  %.3 = phi i32 [ 0, %bb.b ], [ 0, %bb.a ], [ 1, %bb.s ], [ 0, %.critedge ], [ 0, %bb.c ], [ 0, %.lr.ph.i99 ], [ 0, %drmp3_seek_to_start_of_stream.exit ], [ 0, %bb.k ], [ 0, %bb.l ], [ 0, %bb.g ], [ 0, %._crit_edge.i101 ], [ 0, %bb.q ], [ 0, %bb.p ], [ 0, %._crit_edge.i ], [ 0, %bb.i ], [ 0, %.lr.ph.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #61
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #61
   ret i32 %.3
@@ -1321,8 +1292,6 @@ bb.a:
 define hidden i32 @qoa_encode_frame(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1, i32 noundef %2, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %3) local_unnamed_addr #20 {
 bb.a:
   %i.a = alloca [8 x i32], align 16               ; 4 uses
-  %.sroa.0148 = alloca [4 x i32], align 4         ; 5 uses
-  %.sroa.0 = alloca [4 x i32], align 4            ; 13 uses
   %i.b = load i32, ptr %1, align 4                ; 7 uses
   %i.c = add i32 %2, 19
   %i.d = udiv i32 %i.c, 20
@@ -1485,11 +1454,6 @@ bb.a:
 
 .preheader.us.preheader:                          ; preds = %.preheader166.thread
   %i.dk = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %.sroa.0.12..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 12
-  %.sroa.0.4..sroa_idx289 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
-  %.sroa.0.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 8
-  %.sroa.0.4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 4
-  %.sroa.0.12..sroa_idx290 = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 12
   br label %.preheader.us
 
 .preheader.us:                                    ; preds = %.preheader.us.preheader, %._crit_edge.us
@@ -1511,27 +1475,30 @@ bb.b:                                             ; preds = %.preheader.us, %.sp
   %i.ds = trunc nuw i64 %indvars.iv259 to i32     ; 2 uses
   %i.dt = add i32 %i.dm, %i.ds                    ; 2 uses
   %i.du = add i32 %i.do, %i.ds                    ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0148)
   %4 = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv259 ; 2 uses
-  %i.dv = load i32, ptr %4, align 4               ; 2 uses
-  %5 = getelementptr inbounds nuw [32 x i8], ptr %i.dk, i64 %indvars.iv259 ; 7 uses
-  %.sroa.15.0..sroa_idx.us.a = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
+  %5 = load i32, ptr %4, align 4                  ; 2 uses
+  %6 = getelementptr inbounds nuw [32 x i8], ptr %i.dk, i64 %indvars.iv259 ; 9 uses
+  %.sroa.0.0.copyload.us = load i32, ptr %6, align 4 ; 2 uses
+  %.sroa.7.0..sroa_idx.us = getelementptr inbounds nuw i8, ptr %6, i64 4 ; 2 uses
+  %.sroa.7.0.copyload.us = load i32, ptr %.sroa.7.0..sroa_idx.us, align 4 ; 2 uses
+  %.sroa.11.0..sroa_idx.us = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
+  %i.dv = load i32, ptr %.sroa.11.0..sroa_idx.us, align 4 ; 2 uses
+  %.sroa.15.0..sroa_idx.us = getelementptr inbounds nuw i8, ptr %6, i64 12 ; 2 uses
+  %.sroa.15.0.copyload.us = load i32, ptr %.sroa.15.0..sroa_idx.us, align 4 ; 2 uses
+  %.sroa.15.0..sroa_idx.us.a = getelementptr inbounds nuw i8, ptr %6, i64 16 ; 2 uses
   %.sroa.15.0.copyload.us.a = load i32, ptr %.sroa.15.0..sroa_idx.us.a, align 4 ; 2 uses
-  %.sroa.19.0..sroa_idx.us = getelementptr inbounds nuw i8, ptr %5, i64 20 ; 2 uses
+  %.sroa.19.0..sroa_idx.us = getelementptr inbounds nuw i8, ptr %6, i64 20 ; 2 uses
   %.sroa.19.0.copyload.us = load i32, ptr %.sroa.19.0..sroa_idx.us, align 4 ; 2 uses
-  %.sroa.23.0..sroa_idx.us = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
+  %.sroa.23.0..sroa_idx.us = getelementptr inbounds nuw i8, ptr %6, i64 24 ; 2 uses
   %.sroa.23.0.copyload.us = load i32, ptr %.sroa.23.0..sroa_idx.us, align 4 ; 2 uses
-  %.sroa.27.0..sroa_idx.us = getelementptr inbounds nuw i8, ptr %5, i64 28 ; 2 uses
+  %.sroa.27.0..sroa_idx.us = getelementptr inbounds nuw i8, ptr %6, i64 28 ; 2 uses
   %.sroa.27.0.copyload.us = load i32, ptr %.sroa.27.0..sroa_idx.us, align 4 ; 2 uses
   %i.dw = icmp slt i32 %i.dt, %i.du
   br i1 %i.dw, label %.lr.ph.us.us, label %.split203.us233.loopexit245
 
 .split203.us233.loopexit245:                      ; preds = %bb.b
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  %i.dx = and i32 %i.dv, 15                       ; 2 uses
+  %i.dx = and i32 %5, 15                          ; 2 uses
   %i.dy = zext nneg i32 %i.dx to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.0148, ptr noundef nonnull align 4 dereferenceable(16) %5, i64 16, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
   br label %.split203.us233
 
 .lr.ph.us.us:                                     ; preds = %bb.b, %bb.f
@@ -1539,50 +1506,51 @@ bb.b:                                             ; preds = %.preheader.us, %.sp
   %.098200.us.us = phi i32 [ %.199.us.us, %bb.f ], [ 0, %bb.b ]
   %.0100199.us.us = phi i64 [ %.1101.us.us, %bb.f ], [ 0, %bb.b ]
   %.0102198.us.us = phi i64 [ %.1103.us.us, %bb.f ], [ -1, %bb.b ] ; 3 uses
-  %.sroa.4.0197.us.us = phi i32 [ %.sroa.4.1.us.us, %bb.f ], [ undef, %bb.b ]
-  %.sroa.5.0196.us.us = phi i32 [ %.sroa.5.1.us.us, %bb.f ], [ undef, %bb.b ]
-  %.sroa.6.0195.us.us = phi i32 [ %.sroa.6.1.us.us, %bb.f ], [ undef, %bb.b ]
-  %.sroa.7.0194.us.us = phi i32 [ %.sroa.7.1.us.us, %bb.f ], [ undef, %bb.b ]
-  %6 = add nsw i32 %i.dv, %.097201.us.us
-  %7 = and i32 %6, 15                             ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(16) %5, i64 16, i1 false)
-  %i.dz = zext nneg i32 %7 to i64                 ; 3 uses
+  %.sroa.0148.0212.us.us = phi i32 [ %.sroa.4.1.us.us, %bb.f ], [ undef, %bb.b ]
+  %.sroa.4.0211.us.us = phi i32 [ %.sroa.5.1.us.us, %bb.f ], [ undef, %bb.b ]
+  %.sroa.4.0197.us.us = phi i32 [ %.sroa.6.1.us.us, %bb.f ], [ undef, %bb.b ]
+  %.sroa.5.0196.us.us = phi i32 [ %.sroa.7.1.us.us, %bb.f ], [ undef, %bb.b ]
+  %.sroa.6.0195.us.us = phi i32 [ %.sroa.7149.1.us.us, %bb.f ], [ undef, %bb.b ]
+  %.sroa.7.0194.us.us = phi i32 [ %.sroa.8.1.us.us, %bb.f ], [ undef, %bb.b ]
+  %.sroa.9.0206.us.us = phi i32 [ %.sroa.9.1.us.us, %bb.f ], [ undef, %bb.b ]
+  %.sroa.10.0205.us.us = phi i32 [ %.sroa.10.1.us.us, %bb.f ], [ undef, %bb.b ]
+  %7 = add nsw i32 %5, %.097201.us.us
+  %8 = and i32 %7, 15                             ; 2 uses
+  %i.dz = zext nneg i32 %8 to i64                 ; 3 uses
   %i.ea = getelementptr inbounds nuw [4 x i8], ptr @qoa_reciprocal_tab, i64 %i.dz
   %i.eb = load i32, ptr %i.ea, align 4
   %i.ec = getelementptr inbounds nuw [32 x i8], ptr @qoa_dequant_tab, i64 %i.dz
-  %.sroa.0.12..sroa.0.12..sroa.0.12..sroa_idx.promoted.us.us = load i32, ptr %.sroa.0.12..sroa_idx, align 4
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.d, %.lr.ph.us.us
-  %.0.i114193.us.us = phi i32 [ %.sroa.0.12..sroa.0.12..sroa.0.12..sroa_idx.promoted.us.us, %.lr.ph.us.us ], [ %.0.i114.us.us, %bb.d ] ; 2 uses
-  %.0179.us.us = phi i32 [ %i.dt, %.lr.ph.us.us ], [ %i.gf, %bb.d ] ; 2 uses
-  %.094178.us.us = phi i64 [ 0, %.lr.ph.us.us ], [ %i.fo, %bb.d ]
-  %.095177.us.us = phi i64 [ %i.dz, %.lr.ph.us.us ], [ %i.ge, %bb.d ] ; 2 uses
-  %.sroa.15.0176.us.us = phi i32 [ %.sroa.15.0.copyload.us.a, %.lr.ph.us.us ], [ %i.ft, %bb.d ] ; 5 uses
-  %.sroa.19.0175.us.us = phi i32 [ %.sroa.19.0.copyload.us, %.lr.ph.us.us ], [ %i.fw, %bb.d ] ; 5 uses
-  %.sroa.23.0174.us.us = phi i32 [ %.sroa.23.0.copyload.us, %.lr.ph.us.us ], [ %i.fz, %bb.d ] ; 5 uses
-  %.sroa.27.0173.us.us = phi i32 [ %.sroa.27.0.copyload.us, %.lr.ph.us.us ], [ %i.gc, %bb.d ] ; 5 uses
-  %8 = sext i32 %.0179.us.us to i64
-  %9 = getelementptr inbounds [2 x i8], ptr %0, i64 %8
-  %10 = load i16, ptr %9, align 2
-  %11 = sext i16 %10 to i32                       ; 3 uses
-  %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0..us.us = load i32, ptr %.sroa.0, align 4 ; 2 uses
-  %12 = mul nsw i32 %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0..us.us, %.sroa.15.0176.us.us
-  %.sroa.0.4..sroa.0.4..sroa.0.4..sroa.0.4..sroa.0.4..us.us = load i32, ptr %.sroa.0.4..sroa_idx289, align 4 ; 2 uses
-  %i.ed = mul nsw i32 %.sroa.0.4..sroa.0.4..sroa.0.4..sroa.0.4..sroa.0.4..us.us, %.sroa.19.0175.us.us
-  %13 = add nsw i32 %i.ed, %12
-  %.sroa.0.8..sroa.0.8..sroa.0.8..sroa.0.8..sroa.0.8..us.us = load i32, ptr %.sroa.0.8..sroa_idx, align 4 ; 2 uses
-  %i.ee = mul nsw i32 %.sroa.0.8..sroa.0.8..sroa.0.8..sroa.0.8..sroa.0.8..us.us, %.sroa.23.0174.us.us
-  %i.ef = add nsw i32 %13, %i.ee
-  %14 = mul nsw i32 %.0.i114193.us.us, %.sroa.27.0173.us.us
-  %i.eg = add nsw i32 %i.ef, %14
+  %.0.i114193.us.us = phi i32 [ %i.dt, %.lr.ph.us.us ], [ %i.gf, %bb.d ] ; 2 uses
+  %.094182.us.us = phi i64 [ 0, %.lr.ph.us.us ], [ %i.fo, %bb.d ]
+  %.094178.us.us = phi i64 [ %i.dz, %.lr.ph.us.us ], [ %i.ge, %bb.d ] ; 2 uses
+  %.sroa.0.0180.us.us = phi i32 [ %.sroa.0.0.copyload.us, %.lr.ph.us.us ], [ %.sroa.15.0176.us.us, %bb.d ] ; 3 uses
+  %.sroa.15.0176.us.us = phi i32 [ %.sroa.7.0.copyload.us, %.lr.ph.us.us ], [ %.sroa.19.0175.us.us, %bb.d ] ; 5 uses
+  %.sroa.19.0175.us.us = phi i32 [ %i.dv, %.lr.ph.us.us ], [ %.sroa.23.0174.us.us, %bb.d ] ; 5 uses
+  %.sroa.23.0174.us.us = phi i32 [ %.sroa.15.0.copyload.us, %.lr.ph.us.us ], [ %.0.i114.us.us, %bb.d ] ; 5 uses
+  %.sroa.27.0173.us.us = phi i32 [ %.sroa.15.0.copyload.us.a, %.lr.ph.us.us ], [ %i.ft, %bb.d ] ; 5 uses
+  %.sroa.23.0175.us.us = phi i32 [ %.sroa.19.0.copyload.us, %.lr.ph.us.us ], [ %i.fw, %bb.d ] ; 5 uses
+  %.sroa.27.0174.us.us = phi i32 [ %.sroa.23.0.copyload.us, %.lr.ph.us.us ], [ %i.fz, %bb.d ] ; 5 uses
+  %.sroa.31.0173.us.us = phi i32 [ %.sroa.27.0.copyload.us, %.lr.ph.us.us ], [ %i.gc, %bb.d ] ; 5 uses
+  %9 = sext i32 %.0.i114193.us.us to i64
+  %10 = getelementptr inbounds [2 x i8], ptr %0, i64 %9
+  %11 = load i16, ptr %10, align 2
+  %12 = sext i16 %11 to i32                       ; 3 uses
+  %i.ed = mul nsw i32 %.sroa.0.0180.us.us, %.sroa.27.0173.us.us
+  %13 = mul nsw i32 %.sroa.15.0176.us.us, %.sroa.23.0175.us.us
+  %14 = mul nsw i32 %.sroa.19.0175.us.us, %.sroa.27.0174.us.us
+  %i.ee = mul nsw i32 %.sroa.23.0174.us.us, %.sroa.31.0173.us.us
+  %i.ef = add i32 %14, %i.ee
+  %15 = add i32 %i.ef, %13
+  %i.eg = add i32 %15, %i.ed
   %i.eh = ashr i32 %i.eg, 13                      ; 3 uses
-  %i.ei = sub nsw i32 %11, %i.eh
+  %i.ei = sub nsw i32 %12, %i.eh
   %i.ej = mul nsw i32 %i.ei, %i.eb
   %i.ek = add nsw i32 %i.ej, 32768
   %i.el = ashr i32 %i.ek, 16                      ; 2 uses
-  %i.em = tail call i32 @llvm.scmp.i32.i32(i32 %11, i32 %i.eh)
+  %i.em = tail call i32 @llvm.scmp.i32.i32(i32 %12, i32 %i.eh)
   %i.en = add nsw i32 %i.el, %i.em
   %i.eo = tail call i32 @llvm.scmp.i32.i32(i32 0, i32 %i.el)
   %i.ep = add nsw i32 %i.en, %i.eo
@@ -1595,24 +1563,24 @@ bb.c:                                             ; preds = %bb.d, %.lr.ph.us.us
   %i.ev = sext i32 %i.eu to i64                   ; 2 uses
   %i.ew = getelementptr inbounds [4 x i8], ptr %i.ec, i64 %i.ev
   %i.ex = load i32, ptr %i.ew, align 4            ; 2 uses
-  %i.ey = add nsw i32 %i.eh, %i.ex
+  %i.ey = add nsw i32 %i.ex, %i.eh
   %i.ez = tail call i32 @llvm.smax.i32(i32 %i.ey, i32 -32768)
   %.0.i114.us.us = tail call range(i32 -32768, 32768) i32 @llvm.smin.i32(i32 %i.ez, i32 32767) ; 3 uses
-  %i.fa = mul nsw i32 %.sroa.15.0176.us.us, %.sroa.15.0176.us.us
-  %i.fb = mul nsw i32 %.sroa.19.0175.us.us, %.sroa.19.0175.us.us
-  %i.fc = mul nsw i32 %.sroa.23.0174.us.us, %.sroa.23.0174.us.us
-  %i.fd = mul nsw i32 %.sroa.27.0173.us.us, %.sroa.27.0173.us.us
+  %i.fa = mul nsw i32 %.sroa.27.0173.us.us, %.sroa.27.0173.us.us
+  %i.fb = mul nsw i32 %.sroa.23.0175.us.us, %.sroa.23.0175.us.us
+  %i.fc = mul nsw i32 %.sroa.27.0174.us.us, %.sroa.27.0174.us.us
+  %i.fd = mul nsw i32 %.sroa.31.0173.us.us, %.sroa.31.0173.us.us
   %i.fe = add nuw nsw i32 %i.fc, %i.fd
   %i.ff = add nuw nsw i32 %i.fe, %i.fb
   %i.fg = add nuw nsw i32 %i.ff, %i.fa
   %i.fh = lshr i32 %i.fg, 18
   %spec.store.select.us.us = tail call i32 @llvm.usub.sat.i32(i32 %i.fh, i32 2303) ; 2 uses
-  %i.fi = sub nsw i32 %11, %.0.i114.us.us
+  %i.fi = sub nsw i32 %12, %.0.i114.us.us
   %i.fj = sext i32 %i.fi to i64                   ; 2 uses
   %i.fk = mul nsw i64 %i.fj, %i.fj
   %i.fl = mul nuw nsw i32 %spec.store.select.us.us, %spec.store.select.us.us
   %i.fm = zext nneg i32 %i.fl to i64
-  %i.fn = add i64 %.094178.us.us, %i.fm
+  %i.fn = add i64 %.094182.us.us, %i.fm
   %i.fo = add i64 %i.fn, %i.fk                    ; 4 uses
   %.not.us.us = icmp ugt i64 %i.fo, %.0102198.us.us
   br i1 %.not.us.us, label %.thread.us.us, label %bb.d
@@ -1620,65 +1588,76 @@ bb.c:                                             ; preds = %bb.d, %.lr.ph.us.us
 bb.d:                                             ; preds = %bb.c
   %i.fp = ashr i32 %i.ex, 4                       ; 5 uses
   %i.fq = sub nsw i32 0, %i.fp                    ; 4 uses
-  %i.fr = icmp slt i32 %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0..us.us, 0
+  %i.fr = icmp slt i32 %.sroa.0.0180.us.us, 0
   %i.fs = select i1 %i.fr, i32 %i.fq, i32 %i.fp
-  %i.ft = add nsw i32 %i.fs, %.sroa.15.0176.us.us ; 2 uses
-  %i.fu = icmp slt i32 %.sroa.0.4..sroa.0.4..sroa.0.4..sroa.0.4..sroa.0.4..us.us, 0
+  %i.ft = add nsw i32 %i.fs, %.sroa.27.0173.us.us ; 2 uses
+  %i.fu = icmp slt i32 %.sroa.15.0176.us.us, 0
   %i.fv = select i1 %i.fu, i32 %i.fq, i32 %i.fp
-  %i.fw = add nsw i32 %i.fv, %.sroa.19.0175.us.us ; 2 uses
-  %i.fx = icmp slt i32 %.sroa.0.8..sroa.0.8..sroa.0.8..sroa.0.8..sroa.0.8..us.us, 0
+  %i.fw = add nsw i32 %i.fv, %.sroa.23.0175.us.us ; 2 uses
+  %i.fx = icmp slt i32 %.sroa.19.0175.us.us, 0
   %i.fy = select i1 %i.fx, i32 %i.fq, i32 %i.fp
-  %i.fz = add nsw i32 %i.fy, %.sroa.23.0174.us.us ; 2 uses
-  %i.ga = icmp slt i32 %.0.i114193.us.us, 0
+  %i.fz = add nsw i32 %i.fy, %.sroa.27.0174.us.us ; 2 uses
+  %i.ga = icmp slt i32 %.sroa.23.0174.us.us, 0
   %i.gb = select i1 %i.ga, i32 %i.fq, i32 %i.fp
-  %i.gc = add nsw i32 %i.gb, %.sroa.27.0173.us.us ; 2 uses
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %.sroa.0, ptr noundef nonnull align 4 dereferenceable(12) %.sroa.0.4..sroa_idx, i64 12, i1 false)
-  store i32 %.0.i114.us.us, ptr %.sroa.0.12..sroa_idx290, align 4
-  %i.gd = shl i64 %.095177.us.us, 3
+  %i.gc = add nsw i32 %i.gb, %.sroa.31.0173.us.us ; 2 uses
+  %i.gd = shl i64 %.094178.us.us, 3
   %i.ge = or i64 %i.gd, %i.ev                     ; 2 uses
-  %i.gf = add i32 %.0179.us.us, %i.b              ; 2 uses
+  %i.gf = add i32 %.0.i114193.us.us, %i.b         ; 2 uses
   %i.gg = icmp slt i32 %i.gf, %i.du
   br i1 %i.gg, label %bb.c, label %.thread.us.us
 
 .thread.us.us:                                    ; preds = %bb.c, %bb.d
-  %.sroa.27.0.lcssa.us.us.a = phi i32 [ %i.gc, %bb.d ], [ %.sroa.27.0173.us.us, %bb.c ]
-  %.sroa.23.0.lcssa.us.us.a = phi i32 [ %i.fz, %bb.d ], [ %.sroa.23.0174.us.us, %bb.c ]
-  %.sroa.19.0.lcssa.us.us.a = phi i32 [ %i.fw, %bb.d ], [ %.sroa.19.0175.us.us, %bb.c ]
-  %.sroa.15.0.lcssa.us.us = phi i32 [ %i.ft, %bb.d ], [ %.sroa.15.0176.us.us, %bb.c ]
-  %.095.lcssa.us.us = phi i64 [ %i.ge, %bb.d ], [ %.095177.us.us, %bb.c ]
+  %.sroa.31.0.lcssa.us.us = phi i32 [ %i.gc, %bb.d ], [ %.sroa.31.0173.us.us, %bb.c ]
+  %.sroa.27.0.lcssa.us.us = phi i32 [ %i.fz, %bb.d ], [ %.sroa.27.0174.us.us, %bb.c ]
+  %.sroa.23.0.lcssa.us.us = phi i32 [ %i.fw, %bb.d ], [ %.sroa.23.0175.us.us, %bb.c ]
+  %.sroa.19.0.lcssa.us.us = phi i32 [ %i.ft, %bb.d ], [ %.sroa.27.0173.us.us, %bb.c ]
+  %.sroa.27.0.lcssa.us.us.a = phi i32 [ %.0.i114.us.us, %bb.d ], [ %.sroa.23.0174.us.us, %bb.c ]
+  %.sroa.23.0.lcssa.us.us.a = phi i32 [ %.sroa.23.0174.us.us, %bb.d ], [ %.sroa.19.0175.us.us, %bb.c ]
+  %.sroa.19.0.lcssa.us.us.a = phi i32 [ %.sroa.19.0175.us.us, %bb.d ], [ %.sroa.15.0176.us.us, %bb.c ]
+  %.sroa.15.0.lcssa.us.us = phi i32 [ %.sroa.15.0176.us.us, %bb.d ], [ %.sroa.0.0180.us.us, %bb.c ]
+  %.095.lcssa.us.us = phi i64 [ %i.ge, %bb.d ], [ %.094178.us.us, %bb.c ]
   %i.gh = icmp ult i64 %i.fo, %.0102198.us.us
   br i1 %i.gh, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %.thread.us.us
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %.sroa.0148, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.0, i64 16, i1 false)
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %.thread.us.us
-  %.sroa.7.1.us.us = phi i32 [ %.sroa.27.0.lcssa.us.us.a, %bb.e ], [ %.sroa.7.0194.us.us, %.thread.us.us ] ; 2 uses
-  %.sroa.6.1.us.us = phi i32 [ %.sroa.23.0.lcssa.us.us.a, %bb.e ], [ %.sroa.6.0195.us.us, %.thread.us.us ] ; 2 uses
-  %.sroa.5.1.us.us = phi i32 [ %.sroa.19.0.lcssa.us.us.a, %bb.e ], [ %.sroa.5.0196.us.us, %.thread.us.us ] ; 2 uses
-  %.sroa.4.1.us.us = phi i32 [ %.sroa.15.0.lcssa.us.us, %bb.e ], [ %.sroa.4.0197.us.us, %.thread.us.us ] ; 2 uses
+  %.sroa.10.1.us.us = phi i32 [ %.sroa.31.0.lcssa.us.us, %bb.e ], [ %.sroa.10.0205.us.us, %.thread.us.us ] ; 2 uses
+  %.sroa.9.1.us.us = phi i32 [ %.sroa.27.0.lcssa.us.us, %bb.e ], [ %.sroa.9.0206.us.us, %.thread.us.us ] ; 2 uses
+  %.sroa.8.1.us.us = phi i32 [ %.sroa.23.0.lcssa.us.us, %bb.e ], [ %.sroa.7.0194.us.us, %.thread.us.us ] ; 2 uses
+  %.sroa.7149.1.us.us = phi i32 [ %.sroa.19.0.lcssa.us.us, %bb.e ], [ %.sroa.6.0195.us.us, %.thread.us.us ] ; 2 uses
+  %.sroa.7.1.us.us = phi i32 [ %.sroa.27.0.lcssa.us.us.a, %bb.e ], [ %.sroa.5.0196.us.us, %.thread.us.us ] ; 2 uses
+  %.sroa.6.1.us.us = phi i32 [ %.sroa.23.0.lcssa.us.us.a, %bb.e ], [ %.sroa.4.0197.us.us, %.thread.us.us ] ; 2 uses
+  %.sroa.5.1.us.us = phi i32 [ %.sroa.19.0.lcssa.us.us.a, %bb.e ], [ %.sroa.4.0211.us.us, %.thread.us.us ] ; 2 uses
+  %.sroa.4.1.us.us = phi i32 [ %.sroa.15.0.lcssa.us.us, %bb.e ], [ %.sroa.0148.0212.us.us, %.thread.us.us ] ; 2 uses
   %.1103.us.us = phi i64 [ %i.fo, %bb.e ], [ %.0102198.us.us, %.thread.us.us ]
   %.1101.us.us = phi i64 [ %.095.lcssa.us.us, %bb.e ], [ %.0100199.us.us, %.thread.us.us ] ; 2 uses
-  %.199.us.us = phi i32 [ %7, %bb.e ], [ %.098200.us.us, %.thread.us.us ] ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
+  %.199.us.us = phi i32 [ %8, %bb.e ], [ %.098200.us.us, %.thread.us.us ] ; 2 uses
   %i.gi = add nuw nsw i32 %.097201.us.us, 1       ; 2 uses
   %exitcond258.not = icmp eq i32 %i.gi, 16
   br i1 %exitcond258.not, label %.split203.us233, label %.lr.ph.us.us
 
 .split203.us233:                                  ; preds = %bb.f, %.split203.us233.loopexit245
-  %.us-phi.us.a = phi i32 [ %.sroa.27.0.copyload.us, %.split203.us233.loopexit245 ], [ %.sroa.7.1.us.us, %bb.f ]
-  %.us-phi204.us = phi i32 [ %.sroa.23.0.copyload.us, %.split203.us233.loopexit245 ], [ %.sroa.6.1.us.us, %bb.f ]
-  %.us-phi205.us = phi i32 [ %.sroa.19.0.copyload.us, %.split203.us233.loopexit245 ], [ %.sroa.5.1.us.us, %bb.f ]
-  %.us-phi206.us = phi i32 [ %.sroa.15.0.copyload.us.a, %.split203.us233.loopexit245 ], [ %.sroa.4.1.us.us, %bb.f ]
+  %.us-phi.us = phi i32 [ %.sroa.27.0.copyload.us, %.split203.us233.loopexit245 ], [ %.sroa.10.1.us.us, %bb.f ]
+  %.us-phi219.us = phi i32 [ %.sroa.23.0.copyload.us, %.split203.us233.loopexit245 ], [ %.sroa.9.1.us.us, %bb.f ]
+  %.us-phi220.us = phi i32 [ %.sroa.19.0.copyload.us, %.split203.us233.loopexit245 ], [ %.sroa.8.1.us.us, %bb.f ]
+  %.us-phi221.us = phi i32 [ %.sroa.15.0.copyload.us.a, %.split203.us233.loopexit245 ], [ %.sroa.7149.1.us.us, %bb.f ]
+  %.us-phi.us.a = phi i32 [ %.sroa.15.0.copyload.us, %.split203.us233.loopexit245 ], [ %.sroa.7.1.us.us, %bb.f ]
+  %.us-phi204.us = phi i32 [ %i.dv, %.split203.us233.loopexit245 ], [ %.sroa.6.1.us.us, %bb.f ]
+  %.us-phi205.us = phi i32 [ %.sroa.7.0.copyload.us, %.split203.us233.loopexit245 ], [ %.sroa.5.1.us.us, %bb.f ]
+  %.us-phi206.us = phi i32 [ %.sroa.0.0.copyload.us, %.split203.us233.loopexit245 ], [ %.sroa.4.1.us.us, %bb.f ]
   %.us-phi207.us = phi i64 [ %i.dy, %.split203.us233.loopexit245 ], [ %.1101.us.us, %bb.f ]
   %.us-phi208.us = phi i32 [ %i.dx, %.split203.us233.loopexit245 ], [ %.199.us.us, %bb.f ]
   store i32 %.us-phi208.us, ptr %4, align 4
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %5, ptr noundef nonnull align 4 dereferenceable(16) %.sroa.0148, i64 16, i1 false)
-  store i32 %.us-phi206.us, ptr %.sroa.15.0..sroa_idx.us.a, align 4
-  store i32 %.us-phi205.us, ptr %.sroa.19.0..sroa_idx.us, align 4
-  store i32 %.us-phi204.us, ptr %.sroa.23.0..sroa_idx.us, align 4
-  store i32 %.us-phi.us.a, ptr %.sroa.27.0..sroa_idx.us, align 4
+  store i32 %.us-phi206.us, ptr %6, align 4
+  store i32 %.us-phi205.us, ptr %.sroa.7.0..sroa_idx.us, align 4
+  store i32 %.us-phi204.us, ptr %.sroa.11.0..sroa_idx.us, align 4
+  store i32 %.us-phi.us.a, ptr %.sroa.15.0..sroa_idx.us, align 4
+  store i32 %.us-phi221.us, ptr %.sroa.15.0..sroa_idx.us.a, align 4
+  store i32 %.us-phi220.us, ptr %.sroa.19.0..sroa_idx.us, align 4
+  store i32 %.us-phi219.us, ptr %.sroa.23.0..sroa_idx.us, align 4
+  store i32 %.us-phi.us, ptr %.sroa.27.0..sroa_idx.us, align 4
   %i.gj = shl i64 %.us-phi207.us, %i.dr
   %i.gk = zext i32 %.2160209.us to i64
   %i.gl = getelementptr inbounds nuw i8, ptr %3, i64 %i.gk
@@ -1686,7 +1665,6 @@ bb.f:                                             ; preds = %bb.e, %.thread.us.u
   %i.gn = bitcast i64 %i.gj to <8 x i8>
   %i.go = shufflevector <8 x i8> %i.gn, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
   store <8 x i8> %i.go, ptr %i.gl, align 1
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0148)
   %indvars.iv.next260 = add nuw nsw i64 %indvars.iv259, 1 ; 2 uses
   %exitcond263.not = icmp eq i64 %indvars.iv.next260, %i.j
   br i1 %exitcond263.not, label %._crit_edge.us, label %bb.b

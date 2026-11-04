@@ -205,13 +205,10 @@ declare void @av_freep(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define internal fastcc i32 @avi_sync(ptr noundef %0, i32 noundef range(i32 0, 2) %1) unnamed_addr #1 {
 bb.a:
-  %2 = alloca [8 x i32], align 16                 ; 15 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !27   ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !28   ; 17 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %2, i8 -1, i64 32, i1 false)
   %i.e = tail call i64 @avio_seek(ptr noundef %i.d, i64 noundef 0, i32 noundef 1) #12
   %i.f = tail call i32 @avio_feof(ptr noundef %i.d) #12
   %.not266274 = icmp eq i32 %i.f, 0
@@ -225,14 +222,6 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.not199 = icmp eq i32 %1, 0
-  %.4..4.scevgep.sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %.28..28..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 28
-  %.16..16..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 16
-  %.20..20..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 20
-  %.24..24..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %.8..8..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %.12..12..sroa_idx = getelementptr inbounds nuw i8, ptr %2, i64 12
-  %.4..4.scevgep.sroa_idx427 = getelementptr inbounds nuw i8, ptr %2, i64 4
   br label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader.lr.ph.lr.ph, %.thread221
@@ -241,82 +230,78 @@ bb.a:
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.thread225
+  %.sroa.6.1 = phi i32 [ -1, %.preheader.lr.ph ], [ %.sroa.9.1, %.thread225 ] ; 6 uses
+  %.sroa.9.1 = phi i32 [ -1, %.preheader.lr.ph ], [ %.sroa.13.1, %.thread225 ] ; 9 uses
+  %.sroa.13.1 = phi i32 [ -1, %.preheader.lr.ph ], [ %.sroa.17.1, %.thread225 ] ; 15 uses
+  %.sroa.17.1 = phi i32 [ -1, %.preheader.lr.ph ], [ %.sroa.20.1, %.thread225 ] ; 13 uses
+  %.sroa.20.1 = phi i32 [ -1, %.preheader.lr.ph ], [ %.sroa.23.1, %.thread225 ] ; 2 uses
+  %.sroa.23.1 = phi i32 [ -1, %.preheader.lr.ph ], [ %.sroa.26.1, %.thread225 ] ; 2 uses
+  %.sroa.26.1 = phi i32 [ -1, %.preheader.lr.ph ], [ %2, %.thread225 ] ; 2 uses
   %.0178267 = phi i64 [ %i.m, %.preheader.lr.ph ], [ %i.fn, %.thread225 ] ; 4 uses
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(28) %2, ptr noundef nonnull align 4 dereferenceable(28) %.4..4.scevgep.sroa_idx, i64 28, i1 false), !tbaa !37
-  %3 = tail call i32 @avio_r8(ptr noundef %i.d) #12 ; 2 uses
-  store i32 %3, ptr %.28..28..sroa_idx, align 4, !tbaa !37
-  %.16..16. = load i32, ptr %.16..16..sroa_idx, align 16, !tbaa !37
-  %.20..20. = load i32, ptr %.20..20..sroa_idx, align 4, !tbaa !37
-  %4 = shl i32 %.20..20., 8
-  %.24..24. = load i32, ptr %.24..24..sroa_idx, align 8, !tbaa !37
-  %5 = shl i32 %.24..24., 16
-  %i.o = shl i32 %3, 24
-  %6 = add i32 %.16..16., %i.o
-  %7 = add i32 %6, %4
-  %i.p = add i32 %7, %5                           ; 9 uses
-  %.8..8..val209 = load i32, ptr %.8..8..sroa_idx, align 8, !tbaa !37 ; 12 uses
-  %.12..12..val210 = load i32, ptr %.12..12..sroa_idx, align 4 ; 10 uses
-  %i.q = add i32 %.8..8..val209, -48
+  %2 = tail call i32 @avio_r8(ptr noundef %i.d) #12 ; 2 uses
+  %i.o = shl i32 %.sroa.23.1, 8
+  %3 = shl i32 %.sroa.26.1, 16
+  %4 = shl i32 %2, 24
+  %i.p = add i32 %.sroa.20.1, %4
+  %5 = add i32 %i.p, %i.o
+  %6 = add i32 %5, %3                             ; 9 uses
+  %i.q = add i32 %.sroa.13.1, -48
   %or.cond.i = icmp ult i32 %i.q, 10              ; 2 uses
-  %i.r = add i32 %.12..12..val210, -48
+  %i.r = add i32 %.sroa.17.1, -48
   %or.cond8.i = icmp ult i32 %i.r, 10
-  %or.cond1.i = select i1 %or.cond.i, i1 %or.cond8.i, i1 false
-  %i.s = mul nuw nsw i32 %.8..8..val209, 10
-  %i.t = add i32 %.12..12..val210, -528
+  %or.cond1.i = and i1 %or.cond.i, %or.cond8.i
+  %i.s = mul nuw nsw i32 %.sroa.13.1, 10
+  %i.t = add i32 %.sroa.17.1, -528
   %i.u = add i32 %i.t, %i.s
   %.0.i = select i1 %or.cond1.i, i32 %i.u, i32 100
   %i.v = load i64, ptr %i.g, align 8, !tbaa !33
   %i.w = icmp sgt i64 %i.v, 0
   %i.x = select i1 %i.w, i64 %.0178267, i64 0
-  %i.y = zext i32 %i.p to i64                     ; 4 uses
+  %i.y = zext i32 %6 to i64                       ; 4 uses
   %i.z = add i64 %i.x, %i.y
   %i.aa = load i64, ptr %i.h, align 8, !tbaa !32
   %i.ab = icmp ugt i64 %i.z, %i.aa
-  %.0..0. = load i32, ptr %2, align 16            ; 4 uses
-  %i.ac = icmp ugt i32 %.0..0., 127
+  %i.ac = icmp ugt i32 %.sroa.6.1, 127
   %or.cond = select i1 %i.ab, i1 true, i1 %i.ac
   br i1 %or.cond, label %.thread225, label %bb.b
 
 bb.b:                                             ; preds = %.preheader
-  %i.ad = icmp eq i32 %.0..0., 105                ; 3 uses
-  %.4..4. = load i32, ptr %.4..4.scevgep.sroa_idx427, align 4 ; 6 uses
-  %.0.426 = load <4 x i32>, ptr %2, align 16
-  %.fr = freeze <4 x i32> %.0.426                 ; 3 uses
-  %i.ae = icmp eq i32 %.4..4., 120
-  %or.cond5 = select i1 %i.ad, i1 %i.ae, i1 false
+  %i.ad = icmp eq i32 %.sroa.6.1, 105             ; 3 uses
+  %i.ae = icmp eq i32 %.sroa.9.1, 120
+  %or.cond5 = and i1 %i.ad, %i.ae
   br i1 %or.cond5, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   %i.af = load i32, ptr %i.i, align 4, !tbaa !46
   %i.ag = icmp ult i32 %.0.i, %i.af
-  %8 = icmp ne <4 x i32> %.fr, <i32 74, i32 85, i32 78, i32 75>
-  %9 = bitcast <4 x i1> %8 to i4
-  %10 = icmp eq i4 %9, 0
-  %or.cond464 = or i1 %i.ag, %10
-  br i1 %or.cond464, label %bb.g, label %bb.e
+  br i1 %i.ag, label %bb.g, label %bb.d
 
-bb.d:                                             ; preds = %bb.b
-  %.old461 = icmp ne <4 x i32> %.fr, <i32 74, i32 85, i32 78, i32 75>
-  %.old462 = bitcast <4 x i1> %.old461 to i4
-  %.old463 = icmp eq i4 %.old462, 0
-  br i1 %.old463, label %bb.g, label %bb.e
+bb.d:                                             ; preds = %bb.c, %bb.b
+  %7 = icmp eq i32 %.sroa.6.1, 74
+  %8 = icmp eq i32 %.sroa.9.1, 85
+  %or.cond8 = and i1 %7, %8
+  %9 = icmp eq i32 %.sroa.13.1, 78
+  %or.cond11 = and i1 %or.cond8, %9
+  %.old463 = icmp eq i32 %.sroa.17.1, 75
+  %or.cond14 = and i1 %or.cond11, %.old463
+  br i1 %or.cond14, label %bb.g, label %bb.e
 
-bb.e:                                             ; preds = %bb.c, %bb.d
-  %i.ah = icmp eq i32 %.4..4., 100
-  %or.cond17 = select i1 %i.ad, i1 %i.ah, i1 false
-  %11 = icmp eq i32 %.8..8..val209, 120
-  %or.cond20 = select i1 %or.cond17, i1 %11, i1 false
-  %12 = icmp eq i32 %.12..12..val210, 49
-  %or.cond23 = select i1 %or.cond20, i1 %12, i1 false
+bb.e:                                             ; preds = %bb.d
+  %i.ah = icmp eq i32 %.sroa.9.1, 100
+  %10 = icmp eq i32 %.sroa.13.1, 120
+  %11 = and i1 %i.ah, %10
+  %12 = icmp eq i32 %.sroa.17.1, 49
+  %13 = and i1 %11, %12
+  %or.cond23 = and i1 %13, %i.ad
   br i1 %or.cond23, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.ai = icmp eq i32 %.4..4., 110
-  %or.cond26 = select i1 %i.ad, i1 %i.ai, i1 false
-  %13 = icmp eq i32 %.8..8..val209, 100
-  %or.cond29 = select i1 %or.cond26, i1 %13, i1 false
-  %i.aj = icmp eq i32 %.12..12..val210, 120       ; 2 uses
-  %or.cond32 = select i1 %or.cond29, i1 %i.aj, i1 false
+  %i.ai = icmp eq i32 %.sroa.9.1, 110
+  %14 = icmp eq i32 %.sroa.13.1, 100
+  %15 = and i1 %i.ai, %14
+  %or.cond29 = and i1 %15, %i.ad
+  %i.aj = icmp eq i32 %.sroa.17.1, 120            ; 2 uses
+  %or.cond32 = and i1 %or.cond29, %i.aj
   br i1 %or.cond32, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d, %bb.c
@@ -324,24 +309,28 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d,
   br label %.thread221
 
 bb.h:                                             ; preds = %bb.f
-  %14 = icmp ne <4 x i32> %.fr, <i32 76, i32 73, i32 83, i32 84>
-  %15 = bitcast <4 x i1> %14 to i4
-  %i.al = icmp eq i4 %15, 0
-  br i1 %i.al, label %bb.i, label %bb.j
+  %16 = icmp eq i32 %.sroa.6.1, 76
+  %17 = icmp eq i32 %.sroa.9.1, 73
+  %or.cond35 = and i1 %16, %17
+  %18 = icmp eq i32 %.sroa.13.1, 83
+  %or.cond38 = and i1 %or.cond35, %18
+  %i.al = icmp eq i32 %.sroa.17.1, 84
+  %or.cond41 = and i1 %or.cond38, %i.al
+  br i1 %or.cond41, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
   %i.am = tail call i64 @avio_skip(ptr noundef %i.d, i64 noundef 4) #12 ; 0 uses
   br label %.thread221
 
 bb.j:                                             ; preds = %bb.h
-  %i.an = add nsw i32 %.0..0., -48
+  %i.an = add nsw i32 %.sroa.6.1, -48
   %or.cond.i211 = icmp ult i32 %i.an, 10
-  %i.ao = add i32 %.4..4., -48
+  %i.ao = add i32 %.sroa.9.1, -48
   %or.cond8.i212 = icmp ult i32 %i.ao, 10         ; 2 uses
   %or.cond1.i213 = select i1 %or.cond.i211, i1 %or.cond8.i212, i1 false
-  %i.ap = mul nuw nsw i32 %.0..0., 10
+  %i.ap = mul nuw nsw i32 %.sroa.6.1, 10
   %i.aq = add nsw i32 %i.ap, -528
-  %i.ar = add i32 %i.aq, %.4..4.
+  %i.ar = add i32 %i.aq, %.sroa.9.1
   %.0.i214 = select i1 %or.cond1.i213, i32 %i.ar, i32 100 ; 8 uses
   %i.as = load i64, ptr %i.j, align 8, !tbaa !88
   %i.at = sub nsw i64 %.0178267, %i.as
@@ -350,18 +339,18 @@ bb.j:                                             ; preds = %bb.h
   br i1 %.not196, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %or.cond1.i217 = select i1 %or.cond8.i212, i1 %or.cond.i, i1 false
-  %i.av = mul nuw nsw i32 %.4..4., 10
+  %or.cond1.i217 = and i1 %or.cond8.i212, %or.cond.i
+  %i.av = mul nuw nsw i32 %.sroa.9.1, 10
   %i.aw = add nsw i32 %i.av, -528
-  %i.ax = add i32 %i.aw, %.8..8..val209
+  %i.ax = add i32 %i.aw, %.sroa.13.1
   %.0.i218 = select i1 %or.cond1.i217, i32 %i.ax, i32 100
   %i.ay = load i32, ptr %i.i, align 4, !tbaa !46
   %i.az = icmp ult i32 %.0.i218, %i.ay
   br i1 %i.az, label %.thread225, label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %i.ba = icmp eq i32 %.8..8..val209, 105
-  %or.cond44 = select i1 %i.ba, i1 %i.aj, i1 false
+  %i.ba = icmp eq i32 %.sroa.13.1, 105
+  %or.cond44 = and i1 %i.ba, %i.aj
   br i1 %or.cond44, label %bb.m, label %bb.o
 
 bb.m:                                             ; preds = %bb.l
@@ -374,9 +363,9 @@ bb.n:                                             ; preds = %bb.m
   br label %.thread221
 
 bb.o:                                             ; preds = %bb.l
-  %i.be = icmp eq i32 %.8..8..val209, 119         ; 2 uses
-  %i.bf = icmp eq i32 %.12..12..val210, 99        ; 2 uses
-  %or.cond47 = select i1 %i.be, i1 %i.bf, i1 false
+  %i.be = icmp eq i32 %.sroa.13.1, 119            ; 2 uses
+  %i.bf = icmp eq i32 %.sroa.17.1, 99             ; 2 uses
+  %or.cond47 = and i1 %i.be, %i.bf
   br i1 %or.cond47, label %bb.p, label %.thread
 
 bb.p:                                             ; preds = %bb.o
@@ -427,10 +416,10 @@ bb.u:                                             ; preds = %bb.t
   %i.ca = load ptr, ptr %i.bz, align 8, !tbaa !45 ; 4 uses
   %i.cb = icmp ne ptr %i.ca, null
   %or.cond52 = and i1 %i.bk, %i.cb
-  %16 = icmp ne i32 %.12..12..val210, 98
-  %not.or.cond52 = xor i1 %or.cond52, true
-  %or.cond55 = select i1 %not.or.cond52, i1 true, i1 %16
-  %i.cc = select i1 %or.cond55, i1 true, i1 %i.bn
+  %19 = icmp eq i32 %.sroa.17.1, 98
+  %or.cond55 = and i1 %or.cond52, %19
+  %not.or.cond55 = xor i1 %or.cond55, true
+  %i.cc = select i1 %not.or.cond55, i1 true, i1 %i.bn
   br i1 %i.cc, label %bb.ab, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
@@ -473,9 +462,9 @@ bb.ab:                                            ; preds = %bb.u, %bb.v, %bb.w,
   %.1180 = phi i32 [ %.0.i214, %bb.t ], [ 1, %bb.aa ], [ 0, %bb.z ], [ 0, %bb.x ], [ 0, %bb.w ], [ 0, %bb.v ], [ %.0.i214, %bb.u ]
   %.1174 = phi ptr [ %i.bt, %bb.t ], [ %i.by, %bb.aa ], [ %i.bt, %bb.z ], [ %i.bt, %bb.x ], [ %i.bt, %bb.w ], [ %i.bt, %bb.v ], [ %i.bt, %bb.u ] ; 4 uses
   %.1 = phi ptr [ %i.bv, %bb.t ], [ %i.ca, %bb.aa ], [ %i.bv, %bb.z ], [ %i.bv, %bb.x ], [ %i.bv, %bb.w ], [ %i.bv, %bb.v ], [ %i.bv, %bb.u ] ; 13 uses
-  %i.ct = icmp eq i32 %.8..8..val209, 112
-  %or.cond60 = select i1 %i.ct, i1 %i.bj, i1 false
-  %i.cu = icmp ult i32 %i.p, 1029
+  %i.ct = icmp eq i32 %.sroa.13.1, 112
+  %or.cond60 = and i1 %i.ct, %i.bj
+  %i.cu = icmp ult i32 %6, 1029
   %or.cond62 = and i1 %i.cu, %or.cond60
   br i1 %or.cond62, label %bb.ac, label %bb.ae
 
@@ -520,21 +509,19 @@ bb.ae:                                            ; preds = %bb.ab
 
 bb.af:                                            ; preds = %bb.ae
   %i.dm = icmp sgt i64 %i.n, %.0178267
-  %17 = icmp ult i32 %.8..8..val209, 128
-  %or.cond65 = and i1 %i.dm, %17
-  %i.dn = icmp ult i32 %.12..12..val210, 128
-  %or.cond230 = select i1 %or.cond65, i1 %i.dn, i1 false
+  %20 = or i32 %.sroa.17.1, %.sroa.13.1
+  %i.dn = icmp ult i32 %20, 128
+  %or.cond230 = and i1 %i.dm, %i.dn
   br i1 %or.cond230, label %bb.ai, label %bb.ah
 
 bb.ag:                                            ; preds = %bb.ae
-  %.old64 = icmp ult i32 %.8..8..val209, 128
-  %.old = icmp ult i32 %.12..12..val210, 128
-  %or.cond231 = select i1 %.old64, i1 %.old, i1 false
-  br i1 %or.cond231, label %bb.ai, label %bb.ah
+  %21 = or i32 %.sroa.13.1, %.sroa.17.1
+  %.old = icmp ult i32 %21, 128
+  br i1 %.old, label %bb.ai, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.af
-  %i.do = shl i32 %.8..8..val209, 8
-  %i.dp = add i32 %.12..12..val210, %i.do
+  %i.do = shl i32 %.sroa.13.1, 8
+  %i.dp = add i32 %.sroa.17.1, %i.do
   %i.dq = getelementptr inbounds nuw i8, ptr %.1, i64 40
   %i.dr = load i32, ptr %i.dq, align 8, !tbaa !174
   %i.ds = icmp eq i32 %i.dp, %i.dr
@@ -545,8 +532,8 @@ bb.ai:                                            ; preds = %bb.ag, %bb.af, %bb.
   br i1 %.not199, label %bb.aj, label %.thread221.thread
 
 bb.aj:                                            ; preds = %bb.ai
-  %i.du = shl i32 %.8..8..val209, 8
-  %i.dv = add i32 %.12..12..val210, %i.du         ; 2 uses
+  %i.du = shl i32 %.sroa.13.1, 8
+  %i.dv = add i32 %.sroa.17.1, %i.du              ; 2 uses
   %i.dw = getelementptr inbounds nuw i8, ptr %.1, i64 40 ; 2 uses
   %i.dx = load i32, ptr %i.dw, align 8, !tbaa !174
   %i.dy = icmp eq i32 %i.dv, %i.dx
@@ -571,7 +558,7 @@ bb.an:                                            ; preds = %bb.am
   %i.eb = getelementptr inbounds nuw i8, ptr %.1174, i64 68
   %i.ec = load i32, ptr %i.eb, align 4, !tbaa !85 ; 2 uses
   %i.ed = icmp sgt i32 %i.ec, -1
-  %i.ee = icmp eq i32 %i.p, 0
+  %i.ee = icmp eq i32 %6, 0
   %or.cond68 = and i1 %i.ee, %i.ed
   %i.ef = icmp sgt i32 %i.ec, 47
   %or.cond205 = or i1 %i.ef, %or.cond68
@@ -590,7 +577,7 @@ bb.ap:                                            ; preds = %bb.ao
   br i1 %.not7.i, label %get_duration.exit, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
-  %i.ek = sext i32 %i.p to i64
+  %i.ek = sext i32 %6 to i64
   %i.el = sext i32 %i.ej to i64                   ; 2 uses
   %i.em = add nsw i64 %i.ek, -1
   %i.en = add nsw i64 %i.em, %i.el
@@ -599,7 +586,7 @@ bb.aq:                                            ; preds = %bb.ap
   br label %get_duration.exit
 
 get_duration.exit:                                ; preds = %bb.ao, %bb.ap, %bb.aq
-  %.0.i219 = phi i32 [ %i.p, %bb.ao ], [ %i.ep, %bb.aq ], [ 1, %bb.ap ]
+  %.0.i219 = phi i32 [ %6, %bb.ao ], [ %i.ep, %bb.aq ], [ 1, %bb.ap ]
   %i.eq = sext i32 %.0.i219 to i64
   %i.er = load i64, ptr %.1, align 8, !tbaa !56
   %i.es = add nsw i64 %i.er, %i.eq
@@ -610,12 +597,12 @@ get_duration.exit:                                ; preds = %bb.ao, %bb.ap, %bb.
 bb.ar:                                            ; preds = %bb.an, %bb.am
   %i.eu = getelementptr inbounds nuw i8, ptr %i.b, i64 68
   store i32 %.1180, ptr %i.eu, align 4, !tbaa !31
-  %i.ev = add i32 %i.p, 8
+  %i.ev = add i32 %6, 8
   %i.ew = getelementptr inbounds nuw i8, ptr %.1, i64 12
   store i32 %i.ev, ptr %i.ew, align 4, !tbaa !84
   %i.ex = getelementptr inbounds nuw i8, ptr %.1, i64 8
-  store i32 %i.p, ptr %i.ex, align 8, !tbaa !83
-  %.not201 = icmp eq i32 %i.p, 0
+  store i32 %6, ptr %i.ex, align 8, !tbaa !83
+  %.not201 = icmp eq i32 %6, 0
   br i1 %.not201, label %.thread221.thread, label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
@@ -642,11 +629,10 @@ bb.au:                                            ; preds = %bb.at
 
 bb.av:                                            ; preds = %bb.au, %bb.at, %bb.as
   %i.fj = load i64, ptr %.1, align 8, !tbaa !56
-  %i.fk = tail call i32 @av_add_index_entry(ptr noundef nonnull %.1174, i64 noundef %i.ez, i64 noundef %i.fj, i32 noundef %i.p, i32 noundef 0, i32 noundef 1) #12 ; 0 uses
+  %i.fk = tail call i32 @av_add_index_entry(ptr noundef nonnull %.1174, i64 noundef %i.ez, i64 noundef %i.fj, i32 noundef %6, i32 noundef 0, i32 noundef 1) #12 ; 0 uses
   br label %.thread221.thread
 
 .thread221:                                       ; preds = %get_duration.exit, %._crit_edge273, %bb.q, %bb.n, %bb.i, %bb.g
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %2, i8 -1, i64 32, i1 false)
   %i.fl = tail call i64 @avio_seek(ptr noundef %i.d, i64 noundef 0, i32 noundef 1) #12
   %i.fm = tail call i32 @avio_feof(ptr noundef %i.d) #12
   %.not266 = icmp eq i32 %i.fm, 0
@@ -667,7 +653,6 @@ bb.av:                                            ; preds = %bb.au, %bb.at, %bb.
 
 .thread221.thread:                                ; preds = %bb.ai, %bb.ar, %bb.au, %bb.av, %._crit_edge
   %.5 = phi i32 [ %., %._crit_edge ], [ 0, %bb.av ], [ 0, %bb.au ], [ 0, %bb.ar ], [ 0, %bb.ai ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
   ret i32 %.5
 }
 
@@ -768,9 +753,6 @@ declare i64 @llvm.smin.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #9
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
-declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #9
