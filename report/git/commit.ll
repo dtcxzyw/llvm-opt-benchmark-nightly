@@ -204,27 +204,27 @@ bb.ab:                                            ; preds = %hash_algo_by_ptr.ex
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %hash_algo_by_ptr.exit115
-  %.sroa.0.sroa.6.0 = phi ptr [ %.pre140.pre, %hash_algo_by_ptr.exit115 ], [ %i.cl, %bb.ab ] ; 3 uses
-  %.sroa.0.sroa.0.0 = phi ptr [ %13, %hash_algo_by_ptr.exit115 ], [ %12, %bb.ab ] ; 2 uses
-  %.sroa.8.sroa.6.0 = phi ptr [ %i.cl, %hash_algo_by_ptr.exit115 ], [ %.pre140.pre, %bb.ab ] ; 3 uses
-  %.sroa.8.sroa.0.0 = phi ptr [ %12, %hash_algo_by_ptr.exit115 ], [ %13, %bb.ab ] ; 3 uses
-  %.not100 = icmp eq ptr %.sroa.0.sroa.6.0, null
+  %.sroa.0.sroa.6.0 = phi ptr [ %i.cl, %hash_algo_by_ptr.exit115 ], [ %.pre140.pre, %bb.ab ] ; 3 uses
+  %.sroa.0.sroa.0.0 = phi ptr [ %12, %hash_algo_by_ptr.exit115 ], [ %13, %bb.ab ] ; 3 uses
+  %.sroa.8.sroa.6.0 = phi ptr [ %.pre140.pre, %hash_algo_by_ptr.exit115 ], [ %i.cl, %bb.ab ] ; 3 uses
+  %.sroa.8.sroa.0.0 = phi ptr [ %13, %hash_algo_by_ptr.exit115 ], [ %12, %bb.ab ] ; 2 uses
+  %.not100 = icmp eq ptr %.sroa.8.sroa.6.0, null
   br i1 %.not100, label %.thread157, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.cn = call i32 @add_header_signature(ptr noundef nonnull %10, ptr noundef nonnull %.sroa.0.sroa.0.0, ptr noundef nonnull %.sroa.0.sroa.6.0) ; 0 uses
+  %i.cn = call i32 @add_header_signature(ptr noundef nonnull %10, ptr noundef nonnull %.sroa.8.sroa.0.0, ptr noundef nonnull %.sroa.8.sroa.6.0) ; 0 uses
   %i.co = load ptr, ptr %i.al, align 8, !tbaa !211
   %.not101 = icmp eq ptr %i.co, null
   br i1 %.not101, label %.thread157, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.cp = call i32 @add_header_signature(ptr noundef nonnull %11, ptr noundef nonnull %.sroa.0.sroa.0.0, ptr noundef nonnull %.sroa.0.sroa.6.0) ; 0 uses
+  %i.cp = call i32 @add_header_signature(ptr noundef nonnull %11, ptr noundef nonnull %.sroa.8.sroa.0.0, ptr noundef nonnull %.sroa.8.sroa.6.0) ; 0 uses
   br label %.thread157
 
 .thread157:                                       ; preds = %.thread154, %bb.v, %bb.ad, %bb.ae, %bb.ac
   %i.cq = phi ptr [ %i.al, %bb.ac ], [ %i.al, %bb.ad ], [ %i.al, %bb.ae ], [ %i.aj, %.thread154 ], [ %i.al, %bb.v ] ; 4 uses
-  %.sroa.8.sroa.0.0164 = phi ptr [ %.sroa.8.sroa.0.0, %bb.ac ], [ %.sroa.8.sroa.0.0, %bb.ad ], [ %.sroa.8.sroa.0.0, %bb.ae ], [ %12, %.thread154 ], [ %12, %bb.v ] ; 2 uses
-  %.sroa.8.sroa.6.0163 = phi ptr [ %.sroa.8.sroa.6.0, %bb.ac ], [ %.sroa.8.sroa.6.0, %bb.ad ], [ %.sroa.8.sroa.6.0, %bb.ae ], [ %i.cj, %.thread154 ], [ %i.cl, %bb.v ] ; 3 uses
+  %.sroa.8.sroa.0.0164 = phi ptr [ %.sroa.0.sroa.0.0, %bb.ac ], [ %.sroa.0.sroa.0.0, %bb.ad ], [ %.sroa.0.sroa.0.0, %bb.ae ], [ %12, %.thread154 ], [ %12, %bb.v ] ; 2 uses
+  %.sroa.8.sroa.6.0163 = phi ptr [ %.sroa.0.sroa.6.0, %bb.ac ], [ %.sroa.0.sroa.6.0, %bb.ad ], [ %.sroa.0.sroa.6.0, %bb.ae ], [ %i.cj, %.thread154 ], [ %i.cl, %bb.v ] ; 3 uses
   %.not100.1 = icmp eq ptr %.sroa.8.sroa.6.0163, null
   br i1 %.not100.1, label %bb.ah, label %bb.af
 

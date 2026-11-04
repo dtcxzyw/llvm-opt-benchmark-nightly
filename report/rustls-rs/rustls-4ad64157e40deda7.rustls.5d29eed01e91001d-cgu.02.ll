@@ -205,10 +205,13 @@ bb.q:                                             ; preds = %bb.o, %bb.n, %.noex
   %.sroa.5.0.i.i = phi i64 [ %i.bc, %bb.o ], [ %.val.i.i, %bb.n ], [ 0, %.noexc61.i ]
   %.sroa.11.0.i.i = phi i64 [ 0, %bb.o ], [ %i.bb, %bb.n ], [ 0, %.noexc61.i ]
   %i.bd = getelementptr inbounds nuw i8, ptr %i.ae, i64 16 ; 2 uses
-  %i.be = load ptr, ptr %i.bd, align 8, !alias.scope !566, !nonnull !5, !noundef !5 ; 46 uses
+  %i.be = load ptr, ptr %i.bd, align 8, !alias.scope !566, !nonnull !5, !noundef !5 ; 45 uses
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %.sroa.0.0.i.i ; 2 uses
-  %i.bg = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %.sroa.5.0.i.i ; 2 uses
-  %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %.sroa.11.0.i.i ; 2 uses
+  %i.bg = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %.sroa.5.0.i.i
+  %i.bh = getelementptr inbounds nuw [8 x i8], ptr %i.be, i64 %.sroa.11.0.i.i
+  %4 = ptrtoint ptr %i.bg to i64                  ; 2 uses
+  %5 = ptrtoint ptr %i.be to i64                  ; 2 uses
+  %6 = ptrtoint ptr %i.bh to i64                  ; 2 uses
   %i.bi = getelementptr inbounds nuw i8, ptr %i.k, i64 16 ; 2 uses
   %i.bj = load i64, ptr %i.bi, align 8, !noalias !565 ; 4 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %i.k, i64 8
@@ -217,25 +220,30 @@ bb.q:                                             ; preds = %bb.o, %bb.n, %.noex
   br i1 %i.bm, label %.split.us, label %.split
 
 .split.us:                                        ; preds = %bb.q, %.split.us.backedge
-  %.sroa.06.sroa.8.0.i.us = phi ptr [ %.sroa.06.sroa.8.164.i.us, %.split.us.backedge ], [ %i.bg, %bb.q ] ; 4 uses
-  %.sroa.06.sroa.0.0.i.us = phi ptr [ %i.bp, %.split.us.backedge ], [ %i.bf, %bb.q ] ; 2 uses
-  %.sroa.1111.sroa.6.0.i.us = phi ptr [ %.sroa.1111.sroa.6.165.i.us, %.split.us.backedge ], [ %i.bh, %bb.q ] ; 3 uses
-  %.sroa.1111.sroa.0.0.i.us = phi ptr [ %.sroa.1111.sroa.0.166.i.us, %.split.us.backedge ], [ %i.be, %bb.q ] ; 3 uses
-  %.sroa.16.0.i.us = phi i64 [ %i.bq, %.split.us.backedge ], [ 0, %bb.q ] ; 2 uses
-  %i.bn = icmp eq ptr %.sroa.06.sroa.0.0.i.us, %.sroa.06.sroa.8.0.i.us
+  %.sroa.18.0.i.us = phi i64 [ %i.bq, %.split.us.backedge ], [ 0, %bb.q ] ; 2 uses
+  %.sroa.1510.0.i.us = phi i64 [ %.sroa.1510.1111.i.us, %.split.us.backedge ], [ %6, %bb.q ] ; 3 uses
+  %.sroa.12.0.i.us = phi i64 [ %.sroa.12.1112.i.us, %.split.us.backedge ], [ %5, %bb.q ] ; 4 uses
+  %.sroa.8.0.i.us = phi i64 [ %.sroa.8.1113.i.us, %.split.us.backedge ], [ %4, %bb.q ] ; 3 uses
+  %.sroa.1111.sroa.0.0.i.us = phi ptr [ %i.bp, %.split.us.backedge ], [ %i.bf, %bb.q ] ; 3 uses
+  %7 = inttoptr i64 %.sroa.8.0.i.us to ptr
+  %i.bn = icmp eq ptr %.sroa.1111.sroa.0.0.i.us, %7
   br i1 %i.bn, label %bb.r, label %.thread58.i.us
 
 bb.r:                                             ; preds = %.split.us
-  %i.bo = icmp eq ptr %.sroa.1111.sroa.0.0.i.us, %.sroa.1111.sroa.6.0.i.us
-  br i1 %i.bo, label %.thread49.i, label %.thread58.i.us
+  %.sroa.07.0.i.us = ptrtoint ptr %.sroa.1111.sroa.0.0.i.us to i64
+  %8 = inttoptr i64 %.sroa.12.0.i.us to ptr
+  %9 = icmp eq i64 %.sroa.12.0.i.us, %.sroa.1510.0.i.us
+  %i.bo = icmp eq i64 %.sroa.12.0.i.us, 0
+  %or.cond.i.us = or i1 %9, %i.bo
+  br i1 %or.cond.i.us, label %.thread49.i, label %.thread58.i.us
 
 .thread58.i.us:                                   ; preds = %bb.r, %.split.us
-  %.sink6.i.i67.i.us = phi ptr [ %.sroa.1111.sroa.0.0.i.us, %bb.r ], [ %.sroa.06.sroa.0.0.i.us, %.split.us ] ; 2 uses
-  %.sroa.1111.sroa.0.166.i.us = phi ptr [ %.sroa.06.sroa.8.0.i.us, %bb.r ], [ %.sroa.1111.sroa.0.0.i.us, %.split.us ]
-  %.sroa.1111.sroa.6.165.i.us = phi ptr [ %.sroa.06.sroa.8.0.i.us, %bb.r ], [ %.sroa.1111.sroa.6.0.i.us, %.split.us ]
-  %.sroa.06.sroa.8.164.i.us = phi ptr [ %.sroa.1111.sroa.6.0.i.us, %bb.r ], [ %.sroa.06.sroa.8.0.i.us, %.split.us ]
+  %.sink6.i.i67.i.us = phi ptr [ %8, %bb.r ], [ %.sroa.1111.sroa.0.0.i.us, %.split.us ] ; 2 uses
+  %.sroa.8.1113.i.us = phi i64 [ %.sroa.1510.0.i.us, %bb.r ], [ %.sroa.8.0.i.us, %.split.us ]
+  %.sroa.12.1112.i.us = phi i64 [ %.sroa.07.0.i.us, %bb.r ], [ %.sroa.12.0.i.us, %.split.us ]
+  %.sroa.1510.1111.i.us = phi i64 [ %.sroa.8.0.i.us, %bb.r ], [ %.sroa.1510.0.i.us, %.split.us ]
   %i.bp = getelementptr inbounds nuw i8, ptr %.sink6.i.i67.i.us, i64 8
-  %i.bq = add i64 %.sroa.16.0.i.us, 1
+  %i.bq = add i64 %.sroa.18.0.i.us, 1
   %i.br = load ptr, ptr %.sink6.i.i67.i.us, align 8, !nonnull !5, !noundef !5 ; 4 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %i.br, i64 72
   %i.bt = load i16, ptr %i.bs, align 8, !range !567, !noundef !5
@@ -265,25 +273,30 @@ bb.u:                                             ; preds = %bb.t
   br label %.split.us
 
 .split:                                           ; preds = %bb.q, %.split.backedge
-  %.sroa.06.sroa.8.0.i = phi ptr [ %.sroa.06.sroa.8.164.i, %.split.backedge ], [ %i.bg, %bb.q ] ; 4 uses
-  %.sroa.06.sroa.0.0.i = phi ptr [ %i.cg, %.split.backedge ], [ %i.bf, %bb.q ] ; 2 uses
-  %.sroa.1111.sroa.6.0.i = phi ptr [ %.sroa.1111.sroa.6.165.i, %.split.backedge ], [ %i.bh, %bb.q ] ; 3 uses
-  %.sroa.1111.sroa.0.0.i = phi ptr [ %.sroa.1111.sroa.0.166.i, %.split.backedge ], [ %i.be, %bb.q ] ; 3 uses
-  %.sroa.16.0.i = phi i64 [ %i.ch, %.split.backedge ], [ 0, %bb.q ] ; 2 uses
-  %i.ce = icmp eq ptr %.sroa.06.sroa.0.0.i, %.sroa.06.sroa.8.0.i
+  %.sroa.18.0.i = phi i64 [ %i.ch, %.split.backedge ], [ 0, %bb.q ] ; 2 uses
+  %.sroa.1510.0.i = phi i64 [ %.sroa.1510.1111.i, %.split.backedge ], [ %6, %bb.q ] ; 3 uses
+  %.sroa.12.0.i = phi i64 [ %.sroa.12.1112.i, %.split.backedge ], [ %5, %bb.q ] ; 4 uses
+  %.sroa.8.0.i = phi i64 [ %.sroa.8.1113.i, %.split.backedge ], [ %4, %bb.q ] ; 3 uses
+  %.sroa.1111.sroa.0.0.i = phi ptr [ %i.cg, %.split.backedge ], [ %i.bf, %bb.q ] ; 3 uses
+  %10 = inttoptr i64 %.sroa.8.0.i to ptr
+  %i.ce = icmp eq ptr %.sroa.1111.sroa.0.0.i, %10
   br i1 %i.ce, label %bb.v, label %.thread58.i
 
 bb.v:                                             ; preds = %.split
-  %i.cf = icmp eq ptr %.sroa.1111.sroa.0.0.i, %.sroa.1111.sroa.6.0.i
-  br i1 %i.cf, label %.thread49.i, label %.thread58.i
+  %.sroa.07.0.i = ptrtoint ptr %.sroa.1111.sroa.0.0.i to i64
+  %11 = inttoptr i64 %.sroa.12.0.i to ptr
+  %12 = icmp eq i64 %.sroa.12.0.i, %.sroa.1510.0.i
+  %i.cf = icmp eq i64 %.sroa.12.0.i, 0
+  %or.cond.i = or i1 %12, %i.cf
+  br i1 %or.cond.i, label %.thread49.i, label %.thread58.i
 
-.thread58.i:                                      ; preds = %bb.v, %.split
-  %.sink6.i.i67.i = phi ptr [ %.sroa.1111.sroa.0.0.i, %bb.v ], [ %.sroa.06.sroa.0.0.i, %.split ] ; 2 uses
-  %.sroa.1111.sroa.0.166.i = phi ptr [ %.sroa.06.sroa.8.0.i, %bb.v ], [ %.sroa.1111.sroa.0.0.i, %.split ]
-  %.sroa.1111.sroa.6.165.i = phi ptr [ %.sroa.06.sroa.8.0.i, %bb.v ], [ %.sroa.1111.sroa.6.0.i, %.split ]
-  %.sroa.06.sroa.8.164.i = phi ptr [ %.sroa.1111.sroa.6.0.i, %bb.v ], [ %.sroa.06.sroa.8.0.i, %.split ]
+.thread58.i:                                      ; preds = %.split, %bb.v
+  %.sink6.i.i67.i = phi ptr [ %11, %bb.v ], [ %.sroa.1111.sroa.0.0.i, %.split ] ; 2 uses
+  %.sroa.8.1113.i = phi i64 [ %.sroa.1510.0.i, %bb.v ], [ %.sroa.8.0.i, %.split ]
+  %.sroa.12.1112.i = phi i64 [ %.sroa.07.0.i, %bb.v ], [ %.sroa.12.0.i, %.split ]
+  %.sroa.1510.1111.i = phi i64 [ %.sroa.8.0.i, %bb.v ], [ %.sroa.1510.0.i, %.split ]
   %i.cg = getelementptr inbounds nuw i8, ptr %.sink6.i.i67.i, i64 8
-  %i.ch = add i64 %.sroa.16.0.i, 1
+  %i.ch = add i64 %.sroa.18.0.i, 1
   %i.ci = load ptr, ptr %.sink6.i.i67.i, align 8, !nonnull !5, !noundef !5 ; 3 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %i.ci, i64 72
   %i.ck = load i16, ptr %i.cj, align 8, !range !567, !noundef !5
@@ -658,7 +671,7 @@ bb.bj:                                            ; preds = %bb.bi
   br label %.split
 
 .split6.us:                                       ; preds = %bb.bj, %bb.u
-  %.us-phi = phi i64 [ %.sroa.16.0.i.us, %bb.u ], [ %.sroa.16.0.i, %bb.bj ] ; 15 uses
+  %.us-phi = phi i64 [ %.sroa.18.0.i.us, %bb.u ], [ %.sroa.18.0.i, %bb.bj ] ; 15 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !565
   call void @llvm.experimental.noalias.scope.decl(metadata !580)
   %i.ge = load i64, ptr %i.aq, align 8, !alias.scope !580, !noundef !5 ; 3 uses

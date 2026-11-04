@@ -205,25 +205,31 @@ _RNvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_2r
   %i.q = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %.sroa.0.0.i
   %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %.sroa.5.0.i
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %.sroa.11.0.i
+  %4 = ptrtoint ptr %i.q to i64
+  %5 = ptrtoint ptr %i.r to i64
+  %6 = ptrtoint ptr %i.p to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs7gfv9tzbXmh_6yara_x7symbols6SymbolEEB11_.exit, %_RNvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_2rc2RcINtNtCskKLDkoKarTP_4core4cell7RefCellNtNtCs7gfv9tzbXmh_6yara_x7symbols11SymbolTableEEE4iterB1Y_.exit
-  %.sroa.8.sroa.0.0 = phi ptr [ %i.p, %_RNvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_2rc2RcINtNtCskKLDkoKarTP_4core4cell7RefCellNtNtCs7gfv9tzbXmh_6yara_x7symbols11SymbolTableEEE4iterB1Y_.exit ], [ %.sroa.8.sroa.0.1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs7gfv9tzbXmh_6yara_x7symbols6SymbolEEB11_.exit ] ; 4 uses
-  %.sroa.8.sroa.7.0 = phi ptr [ %i.s, %_RNvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_2rc2RcINtNtCskKLDkoKarTP_4core4cell7RefCellNtNtCs7gfv9tzbXmh_6yara_x7symbols11SymbolTableEEE4iterB1Y_.exit ], [ %i.v, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs7gfv9tzbXmh_6yara_x7symbols6SymbolEEB11_.exit ] ; 2 uses
-  %.sroa.06.sroa.0.0 = phi ptr [ %i.q, %_RNvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_2rc2RcINtNtCskKLDkoKarTP_4core4cell7RefCellNtNtCs7gfv9tzbXmh_6yara_x7symbols11SymbolTableEEE4iterB1Y_.exit ], [ %.sroa.06.sroa.0.1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs7gfv9tzbXmh_6yara_x7symbols6SymbolEEB11_.exit ] ; 3 uses
-  %.sroa.06.sroa.6.0 = phi ptr [ %i.r, %_RNvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_2rc2RcINtNtCskKLDkoKarTP_4core4cell7RefCellNtNtCs7gfv9tzbXmh_6yara_x7symbols11SymbolTableEEE4iterB1Y_.exit ], [ %.sroa.06.sroa.6.1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs7gfv9tzbXmh_6yara_x7symbols6SymbolEEB11_.exit ] ; 3 uses
-  %i.t = icmp eq ptr %.sroa.8.sroa.0.0, %.sroa.8.sroa.7.0
+  %.sroa.07.0 = phi i64 [ %4, %_RNvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_2rc2RcINtNtCskKLDkoKarTP_4core4cell7RefCellNtNtCs7gfv9tzbXmh_6yara_x7symbols11SymbolTableEEE4iterB1Y_.exit ], [ %.sroa.07.1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs7gfv9tzbXmh_6yara_x7symbols6SymbolEEB11_.exit ] ; 3 uses
+  %.sroa.68.0 = phi i64 [ %5, %_RNvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_2rc2RcINtNtCskKLDkoKarTP_4core4cell7RefCellNtNtCs7gfv9tzbXmh_6yara_x7symbols11SymbolTableEEE4iterB1Y_.exit ], [ %.sroa.68.1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs7gfv9tzbXmh_6yara_x7symbols6SymbolEEB11_.exit ] ; 3 uses
+  %.sroa.9.0 = phi i64 [ %6, %_RNvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_2rc2RcINtNtCskKLDkoKarTP_4core4cell7RefCellNtNtCs7gfv9tzbXmh_6yara_x7symbols11SymbolTableEEE4iterB1Y_.exit ], [ %.sroa.9.1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs7gfv9tzbXmh_6yara_x7symbols6SymbolEEB11_.exit ] ; 3 uses
+  %.sroa.06.sroa.0.0 = phi ptr [ %i.s, %_RNvMs4_NtNtCsexYYUdYSQU6_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_2rc2RcINtNtCskKLDkoKarTP_4core4cell7RefCellNtNtCs7gfv9tzbXmh_6yara_x7symbols11SymbolTableEEE4iterB1Y_.exit ], [ %i.v, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs7gfv9tzbXmh_6yara_x7symbols6SymbolEEB11_.exit ] ; 3 uses
+  %7 = inttoptr i64 %.sroa.9.0 to ptr
+  %i.t = icmp eq ptr %.sroa.06.sroa.0.0, %7
   br i1 %i.t, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.u = icmp eq ptr %.sroa.06.sroa.0.0, %.sroa.06.sroa.6.0
+  %.sroa.13.0 = ptrtoint ptr %.sroa.06.sroa.0.0 to i64
+  %8 = inttoptr i64 %.sroa.68.0 to ptr
+  %i.u = icmp eq i64 %.sroa.07.0, %.sroa.68.0
   br i1 %i.u, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %.sroa.8.sroa.0.1 = phi ptr [ %.sroa.06.sroa.0.0, %bb.f ], [ %.sroa.8.sroa.0.0, %bb.e ]
-  %.sroa.06.sroa.0.1 = phi ptr [ %.sroa.8.sroa.0.0, %bb.f ], [ %.sroa.06.sroa.0.0, %bb.e ]
-  %.sroa.06.sroa.6.1 = phi ptr [ %.sroa.8.sroa.0.0, %bb.f ], [ %.sroa.06.sroa.6.0, %bb.e ]
-  %.sink12.i = phi ptr [ %.sroa.06.sroa.6.0, %bb.f ], [ %.sroa.8.sroa.7.0, %bb.e ]
+  %.sroa.07.1 = phi i64 [ %.sroa.9.0, %bb.f ], [ %.sroa.07.0, %bb.e ]
+  %.sroa.68.1 = phi i64 [ %.sroa.13.0, %bb.f ], [ %.sroa.68.0, %bb.e ]
+  %.sroa.9.1 = phi i64 [ %.sroa.07.0, %bb.f ], [ %.sroa.9.0, %bb.e ]
+  %.sink12.i = phi ptr [ %8, %bb.f ], [ %.sroa.06.sroa.0.0, %bb.e ]
   %i.v = getelementptr inbounds i8, ptr %.sink12.i, i64 -8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.w = load ptr, ptr %i.v, align 8, !nonnull !4, !noundef !4

@@ -1,0 +1,626 @@
+diff --git a/llvm/lib/Transforms/Scalar/SROA.cpp b/llvm/lib/Transforms/Scalar/SROA.cpp
+index f821d5916edfd5..da0b97edb29189 100644
+--- a/llvm/lib/Transforms/Scalar/SROA.cpp
++++ b/llvm/lib/Transforms/Scalar/SROA.cpp
+@@ -44,6 +44,7 @@
+ #include "llvm/Analysis/GlobalsModRef.h"
+ #include "llvm/Analysis/Loads.h"
+ #include "llvm/Analysis/PtrUseVisitor.h"
++#include "llvm/Analysis/TargetTransformInfo.h"
+ #include "llvm/Analysis/ValueTracking.h"
+ #include "llvm/Analysis/VectorUtils.h"
+ #include "llvm/IR/BasicBlock.h"
+@@ -172,6 +173,7 @@ class SROA {
+   LLVMContext *const C;
+   DomTreeUpdater *const DTU;
+   AssumptionCache *const AC;
++  TargetTransformInfo *const TTI;
+   const bool PreserveCFG;
+   const bool AggregateToVector;
+ 
+@@ -270,8 +272,8 @@ class SROA {
+ 
+ public:
+   SROA(LLVMContext *C, DomTreeUpdater *DTU, AssumptionCache *AC,
+-       SROAOptions Options)
+-      : C(C), DTU(DTU), AC(AC),
++       TargetTransformInfo *TTI, SROAOptions Options)
++      : C(C), DTU(DTU), AC(AC), TTI(TTI),
+         PreserveCFG(Options.CFG == SROAOptions::PreserveCFG),
+         AggregateToVector(Options.AggregateToVector) {}
+ 
+@@ -1053,7 +1055,6 @@ class AllocaSlices::SliceBuilder : public PtrUseVisitor<SliceBuilder> {
+   const uint64_t AllocSize;
+   AllocaSlices &AS;
+ 
+-  SmallDenseMap<Instruction *, unsigned> MemTransferSliceMap;
+   SmallDenseMap<Instruction *, uint64_t> PHIOrSelectSizes;
+ 
+   /// Set to de-duplicate dead instructions found in the use walk.
+@@ -1231,16 +1232,11 @@ class AllocaSlices::SliceBuilder : public PtrUseVisitor<SliceBuilder> {
+       return PI.setAborted(&II);
+ 
+     // This side of the transfer is completely out-of-bounds, and so we can
+-    // nuke the entire transfer. However, we also need to nuke the other side
+-    // if already added to our partitions.
++    // nuke the entire transfer.
+     // FIXME: Yet another place we really should bypass this when
+     // instrumenting for ASan.
+-    if (Offset.uge(AllocSize)) {
+-      auto MTPI = MemTransferSliceMap.find(&II);
+-      if (MTPI != MemTransferSliceMap.end())
+-        AS.Slices[MTPI->second].kill();
++    if (Offset.uge(AllocSize))
+       return markAsDead(II);
+-    }
+ 
+     uint64_t RawOffset = Offset.getLimitedValue();
+     uint64_t Size = Length ? Length->getLimitedValue() : AllocSize - RawOffset;
+@@ -1255,34 +1251,8 @@ class AllocaSlices::SliceBuilder : public PtrUseVisitor<SliceBuilder> {
+       return insertUse(II, Offset, Size, /*IsSplittable=*/false);
+     }
+ 
+-    // If we have seen both source and destination for a mem transfer, then
+-    // they both point to the same alloca.
+-    bool Inserted;
+-    SmallDenseMap<Instruction *, unsigned>::iterator MTPI;
+-    std::tie(MTPI, Inserted) =
+-        MemTransferSliceMap.insert(std::make_pair(&II, AS.Slices.size()));
+-    unsigned PrevIdx = MTPI->second;
+-    if (!Inserted) {
+-      Slice &PrevP = AS.Slices[PrevIdx];
+-
+-      // Check if the begin offsets match and this is a non-volatile transfer.
+-      // In that case, we can completely elide the transfer.
+-      if (!II.isVolatile() && PrevP.beginOffset() == RawOffset) {
+-        PrevP.kill();
+-        return markAsDead(II);
+-      }
+-
+-      // Otherwise we have an offset transfer within the same alloca. We can't
+-      // split those.
+-      PrevP.makeUnsplittable();
+-    }
+-
+-    // Insert the use now that we've fixed up the splittable nature.
+-    insertUse(II, Offset, Size, /*IsSplittable=*/Inserted && Length);
+-
+-    // Check that we ended up with a valid index in the map.
+-    assert(AS.Slices[PrevIdx].getUse()->getUser() == &II &&
+-           "Map index doesn't point back to a slice with this user.");
++    // Memory transfers with known length are splittable
++    insertUse(II, Offset, Size, /*IsSplittable=*/Length);
+   }
+ 
+   // Disable SRoA for any intrinsics except for lifetime invariants.
+@@ -5014,13 +4984,22 @@ class SliceSplitter {
+   LoadInst *createLoad(Value *BasePtr, Iterator &It, Instruction *SplitI) {
+     Type *PartTy = Type::getIntNTy(SplitI->getContext(), It.getSize() * 8);
+     Type *PartPtrTy = BasePtr->getType();
+-    unsigned AS = getLoadStoreAddressSpace(SplitI);
++    unsigned AS;
++    Align AdjustedAlign;
++    if (auto *MTI = dyn_cast<MemTransferInst>(SplitI)) {
++      AS = MTI->getSourceAddressSpace();
++      AdjustedAlign =
++          commonAlignment(MTI->getSourceAlign().valueOrOne(), It.getOffset());
++    } else {
++      AS = getLoadStoreAddressSpace(SplitI);
++      AdjustedAlign = getAdjustedAlignment(SplitI, It.getOffset());
++    }
+     LoadInst *PLoad = IRB.CreateAlignedLoad(
+         PartTy,
+         getAdjustedPtr(IRB, DL, BasePtr,
+                        APInt(DL.getIndexSizeInBits(AS), It.getOffset()),
+                        PartPtrTy, BasePtr->getName() + "."),
+-        getAdjustedAlignment(SplitI, It.getOffset()),
++        AdjustedAlign,
+         /*IsVolatile*/ false, SplitI->getName());
+     PLoad->copyMetadata(*SplitI, {LLVMContext::MD_mem_parallel_loop_access,
+                                   LLVMContext::MD_access_group});
+@@ -5030,13 +5009,22 @@ class SliceSplitter {
+   StoreInst *createStore(Value *StoreVal, Value *BasePtr, Iterator &It,
+                          Instruction *SplitI) {
+     Type *PartPtrTy = BasePtr->getType();
+-    unsigned AS = getLoadStoreAddressSpace(SplitI);
++    unsigned AS;
++    Align AdjustedAlign;
++    if (auto *MTI = dyn_cast<MemTransferInst>(SplitI)) {
++      AS = MTI->getDestAddressSpace();
++      AdjustedAlign =
++          commonAlignment(MTI->getDestAlign().valueOrOne(), It.getOffset());
++    } else {
++      AS = getLoadStoreAddressSpace(SplitI);
++      AdjustedAlign = getAdjustedAlignment(SplitI, It.getOffset());
++    }
+     StoreInst *PStore = IRB.CreateAlignedStore(
+         StoreVal,
+         getAdjustedPtr(IRB, DL, BasePtr,
+                        APInt(DL.getIndexSizeInBits(AS), It.getOffset()),
+                        PartPtrTy, BasePtr->getName() + "."),
+-        getAdjustedAlignment(SplitI, It.getOffset()),
++        AdjustedAlign,
+         /*IsVolatile*/ false);
+     PStore->copyMetadata(*SplitI, {LLVMContext::MD_mem_parallel_loop_access,
+                                    LLVMContext::MD_access_group,
+@@ -5090,6 +5078,9 @@ static Slice *findOverlappingCopySlice(Slice &S,
+     J = dyn_cast<Instruction>(SI->getValueOperand());
+     if (!J || !J->hasOneUser())
+       return nullptr;
++  } else if (isa<MemTransferInst>(I)) {
++    // If we have an overlap it will be with the other operand
++    J = I;
+   } else {
+     return nullptr;
+   }
+@@ -5139,6 +5130,7 @@ bool SROA::presplitLoadsAndStores(AllocaInst &AI, AllocaSlices &AS) {
+   // actually split.
+   SmallVector<LoadInst *, 4> Loads;
+   SmallVector<StoreInst *, 4> Stores;
++  SmallVector<MemTransferInst *, 4> MemTransfers;
+ 
+   // We need to accumulate the splits required of each load or store where we
+   // can find them via a direct lookup. This is important to cross-check loads
+@@ -5150,6 +5142,11 @@ bool SROA::presplitLoadsAndStores(AllocaInst &AI, AllocaSlices &AS) {
+   };
+   SmallDenseMap<Instruction *, SplitOffsets, 8> SplitOffsetsMap;
+ 
++  // A memory transfer will have one slice for the source operand and another
++  // for the destination. The source is stored in SplitOffsetsMap, so we need
++  // another map to store the destination.
++  SmallDenseMap<MemTransferInst *, Slice *, 8> MemTransferDest;
++
+   // Track loads out of this alloca which cannot, for any reason, be pre-split.
+   // This is important as we also cannot pre-split stores of those loads!
+   // FIXME: This is all pretty gross. It means that we can be more aggressive
+@@ -5218,6 +5215,23 @@ bool SROA::presplitLoadsAndStores(AllocaInst &AI, AllocaSlices &AS) {
+         assert(!SI->isVolatile() && "Cannot split volatile stores!");
+ 
+         Stores.push_back(SI);
++      } else if (auto *MTI = dyn_cast<MemTransferInst>(I)) {
++        // Don't pre-split if the slice is too large.
++        if (S.endOffset() - S.beginOffset() >
++            TTI->getMaxMemIntrinsicInlineSizeThreshold())
++          continue;
++        // Both operands of a memory transfer may have a slice, and we want the
++        // instruction to only appear once in MemTransfers. Therefore for the
++        // source slice we record the instruction in MemTransfers and add the
++        // slice to SplitOffsetsMap, and for the destination slice we just
++        // record it in MemTransferDest then continue to the next slice.
++        if (*S.getUse() == MTI->getRawDestUse()) {
++          MemTransferDest[MTI] = &S;
++          continue;
++        }
++        assert(*S.getUse() == MTI->getRawSourceUse() &&
++               "MemTransferInst slice must be source or dest");
++        MemTransfers.push_back(MTI);
+       } else {
+         // Other uses cannot be pre-split.
+         continue;
+@@ -5328,10 +5342,15 @@ bool SROA::presplitLoadsAndStores(AllocaInst &AI, AllocaSlices &AS) {
+   llvm::erase_if(Loads, [&UnsplittableLoads](LoadInst *LI) {
+     return UnsplittableLoads.count(LI);
+   });
++  // Filter out memory transfers where we don't have both the source and
++  // destination slice.
++  llvm::erase_if(MemTransfers, [&MemTransferDest](MemTransferInst *MTI) {
++    return !MemTransferDest.contains(MTI);
++  });
+ 
+   // If no loads or stores are left, there is no pre-splitting to be done for
+   // this alloca.
+-  if (Loads.empty() && Stores.empty())
++  if (Loads.empty() && Stores.empty() && MemTransfers.empty())
+     return false;
+ 
+   // From here on, we can't fail and will be building new accesses, so rig up
+@@ -5529,6 +5548,32 @@ bool SROA::presplitLoadsAndStores(AllocaInst &AI, AllocaSlices &AS) {
+     Offsets.S->kill();
+   }
+ 
++  // For memory transfers we create a load of each slice followed by a store
++  // of the corresponding load slice.
++  for (MemTransferInst *MTI : MemTransfers) {
++    auto &Offsets = SplitOffsetsMap[MTI];
++    Slice *Src = Offsets.S;
++    Slice *Dst = MemTransferDest[MTI];
++    unsigned SliceSize = Src->endOffset() - Src->beginOffset();
++
++    IRB.SetInsertPoint(MTI);
++    SliceSplitter Splitter(IRB, DL, Offsets.Splits, SliceSize);
++    for (auto Part : Splitter) {
++      LoadInst *PLoad = Splitter.createLoad(MTI->getSource(), Part, MTI);
++      StoreInst *PStore =
++          Splitter.createStore(PLoad, MTI->getDest(), Part, MTI);
++      PStore->moveAfter(MTI);
++      NewSlices.push_back(
++          Splitter.createSlice(PLoad, Src->beginOffset(), Part));
++      NewSlices.push_back(
++          Splitter.createSlice(PStore, Dst->beginOffset(), Part));
++    }
++
++    Src->kill();
++    Dst->kill();
++    DeadInsts.push_back(MTI);
++  }
++
+   // Remove the killed slices that have ben pre-split.
+   llvm::erase_if(AS, [](const Slice &S) { return S.isDead(); });
+ 
+@@ -6120,10 +6165,26 @@ bool SROA::splitAlloca(AllocaInst &AI, AllocaSlices &AS) {
+     }
+   }
+ 
++  SmallDenseMap<Instruction *, Slice *> MemTransferSlices;
++
+   for (Slice &S : AS) {
+     if (!S.isSplittable())
+       continue;
+ 
++    // If we have two slices for the same MemTransferInst then that means they
++    // correspond to the source and destination and so the transfer is within
++    // the same alloca. Such slices are always unsplittable.
++    auto *MTI = dyn_cast<MemTransferInst>(S.getUse()->getUser());
++    if (MTI) {
++      auto [Iter, DidInsert] = MemTransferSlices.insert({MTI, &S});
++      if (!DidInsert) {
++        S.makeUnsplittable();
++        Iter->second->makeUnsplittable();
++        IsSorted = false;
++        continue;
++      }
++    }
++
+     if ((S.beginOffset() > AllocaSize ||
+          SplittableOffset.test(S.beginOffset())) &&
+         (S.endOffset() > AllocaSize || SplittableOffset.test(S.endOffset())))
+@@ -6598,9 +6659,10 @@ std::pair<bool /*Changed*/, bool /*CFGChanged*/> SROA::runSROA(Function &F) {
+ PreservedAnalyses SROAPass::run(Function &F, FunctionAnalysisManager &AM) {
+   DominatorTree &DT = AM.getResult<DominatorTreeAnalysis>(F);
+   AssumptionCache &AC = AM.getResult<AssumptionAnalysis>(F);
++  TargetTransformInfo &TTI = AM.getResult<TargetIRAnalysis>(F);
+   DomTreeUpdater DTU(DT, DomTreeUpdater::UpdateStrategy::Lazy);
+   auto [Changed, CFGChanged] =
+-      SROA(&F.getContext(), &DTU, &AC, Options).runSROA(F);
++      SROA(&F.getContext(), &DTU, &AC, &TTI, Options).runSROA(F);
+   if (!Changed)
+     return PreservedAnalyses::all();
+   PreservedAnalyses PA;
+@@ -6645,14 +6707,18 @@ class SROALegacyPass : public FunctionPass {
+     DominatorTree &DT = getAnalysis<DominatorTreeWrapperPass>().getDomTree();
+     AssumptionCache &AC =
+         getAnalysis<AssumptionCacheTracker>().getAssumptionCache(F);
++    TargetTransformInfo &TTI =
++        getAnalysis<TargetTransformInfoWrapperPass>().getTTI(F);
+     DomTreeUpdater DTU(DT, DomTreeUpdater::UpdateStrategy::Lazy);
+-    auto [Changed, _] = SROA(&F.getContext(), &DTU, &AC, Options).runSROA(F);
++    auto [Changed, _] =
++        SROA(&F.getContext(), &DTU, &AC, &TTI, Options).runSROA(F);
+     return Changed;
+   }
+ 
+   void getAnalysisUsage(AnalysisUsage &AU) const override {
+     AU.addRequired<AssumptionCacheTracker>();
+     AU.addRequired<DominatorTreeWrapperPass>();
++    AU.addRequired<TargetTransformInfoWrapperPass>();
+     AU.addPreserved<GlobalsAAWrapperPass>();
+     AU.addPreserved<DominatorTreeWrapperPass>();
+   }
+@@ -6674,5 +6740,6 @@ INITIALIZE_PASS_BEGIN(SROALegacyPass, "sroa",
+                       "Scalar Replacement Of Aggregates", false, false)
+ INITIALIZE_PASS_DEPENDENCY(AssumptionCacheTracker)
+ INITIALIZE_PASS_DEPENDENCY(DominatorTreeWrapperPass)
++INITIALIZE_PASS_DEPENDENCY(TargetTransformInfoWrapperPass)
+ INITIALIZE_PASS_END(SROALegacyPass, "sroa", "Scalar Replacement Of Aggregates",
+                     false, false)
+diff --git a/llvm/test/CodeGen/AMDGPU/promote-alloca-array-aggregate.ll b/llvm/test/CodeGen/AMDGPU/promote-alloca-array-aggregate.ll
+index f0642942e9e7dd..02b0b67ad57bce 100644
+--- a/llvm/test/CodeGen/AMDGPU/promote-alloca-array-aggregate.ll
++++ b/llvm/test/CodeGen/AMDGPU/promote-alloca-array-aggregate.ll
+@@ -154,16 +154,15 @@ define amdgpu_vs void @promote_load_from_store_aggr_varoff(<4 x i32> %input) {
+ 
+ define amdgpu_vs void @promote_memmove_aggr() #0 {
+ ; CHECK-LABEL: @promote_memmove_aggr(
+-; CHECK-NEXT:    [[F1:%.*]] = freeze <5 x float> poison
+-; CHECK-NEXT:    [[TMP1:%.*]] = insertelement <5 x float> [[F1]], float 0.000000e+00, i32 0
+-; CHECK-NEXT:    [[TMP2:%.*]] = insertelement <5 x float> [[TMP1]], float 0.000000e+00, i32 1
+-; CHECK-NEXT:    [[TMP3:%.*]] = insertelement <5 x float> [[TMP2]], float 0.000000e+00, i32 2
+-; CHECK-NEXT:    [[TMP4:%.*]] = insertelement <5 x float> [[TMP3]], float 0.000000e+00, i32 3
+-; CHECK-NEXT:    [[TMP5:%.*]] = insertelement <5 x float> [[TMP4]], float 0.000000e+00, i32 4
+-; CHECK-NEXT:    [[TMP6:%.*]] = insertelement <5 x float> [[TMP5]], float 1.000000e+00, i32 1
+-; CHECK-NEXT:    [[TMP7:%.*]] = insertelement <5 x float> [[TMP6]], float 2.000000e+00, i32 3
+-; CHECK-NEXT:    [[TMP8:%.*]] = shufflevector <5 x float> [[TMP7]], <5 x float> poison, <5 x i32> <i32 1, i32 2, i32 3, i32 4, i32 4>
+-; CHECK-NEXT:    store float 1.000000e+00, ptr addrspace(1) @pv, align 4
++; CHECK-NEXT:    [[TMP1:%.*]] = bitcast float 1.000000e+00 to i32
++; CHECK-NEXT:    [[TMP2:%.*]] = bitcast float 0.000000e+00 to i32
++; CHECK-NEXT:    [[TMP3:%.*]] = bitcast float 2.000000e+00 to i32
++; CHECK-NEXT:    [[TMP4:%.*]] = bitcast float 0.000000e+00 to i32
++; CHECK-NEXT:    [[TMP5:%.*]] = bitcast i32 [[TMP2]] to float
++; CHECK-NEXT:    [[TMP6:%.*]] = bitcast i32 [[TMP3]] to float
++; CHECK-NEXT:    [[TMP7:%.*]] = bitcast i32 [[TMP4]] to float
++; CHECK-NEXT:    [[TMP8:%.*]] = bitcast i32 [[TMP1]] to float
++; CHECK-NEXT:    store float [[TMP8]], ptr addrspace(1) @pv, align 4
+ ; CHECK-NEXT:    ret void
+ ;
+   %f1 = alloca [5 x float], addrspace(5)
+diff --git a/llvm/test/Transforms/SROA/load-store-overlap.ll b/llvm/test/Transforms/SROA/load-store-overlap.ll
+index f201376693c5f2..c4e471c15658ce 100644
+--- a/llvm/test/Transforms/SROA/load-store-overlap.ll
++++ b/llvm/test/Transforms/SROA/load-store-overlap.ll
+@@ -341,41 +341,18 @@ end:
+   ret void
+ }
+ 
+-; FIXME: SROA can't split memmove calls, so we can't optimize this
+ define void @memmove_up(i8 %arg, ptr %dest) {
+ ; CHECK-LABEL: define void @memmove_up(
+ ; CHECK-SAME: i8 [[ARG:%.*]], ptr [[DEST:%.*]]) {
+-; CHECK-NEXT:    [[ARR:%.*]] = alloca [5 x i8], align 1
+-; CHECK-NEXT:    store i8 0, ptr [[ARR]], align 1
+-; CHECK-NEXT:    [[ARR_1_ARR_1_SROA_IDX1:%.*]] = getelementptr inbounds i8, ptr [[ARR]], i64 1
+-; CHECK-NEXT:    store i8 1, ptr [[ARR_1_ARR_1_SROA_IDX1]], align 1
+-; CHECK-NEXT:    [[ARR_2_ARR_2_SROA_IDX:%.*]] = getelementptr inbounds i8, ptr [[ARR]], i64 2
+-; CHECK-NEXT:    store i8 2, ptr [[ARR_2_ARR_2_SROA_IDX]], align 1
+-; CHECK-NEXT:    [[ARR_3_ARR_3_SROA_IDX:%.*]] = getelementptr inbounds i8, ptr [[ARR]], i64 3
+-; CHECK-NEXT:    store i8 3, ptr [[ARR_3_ARR_3_SROA_IDX]], align 1
+-; CHECK-NEXT:    [[ARR_4_ARR_4_SROA_IDX:%.*]] = getelementptr inbounds i8, ptr [[ARR]], i64 4
+-; CHECK-NEXT:    store i8 4, ptr [[ARR_4_ARR_4_SROA_IDX]], align 1
+-; CHECK-NEXT:    [[ARR_1_ARR_1_SROA_IDX:%.*]] = getelementptr inbounds i8, ptr [[ARR]], i64 1
+-; CHECK-NEXT:    call void @llvm.memmove.p0.p0.i32(ptr align 1 [[ARR_1_ARR_1_SROA_IDX]], ptr align 1 [[ARR]], i32 4, i1 false)
+-; CHECK-NEXT:    store i8 [[ARG]], ptr [[ARR]], align 1
+ ; CHECK-NEXT:    [[DEST_1:%.*]] = getelementptr inbounds nuw i8, ptr [[DEST]], i64 1
+ ; CHECK-NEXT:    [[DEST_2:%.*]] = getelementptr inbounds nuw i8, ptr [[DEST]], i64 2
+ ; CHECK-NEXT:    [[DEST_3:%.*]] = getelementptr inbounds nuw i8, ptr [[DEST]], i64 3
+ ; CHECK-NEXT:    [[DEST_4:%.*]] = getelementptr inbounds nuw i8, ptr [[DEST]], i64 4
+-; CHECK-NEXT:    [[ARR_0_VAL_0:%.*]] = load i8, ptr [[ARR]], align 1
+-; CHECK-NEXT:    [[ARR_1_ARR_1_SROA_IDX2:%.*]] = getelementptr inbounds i8, ptr [[ARR]], i64 1
+-; CHECK-NEXT:    [[ARR_1_VAL_1:%.*]] = load i8, ptr [[ARR_1_ARR_1_SROA_IDX2]], align 1
+-; CHECK-NEXT:    [[ARR_2_ARR_2_SROA_IDX3:%.*]] = getelementptr inbounds i8, ptr [[ARR]], i64 2
+-; CHECK-NEXT:    [[ARR_2_VAL_2:%.*]] = load i8, ptr [[ARR_2_ARR_2_SROA_IDX3]], align 1
+-; CHECK-NEXT:    [[ARR_3_ARR_3_SROA_IDX4:%.*]] = getelementptr inbounds i8, ptr [[ARR]], i64 3
+-; CHECK-NEXT:    [[ARR_3_VAL_3:%.*]] = load i8, ptr [[ARR_3_ARR_3_SROA_IDX4]], align 1
+-; CHECK-NEXT:    [[ARR_4_ARR_4_SROA_IDX5:%.*]] = getelementptr inbounds i8, ptr [[ARR]], i64 4
+-; CHECK-NEXT:    [[ARR_4_VAL_4:%.*]] = load i8, ptr [[ARR_4_ARR_4_SROA_IDX5]], align 1
+-; CHECK-NEXT:    store i8 [[ARR_0_VAL_0]], ptr [[DEST]], align 1
+-; CHECK-NEXT:    store i8 [[ARR_1_VAL_1]], ptr [[DEST_1]], align 1
+-; CHECK-NEXT:    store i8 [[ARR_2_VAL_2]], ptr [[DEST_2]], align 1
+-; CHECK-NEXT:    store i8 [[ARR_3_VAL_3]], ptr [[DEST_3]], align 1
+-; CHECK-NEXT:    store i8 [[ARR_4_VAL_4]], ptr [[DEST_4]], align 1
++; CHECK-NEXT:    store i8 [[ARG]], ptr [[DEST]], align 1
++; CHECK-NEXT:    store i8 0, ptr [[DEST_1]], align 1
++; CHECK-NEXT:    store i8 1, ptr [[DEST_2]], align 1
++; CHECK-NEXT:    store i8 2, ptr [[DEST_3]], align 1
++; CHECK-NEXT:    store i8 3, ptr [[DEST_4]], align 1
+ ; CHECK-NEXT:    ret void
+ ;
+   %arr = alloca [5 x i8], align 1
+@@ -410,7 +387,51 @@ define void @memmove_up(i8 %arg, ptr %dest) {
+ define void @memmove_down(i8 %arg, ptr %dest) {
+ ; CHECK-LABEL: define void @memmove_down(
+ ; CHECK-SAME: i8 [[ARG:%.*]], ptr [[DEST:%.*]]) {
+-; CHECK-NEXT:    [[ARR:%.*]] = alloca [5 x i8], align 1
++; CHECK-NEXT:    [[DEST_1:%.*]] = getelementptr inbounds nuw i8, ptr [[DEST]], i64 1
++; CHECK-NEXT:    [[DEST_2:%.*]] = getelementptr inbounds nuw i8, ptr [[DEST]], i64 2
++; CHECK-NEXT:    [[DEST_3:%.*]] = getelementptr inbounds nuw i8, ptr [[DEST]], i64 3
++; CHECK-NEXT:    [[DEST_4:%.*]] = getelementptr inbounds nuw i8, ptr [[DEST]], i64 4
++; CHECK-NEXT:    store i8 1, ptr [[DEST]], align 1
++; CHECK-NEXT:    store i8 2, ptr [[DEST_1]], align 1
++; CHECK-NEXT:    store i8 3, ptr [[DEST_2]], align 1
++; CHECK-NEXT:    store i8 4, ptr [[DEST_3]], align 1
++; CHECK-NEXT:    store i8 [[ARG]], ptr [[DEST_4]], align 1
++; CHECK-NEXT:    ret void
++;
++  %arr = alloca [5 x i8], align 1
++  %arr.1 = getelementptr inbounds nuw i8, ptr %arr, i64 1
++  %arr.2 = getelementptr inbounds nuw i8, ptr %arr, i64 2
++  %arr.3 = getelementptr inbounds nuw i8, ptr %arr, i64 3
++  %arr.4 = getelementptr inbounds nuw i8, ptr %arr, i64 4
++  store i8 0, ptr %arr, align 1
++  store i8 1, ptr %arr.1, align 1
++  store i8 2, ptr %arr.2, align 1
++  store i8 3, ptr %arr.3, align 1
++  store i8 4, ptr %arr.4, align 1
++  call void @llvm.memmove.p0.p0.i32(ptr %arr, ptr %arr.1, i32 4, i1 false)
++  store i8 %arg, ptr %arr.4, align 1
++  %dest.1 = getelementptr inbounds nuw i8, ptr %dest, i64 1
++  %dest.2 = getelementptr inbounds nuw i8, ptr %dest, i64 2
++  %dest.3 = getelementptr inbounds nuw i8, ptr %dest, i64 3
++  %dest.4 = getelementptr inbounds nuw i8, ptr %dest, i64 4
++  %val.0 = load i8, ptr %arr, align 1
++  %val.1 = load i8, ptr %arr.1, align 1
++  %val.2 = load i8, ptr %arr.2, align 1
++  %val.3 = load i8, ptr %arr.3, align 1
++  %val.4 = load i8, ptr %arr.4, align 1
++  store i8 %val.0, ptr %dest, align 1
++  store i8 %val.1, ptr %dest.1, align 1
++  store i8 %val.2, ptr %dest.2, align 1
++  store i8 %val.3, ptr %dest.3, align 1
++  store i8 %val.4, ptr %dest.4, align 1
++  ret void
++}
++
++; We shouldn't split the memmove if it's too large.
++define void @memmove_too_large(i8 %arg, ptr %dest) {
++; CHECK-LABEL: define void @memmove_too_large(
++; CHECK-SAME: i8 [[ARG:%.*]], ptr [[DEST:%.*]]) {
++; CHECK-NEXT:    [[ARR:%.*]] = alloca [513 x i8], align 1
+ ; CHECK-NEXT:    store i8 0, ptr [[ARR]], align 1
+ ; CHECK-NEXT:    [[ARR_1_ARR_1_SROA_IDX1:%.*]] = getelementptr inbounds i8, ptr [[ARR]], i64 1
+ ; CHECK-NEXT:    store i8 1, ptr [[ARR_1_ARR_1_SROA_IDX1]], align 1
+@@ -421,9 +442,8 @@ define void @memmove_down(i8 %arg, ptr %dest) {
+ ; CHECK-NEXT:    [[ARR_4_ARR_4_SROA_IDX:%.*]] = getelementptr inbounds i8, ptr [[ARR]], i64 4
+ ; CHECK-NEXT:    store i8 4, ptr [[ARR_4_ARR_4_SROA_IDX]], align 1
+ ; CHECK-NEXT:    [[ARR_1_ARR_1_SROA_IDX:%.*]] = getelementptr inbounds i8, ptr [[ARR]], i64 1
+-; CHECK-NEXT:    call void @llvm.memmove.p0.p0.i32(ptr align 1 [[ARR]], ptr align 1 [[ARR_1_ARR_1_SROA_IDX]], i32 4, i1 false)
+-; CHECK-NEXT:    [[ARR_4_ARR_4_SROA_IDX5:%.*]] = getelementptr inbounds i8, ptr [[ARR]], i64 4
+-; CHECK-NEXT:    store i8 [[ARG]], ptr [[ARR_4_ARR_4_SROA_IDX5]], align 1
++; CHECK-NEXT:    call void @llvm.memmove.p0.p0.i32(ptr align 1 [[ARR_1_ARR_1_SROA_IDX]], ptr align 1 [[ARR]], i32 512, i1 false)
++; CHECK-NEXT:    store i8 [[ARG]], ptr [[ARR]], align 1
+ ; CHECK-NEXT:    [[DEST_1:%.*]] = getelementptr inbounds nuw i8, ptr [[DEST]], i64 1
+ ; CHECK-NEXT:    [[DEST_2:%.*]] = getelementptr inbounds nuw i8, ptr [[DEST]], i64 2
+ ; CHECK-NEXT:    [[DEST_3:%.*]] = getelementptr inbounds nuw i8, ptr [[DEST]], i64 3
+@@ -435,14 +455,65 @@ define void @memmove_down(i8 %arg, ptr %dest) {
+ ; CHECK-NEXT:    [[ARR_2_VAL_2:%.*]] = load i8, ptr [[ARR_2_ARR_2_SROA_IDX3]], align 1
+ ; CHECK-NEXT:    [[ARR_3_ARR_3_SROA_IDX4:%.*]] = getelementptr inbounds i8, ptr [[ARR]], i64 3
+ ; CHECK-NEXT:    [[ARR_3_VAL_3:%.*]] = load i8, ptr [[ARR_3_ARR_3_SROA_IDX4]], align 1
+-; CHECK-NEXT:    [[ARR_4_ARR_4_SROA_IDX6:%.*]] = getelementptr inbounds i8, ptr [[ARR]], i64 4
+-; CHECK-NEXT:    [[ARR_4_VAL_4:%.*]] = load i8, ptr [[ARR_4_ARR_4_SROA_IDX6]], align 1
++; CHECK-NEXT:    [[ARR_4_ARR_4_SROA_IDX5:%.*]] = getelementptr inbounds i8, ptr [[ARR]], i64 4
++; CHECK-NEXT:    [[ARR_4_VAL_4:%.*]] = load i8, ptr [[ARR_4_ARR_4_SROA_IDX5]], align 1
+ ; CHECK-NEXT:    store i8 [[ARR_0_VAL_0]], ptr [[DEST]], align 1
+ ; CHECK-NEXT:    store i8 [[ARR_1_VAL_1]], ptr [[DEST_1]], align 1
+ ; CHECK-NEXT:    store i8 [[ARR_2_VAL_2]], ptr [[DEST_2]], align 1
+ ; CHECK-NEXT:    store i8 [[ARR_3_VAL_3]], ptr [[DEST_3]], align 1
+ ; CHECK-NEXT:    store i8 [[ARR_4_VAL_4]], ptr [[DEST_4]], align 1
+ ; CHECK-NEXT:    ret void
++;
++  %arr = alloca [513 x i8], align 1
++  %arr.1 = getelementptr inbounds nuw i8, ptr %arr, i64 1
++  %arr.2 = getelementptr inbounds nuw i8, ptr %arr, i64 2
++  %arr.3 = getelementptr inbounds nuw i8, ptr %arr, i64 3
++  %arr.4 = getelementptr inbounds nuw i8, ptr %arr, i64 4
++  store i8 0, ptr %arr, align 1
++  store i8 1, ptr %arr.1, align 1
++  store i8 2, ptr %arr.2, align 1
++  store i8 3, ptr %arr.3, align 1
++  store i8 4, ptr %arr.4, align 1
++  call void @llvm.memmove.p0.p0.i32(ptr %arr.1, ptr %arr, i32 512, i1 false)
++  store i8 %arg, ptr %arr, align 1
++  %dest.1 = getelementptr inbounds nuw i8, ptr %dest, i64 1
++  %dest.2 = getelementptr inbounds nuw i8, ptr %dest, i64 2
++  %dest.3 = getelementptr inbounds nuw i8, ptr %dest, i64 3
++  %dest.4 = getelementptr inbounds nuw i8, ptr %dest, i64 4
++  %val.0 = load i8, ptr %arr, align 1
++  %val.1 = load i8, ptr %arr.1, align 1
++  %val.2 = load i8, ptr %arr.2, align 1
++  %val.3 = load i8, ptr %arr.3, align 1
++  %val.4 = load i8, ptr %arr.4, align 1
++  store i8 %val.0, ptr %dest, align 1
++  store i8 %val.1, ptr %dest.1, align 1
++  store i8 %val.2, ptr %dest.2, align 1
++  store i8 %val.3, ptr %dest.3, align 1
++  store i8 %val.4, ptr %dest.4, align 1
++  ret void
++}
++
++; The memmove source and destination being obscured by a phi and select
++; shouldn't prevent this from being optimized.
++define void @memmove_select_phi(i8 %arg, ptr %dest, i1 %cond) {
++; CHECK-LABEL: define void @memmove_select_phi(
++; CHECK-SAME: i8 [[ARG:%.*]], ptr [[DEST:%.*]], i1 [[COND:%.*]]) {
++; CHECK-NEXT:    br i1 [[COND]], label %[[IF:.*]], label %[[ELSE:.*]]
++; CHECK:       [[IF]]:
++; CHECK-NEXT:    br label %[[THEN:.*]]
++; CHECK:       [[ELSE]]:
++; CHECK-NEXT:    br label %[[THEN]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[DEST_1:%.*]] = getelementptr inbounds nuw i8, ptr [[DEST]], i64 1
++; CHECK-NEXT:    [[DEST_2:%.*]] = getelementptr inbounds nuw i8, ptr [[DEST]], i64 2
++; CHECK-NEXT:    [[DEST_3:%.*]] = getelementptr inbounds nuw i8, ptr [[DEST]], i64 3
++; CHECK-NEXT:    [[DEST_4:%.*]] = getelementptr inbounds nuw i8, ptr [[DEST]], i64 4
++; CHECK-NEXT:    store i8 [[ARG]], ptr [[DEST]], align 1
++; CHECK-NEXT:    store i8 0, ptr [[DEST_1]], align 1
++; CHECK-NEXT:    store i8 1, ptr [[DEST_2]], align 1
++; CHECK-NEXT:    store i8 2, ptr [[DEST_3]], align 1
++; CHECK-NEXT:    store i8 3, ptr [[DEST_4]], align 1
++; CHECK-NEXT:    ret void
+ ;
+   %arr = alloca [5 x i8], align 1
+   %arr.1 = getelementptr inbounds nuw i8, ptr %arr, i64 1
+@@ -454,8 +525,19 @@ define void @memmove_down(i8 %arg, ptr %dest) {
+   store i8 2, ptr %arr.2, align 1
+   store i8 3, ptr %arr.3, align 1
+   store i8 4, ptr %arr.4, align 1
+-  call void @llvm.memmove.p0.p0.i32(ptr %arr, ptr %arr.1, i32 4, i1 false)
+-  store i8 %arg, ptr %arr.4, align 1
++  %dst = select i1 %cond, ptr %arr.1, ptr %arr.1
++  br i1 %cond, label %if, label %else
++
++if:
++  br label %then
++
++else:
++  br label %then
++
++then:
++  %src = phi ptr [ %arr, %if ], [ %arr, %else ]
++  call void @llvm.memmove.p0.p0.i32(ptr %dst, ptr %src, i32 4, i1 false)
++  store i8 %arg, ptr %arr, align 1
+   %dest.1 = getelementptr inbounds nuw i8, ptr %dest, i64 1
+   %dest.2 = getelementptr inbounds nuw i8, ptr %dest, i64 2
+   %dest.3 = getelementptr inbounds nuw i8, ptr %dest, i64 3
+@@ -473,6 +555,74 @@ define void @memmove_down(i8 %arg, ptr %dest) {
+   ret void
+ }
+ 
++; If we have a memmove with no overlap between source and destination then even
++; if the source and destination are obscured by phi and select we should still
++; not try to split them.
++define void @memmove_select_phi_no_overlap(i8 %arg, ptr %dest, i1 %cond) {
++; CHECK-LABEL: define void @memmove_select_phi_no_overlap(
++; CHECK-SAME: i8 [[ARG:%.*]], ptr [[DEST:%.*]], i1 [[COND:%.*]]) {
++; CHECK-NEXT:    br i1 [[COND]], label %[[IF:.*]], label %[[ELSE:.*]]
++; CHECK:       [[IF]]:
++; CHECK-NEXT:    br label %[[THEN:.*]]
++; CHECK:       [[ELSE]]:
++; CHECK-NEXT:    br label %[[THEN]]
++; CHECK:       [[THEN]]:
++; CHECK-NEXT:    [[DEST_1:%.*]] = getelementptr inbounds nuw i8, ptr [[DEST]], i64 1
++; CHECK-NEXT:    [[DEST_2:%.*]] = getelementptr inbounds nuw i8, ptr [[DEST]], i64 2
++; CHECK-NEXT:    [[DEST_3:%.*]] = getelementptr inbounds nuw i8, ptr [[DEST]], i64 3
++; CHECK-NEXT:    [[DEST_4:%.*]] = getelementptr inbounds nuw i8, ptr [[DEST]], i64 4
++; CHECK-NEXT:    store i8 0, ptr [[DEST]], align 1
++; CHECK-NEXT:    store i8 1, ptr [[DEST_1]], align 1
++; CHECK-NEXT:    store i8 2, ptr [[DEST_2]], align 1
++; CHECK-NEXT:    store i8 3, ptr [[DEST_3]], align 1
++; CHECK-NEXT:    store i8 4, ptr [[DEST_4]], align 1
++; CHECK-NEXT:    ret void
++;
++  %arr = alloca [10 x i8], align 1
++  %arr.1 = getelementptr inbounds nuw i8, ptr %arr, i64 1
++  %arr.2 = getelementptr inbounds nuw i8, ptr %arr, i64 2
++  %arr.3 = getelementptr inbounds nuw i8, ptr %arr, i64 3
++  %arr.4 = getelementptr inbounds nuw i8, ptr %arr, i64 4
++  %arr.5 = getelementptr inbounds nuw i8, ptr %arr, i64 5
++  %arr.6 = getelementptr inbounds nuw i8, ptr %arr, i64 6
++  %arr.7 = getelementptr inbounds nuw i8, ptr %arr, i64 7
++  %arr.8 = getelementptr inbounds nuw i8, ptr %arr, i64 8
++  %arr.9 = getelementptr inbounds nuw i8, ptr %arr, i64 9
++  store i8 0, ptr %arr, align 1
++  store i8 1, ptr %arr.1, align 1
++  store i8 2, ptr %arr.2, align 1
++  store i8 3, ptr %arr.3, align 1
++  store i8 4, ptr %arr.4, align 1
++  %dst = select i1 %cond, ptr %arr.5, ptr %arr.5
++  br i1 %cond, label %if, label %else
++
++if:
++  br label %then
++
++else:
++  br label %then
++
++then:
++  %src = phi ptr [ %arr, %if ], [ %arr, %else ]
++  call void @llvm.memmove.p0.p0.i32(ptr %dst, ptr %src, i32 5, i1 false)
++  store i8 %arg, ptr %arr, align 1
++  %dest.1 = getelementptr inbounds nuw i8, ptr %dest, i64 1
++  %dest.2 = getelementptr inbounds nuw i8, ptr %dest, i64 2
++  %dest.3 = getelementptr inbounds nuw i8, ptr %dest, i64 3
++  %dest.4 = getelementptr inbounds nuw i8, ptr %dest, i64 4
++  %val.0 = load i8, ptr %arr.5, align 1
++  %val.1 = load i8, ptr %arr.6, align 1
++  %val.2 = load i8, ptr %arr.7, align 1
++  %val.3 = load i8, ptr %arr.8, align 1
++  %val.4 = load i8, ptr %arr.9, align 1
++  store i8 %val.0, ptr %dest, align 1
++  store i8 %val.1, ptr %dest.1, align 1
++  store i8 %val.2, ptr %dest.2, align 1
++  store i8 %val.3, ptr %dest.3, align 1
++  store i8 %val.4, ptr %dest.4, align 1
++  ret void
++}
++
+ ; The move destination overlaps an unsplittable float store
+ ; FIXME: splitting the move here doesn't let us eliminate it, so the end result
+ ; is worse.

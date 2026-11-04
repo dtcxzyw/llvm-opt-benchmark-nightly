@@ -205,8 +205,8 @@ bb.ck:                                            ; preds = %bb.cj
   %.not = icmp eq i32 %i.ny, 0                    ; 2 uses
   %i.nz = fadd double %i.nr, %i.nv
   %i.oa = fmul double %i.nz, 5.000000e-01         ; 2 uses
-  %.sroa.0221.sroa.0.0 = select i1 %.not, double %i.nr, double %i.oa ; 3 uses
-  %.sroa.15.sroa.0.0 = select i1 %.not, double %i.nv, double %i.oa ; 2 uses
+  %.sroa.0221.sroa.0.0 = select i1 %.not, double %i.nv, double %i.oa ; 2 uses
+  %.sroa.15.sroa.0.0 = select i1 %.not, double %i.nr, double %i.oa ; 3 uses
   %.sroa.0221.sroa.9.0.in = fadd double %i.nt, %i.nx
   %.sroa.0221.sroa.9.0 = fmul double %.sroa.0221.sroa.9.0.in, 5.000000e-01 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %59) #19
@@ -215,7 +215,7 @@ bb.ck:                                            ; preds = %bb.cj
   %i.ob = getelementptr inbounds nuw i8, ptr %60, i64 8
   store double 0.000000e+00, ptr %i.ob, align 8, !tbaa !29
   %i.oc = getelementptr inbounds nuw i8, ptr %60, i64 16
-  store double %.sroa.0221.sroa.0.0, ptr %i.oc, align 8, !tbaa !29
+  store double %.sroa.15.sroa.0.0, ptr %i.oc, align 8, !tbaa !29
   %i.od = getelementptr inbounds nuw i8, ptr %60, i64 24
   %i.oe = getelementptr inbounds nuw i8, ptr %60, i64 40
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.od, i8 0, i64 16, i1 false)
@@ -370,7 +370,7 @@ bb.cz:                                            ; preds = %bb.cy
   %i.pq = getelementptr inbounds nuw i8, ptr %62, i64 8
   store double 0.000000e+00, ptr %i.pq, align 8, !tbaa !29
   %i.pr = getelementptr inbounds nuw i8, ptr %62, i64 16
-  store double %.sroa.15.sroa.0.0, ptr %i.pr, align 8, !tbaa !29
+  store double %.sroa.0221.sroa.0.0, ptr %i.pr, align 8, !tbaa !29
   %i.ps = getelementptr inbounds nuw i8, ptr %62, i64 24
   store double %i.pp, ptr %i.ps, align 8, !tbaa !29
   %i.pt = getelementptr inbounds nuw i8, ptr %62, i64 32
@@ -478,9 +478,9 @@ bb.di:                                            ; preds = %bb.dh
 bb.dj:                                            ; preds = %bb.di
   call void @llvm.lifetime.start.p0(ptr nonnull %63) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %64) #19
-  %i.qz = fneg double %.sroa.0221.sroa.0.0
+  %i.qz = fneg double %.sroa.15.sroa.0.0
   %i.ra = fneg double %.sroa.0221.sroa.9.0
-  %i.rb = fsub double %.sroa.0221.sroa.0.0, %.sroa.15.sroa.0.0
+  %i.rb = fsub double %.sroa.15.sroa.0.0, %.sroa.0221.sroa.0.0
   store double 1.000000e+00, ptr %64, align 8, !tbaa !29
   %i.rc = getelementptr inbounds nuw i8, ptr %64, i64 8
   %i.rd = getelementptr inbounds nuw i8, ptr %64, i64 24

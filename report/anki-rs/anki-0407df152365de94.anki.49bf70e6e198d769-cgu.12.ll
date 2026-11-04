@@ -205,32 +205,34 @@ _ZN5bytes3buf8buf_impl3Buf15chunks_vectored17h3ac2e8da4a30dbe0E.exit.i: ; preds 
   call void @llvm.experimental.noalias.scope.decl(metadata !9681)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !9682
   call void @"_ZN5alloc11collections9vec_deque21VecDeque$LT$T$C$A$GT$4iter17h71d8a58c8a9b2d81E"(ptr noalias noundef nonnull sret([32 x i8]) align 8 captures(address) dereferenceable(32) %i.b, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.q), !noalias !9683
-  %.sroa.0.sroa.0.0.copyload.i.i = load ptr, ptr %i.b, align 8, !noalias !9682
-  %.sroa.0.sroa.7.0.copyload.i.i = load ptr, ptr %.sroa.0.sroa.7.0..sroa_idx.i.i, align 8, !noalias !9682
-  %.sroa.9.sroa.0.0.copyload.i.i = load ptr, ptr %.sroa.9.0..sroa_idx.i.i, align 8, !noalias !9682
-  %.sroa.9.sroa.5.0.copyload.i.i = load ptr, ptr %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !9682
+  %.sroa.0.0.copyload.i.i = load i64, ptr %i.b, align 8, !noalias !9682
+  %.sroa.7.0.copyload.i.i = load i64, ptr %.sroa.0.sroa.7.0..sroa_idx.i.i, align 8, !noalias !9682
+  %.sroa.10.0.copyload.i.i = load i64, ptr %.sroa.9.0..sroa_idx.i.i, align 8, !noalias !9682
+  %.sroa.12.0.copyload.i.i = load i64, ptr %.sroa.9.sroa.5.0..sroa.9.0..sroa_idx.sroa_idx.i.i, align 8, !noalias !9682
   br label %bb.q
 
 bb.q:                                             ; preds = %"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i", %_ZN5bytes3buf8buf_impl3Buf15chunks_vectored17h3ac2e8da4a30dbe0E.exit.i
-  %.sroa.0.sroa.7.0.i.i = phi ptr [ %.sroa.0.sroa.7.0.copyload.i.i, %_ZN5bytes3buf8buf_impl3Buf15chunks_vectored17h3ac2e8da4a30dbe0E.exit.i ], [ %.sroa.0.sroa.7.1.i.i, %"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i" ] ; 3 uses
-  %.sroa.0.sroa.0.0.i.i = phi ptr [ %.sroa.0.sroa.0.0.copyload.i.i, %_ZN5bytes3buf8buf_impl3Buf15chunks_vectored17h3ac2e8da4a30dbe0E.exit.i ], [ %i.bu, %"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i" ] ; 3 uses
-  %.sroa.9.sroa.5.0.i.i = phi ptr [ %.sroa.9.sroa.5.0.copyload.i.i, %_ZN5bytes3buf8buf_impl3Buf15chunks_vectored17h3ac2e8da4a30dbe0E.exit.i ], [ %.sroa.9.sroa.5.1.i.i, %"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i" ] ; 3 uses
-  %.sroa.9.sroa.0.0.i.i = phi ptr [ %.sroa.9.sroa.0.0.copyload.i.i, %_ZN5bytes3buf8buf_impl3Buf15chunks_vectored17h3ac2e8da4a30dbe0E.exit.i ], [ %.sroa.9.sroa.0.1.i.i, %"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i" ] ; 3 uses
+  %.sroa.12.0.i.i = phi i64 [ %.sroa.12.0.copyload.i.i, %_ZN5bytes3buf8buf_impl3Buf15chunks_vectored17h3ac2e8da4a30dbe0E.exit.i ], [ %.sroa.12.1.i.i, %"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i" ] ; 3 uses
+  %.sroa.10.0.i.i = phi i64 [ %.sroa.10.0.copyload.i.i, %_ZN5bytes3buf8buf_impl3Buf15chunks_vectored17h3ac2e8da4a30dbe0E.exit.i ], [ %.sroa.10.1.i.i, %"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i" ] ; 3 uses
+  %.sroa.7.0.i.i = phi i64 [ %.sroa.7.0.copyload.i.i, %_ZN5bytes3buf8buf_impl3Buf15chunks_vectored17h3ac2e8da4a30dbe0E.exit.i ], [ %.sroa.7.1.i.i, %"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i" ] ; 4 uses
+  %.sroa.0.011.i.i = phi i64 [ %.sroa.0.0.copyload.i.i, %_ZN5bytes3buf8buf_impl3Buf15chunks_vectored17h3ac2e8da4a30dbe0E.exit.i ], [ %2, %"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i" ] ; 2 uses
   %.sroa.0.1.i.i = phi i64 [ 0, %_ZN5bytes3buf8buf_impl3Buf15chunks_vectored17h3ac2e8da4a30dbe0E.exit.i ], [ %i.cn, %"_ZN91_$LT$hyper..proto..h1..encode..EncodedBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17h8fbea078ace9ce39E.exit.i.i" ] ; 9 uses
-  %i.bs = icmp eq ptr %.sroa.0.sroa.0.0.i.i, %.sroa.0.sroa.7.0.i.i
+  %i.bs = icmp eq i64 %.sroa.0.011.i.i, %.sroa.7.0.i.i
   br i1 %i.bs, label %bb.r, label %"_ZN109_$LT$alloc..collections..vec_deque..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h90526b73b23fb79bE.exit.i.i"
 
 bb.r:                                             ; preds = %bb.q
-  %i.bt = icmp eq ptr %.sroa.9.sroa.0.0.i.i, %.sroa.9.sroa.5.0.i.i
+  %i.bt = icmp eq i64 %.sroa.10.0.i.i, %.sroa.12.0.i.i
   br i1 %i.bt, label %"_ZN85_$LT$hyper..proto..h1..io..WriteBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17hce614a55c702703bE.exit", label %"_ZN109_$LT$alloc..collections..vec_deque..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h90526b73b23fb79bE.exit.i.i"
 
 "_ZN109_$LT$alloc..collections..vec_deque..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h90526b73b23fb79bE.exit.i.i": ; preds = %bb.r, %bb.q
-  %.sroa.0.sroa.7.1.i.i = phi ptr [ %.sroa.9.sroa.5.0.i.i, %bb.r ], [ %.sroa.0.sroa.7.0.i.i, %bb.q ]
-  %.sroa.9.sroa.5.1.i.i = phi ptr [ %.sroa.0.sroa.7.0.i.i, %bb.r ], [ %.sroa.9.sroa.5.0.i.i, %bb.q ]
-  %.sroa.9.sroa.0.1.i.i = phi ptr [ %.sroa.0.sroa.0.0.i.i, %bb.r ], [ %.sroa.9.sroa.0.0.i.i, %bb.q ]
-  %.sink6.i.i.i = phi ptr [ %.sroa.9.sroa.0.0.i.i, %bb.r ], [ %.sroa.0.sroa.0.0.i.i, %bb.q ] ; 10 uses
+  %.sroa.12.1.i.i = phi i64 [ %.sroa.7.0.i.i, %bb.r ], [ %.sroa.12.0.i.i, %bb.q ]
+  %.sroa.10.1.i.i = phi i64 [ %.sroa.7.0.i.i, %bb.r ], [ %.sroa.10.0.i.i, %bb.q ]
+  %.sroa.7.1.i.i = phi i64 [ %.sroa.12.0.i.i, %bb.r ], [ %.sroa.7.0.i.i, %bb.q ]
+  %.sink6.i.in.i.i = phi i64 [ %.sroa.10.0.i.i, %bb.r ], [ %.sroa.0.011.i.i, %bb.q ] ; 2 uses
+  %.sink6.i.i.i = inttoptr i64 %.sink6.i.in.i.i to ptr ; 9 uses
   %i.bu = getelementptr inbounds nuw i8, ptr %.sink6.i.i.i, i64 80
-  %.not.i3.i = icmp eq ptr %.sink6.i.i.i, null
+  %2 = ptrtoint ptr %i.bu to i64
+  %.not.i3.i = icmp eq i64 %.sink6.i.in.i.i, 0
   br i1 %.not.i3.i, label %"_ZN85_$LT$hyper..proto..h1..io..WriteBuf$LT$B$GT$$u20$as$u20$bytes..buf..buf_impl..Buf$GT$15chunks_vectored17hce614a55c702703bE.exit", label %bb.s
 
 bb.s:                                             ; preds = %"_ZN109_$LT$alloc..collections..vec_deque..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h90526b73b23fb79bE.exit.i.i"

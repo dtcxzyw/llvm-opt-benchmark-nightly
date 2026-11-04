@@ -205,25 +205,32 @@ _RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpC
   %i.n = getelementptr inbounds nuw [32 x i8], ptr %i.m, i64 %.sroa.0.0.i.i
   %i.o = getelementptr inbounds nuw [32 x i8], ptr %i.m, i64 %.sroa.5.0.i.i
   %i.p = getelementptr inbounds nuw [32 x i8], ptr %i.m, i64 %.sroa.11.0.i.i
+  %2 = ptrtoint ptr %i.o to i64
+  %3 = ptrtoint ptr %i.m to i64
+  %4 = ptrtoint ptr %i.p to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread.i, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineE4iterB19_.exit.i
-  %.sroa.0.sroa.7.0.i.i = phi ptr [ %i.o, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineE4iterB19_.exit.i ], [ %.sroa.0.sroa.7.1.i6.i, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread.i ] ; 4 uses
-  %.sroa.0.sroa.0.0.i.i = phi ptr [ %i.n, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineE4iterB19_.exit.i ], [ %i.s, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread.i ] ; 2 uses
-  %.sroa.9.sroa.5.0.i.i = phi ptr [ %i.p, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineE4iterB19_.exit.i ], [ %.sroa.9.sroa.5.1.i7.i, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread.i ] ; 3 uses
-  %.sroa.9.sroa.0.0.i.i = phi ptr [ %i.m, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineE4iterB19_.exit.i ], [ %.sroa.9.sroa.0.1.i8.i, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread.i ] ; 3 uses
-  %i.q = icmp eq ptr %.sroa.0.sroa.0.0.i.i, %.sroa.0.sroa.7.0.i.i
+  %.sroa.12.0.i.i = phi i64 [ %4, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineE4iterB19_.exit.i ], [ %.sroa.12.1.i7.i, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread.i ] ; 3 uses
+  %.sroa.10.0.i.i = phi i64 [ %3, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineE4iterB19_.exit.i ], [ %.sroa.10.1.i8.i, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread.i ] ; 4 uses
+  %.sroa.7.0.i.i = phi i64 [ %2, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineE4iterB19_.exit.i ], [ %.sroa.7.1.i9.i, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread.i ] ; 4 uses
+  %.sroa.9.sroa.5.0.i.i = phi ptr [ %i.n, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineE4iterB19_.exit.i ], [ %i.s, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread.i ] ; 2 uses
+  %.sroa.0.0.i1.i = ptrtoint ptr %.sroa.9.sroa.5.0.i.i to i64
+  %i.q = icmp eq i64 %.sroa.7.0.i.i, %.sroa.0.0.i1.i
   br i1 %i.q, label %bb.f, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread.i
 
 bb.f:                                             ; preds = %bb.e
-  %i.r = icmp eq ptr %.sroa.9.sroa.0.0.i.i, %.sroa.9.sroa.5.0.i.i
-  br i1 %i.r, label %_RNvXsk_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineENtNtCscI6d9CVNmLh_4core3fmt5Debug3fmtB19_.exit, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread.i
+  %.sroa.10.0.i.ptr.i = inttoptr i64 %.sroa.10.0.i.i to ptr
+  %5 = icmp eq i64 %.sroa.10.0.i.i, %.sroa.12.0.i.i
+  %i.r = icmp eq i64 %.sroa.10.0.i.i, 0
+  %or.cond.i = or i1 %5, %i.r
+  br i1 %or.cond.i, label %_RNvXsk_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineENtNtCscI6d9CVNmLh_4core3fmt5Debug3fmtB19_.exit, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread.i
 
 _RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding7decoder17ScheduledScanLineENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread.i: ; preds = %bb.f, %bb.e
-  %.sink6.i.i9.i = phi ptr [ %.sroa.9.sroa.0.0.i.i, %bb.f ], [ %.sroa.0.sroa.0.0.i.i, %bb.e ] ; 2 uses
-  %.sroa.9.sroa.0.1.i8.i = phi ptr [ %.sroa.0.sroa.7.0.i.i, %bb.f ], [ %.sroa.9.sroa.0.0.i.i, %bb.e ]
-  %.sroa.9.sroa.5.1.i7.i = phi ptr [ %.sroa.0.sroa.7.0.i.i, %bb.f ], [ %.sroa.9.sroa.5.0.i.i, %bb.e ]
-  %.sroa.0.sroa.7.1.i6.i = phi ptr [ %.sroa.9.sroa.5.0.i.i, %bb.f ], [ %.sroa.0.sroa.7.0.i.i, %bb.e ]
+  %.sink6.i.i9.i = phi ptr [ %.sroa.10.0.i.ptr.i, %bb.f ], [ %.sroa.9.sroa.5.0.i.i, %bb.e ] ; 2 uses
+  %.sroa.7.1.i9.i = phi i64 [ %.sroa.12.0.i.i, %bb.f ], [ %.sroa.7.0.i.i, %bb.e ]
+  %.sroa.10.1.i8.i = phi i64 [ %.sroa.7.0.i.i, %bb.f ], [ %.sroa.10.0.i.i, %bb.e ]
+  %.sroa.12.1.i7.i = phi i64 [ %.sroa.7.0.i.i, %bb.f ], [ %.sroa.12.0.i.i, %bb.e ]
   %i.s = getelementptr inbounds nuw i8, ptr %.sink6.i.i9.i, i64 32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !66264
   store ptr %.sink6.i.i9.i, ptr %i.a, align 8, !noalias !66264
@@ -279,25 +286,32 @@ _RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequemE4iterCsj
   %i.n = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.sroa.0.0.i.i
   %i.o = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.sroa.5.0.i.i
   %i.p = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %.sroa.11.0.i.i
+  %2 = ptrtoint ptr %i.o to i64
+  %3 = ptrtoint ptr %i.m to i64
+  %4 = ptrtoint ptr %i.p to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4ItermENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread.i, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequemE4iterCsjjpCCFGI3ul_14lance_encoding.exit.i
-  %.sroa.0.sroa.7.0.i.i = phi ptr [ %i.o, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequemE4iterCsjjpCCFGI3ul_14lance_encoding.exit.i ], [ %.sroa.0.sroa.7.1.i6.i, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4ItermENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread.i ] ; 4 uses
-  %.sroa.0.sroa.0.0.i.i = phi ptr [ %i.n, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequemE4iterCsjjpCCFGI3ul_14lance_encoding.exit.i ], [ %i.s, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4ItermENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread.i ] ; 2 uses
-  %.sroa.9.sroa.5.0.i.i = phi ptr [ %i.p, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequemE4iterCsjjpCCFGI3ul_14lance_encoding.exit.i ], [ %.sroa.9.sroa.5.1.i7.i, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4ItermENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread.i ] ; 3 uses
-  %.sroa.9.sroa.0.0.i.i = phi ptr [ %i.m, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequemE4iterCsjjpCCFGI3ul_14lance_encoding.exit.i ], [ %.sroa.9.sroa.0.1.i8.i, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4ItermENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread.i ] ; 3 uses
-  %i.q = icmp eq ptr %.sroa.0.sroa.0.0.i.i, %.sroa.0.sroa.7.0.i.i
+  %.sroa.12.0.i.i = phi i64 [ %4, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequemE4iterCsjjpCCFGI3ul_14lance_encoding.exit.i ], [ %.sroa.12.1.i7.i, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4ItermENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread.i ] ; 3 uses
+  %.sroa.10.0.i.i = phi i64 [ %3, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequemE4iterCsjjpCCFGI3ul_14lance_encoding.exit.i ], [ %.sroa.10.1.i8.i, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4ItermENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread.i ] ; 4 uses
+  %.sroa.7.0.i.i = phi i64 [ %2, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequemE4iterCsjjpCCFGI3ul_14lance_encoding.exit.i ], [ %.sroa.7.1.i9.i, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4ItermENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread.i ] ; 4 uses
+  %.sroa.9.sroa.5.0.i.i = phi ptr [ %i.n, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequemE4iterCsjjpCCFGI3ul_14lance_encoding.exit.i ], [ %i.s, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4ItermENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread.i ] ; 2 uses
+  %.sroa.0.0.i1.i = ptrtoint ptr %.sroa.9.sroa.5.0.i.i to i64
+  %i.q = icmp eq i64 %.sroa.7.0.i.i, %.sroa.0.0.i1.i
   br i1 %i.q, label %bb.f, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4ItermENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread.i
 
 bb.f:                                             ; preds = %bb.e
-  %i.r = icmp eq ptr %.sroa.9.sroa.0.0.i.i, %.sroa.9.sroa.5.0.i.i
-  br i1 %i.r, label %_RNvXsk_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequemENtNtCscI6d9CVNmLh_4core3fmt5Debug3fmtCsjjpCCFGI3ul_14lance_encoding.exit, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4ItermENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread.i
+  %.sroa.10.0.i.ptr.i = inttoptr i64 %.sroa.10.0.i.i to ptr
+  %5 = icmp eq i64 %.sroa.10.0.i.i, %.sroa.12.0.i.i
+  %i.r = icmp eq i64 %.sroa.10.0.i.i, 0
+  %or.cond.i = or i1 %5, %i.r
+  br i1 %or.cond.i, label %_RNvXsk_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequemENtNtCscI6d9CVNmLh_4core3fmt5Debug3fmtCsjjpCCFGI3ul_14lance_encoding.exit, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4ItermENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread.i
 
 _RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4ItermENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread.i: ; preds = %bb.f, %bb.e
-  %.sink6.i.i9.i = phi ptr [ %.sroa.9.sroa.0.0.i.i, %bb.f ], [ %.sroa.0.sroa.0.0.i.i, %bb.e ] ; 2 uses
-  %.sroa.9.sroa.0.1.i8.i = phi ptr [ %.sroa.0.sroa.7.0.i.i, %bb.f ], [ %.sroa.9.sroa.0.0.i.i, %bb.e ]
-  %.sroa.9.sroa.5.1.i7.i = phi ptr [ %.sroa.0.sroa.7.0.i.i, %bb.f ], [ %.sroa.9.sroa.5.0.i.i, %bb.e ]
-  %.sroa.0.sroa.7.1.i6.i = phi ptr [ %.sroa.9.sroa.5.0.i.i, %bb.f ], [ %.sroa.0.sroa.7.0.i.i, %bb.e ]
+  %.sink6.i.i9.i = phi ptr [ %.sroa.10.0.i.ptr.i, %bb.f ], [ %.sroa.9.sroa.5.0.i.i, %bb.e ] ; 2 uses
+  %.sroa.7.1.i9.i = phi i64 [ %.sroa.12.0.i.i, %bb.f ], [ %.sroa.7.0.i.i, %bb.e ]
+  %.sroa.10.1.i8.i = phi i64 [ %.sroa.7.0.i.i, %bb.f ], [ %.sroa.10.0.i.i, %bb.e ]
+  %.sroa.12.1.i7.i = phi i64 [ %.sroa.7.0.i.i, %bb.f ], [ %.sroa.12.0.i.i, %bb.e ]
   %i.s = getelementptr inbounds nuw i8, ptr %.sink6.i.i9.i, i64 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !66277
   store ptr %.sink6.i.i9.i, ptr %i.a, align 8, !noalias !66277
@@ -700,25 +714,32 @@ _RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_5b
   %i.m = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %.sroa.0.0.i
   %i.n = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %.sroa.5.0.i
   %i.o = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %.sroa.11.0.i
+  %2 = ptrtoint ptr %i.n to i64
+  %3 = ptrtoint ptr %i.l to i64
+  %4 = ptrtoint ptr %i.o to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EE4iterB1s_.exit
-  %.sroa.0.sroa.7.0.i = phi ptr [ %i.n, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EE4iterB1s_.exit ], [ %.sroa.0.sroa.7.1.i6, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread ] ; 4 uses
-  %.sroa.0.sroa.0.0.i = phi ptr [ %i.m, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EE4iterB1s_.exit ], [ %i.r, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread ] ; 2 uses
-  %.sroa.9.sroa.5.0.i = phi ptr [ %i.o, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EE4iterB1s_.exit ], [ %.sroa.9.sroa.5.1.i7, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread ] ; 3 uses
-  %.sroa.9.sroa.0.0.i = phi ptr [ %i.l, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EE4iterB1s_.exit ], [ %.sroa.9.sroa.0.1.i8, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread ] ; 3 uses
-  %i.p = icmp eq ptr %.sroa.0.sroa.0.0.i, %.sroa.0.sroa.7.0.i
+  %.sroa.12.0.i = phi i64 [ %4, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EE4iterB1s_.exit ], [ %.sroa.12.1.i7, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread ] ; 3 uses
+  %.sroa.10.0.i = phi i64 [ %3, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EE4iterB1s_.exit ], [ %.sroa.10.1.i8, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread ] ; 4 uses
+  %.sroa.7.0.i = phi i64 [ %2, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EE4iterB1s_.exit ], [ %.sroa.7.1.i9, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread ] ; 4 uses
+  %.sroa.9.sroa.5.0.i = phi ptr [ %i.m, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EE4iterB1s_.exit ], [ %i.r, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread ] ; 2 uses
+  %.sroa.0.0.i1 = ptrtoint ptr %.sroa.9.sroa.5.0.i to i64
+  %i.p = icmp eq i64 %.sroa.7.0.i, %.sroa.0.0.i1
   br i1 %i.p, label %bb.f, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = icmp eq ptr %.sroa.9.sroa.0.0.i, %.sroa.9.sroa.5.0.i
-  br i1 %i.q, label %_RINvMs5_NtNtCscI6d9CVNmLh_4core3fmt8buildersNtB6_9DebugList7entriesRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EINtNtNtNtB19_11collections9vec_deque4iter4IterB14_EEB1I_.exit, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread
+  %.sroa.10.0.i.ptr = inttoptr i64 %.sroa.10.0.i to ptr
+  %5 = icmp eq i64 %.sroa.10.0.i, %.sroa.12.0.i
+  %i.q = icmp eq i64 %.sroa.10.0.i, 0
+  %or.cond = or i1 %5, %i.q
+  br i1 %or.cond, label %_RINvMs5_NtNtCscI6d9CVNmLh_4core3fmt8buildersNtB6_9DebugList7entriesRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EINtNtNtNtB19_11collections9vec_deque4iter4IterB14_EEB1I_.exit, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread
 
 _RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder18LogicalPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread: ; preds = %bb.f, %bb.e
-  %.sink6.i.i9 = phi ptr [ %.sroa.9.sroa.0.0.i, %bb.f ], [ %.sroa.0.sroa.0.0.i, %bb.e ] ; 2 uses
-  %.sroa.9.sroa.0.1.i8 = phi ptr [ %.sroa.0.sroa.7.0.i, %bb.f ], [ %.sroa.9.sroa.0.0.i, %bb.e ]
-  %.sroa.9.sroa.5.1.i7 = phi ptr [ %.sroa.0.sroa.7.0.i, %bb.f ], [ %.sroa.9.sroa.5.0.i, %bb.e ]
-  %.sroa.0.sroa.7.1.i6 = phi ptr [ %.sroa.9.sroa.5.0.i, %bb.f ], [ %.sroa.0.sroa.7.0.i, %bb.e ]
+  %.sink6.i.i9 = phi ptr [ %.sroa.10.0.i.ptr, %bb.f ], [ %.sroa.9.sroa.5.0.i, %bb.e ] ; 2 uses
+  %.sroa.7.1.i9 = phi i64 [ %.sroa.12.0.i, %bb.f ], [ %.sroa.7.0.i, %bb.e ]
+  %.sroa.10.1.i8 = phi i64 [ %.sroa.7.0.i, %bb.f ], [ %.sroa.10.0.i, %bb.e ]
+  %.sroa.12.1.i7 = phi i64 [ %.sroa.7.0.i, %bb.f ], [ %.sroa.12.0.i, %bb.e ]
   %i.r = getelementptr inbounds nuw i8, ptr %.sink6.i.i9, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !89694
   store ptr %.sink6.i.i9, ptr %i.a, align 8, !noalias !89694
@@ -772,25 +793,32 @@ _RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_5b
   %i.m = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %.sroa.0.0.i
   %i.n = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %.sroa.5.0.i
   %i.o = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %.sroa.11.0.i
+  %2 = ptrtoint ptr %i.n to i64
+  %3 = ptrtoint ptr %i.l to i64
+  %4 = ptrtoint ptr %i.o to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EE4iterB1s_.exit
-  %.sroa.0.sroa.7.0.i = phi ptr [ %i.n, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EE4iterB1s_.exit ], [ %.sroa.0.sroa.7.1.i6, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread ] ; 4 uses
-  %.sroa.0.sroa.0.0.i = phi ptr [ %i.m, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EE4iterB1s_.exit ], [ %i.r, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread ] ; 2 uses
-  %.sroa.9.sroa.5.0.i = phi ptr [ %i.o, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EE4iterB1s_.exit ], [ %.sroa.9.sroa.5.1.i7, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread ] ; 3 uses
-  %.sroa.9.sroa.0.0.i = phi ptr [ %i.l, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EE4iterB1s_.exit ], [ %.sroa.9.sroa.0.1.i8, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread ] ; 3 uses
-  %i.p = icmp eq ptr %.sroa.0.sroa.0.0.i, %.sroa.0.sroa.7.0.i
+  %.sroa.12.0.i = phi i64 [ %4, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EE4iterB1s_.exit ], [ %.sroa.12.1.i7, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread ] ; 3 uses
+  %.sroa.10.0.i = phi i64 [ %3, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EE4iterB1s_.exit ], [ %.sroa.10.1.i8, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread ] ; 4 uses
+  %.sroa.7.0.i = phi i64 [ %2, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EE4iterB1s_.exit ], [ %.sroa.7.1.i9, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread ] ; 4 uses
+  %.sroa.9.sroa.5.0.i = phi ptr [ %i.m, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtB9_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EE4iterB1s_.exit ], [ %i.r, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread ] ; 2 uses
+  %.sroa.0.0.i1 = ptrtoint ptr %.sroa.9.sroa.5.0.i to i64
+  %i.p = icmp eq i64 %.sroa.7.0.i, %.sroa.0.0.i1
   br i1 %i.p, label %bb.f, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = icmp eq ptr %.sroa.9.sroa.0.0.i, %.sroa.9.sroa.5.0.i
-  br i1 %i.q, label %_RINvMs5_NtNtCscI6d9CVNmLh_4core3fmt8buildersNtB6_9DebugList7entriesRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EINtNtNtNtB19_11collections9vec_deque4iter4IterB14_EEB1I_.exit, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread
+  %.sroa.10.0.i.ptr = inttoptr i64 %.sroa.10.0.i to ptr
+  %5 = icmp eq i64 %.sroa.10.0.i, %.sroa.12.0.i
+  %i.q = icmp eq i64 %.sroa.10.0.i, 0
+  %or.cond = or i1 %5, %i.q
+  br i1 %or.cond, label %_RINvMs5_NtNtCscI6d9CVNmLh_4core3fmt8buildersNtB6_9DebugList7entriesRINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EINtNtNtNtB19_11collections9vec_deque4iter4IterB14_EEB1I_.exit, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread
 
 _RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtBb_5boxed3BoxDNtNtCsjjpCCFGI3ul_14lance_encoding7decoder21StructuralPageDecoderEL_EENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1v_.exit.i.thread: ; preds = %bb.f, %bb.e
-  %.sink6.i.i9 = phi ptr [ %.sroa.9.sroa.0.0.i, %bb.f ], [ %.sroa.0.sroa.0.0.i, %bb.e ] ; 2 uses
-  %.sroa.9.sroa.0.1.i8 = phi ptr [ %.sroa.0.sroa.7.0.i, %bb.f ], [ %.sroa.9.sroa.0.0.i, %bb.e ]
-  %.sroa.9.sroa.5.1.i7 = phi ptr [ %.sroa.0.sroa.7.0.i, %bb.f ], [ %.sroa.9.sroa.5.0.i, %bb.e ]
-  %.sroa.0.sroa.7.1.i6 = phi ptr [ %.sroa.9.sroa.5.0.i, %bb.f ], [ %.sroa.0.sroa.7.0.i, %bb.e ]
+  %.sink6.i.i9 = phi ptr [ %.sroa.10.0.i.ptr, %bb.f ], [ %.sroa.9.sroa.5.0.i, %bb.e ] ; 2 uses
+  %.sroa.7.1.i9 = phi i64 [ %.sroa.12.0.i, %bb.f ], [ %.sroa.7.0.i, %bb.e ]
+  %.sroa.10.1.i8 = phi i64 [ %.sroa.7.0.i, %bb.f ], [ %.sroa.10.0.i, %bb.e ]
+  %.sroa.12.1.i7 = phi i64 [ %.sroa.7.0.i, %bb.f ], [ %.sroa.12.0.i, %bb.e ]
   %i.r = getelementptr inbounds nuw i8, ptr %.sink6.i.i9, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !89702
   store ptr %.sink6.i.i9, ptr %i.a, align 8, !noalias !89702
@@ -844,25 +872,32 @@ _RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtNtCsc
   %i.m = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %.sroa.0.0.i
   %i.n = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %.sroa.5.0.i
   %i.o = getelementptr inbounds nuw [16 x i8], ptr %i.l, i64 %.sroa.11.0.i
+  %2 = ptrtoint ptr %i.n to i64
+  %3 = ptrtoint ptr %i.l to i64
+  %4 = ptrtoint ptr %i.o to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEENtNtNtNtB1f_4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEE4iterCsjjpCCFGI3ul_14lance_encoding.exit
-  %.sroa.0.sroa.7.0.i = phi ptr [ %i.n, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEE4iterCsjjpCCFGI3ul_14lance_encoding.exit ], [ %.sroa.0.sroa.7.1.i6, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEENtNtNtNtB1f_4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread ] ; 4 uses
-  %.sroa.0.sroa.0.0.i = phi ptr [ %i.m, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEE4iterCsjjpCCFGI3ul_14lance_encoding.exit ], [ %i.r, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEENtNtNtNtB1f_4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread ] ; 2 uses
-  %.sroa.9.sroa.5.0.i = phi ptr [ %i.o, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEE4iterCsjjpCCFGI3ul_14lance_encoding.exit ], [ %.sroa.9.sroa.5.1.i7, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEENtNtNtNtB1f_4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread ] ; 3 uses
-  %.sroa.9.sroa.0.0.i = phi ptr [ %i.l, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEE4iterCsjjpCCFGI3ul_14lance_encoding.exit ], [ %.sroa.9.sroa.0.1.i8, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEENtNtNtNtB1f_4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread ] ; 3 uses
-  %i.p = icmp eq ptr %.sroa.0.sroa.0.0.i, %.sroa.0.sroa.7.0.i
+  %.sroa.12.0.i = phi i64 [ %4, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEE4iterCsjjpCCFGI3ul_14lance_encoding.exit ], [ %.sroa.12.1.i7, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEENtNtNtNtB1f_4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread ] ; 3 uses
+  %.sroa.10.0.i = phi i64 [ %3, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEE4iterCsjjpCCFGI3ul_14lance_encoding.exit ], [ %.sroa.10.1.i8, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEENtNtNtNtB1f_4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread ] ; 4 uses
+  %.sroa.7.0.i = phi i64 [ %2, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEE4iterCsjjpCCFGI3ul_14lance_encoding.exit ], [ %.sroa.7.1.i9, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEENtNtNtNtB1f_4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread ] ; 4 uses
+  %.sroa.9.sroa.5.0.i = phi ptr [ %i.m, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEE4iterCsjjpCCFGI3ul_14lance_encoding.exit ], [ %i.r, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEENtNtNtNtB1f_4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread ] ; 2 uses
+  %.sroa.0.0.i1 = ptrtoint ptr %.sroa.9.sroa.5.0.i to i64
+  %i.p = icmp eq i64 %.sroa.7.0.i, %.sroa.0.0.i1
   br i1 %i.p, label %bb.f, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEENtNtNtNtB1f_4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = icmp eq ptr %.sroa.9.sroa.0.0.i, %.sroa.9.sroa.5.0.i
-  br i1 %i.q, label %_RINvMs5_NtNtCscI6d9CVNmLh_4core3fmt8buildersNtB6_9DebugList7entriesRINtNtNtBa_3ops5range5RangeyEINtNtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iter4IterB14_EECsjjpCCFGI3ul_14lance_encoding.exit, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEENtNtNtNtB1f_4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread
+  %.sroa.10.0.i.ptr = inttoptr i64 %.sroa.10.0.i to ptr
+  %5 = icmp eq i64 %.sroa.10.0.i, %.sroa.12.0.i
+  %i.q = icmp eq i64 %.sroa.10.0.i, 0
+  %or.cond = or i1 %5, %i.q
+  br i1 %or.cond, label %_RINvMs5_NtNtCscI6d9CVNmLh_4core3fmt8buildersNtB6_9DebugList7entriesRINtNtNtBa_3ops5range5RangeyEINtNtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iter4IterB14_EECsjjpCCFGI3ul_14lance_encoding.exit, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEENtNtNtNtB1f_4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread
 
 _RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterINtNtNtCscI6d9CVNmLh_4core3ops5range5RangeyEENtNtNtNtB1f_4iter6traits8iterator8Iterator4nextCsjjpCCFGI3ul_14lance_encoding.exit.i.thread: ; preds = %bb.f, %bb.e
-  %.sink6.i.i9 = phi ptr [ %.sroa.9.sroa.0.0.i, %bb.f ], [ %.sroa.0.sroa.0.0.i, %bb.e ] ; 2 uses
-  %.sroa.9.sroa.0.1.i8 = phi ptr [ %.sroa.0.sroa.7.0.i, %bb.f ], [ %.sroa.9.sroa.0.0.i, %bb.e ]
-  %.sroa.9.sroa.5.1.i7 = phi ptr [ %.sroa.0.sroa.7.0.i, %bb.f ], [ %.sroa.9.sroa.5.0.i, %bb.e ]
-  %.sroa.0.sroa.7.1.i6 = phi ptr [ %.sroa.9.sroa.5.0.i, %bb.f ], [ %.sroa.0.sroa.7.0.i, %bb.e ]
+  %.sink6.i.i9 = phi ptr [ %.sroa.10.0.i.ptr, %bb.f ], [ %.sroa.9.sroa.5.0.i, %bb.e ] ; 2 uses
+  %.sroa.7.1.i9 = phi i64 [ %.sroa.12.0.i, %bb.f ], [ %.sroa.7.0.i, %bb.e ]
+  %.sroa.10.1.i8 = phi i64 [ %.sroa.7.0.i, %bb.f ], [ %.sroa.10.0.i, %bb.e ]
+  %.sroa.12.1.i7 = phi i64 [ %.sroa.7.0.i, %bb.f ], [ %.sroa.12.0.i, %bb.e ]
   %i.r = getelementptr inbounds nuw i8, ptr %.sink6.i.i9, i64 16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !89710
   store ptr %.sink6.i.i9, ptr %i.a, align 8, !noalias !89710
@@ -916,25 +951,32 @@ _RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpC
   %i.m = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.sroa.0.0.i
   %i.n = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.sroa.5.0.i
   %i.o = getelementptr inbounds nuw [24 x i8], ptr %i.l, i64 %.sroa.11.0.i
+  %2 = ptrtoint ptr %i.n to i64
+  %3 = ptrtoint ptr %i.l to i64
+  %4 = ptrtoint ptr %i.o to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferE4iterB19_.exit
-  %.sroa.0.sroa.7.0.i = phi ptr [ %i.n, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferE4iterB19_.exit ], [ %.sroa.0.sroa.7.1.i6, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread ] ; 4 uses
-  %.sroa.0.sroa.0.0.i = phi ptr [ %i.m, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferE4iterB19_.exit ], [ %i.r, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread ] ; 2 uses
-  %.sroa.9.sroa.5.0.i = phi ptr [ %i.o, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferE4iterB19_.exit ], [ %.sroa.9.sroa.5.1.i7, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread ] ; 3 uses
-  %.sroa.9.sroa.0.0.i = phi ptr [ %i.l, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferE4iterB19_.exit ], [ %.sroa.9.sroa.0.1.i8, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread ] ; 3 uses
-  %i.p = icmp eq ptr %.sroa.0.sroa.0.0.i, %.sroa.0.sroa.7.0.i
+  %.sroa.12.0.i = phi i64 [ %4, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferE4iterB19_.exit ], [ %.sroa.12.1.i7, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread ] ; 3 uses
+  %.sroa.10.0.i = phi i64 [ %3, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferE4iterB19_.exit ], [ %.sroa.10.1.i8, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread ] ; 4 uses
+  %.sroa.7.0.i = phi i64 [ %2, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferE4iterB19_.exit ], [ %.sroa.7.1.i9, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread ] ; 4 uses
+  %.sroa.9.sroa.5.0.i = phi ptr [ %i.m, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferE4iterB19_.exit ], [ %i.r, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread ] ; 2 uses
+  %.sroa.0.0.i1 = ptrtoint ptr %.sroa.9.sroa.5.0.i to i64
+  %i.p = icmp eq i64 %.sroa.7.0.i, %.sroa.0.0.i1
   br i1 %i.p, label %bb.f, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = icmp eq ptr %.sroa.9.sroa.0.0.i, %.sroa.9.sroa.5.0.i
-  br i1 %i.q, label %_RINvMs5_NtNtCscI6d9CVNmLh_4core3fmt8buildersNtB6_9DebugList7entriesRNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferINtNtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iter4IterB14_EEB18_.exit, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread
+  %.sroa.10.0.i.ptr = inttoptr i64 %.sroa.10.0.i to ptr
+  %5 = icmp eq i64 %.sroa.10.0.i, %.sroa.12.0.i
+  %i.q = icmp eq i64 %.sroa.10.0.i, 0
+  %or.cond = or i1 %5, %i.q
+  br i1 %or.cond, label %_RINvMs5_NtNtCscI6d9CVNmLh_4core3fmt8buildersNtB6_9DebugList7entriesRNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferINtNtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iter4IterB14_EEB18_.exit, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread
 
 _RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtCsjjpCCFGI3ul_14lance_encoding6buffer11LanceBufferENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1c_.exit.i.thread: ; preds = %bb.f, %bb.e
-  %.sink6.i.i9 = phi ptr [ %.sroa.9.sroa.0.0.i, %bb.f ], [ %.sroa.0.sroa.0.0.i, %bb.e ] ; 2 uses
-  %.sroa.9.sroa.0.1.i8 = phi ptr [ %.sroa.0.sroa.7.0.i, %bb.f ], [ %.sroa.9.sroa.0.0.i, %bb.e ]
-  %.sroa.9.sroa.5.1.i7 = phi ptr [ %.sroa.0.sroa.7.0.i, %bb.f ], [ %.sroa.9.sroa.5.0.i, %bb.e ]
-  %.sroa.0.sroa.7.1.i6 = phi ptr [ %.sroa.9.sroa.5.0.i, %bb.f ], [ %.sroa.0.sroa.7.0.i, %bb.e ]
+  %.sink6.i.i9 = phi ptr [ %.sroa.10.0.i.ptr, %bb.f ], [ %.sroa.9.sroa.5.0.i, %bb.e ] ; 2 uses
+  %.sroa.7.1.i9 = phi i64 [ %.sroa.12.0.i, %bb.f ], [ %.sroa.7.0.i, %bb.e ]
+  %.sroa.10.1.i8 = phi i64 [ %.sroa.7.0.i, %bb.f ], [ %.sroa.10.0.i, %bb.e ]
+  %.sroa.12.1.i7 = phi i64 [ %.sroa.7.0.i, %bb.f ], [ %.sroa.12.0.i, %bb.e ]
   %i.r = getelementptr inbounds nuw i8, ptr %.sink6.i.i9, i64 24
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !89718
   store ptr %.sink6.i.i9, ptr %i.a, align 8, !noalias !89718
@@ -988,25 +1030,32 @@ _RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCs
   %i.m = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %.sroa.0.0.i
   %i.n = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %.sroa.5.0.i
   %i.o = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %.sroa.11.0.i
+  %2 = ptrtoint ptr %i.n to i64
+  %3 = ptrtoint ptr %i.l to i64
+  %4 = ptrtoint ptr %i.o to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestE4iterB1d_.exit
-  %.sroa.0.sroa.7.0.i = phi ptr [ %i.n, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestE4iterB1d_.exit ], [ %.sroa.0.sroa.7.1.i6, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 4 uses
-  %.sroa.0.sroa.0.0.i = phi ptr [ %i.m, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestE4iterB1d_.exit ], [ %i.r, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 2 uses
-  %.sroa.9.sroa.5.0.i = phi ptr [ %i.o, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestE4iterB1d_.exit ], [ %.sroa.9.sroa.5.1.i7, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 3 uses
-  %.sroa.9.sroa.0.0.i = phi ptr [ %i.l, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestE4iterB1d_.exit ], [ %.sroa.9.sroa.0.1.i8, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 3 uses
-  %i.p = icmp eq ptr %.sroa.0.sroa.0.0.i, %.sroa.0.sroa.7.0.i
+  %.sroa.12.0.i = phi i64 [ %4, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestE4iterB1d_.exit ], [ %.sroa.12.1.i7, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 3 uses
+  %.sroa.10.0.i = phi i64 [ %3, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestE4iterB1d_.exit ], [ %.sroa.10.1.i8, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 4 uses
+  %.sroa.7.0.i = phi i64 [ %2, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestE4iterB1d_.exit ], [ %.sroa.7.1.i9, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 4 uses
+  %.sroa.9.sroa.5.0.i = phi ptr [ %i.m, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestE4iterB1d_.exit ], [ %i.r, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 2 uses
+  %.sroa.0.0.i1 = ptrtoint ptr %.sroa.9.sroa.5.0.i to i64
+  %i.p = icmp eq i64 %.sroa.7.0.i, %.sroa.0.0.i1
   br i1 %i.p, label %bb.f, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = icmp eq ptr %.sroa.9.sroa.0.0.i, %.sroa.9.sroa.5.0.i
-  br i1 %i.q, label %_RINvMs5_NtNtCscI6d9CVNmLh_4core3fmt8buildersNtB6_9DebugList7entriesRNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestINtNtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iter4IterB14_EEB1c_.exit, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread
+  %.sroa.10.0.i.ptr = inttoptr i64 %.sroa.10.0.i to ptr
+  %5 = icmp eq i64 %.sroa.10.0.i, %.sroa.12.0.i
+  %i.q = icmp eq i64 %.sroa.10.0.i, 0
+  %or.cond = or i1 %5, %i.q
+  br i1 %or.cond, label %_RINvMs5_NtNtCscI6d9CVNmLh_4core3fmt8buildersNtB6_9DebugList7entriesRNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestINtNtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iter4IterB14_EEB1c_.exit, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread
 
 _RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding7logical4list11ListRequestENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread: ; preds = %bb.f, %bb.e
-  %.sink6.i.i9 = phi ptr [ %.sroa.9.sroa.0.0.i, %bb.f ], [ %.sroa.0.sroa.0.0.i, %bb.e ] ; 2 uses
-  %.sroa.9.sroa.0.1.i8 = phi ptr [ %.sroa.0.sroa.7.0.i, %bb.f ], [ %.sroa.9.sroa.0.0.i, %bb.e ]
-  %.sroa.9.sroa.5.1.i7 = phi ptr [ %.sroa.0.sroa.7.0.i, %bb.f ], [ %.sroa.9.sroa.5.0.i, %bb.e ]
-  %.sroa.0.sroa.7.1.i6 = phi ptr [ %.sroa.9.sroa.5.0.i, %bb.f ], [ %.sroa.0.sroa.7.0.i, %bb.e ]
+  %.sink6.i.i9 = phi ptr [ %.sroa.10.0.i.ptr, %bb.f ], [ %.sroa.9.sroa.5.0.i, %bb.e ] ; 2 uses
+  %.sroa.7.1.i9 = phi i64 [ %.sroa.12.0.i, %bb.f ], [ %.sroa.7.0.i, %bb.e ]
+  %.sroa.10.1.i8 = phi i64 [ %.sroa.7.0.i, %bb.f ], [ %.sroa.10.0.i, %bb.e ]
+  %.sroa.12.1.i7 = phi i64 [ %.sroa.7.0.i, %bb.f ], [ %.sroa.12.0.i, %bb.e ]
   %i.r = getelementptr inbounds nuw i8, ptr %.sink6.i.i9, i64 32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !89726
   store ptr %.sink6.i.i9, ptr %i.a, align 8, !noalias !89726
@@ -1060,25 +1109,32 @@ _RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCs
   %i.m = getelementptr inbounds nuw [56 x i8], ptr %i.l, i64 %.sroa.0.0.i
   %i.n = getelementptr inbounds nuw [56 x i8], ptr %i.l, i64 %.sroa.5.0.i
   %i.o = getelementptr inbounds nuw [56 x i8], ptr %i.l, i64 %.sroa.11.0.i
+  %2 = ptrtoint ptr %i.n to i64
+  %3 = ptrtoint ptr %i.l to i64
+  %4 = ptrtoint ptr %i.o to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkE4iterB1d_.exit
-  %.sroa.0.sroa.7.0.i = phi ptr [ %i.n, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkE4iterB1d_.exit ], [ %.sroa.0.sroa.7.1.i6, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 4 uses
-  %.sroa.0.sroa.0.0.i = phi ptr [ %i.m, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkE4iterB1d_.exit ], [ %i.r, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 2 uses
-  %.sroa.9.sroa.5.0.i = phi ptr [ %i.o, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkE4iterB1d_.exit ], [ %.sroa.9.sroa.5.1.i7, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 3 uses
-  %.sroa.9.sroa.0.0.i = phi ptr [ %i.l, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkE4iterB1d_.exit ], [ %.sroa.9.sroa.0.1.i8, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 3 uses
-  %i.p = icmp eq ptr %.sroa.0.sroa.0.0.i, %.sroa.0.sroa.7.0.i
+  %.sroa.12.0.i = phi i64 [ %4, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkE4iterB1d_.exit ], [ %.sroa.12.1.i7, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 3 uses
+  %.sroa.10.0.i = phi i64 [ %3, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkE4iterB1d_.exit ], [ %.sroa.10.1.i8, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 4 uses
+  %.sroa.7.0.i = phi i64 [ %2, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkE4iterB1d_.exit ], [ %.sroa.7.1.i9, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 4 uses
+  %.sroa.9.sroa.5.0.i = phi ptr [ %i.m, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkE4iterB1d_.exit ], [ %i.r, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 2 uses
+  %.sroa.0.0.i1 = ptrtoint ptr %.sroa.9.sroa.5.0.i to i64
+  %i.p = icmp eq i64 %.sroa.7.0.i, %.sroa.0.0.i1
   br i1 %i.p, label %bb.f, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = icmp eq ptr %.sroa.9.sroa.0.0.i, %.sroa.9.sroa.5.0.i
-  br i1 %i.q, label %_RINvMs5_NtNtCscI6d9CVNmLh_4core3fmt8buildersNtB6_9DebugList7entriesRNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkINtNtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iter4IterB14_EEB1c_.exit, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread
+  %.sroa.10.0.i.ptr = inttoptr i64 %.sroa.10.0.i to ptr
+  %5 = icmp eq i64 %.sroa.10.0.i, %.sroa.12.0.i
+  %i.q = icmp eq i64 %.sroa.10.0.i, 0
+  %or.cond = or i1 %5, %i.q
+  br i1 %or.cond, label %_RINvMs5_NtNtCscI6d9CVNmLh_4core3fmt8buildersNtB6_9DebugList7entriesRNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkINtNtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iter4IterB14_EEB1c_.exit, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread
 
 _RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive11LoadedChunkENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread: ; preds = %bb.f, %bb.e
-  %.sink6.i.i9 = phi ptr [ %.sroa.9.sroa.0.0.i, %bb.f ], [ %.sroa.0.sroa.0.0.i, %bb.e ] ; 2 uses
-  %.sroa.9.sroa.0.1.i8 = phi ptr [ %.sroa.0.sroa.7.0.i, %bb.f ], [ %.sroa.9.sroa.0.0.i, %bb.e ]
-  %.sroa.9.sroa.5.1.i7 = phi ptr [ %.sroa.0.sroa.7.0.i, %bb.f ], [ %.sroa.9.sroa.5.0.i, %bb.e ]
-  %.sroa.0.sroa.7.1.i6 = phi ptr [ %.sroa.9.sroa.5.0.i, %bb.f ], [ %.sroa.0.sroa.7.0.i, %bb.e ]
+  %.sink6.i.i9 = phi ptr [ %.sroa.10.0.i.ptr, %bb.f ], [ %.sroa.9.sroa.5.0.i, %bb.e ] ; 2 uses
+  %.sroa.7.1.i9 = phi i64 [ %.sroa.12.0.i, %bb.f ], [ %.sroa.7.0.i, %bb.e ]
+  %.sroa.10.1.i8 = phi i64 [ %.sroa.7.0.i, %bb.f ], [ %.sroa.10.0.i, %bb.e ]
+  %.sroa.12.1.i7 = phi i64 [ %.sroa.7.0.i, %bb.f ], [ %.sroa.12.0.i, %bb.e ]
   %i.r = getelementptr inbounds nuw i8, ptr %.sink6.i.i9, i64 56
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !89734
   store ptr %.sink6.i.i9, ptr %i.a, align 8, !noalias !89734
@@ -1132,25 +1188,32 @@ _RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCs
   %i.m = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %.sroa.0.0.i
   %i.n = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %.sroa.5.0.i
   %i.o = getelementptr inbounds nuw [32 x i8], ptr %i.l, i64 %.sroa.11.0.i
+  %2 = ptrtoint ptr %i.n to i64
+  %3 = ptrtoint ptr %i.l to i64
+  %4 = ptrtoint ptr %i.o to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsE4iterB1d_.exit
-  %.sroa.0.sroa.7.0.i = phi ptr [ %i.n, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsE4iterB1d_.exit ], [ %.sroa.0.sroa.7.1.i6, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 4 uses
-  %.sroa.0.sroa.0.0.i = phi ptr [ %i.m, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsE4iterB1d_.exit ], [ %i.r, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 2 uses
-  %.sroa.9.sroa.5.0.i = phi ptr [ %i.o, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsE4iterB1d_.exit ], [ %.sroa.9.sroa.5.1.i7, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 3 uses
-  %.sroa.9.sroa.0.0.i = phi ptr [ %i.l, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsE4iterB1d_.exit ], [ %.sroa.9.sroa.0.1.i8, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 3 uses
-  %i.p = icmp eq ptr %.sroa.0.sroa.0.0.i, %.sroa.0.sroa.7.0.i
+  %.sroa.12.0.i = phi i64 [ %4, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsE4iterB1d_.exit ], [ %.sroa.12.1.i7, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 3 uses
+  %.sroa.10.0.i = phi i64 [ %3, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsE4iterB1d_.exit ], [ %.sroa.10.1.i8, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 4 uses
+  %.sroa.7.0.i = phi i64 [ %2, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsE4iterB1d_.exit ], [ %.sroa.7.1.i9, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 4 uses
+  %.sroa.9.sroa.5.0.i = phi ptr [ %i.m, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsE4iterB1d_.exit ], [ %i.r, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread ] ; 2 uses
+  %.sroa.0.0.i1 = ptrtoint ptr %.sroa.9.sroa.5.0.i to i64
+  %i.p = icmp eq i64 %.sroa.7.0.i, %.sroa.0.0.i1
   br i1 %i.p, label %bb.f, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = icmp eq ptr %.sroa.9.sroa.0.0.i, %.sroa.9.sroa.5.0.i
-  br i1 %i.q, label %_RINvMs5_NtNtCscI6d9CVNmLh_4core3fmt8buildersNtB6_9DebugList7entriesRNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsINtNtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iter4IterB14_EEB1c_.exit, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread
+  %.sroa.10.0.i.ptr = inttoptr i64 %.sroa.10.0.i to ptr
+  %5 = icmp eq i64 %.sroa.10.0.i, %.sroa.12.0.i
+  %i.q = icmp eq i64 %.sroa.10.0.i, 0
+  %or.cond = or i1 %5, %i.q
+  br i1 %or.cond, label %_RINvMs5_NtNtCscI6d9CVNmLh_4core3fmt8buildersNtB6_9DebugList7entriesRNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsINtNtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iter4IterB14_EEB1c_.exit, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread
 
 _RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive17ChunkInstructionsENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1g_.exit.i.thread: ; preds = %bb.f, %bb.e
-  %.sink6.i.i9 = phi ptr [ %.sroa.9.sroa.0.0.i, %bb.f ], [ %.sroa.0.sroa.0.0.i, %bb.e ] ; 2 uses
-  %.sroa.9.sroa.0.1.i8 = phi ptr [ %.sroa.0.sroa.7.0.i, %bb.f ], [ %.sroa.9.sroa.0.0.i, %bb.e ]
-  %.sroa.9.sroa.5.1.i7 = phi ptr [ %.sroa.0.sroa.7.0.i, %bb.f ], [ %.sroa.9.sroa.5.0.i, %bb.e ]
-  %.sroa.0.sroa.7.1.i6 = phi ptr [ %.sroa.9.sroa.5.0.i, %bb.f ], [ %.sroa.0.sroa.7.0.i, %bb.e ]
+  %.sink6.i.i9 = phi ptr [ %.sroa.10.0.i.ptr, %bb.f ], [ %.sroa.9.sroa.5.0.i, %bb.e ] ; 2 uses
+  %.sroa.7.1.i9 = phi i64 [ %.sroa.12.0.i, %bb.f ], [ %.sroa.7.0.i, %bb.e ]
+  %.sroa.10.1.i8 = phi i64 [ %.sroa.7.0.i, %bb.f ], [ %.sroa.10.0.i, %bb.e ]
+  %.sroa.12.1.i7 = phi i64 [ %.sroa.7.0.i, %bb.f ], [ %.sroa.12.0.i, %bb.e ]
   %i.r = getelementptr inbounds nuw i8, ptr %.sink6.i.i9, i64 32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !89742
   store ptr %.sink6.i.i9, ptr %i.a, align 8, !noalias !89742
@@ -1204,25 +1267,32 @@ _RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtNt
   %i.m = getelementptr inbounds nuw [40 x i8], ptr %i.l, i64 %.sroa.0.0.i
   %i.n = getelementptr inbounds nuw [40 x i8], ptr %i.l, i64 %.sroa.5.0.i
   %i.o = getelementptr inbounds nuw [40 x i8], ptr %i.l, i64 %.sroa.11.0.i
+  %2 = ptrtoint ptr %i.n to i64
+  %3 = ptrtoint ptr %i.l to i64
+  %4 = ptrtoint ptr %i.o to i64
   br label %bb.e
 
 bb.e:                                             ; preds = %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1i_.exit.i.thread, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobE4iterB1f_.exit
-  %.sroa.0.sroa.7.0.i = phi ptr [ %i.n, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobE4iterB1f_.exit ], [ %.sroa.0.sroa.7.1.i6, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1i_.exit.i.thread ] ; 4 uses
-  %.sroa.0.sroa.0.0.i = phi ptr [ %i.m, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobE4iterB1f_.exit ], [ %i.r, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1i_.exit.i.thread ] ; 2 uses
-  %.sroa.9.sroa.5.0.i = phi ptr [ %i.o, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobE4iterB1f_.exit ], [ %.sroa.9.sroa.5.1.i7, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1i_.exit.i.thread ] ; 3 uses
-  %.sroa.9.sroa.0.0.i = phi ptr [ %i.l, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobE4iterB1f_.exit ], [ %.sroa.9.sroa.0.1.i8, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1i_.exit.i.thread ] ; 3 uses
-  %i.p = icmp eq ptr %.sroa.0.sroa.0.0.i, %.sroa.0.sroa.7.0.i
+  %.sroa.12.0.i = phi i64 [ %4, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobE4iterB1f_.exit ], [ %.sroa.12.1.i7, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1i_.exit.i.thread ] ; 3 uses
+  %.sroa.10.0.i = phi i64 [ %3, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobE4iterB1f_.exit ], [ %.sroa.10.1.i8, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1i_.exit.i.thread ] ; 4 uses
+  %.sroa.7.0.i = phi i64 [ %2, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobE4iterB1f_.exit ], [ %.sroa.7.1.i9, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1i_.exit.i.thread ] ; 4 uses
+  %.sroa.9.sroa.5.0.i = phi ptr [ %i.m, %_RNvMs3_NtNtCs40k4W9msRzi_5alloc11collections9vec_dequeINtB5_8VecDequeNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobE4iterB1f_.exit ], [ %i.r, %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1i_.exit.i.thread ] ; 2 uses
+  %.sroa.0.0.i1 = ptrtoint ptr %.sroa.9.sroa.5.0.i to i64
+  %i.p = icmp eq i64 %.sroa.7.0.i, %.sroa.0.0.i1
   br i1 %i.p, label %bb.f, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1i_.exit.i.thread
 
 bb.f:                                             ; preds = %bb.e
-  %i.q = icmp eq ptr %.sroa.9.sroa.0.0.i, %.sroa.9.sroa.5.0.i
-  br i1 %i.q, label %_RINvMs5_NtNtCscI6d9CVNmLh_4core3fmt8buildersNtB6_9DebugList7entriesRNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobINtNtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iter4IterB14_EEB1e_.exit, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1i_.exit.i.thread
+  %.sroa.10.0.i.ptr = inttoptr i64 %.sroa.10.0.i to ptr
+  %5 = icmp eq i64 %.sroa.10.0.i, %.sroa.12.0.i
+  %i.q = icmp eq i64 %.sroa.10.0.i, 0
+  %or.cond = or i1 %5, %i.q
+  br i1 %or.cond, label %_RINvMs5_NtNtCscI6d9CVNmLh_4core3fmt8buildersNtB6_9DebugList7entriesRNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobINtNtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iter4IterB14_EEB1e_.exit, label %_RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1i_.exit.i.thread
 
 _RNvXs2_NtNtNtCs40k4W9msRzi_5alloc11collections9vec_deque4iterINtB5_4IterNtNtNtNtNtCsjjpCCFGI3ul_14lance_encoding9encodings7logical9primitive4blob10LoadedBlobENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextB1i_.exit.i.thread: ; preds = %bb.f, %bb.e
-  %.sink6.i.i9 = phi ptr [ %.sroa.9.sroa.0.0.i, %bb.f ], [ %.sroa.0.sroa.0.0.i, %bb.e ] ; 2 uses
-  %.sroa.9.sroa.0.1.i8 = phi ptr [ %.sroa.0.sroa.7.0.i, %bb.f ], [ %.sroa.9.sroa.0.0.i, %bb.e ]
-  %.sroa.9.sroa.5.1.i7 = phi ptr [ %.sroa.0.sroa.7.0.i, %bb.f ], [ %.sroa.9.sroa.5.0.i, %bb.e ]
-  %.sroa.0.sroa.7.1.i6 = phi ptr [ %.sroa.9.sroa.5.0.i, %bb.f ], [ %.sroa.0.sroa.7.0.i, %bb.e ]
+  %.sink6.i.i9 = phi ptr [ %.sroa.10.0.i.ptr, %bb.f ], [ %.sroa.9.sroa.5.0.i, %bb.e ] ; 2 uses
+  %.sroa.7.1.i9 = phi i64 [ %.sroa.12.0.i, %bb.f ], [ %.sroa.7.0.i, %bb.e ]
+  %.sroa.10.1.i8 = phi i64 [ %.sroa.7.0.i, %bb.f ], [ %.sroa.10.0.i, %bb.e ]
+  %.sroa.12.1.i7 = phi i64 [ %.sroa.7.0.i, %bb.f ], [ %.sroa.12.0.i, %bb.e ]
   %i.r = getelementptr inbounds nuw i8, ptr %.sink6.i.i9, i64 40
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !89750
   store ptr %.sink6.i.i9, ptr %i.a, align 8, !noalias !89750
