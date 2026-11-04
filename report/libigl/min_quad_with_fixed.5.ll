@@ -205,12 +205,11 @@ define linkonce_odr dso_local void @_ZN3igl19min_quad_with_fixedIdLi3ELi1ELb1EEE
 bb.a:
   %5 = alloca %"class.Eigen::Matrix.830", align 16 ; 11 uses
   %6 = alloca %"class.Eigen::Matrix.840", align 16 ; 10 uses
-  %7 = alloca %"class.Eigen::Matrix.840", align 16 ; 7 uses
-  %8 = alloca %"class.Eigen::Matrix.840", align 16 ; 6 uses
+  %.sroa.098 = alloca <2 x double>, align 16      ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #7
   store <2 x double> <double 2.000000e+00, double 1.000000e+00>, ptr %6, align 16, !tbaa !15
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.098)
   %i.a = load i8, ptr %3, align 1, !tbaa !10, !range !11, !noundef !12
   %i.b = trunc nuw i8 %i.a to i1                  ; 6 uses
   %.148.1.sroa.gep = getelementptr inbounds nuw i8, ptr %5, i64 16
@@ -234,7 +233,7 @@ _ZN5Eigen9DenseBaseINS_5BlockINS_6MatrixIdLi2ELi2ELi0ELi2ELi2EEELin1ELi1ELb0EEEE
 
 bb.b:                                             ; preds = %bb.a
   %i.j = load double, ptr %2, align 8, !tbaa !15
-  store double %i.j, ptr %7, align 16, !tbaa !15
+  store double %i.j, ptr %.sroa.098, align 16, !tbaa !15
   %i.k = load double, ptr %1, align 8, !tbaa !15
   store double %i.k, ptr %5, align 16, !tbaa !15
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 1
@@ -284,7 +283,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %i.y = load double, ptr %4, align 8, !tbaa !15
   %i.z = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.aa = load double, ptr %i.z, align 8, !tbaa !15
-  store double %i.aa, ptr %7, align 16, !tbaa !15
+  store double %i.aa, ptr %.sroa.098, align 16, !tbaa !15
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ac = load double, ptr %i.ab, align 8, !tbaa !15
   store double %i.ac, ptr %6, align 16, !tbaa !15
@@ -293,7 +292,7 @@ bb.h:                                             ; preds = %bb.f, %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.ae = load double, ptr %i.ad, align 8, !tbaa !15
-  %i.af = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.af = getelementptr inbounds nuw i8, ptr %.sroa.098, i64 8
   store double %i.ae, ptr %i.af, align 8, !tbaa !15
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ah = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
@@ -306,7 +305,7 @@ bb.j:                                             ; preds = %.thread91, %bb.i
   %i.ak = phi ptr [ %6, %.thread91 ], [ %i.ai, %bb.i ]
   %i.al = phi ptr [ %5, %.thread91 ], [ %i.ah, %bb.i ] ; 2 uses
   %i.am = phi double [ %i.y, %.thread91 ], [ 1.000000e+00, %bb.i ] ; 2 uses
-  %.1438993 = phi i64 [ 1, %.thread91 ], [ 2, %bb.i ] ; 2 uses
+  %.143109115 = phi i32 [ 1, %.thread91 ], [ 2, %bb.i ] ; 2 uses
   %.148.173 = phi i64 [ 0, %.thread91 ], [ 16, %bb.i ] ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.ao = load double, ptr %i.an, align 8, !tbaa !15
@@ -330,7 +329,7 @@ bb.l:                                             ; preds = %bb.j
   br label %bb.n
 
 bb.m:                                             ; preds = %.thread, %bb.h
-  %.14390 = phi i64 [ 0, %.thread ], [ 1, %bb.h ]
+  %.143110 = phi i32 [ 0, %.thread ], [ 1, %bb.h ]
   %i.ax = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.ay = load double, ptr %i.ax, align 8, !tbaa !15
   %.phi.trans.insert84 = getelementptr inbounds nuw i8, ptr %3, i64 2
@@ -338,21 +337,24 @@ bb.m:                                             ; preds = %.thread, %bb.h
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.k, %bb.l, %bb.m
-  %i.az = phi i1 [ true, %bb.m ], [ false, %bb.l ], [ false, %bb.k ] ; 2 uses
+  %i.az = phi i1 [ true, %bb.m ], [ false, %bb.l ], [ false, %bb.k ] ; 3 uses
   %i.ba = phi i8 [ %.pre85, %bb.m ], [ %i.ar, %bb.l ], [ %i.ar, %bb.k ]
   %i.bb = phi double [ %i.ay, %bb.m ], [ %i.am, %bb.l ], [ %i.am, %bb.k ]
-  %.143.1 = phi i64 [ %.14390, %bb.m ], [ %.1438993, %bb.l ], [ %.1438993, %bb.k ] ; 3 uses
+  %.143.1 = phi i32 [ %.143110, %bb.m ], [ %.143109115, %bb.l ], [ %.143109115, %bb.k ] ; 2 uses
   %i.bc = trunc nuw i8 %i.ba to i1                ; 2 uses
   br i1 %i.bc, label %bb.v, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   %i.bd = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.be = load double, ptr %i.bd, align 8, !tbaa !15
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %.143.1
-  store double %i.be, ptr %9, align 8, !tbaa !15
+  %7 = zext nneg i32 %.143.1 to i64               ; 2 uses
+  %.sroa.idx94 = icmp eq i32 %.143.1, 1
+  %.sroa.sel97.idx.sroa.sel.idx = select i1 %.sroa.idx94, i64 8, i64 0
+  %.sroa.sel97.idx.sroa.sel = getelementptr inbounds nuw i8, ptr %.sroa.098, i64 %.sroa.sel97.idx.sroa.sel.idx
+  store double %i.be, ptr %.sroa.sel97.idx.sroa.sel, align 8, !tbaa !15
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.bg = getelementptr [8 x i8], ptr %5, i64 %.143.1 ; 3 uses
-  %i.bh = getelementptr [8 x i8], ptr %6, i64 %.143.1 ; 2 uses
+  %i.bg = getelementptr [8 x i8], ptr %5, i64 %7  ; 3 uses
+  %i.bh = getelementptr [8 x i8], ptr %6, i64 %7  ; 2 uses
   %i.bi = load double, ptr %i.bf, align 8, !tbaa !15 ; 2 uses
   br i1 %i.b, label %bb.q, label %bb.p
 
@@ -403,9 +405,8 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   %i.bw = insertelement <2 x double> poison, double %i.bu, i64 0
   %i.bx = shufflevector <2 x double> %i.bw, <2 x double> poison, <2 x i32> zeroinitializer
   %i.by = fmul <2 x double> %i.bv, %i.bx
-  %i.bz = load <2 x double>, ptr %7, align 16, !tbaa !13
+  %i.bz = load <2 x double>, ptr %.sroa.098, align 16, !tbaa !13
   %i.ca = fadd <2 x double> %i.bz, %i.by
-  call void @llvm.lifetime.start.p0(ptr nonnull %8) #7
   %i.cb = load <2 x double>, ptr %5, align 16, !tbaa !13 ; 3 uses
   %i.cc = extractelement <2 x double> %i.cb, i64 0 ; 2 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %5, i64 24
@@ -422,47 +423,26 @@ bb.x:                                             ; preds = %bb.w, %_ZN5Eigen9De
   %i.ch = fdiv double %i.cg, %.sroa.0.0.vec.extract ; 2 uses
   %.sroa.0.8.vec.extract = extractelement <2 x double> %.sroa.0.0, i64 1 ; 2 uses
   %i.ci = fmul double %i.ch, %.sroa.0.8.vec.extract
-  %10 = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %11 = extractelement <2 x double> %i.cf, i64 1
-  %i.cj = fsub double %11, %i.ci
-  %i.ck = fdiv double %i.cj, %.sroa.8.24.vec.extract79.pre-phi
-  %12 = fdiv double %i.ck, %.sroa.8.24.vec.extract79.pre-phi ; 2 uses
-  store double %12, ptr %10, align 8, !tbaa !15
-  %13 = fmul double %.sroa.0.8.vec.extract, %12
-  %14 = fsub double %i.ch, %13
-  %15 = fdiv double %14, %.sroa.0.0.vec.extract   ; 2 uses
-  store double %15, ptr %8, align 16, !tbaa !15
-  %.sink.a = select i1 %i.b, double %i.bu, double %15
+  %8 = extractelement <2 x double> %i.cf, i64 1
+  %9 = fsub double %8, %i.ci
+  %10 = fdiv double %9, %.sroa.8.24.vec.extract79.pre-phi
+  %11 = fdiv double %10, %.sroa.8.24.vec.extract79.pre-phi ; 3 uses
+  %12 = fmul double %.sroa.0.8.vec.extract, %11
+  %i.cj = fsub double %i.ch, %12
+  %i.ck = fdiv double %i.cj, %.sroa.0.0.vec.extract ; 3 uses
+  %.sroa.085.0..sroa.085.0..sink = select i1 %i.b, double %i.bu, double %i.ck
   %not. = xor i1 %i.b, true
-  %.141 = zext i1 %not. to i64
-  store double %.sink.a, ptr %0, align 8, !tbaa !15
-  br i1 %i.az, label %19, label %16
-
-16:                                               ; preds = %bb.x
-  %.sroa.sel.idx = select i1 %i.b, i64 0, i64 8
-  %.sroa.sel = getelementptr inbounds nuw i8, ptr %8, i64 %.sroa.sel.idx
-  %17 = load double, ptr %.sroa.sel, align 8, !tbaa !15
-  %18 = select i1 %i.b, i64 1, i64 2
-  br label %19
-
-19:                                               ; preds = %bb.x, %16
-  %.sink82 = phi double [ %17, %16 ], [ %i.bu, %bb.x ]
-  %.141.1 = phi i64 [ %18, %16 ], [ %.141, %bb.x ]
-  %20 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store double %.sink82, ptr %20, align 8, !tbaa !15
-  br i1 %i.bc, label %24, label %21
-
-21:                                               ; preds = %19
-  %22 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %.141.1
-  %23 = load double, ptr %22, align 8, !tbaa !15
-  br label %24
-
-24:                                               ; preds = %19, %21
-  %.sink83 = phi double [ %23, %21 ], [ %i.bu, %19 ]
-  %25 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store double %.sink83, ptr %25, align 8, !tbaa !15
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #7
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #7
+  store double %.sroa.085.0..sroa.085.0..sink, ptr %0, align 8, !tbaa !15
+  %13 = select i1 %i.b, double %i.ck, double %11
+  %.sink = select i1 %i.az, double %i.bu, double %13
+  %.141.1 = select i1 %i.az, i1 %not., i1 %i.b
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  store double %.sink, ptr %14, align 8, !tbaa !15
+  %.sink.a = select i1 %.141.1, double %11, double %i.ck
+  %.sink101 = select i1 %i.bc, double %i.bu, double %.sink.a
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  store double %.sink101, ptr %15, align 8, !tbaa !15
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.098)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #7
   ret void

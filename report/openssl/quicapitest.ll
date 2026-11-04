@@ -204,9 +204,7 @@ bb.l:                                             ; preds = %bb.i, %bb.j, %bb.h,
 ; Function Attrs: nounwind uwtable
 define internal range(i32 0, 2) i32 @test_noisy_dgram(i32 noundef %0) #1 {
 bb.a:
-  %1 = alloca ptr, align 8                        ; 10 uses
-  %.sroa.0 = alloca ptr, align 16                 ; 5 uses
-  %.sroa.5 = alloca ptr, align 8                  ; 5 uses
+  %.sroa.5 = alloca ptr, align 8                  ; 10 uses
   %i.a = alloca ptr, align 8                      ; 13 uses
   %i.b = alloca i64, align 8                      ; 6 uses
   %i.c = alloca i64, align 8                      ; 6 uses
@@ -216,12 +214,8 @@ bb.a:
   %i.g = load ptr, ptr @libctx, align 8, !tbaa !11
   %i.h = tail call ptr @OSSL_QUIC_client_method() #10
   %i.i = tail call ptr @SSL_CTX_new_ex(ptr noundef %i.g, ptr noundef null, ptr noundef %i.h) #10 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #10
-  store ptr null, ptr %1, align 8, !tbaa !17
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
-  store ptr null, ptr %.sroa.0, align 16
-  store ptr null, ptr %.sroa.5, align 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5) #10
+  store ptr null, ptr %.sroa.5, align 8, !tbaa !17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   store ptr null, ptr %i.a, align 8, !tbaa !19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
@@ -241,7 +235,7 @@ bb.b:                                             ; preds = %bb.a
   %i.l = load ptr, ptr @libctx, align 8, !tbaa !11
   %i.m = load ptr, ptr @cert, align 8, !tbaa !15
   %i.n = load ptr, ptr @privkey, align 8, !tbaa !15
-  %i.o = call i32 @qtest_create_quic_objects(ptr noundef %i.l, ptr noundef %i.i, ptr noundef null, ptr noundef %i.m, ptr noundef %i.n, i32 noundef %spec.select, ptr noundef nonnull %i.a, ptr noundef nonnull %1, ptr noundef nonnull %i.f, ptr noundef null) #10
+  %i.o = call i32 @qtest_create_quic_objects(ptr noundef %i.l, ptr noundef %i.i, ptr noundef null, ptr noundef %i.m, ptr noundef %i.n, i32 noundef %spec.select, ptr noundef nonnull %i.a, ptr noundef nonnull %.sroa.5, ptr noundef nonnull %i.f, ptr noundef null) #10
   %i.p = icmp ne i32 %i.o, 0
   %i.q = zext i1 %i.p to i32
   %i.r = call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 1580, ptr noundef nonnull @.str.279, i32 noundef %i.q) #10
@@ -250,7 +244,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.s = load ptr, ptr %i.a, align 8, !tbaa !19
-  %i.t = load ptr, ptr %1, align 8, !tbaa !17
+  %i.t = load ptr, ptr %.sroa.5, align 8, !tbaa !17
   %i.u = call i32 @qtest_create_quic_connection(ptr noundef %i.s, ptr noundef %i.t) #10
   %i.v = icmp ne i32 %i.u, 0
   %i.w = zext i1 %i.v to i32
@@ -259,7 +253,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not29, label %.loopexit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.y = load ptr, ptr %1, align 8, !tbaa !17
+  %i.y = load ptr, ptr %.sroa.5, align 8, !tbaa !17
   %i.z = call i32 @SSL_set_incoming_stream_policy(ptr noundef %i.y, i32 noundef 1, i64 noundef 0) #10
   %i.aa = icmp ne i32 %i.z, 0
   %i.ab = zext i1 %i.aa to i32
@@ -268,7 +262,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not30, label %.loopexit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.ad = load ptr, ptr %1, align 8, !tbaa !17
+  %i.ad = load ptr, ptr %.sroa.5, align 8, !tbaa !17
   %i.ae = call i32 @SSL_set_default_stream_mode(ptr noundef %i.ad, i32 noundef 0) #10
   %i.af = icmp ne i32 %i.ae, 0
   %i.ag = zext i1 %i.af to i32
@@ -277,8 +271,10 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not31, label %.loopexit, label %.preheader45
 
 .preheader45:                                     ; preds = %bb.e, %bb.x
-  %i.ai = phi i1 [ false, %bb.x ], [ true, %bb.e ]
-  %.02550.sroa.phi = phi ptr [ %.sroa.5, %bb.x ], [ %.sroa.0, %bb.e ] ; 3 uses
+  %.sroa.0.0 = phi ptr [ %.sroa.0.2, %bb.x ], [ null, %bb.e ] ; 2 uses
+  %.sroa.6.0 = phi ptr [ %i.bp, %bb.x ], [ null, %bb.e ] ; 2 uses
+  %i.ai = phi i1 [ true, %bb.x ], [ false, %bb.e ] ; 6 uses
+  %1 = phi i1 [ false, %bb.x ], [ true, %bb.e ]
   %i.aj = load ptr, ptr %i.a, align 8, !tbaa !19
   %i.ak = call i32 @ossl_quic_tserver_stream_new(ptr noundef %i.aj, i32 noundef 0, ptr noundef nonnull %i.b) #10
   %i.al = icmp ne i32 %i.ak, 0
@@ -296,9 +292,15 @@ bb.f:                                             ; preds = %.preheader45
 bb.g:                                             ; preds = %bb.p
   %i.aq = add nuw nsw i64 %.02648, 1              ; 2 uses
   %exitcond.not = icmp eq i64 %i.aq, 20
-  br i1 %exitcond.not, label %.preheader.a, label %bb.h, !llvm.loop !46
+  br i1 %exitcond.not, label %.preheader, label %bb.h, !llvm.loop !46
+
+.preheader:                                       ; preds = %bb.g
+  %.sroa.speculated = select i1 %i.ai, ptr %i.bp, ptr %.sroa.0.2
+  br label %.preheader.a
 
 bb.h:                                             ; preds = %bb.f, %bb.g
+  %.sroa.0.1 = phi ptr [ %.sroa.0.0, %bb.f ], [ %.sroa.0.2, %bb.g ] ; 5 uses
+  %.sroa.6.1 = phi ptr [ %.sroa.6.0, %bb.f ], [ %i.bp, %bb.g ] ; 5 uses
   %.02648 = phi i64 [ 0, %bb.f ], [ %i.aq, %bb.g ]
   %i.ar = load ptr, ptr %i.a, align 8, !tbaa !19
   %i.as = load i64, ptr %i.b, align 8, !tbaa !21
@@ -319,13 +321,13 @@ bb.j:                                             ; preds = %bb.i
   %i.az = load ptr, ptr %i.a, align 8, !tbaa !19
   %i.ba = call i32 @ossl_quic_tserver_tick(ptr noundef %i.az) #10 ; 0 uses
   call void @qtest_add_time(i64 noundef 1) #10
-  %i.bb = load ptr, ptr %1, align 8, !tbaa !17    ; 3 uses
+  %i.bb = load ptr, ptr %.sroa.5, align 8, !tbaa !17 ; 3 uses
   %i.bc = load ptr, ptr %i.a, align 8, !tbaa !19  ; 2 uses
-  %.promoted = load ptr, ptr %.02550.sroa.phi, align 8, !tbaa !17
+  %.promoted.sroa.speculated = select i1 %i.ai, ptr %.sroa.6.1, ptr %.sroa.0.1
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.n, %bb.j
-  %i.bd = phi ptr [ %.promoted, %bb.j ], [ %i.bl, %bb.n ] ; 2 uses
+  %i.bd = phi ptr [ %.promoted.sroa.speculated, %bb.j ], [ %i.bl, %bb.n ] ; 2 uses
   %.020.i = phi i32 [ 0, %bb.j ], [ %i.bo, %bb.n ]
   %i.be = icmp eq ptr %i.bd, null
   br i1 %i.be, label %bb.l, label %.thread.i
@@ -358,17 +360,20 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br i1 %exitcond.not.i, label %bb.o, label %bb.k, !llvm.loop !47
 
 bb.o:                                             ; preds = %bb.n
-  store ptr %i.bl, ptr %.02550.sroa.phi, align 8
+  %spec.select69 = select i1 %i.ai, ptr %.sroa.0.1, ptr %i.bl
+  %spec.select70 = select i1 %i.ai, ptr %i.bl, ptr %.sroa.6.1
   call void (ptr, i32, ptr, ...) @test_error(ptr noundef nonnull @.str.14, i32 noundef 1526, ptr noundef nonnull @.str.203) #10
   br label %unreliable_client_read.exit
 
 unreliable_client_read.exit.loopexit:             ; preds = %bb.m, %.thread.i
   %.015.i.ph = phi i32 [ 1, %.thread.i ], [ 0, %bb.m ]
-  store ptr %i.bh, ptr %.02550.sroa.phi, align 8
+  %spec.select71 = select i1 %i.ai, ptr %.sroa.0.1, ptr %i.bh
+  %spec.select72 = select i1 %i.ai, ptr %i.bh, ptr %.sroa.6.1
   br label %unreliable_client_read.exit
 
 unreliable_client_read.exit:                      ; preds = %unreliable_client_read.exit.loopexit, %bb.o
-  %i.bp = phi ptr [ %i.bl, %bb.o ], [ %i.bh, %unreliable_client_read.exit.loopexit ]
+  %.sroa.0.2 = phi ptr [ %spec.select69, %bb.o ], [ %spec.select71, %unreliable_client_read.exit.loopexit ] ; 10 uses
+  %i.bp = phi ptr [ %spec.select70, %bb.o ], [ %spec.select72, %unreliable_client_read.exit.loopexit ] ; 10 uses
   %.015.i = phi i32 [ 0, %bb.o ], [ %.015.i.ph, %unreliable_client_read.exit.loopexit ]
   %i.bq = call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 1620, ptr noundef nonnull @.str.282, i32 noundef %.015.i) #10
   %.not39 = icmp eq i32 %i.bq, 0
@@ -385,9 +390,9 @@ bb.q:                                             ; preds = %bb.w
   %exitcond54.not = icmp eq i64 %i.bt, 20
   br i1 %exitcond54.not, label %bb.x, label %.preheader.a, !llvm.loop !48
 
-.preheader.a:                                     ; preds = %bb.g, %bb.q
-  %.149 = phi i64 [ %i.bt, %bb.q ], [ 0, %bb.g ]
-  %i.bu = call i32 @SSL_write_ex(ptr noundef %i.bp, ptr noundef nonnull @.str.278, i64 noundef 12, ptr noundef nonnull %i.c) #10
+.preheader.a:                                     ; preds = %.preheader, %bb.q
+  %.149 = phi i64 [ 0, %.preheader ], [ %i.bt, %bb.q ]
+  %i.bu = call i32 @SSL_write_ex(ptr noundef %.sroa.speculated, ptr noundef nonnull @.str.278, i64 noundef 12, ptr noundef nonnull %i.c) #10
   %i.bv = icmp ne i32 %i.bu, 0
   %i.bw = zext i1 %i.bv to i32
   %i.bx = call i32 @test_true(ptr noundef nonnull @.str.14, i32 noundef 1628, ptr noundef nonnull @.str.283, i32 noundef %i.bw) #10
@@ -406,7 +411,7 @@ bb.s:                                             ; preds = %bb.r
   call void @qtest_add_time(i64 noundef 1) #10
   %i.cc = load ptr, ptr %i.a, align 8, !tbaa !19  ; 3 uses
   %i.cd = load i64, ptr %i.b, align 8, !tbaa !21
-  %i.ce = load ptr, ptr %1, align 8, !tbaa !17    ; 2 uses
+  %i.ce = load ptr, ptr %.sroa.5, align 8, !tbaa !17 ; 2 uses
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.u, %bb.s
@@ -444,17 +449,17 @@ bb.w:                                             ; preds = %unreliable_server_r
   br i1 %.not36, label %.loopexit, label %bb.q
 
 bb.x:                                             ; preds = %bb.q
-  br i1 %i.ai, label %.preheader45, label %.loopexit, !llvm.loop !50
+  br i1 %1, label %.preheader45, label %.loopexit, !llvm.loop !50
 
 .loopexit:                                        ; preds = %bb.x, %.preheader45, %unreliable_client_read.exit, %bb.p, %bb.h, %bb.i, %unreliable_server_read.exit, %bb.w, %.preheader.a, %bb.r, %bb.d, %bb.e, %bb.c, %bb.a, %bb.b
-  %.027 = phi i32 [ 0, %unreliable_client_read.exit ], [ 0, %bb.a ], [ 0, %bb.e ], [ 0, %unreliable_server_read.exit ], [ 0, %bb.d ], [ 0, %bb.c ], [ 0, %bb.b ], [ 0, %bb.r ], [ 0, %.preheader.a ], [ 0, %bb.w ], [ 0, %bb.i ], [ 0, %bb.h ], [ 0, %bb.p ], [ 1, %bb.x ], [ 0, %.preheader45 ]
-  %2 = load ptr, ptr %i.a, align 8, !tbaa !19
-  call void @ossl_quic_tserver_free(ptr noundef %2) #10
-  %.sroa.0.0..sroa.0.0. = load ptr, ptr %.sroa.0, align 16, !tbaa !17
-  call void @SSL_free(ptr noundef %.sroa.0.0..sroa.0.0.) #10
-  %.sroa.5.0..sroa.5.8. = load ptr, ptr %.sroa.5, align 8, !tbaa !17
-  call void @SSL_free(ptr noundef %.sroa.5.0..sroa.5.8.) #10
-  %i.cp = load ptr, ptr %1, align 8, !tbaa !17
+  %.sroa.0.3 = phi ptr [ null, %bb.a ], [ null, %bb.b ], [ null, %bb.c ], [ null, %bb.d ], [ null, %bb.e ], [ %.sroa.0.2, %bb.p ], [ %.sroa.0.2, %unreliable_server_read.exit ], [ %.sroa.0.2, %bb.r ], [ %.sroa.0.2, %.preheader.a ], [ %.sroa.0.2, %bb.w ], [ %.sroa.0.1, %bb.h ], [ %.sroa.0.2, %unreliable_client_read.exit ], [ %.sroa.0.1, %bb.i ], [ %.sroa.0.2, %bb.x ], [ %.sroa.0.0, %.preheader45 ]
+  %.sroa.6.3 = phi ptr [ null, %bb.a ], [ null, %bb.b ], [ null, %bb.c ], [ null, %bb.d ], [ null, %bb.e ], [ %i.bp, %bb.p ], [ %i.bp, %unreliable_server_read.exit ], [ %i.bp, %bb.r ], [ %i.bp, %.preheader.a ], [ %i.bp, %bb.w ], [ %.sroa.6.1, %bb.h ], [ %i.bp, %unreliable_client_read.exit ], [ %.sroa.6.1, %bb.i ], [ %i.bp, %bb.x ], [ %.sroa.6.0, %.preheader45 ]
+  %.027 = phi i32 [ 0, %bb.a ], [ 0, %bb.b ], [ 0, %bb.c ], [ 0, %bb.d ], [ 0, %bb.e ], [ 0, %unreliable_client_read.exit ], [ 0, %unreliable_server_read.exit ], [ 0, %bb.r ], [ 0, %.preheader.a ], [ 0, %bb.w ], [ 0, %bb.i ], [ 0, %bb.h ], [ 0, %bb.p ], [ 1, %bb.x ], [ 0, %.preheader45 ]
+  %.sroa.0.0..sroa.0.0. = load ptr, ptr %i.a, align 8, !tbaa !19
+  call void @ossl_quic_tserver_free(ptr noundef %.sroa.0.0..sroa.0.0.) #10
+  call void @SSL_free(ptr noundef %.sroa.0.3) #10
+  call void @SSL_free(ptr noundef %.sroa.6.3) #10
+  %i.cp = load ptr, ptr %.sroa.5, align 8, !tbaa !17
   call void @SSL_free(ptr noundef %i.cp) #10
   call void @SSL_CTX_free(ptr noundef %i.i) #10
   %i.cq = load ptr, ptr %i.f, align 8, !tbaa !27
@@ -465,9 +470,7 @@ bb.x:                                             ; preds = %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #10
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5) #10
   ret i32 %.027
 }
 

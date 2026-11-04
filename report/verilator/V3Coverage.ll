@@ -204,9 +204,9 @@ bb.c:                                             ; preds = %bb.a
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZNSt7__cxx1110_List_baseISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EED2Ev.exit, %bb.c
+  %.0.ptr.sroa.idx = phi i8 [ 0, %bb.c ], [ 1, %_ZNSt7__cxx1110_List_baseISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EED2Ev.exit ] ; 2 uses
   %.not = phi i1 [ false, %bb.c ], [ true, %_ZNSt7__cxx1110_List_baseISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EED2Ev.exit ]
-  %.0.idx30.sroa.phi.sroa.speculated = phi i8 [ 0, %bb.c ], [ 1, %_ZNSt7__cxx1110_List_baseISt5dequeIN15CoverageVisitor9CoverTermESaIS3_EESaIS5_EED2Ev.exit ] ; 2 uses
-  %i.n = trunc nuw i8 %.0.idx30.sroa.phi.sroa.speculated to i1
+  %i.n = trunc nuw i8 %.0.ptr.sroa.idx to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #23
   store ptr %6, ptr %i.d, align 8, !tbaa !100
   store ptr %6, ptr %6, align 8, !tbaa !101
@@ -217,7 +217,7 @@ bb.d:                                             ; preds = %_ZNSt7__cxx1110_Lis
   store i64 %i.p, ptr %i.e, align 8, !tbaa !227
   store i64 %i.o, ptr %i.g, align 8, !tbaa !227
   %i.q = load i8, ptr %i.h, align 1, !tbaa !154, !range !80, !noundef !81
-  %i.r = icmp ne i8 %.0.idx30.sroa.phi.sroa.speculated, %i.q
+  %i.r = icmp ne i8 %.0.ptr.sroa.idx, %i.q
   invoke void @_ZN15CoverageVisitor8exprBothEP11AstNodeBiopbbb(ptr noundef nonnull align 8 dereferenceable(416) %0, ptr noundef %1, i1 noundef zeroext true, i1 noundef zeroext %i.n, i1 noundef zeroext %i.r)
           to label %bb.e unwind label %bb.m
 

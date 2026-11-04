@@ -205,7 +205,6 @@ bb.a:
   %i.j = alloca [5 x i8], align 1                 ; 24 uses
   %i.k = alloca [4 x float], align 16             ; 21 uses
   %i.l = alloca [4 x float], align 16             ; 21 uses
-  %6 = alloca [2 x i32], align 4                  ; 5 uses
   %i.m = alloca [4 x float], align 16             ; 15 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 664 ; 4 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !32   ; 3 uses
@@ -225,7 +224,7 @@ bb.a:
   %i.aa = load ptr, ptr %i.z, align 16, !tbaa !57 ; 3 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 516 ; 2 uses
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !448
-  %.fr1070 = freeze i32 %i.ac                     ; 61 uses
+  %.fr1070 = freeze i32 %i.ac                     ; 60 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.o, i64 1540 ; 2 uses
   %i.ae = load i32, ptr %i.ad, align 4, !tbaa !58
   %i.af = and i32 %i.ae, 16384
@@ -628,13 +627,6 @@ _calcRadiusMono.exit.i.i:                         ; preds = %._crit_edge208.loop
   br label %bb.fg
 
 bb.bj:                                            ; preds = %.loopexit.i.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #27
-  %7 = and i32 %.fr1070, 3
-  store i32 %7, ptr %6, align 4, !tbaa !15
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 4
-  %9 = lshr i32 %.fr1070, 4
-  %10 = and i32 %9, 3
-  store i32 %10, ptr %8, align 4, !tbaa !15
   %i.va = icmp sgt i32 %i.ie, 8
   br i1 %i.va, label %.lr.ph212.i.i.i, label %_calcRadiusBayer.exit.i.i
 
@@ -660,10 +652,11 @@ bb.bj:                                            ; preds = %.loopexit.i.i
 bb.bk:                                            ; preds = %._crit_edge.i.i.i, %.lr.ph212.i.i.i
   %indvars.iv216.i.i.i = phi i64 [ 4, %.lr.ph212.i.i.i ], [ %indvars.iv.next217.i.i.i, %._crit_edge.i.i.i ] ; 3 uses
   %.0155209.i.i.i = phi float [ 1.000000e+00, %.lr.ph212.i.i.i ], [ %.1156.lcssa.i.i.i, %._crit_edge.i.i.i ] ; 2 uses
-  %11 = and i64 %indvars.iv216.i.i.i, 1
-  %12 = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %11
-  %13 = load i32, ptr %12, align 4, !tbaa !15
-  %i.vo = and i32 %13, 1
+  %6 = trunc i64 %indvars.iv216.i.i.i to i32
+  %7 = shl i32 %6, 2
+  %8 = and i32 %7, 4
+  %.sroa.speculated.i.i.i = lshr i32 %.fr1070, %8
+  %i.vo = and i32 %.sroa.speculated.i.i.i, 1
   %i.vp = add nuw nsw i32 %i.vo, 5                ; 2 uses
   %i.vq = icmp slt i32 %i.vp, %i.vc
   br i1 %i.vq, label %.lr.ph.i.i.i, label %._crit_edge.i.i.i
@@ -814,7 +807,6 @@ _calcRadiusBayer.exit.i.i:                        ; preds = %._crit_edge213.loop
   %.0155.lcssa.i.i.i = phi float [ 0.000000e+00, %bb.bj ], [ %i.vn, %._crit_edge213.loopexit.i.i.i ]
   %i.ye = fdiv reassoc nsz arcp contract afn float 1.000000e+00, %.0155.lcssa.i.i.i
   %i.yf = tail call reassoc nsz arcp contract afn float @llvm.sqrt.f32(float %i.ye)
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #27
   br label %bb.fg
 
 .preheader._crit_edge.i.i.i:                      ; preds = %.preheader.i.preheader.i.i

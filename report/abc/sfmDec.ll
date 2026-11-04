@@ -205,8 +205,6 @@ bb.a:
   %14 = alloca %struct.timespec, align 8          ; 9 uses
   %15 = alloca %struct.timespec, align 8          ; 5 uses
   %16 = alloca %struct.timespec, align 8          ; 9 uses
-  %.sroa.0 = alloca i32, align 8                  ; 6 uses
-  %.sroa.6 = alloca i32, align 4                  ; 6 uses
   %i.a = alloca [2 x [4 x i64]], align 16         ; 5 uses
   %i.b = alloca [2 x [8 x i64]], align 16         ; 12 uses
   %i.c = alloca [2 x [16 x i32]], align 16        ; 5 uses
@@ -609,10 +607,6 @@ bb.af:                                            ; preds = %Abc_TtIsConst0.exit
 
 bb.ag:                                            ; preds = %.lr.ph543, %bb.bm
   %indvars.iv635 = phi i64 [ 0, %.lr.ph543 ], [ %indvars.iv.next636, %bb.bm ] ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
-  store i32 -1, ptr %.sroa.0, align 8
-  store i32 -1, ptr %.sroa.6, align 4
   %i.ia = shl nuw nsw i64 %indvars.iv635, 2
   %.idx806 = shl nuw nsw i64 %indvars.iv635, 6
   %indvars.iv635.tr = trunc nuw i64 %indvars.iv635 to i32
@@ -623,8 +617,10 @@ bb.ag:                                            ; preds = %.lr.ph543, %bb.bm
   br label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag, %bb.bg
-  %i.if = phi i1 [ true, %bb.ag ], [ false, %bb.bg ]
-  %indvars.iv632.sroa.phi = phi ptr [ %.sroa.0, %bb.ag ], [ %.sroa.6, %bb.bg ]
+  %.sroa.0711.0 = phi i32 [ -1, %bb.ag ], [ %.sroa.0711.1, %bb.bg ] ; 4 uses
+  %.sroa.6712.0 = phi i32 [ -1, %bb.ag ], [ %.sroa.6712.1, %bb.bg ] ; 4 uses
+  %i.if = phi i1 [ false, %bb.ag ], [ true, %bb.bg ] ; 2 uses
+  %17 = phi i1 [ true, %bb.ag ], [ false, %bb.bg ]
   %indvars.iv632 = phi i64 [ 0, %bb.ag ], [ 1, %bb.bg ] ; 7 uses
   %i.ig = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %indvars.iv632
   %i.ih = getelementptr i8, ptr %i.ig, i64 448    ; 4 uses
@@ -753,8 +749,9 @@ Abc_Clock.exit431:                                ; preds = %bb.al, %bb.am
   %i.kf = add nsw i64 %i.kd, %i.ke
   store i64 %i.kf, ptr %i.hy, align 8, !tbaa !116
   %i.kg = load i32, ptr %i.at, align 4, !tbaa !23
-  %i.kh = xor i32 %i.kg, 1                        ; 2 uses
-  store i32 %i.kh, ptr %indvars.iv632.sroa.phi, align 4, !tbaa !23
+  %i.kh = xor i32 %i.kg, 1                        ; 3 uses
+  %spec.select = select i1 %i.if, i32 %.sroa.0711.0, i32 %i.kh
+  %spec.select828 = select i1 %i.if, i32 %i.kh, i32 %.sroa.6712.0
   %i.ki = getelementptr inbounds nuw [16 x i8], ptr %i.hp, i64 %indvars.iv632 ; 6 uses
   %i.kj = getelementptr inbounds nuw i8, ptr %i.ki, i64 4 ; 3 uses
   %i.kk = load i32, ptr %i.kj, align 4, !tbaa !88 ; 7 uses
@@ -982,21 +979,21 @@ bb.bf:                                            ; preds = %bb.ak
   %i.nj = load i32, ptr %i.ni, align 8, !tbaa !114
   %i.nk = add nsw i32 %i.nj, 1
   store i32 %i.nk, ptr %i.ni, align 8, !tbaa !114
-  br label %.thread497
+  br label %bb.dc
 
 bb.bg:                                            ; preds = %._crit_edge539, %Vec_IntPush.exit, %bb.ay, %Abc_TtIntersect.exit427
-  br i1 %i.if, label %bb.ah, label %bb.bh, !llvm.loop !231
+  %.sroa.0711.1 = phi i32 [ %.sroa.0711.0, %bb.ay ], [ %.sroa.0711.0, %._crit_edge539 ], [ %spec.select, %Vec_IntPush.exit ], [ %.sroa.0711.0, %Abc_TtIntersect.exit427 ] ; 5 uses
+  %.sroa.6712.1 = phi i32 [ %.sroa.6712.0, %bb.ay ], [ %.sroa.6712.0, %._crit_edge539 ], [ %spec.select828, %Vec_IntPush.exit ], [ %.sroa.6712.0, %Abc_TtIntersect.exit427 ] ; 3 uses
+  br i1 %17, label %bb.ah, label %bb.bh, !llvm.loop !231
 
 bb.bh:                                            ; preds = %bb.bg
-  %.sroa.0.0..sroa.0.0. = load i32, ptr %.sroa.0, align 8, !tbaa !23 ; 4 uses
-  %i.nl = icmp eq i32 %.sroa.0.0..sroa.0.0., -1
-  %.sroa.6.0..sroa.6.4. = load i32, ptr %.sroa.6, align 4 ; 2 uses
-  %i.nm = icmp eq i32 %.sroa.6.0..sroa.6.4., -1
+  %i.nl = icmp eq i32 %.sroa.0711.1, -1
+  %i.nm = icmp eq i32 %.sroa.6712.1, -1
   %or.cond5 = select i1 %i.nl, i1 true, i1 %i.nm
   br i1 %or.cond5, label %bb.bm, label %bb.bi
 
 bb.bi:                                            ; preds = %bb.bh
-  %i.nn = icmp eq i32 %.sroa.0.0..sroa.0.0., %.sroa.6.0..sroa.6.4.
+  %i.nn = icmp eq i32 %.sroa.0711.1, %.sroa.6712.1
   br i1 %i.nn, label %bb.bj, label %bb.bk
 
 bb.bj:                                            ; preds = %bb.bi
@@ -1016,7 +1013,7 @@ bb.bk:                                            ; preds = %bb.bi
   %i.nw = add nsw i32 %i.nu, -6
   %i.nx = shl nuw i32 1, %i.nw
   %i.ny = select i1 %i.nv, i32 1, i32 %i.nx       ; 5 uses
-  %i.nz = and i32 %.sroa.0.0..sroa.0.0., 1        ; 2 uses
+  %i.nz = and i32 %.sroa.0711.1, 1                ; 2 uses
   %i.oa = icmp sgt i32 %i.ny, 0
   br i1 %i.oa, label %.lr.ph.i435, label %Abc_TtUnit.exit
 
@@ -1060,28 +1057,20 @@ scalar.ph845.2:                                   ; preds = %scalar.ph845.1
   br label %Abc_TtUnit.exit
 
 Abc_TtUnit.exit:                                  ; preds = %vector.body851, %scalar.ph845, %scalar.ph845.1, %scalar.ph845.2, %bb.bk
-  %i.oi = ashr i32 %.sroa.0.0..sroa.0.0., 1       ; 2 uses
+  %i.oi = ashr i32 %.sroa.0711.1, 1               ; 2 uses
   store i32 %i.oi, ptr %2, align 4, !tbaa !23
   %i.oj = getelementptr inbounds nuw i8, ptr %i.ns, i64 120
   %i.ok = load i32, ptr %i.oj, align 4, !tbaa !27
   %.not390 = icmp eq i32 %i.ok, 0
-  br i1 %.not390, label %.thread497, label %bb.bl
+  br i1 %.not390, label %bb.dc, label %bb.bl
 
 bb.bl:                                            ; preds = %Abc_TtUnit.exit
   %.not391 = icmp eq i32 %i.nz, 0
   %i.ol = select i1 %.not391, ptr @.str.9, ptr @.str.8
   %i.om = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.19, ptr noundef nonnull %i.ol, i32 noundef %i.oi) ; 0 uses
-  br label %.thread497
-
-.thread497:                                       ; preds = %bb.bf, %bb.bl, %Abc_TtUnit.exit
-  %.3362.ph = phi i32 [ 1, %Abc_TtUnit.exit ], [ 1, %bb.bl ], [ -2, %bb.bf ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   br label %bb.dc
 
 bb.bm:                                            ; preds = %bb.bj, %bb.bh
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   %indvars.iv.next636 = add nuw nsw i64 %indvars.iv635, 1 ; 2 uses
   %i.on = load i32, ptr %i.az, align 8, !tbaa !97
   %i.oo = sext i32 %i.on to i64
@@ -1484,8 +1473,8 @@ Abc_TtAndSharp.exit.1:                            ; preds = %.lr.ph.i477.1, %mid
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #27
   br label %bb.dc
 
-bb.dc:                                            ; preds = %bb.cc, %Abc_TtStretch6.exit, %.thread497, %bb.cq, %bb.bn, %bb.bo, %Abc_TtConst.exit, %bb.j, %.loopexit, %bb.bu, %bb.g
-  %.8367 = phi i32 [ -2, %bb.g ], [ -2, %bb.cq ], [ %.7366, %.loopexit ], [ -2, %bb.bn ], [ %.3362.ph, %.thread497 ], [ 0, %Abc_TtConst.exit ], [ -2, %bb.bu ], [ 0, %bb.j ], [ -2, %bb.bo ], [ %.1348.lcssa, %Abc_TtStretch6.exit ], [ %.1348.lcssa, %bb.cc ]
+bb.dc:                                            ; preds = %Abc_TtUnit.exit, %bb.bl, %bb.bf, %bb.cc, %Abc_TtStretch6.exit, %bb.cq, %bb.bn, %bb.bo, %Abc_TtConst.exit, %bb.j, %.loopexit, %bb.bu, %bb.g
+  %.8367 = phi i32 [ -2, %bb.g ], [ -2, %bb.cq ], [ %.7366, %.loopexit ], [ -2, %bb.bn ], [ %.1348.lcssa, %bb.cc ], [ 0, %Abc_TtConst.exit ], [ -2, %bb.bu ], [ 0, %bb.j ], [ -2, %bb.bo ], [ %.1348.lcssa, %Abc_TtStretch6.exit ], [ 1, %Abc_TtUnit.exit ], [ 1, %bb.bl ], [ -2, %bb.bf ]
   ret i32 %.8367
 }
 

@@ -205,8 +205,6 @@ declare double @sqrt(double noundef) local_unnamed_addr #7
 ; Function Attrs: nounwind uwtable
 define internal noundef i32 @inner_thread(ptr nofree noundef readonly captures(none) %0, ptr nofree readnone captures(none) %1, ptr nofree noundef readonly captures(address_is_null) %2, ptr noundef %3, ptr noundef %4, i64 noundef %5) #0 {
 bb.a:
-  %6 = alloca [2 x ptr], align 16                 ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #12
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 104
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !15   ; 3 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -300,11 +298,8 @@ bb.g:                                             ; preds = %syrk_beta.exit
   %i.aw = add nsw i64 %i.av, 31
   %i.ax = sdiv i64 %i.aw, 32                      ; 2 uses
   %i.ay = shl nsw i64 %i.ax, 5
-  store ptr %4, ptr %6, align 16, !tbaa !68
   %.idx309 = mul nsw i64 %i.ax, 98304
-  %7 = getelementptr inbounds i8, ptr %4, i64 %.idx309
-  %i.az = getelementptr inbounds nuw i8, ptr %6, i64 8
-  store ptr %7, ptr %i.az, align 8, !tbaa !68
+  %i.az = getelementptr inbounds i8, ptr %4, i64 %.idx309 ; 2 uses
   %i.ba = icmp sgt i64 %i.d, 0
   br i1 %i.ba, label %.lr.ph365, label %.critedge..preheader313_crit_edge
 
@@ -397,8 +392,8 @@ bb.k:                                             ; preds = %bb.h, %bb.i, %bb.j
 
 .lr.ph328:                                        ; preds = %.preheader319
   %i.cg = icmp eq i64 %.0272335, %.0279
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %.0269336
-  %9 = load ptr, ptr %8, align 8, !tbaa !68
+  %.sroa.idx377 = icmp eq i64 %.0269336, 1
+  %.sroa.speculated = select i1 %.sroa.idx377, ptr %i.az, ptr %4
   %.0262. = select i1 %i.cg, i64 %.0262, i64 32
   br label %bb.l
 
@@ -410,7 +405,7 @@ bb.k:                                             ; preds = %bb.h, %bb.i, %bb.j
   br i1 %.not308323, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader316, %.lr.ph
-  tail call void asm sideeffect "nop;nop;nop;nop;nop;nop;nop;nop;\0A", "~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !69
+  tail call void asm sideeffect "nop;nop;nop;nop;nop;nop;nop;nop;\0A", "~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !67
   %i.ci = load atomic i64, ptr %gep seq_cst, align 8, !tbaa !17
   %.not308 = icmp eq i64 %i.ci, 0
   br i1 %.not308, label %._crit_edge, label %.lr.ph, !llvm.loop !44
@@ -424,9 +419,9 @@ bb.k:                                             ; preds = %bb.h, %bb.i, %bb.j
   br i1 %.not305329, label %._crit_edge332, label %.lr.ph331
 
 .lr.ph331:                                        ; preds = %.preheader318
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %.0269336
-  %11 = load ptr, ptr %10, align 8, !tbaa !68
-  %i.ck = ptrtoint ptr %11 to i64                 ; 9 uses
+  %.sroa.idx = icmp eq i64 %.0269336, 1
+  %.sroa.speculated383 = select i1 %.sroa.idx, ptr %i.az, ptr %4
+  %i.ck = ptrtoint ptr %.sroa.speculated383 to i64 ; 9 uses
   %.idx306 = shl nuw nsw i64 %.0269336, 6
   %invariant.gep333 = getelementptr inbounds nuw i8, ptr %i.bj, i64 %.idx306 ; 9 uses
   br i1 %i.bq, label %.epil.preheader, label %.lr.ph331.new
@@ -438,7 +433,7 @@ bb.l:                                             ; preds = %.lr.ph328, %bb.l
   %gep326 = getelementptr [8 x i8], ptr %invariant.gep325, i64 %.0266327
   %i.cm = sub nsw i64 %.0266327, %.0272335
   %i.cn = mul nsw i64 %i.cm, %.0267
-  %i.co = getelementptr inbounds [8 x i8], ptr %9, i64 %i.cn ; 2 uses
+  %i.co = getelementptr inbounds [8 x i8], ptr %.sroa.speculated, i64 %i.cn ; 2 uses
   %i.cp = tail call i32 @dgemm_otcopy(i64 noundef %.0267, i64 noundef %spec.select, ptr noundef %gep326, i64 noundef %i.i, ptr noundef %i.co) #12 ; 0 uses
   %i.cq = load double, ptr %i.m, align 8, !tbaa !66
   %i.cr = mul nsw i64 %.0266327, %i.k
@@ -499,7 +494,7 @@ bb.m:                                             ; preds = %bb.m, %.epil.prehea
   br i1 %epil.iter.cmp.not, label %._crit_edge332, label %bb.m, !llvm.loop !48
 
 ._crit_edge332:                                   ; preds = %._crit_edge332.loopexit.unr-lcssa, %bb.m, %.preheader318
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !70
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !68
   %i.dg = add nuw nsw i64 %.0269336, 1
   %i.dh = icmp slt i64 %i.cd, %.0278
   br i1 %i.dh, label %.preheader320, label %._crit_edge337, !llvm.loop !49
@@ -548,7 +543,7 @@ bb.n:                                             ; preds = %.lr.ph347, %.loopex
   br i1 %i.ea, label %.lr.ph338.us, label %._crit_edge339.us
 
 .lr.ph338.us:                                     ; preds = %.preheader315.us, %.lr.ph338.us
-  tail call void asm sideeffect "nop;nop;nop;nop;nop;nop;nop;nop;\0A", "~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !71
+  tail call void asm sideeffect "nop;nop;nop;nop;nop;nop;nop;nop;\0A", "~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !69
   %i.eb = load atomic i64, ptr %i.dy seq_cst, align 8, !tbaa !17
   %i.ec = icmp eq i64 %i.eb, 0
   br i1 %i.ec, label %.lr.ph338.us, label %._crit_edge339.us, !llvm.loop !51
@@ -581,7 +576,7 @@ bb.n:                                             ; preds = %.lr.ph347, %.loopex
   br i1 %i.et, label %.lr.ph338, label %._crit_edge339
 
 .lr.ph338:                                        ; preds = %.preheader315, %.lr.ph338
-  tail call void asm sideeffect "nop;nop;nop;nop;nop;nop;nop;nop;\0A", "~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !71
+  tail call void asm sideeffect "nop;nop;nop;nop;nop;nop;nop;nop;\0A", "~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !69
   %i.eu = load atomic i64, ptr %i.er seq_cst, align 8, !tbaa !17
   %i.ev = icmp eq i64 %i.eu, 0
   br i1 %i.ev, label %.lr.ph338, label %._crit_edge339, !llvm.loop !51
@@ -724,7 +719,7 @@ bb.s:                                             ; preds = %.lr.ph352, %bb.s
   %i.ho = sub nsw i64 %.0264360, %.2274349
   %i.hp = tail call i32 @dsyrk_kernel_U(i64 noundef %.1263, i64 noundef %.310, i64 noundef %.0267, double noundef %i.hi, ptr noundef %3, ptr noundef %i.hl, ptr noundef %i.hn, i64 noundef %i.k, i64 noundef %i.ho) #12 ; 0 uses
   %i.hq = atomicrmw xchg ptr %i.hj, i64 0 seq_cst, align 8 ; 0 uses
-  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !72
+  tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !70
   %i.hr = add nsw i64 %.2274349, %i.he            ; 2 uses
   %i.hs = add nuw nsw i64 %.2271350, 1
   %i.ht = load i64, ptr %i.gx, align 8, !tbaa !14 ; 3 uses
@@ -760,7 +755,7 @@ bb.t:                                             ; preds = %.lr.ph371, %.loopex
   br i1 %.not300366, label %._crit_edge368, label %.lr.ph367
 
 .lr.ph367:                                        ; preds = %.preheader312, %.lr.ph367
-  tail call void asm sideeffect "nop;nop;nop;nop;nop;nop;nop;nop;\0A", "~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !73
+  tail call void asm sideeffect "nop;nop;nop;nop;nop;nop;nop;nop;\0A", "~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !71
   %i.ie = load atomic i64, ptr %i.ic seq_cst, align 8, !tbaa !17
   %.not300 = icmp eq i64 %i.ie, 0
   br i1 %.not300, label %._crit_edge368, label %.lr.ph367, !llvm.loop !57
@@ -772,7 +767,7 @@ bb.t:                                             ; preds = %.lr.ph371, %.loopex
   br i1 %.not300366.1, label %._crit_edge368.1, label %.lr.ph367.1
 
 .lr.ph367.1:                                      ; preds = %._crit_edge368, %.lr.ph367.1
-  tail call void asm sideeffect "nop;nop;nop;nop;nop;nop;nop;nop;\0A", "~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !73
+  tail call void asm sideeffect "nop;nop;nop;nop;nop;nop;nop;nop;\0A", "~{dirflag},~{fpsr},~{flags}"() #12, !srcloc !71
   %i.ih = load atomic i64, ptr %i.if seq_cst, align 8, !tbaa !17
   %.not300.1 = icmp eq i64 %i.ih, 0
   br i1 %.not300.1, label %._crit_edge368.1, label %.lr.ph367.1, !llvm.loop !57
@@ -788,7 +783,6 @@ bb.t:                                             ; preds = %.lr.ph371, %.loopex
   br i1 %i.ik, label %bb.t, label %.loopexit314, !llvm.loop !58
 
 .loopexit314:                                     ; preds = %.loopexit, %.preheader313, %bb.g, %syrk_beta.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #12
   ret i32 0
 }
 
@@ -913,11 +907,9 @@ attributes #15 = { cold noreturn nounwind }
 !64 = !{!10, !8, i64 40}
 !65 = !{!"double", !4, i64 0}
 !66 = !{!65, !65, i64 0}
-!67 = !{!"p1 double", !8, i64 0}
-!68 = !{!67, !67, i64 0}
-!69 = !{i64 2149625275}
-!70 = !{i64 2149625969}
-!71 = !{i64 2149626156}
-!72 = !{i64 2149627560}
-!73 = !{i64 2149627616}
+!67 = !{i64 2149625275}
+!68 = !{i64 2149625969}
+!69 = !{i64 2149626156}
+!70 = !{i64 2149627560}
+!71 = !{i64 2149627616}
 end_hunk_0

@@ -204,8 +204,8 @@ _ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEjSt4lessIS5_ESaISt
   ret void
 
 bb.f:                                             ; preds = %._crit_edge, %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EED2Ev.exit
+  %not..045.ptr.sroa.idx = phi i8 [ 1, %._crit_edge ], [ 0, %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EED2Ev.exit ]
   %.not = phi i1 [ false, %._crit_edge ], [ true, %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EED2Ev.exit ]
-  %.045.idx609.sroa.phi.sroa.speculated = phi i8 [ 1, %._crit_edge ], [ 0, %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EED2Ev.exit ]
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #22
   store i32 0, ptr %i.l, align 8, !tbaa !88
   store ptr null, ptr %i.m, align 8, !tbaa !87
@@ -243,7 +243,7 @@ _ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_
   %i.av = load i32, ptr %i.au, align 8, !tbaa !203
   %i.aw = icmp sgt i32 %i.av, 0
   %i.ax = zext i1 %i.aw to i8
-  %.not47 = icmp eq i8 %.045.idx609.sroa.phi.sroa.speculated, %i.ax
+  %.not47 = icmp eq i8 %not..045.ptr.sroa.idx, %i.ax
   br i1 %.not47, label %bb.h, label %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EE6insertERKS5_.exit
 
 bb.h:                                             ; preds = %.lr.ph607

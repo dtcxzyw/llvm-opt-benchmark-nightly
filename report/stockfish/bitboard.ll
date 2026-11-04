@@ -2,7 +2,7 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 156
 inline.NumDeleted: 87
 loop-unroll.NumCompletelyUnrolled: 4
-loop-unroll.NumUnrolled: 6
+loop-unroll.NumUnrolled: 7
 begin_hunk_0_@_ZN9Stockfish9Bitboards6prettyB5cxx11Em:._crit_edge.i.i
   %i.bu = load i64, ptr %i.g, align 8, !tbaa !15
   %i.bv = add i64 %i.bu, 1
@@ -204,137 +204,237 @@ bb.b:                                             ; preds = %bb.g
   ret void
 
 bb.c:                                             ; preds = %bb.a, %bb.g
-  %indvars.iv135 = phi i64 [ 0, %bb.a ], [ %indvars.iv.next136, %bb.g ] ; 8 uses
-  %i.ao = getelementptr inbounds nuw [512 x i8], ptr @_ZN9Stockfish9BetweenBBE, i64 %indvars.iv135 ; 6 uses
-  %i.ap = getelementptr inbounds nuw [32 x i8], ptr @_ZN9Stockfish6MagicsE, i64 %indvars.iv135 ; 4 uses
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
-  %i.ar = getelementptr inbounds nuw i8, ptr %i.ap, i64 24
-  %i.as = shl nuw i64 1, %indvars.iv135           ; 4 uses
-  %i.at = getelementptr inbounds nuw [512 x i8], ptr @_ZN9Stockfish6LineBBE, i64 %indvars.iv135 ; 2 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %i.ap, i64 16
-  %i.av = getelementptr inbounds nuw [512 x i8], ptr @_ZN9Stockfish9RayPassBBE, i64 %indvars.iv135 ; 2 uses
-  %i.aw = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZN9Stockfish13PseudoAttacksE, i64 1536), i64 %indvars.iv135
-  %i.ax = load i64, ptr %i.aw, align 8, !tbaa !14
+  %indvars.iv135 = phi i64 [ 0, %bb.a ], [ %indvars.iv.next136, %bb.g ] ; 7 uses
+  %i.ao = getelementptr inbounds nuw [512 x i8], ptr @_ZN9Stockfish9BetweenBBE, i64 %indvars.iv135 ; 12 uses
+  %i.ap = getelementptr inbounds nuw [32 x i8], ptr @_ZN9Stockfish6MagicsE, i64 %indvars.iv135 ; 5 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.ap, i64 8 ; 2 uses
+  %i.ar = getelementptr inbounds nuw i8, ptr %i.ap, i64 24 ; 2 uses
+  %i.as = shl nuw i64 1, %indvars.iv135           ; 8 uses
+  %i.at = getelementptr inbounds nuw [512 x i8], ptr @_ZN9Stockfish6LineBBE, i64 %indvars.iv135 ; 4 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %i.ap, i64 16 ; 2 uses
+  %i.av = getelementptr inbounds nuw [512 x i8], ptr @_ZN9Stockfish9RayPassBBE, i64 %indvars.iv135 ; 4 uses
+  %i.aw = getelementptr inbounds nuw [8 x i8], ptr @_ZN9Stockfish13PseudoAttacksE, i64 %indvars.iv135 ; 2 uses
+  %gep = getelementptr inbounds nuw i8, ptr %i.aw, i64 1536
+  %i.ax = load i64, ptr %gep, align 8, !tbaa !14  ; 2 uses
   br label %bb.h
 
-bb.d:                                             ; preds = %bb.i
-  %i.ay = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @_ZN9Stockfish13PseudoAttacksE, i64 2048), i64 %indvars.iv135
-  %i.az = load i64, ptr %i.ay, align 8, !tbaa !14
+0:                                                ; preds = %bb.i
+  %gep.1 = getelementptr inbounds nuw i8, ptr %i.aw, i64 2048
+  %1 = load i64, ptr %gep.1, align 8, !tbaa !14   ; 2 uses
+  br label %2
+
+2:                                                ; preds = %bb.f, %0
+  %indvars.iv131.1 = phi i64 [ 0, %0 ], [ %indvars.iv.next132.1.a, %bb.f ] ; 10 uses
+  %3 = shl nuw i64 1, %indvars.iv131.1            ; 5 uses
+  %4 = and i64 %1, %3
+  %.not17.1151 = icmp eq i64 %4, 0
+  br i1 %.not17.1151, label %bb.d, label %_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit.thread75.1152
+
+_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit.thread75.1152: ; preds = %2
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %indvars.iv131.1
+  %6 = getelementptr inbounds nuw [32 x i8], ptr @_ZN9Stockfish6MagicsE, i64 %indvars.iv131.1 ; 2 uses
+  %7 = load ptr, ptr %i.ar, align 8, !tbaa !19    ; 3 uses
+  %8 = load i64, ptr %7, align 8, !tbaa !14
+  %9 = getelementptr inbounds nuw i8, ptr %6, i64 24
+  %10 = load ptr, ptr %9, align 8, !tbaa !19      ; 2 uses
+  %11 = load i64, ptr %10, align 8, !tbaa !14
+  %12 = and i64 %11, %8
+  %13 = or i64 %i.as, %12
+  %14 = or i64 %13, %3
+  store i64 %14, ptr %5, align 16, !tbaa !14
+  %15 = load i64, ptr %i.au, align 16, !tbaa !20
+  %16 = tail call noundef i64 @llvm.pext.i64(i64 %3, i64 %15)
+  %17 = and i64 %16, 4294967295
+  %18 = getelementptr inbounds nuw [8 x i8], ptr %7, i64 %17
+  %19 = getelementptr inbounds nuw i8, ptr %6, i64 16
+  %.sink142.1158 = load i64, ptr %18, align 8, !tbaa !14
+  %.sink145.1159 = load i64, ptr %19, align 8, !tbaa !20
+  %20 = tail call noundef i64 @llvm.pext.i64(i64 %i.as, i64 %.sink145.1159)
+  %21 = and i64 %20, 4294967295
+  %22 = getelementptr inbounds nuw [8 x i8], ptr %10, i64 %21 ; 2 uses
+  %23 = load i64, ptr %22, align 8, !tbaa !14
+  %24 = and i64 %23, %.sink142.1158               ; 2 uses
+  %25 = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv131.1
+  store i64 %24, ptr %25, align 16, !tbaa !14
+  %.0.i26.1160 = load i64, ptr %22, align 8, !tbaa !14
+  %.0.i24107.1161 = load i64, ptr %7, align 8, !tbaa !14
+  %26 = or i64 %.0.i26.1160, %3
+  %27 = and i64 %26, %.0.i24107.1161
+  %28 = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %indvars.iv131.1
+  store i64 %27, ptr %28, align 16, !tbaa !14
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.f, %bb.d
-  %indvars.iv131.1.a = phi i64 [ 0, %bb.d ], [ %indvars.iv.next132.1.a, %bb.f ] ; 8 uses
-  %i.ba = shl nuw i64 1, %indvars.iv131.1.a       ; 5 uses
-  %i.bb = and i64 %i.az, %i.ba
+bb.d:                                             ; preds = %2
+  %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv131.1
+  %i.az = load i64, ptr %i.ay, align 16, !tbaa !14
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.d, %_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit.thread75.1152
+  %indvars.iv131.1.a = phi i64 [ %i.az, %bb.d ], [ %24, %_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit.thread75.1152 ]
+  %29 = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv131.1
+  %30 = or i64 %indvars.iv131.1.a, %3
+  store i64 %30, ptr %29, align 16, !tbaa !14
+  %indvars.iv.next132.1166 = or disjoint i64 %indvars.iv131.1, 1 ; 6 uses
+  %i.ba = shl nuw i64 2, %indvars.iv131.1         ; 5 uses
+  %i.bb = and i64 %1, %i.ba
   %.not17.1.a = icmp eq i64 %i.bb, 0
   br i1 %.not17.1.a, label %._crit_edge.1.a, label %_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit.thread75.1
 
 _ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit.thread75.1: ; preds = %bb.e
+  %31 = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %indvars.iv.next132.1166
+  %32 = getelementptr inbounds nuw [32 x i8], ptr @_ZN9Stockfish6MagicsE, i64 %indvars.iv.next132.1166 ; 2 uses
   %i.bc = load ptr, ptr %i.ar, align 8, !tbaa !19 ; 3 uses
   %i.bd = load i64, ptr %i.bc, align 8, !tbaa !14
-  %0 = getelementptr inbounds nuw [32 x i8], ptr @_ZN9Stockfish6MagicsE, i64 %indvars.iv131.1.a ; 2 uses
-  %i.be = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.be = getelementptr inbounds nuw i8, ptr %32, i64 24
   %i.bf = load ptr, ptr %i.be, align 8, !tbaa !19 ; 2 uses
   %i.bg = load i64, ptr %i.bf, align 8, !tbaa !14
   %i.bh = and i64 %i.bg, %i.bd
   %i.bi = or i64 %i.as, %i.bh
   %i.bj = or i64 %i.bi, %i.ba
-  %1 = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %indvars.iv131.1.a
-  store i64 %i.bj, ptr %1, align 8, !tbaa !14
+  store i64 %i.bj, ptr %31, align 8, !tbaa !14
   %i.bk = load i64, ptr %i.au, align 16, !tbaa !20
   %i.bl = tail call noundef i64 @llvm.pext.i64(i64 %i.ba, i64 %i.bk)
   %i.bm = and i64 %i.bl, 4294967295
   %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.bc, i64 %i.bm
-  %2 = load i64, ptr %i.bn, align 8, !tbaa !14
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.bo = load i64, ptr %3, align 16, !tbaa !20
+  %33 = getelementptr inbounds nuw i8, ptr %32, i64 16
+  %.sink142.1.1 = load i64, ptr %i.bn, align 8, !tbaa !14
+  %i.bo = load i64, ptr %33, align 8, !tbaa !20
   %i.bp = tail call noundef i64 @llvm.pext.i64(i64 %i.as, i64 %i.bo)
   %i.bq = and i64 %i.bp, 4294967295
   %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.bf, i64 %i.bq ; 2 uses
   %i.bs = load i64, ptr %i.br, align 8, !tbaa !14
-  %i.bt = and i64 %i.bs, %2                       ; 2 uses
-  %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv131.1.a
+  %i.bt = and i64 %i.bs, %.sink142.1.1            ; 2 uses
+  %i.bu = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv.next132.1166
   store i64 %i.bt, ptr %i.bu, align 8, !tbaa !14
-  %i.bv = load i64, ptr %i.bc, align 8, !tbaa !14
-  %i.bw = load i64, ptr %i.br, align 8, !tbaa !14
-  %i.bx = or i64 %i.bw, %i.ba
-  %i.by = and i64 %i.bx, %i.bv
-  %i.bz = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %indvars.iv131.1.a
+  %i.bv = load i64, ptr %i.br, align 8, !tbaa !14
+  %i.bw = load i64, ptr %i.bc, align 8, !tbaa !14
+  %i.bx = or i64 %i.bv, %i.ba
+  %i.by = and i64 %i.bx, %i.bw
+  %i.bz = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %indvars.iv.next132.1166
   store i64 %i.by, ptr %i.bz, align 8, !tbaa !14
   br label %bb.f
 
 ._crit_edge.1.a:                                  ; preds = %bb.e
-  %.phi.trans.insert.1.a = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv131.1.a
+  %.phi.trans.insert.1.a = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv.next132.1166
   %.pre.1.a = load i64, ptr %.phi.trans.insert.1.a, align 8, !tbaa !14
   br label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge.1.a, %_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit.thread75.1
   %i.ca = phi i64 [ %.pre.1.a, %._crit_edge.1.a ], [ %i.bt, %_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit.thread75.1 ]
-  %i.cb = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv131.1.a
+  %i.cb = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv.next132.1166
   %i.cc = or i64 %i.ca, %i.ba
   store i64 %i.cc, ptr %i.cb, align 8, !tbaa !14
-  %indvars.iv.next132.1.a = add nuw nsw i64 %indvars.iv131.1.a, 1 ; 2 uses
+  %indvars.iv.next132.1.a = add nuw nsw i64 %indvars.iv131.1, 2 ; 2 uses
   %exitcond134.not.1.a = icmp eq i64 %indvars.iv.next132.1.a, 64
-  br i1 %exitcond134.not.1.a, label %bb.g, label %bb.e, !llvm.loop !39
+  br i1 %exitcond134.not.1.a, label %bb.g, label %2, !llvm.loop !39
 
 bb.g:                                             ; preds = %bb.f
   %indvars.iv.next136 = add nuw nsw i64 %indvars.iv135, 1 ; 2 uses
   %exitcond138.not = icmp eq i64 %indvars.iv.next136, 64
   br i1 %exitcond138.not, label %bb.b, label %bb.c, !llvm.loop !40
 
-bb.h:                                             ; preds = %bb.c, %bb.i
-  %indvars.iv131 = phi i64 [ 0, %bb.c ], [ %indvars.iv.next132.a, %bb.i ] ; 8 uses
+bb.h:                                             ; preds = %bb.i, %bb.c
+  %indvars.iv131 = phi i64 [ 0, %bb.c ], [ %indvars.iv.next132.a, %bb.i ] ; 10 uses
   %i.cd = shl nuw i64 1, %indvars.iv131           ; 5 uses
   %i.ce = and i64 %i.ax, %i.cd
   %.not17 = icmp eq i64 %i.ce, 0
-  br i1 %.not17, label %._crit_edge.a, label %_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit.thread
+  br i1 %.not17, label %._crit_edge, label %._crit_edge.a
+
+._crit_edge:                                      ; preds = %bb.h
+  %.phi.trans.insert = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv131
+  %.pre = load i64, ptr %.phi.trans.insert, align 16, !tbaa !14
+  br label %56
 
 ._crit_edge.a:                                    ; preds = %bb.h
+  %34 = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %indvars.iv131
+  %35 = getelementptr inbounds nuw [32 x i8], ptr @_ZN9Stockfish6MagicsE, i64 %indvars.iv131 ; 2 uses
+  %36 = load ptr, ptr %i.aq, align 8, !tbaa !19   ; 3 uses
+  %37 = load i64, ptr %36, align 8, !tbaa !14
+  %38 = getelementptr inbounds nuw i8, ptr %35, i64 8
+  %39 = load ptr, ptr %38, align 8, !tbaa !19     ; 2 uses
+  %40 = load i64, ptr %39, align 8, !tbaa !14
+  %41 = and i64 %40, %37
+  %42 = or i64 %i.as, %41
+  %43 = or i64 %42, %i.cd
+  store i64 %43, ptr %34, align 16, !tbaa !14
+  %44 = load i64, ptr %i.ap, align 32, !tbaa !20
+  %45 = tail call noundef i64 @llvm.pext.i64(i64 %i.cd, i64 %44)
+  %46 = and i64 %45, 4294967295
+  %47 = getelementptr inbounds nuw [8 x i8], ptr %36, i64 %46
+  %.sink142 = load i64, ptr %47, align 8, !tbaa !14
+  %.sink145 = load i64, ptr %35, align 8, !tbaa !20
+  %48 = tail call noundef i64 @llvm.pext.i64(i64 %i.as, i64 %.sink145)
+  %49 = and i64 %48, 4294967295
+  %50 = getelementptr inbounds nuw [8 x i8], ptr %39, i64 %49 ; 2 uses
+  %51 = load i64, ptr %50, align 8, !tbaa !14
+  %52 = and i64 %51, %.sink142                    ; 2 uses
   %.phi.trans.insert.a = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv131
-  %.pre.a = load i64, ptr %.phi.trans.insert.a, align 8, !tbaa !14
-  br label %bb.i
+  store i64 %52, ptr %.phi.trans.insert.a, align 16, !tbaa !14
+  %.0.i26 = load i64, ptr %50, align 8, !tbaa !14
+  %.pre.a = load i64, ptr %36, align 8, !tbaa !14
+  %53 = or i64 %.0.i26, %i.cd
+  %54 = and i64 %53, %.pre.a
+  %55 = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %indvars.iv131
+  store i64 %54, ptr %55, align 16, !tbaa !14
+  br label %56
 
-_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit.thread: ; preds = %bb.h
+56:                                               ; preds = %._crit_edge, %._crit_edge.a
+  %57 = phi i64 [ %.pre, %._crit_edge ], [ %52, %._crit_edge.a ]
+  %58 = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv131
+  %59 = or i64 %57, %i.cd
+  store i64 %59, ptr %58, align 16, !tbaa !14
+  %indvars.iv.next132 = or disjoint i64 %indvars.iv131, 1 ; 6 uses
+  %60 = shl nuw i64 2, %indvars.iv131             ; 5 uses
+  %61 = and i64 %i.ax, %60
+  %.not17.1 = icmp eq i64 %61, 0
+  br i1 %.not17.1, label %._crit_edge.1, label %_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit.thread
+
+_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit.thread: ; preds = %56
+  %62 = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %indvars.iv.next132
+  %63 = getelementptr inbounds nuw [32 x i8], ptr @_ZN9Stockfish6MagicsE, i64 %indvars.iv.next132 ; 2 uses
   %i.cf = load ptr, ptr %i.aq, align 8, !tbaa !19 ; 3 uses
   %i.cg = load i64, ptr %i.cf, align 8, !tbaa !14
-  %4 = getelementptr inbounds nuw [32 x i8], ptr @_ZN9Stockfish6MagicsE, i64 %indvars.iv131 ; 2 uses
-  %i.ch = getelementptr inbounds nuw i8, ptr %4, i64 8
+  %i.ch = getelementptr inbounds nuw i8, ptr %63, i64 8
   %i.ci = load ptr, ptr %i.ch, align 8, !tbaa !19 ; 2 uses
   %i.cj = load i64, ptr %i.ci, align 8, !tbaa !14
   %i.ck = and i64 %i.cj, %i.cg
   %i.cl = or i64 %i.as, %i.ck
-  %i.cm = or i64 %i.cl, %i.cd
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.at, i64 %indvars.iv131
-  store i64 %i.cm, ptr %5, align 8, !tbaa !14
+  %i.cm = or i64 %i.cl, %60
+  store i64 %i.cm, ptr %62, align 8, !tbaa !14
   %i.cn = load i64, ptr %i.ap, align 32, !tbaa !20
-  %i.co = tail call noundef i64 @llvm.pext.i64(i64 %i.cd, i64 %i.cn)
+  %i.co = tail call noundef i64 @llvm.pext.i64(i64 %60, i64 %i.cn)
   %i.cp = and i64 %i.co, 4294967295
   %i.cq = getelementptr inbounds nuw [8 x i8], ptr %i.cf, i64 %i.cp
   %i.cr = load i64, ptr %i.cq, align 8, !tbaa !14
-  %i.cs = load i64, ptr %4, align 32, !tbaa !20
+  %i.cs = load i64, ptr %63, align 8, !tbaa !20
   %i.ct = tail call noundef i64 @llvm.pext.i64(i64 %i.as, i64 %i.cs)
   %i.cu = and i64 %i.ct, 4294967295
   %i.cv = getelementptr inbounds nuw [8 x i8], ptr %i.ci, i64 %i.cu ; 2 uses
   %i.cw = load i64, ptr %i.cv, align 8, !tbaa !14
   %i.cx = and i64 %i.cw, %i.cr                    ; 2 uses
-  %i.cy = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv131
+  %i.cy = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv.next132
   store i64 %i.cx, ptr %i.cy, align 8, !tbaa !14
-  %i.cz = load i64, ptr %i.cf, align 8, !tbaa !14
-  %i.da = load i64, ptr %i.cv, align 8, !tbaa !14
-  %i.db = or i64 %i.da, %i.cd
-  %i.dc = and i64 %i.db, %i.cz
-  %i.dd = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %indvars.iv131
+  %i.cz = load i64, ptr %i.cv, align 8, !tbaa !14
+  %i.da = load i64, ptr %i.cf, align 8, !tbaa !14
+  %i.db = or i64 %i.cz, %60
+  %i.dc = and i64 %i.db, %i.da
+  %i.dd = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %indvars.iv.next132
   store i64 %i.dc, ptr %i.dd, align 8, !tbaa !14
   br label %bb.i
 
-bb.i:                                             ; preds = %._crit_edge.a, %_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit.thread
-  %i.de = phi i64 [ %.pre.a, %._crit_edge.a ], [ %i.cx, %_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit.thread ]
-  %i.df = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv131
-  %i.dg = or i64 %i.de, %i.cd
+._crit_edge.1:                                    ; preds = %56
+  %.phi.trans.insert.1 = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv.next132
+  %.pre.1 = load i64, ptr %.phi.trans.insert.1, align 8, !tbaa !14
+  br label %bb.i
+
+bb.i:                                             ; preds = %._crit_edge.1, %_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit.thread
+  %i.de = phi i64 [ %.pre.1, %._crit_edge.1 ], [ %i.cx, %_ZN9Stockfish10attacks_bbENS_9PieceTypeENS_6SquareEm.exit.thread ]
+  %i.df = getelementptr inbounds nuw [8 x i8], ptr %i.ao, i64 %indvars.iv.next132
+  %i.dg = or i64 %i.de, %60
   store i64 %i.dg, ptr %i.df, align 8, !tbaa !14
-  %indvars.iv.next132.a = add nuw nsw i64 %indvars.iv131, 1 ; 2 uses
+  %indvars.iv.next132.a = add nuw nsw i64 %indvars.iv131, 2 ; 2 uses
   %exitcond134.not = icmp eq i64 %indvars.iv.next132.a, 64
-  br i1 %exitcond134.not, label %bb.d, label %bb.h, !llvm.loop !39
+  br i1 %exitcond134.not, label %0, label %bb.h, !llvm.loop !39
 }
 
 ; Function Attrs: mustprogress nounwind uwtable

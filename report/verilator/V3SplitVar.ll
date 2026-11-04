@@ -205,9 +205,9 @@ bb.b:                                             ; preds = %._crit_edge212
   ret void
 
 bb.c:                                             ; preds = %bb.a, %._crit_edge212
+  %.083.ptr.sroa.idx = phi i8 [ 0, %bb.a ], [ 1, %._crit_edge212 ] ; 3 uses
   %.not = phi i1 [ false, %bb.a ], [ true, %._crit_edge212 ]
-  %.083.idx213.sroa.phi.sroa.speculated = phi i8 [ 0, %bb.a ], [ 1, %._crit_edge212 ] ; 3 uses
-  %i.f = trunc nuw i8 %.083.idx213.sroa.phi.sroa.speculated to i1
+  %i.f = trunc nuw i8 %.083.ptr.sroa.idx to i1
   %i.g = load i8, ptr %i.a, align 8, !tbaa !410, !range !137, !noundef !138
   %i.h = trunc nuw i8 %i.g to i1                  ; 2 uses
   br i1 %i.f, label %bb.d, label %bb.f
@@ -394,7 +394,7 @@ bb.p:                                             ; preds = %_ZNK17PackedVarRefE
   br label %bb.aq
 
 bb.q:                                             ; preds = %bb.l, %bb.n, %_ZN7AstNode4castI9AstVarRefS_EEPT_PT0_.exit.i97, %bb.k
-  %i.ce = call noundef ptr @_ZN21SplitPackedVarVisitor11extractBitsERK17PackedVarRefEntryRK11SplitNewVar7VAccess(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0142.0209, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.011.0.lcssa.i.i, i8 %.083.idx213.sroa.phi.sroa.speculated)
+  %i.ce = call noundef ptr @_ZN21SplitPackedVarVisitor11extractBitsERK17PackedVarRefEntryRK11SplitNewVar7VAccess(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0142.0209, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.011.0.lcssa.i.i, i8 %.083.ptr.sroa.idx)
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.o, %bb.q, %_ZNK17PackedVarRefEntry11backCResetpEv.exit
@@ -526,7 +526,7 @@ bb.y:                                             ; preds = %.thread160, %bb.w, 
   br label %bb.aq
 
 bb.z:                                             ; preds = %bb.s, %bb.t
-  %i.dq = call noundef ptr @_ZN21SplitPackedVarVisitor11extractBitsERK17PackedVarRefEntryRK11SplitNewVar7VAccess(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0142.0209, ptr noundef nonnull align 8 dereferenceable(16) %i.cy, i8 %.083.idx213.sroa.phi.sroa.speculated) ; 2 uses
+  %i.dq = call noundef ptr @_ZN21SplitPackedVarVisitor11extractBitsERK17PackedVarRefEntryRK11SplitNewVar7VAccess(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0142.0209, ptr noundef nonnull align 8 dereferenceable(16) %i.cy, i8 %.083.ptr.sroa.idx) ; 2 uses
   %i.dr = call noalias noundef nonnull dereferenceable(160) ptr @_Znwm(i64 noundef 160) #28 ; 16 uses
   %i.ds = load ptr, ptr %.sroa.0142.0209, align 8, !tbaa !425
   %i.dt = getelementptr inbounds nuw i8, ptr %i.ds, i64 88

@@ -205,10 +205,6 @@ bb.a:
   %i.e = alloca [64 x i64], align 16              ; 14 uses
   %i.f = alloca [64 x i64], align 16              ; 8 uses
   %i.g = alloca [2 x i64], align 16               ; 8 uses
-  %.sroa.0314 = alloca i32, align 4               ; 4 uses
-  %.sroa.4 = alloca i32, align 4                  ; 4 uses
-  %.sroa.0 = alloca i32, align 4                  ; 5 uses
-  %.sroa.5 = alloca i32, align 4                  ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #29
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #29
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 36 ; 2 uses
@@ -227,15 +223,9 @@ bb.a:
   %i.t = sext i32 %i.n to i64
   %i.u = getelementptr inbounds [4 x i8], ptr %.val68, i64 %i.t
   %i.v = load i32, ptr %i.u, align 4, !tbaa !19   ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0314)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
   %i.w = and i32 %i.v, 65535                      ; 7 uses
-  store i32 %i.w, ptr %.sroa.0314, align 4, !tbaa !19
   %i.x = lshr i32 %i.v, 16
   %i.y = and i32 %i.x, 16383                      ; 7 uses
-  store i32 %i.y, ptr %.sroa.4, align 4, !tbaa !19
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5)
   %i.z = lshr i32 %i.v, 30                        ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 1064
   %i.ab = lshr i64 %i.i, 24
@@ -638,22 +628,20 @@ Abc_TtDeriveBiDec.exit:                           ; preds = %Abc_TtVerifyBiDec.e
   br label %bb.w
 
 bb.w:                                             ; preds = %Abc_TtDeriveBiDec.exit, %bb.bh
+  %.sroa.0.0 = phi i32 [ undef, %Abc_TtDeriveBiDec.exit ], [ %spec.select, %bb.bh ]
+  %.sroa.5.0 = phi i32 [ undef, %Abc_TtDeriveBiDec.exit ], [ %spec.select245, %bb.bh ]
+  %.sroa.idx172 = phi i32 [ %i.w, %Abc_TtDeriveBiDec.exit ], [ %i.y, %bb.bh ]
+  %.sroa.idx = phi i1 [ false, %Abc_TtDeriveBiDec.exit ], [ true, %bb.bh ] ; 2 uses
   %8 = phi i1 [ true, %Abc_TtDeriveBiDec.exit ], [ false, %bb.bh ]
-  %indvars.iv169.sroa.phi = phi ptr [ %.sroa.0, %Abc_TtDeriveBiDec.exit ], [ %.sroa.5, %bb.bh ]
-  %indvars.iv169.sroa.phi312 = phi ptr [ %.sroa.0314, %Abc_TtDeriveBiDec.exit ], [ %.sroa.4, %bb.bh ]
   %indvars.iv169.sroa.phi315 = phi ptr [ %i.g, %Abc_TtDeriveBiDec.exit ], [ %indvars.iv169.sroa.gep316, %bb.bh ]
   store i32 0, ptr %i.ho, align 4, !tbaa !56
-  br i1 %.not81.i.i, label %.lr.ph, label %._crit_edge
+  br i1 %.not81.i.i, label %bb.x, label %._crit_edge
 
-.lr.ph:                                           ; preds = %bb.w
-  %9 = load i32, ptr %indvars.iv169.sroa.phi312, align 4, !tbaa !19
-  br label %bb.x
-
-bb.x:                                             ; preds = %.lr.ph, %bb.ah
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.ah ] ; 3 uses
+bb.x:                                             ; preds = %bb.w, %bb.ah
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ah ], [ 0, %bb.w ] ; 3 uses
   %i.hv = trunc nuw nsw i64 %indvars.iv to i32
   %i.hw = shl nuw i32 1, %i.hv
-  %i.hx = and i32 %9, %i.hw
+  %i.hx = and i32 %.sroa.idx172, %i.hw
   %.not66 = icmp eq i32 %i.hx, 0
   br i1 %.not66, label %bb.ah, label %bb.y
 
@@ -738,8 +726,9 @@ bb.ah:                                            ; preds = %bb.x, %Vec_IntPush.
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.w
   %.val74 = phi i32 [ %.val74.pre, %._crit_edge.loopexit ], [ 0, %bb.w ]
-  %i.it = call i32 @Kit_TruthToGia(ptr noundef %0, ptr noundef nonnull %indvars.iv169.sroa.phi315, i32 noundef %.val74, ptr noundef %5, ptr noundef nonnull %4, i32 noundef 0) #29 ; 2 uses
-  store i32 %i.it, ptr %indvars.iv169.sroa.phi, align 4, !tbaa !19
+  %i.it = call i32 @Kit_TruthToGia(ptr noundef %0, ptr noundef nonnull %indvars.iv169.sroa.phi315, i32 noundef %.val74, ptr noundef %5, ptr noundef nonnull %4, i32 noundef 0) #29 ; 3 uses
+  %spec.select = select i1 %.sroa.idx, i32 %.sroa.0.0, i32 %i.it ; 3 uses
+  %spec.select245 = select i1 %.sroa.idx, i32 %i.it, i32 %.sroa.5.0 ; 3 uses
   %.val73 = load i32, ptr %i.ho, align 4, !tbaa !56
   %i.iu = icmp eq i32 %.val73, 1
   br i1 %i.iu, label %bb.bh, label %bb.ai
@@ -1000,12 +989,8 @@ bb.bh:                                            ; preds = %._crit_edge, %Vec_I
   br i1 %8, label %bb.w, label %bb.bi, !llvm.loop !357
 
 bb.bi:                                            ; preds = %bb.bh
-  %.sroa.0.0..sroa.0.0. = load i32, ptr %.sroa.0, align 4, !tbaa !19 ; 2 uses
-  %i.lw = xor i32 %.sroa.0.0..sroa.0.0., %i.hj    ; 2 uses
-  store i32 %i.lw, ptr %.sroa.0, align 4, !tbaa !19
-  %.sroa.5.0..sroa.5.4. = load i32, ptr %.sroa.5, align 4, !tbaa !19 ; 2 uses
-  %i.lx = xor i32 %.sroa.5.0..sroa.5.4., %i.hj    ; 2 uses
-  store i32 %i.lx, ptr %.sroa.5, align 4, !tbaa !19
+  %i.lw = xor i32 %spec.select, %i.hj
+  %i.lx = xor i32 %spec.select245, %i.hj
   %i.ly = call fastcc i32 @Gia_ManAppendAnd(ptr noundef %0, i32 noundef %i.lw, i32 noundef %i.lx) ; 2 uses
   %i.lz = load i32, ptr %i.l, align 8, !tbaa !114
   %i.ma = ashr i32 %i.ly, 1                       ; 7 uses
@@ -1161,7 +1146,7 @@ Vec_IntPush.exit129:                              ; preds = %Vec_IntSetEntry.exi
   %i.np = sext i32 %i.nm to i64
   %i.nq = getelementptr inbounds [4 x i8], ptr %i.nn, i64 %i.np
   store i32 2, ptr %i.nq, align 4, !tbaa !19
-  %i.nr = ashr i32 %.sroa.0.0..sroa.0.0., 1
+  %i.nr = ashr i32 %spec.select, 1
   %i.ns = load i32, ptr %i.hr, align 4, !tbaa !56 ; 7 uses
   %i.nt = load i32, ptr %7, align 8, !tbaa !64
   %i.nu = icmp eq i32 %i.ns, %i.nt
@@ -1200,7 +1185,7 @@ Vec_IntPush.exit137:                              ; preds = %Vec_IntPush.exit129
   %i.oe = sext i32 %i.ob to i64
   %i.of = getelementptr inbounds [4 x i8], ptr %i.oc, i64 %i.oe
   store i32 %i.nr, ptr %i.of, align 4, !tbaa !19
-  %i.og = ashr i32 %.sroa.5.0..sroa.5.4., 1
+  %i.og = ashr i32 %spec.select245, 1
   %i.oh = load i32, ptr %i.hr, align 4, !tbaa !56 ; 7 uses
   %i.oi = load i32, ptr %7, align 8, !tbaa !64
   %i.oj = icmp eq i32 %i.oh, %i.oi
@@ -1285,10 +1270,6 @@ Vec_IntPush.exit153:                              ; preds = %Vec_IntPush.exit145
   %i.po = xor i32 %i.pn, %i.z
   %i.pp = and i32 %i.po, 1
   %i.pq = xor i32 %i.pp, %i.ly
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0314)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #29
   ret i32 %i.pq

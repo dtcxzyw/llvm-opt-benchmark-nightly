@@ -204,8 +204,6 @@ declare ptr @Gia_ManDup(ptr noundef) local_unnamed_addr #7
 ; Function Attrs: nounwind uwtable
 define range(i32 -1073741824, 1073741824) i32 @Gia_ManEquivSetColors(ptr noundef %0, i32 noundef %1) local_unnamed_addr #6 {
 bb.a:
-  %2 = alloca [2 x i32], align 4                  ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #32
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 192 ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !57   ; 2 uses
   %i.c = load i32, ptr %i.b, align 4
@@ -270,10 +268,7 @@ bb.a:
 .critedge:                                        ; preds = %.lr.ph, %.lr.ph.preheader, %..critedge.loopexit_crit_edge, %bb.a
   %.val.i81 = phi ptr [ %.val4257, %bb.a ], [ %.val4257, %.lr.ph.preheader ], [ %.val42, %..critedge.loopexit_crit_edge ], [ %.val42, %.lr.ph ]
   %.val3763 = phi i32 [ %.val4156, %bb.a ], [ %.val4156, %.lr.ph.preheader ], [ %.val41, %..critedge.loopexit_crit_edge ], [ %.val41, %.lr.ph ]
-  %.lcssa = phi i32 [ %i.l, %bb.a ], [ %i.l, %.lr.ph.preheader ], [ %i.aa, %..critedge.loopexit_crit_edge ], [ %i.aa, %.lr.ph ] ; 4 uses
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
-  store i32 %.lcssa, ptr %3, align 4, !tbaa !45
-  store i32 %.lcssa, ptr %2, align 4, !tbaa !45
+  %.lcssa = phi i32 [ %i.l, %bb.a ], [ %i.l, %.lr.ph.preheader ], [ %i.aa, %..critedge.loopexit_crit_edge ], [ %i.aa, %.lr.ph ] ; 6 uses
   %i.ad = getelementptr i8, ptr %0, i64 72        ; 2 uses
   %.val3864 = load ptr, ptr %i.ad, align 8, !tbaa !56 ; 2 uses
   %i.ae = getelementptr i8, ptr %.val3864, i64 4
@@ -295,6 +290,8 @@ bb.a:
   %.val3598 = phi ptr [ %.val35, %.lr.ph69 ], [ %.val3594, %.lr.ph69.preheader ]
   %.val386797 = phi ptr [ %.val38, %.lr.ph69 ], [ %.val3864, %.lr.ph69.preheader ]
   %indvars.iv7496 = phi i64 [ %indvars.iv.next75, %.lr.ph69 ], [ 0, %.lr.ph69.preheader ] ; 4 uses
+  %.sroa.5.099 = phi i32 [ %spec.select85, %.lr.ph69 ], [ %.lcssa, %.lr.ph69.preheader ] ; 2 uses
+  %.sroa.0.098 = phi i32 [ %spec.select, %.lr.ph69 ], [ %.lcssa, %.lr.ph69.preheader ] ; 2 uses
   %i.ag = getelementptr i8, ptr %.val386797, i64 8
   %.val36.val = load ptr, ptr %i.ag, align 8, !tbaa !24
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %.val36.val, i64 %indvars.iv7496
@@ -309,10 +306,11 @@ bb.a:
   %i.aq = and i32 %i.ap, 1
   %i.ar = tail call i32 @Gia_ManEquivSetColor_rec(ptr noundef nonnull %0, ptr noundef nonnull %i.ao, i32 noundef %i.aq)
   %i.as = and i64 %indvars.iv7496, 1
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.as ; 2 uses
-  %5 = load i32, ptr %4, align 4, !tbaa !45
-  %i.at = add nsw i32 %5, %i.ar
-  store i32 %i.at, ptr %4, align 4, !tbaa !45
+  %.sroa.idx.not = icmp eq i64 %i.as, 0           ; 3 uses
+  %.sroa.speculated = select i1 %.sroa.idx.not, i32 %.sroa.0.098, i32 %.sroa.5.099
+  %i.at = add nsw i32 %.sroa.speculated, %i.ar    ; 2 uses
+  %spec.select = select i1 %.sroa.idx.not, i32 %i.at, i32 %.sroa.0.098 ; 3 uses
+  %spec.select85 = select i1 %.sroa.idx.not, i32 %.sroa.5.099, i32 %i.at ; 3 uses
   %indvars.iv.next75 = add nuw nsw i64 %indvars.iv7496, 1 ; 2 uses
   %.val37 = load i32, ptr %i.i, align 8, !tbaa !63
   %.val38 = load ptr, ptr %i.ad, align 8, !tbaa !56 ; 2 uses
@@ -327,17 +325,17 @@ bb.a:
   br label %.critedge2.loopexit, !llvm.loop !132
 
 .critedge2.loopexit:                              ; preds = %.lr.ph69, %..critedge2.loopexit_crit_edge, %.lr.ph69.preheader
-  %.val38.val.lcssa.ph.a = phi i32 [ %.val38.val65, %.lr.ph69.preheader ], [ %.val38.val, %..critedge2.loopexit_crit_edge ], [ %.val38.val, %.lr.ph69 ]
+  %.val38.val.lcssa.ph.a = phi i32 [ %.lcssa, %.lr.ph69.preheader ], [ %spec.select, %..critedge2.loopexit_crit_edge ], [ %spec.select, %.lr.ph69 ]
+  %.sroa.5.2 = phi i32 [ %.lcssa, %.lr.ph69.preheader ], [ %spec.select85, %..critedge2.loopexit_crit_edge ], [ %spec.select85, %.lr.ph69 ]
+  %.val38.val.lcssa.ph = phi i32 [ %.val38.val65, %.lr.ph69.preheader ], [ %.val38.val, %..critedge2.loopexit_crit_edge ], [ %.val38.val, %.lr.ph69 ]
   %.val.i.pre = load ptr, ptr %i.j, align 8, !tbaa !55
-  %.pre = load i32, ptr %2, align 4, !tbaa !45
-  %.pre83 = load i32, ptr %3, align 4, !tbaa !45
   br label %.critedge2
 
 .critedge2:                                       ; preds = %.critedge2.loopexit, %.critedge
-  %6 = phi i32 [ %.lcssa, %.critedge ], [ %.pre83, %.critedge2.loopexit ] ; 3 uses
-  %i.ay = phi i32 [ %.lcssa, %.critedge ], [ %.pre, %.critedge2.loopexit ] ; 2 uses
-  %.val.i = phi ptr [ %.val.i81, %.critedge ], [ %.val.i.pre, %.critedge2.loopexit ]
-  %.val38.val.lcssa = phi i32 [ %.val38.val65, %.critedge ], [ %.val38.val.lcssa.ph.a, %.critedge2.loopexit ]
+  %.val.i = phi ptr [ %.val.i.pre, %.critedge2.loopexit ], [ %.val.i81, %.critedge ]
+  %i.ay = phi i32 [ %.val38.val.lcssa.ph.a, %.critedge2.loopexit ], [ %.lcssa, %.critedge ] ; 2 uses
+  %.sroa.5.1 = phi i32 [ %.sroa.5.2, %.critedge2.loopexit ], [ %.lcssa, %.critedge ] ; 3 uses
+  %.val38.val.lcssa = phi i32 [ %.val38.val.lcssa.ph, %.critedge2.loopexit ], [ %.val38.val65, %.critedge ]
   %i.az = getelementptr i8, ptr %.val.i, i64 4
   %.val.val.i = load i32, ptr %i.az, align 4, !tbaa !44 ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -347,19 +345,18 @@ bb.a:
   %i.be = add i32 %i.bb, %.val.val.i
   %i.bf = add i32 %i.be, %i.bd                    ; 3 uses
   %i.bg = sub nsw i32 %i.bf, %i.ay                ; 3 uses
-  %i.bh = sub nsw i32 %i.bf, %6                   ; 2 uses
+  %i.bh = sub nsw i32 %i.bf, %.sroa.5.1           ; 2 uses
   %.not32 = icmp eq i32 %1, 0
   br i1 %.not32, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %.critedge2
-  %i.bi = sub i32 %6, %i.bg
-  tail call void (i32, ptr, ...) @Abc_Print(i32 noundef 1, ptr noundef nonnull @.str.12, i32 noundef %i.bf, i32 noundef %i.ay, i32 noundef %6, i32 noundef %i.bg, i32 noundef %i.bh, i32 noundef %i.bi)
+  %i.bi = sub i32 %.sroa.5.1, %i.bg
+  tail call void (i32, ptr, ...) @Abc_Print(i32 noundef 1, ptr noundef nonnull @.str.12, i32 noundef %i.bf, i32 noundef %i.ay, i32 noundef %.sroa.5.1, i32 noundef %i.bg, i32 noundef %i.bh, i32 noundef %i.bi)
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %.critedge2
   %i.bj = add nsw i32 %i.bg, %i.bh
   %i.bk = sdiv i32 %i.bj, 2
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #32
   ret i32 %i.bk
 }
 

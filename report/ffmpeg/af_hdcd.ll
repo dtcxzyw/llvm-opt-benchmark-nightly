@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 22
 inline.NumDeleted: 10
 loop-unroll.NumCompletelyUnrolled: 6
-loop-unroll.NumRuntimeUnrolled: 9
-loop-unroll.NumUnrolled: 15
+loop-unroll.NumRuntimeUnrolled: 10
+loop-unroll.NumUnrolled: 16
 begin_hunk_0_@hdcd_detect_onech:bb.a
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.y = load i32, ptr %i.x, align 4, !tbaa !66
@@ -205,8 +205,7 @@ declare void @abort() local_unnamed_addr #5
 ; Function Attrs: nounwind uwtable
 define internal fastcc i32 @hdcd_scan(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef captures(none) %1, i32 noundef range(i32 1, 3) %2, ptr nofree noundef readonly captures(none) %3, i32 noundef range(i32 0, -2147483648) %4) unnamed_addr #1 {
 bb.a:
-  %5 = alloca [2 x i32], align 8                  ; 7 uses
-  %wide.trip.count = zext nneg i32 %2 to i64
+  %wide.trip.count = zext nneg i32 %2 to i64      ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %i.b = load i32, ptr %i.a, align 4, !tbaa !62   ; 4 uses
   %.not68 = icmp eq i32 %i.b, 0                   ; 2 uses
@@ -221,11 +220,13 @@ bb.a:
 .lr.ph:                                           ; preds = %.preheader77
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 320 ; 2 uses
+  %5 = shl nuw nsw i64 %wide.trip.count, 2        ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 8
   %exitcond.not.i = icmp eq i32 %2, 1
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 144
+  %exitcond153.not.i = icmp eq i32 %2, 1
   %exitcond153.not.i.a = icmp eq i32 %2, 1
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 4 ; 2 uses
+  %exitcond153.not.i.epil = icmp eq i32 %2, 1
   br label %bb.j
 
 bb.b:                                             ; preds = %bb.a
@@ -271,9 +272,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
 
 bb.j:                                             ; preds = %.lr.ph, %bb.an
   %.05584 = phi i32 [ 0, %.lr.ph ], [ %i.dj, %bb.an ] ; 2 uses
-  %.06183 = phi ptr [ %3, %.lr.ph ], [ %i.ea, %bb.an ] ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #10
-  store i64 0, ptr %5, align 8
+  %.06183 = phi ptr [ %3, %.lr.ph ], [ %i.ea, %bb.an ] ; 3 uses
   %i.n = sub nsw i32 %.260.lcssa, %.05584
   %i.o = load i8, ptr %i.f, align 8, !tbaa !68
   %i.p = zext i8 %i.o to i32
@@ -281,14 +280,18 @@ bb.j:                                             ; preds = %.lr.ph, %bb.an
   br i1 %exitcond.not.i, label %.preheader137.i, label %bb.k
 
 .preheader137.i:                                  ; preds = %bb.k, %bb.j
-  %.0121..i.lcssa = phi i32 [ %.0121..i, %bb.j ], [ %.0121..i.1, %bb.k ] ; 6 uses
+  %.0121..i.lcssa = phi i32 [ %.0121..i, %bb.j ], [ %.0121..i.1, %bb.k ] ; 11 uses
   %i.q = icmp sgt i32 %.0121..i.lcssa, 0
   br i1 %i.q, label %.preheader136.i.preheader, label %.preheader.i
 
 .preheader136.i.preheader:                        ; preds = %.preheader137.i
-  %.promoted = load i32, ptr %5, align 8, !tbaa !39
-  %.promoted12 = load i32, ptr %6, align 4
-  br label %.preheader136.i.a
+  %xtraiter = and i32 %.0121..i.lcssa, 1
+  %6 = icmp eq i32 %.0121..i.lcssa, 1
+  br i1 %6, label %.preheader136.i.a, label %.preheader136.i.preheader.new
+
+.preheader136.i.preheader.new:                    ; preds = %.preheader136.i.preheader
+  %unroll_iter = and i32 %.0121..i.lcssa, 2147483646
+  br label %.preheader136.i
 
 bb.k:                                             ; preds = %bb.j
   %i.r = load i8, ptr %i.g, align 8, !tbaa !68
@@ -296,39 +299,84 @@ bb.k:                                             ; preds = %bb.j
   %.0121..i.1 = tail call i32 @llvm.smin.i32(i32 %.0121..i, i32 %i.s)
   br label %.preheader137.i
 
-.preheader136.i.a:                                ; preds = %.preheader136.i.preheader, %bb.m
-  %i.t = phi i32 [ %i.ag, %bb.m ], [ %.promoted12, %.preheader136.i.preheader ] ; 2 uses
-  %i.u = phi i32 [ %i.y, %bb.m ], [ %.promoted, %.preheader136.i.preheader ]
-  %.0119144.in.i.a = phi i32 [ %.0119144.i, %bb.m ], [ %.0121..i.lcssa, %.preheader136.i.preheader ] ; 2 uses
-  %.0123143.i.a = phi ptr [ %.lcssa, %bb.m ], [ %.06183, %.preheader136.i.preheader ] ; 3 uses
-  %.0119144.i = add nsw i32 %.0119144.in.i.a, -1  ; 3 uses
-  %7 = getelementptr inbounds nuw i8, ptr %.0123143.i.a, i64 4 ; 2 uses
+.preheader136.i:                                  ; preds = %bb.m, %.preheader136.i.preheader.new
+  %.sroa.0.0.i = phi i32 [ 0, %.preheader136.i.preheader.new ], [ %24, %bb.m ]
+  %.sroa.5.0.i = phi i32 [ 0, %.preheader136.i.preheader.new ], [ %i.ag, %bb.m ] ; 2 uses
+  %.0119144.in.i = phi i32 [ %.0121..i.lcssa, %.preheader136.i.preheader.new ], [ %.0119144.i.1, %bb.m ] ; 2 uses
+  %.0123143.i = phi ptr [ %.06183, %.preheader136.i.preheader.new ], [ %scevgep.1, %bb.m ] ; 3 uses
+  %niter = phi i32 [ 0, %.preheader136.i.preheader.new ], [ %niter.next.1, %bb.m ]
+  %.0119144.i = add nsw i32 %.0119144.in.i, -1    ; 2 uses
+  %7 = load i32, ptr %.0123143.i, align 4, !tbaa !39
+  %8 = and i32 %7, 1
+  %9 = shl nuw i32 %8, %.0119144.i
+  %10 = or i32 %9, %.sroa.0.0.i
+  br i1 %exitcond153.not.i, label %.preheader136.i.1, label %.cont.i.1
+
+.preheader.i.loopexit.unr-lcssa:                  ; preds = %bb.m
+  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
+  br i1 %lcmp.mod.not, label %.preheader.i, label %.preheader136.i.a
+
+.preheader136.i.a:                                ; preds = %.preheader.i.loopexit.unr-lcssa, %.preheader136.i.preheader
+  %i.t = phi i32 [ 0, %.preheader136.i.preheader ], [ %24, %.preheader.i.loopexit.unr-lcssa ]
+  %i.u = phi i32 [ 0, %.preheader136.i.preheader ], [ %i.ag, %.preheader.i.loopexit.unr-lcssa ] ; 2 uses
+  %.0119144.in.i.a = phi i32 [ %.0121..i.lcssa, %.preheader136.i.preheader ], [ %.0119144.i.1, %.preheader.i.loopexit.unr-lcssa ]
+  %.0123143.i.a = phi ptr [ %.06183, %.preheader136.i.preheader ], [ %scevgep.1, %.preheader.i.loopexit.unr-lcssa ] ; 2 uses
+  %lcmp.mod9 = trunc i32 %.0121..i.lcssa to i1
+  tail call void @llvm.assume(i1 %lcmp.mod9)
+  %.0119144.i.epil = add nsw i32 %.0119144.in.i.a, -1 ; 2 uses
   %i.v = load i32, ptr %.0123143.i.a, align 4, !tbaa !39
   %i.w = and i32 %i.v, 1
-  %i.x = shl nuw i32 %i.w, %.0119144.i
-  %i.y = or i32 %i.x, %i.u                        ; 2 uses
-  store i32 %i.y, ptr %5, align 8, !tbaa !39
-  br i1 %exitcond153.not.i.a, label %bb.m, label %bb.l
+  %i.x = shl nuw i32 %i.w, %.0119144.i.epil
+  %i.y = or i32 %i.x, %i.t                        ; 2 uses
+  br i1 %exitcond153.not.i.epil, label %.preheader.i, label %.cont.i.1.epil
 
-.preheader.i:                                     ; preds = %bb.m, %.preheader137.i
+.cont.i.1.epil:                                   ; preds = %.preheader136.i.a
+  %11 = getelementptr inbounds nuw i8, ptr %.0123143.i.a, i64 4
+  %12 = load i32, ptr %11, align 4, !tbaa !39
+  %13 = and i32 %12, 1
+  %14 = shl nuw i32 %13, %.0119144.i.epil
+  %15 = or i32 %14, %i.u
+  br label %.preheader.i
+
+.preheader.i:                                     ; preds = %.preheader.i.loopexit.unr-lcssa, %.cont.i.1.epil, %.preheader136.i.a, %.preheader137.i
+  %.sroa.0.1.i = phi i32 [ 0, %.preheader137.i ], [ %24, %.preheader.i.loopexit.unr-lcssa ], [ %i.y, %.cont.i.1.epil ], [ %i.y, %.preheader136.i.a ]
+  %.sroa.5.1.i = phi i32 [ 0, %.preheader137.i ], [ %i.ag, %.preheader.i.loopexit.unr-lcssa ], [ %i.u, %.preheader136.i.a ], [ %15, %.cont.i.1.epil ]
   %i.z = zext nneg i32 %.0121..i.lcssa to i64
   %i.aa = trunc i32 %.0121..i.lcssa to i8         ; 2 uses
   br label %bb.n
 
-bb.l:                                             ; preds = %.preheader136.i.a
-  %i.ab = getelementptr inbounds nuw i8, ptr %.0123143.i.a, i64 8
-  %i.ac = load i32, ptr %7, align 4, !tbaa !39
+.cont.i.1:                                        ; preds = %.preheader136.i
+  %16 = getelementptr inbounds nuw i8, ptr %.0123143.i, i64 4
+  %17 = load i32, ptr %16, align 4, !tbaa !39
+  %18 = and i32 %17, 1
+  %19 = shl nuw i32 %18, %.0119144.i
+  %20 = or i32 %19, %.sroa.5.0.i
+  br label %.preheader136.i.1
+
+.preheader136.i.1:                                ; preds = %.cont.i.1, %.preheader136.i
+  %spec.select169.i.lcssa = phi i32 [ %.sroa.5.0.i, %.preheader136.i ], [ %20, %.cont.i.1 ] ; 2 uses
+  %scevgep = getelementptr i8, ptr %.0123143.i, i64 %5 ; 3 uses
+  %.0119144.i.1 = add nsw i32 %.0119144.in.i, -2  ; 4 uses
+  %21 = load i32, ptr %scevgep, align 4, !tbaa !39
+  %22 = and i32 %21, 1
+  %23 = shl nuw i32 %22, %.0119144.i.1
+  %24 = or i32 %23, %10                           ; 3 uses
+  br i1 %exitcond153.not.i.a, label %bb.m, label %bb.l
+
+bb.l:                                             ; preds = %.preheader136.i.1
+  %i.ab = getelementptr inbounds nuw i8, ptr %scevgep, i64 4
+  %i.ac = load i32, ptr %i.ab, align 4, !tbaa !39
   %i.ad = and i32 %i.ac, 1
-  %i.ae = shl nuw i32 %i.ad, %.0119144.i
-  %i.af = or i32 %i.ae, %i.t                      ; 2 uses
-  store i32 %i.af, ptr %6, align 4, !tbaa !39
+  %i.ae = shl nuw i32 %i.ad, %.0119144.i.1
+  %i.af = or i32 %i.ae, %spec.select169.i.lcssa
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.l, %.preheader136.i.a
-  %i.ag = phi i32 [ %i.t, %.preheader136.i.a ], [ %i.af, %bb.l ]
-  %.lcssa = phi ptr [ %7, %.preheader136.i.a ], [ %i.ab, %bb.l ]
-  %8 = icmp samesign ugt i32 %.0119144.in.i.a, 1
-  br i1 %8, label %.preheader136.i.a, label %.preheader.i, !llvm.loop !120
+bb.m:                                             ; preds = %bb.l, %.preheader136.i.1
+  %i.ag = phi i32 [ %spec.select169.i.lcssa, %.preheader136.i.1 ], [ %i.af, %bb.l ] ; 3 uses
+  %scevgep.1 = getelementptr i8, ptr %scevgep, i64 %5 ; 2 uses
+  %niter.next.1 = add nuw nsw i32 %niter, 2       ; 2 uses
+  %niter.ncmp.1.not = icmp eq i32 %niter.next.1, %unroll_iter
+  br i1 %niter.ncmp.1.not, label %.preheader.i.loopexit.unr-lcssa, label %.preheader136.i, !llvm.loop !120
 
 bb.n:                                             ; preds = %bb.ah, %.preheader.i
   %.072 = phi i32 [ 0, %.preheader.i ], [ %.173, %bb.ah ] ; 6 uses
@@ -336,9 +384,9 @@ bb.n:                                             ; preds = %bb.ah, %.preheader.
   %i.ah = getelementptr inbounds nuw [136 x i8], ptr %1, i64 %indvars.iv154.i ; 13 uses
   %i.ai = load i64, ptr %i.ah, align 8, !tbaa !67
   %i.aj = shl i64 %i.ai, %i.z
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %5, i64 %indvars.iv154.i
-  %10 = load i32, ptr %9, align 4, !tbaa !39
-  %i.ak = zext i32 %10 to i64
+  %.sroa.idx.i = icmp eq i64 %indvars.iv154.i, 1
+  %.sroa.speculated165.i = select i1 %.sroa.idx.i, i32 %.sroa.5.1.i, i32 %.sroa.0.1.i
+  %i.ak = zext i32 %.sroa.speculated165.i to i64
   %i.al = or i64 %i.aj, %i.ak                     ; 4 uses
   store i64 %i.al, ptr %i.ah, align 8, !tbaa !67
   %i.am = getelementptr inbounds nuw i8, ptr %i.ah, i64 8 ; 5 uses
@@ -514,7 +562,6 @@ bb.ah:                                            ; preds = %bb.ag, %bb.af, %bb.
   br i1 %exitcond158.not.i, label %hdcd_integrate.exit, label %bb.n, !llvm.loop !121
 
 hdcd_integrate.exit:                              ; preds = %bb.ah
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #10
   %i.dj = add nsw i32 %.0121..i.lcssa, %.05584    ; 6 uses
   %.not = icmp eq i32 %.173, 0
   br i1 %.not, label %bb.an, label %.preheader

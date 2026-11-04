@@ -204,14 +204,12 @@ bb.a:
 ; Function Attrs: nounwind sspstrong uwtable
 define internal fastcc noundef zeroext i1 @do_simd_permute(ptr noundef %0, ptr nofree noundef nonnull readonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, i32 noundef range(i32 0, 2) %3) unnamed_addr #0 {
 bb.a:
-  %4 = alloca [2 x ptr], align 16                 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = load i32, ptr %i.a, align 4              ; 5 uses
   %i.c = load i32, ptr %1, align 4
   %.not = icmp ne i32 %i.c, 0                     ; 2 uses
   %i.d = select i1 %.not, i32 16, i32 8
   %i.e = lshr i32 %i.d, %i.b                      ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #14
   %i.f = icmp ne i32 %i.b, 3
   %brmerge = select i1 %i.f, i1 true, i1 %.not    ; 2 uses
   br i1 %brmerge, label %bb.b, label %fp_access_check.exit
@@ -255,8 +253,7 @@ bb.g:                                             ; preds = %bb.f
   br label %fp_access_check.exit
 
 bb.h:                                             ; preds = %bb.f, %bb.e
-  %i.q = tail call ptr @tcg_temp_new_i64() #14
-  store ptr %i.q, ptr %4, align 16
+  %i.q = tail call ptr @tcg_temp_new_i64() #14    ; 2 uses
   %i.r = load i32, ptr %1, align 4
   %.not51 = icmp eq i32 %i.r, 0
   br i1 %.not51, label %bb.j, label %bb.i
@@ -266,9 +263,7 @@ bb.i:                                             ; preds = %bb.h
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.h, %bb.i
-  %i.t = phi ptr [ %i.s, %bb.i ], [ null, %bb.h ]
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store ptr %i.t, ptr %5, align 8
+  %i.t = phi ptr [ %i.s, %bb.i ], [ null, %bb.h ] ; 2 uses
   %i.u = tail call ptr @tcg_temp_new_i64() #14    ; 3 uses
   %.not60 = icmp eq i32 %i.e, 0
   br i1 %.not60, label %._crit_edge, label %.lr.ph
@@ -300,20 +295,19 @@ bb.k:                                             ; preds = %.lr.ph, %bb.n
   %i.af = and i32 %i.ac, %i.v
   tail call fastcc void @read_vec_element(ptr noundef %i.u, i32 noundef %i.ae, i32 noundef %i.af, i32 noundef %i.b)
   %i.ag = shl i32 %.04655, %i.w                   ; 2 uses
-  %6 = sdiv i32 %i.ag, 64
   %i.ah = srem i32 %i.ag, 64                      ; 2 uses
   %i.ai = icmp eq i32 %i.ah, 0
-  %7 = sext i32 %6 to i64
-  %8 = getelementptr inbounds [8 x i8], ptr %4, i64 %7
-  %9 = load ptr, ptr %8, align 8                  ; 3 uses
+  %4 = and i32 %i.ag, -64
+  %.sroa.idx66 = icmp eq i32 %4, 64
+  %.sroa.speculated = select i1 %.sroa.idx66, ptr %i.t, ptr %i.q ; 3 uses
   br i1 %i.ai, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  tail call void @tcg_gen_mov_i64(ptr noundef %9, ptr noundef %i.u) #14
+  tail call void @tcg_gen_mov_i64(ptr noundef %.sroa.speculated, ptr noundef %i.u) #14
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.k
-  tail call void @tcg_gen_deposit_i64(ptr noundef %9, ptr noundef %9, ptr noundef %i.u, i32 noundef %i.ah, i32 noundef %i.x) #14
+  tail call void @tcg_gen_deposit_i64(ptr noundef %.sroa.speculated, ptr noundef %.sroa.speculated, ptr noundef %i.u, i32 noundef %i.ah, i32 noundef %i.x) #14
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.l
@@ -340,8 +334,8 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 
 bb.o:                                             ; preds = %.lr.ph58, %bb.o
   %indvars.iv = phi i64 [ %i.ab, %.lr.ph58 ], [ %indvars.iv.next, %bb.o ] ; 4 uses
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv
-  %11 = load ptr, ptr %10, align 8
+  %.sroa.idx = icmp eq i64 %indvars.iv, 1
+  %.sroa.speculated75 = select i1 %.sroa.idx, ptr %i.t, ptr %i.q
   %i.ar = load i32, ptr %i.aa, align 4
   %i.as = shl i32 %i.ar, 8
   %indvars.iv.tr = trunc i64 %indvars.iv to i32
@@ -350,13 +344,12 @@ bb.o:                                             ; preds = %.lr.ph58, %bb.o
   %i.av = add i32 %i.au, %i.as
   %i.aw = load ptr, ptr @tcg_env, align 8
   %i.ax = sext i32 %i.av to i64
-  tail call void @tcg_gen_st_i64(ptr noundef %11, ptr noundef %i.aw, i64 noundef %i.ax) #14
+  tail call void @tcg_gen_st_i64(ptr noundef %.sroa.speculated75, ptr noundef %i.aw, i64 noundef %i.ax) #14
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
   %.not66 = icmp eq i64 %indvars.iv, 0
   br i1 %.not66, label %._crit_edge59.loopexit, label %bb.o, !llvm.loop !55
 
 fp_access_check.exit:                             ; preds = %bb.a, %bb.g, %fp_access_check_only.exit.i, %._crit_edge59
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
   ret i1 %brmerge
 }
 

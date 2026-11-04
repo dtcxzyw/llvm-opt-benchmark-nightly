@@ -205,17 +205,14 @@ middle.block:                                     ; preds = %vector.body
 define internal fastcc { ptr, i32 } @_ZL42lowerVECTOR_SHUFFLEAsLanePermuteAndShuffleRKN4llvm5SDLocENS_8ArrayRefIiEENS_3MVTENS_7SDValueES6_RNS_12SelectionDAGE(ptr noundef nonnull align 8 dereferenceable(12) %0, ptr nofree readonly captures(none) %1, i64 %2, i16 %3, ptr %4, i32 %5, ptr noundef nonnull align 8 dereferenceable(920) %6) unnamed_addr #1 {
 bb.a:
   %7 = alloca %"class.llvm::SDLoc", align 8       ; 4 uses
-  %8 = alloca [2 x i8], align 2                   ; 6 uses
-  %9 = alloca %"class.llvm::SmallVector.670", align 8 ; 11 uses
-  %10 = alloca %"class.llvm::SDValue", align 8    ; 3 uses
-  %11 = alloca %"class.llvm::ArrayRef.192", align 8 ; 3 uses
+  %8 = alloca %"class.llvm::SmallVector.670", align 8 ; 11 uses
+  %9 = alloca %"class.llvm::SDValue", align 8     ; 3 uses
+  %10 = alloca %"class.llvm::ArrayRef.192", align 8 ; 3 uses
   %i.a = alloca [4 x i32], align 16               ; 4 uses
-  %12 = alloca %"class.llvm::SDValue", align 8    ; 3 uses
-  %13 = alloca %"class.llvm::ArrayRef.192", align 8 ; 3 uses
+  %11 = alloca %"class.llvm::SDValue", align 8    ; 3 uses
+  %12 = alloca %"class.llvm::ArrayRef.192", align 8 ; 3 uses
   %i.b = trunc i64 %2 to i32                      ; 7 uses
   %i.c = sdiv i32 %i.b, 2                         ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %8) #28
-  store i16 0, ptr %8, align 2
   %i.d = icmp sgt i32 %i.b, 0
   br i1 %i.d, label %.lr.ph.preheader, label %._crit_edge.thread
 
@@ -224,15 +221,14 @@ bb.a:
   br label %.lr.ph
 
 ._crit_edge:                                      ; preds = %bb.d
-  %.pre = load i8, ptr %8, align 2, !tbaa !636, !range !40
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %8, i64 1
-  %.pre26 = load i8, ptr %.phi.trans.insert, align 1, !range !40
-  %i.e = trunc nuw i8 %.pre to i1
-  %i.f = trunc nuw i8 %.pre26 to i1
+  %i.e = trunc nuw i8 %.sroa.0.2 to i1
+  %i.f = trunc nuw i8 %.sroa.5.2 to i1
   %i.g = select i1 %i.e, i1 true, i1 %i.f
   br i1 %i.g, label %bb.e, label %._crit_edge.thread
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
+  %.sroa.0.1 = phi i8 [ 0, %.lr.ph.preheader ], [ %.sroa.0.2, %bb.d ] ; 3 uses
+  %.sroa.5.1 = phi i8 [ 0, %.lr.ph.preheader ], [ %.sroa.5.2, %bb.d ] ; 3 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.d ] ; 3 uses
   %i.h = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv
   %i.i = load i32, ptr %i.h, align 4, !tbaa !160  ; 2 uses
@@ -248,22 +244,24 @@ bb.b:                                             ; preds = %.lr.ph
   br i1 %.not85, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %14 = zext nneg i32 %i.l to i64
-  %15 = getelementptr inbounds nuw i8, ptr %8, i64 %14
-  store i8 1, ptr %15, align 1, !tbaa !636
+  %.sroa.idx = icmp eq i32 %i.l, 1                ; 2 uses
+  %spec.select = select i1 %.sroa.idx, i8 %.sroa.0.1, i8 1
+  %spec.select36 = select i1 %.sroa.idx, i8 1, i8 %.sroa.5.1
   br label %bb.d
 
-bb.d:                                             ; preds = %.lr.ph, %bb.b, %bb.c
+bb.d:                                             ; preds = %bb.c, %.lr.ph, %bb.b
+  %.sroa.0.2 = phi i8 [ %.sroa.0.1, %bb.b ], [ %.sroa.0.1, %.lr.ph ], [ %spec.select, %bb.c ] ; 2 uses
+  %.sroa.5.2 = phi i8 [ %.sroa.5.1, %bb.b ], [ %.sroa.5.1, %.lr.ph ], [ %spec.select36, %bb.c ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !1720
 
 bb.e:                                             ; preds = %._crit_edge
-  call void @llvm.lifetime.start.p0(ptr nonnull %9) #28
-  %i.o = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 3 uses
-  store ptr %i.o, ptr %9, align 8, !tbaa !34
-  %i.p = getelementptr inbounds nuw i8, ptr %9, i64 8 ; 6 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %9, i64 12
+  call void @llvm.lifetime.start.p0(ptr nonnull %8) #28
+  %i.o = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 3 uses
+  store ptr %i.o, ptr %8, align 8, !tbaa !34
+  %i.p = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 6 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %8, i64 12
   store i32 12, ptr %i.q, align 4, !tbaa !545
   store i32 0, ptr %i.p, align 8, !tbaa !544
   %.idx = shl nuw nsw i64 %2, 2
@@ -271,7 +269,7 @@ bb.e:                                             ; preds = %._crit_edge
   br i1 %i.r, label %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.thread, label %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i
 
 _ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.thread: ; preds = %bb.e
-  call void @_ZN4llvm15SmallVectorBaseIjE8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(16) %9, ptr noundef nonnull %i.o, i64 noundef %2, i64 noundef 4) #28
+  call void @_ZN4llvm15SmallVectorBaseIjE8grow_podEPvmm(ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull %i.o, i64 noundef %2, i64 noundef 4) #28
   %.pre8.pre.i.i = load i32, ptr %i.p, align 8, !tbaa !544
   %i.s = zext i32 %.pre8.pre.i.i to i64
   br label %_ZN4llvm15SmallVectorImplIiE6assignIPKivEEvT_S5_.exit
@@ -286,13 +284,13 @@ _ZN4llvm15SmallVectorImplIiE6assignIPKivEEvT_S5_.exit.thread: ; preds = %_ZN4llv
 
 _ZN4llvm15SmallVectorImplIiE6assignIPKivEEvT_S5_.exit: ; preds = %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i, %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.thread
   %.pre8.i.i36 = phi i64 [ %i.s, %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i.thread ], [ 0, %_ZN4llvm15SmallVectorImplIiE7reserveEm.exit.i.i ]
-  %i.t = load ptr, ptr %9, align 8, !tbaa !34
+  %i.t = load ptr, ptr %8, align 8, !tbaa !34
   %i.u = getelementptr inbounds nuw [4 x i8], ptr %i.t, i64 %.pre8.i.i36
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.u, ptr nonnull align 4 %1, i64 %.idx, i1 false)
   %.pre.i.i = load i32, ptr %i.p, align 8, !tbaa !544
   %i.v = add i32 %.pre.i.i, %i.b
   store i32 %i.v, ptr %i.p, align 8, !tbaa !544
-  %i.w = load ptr, ptr %9, align 8, !tbaa !34
+  %i.w = load ptr, ptr %8, align 8, !tbaa !34
   %wide.trip.count24 = and i64 %2, 2147483647
   br label %bb.g
 
@@ -306,34 +304,34 @@ _ZN4llvm15SmallVectorImplIiE6assignIPKivEEvT_S5_.exit: ; preds = %_ZN4llvm15Smal
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #28
   %.fca.0.extract21 = extractvalue { ptr, i32 } %i.y, 0
   %.fca.1.extract22 = extractvalue { ptr, i32 } %i.y, 1
-  store ptr %.fca.0.extract21, ptr %10, align 8
-  %.sroa.224.0..sroa_idx = getelementptr inbounds nuw i8, ptr %10, i64 8
+  store ptr %.fca.0.extract21, ptr %9, align 8
+  %.sroa.224.0..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 8
   store i32 %.fca.1.extract22, ptr %.sroa.224.0..sroa_idx, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28
   store <4 x i32> <i32 2, i32 3, i32 0, i32 1>, ptr %i.a, align 16, !tbaa !160
-  store ptr %i.a, ptr %11, align 8, !tbaa !558
-  %i.z = getelementptr inbounds nuw i8, ptr %11, i64 8
+  store ptr %i.a, ptr %10, align 8, !tbaa !558
+  %i.z = getelementptr inbounds nuw i8, ptr %10, i64 8
   store i64 4, ptr %i.z, align 8, !tbaa !559
-  %i.aa = call { ptr, i32 } @_ZN4llvm12SelectionDAG16getVectorShuffleENS_3EVTERKNS_5SDLocENS_7SDValueES5_NS_8ArrayRefIiEE(ptr noundef nonnull align 8 dereferenceable(920) %6, i16 96, ptr null, ptr noundef nonnull align 8 dereferenceable(12) %0, ptr %.fca.0.extract31, i32 %.fca.1.extract32, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %10, ptr noundef nonnull byval(%"class.llvm::ArrayRef.192") align 8 %11) #28 ; 2 uses
+  %i.aa = call { ptr, i32 } @_ZN4llvm12SelectionDAG16getVectorShuffleENS_3EVTERKNS_5SDLocENS_7SDValueES5_NS_8ArrayRefIiEE(ptr noundef nonnull align 8 dereferenceable(920) %6, i16 96, ptr null, ptr noundef nonnull align 8 dereferenceable(12) %0, ptr %.fca.0.extract31, i32 %.fca.1.extract32, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %9, ptr noundef nonnull byval(%"class.llvm::ArrayRef.192") align 8 %10) #28 ; 2 uses
   %.fca.0.extract15 = extractvalue { ptr, i32 } %i.aa, 0
   %.fca.1.extract16 = extractvalue { ptr, i32 } %i.aa, 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #28
   %i.ab = call { ptr, i32 } @_ZN4llvm12SelectionDAG10getBitcastENS_3EVTENS_7SDValueE(ptr noundef nonnull align 8 dereferenceable(920) %6, i16 %3, ptr null, ptr %.fca.0.extract15, i32 %.fca.1.extract16) #28 ; 2 uses
   %.fca.0.extract6 = extractvalue { ptr, i32 } %i.ab, 0
   %.fca.1.extract7 = extractvalue { ptr, i32 } %i.ab, 1
-  store ptr %.fca.0.extract6, ptr %12, align 8, !tbaa !365
-  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %12, i64 8
+  store ptr %.fca.0.extract6, ptr %11, align 8, !tbaa !365
+  %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %11, i64 8
   store i32 %.fca.1.extract7, ptr %.sroa.8.0..sroa_idx, align 8, !tbaa !160
-  %i.ac = load ptr, ptr %9, align 8, !tbaa !34
-  store ptr %i.ac, ptr %13, align 8, !tbaa !558
-  %i.ad = getelementptr inbounds nuw i8, ptr %13, i64 8
+  %i.ac = load ptr, ptr %8, align 8, !tbaa !34
+  store ptr %i.ac, ptr %12, align 8, !tbaa !558
+  %i.ad = getelementptr inbounds nuw i8, ptr %12, i64 8
   %i.ae = load i32, ptr %i.p, align 8, !tbaa !544
   %i.af = zext i32 %i.ae to i64
   store i64 %i.af, ptr %i.ad, align 8, !tbaa !559
-  %i.ag = call { ptr, i32 } @_ZN4llvm12SelectionDAG16getVectorShuffleENS_3EVTERKNS_5SDLocENS_7SDValueES5_NS_8ArrayRefIiEE(ptr noundef nonnull align 8 dereferenceable(920) %6, i16 %3, ptr null, ptr noundef nonnull align 8 dereferenceable(12) %0, ptr %4, i32 %5, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %12, ptr noundef nonnull byval(%"class.llvm::ArrayRef.192") align 8 %13) #28 ; 2 uses
+  %i.ag = call { ptr, i32 } @_ZN4llvm12SelectionDAG16getVectorShuffleENS_3EVTERKNS_5SDLocENS_7SDValueES5_NS_8ArrayRefIiEE(ptr noundef nonnull align 8 dereferenceable(920) %6, i16 %3, ptr null, ptr noundef nonnull align 8 dereferenceable(12) %0, ptr %4, i32 %5, ptr noundef nonnull byval(%"class.llvm::SDValue") align 8 %11, ptr noundef nonnull byval(%"class.llvm::ArrayRef.192") align 8 %12) #28 ; 2 uses
   %.fca.0.extract = extractvalue { ptr, i32 } %i.ag, 0
   %.fca.1.extract = extractvalue { ptr, i32 } %i.ag, 1
-  %i.ah = load ptr, ptr %9, align 8, !tbaa !34    ; 2 uses
+  %i.ah = load ptr, ptr %8, align 8, !tbaa !34    ; 2 uses
   %i.ai = icmp eq ptr %i.ah, %i.o
   br i1 %i.ai, label %_ZN4llvm11SmallVectorIiLj12EED2Ev.exit, label %bb.f
 
@@ -342,7 +340,7 @@ bb.f:                                             ; preds = %._crit_edge19
   br label %_ZN4llvm11SmallVectorIiLj12EED2Ev.exit
 
 _ZN4llvm11SmallVectorIiLj12EED2Ev.exit:           ; preds = %._crit_edge19, %bb.f
-  call void @llvm.lifetime.end.p0(ptr nonnull %9) #28
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #28
   br label %._crit_edge.thread
 
 bb.g:                                             ; preds = %_ZN4llvm15SmallVectorImplIiE6assignIPKivEEvT_S5_.exit, %bb.j
@@ -376,7 +374,6 @@ bb.j:                                             ; preds = %bb.h, %bb.i, %bb.g
 ._crit_edge.thread:                               ; preds = %bb.a, %._crit_edge, %_ZN4llvm11SmallVectorIiLj12EED2Ev.exit
   %.sroa.4.0 = phi i32 [ %.fca.1.extract, %_ZN4llvm11SmallVectorIiLj12EED2Ev.exit ], [ 0, %._crit_edge ], [ 0, %bb.a ]
   %.sroa.014.0 = phi ptr [ %.fca.0.extract, %_ZN4llvm11SmallVectorIiLj12EED2Ev.exit ], [ null, %._crit_edge ], [ null, %bb.a ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #28
   %.fca.0.insert = insertvalue { ptr, i32 } poison, ptr %.sroa.014.0, 0
   %.fca.1.insert = insertvalue { ptr, i32 } %.fca.0.insert, i32 %.sroa.4.0, 1
   ret { ptr, i32 } %.fca.1.insert

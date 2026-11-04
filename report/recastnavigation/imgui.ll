@@ -205,8 +205,6 @@ bb.k:                                             ; preds = %bb.h, %_ZN5ImGui28S
 define dso_local void @_ZN5ImGui25NavMoveRequestApplyResultEv() local_unnamed_addr #11 {
 bb.a:
   %0 = alloca %struct.ImRect, align 8             ; 5 uses
-  %1 = alloca %struct.ImVec2, align 8             ; 5 uses
-  %2 = alloca %struct.ImVec2, align 8             ; 4 uses
   %i.a = load ptr, ptr @GImGui, align 8, !tbaa !245 ; 48 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8304
   %i.c = load i32, ptr %i.b, align 8, !tbaa !961
@@ -342,7 +340,7 @@ bb.n:                                             ; preds = %.thread140, %bb.f
   %i.bk = phi i32 [ %i.ac, %.thread140 ], [ %i.ah, %bb.f ]
   %i.bl = phi ptr [ %i.z, %.thread140 ], [ %i.ae, %bb.f ]
   %.0142 = phi ptr [ %.0.ph, %.thread140 ], [ %i.ad, %bb.f ] ; 3 uses
-  %i.bm = phi ptr [ %.ph139, %.thread140 ], [ %i.i, %bb.f ] ; 6 uses
+  %i.bm = phi ptr [ %.ph139, %.thread140 ], [ %i.i, %bb.f ] ; 5 uses
   %i.bn = phi i32 [ %.ph138, %.thread140 ], [ %i.j, %bb.f ]
   %i.bo = and i32 %i.bn, 32
   %.not111 = icmp eq i32 %i.bo, 0
@@ -511,7 +509,7 @@ bb.aj:                                            ; preds = %bb.ai
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai, %bb.ah
   %.pre151 = phi i32 [ %.pre151.pre, %bb.aj ], [ %.pre151.pre157, %bb.ai ], [ %.pre151.pre157, %bb.ah ] ; 3 uses
-  %i.ef = phi i32 [ %.pre150, %bb.aj ], [ %i.ec, %bb.ai ], [ %i.ea, %bb.ah ] ; 3 uses
+  %i.ef = phi i32 [ %.pre150, %bb.aj ], [ %i.ec, %bb.ai ], [ %i.ea, %bb.ah ] ; 4 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %i.a, i64 8076
   %i.eh = load i32, ptr %i.eg, align 4, !tbaa !394
   %.not120 = icmp ne i32 %i.eh, %i.ef
@@ -567,26 +565,27 @@ bb.an:                                            ; preds = %bb.am
   tail call void (ptr, ...) @_ZN5ImGui8DebugLogEPKcz(ptr noundef nonnull @.str.177, i32 noundef %i.ef, i32 noundef %.pre155, ptr noundef %i.fj)
   %.pre152 = load ptr, ptr %i.dp, align 8, !tbaa !388
   %.pre154 = load i32, ptr %i.co, align 4, !tbaa !724
+  %.pre161 = load i32, ptr %i.eb, align 8, !tbaa !1002
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an, %bb.am
+  %1 = phi i32 [ %.pre161, %bb.an ], [ %i.ef, %bb.am ] ; 2 uses
   %i.fk = phi i32 [ %.pre154, %bb.an ], [ %.pre155, %bb.am ] ; 2 uses
   %i.fl = phi ptr [ %.pre152, %bb.an ], [ %.pre153, %bb.am ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #35
   %i.fm = getelementptr inbounds nuw i8, ptr %i.fl, i64 984
   %i.fn = load ptr, ptr %i.fm, align 8, !tbaa !389
   %i.fo = getelementptr inbounds nuw i8, ptr %i.fn, i64 1048
   %i.fp = zext i32 %i.fk to i64                   ; 3 uses
-  %i.fq = getelementptr inbounds nuw [8 x i8], ptr %i.fo, i64 %i.fp
-  %3 = load i64, ptr %i.fq, align 8, !tbaa !86
-  store i64 %3, ptr %1, align 8, !tbaa !86
-  %4 = load i32, ptr %i.eb, align 8, !tbaa !1002  ; 2 uses
+  %i.fq = getelementptr inbounds nuw [8 x i8], ptr %i.fo, i64 %i.fp ; 2 uses
+  %2 = load float, ptr %i.fq, align 8
+  %.sroa_idx150 = getelementptr inbounds nuw i8, ptr %i.fq, i64 4
+  %3 = load float, ptr %.sroa_idx150, align 4
   %i.fr = getelementptr inbounds nuw i8, ptr %.2, i64 12
   %i.fs = load i32, ptr %i.fr, align 4, !tbaa !1003
   %i.ft = getelementptr inbounds nuw i8, ptr %.2, i64 16 ; 2 uses
   %i.fu = load ptr, ptr @GImGui, align 8, !tbaa !245 ; 3 uses
   %i.fv = getelementptr inbounds nuw i8, ptr %i.fu, i64 8076
-  store i32 %4, ptr %i.fv, align 4, !tbaa !394
+  store i32 %1, ptr %i.fv, align 4, !tbaa !394
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fu, i64 8092
   store i32 %i.fk, ptr %i.fw, align 4, !tbaa !724
   tail call void @_ZN5ImGui16SetNavFocusScopeEj(i32 noundef %i.fs)
@@ -594,7 +593,7 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
   %i.fy = load ptr, ptr %i.fx, align 8, !tbaa !388 ; 2 uses
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fy, i64 1008
   %i.ga = getelementptr inbounds nuw [4 x i8], ptr %i.fz, i64 %i.fp
-  store i32 %4, ptr %i.ga, align 4, !tbaa !255
+  store i32 %1, ptr %i.ga, align 4, !tbaa !255
   %i.gb = getelementptr inbounds nuw i8, ptr %i.fy, i64 1016
   %i.gc = getelementptr inbounds nuw [16 x i8], ptr %i.gb, i64 %i.fp
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.gc, ptr noundef nonnull readonly align 8 dereferenceable(16) %i.ft, i64 16, i1 false), !tbaa.struct !402
@@ -620,35 +619,33 @@ bb.ap:                                            ; preds = %bb.ao
   br label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap, %bb.ao
-  %i.gq = load i32, ptr %i.bm, align 4, !tbaa !390 ; 3 uses
+  %i.gq = load i32, ptr %i.bm, align 4, !tbaa !390 ; 4 uses
   %i.gr = and i32 %i.gq, 1024
   %i.gs = icmp eq i32 %i.gr, 0
   br i1 %i.gs, label %.thread145, label %bb.ar
 
 .thread145:                                       ; preds = %bb.aq
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #35
   %i.gt = getelementptr inbounds nuw i8, ptr %.2, i64 24
   %i.gu = load <2 x float>, ptr %i.ft, align 8, !tbaa !86
   %i.gv = load <2 x float>, ptr %i.gt, align 8, !tbaa !86
-  %i.gw = fadd <2 x float> %i.gu, %i.gv
-  %5 = fmul <2 x float> %i.gw, splat (float 5.000000e-01)
-  store <2 x float> %5, ptr %2, align 8
-  %6 = zext nneg i32 %i.bk to i64                 ; 2 uses
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %6
-  %8 = load float, ptr %7, align 4, !tbaa !86
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %6
-  store float %8, ptr %9, align 4, !tbaa !86
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #35
+  %i.gw = fadd <2 x float> %i.gu, %i.gv           ; 2 uses
+  %.sroa.idx.not = icmp eq i32 %i.bk, 0           ; 3 uses
+  %4 = extractelement <2 x float> %i.gw, i64 0
+  %5 = extractelement <2 x float> %i.gw, i64 1
+  %.sroa.speculated.v = select i1 %.sroa.idx.not, float %4, float %5
+  %.sroa.speculated = fmul float %.sroa.speculated.v, 5.000000e-01 ; 2 uses
+  %.sroa.0152.0 = select i1 %.sroa.idx.not, float %.sroa.speculated, float %2
+  %.sroa.5.0 = select i1 %.sroa.idx.not, float %3, float %.sroa.speculated
   %i.gx = load ptr, ptr %i.dp, align 8, !tbaa !388
   %i.gy = getelementptr inbounds nuw i8, ptr %i.gx, i64 984
   %i.gz = load ptr, ptr %i.gy, align 8, !tbaa !389
   %i.ha = getelementptr inbounds nuw i8, ptr %i.gz, i64 1048
   %i.hb = load i32, ptr %i.co, align 4, !tbaa !724
   %i.hc = zext i32 %i.hb to i64
-  %i.hd = getelementptr inbounds nuw [8 x i8], ptr %i.ha, i64 %i.hc
-  %10 = load i64, ptr %1, align 8, !tbaa !86
-  store i64 %10, ptr %i.hd, align 8, !tbaa !86
-  %.pre156 = load i32, ptr %i.bm, align 4, !tbaa !390
+  %i.hd = getelementptr inbounds nuw [8 x i8], ptr %i.ha, i64 %i.hc ; 2 uses
+  store float %.sroa.0152.0, ptr %i.hd, align 8, !tbaa !86
+  %.sroa_idx149 = getelementptr inbounds nuw i8, ptr %i.hd, i64 4
+  store float %.sroa.5.0, ptr %.sroa_idx149, align 4, !tbaa !86
   br label %bb.at
 
 bb.ar:                                            ; preds = %bb.aq
@@ -664,7 +661,7 @@ bb.as:                                            ; preds = %bb.ar
   br label %bb.at
 
 bb.at:                                            ; preds = %.thread145, %bb.as, %bb.ar
-  %i.hj = phi i32 [ %.pre156, %.thread145 ], [ %i.hi, %bb.as ], [ %i.gq, %bb.ar ] ; 3 uses
+  %i.hj = phi i32 [ %i.gq, %.thread145 ], [ %i.hi, %bb.as ], [ %i.gq, %bb.ar ] ; 3 uses
   %i.hk = and i32 %i.hj, 4096
   %.not125 = icmp eq i32 %i.hk, 0
   br i1 %.not125, label %bb.av, label %bb.au
@@ -683,7 +680,7 @@ bb.au:                                            ; preds = %bb.at
 bb.av:                                            ; preds = %bb.au, %bb.at
   %i.hp = and i32 %i.hj, 16384
   %i.hq = icmp eq i32 %i.hp, 0
-  br i1 %i.hq, label %bb.aw, label %11
+  br i1 %i.hq, label %bb.aw, label %bb.ay
 
 bb.aw:                                            ; preds = %bb.av
   %i.hr = getelementptr inbounds nuw i8, ptr %i.gd, i64 86
@@ -701,13 +698,9 @@ _ZN5ImGui28SetNavCursorVisibleAfterMoveEv.exit133: ; preds = %bb.aw, %bb.ax
   store i8 1, ptr %i.hv, align 2, !tbaa !723
   %i.hw = getelementptr inbounds nuw i8, ptr %i.gd, i64 8073
   store i8 1, ptr %i.hw, align 1, !tbaa !685
-  br label %11
-
-11:                                               ; preds = %_ZN5ImGui28SetNavCursorVisibleAfterMoveEv.exit133, %bb.av
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #35
   br label %bb.ay
 
-bb.ay:                                            ; preds = %bb.l, %bb.m, %11
+bb.ay:                                            ; preds = %bb.av, %_ZN5ImGui28SetNavCursorVisibleAfterMoveEv.exit133, %bb.l, %bb.m
   ret void
 }
 

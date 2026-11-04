@@ -204,12 +204,10 @@ bb.a:
 ; Function Attrs: nounwind sspstrong uwtable
 define internal noundef zeroext i1 @ssd0303_update_display(ptr nofree noundef captures(none) %0) #0 {
 bb.a:
-  %1 = alloca [2 x ptr], align 16                 ; 10 uses
   %i.a = alloca [32 x i8], align 16               ; 9 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = tail call ptr @qemu_console_surface(ptr noundef %i.c) #6 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 196 ; 2 uses
   %i.f = load i32, ptr %i.e, align 4
@@ -247,7 +245,6 @@ bb.e:                                             ; preds = %bb.b
 
 bb.f:                                             ; preds = %bb.b, %bb.b, %bb.d, %bb.c
   %.0 = phi i32 [ 16, %bb.d ], [ 8, %bb.b ], [ 12, %bb.c ], [ 8, %bb.b ] ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %1, i8 0, i64 16, i1 false), !annotation !9
   %i.o = zext nneg i32 %.0 to i64                 ; 7 uses
   %i.p = call ptr @__memset_chk(ptr noundef nonnull %i.a, i32 noundef 255, i64 noundef range(i64 8, 17) %i.o, i64 noundef 32) #6 ; 0 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.o ; 3 uses
@@ -255,32 +252,19 @@ bb.f:                                             ; preds = %bb.b, %bb.b, %bb.d,
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 184
   %i.s = load i32, ptr %i.r, align 8
   %.not45 = icmp eq i32 %i.s, 0
-  br i1 %.not45, label %bb.g, label %2
-
-2:                                                ; preds = %bb.f
-  store ptr %i.a, ptr %1, align 16
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store ptr %i.a, ptr %3, align 8
-  br label %bb.h
+  br i1 %.not45, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.u = load i32, ptr %i.t, align 8
-  %.not46 = icmp eq i32 %i.u, 0
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  br i1 %.not46, label %6, label %5
-
-5:                                                ; preds = %bb.g
-  store ptr %i.a, ptr %1, align 16
-  store ptr %i.q, ptr %4, align 8
+  %.not46 = icmp eq i32 %i.u, 0                   ; 2 uses
+  %spec.select = select i1 %.not46, ptr %i.q, ptr %i.a
+  %spec.select58 = select i1 %.not46, ptr %i.a, ptr %i.q
   br label %bb.h
 
-6:                                                ; preds = %bb.g
-  store ptr %i.q, ptr %1, align 16
-  store ptr %i.a, ptr %4, align 8
-  br label %bb.h
-
-bb.h:                                             ; preds = %5, %6, %2
+bb.h:                                             ; preds = %bb.g, %bb.f
+  %.sroa.0.0 = phi ptr [ %spec.select, %bb.g ], [ %i.a, %bb.f ] ; 2 uses
+  %.sroa.7.0 = phi ptr [ %spec.select58, %bb.g ], [ %i.a, %bb.f ] ; 2 uses
   %.val = load ptr, ptr %i.d, align 8
   %i.v = call ptr @pixman_image_get_data(ptr noundef %.val) #6
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 176
@@ -300,7 +284,8 @@ bb.i:                                             ; preds = %bb.h, %.preheader.p
   %i.af = zext nneg i32 %i.ae to i64
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 %i.af
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 244
-  %i.ai = and i32 %i.ab, 7                        ; 2 uses
+  %i.ai = and i32 %i.ab, 7
+  %1 = shl nuw nsw i32 1, %i.ai                   ; 2 uses
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.j, %bb.i
@@ -309,22 +294,18 @@ bb.j:                                             ; preds = %bb.j, %bb.i
   %.14347 = phi ptr [ %.04252, %bb.i ], [ %i.ar, %bb.j ] ; 2 uses
   %i.aj = load i8, ptr %.04148, align 1
   %i.ak = zext i8 %i.aj to i32
-  %7 = lshr i32 %i.ak, %i.ai
-  %i.al = and i32 %7, 1
-  %8 = zext nneg i32 %i.al to i64
-  %9 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %8
-  %10 = load ptr, ptr %9, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.14347, ptr noundef nonnull align 1 dereferenceable(1) %10, i64 noundef range(i64 8, 1537) %i.o, i1 noundef false) #6
+  %i.al = and i32 %1, %i.ak
+  %.sroa.idx.not = icmp eq i32 %i.al, 0
+  %.sroa.speculated = select i1 %.sroa.idx.not, ptr %.sroa.0.0, ptr %.sroa.7.0
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.14347, ptr noundef nonnull align 1 dereferenceable(1) %.sroa.speculated, i64 noundef range(i64 8, 1537) %i.o, i1 noundef false) #6
   %i.am = getelementptr inbounds nuw i8, ptr %.14347, i64 %i.o ; 2 uses
   %i.an = getelementptr inbounds nuw i8, ptr %.04148, i64 1
   %i.ao = load i8, ptr %i.an, align 1
   %i.ap = zext i8 %i.ao to i32
-  %11 = lshr i32 %i.ap, %i.ai
-  %i.aq = and i32 %11, 1
-  %12 = zext nneg i32 %i.aq to i64
-  %13 = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %12
-  %14 = load ptr, ptr %13, align 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.am, ptr noundef nonnull align 1 dereferenceable(1) %14, i64 noundef range(i64 8, 1537) %i.o, i1 noundef false) #6
+  %i.aq = and i32 %1, %i.ap
+  %.sroa.idx.not.1 = icmp eq i32 %i.aq, 0
+  %.sroa.speculated.1 = select i1 %.sroa.idx.not.1, ptr %.sroa.0.0, ptr %.sroa.7.0
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.am, ptr noundef nonnull align 1 dereferenceable(1) %.sroa.speculated.1, i64 noundef range(i64 8, 1537) %i.o, i1 noundef false) #6
   %i.ar = getelementptr inbounds nuw i8, ptr %i.am, i64 %i.o ; 5 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.04148, i64 2
   %i.at = add nuw nsw i32 %.04049, 2              ; 2 uses
@@ -351,7 +332,6 @@ bb.k:                                             ; preds = %.preheader.preheade
 
 bb.l:                                             ; preds = %bb.b, %bb.a, %bb.k, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #6
   ret i1 true
 }
 

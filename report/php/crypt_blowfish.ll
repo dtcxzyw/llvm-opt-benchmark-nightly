@@ -204,13 +204,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define internal fastcc void @BF_set_key(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef nonnull writeonly captures(none) %1, ptr nofree noundef nonnull captures(none) %2, i8 noundef zeroext %3) unnamed_addr #5 {
 bb.a:
-  %4 = alloca [2 x i32], align 4                  ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
   %i.a = zext i8 %3 to i32                        ; 2 uses
   %i.b = and i32 %i.a, 1
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 4
-  %6 = zext nneg i32 %i.b to i64
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %6
+  %.sroa.idx.not = icmp eq i32 %i.b, 0
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.a, %bb.b
@@ -249,11 +245,9 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   %i.y = load i8, ptr %.236.2, align 1, !tbaa !13 ; 3 uses
   %i.z = zext i8 %i.y to i32
   %i.aa = or disjoint i32 %i.x, %i.z              ; 2 uses
-  store i32 %i.aa, ptr %4, align 4, !tbaa !14
   %i.ab = shl nsw i32 %i.u, 8
   %i.ac = sext i8 %i.y to i32                     ; 2 uses
   %i.ad = or i32 %i.ab, %i.ac                     ; 2 uses
-  store i32 %i.ad, ptr %5, align 4, !tbaa !14
   %i.ae = or i32 %i.v, %i.ac
   %i.af = and i32 %i.ae, 128
   %.2.3 = or i32 %i.af, %.03144                   ; 2 uses
@@ -262,12 +256,12 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   %.236.3 = select i1 %.not37.3, ptr %0, ptr %i.ag
   %i.ah = xor i32 %i.aa, %i.ad
   %i.ai = or i32 %i.ah, %.045                     ; 3 uses
-  %8 = load i32, ptr %7, align 4, !tbaa !14       ; 2 uses
+  %.sroa.speculated = select i1 %.sroa.idx.not, i32 %i.aa, i32 %i.ad ; 2 uses
   %i.aj = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv
-  store i32 %8, ptr %i.aj, align 4, !tbaa !14
+  store i32 %.sroa.speculated, ptr %i.aj, align 4, !tbaa !14
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr getelementptr inbounds nuw (i8, ptr @BF_init_state, i64 4096), i64 %indvars.iv
   %i.al = load i32, ptr %i.ak, align 4, !tbaa !14
-  %i.am = xor i32 %i.al, %8
+  %i.am = xor i32 %i.al, %.sroa.speculated
   %i.an = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv
   store i32 %i.am, ptr %i.an, align 4, !tbaa !14
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -286,7 +280,6 @@ bb.c:                                             ; preds = %bb.b
   %i.av = load i32, ptr %2, align 4, !tbaa !14
   %i.aw = xor i32 %i.av, %i.au
   store i32 %i.aw, ptr %2, align 4, !tbaa !14
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   ret void
 }
 
