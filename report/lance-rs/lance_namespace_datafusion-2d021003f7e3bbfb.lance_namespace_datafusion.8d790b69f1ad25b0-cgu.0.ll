@@ -205,7 +205,6 @@ bb.m:                                             ; preds = %bb.n, %bb.l, %bb.k
 bb.n:                                             ; preds = %bb.l
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ak, i64 8
   %i.ap = load ptr, ptr %i.ao, align 8, !noalias !325, !noundef !109
-  store i64 1, ptr %0, align 8, !alias.scope !325
   store ptr %i.ap, ptr %i.ai, align 8, !alias.scope !325
   br label %bb.m
 
@@ -242,7 +241,6 @@ bb.s:                                             ; preds = %bb.q
   unreachable
 
 bb.t:                                             ; preds = %bb.g
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !326)
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.au = load ptr, ptr %i.at, align 8, !alias.scope !326, !noundef !109 ; 4 uses
@@ -250,6 +248,7 @@ bb.t:                                             ; preds = %bb.g
   br i1 %i.av, label %_RNvMs1_NtNtCskTBvlRM5ILY_4moka6common5dequeINtB5_5DequeINtNtB7_10concurrent11KeyHashDateNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEE12move_to_backCsc93vp1BCDlY_26lance_namespace_datafusion.exit, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.aw = load i64, ptr %1, align 8, !range !116, !alias.scope !326, !noundef !109
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.ay = trunc nuw i64 %i.aw to i1
@@ -268,7 +267,6 @@ bb.w:                                             ; preds = %bb.x, %bb.v, %bb.u
 bb.x:                                             ; preds = %bb.v
   %i.bd = getelementptr inbounds nuw i8, ptr %i.az, i64 8
   %i.be = load ptr, ptr %i.bd, align 8, !noalias !326, !noundef !109
-  store i64 1, ptr %1, align 8, !alias.scope !326
   store ptr %i.be, ptr %i.ax, align 8, !alias.scope !326
   br label %bb.w
 
@@ -305,7 +303,6 @@ bb.ac:                                            ; preds = %bb.aa
   unreachable
 
 bb.ad:                                            ; preds = %bb.h
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !327)
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 2 uses
   %i.bj = load ptr, ptr %i.bi, align 8, !alias.scope !327, !noundef !109 ; 4 uses
@@ -313,6 +310,7 @@ bb.ad:                                            ; preds = %bb.h
   br i1 %i.bk, label %_RNvMs1_NtNtCskTBvlRM5ILY_4moka6common5dequeINtB5_5DequeINtNtB7_10concurrent11KeyHashDateNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEE12move_to_backCsc93vp1BCDlY_26lance_namespace_datafusion.exit, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.bl = load i64, ptr %2, align 8, !range !116, !alias.scope !327, !noundef !109
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   %i.bn = trunc nuw i64 %i.bl to i1
@@ -331,7 +329,6 @@ bb.ag:                                            ; preds = %bb.ah, %bb.af, %bb.
 bb.ah:                                            ; preds = %bb.af
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bo, i64 8
   %i.bt = load ptr, ptr %i.bs, align 8, !noalias !327, !noundef !109
-  store i64 1, ptr %2, align 8, !alias.scope !327
   store ptr %i.bt, ptr %i.bm, align 8, !alias.scope !327
   br label %bb.ag
 
@@ -412,7 +409,6 @@ _RNvMs1_NtNtCskTBvlRM5ILY_4moka6common5dequeINtB5_5DequeINtNtB7_10concurrent11Ke
   ret void
 
 bb.f:                                             ; preds = %bb.e
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !330)
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   %i.p = load ptr, ptr %i.o, align 8, !alias.scope !330, !noundef !109 ; 4 uses
@@ -420,6 +416,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.q, label %_RNvMs1_NtNtCskTBvlRM5ILY_4moka6common5dequeINtB5_5DequeINtNtB7_10concurrent11KeyHashDateNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEE12move_to_backCsc93vp1BCDlY_26lance_namespace_datafusion.exit, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.r = load i64, ptr %1, align 8, !range !116, !alias.scope !330, !noundef !109
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
   %i.t = trunc nuw i64 %i.r to i1
@@ -438,7 +435,6 @@ bb.i:                                             ; preds = %bb.j, %bb.h, %bb.g
 bb.j:                                             ; preds = %bb.h
   %i.y = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %i.z = load ptr, ptr %i.y, align 8, !noalias !330, !noundef !109
-  store i64 1, ptr %1, align 8, !alias.scope !330
   store ptr %i.z, ptr %i.s, align 8, !alias.scope !330
   br label %bb.i
 
@@ -537,7 +533,6 @@ bb.h:                                             ; preds = %bb.i, %bb.g, %bb.f
 bb.i:                                             ; preds = %bb.g
   %i.v = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   %i.w = load ptr, ptr %i.v, align 8, !noalias !347, !noundef !109
-  store i64 1, ptr %0, align 8, !alias.scope !347
   store ptr %i.w, ptr %i.p, align 8, !alias.scope !347
   br label %bb.h
 
@@ -940,7 +935,6 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.k = load ptr, ptr %i.j, align 8, !noalias !4978, !noundef !109
-  store i64 1, ptr %0, align 8, !alias.scope !4978
   store ptr %i.k, ptr %i.c, align 8, !alias.scope !4978
   br label %_RNCNvMs1_NtNtCskTBvlRM5ILY_4moka6common5dequeINtB7_5DequeINtNtB9_11timer_wheel9TimerNodeNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEE9pop_front0Csc93vp1BCDlY_26lance_namespace_datafusion.exit.i
 
@@ -1343,7 +1337,6 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 24
   %i.k = load ptr, ptr %i.j, align 8, !noalias !6826, !noundef !109
-  store i64 1, ptr %.0.val, align 8, !alias.scope !6826
   store ptr %i.k, ptr %i.c, align 8, !alias.scope !6826
   br label %bb.e
 
@@ -1746,7 +1739,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.lr.ph20, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCskTBvlRM5ILY_4moka6common5deque5DequeINtNtBG_11timer_wheel9TimerNodeNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEEECsc93vp1BCDlY_26lance_namespace_datafusion.exit
   %.sroa.0.0.i.i18 = phi i64 [ %i.g, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCskTBvlRM5ILY_4moka6common5deque5DequeINtNtBG_11timer_wheel9TimerNodeNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEEECsc93vp1BCDlY_26lance_namespace_datafusion.exit ], [ 0, %.lr.ph20 ] ; 2 uses
-  %i.f = getelementptr inbounds nuw [48 x i8], ptr %.val8, i64 %.sroa.0.0.i.i18 ; 7 uses
+  %i.f = getelementptr inbounds nuw [48 x i8], ptr %.val8, i64 %.sroa.0.0.i.i18 ; 6 uses
   %i.g = add nuw nsw i64 %.sroa.0.0.i.i18, 1      ; 4 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !19524)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !19525)
@@ -1775,7 +1768,6 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 24
   %i.r = load ptr, ptr %i.q, align 8, !noalias !19528, !noundef !109
-  store i64 1, ptr %i.f, align 8, !alias.scope !19528
   store ptr %i.r, ptr %i.j, align 8, !alias.scope !19528
   br label %_RNCNvMs1_NtNtCskTBvlRM5ILY_4moka6common5dequeINtB7_5DequeINtNtB9_11timer_wheel9TimerNodeNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEE9pop_front0Csc93vp1BCDlY_26lance_namespace_datafusion.exit.i.i
 
@@ -2178,7 +2170,7 @@ bb.rh:                                            ; preds = %bb.rg
 bb.ri:                                            ; preds = %bb.re
   %i.bly = getelementptr inbounds nuw i8, ptr %0, i64 1088
   %i.blz = load ptr, ptr %i.bly, align 8, !noalias !32655, !nonnull !109, !align !125, !noundef !109 ; 4 uses
-  %i.bma = getelementptr inbounds nuw i8, ptr %i.blz, i64 48 ; 2 uses
+  %i.bma = getelementptr inbounds nuw i8, ptr %i.blz, i64 48
   %i.bmb = getelementptr i8, ptr %i.blz, i64 72   ; 2 uses
   %.val115.i.i = load ptr, ptr %i.bmb, align 8, !noundef !109 ; 8 uses
   %.not27.i.i = icmp eq ptr %.val115.i.i, null
@@ -2256,7 +2248,6 @@ bb.rp:                                            ; preds = %bb.rq, %bb.ro, %bb.
 bb.rq:                                            ; preds = %bb.ro
   %i.bnj = getelementptr inbounds nuw i8, ptr %i.bnd, i64 8
   %i.bnk = load ptr, ptr %i.bnj, align 8, !noalias !32719, !noundef !109
-  store i64 1, ptr %i.bma, align 8, !alias.scope !32719
   store ptr %i.bnk, ptr %i.bnb, align 8, !alias.scope !32719
   br label %bb.rp
 
@@ -2659,7 +2650,7 @@ bb.e:                                             ; preds = %bb.c
 
 bb.f:                                             ; preds = %bb.d
   %i.l = load ptr, ptr %i.h, align 8, !nonnull !109, !noundef !109
-  %i.m = getelementptr inbounds nuw [48 x i8], ptr %i.l, i64 %i.f ; 6 uses
+  %i.m = getelementptr inbounds nuw [48 x i8], ptr %i.l, i64 %i.f ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !36041)
   %i.n = load i64, ptr %i.m, align 8, !range !116, !alias.scope !36041, !noundef !109
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 2 uses
@@ -2674,7 +2665,6 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.s = getelementptr inbounds nuw i8, ptr %i.q, i64 24
   %i.t = load ptr, ptr %i.s, align 8, !noalias !36041, !noundef !109
-  store i64 1, ptr %i.m, align 8, !alias.scope !36041
   store ptr %i.t, ptr %i.o, align 8, !alias.scope !36041
   br label %_RNvMs1_NtNtCskTBvlRM5ILY_4moka6common5dequeINtB5_5DequeINtNtB7_11timer_wheel9TimerNodeNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyEE6unlinkCsc93vp1BCDlY_26lance_namespace_datafusion.exit
 
@@ -3077,7 +3067,6 @@ bb.f:                                             ; preds = %bb.g, %bb.e, %bb.d
 bb.g:                                             ; preds = %bb.e
   %i.ac = getelementptr inbounds nuw i8, ptr %i.y, i64 8
   %i.ad = load ptr, ptr %i.ac, align 8, !noalias !36155, !noundef !109
-  store i64 1, ptr %2, align 8, !alias.scope !36155
   store ptr %i.ad, ptr %i.w, align 8, !alias.scope !36155
   br label %bb.f
 
@@ -3480,7 +3469,6 @@ bb.ab:                                            ; preds = %bb.ac, %bb.aa, %bb.
 bb.ac:                                            ; preds = %bb.aa
   %i.ds = getelementptr inbounds nuw i8, ptr %i.do, i64 8
   %i.dt = load ptr, ptr %i.ds, align 8, !noalias !37582, !noundef !109
-  store i64 1, ptr %5, align 8, !alias.scope !37582
   store ptr %i.dt, ptr %i.dm, align 8, !alias.scope !37582
   br label %bb.ab
 
@@ -3605,7 +3593,6 @@ bb.ar:                                            ; preds = %bb.as, %bb.aq, %bb.
 bb.as:                                            ; preds = %bb.aq
   %i.fd = getelementptr inbounds nuw i8, ptr %i.ez, i64 8
   %i.fe = load ptr, ptr %i.fd, align 8, !noalias !37586, !noundef !109
-  store i64 1, ptr %6, align 8, !alias.scope !37586
   store ptr %i.fe, ptr %i.ex, align 8, !alias.scope !37586
   br label %bb.ar
 
@@ -3702,7 +3689,6 @@ bb.bd:                                            ; preds = %bb.be, %bb.bc, %bb.
 bb.be:                                            ; preds = %bb.bc
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fs, i64 8
   %i.fz = load ptr, ptr %i.fy, align 8, !noalias !37587, !noundef !109
-  store i64 1, ptr %5, align 8, !alias.scope !37587
   store ptr %i.fz, ptr %i.fq, align 8, !alias.scope !37587
   br label %bb.bd
 
@@ -4025,7 +4011,6 @@ bb.z:                                             ; preds = %bb.u
   unreachable
 
 bb.aa:                                            ; preds = %bb.t
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 144 ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !37611)
   %i.cl = getelementptr inbounds nuw i8, ptr %3, i64 176 ; 2 uses
   %i.cm = load ptr, ptr %i.cl, align 8, !alias.scope !37611, !noundef !109 ; 4 uses
@@ -4033,6 +4018,7 @@ bb.aa:                                            ; preds = %bb.t
   br i1 %i.cn, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCskTBvlRM5ILY_4moka6common10concurrent3arc7MiniArcINtBG_10ValueEntryNtNtNtCsjjbR6Jfsbqw_8lance_io5uring6reader8CacheKeyNtB1S_16CachedReaderDataEEECsc93vp1BCDlY_26lance_namespace_datafusion.exit, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 144
   %i.co = load i64, ptr %4, align 8, !range !116, !alias.scope !37611, !noundef !109
   %i.cp = getelementptr inbounds nuw i8, ptr %3, i64 152 ; 2 uses
   %i.cq = trunc nuw i64 %i.co to i1
@@ -4054,7 +4040,6 @@ bb.ad:                                            ; preds = %bb.ae, %bb.ac, %bb.
 bb.ae:                                            ; preds = %bb.ac
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cr, i64 8
   %i.cy = load ptr, ptr %i.cx, align 8, !noalias !37611, !noundef !109
-  store i64 1, ptr %4, align 8, !alias.scope !37611
   store ptr %i.cy, ptr %i.cp, align 8, !alias.scope !37611
   br label %bb.ad
 
@@ -4457,7 +4442,7 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 264 ; 3 uses
   store i64 0, ptr %i.f, align 8, !alias.scope !37654
   store i64 0, ptr %i.c, align 8, !alias.scope !37654
-  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 4 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 2 uses
   %.not182 = icmp eq i64 %.0.val, 0
   br i1 %.not182, label %._crit_edge, label %.lr.ph
 
@@ -4545,7 +4530,6 @@ bb.h:                                             ; preds = %bb.i, %bb.g, %bb.f
 bb.i:                                             ; preds = %bb.g
   %i.as = getelementptr inbounds nuw i8, ptr %i.an, i64 8
   %i.at = load ptr, ptr %i.as, align 8, !noalias !37656, !noundef !109
-  store i64 1, ptr %i.g, align 8, !alias.scope !37656
   store ptr %i.at, ptr %i.k, align 8, !alias.scope !37656
   br label %bb.h
 
@@ -4851,7 +4835,6 @@ bb.al:                                            ; preds = %bb.am, %bb.ak, %bb.
 bb.am:                                            ; preds = %bb.ak
   %i.er = getelementptr inbounds nuw i8, ptr %i.em, i64 8
   %i.es = load ptr, ptr %i.er, align 8, !noalias !37666, !noundef !109
-  store i64 1, ptr %i.g, align 8, !alias.scope !37666
   store ptr %i.es, ptr %i.k, align 8, !alias.scope !37666
   br label %bb.al
 
@@ -5254,7 +5237,7 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o, %.split.i.i.i, %bb.m
   %i.bw = icmp samesign eq i64 %i.bq, %.val1
-  br i1 %i.bw, label %.sink.split, label %bb.q
+  br i1 %i.bw, label %bb.s, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.bx = getelementptr inbounds nuw i8, ptr %.val, i64 %i.bq
@@ -5299,13 +5282,13 @@ bb.r:                                             ; preds = %.loopexit19
   store i8 1, ptr %i.j, align 2, !alias.scope !37708
   br label %_RNvXsv_NtNtCscI6d9CVNmLh_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4next.exit.thread7.i
 
-.sink.split:                                      ; preds = %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsc93vp1BCDlY_26lance_namespace_datafusion.exit16.i.i.i, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsc93vp1BCDlY_26lance_namespace_datafusion.exit14.i.i.i, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsc93vp1BCDlY_26lance_namespace_datafusion.exit12.i.i.i, %bb.q, %bb.h, %bb.p
-  %.ph = phi i64 [ %.val1, %bb.p ], [ %.promoted.i, %bb.h ], [ %i.bq, %bb.q ], [ %i.bq, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsc93vp1BCDlY_26lance_namespace_datafusion.exit12.i.i.i ], [ %i.bq, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsc93vp1BCDlY_26lance_namespace_datafusion.exit14.i.i.i ], [ %i.bq, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsc93vp1BCDlY_26lance_namespace_datafusion.exit16.i.i.i ]
+.sink.split:                                      ; preds = %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsc93vp1BCDlY_26lance_namespace_datafusion.exit16.i.i.i, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsc93vp1BCDlY_26lance_namespace_datafusion.exit14.i.i.i, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsc93vp1BCDlY_26lance_namespace_datafusion.exit12.i.i.i, %bb.q, %bb.h
+  %.lcssa14 = phi i64 [ %.promoted.i, %bb.h ], [ %i.bq, %bb.q ], [ %i.bq, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsc93vp1BCDlY_26lance_namespace_datafusion.exit12.i.i.i ], [ %i.bq, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsc93vp1BCDlY_26lance_namespace_datafusion.exit14.i.i.i ], [ %i.bq, %_RNvXs2J_NtNtCscI6d9CVNmLh_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsc93vp1BCDlY_26lance_namespace_datafusion.exit16.i.i.i ]
   store i8 0, ptr %i.m, align 8, !alias.scope !37708
   br label %bb.s
 
-bb.s:                                             ; preds = %.sink.split, %.loopexit19
-  %1 = phi i64 [ %.val1, %.loopexit19 ], [ %.ph, %.sink.split ] ; 2 uses
+bb.s:                                             ; preds = %bb.p, %.sink.split, %.loopexit19
+  %1 = phi i64 [ %.lcssa14, %.sink.split ], [ %.val1, %.loopexit19 ], [ %.val1, %bb.p ] ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %1, ptr %i.ck, align 8, !alias.scope !37706
   %i.cl = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -5627,7 +5610,7 @@ bb.g:                                             ; preds = %bb.f
   %i.an = load i64, ptr %i.am, align 8, !alias.scope !37759, !noundef !109 ; 5 uses
   %.sroa.013.015.i.i = load ptr, ptr %i.al, align 8, !alias.scope !37759, !nonnull !109, !noundef !109 ; 3 uses
   %i.ao = icmp eq i64 %i.an, 0
-  br i1 %i.ao, label %._crit_edge.i.i, label %.lr.ph.i.i2.preheader
+  br i1 %i.ao, label %_RNvMsc_NtNtNtCs40k4W9msRzi_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringB1J_E10init_frontCsc93vp1BCDlY_26lance_namespace_datafusion.exit.i, label %.lr.ph.i.i2.preheader
 
 .lr.ph.i.i2.preheader:                            ; preds = %bb.g
   %xtraiter = and i64 %i.an, 7                    ; 2 uses
@@ -5650,12 +5633,7 @@ bb.g:                                             ; preds = %bb.f
   %.sroa.013.017.i.i.unr = phi ptr [ %.sroa.013.015.i.i, %.lr.ph.i.i2.preheader ], [ %.sroa.013.0.i.i.prol, %.lr.ph.i.i2.prol ]
   %.sroa.011.016.i.i.unr = phi i64 [ %i.an, %.lr.ph.i.i2.preheader ], [ %i.aq, %.lr.ph.i.i2.prol ]
   %i.ar = icmp ult i64 %i.an, 8
-  br i1 %i.ar, label %._crit_edge.i.i, label %.lr.ph.i.i2
-
-._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g
-  %.sroa.013.0.lcssa.i.i = phi ptr [ %.sroa.013.015.i.i, %bb.g ], [ %.sroa.013.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ]
-  store i64 1, ptr %1, align 8, !alias.scope !37759
-  br label %_RNvMsc_NtNtNtCs40k4W9msRzi_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringB1J_E10init_frontCsc93vp1BCDlY_26lance_namespace_datafusion.exit.i
+  br i1 %i.ar, label %_RNvMsc_NtNtNtCs40k4W9msRzi_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringB1J_E10init_frontCsc93vp1BCDlY_26lance_namespace_datafusion.exit.i, label %.lr.ph.i.i2
 
 .lr.ph.i.i2:                                      ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2
   %.sroa.013.017.i.i = phi ptr [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ], [ %.sroa.013.017.i.i.unr, %.lr.ph.i.i2.prol.loopexit ]
@@ -5678,12 +5656,12 @@ bb.g:                                             ; preds = %bb.f
   %i.ba = add i64 %.sroa.011.016.i.i, -8          ; 2 uses
   %.sroa.013.0.i.i.7 = load ptr, ptr %i.az, align 8, !noalias !37761, !nonnull !109, !noundef !109 ; 2 uses
   %i.bb = icmp eq i64 %i.ba, 0
-  br i1 %i.bb, label %._crit_edge.i.i, label %.lr.ph.i.i2
+  br i1 %i.bb, label %_RNvMsc_NtNtNtCs40k4W9msRzi_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringB1J_E10init_frontCsc93vp1BCDlY_26lance_namespace_datafusion.exit.i, label %.lr.ph.i.i2
 
-_RNvMsc_NtNtNtCs40k4W9msRzi_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringB1J_E10init_frontCsc93vp1BCDlY_26lance_namespace_datafusion.exit.i: ; preds = %._crit_edge.i.i, %._RNvMsc_NtNtNtCs40k4W9msRzi_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringB1J_E10init_frontCsc93vp1BCDlY_26lance_namespace_datafusion.exit_crit_edge.i
-  %.sroa.59.0.copyload.i.i = phi i64 [ %.sroa.59.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs40k4W9msRzi_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringB1J_E10init_frontCsc93vp1BCDlY_26lance_namespace_datafusion.exit_crit_edge.i ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.48.0.copyload.i.i = phi i64 [ %.sroa.48.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs40k4W9msRzi_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringB1J_E10init_frontCsc93vp1BCDlY_26lance_namespace_datafusion.exit_crit_edge.i ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.07.0.copyload.i.i = phi ptr [ %i.ak, %._RNvMsc_NtNtNtCs40k4W9msRzi_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringB1J_E10init_frontCsc93vp1BCDlY_26lance_namespace_datafusion.exit_crit_edge.i ], [ %.sroa.013.0.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
+_RNvMsc_NtNtNtCs40k4W9msRzi_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringB1J_E10init_frontCsc93vp1BCDlY_26lance_namespace_datafusion.exit.i: ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g, %._RNvMsc_NtNtNtCs40k4W9msRzi_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringB1J_E10init_frontCsc93vp1BCDlY_26lance_namespace_datafusion.exit_crit_edge.i
+  %.sroa.59.0.copyload.i.i = phi i64 [ %.sroa.59.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs40k4W9msRzi_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringB1J_E10init_frontCsc93vp1BCDlY_26lance_namespace_datafusion.exit_crit_edge.i ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.48.0.copyload.i.i = phi i64 [ %.sroa.48.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs40k4W9msRzi_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringB1J_E10init_frontCsc93vp1BCDlY_26lance_namespace_datafusion.exit_crit_edge.i ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.07.0.copyload.i.i = phi ptr [ %i.ak, %._RNvMsc_NtNtNtCs40k4W9msRzi_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtBb_6string6StringB1J_E10init_frontCsc93vp1BCDlY_26lance_namespace_datafusion.exit_crit_edge.i ], [ %.sroa.013.015.i.i, %bb.g ], [ %.sroa.013.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !37762)
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.07.0.copyload.i.i, i64 538
   %i.bd = load i16, ptr %i.bc, align 2, !noalias !37763, !noundef !109
@@ -6086,7 +6064,7 @@ bb.i:                                             ; preds = %bb.g
 
 bb.j:                                             ; preds = %bb.h
   %i.av = load ptr, ptr %i.ar, align 8, !noalias !39485, !nonnull !109, !noundef !109
-  %i.aw = getelementptr inbounds nuw [48 x i8], ptr %i.av, i64 %.pre-phi.i.i.i ; 6 uses
+  %i.aw = getelementptr inbounds nuw [48 x i8], ptr %i.av, i64 %.pre-phi.i.i.i ; 5 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 24 ; 2 uses
   %i.ay = load ptr, ptr %i.ax, align 8, !noalias !39485, !noundef !109 ; 26 uses
   %.not.i.i.i.i = icmp eq ptr %i.ay, null
@@ -6116,7 +6094,6 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n
   %i.bg = getelementptr inbounds nuw i8, ptr %i.be, i64 24
   %i.bh = load ptr, ptr %i.bg, align 8, !noalias !39487, !noundef !109
-  store i64 1, ptr %i.aw, align 8, !alias.scope !39486, !noalias !39485
   store ptr %i.bh, ptr %i.bc, align 8, !alias.scope !39486, !noalias !39485
   br label %bb.p
 
@@ -6192,7 +6169,7 @@ bb.v:                                             ; preds = %bb.t
 
 bb.w:                                             ; preds = %bb.u
   %i.cb = load ptr, ptr %i.bx, align 8, !noalias !39485, !nonnull !109, !noundef !109
-  %i.cc = getelementptr inbounds nuw [48 x i8], ptr %i.cb, i64 %i.bu ; 5 uses
+  %i.cc = getelementptr inbounds nuw [48 x i8], ptr %i.cb, i64 %i.bu ; 4 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 32 ; 2 uses
   %i.ce = load ptr, ptr %i.cd, align 8, !noalias !39485, !noundef !109 ; 3 uses
   %.not1.i.i.i.i = icmp eq ptr %i.ce, null
@@ -6257,7 +6234,6 @@ bb.ab:                                            ; preds = %bb.ac, %bb.aa, %bb.
 bb.ac:                                            ; preds = %bb.aa
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cq, i64 24
   %i.cx = load ptr, ptr %i.cw, align 8, !noalias !39491, !noundef !109
-  store i64 1, ptr %i.cc, align 8, !alias.scope !39490, !noalias !39485
   store ptr %i.cx, ptr %i.cg, align 8, !alias.scope !39490, !noalias !39485
   br label %bb.ab
 

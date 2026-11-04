@@ -205,14 +205,10 @@ bb.a:
   %2 = alloca %struct.rust_mangled_ident, align 8 ; 4 uses
   %i.b = alloca i8, align 1                       ; 5 uses
   %3 = alloca %struct.rust_mangled_ident, align 8 ; 9 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 25 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 24 uses
   %i.d = load i8, ptr %i.c, align 8, !tbaa !24, !range !32, !noundef !33
   %i.e = trunc nuw i8 %i.d to i1
-  br i1 %i.e, label %4, label %bb.b
-
-4:                                                ; preds = %bb.a
-  store i8 1, ptr %i.c, align 8, !tbaa !24
-  br label %common.ret304
+  br i1 %i.e, label %common.ret304, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 29 uses
@@ -615,7 +611,7 @@ parse_integer_62.exit:                            ; preds = %eat.exit.thread.i, 
   %i.ls = trunc nuw i8 %i.lr to i1
   br i1 %i.ls, label %common.ret304, label %bb.cg
 
-common.ret304:                                    ; preds = %bb.bn, %bb.bm, %bb.bg, %bb.bf, %bb.be, %next.exit.thread, %next.exit89.thread, %parse_integer_62.exit, %.critedge83, %print_str.exit84, %4, %print_str.exit140, %print_str.exit139, %bb.bi, %demangle_generic_arg.exit, %bb.cg
+common.ret304:                                    ; preds = %bb.bn, %bb.bm, %bb.bg, %bb.bf, %bb.be, %next.exit.thread, %next.exit89.thread, %parse_integer_62.exit, %.critedge83, %print_str.exit84, %print_str.exit140, %print_str.exit139, %bb.bi, %bb.a, %demangle_generic_arg.exit, %bb.cg
   ret void
 
 bb.cg:                                            ; preds = %parse_integer_62.exit
@@ -1018,7 +1014,7 @@ define internal fastcc void @demangle_type(ptr noundef nonnull %0) unnamed_addr 
 bb.a:
   %1 = alloca %struct.rust_mangled_ident, align 8 ; 8 uses
   %2 = alloca %struct.rust_mangled_ident, align 8 ; 6 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 35 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 34 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !24, !range !32, !noundef !33
   %i.c = trunc nuw i8 %i.b to i1
   br i1 %i.c, label %tailrecurse._crit_edge, label %.lr.ph
@@ -1421,11 +1417,7 @@ print_str.exit177:                                ; preds = %bb.bz
   tail call void %i.iw(ptr noundef nonnull @.str.50, i64 noundef 3, ptr noundef %i.ix) #12, !inline_history !0
   %.pre = load i8, ptr %i.a, align 8, !tbaa !24, !range !32
   %i.iy = trunc nuw i8 %.pre to i1
-  br i1 %i.iy, label %3, label %print_str.exit177.thread
-
-3:                                                ; preds = %print_str.exit177
-  store i8 1, ptr %i.a, align 8, !tbaa !24
-  br label %demangle_dyn_trait.exit
+  br i1 %i.iy, label %demangle_dyn_trait.exit, label %print_str.exit177.thread
 
 print_str.exit177.thread:                         ; preds = %bb.by, %bb.bz, %print_str.exit177
   %i.iz = tail call fastcc zeroext i1 @demangle_path_maybe_open_generics(ptr noundef nonnull %0), !inline_history !64 ; 2 uses
@@ -1575,7 +1567,7 @@ bb.cp:                                            ; preds = %bb.co
   tail call void %i.la(ptr noundef nonnull @.str.18, i64 noundef 1, ptr noundef %i.lb) #12, !inline_history !65
   br label %demangle_dyn_trait.exit
 
-demangle_dyn_trait.exit:                          ; preds = %bb.cp, %bb.co, %.critedge, %3, %peek.exit.i185._crit_edge
+demangle_dyn_trait.exit:                          ; preds = %print_str.exit177, %bb.cp, %bb.co, %.critedge, %peek.exit.i185._crit_edge
   %i.lc = add i64 %.0317, 1
   %i.ld = load i8, ptr %i.a, align 8, !tbaa !24, !range !32, !noundef !33
   %i.le = trunc nuw i8 %i.ld to i1
@@ -1869,14 +1861,10 @@ print_str.exit11:                                 ; preds = %bb.f, %bb.e, %bb.d,
 define internal fastcc void @demangle_const(ptr noundef nonnull %0, i1 noundef zeroext %1) unnamed_addr #0 {
 bb.a:
   %2 = alloca %struct.rust_mangled_ident, align 8 ; 4 uses
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 34 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 33 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !24, !range !32, !noundef !33
   %i.c = trunc nuw i8 %i.b to i1
-  br i1 %i.c, label %3, label %bb.b
-
-3:                                                ; preds = %bb.a
-  store i8 1, ptr %i.a, align 8, !tbaa !24
-  br label %common.ret418
+  br i1 %i.c, label %common.ret418, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 28 uses
@@ -2279,7 +2267,7 @@ parse_integer_62.exit:                            ; preds = %eat.exit.thread.i, 
   %i.og = trunc nuw i8 %i.of to i1
   br i1 %i.og, label %common.ret418, label %bb.co
 
-common.ret418:                                    ; preds = %bb.cs, %bb.cr, %bb.cq, %print_str.exit206.thread, %print_str.exit198.thread, %print_str.exit218.thread, %print_str.exit185, %print_str.exit226.thread, %print_str.exit191, %print_str.exit226, %print_str.exit218, %print_str.exit206, %print_str.exit198, %bb.u, %bb.t, %print_str.exit181, %bb.o, %.thread, %bb.d, %bb.c, %parse_hex_nibbles_for_const_uint.exit180.thread, %bb.n, %next.exit212.thread, %next.exit.thread, %.critedge, %bb.e, %print_str.exit152, %bb.z, %parse_integer_62.exit, %bb.cp, %3, %bb.co
+common.ret418:                                    ; preds = %bb.cs, %bb.cr, %bb.cq, %print_str.exit206.thread, %print_str.exit198.thread, %print_str.exit218.thread, %print_str.exit185, %print_str.exit226.thread, %print_str.exit191, %print_str.exit226, %print_str.exit218, %print_str.exit206, %print_str.exit198, %bb.u, %bb.t, %print_str.exit181, %bb.o, %.thread, %bb.d, %bb.c, %parse_hex_nibbles_for_const_uint.exit180.thread, %bb.n, %next.exit212.thread, %next.exit.thread, %.critedge, %bb.e, %print_str.exit152, %bb.z, %parse_integer_62.exit, %bb.cp, %bb.a, %bb.co
   ret void
 
 bb.co:                                            ; preds = %parse_integer_62.exit
@@ -2318,14 +2306,10 @@ bb.cs:                                            ; preds = %bb.cr
 ; Function Attrs: nounwind
 define internal fastcc void @demangle_binder(ptr nofree noundef nonnull captures(none) %0) unnamed_addr #0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 5 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !24, !range !32, !noundef !33
   %i.c = trunc nuw i8 %i.b to i1
-  br i1 %i.c, label %1, label %bb.b
-
-1:                                                ; preds = %bb.a
-  store i8 1, ptr %i.a, align 8, !tbaa !24
-  br label %print_str.exit14
+  br i1 %i.c, label %print_str.exit14, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 5 uses
@@ -2490,7 +2474,7 @@ print_str.exit15:                                 ; preds = %bb.m, %bb.l, %.peel
   %exitcond.not = icmp eq i64 %i.bi, %.0.i2238
   br i1 %exitcond.not, label %.loopexit, label %.peel.next, !llvm.loop !74
 
-print_str.exit14:                                 ; preds = %peek.exit.i.i, %bb.b, %bb.k, %bb.j, %.loopexit, %parse_opt_integer_62.exit, %1
+print_str.exit14:                                 ; preds = %bb.a, %peek.exit.i.i, %bb.b, %bb.k, %bb.j, %.loopexit, %parse_opt_integer_62.exit
   ret void
 }
 
@@ -2501,14 +2485,10 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 define internal fastcc void @demangle_const_uint(ptr nofree noundef nonnull captures(none) %0, i8 noundef signext %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [21 x i8], align 16               ; 5 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 7 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 6 uses
   %i.c = load i8, ptr %i.b, align 8, !tbaa !24, !range !32, !noundef !33
   %i.d = trunc nuw i8 %i.c to i1
-  br i1 %i.d, label %2, label %bb.b
-
-2:                                                ; preds = %bb.a
-  store i8 1, ptr %i.b, align 8, !tbaa !24
-  br label %print_str.exit24
+  br i1 %i.d, label %print_str.exit24, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
@@ -2735,7 +2715,7 @@ bb.m:                                             ; preds = %bb.l
   call void %i.cj(ptr noundef nonnull %switch.load, i64 noundef %i.cc, ptr noundef %i.cl) #12, !inline_history !0
   br label %print_str.exit24
 
-print_str.exit24:                                 ; preds = %bb.m, %bb.l, %switch.lookup, %.loopexit, %print_str.exit21, %2
+print_str.exit24:                                 ; preds = %bb.a, %bb.m, %bb.l, %switch.lookup, %.loopexit, %print_str.exit21
   ret void
 }
 
@@ -3050,14 +3030,10 @@ print_str.exit:                                   ; preds = %bb.af, %bb.ae, %bb.
 ; Function Attrs: nounwind
 define internal fastcc void @demangle_const_str_literal(ptr nofree noundef nonnull captures(none) %0) unnamed_addr #0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 6 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 5 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !24, !range !32, !noundef !33
   %i.c = trunc nuw i8 %i.b to i1
-  br i1 %i.c, label %1, label %bb.b
-
-1:                                                ; preds = %bb.a
-  store i8 1, ptr %i.a, align 8, !tbaa !24
-  br label %print_str.exit54
+  br i1 %i.c, label %print_str.exit54, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
@@ -3291,21 +3267,17 @@ bb.k:                                             ; preds = %bb.j
   tail call void %i.dd(ptr noundef nonnull @.str.86, i64 noundef 1, ptr noundef %i.df) #12, !inline_history !0
   br label %print_str.exit54
 
-print_str.exit54:                                 ; preds = %bb.k, %bb.j, %.critedge40, %.critedge, %.loopexit, %1
+print_str.exit54:                                 ; preds = %bb.a, %bb.k, %bb.j, %.critedge40, %.critedge, %.loopexit
   ret void
 }
 
 ; Function Attrs: nounwind
 define internal fastcc zeroext i1 @demangle_path_maybe_open_generics(ptr noundef nonnull %0) unnamed_addr #0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 7 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 6 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !24, !range !32, !noundef !33
   %i.c = trunc nuw i8 %i.b to i1
-  br i1 %i.c, label %1, label %bb.b
-
-1:                                                ; preds = %bb.a
-  store i8 1, ptr %i.a, align 8, !tbaa !24
-  br label %common.ret112
+  br i1 %i.c, label %common.ret112, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 16 uses
@@ -3408,8 +3380,8 @@ parse_integer_62.exit:                            ; preds = %eat.exit.thread.i, 
   %i.al = trunc nuw i8 %i.ak to i1
   br i1 %i.al, label %common.ret112, label %bb.i
 
-common.ret112:                                    ; preds = %eat.exit28, %bb.x, %parse_integer_62.exit, %1, %print_str.exit, %bb.j, %demangle_generic_arg.exit, %bb.i
-  %common.ret112.op = phi i1 [ %i.am, %bb.i ], [ true, %bb.j ], [ false, %1 ], [ false, %bb.x ], [ true, %eat.exit28 ], [ false, %parse_integer_62.exit ], [ true, %print_str.exit ], [ true, %demangle_generic_arg.exit ]
+common.ret112:                                    ; preds = %eat.exit28, %bb.x, %parse_integer_62.exit, %print_str.exit, %bb.j, %bb.a, %demangle_generic_arg.exit, %bb.i
+  %common.ret112.op = phi i1 [ %i.am, %bb.i ], [ true, %bb.j ], [ false, %bb.a ], [ false, %bb.x ], [ true, %eat.exit28 ], [ false, %parse_integer_62.exit ], [ true, %print_str.exit ], [ true, %demangle_generic_arg.exit ]
   ret i1 %common.ret112.op
 
 bb.i:                                             ; preds = %parse_integer_62.exit

@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.n, label %bb.f, label %bb.j
 
 bb.f:                                             ; preds = %bb.e
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 1345 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 1345
   %i.p = load i8, ptr %i.o, align 1, !tbaa !42, !range !154, !noundef !155
   %i.q = trunc nuw i8 %i.p to i1
   br i1 %i.q, label %bb.h, label %bb.g
@@ -212,11 +212,10 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.f
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 1352
   store i64 10000, ptr %i.r, align 8, !tbaa !90
-  store i8 0, ptr %i.o, align 1, !tbaa !42
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 1425 ; 2 uses
+  %i.s = getelementptr inbounds nuw i8, ptr %0, i64 1425
   %i.t = load i8, ptr %i.s, align 1, !tbaa !42, !range !154, !noundef !155
   %i.u = trunc nuw i8 %i.t to i1
   br i1 %i.u, label %bb.j, label %bb.i
@@ -224,7 +223,6 @@ bb.h:                                             ; preds = %bb.g, %bb.f
 bb.i:                                             ; preds = %bb.h
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 1432
   store i64 2000000, ptr %i.v, align 8, !tbaa !90
-  store i8 0, ptr %i.s, align 1, !tbaa !42
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.h, %bb.i, %bb.e
@@ -235,7 +233,7 @@ bb.j:                                             ; preds = %bb.h, %bb.i, %bb.e
 
 .preheader.preheader:                             ; preds = %bb.j
   %i.z = tail call noundef ptr @_ZN4bzla6option7Options4dataENS0_6OptionE(ptr noundef nonnull align 8 dereferenceable(3712) %0, i32 noundef 44) ; 2 uses
-  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 33 ; 2 uses
+  %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 33
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !42, !range !154, !noundef !155
   %i.ac = trunc nuw i8 %i.ab to i1
   br i1 %i.ac, label %.preheader.1, label %bb.k
@@ -243,12 +241,11 @@ bb.j:                                             ; preds = %bb.h, %bb.i, %bb.e
 bb.k:                                             ; preds = %.preheader.preheader
   %i.ad = getelementptr inbounds nuw i8, ptr %i.z, i64 34
   store i8 0, ptr %i.ad, align 2, !tbaa !89
-  store i8 0, ptr %i.aa, align 1, !tbaa !42
   br label %.preheader.1
 
 .preheader.1:                                     ; preds = %bb.k, %.preheader.preheader
   %i.ae = tail call noundef ptr @_ZN4bzla6option7Options4dataENS0_6OptionE(ptr noundef nonnull align 8 dereferenceable(3712) %0, i32 noundef 45) ; 2 uses
-  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 33 ; 2 uses
+  %i.af = getelementptr inbounds nuw i8, ptr %i.ae, i64 33
   %i.ag = load i8, ptr %i.af, align 1, !tbaa !42, !range !154, !noundef !155
   %i.ah = trunc nuw i8 %i.ag to i1
   br i1 %i.ah, label %.preheader.2, label %bb.l
@@ -256,12 +253,11 @@ bb.k:                                             ; preds = %.preheader.preheade
 bb.l:                                             ; preds = %.preheader.1
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 34
   store i8 0, ptr %i.ai, align 2, !tbaa !89
-  store i8 0, ptr %i.af, align 1, !tbaa !42
   br label %.preheader.2
 
 .preheader.2:                                     ; preds = %bb.l, %.preheader.1
   %i.aj = tail call noundef ptr @_ZN4bzla6option7Options4dataENS0_6OptionE(ptr noundef nonnull align 8 dereferenceable(3712) %0, i32 noundef 46) ; 2 uses
-  %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 33 ; 2 uses
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 33
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !42, !range !154, !noundef !155
   %i.am = trunc nuw i8 %i.al to i1
   br i1 %i.am, label %.preheader.3, label %bb.m
@@ -269,12 +265,11 @@ bb.l:                                             ; preds = %.preheader.1
 bb.m:                                             ; preds = %.preheader.2
   %i.an = getelementptr inbounds nuw i8, ptr %i.aj, i64 34
   store i8 0, ptr %i.an, align 2, !tbaa !89
-  store i8 0, ptr %i.ak, align 1, !tbaa !42
   br label %.preheader.3
 
 .preheader.3:                                     ; preds = %bb.m, %.preheader.2
   %i.ao = tail call noundef ptr @_ZN4bzla6option7Options4dataENS0_6OptionE(ptr noundef nonnull align 8 dereferenceable(3712) %0, i32 noundef 47) ; 2 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 33 ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 33
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !42, !range !154, !noundef !155
   %i.ar = trunc nuw i8 %i.aq to i1
   br i1 %i.ar, label %.preheader.4, label %bb.n
@@ -282,12 +277,11 @@ bb.m:                                             ; preds = %.preheader.2
 bb.n:                                             ; preds = %.preheader.3
   %i.as = getelementptr inbounds nuw i8, ptr %i.ao, i64 34
   store i8 0, ptr %i.as, align 2, !tbaa !89
-  store i8 0, ptr %i.ap, align 1, !tbaa !42
   br label %.preheader.4
 
 .preheader.4:                                     ; preds = %bb.n, %.preheader.3
   %i.at = tail call noundef ptr @_ZN4bzla6option7Options4dataENS0_6OptionE(ptr noundef nonnull align 8 dereferenceable(3712) %0, i32 noundef 48) ; 2 uses
-  %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 33 ; 2 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 33
   %i.av = load i8, ptr %i.au, align 1, !tbaa !42, !range !154, !noundef !155
   %i.aw = trunc nuw i8 %i.av to i1
   br i1 %i.aw, label %.preheader.5, label %bb.o
@@ -295,12 +289,11 @@ bb.n:                                             ; preds = %.preheader.3
 bb.o:                                             ; preds = %.preheader.4
   %i.ax = getelementptr inbounds nuw i8, ptr %i.at, i64 34
   store i8 0, ptr %i.ax, align 2, !tbaa !89
-  store i8 0, ptr %i.au, align 1, !tbaa !42
   br label %.preheader.5
 
 .preheader.5:                                     ; preds = %bb.o, %.preheader.4
   %i.ay = tail call noundef ptr @_ZN4bzla6option7Options4dataENS0_6OptionE(ptr noundef nonnull align 8 dereferenceable(3712) %0, i32 noundef 49) ; 2 uses
-  %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 33 ; 2 uses
+  %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 33
   %i.ba = load i8, ptr %i.az, align 1, !tbaa !42, !range !154, !noundef !155
   %i.bb = trunc nuw i8 %i.ba to i1
   br i1 %i.bb, label %.preheader.6, label %bb.p
@@ -308,12 +301,11 @@ bb.o:                                             ; preds = %.preheader.4
 bb.p:                                             ; preds = %.preheader.5
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ay, i64 34
   store i8 0, ptr %i.bc, align 2, !tbaa !89
-  store i8 0, ptr %i.az, align 1, !tbaa !42
   br label %.preheader.6
 
 .preheader.6:                                     ; preds = %bb.p, %.preheader.5
   %i.bd = tail call noundef ptr @_ZN4bzla6option7Options4dataENS0_6OptionE(ptr noundef nonnull align 8 dereferenceable(3712) %0, i32 noundef 50) ; 2 uses
-  %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 33 ; 2 uses
+  %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 33
   %i.bf = load i8, ptr %i.be, align 1, !tbaa !42, !range !154, !noundef !155
   %i.bg = trunc nuw i8 %i.bf to i1
   br i1 %i.bg, label %.preheader.7, label %bb.q
@@ -321,12 +313,11 @@ bb.p:                                             ; preds = %.preheader.5
 bb.q:                                             ; preds = %.preheader.6
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bd, i64 34
   store i8 0, ptr %i.bh, align 2, !tbaa !89
-  store i8 0, ptr %i.be, align 1, !tbaa !42
   br label %.preheader.7
 
 .preheader.7:                                     ; preds = %bb.q, %.preheader.6
   %i.bi = tail call noundef ptr @_ZN4bzla6option7Options4dataENS0_6OptionE(ptr noundef nonnull align 8 dereferenceable(3712) %0, i32 noundef 51) ; 2 uses
-  %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 33 ; 2 uses
+  %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 33
   %i.bk = load i8, ptr %i.bj, align 1, !tbaa !42, !range !154, !noundef !155
   %i.bl = trunc nuw i8 %i.bk to i1
   br i1 %i.bl, label %.loopexit, label %bb.r
@@ -334,7 +325,6 @@ bb.q:                                             ; preds = %.preheader.6
 bb.r:                                             ; preds = %.preheader.7
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bi, i64 34
   store i8 0, ptr %i.bm, align 2, !tbaa !89
-  store i8 0, ptr %i.bj, align 1, !tbaa !42
   br label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader.7, %bb.r, %bb.j

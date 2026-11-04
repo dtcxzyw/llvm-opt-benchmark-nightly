@@ -205,7 +205,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.q,
   br label %bb.bb
 
 bb.r:                                             ; preds = %bb.i
-  %i.at = getelementptr inbounds nuw i8, ptr %0, i64 17 ; 10 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %0, i64 17 ; 9 uses
   %i.au = load i8, ptr %i.at, align 1, !tbaa !204, !range !13, !noundef !14
   %i.av = trunc nuw i8 %i.au to i1
   br i1 %i.av, label %.thread80, label %bb.s
@@ -214,11 +214,7 @@ bb.s:                                             ; preds = %bb.r
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !32, !range !13, !noundef !14
   %i.ay = trunc nuw i8 %i.ax to i1
-  br i1 %i.ay, label %bb.t, label %.thread78
-
-.thread78:                                        ; preds = %bb.s
-  store i8 0, ptr %i.at, align 1, !tbaa !204
-  br label %bb.u
+  br i1 %i.ay, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
   %i.az = load i8, ptr %0, align 8, !tbaa !31, !range !13, !noundef !14 ; 2 uses
@@ -227,7 +223,7 @@ bb.t:                                             ; preds = %bb.s
   %.not84.not = icmp eq i8 %i.az, 0
   br i1 %.not84.not, label %.thread80, label %bb.u
 
-bb.u:                                             ; preds = %.thread78, %bb.t
+bb.u:                                             ; preds = %bb.s, %bb.t
   %i.bb = load i8, ptr %0, align 8, !tbaa !31, !range !13, !noundef !14
   %i.bc = trunc nuw i8 %i.bb to i1
   br i1 %i.bc, label %bb.v, label %.thread81

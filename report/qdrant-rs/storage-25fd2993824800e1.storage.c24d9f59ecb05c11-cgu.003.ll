@@ -204,16 +204,12 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e
   %i.j = load i64, ptr %0, align 8, !range !28, !noundef !29
   %i.k = trunc nuw i64 %i.j to i1
-  br i1 %i.k, label %3, label %bb.h
+  br i1 %i.k, label %common.ret, label %bb.h
 
-common.ret:                                       ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCINvMNtNtCsjZG7hsAZr3B_5tokio2fs12open_optionsNtBH_11OpenOptions4openRNtNtCsG258MDvU3F_3std4path7PathBufE0ECsgGgPqgSfnMH_7storage.exit, %3
-  %storemerge = phi i8 [ 1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCINvMNtNtCsjZG7hsAZr3B_5tokio2fs12open_optionsNtBH_11OpenOptions4openRNtNtCsG258MDvU3F_3std4path7PathBufE0ECsgGgPqgSfnMH_7storage.exit ], [ 3, %3 ]
+common.ret:                                       ; preds = %bb.g, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCINvMNtNtCsjZG7hsAZr3B_5tokio2fs12open_optionsNtBH_11OpenOptions4openRNtNtCsG258MDvU3F_3std4path7PathBufE0ECsgGgPqgSfnMH_7storage.exit
+  %storemerge = phi i8 [ 1, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCINvMNtNtCsjZG7hsAZr3B_5tokio2fs12open_optionsNtBH_11OpenOptions4openRNtNtCsG258MDvU3F_3std4path7PathBufE0ECsgGgPqgSfnMH_7storage.exit ], [ 3, %bb.g ]
   store i8 %storemerge, ptr %i.a, align 1
   ret void
-
-3:                                                ; preds = %bb.g
-  store i64 1, ptr %0, align 8
-  br label %common.ret
 
 bb.h:                                             ; preds = %bb.g
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 160

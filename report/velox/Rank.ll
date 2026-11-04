@@ -205,20 +205,16 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #24
   call void @_ZN8facebook5velox4exec18parseTypeSignatureERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.facebook::velox::exec::TypeSignature") align 8 %2, ptr noundef nonnull align 8 dereferenceable(32) %1)
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 3 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 160 ; 2 uses
   %i.c = load i8, ptr %i.b, align 8, !tbaa !69, !range !70, !noundef !71
   %i.d = trunc nuw i8 %i.c to i1
-  br i1 %i.d, label %bb.b, label %3
+  br i1 %i.d, label %bb.b, label %_ZNSt19_Optional_base_implIN8facebook5velox4exec13TypeSignatureESt14_Optional_baseIS3_Lb0ELb0EEE8_M_resetEv.exit.i
 
 bb.b:                                             ; preds = %bb.a
   call void @_ZNSt22_Optional_payload_baseIN8facebook5velox4exec13TypeSignatureEE10_M_destroyEv(ptr noundef nonnull align 8 dereferenceable(112) %i.a) #24
   br label %_ZNSt19_Optional_base_implIN8facebook5velox4exec13TypeSignatureESt14_Optional_baseIS3_Lb0ELb0EEE8_M_resetEv.exit.i
 
-3:                                                ; preds = %bb.a
-  store i8 0, ptr %i.b, align 8, !tbaa !69
-  br label %_ZNSt19_Optional_base_implIN8facebook5velox4exec13TypeSignatureESt14_Optional_baseIS3_Lb0ELb0EEE8_M_resetEv.exit.i
-
-_ZNSt19_Optional_base_implIN8facebook5velox4exec13TypeSignatureESt14_Optional_baseIS3_Lb0ELb0EEE8_M_resetEv.exit.i: ; preds = %3, %bb.b
+_ZNSt19_Optional_base_implIN8facebook5velox4exec13TypeSignatureESt14_Optional_baseIS3_Lb0ELb0EEE8_M_resetEv.exit.i: ; preds = %bb.b, %bb.a
   invoke void @_ZN8facebook5velox4exec13TypeSignatureC2EOS2_(ptr noundef nonnull align 8 dereferenceable(112) %i.a, ptr noundef nonnull align 8 dereferenceable(97) %2)
           to label %bb.c unwind label %bb.g
 
@@ -227,11 +223,11 @@ bb.c:                                             ; preds = %_ZNSt19_Optional_ba
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 88 ; 2 uses
   %i.f = load i8, ptr %i.e, align 8, !tbaa !73, !range !70, !noundef !71
   %i.g = trunc nuw i8 %i.f to i1
-  store i8 0, ptr %i.e, align 8, !tbaa !73
   br i1 %i.g, label %bb.d, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.i
 
 bb.d:                                             ; preds = %bb.c
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 56
+  store i8 0, ptr %i.e, align 8, !tbaa !73
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !27   ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 72 ; 2 uses
   %i.k = icmp eq ptr %i.i, %i.j
@@ -557,11 +553,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !73, !range !70, !noundef !71
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !73
   br i1 %i.c, label %bb.b, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56
+  store i8 0, ptr %i.a, align 8, !tbaa !73
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !27   ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f
@@ -640,11 +636,11 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.c = load i8, ptr %i.b, align 8, !tbaa !73, !range !70, !noundef !71
   %i.d = trunc nuw i8 %i.c to i1
-  store i8 0, ptr %i.b, align 8, !tbaa !73
   br i1 %i.d, label %bb.b, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.i
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 56
+  store i8 0, ptr %i.b, align 8, !tbaa !73
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !27   ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.h = icmp eq ptr %i.f, %i.g
@@ -1047,11 +1043,11 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !73, !range !70, !noundef !71
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !73
   br i1 %i.c, label %bb.b, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.i
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56
+  store i8 0, ptr %i.a, align 8, !tbaa !73
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !27   ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
   %i.g = icmp eq ptr %i.e, %i.f

@@ -205,7 +205,6 @@ bb.e:                                             ; preds = %bb.b
   br i1 %.not, label %bb.j, label %bb.i, !dbg !3777, !prof !422
 
 bb.f:                                             ; preds = %bb.d
-  store i32 1, ptr %1, align 4, !dbg !3778
   store <2 x i32> %i.k, ptr %i.d, align 4, !dbg !3778
   br label %bb.h, !dbg !3779
 
@@ -284,7 +283,6 @@ bb.e:                                             ; preds = %bb.b
   br i1 %.not, label %bb.j, label %bb.i, !dbg !3842, !prof !422
 
 bb.f:                                             ; preds = %bb.d
-  store i32 1, ptr %1, align 4, !dbg !3843
   store <2 x i32> %i.k, ptr %i.d, align 4, !dbg !3843
   br label %bb.h, !dbg !3844
 
@@ -363,7 +361,6 @@ bb.e:                                             ; preds = %bb.b
   br i1 %.not, label %bb.j, label %bb.i, !dbg !3905, !prof !422
 
 bb.f:                                             ; preds = %bb.d
-  store i32 1, ptr %1, align 4, !dbg !3906
   store <2 x i32> %i.k, ptr %i.d, align 4, !dbg !3906
   br label %bb.h, !dbg !3907
 
@@ -766,7 +763,7 @@ bb.bn:                                            ; preds = %bb.bl, %bb.bk
 
 bb.bo:                                            ; preds = %bb.bn
   %i.is = load ptr, ptr %i.cv, align 8, !dbg !9101, !noalias !8827, !nonnull !396, !noundef !396
-  %i.it = getelementptr inbounds nuw [104 x i8], ptr %i.is, i64 %.sroa.7136.0, !dbg !9102 ; 6 uses
+  %i.it = getelementptr inbounds nuw [104 x i8], ptr %i.is, i64 %.sroa.7136.0, !dbg !9102 ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !8828), !dbg !9103
   call void @llvm.experimental.noalias.scope.decl(metadata !8829), !dbg !9103
   %i.iu = load i64, ptr %i.it, align 8, !dbg !9104, !range !399, !alias.scope !8828, !noalias !8827, !noundef !396
@@ -890,7 +887,6 @@ bb.bx:                                            ; preds = %_RNvMsG_NtCs1xwejQu
   store i64 1, ptr %i.jw, align 8, !dbg !9136, !noalias !8833
   %i.jx = getelementptr inbounds nuw i8, ptr %i.jv, i64 24, !dbg !9136
   store i64 %i.iy, ptr %i.jx, align 8, !dbg !9136, !noalias !8833
-  store i64 1, ptr %i.it, align 8, !dbg !9137, !alias.scope !8828, !noalias !8827
   store i64 %i.iy, ptr %i.iw, align 8, !dbg !9137, !alias.scope !8828, !noalias !8827
   br label %_RNvMsO_NtNtCs74LoFwSioHw_4http6header3mapINtB5_13OccupiedEntryNtNtB7_5value11HeaderValueE6appendCsbaWXNhtWAp9_11foundations.exit, !dbg !9138
 

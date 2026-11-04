@@ -204,8 +204,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y, %bb.x
   store i8 0, ptr %i.a, align 1, !tbaa !131
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #21
   %i.by = call noundef i32 @_ZN11CommandData13IsProcessFileER10FileHeaderPbibPwj(ptr noundef nonnull align 8 dereferenceable(100904) %i.bo, ptr noundef nonnull align 8 dereferenceable(17184) %i.bh, ptr noundef nonnull %i.a, i32 noundef 6, i1 noundef zeroext false, ptr noundef nonnull %i.b, i32 noundef 2048)
-  %i.bz = icmp ne i32 %i.by, 0                    ; 2 uses
-  %10 = zext i1 %i.bz to i8                       ; 4 uses
+  %i.bz = icmp ne i32 %i.by, 0                    ; 5 uses
   %i.ca = load ptr, ptr %i.i, align 8, !tbaa !36  ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 57452
   %i.cc = load i32, ptr %i.cb, align 4, !tbaa !132
@@ -272,8 +271,8 @@ bb.ah:                                            ; preds = %bb.ag
   br i1 %i.dg, label %bb.ai, label %bb.al
 
 bb.ai:                                            ; preds = %bb.ah
-  %11 = icmp eq i32 %i.cx, 0
-  %spec.select = select i1 %11, i8 0, i8 %10
+  %10 = icmp ne i32 %i.cx, 0
+  %spec.select = and i1 %10, %i.bz
   %i.dh = call noundef i32 @_Z20ParseVersionFileNamePwb(ptr noundef nonnull %i.c, i1 noundef zeroext true) ; 0 uses
   br label %bb.al
 
@@ -285,12 +284,12 @@ bb.ak:                                            ; preds = %bb.aj
   %i.dj = load ptr, ptr %i.i, align 8, !tbaa !36
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 67004
   %i.dl = load i32, ptr %i.dk, align 4, !tbaa !175
-  %12 = icmp ugt i32 %i.dl, 1
-  %spec.select364 = select i1 %12, i8 0, i8 %10
+  %11 = icmp ult i32 %i.dl, 2
+  %spec.select364 = and i1 %11, %i.bz
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ak, %bb.ai, %bb.ah, %bb.aj, %bb.ag
-  %.2308 = phi i8 [ %10, %bb.ag ], [ %spec.select364, %bb.ak ], [ %10, %bb.aj ], [ 0, %bb.ah ], [ %spec.select, %bb.ai ] ; 2 uses
+  %.2308 = phi i1 [ %i.bz, %bb.ag ], [ %spec.select364, %bb.ak ], [ %i.bz, %bb.aj ], [ false, %bb.ah ], [ %spec.select, %bb.ai ] ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %1, i64 22329 ; 2 uses
   %i.dn = load i8, ptr %i.dm, align 1, !tbaa !127, !range !64, !noundef !65
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 5 uses
@@ -306,14 +305,13 @@ bb.al:                                            ; preds = %bb.ak, %bb.ai, %bb.
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dv, i64 40
   %i.dx = load ptr, ptr %i.dw, align 8
   call void %i.dx(ptr noundef nonnull align 8 dereferenceable(57108) %1, i64 noundef %i.du, i32 noundef 0)
-  %i.dy = getelementptr inbounds nuw i8, ptr %0, i64 368 ; 4 uses
+  %i.dy = getelementptr inbounds nuw i8, ptr %0, i64 368 ; 3 uses
   %i.dz = load i8, ptr %i.dy, align 8, !tbaa !104, !range !64, !noundef !65
   %i.ea = trunc nuw i8 %i.dz to i1
   br i1 %i.ea, label %bb.am, label %.thread372
 
 bb.am:                                            ; preds = %bb.al
-  %13 = trunc nuw i8 %.2308 to i1
-  br i1 %13, label %bb.an, label %.thread372.thread
+  br i1 %.2308, label %bb.an, label %.thread372.thread
 
 bb.an:                                            ; preds = %bb.am
   %i.eb = getelementptr inbounds nuw i8, ptr %1, i64 22328
@@ -356,9 +354,7 @@ bb.ao:                                            ; preds = %bb.an
   br label %.preheader
 
 .thread372:                                       ; preds = %bb.al
-  store i8 0, ptr %i.dy, align 8, !tbaa !104
-  %14 = trunc nuw i8 %.2308 to i1
-  br i1 %14, label %.loopexit, label %.preheader
+  br i1 %.2308, label %.loopexit, label %.preheader
 
 .preheader:                                       ; preds = %.thread372.thread, %.thread372
   %i.eo = getelementptr inbounds nuw i8, ptr %0, i64 8

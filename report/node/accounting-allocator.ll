@@ -116,16 +116,12 @@ bb.e:                                             ; preds = %bb.d
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.k = load ptr, ptr %i.j, align 8, !noalias !10
   call void @_ZN2v88internal10MemoryPool21RemoveZoneReservationEPNS0_7IsolateE(ptr dead_on_unwind nonnull writable sret(%"class.std::optional.6") align 8 %3, ptr noundef nonnull align 8 dereferenceable(176) %i.k, ptr noundef nonnull %i.d) #12
-  %i.l = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 3 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
   %i.m = load i8, ptr %i.l, align 8, !range !5, !alias.scope !10, !noundef !9
   %i.n = trunc nuw i8 %i.m to i1
-  br i1 %i.n, label %bb.j, label %.thread.i.i
+  br i1 %i.n, label %bb.j, label %bb.f
 
-.thread.i.i:                                      ; preds = %bb.e
-  store i8 0, ptr %i.l, align 8, !alias.scope !10
-  br label %bb.f
-
-bb.f:                                             ; preds = %.thread.i.i, %bb.d
+bb.f:                                             ; preds = %bb.e, %bb.d
   %i.o = call noundef ptr @_ZN2v88internal24GetPlatformPageAllocatorEv() #12
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #12, !noalias !10
   call void @_ZN2v88internal13VirtualMemoryC1EPNS_13PageAllocatorEmNS2_14AllocationHintEmNS2_10PermissionE(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef %i.o, i64 noundef %i.g, ptr null, i8 0, i64 noundef 16384, i32 noundef 2) #12
@@ -177,10 +173,10 @@ bb.j:                                             ; preds = %_ZN2v88internal12_G
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   %.pre = load i8, ptr %i.x, align 8, !range !5
   %i.ad = trunc nuw i8 %.pre to i1
-  store i8 0, ptr %i.x, align 8
   br i1 %i.ad, label %bb.k, label %_ZNSt14_Optional_baseIN2v88internal13VirtualMemoryELb0ELb0EED2Ev.exit.i
 
 bb.k:                                             ; preds = %bb.j
+  store i8 0, ptr %i.x, align 8
   call void @_ZN2v88internal13VirtualMemoryD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(32) %3) #12
   br label %_ZNSt14_Optional_baseIN2v88internal13VirtualMemoryELb0ELb0EED2Ev.exit.i
 

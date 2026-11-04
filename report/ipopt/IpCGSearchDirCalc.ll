@@ -202,13 +202,13 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa, %_ZN
   %i.ch = load ptr, ptr %i.e, align 8, !tbaa !24  ; 4 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 2192
   %i.cj = load ptr, ptr %i.ci, align 8, !tbaa !305 ; 9 uses
-  %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 64 ; 2 uses
+  %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 64
   %i.cl = load i8, ptr %i.ck, align 8, !tbaa !308, !range !46, !noundef !47
   %i.cm = trunc nuw i8 %i.cl to i1
   br i1 %i.cm, label %bb.ad, label %bb.ae
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.cn = getelementptr inbounds nuw i8, ptr %i.cj, i64 80 ; 2 uses
+  %i.cn = getelementptr inbounds nuw i8, ptr %i.cj, i64 80
   %i.co = load i8, ptr %i.cn, align 8, !tbaa !309, !range !46, !noundef !47
   %i.cp = trunc nuw i8 %i.co to i1
   br i1 %i.cp, label %bb.cc, label %bb.ae
@@ -611,10 +611,8 @@ bb.cd:                                            ; preds = %bb.cc
   %.sroa.speculated.i314 = select i1 %i.lk, double %.sroa.speculated.i313, double 1.000000e+06 ; 2 uses
   %i.ll = getelementptr inbounds nuw i8, ptr %i.cj, i64 56
   store double %.sroa.speculated.i314, ptr %i.ll, align 8, !tbaa !332
-  store i8 1, ptr %i.ck, align 8, !tbaa !308
   %i.lm = getelementptr inbounds nuw i8, ptr %i.cj, i64 72
   store double %.sroa.speculated.i314, ptr %i.lm, align 8, !tbaa !333
-  store i8 1, ptr %i.cn, align 8, !tbaa !309
   br label %bb.cf
 
 bb.ce:                                            ; preds = %bb.aq, %bb.ar, %bb.cb, %bb.ca, %bb.by

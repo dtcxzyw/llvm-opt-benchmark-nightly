@@ -204,7 +204,7 @@ bb.g:                                             ; preds = %bb.f
   %i.an = load i64, ptr %i.am, align 8, !alias.scope !3372, !noundef !13 ; 5 uses
   %.sroa.013.015.i.i = load ptr, ptr %i.al, align 8, !alias.scope !3372, !nonnull !13, !noundef !13 ; 3 uses
   %i.ao = icmp eq i64 %i.an, 0
-  br i1 %i.ao, label %._crit_edge.i.i, label %.lr.ph.i.i2.preheader
+  br i1 %i.ao, label %_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCsaKJjC64KgbL_3std4path7PathBufNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit.i, label %.lr.ph.i.i2.preheader
 
 .lr.ph.i.i2.preheader:                            ; preds = %bb.g
   %xtraiter = and i64 %i.an, 7                    ; 2 uses
@@ -227,12 +227,7 @@ bb.g:                                             ; preds = %bb.f
   %.sroa.013.017.i.i.unr = phi ptr [ %.sroa.013.015.i.i, %.lr.ph.i.i2.preheader ], [ %.sroa.013.0.i.i.prol, %.lr.ph.i.i2.prol ]
   %.sroa.011.016.i.i.unr = phi i64 [ %i.an, %.lr.ph.i.i2.preheader ], [ %i.aq, %.lr.ph.i.i2.prol ]
   %i.ar = icmp ult i64 %i.an, 8
-  br i1 %i.ar, label %._crit_edge.i.i, label %.lr.ph.i.i2
-
-._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g
-  %.sroa.013.0.lcssa.i.i = phi ptr [ %.sroa.013.015.i.i, %bb.g ], [ %.sroa.013.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ]
-  store i64 1, ptr %1, align 8, !alias.scope !3372
-  br label %_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCsaKJjC64KgbL_3std4path7PathBufNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit.i
+  br i1 %i.ar, label %_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCsaKJjC64KgbL_3std4path7PathBufNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit.i, label %.lr.ph.i.i2
 
 .lr.ph.i.i2:                                      ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2
   %.sroa.013.017.i.i = phi ptr [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ], [ %.sroa.013.017.i.i.unr, %.lr.ph.i.i2.prol.loopexit ]
@@ -255,12 +250,12 @@ bb.g:                                             ; preds = %bb.f
   %i.ba = add i64 %.sroa.011.016.i.i, -8          ; 2 uses
   %.sroa.013.0.i.i.7 = load ptr, ptr %i.az, align 8, !noalias !3374, !nonnull !13, !noundef !13 ; 2 uses
   %i.bb = icmp eq i64 %i.ba, 0
-  br i1 %i.bb, label %._crit_edge.i.i, label %.lr.ph.i.i2
+  br i1 %i.bb, label %_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCsaKJjC64KgbL_3std4path7PathBufNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit.i, label %.lr.ph.i.i2
 
-_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCsaKJjC64KgbL_3std4path7PathBufNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit.i: ; preds = %._crit_edge.i.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCsaKJjC64KgbL_3std4path7PathBufNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i
-  %.sroa.59.0.copyload.i.i = phi i64 [ %.sroa.59.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCsaKJjC64KgbL_3std4path7PathBufNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.48.0.copyload.i.i = phi i64 [ %.sroa.48.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCsaKJjC64KgbL_3std4path7PathBufNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.07.0.copyload.i.i = phi ptr [ %i.ak, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCsaKJjC64KgbL_3std4path7PathBufNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ %.sroa.013.0.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
+_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCsaKJjC64KgbL_3std4path7PathBufNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit.i: ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCsaKJjC64KgbL_3std4path7PathBufNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i
+  %.sroa.59.0.copyload.i.i = phi i64 [ %.sroa.59.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCsaKJjC64KgbL_3std4path7PathBufNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.48.0.copyload.i.i = phi i64 [ %.sroa.48.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCsaKJjC64KgbL_3std4path7PathBufNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.07.0.copyload.i.i = phi ptr [ %i.ak, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCsaKJjC64KgbL_3std4path7PathBufNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ %.sroa.013.015.i.i, %bb.g ], [ %.sroa.013.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3375)
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.07.0.copyload.i.i, i64 274
   %i.bd = load i16, ptr %i.bc, align 2, !noalias !3376, !noundef !13
@@ -528,7 +523,7 @@ bb.g:                                             ; preds = %bb.f
   %i.ap = load i64, ptr %i.ao, align 8, !alias.scope !3423, !noundef !13 ; 5 uses
   %.sroa.013.015.i.i = load ptr, ptr %i.an, align 8, !alias.scope !3423, !nonnull !13, !noundef !13 ; 3 uses
   %i.aq = icmp eq i64 %i.ap, 0
-  br i1 %i.aq, label %._crit_edge.i.i, label %.lr.ph.i.i2.preheader
+  br i1 %i.aq, label %_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit.i, label %.lr.ph.i.i2.preheader
 
 .lr.ph.i.i2.preheader:                            ; preds = %bb.g
   %xtraiter = and i64 %i.ap, 7                    ; 2 uses
@@ -551,12 +546,7 @@ bb.g:                                             ; preds = %bb.f
   %.sroa.013.017.i.i.unr = phi ptr [ %.sroa.013.015.i.i, %.lr.ph.i.i2.preheader ], [ %.sroa.013.0.i.i.prol, %.lr.ph.i.i2.prol ]
   %.sroa.011.016.i.i.unr = phi i64 [ %i.ap, %.lr.ph.i.i2.preheader ], [ %i.as, %.lr.ph.i.i2.prol ]
   %i.at = icmp ult i64 %i.ap, 8
-  br i1 %i.at, label %._crit_edge.i.i, label %.lr.ph.i.i2
-
-._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g
-  %.sroa.013.0.lcssa.i.i = phi ptr [ %.sroa.013.015.i.i, %bb.g ], [ %.sroa.013.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ]
-  store i64 1, ptr %1, align 8, !alias.scope !3423
-  br label %_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit.i
+  br i1 %i.at, label %_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit.i, label %.lr.ph.i.i2
 
 .lr.ph.i.i2:                                      ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2
   %.sroa.013.017.i.i = phi ptr [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ], [ %.sroa.013.017.i.i.unr, %.lr.ph.i.i2.prol.loopexit ]
@@ -579,12 +569,12 @@ bb.g:                                             ; preds = %bb.f
   %i.bc = add i64 %.sroa.011.016.i.i, -8          ; 2 uses
   %.sroa.013.0.i.i.7 = load ptr, ptr %i.bb, align 8, !noalias !3425, !nonnull !13, !noundef !13 ; 2 uses
   %i.bd = icmp eq i64 %i.bc, 0
-  br i1 %i.bd, label %._crit_edge.i.i, label %.lr.ph.i.i2
+  br i1 %i.bd, label %_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit.i, label %.lr.ph.i.i2
 
-_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit.i: ; preds = %._crit_edge.i.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i
-  %.sroa.59.0.copyload.i.i = phi i64 [ %.sroa.59.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.48.0.copyload.i.i = phi i64 [ %.sroa.48.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.07.0.copyload.i.i = phi ptr [ %i.am, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ %.sroa.013.0.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
+_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit.i: ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i
+  %.sroa.59.0.copyload.i.i = phi i64 [ %.sroa.59.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.48.0.copyload.i.i = phi i64 [ %.sroa.48.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.07.0.copyload.i.i = phi ptr [ %i.am, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ %.sroa.013.015.i.i, %bb.g ], [ %.sroa.013.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3426)
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.07.0.copyload.i.i, i64 362
   %i.bf = load i16, ptr %i.be, align 2, !noalias !3427, !noundef !13
@@ -851,7 +841,7 @@ bb.g:                                             ; preds = %bb.f
   %i.an = load i64, ptr %i.am, align 8, !alias.scope !3474, !noundef !13 ; 5 uses
   %.sroa.013.015.i.i = load ptr, ptr %i.al, align 8, !alias.scope !3474, !nonnull !13, !noundef !13 ; 3 uses
   %i.ao = icmp eq i64 %i.an, 0
-  br i1 %i.ao, label %._crit_edge.i.i, label %.lr.ph.i.i2.preheader
+  br i1 %i.ao, label %_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just6signal6SignalNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit.i, label %.lr.ph.i.i2.preheader
 
 .lr.ph.i.i2.preheader:                            ; preds = %bb.g
   %xtraiter = and i64 %i.an, 7                    ; 2 uses
@@ -874,12 +864,7 @@ bb.g:                                             ; preds = %bb.f
   %.sroa.013.017.i.i.unr = phi ptr [ %.sroa.013.015.i.i, %.lr.ph.i.i2.preheader ], [ %.sroa.013.0.i.i.prol, %.lr.ph.i.i2.prol ]
   %.sroa.011.016.i.i.unr = phi i64 [ %i.an, %.lr.ph.i.i2.preheader ], [ %i.aq, %.lr.ph.i.i2.prol ]
   %i.ar = icmp ult i64 %i.an, 8
-  br i1 %i.ar, label %._crit_edge.i.i, label %.lr.ph.i.i2
-
-._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g
-  %.sroa.013.0.lcssa.i.i = phi ptr [ %.sroa.013.015.i.i, %bb.g ], [ %.sroa.013.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ]
-  store i64 1, ptr %1, align 8, !alias.scope !3474
-  br label %_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just6signal6SignalNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit.i
+  br i1 %i.ar, label %_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just6signal6SignalNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit.i, label %.lr.ph.i.i2
 
 .lr.ph.i.i2:                                      ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2
   %.sroa.013.017.i.i = phi ptr [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ], [ %.sroa.013.017.i.i.unr, %.lr.ph.i.i2.prol.loopexit ]
@@ -902,12 +887,12 @@ bb.g:                                             ; preds = %bb.f
   %i.ba = add i64 %.sroa.011.016.i.i, -8          ; 2 uses
   %.sroa.013.0.i.i.7 = load ptr, ptr %i.az, align 8, !noalias !3476, !nonnull !13, !noundef !13 ; 2 uses
   %i.bb = icmp eq i64 %i.ba, 0
-  br i1 %i.bb, label %._crit_edge.i.i, label %.lr.ph.i.i2
+  br i1 %i.bb, label %_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just6signal6SignalNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit.i, label %.lr.ph.i.i2
 
-_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just6signal6SignalNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit.i: ; preds = %._crit_edge.i.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just6signal6SignalNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i
-  %.sroa.59.0.copyload.i.i = phi i64 [ %.sroa.59.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just6signal6SignalNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.48.0.copyload.i.i = phi i64 [ %.sroa.48.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just6signal6SignalNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.07.0.copyload.i.i = phi ptr [ %i.ak, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just6signal6SignalNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ %.sroa.013.0.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
+_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just6signal6SignalNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit.i: ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just6signal6SignalNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i
+  %.sroa.59.0.copyload.i.i = phi i64 [ %.sroa.59.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just6signal6SignalNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.48.0.copyload.i.i = phi i64 [ %.sroa.48.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just6signal6SignalNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.07.0.copyload.i.i = phi ptr [ %i.ak, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just6signal6SignalNtNtB7_7set_val9SetValZSTE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ %.sroa.013.015.i.i, %bb.g ], [ %.sroa.013.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3477)
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.07.0.copyload.i.i, i64 54
   %i.bd = load i16, ptr %i.bc, align 2, !noalias !3478, !noundef !13
@@ -1173,7 +1158,7 @@ bb.g:                                             ; preds = %bb.f
   %i.an = load i64, ptr %i.am, align 8, !alias.scope !3525, !noundef !13 ; 5 uses
   %.sroa.013.015.i.i = load ptr, ptr %i.al, align 8, !alias.scope !3525, !nonnull !13, !noundef !13 ; 3 uses
   %i.ao = icmp eq i64 %i.an, 0
-  br i1 %i.ao, label %._crit_edge.i.i, label %.lr.ph.i.i2.preheader
+  br i1 %i.ao, label %_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB1N_4name4NameE10init_frontCs6SXwsBSuFuw_4just.exit.i, label %.lr.ph.i.i2.preheader
 
 .lr.ph.i.i2.preheader:                            ; preds = %bb.g
   %xtraiter = and i64 %i.an, 7                    ; 2 uses
@@ -1196,12 +1181,7 @@ bb.g:                                             ; preds = %bb.f
   %.sroa.013.017.i.i.unr = phi ptr [ %.sroa.013.015.i.i, %.lr.ph.i.i2.preheader ], [ %.sroa.013.0.i.i.prol, %.lr.ph.i.i2.prol ]
   %.sroa.011.016.i.i.unr = phi i64 [ %i.an, %.lr.ph.i.i2.preheader ], [ %i.aq, %.lr.ph.i.i2.prol ]
   %i.ar = icmp ult i64 %i.an, 8
-  br i1 %i.ar, label %._crit_edge.i.i, label %.lr.ph.i.i2
-
-._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g
-  %.sroa.013.0.lcssa.i.i = phi ptr [ %.sroa.013.015.i.i, %bb.g ], [ %.sroa.013.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ]
-  store i64 1, ptr %1, align 8, !alias.scope !3525
-  br label %_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB1N_4name4NameE10init_frontCs6SXwsBSuFuw_4just.exit.i
+  br i1 %i.ar, label %_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB1N_4name4NameE10init_frontCs6SXwsBSuFuw_4just.exit.i, label %.lr.ph.i.i2
 
 .lr.ph.i.i2:                                      ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2
   %.sroa.013.017.i.i = phi ptr [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ], [ %.sroa.013.017.i.i.unr, %.lr.ph.i.i2.prol.loopexit ]
@@ -1224,12 +1204,12 @@ bb.g:                                             ; preds = %bb.f
   %i.ba = add i64 %.sroa.011.016.i.i, -8          ; 2 uses
   %.sroa.013.0.i.i.7 = load ptr, ptr %i.az, align 8, !noalias !3527, !nonnull !13, !noundef !13 ; 2 uses
   %i.bb = icmp eq i64 %i.ba, 0
-  br i1 %i.bb, label %._crit_edge.i.i, label %.lr.ph.i.i2
+  br i1 %i.bb, label %_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB1N_4name4NameE10init_frontCs6SXwsBSuFuw_4just.exit.i, label %.lr.ph.i.i2
 
-_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB1N_4name4NameE10init_frontCs6SXwsBSuFuw_4just.exit.i: ; preds = %._crit_edge.i.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB1N_4name4NameE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i
-  %.sroa.59.0.copyload.i.i = phi i64 [ %.sroa.59.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB1N_4name4NameE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.48.0.copyload.i.i = phi i64 [ %.sroa.48.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB1N_4name4NameE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.07.0.copyload.i.i = phi ptr [ %i.ak, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB1N_4name4NameE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ %.sroa.013.0.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
+_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB1N_4name4NameE10init_frontCs6SXwsBSuFuw_4just.exit.i: ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB1N_4name4NameE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i
+  %.sroa.59.0.copyload.i.i = phi i64 [ %.sroa.59.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB1N_4name4NameE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.48.0.copyload.i.i = phi i64 [ %.sroa.48.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB1N_4name4NameE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.07.0.copyload.i.i = phi ptr [ %i.ak, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingNtNtCskXtk6F4WjxZ_4just9attribute9AttributeNtNtB1N_4name4NameE10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ %.sroa.013.015.i.i, %bb.g ], [ %.sroa.013.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3528)
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.07.0.copyload.i.i, i64 15674
   %i.bd = load i16, ptr %i.bc, align 2, !noalias !3529, !noundef !13
@@ -1495,7 +1475,7 @@ bb.g:                                             ; preds = %bb.f
   %i.an = load i64, ptr %i.am, align 8, !alias.scope !3576, !noundef !13 ; 5 uses
   %.sroa.013.015.i.i = load ptr, ptr %i.al, align 8, !alias.scope !3576, !nonnull !13, !noundef !13 ; 3 uses
   %i.ao = icmp eq i64 %i.an, 0
-  br i1 %i.ao, label %._crit_edge.i.i, label %.lr.ph.i.i2.preheader
+  br i1 %i.ao, label %_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingTNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtBb_6string6StringEB2v_E10init_frontCs6SXwsBSuFuw_4just.exit.i, label %.lr.ph.i.i2.preheader
 
 .lr.ph.i.i2.preheader:                            ; preds = %bb.g
   %xtraiter = and i64 %i.an, 7                    ; 2 uses
@@ -1518,12 +1498,7 @@ bb.g:                                             ; preds = %bb.f
   %.sroa.013.017.i.i.unr = phi ptr [ %.sroa.013.015.i.i, %.lr.ph.i.i2.preheader ], [ %.sroa.013.0.i.i.prol, %.lr.ph.i.i2.prol ]
   %.sroa.011.016.i.i.unr = phi i64 [ %i.an, %.lr.ph.i.i2.preheader ], [ %i.aq, %.lr.ph.i.i2.prol ]
   %i.ar = icmp ult i64 %i.an, 8
-  br i1 %i.ar, label %._crit_edge.i.i, label %.lr.ph.i.i2
-
-._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g
-  %.sroa.013.0.lcssa.i.i = phi ptr [ %.sroa.013.015.i.i, %bb.g ], [ %.sroa.013.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ]
-  store i64 1, ptr %1, align 8, !alias.scope !3576
-  br label %_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingTNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtBb_6string6StringEB2v_E10init_frontCs6SXwsBSuFuw_4just.exit.i
+  br i1 %i.ar, label %_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingTNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtBb_6string6StringEB2v_E10init_frontCs6SXwsBSuFuw_4just.exit.i, label %.lr.ph.i.i2
 
 .lr.ph.i.i2:                                      ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2
   %.sroa.013.017.i.i = phi ptr [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ], [ %.sroa.013.017.i.i.unr, %.lr.ph.i.i2.prol.loopexit ]
@@ -1546,12 +1521,12 @@ bb.g:                                             ; preds = %bb.f
   %i.ba = add i64 %.sroa.011.016.i.i, -8          ; 2 uses
   %.sroa.013.0.i.i.7 = load ptr, ptr %i.az, align 8, !noalias !3578, !nonnull !13, !noundef !13 ; 2 uses
   %i.bb = icmp eq i64 %i.ba, 0
-  br i1 %i.bb, label %._crit_edge.i.i, label %.lr.ph.i.i2
+  br i1 %i.bb, label %_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingTNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtBb_6string6StringEB2v_E10init_frontCs6SXwsBSuFuw_4just.exit.i, label %.lr.ph.i.i2
 
-_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingTNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtBb_6string6StringEB2v_E10init_frontCs6SXwsBSuFuw_4just.exit.i: ; preds = %._crit_edge.i.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingTNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtBb_6string6StringEB2v_E10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i
-  %.sroa.59.0.copyload.i.i = phi i64 [ %.sroa.59.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingTNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtBb_6string6StringEB2v_E10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.48.0.copyload.i.i = phi i64 [ %.sroa.48.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingTNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtBb_6string6StringEB2v_E10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.07.0.copyload.i.i = phi ptr [ %i.ak, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingTNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtBb_6string6StringEB2v_E10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ %.sroa.013.0.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
+_RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingTNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtBb_6string6StringEB2v_E10init_frontCs6SXwsBSuFuw_4just.exit.i: ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingTNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtBb_6string6StringEB2v_E10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i
+  %.sroa.59.0.copyload.i.i = phi i64 [ %.sroa.59.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingTNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtBb_6string6StringEB2v_E10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.48.0.copyload.i.i = phi i64 [ %.sroa.48.0.copyload.i.pre.i, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingTNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtBb_6string6StringEB2v_E10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.07.0.copyload.i.i = phi ptr [ %i.ak, %._RNvMsc_NtNtNtCs4wP2HXfJTCR_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5DyingTNtNtCskXtk6F4WjxZ_4just10modulepath10ModulepathNtNtBb_6string6StringEB2v_E10init_frontCs6SXwsBSuFuw_4just.exit_crit_edge.i ], [ %.sroa.013.015.i.i, %bb.g ], [ %.sroa.013.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.013.0.i.i.7, %.lr.ph.i.i2 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3579)
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.07.0.copyload.i.i, i64 890
   %i.bd = load i16, ptr %i.bc, align 2, !noalias !3580, !noundef !13

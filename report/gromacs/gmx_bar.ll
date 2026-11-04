@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.lr.ph145, %.thread
   %.093.neg143 = phi i64 [ 0, %.lr.ph145 ], [ %.093.neg, %.thread134 ] ; 2 uses
   %.093142 = phi i64 [ 0, %.lr.ph145 ], [ %i.cu, %.thread134 ] ; 3 uses
   %i.aw = getelementptr inbounds nuw [24 x i8], ptr %i.as, i64 %indvars.iv151 ; 6 uses
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 8 ; 3 uses
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 8 ; 2 uses
   %i.ay = load i8, ptr %i.ax, align 8, !tbaa !82, !range !83, !noundef !84
   %i.az = trunc nuw i8 %i.ay to i1
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %indvars.iv151
@@ -277,11 +277,7 @@ bb.e:                                             ; preds = %bb.d
   %foldExtExtBinop = fsub <2 x double> %i.cq, %shift
   %i.cr = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 2 uses
   %i.cs = fcmp ogt double %i.cr, f0x3FEE666666666666
-  br i1 %i.cs, label %4, label %bb.f
-
-4:                                                ; preds = %bb.e
-  store i8 1, ptr %i.ax, align 8, !tbaa !82
-  br label %.thread134
+  br i1 %i.cs, label %.thread134, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.ct = fcmp olt double %i.cr, 5.000000e-02
@@ -291,8 +287,8 @@ bb.g:                                             ; preds = %bb.f
   store i8 0, ptr %i.ax, align 8, !tbaa !82
   br label %.thread134
 
-.thread134:                                       ; preds = %.thread127, %bb.g, %4, %.thread
-  %.092131 = phi i64 [ %i.ca, %bb.g ], [ 0, %.thread127 ], [ %.092133, %.thread ], [ %i.ca, %4 ]
+.thread134:                                       ; preds = %bb.e, %.thread127, %bb.g, %.thread
+  %.092131 = phi i64 [ %i.ca, %bb.g ], [ 0, %.thread127 ], [ %.092133, %.thread ], [ %i.ca, %bb.e ]
   %i.cu = add nsw i64 %.092131, %.093142          ; 2 uses
   %indvars.iv.next152 = add nuw nsw i64 %indvars.iv151, 1 ; 2 uses
   %.093.neg = sub i64 0, %i.cu

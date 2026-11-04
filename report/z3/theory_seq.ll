@@ -205,13 +205,12 @@ _ZN17scoped_ptr_vectorIN3smt10theory_seq5applyEE8pop_backEv.exit: ; preds = %_ZN
   br i1 %i.by, label %.critedge2, label %.lr.ph, !llvm.loop !1314
 
 .critedge2:                                       ; preds = %_ZN17scoped_ptr_vectorIN3smt10theory_seq5applyEE8pop_backEv.exit, %.lr.ph, %_ZNK17scoped_ptr_vectorIN3smt10theory_seq5applyEE5emptyEv.exit.lr.ph, %.critedge
-  %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 5561 ; 5 uses
+  %i.bz = getelementptr inbounds nuw i8, ptr %0, i64 5561 ; 4 uses
   %i.ca = load i8, ptr %i.bz, align 1, !tbaa !772, !range !770, !noundef !62
   %i.cb = trunc nuw i8 %i.ca to i1
   br i1 %i.cb, label %bb.l, label %bb.o
 
 bb.l:                                             ; preds = %.critedge2
-  store i8 1, ptr %i.bz, align 1, !tbaa !772
   %i.cc = getelementptr inbounds nuw i8, ptr %0, i64 16
   br label %bb.m
 
