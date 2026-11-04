@@ -205,10 +205,10 @@ bb.b:                                             ; preds = %bb.c
   ret i32 %i.z
 
 bb.c:                                             ; preds = %bb.a, %bb.c
+  %.sroa.idx = phi i8 [ %i.d, %bb.a ], [ %i.e, %bb.c ]
   %6 = phi i1 [ true, %bb.a ], [ false, %bb.c ]
-  %indvars.iv.sroa.phi.sroa.speculated = phi i8 [ %i.d, %bb.a ], [ %i.e, %bb.c ]
   %indvars.iv = phi i64 [ 0, %bb.a ], [ 512, %bb.c ]
-  %i.aa = zext i8 %indvars.iv.sroa.phi.sroa.speculated to i64 ; 2 uses
+  %i.aa = zext i8 %.sroa.idx to i64               ; 2 uses
   %i.ab = getelementptr inbounds nuw [2048 x i8], ptr %i.a, i64 %i.aa ; 32 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 1024
   %i.ad = getelementptr inbounds nuw i8, ptr %4, i64 %indvars.iv ; 8 uses

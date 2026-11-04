@@ -205,10 +205,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.d,
   ret void
 
 bb.e:                                             ; preds = %_ZNSt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEC2Em.exit, %_ZN4absl12lts_202605264CordD2Ev.exit284
-  %.not.a = phi i1 [ false, %_ZNSt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEC2Em.exit ], [ true, %_ZN4absl12lts_202605264CordD2Ev.exit284 ]
-  %.0.idx512.sroa.phi.sroa.speculated = phi i1 [ true, %_ZNSt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEC2Em.exit ], [ false, %_ZN4absl12lts_202605264CordD2Ev.exit284 ] ; 2 uses
+  %.not.a = phi i1 [ true, %_ZNSt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEC2Em.exit ], [ false, %_ZN4absl12lts_202605264CordD2Ev.exit284 ] ; 2 uses
+  %.0.idx512.sroa.phi.sroa.speculated = phi i1 [ false, %_ZNSt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEC2Em.exit ], [ true, %_ZN4absl12lts_202605264CordD2Ev.exit284 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #38
-  %i.bg = select i1 %.0.idx512.sroa.phi.sroa.speculated, ptr @.str.395, ptr @.str.396
+  %i.bg = select i1 %.not.a, ptr @.str.395, ptr @.str.396
   invoke void @_ZN7testing11ScopedTraceC2EPKciS2_(ptr noundef nonnull align 1 dereferenceable(1) %3, ptr noundef nonnull @.str.1, i32 noundef 2489, ptr noundef nonnull %i.bg)
           to label %bb.f unwind label %bb.q
 
@@ -216,7 +216,7 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #38
   %i.bh = load ptr, ptr %2, align 8, !tbaa !74    ; 2 uses
   %i.bi = load i64, ptr %i.s, align 8, !tbaa !76  ; 3 uses
-  br i1 %.0.idx512.sroa.phi.sroa.speculated, label %bb.g, label %bb.h
+  br i1 %.not.a, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   invoke void @_ZN4absl12lts_202605264CordC2ESt17basic_string_viewIcSt11char_traitsIcEENS0_13cord_internal18CordzUpdateTracker16MethodIdentifierE(ptr noundef nonnull align 8 dereferenceable(16) %4, i64 %i.bi, ptr %i.bh, i32 noundef 9)
@@ -619,7 +619,7 @@ _ZN4absl12lts_202605264CordD2Ev.exit284:          ; preds = %_ZN4absl12lts_20260
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #38
   call void @_ZN7testing11ScopedTraceD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %3) #38
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #38
-  br i1 %.not.a, label %bb.d, label %bb.e
+  br i1 %.0.idx512.sroa.phi.sroa.speculated, label %bb.d, label %bb.e
 
 bb.fe:                                            ; preds = %_ZN7testing7MessageD2Ev.exit277, %bb.en, %bb.dz, %_ZN7testing7MessageD2Ev.exit220, %bb.dd, %bb.cp, %_ZN7testing7MessageD2Ev.exit164, %bb.bt, %bb.be, %bb.bd, %_ZN7testing7MessageD2Ev.exit117, %bb.ai
   %.pn84.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn84.pn.pn, %_ZN7testing7MessageD2Ev.exit277 ], [ %.pn80.pn.pn, %bb.en ], [ %i.ml, %bb.dz ], [ %.pn73.pn.pn, %_ZN7testing7MessageD2Ev.exit220 ], [ %.pn69.pn.pn, %bb.dd ], [ %i.ja, %bb.cp ], [ %.pn62.pn.pn, %_ZN7testing7MessageD2Ev.exit164 ], [ %.pn58.pn.pn, %bb.bt ], [ %i.fo, %bb.be ], [ %i.fn, %bb.bd ], [ %.pn51.pn.pn, %_ZN7testing7MessageD2Ev.exit117 ], [ %.pn.pn.pn, %bb.ai ]
@@ -1022,10 +1022,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.d,
   ret void
 
 bb.e:                                             ; preds = %_ZNSt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEC2Em.exit, %_ZN4absl12lts_202605264CordD2Ev.exit304
-  %.not.a = phi i1 [ false, %_ZNSt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEC2Em.exit ], [ true, %_ZN4absl12lts_202605264CordD2Ev.exit304 ]
-  %.0.idx690.sroa.phi.sroa.speculated = phi i1 [ true, %_ZNSt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEC2Em.exit ], [ false, %_ZN4absl12lts_202605264CordD2Ev.exit304 ] ; 2 uses
+  %.not.a = phi i1 [ true, %_ZNSt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEC2Em.exit ], [ false, %_ZN4absl12lts_202605264CordD2Ev.exit304 ] ; 2 uses
+  %.0.idx690.sroa.phi.sroa.speculated = phi i1 [ false, %_ZNSt23mersenne_twister_engineImLm64ELm312ELm156ELm31ELm13043109905998158313ELm29ELm6148914691236517205ELm17ELm8202884508482404352ELm37ELm18444473444759240704ELm43ELm6364136223846793005EEC2Em.exit ], [ true, %_ZN4absl12lts_202605264CordD2Ev.exit304 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #38
-  %i.bj = select i1 %.0.idx690.sroa.phi.sroa.speculated, ptr @.str.395, ptr @.str.396
+  %i.bj = select i1 %.not.a, ptr @.str.395, ptr @.str.396
   invoke void @_ZN7testing11ScopedTraceC2EPKciS2_(ptr noundef nonnull align 1 dereferenceable(1) %3, ptr noundef nonnull @.str.1, i32 noundef 2523, ptr noundef nonnull %i.bj)
           to label %bb.f unwind label %bb.w
 
@@ -1033,7 +1033,7 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #38
   %i.bk = load ptr, ptr %2, align 8, !tbaa !74    ; 2 uses
   %i.bl = load i64, ptr %i.t, align 8, !tbaa !76  ; 3 uses
-  br i1 %.0.idx690.sroa.phi.sroa.speculated, label %bb.g, label %bb.h
+  br i1 %.not.a, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   invoke void @_ZN4absl12lts_202605264CordC2ESt17basic_string_viewIcSt11char_traitsIcEENS0_13cord_internal18CordzUpdateTracker16MethodIdentifierE(ptr noundef nonnull align 8 dereferenceable(16) %4, i64 %i.bl, ptr %i.bk, i32 noundef 9)
@@ -1436,7 +1436,7 @@ _ZN4absl12lts_202605264CordD2Ev.exit304:          ; preds = %_ZNSt7__cxx1112basi
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #38
   call void @_ZN7testing11ScopedTraceD1Ev(ptr noundef nonnull align 1 dereferenceable(1) %3) #38
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #38
-  br i1 %.not.a, label %bb.d, label %bb.e
+  br i1 %.0.idx690.sroa.phi.sroa.speculated, label %bb.d, label %bb.e
 
 bb.fl:                                            ; preds = %_ZN7testing7MessageD2Ev.exit294, %bb.eu, %bb.eg, %_ZN7testing7MessageD2Ev.exit237, %bb.dk, %bb.cw, %_ZN7testing7MessageD2Ev.exit180, %bb.ca, %bb.bl, %bb.bk, %_ZN7testing7MessageD2Ev.exit126, %bb.ap
   %.pn86.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn86.pn.pn, %_ZN7testing7MessageD2Ev.exit294 ], [ %.pn82.pn.pn, %bb.eu ], [ %i.ng, %bb.eg ], [ %.pn75.pn.pn, %_ZN7testing7MessageD2Ev.exit237 ], [ %.pn71.pn.pn, %bb.dk ], [ %i.jv, %bb.cw ], [ %.pn64.pn.pn, %_ZN7testing7MessageD2Ev.exit180 ], [ %.pn60.pn.pn, %bb.ca ], [ %i.gj, %bb.bl ], [ %i.gi, %bb.bk ], [ %.pn53.pn.pn, %_ZN7testing7MessageD2Ev.exit126 ], [ %.pn.pn.pn, %bb.ap ]
@@ -1839,8 +1839,8 @@ bb.c:                                             ; preds = %_ZN4absl12lts_20260
   br i1 %.not262, label %bb.aon, label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c
+  %.080.ptr.sroa.idx = phi i8 [ 0, %bb.b ], [ 1, %bb.c ] ; 2 uses
   %.not262 = phi i1 [ false, %bb.b ], [ true, %bb.c ]
-  %.080.idx3396.sroa.phi.sroa.speculated = phi i8 [ 0, %bb.b ], [ 1, %bb.c ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %73) #38
   call void @llvm.lifetime.start.p0(ptr nonnull %69)
   call void @llvm.lifetime.start.p0(ptr nonnull %70) #38
@@ -1848,7 +1848,7 @@ bb.d:                                             ; preds = %bb.b, %bb.c
           to label %.noexc unwind label %bb.af
 
 .noexc:                                           ; preds = %bb.d
-  %i.ij = trunc nuw i8 %.080.idx3396.sroa.phi.sroa.speculated to i1 ; 2 uses
+  %i.ij = trunc nuw i8 %.080.ptr.sroa.idx to i1   ; 2 uses
   %i.ik = select i1 %i.ij, ptr @.str.38, ptr @.str.37
   %i.il = load ptr, ptr %70, align 8, !tbaa !115
   %i.im = getelementptr inbounds nuw i8, ptr %i.il, i64 16
@@ -1932,7 +1932,7 @@ bb.i:                                             ; preds = %_ZNKSt14default_del
 
 _ZNK12_GLOBAL__N_120PopulatedCordFactory8GenerateEv.exit: ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %75) #38
-  store i8 %.080.idx3396.sroa.phi.sroa.speculated, ptr %75, align 8, !tbaa !2019
+  store i8 %.080.ptr.sroa.idx, ptr %75, align 8, !tbaa !2019
   %i.jh = load i8, ptr %74, align 8, !tbaa !78
   %i.ji = trunc i8 %i.jh to i1
   %i.jj = load ptr, ptr %i.av, align 8            ; 3 uses

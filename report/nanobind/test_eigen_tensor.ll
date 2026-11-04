@@ -204,21 +204,21 @@ bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d
   %i.ap = getelementptr inbounds nuw i8, ptr %15, i64 60
   store <2 x i16> splat (i16 2), ptr %i.ap, align 4, !tbaa !17
   %i.aq = getelementptr inbounds nuw i8, ptr %15, i64 88
-  %i.ar = getelementptr inbounds nuw i8, ptr %15, i64 120
-  %39 = getelementptr inbounds nuw i8, ptr %15, i64 56
-  %i.as = getelementptr inbounds nuw i8, ptr %15, i64 80
-  %i.at = getelementptr inbounds nuw i8, ptr %15, i64 112
+  %i.ar = getelementptr inbounds nuw i8, ptr %15, i64 112
+  store i32 0, ptr %i.ar, align 8
+  %i.as = getelementptr inbounds nuw i8, ptr %15, i64 120
+  %i.at = getelementptr inbounds nuw i8, ptr %15, i64 144
   store i32 0, ptr %i.at, align 8
-  %i.au = getelementptr inbounds nuw i8, ptr %15, i64 144
-  store i32 0, ptr %i.au, align 8
-  store ptr %0, ptr %i.as, align 8, !tbaa !127
+  %i.au = getelementptr inbounds nuw i8, ptr %15, i64 56
+  %39 = getelementptr inbounds nuw i8, ptr %15, i64 80
+  store ptr %0, ptr %39, align 8, !tbaa !127
   %i.av = getelementptr inbounds nuw i8, ptr %15, i64 64
   store ptr @.str.9, ptr %i.av, align 8, !tbaa !128
-  store i32 11, ptr %39, align 8, !tbaa !129
+  store i32 11, ptr %i.au, align 8, !tbaa !129
   store ptr @.str.7, ptr %i.aq, align 8, !tbaa !131
   %i.aw = getelementptr inbounds nuw i8, ptr %15, i64 96
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.aw, i8 0, i64 16, i1 false)
-  store ptr @.str.8, ptr %i.ar, align 8, !tbaa !131
+  store ptr @.str.8, ptr %i.as, align 8, !tbaa !131
   %i.ax = getelementptr inbounds nuw i8, ptr %15, i64 128
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ax, i8 0, i64 16, i1 false)
   %i.ay = load ptr, ptr @_ZN8nanobind6detail9internalsE, align 8, !tbaa !13

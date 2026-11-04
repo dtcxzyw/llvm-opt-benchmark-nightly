@@ -204,8 +204,8 @@ bb.b:                                             ; preds = %_ZN4absl12lts_20260
   %i.d = phi ptr [ null, %_ZN4absl12lts_20260526ngENS0_8DurationE.exit ], [ %i.gc, %_ZNSt6vectorIN12_GLOBAL__N_116TimeoutTestParamESaIS1_EE9push_backEOS1_.exit267 ] ; 5 uses
   %.val.i.i.i = phi ptr [ null, %_ZN4absl12lts_20260526ngENS0_8DurationE.exit ], [ %.val.i.i.i588, %_ZNSt6vectorIN12_GLOBAL__N_116TimeoutTestParamESaIS1_EE9push_backEOS1_.exit267 ] ; 6 uses
   %i.e = phi ptr [ null, %_ZN4absl12lts_20260526ngENS0_8DurationE.exit ], [ %i.gd, %_ZNSt6vectorIN12_GLOBAL__N_116TimeoutTestParamESaIS1_EE9push_backEOS1_.exit267 ] ; 12 uses
+  %.0.ptr.sroa.idx = phi i8 [ 0, %_ZN4absl12lts_20260526ngENS0_8DurationE.exit ], [ 1, %_ZNSt6vectorIN12_GLOBAL__N_116TimeoutTestParamESaIS1_EE9push_backEOS1_.exit267 ] ; 18 uses
   %.not = phi i1 [ false, %_ZN4absl12lts_20260526ngENS0_8DurationE.exit ], [ true, %_ZNSt6vectorIN12_GLOBAL__N_116TimeoutTestParamESaIS1_EE9push_backEOS1_.exit267 ]
-  %.0.idx579.sroa.phi.sroa.speculated = phi i8 [ 0, %_ZN4absl12lts_20260526ngENS0_8DurationE.exit ], [ 1, %_ZNSt6vectorIN12_GLOBAL__N_116TimeoutTestParamESaIS1_EE9push_backEOS1_.exit267 ] ; 18 uses
   %.not.i.i = icmp eq ptr %i.e, %i.d
   br i1 %.not.i.i, label %bb.d, label %bb.c
 
@@ -214,7 +214,7 @@ bb.c:                                             ; preds = %bb.b
   %.sroa.6527.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   store i32 1485, ptr %.sroa.6527.0..sroa_idx, align 8, !tbaa !64
   %.sroa.7530.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 12
-  store i8 %.0.idx579.sroa.phi.sroa.speculated, ptr %.sroa.7530.0..sroa_idx, align 4, !tbaa !152
+  store i8 %.0.ptr.sroa.idx, ptr %.sroa.7530.0..sroa_idx, align 4, !tbaa !152
   %.sroa.8535.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   store i64 -9223372036854775808, ptr %.sroa.8535.0..sroa_idx, align 8, !tbaa !64
   %.sroa.9538.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 24
@@ -260,7 +260,7 @@ _ZNKSt6vectorIN12_GLOBAL__N_116TimeoutTestParamESaIS1_EE12_M_check_lenEmPKc.exit
   %.sroa.6527.0..sroa_idx528 = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   store i32 1485, ptr %.sroa.6527.0..sroa_idx528, align 8, !tbaa !64
   %.sroa.7530.0..sroa_idx531 = getelementptr inbounds nuw i8, ptr %i.s, i64 12
-  store i8 %.0.idx579.sroa.phi.sroa.speculated, ptr %.sroa.7530.0..sroa_idx531, align 4, !tbaa !152
+  store i8 %.0.ptr.sroa.idx, ptr %.sroa.7530.0..sroa_idx531, align 4, !tbaa !152
   %.sroa.8535.0..sroa_idx536 = getelementptr inbounds nuw i8, ptr %i.s, i64 16
   store i64 -9223372036854775808, ptr %.sroa.8535.0..sroa_idx536, align 8, !tbaa !64
   %.sroa.9538.0..sroa_idx539 = getelementptr inbounds nuw i8, ptr %i.s, i64 24
@@ -315,7 +315,7 @@ bb.f:                                             ; preds = %_ZNSt6vectorIN12_GL
   %.sroa.6494.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.y, i64 8
   store i32 1494, ptr %.sroa.6494.0..sroa_idx, align 8, !tbaa !64
   %.sroa.7497.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.y, i64 12
-  store i8 %.0.idx579.sroa.phi.sroa.speculated, ptr %.sroa.7497.0..sroa_idx, align 4, !tbaa !152
+  store i8 %.0.ptr.sroa.idx, ptr %.sroa.7497.0..sroa_idx, align 4, !tbaa !152
   %.sroa.8502.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.y, i64 16
   store i64 -9223372036854775808, ptr %.sroa.8502.0..sroa_idx, align 8, !tbaa !64
   %.sroa.9505.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.y, i64 24
@@ -361,7 +361,7 @@ _ZNKSt6vectorIN12_GLOBAL__N_116TimeoutTestParamESaIS1_EE12_M_check_lenEmPKc.exit
   %.sroa.6494.0..sroa_idx495 = getelementptr inbounds nuw i8, ptr %i.am, i64 8
   store i32 1494, ptr %.sroa.6494.0..sroa_idx495, align 8, !tbaa !64
   %.sroa.7497.0..sroa_idx498 = getelementptr inbounds nuw i8, ptr %i.am, i64 12
-  store i8 %.0.idx579.sroa.phi.sroa.speculated, ptr %.sroa.7497.0..sroa_idx498, align 4, !tbaa !152
+  store i8 %.0.ptr.sroa.idx, ptr %.sroa.7497.0..sroa_idx498, align 4, !tbaa !152
   %.sroa.8502.0..sroa_idx503 = getelementptr inbounds nuw i8, ptr %i.am, i64 16
   store i64 -9223372036854775808, ptr %.sroa.8502.0..sroa_idx503, align 8, !tbaa !64
   %.sroa.9505.0..sroa_idx506 = getelementptr inbounds nuw i8, ptr %i.am, i64 24
@@ -416,7 +416,7 @@ bb.i:                                             ; preds = %_ZNSt6vectorIN12_GL
   %.sroa.6461.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   store i32 1503, ptr %.sroa.6461.0..sroa_idx, align 8, !tbaa !64
   %.sroa.7464.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.as, i64 12
-  store i8 %.0.idx579.sroa.phi.sroa.speculated, ptr %.sroa.7464.0..sroa_idx, align 4, !tbaa !152
+  store i8 %.0.ptr.sroa.idx, ptr %.sroa.7464.0..sroa_idx, align 4, !tbaa !152
   %.sroa.8469.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.as, i64 16
   store i64 -9223372036854775808, ptr %.sroa.8469.0..sroa_idx, align 8, !tbaa !64
   %.sroa.9472.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.as, i64 24
@@ -462,7 +462,7 @@ _ZNKSt6vectorIN12_GLOBAL__N_116TimeoutTestParamESaIS1_EE12_M_check_lenEmPKc.exit
   %.sroa.6461.0..sroa_idx462 = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
   store i32 1503, ptr %.sroa.6461.0..sroa_idx462, align 8, !tbaa !64
   %.sroa.7464.0..sroa_idx465 = getelementptr inbounds nuw i8, ptr %i.bg, i64 12
-  store i8 %.0.idx579.sroa.phi.sroa.speculated, ptr %.sroa.7464.0..sroa_idx465, align 4, !tbaa !152
+  store i8 %.0.ptr.sroa.idx, ptr %.sroa.7464.0..sroa_idx465, align 4, !tbaa !152
   %.sroa.8469.0..sroa_idx470 = getelementptr inbounds nuw i8, ptr %i.bg, i64 16
   store i64 -9223372036854775808, ptr %.sroa.8469.0..sroa_idx470, align 8, !tbaa !64
   %.sroa.9472.0..sroa_idx473 = getelementptr inbounds nuw i8, ptr %i.bg, i64 24
@@ -517,7 +517,7 @@ bb.l:                                             ; preds = %_ZNSt6vectorIN12_GL
   %.sroa.6428.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bm, i64 8
   store i32 1515, ptr %.sroa.6428.0..sroa_idx, align 8, !tbaa !64
   %.sroa.7431.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bm, i64 12
-  store i8 %.0.idx579.sroa.phi.sroa.speculated, ptr %.sroa.7431.0..sroa_idx, align 4, !tbaa !152
+  store i8 %.0.ptr.sroa.idx, ptr %.sroa.7431.0..sroa_idx, align 4, !tbaa !152
   %.sroa.8436.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bm, i64 16
   store i64 9223372036854775807, ptr %.sroa.8436.0..sroa_idx, align 8, !tbaa !64
   %.sroa.9439.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bm, i64 24
@@ -563,7 +563,7 @@ _ZNKSt6vectorIN12_GLOBAL__N_116TimeoutTestParamESaIS1_EE12_M_check_lenEmPKc.exit
   %.sroa.6428.0..sroa_idx429 = getelementptr inbounds nuw i8, ptr %i.ca, i64 8
   store i32 1515, ptr %.sroa.6428.0..sroa_idx429, align 8, !tbaa !64
   %.sroa.7431.0..sroa_idx432 = getelementptr inbounds nuw i8, ptr %i.ca, i64 12
-  store i8 %.0.idx579.sroa.phi.sroa.speculated, ptr %.sroa.7431.0..sroa_idx432, align 4, !tbaa !152
+  store i8 %.0.ptr.sroa.idx, ptr %.sroa.7431.0..sroa_idx432, align 4, !tbaa !152
   %.sroa.8436.0..sroa_idx437 = getelementptr inbounds nuw i8, ptr %i.ca, i64 16
   store i64 9223372036854775807, ptr %.sroa.8436.0..sroa_idx437, align 8, !tbaa !64
   %.sroa.9439.0..sroa_idx440 = getelementptr inbounds nuw i8, ptr %i.ca, i64 24
@@ -618,7 +618,7 @@ bb.o:                                             ; preds = %_ZNSt6vectorIN12_GL
   %.sroa.6395.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cg, i64 8
   store i32 1524, ptr %.sroa.6395.0..sroa_idx, align 8, !tbaa !64
   %.sroa.7398.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cg, i64 12
-  store i8 %.0.idx579.sroa.phi.sroa.speculated, ptr %.sroa.7398.0..sroa_idx, align 4, !tbaa !152
+  store i8 %.0.ptr.sroa.idx, ptr %.sroa.7398.0..sroa_idx, align 4, !tbaa !152
   %.sroa.8403.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cg, i64 16
   store i64 9223372036854775807, ptr %.sroa.8403.0..sroa_idx, align 8, !tbaa !64
   %.sroa.9406.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cg, i64 24
@@ -664,7 +664,7 @@ _ZNKSt6vectorIN12_GLOBAL__N_116TimeoutTestParamESaIS1_EE12_M_check_lenEmPKc.exit
   %.sroa.6395.0..sroa_idx396 = getelementptr inbounds nuw i8, ptr %i.cu, i64 8
   store i32 1524, ptr %.sroa.6395.0..sroa_idx396, align 8, !tbaa !64
   %.sroa.7398.0..sroa_idx399 = getelementptr inbounds nuw i8, ptr %i.cu, i64 12
-  store i8 %.0.idx579.sroa.phi.sroa.speculated, ptr %.sroa.7398.0..sroa_idx399, align 4, !tbaa !152
+  store i8 %.0.ptr.sroa.idx, ptr %.sroa.7398.0..sroa_idx399, align 4, !tbaa !152
   %.sroa.8403.0..sroa_idx404 = getelementptr inbounds nuw i8, ptr %i.cu, i64 16
   store i64 9223372036854775807, ptr %.sroa.8403.0..sroa_idx404, align 8, !tbaa !64
   %.sroa.9406.0..sroa_idx407 = getelementptr inbounds nuw i8, ptr %i.cu, i64 24
@@ -719,7 +719,7 @@ bb.r:                                             ; preds = %_ZNSt6vectorIN12_GL
   %.sroa.6362.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.da, i64 8
   store i32 1536, ptr %.sroa.6362.0..sroa_idx, align 8, !tbaa !64
   %.sroa.7365.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.da, i64 12
-  store i8 %.0.idx579.sroa.phi.sroa.speculated, ptr %.sroa.7365.0..sroa_idx, align 4, !tbaa !152
+  store i8 %.0.ptr.sroa.idx, ptr %.sroa.7365.0..sroa_idx, align 4, !tbaa !152
   %.sroa.8370.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.da, i64 16
   store i64 9223372036854775807, ptr %.sroa.8370.0..sroa_idx, align 8, !tbaa !64
   %.sroa.9373.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.da, i64 24
@@ -765,7 +765,7 @@ _ZNKSt6vectorIN12_GLOBAL__N_116TimeoutTestParamESaIS1_EE12_M_check_lenEmPKc.exit
   %.sroa.6362.0..sroa_idx363 = getelementptr inbounds nuw i8, ptr %i.do, i64 8
   store i32 1536, ptr %.sroa.6362.0..sroa_idx363, align 8, !tbaa !64
   %.sroa.7365.0..sroa_idx366 = getelementptr inbounds nuw i8, ptr %i.do, i64 12
-  store i8 %.0.idx579.sroa.phi.sroa.speculated, ptr %.sroa.7365.0..sroa_idx366, align 4, !tbaa !152
+  store i8 %.0.ptr.sroa.idx, ptr %.sroa.7365.0..sroa_idx366, align 4, !tbaa !152
   %.sroa.8370.0..sroa_idx371 = getelementptr inbounds nuw i8, ptr %i.do, i64 16
   store i64 9223372036854775807, ptr %.sroa.8370.0..sroa_idx371, align 8, !tbaa !64
   %.sroa.9373.0..sroa_idx374 = getelementptr inbounds nuw i8, ptr %i.do, i64 24
@@ -828,7 +828,7 @@ bb.u:                                             ; preds = %_ZNSt6vectorIN12_GL
   %.sroa.6329.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.du, i64 8
   store i32 1545, ptr %.sroa.6329.0..sroa_idx, align 8, !tbaa !64
   %.sroa.7332.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.du, i64 12
-  store i8 %.0.idx579.sroa.phi.sroa.speculated, ptr %.sroa.7332.0..sroa_idx, align 4, !tbaa !152
+  store i8 %.0.ptr.sroa.idx, ptr %.sroa.7332.0..sroa_idx, align 4, !tbaa !152
   %.sroa.8337.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.du, i64 16
   store i64 %.sroa.03.0.copyload.i215, ptr %.sroa.8337.0..sroa_idx, align 8, !tbaa !64
   %.sroa.9340.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.du, i64 24
@@ -874,7 +874,7 @@ _ZNKSt6vectorIN12_GLOBAL__N_116TimeoutTestParamESaIS1_EE12_M_check_lenEmPKc.exit
   %.sroa.6329.0..sroa_idx330 = getelementptr inbounds nuw i8, ptr %i.ej, i64 8
   store i32 1545, ptr %.sroa.6329.0..sroa_idx330, align 8, !tbaa !64
   %.sroa.7332.0..sroa_idx333 = getelementptr inbounds nuw i8, ptr %i.ej, i64 12
-  store i8 %.0.idx579.sroa.phi.sroa.speculated, ptr %.sroa.7332.0..sroa_idx333, align 4, !tbaa !152
+  store i8 %.0.ptr.sroa.idx, ptr %.sroa.7332.0..sroa_idx333, align 4, !tbaa !152
   %.sroa.8337.0..sroa_idx338 = getelementptr inbounds nuw i8, ptr %i.ej, i64 16
   store i64 %.sroa.03.0.copyload.i215, ptr %.sroa.8337.0..sroa_idx338, align 8, !tbaa !64
   %.sroa.9340.0..sroa_idx341 = getelementptr inbounds nuw i8, ptr %i.ej, i64 24
@@ -929,7 +929,7 @@ bb.x:                                             ; preds = %_ZNSt6vectorIN12_GL
   %.sroa.6296.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ep, i64 8
   store i32 1554, ptr %.sroa.6296.0..sroa_idx, align 8, !tbaa !64
   %.sroa.7299.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ep, i64 12
-  store i8 %.0.idx579.sroa.phi.sroa.speculated, ptr %.sroa.7299.0..sroa_idx, align 4, !tbaa !152
+  store i8 %.0.ptr.sroa.idx, ptr %.sroa.7299.0..sroa_idx, align 4, !tbaa !152
   %.sroa.8304.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ep, i64 16
   store i64 %.sroa.03.0.copyload.i, ptr %.sroa.8304.0..sroa_idx, align 8, !tbaa !64
   %.sroa.9307.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ep, i64 24
@@ -975,7 +975,7 @@ _ZNKSt6vectorIN12_GLOBAL__N_116TimeoutTestParamESaIS1_EE12_M_check_lenEmPKc.exit
   %.sroa.6296.0..sroa_idx297 = getelementptr inbounds nuw i8, ptr %i.fd, i64 8
   store i32 1554, ptr %.sroa.6296.0..sroa_idx297, align 8, !tbaa !64
   %.sroa.7299.0..sroa_idx300 = getelementptr inbounds nuw i8, ptr %i.fd, i64 12
-  store i8 %.0.idx579.sroa.phi.sroa.speculated, ptr %.sroa.7299.0..sroa_idx300, align 4, !tbaa !152
+  store i8 %.0.ptr.sroa.idx, ptr %.sroa.7299.0..sroa_idx300, align 4, !tbaa !152
   %.sroa.8304.0..sroa_idx305 = getelementptr inbounds nuw i8, ptr %i.fd, i64 16
   store i64 %.sroa.03.0.copyload.i, ptr %.sroa.8304.0..sroa_idx305, align 8, !tbaa !64
   %.sroa.9307.0..sroa_idx308 = getelementptr inbounds nuw i8, ptr %i.fd, i64 24
@@ -1030,7 +1030,7 @@ bb.aa:                                            ; preds = %_ZNSt6vectorIN12_GL
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fj, i64 8
   store i32 1563, ptr %.sroa.6.0..sroa_idx, align 8, !tbaa !64
   %.sroa.7.0..sroa_idx271 = getelementptr inbounds nuw i8, ptr %i.fj, i64 12
-  store i8 %.0.idx579.sroa.phi.sroa.speculated, ptr %.sroa.7.0..sroa_idx271, align 4, !tbaa !152
+  store i8 %.0.ptr.sroa.idx, ptr %.sroa.7.0..sroa_idx271, align 4, !tbaa !152
   %.sroa.8275.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.fj, i64 16
   store i64 %.sroa.03.0.copyload.i, ptr %.sroa.8275.0..sroa_idx, align 8, !tbaa !64
   %.sroa.9.0..sroa_idx278 = getelementptr inbounds nuw i8, ptr %i.fj, i64 24
@@ -1083,7 +1083,7 @@ _ZNKSt6vectorIN12_GLOBAL__N_116TimeoutTestParamESaIS1_EE12_M_check_lenEmPKc.exit
   %.sroa.6.0..sroa_idx269 = getelementptr inbounds nuw i8, ptr %i.fx, i64 8
   store i32 1563, ptr %.sroa.6.0..sroa_idx269, align 8, !tbaa !64
   %.sroa.7.0..sroa_idx272 = getelementptr inbounds nuw i8, ptr %i.fx, i64 12
-  store i8 %.0.idx579.sroa.phi.sroa.speculated, ptr %.sroa.7.0..sroa_idx272, align 4, !tbaa !152
+  store i8 %.0.ptr.sroa.idx, ptr %.sroa.7.0..sroa_idx272, align 4, !tbaa !152
   %.sroa.8275.0..sroa_idx276 = getelementptr inbounds nuw i8, ptr %i.fx, i64 16
   store i64 %.sroa.03.0.copyload.i, ptr %.sroa.8275.0..sroa_idx276, align 8, !tbaa !64
   %.sroa.9.0..sroa_idx279 = getelementptr inbounds nuw i8, ptr %i.fx, i64 24
