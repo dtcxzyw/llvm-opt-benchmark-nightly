@@ -205,7 +205,7 @@ vector.ph:                                        ; preds = %vector.main.loop.it
 
 vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.q = add i64 %i.b, %index                     ; 2 uses
+  %i.q = add i64 %i.b, %index                     ; 3 uses
   %i.r = getelementptr i8, ptr %0, i64 %i.q       ; 3 uses
   %i.s = getelementptr i8, ptr %i.r, i64 8
   %wide.load = load <8 x i8>, ptr %i.r, align 1, !tbaa !23, !alias.scope !36
@@ -215,18 +215,14 @@ vector.body:                                      ; preds = %vector.ph, %vector.
   %wide.load97 = load <8 x i8>, ptr %i.t, align 1, !tbaa !23, !alias.scope !37
   %wide.load98 = load <8 x i8>, ptr %i.u, align 1, !tbaa !23, !alias.scope !37
   %i.v = shl nsw i64 %i.q, 1
-  %5 = getelementptr inbounds i8, ptr %4, i64 %i.v ; 2 uses
-  %6 = zext <8 x i8> %wide.load97 to <8 x i16>
-  %7 = zext <8 x i8> %wide.load98 to <8 x i16>
-  %8 = shl nuw <8 x i16> %6, splat (i16 8)
-  %9 = shl nuw <8 x i16> %7, splat (i16 8)
-  %10 = zext <8 x i8> %wide.load to <8 x i16>
-  %11 = zext <8 x i8> %wide.load96 to <8 x i16>
-  %12 = or disjoint <8 x i16> %8, %10
-  %13 = or disjoint <8 x i16> %9, %11
-  %14 = getelementptr inbounds nuw i8, ptr %5, i64 16
-  store <8 x i16> %12, ptr %5, align 1, !alias.scope !38, !noalias !39
-  store <8 x i16> %13, ptr %14, align 1, !alias.scope !38, !noalias !39
+  %5 = shl i64 %i.q, 1
+  %6 = getelementptr inbounds i8, ptr %4, i64 %i.v
+  %7 = getelementptr i8, ptr %4, i64 %5
+  %8 = getelementptr i8, ptr %7, i64 16
+  %interleaved.vec = shufflevector <8 x i8> %wide.load, <8 x i8> %wide.load97, <16 x i32> <i32 0, i32 8, i32 1, i32 9, i32 2, i32 10, i32 3, i32 11, i32 4, i32 12, i32 5, i32 13, i32 6, i32 14, i32 7, i32 15>
+  store <16 x i8> %interleaved.vec, ptr %6, align 1, !alias.scope !38, !noalias !39
+  %interleaved.vec99 = shufflevector <8 x i8> %wide.load96, <8 x i8> %wide.load98, <16 x i32> <i32 0, i32 8, i32 1, i32 9, i32 2, i32 10, i32 3, i32 11, i32 4, i32 12, i32 5, i32 13, i32 6, i32 14, i32 7, i32 15>
+  store <16 x i8> %interleaved.vec99, ptr %8, align 1, !alias.scope !38, !noalias !39
   %index.next = add nuw i64 %index, 16            ; 2 uses
   %i.w = icmp eq i64 %index.next, %n.vec
   br i1 %i.w, label %middle.block, label %vector.body, !llvm.loop !32
@@ -255,11 +251,8 @@ vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.b
   %wide.load102 = load <4 x i8>, ptr %i.ab, align 1, !tbaa !23, !alias.scope !37
   %i.ac = shl nsw i64 %i.z, 1
   %i.ad = getelementptr inbounds i8, ptr %4, i64 %i.ac
-  %15 = zext <4 x i8> %wide.load102 to <4 x i16>
-  %16 = shl nuw <4 x i16> %15, splat (i16 8)
-  %17 = zext <4 x i8> %wide.load101 to <4 x i16>
-  %18 = or disjoint <4 x i16> %16, %17
-  store <4 x i16> %18, ptr %i.ad, align 1, !alias.scope !38, !noalias !39
+  %interleaved.vec104 = shufflevector <4 x i8> %wide.load101, <4 x i8> %wide.load102, <8 x i32> <i32 0, i32 4, i32 1, i32 5, i32 2, i32 6, i32 3, i32 7>
+  store <8 x i8> %interleaved.vec104, ptr %i.ad, align 1, !alias.scope !38, !noalias !39
   %index.next103 = add nuw i64 %index100, 4       ; 2 uses
   %i.ae = icmp eq i64 %index.next103, %n.vec99
   br i1 %i.ae, label %vec.epilog.middle.block, label %vec.epilog.vector.body, !llvm.loop !33
@@ -282,12 +275,10 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %gep.1.prol = getelementptr i8, ptr %invariant.gep.prol, i64 %3
   %i.ah = load i8, ptr %gep.1.prol, align 1, !tbaa !23
   %i.ai = shl nsw i64 %.05572.ph, 1
-  %i.aj = getelementptr inbounds i8, ptr %4, i64 %i.ai
-  %.sroa.482.0.insert.ext.prol = zext i8 %i.ah to i16
-  %.sroa.482.0.insert.shift.prol = shl nuw i16 %.sroa.482.0.insert.ext.prol, 8
-  %.sroa.081.0.insert.ext.prol = zext i8 %i.ag to i16
-  %.sroa.081.0.insert.insert.prol = or disjoint i16 %.sroa.482.0.insert.shift.prol, %.sroa.081.0.insert.ext.prol
-  store i16 %.sroa.081.0.insert.insert.prol, ptr %i.aj, align 1
+  %i.aj = getelementptr inbounds i8, ptr %4, i64 %i.ai ; 2 uses
+  store i8 %i.ag, ptr %i.aj, align 1
+  %.sroa.4.0..sroa_idx.prol = getelementptr inbounds nuw i8, ptr %i.aj, i64 1
+  store i8 %i.ah, ptr %.sroa.4.0..sroa_idx.prol, align 1
   %i.ak = add nsw i64 %.05572.ph, 1
   br label %.lr.ph.prol.loopexit
 
@@ -296,10 +287,6 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.al = icmp eq i64 %2, %.neg
   br i1 %i.al, label %.preheader, label %.lr.ph
 
-.preheader:                                       ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %vec.epilog.middle.block, %bb.a
-  %19 = icmp sgt i64 %2, 15
-  br i1 %19, label %.critedge.critedge, label %._crit_edge
-
 .lr.ph:                                           ; preds = %.lr.ph.prol.loopexit, %.lr.ph
   %.05572 = phi i64 [ %i.av, %.lr.ph ], [ %.05572.unr, %.lr.ph.prol.loopexit ] ; 4 uses
   %invariant.gep = getelementptr i8, ptr %0, i64 %.05572 ; 2 uses
@@ -307,27 +294,27 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %gep.1 = getelementptr i8, ptr %invariant.gep, i64 %3
   %i.an = load i8, ptr %gep.1, align 1, !tbaa !23
   %i.ao = shl nsw i64 %.05572, 1
-  %i.ap = getelementptr inbounds i8, ptr %4, i64 %i.ao
-  %.sroa.482.0.insert.ext = zext i8 %i.an to i16
-  %.sroa.482.0.insert.shift = shl nuw i16 %.sroa.482.0.insert.ext, 8
-  %.sroa.081.0.insert.ext = zext i8 %i.am to i16
-  %.sroa.081.0.insert.insert = or disjoint i16 %.sroa.482.0.insert.shift, %.sroa.081.0.insert.ext
-  store i16 %.sroa.081.0.insert.insert, ptr %i.ap, align 1
+  %i.ap = getelementptr inbounds i8, ptr %4, i64 %i.ao ; 2 uses
+  store i8 %i.am, ptr %i.ap, align 1
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ap, i64 1
+  store i8 %i.an, ptr %.sroa.4.0..sroa_idx, align 1
   %i.aq = add nsw i64 %.05572, 1                  ; 2 uses
   %invariant.gep.1 = getelementptr i8, ptr %0, i64 %i.aq ; 2 uses
   %i.ar = load i8, ptr %invariant.gep.1, align 1, !tbaa !23
   %gep.1.1 = getelementptr i8, ptr %invariant.gep.1, i64 %3
   %i.as = load i8, ptr %gep.1.1, align 1, !tbaa !23
   %i.at = shl nsw i64 %i.aq, 1
-  %i.au = getelementptr inbounds i8, ptr %4, i64 %i.at
-  %.sroa.482.0.insert.ext.1 = zext i8 %i.as to i16
-  %.sroa.482.0.insert.shift.1 = shl nuw i16 %.sroa.482.0.insert.ext.1, 8
-  %.sroa.081.0.insert.ext.1 = zext i8 %i.ar to i16
-  %.sroa.081.0.insert.insert.1 = or disjoint i16 %.sroa.482.0.insert.shift.1, %.sroa.081.0.insert.ext.1
-  store i16 %.sroa.081.0.insert.insert.1, ptr %i.au, align 1
+  %i.au = getelementptr inbounds i8, ptr %4, i64 %i.at ; 2 uses
+  store i8 %i.ar, ptr %i.au, align 1
+  %.sroa.4.0..sroa_idx.1 = getelementptr inbounds nuw i8, ptr %i.au, i64 1
+  store i8 %i.as, ptr %.sroa.4.0..sroa_idx.1, align 1
   %i.av = add nsw i64 %.05572, 2                  ; 2 uses
   %exitcond.not.1 = icmp eq i64 %i.av, %2
   br i1 %exitcond.not.1, label %.preheader, label %.lr.ph, !llvm.loop !34
+
+.preheader:                                       ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %vec.epilog.middle.block, %bb.a
+  %9 = icmp sgt i64 %2, 15
+  br i1 %9, label %.critedge.critedge, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.critedge.critedge, %.preheader
   ret void

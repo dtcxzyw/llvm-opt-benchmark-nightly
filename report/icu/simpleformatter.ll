@@ -202,11 +202,6 @@ bb.l:                                             ; preds = %bb.a, %_ZNK6icu_781
 ; Function Attrs: mustprogress uwtable
 define noundef nonnull align 8 dereferenceable(64) ptr @_ZNK6icu_7815SimpleFormatter6formatERKNS_13UnicodeStringES3_RS1_R10UErrorCode(ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull align 8 dereferenceable(64) %1, ptr noundef nonnull align 8 dereferenceable(64) %2, ptr noundef nonnull returned align 8 dereferenceable(64) %3, ptr nofree noundef nonnull align 4 captures(none) dereferenceable(4) %4) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %5 = alloca [2 x ptr], align 16                 ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #7
-  store ptr %1, ptr %5, align 16, !tbaa !18
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  store ptr %2, ptr %6, align 8, !tbaa !18
   %i.a = load i32, ptr %4, align 4, !tbaa !10
   %i.b = icmp slt i32 %i.a, 1
   br i1 %i.b, label %bb.b, label %_ZNK6icu_7815SimpleFormatter15formatAndAppendEPKPKNS_13UnicodeStringEiRS1_PiiR10UErrorCode.exit
@@ -280,24 +275,21 @@ bb.h:                                             ; preds = %bb.f
   br i1 %i.ab, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %.lr.ph81.split.i
-  %7 = zext nneg i16 %i.aa to i64
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %7
-  %9 = load ptr, ptr %8, align 8, !tbaa !18       ; 5 uses
-  %i.ac = icmp eq ptr %9, null
-  %10 = icmp eq ptr %9, %3
-  %or.cond.i = or i1 %i.ac, %10
-  br i1 %or.cond.i, label %_ZNK6icu_7815SimpleFormatter15formatAndAppendEPKPKNS_13UnicodeStringEiRS1_PiiR10UErrorCode.exit.sink.split, label %bb.j
+  %i.ac = icmp eq i16 %i.aa, 1
+  %.sroa.speculated = select i1 %i.ac, ptr %2, ptr %1 ; 4 uses
+  %5 = icmp eq ptr %.sroa.speculated, %3
+  br i1 %5, label %_ZNK6icu_7815SimpleFormatter15formatAndAppendEPKPKNS_13UnicodeStringEiRS1_PiiR10UErrorCode.exit.sink.split, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.ad = getelementptr inbounds nuw i8, ptr %9, i64 8
+  %i.ad = getelementptr inbounds nuw i8, ptr %.sroa.speculated, i64 8
   %i.ae = load i16, ptr %i.ad, align 8, !tbaa !11 ; 2 uses
   %i.af = icmp slt i16 %i.ae, 0
   %i.ag = ashr i16 %i.ae, 5
   %i.ah = sext i16 %i.ag to i32
-  %i.ai = getelementptr inbounds nuw i8, ptr %9, i64 12
+  %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.speculated, i64 12
   %i.aj = load i32, ptr %i.ai, align 4
   %i.ak = select i1 %i.af, i32 %i.aj, i32 %i.ah
-  %i.al = tail call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString8doAppendERKS0_ii(ptr noundef nonnull align 8 dereferenceable(64) %3, ptr noundef nonnull align 8 dereferenceable(64) %9, i32 noundef 0, i32 noundef %i.ak) ; 0 uses
+  %i.al = tail call noundef nonnull align 8 dereferenceable(64) ptr @_ZN6icu_7813UnicodeString8doAppendERKS0_ii(ptr noundef nonnull align 8 dereferenceable(64) %3, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.speculated, i32 noundef 0, i32 noundef %i.ak) ; 0 uses
   br label %bb.l
 
 bb.k:                                             ; preds = %.lr.ph81.split.i
@@ -329,7 +321,6 @@ _ZNK6icu_7815SimpleFormatter15formatAndAppendEPKPKNS_13UnicodeStringEiRS1_PiiR10
   br label %_ZNK6icu_7815SimpleFormatter15formatAndAppendEPKPKNS_13UnicodeStringEiRS1_PiiR10UErrorCode.exit
 
 _ZNK6icu_7815SimpleFormatter15formatAndAppendEPKPKNS_13UnicodeStringEiRS1_PiiR10UErrorCode.exit: ; preds = %bb.l, %_ZNK6icu_7815SimpleFormatter15formatAndAppendEPKPKNS_13UnicodeStringEiRS1_PiiR10UErrorCode.exit.sink.split, %.preheader78.i, %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #7
   ret ptr %3
 }
 

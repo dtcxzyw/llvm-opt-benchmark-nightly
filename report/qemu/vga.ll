@@ -205,7 +205,6 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 8 uses
   %i.b = alloca i32, align 4                      ; 11 uses
   %2 = alloca %struct.VGADisplayParams, align 4   ; 6 uses
-  %3 = alloca [2 x ptr], align 16                 ; 5 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 2624 ; 14 uses
   %i.d = load ptr, ptr %i.c, align 16
   %i.e = tail call ptr @qemu_console_surface(ptr noundef %i.d) #18 ; 2 uses
@@ -256,7 +255,6 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   ]
 
 bb.g:                                             ; preds = %bb.f
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #18
   %i.w = tail call i64 @qemu_clock_get_ns(i32 noundef 1) #18
   %i.x = sdiv i64 %i.w, 1000000                   ; 4 uses
   %i.y = getelementptr i8, ptr %0, i64 2594       ; 2 uses
@@ -285,10 +283,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h, %bb.g
   %.0220.i = phi i32 [ 1, %bb.h ], [ %.016, %bb.g ]
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
-  %i.am = load ptr, ptr %i.al, align 8            ; 2 uses
-  %4 = zext nneg i32 %i.ai to i64
-  %5 = getelementptr inbounds nuw i8, ptr %i.am, i64 %4
-  store ptr %5, ptr %3, align 16
+  %i.am = load ptr, ptr %i.al, align 8
   %i.an = lshr i32 %i.ab, 5
   %i.ao = and i32 %i.an, 1
   %i.ap = lshr i32 %i.ab, 1
@@ -296,10 +291,6 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   %i.ar = or disjoint i32 %i.ao, %i.aq
   %i.as = shl nuw nsw i32 %i.ar, 15
   %i.at = or disjoint i32 %i.as, 2                ; 3 uses
-  %6 = zext nneg i32 %i.at to i64
-  %7 = getelementptr inbounds nuw i8, ptr %i.am, i64 %6
-  %8 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  store ptr %7, ptr %8, align 8
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 2636 ; 2 uses
   %i.av = load i32, ptr %i.au, align 4
   %.not236.i = icmp eq i32 %i.at, %i.av
@@ -399,7 +390,7 @@ vga_get_text_resolution.exit.i:                   ; preds = %bb.p, %update_basic
   %i.cm = mul nuw nsw i32 %.0.i270.i, %i.cl
   %i.cn = add nsw i32 %i.cm, -16001
   %or.cond268.i = icmp ult i32 %i.cn, -15999
-  br i1 %or.cond268.i, label %vga_draw_text.exit, label %bb.q
+  br i1 %or.cond268.i, label %vga_draw_blank.exit, label %bb.q
 
 bb.q:                                             ; preds = %vga_get_text_resolution.exit.i
   %i.co = getelementptr inbounds nuw i8, ptr %0, i64 2684 ; 2 uses
@@ -606,7 +597,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak
   %.0219.val269.i = load ptr, ptr %.0219.i, align 8
   %i.gf = call i32 @pixman_image_get_stride(ptr noundef %.0219.val269.i) #18 ; 3 uses
   %.not402.i = icmp eq i32 %.0.i270.i, 0
-  br i1 %.not402.i, label %vga_draw_text.exit, label %.lr.ph.i
+  br i1 %.not402.i, label %vga_draw_blank.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.am
   %i.gg = load i32, ptr %i.ek, align 4
@@ -670,14 +661,14 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap
   store i32 %i.he, ptr %.1396.i, align 4
   %i.hh = and i32 %i.he, 255                      ; 2 uses
   %i.hi = lshr i32 %i.he, 8
-  %9 = lshr i32 %i.he, 11
-  %10 = and i32 %9, 1
-  %11 = zext nneg i32 %10 to i64
-  %12 = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %11
-  %13 = load ptr, ptr %12, align 8
+  %3 = and i32 %i.he, 2048
+  %.sroa.idx.not.i = icmp eq i32 %3, 0
+  %.sroa.speculated.v.v.i = select i1 %.sroa.idx.not.i, i32 %i.ai, i32 %i.at
+  %.sroa.speculated.v.i = zext nneg i32 %.sroa.speculated.v.v.i to i64
+  %.sroa.speculated.i = getelementptr inbounds nuw i8, ptr %i.am, i64 %.sroa.speculated.v.i
   %i.hj = shl nuw nsw i32 %i.hh, 7
   %i.hk = zext nneg i32 %i.hj to i64
-  %i.hl = getelementptr inbounds nuw i8, ptr %13, i64 %i.hk ; 4 uses
+  %i.hl = getelementptr inbounds nuw i8, ptr %.sroa.speculated.i, i64 %i.hk ; 4 uses
   %i.hm = load i8, ptr %i.gk, align 1             ; 2 uses
   %i.hn = and i8 %i.hm, 8
   %.not252.i = icmp eq i8 %i.hn, 0
@@ -1080,11 +1071,7 @@ bb.bg:                                            ; preds = %bb.bf, %bb.be
   %.1210.i = select i1 %or.cond267.i, i32 %i.so, i32 0
   %i.sr = add nuw nsw i32 %.0217397.i, 1          ; 2 uses
   %exitcond408.not.i = icmp eq i32 %i.sr, %.0.i270.i
-  br i1 %exitcond408.not.i, label %vga_draw_text.exit, label %bb.an, !llvm.loop !21
-
-vga_draw_text.exit:                               ; preds = %bb.bg, %vga_get_text_resolution.exit.i, %bb.am
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #18
-  br label %vga_draw_blank.exit
+  br i1 %exitcond408.not.i, label %vga_draw_blank.exit, label %bb.an, !llvm.loop !21
 
 bb.bh:                                            ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #18
@@ -1487,7 +1474,7 @@ bb.ec:                                            ; preds = %bb.ec, %.lr.ph.i48
   tail call void @qemu_console_update_full(ptr noundef %i.ahe) #18
   br label %vga_draw_blank.exit
 
-vga_draw_blank.exit:                              ; preds = %._crit_edge.i49, %bb.dy, %bb.dx, %bb.dw, %vga_draw_text.exit, %vga_draw_graphic.exit, %bb.a
+vga_draw_blank.exit:                              ; preds = %bb.bg, %._crit_edge.i49, %bb.dy, %bb.dx, %bb.dw, %bb.am, %vga_get_text_resolution.exit.i, %vga_draw_graphic.exit, %bb.a
   ret i1 true
 }
 

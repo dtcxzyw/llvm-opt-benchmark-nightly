@@ -204,7 +204,7 @@ bb.a:
   %5 = alloca %"struct.std::_Rb_tree<std::__cxx11::basic_string<char>, std::pair<const std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char>>, std::_Select1st<std::pair<const std::__cxx11::basic_string<char>, std::__cxx11::basic_string<char>>>, std::less<std::__cxx11::basic_string<char>>>::_Reuse_or_alloc_node", align 8 ; 7 uses
   %6 = alloca %"class.std::function", align 8     ; 9 uses
   %7 = alloca [3 x %"class.v8::internal::DirectHandle.443"], align 8 ; 6 uses
-  %8 = alloca %"class.v8::internal::DirectHandle.460", align 8 ; 10 uses
+  %8 = alloca %"class.v8::internal::DirectHandle.460", align 8 ; 11 uses
   %9 = alloca %"class.v8::Maybe", align 8         ; 8 uses
   %10 = alloca %"class.std::vector.445", align 8  ; 8 uses
   %11 = alloca %"struct.v8::internal::Intl::ResolvedLocale", align 8 ; 16 uses
@@ -251,20 +251,24 @@ _ZNKR2v85MaybeINS_8internal4Intl13MatcherOptionEE8FromJustEv.exit: ; preds = %bb
   store ptr null, ptr %8, align 8
   %i.j = call i16 @_ZN2v88internal15GetStringOptionEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS3_INS0_6StringEEEPKcPS7_(ptr noundef nonnull %0, ptr nonnull %i.f, ptr nonnull %i.i, ptr noundef %4, ptr noundef nonnull %8) #16 ; 2 uses
   %i.k = trunc i16 %i.j to i1
-  br i1 %i.k, label %_ZNKR2v85MaybeIbE8FromJustEv.exit.i, label %_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit.thread.a
+  br i1 %i.k, label %_ZNKR2v85MaybeIbE8FromJustEv.exit.i, label %_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit.thread
 
 _ZNKR2v85MaybeIbE8FromJustEv.exit.i:              ; preds = %_ZNKR2v85MaybeINS_8internal4Intl13MatcherOptionEE8FromJustEv.exit
   %i.l = and i16 %i.j, 256
   %.not16.i = icmp eq i16 %i.l, 0
-  br i1 %.not16.i, label %_ZNKR2v85MaybeINS_8internal13JSPluralRules4TypeEE8FromJustEv.exit, label %.lr.ph.i.preheader
+  br i1 %.not16.i, label %_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit.thread141, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %_ZNKR2v85MaybeIbE8FromJustEv.exit.i
   %.sroa.0.0.copyload.i.i = load ptr, ptr %8, align 8
   %i.m = load i64, ptr %.sroa.0.0.copyload.i.i, align 8
   %i.n = add i64 %i.m, -1
   %i.o = inttoptr i64 %i.n to ptr
-  %i.p = call noundef zeroext i1 @_ZNK2v88internal6String9IsEqualToILNS1_12EqualityTypeE0EcEEbNS_4base6VectorIKT0_EEPNS0_7IsolateE(ptr noundef nonnull align 4 dereferenceable(16) %i.o, ptr nonnull @.str.1, i64 8, ptr noundef nonnull %0)
-  br i1 %i.p, label %_ZNKR2v85MaybeINS_8internal13JSPluralRules4TypeEE8FromJustEv.exit, label %.lr.ph.i.1
+  %i.p = call noundef zeroext i1 @_ZNK2v88internal6String9IsEqualToILNS1_12EqualityTypeE0EcEEbNS_4base6VectorIKT0_EEPNS0_7IsolateE(ptr noundef nonnull align 4 dereferenceable(16) %i.o, ptr nonnull @.str.1, i64 8, ptr noundef nonnull %0) ; 2 uses
+  br i1 %i.p, label %_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit.thread.a, label %.lr.ph.i.1
+
+_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit.thread141: ; preds = %_ZNKR2v85MaybeIbE8FromJustEv.exit.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #16
+  br label %_ZNKR2v85MaybeINS_8internal13JSPluralRules4TypeEE8FromJustEv.exit
 
 .lr.ph.i.1:                                       ; preds = %.lr.ph.i.preheader
   %.sroa.0.0.copyload.i.i.1 = load ptr, ptr %8, align 8
@@ -272,7 +276,7 @@ _ZNKR2v85MaybeIbE8FromJustEv.exit.i:              ; preds = %_ZNKR2v85MaybeINS_8
   %i.r = add i64 %i.q, -1
   %i.s = inttoptr i64 %i.r to ptr
   %i.t = call noundef zeroext i1 @_ZNK2v88internal6String9IsEqualToILNS1_12EqualityTypeE0EcEEbNS_4base6VectorIKT0_EEPNS0_7IsolateE(ptr noundef nonnull align 4 dereferenceable(16) %i.s, ptr nonnull @.str.2, i64 7, ptr noundef nonnull %0)
-  br i1 %i.t, label %_ZNKR2v85MaybeINS_8internal13JSPluralRules4TypeEE8FromJustEv.exit, label %.loopexit.i
+  br i1 %i.t, label %_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit.thread.a, label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %.lr.ph.i.1
   %i.u = load ptr, ptr %8, align 8
@@ -307,15 +311,20 @@ _ZN2v88internal11FactoryBaseINS0_7FactoryEE25NewStringFromAsciiCheckedEPKcNS0_14
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #16
   %i.ae = load i64, ptr %i.ad, align 8
   %i.af = call i64 @_ZN2v88internal7Isolate5ThrowENS0_6TaggedINS0_6ObjectEEEPNS0_15MessageLocationE(ptr noundef nonnull align 8 dereferenceable(64320) %0, i64 %i.ae, ptr noundef null) #16 ; 0 uses
-  br label %_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit.thread.a
+  br label %_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit.thread
 
-_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit.thread.a: ; preds = %_ZNKR2v85MaybeINS_8internal4Intl13MatcherOptionEE8FromJustEv.exit, %_ZN2v88internal11FactoryBaseINS0_7FactoryEE25NewStringFromAsciiCheckedEPKcNS0_14AllocationTypeE.exit.i
+_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit.thread: ; preds = %_ZNKR2v85MaybeINS_8internal4Intl13MatcherOptionEE8FromJustEv.exit, %_ZN2v88internal11FactoryBaseINS0_7FactoryEE25NewStringFromAsciiCheckedEPKcNS0_14AllocationTypeE.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #16
   br label %_ZNK2v88internal11MaybeHandleINS0_10JSReceiverEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
 
-_ZNKR2v85MaybeINS_8internal13JSPluralRules4TypeEE8FromJustEv.exit: ; preds = %.lr.ph.i.preheader, %.lr.ph.i.1, %_ZNKR2v85MaybeIbE8FromJustEv.exit.i
-  %.sroa.597.0.extract.trunc147 = phi i32 [ 0, %_ZNKR2v85MaybeIbE8FromJustEv.exit.i ], [ 0, %.lr.ph.i.preheader ], [ 1, %.lr.ph.i.1 ] ; 3 uses
+_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit.thread.a: ; preds = %.lr.ph.i.1, %.lr.ph.i.preheader
+  %.sroa.idx = xor i1 %i.p, true
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #16
+  %.sroa.597.0.extract.trunc = zext i1 %.sroa.idx to i32
+  br label %_ZNKR2v85MaybeINS_8internal13JSPluralRules4TypeEE8FromJustEv.exit
+
+_ZNKR2v85MaybeINS_8internal13JSPluralRules4TypeEE8FromJustEv.exit: ; preds = %_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit.thread.a, %_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit.thread141
+  %.sroa.597.0.extract.trunc147 = phi i32 [ 0, %_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit.thread141 ], [ %.sroa.597.0.extract.trunc, %_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit.thread.a ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #16
   %i.ag = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 4 uses
   store ptr %i.ag, ptr %11, align 8
@@ -718,8 +727,8 @@ _ZN2v88internal4Intl14ResolvedLocaleD2Ev.exit:    ; preds = %bb.v, %_ZNKSt7__cxx
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #16
   br label %_ZNK2v88internal11MaybeHandleINS0_10JSReceiverEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
 
-_ZNK2v88internal11MaybeHandleINS0_10JSReceiverEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit: ; preds = %bb.b, %_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit.thread.a, %_ZN2v88internal4Intl14ResolvedLocaleD2Ev.exit, %_ZNKR2v85MaybeISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS7_EEE8FromJustEv.exit
-  %.sroa.0108.5 = phi ptr [ null, %_ZNKR2v85MaybeISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS7_EEE8FromJustEv.exit ], [ null, %bb.b ], [ %.sroa.0108.2, %_ZN2v88internal4Intl14ResolvedLocaleD2Ev.exit ], [ null, %_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit.thread.a ]
+_ZNK2v88internal11MaybeHandleINS0_10JSReceiverEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit: ; preds = %bb.b, %_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit.thread, %_ZN2v88internal4Intl14ResolvedLocaleD2Ev.exit, %_ZNKR2v85MaybeISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS7_EEE8FromJustEv.exit
+  %.sroa.0108.5 = phi ptr [ null, %_ZNKR2v85MaybeISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS7_EEE8FromJustEv.exit ], [ null, %bb.b ], [ %.sroa.0108.2, %_ZN2v88internal4Intl14ResolvedLocaleD2Ev.exit ], [ null, %_ZN2v88internalL15GetStringOptionINS0_13JSPluralRules4TypeEEENS_5MaybeIT_EEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEENS9_INS0_6StringEEEPKcSt4spanIKSt17basic_string_viewIcSt11char_traitsIcEELm18446744073709551615EESG_IKS5_Lm18446744073709551615EESt8optionalIS5_E.exit.thread ]
   %i.gd = load ptr, ptr %10, align 8              ; 3 uses
   %i.ge = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.gf = load ptr, ptr %i.ge, align 8            ; 2 uses

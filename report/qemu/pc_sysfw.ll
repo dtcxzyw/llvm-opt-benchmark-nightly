@@ -182,9 +182,10 @@ bb.a:
   tail call void @pflash_cfi01_legacy_drive(ptr noundef %i.l, ptr noundef %i.m) #7
   %i.n = load ptr, ptr %i.k, align 8
   %i.o = tail call ptr @pflash_cfi01_get_blk(ptr noundef %i.n) #7
-  %.not38 = icmp eq ptr %i.o, null
-  %.not34 = icmp eq ptr %i.j, null                ; 2 uses
-  br i1 %.not38, label %2, label %bb.d
+  %.not49 = icmp ne ptr %i.o, null
+  %.not38 = icmp eq ptr %i.j, null                ; 2 uses
+  %or.cond51 = select i1 %.not49, i1 %.not38, i1 false
+  br i1 %or.cond51, label %bb.e, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   %i.p = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str.21, ptr noundef nonnull @.str.22, i32 noundef 107, ptr noundef nonnull @__func__.X86_MACHINE) #7
@@ -199,17 +200,14 @@ bb.c:                                             ; preds = %bb.b
   br label %.loopexit
 
 bb.d:                                             ; preds = %.preheader41
-  br i1 %.not34, label %bb.e, label %.thread
+  br i1 %.not38, label %bb.f, label %.thread
 
-bb.e:                                             ; preds = %bb.d
+bb.e:                                             ; preds = %.preheader41
   tail call void (ptr, ...) @error_report(ptr noundef nonnull @.str.8, i32 noundef 1, i32 noundef 0) #7
   tail call void @exit(i32 noundef 1) #9
   unreachable
 
-2:                                                ; preds = %.preheader41
-  br i1 %.not34, label %bb.f, label %.thread
-
-bb.f:                                             ; preds = %2
+bb.f:                                             ; preds = %bb.d
   %i.t = tail call ptr @object_dynamic_cast_assert(ptr noundef nonnull %0, ptr noundef nonnull @.str.21, ptr noundef nonnull @.str.22, i32 noundef 107, ptr noundef nonnull @__func__.X86_MACHINE) #7
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 1088
   %i.v = load ptr, ptr %i.u, align 16
@@ -221,7 +219,7 @@ bb.g:                                             ; preds = %bb.f
   tail call void @x86_bios_rom_init(ptr noundef %i.w, ptr noundef nonnull @.str.7, ptr noundef %1, i1 noundef zeroext false) #7
   br label %pc_system_flash_map.exit
 
-.thread:                                          ; preds = %bb.d, %2
+.thread:                                          ; preds = %bb.d
   %i.x = load i8, ptr @kvm_allowed, align 1, !range !7, !noundef !8
   %i.y = trunc nuw i8 %i.x to i1
   %.not = xor i1 %i.y, true

@@ -91,7 +91,6 @@ $_ZNSt6vectorIdSaIdEE17_M_default_appendEm = comdat any
 @.str.9 = private unnamed_addr constant [4 x i8] c"CPU\00", align 1
 @.str.10 = private unnamed_addr constant [4 x i8] c"GPU\00", align 1
 @.str.11 = private unnamed_addr constant [11 x i8] c"          \00", align 1
-@__const._ZN5State12timer_outputE12state_timers17mesh_device_typesi.device_string = private unnamed_addr constant [2 x ptr] [ptr @.str.9, ptr @.str.10], align 16
 @.str.12 = private unnamed_addr constant [19 x i8] c"%3s: %.*s%-30.30s\09\00", align 1
 @_ZL22state_timer_descriptor = internal unnamed_addr constant [9 x ptr] [ptr @.str.49, ptr @.str.50, ptr @.str.51, ptr @.str.52, ptr @.str.53, ptr @.str.54, ptr @.str.55, ptr @.str.56, ptr @.str.57], align 16
 @.str.13 = private unnamed_addr constant [2 x i8] c"s\00", align 1
@@ -494,14 +493,13 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   br i1 %i.q, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  %4 = zext i32 %2 to i64
-  %5 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN5State12timer_outputE12state_timers17mesh_device_typesi.device_string, i64 %4
-  %6 = load ptr, ptr %5, align 8, !tbaa !127
+  %.sroa.idx = icmp eq i32 %2, 1
+  %.sroa.speculated = select i1 %.sroa.idx, ptr @.str.10, ptr @.str.9
   %i.r = shl nsw i32 %3, 1
   %i.s = zext i32 %1 to i64
   %i.t = getelementptr inbounds nuw [8 x i8], ptr @_ZL22state_timer_descriptor, i64 %i.s
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !127
-  %i.v = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(1) @.str.12, ptr noundef %6, i32 noundef %i.r, ptr noundef nonnull @.str.11, ptr noundef %i.u) #21 ; 0 uses
+  %i.v = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.a, ptr noundef nonnull dereferenceable(1) @.str.12, ptr noundef nonnull %.sroa.speculated, i32 noundef %i.r, ptr noundef nonnull @.str.11, ptr noundef %i.u) #21 ; 0 uses
   %.pre = load ptr, ptr %i.b, align 8, !tbaa !35
   br label %bb.f
 

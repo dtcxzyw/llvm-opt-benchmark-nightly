@@ -205,7 +205,7 @@ bb.dg:                                            ; preds = %_RNvMs3_NtNtCs68Jln
   %.sroa.3.0.extract.shift.i.i.i.i = lshr i64 %.sroa.04.0.copyload.i.i.i, 32
   %.sroa.3.0.extract.trunc.i.i.i.i = trunc nuw i64 %.sroa.3.0.extract.shift.i.i.i.i to i32 ; 2 uses
   %i.nb = and i64 %.sroa.02.0.copyload.i.i.i89, 4294967295 ; 2 uses
-  %2 = icmp ugt i64 %.val3.i.i.i.i71, %i.nb
+  %2 = icmp ult i64 %i.nb, %.val3.i.i.i.i71
   br i1 %2, label %bb.dh, label %.loopexit.i.i.i
 
 bb.dh:                                            ; preds = %bb.dg
@@ -231,7 +231,7 @@ bb.dj:                                            ; preds = %bb.di
   br label %_RNvMsp_NtCs68Jln09rRqb_8petgraph10graph_implINtB5_14EdgesWalkerMutINtNtCslwFuT2d6ECx_4core6option6OptionNtNtCsbNMRYq9Xj9a_14rustworkx_core18bipartite_coloring8EdgeDataEE4nextB1I_.exit.thread.i.i.i.i
 
 _RNvMsp_NtCs68Jln09rRqb_8petgraph10graph_implINtB5_14EdgesWalkerMutINtNtCslwFuT2d6ECx_4core6option6OptionNtNtCsbNMRYq9Xj9a_14rustworkx_core18bipartite_coloring8EdgeDataEE4nextB1I_.exit.thread.i.i.i.i: ; preds = %.preheader.i.i.i.i, %bb.do, %bb.dj
-  %3 = icmp ugt i64 %.val3.i.i.i.i71, %.sroa.2.0.extract.shift.i.i.i.i
+  %3 = icmp ult i64 %.sroa.2.0.extract.shift.i.i.i.i, %.val3.i.i.i.i71
   br i1 %3, label %bb.dk, label %.loopexit.i.i.i
 
 bb.dk:                                            ; preds = %_RNvMsp_NtCs68Jln09rRqb_8petgraph10graph_implINtB5_14EdgesWalkerMutINtNtCslwFuT2d6ECx_4core6option6OptionNtNtCsbNMRYq9Xj9a_14rustworkx_core18bipartite_coloring8EdgeDataEE4nextB1I_.exit.thread.i.i.i.i
@@ -634,7 +634,7 @@ bb.bj:                                            ; preds = %bb.bi
   %.sroa.3.0.extract.shift.i.i.i = lshr i64 %.sroa.04.0.copyload.i.i, 32
   %.sroa.3.0.extract.trunc.i.i.i = trunc nuw i64 %.sroa.3.0.extract.shift.i.i.i to i32 ; 2 uses
   %i.ik = and i64 %.sroa.02.0.copyload.i.i43, 4294967295 ; 2 uses
-  %2 = icmp ugt i64 %.val6.i.i, %i.ik
+  %2 = icmp ult i64 %i.ik, %.val6.i.i
   br i1 %2, label %bb.bk, label %.loopexit.i.i
 
 bb.bk:                                            ; preds = %bb.bj
@@ -660,7 +660,7 @@ bb.bm:                                            ; preds = %bb.bl
   br label %_RNvMsp_NtCs68Jln09rRqb_8petgraph10graph_implINtB5_14EdgesWalkerMutINtNtCslwFuT2d6ECx_4core6option6OptionNtNtCsbNMRYq9Xj9a_14rustworkx_core18bipartite_coloring8EdgeDataEE4nextB1I_.exit.thread.i.i.i
 
 _RNvMsp_NtCs68Jln09rRqb_8petgraph10graph_implINtB5_14EdgesWalkerMutINtNtCslwFuT2d6ECx_4core6option6OptionNtNtCsbNMRYq9Xj9a_14rustworkx_core18bipartite_coloring8EdgeDataEE4nextB1I_.exit.thread.i.i.i: ; preds = %.preheader.i.i.i, %bb.br, %bb.bm
-  %3 = icmp ugt i64 %.val6.i.i, %.sroa.2.0.extract.shift.i.i.i
+  %3 = icmp ult i64 %.sroa.2.0.extract.shift.i.i.i, %.val6.i.i
   br i1 %3, label %bb.bn, label %.loopexit.i.i
 
 bb.bn:                                            ; preds = %_RNvMsp_NtCs68Jln09rRqb_8petgraph10graph_implINtB5_14EdgesWalkerMutINtNtCslwFuT2d6ECx_4core6option6OptionNtNtCsbNMRYq9Xj9a_14rustworkx_core18bipartite_coloring8EdgeDataEE4nextB1I_.exit.thread.i.i.i

@@ -1,8 +1,6 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/nanobind/original/test_ndarray?download=true
 inline.NumInlined: 2079
 inline.NumDeleted: 1057
-loop-unroll.NumCompletelyUnrolled: 1
-loop-unroll.NumUnrolled: 1
 begin_hunk_0_@_ZL30nanobind_test_ndarray_ext_execP7_object:bb.a
   store ptr %i.dg, ptr @_ZN8nanobind6detail9internalsE, align 8, !tbaa !15
   %.not = icmp eq ptr %i.dg, null
@@ -204,30 +202,30 @@ bb.e:                                             ; preds = %bb.b, %bb.c, %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ch) #25
   store ptr null, ptr %i.ch, align 8, !tbaa !208
   call void @llvm.lifetime.start.p0(ptr nonnull %88) #25
-  %i.gj = getelementptr inbounds nuw i8, ptr %88, i64 56
-  %i.gk = getelementptr inbounds nuw i8, ptr %88, i64 32
-  store ptr @"_ZZN8nanobind6detail11func_createILb0ELb1EZL35nanobind_test_ndarray_ext_exec_implNS_7module_EE3$_6lJRKNS_7ndarrayIJEEEmEJLm0ELm1EEJNS_5scopeENS_4nameENS_5arg_tILj0ELb0EEENSA_ILj1ELb0EEEEEEP7_objectOT1_PFT2_DpT3_ESt16integer_sequenceImJXspT4_EEEDpRKT5_ENUlPvPSE_jPNS0_12cleanup_listEE_8__invokeESS_ST_jSV_", ptr %i.gk, align 8, !tbaa !211
-  %i.gl = getelementptr inbounds nuw i8, ptr %88, i64 40
-  store ptr @"_ZZN8nanobind6detail11func_createILb0ELb1EZL35nanobind_test_ndarray_ext_exec_implNS_7module_EE3$_6lJRKNS_7ndarrayIJEEEmEJLm0ELm1EEJNS_5scopeENS_4nameENS_5arg_tILj0ELb0EEENSA_ILj1ELb0EEEEEEP7_objectOT1_PFT2_DpT3_ESt16integer_sequenceImJXspT4_EEEDpRKT5_E5descr", ptr %i.gl, align 8, !tbaa !212
-  %i.gm = getelementptr inbounds nuw i8, ptr %88, i64 48
-  store ptr %i.ch, ptr %i.gm, align 8, !tbaa !213
-  %i.gn = getelementptr inbounds nuw i8, ptr %88, i64 60
-  store <2 x i16> splat (i16 2), ptr %i.gn, align 4, !tbaa !20
-  %129 = getelementptr inbounds nuw i8, ptr %88, i64 88
-  %i.go = getelementptr inbounds nuw i8, ptr %88, i64 80
-  %i.gp = getelementptr inbounds nuw i8, ptr %88, i64 112
+  %i.gj = getelementptr inbounds nuw i8, ptr %88, i64 32
+  store ptr @"_ZZN8nanobind6detail11func_createILb0ELb1EZL35nanobind_test_ndarray_ext_exec_implNS_7module_EE3$_6lJRKNS_7ndarrayIJEEEmEJLm0ELm1EEJNS_5scopeENS_4nameENS_5arg_tILj0ELb0EEENSA_ILj1ELb0EEEEEEP7_objectOT1_PFT2_DpT3_ESt16integer_sequenceImJXspT4_EEEDpRKT5_ENUlPvPSE_jPNS0_12cleanup_listEE_8__invokeESS_ST_jSV_", ptr %i.gj, align 8, !tbaa !211
+  %i.gk = getelementptr inbounds nuw i8, ptr %88, i64 40
+  store ptr @"_ZZN8nanobind6detail11func_createILb0ELb1EZL35nanobind_test_ndarray_ext_exec_implNS_7module_EE3$_6lJRKNS_7ndarrayIJEEEmEJLm0ELm1EEJNS_5scopeENS_4nameENS_5arg_tILj0ELb0EEENSA_ILj1ELb0EEEEEEP7_objectOT1_PFT2_DpT3_ESt16integer_sequenceImJXspT4_EEEDpRKT5_E5descr", ptr %i.gk, align 8, !tbaa !212
+  %i.gl = getelementptr inbounds nuw i8, ptr %88, i64 48
+  store ptr %i.ch, ptr %i.gl, align 8, !tbaa !213
+  %i.gm = getelementptr inbounds nuw i8, ptr %88, i64 60
+  store <2 x i16> splat (i16 2), ptr %i.gm, align 4, !tbaa !20
+  %i.gn = getelementptr inbounds nuw i8, ptr %88, i64 88
+  %129 = getelementptr inbounds nuw i8, ptr %88, i64 112
+  store i32 0, ptr %129, align 8
+  %i.go = getelementptr inbounds nuw i8, ptr %88, i64 120
+  %i.gp = getelementptr inbounds nuw i8, ptr %88, i64 144
   store i32 0, ptr %i.gp, align 8
-  %i.gq = getelementptr inbounds nuw i8, ptr %88, i64 144
-  store i32 0, ptr %i.gq, align 8
-  store ptr %.sroa.0.0.copyload.i286.i, ptr %i.go, align 8, !tbaa !216
+  %i.gq = getelementptr inbounds nuw i8, ptr %88, i64 56
+  %130 = getelementptr inbounds nuw i8, ptr %88, i64 80
+  store ptr %.sroa.0.0.copyload.i286.i, ptr %130, align 8, !tbaa !216
   %i.gr = getelementptr inbounds nuw i8, ptr %88, i64 64
   store ptr @.str.10, ptr %i.gr, align 8, !tbaa !217
-  store i32 11, ptr %i.gj, align 8, !tbaa !218
-  store ptr @.str.4, ptr %129, align 8, !tbaa !219
-  %130 = getelementptr inbounds nuw i8, ptr %88, i64 96
-  %i.gs = getelementptr inbounds nuw i8, ptr %88, i64 120
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %130, i8 0, i64 16, i1 false)
-  store ptr @.str.11, ptr %i.gs, align 8, !tbaa !219
+  store i32 11, ptr %i.gq, align 8, !tbaa !218
+  store ptr @.str.4, ptr %i.gn, align 8, !tbaa !219
+  %i.gs = getelementptr inbounds nuw i8, ptr %88, i64 96
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.gs, i8 0, i64 16, i1 false)
+  store ptr @.str.11, ptr %i.go, align 8, !tbaa !219
   %i.gt = getelementptr inbounds nuw i8, ptr %88, i64 128
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.gt, i8 0, i64 16, i1 false)
   %i.gu = load ptr, ptr @_ZN8nanobind6detail9internalsE, align 8, !tbaa !15
@@ -630,40 +628,40 @@ bb.c:                                             ; preds = %bb.b
 
 .preheader.i.a:                                   ; preds = %bb.c, %._crit_edge.i
   %.068.i = phi i64 [ %i.l, %._crit_edge.i ], [ 0, %bb.c ] ; 2 uses
-  br label %6
+  br label %.preheader.i
 
 ._crit_edge9.split.i:                             ; preds = %._crit_edge.i, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
   br label %"_ZZL35nanobind_test_ndarray_ext_exec_implN8nanobind7module_EENK4$_77clENS_7ndarrayIJEEE.exit"
+
+.preheader.i:                                     ; preds = %_ZNK8nanobind12ndarray_viewIfLm2ELc0EEclIJmmEEERfDpT_.exit.i, %.preheader.i.a
+  %.08.i = phi i64 [ 0, %.preheader.i.a ], [ %i.t, %_ZNK8nanobind12ndarray_viewIfLm2ELc0EEclIJmmEEERfDpT_.exit.i ] ; 2 uses
+  br label %bb.d
 
 ._crit_edge.i:                                    ; preds = %_ZNK8nanobind12ndarray_viewIfLm2ELc0EEclIJmmEEERfDpT_.exit.i
   %i.l = add nuw i64 %.068.i, 1                   ; 2 uses
   %exitcond11.not.i = icmp eq i64 %i.l, %i.h
   br i1 %exitcond11.not.i, label %._crit_edge9.split.i, label %.preheader.i.a, !llvm.loop !439
 
-6:                                                ; preds = %_ZNK8nanobind12ndarray_viewIfLm2ELc0EEclIJmmEEERfDpT_.exit.i, %.preheader.i.a
-  %.07.i = phi i64 [ 0, %.preheader.i.a ], [ %i.t, %_ZNK8nanobind12ndarray_viewIfLm2ELc0EEclIJmmEEERfDpT_.exit.i ] ; 2 uses
-  br label %bb.d
-
-bb.d:                                             ; preds = %bb.d, %6
-  %7 = phi i1 [ true, %6 ], [ false, %bb.d ]
-  %.0.i6.i.sroa.phi.sroa.speculated = phi i64 [ %.068.i, %6 ], [ %.07.i, %bb.d ]
-  %.0.i6.i = phi i64 [ 0, %6 ], [ 1, %bb.d ]
-  %.08.i5.i = phi i64 [ 0, %6 ], [ %i.p, %bb.d ]
+bb.d:                                             ; preds = %bb.d, %.preheader.i
+  %.sroa.idx.i.i = phi i64 [ %.068.i, %.preheader.i ], [ %.08.i, %bb.d ]
+  %6 = phi i1 [ true, %.preheader.i ], [ false, %bb.d ]
+  %.0.i6.i = phi i64 [ 0, %.preheader.i ], [ 1, %bb.d ]
+  %.08.i5.i = phi i64 [ 0, %.preheader.i ], [ %i.p, %bb.d ]
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %scevgep13.i.i, i64 %.0.i6.i
   %i.n = load i64, ptr %i.m, align 8, !tbaa !27
-  %i.o = mul nsw i64 %i.n, %.0.i6.i.sroa.phi.sroa.speculated
+  %i.o = mul nsw i64 %i.n, %.sroa.idx.i.i
   %i.p = add nsw i64 %i.o, %.08.i5.i              ; 2 uses
-  br i1 %7, label %bb.d, label %_ZNK8nanobind12ndarray_viewIfLm2ELc0EEclIJmmEEERfDpT_.exit.i, !llvm.loop !1
+  br i1 %6, label %bb.d, label %_ZNK8nanobind12ndarray_viewIfLm2ELc0EEclIJmmEEERfDpT_.exit.i, !llvm.loop !1
 
 _ZNK8nanobind12ndarray_viewIfLm2ELc0EEclIJmmEEERfDpT_.exit.i: ; preds = %bb.d
   %i.q = getelementptr inbounds [4 x i8], ptr %i.g, i64 %i.p ; 2 uses
   %i.r = load float, ptr %i.q, align 4, !tbaa !109
   %i.s = fmul float %i.r, 2.000000e+00
   store float %i.s, ptr %i.q, align 4, !tbaa !109
-  %i.t = add nuw i64 %.07.i, 1                    ; 2 uses
+  %i.t = add nuw i64 %.08.i, 1                    ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.t, %i.j
-  br i1 %exitcond.not.i, label %._crit_edge.i, label %6, !llvm.loop !440
+  br i1 %exitcond.not.i, label %._crit_edge.i, label %.preheader.i, !llvm.loop !440
 
 "_ZZL35nanobind_test_ndarray_ext_exec_implN8nanobind7module_EENK4$_77clENS_7ndarrayIJEEE.exit": ; preds = %._crit_edge9.split.i, %bb.b
   call void @_ZN8nanobind6detail15ndarray_dec_refEPNS0_14ndarray_handleE(ptr noundef %i.d) #24
@@ -728,13 +726,13 @@ bb.c:                                             ; preds = %_ZNK8nanobind12ndar
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %bb.c
+  %.sroa.idx.i.i = phi i64 [ %.084.i, %bb.c ], [ %.03.i, %bb.d ]
   %6 = phi i1 [ true, %bb.c ], [ false, %bb.d ]
-  %.0.i2.i.sroa.phi.sroa.speculated = phi i64 [ %.084.i, %bb.c ], [ %.03.i, %bb.d ]
   %.0.i2.i = phi i64 [ 0, %bb.c ], [ 1, %bb.d ]
   %.08.i1.i = phi i64 [ 0, %bb.c ], [ %i.p, %bb.d ]
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %scevgep13.i.i, i64 %.0.i2.i
   %i.n = load i64, ptr %i.m, align 8, !tbaa !27
-  %i.o = mul nsw i64 %i.n, %.0.i2.i.sroa.phi.sroa.speculated
+  %i.o = mul nsw i64 %i.n, %.sroa.idx.i.i
   %i.p = add nsw i64 %i.o, %.08.i1.i              ; 2 uses
   br i1 %6, label %bb.d, label %_ZNK8nanobind12ndarray_viewIfLm2ELc0EEclIJmmEEERfDpT_.exit.i, !llvm.loop !1
 
@@ -861,13 +859,13 @@ bb.d:                                             ; preds = %_ZNK8nanobind12ndar
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %bb.d
+  %.sroa.idx.i.i = phi i64 [ %.084.i, %bb.d ], [ %.03.i, %bb.e ]
   %6 = phi i1 [ true, %bb.d ], [ false, %bb.e ]
-  %.0.i2.i.sroa.phi.sroa.speculated = phi i64 [ %.084.i, %bb.d ], [ %.03.i, %bb.e ]
   %.0.i2.i = phi i64 [ 0, %bb.d ], [ 1, %bb.e ]
   %.08.i1.i = phi i64 [ 0, %bb.d ], [ %i.l, %bb.e ]
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %scevgep15.i.i, i64 %.0.i2.i
   %i.j = load i64, ptr %i.i, align 8, !tbaa !27
-  %i.k = mul nsw i64 %i.j, %.0.i2.i.sroa.phi.sroa.speculated
+  %i.k = mul nsw i64 %i.j, %.sroa.idx.i.i
   %i.l = add nsw i64 %i.k, %.08.i1.i              ; 2 uses
   br i1 %6, label %bb.e, label %_ZNK8nanobind12ndarray_viewIfLm2ELc67EEclIJmmEEERfDpT_.exit.i, !llvm.loop !446
 
@@ -994,13 +992,13 @@ bb.d:                                             ; preds = %_ZNK8nanobind12ndar
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.e, %bb.d
+  %.sroa.idx.i.i = phi i64 [ %.084.i, %bb.d ], [ %.03.i, %bb.e ]
   %6 = phi i1 [ true, %bb.d ], [ false, %bb.e ]
-  %.0.i2.i.sroa.phi.sroa.speculated = phi i64 [ %.084.i, %bb.d ], [ %.03.i, %bb.e ]
   %.0.i2.i = phi i64 [ 0, %bb.d ], [ 1, %bb.e ]
   %.08.i1.i = phi i64 [ 0, %bb.d ], [ %i.l, %bb.e ]
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %scevgep15.i.i, i64 %.0.i2.i
   %i.j = load i64, ptr %i.i, align 8, !tbaa !27
-  %i.k = mul nsw i64 %i.j, %.0.i2.i.sroa.phi.sroa.speculated
+  %i.k = mul nsw i64 %i.j, %.sroa.idx.i.i
   %i.l = add nsw i64 %i.k, %.08.i1.i              ; 2 uses
   br i1 %6, label %bb.e, label %_ZNK8nanobind12ndarray_viewIfLm2ELc70EEclIJmmEEERfDpT_.exit.i, !llvm.loop !451
 
@@ -1117,22 +1115,22 @@ bb.b:                                             ; preds = %bb.a
   %.064.i = phi i64 [ 0, %bb.b ], [ 1, %6 ]
   br label %bb.c
 
-6:                                                ; preds = %_ZNSt7complexIfEmLIfEERS0_RKS_IT_E.exit.i
-  br i1 %i.g, label %.preheader.i.a, label %bb.g, !llvm.loop !455
-
 bb.c:                                             ; preds = %_ZNSt7complexIfEmLIfEERS0_RKS_IT_E.exit.i, %.preheader.i.a
   %i.h = phi i1 [ true, %.preheader.i.a ], [ false, %_ZNSt7complexIfEmLIfEERS0_RKS_IT_E.exit.i ]
   %.03.i = phi i64 [ 0, %.preheader.i.a ], [ 1, %_ZNSt7complexIfEmLIfEERS0_RKS_IT_E.exit.i ]
   br label %bb.d
 
+6:                                                ; preds = %_ZNSt7complexIfEmLIfEERS0_RKS_IT_E.exit.i
+  br i1 %i.g, label %.preheader.i.a, label %bb.g, !llvm.loop !455
+
 bb.d:                                             ; preds = %bb.d, %bb.c
+  %.sroa.idx.i.i = phi i64 [ %.064.i, %bb.c ], [ %.03.i, %bb.d ]
   %7 = phi i1 [ true, %bb.c ], [ false, %bb.d ]
-  %.0.i2.i.sroa.phi.sroa.speculated = phi i64 [ %.064.i, %bb.c ], [ %.03.i, %bb.d ]
   %.0.i2.i = phi i64 [ 0, %bb.c ], [ 1, %bb.d ]
   %.08.i1.i = phi i64 [ 0, %bb.c ], [ %i.l, %bb.d ]
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %scevgep15.i.i, i64 %.0.i2.i
   %i.j = load i64, ptr %i.i, align 8, !tbaa !27
-  %i.k = mul nuw nsw i64 %i.j, %.0.i2.i.sroa.phi.sroa.speculated
+  %i.k = mul nuw nsw i64 %i.j, %.sroa.idx.i.i
   %i.l = add nsw i64 %i.k, %.08.i1.i              ; 2 uses
   br i1 %7, label %bb.d, label %_ZNK8nanobind12ndarray_viewISt7complexIfELm2ELc67EEclIJmmEEERS2_DpT_.exit.i, !llvm.loop !456
 

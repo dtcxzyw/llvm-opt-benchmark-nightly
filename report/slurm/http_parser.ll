@@ -9,7 +9,6 @@ target triple = "x86_64-pc-linux-gnu"
 @.str = private unnamed_addr constant [12 x i8] c"http_parser\00", align 1
 @.str.1 = private unnamed_addr constant [27 x i8] c"http_parser/libhttp_parser\00", align 1
 @.str.2 = private unnamed_addr constant [26 x i8] c"http_parser/llhttp_parser\00", align 1
-@__const.http_parser_g_init.default_http_parser_types = private unnamed_addr constant [2 x ptr] [ptr @.str.1, ptr @.str.2], align 16
 @.str.3 = private unnamed_addr constant [32 x i8] c"%s: pthread_rwlock_wrlock(): %m\00", align 1
 @__func__.http_parser_g_init = private unnamed_addr constant [19 x i8] c"http_parser_g_init\00", align 1
 @plugin_inited = internal unnamed_addr global i1 false, align 4
@@ -37,7 +36,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local range(i32 -1, 1) i32 @http_parser_g_init() #0 {
 bb.a:
-  %i.a = alloca ptr, align 8                      ; 7 uses
+  %i.a = alloca ptr, align 8                      ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   store ptr null, ptr %i.a, align 8
   %i.b = tail call i32 @pthread_rwlock_wrlock(ptr noundef nonnull @context_lock) #6 ; 2 uses
@@ -52,32 +51,33 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %.b17 = load i1, ptr @plugin_inited, align 4
-  br i1 %.b17, label %bb.i, label %.preheader.preheader
+  br i1 %.b17, label %bb.i, label %.preheader.a
 
-.preheader.preheader:                             ; preds = %bb.c
-  %.pre = load ptr, ptr getelementptr inbounds nuw (i8, ptr @slurm_conf, i64 472), align 8
-  br label %.preheader.a
-
-.preheader.a:                                     ; preds = %bb.f, %.preheader.preheader
-  %0 = phi ptr [ %.pre, %.preheader.preheader ], [ null, %bb.f ] ; 2 uses
-  %1 = phi i1 [ true, %.preheader.preheader ], [ false, %bb.f ]
-  %indvars.iv = phi i64 [ 0, %.preheader.preheader ], [ 1, %bb.f ]
+.preheader.a:                                     ; preds = %bb.c
+  %.pre = load ptr, ptr getelementptr inbounds nuw (i8, ptr @slurm_conf, i64 472), align 8 ; 2 uses
+  %.not18.peel = icmp eq ptr %.pre, null
+  %.011.peel = select i1 %.not18.peel, ptr @.str.1, ptr %.pre ; 2 uses
+  %0 = tail call ptr @plugin_context_create(ptr noundef nonnull @.str, ptr noundef nonnull %.011.peel, ptr noundef nonnull @ops, ptr noundef nonnull @syms, i64 noundef 24) #6 ; 2 uses
+  store ptr %0, ptr @g_context, align 8
   %.not18 = icmp eq ptr %0, null
-  br i1 %.not18, label %bb.d, label %bb.e
+  br i1 %.not18, label %bb.d, label %.thread
 
 bb.d:                                             ; preds = %.preheader.a
-  %2 = getelementptr inbounds nuw [8 x i8], ptr @__const.http_parser_g_init.default_http_parser_types, i64 %indvars.iv
-  %i.d = load ptr, ptr %2, align 8
-  br label %bb.e
+  %1 = load ptr, ptr %i.a, align 8
+  %.not20.peel = icmp eq ptr %1, null
+  %2 = select i1 %.not20.peel, ptr @.str.6, ptr @.str.5
+  call void (ptr, ptr, ...) @_xstrfmtcat(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.4, ptr noundef nonnull %2, ptr noundef nonnull %.011.peel) #6
+  %i.d = load ptr, ptr getelementptr inbounds nuw (i8, ptr @slurm_conf, i64 472), align 8
+  %.not21.peel = icmp eq ptr %i.d, null
+  br i1 %.not21.peel, label %bb.e, label %bb.g
 
-bb.e:                                             ; preds = %.preheader.a, %bb.d
-  %.011 = phi ptr [ %i.d, %bb.d ], [ %0, %.preheader.a ] ; 2 uses
-  %i.e = call ptr @plugin_context_create(ptr noundef nonnull @.str, ptr noundef %.011, ptr noundef nonnull @ops, ptr noundef nonnull @syms, i64 noundef 24) #6 ; 2 uses
+bb.e:                                             ; preds = %bb.d
+  %i.e = call ptr @plugin_context_create(ptr noundef nonnull @.str, ptr noundef nonnull @.str.2, ptr noundef nonnull @ops, ptr noundef nonnull @syms, i64 noundef 24) #6 ; 2 uses
   store ptr %i.e, ptr @g_context, align 8
   %.not19 = icmp eq ptr %i.e, null
   br i1 %.not19, label %bb.f, label %.thread
 
-.thread:                                          ; preds = %bb.e
+.thread:                                          ; preds = %bb.e, %.preheader.a
   store i1 true, ptr @plugin_inited, align 4
   br label %bb.i
 
@@ -85,13 +85,10 @@ bb.f:                                             ; preds = %bb.e
   %i.f = load ptr, ptr %i.a, align 8
   %.not20 = icmp eq ptr %i.f, null
   %i.g = select i1 %.not20, ptr @.str.6, ptr @.str.5
-  call void (ptr, ptr, ...) @_xstrfmtcat(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.4, ptr noundef nonnull %i.g, ptr noundef %.011) #6
-  %3 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @slurm_conf, i64 472), align 8
-  %.not21 = icmp eq ptr %3, null
-  %or.cond = and i1 %.not21, %1
-  br i1 %or.cond, label %.preheader.a, label %bb.g, !llvm.loop !8
+  call void (ptr, ptr, ...) @_xstrfmtcat(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.4, ptr noundef nonnull %i.g, ptr noundef nonnull @.str.2) #6
+  br label %bb.g
 
-bb.g:                                             ; preds = %bb.f
+bb.g:                                             ; preds = %bb.f, %bb.d
   %.b.pr = load i1, ptr @plugin_inited, align 4
   br i1 %.b.pr, label %bb.i, label %bb.h
 
@@ -253,7 +250,4 @@ attributes #8 = { noreturn nounwind }
 !5 = !{i32 7, !"frame-pointer", i32 2}
 !6 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
 !7 = !{!"Ubuntu clang version 24.0.0 (++20260804081852+44c6aed9bd9b-1~exp1~20260804202019.1766)"}
-!8 = distinct !{!8, !9, !10}
-!9 = !{!"llvm.loop.mustprogress"}
-!10 = !{!"llvm.loop.unroll.disable"}
 end_hunk_0

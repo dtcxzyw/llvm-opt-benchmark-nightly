@@ -204,7 +204,7 @@ _ZNK5osgeo4proj4util8CodeListneERKS2_.exit.a:     ; preds = %bb.ah
   %.not = icmp eq i32 %bcmp.i.i.i, 0
   br i1 %.not, label %_ZNK5osgeo4proj4util8CodeListneERKS2_.exit.thread127, label %_ZNK5osgeo4proj4util8CodeListneERKS2_.exit.thread.a
 
-_ZNK5osgeo4proj4util8CodeListneERKS2_.exit.thread.a: ; preds = %bb.ag, %_ZNK5osgeo4proj4util8CodeListneERKS2_.exit.a
+_ZNK5osgeo4proj4util8CodeListneERKS2_.exit.thread.a: ; preds = %_ZNK5osgeo4proj4util8CodeListneERKS2_.exit.a, %bb.ag
   %i.bu = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNK5osgeo4proj2cs20CoordinateSystemAxis9directionEv(ptr noundef nonnull align 8 dereferenceable(56) %i.bf) #42 ; 4 uses
   %i.bv = icmp eq ptr %i.bu, @_ZN5osgeo4proj2cs13AxisDirection4WESTE
   br i1 %i.bv, label %bb.ak, label %bb.ai
@@ -253,7 +253,7 @@ bb.ap:                                            ; preds = %bb.an, %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #39
   br label %.thread146
 
-_ZNK5osgeo4proj4util8CodeListneERKS2_.exit.thread127: ; preds = %bb.ah, %bb.af, %_ZNK5osgeo4proj4util8CodeListneERKS2_.exit.a
+_ZNK5osgeo4proj4util8CodeListneERKS2_.exit.thread127: ; preds = %bb.ah, %_ZNK5osgeo4proj4util8CodeListneERKS2_.exit.a, %bb.af
   %i.cg = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNK5osgeo4proj6common16IdentifiedObject7nameStrB5cxx11Ev(ptr noundef nonnull align 8 dereferenceable(40) %i.bf) #42
   %i.ch = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNK5osgeo4proj6common16IdentifiedObject7nameStrB5cxx11Ev(ptr noundef nonnull align 8 dereferenceable(40) %i.bi) #42
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #39
@@ -324,7 +324,7 @@ bb.as:                                            ; preds = %bb.aq, %bb.ar
   call void @_ZN5osgeo4proj2io19PROJStringFormatter8addParamEPKcS4_(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.48, ptr noundef nonnull @.str.107)
   br label %.thread146
 
-.thread146:                                       ; preds = %bb.an, %bb.ao, %bb.ap, %bb.as, %bb.ar, %bb.aq, %bb.ae, %bb.ac
+.thread146:                                       ; preds = %bb.an, %bb.ap, %bb.ao, %bb.as, %bb.ar, %bb.aq, %bb.ae, %bb.ac
   ret void
 }
 

@@ -204,7 +204,6 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: nonlazybind uwtable
 define zeroext i1 @_RNvXsa_NtNtCsfkBndxG8xzO_14regex_automata4util8alphabetNtB5_6BitSetNtNtCs4NRVxsYgnAr_4core3fmt5Debug3fmt(ptr nofree readonly align 16 captures(none) %0, ptr align 8 %1) unnamed_addr #0 {
 bb.a:
-  %2 = alloca [32 x i8], align 16                 ; 2 uses
   %i.a = alloca [1 x i8], align 1                 ; 2 uses
   %i.b = alloca [3 x i8], align 4                 ; 3 uses
   %i.c = alloca [16 x i8], align 8                ; 3 uses
@@ -214,21 +213,24 @@ bb.a:
   store i24 %i.e, ptr %i.b, align 4
   %i.f = call { i1, i8 } @_RNvXsd_NtNtCs4NRVxsYgnAr_4core4iter5rangeINtNtNtB9_3ops5range14RangeInclusivehENtNtNtB7_6traits8iterator8Iterator4nextCsfcggljOhZkm_12regex_syntax(ptr nonnull %i.b) ; 2 uses
   %i.g = extractvalue { i1, i8 } %i.f, 0
-  br i1 %i.g, label %.lr.ph.a, label %._crit_edge
+  br i1 %i.g, label %.lr.ph, label %._crit_edge
 
-.lr.ph.a:                                         ; preds = %bb.a, %.backedge
-  %i.h = phi { i1, i8 } [ %i.n, %.backedge ], [ %i.f, %bb.a ]
+.lr.ph:                                           ; preds = %bb.a
+  %.sroa.28.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
+  br label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %.lr.ph, %.backedge
+  %i.h = phi { i1, i8 } [ %i.f, %.lr.ph ], [ %i.n, %.backedge ]
   %i.i = extractvalue { i1, i8 } %i.h, 1          ; 3 uses
   store i8 %i.i, ptr %i.a, align 1
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %2, ptr noundef nonnull align 16 dereferenceable(32) %0, i64 32, i1 false)
-  %.lobit.i = lshr i8 %i.i, 7
-  %3 = zext nneg i8 %.lobit.i to i64
+  %.sroa.07.0.copyload = load i128, ptr %0, align 16
+  %.sroa.28.0.copyload = load i128, ptr %.sroa.28.0..sroa_idx, align 16
   %i.j = and i8 %i.i, 127
-  %4 = getelementptr inbounds nuw [16 x i8], ptr %2, i64 %3
-  %5 = load i128, ptr %4, align 16
+  %.sroa.idx.not9 = icmp slt i8 %i.i, 0
+  %.sroa.speculated = select i1 %.sroa.idx.not9, i128 %.sroa.28.0.copyload, i128 %.sroa.07.0.copyload
   %i.k = zext nneg i8 %i.j to i128
   %i.l = shl nuw i128 1, %i.k
-  %i.m = and i128 %5, %i.l
+  %i.m = and i128 %.sroa.speculated, %i.l
   %.not = icmp eq i128 %i.m, 0
   br i1 %.not, label %.backedge, label %bb.b
 

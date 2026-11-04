@@ -202,8 +202,6 @@ _ZN2cv8GMatDescD2Ev.exit27:                       ; preds = %bb.z, %_ZN2cv8GMatD
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZN10GCPUStereo5setupERKN2cv8GMatDescES3_NS0_4gapi18StereoOutputFormatERSt10shared_ptrI11StereoSetupERKSt6vectorINS0_11GCompileArgESaISB_EE(ptr noundef nonnull align 8 dereferenceable(48) %0, ptr noundef nonnull align 8 dereferenceable(48) %1, i32 noundef %2, ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(24) %4) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.0 = alloca ptr, align 8                  ; 4 uses
-  %.sroa.4 = alloca ptr, align 8                  ; 4 uses
   %5 = alloca %"class.cv::util::bad_any_cast", align 8 ; 5 uses
   %6 = alloca %"class.cv::util::optional", align 8 ; 8 uses
   %7 = alloca %struct.StereoSetup, align 16       ; 8 uses
@@ -213,7 +211,7 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !179, !noalias !177 ; 2 uses
   %.not12.i = icmp eq ptr %i.a, %i.c
-  br i1 %.not12.i, label %._crit_edge.i, label %.lr.ph.i
+  br i1 %.not12.i, label %.loopexit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a, %.critedge.i
   %.sroa.06.013.i = phi ptr [ %i.v, %.critedge.i ], [ %i.a, %bb.a ] ; 4 uses
@@ -269,7 +267,11 @@ bb.c:                                             ; preds = %_ZN2cv4util8any_cas
 .critedge.i:                                      ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.i, %.lr.ph.i
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.06.013.i, i64 72 ; 2 uses
   %.not.i = icmp eq ptr %i.v, %i.c
-  br i1 %.not.i, label %._crit_edge.i, label %.lr.ph.i
+  br i1 %.not.i, label %.loopexit, label %.lr.ph.i
+
+.loopexit:                                        ; preds = %.critedge.i, %bb.a
+  store i64 0, ptr %6, align 8, !tbaa !181, !alias.scope !177
+  br label %bb.e
 
 bb.d:                                             ; preds = %_ZN2cv4util8any_castINS_4gapi7calib3d3cpu15StereoInitParamEEEPKT_PKNS0_3anyE.exit.i.i.i
   %i.w = getelementptr inbounds nuw i8, ptr %i.t, i64 8
@@ -278,25 +280,16 @@ bb.d:                                             ; preds = %_ZN2cv4util8any_cas
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.x, ptr noundef nonnull align 8 dereferenceable(24) %i.w, i64 24, i1 false), !tbaa.struct !183
   br label %bb.e
 
-._crit_edge.i:                                    ; preds = %.critedge.i, %bb.a
-  store i64 0, ptr %6, align 8, !tbaa !181, !alias.scope !177
-  br label %bb.e
-
-bb.e:                                             ; preds = %._crit_edge.i, %bb.d
-  %i.y = phi i1 [ false, %._crit_edge.i ], [ true, %bb.d ] ; 3 uses
-  %.sroa.phi = phi ptr [ %.sroa.0, %._crit_edge.i ], [ %.sroa.4, %bb.d ]
+bb.e:                                             ; preds = %.loopexit, %bb.d
+  %i.y = phi i1 [ true, %bb.d ], [ false, %.loopexit ] ; 3 uses
+  %.sroa.phi = phi ptr [ @_ZN2cv4util7variantIJNS0_8optionalINS_4gapi7calib3d3cpu15StereoInitParamEE7nothingES6_EE6dtor_hIS6_E4helpEPNSt15aligned_storageILm24ELm8EE4typeE, %bb.d ], [ @_ZN2cv4util7variantIJNS0_8optionalINS_4gapi7calib3d3cpu15StereoInitParamEE7nothingES6_EE6dtor_hIS8_E4helpEPNSt15aligned_storageILm24ELm8EE4typeE, %.loopexit ]
   %i.z = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %.sroa.010.0.copyload.sroa.speculate.load.true = load i32, ptr %i.z, align 8
   %.sroa.gep = getelementptr inbounds nuw i8, ptr %6, i64 12
   %.sroa.5.0.copyload.sroa.speculate.load.true = load i32, ptr %.sroa.gep, align 4
   %.sroa.gep15 = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.aa = load <2 x double>, ptr %.sroa.gep15, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
-  store ptr @_ZN2cv4util7variantIJNS0_8optionalINS_4gapi7calib3d3cpu15StereoInitParamEE7nothingES6_EE6dtor_hIS8_E4helpEPNSt15aligned_storageILm24ELm8EE4typeE, ptr %.sroa.0, align 8
-  store ptr @_ZN2cv4util7variantIJNS0_8optionalINS_4gapi7calib3d3cpu15StereoInitParamEE7nothingES6_EE6dtor_hIS6_E4helpEPNSt15aligned_storageILm24ELm8EE4typeE, ptr %.sroa.4, align 8
-  %8 = load ptr, ptr %.sroa.phi, align 8, !tbaa !63
-  invoke void %8(ptr noundef nonnull %i.z)
+  invoke void %.sroa.phi(ptr noundef nonnull %i.z)
           to label %_ZN2cv4util8optionalINS_4gapi7calib3d3cpu15StereoInitParamEED2Ev.exit unwind label %bb.f
 
 bb.f:                                             ; preds = %bb.e
@@ -312,8 +305,6 @@ _ZN2cv4util8optionalINS_4gapi7calib3d3cpu15StereoInitParamEED2Ev.exit: ; preds =
   %i.af = select <2 x i1> %i.ae, <2 x double> %i.aa, <2 x double> <double 6.350000e+01, double 3.600000e+00>
   %.sroa.5.0.copyload.sroa.speculated = select i1 %i.y, i32 %.sroa.5.0.copyload.sroa.speculate.load.true, i32 21
   %.sroa.010.0.copyload.sroa.speculated = select i1 %i.y, i32 %.sroa.010.0.copyload.sroa.speculate.load.true, i32 0
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #22
   store <2 x double> %i.af, ptr %7, align 16, !tbaa !182
@@ -659,13 +650,13 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr hidden void @_ZN2cv4util7variantIJNS0_8optionalINS_4gapi7calib3d3cpu15StereoInitParamEE7nothingES6_EE6dtor_hIS8_E4helpEPNSt15aligned_storageILm24ELm8EE4typeE(ptr noundef %0) #3 comdat align 2 {
+define linkonce_odr hidden void @_ZN2cv4util7variantIJNS0_8optionalINS_4gapi7calib3d3cpu15StereoInitParamEE7nothingES6_EE6dtor_hIS8_E4helpEPNSt15aligned_storageILm24ELm8EE4typeE(ptr noundef %0) local_unnamed_addr #3 comdat align 2 {
 bb.a:
   ret void
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr hidden void @_ZN2cv4util7variantIJNS0_8optionalINS_4gapi7calib3d3cpu15StereoInitParamEE7nothingES6_EE6dtor_hIS6_E4helpEPNSt15aligned_storageILm24ELm8EE4typeE(ptr noundef %0) #3 comdat align 2 {
+define linkonce_odr hidden void @_ZN2cv4util7variantIJNS0_8optionalINS_4gapi7calib3d3cpu15StereoInitParamEE7nothingES6_EE6dtor_hIS6_E4helpEPNSt15aligned_storageILm24ELm8EE4typeE(ptr noundef %0) local_unnamed_addr #3 comdat align 2 {
 bb.a:
   ret void
 }
