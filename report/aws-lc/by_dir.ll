@@ -175,8 +175,8 @@ bb.g:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %._crit_edge
+  %.sroa.idx = phi i32 [ %i.j, %bb.g ], [ %i.k, %._crit_edge ] ; 6 uses
   %7 = phi i1 [ true, %bb.g ], [ false, %._crit_edge ]
-  %indvars.iv.sroa.phi.sroa.speculated = phi i32 [ %i.j, %bb.g ], [ %i.k, %._crit_edge ] ; 6 uses
   %i.p = load ptr, ptr %i.i, align 8, !tbaa !11
   %i.q = call i64 @OPENSSL_sk_num(ptr noundef %i.p) #10
   %.not150 = icmp eq i64 %i.q, 0
@@ -208,7 +208,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not98, label %.split.split.us.preheader, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  store i32 %indvars.iv.sroa.phi.sroa.speculated, ptr %6, align 4, !tbaa !23
+  store i32 %.sroa.idx, ptr %6, align 4, !tbaa !23
   call void @CRYPTO_MUTEX_lock_read(ptr noundef nonnull %i.s) #10
   %i.ab = load ptr, ptr %i.z, align 8, !tbaa !21
   %i.ac = call i32 @OPENSSL_sk_find(ptr noundef %i.ab, ptr noundef nonnull %i.a, ptr noundef nonnull %6, ptr noundef nonnull @sk_BY_DIR_HASH_call_cmp_func) #10
@@ -238,7 +238,7 @@ bb.n:                                             ; preds = %bb.i
   %i.aj = load ptr, ptr %i.m, align 8, !tbaa !36
   %i.ak = load i64, ptr %i.n, align 8, !tbaa !37
   %i.al = load ptr, ptr %i.t, align 8, !tbaa !20
-  %i.am = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %i.aj, i64 noundef %i.ak, ptr noundef nonnull @.str.3, ptr noundef %i.al, i32 noundef %indvars.iv.sroa.phi.sroa.speculated, ptr noundef nonnull %.082, i32 noundef %.288.us) #10 ; 0 uses
+  %i.am = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %i.aj, i64 noundef %i.ak, ptr noundef nonnull @.str.3, ptr noundef %i.al, i32 noundef %.sroa.idx, ptr noundef nonnull %.082, i32 noundef %.288.us) #10 ; 0 uses
   %i.an = load ptr, ptr %i.m, align 8, !tbaa !36
   %i.ao = load i32, ptr %i.ai, align 8, !tbaa !24
   %i.ap = call i32 @X509_load_cert_file(ptr noundef %0, ptr noundef %i.an, i32 noundef %i.ao) #10
@@ -257,7 +257,7 @@ bb.n:                                             ; preds = %bb.i
   %i.at = load ptr, ptr %i.m, align 8, !tbaa !36
   %i.au = load i64, ptr %i.n, align 8, !tbaa !37
   %i.av = load ptr, ptr %i.t, align 8, !tbaa !20
-  %i.aw = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %i.at, i64 noundef %i.au, ptr noundef nonnull @.str.3, ptr noundef %i.av, i32 noundef %indvars.iv.sroa.phi.sroa.speculated, ptr noundef nonnull %.082, i32 noundef %.288.us126) #10 ; 0 uses
+  %i.aw = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %i.at, i64 noundef %i.au, ptr noundef nonnull @.str.3, ptr noundef %i.av, i32 noundef %.sroa.idx, ptr noundef nonnull %.082, i32 noundef %.288.us126) #10 ; 0 uses
   %i.ax = load ptr, ptr %i.m, align 8, !tbaa !36
   %i.ay = load i32, ptr %i.as, align 8, !tbaa !24
   %i.az = call i32 @X509_load_crl_file(ptr noundef %0, ptr noundef %i.ax, i32 noundef %i.ay) #10
@@ -270,7 +270,7 @@ bb.n:                                             ; preds = %bb.i
   %i.bc = load ptr, ptr %i.m, align 8, !tbaa !36
   %i.bd = load i64, ptr %i.n, align 8, !tbaa !37
   %i.be = load ptr, ptr %i.t, align 8, !tbaa !20
-  %i.bf = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %i.bc, i64 noundef %i.bd, ptr noundef nonnull @.str.3, ptr noundef %i.be, i32 noundef %indvars.iv.sroa.phi.sroa.speculated, ptr noundef nonnull %.082, i32 noundef %.288) #10 ; 0 uses
+  %i.bf = call i32 (ptr, i64, ptr, ...) @snprintf(ptr noundef %i.bc, i64 noundef %i.bd, ptr noundef nonnull @.str.3, ptr noundef %i.be, i32 noundef %.sroa.idx, ptr noundef nonnull %.082, i32 noundef %.288) #10 ; 0 uses
   %i.bg = add nuw nsw i32 %.288, 1
   br label %.split.split
 
@@ -310,7 +310,7 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not101, label %bb.r, label %.thread108
 
 bb.r:                                             ; preds = %bb.q
-  store i32 %indvars.iv.sroa.phi.sroa.speculated, ptr %6, align 4, !tbaa !23
+  store i32 %.sroa.idx, ptr %6, align 4, !tbaa !23
   %i.bu = getelementptr inbounds nuw i8, ptr %i.s, i64 72 ; 5 uses
   %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !21
   call void @OPENSSL_sk_sort(ptr noundef %i.bv, ptr noundef nonnull @sk_BY_DIR_HASH_call_cmp_func) #10
@@ -336,7 +336,7 @@ bb.t:                                             ; preds = %.thread
   br label %.thread112
 
 bb.u:                                             ; preds = %.thread
-  store i32 %indvars.iv.sroa.phi.sroa.speculated, ptr %i.cb, align 4, !tbaa !23
+  store i32 %.sroa.idx, ptr %i.cb, align 4, !tbaa !23
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cb, i64 4
   store i32 %.288116, ptr %i.cd, align 4, !tbaa !34
   %i.ce = load ptr, ptr %i.bu, align 8, !tbaa !21

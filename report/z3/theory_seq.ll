@@ -205,7 +205,7 @@ bb.dg:                                            ; preds = %_ZN3smt10theory_seq
   invoke void @_ZN6vectorIN3sat7literalELb0EjE6appendEjPKS1_(ptr noundef nonnull align 8 dereferenceable(8) %3, i32 noundef 2, ptr noundef nonnull %16)
           to label %.critedge157 unwind label %bb.dm
 
-bb.dh:                                            ; preds = %bb.ck, %bb.bh, %bb.bl, %bb.bn, %bb.bp, %bb.co, %bb.cm, %.noexc282, %.noexc281, %bb.cv, %.noexc245, %.noexc244, %.critedge153, %bb.bw, %.noexc206, %.noexc205, %.critedge149, %bb.aw, %bb.bu, %bb.ct, %bb.ds, %bb.ev, %bb.ew
+bb.dh:                                            ; preds = %bb.bn, %bb.bp, %bb.cm, %bb.co, %bb.ck, %bb.bh, %bb.bl, %.noexc282, %.noexc281, %bb.cv, %.noexc245, %.noexc244, %.critedge153, %bb.bw, %.noexc206, %.noexc205, %.critedge149, %bb.aw, %bb.bu, %bb.ct, %bb.ds, %bb.ev, %bb.ew
   %i.rv = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp333
@@ -605,8 +605,8 @@ _ZN7obj_refI4expr11ast_managerED2Ev.exit324:      ; preds = %.critedge159, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #26
   br label %_ZNK8seq_util3str7is_unitEPK4expr.exit.thread
 
-_ZNK8seq_util3str7is_unitEPK4expr.exit.thread:    ; preds = %bb.cg, %bb.cf, %bb.bg, %bb.bf, %bb.eu, %bb.et, %_ZNK8seq_util3str7is_unitEPK4expr.exit, %_ZN7obj_refI4expr11ast_managerED2Ev.exit200, %bb.dq, %bb.eq, %bb.ew, %_ZN7obj_refI4expr11ast_managerED2Ev.exit324, %.critedge157, %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit.i273.1, %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit.i234.1, %_ZN7obj_refI4expr11ast_managerED2Ev.exit322
-  %.5 = phi i1 [ true, %bb.ew ], [ true, %_ZN7obj_refI4expr11ast_managerED2Ev.exit322 ], [ true, %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit.i234.1 ], [ true, %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit.i273.1 ], [ true, %.critedge157 ], [ true, %_ZN7obj_refI4expr11ast_managerED2Ev.exit324 ], [ false, %bb.eq ], [ false, %bb.dq ], [ false, %bb.bg ], [ false, %bb.eu ], [ false, %_ZN7obj_refI4expr11ast_managerED2Ev.exit200 ], [ false, %_ZNK8seq_util3str7is_unitEPK4expr.exit ], [ false, %bb.et ], [ false, %bb.bf ], [ false, %bb.cf ], [ false, %bb.cg ]
+_ZNK8seq_util3str7is_unitEPK4expr.exit.thread:    ; preds = %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit.i234.1, %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit.i273.1, %bb.eu, %bb.et, %bb.cg, %bb.cf, %bb.bg, %bb.bf, %_ZNK8seq_util3str7is_unitEPK4expr.exit, %_ZN7obj_refI4expr11ast_managerED2Ev.exit200, %bb.dq, %bb.eq, %bb.ew, %_ZN7obj_refI4expr11ast_managerED2Ev.exit324, %.critedge157, %_ZN7obj_refI4expr11ast_managerED2Ev.exit322
+  %.5 = phi i1 [ true, %bb.ew ], [ true, %_ZN7obj_refI4expr11ast_managerED2Ev.exit322 ], [ false, %bb.eu ], [ true, %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit.i273.1 ], [ true, %.critedge157 ], [ true, %_ZN7obj_refI4expr11ast_managerED2Ev.exit324 ], [ false, %bb.eq ], [ false, %bb.dq ], [ false, %bb.bg ], [ false, %_ZNK8seq_util3str7is_unitEPK4expr.exit ], [ false, %_ZN7obj_refI4expr11ast_managerED2Ev.exit200 ], [ false, %bb.bf ], [ false, %bb.cf ], [ false, %bb.cg ], [ false, %bb.et ], [ true, %_ZN6vectorIN3sat7literalELb0EjE9push_backERKS1_.exit.i234.1 ]
   %i.vu = load ptr, ptr @_ZN8rational13g_mpq_managerE, align 8, !tbaa !848 ; 2 uses
   invoke void @_ZN11mpz_managerILb1EE3delEPS0_R3mpz(ptr noundef %i.vu, ptr noundef nonnull align 8 dereferenceable(32) %4)
           to label %.noexc.i unwind label %bb.fg
