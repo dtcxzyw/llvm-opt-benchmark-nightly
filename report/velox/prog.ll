@@ -205,14 +205,14 @@ bb.a:
 bb.b:                                             ; preds = %.loopexit.i, %._crit_edge
   %.012.i = phi i32 [ 0, %._crit_edge ], [ %.1.lcssa.i, %.loopexit.i ] ; 5 uses
   %i.r = invoke noundef i32 @_ZNK3re29Bitmap25614FindNextSetBitEi(ptr noundef nonnull align 8 dereferenceable(1112) %1, i32 noundef %.012.i)
-          to label %.noexc unwind label %.loopexit.split-lp152.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 4 uses
+          to label %.noexc unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 4 uses
 
 .noexc:                                           ; preds = %bb.b
   %i.s = sext i32 %i.r to i64
   %i.t = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.s
   %i.u = load i32, ptr %i.t, align 4, !tbaa !87
   %i.v = invoke noundef i32 @_ZN3re214ByteMapBuilder7RecolorEi(ptr noundef nonnull align 8 dereferenceable(1112) %1, i32 noundef %i.u)
-          to label %.noexc85 unwind label %.loopexit.split-lp152.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc85 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc85:                                         ; preds = %.noexc
   %.not10.i = icmp sgt i32 %.012.i, %i.r
@@ -274,7 +274,7 @@ bb.g:                                             ; preds = %bb.e
   %i.au = ptrtoint ptr %i.as to i64               ; 4 uses
   %i.av = sub i64 %i.at, %i.au                    ; 3 uses
   %i.aw = icmp eq i64 %i.av, 9223372036854775800
-  br i1 %i.aw, label %.invoke, label %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
+  br i1 %i.aw, label %bb.ai, label %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
 
 _ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.g
   %i.ax = ashr exact i64 %i.av, 3                 ; 3 uses
@@ -287,7 +287,7 @@ _ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i: ; preds = %bb.g
   call void @llvm.assume(i1 %.not.i.i.i.i)
   %i.bc = shl nuw nsw i64 %i.bb, 3
   %i.bd = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.bc) #26
-          to label %.noexc87 unwind label %.loopexit.split-lp152.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 10 uses
+          to label %.noexc87 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 10 uses
 
 .noexc87:                                         ; preds = %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 %i.av ; 2 uses
@@ -454,7 +454,7 @@ bb.l:                                             ; preds = %bb.j
   %i.da = ptrtoint ptr %i.cy to i64               ; 4 uses
   %i.db = sub i64 %i.cz, %i.da                    ; 3 uses
   %i.dc = icmp eq i64 %i.db, 9223372036854775800
-  br i1 %i.dc, label %.invoke, label %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i90
+  br i1 %i.dc, label %bb.ai, label %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i90
 
 _ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i90: ; preds = %bb.l
   %i.dd = ashr exact i64 %i.db, 3                 ; 3 uses
@@ -467,7 +467,7 @@ _ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i90: ; preds = %bb
   call void @llvm.assume(i1 %.not.i.i.i.i92)
   %i.di = shl nuw nsw i64 %i.dh, 3
   %i.dj = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.di) #26
-          to label %.noexc103 unwind label %.loopexit.split-lp152.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 10 uses
+          to label %.noexc103 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 10 uses
 
 .noexc103:                                        ; preds = %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i90
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 %i.db ; 2 uses
@@ -596,6 +596,13 @@ _ZNSt6vectorISt4pairIiiESaIS1_EE17_M_realloc_insertIJRiS5_EEEvN9__gnu_cxx17__nor
   store ptr %i.eq, ptr %i.k, align 8, !tbaa !101
   br label %_ZN3re214ByteMapBuilder4MarkEii.exit104
 
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i133, %bb.b, %.noexc, %bb.ab, %.noexc123, %bb.z, %bb.x, %bb.o, %_ZN3re214ByteMapBuilder4MarkEii.exit120, %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i, %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i90, %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i106, %bb.ai
+  %lpad.loopexit.split-lp401 = landingpad { ptr, i32 }
+          cleanup
+  call void @_ZN3re214ByteMapBuilderD2Ev(ptr noundef nonnull align 8 dead_on_return(1112) dereferenceable(1112) %1) #22
+  call void @llvm.lifetime.end.p0(ptr nonnull %1) #22
+  resume { ptr, i32 } %lpad.loopexit.split-lp401
+
 _ZN3re214ByteMapBuilder4MarkEii.exit104:          ; preds = %_ZNSt6vectorISt4pairIiiESaIS1_EE17_M_realloc_insertIJRiS5_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i101, %bb.k, %bb.i, %_ZN3re214ByteMapBuilder4MarkEii.exit
   %i.er = load i32, ptr %i.ad, align 4, !tbaa !16 ; 2 uses
   %i.es = and i32 %i.er, 8
@@ -616,7 +623,7 @@ bb.n:                                             ; preds = %_ZN3re214ByteMapBui
 
 bb.o:                                             ; preds = %bb.n, %_ZN3re214ByteMapBuilder4MarkEii.exit104
   invoke void @_ZN3re214ByteMapBuilder5MergeEv(ptr noundef nonnull align 8 dereferenceable(1112) %1)
-          to label %.critedge84 unwind label %.loopexit.split-lp152.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.critedge84 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.p:                                             ; preds = %bb.c
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ad, i64 4 ; 2 uses
@@ -646,14 +653,7 @@ bb.s:                                             ; preds = %bb.q
   %i.fk = ptrtoint ptr %i.fi to i64               ; 4 uses
   %i.fl = sub i64 %i.fj, %i.fk                    ; 3 uses
   %i.fm = icmp eq i64 %i.fl, 9223372036854775800
-  br i1 %i.fm, label %.invoke, label %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i106
-
-.invoke:                                          ; preds = %bb.g, %bb.l, %bb.s
-  invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.19) #25
-          to label %.cont unwind label %.loopexit.split-lp152.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
-
-.cont:                                            ; preds = %.invoke
-  unreachable
+  br i1 %i.fm, label %bb.ai, label %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i106
 
 _ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i106: ; preds = %bb.s
   %i.fn = ashr exact i64 %i.fl, 3                 ; 3 uses
@@ -666,7 +666,7 @@ _ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i106: ; preds = %b
   call void @llvm.assume(i1 %.not.i.i.i.i108)
   %i.fs = shl nuw nsw i64 %i.fr, 3
   %i.ft = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.fs) #26
-          to label %.noexc119 unwind label %.loopexit.split-lp152.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 10 uses
+          to label %.noexc119 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 10 uses
 
 .noexc119:                                        ; preds = %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i106
   %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 %i.fl ; 2 uses
@@ -797,7 +797,7 @@ _ZNSt6vectorISt4pairIiiESaIS1_EE17_M_realloc_insertIJRiS5_EEEvN9__gnu_cxx17__nor
 
 _ZN3re214ByteMapBuilder4MarkEii.exit120:          ; preds = %_ZNSt6vectorISt4pairIiiESaIS1_EE17_M_realloc_insertIJRiS5_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i117, %bb.r
   invoke void @_ZN3re214ByteMapBuilder5MergeEv(ptr noundef nonnull align 8 dereferenceable(1112) %1)
-          to label %_ZN3re214ByteMapBuilder4MarkEii.exit120._crit_edge unwind label %.loopexit.split-lp152.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %_ZN3re214ByteMapBuilder4MarkEii.exit120._crit_edge unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 _ZN3re214ByteMapBuilder4MarkEii.exit120._crit_edge: ; preds = %_ZN3re214ByteMapBuilder4MarkEii.exit120
   %.pre = load i32, ptr %i.fa, align 4, !tbaa !17
@@ -812,8 +812,8 @@ bb.u:                                             ; preds = %_ZN3re214ByteMapBui
   br i1 %or.cond7, label %.critedge84, label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %_ZN3re214ByteMapBuilder5MergeEv.exit
+  %not..059.ptr.sroa.idx = phi i8 [ 0, %_ZN3re214ByteMapBuilder5MergeEv.exit ], [ 1, %bb.u ]
   %.not = phi i1 [ true, %_ZN3re214ByteMapBuilder5MergeEv.exit ], [ false, %bb.u ]
-  %.059.idx170.sroa.phi.sroa.speculated = phi i8 [ 0, %_ZN3re214ByteMapBuilder5MergeEv.exit ], [ 1, %bb.u ]
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.v, %_ZN3re214ByteMapBuilder4MarkEii.exit147
@@ -939,7 +939,7 @@ bb.x:                                             ; preds = %bb.w
   %i.iz = or i64 %i.iu, %i.ix
   store i64 %i.iz, ptr %i.it, align 8, !tbaa !110
   %i.ja = invoke noundef i32 @_ZNK3re29Bitmap25614FindNextSetBitEi(ptr noundef nonnull align 8 dereferenceable(1112) %1, i32 noundef %i.im)
-          to label %.noexc121 unwind label %.loopexit.split-lp152.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc121 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc121:                                        ; preds = %bb.x
   %i.jb = sext i32 %i.ja to i64
@@ -967,7 +967,7 @@ bb.z:                                             ; preds = %bb.y
   store i64 %i.jo, ptr %i.ji, align 8, !tbaa !110
   %i.jp = add nsw i32 %i.ip, 1
   %i.jq = invoke noundef i32 @_ZNK3re29Bitmap25614FindNextSetBitEi(ptr noundef nonnull align 8 dereferenceable(1112) %1, i32 noundef %i.jp)
-          to label %.noexc122 unwind label %.loopexit.split-lp152.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc122 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc122:                                        ; preds = %bb.z
   %i.jr = sext i32 %i.jq to i64
@@ -988,14 +988,14 @@ bb.aa:                                            ; preds = %.preheader388, %.no
 
 bb.ab:                                            ; preds = %bb.aa
   %i.jx = invoke noundef i32 @_ZNK3re29Bitmap25614FindNextSetBitEi(ptr noundef nonnull align 8 dereferenceable(1112) %1, i32 noundef %.0.i)
-          to label %.noexc123 unwind label %.loopexit.split-lp152.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 3 uses
+          to label %.noexc123 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 3 uses
 
 .noexc123:                                        ; preds = %bb.ab
   %i.jy = sext i32 %i.jx to i64
   %i.jz = getelementptr inbounds [4 x i8], ptr %i.l, i64 %i.jy ; 2 uses
   %i.ka = load i32, ptr %i.jz, align 4, !tbaa !87
   %i.kb = invoke noundef i32 @_ZN3re214ByteMapBuilder7RecolorEi(ptr noundef nonnull align 8 dereferenceable(1112) %1, i32 noundef %i.ka)
-          to label %.noexc124 unwind label %.loopexit.split-lp152.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc124 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc124:                                        ; preds = %.noexc123
   store i32 %i.kb, ptr %i.jz, align 4, !tbaa !87
@@ -1037,7 +1037,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %.058.in.lcssa = phi i32 [ %smax, %.preheader ], [ %split245, %..critedge_crit_edge244 ], [ %smax, %middle.block342 ], [ %smax, %bb.ad ] ; 4 uses
   %.058.lcssa = phi i32 [ %i.hk, %.preheader ], [ %split246, %..critedge_crit_edge244 ], [ %i.hk, %middle.block342 ], [ %i.hk, %bb.ad ]
   %i.ko = zext i1 %i.hj to i8
-  %i.kp = icmp eq i8 %.059.idx170.sroa.phi.sroa.speculated, %i.ko
+  %i.kp = icmp eq i8 %not..059.ptr.sroa.idx, %i.ko
   br i1 %i.kp, label %bb.ae, label %_ZN3re214ByteMapBuilder4MarkEii.exit147
 
 bb.ae:                                            ; preds = %.critedge
@@ -1068,9 +1068,9 @@ bb.ah:                                            ; preds = %bb.af
   %i.la = icmp eq i64 %i.kz, 9223372036854775800
   br i1 %i.la, label %bb.ai, label %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i133
 
-bb.ai:                                            ; preds = %bb.ah
+bb.ai:                                            ; preds = %bb.s, %bb.l, %bb.g, %bb.ah
   invoke void @_ZSt20__throw_length_errorPKc(ptr noundef nonnull @.str.19) #25
-          to label %.noexc145 unwind label %.loopexit.split-lp152.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.noexc145 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc145:                                        ; preds = %bb.ai
   unreachable
@@ -1086,7 +1086,7 @@ _ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i133: ; preds = %b
   call void @llvm.assume(i1 %.not.i.i.i.i135)
   %i.lg = shl nuw nsw i64 %i.lf, 3
   %i.lh = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.lg) #26
-          to label %.noexc146 unwind label %.loopexit.split-lp152.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 10 uses
+          to label %.noexc146 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 10 uses
 
 .noexc146:                                        ; preds = %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i133
   %i.li = getelementptr inbounds nuw i8, ptr %i.lh, i64 %i.kz ; 2 uses
@@ -1221,13 +1221,6 @@ _ZN3re214ByteMapBuilder4MarkEii.exit147:          ; preds = %_ZNSt6vectorISt4pai
 
 _ZN3re214ByteMapBuilder5MergeEv.exit:             ; preds = %_ZSt8_DestroyIPSt4pairIiiES1_EvT_S3_RSaIT0_E.exit.i.i24.i, %_ZNSt6vectorISt4pairIiiESaIS1_EE5clearEv.exit.i
   br i1 %.not, label %.critedge84, label %bb.v
-
-.loopexit.split-lp152.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.z, %bb.x, %bb.ab, %.noexc123, %bb.b, %.noexc, %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i106, %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i90, %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i, %_ZN3re214ByteMapBuilder4MarkEii.exit120, %bb.o, %.invoke, %_ZNKSt6vectorISt4pairIiiESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i133, %bb.ai
-  %lpad.loopexit.split-lp396 = landingpad { ptr, i32 }
-          cleanup
-  call void @_ZN3re214ByteMapBuilderD2Ev(ptr noundef nonnull align 8 dead_on_return(1112) dereferenceable(1112) %1) #22
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #22
-  resume { ptr, i32 } %lpad.loopexit.split-lp396
 
 .critedge84:                                      ; preds = %_ZN3re214ByteMapBuilder5MergeEv.exit, %bb.n, %bb.c, %bb.u, %bb.o
   %.373 = phi i1 [ %.070171, %bb.o ], [ %.070171, %bb.c ], [ %.171, %bb.u ], [ %.070171, %bb.n ], [ %.171, %_ZN3re214ByteMapBuilder5MergeEv.exit ]

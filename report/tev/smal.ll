@@ -20,12 +20,9 @@ define void @_ZN6LibRaw19smal_decode_segmentEPA2_ji(ptr noundef nonnull align 8 
 bb.a:
   %i.a = alloca [3 x [13 x i8]], align 16         ; 4 uses
   %i.b = alloca [3 x i32], align 4                ; 6 uses
-  %3 = alloca [2 x i8], align 2                   ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(39) %i.a, ptr noundef nonnull align 16 dereferenceable(39) @__const._ZN6LibRaw19smal_decode_segmentEPA2_ji.hist, i64 39, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #8
-  store i16 0, ptr %3, align 2
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 381592 ; 2 uses
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !70   ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 4
@@ -67,6 +64,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br label %.preheader142
 
 .preheader142:                                    ; preds = %.preheader142.lr.ph, %bb.v
+  %.sroa.0.0 = phi i8 [ 0, %.preheader142.lr.ph ], [ %.sroa.0.1193, %bb.v ] ; 2 uses
+  %.sroa.4.0 = phi i8 [ 0, %.preheader142.lr.ph ], [ %.sroa.4.1195, %bb.v ] ; 2 uses
   %.0163 = phi i32 [ 0, %.preheader142.lr.ph ], [ %i.cs, %bb.v ]
   %.099162 = phi i32 [ 0, %.preheader142.lr.ph ], [ %.3.in, %bb.v ]
   %.0103161 = phi i32 [ %i.y, %.preheader142.lr.ph ], [ %i.hj, %bb.v ] ; 7 uses
@@ -469,21 +468,18 @@ bb.t:                                             ; preds = %bb.r
   %i.gp = sub i32 0, %i.gn
   %i.gq = select i1 %.not128, i32 128, i32 %i.gp
   %.0101 = select i1 %.not, i32 %i.gn, i32 %i.gq
-  %i.gr = and i32 %.0103161, 1                    ; 2 uses
-  %4 = zext nneg i32 %i.gr to i64
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 %4 ; 2 uses
-  %6 = load i8, ptr %5, align 1, !tbaa !93
+  %i.gr = and i32 %.0103161, 1
+  %.sroa.idx.not = icmp eq i32 %i.gr, 0           ; 2 uses
+  %.sroa.speculated = select i1 %.sroa.idx.not, i8 %.sroa.0.0, i8 %.sroa.4.0
   %i.gs = trunc i32 %.0101 to i8
   %i.gt = select i1 %.not129, i8 %i.gs, i8 0
-  %i.gu = add i8 %i.gt, %6                        ; 2 uses
-  store i8 %i.gu, ptr %5, align 1, !tbaa !93
+  %i.gu = add i8 %i.gt, %.sroa.speculated         ; 3 uses
   %i.gv = zext i8 %i.gu to i16
   %i.gw = load ptr, ptr %i.ad, align 8, !tbaa !97
   %i.gx = zext nneg i32 %.0103161 to i64
   %i.gy = getelementptr inbounds nuw [2 x i8], ptr %i.gw, i64 %i.gx
   store i16 %i.gv, ptr %i.gy, align 2, !tbaa !77
-  %.not131 = icmp eq i32 %i.gr, 0
-  br i1 %.not131, label %bb.u, label %bb.v
+  br i1 %.sroa.idx.not, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
   %i.gz = load i16, ptr %i.q, align 2, !tbaa !74
@@ -500,8 +496,10 @@ bb.u:                                             ; preds = %bb.t
   %spec.select = select i1 %.not132, i32 %.0103161, i32 %i.hi
   br label %bb.v
 
-bb.v:                                             ; preds = %bb.u, %bb.t
-  %.1104 = phi i32 [ %.0103161, %bb.t ], [ %spec.select, %bb.u ]
+bb.v:                                             ; preds = %bb.t, %bb.u
+  %.sroa.4.1195 = phi i8 [ %.sroa.4.0, %bb.u ], [ %i.gu, %bb.t ]
+  %.sroa.0.1193 = phi i8 [ %i.gu, %bb.u ], [ %.sroa.0.0, %bb.t ]
+  %.1104 = phi i32 [ %spec.select, %bb.u ], [ %.0103161, %bb.t ]
   %i.hj = add nuw i32 %.1104, 1                   ; 2 uses
   %i.hk = load i32, ptr %i.n, align 4, !tbaa !71
   %i.hl = icmp ult i32 %i.hj, %i.hk
@@ -510,7 +508,6 @@ bb.v:                                             ; preds = %bb.u, %bb.t
 ._crit_edge:                                      ; preds = %bb.v, %bb.c
   %i.hm = getelementptr inbounds nuw i8, ptr %0, i64 153096
   store i32 255, ptr %i.hm, align 8, !tbaa !98
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   ret void

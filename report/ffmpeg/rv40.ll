@@ -204,8 +204,6 @@ bb.a:
   %i.o = alloca i32, align 4                      ; 4 uses
   %i.p = alloca i32, align 4                      ; 4 uses
   %i.q = alloca [4 x [2 x i32]], align 16         ; 12 uses
-  %.sroa.0456 = alloca i32, align 4               ; 4 uses
-  %.sroa.5457 = alloca i32, align 4               ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q) #7
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 396 ; 4 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 388 ; 3 uses
@@ -278,7 +276,7 @@ bb.d:                                             ; preds = %bb.c
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 1088 ; 4 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 5728 ; 3 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 5736 ; 4 uses
-  %.not263 = icmp eq i32 %1, 0                    ; 6 uses
+  %.not263 = icmp eq i32 %1, 0                    ; 4 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.q, i64 24
   %i.bf = getelementptr inbounds nuw i8, ptr %i.q, i64 16 ; 3 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.q, i64 8 ; 3 uses
@@ -306,8 +304,6 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %.lr.ph350, %bb.cg
   %indvars.iv374 = phi i64 [ 0, %.lr.ph350 ], [ %indvars.iv.next375, %bb.cg ] ; 5 uses
   %indvars.iv372 = phi i64 [ %i.bt, %.lr.ph350 ], [ %indvars.iv.next373, %bb.cg ] ; 9 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0456)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.5457)
   %i.ca = load ptr, ptr %i.aw, align 8, !tbaa !107
   %i.cb = getelementptr inbounds i8, ptr %i.ca, i64 %indvars.iv372
   %i.cc = load i8, ptr %i.cb, align 1, !tbaa !45
@@ -531,33 +527,27 @@ bb.o:                                             ; preds = %._crit_edge423, %bb
   %i.hy = or i32 %i.hx, %i.hd                     ; 2 uses
   %i.hz = shl nuw nsw i32 %i.cy, 2
   %i.ia = or disjoint i32 %i.em, %i.hz
-  %i.ib = or i32 %i.ia, %i.hd                     ; 3 uses
-  %i.ic = and i32 %i.hy, -6
+  %i.ib = or i32 %i.ia, %i.hd                     ; 2 uses
+  %i.ic = and i32 %i.hy, 2147483642
   %spec.select464 = select i1 %.not, i32 %i.ic, i32 %i.hy
-  store i32 %spec.select464, ptr %.sroa.0456, align 4, !tbaa !47
-  %brmerge = select i1 %i.ht, i1 true, i1 %.pre-phi422 ; 4 uses
-  %2 = or i1 %.not263, %brmerge
   %i.id = and i32 %i.ib, -4
   %i.ie = select i1 %.not263, i32 %i.id, i32 %i.ib ; 2 uses
-  %3 = and i32 %i.ie, -49
-  %simplifycfg.merge = select i1 %brmerge, i32 %3, i32 %i.ie
-  %.sroa.0453.0 = select i1 %2, i32 %simplifycfg.merge, i32 %i.ib
+  %brmerge = select i1 %i.ht, i1 true, i1 %.pre-phi422 ; 2 uses
+  %2 = and i32 %i.ie, -49
+  %.sroa.0453.0 = select i1 %brmerge, i32 %2, i32 %i.ie
   %i.if = shl nuw nsw i32 %i.da, 1
   %i.ig = and i32 %i.if, 26
   %i.ih = or disjoint i32 %i.ig, %i.ft
   %i.ii = or i32 %i.ih, %i.hc                     ; 2 uses
   %i.ij = shl nuw nsw i32 %i.da, 2
   %i.ik = or disjoint i32 %i.el, %i.ij
-  %i.il = or i32 %i.ik, %i.hc                     ; 3 uses
-  %i.im = and i32 %i.ii, -6
+  %i.il = or i32 %i.ik, %i.hc                     ; 2 uses
+  %i.im = and i32 %i.ii, 2147483642
   %storemerge459 = select i1 %.not, i32 %i.im, i32 %i.ii
-  store i32 %storemerge459, ptr %.sroa.5457, align 4, !tbaa !47
-  %4 = or i1 %.not263, %brmerge
   %i.in = and i32 %i.il, -4
   %i.io = select i1 %.not263, i32 %i.in, i32 %i.il ; 2 uses
   %i.ip = and i32 %i.io, -49
-  %simplifycfg.merge441 = select i1 %brmerge, i32 %i.ip, i32 %i.io
-  %.sroa.5.0458 = select i1 %4, i32 %simplifycfg.merge441, i32 %i.il
+  %.sroa.5.0458 = select i1 %brmerge, i32 %i.ip, i32 %i.io
   %i.iq = shl nuw nsw i64 %indvars.iv374, 4
   %i.ir = or i32 %.pre-phi418, %i.de
   %.not435 = icmp eq i32 %i.ir, 0                 ; 4 uses
@@ -862,21 +852,22 @@ bb.aw:                                            ; preds = %bb.av
   br i1 %i.nf, label %bb.p, label %.preheader331, !llvm.loop !97
 
 .preheader:                                       ; preds = %.preheader331, %bb.cf
+  %.sroa.idx = phi i1 [ false, %.preheader331 ], [ true, %bb.cf ] ; 3 uses
   %i.ng = phi i1 [ true, %.preheader331 ], [ false, %bb.cf ]
-  %indvars.iv369.sroa.phi.sroa.speculated = phi i32 [ %i.hd, %.preheader331 ], [ %i.hc, %bb.cf ] ; 3 uses
-  %indvars.iv369.sroa.phi.sroa.speculated454 = phi i32 [ %.sroa.0453.0, %.preheader331 ], [ %.sroa.5.0458, %bb.cf ] ; 2 uses
-  %indvars.iv369.sroa.phi = phi ptr [ %.sroa.0456, %.preheader331 ], [ %.sroa.5457, %bb.cf ]
   %indvars.iv369 = phi i64 [ 0, %.preheader331 ], [ 1, %bb.cf ] ; 3 uses
-  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %indvars.iv369
-  %6 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.nh = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %indvars.iv369 ; 2 uses
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %indvars.iv369
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %indvars.iv369
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %.sroa.speculated = select i1 %.sroa.idx, i32 %i.hc, i32 %i.hd ; 3 uses
+  %.sroa.speculated383 = select i1 %.sroa.idx, i32 %.sroa.5.0458, i32 %.sroa.0453.0 ; 2 uses
+  %5 = getelementptr inbounds nuw [4 x i8], ptr %i.bf, i64 %indvars.iv369 ; 2 uses
+  %i.nh = getelementptr inbounds nuw [4 x i8], ptr %i.bg, i64 %indvars.iv369
+  %.sroa.speculated388 = select i1 %.sroa.idx, i32 %storemerge459, i32 %spec.select464
   br label %bb.ax
 
 bb.ax:                                            ; preds = %.preheader, %bb.ce
   %.not273 = phi i1 [ false, %.preheader ], [ true, %bb.ce ] ; 2 uses
   %indvars.iv366 = phi i64 [ 0, %.preheader ], [ 1, %bb.ce ] ; 3 uses
-  %i.ni = load ptr, ptr %6, align 8, !tbaa !111
+  %i.ni = load ptr, ptr %4, align 8, !tbaa !111
   %i.nj = getelementptr inbounds nuw i8, ptr %i.ni, i64 %i.it
   %i.nk = shl nuw nsw i64 %indvars.iv366, 2
   %i.nl = or disjoint i64 %i.nk, %i.bs
@@ -898,16 +889,16 @@ bb.ay:                                            ; preds = %bb.ax, %bb.cd
   %.3341 = phi i32 [ 0, %bb.ax ], [ 1, %bb.cd ]   ; 3 uses
   %i.nv = or disjoint i32 %.3341, %i.np           ; 3 uses
   %i.nw = shl nuw nsw i32 1, %i.nv                ; 3 uses
-  %i.nx = and i32 %indvars.iv369.sroa.phi.sroa.speculated, %i.nw
+  %i.nx = and i32 %.sroa.speculated, %i.nw
   %.not265 = icmp eq i32 %i.nx, 0
   %i.ny = select i1 %.not265, i32 0, i32 %i.dl    ; 12 uses
   %i.nz = shl nuw nsw i32 4, %i.nv                ; 3 uses
-  %i.oa = and i32 %indvars.iv369.sroa.phi.sroa.speculated454, %i.nz
+  %i.oa = and i32 %.sroa.speculated383, %i.nz
   %.not266 = icmp eq i32 %i.oa, 0
   br i1 %.not266, label %bb.bf, label %bb.az
 
 bb.az:                                            ; preds = %bb.ay
-  %i.ob = and i32 %indvars.iv369.sroa.phi.sroa.speculated, %i.nz
+  %i.ob = and i32 %.sroa.speculated, %i.nz
   %.not267 = icmp eq i32 %i.ob, 0
   %i.oc = select i1 %.not267, i32 0, i32 %i.dl    ; 3 uses
   %i.od = load i64, ptr %i.bq, align 8, !tbaa !113 ; 2 uses
@@ -964,8 +955,7 @@ rv40_adaptive_loop_filter.exit317:                ; preds = %bb.ba, %bb.bc, %bb.
   br label %bb.bf
 
 bb.bf:                                            ; preds = %rv40_adaptive_loop_filter.exit317, %bb.ay
-  %8 = load i32, ptr %indvars.iv369.sroa.phi, align 4, !tbaa !47
-  %i.pa = and i32 %8, %i.nw
+  %i.pa = and i32 %.sroa.speculated388, %i.nw
   %.not268 = icmp eq i32 %i.pa, 0                 ; 2 uses
   br i1 %.not268, label %bb.bp, label %bb.bg
 
@@ -976,14 +966,14 @@ bb.bh:                                            ; preds = %bb.bg
   br i1 %.not435, label %bb.bi, label %bb.bp
 
 bb.bi:                                            ; preds = %bb.bh
-  %i.pb = load i32, ptr %i.nh, align 4, !tbaa !47
+  %i.pb = load i32, ptr %5, align 4, !tbaa !47
   %i.pc = and i32 %i.pb, %i.nq
   br label %bb.bj
 
 .critedge301:                                     ; preds = %bb.bg
   %i.pd = add nsw i32 %i.nv, -1
   %i.pe = shl nuw nsw i32 1, %i.pd
-  %i.pf = and i32 %indvars.iv369.sroa.phi.sroa.speculated, %i.pe
+  %i.pf = and i32 %.sroa.speculated, %i.pe
   br label %bb.bj
 
 bb.bj:                                            ; preds = %.critedge301, %bb.bi
@@ -1042,14 +1032,14 @@ rv40_adaptive_loop_filter.exit321:                ; preds = %bb.bk, %bb.bm, %bb.
   br label %bb.bp
 
 bb.bp:                                            ; preds = %rv40_adaptive_loop_filter.exit321, %bb.bh, %bb.bf
-  %i.qb = and i32 %indvars.iv369.sroa.phi.sroa.speculated454, %i.nw
+  %i.qb = and i32 %.sroa.speculated383, %i.nw
   %.not274 = icmp eq i32 %i.qb, 0
   %or.cond330 = select i1 %.not273, i1 true, i1 %.not274
   %brmerge354 = or i1 %or.cond330, %.not436
   br i1 %brmerge354, label %bb.bw, label %bb.bq
 
 bb.bq:                                            ; preds = %bb.bp
-  %i.qc = load i32, ptr %7, align 4, !tbaa !47
+  %i.qc = load i32, ptr %i.nh, align 4, !tbaa !47
   %i.qd = and i32 %i.qc, %i.nz
   %.not276 = icmp eq i32 %i.qd, 0
   %i.qe = select i1 %.not276, i32 0, i32 %i.et    ; 3 uses
@@ -1110,7 +1100,7 @@ bb.bw:                                            ; preds = %bb.bp, %rv40_adapti
   br i1 %brmerge355, label %bb.cd, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw
-  %i.ra = load i32, ptr %i.nh, align 4, !tbaa !47
+  %i.ra = load i32, ptr %5, align 4, !tbaa !47
   %i.rb = and i32 %i.ra, %i.nq
   %.not278 = icmp eq i32 %i.rb, 0
   %i.rc = select i1 %.not278, i32 0, i32 %i.gb    ; 3 uses
@@ -1175,8 +1165,6 @@ bb.cf:                                            ; preds = %bb.ce
   br i1 %i.ng, label %.preheader, label %bb.cg, !llvm.loop !100
 
 bb.cg:                                            ; preds = %bb.cf
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0456)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5457)
   %indvars.iv.next375 = add nuw nsw i64 %indvars.iv374, 1 ; 2 uses
   %indvars.iv.next373 = add nsw i64 %indvars.iv372, 1
   %i.ry = load i32, ptr %i.s, align 4, !tbaa !102

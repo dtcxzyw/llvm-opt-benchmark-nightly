@@ -164,8 +164,6 @@ bb.a:
   %i.k = alloca [3 x ptr], align 16               ; 251 uses
   %i.l = alloca [2 x [2 x [256 x double]]], align 16 ; 212 uses
   %i.m = alloca [2 x [2 x [16 x double]]], align 16 ; 8 uses
-  %.sroa.0 = alloca i32, align 8                  ; 6 uses
-  %.sroa.6 = alloca i32, align 4                  ; 6 uses
   %i.n = alloca [1 x float], align 4              ; 5 uses
   %i.o = alloca [1 x float], align 4              ; 5 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 516
@@ -568,10 +566,6 @@ begin_hunk_1_@process:bb.a
   store <4 x double> zeroinitializer, ptr %i.axv, align 16, !tbaa !216
   store <4 x double> zeroinitializer, ptr %i.axw, align 16, !tbaa !216
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(512) %i.m, i8 0, i64 512, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
-  store i32 0, ptr %.sroa.0, align 8
-  store i32 0, ptr %.sroa.6, align 4
   br i1 %brmerge2997, label %.thread, label %.preheader1962.preheader
 
 .preheader1962.preheader:                         ; preds = %._crit_edge2094
@@ -584,6 +578,8 @@ begin_hunk_1_@process:bb.a
   br label %.preheader1962
 
 .preheader1962:                                   ; preds = %.preheader1962.preheader, %._crit_edge2117
+  %.sroa.02782.0 = phi i32 [ 0, %.preheader1962.preheader ], [ %.sroa.02782.4, %._crit_edge2117 ]
+  %.sroa.62783.0 = phi i32 [ 0, %.preheader1962.preheader ], [ %.sroa.62783.4, %._crit_edge2117 ]
   %indvars.iv2571 = phi i64 [ 1, %.preheader1962.preheader ], [ %indvars.iv.next2572, %._crit_edge2117 ] ; 4 uses
   %i.ewu = add nsw i64 %indvars.iv2571, -1
   %i.ewv = mul nuw nsw i64 %i.ewu, %i.fu
@@ -597,13 +593,13 @@ begin_hunk_1_@process:bb.a
   br label %.preheader1937
 
 ._crit_edge2119.split:                            ; preds = %._crit_edge2117
-  %.sroa.0.0..sroa.0.0..pre2830 = load i32, ptr %.sroa.0, align 8, !tbaa !12
-  %.sroa.6.0..sroa.6.4..pre2831 = load i32, ptr %.sroa.6, align 4, !tbaa !12
-  %i.exa = tail call i32 @llvm.smin.i32(i32 %.sroa.0.0..sroa.0.0..pre2830, i32 %.sroa.6.0..sroa.6.4..pre2831) ; 3 uses
+  %i.exa = tail call i32 @llvm.smin.i32(i32 %.sroa.02782.4, i32 %.sroa.62783.4) ; 3 uses
   %i.exb = icmp slt i32 %i.exa, 32
   br i1 %i.exb, label %bb.au, label %bb.aw
 
 .preheader1937:                                   ; preds = %.preheader1962, %bb.aq
+  %.sroa.02782.2 = phi i32 [ %.sroa.02782.0, %.preheader1962 ], [ %.sroa.02782.4, %bb.aq ]
+  %.sroa.62783.2 = phi i32 [ %.sroa.62783.0, %.preheader1962 ], [ %.sroa.62783.4, %bb.aq ]
   %indvars.iv2566 = phi i64 [ 1, %.preheader1962 ], [ %indvars.iv.next2567, %bb.aq ] ; 5 uses
   %gep2976 = getelementptr [16 x i8], ptr %invariant.gep2975, i64 %indvars.iv2566 ; 3 uses
   %i.exc = getelementptr i8, ptr %gep2976, i64 -16
@@ -631,8 +627,10 @@ bb.aq:                                            ; preds = %.loopexit1907
   br i1 %exitcond2570.not, label %._crit_edge2117, label %.preheader1937
 
 bb.ar:                                            ; preds = %.preheader1937, %.loopexit1907
-  %i.exn = phi i1 [ true, %.preheader1937 ], [ false, %.loopexit1907 ]
-  %indvars.iv2563.sroa.phi = phi ptr [ %.sroa.0, %.preheader1937 ], [ %.sroa.6, %.loopexit1907 ] ; 2 uses
+  %.sroa.02782.3 = phi i32 [ %.sroa.02782.2, %.preheader1937 ], [ %.sroa.02782.4, %.loopexit1907 ] ; 4 uses
+  %.sroa.62783.3 = phi i32 [ %.sroa.62783.2, %.preheader1937 ], [ %.sroa.62783.4, %.loopexit1907 ] ; 4 uses
+  %i.exn = phi i1 [ false, %.preheader1937 ], [ true, %.loopexit1907 ] ; 3 uses
+  %6 = phi i1 [ true, %.preheader1937 ], [ false, %.loopexit1907 ]
   %indvars.iv2563.sroa.phi4818 = phi ptr [ %i.m, %.preheader1937 ], [ %indvars.iv2563.sroa.gep4819, %.loopexit1907 ] ; 2 uses
   %indvars.iv2563.sroa.phi4823 = phi ptr [ %i.l, %.preheader1937 ], [ %indvars.iv2563.sroa.gep4825, %.loopexit1907 ] ; 4 uses
   %indvars.iv2563.sroa.phi4826 = phi ptr [ %i.b, %.preheader1937 ], [ %indvars.iv2563.sroa.gep4828, %.loopexit1907 ]
@@ -732,9 +730,10 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %i.faw, label %.loopexit1907, label %.preheader1896.lr.ph
 
 .preheader1896.lr.ph:                             ; preds = %bb.as
-  %6 = load i32, ptr %indvars.iv2563.sroa.phi, align 4, !tbaa !12
-  %i.fax = add nsw i32 %6, 1
-  store i32 %i.fax, ptr %indvars.iv2563.sroa.phi, align 4, !tbaa !12
+  %.sroa.speculated = select i1 %i.exn, i32 %.sroa.62783.3, i32 %.sroa.02782.3
+  %i.fax = add nsw i32 %.sroa.speculated, 1       ; 2 uses
+  %spec.select3004 = select i1 %i.exn, i32 %.sroa.02782.3, i32 %i.fax
+  %spec.select3005 = select i1 %i.exn, i32 %i.fax, i32 %.sroa.62783.3
   %i.fay = getelementptr inbounds nuw i8, ptr %indvars.iv2563.sroa.phi4823, i64 2048 ; 3 uses
   %i.faz = fpext reassoc nsz arcp contract afn <2 x float> %i.fan to <2 x double>
   %i.fba = getelementptr inbounds nuw i8, ptr %indvars.iv2563.sroa.phi4818, i64 128
@@ -861,7 +860,9 @@ bb.at:                                            ; preds = %bb.at, %.preheader1
   br i1 %exitcond2562.not, label %.loopexit1907, label %.preheader1896
 
 .loopexit1907:                                    ; preds = %._crit_edge2107.split.us, %bb.ar, %bb.as
-  br i1 %i.exn, label %bb.ar, label %bb.aq
+  %.sroa.02782.4 = phi i32 [ %.sroa.02782.3, %bb.ar ], [ %.sroa.02782.3, %bb.as ], [ %spec.select3004, %._crit_edge2107.split.us ] ; 4 uses
+  %.sroa.62783.4 = phi i32 [ %.sroa.62783.3, %bb.ar ], [ %.sroa.62783.3, %bb.as ], [ %spec.select3005, %._crit_edge2107.split.us ] ; 4 uses
+  br i1 %6, label %bb.ar, label %bb.aq
 
 bb.au:                                            ; preds = %._crit_edge2119.split
   %i.fdf = icmp slt i32 %i.exa, 10
@@ -879,8 +880,6 @@ bb.av:                                            ; preds = %.thread
   br label %.thread1874
 
 .thread1874:                                      ; preds = %.thread, %bb.av
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #20
   br label %.thread1866
@@ -1283,8 +1282,6 @@ _LinEqSolve.exit.1:                               ; preds = %._crit_edge162.i.1,
   br i1 %i.feb, label %.preheader1961, label %bb.bd
 
 bb.bd:                                            ; preds = %_LinEqSolve.exit.1
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #20
   %.not1786 = icmp eq i32 %.6.1, 0                ; 2 uses

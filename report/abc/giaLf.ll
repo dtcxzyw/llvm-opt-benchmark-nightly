@@ -205,8 +205,6 @@ bb.a:
   %i.a = alloca [128 x i64], align 16             ; 18 uses
   %i.b = ptrtoaddr ptr %i.a to i64                ; 4 uses
   %i.c = alloca [13 x i32], align 16              ; 6 uses
-  %.sroa.0 = alloca i32, align 4                  ; 4 uses
-  %.sroa.4 = alloca i32, align 4                  ; 4 uses
   %i.d = load ptr, ptr %0, align 8, !tbaa !38
   %i.e = getelementptr i8, ptr %i.d, i64 24
   %.val112 = load i32, ptr %i.e, align 8, !tbaa !58 ; 7 uses
@@ -571,8 +569,6 @@ bb.r:                                             ; preds = %bb.q
   %i.gl = sext i32 %i.gk to i64                   ; 3 uses
   %i.gm = getelementptr inbounds [8 x i8], ptr %i.ge, i64 %i.gl ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #34
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
   %i.gn = load i32, ptr %i.fr, align 8, !tbaa !77 ; 3 uses
   %i.go = icmp slt i32 %i.gn, 7
   %i.gp = add nsw i32 %i.gn, -6
@@ -669,8 +665,10 @@ bb.r:                                             ; preds = %bb.q
   br label %.preheader366.i
 
 .preheader366.i:                                  ; preds = %Vec_IntPush.exit211.i, %bb.r
+  %.sroa.0.0.i = phi i32 [ undef, %bb.r ], [ %spec.select534.i, %Vec_IntPush.exit211.i ]
+  %.sroa.4.0.i = phi i32 [ undef, %bb.r ], [ %spec.select535.i, %Vec_IntPush.exit211.i ]
   %.not147.i = phi i1 [ true, %bb.r ], [ false, %Vec_IntPush.exit211.i ] ; 2 uses
-  %indvars.iv402.i.sroa.phi = phi ptr [ %.sroa.0, %bb.r ], [ %.sroa.4, %Vec_IntPush.exit211.i ]
+  %.sroa.idx.i = phi i1 [ false, %bb.r ], [ true, %Vec_IntPush.exit211.i ] ; 2 uses
   %i.ig = load i32, ptr %i.fb, align 4            ; 2 uses
   %i.ih = lshr i32 %i.ig, 24                      ; 3 uses
   %.not388.i = icmp eq i32 %i.ih, 0
@@ -1073,8 +1071,9 @@ Vec_IntPush.exit.i:                               ; preds = %Vec_IntGrow.exit11.
   br i1 %exitcond398.not.i, label %._crit_edge370.i, label %.lr.ph369.i, !llvm.loop !289
 
 ._crit_edge370.i:                                 ; preds = %Vec_IntPush.exit.i, %Abc_TtCofactor1p.exit.i
-  %i.oh = call i32 @Kit_TruthToGia(ptr noundef nonnull %i.bk, ptr noundef nonnull %i.a, i32 noundef %i.ne, ptr noundef nonnull %i.bc, ptr noundef nonnull %i.bg, i32 noundef 0) #34 ; 2 uses
-  store i32 %i.oh, ptr %indvars.iv402.i.sroa.phi, align 4, !tbaa !57
+  %i.oh = call i32 @Kit_TruthToGia(ptr noundef nonnull %i.bk, ptr noundef nonnull %i.a, i32 noundef %i.ne, ptr noundef nonnull %i.bc, ptr noundef nonnull %i.bg, i32 noundef 0) #34 ; 3 uses
+  %spec.select534.i = select i1 %.sroa.idx.i, i32 %.sroa.0.0.i, i32 %i.oh ; 2 uses
+  %spec.select535.i = select i1 %.sroa.idx.i, i32 %i.oh, i32 %.sroa.4.0.i ; 2 uses
   %i.oi = ashr i32 %i.oh, 1                       ; 7 uses
   %.val168.i = load i32, ptr %i.au, align 4, !tbaa !64 ; 8 uses
   %i.oj = add nsw i32 %i.oi, 1                    ; 4 uses
@@ -1318,7 +1317,6 @@ Vec_IntPush.exit211.i:                            ; preds = %Vec_IntGrow.exit11.
 bb.bi:                                            ; preds = %Vec_IntPush.exit211.i
   store i64 -3834029160418063670, ptr %i.a, align 16, !tbaa !109
   store i32 0, ptr %i.bh, align 4, !tbaa !64
-  %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0. = load i32, ptr %.sroa.0, align 4, !tbaa !57
   %i.ri = load i32, ptr %i.bg, align 8, !tbaa !117
   %i.rj = icmp eq i32 %i.ri, 0
   %.pre426.i = load ptr, ptr %i.bj, align 8, !tbaa !56 ; 3 uses
@@ -1351,8 +1349,7 @@ Vec_IntPush.exit219.i:                            ; preds = %Vec_IntGrow.exit11.
   store i32 %i.rp, ptr %i.bh, align 4, !tbaa !64
   %i.rq = sext i32 %i.rn to i64
   %i.rr = getelementptr inbounds [4 x i8], ptr %i.ro, i64 %i.rq
-  store i32 %.sroa.0.0..sroa.0.0..sroa.0.0..sroa.0.0., ptr %i.rr, align 4, !tbaa !57
-  %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.4. = load i32, ptr %.sroa.4, align 4, !tbaa !57
+  store i32 %spec.select534.i, ptr %i.rr, align 4, !tbaa !57
   %i.rs = load i32, ptr %i.bh, align 4, !tbaa !64 ; 7 uses
   %i.rt = load i32, ptr %i.bg, align 8, !tbaa !117
   %i.ru = icmp eq i32 %i.rs, %i.rt
@@ -1390,7 +1387,7 @@ Vec_IntPush.exit227.i:                            ; preds = %Vec_IntGrow.exit11.
   store i32 %i.sd, ptr %i.bh, align 4, !tbaa !64
   %i.se = sext i32 %i.sb to i64
   %i.sf = getelementptr inbounds [4 x i8], ptr %i.sc, i64 %i.se
-  store i32 %.sroa.4.0..sroa.4.0..sroa.4.0..sroa.4.4., ptr %i.sf, align 4, !tbaa !57
+  store i32 %spec.select535.i, ptr %i.sf, align 4, !tbaa !57
   %i.sg = getelementptr inbounds [4 x i8], ptr %i.hj, i64 %i.hf
   %i.sh = load i32, ptr %i.sg, align 4, !tbaa !57
   %.val154.i = load ptr, ptr %i.ca, align 8, !tbaa !56
@@ -1676,8 +1673,6 @@ Vec_IntPush.exit276.i:                            ; preds = %Vec_IntGrow.exit11.
   %i.vz = sext i32 %i.vw to i64
   %i.wa = getelementptr inbounds [4 x i8], ptr %i.vx, i64 %i.vz
   store i32 %i.vm, ptr %i.wa, align 4, !tbaa !57
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #34
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #34
   br label %Lf_ManDerivePart.exit

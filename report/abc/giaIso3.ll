@@ -205,7 +205,6 @@ declare noundef i32 @printf(ptr noundef readonly captures(none), ...) local_unna
 ; Function Attrs: nounwind uwtable
 define ptr @Gia_Iso4Gia(ptr noundef %0) local_unnamed_addr #2 {
 bb.a:
-  %1 = alloca [2 x i32], align 4                  ; 7 uses
   %i.a = tail call ptr @Gia_ManLevelizeR(ptr noundef %0) #20 ; 3 uses
   %i.b = tail call i32 @Abc_Random(i32 noundef 1) #20 ; 0 uses
   %i.c = getelementptr i8, ptr %i.a, i64 4        ; 2 uses
@@ -215,7 +214,6 @@ bb.a:
 
 .lr.ph61:                                         ; preds = %bb.a
   %i.e = getelementptr i8, ptr %i.a, i64 8
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.f = getelementptr i8, ptr %0, i64 32         ; 2 uses
   br label %bb.b
 
@@ -223,11 +221,8 @@ bb.b:                                             ; preds = %.lr.ph61, %.critedg
   %indvars.iv67 = phi i64 [ 0, %.lr.ph61 ], [ %indvars.iv.next68, %.critedge2 ] ; 3 uses
   %.val49 = load ptr, ptr %i.e, align 8, !tbaa !42
   %i.g = getelementptr inbounds nuw [16 x i8], ptr %.val49, i64 %indvars.iv67 ; 3 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #20
-  %i.h = tail call i32 @Abc_Random(i32 noundef 0) #20
-  store i32 %i.h, ptr %1, align 4, !tbaa !33
-  %i.i = tail call i32 @Abc_Random(i32 noundef 0) #20
-  store i32 %i.i, ptr %2, align 4, !tbaa !33
+  %i.h = tail call i32 @Abc_Random(i32 noundef 0) #20 ; 3 uses
+  %i.i = tail call i32 @Abc_Random(i32 noundef 0) #20 ; 3 uses
   %i.j = icmp eq i64 %indvars.iv67, 0
   %i.k = getelementptr i8, ptr %i.g, i64 4        ; 2 uses
   %.val4755 = load i32, ptr %i.k, align 4, !tbaa !38 ; 2 uses
@@ -271,11 +266,10 @@ bb.d:                                             ; preds = %bb.c
   %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   store i32 %i.s, ptr %i.t, align 4, !tbaa !35
   %.val42 = load i64, ptr %i.r, align 4           ; 2 uses
-  %3 = lshr i64 %.val42, 29
-  %i.u = and i64 %3, 1
-  %4 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.u
-  %5 = load i32, ptr %4, align 4, !tbaa !33
-  %i.v = add i32 %5, %i.s
+  %i.u = and i64 %.val42, 536870912
+  %.sroa.idx74.not = icmp eq i64 %i.u, 0
+  %.sroa.speculated = select i1 %.sroa.idx74.not, i32 %i.h, i32 %i.i
+  %i.v = add i32 %.sroa.speculated, %i.s
   %i.w = and i64 %.val42, 536870911
   %i.x = sub nsw i64 0, %i.w
   %i.y = getelementptr inbounds [12 x i8], ptr %i.r, i64 %i.x
@@ -306,11 +300,10 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %.lr.ph.split
   %i.al = getelementptr inbounds nuw i8, ptr %i.ah, i64 8 ; 2 uses
   %i.am = load i32, ptr %i.al, align 4, !tbaa !35
-  %6 = lshr i64 %.val40, 29
-  %i.an = and i64 %6, 1
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.an
-  %8 = load i32, ptr %7, align 4, !tbaa !33
-  %i.ao = add i32 %8, %i.am
+  %i.an = and i64 %.val40, 536870912
+  %.sroa.idx.not = icmp eq i64 %i.an, 0
+  %.sroa.speculated83 = select i1 %.sroa.idx.not, i32 %i.h, i32 %i.i
+  %i.ao = add i32 %.sroa.speculated83, %i.am
   %i.ap = sub nsw i64 0, %i.aj
   %i.aq = getelementptr inbounds [12 x i8], ptr %i.ah, i64 %i.ap
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 8 ; 2 uses
@@ -318,11 +311,10 @@ bb.e:                                             ; preds = %.lr.ph.split
   %i.at = add i32 %i.ao, %i.as
   store i32 %i.at, ptr %i.ar, align 4, !tbaa !35
   %i.au = load i32, ptr %i.al, align 4, !tbaa !35
-  %9 = lshr i64 %.val40, 61
-  %i.av = and i64 %9, 1
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.av
-  %11 = load i32, ptr %10, align 4, !tbaa !33
-  %i.aw = add i32 %11, %i.au
+  %i.av = and i64 %.val40, 2305843009213693952
+  %.sroa.idx70.not = icmp eq i64 %i.av, 0
+  %.sroa.speculated80 = select i1 %.sroa.idx70.not, i32 %i.h, i32 %i.i
+  %i.aw = add i32 %.sroa.speculated80, %i.au
   %i.ax = lshr i64 %.val40, 32
   %i.ay = and i64 %i.ax, 536870911
   %i.az = sub nsw i64 0, %i.ay
@@ -339,7 +331,6 @@ bb.f:                                             ; preds = %.lr.ph.split, %bb.e
   br i1 %exitcond.not, label %.critedge2, label %.lr.ph.split, !llvm.loop !55
 
 .critedge2:                                       ; preds = %bb.f, %bb.d, %bb.c, %.preheader51, %.lr.ph, %.preheader
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #20
   %indvars.iv.next68 = add nuw nsw i64 %indvars.iv67, 1 ; 2 uses
   %.val48 = load i32, ptr %i.c, align 4, !tbaa !41
   %i.be = sext i32 %.val48 to i64

@@ -205,8 +205,6 @@ bb.a:
   %6 = alloca %"class.llvm::SmallVector.172", align 8 ; 9 uses
   %7 = alloca [4 x %"class.llvm::Register"], align 16 ; 7 uses
   %8 = alloca %"class.llvm::SmallVector.537", align 8 ; 12 uses
-  %.sroa.0 = alloca i32, align 4                  ; 6 uses
-  %.sroa.6 = alloca i32, align 4                  ; 6 uses
   %9 = alloca %"class.llvm::SmallVector.428", align 8 ; 12 uses
   %10 = alloca %"class.llvm::DstOp", align 8      ; 5 uses
   %11 = alloca %"class.llvm::DstOp", align 8      ; 5 uses
@@ -428,10 +426,6 @@ bb.n:                                             ; preds = %bb.i, %bb.aq
   %indvars.iv202 = phi i64 [ 0, %bb.i ], [ %i.bx, %bb.aq ] ; 2 uses
   %.sroa.0151.0187 = phi i32 [ 0, %bb.i ], [ %.sroa.0151.1, %bb.aq ] ; 4 uses
   %.sroa.0141.0186 = phi i32 [ 0, %bb.i ], [ %.sroa.0141.1, %bb.aq ] ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.6)
-  store i32 -1, ptr %.sroa.0, align 4
-  store i32 -1, ptr %.sroa.6, align 4
   br i1 %.not189, label %.cont145, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.n
@@ -439,10 +433,12 @@ bb.n:                                             ; preds = %bb.i, %bb.aq
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.x
+  %.sroa.0.0 = phi i32 [ -1, %.lr.ph.preheader ], [ %.sroa.0.2, %bb.x ] ; 7 uses
+  %.sroa.6.0 = phi i32 [ -1, %.lr.ph.preheader ], [ %.sroa.6.2, %bb.x ] ; 7 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.x ] ; 2 uses
   %gep = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep, i64 %indvars.iv
   %i.cl = load i32, ptr %gep, align 4, !tbaa !238 ; 2 uses
-  %i.cm = udiv i32 %i.cl, %i.x                    ; 5 uses
+  %i.cm = udiv i32 %i.cl, %i.x                    ; 6 uses
   %.recomposed = urem i32 %i.cl, %i.x
   %.not112 = icmp ult i32 %i.cm, 4
   br i1 %.not112, label %bb.r, label %bb.o
@@ -469,34 +465,28 @@ bb.q:                                             ; preds = %bb.o
 
 bb.r:                                             ; preds = %.lr.ph
   %i.cu = mul nuw nsw i32 %i.cm, %i.x             ; 0 uses
-  %.sroa.0.0..sroa.0.0..sroa.0.0.206 = load i32, ptr %.sroa.0, align 4, !tbaa !238 ; 2 uses
-  %i.cv = icmp eq i32 %.sroa.0.0..sroa.0.0..sroa.0.0.206, %i.cm
+  %i.cv = icmp eq i32 %.sroa.0.0, %i.cm
   br i1 %i.cv, label %.loopexit, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %i.cw = icmp eq i32 %.sroa.0.0..sroa.0.0..sroa.0.0.206, -1
-  br i1 %i.cw, label %25, label %bb.t
-
-25:                                               ; preds = %bb.u, %bb.s
-  %.0102183.lcssa192.wide = phi i32 [ 0, %bb.s ], [ %i.x, %bb.u ]
-  %.lcssa190.sroa.phi = phi ptr [ %.sroa.0, %bb.s ], [ %.sroa.6, %bb.u ]
-  store i32 %i.cm, ptr %.lcssa190.sroa.phi, align 4, !tbaa !238
-  br label %.loopexit
+  %i.cw = icmp eq i32 %.sroa.0.0, -1
+  br i1 %i.cw, label %.loopexit, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %.sroa.6.0..sroa.6.0..sroa.6.4.207 = load i32, ptr %.sroa.6, align 4, !tbaa !238 ; 2 uses
-  %i.cx = icmp eq i32 %.sroa.6.0..sroa.6.0..sroa.6.4.207, %i.cm
+  %i.cx = icmp eq i32 %.sroa.6.0, %i.cm
   br i1 %i.cx, label %.loopexit, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
-  %i.cy = icmp eq i32 %.sroa.6.0..sroa.6.0..sroa.6.4.207, -1
-  br i1 %i.cy, label %25, label %_ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit.thread169
+  %i.cy = icmp eq i32 %.sroa.6.0, -1
+  br i1 %i.cy, label %.loopexit, label %_ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit.thread169
 
 _ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit.thread169: ; preds = %bb.u
   br i1 %i.ar, label %_ZNK4llvm3LLT14getElementTypeEv.exit, label %bb.y
 
-.loopexit:                                        ; preds = %bb.r, %bb.t, %25
-  %.0102183194 = phi i32 [ %.0102183.lcssa192.wide, %25 ], [ 0, %bb.r ], [ %i.x, %bb.t ]
+.loopexit:                                        ; preds = %bb.r, %bb.t, %bb.u, %bb.s
+  %.sroa.0.1 = phi i32 [ %i.cm, %bb.s ], [ %.sroa.0.0, %bb.u ], [ %.sroa.0.0, %bb.t ], [ %.sroa.0.0, %bb.r ] ; 2 uses
+  %.sroa.6.1 = phi i32 [ %.sroa.6.0, %bb.s ], [ %i.cm, %bb.u ], [ %.sroa.6.0, %bb.t ], [ %.sroa.6.0, %bb.r ] ; 2 uses
+  %.0102183194 = phi i32 [ 0, %bb.s ], [ %i.x, %bb.u ], [ %i.x, %bb.t ], [ 0, %bb.r ]
   %i.cz = add i32 %.0102183194, %.recomposed      ; 2 uses
   %i.da = load i32, ptr %i.ap, align 8, !tbaa !227 ; 2 uses
   %i.db = load i32, ptr %i.aq, align 4, !tbaa !239
@@ -518,6 +508,8 @@ bb.w:                                             ; preds = %.loopexit
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.q, %bb.p, %bb.v, %bb.w
+  %.sroa.0.2 = phi i32 [ %.sroa.0.1, %bb.w ], [ %.sroa.0.1, %bb.v ], [ %.sroa.0.0, %bb.q ], [ %.sroa.0.0, %bb.p ] ; 4 uses
+  %.sroa.6.2 = phi i32 [ %.sroa.6.1, %bb.w ], [ %.sroa.6.1, %bb.v ], [ %.sroa.6.0, %bb.q ], [ %.sroa.6.0, %bb.p ] ; 3 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.bx
   br i1 %exitcond.not, label %_ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit, label %.lr.ph, !llvm.loop !1062
@@ -694,8 +686,7 @@ bb.al:                                            ; preds = %_ZN4llvm23SmallVect
   br i1 %exitcond201.not, label %.cont148, label %bb.ae, !llvm.loop !1063
 
 _ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit: ; preds = %bb.x
-  %.sroa.0.0..sroa.0.0..sroa.0.0..pre = load i32, ptr %.sroa.0, align 4, !tbaa !238 ; 3 uses
-  %i.fm = icmp eq i32 %.sroa.0.0..sroa.0.0..sroa.0.0..pre, -1
+  %i.fm = icmp eq i32 %.sroa.0.2, -1
   br i1 %i.fm, label %.cont145, label %bb.am
 
 .cont145:                                         ; preds = %bb.n, %_ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi.exit
@@ -723,7 +714,7 @@ bb.am:                                            ; preds = %_ZN4llvm23SmallVect
   store i64 %i.q, ptr %17, align 8, !tbaa !226
   store i32 0, ptr %i.bu, align 8, !tbaa !243
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #19
-  %i.fv = zext i32 %.sroa.0.0..sroa.0.0..sroa.0.0..pre to i64
+  %i.fv = zext nneg i32 %.sroa.0.2 to i64
   %i.fw = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %i.fv
   %.sroa.013.0.copyload = load i32, ptr %i.fw, align 4, !tbaa !238
   store i32 %.sroa.013.0.copyload, ptr %18, align 8, !tbaa !238
@@ -741,11 +732,10 @@ bb.am:                                            ; preds = %_ZN4llvm23SmallVect
   br label %bb.aq
 
 bb.an:                                            ; preds = %bb.am
-  %i.gd = zext i32 %.sroa.0.0..sroa.0.0..sroa.0.0..pre to i64
+  %i.gd = zext nneg i32 %.sroa.0.2 to i64
   %i.ge = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %i.gd
-  %.sroa.012.0.copyload = load i32, ptr %i.ge, align 4, !tbaa !238
-  %.sroa.6.0..sroa.6.0..sroa.6.4. = load i32, ptr %.sroa.6, align 4, !tbaa !238 ; 2 uses
-  %i.gf = icmp eq i32 %.sroa.6.0..sroa.6.0..sroa.6.4., -1
+  %.sroa.6.0..sroa.6.0..sroa.6.4. = load i32, ptr %i.ge, align 4, !tbaa !238
+  %i.gf = icmp eq i32 %.sroa.6.2, -1
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #19
   br i1 %i.gf, label %bb.ao, label %bb.ap
 
@@ -761,7 +751,7 @@ bb.ao:                                            ; preds = %bb.an
   br label %.cont
 
 bb.ap:                                            ; preds = %bb.an
-  %i.gm = zext i32 %.sroa.6.0..sroa.6.0..sroa.6.4. to i64
+  %i.gm = zext nneg i32 %.sroa.6.2 to i64
   %i.gn = getelementptr inbounds nuw [4 x i8], ptr %7, i64 %i.gm
   br label %.cont
 
@@ -774,7 +764,7 @@ bb.ap:                                            ; preds = %bb.an
   store i64 %i.q, ptr %20, align 8, !tbaa !226
   store i32 0, ptr %i.br, align 8, !tbaa !243
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #19
-  store i32 %.sroa.012.0.copyload, ptr %21, align 8, !tbaa !238
+  store i32 %.sroa.6.0..sroa.6.0..sroa.6.4., ptr %21, align 8, !tbaa !238
   store i32 0, ptr %i.bs, align 8, !tbaa !246
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #19
   store i32 %.sroa.011.0, ptr %22, align 8, !tbaa !238
@@ -799,8 +789,6 @@ bb.aq:                                            ; preds = %.cont145, %.cont, %
   %.sroa.0141.1 = phi i32 [ %spec.select, %_ZN4llvm11SmallVectorINS_8RegisterELj16EED2Ev.exit ], [ %spec.select173, %.cont145 ], [ %spec.select175, %.cont142 ], [ %spec.select177, %.cont ] ; 2 uses
   %.sroa.0151.1 = phi i32 [ %spec.select172, %_ZN4llvm11SmallVectorINS_8RegisterELj16EED2Ev.exit ], [ %spec.select174, %.cont145 ], [ %spec.select176, %.cont142 ], [ %spec.select178, %.cont ] ; 2 uses
   store i32 0, ptr %i.ap, align 8, !tbaa !227
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   br i1 %.not111, label %bb.n, label %bb.j, !llvm.loop !1064
 
 _ZN4llvm13isPowerOf2_32Ej.exit.thread:            ; preds = %_ZNK4llvm3LLT14getNumElementsEv.exit, %bb.c, %bb.b, %_ZN4llvm11SmallVectorINS_8RegisterELj12EED2Ev.exit119

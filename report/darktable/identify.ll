@@ -205,7 +205,6 @@ declare noundef i32 @_ZN6LibRaw11ljpeg_startEP5jheadi(ptr noundef nonnull align 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6LibRaw27identify_process_dng_fieldsEv(ptr noundef nonnull align 8 dereferenceable(768512) %0) local_unnamed_addr #4 align 2 {
 bb.a:
-  %1 = alloca [2 x i32], align 4                  ; 5 uses
   %i.a = alloca [4 x [4 x double]], align 16      ; 24 uses
   %i.b = alloca [4 x [3 x double]], align 16      ; 9 uses
   %i.c = alloca [4 x [3 x double]], align 16      ; 15 uses
@@ -251,7 +250,6 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not399, label %bb.d, label %bb.x
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #19
   %i.ag = zext nneg i32 %i.v to i64               ; 2 uses
   %i.ah = getelementptr inbounds nuw [33472 x i8], ptr %0, i64 %i.ag ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 433660
@@ -296,7 +294,6 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h, %bb.i
   %i.az = phi i32 [ %sext418, %bb.i ], [ %i.v, %bb.h ]
-  store i32 %i.az, ptr %1, align 4, !tbaa !81
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ah, i64 433828
   %i.bb = load i32, ptr %i.ba, align 4, !tbaa !259 ; 3 uses
   %i.bc = and i32 %i.bb, 2
@@ -341,8 +338,6 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o, %bb.n
   %i.bt = phi i32 [ %sext418.1, %bb.o ], [ %i.v, %bb.n ]
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  store i32 %i.bt, ptr %2, align 4, !tbaa !81
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 433512 ; 2 uses
   %i.bv = getelementptr inbounds nuw [33472 x i8], ptr %i.bu, i64 %i.ag
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 488
@@ -362,7 +357,7 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.p, %bb.q
   %i.cd = phi i32 [ %sext, %bb.q ], [ %i.v, %bb.p ]
   %i.ce = icmp sgt i32 %i.ap, -1
-  br i1 %i.ce, label %bb.s, label %5
+  br i1 %i.ce, label %bb.s, label %bb.x
 
 bb.s:                                             ; preds = %bb.r
   %i.cf = icmp slt i32 %i.ap, %i.aa
@@ -372,7 +367,7 @@ bb.s:                                             ; preds = %bb.r
   %or.cond491 = select i1 %or.cond489, i1 %i.ch, i1 false
   %i.ci = icmp eq i32 %i.ap, %i.bn
   %or.cond494 = select i1 %or.cond491, i1 %i.ci, i1 false
-  br i1 %or.cond494, label %bb.t, label %5
+  br i1 %or.cond494, label %bb.t, label %bb.x
 
 bb.t:                                             ; preds = %bb.s
   %i.cj = zext nneg i32 %i.ap to i64
@@ -381,13 +376,13 @@ bb.t:                                             ; preds = %bb.s
   %i.cm = getelementptr inbounds nuw i8, ptr %i.ck, i64 152
   %i.cn = load i16, ptr %i.cm, align 8, !tbaa !92 ; 5 uses
   %.not402 = icmp eq i16 %i.cn, 0
-  br i1 %.not402, label %5, label %bb.u
+  br i1 %.not402, label %bb.x, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.co = getelementptr inbounds nuw i8, ptr %i.ck, i64 320
   %i.cp = load i16, ptr %i.co, align 8, !tbaa !92 ; 4 uses
   %.not403 = icmp eq i16 %i.cp, 0
-  br i1 %.not403, label %5, label %.preheader543
+  br i1 %.not403, label %bb.x, label %.preheader543
 
 .preheader543:                                    ; preds = %bb.u
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #19
@@ -452,7 +447,7 @@ switch.hole_check:                                ; preds = %.preheader540.1
   br i1 %i.dc, label %.preheader539, label %bb.w
 
 .preheader539:                                    ; preds = %.preheader541.1, %.preheader543, %.thread
-  %.4359796 = phi i32 [ %.4359, %.thread ], [ 1, %.preheader541.1 ], [ 0, %.preheader543 ]
+  %.4359796 = phi i32 [ %.4359, %.thread ], [ 1, %.preheader541.1 ], [ 0, %.preheader543 ] ; 2 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %0, i64 540
   %i.de = load i32, ptr %i.dd, align 4, !tbaa !99 ; 11 uses
   %invariant.smin = tail call i32 @llvm.smin.i32(i32 %i.de, i32 4) ; 3 uses
@@ -460,7 +455,7 @@ switch.hole_check:                                ; preds = %.preheader540.1
   br i1 %i.df, label %.preheader538.lr.ph, label %.loopexit537
 
 .preheader538.lr.ph:                              ; preds = %.preheader539
-  %i.dg = zext nneg i32 %.4359796 to i64          ; 3 uses
+  %i.dg = zext nneg i32 %.4359796 to i64          ; 2 uses
   %wide.trip.count = zext nneg i32 %invariant.smin to i64 ; 2 uses
   %trip.count.minus.1 = add nsw i64 %wide.trip.count, -1
   %broadcast.splatinsert = insertelement <4 x i64> poison, i64 %trip.count.minus.1, i64 0
@@ -483,9 +478,9 @@ switch.hole_check:                                ; preds = %.preheader540.1
   %i.dm = fpext reassoc nsz arcp contract afn <4 x float> %wide.masked.gather821 to <4 x double>
   %wide.gep822 = getelementptr inbounds nuw i8, <4 x ptr> %wide.gep816, i64 16
   call void @llvm.masked.scatter.v4f64.v4p0(<4 x double> %i.dm, <4 x ptr> align 8 %wide.gep822, <4 x i1> %i.dj), !tbaa !137
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.dg
-  %4 = load i32, ptr %3, align 4, !tbaa !81
-  %.not810 = icmp eq i32 %4, %i.ap
+  %.sroa.idx = icmp eq i32 %.4359796, 1
+  %.sroa.speculated = select i1 %.sroa.idx, i32 %i.bt, i32 %i.az
+  %.not810 = icmp eq i32 %.sroa.speculated, %i.ap
   br i1 %.not810, label %.preheader535.preheader, label %.loopexit537
 
 .preheader535.preheader:                          ; preds = %.preheader538.lr.ph
@@ -753,13 +748,9 @@ bb.w:                                             ; preds = %._crit_edge578, %.t
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #19
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
-  br label %5
-
-5:                                                ; preds = %bb.w, %bb.u, %bb.t, %bb.s, %bb.r
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #19
   br label %bb.x
 
-bb.x:                                             ; preds = %5, %bb.c
+bb.x:                                             ; preds = %bb.r, %bb.s, %bb.t, %bb.u, %bb.w, %bb.c
   %i.hd = getelementptr inbounds nuw i8, ptr %0, i64 524
   %i.he = load i32, ptr %i.hd, align 4, !tbaa !79
   %i.hf = icmp eq i32 %i.he, 18

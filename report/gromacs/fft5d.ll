@@ -65,10 +65,9 @@ bb.a:
   %i.p = alloca [3 x ptr], align 16               ; 9 uses
   %i.q = alloca [3 x i32], align 4                ; 11 uses
   %i.r = alloca [3 x i32], align 4                ; 11 uses
-  %11 = alloca [2 x i32], align 4                 ; 8 uses
   %i.s = alloca ptr, align 8                      ; 7 uses
   %i.t = alloca i32, align 4                      ; 24 uses
-  %12 = alloca [3 x %struct.fftw_iodim_do_not_use_me], align 16 ; 24 uses
+  %11 = alloca [3 x %struct.fftw_iodim_do_not_use_me], align 16 ; 24 uses
   %i.u = tail call i32 @__kmpc_global_thread_num(ptr nonnull @1)
   store i32 %4, ptr %i.a, align 4, !tbaa !9
   store i32 %9, ptr %i.b, align 4, !tbaa !9
@@ -92,7 +91,6 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.p, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r) #13
-  call void @llvm.lifetime.start.p0(ptr nonnull %11) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s) #13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t) #13
   %i.v = load ptr, ptr %3, align 8, !tbaa !12     ; 2 uses
@@ -216,13 +214,13 @@ bb.r:                                             ; preds = %bb.n, %bb.q, %bb.p,
   %.0269 = phi i32 [ %1, %bb.q ], [ %i.bk, %bb.p ], [ %1, %bb.n ], [ %1, %bb.l ] ; 19 uses
   %.0268 = phi i32 [ %0, %bb.q ], [ %0, %bb.p ], [ %i.bh, %bb.n ], [ %0, %bb.l ] ; 18 uses
   %i.bn = load i32, ptr %i.c, align 4, !tbaa !9
-  %.fr492 = freeze i32 %i.bn                      ; 31 uses
+  %.fr492 = freeze i32 %i.bn                      ; 29 uses
   %i.bo = sext i32 %.fr492 to i64
   %i.bp = shl nsw i64 %i.bo, 2                    ; 6 uses
   %i.bq = call noalias ptr @malloc(i64 noundef %i.bp) #19 ; 12 uses
   %i.br = getelementptr inbounds nuw i8, ptr %i.c, i64 4 ; 2 uses
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !9
-  %.fr = freeze i32 %i.bs                         ; 31 uses
+  %.fr = freeze i32 %i.bs                         ; 29 uses
   %i.bt = sext i32 %.fr to i64
   %i.bu = shl nsw i64 %i.bt, 2                    ; 6 uses
   %i.bv = call noalias ptr @malloc(i64 noundef %i.bu) #19 ; 12 uses
@@ -625,7 +623,6 @@ _ZL4vmaxPKii.exit330:                             ; preds = %.lr.ph.i324, %middl
   store i32 %i.jq, ptr %i.h, align 4, !tbaa !9
   store ptr %i.bv, ptr %i.o, align 16, !tbaa !19
   store ptr %i.cb, ptr %i.p, align 16, !tbaa !19
-  store i32 %.fr, ptr %11, align 4, !tbaa !9
   %i.jr = getelementptr inbounds nuw i8, ptr %i.q, i64 4
   store i32 %.0270, ptr %i.jr, align 4, !tbaa !9
   %i.js = getelementptr inbounds nuw i8, ptr %i.r, i64 4
@@ -838,8 +835,6 @@ _ZL4vmaxPKii.exit350:                             ; preds = %.lr.ph.i344, %middl
   %i.lp = load i32, ptr %i.lo, align 4, !tbaa !9  ; 2 uses
   %i.lq = getelementptr inbounds nuw i8, ptr %i.l, i64 4
   store i32 %i.lp, ptr %i.lq, align 4, !tbaa !9
-  %13 = getelementptr inbounds nuw i8, ptr %11, i64 4
-  store i32 %.fr492, ptr %13, align 4, !tbaa !9
   %i.lr = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   store i32 %.0269, ptr %i.lr, align 4, !tbaa !9
   %i.ls = getelementptr inbounds nuw i8, ptr %i.r, i64 8
@@ -1232,7 +1227,6 @@ _ZL4vmaxPKii.exit390:                             ; preds = %.lr.ph.i384, %middl
   store i32 %i.ot, ptr %i.h, align 4, !tbaa !9
   store ptr %i.bq, ptr %i.o, align 16, !tbaa !19
   store ptr %i.ca, ptr %i.p, align 16, !tbaa !19
-  store i32 %.fr492, ptr %11, align 4, !tbaa !9
   %i.ou = getelementptr inbounds nuw i8, ptr %i.q, i64 4
   store i32 %.0269, ptr %i.ou, align 4, !tbaa !9
   %i.ov = getelementptr inbounds nuw i8, ptr %i.r, i64 4
@@ -1445,8 +1439,6 @@ _ZL4vmaxPKii.exit410:                             ; preds = %.lr.ph.i404, %middl
   store i32 %i.id, ptr %i.qs, align 4, !tbaa !9
   %i.qt = getelementptr inbounds nuw i8, ptr %i.l, i64 4
   store i32 %i.if, ptr %i.qt, align 4, !tbaa !9
-  %14 = getelementptr inbounds nuw i8, ptr %11, i64 4
-  store i32 %.fr, ptr %14, align 4, !tbaa !9
   %i.qu = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   store i32 %.0270, ptr %i.qu, align 4, !tbaa !9
   %i.qv = getelementptr inbounds nuw i8, ptr %i.r, i64 8
@@ -1656,6 +1648,8 @@ bb.u:                                             ; preds = %_ZL4vmaxPKii.exit43
   %.sink568.a = phi ptr [ %i.by, %_ZL4vmaxPKii.exit430 ], [ %i.bx, %_ZL4vmaxPKii.exit370 ]
   %.sink567 = phi ptr [ %i.ce, %_ZL4vmaxPKii.exit430 ], [ %i.cd, %_ZL4vmaxPKii.exit370 ]
   %i.sn = phi i32 [ %.0270, %_ZL4vmaxPKii.exit430 ], [ %.0269, %_ZL4vmaxPKii.exit370 ]
+  %.sroa.0.0 = phi i32 [ %.fr492, %_ZL4vmaxPKii.exit430 ], [ %.fr, %_ZL4vmaxPKii.exit370 ] ; 2 uses
+  %.sroa.6.0 = phi i32 [ %.fr, %_ZL4vmaxPKii.exit430 ], [ %.fr492, %_ZL4vmaxPKii.exit370 ] ; 2 uses
   %i.so = phi i32 [ %.0.lcssa.i391, %_ZL4vmaxPKii.exit430 ], [ %.0.lcssa.i331, %_ZL4vmaxPKii.exit370 ]
   %i.sp = phi i32 [ %.0.lcssa.i371460, %_ZL4vmaxPKii.exit430 ], [ %.0.lcssa.i457, %_ZL4vmaxPKii.exit370 ]
   %i.sq = phi i32 [ %.0.lcssa.i411, %_ZL4vmaxPKii.exit430 ], [ %.0.lcssa.i351, %_ZL4vmaxPKii.exit370 ]
@@ -1664,8 +1658,6 @@ bb.u:                                             ; preds = %_ZL4vmaxPKii.exit43
   %i.st = phi i32 [ %.0.lcssa.i421, %_ZL4vmaxPKii.exit430 ], [ %.0.lcssa.i361, %_ZL4vmaxPKii.exit370 ]
   %i.su = phi i32 [ %.0.lcssa.i401, %_ZL4vmaxPKii.exit430 ], [ %i.jq, %_ZL4vmaxPKii.exit370 ]
   %i.sv = phi i32 [ %i.id, %_ZL4vmaxPKii.exit430 ], [ %.0.lcssa.i321, %_ZL4vmaxPKii.exit370 ]
-  %15 = phi i32 [ %.fr, %_ZL4vmaxPKii.exit430 ], [ %.fr492, %_ZL4vmaxPKii.exit370 ]
-  %16 = phi i32 [ %.fr492, %_ZL4vmaxPKii.exit430 ], [ %.fr, %_ZL4vmaxPKii.exit370 ]
   %i.sw = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   store i32 %.sink571.a, ptr %i.sw, align 4, !tbaa !9
   call void @free(ptr noundef nonnull %.sink570.a) #13
@@ -1678,10 +1670,10 @@ bb.u:                                             ; preds = %_ZL4vmaxPKii.exit43
   store i32 -1, ptr %i.sy, align 4, !tbaa !9
   %i.sz = mul nsw i32 %i.ss, %i.sp
   %i.ta = mul nsw i32 %i.sz, %i.sv
-  %i.tb = mul nsw i32 %i.ta, %16
+  %i.tb = mul nsw i32 %i.ta, %.sroa.0.0
   %i.tc = mul nsw i32 %i.sr, %i.so
   %i.td = mul nsw i32 %i.tc, %i.su
-  %i.te = mul nsw i32 %i.td, %15
+  %i.te = mul nsw i32 %i.td, %.sroa.6.0
   %i.tf = mul i32 %i.st, %i.sq
   %i.tg = mul i32 %i.tf, %i.sn
   %i.th = call i32 @llvm.smax.i32(i32 %i.te, i32 %i.tg)
@@ -1742,7 +1734,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
   br i1 %or.cond11, label %bb.ac, label %bb.at
 
 bb.ac:                                            ; preds = %bb.ab
-  call void @llvm.lifetime.start.p0(ptr nonnull %12) #13
+  call void @llvm.lifetime.start.p0(ptr nonnull %11) #13
   %i.ue = call noundef i32 @pthread_mutex_lock(ptr noundef nonnull @_ZL14big_fftw_mutex) #13 ; 2 uses
   %.not.i = icmp eq i32 %i.ue, 0
   br i1 %.not.i, label %_ZNSt5mutex4lockEv.exit, label %bb.ad
@@ -1809,28 +1801,28 @@ bb.ak:                                            ; preds = %_ZNSt5mutex4lockEv.
 
 bb.al:                                            ; preds = %.thread547, %bb.ak
   %.0265554 = phi i32 [ %i.up, %.thread547 ], [ %.0268, %bb.ak ] ; 2 uses
-  store i32 %.0270, ptr %12, align 16, !tbaa !92
-  %i.us = getelementptr inbounds nuw i8, ptr %12, i64 12
+  store i32 %.0270, ptr %11, align 16, !tbaa !92
+  %i.us = getelementptr inbounds nuw i8, ptr %11, i64 12
   store i32 %.0269, ptr %i.us, align 4, !tbaa !92
-  %i.ut = getelementptr inbounds nuw i8, ptr %12, i64 24
+  %i.ut = getelementptr inbounds nuw i8, ptr %11, i64 24
   store i32 %0, ptr %i.ut, align 8, !tbaa !92
   %i.uu = mul nsw i32 %.0265554, %.0269
-  %i.uv = getelementptr inbounds nuw i8, ptr %12, i64 4
+  %i.uv = getelementptr inbounds nuw i8, ptr %11, i64 4
   store i32 %i.uu, ptr %i.uv, align 4, !tbaa !93
-  %i.uw = getelementptr inbounds nuw i8, ptr %12, i64 16
+  %i.uw = getelementptr inbounds nuw i8, ptr %11, i64 16
   store i32 %.0265554, ptr %i.uw, align 16, !tbaa !93
-  %i.ux = getelementptr inbounds nuw i8, ptr %12, i64 28
+  %i.ux = getelementptr inbounds nuw i8, ptr %11, i64 28
   store i32 1, ptr %i.ux, align 4, !tbaa !93
   %i.uy = mul nsw i32 %.0268, %.0270
   %.sink509 = select i1 %.not294, i32 %.0269, i32 1
   %.sink = select i1 %.not294, i32 1, i32 %i.uy
   %i.uz = select i1 %.not294, i32 %.0269, i32 1
   %.0270.sink = mul nsw i32 %.0270, %i.uz
-  %i.va = getelementptr inbounds nuw i8, ptr %12, i64 8
+  %i.va = getelementptr inbounds nuw i8, ptr %11, i64 8
   store i32 %.sink509, ptr %i.va, align 8, !tbaa !94
-  %i.vb = getelementptr inbounds nuw i8, ptr %12, i64 20
+  %i.vb = getelementptr inbounds nuw i8, ptr %11, i64 20
   store i32 %.sink, ptr %i.vb, align 4, !tbaa !94
-  %i.vc = getelementptr inbounds nuw i8, ptr %12, i64 32
+  %i.vc = getelementptr inbounds nuw i8, ptr %11, i64 32
   store i32 %.0270.sink, ptr %i.vc, align 16, !tbaa !94
   br i1 %.not291, label %.thread464, label %bb.ao
 
@@ -1850,7 +1842,7 @@ bb.an:                                            ; preds = %.thread537.thread56
   br label %bb.ap
 
 bb.ao:                                            ; preds = %bb.al
-  %i.vh = call ptr @fftwf_plan_guru_dft_r2c(i32 noundef 3, ptr noundef nonnull %12, i32 noundef 0, ptr noundef null, ptr noundef %.0, ptr noundef %.0455, i32 noundef %i.uo)
+  %i.vh = call ptr @fftwf_plan_guru_dft_r2c(i32 noundef 3, ptr noundef nonnull %11, i32 noundef 0, ptr noundef null, ptr noundef %.0, ptr noundef %.0455, i32 noundef %i.uo)
   br label %bb.ar
 
 bb.ap:                                            ; preds = %bb.am, %bb.an
@@ -1862,33 +1854,33 @@ bb.ap:                                            ; preds = %bb.am, %bb.an
   %.sink511.a = phi i32 [ %.0268, %bb.am ], [ %i.vf, %bb.an ]
   %.sink510 = phi i32 [ %i.ve, %bb.am ], [ %i.vg, %bb.an ]
   %.0263.sink = phi i32 [ %.0264545558, %bb.am ], [ %.0263546565, %bb.an ]
-  store i32 %.0269.sink, ptr %12, align 16, !tbaa !92
-  %i.vi = getelementptr inbounds nuw i8, ptr %12, i64 12
+  store i32 %.0269.sink, ptr %11, align 16, !tbaa !92
+  %i.vi = getelementptr inbounds nuw i8, ptr %11, i64 12
   store i32 %.0268.sink514, ptr %i.vi, align 4, !tbaa !92
-  %i.vj = getelementptr inbounds nuw i8, ptr %12, i64 24
+  %i.vj = getelementptr inbounds nuw i8, ptr %11, i64 24
   store i32 %.sink513.a, ptr %i.vj, align 8, !tbaa !92
-  %i.vk = getelementptr inbounds nuw i8, ptr %12, i64 4
+  %i.vk = getelementptr inbounds nuw i8, ptr %11, i64 4
   store i32 %.0268.sink, ptr %i.vk, align 4, !tbaa !93
-  %i.vl = getelementptr inbounds nuw i8, ptr %12, i64 16
+  %i.vl = getelementptr inbounds nuw i8, ptr %11, i64 16
   store i32 %.sink512.a, ptr %i.vl, align 16, !tbaa !93
-  %i.vm = getelementptr inbounds nuw i8, ptr %12, i64 28
+  %i.vm = getelementptr inbounds nuw i8, ptr %11, i64 28
   store i32 %.sink511.a, ptr %i.vm, align 4, !tbaa !93
-  %i.vn = getelementptr inbounds nuw i8, ptr %12, i64 8
+  %i.vn = getelementptr inbounds nuw i8, ptr %11, i64 8
   store i32 %.sink510, ptr %i.vn, align 8, !tbaa !94
-  %i.vo = getelementptr inbounds nuw i8, ptr %12, i64 20
+  %i.vo = getelementptr inbounds nuw i8, ptr %11, i64 20
   store i32 %.0263.sink, ptr %i.vo, align 4, !tbaa !94
-  %i.vp = getelementptr inbounds nuw i8, ptr %12, i64 32
+  %i.vp = getelementptr inbounds nuw i8, ptr %11, i64 32
   store i32 1, ptr %i.vp, align 16, !tbaa !94
   br i1 %.not291, label %.thread464, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
-  %i.vq = call ptr @fftwf_plan_guru_dft_c2r(i32 noundef 3, ptr noundef nonnull %12, i32 noundef 0, ptr noundef null, ptr noundef %.0, ptr noundef %.0455, i32 noundef %i.uo)
+  %i.vq = call ptr @fftwf_plan_guru_dft_c2r(i32 noundef 3, ptr noundef nonnull %11, i32 noundef 0, ptr noundef null, ptr noundef %.0, ptr noundef %.0455, i32 noundef %i.uo)
   br label %bb.ar
 
 .thread464:                                       ; preds = %bb.al, %bb.ap
   %.pre-phi543 = phi i32 [ 0, %bb.al ], [ %.pre524.a, %bb.ap ]
   %i.vr = add nsw i32 %.pre-phi543, -1
-  %i.vs = call ptr @fftwf_plan_guru_dft(i32 noundef 3, ptr noundef nonnull %12, i32 noundef 0, ptr noundef null, ptr noundef %.0, ptr noundef %.0455, i32 noundef %i.vr, i32 noundef %i.uo)
+  %i.vs = call ptr @fftwf_plan_guru_dft(i32 noundef 3, ptr noundef nonnull %11, i32 noundef 0, ptr noundef null, ptr noundef %.0, ptr noundef %.0455, i32 noundef %i.vr, i32 noundef %i.uo)
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.ao, %.thread464, %bb.aq
@@ -1896,15 +1888,14 @@ bb.ar:                                            ; preds = %bb.ao, %.thread464,
   %i.vt = getelementptr inbounds nuw i8, ptr %i.tu, i64 56
   store ptr %.sink573, ptr %i.vt, align 8, !tbaa !26
   %i.vu = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull @_ZL14big_fftw_mutex) #13 ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %12) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %11) #13
   br label %bb.at
 
 bb.as:                                            ; preds = %bb.ah, %bb.ae
   %.merged = phi { ptr, i32 } [ %i.ul, %bb.ah ], [ %i.uf, %bb.ae ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %12) #13
+  call void @llvm.lifetime.end.p0(ptr nonnull %11) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %11) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p) #13
@@ -2110,12 +2101,12 @@ bb.ax:                                            ; preds = %.loopexit, %bb.ax
   br i1 %i.aaj, label %bb.ax, label %.preheader, !llvm.loop !87
 
 bb.ay:                                            ; preds = %.preheader, %bb.ay
-  %storemerge318491 = phi i32 [ 0, %.preheader ], [ %i.aas, %bb.ay ]
-  %i.aak = sext i32 %storemerge318491 to i64      ; 2 uses
-  %17 = getelementptr inbounds [4 x i8], ptr %11, i64 %i.aak
-  %18 = load i32, ptr %17, align 4, !tbaa !9
+  %storemerge318491 = phi i32 [ 0, %.preheader ], [ %i.aas, %bb.ay ] ; 2 uses
+  %i.aak = sext i32 %storemerge318491 to i64
+  %.sroa.idx = icmp eq i32 %storemerge318491, 1
+  %.sroa.speculated509 = select i1 %.sroa.idx, i32 %.sroa.6.0, i32 %.sroa.0.0
   %i.aal = getelementptr inbounds [4 x i8], ptr %i.xv, i64 %i.aak
-  store i32 %18, ptr %i.aal, align 4, !tbaa !9
+  store i32 %.sroa.speculated509, ptr %i.aal, align 4, !tbaa !9
   %i.aam = load i32, ptr %i.t, align 4, !tbaa !9
   %i.aan = sext i32 %i.aam to i64                 ; 2 uses
   %i.aao = getelementptr inbounds [4 x i8], ptr %i.d, i64 %i.aan
@@ -2147,7 +2138,6 @@ bb.ba:                                            ; preds = %bb.j, %bb.k, %bb.az
   %.0267 = phi ptr [ %i.wx, %bb.az ], [ null, %bb.k ], [ null, %bb.j ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s) #13
-  call void @llvm.lifetime.end.p0(ptr nonnull %11) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p) #13

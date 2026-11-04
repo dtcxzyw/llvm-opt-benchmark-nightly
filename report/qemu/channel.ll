@@ -202,7 +202,7 @@ bb.y:                                             ; preds = %bb.x
   %i.ac = load i32, ptr %i.ab, align 8
   call void @migrate_set_state(ptr noundef nonnull %i.ab, i32 noundef %i.ac, i32 noundef 12) #8
   %i.ad = getelementptr inbounds nuw i8, ptr %i.c, i64 980
-  %i.ae = load i8, ptr %i.ad, align 4, !range !9, !noundef !8
+  %i.ae = load i8, ptr %i.ad, align 4, !range !8, !noundef !9
   %i.af = trunc nuw i8 %i.ae to i1
   br i1 %i.af, label %bb.z, label %bb.aa
 
@@ -282,9 +282,6 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #8
   ret i32 %.0
 }
-
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #4
 
 declare i64 @qio_channel_readv_full(ptr noundef, ptr noundef, i64 noundef, ptr noundef, ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #2
 
@@ -426,7 +423,7 @@ glib_autoptr_cleanup_MigrationChannel.exit:       ; preds = %glib_autoptr_cleanu
 }
 
 ; Function Attrs: allocsize(0)
-declare noalias ptr @g_malloc0(i64 noundef) local_unnamed_addr #5
+declare noalias ptr @g_malloc0(i64 noundef) local_unnamed_addr #4
 
 declare i32 @strstart(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #2
 
@@ -446,7 +443,6 @@ declare i32 @file_parse_offset(ptr noundef, ptr noundef, ptr noundef) local_unna
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local noundef zeroext i1 @migration_channel_parse_input(ptr noundef %0, ptr nofree noundef readonly captures(address_is_null) %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef captures(address_is_null) %3, ptr noundef %4) local_unnamed_addr #0 {
 bb.a:
-  %5 = alloca [2 x ptr], align 16                 ; 6 uses
   %i.a = alloca ptr, align 8                      ; 5 uses
   %i.b = alloca ptr, align 8                      ; 5 uses
   %.not13 = icmp eq ptr %1, null                  ; 2 uses
@@ -462,8 +458,6 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not13, label %bb.r, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %5, i8 0, i64 16, i1 false)
   %.not.i = icmp eq ptr %3, null                  ; 2 uses
   br i1 %.not.i, label %bb.e, label %.preheader
 
@@ -477,26 +471,28 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.e
   tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %4, ptr noundef nonnull @.str, i32 noundef 316, ptr noundef nonnull @__func__.migrate_channels_parse, ptr noundef nonnull @.str.21) #8
-  br label %migrate_channels_parse.exit
+  br label %bb.s
 
 bb.g:                                             ; preds = %.preheader, %bb.i
+  %.sroa.0.0.i = phi ptr [ %spec.select.i, %bb.i ], [ null, %.preheader ] ; 2 uses
+  %.sroa.5.0.i = phi ptr [ %spec.select40.i, %bb.i ], [ null, %.preheader ] ; 2 uses
   %.02535.i = phi ptr [ %i.j, %bb.i ], [ %1, %.preheader ] ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.02535.i, i64 8
-  %i.g = load ptr, ptr %i.f, align 8              ; 2 uses
+  %i.g = load ptr, ptr %i.f, align 8              ; 3 uses
   %i.h = load i32, ptr %i.g, align 8              ; 2 uses
-  %6 = zext i32 %i.h to i64
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %6 ; 2 uses
-  %8 = load ptr, ptr %7, align 8
-  %.not34.i = icmp eq ptr %8, null
+  %.sroa.idx.i = icmp eq i32 %i.h, 1              ; 3 uses
+  %.sroa.speculated.i = select i1 %.sroa.idx.i, ptr %.sroa.5.0.i, ptr %.sroa.0.0.i
+  %.not34.i = icmp eq ptr %.sroa.speculated.i, null
   br i1 %.not34.i, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.i = tail call ptr @qapi_enum_lookup(ptr noundef nonnull @MigrationChannelType_lookup, i32 noundef %i.h) #8
   tail call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %4, ptr noundef nonnull @.str, i32 noundef 326, ptr noundef nonnull @__func__.migrate_channels_parse, ptr noundef nonnull @.str.22, ptr noundef %i.i) #8
-  br label %migrate_channels_parse.exit
+  br label %bb.s
 
 bb.i:                                             ; preds = %bb.g
-  store ptr %i.g, ptr %7, align 8
+  %spec.select.i = select i1 %.sroa.idx.i, ptr %.sroa.0.0.i, ptr %i.g ; 3 uses
+  %spec.select40.i = select i1 %.sroa.idx.i, ptr %i.g, ptr %.sroa.5.0.i ; 3 uses
   %i.j = load ptr, ptr %.02535.i, align 8         ; 2 uses
   %.not29.i = icmp eq ptr %i.j, null
   br i1 %.not29.i, label %bb.j, label %bb.g, !llvm.loop !10
@@ -506,10 +502,8 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
-  %9 = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %10 = load ptr, ptr %9, align 8                 ; 2 uses
-  store ptr %10, ptr %i.a, align 8
-  %.not30.i = icmp eq ptr %10, null
+  store ptr %spec.select40.i, ptr %i.a, align 8
+  %.not30.i = icmp eq ptr %spec.select40.i, null
   br i1 %.not30.i, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
@@ -534,12 +528,12 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.n
   call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %4, ptr noundef nonnull @.str, i32 noundef 337, ptr noundef nonnull @__func__.migrate_channels_parse, ptr noundef nonnull @.str.23) #8
-  br label %migrate_channels_parse.exit
+  br label %bb.s
 
 bb.p:                                             ; preds = %bb.n, %bb.m, %bb.j
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #8
-  %11 = load ptr, ptr %5, align 16, !nonnull !8, !noundef !8
-  store ptr %11, ptr %i.b, align 8
+  store ptr %spec.select.i, ptr %i.b, align 8
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %spec.select.i) ]
   %i.q = call ptr @qapi_clone_visitor_new() #8    ; 2 uses
   %i.r = call zeroext i1 @visit_type_MigrationChannel(ptr noundef %i.q, ptr noundef null, ptr noundef nonnull %i.b, ptr noundef nonnull @error_abort) #8 ; 0 uses
   call void @visit_free(ptr noundef %i.q) #8
@@ -549,23 +543,18 @@ bb.p:                                             ; preds = %bb.n, %bb.m, %bb.j
   %i.s = getelementptr inbounds nuw i8, ptr %.pre37.i, i64 8
   %i.t = load ptr, ptr %i.s, align 8
   %.not33.i = icmp eq ptr %i.t, null
-  br i1 %.not33.i, label %bb.q, label %migrate_channels_parse.exit
+  br i1 %.not33.i, label %bb.q, label %bb.s
 
 bb.q:                                             ; preds = %bb.p
   call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef %4, ptr noundef nonnull @.str, i32 noundef 346, ptr noundef nonnull @__func__.migrate_channels_parse, ptr noundef nonnull @.str.24) #8
-  br label %migrate_channels_parse.exit
-
-migrate_channels_parse.exit:                      ; preds = %bb.f, %bb.h, %bb.o, %bb.p, %bb.q
-  %.2.i = phi i1 [ false, %bb.h ], [ false, %bb.f ], [ false, %bb.q ], [ false, %bb.o ], [ true, %bb.p ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #8
   br label %bb.s
 
 bb.r:                                             ; preds = %bb.c
   %i.u = tail call zeroext i1 @migrate_uri_parse(ptr noundef %0, ptr noundef %2, ptr noundef %4)
   br label %bb.s
 
-bb.s:                                             ; preds = %bb.r, %migrate_channels_parse.exit, %bb.b
-  %.0 = phi i1 [ false, %bb.b ], [ %.2.i, %migrate_channels_parse.exit ], [ %i.u, %bb.r ]
+bb.s:                                             ; preds = %bb.q, %bb.p, %bb.o, %bb.h, %bb.f, %bb.r, %bb.b
+  %.0 = phi i1 [ false, %bb.b ], [ %i.u, %bb.r ], [ false, %bb.h ], [ false, %bb.f ], [ false, %bb.q ], [ false, %bb.o ], [ true, %bb.p ]
   ret i1 %.0
 }
 
@@ -576,17 +565,17 @@ declare void @qemu_log(ptr noundef, ...) local_unnamed_addr #2
 declare zeroext i1 @qio_channel_has_feature(ptr noundef, i32 noundef) local_unnamed_addr #2
 
 ; Function Attrs: noreturn nounwind
-declare void @__assert_fail(ptr noundef, ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #6
+declare void @__assert_fail(ptr noundef, ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #7
+declare i32 @llvm.bswap.i32(i32) #6
 
 declare void @qapi_free_MigrationChannel(ptr noundef) local_unnamed_addr #2
 
 declare void @qapi_free_MigrationAddress(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: allocsize(0)
-declare noalias ptr @g_malloc(i64 noundef) local_unnamed_addr #5
+declare noalias ptr @g_malloc(i64 noundef) local_unnamed_addr #4
 
 declare noalias ptr @g_strdup(ptr noundef) local_unnamed_addr #2
 
@@ -600,14 +589,17 @@ declare void @visit_free(ptr noundef) local_unnamed_addr #2
 
 declare i32 @migrate_mode() local_unnamed_addr #2
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #7
+
 attributes #0 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #3 = { nofree noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
-attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #5 = { allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
-attributes #6 = { noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
-attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
+attributes #5 = { noreturn nounwind "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
+attributes #6 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #7 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
 attributes #8 = { nounwind }
 attributes #9 = { noreturn nounwind }
 attributes #10 = { cold noreturn nounwind }
@@ -624,8 +616,8 @@ attributes #11 = { nounwind allocsize(0) }
 !5 = !{i32 7, !"debug-info-assignment-tracking", i1 true}
 !6 = !{!"Ubuntu clang version 24.0.0 (++20260815081758+83e1178daa12-1~exp1~20260815201912.1788)"}
 !7 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!8 = !{}
-!9 = !{i8 0, i8 2}
+!8 = !{i8 0, i8 2}
+!9 = !{}
 !10 = distinct !{!10, !11}
 !11 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

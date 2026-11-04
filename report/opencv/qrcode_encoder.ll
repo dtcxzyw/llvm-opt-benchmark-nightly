@@ -205,8 +205,6 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #12
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN2cv17QRCodeEncoderImpl17writeReservedAreaEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(608) %0) local_unnamed_addr #4 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %.sroa.0 = alloca i32, align 4                  ; 4 uses
-  %.sroa.4 = alloca i32, align 4                  ; 4 uses
   %i.a = tail call noalias noundef nonnull dereferenceable(48) ptr @_Znwm(i64 noundef 48) #30 ; 13 uses
   %.sroa.5254.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 0, ptr %i.a, align 4
@@ -235,33 +233,29 @@ bb.a:
   store i32 %i.g, ptr %.sroa.5231.0..sroa_idx, align 4, !tbaa !28
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 44
   store i32 9, ptr %.sroa.6.0..sroa_idx, align 4, !tbaa !28
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
-  store i32 3, ptr %.sroa.0, align 4, !tbaa !28
   %i.j = add nsw i32 %i.c, -4                     ; 4 uses
-  store i32 %i.j, ptr %.sroa.4, align 4, !tbaa !28
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 356 ; 20 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 376 ; 20 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 480 ; 20 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 148 ; 32 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 33 uses
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 32 uses
+  %1 = icmp eq i32 %i.j, 3
   %i.q = add nsw i32 %i.c, -9                     ; 2 uses
   %i.r = icmp slt i32 %i.c, 9
   %i.s = zext nneg i32 %i.q to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.loopexit281.1, %bb.a
-  %i.t = phi i1 [ false, %bb.a ], [ true, %.loopexit281.1 ]
+  %i.t = phi i1 [ false, %bb.a ], [ true, %.loopexit281.1 ] ; 2 uses
   %i.u = phi i1 [ true, %bb.a ], [ false, %.loopexit281.1 ]
-  %indvars.iv.sroa.phi = phi ptr [ %.sroa.0, %bb.a ], [ %.sroa.4, %.loopexit281.1 ] ; 2 uses
-  %1 = load i32, ptr %indvars.iv.sroa.phi, align 4, !tbaa !28 ; 2 uses
-  %i.v = icmp eq i32 %1, %i.j
+  %.sroa.speculated = select i1 %i.t, i32 %i.j, i32 3 ; 2 uses
+  %i.v = icmp eq i32 %.sroa.speculated, %i.j
   br label %.preheader280
 
 .preheader280:                                    ; preds = %bb.b, %.split
   %.0129286 = phi i32 [ -5, %bb.b ], [ %i.ag, %.split ] ; 5 uses
-  %i.w = add nsw i32 %.0129286, %1                ; 13 uses
+  %i.w = add nsw i32 %.0129286, %.sroa.speculated ; 13 uses
   %i.x = icmp slt i32 %i.w, 0
   %i.y = add nsw i32 %.0129286, 2
   %i.z = icmp ult i32 %i.y, 5                     ; 2 uses
@@ -621,17 +615,12 @@ bb.ak:                                            ; preds = %bb.aj
   br label %.split
 
 .loopexit281:                                     ; preds = %.split
-  br i1 %i.t, label %.loopexit281.1.thread, label %2
+  br i1 %i.t, label %.loopexit281.1.thread, label %.preheader280.1
 
-2:                                                ; preds = %.loopexit281
-  %3 = load i32, ptr %indvars.iv.sroa.phi, align 4, !tbaa !28 ; 2 uses
-  %4 = icmp eq i32 %3, %i.j
-  br label %.preheader280.1
-
-.preheader280.1:                                  ; preds = %.split.1, %2
-  %.0129286.1 = phi i32 [ -5, %2 ], [ %i.ga, %.split.1 ] ; 5 uses
-  %i.en = add nsw i32 %.0129286.1, %3             ; 4 uses
-  %i.eo = icmp slt i32 %i.en, 0
+.preheader280.1:                                  ; preds = %.loopexit281, %.split.1
+  %.0129286.1 = phi i32 [ %i.ga, %.split.1 ], [ -5, %.loopexit281 ] ; 6 uses
+  %i.en = add nsw i32 %.0129286.1, 3              ; 3 uses
+  %i.eo = icmp slt i32 %.0129286.1, -3
   %i.ep = add nsw i32 %.0129286.1, 2
   %i.eq = icmp ult i32 %i.ep, 5
   %i.er = tail call i32 @llvm.abs.i32(i32 %.0129286.1, i1 true) ; 2 uses
@@ -639,7 +628,7 @@ bb.ak:                                            ; preds = %bb.aj
   %i.et = icmp eq i32 %i.er, 4                    ; 2 uses
   %i.eu = zext nneg i32 %i.en to i64              ; 3 uses
   %i.ev = icmp eq i32 %.0129286.1, -5
-  %or.cond5.1 = and i1 %4, %i.ev
+  %or.cond5.1 = and i1 %1, %i.ev
   br i1 %i.eo, label %.split.1, label %.preheader280.split.1
 
 .preheader280.split.1:                            ; preds = %.preheader280.1
@@ -1042,8 +1031,6 @@ bb.bf:                                            ; preds = %.preheader277, %.cr
   br i1 %.not, label %_ZNSt6vectorIN2cv5Rect_IiEESaIS2_EED2Ev.exit, label %.preheader276
 
 _ZNSt6vectorIN2cv5Rect_IiEESaIS2_EED2Ev.exit:     ; preds = %.critedge9, %bb.bf
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
   tail call void @_ZdlPvm(ptr noundef nonnull %i.a, i64 noundef 48) #29
   ret void
 

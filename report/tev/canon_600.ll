@@ -184,11 +184,8 @@ declare i32 @llvm.abs.i32(i32, i1 immarg) #3
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
 define void @_ZN6LibRaw17canon_600_auto_wbEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(768512) %0) local_unnamed_addr #4 align 2 {
 bb.a:
-  %1 = alloca [2 x i32], align 8                  ; 6 uses
   %i.a = alloca [8 x i32], align 16               ; 23 uses
   %i.b = alloca [2 x [8 x i32]], align 16         ; 16 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #10
-  store i64 0, ptr %1, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.b, i8 0, i64 64, i1 false)
@@ -256,6 +253,8 @@ bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
   br label %.preheader97
 
 .preheader97:                                     ; preds = %.preheader97.lr.ph.split, %._crit_edge
+  %.sroa.0136.0 = phi i32 [ 0, %.preheader97.lr.ph.split ], [ %.sroa.0136.2, %._crit_edge ]
+  %.sroa.5137.0 = phi i32 [ 0, %.preheader97.lr.ph.split ], [ %.sroa.5137.2, %._crit_edge ]
   %.076107 = phi i32 [ 14, %.preheader97.lr.ph.split ], [ %i.jz, %._crit_edge ] ; 6 uses
   %i.at = lshr i32 %.076107, %i.ad
   %i.au = mul nuw nsw i32 %i.at, %i.af            ; 2 uses
@@ -339,6 +338,8 @@ bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
   br label %.preheader96
 
 .preheader96:                                     ; preds = %.preheader97, %.loopexit93
+  %.sroa.0136.1 = phi i32 [ %.sroa.0136.0, %.preheader97 ], [ %.sroa.0136.2, %.loopexit93 ] ; 15 uses
+  %.sroa.5137.1 = phi i32 [ %.sroa.5137.0, %.preheader97 ], [ %.sroa.5137.2, %.loopexit93 ] ; 15 uses
   %.075106 = phi i32 [ 10, %.preheader97 ], [ %i.jx, %.loopexit93 ] ; 3 uses
   %i.dm = lshr i32 %.075106, %i.ad                ; 4 uses
   %i.dn = add nuw nsw i32 %i.au, %i.dm
@@ -665,7 +666,7 @@ _ZN6LibRaw15canon_600_colorEPii.exit.1:           ; preds = %bb.x, %bb.w, %bb.v,
   %.sroa.11.0 = phi i32 [ %i.im, %bb.x ], [ %i.id, %bb.w ], [ %i.id, %bb.v ], [ %i.hl, %bb.o ]
   %.not84.1 = phi i1 [ false, %bb.x ], [ false, %bb.w ], [ true, %bb.v ], [ false, %bb.o ]
   %.033.i.1 = phi i32 [ 1, %bb.x ], [ 2, %bb.w ], [ 0, %bb.v ], [ 2, %bb.o ]
-  %i.ip = or i32 %.033.i.1, %.033.i171            ; 2 uses
+  %i.ip = or i32 %.033.i.1, %.033.i171            ; 3 uses
   %i.iq = icmp samesign ugt i32 %i.ip, 1
   br i1 %i.iq, label %.loopexit93, label %.preheader90.preheader
 
@@ -702,7 +703,7 @@ _ZN6LibRaw15canon_600_colorEPii.exit.1:           ; preds = %bb.x, %bb.w, %bb.v,
 .loopexit87.1:                                    ; preds = %.preheader.1, %.loopexit87
   %i.jf = phi i32 [ %i.je, %.preheader.1 ], [ %i.fj, %.loopexit87 ]
   %i.jg = phi i32 [ %i.jb, %.preheader.1 ], [ %i.ff, %.loopexit87 ]
-  %i.jh = zext nneg i32 %i.ip to i64              ; 2 uses
+  %i.jh = zext nneg i32 %i.ip to i64
   %i.ji = getelementptr inbounds nuw [32 x i8], ptr %i.b, i64 %i.jh ; 3 uses
   %i.jj = load <4 x i32>, ptr %i.ji, align 16, !tbaa !73
   %i.jk = insertelement <4 x i32> poison, i32 %i.ev, i64 0
@@ -719,13 +720,16 @@ _ZN6LibRaw15canon_600_colorEPii.exit.1:           ; preds = %bb.x, %bb.w, %bb.v,
   %i.ju = insertelement <4 x i32> %i.jt, i32 %i.jf, i64 3
   %i.jv = add nsw <4 x i32> %i.jq, %i.ju
   store <4 x i32> %i.jv, ptr %i.jp, align 16, !tbaa !73
-  %2 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.jh ; 2 uses
-  %3 = load i32, ptr %2, align 4, !tbaa !73
-  %i.jw = add nsw i32 %3, 1
-  store i32 %i.jw, ptr %2, align 4, !tbaa !73
+  %.sroa.idx = icmp eq i32 %i.ip, 1               ; 3 uses
+  %.sroa.speculated = select i1 %.sroa.idx, i32 %.sroa.5137.1, i32 %.sroa.0136.1
+  %i.jw = add nsw i32 %.sroa.speculated, 1        ; 2 uses
+  %spec.select194 = select i1 %.sroa.idx, i32 %.sroa.0136.1, i32 %i.jw
+  %spec.select195 = select i1 %.sroa.idx, i32 %i.jw, i32 %.sroa.5137.1
   br label %.loopexit93
 
-.loopexit93:                                      ; preds = %.preheader96, %.preheader94.1, %.preheader94.2, %.preheader94.3, %.preheader94.4, %.preheader94.5, %.preheader94.6, %.preheader94.7, %.preheader92.preheader, %.preheader92.1, %.preheader92.2, %.preheader92.3, %.loopexit87.1, %_ZN6LibRaw15canon_600_colorEPii.exit.1
+.loopexit93:                                      ; preds = %.loopexit87.1, %.preheader96, %.preheader94.1, %.preheader94.2, %.preheader94.3, %.preheader94.4, %.preheader94.5, %.preheader94.6, %.preheader94.7, %.preheader92.preheader, %.preheader92.1, %.preheader92.2, %.preheader92.3, %_ZN6LibRaw15canon_600_colorEPii.exit.1
+  %.sroa.0136.2 = phi i32 [ %.sroa.0136.1, %.preheader92.preheader ], [ %spec.select194, %.loopexit87.1 ], [ %.sroa.0136.1, %_ZN6LibRaw15canon_600_colorEPii.exit.1 ], [ %.sroa.0136.1, %.preheader96 ], [ %.sroa.0136.1, %.preheader92.3 ], [ %.sroa.0136.1, %.preheader92.2 ], [ %.sroa.0136.1, %.preheader92.1 ], [ %.sroa.0136.1, %.preheader94.7 ], [ %.sroa.0136.1, %.preheader94.6 ], [ %.sroa.0136.1, %.preheader94.5 ], [ %.sroa.0136.1, %.preheader94.4 ], [ %.sroa.0136.1, %.preheader94.3 ], [ %.sroa.0136.1, %.preheader94.2 ], [ %.sroa.0136.1, %.preheader94.1 ] ; 3 uses
+  %.sroa.5137.2 = phi i32 [ %.sroa.5137.1, %.preheader92.preheader ], [ %spec.select195, %.loopexit87.1 ], [ %.sroa.5137.1, %_ZN6LibRaw15canon_600_colorEPii.exit.1 ], [ %.sroa.5137.1, %.preheader96 ], [ %.sroa.5137.1, %.preheader92.3 ], [ %.sroa.5137.1, %.preheader92.2 ], [ %.sroa.5137.1, %.preheader92.1 ], [ %.sroa.5137.1, %.preheader94.7 ], [ %.sroa.5137.1, %.preheader94.6 ], [ %.sroa.5137.1, %.preheader94.5 ], [ %.sroa.5137.1, %.preheader94.4 ], [ %.sroa.5137.1, %.preheader94.3 ], [ %.sroa.5137.1, %.preheader94.2 ], [ %.sroa.5137.1, %.preheader94.1 ] ; 3 uses
   %i.jx = add nuw nsw i32 %.075106, 2             ; 2 uses
   %i.jy = icmp samesign ult i32 %i.jx, %i.v
   br i1 %i.jy, label %.preheader96, label %._crit_edge, !llvm.loop !83
@@ -733,24 +737,18 @@ _ZN6LibRaw15canon_600_colorEPii.exit.1:           ; preds = %bb.x, %bb.w, %bb.v,
 ._crit_edge:                                      ; preds = %.loopexit93
   %i.jz = add nuw nsw i32 %.076107, 4             ; 2 uses
   %i.ka = icmp slt i32 %i.jz, %i.r
-  br i1 %i.ka, label %.preheader97, label %._crit_edge108.split.loopexit, !llvm.loop !84
+  br i1 %i.ka, label %.preheader97, label %._crit_edge108.split, !llvm.loop !84
 
-._crit_edge108.split.loopexit:                    ; preds = %._crit_edge
-  %.pre = load i32, ptr %1, align 8, !tbaa !73
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %.pre136 = load i32, ptr %.phi.trans.insert, align 4, !tbaa !73
-  br label %._crit_edge108.split
-
-._crit_edge108.split:                             ; preds = %._crit_edge108.split.loopexit, %.preheader97.lr.ph, %bb.d
-  %i.kb = phi i32 [ %.pre136, %._crit_edge108.split.loopexit ], [ 0, %.preheader97.lr.ph ], [ 0, %bb.d ] ; 2 uses
-  %i.kc = phi i32 [ %.pre, %._crit_edge108.split.loopexit ], [ 0, %.preheader97.lr.ph ], [ 0, %bb.d ] ; 2 uses
-  %i.kd = or i32 %i.kb, %i.kc
+._crit_edge108.split:                             ; preds = %._crit_edge, %.preheader97.lr.ph, %bb.d
+  %i.kb = phi i32 [ 0, %bb.d ], [ 0, %.preheader97.lr.ph ], [ %.sroa.0136.2, %._crit_edge ] ; 2 uses
+  %i.kc = phi i32 [ 0, %bb.d ], [ 0, %.preheader97.lr.ph ], [ %.sroa.5137.2, %._crit_edge ] ; 2 uses
+  %i.kd = or i32 %i.kc, %i.kb
   %.not = icmp eq i32 %i.kd, 0
   br i1 %.not, label %.loopexit, label %bb.y
 
 bb.y:                                             ; preds = %._crit_edge108.split
-  %i.ke = mul nsw i32 %i.kc, 200
-  %i.kf = icmp slt i32 %i.ke, %i.kb               ; 8 uses
+  %i.ke = mul nsw i32 %i.kb, 200
+  %i.kf = icmp slt i32 %i.ke, %i.kc               ; 8 uses
   %.sroa.gep = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %.sroa.gep.val = load i32, ptr %.sroa.gep, align 16
   %.val = load i32, ptr %i.b, align 16
@@ -832,7 +830,6 @@ bb.af:                                            ; preds = %bb.ae
 .loopexit:                                        ; preds = %bb.ae, %bb.af, %._crit_edge108.split
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #10
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #10
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #10
   ret void
 }
 

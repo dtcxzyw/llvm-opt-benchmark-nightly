@@ -204,11 +204,9 @@ declare void @curlx_dyn_reset(ptr noundef) local_unnamed_addr #4
 ; Function Attrs: nounwind uwtable
 define i32 @Curl_add_custom_headers(ptr noundef %0, i1 noundef zeroext %1, i32 noundef %2, ptr noundef %3) local_unnamed_addr #2 {
 bb.a:
-  %4 = alloca [2 x ptr], align 16                 ; 7 uses
-  %5 = alloca %struct.Curl_str, align 8           ; 16 uses
+  %4 = alloca %struct.Curl_str, align 8           ; 16 uses
   %i.a = alloca ptr, align 8                      ; 11 uses
-  %6 = alloca %struct.Curl_str, align 8           ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
+  %5 = alloca %struct.Curl_str, align 8           ; 5 uses
   br i1 %1, label %.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -219,8 +217,7 @@ bb.b:                                             ; preds = %bb.a
   %i.f = and i32 %i.e, 2
   %i.g = icmp eq i32 %i.f, 0
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 744
-  %i.i = load ptr, ptr %i.h, align 8, !tbaa !125
-  store ptr %i.i, ptr %4, align 16, !tbaa !81
+  %i.i = load ptr, ptr %i.h, align 8, !tbaa !125  ; 3 uses
   br i1 %i.g, label %bb.g, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
@@ -233,8 +230,6 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 1200
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !184
-  %7 = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store ptr %i.n, ptr %7, align 8, !tbaa !81
   br label %bb.g
 
 .thread:                                          ; preds = %bb.a
@@ -247,19 +242,19 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %.thread
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 1200
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !184
-  store ptr %i.s, ptr %4, align 16, !tbaa !81
   br label %bb.g
 
 bb.f:                                             ; preds = %.thread
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 744
   %i.u = load ptr, ptr %i.t, align 8, !tbaa !125
-  store ptr %i.u, ptr %4, align 16, !tbaa !81
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.b, %bb.e, %bb.f, %bb.c, %bb.d
+  %.sroa.0.0 = phi ptr [ %i.u, %bb.f ], [ %i.s, %bb.e ], [ %i.i, %bb.d ], [ %i.i, %bb.c ], [ %i.i, %bb.b ]
+  %.sroa.7.0 = phi ptr [ undef, %bb.f ], [ undef, %bb.e ], [ %i.n, %bb.d ], [ undef, %bb.c ], [ undef, %bb.b ]
   %.040 = phi i64 [ 1, %bb.f ], [ 1, %bb.e ], [ 2, %bb.d ], [ 1, %bb.c ], [ 1, %bb.b ]
-  %i.v = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
-  %i.w = getelementptr inbounds nuw i8, ptr %6, i64 8
+  %i.v = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
+  %i.w = getelementptr inbounds nuw i8, ptr %5, i64 8
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 4600
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 4627 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 417
@@ -268,18 +263,18 @@ bb.g:                                             ; preds = %bb.b, %bb.e, %bb.f,
 
 bb.h:                                             ; preds = %bb.g, %._crit_edge
   %indvars.iv = phi i64 [ 0, %bb.g ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %4, i64 %indvars.iv
-  %.04179 = load ptr, ptr %8, align 8, !tbaa !81  ; 2 uses
-  %.not4580 = icmp eq ptr %.04179, null
+  %.sroa.idx = icmp eq i64 %indvars.iv, 1
+  %.04179.sroa.speculated = select i1 %.sroa.idx, ptr %.sroa.7.0, ptr %.sroa.0.0 ; 2 uses
+  %.not4580 = icmp eq ptr %.04179.sroa.speculated, null
   br i1 %.not4580, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.h, %.thread66
-  %.04181 = phi ptr [ %.041, %.thread66 ], [ %.04179, %bb.h ] ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
+  %.04181 = phi ptr [ %.041, %.thread66 ], [ %.04179.sroa.speculated, %bb.h ] ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.ab = load ptr, ptr %.04181, align 8, !tbaa !83 ; 3 uses
   store ptr %i.ab, ptr %i.a, align 8, !tbaa !86
-  %i.ac = call i32 @curlx_str_until(ptr noundef nonnull %i.a, ptr noundef nonnull %5, i64 noundef 307200, i8 noundef signext 59) #9
+  %i.ac = call i32 @curlx_str_until(ptr noundef nonnull %i.a, ptr noundef nonnull %4, i64 noundef 307200, i8 noundef signext 59) #9
   %.not46 = icmp eq i32 %i.ac, 0
   br i1 %.not46, label %bb.i, label %bb.l
 
@@ -294,7 +289,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not48, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.af = load ptr, ptr %5, align 8, !tbaa !88
+  %i.af = load ptr, ptr %4, align 8, !tbaa !88
   %i.ag = load i64, ptr %i.v, align 8, !tbaa !89
   %i.ah = call ptr @memchr(ptr noundef %i.af, i32 noundef 58, i64 noundef %i.ag) #10
   %.not49 = icmp eq ptr %i.ah, null
@@ -302,7 +297,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k, %bb.j, %bb.i, %.lr.ph
   store ptr %i.ab, ptr %i.a, align 8, !tbaa !86
-  %i.ai = call i32 @curlx_str_until(ptr noundef nonnull %i.a, ptr noundef nonnull %5, i64 noundef 307200, i8 noundef signext 58) #9
+  %i.ai = call i32 @curlx_str_until(ptr noundef nonnull %i.a, ptr noundef nonnull %4, i64 noundef 307200, i8 noundef signext 58) #9
   %.not50 = icmp eq i32 %i.ai, 0
   br i1 %.not50, label %bb.m, label %.thread66
 
@@ -312,12 +307,12 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not51, label %bb.n, label %.thread66
 
 bb.n:                                             ; preds = %bb.m
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
-  %i.ak = call i32 @curlx_str_untilnl(ptr noundef nonnull %i.a, ptr noundef nonnull %6, i64 noundef 307200) #9 ; 0 uses
-  call void @curlx_str_trimblanks(ptr noundef nonnull %6) #9
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #9
+  %i.ak = call i32 @curlx_str_untilnl(ptr noundef nonnull %i.a, ptr noundef nonnull %5, i64 noundef 307200) #9 ; 0 uses
+  call void @curlx_str_trimblanks(ptr noundef nonnull %5) #9
   %i.al = load i64, ptr %i.w, align 8, !tbaa !89
   %.not52.not = icmp eq i64 %i.al, 0
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
   br i1 %.not52.not, label %.thread66, label %bb.o
 
 bb.o:                                             ; preds = %bb.k, %bb.n
@@ -327,7 +322,7 @@ bb.o:                                             ; preds = %bb.k, %bb.n
   br i1 %.not53, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.an = call i32 @curlx_str_casecompare(ptr noundef nonnull %5, ptr noundef nonnull @.str.11) #9
+  %i.an = call i32 @curlx_str_casecompare(ptr noundef nonnull %4, ptr noundef nonnull @.str.11) #9
   %.not54 = icmp eq i32 %i.an, 0
   br i1 %.not54, label %bb.q, label %.thread66
 
@@ -337,7 +332,7 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   br i1 %i.ap, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %bb.q
-  %i.aq = call i32 @curlx_str_casecompare(ptr noundef nonnull %5, ptr noundef nonnull @.str.12) #9
+  %i.aq = call i32 @curlx_str_casecompare(ptr noundef nonnull %4, ptr noundef nonnull @.str.12) #9
   %.not55 = icmp eq i32 %i.aq, 0
   br i1 %.not55, label %thread-pre-split, label %.thread66
 
@@ -351,7 +346,7 @@ bb.s:                                             ; preds = %thread-pre-split, %
   br i1 %i.as, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
-  %i.at = call i32 @curlx_str_casecompare(ptr noundef nonnull %5, ptr noundef nonnull @.str.12) #9
+  %i.at = call i32 @curlx_str_casecompare(ptr noundef nonnull %4, ptr noundef nonnull @.str.12) #9
   %.not56 = icmp eq i32 %i.at, 0
   br i1 %.not56, label %bb.u, label %.thread66
 
@@ -362,12 +357,12 @@ bb.u:                                             ; preds = %bb.t, %bb.s
   br i1 %.not57, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %i.aw = call i32 @curlx_str_casecompare(ptr noundef nonnull %5, ptr noundef nonnull @.str.13) #9
+  %i.aw = call i32 @curlx_str_casecompare(ptr noundef nonnull %4, ptr noundef nonnull @.str.13) #9
   %.not58 = icmp eq i32 %i.aw, 0
   br i1 %.not58, label %bb.w, label %.thread66
 
 bb.w:                                             ; preds = %bb.v, %bb.u
-  %i.ax = call i32 @curlx_str_casecompare(ptr noundef nonnull %5, ptr noundef nonnull @.str.14) #9
+  %i.ax = call i32 @curlx_str_casecompare(ptr noundef nonnull %4, ptr noundef nonnull @.str.14) #9
   %.not59 = icmp eq i32 %i.ax, 0
   br i1 %.not59, label %bb.x, label %.thread66
 
@@ -375,17 +370,17 @@ bb.x:                                             ; preds = %bb.w
   br i1 %i.aa, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
-  %i.ay = call i32 @curlx_str_casecompare(ptr noundef nonnull %5, ptr noundef nonnull @.str.15) #9
+  %i.ay = call i32 @curlx_str_casecompare(ptr noundef nonnull %4, ptr noundef nonnull @.str.15) #9
   %.not60 = icmp eq i32 %i.ay, 0
   br i1 %.not60, label %bb.z, label %.thread66
 
 bb.z:                                             ; preds = %bb.y, %bb.x
-  %i.az = call i32 @curlx_str_casecompare(ptr noundef nonnull %5, ptr noundef nonnull @.str.16) #9
+  %i.az = call i32 @curlx_str_casecompare(ptr noundef nonnull %4, ptr noundef nonnull @.str.16) #9
   %.not61 = icmp eq i32 %i.az, 0
   br i1 %.not61, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
-  %i.ba = call i32 @curlx_str_casecompare(ptr noundef nonnull %5, ptr noundef nonnull @.str.17) #9
+  %i.ba = call i32 @curlx_str_casecompare(ptr noundef nonnull %4, ptr noundef nonnull @.str.17) #9
   %.not62 = icmp eq i32 %i.ba, 0
   br i1 %.not62, label %bb.ac, label %bb.ab
 
@@ -399,7 +394,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
 bb.ad:                                            ; preds = %bb.ac
   %i.bc = load i64, ptr %i.v, align 8, !tbaa !89
   %i.bd = trunc i64 %i.bc to i32
-  %i.be = load ptr, ptr %5, align 8, !tbaa !88
+  %i.be = load ptr, ptr %4, align 8, !tbaa !88
   %i.bf = call i32 (ptr, ptr, ...) @curlx_dyn_addf(ptr noundef %3, ptr noundef nonnull @.str.18, i32 noundef %i.bd, ptr noundef %i.be) #9
   br label %bb.af
 
@@ -414,12 +409,12 @@ bb.af:                                            ; preds = %bb.ad, %bb.ae
 
 .thread70:                                        ; preds = %bb.af
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   br label %.loopexit
 
 .thread66:                                        ; preds = %bb.n, %bb.af, %bb.m, %bb.l, %bb.p, %bb.r, %bb.t, %bb.v, %bb.w, %bb.y, %bb.ab
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #9
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   %i.bh = getelementptr inbounds nuw i8, ptr %.04181, i64 8
   %.041 = load ptr, ptr %i.bh, align 8, !tbaa !81 ; 2 uses
   %.not45 = icmp eq ptr %.041, null
@@ -432,7 +427,6 @@ bb.af:                                            ; preds = %bb.ad, %bb.ae
 
 .loopexit:                                        ; preds = %._crit_edge, %.thread70
   %.3 = phi i32 [ %.037, %.thread70 ], [ 0, %._crit_edge ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
   ret i32 %.3
 }
 

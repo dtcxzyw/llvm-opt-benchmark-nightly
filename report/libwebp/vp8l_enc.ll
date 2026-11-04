@@ -205,9 +205,6 @@ bb.a:
   %4 = alloca %struct.HuffmanTreeCode, align 8    ; 8 uses
   %i.c = alloca [19 x i32], align 16              ; 9 uses
   %i.d = alloca [19 x i8], align 16               ; 4 uses
-  %5 = alloca [2 x i32], align 8                  ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #7
-  store i64 0, ptr %5, align 8
   %i.e = load i32, ptr %3, align 8, !tbaa !79     ; 3 uses
   %i.f = icmp sgt i32 %i.e, 0
   br i1 %i.f, label %.lr.ph, label %._crit_edge.thread
@@ -219,30 +216,28 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.d
+  %.sroa.0.0 = phi i32 [ 0, %.lr.ph ], [ %.sroa.0.2, %bb.d ] ; 2 uses
+  %.sroa.5.0 = phi i32 [ 0, %.lr.ph ], [ %.sroa.5.2, %bb.d ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.d ] ; 3 uses
   %.052 = phi i32 [ 0, %.lr.ph ], [ %.1, %bb.d ]  ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.h, i64 %indvars.iv
   %i.k = load i8, ptr %i.j, align 1, !tbaa !42
   %.not = icmp eq i8 %i.k, 0
-  br i1 %.not, label %bb.d, label %6
+  br i1 %.not, label %bb.d, label %bb.c
 
-6:                                                ; preds = %bb.b
-  %7 = icmp slt i32 %.052, 2
-  br i1 %7, label %bb.c, label %11
-
-bb.c:                                             ; preds = %6
-  %8 = sext i32 %.052 to i64
-  %9 = getelementptr inbounds [4 x i8], ptr %5, i64 %8
-  %10 = trunc nuw nsw i64 %indvars.iv to i32
-  store i32 %10, ptr %9, align 4, !tbaa !41
-  br label %11
-
-11:                                               ; preds = %bb.c, %6
-  %12 = add nsw i32 %.052, 1
+bb.c:                                             ; preds = %bb.b
+  %.sroa.idx.not = icmp eq i32 %.052, 1
+  %5 = trunc nuw nsw i64 %indvars.iv to i32       ; 2 uses
+  %6 = icmp slt i32 %.052, 1
+  %.sroa.0.1 = select i1 %6, i32 %5, i32 %.sroa.0.0
+  %.sroa.5.1 = select i1 %.sroa.idx.not, i32 %5, i32 %.sroa.5.0
+  %7 = add nsw i32 %.052, 1
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.b, %11
-  %.1 = phi i32 [ %12, %11 ], [ %.052, %bb.b ]    ; 5 uses
+bb.d:                                             ; preds = %bb.b, %bb.c
+  %.sroa.0.2 = phi i32 [ %.sroa.0.0, %bb.b ], [ %.sroa.0.1, %bb.c ] ; 5 uses
+  %.sroa.5.2 = phi i32 [ %.sroa.5.0, %bb.b ], [ %.sroa.5.1, %bb.c ] ; 3 uses
+  %.1 = phi i32 [ %.052, %bb.b ], [ %7, %bb.c ]   ; 5 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.l = icmp samesign ult i64 %indvars.iv.next, %i.i
   %i.m = icmp slt i32 %.1, 3                      ; 2 uses
@@ -276,12 +271,9 @@ VP8LPutBits.exit:                                 ; preds = %._crit_edge.thread,
   br label %bb.bl
 
 bb.f:                                             ; preds = %._crit_edge
-  %13 = load i32, ptr %5, align 8                 ; 4 uses
-  %i.y = icmp slt i32 %13, 256
+  %i.y = icmp slt i32 %.sroa.0.2, 256
   %or.cond = select i1 %i.m, i1 %i.y, i1 false
-  %14 = getelementptr inbounds nuw i8, ptr %5, i64 4
-  %15 = load i32, ptr %14, align 4                ; 2 uses
-  %i.z = icmp slt i32 %15, 256
+  %i.z = icmp slt i32 %.sroa.5.2, 256
   %or.cond5 = select i1 %or.cond, i1 %i.z, i1 false
   br i1 %or.cond5, label %bb.g, label %bb.s
 
@@ -325,7 +317,7 @@ VP8LPutBits.exit34:                               ; preds = %VP8LPutBits.exit32,
   store i64 %i.aq, ptr %0, align 8, !tbaa !67
   %i.ar = add nsw i32 %i.am, 1                    ; 3 uses
   store i32 %i.ar, ptr %i.aa, align 8, !tbaa !62
-  %i.as = icmp slt i32 %13, 2
+  %i.as = icmp slt i32 %.sroa.0.2, 2
   %i.at = icmp sgt i32 %i.am, 30                  ; 2 uses
   br i1 %i.as, label %bb.j, label %bb.m
 
@@ -351,7 +343,7 @@ bb.l:                                             ; preds = %VP8LPutBits.exit36
 
 VP8LPutBits.exit38:                               ; preds = %VP8LPutBits.exit36, %bb.l
   %i.ax = phi i32 [ %.pre.i37, %bb.l ], [ %i.av, %VP8LPutBits.exit36 ] ; 2 uses
-  %i.ay = zext i32 %13 to i64
+  %i.ay = zext i32 %.sroa.0.2 to i64
   %i.az = zext nneg i32 %i.ax to i64
   %i.ba = shl i64 %i.ay, %i.az
   %i.bb = load i64, ptr %0, align 8, !tbaa !67
@@ -390,7 +382,7 @@ bb.o:                                             ; preds = %VP8LPutBits.exit40
 VP8LPutBits.exit42:                               ; preds = %VP8LPutBits.exit40, %bb.o
   %i.bl = phi i64 [ %.pre61, %bb.o ], [ %i.bi, %VP8LPutBits.exit40 ]
   %i.bm = phi i32 [ %.pre.i41, %bb.o ], [ %i.bj, %VP8LPutBits.exit40 ] ; 2 uses
-  %i.bn = zext nneg i32 %13 to i64
+  %i.bn = zext nneg i32 %.sroa.0.2 to i64
   %i.bo = zext nneg i32 %i.bm to i64
   %i.bp = shl i64 %i.bn, %i.bo
   %i.bq = or i64 %i.bp, %i.bl                     ; 2 uses
@@ -418,7 +410,7 @@ bb.r:                                             ; preds = %bb.q
 VP8LPutBits.exit44:                               ; preds = %bb.q, %bb.r
   %i.bw = phi i64 [ %.pre62, %bb.r ], [ %i.bs, %bb.q ]
   %i.bx = phi i32 [ %.pre.i43, %bb.r ], [ %i.bt, %bb.q ] ; 2 uses
-  %i.by = zext i32 %15 to i64
+  %i.by = zext i32 %.sroa.5.2 to i64
   %i.bz = zext nneg i32 %i.bx to i64
   %i.ca = shl i64 %i.by, %i.bz
   %i.cb = or i64 %i.ca, %i.bw
@@ -821,7 +813,6 @@ StoreFullHuffmanCode.exit:                        ; preds = %bb.bk, %bb.az
   br label %bb.bl
 
 bb.bl:                                            ; preds = %StoreFullHuffmanCode.exit, %VP8LPutBits.exit44, %bb.p, %VP8LPutBits.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #7
   ret void
 }
 

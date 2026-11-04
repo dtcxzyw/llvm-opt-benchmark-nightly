@@ -201,7 +201,6 @@ bb.bo:                                            ; preds = %bb.ac, %bb.bf, %add
 ; Function Attrs: nounwind uwtable
 define dso_local void @fill_loop(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr nofree noundef readonly captures(none) %3, ptr noundef %4, i64 noundef %5) local_unnamed_addr #0 {
 bb.a:
-  %6 = alloca [2 x i32], align 4                  ; 8 uses
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !56   ; 3 uses
   %i.c = icmp eq ptr %i.b, null
@@ -222,7 +221,6 @@ bb.b:                                             ; preds = %bb.a
 .preheader238.lr.ph:                              ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 3 uses
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 128
-  %7 = getelementptr inbounds nuw i8, ptr %6, i64 4 ; 4 uses
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 272 ; 2 uses
   %.neg273 = mul i64 %5, -2                       ; 2 uses
   br label %.preheader238
@@ -605,14 +603,12 @@ bb.af:                                            ; preds = %bb.ae, %bb.aa
 
 ._crit_edge:                                      ; preds = %bb.af, %.preheader
   %i.gl = sub nsw i64 %.4, %.0194271
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
-  store i32 0, ptr %6, align 4, !tbaa !12
   %i.gm = load i32, ptr %i.i, align 8, !tbaa !43
-  store i32 %i.gm, ptr %7, align 4, !tbaa !12
   br label %bb.ag
 
 bb.ag:                                            ; preds = %._crit_edge, %swap_group.exit
-  %i.gn = phi i32 [ 0, %._crit_edge ], [ %i.ho, %swap_group.exit ]
+  %.sroa.0.0 = phi i32 [ 0, %._crit_edge ], [ %.sroa.0.1, %swap_group.exit ] ; 5 uses
+  %i.gn = phi i32 [ %i.gm, %._crit_edge ], [ %i.ho, %swap_group.exit ] ; 6 uses
   %.0269 = phi i64 [ undef, %._crit_edge ], [ %.1, %swap_group.exit ] ; 6 uses
   %.0175268 = phi i64 [ undef, %._crit_edge ], [ %.1176, %swap_group.exit ] ; 6 uses
   %.0177267 = phi ptr [ %.0184250, %._crit_edge ], [ %i.gt, %swap_group.exit ] ; 17 uses
@@ -622,14 +618,13 @@ bb.ag:                                            ; preds = %._crit_edge, %swap_
   %i.gr = load i64, ptr %i.gq, align 8, !tbaa !96 ; 3 uses
   %i.gs = getelementptr inbounds nuw i8, ptr %.0177267, i64 80 ; 4 uses
   %i.gt = load ptr, ptr %i.gs, align 8, !tbaa !58 ; 2 uses
-  %i.gu = and i32 %i.gn, %1
+  %i.gu = and i32 %.sroa.0.0, %1                  ; 2 uses
   %.not211 = icmp eq i32 %i.gu, 0
   br i1 %.not211, label %bb.al, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  %8 = load i32, ptr %7, align 4, !tbaa !12
   %i.gv = load i32, ptr %i.j, align 8, !tbaa !97  ; 2 uses
-  %i.gw = and i32 %i.gv, %8
+  %i.gw = and i32 %i.gv, %i.gn
   %.not212 = icmp eq i32 %i.gw, 0
   br i1 %.not212, label %bb.al, label %bb.ai
 
@@ -638,23 +633,26 @@ bb.ai:                                            ; preds = %bb.ah
   %i.gy = load i32, ptr %i.gx, align 8, !tbaa !51
   %i.gz = getelementptr inbounds nuw i8, ptr %.0177267, i64 68
   %i.ha = load i16, ptr %i.gz, align 4, !tbaa !50
-  %9 = sext i16 %i.ha to i64
-  %10 = getelementptr inbounds [4 x i8], ptr %6, i64 %9 ; 2 uses
-  %11 = load i32, ptr %10, align 4, !tbaa !12
-  %i.hb = add nsw i32 %11, %i.gy
-  store i32 %i.hb, ptr %10, align 4, !tbaa !12
-  %12 = load i32, ptr %6, align 4, !tbaa !12      ; 3 uses
-  %13 = and i32 %12, %1
-  %.not215 = icmp eq i32 %13, 0
-  br i1 %.not215, label %bb.ak, label %bb.aj
+  %.sroa.idx281 = icmp eq i16 %i.ha, 1            ; 2 uses
+  %.sroa.speculated = select i1 %.sroa.idx281, i32 %i.gn, i32 %.sroa.0.0
+  %i.hb = add nsw i32 %.sroa.speculated, %i.gy    ; 4 uses
+  br i1 %.sroa.idx281, label %bb.aj, label %.cont
 
-bb.aj:                                            ; preds = %bb.ai
-  %14 = load i32, ptr %7, align 4, !tbaa !12
-  %i.hc = and i32 %14, %i.gv
+.cont:                                            ; preds = %bb.ai
+  %.pre306 = and i32 %i.hb, %1
+  %6 = icmp eq i32 %.pre306, 0
+  br i1 %6, label %bb.ak, label %bb.aj
+
+bb.aj:                                            ; preds = %bb.ai, %.cont
+  %.sroa.8.2337 = phi i32 [ %i.gn, %.cont ], [ %i.hb, %bb.ai ] ; 3 uses
+  %.sroa.0.2335 = phi i32 [ %i.hb, %.cont ], [ %.sroa.0.0, %bb.ai ] ; 2 uses
+  %i.hc = and i32 %.sroa.8.2337, %i.gv
   %.not216 = icmp eq i32 %i.hc, 0
   br i1 %.not216, label %bb.ak, label %bb.an
 
-bb.ak:                                            ; preds = %bb.aj, %bb.ai
+bb.ak:                                            ; preds = %bb.aj, %.cont
+  %.sroa.8.2338 = phi i32 [ %.sroa.8.2337, %bb.aj ], [ %i.gn, %.cont ]
+  %.sroa.0.2336 = phi i32 [ %.sroa.0.2335, %bb.aj ], [ %i.hb, %.cont ]
   %i.hd = add nsw i64 %.0175268, %5
   %.neg235 = sub i64 %.neg273, %.0175268
   %i.he = add i64 %.neg235, %i.gp
@@ -669,29 +667,29 @@ bb.al:                                            ; preds = %bb.ah, %bb.ag
   %i.hj = load i32, ptr %i.hi, align 8, !tbaa !51
   %i.hk = getelementptr inbounds nuw i8, ptr %.0177267, i64 68
   %i.hl = load i16, ptr %i.hk, align 4, !tbaa !50
-  %15 = sext i16 %i.hl to i64
-  %16 = getelementptr inbounds [4 x i8], ptr %6, i64 %15 ; 2 uses
-  %17 = load i32, ptr %16, align 4, !tbaa !12
-  %18 = add nsw i32 %17, %i.hj
-  store i32 %18, ptr %16, align 4, !tbaa !12
-  %19 = load i32, ptr %6, align 4, !tbaa !12      ; 3 uses
-  %20 = and i32 %19, %1
-  %.not213 = icmp eq i32 %20, 0
+  %.sroa.idx = icmp eq i16 %i.hl, 1               ; 4 uses
+  %.sroa.speculated294 = select i1 %.sroa.idx, i32 %i.gn, i32 %.sroa.0.0
+  %7 = add nsw i32 %.sroa.speculated294, %i.hj    ; 3 uses
+  %.pre305 = and i32 %7, %1
+  %.pre-phi = select i1 %.sroa.idx, i32 %i.gu, i32 %.pre305
+  %.sroa.0.3 = select i1 %.sroa.idx, i32 %.sroa.0.0, i32 %7 ; 2 uses
+  %.sroa.8.3 = select i1 %.sroa.idx, i32 %7, i32 %i.gn ; 3 uses
+  %.not213 = icmp eq i32 %.pre-phi, 0
   br i1 %.not213, label %bb.an, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
-  %21 = load i32, ptr %7, align 4, !tbaa !12
   %i.hm = load i32, ptr %i.j, align 8, !tbaa !97
-  %i.hn = and i32 %i.hm, %21
+  %i.hn = and i32 %i.hm, %.sroa.8.3
   %.not214 = icmp eq i32 %i.hn, 0                 ; 2 uses
   %spec.select223 = select i1 %.not214, i64 %.0175268, i64 %i.gp
   %spec.select224 = select i1 %.not214, i64 %.0269, i64 %i.gr
   br label %bb.an
 
 bb.an:                                            ; preds = %bb.am, %bb.al, %bb.aj, %bb.ak
-  %i.ho = phi i32 [ %12, %bb.aj ], [ %12, %bb.ak ], [ %19, %bb.al ], [ %19, %bb.am ]
-  %.1176 = phi i64 [ %.0175268, %bb.aj ], [ %.0175268, %bb.ak ], [ %.0175268, %bb.al ], [ %spec.select223, %bb.am ]
-  %.1 = phi i64 [ %.0269, %bb.aj ], [ %.0269, %bb.ak ], [ %.0269, %bb.al ], [ %spec.select224, %bb.am ]
+  %.sroa.0.1 = phi i32 [ %.sroa.0.3, %bb.al ], [ %.sroa.0.3, %bb.am ], [ %.sroa.0.2336, %bb.ak ], [ %.sroa.0.2335, %bb.aj ]
+  %i.ho = phi i32 [ %.sroa.8.3, %bb.al ], [ %.sroa.8.3, %bb.am ], [ %.sroa.8.2338, %bb.ak ], [ %.sroa.8.2337, %bb.aj ]
+  %.1176 = phi i64 [ %.0175268, %bb.al ], [ %spec.select223, %bb.am ], [ %.0175268, %bb.ak ], [ %.0175268, %bb.aj ]
+  %.1 = phi i64 [ %.0269, %bb.al ], [ %spec.select224, %bb.am ], [ %.0269, %bb.ak ], [ %.0269, %bb.aj ]
   store i64 %i.gr, ptr %i.go, align 8, !tbaa !63
   %i.hp = getelementptr inbounds nuw i8, ptr %.0177267, i64 70
   %i.hq = load i16, ptr %i.hp, align 2, !tbaa !67
@@ -826,15 +824,11 @@ bb.be:                                            ; preds = %bb.bb
 
 swap_group.exit:                                  ; preds = %bb.au, %bb.be, %bb.bd, %bb.bc, %bb.ao, %bb.an
   %.not210 = icmp eq ptr %i.gt, null
-  br i1 %.not210, label %22, label %bb.ag, !llvm.loop !93
+  br i1 %.not210, label %bb.bf, label %bb.ag, !llvm.loop !93
 
-22:                                               ; preds = %swap_group.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
-  br label %bb.bf
-
-bb.bf:                                            ; preds = %.critedge.thread, %22
-  %.1180242 = phi ptr [ %.1180243, %22 ], [ %.1180249, %.critedge.thread ]
-  %.1195 = phi i64 [ %.4, %22 ], [ %i.l, %.critedge.thread ] ; 2 uses
+bb.bf:                                            ; preds = %swap_group.exit, %.critedge.thread
+  %.1180242 = phi ptr [ %.1180249, %.critedge.thread ], [ %.1180243, %swap_group.exit ]
+  %.1195 = phi i64 [ %i.l, %.critedge.thread ], [ %.4, %swap_group.exit ] ; 2 uses
   %.not = icmp slt i64 %.1195, %.sroa.3.0.copyload
   br i1 %.not, label %.preheader238, label %.thread231
 

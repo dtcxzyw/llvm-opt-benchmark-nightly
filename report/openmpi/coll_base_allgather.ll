@@ -202,12 +202,6 @@ ompi_coll_base_sendrecv.exit:                     ; preds = %.lr.ph, %bb.e
 ; Function Attrs: nounwind uwtable
 define i32 @ompi_coll_base_allgather_intra_neighborexchange(ptr noundef %0, i32 noundef %1, ptr noundef %2, ptr noundef %3, i32 noundef %4, ptr noundef %5, ptr noundef %6, ptr nofree noundef readnone captures(none) %7) local_unnamed_addr #0 {
 bb.a:
-  %8 = alloca [2 x i32], align 4                  ; 5 uses
-  %9 = alloca [2 x i32], align 8                  ; 4 uses
-  %10 = alloca [2 x i32], align 4                 ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %8) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %9) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %10) #9
   %i.a = getelementptr i8, ptr %6, i64 264
   %.val = load ptr, ptr %i.a, align 8, !tbaa !36
   %i.b = getelementptr i8, ptr %.val, i64 16
@@ -263,16 +257,10 @@ bb.g:                                             ; preds = %bb.e
 ompi_coll_base_sendrecv.exit:                     ; preds = %bb.f, %bb.g
   %.sink112 = phi i32 [ %i.s, %bb.f ], [ %i.x, %bb.g ] ; 4 uses
   %.pn = phi i32 [ %i.u, %bb.f ], [ %i.y, %bb.g ]
-  %i.z = phi i32 [ %.val97, %bb.f ], [ %i.x, %bb.g ] ; 3 uses
-  %11 = phi <2 x i32> [ <i32 2, i32 -2>, %bb.f ], [ <i32 -2, i32 2>, %bb.g ]
-  %.sink111 = srem i32 %.pn, %.val.val
-  store i32 %.sink112, ptr %8, align 4, !tbaa !65
-  %12 = getelementptr inbounds nuw i8, ptr %8, i64 4
-  store i32 %.sink111, ptr %12, align 4, !tbaa !65
-  store i32 %i.z, ptr %10, align 4, !tbaa !65
-  %13 = getelementptr inbounds nuw i8, ptr %10, i64 4
-  store i32 %i.z, ptr %13, align 4, !tbaa !65
-  store <2 x i32> %11, ptr %9, align 8, !tbaa !65
+  %i.z = phi i32 [ 2, %bb.f ], [ -2, %bb.g ]
+  %.sroa.5.0 = phi i32 [ -2, %bb.f ], [ 2, %bb.g ]
+  %.sroa.0.0 = phi i32 [ %.val97, %bb.f ], [ %i.x, %bb.g ] ; 3 uses
+  %.sroa.5114.0 = srem i32 %.pn, %.val.val
   %i.aa = sext i32 %.sink112 to i64
   %i.ab = mul i64 %i.j, %i.l                      ; 3 uses
   %i.ac = mul i64 %i.ab, %i.aa
@@ -294,32 +282,32 @@ bb.h:                                             ; preds = %ompi_coll_base_send
   br label %bb.j
 
 bb.i:                                             ; preds = %ompi_coll_base_sendrecv.exit99
-  %i.al = add nuw nsw i32 %.086105.a, 1           ; 2 uses
+  %i.al = add nuw nsw i32 %.086105, 1             ; 2 uses
   %exitcond.not = icmp eq i32 %i.al, %i.ah
   br i1 %exitcond.not, label %.loopexit, label %bb.j, !llvm.loop !64
 
 bb.j:                                             ; preds = %.lr.ph, %bb.i
-  %.1106.a = phi i32 [ %i.z, %.lr.ph ], [ %i.ao, %bb.i ]
-  %.086105.a = phi i32 [ 1, %.lr.ph ], [ %i.al, %bb.i ] ; 2 uses
-  %14 = and i32 %.086105.a, 1
-  %15 = zext nneg i32 %14 to i64                  ; 3 uses
-  %16 = getelementptr inbounds nuw [4 x i8], ptr %10, i64 %15 ; 2 uses
-  %17 = load i32, ptr %16, align 4, !tbaa !65
-  %18 = getelementptr inbounds nuw [4 x i8], ptr %9, i64 %15
-  %19 = load i32, ptr %18, align 4, !tbaa !65
-  %i.am = add i32 %17, %.val.val
-  %i.an = add i32 %i.am, %19
-  %i.ao = srem i32 %i.an, %.val.val               ; 3 uses
-  store i32 %i.ao, ptr %16, align 4, !tbaa !65
+  %.1106.a = phi i32 [ %.sroa.0.0, %.lr.ph ], [ %.sroa.0.2, %bb.i ] ; 2 uses
+  %.086105.a = phi i32 [ %.sroa.0.0, %.lr.ph ], [ %.sroa.6.2, %bb.i ] ; 2 uses
+  %.1106 = phi i32 [ %.sroa.0.0, %.lr.ph ], [ %i.ao, %bb.i ]
+  %.086105 = phi i32 [ 1, %.lr.ph ], [ %i.al, %bb.i ] ; 2 uses
+  %8 = and i32 %.086105, 1
+  %.sroa.idx.not = icmp eq i32 %8, 0              ; 5 uses
+  %.sroa.speculated = select i1 %.sroa.idx.not, i32 %.1106.a, i32 %.086105.a
+  %.sroa.speculated111 = select i1 %.sroa.idx.not, i32 %i.z, i32 %.sroa.5.0
+  %i.am = add i32 %.sroa.speculated, %.val.val
+  %i.an = add i32 %i.am, %.sroa.speculated111
+  %i.ao = srem i32 %i.an, %.val.val               ; 4 uses
+  %.sroa.speculated115 = select i1 %.sroa.idx.not, i32 %.sink112, i32 %.sroa.5114.0 ; 3 uses
+  %.sroa.0.2 = select i1 %.sroa.idx.not, i32 %i.ao, i32 %.1106.a
+  %.sroa.6.2 = select i1 %.sroa.idx.not, i32 %.086105.a, i32 %i.ao
   %i.ap = sext i32 %i.ao to i64
   %i.aq = mul i64 %i.ab, %i.ap
   %i.ar = getelementptr inbounds i8, ptr %3, i64 %i.aq ; 2 uses
-  %i.as = sext i32 %.1106.a to i64
+  %i.as = sext i32 %.1106 to i64
   %i.at = mul i64 %i.ab, %i.as
   %i.au = getelementptr inbounds i8, ptr %3, i64 %i.at ; 2 uses
-  %20 = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %15
-  %21 = load i32, ptr %20, align 4, !tbaa !65     ; 3 uses
-  %i.av = icmp eq i32 %21, %.val97
+  %i.av = icmp eq i32 %.sroa.speculated115, %.val97
   br i1 %i.av, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
@@ -327,7 +315,7 @@ bb.k:                                             ; preds = %bb.j
   br label %ompi_coll_base_sendrecv.exit99
 
 bb.l:                                             ; preds = %bb.j
-  %i.ax = tail call i32 @ompi_coll_base_sendrecv_actual(ptr noundef %i.au, i64 noundef range(i64 -4611686016279904256, 4611686018427387905) %i.aj, ptr noundef nonnull %5, i32 noundef %21, i32 noundef -10, ptr noundef %i.ar, i64 noundef range(i64 -4611686016279904256, 4611686018427387905) %i.aj, ptr noundef nonnull %5, i32 noundef %21, i32 noundef -10, ptr noundef nonnull %6, ptr noundef null) #9
+  %i.ax = tail call i32 @ompi_coll_base_sendrecv_actual(ptr noundef %i.au, i64 noundef range(i64 -4611686016279904256, 4611686018427387905) %i.aj, ptr noundef nonnull %5, i32 noundef %.sroa.speculated115, i32 noundef -10, ptr noundef %i.ar, i64 noundef range(i64 -4611686016279904256, 4611686018427387905) %i.aj, ptr noundef nonnull %5, i32 noundef %.sroa.speculated115, i32 noundef -10, ptr noundef nonnull %6, ptr noundef null) #9
   br label %ompi_coll_base_sendrecv.exit99
 
 ompi_coll_base_sendrecv.exit99:                   ; preds = %bb.k, %bb.l
@@ -337,9 +325,6 @@ ompi_coll_base_sendrecv.exit99:                   ; preds = %bb.k, %bb.l
 
 .loopexit:                                        ; preds = %bb.i, %ompi_coll_base_sendrecv.exit99, %bb.h, %bb.d, %ompi_coll_base_sendrecv.exit, %bb.b
   %.087 = phi i32 [ %i.e, %bb.b ], [ %i.p, %bb.d ], [ %i.ag, %ompi_coll_base_sendrecv.exit ], [ 0, %bb.h ], [ 0, %bb.i ], [ %.0.i98, %ompi_coll_base_sendrecv.exit99 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %10) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %9) #9
-  call void @llvm.lifetime.end.p0(ptr nonnull %8) #9
   ret i32 %.087
 }
 
@@ -436,11 +421,11 @@ bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
   %.036 = phi i32 [ %4, %bb.c ], [ %1, %bb.b ], [ %1, %bb.a ]
   %.035 = phi ptr [ %i.m, %bb.c ], [ inttoptr (i64 1 to ptr), %bb.b ], [ %0, %bb.a ]
   %i.n = getelementptr inbounds nuw i8, ptr %6, i64 344 ; 3 uses
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !66   ; 2 uses
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !65   ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 144
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !70
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !69
   %i.r = getelementptr inbounds nuw i8, ptr %i.o, i64 152
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !71
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !70
   %i.t = tail call i32 %i.q(ptr noundef %.035, i32 noundef %.036, ptr noundef %.037, ptr noundef %3, i32 noundef %4, ptr noundef %5, i32 noundef 0, ptr noundef %6, ptr noundef %i.s) #9 ; 2 uses
   %i.u = icmp eq i32 %i.t, 0
   br i1 %i.u, label %bb.e, label %bb.h
@@ -457,26 +442,26 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.aa, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.ab = load ptr, ptr %i.n, align 8, !tbaa !66  ; 2 uses
+  %i.ab = load ptr, ptr %i.n, align 8, !tbaa !65  ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %i.ab, i64 112
-  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !72
+  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !71
   %i.ae = mul i32 %.val42.val, %4
   %i.af = getelementptr inbounds nuw i8, ptr %i.ab, i64 120
-  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !73
+  %i.ag = load ptr, ptr %i.af, align 8, !tbaa !72
   %i.ah = tail call i32 %i.ad(ptr noundef %3, i32 noundef %i.ae, ptr noundef %5, i32 noundef 0, ptr noundef nonnull %6, ptr noundef %i.ag) #9
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.ai = call i32 @ompi_datatype_create_contiguous(i32 noundef %.val42.val, ptr noundef %5, ptr noundef nonnull %i.a) #9 ; 0 uses
-  %.val45 = load ptr, ptr %i.a, align 8, !tbaa !75
+  %.val45 = load ptr, ptr %i.a, align 8, !tbaa !74
   %i.aj = call i32 @opal_datatype_commit(ptr noundef %.val45) #9 ; 0 uses
-  %i.ak = load ptr, ptr %i.n, align 8, !tbaa !66  ; 2 uses
+  %i.ak = load ptr, ptr %i.n, align 8, !tbaa !65  ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 112
-  %i.am = load ptr, ptr %i.al, align 8, !tbaa !72
-  %i.an = load ptr, ptr %i.a, align 8, !tbaa !75
+  %i.am = load ptr, ptr %i.al, align 8, !tbaa !71
+  %i.an = load ptr, ptr %i.a, align 8, !tbaa !74
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ak, i64 120
-  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !73
+  %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !72
   %i.aq = call i32 %i.am(ptr noundef %3, i32 noundef %4, ptr noundef %i.an, i32 noundef 0, ptr noundef nonnull %6, ptr noundef %i.ap) #9
   %i.ar = call i32 @ompi_datatype_destroy(ptr noundef nonnull %i.a) #9 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
@@ -588,15 +573,14 @@ attributes #11 = { nounwind allocsize(0) }
 !62 = !{!61, !8, i64 48}
 !63 = distinct !{!63, !48}
 !64 = distinct !{!64, !48}
-!65 = !{!5, !5, i64 0}
-!66 = !{!35, !31, i64 344}
-!67 = !{!"p1 _ZTS28mca_coll_base_module_2_4_0_t", !8, i64 0}
-!68 = !{!"p1 _ZTS11opal_list_t", !8, i64 0}
-!69 = !{!"mca_coll_base_comm_coll_t", !8, i64 0, !67, i64 8, !8, i64 16, !67, i64 24, !8, i64 32, !67, i64 40, !8, i64 48, !67, i64 56, !8, i64 64, !67, i64 72, !8, i64 80, !67, i64 88, !8, i64 96, !67, i64 104, !8, i64 112, !67, i64 120, !8, i64 128, !67, i64 136, !8, i64 144, !67, i64 152, !8, i64 160, !67, i64 168, !8, i64 176, !67, i64 184, !8, i64 192, !67, i64 200, !8, i64 208, !67, i64 216, !8, i64 224, !67, i64 232, !8, i64 240, !67, i64 248, !8, i64 256, !67, i64 264, !8, i64 272, !67, i64 280, !8, i64 288, !67, i64 296, !8, i64 304, !67, i64 312, !8, i64 320, !67, i64 328, !8, i64 336, !67, i64 344, !8, i64 352, !67, i64 360, !8, i64 368, !67, i64 376, !8, i64 384, !67, i64 392, !8, i64 400, !67, i64 408, !8, i64 416, !67, i64 424, !8, i64 432, !67, i64 440, !8, i64 448, !67, i64 456, !8, i64 464, !67, i64 472, !8, i64 480, !67, i64 488, !8, i64 496, !67, i64 504, !8, i64 512, !67, i64 520, !8, i64 528, !67, i64 536, !8, i64 544, !67, i64 552, !8, i64 560, !67, i64 568, !8, i64 576, !67, i64 584, !8, i64 592, !67, i64 600, !8, i64 608, !67, i64 616, !8, i64 624, !67, i64 632, !8, i64 640, !67, i64 648, !8, i64 656, !67, i64 664, !8, i64 672, !67, i64 680, !8, i64 688, !67, i64 696, !8, i64 704, !67, i64 712, !8, i64 720, !67, i64 728, !8, i64 736, !67, i64 744, !8, i64 752, !67, i64 760, !8, i64 768, !67, i64 776, !8, i64 784, !67, i64 792, !8, i64 800, !67, i64 808, !8, i64 816, !67, i64 824, !8, i64 832, !67, i64 840, !8, i64 848, !67, i64 856, !8, i64 864, !67, i64 872, !8, i64 880, !67, i64 888, !8, i64 896, !67, i64 904, !8, i64 912, !67, i64 920, !8, i64 928, !67, i64 936, !8, i64 944, !67, i64 952, !8, i64 960, !67, i64 968, !8, i64 976, !67, i64 984, !8, i64 992, !67, i64 1000, !8, i64 1008, !67, i64 1016, !8, i64 1024, !67, i64 1032, !8, i64 1040, !67, i64 1048, !8, i64 1056, !67, i64 1064, !8, i64 1072, !67, i64 1080, !8, i64 1088, !67, i64 1096, !8, i64 1104, !68, i64 1112}
-!70 = !{!69, !8, i64 144}
-!71 = !{!69, !67, i64 152}
-!72 = !{!69, !8, i64 112}
-!73 = !{!69, !67, i64 120}
-!74 = !{!"p1 _ZTS15ompi_datatype_t", !8, i64 0}
-!75 = !{!74, !74, i64 0}
+!65 = !{!35, !31, i64 344}
+!66 = !{!"p1 _ZTS28mca_coll_base_module_2_4_0_t", !8, i64 0}
+!67 = !{!"p1 _ZTS11opal_list_t", !8, i64 0}
+!68 = !{!"mca_coll_base_comm_coll_t", !8, i64 0, !66, i64 8, !8, i64 16, !66, i64 24, !8, i64 32, !66, i64 40, !8, i64 48, !66, i64 56, !8, i64 64, !66, i64 72, !8, i64 80, !66, i64 88, !8, i64 96, !66, i64 104, !8, i64 112, !66, i64 120, !8, i64 128, !66, i64 136, !8, i64 144, !66, i64 152, !8, i64 160, !66, i64 168, !8, i64 176, !66, i64 184, !8, i64 192, !66, i64 200, !8, i64 208, !66, i64 216, !8, i64 224, !66, i64 232, !8, i64 240, !66, i64 248, !8, i64 256, !66, i64 264, !8, i64 272, !66, i64 280, !8, i64 288, !66, i64 296, !8, i64 304, !66, i64 312, !8, i64 320, !66, i64 328, !8, i64 336, !66, i64 344, !8, i64 352, !66, i64 360, !8, i64 368, !66, i64 376, !8, i64 384, !66, i64 392, !8, i64 400, !66, i64 408, !8, i64 416, !66, i64 424, !8, i64 432, !66, i64 440, !8, i64 448, !66, i64 456, !8, i64 464, !66, i64 472, !8, i64 480, !66, i64 488, !8, i64 496, !66, i64 504, !8, i64 512, !66, i64 520, !8, i64 528, !66, i64 536, !8, i64 544, !66, i64 552, !8, i64 560, !66, i64 568, !8, i64 576, !66, i64 584, !8, i64 592, !66, i64 600, !8, i64 608, !66, i64 616, !8, i64 624, !66, i64 632, !8, i64 640, !66, i64 648, !8, i64 656, !66, i64 664, !8, i64 672, !66, i64 680, !8, i64 688, !66, i64 696, !8, i64 704, !66, i64 712, !8, i64 720, !66, i64 728, !8, i64 736, !66, i64 744, !8, i64 752, !66, i64 760, !8, i64 768, !66, i64 776, !8, i64 784, !66, i64 792, !8, i64 800, !66, i64 808, !8, i64 816, !66, i64 824, !8, i64 832, !66, i64 840, !8, i64 848, !66, i64 856, !8, i64 864, !66, i64 872, !8, i64 880, !66, i64 888, !8, i64 896, !66, i64 904, !8, i64 912, !66, i64 920, !8, i64 928, !66, i64 936, !8, i64 944, !66, i64 952, !8, i64 960, !66, i64 968, !8, i64 976, !66, i64 984, !8, i64 992, !66, i64 1000, !8, i64 1008, !66, i64 1016, !8, i64 1024, !66, i64 1032, !8, i64 1040, !66, i64 1048, !8, i64 1056, !66, i64 1064, !8, i64 1072, !66, i64 1080, !8, i64 1088, !66, i64 1096, !8, i64 1104, !67, i64 1112}
+!69 = !{!68, !8, i64 144}
+!70 = !{!68, !66, i64 152}
+!71 = !{!68, !8, i64 112}
+!72 = !{!68, !66, i64 120}
+!73 = !{!"p1 _ZTS15ompi_datatype_t", !8, i64 0}
+!74 = !{!73, !73, i64 0}
 end_hunk_0

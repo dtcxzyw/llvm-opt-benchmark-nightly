@@ -202,24 +202,24 @@ declare void @_xstrcat(ptr noundef, ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define internal fastcc noundef zeroext i1 @_resv_time_overlap(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef nonnull readonly captures(none) %1) unnamed_addr #0 {
 bb.a:
-  %2 = alloca %struct.constraint_slot, align 8    ; 14 uses
-  %3 = alloca %struct.constraint_slot, align 8    ; 14 uses
+  %2 = alloca %struct.constraint_slot, align 8    ; 10 uses
+  %3 = alloca %struct.constraint_slot, align 8    ; 10 uses
   %i.a = tail call i64 @time(ptr noundef null) #18 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #18
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.c = load i64, ptr %i.b, align 8
   store i64 %i.c, ptr %2, align 8
-  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.f = load i64, ptr %i.e, align 8
   store i64 %i.f, ptr %i.d, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 16
   store i32 0, ptr %i.g, align 8
-  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 20
+  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 20 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.j = load i32, ptr %i.i, align 4
   store i32 %i.j, ptr %i.h, align 4
-  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 3 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.m = load i64, ptr %i.l, align 8
   store i64 %i.m, ptr %i.k, align 8
@@ -227,7 +227,7 @@ bb.a:
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 280
   %i.o = load i64, ptr %i.n, align 8
   store i64 %i.o, ptr %3, align 8
-  %i.p = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 6 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 120
   %i.r = load i64, ptr %i.q, align 8
   store i64 %i.r, ptr %i.p, align 8
@@ -235,42 +235,33 @@ bb.a:
   store i32 0, ptr %i.s, align 8
   %i.t = getelementptr inbounds nuw i8, ptr %3, i64 20
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 112
-  %i.v = load i32, ptr %i.u, align 8
+  %i.v = load i32, ptr %i.u, align 8              ; 2 uses
   store i32 %i.v, ptr %i.t, align 4
   %i.w = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 144
-  %i.y = load i64, ptr %i.x, align 8
+  %i.y = load i64, ptr %i.x, align 8              ; 2 uses
   store i64 %i.y, ptr %i.w, align 8
-  %indvars.iv.sroa.phi.sroa.speculated.sroa.gep = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %indvars.iv.sroa.phi.sroa.speculated.sroa.gep134 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %indvars.iv.sroa.phi.sroa.speculated.sroa.gep136 = getelementptr inbounds nuw i8, ptr %2, i64 20
-  %indvars.iv.sroa.phi.sroa.speculated.sroa.gep137 = getelementptr inbounds nuw i8, ptr %3, i64 20
-  %indvars.iv.sroa.phi.sroa.speculated.sroa.gep139 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %indvars.iv.sroa.phi.sroa.speculated.sroa.gep140 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %indvars.iv.sroa.phi.sroa.speculated.sroa.gep142 = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %indvars.iv.sroa.phi.sroa.speculated.sroa.gep143 = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %.val142 = load i64, ptr %i.k, align 8
+  %.val144 = load i32, ptr %i.h, align 4
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.f
-  br i1 %.not120.a, label %bb.c, label %.critedge, !llvm.loop !89
+  br i1 %.not120, label %bb.c, label %.critedge, !llvm.loop !89
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  %.not120.a = phi i1 [ true, %bb.a ], [ false, %bb.b ]
-  %indvars.iv.sroa.phi.sroa.speculated.sroa.phi = phi ptr [ %indvars.iv.sroa.phi.sroa.speculated.sroa.gep, %bb.a ], [ %indvars.iv.sroa.phi.sroa.speculated.sroa.gep134, %bb.b ]
-  %indvars.iv.sroa.phi.sroa.speculated.sroa.phi135 = phi ptr [ %indvars.iv.sroa.phi.sroa.speculated.sroa.gep136, %bb.a ], [ %indvars.iv.sroa.phi.sroa.speculated.sroa.gep137, %bb.b ]
-  %indvars.iv.sroa.phi.sroa.speculated.sroa.phi138 = phi ptr [ %indvars.iv.sroa.phi.sroa.speculated.sroa.gep139, %bb.a ], [ %indvars.iv.sroa.phi.sroa.speculated.sroa.gep140, %bb.b ]
-  %indvars.iv.sroa.phi.sroa.speculated.sroa.phi141 = phi ptr [ %indvars.iv.sroa.phi.sroa.speculated.sroa.gep142, %bb.a ], [ %indvars.iv.sroa.phi.sroa.speculated.sroa.gep143, %bb.b ]
-  %indvars.iv.sroa.phi.sroa.speculated = phi ptr [ %2, %bb.a ], [ %3, %bb.b ] ; 2 uses
-  %4 = load i64, ptr %indvars.iv.sroa.phi.sroa.speculated.sroa.phi141, align 8
+  %.not120.a = phi i1 [ false, %bb.a ], [ true, %bb.b ] ; 5 uses
+  %.not120 = phi i1 [ true, %bb.a ], [ false, %bb.b ]
+  %.sroa.speculated = select i1 %.not120.a, ptr %3, ptr %2 ; 2 uses
+  %4 = select i1 %.not120.a, i64 %i.y, i64 %.val142
   %i.z = and i64 %4, 131072
   %.not = icmp eq i64 %i.z, 0
-  %.pre = load i64, ptr %indvars.iv.sroa.phi.sroa.speculated, align 8 ; 2 uses
+  %.pre = load i64, ptr %.sroa.speculated, align 8 ; 2 uses
   br i1 %.not, label %bb.f, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.aa = add nsw i64 %.pre, %i.a                 ; 5 uses
-  store i64 %i.aa, ptr %indvars.iv.sroa.phi.sroa.speculated, align 8
-  %5 = load i32, ptr %indvars.iv.sroa.phi.sroa.speculated.sroa.phi135, align 4 ; 2 uses
+  store i64 %i.aa, ptr %.sroa.speculated, align 8
+  %5 = select i1 %.not120.a, i32 %i.v, i32 %.val144 ; 2 uses
   switch i32 %5, label %bb.e [
     i32 -1, label %.sink.split
     i32 0, label %bb.f
@@ -285,13 +276,16 @@ bb.e:                                             ; preds = %bb.d
 .sink.split:                                      ; preds = %bb.d, %bb.e
   %.sink130 = phi i64 [ %i.ac, %bb.e ], [ 31536000, %bb.d ]
   %i.ad = add nsw i64 %i.aa, %.sink130
-  store i64 %i.ad, ptr %indvars.iv.sroa.phi.sroa.speculated.sroa.phi, align 8
+  %.sroa.speculated.sroa.sel128 = select i1 %.not120.a, ptr %i.p, ptr %i.d
+  store i64 %i.ad, ptr %.sroa.speculated.sroa.sel128, align 8
   br label %bb.f
 
 bb.f:                                             ; preds = %.sink.split, %bb.d, %bb.d, %bb.c
   %i.ae = phi i64 [ %i.aa, %bb.d ], [ %i.aa, %bb.d ], [ %.pre, %bb.c ], [ %i.aa, %.sink.split ]
-  %i.af = load i64, ptr %indvars.iv.sroa.phi.sroa.speculated.sroa.phi138, align 8
-  %i.ag = icmp sgt i64 %i.ae, %i.af
+  %.val145 = load i64, ptr %i.p, align 8
+  %i.af = load i64, ptr %i.d, align 8
+  %6 = select i1 %.not120.a, i64 %.val145, i64 %i.af
+  %i.ag = icmp sgt i64 %i.ae, %6
   br i1 %i.ag, label %bb.g, label %bb.b
 
 bb.g:                                             ; preds = %bb.f
