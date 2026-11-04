@@ -204,12 +204,12 @@ define dso_local noundef zeroext i1 @_ZNK30btKinematicCharacterController8onGrou
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 36
   %i.b = load <2 x float>, ptr %i.a, align 4
-  %1 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %i.b)
-  %2 = fcmp olt <2 x float> %1, splat (float f0x34000000) ; 2 uses
-  %3 = extractelement <2 x i1> %2, i64 0
-  %4 = extractelement <2 x i1> %2, i64 1
-  %5 = select i1 %3, i1 %4, i1 false
-  ret i1 %5
+  %.fr1 = freeze <2 x float> %i.b
+  %1 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %.fr1)
+  %2 = fcmp uge <2 x float> %1, splat (float f0x34000000)
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, 0
+  ret i1 %4
 }
 
 ; Function Attrs: mustprogress nounwind uwtable

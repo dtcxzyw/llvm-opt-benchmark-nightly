@@ -202,10 +202,10 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.t = tail call noundef nonnull align 8 dereferenceable(24) ptr %i.s(ptr noundef nonnull align 8 dereferenceable(8) %i.p, i64 noundef 0), !inline_history !59
   %i.u = load <2 x double>, ptr %i.n, align 8
   %i.v = load <2 x double>, ptr %i.t, align 8
-  %i.w = fcmp oeq <2 x double> %i.u, %i.v         ; 2 uses
-  %2 = extractelement <2 x i1> %i.w, i64 0
-  %3 = extractelement <2 x i1> %i.w, i64 1
-  %.0.i.i = select i1 %2, i1 %3, i1 false
+  %i.w = fcmp oeq <2 x double> %i.u, %i.v
+  %2 = freeze <2 x i1> %i.w
+  %3 = bitcast <2 x i1> %2 to i2
+  %.0.i.i = icmp eq i2 %3, -1
   br i1 %.0.i.i, label %_ZNK4geos9operation9overlayng4Edge17relativeDirectionEPKS2_.exit, label %_ZNK4geos9operation9overlayng4Edge17relativeDirectionEPKS2_.exit.thread
 
 _ZNK4geos9operation9overlayng4Edge17relativeDirectionEPKS2_.exit: ; preds = %bb.e
@@ -221,12 +221,11 @@ _ZNK4geos9operation9overlayng4Edge17relativeDirectionEPKS2_.exit: ; preds = %bb.
   %i.ag = tail call noundef nonnull align 8 dereferenceable(24) ptr %i.af(ptr noundef nonnull align 8 dereferenceable(8) %i.ac, i64 noundef 1), !inline_history !59
   %i.ah = load <2 x double>, ptr %i.ab, align 8
   %i.ai = load <2 x double>, ptr %i.ag, align 8
-  %i.aj = fcmp oeq <2 x double> %i.ah, %i.ai      ; 2 uses
-  %4 = extractelement <2 x i1> %i.aj, i64 0
-  %5 = extractelement <2 x i1> %i.aj, i64 1
-  %.0.i4.i = select i1 %4, i1 %5, i1 false
-  %cond.fr = freeze i1 %.0.i4.i
-  %spec.select = select i1 %cond.fr, i32 1, i32 -1
+  %i.aj = fcmp oeq <2 x double> %i.ah, %i.ai
+  %4 = freeze <2 x i1> %i.aj
+  %5 = bitcast <2 x i1> %4 to i2
+  %.0.i4.i = icmp eq i2 %5, -1
+  %spec.select = select i1 %.0.i4.i, i32 1, i32 -1
   br label %_ZNK4geos9operation9overlayng4Edge17relativeDirectionEPKS2_.exit.thread
 
 _ZNK4geos9operation9overlayng4Edge17relativeDirectionEPKS2_.exit.thread: ; preds = %_ZNK4geos9operation9overlayng4Edge17relativeDirectionEPKS2_.exit, %bb.e

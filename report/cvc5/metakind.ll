@@ -204,10 +204,10 @@ _ZNK4cvc58internal4expr9NodeValue8getConstINS0_16BitVectorExtractEEERKT_v.exit10
   %.sink = phi ptr [ %i.n, %_ZNK4cvc58internal4expr9NodeValue8getConstINS0_16BitVectorExtractEEERKT_v.exit ], [ %i.r, %_ZNK4cvc58internal4expr9NodeValue8getConstINS0_16BitVectorExtractEEERKT_v.exit9 ], [ %i.s, %bb.g ]
   %i.t = load <2 x i32>, ptr %.sink23, align 4
   %i.u = load <2 x i32>, ptr %.sink, align 4
-  %i.v = icmp eq <2 x i32> %i.t, %i.u             ; 2 uses
-  %2 = extractelement <2 x i1> %i.v, i64 0
-  %3 = extractelement <2 x i1> %i.v, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.v = icmp eq <2 x i32> %i.t, %i.u
+  %2 = freeze <2 x i1> %i.v
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 
@@ -610,10 +610,10 @@ _ZNK4cvc58internal4expr9NodeValue8getConstINS0_17FloatingPointSizeEEERKT_v.exit1
   %.sink = phi ptr [ %i.n, %_ZNK4cvc58internal4expr9NodeValue8getConstINS0_17FloatingPointSizeEEERKT_v.exit ], [ %i.r, %_ZNK4cvc58internal4expr9NodeValue8getConstINS0_17FloatingPointSizeEEERKT_v.exit9 ], [ %i.s, %bb.g ]
   %i.t = load <2 x i32>, ptr %.sink23, align 4
   %i.u = load <2 x i32>, ptr %.sink, align 4
-  %i.v = icmp eq <2 x i32> %i.t, %i.u             ; 2 uses
-  %2 = extractelement <2 x i1> %i.v, i64 0
-  %3 = extractelement <2 x i1> %i.v, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.v = icmp eq <2 x i32> %i.t, %i.u
+  %2 = freeze <2 x i1> %i.v
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 
@@ -675,10 +675,10 @@ _ZNK4cvc58internal4expr9NodeValue8getConstINS0_30FloatingPointToFPIEEEBitVectorE
   %.sink = phi ptr [ %i.n, %_ZNK4cvc58internal4expr9NodeValue8getConstINS0_30FloatingPointToFPIEEEBitVectorEEERKT_v.exit ], [ %i.r, %_ZNK4cvc58internal4expr9NodeValue8getConstINS0_30FloatingPointToFPIEEEBitVectorEEERKT_v.exit9 ], [ %i.s, %bb.g ]
   %i.t = load <2 x i32>, ptr %.sink23, align 4
   %i.u = load <2 x i32>, ptr %.sink, align 4
-  %i.v = icmp eq <2 x i32> %i.t, %i.u             ; 2 uses
-  %2 = extractelement <2 x i1> %i.v, i64 0
-  %3 = extractelement <2 x i1> %i.v, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.v = icmp eq <2 x i32> %i.t, %i.u
+  %2 = freeze <2 x i1> %i.v
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 
@@ -740,10 +740,10 @@ _ZNK4cvc58internal4expr9NodeValue8getConstINS0_30FloatingPointToFPFloatingPointE
   %.sink = phi ptr [ %i.n, %_ZNK4cvc58internal4expr9NodeValue8getConstINS0_30FloatingPointToFPFloatingPointEEERKT_v.exit ], [ %i.r, %_ZNK4cvc58internal4expr9NodeValue8getConstINS0_30FloatingPointToFPFloatingPointEEERKT_v.exit9 ], [ %i.s, %bb.g ]
   %i.t = load <2 x i32>, ptr %.sink23, align 4
   %i.u = load <2 x i32>, ptr %.sink, align 4
-  %i.v = icmp eq <2 x i32> %i.t, %i.u             ; 2 uses
-  %2 = extractelement <2 x i1> %i.v, i64 0
-  %3 = extractelement <2 x i1> %i.v, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.v = icmp eq <2 x i32> %i.t, %i.u
+  %2 = freeze <2 x i1> %i.v
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 
@@ -805,10 +805,10 @@ _ZNK4cvc58internal4expr9NodeValue8getConstINS0_21FloatingPointToFPRealEEERKT_v.e
   %.sink = phi ptr [ %i.n, %_ZNK4cvc58internal4expr9NodeValue8getConstINS0_21FloatingPointToFPRealEEERKT_v.exit ], [ %i.r, %_ZNK4cvc58internal4expr9NodeValue8getConstINS0_21FloatingPointToFPRealEEERKT_v.exit9 ], [ %i.s, %bb.g ]
   %i.t = load <2 x i32>, ptr %.sink23, align 4
   %i.u = load <2 x i32>, ptr %.sink, align 4
-  %i.v = icmp eq <2 x i32> %i.t, %i.u             ; 2 uses
-  %2 = extractelement <2 x i1> %i.v, i64 0
-  %3 = extractelement <2 x i1> %i.v, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.v = icmp eq <2 x i32> %i.t, %i.u
+  %2 = freeze <2 x i1> %i.v
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 
@@ -870,10 +870,10 @@ _ZNK4cvc58internal4expr9NodeValue8getConstINS0_32FloatingPointToFPSignedBitVecto
   %.sink = phi ptr [ %i.n, %_ZNK4cvc58internal4expr9NodeValue8getConstINS0_32FloatingPointToFPSignedBitVectorEEERKT_v.exit ], [ %i.r, %_ZNK4cvc58internal4expr9NodeValue8getConstINS0_32FloatingPointToFPSignedBitVectorEEERKT_v.exit9 ], [ %i.s, %bb.g ]
   %i.t = load <2 x i32>, ptr %.sink23, align 4
   %i.u = load <2 x i32>, ptr %.sink, align 4
-  %i.v = icmp eq <2 x i32> %i.t, %i.u             ; 2 uses
-  %2 = extractelement <2 x i1> %i.v, i64 0
-  %3 = extractelement <2 x i1> %i.v, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.v = icmp eq <2 x i32> %i.t, %i.u
+  %2 = freeze <2 x i1> %i.v
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 
@@ -935,10 +935,10 @@ _ZNK4cvc58internal4expr9NodeValue8getConstINS0_34FloatingPointToFPUnsignedBitVec
   %.sink = phi ptr [ %i.n, %_ZNK4cvc58internal4expr9NodeValue8getConstINS0_34FloatingPointToFPUnsignedBitVectorEEERKT_v.exit ], [ %i.r, %_ZNK4cvc58internal4expr9NodeValue8getConstINS0_34FloatingPointToFPUnsignedBitVectorEEERKT_v.exit9 ], [ %i.s, %bb.g ]
   %i.t = load <2 x i32>, ptr %.sink23, align 4
   %i.u = load <2 x i32>, ptr %.sink, align 4
-  %i.v = icmp eq <2 x i32> %i.t, %i.u             ; 2 uses
-  %2 = extractelement <2 x i1> %i.v, i64 0
-  %3 = extractelement <2 x i1> %i.v, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.v = icmp eq <2 x i32> %i.t, %i.u
+  %2 = freeze <2 x i1> %i.v
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 
@@ -1341,10 +1341,10 @@ _ZNK4cvc58internal4expr9NodeValue8getConstINS0_16BitVectorExtractEEERKT_v.exit2:
   %i.n = phi ptr [ %i.m, %bb.c ], [ %i.l, %_ZNK4cvc58internal4expr9NodeValue8getConstINS0_16BitVectorExtractEEERKT_v.exit ]
   %i.o = load <2 x i32>, ptr %i.g, align 4
   %i.p = load <2 x i32>, ptr %i.n, align 4
-  %i.q = icmp eq <2 x i32> %i.o, %i.p             ; 2 uses
-  %2 = extractelement <2 x i1> %i.q, i64 0
-  %3 = extractelement <2 x i1> %i.q, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.q = icmp eq <2 x i32> %i.o, %i.p
+  %2 = freeze <2 x i1> %i.q
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 
@@ -1478,10 +1478,10 @@ _ZNK4cvc58internal4expr9NodeValue8getConstINS0_17FloatingPointSizeEEERKT_v.exit2
   %i.n = phi ptr [ %i.m, %bb.c ], [ %i.l, %_ZNK4cvc58internal4expr9NodeValue8getConstINS0_17FloatingPointSizeEEERKT_v.exit ]
   %i.o = load <2 x i32>, ptr %i.g, align 4
   %i.p = load <2 x i32>, ptr %i.n, align 4
-  %i.q = icmp eq <2 x i32> %i.o, %i.p             ; 2 uses
-  %2 = extractelement <2 x i1> %i.q, i64 0
-  %3 = extractelement <2 x i1> %i.q, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.q = icmp eq <2 x i32> %i.o, %i.p
+  %2 = freeze <2 x i1> %i.q
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 
@@ -1516,10 +1516,10 @@ _ZNK4cvc58internal4expr9NodeValue8getConstINS0_30FloatingPointToFPIEEEBitVectorE
   %i.n = phi ptr [ %i.m, %bb.c ], [ %i.l, %_ZNK4cvc58internal4expr9NodeValue8getConstINS0_30FloatingPointToFPIEEEBitVectorEEERKT_v.exit ]
   %i.o = load <2 x i32>, ptr %i.g, align 4
   %i.p = load <2 x i32>, ptr %i.n, align 4
-  %i.q = icmp eq <2 x i32> %i.o, %i.p             ; 2 uses
-  %2 = extractelement <2 x i1> %i.q, i64 0
-  %3 = extractelement <2 x i1> %i.q, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.q = icmp eq <2 x i32> %i.o, %i.p
+  %2 = freeze <2 x i1> %i.q
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 
@@ -1554,10 +1554,10 @@ _ZNK4cvc58internal4expr9NodeValue8getConstINS0_30FloatingPointToFPFloatingPointE
   %i.n = phi ptr [ %i.m, %bb.c ], [ %i.l, %_ZNK4cvc58internal4expr9NodeValue8getConstINS0_30FloatingPointToFPFloatingPointEEERKT_v.exit ]
   %i.o = load <2 x i32>, ptr %i.g, align 4
   %i.p = load <2 x i32>, ptr %i.n, align 4
-  %i.q = icmp eq <2 x i32> %i.o, %i.p             ; 2 uses
-  %2 = extractelement <2 x i1> %i.q, i64 0
-  %3 = extractelement <2 x i1> %i.q, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.q = icmp eq <2 x i32> %i.o, %i.p
+  %2 = freeze <2 x i1> %i.q
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 
@@ -1592,10 +1592,10 @@ _ZNK4cvc58internal4expr9NodeValue8getConstINS0_21FloatingPointToFPRealEEERKT_v.e
   %i.n = phi ptr [ %i.m, %bb.c ], [ %i.l, %_ZNK4cvc58internal4expr9NodeValue8getConstINS0_21FloatingPointToFPRealEEERKT_v.exit ]
   %i.o = load <2 x i32>, ptr %i.g, align 4
   %i.p = load <2 x i32>, ptr %i.n, align 4
-  %i.q = icmp eq <2 x i32> %i.o, %i.p             ; 2 uses
-  %2 = extractelement <2 x i1> %i.q, i64 0
-  %3 = extractelement <2 x i1> %i.q, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.q = icmp eq <2 x i32> %i.o, %i.p
+  %2 = freeze <2 x i1> %i.q
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 
@@ -1630,10 +1630,10 @@ _ZNK4cvc58internal4expr9NodeValue8getConstINS0_32FloatingPointToFPSignedBitVecto
   %i.n = phi ptr [ %i.m, %bb.c ], [ %i.l, %_ZNK4cvc58internal4expr9NodeValue8getConstINS0_32FloatingPointToFPSignedBitVectorEEERKT_v.exit ]
   %i.o = load <2 x i32>, ptr %i.g, align 4
   %i.p = load <2 x i32>, ptr %i.n, align 4
-  %i.q = icmp eq <2 x i32> %i.o, %i.p             ; 2 uses
-  %2 = extractelement <2 x i1> %i.q, i64 0
-  %3 = extractelement <2 x i1> %i.q, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.q = icmp eq <2 x i32> %i.o, %i.p
+  %2 = freeze <2 x i1> %i.q
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 
@@ -1668,10 +1668,10 @@ _ZNK4cvc58internal4expr9NodeValue8getConstINS0_34FloatingPointToFPUnsignedBitVec
   %i.n = phi ptr [ %i.m, %bb.c ], [ %i.l, %_ZNK4cvc58internal4expr9NodeValue8getConstINS0_34FloatingPointToFPUnsignedBitVectorEEERKT_v.exit ]
   %i.o = load <2 x i32>, ptr %i.g, align 4
   %i.p = load <2 x i32>, ptr %i.n, align 4
-  %i.q = icmp eq <2 x i32> %i.o, %i.p             ; 2 uses
-  %2 = extractelement <2 x i1> %i.q, i64 0
-  %3 = extractelement <2 x i1> %i.q, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.q = icmp eq <2 x i32> %i.o, %i.p
+  %2 = freeze <2 x i1> %i.q
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 

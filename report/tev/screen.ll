@@ -205,11 +205,10 @@ bb.e:                                             ; preds = %bb.d, %_ZNSt3__14fi
 define hidden void @_ZN7nanogui6Screen13center_windowEPNS_6WindowE(ptr nofree noundef nonnull readonly align 16 captures(none) dereferenceable(520) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 4 uses
-  %i.b = load <2 x i32>, ptr %i.a, align 4        ; 2 uses
-  %2 = icmp eq <2 x i32> %i.b, zeroinitializer    ; 2 uses
-  %3 = extractelement <2 x i1> %2, i64 0
-  %4 = extractelement <2 x i1> %2, i64 1
-  %.not.lcssa.i = select i1 %3, i1 %4, i1 false
+  %i.b = load <2 x i32>, ptr %i.a, align 4
+  %.fr = freeze <2 x i32> %i.b                    ; 2 uses
+  %.fr.scalar = bitcast <2 x i32> %.fr to i64
+  %.not.lcssa.i = icmp eq i64 %.fr.scalar, 0
   br i1 %.not.lcssa.i, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
@@ -247,7 +246,7 @@ _ZN7nanogui6Widget8set_sizeERKNS_5ArrayIiLm2EEE.exit: ; preds = %bb.b, %bb.c
   br label %bb.d
 
 bb.d:                                             ; preds = %_ZN7nanogui6Widget8set_sizeERKNS_5ArrayIiLm2EEE.exit, %bb.a
-  %i.r = phi <2 x i32> [ %i.q, %_ZN7nanogui6Widget8set_sizeERKNS_5ArrayIiLm2EEE.exit ], [ %i.b, %bb.a ]
+  %i.r = phi <2 x i32> [ %i.q, %_ZN7nanogui6Widget8set_sizeERKNS_5ArrayIiLm2EEE.exit ], [ %.fr, %bb.a ]
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.t = load <2 x i32>, ptr %i.s, align 16, !tbaa !40
   %i.u = sub nsw <2 x i32> %i.t, %i.r

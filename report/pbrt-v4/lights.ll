@@ -205,10 +205,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %8, i64 8
   store float 0.000000e+00, ptr %i.b, align 8, !tbaa !241
   %i.c = load <2 x float>, ptr %7, align 8
-  %9 = fcmp une <2 x float> %i.c, zeroinitializer ; 2 uses
-  %10 = extractelement <2 x i1> %9, i64 0
-  %11 = extractelement <2 x i1> %9, i64 1
-  %or.cond.i = select i1 %10, i1 true, i1 %11
+  %.fr = freeze <2 x float> %i.c
+  %9 = fcmp une <2 x float> %.fr, zeroinitializer
+  %10 = bitcast <2 x i1> %9 to i2
+  %or.cond.i = icmp ne i2 %10, 0
   %i.d = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.e = load float, ptr %i.d, align 8
   %i.f = fcmp une float %i.e, 0.000000e+00
@@ -611,10 +611,10 @@ bb.g:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %8, i64 8
   store float 0.000000e+00, ptr %i.f, align 8, !tbaa !241
   %i.g = load <2 x float>, ptr %7, align 8
-  %9 = fcmp une <2 x float> %i.g, zeroinitializer ; 2 uses
-  %10 = extractelement <2 x i1> %9, i64 0
-  %11 = extractelement <2 x i1> %9, i64 1
-  %or.cond.i.i.i.i.i = select i1 %10, i1 true, i1 %11
+  %.fr = freeze <2 x float> %i.g
+  %9 = fcmp une <2 x float> %.fr, zeroinitializer
+  %10 = bitcast <2 x i1> %9 to i2
+  %or.cond.i.i.i.i.i = icmp ne i2 %10, 0
   %i.h = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.i = load float, ptr %i.h, align 8
   %i.j = fcmp une float %i.i, 0.000000e+00

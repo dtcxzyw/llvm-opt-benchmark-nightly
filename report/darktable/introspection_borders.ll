@@ -204,11 +204,10 @@ bb.a:
   %i.m = insertelement <2 x float> poison, float %i.h, i64 0
   %i.n = insertelement <2 x float> %i.m, float %i.f, i64 1
   %i.o = fmul reassoc nsz arcp contract afn <2 x float> %i.n, %i.l
-  %i.p = fptosi <2 x float> %i.o to <2 x i32>     ; 2 uses
-  %4 = icmp eq <2 x i32> %i.p, zeroinitializer    ; 2 uses
-  %5 = extractelement <2 x i1> %4, i64 0
-  %6 = extractelement <2 x i1> %4, i64 1
-  %or.cond = select i1 %5, i1 %6, i1 false
+  %i.p = fptosi <2 x float> %i.o to <2 x i32>
+  %.fr = freeze <2 x i32> %i.p                    ; 2 uses
+  %.fr.scalar = bitcast <2 x i32> %.fr to i64
+  %or.cond = icmp eq i64 %.fr.scalar, 0
   br i1 %or.cond, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -218,7 +217,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %.loopexit, label %iter.check
 
 iter.check:                                       ; preds = %bb.b
-  %i.r = sitofp reassoc nsz arcp contract afn <2 x i32> %i.p to <2 x float> ; 5 uses
+  %i.r = sitofp reassoc nsz arcp contract afn <2 x i32> %.fr to <2 x float> ; 5 uses
   %i.s = add i64 %i.q, -2                         ; 3 uses
   %i.t = lshr exact i64 %i.s, 1
   %i.u = add nuw i64 %i.t, 1                      ; 5 uses
@@ -335,11 +334,10 @@ bb.a:
   %i.m = insertelement <2 x float> poison, float %i.h, i64 0
   %i.n = insertelement <2 x float> %i.m, float %i.f, i64 1
   %i.o = fmul reassoc nsz arcp contract afn <2 x float> %i.n, %i.l
-  %i.p = fptosi <2 x float> %i.o to <2 x i32>     ; 2 uses
-  %4 = icmp eq <2 x i32> %i.p, zeroinitializer    ; 2 uses
-  %5 = extractelement <2 x i1> %4, i64 0
-  %6 = extractelement <2 x i1> %4, i64 1
-  %or.cond = select i1 %5, i1 %6, i1 false
+  %i.p = fptosi <2 x float> %i.o to <2 x i32>
+  %.fr = freeze <2 x i32> %i.p                    ; 2 uses
+  %.fr.scalar = bitcast <2 x i32> %.fr to i64
+  %or.cond = icmp eq i64 %.fr.scalar, 0
   br i1 %or.cond, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -349,7 +347,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %.loopexit, label %iter.check
 
 iter.check:                                       ; preds = %bb.b
-  %i.r = sitofp reassoc nsz arcp contract afn <2 x i32> %i.p to <2 x float> ; 5 uses
+  %i.r = sitofp reassoc nsz arcp contract afn <2 x i32> %.fr to <2 x float> ; 5 uses
   %i.s = add i64 %i.q, -2                         ; 3 uses
   %i.t = lshr exact i64 %i.s, 1
   %i.u = add nuw i64 %i.t, 1                      ; 5 uses

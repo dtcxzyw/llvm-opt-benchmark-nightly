@@ -205,17 +205,15 @@ bb.q:                                             ; preds = %_RNvMs1x_Cs8Xq8PKFY
   %.sroa.811.0..sroa_idx.i47.i = getelementptr inbounds nuw i8, ptr %.val39.i, i64 16
   %.sroa.811.sroa.0.0.copyload.i48.i = load i8, ptr %.sroa.811.0..sroa_idx.i47.i, align 8, !noalias !619
   %switch.idx.cast.i49.i = zext i8 %.sroa.811.sroa.0.0.copyload.i48.i to i32
-  %i.bm = icmp eq i32 %.sroa.0.068.i, %switch.idx.cast.i49.i
-  br i1 %i.bm, label %2, label %.thread.i
+  %2 = icmp eq i32 %.sroa.0.068.i, %switch.idx.cast.i49.i
+  %3 = icmp eq <2 x i32> %i.aw, %i.bl
+  %4 = freeze <2 x i1> %3
+  %5 = bitcast <2 x i1> %4 to i2
+  %i.bm = icmp eq i2 %5, -1
+  %or.cond = and i1 %2, %i.bm
+  br i1 %or.cond, label %.thread82.i, label %.thread.i
 
-2:                                                ; preds = %bb.q
-  %3 = icmp eq <2 x i32> %i.aw, %i.bl             ; 2 uses
-  %4 = extractelement <2 x i1> %3, i64 0
-  %5 = extractelement <2 x i1> %3, i64 1
-  %or.cond.i = select i1 %5, i1 %4, i1 false
-  br i1 %or.cond.i, label %.thread82.i, label %.thread.i
-
-.thread.i:                                        ; preds = %2, %bb.q, %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit52.thread.i, %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit52.i
+.thread.i:                                        ; preds = %bb.q, %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit52.thread.i, %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit52.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !617
   %.sroa.021.0.copyload.i = load i32, ptr %.val40.i, align 8, !noalias !616 ; 2 uses
   %i.bn = icmp ne i32 %.sroa.021.0.copyload.i, 27
@@ -223,7 +221,7 @@ bb.q:                                             ; preds = %_RNvMs1x_Cs8Xq8PKFY
   %i.bo = icmp eq i32 %.sroa.021.0.copyload.i, 10
   br i1 %i.bo, label %bb.x, label %bb.r
 
-.thread82.i:                                      ; preds = %2, %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit52.thread.i
+.thread82.i:                                      ; preds = %bb.q, %_RNvMs1x_Cs8Xq8PKFYOms_3hirNtB6_4Type6as_adt.exit52.thread.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !617
   %i.bp = call { i64, ptr } @_RNvNtNtNtCsjJXvCMGntp8_6syntax3ast4make3ext11option_none(), !noalias !616 ; 2 uses
   %i.bq = extractvalue { i64, ptr } %i.bp, 0

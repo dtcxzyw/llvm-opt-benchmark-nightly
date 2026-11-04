@@ -204,12 +204,12 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.b
   %i.v = load <2 x i8>, ptr %i.g, align 16
-  %2 = and <2 x i8> %i.v, splat (i8 -2)
-  %3 = icmp eq <2 x i8> %2, splat (i8 80)         ; 2 uses
-  %4 = extractelement <2 x i1> %3, i64 0
-  %5 = extractelement <2 x i1> %3, i64 1
-  %or.cond11 = select i1 %4, i1 true, i1 %5
-  br i1 %or.cond11, label %.preheader, label %bb.t
+  %.fr79 = freeze <2 x i8> %i.v
+  %2 = and <2 x i8> %.fr79, splat (i8 -2)
+  %3 = icmp eq <2 x i8> %2, splat (i8 80)
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond11.not = icmp eq i2 %4, 0
+  br i1 %or.cond11.not, label %bb.t, label %.preheader
 
 .preheader:                                       ; preds = %bb.d
   %i.w = load i64, ptr %i.d, align 8, !tbaa !43

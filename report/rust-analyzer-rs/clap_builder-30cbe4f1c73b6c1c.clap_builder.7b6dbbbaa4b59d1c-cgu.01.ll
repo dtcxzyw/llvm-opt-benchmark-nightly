@@ -204,11 +204,10 @@ bb.d:                                             ; preds = %bb.c
   %i.jp = getelementptr i8, ptr %i.jo, i64 676    ; 4 uses
   %i.jq = getelementptr i8, ptr %i.jo, i64 680    ; 2 uses
   %i.jr = load <2 x i32>, ptr %i.jp, align 4
-  %4 = and <2 x i32> %i.jr, splat (i32 16384)
-  %5 = icmp ne <2 x i32> %4, zeroinitializer      ; 2 uses
-  %6 = extractelement <2 x i1> %5, i64 0
-  %7 = extractelement <2 x i1> %5, i64 1
-  %.sroa.0.0.i281 = select i1 %6, i1 true, i1 %7
+  %.fr2165 = freeze <2 x i32> %i.jr
+  %4 = and <2 x i32> %.fr2165, splat (i32 16384)
+  %.scalar = bitcast <2 x i32> %4 to i64
+  %.sroa.0.0.i281 = icmp ne i64 %.scalar, 0
   %i.js = icmp eq i64 %i.je, 0
   %or.cond220.i = select i1 %.sroa.0.0.i281, i1 true, i1 %i.js
   br i1 %or.cond220.i, label %bb.g, label %bb.f
@@ -258,12 +257,11 @@ bb.l:                                             ; preds = %bb.m, %bb.k, %bb.j
 
 bb.m:                                             ; preds = %bb.k
   %i.kd = load <2 x i32>, ptr %i.jp, align 4
-  %8 = and <2 x i32> %i.kd, splat (i32 1048576)
-  %9 = icmp ne <2 x i32> %8, zeroinitializer      ; 2 uses
-  %10 = extractelement <2 x i1> %9, i64 0
-  %11 = extractelement <2 x i1> %9, i64 1
-  %.sroa.0.0.i279 = select i1 %10, i1 true, i1 %11
-  br i1 %.sroa.0.0.i279, label %bb.l, label %bb.n
+  %.fr2166 = freeze <2 x i32> %i.kd
+  %5 = and <2 x i32> %.fr2166, splat (i32 1048576)
+  %.scalar2167 = bitcast <2 x i32> %5 to i64
+  %.sroa.0.0.i279.not = icmp eq i64 %.scalar2167, 0
+  br i1 %.sroa.0.0.i279.not, label %bb.n, label %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.ke = invoke { ptr, ptr } @_RNvMCs74Z8AuVjqbo_8clap_lexNtB2_7RawArgs9remaining(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %2, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.ga)
@@ -666,11 +664,10 @@ bb.mp:                                            ; preds = %bb.mn, %bb.mo
   %.sroa.053.0.i = phi i1 [ false, %bb.mn ], [ %.not.i111, %bb.mo ] ; 2 uses
   %i.ahr = getelementptr i8, ptr %.pre1337, i64 676
   %i.ahs = load <2 x i32>, ptr %i.ahr, align 4
-  %12 = and <2 x i32> %i.ahs, splat (i32 16)
-  %13 = icmp ne <2 x i32> %12, zeroinitializer    ; 2 uses
-  %14 = extractelement <2 x i1> %13, i64 0
-  %15 = extractelement <2 x i1> %13, i64 1
-  %.sroa.0.0.i110 = select i1 %14, i1 true, i1 %15 ; 2 uses
+  %.fr2168 = freeze <2 x i32> %i.ahs
+  %6 = and <2 x i32> %.fr2168, splat (i32 16)
+  %.scalar2169 = bitcast <2 x i32> %6 to i64
+  %.sroa.0.0.i110 = icmp ne i64 %.scalar2169, 0   ; 2 uses
   %brmerge.not.i = and i1 %i.jn, %.sroa.0.0.i110
   br i1 %brmerge.not.i, label %bb.mr, label %bb.mq
 
@@ -1073,11 +1070,10 @@ bb.vo:                                            ; preds = %bb.kf
   %i.avo = getelementptr i8, ptr %i.avn, i64 676  ; 2 uses
   %i.avp = getelementptr i8, ptr %i.avn, i64 680
   %i.avq = load <2 x i32>, ptr %i.avo, align 4
-  %16 = and <2 x i32> %i.avq, splat (i32 8192)
-  %17 = icmp ne <2 x i32> %16, zeroinitializer    ; 2 uses
-  %18 = extractelement <2 x i1> %17, i64 0
-  %19 = extractelement <2 x i1> %17, i64 1
-  %.sroa.0.0.i28 = select i1 %18, i1 true, i1 %19
+  %.fr2170 = freeze <2 x i32> %i.avq
+  %7 = and <2 x i32> %.fr2170, splat (i32 8192)
+  %.scalar2171 = bitcast <2 x i32> %7 to i64
+  %.sroa.0.0.i28 = icmp ne i64 %.scalar2171, 0
   %i.avr = trunc nuw i8 %.sroa.0.5 to i1
   %or.cond7.i = select i1 %.sroa.0.0.i28, i1 %i.avr, i1 false
   br i1 %or.cond7.i, label %bb.vs, label %bb.vp

@@ -204,11 +204,11 @@ bb.au:                                            ; preds = %bb.at
   call void @prepare_submodule_repo_env(ptr noundef nonnull %i.eg) #18
   call void (ptr, ...) @strvec_pushl(ptr noundef nonnull %2, ptr noundef nonnull @.str.338, ptr noundef null) #18
   %i.eh = load <2 x i32>, ptr %1, align 8, !tbaa !24
-  %8 = and <2 x i32> %i.eh, splat (i32 61440)
+  %.fr108 = freeze <2 x i32> %i.eh
+  %8 = and <2 x i32> %.fr108, splat (i32 61440)
   %9 = icmp eq <2 x i32> %8, splat (i32 57344)    ; 2 uses
-  %10 = extractelement <2 x i1> %9, i64 0
-  %11 = extractelement <2 x i1> %9, i64 1         ; 2 uses
-  %or.cond.i88 = select i1 %10, i1 %11, i1 false
+  %10 = bitcast <2 x i1> %9 to i2
+  %or.cond.i88 = icmp eq i2 %10, -1
   br i1 %or.cond.i88, label %bb.av, label %._crit_edge.i
 
 bb.av:                                            ; preds = %bb.au
@@ -227,6 +227,7 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av
   br label %bb.ba
 
 ._crit_edge.i:                                    ; preds = %bb.au
+  %11 = extractelement <2 x i1> %9, i64 1
   br i1 %11, label %bb.ay, label %bb.az
 
 bb.ay:                                            ; preds = %._crit_edge.i

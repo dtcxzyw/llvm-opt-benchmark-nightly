@@ -204,7 +204,8 @@ bb.p:                                             ; preds = %bb.k, %bb.k
   %i.bw = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.bx = load i32, ptr %i.bw, align 16
   %i.by = getelementptr inbounds nuw i8, ptr %i.b, i64 24
-  %i.bz = load <2 x i32>, ptr %i.by, align 8      ; 2 uses
+  %i.bz = load <2 x i32>, ptr %i.by, align 8
+  %.fr = freeze <2 x i32> %i.bz                   ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.cb = load i32, ptr %i.ca, align 16           ; 2 uses
   %i.cc = load ptr, ptr %0, align 8, !tbaa !27    ; 9 uses
@@ -264,14 +265,13 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
-  %2 = icmp sgt <2 x i32> %i.bz, zeroinitializer  ; 2 uses
-  %3 = extractelement <2 x i1> %2, i64 0
-  %4 = extractelement <2 x i1> %2, i64 1
-  %or.cond3 = select i1 %3, i1 %4, i1 false
+  %2 = icmp slt <2 x i32> %.fr, splat (i32 1)
+  %3 = bitcast <2 x i1> %2 to i2
+  %or.cond3 = icmp eq i2 %3, 0
   br i1 %or.cond3, label %bb.w, label %bb.y
 
 bb.w:                                             ; preds = %bb.v
-  %i.cw = udiv <2 x i32> %i.bz, splat (i32 100)
+  %i.cw = udiv <2 x i32> %.fr, splat (i32 100)
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 296
   %i.cy = trunc <2 x i32> %i.cw to <2 x i16>
   store <2 x i16> %i.cy, ptr %i.cx, align 8, !tbaa !78

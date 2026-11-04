@@ -205,13 +205,13 @@ bb.z:                                             ; preds = %bb.y
   %i.dj = load <2 x i32>, ptr %i.dh, align 4, !tbaa !104
   %i.dk = load <2 x i32>, ptr %i.di, align 4, !tbaa !104
   %i.dl = sub nsw <2 x i32> %i.dk, %i.dj
-  %i.dm = add nsw <2 x i32> %i.dl, splat (i32 1)  ; 2 uses
+  %.fr1688 = freeze <2 x i32> %i.dl
+  %i.dm = add <2 x i32> %.fr1688, splat (i32 1)   ; 2 uses
   store <2 x i32> %i.dm, ptr %.reload.addr1217, align 8, !tbaa !104
-  %i.dn = icmp eq <2 x i32> %i.dm, zeroinitializer ; 2 uses
-  %25 = extractelement <2 x i1> %i.dn, i64 0
-  %26 = extractelement <2 x i1> %i.dn, i64 1
-  %or.cond = select i1 %25, i1 true, i1 %26
-  br i1 %or.cond, label %bb.aa, label %bb.ad
+  %i.dn = icmp eq <2 x i32> %i.dm, zeroinitializer
+  %25 = bitcast <2 x i1> %i.dn to i2
+  %or.cond.not = icmp eq i2 %25, 0
+  br i1 %or.cond.not, label %bb.ad, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
   %i.do = invoke noundef nonnull align 8 dereferenceable(25) ptr @_ZNK7Imf_3_49InputPart6headerEv(ptr noundef nonnull align 8 dereferenceable(8) %.reload.addr1221)

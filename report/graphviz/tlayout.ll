@@ -202,7 +202,8 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t,
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.n, %._crit_edge.i36
-  %i.de = phi <2 x double> [ %i.bi, %._crit_edge.i36 ], [ %i.bu, %bb.w ], [ zeroinitializer, %bb.n ] ; 8 uses
+  %i.de = phi <2 x double> [ %i.bi, %._crit_edge.i36 ], [ %i.bu, %bb.w ], [ zeroinitializer, %bb.n ]
+  %.fr = freeze <2 x double> %i.de                ; 8 uses
   %i.df = load i32, ptr getelementptr inbounds nuw (i8, ptr @parms, i64 64), align 8, !tbaa !23
   %i.dg = icmp eq i32 %i.df, 2
   br i1 %i.dg, label %bb.y, label %bb.z
@@ -227,8 +228,8 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   br i1 %.not177200.i, label %._crit_edge203.i, label %.lr.ph202.i.preheader
 
 .lr.ph202.i.preheader:                            ; preds = %.preheader.i
-  %i.dk = extractelement <2 x double> %i.de, i64 0
-  %i.dl = extractelement <2 x double> %i.de, i64 1
+  %i.dk = extractelement <2 x double> %.fr, i64 0
+  %i.dl = extractelement <2 x double> %.fr, i64 1
   br label %.lr.ph202.i
 
 .lr.ph202.i:                                      ; preds = %.lr.ph202.i.preheader, %.lr.ph202.i
@@ -264,7 +265,7 @@ bb.aa:                                            ; preds = %bb.z, %bb.y
   br i1 %.not178215.i, label %initPositions.exit, label %.lr.ph219.i
 
 .lr.ph219.i:                                      ; preds = %._crit_edge203.i
-  %i.eg = fmul <2 x double> %i.de, splat (double 1.000000e-01)
+  %i.eg = fmul <2 x double> %.fr, splat (double 1.000000e-01)
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.an, %.lr.ph219.i
@@ -294,7 +295,7 @@ bb.ae:                                            ; preds = %bb.ad
   %i.er = getelementptr inbounds nuw i8, ptr %i.ei, i64 176
   %i.es = load ptr, ptr %i.er, align 8, !tbaa !46 ; 2 uses
   %i.et = load <2 x double>, ptr %i.es, align 8, !tbaa !18
-  %i.eu = fsub <2 x double> %i.et, %i.de
+  %i.eu = fsub <2 x double> %i.et, %.fr
   store <2 x double> %i.eu, ptr %i.es, align 8, !tbaa !18
   br label %bb.an
 
@@ -454,7 +455,7 @@ bb.aq:                                            ; preds = %.lr.ph223.i
   %i.hr = getelementptr inbounds nuw i8, ptr %i.ho, i64 176
   %i.hs = load ptr, ptr %i.hr, align 8, !tbaa !46 ; 2 uses
   %i.ht = load <2 x double>, ptr %i.hs, align 8, !tbaa !18
-  %i.hu = fsub <2 x double> %i.ht, %i.de
+  %i.hu = fsub <2 x double> %i.ht, %.fr
   store <2 x double> %i.hu, ptr %i.hs, align 8, !tbaa !18
   br label %bb.as
 
@@ -857,11 +858,10 @@ adjust.exit:                                      ; preds = %.lr.ph90, %._crit_e
   br i1 %i.tb, label %.lr.ph90, label %.loopexit75, !llvm.loop !81
 
 .loopexit75:                                      ; preds = %adjust.exit, %.preheader, %._crit_edge
-  %i.tc = fcmp une <2 x double> %i.de, zeroinitializer ; 2 uses
-  %2 = extractelement <2 x i1> %i.tc, i64 0
-  %3 = extractelement <2 x i1> %i.tc, i64 1
-  %or.cond = select i1 %2, i1 true, i1 %3
-  br i1 %or.cond, label %bb.bq, label %.loopexit
+  %i.tc = fcmp une <2 x double> %.fr, zeroinitializer
+  %2 = bitcast <2 x i1> %i.tc to i2
+  %or.cond.not = icmp eq i2 %2, 0
+  br i1 %or.cond.not, label %.loopexit, label %bb.bq
 
 bb.bq:                                            ; preds = %.loopexit75
   %i.td = tail call ptr @agfstnode(ptr noundef %0) #6 ; 2 uses
@@ -869,8 +869,8 @@ bb.bq:                                            ; preds = %.loopexit75
   br i1 %.not3491, label %.loopexit, label %.lr.ph94.preheader
 
 .lr.ph94.preheader:                               ; preds = %bb.bq
-  %i.te = extractelement <2 x double> %i.de, i64 0
-  %i.tf = extractelement <2 x double> %i.de, i64 1
+  %i.te = extractelement <2 x double> %.fr, i64 0
+  %i.tf = extractelement <2 x double> %.fr, i64 1
   br label %.lr.ph94
 
 .lr.ph94:                                         ; preds = %.lr.ph94.preheader, %.lr.ph94

@@ -50,7 +50,8 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 116
   %i.j = load i32, ptr %i.i, align 4, !tbaa !69   ; 2 uses
-  %i.k = load <2 x i32>, ptr %i.f, align 8, !tbaa !42 ; 2 uses
+  %i.k = load <2 x i32>, ptr %i.f, align 8, !tbaa !42
+  %.fr74 = freeze <2 x i32> %i.k                  ; 2 uses
   %i.l = and i32 %i.j, 15
   %.not56 = icmp eq i32 %i.l, 0
   br i1 %.not56, label %bb.d, label %bb.c
@@ -74,11 +75,10 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.n
 
 bb.f:                                             ; preds = %bb.d
-  %i.r = tail call range(i32 0, 33) <2 x i32> @llvm.ctpop.v2i32(<2 x i32> %i.k)
-  %1 = icmp samesign ult <2 x i32> %i.r, splat (i32 2) ; 2 uses
-  %2 = extractelement <2 x i1> %1, i64 0
-  %3 = extractelement <2 x i1> %1, i64 1
-  %or.cond67 = select i1 %2, i1 %3, i1 false
+  %i.r = tail call range(i32 0, 33) <2 x i32> @llvm.ctpop.v2i32(<2 x i32> %.fr74)
+  %1 = icmp samesign ugt <2 x i32> %i.r, splat (i32 1)
+  %2 = bitcast <2 x i1> %1 to i2
+  %or.cond67 = icmp eq i2 %2, 0
   br i1 %or.cond67, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
@@ -87,7 +87,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.g
-  %i.t = phi <2 x i32> [ %i.k, %bb.f ], [ %i.s, %bb.g ]
+  %i.t = phi <2 x i32> [ %.fr74, %bb.f ], [ %i.s, %bb.g ]
   %i.u = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 7 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 36 ; 6 uses
   store <2 x i32> %i.t, ptr %i.u, align 8, !tbaa !42

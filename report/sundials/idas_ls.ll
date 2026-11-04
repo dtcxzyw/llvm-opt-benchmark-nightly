@@ -203,12 +203,14 @@ bb.f:                                             ; preds = %bb.e
   %i.an = insertelement <2 x double> %i.am, double %i.ak, i64 1
   %i.ao = insertelement <2 x double> poison, double %i.ah, i64 0
   %i.ap = insertelement <2 x double> %i.ao, double %i.al, i64 1
-  %i.aq = fdiv <2 x double> %i.an, %i.ap          ; 3 uses
-  %i.ar = fcmp ogt <2 x double> %i.aq, splat (double 9.000000e-01) ; 2 uses
-  %i.as = extractelement <2 x i1> %i.ar, i64 0    ; 2 uses
-  %i.at = extractelement <2 x i1> %i.ar, i64 1    ; 2 uses
-  %or.cond3 = select i1 %i.as, i1 true, i1 %i.at
-  br i1 %or.cond3, label %bb.g, label %bb.l
+  %i.aq = fdiv <2 x double> %i.an, %i.ap
+  %.fr = freeze <2 x double> %i.aq                ; 3 uses
+  %i.ar = fcmp ogt <2 x double> %.fr, splat (double 9.000000e-01) ; 3 uses
+  %i.as = extractelement <2 x i1> %i.ar, i64 0
+  %i.at = extractelement <2 x i1> %i.ar, i64 1
+  %2 = bitcast <2 x i1> %i.ar to i2
+  %or.cond3.not = icmp eq i2 %2, 0
+  br i1 %or.cond3.not, label %bb.l, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.au = getelementptr inbounds nuw i8, ptr %i.b, i64 224 ; 2 uses
@@ -224,7 +226,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 1264
   %i.az = load double, ptr %i.ay, align 8, !tbaa !65
-  %i.ba = extractelement <2 x double> %i.aq, i64 0
+  %i.ba = extractelement <2 x double> %.fr, i64 0
   tail call void (ptr, i32, i32, ptr, ptr, ptr, ...) @IDAProcessError(ptr noundef nonnull %0, i32 noundef 99, i32 noundef 1728, ptr noundef nonnull @__func__.idaLsPerf, ptr noundef nonnull @.str, ptr noundef nonnull @.str.40, double noundef %i.az, double noundef %i.ba) #12
   br label %bb.j
 
@@ -234,7 +236,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 bb.k:                                             ; preds = %bb.j
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 1264
   %i.bc = load double, ptr %i.bb, align 8, !tbaa !65
-  %i.bd = extractelement <2 x double> %i.aq, i64 1
+  %i.bd = extractelement <2 x double> %.fr, i64 1
   tail call void (ptr, i32, i32, ptr, ptr, ptr, ...) @IDAProcessError(ptr noundef nonnull %0, i32 noundef 99, i32 noundef 1733, ptr noundef nonnull @__func__.idaLsPerf, ptr noundef nonnull @.str, ptr noundef nonnull @.str.41, double noundef %i.bc, double noundef %i.bd) #12
   br label %bb.l
 

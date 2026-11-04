@@ -205,13 +205,13 @@ bb.h:                                             ; preds = %.preheader.us, %bb.
   %i.dq = fsub reassoc nsz arcp contract afn <2 x float> %i.do, %i.dp
   %i.dr = fmul reassoc nsz arcp contract afn <2 x float> %i.dq, %i.dm
   %i.ds = call reassoc nsz arcp contract afn <2 x float> @llvm.floor.v2f32(<2 x float> %i.dr)
-  %i.dt = fptosi <2 x float> %i.ds to <2 x i32>   ; 2 uses
-  store <2 x i32> %i.dt, ptr %i.dl, align 4, !tbaa !17
-  %4 = icmp slt <2 x i32> %i.dt, splat (i32 4)    ; 2 uses
-  %5 = extractelement <2 x i1> %4, i64 0
-  %6 = extractelement <2 x i1> %4, i64 1
-  %or.cond = select i1 %5, i1 true, i1 %6
-  br i1 %or.cond, label %bb.i, label %bb.n
+  %i.dt = fptosi <2 x float> %i.ds to <2 x i32>
+  %.fr = freeze <2 x i32> %i.dt                   ; 2 uses
+  store <2 x i32> %.fr, ptr %i.dl, align 4, !tbaa !17
+  %4 = icmp slt <2 x i32> %.fr, splat (i32 4)
+  %5 = bitcast <2 x i1> %4 to i2
+  %or.cond.not = icmp eq i2 %5, 0
+  br i1 %or.cond.not, label %bb.n, label %bb.i
 
 bb.i:                                             ; preds = %._crit_edge96
   %i.du = load i32, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 8), align 8, !tbaa !101

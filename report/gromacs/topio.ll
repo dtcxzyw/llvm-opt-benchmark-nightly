@@ -205,7 +205,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.al = shufflevector <8 x float> %i.v, <8 x float> poison, <2 x i32> <i32 1, i32 7>
   %i.am = fpext <2 x float> %i.al to <2 x double>
   %i.an = fadd <2 x double> %i.ak, %i.am
-  %i.ao = fptrunc <2 x double> %i.an to <2 x float> ; 3 uses
+  %.fr = freeze <2 x double> %i.an
+  %i.ao = fptrunc <2 x double> %.fr to <2 x float> ; 3 uses
   %shift = shufflevector <2 x float> %i.ao, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop = fsub <2 x float> %i.ao, %shift
   %i.ap = extractelement <2 x float> %foldExtExtBinop, i64 0
@@ -220,11 +221,10 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.au = zext i1 %not. to i32
   %.127 = add nsw i32 %.026125, %i.au             ; 2 uses
   %i.av = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %i.ao)
-  %i.aw = fcmp ogt <2 x float> %i.av, splat (float f0x3C23D70A) ; 2 uses
-  %9 = extractelement <2 x i1> %i.aw, i64 0
-  %10 = extractelement <2 x i1> %i.aw, i64 1
-  %or.cond = select i1 %9, i1 true, i1 %10
-  br i1 %or.cond, label %bb.c, label %bb.d
+  %i.aw = fcmp ogt <2 x float> %i.av, splat (float f0x3C23D70A)
+  %9 = bitcast <2 x i1> %i.aw to i2
+  %or.cond.not = icmp eq i2 %9, 0
+  br i1 %or.cond.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.i
   %i.ax = add nsw i32 %.0126, 1

@@ -205,10 +205,10 @@ bb.c:                                             ; preds = %bb.b
   %i.s = load <2 x i32>, ptr %i.l, align 8, !tbaa !7
   %i.t = sitofp <2 x i32> %i.s to <2 x float>
   %i.u = fdiv contract <2 x float> %i.t, %i.o
-  %5 = fcmp contract oeq <2 x float> %i.u, splat (float 1.000000e+00) ; 2 uses
-  %6 = extractelement <2 x i1> %5, i64 0
-  %7 = extractelement <2 x i1> %5, i64 1
-  %or.cond.i = select i1 %6, i1 %7, i1 false
+  %.fr = freeze <2 x float> %i.u
+  %5 = fcmp une <2 x float> %.fr, splat (float 1.000000e+00)
+  %6 = bitcast <2 x i1> %5 to i2
+  %or.cond.i = icmp eq i2 %6, 0
   br i1 %or.cond.i, label %bb.d, label %bb.k
 
 bb.d:                                             ; preds = %bb.c
@@ -216,10 +216,10 @@ bb.d:                                             ; preds = %bb.c
   %i.w = load <2 x i32>, ptr %i.v, align 8, !tbaa !7
   %i.x = sitofp <2 x i32> %i.w to <2 x float>
   %i.y = fdiv contract <2 x float> %i.x, %i.o
-  %i.z = fcmp contract oeq <2 x float> %i.r, %i.y ; 2 uses
-  %8 = extractelement <2 x i1> %i.z, i64 0
-  %9 = extractelement <2 x i1> %i.z, i64 1
-  %or.cond35.i = select i1 %8, i1 %9, i1 false
+  %i.z = fcmp contract oeq <2 x float> %i.r, %i.y
+  %7 = freeze <2 x i1> %i.z
+  %8 = bitcast <2 x i1> %7 to i2
+  %or.cond35.i = icmp eq i2 %8, -1
   br i1 %or.cond35.i, label %bb.e, label %bb.k
 
 bb.e:                                             ; preds = %bb.d

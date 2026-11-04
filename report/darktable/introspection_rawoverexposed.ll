@@ -204,6 +204,7 @@ vec.epilog.scalar.ph.prol.loopexit:               ; preds = %vec.epilog.scalar.p
   %i.ed = load i32, ptr %i.bl, align 8
   %i.ee = load <2 x i32>, ptr %i.bl, align 8
   %i.ef = zext nneg i32 %i.ed to i64
+  %.fr183 = freeze <2 x i32> %i.ee
   br label %bb.d
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.prol.loopexit, %vec.epilog.scalar.ph
@@ -281,25 +282,22 @@ bb.d:                                             ; preds = %.lr.ph107, %bb.m
   %.idx123 = shl nuw nsw i64 %indvars.iv112, 3
   %i.ga = getelementptr inbounds nuw i8, ptr %i.bg, i64 %.idx123
   %i.gb = load <2 x float>, ptr %i.ga, align 8, !tbaa !113
-  %i.gc = fptosi <2 x float> %i.gb to <2 x i32>   ; 7 uses
-  %i.gd = icmp slt <2 x i32> %i.gc, zeroinitializer ; 2 uses
-  %7 = extractelement <2 x i1> %i.gd, i64 0
-  %8 = extractelement <2 x i1> %i.gd, i64 1
-  %or.cond = select i1 %7, i1 true, i1 %8
-  br i1 %or.cond, label %bb.m, label %9
+  %i.gc = fptosi <2 x float> %i.gb to <2 x i32>
+  %.fr = freeze <2 x i32> %i.gc                   ; 7 uses
+  %i.gd = icmp slt <2 x i32> %.fr, zeroinitializer
+  %7 = bitcast <2 x i1> %i.gd to i2
+  %or.cond.not = icmp eq i2 %7, 0
+  %8 = icmp sle <2 x i32> %.fr183, %.fr
+  %9 = bitcast <2 x i1> %8 to i2
+  %or.cond101 = icmp eq i2 %9, 0
+  %or.cond = and i1 %or.cond.not, %or.cond101
+  br i1 %or.cond, label %bb.e, label %bb.m
 
-9:                                                ; preds = %bb.d
-  %10 = icmp sgt <2 x i32> %i.ee, %i.gc           ; 2 uses
-  %11 = extractelement <2 x i1> %10, i64 0
-  %12 = extractelement <2 x i1> %10, i64 1
-  %or.cond101 = select i1 %11, i1 %12, i1 false
-  br i1 %or.cond101, label %bb.e, label %bb.m
-
-bb.e:                                             ; preds = %9
+bb.e:                                             ; preds = %bb.d
   br i1 %i.bm, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.ge = add nuw nsw <2 x i32> %i.gc, splat (i32 600)
+  %i.ge = add nuw nsw <2 x i32> %.fr, splat (i32 600)
   %i.gf = urem <2 x i32> %i.ge, splat (i32 6)     ; 2 uses
   %i.gg = extractelement <2 x i32> %i.gf, i64 1
   %i.gh = zext nneg i32 %i.gg to i64
@@ -312,10 +310,10 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
-  %i.go = extractelement <2 x i32> %i.gc, i64 1
+  %i.go = extractelement <2 x i32> %.fr, i64 1
   %i.gp = shl nuw i32 %i.go, 1
   %i.gq = and i32 %i.gp, 14
-  %i.gr = extractelement <2 x i32> %i.gc, i64 0
+  %i.gr = extractelement <2 x i32> %.fr, i64 0
   %i.gs = and i32 %i.gr, 1
   %i.gt = or disjoint i32 %i.gq, %i.gs
   %i.gu = shl nuw nsw i32 %i.gt, 1
@@ -325,10 +323,10 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.0 = phi i32 [ %i.gn, %bb.f ], [ %i.gw, %bb.g ]
-  %i.gx = extractelement <2 x i32> %i.gc, i64 1
+  %i.gx = extractelement <2 x i32> %.fr, i64 1
   %i.gy = zext nneg i32 %i.gx to i64
   %i.gz = mul nuw nsw i64 %i.ef, %i.gy
-  %i.ha = extractelement <2 x i32> %i.gc, i64 0
+  %i.ha = extractelement <2 x i32> %.fr, i64 0
   %i.hb = zext nneg i32 %i.ha to i64
   %i.hc = getelementptr [2 x i8], ptr %i.au, i64 %i.gz
   %i.hd = getelementptr [2 x i8], ptr %i.hc, i64 %i.hb
@@ -365,7 +363,7 @@ bb.l:                                             ; preds = %bb.i
   store float 0.000000e+00, ptr %i.hp, align 4, !tbaa !113
   br label %bb.m
 
-bb.m:                                             ; preds = %bb.h, %bb.l, %bb.k, %bb.j, %bb.i, %bb.d, %9
+bb.m:                                             ; preds = %bb.h, %bb.l, %bb.k, %bb.j, %bb.i, %bb.d
   %indvars.iv.next113 = add nuw nsw i64 %indvars.iv112, 1 ; 2 uses
   %i.hq = load i32, ptr %i.ai, align 4, !tbaa !107 ; 3 uses
   %i.hr = sext i32 %i.hq to i64

@@ -205,16 +205,15 @@ bb.b:                                             ; preds = %bb.a
   %i.a = load ptr, ptr %1, align 8
   tail call fastcc void @nk_draw_list_push_image(ptr noundef %0, ptr %i.a)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.c = load <2 x i16>, ptr %i.b, align 8        ; 2 uses
-  %5 = icmp ne <2 x i16> %i.c, zeroinitializer    ; 2 uses
-  %6 = extractelement <2 x i1> %5, i64 0
-  %7 = extractelement <2 x i1> %5, i64 1
-  %or.cond = select i1 %6, i1 true, i1 %7
-  br i1 %or.cond, label %nk_image_is_subimage.exit.thread, label %bb.c
+  %i.c = load <2 x i16>, ptr %i.b, align 8
+  %.fr = freeze <2 x i16> %i.c                    ; 2 uses
+  %.fr.scalar = bitcast <2 x i16> %.fr to i32
+  %or.cond.not = icmp eq i32 %.fr.scalar, 0
+  br i1 %or.cond.not, label %bb.c, label %nk_image_is_subimage.exit.thread
 
 nk_image_is_subimage.exit.thread:                 ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %i.e = uitofp <2 x i16> %i.c to <2 x float>     ; 2 uses
+  %i.e = uitofp <2 x i16> %.fr to <2 x float>     ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.g = load <2 x i16>, ptr %i.d, align 4, !tbaa !106 ; 2 uses
   %i.h = uitofp <2 x i16> %i.g to <2 x float>
@@ -617,22 +616,21 @@ bb.bp:                                            ; preds = %bb.c
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.0249425, i64 32
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.0249425, i64 36
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.0249425, i64 40
-  %i.ur = load <2 x i16>, ptr %.sroa.4.0..sroa_idx, align 8 ; 2 uses
-  %5 = load <2 x i16>, ptr %.sroa.6.0..sroa_idx, align 4 ; 2 uses
-  %i.us = load <2 x i16>, ptr %.sroa.8.0..sroa_idx, align 8
+  %i.ur = load <2 x i16>, ptr %.sroa.4.0..sroa_idx, align 8
+  %.fr = freeze <2 x i16> %i.ur                   ; 2 uses
+  %i.us = load <2 x i16>, ptr %.sroa.6.0..sroa_idx, align 4 ; 2 uses
+  %5 = load <2 x i16>, ptr %.sroa.8.0..sroa_idx, align 8
   tail call fastcc void @nk_draw_list_push_image(ptr noundef nonnull %i.k, ptr %.sroa.0.0.copyload)
-  %6 = icmp ne <2 x i16> %i.ur, zeroinitializer   ; 2 uses
-  %7 = extractelement <2 x i1> %6, i64 0
-  %8 = extractelement <2 x i1> %6, i64 1
-  %or.cond.i = select i1 %7, i1 true, i1 %8
-  br i1 %or.cond.i, label %nk_image_is_subimage.exit.thread.i, label %bb.bq
+  %.fr.scalar = bitcast <2 x i16> %.fr to i32
+  %or.cond.i.not = icmp eq i32 %.fr.scalar, 0
+  br i1 %or.cond.i.not, label %bb.bq, label %nk_image_is_subimage.exit.thread.i
 
 nk_image_is_subimage.exit.thread.i:               ; preds = %bb.bp
-  %i.ut = uitofp <2 x i16> %i.ur to <2 x float>   ; 2 uses
-  %i.uu = uitofp <2 x i16> %5 to <2 x float>
+  %i.ut = uitofp <2 x i16> %.fr to <2 x float>    ; 2 uses
+  %i.uu = uitofp <2 x i16> %i.us to <2 x float>
   %i.uv = fdiv <2 x float> %i.uu, %i.ut
-  %i.uw = zext <2 x i16> %5 to <2 x i32>
-  %i.ux = zext <2 x i16> %i.us to <2 x i32>
+  %i.uw = zext <2 x i16> %i.us to <2 x i32>
+  %i.ux = zext <2 x i16> %5 to <2 x i32>
   %i.uy = add nuw nsw <2 x i32> %i.ux, %i.uw
   %i.uz = uitofp nneg <2 x i32> %i.uy to <2 x float>
   %i.va = fdiv <2 x float> %i.uz, %i.ut
@@ -1035,11 +1033,11 @@ stbtt_GetGlyphBitmapBoxSubpixel.exit:             ; preds = %bb.b
   %i.y = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.x, <2 x float> %i.r, <2 x float> zeroinitializer)
   %i.z = call <2 x float> @llvm.ceil.v2f32(<2 x float> %i.y)
   %i.aa = fptosi <2 x float> %i.z to <2 x i32>    ; 3 uses
-  %i.ab = icmp eq <2 x i32> %i.u, %i.aa           ; 2 uses
-  %10 = extractelement <2 x i1> %i.ab, i64 0
-  %11 = extractelement <2 x i1> %i.ab, i64 1
-  %or.cond519 = select i1 %11, i1 true, i1 %10
-  br i1 %or.cond519, label %bb.bp, label %bb.c
+  %i.ab = icmp eq <2 x i32> %i.u, %i.aa
+  %10 = freeze <2 x i1> %i.ab
+  %11 = bitcast <2 x i1> %10 to i2
+  %or.cond519.not = icmp eq i2 %11, 0
+  br i1 %or.cond519.not, label %bb.c, label %bb.bp
 
 bb.c:                                             ; preds = %stbtt_GetGlyphBitmapBoxSubpixel.exit
   %i.ac = extractelement <2 x i32> %i.u, i64 1
@@ -1442,10 +1440,10 @@ nk_input_is_mouse_hovering_rect.exit.i:           ; preds = %bb.h
   %i.bh = fcmp ole <2 x float> %i.an, %i.bg
   %i.bi = fadd <2 x float> %i.an, splat (float 4.000000e+00)
   %i.bj = fcmp olt <2 x float> %i.bg, %i.bi
-  %i.bk = and <2 x i1> %i.bh, %i.bj               ; 2 uses
-  %3 = extractelement <2 x i1> %i.bk, i64 0
-  %4 = extractelement <2 x i1> %i.bk, i64 1
-  %narrow.i = select i1 %3, i1 %4, i1 false
+  %i.bk = and <2 x i1> %i.bh, %i.bj
+  %3 = freeze <2 x i1> %i.bk
+  %4 = bitcast <2 x i1> %3 to i2
+  %narrow.i = icmp eq i2 %4, -1
   %.0.i.i = zext i1 %narrow.i to i32              ; 2 uses
   %i.bl = load i8, ptr %i.au, align 4, !tbaa !388, !range !88, !noundef !89
   %i.bm = trunc nuw i8 %i.bl to i1

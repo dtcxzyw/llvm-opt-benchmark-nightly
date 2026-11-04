@@ -205,7 +205,8 @@ _ZNKSt6vectorIN2cv11hough_indexESaIS1_EE12_M_check_lenEmPKc.exit.i.i.i.i: ; pred
   %i.ba = insertelement <2 x double> <double f0x401921FB54442D18, double poison>, double %sqrt.i, i64 1
   %i.bb = fmul <2 x double> %i.ba, %i.az
   %i.bc = call <2 x double> @llvm.floor.v2f64(<2 x double> %i.bb)
-  %i.bd = fptosi <2 x double> %i.bc to <2 x i32>  ; 3 uses
+  %i.bd = fptosi <2 x double> %i.bc to <2 x i32>
+  %.fr = freeze <2 x i32> %i.bd                   ; 3 uses
   %i.be = invoke noalias noundef nonnull dereferenceable(12) ptr @_Znwm(i64 noundef 12) #25
           to label %bb.q unwind label %bb.t       ; 15 uses
 
@@ -214,7 +215,7 @@ bb.q:                                             ; preds = %_ZNKSt6vectorIN2cv1
   %.sroa.6453.0..sroa_idx454.i = getelementptr inbounds nuw i8, ptr %i.be, i64 4
   store <2 x float> <float -1.000000e+00, float 0.000000e+00>, ptr %.sroa.6453.0..sroa_idx454.i, align 4, !tbaa !43
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 12 ; 15 uses
-  %i.bg = extractelement <2 x i32> %i.bd, i64 0   ; 6 uses
+  %i.bg = extractelement <2 x i32> %.fr, i64 0    ; 6 uses
   %i.bh = mul i32 %i.bg, 5
   %i.bi = mul i32 %i.bh, %i.n                     ; 6 uses
   %i.bj = sext i32 %i.bi to i64                   ; 3 uses
@@ -318,7 +319,7 @@ _ZNSt6vectorIfSaIfEED2Ev.exit401.thread545.i:     ; preds = %bb.s, %bb.r
 ._crit_edge.i:                                    ; preds = %._crit_edge.i.loopexit, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i
   %.sroa.10449.0845.i = phi i64 [ 0, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ %i.cn, %._crit_edge.i.loopexit ] ; 2 uses
   %.sroa.0445.0842.i = phi ptr [ null, %_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_.exit.i.i ], [ %i.bm, %._crit_edge.i.loopexit ] ; 7 uses
-  %i.co = extractelement <2 x i32> %i.bd, i64 1   ; 3 uses
+  %i.co = extractelement <2 x i32> %.fr, i64 1    ; 3 uses
   %i.cp = mul nsw i32 %i.co, %i.bg                ; 5 uses
   %i.cq = sext i32 %i.cp to i64                   ; 3 uses
   %i.cr = icmp slt i32 %i.cp, 0
@@ -508,10 +509,11 @@ _ZSt6fill_nIPimiET_S1_T0_RKT1_.exit.loopexit.i.i.i.i.i353.i: ; preds = %.noexc35
   %.sroa.10436.0507878.i = phi ptr [ null, %_ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit.i ], [ %.sroa.10436.0507.i, %.preheader565.i.loopexit ] ; 4 uses
   %.0291.lcssa848851877.i = phi i64 [ 0, %_ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit.i ], [ %i.ek, %.preheader565.i.loopexit ] ; 2 uses
   %.not.i.i.i.i346852876.i = phi i1 [ true, %_ZNSt6vectorIhSaIhEEC2EmRKhRKS0_.exit.i ], [ %.not.i.i.i.i346.i, %.preheader565.i.loopexit ]
-  %i.el = icmp sgt <2 x i32> %i.bd, zeroinitializer ; 2 uses
-  %i.em = extractelement <2 x i1> %i.el, i64 0    ; 2 uses
-  %i.en = extractelement <2 x i1> %i.el, i64 1    ; 2 uses
-  %or.cond921.i = select i1 %i.en, i1 %i.em, i1 false
+  %i.el = icmp sgt <2 x i32> %.fr, zeroinitializer ; 3 uses
+  %i.em = extractelement <2 x i1> %i.el, i64 0
+  %i.en = extractelement <2 x i1> %i.el, i64 1
+  %20 = bitcast <2 x i1> %i.el to i2
+  %or.cond921.i = icmp eq i2 %20, -1
   br i1 %or.cond921.i, label %.preheader564.us.preheader.i, label %._crit_edge650.thread.i
 
 .preheader564.us.preheader.i:                     ; preds = %.preheader565.i

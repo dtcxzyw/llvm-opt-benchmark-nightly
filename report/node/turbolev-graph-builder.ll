@@ -205,10 +205,10 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.ak = getelementptr inbounds nuw i8, ptr %i.z, i64 4
   %i.al = load <2 x i8>, ptr %i.ak, align 4, !noalias !3036
   %i.am = load <2 x i8>, ptr %i.o, align 4, !noalias !3037
-  %i.an = icmp eq <2 x i8> %i.al, %i.am           ; 2 uses
-  %3 = extractelement <2 x i1> %i.an, i64 0
-  %4 = extractelement <2 x i1> %i.an, i64 1
-  %or.cond.i.i = select i1 %3, i1 %4, i1 false
+  %i.an = icmp eq <2 x i8> %i.al, %i.am
+  %3 = freeze <2 x i1> %i.an
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond.i.i = icmp eq i2 %4, -1
   br i1 %or.cond.i.i, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_15ChangeOrDeoptOpEE12EqualsForGVNERKS5_.exit, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_15ChangeOrDeoptOpEE12EqualsForGVNERKS5_.exit.thread
 
 _ZNK2v88internal8compiler10turboshaft10OperationTINS2_15ChangeOrDeoptOpEE12EqualsForGVNERKS5_.exit: ; preds = %bb.g
@@ -611,10 +611,10 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.ao = load i8, ptr %i.p, align 2, !noalias !3596
   %i.ap = load <2 x i8>, ptr %i.al, align 4, !noalias !3595
   %i.aq = load <2 x i8>, ptr %i.o, align 4, !noalias !3596
-  %i.ar = icmp eq <2 x i8> %i.ap, %i.aq           ; 2 uses
-  %3 = extractelement <2 x i1> %i.ar, i64 0
-  %4 = extractelement <2 x i1> %i.ar, i64 1
-  %or.cond.i.i = select i1 %3, i1 %4, i1 false
+  %i.ar = icmp eq <2 x i8> %i.ap, %i.aq
+  %3 = freeze <2 x i1> %i.ar
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond.i.i = icmp eq i2 %4, -1
   %i.as = icmp eq i8 %i.an, %i.ao
   %or.cond18.i.i = select i1 %or.cond.i.i, i1 %i.as, i1 false
   br i1 %or.cond18.i.i, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_37ConvertUntaggedToJSPrimitiveOrDeoptOpEE12EqualsForGVNERKS5_.exit, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_37ConvertUntaggedToJSPrimitiveOrDeoptOpEE12EqualsForGVNERKS5_.exit.thread
@@ -1017,10 +1017,10 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.ao = load i8, ptr %i.p, align 2, !noalias !3609
   %i.ap = load <2 x i8>, ptr %i.al, align 4, !noalias !3608
   %i.aq = load <2 x i8>, ptr %i.o, align 4, !noalias !3609
-  %i.ar = icmp eq <2 x i8> %i.ap, %i.aq           ; 2 uses
-  %3 = extractelement <2 x i1> %i.ar, i64 0
-  %4 = extractelement <2 x i1> %i.ar, i64 1
-  %or.cond.i.i = select i1 %3, i1 %4, i1 false
+  %i.ar = icmp eq <2 x i8> %i.ap, %i.aq
+  %3 = freeze <2 x i1> %i.ar
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond.i.i = icmp eq i2 %4, -1
   %i.as = icmp eq i8 %i.an, %i.ao
   %or.cond18.i.i = select i1 %or.cond.i.i, i1 %i.as, i1 false
   br i1 %or.cond18.i.i, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_37ConvertJSPrimitiveToUntaggedOrDeoptOpEE12EqualsForGVNERKS5_.exit, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_37ConvertJSPrimitiveToUntaggedOrDeoptOpEE12EqualsForGVNERKS5_.exit.thread
@@ -1423,10 +1423,10 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.ak = getelementptr inbounds nuw i8, ptr %i.z, i64 4
   %i.al = load <2 x i8>, ptr %i.ak, align 4, !noalias !3628
   %i.am = load <2 x i8>, ptr %i.o, align 4, !noalias !3629
-  %i.an = icmp eq <2 x i8> %i.al, %i.am           ; 2 uses
-  %3 = extractelement <2 x i1> %i.an, i64 0
-  %4 = extractelement <2 x i1> %i.an, i64 1
-  %or.cond.i.i = select i1 %3, i1 %4, i1 false
+  %i.an = icmp eq <2 x i8> %i.al, %i.am
+  %3 = freeze <2 x i1> %i.an
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond.i.i = icmp eq i2 %4, -1
   br i1 %or.cond.i.i, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_38TruncateJSPrimitiveToUntaggedOrDeoptOpEE12EqualsForGVNERKS5_.exit, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_38TruncateJSPrimitiveToUntaggedOrDeoptOpEE12EqualsForGVNERKS5_.exit.thread
 
 _ZNK2v88internal8compiler10turboshaft10OperationTINS2_38TruncateJSPrimitiveToUntaggedOrDeoptOpEE12EqualsForGVNERKS5_.exit: ; preds = %bb.g
@@ -1829,10 +1829,10 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ab, i64 4
   %i.ap = load <2 x i8>, ptr %i.ao, align 4, !noalias !3835
   %i.aq = load <2 x i8>, ptr %i.p, align 4, !noalias !3836
-  %i.ar = icmp eq <2 x i8> %i.ap, %i.aq           ; 2 uses
-  %3 = extractelement <2 x i1> %i.ar, i64 0
-  %4 = extractelement <2 x i1> %i.ar, i64 1
-  %or.cond.i.i = select i1 %3, i1 %4, i1 false
+  %i.ar = icmp eq <2 x i8> %i.ap, %i.aq
+  %3 = freeze <2 x i1> %i.ar
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond.i.i = icmp eq i2 %4, -1
   br i1 %or.cond.i.i, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_26WordBinopDeoptOnOverflowOpEE12EqualsForGVNERKS5_.exit, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_26WordBinopDeoptOnOverflowOpEE12EqualsForGVNERKS5_.exit.thread
 
 _ZNK2v88internal8compiler10turboshaft10OperationTINS2_26WordBinopDeoptOnOverflowOpEE12EqualsForGVNERKS5_.exit: ; preds = %bb.g

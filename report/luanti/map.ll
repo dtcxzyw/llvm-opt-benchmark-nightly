@@ -204,11 +204,11 @@ bb.ad:                                            ; preds = %.thread
   %.sroa.0.0.insert.insert.i102 = or disjoint i48 %.sroa.3.0.insert.shift.i97, %i.gk ; 2 uses
   %i.gl = icmp sgt <2 x i16> %i.f, %i.gj
   %i.gm = icmp slt <2 x i16> %i.j, %i.gj
-  %i.gn = or <2 x i1> %i.gl, %i.gm                ; 2 uses
-  %5 = extractelement <2 x i1> %i.gn, i64 0
-  %6 = extractelement <2 x i1> %i.gn, i64 1
-  %or.cond14.i = select i1 %5, i1 true, i1 %6
-  br i1 %or.cond14.i, label %_ZNSt6vectorIN4core8vector3dIsEESaIS2_EE9push_backERKS2_.exit, label %bb.ae
+  %i.gn = or <2 x i1> %i.gl, %i.gm
+  %5 = freeze <2 x i1> %i.gn
+  %6 = bitcast <2 x i1> %5 to i2
+  %or.cond14.i.not = icmp eq i2 %6, 0
+  br i1 %or.cond14.i.not, label %bb.ae, label %_ZNSt6vectorIN4core8vector3dIsEESaIS2_EE9push_backERKS2_.exit
 
 bb.ae:                                            ; preds = %.lr.ph
   %.not9.i = icmp sge i16 %i.gh, %.sroa.8172.0

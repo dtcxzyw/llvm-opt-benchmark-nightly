@@ -205,12 +205,12 @@ bb.b:                                             ; preds = %bb.a
   %narrow90 = mul nuw nsw i32 %i.s, 3
   %.0.idx = zext nneg i32 %narrow90 to i64
   %.0 = getelementptr inbounds nuw i8, ptr %1, i64 %.0.idx ; 2 uses
-  %i.t = add nsw <2 x i32> %i.p, %i.r             ; 3 uses
-  %3 = icmp slt <2 x i32> %i.t, zeroinitializer   ; 2 uses
-  %4 = extractelement <2 x i1> %3, i64 0
-  %5 = extractelement <2 x i1> %3, i64 1
-  %or.cond = select i1 %4, i1 true, i1 %5
-  br i1 %or.cond, label %.loopexit, label %bb.c
+  %i.t = add nsw <2 x i32> %i.p, %i.r
+  %.fr = freeze <2 x i32> %i.t                    ; 3 uses
+  %3 = icmp slt <2 x i32> %.fr, zeroinitializer
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond.not = icmp eq i2 %4, 0
+  br i1 %or.cond.not, label %bb.c, label %.loopexit
 
 bb.c:                                             ; preds = %bb.b
   %i.u = extractelement <2 x i32> %i.i, i64 1     ; 3 uses
@@ -235,12 +235,12 @@ bb.e:                                             ; preds = %bb.c
 bb.f:                                             ; preds = %bb.e, %bb.d
   %.174 = phi ptr [ %i.ab, %bb.d ], [ %.073, %bb.e ]
   %.1 = phi ptr [ %.0, %bb.d ], [ %i.ae, %bb.e ]
-  %i.af = extractelement <2 x i32> %i.t, i64 1    ; 2 uses
+  %i.af = extractelement <2 x i32> %.fr, i64 1    ; 2 uses
   %.not100 = icmp eq i32 %i.af, 0
   br i1 %.not100, label %.loopexit, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %bb.f
-  %i.ag = extractelement <2 x i32> %i.t, i64 0    ; 2 uses
+  %i.ag = extractelement <2 x i32> %.fr, i64 0    ; 2 uses
   %.not101 = icmp eq i32 %i.ag, 0
   %i.ah = sext i32 %2 to i64
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 10872

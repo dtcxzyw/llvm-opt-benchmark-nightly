@@ -205,13 +205,13 @@ bb.b:                                             ; preds = %.outer, %bb.e
   %i.ai = phi <2 x float> [ %i.bg, %bb.e ], [ %.ph25, %.outer ] ; 3 uses
   %i.aj = fadd <2 x float> %i.ah, %.ph26
   %i.ak = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ai, <2 x float> splat (float -2.000000e+00), <2 x float> %i.aj)
-  %9 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %i.ak)
-  %10 = fcmp ole <2 x float> %9, splat (float 2.500000e-01) ; 2 uses
-  %11 = extractelement <2 x i1> %10, i64 0
-  %12 = extractelement <2 x i1> %10, i64 1
-  %13 = select i1 %11, i1 %12, i1 false
+  %.fr25 = freeze <2 x float> %i.ak
+  %9 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %.fr25)
+  %10 = fcmp ugt <2 x float> %9, splat (float 2.500000e-01)
+  %11 = bitcast <2 x i1> %10 to i2
+  %12 = icmp eq i2 %11, 0
   %i.al = icmp sgt i32 %.064.i.i, 15
-  %or.cond.i.i = select i1 %i.al, i1 true, i1 %13
+  %or.cond.i.i = or i1 %i.al, %12
   br i1 %or.cond.i.i, label %bb.c, label %bb.e
 
 bb.c:                                             ; preds = %bb.b

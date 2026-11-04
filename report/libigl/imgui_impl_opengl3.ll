@@ -202,12 +202,12 @@ bb.a:
   %i.s = load <2 x float>, ptr %i.q, align 8, !tbaa !60
   %i.t = load <2 x float>, ptr %i.r, align 8, !tbaa !60
   %i.u = fmul <2 x float> %i.s, %i.t
-  %i.v = fptosi <2 x float> %i.u to <2 x i32>     ; 3 uses
-  %1 = icmp slt <2 x i32> %i.v, splat (i32 1)     ; 2 uses
-  %2 = extractelement <2 x i1> %1, i64 0
-  %3 = extractelement <2 x i1> %1, i64 1
-  %or.cond = select i1 %2, i1 true, i1 %3
-  br i1 %or.cond, label %bb.t, label %bb.b
+  %i.v = fptosi <2 x float> %i.u to <2 x i32>
+  %.fr = freeze <2 x i32> %i.v                    ; 3 uses
+  %1 = icmp slt <2 x i32> %.fr, splat (i32 1)
+  %2 = bitcast <2 x i1> %1 to i2
+  %or.cond.not = icmp eq i2 %2, 0
+  br i1 %or.cond.not, label %bb.b, label %bb.t
 
 bb.b:                                             ; preds = %bb.a
   %i.w = tail call noundef ptr @_ZN5ImGui17GetCurrentContextEv()
@@ -308,8 +308,8 @@ bb.h:                                             ; preds = %bb.f, %bb.g
   %i.bi = load ptr, ptr getelementptr inbounds nuw (i8, ptr @imgl3wProcs, i64 224), align 8, !tbaa !14
   call void %i.bi(i32 noundef 1, ptr noundef nonnull %i.p)
   %i.bj = load i32, ptr %i.p, align 4, !tbaa !31
-  %i.bk = extractelement <2 x i32> %i.v, i64 0    ; 2 uses
-  %i.bl = extractelement <2 x i32> %i.v, i64 1    ; 3 uses
+  %i.bk = extractelement <2 x i32> %.fr, i64 0    ; 2 uses
+  %i.bl = extractelement <2 x i32> %.fr, i64 1    ; 3 uses
   call fastcc void @_ZL34ImGui_ImplOpenGL3_SetupRenderStateP10ImDrawDataiij(ptr noundef nonnull %0, i32 noundef %i.bk, i32 noundef %i.bl, i32 noundef %i.bj)
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.bn = load <2 x float>, ptr %i.bm, align 8, !tbaa !60 ; 2 uses
@@ -402,11 +402,11 @@ bb.m:                                             ; preds = %bb.j
   %i.dh = load <2 x float>, ptr %i.dd, align 8, !tbaa !60
   %i.di = fsub <2 x float> %i.dh, %i.bn
   %i.dj = fmul <2 x float> %i.bo, %i.di           ; 3 uses
-  %i.dk = fcmp olt <2 x float> %i.dj, %i.dg       ; 2 uses
-  %4 = extractelement <2 x i1> %i.dk, i64 0
-  %5 = extractelement <2 x i1> %i.dk, i64 1
-  %or.cond79 = select i1 %4, i1 true, i1 %5
-  br i1 %or.cond79, label %.critedge, label %bb.n
+  %i.dk = fcmp olt <2 x float> %i.dj, %i.dg
+  %3 = freeze <2 x i1> %i.dk
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond79.not = icmp eq i2 %4, 0
+  br i1 %or.cond79.not, label %bb.n, label %.critedge
 
 bb.n:                                             ; preds = %bb.m
   %i.dl = load ptr, ptr getelementptr inbounds nuw (i8, ptr @imgl3wProcs, i64 352), align 8, !tbaa !14

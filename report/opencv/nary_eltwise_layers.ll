@@ -205,7 +205,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.f,
   %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 4
   %i.x = load <2 x i32>, ptr %i.w, align 4
   %i.y = icmp eq <2 x i32> %i.x, %i.r
-  %12 = select <2 x i1> %i.t, <2 x i1> %i.y, <2 x i1> zeroinitializer
+  %.fr = freeze <2 x i1> %i.y
+  %12 = and <2 x i1> %i.t, %.fr
   %i.z = icmp eq i32 %i.v, %i.q
   %i.aa = select i1 %.055169, i1 %i.z, i1 false
   %.sroa.speculated119 = tail call i32 @llvm.smax.i32(i32 %.0165, i32 %i.v)
@@ -215,7 +216,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.f,
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ab, i64 56
   %i.af = load <2 x i32>, ptr %i.ae, align 4
   %i.ag = icmp eq <2 x i32> %i.af, %i.r
-  %13 = select <2 x i1> %12, <2 x i1> %i.ag, <2 x i1> zeroinitializer ; 3 uses
+  %.fr.1 = freeze <2 x i1> %i.ag
+  %13 = and <2 x i1> %12, %.fr.1                  ; 3 uses
   %i.ah = icmp eq i32 %i.ad, %i.q
   %i.ai = select i1 %i.aa, i1 %i.ah, i1 false     ; 3 uses
   %.sroa.speculated119.1 = tail call i32 @llvm.smax.i32(i32 %.sroa.speculated119, i32 %i.ad) ; 3 uses
@@ -240,20 +242,20 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.f,
   %i.am = getelementptr inbounds nuw i8, ptr %i.ak, i64 4
   %i.an = load <2 x i32>, ptr %i.am, align 4
   %i.ao = icmp eq <2 x i32> %i.an, %i.r
-  %14 = select <2 x i1> %.epil.init, <2 x i1> %i.ao, <2 x i1> zeroinitializer
+  %.fr.epil = freeze <2 x i1> %i.ao
+  %14 = and <2 x i1> %.epil.init, %.fr.epil
   %i.ap = icmp eq i32 %i.al, %i.q
   %i.aq = select i1 %.055169.epil.init, i1 %i.ap, i1 false
   %.sroa.speculated119.epil = tail call i32 @llvm.smax.i32(i32 %.0165.epil.init, i32 %i.al)
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.unr-lcssa, %.lr.ph.epil.preheader
-  %.lcssa213 = phi <2 x i1> [ %13, %._crit_edge.unr-lcssa ], [ %14, %.lr.ph.epil.preheader ] ; 2 uses
+  %.lcssa213 = phi <2 x i1> [ %13, %._crit_edge.unr-lcssa ], [ %14, %.lr.ph.epil.preheader ]
   %.lcssa = phi i1 [ %i.ai, %._crit_edge.unr-lcssa ], [ %i.aq, %.lr.ph.epil.preheader ]
   %.sroa.speculated119.lcssa = phi i32 [ %.sroa.speculated119.1, %._crit_edge.unr-lcssa ], [ %.sroa.speculated119.epil, %.lr.ph.epil.preheader ] ; 4 uses
   tail call void @_ZN2cv8MatShapeC1EiiNS_10DataLayoutE(ptr noundef nonnull align 4 dereferenceable(52) %0, i32 noundef %.sroa.speculated119.lcssa, i32 noundef 1, i32 noundef 0)
-  %15 = extractelement <2 x i1> %.lcssa213, i64 0
-  %16 = extractelement <2 x i1> %.lcssa213, i64 1
-  %or.cond = select i1 %15, i1 %16, i1 false
+  %15 = bitcast <2 x i1> %.lcssa213 to i2
+  %or.cond = icmp eq i2 %15, -1
   %or.cond3 = select i1 %or.cond, i1 %.lcssa, i1 false
   br i1 %or.cond3, label %bb.g, label %.lr.ph179
 

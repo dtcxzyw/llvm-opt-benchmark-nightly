@@ -205,12 +205,11 @@ _ZNSt6vectorIZN4LIEF5MachO13LayoutChecker18check_initializersEvE7range_tSaIS3_EE
   %i.aj = load ptr, ptr %.sroa.4193.0296, align 8, !tbaa !70 ; 4 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.aj, i64 120
   %i.al = load <2 x i32>, ptr %i.ak, align 8
-  %13 = and <2 x i32> %i.al, splat (i32 4)
-  %14 = icmp ne <2 x i32> %13, zeroinitializer    ; 2 uses
-  %15 = extractelement <2 x i1> %14, i64 0
-  %16 = extractelement <2 x i1> %14, i64 1
-  %17 = select i1 %16, i1 true, i1 %15
-  br i1 %17, label %bb.d, label %_ZNSt6vectorIZN4LIEF5MachO13LayoutChecker18check_initializersEvE7range_tSaIS3_EE9push_backEOS3_.exit
+  %.fr462 = freeze <2 x i32> %i.al
+  %13 = and <2 x i32> %.fr462, splat (i32 4)
+  %.scalar = bitcast <2 x i32> %13 to i64
+  %.not463 = icmp eq i64 %.scalar, 0
+  br i1 %.not463, label %_ZNSt6vectorIZN4LIEF5MachO13LayoutChecker18check_initializersEvE7range_tSaIS3_EE9push_backEOS3_.exit, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph
   %i.am = getelementptr inbounds nuw i8, ptr %i.aj, i64 88
@@ -613,12 +612,11 @@ bb.aa:                                            ; preds = %bb.z
   %i.ia = load ptr, ptr %i.hz, align 8, !tbaa !446
   %i.ib = getelementptr inbounds nuw i8, ptr %i.ia, i64 120
   %i.ic = load <2 x i32>, ptr %i.ib, align 8
-  %18 = and <2 x i32> %i.ic, splat (i32 2)
-  %19 = icmp ne <2 x i32> %18, zeroinitializer    ; 2 uses
-  %20 = extractelement <2 x i1> %19, i64 0
-  %21 = extractelement <2 x i1> %19, i64 1
-  %22 = select i1 %21, i1 true, i1 %20
-  br i1 %22, label %bb.ab, label %bb.ac
+  %.fr465 = freeze <2 x i32> %i.ic
+  %14 = and <2 x i32> %.fr465, splat (i32 2)
+  %.scalar467 = bitcast <2 x i32> %14 to i64
+  %.not466 = icmp eq i64 %.scalar467, 0
+  br i1 %.not466, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   %i.id = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNK4LIEF5MachO7Section12segment_nameB5cxx11Ev(ptr noundef nonnull align 8 dereferenceable(192) %i.hv) #24
@@ -1021,12 +1019,11 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c
   %i.q = getelementptr inbounds nuw i8, ptr %i.o, i64 120
   %i.r = load <2 x i32>, ptr %i.q, align 8
-  %1 = and <2 x i32> %i.r, splat (i32 4)
-  %2 = icmp ne <2 x i32> %1, zeroinitializer      ; 2 uses
-  %3 = extractelement <2 x i1> %2, i64 0
-  %4 = extractelement <2 x i1> %2, i64 1
-  %5 = select i1 %4, i1 true, i1 %3
-  br i1 %5, label %.thread, label %.thread60.sink.split
+  %.fr71 = freeze <2 x i32> %i.r
+  %1 = and <2 x i32> %.fr71, splat (i32 4)
+  %.scalar = bitcast <2 x i32> %1 to i64
+  %.not72 = icmp eq i64 %.scalar, 0
+  br i1 %.not72, label %.thread60.sink.split, label %.thread
 
 bb.e:                                             ; preds = %bb.b
   %i.s = tail call noundef ptr @_ZNK4LIEF5MachO6Binary14thread_commandEv(ptr noundef nonnull align 8 dereferenceable(552) %i.f) #24 ; 2 uses
@@ -1054,12 +1051,11 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 120
   %i.ac = load <2 x i32>, ptr %i.ab, align 8
-  %6 = and <2 x i32> %i.ac, splat (i32 4)
-  %7 = icmp ne <2 x i32> %6, zeroinitializer      ; 2 uses
-  %8 = extractelement <2 x i1> %7, i64 0
-  %9 = extractelement <2 x i1> %7, i64 1
-  %10 = select i1 %9, i1 true, i1 %8
-  br i1 %10, label %.thread60, label %.thread60.sink.split
+  %.fr73 = freeze <2 x i32> %i.ac
+  %2 = and <2 x i32> %.fr73, splat (i32 4)
+  %.scalar75 = bitcast <2 x i32> %2 to i64
+  %.not74 = icmp eq i64 %.scalar75, 0
+  br i1 %.not74, label %.thread60.sink.split, label %.thread60
 
 .thread60.sink.split:                             ; preds = %bb.e, %bb.h, %bb.g, %bb.f, %bb.d, %bb.c
   %.str.28.sink = phi ptr [ @.str.27, %bb.d ], [ @.str.28, %bb.f ], [ @.str.26, %bb.g ], [ @.str.26, %bb.c ], [ @.str.27, %bb.h ], [ @.str.29, %bb.e ]

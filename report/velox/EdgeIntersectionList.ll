@@ -202,10 +202,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.b, %.lr.ph
   %.sroa.09.014 = phi ptr [ %i.a, %.lr.ph ], [ %i.g, %bb.b ] ; 2 uses
   %i.e = load <2 x double>, ptr %.sroa.09.014, align 8
-  %i.f = fcmp oeq <2 x double> %i.e, %i.d         ; 2 uses
-  %2 = extractelement <2 x i1> %i.f, i64 0
-  %3 = extractelement <2 x i1> %i.f, i64 1
-  %.0.i.i = select i1 %2, i1 %3, i1 false         ; 2 uses
+  %i.f = fcmp oeq <2 x double> %i.e, %i.d
+  %2 = freeze <2 x i1> %i.f
+  %3 = bitcast <2 x i1> %2 to i2
+  %.0.i.i = icmp eq i2 %3, -1                     ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.sroa.09.014, i64 40 ; 2 uses
   %.not.not = icmp eq ptr %i.g, %i.c
   %or.cond = select i1 %.0.i.i, i1 true, i1 %.not.not
@@ -502,18 +502,17 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.r = load <2 x double>, ptr %2, align 8
   %i.s = load <2 x double>, ptr %i.n, align 8
-  %i.t = fcmp une <2 x double> %i.r, %i.s         ; 2 uses
-  %4 = extractelement <2 x i1> %i.t, i64 0
-  %5 = extractelement <2 x i1> %i.t, i64 1
-  %.0.i.not = select i1 %4, i1 true, i1 %5
-  %cond.fr = freeze i1 %.0.i.not                  ; 2 uses
-  %not.cond.fr = xor i1 %cond.fr, true
+  %i.t = fcmp une <2 x double> %i.r, %i.s
+  %4 = freeze <2 x i1> %i.t
+  %5 = bitcast <2 x i1> %4 to i2
+  %.0.i.not = icmp ne i2 %5, 0                    ; 2 uses
+  %not.cond.fr = xor i1 %.0.i.not, true
   %i.u = sext i1 %not.cond.fr to i64
   %spec.select = add i64 %i.f, %i.u
   br label %.thread
 
 .thread:                                          ; preds = %bb.b, %bb.a
-  %i.v = phi i1 [ %cond.fr, %bb.b ], [ true, %bb.a ] ; 2 uses
+  %i.v = phi i1 [ %.0.i.not, %bb.b ], [ true, %bb.a ] ; 2 uses
   %i.w = phi i64 [ %spec.select, %bb.b ], [ %i.f, %bb.a ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #19
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, i8 0, i64 24, i1 false)

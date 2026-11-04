@@ -204,13 +204,13 @@ _ZL23single_real_horner_evaljPKddj.exit72.loopexit.us.i: ; preds = %.lr.ph.i68.u
   %i.ed = fmul <2 x double> %i.ea, %i.ec          ; 3 uses
   %i.ee = fsub <2 x double> %i.ed, %i.bb
   %i.ef = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.ee)
-  %i.eg = fcmp olt <2 x double> %i.ef, %i.az      ; 2 uses
-  %2 = extractelement <2 x i1> %i.eg, i64 0
-  %3 = extractelement <2 x i1> %i.eg, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 2 uses
+  %i.eg = fcmp olt <2 x double> %i.ef, %i.az
+  %2 = freeze <2 x i1> %i.eg
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 2 uses
   %i.eh = add nsw i32 %i.ba, -1
   %i.ei = icmp eq i32 %i.ba, 0
-  %.not63.us.i = select i1 %i.ei, i1 true, i1 %4
+  %.not63.us.i = or i1 %i.ei, %4
   br i1 %.not63.us.i, label %.split.us.i, label %.lr.ph55.i.preheader.us.i, !llvm.loop !76
 
 _ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.split.i: ; preds = %_ZL19coords_out_of_rangeP8PJconstsPKN12_GLOBAL__N_16hornerEdd.exit.i
@@ -241,12 +241,11 @@ _ZL23double_real_horner_evaljPKdS0_5PJ_UVj.exit.thread.peel.next.i: ; preds = %_
   %i.fe = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.fd)
   %i.ff = insertelement <2 x double> poison, double %i.n, i64 0
   %i.fg = shufflevector <2 x double> %i.ff, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.fh = fcmp olt <2 x double> %i.fe, %i.fg      ; 2 uses
-  %5 = extractelement <2 x i1> %i.fh, i64 0
-  %6 = extractelement <2 x i1> %i.fh, i64 1
-  %7 = select i1 %5, i1 %6, i1 false
-  %.fr = freeze i1 %7
-  br i1 %.fr, label %.split.us.thread.i, label %.split.us.i.thread32
+  %i.fh = fcmp olt <2 x double> %i.fe, %i.fg
+  %5 = freeze <2 x i1> %i.fh
+  %6 = bitcast <2 x i1> %5 to i2
+  %7 = icmp eq i2 %6, -1
+  br i1 %7, label %.split.us.thread.i, label %.split.us.i.thread32
 
 .split.us.i:                                      ; preds = %_ZL23single_real_horner_evaljPKddj.exit72.loopexit.us.i
   br i1 %4, label %.split.us.thread.i, label %.split.us.i.thread32

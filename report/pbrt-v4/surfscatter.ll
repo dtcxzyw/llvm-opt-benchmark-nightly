@@ -204,11 +204,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %.sroa.068.4.vec.extract = extractelement <2 x float> %3, i64 1
   %i.e = shufflevector <2 x float> %3, <2 x float> %1, <2 x i32> <i32 1, i32 3>
-  %5 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %i.e)
-  %6 = fcmp olt <2 x float> %5, splat (float 7.200000e-01) ; 2 uses
-  %7 = extractelement <2 x i1> %6, i64 0
-  %8 = extractelement <2 x i1> %6, i64 1
-  %or.cond166 = select i1 %8, i1 %7, i1 false     ; 2 uses
+  %.fr210 = freeze <2 x float> %i.e
+  %5 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %.fr210)
+  %6 = fcmp uge <2 x float> %5, splat (float 7.200000e-01)
+  %7 = bitcast <2 x i1> %6 to i2
+  %or.cond166 = icmp eq i2 %7, 0                  ; 2 uses
   %spec.select = select i1 %or.cond166, float 1.000000e+00, float 0.000000e+00
   %spec.select167 = select i1 %or.cond166, float 0.000000e+00, float 1.000000e+00
   %i.f = insertelement <2 x float> <float 0.000000e+00, float poison>, float %spec.select, i64 1

@@ -205,10 +205,10 @@ bb.d:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.n = load <2 x i8>, ptr %i.l, align 8
   %i.o = load <2 x i8>, ptr %i.m, align 8
-  %i.p = icmp eq <2 x i8> %i.n, %i.o              ; 2 uses
-  %2 = extractelement <2 x i1> %i.p, i64 0
-  %3 = extractelement <2 x i1> %i.p, i64 1
-  %.sroa.0.0.i = select i1 %2, i1 %3, i1 false
+  %i.p = icmp eq <2 x i8> %i.n, %i.o
+  %2 = freeze <2 x i1> %i.p
+  %3 = bitcast <2 x i1> %2 to i2
+  %.sroa.0.0.i = icmp eq i2 %3, -1
   br label %_RNvXsI_NtNtCs1Jc0oVeks7E_15datafusion_expr12logical_plan9statementNtB5_11SetVariableNtNtCscI6d9CVNmLh_4core3cmp9PartialEq2eq.exit
 
 bb.e:                                             ; preds = %bb.b
@@ -216,10 +216,10 @@ bb.e:                                             ; preds = %bb.b
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.s = load <2 x i8>, ptr %i.q, align 8
   %i.t = load <2 x i8>, ptr %i.r, align 8
-  %i.u = icmp eq <2 x i8> %i.s, %i.t              ; 2 uses
-  %4 = extractelement <2 x i1> %i.u, i64 0
-  %5 = extractelement <2 x i1> %i.u, i64 1
-  %.sroa.0.0.i17 = select i1 %5, i1 %4, i1 false
+  %i.u = icmp eq <2 x i8> %i.s, %i.t
+  %4 = freeze <2 x i1> %i.u
+  %5 = bitcast <2 x i1> %4 to i2
+  %.sroa.0.0.i17 = icmp eq i2 %5, -1
   br label %_RNvXsI_NtNtCs1Jc0oVeks7E_15datafusion_expr12logical_plan9statementNtB5_11SetVariableNtNtCscI6d9CVNmLh_4core3cmp9PartialEq2eq.exit
 
 bb.f:                                             ; preds = %bb.b
@@ -622,10 +622,10 @@ bb.ak:                                            ; preds = %bb.af
   %i.fd = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.fe = load <2 x i8>, ptr %i.fc, align 8, !alias.scope !112149
   %i.ff = load <2 x i8>, ptr %i.fd, align 8, !alias.scope !112150
-  %i.fg = icmp eq <2 x i8> %i.fe, %i.ff           ; 2 uses
-  %2 = extractelement <2 x i1> %i.fg, i64 0
-  %3 = extractelement <2 x i1> %i.fg, i64 1
-  %.sroa.0.0.i31 = select i1 %3, i1 %2, i1 false
+  %i.fg = icmp eq <2 x i8> %i.fe, %i.ff
+  %2 = freeze <2 x i1> %i.fg
+  %3 = bitcast <2 x i1> %2 to i2
+  %.sroa.0.0.i31 = icmp eq i2 %3, -1
   br label %_RNvXs2_NtNtCscI6d9CVNmLh_4core5slice3cmpNtNtCs40MM8ukkVQd_9sqlparser3ast4ExprINtB5_14SlicePartialEqBC_E17equal_same_lengthCsc85D0lJ81Z_16lance_datafusion.exit
 
 bb.al:                                            ; preds = %bb.b

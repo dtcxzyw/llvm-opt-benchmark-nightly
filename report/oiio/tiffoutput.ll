@@ -205,15 +205,14 @@ bb.dd:                                            ; preds = %bb.db, %bb.dc
 
 bb.de:                                            ; preds = %bb.da, %bb.dd
   %i.rz = phi <2 x float> [ %i.rv, %bb.dd ], [ %i.rk, %bb.da ]
-  %i.sa = load <2 x i32>, ptr %i.l, align 8, !tbaa !56 ; 2 uses
-  %77 = icmp eq <2 x i32> %i.sa, zeroinitializer  ; 2 uses
-  %78 = extractelement <2 x i1> %77, i64 0
-  %79 = extractelement <2 x i1> %77, i64 1
-  %or.cond405 = select i1 %78, i1 %79, i1 false
+  %i.sa = load <2 x i32>, ptr %i.l, align 8, !tbaa !56
+  %.fr = freeze <2 x i32> %i.sa                   ; 2 uses
+  %.fr.scalar = bitcast <2 x i32> %.fr to i64
+  %or.cond405 = icmp eq i64 %.fr.scalar, 0
   br i1 %or.cond405, label %bb.df, label %._crit_edge344
 
 ._crit_edge344:                                   ; preds = %bb.de
-  %i.sb = sitofp <2 x i32> %i.sa to <2 x float>
+  %i.sb = sitofp <2 x i32> %.fr to <2 x float>
   %i.sc = load ptr, ptr %i.f, align 8, !tbaa !117
   %i.sd = fdiv <2 x float> %i.sb, %i.rz           ; 2 uses
   %i.se = fcmp ogt <2 x float> %i.sd, zeroinitializer

@@ -204,12 +204,12 @@ bb.m:                                             ; preds = %bb.l
   %i.bs = srem <2 x i32> %i.bp, %i.br
   %i.bt = insertelement <2 x i32> poison, i32 %i.h, i64 0
   %i.bu = insertelement <2 x i32> %i.bt, i32 %i.k, i64 1
-  %i.bv = sub <2 x i32> %i.bu, %i.bs              ; 3 uses
-  %9 = icmp sgt <2 x i32> %i.bv, zeroinitializer  ; 2 uses
-  %10 = extractelement <2 x i1> %9, i64 0
-  %11 = extractelement <2 x i1> %9, i64 1
-  %or.cond = select i1 %10, i1 true, i1 %11
-  br i1 %or.cond, label %bb.n, label %bb.r
+  %i.bv = sub <2 x i32> %i.bu, %i.bs
+  %.fr70 = freeze <2 x i32> %i.bv                 ; 3 uses
+  %9 = icmp sgt <2 x i32> %.fr70, zeroinitializer
+  %10 = bitcast <2 x i1> %9 to i2
+  %or.cond.not = icmp eq i2 %10, 0
+  br i1 %or.cond.not, label %bb.r, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #9
@@ -218,8 +218,8 @@ bb.n:                                             ; preds = %bb.m
   %i.bx = load ptr, ptr %i.bw, align 8, !tbaa !77
   %i.by = getelementptr inbounds nuw i8, ptr %7, i64 8
   store ptr %i.bx, ptr %i.by, align 8, !tbaa !68
-  %i.bz = sdiv <2 x i32> %i.bv, splat (i32 2)     ; 3 uses
-  %i.ca = sub nsw <2 x i32> %i.bv, %i.bz          ; 2 uses
+  %i.bz = sdiv <2 x i32> %.fr70, splat (i32 2)    ; 3 uses
+  %i.ca = sub nsw <2 x i32> %.fr70, %i.bz         ; 2 uses
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 252
   %i.cc = load float, ptr %i.cb, align 4, !tbaa !49
   %i.cd = extractelement <2 x i32> %i.ca, i64 0
@@ -247,12 +247,12 @@ bb.p:                                             ; preds = %bb.o
   %i.co = srem <2 x i32> %i.cm, %i.cn
   %i.cp = insertelement <2 x i32> poison, i32 %i.h, i64 0
   %i.cq = insertelement <2 x i32> %i.cp, i32 %i.k, i64 1
-  %i.cr = sub <2 x i32> %i.cq, %i.co              ; 3 uses
-  %12 = icmp sgt <2 x i32> %i.cr, zeroinitializer ; 2 uses
-  %13 = extractelement <2 x i1> %12, i64 0
-  %14 = extractelement <2 x i1> %12, i64 1
-  %or.cond3 = select i1 %13, i1 true, i1 %14
-  br i1 %or.cond3, label %bb.q, label %bb.r
+  %i.cr = sub <2 x i32> %i.cq, %i.co
+  %.fr = freeze <2 x i32> %i.cr                   ; 3 uses
+  %11 = icmp sgt <2 x i32> %.fr, zeroinitializer
+  %12 = bitcast <2 x i1> %11 to i2
+  %or.cond3.not = icmp eq i2 %12, 0
+  br i1 %or.cond3.not, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #9
@@ -261,8 +261,8 @@ bb.q:                                             ; preds = %bb.p
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !77
   %i.cu = getelementptr inbounds nuw i8, ptr %8, i64 8
   store ptr %i.ct, ptr %i.cu, align 8, !tbaa !68
-  %i.cv = sdiv <2 x i32> %i.cr, splat (i32 2)     ; 3 uses
-  %i.cw = sub nsw <2 x i32> %i.cr, %i.cv          ; 2 uses
+  %i.cv = sdiv <2 x i32> %.fr, splat (i32 2)      ; 3 uses
+  %i.cw = sub nsw <2 x i32> %.fr, %i.cv           ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 252
   %i.cy = load float, ptr %i.cx, align 4, !tbaa !49
   %i.cz = extractelement <2 x i32> %i.cw, i64 0

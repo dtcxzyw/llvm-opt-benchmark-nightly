@@ -205,10 +205,10 @@ bb.j:                                             ; preds = %_ZN5boost9container
 bb.k:                                             ; preds = %.lr.ph.i
   %i.bw = load <2 x i32>, ptr %.sroa.0147.0, align 4
   %i.bx = load <2 x i32>, ptr %.sroa.0142.0, align 4
-  %i.by = icmp eq <2 x i32> %i.bw, %i.bx          ; 2 uses
-  %10 = extractelement <2 x i1> %i.by, i64 0
-  %11 = extractelement <2 x i1> %i.by, i64 1
-  %12 = select i1 %10, i1 %11, i1 false
+  %i.by = icmp eq <2 x i32> %i.bw, %i.bx
+  %10 = freeze <2 x i1> %i.by
+  %11 = bitcast <2 x i1> %10 to i2
+  %12 = icmp eq i2 %11, -1
   %i.bz = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEES5_EvT_S6_T0_S7_, i1 noundef zeroext %12)
           to label %.noexc25 unwind label %.loopexit.split-lp175.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -324,10 +324,10 @@ bb.m:                                             ; preds = %_ZN5boost9container
 bb.n:                                             ; preds = %.lr.ph.i29
   %i.cz = load <2 x i32>, ptr %.sroa.0136.0, align 4
   %i.da = load <2 x i32>, ptr %.sroa.0131.0, align 4
-  %i.db = icmp eq <2 x i32> %i.cz, %i.da          ; 2 uses
-  %13 = extractelement <2 x i1> %i.db, i64 0
-  %14 = extractelement <2 x i1> %i.db, i64 1
-  %15 = select i1 %13, i1 %14, i1 false
+  %i.db = icmp eq <2 x i32> %i.cz, %i.da
+  %13 = freeze <2 x i1> %i.db
+  %14 = bitcast <2 x i1> %13 to i2
+  %15 = icmp eq i2 %14, -1
   %i.dc = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEES5_EvT_S6_T0_S7_, i1 noundef zeroext %15)
           to label %.noexc33 unwind label %.loopexit.split-lp170.loopexit ; 0 uses
 
@@ -470,10 +470,10 @@ _ZN5boost9container13static_vectorI14counting_valueLm10EvEC2ERKS3_.exit49: ; pre
 bb.s:                                             ; preds = %.lr.ph.i53
   %i.er = load <2 x i32>, ptr %.sroa.0125.0, align 4
   %i.es = load <2 x i32>, ptr %.sroa.0120.0, align 4
-  %i.et = icmp eq <2 x i32> %i.er, %i.es          ; 2 uses
-  %16 = extractelement <2 x i1> %i.et, i64 0
-  %17 = extractelement <2 x i1> %i.et, i64 1
-  %18 = select i1 %16, i1 %17, i1 false
+  %i.et = icmp eq <2 x i32> %i.er, %i.es
+  %16 = freeze <2 x i1> %i.et
+  %17 = bitcast <2 x i1> %16 to i2
+  %18 = icmp eq i2 %17, -1
   %i.eu = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEES5_EvT_S6_T0_S7_, i1 noundef zeroext %18)
           to label %.noexc57 unwind label %.loopexit.split-lp165.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -644,10 +644,10 @@ bb.v:                                             ; preds = %._crit_edge.i.i.i.i
 bb.w:                                             ; preds = %.lr.ph.i66
   %i.gq = load <2 x i32>, ptr %i.ey, align 4
   %i.gr = load <2 x i32>, ptr %8, align 8
-  %i.gs = icmp eq <2 x i32> %i.gq, %i.gr          ; 2 uses
-  %19 = extractelement <2 x i1> %i.gs, i64 0
-  %20 = extractelement <2 x i1> %i.gs, i64 1
-  %21 = select i1 %19, i1 %20, i1 false
+  %i.gs = icmp eq <2 x i32> %i.gq, %i.gr
+  %19 = freeze <2 x i1> %i.gs
+  %20 = bitcast <2 x i1> %19 to i2
+  %21 = icmp eq i2 %20, -1
   %i.gt = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEES5_EvT_S6_T0_S7_, i1 noundef zeroext %21)
           to label %.noexc70 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -660,10 +660,10 @@ bb.x:                                             ; preds = %.noexc70
   %.sroa.0114.0.ptr.1 = getelementptr inbounds nuw i8, ptr %i.ey, i64 8
   %i.gv = load <2 x i32>, ptr %.sroa.0114.0.ptr.1, align 4
   %i.gw = load <2 x i32>, ptr %i.gu, align 8
-  %i.gx = icmp eq <2 x i32> %i.gv, %i.gw          ; 2 uses
-  %22 = extractelement <2 x i1> %i.gx, i64 0
-  %23 = extractelement <2 x i1> %i.gx, i64 1
-  %24 = select i1 %22, i1 %23, i1 false
+  %i.gx = icmp eq <2 x i32> %i.gv, %i.gw
+  %22 = freeze <2 x i1> %i.gx
+  %23 = bitcast <2 x i1> %22 to i2
+  %24 = icmp eq i2 %23, -1
   %i.gy = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEES5_EvT_S6_T0_S7_, i1 noundef zeroext %24)
           to label %.noexc70.1 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -676,10 +676,10 @@ bb.y:                                             ; preds = %.noexc70.1
   %.sroa.0114.0.ptr.2 = getelementptr inbounds nuw i8, ptr %i.ey, i64 16
   %i.ha = load <2 x i32>, ptr %.sroa.0114.0.ptr.2, align 4
   %i.hb = load <2 x i32>, ptr %i.gz, align 8
-  %i.hc = icmp eq <2 x i32> %i.ha, %i.hb          ; 2 uses
-  %25 = extractelement <2 x i1> %i.hc, i64 0
-  %26 = extractelement <2 x i1> %i.hc, i64 1
-  %27 = select i1 %25, i1 %26, i1 false
+  %i.hc = icmp eq <2 x i32> %i.ha, %i.hb
+  %25 = freeze <2 x i1> %i.hc
+  %26 = bitcast <2 x i1> %25 to i2
+  %27 = icmp eq i2 %26, -1
   %i.hd = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEES5_EvT_S6_T0_S7_, i1 noundef zeroext %27)
           to label %.noexc70.2 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -692,10 +692,10 @@ bb.z:                                             ; preds = %.noexc70.2
   %.sroa.0114.0.ptr.3 = getelementptr inbounds nuw i8, ptr %i.ey, i64 24
   %i.hf = load <2 x i32>, ptr %.sroa.0114.0.ptr.3, align 4
   %i.hg = load <2 x i32>, ptr %i.he, align 8
-  %i.hh = icmp eq <2 x i32> %i.hf, %i.hg          ; 2 uses
-  %28 = extractelement <2 x i1> %i.hh, i64 0
-  %29 = extractelement <2 x i1> %i.hh, i64 1
-  %30 = select i1 %28, i1 %29, i1 false
+  %i.hh = icmp eq <2 x i32> %i.hf, %i.hg
+  %28 = freeze <2 x i1> %i.hh
+  %29 = bitcast <2 x i1> %28 to i2
+  %30 = icmp eq i2 %29, -1
   %i.hi = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEES5_EvT_S6_T0_S7_, i1 noundef zeroext %30)
           to label %.noexc70.3 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -708,10 +708,10 @@ bb.aa:                                            ; preds = %.noexc70.3
   %.sroa.0114.0.ptr.4 = getelementptr inbounds nuw i8, ptr %i.ey, i64 32
   %i.hk = load <2 x i32>, ptr %.sroa.0114.0.ptr.4, align 4
   %i.hl = load <2 x i32>, ptr %i.hj, align 8
-  %i.hm = icmp eq <2 x i32> %i.hk, %i.hl          ; 2 uses
-  %31 = extractelement <2 x i1> %i.hm, i64 0
-  %32 = extractelement <2 x i1> %i.hm, i64 1
-  %33 = select i1 %31, i1 %32, i1 false
+  %i.hm = icmp eq <2 x i32> %i.hk, %i.hl
+  %31 = freeze <2 x i1> %i.hm
+  %32 = bitcast <2 x i1> %31 to i2
+  %33 = icmp eq i2 %32, -1
   %i.hn = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEES5_EvT_S6_T0_S7_, i1 noundef zeroext %33)
           to label %.noexc70.4 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -724,10 +724,10 @@ bb.ab:                                            ; preds = %.noexc70.4
   %.sroa.0114.0.ptr.5 = getelementptr inbounds nuw i8, ptr %i.ey, i64 40
   %i.hp = load <2 x i32>, ptr %.sroa.0114.0.ptr.5, align 4
   %i.hq = load <2 x i32>, ptr %i.ho, align 8
-  %i.hr = icmp eq <2 x i32> %i.hp, %i.hq          ; 2 uses
-  %34 = extractelement <2 x i1> %i.hr, i64 0
-  %35 = extractelement <2 x i1> %i.hr, i64 1
-  %36 = select i1 %34, i1 %35, i1 false
+  %i.hr = icmp eq <2 x i32> %i.hp, %i.hq
+  %34 = freeze <2 x i1> %i.hr
+  %35 = bitcast <2 x i1> %34 to i2
+  %36 = icmp eq i2 %35, -1
   %i.hs = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEES5_EvT_S6_T0_S7_, i1 noundef zeroext %36)
           to label %.noexc70.5 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -740,10 +740,10 @@ bb.ac:                                            ; preds = %.noexc70.5
   %.sroa.0114.0.ptr.6 = getelementptr inbounds nuw i8, ptr %i.ey, i64 48
   %i.hu = load <2 x i32>, ptr %.sroa.0114.0.ptr.6, align 4
   %i.hv = load <2 x i32>, ptr %i.ht, align 8
-  %i.hw = icmp eq <2 x i32> %i.hu, %i.hv          ; 2 uses
-  %37 = extractelement <2 x i1> %i.hw, i64 0
-  %38 = extractelement <2 x i1> %i.hw, i64 1
-  %39 = select i1 %37, i1 %38, i1 false
+  %i.hw = icmp eq <2 x i32> %i.hu, %i.hv
+  %37 = freeze <2 x i1> %i.hw
+  %38 = bitcast <2 x i1> %37 to i2
+  %39 = icmp eq i2 %38, -1
   %i.hx = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEES5_EvT_S6_T0_S7_, i1 noundef zeroext %39)
           to label %.noexc70.6 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -756,10 +756,10 @@ bb.ad:                                            ; preds = %.noexc70.6
   %.sroa.0114.0.ptr.7 = getelementptr inbounds nuw i8, ptr %i.ey, i64 56
   %i.hz = load <2 x i32>, ptr %.sroa.0114.0.ptr.7, align 4
   %i.ia = load <2 x i32>, ptr %i.hy, align 8
-  %i.ib = icmp eq <2 x i32> %i.hz, %i.ia          ; 2 uses
-  %40 = extractelement <2 x i1> %i.ib, i64 0
-  %41 = extractelement <2 x i1> %i.ib, i64 1
-  %42 = select i1 %40, i1 %41, i1 false
+  %i.ib = icmp eq <2 x i32> %i.hz, %i.ia
+  %40 = freeze <2 x i1> %i.ib
+  %41 = bitcast <2 x i1> %40 to i2
+  %42 = icmp eq i2 %41, -1
   %i.ic = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEES5_EvT_S6_T0_S7_, i1 noundef zeroext %42)
           to label %.noexc70.7 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -772,10 +772,10 @@ bb.ae:                                            ; preds = %.noexc70.7
   %.sroa.0114.0.ptr.8 = getelementptr inbounds nuw i8, ptr %i.ey, i64 64
   %i.ie = load <2 x i32>, ptr %.sroa.0114.0.ptr.8, align 4
   %i.if = load <2 x i32>, ptr %i.id, align 8
-  %i.ig = icmp eq <2 x i32> %i.ie, %i.if          ; 2 uses
-  %43 = extractelement <2 x i1> %i.ig, i64 0
-  %44 = extractelement <2 x i1> %i.ig, i64 1
-  %45 = select i1 %43, i1 %44, i1 false
+  %i.ig = icmp eq <2 x i32> %i.ie, %i.if
+  %43 = freeze <2 x i1> %i.ig
+  %44 = bitcast <2 x i1> %43 to i2
+  %45 = icmp eq i2 %44, -1
   %i.ih = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEES5_EvT_S6_T0_S7_, i1 noundef zeroext %45)
           to label %.noexc70.8 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -788,10 +788,10 @@ bb.af:                                            ; preds = %.noexc70.8
   %.sroa.0114.0.ptr.9 = getelementptr inbounds nuw i8, ptr %i.ey, i64 72
   %i.ij = load <2 x i32>, ptr %.sroa.0114.0.ptr.9, align 4
   %i.ik = load <2 x i32>, ptr %i.ii, align 8
-  %i.il = icmp eq <2 x i32> %i.ij, %i.ik          ; 2 uses
-  %46 = extractelement <2 x i1> %i.il, i64 0
-  %47 = extractelement <2 x i1> %i.il, i64 1
-  %48 = select i1 %46, i1 %47, i1 false
+  %i.il = icmp eq <2 x i32> %i.ij, %i.ik
+  %46 = freeze <2 x i1> %i.il
+  %47 = bitcast <2 x i1> %46 to i2
+  %48 = icmp eq i2 %47, -1
   %i.im = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEES5_EvT_S6_T0_S7_, i1 noundef zeroext %48)
           to label %_ZN5boost9container6vectorI14counting_valuevvED2Ev.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -1194,10 +1194,10 @@ bb.b:                                             ; preds = %_ZN5boost9container
 bb.c:                                             ; preds = %.lr.ph.i
   %i.l = load <2 x i32>, ptr %.sroa.092.0, align 4
   %i.m = load <2 x i32>, ptr %.sroa.087.0, align 4
-  %i.n = icmp eq <2 x i32> %i.l, %i.m             ; 2 uses
-  %4 = extractelement <2 x i1> %i.n, i64 0
-  %5 = extractelement <2 x i1> %i.n, i64 1
-  %6 = select i1 %4, i1 %5, i1 false
+  %i.n = icmp eq <2 x i32> %i.l, %i.m
+  %4 = freeze <2 x i1> %i.n
+  %5 = bitcast <2 x i1> %4 to i2
+  %6 = icmp eq i2 %5, -1
   %i.o = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEES5_EvT_S6_T0_S7_, i1 noundef zeroext %6)
           to label %.noexc10 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -1320,10 +1320,10 @@ bb.k:                                             ; preds = %.lr.ph.i18
   %i.az = getelementptr inbounds i8, ptr %.sroa.076.0, i64 -8 ; 2 uses
   %i.ba = load <2 x i32>, ptr %i.ay, align 4
   %i.bb = load <2 x i32>, ptr %i.az, align 4
-  %i.bc = icmp eq <2 x i32> %i.ba, %i.bb          ; 2 uses
-  %7 = extractelement <2 x i1> %i.bc, i64 0
-  %8 = extractelement <2 x i1> %i.bc, i64 1
-  %9 = select i1 %7, i1 %8, i1 false
+  %i.bc = icmp eq <2 x i32> %i.ba, %i.bb
+  %7 = freeze <2 x i1> %i.bc
+  %8 = bitcast <2 x i1> %7 to i2
+  %9 = icmp eq i2 %8, -1
   %i.bd = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost7movelib16reverse_iteratorINS0_9container12vec_iteratorIP14counting_valueLb0EEEEES8_EvT_S9_T0_SA_, i1 noundef zeroext %9)
           to label %.noexc22 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -1536,10 +1536,10 @@ bb.p:                                             ; preds = %.lr.ph.i28
   %i.ec = getelementptr inbounds i8, ptr %.sroa.062.0, i64 -8 ; 2 uses
   %i.ed = load <2 x i32>, ptr %.sroa.067.0, align 4
   %i.ee = load <2 x i32>, ptr %i.ec, align 4
-  %i.ef = icmp eq <2 x i32> %i.ed, %i.ee          ; 2 uses
-  %10 = extractelement <2 x i1> %i.ef, i64 0
-  %11 = extractelement <2 x i1> %i.ef, i64 1
-  %12 = select i1 %10, i1 %11, i1 false
+  %i.ef = icmp eq <2 x i32> %i.ed, %i.ee
+  %10 = freeze <2 x i1> %i.ef
+  %11 = bitcast <2 x i1> %10 to i2
+  %12 = icmp eq i2 %11, -1
   %i.eg = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEENS0_7movelib16reverse_iteratorIS5_EEEvT_S9_T0_SA_, i1 noundef zeroext %12)
           to label %.noexc33 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -1576,10 +1576,10 @@ bb.q:                                             ; preds = %.lr.ph.i37
   %i.ep = getelementptr inbounds i8, ptr %.sroa.056.0, i64 -8 ; 3 uses
   %i.eq = load <2 x i32>, ptr %i.ep, align 4
   %i.er = load <2 x i32>, ptr %.sroa.051.0, align 4
-  %i.es = icmp eq <2 x i32> %i.eq, %i.er          ; 2 uses
-  %13 = extractelement <2 x i1> %i.es, i64 0
-  %14 = extractelement <2 x i1> %i.es, i64 1
-  %15 = select i1 %13, i1 %14, i1 false
+  %i.es = icmp eq <2 x i32> %i.eq, %i.er
+  %13 = freeze <2 x i1> %i.es
+  %14 = bitcast <2 x i1> %13 to i2
+  %15 = icmp eq i2 %14, -1
   %i.et = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost7movelib16reverse_iteratorINS0_9container12vec_iteratorIP14counting_valueLb0EEEEES7_EvT_S9_T0_SA_, i1 noundef zeroext %15)
           to label %.noexc42 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -1982,10 +1982,10 @@ bb.t:                                             ; preds = %_ZN5boost9container
 ._crit_edge:                                      ; preds = %bb.u, %.preheader174
   %i.gz = load <2 x i32>, ptr %i.fo, align 8
   %i.ha = load <2 x i32>, ptr %0, align 4
-  %i.hb = icmp eq <2 x i32> %i.gz, %i.ha          ; 2 uses
-  %9 = extractelement <2 x i1> %i.hb, i64 0
-  %10 = extractelement <2 x i1> %i.hb, i64 1
-  %11 = select i1 %9, i1 %10, i1 false
+  %i.hb = icmp eq <2 x i32> %i.gz, %i.ha
+  %9 = freeze <2 x i1> %i.hb
+  %10 = bitcast <2 x i1> %9 to i2
+  %11 = icmp eq i2 %10, -1
   %i.hc = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.83, ptr noundef nonnull @.str.1, i32 noundef 388, ptr noundef nonnull @__PRETTY_FUNCTION__._Z14test_insert_ndI14counting_valueLm10EEvRKT_, i1 noundef zeroext %11)
           to label %.preheader173 unwind label %.loopexit176 ; 0 uses
 
@@ -2168,10 +2168,10 @@ bb.ac:                                            ; preds = %bb.ab
 .preheader167:                                    ; preds = %bb.ad, %.preheader168
   %i.jg = load <2 x i32>, ptr %i.iw, align 8
   %i.jh = load <2 x i32>, ptr %0, align 4
-  %i.ji = icmp eq <2 x i32> %i.jg, %i.jh          ; 2 uses
-  %12 = extractelement <2 x i1> %i.ji, i64 0
-  %13 = extractelement <2 x i1> %i.ji, i64 1
-  %14 = select i1 %12, i1 %13, i1 false
+  %i.ji = icmp eq <2 x i32> %i.jg, %i.jh
+  %12 = freeze <2 x i1> %i.ji
+  %13 = bitcast <2 x i1> %12 to i2
+  %14 = icmp eq i2 %13, -1
   %i.jj = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.86, ptr noundef nonnull @.str.1, i32 noundef 405, ptr noundef nonnull @__PRETTY_FUNCTION__._Z14test_insert_ndI14counting_valueLm10EEvRKT_, i1 noundef zeroext %14)
           to label %bb.af unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ; 0 uses
 
@@ -2216,10 +2216,10 @@ bb.af:                                            ; preds = %.preheader167
   %gep198.1 = getelementptr inbounds nuw i8, ptr %i.iw, i64 8
   %i.kc = load <2 x i32>, ptr %gep198.1, align 8
   %i.kd = load <2 x i32>, ptr %0, align 4
-  %i.ke = icmp eq <2 x i32> %i.kc, %i.kd          ; 2 uses
-  %15 = extractelement <2 x i1> %i.ke, i64 0
-  %16 = extractelement <2 x i1> %i.ke, i64 1
-  %17 = select i1 %15, i1 %16, i1 false
+  %i.ke = icmp eq <2 x i32> %i.kc, %i.kd
+  %15 = freeze <2 x i1> %i.ke
+  %16 = bitcast <2 x i1> %15 to i2
+  %17 = icmp eq i2 %16, -1
   %i.kf = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.86, ptr noundef nonnull @.str.1, i32 noundef 405, ptr noundef nonnull @__PRETTY_FUNCTION__._Z14test_insert_ndI14counting_valueLm10EEvRKT_, i1 noundef zeroext %17)
           to label %bb.ag unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ; 0 uses
 
@@ -2227,10 +2227,10 @@ bb.ag:                                            ; preds = %bb.af
   %gep198.2 = getelementptr inbounds nuw i8, ptr %i.iw, i64 16
   %i.kg = load <2 x i32>, ptr %gep198.2, align 8
   %i.kh = load <2 x i32>, ptr %0, align 4
-  %i.ki = icmp eq <2 x i32> %i.kg, %i.kh          ; 2 uses
-  %18 = extractelement <2 x i1> %i.ki, i64 0
-  %19 = extractelement <2 x i1> %i.ki, i64 1
-  %20 = select i1 %18, i1 %19, i1 false
+  %i.ki = icmp eq <2 x i32> %i.kg, %i.kh
+  %18 = freeze <2 x i1> %i.ki
+  %19 = bitcast <2 x i1> %18 to i2
+  %20 = icmp eq i2 %19, -1
   %i.kj = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.86, ptr noundef nonnull @.str.1, i32 noundef 405, ptr noundef nonnull @__PRETTY_FUNCTION__._Z14test_insert_ndI14counting_valueLm10EEvRKT_, i1 noundef zeroext %20)
           to label %.preheader unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit ; 0 uses
 
@@ -2633,10 +2633,10 @@ bb.d:                                             ; preds = %_ZN5boost9container
 bb.e:                                             ; preds = %.lr.ph.i
   %i.ar = load <2 x i32>, ptr %.sroa.057.0, align 4
   %i.as = load <2 x i32>, ptr %.sroa.052.0, align 4
-  %i.at = icmp eq <2 x i32> %i.ar, %i.as          ; 2 uses
-  %3 = extractelement <2 x i1> %i.at, i64 0
-  %4 = extractelement <2 x i1> %i.at, i64 1
-  %5 = select i1 %3, i1 %4, i1 false
+  %i.at = icmp eq <2 x i32> %i.ar, %i.as
+  %3 = freeze <2 x i1> %i.at
+  %4 = bitcast <2 x i1> %3 to i2
+  %5 = icmp eq i2 %4, -1
   %i.au = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEENS2_IS4_Lb1EEEEvT_S7_T0_S8_, i1 noundef zeroext %5)
           to label %.noexc13 unwind label %.loopexit.split-lp68.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -2776,10 +2776,10 @@ bb.h:                                             ; preds = %_ZN5boost9container
 bb.i:                                             ; preds = %.lr.ph.i19
   %i.cq = load <2 x i32>, ptr %.sroa.044.0, align 4
   %i.cr = load <2 x i32>, ptr %.sroa.039.0, align 4
-  %i.cs = icmp eq <2 x i32> %i.cq, %i.cr          ; 2 uses
-  %6 = extractelement <2 x i1> %i.cs, i64 0
-  %7 = extractelement <2 x i1> %i.cs, i64 1
-  %8 = select i1 %6, i1 %7, i1 false
+  %i.cs = icmp eq <2 x i32> %i.cq, %i.cr
+  %6 = freeze <2 x i1> %i.cs
+  %7 = bitcast <2 x i1> %6 to i2
+  %8 = icmp eq i2 %7, -1
   %i.ct = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEENS2_IS4_Lb1EEEEvT_S7_T0_S8_, i1 noundef zeroext %8)
           to label %.noexc24 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -2963,10 +2963,10 @@ bb.d:                                             ; preds = %_ZN5boost9container
 bb.e:                                             ; preds = %.lr.ph.i
   %i.at = load <2 x i32>, ptr %.sroa.057.0, align 4
   %i.au = load <2 x i32>, ptr %.sroa.052.0, align 4
-  %i.av = icmp eq <2 x i32> %i.at, %i.au          ; 2 uses
-  %3 = extractelement <2 x i1> %i.av, i64 0
-  %4 = extractelement <2 x i1> %i.av, i64 1
-  %5 = select i1 %3, i1 %4, i1 false
+  %i.av = icmp eq <2 x i32> %i.at, %i.au
+  %3 = freeze <2 x i1> %i.av
+  %4 = bitcast <2 x i1> %3 to i2
+  %5 = icmp eq i2 %4, -1
   %i.aw = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEENS2_IS4_Lb1EEEEvT_S7_T0_S8_, i1 noundef zeroext %5)
           to label %.noexc13 unwind label %.loopexit.split-lp68.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -3108,10 +3108,10 @@ bb.h:                                             ; preds = %_ZN5boost9container
 bb.i:                                             ; preds = %.lr.ph.i19
   %i.cu = load <2 x i32>, ptr %.sroa.044.0, align 4
   %i.cv = load <2 x i32>, ptr %.sroa.039.0, align 4
-  %i.cw = icmp eq <2 x i32> %i.cu, %i.cv          ; 2 uses
-  %6 = extractelement <2 x i1> %i.cw, i64 0
-  %7 = extractelement <2 x i1> %i.cw, i64 1
-  %8 = select i1 %6, i1 %7, i1 false
+  %i.cw = icmp eq <2 x i32> %i.cu, %i.cv
+  %6 = freeze <2 x i1> %i.cw
+  %7 = bitcast <2 x i1> %6 to i2
+  %8 = icmp eq i2 %7, -1
   %i.cx = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEENS2_IS4_Lb1EEEEvT_S7_T0_S8_, i1 noundef zeroext %8)
           to label %.noexc24 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -3312,10 +3312,10 @@ bb.d:                                             ; preds = %.lr.ph.i
   %i.aq = getelementptr inbounds nuw i8, ptr %.sroa.058.0, i64 16
   %i.ar = load <2 x i32>, ptr %.sroa.063.0, align 4
   %i.as = load <2 x i32>, ptr %i.aq, align 4
-  %i.at = icmp eq <2 x i32> %i.ar, %i.as          ; 2 uses
-  %3 = extractelement <2 x i1> %i.at, i64 0
-  %4 = extractelement <2 x i1> %i.at, i64 1
-  %5 = select i1 %3, i1 %4, i1 false
+  %i.at = icmp eq <2 x i32> %i.ar, %i.as
+  %3 = freeze <2 x i1> %i.at
+  %4 = bitcast <2 x i1> %3 to i2
+  %5 = icmp eq i2 %4, -1
   %i.au = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEENS1_3dtl23iterator_from_iiteratorINS0_9intrusive13list_iteratorINS8_8bhtraitsINS1_9base_nodeIS3_NS6_9list_hookIPvEELb0EEENS8_16list_node_traitsISD_EELNS8_14link_mode_typeE0ENS8_7dft_tagELj1EEELb0EEELb1EEEEvT_SN_T0_SO_, i1 noundef zeroext %5)
           to label %.noexc13 unwind label %.loopexit.split-lp71.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
@@ -3475,10 +3475,10 @@ bb.g:                                             ; preds = %.lr.ph.i25
   %i.co = getelementptr inbounds nuw i8, ptr %.sroa.045.0, i64 16
   %i.cp = load <2 x i32>, ptr %.sroa.050.0, align 4
   %i.cq = load <2 x i32>, ptr %i.co, align 4
-  %i.cr = icmp eq <2 x i32> %i.cp, %i.cq          ; 2 uses
-  %6 = extractelement <2 x i1> %i.cr, i64 0
-  %7 = extractelement <2 x i1> %i.cr, i64 1
-  %8 = select i1 %6, i1 %7, i1 false
+  %i.cr = icmp eq <2 x i32> %i.cp, %i.cq
+  %6 = freeze <2 x i1> %i.cr
+  %7 = bitcast <2 x i1> %6 to i2
+  %8 = icmp eq i2 %7, -1
   %i.cs = invoke noundef zeroext i1 @_ZN5boost6detail9test_implEPKcS2_iS2_b(ptr noundef nonnull @.str.73, ptr noundef nonnull @.str.1, i32 noundef 204, ptr noundef nonnull @__PRETTY_FUNCTION__._Z19test_compare_rangesIN5boost9container12vec_iteratorIP14counting_valueLb0EEENS1_3dtl23iterator_from_iiteratorINS0_9intrusive13list_iteratorINS8_8bhtraitsINS1_9base_nodeIS3_NS6_9list_hookIPvEELb0EEENS8_16list_node_traitsISD_EELNS8_14link_mode_typeE0ENS8_7dft_tagELj1EEELb0EEELb1EEEEvT_SN_T0_SO_, i1 noundef zeroext %8)
           to label %.noexc30 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 

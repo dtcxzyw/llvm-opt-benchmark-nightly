@@ -205,10 +205,10 @@ bb.n:                                             ; preds = %bb.l
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 400 ; 2 uses
   %i.aq = load <2 x i32>, ptr %i.ap, align 8, !noalias !156
   %i.ar = load <2 x i32>, ptr %6, align 8, !noalias !156
-  %i.as = icmp eq <2 x i32> %i.aq, %i.ar          ; 2 uses
-  %8 = extractelement <2 x i1> %i.as, i64 0
-  %9 = extractelement <2 x i1> %i.as, i64 1
-  %10 = select i1 %8, i1 %9, i1 false
+  %i.as = icmp eq <2 x i32> %i.aq, %i.ar
+  %8 = freeze <2 x i1> %i.as
+  %9 = bitcast <2 x i1> %8 to i2
+  %10 = icmp eq i2 %9, -1
   br i1 %10, label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyISt4pairIN2v88internal8compiler10turboshaft7OpIndexEiENS7_16SnapshotTableKeyINS7_18StoreObservabilityENS7_27MaybeRedundantStoresKeyDataEEEEENS_13hash_internal4HashIS9_EESt8equal_toIS9_ENS5_13ZoneAllocatorIS3_IKS9_SD_EEEE28find_or_prepare_insert_smallIS9_EES3_INSO_8iteratorEbERKT_.exit.i.i.i.i.i.i.i, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
@@ -278,10 +278,10 @@ bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.f = load <2 x i32>, ptr %i.e, align 8
   %i.g = load <2 x i32>, ptr %1, align 4
-  %i.h = icmp eq <2 x i32> %i.f, %i.g             ; 2 uses
-  %2 = extractelement <2 x i1> %i.h, i64 0
-  %3 = extractelement <2 x i1> %i.h, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.h = icmp eq <2 x i32> %i.f, %i.g
+  %2 = freeze <2 x i1> %i.h
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   %.fca.1.insert.i.i = insertvalue { ptr, ptr } { ptr @_ZN4absl18container_internal11kSooControlE, ptr poison }, ptr %i.e, 1
   %spec.select.i = select i1 %4, { ptr, ptr } %.fca.1.insert.i.i, { ptr, ptr } { ptr null, ptr undef }
   br label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashMapPolicyISt4pairIN2v88internal8compiler10turboshaft7OpIndexEiENS7_16SnapshotTableKeyINS7_18StoreObservabilityENS7_27MaybeRedundantStoresKeyDataEEEEENS_13hash_internal4HashIS9_EESt8equal_toIS9_ENS5_13ZoneAllocatorIS3_IKS9_SD_EEEE10find_smallIS9_EENSO_8iteratorERSL_.exit
@@ -684,10 +684,10 @@ _ZNK2v88internal8compiler10turboshaft10OperationTINS2_15WasmTypeCheckOpEE12Equal
   %i.at = getelementptr inbounds nuw i8, ptr %i.ag, i64 4
   %i.au = load <2 x i32>, ptr %i.at, align 4
   %i.av = load <2 x i32>, ptr %i.x, align 4
-  %i.aw = icmp eq <2 x i32> %i.au, %i.av          ; 2 uses
-  %2 = extractelement <2 x i1> %i.aw, i64 0
-  %3 = extractelement <2 x i1> %i.aw, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.aw = icmp eq <2 x i32> %i.au, %i.av
+  %2 = freeze <2 x i1> %i.aw
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   br i1 %4, label %_ZN2v88internal8compiler10turboshaft21ValueNumberingReducerINS2_18GenericReducerBaseINS2_13TSReducerBaseINS2_11StackBottomINS_4base3tmp5list1IJNS2_12GraphVisitorENS2_28LoopStackCheckElisionReducerENS2_28StoreStoreEliminationReducerENS2_26LateLoadEliminationReducerENS2_26MachineOptimizationReducerENS2_24BranchEliminationReducerES3_S5_EEEEEEEEEE4FindINS2_15WasmTypeCheckOpEEEPNSK_5EntryERKT_Pm.exit, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_15WasmTypeCheckOpEE12EqualsForGVNERKS5_.exit.thread.i
 
 _ZNK2v88internal8compiler10turboshaft10OperationTINS2_15WasmTypeCheckOpEE12EqualsForGVNERKS5_.exit.thread.i: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i, %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_15WasmTypeCheckOpEE12EqualsForGVNERKS5_.exit.i, %bb.e, %bb.d, %bb.c
@@ -1090,10 +1090,10 @@ _ZNK2v88internal8compiler10turboshaft10OperationTINS2_14WasmTypeCastOpEE12Equals
   %i.bd = getelementptr inbounds nuw i8, ptr %i.an, i64 4
   %i.be = load <2 x i32>, ptr %i.bd, align 4
   %i.bf = load <2 x i32>, ptr %i.ad, align 4
-  %i.bg = icmp eq <2 x i32> %i.be, %i.bf          ; 2 uses
-  %3 = extractelement <2 x i1> %i.bg, i64 0
-  %4 = extractelement <2 x i1> %i.bg, i64 1
-  %5 = select i1 %3, i1 %4, i1 false
+  %i.bg = icmp eq <2 x i32> %i.be, %i.bf
+  %3 = freeze <2 x i1> %i.bg
+  %4 = bitcast <2 x i1> %3 to i2
+  %5 = icmp eq i2 %4, -1
   br i1 %5, label %.loopexit, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_14WasmTypeCastOpEE12EqualsForGVNERKS5_.exit.thread
 
 _ZNK2v88internal8compiler10turboshaft10OperationTINS2_14WasmTypeCastOpEE12EqualsForGVNERKS5_.exit.thread: ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i, %bb.c, %bb.d, %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_14WasmTypeCastOpEE12EqualsForGVNERKS5_.exit, %bb.e, %bb.b
@@ -1496,10 +1496,10 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.ao = getelementptr inbounds nuw i8, ptr %i.ab, i64 4
   %i.ap = load <2 x i8>, ptr %i.ao, align 4, !noalias !1434
   %i.aq = load <2 x i8>, ptr %i.p, align 4, !noalias !1435
-  %i.ar = icmp eq <2 x i8> %i.ap, %i.aq           ; 2 uses
-  %3 = extractelement <2 x i1> %i.ar, i64 0
-  %4 = extractelement <2 x i1> %i.ar, i64 1
-  %or.cond.i.i = select i1 %3, i1 %4, i1 false
+  %i.ar = icmp eq <2 x i8> %i.ap, %i.aq
+  %3 = freeze <2 x i1> %i.ar
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond.i.i = icmp eq i2 %4, -1
   br i1 %or.cond.i.i, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_26WordBinopDeoptOnOverflowOpEE12EqualsForGVNERKS5_.exit, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_26WordBinopDeoptOnOverflowOpEE12EqualsForGVNERKS5_.exit.thread
 
 _ZNK2v88internal8compiler10turboshaft10OperationTINS2_26WordBinopDeoptOnOverflowOpEE12EqualsForGVNERKS5_.exit: ; preds = %bb.g
@@ -1902,10 +1902,10 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.ak = getelementptr inbounds nuw i8, ptr %i.z, i64 4
   %i.al = load <2 x i8>, ptr %i.ak, align 4, !noalias !1505
   %i.am = load <2 x i8>, ptr %i.o, align 4, !noalias !1506
-  %i.an = icmp eq <2 x i8> %i.al, %i.am           ; 2 uses
-  %3 = extractelement <2 x i1> %i.an, i64 0
-  %4 = extractelement <2 x i1> %i.an, i64 1
-  %or.cond.i.i = select i1 %3, i1 %4, i1 false
+  %i.an = icmp eq <2 x i8> %i.al, %i.am
+  %3 = freeze <2 x i1> %i.an
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond.i.i = icmp eq i2 %4, -1
   br i1 %or.cond.i.i, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_15ChangeOrDeoptOpEE12EqualsForGVNERKS5_.exit, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_15ChangeOrDeoptOpEE12EqualsForGVNERKS5_.exit.thread
 
 _ZNK2v88internal8compiler10turboshaft10OperationTINS2_15ChangeOrDeoptOpEE12EqualsForGVNERKS5_.exit: ; preds = %bb.g
@@ -2308,10 +2308,10 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.ao = load i8, ptr %i.p, align 2, !noalias !1545
   %i.ap = load <2 x i8>, ptr %i.al, align 4, !noalias !1544
   %i.aq = load <2 x i8>, ptr %i.o, align 4, !noalias !1545
-  %i.ar = icmp eq <2 x i8> %i.ap, %i.aq           ; 2 uses
-  %3 = extractelement <2 x i1> %i.ar, i64 0
-  %4 = extractelement <2 x i1> %i.ar, i64 1
-  %or.cond.i.i = select i1 %3, i1 %4, i1 false
+  %i.ar = icmp eq <2 x i8> %i.ap, %i.aq
+  %3 = freeze <2 x i1> %i.ar
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond.i.i = icmp eq i2 %4, -1
   %i.as = icmp eq i8 %i.an, %i.ao
   %or.cond18.i.i = select i1 %or.cond.i.i, i1 %i.as, i1 false
   br i1 %or.cond18.i.i, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_37ConvertJSPrimitiveToUntaggedOrDeoptOpEE12EqualsForGVNERKS5_.exit, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_37ConvertJSPrimitiveToUntaggedOrDeoptOpEE12EqualsForGVNERKS5_.exit.thread
@@ -2714,10 +2714,10 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.ao = load i8, ptr %i.p, align 2, !noalias !1571
   %i.ap = load <2 x i8>, ptr %i.al, align 4, !noalias !1570
   %i.aq = load <2 x i8>, ptr %i.o, align 4, !noalias !1571
-  %i.ar = icmp eq <2 x i8> %i.ap, %i.aq           ; 2 uses
-  %3 = extractelement <2 x i1> %i.ar, i64 0
-  %4 = extractelement <2 x i1> %i.ar, i64 1
-  %or.cond.i.i = select i1 %3, i1 %4, i1 false
+  %i.ar = icmp eq <2 x i8> %i.ap, %i.aq
+  %3 = freeze <2 x i1> %i.ar
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond.i.i = icmp eq i2 %4, -1
   %i.as = icmp eq i8 %i.an, %i.ao
   %or.cond18.i.i = select i1 %or.cond.i.i, i1 %i.as, i1 false
   br i1 %or.cond18.i.i, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_37ConvertUntaggedToJSPrimitiveOrDeoptOpEE12EqualsForGVNERKS5_.exit, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_37ConvertUntaggedToJSPrimitiveOrDeoptOpEE12EqualsForGVNERKS5_.exit.thread
@@ -3120,10 +3120,10 @@ bb.g:                                             ; preds = %.lr.ph.i.i.i.i.i.i.
   %i.ak = getelementptr inbounds nuw i8, ptr %i.z, i64 4
   %i.al = load <2 x i8>, ptr %i.ak, align 4, !noalias !1593
   %i.am = load <2 x i8>, ptr %i.o, align 4, !noalias !1594
-  %i.an = icmp eq <2 x i8> %i.al, %i.am           ; 2 uses
-  %3 = extractelement <2 x i1> %i.an, i64 0
-  %4 = extractelement <2 x i1> %i.an, i64 1
-  %or.cond.i.i = select i1 %3, i1 %4, i1 false
+  %i.an = icmp eq <2 x i8> %i.al, %i.am
+  %3 = freeze <2 x i1> %i.an
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond.i.i = icmp eq i2 %4, -1
   br i1 %or.cond.i.i, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_38TruncateJSPrimitiveToUntaggedOrDeoptOpEE12EqualsForGVNERKS5_.exit, label %_ZNK2v88internal8compiler10turboshaft10OperationTINS2_38TruncateJSPrimitiveToUntaggedOrDeoptOpEE12EqualsForGVNERKS5_.exit.thread
 
 _ZNK2v88internal8compiler10turboshaft10OperationTINS2_38TruncateJSPrimitiveToUntaggedOrDeoptOpEE12EqualsForGVNERKS5_.exit: ; preds = %bb.g

@@ -204,11 +204,11 @@ bb.b:                                             ; preds = %bb.a
   %i.ar = fmul reassoc nsz arcp contract afn <2 x float> %i.aq, splat (float 2.560000e+02)
   %i.as = fdiv reassoc nsz arcp contract afn <2 x float> %i.ar, %i.ao ; 2 uses
   store <2 x float> %i.as, ptr %i.f, align 4, !tbaa !15
-  %i.at = fcmp reassoc nsz arcp contract afn une <2 x float> %i.u, %i.as ; 2 uses
-  %4 = extractelement <2 x i1> %i.at, i64 0
-  %5 = extractelement <2 x i1> %i.at, i64 1
-  %or.cond = select i1 %4, i1 true, i1 %5
-  br i1 %or.cond, label %bb.c, label %bb.d
+  %i.at = fcmp reassoc nsz arcp contract afn une <2 x float> %i.u, %i.as
+  %4 = freeze <2 x i1> %i.at
+  %5 = bitcast <2 x i1> %4 to i2
+  %or.cond.not = icmp eq i2 %5, 0
+  br i1 %or.cond.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.au = load ptr, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 64), align 8, !tbaa !101

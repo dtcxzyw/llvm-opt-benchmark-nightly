@@ -205,13 +205,13 @@ bb.a:
   %i.u = shufflevector <2 x float> %i.t, <2 x float> poison, <2 x i32> zeroinitializer
   %i.v = fmul nsz <2 x float> %i.s, %i.u
   %i.w = load <2 x float>, ptr %i.c, align 4, !tbaa !29
-  %i.x = fdiv nsz <2 x float> %i.v, %i.w          ; 2 uses
-  %8 = tail call nsz <2 x float> @llvm.fabs.v2f32(<2 x float> %i.x)
-  %9 = fcmp nsz olt <2 x float> %8, splat (float 5.000000e-01) ; 2 uses
-  %10 = extractelement <2 x i1> %9, i64 0
-  %11 = extractelement <2 x i1> %9, i64 1
-  %12 = select i1 %10, i1 %11, i1 false           ; 3 uses
-  %i.y = fmul nsz <2 x float> %i.x, splat (float 2.000000e+00)
+  %i.x = fdiv nsz <2 x float> %i.v, %i.w
+  %.fr78 = freeze <2 x float> %i.x                ; 2 uses
+  %8 = tail call nsz <2 x float> @llvm.fabs.v2f32(<2 x float> %.fr78)
+  %9 = fcmp uge <2 x float> %8, splat (float 5.000000e-01)
+  %10 = bitcast <2 x i1> %9 to i2
+  %11 = icmp eq i2 %10, 0                         ; 3 uses
+  %i.y = fmul nsz <2 x float> %.fr78, splat (float 2.000000e+00)
   %i.z = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.y, <2 x float> splat (float 5.000000e-01), <2 x float> splat (float 5.000000e-01))
   %i.aa = fadd nnan nsz <2 x float> %i.f, splat (float -1.000000e+00)
   %i.ab = fmul nsz <2 x float> %i.aa, %i.z        ; 2 uses
@@ -221,14 +221,14 @@ bb.a:
   %i.af = shufflevector <4 x i32> %i.ae, <4 x i32> poison, <2 x i32> <i32 0, i32 3>
   %i.ag = sitofp nsz <2 x i32> %i.af to <2 x float>
   %i.ah = fsub nsz <2 x float> %i.ab, %i.ag
-  %i.ai = insertelement <2 x i1> poison, i1 %12, i64 0
+  %i.ai = insertelement <2 x i1> poison, i1 %11, i64 0
   %i.aj = shufflevector <2 x i1> %i.ai, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.ak = select <2 x i1> %i.aj, <2 x float> %i.ah, <2 x float> zeroinitializer ; 2 uses
   %i.al = extractelement <2 x float> %i.ak, i64 0
   store float %i.al, ptr %6, align 4, !tbaa !29
   %i.am = extractelement <2 x float> %i.ak, i64 1
   store float %i.am, ptr %7, align 4, !tbaa !29
-  br i1 %12, label %.preheader.us.preheader, label %.preheader.preheader
+  br i1 %11, label %.preheader.us.preheader, label %.preheader.preheader
 
 .preheader.preheader:                             ; preds = %bb.a
   store i16 0, ptr %4, align 2, !tbaa !18
@@ -389,7 +389,7 @@ bb.a:
   store i16 %i.dx, ptr %i.dw, align 2, !tbaa !18
   %i.dy = getelementptr inbounds nuw i8, ptr %5, i64 30
   store i16 %i.ds, ptr %i.dy, align 2, !tbaa !18
-  %i.dz = zext i1 %12 to i32
+  %i.dz = zext i1 %11 to i32
   ret i32 %i.dz
 }
 

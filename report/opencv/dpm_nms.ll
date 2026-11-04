@@ -202,11 +202,11 @@ bb.y:                                             ; preds = %.lr.ph397, %_ZNSt6v
   %i.fb = fcmp olt <2 x double> %i.ez, %i.fa
   %i.fc = select <2 x i1> %i.fb, <2 x double> %i.ez, <2 x double> %i.fa
   %i.fd = fsub <2 x double> %i.fc, %i.ey
-  %6 = fadd <2 x double> %i.fd, splat (double 1.000000e+00) ; 3 uses
-  %7 = fcmp ogt <2 x double> %6, zeroinitializer  ; 2 uses
-  %8 = extractelement <2 x i1> %7, i64 0
-  %9 = extractelement <2 x i1> %7, i64 1
-  %or.cond = select i1 %8, i1 %9, i1 false
+  %.fr729 = freeze <2 x double> %i.fd
+  %6 = fadd <2 x double> %.fr729, splat (double 1.000000e+00) ; 3 uses
+  %7 = fcmp ule <2 x double> %6, zeroinitializer
+  %8 = bitcast <2 x i1> %7 to i2
+  %or.cond = icmp eq i2 %8, 0
   br i1 %or.cond, label %bb.z, label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit143
 
 bb.z:                                             ; preds = %bb.y

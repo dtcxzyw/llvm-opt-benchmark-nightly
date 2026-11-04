@@ -205,10 +205,10 @@ bb.bm:                                            ; preds = %bb.bn, %.lr.ph.i.i.
   %indvars.iv.i.i.i = phi i64 [ 0, %.lr.ph.i.i.i78 ], [ %indvars.iv.next.i.i.i, %bb.bn ] ; 5 uses
   %i.it = getelementptr inbounds nuw [16 x i8], ptr %.sroa.19.0290, i64 %indvars.iv.i.i.i
   %i.iu = load <2 x i32>, ptr %i.it, align 4
-  %i.iv = icmp eq <2 x i32> %i.is, %i.iu          ; 2 uses
-  %4 = extractelement <2 x i1> %i.iv, i64 0
-  %5 = extractelement <2 x i1> %i.iv, i64 1
-  %6 = select i1 %4, i1 %5, i1 false
+  %i.iv = icmp eq <2 x i32> %i.is, %i.iu
+  %4 = freeze <2 x i1> %i.iv
+  %5 = bitcast <2 x i1> %4 to i2
+  %6 = icmp eq i2 %5, -1
   br i1 %6, label %_ZN11hb_vector_tIN20hb_aat_map_builder_t14feature_info_tELb1EE7lsearchIS1_EEPS1_RKT_S4_.exit, label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm
@@ -611,11 +611,11 @@ hb_draw_line_to.exit94:                           ; preds = %_ZN15hb_draw_funcs_
 bb.n:                                             ; preds = %hb_draw_line_to.exit94
   %i.ch = getelementptr inbounds nuw i8, ptr %2, i64 4
   %i.ci = load <2 x float>, ptr %i.ch, align 4, !tbaa !304 ; 3 uses
-  %i.cj = fcmp une <2 x float> %i.ci, %i.ai       ; 2 uses
-  %10 = extractelement <2 x i1> %i.cj, i64 0
-  %11 = extractelement <2 x i1> %i.cj, i64 1
-  %or.cond = select i1 %10, i1 true, i1 %11
-  br i1 %or.cond, label %._crit_edge.i99, label %bb.p
+  %i.cj = fcmp une <2 x float> %i.ci, %i.ai
+  %10 = freeze <2 x i1> %i.cj
+  %11 = bitcast <2 x i1> %10 to i2
+  %or.cond.not = icmp eq i2 %11, 0
+  br i1 %or.cond.not, label %bb.p, label %._crit_edge.i99
 
 ._crit_edge.i99:                                  ; preds = %bb.n
   %i.ck = load ptr, ptr %i.bh, align 8, !tbaa !364
@@ -1018,10 +1018,10 @@ _ZNK14hb_transform_tIfE17transform_extentsER12hb_extents_tIfE.exit: ; preds = %_
   %i.bm = phi <4 x float> [ %i.bl, %bb.d ], [ %i.az, %_ZN12hb_extents_tIfE9add_pointEff.exit.2.i ] ; 9 uses
   %i.bn = shufflevector <4 x float> %i.bm, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.bo = shufflevector <4 x float> %i.bm, <4 x float> poison, <2 x i32> <i32 2, i32 3>
-  %i.bp = fcmp ult <2 x float> %i.bn, %i.bo       ; 2 uses
-  %3 = extractelement <2 x i1> %i.bp, i64 0
-  %4 = extractelement <2 x i1> %i.bp, i64 1
-  %.not44 = select i1 %3, i1 %4, i1 false         ; 2 uses
+  %i.bp = fcmp ult <2 x float> %i.bn, %i.bo
+  %3 = freeze <2 x i1> %i.bp
+  %4 = bitcast <2 x i1> %3 to i2
+  %.not44 = icmp eq i2 %4, -1                     ; 2 uses
   %i.bq = select i1 %.not44, i32 1, i32 2         ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 3 uses
@@ -1056,11 +1056,11 @@ bb.g:                                             ; preds = %bb.f
   %i.ca = load <4 x float>, ptr %i.bz, align 4    ; 5 uses
   %i.cb = shufflevector <4 x float> %i.ca, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.cc = shufflevector <4 x float> %i.ca, <4 x float> poison, <2 x i32> <i32 2, i32 3>
-  %i.cd = fcmp oge <2 x float> %i.cb, %i.cc       ; 2 uses
-  %5 = extractelement <2 x i1> %i.cd, i64 0
-  %6 = extractelement <2 x i1> %i.cd, i64 1
-  %7 = select i1 %5, i1 true, i1 %6
-  br i1 %7, label %_ZN11hb_bounds_tIfE9intersectERKS0_.exit, label %_ZN12hb_extents_tIfE9intersectERKS0_.exit.i
+  %i.cd = fcmp oge <2 x float> %i.cb, %i.cc
+  %5 = freeze <2 x i1> %i.cd
+  %6 = bitcast <2 x i1> %5 to i2
+  %.not = icmp eq i2 %6, 0
+  br i1 %.not, label %_ZN12hb_extents_tIfE9intersectERKS0_.exit.i, label %_ZN11hb_bounds_tIfE9intersectERKS0_.exit
 
 _ZN12hb_extents_tIfE9intersectERKS0_.exit.i:      ; preds = %bb.g
   %i.ce = fcmp oge <4 x float> %i.bm, %i.ca
@@ -1069,11 +1069,11 @@ _ZN12hb_extents_tIfE9intersectERKS0_.exit.i:      ; preds = %bb.g
   %i.ch = select <4 x i1> %i.cg, <4 x float> %i.bm, <4 x float> %i.ca ; 3 uses
   %i.ci = shufflevector <4 x float> %i.ch, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.cj = shufflevector <4 x float> %i.ch, <4 x float> poison, <2 x i32> <i32 2, i32 3>
-  %i.ck = fcmp oge <2 x float> %i.ci, %i.cj       ; 2 uses
-  %8 = extractelement <2 x i1> %i.ck, i64 0
-  %9 = extractelement <2 x i1> %i.ck, i64 1
-  %10 = select i1 %8, i1 true, i1 %9
-  %spec.select = select i1 %10, i32 2, i32 1
+  %i.ck = fcmp oge <2 x float> %i.ci, %i.cj
+  %7 = freeze <2 x i1> %i.ck
+  %8 = bitcast <2 x i1> %7 to i2
+  %.not59 = icmp eq i2 %8, 0
+  %spec.select = select i1 %.not59, i32 1, i32 2
   br label %_ZN11hb_bounds_tIfE9intersectERKS0_.exit
 
 _ZN11hb_bounds_tIfE9intersectERKS0_.exit:         ; preds = %_ZN12hb_extents_tIfE9intersectERKS0_.exit.i, %bb.f, %bb.g, %_ZN11hb_vector_tI11hb_bounds_tIfELb0EE4tailEv.exit.thread, %_ZN11hb_vector_tI11hb_bounds_tIfELb0EE4tailEv.exit, %bb.e
@@ -1476,21 +1476,21 @@ bb.i:                                             ; preds = %bb.g
   %i.o = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 4 ; 3 uses
   %i.p = shufflevector <4 x float> %i.m, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.q = shufflevector <4 x float> %i.m, <4 x float> poison, <2 x i32> <i32 2, i32 3>
-  %i.r = fcmp oge <2 x float> %i.p, %i.q          ; 2 uses
-  %2 = extractelement <2 x i1> %i.r, i64 0
-  %3 = extractelement <2 x i1> %i.r, i64 1
-  %4 = select i1 %2, i1 true, i1 %3
-  br i1 %4, label %_ZN12hb_extents_tIfE9intersectERKS0_.exit.thread.i, label %bb.j
+  %i.r = fcmp oge <2 x float> %i.p, %i.q
+  %2 = freeze <2 x i1> %i.r
+  %3 = bitcast <2 x i1> %2 to i2
+  %.not = icmp eq i2 %3, 0
+  br i1 %.not, label %bb.j, label %_ZN12hb_extents_tIfE9intersectERKS0_.exit.thread.i
 
 bb.j:                                             ; preds = %bb.i
   %i.s = load <4 x float>, ptr %i.o, align 4      ; 5 uses
   %i.t = shufflevector <4 x float> %i.s, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.u = shufflevector <4 x float> %i.s, <4 x float> poison, <2 x i32> <i32 2, i32 3>
-  %i.v = fcmp oge <2 x float> %i.t, %i.u          ; 2 uses
-  %5 = extractelement <2 x i1> %i.v, i64 0
-  %6 = extractelement <2 x i1> %i.v, i64 1
-  %7 = select i1 %5, i1 true, i1 %6
-  br i1 %7, label %_ZN12hb_extents_tIfE9intersectERKS0_.exit.thread.i, label %_ZN12hb_extents_tIfE9intersectERKS0_.exit.i
+  %i.v = fcmp oge <2 x float> %i.t, %i.u
+  %4 = freeze <2 x i1> %i.v
+  %5 = bitcast <2 x i1> %4 to i2
+  %.not67 = icmp eq i2 %5, 0
+  br i1 %.not67, label %_ZN12hb_extents_tIfE9intersectERKS0_.exit.i, label %_ZN12hb_extents_tIfE9intersectERKS0_.exit.thread.i
 
 _ZN12hb_extents_tIfE9intersectERKS0_.exit.thread.i: ; preds = %bb.j, %bb.i
   store <4 x float> <float 0.000000e+00, float 0.000000e+00, float -1.000000e+00, float -1.000000e+00>, ptr %i.o, align 4, !tbaa !304
@@ -1504,11 +1504,11 @@ _ZN12hb_extents_tIfE9intersectERKS0_.exit.i:      ; preds = %bb.j
   store <4 x float> %i.z, ptr %i.o, align 4, !tbaa !304
   %i.aa = shufflevector <4 x float> %i.z, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.ab = shufflevector <4 x float> %i.z, <4 x float> poison, <2 x i32> <i32 2, i32 3>
-  %i.ac = fcmp oge <2 x float> %i.aa, %i.ab       ; 2 uses
-  %8 = extractelement <2 x i1> %i.ac, i64 0
-  %9 = extractelement <2 x i1> %i.ac, i64 1
-  %10 = select i1 %8, i1 true, i1 %9
-  br i1 %10, label %bb.k, label %_ZN11hb_bounds_tIfE9intersectERKS0_.exit
+  %i.ac = fcmp oge <2 x float> %i.aa, %i.ab
+  %6 = freeze <2 x i1> %i.ac
+  %7 = bitcast <2 x i1> %6 to i2
+  %.not68 = icmp eq i2 %7, 0
+  br i1 %.not68, label %_ZN11hb_bounds_tIfE9intersectERKS0_.exit, label %bb.k
 
 bb.k:                                             ; preds = %_ZN12hb_extents_tIfE9intersectERKS0_.exit.i, %_ZN12hb_extents_tIfE9intersectERKS0_.exit.thread.i
   store i32 2, ptr %.0.i.i, align 4, !tbaa !2091
@@ -1541,21 +1541,21 @@ bb.p:                                             ; preds = %bb.n
   %i.ae = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 4 ; 3 uses
   %i.af = shufflevector <4 x float> %i.m, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.ag = shufflevector <4 x float> %i.m, <4 x float> poison, <2 x i32> <i32 2, i32 3>
-  %i.ah = fcmp oge <2 x float> %i.af, %i.ag       ; 2 uses
-  %11 = extractelement <2 x i1> %i.ah, i64 0
-  %12 = extractelement <2 x i1> %i.ah, i64 1
-  %13 = select i1 %11, i1 true, i1 %12
-  br i1 %13, label %_ZN11hb_bounds_tIfE9intersectERKS0_.exit, label %bb.q
+  %i.ah = fcmp oge <2 x float> %i.af, %i.ag
+  %8 = freeze <2 x i1> %i.ah
+  %9 = bitcast <2 x i1> %8 to i2
+  %.not69 = icmp eq i2 %9, 0
+  br i1 %.not69, label %bb.q, label %_ZN11hb_bounds_tIfE9intersectERKS0_.exit
 
 bb.q:                                             ; preds = %bb.p
   %i.ai = load <4 x float>, ptr %i.ae, align 4    ; 5 uses
   %i.aj = shufflevector <4 x float> %i.ai, <4 x float> poison, <2 x i32> <i32 0, i32 1>
   %i.ak = shufflevector <4 x float> %i.ai, <4 x float> poison, <2 x i32> <i32 2, i32 3>
-  %i.al = fcmp oge <2 x float> %i.aj, %i.ak       ; 2 uses
-  %14 = extractelement <2 x i1> %i.al, i64 0
-  %15 = extractelement <2 x i1> %i.al, i64 1
-  %16 = select i1 %14, i1 true, i1 %15
-  br i1 %16, label %bb.r, label %bb.s
+  %i.al = fcmp oge <2 x float> %i.aj, %i.ak
+  %10 = freeze <2 x i1> %i.al
+  %11 = bitcast <2 x i1> %10 to i2
+  %.not70 = icmp eq i2 %11, 0
+  br i1 %.not70, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
   store <4 x float> %i.m, ptr %i.ae, align 4, !tbaa !304

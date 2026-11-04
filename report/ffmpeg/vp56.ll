@@ -205,15 +205,15 @@ tailrecurse.i:                                    ; preds = %bb.s, %bb.y
   %i.cv = sext <4 x i32> %i.cu to <4 x i64>
   store <4 x i64> %i.cv, ptr %i.cq, align 16, !tbaa !61
   %i.cw = getelementptr inbounds nuw i8, ptr %.tr.i, i64 776 ; 2 uses
-  %i.cx = load <2 x i32>, ptr %i.bx, align 8, !tbaa !58 ; 2 uses
-  %i.cy = add nsw <2 x i32> %i.cx, splat (i32 15)
+  %i.cx = load <2 x i32>, ptr %i.bx, align 8, !tbaa !58
+  %.fr = freeze <2 x i32> %i.cx                   ; 2 uses
+  %i.cy = add nsw <2 x i32> %.fr, splat (i32 15)
   %i.cz = sdiv <2 x i32> %i.cy, splat (i32 16)    ; 2 uses
   store <2 x i32> %i.cz, ptr %i.cw, align 8, !tbaa !58
-  %i.da = icmp sgt <2 x i32> %i.cx, splat (i32 16000) ; 2 uses
-  %4 = extractelement <2 x i1> %i.da, i64 0
-  %5 = extractelement <2 x i1> %i.da, i64 1
-  %or.cond.i = select i1 %4, i1 true, i1 %5
-  br i1 %or.cond.i, label %bb.t, label %bb.u
+  %i.da = icmp sgt <2 x i32> %.fr, splat (i32 16000)
+  %4 = bitcast <2 x i1> %i.da to i2
+  %or.cond.i.not = icmp eq i2 %4, 0
+  br i1 %or.cond.i.not, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %tailrecurse.i
   %i.db = tail call i32 @ff_set_dimensions(ptr noundef nonnull %i.bs, i32 noundef 0, i32 noundef 0) #8, !inline_history !85 ; 0 uses

@@ -204,12 +204,12 @@ bb.n:                                             ; preds = %bb.k
   %i.ck = load <2 x i32>, ptr %i.ci, align 4, !tbaa !46
   %i.cl = srem <2 x i32> %i.ch, %i.ck
   %i.cm = xor <2 x i32> %i.cl, splat (i32 -1)
-  %i.cn = add <2 x i32> %i.cj, %i.cm              ; 3 uses
-  %8 = icmp sgt <2 x i32> %i.cn, zeroinitializer  ; 2 uses
-  %9 = extractelement <2 x i1> %8, i64 0
-  %10 = extractelement <2 x i1> %8, i64 1
-  %or.cond = select i1 %9, i1 true, i1 %10
-  br i1 %or.cond, label %bb.o, label %bb.r
+  %i.cn = add <2 x i32> %i.cj, %i.cm
+  %.fr86 = freeze <2 x i32> %i.cn                 ; 3 uses
+  %8 = icmp sgt <2 x i32> %.fr86, zeroinitializer
+  %9 = bitcast <2 x i1> %8 to i2
+  %or.cond.not = icmp eq i2 %9, 0
+  br i1 %or.cond.not, label %bb.r, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #6
@@ -218,8 +218,8 @@ bb.o:                                             ; preds = %bb.n
   %i.cp = load ptr, ptr %i.co, align 8, !tbaa !112
   %i.cq = getelementptr inbounds nuw i8, ptr %6, i64 8
   store ptr %i.cp, ptr %i.cq, align 8, !tbaa !50
-  %i.cr = sdiv <2 x i32> %i.cn, splat (i32 2)     ; 3 uses
-  %i.cs = sub nsw <2 x i32> %i.cn, %i.cr          ; 2 uses
+  %i.cr = sdiv <2 x i32> %.fr86, splat (i32 2)    ; 3 uses
+  %i.cs = sub nsw <2 x i32> %.fr86, %i.cr         ; 2 uses
   %i.ct = extractelement <2 x i32> %i.cs, i64 0
   %i.cu = extractelement <2 x i32> %i.cs, i64 1
   %i.cv = extractelement <2 x i32> %i.cr, i64 0
@@ -236,12 +236,12 @@ bb.p:                                             ; preds = %bb.k
   %i.db = load <2 x i32>, ptr %i.cy, align 4, !tbaa !46
   %i.dc = srem <2 x i32> %i.da, %i.db
   %i.dd = xor <2 x i32> %i.dc, splat (i32 -1)
-  %i.de = add <2 x i32> %i.cz, %i.dd              ; 3 uses
-  %11 = icmp sgt <2 x i32> %i.de, zeroinitializer ; 2 uses
-  %12 = extractelement <2 x i1> %11, i64 0
-  %13 = extractelement <2 x i1> %11, i64 1
-  %or.cond3 = select i1 %12, i1 true, i1 %13
-  br i1 %or.cond3, label %bb.q, label %bb.r
+  %i.de = add <2 x i32> %i.cz, %i.dd
+  %.fr = freeze <2 x i32> %i.de                   ; 3 uses
+  %10 = icmp sgt <2 x i32> %.fr, zeroinitializer
+  %11 = bitcast <2 x i1> %10 to i2
+  %or.cond3.not = icmp eq i2 %11, 0
+  br i1 %or.cond3.not, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #6
@@ -250,8 +250,8 @@ bb.q:                                             ; preds = %bb.p
   %i.dg = load ptr, ptr %i.df, align 8, !tbaa !112
   %i.dh = getelementptr inbounds nuw i8, ptr %7, i64 8
   store ptr %i.dg, ptr %i.dh, align 8, !tbaa !50
-  %i.di = sdiv <2 x i32> %i.de, splat (i32 2)     ; 3 uses
-  %i.dj = sub nsw <2 x i32> %i.de, %i.di          ; 2 uses
+  %i.di = sdiv <2 x i32> %.fr, splat (i32 2)      ; 3 uses
+  %i.dj = sub nsw <2 x i32> %.fr, %i.di           ; 2 uses
   %i.dk = extractelement <2 x i32> %i.dj, i64 0
   %i.dl = extractelement <2 x i32> %i.dj, i64 1
   %i.dm = extractelement <2 x i32> %i.di, i64 0

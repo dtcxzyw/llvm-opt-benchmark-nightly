@@ -205,11 +205,11 @@ _ZNK5folly5IOBuf3endEv.exit.preheader:            ; preds = %_ZNK5folly5IOBuf5be
   %i.j = getelementptr inbounds nuw i8, ptr %9, i64 8
   %i.k = load <2 x ptr>, ptr %8, align 16
   %i.l = load <2 x ptr>, ptr %9, align 16
-  %i.m = icmp ne <2 x ptr> %i.k, %i.l             ; 2 uses
-  %10 = extractelement <2 x i1> %i.m, i64 0
-  %11 = extractelement <2 x i1> %i.m, i64 1
-  %.not3.i18 = select i1 %10, i1 true, i1 %11
-  br i1 %.not3.i18, label %.lr.ph, label %_ZNK5folly5IOBuf3endEv.exit._crit_edge
+  %i.m = icmp ne <2 x ptr> %i.k, %i.l
+  %10 = freeze <2 x i1> %i.m
+  %11 = bitcast <2 x i1> %10 to i2
+  %.not3.i18.not = icmp eq i2 %11, 0
+  br i1 %.not3.i18.not, label %_ZNK5folly5IOBuf3endEv.exit._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNK5folly5IOBuf3endEv.exit.preheader
   %i.n = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 2 uses
@@ -612,11 +612,11 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.g = load <2 x ptr>, ptr %2, align 16
   %i.h = load <2 x ptr>, ptr %3, align 16
-  %i.i = icmp ne <2 x ptr> %i.g, %i.h             ; 2 uses
-  %4 = extractelement <2 x i1> %i.i, i64 0
-  %5 = extractelement <2 x i1> %i.i, i64 1
-  %.not3.i9 = select i1 %4, i1 true, i1 %5
-  br i1 %.not3.i9, label %.lr.ph, label %._crit_edge
+  %i.i = icmp ne <2 x ptr> %i.g, %i.h
+  %4 = freeze <2 x i1> %i.i
+  %5 = bitcast <2 x i1> %4 to i2
+  %.not3.i9.not = icmp eq i2 %5, 0
+  br i1 %.not3.i9.not, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses

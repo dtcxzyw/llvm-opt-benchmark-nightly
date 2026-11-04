@@ -204,7 +204,8 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ah = fsub <2 x double> %i.ae, %i.ag
   %i.ai = load <2 x double>, ptr %i.i, align 8
   %i.aj = fdiv <2 x double> %i.ah, %i.ai
-  %i.ak = fptosi <2 x double> %i.aj to <2 x i32>  ; 9 uses
+  %i.ak = fptosi <2 x double> %i.aj to <2 x i32>
+  %.fr = freeze <2 x i32> %i.ak                   ; 9 uses
   %i.al = tail call i32 @gtk_widget_get_scale_factor(ptr noundef %0) #15
   %i.am = load i32, ptr @trace_events_enabled_count, align 4
   %.not.i.i = icmp eq i32 %i.am, 0
@@ -222,8 +223,8 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not6.i.i, label %trace_gd_motion_event.exit.i, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.aq = extractelement <2 x i32> %i.ak, i64 0
-  %i.ar = extractelement <2 x i32> %i.ak, i64 1
+  %i.aq = extractelement <2 x i32> %.fr, i64 0
+  %i.ar = extractelement <2 x i32> %.fr, i64 1
   tail call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.65, i32 noundef %i.t, i32 noundef %i.u, i32 noundef %i.al, i32 noundef %i.aq, i32 noundef %i.ar) #15
   br label %trace_gd_motion_event.exit.i
 
@@ -234,17 +235,16 @@ trace_gd_motion_event.exit.i:                     ; preds = %bb.j, %bb.i, %bb.h,
   br i1 %i.au, label %bb.k, label %bb.o
 
 bb.k:                                             ; preds = %trace_gd_motion_event.exit.i
-  %i.av = icmp slt <2 x i32> %i.ak, zeroinitializer ; 2 uses
-  %4 = extractelement <2 x i1> %i.av, i64 0
-  %5 = extractelement <2 x i1> %i.av, i64 1
-  %or.cond.i = select i1 %4, i1 true, i1 %5
-  br i1 %or.cond.i, label %gd_motion_event.exit, label %bb.l
+  %i.av = icmp slt <2 x i32> %.fr, zeroinitializer
+  %4 = bitcast <2 x i1> %i.av to i2
+  %or.cond.i.not = icmp eq i2 %4, 0
+  br i1 %or.cond.i.not, label %bb.l, label %gd_motion_event.exit
 
 bb.l:                                             ; preds = %bb.k
   %i.aw = load ptr, ptr %i.e, align 8
   %.val98.i = load ptr, ptr %i.aw, align 8
   %i.ax = tail call i32 @pixman_image_get_width(ptr noundef %.val98.i) #15
-  %i.ay = extractelement <2 x i32> %i.ak, i64 0   ; 2 uses
+  %i.ay = extractelement <2 x i32> %.fr, i64 0    ; 2 uses
   %.not92.i = icmp sgt i32 %i.ax, %i.ay
   br i1 %.not92.i, label %bb.m, label %gd_motion_event.exit
 
@@ -252,7 +252,7 @@ bb.m:                                             ; preds = %bb.l
   %i.az = load ptr, ptr %i.e, align 8
   %.val101.i = load ptr, ptr %i.az, align 8
   %i.ba = tail call i32 @pixman_image_get_height(ptr noundef %.val101.i) #15
-  %i.bb = extractelement <2 x i32> %i.ak, i64 1   ; 2 uses
+  %i.bb = extractelement <2 x i32> %.fr, i64 1    ; 2 uses
   %.not93.i = icmp sgt i32 %i.ba, %i.bb
   br i1 %.not93.i, label %bb.n, label %gd_motion_event.exit
 
@@ -285,13 +285,13 @@ bb.q:                                             ; preds = %bb.p
   %i.bn = load ptr, ptr %i.as, align 8
   %i.bo = getelementptr inbounds nuw i8, ptr %i.c, i64 216
   %i.bp = load i32, ptr %i.bo, align 8
-  %i.bq = extractelement <2 x i32> %i.ak, i64 0
+  %i.bq = extractelement <2 x i32> %.fr, i64 0
   %i.br = sub i32 %i.bq, %i.bp
   tail call void @qemu_input_queue_rel(ptr noundef %i.bn, i32 noundef 0, i32 noundef %i.br) #15
   %i.bs = load ptr, ptr %i.as, align 8
   %i.bt = getelementptr inbounds nuw i8, ptr %i.c, i64 220
   %i.bu = load i32, ptr %i.bt, align 4
-  %i.bv = extractelement <2 x i32> %i.ak, i64 1
+  %i.bv = extractelement <2 x i32> %.fr, i64 1
   %i.bw = sub i32 %i.bv, %i.bu
   tail call void @qemu_input_queue_rel(ptr noundef %i.bs, i32 noundef 1, i32 noundef %i.bw) #15
   br label %.sink.split.i
@@ -302,10 +302,10 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %.sink.split.i, %bb.p, %bb.o
   %i.bx = getelementptr inbounds nuw i8, ptr %i.c, i64 216
-  %i.by = extractelement <2 x i32> %i.ak, i64 0
+  %i.by = extractelement <2 x i32> %.fr, i64 0
   store i32 %i.by, ptr %i.bx, align 8
   %i.bz = getelementptr inbounds nuw i8, ptr %i.c, i64 220
-  %i.ca = extractelement <2 x i32> %i.ak, i64 1
+  %i.ca = extractelement <2 x i32> %.fr, i64 1
   store i32 %i.ca, ptr %i.bz, align 4
   %i.cb = getelementptr inbounds nuw i8, ptr %i.c, i64 212 ; 2 uses
   store i32 1, ptr %i.cb, align 4

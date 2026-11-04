@@ -205,12 +205,14 @@ bb.ag:                                            ; preds = %bb.af
   %i.hv = load i32, ptr %i.hu, align 4, !tbaa !164
   %i.hw = add nsw i32 %i.hv, -1
   %i.hx = sitofp i32 %i.hw to float
-  %7 = extractelement <2 x float> %i.hq, i64 0
-  %8 = fcmp oge float %7, %i.hx
-  %9 = extractelement <2 x float> %i.hq, i64 1
-  %10 = fcmp olt float %9, 0.000000e+00
-  %or.cond.i = select i1 %8, i1 true, i1 %10
-  br i1 %or.cond.i, label %_ZN2cv6dynafuL13bilinearDepthERKNS_4Mat_IfEENS_6Point_IfEE.exit.thread, label %bb.ah
+  %7 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %i.hx, i64 0 ; 2 uses
+  %8 = fcmp olt <2 x float> %i.hq, %7
+  %9 = fcmp oge <2 x float> %i.hq, %7
+  %10 = shufflevector <2 x i1> %9, <2 x i1> %8, <2 x i32> <i32 0, i32 3>
+  %11 = freeze <2 x i1> %10
+  %12 = bitcast <2 x i1> %11 to i2
+  %or.cond.i.not = icmp eq i2 %12, 0
+  br i1 %or.cond.i.not, label %bb.ah, label %_ZN2cv6dynafuL13bilinearDepthERKNS_4Mat_IfEENS_6Point_IfEE.exit.thread
 
 bb.ah:                                            ; preds = %bb.ag
   %i.hy = getelementptr inbounds nuw i8, ptr %i.hr, i64 8

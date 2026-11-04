@@ -205,16 +205,16 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 448
   %i.f = load <2 x double>, ptr %i.b, align 8
   %i.g = load <2 x double>, ptr %i.a, align 8, !tbaa !1104, !noalias !9686
-  %i.h = fsub <2 x double> %i.f, %i.g             ; 5 uses
-  store <2 x double> %i.h, ptr %i.e, align 8, !tbaa !1104
+  %i.h = fsub <2 x double> %i.f, %i.g
+  %.fr89 = freeze <2 x double> %i.h               ; 5 uses
+  store <2 x double> %.fr89, ptr %i.e, align 8, !tbaa !1104
   %i.i = fsub double %.sroa.881.0.copyload, %i.d  ; 3 uses
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 464
   store double %i.i, ptr %i.j, align 8, !tbaa !9687
-  %i.k = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.h)
-  %i.l = fcmp ule <2 x double> %i.k, splat (double 1.000000e-15) ; 2 uses
-  %4 = extractelement <2 x i1> %i.l, i64 0
-  %5 = extractelement <2 x i1> %i.l, i64 1
-  %or.cond = select i1 %4, i1 true, i1 %5
+  %i.k = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr89)
+  %i.l = fcmp ule <2 x double> %i.k, splat (double 1.000000e-15)
+  %4 = bitcast <2 x i1> %i.l to i2
+  %or.cond = icmp ne i2 %4, 0
   %i.m = tail call double @llvm.fabs.f64(double %i.i)
   %i.n = fcmp ule double %i.m, 1.000000e-15
   %or.cond84 = select i1 %or.cond, i1 true, i1 %i.n
@@ -313,7 +313,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit5: ; preds = %bb.j
   resume { ptr, i32 } %i.ac
 
 bb.k:                                             ; preds = %bb.a
-  %i.ah = fmul nnan <2 x double> %i.h, splat (double 5.000000e-01)
+  %i.ah = fmul nnan <2 x double> %.fr89, splat (double 5.000000e-01)
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 472
   store <2 x double> %i.ah, ptr %i.ai, align 8, !tbaa !1104
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 56
@@ -329,7 +329,7 @@ bb.k:                                             ; preds = %bb.a
   %i.at = insertelement <2 x double> %i.as, double %i.i, i64 1
   %i.au = fdiv <2 x double> %i.ar, %i.at          ; 2 uses
   store <2 x double> %i.au, ptr %i.ap, align 8, !tbaa !1104
-  %foldExtExtBinop = fmul nnan <2 x double> %i.h, %i.h
+  %foldExtExtBinop = fmul nnan <2 x double> %.fr89, %.fr89
   %i.av = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.aw = extractelement <2 x double> %i.au, i64 1
   %i.ax = fdiv double %i.aw, %i.av

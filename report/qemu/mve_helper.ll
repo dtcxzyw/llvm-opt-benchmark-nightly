@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/mve_helper?download=true
 inline.NumInlined: 1943
 inline.NumDeleted: 98
-loop-unroll.NumCompletelyUnrolled: 752
-loop-unroll.NumUnrolled: 752
+loop-unroll.NumCompletelyUnrolled: 753
+loop-unroll.NumUnrolled: 753
 begin_hunk_0_@helper_mve_vldrd_sg_ud:bb.a
 bb.e:                                             ; preds = %arm_to_core_mmu_idx.exit
   %i.p = and i16 %i.a, 1
@@ -204,41 +204,327 @@ arm_to_core_mmu_idx.exit:                         ; preds = %mve_eci_mask.exit
   %i.k = shl i32 %.val24, 6
   %i.l = and i32 %i.k, 512
   %i.m = or disjoint i32 %i.h, %i.l
-  %i.n = or disjoint i32 %i.m, 7168
+  %i.n = or disjoint i32 %i.m, 7168               ; 16 uses
   %i.o = insertelement <2 x i16> poison, i16 %i.a, i64 0
   %i.p = insertelement <2 x i16> %i.o, i16 %.0.i, i64 1
-  br label %bb.e
+  %.fr = freeze <2 x i16> %i.p                    ; 16 uses
+  %4 = and <2 x i16> %.fr, splat (i16 1)
+  %5 = icmp eq <2 x i16> %4, zeroinitializer
+  %6 = bitcast <2 x i1> %5 to i2
+  %or.cond.not = icmp eq i2 %6, 0
+  br i1 %or.cond.not, label %7, label %15
 
-bb.e:                                             ; preds = %arm_to_core_mmu_idx.exit, %bb.g
-  %indvars.iv = phi i64 [ 0, %arm_to_core_mmu_idx.exit ], [ %indvars.iv.next, %bb.g ] ; 3 uses
-  %4 = phi <2 x i16> [ %i.p, %arm_to_core_mmu_idx.exit ], [ %9, %bb.g ] ; 2 uses
-  %5 = and <2 x i16> %4, splat (i16 1)
-  %6 = icmp eq <2 x i16> %5, zeroinitializer      ; 2 uses
-  %7 = extractelement <2 x i1> %6, i64 0
-  %8 = extractelement <2 x i1> %6, i64 1
-  %or.cond = select i1 %8, i1 true, i1 %7
-  br i1 %or.cond, label %bb.g, label %bb.f
+7:                                                ; preds = %arm_to_core_mmu_idx.exit
+  %8 = load i8, ptr %2, align 1
+  %9 = zext i8 %8 to i32
+  %10 = add i32 %3, %9
+  %11 = zext i32 %10 to i64
+  %12 = load i8, ptr %1, align 1
+  %13 = tail call ptr @llvm.returnaddress.p0(i32 0)
+  %14 = ptrtoint ptr %13 to i64
+  tail call void @cpu_stb_mmu(ptr noundef nonnull %0, i64 noundef %11, i8 noundef zeroext %12, i32 noundef %i.n, i64 noundef %14) #12
+  br label %15
 
-bb.f:                                             ; preds = %bb.e
-  %i.q = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv
+15:                                               ; preds = %7, %arm_to_core_mmu_idx.exit
+  %16 = and <2 x i16> %.fr, splat (i16 2)
+  %17 = icmp eq <2 x i16> %16, zeroinitializer
+  %18 = bitcast <2 x i1> %17 to i2
+  %or.cond.not.1 = icmp eq i2 %18, 0
+  br i1 %or.cond.not.1, label %19, label %29
+
+19:                                               ; preds = %15
+  %20 = getelementptr inbounds nuw i8, ptr %2, i64 1
+  %21 = load i8, ptr %20, align 1
+  %22 = zext i8 %21 to i32
+  %23 = add i32 %3, %22
+  %24 = zext i32 %23 to i64
+  %25 = getelementptr inbounds nuw i8, ptr %1, i64 1
+  %26 = load i8, ptr %25, align 1
+  %27 = tail call ptr @llvm.returnaddress.p0(i32 0)
+  %28 = ptrtoint ptr %27 to i64
+  tail call void @cpu_stb_mmu(ptr noundef nonnull %0, i64 noundef %24, i8 noundef zeroext %26, i32 noundef %i.n, i64 noundef %28) #12
+  br label %29
+
+29:                                               ; preds = %19, %15
+  %30 = and <2 x i16> %.fr, splat (i16 4)
+  %31 = icmp eq <2 x i16> %30, zeroinitializer
+  %32 = bitcast <2 x i1> %31 to i2
+  %or.cond.not.2 = icmp eq i2 %32, 0
+  br i1 %or.cond.not.2, label %33, label %43
+
+33:                                               ; preds = %29
+  %34 = getelementptr inbounds nuw i8, ptr %2, i64 2
+  %35 = load i8, ptr %34, align 1
+  %36 = zext i8 %35 to i32
+  %37 = add i32 %3, %36
+  %38 = zext i32 %37 to i64
+  %39 = getelementptr inbounds nuw i8, ptr %1, i64 2
+  %40 = load i8, ptr %39, align 1
+  %41 = tail call ptr @llvm.returnaddress.p0(i32 0)
+  %42 = ptrtoint ptr %41 to i64
+  tail call void @cpu_stb_mmu(ptr noundef nonnull %0, i64 noundef %38, i8 noundef zeroext %40, i32 noundef %i.n, i64 noundef %42) #12
+  br label %43
+
+43:                                               ; preds = %33, %29
+  %44 = and <2 x i16> %.fr, splat (i16 8)
+  %45 = icmp eq <2 x i16> %44, zeroinitializer
+  %46 = bitcast <2 x i1> %45 to i2
+  %or.cond.not.3 = icmp eq i2 %46, 0
+  br i1 %or.cond.not.3, label %47, label %57
+
+47:                                               ; preds = %43
+  %48 = getelementptr inbounds nuw i8, ptr %2, i64 3
+  %49 = load i8, ptr %48, align 1
+  %50 = zext i8 %49 to i32
+  %51 = add i32 %3, %50
+  %52 = zext i32 %51 to i64
+  %53 = getelementptr inbounds nuw i8, ptr %1, i64 3
+  %54 = load i8, ptr %53, align 1
+  %55 = tail call ptr @llvm.returnaddress.p0(i32 0)
+  %56 = ptrtoint ptr %55 to i64
+  tail call void @cpu_stb_mmu(ptr noundef nonnull %0, i64 noundef %52, i8 noundef zeroext %54, i32 noundef %i.n, i64 noundef %56) #12
+  br label %57
+
+57:                                               ; preds = %47, %43
+  %58 = and <2 x i16> %.fr, splat (i16 16)
+  %59 = icmp eq <2 x i16> %58, zeroinitializer
+  %60 = bitcast <2 x i1> %59 to i2
+  %or.cond.not.4 = icmp eq i2 %60, 0
+  br i1 %or.cond.not.4, label %61, label %71
+
+61:                                               ; preds = %57
+  %62 = getelementptr inbounds nuw i8, ptr %2, i64 4
+  %63 = load i8, ptr %62, align 1
+  %64 = zext i8 %63 to i32
+  %65 = add i32 %3, %64
+  %66 = zext i32 %65 to i64
+  %67 = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %68 = load i8, ptr %67, align 1
+  %69 = tail call ptr @llvm.returnaddress.p0(i32 0)
+  %70 = ptrtoint ptr %69 to i64
+  tail call void @cpu_stb_mmu(ptr noundef nonnull %0, i64 noundef %66, i8 noundef zeroext %68, i32 noundef %i.n, i64 noundef %70) #12
+  br label %71
+
+71:                                               ; preds = %61, %57
+  %72 = and <2 x i16> %.fr, splat (i16 32)
+  %73 = icmp eq <2 x i16> %72, zeroinitializer
+  %74 = bitcast <2 x i1> %73 to i2
+  %or.cond.not.5 = icmp eq i2 %74, 0
+  br i1 %or.cond.not.5, label %75, label %85
+
+75:                                               ; preds = %71
+  %76 = getelementptr inbounds nuw i8, ptr %2, i64 5
+  %77 = load i8, ptr %76, align 1
+  %78 = zext i8 %77 to i32
+  %79 = add i32 %3, %78
+  %80 = zext i32 %79 to i64
+  %81 = getelementptr inbounds nuw i8, ptr %1, i64 5
+  %82 = load i8, ptr %81, align 1
+  %83 = tail call ptr @llvm.returnaddress.p0(i32 0)
+  %84 = ptrtoint ptr %83 to i64
+  tail call void @cpu_stb_mmu(ptr noundef nonnull %0, i64 noundef %80, i8 noundef zeroext %82, i32 noundef %i.n, i64 noundef %84) #12
+  br label %85
+
+85:                                               ; preds = %75, %71
+  %86 = and <2 x i16> %.fr, splat (i16 64)
+  %87 = icmp eq <2 x i16> %86, zeroinitializer
+  %88 = bitcast <2 x i1> %87 to i2
+  %or.cond.not.6 = icmp eq i2 %88, 0
+  br i1 %or.cond.not.6, label %89, label %99
+
+89:                                               ; preds = %85
+  %90 = getelementptr inbounds nuw i8, ptr %2, i64 6
+  %91 = load i8, ptr %90, align 1
+  %92 = zext i8 %91 to i32
+  %93 = add i32 %3, %92
+  %94 = zext i32 %93 to i64
+  %95 = getelementptr inbounds nuw i8, ptr %1, i64 6
+  %96 = load i8, ptr %95, align 1
+  %97 = tail call ptr @llvm.returnaddress.p0(i32 0)
+  %98 = ptrtoint ptr %97 to i64
+  tail call void @cpu_stb_mmu(ptr noundef nonnull %0, i64 noundef %94, i8 noundef zeroext %96, i32 noundef %i.n, i64 noundef %98) #12
+  br label %99
+
+99:                                               ; preds = %89, %85
+  %100 = and <2 x i16> %.fr, splat (i16 128)
+  %101 = icmp eq <2 x i16> %100, zeroinitializer
+  %102 = bitcast <2 x i1> %101 to i2
+  %or.cond.not.7 = icmp eq i2 %102, 0
+  br i1 %or.cond.not.7, label %103, label %113
+
+103:                                              ; preds = %99
+  %104 = getelementptr inbounds nuw i8, ptr %2, i64 7
+  %105 = load i8, ptr %104, align 1
+  %106 = zext i8 %105 to i32
+  %107 = add i32 %3, %106
+  %108 = zext i32 %107 to i64
+  %109 = getelementptr inbounds nuw i8, ptr %1, i64 7
+  %110 = load i8, ptr %109, align 1
+  %111 = tail call ptr @llvm.returnaddress.p0(i32 0)
+  %112 = ptrtoint ptr %111 to i64
+  tail call void @cpu_stb_mmu(ptr noundef nonnull %0, i64 noundef %108, i8 noundef zeroext %110, i32 noundef %i.n, i64 noundef %112) #12
+  br label %113
+
+113:                                              ; preds = %103, %99
+  %114 = and <2 x i16> %.fr, splat (i16 256)
+  %115 = icmp eq <2 x i16> %114, zeroinitializer
+  %116 = bitcast <2 x i1> %115 to i2
+  %or.cond.not.8 = icmp eq i2 %116, 0
+  br i1 %or.cond.not.8, label %117, label %127
+
+117:                                              ; preds = %113
+  %118 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %119 = load i8, ptr %118, align 1
+  %120 = zext i8 %119 to i32
+  %121 = add i32 %3, %120
+  %122 = zext i32 %121 to i64
+  %123 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %124 = load i8, ptr %123, align 1
+  %125 = tail call ptr @llvm.returnaddress.p0(i32 0)
+  %126 = ptrtoint ptr %125 to i64
+  tail call void @cpu_stb_mmu(ptr noundef nonnull %0, i64 noundef %122, i8 noundef zeroext %124, i32 noundef %i.n, i64 noundef %126) #12
+  br label %127
+
+127:                                              ; preds = %117, %113
+  %128 = and <2 x i16> %.fr, splat (i16 512)
+  %129 = icmp eq <2 x i16> %128, zeroinitializer
+  %130 = bitcast <2 x i1> %129 to i2
+  %or.cond.not.9 = icmp eq i2 %130, 0
+  br i1 %or.cond.not.9, label %131, label %141
+
+131:                                              ; preds = %127
+  %132 = getelementptr inbounds nuw i8, ptr %2, i64 9
+  %133 = load i8, ptr %132, align 1
+  %134 = zext i8 %133 to i32
+  %135 = add i32 %3, %134
+  %136 = zext i32 %135 to i64
+  %137 = getelementptr inbounds nuw i8, ptr %1, i64 9
+  %138 = load i8, ptr %137, align 1
+  %139 = tail call ptr @llvm.returnaddress.p0(i32 0)
+  %140 = ptrtoint ptr %139 to i64
+  tail call void @cpu_stb_mmu(ptr noundef nonnull %0, i64 noundef %136, i8 noundef zeroext %138, i32 noundef %i.n, i64 noundef %140) #12
+  br label %141
+
+141:                                              ; preds = %131, %127
+  %142 = and <2 x i16> %.fr, splat (i16 1024)
+  %143 = icmp eq <2 x i16> %142, zeroinitializer
+  %144 = bitcast <2 x i1> %143 to i2
+  %or.cond.not.10 = icmp eq i2 %144, 0
+  br i1 %or.cond.not.10, label %145, label %155
+
+145:                                              ; preds = %141
+  %146 = getelementptr inbounds nuw i8, ptr %2, i64 10
+  %147 = load i8, ptr %146, align 1
+  %148 = zext i8 %147 to i32
+  %149 = add i32 %3, %148
+  %150 = zext i32 %149 to i64
+  %151 = getelementptr inbounds nuw i8, ptr %1, i64 10
+  %152 = load i8, ptr %151, align 1
+  %153 = tail call ptr @llvm.returnaddress.p0(i32 0)
+  %154 = ptrtoint ptr %153 to i64
+  tail call void @cpu_stb_mmu(ptr noundef nonnull %0, i64 noundef %150, i8 noundef zeroext %152, i32 noundef %i.n, i64 noundef %154) #12
+  br label %155
+
+155:                                              ; preds = %145, %141
+  %156 = and <2 x i16> %.fr, splat (i16 2048)
+  %157 = icmp eq <2 x i16> %156, zeroinitializer
+  %158 = bitcast <2 x i1> %157 to i2
+  %or.cond.not.11 = icmp eq i2 %158, 0
+  br i1 %or.cond.not.11, label %159, label %169
+
+159:                                              ; preds = %155
+  %160 = getelementptr inbounds nuw i8, ptr %2, i64 11
+  %161 = load i8, ptr %160, align 1
+  %162 = zext i8 %161 to i32
+  %163 = add i32 %3, %162
+  %164 = zext i32 %163 to i64
+  %165 = getelementptr inbounds nuw i8, ptr %1, i64 11
+  %166 = load i8, ptr %165, align 1
+  %167 = tail call ptr @llvm.returnaddress.p0(i32 0)
+  %168 = ptrtoint ptr %167 to i64
+  tail call void @cpu_stb_mmu(ptr noundef nonnull %0, i64 noundef %164, i8 noundef zeroext %166, i32 noundef %i.n, i64 noundef %168) #12
+  br label %169
+
+169:                                              ; preds = %159, %155
+  %170 = and <2 x i16> %.fr, splat (i16 4096)
+  %171 = icmp eq <2 x i16> %170, zeroinitializer
+  %172 = bitcast <2 x i1> %171 to i2
+  %or.cond.not.12 = icmp eq i2 %172, 0
+  br i1 %or.cond.not.12, label %173, label %183
+
+173:                                              ; preds = %169
+  %174 = getelementptr inbounds nuw i8, ptr %2, i64 12
+  %175 = load i8, ptr %174, align 1
+  %176 = zext i8 %175 to i32
+  %177 = add i32 %3, %176
+  %178 = zext i32 %177 to i64
+  %179 = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %180 = load i8, ptr %179, align 1
+  %181 = tail call ptr @llvm.returnaddress.p0(i32 0)
+  %182 = ptrtoint ptr %181 to i64
+  tail call void @cpu_stb_mmu(ptr noundef nonnull %0, i64 noundef %178, i8 noundef zeroext %180, i32 noundef %i.n, i64 noundef %182) #12
+  br label %183
+
+183:                                              ; preds = %173, %169
+  %184 = and <2 x i16> %.fr, splat (i16 8192)
+  %185 = icmp eq <2 x i16> %184, zeroinitializer
+  %186 = bitcast <2 x i1> %185 to i2
+  %or.cond.not.13 = icmp eq i2 %186, 0
+  br i1 %or.cond.not.13, label %bb.e, label %196
+
+bb.e:                                             ; preds = %183
+  %187 = getelementptr inbounds nuw i8, ptr %2, i64 13
+  %188 = load i8, ptr %187, align 1
+  %189 = zext i8 %188 to i32
+  %190 = add i32 %3, %189
+  %191 = zext i32 %190 to i64
+  %192 = getelementptr inbounds nuw i8, ptr %1, i64 13
+  %193 = load i8, ptr %192, align 1
+  %194 = tail call ptr @llvm.returnaddress.p0(i32 0)
+  %195 = ptrtoint ptr %194 to i64
+  tail call void @cpu_stb_mmu(ptr noundef nonnull %0, i64 noundef %191, i8 noundef zeroext %193, i32 noundef %i.n, i64 noundef %195) #12
+  br label %196
+
+196:                                              ; preds = %bb.e, %183
+  %197 = and <2 x i16> %.fr, splat (i16 16384)
+  %198 = icmp eq <2 x i16> %197, zeroinitializer
+  %199 = bitcast <2 x i1> %198 to i2
+  %or.cond.not.14 = icmp eq i2 %199, 0
+  br i1 %or.cond.not.14, label %bb.f, label %bb.g
+
+bb.f:                                             ; preds = %196
+  %i.q = getelementptr inbounds nuw i8, ptr %2, i64 14
   %i.r = load i8, ptr %i.q, align 1
   %i.s = zext i8 %i.r to i32
   %i.t = add i32 %3, %i.s
   %i.u = zext i32 %i.t to i64
-  %i.v = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv
+  %i.v = getelementptr inbounds nuw i8, ptr %1, i64 14
   %i.w = load i8, ptr %i.v, align 1
   %i.x = tail call ptr @llvm.returnaddress.p0(i32 0)
   %i.y = ptrtoint ptr %i.x to i64
   tail call void @cpu_stb_mmu(ptr noundef nonnull %0, i64 noundef %i.u, i8 noundef zeroext %i.w, i32 noundef %i.n, i64 noundef %i.y) #12
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %bb.e
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %9 = lshr <2 x i16> %4, splat (i16 1)
-  %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.h, label %bb.e, !llvm.loop !12
+bb.g:                                             ; preds = %bb.f, %196
+  %200 = icmp sgt <2 x i16> %.fr, splat (i16 -1)
+  %201 = bitcast <2 x i1> %200 to i2
+  %exitcond.not = icmp eq i2 %201, 0
+  br i1 %exitcond.not, label %202, label %bb.h
 
-bb.h:                                             ; preds = %bb.g
+202:                                              ; preds = %bb.g
+  %203 = getelementptr inbounds nuw i8, ptr %2, i64 15
+  %204 = load i8, ptr %203, align 1
+  %205 = zext i8 %204 to i32
+  %206 = add i32 %3, %205
+  %207 = zext i32 %206 to i64
+  %208 = getelementptr inbounds nuw i8, ptr %1, i64 15
+  %209 = load i8, ptr %208, align 1
+  %210 = tail call ptr @llvm.returnaddress.p0(i32 0)
+  %211 = ptrtoint ptr %210 to i64
+  tail call void @cpu_stb_mmu(ptr noundef nonnull %0, i64 noundef %207, i8 noundef zeroext %209, i32 noundef %i.n, i64 noundef %211) #12
+  br label %bb.h
+
+bb.h:                                             ; preds = %202, %bb.g
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 3828 ; 2 uses
   %i.aa = load i32, ptr %i.z, align 4             ; 5 uses
   %.val.i = load i32, ptr %i.b, align 16          ; 4 uses
@@ -641,7 +927,7 @@ mergemask_sb.exit:                                ; preds = %do_sat_bhs.exit, %b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.l = lshr i16 %.02126, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.c, label %do_sat_bhs.exit, !llvm.loop !13
+  br i1 %exitcond.not, label %bb.c, label %do_sat_bhs.exit, !llvm.loop !12
 
 bb.c:                                             ; preds = %mergemask_sb.exit
   br i1 %i.k, label %bb.d, label %bb.e
@@ -1044,7 +1330,7 @@ mergemask_sb.exit:                                ; preds = %do_sat_bhs.exit, %b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.l = lshr i16 %.01721, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.c, label %do_sat_bhs.exit, !llvm.loop !14
+  br i1 %exitcond.not, label %bb.c, label %do_sat_bhs.exit, !llvm.loop !13
 
 bb.c:                                             ; preds = %mergemask_sb.exit
   br i1 %i.k, label %bb.d, label %bb.e
@@ -1447,7 +1733,7 @@ mergemask_sb.exit:                                ; preds = %do_sat_bhw.exit, %b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.r = lshr i16 %.02125, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.c, label %do_sat_bhw.exit, !llvm.loop !15
+  br i1 %exitcond.not, label %bb.c, label %do_sat_bhw.exit, !llvm.loop !14
 
 bb.c:                                             ; preds = %mergemask_sb.exit
   br i1 %i.q, label %bb.d, label %bb.e
@@ -1850,7 +2136,7 @@ mergemask_sb.exit:                                ; preds = %do_sat_bhw.exit, %b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.s = lshr i16 %.02125, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.c, label %do_sat_bhw.exit, !llvm.loop !16
+  br i1 %exitcond.not, label %bb.c, label %do_sat_bhw.exit, !llvm.loop !15
 
 bb.c:                                             ; preds = %mergemask_sb.exit
   br i1 %i.r, label %bb.d, label %bb.e
@@ -2253,7 +2539,7 @@ mergemask_sb.exit:                                ; preds = %do_sat_bhw.exit, %b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.q = lshr i16 %.02125, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.c, label %do_sat_bhw.exit, !llvm.loop !17
+  br i1 %exitcond.not, label %bb.c, label %do_sat_bhw.exit, !llvm.loop !16
 
 bb.c:                                             ; preds = %mergemask_sb.exit
   br i1 %i.p, label %bb.d, label %bb.e
@@ -2656,7 +2942,7 @@ mergemask_sb.exit:                                ; preds = %do_sat_bhw.exit, %b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.q = lshr i16 %.02125, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.c, label %do_sat_bhw.exit, !llvm.loop !18
+  br i1 %exitcond.not, label %bb.c, label %do_sat_bhw.exit, !llvm.loop !17
 
 bb.c:                                             ; preds = %mergemask_sb.exit
   br i1 %i.p, label %bb.d, label %bb.e
@@ -3059,7 +3345,7 @@ mergemask_sb.exit:                                ; preds = %do_sqrshl_bhs.exit,
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.s = lshr i16 %.01417, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.i, label %bb.b, !llvm.loop !19
+  br i1 %exitcond.not, label %bb.i, label %bb.b, !llvm.loop !18
 
 bb.i:                                             ; preds = %mergemask_sb.exit
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 3828 ; 2 uses
@@ -3462,7 +3748,7 @@ mergemask_ub.exit:                                ; preds = %do_uqrshl_bhs.exit,
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.p = lshr i16 %.01417, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.g, label %bb.b, !llvm.loop !20
+  br i1 %exitcond.not, label %bb.g, label %bb.b, !llvm.loop !19
 
 bb.g:                                             ; preds = %mergemask_ub.exit
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 3828 ; 2 uses
@@ -3865,7 +4151,7 @@ mergemask_sb.exit:                                ; preds = %do_sqrshl_bhs.exit,
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.u = lshr i16 %.01417, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.h, label %bb.b, !llvm.loop !21
+  br i1 %exitcond.not, label %bb.h, label %bb.b, !llvm.loop !20
 
 bb.h:                                             ; preds = %mergemask_sb.exit
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 3828 ; 2 uses
@@ -4268,7 +4554,7 @@ mergemask_ub.exit:                                ; preds = %do_uqrshl_bhs.exit,
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.r = lshr i16 %.01417, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.g, label %bb.b, !llvm.loop !22
+  br i1 %exitcond.not, label %bb.g, label %bb.b, !llvm.loop !21
 
 bb.g:                                             ; preds = %mergemask_ub.exit
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 3828 ; 2 uses
@@ -4671,7 +4957,7 @@ mergemask_sb.exit:                                ; preds = %do_sqrshl_bhs.exit,
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.z = lshr i16 %.02528, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.k, label %bb.b, !llvm.loop !23
+  br i1 %exitcond.not, label %bb.k, label %bb.b, !llvm.loop !22
 
 bb.k:                                             ; preds = %mergemask_sb.exit
   br i1 %i.y, label %bb.l, label %bb.m
@@ -5074,7 +5360,7 @@ mergemask_ub.exit:                                ; preds = %do_uqrshl_bhs.exit,
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.w = lshr i16 %.02528, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.j, label %bb.b, !llvm.loop !24
+  br i1 %exitcond.not, label %bb.j, label %bb.b, !llvm.loop !23
 
 bb.j:                                             ; preds = %mergemask_ub.exit
   br i1 %i.v, label %bb.k, label %bb.l
@@ -5477,7 +5763,7 @@ mergemask_sb.exit:                                ; preds = %do_sqrshl_bhs.exit,
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ab = lshr i16 %.02528, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.j, label %bb.b, !llvm.loop !25
+  br i1 %exitcond.not, label %bb.j, label %bb.b, !llvm.loop !24
 
 bb.j:                                             ; preds = %mergemask_sb.exit
   br i1 %i.aa, label %bb.k, label %bb.l
@@ -5880,7 +6166,7 @@ mergemask_ub.exit:                                ; preds = %do_uqrshl_bhs.exit,
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.y = lshr i16 %.02528, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.j, label %bb.b, !llvm.loop !26
+  br i1 %exitcond.not, label %bb.j, label %bb.b, !llvm.loop !25
 
 bb.j:                                             ; preds = %mergemask_ub.exit
   br i1 %i.x, label %bb.k, label %bb.l
@@ -6283,7 +6569,7 @@ bb.d:                                             ; preds = %mergemask_sb.exit, 
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ae = lshr i16 %.02630, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.e, label %bb.b, !llvm.loop !27
+  br i1 %exitcond.not, label %bb.e, label %bb.b, !llvm.loop !26
 
 bb.e:                                             ; preds = %bb.d
   br i1 %.1, label %bb.f, label %bb.g
@@ -6686,7 +6972,7 @@ bb.d:                                             ; preds = %mergemask_sb.exit, 
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ac = lshr i16 %.02630, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.e, label %bb.b, !llvm.loop !28
+  br i1 %exitcond.not, label %bb.e, label %bb.b, !llvm.loop !27
 
 bb.e:                                             ; preds = %bb.d
   br i1 %.1, label %bb.f, label %bb.g
@@ -7089,7 +7375,7 @@ bb.d:                                             ; preds = %mergemask_sb.exit, 
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ah = lshr i16 %.02630, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.e, label %bb.b, !llvm.loop !29
+  br i1 %exitcond.not, label %bb.e, label %bb.b, !llvm.loop !28
 
 bb.e:                                             ; preds = %bb.d
   br i1 %.1, label %bb.f, label %bb.g
@@ -7492,7 +7778,7 @@ bb.d:                                             ; preds = %mergemask_sb.exit, 
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.af = lshr i16 %.02630, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.e, label %bb.b, !llvm.loop !30
+  br i1 %exitcond.not, label %bb.e, label %bb.b, !llvm.loop !29
 
 bb.e:                                             ; preds = %bb.d
   br i1 %.1, label %bb.f, label %bb.g
@@ -7895,7 +8181,7 @@ bb.d:                                             ; preds = %mergemask_sb.exit, 
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ae = lshr i16 %.02630, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.e, label %bb.b, !llvm.loop !31
+  br i1 %exitcond.not, label %bb.e, label %bb.b, !llvm.loop !30
 
 bb.e:                                             ; preds = %bb.d
   br i1 %.1, label %bb.f, label %bb.g
@@ -8298,7 +8584,7 @@ bb.d:                                             ; preds = %mergemask_sb.exit, 
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ac = lshr i16 %.02630, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.e, label %bb.b, !llvm.loop !32
+  br i1 %exitcond.not, label %bb.e, label %bb.b, !llvm.loop !31
 
 bb.e:                                             ; preds = %bb.d
   br i1 %.1, label %bb.f, label %bb.g
@@ -8701,7 +8987,7 @@ bb.d:                                             ; preds = %mergemask_sb.exit, 
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ah = lshr i16 %.02630, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.e, label %bb.b, !llvm.loop !33
+  br i1 %exitcond.not, label %bb.e, label %bb.b, !llvm.loop !32
 
 bb.e:                                             ; preds = %bb.d
   br i1 %.1, label %bb.f, label %bb.g
@@ -9104,7 +9390,7 @@ bb.d:                                             ; preds = %mergemask_sb.exit, 
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.af = lshr i16 %.02630, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.e, label %bb.b, !llvm.loop !34
+  br i1 %exitcond.not, label %bb.e, label %bb.b, !llvm.loop !33
 
 bb.e:                                             ; preds = %bb.d
   br i1 %.1, label %bb.f, label %bb.g
@@ -9507,7 +9793,7 @@ mergemask_sb.exit:                                ; preds = %do_sat_bhw.exit, %b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.p = lshr i16 %.01923, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.c, label %do_sat_bhw.exit, !llvm.loop !35
+  br i1 %exitcond.not, label %bb.c, label %do_sat_bhw.exit, !llvm.loop !34
 
 bb.c:                                             ; preds = %mergemask_sb.exit
   br i1 %i.o, label %bb.d, label %bb.e
@@ -9910,7 +10196,7 @@ mergemask_sb.exit:                                ; preds = %do_sat_bhw.exit, %b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.p = lshr i16 %.01923, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.c, label %do_sat_bhw.exit, !llvm.loop !36
+  br i1 %exitcond.not, label %bb.c, label %do_sat_bhw.exit, !llvm.loop !35
 
 bb.c:                                             ; preds = %mergemask_sb.exit
   br i1 %i.o, label %bb.d, label %bb.e
@@ -10313,7 +10599,7 @@ mergemask_sb.exit:                                ; preds = %do_sat_bhw.exit, %b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.r = lshr i16 %.01923, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.c, label %do_sat_bhw.exit, !llvm.loop !37
+  br i1 %exitcond.not, label %bb.c, label %do_sat_bhw.exit, !llvm.loop !36
 
 bb.c:                                             ; preds = %mergemask_sb.exit
   br i1 %i.q, label %bb.d, label %bb.e
@@ -10716,7 +11002,7 @@ mergemask_ub.exit:                                ; preds = %do_vbrsrb.exit, %bb
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ap = lshr i16 %.01315, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %.split18.us, label %do_vbrsrb.exit, !llvm.loop !38
+  br i1 %exitcond.not, label %.split18.us, label %do_vbrsrb.exit, !llvm.loop !37
 
 .split18.us:                                      ; preds = %mergemask_ub.exit, %mergemask_ub.exit.us.14, %bb.q
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 3828 ; 2 uses
@@ -11119,7 +11405,7 @@ mergemask_sb.exit:                                ; preds = %do_vqdmlah_b.exit, 
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.u = lshr i16 %.02125, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.c, label %do_vqdmlah_b.exit, !llvm.loop !39
+  br i1 %exitcond.not, label %bb.c, label %do_vqdmlah_b.exit, !llvm.loop !38
 
 bb.c:                                             ; preds = %mergemask_sb.exit
   br i1 %i.t, label %bb.d, label %bb.e
@@ -11522,7 +11808,7 @@ mergemask_sb.exit:                                ; preds = %do_vqdmlah_b.exit, 
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.x = lshr i16 %.02125, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.c, label %do_vqdmlah_b.exit, !llvm.loop !40
+  br i1 %exitcond.not, label %bb.c, label %do_vqdmlah_b.exit, !llvm.loop !39
 
 bb.c:                                             ; preds = %mergemask_sb.exit
   br i1 %i.w, label %bb.d, label %bb.e
@@ -11925,7 +12211,7 @@ mergemask_sb.exit:                                ; preds = %do_vqdmlah_b.exit, 
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.u = lshr i16 %.02125, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.c, label %do_vqdmlah_b.exit, !llvm.loop !41
+  br i1 %exitcond.not, label %bb.c, label %do_vqdmlah_b.exit, !llvm.loop !40
 
 bb.c:                                             ; preds = %mergemask_sb.exit
   br i1 %i.t, label %bb.d, label %bb.e
@@ -12328,7 +12614,7 @@ mergemask_sb.exit:                                ; preds = %do_vqdmlah_b.exit, 
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.x = lshr i16 %.02125, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %bb.c, label %do_vqdmlah_b.exit, !llvm.loop !42
+  br i1 %exitcond.not, label %bb.c, label %do_vqdmlah_b.exit, !llvm.loop !41
 
 bb.c:                                             ; preds = %mergemask_sb.exit
   br i1 %i.w, label %bb.d, label %bb.e
@@ -12731,7 +13017,7 @@ mergemask_sb.exit.us.us38:                        ; preds = %bb.r, %.split.us.sp
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ed = lshr i16 %.02225.us.us33, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %.split29.us, label %.split.us.split.split.us, !llvm.loop !43
+  br i1 %exitcond.not, label %.split29.us, label %.split.us.split.split.us, !llvm.loop !42
 
 bb.s:                                             ; preds = %.split.us.split.split.preheader
   %i.ee = icmp sgt i8 %i.dm, -1
@@ -13134,7 +13420,7 @@ mergemask_sb.exit.us.us38:                        ; preds = %bb.s, %do_suqrshl_b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.ic = lshr i16 %.02225.us.us33, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %.split29.us, label %.split.us.split.split.us, !llvm.loop !44
+  br i1 %exitcond.not, label %.split29.us, label %.split.us.split.split.us, !llvm.loop !43
 
 bb.t:                                             ; preds = %.split.us.split.split.preheader
   %i.id = icmp sgt i8 %i.hl, 0
@@ -13537,7 +13823,7 @@ mergemask_sb.exit.us.us38:                        ; preds = %bb.r, %.split.us.sp
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.fz = lshr i16 %.02225.us.us33, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
-  br i1 %exitcond.not, label %.split29.us, label %.split.us.split.split.us, !llvm.loop !45
+  br i1 %exitcond.not, label %.split29.us, label %.split.us.split.split.us, !llvm.loop !44
 
 bb.s:                                             ; preds = %.split.us.split.split.preheader
   %i.ga = icmp sgt i8 %i.fi, -1
@@ -13940,5 +14226,4 @@ attributes #12 = { nounwind }
 !42 = distinct !{!42, !7}
 !43 = distinct !{!43, !7}
 !44 = distinct !{!44, !7}
-!45 = distinct !{!45, !7}
 end_hunk_34

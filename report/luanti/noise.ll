@@ -204,11 +204,11 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   %i.aa = insertelement <2 x float> poison, float %i.n, i64 0
   %i.ab = shufflevector <2 x float> %i.aa, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.ac = fmul nsz <2 x float> %i.ab, %i.z
-  %i.ad = fdiv nsz <2 x float> %i.ac, %i.q        ; 3 uses
-  %4 = fcmp nsz ogt <2 x float> %i.ad, splat (float 1.000000e+09) ; 2 uses
-  %5 = extractelement <2 x i1> %4, i64 0
-  %6 = extractelement <2 x i1> %4, i64 1
-  %or.cond = select i1 %5, i1 true, i1 %6
+  %i.ad = fdiv nsz <2 x float> %i.ac, %i.q
+  %.fr = freeze <2 x float> %i.ad                 ; 3 uses
+  %4 = fcmp nsz ogt <2 x float> %.fr, splat (float 1.000000e+09)
+  %5 = bitcast <2 x i1> %4 to i2
+  %or.cond = icmp ne i2 %5, 0
   %i.ae = fcmp nsz ogt float %i.x, 1.000000e+09
   %or.cond3 = select i1 %or.cond, i1 true, i1 %i.ae
   br i1 %or.cond3, label %bb.d, label %bb.g
@@ -230,10 +230,10 @@ bb.f:                                             ; preds = %bb.d
 
 bb.g:                                             ; preds = %bb.c
   %i.ah = fdiv nsz <2 x float> %i.q, %i.ab
-  %7 = fcmp nsz olt <2 x float> %i.ah, splat (float 1.000000e+00) ; 2 uses
-  %8 = extractelement <2 x i1> %7, i64 0
-  %9 = extractelement <2 x i1> %7, i64 1
-  %or.cond41 = select i1 %8, i1 true, i1 %9
+  %.fr54 = freeze <2 x float> %i.ah
+  %6 = fcmp nsz olt <2 x float> %.fr54, splat (float 1.000000e+00)
+  %7 = bitcast <2 x i1> %6 to i2
+  %or.cond41 = icmp ne i2 %7, 0
   %i.ai = fdiv nsz float %i.w, %i.n
   %i.aj = fcmp nsz olt float %i.ai, 1.000000e+00
   %or.cond43 = select i1 %or.cond41, i1 true, i1 %i.aj
@@ -329,11 +329,11 @@ bb.o:                                             ; preds = %_ZN11StreamProxylsE
   br label %bb.ab
 
 bb.p:                                             ; preds = %bb.g
-  %i.bm = extractelement <2 x float> %i.ad, i64 0
+  %i.bm = extractelement <2 x float> %.fr, i64 0
   %i.bn = tail call nsz noundef float @llvm.ceil.f32(float %i.bm)
   %i.bo = fptoui float %i.bn to i64
   %i.bp = add i64 %i.bo, 3
-  %i.bq = extractelement <2 x float> %i.ad, i64 1
+  %i.bq = extractelement <2 x float> %.fr, i64 1
   %i.br = tail call nsz noundef float @llvm.ceil.f32(float %i.bq)
   %i.bs = fptoui float %i.br to i64
   %i.bt = add i64 %i.bs, 3
@@ -736,8 +736,9 @@ bb.a:
   %i.q = insertelement <2 x float> poison, float %4, i64 0
   %i.r = insertelement <2 x float> %i.q, float %5, i64 1
   %i.s = tail call nsz <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.p, <2 x float> %i.r, <2 x float> %i.n)
-  %i.t = fptoui <2 x float> %i.s to <2 x i32>     ; 2 uses
-  %i.u = add <2 x i32> %i.t, splat (i32 2)        ; 5 uses
+  %i.t = fptoui <2 x float> %i.s to <2 x i32>
+  %.fr264 = freeze <2 x i32> %i.t                 ; 2 uses
+  %i.u = add <2 x i32> %.fr264, splat (i32 2)     ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 52
   %i.w = load i32, ptr %i.v, align 4, !tbaa !43   ; 3 uses
   %i.x = uitofp nsz i32 %i.w to float
@@ -748,19 +749,18 @@ bb.a:
   br i1 %.not192, label %.preheader181, label %.preheader183.lr.ph
 
 .preheader183.lr.ph:                              ; preds = %bb.a
-  %i.ab = icmp eq <2 x i32> %i.u, zeroinitializer ; 2 uses
+  %i.ab = icmp eq <2 x i32> %i.u, zeroinitializer
   %i.ac = mul i32 %7, 1013
-  %8 = extractelement <2 x i1> %i.ab, i64 0
-  %9 = extractelement <2 x i1> %i.ab, i64 1
-  %or.cond = select i1 %9, i1 true, i1 %8
-  br i1 %or.cond, label %.preheader181, label %.preheader183.lr.ph.split.split
+  %8 = bitcast <2 x i1> %i.ab to i2
+  %or.cond.not = icmp eq i2 %8, 0
+  br i1 %or.cond.not, label %.preheader183.lr.ph.split.split, label %.preheader181
 
 .preheader183.lr.ph.split.split:                  ; preds = %.preheader183.lr.ph
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !44 ; 2 uses
   %i.af = extractelement <2 x i32> %i.u, i64 0    ; 4 uses
   %i.ag = extractelement <2 x i32> %i.u, i64 1
-  %i.ah = extractelement <2 x i32> %i.t, i64 0
+  %i.ah = extractelement <2 x i32> %.fr264, i64 0
   %i.ai = extractelement <2 x i32> %i.l, i64 1
   %min.iters.check = icmp ult i32 %i.af, 4
   %i.aj = sub i32 -2, %i.ah

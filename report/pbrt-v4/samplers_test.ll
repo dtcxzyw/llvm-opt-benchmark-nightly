@@ -205,10 +205,10 @@ _ZN4pbrt7Sampler5Get2DEv.exit419:                 ; preds = %bb.ey, %bb.ex, %bb.
   %.sroa.0.0.i484 = phi <2 x float> [ %.sroa.0.4.vec.insert.i.i.i.i496, %bb.ez ], [ %i.byq, %bb.ex ], [ %i.blx, %bb.dw ], [ %i.blc, %bb.dv ], [ %.sroa.0.4.vec.insert.i.i20.i490, %.noexc500 ], [ %.sroa.0.4.vec.insert.i601, %.noexc501 ], [ %.sroa.0.4.vec.insert.i.i22.i487, %.noexc503 ], [ %i.bly, %bb.dx ], [ %i.byr, %bb.ey ] ; 2 uses
   store <2 x float> %.sroa.0.0.i484, ptr %17, align 8
   %i.bzm = load <2 x float>, ptr %i.bkw, align 4, !noalias !187
-  %i.bzn = fcmp oeq <2 x float> %i.bzm, %.sroa.0.0.i484 ; 2 uses
-  %23 = extractelement <2 x i1> %i.bzn, i64 0
-  %24 = extractelement <2 x i1> %i.bzn, i64 1
-  %25 = select i1 %23, i1 %24, i1 false
+  %i.bzn = fcmp oeq <2 x float> %i.bzm, %.sroa.0.0.i484
+  %23 = freeze <2 x i1> %i.bzn
+  %24 = bitcast <2 x i1> %23 to i2
+  %25 = icmp eq i2 %24, -1
   br i1 %25, label %bb.fa, label %bb.fb
 
 bb.fa:                                            ; preds = %_ZN4pbrt7Sampler5Get2DEv.exit419

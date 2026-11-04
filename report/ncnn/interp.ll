@@ -205,13 +205,13 @@ bb.a:
   %4 = alloca %"class.std::vector.3", align 8     ; 11 uses
   %5 = alloca %"class.std::vector.3", align 8     ; 11 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 220
-  %i.b = load <2 x i32>, ptr %i.a, align 4, !tbaa !47 ; 2 uses
+  %i.b = load <2 x i32>, ptr %i.a, align 4, !tbaa !47
+  %.fr = freeze <2 x i32> %i.b                    ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
-  %i.d = icmp eq <2 x i32> %i.b, zeroinitializer  ; 2 uses
-  %6 = extractelement <2 x i1> %i.d, i64 0
-  %7 = extractelement <2 x i1> %i.d, i64 1
-  %or.cond = select i1 %6, i1 true, i1 %7
-  br i1 %or.cond, label %bb.b, label %.noexc63
+  %i.d = icmp eq <2 x i32> %.fr, zeroinitializer
+  %6 = bitcast <2 x i1> %i.d to i2
+  %or.cond.not = icmp eq i2 %6, 0
+  br i1 %or.cond.not, label %.noexc63, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 44
@@ -229,7 +229,7 @@ bb.b:                                             ; preds = %bb.a
   br label %.noexc63
 
 .noexc63:                                         ; preds = %bb.a, %bb.b
-  %i.q = phi <2 x i32> [ %i.p, %bb.b ], [ %i.b, %bb.a ]
+  %i.q = phi <2 x i32> [ %i.p, %bb.b ], [ %.fr, %bb.a ]
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
   %i.r = tail call noalias noundef nonnull dereferenceable(144) ptr @_Znwm(i64 noundef 144) #21 ; 17 uses
   store ptr %i.r, ptr %4, align 8, !tbaa !43

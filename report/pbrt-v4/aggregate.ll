@@ -204,7 +204,7 @@ _ZNK4pbrt6Tuple3INS_7Vector3EfEneENS1_IfEE.exit.thread.i.i.i.i: ; preds = %bb.f,
   %.sroa.21.0266.i.i.i.i = phi float [ %i.ae, %_ZNK4pbrt6Tuple3INS_7Vector3EfEneENS1_IfEE.exit.thread.lr.ph.i.i.i.i ], [ %i.hg, %bb.f ] ; 4 uses
   %.sroa.10192.0264.i.i.i.i = phi float [ %i.s, %_ZNK4pbrt6Tuple3INS_7Vector3EfEneENS1_IfEE.exit.thread.lr.ph.i.i.i.i ], [ %.fca.1.extract.i.i.i.i.i.i.i.i, %bb.f ] ; 3 uses
   %.sroa.0187.0263.i.i.i.i = phi <2 x float> [ %.sroa.0.4.vec.insert.i.i.i.i.i.i, %_ZNK4pbrt6Tuple3INS_7Vector3EfEneENS1_IfEE.exit.thread.lr.ph.i.i.i.i ], [ %.fca.0.extract.i.i.i.i.i.i.i.i, %bb.f ] ; 4 uses
-  %i.ej = phi <2 x float> [ %.sroa.0.4.vec.insert.i13.i.i.i.i.i, %_ZNK4pbrt6Tuple3INS_7Vector3EfEneENS1_IfEE.exit.thread.lr.ph.i.i.i.i ], [ %i.hf, %bb.f ] ; 4 uses
+  %i.ej = phi <2 x float> [ %.sroa.0.4.vec.insert.i13.i.i.i.i.i, %_ZNK4pbrt6Tuple3INS_7Vector3EfEneENS1_IfEE.exit.thread.lr.ph.i.i.i.i ], [ %.fr4, %bb.f ] ; 4 uses
   store <2 x float> %.sroa.0187.0263.i.i.i.i, ptr %10, align 8
   store float %.sroa.10192.0264.i.i.i.i, ptr %.sroa.10192.0..sroa_idx193.i.i.i.i, align 8
   store <2 x float> %i.ej, ptr %.sroa.14.0..sroa_idx197.i.i.i.i, align 4
@@ -378,9 +378,10 @@ _ZN4pstd8optionalIN4pbrt17ShapeIntersectionEEptEv.exit.i.i.i.i.i: ; preds = %.th
   %i.hc = insertelement <2 x float> %i.hb, float %.sroa.6.0.copyload.i.i.i.i.i, i64 1
   %i.hd = fadd <2 x float> %i.hc, %i.ha
   %i.he = fmul <2 x float> %i.hd, splat (float 5.000000e-01)
-  %i.hf = fsub <2 x float> %i.bs, %i.he           ; 5 uses
+  %i.hf = fsub <2 x float> %i.bs, %i.he
+  %.fr4 = freeze <2 x float> %i.hf                ; 5 uses
   %i.hg = fsub float %i.bt, %i.gz                 ; 5 uses
-  %i.hh = call { <2 x float>, float } @_ZN4pbrt15OffsetRayOriginENS_8Point3fiENS_7Normal3IfEENS_7Vector3IfEE(ptr noundef nonnull byval(%"class.pbrt::Point3fi") align 8 %12, <2 x float> %.sroa.09.0.copyload.i.i.i.i.i.i, float %.sroa.210.0.copyload.i.i.i.i.i.i, <2 x float> %i.hf, float %i.hg) ; 2 uses
+  %i.hh = call { <2 x float>, float } @_ZN4pbrt15OffsetRayOriginENS_8Point3fiENS_7Normal3IfEENS_7Vector3IfEE(ptr noundef nonnull byval(%"class.pbrt::Point3fi") align 8 %12, <2 x float> %.sroa.09.0.copyload.i.i.i.i.i.i, float %.sroa.210.0.copyload.i.i.i.i.i.i, <2 x float> %.fr4, float %i.hg) ; 2 uses
   %.fca.0.extract.i.i.i.i.i.i.i.i = extractvalue { <2 x float>, float } %i.hh, 0
   %.fca.1.extract.i.i.i.i.i.i.i.i = extractvalue { <2 x float>, float } %i.hh, 1
   %i.hi = load ptr, ptr %i.eh, align 8, !tbaa !138, !noalias !773 ; 2 uses
@@ -391,12 +392,12 @@ bb.e:                                             ; preds = %_ZN4pstd8optionalIN
   %.sroa.01.0.vec.extract.i.i.i.i.i.i.i.i = extractelement <2 x float> %.sroa.09.0.copyload.i.i.i.i.i.i, i64 0
   %.sroa.01.4.vec.extract.i.i.i.i.i.i.i.i = extractelement <2 x float> %.sroa.09.0.copyload.i.i.i.i.i.i, i64 1
   %i.hj = fmul float %.sroa.210.0.copyload.i.i.i.i.i.i, %i.hg ; 2 uses
-  %i.hk = extractelement <2 x float> %i.hf, i64 1
+  %i.hk = extractelement <2 x float> %.fr4, i64 1
   %i.hl = call noundef float @llvm.fma.f32(float %.sroa.01.4.vec.extract.i.i.i.i.i.i.i.i, float %i.hk, float %i.hj)
   %i.hm = fneg float %i.hj
   %i.hn = call noundef float @llvm.fma.f32(float %.sroa.210.0.copyload.i.i.i.i.i.i, float %i.hg, float %i.hm)
   %i.ho = fadd float %i.hl, %i.hn
-  %i.hp = extractelement <2 x float> %i.hf, i64 0
+  %i.hp = extractelement <2 x float> %.fr4, i64 0
   %i.hq = call noundef float @llvm.fma.f32(float %.sroa.01.0.vec.extract.i.i.i.i.i.i.i.i, float %i.hp, float %i.ho)
   %i.hr = fcmp ogt float %i.hq, 0.000000e+00
   %spec.select.idx.i.i.i.i.i.i.i = select i1 %i.hr, i64 8, i64 0
@@ -406,10 +407,9 @@ bb.e:                                             ; preds = %_ZN4pstd8optionalIN
 bb.f:                                             ; preds = %bb.e, %_ZN4pstd8optionalIN4pbrt17ShapeIntersectionEEptEv.exit.i.i.i.i.i
   %storemerge.in.i.i.i.i.i.i.i = phi ptr [ %spec.select.i.i.i.i.i.i.i, %bb.e ], [ %i.dp, %_ZN4pstd8optionalIN4pbrt17ShapeIntersectionEEptEv.exit.i.i.i.i.i ]
   %storemerge.i.i.i.i.i.i.i = load i64, ptr %storemerge.in.i.i.i.i.i.i.i, align 8, !tbaa !65, !noalias !773
-  %i.hs = fcmp une <2 x float> %i.hf, zeroinitializer ; 2 uses
-  %13 = extractelement <2 x i1> %i.hs, i64 0
-  %14 = extractelement <2 x i1> %i.hs, i64 1
-  %or.cond.i.i.i.i.i = select i1 %13, i1 true, i1 %14
+  %i.hs = fcmp une <2 x float> %.fr4, zeroinitializer
+  %13 = bitcast <2 x i1> %i.hs to i2
+  %or.cond.i.i.i.i.i = icmp ne i2 %13, 0
   %i.ht = fcmp une float %i.hg, 0.000000e+00
   %or.cond.i.i.i.i = select i1 %or.cond.i.i.i.i.i, i1 true, i1 %i.ht
   br i1 %or.cond.i.i.i.i, label %_ZNK4pbrt6Tuple3INS_7Vector3EfEneENS1_IfEE.exit.thread.i.i.i.i, label %.thread249.i.i.i.i
@@ -812,14 +812,15 @@ bb.b:                                             ; preds = %bb.f, %bb.a
   %i.bq = fadd float %.sroa.867.0.copyload.i.i.i, %.sroa.766.0.copyload.i.i.i
   %i.br = fmul float %i.bq, 5.000000e-01
   %i.bs = fmul <2 x float> %i.bp, splat (float 5.000000e-01)
-  %i.bt = fsub <2 x float> %.sroa.04.0.copyload.i.i.i, %i.bs ; 5 uses
+  %i.bt = fsub <2 x float> %.sroa.04.0.copyload.i.i.i, %i.bs
+  %.fr = freeze <2 x float> %i.bt                 ; 5 uses
   %i.bu = fsub float %.sroa.25.0.copyload.i.i.i, %i.br ; 5 uses
-  %i.bv = call { <2 x float>, float } @_ZN4pbrt15OffsetRayOriginENS_8Point3fiENS_7Normal3IfEENS_7Vector3IfEE(ptr noundef nonnull byval(%"class.pbrt::Point3fi") align 8 %4, <2 x float> %.sroa.09.0.copyload.i.i.i.i, float %.sroa.210.0.copyload.i.i.i.i, <2 x float> %i.bt, float %i.bu), !noalias !973 ; 2 uses
+  %i.bv = call { <2 x float>, float } @_ZN4pbrt15OffsetRayOriginENS_8Point3fiENS_7Normal3IfEENS_7Vector3IfEE(ptr noundef nonnull byval(%"class.pbrt::Point3fi") align 8 %4, <2 x float> %.sroa.09.0.copyload.i.i.i.i, float %.sroa.210.0.copyload.i.i.i.i, <2 x float> %.fr, float %i.bu), !noalias !973 ; 2 uses
   %.fca.0.extract.i.i.i.i.i.i = extractvalue { <2 x float>, float } %i.bv, 0
   %.fca.1.extract.i.i.i.i.i.i = extractvalue { <2 x float>, float } %i.bv, 1
   store <2 x float> %.fca.0.extract.i.i.i.i.i.i, ptr %5, align 8, !alias.scope !974
   store float %.fca.1.extract.i.i.i.i.i.i, ptr %.sroa.27.0..sroa_idx.i.i.i.i.i.i.i, align 8, !alias.scope !974
-  store <2 x float> %i.bt, ptr %i.ax, align 4, !alias.scope !974
+  store <2 x float> %.fr, ptr %i.ax, align 4, !alias.scope !974
   store float %i.bu, ptr %.sroa.23.0..sroa_idx.i.i.i.i.i.i.i, align 4, !alias.scope !974
   store float %i.bm, ptr %i.ay, align 8, !tbaa !166, !alias.scope !974
   %.not.i.i.i.i.i = icmp eq ptr %i.bl, null
@@ -829,12 +830,12 @@ bb.c:                                             ; preds = %bb.b
   %.sroa.01.0.vec.extract.i.i.i.i.i.i = extractelement <2 x float> %.sroa.09.0.copyload.i.i.i.i, i64 0
   %.sroa.01.4.vec.extract.i.i.i.i.i.i = extractelement <2 x float> %.sroa.09.0.copyload.i.i.i.i, i64 1
   %i.bw = fmul float %.sroa.210.0.copyload.i.i.i.i, %i.bu ; 2 uses
-  %i.bx = extractelement <2 x float> %i.bt, i64 1
+  %i.bx = extractelement <2 x float> %.fr, i64 1
   %i.by = call noundef float @llvm.fma.f32(float %.sroa.01.4.vec.extract.i.i.i.i.i.i, float %i.bx, float %i.bw)
   %i.bz = fneg float %i.bw
   %i.ca = call noundef float @llvm.fma.f32(float %.sroa.210.0.copyload.i.i.i.i, float %i.bu, float %i.bz)
   %i.cb = fadd float %i.by, %i.ca
-  %i.cc = extractelement <2 x float> %i.bt, i64 0
+  %i.cc = extractelement <2 x float> %.fr, i64 0
   %i.cd = call noundef float @llvm.fma.f32(float %.sroa.01.0.vec.extract.i.i.i.i.i.i, float %i.cc, float %i.cb)
   %i.ce = fcmp ogt float %i.cd, 0.000000e+00
   %spec.select.idx.i.i.i.i.i = select i1 %i.ce, i64 8, i64 0
@@ -845,10 +846,9 @@ bb.c:                                             ; preds = %bb.b
 _ZNK4pbrt11Interaction10SpawnRayToENS_6Point3IfEE.exit.i.i.i: ; preds = %bb.c, %bb.b
   %storemerge.i.i.i.i.i = phi i64 [ %storemerge.i.i.pre.i.i.i, %bb.c ], [ %storemerge.i.i267.i.i.i, %bb.b ]
   store i64 %storemerge.i.i.i.i.i, ptr %i.az, align 8, !tbaa !65, !alias.scope !973
-  %7 = fcmp oeq <2 x float> %i.bt, zeroinitializer ; 2 uses
-  %8 = extractelement <2 x i1> %7, i64 0
-  %9 = extractelement <2 x i1> %7, i64 1
-  %or.cond.i.i.i.i = select i1 %8, i1 %9, i1 false
+  %7 = fcmp une <2 x float> %.fr, zeroinitializer
+  %8 = bitcast <2 x i1> %7 to i2
+  %or.cond.i.i.i.i = icmp eq i2 %8, 0
   %i.cf = fcmp oeq float %i.bu, 0.000000e+00
   %or.cond.i.i.i = select i1 %or.cond.i.i.i.i, i1 %i.cf, i1 false
   br i1 %or.cond.i.i.i, label %.thread.i.i.i, label %_ZNK4pbrt6Tuple3INS_7Vector3EfEeqENS1_IfEE.exit.thread.i.i.i

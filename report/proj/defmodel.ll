@@ -205,15 +205,15 @@ bb.bb:                                            ; preds = %bb.ba
   %i.jo = insertelement <2 x double> %i.jn, double %.sroa.speculated464, i64 1
   %i.jp = fsub <2 x double> %i.jo, %i.jm
   %i.jq = load <2 x double>, ptr %i.jk, align 8, !tbaa !59
-  %i.jr = fdiv <2 x double> %i.jp, %i.jq          ; 6 uses
-  %16 = fcmp olt <2 x double> %i.jr, %i.ci        ; 2 uses
-  %17 = extractelement <2 x i1> %16, i64 0
-  %18 = extractelement <2 x i1> %16, i64 1
-  %or.cond = select i1 %17, i1 true, i1 %18
-  br i1 %or.cond, label %_ZN16DeformationModelL9bboxCheckERdS0_bdddddd.exit404.thread, label %bb.bc
+  %i.jr = fdiv <2 x double> %i.jp, %i.jq
+  %.fr = freeze <2 x double> %i.jr                ; 6 uses
+  %16 = fcmp olt <2 x double> %.fr, %i.ci
+  %17 = bitcast <2 x i1> %16 to i2
+  %or.cond.not = icmp eq i2 %17, 0
+  br i1 %or.cond.not, label %bb.bc, label %_ZN16DeformationModelL9bboxCheckERdS0_bdddddd.exit404.thread
 
 bb.bc:                                            ; preds = %bb.bb
-  %i.js = extractelement <2 x double> %i.jr, i64 0
+  %i.js = extractelement <2 x double> %.fr, i64 0
   %i.jt = fadd double %i.js, 1.000000e+00
   %i.ju = uitofp nneg i32 %i.je to double
   %i.jv = fadd double %i.ai, %i.ju
@@ -221,7 +221,7 @@ bb.bc:                                            ; preds = %bb.bb
   br i1 %i.jw, label %bb.bd, label %_ZN16DeformationModelL9bboxCheckERdS0_bdddddd.exit404.thread
 
 bb.bd:                                            ; preds = %bb.bc
-  %i.jx = extractelement <2 x double> %i.jr, i64 1
+  %i.jx = extractelement <2 x double> %.fr, i64 1
   %i.jy = fadd double %i.jx, 1.000000e+00
   %i.jz = uitofp nneg i32 %i.jh to double
   %i.ka = fadd double %i.ai, %i.jz
@@ -230,16 +230,16 @@ bb.bd:                                            ; preds = %bb.bc
 
 bb.be:                                            ; preds = %bb.bd
   %i.kc = add nsw <2 x i32> %i.ji, splat (i32 -2)
-  %i.kd = fptosi <2 x double> %i.jr to <2 x i32>
+  %i.kd = fptosi <2 x double> %.fr to <2 x i32>
   %i.ke = call <2 x i32> @llvm.smin.v2i32(<2 x i32> %i.kc, <2 x i32> %i.kd) ; 3 uses
   %i.kf = extractelement <2 x i32> %i.ke, i64 1   ; 12 uses
   %i.kg = extractelement <2 x i32> %i.ke, i64 0   ; 12 uses
   %i.kh = add nsw i32 %i.kg, 1                    ; 10 uses
   %i.ki = add nsw i32 %i.kf, 1                    ; 10 uses
   %i.kj = sitofp <2 x i32> %i.ke to <2 x double>  ; 2 uses
-  %foldExtExtBinop = fsub <2 x double> %i.jr, %i.kj
+  %foldExtExtBinop = fsub <2 x double> %.fr, %i.kj
   %i.kk = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 4 uses
-  %foldExtExtBinop764 = fsub <2 x double> %i.jr, %i.kj
+  %foldExtExtBinop764 = fsub <2 x double> %.fr, %i.kj
   %i.kl = extractelement <2 x double> %foldExtExtBinop764, i64 1 ; 3 uses
   %i.km = fsub double 1.000000e+00, %i.kk         ; 2 uses
   %i.kn = fsub double 1.000000e+00, %i.kl         ; 2 uses

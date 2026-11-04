@@ -205,12 +205,12 @@ bb.bq:                                            ; preds = %bb.bp
   %i.jf = fptosi <2 x float> %i.je to <2 x i32>   ; 2 uses
   %i.jg = load <2 x float>, ptr %i.jd, align 4, !tbaa !96 ; 2 uses
   %i.jh = fptosi <2 x float> %i.jg to <2 x i32>
-  %i.ji = sub nsw <2 x i32> %i.jh, %i.jf          ; 2 uses
-  %38 = icmp slt <2 x i32> %i.ji, splat (i32 2)   ; 2 uses
-  %39 = extractelement <2 x i1> %38, i64 0
-  %40 = extractelement <2 x i1> %38, i64 1
-  %or.cond = select i1 %39, i1 true, i1 %40
-  br i1 %or.cond, label %bb.br, label %bb.bs
+  %i.ji = sub nsw <2 x i32> %i.jh, %i.jf
+  %.fr = freeze <2 x i32> %i.ji                   ; 2 uses
+  %38 = icmp slt <2 x i32> %.fr, splat (i32 2)
+  %39 = bitcast <2 x i1> %38 to i2
+  %or.cond.not = icmp eq i2 %39, 0
+  br i1 %or.cond.not, label %bb.bs, label %bb.br
 
 bb.br:                                            ; preds = %bb.bq
   %i.jj = fmul <2 x float> %i.je, %i.ib
@@ -222,7 +222,7 @@ bb.br:                                            ; preds = %bb.bq
 
 bb.bs:                                            ; preds = %bb.bq, %bb.br
   %i.jo = phi <2 x i32> [ %i.jl, %bb.br ], [ %i.jf, %bb.bq ]
-  %i.jp = phi <2 x i32> [ %i.jn, %bb.br ], [ %i.ji, %bb.bq ]
+  %i.jp = phi <2 x i32> [ %i.jn, %bb.br ], [ %.fr, %bb.bq ]
   %i.jq = add nsw <2 x i32> %i.jp, splat (i32 1)
   %i.jr = call <2 x i32> @llvm.smin.v2i32(<2 x i32> %i.ic, <2 x i32> %i.jo)
   %i.js = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.jr, <2 x i32> zeroinitializer) ; 4 uses

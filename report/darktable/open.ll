@@ -205,10 +205,9 @@ bb.eg:                                            ; preds = %bb.ef
   %i.ye = zext <2 x i16> %i.yd to <2 x i32>
   %i.yf = add nuw nsw <2 x i32> %i.ye, splat (i32 6)
   %i.yg = select <2 x i1> %i.yc, <2 x i32> %i.ya, <2 x i32> %i.yf ; 4 uses
-  %2 = icmp eq <2 x i32> %i.yg, %i.ya             ; 2 uses
-  %3 = extractelement <2 x i1> %2, i64 0
-  %4 = extractelement <2 x i1> %2, i64 1
-  %or.cond659 = select i1 %3, i1 %4, i1 false
+  %.scalar1004 = bitcast <2 x i32> %i.yg to i64
+  %.scalar1005 = bitcast <2 x i32> %i.ya to i64
+  %or.cond659 = icmp eq i64 %.scalar1004, %.scalar1005
   br i1 %or.cond659, label %.loopexit695, label %.loopexit695.loopexit
 
 .loopexit695.loopexit:                            ; preds = %bb.eg

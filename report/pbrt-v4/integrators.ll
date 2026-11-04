@@ -205,9 +205,10 @@ _ZN4pstd8optionalIN4pbrt18BSSRDFProbeSegmentEEptEv.exit608: ; preds = %_ZN4pstd8
   %i.csw = shufflevector <4 x float> %i.csu, <4 x float> poison, <2 x i32> <i32 1, i32 3>
   %i.csx = fadd <2 x float> %i.csv, %i.csw
   %i.csy = fmul <2 x float> %i.csx, splat (float 5.000000e-01)
-  %i.csz = fsub <2 x float> %.sroa.043.0.copyload, %i.csy ; 5 uses
+  %i.csz = fsub <2 x float> %.sroa.043.0.copyload, %i.csy
+  %.fr1743 = freeze <2 x float> %i.csz            ; 5 uses
   %i.cta = fsub float %.sroa.244.0.copyload, %i.cst ; 5 uses
-  %i.ctb = invoke { <2 x float>, float } @_ZN4pbrt15OffsetRayOriginENS_8Point3fiENS_7Normal3IfEENS_7Vector3IfEE(ptr noundef nonnull byval(%"class.pbrt::Point3fi") align 8 %80, <2 x float> %.sroa.09.0.copyload.i, float %.sroa.210.0.copyload.i, <2 x float> %i.csz, float %i.cta)
+  %i.ctb = invoke { <2 x float>, float } @_ZN4pbrt15OffsetRayOriginENS_8Point3fiENS_7Normal3IfEENS_7Vector3IfEE(ptr noundef nonnull byval(%"class.pbrt::Point3fi") align 8 %80, <2 x float> %.sroa.09.0.copyload.i, float %.sroa.210.0.copyload.i, <2 x float> %.fr1743, float %i.cta)
           to label %.noexc611 unwind label %.loopexit.split-lp993.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc611:                                        ; preds = %_ZN4pstd8optionalIN4pbrt18BSSRDFProbeSegmentEEptEv.exit608
@@ -215,7 +216,7 @@ _ZN4pstd8optionalIN4pbrt18BSSRDFProbeSegmentEEptEv.exit608: ; preds = %_ZN4pstd8
   %.fca.1.extract.i.i.i = extractvalue { <2 x float>, float } %i.ctb, 1
   store <2 x float> %.fca.0.extract.i.i.i, ptr %81, align 8, !alias.scope !1244
   store float %.fca.1.extract.i.i.i, ptr %.sroa.27.0..sroa_idx.i.i.i.i, align 8, !alias.scope !1244
-  store <2 x float> %i.csz, ptr %i.dd, align 4, !alias.scope !1244
+  store <2 x float> %.fr1743, ptr %i.dd, align 4, !alias.scope !1244
   store float %i.cta, ptr %.sroa.23.0..sroa_idx.i.i.i.i, align 4, !alias.scope !1244
   store float %i.csr, ptr %i.de, align 8, !tbaa !283, !alias.scope !1244
   %i.ctc = load ptr, ptr %i.cz, align 16, !tbaa !284, !noalias !1245 ; 2 uses
@@ -226,12 +227,12 @@ bb.hk:                                            ; preds = %.noexc611
   %.sroa.01.0.vec.extract.i.i.i = extractelement <2 x float> %.sroa.09.0.copyload.i, i64 0
   %.sroa.01.4.vec.extract.i.i.i = extractelement <2 x float> %.sroa.09.0.copyload.i, i64 1
   %i.ctd = fmul float %.sroa.210.0.copyload.i, %i.cta ; 2 uses
-  %i.cte = extractelement <2 x float> %i.csz, i64 1
+  %i.cte = extractelement <2 x float> %.fr1743, i64 1
   %i.ctf = call noundef float @llvm.fma.f32(float %.sroa.01.4.vec.extract.i.i.i, float %i.cte, float %i.ctd)
   %i.ctg = fneg float %i.ctd
   %i.cth = call noundef float @llvm.fma.f32(float %.sroa.210.0.copyload.i, float %i.cta, float %i.ctg)
   %i.cti = fadd float %i.ctf, %i.cth
-  %i.ctj = extractelement <2 x float> %i.csz, i64 0
+  %i.ctj = extractelement <2 x float> %.fr1743, i64 0
   %i.ctk = call noundef float @llvm.fma.f32(float %.sroa.01.0.vec.extract.i.i.i, float %i.ctj, float %i.cti)
   %i.ctl = fcmp ogt float %i.ctk, 0.000000e+00
   %spec.select.idx.i.i = select i1 %i.ctl, i64 8, i64 0
@@ -242,10 +243,9 @@ bb.hk:                                            ; preds = %.noexc611
 bb.hl:                                            ; preds = %bb.hk, %.noexc611
   %storemerge.i.i = phi i64 [ %storemerge.i.i.pre, %bb.hk ], [ %storemerge.i.i1282, %.noexc611 ]
   store i64 %storemerge.i.i, ptr %i.df, align 8, !tbaa !264, !alias.scope !1243
-  %90 = fcmp oeq <2 x float> %i.csz, zeroinitializer ; 2 uses
-  %91 = extractelement <2 x i1> %90, i64 0
-  %92 = extractelement <2 x i1> %90, i64 1
-  %or.cond.i612 = select i1 %91, i1 %92, i1 false
+  %90 = fcmp une <2 x float> %.fr1743, zeroinitializer
+  %91 = bitcast <2 x i1> %90 to i2
+  %or.cond.i612 = icmp eq i2 %91, 0
   %i.ctm = fcmp oeq float %i.cta, 0.000000e+00
   %or.cond973 = select i1 %or.cond.i612, i1 %i.ctm, i1 false
   br i1 %or.cond973, label %.thread939, label %_ZNK4pbrt6Tuple3INS_7Vector3EfEeqENS1_IfEE.exit.thread

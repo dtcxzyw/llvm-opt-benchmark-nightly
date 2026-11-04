@@ -204,10 +204,10 @@ bb.t:                                             ; preds = %bb.s
   %i.ly = fmul <2 x float> %i.lx, splat (float 2.000000e+00) ; 3 uses
   %i.lz = insertelement <2 x float> poison, float %i.kt, i64 0
   %i.ma = shufflevector <2 x float> %i.lz, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.mb = fcmp olt <2 x float> %i.ma, %i.ly       ; 2 uses
-  %3 = extractelement <2 x i1> %i.mb, i64 0
-  %4 = extractelement <2 x i1> %i.mb, i64 1
-  %or.cond.i = select i1 %4, i1 %3, i1 false
+  %i.mb = fcmp olt <2 x float> %i.ma, %i.ly
+  %3 = freeze <2 x i1> %i.mb
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond.i = icmp eq i2 %4, -1
   br i1 %or.cond.i, label %b3RotateNodes.exit, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
@@ -392,10 +392,10 @@ bb.y:                                             ; preds = %bb.x
   %i.qf = fmul <2 x float> %i.qe, splat (float 2.000000e+00) ; 3 uses
   %i.qg = insertelement <2 x float> poison, float %i.pa, i64 0
   %i.qh = shufflevector <2 x float> %i.qg, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.qi = fcmp olt <2 x float> %i.qh, %i.qf       ; 2 uses
-  %5 = extractelement <2 x i1> %i.qi, i64 0
-  %6 = extractelement <2 x i1> %i.qi, i64 1
-  %or.cond324.i = select i1 %6, i1 %5, i1 false
+  %i.qi = fcmp olt <2 x float> %i.qh, %i.qf
+  %5 = freeze <2 x i1> %i.qi
+  %6 = bitcast <2 x i1> %5 to i2
+  %or.cond324.i = icmp eq i2 %6, -1
   br i1 %or.cond324.i, label %b3RotateNodes.exit, label %bb.z
 
 bb.z:                                             ; preds = %bb.y

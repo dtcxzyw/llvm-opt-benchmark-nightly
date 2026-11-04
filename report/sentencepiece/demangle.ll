@@ -204,15 +204,15 @@ bb.ae:                                            ; preds = %bb.ad
   br label %_ZN4absl12lts_2026052618debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit19.i
 
 _ZN4absl12lts_2026052618debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit19.i: ; preds = %bb.ae, %bb.ad
-  %i.dq = load <2 x i32>, ptr %i.a, align 4, !tbaa !33 ; 3 uses
-  %i.dr = add nsw <2 x i32> %i.dq, splat (i32 1)
+  %i.dq = load <2 x i32>, ptr %i.a, align 4, !tbaa !33
+  %.fr = freeze <2 x i32> %i.dq                   ; 3 uses
+  %i.dr = add nsw <2 x i32> %.fr, splat (i32 1)
   store <2 x i32> %i.dr, ptr %i.a, align 4, !tbaa !33
-  %i.ds = extractelement <2 x i32> %i.dq, i64 0   ; 2 uses
-  %i.dt = icmp sgt <2 x i32> %i.dq, <i32 255, i32 131071> ; 2 uses
-  %1 = extractelement <2 x i1> %i.dt, i64 0
-  %2 = extractelement <2 x i1> %i.dt, i64 1
-  %or.cond.i.i30 = select i1 %1, i1 true, i1 %2
-  br i1 %or.cond.i.i30, label %_ZN4absl12lts_2026052618debugging_internalL12ParseAbiTagsEPNS1_5StateE.exit, label %bb.aa
+  %i.ds = extractelement <2 x i32> %.fr, i64 0    ; 2 uses
+  %i.dt = icmp sgt <2 x i32> %.fr, <i32 255, i32 131071>
+  %1 = bitcast <2 x i1> %i.dt to i2
+  %or.cond.i.i30.not = icmp eq i2 %1, 0
+  br i1 %or.cond.i.i30.not, label %bb.aa, label %_ZN4absl12lts_2026052618debugging_internalL12ParseAbiTagsEPNS1_5StateE.exit
 
 _ZN4absl12lts_2026052618debugging_internalL12ParseAbiTagsEPNS1_5StateE.exit: ; preds = %bb.aa, %_ZN4absl12lts_2026052618debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit19.i, %bb.z, %.preheader.i, %_ZN4absl12lts_2026052618debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit19.thread.i
   %i.du = phi i32 [ %i.cw, %bb.z ], [ %.pre.i29, %_ZN4absl12lts_2026052618debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit19.thread.i ], [ %i.cw, %.preheader.i ], [ %i.dh, %bb.aa ], [ %i.ds, %_ZN4absl12lts_2026052618debugging_internalL11MaybeAppendEPNS1_5StateEPKc.exit19.i ]

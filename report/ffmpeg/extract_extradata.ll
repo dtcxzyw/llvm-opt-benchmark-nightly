@@ -204,6 +204,7 @@ bb.q:                                             ; preds = %._crit_edge162, %.t
   %i.cs = icmp eq <2 x i32> %i.cr, <i32 1, i32 0>
   %i.ct = zext <2 x i1> %i.cs to <2 x i32>
   %i.cu = or <2 x i32> %i.af, %i.ct
+  %5 = freeze <2 x i32> %i.cu
   br label %bb.u
 
 bb.r:                                             ; preds = %bb.m
@@ -225,7 +226,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r
 bb.u:                                             ; preds = %bb.t, %.thread
   %.265 = phi i32 [ %.063151, %bb.t ], [ %i.cp, %.thread ] ; 2 uses
   %.1 = phi i32 [ %i.cz, %bb.t ], [ %.062152, %.thread ] ; 2 uses
-  %i.da = phi <2 x i32> [ %i.af, %bb.t ], [ %i.cu, %.thread ] ; 2 uses
+  %i.da = phi <2 x i32> [ %i.af, %bb.t ], [ %5, %.thread ] ; 2 uses
   %i.db = zext i32 %i.bo to i64
   %..i96 = tail call i64 @llvm.smin.i64(i64 %i.ad, i64 %i.db)
   %i.dc = getelementptr inbounds i8, ptr %.sroa.0115.0145, i64 %..i96 ; 2 uses
@@ -240,10 +241,8 @@ bb.u:                                             ; preds = %bb.t, %.thread
 
 ._crit_edge155.loopexit:                          ; preds = %bb.u
   %i.dj = add nsw i32 %.1, 1
-  %5 = icmp eq <2 x i32> %i.da, zeroinitializer   ; 2 uses
-  %6 = extractelement <2 x i1> %5, i64 0
-  %7 = extractelement <2 x i1> %5, i64 1
-  %.not183 = select i1 %7, i1 %6, i1 false
+  %.fr.scalar = bitcast <2 x i32> %i.da to i64
+  %.not183 = icmp eq i64 %.fr.scalar, 0
   br label %._crit_edge155
 
 ._crit_edge155:                                   ; preds = %._crit_edge155.loopexit, %bb.f

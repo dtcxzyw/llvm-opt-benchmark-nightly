@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %bb.m, %._crit_edge.
 
 ._crit_edge96.loopexit.unr-lcssa:                 ; preds = %bb.m
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge96, label %.epil.preheader
+  br i1 %lcmp.mod.not, label %._crit_edge96.loopexit, label %.epil.preheader
 
 .epil.preheader:                                  ; preds = %._crit_edge96.loopexit.unr-lcssa, %._crit_edge
   %indvars.iv103.epil.init = phi i64 [ 0, %._crit_edge ], [ %indvars.iv.next104.1, %._crit_edge96.loopexit.unr-lcssa ]
@@ -216,20 +216,24 @@ bb.m:                                             ; preds = %bb.m, %._crit_edge.
   %i.bz = fsub <2 x double> %i.by, %i.ah          ; 2 uses
   %i.ca = shufflevector <2 x double> %i.bz, <2 x double> poison, <2 x i32> zeroinitializer
   %i.cb = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ca, <2 x double> %i.bz, <2 x double> %.epil.init)
+  br label %._crit_edge96.loopexit
+
+._crit_edge96.loopexit:                           ; preds = %._crit_edge96.loopexit.unr-lcssa, %.epil.preheader
+  %.lcssa = phi <2 x double> [ %i.bw, %._crit_edge96.loopexit.unr-lcssa ], [ %i.cb, %.epil.preheader ]
+  %7 = freeze <2 x double> %.lcssa
   br label %._crit_edge96
 
-._crit_edge96:                                    ; preds = %.epil.preheader, %._crit_edge96.loopexit.unr-lcssa, %_ZN6QDebuglsEi.exit, %_ZN5QListI7QPointFEC2Ex.exit
-  %7 = phi <2 x double> [ zeroinitializer, %_ZN5QListI7QPointFEC2Ex.exit ], [ zeroinitializer, %_ZN6QDebuglsEi.exit ], [ %i.bw, %._crit_edge96.loopexit.unr-lcssa ], [ %i.cb, %.epil.preheader ] ; 3 uses
-  %i.cc = call <2 x double> @llvm.fabs.v2f64(<2 x double> %7)
-  %i.cd = fcmp ole <2 x double> %i.cc, splat (double f0x3D719799812DEA11) ; 2 uses
-  %8 = extractelement <2 x i1> %i.cd, i64 0
-  %9 = extractelement <2 x i1> %i.cd, i64 1
-  %or.cond83 = select i1 %8, i1 true, i1 %9
-  br i1 %or.cond83, label %bb.o, label %bb.n
+._crit_edge96:                                    ; preds = %._crit_edge96.loopexit, %_ZN6QDebuglsEi.exit, %_ZN5QListI7QPointFEC2Ex.exit
+  %.fr125 = phi <2 x double> [ zeroinitializer, %_ZN5QListI7QPointFEC2Ex.exit ], [ zeroinitializer, %_ZN6QDebuglsEi.exit ], [ %7, %._crit_edge96.loopexit ] ; 3 uses
+  %i.cc = call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr125)
+  %i.cd = fcmp ole <2 x double> %i.cc, splat (double f0x3D719799812DEA11)
+  %8 = bitcast <2 x i1> %i.cd to i2
+  %or.cond83.not = icmp eq i2 %8, 0
+  br i1 %or.cond83.not, label %bb.n, label %bb.o
 
 bb.n:                                             ; preds = %._crit_edge96
-  %i.ce = extractelement <2 x double> %7, i64 0
-  %i.cf = extractelement <2 x double> %7, i64 1
+  %i.ce = extractelement <2 x double> %.fr125, i64 0
+  %i.cf = extractelement <2 x double> %.fr125, i64 1
   %i.cg = call noundef double @atan2(double noundef %i.cf, double noundef %i.ce) #49
   br label %bb.o
 
@@ -632,7 +636,8 @@ bb.d:                                             ; preds = %bb.c
   %i.v = fptosi <2 x double> %i.u to <2 x i32>
   %i.w = insertelement <2 x i1> poison, i1 %i.p, i64 0
   %i.x = shufflevector <2 x i1> %i.w, <2 x i1> poison, <2 x i32> zeroinitializer
-  %i.y = select <2 x i1> %i.x, <2 x i32> splat (i32 1), <2 x i32> %i.v ; 9 uses
+  %i.y = select <2 x i1> %i.x, <2 x i32> splat (i32 1), <2 x i32> %i.v
+  %.fr171 = freeze <2 x i32> %i.y                 ; 9 uses
   %i.z = getelementptr i8, ptr %i.h, i64 76       ; 6 uses
   %i.aa = load i32, ptr %i.z, align 4             ; 2 uses
   %i.ab = icmp eq i32 %i.aa, 1
@@ -641,20 +646,20 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   %i.ac = getelementptr i8, ptr %0, i64 320       ; 2 uses
   %i.ad = tail call noundef i32 @_ZNK6QImage5widthEv(ptr noundef align 8 dereferenceable_or_null(24) %i.ac)
-  %i.ae = extractelement <2 x i32> %i.y, i64 0
+  %i.ae = extractelement <2 x i32> %.fr171, i64 0
   %i.af = mul i32 %i.ae, %i.r                     ; 2 uses
   %.not99 = icmp eq i32 %i.ad, %i.af
   br i1 %.not99, label %bb.f, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.e
-  %i.ag = extractelement <2 x i32> %i.y, i64 1
+  %i.ag = extractelement <2 x i32> %.fr171, i64 1
   %i.ah = extractelement <2 x i32> %i.q, i64 1
   %.pre152 = mul i32 %i.ag, %i.ah
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.ai = tail call noundef i32 @_ZNK6QImage6heightEv(ptr noundef align 8 dereferenceable_or_null(24) %i.ac)
-  %i.aj = extractelement <2 x i32> %i.y, i64 1
+  %i.aj = extractelement <2 x i32> %.fr171, i64 1
   %i.ak = extractelement <2 x i32> %i.q, i64 1
   %i.al = mul i32 %i.aj, %i.ak                    ; 2 uses
   %.not100 = icmp eq i32 %i.ai, %i.al
@@ -698,20 +703,20 @@ bb.h:                                             ; preds = %thread-pre-split, %
 bb.i:                                             ; preds = %bb.h
   %i.au = getelementptr i8, ptr %0, i64 320       ; 2 uses
   %i.av = tail call noundef i32 @_ZNK6QImage5widthEv(ptr noundef align 8 dereferenceable_or_null(24) %i.au)
-  %i.aw = extractelement <2 x i32> %i.y, i64 1
+  %i.aw = extractelement <2 x i32> %.fr171, i64 1
   %i.ax = extractelement <2 x i32> %i.q, i64 1
   %i.ay = mul i32 %i.aw, %i.ax                    ; 2 uses
   %.not101 = icmp eq i32 %i.av, %i.ay
   br i1 %.not101, label %bb.j, label %._crit_edge150
 
 ._crit_edge150:                                   ; preds = %bb.i
-  %i.az = extractelement <2 x i32> %i.y, i64 0
+  %i.az = extractelement <2 x i32> %.fr171, i64 0
   %.pre151 = mul i32 %i.az, %i.r
   br label %bb.k
 
 bb.j:                                             ; preds = %bb.i
   %i.ba = tail call noundef i32 @_ZNK6QImage6heightEv(ptr noundef align 8 dereferenceable_or_null(24) %i.au)
-  %i.bb = extractelement <2 x i32> %i.y, i64 0
+  %i.bb = extractelement <2 x i32> %.fr171, i64 0
   %i.bc = mul i32 %i.bb, %i.r                     ; 2 uses
   %.not102 = icmp eq i32 %i.ba, %i.bc
   br i1 %.not102, label %bb.l, label %bb.k
@@ -917,11 +922,10 @@ bb.x:                                             ; preds = %bb.u, %_ZN6QDebugls
   resume { ptr, i32 } %eh.lpad-body
 
 bb.y:                                             ; preds = %bb.l
-  %i.cw = icmp sgt <2 x i32> %i.y, splat (i32 1)  ; 2 uses
-  %27 = extractelement <2 x i1> %i.cw, i64 0
-  %28 = extractelement <2 x i1> %i.cw, i64 1
-  %or.cond = select i1 %27, i1 true, i1 %28       ; 2 uses
-  br i1 %or.cond, label %bb.z, label %bb.ai
+  %i.cw = icmp sgt <2 x i32> %.fr171, splat (i32 1)
+  %27 = bitcast <2 x i1> %i.cw to i2
+  %or.cond.not = icmp eq i2 %27, 0                ; 2 uses
+  br i1 %or.cond.not, label %bb.ai, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   %i.cx = load i32, ptr %i.z, align 4             ; 2 uses
@@ -1135,7 +1139,7 @@ bb.ak:                                            ; preds = %bb.ai, %bb.aj, %bb.
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph.split, !llvm.loop !1284
 
 .loopexit:                                        ; preds = %.lr.ph.split, %.lr.ph.split.us, %.lr.ph130.split, %.lr.ph130.split.us, %.preheader126, %.preheader
-  br i1 %or.cond, label %bb.al, label %bb.ao
+  br i1 %or.cond.not, label %bb.ao, label %bb.al
 
 bb.al:                                            ; preds = %.loopexit
   %i.ga = load i32, ptr %i.z, align 4
@@ -1146,7 +1150,7 @@ bb.al:                                            ; preds = %.loopexit
 
 bb.am:                                            ; preds = %bb.al
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #49
-  %i.ge = mul <2 x i32> %i.y, %i.q
+  %i.ge = mul <2 x i32> %.fr171, %i.q
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #49, !noalias !1290
   store <2 x i32> %i.ge, ptr %4, align 8, !noalias !1290
   call void @_ZNK6QImage6scaledERK5QSizeN2Qt15AspectRatioModeENS3_18TransformationModeE(ptr dead_on_unwind nonnull writable sret(%class.QImage) align 8 %25, ptr noundef align 8 dereferenceable_or_null(24) %i.gc, ptr noundef nonnull align 4 dereferenceable(8) %4, i32 noundef 0, i32 noundef 0)
@@ -1170,7 +1174,7 @@ bb.am:                                            ; preds = %bb.al
 bb.an:                                            ; preds = %bb.al
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #49
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #49, !noalias !1291
-  %i.gj = mul <2 x i32> %i.y, %i.q
+  %i.gj = mul <2 x i32> %.fr171, %i.q
   %i.gk = shufflevector <2 x i32> %i.gj, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
   store <2 x i32> %i.gk, ptr %2, align 8, !noalias !1291
   call void @_ZNK6QImage6scaledERK5QSizeN2Qt15AspectRatioModeENS3_18TransformationModeE(ptr dead_on_unwind nonnull writable sret(%class.QImage) align 8 %26, ptr noundef align 8 dereferenceable_or_null(24) %i.gc, ptr noundef nonnull align 4 dereferenceable(8) %2, i32 noundef 0, i32 noundef 0)
@@ -1573,12 +1577,12 @@ bb.f:                                             ; preds = %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %21) #49
   %i.cc = add <2 x i32> %i.bs, splat (i32 -1)
   %i.cd = add <2 x i32> %i.cc, %i.ca              ; 2 uses
-  %i.ce = icmp slt <2 x i32> %i.cd, %i.bs         ; 2 uses
-  %23 = extractelement <2 x i1> %i.ce, i64 0
-  %24 = extractelement <2 x i1> %i.ce, i64 1
-  %or.cond = select i1 %23, i1 true, i1 %24
+  %i.ce = icmp slt <2 x i32> %i.cd, %i.bs
+  %23 = freeze <2 x i1> %i.ce
+  %24 = bitcast <2 x i1> %23 to i2
+  %or.cond.not = icmp eq i2 %24, 0
   %i.cf = add <2 x i32> %i.bs, %i.ca
-  %storemerge = select i1 %or.cond, <2 x i32> %i.cf, <2 x i32> %i.cd
+  %storemerge = select i1 %or.cond.not, <2 x i32> %i.cd, <2 x i32> %i.cf
   store <2 x i32> %storemerge, ptr %i.cb, align 8
   %i.cg = call noundef zeroext i1 @_ZNK5QRect10intersectsERKS_(ptr noundef nonnull align 4 dereferenceable_or_null(16) %19, ptr noundef nonnull align 4 dereferenceable(16) %20) #49
   br i1 %i.cg, label %bb.k, label %bb.v
@@ -1981,10 +1985,10 @@ bb.a:
   %i.x = tail call <2 x double> @llvm.copysign.v2f64(<2 x double> splat (double 5.000000e-01), <2 x double> %i.w)
   %i.y = fadd <2 x double> %i.w, %i.x
   %i.z = fptosi <2 x double> %i.y to <2 x i32>    ; 3 uses
-  %i.aa = icmp eq <2 x i32> %i.u, %i.z            ; 2 uses
-  %5 = extractelement <2 x i1> %i.aa, i64 0
-  %6 = extractelement <2 x i1> %i.aa, i64 1
-  %7 = select i1 %5, i1 %6, i1 false
+  %i.aa = icmp eq <2 x i32> %i.u, %i.z
+  %5 = freeze <2 x i1> %i.aa
+  %6 = bitcast <2 x i1> %5 to i2
+  %7 = icmp eq i2 %6, -1
   br i1 %7, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -2382,11 +2386,11 @@ bb.e:                                             ; preds = %_ZNK5QRect6isNullEv
   %i.af = call <2 x double> @llvm.copysign.v2f64(<2 x double> splat (double 5.000000e-01), <2 x double> %i.ae)
   %i.ag = fadd <2 x double> %i.ae, %i.af
   %i.ah = fptosi <2 x double> %i.ag to <2 x i32>
-  %i.ai = icmp ne <2 x i32> %i.y, %i.ah           ; 2 uses
-  %14 = extractelement <2 x i1> %i.ai, i64 0
-  %15 = extractelement <2 x i1> %i.ai, i64 1
-  %16 = select i1 %15, i1 true, i1 %14
-  br i1 %16, label %.critedge, label %bb.n
+  %i.ai = icmp ne <2 x i32> %i.y, %i.ah
+  %14 = freeze <2 x i1> %i.ai
+  %15 = bitcast <2 x i1> %14 to i2
+  %.not = icmp eq i2 %15, 0
+  br i1 %.not, label %bb.n, label %.critedge
 
 .critedge:                                        ; preds = %_ZNK5QRect6isNullEv.exit.thread, %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #49

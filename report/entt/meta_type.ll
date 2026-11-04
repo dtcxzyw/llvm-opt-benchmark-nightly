@@ -205,10 +205,10 @@ define linkonce_odr hidden void @_ZN7testing8internal8EqHelper7CompareIN4entt9me
 bb.a:
   %i.a = load <2 x ptr>, ptr %3, align 8, !noalias !464
   %i.b = load <2 x ptr>, ptr %4, align 8, !noalias !464
-  %i.c = icmp eq <2 x ptr> %i.a, %i.b             ; 2 uses
-  %5 = extractelement <2 x i1> %i.c, i64 0
-  %6 = extractelement <2 x i1> %i.c, i64 1
-  %7 = select i1 %6, i1 %5, i1 false
+  %i.c = icmp eq <2 x ptr> %i.a, %i.b
+  %5 = freeze <2 x i1> %i.c
+  %6 = bitcast <2 x i1> %5 to i2
+  %7 = icmp eq i2 %6, -1
   br i1 %7, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -394,10 +394,10 @@ define linkonce_odr hidden void @_ZN7testing8internal8EqHelper7CompareIN4entt9me
 bb.a:
   %i.a = load <2 x ptr>, ptr %3, align 8, !noalias !470
   %i.b = load <2 x ptr>, ptr %4, align 8, !noalias !470
-  %i.c = icmp eq <2 x ptr> %i.a, %i.b             ; 2 uses
-  %5 = extractelement <2 x i1> %i.c, i64 0
-  %6 = extractelement <2 x i1> %i.c, i64 1
-  %7 = select i1 %6, i1 %5, i1 false
+  %i.c = icmp eq <2 x ptr> %i.a, %i.b
+  %5 = freeze <2 x i1> %i.c
+  %6 = bitcast <2 x i1> %5 to i2
+  %7 = icmp eq i2 %6, -1
   br i1 %7, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a

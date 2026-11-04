@@ -204,19 +204,19 @@ bb.c:                                             ; preds = %.preheader147, %._c
   %i.bv = fsub fast <2 x float> %i.bu, %i.bq
   %i.bw = call fast <2 x float> @llvm.ceil.v2f32(<2 x float> %i.bv)
   %i.bx = select <2 x i1> %i.ao, <2 x float> %i.aq, <2 x float> %i.bw
-  %i.by = fptosi <2 x float> %i.bx to <2 x i32>   ; 3 uses
+  %i.by = fptosi <2 x float> %i.bx to <2 x i32>
+  %.fr = freeze <2 x i32> %i.by                   ; 3 uses
   %i.bz = fcmp ole <2 x float> %i.bu, %i.bq
   %i.ca = extractelement <2 x i1> %i.bz, i64 1
   %i.cb = fcmp ole <2 x float> %i.bu, %i.bq
   %i.cc = extractelement <2 x i1> %i.cb, i64 0
   %i.cd = select i1 %i.ca, i1 true, i1 %i.cc
-  %i.ce = extractelement <2 x i32> %i.by, i64 0   ; 3 uses
-  %i.cf = extractelement <2 x i32> %i.by, i64 1   ; 2 uses
+  %i.ce = extractelement <2 x i32> %.fr, i64 0    ; 3 uses
+  %i.cf = extractelement <2 x i32> %.fr, i64 1    ; 2 uses
   %i.cg = mul i32 %i.ce, %i.cf                    ; 2 uses
-  %13 = icmp sgt <2 x i32> %i.by, zeroinitializer ; 2 uses
-  %14 = extractelement <2 x i1> %13, i64 0
-  %15 = extractelement <2 x i1> %13, i64 1
-  %or.cond = select i1 %15, i1 %14, i1 false
+  %13 = icmp slt <2 x i32> %.fr, splat (i32 1)
+  %14 = bitcast <2 x i1> %13 to i2
+  %or.cond = icmp eq i2 %14, 0
   br i1 %or.cond, label %.preheader.lr.ph.split.us, label %._crit_edge155
 
 .preheader.lr.ph.split.us:                        ; preds = %bb.c

@@ -205,11 +205,11 @@ bb.a:
   store ptr %2, ptr %i.b, align 8, !tbaa !59
   %.sroa.0.0.copyload = load <2 x float>, ptr %4, align 4
   %i.c = load <2 x float>, ptr %3, align 4
-  %i.d = fcmp une <2 x float> %i.c, %.sroa.0.0.copyload ; 2 uses
-  %8 = extractelement <2 x i1> %i.d, i64 0
-  %9 = extractelement <2 x i1> %i.d, i64 1
-  %10 = select i1 %8, i1 true, i1 %9
-  br i1 %10, label %bb.b, label %bb.c
+  %i.d = fcmp une <2 x float> %i.c, %.sroa.0.0.copyload
+  %8 = freeze <2 x i1> %i.d
+  %9 = bitcast <2 x i1> %8 to i2
+  %.not = icmp eq i2 %9, 0
+  br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind writable sret(%"class.testing::AssertionResult") align 8 %0)
@@ -452,10 +452,10 @@ bb.c:                                             ; preds = %bb.a, %_ZN7testing1
   %i.x = fmul nnan <2 x float> %i.w, splat (float f0x2F800000) ; 2 uses
   %i.y = fcmp olt <2 x float> %i.x, splat (float f0x3F7FFFFF)
   %i.z = select <2 x i1> %i.y, <2 x float> %i.x, <2 x float> splat (float f0x3F7FFFFF)
-  %8 = fcmp olt <2 x float> %i.z, splat (float 1.000000e+00) ; 2 uses
-  %9 = extractelement <2 x i1> %8, i64 0
-  %10 = extractelement <2 x i1> %8, i64 1
-  %or.cond = select i1 %10, i1 %9, i1 false
+  %.fr = freeze <2 x float> %i.z
+  %8 = fcmp uge <2 x float> %.fr, splat (float 1.000000e+00)
+  %9 = bitcast <2 x i1> %8 to i2
+  %or.cond = icmp eq i2 %9, 0
   br i1 %or.cond, label %bb.d, label %.thread
 
 .thread:                                          ; preds = %bb.c
@@ -858,10 +858,10 @@ bb.a:
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %.sroa.0.0.copyload = load <2 x float>, ptr %4, align 4
   %i.a = load <2 x float>, ptr %3, align 4
-  %i.b = fcmp oeq <2 x float> %i.a, %.sroa.0.0.copyload ; 2 uses
-  %7 = extractelement <2 x i1> %i.b, i64 0
-  %8 = extractelement <2 x i1> %i.b, i64 1
-  %9 = select i1 %7, i1 %8, i1 false
+  %i.b = fcmp oeq <2 x float> %i.a, %.sroa.0.0.copyload
+  %7 = freeze <2 x i1> %i.b
+  %8 = bitcast <2 x i1> %7 to i2
+  %9 = icmp eq i2 %8, -1
   br i1 %9, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a

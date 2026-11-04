@@ -205,10 +205,10 @@ _ZN5boost9intrusive18iterator_udistanceINS_9container3dtl23iterator_from_iiterat
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.028, i64 24
   %i.x = load <2 x i32>, ptr %i.v, align 4
   %i.y = load <2 x i32>, ptr %i.w, align 4
-  %i.z = icmp eq <2 x i32> %i.x, %i.y             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.x, %i.y
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -342,10 +342,10 @@ _ZN5boost9intrusive18iterator_udistanceINS_9container3dtl23iterator_from_iiterat
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.028, i64 24
   %i.x = load <2 x i32>, ptr %i.v, align 4
   %i.y = load <2 x i32>, ptr %i.w, align 4
-  %i.z = icmp eq <2 x i32> %i.x, %i.y             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.x, %i.y
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -479,10 +479,10 @@ _ZN5boost9intrusive18iterator_udistanceINS_9container3dtl23iterator_from_iiterat
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.028, i64 24
   %i.x = load <2 x i32>, ptr %i.v, align 4
   %i.y = load <2 x i32>, ptr %i.w, align 4
-  %i.z = icmp eq <2 x i32> %i.x, %i.y             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.x, %i.y
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -616,10 +616,10 @@ _ZN5boost9intrusive18iterator_udistanceINS_9container3dtl23iterator_from_iiterat
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.028, i64 24
   %i.x = load <2 x i32>, ptr %i.v, align 4
   %i.y = load <2 x i32>, ptr %i.w, align 4
-  %i.z = icmp eq <2 x i32> %i.x, %i.y             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.x, %i.y
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -804,10 +804,10 @@ _ZN5boost9intrusive18iterator_udistanceINS_9container3dtl23iterator_from_iiterat
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.028, i64 24
   %i.x = load <2 x i32>, ptr %i.v, align 4
   %i.y = load <2 x i32>, ptr %i.w, align 4
-  %i.z = icmp eq <2 x i32> %i.x, %i.y             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.x, %i.y
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -941,10 +941,10 @@ _ZN5boost9intrusive18iterator_udistanceINS_9container3dtl23iterator_from_iiterat
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.028, i64 24
   %i.x = load <2 x i32>, ptr %i.v, align 4
   %i.y = load <2 x i32>, ptr %i.w, align 4
-  %i.z = icmp eq <2 x i32> %i.x, %i.y             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.x, %i.y
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -1158,10 +1158,10 @@ _ZN5boost9intrusive18iterator_udistanceINS_9container3dtl23iterator_from_iiterat
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.028, i64 24
   %i.x = load <2 x i32>, ptr %i.v, align 4
   %i.y = load <2 x i32>, ptr %i.w, align 4
-  %i.z = icmp eq <2 x i32> %i.x, %i.y             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.x, %i.y
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -1564,10 +1564,10 @@ bb.ab:                                            ; preds = %.noexc.1
   %i.hi = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i225, i64 24
   %i.hj = load <2 x i32>, ptr %i.hh, align 4
   %i.hk = load <2 x i32>, ptr %i.hi, align 4
-  %i.hl = icmp eq <2 x i32> %i.hj, %i.hk          ; 2 uses
-  %21 = extractelement <2 x i1> %i.hl, i64 0
-  %22 = extractelement <2 x i1> %i.hl, i64 1
-  %.not6.i226.not = select i1 %21, i1 %22, i1 false ; 3 uses
+  %i.hl = icmp eq <2 x i32> %i.hj, %i.hk
+  %21 = freeze <2 x i1> %i.hl
+  %22 = bitcast <2 x i1> %21 to i2
+  %.not6.i226.not = icmp eq i2 %22, -1            ; 3 uses
   br i1 %.not6.i226.not, label %bb.ac, label %_ZN5boost9container3dtlneERKNS1_4treeISt4pairIKiiEiSt4lessIiEvvEESA_.exit258
 
 bb.ac:                                            ; preds = %.lr.ph.i.i.i.i224
@@ -1904,10 +1904,10 @@ bb.ba:                                            ; preds = %.noexc290.1
   %i.lg = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i294, i64 24
   %i.lh = load <2 x i32>, ptr %i.lf, align 4
   %i.li = load <2 x i32>, ptr %i.lg, align 4
-  %i.lj = icmp eq <2 x i32> %i.lh, %i.li          ; 2 uses
-  %23 = extractelement <2 x i1> %i.lj, i64 0
-  %24 = extractelement <2 x i1> %i.lj, i64 1
-  %.not6.i295.not = select i1 %23, i1 %24, i1 false ; 3 uses
+  %i.lj = icmp eq <2 x i32> %i.lh, %i.li
+  %23 = freeze <2 x i1> %i.lj
+  %24 = bitcast <2 x i1> %23 to i2
+  %.not6.i295.not = icmp eq i2 %24, -1            ; 3 uses
   br i1 %.not6.i295.not, label %bb.bb, label %_ZN5boost9container3dtlneERKNS1_4treeISt4pairIKiiEiSt4lessIiEvvEESA_.exit327
 
 bb.bb:                                            ; preds = %.lr.ph.i.i.i.i293
@@ -2310,10 +2310,10 @@ bb.ab:                                            ; preds = %.noexc.1
   %i.hi = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i223, i64 24
   %i.hj = load <2 x i32>, ptr %i.hh, align 4
   %i.hk = load <2 x i32>, ptr %i.hi, align 4
-  %i.hl = icmp eq <2 x i32> %i.hj, %i.hk          ; 2 uses
-  %21 = extractelement <2 x i1> %i.hl, i64 0
-  %22 = extractelement <2 x i1> %i.hl, i64 1
-  %.not6.i224.not = select i1 %21, i1 %22, i1 false ; 3 uses
+  %i.hl = icmp eq <2 x i32> %i.hj, %i.hk
+  %21 = freeze <2 x i1> %i.hl
+  %22 = bitcast <2 x i1> %21 to i2
+  %.not6.i224.not = icmp eq i2 %22, -1            ; 3 uses
   br i1 %.not6.i224.not, label %bb.ac, label %_ZN5boost9container3dtlneERKNS1_4treeISt4pairIKiiEiSt4lessIiEvvEESA_.exit256
 
 bb.ac:                                            ; preds = %.lr.ph.i.i.i.i222
@@ -2650,10 +2650,10 @@ bb.ba:                                            ; preds = %.noexc288.1
   %i.lg = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i292, i64 24
   %i.lh = load <2 x i32>, ptr %i.lf, align 4
   %i.li = load <2 x i32>, ptr %i.lg, align 4
-  %i.lj = icmp eq <2 x i32> %i.lh, %i.li          ; 2 uses
-  %23 = extractelement <2 x i1> %i.lj, i64 0
-  %24 = extractelement <2 x i1> %i.lj, i64 1
-  %.not6.i293.not = select i1 %23, i1 %24, i1 false ; 3 uses
+  %i.lj = icmp eq <2 x i32> %i.lh, %i.li
+  %23 = freeze <2 x i1> %i.lj
+  %24 = bitcast <2 x i1> %23 to i2
+  %.not6.i293.not = icmp eq i2 %24, -1            ; 3 uses
   br i1 %.not6.i293.not, label %bb.bb, label %_ZN5boost9container3dtlneERKNS1_4treeISt4pairIKiiEiSt4lessIiEvvEESA_.exit325
 
 bb.bb:                                            ; preds = %.lr.ph.i.i.i.i291
@@ -3056,10 +3056,10 @@ bb.o:                                             ; preds = %bb.n
   %i.dg = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 24
   %i.dh = load <2 x i32>, ptr %i.df, align 4
   %i.di = load <2 x i32>, ptr %i.dg, align 4
-  %i.dj = icmp eq <2 x i32> %i.dh, %i.di          ; 2 uses
-  %24 = extractelement <2 x i1> %i.dj, i64 0
-  %25 = extractelement <2 x i1> %i.dj, i64 1
-  %26 = select i1 %24, i1 %25, i1 false
+  %i.dj = icmp eq <2 x i32> %i.dh, %i.di
+  %24 = freeze <2 x i1> %i.dj
+  %25 = bitcast <2 x i1> %24 to i2
+  %26 = icmp eq i2 %25, -1
   br i1 %26, label %bb.p, label %_ZN5boost9container3dtleqERKNS1_4treeISt4pairIKiiEiSt4lessIiESaIS5_ENS0_8tree_optILNS0_14tree_type_enumE0ELb1EEEEESE_.exit
 
 bb.p:                                             ; preds = %.lr.ph.i.i.i123
@@ -3462,10 +3462,10 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.029, i64 32
   %i.x = load <2 x i32>, ptr %i.v, align 4
   %i.y = load <2 x i32>, ptr %i.w, align 4
-  %i.z = icmp eq <2 x i32> %i.x, %i.y             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.x, %i.y
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -3599,10 +3599,10 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.029, i64 32
   %i.x = load <2 x i32>, ptr %i.v, align 4
   %i.y = load <2 x i32>, ptr %i.w, align 4
-  %i.z = icmp eq <2 x i32> %i.x, %i.y             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.x, %i.y
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -4005,10 +4005,10 @@ bb.o:                                             ; preds = %bb.n
   %i.dg = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 24
   %i.dh = load <2 x i32>, ptr %i.df, align 4
   %i.di = load <2 x i32>, ptr %i.dg, align 4
-  %i.dj = icmp eq <2 x i32> %i.dh, %i.di          ; 2 uses
-  %24 = extractelement <2 x i1> %i.dj, i64 0
-  %25 = extractelement <2 x i1> %i.dj, i64 1
-  %26 = select i1 %24, i1 %25, i1 false
+  %i.dj = icmp eq <2 x i32> %i.dh, %i.di
+  %24 = freeze <2 x i1> %i.dj
+  %25 = bitcast <2 x i1> %24 to i2
+  %26 = icmp eq i2 %25, -1
   br i1 %26, label %bb.p, label %_ZN5boost9container3dtleqERKNS1_4treeISt4pairIKiiEiSt4lessIiENS0_13new_allocatorIS5_EENS0_8tree_optILNS0_14tree_type_enumE1ELb1EEEEESF_.exit
 
 bb.p:                                             ; preds = %.lr.ph.i.i.i123
@@ -4411,10 +4411,10 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.029, i64 32
   %i.x = load <2 x i32>, ptr %i.v, align 4
   %i.y = load <2 x i32>, ptr %i.w, align 4
-  %i.z = icmp eq <2 x i32> %i.x, %i.y             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.x, %i.y
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -4548,10 +4548,10 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.029, i64 32
   %i.x = load <2 x i32>, ptr %i.v, align 4
   %i.y = load <2 x i32>, ptr %i.w, align 4
-  %i.z = icmp eq <2 x i32> %i.x, %i.y             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.x, %i.y
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -4954,10 +4954,10 @@ bb.q:                                             ; preds = %bb.p
   %i.dq = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 24
   %i.dr = load <2 x i32>, ptr %i.dp, align 4
   %i.ds = load <2 x i32>, ptr %i.dq, align 4
-  %i.dt = icmp eq <2 x i32> %i.dr, %i.ds          ; 2 uses
-  %25 = extractelement <2 x i1> %i.dt, i64 0
-  %26 = extractelement <2 x i1> %i.dt, i64 1
-  %27 = select i1 %25, i1 %26, i1 false
+  %i.dt = icmp eq <2 x i32> %i.dr, %i.ds
+  %25 = freeze <2 x i1> %i.dt
+  %26 = bitcast <2 x i1> %25 to i2
+  %27 = icmp eq i2 %26, -1
   br i1 %27, label %bb.r, label %_ZN5boost9container3dtleqERKNS1_4treeISt4pairIKiiEiSt4lessIiENS0_13adaptive_poolIS5_Lm256ELm2ELm1ELj2EEENS0_8tree_optILNS0_14tree_type_enumE2ELb1EEEEESF_.exit
 
 bb.r:                                             ; preds = %.lr.ph.i.i.i123
@@ -5360,10 +5360,10 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.029, i64 32
   %i.x = load <2 x i32>, ptr %i.v, align 4
   %i.y = load <2 x i32>, ptr %i.w, align 4
-  %i.z = icmp eq <2 x i32> %i.x, %i.y             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.x, %i.y
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -5491,10 +5491,10 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.029, i64 32
   %i.x = load <2 x i32>, ptr %i.v, align 4
   %i.y = load <2 x i32>, ptr %i.w, align 4
-  %i.z = icmp eq <2 x i32> %i.x, %i.y             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.x, %i.y
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -5897,10 +5897,10 @@ bb.q:                                             ; preds = %bb.p
   %i.do = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 24
   %i.dp = load <2 x i32>, ptr %i.dn, align 4
   %i.dq = load <2 x i32>, ptr %i.do, align 4
-  %i.dr = icmp eq <2 x i32> %i.dp, %i.dq          ; 2 uses
-  %25 = extractelement <2 x i1> %i.dr, i64 0
-  %26 = extractelement <2 x i1> %i.dr, i64 1
-  %27 = select i1 %25, i1 %26, i1 false
+  %i.dr = icmp eq <2 x i32> %i.dp, %i.dq
+  %25 = freeze <2 x i1> %i.dr
+  %26 = bitcast <2 x i1> %25 to i2
+  %27 = icmp eq i2 %26, -1
   br i1 %27, label %bb.r, label %_ZN5boost9container3dtleqERKNS1_4treeISt4pairIKNS0_4test11movable_intES5_EiSt4lessIS5_ENS0_13new_allocatorIS7_EENS0_8tree_optILNS0_14tree_type_enumE3ELb1EEEEESH_.exit
 
 bb.r:                                             ; preds = %.lr.ph.i.i.i146
@@ -6303,10 +6303,10 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.029, i64 32
   %i.x = load <2 x i32>, ptr %i.w, align 4
   %i.y = load <2 x i32>, ptr %i.v, align 4
-  %i.z = icmp eq <2 x i32> %i.y, %i.x             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.y, %i.x
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -6434,10 +6434,10 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.029, i64 32
   %i.x = load <2 x i32>, ptr %i.w, align 4
   %i.y = load <2 x i32>, ptr %i.v, align 4
-  %i.z = icmp eq <2 x i32> %i.y, %i.x             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.y, %i.x
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -6840,10 +6840,10 @@ bb.q:                                             ; preds = %bb.p
   %i.do = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 24
   %i.dp = load <2 x i32>, ptr %i.dn, align 4
   %i.dq = load <2 x i32>, ptr %i.do, align 4
-  %i.dr = icmp eq <2 x i32> %i.dp, %i.dq          ; 2 uses
-  %25 = extractelement <2 x i1> %i.dr, i64 0
-  %26 = extractelement <2 x i1> %i.dr, i64 1
-  %27 = select i1 %25, i1 %26, i1 false
+  %i.dr = icmp eq <2 x i32> %i.dp, %i.dq
+  %25 = freeze <2 x i1> %i.dr
+  %26 = bitcast <2 x i1> %25 to i2
+  %27 = icmp eq i2 %26, -1
   br i1 %27, label %bb.r, label %_ZN5boost9container3dtleqERKNS1_4treeISt4pairIKNS0_4test12copyable_intES5_EiSt4lessIS5_ENS0_13new_allocatorIS7_EENS0_8tree_optILNS0_14tree_type_enumE0ELb1EEEEESH_.exit
 
 bb.r:                                             ; preds = %.lr.ph.i.i.i146
@@ -7246,10 +7246,10 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.029, i64 32
   %i.x = load <2 x i32>, ptr %i.w, align 4
   %i.y = load <2 x i32>, ptr %i.v, align 4
-  %i.z = icmp eq <2 x i32> %i.y, %i.x             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.y, %i.x
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -7383,10 +7383,10 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.029, i64 32
   %i.x = load <2 x i32>, ptr %i.w, align 4
   %i.y = load <2 x i32>, ptr %i.v, align 4
-  %i.z = icmp eq <2 x i32> %i.y, %i.x             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.y, %i.x
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -7789,10 +7789,10 @@ bb.q:                                             ; preds = %bb.p
   %i.do = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 24
   %i.dp = load <2 x i32>, ptr %i.dn, align 4
   %i.dq = load <2 x i32>, ptr %i.do, align 4
-  %i.dr = icmp eq <2 x i32> %i.dp, %i.dq          ; 2 uses
-  %25 = extractelement <2 x i1> %i.dr, i64 0
-  %26 = extractelement <2 x i1> %i.dr, i64 1
-  %27 = select i1 %25, i1 %26, i1 false
+  %i.dr = icmp eq <2 x i32> %i.dp, %i.dq
+  %25 = freeze <2 x i1> %i.dr
+  %26 = bitcast <2 x i1> %25 to i2
+  %27 = icmp eq i2 %26, -1
   br i1 %27, label %bb.r, label %_ZN5boost9container3dtleqERKNS1_4treeISt4pairIKNS0_4test24movable_and_copyable_intES5_EiSt4lessIS5_ENS0_13new_allocatorIS7_EENS0_8tree_optILNS0_14tree_type_enumE0ELb1EEEEESH_.exit
 
 bb.r:                                             ; preds = %.lr.ph.i.i.i146
@@ -8195,10 +8195,10 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.029, i64 32
   %i.x = load <2 x i32>, ptr %i.w, align 4
   %i.y = load <2 x i32>, ptr %i.v, align 4
-  %i.z = icmp eq <2 x i32> %i.y, %i.x             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.y, %i.x
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -8332,10 +8332,10 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.029, i64 32
   %i.x = load <2 x i32>, ptr %i.w, align 4
   %i.y = load <2 x i32>, ptr %i.v, align 4
-  %i.z = icmp eq <2 x i32> %i.y, %i.x             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.y, %i.x
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -8738,10 +8738,10 @@ bb.q:                                             ; preds = %bb.p
   %i.do = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 24
   %i.dp = load <2 x i32>, ptr %i.dn, align 4
   %i.dq = load <2 x i32>, ptr %i.do, align 4
-  %i.dr = icmp eq <2 x i32> %i.dp, %i.dq          ; 2 uses
-  %25 = extractelement <2 x i1> %i.dr, i64 0
-  %26 = extractelement <2 x i1> %i.dr, i64 1
-  %27 = select i1 %25, i1 %26, i1 false
+  %i.dr = icmp eq <2 x i32> %i.dp, %i.dq
+  %25 = freeze <2 x i1> %i.dr
+  %26 = bitcast <2 x i1> %25 to i2
+  %27 = icmp eq i2 %26, -1
   br i1 %27, label %bb.r, label %_ZN5boost9container3dtleqERKNS1_4treeISt4pairIKNS0_4test17moveconstruct_intES5_EiSt4lessIS5_ENS0_13new_allocatorIS7_EENS0_8tree_optILNS0_14tree_type_enumE0ELb1EEEEESH_.exit
 
 bb.r:                                             ; preds = %.lr.ph.i.i.i146
@@ -9144,10 +9144,10 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.029, i64 32
   %i.x = load <2 x i32>, ptr %i.w, align 4
   %i.y = load <2 x i32>, ptr %i.v, align 4
-  %i.z = icmp eq <2 x i32> %i.y, %i.x             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.y, %i.x
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -9281,10 +9281,10 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.029, i64 32
   %i.x = load <2 x i32>, ptr %i.w, align 4
   %i.y = load <2 x i32>, ptr %i.v, align 4
-  %i.z = icmp eq <2 x i32> %i.y, %i.x             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.y, %i.x
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -9687,10 +9687,10 @@ bb.q:                                             ; preds = %bb.p
   %i.do = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 24
   %i.dp = load <2 x i32>, ptr %i.dn, align 4
   %i.dq = load <2 x i32>, ptr %i.do, align 4
-  %i.dr = icmp eq <2 x i32> %i.dp, %i.dq          ; 2 uses
-  %26 = extractelement <2 x i1> %i.dr, i64 0
-  %27 = extractelement <2 x i1> %i.dr, i64 1
-  %28 = select i1 %26, i1 %27, i1 false
+  %i.dr = icmp eq <2 x i32> %i.dp, %i.dq
+  %26 = freeze <2 x i1> %i.dr
+  %27 = bitcast <2 x i1> %26 to i2
+  %28 = icmp eq i2 %27, -1
   br i1 %28, label %bb.r, label %_ZN5boost9container3dtleqERKNS1_4treeISt4pairIKNS0_4test24movable_and_copyable_intES5_EiNS4_16less_transparentENS0_13new_allocatorIS7_EENS0_8tree_optILNS0_14tree_type_enumE0ELb1EEEEESG_.exit
 
 bb.r:                                             ; preds = %.lr.ph.i.i.i146
@@ -10093,10 +10093,10 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.029, i64 32
   %i.x = load <2 x i32>, ptr %i.w, align 4
   %i.y = load <2 x i32>, ptr %i.v, align 4
-  %i.z = icmp eq <2 x i32> %i.y, %i.x             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.y, %i.x
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph
@@ -10230,10 +10230,10 @@ _ZN5boost9intrusive18iterator_udistanceISt23_Rb_tree_const_iteratorISt4pairIKiiE
   %i.w = getelementptr inbounds nuw i8, ptr %.sroa.018.029, i64 32
   %i.x = load <2 x i32>, ptr %i.w, align 4
   %i.y = load <2 x i32>, ptr %i.v, align 4
-  %i.z = icmp eq <2 x i32> %i.y, %i.x             ; 2 uses
-  %2 = extractelement <2 x i1> %i.z, i64 0
-  %3 = extractelement <2 x i1> %i.z, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.z = icmp eq <2 x i32> %i.y, %i.x
+  %2 = freeze <2 x i1> %i.z
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   br i1 %4, label %bb.e, label %.loopexit
 
 bb.e:                                             ; preds = %.lr.ph

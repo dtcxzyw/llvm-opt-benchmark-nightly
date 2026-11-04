@@ -205,12 +205,13 @@ bb.x:                                             ; preds = %bb.ab, %.lr.ph.i
   %i.cy = sext i32 %i.cx to i64
   %i.cz = getelementptr [4 x i8], ptr %i.n, i64 %i.cy
   %i.da = load <2 x float>, ptr %i.cz, align 4, !tbaa !79
-  %i.db = fdiv <2 x float> %i.da, <float 6.000000e+00, float 1.200000e+01> ; 3 uses
+  %.fr227 = freeze <2 x float> %i.da
+  %i.db = fdiv <2 x float> %.fr227, <float 6.000000e+00, float 1.200000e+01> ; 3 uses
   %i.dc = extractelement <2 x float> %i.db, i64 0 ; 3 uses
   %i.dd = fcmp ogt float %i.dc, 0.000000e+00
   %i.de = extractelement <2 x float> %i.db, i64 1 ; 3 uses
   %i.df = fcmp ogt float %i.de, 0.000000e+00
-  %or.cond.i = select i1 %i.dd, i1 %i.df, i1 false
+  %or.cond.i = and i1 %i.dd, %i.df
   br i1 %or.cond.i, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
@@ -230,10 +231,9 @@ bb.y:                                             ; preds = %bb.x
   br label %.sink.split.i
 
 bb.z:                                             ; preds = %bb.x
-  %23 = fcmp oeq <2 x float> %i.db, zeroinitializer ; 2 uses
-  %24 = extractelement <2 x i1> %23, i64 0
-  %25 = extractelement <2 x i1> %23, i64 1
-  %or.cond3.i = select i1 %24, i1 %25, i1 false
+  %23 = fcmp une <2 x float> %i.db, zeroinitializer
+  %24 = bitcast <2 x i1> %23 to i2
+  %or.cond3.i = icmp eq i2 %24, 0
   br i1 %or.cond3.i, label %bb.aa, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.z
@@ -404,7 +404,8 @@ bb.ac:                                            ; preds = %.lr.ph256.split.i
   %i.ft = add nsw i64 %indvars.iv280.i, %i.dx
   %.idx349.i = shl i64 %i.ft, 3
   %i.fu = getelementptr i8, ptr %i.n, i64 %.idx349.i
-  %i.fv = load <2 x float>, ptr %i.fu, align 4, !tbaa !79 ; 6 uses
+  %i.fv = load <2 x float>, ptr %i.fu, align 4, !tbaa !79
+  %.fr228 = freeze <2 x float> %i.fv              ; 6 uses
   %i.fw = mul nuw nsw i32 %i.fr, %i.dy
   %i.fx = trunc nuw nsw i64 %indvars.iv280.i to i32 ; 2 uses
   %i.fy = add nsw i32 %i.fw, %i.fx
@@ -412,12 +413,12 @@ bb.ac:                                            ; preds = %.lr.ph256.split.i
   %i.ga = sext i32 %i.fz to i64
   %i.gb = load ptr, ptr %i.bm, align 8, !tbaa !76
   %i.gc = getelementptr [4 x i8], ptr %i.gb, i64 %i.ga
-  store <2 x float> %i.fv, ptr %i.gc, align 4, !tbaa !79
+  store <2 x float> %.fr228, ptr %i.gc, align 4, !tbaa !79
   %i.gd = trunc nuw i8 %.1190253.i to i1
   br i1 %i.gd, label %bb.ad, label %bb.af
 
 bb.ad:                                            ; preds = %bb.ac
-  %foldExtExtBinop = fmul <2 x float> %i.fv, %i.fv
+  %foldExtExtBinop = fmul <2 x float> %.fr228, %.fr228
   %i.ge = extractelement <2 x float> %foldExtExtBinop, i64 0
   %i.gf = fpext float %i.ge to double
   %i.gg = load float, ptr %i.ea, align 4, !tbaa !79
@@ -434,7 +435,7 @@ bb.ad:                                            ; preds = %bb.ac
   br i1 %i.gn, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %.noexc45
-  %foldExtExtBinop223 = fmul <2 x float> %i.fv, %i.fv
+  %foldExtExtBinop223 = fmul <2 x float> %.fr228, %.fr228
   %i.go = extractelement <2 x float> %foldExtExtBinop223, i64 1
   %i.gp = fpext float %i.go to double
   %i.gq = load float, ptr %i.eb, align 4, !tbaa !79
@@ -451,7 +452,7 @@ bb.ae:                                            ; preds = %.noexc45
 
 bb.af:                                            ; preds = %.noexc46, %.noexc45, %bb.ac
   %i.gx = phi i8 [ 0, %.noexc45 ], [ 0, %bb.ac ], [ %i.gw, %.noexc46 ] ; 6 uses
-  %i.gy = fdiv <2 x float> %i.fv, <float 6.000000e+00, float 1.200000e+01> ; 3 uses
+  %i.gy = fdiv <2 x float> %.fr228, <float 6.000000e+00, float 1.200000e+01> ; 3 uses
   %i.gz = trunc nuw i8 %.3188254.i to i1
   br i1 %i.gz, label %bb.ag, label %bb.an
 
@@ -460,7 +461,7 @@ bb.ag:                                            ; preds = %bb.af
   %i.hb = fcmp oeq float %i.ha, 0.000000e+00
   %i.hc = extractelement <2 x float> %i.gy, i64 1 ; 3 uses
   %i.hd = fcmp oeq float %i.hc, 0.000000e+00
-  %or.cond5.i = select i1 %i.hb, i1 %i.hd, i1 false
+  %or.cond5.i = and i1 %i.hb, %i.hd
   br i1 %or.cond5.i, label %bb.ah, label %bb.aj
 
 bb.ah:                                            ; preds = %bb.ag
@@ -480,10 +481,9 @@ bb.ai:                                            ; preds = %bb.ah
   br i1 %i.hm, label %bb.an, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai, %bb.ag
-  %26 = fcmp ogt <2 x float> %i.gy, zeroinitializer ; 2 uses
-  %27 = extractelement <2 x i1> %26, i64 0
-  %28 = extractelement <2 x i1> %26, i64 1
-  %or.cond7.i = select i1 %27, i1 %28, i1 false
+  %25 = fcmp ule <2 x float> %i.gy, zeroinitializer
+  %26 = bitcast <2 x i1> %25 to i2
+  %or.cond7.i = icmp eq i2 %26, 0
   br i1 %or.cond7.i, label %bb.ak, label %bb.an
 
 bb.ak:                                            ; preds = %bb.aj
@@ -886,11 +886,11 @@ bb.c:                                             ; preds = %bb.g, %.lr.ph.i.new
   %i.z = getelementptr inbounds [16 x i8], ptr %i.e, i64 %.010.i
   %i.aa = load <2 x i64>, ptr %i.z, align 8
   %i.ab = and <2 x i64> %i.aa, %i.x
-  %3 = icmp eq <2 x i64> %i.ab, zeroinitializer   ; 2 uses
-  %4 = extractelement <2 x i1> %3, i64 0
-  %5 = extractelement <2 x i1> %3, i64 1
-  %6 = select i1 %4, i1 %5, i1 false
-  br i1 %6, label %bb.d, label %_ZN3gmxL14clearBufferAllENS_8ArrayRefIfEE.exit.i
+  %.fr = freeze <2 x i64> %i.ab
+  %3 = icmp ne <2 x i64> %.fr, zeroinitializer
+  %4 = bitcast <2 x i1> %3 to i2
+  %5 = icmp eq i2 %4, 0
+  br i1 %5, label %bb.d, label %_ZN3gmxL14clearBufferAllENS_8ArrayRefIfEE.exit.i
 
 _ZN3gmxL14clearBufferAllENS_8ArrayRefIfEE.exit.i: ; preds = %bb.c
   %.idx.i = mul i64 %.010.i, 192
@@ -903,11 +903,11 @@ bb.d:                                             ; preds = %_ZN3gmxL14clearBuff
   %i.ae = getelementptr inbounds [16 x i8], ptr %i.e, i64 %i.ad
   %i.af = load <2 x i64>, ptr %i.ae, align 8
   %i.ag = and <2 x i64> %i.af, %i.x
-  %7 = icmp eq <2 x i64> %i.ag, zeroinitializer   ; 2 uses
-  %8 = extractelement <2 x i1> %7, i64 0
-  %9 = extractelement <2 x i1> %7, i64 1
-  %10 = select i1 %8, i1 %9, i1 false
-  br i1 %10, label %bb.e, label %_ZN3gmxL14clearBufferAllENS_8ArrayRefIfEE.exit.i.1
+  %.fr.1 = freeze <2 x i64> %i.ag
+  %6 = icmp ne <2 x i64> %.fr.1, zeroinitializer
+  %7 = bitcast <2 x i1> %6 to i2
+  %8 = icmp eq i2 %7, 0
+  br i1 %8, label %bb.e, label %_ZN3gmxL14clearBufferAllENS_8ArrayRefIfEE.exit.i.1
 
 _ZN3gmxL14clearBufferAllENS_8ArrayRefIfEE.exit.i.1: ; preds = %bb.d
   %.idx.i.1 = mul i64 %i.ad, 192
@@ -920,11 +920,11 @@ bb.e:                                             ; preds = %_ZN3gmxL14clearBuff
   %i.aj = getelementptr inbounds [16 x i8], ptr %i.e, i64 %i.ai
   %i.ak = load <2 x i64>, ptr %i.aj, align 8
   %i.al = and <2 x i64> %i.ak, %i.x
-  %11 = icmp eq <2 x i64> %i.al, zeroinitializer  ; 2 uses
-  %12 = extractelement <2 x i1> %11, i64 0
-  %13 = extractelement <2 x i1> %11, i64 1
-  %14 = select i1 %12, i1 %13, i1 false
-  br i1 %14, label %bb.f, label %_ZN3gmxL14clearBufferAllENS_8ArrayRefIfEE.exit.i.2
+  %.fr.2 = freeze <2 x i64> %i.al
+  %9 = icmp ne <2 x i64> %.fr.2, zeroinitializer
+  %10 = bitcast <2 x i1> %9 to i2
+  %11 = icmp eq i2 %10, 0
+  br i1 %11, label %bb.f, label %_ZN3gmxL14clearBufferAllENS_8ArrayRefIfEE.exit.i.2
 
 _ZN3gmxL14clearBufferAllENS_8ArrayRefIfEE.exit.i.2: ; preds = %bb.e
   %.idx.i.2 = mul i64 %i.ai, 192
@@ -937,11 +937,11 @@ bb.f:                                             ; preds = %_ZN3gmxL14clearBuff
   %i.ao = getelementptr inbounds [16 x i8], ptr %i.e, i64 %i.an
   %i.ap = load <2 x i64>, ptr %i.ao, align 8
   %i.aq = and <2 x i64> %i.ap, %i.x
-  %15 = icmp eq <2 x i64> %i.aq, zeroinitializer  ; 2 uses
-  %16 = extractelement <2 x i1> %15, i64 0
-  %17 = extractelement <2 x i1> %15, i64 1
-  %18 = select i1 %16, i1 %17, i1 false
-  br i1 %18, label %bb.g, label %_ZN3gmxL14clearBufferAllENS_8ArrayRefIfEE.exit.i.3
+  %.fr.3 = freeze <2 x i64> %i.aq
+  %12 = icmp ne <2 x i64> %.fr.3, zeroinitializer
+  %13 = bitcast <2 x i1> %12 to i2
+  %14 = icmp eq i2 %13, 0
+  br i1 %14, label %bb.g, label %_ZN3gmxL14clearBufferAllENS_8ArrayRefIfEE.exit.i.3
 
 _ZN3gmxL14clearBufferAllENS_8ArrayRefIfEE.exit.i.3: ; preds = %bb.f
   %.idx.i.3 = mul i64 %i.an, 192
@@ -971,11 +971,11 @@ bb.h:                                             ; preds = %bb.i, %.epil.prehea
   %i.at = getelementptr inbounds [16 x i8], ptr %i.e, i64 %.010.i.epil
   %i.au = load <2 x i64>, ptr %i.at, align 8
   %i.av = and <2 x i64> %i.au, %i.x
-  %19 = icmp eq <2 x i64> %i.av, zeroinitializer  ; 2 uses
-  %20 = extractelement <2 x i1> %19, i64 0
-  %21 = extractelement <2 x i1> %19, i64 1
-  %22 = select i1 %20, i1 %21, i1 false
-  br i1 %22, label %bb.i, label %_ZN3gmxL14clearBufferAllENS_8ArrayRefIfEE.exit.i.epil
+  %.fr.epil = freeze <2 x i64> %i.av
+  %15 = icmp ne <2 x i64> %.fr.epil, zeroinitializer
+  %16 = bitcast <2 x i1> %15 to i2
+  %17 = icmp eq i2 %16, 0
+  br i1 %17, label %bb.i, label %_ZN3gmxL14clearBufferAllENS_8ArrayRefIfEE.exit.i.epil
 
 _ZN3gmxL14clearBufferAllENS_8ArrayRefIfEE.exit.i.epil: ; preds = %bb.h
   %.idx.i.epil = mul i64 %.010.i.epil, 192

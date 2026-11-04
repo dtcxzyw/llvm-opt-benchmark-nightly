@@ -205,11 +205,11 @@ bb.ib:                                            ; preds = %bb.ia
   %i.avs = insertelement <2 x float> %i.avr, float %.sroa.2263.0.copyload, i64 1
   %i.avt = fmul <2 x float> %i.ave, %i.avs
   %i.avu = fadd <2 x float> %i.avt, %i.avq
-  %25 = fcmp ole <2 x float> %i.avu, splat (float f0x3F7EF9DB) ; 2 uses
-  %26 = extractelement <2 x i1> %25, i64 0
-  %27 = extractelement <2 x i1> %25, i64 1
-  %or.cond = select i1 %27, i1 true, i1 %26
-  br i1 %or.cond, label %bb.ic, label %.critedge7
+  %.fr20026 = freeze <2 x float> %i.avu
+  %25 = fcmp ole <2 x float> %.fr20026, splat (float f0x3F7EF9DB)
+  %26 = bitcast <2 x i1> %25 to i2
+  %or.cond.not = icmp eq i2 %26, 0
+  br i1 %or.cond.not, label %.critedge7, label %bb.ic
 
 bb.ic:                                            ; preds = %bb.ib
   %indvars.iv.next13064 = add nuw nsw i64 %indvars.iv13063, 1 ; 2 uses

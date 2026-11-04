@@ -205,11 +205,10 @@ bb.k:                                             ; preds = %.lr.ph.i.i
 .split.i.i:                                       ; preds = %bb.k, %.lr.ph.i.i
   %i.br = getelementptr inbounds nuw i8, ptr %i.bh, i64 700
   %i.bs = load <2 x i32>, ptr %i.br, align 4, !alias.scope !1677, !noalias !1678
-  %4 = and <2 x i32> %i.bs, splat (i32 8388608)
-  %5 = icmp eq <2 x i32> %4, zeroinitializer      ; 2 uses
-  %6 = extractelement <2 x i1> %5, i64 0
-  %7 = extractelement <2 x i1> %5, i64 1
-  %.sroa.01.0.i.i.i = select i1 %6, i1 %7, i1 false
+  %.fr12 = freeze <2 x i32> %i.bs
+  %4 = and <2 x i32> %.fr12, splat (i32 8388608)
+  %.scalar = bitcast <2 x i32> %4 to i64
+  %.sroa.01.0.i.i.i = icmp eq i64 %.scalar, 0
   br i1 %.sroa.01.0.i.i.i, label %_RNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command23has_visible_subcommands.exit, label %_RNCNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB7_7Command23has_visible_subcommands0Bb_.exit.backedge.i.i
 
 _RNCNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB7_7Command23has_visible_subcommands0Bb_.exit.backedge.i.i: ; preds = %.split.i.i, %bb.k
@@ -247,11 +246,10 @@ bb.l:                                             ; preds = %.lr.ph.i.i.i17
 .split.i.i.i:                                     ; preds = %bb.l, %.lr.ph.i.i.i17
   %i.ce = getelementptr inbounds nuw i8, ptr %i.bu, i64 700
   %i.cf = load <2 x i32>, ptr %i.ce, align 4, !alias.scope !1681, !noalias !1682
-  %8 = and <2 x i32> %i.cf, splat (i32 8388608)
-  %9 = icmp eq <2 x i32> %8, zeroinitializer      ; 2 uses
-  %10 = extractelement <2 x i1> %9, i64 0
-  %11 = extractelement <2 x i1> %9, i64 1
-  %.sroa.01.0.i.i.i.i = select i1 %10, i1 %11, i1 false
+  %.fr13 = freeze <2 x i32> %i.cf
+  %5 = and <2 x i32> %.fr13, splat (i32 8388608)
+  %.scalar14 = bitcast <2 x i32> %5 to i64
+  %.sroa.01.0.i.i.i.i = icmp eq i64 %.scalar14, 0
   br i1 %.sroa.01.0.i.i.i.i, label %_RNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command23has_visible_subcommands.exit.i, label %_RNCNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB7_7Command23has_visible_subcommands0Bb_.exit.backedge.i.i.i
 
 _RNCNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB7_7Command23has_visible_subcommands0Bb_.exit.backedge.i.i.i: ; preds = %.split.i.i.i, %bb.l
@@ -654,11 +652,10 @@ bb.by:                                            ; preds = %.lr.ph.i.i.i153
 .split.i.i.i:                                     ; preds = %bb.by, %.lr.ph.i.i.i153
   %i.sy = getelementptr inbounds nuw i8, ptr %i.so, i64 700
   %i.sz = load <2 x i32>, ptr %i.sy, align 4, !alias.scope !6799, !noalias !6800
-  %3 = and <2 x i32> %i.sz, splat (i32 8388608)
-  %4 = icmp eq <2 x i32> %3, zeroinitializer      ; 2 uses
-  %5 = extractelement <2 x i1> %4, i64 0
-  %6 = extractelement <2 x i1> %4, i64 1
-  %.sroa.01.0.i.i.i.i = select i1 %5, i1 %6, i1 false
+  %.fr832 = freeze <2 x i32> %i.sz
+  %3 = and <2 x i32> %.fr832, splat (i32 8388608)
+  %.scalar = bitcast <2 x i32> %3 to i64
+  %.sroa.01.0.i.i.i.i = icmp eq i64 %.scalar, 0
   br i1 %.sroa.01.0.i.i.i.i, label %_RNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command23has_visible_subcommands.exit.i, label %_RNCNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB7_7Command23has_visible_subcommands0Bb_.exit.backedge.i.i.i
 
 _RNCNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB7_7Command23has_visible_subcommands0Bb_.exit.backedge.i.i.i: ; preds = %.split.i.i.i, %bb.by
@@ -765,11 +762,10 @@ _RINvXs3_NtNtCsfu0rQaTkGUu_12clap_builder4util8flat_setINtB6_7FlatSetReEINtNtNtN
   %.sroa.5203.0.copyload205.i = load ptr, ptr %.sroa.4.0..sroa_idx.i161.i, align 8, !noalias !6766 ; 6 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !6801
   %i.uf = load <2 x i32>, ptr %i.cq, align 4, !noalias !6766
-  %7 = and <2 x i32> %i.uf, splat (i32 32768)
-  %8 = icmp ne <2 x i32> %7, zeroinitializer      ; 2 uses
-  %9 = extractelement <2 x i1> %8, i64 0
-  %10 = extractelement <2 x i1> %8, i64 1
-  %.sroa.0.0.i.i.i = select i1 %9, i1 true, i1 %10 ; 2 uses
+  %.fr833 = freeze <2 x i32> %i.uf
+  %4 = and <2 x i32> %.fr833, splat (i32 32768)
+  %.scalar834 = bitcast <2 x i32> %4 to i64
+  %.sroa.0.0.i.i.i = icmp ne i64 %.scalar834, 0   ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !noalias !6766
   store i8 1, ptr %i.t, align 1, !noalias !6766
   %.not.i155 = xor i1 %.lcssa.i.i.i, true
@@ -1172,11 +1168,10 @@ _RNvXs1_NtCs4wP2HXfJTCR_5alloc5allocNtB5_6GlobalNtNtCsj6eKBz9Db1c_4core5alloc9Al
 bb.g:                                             ; preds = %_RNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command15has_positionals.exit.thread
   %i.dl = getelementptr i8, ptr %i.cz, i64 700
   %i.dm = load <2 x i32>, ptr %i.dl, align 4
-  %4 = and <2 x i32> %i.dm, splat (i32 8192)
-  %5 = icmp ne <2 x i32> %4, zeroinitializer      ; 2 uses
-  %6 = extractelement <2 x i1> %5, i64 0
-  %7 = extractelement <2 x i1> %5, i64 1
-  %.sroa.0.0.i = select i1 %6, i1 true, i1 %7
+  %.fr401 = freeze <2 x i32> %i.dm
+  %4 = and <2 x i32> %.fr401, splat (i32 8192)
+  %.scalar = bitcast <2 x i32> %4 to i64
+  %.sroa.0.0.i = icmp ne i64 %.scalar, 0
   %brmerge.demorgan = and i1 %2, %.sroa.0.0.i
   br i1 %brmerge.demorgan, label %bb.l, label %bb.j
 
@@ -1579,12 +1574,11 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtBG_
 _RNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command15has_positionals.exit101: ; preds = %_RNvXs1_NtNtNtCsj6eKBz9Db1c_4core3ops8function5implsQNCNvMs2_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtBW_7Command15get_positionals0INtB7_5FnMutTRRNtNtBY_3arg3ArgEE8call_mutB10_.exit.i.i99
   %i.mr = getelementptr i8, ptr %i.ip, i64 700
   %i.ms = load <2 x i32>, ptr %i.mr, align 4
-  %8 = and <2 x i32> %i.ms, splat (i32 256)
-  %9 = icmp ne <2 x i32> %8, zeroinitializer      ; 2 uses
-  %10 = extractelement <2 x i1> %9, i64 0
-  %11 = extractelement <2 x i1> %9, i64 1
-  %.sroa.0.0.i131 = select i1 %10, i1 true, i1 %11
-  br i1 %.sroa.0.0.i131, label %_RNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command15has_positionals.exit101.thread, label %bb.be
+  %.fr402 = freeze <2 x i32> %i.ms
+  %5 = and <2 x i32> %.fr402, splat (i32 256)
+  %.scalar403 = bitcast <2 x i32> %5 to i64
+  %.sroa.0.0.i131.not = icmp eq i64 %.scalar403, 0
+  br i1 %.sroa.0.0.i131.not, label %bb.be, label %_RNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command15has_positionals.exit101.thread
 
 _RNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command15has_positionals.exit101.thread: ; preds = %_RNvXs1_NtNtNtCsj6eKBz9Db1c_4core3ops8function5implsQNCNvMs2_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtBW_7Command15get_positionals0INtB7_5FnMutTRRNtNtBY_3arg3ArgEE8call_mutB10_.exit.thread.i.i97, %bb.ah, %_RNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB5_7Command15has_positionals.exit101
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bq)
@@ -1987,11 +1981,10 @@ bb.c:                                             ; preds = %bb.b
   %i.jz = getelementptr i8, ptr %i.jy, i64 700    ; 3 uses
   %i.ka = getelementptr i8, ptr %i.jy, i64 704
   %i.kb = load <2 x i32>, ptr %i.jz, align 4, !noalias !10006
-  %4 = and <2 x i32> %i.kb, splat (i32 16384)
-  %5 = icmp ne <2 x i32> %4, zeroinitializer      ; 2 uses
-  %6 = extractelement <2 x i1> %5, i64 0
-  %7 = extractelement <2 x i1> %5, i64 1
-  %.sroa.0.0.i660 = select i1 %6, i1 true, i1 %7
+  %.fr4616 = freeze <2 x i32> %i.kb
+  %4 = and <2 x i32> %.fr4616, splat (i32 16384)
+  %.scalar = bitcast <2 x i32> %4 to i64
+  %.sroa.0.0.i660 = icmp ne i64 %.scalar, 0
   %i.kc = icmp eq i64 %i.jq, 0
   %or.cond180.i = select i1 %.sroa.0.0.i660, i1 true, i1 %i.kc
   br i1 %or.cond180.i, label %bb.g, label %bb.f
@@ -2050,12 +2043,11 @@ _RNvXs1_NtCs4wP2HXfJTCR_5alloc5allocNtB5_6GlobalNtNtCsj6eKBz9Db1c_4core5alloc9Al
 
 bb.l:                                             ; preds = %bb.i
   %i.ks = load <2 x i32>, ptr %i.jz, align 4, !noalias !10006
-  %8 = and <2 x i32> %i.ks, splat (i32 1048576)
-  %9 = icmp ne <2 x i32> %8, zeroinitializer      ; 2 uses
-  %10 = extractelement <2 x i1> %9, i64 0
-  %11 = extractelement <2 x i1> %9, i64 1
-  %.sroa.0.0.i653 = select i1 %10, i1 true, i1 %11
-  br i1 %.sroa.0.0.i653, label %_RNvXs1_NtCs4wP2HXfJTCR_5alloc5allocNtB5_6GlobalNtNtCsj6eKBz9Db1c_4core5alloc9Allocator8allocate.exit.i656, label %bb.m
+  %.fr4618 = freeze <2 x i32> %i.ks
+  %5 = and <2 x i32> %.fr4618, splat (i32 1048576)
+  %.scalar4619 = bitcast <2 x i32> %5 to i64
+  %.sroa.0.0.i653.not = icmp eq i64 %.scalar4619, 0
+  br i1 %.sroa.0.0.i653.not, label %bb.m, label %_RNvXs1_NtCs4wP2HXfJTCR_5alloc5allocNtB5_6GlobalNtNtCsj6eKBz9Db1c_4core5alloc9Allocator8allocate.exit.i656
 
 bb.m:                                             ; preds = %bb.l
   %i.kt = call { ptr, ptr } @_RNvMCs3RZUOUhPFQ6_8clap_lexNtB2_7RawArgs9remaining(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %2, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.ga) #43, !noalias !10006, !inline_history !8350 ; 2 uses
@@ -2458,11 +2450,10 @@ _RINvMs4_NtCsfu0rQaTkGUu_12clap_builder7mkeymapNtB6_7MKeyMap3getjEB8_.exit246.th
   %.sroa.078.0.i = phi i1 [ %.not.i238, %bb.jd ], [ false, %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterNtNtNtCsfu0rQaTkGUu_12clap_builder7builder3arg3ArgENtNtNtNtBb_4iter6traits8iterator8Iterator4foldINtNtBb_6option6OptionRBQ_ENCINvNtNtB1L_8adapters6filter11filter_foldB2L_B2p_NCNvMs2_NtBU_7commandNtB3M_7Command15get_positionals0INvNvB1F_4last4someB2L_EE0EBW_.exit.thread ], [ false, %bb.ja ] ; 2 uses
   %i.bgu = getelementptr i8, ptr %i.bfw, i64 700
   %i.bgv = load <2 x i32>, ptr %i.bgu, align 4, !noalias !10006
-  %12 = and <2 x i32> %i.bgv, splat (i32 16)
-  %13 = icmp ne <2 x i32> %12, zeroinitializer    ; 2 uses
-  %14 = extractelement <2 x i1> %13, i64 0
-  %15 = extractelement <2 x i1> %13, i64 1
-  %.sroa.0.0.i237 = select i1 %14, i1 true, i1 %15 ; 2 uses
+  %.fr4621 = freeze <2 x i32> %i.bgv
+  %6 = and <2 x i32> %.fr4621, splat (i32 16)
+  %.scalar4622 = bitcast <2 x i32> %6 to i64
+  %.sroa.0.0.i237 = icmp ne i64 %.scalar4622, 0   ; 2 uses
   %brmerge.not.i = and i1 %i.ke, %.sroa.0.0.i237
   br i1 %brmerge.not.i, label %bb.jf, label %bb.je
 
@@ -2865,12 +2856,11 @@ _RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterNtNtNtCsfu0rQaTkGUu_12cla
   %i.cun = load ptr, ptr %i.cby, align 8, !alias.scope !10660, !nonnull !10, !align !16, !noundef !10 ; 3 uses
   %i.cuo = getelementptr i8, ptr %i.cun, i64 700
   %i.cup = load <2 x i32>, ptr %i.cuo, align 4, !noalias !10662
-  %16 = and <2 x i32> %i.cup, splat (i32 16)
-  %17 = icmp ne <2 x i32> %16, zeroinitializer    ; 2 uses
-  %18 = extractelement <2 x i1> %17, i64 0
-  %19 = extractelement <2 x i1> %17, i64 1
-  %.sroa.0.0.i92.i.i = select i1 %18, i1 true, i1 %19
-  br i1 %.sroa.0.0.i92.i.i, label %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterNtNtNtCsfu0rQaTkGUu_12clap_builder7builder3arg3ArgENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1E_8adapters6filter15filter_try_foldRBJ_uINtNtNtBa_3ops12control_flow11ControlFlowB37_ENCNvMs2_NtBN_7commandNtB44_7Command15get_positionals0NCINvNvB1y_4find5checkB37_QNCNvMNtNtBP_6parser9validatorNtB5j_9Validator17validate_requireds4_0E0E0B3c_EBP_.exit.thread.i.i, label %bb.qn
+  %.fr4627 = freeze <2 x i32> %i.cup
+  %7 = and <2 x i32> %.fr4627, splat (i32 16)
+  %.scalar4628 = bitcast <2 x i32> %7 to i64
+  %.sroa.0.0.i92.i.i.not = icmp eq i64 %.scalar4628, 0
+  br i1 %.sroa.0.0.i92.i.i.not, label %bb.qn, label %_RINvYINtNtNtCsj6eKBz9Db1c_4core5slice4iter4IterNtNtNtCsfu0rQaTkGUu_12clap_builder7builder3arg3ArgENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1E_8adapters6filter15filter_try_foldRBJ_uINtNtNtBa_3ops12control_flow11ControlFlowB37_ENCNvMs2_NtBN_7commandNtB44_7Command15get_positionals0NCINvNvB1y_4find5checkB37_QNCNvMNtNtBP_6parser9validatorNtB5j_9Validator17validate_requireds4_0E0E0B3c_EBP_.exit.thread.i.i
 
 bb.qn:                                            ; preds = %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterNtNtNtCsfu0rQaTkGUu_12clap_builder7builder3arg3ArgENtNtNtNtBb_4iter6traits8iterator8Iterator4findQNCNvMNtNtBW_6parser9validatorNtB2v_9Validator17validate_requireds2_0EBW_.exit.thread.i.i
   %i.cuq = getelementptr i8, ptr %i.cun, i64 136
@@ -3273,12 +3263,11 @@ bb.vc:                                            ; preds = %bb.pc
   %i.dsq = load ptr, ptr %i.cby, align 8, !alias.scope !10551, !nonnull !10, !align !16, !noundef !10
   %i.dsr = getelementptr i8, ptr %i.dsq, i64 700
   %i.dss = load <2 x i32>, ptr %i.dsr, align 4, !noalias !10552
-  %20 = and <2 x i32> %i.dss, splat (i32 4096)
-  %21 = icmp ne <2 x i32> %20, zeroinitializer    ; 2 uses
-  %22 = extractelement <2 x i1> %21, i64 0
-  %23 = extractelement <2 x i1> %21, i64 1
-  %.sroa.0.0.i80.i = select i1 %22, i1 true, i1 %23
-  br i1 %.sroa.0.0.i80.i, label %bb.vd, label %bb.pg
+  %.fr4624 = freeze <2 x i32> %i.dss
+  %8 = and <2 x i32> %.fr4624, splat (i32 4096)
+  %.scalar4625 = bitcast <2 x i32> %8 to i64
+  %.sroa.0.0.i80.i.not = icmp eq i64 %.scalar4625, 0
+  br i1 %.sroa.0.0.i80.i.not, label %bb.pg, label %bb.vd
 
 bb.vd:                                            ; preds = %bb.vc, %_RNvMNtNtCsfu0rQaTkGUu_12clap_builder6parser9validatorNtB2_9Validator17validate_required.exit.thread.i
   call void @llvm.experimental.noalias.scope.decl(metadata !10887)
@@ -3681,11 +3670,10 @@ bb.cc:                                            ; preds = %bb.bv
   %i.mi = load ptr, ptr %i.mh, align 8, !nonnull !10, !align !16, !noundef !10
   %i.mj = getelementptr i8, ptr %i.mi, i64 700
   %i.mk = load <2 x i32>, ptr %i.mj, align 4
-  %9 = and <2 x i32> %i.mk, splat (i32 64)
-  %10 = icmp ne <2 x i32> %9, zeroinitializer     ; 2 uses
-  %11 = extractelement <2 x i1> %10, i64 0
-  %12 = extractelement <2 x i1> %10, i64 1
-  %.sroa.0.0.i157 = select i1 %11, i1 true, i1 %12
+  %.fr385 = freeze <2 x i32> %i.mk
+  %9 = and <2 x i32> %.fr385, splat (i32 64)
+  %.scalar = bitcast <2 x i32> %9 to i64
+  %.sroa.0.0.i157 = icmp ne i64 %.scalar, 0
   %i.ml = trunc nuw i64 %6 to i1
   %i.mm = icmp eq i64 %7, 0
   %i.mn = and i1 %.sroa.0.0.i157, %i.ml
@@ -3870,11 +3858,10 @@ bb.co:                                            ; preds = %bb.cl
   %i.pc = load ptr, ptr %i.og, align 8, !nonnull !10, !align !16, !noundef !10
   %i.pd = getelementptr i8, ptr %i.pc, i64 700
   %i.pe = load <2 x i32>, ptr %i.pd, align 4
-  %13 = and <2 x i32> %i.pe, splat (i32 64)
-  %14 = icmp ne <2 x i32> %13, zeroinitializer    ; 2 uses
-  %15 = extractelement <2 x i1> %14, i64 0
-  %16 = extractelement <2 x i1> %14, i64 1
-  %.sroa.0.0.i168 = select i1 %15, i1 true, i1 %16
+  %.fr386 = freeze <2 x i32> %i.pe
+  %10 = and <2 x i32> %.fr386, splat (i32 64)
+  %.scalar387 = bitcast <2 x i32> %10 to i64
+  %.sroa.0.0.i168 = icmp ne i64 %.scalar387, 0
   %i.pf = icmp eq i64 %.sroa.4.1, %.sroa.13.0266
   %i.pg = and i1 %.sroa.0.0.i168, %i.oh
   %or.cond111 = select i1 %i.pg, i1 %i.pf, i1 false
@@ -4183,12 +4170,11 @@ bb.ds:                                            ; preds = %bb.dq
   %i.so = load ptr, ptr %i.sn, align 8, !nonnull !10, !align !16, !noundef !10 ; 2 uses
   %i.sp = getelementptr i8, ptr %i.so, i64 700
   %i.sq = load <2 x i32>, ptr %i.sp, align 4
-  %17 = and <2 x i32> %i.sq, splat (i32 8)
-  %18 = icmp ne <2 x i32> %17, zeroinitializer    ; 2 uses
-  %19 = extractelement <2 x i1> %18, i64 0
-  %20 = extractelement <2 x i1> %18, i64 1
-  %.sroa.0.0.i176 = select i1 %19, i1 true, i1 %20
-  br i1 %.sroa.0.0.i176, label %bb.dt, label %bb.du
+  %.fr392 = freeze <2 x i32> %i.sq
+  %11 = and <2 x i32> %.fr392, splat (i32 8)
+  %.scalar393 = bitcast <2 x i32> %11 to i64
+  %.sroa.0.0.i176.not = icmp eq i64 %.scalar393, 0
+  br i1 %.sroa.0.0.i176.not, label %bb.du, label %bb.dt
 
 bb.dt:                                            ; preds = %bb.du, %bb.ds, %bb.dq
   call fastcc void @_RNvMs_NtNtCsfu0rQaTkGUu_12clap_builder6parser6parserNtB4_6Parser16start_custom_arg(ptr noundef nonnull align 8 %1, ptr noalias nofree noundef align 8 dereferenceable(120) %8, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(600) %4, i8 noundef %3) #43
@@ -4351,12 +4337,11 @@ bb.ek:                                            ; preds = %bb.eh
   %i.uc = load ptr, ptr %i.ub, align 8, !nonnull !10, !align !16, !noundef !10 ; 2 uses
   %i.ud = getelementptr i8, ptr %i.uc, i64 700
   %i.ue = load <2 x i32>, ptr %i.ud, align 4
-  %21 = and <2 x i32> %i.ue, splat (i32 8)
-  %22 = icmp ne <2 x i32> %21, zeroinitializer    ; 2 uses
-  %23 = extractelement <2 x i1> %22, i64 0
-  %24 = extractelement <2 x i1> %22, i64 1
-  %.sroa.0.0.i183 = select i1 %23, i1 true, i1 %24
-  br i1 %.sroa.0.0.i183, label %bb.el, label %bb.em
+  %.fr390 = freeze <2 x i32> %i.ue
+  %12 = and <2 x i32> %.fr390, splat (i32 8)
+  %.scalar391 = bitcast <2 x i32> %12 to i64
+  %.sroa.0.0.i183.not = icmp eq i64 %.scalar391, 0
+  br i1 %.sroa.0.0.i183.not, label %bb.em, label %bb.el
 
 bb.el:                                            ; preds = %bb.em, %bb.ek, %bb.eh
   call fastcc void @_RNvMs_NtNtCsfu0rQaTkGUu_12clap_builder6parser6parserNtB4_6Parser16start_custom_arg(ptr noundef nonnull align 8 %1, ptr noalias nofree noundef align 8 dereferenceable(120) %8, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(600) %4, i8 noundef %3) #43
@@ -4462,12 +4447,11 @@ bb.ew:                                            ; preds = %bb.et
   %i.vd = load ptr, ptr %i.vc, align 8, !nonnull !10, !align !16, !noundef !10 ; 2 uses
   %i.ve = getelementptr i8, ptr %i.vd, i64 700
   %i.vf = load <2 x i32>, ptr %i.ve, align 4
-  %25 = and <2 x i32> %i.vf, splat (i32 8)
-  %26 = icmp ne <2 x i32> %25, zeroinitializer    ; 2 uses
-  %27 = extractelement <2 x i1> %26, i64 0
-  %28 = extractelement <2 x i1> %26, i64 1
-  %.sroa.0.0.i188 = select i1 %27, i1 true, i1 %28
-  br i1 %.sroa.0.0.i188, label %bb.ex, label %bb.ey
+  %.fr388 = freeze <2 x i32> %i.vf
+  %13 = and <2 x i32> %.fr388, splat (i32 8)
+  %.scalar389 = bitcast <2 x i32> %13 to i64
+  %.sroa.0.0.i188.not = icmp eq i64 %.scalar389, 0
+  br i1 %.sroa.0.0.i188.not, label %bb.ey, label %bb.ex
 
 bb.ex:                                            ; preds = %bb.ey, %bb.ew, %bb.et
   call fastcc void @_RNvMs_NtNtCsfu0rQaTkGUu_12clap_builder6parser6parserNtB4_6Parser16start_custom_arg(ptr noundef nonnull align 8 %1, ptr noalias nofree noundef align 8 dereferenceable(120) %8, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(600) %4, i8 noundef %3) #43
@@ -4870,11 +4854,10 @@ bb.ao:                                            ; preds = %.lr.ph.i.i.i
 .split.i.i.i:                                     ; preds = %bb.ao, %.lr.ph.i.i.i
   %i.ig = getelementptr inbounds nuw i8, ptr %i.hw, i64 700
   %i.ih = load <2 x i32>, ptr %i.ig, align 4, !alias.scope !11872, !noalias !11873
-  %4 = and <2 x i32> %i.ih, splat (i32 8388608)
-  %5 = icmp eq <2 x i32> %4, zeroinitializer      ; 2 uses
-  %6 = extractelement <2 x i1> %5, i64 0
-  %7 = extractelement <2 x i1> %5, i64 1
-  %.sroa.01.0.i.i.i.i = select i1 %6, i1 %7, i1 false
+  %.fr102 = freeze <2 x i32> %i.ih
+  %4 = and <2 x i32> %.fr102, splat (i32 8388608)
+  %.scalar = bitcast <2 x i32> %4 to i64
+  %.sroa.01.0.i.i.i.i = icmp eq i64 %.scalar, 0
   br i1 %.sroa.01.0.i.i.i.i, label %.split3.i, label %_RNCNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB7_7Command23has_visible_subcommands0Bb_.exit.backedge.i.i.i
 
 _RNCNvMs5_NtNtCsfu0rQaTkGUu_12clap_builder7builder7commandNtB7_7Command23has_visible_subcommands0Bb_.exit.backedge.i.i.i: ; preds = %.split.i.i.i, %bb.ao

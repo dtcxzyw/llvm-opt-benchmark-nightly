@@ -205,21 +205,21 @@ bb.d:                                             ; preds = %_ZNK2OT9glyf_impl20
   %i.x = load <2 x float>, ptr %1, align 4, !tbaa !319
   %i.y = fadd <2 x float> %i.x, splat (float 5.000000e-01)
   %i.z = tail call <2 x float> @llvm.floor.v2f32(<2 x float> %i.y)
-  %i.aa = fptosi <2 x float> %i.z to <2 x i32>    ; 5 uses
-  %3 = add <2 x i32> %i.aa, splat (i32 128)
-  %4 = icmp ult <2 x i32> %3, splat (i32 256)     ; 2 uses
-  %5 = extractelement <2 x i1> %4, i64 0
-  %6 = extractelement <2 x i1> %4, i64 1
-  %or.cond5 = select i1 %5, i1 %6, i1 false
+  %i.aa = fptosi <2 x float> %i.z to <2 x i32>
+  %.fr57 = freeze <2 x i32> %i.aa                 ; 5 uses
+  %3 = add <2 x i32> %.fr57, splat (i32 -128)
+  %4 = icmp ult <2 x i32> %3, splat (i32 -256)
+  %5 = bitcast <2 x i1> %4 to i2
+  %or.cond5 = icmp eq i2 %5, 0
   br i1 %or.cond5, label %_ZL9hb_memcpyPvPKvm.exit51, label %_ZL9hb_memcpyPvPKvm.exit53
 
 _ZL9hb_memcpyPvPKvm.exit51:                       ; preds = %bb.d
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull readonly align 1 dereferenceable(1) %0, i64 %spec.select.i, i1 false), !alias.scope !1144
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %i.ac = bitcast <2 x i32> %i.aa to <8 x i8>
+  %i.ac = bitcast <2 x i32> %.fr57 to <8 x i8>
   %i.ad = extractelement <8 x i8> %i.ac, i64 0
   store i8 %i.ad, ptr %i.ab, align 1, !tbaa !238
-  %i.ae = bitcast <2 x i32> %i.aa to <8 x i8>
+  %i.ae = bitcast <2 x i32> %.fr57 to <8 x i8>
   %i.af = extractelement <8 x i8> %i.ae, i64 4
   %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 5
   store i8 %i.af, ptr %i.ag, align 1, !tbaa !238
@@ -232,12 +232,12 @@ _ZL9hb_memcpyPvPKvm.exit53:                       ; preds = %bb.d
   %i.aj = or i16 %i.ai, 256
   store i16 %i.aj, ptr %2, align 1, !tbaa !238
   %i.ak = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %i.al = bitcast <2 x i32> %i.aa to <4 x i16>
+  %i.al = bitcast <2 x i32> %.fr57 to <4 x i16>
   %i.am = extractelement <4 x i16> %i.al, i64 0
   %i.an = tail call i16 @llvm.bswap.i16(i16 %i.am)
   store i16 %i.an, ptr %i.ak, align 1, !alias.scope !1146
   %i.ao = getelementptr inbounds nuw i8, ptr %2, i64 6
-  %i.ap = bitcast <2 x i32> %i.aa to <4 x i16>
+  %i.ap = bitcast <2 x i32> %.fr57 to <4 x i16>
   %i.aq = extractelement <4 x i16> %i.ap, i64 2
   %i.ar = tail call i16 @llvm.bswap.i16(i16 %i.aq)
   store i16 %i.ar, ptr %i.ao, align 1, !alias.scope !1147
@@ -640,10 +640,10 @@ bb.d:                                             ; preds = %.lr.ph
   %i.aa = load ptr, ptr %1, align 8, !tbaa !497
   %i.ab = load <2 x i32>, ptr %i.z, align 4
   %i.ac = load <2 x i32>, ptr %i.aa, align 4
-  %i.ad = icmp eq <2 x i32> %i.ab, %i.ac          ; 2 uses
-  %5 = extractelement <2 x i1> %i.ad, i64 0
-  %6 = extractelement <2 x i1> %i.ad, i64 1
-  %7 = select i1 %5, i1 %6, i1 false
+  %i.ad = icmp eq <2 x i32> %i.ab, %i.ac
+  %5 = freeze <2 x i1> %i.ad
+  %6 = bitcast <2 x i1> %5 to i2
+  %7 = icmp eq i2 %6, -1
   br i1 %7, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d

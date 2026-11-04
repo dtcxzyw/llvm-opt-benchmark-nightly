@@ -205,11 +205,11 @@ bb.e:                                             ; preds = %.unr-lcssa, %.epil.
   %.lcssa535 = phi <4 x float> [ %i.at, %.unr-lcssa ], [ %i.y, %.epil.preheader ]
   %i.z = fsub <4 x float> %.lcssa535, %.lcssa536.a ; 5 uses
   %i.aa = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.z, <4 x float> splat (float 5.000000e-01), <4 x float> %.lcssa536.a) ; 5 uses
-  %i.ab = shufflevector <4 x float> %i.z, <4 x float> poison, <2 x i32> <i32 0, i32 1> ; 4 uses
-  %8 = fcmp olt <2 x float> %i.ab, splat (float f0x358637BD) ; 3 uses
-  %9 = extractelement <2 x i1> %8, i64 0
-  %10 = extractelement <2 x i1> %8, i64 1
-  %or.cond = select i1 %9, i1 true, i1 %10
+  %i.ab = shufflevector <4 x float> %i.z, <4 x float> poison, <2 x i32> <i32 0, i32 1>
+  %.fr = freeze <2 x float> %i.ab                 ; 4 uses
+  %8 = fcmp olt <2 x float> %.fr, splat (float f0x358637BD) ; 2 uses
+  %9 = bitcast <2 x i1> %8 to i2
+  %or.cond = icmp ne i2 %9, 0
   %i.ac = extractelement <4 x float> %i.z, i64 2  ; 7 uses
   %i.ad = fcmp olt float %i.ac, f0x358637BD       ; 2 uses
   %or.cond3 = select i1 %or.cond, i1 true, i1 %i.ad
@@ -262,7 +262,7 @@ bb.h:                                             ; preds = %bb.g
   %i.be = fmul float %.2310, 5.000000e-02         ; 2 uses
   %i.bf = insertelement <2 x float> poison, float %i.be, i64 0
   %i.bg = shufflevector <2 x float> %i.bf, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.bh = select <2 x i1> %8, <2 x float> %i.bg, <2 x float> %i.ab ; 2 uses
+  %i.bh = select <2 x i1> %8, <2 x float> %i.bg, <2 x float> %.fr ; 2 uses
   br i1 %i.ad, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
@@ -285,9 +285,9 @@ bb.j:                                             ; preds = %bb.g, %bb.h, %bb.i
   br label %.sink.split
 
 bb.k:                                             ; preds = %bb.e
-  store <2 x float> %i.ab, ptr %7, align 4, !tbaa !12
+  store <2 x float> %.fr, ptr %7, align 4, !tbaa !12
   store float %i.ac, ptr %i.q, align 4, !tbaa !12
-  %i.bu = fdiv <2 x float> splat (float 1.000000e+00), %i.ab ; 2 uses
+  %i.bu = fdiv <2 x float> splat (float 1.000000e+00), %.fr ; 2 uses
   %i.bv = fdiv float 1.000000e+00, %i.ac          ; 2 uses
   %i.bw = shufflevector <4 x float> %i.aa, <4 x float> poison, <3 x i32> <i32 0, i32 1, i32 2>
   %i.bx = shufflevector <2 x float> %i.bu, <2 x float> poison, <3 x i32> <i32 0, i32 1, i32 poison>
@@ -548,13 +548,13 @@ _ZN20btAlignedObjectArrayIiE9push_backERKi.exit:  ; preds = %bb.q, %bb.r, %_ZN20
   %.sroa.10.0 = phi float [ f0xFF7FFFFF, %bb.l ], [ %spec.store.select371.2, %.lr.ph393 ]
   %i.fs = phi <2 x float> [ splat (float f0xFF7FFFFF), %bb.l ], [ %i.ge, %.lr.ph393 ]
   %i.ft = phi <2 x float> [ splat (float f0x7F7FFFFF), %bb.l ], [ %i.gd, %.lr.ph393 ] ; 2 uses
-  %i.fu = fsub <2 x float> %i.fs, %i.ft           ; 5 uses
-  %11 = fsub float %.sroa.10.0, %.sroa.10425.0    ; 6 uses
-  %12 = fcmp olt <2 x float> %i.fu, splat (float f0x358637BD) ; 3 uses
-  %13 = extractelement <2 x i1> %12, i64 0
-  %14 = extractelement <2 x i1> %12, i64 1
-  %or.cond7 = select i1 %13, i1 true, i1 %14
-  %i.fv = fcmp olt float %11, f0x358637BD         ; 2 uses
+  %i.fu = fsub <2 x float> %i.fs, %i.ft
+  %.fr527 = freeze <2 x float> %i.fu              ; 5 uses
+  %10 = fsub float %.sroa.10.0, %.sroa.10425.0    ; 6 uses
+  %11 = fcmp olt <2 x float> %.fr527, splat (float f0x358637BD) ; 2 uses
+  %12 = bitcast <2 x i1> %11 to i2
+  %or.cond7 = icmp ne i2 %12, 0
+  %i.fv = fcmp olt float %10, f0x358637BD         ; 2 uses
   %or.cond9 = select i1 %or.cond7, i1 true, i1 %i.fv
   %i.fw = icmp ult i32 %i.ci, 3
   %or.cond337 = or i1 %i.fw, %or.cond9
@@ -583,10 +583,10 @@ _ZN20btAlignedObjectArrayIiE9push_backERKi.exit:  ; preds = %bb.q, %bb.r, %_ZN20
   br i1 %exitcond417.not, label %._crit_edge, label %.lr.ph393, !llvm.loop !161
 
 bb.w:                                             ; preds = %._crit_edge
-  %i.gj = extractelement <2 x float> %i.fu, i64 0 ; 3 uses
-  %i.gk = extractelement <2 x float> %i.fu, i64 1 ; 3 uses
-  %i.gl = shufflevector <2 x float> %i.fu, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 0>
-  %i.gm = insertelement <4 x float> %i.gl, float %11, i64 2
+  %i.gj = extractelement <2 x float> %.fr527, i64 0 ; 3 uses
+  %i.gk = extractelement <2 x float> %.fr527, i64 1 ; 3 uses
+  %i.gl = shufflevector <2 x float> %.fr527, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 0>
+  %i.gm = insertelement <4 x float> %i.gl, float %10, i64 2
   %i.gn = shufflevector <2 x float> %i.ft, <2 x float> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 0>
   %i.go = insertelement <4 x float> %i.gn, float %.sroa.10425.0, i64 2
   %i.gp = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.gm, <4 x float> splat (float 5.000000e-01), <4 x float> %i.go) ; 4 uses
@@ -598,10 +598,10 @@ bb.w:                                             ; preds = %._crit_edge
   %i.gt = fcmp olt float %i.gk, %.0285
   %or.cond339 = and i1 %i.gs, %i.gt
   %.1286 = select i1 %or.cond339, float %i.gk, float %.0285 ; 2 uses
-  %i.gu = fcmp oge float %11, f0x358637BD
-  %i.gv = fcmp olt float %11, %.1286
+  %i.gu = fcmp oge float %10, f0x358637BD
+  %i.gv = fcmp olt float %10, %.1286
   %or.cond340 = select i1 %i.gu, i1 %i.gv, i1 false
-  %.2287 = select i1 %or.cond340, float %11, float %.1286 ; 2 uses
+  %.2287 = select i1 %or.cond340, float %10, float %.1286 ; 2 uses
   %i.gw = fcmp oeq float %.2287, f0x7F7FFFFF
   br i1 %i.gw, label %.critedge, label %bb.x
 
@@ -609,14 +609,14 @@ bb.x:                                             ; preds = %bb.w
   %i.gx = fmul float %.2287, 5.000000e-02         ; 2 uses
   %i.gy = insertelement <2 x float> poison, float %i.gx, i64 0
   %i.gz = shufflevector <2 x float> %i.gy, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.ha = select <2 x i1> %12, <2 x float> %i.gz, <2 x float> %i.fu ; 2 uses
+  %i.ha = select <2 x i1> %11, <2 x float> %i.gz, <2 x float> %.fr527 ; 2 uses
   br i1 %i.fv, label %bb.y, label %.critedge
 
 bb.y:                                             ; preds = %bb.x
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.w, %bb.x, %bb.y
-  %.0288 = phi float [ %11, %bb.x ], [ %i.gx, %bb.y ], [ f0x3C23D70A, %bb.w ] ; 2 uses
+  %.0288 = phi float [ %10, %bb.x ], [ %i.gx, %bb.y ], [ f0x3C23D70A, %bb.w ] ; 2 uses
   %i.hb = phi <2 x float> [ %i.ha, %bb.x ], [ %i.ha, %bb.y ], [ splat (float f0x3C23D70A), %bb.w ] ; 2 uses
   %i.hc = extractelement <2 x float> %i.hb, i64 1
   %i.hd = extractelement <4 x float> %i.gp, i64 1

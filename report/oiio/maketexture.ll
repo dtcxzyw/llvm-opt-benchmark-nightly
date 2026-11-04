@@ -205,19 +205,19 @@ bb.a:
   %i.d = insertelement <2 x i32> poison, i32 %.36.val1, i64 0
   %i.e = insertelement <2 x i32> %i.d, i32 %.40.val3, i64 1
   %i.f = sitofp <2 x i32> %i.e to <2 x float>
-  %i.g = fdiv <2 x float> %i.c, %i.f              ; 2 uses
-  %i.h = fcmp ogt <2 x float> %i.g, splat (float 1.000000e+00) ; 3 uses
-  %i.i = select <2 x i1> %i.h, <2 x float> %i.g, <2 x float> splat (float 1.000000e+00)
+  %i.g = fdiv <2 x float> %i.c, %i.f
+  %.fr = freeze <2 x float> %i.g                  ; 2 uses
+  %i.h = fcmp ogt <2 x float> %.fr, splat (float 1.000000e+00) ; 2 uses
+  %i.i = select <2 x i1> %i.h, <2 x float> %.fr, <2 x float> splat (float 1.000000e+00)
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.k = load i64, ptr %i.j, align 8, !tbaa !63
   %i.l = icmp eq i64 %i.k, 0
   br i1 %i.l, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
-  %3 = extractelement <2 x i1> %i.h, i64 0
-  %4 = extractelement <2 x i1> %i.h, i64 1
-  %or.cond = select i1 %3, i1 true, i1 %4
-  br i1 %or.cond, label %bb.c, label %bb.d
+  %3 = bitcast <2 x i1> %i.h to i2
+  %or.cond.not = icmp eq i2 %3, 0
+  br i1 %or.cond.not, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.m = tail call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef 0, i64 noundef 0, ptr noundef nonnull @.str.283, i64 noundef 15) ; 0 uses

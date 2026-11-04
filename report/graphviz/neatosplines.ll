@@ -205,16 +205,16 @@ bb.o:                                             ; preds = %bb.n
   %i.as = getelementptr inbounds nuw i8, ptr %i.o, i64 48
   %i.at = load <2 x double>, ptr %i.ap, align 8, !tbaa !14
   %i.au = load <2 x double>, ptr %i.as, align 8, !tbaa !14
-  %i.av = fdiv <2 x double> %i.at, %i.au          ; 3 uses
-  %1 = fcmp ogt <2 x double> %i.av, splat (double 1.000000e+00) ; 2 uses
-  %2 = extractelement <2 x i1> %1, i64 0
-  %3 = extractelement <2 x i1> %1, i64 1
-  %or.cond3.i = select i1 %2, i1 %3, i1 false
+  %i.av = fdiv <2 x double> %i.at, %i.au
+  %.fr = freeze <2 x double> %i.av                ; 3 uses
+  %1 = fcmp ule <2 x double> %.fr, splat (double 1.000000e+00)
+  %2 = bitcast <2 x i1> %1 to i2
+  %or.cond3.i = icmp eq i2 %2, 0
   br i1 %or.cond3.i, label %bb.p, label %_neato_set_aspect.exit
 
 bb.p:                                             ; preds = %bb.o
-  %i.aw = extractelement <2 x double> %i.av, i64 0
-  %i.ax = extractelement <2 x double> %i.av, i64 1
+  %i.aw = extractelement <2 x double> %.fr, i64 0
+  %i.ax = extractelement <2 x double> %.fr, i64 1
   %i.ay = tail call nsz double @llvm.minnum.f64(double %i.aw, double %i.ax)
   %i.az = insertelement <2 x double> poison, double %i.ay, i64 0
   %i.ba = shufflevector <2 x double> %i.az, <2 x double> poison, <2 x i32> zeroinitializer

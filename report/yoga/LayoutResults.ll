@@ -204,19 +204,19 @@ bb.bd:                                            ; preds = %.lr.ph, %_ZNK8faceb
   %i.go = getelementptr inbounds nuw i8, ptr %i.gm, i64 8
   %i.gp = load <2 x i32>, ptr %.sroa.3.0..sroa_idx, align 4, !tbaa !28
   %i.gq = load <2 x i32>, ptr %i.go, align 4
-  %i.gr = icmp eq <2 x i32> %i.gq, %i.gp          ; 2 uses
-  %3 = extractelement <2 x i1> %i.gr, i64 0
-  %4 = extractelement <2 x i1> %i.gr, i64 1
-  %5 = select i1 %3, i1 %4, i1 false              ; 3 uses
+  %i.gr = icmp eq <2 x i32> %i.gq, %i.gp
+  %3 = freeze <2 x i1> %i.gr
+  %4 = bitcast <2 x i1> %3 to i2
+  %5 = icmp eq i2 %4, -1                          ; 3 uses
   %i.gs = load float, ptr %i.gm, align 4, !tbaa !12 ; 2 uses
   %i.gt = fcmp uno float %i.gs, 0.000000e+00
   br i1 %i.gt, label %bb.be, label %bb.bf
 
 bb.be:                                            ; preds = %bb.bd
   %i.gu = fcmp ord float %.sroa.035.0.copyload, 0.000000e+00 ; 2 uses
-  %brmerge.not.i = select i1 %i.gu, i1 %5, i1 false
+  %brmerge.not.i = and i1 %i.gu, %5
   %not..i = xor i1 %i.gu, true
-  %narrow.i = select i1 %not..i, i1 %5, i1 false
+  %narrow.i = and i1 %5, %not..i
   br i1 %brmerge.not.i, label %._crit_edge.i, label %_ZNK8facebook4yoga17CachedMeasurementeqES1_.exit
 
 bb.bf:                                            ; preds = %bb.bd
@@ -312,10 +312,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = load <2 x i32>, ptr %i.a, align 4
   %i.d = load <2 x i32>, ptr %i.b, align 8
-  %i.e = icmp eq <2 x i32> %i.c, %i.d             ; 2 uses
-  %2 = extractelement <2 x i1> %i.e, i64 0
-  %3 = extractelement <2 x i1> %i.e, i64 1
-  %4 = select i1 %2, i1 %3, i1 false              ; 3 uses
+  %i.e = icmp eq <2 x i32> %i.c, %i.d
+  %2 = freeze <2 x i1> %i.e
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1                          ; 3 uses
   %i.f = load float, ptr %0, align 4, !tbaa !12   ; 2 uses
   %i.g = fcmp uno float %i.f, 0.000000e+00
   br i1 %i.g, label %bb.b, label %bb.c
@@ -323,9 +323,9 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.h = load float, ptr %1, align 8, !tbaa !12   ; 2 uses
   %i.i = fcmp ord float %i.h, 0.000000e+00        ; 2 uses
-  %brmerge.not = select i1 %i.i, i1 %4, i1 false
+  %brmerge.not = and i1 %i.i, %4
   %not. = xor i1 %i.i, true
-  %narrow = select i1 %not., i1 %4, i1 false
+  %narrow = and i1 %4, %not.
   br i1 %brmerge.not, label %bb.d, label %bb.e
 
 bb.c:                                             ; preds = %bb.a

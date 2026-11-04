@@ -170,12 +170,12 @@ bb.a:
   %i.i = load <2 x float>, ptr %i.g, align 8, !tbaa !44
   %i.j = load <2 x float>, ptr %i.h, align 8, !tbaa !44
   %i.k = fmul <2 x float> %i.i, %i.j
-  %i.l = fptosi <2 x float> %i.k to <2 x i32>     ; 3 uses
-  %1 = icmp eq <2 x i32> %i.l, zeroinitializer    ; 2 uses
-  %2 = extractelement <2 x i1> %1, i64 0
-  %3 = extractelement <2 x i1> %1, i64 1
-  %or.cond = select i1 %2, i1 true, i1 %3
-  br i1 %or.cond, label %bb.l, label %bb.b
+  %i.l = fptosi <2 x float> %i.k to <2 x i32>
+  %.fr = freeze <2 x i32> %i.l                    ; 3 uses
+  %1 = icmp eq <2 x i32> %.fr, zeroinitializer
+  %2 = bitcast <2 x i1> %1 to i2
+  %or.cond.not = icmp eq i2 %2, 0
+  br i1 %or.cond.not, label %bb.b, label %bb.l
 
 bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -224,8 +224,8 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #4
   call void @glGetTexEnviv(i32 noundef 8960, i32 noundef 8704, ptr noundef nonnull %i.f) #4
   call void @glPushAttrib(i32 noundef 28672) #4
-  %i.x = extractelement <2 x i32> %i.l, i64 0     ; 2 uses
-  %i.y = extractelement <2 x i32> %i.l, i64 1     ; 3 uses
+  %i.x = extractelement <2 x i32> %.fr, i64 0     ; 2 uses
+  %i.y = extractelement <2 x i32> %.fr, i64 1     ; 3 uses
   call fastcc void @_ZL34ImGui_ImplOpenGL2_SetupRenderStateP10ImDrawDataii(ptr noundef %0, i32 noundef %i.x, i32 noundef %i.y)
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.aa = load <2 x float>, ptr %i.z, align 8, !tbaa !44 ; 2 uses
@@ -341,10 +341,10 @@ bb.j:                                             ; preds = %bb.g
   %i.by = load <2 x float>, ptr %i.bu, align 8, !tbaa !44
   %i.bz = fsub <2 x float> %i.by, %i.aa
   %i.ca = fmul <2 x float> %i.ab, %i.bz           ; 3 uses
-  %i.cb = fcmp ugt <2 x float> %i.ca, %i.bx       ; 2 uses
-  %4 = extractelement <2 x i1> %i.cb, i64 0
-  %5 = extractelement <2 x i1> %i.cb, i64 1
-  %or.cond76 = select i1 %4, i1 %5, i1 false
+  %i.cb = fcmp ugt <2 x float> %i.ca, %i.bx
+  %3 = freeze <2 x i1> %i.cb
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond76 = icmp eq i2 %4, -1
   br i1 %or.cond76, label %.critedge, label %bb.k
 
 .critedge:                                        ; preds = %bb.j

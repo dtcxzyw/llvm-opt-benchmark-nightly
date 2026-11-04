@@ -204,8 +204,9 @@ bb.a:
   %i.r = load <2 x i32>, ptr %i.a, align 4, !tbaa !24, !noalias !153
   %i.s = load i32, ptr %i.o, align 8, !tbaa !154, !noalias !153 ; 2 uses
   %i.t = sitofp <2 x i32> %i.r to <2 x double>    ; 8 uses
-  %i.u = load <2 x i32>, ptr %i.p, align 4, !tbaa !24, !noalias !153 ; 4 uses
-  %i.v = sitofp <2 x i32> %i.u to <2 x double>    ; 7 uses
+  %i.u = load <2 x i32>, ptr %i.p, align 4, !tbaa !24, !noalias !153
+  %.fr = freeze <2 x i32> %i.u                    ; 4 uses
+  %i.v = sitofp <2 x i32> %.fr to <2 x double>    ; 7 uses
   %i.w = load <2 x double>, ptr %2, align 8, !tbaa !69, !noalias !155 ; 8 uses
   %i.x = load <2 x double>, ptr %.sroa.14.0..sroa_idx.i, align 8, !tbaa !69, !noalias !155 ; 6 uses
   %i.y = extractelement <2 x double> %i.x, i64 0  ; 5 uses
@@ -216,11 +217,10 @@ bb.a:
   br i1 %i.ac, label %_ZN2cvorIdEENS_5Rect_IT_EERKS3_S5_.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.ad = icmp slt <2 x i32> %i.u, splat (i32 1)  ; 2 uses
-  %5 = extractelement <2 x i1> %i.ad, i64 0
-  %6 = extractelement <2 x i1> %i.ad, i64 1
-  %7 = select i1 %5, i1 true, i1 %6
-  br i1 %7, label %_ZN2cvorIdEENS_5Rect_IT_EERKS3_S5_.exit, label %bb.c
+  %i.ad = icmp slt <2 x i32> %.fr, splat (i32 1)
+  %5 = bitcast <2 x i1> %i.ad to i2
+  %.not = icmp eq i2 %5, 0
+  br i1 %.not, label %bb.c, label %_ZN2cvorIdEENS_5Rect_IT_EERKS3_S5_.exit
 
 bb.c:                                             ; preds = %bb.b
   %i.ae = extractelement <2 x double> %i.w, i64 0 ; 3 uses
@@ -255,7 +255,7 @@ bb.d:                                             ; preds = %.cont37.i, %bb.c
   br i1 %i.at, label %bb.e, label %._crit_edge.i.cont.i
 
 bb.e:                                             ; preds = %.cont31.i
-  %i.av = extractelement <2 x i32> %i.u, i64 1
+  %i.av = extractelement <2 x i32> %.fr, i64 1
   %i.aw = add nsw i32 %i.av, %i.s
   %i.ax = sitofp i32 %i.aw to double
   br label %.cont45.i
@@ -327,11 +327,11 @@ _ZN2cvorIdEENS_5Rect_IT_EERKS3_S5_.exit:          ; preds = %bb.b, %bb.a, %bb.g
   store i32 %i.cj, ptr %i.ch, align 8, !tbaa !96
   %i.ck = load i8, ptr %i.k, align 8, !tbaa !95, !range !26, !noundef !27
   %i.cl = trunc nuw i8 %i.ck to i1
-  %i.cm = icmp sgt <2 x i32> %i.u, zeroinitializer ; 2 uses
+  %i.cm = icmp sgt <2 x i32> %.fr, zeroinitializer ; 2 uses
   %i.cn = extractelement <2 x i1> %i.cm, i64 0
-  %8 = select i1 %i.cl, i1 %i.cn, i1 false
+  %6 = and i1 %i.cn, %i.cl
   %i.co = extractelement <2 x i1> %i.cm, i64 1
-  %narrow = select i1 %8, i1 %i.co, i1 false
+  %narrow = and i1 %6, %i.co
   %i.cp = zext i1 %narrow to i32
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 108 ; 2 uses
   %i.cr = load i32, ptr %i.cq, align 4, !tbaa !156

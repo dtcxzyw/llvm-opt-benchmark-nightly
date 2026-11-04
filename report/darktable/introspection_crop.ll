@@ -204,14 +204,14 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 336
   %i.c = load ptr, ptr %i.b, align 16, !tbaa !112
   call void %i.c(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %5, ptr noundef nonnull %4) #22, !inline_history !0
-  %i.d = load <2 x i32>, ptr %5, align 8, !tbaa !109 ; 2 uses
-  %6 = sitofp reassoc nsz arcp contract afn <2 x i32> %i.d to <2 x float> ; 5 uses
+  %i.d = load <2 x i32>, ptr %5, align 8, !tbaa !109
+  %.fr = freeze <2 x i32> %i.d                    ; 2 uses
+  %6 = sitofp reassoc nsz arcp contract afn <2 x i32> %.fr to <2 x float> ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
-  %7 = icmp slt <2 x i32> %i.d, splat (i32 1)     ; 2 uses
-  %8 = extractelement <2 x i1> %7, i64 0
-  %9 = extractelement <2 x i1> %7, i64 1
-  %or.cond = select i1 %9, i1 %8, i1 false
+  %7 = icmp sgt <2 x i32> %.fr, zeroinitializer
+  %8 = bitcast <2 x i1> %7 to i2
+  %or.cond = icmp eq i2 %8, 0
   br i1 %or.cond, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -331,14 +331,14 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 336
   %i.c = load ptr, ptr %i.b, align 16, !tbaa !112
   call void %i.c(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %5, ptr noundef nonnull %4) #22, !inline_history !0
-  %i.d = load <2 x i32>, ptr %5, align 8, !tbaa !109 ; 2 uses
-  %6 = sitofp reassoc nsz arcp contract afn <2 x i32> %i.d to <2 x float> ; 5 uses
+  %i.d = load <2 x i32>, ptr %5, align 8, !tbaa !109
+  %.fr = freeze <2 x i32> %i.d                    ; 2 uses
+  %6 = sitofp reassoc nsz arcp contract afn <2 x i32> %.fr to <2 x float> ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
-  %7 = icmp slt <2 x i32> %i.d, splat (i32 1)     ; 2 uses
-  %8 = extractelement <2 x i1> %7, i64 0
-  %9 = extractelement <2 x i1> %7, i64 1
-  %or.cond = select i1 %9, i1 %8, i1 false
+  %7 = icmp sgt <2 x i32> %.fr, zeroinitializer
+  %8 = bitcast <2 x i1> %7 to i2
+  %or.cond = icmp eq i2 %8, 0
   br i1 %or.cond, label %.loopexit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a

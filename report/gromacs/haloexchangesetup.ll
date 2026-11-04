@@ -205,10 +205,10 @@ bb.h:                                             ; preds = %bb.g, %.lr.ph130.pr
   %i.eo = load <2 x i32>, ptr %4, align 16, !tbaa !120 ; 3 uses
   %i.ep = sub nsw <2 x i32> %i.en, %i.eo
   %i.eq = load <2 x i32>, ptr %5, align 8
-  %i.er = icmp eq <2 x i32> %i.eq, %i.ep          ; 3 uses
-  %7 = extractelement <2 x i1> %i.er, i64 0
-  %8 = extractelement <2 x i1> %i.er, i64 1
-  %or.cond = select i1 %7, i1 %8, i1 false
+  %i.er = icmp eq <2 x i32> %i.eq, %i.ep
+  %7 = freeze <2 x i1> %i.er                      ; 2 uses
+  %8 = bitcast <2 x i1> %7 to i2
+  %or.cond = icmp eq i2 %8, -1
   %.pre154 = load i32, ptr %.sroa.217.0..sroa_idx, align 8, !tbaa !120 ; 2 uses
   br i1 %or.cond, label %bb.i, label %._crit_edge131._ZNK3gmx11BasicVectorIiEneERKS1_.exit_crit_edge
 
@@ -229,7 +229,7 @@ _ZNK3gmx11BasicVectorIiEneERKS1_.exit:            ; preds = %._crit_edge131._ZNK
   %i.ew = phi i8 [ 1, %._crit_edge131._ZNK3gmx11BasicVectorIiEneERKS1_.exit_crit_edge ], [ %i.ev, %bb.i ] ; 2 uses
   store i8 %i.ew, ptr %i.d, align 1, !tbaa !131
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #13
-  %i.ex = xor <2 x i1> %i.er, splat (i1 true)
+  %i.ex = xor <2 x i1> %7, splat (i1 true)
   %i.ey = zext <2 x i1> %i.ex to <2 x i32>
   store <2 x i32> %i.ey, ptr %i.e, align 8, !tbaa !120
   %.not82.2 = icmp ne i32 %.pre154, %.pre-phi

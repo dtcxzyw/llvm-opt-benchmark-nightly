@@ -205,10 +205,10 @@ bb.a:
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %.sroa.03.0.copyload.i = load <2 x float>, ptr %4, align 8
   %i.a = load <2 x float>, ptr %3, align 8
-  %i.b = fcmp oeq <2 x float> %i.a, %.sroa.03.0.copyload.i ; 2 uses
-  %7 = extractelement <2 x i1> %i.b, i64 0
-  %8 = extractelement <2 x i1> %i.b, i64 1
-  %9 = select i1 %7, i1 %8, i1 false
+  %i.b = fcmp oeq <2 x float> %i.a, %.sroa.03.0.copyload.i
+  %7 = freeze <2 x i1> %i.b
+  %8 = bitcast <2 x i1> %7 to i2
+  %9 = icmp eq i2 %8, -1
   br i1 %9, label %bb.b, label %_ZNK4pbrt13RGBColorSpaceeqERKS0_.exit.thread
 
 bb.b:                                             ; preds = %bb.a
@@ -216,10 +216,10 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %4, i64 8
   %.sroa.02.0.copyload.i = load <2 x float>, ptr %i.d, align 8
   %i.e = load <2 x float>, ptr %i.c, align 8
-  %i.f = fcmp oeq <2 x float> %i.e, %.sroa.02.0.copyload.i ; 2 uses
-  %10 = extractelement <2 x i1> %i.f, i64 0
-  %11 = extractelement <2 x i1> %i.f, i64 1
-  %12 = select i1 %10, i1 %11, i1 false
+  %i.f = fcmp oeq <2 x float> %i.e, %.sroa.02.0.copyload.i
+  %10 = freeze <2 x i1> %i.f
+  %11 = bitcast <2 x i1> %10 to i2
+  %12 = icmp eq i2 %11, -1
   br i1 %12, label %bb.c, label %_ZNK4pbrt13RGBColorSpaceeqERKS0_.exit.thread
 
 bb.c:                                             ; preds = %bb.b
@@ -227,10 +227,10 @@ bb.c:                                             ; preds = %bb.b
   %i.h = getelementptr inbounds nuw i8, ptr %4, i64 16
   %.sroa.01.0.copyload.i = load <2 x float>, ptr %i.h, align 8
   %i.i = load <2 x float>, ptr %i.g, align 8
-  %i.j = fcmp oeq <2 x float> %i.i, %.sroa.01.0.copyload.i ; 2 uses
-  %13 = extractelement <2 x i1> %i.j, i64 0
-  %14 = extractelement <2 x i1> %i.j, i64 1
-  %15 = select i1 %13, i1 %14, i1 false
+  %i.j = fcmp oeq <2 x float> %i.i, %.sroa.01.0.copyload.i
+  %13 = freeze <2 x i1> %i.j
+  %14 = bitcast <2 x i1> %13 to i2
+  %15 = icmp eq i2 %14, -1
   br i1 %15, label %bb.d, label %_ZNK4pbrt13RGBColorSpaceeqERKS0_.exit.thread
 
 bb.d:                                             ; preds = %bb.c
@@ -238,10 +238,10 @@ bb.d:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %4, i64 24
   %.sroa.0.0.copyload.i = load <2 x float>, ptr %i.l, align 8
   %i.m = load <2 x float>, ptr %i.k, align 8
-  %i.n = fcmp oeq <2 x float> %i.m, %.sroa.0.0.copyload.i ; 2 uses
-  %16 = extractelement <2 x i1> %i.n, i64 0
-  %17 = extractelement <2 x i1> %i.n, i64 1
-  %18 = select i1 %16, i1 %17, i1 false
+  %i.n = fcmp oeq <2 x float> %i.m, %.sroa.0.0.copyload.i
+  %16 = freeze <2 x i1> %i.n
+  %17 = bitcast <2 x i1> %16 to i2
+  %18 = icmp eq i2 %17, -1
   br i1 %18, label %_ZNK4pbrt13RGBColorSpaceeqERKS0_.exit, label %_ZNK4pbrt13RGBColorSpaceeqERKS0_.exit.thread
 
 _ZNK4pbrt13RGBColorSpaceeqERKS0_.exit:            ; preds = %bb.d

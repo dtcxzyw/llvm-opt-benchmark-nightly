@@ -203,16 +203,18 @@ bb.l:                                             ; preds = %bb.k
   %i.nl = fmul <2 x double> %i.ni, %i.nk
   %i.nm = shufflevector <2 x double> %foldExtExtBinop, <2 x double> poison, <2 x i32> zeroinitializer
   %i.nn = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.nm, <2 x double> %i.nf, <2 x double> %i.nl)
-  %i.no = fcmp ogt <2 x double> %i.nn, zeroinitializer ; 2 uses
-  %i.np = extractelement <2 x i1> %i.no, i64 0    ; 2 uses
-  %4 = extractelement <2 x i1> %i.no, i64 1       ; 2 uses
-  %or.cond = select i1 %4, i1 true, i1 %i.np
-  br i1 %or.cond, label %bb.m, label %bb.s
+  %.fr = freeze <2 x double> %i.nn
+  %i.no = fcmp ogt <2 x double> %.fr, zeroinitializer ; 3 uses
+  %i.np = extractelement <2 x i1> %i.no, i64 0
+  %4 = bitcast <2 x i1> %i.no to i2
+  %or.cond.not = icmp eq i2 %4, 0
+  br i1 %or.cond.not, label %bb.s, label %bb.m
 
 bb.m:                                             ; preds = %.loopexit
+  %5 = extractelement <2 x i1> %i.no, i64 1
   %i.nq = load ptr, ptr %.2115, align 8, !tbaa !15 ; 2 uses
   %i.nr = load ptr, ptr %.2, align 8, !tbaa !15   ; 2 uses
-  br i1 %4, label %bb.n, label %bb.p
+  br i1 %5, label %bb.n, label %bb.p
 
 bb.n:                                             ; preds = %bb.m
   br i1 %i.np, label %bb.o, label %bb.q
