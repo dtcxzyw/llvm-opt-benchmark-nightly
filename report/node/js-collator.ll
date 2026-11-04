@@ -204,8 +204,7 @@ _ZN2v88internalL15GetStringOptionINS0_12_GLOBAL__N_15UsageEEENS_5MaybeIT_EEPNS0_
   br label %_ZNK2v88internal11MaybeHandleINS0_10JSReceiverEE8ToHandleIS2_EEbPNS0_12DirectHandleIT_EE.exit
 
 _ZNKR2v85MaybeINS_8internal12_GLOBAL__N_15UsageEE8FromJustEv.exit: ; preds = %.lr.ph.i.preheader, %.lr.ph.i.1, %_ZNKR2v85MaybeIbE8FromJustEv.exit.i
-  %41 = phi i1 [ false, %_ZNKR2v85MaybeIbE8FromJustEv.exit.i ], [ false, %.lr.ph.i.preheader ], [ true, %.lr.ph.i.1 ] ; 2 uses
-  %i.ak = phi i1 [ true, %_ZNKR2v85MaybeIbE8FromJustEv.exit.i ], [ true, %.lr.ph.i.preheader ], [ false, %.lr.ph.i.1 ]
+  %i.ak = phi i1 [ true, %_ZNKR2v85MaybeIbE8FromJustEv.exit.i ], [ false, %.lr.ph.i.1 ], [ true, %.lr.ph.i.preheader ] ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #17
   %i.al = call i64 @_ZN2v88internal4Intl16GetLocaleMatcherEPNS0_7IsolateENS0_12DirectHandleINS0_10JSReceiverEEEPKc(ptr noundef nonnull %0, ptr nonnull %i.l, ptr noundef %4) #17 ; 2 uses
   %.sroa.5170.0.extract.shift = lshr i64 %i.al, 32
@@ -447,10 +446,10 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.n, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread224, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit98
-  br i1 %41, label %bb.o, label %_ZNKR2v85MaybeIbE8FromJustEv.exit87
+  br i1 %i.ak, label %_ZNKR2v85MaybeIbE8FromJustEv.exit87, label %bb.o
 
 .critedge.thread:                                 ; preds = %_ZNKR2v85MaybeIbE8FromJustEv.exit88
-  br i1 %41, label %bb.o, label %_ZNKR2v85MaybeIbE8FromJustEv.exit87.thread
+  br i1 %i.ak, label %_ZNKR2v85MaybeIbE8FromJustEv.exit87.thread, label %bb.o
 
 bb.o:                                             ; preds = %.critedge.thread, %.critedge
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #17

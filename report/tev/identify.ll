@@ -204,7 +204,6 @@ declare noundef i32 @_ZN6LibRaw11ljpeg_startEP5jheadi(ptr noundef nonnull align 
 ; Function Attrs: mustprogress uwtable
 define void @_ZN6LibRaw27identify_process_dng_fieldsEv(ptr noundef nonnull align 8 dereferenceable(768512) %0) local_unnamed_addr #4 align 2 {
 bb.a:
-  %1 = alloca [2 x i32], align 4                  ; 5 uses
   %i.a = alloca [4 x [3 x double]], align 16      ; 15 uses
   %i.b = alloca [4 x i32], align 16               ; 8 uses
   %i.c = alloca [4 x i32], align 16               ; 8 uses
@@ -245,7 +244,6 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not399, label %bb.d, label %bb.ax
 
 bb.d:                                             ; preds = %bb.c
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #15
   %i.ab = zext nneg i32 %i.q to i64               ; 2 uses
   %i.ac = getelementptr inbounds nuw [33472 x i8], ptr %0, i64 %i.ab ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 433660
@@ -290,7 +288,6 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h, %bb.i
   %i.au = phi i32 [ %sext418, %bb.i ], [ %i.q, %bb.h ]
-  store i32 %i.au, ptr %1, align 4, !tbaa !77
   %i.av = getelementptr inbounds nuw i8, ptr %i.ac, i64 433828
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !221 ; 3 uses
   %i.ax = and i32 %i.aw, 2
@@ -335,8 +332,6 @@ bb.o:                                             ; preds = %bb.n
 
 bb.p:                                             ; preds = %bb.o, %bb.n
   %i.bo = phi i32 [ %sext418.1, %bb.o ], [ %i.q, %bb.n ]
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  store i32 %i.bo, ptr %2, align 4, !tbaa !77
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 433512 ; 2 uses
   %i.bq = getelementptr inbounds nuw [33472 x i8], ptr %i.bp, i64 %i.ab
   %i.br = getelementptr inbounds nuw i8, ptr %i.bq, i64 488
@@ -356,7 +351,7 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.p, %bb.q
   %i.by = phi i32 [ %sext, %bb.q ], [ %i.q, %bb.p ]
   %i.bz = icmp sgt i32 %i.ak, -1
-  br i1 %i.bz, label %bb.s, label %bb.aw
+  br i1 %i.bz, label %bb.s, label %bb.ax
 
 bb.s:                                             ; preds = %bb.r
   %i.ca = icmp slt i32 %i.ak, %i.v
@@ -366,7 +361,7 @@ bb.s:                                             ; preds = %bb.r
   %or.cond491 = select i1 %or.cond489, i1 %i.cc, i1 false
   %i.cd = icmp eq i32 %i.ak, %i.bi
   %or.cond494 = select i1 %or.cond491, i1 %i.cd, i1 false
-  br i1 %or.cond494, label %bb.t, label %bb.aw
+  br i1 %or.cond494, label %bb.t, label %bb.ax
 
 bb.t:                                             ; preds = %bb.s
   %i.ce = zext nneg i32 %i.ak to i64
@@ -375,13 +370,13 @@ bb.t:                                             ; preds = %bb.s
   %i.ch = getelementptr inbounds nuw i8, ptr %i.cf, i64 152
   %i.ci = load i16, ptr %i.ch, align 8, !tbaa !88 ; 5 uses
   %.not402 = icmp eq i16 %i.ci, 0
-  br i1 %.not402, label %bb.aw, label %bb.u
+  br i1 %.not402, label %bb.ax, label %bb.u
 
 bb.u:                                             ; preds = %bb.t
   %i.cj = getelementptr inbounds nuw i8, ptr %i.cf, i64 320
   %i.ck = load i16, ptr %i.cj, align 8, !tbaa !88 ; 4 uses
   %.not403 = icmp eq i16 %i.ck, 0
-  br i1 %.not403, label %bb.aw, label %.preheader543
+  br i1 %.not403, label %bb.ax, label %.preheader543
 
 .preheader543:                                    ; preds = %bb.u
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #15
@@ -428,17 +423,17 @@ switch.hole_check:                                ; preds = %.preheader540.1
 .thread:                                          ; preds = %switch.hole_check, %.preheader540.1, %bb.v, %bb.v, %bb.v, %bb.v, %bb.v
   %.4359 = phi i32 [ %.2357, %bb.v ], [ %.2357, %bb.v ], [ %.2357, %bb.v ], [ %.2357, %bb.v ], [ %.2357, %bb.v ], [ %.2357, %.preheader540.1 ], [ %spec.select, %switch.hole_check ] ; 2 uses
   %i.cr = icmp sgt i32 %.4359, -1
-  br i1 %i.cr, label %.preheader539, label %5
+  br i1 %i.cr, label %.preheader539, label %bb.aw
 
 .preheader539:                                    ; preds = %.preheader541.1, %.preheader543, %.thread
-  %.4359796 = phi i32 [ %.4359, %.thread ], [ 1, %.preheader541.1 ], [ 0, %.preheader543 ]
+  %.4359796 = phi i32 [ %.4359, %.thread ], [ 1, %.preheader541.1 ], [ 0, %.preheader543 ] ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 540
   %i.ct = load i32, ptr %i.cs, align 4, !tbaa !95 ; 43 uses
   %i.cu = icmp sgt i32 %i.ct, 0                   ; 3 uses
   br i1 %i.cu, label %.preheader538.lr.ph, label %.loopexit537
 
 .preheader538.lr.ph:                              ; preds = %.preheader539
-  %i.cv = zext nneg i32 %.4359796 to i64          ; 3 uses
+  %i.cv = zext nneg i32 %.4359796 to i64          ; 2 uses
   %i.cw = getelementptr inbounds nuw [168 x i8], ptr %i.cg, i64 %i.cv ; 8 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 72
   %i.cy = load <2 x float>, ptr %i.cx, align 4, !tbaa !86
@@ -485,9 +480,9 @@ switch.hole_check:                                ; preds = %.preheader540.1
   %.sroa.30.0 = phi <2 x double> [ undef, %.preheader538.lr.ph ], [ undef, %.preheader538.1 ], [ %i.dl, %.preheader538.2 ], [ %i.dl, %.preheader538.3 ] ; 5 uses
   %.sroa.25.0 = phi double [ undef, %.preheader538.lr.ph ], [ %i.di, %.preheader538.1 ], [ %i.di, %.preheader538.2 ], [ %i.di, %.preheader538.3 ] ; 5 uses
   %.sroa.16.0 = phi <2 x double> [ undef, %.preheader538.lr.ph ], [ %i.df, %.preheader538.1 ], [ %i.df, %.preheader538.2 ], [ %i.df, %.preheader538.3 ] ; 5 uses
-  %3 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.cv
-  %4 = load i32, ptr %3, align 4, !tbaa !77
-  %.not810 = icmp eq i32 %4, %i.ak
+  %.sroa.idx188 = icmp eq i32 %.4359796, 1
+  %.sroa.speculated = select i1 %.sroa.idx188, i32 %i.bo, i32 %i.au
+  %.not810 = icmp eq i32 %.sroa.speculated, %i.ak
   br i1 %.not810, label %.preheader535.preheader, label %.loopexit537
 
 .preheader535.preheader:                          ; preds = %._crit_edge
@@ -890,17 +885,13 @@ bb.av:                                            ; preds = %bb.au
 ._crit_edge578:                                   ; preds = %.split.us, %.split.us.1, %.lr.ph.us.preheader.2, %.lr.ph.us.preheader.3, %.preheader533, %.loopexit534
   %i.jc = getelementptr inbounds nuw i8, ptr %0, i64 153284
   call void @_ZN6LibRaw13cam_xyz_coeffEPA4_fPA3_d(ptr noundef nonnull align 8 dereferenceable(768512) %0, ptr noundef nonnull %i.jc, ptr noundef nonnull %i.a)
-  br label %5
-
-5:                                                ; preds = %._crit_edge578, %.thread
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   br label %bb.aw
 
-bb.aw:                                            ; preds = %5, %bb.u, %bb.t, %bb.s, %bb.r
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #15
+bb.aw:                                            ; preds = %._crit_edge578, %.thread
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #15
   br label %bb.ax
 
-bb.ax:                                            ; preds = %bb.aw, %bb.c
+bb.ax:                                            ; preds = %bb.r, %bb.s, %bb.t, %bb.u, %bb.aw, %bb.c
   %i.jd = getelementptr inbounds nuw i8, ptr %0, i64 524
   %i.je = load i32, ptr %i.jd, align 4, !tbaa !75
   %i.jf = icmp eq i32 %i.je, 18

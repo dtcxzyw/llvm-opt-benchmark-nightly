@@ -39,7 +39,6 @@ target triple = "x86_64-pc-linux-gnu"
 @__func__.xcgroup_get_uint64_param = private unnamed_addr constant [25 x i8] c"xcgroup_get_uint64_param\00", align 1
 @.str.19 = private unnamed_addr constant [12 x i8] c"cpuset.cpus\00", align 1
 @.str.20 = private unnamed_addr constant [12 x i8] c"cpuset.mems\00", align 1
-@__const.xcgroup_cpuset_init.cpuset_metafiles = private unnamed_addr constant [2 x ptr] [ptr @.str.19, ptr @.str.20], align 16
 @.str.21 = private unnamed_addr constant [68 x i8] c"%s: %s: CGROUP: unable to get ancestor path for cpuset cg '%s' : %m\00", align 1
 @__func__.xcgroup_cpuset_init = private unnamed_addr constant [20 x i8] c"xcgroup_cpuset_init\00", align 1
 @.str.22 = private unnamed_addr constant [64 x i8] c"%s: %s: CGROUP: unable to load ancestor for cpuset cg '%s' : %m\00", align 1
@@ -442,11 +441,9 @@ bb.k:                                             ; preds = %bb.f
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.x
-  %.not32 = phi i1 [ true, %bb.k ], [ false, %bb.x ]
-  %indvars.iv = phi i64 [ 0, %bb.k ], [ 1, %bb.x ]
-  %2 = getelementptr inbounds nuw [8 x i8], ptr @__const.xcgroup_cpuset_init.cpuset_metafiles, i64 %indvars.iv
-  %3 = load ptr, ptr %2, align 8                  ; 3 uses
-  %i.v = call i32 @common_cgroup_get_param(ptr noundef nonnull %1, ptr noundef %3, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #6
+  %.sroa.idx = phi ptr [ @.str.19, %bb.k ], [ @.str.20, %bb.x ] ; 3 uses
+  %.not46 = phi i1 [ true, %bb.k ], [ false, %bb.x ]
+  %i.v = call i32 @common_cgroup_get_param(ptr noundef nonnull %1, ptr noundef nonnull %.sroa.idx, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #6
   %.not24 = icmp eq i32 %i.v, 0
   br i1 %.not24, label %bb.q, label %bb.m
 
@@ -485,7 +482,7 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r, %bb.q
   %i.ag = load ptr, ptr %i.a, align 8
-  %i.ah = call i32 @common_cgroup_set_param(ptr noundef nonnull %0, ptr noundef %3, ptr noundef %i.ag) #6
+  %i.ah = call i32 @common_cgroup_set_param(ptr noundef nonnull %0, ptr noundef nonnull %.sroa.idx, ptr noundef %i.ag) #6
   %.not26 = icmp eq i32 %i.ah, 0
   br i1 %.not26, label %bb.x, label %bb.t
 
@@ -504,7 +501,7 @@ bb.v:                                             ; preds = %bb.u
   %i.am = load ptr, ptr %i.a, align 8
   %i.an = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ao = load ptr, ptr %i.an, align 8
-  call void (i32, ptr, ...) @log_var(i32 noundef 4, ptr noundef nonnull @.str.24, ptr noundef nonnull @plugin_type, ptr noundef nonnull @__func__.xcgroup_cpuset_init, ptr noundef %3, ptr noundef %i.am, ptr noundef %i.ao) #6
+  call void (i32, ptr, ...) @log_var(i32 noundef 4, ptr noundef nonnull @.str.24, ptr noundef nonnull @plugin_type, ptr noundef nonnull @__func__.xcgroup_cpuset_init, ptr noundef nonnull %.sroa.idx, ptr noundef %i.am, ptr noundef %i.ao) #6
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.u, %bb.v, %bb.t
@@ -514,7 +511,7 @@ bb.w:                                             ; preds = %bb.u, %bb.v, %bb.t
 
 bb.x:                                             ; preds = %bb.s
   call void @slurm_xfree(ptr noundef nonnull %i.a) #6
-  br i1 %.not32, label %bb.l, label %.critedge, !llvm.loop !12
+  br i1 %.not46, label %bb.l, label %.critedge, !llvm.loop !12
 
 .critedge:                                        ; preds = %bb.x
   call void @common_cgroup_destroy(ptr noundef nonnull %1) #6

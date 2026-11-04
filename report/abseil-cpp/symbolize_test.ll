@@ -204,7 +204,6 @@ $_ZZN7testing8internal31CanonicalizeForStdLibVersioningENSt7__cxx1112basic_strin
 @.str.79 = private unnamed_addr constant [5 x i8] c"addr\00", align 1
 @.str.80 = private unnamed_addr constant [14 x i8] c"((void *) -1)\00", align 1
 @.str.81 = private unnamed_addr constant [4 x i8] c"ret\00", align 1
-@__const._ZN40Symbolize_SymbolizeWithMultipleMaps_Test8TestBodyEv.expected = private unnamed_addr constant [2 x ptr] [ptr @.str.76, ptr @.str.78], align 16
 @.str.82 = private unnamed_addr constant [12 x i8] c"expected[i]\00", align 1
 @_ZN33Symbolize_SetSymbolDecorator_Test10test_info_E = dso_local global ptr null, align 8
 @.str.84 = private unnamed_addr constant [19 x i8] c"SetSymbolDecorator\00", align 1
@@ -607,16 +606,15 @@ bb.bk:                                            ; preds = %_ZN7testing7Message
   br label %.loopexit.sink.split
 
 .preheader:                                       ; preds = %.critedge73, %_ZN7testing15AssertionResultD2Ev.exit146.3
+  %.sroa.idx = phi ptr [ @.str.76, %.critedge73 ], [ @.str.78, %_ZN7testing15AssertionResultD2Ev.exit146.3 ] ; 4 uses
   %i.eq = phi i1 [ true, %.critedge73 ], [ false, %_ZN7testing15AssertionResultD2Ev.exit146.3 ]
-  %indvars.iv = phi i64 [ 0, %.critedge73 ], [ 1, %_ZN7testing15AssertionResultD2Ev.exit146.3 ] ; 2 uses
+  %indvars.iv = phi i64 [ 0, %.critedge73 ], [ 1, %_ZN7testing15AssertionResultD2Ev.exit146.3 ]
   %i.er = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN40Symbolize_SymbolizeWithMultipleMaps_Test8TestBodyEv.ptrs, i64 %indvars.iv
   %i.es = load ptr, ptr %i.er, align 8, !tbaa !21 ; 4 uses
-  %18 = getelementptr inbounds nuw [8 x i8], ptr @__const._ZN40Symbolize_SymbolizeWithMultipleMaps_Test8TestBodyEv.expected, i64 %indvars.iv
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(512) %i.a, i8 0, i64 512, i1 false)
   %i.et = call noundef zeroext i1 @_ZN4absl12lts_202605269SymbolizeEPKvPci(ptr noundef %i.es, ptr noundef nonnull %i.a, i32 noundef 512) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #33
-  %19 = load ptr, ptr %18, align 8, !tbaa !21     ; 4 uses
-  call void @_ZN7testing8internal14CmpHelperSTREQEPKcS2_S2_S2_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %15, ptr noundef nonnull @.str.82, ptr noundef nonnull @.str.75, ptr noundef %19, ptr noundef nonnull %i.a)
+  call void @_ZN7testing8internal14CmpHelperSTREQEPKcS2_S2_S2_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %15, ptr noundef nonnull @.str.82, ptr noundef nonnull @.str.75, ptr noundef nonnull %.sroa.idx, ptr noundef nonnull %i.a)
   %i.eu = load i8, ptr %15, align 8, !tbaa !33, !range !34, !noundef !35
   %i.ev = trunc nuw i8 %i.eu to i1
   br i1 %i.ev, label %bb.bu, label %bb.bl
@@ -727,7 +725,7 @@ _ZN7testing15AssertionResultD2Ev.exit146:         ; preds = %bb.bu, %_ZNKSt14def
   %i.fq = getelementptr inbounds nuw i8, ptr %i.es, i64 65536
   %i.fr = call noundef zeroext i1 @_ZN4absl12lts_202605269SymbolizeEPKvPci(ptr noundef nonnull %i.fq, ptr noundef nonnull %i.a, i32 noundef 512) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #33
-  call void @_ZN7testing8internal14CmpHelperSTREQEPKcS2_S2_S2_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %15, ptr noundef nonnull @.str.82, ptr noundef nonnull @.str.75, ptr noundef %19, ptr noundef nonnull %i.a)
+  call void @_ZN7testing8internal14CmpHelperSTREQEPKcS2_S2_S2_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %15, ptr noundef nonnull @.str.82, ptr noundef nonnull @.str.75, ptr noundef nonnull %.sroa.idx, ptr noundef nonnull %i.a)
   %i.fs = load i8, ptr %15, align 8, !tbaa !33, !range !34, !noundef !35
   %i.ft = trunc nuw i8 %i.fs to i1
   br i1 %i.ft, label %bb.cb, label %bb.bw
@@ -801,7 +799,7 @@ _ZN7testing15AssertionResultD2Ev.exit146.1:       ; preds = %_ZNKSt14default_del
   %i.gh = getelementptr inbounds nuw i8, ptr %i.es, i64 131072
   %i.gi = call noundef zeroext i1 @_ZN4absl12lts_202605269SymbolizeEPKvPci(ptr noundef nonnull %i.gh, ptr noundef nonnull %i.a, i32 noundef 512) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #33
-  call void @_ZN7testing8internal14CmpHelperSTREQEPKcS2_S2_S2_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %15, ptr noundef nonnull @.str.82, ptr noundef nonnull @.str.75, ptr noundef %19, ptr noundef nonnull %i.a)
+  call void @_ZN7testing8internal14CmpHelperSTREQEPKcS2_S2_S2_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %15, ptr noundef nonnull @.str.82, ptr noundef nonnull @.str.75, ptr noundef nonnull %.sroa.idx, ptr noundef nonnull %i.a)
   %i.gj = load i8, ptr %15, align 8, !tbaa !33, !range !34, !noundef !35
   %i.gk = trunc nuw i8 %i.gj to i1
   br i1 %i.gk, label %bb.ci, label %bb.cd
@@ -875,7 +873,7 @@ _ZN7testing15AssertionResultD2Ev.exit146.2:       ; preds = %_ZNKSt14default_del
   %i.gy = getelementptr inbounds nuw i8, ptr %i.es, i64 196608
   %i.gz = call noundef zeroext i1 @_ZN4absl12lts_202605269SymbolizeEPKvPci(ptr noundef nonnull %i.gy, ptr noundef nonnull %i.a, i32 noundef 512) ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #33
-  call void @_ZN7testing8internal14CmpHelperSTREQEPKcS2_S2_S2_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %15, ptr noundef nonnull @.str.82, ptr noundef nonnull @.str.75, ptr noundef %19, ptr noundef nonnull %i.a)
+  call void @_ZN7testing8internal14CmpHelperSTREQEPKcS2_S2_S2_(ptr dead_on_unwind nonnull writable sret(%"class.testing::AssertionResult") align 8 %15, ptr noundef nonnull @.str.82, ptr noundef nonnull @.str.75, ptr noundef nonnull %.sroa.idx, ptr noundef nonnull %i.a)
   %i.ha = load i8, ptr %15, align 8, !tbaa !33, !range !34, !noundef !35
   %i.hb = trunc nuw i8 %i.ha to i1
   br i1 %i.hb, label %bb.cp, label %bb.ck

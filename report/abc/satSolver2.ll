@@ -204,9 +204,6 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: write, target_mem: none) uwtable
 define noundef i32 @sat_solver2_check_watched(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #15 {
 bb.a:
-  %1 = alloca [2 x i32], align 8                  ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %1) #25
-  store i64 0, ptr %1, align 8
   %i.a = load i32, ptr %0, align 8, !tbaa !99     ; 2 uses
   %i.b = icmp sgt i32 %i.a, 0
   br i1 %i.b, label %.lr.ph53, label %._crit_edge54
@@ -253,7 +250,7 @@ bb.b:                                             ; preds = %.lr.ph53, %._crit_e
   %i.u = sext i32 %i.q to i64
   %i.v = getelementptr inbounds [4 x i8], ptr %i.t, i64 %i.u ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 4
-  %i.x = load i32, ptr %i.v, align 4              ; 2 uses
+  %i.x = load i32, ptr %i.v, align 4
   %i.y = lshr i32 %i.x, 11                        ; 3 uses
   %.not = icmp eq i32 %i.y, 0
   br i1 %.not, label %._crit_edge.thread, label %.lr.ph
@@ -284,7 +281,7 @@ bb.d:                                             ; preds = %bb.c
 ._crit_edge:                                      ; preds = %bb.c
   %i.ai = trunc nuw nsw i64 %indvars.iv to i32
   %i.aj = icmp eq i32 %i.y, %i.ai
-  br i1 %i.aj, label %._crit_edge.thread, label %2
+  br i1 %i.aj, label %._crit_edge.thread, label %bb.e
 
 ._crit_edge.thread:                               ; preds = %bb.d, %.lr.ph48, %._crit_edge
   %i.ak = add nsw i32 %.046, 1
@@ -294,18 +291,9 @@ bb.d:                                             ; preds = %bb.c
   %.val33.pre = load i32, ptr %i.l, align 4, !tbaa !39
   br label %bb.e
 
-2:                                                ; preds = %._crit_edge
-  %3 = and i32 %i.x, 1
-  %4 = zext nneg i32 %3 to i64
-  %5 = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %4 ; 2 uses
-  %6 = load i32, ptr %5, align 4, !tbaa !36
-  %7 = add nsw i32 %6, 1
-  store i32 %7, ptr %5, align 4, !tbaa !36
-  br label %bb.e
-
-bb.e:                                             ; preds = %2, %._crit_edge.thread
-  %.val33 = phi i32 [ %.val33.pre, %._crit_edge.thread ], [ %.val3362, %2 ] ; 2 uses
-  %.1 = phi i32 [ %i.ak, %._crit_edge.thread ], [ %.046, %2 ] ; 2 uses
+bb.e:                                             ; preds = %._crit_edge, %._crit_edge.thread
+  %.val33 = phi i32 [ %.val33.pre, %._crit_edge.thread ], [ %.val3362, %._crit_edge ] ; 2 uses
+  %.1 = phi i32 [ %i.ak, %._crit_edge.thread ], [ %.046, %._crit_edge ] ; 2 uses
   %indvars.iv.next57 = add nuw nsw i64 %indvars.iv56, 1 ; 2 uses
   %i.an = sext i32 %.val33 to i64
   %i.ao = icmp slt i64 %indvars.iv.next57, %i.an
@@ -326,7 +314,6 @@ bb.e:                                             ; preds = %2, %._crit_edge.thr
   br i1 %i.as, label %bb.b, label %._crit_edge54, !llvm.loop !209
 
 ._crit_edge54:                                    ; preds = %._crit_edge49, %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %1) #25
   ret i32 0
 }
 
