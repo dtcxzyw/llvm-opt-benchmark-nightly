@@ -1,8 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lean4/original/apply?download=true
 inline.NumInlined: 3227
 inline.NumDeleted: 31
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 19
-loop-unroll.NumUnrolled: 19
+loop-unroll.NumUnrolled: 20
 begin_hunk_0_@lean_apply_1:bb.a
   %i.axm = load ptr, ptr %i.aub, align 8, !tbaa !18
   %i.axn = load ptr, ptr %i.aui, align 8, !tbaa !18
@@ -204,7 +205,7 @@ bb.k:                                             ; preds = %bb.a
   %.val = load i16, ptr %i.o, align 8, !tbaa !23  ; 4 uses
   %i.p = zext i16 %.val to i32                    ; 7 uses
   %i.q = getelementptr i8, ptr %0, i64 18
-  %.val795 = load i16, ptr %i.q, align 2, !tbaa !23 ; 7 uses
+  %.val795 = load i16, ptr %i.q, align 2, !tbaa !23 ; 6 uses
   %i.r = zext i16 %.val795 to i32                 ; 9 uses
   %i.s = add nuw nsw i32 %i.r, 2                  ; 3 uses
   %i.t = icmp eq i32 %i.s, %i.p
@@ -607,21 +608,21 @@ bb.so:                                            ; preds = %bb.sn
 bb.sp:                                            ; preds = %bb.m, %bb.ac
   %i.asg = shl nuw nsw i32 %i.p, 3
   %i.ash = zext nneg i32 %i.asg to i64
-  %i.asi = alloca i8, i64 %i.ash, align 16        ; 3 uses
+  %i.asi = alloca i8, i64 %i.ash, align 16        ; 4 uses
   %.not1159 = icmp eq i16 %.val795, 0
   br i1 %.not1159, label %.preheader, label %.lr.ph1155
 
 .lr.ph1155:                                       ; preds = %bb.sp
   %i.asj = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %wide.trip.count1169 = zext i16 %.val795 to i64
+  %wide.trip.count1169 = zext i16 %.val795 to i64 ; 2 uses
   br label %bb.sq
 
 .preheader:                                       ; preds = %_ZL8lean_incP11lean_object.exit584, %bb.sp
-  %3 = zext i16 %.val795 to i64
-  %4 = shl nuw nsw i64 %3, 3
-  %scevgep = getelementptr i8, ptr %i.asi, i64 %4 ; 2 uses
-  store ptr %1, ptr %scevgep, align 8, !tbaa !18
-  %.sroa.4.0.scevgep.sroa_idx = getelementptr inbounds nuw i8, ptr %scevgep, i64 8
+  %.pre-phi = phi i64 [ 0, %bb.sp ], [ %wide.trip.count1169, %_ZL8lean_incP11lean_object.exit584 ] ; 2 uses
+  %3 = getelementptr inbounds nuw [8 x i8], ptr %i.asi, i64 %.pre-phi
+  store ptr %1, ptr %3, align 8, !tbaa !18
+  %4 = getelementptr inbounds nuw [8 x i8], ptr %i.asi, i64 %.pre-phi
+  %.sroa.4.0.scevgep.sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 8
   store ptr %2, ptr %.sroa.4.0.scevgep.sroa_idx, align 8, !tbaa !18
   %i.ask = getelementptr i8, ptr %0, i64 8
   %.val797 = load ptr, ptr %i.ask, align 8, !tbaa !18

@@ -204,18 +204,20 @@ define hidden void @_RNvXNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection1
 bb.a:
   %i.a = alloca [1 x i8], align 1                 ; 3 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
-  %i.c = alloca [32 x i8], align 8                ; 8 uses
+  %i.c = alloca [32 x i8], align 8                ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   store i64 0, ptr %i.c, align 8
-  %.sroa.4.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  store i64 2, ptr %.sroa.4.0..sroa_idx.a, align 8
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  store i64 2, ptr %.sroa.4.0..sroa_idx, align 8
+  %.sroa.4.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+  store i8 0, ptr %.sroa.4.0..sroa_idx.a, align 8
+  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 3 uses
   store i8 0, ptr %.sroa.5.0..sroa_idx, align 8
-  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 24 ; 3 uses
-  store i16 0, ptr %i.d, align 8
+  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 25
+  store i8 0, ptr %i.d, align 1
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %i.e = ptrtoint ptr %i.d to i64
-  store ptr %i.d, ptr %i.b, align 8
+  %i.e = ptrtoint ptr %.sroa.5.0..sroa_idx to i64
+  store ptr %.sroa.5.0..sroa_idx, ptr %i.b, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 %i.e, ptr %i.f, align 8
   %i.g = call fastcc noundef i8 @_RINvXs1_NtNtNtCs7gufeB8TUC6_12iceoryx2_cal20zero_copy_connection15used_chunk_list7detailsINtB6_13UsedChunkListINtNtCs3stRo7scs5B_22iceoryx2_bb_elementary15relocatable_ptr18RelocatablePointerNtNtCs1xtDLGvwb7z_23iceoryx2_bb_concurrency6atomic10AtomicBoolEENtNtCs6KsCSdq2EJ7_29iceoryx2_bb_elementary_traits21relocatable_container20RelocatableContainer4initNtNtB1P_14bump_allocator13BumpAllocatorECsehyvh8hCwXJ_25iceoryx2_cal_tests_common(ptr noalias nofree noundef align 8 dereferenceable(24) %i.c, ptr noundef nonnull align 8 %i.b) #18 ; 2 uses

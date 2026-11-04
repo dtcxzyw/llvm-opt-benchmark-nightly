@@ -205,11 +205,10 @@ bb.a:
   %3 = alloca %"class.llvm::Twine", align 8       ; 4 uses
   %4 = alloca %"class.llvm::InsertPosition", align 8 ; 4 uses
   %5 = alloca %"class.llvm::SmallDenseMap.591", align 8 ; 12 uses
-  %6 = alloca [2 x ptr], align 16                 ; 6 uses
   %i.a = alloca [16 x i32], align 16              ; 6 uses
-  %i.b = alloca ptr, align 8                      ; 7 uses
-  %i.c = alloca i32, align 4                      ; 5 uses
-  %7 = alloca %"class.llvm::Twine", align 8       ; 4 uses
+  %i.b = alloca ptr, align 8                      ; 8 uses
+  %i.c = alloca i32, align 4                      ; 6 uses
+  %6 = alloca %"class.llvm::Twine", align 8       ; 4 uses
   %i.d = tail call noundef ptr @_ZN4llvm8CallBase7arg_endEv(ptr noundef nonnull align 8 dereferenceable(88) %0)
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 4 uses
   %i.f = load i32, ptr %i.e, align 4
@@ -277,12 +276,8 @@ bb.d:                                             ; preds = %bb.c, %bb.c
   %i.az = getelementptr inbounds nuw i8, ptr %5, i64 40 ; 2 uses
   store i32 1, ptr %5, align 8
   store i32 0, ptr %i.az, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #29
   %i.ba = tail call noundef ptr @_ZN4llvm11PoisonValue3getEPNS_4TypeE(ptr noundef nonnull %i.ai) #29
-  store ptr %i.ba, ptr %6, align 16, !tbaa !166
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %i.bb = tail call noundef ptr @_ZN4llvm11PoisonValue3getEPNS_4TypeE(ptr noundef nonnull %i.ai) #29
-  store ptr %i.bb, ptr %8, align 8, !tbaa !166
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #29
   %i.bc = zext i32 %i.ak to i64                   ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
@@ -293,6 +288,8 @@ bb.d:                                             ; preds = %bb.c, %bb.c
 
 bb.e:                                             ; preds = %.lr.ph, %bb.t
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.t ] ; 4 uses
+  %.sroa.5.0111 = phi ptr [ %i.bb, %.lr.ph ], [ %.sroa.5.486, %bb.t ] ; 3 uses
+  %.sroa.0.0110 = phi ptr [ %i.ba, %.lr.ph ], [ %.sroa.0.485, %bb.t ] ; 3 uses
   %i.bg = trunc nuw i64 %indvars.iv to i32        ; 2 uses
   %i.bh = call noundef ptr @_ZNK4llvm8Constant19getAggregateElementEj(ptr noundef nonnull align 8 dereferenceable(24) %i.r, i32 noundef %i.bg) #29 ; 4 uses
   %.not64 = icmp eq ptr %i.bh, null
@@ -389,7 +386,7 @@ bb.o:                                             ; preds = %bb.n
   %.sink1.i.i.i.i = select i1 %.not.i.i.i.i, ptr %i.ct, ptr %i.az ; 2 uses
   %.sink.i.i.i.i = select i1 %.not.i.i.i.i, i32 %i.cu, i32 2 ; 2 uses
   %i.cv = icmp eq i32 %.sink.i.i.i.i, 0
-  br i1 %i.cv, label %.thread82, label %bb.p
+  br i1 %i.cv, label %.thread99, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.cw = add i32 %.sink.i.i.i.i, -1              ; 2 uses
@@ -406,7 +403,7 @@ bb.p:                                             ; preds = %bb.o
   %i.dh = and i32 %i.dc, 31
   %i.di = lshr i32 %i.dg, %i.dh
   %i.dj = trunc i32 %i.di to i1
-  br i1 %i.dj, label %.lr.ph.i.i, label %.thread82, !prof !174
+  br i1 %i.dj, label %.lr.ph.i.i, label %.thread99, !prof !174
 
 .lr.ph.i.i:                                       ; preds = %bb.p, %bb.q
   %i.dk = phi i64 [ %i.dq, %bb.q ], [ %i.dd, %bb.p ]
@@ -426,12 +423,7 @@ bb.q:                                             ; preds = %.lr.ph.i.i
   %i.du = and i32 %i.dp, 31
   %i.dv = lshr i32 %i.dt, %i.du
   %i.dw = trunc i32 %i.dv to i1
-  br i1 %i.dw, label %.lr.ph.i.i, label %.thread82, !prof !176
-
-.thread82:                                        ; preds = %bb.p, %bb.o, %bb.q
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #29
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #29
-  br label %.thread76
+  br i1 %i.dw, label %.lr.ph.i.i, label %7, !prof !176
 
 _ZNK4llvm12DenseMapBaseINS_13SmallDenseMapIPNS_5ValueEjLj2ENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_jEEEES3_jS5_S8_E8containsEPKS2_.exit: ; preds = %.lr.ph.i.i, %bb.n
   %i.dx = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_13SmallDenseMapIPNS_5ValueEjLj2ENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_jEEEES3_jS5_S8_E24lookupOrInsertIntoBucketIRKS3_JRjEEESt4pairIPS8_bEOT_DpOT0_(ptr noundef nonnull align 1 dereferenceable(1) %5, ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 4 dereferenceable(4) %i.c), !noalias !975 ; 2 uses
@@ -446,16 +438,18 @@ _ZNK4llvm12DenseMapBaseINS_13SmallDenseMapIPNS_5ValueEjLj2ENS_12DenseMapInfoIS3_
   br label %bb.s
 
 bb.r:                                             ; preds = %_ZNK4llvm12DenseMapBaseINS_13SmallDenseMapIPNS_5ValueEjLj2ENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_jEEEES3_jS5_S8_E8containsEPKS2_.exit
-  %i.dz = load ptr, ptr %i.b, align 8, !tbaa !166
+  %i.dz = load ptr, ptr %i.b, align 8, !tbaa !166 ; 2 uses
   %i.ea = getelementptr inbounds nuw i8, ptr %.fca.0.extract.i.i, i64 8
   %i.eb = load i32, ptr %i.ea, align 4, !tbaa !111 ; 2 uses
-  %9 = zext i32 %i.eb to i64
-  %10 = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %9
-  store ptr %i.dz, ptr %10, align 8, !tbaa !166
+  %.sroa.idx = icmp eq i32 %i.eb, 1               ; 2 uses
+  %.sroa.0.0. = select i1 %.sroa.idx, ptr %.sroa.0.0110, ptr %i.dz
+  %..sroa.5.0 = select i1 %.sroa.idx, ptr %i.dz, ptr %.sroa.5.0111
   br label %bb.s
 
 bb.s:                                             ; preds = %_ZNK4llvm12DenseMapBaseINS_13SmallDenseMapIPNS_5ValueEjLj2ENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_jEEEES3_jS5_S8_E8containsEPKS2_.exit._crit_edge, %bb.r
-  %i.ec = phi i32 [ %.pre, %_ZNK4llvm12DenseMapBaseINS_13SmallDenseMapIPNS_5ValueEjLj2ENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_jEEEES3_jS5_S8_E8containsEPKS2_.exit._crit_edge ], [ %i.eb, %bb.r ]
+  %i.ec = phi i32 [ %i.eb, %bb.r ], [ %.pre, %_ZNK4llvm12DenseMapBaseINS_13SmallDenseMapIPNS_5ValueEjLj2ENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_jEEEES3_jS5_S8_E8containsEPKS2_.exit._crit_edge ]
+  %.sroa.0.1 = phi ptr [ %.sroa.0.0., %bb.r ], [ %.sroa.0.0110, %_ZNK4llvm12DenseMapBaseINS_13SmallDenseMapIPNS_5ValueEjLj2ENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_jEEEES3_jS5_S8_E8containsEPKS2_.exit._crit_edge ]
+  %.sroa.5.1 = phi ptr [ %..sroa.5.0, %bb.r ], [ %.sroa.5.0111, %_ZNK4llvm12DenseMapBaseINS_13SmallDenseMapIPNS_5ValueEjLj2ENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_jEEEES3_jS5_S8_E8containsEPKS2_.exit._crit_edge ]
   %i.ed = mul i32 %i.ec, %i.ak
   %i.ee = add i32 %i.ed, %.054
   %i.ef = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv
@@ -465,15 +459,25 @@ bb.s:                                             ; preds = %_ZNK4llvm12DenseMap
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %.thread78
+  %.sroa.5.486 = phi ptr [ %.sroa.5.0111, %.thread78 ], [ %.sroa.5.1, %bb.s ] ; 3 uses
+  %.sroa.0.485 = phi ptr [ %.sroa.0.0110, %.thread78 ], [ %.sroa.0.1, %bb.s ] ; 3 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.critedge, label %bb.e, !llvm.loop !973
 
+.thread99:                                        ; preds = %bb.o, %bb.p
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #29
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #29
+  br label %.thread76
+
+7:                                                ; preds = %bb.q
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #29
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #29
+  br label %.thread76
+
 .critedge:                                        ; preds = %bb.t
-  %.pre90 = load ptr, ptr %6, align 16, !tbaa !166 ; 2 uses
-  %.pre91 = load ptr, ptr %8, align 8, !tbaa !166 ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #29
-  %i.eg = getelementptr inbounds nuw i8, ptr %7, i64 32
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #29
+  %i.eg = getelementptr inbounds nuw i8, ptr %6, i64 32
   store i16 257, ptr %i.eg, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
   %i.eh = getelementptr inbounds nuw i8, ptr %1, i64 64
@@ -481,7 +485,7 @@ bb.t:                                             ; preds = %bb.s, %.thread78
   %i.ej = load ptr, ptr %i.ei, align 8, !tbaa !26
   %i.ek = getelementptr inbounds nuw i8, ptr %i.ej, i64 112
   %i.el = load ptr, ptr %i.ek, align 8
-  %i.em = call noundef ptr %i.el(ptr noundef nonnull align 8 dereferenceable(8) %i.ei, ptr noundef %.pre90, ptr noundef %.pre91, ptr nonnull %i.a, i64 %wide.trip.count) #29, !inline_history !311 ; 2 uses
+  %i.em = call noundef ptr %i.el(ptr noundef nonnull align 8 dereferenceable(8) %i.ei, ptr noundef %.sroa.0.485, ptr noundef %.sroa.5.486, ptr nonnull %i.a, i64 %wide.trip.count) #29, !inline_history !311 ; 2 uses
   %.not.not.i = icmp eq ptr %i.em, null
   br i1 %.not.not.i, label %bb.u, label %_ZN4llvm13IRBuilderBase19CreateShuffleVectorEPNS_5ValueES2_NS_8ArrayRefIiEERKNS_5TwineE.exit
 
@@ -492,7 +496,7 @@ bb.u:                                             ; preds = %.critedge
   %i.ep = getelementptr inbounds nuw i8, ptr %3, i64 32
   store i16 257, ptr %i.ep, align 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %4, i8 0, i64 16, i1 false)
-  call void @_ZN4llvm17ShuffleVectorInstC1EPNS_5ValueES2_NS_8ArrayRefIiEERKNS_5TwineENS_14InsertPositionE(ptr noundef nonnull align 8 dereferenceable(112) %i.eo, ptr noundef %.pre90, ptr noundef %.pre91, ptr nonnull %i.a, i64 %wide.trip.count, ptr noundef nonnull align 8 dereferenceable(34) %3, ptr noundef nonnull byval(%"class.llvm::InsertPosition") align 8 %4) #29
+  call void @_ZN4llvm17ShuffleVectorInstC1EPNS_5ValueES2_NS_8ArrayRefIiEERKNS_5TwineENS_14InsertPositionE(ptr noundef nonnull align 8 dereferenceable(112) %i.eo, ptr noundef %.sroa.0.485, ptr noundef %.sroa.5.486, ptr nonnull %i.a, i64 %wide.trip.count, ptr noundef nonnull align 8 dereferenceable(34) %3, ptr noundef nonnull byval(%"class.llvm::InsertPosition") align 8 %4) #29
   %i.eq = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.er = load ptr, ptr %i.eq, align 8, !tbaa !190, !nonnull !35, !align !98 ; 2 uses
   %i.es = getelementptr inbounds nuw i8, ptr %1, i64 40
@@ -502,7 +506,7 @@ bb.u:                                             ; preds = %.critedge
   %i.et = load ptr, ptr %i.er, align 8, !tbaa !26
   %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 16
   %i.ev = load ptr, ptr %i.eu, align 8
-  call void %i.ev(ptr noundef nonnull align 8 dereferenceable(8) %i.er, ptr noundef nonnull %i.eo, ptr noundef nonnull align 8 dereferenceable(34) %7, ptr %.sroa.0.0.copyload.i.i, i64 %.sroa.2.0.copyload.i.i) #29, !inline_history !9
+  call void %i.ev(ptr noundef nonnull align 8 dereferenceable(8) %i.er, ptr noundef nonnull %i.eo, ptr noundef nonnull align 8 dereferenceable(34) %6, ptr %.sroa.0.0.copyload.i.i, i64 %.sroa.2.0.copyload.i.i) #29, !inline_history !9
   call void @_ZNK4llvm13IRBuilderBase20SetInstDebugLocationEPNS_11InstructionE(ptr noundef nonnull align 8 dereferenceable(88) %i.en, ptr noundef nonnull %i.eo) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #29
   br label %_ZN4llvm13IRBuilderBase19CreateShuffleVectorEPNS_5ValueES2_NS_8ArrayRefIiEERKNS_5TwineE.exit
@@ -510,14 +514,13 @@ bb.u:                                             ; preds = %.critedge
 _ZN4llvm13IRBuilderBase19CreateShuffleVectorEPNS_5ValueES2_NS_8ArrayRefIiEERKNS_5TwineE.exit: ; preds = %.critedge, %bb.u
   %.1.i = phi ptr [ %i.eo, %bb.u ], [ %i.em, %.critedge ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  call void @llvm.lifetime.end.p0(ptr nonnull %7) #29
+  call void @llvm.lifetime.end.p0(ptr nonnull %6) #29
   %i.ew = call noundef ptr @_ZN4llvm12InstCombiner19replaceInstUsesWithERNS_11InstructionEPNS_5ValueE(ptr noundef nonnull align 8 dereferenceable(1240) %1, ptr noundef nonnull align 8 dereferenceable(72) %0, ptr noundef nonnull %.1.i)
   br label %.thread76
 
-.thread76:                                        ; preds = %bb.e, %bb.g, %.thread80, %.thread82, %_ZN4llvm13IRBuilderBase19CreateShuffleVectorEPNS_5ValueES2_NS_8ArrayRefIiEERKNS_5TwineE.exit
-  %.5 = phi ptr [ %i.ew, %_ZN4llvm13IRBuilderBase19CreateShuffleVectorEPNS_5ValueES2_NS_8ArrayRefIiEERKNS_5TwineE.exit ], [ null, %.thread82 ], [ null, %.thread80 ], [ null, %bb.g ], [ null, %bb.e ]
+.thread76:                                        ; preds = %bb.e, %bb.g, %7, %.thread80, %.thread99, %_ZN4llvm13IRBuilderBase19CreateShuffleVectorEPNS_5ValueES2_NS_8ArrayRefIiEERKNS_5TwineE.exit
+  %.5 = phi ptr [ %i.ew, %_ZN4llvm13IRBuilderBase19CreateShuffleVectorEPNS_5ValueES2_NS_8ArrayRefIiEERKNS_5TwineE.exit ], [ null, %7 ], [ null, %.thread99 ], [ null, %.thread80 ], [ null, %bb.g ], [ null, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #29
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #29
   %i.ex = load i32, ptr %5, align 8
   %i.ey = and i32 %i.ex, 1
   %.not.i.i = icmp eq i32 %i.ey, 0

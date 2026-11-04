@@ -205,7 +205,7 @@ bb.a:
   %i.k = shl nuw nsw i16 %.fr253, 4
   %i.l = zext nneg i16 %i.k to i64
   %i.m = getelementptr i8, ptr %i.e, i64 %i.l     ; 4 uses
-  %i.n = getelementptr i8, ptr %i.m, i64 16       ; 39 uses
+  %i.n = getelementptr i8, ptr %i.m, i64 16       ; 40 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.m, i64 18
   store volatile i16 0, ptr %i.e, align 16, !tbaa !34
   %i.p = getelementptr inbounds nuw i8, ptr %i.e, i64 8
@@ -255,7 +255,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.aj = icmp eq i32 %.2135, 0
   br i1 %i.aj, label %bb.e, label %.loopexit
 
-bb.e:                                             ; preds = %bb.d, %.thread182
+bb.e:                                             ; preds = %.thread182, %bb.d
   %.0155168179192 = phi i64 [ 0, %.thread182 ], [ %.neg19.i, %bb.d ] ; 6 uses
   %i.ak = add nsw i32 %1, -2
   %i.al = sext i32 %1 to i64
@@ -448,7 +448,7 @@ bb.v:                                             ; preds = %.critedge
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %.critedge
-  %i.cz = load i16, ptr %i.n, align 16, !tbaa !40 ; 3 uses
+  %i.cz = load i16, ptr %i.n, align 16, !tbaa !40 ; 2 uses
   %i.da = icmp eq i16 %i.cz, 0
   br i1 %i.da, label %bb.x, label %bb.y
 
@@ -463,14 +463,16 @@ bb.y:                                             ; preds = %bb.w
   %i.de = getelementptr i8, ptr %i.m, i64 24
   %i.df = shl nuw nsw i64 %i.dc, 3
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.dd, ptr nonnull readonly align 8 %i.de, i64 %i.df, i1 false)
+  %.pre.i = load i16, ptr %i.n, align 16, !tbaa !40
   br label %_sp_copy.exit
 
 _sp_copy.exit:                                    ; preds = %bb.x, %bb.y
-  store i16 %i.cz, ptr %3, align 8, !tbaa !40
+  %4 = phi i16 [ %.pre.i, %bb.y ], [ 0, %bb.x ]
+  store i16 %4, ptr %3, align 8, !tbaa !40
   br label %.loopexit
 
 .loopexit:                                        ; preds = %sp_mod.exit152, %bb.t, %bb.s, %.split.split, %bb.p, %.split.us, %sp_mod.exit149.us, %sp_mod.exit149.us.1, %sp_mod.exit149.us.2, %sp_mod.exit149.us.3, %bb.a, %bb.d, %bb.h, %bb.g, %sp_mod.exit, %_sp_copy.exit
-  %.6235 = phi i32 [ 0, %_sp_copy.exit ], [ %i.ax, %sp_mod.exit ], [ %i.ch, %sp_mod.exit149.us.3 ], [ -98, %bb.a ], [ %.2135, %bb.d ], [ -98, %bb.h ], [ %.4, %bb.g ], [ -98, %bb.p ], [ %i.bz, %.split.us ], [ %i.cb, %sp_mod.exit149.us ], [ %i.cd, %sp_mod.exit149.us.1 ], [ %i.cf, %sp_mod.exit149.us.2 ], [ %i.cj, %.split.split ], [ -98, %bb.t ], [ %.10, %bb.s ], [ %.11, %sp_mod.exit152 ]
+  %.6235 = phi i32 [ 0, %_sp_copy.exit ], [ %i.ax, %sp_mod.exit ], [ %i.ch, %sp_mod.exit149.us.3 ], [ -98, %bb.a ], [ %.2135, %bb.d ], [ -98, %bb.h ], [ %.4, %bb.g ], [ -98, %bb.p ], [ %i.bz, %.split.us ], [ %i.cb, %sp_mod.exit149.us ], [ %i.cd, %sp_mod.exit149.us.1 ], [ %i.cf, %sp_mod.exit149.us.2 ], [ %i.cj, %.split.split ], [ %.11, %sp_mod.exit152 ], [ -98, %bb.t ], [ %.10, %bb.s ]
   ret i32 %.6235
 }
 
@@ -873,8 +875,8 @@ sp_count_bits.exit:                               ; preds = %sp_count_bits.exitt
   %i.al = getelementptr inbounds nuw i8, ptr %i.aa, i64 2 ; 2 uses
   %i.am = shl nuw nsw i64 %i.u, 4
   %i.an = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.am ; 3 uses
-  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 16 ; 3 uses
-  %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 18 ; 2 uses
+  %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 18 ; 2 uses
+  %i.ap = getelementptr inbounds nuw i8, ptr %i.an, i64 16 ; 3 uses
   %i.aq = zext nneg i16 %.pr.pre to i32           ; 3 uses
   store volatile i16 0, ptr %i.x, align 16, !tbaa !34
   %i.ar = getelementptr inbounds nuw i8, ptr %i.x, i64 8 ; 5 uses
@@ -888,10 +890,10 @@ sp_count_bits.exit:                               ; preds = %sp_count_bits.exitt
   %i.at = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 8 uses
   store volatile i64 0, ptr %i.at, align 8, !tbaa !36
   store volatile i16 %i.ak, ptr %i.al, align 2, !tbaa !37
-  store volatile i16 0, ptr %i.ao, align 16, !tbaa !34
+  store volatile i16 0, ptr %i.ap, align 16, !tbaa !34
   %i.au = getelementptr inbounds nuw i8, ptr %i.an, i64 24 ; 3 uses
   store volatile i64 0, ptr %i.au, align 8, !tbaa !36
-  store volatile i16 %i.ak, ptr %i.ap, align 2, !tbaa !37
+  store volatile i16 %i.ak, ptr %i.ao, align 2, !tbaa !37
   store i16 %.pr.pre, ptr %i.x, align 16, !tbaa !40
   br i1 %i.t, label %bb.f, label %bb.g
 
@@ -1139,7 +1141,7 @@ sp_cmp_d.exit:                                    ; preds = %bb.w, %bb.v, %.lr.p
   br i1 %.not, label %.lr.ph294, label %.preheader16.i.i
 
 _sp_cmp.exit:                                     ; preds = %bb.u, %bb.m, %bb.x, %bb.p
-  %i.do = call fastcc i32 @sp_prime_miller_rabin(ptr noundef nonnull %0, ptr noundef nonnull %i.aa, ptr noundef nonnull %2, ptr noundef nonnull %i.ae, ptr noundef nonnull %i.ao) ; 2 uses
+  %i.do = call fastcc i32 @sp_prime_miller_rabin(ptr noundef nonnull %0, ptr noundef nonnull %i.aa, ptr noundef nonnull %2, ptr noundef nonnull %i.ae, ptr noundef nonnull %i.ap) ; 2 uses
   %.not92 = icmp eq i32 %i.do, 0
   br i1 %.not92, label %bb.y, label %.preheader16.i.i
 
@@ -1151,12 +1153,12 @@ bb.y:                                             ; preds = %_sp_cmp.exit
   %or.cond268 = select i1 %i.dq, i1 %i.ds, i1 false
   br i1 %or.cond268, label %.lr.ph, label %.preheader16.i.i, !llvm.loop !191
 
-.preheader16.i.i:                                 ; preds = %bb.y, %_sp_cmp.exit, %.lr.ph.split.us.split.us, %.lr.ph.split.preheader, %sp_cmp_d.exit, %sp_cmp_d.exit.us.us, %_sp_sub_d.exit
+.preheader16.i.i:                                 ; preds = %.lr.ph.split.us.split.us, %_sp_cmp.exit, %bb.y, %.lr.ph.split.preheader, %sp_cmp_d.exit, %sp_cmp_d.exit.us.us, %_sp_sub_d.exit
   %.3 = phi i32 [ 0, %_sp_sub_d.exit ], [ %i.dn, %sp_cmp_d.exit ], [ %i.cn, %sp_cmp_d.exit.us.us ], [ 0, %bb.y ], [ %i.do, %_sp_cmp.exit ], [ %i.bw, %.lr.ph.split.preheader ], [ %i.bw, %.lr.ph.split.us.split.us ]
   fence seq_cst
   store volatile i16 0, ptr %i.ae, align 8, !tbaa !34
   store volatile i64 0, ptr %i.as, align 8, !tbaa !36
-  %i.dt = load i16, ptr %i.ap, align 2, !tbaa !39 ; 2 uses
+  %i.dt = load i16, ptr %i.ao, align 2, !tbaa !39 ; 2 uses
   fence seq_cst
   %.not186 = icmp eq i16 %i.dt, 0
   br i1 %.not186, label %._crit_edge.i.i120, label %._crit_edge.i.i120.sink.split
@@ -1169,7 +1171,7 @@ bb.y:                                             ; preds = %_sp_cmp.exit
 
 ._crit_edge.i.i120:                               ; preds = %.preheader16.i.i, %._crit_edge.i.i120.sink.split
   fence seq_cst
-  store volatile i16 0, ptr %i.ao, align 16, !tbaa !34
+  store volatile i16 0, ptr %i.ap, align 16, !tbaa !34
   store volatile i64 0, ptr %i.au, align 8, !tbaa !36
   %i.dw = load i16, ptr %i.al, align 2, !tbaa !39 ; 2 uses
   fence seq_cst
@@ -1191,7 +1193,7 @@ bb.y:                                             ; preds = %_sp_cmp.exit
   store volatile i64 0, ptr %i.ar, align 8, !tbaa !36
   br label %.critedge98
 
-.critedge98:                                      ; preds = %sp_count_bits.exit, %.critedge.a, %._crit_edge.i.i139
+.critedge98:                                      ; preds = %.critedge.a, %sp_count_bits.exit, %._crit_edge.i.i139
   %.4 = phi i32 [ %.3, %._crit_edge.i.i139 ], [ -98, %.critedge.a ], [ -98, %sp_count_bits.exit ]
   ret i32 %.4
 }

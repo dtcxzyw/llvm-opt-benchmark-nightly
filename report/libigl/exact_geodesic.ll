@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr dso_local noundef i32 @_ZN3igl8geodesic22GeodesicAlgorithmExact19intersect_intervalsEPNS0_8IntervalEPNS0_16IntervalWithStopE(ptr noundef nonnull align 8 dereferenceable(512) %0, ptr noundef %1, ptr noundef %2) local_unnamed_addr #0 comdat align 2 {
 bb.a:
-  %i.a = alloca [4 x double], align 16            ; 18 uses
+  %i.a = alloca [4 x double], align 16            ; 19 uses
   %i.b = alloca [3 x i32], align 4                ; 15 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !86
@@ -297,22 +297,21 @@ bb.g:                                             ; preds = %bb.a
   %i.bf = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.be, <2 x double> %i.be, <2 x double> %i.bd) ; 5 uses
   %i.bg = tail call noundef double @llvm.fabs.f64(double %i.ar)
   %i.bh = fcmp olt double %i.bg, %i.g
-  br i1 %i.bh, label %3, label %bb.i
+  br i1 %i.bh, label %bb.h, label %bb.i
 
-3:                                                ; preds = %bb.g
+bb.h:                                             ; preds = %bb.g
   %foldExtExtBinop = fsub <2 x double> %i.az, %i.aw
-  %4 = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 2 uses
-  %5 = tail call noundef double @llvm.fabs.f64(double %4)
-  %6 = fcmp ogt double %5, %i.am
-  br i1 %6, label %bb.h, label %bb.p
-
-bb.h:                                             ; preds = %3
+  %3 = extractelement <2 x double> %foldExtExtBinop, i64 0 ; 2 uses
+  %4 = tail call noundef double @llvm.fabs.f64(double %3)
+  %5 = fcmp ogt double %4, %i.am                  ; 2 uses
   %shift = shufflevector <2 x double> %i.bf, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
   %foldExtExtBinop328 = fsub <2 x double> %shift, %i.bf
   %i.bi = extractelement <2 x double> %foldExtExtBinop328, i64 0
-  %i.bj = fmul double %4, 2.000000e+00
+  %i.bj = fmul double %3, 2.000000e+00
   %i.bk = fdiv double %i.bi, %i.bj
-  %.sroa.0.0.vec.insert = insertelement <2 x double> <double poison, double undef>, double %i.bk, i64 0
+  %.sroa.0.0 = select i1 %5, double %i.bk, double undef
+  %.0149 = zext i1 %5 to i32
+  %.sroa.0.0.vec.insert = insertelement <2 x double> <double poison, double undef>, double %.sroa.0.0, i64 0
   br label %bb.p
 
 bb.i:                                             ; preds = %bb.g
@@ -359,10 +358,10 @@ bb.m:                                             ; preds = %bb.l
   %i.cj = tail call double @sqrt(double noundef %i.cg) #22 ; 2 uses
   %i.ck = fcmp ogt double %i.bs, 0.000000e+00
   %i.cl = fneg double %i.bu
-  %i.cm = insertelement <2 x double> poison, double %i.cj, i64 0
-  %i.cn = insertelement <2 x double> %i.cm, double %i.cl, i64 1 ; 2 uses
-  %i.co = insertelement <2 x double> poison, double %i.bu, i64 0
-  %i.cp = insertelement <2 x double> %i.co, double %i.cj, i64 1 ; 2 uses
+  %i.cm = insertelement <2 x double> poison, double %i.cl, i64 0
+  %i.cn = insertelement <2 x double> %i.cm, double %i.cj, i64 1 ; 2 uses
+  %i.co = insertelement <2 x double> poison, double %i.cj, i64 0
+  %i.cp = insertelement <2 x double> %i.co, double %i.bu, i64 1 ; 2 uses
   %i.cq = fsub <2 x double> %i.cn, %i.cp
   %i.cr = fsub <2 x double> %i.cn, %i.cp
   %i.cs = shufflevector <2 x double> %i.cr, <2 x double> poison, <2 x i32> <i32 1, i32 0>
@@ -372,9 +371,8 @@ bb.m:                                             ; preds = %bb.l
   %i.cw = insertelement <2 x double> poison, double %i.bs, i64 0
   %i.cx = shufflevector <2 x double> %i.cw, <2 x double> poison, <2 x i32> zeroinitializer
   %i.cy = fdiv <2 x double> %i.cv, %i.cx          ; 3 uses
-  %7 = shufflevector <2 x double> %i.cy, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %shift335 = shufflevector <2 x double> %i.cy, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop336 = fsub <2 x double> %i.cy, %shift335
+  %foldExtExtBinop336 = fsub <2 x double> %shift335, %i.cy
   %i.cz = extractelement <2 x double> %foldExtExtBinop336, i64 0
   %i.da = fcmp ogt double %i.cz, %i.am
   %. = select i1 %i.da, i32 2, i32 1
@@ -390,9 +388,9 @@ bb.o:                                             ; preds = %bb.n
   %.sroa.0.0.vec.insert349 = insertelement <2 x double> <double poison, double undef>, double %i.dd, i64 0
   br label %bb.p
 
-bb.p:                                             ; preds = %bb.k, %bb.j, %bb.m, %bb.n, %bb.o, %3, %bb.h
-  %.sroa.0.0 = phi <2 x double> [ %.sroa.0.0.vec.insert, %bb.h ], [ undef, %3 ], [ %.sroa.0.0.vec.insert347, %bb.k ], [ undef, %bb.j ], [ %7, %bb.m ], [ undef, %bb.n ], [ %.sroa.0.0.vec.insert349, %bb.o ] ; 2 uses
-  %.3 = phi i32 [ 1, %bb.h ], [ 0, %3 ], [ 1, %bb.k ], [ 0, %bb.j ], [ %., %bb.m ], [ 0, %bb.n ], [ 1, %bb.o ] ; 3 uses
+bb.p:                                             ; preds = %bb.k, %bb.j, %bb.m, %bb.n, %bb.o, %bb.h
+  %.3 = phi i32 [ %.0149, %bb.h ], [ 1, %bb.k ], [ 0, %bb.j ], [ %., %bb.m ], [ 0, %bb.n ], [ 1, %bb.o ] ; 3 uses
+  %6 = phi <2 x double> [ %.sroa.0.0.vec.insert, %bb.h ], [ %.sroa.0.0.vec.insert347, %bb.k ], [ undef, %bb.j ], [ %i.cy, %bb.m ], [ undef, %bb.n ], [ %.sroa.0.0.vec.insert349, %bb.o ] ; 2 uses
   %i.de = load double, ptr %1, align 8, !tbaa !87 ; 5 uses
   %i.df = load double, ptr %2, align 8, !tbaa !87 ; 2 uses
   %i.dg = fcmp olt double %i.de, %i.df
@@ -421,25 +419,25 @@ bb.p:                                             ; preds = %bb.k, %bb.j, %bb.m,
   br label %.lr.ph182
 
 .lr.ph:                                           ; preds = %bb.p
-  %i.ds = fadd double %i.g, %i.dh                 ; 2 uses
-  %i.dt = fsub double %.sroa.speculated, %i.g     ; 2 uses
-  %.sroa.0.0.vec.extract = extractelement <2 x double> %.sroa.0.0, i64 0 ; 3 uses
-  %i.du = fcmp ogt double %.sroa.0.0.vec.extract, %i.ds
-  %i.dv = fcmp olt double %.sroa.0.0.vec.extract, %i.dt
+  %i.ds = fadd double %i.g, %i.dh                 ; 3 uses
+  %i.dt = fsub double %.sroa.speculated, %i.g     ; 3 uses
+  %7 = extractelement <2 x double> %6, i64 0      ; 6 uses
+  %.sroa.0.0.vec.extract = extractelement <2 x double> %6, i64 1 ; 3 uses
+  %i.du = fcmp ogt double %7, %i.ds
+  %i.dv = fcmp olt double %7, %i.dt
   %or.cond = select i1 %i.du, i1 %i.dv, i1 false
   br i1 %or.cond, label %bb.q, label %bb.r
 
-._crit_edge:                                      ; preds = %bb.u, %bb.r
-  %.1.lcssa = phi i8 [ %.1, %bb.r ], [ %spec.select, %bb.u ] ; 2 uses
+._crit_edge:                                      ; preds = %9, %bb.u, %8, %bb.r
+  %.1.lcssa = phi i8 [ %.1, %bb.r ], [ %.1.1, %8 ], [ %12, %bb.u ], [ %.1.1, %9 ]
   %i.dw = zext i8 %.1.lcssa to i64                ; 2 uses
   %i.dx = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.dw
   store double %.sroa.speculated, ptr %i.dx, align 8, !tbaa !87
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #22
-  %.not205 = icmp eq i8 %.1.lcssa, 0
-  br i1 %.not205, label %._crit_edge183, label %.lr.ph182
+  br label %.lr.ph182
 
-.lr.ph182:                                        ; preds = %._crit_edge.thread, %._crit_edge
-  %i.dy = phi i64 [ 1, %._crit_edge.thread ], [ %i.dw, %._crit_edge ] ; 28 uses
+.lr.ph182:                                        ; preds = %._crit_edge, %._crit_edge.thread
+  %i.dy = phi i64 [ 1, %._crit_edge.thread ], [ %i.dw, %._crit_edge ] ; 19 uses
   %i.dz = fcmp oeq double %i.ao, 1.000000e+100
   %i.ea = fcmp oeq double %i.ay, 0.000000e+00     ; 2 uses
   %i.eb = fcmp oeq double %i.aq, 1.000000e+100    ; 2 uses
@@ -724,7 +722,7 @@ _ZN3igl8geodesic8Interval6signalEd.exit.us186:    ; preds = %_ZN3igl8geodesic8In
 
 bb.q:                                             ; preds = %.lr.ph
   %i.ig = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store double %.sroa.0.0.vec.extract, ptr %i.ig, align 8, !tbaa !87
+  store double %7, ptr %i.ig, align 8, !tbaa !87
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %.lr.ph
@@ -733,31 +731,40 @@ bb.r:                                             ; preds = %bb.q, %.lr.ph
   br i1 %exitcond.not, label %._crit_edge, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
-  %.sroa.0.8.vec.extract = extractelement <2 x double> %.sroa.0.0, i64 1 ; 3 uses
-  %i.ih = fcmp ogt double %.sroa.0.8.vec.extract, %i.ds
-  %i.ii = fcmp olt double %.sroa.0.8.vec.extract, %i.dt
+  %i.ih = fcmp ogt double %.sroa.0.0.vec.extract, %i.ds
+  %i.ii = fcmp olt double %.sroa.0.0.vec.extract, %i.dt
   %or.cond.1 = select i1 %i.ih, i1 %i.ii, i1 false
-  br i1 %or.cond.1, label %bb.t, label %bb.u
+  br i1 %or.cond.1, label %bb.t, label %8
 
 bb.t:                                             ; preds = %bb.s
   %i.ij = add nuw nsw i8 %.1, 1
   %i.ik = zext nneg i8 %.1 to i64
   %i.il = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.ik
-  store double %.sroa.0.8.vec.extract, ptr %i.il, align 8, !tbaa !87
-  br label %bb.u
+  store double %.sroa.0.0.vec.extract, ptr %i.il, align 8, !tbaa !87
+  br label %8
 
-bb.u:                                             ; preds = %bb.t, %bb.s
-  %.1.1 = phi i8 [ %i.ij, %bb.t ], [ %.1, %bb.s ]
+8:                                                ; preds = %bb.t, %bb.s
+  %.1.1 = phi i8 [ %i.ij, %bb.t ], [ %.1, %bb.s ] ; 4 uses
   %exitcond.not.1 = icmp eq i32 %.3, 2
-  %spec.select = select i1 %exitcond.not.1, i8 %.1.1, i8 poison
+  br i1 %exitcond.not.1, label %._crit_edge, label %9
+
+9:                                                ; preds = %8
+  %10 = fcmp ogt double %7, %i.ds
+  %11 = fcmp olt double %7, %i.dt
+  %or.cond.2 = select i1 %10, i1 %11, i1 false
+  br i1 %or.cond.2, label %bb.u, label %._crit_edge
+
+bb.u:                                             ; preds = %9
+  %12 = add nuw nsw i8 %.1.1, 1
+  %13 = zext i8 %.1.1 to i64
+  %14 = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %13
+  store double %7, ptr %14, align 8, !tbaa !87
   br label %._crit_edge
 
-._crit_edge183:                                   ; preds = %_ZN3igl8geodesic8Interval6signalEd.exit174, %_ZN3igl8geodesic8Interval6signalEd.exit.us186, %_ZN3igl8geodesic8Interval6signalEd.exit.us186.us, %_ZN3igl8geodesic8Interval6signalEd.exit.us, %_ZN3igl8geodesic8Interval6signalEd.exit.us.us193, %middle.block, %middle.block288, %middle.block306, %middle.block324, %_ZN3igl8geodesic8Interval6signalEd.exit.us.us.preheader, %._crit_edge
-  %.not205259 = phi i1 [ false, %middle.block ], [ false, %middle.block288 ], [ false, %middle.block306 ], [ false, %middle.block324 ], [ true, %._crit_edge ], [ false, %_ZN3igl8geodesic8Interval6signalEd.exit.us.us.preheader ], [ false, %_ZN3igl8geodesic8Interval6signalEd.exit.us186.us ], [ false, %_ZN3igl8geodesic8Interval6signalEd.exit.us186 ], [ false, %_ZN3igl8geodesic8Interval6signalEd.exit.us.us193 ], [ false, %_ZN3igl8geodesic8Interval6signalEd.exit.us ], [ false, %_ZN3igl8geodesic8Interval6signalEd.exit174 ]
-  %8 = phi i64 [ %i.dy, %middle.block ], [ %i.dy, %middle.block288 ], [ %i.dy, %middle.block306 ], [ %i.dy, %middle.block324 ], [ 0, %._crit_edge ], [ %i.dy, %_ZN3igl8geodesic8Interval6signalEd.exit.us.us.preheader ], [ %i.dy, %_ZN3igl8geodesic8Interval6signalEd.exit.us186.us ], [ %i.dy, %_ZN3igl8geodesic8Interval6signalEd.exit.us186 ], [ %i.dy, %_ZN3igl8geodesic8Interval6signalEd.exit.us.us193 ], [ %i.dy, %_ZN3igl8geodesic8Interval6signalEd.exit.us ], [ %i.dy, %_ZN3igl8geodesic8Interval6signalEd.exit174 ]
+._crit_edge183:                                   ; preds = %_ZN3igl8geodesic8Interval6signalEd.exit174, %_ZN3igl8geodesic8Interval6signalEd.exit.us186, %_ZN3igl8geodesic8Interval6signalEd.exit.us186.us, %_ZN3igl8geodesic8Interval6signalEd.exit.us, %_ZN3igl8geodesic8Interval6signalEd.exit.us.us193, %middle.block, %middle.block288, %middle.block306, %middle.block324, %_ZN3igl8geodesic8Interval6signalEd.exit.us.us.preheader
   %i.im = fsub double %i.dh, %i.g
   %i.in = fcmp olt double %i.de, %i.im
-  br i1 %i.in, label %bb.z, label %9
+  br i1 %i.in, label %bb.z, label %.lr.ph201
 
 .lr.ph182.split.split:                            ; preds = %.lr.ph182.split.split.preheader, %_ZN3igl8geodesic8Interval6signalEd.exit174
   %indvars.iv213 = phi i64 [ %indvars.iv.next214, %_ZN3igl8geodesic8Interval6signalEd.exit174 ], [ 0, %.lr.ph182.split.split.preheader ] ; 3 uses
@@ -812,26 +819,22 @@ bb.z:                                             ; preds = %._crit_edge183
 
 bb.aa:                                            ; preds = %bb.z
   store double %i.de, ptr %i.a, align 16, !tbaa !87
-  br label %9
+  br label %.lr.ph201
 
 bb.ab:                                            ; preds = %bb.z
   %i.jf = getelementptr inbounds nuw i8, ptr %0, i64 264
   store i32 0, ptr %i.jf, align 8, !tbaa !153
   %i.jg = getelementptr inbounds nuw i8, ptr %0, i64 288
   store double %i.de, ptr %i.jg, align 8, !tbaa !87
-  br label %9
+  br label %.lr.ph201
 
-9:                                                ; preds = %bb.aa, %bb.ab, %._crit_edge183
-  %.2153 = phi i32 [ 0, %bb.aa ], [ 1, %bb.ab ], [ 0, %._crit_edge183 ] ; 2 uses
-  br i1 %.not205259, label %._crit_edge202, label %.lr.ph201
-
-.lr.ph201:                                        ; preds = %9
+.lr.ph201:                                        ; preds = %._crit_edge183, %bb.ab, %bb.aa
+  %.2153 = phi i32 [ 0, %bb.aa ], [ 1, %bb.ab ], [ 0, %._crit_edge183 ]
   %i.jh = getelementptr inbounds nuw i8, ptr %0, i64 264 ; 2 uses
   %i.ji = getelementptr inbounds nuw i8, ptr %0, i64 288
   br label %bb.ac
 
-._crit_edge202:                                   ; preds = %bb.af, %9
-  %.3154.lcssa = phi i32 [ %.2153, %9 ], [ %.4, %bb.af ] ; 6 uses
+._crit_edge202:                                   ; preds = %bb.af
   %i.jj = load ptr, ptr %i.dk, align 8
   %i.jk = getelementptr inbounds nuw i8, ptr %i.jj, i64 56
   %.in.i176 = select i1 %.not.i167, ptr %i.jk, ptr %i.dj
@@ -869,18 +872,18 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ac
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad
-  %.4 = phi i32 [ %i.ka, %bb.ae ], [ %.3154198, %bb.ad ] ; 2 uses
+  %.4 = phi i32 [ %i.ka, %bb.ae ], [ %.3154198, %bb.ad ] ; 7 uses
   %i.kc = add nuw nsw i64 %.0199, 1               ; 2 uses
-  %exitcond241.not = icmp eq i64 %i.kc, %8
+  %exitcond241.not = icmp eq i64 %i.kc, %i.dy
   br i1 %exitcond241.not, label %._crit_edge202, label %bb.ac, !llvm.loop !403
 
 bb.ag:                                            ; preds = %._crit_edge202
-  %i.kd = icmp eq i32 %.3154.lcssa, 0
+  %i.kd = icmp eq i32 %.4, 0
   br i1 %i.kd, label %bb.ai, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
   %i.ke = getelementptr inbounds nuw i8, ptr %0, i64 264
-  %i.kf = add i32 %.3154.lcssa, -1
+  %i.kf = add i32 %.4, -1
   %i.kg = zext i32 %i.kf to i64
   %i.kh = getelementptr inbounds nuw [4 x i8], ptr %i.ke, i64 %i.kg
   %i.ki = load i32, ptr %i.kh, align 4, !tbaa !153
@@ -889,17 +892,17 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.ah, %bb.ag
   %i.kk = getelementptr inbounds nuw i8, ptr %0, i64 264
-  %i.kl = zext i32 %.3154.lcssa to i64            ; 2 uses
+  %i.kl = zext i32 %.4 to i64                     ; 2 uses
   %i.km = getelementptr inbounds nuw [4 x i8], ptr %i.kk, i64 %i.kl
   store i32 0, ptr %i.km, align 4, !tbaa !153
   %i.kn = getelementptr inbounds nuw i8, ptr %0, i64 288
-  %i.ko = add i32 %.3154.lcssa, 1
+  %i.ko = add i32 %.4, 1
   %i.kp = getelementptr inbounds nuw [8 x i8], ptr %i.kn, i64 %i.kl
   store double %i.jm, ptr %i.kp, align 8, !tbaa !87
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ah, %bb.ai, %._crit_edge202
-  %.5 = phi i32 [ %i.ko, %bb.ai ], [ %.3154.lcssa, %bb.ah ], [ %.3154.lcssa, %._crit_edge202 ]
+  %.5 = phi i32 [ %i.ko, %bb.ai ], [ %.4, %bb.ah ], [ %.4, %._crit_edge202 ]
   %i.kq = load double, ptr %1, align 8, !tbaa !87
   %i.kr = getelementptr inbounds nuw i8, ptr %0, i64 288
   store double %i.kq, ptr %i.kr, align 8, !tbaa !87

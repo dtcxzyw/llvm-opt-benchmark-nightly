@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/darktable/original/SamsungV2Decompressor?download=true
 inline.NumInlined: 311
 inline.NumDeleted: 154
-loop-unroll.NumCompletelyUnrolled: 8
-loop-unroll.NumUnrolled: 8
+loop-unroll.NumCompletelyUnrolled: 9
+loop-unroll.NumUnrolled: 9
 begin_hunk_0_@_ZN8rawspeed27AbstractSamsungDecompressorD2Ev:bb.a
 bb.e:                                             ; preds = %bb.d
   %i.o = add nsw i32 %i.f, -1
@@ -204,14 +204,11 @@ _ZN8rawspeed10ByteStream9skipBytesEj.exit46:      ; preds = %._crit_edge
   ret void
 
 bb.g:                                             ; preds = %.lr.ph, %.preheader
-  %indvars.iv450 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next451, %.preheader ] ; 8 uses
+  %indvars.iv450 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next451, %.preheader ] ; 9 uses
   %i.ci = phi i32 [ %i.ad, %.lr.ph ], [ %i.xt, %.preheader ] ; 3 uses
   %.sroa.0166.0401 = phi i64 [ 0, %.lr.ph ], [ %.sroa.0166.10, %.preheader ] ; 3 uses
   %.sroa.30.0400 = phi i32 [ 0, %.lr.ph ], [ %.sroa.30.10, %.preheader ] ; 6 uses
   %.sroa.80203.0399 = phi i32 [ 0, %.lr.ph ], [ %.sroa.80203.10, %.preheader ] ; 8 uses
-  %5 = shl nuw i64 %indvars.iv450, 1
-  %6 = add i64 %5, 8589934560
-  %7 = and i64 %6, 8589934560
   %i.cj = load ptr, ptr %0, align 8, !tbaa !17    ; 5 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 568
   %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !145, !noalias !146 ; 5 uses
@@ -219,7 +216,7 @@ bb.g:                                             ; preds = %.lr.ph, %.preheader
   %i.cn = load i32, ptr %i.cm, align 8, !tbaa !98, !noalias !146
   %i.co = getelementptr inbounds nuw i8, ptr %i.cj, i64 608
   %i.cp = load i32, ptr %i.co, align 8, !tbaa !147, !noalias !146
-  %i.cq = mul nsw i32 %i.cp, %i.cn                ; 6 uses
+  %i.cq = mul nsw i32 %i.cp, %i.cn                ; 7 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %i.cj, i64 612
   %i.cs = load i32, ptr %i.cr, align 4, !tbaa !148, !noalias !146 ; 5 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cj, i64 48
@@ -592,24 +589,29 @@ bb.ar:                                            ; preds = %bb.ao
 
 .thread:                                          ; preds = %bb.ap, %bb.ar
   %i.ho = icmp eq i64 %indvars.iv450, 0
-  br i1 %i.ho, label %8, label %.preheader320.preheader
-
-8:                                                ; preds = %.thread
-  %9 = load <1 x i16>, ptr %i.am, align 2
-  %10 = shufflevector <1 x i16> %9, <1 x i16> poison, <16 x i32> zeroinitializer
-  br label %_ZN8rawspeed21SamsungV2Decompressor21prepareBaselineValuesERNS_16BitStreamerMSB32Eii.exit.sink.split
+  br i1 %i.ho, label %12, label %.preheader320.preheader
 
 .preheader320.preheader:                          ; preds = %.thread
   %i.hp = icmp samesign ult i32 %1, %i.cs
   tail call void @llvm.assume(i1 %i.hp), !noalias !150
   %i.hq = mul nuw nsw i32 %i.cv, %1
-  %i.hr = zext nneg i32 %i.hq to i64
-  %scevgep = getelementptr i8, ptr %i.cl, i64 28
-  %11 = shl nuw nsw i64 %i.hr, 1
-  %12 = getelementptr i8, ptr %scevgep, i64 %7
-  %scevgep424 = getelementptr i8, ptr %12, i64 %11
-  %i.hs = load <2 x i16>, ptr %scevgep424, align 2, !tbaa !151, !noalias !150
+  %5 = zext nneg i32 %i.hq to i64
+  %6 = getelementptr inbounds nuw [2 x i8], ptr %i.cl, i64 %5
+  %i.hr = zext nneg i32 %i.cq to i64              ; 2 uses
+  %7 = add nsw i64 %indvars.iv450, -2             ; 2 uses
+  %8 = icmp samesign ult i64 %7, %i.hr
+  tail call void @llvm.assume(i1 %8), !noalias !150
+  %9 = getelementptr inbounds nuw [2 x i8], ptr %6, i64 %7
+  %10 = add nsw i64 %indvars.iv450, -1
+  %11 = icmp samesign ult i64 %10, %i.hr
+  tail call void @llvm.assume(i1 %11), !noalias !150
+  %i.hs = load <2 x i16>, ptr %9, align 2, !tbaa !151, !noalias !150
   %i.ht = shufflevector <2 x i16> %i.hs, <2 x i16> poison, <16 x i32> <i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1>
+  br label %_ZN8rawspeed21SamsungV2Decompressor21prepareBaselineValuesERNS_16BitStreamerMSB32Eii.exit.sink.split
+
+12:                                               ; preds = %.thread
+  %13 = load <1 x i16>, ptr %i.am, align 2
+  %14 = shufflevector <1 x i16> %13, <1 x i16> poison, <16 x i32> zeroinitializer
   br label %_ZN8rawspeed21SamsungV2Decompressor21prepareBaselineValuesERNS_16BitStreamerMSB32Eii.exit.sink.split
 
 bb.as:                                            ; preds = %bb.ar
@@ -774,8 +776,8 @@ bb.be:                                            ; preds = %bb.bc, %bb.bd
   %exitcond.not = icmp eq i64 %indvars.iv.next, 16
   br i1 %exitcond.not, label %_ZN8rawspeed21SamsungV2Decompressor21prepareBaselineValuesERNS_16BitStreamerMSB32Eii.exit, label %.split, !llvm.loop !138
 
-_ZN8rawspeed21SamsungV2Decompressor21prepareBaselineValuesERNS_16BitStreamerMSB32Eii.exit.sink.split: ; preds = %.preheader320.preheader, %8
-  %i.ko = phi <16 x i16> [ %10, %8 ], [ %i.ht, %.preheader320.preheader ]
+_ZN8rawspeed21SamsungV2Decompressor21prepareBaselineValuesERNS_16BitStreamerMSB32Eii.exit.sink.split: ; preds = %12, %.preheader320.preheader
+  %i.ko = phi <16 x i16> [ %i.ht, %.preheader320.preheader ], [ %14, %12 ]
   store <16 x i16> %i.ko, ptr %4, align 2, !tbaa !151
   br label %_ZN8rawspeed21SamsungV2Decompressor21prepareBaselineValuesERNS_16BitStreamerMSB32Eii.exit
 

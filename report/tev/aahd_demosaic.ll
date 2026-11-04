@@ -1,8 +1,8 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/aahd_demosaic?download=true
 inline.NumInlined: 46
 inline.NumDeleted: 8
-loop-unroll.NumCompletelyUnrolled: 21
-loop-unroll.NumUnrolled: 21
+loop-unroll.NumCompletelyUnrolled: 23
+loop-unroll.NumUnrolled: 23
 begin_hunk_0_@_ZN4AAHD12evaluate_ahdEv:.preheader326
 
 bb.m:                                             ; preds = %bb.l
@@ -204,66 +204,71 @@ bb.t:                                             ; preds = %.lr.ph355, %._crit_
   %indvars.iv397 = phi i64 [ %i.tz, %.lr.ph352.preheader ], [ %indvars.iv.next398, %bb.w ] ; 9 uses
   %.0247350 = phi i32 [ 0, %.lr.ph352.preheader ], [ %i.adr, %bb.w ]
   %i.ug = load i32, ptr %i.c, align 4, !tbaa !82  ; 2 uses
-  %i.uh = sext i32 %i.ug to i64                   ; 11 uses
-  %1 = sub nsw i64 0, %i.uh                       ; 2 uses
-  %2 = sub nsw i64 1, %i.uh                       ; 2 uses
+  %i.uh = sext i32 %i.ug to i64                   ; 16 uses
   %i.ui = load ptr, ptr %i.eq, align 8, !tbaa !86
   %i.uj = getelementptr inbounds i8, ptr %i.ui, i64 %indvars.iv397 ; 9 uses
-  %i.uk = xor i64 %i.uh, -1                       ; 2 uses
+  %1 = sub nsw i64 0, %i.uh
+  %i.uk = xor i64 %i.uh, -1
   %i.ul = getelementptr inbounds i8, ptr %i.uj, i64 %i.uk
   %i.um = load i8, ptr %i.ul, align 1, !tbaa !99
   %i.un = getelementptr inbounds i8, ptr %i.uj, i64 -1
   %i.uo = load i8, ptr %i.un, align 1, !tbaa !99
-  %i.up = add i8 %i.um, %i.uo
-  %3 = add nsw i64 %i.uh, -1                      ; 2 uses
-  %i.uq = getelementptr inbounds i8, ptr %i.uj, i64 %3
+  %i.up = add i8 %i.uo, %i.um
+  %2 = getelementptr i8, ptr %i.uj, i64 %i.uh
+  %i.uq = getelementptr i8, ptr %2, i64 -1
   %i.ur = load i8, ptr %i.uq, align 1, !tbaa !99
-  %i.us = add i8 %i.up, %i.ur
+  %i.us = add i8 %i.ur, %i.up
   %i.ut = getelementptr inbounds i8, ptr %i.uj, i64 %1
   %i.uu = load i8, ptr %i.ut, align 1, !tbaa !99
-  %i.uv = add i8 %i.us, %i.uu
+  %i.uv = add i8 %i.uu, %i.us
   %i.uw = load i8, ptr %i.uj, align 1, !tbaa !99
-  %i.ux = add i8 %i.uv, %i.uw
+  %i.ux = add i8 %i.uw, %i.uv
   %i.uy = getelementptr inbounds i8, ptr %i.uj, i64 %i.uh
   %i.uz = load i8, ptr %i.uy, align 1, !tbaa !99
-  %i.va = add i8 %i.ux, %i.uz
-  %i.vb = getelementptr inbounds i8, ptr %i.uj, i64 %2
+  %i.va = add i8 %i.uz, %i.ux
+  %3 = sub nsw i64 1, %i.uh
+  %i.vb = getelementptr inbounds i8, ptr %i.uj, i64 %3
   %i.vc = load i8, ptr %i.vb, align 1, !tbaa !99
-  %i.vd = add i8 %i.va, %i.vc
+  %i.vd = add i8 %i.vc, %i.va
   %i.ve = getelementptr inbounds nuw i8, ptr %i.uj, i64 1
   %i.vf = load i8, ptr %i.ve, align 1, !tbaa !99
-  %i.vg = add i8 %i.vd, %i.vf
-  %4 = add nsw i64 %i.uh, 1                       ; 2 uses
-  %i.vh = getelementptr inbounds i8, ptr %i.uj, i64 %4
+  %i.vg = add i8 %i.vf, %i.vd
+  %4 = getelementptr i8, ptr %i.uj, i64 %i.uh
+  %i.vh = getelementptr i8, ptr %4, i64 1
   %i.vi = load i8, ptr %i.vh, align 1, !tbaa !99
-  %i.vj = add i8 %i.vg, %i.vi                     ; 2 uses
+  %i.vj = add i8 %i.vi, %i.vg                     ; 2 uses
   %i.vk = load ptr, ptr %i.et, align 8, !tbaa !86
   %i.vl = getelementptr inbounds i8, ptr %i.vk, i64 %indvars.iv397 ; 9 uses
-  %i.vm = getelementptr inbounds i8, ptr %i.vl, i64 %i.uk
+  %5 = sub nsw i64 0, %i.uh
+  %6 = xor i64 %i.uh, -1
+  %i.vm = getelementptr inbounds i8, ptr %i.vl, i64 %6
   %i.vn = load i8, ptr %i.vm, align 1, !tbaa !99
   %i.vo = getelementptr inbounds i8, ptr %i.vl, i64 -1
   %i.vp = load i8, ptr %i.vo, align 1, !tbaa !99
-  %i.vq = add i8 %i.vn, %i.vp
-  %i.vr = getelementptr inbounds i8, ptr %i.vl, i64 %3
+  %i.vq = add i8 %i.vp, %i.vn
+  %7 = getelementptr i8, ptr %i.vl, i64 %i.uh
+  %i.vr = getelementptr i8, ptr %7, i64 -1
   %i.vs = load i8, ptr %i.vr, align 1, !tbaa !99
-  %i.vt = add i8 %i.vq, %i.vs
-  %i.vu = getelementptr inbounds i8, ptr %i.vl, i64 %1
+  %i.vt = add i8 %i.vs, %i.vq
+  %i.vu = getelementptr inbounds i8, ptr %i.vl, i64 %5
   %i.vv = load i8, ptr %i.vu, align 1, !tbaa !99
-  %i.vw = add i8 %i.vt, %i.vv
+  %i.vw = add i8 %i.vv, %i.vt
   %i.vx = load i8, ptr %i.vl, align 1, !tbaa !99
-  %i.vy = add i8 %i.vw, %i.vx
+  %i.vy = add i8 %i.vx, %i.vw
   %i.vz = getelementptr inbounds i8, ptr %i.vl, i64 %i.uh
   %i.wa = load i8, ptr %i.vz, align 1, !tbaa !99
-  %i.wb = add i8 %i.vy, %i.wa
-  %i.wc = getelementptr inbounds i8, ptr %i.vl, i64 %2
+  %i.wb = add i8 %i.wa, %i.vy
+  %8 = sub nsw i64 1, %i.uh
+  %i.wc = getelementptr inbounds i8, ptr %i.vl, i64 %8
   %i.wd = load i8, ptr %i.wc, align 1, !tbaa !99
-  %i.we = add i8 %i.wb, %i.wd
+  %i.we = add i8 %i.wd, %i.wb
   %i.wf = getelementptr inbounds nuw i8, ptr %i.vl, i64 1
   %i.wg = load i8, ptr %i.wf, align 1, !tbaa !99
-  %i.wh = add i8 %i.we, %i.wg
-  %i.wi = getelementptr inbounds i8, ptr %i.vl, i64 %4
+  %i.wh = add i8 %i.wg, %i.we
+  %9 = getelementptr i8, ptr %i.vl, i64 %i.uh
+  %i.wi = getelementptr i8, ptr %9, i64 1
   %i.wj = load i8, ptr %i.wi, align 1, !tbaa !99
-  %i.wk = add i8 %i.wh, %i.wj                     ; 2 uses
+  %i.wk = add i8 %i.wj, %i.wh                     ; 2 uses
   %.not = icmp eq i8 %i.vj, %i.wk
   br i1 %.not, label %bb.v, label %bb.u
 
