@@ -84,9 +84,7 @@ target triple = "x86_64-pc-linux-gnu"
 define i32 @ff_silk_decode_superframe(ptr nofree noundef captures(none) %0, ptr noundef %1, ptr nofree noundef readonly captures(none) %2, i32 noundef %3, i32 noundef %4, i32 noundef %5) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [2 x [6 x i32]], align 16         ; 5 uses
-  %6 = alloca [2 x i32], align 4                  ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
-  call void @llvm.lifetime.start.p0(ptr nonnull %6) #9
   %i.b = icmp ugt i32 %3, 2
   %i.c = icmp sgt i32 %4, 2
   %or.cond = or i1 %i.b, %i.c
@@ -148,6 +146,8 @@ silk_flush_frame.exit:                            ; preds = %bb.e, %bb.d, %bb.c
   br label %.preheader127
 
 .preheader127:                                    ; preds = %.preheader127.preheader, %bb.g
+  %.sroa.0.0 = phi i32 [ undef, %.preheader127.preheader ], [ %spec.select, %bb.g ]
+  %.sroa.6.0 = phi i32 [ undef, %.preheader127.preheader ], [ %spec.select218, %bb.g ]
   %indvars.iv145 = phi i64 [ 0, %.preheader127.preheader ], [ %indvars.iv.next146, %bb.g ] ; 3 uses
   %i.ac = getelementptr inbounds nuw [24 x i8], ptr %i.a, i64 %indvars.iv145
   br label %bb.f
@@ -171,36 +171,36 @@ bb.f:                                             ; preds = %.preheader127, %bb.
   br i1 %exitcond.not, label %bb.g, label %bb.f, !llvm.loop !31
 
 bb.g:                                             ; preds = %bb.f
-  %i.ah = tail call i32 @ff_opus_rc_dec_log(ptr noundef %1, i32 noundef 1) #9
-  %7 = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %indvars.iv145
-  store i32 %i.ah, ptr %7, align 4, !tbaa !19
+  %i.ah = tail call i32 @ff_opus_rc_dec_log(ptr noundef %1, i32 noundef 1) #9 ; 2 uses
+  %.sroa.idx175 = icmp eq i64 %indvars.iv145, 1   ; 2 uses
+  %spec.select = select i1 %.sroa.idx175, i32 %.sroa.0.0, i32 %i.ah ; 3 uses
+  %spec.select218 = select i1 %.sroa.idx175, i32 %i.ah, i32 %.sroa.6.0 ; 3 uses
   %indvars.iv.next146 = add nuw nsw i64 %indvars.iv145, 1 ; 2 uses
   %exitcond149.not = icmp eq i64 %indvars.iv.next146, %wide.trip.count148
   br i1 %exitcond149.not, label %.lr.ph, label %.preheader127, !llvm.loop !32
 
 .preheader124.us.preheader:                       ; preds = %bb.j, %.lr.ph
-  %8 = getelementptr inbounds nuw i8, ptr %6, i64 4
-  %9 = load i32, ptr %8, align 4                  ; 2 uses
+  %.sroa.6.2209 = phi i32 [ %spec.select218, %.lr.ph ], [ %.sroa.6.4, %bb.j ] ; 2 uses
+  %.sroa.0.2208 = phi i32 [ %spec.select, %.lr.ph ], [ %.sroa.0.4, %bb.j ]
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %.pre = load i32, ptr %6, align 4, !tbaa !19
   %exitcond159.peel.not = icmp eq i32 %4, 1
   br label %.preheader124.us
 
 .preheader124.us:                                 ; preds = %.preheader124.us.preheader, %._crit_edge.us
   %.2108133.us = phi i32 [ %i.ao, %._crit_edge.us ], [ 0, %.preheader124.us.preheader ] ; 5 uses
   %i.aj = shl nuw nsw i32 1, %.2108133.us         ; 2 uses
-  %i.ak = and i32 %.pre, %i.aj
+  %i.ak = and i32 %.sroa.0.2208, %i.aj
   %.not119.us.peel = icmp eq i32 %i.ak, 0
   br i1 %.not119.us.peel, label %bb.h, label %.split112.us.peel
 
 .split112.us.peel:                                ; preds = %.preheader124.us
-  %i.al = lshr i32 %9, %.2108133.us
+  %i.al = lshr i32 %.sroa.6.2209, %.2108133.us
   %i.am = and i32 %i.al, 1
   tail call fastcc void @silk_decode_frame(ptr noundef %0, ptr noundef %1, i32 noundef %.2108133.us, i32 noundef 0, i32 noundef %4, i32 noundef 1, i32 noundef %i.am, i32 noundef 1)
   br label %bb.h
 
 bb.h:                                             ; preds = %.split112.us.peel, %.preheader124.us
-  %i.an = and i32 %9, %i.aj
+  %i.an = and i32 %.sroa.6.2209, %i.aj
   %.not119.us = icmp eq i32 %i.an, 0
   %or.cond193 = select i1 %exitcond159.peel.not, i1 true, i1 %.not119.us
   br i1 %or.cond193, label %._crit_edge.us, label %.split.us
@@ -221,18 +221,23 @@ bb.h:                                             ; preds = %.split112.us.peel, 
   br label %.preheader123
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %bb.j
+  %.sroa.0.3 = phi i32 [ %spec.select, %.lr.ph.split.preheader ], [ %.sroa.0.4, %bb.j ] ; 3 uses
+  %.sroa.6.3 = phi i32 [ %spec.select218, %.lr.ph.split.preheader ], [ %.sroa.6.4, %bb.j ] ; 3 uses
   %indvars.iv150 = phi i64 [ 0, %.lr.ph.split.preheader ], [ %indvars.iv.next151, %bb.j ] ; 2 uses
-  %10 = getelementptr inbounds nuw [4 x i8], ptr %6, i64 %indvars.iv150 ; 2 uses
-  %11 = load i32, ptr %10, align 4, !tbaa !19
-  %.not141 = icmp eq i32 %11, 0
+  %.sroa.idx = icmp eq i64 %indvars.iv150, 1      ; 3 uses
+  %.sroa.speculated188 = select i1 %.sroa.idx, i32 %.sroa.6.3, i32 %.sroa.0.3
+  %.not141 = icmp eq i32 %.sroa.speculated188, 0
   br i1 %.not141, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph.split
-  %i.aq = tail call i32 @ff_opus_rc_dec_cdf(ptr noundef %1, ptr noundef nonnull %i.ae) #9
-  store i32 %i.aq, ptr %10, align 4, !tbaa !19
+  %i.aq = tail call i32 @ff_opus_rc_dec_cdf(ptr noundef %1, ptr noundef nonnull %i.ae) #9 ; 2 uses
+  %spec.select220 = select i1 %.sroa.idx, i32 %.sroa.0.3, i32 %i.aq
+  %spec.select221 = select i1 %.sroa.idx, i32 %i.aq, i32 %.sroa.6.3
   br label %bb.j
 
-bb.j:                                             ; preds = %.lr.ph.split, %bb.i
+bb.j:                                             ; preds = %bb.i, %.lr.ph.split
+  %.sroa.0.4 = phi i32 [ %.sroa.0.3, %.lr.ph.split ], [ %spec.select220, %bb.i ] ; 2 uses
+  %.sroa.6.4 = phi i32 [ %.sroa.6.3, %.lr.ph.split ], [ %spec.select221, %bb.i ] ; 2 uses
   %indvars.iv.next151 = add nuw nsw i64 %indvars.iv150, 1 ; 2 uses
   %exitcond154.not = icmp eq i64 %indvars.iv.next151, %wide.trip.count153
   br i1 %exitcond154.not, label %.preheader124.us.preheader, label %.lr.ph.split, !llvm.loop !34
@@ -635,7 +640,6 @@ bb.s:                                             ; preds = %.loopexit
 
 bb.t:                                             ; preds = %bb.s, %bb.b
   %.0110 = phi i32 [ -22, %bb.b ], [ %i.jg, %bb.s ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %6) #9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret i32 %.0110
 }
