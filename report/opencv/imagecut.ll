@@ -204,8 +204,9 @@ bb.b:                                             ; preds = %bb.a
   br i1 %or.cond52, label %.loopexit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.z = sub <2 x i32> %i.r, %i.k                 ; 2 uses
-  %i.aa = add <2 x i32> %i.z, splat (i32 1)       ; 3 uses
+  %i.z = sub <2 x i32> %i.r, %i.k
+  %.fr = freeze <2 x i32> %i.z                    ; 2 uses
+  %i.aa = add <2 x i32> %.fr, splat (i32 1)       ; 3 uses
   %i.ab = tail call noalias noundef nonnull dereferenceable(40) ptr @_Znwm(i64 noundef 40) #8 ; 7 uses
   %i.ac = extractelement <2 x i32> %i.aa, i64 0
   %i.ad = extractelement <2 x i32> %i.aa, i64 1   ; 3 uses
@@ -275,11 +276,10 @@ _ZN5zxing8ArrayRefIhEaSEPNS_5ArrayIhEE.exit:      ; preds = %bb.d, %bb.e, %bb.f
   store ptr %i.ab, ptr %i.ap, align 8, !tbaa !21
   %i.ay = getelementptr inbounds nuw i8, ptr %2, i64 24
   store <2 x i32> %i.aa, ptr %i.ay, align 8, !tbaa !34
-  %i.az = icmp slt <2 x i32> %i.z, zeroinitializer ; 2 uses
-  %3 = extractelement <2 x i1> %i.az, i64 0
-  %4 = extractelement <2 x i1> %i.az, i64 1
-  %or.cond = select i1 %4, i1 true, i1 %3
-  br i1 %or.cond, label %.loopexit, label %.preheader.preheader
+  %i.az = icmp slt <2 x i32> %.fr, zeroinitializer
+  %3 = bitcast <2 x i1> %i.az to i2
+  %or.cond.not = icmp eq i2 %3, 0
+  br i1 %or.cond.not, label %.preheader.preheader, label %.loopexit
 
 .preheader.preheader:                             ; preds = %_ZN5zxing8ArrayRefIhEaSEPNS_5ArrayIhEE.exit
   %i.ba = add nsw i32 %i.u, 1

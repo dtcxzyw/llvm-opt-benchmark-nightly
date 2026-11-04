@@ -204,13 +204,13 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %i.f, i64 144
-  %i.h = load <2 x i32>, ptr %i.g, align 16, !tbaa !86 ; 2 uses
-  %3 = uitofp nneg <2 x i32> %i.h to <2 x float>
-  %4 = icmp slt <2 x i32> %i.h, splat (i32 1)     ; 2 uses
-  %5 = extractelement <2 x i1> %4, i64 0
-  %6 = extractelement <2 x i1> %4, i64 1
-  %or.cond = select i1 %5, i1 true, i1 %6
-  br i1 %or.cond, label %bb.f, label %bb.d
+  %i.h = load <2 x i32>, ptr %i.g, align 16, !tbaa !86
+  %.fr = freeze <2 x i32> %i.h                    ; 2 uses
+  %3 = uitofp nneg <2 x i32> %.fr to <2 x float>
+  %4 = icmp slt <2 x i32> %.fr, splat (i32 1)
+  %5 = bitcast <2 x i1> %4 to i2
+  %or.cond.not = icmp eq i2 %5, 0
+  br i1 %or.cond.not, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 156

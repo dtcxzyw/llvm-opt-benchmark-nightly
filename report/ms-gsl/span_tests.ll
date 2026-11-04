@@ -205,10 +205,10 @@ bb.af:                                            ; preds = %._crit_edge
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ew, ptr noundef nonnull align 8 dereferenceable(24) %i.ev, i64 24, i1 false)
   %i.ex = load <2 x ptr>, ptr %i.ek, align 8
   %i.ey = load <2 x ptr>, ptr %i.ew, align 8
-  %i.ez = icmp eq <2 x ptr> %i.ex, %i.ey          ; 2 uses
-  %11 = extractelement <2 x i1> %i.ez, i64 0
-  %12 = extractelement <2 x i1> %i.ez, i64 1
-  %13 = select i1 %11, i1 %12, i1 false, !prof !38
+  %i.ez = icmp eq <2 x ptr> %i.ex, %i.ey
+  %11 = freeze <2 x i1> %i.ez
+  %12 = bitcast <2 x i1> %11 to i2
+  %13 = icmp eq i2 %12, -1
   br i1 %13, label %_ZNK3gsl7details13span_iteratorIcEneIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove_cvIT_E4typeEcEE5valueEiE4typeELi0EEEbRKNS1_IS6_EE.exit, label %bb.ag, !prof !38
 
 bb.ag:                                            ; preds = %bb.af
@@ -231,10 +231,10 @@ _ZNK3gsl7details13span_iteratorIcEneIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.fj, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
   %i.fk = load <2 x ptr>, ptr %i.el, align 8
   %i.fl = load <2 x ptr>, ptr %i.fj, align 8
-  %i.fm = icmp eq <2 x ptr> %i.fk, %i.fl          ; 2 uses
-  %14 = extractelement <2 x i1> %i.fm, i64 0
-  %15 = extractelement <2 x i1> %i.fm, i64 1
-  %16 = select i1 %14, i1 %15, i1 false, !prof !38
+  %i.fm = icmp eq <2 x ptr> %i.fk, %i.fl
+  %14 = freeze <2 x i1> %i.fm
+  %15 = bitcast <2 x i1> %14 to i2
+  %16 = icmp eq i2 %15, -1
   br i1 %16, label %_ZNK3gsl7details13span_iteratorIcEneIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove_cvIT_E4typeEcEE5valueEiE4typeELi0EEEbRKNS1_IS6_EE.exit63, label %bb.ah, !prof !38
 
 bb.ah:                                            ; preds = %_ZNK3gsl7details13span_iteratorIcEneIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove_cvIT_E4typeEcEE5valueEiE4typeELi0EEEbRKNS1_IS6_EE.exit
@@ -637,10 +637,10 @@ bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.m = load <2 x ptr>, ptr %i.h, align 8
   %i.n = load <2 x ptr>, ptr %i.l, align 8
-  %i.o = icmp eq <2 x ptr> %i.m, %i.n             ; 2 uses
-  %3 = extractelement <2 x i1> %i.o, i64 0
-  %4 = extractelement <2 x i1> %i.o, i64 1
-  %5 = select i1 %3, i1 %4, i1 false, !prof !38
+  %i.o = icmp eq <2 x ptr> %i.m, %i.n
+  %3 = freeze <2 x i1> %i.o
+  %4 = bitcast <2 x i1> %3 to i2
+  %5 = icmp eq i2 %4, -1
   br i1 %5, label %_ZNK3gsl7details13span_iteratorIcEneIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove_cvIT_E4typeEcEE5valueEiE4typeELi0EEEbRKNS1_IS6_EE.exit, label %bb.c, !prof !38
 
 bb.c:                                             ; preds = %bb.b
@@ -1043,10 +1043,10 @@ bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.m = load <2 x ptr>, ptr %i.h, align 8
   %i.n = load <2 x ptr>, ptr %i.l, align 8
-  %i.o = icmp eq <2 x ptr> %i.m, %i.n             ; 2 uses
-  %3 = extractelement <2 x i1> %i.o, i64 0
-  %4 = extractelement <2 x i1> %i.o, i64 1
-  %5 = select i1 %3, i1 %4, i1 false, !prof !38
+  %i.o = icmp eq <2 x ptr> %i.m, %i.n
+  %3 = freeze <2 x i1> %i.o
+  %4 = bitcast <2 x i1> %3 to i2
+  %5 = icmp eq i2 %4, -1
   br i1 %5, label %_ZNK3gsl7details13span_iteratorIcEneIcTnNSt9enable_ifIXsr3std7is_sameINSt9remove_cvIT_E4typeEcEE5valueEiE4typeELi0EEEbRKNS1_IS6_EE.exit, label %bb.c, !prof !38
 
 bb.c:                                             ; preds = %bb.b

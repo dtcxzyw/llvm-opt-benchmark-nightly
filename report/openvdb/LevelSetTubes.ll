@@ -205,10 +205,10 @@ bb.dy:                                            ; preds = %bb.dw, %_ZNSt10uniq
   br label %.body
 
 ._crit_edge544:                                   ; preds = %.lr.ph543
-  %i.vf = icmp eq <2 x i32> %i.vo, %i.pf          ; 2 uses
-  %11 = extractelement <2 x i1> %i.vf, i64 0
-  %12 = extractelement <2 x i1> %i.vf, i64 1
-  %or.cond749 = select i1 %11, i1 %12, i1 false
+  %i.vf = icmp eq <2 x i32> %i.vo, %i.pf
+  %11 = freeze <2 x i1> %i.vf
+  %12 = bitcast <2 x i1> %11 to i2
+  %or.cond749 = icmp eq i2 %12, -1
   %i.vg = icmp eq i32 %i.vr, %.sroa.11.0.copyload
   %or.cond750 = select i1 %or.cond749, i1 %i.vg, i1 false
   br i1 %or.cond750, label %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_4math4Vec3IiEELj3EEELj4EEELj5EEEE13setBackgroundERKS7_b.exit, label %_ZN7openvdb5v13_04math14isExactlyEqualINS1_4Vec3IiEES4_EEbRKT_RKT0_.exit.thread.i

@@ -205,11 +205,11 @@ GetImageAlphaBorder.exit:                         ; preds = %bb.d, %._crit_edge6
   %.sroa.030.1.i = phi <2 x float> [ %.sroa.030.0.i, %._crit_edge64.thread.i ], [ zeroinitializer, %bb.d ]
   %.sroa.432.1.i = phi <2 x float> [ %.sroa.432.0.i, %._crit_edge64.thread.i ], [ zeroinitializer, %bb.d ] ; 2 uses
   %i.at = fptosi <2 x float> %.sroa.432.1.i to <2 x i32>
-  %2 = icmp eq <2 x i32> %i.at, zeroinitializer   ; 2 uses
-  %3 = extractelement <2 x i1> %2, i64 0
-  %4 = extractelement <2 x i1> %2, i64 1
-  %or.cond = select i1 %3, i1 true, i1 %4
-  br i1 %or.cond, label %bb.l, label %bb.k
+  %.fr = freeze <2 x i32> %i.at
+  %2 = icmp eq <2 x i32> %.fr, zeroinitializer
+  %3 = bitcast <2 x i1> %2 to i2
+  %or.cond.not = icmp eq i2 %3, 0
+  br i1 %or.cond.not, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %GetImageAlphaBorder.exit
   tail call void @ImageCrop(ptr noundef nonnull %0, <2 x float> %.sroa.030.1.i, <2 x float> %.sroa.432.1.i)
@@ -612,11 +612,11 @@ bb.a:
   %i.ae = select i1 %i.y, <2 x i32> %i.ac, <2 x i32> %i.t ; 2 uses
   %i.af = select i1 %i.y, <2 x i32> %i.ab, <2 x i32> %i.p ; 2 uses
   %i.ag = select i1 %i.y, <2 x i32> %i.ad, <2 x i32> %i.aa ; 3 uses
-  %i.ah = icmp sgt <2 x i32> %i.n, %i.h           ; 2 uses
-  %5 = extractelement <2 x i1> %i.ah, i64 0
-  %6 = extractelement <2 x i1> %i.ah, i64 1
-  %or.cond = select i1 %6, i1 true, i1 %5
-  br i1 %or.cond, label %._crit_edge210.split, label %.preheader.preheader
+  %i.ah = icmp sgt <2 x i32> %i.n, %i.h
+  %5 = freeze <2 x i1> %i.ah
+  %6 = bitcast <2 x i1> %5 to i2
+  %or.cond.not = icmp eq i2 %6, 0
+  br i1 %or.cond.not, label %.preheader.preheader, label %._crit_edge210.split
 
 .preheader.preheader:                             ; preds = %bb.a
   %i.ai = uitofp nneg <2 x i32> %i.n to <2 x float> ; 3 uses

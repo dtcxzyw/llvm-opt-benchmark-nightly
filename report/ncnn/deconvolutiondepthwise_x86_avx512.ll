@@ -205,17 +205,17 @@ bb.g:                                             ; preds = %_ZNK4ncnn3Mat5empty
   %i.bm = insertelement <2 x i32> %i.bl, i32 %i.q, i64 1
   %i.bn = insertelement <2 x i32> poison, i32 %i.bj, i64 0
   %i.bo = shufflevector <2 x i32> %i.bn, <2 x i32> poison, <2 x i32> zeroinitializer
-  %i.bp = sdiv <2 x i32> %i.bm, %i.bo             ; 3 uses
-  %i.bq = extractelement <2 x i32> %i.bp, i64 0   ; 3 uses
-  %i.br = extractelement <2 x i32> %i.bp, i64 1   ; 3 uses
+  %i.bp = sdiv <2 x i32> %i.bm, %i.bo
+  %.fr = freeze <2 x i32> %i.bp                   ; 3 uses
+  %i.bq = extractelement <2 x i32> %.fr, i64 0    ; 3 uses
+  %i.br = extractelement <2 x i32> %.fr, i64 1    ; 3 uses
   %factor.op.mul171 = mul i32 %i.br, %i.bq
   %.reass = mul i32 %factor.op.mul171, %i.au
   %i.bs = load ptr, ptr %4, align 8, !tbaa !20    ; 3 uses
-  %i.bt = icmp slt <2 x i32> %i.bp, splat (i32 1) ; 2 uses
+  %i.bt = icmp slt <2 x i32> %.fr, splat (i32 1)
   %i.bu = icmp slt i32 %i.au, 1
-  %10 = extractelement <2 x i1> %i.bt, i64 0
-  %11 = extractelement <2 x i1> %i.bt, i64 1
-  %brmerge = select i1 %11, i1 true, i1 %10
+  %10 = bitcast <2 x i1> %i.bt to i2
+  %brmerge = icmp ne i2 %10, 0
   %brmerge181 = or i1 %brmerge, %i.bu
   br i1 %brmerge181, label %._crit_edge175.split, label %.preheader163.lr.ph.preheader
 

@@ -204,13 +204,13 @@ bb.m:                                             ; preds = %.lr.ph760
   %i.bg = fptosi <2 x float> %i.bf to <2 x i32>   ; 2 uses
   %i.bh = load <2 x float>, ptr %i.be, align 4, !tbaa !61 ; 2 uses
   %i.bi = fptosi <2 x float> %i.bh to <2 x i32>
-  %i.bj = sub nsw <2 x i32> %i.bi, %i.bg          ; 2 uses
-  %71 = icmp slt <2 x i32> %i.bj, splat (i32 2)   ; 2 uses
-  %72 = extractelement <2 x i1> %71, i64 0
-  %73 = extractelement <2 x i1> %71, i64 1
-  %or.cond = select i1 %72, i1 true, i1 %73
-  %i.bk = shufflevector <2 x i32> %i.bg, <2 x i32> %i.bj, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  br i1 %or.cond, label %bb.n, label %bb.o
+  %i.bj = sub nsw <2 x i32> %i.bi, %i.bg
+  %.fr = freeze <2 x i32> %i.bj                   ; 2 uses
+  %71 = icmp slt <2 x i32> %.fr, splat (i32 2)
+  %72 = bitcast <2 x i1> %71 to i2
+  %or.cond.not = icmp eq i2 %72, 0
+  %i.bk = shufflevector <2 x i32> %i.bg, <2 x i32> %.fr, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  br i1 %or.cond.not, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.bl = load <2 x i32>, ptr %i.w, align 8, !tbaa !67

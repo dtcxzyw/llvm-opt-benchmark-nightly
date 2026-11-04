@@ -202,15 +202,15 @@ bb.cv:                                            ; preds = %_ZNK2cv3MatclERKNS_
   %i.os = shufflevector <1 x double> %i.oq, <1 x double> poison, <2 x i32> zeroinitializer
   %i.ot = fdiv <2 x double> %i.or, %i.os          ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #15
-  %i.ou = fsub <2 x double> %i.ot, %i.oe          ; 2 uses
-  %i.ov = call <2 x double> @llvm.round.v2f64(<2 x double> %i.ou)
+  %i.ou = fsub <2 x double> %i.ot, %i.oe
+  %.fr556 = freeze <2 x double> %i.ou             ; 2 uses
+  %i.ov = call <2 x double> @llvm.round.v2f64(<2 x double> %.fr556)
   %i.ow = fadd <2 x double> %.sroa.0255.0320.us, %i.ov ; 2 uses
-  %i.ox = call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.ou)
-  %66 = fcmp olt <2 x double> %i.ox, splat (double 5.000000e-01) ; 2 uses
-  %67 = extractelement <2 x i1> %66, i64 0
-  %68 = extractelement <2 x i1> %66, i64 1
-  %69 = select i1 %67, i1 %68, i1 false
-  br i1 %69, label %.split330.us, label %bb.cw
+  %i.ox = call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr556)
+  %66 = fcmp uge <2 x double> %i.ox, splat (double 5.000000e-01)
+  %67 = bitcast <2 x i1> %66 to i2
+  %68 = icmp eq i2 %67, 0
+  br i1 %68, label %.split330.us, label %bb.cw
 
 bb.cw:                                            ; preds = %bb.cv
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %64) #15

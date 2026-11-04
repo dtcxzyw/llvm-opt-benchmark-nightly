@@ -205,13 +205,14 @@ bb.d:                                             ; preds = %bb.a
   %.decomposed = sub <2 x i32> %.frozen, %i.p
   %i.q = icmp sgt <2 x i32> %.decomposed, zeroinitializer
   %i.r = zext <2 x i1> %i.q to <2 x i32>
-  %i.s = add <2 x i32> %i.o, %i.r                 ; 5 uses
+  %i.s = add <2 x i32> %i.o, %i.r
+  %.fr = freeze <2 x i32> %i.s                    ; 5 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
   %i.u = load <2 x i32>, ptr %i.t, align 8
-  %2 = icmp eq <2 x i32> %i.u, %i.s               ; 2 uses
-  %3 = extractelement <2 x i1> %2, i64 0
-  %4 = extractelement <2 x i1> %2, i64 1
-  %or.cond63 = select i1 %3, i1 %4, i1 false
+  %.fr108 = freeze <2 x i32> %i.u
+  %.fr108.scalar = bitcast <2 x i32> %.fr108 to i64
+  %.fr.scalar = bitcast <2 x i32> %.fr to i64
+  %or.cond63 = icmp eq i64 %.fr108.scalar, %.fr.scalar
   br i1 %or.cond63, label %bb.g, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -235,19 +236,18 @@ _ZN25btHeightfieldTerrainShape16clearAcceleratorEv.exit66: ; preds = %bb.e, %bb.
   store i32 0, ptr %i.aa, align 4, !tbaa !18
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 160
   store i32 0, ptr %i.ab, align 8, !tbaa !19
-  store <2 x i32> %i.s, ptr %i.t, align 8, !tbaa !44
+  store <2 x i32> %.fr, ptr %i.t, align 8, !tbaa !44
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.d, %_ZN25btHeightfieldTerrainShape16clearAcceleratorEv.exit66
-  %i.ac = icmp eq <2 x i32> %i.s, zeroinitializer ; 2 uses
-  %5 = extractelement <2 x i1> %i.ac, i64 0
-  %6 = extractelement <2 x i1> %i.ac, i64 1
-  %or.cond = select i1 %5, i1 true, i1 %6
-  br i1 %or.cond, label %.loopexit70, label %bb.h
+  %i.ac = icmp eq <2 x i32> %.fr, zeroinitializer
+  %2 = bitcast <2 x i1> %i.ac to i2
+  %or.cond.not = icmp eq i2 %2, 0
+  br i1 %or.cond.not, label %bb.h, label %.loopexit70
 
 bb.h:                                             ; preds = %bb.g
-  %i.ad = extractelement <2 x i32> %i.s, i64 0    ; 3 uses
-  %i.ae = extractelement <2 x i32> %i.s, i64 1    ; 3 uses
+  %i.ad = extractelement <2 x i32> %.fr, i64 0    ; 3 uses
+  %i.ae = extractelement <2 x i32> %.fr, i64 1    ; 3 uses
   %i.af = mul nsw i32 %i.ae, %i.ad                ; 6 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 156 ; 3 uses
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !18 ; 2 uses

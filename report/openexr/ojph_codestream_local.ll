@@ -204,11 +204,11 @@ bb.p:                                             ; preds = %.lr.ph, %bb.r
   %i.bh = getelementptr inbounds nuw [3 x i8], ptr %i.bg, i64 %indvars.iv
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 1
   %i.bj = load <2 x i8>, ptr %i.bi, align 1, !tbaa !49
-  %2 = tail call range(i8 0, 9) <2 x i8> @llvm.ctpop.v2i8(<2 x i8> %i.bj)
-  %3 = icmp samesign ult <2 x i8> %2, splat (i8 2) ; 2 uses
-  %4 = extractelement <2 x i1> %3, i64 0
-  %5 = extractelement <2 x i1> %3, i64 1
-  %or.cond53 = select i1 %4, i1 %5, i1 false
+  %.fr64 = freeze <2 x i8> %i.bj
+  %2 = tail call range(i8 0, 9) <2 x i8> @llvm.ctpop.v2i8(<2 x i8> %.fr64)
+  %3 = icmp samesign ugt <2 x i8> %2, splat (i8 1)
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond53 = icmp eq i2 %4, 0
   br i1 %or.cond53, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p

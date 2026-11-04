@@ -172,13 +172,13 @@ bb.g:                                             ; preds = %bb.e
 _ZN2cv4gapi2nn9SSDParser17adjustBoundingBoxERNS_5Rect_IiEE.exit: ; preds = %bb.g, %bb.f, %bb.d
   %.sroa.0.0 = phi i32 [ %i.as, %bb.d ], [ %i.bm, %bb.f ], [ %i.az, %bb.g ] ; 3 uses
   %.sroa.8.0 = phi i32 [ %i.at, %bb.d ], [ %i.bd, %bb.f ], [ %i.bq, %bb.g ] ; 6 uses
-  %i.bs = phi <2 x i32> [ %i.an, %bb.d ], [ %i.bn, %bb.f ], [ %i.br, %bb.g ] ; 7 uses
+  %i.bs = phi <2 x i32> [ %i.an, %bb.d ], [ %i.bn, %bb.f ], [ %i.br, %bb.g ]
+  %.fr = freeze <2 x i32> %i.bs                   ; 7 uses
   %.sroa.0.0.copyload.i = load i64, ptr %i.q, align 8, !tbaa !43 ; 3 uses
-  %i.bt = icmp slt <2 x i32> %i.bs, splat (i32 1) ; 2 uses
-  %9 = extractelement <2 x i1> %i.bt, i64 0
-  %10 = extractelement <2 x i1> %i.bt, i64 1
-  %11 = select i1 %9, i1 true, i1 %10
-  br i1 %11, label %_ZN2cvanIiEENS_5Rect_IT_EERKS3_S5_.exit, label %bb.h
+  %i.bt = icmp slt <2 x i32> %.fr, splat (i32 1)
+  %9 = bitcast <2 x i1> %i.bt to i2
+  %.not65 = icmp eq i2 %9, 0
+  br i1 %.not65, label %bb.h, label %_ZN2cvanIiEENS_5Rect_IT_EERKS3_S5_.exit
 
 bb.h:                                             ; preds = %_ZN2cv4gapi2nn9SSDParser17adjustBoundingBoxERNS_5Rect_IiEE.exit
   %.sroa.2.0.copyload.i = load i64, ptr %.sroa.2.0..sroa_idx.i, align 8, !tbaa !43 ; 2 uses
@@ -202,7 +202,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.ca, label %.cont38.i, label %bb.j
 
 .cont38.i:                                        ; preds = %bb.i
-  %i.cc = extractelement <2 x i32> %i.bs, i64 0
+  %i.cc = extractelement <2 x i32> %.fr, i64 0
   %spec.select.i = select i1 %i.bx, i32 %i.cc, i32 %.sroa.5.8.extract.trunc
   %i.cd = add nsw i32 %spec.select.i, %i.bz
   %i.ce = icmp slt i32 %i.cd, %i.cb
@@ -213,7 +213,7 @@ bb.j:                                             ; preds = %.cont38.i, %bb.i
 
 .cont55.thread.i:                                 ; preds = %bb.j
   %i.cf = icmp slt i32 %.sroa.8.0, 0
-  %i.cg = extractelement <2 x i32> %i.bs, i64 1   ; 2 uses
+  %i.cg = extractelement <2 x i32> %.fr, i64 1    ; 2 uses
   br i1 %i.cf, label %.then53.i, label %._crit_edge.i.cont.i
 
 .cont29.i:                                        ; preds = %bb.j
@@ -244,14 +244,14 @@ bb.k:                                             ; preds = %.cont29.i
 .cont35.i:                                        ; preds = %.cont52.i, %._crit_edge.i.cont.i
   %.neg49.pre-phi.i.i = phi i32 [ %.pre60.i.i, %._crit_edge.i.cont.i ], [ %i.cm, %.cont52.i ]
   %i.cp = phi i32 [ %.pre59.i.i, %._crit_edge.i.cont.i ], [ %i.cn, %.cont52.i ] ; 2 uses
-  %i.cq = extractelement <2 x i32> %i.bs, i64 0   ; 2 uses
+  %i.cq = extractelement <2 x i32> %.fr, i64 0    ; 2 uses
   %.v.v.i = select i1 %i.bx, i32 %i.cq, i32 %.sroa.5.8.extract.trunc
   %.v.i = sub i32 %i.bz, %i.cb
   %i.cr = add i32 %.v.i, %.v.v.i
   %i.cs = select i1 %i.bx, i32 %.sroa.5.8.extract.trunc, i32 %i.cq
   %.sroa.speculated53.i.i = call i32 @llvm.smin.i32(i32 %i.cs, i32 %i.cr) ; 2 uses
   %i.ct = sub i32 %.neg49.pre-phi.i.i, %i.cp
-  %i.cu = extractelement <2 x i32> %i.bs, i64 1
+  %i.cu = extractelement <2 x i32> %.fr, i64 1
   %i.cv = select i1 %i.by, i32 %.sroa.5.12.extract.trunc, i32 %i.cu
   %.sroa.speculated.i.i = call i32 @llvm.smin.i32(i32 %i.cv, i32 %i.ct) ; 2 uses
   %i.cw = icmp slt i32 %.sroa.speculated53.i.i, 1
@@ -279,8 +279,8 @@ _ZN2cvanIiEENS_5Rect_IT_EERKS3_S5_.exit:          ; preds = %_ZN2cv4gapi2nn9SSDP
 
 bb.m:                                             ; preds = %_ZN2cvanIiEENS_5Rect_IT_EERKS3_S5_.exit
   %i.cz = mul nsw i32 %.sroa.14.sroa.12.0.i, %.sroa.14.sroa.0.0.i
-  %i.da = extractelement <2 x i32> %i.bs, i64 0
-  %i.db = extractelement <2 x i32> %i.bs, i64 1
+  %i.da = extractelement <2 x i32> %.fr, i64 0
+  %i.db = extractelement <2 x i32> %.fr, i64 1
   %i.dc = mul nsw i32 %i.db, %i.da
   %.not17 = icmp eq i32 %i.cz, %i.dc
   br i1 %.not17, label %bb.n, label %_ZNSt6vectorIiSaIiEE12emplace_backIJRiEEES3_DpOT_.exit

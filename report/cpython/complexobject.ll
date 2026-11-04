@@ -202,12 +202,12 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
 
 bb.g:                                             ; preds = %bb.f
   %i.ap = insertelement <2 x double> poison, double %1, i64 0
-  %i.aq = insertelement <2 x double> %i.ap, double %0, i64 1 ; 4 uses
-  %4 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.aq) ; 3 uses
-  %5 = fcmp une <2 x double> %4, splat (double +inf) ; 3 uses
-  %6 = extractelement <2 x i1> %5, i64 0
-  %7 = extractelement <2 x i1> %5, i64 1
-  %or.cond69.not84 = select i1 %7, i1 %6, i1 false
+  %i.aq = insertelement <2 x double> %i.ap, double %0, i64 1
+  %.fr89 = freeze <2 x double> %i.aq              ; 4 uses
+  %4 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr89) ; 3 uses
+  %5 = fcmp une <2 x double> %4, splat (double +inf) ; 2 uses
+  %6 = bitcast <2 x i1> %5 to i2
+  %or.cond69.not84 = icmp eq i2 %6, -1
   %i.ar = tail call double @llvm.fabs.f64(double %2) ; 2 uses
   %i.as = fcmp ueq double %i.ar, +inf
   %or.cond71 = or i1 %or.cond69.not84, %i.as
@@ -218,7 +218,7 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.av = select <2 x i1> %5, <2 x double> zeroinitializer, <2 x double> splat (double 1.000000e+00)
-  %i.aw = tail call <2 x double> @llvm.copysign.v2f64(<2 x double> %i.av, <2 x double> %i.aq) ; 2 uses
+  %i.aw = tail call <2 x double> @llvm.copysign.v2f64(<2 x double> %i.av, <2 x double> %.fr89) ; 2 uses
   %i.ax = insertelement <2 x double> poison, double %3, i64 0
   %i.ay = insertelement <2 x double> %i.ax, double %i.e, i64 1
   %i.az = fmul nnan <2 x double> %i.aw, %i.ay
@@ -238,7 +238,7 @@ bb.i:                                             ; preds = %bb.g
   %or.cond77 = or i1 %i.bi, %or.cond75.not86
   %i.bj = extractelement <2 x double> %4, i64 0
   %i.bk = fcmp ueq double %i.bj, +inf
-  %or.cond79 = select i1 %or.cond77, i1 true, i1 %i.bk
+  %or.cond79 = or i1 %or.cond77, %i.bk
   br i1 %or.cond79, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
@@ -249,11 +249,11 @@ bb.j:                                             ; preds = %bb.i
   %i.bp = fneg double %i.bo
   %i.bq = insertelement <2 x double> poison, double %i.bo, i64 0
   %i.br = insertelement <2 x double> %i.bq, double %i.bp, i64 1
-  %i.bs = fmul nnan <2 x double> %i.aq, %i.br
+  %i.bs = fmul nnan <2 x double> %.fr89, %i.br
   %i.bt = shufflevector <2 x double> %i.bs, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.bu = insertelement <2 x double> poison, double %i.bm, i64 0
   %i.bv = shufflevector <2 x double> %i.bu, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.bw = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.aq, <2 x double> %i.bv, <2 x double> %i.bt)
+  %i.bw = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %.fr89, <2 x double> %i.bv, <2 x double> %i.bt)
   %i.bx = fmul <2 x double> %i.bw, zeroinitializer
   br label %bb.k
 

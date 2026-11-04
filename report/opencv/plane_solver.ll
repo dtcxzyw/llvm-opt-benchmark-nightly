@@ -202,25 +202,25 @@ bb.d:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %10, i64 24
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !32   ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 24
-  %i.q = load <2 x float>, ptr %i.p, align 4, !tbaa !45 ; 4 uses
+  %i.q = load <2 x float>, ptr %i.p, align 4, !tbaa !45
+  %.fr53 = freeze <2 x float> %i.q                ; 4 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.o, i64 32
   %i.s = load float, ptr %i.r, align 4, !tbaa !45 ; 4 uses
-  %i.t = call <2 x float> @llvm.fabs.v2f32(<2 x float> %i.q)
-  %i.u = fcmp oeq <2 x float> %i.t, splat (float +inf) ; 2 uses
-  %14 = extractelement <2 x i1> %i.u, i64 0
-  %15 = extractelement <2 x i1> %i.u, i64 1
-  %or.cond48 = select i1 %14, i1 true, i1 %15
+  %i.t = call <2 x float> @llvm.fabs.v2f32(<2 x float> %.fr53)
+  %i.u = fcmp oeq <2 x float> %i.t, splat (float +inf)
+  %14 = bitcast <2 x i1> %i.u to i2
+  %or.cond48 = icmp ne i2 %14, 0
   %i.v = call float @llvm.fabs.f32(float %i.s)
   %i.w = fcmp oeq float %i.v, +inf
   %or.cond50 = select i1 %or.cond48, i1 true, i1 %i.w
   br i1 %or.cond50, label %bb.v, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.x = extractelement <2 x float> %i.q, i64 0   ; 2 uses
+  %i.x = extractelement <2 x float> %.fr53, i64 0 ; 2 uses
   %i.y = fcmp oeq float %i.x, 0.000000e+00
-  %i.z = extractelement <2 x float> %i.q, i64 1   ; 2 uses
+  %i.z = extractelement <2 x float> %.fr53, i64 1 ; 2 uses
   %i.aa = fcmp oeq float %i.z, 0.000000e+00
-  %or.cond = select i1 %i.y, i1 %i.aa, i1 false
+  %or.cond = and i1 %i.y, %i.aa
   %i.ab = fcmp oeq float %i.s, 0.000000e+00
   %or.cond3 = select i1 %or.cond, i1 %i.ab, i1 false
   br i1 %or.cond3, label %bb.v, label %bb.i
@@ -263,7 +263,7 @@ bb.j:                                             ; preds = %bb.i
   %i.ap = load float, ptr %i.ao, align 4, !tbaa !45
   %i.aq = fneg float %i.s
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #14
-  %i.ar = fpext <2 x float> %i.q to <2 x double>
+  %i.ar = fpext <2 x float> %.fr53 to <2 x double>
   store <2 x double> %i.ar, ptr %i.a, align 16, !tbaa !47
   %i.as = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.at = call float @llvm.fmuladd.f32(float %i.ai, float %i.aj, float %i.an)

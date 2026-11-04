@@ -205,8 +205,9 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.e = load ptr, ptr %i.d, align 16, !tbaa !48  ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 144
-  %i.g = load <2 x i32>, ptr %i.f, align 16, !tbaa !49 ; 2 uses
-  %i.h = shufflevector <2 x i32> %i.g, <2 x i32> poison, <8 x i32> <i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1>
+  %i.g = load <2 x i32>, ptr %i.f, align 16, !tbaa !49
+  %.fr = freeze <2 x i32> %i.g                    ; 2 uses
+  %i.h = shufflevector <2 x i32> %.fr, <2 x i32> poison, <8 x i32> <i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1>
   %i.i = sitofp reassoc nsz arcp contract afn <8 x i32> %i.h to <8 x float>
   %.not = icmp eq i32 %4, 0
   br i1 %.not, label %.thread, label %bb.b
@@ -219,11 +220,10 @@ bb.b:                                             ; preds = %bb.a
 
 .thread:                                          ; preds = %bb.a, %bb.b
   %i.m = phi <2 x float> [ %i.l, %bb.b ], [ splat (float 1.000000e+00), %bb.a ] ; 4 uses
-  %i.n = icmp slt <2 x i32> %i.g, splat (i32 1)   ; 2 uses
-  %5 = extractelement <2 x i1> %i.n, i64 0
-  %6 = extractelement <2 x i1> %i.n, i64 1
-  %or.cond = select i1 %5, i1 true, i1 %6
-  br i1 %or.cond, label %.preheader, label %bb.c
+  %i.n = icmp slt <2 x i32> %.fr, splat (i32 1)
+  %5 = bitcast <2 x i1> %i.n to i2
+  %or.cond.not = icmp eq i2 %5, 0
+  br i1 %or.cond.not, label %bb.c, label %.preheader
 
 .preheader:                                       ; preds = %.thread
   %i.o = icmp sgt i32 %1, 0

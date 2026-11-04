@@ -204,11 +204,11 @@ bb.a:
   store ptr %2, ptr %i.b, align 8, !tbaa !40
   %.sroa.0.0.copyload = load <2 x float>, ptr %4, align 4
   %i.c = load <2 x float>, ptr %3, align 4
-  %i.d = fcmp une <2 x float> %i.c, %.sroa.0.0.copyload ; 2 uses
-  %8 = extractelement <2 x i1> %i.d, i64 0
-  %9 = extractelement <2 x i1> %i.d, i64 1
-  %10 = select i1 %8, i1 true, i1 %9
-  br i1 %10, label %bb.b, label %bb.c
+  %i.d = fcmp une <2 x float> %i.c, %.sroa.0.0.copyload
+  %8 = freeze <2 x i1> %i.d
+  %9 = bitcast <2 x i1> %8 to i2
+  %.not = icmp eq i2 %9, 0
+  br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZN7testing16AssertionSuccessEv(ptr dead_on_unwind writable sret(%"class.testing::AssertionResult") align 8 %0)
@@ -611,10 +611,10 @@ bb.a:
   %.sroa.22.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 8
   %.sroa.22.0.copyload = load float, ptr %.sroa.22.0..sroa_idx, align 4
   %i.c = load <2 x float>, ptr %3, align 4
-  %i.d = fcmp une <2 x float> %i.c, %.sroa.01.0.copyload ; 2 uses
-  %8 = extractelement <2 x i1> %i.d, i64 0
-  %9 = extractelement <2 x i1> %i.d, i64 1
-  %or.cond.i = select i1 %8, i1 true, i1 %9
+  %i.d = fcmp une <2 x float> %i.c, %.sroa.01.0.copyload
+  %8 = freeze <2 x i1> %i.d
+  %9 = bitcast <2 x i1> %8 to i2
+  %or.cond.i = icmp ne i2 %9, 0
   %i.e = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.f = load float, ptr %i.e, align 4
   %i.g = fcmp une float %i.f, %.sroa.22.0.copyload
@@ -1017,10 +1017,10 @@ bb.a:
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %.sroa.0.0.copyload = load <2 x float>, ptr %4, align 4
   %i.a = load <2 x float>, ptr %3, align 4
-  %i.b = fcmp oeq <2 x float> %i.a, %.sroa.0.0.copyload ; 2 uses
-  %7 = extractelement <2 x i1> %i.b, i64 0
-  %8 = extractelement <2 x i1> %i.b, i64 1
-  %9 = select i1 %7, i1 %8, i1 false
+  %i.b = fcmp oeq <2 x float> %i.a, %.sroa.0.0.copyload
+  %7 = freeze <2 x i1> %i.b
+  %8 = bitcast <2 x i1> %7 to i2
+  %9 = icmp eq i2 %8, -1
   br i1 %9, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -1423,10 +1423,10 @@ bb.a:
   %.sroa.22.0..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 8
   %.sroa.22.0.copyload = load float, ptr %.sroa.22.0..sroa_idx, align 4
   %i.a = load <2 x float>, ptr %3, align 4
-  %i.b = fcmp oeq <2 x float> %i.a, %.sroa.01.0.copyload ; 2 uses
-  %7 = extractelement <2 x i1> %i.b, i64 0
-  %8 = extractelement <2 x i1> %i.b, i64 1
-  %or.cond.i = select i1 %7, i1 %8, i1 false
+  %i.b = fcmp oeq <2 x float> %i.a, %.sroa.01.0.copyload
+  %7 = freeze <2 x i1> %i.b
+  %8 = bitcast <2 x i1> %7 to i2
+  %or.cond.i = icmp eq i2 %8, -1
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.d = load float, ptr %i.c, align 4
   %i.e = fcmp oeq float %i.d, %.sroa.22.0.copyload
@@ -1829,10 +1829,10 @@ bb.a:
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %.sroa.01.0.copyload.i = load <2 x float>, ptr %3, align 4
   %i.a = load <2 x float>, ptr %4, align 4
-  %i.b = fcmp oeq <2 x float> %i.a, %.sroa.01.0.copyload.i ; 2 uses
-  %7 = extractelement <2 x i1> %i.b, i64 0
-  %8 = extractelement <2 x i1> %i.b, i64 1
-  %9 = select i1 %7, i1 %8, i1 false
+  %i.b = fcmp oeq <2 x float> %i.a, %.sroa.01.0.copyload.i
+  %7 = freeze <2 x i1> %i.b
+  %8 = bitcast <2 x i1> %7 to i2
+  %9 = icmp eq i2 %8, -1
   br i1 %9, label %_ZNK4pbrt7Bounds2IfEeqERKS1_.exit, label %_ZNK4pbrt7Bounds2IfEeqERKS1_.exit.thread
 
 _ZNK4pbrt7Bounds2IfEeqERKS1_.exit:                ; preds = %bb.a
@@ -1840,10 +1840,10 @@ _ZNK4pbrt7Bounds2IfEeqERKS1_.exit:                ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.sroa.0.0.copyload.i = load <2 x float>, ptr %i.d, align 4
   %i.e = load <2 x float>, ptr %i.c, align 4
-  %i.f = fcmp oeq <2 x float> %i.e, %.sroa.0.0.copyload.i ; 2 uses
-  %10 = extractelement <2 x i1> %i.f, i64 0
-  %11 = extractelement <2 x i1> %i.f, i64 1
-  %12 = select i1 %10, i1 %11, i1 false
+  %i.f = fcmp oeq <2 x float> %i.e, %.sroa.0.0.copyload.i
+  %10 = freeze <2 x i1> %i.f
+  %11 = bitcast <2 x i1> %10 to i2
+  %12 = icmp eq i2 %11, -1
   br i1 %12, label %bb.b, label %_ZNK4pbrt7Bounds2IfEeqERKS1_.exit.thread
 
 bb.b:                                             ; preds = %_ZNK4pbrt7Bounds2IfEeqERKS1_.exit
@@ -2246,10 +2246,10 @@ bb.a:
   %.sroa.26.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %3, i64 8
   %.sroa.26.0.copyload.i = load float, ptr %.sroa.26.0..sroa_idx.i, align 4
   %i.a = load <2 x float>, ptr %4, align 4
-  %i.b = fcmp oeq <2 x float> %i.a, %.sroa.05.0.copyload.i ; 2 uses
-  %7 = extractelement <2 x i1> %i.b, i64 0
-  %8 = extractelement <2 x i1> %i.b, i64 1
-  %or.cond.i.i = select i1 %7, i1 %8, i1 false
+  %i.b = fcmp oeq <2 x float> %i.a, %.sroa.05.0.copyload.i
+  %7 = freeze <2 x i1> %i.b
+  %8 = bitcast <2 x i1> %7 to i2
+  %or.cond.i.i = icmp eq i2 %8, -1
   %i.c = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.d = load float, ptr %i.c, align 4
   %i.e = fcmp oeq float %i.d, %.sroa.26.0.copyload.i
@@ -2261,10 +2261,10 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 12
   %.sroa.01.0.copyload.i = load <2 x float>, ptr %i.g, align 4
   %i.h = load <2 x float>, ptr %i.f, align 4
-  %i.i = fcmp oeq <2 x float> %i.h, %.sroa.01.0.copyload.i ; 2 uses
-  %9 = extractelement <2 x i1> %i.i, i64 0
-  %10 = extractelement <2 x i1> %i.i, i64 1
-  %or.cond.i11.i = select i1 %9, i1 %10, i1 false
+  %i.i = fcmp oeq <2 x float> %i.h, %.sroa.01.0.copyload.i
+  %9 = freeze <2 x i1> %i.i
+  %10 = bitcast <2 x i1> %9 to i2
+  %or.cond.i11.i = icmp eq i2 %10, -1
   br i1 %or.cond.i11.i, label %_ZNK4pbrt7Bounds3IfEeqERKS1_.exit, label %_ZNK4pbrt7Bounds3IfEeqERKS1_.exit.thread
 
 _ZNK4pbrt7Bounds3IfEeqERKS1_.exit:                ; preds = %bb.b

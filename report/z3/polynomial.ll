@@ -205,10 +205,10 @@ bb.r:                                             ; preds = %bb.q, %.lr.ph.i.i
   %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.bl, i64 %indvars.iv.i.i
   %i.bo = load <2 x i32>, ptr %i.bm, align 4
   %i.bp = load <2 x i32>, ptr %i.bn, align 4
-  %i.bq = icmp eq <2 x i32> %i.bo, %i.bp          ; 2 uses
-  %3 = extractelement <2 x i1> %i.bq, i64 0
-  %4 = extractelement <2 x i1> %i.bq, i64 1
-  %5 = select i1 %3, i1 %4, i1 false
+  %i.bq = icmp eq <2 x i32> %i.bo, %i.bp
+  %3 = freeze <2 x i1> %i.bq
+  %4 = bitcast <2 x i1> %3 to i2
+  %5 = icmp eq i2 %4, -1
   br i1 %5, label %bb.q, label %.loopexit110
 
 .loopexit110:                                     ; preds = %bb.r, %bb.p, %bb.o
@@ -611,10 +611,10 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph.i.i
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %indvars.iv.i.i
   %i.ap = load <2 x i32>, ptr %i.an, align 4
   %i.aq = load <2 x i32>, ptr %i.ao, align 4
-  %i.ar = icmp eq <2 x i32> %i.ap, %i.aq          ; 2 uses
-  %2 = extractelement <2 x i1> %i.ar, i64 0
-  %3 = extractelement <2 x i1> %i.ar, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.ar = icmp eq <2 x i32> %i.ap, %i.aq
+  %2 = freeze <2 x i1> %i.ar
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   br i1 %4, label %bb.f, label %.loopexit
 
 .loopexit:                                        ; preds = %bb.g, %bb.e, %bb.d
@@ -1017,10 +1017,10 @@ bb.j:                                             ; preds = %bb.i, %.preheader.i
   %i.cf = getelementptr inbounds nuw [8 x i8], ptr %i.bk, i64 %indvars.iv.i.i.i.i
   %i.cg = load <2 x i32>, ptr %i.ce, align 4
   %i.ch = load <2 x i32>, ptr %i.cf, align 4
-  %i.ci = icmp eq <2 x i32> %i.cg, %i.ch          ; 2 uses
-  %2 = extractelement <2 x i1> %i.ci, i64 0
-  %3 = extractelement <2 x i1> %i.ci, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.ci = icmp eq <2 x i32> %i.cg, %i.ch
+  %2 = freeze <2 x i1> %i.ci
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   br i1 %4, label %bb.i, label %.loopexit.i.i
 
 _ZNK10chashtableIPN10polynomial8monomialENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.i.i: ; preds = %bb.g, %bb.i
@@ -1423,10 +1423,10 @@ bb.e:                                             ; preds = %bb.d, %.preheader.i
   %i.al = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %indvars.iv.i.i.i
   %i.am = load <2 x i32>, ptr %i.ak, align 4
   %i.an = load <2 x i32>, ptr %i.al, align 4
-  %i.ao = icmp eq <2 x i32> %i.am, %i.an          ; 2 uses
-  %2 = extractelement <2 x i1> %i.ao, i64 0
-  %3 = extractelement <2 x i1> %i.ao, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.ao = icmp eq <2 x i32> %i.am, %i.an
+  %2 = freeze <2 x i1> %i.ao
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   br i1 %4, label %bb.d, label %.loopexit.i
 
 _ZNK10chashtableIPN10polynomial8monomialENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.i: ; preds = %bb.d, %bb.b
@@ -1829,10 +1829,10 @@ bb.ct:                                            ; preds = %bb.cs, %.preheader.
   %i.ut = getelementptr inbounds nuw [8 x i8], ptr %i.ty, i64 %indvars.iv.i.i.i.i280
   %i.uu = load <2 x i32>, ptr %i.us, align 4
   %i.uv = load <2 x i32>, ptr %i.ut, align 4
-  %i.uw = icmp eq <2 x i32> %i.uu, %i.uv          ; 2 uses
-  %24 = extractelement <2 x i1> %i.uw, i64 0
-  %25 = extractelement <2 x i1> %i.uw, i64 1
-  %26 = select i1 %24, i1 %25, i1 false
+  %i.uw = icmp eq <2 x i32> %i.uu, %i.uv
+  %24 = freeze <2 x i1> %i.uw
+  %25 = bitcast <2 x i1> %24 to i2
+  %26 = icmp eq i2 %25, -1
   br i1 %26, label %bb.cs, label %.loopexit.i.i
 
 _ZNK10chashtableIPN10polynomial8monomialENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.i.i: ; preds = %bb.cq, %bb.cs
@@ -2235,10 +2235,10 @@ bb.ee:                                            ; preds = %bb.ed, %.preheader.
   %i.acg = getelementptr inbounds nuw [8 x i8], ptr %i.abl, i64 %indvars.iv.i.i.i.i303
   %i.ach = load <2 x i32>, ptr %i.acf, align 4
   %i.aci = load <2 x i32>, ptr %i.acg, align 4
-  %i.acj = icmp eq <2 x i32> %i.ach, %i.aci       ; 2 uses
-  %27 = extractelement <2 x i1> %i.acj, i64 0
-  %28 = extractelement <2 x i1> %i.acj, i64 1
-  %29 = select i1 %27, i1 %28, i1 false
+  %i.acj = icmp eq <2 x i32> %i.ach, %i.aci
+  %27 = freeze <2 x i1> %i.acj
+  %28 = bitcast <2 x i1> %27 to i2
+  %29 = icmp eq i2 %28, -1
   br i1 %29, label %bb.ed, label %.loopexit.i.i293
 
 _ZNK10chashtableIPN10polynomial8monomialENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.i.i306: ; preds = %bb.eb, %bb.ed
@@ -2641,10 +2641,10 @@ bb.as:                                            ; preds = %bb.ar, %.preheader.
   %i.jv = getelementptr inbounds nuw [8 x i8], ptr %i.ja, i64 %indvars.iv.i.i.i.i
   %i.jw = load <2 x i32>, ptr %i.ju, align 4
   %i.jx = load <2 x i32>, ptr %i.jv, align 4
-  %i.jy = icmp eq <2 x i32> %i.jw, %i.jx          ; 2 uses
-  %5 = extractelement <2 x i1> %i.jy, i64 0
-  %6 = extractelement <2 x i1> %i.jy, i64 1
-  %7 = select i1 %5, i1 %6, i1 false
+  %i.jy = icmp eq <2 x i32> %i.jw, %i.jx
+  %5 = freeze <2 x i1> %i.jy
+  %6 = bitcast <2 x i1> %5 to i2
+  %7 = icmp eq i2 %6, -1
   br i1 %7, label %bb.ar, label %.loopexit.i.i
 
 _ZNK10chashtableIPN10polynomial8monomialENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.i.i: ; preds = %bb.ap, %bb.ar
@@ -3047,10 +3047,10 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph.i.i
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.z, i64 %indvars.iv.i.i
   %i.ap = load <2 x i32>, ptr %i.an, align 4
   %i.aq = load <2 x i32>, ptr %i.ao, align 4
-  %i.ar = icmp eq <2 x i32> %i.ap, %i.aq          ; 2 uses
-  %2 = extractelement <2 x i1> %i.ar, i64 0
-  %3 = extractelement <2 x i1> %i.ar, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.ar = icmp eq <2 x i32> %i.ap, %i.aq
+  %2 = freeze <2 x i1> %i.ar
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   br i1 %4, label %bb.f, label %.loopexit
 
 _ZNK10chashtableIPN10polynomial8monomialENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit: ; preds = %.preheader.i.i, %bb.f
@@ -3453,10 +3453,10 @@ bb.ib:                                            ; preds = %bb.ia, %.preheader.
   %i.awl = getelementptr inbounds nuw [8 x i8], ptr %i.avq, i64 %indvars.iv.i.i.i.i1764
   %i.awm = load <2 x i32>, ptr %i.awk, align 4
   %i.awn = load <2 x i32>, ptr %i.awl, align 4
-  %i.awo = icmp eq <2 x i32> %i.awm, %i.awn       ; 2 uses
-  %104 = extractelement <2 x i1> %i.awo, i64 0
-  %105 = extractelement <2 x i1> %i.awo, i64 1
-  %106 = select i1 %104, i1 %105, i1 false
+  %i.awo = icmp eq <2 x i32> %i.awm, %i.awn
+  %104 = freeze <2 x i1> %i.awo
+  %105 = bitcast <2 x i1> %104 to i2
+  %106 = icmp eq i2 %105, -1
   br i1 %106, label %bb.ia, label %.loopexit.i.i1754
 
 _ZNK10chashtableIPN10polynomial8monomialENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.i.i1767: ; preds = %bb.hy, %bb.ia
@@ -3859,10 +3859,10 @@ bb.jo:                                            ; preds = %bb.jn, %.preheader.
   %i.bek = getelementptr inbounds nuw [8 x i8], ptr %i.bdp, i64 %indvars.iv.i.i.i.i1814
   %i.bel = load <2 x i32>, ptr %i.bej, align 4
   %i.bem = load <2 x i32>, ptr %i.bek, align 4
-  %i.ben = icmp eq <2 x i32> %i.bel, %i.bem       ; 2 uses
-  %107 = extractelement <2 x i1> %i.ben, i64 0
-  %108 = extractelement <2 x i1> %i.ben, i64 1
-  %109 = select i1 %107, i1 %108, i1 false
+  %i.ben = icmp eq <2 x i32> %i.bel, %i.bem
+  %107 = freeze <2 x i1> %i.ben
+  %108 = bitcast <2 x i1> %107 to i2
+  %109 = icmp eq i2 %108, -1
   br i1 %109, label %bb.jn, label %.loopexit.i.i1804
 
 _ZNK10chashtableIPN10polynomial8monomialENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.i.i1817: ; preds = %bb.jl, %bb.jn
@@ -4265,10 +4265,10 @@ bb.mo:                                            ; preds = %bb.mn, %.preheader.
   %i.but = getelementptr inbounds nuw [8 x i8], ptr %i.bty, i64 %indvars.iv.i.i.i.i1864
   %i.buu = load <2 x i32>, ptr %i.bus, align 4
   %i.buv = load <2 x i32>, ptr %i.but, align 4
-  %i.buw = icmp eq <2 x i32> %i.buu, %i.buv       ; 2 uses
-  %110 = extractelement <2 x i1> %i.buw, i64 0
-  %111 = extractelement <2 x i1> %i.buw, i64 1
-  %112 = select i1 %110, i1 %111, i1 false
+  %i.buw = icmp eq <2 x i32> %i.buu, %i.buv
+  %110 = freeze <2 x i1> %i.buw
+  %111 = bitcast <2 x i1> %110 to i2
+  %112 = icmp eq i2 %111, -1
   br i1 %112, label %bb.mn, label %.loopexit.i.i1854
 
 _ZNK10chashtableIPN10polynomial8monomialENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.i.i1867: ; preds = %bb.ml, %bb.mn
@@ -4671,10 +4671,10 @@ bb.ox:                                            ; preds = %bb.ow, %.preheader.
   %i.cgm = getelementptr inbounds nuw [8 x i8], ptr %i.cfr, i64 %indvars.iv.i.i.i.i1914
   %i.cgn = load <2 x i32>, ptr %i.cgl, align 4
   %i.cgo = load <2 x i32>, ptr %i.cgm, align 4
-  %i.cgp = icmp eq <2 x i32> %i.cgn, %i.cgo       ; 2 uses
-  %113 = extractelement <2 x i1> %i.cgp, i64 0
-  %114 = extractelement <2 x i1> %i.cgp, i64 1
-  %115 = select i1 %113, i1 %114, i1 false
+  %i.cgp = icmp eq <2 x i32> %i.cgn, %i.cgo
+  %113 = freeze <2 x i1> %i.cgp
+  %114 = bitcast <2 x i1> %113 to i2
+  %115 = icmp eq i2 %114, -1
   br i1 %115, label %bb.ow, label %.loopexit.i.i1904
 
 _ZNK10chashtableIPN10polynomial8monomialENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.i.i1917: ; preds = %bb.ou, %bb.ow
@@ -5077,10 +5077,10 @@ bb.sw:                                            ; preds = %bb.sv, %.preheader.
   %i.dbi = getelementptr inbounds nuw [8 x i8], ptr %i.dan, i64 %indvars.iv.i.i.i.i2014
   %i.dbj = load <2 x i32>, ptr %i.dbh, align 4
   %i.dbk = load <2 x i32>, ptr %i.dbi, align 4
-  %i.dbl = icmp eq <2 x i32> %i.dbj, %i.dbk       ; 2 uses
-  %116 = extractelement <2 x i1> %i.dbl, i64 0
-  %117 = extractelement <2 x i1> %i.dbl, i64 1
-  %118 = select i1 %116, i1 %117, i1 false
+  %i.dbl = icmp eq <2 x i32> %i.dbj, %i.dbk
+  %116 = freeze <2 x i1> %i.dbl
+  %117 = bitcast <2 x i1> %116 to i2
+  %118 = icmp eq i2 %117, -1
   br i1 %118, label %bb.sv, label %.loopexit.i.i2004
 
 _ZNK10chashtableIPN10polynomial8monomialENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.i.i2017: ; preds = %bb.st, %bb.sv
@@ -5483,10 +5483,10 @@ bb.vg:                                            ; preds = %bb.vf, %.preheader.
   %i.dnb = getelementptr inbounds nuw [8 x i8], ptr %i.dmg, i64 %indvars.iv.i.i.i.i2064
   %i.dnc = load <2 x i32>, ptr %i.dna, align 4
   %i.dnd = load <2 x i32>, ptr %i.dnb, align 4
-  %i.dne = icmp eq <2 x i32> %i.dnc, %i.dnd       ; 2 uses
-  %119 = extractelement <2 x i1> %i.dne, i64 0
-  %120 = extractelement <2 x i1> %i.dne, i64 1
-  %121 = select i1 %119, i1 %120, i1 false
+  %i.dne = icmp eq <2 x i32> %i.dnc, %i.dnd
+  %119 = freeze <2 x i1> %i.dne
+  %120 = bitcast <2 x i1> %119 to i2
+  %121 = icmp eq i2 %120, -1
   br i1 %121, label %bb.vf, label %.loopexit.i.i2054
 
 _ZNK10chashtableIPN10polynomial8monomialENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.i.i2067: ; preds = %bb.vd, %bb.vf
@@ -5889,10 +5889,10 @@ bb.wu:                                            ; preds = %bb.wt, %.preheader.
   %i.dve = getelementptr inbounds nuw [8 x i8], ptr %i.duj, i64 %indvars.iv.i.i.i.i2114
   %i.dvf = load <2 x i32>, ptr %i.dvd, align 4
   %i.dvg = load <2 x i32>, ptr %i.dve, align 4
-  %i.dvh = icmp eq <2 x i32> %i.dvf, %i.dvg       ; 2 uses
-  %122 = extractelement <2 x i1> %i.dvh, i64 0
-  %123 = extractelement <2 x i1> %i.dvh, i64 1
-  %124 = select i1 %122, i1 %123, i1 false
+  %i.dvh = icmp eq <2 x i32> %i.dvf, %i.dvg
+  %122 = freeze <2 x i1> %i.dvh
+  %123 = bitcast <2 x i1> %122 to i2
+  %124 = icmp eq i2 %123, -1
   br i1 %124, label %bb.wt, label %.loopexit.i.i2104
 
 _ZNK10chashtableIPN10polynomial8monomialENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.i.i2117: ; preds = %bb.wr, %bb.wt
@@ -6295,10 +6295,10 @@ bb.yd:                                            ; preds = %bb.yc, %.preheader.
   %i.ecz = getelementptr inbounds nuw [8 x i8], ptr %i.ece, i64 %indvars.iv.i.i.i.i2164
   %i.eda = load <2 x i32>, ptr %i.ecy, align 4
   %i.edb = load <2 x i32>, ptr %i.ecz, align 4
-  %i.edc = icmp eq <2 x i32> %i.eda, %i.edb       ; 2 uses
-  %125 = extractelement <2 x i1> %i.edc, i64 0
-  %126 = extractelement <2 x i1> %i.edc, i64 1
-  %127 = select i1 %125, i1 %126, i1 false
+  %i.edc = icmp eq <2 x i32> %i.eda, %i.edb
+  %125 = freeze <2 x i1> %i.edc
+  %126 = bitcast <2 x i1> %125 to i2
+  %127 = icmp eq i2 %126, -1
   br i1 %127, label %bb.yc, label %.loopexit.i.i2154
 
 _ZNK10chashtableIPN10polynomial8monomialENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.i.i2167: ; preds = %bb.ya, %bb.yc
@@ -6701,10 +6701,10 @@ bb.zn:                                            ; preds = %bb.zm, %.preheader.
   %i.eku = getelementptr inbounds nuw [8 x i8], ptr %i.ejz, i64 %indvars.iv.i.i.i.i2214
   %i.ekv = load <2 x i32>, ptr %i.ekt, align 4
   %i.ekw = load <2 x i32>, ptr %i.eku, align 4
-  %i.ekx = icmp eq <2 x i32> %i.ekv, %i.ekw       ; 2 uses
-  %128 = extractelement <2 x i1> %i.ekx, i64 0
-  %129 = extractelement <2 x i1> %i.ekx, i64 1
-  %130 = select i1 %128, i1 %129, i1 false
+  %i.ekx = icmp eq <2 x i32> %i.ekv, %i.ekw
+  %128 = freeze <2 x i1> %i.ekx
+  %129 = bitcast <2 x i1> %128 to i2
+  %130 = icmp eq i2 %129, -1
   br i1 %130, label %bb.zm, label %.loopexit.i.i2204
 
 _ZNK10chashtableIPN10polynomial8monomialENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.i.i2217: ; preds = %bb.zk, %bb.zm
@@ -7107,10 +7107,10 @@ bb.abj:                                           ; preds = %bb.abi, %.preheader
   %i.etr = getelementptr inbounds nuw [8 x i8], ptr %i.esw, i64 %indvars.iv.i.i.i.i2264
   %i.ets = load <2 x i32>, ptr %i.etq, align 4
   %i.ett = load <2 x i32>, ptr %i.etr, align 4
-  %i.etu = icmp eq <2 x i32> %i.ets, %i.ett       ; 2 uses
-  %131 = extractelement <2 x i1> %i.etu, i64 0
-  %132 = extractelement <2 x i1> %i.etu, i64 1
-  %133 = select i1 %131, i1 %132, i1 false
+  %i.etu = icmp eq <2 x i32> %i.ets, %i.ett
+  %131 = freeze <2 x i1> %i.etu
+  %132 = bitcast <2 x i1> %131 to i2
+  %133 = icmp eq i2 %132, -1
   br i1 %133, label %bb.abi, label %.loopexit.i.i2254
 
 _ZNK10chashtableIPN10polynomial8monomialENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.i.i2267: ; preds = %bb.abg, %bb.abi
@@ -7513,10 +7513,10 @@ bb.acu:                                           ; preds = %bb.act, %.preheader
   %i.fbl = getelementptr inbounds nuw [8 x i8], ptr %i.faq, i64 %indvars.iv.i.i.i.i2314
   %i.fbm = load <2 x i32>, ptr %i.fbk, align 4
   %i.fbn = load <2 x i32>, ptr %i.fbl, align 4
-  %i.fbo = icmp eq <2 x i32> %i.fbm, %i.fbn       ; 2 uses
-  %134 = extractelement <2 x i1> %i.fbo, i64 0
-  %135 = extractelement <2 x i1> %i.fbo, i64 1
-  %136 = select i1 %134, i1 %135, i1 false
+  %i.fbo = icmp eq <2 x i32> %i.fbm, %i.fbn
+  %134 = freeze <2 x i1> %i.fbo
+  %135 = bitcast <2 x i1> %134 to i2
+  %136 = icmp eq i2 %135, -1
   br i1 %136, label %bb.act, label %.loopexit.i.i2304
 
 _ZNK10chashtableIPN10polynomial8monomialENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.i.i2317: ; preds = %bb.acr, %bb.act
@@ -7919,10 +7919,10 @@ bb.aee:                                           ; preds = %bb.aed, %.preheader
   %i.fjg = getelementptr inbounds nuw [8 x i8], ptr %i.fil, i64 %indvars.iv.i.i.i.i2364
   %i.fjh = load <2 x i32>, ptr %i.fjf, align 4
   %i.fji = load <2 x i32>, ptr %i.fjg, align 4
-  %i.fjj = icmp eq <2 x i32> %i.fjh, %i.fji       ; 2 uses
-  %137 = extractelement <2 x i1> %i.fjj, i64 0
-  %138 = extractelement <2 x i1> %i.fjj, i64 1
-  %139 = select i1 %137, i1 %138, i1 false
+  %i.fjj = icmp eq <2 x i32> %i.fjh, %i.fji
+  %137 = freeze <2 x i1> %i.fjj
+  %138 = bitcast <2 x i1> %137 to i2
+  %139 = icmp eq i2 %138, -1
   br i1 %139, label %bb.aed, label %.loopexit.i.i2354
 
 _ZNK10chashtableIPN10polynomial8monomialENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.i.i2367: ; preds = %bb.aeb, %bb.aed
@@ -8325,10 +8325,10 @@ bb.agz:                                           ; preds = %bb.agy, %.preheader
   %i.fvk = getelementptr inbounds nuw [8 x i8], ptr %i.fup, i64 %indvars.iv.i.i.i.i2414
   %i.fvl = load <2 x i32>, ptr %i.fvj, align 4
   %i.fvm = load <2 x i32>, ptr %i.fvk, align 4
-  %i.fvn = icmp eq <2 x i32> %i.fvl, %i.fvm       ; 2 uses
-  %140 = extractelement <2 x i1> %i.fvn, i64 0
-  %141 = extractelement <2 x i1> %i.fvn, i64 1
-  %142 = select i1 %140, i1 %141, i1 false
+  %i.fvn = icmp eq <2 x i32> %i.fvl, %i.fvm
+  %140 = freeze <2 x i1> %i.fvn
+  %141 = bitcast <2 x i1> %140 to i2
+  %142 = icmp eq i2 %141, -1
   br i1 %142, label %bb.agy, label %.loopexit.i.i2404
 
 _ZNK10chashtableIPN10polynomial8monomialENS1_9hash_procENS1_7eq_procEE6equalsERKS2_S7_.exit.i.i2417: ; preds = %bb.agw, %bb.agy

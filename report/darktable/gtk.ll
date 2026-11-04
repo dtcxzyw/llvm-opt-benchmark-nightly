@@ -204,15 +204,15 @@ bb.f:                                             ; preds = %bb.h, %.lr.ph.i
   %i.y = call ptr @gdk_display_get_monitor(ptr noundef %i.o, i32 noundef %.03244.i) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #16
   call void @gdk_monitor_get_geometry(ptr noundef %i.y, ptr noundef nonnull %0) #16
-  %i.z = load <2 x i32>, ptr %i.q, align 8, !tbaa !72 ; 2 uses
-  %1 = icmp slt <2 x i32> %i.z, splat (i32 49)    ; 2 uses
-  %2 = extractelement <2 x i1> %1, i64 0
-  %3 = extractelement <2 x i1> %1, i64 1
-  %or.cond.i = select i1 %2, i1 true, i1 %3
-  br i1 %or.cond.i, label %bb.h, label %bb.g
+  %i.z = load <2 x i32>, ptr %i.q, align 8, !tbaa !72
+  %.fr = freeze <2 x i32> %i.z                    ; 2 uses
+  %1 = icmp slt <2 x i32> %.fr, splat (i32 49)
+  %2 = bitcast <2 x i1> %1 to i2
+  %or.cond.i.not = icmp eq i2 %2, 0
+  br i1 %or.cond.i.not, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.aa = add nsw <2 x i32> %i.z, splat (i32 -48)
+  %i.aa = add nsw <2 x i32> %.fr, splat (i32 -48)
   %i.ab = load <2 x i32>, ptr %0, align 8, !tbaa !72
   %i.ac = add nsw <2 x i32> %i.ab, splat (i32 24) ; 2 uses
   %i.ad = add nsw <2 x i32> %i.aa, %i.ac

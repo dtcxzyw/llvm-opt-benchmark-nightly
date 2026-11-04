@@ -205,11 +205,11 @@ bb.g:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.p = load <4 x i32>, ptr %i.o, align 8        ; 4 uses
   %i.q = shufflevector <4 x i32> %i.p, <4 x i32> poison, <2 x i32> <i32 0, i32 1>
-  %9 = icmp slt <2 x i32> %i.q, splat (i32 1)     ; 2 uses
-  %10 = extractelement <2 x i1> %9, i64 0
-  %11 = extractelement <2 x i1> %9, i64 1
-  %12 = select i1 %10, i1 true, i1 %11
-  br i1 %12, label %bb.h, label %bb.m
+  %.fr = freeze <2 x i32> %i.q
+  %9 = icmp slt <2 x i32> %.fr, splat (i32 1)
+  %10 = bitcast <2 x i1> %9 to i2
+  %.not = icmp eq i2 %10, 0
+  br i1 %.not, label %bb.m, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23

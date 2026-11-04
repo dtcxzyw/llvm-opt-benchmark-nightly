@@ -205,11 +205,11 @@ bb.f:                                             ; preds = %bb.e
   %i.v = getelementptr inbounds nuw i8, ptr %i.k, i64 16
   %bc.i22 = bitcast <2 x float> %2 to <2 x i32>
   %i.w = load <2 x i32>, ptr %i.v, align 4
-  %i.x = icmp ne <2 x i32> %i.w, %bc.i22          ; 2 uses
-  %5 = extractelement <2 x i1> %i.x, i64 0
-  %6 = extractelement <2 x i1> %i.x, i64 1
-  %or.cond28 = select i1 %5, i1 true, i1 %6
-  br i1 %or.cond28, label %b2RecVec2Differs.exit.thread, label %bb.g
+  %i.x = icmp ne <2 x i32> %i.w, %bc.i22
+  %5 = freeze <2 x i1> %i.x
+  %6 = bitcast <2 x i1> %5 to i2
+  %or.cond28.not = icmp eq i2 %6, 0
+  br i1 %or.cond28.not, label %bb.g, label %b2RecVec2Differs.exit.thread
 
 bb.g:                                             ; preds = %bb.f
   %i.y = getelementptr inbounds nuw i8, ptr %i.k, i64 24

@@ -202,12 +202,12 @@ bb.a:
   %i.f = insertelement <2 x double> %i.e, double %2, i64 1
   %i.g = fsub <2 x double> %i.f, %i.d
   %i.h = load <2 x double>, ptr %i.b, align 8, !tbaa !97
-  %i.i = fdiv <2 x double> %i.g, %i.h             ; 3 uses
-  %3 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.i)
-  %4 = fcmp olt <2 x double> %3, splat (double 1.000000e-04) ; 2 uses
-  %5 = extractelement <2 x i1> %4, i64 0
-  %6 = extractelement <2 x i1> %4, i64 1
-  %or.cond = select i1 %5, i1 %6, i1 false
+  %i.i = fdiv <2 x double> %i.g, %i.h
+  %.fr26 = freeze <2 x double> %i.i               ; 3 uses
+  %3 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr26)
+  %4 = fcmp uge <2 x double> %3, splat (double 1.000000e-04)
+  %5 = bitcast <2 x i1> %4 to i2
+  %or.cond = icmp eq i2 %5, 0
   br i1 %or.cond, label %bb.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -236,7 +236,7 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d
   %i.s = insertelement <2 x double> poison, double %i.o, i64 0
   %i.t = shufflevector <2 x double> %i.s, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.u = fdiv <2 x double> %i.i, %i.t             ; 2 uses
+  %i.u = fdiv <2 x double> %.fr26, %i.t           ; 2 uses
   %i.v = extractelement <2 x double> %i.u, i64 1
   %i.w = fsub double %i.q, %i.v
   store double %i.w, ptr %i.p, align 8, !tbaa !33
@@ -248,7 +248,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.d
   %i.aa = insertelement <2 x double> poison, double %i.o, i64 0
   %i.ab = shufflevector <2 x double> %i.aa, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ac = fdiv <2 x double> %i.i, %i.ab           ; 2 uses
+  %i.ac = fdiv <2 x double> %.fr26, %i.ab         ; 2 uses
   %i.ad = extractelement <2 x double> %i.ac, i64 0
   %i.ae = fsub double %i.q, %i.ad
   store double %i.ae, ptr %i.p, align 8, !tbaa !33

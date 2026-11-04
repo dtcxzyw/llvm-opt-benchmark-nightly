@@ -204,16 +204,16 @@ bb.o:                                             ; preds = %bb.n
   %i.bf = extractelement <2 x i32> %i.be, i64 1   ; 2 uses
   %i.bg = fptosi <2 x float> %i.bb to <2 x i32>   ; 2 uses
   %i.bh = extractelement <2 x i32> %i.bg, i64 1   ; 2 uses
-  %i.bi = sub nsw <2 x i32> %i.bg, %i.be          ; 2 uses
+  %i.bi = sub nsw <2 x i32> %i.bg, %i.be
+  %.fr = freeze <2 x i32> %i.bi                   ; 2 uses
   %i.bj = sub nsw i32 %i.bh, %i.bf
   %i.bk = extractelement <2 x i32> %i.be, i64 0
   %i.bl = add nsw i32 %i.bc, %i.bk                ; 3 uses
   %i.bm = add nsw i32 %i.bd, %i.bf                ; 2 uses
-  %i.bn = icmp slt <2 x i32> %i.bi, splat (i32 1) ; 2 uses
-  %8 = extractelement <2 x i1> %i.bn, i64 0
-  %9 = extractelement <2 x i1> %i.bn, i64 1
-  %10 = select i1 %8, i1 true, i1 %9
-  br i1 %10, label %_ZN2cvanIiEENS_5Rect_IT_EERKS3_S5_.exit, label %bb.p
+  %i.bn = icmp slt <2 x i32> %.fr, splat (i32 1)
+  %8 = bitcast <2 x i1> %i.bn to i2
+  %.not = icmp eq i2 %8, 0
+  br i1 %.not, label %bb.p, label %_ZN2cvanIiEENS_5Rect_IT_EERKS3_S5_.exit
 
 bb.p:                                             ; preds = %bb.o
   br i1 %i.am, label %_ZN2cvanIiEENS_5Rect_IT_EERKS3_S5_.exit, label %bb.q
@@ -222,7 +222,7 @@ bb.q:                                             ; preds = %bb.p
   %i.bo = icmp slt i32 %i.bl, 0                   ; 3 uses
   %i.bp = tail call i32 @llvm.smin.i32(i32 %i.bl, i32 0) ; 2 uses
   %i.bq = tail call i32 @llvm.smax.i32(i32 %i.bl, i32 0) ; 3 uses
-  %i.br = extractelement <2 x i32> %i.bi, i64 0   ; 3 uses
+  %i.br = extractelement <2 x i32> %.fr, i64 0    ; 3 uses
   %i.bs = add nsw i32 %i.bp, %i.br
   %i.bt = icmp slt i32 %i.bs, %i.bq
   %or.cond = select i1 %i.bo, i1 %i.bt, i1 false

@@ -204,6 +204,7 @@ bb.a:
 define void @DrawRectangleRoundedLinesEx(<2 x float> %0, <2 x float> %1, float noundef %2, i32 noundef %3, float noundef %4, i32 %5) local_unnamed_addr #4 {
 bb.a:
   %6 = alloca [4 x %struct.Vector2], align 16     ; 11 uses
+  %.fr426 = freeze <2 x float> %1                 ; 4 uses
   %.sroa.0232.0.extract.trunc = trunc i32 %5 to i8 ; 13 uses
   %.sroa.9.0.extract.shift = lshr i32 %5, 8
   %.sroa.9.0.extract.trunc = trunc i32 %.sroa.9.0.extract.shift to i8 ; 13 uses
@@ -220,12 +221,11 @@ bb.b:                                             ; preds = %bb.a
   %i.c = insertelement <2 x float> poison, float %spec.store.select, i64 0
   %i.d = shufflevector <2 x float> %i.c, <2 x float> poison, <2 x i32> zeroinitializer ; 3 uses
   %i.e = fsub <2 x float> %0, %i.d                ; 5 uses
-  %i.f = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.d, <2 x float> splat (float 2.000000e+00), <2 x float> %1) ; 6 uses
-  %i.g = fcmp ogt <2 x float> %i.d, %i.f          ; 2 uses
-  %7 = extractelement <2 x i1> %i.g, i64 0
-  %8 = extractelement <2 x i1> %i.g, i64 1
-  %or.cond.i = select i1 %7, i1 true, i1 %8
-  br i1 %or.cond.i, label %bb.c, label %DrawRectangleLinesEx.exit
+  %i.f = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.d, <2 x float> splat (float 2.000000e+00), <2 x float> %.fr426) ; 6 uses
+  %i.g = fcmp ogt <2 x float> %i.d, %i.f
+  %7 = bitcast <2 x i1> %i.g to i2
+  %or.cond.i.not = icmp eq i2 %7, 0
+  br i1 %or.cond.i.not, label %DrawRectangleLinesEx.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.h = extractelement <2 x float> %i.f, i64 0   ; 3 uses
@@ -270,8 +270,8 @@ DrawRectangleLinesEx.exit:                        ; preds = %bb.b, %bb.d, %bb.e,
 bb.g:                                             ; preds = %bb.a
   %i.w = fcmp oge float %2, 1.000000e+00
   %spec.store.select1 = select i1 %i.w, float 1.000000e+00, float %2
-  %.sroa.43339.8.vec.extract341 = extractelement <2 x float> %1, i64 0 ; 2 uses
-  %.sroa.43339.12.vec.extract365 = extractelement <2 x float> %1, i64 1 ; 3 uses
+  %.sroa.43339.8.vec.extract341 = extractelement <2 x float> %.fr426, i64 0 ; 2 uses
+  %.sroa.43339.12.vec.extract365 = extractelement <2 x float> %.fr426, i64 1 ; 3 uses
   %i.x = fcmp ogt float %.sroa.43339.8.vec.extract341, %.sroa.43339.12.vec.extract365
   %.sroa.43339.12.vec.extract365..sroa.43339.8.vec.extract341 = select i1 %i.x, float %.sroa.43339.12.vec.extract365, float %.sroa.43339.8.vec.extract341
   %.in = fmul float %.sroa.43339.12.vec.extract365..sroa.43339.8.vec.extract341, %spec.store.select1
@@ -308,7 +308,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %.sroa.0258.4.vec.extract300 = extractelement <2 x float> %0, i64 1 ; 4 uses
   %i.aq = fsub float %.sroa.0258.4.vec.extract300, %spec.store.select
   %i.ar = fadd float %i.aq, 5.000000e-01          ; 4 uses
-  %foldExtExtBinop = fadd <2 x float> %0, %1
+  %foldExtExtBinop = fadd <2 x float> %0, %.fr426
   %i.as = extractelement <2 x float> %foldExtExtBinop, i64 0 ; 3 uses
   %i.at = fsub float %i.as, %i.y
   %i.au = fadd float %i.at, -5.000000e-01         ; 12 uses
@@ -711,17 +711,17 @@ bb.a:
   %i.e = insertelement <2 x float> poison, float %1, i64 0
   %i.f = shufflevector <2 x float> %i.e, <2 x float> poison, <2 x i32> zeroinitializer
   %i.g = fadd <2 x float> %i.f, %i.a
-  %i.h = fcmp ugt <2 x float> %i.d, %i.g          ; 2 uses
-  %4 = extractelement <2 x i1> %i.h, i64 0
-  %5 = extractelement <2 x i1> %i.h, i64 1
-  %or.cond = select i1 %4, i1 true, i1 %5
-  br i1 %or.cond, label %bb.d, label %bb.b
+  %i.h = fcmp ugt <2 x float> %i.d, %i.g
+  %4 = freeze <2 x i1> %i.h
+  %5 = bitcast <2 x i1> %4 to i2
+  %or.cond.not = icmp eq i2 %5, 0
+  br i1 %or.cond.not, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
-  %i.i = fcmp ugt <2 x float> %i.d, %i.a          ; 2 uses
-  %6 = extractelement <2 x i1> %i.i, i64 0
-  %7 = extractelement <2 x i1> %i.i, i64 1
-  %or.cond37 = select i1 %6, i1 %7, i1 false
+  %i.i = fcmp ugt <2 x float> %i.d, %i.a
+  %6 = freeze <2 x i1> %i.i
+  %7 = bitcast <2 x i1> %6 to i2
+  %or.cond37 = icmp eq i2 %7, -1
   br i1 %or.cond37, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b

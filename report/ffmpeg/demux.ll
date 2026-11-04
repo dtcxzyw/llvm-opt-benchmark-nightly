@@ -205,10 +205,10 @@ bb.p:                                             ; preds = %bb.o
   %i.da = fdiv nsz <2 x double> %i.cz, %i.cl
   %i.db = fneg nsz <2 x double> %i.cx
   %i.dc = tail call nsz <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.db, <2 x double> %i.cx, <2 x double> %i.da)
-  %3 = fcmp nsz ogt <2 x double> %i.dc, splat (double 4.000000e-02) ; 2 uses
-  %4 = extractelement <2 x i1> %3, i64 0
-  %5 = extractelement <2 x i1> %3, i64 1
-  %or.cond3 = select i1 %5, i1 %4, i1 false
+  %.fr = freeze <2 x double> %i.dc
+  %3 = fcmp ule <2 x double> %.fr, splat (double 4.000000e-02)
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond3 = icmp eq i2 %4, 0
   br i1 %or.cond3, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p

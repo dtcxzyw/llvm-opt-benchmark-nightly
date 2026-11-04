@@ -205,11 +205,11 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.d = load <2 x i32>, ptr %i.c, align 4
   %i.e = load <2 x i32>, ptr %3, align 4
-  %i.f = icmp slt <2 x i32> %i.d, %i.e            ; 2 uses
-  %12 = extractelement <2 x i1> %i.f, i64 0
-  %13 = extractelement <2 x i1> %i.f, i64 1
-  %14 = select i1 %12, i1 true, i1 %13
-  %i.g = select i1 %14, ptr %2, ptr %3
+  %i.f = icmp slt <2 x i32> %i.d, %i.e
+  %12 = freeze <2 x i1> %i.f
+  %13 = bitcast <2 x i1> %12 to i2
+  %.not17 = icmp eq i2 %13, 0
+  %i.g = select i1 %.not17, ptr %3, ptr %2
   call void @_ZN7Imf_3_46HeaderC1ERKN9Imath_3_23BoxINS1_4Vec2IiEEEES7_fRKNS3_IfEEfNS_9LineOrderENS_11CompressionE(ptr noundef nonnull align 8 dereferenceable(49) %11, ptr noundef nonnull align 4 dereferenceable(16) %2, ptr noundef nonnull align 4 dereferenceable(16) %i.g, float noundef %5, ptr noundef nonnull align 4 dereferenceable(8) %6, float noundef %7, i32 noundef %8, i32 noundef %9)
   invoke fastcc void @_ZN7Imf_3_412_GLOBAL__N_114insertChannelsERNS_6HeaderENS_12RgbaChannelsE(ptr noundef nonnull align 8 dereferenceable(49) %11, i32 noundef %4)
           to label %bb.b unwind label %bb.h

@@ -204,12 +204,12 @@ bb.m:                                             ; preds = %.lr.ph.i.i.i.i.i
 _ZNSt13unordered_mapImN2cv6detail8tracking3tbm5TrackESt4hashImESt8equal_toImESaISt4pairIKmS4_EEE2atERSA_.exit: ; preds = %bb.l, %bb.k, %_ZNSt13unordered_mapImN2cv6detail8tracking3tbm5TrackESt4hashImESt8equal_toImESaISt4pairIKmS4_EEE4findERSA_.exit.thread37.thread
   %.sroa.06.1.i.i.i = phi ptr [ %.sroa.06.0.i.i.i, %bb.k ], [ %i.ad, %_ZNSt13unordered_mapImN2cv6detail8tracking3tbm5TrackESt4hashImESt8equal_toImESaISt4pairIKmS4_EEE4findERSA_.exit.thread37.thread ], [ %i.ai, %bb.l ] ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 256
-  %i.an = load <2 x i32>, ptr %i.am, align 8      ; 2 uses
-  %3 = icmp slt <2 x i32> %i.an, splat (i32 1)    ; 2 uses
-  %4 = extractelement <2 x i1> %3, i64 0
-  %5 = extractelement <2 x i1> %3, i64 1
-  %6 = select i1 %4, i1 true, i1 %5
-  br i1 %6, label %_ZNSt13unordered_mapImN2cv6detail8tracking3tbm5TrackESt4hashImESt8equal_toImESaISt4pairIKmS4_EEE4findERSA_.exit.thread, label %bb.n
+  %i.an = load <2 x i32>, ptr %i.am, align 8
+  %.fr = freeze <2 x i32> %i.an                   ; 2 uses
+  %3 = icmp slt <2 x i32> %.fr, splat (i32 1)
+  %4 = bitcast <2 x i1> %3 to i2
+  %.not108 = icmp eq i2 %4, 0
+  br i1 %.not108, label %bb.n, label %_ZNSt13unordered_mapImN2cv6detail8tracking3tbm5TrackESt4hashImESt8equal_toImESaISt4pairIKmS4_EEE4findERSA_.exit.thread
 
 bb.n:                                             ; preds = %_ZNSt13unordered_mapImN2cv6detail8tracking3tbm5TrackESt4hashImESt8equal_toImESaISt4pairIKmS4_EEE2atERSA_.exit
   %i.ao = getelementptr inbounds nuw i8, ptr %.sroa.06.1.i.i.i, i64 104
@@ -223,11 +223,11 @@ bb.n:                                             ; preds = %_ZNSt13unordered_ma
   %.sroa.0.0.insert.insert.i = bitcast <2 x i32> %i.av to i64
   %i.aw = and i64 %.sroa.0.0.insert.insert.i, -9223372034707292160
   %or.cond.not = icmp ne i64 %i.aw, 0
-  %i.ax = icmp slt <2 x i32> %i.an, %i.av         ; 2 uses
+  %i.ax = icmp slt <2 x i32> %.fr, %i.av          ; 2 uses
   %i.ay = extractelement <2 x i1> %i.ax, i64 0
   %or.cond = or i1 %i.ay, %or.cond.not
   %i.az = extractelement <2 x i1> %i.ax, i64 1
-  %or.cond95 = select i1 %or.cond, i1 true, i1 %i.az
+  %or.cond95 = or i1 %or.cond, %i.az
   br i1 %or.cond95, label %bb.o, label %_ZNSt13unordered_mapImN2cv6detail8tracking3tbm5TrackESt4hashImESt8equal_toImESaISt4pairIKmS4_EEE4findERSA_.exit.thread
 
 bb.o:                                             ; preds = %bb.n

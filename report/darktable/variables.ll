@@ -202,15 +202,15 @@ bb.n:                                             ; preds = %g_strdup_inline.exi
   %i.ds = shufflevector <2 x i32> %i.dp, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   store <4 x i32> %i.ds, ptr %i.dq, align 4, !tbaa !120
   %i.dt = getelementptr inbounds nuw i8, ptr %i.da, i64 36
-  %i.du = load <2 x i32>, ptr %i.dt, align 4, !tbaa !120 ; 2 uses
-  %3 = icmp eq <2 x i32> %i.du, zeroinitializer   ; 3 uses
-  %4 = extractelement <2 x i1> %3, i64 0
-  %5 = extractelement <2 x i1> %3, i64 1
-  %or.cond196.i = select i1 %5, i1 %4, i1 false
+  %i.du = load <2 x i32>, ptr %i.dt, align 4, !tbaa !120
+  %.fr = freeze <2 x i32> %i.du                   ; 2 uses
+  %3 = icmp eq <2 x i32> %.fr, zeroinitializer    ; 2 uses
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond196.i = icmp eq i2 %4, -1
   br i1 %or.cond196.i, label %bb.q, label %._crit_edge.i
 
 ._crit_edge.i:                                    ; preds = %.critedge.i
-  %i.dv = sitofp reassoc nsz arcp contract afn <2 x i32> %i.du to <2 x float>
+  %i.dv = sitofp reassoc nsz arcp contract afn <2 x i32> %.fr to <2 x float>
   %i.dw = select <2 x i1> %3, <2 x float> splat (float f0x4F000000), <2 x float> %i.dv
   %i.dx = sitofp reassoc nsz arcp contract afn <2 x i32> %i.dp to <2 x float> ; 2 uses
   %i.dy = fdiv reassoc nsz arcp contract afn <2 x float> %i.dw, %i.dx ; 2 uses

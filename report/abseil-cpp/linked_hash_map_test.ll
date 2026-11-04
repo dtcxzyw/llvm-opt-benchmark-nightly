@@ -205,10 +205,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load <2 x i32>, ptr %1, align 4
   %i.c = load <2 x i32>, ptr %i.a, align 8
-  %i.d = icmp eq <2 x i32> %i.b, %i.c             ; 2 uses
-  %3 = extractelement <2 x i1> %i.d, i64 0
-  %4 = extractelement <2 x i1> %i.d, i64 1
-  %5 = select i1 %3, i1 %4, i1 false
+  %i.d = icmp eq <2 x i32> %i.b, %i.c
+  %3 = freeze <2 x i1> %i.d
+  %4 = bitcast <2 x i1> %3 to i2
+  %5 = icmp eq i2 %4, -1
   ret i1 %5
 }
 
@@ -611,10 +611,10 @@ _ZN7testing8internal26AssertionResultExpectationD2Ev.exit: ; preds = %bb.b, %bb.
   %i.bd = getelementptr inbounds nuw i8, ptr %i.t, i64 16 ; 2 uses
   %i.be = load <2 x i32>, ptr %4, align 8, !noalias !13629
   %i.bf = load <2 x i32>, ptr %i.bd, align 4, !noalias !13629
-  %i.bg = icmp eq <2 x i32> %i.be, %i.bf          ; 2 uses
-  %24 = extractelement <2 x i1> %i.bg, i64 0
-  %25 = extractelement <2 x i1> %i.bg, i64 1
-  %26 = select i1 %24, i1 %25, i1 false
+  %i.bg = icmp eq <2 x i32> %i.be, %i.bf
+  %24 = freeze <2 x i1> %i.bg
+  %25 = bitcast <2 x i1> %24 to i2
+  %26 = icmp eq i2 %25, -1
   br i1 %26, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit
@@ -972,10 +972,10 @@ _ZN7testing8internal26AssertionResultExpectationD2Ev.exit75: ; preds = %bb.ae, %
   %i.fo = getelementptr inbounds nuw i8, ptr %i.ed, i64 16 ; 2 uses
   %i.fp = load <2 x i32>, ptr %4, align 8, !noalias !13630
   %i.fq = load <2 x i32>, ptr %i.fo, align 4, !noalias !13630
-  %i.fr = icmp eq <2 x i32> %i.fp, %i.fq          ; 2 uses
-  %27 = extractelement <2 x i1> %i.fr, i64 0
-  %28 = extractelement <2 x i1> %i.fr, i64 1
-  %29 = select i1 %27, i1 %28, i1 false
+  %i.fr = icmp eq <2 x i32> %i.fp, %i.fq
+  %27 = freeze <2 x i1> %i.fr
+  %28 = bitcast <2 x i1> %27 to i2
+  %29 = icmp eq i2 %28, -1
   br i1 %29, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit75
@@ -1378,10 +1378,10 @@ _ZN7testing8internal26AssertionResultExpectationD2Ev.exit: ; preds = %bb.b, %bb.
   %i.be = getelementptr inbounds nuw i8, ptr %i.t, i64 16 ; 2 uses
   %i.bf = load <2 x i32>, ptr %4, align 8, !noalias !13785
   %i.bg = load <2 x i32>, ptr %i.be, align 4, !noalias !13785
-  %i.bh = icmp eq <2 x i32> %i.bf, %i.bg          ; 2 uses
-  %24 = extractelement <2 x i1> %i.bh, i64 0
-  %25 = extractelement <2 x i1> %i.bh, i64 1
-  %26 = select i1 %24, i1 %25, i1 false
+  %i.bh = icmp eq <2 x i32> %i.bf, %i.bg
+  %24 = freeze <2 x i1> %i.bh
+  %25 = bitcast <2 x i1> %24 to i2
+  %26 = icmp eq i2 %25, -1
   br i1 %26, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit
@@ -1739,10 +1739,10 @@ _ZN7testing8internal26AssertionResultExpectationD2Ev.exit71: ; preds = %bb.ae, %
   %i.fp = getelementptr inbounds nuw i8, ptr %i.ee, i64 16 ; 2 uses
   %i.fq = load <2 x i32>, ptr %4, align 8, !noalias !13786
   %i.fr = load <2 x i32>, ptr %i.fp, align 4, !noalias !13786
-  %i.fs = icmp eq <2 x i32> %i.fq, %i.fr          ; 2 uses
-  %27 = extractelement <2 x i1> %i.fs, i64 0
-  %28 = extractelement <2 x i1> %i.fs, i64 1
-  %29 = select i1 %27, i1 %28, i1 false
+  %i.fs = icmp eq <2 x i32> %i.fq, %i.fr
+  %27 = freeze <2 x i1> %i.fs
+  %28 = bitcast <2 x i1> %27 to i2
+  %29 = icmp eq i2 %28, -1
   br i1 %29, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit71
@@ -2145,10 +2145,10 @@ _ZN7testing8internal26AssertionResultExpectationD2Ev.exit: ; preds = %bb.b, %bb.
   %i.aw = getelementptr inbounds nuw i8, ptr %.fca.0.extract1, i64 16 ; 2 uses
   %i.ax = load <2 x i32>, ptr %2, align 8, !noalias !14910
   %i.ay = load <2 x i32>, ptr %i.aw, align 4, !noalias !14910
-  %i.az = icmp eq <2 x i32> %i.ax, %i.ay          ; 2 uses
-  %22 = extractelement <2 x i1> %i.az, i64 0
-  %23 = extractelement <2 x i1> %i.az, i64 1
-  %24 = select i1 %22, i1 %23, i1 false
+  %i.az = icmp eq <2 x i32> %i.ax, %i.ay
+  %22 = freeze <2 x i1> %i.az
+  %23 = bitcast <2 x i1> %22 to i2
+  %24 = icmp eq i2 %23, -1
   br i1 %24, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit
@@ -2494,10 +2494,10 @@ _ZN7testing8internal26AssertionResultExpectationD2Ev.exit71: ; preds = %bb.ae, %
   %i.fb = getelementptr inbounds nuw i8, ptr %.fca.0.extract, i64 16 ; 2 uses
   %i.fc = load <2 x i32>, ptr %2, align 8, !noalias !14911
   %i.fd = load <2 x i32>, ptr %i.fb, align 4, !noalias !14911
-  %i.fe = icmp eq <2 x i32> %i.fc, %i.fd          ; 2 uses
-  %25 = extractelement <2 x i1> %i.fe, i64 0
-  %26 = extractelement <2 x i1> %i.fe, i64 1
-  %27 = select i1 %25, i1 %26, i1 false
+  %i.fe = icmp eq <2 x i32> %i.fc, %i.fd
+  %25 = freeze <2 x i1> %i.fe
+  %26 = bitcast <2 x i1> %25 to i2
+  %27 = icmp eq i2 %26, -1
   br i1 %27, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit71
@@ -2900,10 +2900,10 @@ bb.b:                                             ; preds = %bb.a
   %i.n = getelementptr inbounds nuw i8, ptr %.fca.0.extract.i, i64 16 ; 2 uses
   %i.o = load <2 x i32>, ptr %2, align 8, !noalias !15216
   %i.p = load <2 x i32>, ptr %i.n, align 4, !noalias !15216
-  %i.q = icmp eq <2 x i32> %i.o, %i.p             ; 2 uses
-  %12 = extractelement <2 x i1> %i.q, i64 0
-  %13 = extractelement <2 x i1> %i.q, i64 1
-  %14 = select i1 %12, i1 %13, i1 false
+  %i.q = icmp eq <2 x i32> %i.o, %i.p
+  %12 = freeze <2 x i1> %i.q
+  %13 = bitcast <2 x i1> %12 to i2
+  %14 = icmp eq i2 %13, -1
   br i1 %14, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -3102,10 +3102,10 @@ bb.s:                                             ; preds = %bb.r
   %i.ck = getelementptr inbounds nuw i8, ptr %.fca.0.extract.i26, i64 16 ; 2 uses
   %i.cl = load <2 x i32>, ptr %2, align 8, !noalias !15217
   %i.cm = load <2 x i32>, ptr %i.ck, align 4, !noalias !15217
-  %i.cn = icmp eq <2 x i32> %i.cl, %i.cm          ; 2 uses
-  %15 = extractelement <2 x i1> %i.cn, i64 0
-  %16 = extractelement <2 x i1> %i.cn, i64 1
-  %17 = select i1 %15, i1 %16, i1 false
+  %i.cn = icmp eq <2 x i32> %i.cl, %i.cm
+  %15 = freeze <2 x i1> %i.cn
+  %16 = bitcast <2 x i1> %15 to i2
+  %17 = icmp eq i2 %16, -1
   br i1 %17, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -3508,10 +3508,10 @@ _ZN7testing8internal26AssertionResultExpectationD2Ev.exit: ; preds = %bb.b, %bb.
   %i.bf = getelementptr inbounds nuw i8, ptr %i.v, i64 16 ; 2 uses
   %i.bg = load <2 x i32>, ptr %4, align 8, !noalias !15372
   %i.bh = load <2 x i32>, ptr %i.bf, align 4, !noalias !15372
-  %i.bi = icmp eq <2 x i32> %i.bg, %i.bh          ; 2 uses
-  %24 = extractelement <2 x i1> %i.bi, i64 0
-  %25 = extractelement <2 x i1> %i.bi, i64 1
-  %26 = select i1 %24, i1 %25, i1 false
+  %i.bi = icmp eq <2 x i32> %i.bg, %i.bh
+  %24 = freeze <2 x i1> %i.bi
+  %25 = bitcast <2 x i1> %24 to i2
+  %26 = icmp eq i2 %25, -1
   br i1 %26, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit
@@ -3871,10 +3871,10 @@ _ZN7testing8internal26AssertionResultExpectationD2Ev.exit75: ; preds = %bb.ae, %
   %i.fr = getelementptr inbounds nuw i8, ptr %i.eg, i64 16 ; 2 uses
   %i.fs = load <2 x i32>, ptr %4, align 8, !noalias !15373
   %i.ft = load <2 x i32>, ptr %i.fr, align 4, !noalias !15373
-  %i.fu = icmp eq <2 x i32> %i.fs, %i.ft          ; 2 uses
-  %27 = extractelement <2 x i1> %i.fu, i64 0
-  %28 = extractelement <2 x i1> %i.fu, i64 1
-  %29 = select i1 %27, i1 %28, i1 false
+  %i.fu = icmp eq <2 x i32> %i.fs, %i.ft
+  %27 = freeze <2 x i1> %i.fu
+  %28 = bitcast <2 x i1> %27 to i2
+  %29 = icmp eq i2 %28, -1
   br i1 %29, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %_ZN7testing8internal26AssertionResultExpectationD2Ev.exit75
@@ -4277,10 +4277,10 @@ bb.b:                                             ; preds = %bb.a
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 16 ; 2 uses
   %i.x = load <2 x i32>, ptr %4, align 8, !noalias !15630
   %i.y = load <2 x i32>, ptr %i.w, align 4, !noalias !15630
-  %i.z = icmp eq <2 x i32> %i.x, %i.y             ; 2 uses
-  %14 = extractelement <2 x i1> %i.z, i64 0
-  %15 = extractelement <2 x i1> %i.z, i64 1
-  %16 = select i1 %14, i1 %15, i1 false
+  %i.z = icmp eq <2 x i32> %i.x, %i.y
+  %14 = freeze <2 x i1> %i.z
+  %15 = bitcast <2 x i1> %14 to i2
+  %16 = icmp eq i2 %15, -1
   br i1 %16, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -4493,10 +4493,10 @@ bb.s:                                             ; preds = %bb.r
   %i.cz = getelementptr inbounds nuw i8, ptr %i.cy, i64 16 ; 2 uses
   %i.da = load <2 x i32>, ptr %4, align 8, !noalias !15631
   %i.db = load <2 x i32>, ptr %i.cz, align 4, !noalias !15631
-  %i.dc = icmp eq <2 x i32> %i.da, %i.db          ; 2 uses
-  %17 = extractelement <2 x i1> %i.dc, i64 0
-  %18 = extractelement <2 x i1> %i.dc, i64 1
-  %19 = select i1 %17, i1 %18, i1 false
+  %i.dc = icmp eq <2 x i32> %i.da, %i.db
+  %17 = freeze <2 x i1> %i.dc
+  %18 = bitcast <2 x i1> %17 to i2
+  %19 = icmp eq i2 %18, -1
   br i1 %19, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -4899,10 +4899,10 @@ scalar.ph481:                                     ; preds = %scalar.ph481.prehea
   %.07.i.i = phi i64 [ %spec.select.i.i, %scalar.ph481 ], [ %.07.i.i.ph, %scalar.ph481.preheader ]
   %.sroa.03.06.i.i = phi ptr [ %i.jz, %scalar.ph481 ], [ %.sroa.03.06.i.i.ph, %scalar.ph481.preheader ] ; 2 uses
   %i.jw = load <2 x i32>, ptr %.sroa.03.06.i.i, align 4
-  %i.jx = icmp eq <2 x i32> %i.jw, %i.jb          ; 2 uses
-  %24 = extractelement <2 x i1> %i.jx, i64 0
-  %25 = extractelement <2 x i1> %i.jx, i64 1
-  %26 = select i1 %24, i1 %25, i1 false
+  %i.jx = icmp eq <2 x i32> %i.jw, %i.jb
+  %24 = freeze <2 x i1> %i.jx
+  %25 = bitcast <2 x i1> %24 to i2
+  %26 = icmp eq i2 %25, -1
   %i.jy = zext i1 %26 to i64
   %spec.select.i.i = add nuw nsw i64 %.07.i.i, %i.jy ; 2 uses
   %i.jz = getelementptr inbounds nuw i8, ptr %.sroa.03.06.i.i, i64 8 ; 2 uses
@@ -5305,10 +5305,10 @@ bb.bc:                                            ; preds = %bb.bc, %.lr.ph.i.i1
   %.sroa.03.06.i.i = phi ptr [ %i.hl, %.lr.ph.i.i107 ], [ %i.hr, %bb.bc ] ; 2 uses
   %i.hn = getelementptr inbounds nuw i8, ptr %.sroa.03.06.i.i, i64 16
   %i.ho = load <2 x i32>, ptr %i.hn, align 4
-  %i.hp = icmp eq <2 x i32> %i.ho, %i.hm          ; 2 uses
-  %21 = extractelement <2 x i1> %i.hp, i64 0
-  %22 = extractelement <2 x i1> %i.hp, i64 1
-  %23 = select i1 %21, i1 %22, i1 false
+  %i.hp = icmp eq <2 x i32> %i.ho, %i.hm
+  %21 = freeze <2 x i1> %i.hp
+  %22 = bitcast <2 x i1> %21 to i2
+  %23 = icmp eq i2 %22, -1
   %i.hq = zext i1 %23 to i64
   %spec.select.i.i = add nuw nsw i64 %.07.i.i, %i.hq ; 3 uses
   %i.hr = load ptr, ptr %.sroa.03.06.i.i, align 8, !tbaa !186 ; 2 uses

@@ -205,17 +205,17 @@ _RINvNtCshxxEFTT9rch_10rand_distr5utils8zigguratNtNtNtCsci2cbTAlhZn_4rand4rngs6t
   %i.qr = insertelement <2 x double> poison, double %.pn32.i, i64 0, !dbg !4829
   %i.qs = insertelement <2 x double> %i.qr, double %.sroa.0.0.i34.i, i64 1, !dbg !4829
   %i.qt = fmul <2 x double> %i.lb, %i.qs, !dbg !4829
-  %i.qu = fadd <2 x double> %i.ko, %i.qt, !dbg !4829 ; 3 uses
-  %2 = fcmp oge <2 x double> %i.qu, zeroinitializer ; 2 uses
-  %3 = extractelement <2 x i1> %2, i64 0, !dbg !4830
-  %4 = extractelement <2 x i1> %2, i64 1, !dbg !4830
-  %or.cond2.i = select i1 %4, i1 %3, i1 false, !dbg !4830
+  %i.qu = fadd <2 x double> %i.ko, %i.qt, !dbg !4829
+  %.fr = freeze <2 x double> %i.qu                ; 3 uses
+  %2 = fcmp ult <2 x double> %.fr, zeroinitializer, !dbg !4830
+  %3 = bitcast <2 x i1> %2 to i2, !dbg !4830
+  %or.cond2.i = icmp eq i2 %3, 0, !dbg !4830
   br i1 %or.cond2.i, label %bb.bq, label %bb.ar, !dbg !4830
 
 bb.bq:                                            ; preds = %_RINvNtCshxxEFTT9rch_10rand_distr5utils8zigguratNtNtNtCsci2cbTAlhZn_4rand4rngs6thread9ThreadRngNvNvXs_NtB4_6normalNtB1B_14StandardNormalINtNtNtBP_5distr12distribution12DistributiondE6sample3pdfINvB1w_9zero_caseBJ_EECs2g09Ig8GZd6_13polars_stream.exit.i
-  %i.qv = extractelement <2 x double> %i.qu, i64 0, !dbg !4831
+  %i.qv = extractelement <2 x double> %.fr, i64 0, !dbg !4831
   %i.qw = fadd double %i.qv, f0x3EB0C6F7A0B5ED8D, !dbg !4831
-  %i.qx = extractelement <2 x double> %i.qu, i64 1, !dbg !4832
+  %i.qx = extractelement <2 x double> %.fr, i64 1, !dbg !4832
   %i.qy = fdiv double %i.qx, %i.qw, !dbg !4832
   br label %bb.br, !dbg !4833
 

@@ -202,10 +202,10 @@ bb.cj:                                            ; preds = %_ZN7testing8interna
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #28
   %i.hm = load <2 x ptr>, ptr %1, align 16, !noalias !102
   %i.hn = load <2 x ptr>, ptr %2, align 16, !noalias !102
-  %i.ho = icmp eq <2 x ptr> %i.hm, %i.hn          ; 2 uses
-  %70 = extractelement <2 x i1> %i.ho, i64 0
-  %71 = extractelement <2 x i1> %i.ho, i64 1
-  %72 = select i1 %71, i1 %70, i1 false
+  %i.ho = icmp eq <2 x ptr> %i.hm, %i.hn
+  %70 = freeze <2 x i1> %i.ho
+  %71 = bitcast <2 x i1> %70 to i2
+  %72 = icmp eq i2 %71, -1
   br i1 %72, label %bb.cl, label %bb.ck
 
 bb.ck:                                            ; preds = %bb.cj
@@ -608,10 +608,10 @@ define linkonce_odr hidden void @_ZN7testing8internal8EqHelper7CompareIN4entt8de
 bb.a:
   %i.a = load <2 x ptr>, ptr %3, align 8, !noalias !105
   %i.b = load <2 x ptr>, ptr %4, align 8, !noalias !105
-  %i.c = icmp eq <2 x ptr> %i.a, %i.b             ; 2 uses
-  %5 = extractelement <2 x i1> %i.c, i64 0
-  %6 = extractelement <2 x i1> %i.c, i64 1
-  %7 = select i1 %6, i1 %5, i1 false
+  %i.c = icmp eq <2 x ptr> %i.a, %i.b
+  %5 = freeze <2 x i1> %i.c
+  %6 = bitcast <2 x i1> %5 to i2
+  %7 = icmp eq i2 %6, -1
   br i1 %7, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -634,10 +634,10 @@ define linkonce_odr hidden void @_ZN7testing8internal11CmpHelperNEIN4entt8delega
 bb.a:
   %i.a = load <2 x ptr>, ptr %3, align 8
   %i.b = load <2 x ptr>, ptr %4, align 8
-  %i.c = icmp eq <2 x ptr> %i.a, %i.b             ; 2 uses
-  %5 = extractelement <2 x i1> %i.c, i64 0
-  %6 = extractelement <2 x i1> %i.c, i64 1
-  %7 = select i1 %6, i1 %5, i1 false
+  %i.c = icmp eq <2 x ptr> %i.a, %i.b
+  %5 = freeze <2 x i1> %i.c
+  %6 = bitcast <2 x i1> %5 to i2
+  %7 = icmp eq i2 %6, -1
   br i1 %7, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -1040,10 +1040,10 @@ bb.l:                                             ; preds = %_ZNKSt14default_del
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 9 uses
   %i.as = load <2 x ptr>, ptr %1, align 16
   %i.at = load <2 x ptr>, ptr %2, align 16
-  %i.au = icmp eq <2 x ptr> %i.as, %i.at          ; 2 uses
-  %217 = extractelement <2 x i1> %i.au, i64 0
-  %218 = extractelement <2 x i1> %i.au, i64 1
-  %219 = select i1 %218, i1 %217, i1 false        ; 2 uses
+  %i.au = icmp eq <2 x ptr> %i.as, %i.at
+  %217 = freeze <2 x i1> %i.au
+  %218 = bitcast <2 x i1> %217 to i2
+  %219 = icmp eq i2 %218, -1                      ; 2 uses
   %i.av = zext i1 %219 to i8
   store i8 %i.av, ptr %8, align 8, !tbaa !42
   %i.aw = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 2 uses
@@ -1446,10 +1446,10 @@ bb.ce:                                            ; preds = %_ZNKSt14default_del
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #28
   %i.ib = load <2 x ptr>, ptr %1, align 16
   %i.ic = load <2 x ptr>, ptr %2, align 16
-  %i.id = icmp eq <2 x ptr> %i.ib, %i.ic          ; 2 uses
-  %220 = extractelement <2 x i1> %i.id, i64 0
-  %221 = extractelement <2 x i1> %i.id, i64 1
-  %222 = select i1 %221, i1 %220, i1 false        ; 2 uses
+  %i.id = icmp eq <2 x ptr> %i.ib, %i.ic
+  %220 = freeze <2 x i1> %i.id
+  %221 = bitcast <2 x i1> %220 to i2
+  %222 = icmp eq i2 %221, -1                      ; 2 uses
   %i.ie = zext i1 %222 to i8
   store i8 %i.ie, ptr %28, align 8, !tbaa !42
   %i.if = getelementptr inbounds nuw i8, ptr %28, i64 8 ; 2 uses
@@ -1815,10 +1815,10 @@ bb.dk:                                            ; preds = %_ZN7testing8interna
   call void @llvm.lifetime.start.p0(ptr nonnull %38) #28
   %i.ld = load <2 x ptr>, ptr %1, align 16
   %i.le = load <2 x ptr>, ptr %2, align 16
-  %i.lf = icmp ne <2 x ptr> %i.ld, %i.le          ; 2 uses
-  %223 = extractelement <2 x i1> %i.lf, i64 0
-  %224 = extractelement <2 x i1> %i.lf, i64 1
-  %.not1432 = select i1 %224, i1 true, i1 %223    ; 2 uses
+  %i.lf = icmp ne <2 x ptr> %i.ld, %i.le
+  %223 = freeze <2 x i1> %i.lf
+  %224 = bitcast <2 x i1> %223 to i2
+  %.not1432 = icmp ne i2 %224, 0                  ; 2 uses
   %i.lg = zext i1 %.not1432 to i8
   store i8 %i.lg, ptr %38, align 8, !tbaa !42
   %i.lh = getelementptr inbounds nuw i8, ptr %38, i64 8
@@ -1940,10 +1940,10 @@ bb.dv:                                            ; preds = %bb.dk
   call void @llvm.lifetime.start.p0(ptr nonnull %42) #28
   %i.mf = load <2 x ptr>, ptr %1, align 16
   %i.mg = load <2 x ptr>, ptr %2, align 16
-  %i.mh = icmp ne <2 x ptr> %i.mf, %i.mg          ; 2 uses
-  %225 = extractelement <2 x i1> %i.mh, i64 0
-  %226 = extractelement <2 x i1> %i.mh, i64 1
-  %.not1434 = select i1 %226, i1 true, i1 %225    ; 2 uses
+  %i.mh = icmp ne <2 x ptr> %i.mf, %i.mg
+  %225 = freeze <2 x i1> %i.mh
+  %226 = bitcast <2 x i1> %225 to i2
+  %.not1434 = icmp ne i2 %226, 0                  ; 2 uses
   %i.mi = zext i1 %.not1434 to i8
   store i8 %i.mi, ptr %42, align 8, !tbaa !42
   %i.mj = getelementptr inbounds nuw i8, ptr %42, i64 8
@@ -2254,10 +2254,10 @@ bb.fa:                                            ; preds = %bb.eq
   call void @llvm.lifetime.start.p0(ptr nonnull %53) #28
   %i.oq = load <2 x ptr>, ptr %1, align 16
   %i.or = load <2 x ptr>, ptr %2, align 16
-  %i.os = icmp eq <2 x ptr> %i.oq, %i.or          ; 2 uses
-  %227 = extractelement <2 x i1> %i.os, i64 0
-  %228 = extractelement <2 x i1> %i.os, i64 1
-  %229 = select i1 %228, i1 %227, i1 false        ; 2 uses
+  %i.os = icmp eq <2 x ptr> %i.oq, %i.or
+  %227 = freeze <2 x i1> %i.os
+  %228 = bitcast <2 x i1> %227 to i2
+  %229 = icmp eq i2 %228, -1                      ; 2 uses
   %i.ot = zext i1 %229 to i8
   store i8 %i.ot, ptr %53, align 8, !tbaa !42
   %i.ou = getelementptr inbounds nuw i8, ptr %53, i64 8
@@ -2379,10 +2379,10 @@ bb.fl:                                            ; preds = %bb.fa
   call void @llvm.lifetime.start.p0(ptr nonnull %57) #28
   %i.ps = load <2 x ptr>, ptr %1, align 16
   %i.pt = load <2 x ptr>, ptr %2, align 16
-  %i.pu = icmp eq <2 x ptr> %i.ps, %i.pt          ; 2 uses
-  %230 = extractelement <2 x i1> %i.pu, i64 0
-  %231 = extractelement <2 x i1> %i.pu, i64 1
-  %232 = select i1 %231, i1 %230, i1 false        ; 2 uses
+  %i.pu = icmp eq <2 x ptr> %i.ps, %i.pt
+  %230 = freeze <2 x i1> %i.pu
+  %231 = bitcast <2 x i1> %230 to i2
+  %232 = icmp eq i2 %231, -1                      ; 2 uses
   %i.pv = zext i1 %232 to i8
   store i8 %i.pv, ptr %57, align 8, !tbaa !42
   %i.pw = getelementptr inbounds nuw i8, ptr %57, i64 8
@@ -2693,10 +2693,10 @@ bb.gq:                                            ; preds = %bb.gg
   call void @llvm.lifetime.start.p0(ptr nonnull %68) #28
   %i.sd = load <2 x ptr>, ptr %1, align 16
   %i.se = load <2 x ptr>, ptr %2, align 16
-  %i.sf = icmp ne <2 x ptr> %i.sd, %i.se          ; 2 uses
-  %233 = extractelement <2 x i1> %i.sf, i64 0
-  %234 = extractelement <2 x i1> %i.sf, i64 1
-  %.not1436 = select i1 %234, i1 true, i1 %233    ; 2 uses
+  %i.sf = icmp ne <2 x ptr> %i.sd, %i.se
+  %233 = freeze <2 x i1> %i.sf
+  %234 = bitcast <2 x i1> %233 to i2
+  %.not1436 = icmp ne i2 %234, 0                  ; 2 uses
   %i.sg = zext i1 %.not1436 to i8
   store i8 %i.sg, ptr %68, align 8, !tbaa !42
   %i.sh = getelementptr inbounds nuw i8, ptr %68, i64 8
@@ -2818,10 +2818,10 @@ bb.hb:                                            ; preds = %bb.gq
   call void @llvm.lifetime.start.p0(ptr nonnull %72) #28
   %i.tf = load <2 x ptr>, ptr %1, align 16
   %i.tg = load <2 x ptr>, ptr %2, align 16
-  %i.th = icmp ne <2 x ptr> %i.tf, %i.tg          ; 2 uses
-  %235 = extractelement <2 x i1> %i.th, i64 0
-  %236 = extractelement <2 x i1> %i.th, i64 1
-  %.not1438 = select i1 %236, i1 true, i1 %235    ; 2 uses
+  %i.th = icmp ne <2 x ptr> %i.tf, %i.tg
+  %235 = freeze <2 x i1> %i.th
+  %236 = bitcast <2 x i1> %235 to i2
+  %.not1438 = icmp ne i2 %236, 0                  ; 2 uses
   %i.ti = zext i1 %.not1438 to i8
   store i8 %i.ti, ptr %72, align 8, !tbaa !42
   %i.tj = getelementptr inbounds nuw i8, ptr %72, i64 8
@@ -3132,10 +3132,10 @@ bb.ig:                                            ; preds = %bb.hw
   call void @llvm.lifetime.start.p0(ptr nonnull %83) #28
   %i.vq = load <2 x ptr>, ptr %1, align 16
   %i.vr = load <2 x ptr>, ptr %2, align 16
-  %i.vs = icmp eq <2 x ptr> %i.vq, %i.vr          ; 2 uses
-  %237 = extractelement <2 x i1> %i.vs, i64 0
-  %238 = extractelement <2 x i1> %i.vs, i64 1
-  %239 = select i1 %238, i1 %237, i1 false        ; 2 uses
+  %i.vs = icmp eq <2 x ptr> %i.vq, %i.vr
+  %237 = freeze <2 x i1> %i.vs
+  %238 = bitcast <2 x i1> %237 to i2
+  %239 = icmp eq i2 %238, -1                      ; 2 uses
   %i.vt = zext i1 %239 to i8
   store i8 %i.vt, ptr %83, align 8, !tbaa !42
   %i.vu = getelementptr inbounds nuw i8, ptr %83, i64 8
@@ -3257,10 +3257,10 @@ bb.ir:                                            ; preds = %bb.ig
   call void @llvm.lifetime.start.p0(ptr nonnull %87) #28
   %i.ws = load <2 x ptr>, ptr %1, align 16
   %i.wt = load <2 x ptr>, ptr %2, align 16
-  %i.wu = icmp eq <2 x ptr> %i.ws, %i.wt          ; 2 uses
-  %240 = extractelement <2 x i1> %i.wu, i64 0
-  %241 = extractelement <2 x i1> %i.wu, i64 1
-  %242 = select i1 %241, i1 %240, i1 false        ; 2 uses
+  %i.wu = icmp eq <2 x ptr> %i.ws, %i.wt
+  %240 = freeze <2 x i1> %i.wu
+  %241 = bitcast <2 x i1> %240 to i2
+  %242 = icmp eq i2 %241, -1                      ; 2 uses
   %i.wv = zext i1 %242 to i8
   store i8 %i.wv, ptr %87, align 8, !tbaa !42
   %i.ww = getelementptr inbounds nuw i8, ptr %87, i64 8
@@ -3571,10 +3571,10 @@ bb.jw:                                            ; preds = %bb.jm
   call void @llvm.lifetime.start.p0(ptr nonnull %98) #28
   %i.zd = load <2 x ptr>, ptr %1, align 16
   %i.ze = load <2 x ptr>, ptr %2, align 16
-  %i.zf = icmp ne <2 x ptr> %i.zd, %i.ze          ; 2 uses
-  %243 = extractelement <2 x i1> %i.zf, i64 0
-  %244 = extractelement <2 x i1> %i.zf, i64 1
-  %.not1440 = select i1 %244, i1 true, i1 %243    ; 2 uses
+  %i.zf = icmp ne <2 x ptr> %i.zd, %i.ze
+  %243 = freeze <2 x i1> %i.zf
+  %244 = bitcast <2 x i1> %243 to i2
+  %.not1440 = icmp ne i2 %244, 0                  ; 2 uses
   %i.zg = zext i1 %.not1440 to i8
   store i8 %i.zg, ptr %98, align 8, !tbaa !42
   %i.zh = getelementptr inbounds nuw i8, ptr %98, i64 8
@@ -3696,10 +3696,10 @@ bb.kh:                                            ; preds = %bb.jw
   call void @llvm.lifetime.start.p0(ptr nonnull %102) #28
   %i.aaf = load <2 x ptr>, ptr %1, align 16
   %i.aag = load <2 x ptr>, ptr %2, align 16
-  %i.aah = icmp ne <2 x ptr> %i.aaf, %i.aag       ; 2 uses
-  %245 = extractelement <2 x i1> %i.aah, i64 0
-  %246 = extractelement <2 x i1> %i.aah, i64 1
-  %.not1442 = select i1 %246, i1 true, i1 %245    ; 2 uses
+  %i.aah = icmp ne <2 x ptr> %i.aaf, %i.aag
+  %245 = freeze <2 x i1> %i.aah
+  %246 = bitcast <2 x i1> %245 to i2
+  %.not1442 = icmp ne i2 %246, 0                  ; 2 uses
   %i.aai = zext i1 %.not1442 to i8
   store i8 %i.aai, ptr %102, align 8, !tbaa !42
   %i.aaj = getelementptr inbounds nuw i8, ptr %102, i64 8
@@ -4102,10 +4102,10 @@ bb.mg:                                            ; preds = %bb.lw
   call void @llvm.lifetime.start.p0(ptr nonnull %119) #28
   %i.aec = load <2 x ptr>, ptr %1, align 16
   %i.aed = load <2 x ptr>, ptr %2, align 16
-  %i.aee = icmp eq <2 x ptr> %i.aec, %i.aed       ; 2 uses
-  %247 = extractelement <2 x i1> %i.aee, i64 0
-  %248 = extractelement <2 x i1> %i.aee, i64 1
-  %249 = select i1 %248, i1 %247, i1 false        ; 2 uses
+  %i.aee = icmp eq <2 x ptr> %i.aec, %i.aed
+  %247 = freeze <2 x i1> %i.aee
+  %248 = bitcast <2 x i1> %247 to i2
+  %249 = icmp eq i2 %248, -1                      ; 2 uses
   %i.aef = zext i1 %249 to i8
   store i8 %i.aef, ptr %119, align 8, !tbaa !42
   %i.aeg = getelementptr inbounds nuw i8, ptr %119, i64 8
@@ -4227,10 +4227,10 @@ bb.mr:                                            ; preds = %bb.mg
   call void @llvm.lifetime.start.p0(ptr nonnull %123) #28
   %i.afe = load <2 x ptr>, ptr %1, align 16
   %i.aff = load <2 x ptr>, ptr %2, align 16
-  %i.afg = icmp eq <2 x ptr> %i.afe, %i.aff       ; 2 uses
-  %250 = extractelement <2 x i1> %i.afg, i64 0
-  %251 = extractelement <2 x i1> %i.afg, i64 1
-  %252 = select i1 %251, i1 %250, i1 false        ; 2 uses
+  %i.afg = icmp eq <2 x ptr> %i.afe, %i.aff
+  %250 = freeze <2 x i1> %i.afg
+  %251 = bitcast <2 x i1> %250 to i2
+  %252 = icmp eq i2 %251, -1                      ; 2 uses
   %i.afh = zext i1 %252 to i8
   store i8 %i.afh, ptr %123, align 8, !tbaa !42
   %i.afi = getelementptr inbounds nuw i8, ptr %123, i64 8
@@ -4633,10 +4633,10 @@ bb.oq:                                            ; preds = %bb.og
   call void @llvm.lifetime.start.p0(ptr nonnull %140) #28
   %i.ajb = load <2 x ptr>, ptr %1, align 16
   %i.ajc = load <2 x ptr>, ptr %2, align 16
-  %i.ajd = icmp ne <2 x ptr> %i.ajb, %i.ajc       ; 2 uses
-  %253 = extractelement <2 x i1> %i.ajd, i64 0
-  %254 = extractelement <2 x i1> %i.ajd, i64 1
-  %.not1444 = select i1 %254, i1 true, i1 %253    ; 2 uses
+  %i.ajd = icmp ne <2 x ptr> %i.ajb, %i.ajc
+  %253 = freeze <2 x i1> %i.ajd
+  %254 = bitcast <2 x i1> %253 to i2
+  %.not1444 = icmp ne i2 %254, 0                  ; 2 uses
   %i.aje = zext i1 %.not1444 to i8
   store i8 %i.aje, ptr %140, align 8, !tbaa !42
   %i.ajf = getelementptr inbounds nuw i8, ptr %140, i64 8
@@ -4758,10 +4758,10 @@ bb.pb:                                            ; preds = %bb.oq
   call void @llvm.lifetime.start.p0(ptr nonnull %144) #28
   %i.akd = load <2 x ptr>, ptr %1, align 16
   %i.ake = load <2 x ptr>, ptr %2, align 16
-  %i.akf = icmp ne <2 x ptr> %i.akd, %i.ake       ; 2 uses
-  %255 = extractelement <2 x i1> %i.akf, i64 0
-  %256 = extractelement <2 x i1> %i.akf, i64 1
-  %.not1446 = select i1 %256, i1 true, i1 %255    ; 2 uses
+  %i.akf = icmp ne <2 x ptr> %i.akd, %i.ake
+  %255 = freeze <2 x i1> %i.akf
+  %256 = bitcast <2 x i1> %255 to i2
+  %.not1446 = icmp ne i2 %256, 0                  ; 2 uses
   %i.akg = zext i1 %.not1446 to i8
   store i8 %i.akg, ptr %144, align 8, !tbaa !42
   %i.akh = getelementptr inbounds nuw i8, ptr %144, i64 8
@@ -5164,10 +5164,10 @@ bb.ra:                                            ; preds = %bb.qq
   call void @llvm.lifetime.start.p0(ptr nonnull %161) #28
   %i.aoa = load <2 x ptr>, ptr %1, align 16
   %i.aob = load <2 x ptr>, ptr %2, align 16
-  %i.aoc = icmp ne <2 x ptr> %i.aoa, %i.aob       ; 2 uses
-  %257 = extractelement <2 x i1> %i.aoc, i64 0
-  %258 = extractelement <2 x i1> %i.aoc, i64 1
-  %.not1448 = select i1 %258, i1 true, i1 %257    ; 2 uses
+  %i.aoc = icmp ne <2 x ptr> %i.aoa, %i.aob
+  %257 = freeze <2 x i1> %i.aoc
+  %258 = bitcast <2 x i1> %257 to i2
+  %.not1448 = icmp ne i2 %258, 0                  ; 2 uses
   %i.aod = zext i1 %.not1448 to i8
   store i8 %i.aod, ptr %161, align 8, !tbaa !42
   %i.aoe = getelementptr inbounds nuw i8, ptr %161, i64 8
@@ -5289,10 +5289,10 @@ bb.rl:                                            ; preds = %bb.ra
   call void @llvm.lifetime.start.p0(ptr nonnull %165) #28
   %i.apc = load <2 x ptr>, ptr %1, align 16
   %i.apd = load <2 x ptr>, ptr %2, align 16
-  %i.ape = icmp ne <2 x ptr> %i.apc, %i.apd       ; 2 uses
-  %259 = extractelement <2 x i1> %i.ape, i64 0
-  %260 = extractelement <2 x i1> %i.ape, i64 1
-  %.not1450 = select i1 %260, i1 true, i1 %259    ; 2 uses
+  %i.ape = icmp ne <2 x ptr> %i.apc, %i.apd
+  %259 = freeze <2 x i1> %i.ape
+  %260 = bitcast <2 x i1> %259 to i2
+  %.not1450 = icmp ne i2 %260, 0                  ; 2 uses
   %i.apf = zext i1 %.not1450 to i8
   store i8 %i.apf, ptr %165, align 8, !tbaa !42
   %i.apg = getelementptr inbounds nuw i8, ptr %165, i64 8
@@ -5603,10 +5603,10 @@ bb.sq:                                            ; preds = %bb.sg
   call void @llvm.lifetime.start.p0(ptr nonnull %176) #28
   %i.arn = load <2 x ptr>, ptr %1, align 16
   %i.aro = load <2 x ptr>, ptr %2, align 16
-  %i.arp = icmp ne <2 x ptr> %i.arn, %i.aro       ; 2 uses
-  %261 = extractelement <2 x i1> %i.arp, i64 0
-  %262 = extractelement <2 x i1> %i.arp, i64 1
-  %.not1452 = select i1 %262, i1 true, i1 %261    ; 2 uses
+  %i.arp = icmp ne <2 x ptr> %i.arn, %i.aro
+  %261 = freeze <2 x i1> %i.arp
+  %262 = bitcast <2 x i1> %261 to i2
+  %.not1452 = icmp ne i2 %262, 0                  ; 2 uses
   %i.arq = zext i1 %.not1452 to i8
   store i8 %i.arq, ptr %176, align 8, !tbaa !42
   %i.arr = getelementptr inbounds nuw i8, ptr %176, i64 8
@@ -5728,10 +5728,10 @@ bb.tb:                                            ; preds = %bb.sq
   call void @llvm.lifetime.start.p0(ptr nonnull %180) #28
   %i.asp = load <2 x ptr>, ptr %1, align 16
   %i.asq = load <2 x ptr>, ptr %2, align 16
-  %i.asr = icmp ne <2 x ptr> %i.asp, %i.asq       ; 2 uses
-  %263 = extractelement <2 x i1> %i.asr, i64 0
-  %264 = extractelement <2 x i1> %i.asr, i64 1
-  %.not1454 = select i1 %264, i1 true, i1 %263    ; 2 uses
+  %i.asr = icmp ne <2 x ptr> %i.asp, %i.asq
+  %263 = freeze <2 x i1> %i.asr
+  %264 = bitcast <2 x i1> %263 to i2
+  %.not1454 = icmp ne i2 %264, 0                  ; 2 uses
   %i.ass = zext i1 %.not1454 to i8
   store i8 %i.ass, ptr %180, align 8, !tbaa !42
   %i.ast = getelementptr inbounds nuw i8, ptr %180, i64 8
@@ -6039,10 +6039,10 @@ bb.ug:                                            ; preds = %bb.tw
   call void @llvm.lifetime.start.p0(ptr nonnull %191) #28
   %i.auz = load <2 x ptr>, ptr %1, align 16
   %i.ava = load <2 x ptr>, ptr %2, align 16
-  %i.avb = icmp ne <2 x ptr> %i.auz, %i.ava       ; 2 uses
-  %265 = extractelement <2 x i1> %i.avb, i64 0
-  %266 = extractelement <2 x i1> %i.avb, i64 1
-  %.not1456 = select i1 %266, i1 true, i1 %265    ; 2 uses
+  %i.avb = icmp ne <2 x ptr> %i.auz, %i.ava
+  %265 = freeze <2 x i1> %i.avb
+  %266 = bitcast <2 x i1> %265 to i2
+  %.not1456 = icmp ne i2 %266, 0                  ; 2 uses
   %i.avc = zext i1 %.not1456 to i8
   store i8 %i.avc, ptr %191, align 8, !tbaa !42
   %i.avd = getelementptr inbounds nuw i8, ptr %191, i64 8
@@ -6164,10 +6164,10 @@ bb.ur:                                            ; preds = %bb.ug
   call void @llvm.lifetime.start.p0(ptr nonnull %195) #28
   %i.awb = load <2 x ptr>, ptr %1, align 16
   %i.awc = load <2 x ptr>, ptr %2, align 16
-  %i.awd = icmp ne <2 x ptr> %i.awb, %i.awc       ; 2 uses
-  %267 = extractelement <2 x i1> %i.awd, i64 0
-  %268 = extractelement <2 x i1> %i.awd, i64 1
-  %.not1458 = select i1 %268, i1 true, i1 %267    ; 2 uses
+  %i.awd = icmp ne <2 x ptr> %i.awb, %i.awc
+  %267 = freeze <2 x i1> %i.awd
+  %268 = bitcast <2 x i1> %267 to i2
+  %.not1458 = icmp ne i2 %268, 0                  ; 2 uses
   %i.awe = zext i1 %.not1458 to i8
   store i8 %i.awe, ptr %195, align 8, !tbaa !42
   %i.awf = getelementptr inbounds nuw i8, ptr %195, i64 8
@@ -6475,10 +6475,10 @@ bb.vw:                                            ; preds = %bb.vm
   call void @llvm.lifetime.start.p0(ptr nonnull %206) #28
   %i.ayl = load <2 x ptr>, ptr %1, align 16
   %i.aym = load <2 x ptr>, ptr %2, align 16
-  %i.ayn = icmp eq <2 x ptr> %i.ayl, %i.aym       ; 2 uses
-  %269 = extractelement <2 x i1> %i.ayn, i64 0
-  %270 = extractelement <2 x i1> %i.ayn, i64 1
-  %271 = select i1 %270, i1 %269, i1 false        ; 2 uses
+  %i.ayn = icmp eq <2 x ptr> %i.ayl, %i.aym
+  %269 = freeze <2 x i1> %i.ayn
+  %270 = bitcast <2 x i1> %269 to i2
+  %271 = icmp eq i2 %270, -1                      ; 2 uses
   %i.ayo = zext i1 %271 to i8
   store i8 %i.ayo, ptr %206, align 8, !tbaa !42
   %i.ayp = getelementptr inbounds nuw i8, ptr %206, i64 8
@@ -6600,10 +6600,10 @@ bb.wh:                                            ; preds = %bb.vw
   call void @llvm.lifetime.start.p0(ptr nonnull %210) #28
   %i.azn = load <2 x ptr>, ptr %1, align 16
   %i.azo = load <2 x ptr>, ptr %2, align 16
-  %i.azp = icmp eq <2 x ptr> %i.azn, %i.azo       ; 2 uses
-  %272 = extractelement <2 x i1> %i.azp, i64 0
-  %273 = extractelement <2 x i1> %i.azp, i64 1
-  %274 = select i1 %273, i1 %272, i1 false        ; 2 uses
+  %i.azp = icmp eq <2 x ptr> %i.azn, %i.azo
+  %272 = freeze <2 x i1> %i.azp
+  %273 = bitcast <2 x i1> %272 to i2
+  %274 = icmp eq i2 %273, -1                      ; 2 uses
   %i.azq = zext i1 %274 to i8
   store i8 %i.azq, ptr %210, align 8, !tbaa !42
   %i.azr = getelementptr inbounds nuw i8, ptr %210, i64 8

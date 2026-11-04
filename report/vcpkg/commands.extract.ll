@@ -204,10 +204,10 @@ bb.j:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %20)
   %i.ar = load <2 x i32>, ptr %31, align 8, !noalias !147
   %i.as = load <2 x i32>, ptr %32, align 8, !noalias !147
-  %i.at = icmp eq <2 x i32> %i.ar, %i.as          ; 2 uses
-  %107 = extractelement <2 x i1> %i.at, i64 0
-  %108 = extractelement <2 x i1> %i.at, i64 1
-  %109 = select i1 %107, i1 %108, i1 false
+  %i.at = icmp eq <2 x i32> %i.ar, %i.as
+  %107 = freeze <2 x i1> %i.at
+  %108 = bitcast <2 x i1> %107 to i2
+  %109 = icmp eq i2 %108, -1
   call void @_ZN5Catch9StringRefC1EPKc(ptr noundef nonnull align 8 dereferenceable(16) %20, ptr noundef nonnull @.str.41) #19, !noalias !147
   %i.au = load ptr, ptr %20, align 8, !noalias !147
   %i.av = getelementptr inbounds nuw i8, ptr %20, i64 8
@@ -592,10 +592,10 @@ bb.ao:                                            ; preds = %bb.ak
   call void @llvm.lifetime.start.p0(ptr nonnull %17)
   %i.ej = load <2 x i32>, ptr %44, align 8, !noalias !154
   %i.ek = load <2 x i32>, ptr %45, align 8, !noalias !154
-  %i.el = icmp eq <2 x i32> %i.ej, %i.ek          ; 2 uses
-  %110 = extractelement <2 x i1> %i.el, i64 0
-  %111 = extractelement <2 x i1> %i.el, i64 1
-  %112 = select i1 %110, i1 %111, i1 false
+  %i.el = icmp eq <2 x i32> %i.ej, %i.ek
+  %110 = freeze <2 x i1> %i.el
+  %111 = bitcast <2 x i1> %110 to i2
+  %112 = icmp eq i2 %111, -1
   call void @_ZN5Catch9StringRefC1EPKc(ptr noundef nonnull align 8 dereferenceable(16) %17, ptr noundef nonnull @.str.41) #19, !noalias !154
   %i.em = load ptr, ptr %17, align 8, !noalias !154
   %i.en = getelementptr inbounds nuw i8, ptr %17, i64 8
@@ -998,10 +998,10 @@ bb.bx:                                            ; preds = %bb.bt
   call void @llvm.lifetime.start.p0(ptr nonnull %14)
   %i.ig = load <2 x i32>, ptr %57, align 8, !noalias !156
   %i.ih = load <2 x i32>, ptr %58, align 8, !noalias !156
-  %i.ii = icmp eq <2 x i32> %i.ig, %i.ih          ; 2 uses
-  %113 = extractelement <2 x i1> %i.ii, i64 0
-  %114 = extractelement <2 x i1> %i.ii, i64 1
-  %115 = select i1 %113, i1 %114, i1 false
+  %i.ii = icmp eq <2 x i32> %i.ig, %i.ih
+  %113 = freeze <2 x i1> %i.ii
+  %114 = bitcast <2 x i1> %113 to i2
+  %115 = icmp eq i2 %114, -1
   call void @_ZN5Catch9StringRefC1EPKc(ptr noundef nonnull align 8 dereferenceable(16) %14, ptr noundef nonnull @.str.41) #19, !noalias !156
   %i.ij = load ptr, ptr %14, align 8, !noalias !156
   %i.ik = getelementptr inbounds nuw i8, ptr %14, i64 8
@@ -1404,10 +1404,10 @@ bb.dg:                                            ; preds = %bb.dc
   call void @llvm.lifetime.start.p0(ptr nonnull %11)
   %i.me = load <2 x i32>, ptr %70, align 8, !noalias !158
   %i.mf = load <2 x i32>, ptr %71, align 8, !noalias !158
-  %i.mg = icmp eq <2 x i32> %i.me, %i.mf          ; 2 uses
-  %116 = extractelement <2 x i1> %i.mg, i64 0
-  %117 = extractelement <2 x i1> %i.mg, i64 1
-  %118 = select i1 %116, i1 %117, i1 false
+  %i.mg = icmp eq <2 x i32> %i.me, %i.mf
+  %116 = freeze <2 x i1> %i.mg
+  %117 = bitcast <2 x i1> %116 to i2
+  %118 = icmp eq i2 %117, -1
   call void @_ZN5Catch9StringRefC1EPKc(ptr noundef nonnull align 8 dereferenceable(16) %11, ptr noundef nonnull @.str.41) #19, !noalias !158
   %i.mh = load ptr, ptr %11, align 8, !noalias !158
   %i.mi = getelementptr inbounds nuw i8, ptr %11, i64 8
@@ -1679,10 +1679,10 @@ bb.eg:                                            ; preds = %bb.ec
   call void @llvm.lifetime.start.p0(ptr nonnull %8)
   %i.oy = load <2 x i32>, ptr %79, align 8, !noalias !160
   %i.oz = load <2 x i32>, ptr %80, align 8, !noalias !160
-  %i.pa = icmp eq <2 x i32> %i.oy, %i.oz          ; 2 uses
-  %119 = extractelement <2 x i1> %i.pa, i64 0
-  %120 = extractelement <2 x i1> %i.pa, i64 1
-  %121 = select i1 %119, i1 %120, i1 false
+  %i.pa = icmp eq <2 x i32> %i.oy, %i.oz
+  %119 = freeze <2 x i1> %i.pa
+  %120 = bitcast <2 x i1> %119 to i2
+  %121 = icmp eq i2 %120, -1
   call void @_ZN5Catch9StringRefC1EPKc(ptr noundef nonnull align 8 dereferenceable(16) %8, ptr noundef nonnull @.str.41) #19, !noalias !160
   %i.pb = load ptr, ptr %8, align 8, !noalias !160
   %i.pc = getelementptr inbounds nuw i8, ptr %8, i64 8
@@ -1929,10 +1929,10 @@ bb.fe:                                            ; preds = %bb.fa
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
   %i.rm = load <2 x i32>, ptr %88, align 8, !noalias !162
   %i.rn = load <2 x i32>, ptr %89, align 8, !noalias !162
-  %i.ro = icmp eq <2 x i32> %i.rm, %i.rn          ; 2 uses
-  %122 = extractelement <2 x i1> %i.ro, i64 0
-  %123 = extractelement <2 x i1> %i.ro, i64 1
-  %124 = select i1 %122, i1 %123, i1 false
+  %i.ro = icmp eq <2 x i32> %i.rm, %i.rn
+  %122 = freeze <2 x i1> %i.ro
+  %123 = bitcast <2 x i1> %122 to i2
+  %124 = icmp eq i2 %123, -1
   call void @_ZN5Catch9StringRefC1EPKc(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull @.str.41) #19, !noalias !162
   %i.rp = load ptr, ptr %5, align 8, !noalias !162
   %i.rq = getelementptr inbounds nuw i8, ptr %5, i64 8

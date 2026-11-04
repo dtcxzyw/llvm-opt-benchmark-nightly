@@ -205,8 +205,9 @@ bb.o:                                             ; preds = %bb.n
   %i.gy = icmp slt <2 x i32> %i.gv, splat (i32 -2)
   %i.gz = select <2 x i1> %i.gy, <2 x i32> zeroinitializer, <2 x i32> %i.gw
   %i.ha = select <2 x i1> %i.gx, <2 x i32> %i.bk, <2 x i32> %i.gz ; 5 uses
-  %i.hb = sub nsw <2 x i32> %i.ha, %i.gr          ; 3 uses
-  %i.hc = add nuw nsw <2 x i32> %i.hb, splat (i32 1) ; 2 uses
+  %i.hb = sub nsw <2 x i32> %i.ha, %i.gr
+  %.fr = freeze <2 x i32> %i.hb                   ; 3 uses
+  %i.hc = add nuw nsw <2 x i32> %.fr, splat (i32 1) ; 2 uses
   tail call void @free(ptr noundef nonnull %i.cq) #12
   %i.hd = load i32, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 8), align 8, !tbaa !127
   %i.he = and i32 %i.hd, 4112
@@ -289,11 +290,10 @@ bb.u:                                             ; preds = %._crit_edge415
 
 bb.v:                                             ; preds = %bb.u, %._crit_edge415
   %.3 = phi nsz double [ %.2397, %._crit_edge415 ], [ %i.ir, %bb.u ] ; 2 uses
-  %i.it = icmp slt <2 x i32> %i.hb, splat (i32 1) ; 2 uses
-  %15 = extractelement <2 x i1> %i.it, i64 0
-  %16 = extractelement <2 x i1> %i.it, i64 1
-  %or.cond = select i1 %15, i1 true, i1 %16
-  br i1 %or.cond, label %bb.ai, label %bb.w
+  %i.it = icmp slt <2 x i32> %.fr, splat (i32 1)
+  %15 = bitcast <2 x i1> %i.it to i2
+  %or.cond.not = icmp eq i2 %15, 0
+  br i1 %or.cond.not, label %bb.w, label %bb.ai
 
 bb.w:                                             ; preds = %bb.v
   %i.iu = extractelement <2 x i32> %i.hc, i64 0
@@ -323,7 +323,7 @@ bb.w:                                             ; preds = %bb.v
 .preheader.preheader:                             ; preds = %.preheader.lr.ph
   %i.jh = sext i32 %i.jd to i64                   ; 2 uses
   %i.ji = add <2 x i32> %i.ha, splat (i32 1)      ; 2 uses
-  %i.jj = extractelement <2 x i32> %i.hb, i64 0   ; 2 uses
+  %i.jj = extractelement <2 x i32> %.fr, i64 0    ; 2 uses
   %i.jk = extractelement <2 x i32> %i.be, i64 1
   %i.jl = extractelement <2 x i32> %i.ji, i64 1
   %min.iters.check486 = icmp ult i32 %i.jj, 3

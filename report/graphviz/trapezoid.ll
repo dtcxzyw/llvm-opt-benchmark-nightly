@@ -204,12 +204,12 @@ bb.al:                                            ; preds = %.lr.ph, %bb.cl
 
 greater_than_equal_to.exit:                       ; preds = %bb.al
   %i.oj = fsub <2 x double> %i.nx, %i.ny
-  %5 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.oj)
-  %6 = fcmp ole <2 x double> %5, splat (double f0x3E7AD7F29ABCAF48) ; 2 uses
-  %7 = extractelement <2 x i1> %6, i64 0
-  %8 = extractelement <2 x i1> %6, i64 1
-  %9 = select i1 %8, i1 %7, i1 false
-  br i1 %9, label %greater_than_equal_to.exit.thread, label %.critedge
+  %.fr937 = freeze <2 x double> %i.oj
+  %5 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr937)
+  %6 = fcmp ugt <2 x double> %5, splat (double f0x3E7AD7F29ABCAF48)
+  %7 = bitcast <2 x i1> %6 to i2
+  %8 = icmp eq i2 %7, 0
+  br i1 %8, label %greater_than_equal_to.exit.thread, label %.critedge
 
 greater_than_equal_to.exit.thread:                ; preds = %bb.al, %greater_than_equal_to.exit
   %i.ok = load ptr, ptr %2, align 8, !tbaa !8
@@ -303,12 +303,12 @@ greater_than_equal_to.exit.thread:                ; preds = %bb.al, %greater_tha
   %i.qz = load <2 x double>, ptr %i.qu, align 8
   %i.ra = load <2 x double>, ptr %i.qy, align 8
   %i.rb = fsub <2 x double> %i.qz, %i.ra
-  %10 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.rb)
-  %11 = fcmp ole <2 x double> %10, splat (double f0x3E7AD7F29ABCAF48) ; 2 uses
-  %12 = extractelement <2 x i1> %11, i64 0
-  %13 = extractelement <2 x i1> %11, i64 1
-  %14 = select i1 %13, i1 %12, i1 false
-  %.1780 = select i1 %14, i64 %i.qd, i64 %.0779852 ; 3 uses
+  %.fr938 = freeze <2 x double> %i.rb
+  %9 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr938)
+  %10 = fcmp ugt <2 x double> %9, splat (double f0x3E7AD7F29ABCAF48)
+  %11 = bitcast <2 x i1> %10 to i2
+  %12 = icmp eq i2 %11, 0
+  %.1780 = select i1 %12, i64 %i.qd, i64 %.0779852 ; 3 uses
   %i.rc = load ptr, ptr %2, align 8, !tbaa !8
   %i.rd = tail call i64 @gv_list_get_(ptr noundef nonnull byval(%struct.list_t_) align 8 %2, i64 noundef %.0775854) #10
   %i.re = getelementptr inbounds nuw [96 x i8], ptr %i.rc, i64 %i.rd
@@ -711,11 +711,11 @@ bb.cf:                                            ; preds = %bb.ce
   %i.aic = insertelement <2 x double> poison, double %i.ahp, i64 0
   %i.aid = insertelement <2 x double> %i.aic, double %i.ahm, i64 1
   %i.aie = fsub <2 x double> %i.aid, %i.aht
-  %15 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.aie)
-  %16 = fcmp ugt <2 x double> %15, splat (double f0x3E7AD7F29ABCAF48) ; 2 uses
-  %17 = extractelement <2 x i1> %16, i64 0
-  %18 = extractelement <2 x i1> %16, i64 1
-  %.not4.i = select i1 %18, i1 true, i1 %17
+  %.fr939 = freeze <2 x double> %i.aie
+  %13 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr939)
+  %14 = fcmp ugt <2 x double> %13, splat (double f0x3E7AD7F29ABCAF48)
+  %15 = bitcast <2 x i1> %14 to i2
+  %.not4.i = icmp ne i2 %15, 0
   br label %less_than.exit
 
 less_than.exit:                                   ; preds = %bb.cf, %bb.ce, %bb.cd
@@ -994,12 +994,12 @@ tailrecurse.backedge:                             ; preds = %bb.c, %is_left_of.e
 
 bb.d:                                             ; preds = %bb.c
   %i.v = fsub <2 x double> %i.i, %i.j
-  %5 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.v)
-  %6 = fcmp ole <2 x double> %5, splat (double f0x3E7AD7F29ABCAF48) ; 2 uses
-  %7 = extractelement <2 x i1> %6, i64 0
-  %8 = extractelement <2 x i1> %6, i64 1
-  %9 = select i1 %8, i1 %7, i1 false
-  br i1 %9, label %bb.e, label %tailrecurse.backedge
+  %.fr114 = freeze <2 x double> %i.v
+  %5 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr114)
+  %6 = fcmp ugt <2 x double> %5, splat (double f0x3E7AD7F29ABCAF48)
+  %7 = bitcast <2 x i1> %6 to i2
+  %8 = icmp eq i2 %7, 0
+  br i1 %8, label %bb.e, label %tailrecurse.backedge
 
 bb.e:                                             ; preds = %bb.d
   %i.w = load double, ptr %1, align 8
@@ -1021,24 +1021,24 @@ bb.f:                                             ; preds = %tailrecurse
   %i.ah = load <2 x double>, ptr %i.af, align 8   ; 5 uses
   %i.ai = extractelement <2 x double> %i.ah, i64 1 ; 11 uses
   %i.aj = extractelement <2 x double> %i.ah, i64 0 ; 9 uses
-  %i.ak = fsub <2 x double> %i.ag, %i.ah          ; 3 uses
-  %10 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.ak)
-  %11 = fcmp ole <2 x double> %10, splat (double f0x3E7AD7F29ABCAF48) ; 2 uses
-  %12 = extractelement <2 x i1> %11, i64 0
-  %13 = extractelement <2 x i1> %11, i64 1
-  %14 = select i1 %13, i1 %12, i1 false
-  br i1 %14, label %bb.h, label %bb.g
+  %i.ak = fsub <2 x double> %i.ag, %i.ah
+  %.fr112 = freeze <2 x double> %i.ak             ; 3 uses
+  %9 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr112)
+  %10 = fcmp ugt <2 x double> %9, splat (double f0x3E7AD7F29ABCAF48)
+  %11 = bitcast <2 x i1> %10 to i2
+  %12 = icmp eq i2 %11, 0
+  br i1 %12, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.al = getelementptr inbounds nuw i8, ptr %i.af, i64 16
   %i.am = load <2 x double>, ptr %i.al, align 8   ; 5 uses
-  %i.an = fsub <2 x double> %i.ag, %i.am          ; 3 uses
-  %15 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.an)
-  %16 = fcmp ole <2 x double> %15, splat (double f0x3E7AD7F29ABCAF48) ; 2 uses
-  %17 = extractelement <2 x i1> %16, i64 0
-  %18 = extractelement <2 x i1> %16, i64 1
-  %19 = select i1 %18, i1 %17, i1 false
-  br i1 %19, label %bb.h, label %bb.u
+  %i.an = fsub <2 x double> %i.ag, %i.am
+  %.fr113 = freeze <2 x double> %i.an             ; 3 uses
+  %13 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr113)
+  %14 = fcmp ugt <2 x double> %13, splat (double f0x3E7AD7F29ABCAF48)
+  %15 = bitcast <2 x i1> %14 to i2
+  %16 = icmp eq i2 %15, 0
+  br i1 %16, label %bb.h, label %bb.u
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %i.ao = load double, ptr %i.a, align 8, !tbaa !50 ; 6 uses
@@ -1175,11 +1175,11 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.x
   %i.df = fsub <2 x double> %i.am, %i.ah          ; 2 uses
-  %i.dg = extractelement <2 x double> %i.ak, i64 0
+  %i.dg = extractelement <2 x double> %.fr112, i64 0
   %i.dh = fneg double %i.dg
   %i.di = extractelement <2 x double> %i.df, i64 1
   %i.dj = fmul double %i.di, %i.dh
-  %i.dk = extractelement <2 x double> %i.ak, i64 1
+  %i.dk = extractelement <2 x double> %.fr112, i64 1
   %i.dl = extractelement <2 x double> %i.df, i64 0
   %i.dm = tail call double @llvm.fmuladd.f64(double %i.dl, double %i.dk, double %i.dj)
   br label %is_left_of.exit84
@@ -1205,11 +1205,11 @@ bb.ad:                                            ; preds = %bb.ac
 
 bb.ae:                                            ; preds = %bb.ac
   %i.du = fsub <2 x double> %i.ah, %i.am          ; 2 uses
-  %i.dv = extractelement <2 x double> %i.an, i64 0
+  %i.dv = extractelement <2 x double> %.fr113, i64 0
   %i.dw = fneg double %i.dv
   %i.dx = extractelement <2 x double> %i.du, i64 1
   %i.dy = fmul double %i.dx, %i.dw
-  %i.dz = extractelement <2 x double> %i.an, i64 1
+  %i.dz = extractelement <2 x double> %.fr113, i64 1
   %i.ea = extractelement <2 x double> %i.du, i64 0
   %i.eb = tail call double @llvm.fmuladd.f64(double %i.ea, double %i.dz, double %i.dy)
   br label %is_left_of.exit84
@@ -1612,12 +1612,12 @@ bb.b:                                             ; preds = %.lr.ph, %.thread151
 
 greater_than_equal_to.exit:                       ; preds = %bb.b
   %i.x = fsub <2 x double> %i.l, %i.m
-  %6 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.x)
-  %7 = fcmp ole <2 x double> %6, splat (double f0x3E7AD7F29ABCAF48) ; 2 uses
-  %8 = extractelement <2 x i1> %7, i64 0
-  %9 = extractelement <2 x i1> %7, i64 1
-  %10 = select i1 %9, i1 %8, i1 false
-  br i1 %10, label %greater_than_equal_to.exit.thread, label %.critedge
+  %.fr156 = freeze <2 x double> %i.x
+  %6 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr156)
+  %7 = fcmp ugt <2 x double> %6, splat (double f0x3E7AD7F29ABCAF48)
+  %8 = bitcast <2 x i1> %7 to i2
+  %9 = icmp eq i2 %8, 0
+  br i1 %9, label %greater_than_equal_to.exit.thread, label %.critedge
 
 greater_than_equal_to.exit.thread:                ; preds = %bb.b, %greater_than_equal_to.exit
   %i.y = load ptr, ptr %4, align 8, !tbaa !8

@@ -205,10 +205,10 @@ middle.block:                                     ; preds = %vector.body
   %i.cp = fptosi <4 x double> %i.co to <4 x i32>  ; 3 uses
   store <4 x i32> %i.cp, ptr %5, align 16, !tbaa !11
   %i.cq = shufflevector <4 x i32> %i.cp, <4 x i32> poison, <2 x i32> <i32 2, i32 3>
-  %7 = icmp sgt <2 x i32> %i.cq, zeroinitializer  ; 2 uses
-  %8 = extractelement <2 x i1> %7, i64 0
-  %9 = extractelement <2 x i1> %7, i64 1
-  %or.cond = select i1 %8, i1 %9, i1 false
+  %.fr = freeze <2 x i32> %i.cq
+  %7 = icmp slt <2 x i32> %.fr, splat (i32 1)
+  %8 = bitcast <2 x i1> %7 to i2
+  %or.cond = icmp eq i2 %8, 0
   br i1 %or.cond, label %bb.b, label %bb.g
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader188, %.lr.ph

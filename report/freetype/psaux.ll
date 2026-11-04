@@ -205,7 +205,8 @@ bb.h:                                             ; preds = %bb.g, %bb.c
 bb.i:                                             ; preds = %bb.h
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ax, i64 312
   %i.bd = load <2 x i64>, ptr %i.bc, align 8, !tbaa !42
-  %i.be = trunc <2 x i64> %i.bd to <2 x i32>
+  %.fr124 = freeze <2 x i64> %i.bd
+  %i.be = trunc <2 x i64> %.fr124 to <2 x i32>
   %i.bf = add <2 x i32> %i.be, splat (i32 32)
   %i.bg = sdiv <2 x i32> %i.bf, splat (i32 64)
   br label %cf2_getScaleAndHintFlag.exit
@@ -291,11 +292,10 @@ bb.o:                                             ; preds = %bb.n, %bb.m, %bb.k
   br i1 %.not79, label %cf2_checkTransform.exit, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.ct = icmp slt <2 x i32> %i.bh, splat (i32 1) ; 2 uses
-  %6 = extractelement <2 x i1> %i.ct, i64 0
-  %7 = extractelement <2 x i1> %i.ct, i64 1
-  %or.cond94 = select i1 %6, i1 true, i1 %7
-  br i1 %or.cond94, label %cf2_setGlyphWidth.exit, label %bb.q
+  %i.ct = icmp slt <2 x i32> %i.bh, splat (i32 1)
+  %6 = bitcast <2 x i1> %i.ct to i2
+  %or.cond94.not = icmp eq i2 %6, 0
+  br i1 %or.cond94.not, label %bb.q, label %cf2_setGlyphWidth.exit
 
 bb.q:                                             ; preds = %bb.p
   %i.cu = icmp slt i16 %.val.val, 0

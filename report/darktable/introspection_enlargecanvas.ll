@@ -204,12 +204,12 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.v = insertelement <2 x float> poison, float %.030, i64 0
   %i.w = insertelement <2 x float> %i.v, float %.029, i64 1
   %i.x = fmul reassoc nsz arcp contract afn <2 x float> %i.w, %i.u
-  %i.y = fptosi <2 x float> %i.x to <2 x i32>     ; 2 uses
-  %4 = icmp sgt <2 x i32> %i.y, zeroinitializer   ; 2 uses
-  %5 = extractelement <2 x i1> %4, i64 0
-  %6 = extractelement <2 x i1> %4, i64 1
-  %or.cond = select i1 %5, i1 true, i1 %6
-  br i1 %or.cond, label %bb.f, label %.loopexit
+  %i.y = fptosi <2 x float> %i.x to <2 x i32>
+  %.fr = freeze <2 x i32> %i.y                    ; 2 uses
+  %4 = icmp sgt <2 x i32> %.fr, zeroinitializer
+  %5 = bitcast <2 x i1> %4 to i2
+  %or.cond.not = icmp eq i2 %5, 0
+  br i1 %or.cond.not, label %.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   call void @llvm.assume(i1 true) [ "align"(ptr %2, i64 64) ]
@@ -218,7 +218,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not, label %.loopexit, label %iter.check
 
 iter.check:                                       ; preds = %bb.f
-  %i.aa = sitofp reassoc nsz arcp contract afn <2 x i32> %i.y to <2 x float> ; 5 uses
+  %i.aa = sitofp reassoc nsz arcp contract afn <2 x i32> %.fr to <2 x float> ; 5 uses
   %i.ab = add i64 %i.z, -2                        ; 3 uses
   %i.ac = lshr exact i64 %i.ab, 1
   %i.ad = add nuw i64 %i.ac, 1                    ; 5 uses
@@ -358,12 +358,12 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.v = insertelement <2 x float> poison, float %.030, i64 0
   %i.w = insertelement <2 x float> %i.v, float %.029, i64 1
   %i.x = fmul reassoc nsz arcp contract afn <2 x float> %i.w, %i.u
-  %i.y = fptosi <2 x float> %i.x to <2 x i32>     ; 2 uses
-  %4 = icmp sgt <2 x i32> %i.y, zeroinitializer   ; 2 uses
-  %5 = extractelement <2 x i1> %4, i64 0
-  %6 = extractelement <2 x i1> %4, i64 1
-  %or.cond = select i1 %5, i1 true, i1 %6
-  br i1 %or.cond, label %bb.f, label %.loopexit
+  %i.y = fptosi <2 x float> %i.x to <2 x i32>
+  %.fr = freeze <2 x i32> %i.y                    ; 2 uses
+  %4 = icmp sgt <2 x i32> %.fr, zeroinitializer
+  %5 = bitcast <2 x i1> %4 to i2
+  %or.cond.not = icmp eq i2 %5, 0
+  br i1 %or.cond.not, label %.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   call void @llvm.assume(i1 true) [ "align"(ptr %2, i64 64) ]
@@ -372,7 +372,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not, label %.loopexit, label %iter.check
 
 iter.check:                                       ; preds = %bb.f
-  %i.aa = sitofp reassoc nsz arcp contract afn <2 x i32> %i.y to <2 x float> ; 5 uses
+  %i.aa = sitofp reassoc nsz arcp contract afn <2 x i32> %.fr to <2 x float> ; 5 uses
   %i.ab = add i64 %i.z, -2                        ; 3 uses
   %i.ac = lshr exact i64 %i.ab, 1
   %i.ad = add nuw i64 %i.ac, 1                    ; 5 uses

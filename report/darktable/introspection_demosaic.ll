@@ -205,7 +205,8 @@ bb.b:                                             ; preds = %.lr.ph.us, %bb.b
   %i.u = load float, ptr %gep.us, align 4, !tbaa !12
   %i.v = insertelement <2 x float> poison, float %i.u, i64 0
   %i.w = insertelement <2 x float> %i.v, float %i.t, i64 1
-  %i.x = fpext reassoc nsz arcp contract afn <2 x float> %i.w to <2 x double>
+  %.fr = freeze <2 x float> %i.w
+  %i.x = fpext reassoc nsz arcp contract afn <2 x float> %.fr to <2 x double>
   %i.y = fadd reassoc nsz arcp contract afn <2 x double> %i.r, %i.x ; 7 uses
   %i.z = add i64 %.05262.us, 2                    ; 2 uses
   %i.aa = icmp ult i64 %i.z, %i.j
@@ -217,10 +218,9 @@ bb.b:                                             ; preds = %.lr.ph.us, %bb.b
   br i1 %i.ac, label %.lr.ph.us, label %._crit_edge69
 
 ._crit_edge69:                                    ; preds = %._crit_edge.us
-  %5 = fcmp reassoc nsz arcp contract afn ogt <2 x double> %i.y, zeroinitializer ; 2 uses
-  %6 = extractelement <2 x i1> %5, i64 0
-  %7 = extractelement <2 x i1> %5, i64 1
-  %or.cond = select i1 %7, i1 %6, i1 false
+  %5 = fcmp ule <2 x double> %i.y, zeroinitializer
+  %6 = bitcast <2 x i1> %5 to i2
+  %or.cond = icmp eq i2 %6, 0
   %i.ad = icmp sgt i32 %3, 1
   %or.cond93 = and i1 %or.cond, %i.ad
   br i1 %or.cond93, label %.preheader.lr.ph, label %.loopexit

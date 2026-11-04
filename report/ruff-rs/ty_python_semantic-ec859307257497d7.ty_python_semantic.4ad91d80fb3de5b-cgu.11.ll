@@ -205,10 +205,10 @@ bb.l:                                             ; preds = %bb.b
   %i.ap = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.aq = load <2 x i32>, ptr %i.ao, align 4
   %i.ar = load <2 x i32>, ptr %i.ap, align 4
-  %i.as = icmp eq <2 x i32> %i.aq, %i.ar          ; 2 uses
-  %2 = extractelement <2 x i1> %i.as, i64 0
-  %3 = extractelement <2 x i1> %i.as, i64 1
-  %.sroa.0.0.i76 = select i1 %3, i1 %2, i1 false
+  %i.as = icmp eq <2 x i32> %i.aq, %i.ar
+  %2 = freeze <2 x i1> %i.as
+  %3 = bitcast <2 x i1> %2 to i2
+  %.sroa.0.0.i76 = icmp eq i2 %3, -1
   br label %_RNvXs3S_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_11DynamicTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.m:                                             ; preds = %bb.b
@@ -216,10 +216,10 @@ bb.m:                                             ; preds = %bb.b
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.av = load <2 x i32>, ptr %i.at, align 4
   %i.aw = load <2 x i32>, ptr %i.au, align 4
-  %i.ax = icmp eq <2 x i32> %i.av, %i.aw          ; 2 uses
-  %4 = extractelement <2 x i1> %i.ax, i64 0
-  %5 = extractelement <2 x i1> %i.ax, i64 1
-  %.sroa.0.0.i77 = select i1 %5, i1 %4, i1 false
+  %i.ax = icmp eq <2 x i32> %i.av, %i.aw
+  %4 = freeze <2 x i1> %i.ax
+  %5 = bitcast <2 x i1> %4 to i2
+  %.sroa.0.0.i77 = icmp eq i2 %5, -1
   br label %_RNvXs3S_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_11DynamicTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.n:                                             ; preds = %bb.b
@@ -241,10 +241,10 @@ bb.p:                                             ; preds = %bb.b
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bg = load <2 x i32>, ptr %i.be, align 4
   %i.bh = load <2 x i32>, ptr %i.bf, align 4
-  %i.bi = icmp eq <2 x i32> %i.bg, %i.bh          ; 2 uses
-  %6 = extractelement <2 x i1> %i.bi, i64 0
-  %7 = extractelement <2 x i1> %i.bi, i64 1
-  %.sroa.0.0.i78 = select i1 %7, i1 %6, i1 false
+  %i.bi = icmp eq <2 x i32> %i.bg, %i.bh
+  %6 = freeze <2 x i1> %i.bi
+  %7 = bitcast <2 x i1> %6 to i2
+  %.sroa.0.0.i78 = icmp eq i2 %7, -1
   br label %_RNvXs3S_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_11DynamicTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.q:                                             ; preds = %bb.b
@@ -252,10 +252,10 @@ bb.q:                                             ; preds = %bb.b
   %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bl = load <2 x i32>, ptr %i.bj, align 4
   %i.bm = load <2 x i32>, ptr %i.bk, align 4
-  %i.bn = icmp eq <2 x i32> %i.bl, %i.bm          ; 2 uses
-  %8 = extractelement <2 x i1> %i.bn, i64 0
-  %9 = extractelement <2 x i1> %i.bn, i64 1
-  %.sroa.0.0.i79 = select i1 %9, i1 %8, i1 false
+  %i.bn = icmp eq <2 x i32> %i.bl, %i.bm
+  %8 = freeze <2 x i1> %i.bn
+  %9 = bitcast <2 x i1> %8 to i2
+  %.sroa.0.0.i79 = icmp eq i2 %9, -1
   br label %_RNvXs3S_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_11DynamicTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.r:                                             ; preds = %bb.b
@@ -263,10 +263,10 @@ bb.r:                                             ; preds = %bb.b
   %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bq = load <2 x i32>, ptr %i.bo, align 4
   %i.br = load <2 x i32>, ptr %i.bp, align 4
-  %i.bs = icmp eq <2 x i32> %i.bq, %i.br          ; 2 uses
-  %10 = extractelement <2 x i1> %i.bs, i64 0
-  %11 = extractelement <2 x i1> %i.bs, i64 1
-  %.sroa.0.0.i80 = select i1 %11, i1 %10, i1 false
+  %i.bs = icmp eq <2 x i32> %i.bq, %i.br
+  %10 = freeze <2 x i1> %i.bs
+  %11 = bitcast <2 x i1> %10 to i2
+  %.sroa.0.0.i80 = icmp eq i2 %11, -1
   br label %_RNvXs3S_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_11DynamicTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.s:                                             ; preds = %bb.b
@@ -274,10 +274,10 @@ bb.s:                                             ; preds = %bb.b
   %i.bu = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bv = load <2 x i32>, ptr %i.bt, align 4
   %i.bw = load <2 x i32>, ptr %i.bu, align 4
-  %i.bx = icmp eq <2 x i32> %i.bv, %i.bw          ; 2 uses
-  %12 = extractelement <2 x i1> %i.bx, i64 0
-  %13 = extractelement <2 x i1> %i.bx, i64 1
-  %.sroa.0.0.i81 = select i1 %13, i1 %12, i1 false
+  %i.bx = icmp eq <2 x i32> %i.bv, %i.bw
+  %12 = freeze <2 x i1> %i.bx
+  %13 = bitcast <2 x i1> %12 to i2
+  %.sroa.0.0.i81 = icmp eq i2 %13, -1
   br label %_RNvXs3S_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_11DynamicTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.t:                                             ; preds = %bb.b
@@ -291,10 +291,10 @@ bb.u:                                             ; preds = %bb.b
   %i.cc = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.cd = load <2 x i32>, ptr %i.cb, align 4
   %i.ce = load <2 x i32>, ptr %i.cc, align 4
-  %i.cf = icmp eq <2 x i32> %i.cd, %i.ce          ; 2 uses
-  %14 = extractelement <2 x i1> %i.cf, i64 0
-  %15 = extractelement <2 x i1> %i.cf, i64 1
-  %.sroa.0.0.i82 = select i1 %15, i1 %14, i1 false
+  %i.cf = icmp eq <2 x i32> %i.cd, %i.ce
+  %14 = freeze <2 x i1> %i.cf
+  %15 = bitcast <2 x i1> %14 to i2
+  %.sroa.0.0.i82 = icmp eq i2 %15, -1
   br label %_RNvXs3S_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_11DynamicTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.v:                                             ; preds = %bb.b
@@ -355,10 +355,10 @@ bb.ae:                                            ; preds = %bb.b
   %i.cz = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.da = load <2 x i32>, ptr %i.cy, align 4
   %i.db = load <2 x i32>, ptr %i.cz, align 4
-  %i.dc = icmp eq <2 x i32> %i.da, %i.db          ; 2 uses
-  %16 = extractelement <2 x i1> %i.dc, i64 0
-  %17 = extractelement <2 x i1> %i.dc, i64 1
-  %.sroa.0.0.i83 = select i1 %17, i1 %16, i1 false
+  %i.dc = icmp eq <2 x i32> %i.da, %i.db
+  %16 = freeze <2 x i1> %i.dc
+  %17 = bitcast <2 x i1> %16 to i2
+  %.sroa.0.0.i83 = icmp eq i2 %17, -1
   br label %_RNvXs3S_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_11DynamicTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.af:                                            ; preds = %bb.b
@@ -366,10 +366,10 @@ bb.af:                                            ; preds = %bb.b
   %i.de = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.df = load <2 x i32>, ptr %i.dd, align 4
   %i.dg = load <2 x i32>, ptr %i.de, align 4
-  %i.dh = icmp eq <2 x i32> %i.df, %i.dg          ; 2 uses
-  %18 = extractelement <2 x i1> %i.dh, i64 0
-  %19 = extractelement <2 x i1> %i.dh, i64 1
-  %.sroa.0.0.i84 = select i1 %19, i1 %18, i1 false
+  %i.dh = icmp eq <2 x i32> %i.df, %i.dg
+  %18 = freeze <2 x i1> %i.dh
+  %19 = bitcast <2 x i1> %18 to i2
+  %.sroa.0.0.i84 = icmp eq i2 %19, -1
   br label %_RNvXs3S_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_11DynamicTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.ag:                                            ; preds = %bb.b
@@ -377,10 +377,10 @@ bb.ag:                                            ; preds = %bb.b
   %i.dj = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.dk = load <2 x i32>, ptr %i.di, align 4
   %i.dl = load <2 x i32>, ptr %i.dj, align 4
-  %i.dm = icmp eq <2 x i32> %i.dk, %i.dl          ; 2 uses
-  %20 = extractelement <2 x i1> %i.dm, i64 0
-  %21 = extractelement <2 x i1> %i.dm, i64 1
-  %.sroa.0.0.i85 = select i1 %21, i1 %20, i1 false
+  %i.dm = icmp eq <2 x i32> %i.dk, %i.dl
+  %20 = freeze <2 x i1> %i.dm
+  %21 = bitcast <2 x i1> %20 to i2
+  %.sroa.0.0.i85 = icmp eq i2 %21, -1
   br label %_RNvXs3S_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_11DynamicTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.ah:                                            ; preds = %bb.b
@@ -388,10 +388,10 @@ bb.ah:                                            ; preds = %bb.b
   %i.do = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.dp = load <2 x i32>, ptr %i.dn, align 4
   %i.dq = load <2 x i32>, ptr %i.do, align 4
-  %i.dr = icmp eq <2 x i32> %i.dp, %i.dq          ; 2 uses
-  %22 = extractelement <2 x i1> %i.dr, i64 0
-  %23 = extractelement <2 x i1> %i.dr, i64 1
-  %.sroa.0.0.i86 = select i1 %23, i1 %22, i1 false
+  %i.dr = icmp eq <2 x i32> %i.dp, %i.dq
+  %22 = freeze <2 x i1> %i.dr
+  %23 = bitcast <2 x i1> %22 to i2
+  %.sroa.0.0.i86 = icmp eq i2 %23, -1
   br label %_RNvXs3S_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_11DynamicTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.ai:                                            ; preds = %bb.b
@@ -405,10 +405,10 @@ bb.aj:                                            ; preds = %bb.b
   %i.dw = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.dx = load <2 x i32>, ptr %i.dv, align 4
   %i.dy = load <2 x i32>, ptr %i.dw, align 4
-  %i.dz = icmp eq <2 x i32> %i.dx, %i.dy          ; 2 uses
-  %24 = extractelement <2 x i1> %i.dz, i64 0
-  %25 = extractelement <2 x i1> %i.dz, i64 1
-  %.sroa.0.0.i87 = select i1 %25, i1 %24, i1 false
+  %i.dz = icmp eq <2 x i32> %i.dx, %i.dy
+  %24 = freeze <2 x i1> %i.dz
+  %25 = bitcast <2 x i1> %24 to i2
+  %.sroa.0.0.i87 = icmp eq i2 %25, -1
   br label %_RNvXs3S_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_11DynamicTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.ak:                                            ; preds = %bb.b
@@ -416,10 +416,10 @@ bb.ak:                                            ; preds = %bb.b
   %i.eb = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ec = load <2 x i32>, ptr %i.ea, align 4
   %i.ed = load <2 x i32>, ptr %i.eb, align 4
-  %i.ee = icmp eq <2 x i32> %i.ec, %i.ed          ; 2 uses
-  %26 = extractelement <2 x i1> %i.ee, i64 0
-  %27 = extractelement <2 x i1> %i.ee, i64 1
-  %.sroa.0.0.i88 = select i1 %27, i1 %26, i1 false
+  %i.ee = icmp eq <2 x i32> %i.ec, %i.ed
+  %26 = freeze <2 x i1> %i.ee
+  %27 = bitcast <2 x i1> %26 to i2
+  %.sroa.0.0.i88 = icmp eq i2 %27, -1
   br label %_RNvXs3S_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_11DynamicTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.al:                                            ; preds = %bb.b
@@ -427,10 +427,10 @@ bb.al:                                            ; preds = %bb.b
   %i.eg = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.eh = load <2 x i32>, ptr %i.ef, align 4
   %i.ei = load <2 x i32>, ptr %i.eg, align 4
-  %i.ej = icmp eq <2 x i32> %i.eh, %i.ei          ; 2 uses
-  %28 = extractelement <2 x i1> %i.ej, i64 0
-  %29 = extractelement <2 x i1> %i.ej, i64 1
-  %.sroa.0.0.i89 = select i1 %29, i1 %28, i1 false
+  %i.ej = icmp eq <2 x i32> %i.eh, %i.ei
+  %28 = freeze <2 x i1> %i.ej
+  %29 = bitcast <2 x i1> %28 to i2
+  %.sroa.0.0.i89 = icmp eq i2 %29, -1
   br label %_RNvXs3S_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_11DynamicTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.am:                                            ; preds = %bb.b
@@ -438,10 +438,10 @@ bb.am:                                            ; preds = %bb.b
   %i.el = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.em = load <2 x i32>, ptr %i.ek, align 4
   %i.en = load <2 x i32>, ptr %i.el, align 4
-  %i.eo = icmp eq <2 x i32> %i.em, %i.en          ; 2 uses
-  %30 = extractelement <2 x i1> %i.eo, i64 0
-  %31 = extractelement <2 x i1> %i.eo, i64 1
-  %.sroa.0.0.i90 = select i1 %31, i1 %30, i1 false
+  %i.eo = icmp eq <2 x i32> %i.em, %i.en
+  %30 = freeze <2 x i1> %i.eo
+  %31 = bitcast <2 x i1> %30 to i2
+  %.sroa.0.0.i90 = icmp eq i2 %31, -1
   br label %_RNvXs3S_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_11DynamicTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.an:                                            ; preds = %bb.b
@@ -449,10 +449,10 @@ bb.an:                                            ; preds = %bb.b
   %i.eq = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.er = load <2 x i32>, ptr %i.ep, align 4
   %i.es = load <2 x i32>, ptr %i.eq, align 4
-  %i.et = icmp eq <2 x i32> %i.er, %i.es          ; 2 uses
-  %32 = extractelement <2 x i1> %i.et, i64 0
-  %33 = extractelement <2 x i1> %i.et, i64 1
-  %.sroa.0.0.i91 = select i1 %33, i1 %32, i1 false
+  %i.et = icmp eq <2 x i32> %i.er, %i.es
+  %32 = freeze <2 x i1> %i.et
+  %33 = bitcast <2 x i1> %32 to i2
+  %.sroa.0.0.i91 = icmp eq i2 %33, -1
   br label %_RNvXs3S_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_11DynamicTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.ao:                                            ; preds = %bb.b
@@ -507,10 +507,10 @@ bb.av:                                            ; preds = %bb.b
   %i.ft = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.fu = load <2 x i32>, ptr %i.fs, align 4
   %i.fv = load <2 x i32>, ptr %i.ft, align 4
-  %i.fw = icmp eq <2 x i32> %i.fu, %i.fv          ; 2 uses
-  %34 = extractelement <2 x i1> %i.fw, i64 0
-  %35 = extractelement <2 x i1> %i.fw, i64 1
-  %.sroa.0.0.i93 = select i1 %35, i1 %34, i1 false
+  %i.fw = icmp eq <2 x i32> %i.fu, %i.fv
+  %34 = freeze <2 x i1> %i.fw
+  %35 = bitcast <2 x i1> %34 to i2
+  %.sroa.0.0.i93 = icmp eq i2 %35, -1
   br label %_RNvXs3S_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_11DynamicTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 }
 
@@ -913,10 +913,10 @@ bb.d:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.l = load <2 x i32>, ptr %i.j, align 4
   %i.m = load <2 x i32>, ptr %i.k, align 4
-  %i.n = icmp eq <2 x i32> %i.l, %i.m             ; 2 uses
-  %2 = extractelement <2 x i1> %i.n, i64 0
-  %3 = extractelement <2 x i1> %i.n, i64 1
-  %.sroa.0.0.i = select i1 %3, i1 %2, i1 false
+  %i.n = icmp eq <2 x i32> %i.l, %i.m
+  %2 = freeze <2 x i1> %i.n
+  %3 = bitcast <2 x i1> %2 to i2
+  %.sroa.0.0.i = icmp eq i2 %3, -1
   br label %_RNvXso_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10type_aliasNtB5_13TypeAliasTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.e:                                             ; preds = %bb.b
@@ -924,10 +924,10 @@ bb.e:                                             ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.q = load <2 x i32>, ptr %i.o, align 4
   %i.r = load <2 x i32>, ptr %i.p, align 4
-  %i.s = icmp eq <2 x i32> %i.q, %i.r             ; 2 uses
-  %4 = extractelement <2 x i1> %i.s, i64 0
-  %5 = extractelement <2 x i1> %i.s, i64 1
-  %.sroa.0.0.i82 = select i1 %5, i1 %4, i1 false
+  %i.s = icmp eq <2 x i32> %i.q, %i.r
+  %4 = freeze <2 x i1> %i.s
+  %5 = bitcast <2 x i1> %4 to i2
+  %.sroa.0.0.i82 = icmp eq i2 %5, -1
   br label %_RNvXso_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10type_aliasNtB5_13TypeAliasTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.f:                                             ; preds = %bb.b
@@ -935,10 +935,10 @@ bb.f:                                             ; preds = %bb.b
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.v = load <2 x i32>, ptr %i.t, align 4
   %i.w = load <2 x i32>, ptr %i.u, align 4
-  %i.x = icmp eq <2 x i32> %i.v, %i.w             ; 2 uses
-  %6 = extractelement <2 x i1> %i.x, i64 0
-  %7 = extractelement <2 x i1> %i.x, i64 1
-  %.sroa.0.0.i83 = select i1 %7, i1 %6, i1 false
+  %i.x = icmp eq <2 x i32> %i.v, %i.w
+  %6 = freeze <2 x i1> %i.x
+  %7 = bitcast <2 x i1> %6 to i2
+  %.sroa.0.0.i83 = icmp eq i2 %7, -1
   br label %_RNvXso_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10type_aliasNtB5_13TypeAliasTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.g:                                             ; preds = %bb.b
@@ -1004,10 +1004,10 @@ bb.o:                                             ; preds = %bb.b
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ay = load <2 x i32>, ptr %i.aw, align 4
   %i.az = load <2 x i32>, ptr %i.ax, align 4
-  %i.ba = icmp eq <2 x i32> %i.ay, %i.az          ; 2 uses
-  %8 = extractelement <2 x i1> %i.ba, i64 0
-  %9 = extractelement <2 x i1> %i.ba, i64 1
-  %.sroa.0.0.i84 = select i1 %9, i1 %8, i1 false
+  %i.ba = icmp eq <2 x i32> %i.ay, %i.az
+  %8 = freeze <2 x i1> %i.ba
+  %9 = bitcast <2 x i1> %8 to i2
+  %.sroa.0.0.i84 = icmp eq i2 %9, -1
   br label %_RNvXso_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10type_aliasNtB5_13TypeAliasTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.p:                                             ; preds = %bb.b
@@ -1015,10 +1015,10 @@ bb.p:                                             ; preds = %bb.b
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bd = load <2 x i32>, ptr %i.bb, align 4
   %i.be = load <2 x i32>, ptr %i.bc, align 4
-  %i.bf = icmp eq <2 x i32> %i.bd, %i.be          ; 2 uses
-  %10 = extractelement <2 x i1> %i.bf, i64 0
-  %11 = extractelement <2 x i1> %i.bf, i64 1
-  %.sroa.0.0.i85 = select i1 %11, i1 %10, i1 false
+  %i.bf = icmp eq <2 x i32> %i.bd, %i.be
+  %10 = freeze <2 x i1> %i.bf
+  %11 = bitcast <2 x i1> %10 to i2
+  %.sroa.0.0.i85 = icmp eq i2 %11, -1
   br label %_RNvXso_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10type_aliasNtB5_13TypeAliasTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.q:                                             ; preds = %bb.b
@@ -1026,10 +1026,10 @@ bb.q:                                             ; preds = %bb.b
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bi = load <2 x i32>, ptr %i.bg, align 4
   %i.bj = load <2 x i32>, ptr %i.bh, align 4
-  %i.bk = icmp eq <2 x i32> %i.bi, %i.bj          ; 2 uses
-  %12 = extractelement <2 x i1> %i.bk, i64 0
-  %13 = extractelement <2 x i1> %i.bk, i64 1
-  %.sroa.0.0.i86 = select i1 %13, i1 %12, i1 false
+  %i.bk = icmp eq <2 x i32> %i.bi, %i.bj
+  %12 = freeze <2 x i1> %i.bk
+  %13 = bitcast <2 x i1> %12 to i2
+  %.sroa.0.0.i86 = icmp eq i2 %13, -1
   br label %_RNvXso_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10type_aliasNtB5_13TypeAliasTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.r:                                             ; preds = %bb.b
@@ -1037,10 +1037,10 @@ bb.r:                                             ; preds = %bb.b
   %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bn = load <2 x i32>, ptr %i.bl, align 4
   %i.bo = load <2 x i32>, ptr %i.bm, align 4
-  %i.bp = icmp eq <2 x i32> %i.bn, %i.bo          ; 2 uses
-  %14 = extractelement <2 x i1> %i.bp, i64 0
-  %15 = extractelement <2 x i1> %i.bp, i64 1
-  %.sroa.0.0.i87 = select i1 %15, i1 %14, i1 false
+  %i.bp = icmp eq <2 x i32> %i.bn, %i.bo
+  %14 = freeze <2 x i1> %i.bp
+  %15 = bitcast <2 x i1> %14 to i2
+  %.sroa.0.0.i87 = icmp eq i2 %15, -1
   br label %_RNvXso_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10type_aliasNtB5_13TypeAliasTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.s:                                             ; preds = %bb.b
@@ -1048,10 +1048,10 @@ bb.s:                                             ; preds = %bb.b
   %i.br = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bs = load <2 x i32>, ptr %i.bq, align 4
   %i.bt = load <2 x i32>, ptr %i.br, align 4
-  %i.bu = icmp eq <2 x i32> %i.bs, %i.bt          ; 2 uses
-  %16 = extractelement <2 x i1> %i.bu, i64 0
-  %17 = extractelement <2 x i1> %i.bu, i64 1
-  %.sroa.0.0.i88 = select i1 %17, i1 %16, i1 false
+  %i.bu = icmp eq <2 x i32> %i.bs, %i.bt
+  %16 = freeze <2 x i1> %i.bu
+  %17 = bitcast <2 x i1> %16 to i2
+  %.sroa.0.0.i88 = icmp eq i2 %17, -1
   br label %_RNvXso_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10type_aliasNtB5_13TypeAliasTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.t:                                             ; preds = %bb.b
@@ -1059,10 +1059,10 @@ bb.t:                                             ; preds = %bb.b
   %i.bw = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.bx = load <2 x i32>, ptr %i.bv, align 4
   %i.by = load <2 x i32>, ptr %i.bw, align 4
-  %i.bz = icmp eq <2 x i32> %i.bx, %i.by          ; 2 uses
-  %18 = extractelement <2 x i1> %i.bz, i64 0
-  %19 = extractelement <2 x i1> %i.bz, i64 1
-  %.sroa.0.0.i89 = select i1 %19, i1 %18, i1 false
+  %i.bz = icmp eq <2 x i32> %i.bx, %i.by
+  %18 = freeze <2 x i1> %i.bz
+  %19 = bitcast <2 x i1> %18 to i2
+  %.sroa.0.0.i89 = icmp eq i2 %19, -1
   br label %_RNvXso_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10type_aliasNtB5_13TypeAliasTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.u:                                             ; preds = %bb.b
@@ -1070,10 +1070,10 @@ bb.u:                                             ; preds = %bb.b
   %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.cc = load <2 x i32>, ptr %i.ca, align 4
   %i.cd = load <2 x i32>, ptr %i.cb, align 4
-  %i.ce = icmp eq <2 x i32> %i.cc, %i.cd          ; 2 uses
-  %20 = extractelement <2 x i1> %i.ce, i64 0
-  %21 = extractelement <2 x i1> %i.ce, i64 1
-  %.sroa.0.0.i90 = select i1 %21, i1 %20, i1 false
+  %i.ce = icmp eq <2 x i32> %i.cc, %i.cd
+  %20 = freeze <2 x i1> %i.ce
+  %21 = bitcast <2 x i1> %20 to i2
+  %.sroa.0.0.i90 = icmp eq i2 %21, -1
   br label %_RNvXso_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10type_aliasNtB5_13TypeAliasTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.v:                                             ; preds = %bb.b
@@ -1081,10 +1081,10 @@ bb.v:                                             ; preds = %bb.b
   %i.cg = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ch = load <2 x i32>, ptr %i.cf, align 4
   %i.ci = load <2 x i32>, ptr %i.cg, align 4
-  %i.cj = icmp eq <2 x i32> %i.ch, %i.ci          ; 2 uses
-  %22 = extractelement <2 x i1> %i.cj, i64 0
-  %23 = extractelement <2 x i1> %i.cj, i64 1
-  %.sroa.0.0.i91 = select i1 %23, i1 %22, i1 false
+  %i.cj = icmp eq <2 x i32> %i.ch, %i.ci
+  %22 = freeze <2 x i1> %i.cj
+  %23 = bitcast <2 x i1> %22 to i2
+  %.sroa.0.0.i91 = icmp eq i2 %23, -1
   br label %_RNvXso_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10type_aliasNtB5_13TypeAliasTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.w:                                             ; preds = %bb.b
@@ -1092,10 +1092,10 @@ bb.w:                                             ; preds = %bb.b
   %i.cl = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.cm = load <2 x i32>, ptr %i.ck, align 4
   %i.cn = load <2 x i32>, ptr %i.cl, align 4
-  %i.co = icmp eq <2 x i32> %i.cm, %i.cn          ; 2 uses
-  %24 = extractelement <2 x i1> %i.co, i64 0
-  %25 = extractelement <2 x i1> %i.co, i64 1
-  %.sroa.0.0.i92 = select i1 %25, i1 %24, i1 false
+  %i.co = icmp eq <2 x i32> %i.cm, %i.cn
+  %24 = freeze <2 x i1> %i.co
+  %25 = bitcast <2 x i1> %24 to i2
+  %.sroa.0.0.i92 = icmp eq i2 %25, -1
   br label %_RNvXso_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10type_aliasNtB5_13TypeAliasTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.x:                                             ; preds = %bb.b
@@ -1103,10 +1103,10 @@ bb.x:                                             ; preds = %bb.b
   %i.cq = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.cr = load <2 x i32>, ptr %i.cp, align 4
   %i.cs = load <2 x i32>, ptr %i.cq, align 4
-  %i.ct = icmp eq <2 x i32> %i.cr, %i.cs          ; 2 uses
-  %26 = extractelement <2 x i1> %i.ct, i64 0
-  %27 = extractelement <2 x i1> %i.ct, i64 1
-  %.sroa.0.0.i93 = select i1 %27, i1 %26, i1 false
+  %i.ct = icmp eq <2 x i32> %i.cr, %i.cs
+  %26 = freeze <2 x i1> %i.ct
+  %27 = bitcast <2 x i1> %26 to i2
+  %.sroa.0.0.i93 = icmp eq i2 %27, -1
   br label %_RNvXso_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10type_aliasNtB5_13TypeAliasTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.y:                                             ; preds = %bb.b
@@ -1114,10 +1114,10 @@ bb.y:                                             ; preds = %bb.b
   %i.cv = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.cw = load <2 x i32>, ptr %i.cu, align 4
   %i.cx = load <2 x i32>, ptr %i.cv, align 4
-  %i.cy = icmp eq <2 x i32> %i.cw, %i.cx          ; 2 uses
-  %28 = extractelement <2 x i1> %i.cy, i64 0
-  %29 = extractelement <2 x i1> %i.cy, i64 1
-  %.sroa.0.0.i94 = select i1 %29, i1 %28, i1 false
+  %i.cy = icmp eq <2 x i32> %i.cw, %i.cx
+  %28 = freeze <2 x i1> %i.cy
+  %29 = bitcast <2 x i1> %28 to i2
+  %.sroa.0.0.i94 = icmp eq i2 %29, -1
   br label %_RNvXso_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10type_aliasNtB5_13TypeAliasTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.z:                                             ; preds = %bb.b
@@ -1125,10 +1125,10 @@ bb.z:                                             ; preds = %bb.b
   %i.da = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.db = load <2 x i32>, ptr %i.cz, align 4
   %i.dc = load <2 x i32>, ptr %i.da, align 4
-  %i.dd = icmp eq <2 x i32> %i.db, %i.dc          ; 2 uses
-  %30 = extractelement <2 x i1> %i.dd, i64 0
-  %31 = extractelement <2 x i1> %i.dd, i64 1
-  %.sroa.0.0.i95 = select i1 %31, i1 %30, i1 false
+  %i.dd = icmp eq <2 x i32> %i.db, %i.dc
+  %30 = freeze <2 x i1> %i.dd
+  %31 = bitcast <2 x i1> %30 to i2
+  %.sroa.0.0.i95 = icmp eq i2 %31, -1
   br label %_RNvXso_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10type_aliasNtB5_13TypeAliasTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.aa:                                            ; preds = %bb.b
@@ -1136,10 +1136,10 @@ bb.aa:                                            ; preds = %bb.b
   %i.df = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.dg = load <2 x i32>, ptr %i.de, align 4
   %i.dh = load <2 x i32>, ptr %i.df, align 4
-  %i.di = icmp eq <2 x i32> %i.dg, %i.dh          ; 2 uses
-  %32 = extractelement <2 x i1> %i.di, i64 0
-  %33 = extractelement <2 x i1> %i.di, i64 1
-  %.sroa.0.0.i96 = select i1 %33, i1 %32, i1 false
+  %i.di = icmp eq <2 x i32> %i.dg, %i.dh
+  %32 = freeze <2 x i1> %i.di
+  %33 = bitcast <2 x i1> %32 to i2
+  %.sroa.0.0.i96 = icmp eq i2 %33, -1
   br label %_RNvXso_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10type_aliasNtB5_13TypeAliasTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.ab:                                            ; preds = %bb.b
@@ -1147,10 +1147,10 @@ bb.ab:                                            ; preds = %bb.b
   %i.dk = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.dl = load <2 x i32>, ptr %i.dj, align 4
   %i.dm = load <2 x i32>, ptr %i.dk, align 4
-  %i.dn = icmp eq <2 x i32> %i.dl, %i.dm          ; 2 uses
-  %34 = extractelement <2 x i1> %i.dn, i64 0
-  %35 = extractelement <2 x i1> %i.dn, i64 1
-  %.sroa.0.0.i97 = select i1 %35, i1 %34, i1 false
+  %i.dn = icmp eq <2 x i32> %i.dl, %i.dm
+  %34 = freeze <2 x i1> %i.dn
+  %35 = bitcast <2 x i1> %34 to i2
+  %.sroa.0.0.i97 = icmp eq i2 %35, -1
   br label %_RNvXso_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10type_aliasNtB5_13TypeAliasTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.ac:                                            ; preds = %bb.b
@@ -1158,10 +1158,10 @@ bb.ac:                                            ; preds = %bb.b
   %i.dp = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.dq = load <2 x i32>, ptr %i.do, align 4
   %i.dr = load <2 x i32>, ptr %i.dp, align 4
-  %i.ds = icmp eq <2 x i32> %i.dq, %i.dr          ; 2 uses
-  %36 = extractelement <2 x i1> %i.ds, i64 0
-  %37 = extractelement <2 x i1> %i.ds, i64 1
-  %.sroa.0.0.i98 = select i1 %37, i1 %36, i1 false
+  %i.ds = icmp eq <2 x i32> %i.dq, %i.dr
+  %36 = freeze <2 x i1> %i.ds
+  %37 = bitcast <2 x i1> %36 to i2
+  %.sroa.0.0.i98 = icmp eq i2 %37, -1
   br label %_RNvXso_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10type_aliasNtB5_13TypeAliasTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 
 bb.ad:                                            ; preds = %bb.b
@@ -1177,10 +1177,10 @@ bb.ae:                                            ; preds = %bb.b
   %i.dz = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.ea = load <2 x i32>, ptr %i.dy, align 4
   %i.eb = load <2 x i32>, ptr %i.dz, align 4
-  %i.ec = icmp eq <2 x i32> %i.ea, %i.eb          ; 2 uses
-  %38 = extractelement <2 x i1> %i.ec, i64 0
-  %39 = extractelement <2 x i1> %i.ec, i64 1
-  %.sroa.0.0.i99 = select i1 %39, i1 %38, i1 false
+  %i.ec = icmp eq <2 x i32> %i.ea, %i.eb
+  %38 = freeze <2 x i1> %i.ec
+  %39 = bitcast <2 x i1> %38 to i2
+  %.sroa.0.0.i99 = icmp eq i2 %39, -1
   br label %_RNvXso_NtNtCsoTR8nlGN3X_18ty_python_semantic5types10type_aliasNtB5_13TypeAliasTypeNtNtCs4NRVxsYgnAr_4core3cmp9PartialEq2eq.exit
 }
 

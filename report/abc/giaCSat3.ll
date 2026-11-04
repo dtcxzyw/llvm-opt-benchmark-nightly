@@ -205,17 +205,17 @@ Cbs3_ManAssign.exit.Cbs3_ManSaveModel.exit_crit_edge.i: ; preds = %Cbs3_ManAssig
 bb.h:                                             ; preds = %Cbs3_ManAssign.exit.i
   %i.as = load <2 x i32>, ptr %i.c, align 4, !tbaa !40
   %i.at = load <2 x i32>, ptr %0, align 8, !tbaa !40
-  %i.au = icmp sgt <2 x i32> %i.as, %i.at         ; 3 uses
-  %i.av = shufflevector <2 x i1> %i.au, <2 x i1> poison, <2 x i32> <i32 1, i32 0>
+  %i.au = icmp sgt <2 x i32> %i.as, %i.at
+  %3 = freeze <2 x i1> %i.au                      ; 2 uses
+  %i.av = shufflevector <2 x i1> %3, <2 x i1> poison, <2 x i32> <i32 1, i32 0>
   %i.aw = zext <2 x i1> %i.av to <2 x i32>
   %i.ax = load <2 x i32>, ptr %i.o, align 4, !tbaa !40
   %i.ay = add nsw <2 x i32> %i.ax, %i.aw
   store <2 x i32> %i.ay, ptr %i.o, align 4, !tbaa !40
-  %3 = extractelement <2 x i1> %i.au, i64 0
-  %4 = extractelement <2 x i1> %i.au, i64 1
-  %5 = select i1 %4, i1 true, i1 %3
+  %4 = bitcast <2 x i1> %3 to i2
+  %.not = icmp eq i2 %4, 0
   %.pre27.i = load i32, ptr %i.j, align 4, !tbaa !59 ; 3 uses
-  br i1 %5, label %Cbs3_ManSaveModel.exit.i, label %bb.i
+  br i1 %.not, label %bb.i, label %Cbs3_ManSaveModel.exit.i
 
 bb.i:                                             ; preds = %bb.h
   %i.az = load ptr, ptr %i.p, align 8, !tbaa !37  ; 4 uses
@@ -379,16 +379,16 @@ Cbs3_ManSolveInt.exit:                            ; preds = %.lr.ph.i20.i, %bb.v
   %i.dk = tail call noundef i32 @llvm.smax.i32(i32 %i.df, i32 %i.dj)
   store i32 %i.dk, ptr %i.w, align 8, !tbaa !119
   %i.dl = load <2 x i32>, ptr %0, align 8, !tbaa !40
-  %i.dm = icmp sgt <2 x i32> %i.dg, %i.dl         ; 3 uses
-  %i.dn = shufflevector <2 x i1> %i.dm, <2 x i1> poison, <2 x i32> <i32 1, i32 0>
+  %i.dm = icmp sgt <2 x i32> %i.dg, %i.dl
+  %5 = freeze <2 x i1> %i.dm                      ; 2 uses
+  %i.dn = shufflevector <2 x i1> %5, <2 x i1> poison, <2 x i32> <i32 1, i32 0>
   %i.do = zext <2 x i1> %i.dn to <2 x i32>
   %i.dp = load <2 x i32>, ptr %i.o, align 4, !tbaa !40
   %i.dq = add nsw <2 x i32> %i.dp, %i.do
   store <2 x i32> %i.dq, ptr %i.o, align 4, !tbaa !40
-  %6 = extractelement <2 x i1> %i.dm, i64 0
-  %7 = extractelement <2 x i1> %i.dm, i64 1
-  %8 = select i1 %7, i1 true, i1 %6
-  br i1 %8, label %bb.b, label %Cbs3_ManSolveInt.exit._crit_edge
+  %6 = bitcast <2 x i1> %5 to i2
+  %.not21 = icmp eq i2 %6, 0
+  br i1 %.not21, label %Cbs3_ManSolveInt.exit._crit_edge, label %bb.b
 
 Cbs3_ManSolveInt.exit._crit_edge:                 ; preds = %bb.b, %Cbs3_ManSolveInt.exit, %bb.a
   %.1 = phi i32 [ -1, %bb.a ], [ %.035.i, %Cbs3_ManSolveInt.exit ], [ -1, %bb.b ]

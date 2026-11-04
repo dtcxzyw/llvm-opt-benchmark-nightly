@@ -204,10 +204,10 @@ bb.b:                                             ; preds = %bb.a
   %i.w = insertelement <2 x float> poison, float %i.s, i64 0
   %i.x = shufflevector <2 x float> %i.w, <2 x float> poison, <2 x i32> zeroinitializer
   %i.y = fdiv <2 x float> %i.x, %i.v
-  %2 = fcmp oge <2 x float> %i.y, splat (float 5.000000e-01) ; 2 uses
-  %3 = extractelement <2 x i1> %2, i64 0
-  %4 = extractelement <2 x i1> %2, i64 1
-  %5 = select i1 %4, i1 %3, i1 false
+  %.fr93 = freeze <2 x float> %i.y
+  %2 = fcmp ult <2 x float> %.fr93, splat (float 5.000000e-01)
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, 0
   br label %bb.l
 
 bb.c:                                             ; preds = %bb.a
@@ -228,10 +228,10 @@ bb.d:                                             ; preds = %bb.c
   %i.ah = insertelement <2 x float> poison, float %i.ad, i64 0
   %i.ai = shufflevector <2 x float> %i.ah, <2 x float> poison, <2 x i32> zeroinitializer
   %i.aj = fdiv <2 x float> %i.ai, %i.ag
-  %6 = fcmp oge <2 x float> %i.aj, splat (float 5.000000e-01) ; 2 uses
-  %7 = extractelement <2 x i1> %6, i64 0
-  %8 = extractelement <2 x i1> %6, i64 1
-  %9 = select i1 %8, i1 %7, i1 false
+  %.fr = freeze <2 x float> %i.aj
+  %5 = fcmp ult <2 x float> %.fr, splat (float 5.000000e-01)
+  %6 = bitcast <2 x i1> %5 to i2
+  %7 = icmp eq i2 %6, 0
   br label %bb.l
 
 bb.e:                                             ; preds = %bb.c
@@ -284,7 +284,7 @@ bb.k:                                             ; preds = %bb.j
   unreachable
 
 bb.l:                                             ; preds = %bb.j, %bb.i, %bb.h, %bb.f, %bb.d, %bb.b
-  %.0.shrunk = phi i1 [ %5, %bb.b ], [ %9, %bb.d ], [ %i.an, %bb.f ], [ %i.ar, %bb.h ], [ false, %bb.i ], [ false, %bb.j ]
+  %.0.shrunk = phi i1 [ %4, %bb.b ], [ %7, %bb.d ], [ %i.an, %bb.f ], [ %i.ar, %bb.h ], [ false, %bb.i ], [ false, %bb.j ]
   %.0 = zext i1 %.0.shrunk to i8
   ret i8 %.0
 }

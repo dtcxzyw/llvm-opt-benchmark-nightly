@@ -205,10 +205,10 @@ bb.as:                                            ; preds = %_ZNK4Luau7AstNameeq
 _ZNK4Luau7AstNameeqEPKc.exit61.thread:            ; preds = %bb.ad, %.thread119, %_ZNK4Luau7AstNameeqEPKc.exit61
   %i.ff = load <2 x i32>, ptr %7, align 8
   %i.fg = load <2 x i32>, ptr %i.cr, align 4
-  %i.fh = icmp eq <2 x i32> %i.ff, %i.fg          ; 2 uses
-  %13 = extractelement <2 x i1> %i.fh, i64 0
-  %14 = extractelement <2 x i1> %i.fh, i64 1
-  %15 = select i1 %14, i1 %13, i1 false
+  %i.fh = icmp eq <2 x i32> %i.ff, %i.fg
+  %13 = freeze <2 x i1> %i.fh
+  %14 = bitcast <2 x i1> %13 to i2
+  %15 = icmp eq i2 %14, -1
   br i1 %15, label %_ZNK4Luau8LocationeqERKS0_.exit, label %_ZNK4Luau8LocationeqERKS0_.exit.thread
 
 _ZNK4Luau8LocationeqERKS0_.exit:                  ; preds = %_ZNK4Luau7AstNameeqEPKc.exit61.thread
@@ -216,10 +216,10 @@ _ZNK4Luau8LocationeqERKS0_.exit:                  ; preds = %_ZNK4Luau7AstNameeq
   %i.fj = getelementptr inbounds nuw i8, ptr %0, i64 140
   %i.fk = load <2 x i32>, ptr %i.fi, align 8
   %i.fl = load <2 x i32>, ptr %i.fj, align 4
-  %i.fm = icmp eq <2 x i32> %i.fk, %i.fl          ; 2 uses
-  %16 = extractelement <2 x i1> %i.fm, i64 0
-  %17 = extractelement <2 x i1> %i.fm, i64 1
-  %18 = select i1 %17, i1 %16, i1 false
+  %i.fm = icmp eq <2 x i32> %i.fk, %i.fl
+  %16 = freeze <2 x i1> %i.fm
+  %17 = bitcast <2 x i1> %16 to i2
+  %18 = icmp eq i2 %17, -1
   br i1 %18, label %bb.at, label %_ZNK4Luau8LocationeqERKS0_.exit.thread
 
 bb.at:                                            ; preds = %_ZNK4Luau8LocationeqERKS0_.exit
@@ -622,10 +622,10 @@ bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.k = load <2 x i32>, ptr %i.i, align 4
   %i.l = load <2 x i32>, ptr %i.j, align 4
-  %i.m = icmp eq <2 x i32> %i.k, %i.l             ; 2 uses
-  %7 = extractelement <2 x i1> %i.m, i64 0
-  %8 = extractelement <2 x i1> %i.m, i64 1
-  %9 = select i1 %8, i1 %7, i1 false
+  %i.m = icmp eq <2 x i32> %i.k, %i.l
+  %7 = freeze <2 x i1> %i.m
+  %8 = bitcast <2 x i1> %7 to i2
+  %9 = icmp eq i2 %8, -1
   br i1 %9, label %bb.d, label %.thread33
 
 bb.d:                                             ; preds = %bb.c
@@ -658,10 +658,10 @@ bb.g:                                             ; preds = %bb.f
   %i.x = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.y = load <2 x i32>, ptr %i.w, align 4
   %i.z = load <2 x i32>, ptr %i.x, align 4
-  %i.aa = icmp eq <2 x i32> %i.y, %i.z            ; 2 uses
-  %10 = extractelement <2 x i1> %i.aa, i64 0
-  %11 = extractelement <2 x i1> %i.aa, i64 1
-  %12 = select i1 %11, i1 %10, i1 false
+  %i.aa = icmp eq <2 x i32> %i.y, %i.z
+  %10 = freeze <2 x i1> %i.aa
+  %11 = bitcast <2 x i1> %10 to i2
+  %12 = icmp eq i2 %11, -1
   br i1 %12, label %bb.h, label %.thread33
 
 bb.h:                                             ; preds = %bb.g
@@ -694,10 +694,10 @@ bb.k:                                             ; preds = %bb.j
   %i.al = getelementptr inbounds nuw i8, ptr %3, i64 4
   %i.am = load <2 x i32>, ptr %i.ak, align 4
   %i.an = load <2 x i32>, ptr %i.al, align 4
-  %i.ao = icmp eq <2 x i32> %i.am, %i.an          ; 2 uses
-  %13 = extractelement <2 x i1> %i.ao, i64 0
-  %14 = extractelement <2 x i1> %i.ao, i64 1
-  %15 = select i1 %14, i1 %13, i1 false
+  %i.ao = icmp eq <2 x i32> %i.am, %i.an
+  %13 = freeze <2 x i1> %i.ao
+  %14 = bitcast <2 x i1> %13 to i2
+  %15 = icmp eq i2 %14, -1
   br i1 %15, label %bb.l, label %.thread33
 
 bb.l:                                             ; preds = %bb.k
@@ -1100,10 +1100,10 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds i8, ptr %i.d, i64 -48
   %i.g = load <2 x i32>, ptr %1, align 4
   %i.h = load <2 x i32>, ptr %i.f, align 4
-  %i.i = icmp eq <2 x i32> %i.g, %i.h             ; 2 uses
-  %6 = extractelement <2 x i1> %i.i, i64 0
-  %7 = extractelement <2 x i1> %i.i, i64 1
-  %8 = select i1 %7, i1 %6, i1 false
+  %i.i = icmp eq <2 x i32> %i.g, %i.h
+  %6 = freeze <2 x i1> %i.i
+  %7 = bitcast <2 x i1> %6 to i2
+  %8 = icmp eq i2 %7, -1
   br i1 %8, label %_ZNK4Luau8LocationeqERKS0_.exit, label %_ZNK4Luau8LocationeqERKS0_.exit.thread
 
 _ZNK4Luau8LocationeqERKS0_.exit:                  ; preds = %bb.b
@@ -1111,10 +1111,10 @@ _ZNK4Luau8LocationeqERKS0_.exit:                  ; preds = %bb.b
   %i.k = getelementptr inbounds i8, ptr %i.d, i64 -40
   %i.l = load <2 x i32>, ptr %i.j, align 4
   %i.m = load <2 x i32>, ptr %i.k, align 4
-  %i.n = icmp eq <2 x i32> %i.l, %i.m             ; 2 uses
-  %9 = extractelement <2 x i1> %i.n, i64 0
-  %10 = extractelement <2 x i1> %i.n, i64 1
-  %11 = select i1 %10, i1 %9, i1 false
+  %i.n = icmp eq <2 x i32> %i.l, %i.m
+  %9 = freeze <2 x i1> %i.n
+  %10 = bitcast <2 x i1> %9 to i2
+  %11 = icmp eq i2 %10, -1
   br i1 %11, label %bb.o, label %_ZNK4Luau8LocationeqERKS0_.exit.thread
 
 _ZNK4Luau8LocationeqERKS0_.exit.thread:           ; preds = %bb.b, %_ZNK4Luau8LocationeqERKS0_.exit, %bb.a

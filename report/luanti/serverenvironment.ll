@@ -204,11 +204,11 @@ bb.v:                                             ; preds = %bb.u
   %i.fy = sext <2 x i16> %i.fs to <2 x i32>
   %i.fz = insertelement <2 x i32> poison, i32 %i.fx, i64 0
   %i.ga = insertelement <2 x i32> %i.fz, i32 %i.fw, i64 1
-  %i.gb = icmp slt <2 x i32> %i.ga, %i.fy         ; 2 uses
-  %11 = extractelement <2 x i1> %i.gb, i64 0
-  %12 = extractelement <2 x i1> %i.gb, i64 1
-  %or.cond.i96 = select i1 %12, i1 true, i1 %11
-  br i1 %or.cond.i96, label %_ZL17fillViewConeBlockN4core8vector3dIsEEsNS0_IfEES2_fRSt3setIS1_St4lessIS1_ESaIS1_EE.exit, label %.lr.ph52.i.preheader
+  %i.gb = icmp slt <2 x i32> %i.ga, %i.fy
+  %11 = freeze <2 x i1> %i.gb
+  %12 = bitcast <2 x i1> %11 to i2
+  %or.cond.i96.not = icmp eq i2 %12, 0
+  br i1 %or.cond.i96.not, label %.lr.ph52.i.preheader, label %_ZL17fillViewConeBlockN4core8vector3dIsEEsNS0_IfEES2_fRSt3setIS1_St4lessIS1_ESaIS1_EE.exit
 
 .lr.ph52.i.preheader:                             ; preds = %.lr.ph58.i
   %i.gc = extractelement <2 x i16> %i.fs, i64 1
@@ -611,11 +611,11 @@ bb.r:                                             ; preds = %bb.c
   %.sroa.01.0.copyload.i = load <2 x float>, ptr %i.bs, align 8, !tbaa !68
   %.sroa.22.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.j, i64 320
   %.sroa.22.0.copyload.i = load float, ptr %.sroa.22.0..sroa_idx.i, align 8, !tbaa !68
-  %4 = tail call nsz <2 x float> @llvm.fabs.v2f32(<2 x float> %.sroa.01.0.copyload.i)
-  %5 = fcmp nsz ogt <2 x float> %4, splat (float 3.100750e+05) ; 2 uses
-  %6 = extractelement <2 x i1> %5, i64 0
-  %7 = extractelement <2 x i1> %5, i64 1
-  %or.cond8.i = select i1 %6, i1 true, i1 %7
+  %.sroa.01.0.copyload.i.fr = freeze <2 x float> %.sroa.01.0.copyload.i
+  %4 = tail call nsz <2 x float> @llvm.fabs.v2f32(<2 x float> %.sroa.01.0.copyload.i.fr)
+  %5 = fcmp nsz ogt <2 x float> %4, splat (float 3.100750e+05)
+  %6 = bitcast <2 x i1> %5 to i2
+  %or.cond8.i = icmp ne i2 %6, 0
   %i.bt = tail call nsz float @llvm.fabs.f32(float %.sroa.22.0.copyload.i)
   %i.bu = fcmp nsz ogt float %i.bt, 3.100750e+05
   %i.bv = select i1 %or.cond8.i, i1 true, i1 %i.bu

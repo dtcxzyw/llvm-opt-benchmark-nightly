@@ -205,7 +205,8 @@ bb.ca:                                            ; preds = %bb.by
 bb.cb:                                            ; preds = %bb.ca, %bb.bz
   %.077.in.i = phi ptr [ %i.xt, %bb.ca ], [ %i.xd, %bb.bz ]
   %.074.i = phi i64 [ %i.xu, %bb.ca ], [ 0, %bb.bz ] ; 2 uses
-  %i.xv = phi <2 x i32> [ %i.xh, %bb.ca ], [ %i.xc, %bb.bz ] ; 5 uses
+  %i.xv = phi <2 x i32> [ %i.xh, %bb.ca ], [ %i.xc, %bb.bz ]
+  %.fr = freeze <2 x i32> %i.xv                   ; 5 uses
   %.077.i = load ptr, ptr %.077.in.i, align 8, !tbaa !140 ; 2 uses
   %i.xw = getelementptr inbounds nuw i8, ptr %.084112.i, i64 32
   %i.xx = load i32, ptr %i.xw, align 8, !tbaa !124
@@ -229,11 +230,10 @@ bb.cd:                                            ; preds = %bb.cb
 bb.ce:                                            ; preds = %bb.cd, %bb.cc
   %.076.i = phi i32 [ %i.yc, %bb.cc ], [ 0, %bb.cd ] ; 10 uses
   %.075.i = phi i32 [ %i.yd, %bb.cc ], [ %i.ye, %bb.cd ] ; 6 uses
-  %i.yf = icmp eq <2 x i32> %i.xv, zeroinitializer ; 2 uses
-  %12 = extractelement <2 x i1> %i.yf, i64 0
-  %13 = extractelement <2 x i1> %i.yf, i64 1
-  %or.cond.i225 = select i1 %12, i1 true, i1 %13
-  br i1 %or.cond.i225, label %.loopexit.i, label %bb.cf
+  %i.yf = icmp eq <2 x i32> %.fr, zeroinitializer
+  %12 = bitcast <2 x i1> %i.yf to i2
+  %or.cond.i225.not = icmp eq i2 %12, 0
+  br i1 %or.cond.i225.not, label %bb.cf, label %.loopexit.i
 
 bb.cf:                                            ; preds = %bb.ce
   %i.yg = getelementptr inbounds nuw i8, ptr %.085111.i, i64 20
@@ -243,11 +243,11 @@ bb.cf:                                            ; preds = %bb.ce
   br i1 %i.yi, label %.preheader.i229.preheader, label %.preheader96.preheader.i
 
 .preheader.i229.preheader:                        ; preds = %bb.cf
-  %i.yk = extractelement <2 x i32> %i.xv, i64 0   ; 6 uses
+  %i.yk = extractelement <2 x i32> %.fr, i64 0    ; 6 uses
   %i.yl = add i32 %i.yk, -1
   %i.ym = zext i32 %i.yl to i64
   %i.yn = shl nuw nsw i64 %i.ym, 2
-  %i.yo = extractelement <2 x i32> %i.xv, i64 1
+  %i.yo = extractelement <2 x i32> %.fr, i64 1
   %i.yp = zext i32 %i.yk to i64                   ; 2 uses
   %min.iters.check = icmp ult i32 %i.yk, 8
   %n.vec = and i64 %i.yp, 4294967288              ; 4 uses
@@ -263,8 +263,8 @@ bb.cf:                                            ; preds = %bb.ce
 .preheader96.preheader.i:                         ; preds = %bb.cf
   %i.ys = sext i32 %.076.i to i64
   %i.yt = zext nneg i32 %.075.i to i64
-  %i.yu = extractelement <2 x i32> %i.xv, i64 1
-  %i.yv = extractelement <2 x i32> %i.xv, i64 0
+  %i.yu = extractelement <2 x i32> %.fr, i64 1
+  %i.yv = extractelement <2 x i32> %.fr, i64 0
   br label %.preheader96.i
 
 .preheader.i229:                                  ; preds = %.preheader.i229.preheader, %._crit_edge106.i

@@ -205,10 +205,10 @@ bb.dy:                                            ; preds = %bb.dw, %_ZNSt10uniq
   br label %.body
 
 ._crit_edge544:                                   ; preds = %.lr.ph543
-  %i.vf = icmp eq <2 x i32> %i.vo, %i.pf          ; 2 uses
-  %11 = extractelement <2 x i1> %i.vf, i64 0
-  %12 = extractelement <2 x i1> %i.vf, i64 1
-  %or.cond749 = select i1 %11, i1 %12, i1 false
+  %i.vf = icmp eq <2 x i32> %i.vo, %i.pf
+  %11 = freeze <2 x i1> %i.vf
+  %12 = bitcast <2 x i1> %11 to i2
+  %or.cond749 = icmp eq i2 %12, -1
   %i.vg = icmp eq i32 %i.vr, %.sroa.11.0.copyload
   %or.cond750 = select i1 %or.cond749, i1 %i.vg, i1 false
   br i1 %or.cond750, label %_ZN7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeINS0_4math4Vec3IiEELj3EEELj4EEELj5EEEE13setBackgroundERKS7_b.exit, label %_ZN7openvdb5v13_04math14isExactlyEqualINS1_4Vec3IiEES4_EEbRKT_RKT0_.exit.thread.i
@@ -611,11 +611,11 @@ bb.a:
   %i.ap = extractelement <2 x float> %i.ab, i64 1
   %i.aq = fmul float %i.ap, %i.ao
   %i.ar = tail call float @llvm.fmuladd.f32(float %i.y, float %i.ac, float %i.aq)
-  %6 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %i.am)
-  %7 = fcmp ogt <2 x float> %6, splat (float f0x322BCC77) ; 2 uses
-  %8 = extractelement <2 x i1> %7, i64 0
-  %9 = extractelement <2 x i1> %7, i64 1
-  %or.cond.not.i = select i1 %9, i1 true, i1 %8
+  %.fr74 = freeze <2 x float> %i.am
+  %6 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %.fr74)
+  %7 = fcmp ogt <2 x float> %6, splat (float f0x322BCC77)
+  %8 = bitcast <2 x i1> %7 to i2
+  %or.cond.not.i = icmp ne i2 %8, 0
   %i.as = tail call float @llvm.fabs.f32(float %i.ar)
   %i.at = fcmp ogt float %i.as, f0x322BCC77
   %i.au = select i1 %or.cond.not.i, i1 true, i1 %i.at
@@ -1018,11 +1018,11 @@ bb.a:
   %i.ap = extractelement <2 x float> %i.ab, i64 1
   %i.aq = fmul float %i.ap, %i.ao
   %i.ar = tail call float @llvm.fmuladd.f32(float %i.y, float %i.ac, float %i.aq)
-  %6 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %i.am)
-  %7 = fcmp ogt <2 x float> %6, splat (float f0x322BCC77) ; 2 uses
-  %8 = extractelement <2 x i1> %7, i64 0
-  %9 = extractelement <2 x i1> %7, i64 1
-  %or.cond.not.i = select i1 %9, i1 true, i1 %8
+  %.fr74 = freeze <2 x float> %i.am
+  %6 = tail call <2 x float> @llvm.fabs.v2f32(<2 x float> %.fr74)
+  %7 = fcmp ogt <2 x float> %6, splat (float f0x322BCC77)
+  %8 = bitcast <2 x i1> %7 to i2
+  %or.cond.not.i = icmp ne i2 %8, 0
   %i.as = tail call float @llvm.fabs.f32(float %i.ar)
   %i.at = fcmp ogt float %i.as, f0x322BCC77
   %i.au = select i1 %or.cond.not.i, i1 true, i1 %i.at

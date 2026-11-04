@@ -205,21 +205,21 @@ bb.aq:                                            ; preds = %_ZNSt7__cxx1112basi
   %i.hs = getelementptr inbounds nuw i8, ptr %20, i64 8 ; 3 uses
   %i.ht = fcmp olt <2 x float> %.sroa.04.0.copyload.i300, zeroinitializer
   %i.hu = select <2 x i1> %i.ht, <2 x float> zeroinitializer, <2 x float> %.sroa.04.0.copyload.i300
-  %i.hv = fcmp une <2 x float> %i.hu, %.sroa.04.0.copyload.i300 ; 2 uses
-  %22 = extractelement <2 x i1> %i.hv, i64 0
-  %23 = extractelement <2 x i1> %i.hv, i64 1
-  %24 = select i1 %22, i1 true, i1 %23
-  br i1 %24, label %_ZNK4pbrt7Bounds2IfEneERKS1_.exit.thread, label %_ZNK4pbrt7Bounds2IfEneERKS1_.exit
+  %i.hv = fcmp une <2 x float> %i.hu, %.sroa.04.0.copyload.i300
+  %22 = freeze <2 x i1> %i.hv
+  %23 = bitcast <2 x i1> %22 to i2
+  %.not624 = icmp eq i2 %23, 0
+  br i1 %.not624, label %_ZNK4pbrt7Bounds2IfEneERKS1_.exit, label %_ZNK4pbrt7Bounds2IfEneERKS1_.exit.thread
 
 _ZNK4pbrt7Bounds2IfEneERKS1_.exit:                ; preds = %bb.aq
   %.sroa.01.0.copyload.i308 = load <2 x float>, ptr %i.hs, align 8 ; 4 uses
   %i.hw = fcmp ogt <2 x float> %.sroa.01.0.copyload.i308, splat (float 1.000000e+00)
   %i.hx = select <2 x i1> %i.hw, <2 x float> splat (float 1.000000e+00), <2 x float> %.sroa.01.0.copyload.i308
-  %i.hy = fcmp une <2 x float> %i.hx, %.sroa.01.0.copyload.i308 ; 2 uses
-  %25 = extractelement <2 x i1> %i.hy, i64 0
-  %26 = extractelement <2 x i1> %i.hy, i64 1
-  %27 = select i1 %25, i1 true, i1 %26
-  br i1 %27, label %_ZNK4pbrt7Bounds2IfEneERKS1_.exit.thread, label %bb.ax
+  %i.hy = fcmp une <2 x float> %i.hx, %.sroa.01.0.copyload.i308
+  %24 = freeze <2 x i1> %i.hy
+  %25 = bitcast <2 x i1> %24 to i2
+  %.not625 = icmp eq i2 %25, 0
+  br i1 %.not625, label %bb.ax, label %_ZNK4pbrt7Bounds2IfEneERKS1_.exit.thread
 
 _ZNK4pbrt7Bounds2IfEneERKS1_.exit.thread:         ; preds = %bb.aq, %_ZNK4pbrt7Bounds2IfEneERKS1_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #30
@@ -551,11 +551,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
 bb.bo:                                            ; preds = %bb.bd, %bb.bj, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i412, %bb.bf, %bb.bc
   %i.ng = load <2 x i32>, ptr %i.c, align 8
   %i.nh = load <2 x i32>, ptr %i.d, align 8
-  %i.ni = icmp sge <2 x i32> %i.ng, %i.nh         ; 2 uses
-  %28 = extractelement <2 x i1> %i.ni, i64 0
-  %29 = extractelement <2 x i1> %i.ni, i64 1
-  %30 = select i1 %28, i1 true, i1 %29
-  br i1 %30, label %bb.bp, label %._crit_edge.i.i417
+  %i.ni = icmp sge <2 x i32> %i.ng, %i.nh
+  %26 = freeze <2 x i1> %i.ni
+  %27 = bitcast <2 x i1> %26 to i2
+  %.not626 = icmp eq i2 %27, 0
+  br i1 %.not626, label %._crit_edge.i.i417, label %bb.bp
 
 bb.bp:                                            ; preds = %bb.bo
   invoke void @_ZN4pbrt9ErrorExitIJRNS_7Bounds2IiEEEEEvPKNS_7FileLocEPKcDpOT_(ptr noundef %4, ptr noundef nonnull @.str.17, ptr noundef nonnull align 4 dereferenceable(16) %i.c) #32
@@ -958,11 +958,11 @@ bb.b:                                             ; preds = %bb.a
   %i.cn = extractelement <2 x i32> %i.cf, i64 1   ; 2 uses
   %i.co = extractelement <2 x i32> %i.cm, i64 1
   %i.cp = tail call i32 @llvm.smax.i32(i32 %i.cn, i32 %i.co)
-  %i.cq = icmp sge <2 x i32> %i.cf, %i.cm         ; 2 uses
-  %7 = extractelement <2 x i1> %i.cq, i64 0
-  %8 = extractelement <2 x i1> %i.cq, i64 1
-  %.not = select i1 %7, i1 true, i1 %8
-  br i1 %.not, label %_ZNK4pbrt16Bounds2iIteratorneERKS0_.exit, label %.lr.ph
+  %i.cq = icmp sge <2 x i32> %i.cf, %i.cm
+  %7 = freeze <2 x i1> %i.cq
+  %8 = bitcast <2 x i1> %7 to i2
+  %.not.not = icmp eq i2 %8, 0
+  br i1 %.not.not, label %.lr.ph, label %_ZNK4pbrt16Bounds2iIteratorneERKS0_.exit
 
 .lr.ph:                                           ; preds = %.lr.ph.i.i
   %i.cr = extractelement <2 x i32> %i.cf, i64 0   ; 3 uses
@@ -1365,11 +1365,11 @@ bb.b:                                             ; preds = %bb.a
   %i.cn = extractelement <2 x i32> %i.cf, i64 1   ; 2 uses
   %i.co = extractelement <2 x i32> %i.cm, i64 1
   %i.cp = tail call i32 @llvm.smax.i32(i32 %i.cn, i32 %i.co)
-  %i.cq = icmp sge <2 x i32> %i.cf, %i.cm         ; 2 uses
-  %7 = extractelement <2 x i1> %i.cq, i64 0
-  %8 = extractelement <2 x i1> %i.cq, i64 1
-  %.not = select i1 %7, i1 true, i1 %8
-  br i1 %.not, label %_ZNK4pbrt16Bounds2iIteratorneERKS0_.exit, label %.lr.ph
+  %i.cq = icmp sge <2 x i32> %i.cf, %i.cm
+  %7 = freeze <2 x i1> %i.cq
+  %8 = bitcast <2 x i1> %7 to i2
+  %.not.not = icmp eq i2 %8, 0
+  br i1 %.not.not, label %.lr.ph, label %_ZNK4pbrt16Bounds2iIteratorneERKS0_.exit
 
 .lr.ph:                                           ; preds = %.lr.ph.i.i
   %i.cr = extractelement <2 x i32> %i.cf, i64 0   ; 3 uses
@@ -1772,11 +1772,11 @@ bb.b:                                             ; preds = %bb.a
   %i.cv = extractelement <2 x i32> %i.cn, i64 1   ; 2 uses
   %i.cw = extractelement <2 x i32> %i.cu, i64 1
   %i.cx = tail call i32 @llvm.smax.i32(i32 %i.cv, i32 %i.cw)
-  %i.cy = icmp sge <2 x i32> %i.cn, %i.cu         ; 2 uses
-  %7 = extractelement <2 x i1> %i.cy, i64 0
-  %8 = extractelement <2 x i1> %i.cy, i64 1
-  %.not = select i1 %7, i1 true, i1 %8
-  br i1 %.not, label %_ZNK4pbrt16Bounds2iIteratorneERKS0_.exit, label %.lr.ph
+  %i.cy = icmp sge <2 x i32> %i.cn, %i.cu
+  %7 = freeze <2 x i1> %i.cy
+  %8 = bitcast <2 x i1> %7 to i2
+  %.not.not = icmp eq i2 %8, 0
+  br i1 %.not.not, label %.lr.ph, label %_ZNK4pbrt16Bounds2iIteratorneERKS0_.exit
 
 .lr.ph:                                           ; preds = %.lr.ph.i.i
   %i.cz = load <4 x float>, ptr %i.e, align 4     ; 2 uses

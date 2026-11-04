@@ -200,11 +200,11 @@ bb.br:                                            ; preds = %bb.bq
   %i.hx = insertelement <2 x double> %i.hp, double %i.hw, i64 1
   %i.hy = insertelement <2 x double> %i.hq, double %i.hw, i64 0
   %i.hz = fdiv <2 x double> %i.hx, %i.hy
-  %i.ia = fcmp ogt <2 x double> %i.hz, %i.hn      ; 2 uses
-  %26 = extractelement <2 x i1> %i.ia, i64 0
-  %27 = extractelement <2 x i1> %i.ia, i64 1
-  %or.cond = select i1 %27, i1 true, i1 %26
-  br i1 %or.cond, label %bb.bs, label %bb.bt
+  %i.ia = fcmp ogt <2 x double> %i.hz, %i.hn
+  %26 = freeze <2 x i1> %i.ia
+  %27 = bitcast <2 x i1> %26 to i2
+  %or.cond.not709 = icmp eq i2 %27, 0
+  br i1 %or.cond.not709, label %bb.bt, label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br
   %i.ib = mul i32 %i.et, %indvars645
@@ -296,11 +296,11 @@ bb.by:                                            ; preds = %bb.bx
   %i.jw = insertelement <2 x double> %i.jp, double %i.jv, i64 0
   %i.jx = insertelement <2 x double> %i.jq, double %i.jv, i64 1
   %i.jy = fdiv <2 x double> %i.jw, %i.jx
-  %i.jz = fcmp ogt <2 x double> %i.jy, %i.jn      ; 2 uses
-  %28 = extractelement <2 x i1> %i.jz, i64 0
-  %29 = extractelement <2 x i1> %i.jz, i64 1
-  %or.cond636 = select i1 %28, i1 true, i1 %29
-  br i1 %or.cond636, label %bb.bz, label %bb.ca
+  %i.jz = fcmp ogt <2 x double> %i.jy, %i.jn
+  %28 = freeze <2 x i1> %i.jz
+  %29 = bitcast <2 x i1> %28 to i2
+  %or.cond636.not = icmp eq i2 %29, 0
+  br i1 %or.cond636.not, label %bb.ca, label %bb.bz
 
 bb.bz:                                            ; preds = %bb.by
   %i.ka = trunc nuw nsw i64 %indvars.iv646 to i32

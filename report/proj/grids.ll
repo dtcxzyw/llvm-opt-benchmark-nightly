@@ -205,19 +205,19 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %bb.d
   %i.w = getelementptr inbounds nuw i8, ptr %i.b, i64 128
-  %i.x = load <2 x i32>, ptr %i.w, align 16       ; 3 uses
-  %3 = icmp slt <2 x i32> %i.x, splat (i32 1)     ; 2 uses
-  %4 = extractelement <2 x i1> %3, i64 0
-  %5 = extractelement <2 x i1> %3, i64 1
-  %or.cond7 = select i1 %4, i1 true, i1 %5
-  br i1 %or.cond7, label %bb.g, label %bb.h
+  %i.x = load <2 x i32>, ptr %i.w, align 16
+  %.fr = freeze <2 x i32> %i.x                    ; 3 uses
+  %3 = icmp slt <2 x i32> %.fr, splat (i32 1)
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond7.not = icmp eq i2 %4, 0
+  br i1 %or.cond7.not, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   call void @_Z22proj_context_errno_setP6pj_ctxi(ptr noundef %0, i32 noundef 1029)
   br label %bb.l
 
 bb.h:                                             ; preds = %bb.f
-  %i.y = add nsw <2 x i32> %i.x, splat (i32 -1)
+  %i.y = add nsw <2 x i32> %.fr, splat (i32 -1)
   %i.z = uitofp nneg <2 x i32> %i.y to <2 x double>
   %i.aa = shufflevector <2 x double> %i.k, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ab = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.z, <2 x double> %i.aa, <2 x double> %i.i)
@@ -273,7 +273,7 @@ _ZNSt10unique_ptrIN5osgeo4proj4FileESt14default_deleteIS2_EED2Ev.exit: ; preds =
   store i8 0, ptr %i.at, align 1, !tbaa !73
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #31
   %i.au = getelementptr inbounds nuw i8, ptr %i.ad, i64 40
-  store <2 x i32> %i.x, ptr %i.au, align 8, !tbaa !129
+  store <2 x i32> %.fr, ptr %i.au, align 8, !tbaa !129
   %i.av = getelementptr inbounds nuw i8, ptr %i.ad, i64 48
   store i8 1, ptr %i.av, align 8, !tbaa !77
   %.sroa.530.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ad, i64 56

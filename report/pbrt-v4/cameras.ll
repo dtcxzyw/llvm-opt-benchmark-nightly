@@ -205,17 +205,17 @@ bb.e:                                             ; preds = %._crit_edge140, %bb
   br i1 %i.af, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
-  %i.ay = load <2 x i32>, ptr %i.s, align 4       ; 2 uses
-  %5 = icmp sgt <2 x i32> %i.ay, zeroinitializer  ; 2 uses
-  %6 = extractelement <2 x i1> %5, i64 0
-  %7 = extractelement <2 x i1> %5, i64 1
-  %8 = select i1 %6, i1 %7, i1 false
-  br i1 %8, label %bb.g, label %bb.h
+  %i.ay = load <2 x i32>, ptr %i.s, align 4
+  %.fr = freeze <2 x i32> %i.ay                   ; 2 uses
+  %5 = icmp slt <2 x i32> %.fr, splat (i32 1)
+  %6 = bitcast <2 x i1> %5 to i2
+  %7 = icmp eq i2 %6, 0
+  br i1 %7, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.az = getelementptr inbounds nuw i8, ptr %i.aa, i64 12
   %i.ba = load float, ptr %i.az, align 4, !tbaa !173
-  %i.bb = uitofp nneg <2 x i32> %i.ay to <2 x float>
+  %i.bb = uitofp nneg <2 x i32> %.fr to <2 x float>
   %i.bc = insertelement <2 x float> poison, float %i.ba, i64 0
   %i.bd = shufflevector <2 x float> %i.bc, <2 x float> poison, <2 x i32> zeroinitializer
   %i.be = fdiv <2 x float> %i.aw, %i.bd
@@ -618,11 +618,11 @@ bb.a:
   br label %bb.c
 
 bb.b:                                             ; preds = %bb.f
-  %i.ag = fcmp ogt <2 x float> %.sroa.075.1, %.sroa.12.1 ; 2 uses
-  %5 = extractelement <2 x i1> %i.ag, i64 0
-  %6 = extractelement <2 x i1> %i.ag, i64 1
-  %7 = select i1 %5, i1 true, i1 %6
-  br i1 %7, label %bb.g, label %bb.l
+  %i.ag = fcmp ogt <2 x float> %.sroa.075.1, %.sroa.12.1
+  %5 = freeze <2 x i1> %i.ag
+  %6 = bitcast <2 x i1> %5 to i2
+  %.not = icmp eq i2 %6, 0
+  br i1 %.not, label %bb.l, label %bb.g
 
 bb.c:                                             ; preds = %bb.a, %bb.f
   %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.f ] ; 5 uses
@@ -876,11 +876,11 @@ bb.a:
   %.sroa.0.0.copyload = load <2 x float>, ptr %i.s, align 4 ; 3 uses
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %i.t = load <2 x float>, ptr %.sroa.8.0..sroa_idx, align 4 ; 3 uses
-  %i.u = fcmp ogt <2 x float> %.sroa.0.0.copyload, %i.t ; 2 uses
-  %4 = extractelement <2 x i1> %i.u, i64 0
-  %5 = extractelement <2 x i1> %i.u, i64 1
-  %6 = select i1 %4, i1 true, i1 %5
-  br i1 %6, label %bb.b, label %bb.c
+  %i.u = fcmp ogt <2 x float> %.sroa.0.0.copyload, %i.t
+  %4 = freeze <2 x i1> %i.u
+  %5 = bitcast <2 x i1> %4 to i2
+  %.not = icmp eq i2 %5, 0
+  br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %0, i8 0, i64 20, i1 false)

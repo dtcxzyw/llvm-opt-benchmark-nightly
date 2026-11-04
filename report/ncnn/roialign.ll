@@ -204,7 +204,8 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c, %bb.d
   %i.bx = phi <2 x float> [ %i.bw, %bb.d ], [ %i.aq, %bb.c ]
-  %i.by = fptosi <2 x float> %i.bx to <2 x i32>   ; 4 uses
+  %i.by = fptosi <2 x float> %i.bx to <2 x i32>
+  %.fr = freeze <2 x i32> %i.by                   ; 4 uses
   %i.bz = extractelement <2 x float> %i.bu, i64 1
   %i.ca = extractelement <2 x float> %i.bs, i64 1 ; 2 uses
   %i.cb = fcmp fast ole float %i.bz, %i.ca
@@ -212,17 +213,16 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.cd = extractelement <2 x float> %i.bs, i64 0 ; 2 uses
   %i.ce = fcmp fast ole float %i.cc, %i.cd
   %i.cf = select i1 %i.cb, i1 true, i1 %i.ce
-  %i.cg = extractelement <2 x i32> %i.by, i64 0   ; 2 uses
-  %i.ch = extractelement <2 x i32> %i.by, i64 1   ; 2 uses
+  %i.cg = extractelement <2 x i32> %.fr, i64 0    ; 2 uses
+  %i.ch = extractelement <2 x i32> %.fr, i64 1    ; 2 uses
   %i.ci = mul nsw i32 %i.cg, %i.ch
-  %12 = icmp sgt <2 x i32> %i.by, zeroinitializer ; 2 uses
-  %13 = extractelement <2 x i1> %12, i64 0
-  %14 = extractelement <2 x i1> %12, i64 1
-  %or.cond = select i1 %14, i1 %13, i1 false
+  %12 = icmp slt <2 x i32> %.fr, splat (i32 1)
+  %13 = bitcast <2 x i1> %12 to i2
+  %or.cond = icmp eq i2 %13, 0
   br i1 %or.cond, label %.lr.ph149.split.us, label %._crit_edge150
 
 .lr.ph149.split.us:                               ; preds = %bb.e
-  %i.cj = uitofp nneg <2 x i32> %i.by to <2 x float> ; 2 uses
+  %i.cj = uitofp nneg <2 x i32> %.fr to <2 x float> ; 2 uses
   %i.ck = extractelement <2 x float> %i.cj, i64 1
   %i.cl = fdiv fast float 1.000000e+00, %i.ck
   %i.cm = extractelement <2 x float> %i.cj, i64 0

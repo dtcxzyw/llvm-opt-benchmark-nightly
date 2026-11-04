@@ -205,10 +205,10 @@ define noundef zeroext i1 @_ZNK4pugi17xml_node_iteratoreqERKS0_(ptr nofree nound
 bb.a:
   %i.a = load <2 x ptr>, ptr %0, align 8
   %i.b = load <2 x ptr>, ptr %1, align 8
-  %i.c = icmp eq <2 x ptr> %i.a, %i.b             ; 2 uses
-  %2 = extractelement <2 x i1> %i.c, i64 0
-  %3 = extractelement <2 x i1> %i.c, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.c = icmp eq <2 x ptr> %i.a, %i.b
+  %2 = freeze <2 x i1> %i.c
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 
@@ -217,10 +217,10 @@ define noundef zeroext i1 @_ZNK4pugi17xml_node_iteratorneERKS0_(ptr nofree nound
 bb.a:
   %i.a = load <2 x ptr>, ptr %0, align 8
   %i.b = load <2 x ptr>, ptr %1, align 8
-  %i.c = icmp ne <2 x ptr> %i.a, %i.b             ; 2 uses
-  %2 = extractelement <2 x i1> %i.c, i64 0
-  %3 = extractelement <2 x i1> %i.c, i64 1
-  %4 = select i1 %2, i1 true, i1 %3
+  %i.c = icmp ne <2 x ptr> %i.a, %i.b
+  %2 = freeze <2 x i1> %i.c
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp ne i2 %3, 0
   ret i1 %4
 }
 
@@ -434,10 +434,10 @@ define noundef zeroext i1 @_ZNK4pugi22xml_attribute_iteratoreqERKS0_(ptr nofree 
 bb.a:
   %i.a = load <2 x ptr>, ptr %0, align 8
   %i.b = load <2 x ptr>, ptr %1, align 8
-  %i.c = icmp eq <2 x ptr> %i.a, %i.b             ; 2 uses
-  %2 = extractelement <2 x i1> %i.c, i64 0
-  %3 = extractelement <2 x i1> %i.c, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.c = icmp eq <2 x ptr> %i.a, %i.b
+  %2 = freeze <2 x i1> %i.c
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 
@@ -446,10 +446,10 @@ define noundef zeroext i1 @_ZNK4pugi22xml_attribute_iteratorneERKS0_(ptr nofree 
 bb.a:
   %i.a = load <2 x ptr>, ptr %0, align 8
   %i.b = load <2 x ptr>, ptr %1, align 8
-  %i.c = icmp ne <2 x ptr> %i.a, %i.b             ; 2 uses
-  %2 = extractelement <2 x i1> %i.c, i64 0
-  %3 = extractelement <2 x i1> %i.c, i64 1
-  %4 = select i1 %2, i1 true, i1 %3
+  %i.c = icmp ne <2 x ptr> %i.a, %i.b
+  %2 = freeze <2 x i1> %i.c
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp ne i2 %3, 0
   ret i1 %4
 }
 
@@ -687,10 +687,10 @@ define noundef zeroext i1 @_ZNK4pugi23xml_named_node_iteratoreqERKS0_(ptr nofree
 bb.a:
   %i.a = load <2 x ptr>, ptr %0, align 8
   %i.b = load <2 x ptr>, ptr %1, align 8
-  %i.c = icmp eq <2 x ptr> %i.a, %i.b             ; 2 uses
-  %2 = extractelement <2 x i1> %i.c, i64 0
-  %3 = extractelement <2 x i1> %i.c, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.c = icmp eq <2 x ptr> %i.a, %i.b
+  %2 = freeze <2 x i1> %i.c
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 
@@ -699,10 +699,10 @@ define noundef zeroext i1 @_ZNK4pugi23xml_named_node_iteratorneERKS0_(ptr nofree
 bb.a:
   %i.a = load <2 x ptr>, ptr %0, align 8
   %i.b = load <2 x ptr>, ptr %1, align 8
-  %i.c = icmp ne <2 x ptr> %i.a, %i.b             ; 2 uses
-  %2 = extractelement <2 x i1> %i.c, i64 0
-  %3 = extractelement <2 x i1> %i.c, i64 1
-  %4 = select i1 %2, i1 true, i1 %3
+  %i.c = icmp ne <2 x ptr> %i.a, %i.b
+  %2 = freeze <2 x i1> %i.c
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp ne i2 %3, 0
   ret i1 %4
 }
 
@@ -1105,10 +1105,10 @@ define noundef zeroext i1 @_ZNK4pugi10xpath_nodeeqERKS0_(ptr nofree noundef nonn
 bb.a:
   %i.a = load <2 x ptr>, ptr %0, align 8
   %i.b = load <2 x ptr>, ptr %1, align 8
-  %i.c = icmp eq <2 x ptr> %i.a, %i.b             ; 2 uses
-  %2 = extractelement <2 x i1> %i.c, i64 0
-  %3 = extractelement <2 x i1> %i.c, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.c = icmp eq <2 x ptr> %i.a, %i.b
+  %2 = freeze <2 x i1> %i.c
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 
@@ -1117,10 +1117,10 @@ define noundef zeroext i1 @_ZNK4pugi10xpath_nodeneERKS0_(ptr nofree noundef nonn
 bb.a:
   %i.a = load <2 x ptr>, ptr %0, align 8
   %i.b = load <2 x ptr>, ptr %1, align 8
-  %i.c = icmp ne <2 x ptr> %i.a, %i.b             ; 2 uses
-  %2 = extractelement <2 x i1> %i.c, i64 0
-  %3 = extractelement <2 x i1> %i.c, i64 1
-  %4 = select i1 %2, i1 true, i1 %3
+  %i.c = icmp ne <2 x ptr> %i.a, %i.b
+  %2 = freeze <2 x i1> %i.c
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp ne i2 %3, 0
   ret i1 %4
 }
 
@@ -1523,11 +1523,11 @@ bb.t:                                             ; preds = %.lr.ph73
   %i.ce = getelementptr inbounds nuw i8, ptr %.019.i71, i64 16 ; 4 uses
   %i.cf = load <2 x ptr>, ptr %.019.i71, align 8
   %i.cg = load <2 x ptr>, ptr %i.ce, align 8
-  %i.ch = icmp ne <2 x ptr> %i.cf, %i.cg          ; 2 uses
-  %4 = extractelement <2 x i1> %i.ch, i64 0
-  %5 = extractelement <2 x i1> %i.ch, i64 1
-  %6 = select i1 %4, i1 true, i1 %5
-  br i1 %6, label %bb.t, label %..critedge.i_crit_edge, !llvm.loop !747
+  %i.ch = icmp ne <2 x ptr> %i.cf, %i.cg
+  %4 = freeze <2 x i1> %i.ch
+  %5 = bitcast <2 x i1> %4 to i2
+  %.not = icmp eq i2 %5, 0
+  br i1 %.not, label %..critedge.i_crit_edge, label %bb.t, !llvm.loop !747
 
 ..critedge.i_crit_edge:                           ; preds = %.lr.ph73
   br label %.critedge.i, !llvm.loop !747
@@ -1547,11 +1547,11 @@ bb.t:                                             ; preds = %.lr.ph73
   %.025.i = phi ptr [ %.1.i39, %bb.v ], [ %.019.i.lcssa, %.preheader.i ] ; 3 uses
   %i.cj = load <2 x ptr>, ptr %.12026.i, align 8
   %i.ck = load <2 x ptr>, ptr %.025.i, align 8
-  %i.cl = icmp ne <2 x ptr> %i.cj, %i.ck          ; 2 uses
-  %7 = extractelement <2 x i1> %i.cl, i64 0
-  %8 = extractelement <2 x i1> %i.cl, i64 1
-  %9 = select i1 %7, i1 true, i1 %8
-  br i1 %9, label %bb.u, label %bb.v
+  %i.cl = icmp ne <2 x ptr> %i.cj, %i.ck
+  %6 = freeze <2 x i1> %i.cl
+  %7 = bitcast <2 x i1> %6 to i2
+  %.not76 = icmp eq i2 %7, 0
+  br i1 %.not76, label %bb.v, label %bb.u
 
 bb.u:                                             ; preds = %.lr.ph.i
   %i.cm = getelementptr inbounds nuw i8, ptr %.025.i, i64 16 ; 2 uses

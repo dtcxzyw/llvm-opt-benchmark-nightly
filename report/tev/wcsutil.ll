@@ -40,7 +40,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.w = phi <2 x double> [ %i.v, %bb.c ], [ %i.j, %bb.b ]
   %i.x = fmul double %2, f0x3F91DF46A252DD11      ; 20 uses
   %.scalar = fmul double %3, f0x3F91DF46A252DD11  ; 14 uses
-  %i.y = fmul <2 x double> %i.w, splat (double f0x3F91DF46A252DD11) ; 6 uses
+  %.fr387 = freeze <2 x double> %i.w
+  %i.y = fmul <2 x double> %.fr387, splat (double f0x3F91DF46A252DD11) ; 6 uses
   %i.z = extractelement <2 x double> %i.y, i64 1  ; 13 uses
   %i.aa = extractelement <2 x double> %i.y, i64 0 ; 12 uses
   %i.ab = fmul double %i.z, %i.z
@@ -183,7 +184,7 @@ bb.u:                                             ; preds = %bb.s
   %i.cm = tail call double @llvm.fmuladd.f64(double %i.ad, double %i.cf, double %i.cl) ; 2 uses
   %i.cn = fcmp oeq double %i.cm, 0.000000e+00
   %i.co = fcmp oeq double %i.aa, 0.000000e+00
-  %or.cond3 = select i1 %i.cn, i1 %i.co, i1 false
+  %or.cond3 = and i1 %i.cn, %i.co
   br i1 %or.cond3, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %bb.u
@@ -400,11 +401,10 @@ bb.av:                                            ; preds = %bb.au
   %i.gw = fadd double %i.gv, 1.000000e+00
   %i.gx = fmul double %i.gw, 5.000000e-01
   %i.gy = tail call double @sqrt(double noundef %i.gx) #3
-  %i.gz = fcmp une <2 x double> %i.y, zeroinitializer ; 2 uses
-  %13 = extractelement <2 x i1> %i.gz, i64 0
-  %14 = extractelement <2 x i1> %i.gz, i64 1
-  %or.cond10 = select i1 %13, i1 true, i1 %14
-  br i1 %or.cond10, label %bb.aw, label %bb.cg
+  %i.gz = fcmp une <2 x double> %i.y, zeroinitializer
+  %13 = bitcast <2 x i1> %i.gz to i2
+  %or.cond10.not = icmp eq i2 %13, 0
+  br i1 %or.cond10.not, label %bb.cg, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
   %i.ha = shufflevector <2 x double> %i.fy, <2 x double> poison, <2 x i32> <i32 1, i32 poison>

@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %.preheader.3.i.us
 
 .preheader374.i.us:                               ; preds = %.preheader374.i.us, %.preheader374.preheader.i.us
   %indvars.iv482.i.us = phi i64 [ 0, %.preheader374.preheader.i.us ], [ %indvars.iv.next483.i.us, %.preheader374.i.us ] ; 3 uses
-  %i.xh = phi <2 x float> [ zeroinitializer, %.preheader374.preheader.i.us ], [ %i.aau, %.preheader374.i.us ]
+  %i.xh = phi <2 x float> [ zeroinitializer, %.preheader374.preheader.i.us ], [ %.fr, %.preheader374.i.us ]
   %i.xi = getelementptr inbounds nuw [2 x i8], ptr %i.g, i64 %indvars.iv482.i.us
   %i.xj = load i16, ptr %i.xi, align 2, !tbaa !57, !noalias !668
   %i.xk = zext i16 %i.xj to i64
@@ -296,18 +296,18 @@ bb.v:                                             ; preds = %.preheader.3.i.us
   %i.aar = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aao, <2 x float> %i.aaq, <2 x float> %i.aam)
   %i.aas = shufflevector <8 x float> %i.zp, <8 x float> poison, <2 x i32> <i32 7, i32 7>
   %i.aat = insertelement <2 x float> %i.aan, float %i.ze, i64 0
-  %i.aau = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aas, <2 x float> %i.aat, <2 x float> %i.aar) ; 4 uses
+  %i.aau = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aas, <2 x float> %i.aat, <2 x float> %i.aar)
+  %.fr = freeze <2 x float> %i.aau                ; 4 uses
   %indvars.iv.next483.i.us = add nuw nsw i64 %indvars.iv482.i.us, 1 ; 2 uses
   %exitcond485.not.i.us = icmp eq i64 %indvars.iv.next483.i.us, 4
   br i1 %exitcond485.not.i.us, label %bb.w, label %.preheader374.i.us, !llvm.loop !661
 
 bb.w:                                             ; preds = %.preheader374.i.us
-  %5 = fcmp ogt <2 x float> %i.aau, zeroinitializer ; 2 uses
-  %6 = extractelement <2 x i1> %5, i64 0
-  %7 = extractelement <2 x i1> %5, i64 1
-  %or.cond5.i.us = select i1 %7, i1 %6, i1 false
-  %i.aav = extractelement <2 x float> %i.aau, i64 0
-  %i.aaw = extractelement <2 x float> %i.aau, i64 1
+  %5 = fcmp ule <2 x float> %.fr, zeroinitializer
+  %6 = bitcast <2 x i1> %5 to i2
+  %or.cond5.i.us = icmp eq i2 %6, 0
+  %i.aav = extractelement <2 x float> %.fr, i64 0
+  %i.aaw = extractelement <2 x float> %.fr, i64 1
   %i.aax = fdiv float %i.aaw, %i.aav
   %.5.i.us = select i1 %or.cond5.i.us, float %i.aax, float %.4342.i.us
   br label %bb.x

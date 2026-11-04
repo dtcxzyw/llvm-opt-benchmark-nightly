@@ -205,10 +205,10 @@ _RINvMs3_NtCsfztDQZkQYYe_8indexmap3mapINtB6_8IndexMapTNtNtCs68Jln09rRqb_8petgrap
   %i.ax = getelementptr inbounds nuw i8, ptr %i.aw, i64 32
   %i.ay = load <2 x i32>, ptr %1, align 4, !alias.scope !1229
   %i.az = load <2 x i32>, ptr %i.ax, align 4, !noalias !1243
-  %i.ba = icmp eq <2 x i32> %i.ay, %i.az          ; 2 uses
-  %2 = extractelement <2 x i1> %i.ba, i64 0
-  %3 = extractelement <2 x i1> %i.ba, i64 1
-  %spec.select.i.i.i = select i1 %2, i1 %3, i1 false
+  %i.ba = icmp eq <2 x i32> %i.ay, %i.az
+  %2 = freeze <2 x i1> %i.ba
+  %3 = bitcast <2 x i1> %2 to i2
+  %spec.select.i.i.i = icmp eq i2 %3, -1
   br i1 %spec.select.i.i.i, label %_RINvMs3_NtCsfztDQZkQYYe_8indexmap3mapINtB6_8IndexMapTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexBP_EINtNtCs87CvPiUlf0m_5alloc3vec3VecjENtNtCs1X8ypyHYXIB_8foldhash4fast11RandomStateE12get_index_ofBO_ECskcxRuJ53GpR_9rustworkx.exit.thread6, label %_RINvMs3_NtCsfztDQZkQYYe_8indexmap3mapINtB6_8IndexMapTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexBP_EINtNtCs87CvPiUlf0m_5alloc3vec3VecjENtNtCs1X8ypyHYXIB_8foldhash4fast11RandomStateE12get_index_ofBO_ECskcxRuJ53GpR_9rustworkx.exit.thread
 
 _RINvMs3_NtCsfztDQZkQYYe_8indexmap3mapINtB6_8IndexMapTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexBP_EINtNtCs87CvPiUlf0m_5alloc3vec3VecjENtNtCs1X8ypyHYXIB_8foldhash4fast11RandomStateE12get_index_ofBO_ECskcxRuJ53GpR_9rustworkx.exit.thread6: ; preds = %_RNCINvMs6_NtCslcZTgAvcSNH_9hashbrown3rawINtB8_8RawTablejE4findNCINvNtCsfztDQZkQYYe_8indexmap5inner10equivalentTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexB1L_EINtNtCs87CvPiUlf0m_5alloc3vec3VecjEB1K_E0E0CskcxRuJ53GpR_9rustworkx.exit.i.i.i, %_RINvMs3_NtCsfztDQZkQYYe_8indexmap3mapINtB6_8IndexMapTNtNtCs68Jln09rRqb_8petgraph10graph_impl9NodeIndexBP_EINtNtCs87CvPiUlf0m_5alloc3vec3VecjENtNtCs1X8ypyHYXIB_8foldhash4fast11RandomStateE12get_index_ofBO_ECskcxRuJ53GpR_9rustworkx.exit
@@ -611,10 +611,10 @@ bb.de:                                            ; preds = %bb.dd
 bb.df:                                            ; preds = %bb.de
   %i.afd = getelementptr inbounds i8, ptr %i.aeb, i64 -16
   %i.afe = load <2 x i32>, ptr %i.afd, align 4, !alias.scope !52824, !noalias !52814
-  %i.aff = icmp eq <2 x i32> %i.afe, %i.adc       ; 2 uses
-  %2 = extractelement <2 x i1> %i.aff, i64 0
-  %3 = extractelement <2 x i1> %i.aff, i64 1
-  %spec.select.i18.i.i.i.i = select i1 %2, i1 %3, i1 false
+  %i.aff = icmp eq <2 x i32> %i.afe, %i.adc
+  %2 = freeze <2 x i1> %i.aff
+  %3 = bitcast <2 x i1> %2 to i2
+  %spec.select.i18.i.i.i.i = icmp eq i2 %3, -1
   br i1 %spec.select.i18.i.i.i.i, label %.split.i.i.i, label %bb.dg
 
 .split.i.i.i:                                     ; preds = %bb.df
@@ -1017,10 +1017,10 @@ bb.dr:                                            ; preds = %bb.dt, %_RINvNtNtNt
   %i.uq = getelementptr i8, ptr %i.up, i64 -8
   %i.ur = load <2 x i32>, ptr %i.uo, align 4, !noalias !135231
   %i.us = load <2 x i32>, ptr %i.uq, align 4, !noalias !135231
-  %i.ut = icmp eq <2 x i32> %i.ur, %i.us          ; 2 uses
-  %5 = extractelement <2 x i1> %i.ut, i64 0
-  %6 = extractelement <2 x i1> %i.ut, i64 1
-  %spec.select.i.i17.i.i.i.i.i.prol = select i1 %5, i1 %6, i1 false
+  %i.ut = icmp eq <2 x i32> %i.ur, %i.us
+  %5 = freeze <2 x i1> %i.ut
+  %6 = bitcast <2 x i1> %5 to i2
+  %spec.select.i.i17.i.i.i.i.i.prol = icmp eq i2 %6, -1
   br i1 %spec.select.i.i17.i.i.i.i.i.prol, label %.lr.ph.i.i.i.i.i.prol.loopexit, label %bb.ds
 
 bb.ds:                                            ; preds = %.lr.ph.i.i.i.i.i.prol
@@ -1051,10 +1051,10 @@ bb.dt:                                            ; preds = %bb.dr
   %i.vb = getelementptr i8, ptr %i.va, i64 -8
   %i.vc = load <2 x i32>, ptr %i.uz, align 4, !noalias !135231
   %i.vd = load <2 x i32>, ptr %i.vb, align 4, !noalias !135231
-  %i.ve = icmp eq <2 x i32> %i.vc, %i.vd          ; 2 uses
-  %7 = extractelement <2 x i1> %i.ve, i64 0
-  %8 = extractelement <2 x i1> %i.ve, i64 1
-  %spec.select.i.i17.i.i.i.i.i = select i1 %7, i1 %8, i1 false
+  %i.ve = icmp eq <2 x i32> %i.vc, %i.vd
+  %7 = freeze <2 x i1> %i.ve
+  %8 = bitcast <2 x i1> %7 to i2
+  %spec.select.i.i17.i.i.i.i.i = icmp eq i2 %8, -1
   br i1 %spec.select.i.i17.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.1, label %bb.du
 
 bb.du:                                            ; preds = %.lr.ph.i.i.i.i.i
@@ -1071,10 +1071,10 @@ bb.du:                                            ; preds = %.lr.ph.i.i.i.i.i
   %i.vj = getelementptr i8, ptr %i.vi, i64 -8
   %i.vk = load <2 x i32>, ptr %i.vh, align 4, !noalias !135231
   %i.vl = load <2 x i32>, ptr %i.vj, align 4, !noalias !135231
-  %i.vm = icmp eq <2 x i32> %i.vk, %i.vl          ; 2 uses
-  %9 = extractelement <2 x i1> %i.vm, i64 0
-  %10 = extractelement <2 x i1> %i.vm, i64 1
-  %spec.select.i.i17.i.i.i.i.i.1 = select i1 %9, i1 %10, i1 false
+  %i.vm = icmp eq <2 x i32> %i.vk, %i.vl
+  %9 = freeze <2 x i1> %i.vm
+  %10 = bitcast <2 x i1> %9 to i2
+  %spec.select.i.i17.i.i.i.i.i.1 = icmp eq i2 %10, -1
   br i1 %spec.select.i.i17.i.i.i.i.i.1, label %bb.dw, label %bb.dv
 
 bb.dv:                                            ; preds = %.lr.ph.i.i.i.i.i.1
@@ -1477,10 +1477,10 @@ bb.fo:                                            ; preds = %bb.fq, %_RINvNtNtNt
   %i.afi = getelementptr i8, ptr %i.afh, i64 -8
   %i.afj = load <2 x i32>, ptr %i.afg, align 4, !noalias !135293
   %i.afk = load <2 x i32>, ptr %i.afi, align 4, !noalias !135293
-  %i.afl = icmp eq <2 x i32> %i.afj, %i.afk       ; 2 uses
-  %11 = extractelement <2 x i1> %i.afl, i64 0
-  %12 = extractelement <2 x i1> %i.afl, i64 1
-  %spec.select.i.i17.i.i135.i.i.i.prol = select i1 %11, i1 %12, i1 false
+  %i.afl = icmp eq <2 x i32> %i.afj, %i.afk
+  %11 = freeze <2 x i1> %i.afl
+  %12 = bitcast <2 x i1> %11 to i2
+  %spec.select.i.i17.i.i135.i.i.i.prol = icmp eq i2 %12, -1
   br i1 %spec.select.i.i17.i.i135.i.i.i.prol, label %.lr.ph.i.i127.i.i.i.prol.loopexit, label %bb.fp
 
 bb.fp:                                            ; preds = %.lr.ph.i.i127.i.i.i.prol
@@ -1511,10 +1511,10 @@ bb.fq:                                            ; preds = %bb.fo
   %i.aft = getelementptr i8, ptr %i.afs, i64 -8
   %i.afu = load <2 x i32>, ptr %i.afr, align 4, !noalias !135293
   %i.afv = load <2 x i32>, ptr %i.aft, align 4, !noalias !135293
-  %i.afw = icmp eq <2 x i32> %i.afu, %i.afv       ; 2 uses
-  %13 = extractelement <2 x i1> %i.afw, i64 0
-  %14 = extractelement <2 x i1> %i.afw, i64 1
-  %spec.select.i.i17.i.i135.i.i.i = select i1 %13, i1 %14, i1 false
+  %i.afw = icmp eq <2 x i32> %i.afu, %i.afv
+  %13 = freeze <2 x i1> %i.afw
+  %14 = bitcast <2 x i1> %13 to i2
+  %spec.select.i.i17.i.i135.i.i.i = icmp eq i2 %14, -1
   br i1 %spec.select.i.i17.i.i135.i.i.i, label %.lr.ph.i.i127.i.i.i.1, label %bb.fr
 
 bb.fr:                                            ; preds = %.lr.ph.i.i127.i.i.i
@@ -1531,10 +1531,10 @@ bb.fr:                                            ; preds = %.lr.ph.i.i127.i.i.i
   %i.agb = getelementptr i8, ptr %i.aga, i64 -8
   %i.agc = load <2 x i32>, ptr %i.afz, align 4, !noalias !135293
   %i.agd = load <2 x i32>, ptr %i.agb, align 4, !noalias !135293
-  %i.age = icmp eq <2 x i32> %i.agc, %i.agd       ; 2 uses
-  %15 = extractelement <2 x i1> %i.age, i64 0
-  %16 = extractelement <2 x i1> %i.age, i64 1
-  %spec.select.i.i17.i.i135.i.i.i.1 = select i1 %15, i1 %16, i1 false
+  %i.age = icmp eq <2 x i32> %i.agc, %i.agd
+  %15 = freeze <2 x i1> %i.age
+  %16 = bitcast <2 x i1> %15 to i2
+  %spec.select.i.i17.i.i135.i.i.i.1 = icmp eq i2 %16, -1
   br i1 %spec.select.i.i17.i.i135.i.i.i.1, label %bb.ft, label %bb.fs
 
 bb.fs:                                            ; preds = %.lr.ph.i.i127.i.i.i.1

@@ -205,12 +205,12 @@ bb.bi:                                            ; preds = %.lr.ph775, %_ZNSt15
   %.sroa.32.0771 = phi ptr [ %i.sw, %.lr.ph775 ], [ %.sroa.32.1, %_ZNSt15_Deque_iteratorISt4pairI10aiVector2tIdES2_ERS3_PS3_EppEi.exit ] ; 6 uses
   %i.tf = load <2 x double>, ptr %.sroa.0479.0773, align 8 ; 3 uses
   %i.tg = fsub <2 x double> %i.tf, %i.sz
-  %24 = call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.tg)
-  %25 = fcmp olt <2 x double> %24, splat (double f0x3EB0C6F7A0000000) ; 2 uses
-  %26 = extractelement <2 x i1> %25, i64 0
-  %27 = extractelement <2 x i1> %25, i64 1
-  %28 = select i1 %26, i1 %27, i1 false           ; 2 uses
-  br i1 %28, label %bb.bj, label %bb.bm
+  %.fr1058 = freeze <2 x double> %i.tg
+  %24 = call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr1058)
+  %25 = fcmp uge <2 x double> %24, splat (double f0x3EB0C6F7A0000000)
+  %26 = bitcast <2 x i1> %25 to i2
+  %27 = icmp eq i2 %26, 0                         ; 2 uses
+  br i1 %27, label %bb.bj, label %bb.bm
 
 bb.bj:                                            ; preds = %bb.bi
   br i1 %i.tc, label %bb.bk, label %bb.bl
@@ -227,12 +227,12 @@ bb.bl:                                            ; preds = %bb.bk, %bb.bj
   %i.tm = load <2 x double>, ptr %i.tk, align 8
   %i.tn = load <2 x double>, ptr %i.tl, align 8
   %i.to = fsub <2 x double> %i.tn, %i.tm
-  %29 = call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.to)
-  %30 = fcmp olt <2 x double> %29, splat (double f0x3EB0C6F7A0000000) ; 2 uses
-  %31 = extractelement <2 x i1> %30, i64 0
-  %32 = extractelement <2 x i1> %30, i64 1
-  %33 = select i1 %31, i1 %32, i1 false
-  br i1 %33, label %bb.bq, label %bb.bm
+  %.fr1059 = freeze <2 x double> %i.to
+  %28 = call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr1059)
+  %29 = fcmp uge <2 x double> %28, splat (double f0x3EB0C6F7A0000000)
+  %30 = bitcast <2 x i1> %29 to i2
+  %31 = icmp eq i2 %30, 0
+  br i1 %31, label %bb.bq, label %bb.bm
 
 bb.bm:                                            ; preds = %bb.bl, %bb.bi
   br i1 %i.tc, label %bb.bn, label %bb.bo
@@ -247,23 +247,23 @@ bb.bo:                                            ; preds = %bb.bn, %bb.bm
   %i.ts = getelementptr inbounds i8, ptr %i.tr, i64 -16
   %i.tt = load <2 x double>, ptr %i.ts, align 8
   %i.tu = fsub <2 x double> %i.tf, %i.tt
-  %34 = call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.tu)
-  %35 = fcmp olt <2 x double> %34, splat (double f0x3EB0C6F7A0000000) ; 2 uses
-  %36 = extractelement <2 x i1> %35, i64 0
-  %37 = extractelement <2 x i1> %35, i64 1
-  %38 = select i1 %36, i1 %37, i1 false
-  br i1 %38, label %bb.bp, label %bb.bs
+  %.fr1060 = freeze <2 x double> %i.tu
+  %32 = call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr1060)
+  %33 = fcmp uge <2 x double> %32, splat (double f0x3EB0C6F7A0000000)
+  %34 = bitcast <2 x i1> %33 to i2
+  %35 = icmp eq i2 %34, 0
+  br i1 %35, label %bb.bp, label %bb.bs
 
 bb.bp:                                            ; preds = %bb.bo
   %i.tv = getelementptr inbounds nuw i8, ptr %.sroa.0479.0773, i64 16
   %i.tw = load <2 x double>, ptr %i.tv, align 8
   %i.tx = fsub <2 x double> %i.tw, %i.sz
-  %39 = call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.tx)
-  %40 = fcmp olt <2 x double> %39, splat (double f0x3EB0C6F7A0000000) ; 2 uses
-  %41 = extractelement <2 x i1> %40, i64 0
-  %42 = extractelement <2 x i1> %40, i64 1
-  %43 = select i1 %41, i1 %42, i1 false
-  br i1 %43, label %bb.bq, label %bb.bs
+  %.fr1061 = freeze <2 x double> %i.tx
+  %36 = call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr1061)
+  %37 = fcmp uge <2 x double> %36, splat (double f0x3EB0C6F7A0000000)
+  %38 = bitcast <2 x i1> %37 to i2
+  %39 = icmp eq i2 %38, 0
+  br i1 %39, label %bb.bq, label %bb.bs
 
 bb.bq:                                            ; preds = %bb.bp, %bb.bl
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #27
@@ -291,7 +291,7 @@ bb.br:                                            ; preds = %bb.bq
 
 bb.bs:                                            ; preds = %bb.bo, %bb.bp
   %i.ub = getelementptr inbounds nuw i8, ptr %.sroa.0479.0773, i64 16 ; 3 uses
-  br i1 %28, label %bb.bt, label %bb.ch
+  br i1 %27, label %bb.bt, label %bb.ch
 
 bb.bt:                                            ; preds = %bb.bs
   %i.uc = load ptr, ptr %i.rh, align 8
@@ -484,12 +484,12 @@ _ZNSt5dequeI10aiVector2tIdESaIS1_EE17_M_push_front_auxIJRKS1_EEEvDpOT_.exit.i: ;
 bb.ch:                                            ; preds = %bb.bs
   %i.xg = load <2 x double>, ptr %i.ub, align 8   ; 2 uses
   %i.xh = fsub <2 x double> %i.xg, %i.sz
-  %44 = call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.xh)
-  %45 = fcmp olt <2 x double> %44, splat (double f0x3EB0C6F7A0000000) ; 2 uses
-  %46 = extractelement <2 x i1> %45, i64 0
-  %47 = extractelement <2 x i1> %45, i64 1
-  %48 = select i1 %46, i1 %47, i1 false
-  br i1 %48, label %bb.ci, label %bb.cw
+  %.fr1062 = freeze <2 x double> %i.xh
+  %40 = call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr1062)
+  %41 = fcmp uge <2 x double> %40, splat (double f0x3EB0C6F7A0000000)
+  %42 = bitcast <2 x i1> %41 to i2
+  %43 = icmp eq i2 %42, 0
+  br i1 %43, label %bb.ci, label %bb.cw
 
 bb.ci:                                            ; preds = %bb.ch
   %i.xi = load ptr, ptr %i.rh, align 8
@@ -671,12 +671,12 @@ bb.cy:                                            ; preds = %bb.cx, %bb.cw
   %i.aap = getelementptr inbounds i8, ptr %i.aao, i64 -16
   %i.aaq = load <2 x double>, ptr %i.aap, align 8
   %i.aar = fsub <2 x double> %i.tf, %i.aaq
-  %49 = call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.aar)
-  %50 = fcmp olt <2 x double> %49, splat (double f0x3EB0C6F7A0000000) ; 2 uses
-  %51 = extractelement <2 x i1> %50, i64 0
-  %52 = extractelement <2 x i1> %50, i64 1
-  %53 = select i1 %51, i1 %52, i1 false
-  br i1 %53, label %bb.cz, label %bb.ds
+  %.fr1063 = freeze <2 x double> %i.aar
+  %44 = call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr1063)
+  %45 = fcmp uge <2 x double> %44, splat (double f0x3EB0C6F7A0000000)
+  %46 = bitcast <2 x i1> %45 to i2
+  %47 = icmp eq i2 %46, 0
+  br i1 %47, label %bb.cz, label %bb.ds
 
 bb.cz:                                            ; preds = %bb.cy
   %i.aas = getelementptr inbounds nuw i8, ptr %.sroa.0479.0773, i64 16 ; 2 uses
@@ -884,12 +884,12 @@ bb.du:                                            ; preds = %bb.dt, %bb.ds
   %i.aei = getelementptr inbounds i8, ptr %i.aeh, i64 -16
   %i.aej = load <2 x double>, ptr %i.aei, align 8
   %i.aek = fsub <2 x double> %i.xg, %i.aej
-  %54 = call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.aek)
-  %55 = fcmp olt <2 x double> %54, splat (double f0x3EB0C6F7A0000000) ; 2 uses
-  %56 = extractelement <2 x i1> %55, i64 0
-  %57 = extractelement <2 x i1> %55, i64 1
-  %58 = select i1 %56, i1 %57, i1 false
-  br i1 %58, label %bb.dv, label %_ZNSt5dequeI10aiVector2tIdESaIS1_EE10push_frontERKS1_.exit
+  %.fr1064 = freeze <2 x double> %i.aek
+  %48 = call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr1064)
+  %49 = fcmp uge <2 x double> %48, splat (double f0x3EB0C6F7A0000000)
+  %50 = bitcast <2 x i1> %49 to i2
+  %51 = icmp eq i2 %50, 0
+  br i1 %51, label %bb.dv, label %_ZNSt5dequeI10aiVector2tIdESaIS1_EE10push_frontERKS1_.exit
 
 bb.dv:                                            ; preds = %bb.du
   %i.ael = load ptr, ptr %i.re, align 8

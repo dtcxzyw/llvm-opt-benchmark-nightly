@@ -205,10 +205,10 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.h = load <2 x i32>, ptr %i.b, align 4
   %i.i = load <2 x i32>, ptr %i.e, align 4
-  %i.j = icmp eq <2 x i32> %i.h, %i.i             ; 2 uses
-  %2 = extractelement <2 x i1> %i.j, i64 0
-  %3 = extractelement <2 x i1> %i.j, i64 1
-  %4 = select i1 %3, i1 %2, i1 false
+  %i.j = icmp eq <2 x i32> %i.h, %i.i
+  %2 = freeze <2 x i1> %i.j
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   br i1 %4, label %_ZNK4Luau8LocationeqERKS0_.exit.i, label %_ZNK4Luau9TypeErroreqERKS0_.exit.thread
 
 _ZNK4Luau8LocationeqERKS0_.exit.i:                ; preds = %bb.c
@@ -216,10 +216,10 @@ _ZNK4Luau8LocationeqERKS0_.exit.i:                ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.m = load <2 x i32>, ptr %i.k, align 4
   %i.n = load <2 x i32>, ptr %i.l, align 4
-  %i.o = icmp eq <2 x i32> %i.m, %i.n             ; 2 uses
-  %5 = extractelement <2 x i1> %i.o, i64 0
-  %6 = extractelement <2 x i1> %i.o, i64 1
-  %7 = select i1 %6, i1 %5, i1 false
+  %i.o = icmp eq <2 x i32> %i.m, %i.n
+  %5 = freeze <2 x i1> %i.o
+  %6 = bitcast <2 x i1> %5 to i2
+  %7 = icmp eq i2 %6, -1
   br i1 %7, label %bb.d, label %_ZNK4Luau9TypeErroreqERKS0_.exit.thread
 
 bb.d:                                             ; preds = %_ZNK4Luau8LocationeqERKS0_.exit.i
@@ -292,10 +292,10 @@ define dso_local noundef zeroext i1 @_ZNK4Luau9TypeErroreqERKS0_(ptr noundef non
 bb.a:
   %i.a = load <2 x i32>, ptr %0, align 8
   %i.b = load <2 x i32>, ptr %1, align 8
-  %i.c = icmp eq <2 x i32> %i.a, %i.b             ; 2 uses
-  %2 = extractelement <2 x i1> %i.c, i64 0
-  %3 = extractelement <2 x i1> %i.c, i64 1
-  %4 = select i1 %3, i1 %2, i1 false
+  %i.c = icmp eq <2 x i32> %i.a, %i.b
+  %2 = freeze <2 x i1> %i.c
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   br i1 %4, label %_ZNK4Luau8LocationeqERKS0_.exit, label %_ZNK4Luau7VariantIJNS_12TypeMismatchENS_13UnknownSymbolENS_15UnknownPropertyENS_9NotATableENS_17CannotExtendTableENS_27CannotCompareUnrelatedTypesENS_24OnlyTablesCanHaveMethodsENS_23DuplicateTypeDefinitionENS_13CountMismatchENS_23FunctionDoesNotTakeSelfENS_20FunctionRequiresSelfENS_17OccursCheckFailedENS_14UnknownRequireENS_30IncorrectGenericParameterCountENS_11SyntaxErrorENS_14CodeTooComplexENS_21UnificationTooComplexENS_27UnknownPropButFoundLikePropENS_12GenericErrorENS_13InternalErrorENS_32ConstraintSolvingIncompleteErrorENS_21CannotCallNonFunctionENS_16ExtraInformationENS_17DeprecatedApiUsedENS_25ModuleHasCyclicDependencyENS_25CyclicModuleGraphTooLargeENS_14IllegalRequireENS_29FunctionExitsWithoutReturningENS_25DuplicateGenericParameterENS_19CannotAssignToNeverENS_26CannotInferBinaryOperationENS_17MissingPropertiesENS_27SwappedGenericTypeParameterENS_19OptionalValueAccessENS_20MissingUnionPropertyENS_17TypesAreUnrelatedENS_23NormalizationTooComplexENS_16TypePackMismatchENS_40DynamicPropertyLookupOnExternT
 
 _ZNK4Luau8LocationeqERKS0_.exit:                  ; preds = %bb.a
@@ -303,10 +303,10 @@ _ZNK4Luau8LocationeqERKS0_.exit:                  ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.f = load <2 x i32>, ptr %i.d, align 8
   %i.g = load <2 x i32>, ptr %i.e, align 8
-  %i.h = icmp eq <2 x i32> %i.f, %i.g             ; 2 uses
-  %5 = extractelement <2 x i1> %i.h, i64 0
-  %6 = extractelement <2 x i1> %i.h, i64 1
-  %7 = select i1 %6, i1 %5, i1 false
+  %i.h = icmp eq <2 x i32> %i.f, %i.g
+  %5 = freeze <2 x i1> %i.h
+  %6 = bitcast <2 x i1> %5 to i2
+  %7 = icmp eq i2 %6, -1
   br i1 %7, label %bb.b, label %_ZNK4Luau7VariantIJNS_12TypeMismatchENS_13UnknownSymbolENS_15UnknownPropertyENS_9NotATableENS_17CannotExtendTableENS_27CannotCompareUnrelatedTypesENS_24OnlyTablesCanHaveMethodsENS_23DuplicateTypeDefinitionENS_13CountMismatchENS_23FunctionDoesNotTakeSelfENS_20FunctionRequiresSelfENS_17OccursCheckFailedENS_14UnknownRequireENS_30IncorrectGenericParameterCountENS_11SyntaxErrorENS_14CodeTooComplexENS_21UnificationTooComplexENS_27UnknownPropButFoundLikePropENS_12GenericErrorENS_13InternalErrorENS_32ConstraintSolvingIncompleteErrorENS_21CannotCallNonFunctionENS_16ExtraInformationENS_17DeprecatedApiUsedENS_25ModuleHasCyclicDependencyENS_25CyclicModuleGraphTooLargeENS_14IllegalRequireENS_29FunctionExitsWithoutReturningENS_25DuplicateGenericParameterENS_19CannotAssignToNeverENS_26CannotInferBinaryOperationENS_17MissingPropertiesENS_27SwappedGenericTypeParameterENS_19OptionalValueAccessENS_20MissingUnionPropertyENS_17TypesAreUnrelatedENS_23NormalizationTooComplexENS_16TypePackMismatchENS_40DynamicPropertyLookupOnExternT
 
 bb.b:                                             ; preds = %_ZNK4Luau8LocationeqERKS0_.exit
@@ -560,10 +560,10 @@ bb.c:                                             ; preds = %_ZSteqIcSt11char_tr
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.r = load <2 x i32>, ptr %i.q, align 8
   %i.s = load <2 x i32>, ptr %i.p, align 8
-  %i.t = icmp eq <2 x i32> %i.r, %i.s             ; 2 uses
-  %2 = extractelement <2 x i1> %i.t, i64 0
-  %3 = extractelement <2 x i1> %i.t, i64 1
-  %4 = select i1 %3, i1 %2, i1 false
+  %i.t = icmp eq <2 x i32> %i.r, %i.s
+  %2 = freeze <2 x i1> %i.t
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   br i1 %4, label %bb.d, label %_ZSteqIN4Luau8LocationES1_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS3_ERKSC_IS6_E.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -571,10 +571,10 @@ bb.d:                                             ; preds = %bb.c
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.w = load <2 x i32>, ptr %i.u, align 8
   %i.x = load <2 x i32>, ptr %i.v, align 8
-  %i.y = icmp eq <2 x i32> %i.w, %i.x             ; 2 uses
-  %5 = extractelement <2 x i1> %i.y, i64 0
-  %6 = extractelement <2 x i1> %i.y, i64 1
-  %7 = select i1 %6, i1 %5, i1 false
+  %i.y = icmp eq <2 x i32> %i.w, %i.x
+  %5 = freeze <2 x i1> %i.y
+  %6 = bitcast <2 x i1> %5 to i2
+  %7 = icmp eq i2 %6, -1
   br label %_ZSteqIN4Luau8LocationES1_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS3_ERKSC_IS6_E.exit
 
 _ZSteqIN4Luau8LocationES1_ENSt9enable_ifIXsr14is_convertibleIDTeqclsr3stdE7declvalIRKT_EEclsr3stdE7declvalIRKT0_EEEbEE5valueEbE4typeERKSt8optionalIS3_ERKSC_IS6_E.exit: ; preds = %bb.a, %bb.d, %bb.c, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit
@@ -977,10 +977,10 @@ define dso_local noundef zeroext i1 @_ZNK4Luau17TypesAreUnrelatedeqERKS0_(ptr no
 bb.a:
   %i.a = load <2 x ptr>, ptr %0, align 8
   %i.b = load <2 x ptr>, ptr %1, align 8
-  %i.c = icmp eq <2 x ptr> %i.a, %i.b             ; 2 uses
-  %2 = extractelement <2 x i1> %i.c, i64 0
-  %3 = extractelement <2 x i1> %i.c, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.c = icmp eq <2 x ptr> %i.a, %i.b
+  %2 = freeze <2 x i1> %i.c
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 
@@ -1383,10 +1383,10 @@ define dso_local noundef zeroext i1 @_ZNK4Luau21AmbiguousFunctionCalleqERKS0_(pt
 bb.a:
   %i.a = load <2 x ptr>, ptr %0, align 8
   %i.b = load <2 x ptr>, ptr %1, align 8
-  %i.c = icmp eq <2 x ptr> %i.a, %i.b             ; 2 uses
-  %2 = extractelement <2 x i1> %i.c, i64 0
-  %3 = extractelement <2 x i1> %i.c, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.c = icmp eq <2 x ptr> %i.a, %i.b
+  %2 = freeze <2 x i1> %i.c
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 
@@ -1789,10 +1789,10 @@ bb.c:                                             ; preds = %_ZSteqIcSt11char_tr
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.r = load <2 x i32>, ptr %i.q, align 8
   %i.s = load <2 x i32>, ptr %i.p, align 8
-  %i.t = icmp eq <2 x i32> %i.r, %i.s             ; 2 uses
-  %2 = extractelement <2 x i1> %i.t, i64 0
-  %3 = extractelement <2 x i1> %i.t, i64 1
-  %4 = select i1 %3, i1 %2, i1 false
+  %i.t = icmp eq <2 x i32> %i.r, %i.s
+  %2 = freeze <2 x i1> %i.t
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   br i1 %4, label %bb.d, label %_ZNK4Luau23DuplicateTypeDefinitioneqERKS0_.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -1800,10 +1800,10 @@ bb.d:                                             ; preds = %bb.c
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.w = load <2 x i32>, ptr %i.u, align 8
   %i.x = load <2 x i32>, ptr %i.v, align 8
-  %i.y = icmp eq <2 x i32> %i.w, %i.x             ; 2 uses
-  %5 = extractelement <2 x i1> %i.y, i64 0
-  %6 = extractelement <2 x i1> %i.y, i64 1
-  %7 = select i1 %6, i1 %5, i1 false
+  %i.y = icmp eq <2 x i32> %i.w, %i.x
+  %5 = freeze <2 x i1> %i.y
+  %6 = bitcast <2 x i1> %5 to i2
+  %7 = icmp eq i2 %6, -1
   br label %_ZNK4Luau23DuplicateTypeDefinitioneqERKS0_.exit
 
 _ZNK4Luau23DuplicateTypeDefinitioneqERKS0_.exit:  ; preds = %bb.a, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.i, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EESA_.exit.thread.i, %bb.c, %bb.d
@@ -2206,10 +2206,10 @@ define linkonce_odr dso_local noundef zeroext i1 @_ZN4Luau7VariantIJNS_12TypeMis
 bb.a:
   %i.a = load <2 x ptr>, ptr %0, align 8
   %i.b = load <2 x ptr>, ptr %1, align 8
-  %i.c = icmp eq <2 x ptr> %i.a, %i.b             ; 2 uses
-  %2 = extractelement <2 x i1> %i.c, i64 0
-  %3 = extractelement <2 x i1> %i.c, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.c = icmp eq <2 x ptr> %i.a, %i.b
+  %2 = freeze <2 x i1> %i.c
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 
@@ -2612,10 +2612,10 @@ define linkonce_odr dso_local noundef zeroext i1 @_ZN4Luau7VariantIJNS_12TypeMis
 bb.a:
   %i.a = load <2 x ptr>, ptr %0, align 8
   %i.b = load <2 x ptr>, ptr %1, align 8
-  %i.c = icmp eq <2 x ptr> %i.a, %i.b             ; 2 uses
-  %2 = extractelement <2 x i1> %i.c, i64 0
-  %3 = extractelement <2 x i1> %i.c, i64 1
-  %4 = select i1 %2, i1 %3, i1 false
+  %i.c = icmp eq <2 x ptr> %i.a, %i.b
+  %2 = freeze <2 x i1> %i.c
+  %3 = bitcast <2 x i1> %2 to i2
+  %4 = icmp eq i2 %3, -1
   ret i1 %4
 }
 

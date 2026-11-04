@@ -204,12 +204,12 @@ bb.ai:                                            ; preds = %bb.ac, %bb.ab
   %i.ew = load <2 x double>, ptr %i.ac, align 8
   %i.ex = load <2 x double>, ptr %i.ev, align 8
   %i.ey = fsub <2 x double> %i.ew, %i.ex
-  %11 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.ey)
-  %12 = fcmp ole <2 x double> %11, splat (double f0x3E7AD7F29ABCAF48) ; 2 uses
-  %13 = extractelement <2 x i1> %12, i64 0
-  %14 = extractelement <2 x i1> %12, i64 1
-  %15 = select i1 %14, i1 %13, i1 false
-  br i1 %15, label %bb.aj, label %bb.an
+  %.fr915 = freeze <2 x double> %i.ey
+  %11 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr915)
+  %12 = fcmp ugt <2 x double> %11, splat (double f0x3E7AD7F29ABCAF48)
+  %13 = bitcast <2 x i1> %12 to i2
+  %14 = icmp eq i2 %13, 0
+  br i1 %14, label %bb.aj, label %bb.an
 
 bb.aj:                                            ; preds = %bb.ai
   %i.ez = load ptr, ptr %3, align 8, !tbaa !21
@@ -318,16 +318,16 @@ bb.at:                                            ; preds = %bb.as
   %i.gy = insertelement <2 x double> poison, double %i.gw, i64 0
   %i.gz = insertelement <2 x double> %i.gy, double %.pre906, i64 1
   %i.ha = fsub <2 x double> %i.gz, %i.gx
-  %16 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.ha)
-  %17 = fcmp ole <2 x double> %16, splat (double f0x3E7AD7F29ABCAF48) ; 2 uses
-  %18 = extractelement <2 x i1> %17, i64 0
-  %19 = extractelement <2 x i1> %17, i64 1
-  %20 = select i1 %19, i1 %18, i1 false
+  %.fr914 = freeze <2 x double> %i.ha
+  %15 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr914)
+  %16 = fcmp ugt <2 x double> %15, splat (double f0x3E7AD7F29ABCAF48)
+  %17 = bitcast <2 x i1> %16 to i2
+  %18 = icmp eq i2 %17, 0
   %i.hb = load ptr, ptr %3, align 8, !tbaa !21
   %i.hc = tail call i64 @gv_list_get_(ptr noundef nonnull byval(%struct.list_t_) align 8 %3, i64 noundef %i.gr) #18
   %i.hd = getelementptr inbounds nuw [96 x i8], ptr %i.hb, i64 %i.hc
   %i.he = load i32, ptr %i.hd, align 8, !tbaa !31 ; 4 uses
-  br i1 %20, label %bb.au, label %bb.ay
+  br i1 %18, label %bb.au, label %bb.ay
 
 bb.au:                                            ; preds = %bb.at
   %i.hf = load i32, ptr %i.r, align 8, !tbaa !31  ; 2 uses
@@ -408,27 +408,27 @@ bb.bc:                                            ; preds = %.thread._crit_edge,
   %i.is = insertelement <2 x double> poison, double %i.iq, i64 0
   %i.it = insertelement <2 x double> %i.is, double %i.im, i64 1 ; 2 uses
   %i.iu = fsub <2 x double> %i.it, %i.ir
-  %21 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.iu)
-  %22 = fcmp ole <2 x double> %21, splat (double f0x3E7AD7F29ABCAF48) ; 2 uses
-  %23 = extractelement <2 x i1> %22, i64 0
-  %24 = extractelement <2 x i1> %22, i64 1
-  %25 = select i1 %24, i1 %23, i1 false
+  %.fr910 = freeze <2 x double> %i.iu
+  %19 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr910)
+  %20 = fcmp ugt <2 x double> %19, splat (double f0x3E7AD7F29ABCAF48)
+  %21 = bitcast <2 x i1> %20 to i2
+  %22 = icmp eq i2 %21, 0
   %i.iv = getelementptr inbounds nuw i8, ptr %i.r, i64 4
   %i.iw = load i32, ptr %i.iv, align 4, !tbaa !30 ; 3 uses
   %i.ix = sext i32 %i.iw to i64                   ; 2 uses
-  br i1 %25, label %bb.bd, label %._crit_edge907
+  br i1 %22, label %bb.bd, label %._crit_edge907
 
 bb.bd:                                            ; preds = %bb.bc
   %i.iy = getelementptr inbounds [64 x i8], ptr %2, i64 %i.ix
   %i.iz = load <2 x double>, ptr %i.ac, align 8
   %i.ja = load <2 x double>, ptr %i.iy, align 8
   %i.jb = fsub <2 x double> %i.iz, %i.ja
-  %26 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.jb)
-  %27 = fcmp ole <2 x double> %26, splat (double f0x3E7AD7F29ABCAF48) ; 2 uses
-  %28 = extractelement <2 x i1> %27, i64 0
-  %29 = extractelement <2 x i1> %27, i64 1
-  %30 = select i1 %29, i1 %28, i1 false
-  br i1 %30, label %bb.be, label %._crit_edge907
+  %.fr911 = freeze <2 x double> %i.jb
+  %23 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr911)
+  %24 = fcmp ugt <2 x double> %23, splat (double f0x3E7AD7F29ABCAF48)
+  %25 = bitcast <2 x i1> %24 to i2
+  %26 = icmp eq i2 %25, 0
+  br i1 %26, label %bb.be, label %._crit_edge907
 
 bb.be:                                            ; preds = %bb.bd
   %i.jc = icmp eq i32 %.tr895900, 1
@@ -463,24 +463,24 @@ bb.bg:                                            ; preds = %bb.be
   %i.jq = getelementptr inbounds nuw i8, ptr %i.jp, i64 16
   %i.jr = load <2 x double>, ptr %i.jq, align 8
   %i.js = fsub <2 x double> %i.it, %i.jr
-  %31 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.js)
-  %32 = fcmp ole <2 x double> %31, splat (double f0x3E7AD7F29ABCAF48) ; 2 uses
-  %33 = extractelement <2 x i1> %32, i64 0
-  %34 = extractelement <2 x i1> %32, i64 1
-  %35 = select i1 %34, i1 %33, i1 false
-  br i1 %35, label %bb.bh, label %bb.bl
+  %.fr912 = freeze <2 x double> %i.js
+  %27 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr912)
+  %28 = fcmp ugt <2 x double> %27, splat (double f0x3E7AD7F29ABCAF48)
+  %29 = bitcast <2 x i1> %28 to i2
+  %30 = icmp eq i2 %29, 0
+  br i1 %30, label %bb.bh, label %bb.bl
 
 bb.bh:                                            ; preds = %._crit_edge907
   %i.jt = getelementptr inbounds nuw i8, ptr %i.ip, i64 16
   %i.ju = load <2 x double>, ptr %i.ac, align 8
   %i.jv = load <2 x double>, ptr %i.jt, align 8
   %i.jw = fsub <2 x double> %i.ju, %i.jv
-  %36 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %i.jw)
-  %37 = fcmp ole <2 x double> %36, splat (double f0x3E7AD7F29ABCAF48) ; 2 uses
-  %38 = extractelement <2 x i1> %37, i64 0
-  %39 = extractelement <2 x i1> %37, i64 1
-  %40 = select i1 %39, i1 %38, i1 false
-  br i1 %40, label %bb.bi, label %bb.bl
+  %.fr913 = freeze <2 x double> %i.jw
+  %31 = tail call <2 x double> @llvm.fabs.v2f64(<2 x double> %.fr913)
+  %32 = fcmp ugt <2 x double> %31, splat (double f0x3E7AD7F29ABCAF48)
+  %33 = bitcast <2 x i1> %32 to i2
+  %34 = icmp eq i2 %33, 0
+  br i1 %34, label %bb.bi, label %bb.bl
 
 bb.bi:                                            ; preds = %bb.bh
   %i.jx = getelementptr inbounds nuw i8, ptr %i.jp, i64 56

@@ -204,21 +204,21 @@ bb.m:                                             ; preds = %bb.l, %stbte__prepa
   br i1 %i.ep, label %.preheader296.lr.ph, label %.loopexit298
 
 .preheader296.lr.ph:                              ; preds = %.preheader297
-  %i.eq = icmp sge <2 x i32> %i.ej, %i.em         ; 2 uses
+  %i.eq = icmp sge <2 x i32> %i.ej, %i.em
   %i.er = extractelement <2 x i32> %i.em, i64 0   ; 3 uses
   %i.es = icmp sgt i32 %i.er, -1
   %i.et = extractelement <2 x i32> %i.em, i64 1   ; 3 uses
   %i.eu = icmp sgt i32 %i.et, -1
-  %1 = extractelement <2 x i1> %i.eq, i64 0
-  %2 = extractelement <2 x i1> %i.eq, i64 1
-  %brmerge = select i1 %2, i1 true, i1 %1
+  %1 = freeze <2 x i1> %i.eq
+  %2 = bitcast <2 x i1> %1 to i2
+  %brmerge.not = icmp eq i2 %2, 0
   %i.ev = extractelement <2 x i32> %i.ej, i64 0   ; 2 uses
   %i.ew = extractelement <2 x i32> %i.ej, i64 1   ; 2 uses
   br label %.preheader296
 
 .preheader296:                                    ; preds = %.preheader296.lr.ph, %.loopexit295
   %.0254311 = phi i32 [ 0, %.preheader296.lr.ph ], [ %i.ha, %.loopexit295 ] ; 3 uses
-  br i1 %brmerge, label %._crit_edge304.split, label %.preheader293
+  br i1 %brmerge.not, label %.preheader293, label %._crit_edge304.split
 
 .preheader293:                                    ; preds = %.preheader296, %._crit_edge
   %.0246303 = phi i32 [ %i.fk, %._crit_edge ], [ %i.ew, %.preheader296 ] ; 3 uses
@@ -392,10 +392,10 @@ bb.p:                                             ; preds = %.loopexit298
   br i1 %i.iy, label %.lr.ph319, label %.loopexit, !llvm.loop !230
 
 .loopexit:                                        ; preds = %.lr.ph319, %bb.m, %.preheader292, %.loopexit298
-  %i.iz = icmp slt <2 x i32> %i.ej, %i.em         ; 2 uses
-  %3 = extractelement <2 x i1> %i.iz, i64 0
-  %4 = extractelement <2 x i1> %i.iz, i64 1
-  %or.cond333 = select i1 %4, i1 %3, i1 false
+  %i.iz = icmp slt <2 x i32> %i.ej, %i.em
+  %3 = freeze <2 x i1> %i.iz
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond333 = icmp eq i2 %4, -1
   br i1 %or.cond333, label %.preheader.preheader, label %._crit_edge324.split
 
 .preheader.preheader:                             ; preds = %.loopexit

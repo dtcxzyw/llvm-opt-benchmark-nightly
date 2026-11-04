@@ -204,14 +204,15 @@ bb.c:                                             ; preds = %bb.en, %bb.b
   %i.hu = call <2 x i32> @llvm.smin.v2i32(<2 x i32> %i.hg, <2 x i32> %i.ht)
   %i.hv = sitofp <2 x i32> %i.hu to <2 x float>   ; 2 uses
   %i.hw = fcmp olt <2 x float> %i.hq, %i.hv
-  %i.hx = select <2 x i1> %i.hw, <2 x float> %i.hq, <2 x float> %i.hv ; 2 uses
+  %i.hx = select <2 x i1> %i.hw, <2 x float> %i.hq, <2 x float> %i.hv
+  %.fr = freeze <2 x float> %i.hx                 ; 2 uses
   %i.hy = fptosi <2 x float> %i.hq to <2 x i32>   ; 2 uses
   %i.hz = shufflevector <2 x i32> %i.hy, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
   %i.ia = call <2 x i32> @llvm.smin.v2i32(<2 x i32> %i.hg, <2 x i32> %i.hy) ; 2 uses
   %i.ib = sub nsw <2 x i32> %i.gx, %i.hz
   %i.ic = call <2 x i32> @llvm.smax.v2i32(<2 x i32> %i.ib, <2 x i32> zeroinitializer)
   store <2 x i32> %i.ic, ptr %75, align 8, !tbaa !46
-  %i.id = fptosi <2 x float> %i.hx to <2 x i32>
+  %i.id = fptosi <2 x float> %.fr to <2 x i32>
   %i.ie = add <2 x i32> %i.ia, splat (i32 1)
   %i.if = add <2 x i32> %i.ie, %i.id
   %i.ig = shufflevector <2 x i32> %i.if, <2 x i32> poison, <2 x i32> <i32 1, i32 0>
@@ -228,11 +229,10 @@ bb.d:                                             ; preds = %_ZNK2cv3MatclERKNS_
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %77) #21
   call void @llvm.lifetime.end.p0(ptr nonnull %77) #21
   %i.ii = sitofp <2 x i32> %i.ia to <2 x float>   ; 2 uses
-  %i.ij = fcmp ole <2 x float> %i.hx, zeroinitializer ; 2 uses
-  %94 = extractelement <2 x i1> %i.ij, i64 0
-  %95 = extractelement <2 x i1> %i.ij, i64 1
-  %or.cond3.i = select i1 %95, i1 true, i1 %94
-  br i1 %or.cond3.i, label %.loopexit, label %bb.h
+  %i.ij = fcmp ole <2 x float> %.fr, zeroinitializer
+  %94 = bitcast <2 x i1> %i.ij to i2
+  %or.cond3.i.not = icmp eq i2 %94, 0
+  br i1 %or.cond3.i.not, label %bb.h, label %.loopexit
 
 bb.e:                                             ; preds = %bb.c
   %i.ik = landingpad { ptr, i32 }
@@ -278,11 +278,11 @@ bb.h:                                             ; preds = %bb.d
   %i.ji = fsub <2 x float> %i.jh, %i.it           ; 2 uses
   %i.jj = insertelement <2 x float> poison, float %i.ix, i64 0
   %i.jk = shufflevector <2 x float> %i.jj, <2 x float> poison, <2 x i32> zeroinitializer
-  %i.jl = fcmp ult <2 x float> %i.ji, %i.jk       ; 2 uses
-  %96 = extractelement <2 x i1> %i.jl, i64 0
-  %97 = extractelement <2 x i1> %i.jl, i64 1
-  %or.cond249.i = select i1 %97, i1 true, i1 %96
-  br i1 %or.cond249.i, label %.loopexit, label %bb.i
+  %i.jl = fcmp ult <2 x float> %i.ji, %i.jk
+  %95 = freeze <2 x i1> %i.jl
+  %96 = bitcast <2 x i1> %95 to i2
+  %or.cond249.i.not = icmp eq i2 %96, 0
+  br i1 %or.cond249.i.not, label %bb.i, label %.loopexit
 
 bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %78) #21

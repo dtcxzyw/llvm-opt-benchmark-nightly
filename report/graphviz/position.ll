@@ -204,16 +204,16 @@ bb.bv:                                            ; preds = %bb.bu
   %i.aeh = load <2 x double>, ptr %i.aeg, align 8, !tbaa !80 ; 2 uses
   %i.aei = fsub <2 x double> %i.aeb, %i.aeh
   %i.aej = fsub <2 x double> %i.aei, %i.aeh       ; 3 uses
-  %i.aek = fdiv <2 x double> %i.aej, %i.adq       ; 3 uses
-  %1 = fcmp oge <2 x double> %i.aek, splat (double 1.000000e+00) ; 2 uses
-  %2 = extractelement <2 x i1> %1, i64 0
-  %3 = extractelement <2 x i1> %1, i64 1
-  %or.cond4.i.i = select i1 %2, i1 %3, i1 false
+  %i.aek = fdiv <2 x double> %i.aej, %i.adq
+  %.fr176 = freeze <2 x double> %i.aek            ; 3 uses
+  %1 = fcmp ult <2 x double> %.fr176, splat (double 1.000000e+00)
+  %2 = bitcast <2 x i1> %1 to i2
+  %or.cond4.i.i = icmp eq i2 %2, 0
   br i1 %or.cond4.i.i, label %set_aspect.exit, label %idealsize.exit.thread92.i
 
 idealsize.exit.thread92.i:                        ; preds = %bb.bv
-  %i.ael = extractelement <2 x double> %i.aek, i64 0 ; 2 uses
-  %i.aem = extractelement <2 x double> %i.aek, i64 1 ; 2 uses
+  %i.ael = extractelement <2 x double> %.fr176, i64 0 ; 2 uses
+  %i.aem = extractelement <2 x double> %.fr176, i64 1 ; 2 uses
   %i.aen = fcmp olt double %i.ael, %i.aem
   %i.aeo = select i1 %i.aen, double %i.ael, double %i.aem ; 2 uses
   %i.aep = fcmp ogt double %i.aeo, 5.000000e-01
@@ -271,16 +271,16 @@ bb.cb:                                            ; preds = %bb.bt
 
 bb.cc:                                            ; preds = %bb.cb
   %i.afu = load <2 x double>, ptr %i.afr, align 8, !tbaa !80
-  %i.afv = fdiv <2 x double> %i.afu, %i.adq       ; 3 uses
-  %4 = fcmp ogt <2 x double> %i.afv, splat (double 1.000000e+00) ; 2 uses
-  %5 = extractelement <2 x i1> %4, i64 0
-  %6 = extractelement <2 x i1> %4, i64 1
-  %or.cond3.i = select i1 %5, i1 %6, i1 false
+  %i.afv = fdiv <2 x double> %i.afu, %i.adq
+  %.fr = freeze <2 x double> %i.afv               ; 3 uses
+  %3 = fcmp ule <2 x double> %.fr, splat (double 1.000000e+00)
+  %4 = bitcast <2 x i1> %3 to i2
+  %or.cond3.i = icmp eq i2 %4, 0
   br i1 %or.cond3.i, label %bb.cd, label %set_aspect.exit
 
 bb.cd:                                            ; preds = %bb.cc
-  %i.afw = extractelement <2 x double> %i.afv, i64 0
-  %i.afx = extractelement <2 x double> %i.afv, i64 1
+  %i.afw = extractelement <2 x double> %.fr, i64 0
+  %i.afx = extractelement <2 x double> %.fr, i64 1
   %i.afy = tail call nsz double @llvm.minnum.f64(double %i.afw, double %i.afx)
   %i.afz = insertelement <2 x double> poison, double %i.afy, i64 0
   %i.aga = shufflevector <2 x double> %i.afz, <2 x double> poison, <2 x i32> zeroinitializer

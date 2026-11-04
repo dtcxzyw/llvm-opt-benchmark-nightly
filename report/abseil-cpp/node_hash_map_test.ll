@@ -205,10 +205,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load <2 x i32>, ptr %1, align 4
   %i.c = load <2 x i32>, ptr %i.a, align 8
-  %i.d = icmp eq <2 x i32> %i.b, %i.c             ; 2 uses
-  %3 = extractelement <2 x i1> %i.d, i64 0
-  %4 = extractelement <2 x i1> %i.d, i64 1
-  %5 = select i1 %3, i1 %4, i1 false
+  %i.d = icmp eq <2 x i32> %i.b, %i.c
+  %3 = freeze <2 x i1> %i.d
+  %4 = bitcast <2 x i1> %3 to i2
+  %5 = icmp eq i2 %4, -1
   ret i1 %5
 }
 
@@ -611,10 +611,10 @@ bb.e:                                             ; preds = %.lr.ph.i
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !310
   %i.ak = load <2 x i32>, ptr %i.aj, align 4
   %i.al = load <2 x i32>, ptr %i.ae, align 4
-  %i.am = icmp eq <2 x i32> %i.ak, %i.al          ; 2 uses
-  %5 = extractelement <2 x i1> %i.am, i64 0
-  %6 = extractelement <2 x i1> %i.am, i64 1
-  %7 = select i1 %5, i1 %6, i1 false
+  %i.am = icmp eq <2 x i32> %i.ak, %i.al
+  %5 = freeze <2 x i1> %i.am
+  %6 = bitcast <2 x i1> %5 to i2
+  %7 = icmp eq i2 %6, -1
   br i1 %7, label %bb.f, label %.loopexit
 
 bb.f:                                             ; preds = %bb.e
@@ -1017,10 +1017,10 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   %i.ei = load ptr, ptr %.sroa.5.0.copyload149, align 8, !tbaa !310 ; 2 uses
   %i.ej = load <2 x i32>, ptr %2, align 8, !noalias !5711
   %i.ek = load <2 x i32>, ptr %i.ei, align 4, !noalias !5711
-  %i.el = icmp eq <2 x i32> %i.ej, %i.ek          ; 2 uses
-  %18 = extractelement <2 x i1> %i.el, i64 0
-  %19 = extractelement <2 x i1> %i.el, i64 1
-  %20 = select i1 %18, i1 %19, i1 false
+  %i.el = icmp eq <2 x i32> %i.ej, %i.ek
+  %18 = freeze <2 x i1> %i.el
+  %19 = bitcast <2 x i1> %18 to i2
+  %20 = icmp eq i2 %19, -1
   br i1 %20, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %.thread114
@@ -1423,10 +1423,10 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   %i.aw = load ptr, ptr %i.l, align 8, !tbaa !310 ; 2 uses
   %i.ax = load <2 x i32>, ptr %1, align 8, !noalias !5802
   %i.ay = load <2 x i32>, ptr %i.aw, align 4, !noalias !5802
-  %i.az = icmp eq <2 x i32> %i.ax, %i.ay          ; 2 uses
-  %21 = extractelement <2 x i1> %i.az, i64 0
-  %22 = extractelement <2 x i1> %i.az, i64 1
-  %23 = select i1 %21, i1 %22, i1 false
+  %i.az = icmp eq <2 x i32> %i.ax, %i.ay
+  %21 = freeze <2 x i1> %i.az
+  %22 = bitcast <2 x i1> %21 to i2
+  %23 = icmp eq i2 %22, -1
   br i1 %23, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %.thread
@@ -1773,10 +1773,10 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   %i.fe = load ptr, ptr %i.dt, align 8, !tbaa !310 ; 2 uses
   %i.ff = load <2 x i32>, ptr %1, align 8, !noalias !5803
   %i.fg = load <2 x i32>, ptr %i.fe, align 4, !noalias !5803
-  %i.fh = icmp eq <2 x i32> %i.ff, %i.fg          ; 2 uses
-  %24 = extractelement <2 x i1> %i.fh, i64 0
-  %25 = extractelement <2 x i1> %i.fh, i64 1
-  %26 = select i1 %24, i1 %25, i1 false
+  %i.fh = icmp eq <2 x i32> %i.ff, %i.fg
+  %24 = freeze <2 x i1> %i.fh
+  %25 = bitcast <2 x i1> %24 to i2
+  %26 = icmp eq i2 %25, -1
   br i1 %26, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %.thread112
@@ -2179,10 +2179,10 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   %i.ei = load ptr, ptr %.sroa.5.0.copyload149, align 8, !tbaa !310 ; 2 uses
   %i.ej = load <2 x i32>, ptr %2, align 8, !noalias !6431
   %i.ek = load <2 x i32>, ptr %i.ei, align 4, !noalias !6431
-  %i.el = icmp eq <2 x i32> %i.ej, %i.ek          ; 2 uses
-  %18 = extractelement <2 x i1> %i.el, i64 0
-  %19 = extractelement <2 x i1> %i.el, i64 1
-  %20 = select i1 %18, i1 %19, i1 false
+  %i.el = icmp eq <2 x i32> %i.ej, %i.ek
+  %18 = freeze <2 x i1> %i.el
+  %19 = bitcast <2 x i1> %18 to i2
+  %20 = icmp eq i2 %19, -1
   br i1 %20, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %.thread114
@@ -2585,10 +2585,10 @@ bb.b:                                             ; preds = %bb.a
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !310  ; 2 uses
   %i.n = load <2 x i32>, ptr %1, align 8, !noalias !6518
   %i.o = load <2 x i32>, ptr %i.m, align 4, !noalias !6518
-  %i.p = icmp eq <2 x i32> %i.n, %i.o             ; 2 uses
-  %11 = extractelement <2 x i1> %i.p, i64 0
-  %12 = extractelement <2 x i1> %i.p, i64 1
-  %13 = select i1 %11, i1 %12, i1 false
+  %i.p = icmp eq <2 x i32> %i.n, %i.o
+  %11 = freeze <2 x i1> %i.p
+  %12 = bitcast <2 x i1> %11 to i2
+  %13 = icmp eq i2 %12, -1
   br i1 %13, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -2787,10 +2787,10 @@ bb.s:                                             ; preds = %bb.r
   %i.ck = load ptr, ptr %i.cj, align 8, !tbaa !310 ; 2 uses
   %i.cl = load <2 x i32>, ptr %1, align 8, !noalias !6519
   %i.cm = load <2 x i32>, ptr %i.ck, align 4, !noalias !6519
-  %i.cn = icmp eq <2 x i32> %i.cl, %i.cm          ; 2 uses
-  %14 = extractelement <2 x i1> %i.cn, i64 0
-  %15 = extractelement <2 x i1> %i.cn, i64 1
-  %16 = select i1 %14, i1 %15, i1 false
+  %i.cn = icmp eq <2 x i32> %i.cl, %i.cm
+  %14 = freeze <2 x i1> %i.cn
+  %15 = bitcast <2 x i1> %14 to i2
+  %16 = icmp eq i2 %15, -1
   br i1 %16, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -3193,10 +3193,10 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   %i.ei = load ptr, ptr %.sroa.5.0.copyload149, align 8, !tbaa !310 ; 2 uses
   %i.ej = load <2 x i32>, ptr %2, align 8, !noalias !6662
   %i.ek = load <2 x i32>, ptr %i.ei, align 4, !noalias !6662
-  %i.el = icmp eq <2 x i32> %i.ej, %i.ek          ; 2 uses
-  %18 = extractelement <2 x i1> %i.el, i64 0
-  %19 = extractelement <2 x i1> %i.el, i64 1
-  %20 = select i1 %18, i1 %19, i1 false
+  %i.el = icmp eq <2 x i32> %i.ej, %i.ek
+  %18 = freeze <2 x i1> %i.el
+  %19 = bitcast <2 x i1> %18 to i2
+  %20 = icmp eq i2 %19, -1
   br i1 %20, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %.thread114
@@ -3599,10 +3599,10 @@ bb.b:                                             ; preds = %bb.a
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !310  ; 2 uses
   %i.o = load <2 x i32>, ptr %1, align 8, !noalias !6729
   %i.p = load <2 x i32>, ptr %i.n, align 4, !noalias !6729
-  %i.q = icmp eq <2 x i32> %i.o, %i.p             ; 2 uses
-  %11 = extractelement <2 x i1> %i.q, i64 0
-  %12 = extractelement <2 x i1> %i.q, i64 1
-  %13 = select i1 %11, i1 %12, i1 false
+  %i.q = icmp eq <2 x i32> %i.o, %i.p
+  %11 = freeze <2 x i1> %i.q
+  %12 = bitcast <2 x i1> %11 to i2
+  %13 = icmp eq i2 %12, -1
   br i1 %13, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
@@ -3801,10 +3801,10 @@ bb.s:                                             ; preds = %bb.r
   %i.cl = load ptr, ptr %i.ck, align 8, !tbaa !310 ; 2 uses
   %i.cm = load <2 x i32>, ptr %1, align 8, !noalias !6730
   %i.cn = load <2 x i32>, ptr %i.cl, align 4, !noalias !6730
-  %i.co = icmp eq <2 x i32> %i.cm, %i.cn          ; 2 uses
-  %14 = extractelement <2 x i1> %i.co, i64 0
-  %15 = extractelement <2 x i1> %i.co, i64 1
-  %16 = select i1 %14, i1 %15, i1 false
+  %i.co = icmp eq <2 x i32> %i.cm, %i.cn
+  %14 = freeze <2 x i1> %i.co
+  %15 = bitcast <2 x i1> %14 to i2
+  %16 = icmp eq i2 %15, -1
   br i1 %16, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
@@ -4207,10 +4207,10 @@ scalar.ph404:                                     ; preds = %scalar.ph404.prehea
   %.07.i.i = phi i64 [ %spec.select.i.i, %scalar.ph404 ], [ %.07.i.i.ph, %scalar.ph404.preheader ]
   %.sroa.03.06.i.i = phi ptr [ %i.iz, %scalar.ph404 ], [ %.sroa.03.06.i.i.ph, %scalar.ph404.preheader ] ; 2 uses
   %i.iw = load <2 x i32>, ptr %.sroa.03.06.i.i, align 4
-  %i.ix = icmp eq <2 x i32> %i.iw, %i.ib          ; 2 uses
-  %21 = extractelement <2 x i1> %i.ix, i64 0
-  %22 = extractelement <2 x i1> %i.ix, i64 1
-  %23 = select i1 %21, i1 %22, i1 false
+  %i.ix = icmp eq <2 x i32> %i.iw, %i.ib
+  %21 = freeze <2 x i1> %i.ix
+  %22 = bitcast <2 x i1> %21 to i2
+  %23 = icmp eq i2 %22, -1
   %i.iy = zext i1 %23 to i64
   %spec.select.i.i = add nuw nsw i64 %.07.i.i, %i.iy ; 2 uses
   %i.iz = getelementptr inbounds nuw i8, ptr %.sroa.03.06.i.i, i64 8 ; 2 uses
@@ -4613,10 +4613,10 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicy
   %.sroa.03.08.i.i = phi ptr [ %.sroa.0.0.i.ph, %.lr.ph.i.i105 ], [ %.sroa.03.1.i.i, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17NodeHashMapPolicyIiiEEJNS1_19StatefulTestingHashENS1_20StatefulTestingEqualENS1_5AllocISt4pairIKiiEEEEE8iterator21skip_empty_or_deletedEv.exit.i.i.i ]
   %i.ft = load ptr, ptr %.sroa.7.09.i.i, align 8, !tbaa !310
   %i.fu = load <2 x i32>, ptr %i.ft, align 4
-  %i.fv = icmp eq <2 x i32> %i.fu, %i.fs          ; 2 uses
-  %19 = extractelement <2 x i1> %i.fv, i64 0
-  %20 = extractelement <2 x i1> %i.fv, i64 1
-  %21 = select i1 %19, i1 %20, i1 false
+  %i.fv = icmp eq <2 x i32> %i.fu, %i.fs
+  %19 = freeze <2 x i1> %i.fv
+  %20 = bitcast <2 x i1> %19 to i2
+  %21 = icmp eq i2 %20, -1
   %i.fw = zext i1 %21 to i64
   %spec.select.i.i = add nuw nsw i64 %.010.i.i, %i.fw ; 3 uses
   %i.fx = getelementptr inbounds nuw i8, ptr %.sroa.03.08.i.i, i64 1 ; 3 uses

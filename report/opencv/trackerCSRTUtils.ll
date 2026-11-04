@@ -205,10 +205,11 @@ _ZNK2cv8MatShapeclEv.exit.i:                      ; preds = %bb.t, %bb.s
   %i.av = shufflevector <2 x double> %i.au, <2 x double> poison, <2 x i32> zeroinitializer
   %i.aw = fdiv <2 x double> %i.at, %i.av
   %i.ax = call <2 x double> @llvm.floor.v2f64(<2 x double> %i.aw)
-  %i.ay = fptosi <2 x double> %i.ax to <2 x i32>  ; 4 uses
-  %i.az = extractelement <2 x i32> %i.ay, i64 0   ; 7 uses
+  %i.ay = fptosi <2 x double> %i.ax to <2 x i32>
+  %.fr = freeze <2 x i32> %i.ay                   ; 4 uses
+  %i.az = extractelement <2 x i32> %.fr, i64 0    ; 7 uses
   %i.ba = call i32 @llvm.smax.i32(i32 %i.az, i32 2) ; 2 uses
-  %i.bb = extractelement <2 x i32> %i.ay, i64 1   ; 5 uses
+  %i.bb = extractelement <2 x i32> %.fr, i64 1    ; 5 uses
   %i.bc = call i32 @llvm.smax.i32(i32 %i.bb, i32 2) ; 2 uses
   %.sroa.11.0.insert.ext.i = zext i32 %i.bb to i64 ; 2 uses
   %.sroa.11.0.insert.shift.i = shl nuw i64 %.sroa.11.0.insert.ext.i, 32
@@ -240,7 +241,7 @@ _ZNK2cv8MatShapeclEv.exit.i:                      ; preds = %bb.t, %bb.s
   br label %bb.by
 
 _ZNK2cv7MatExprcvNS_3MatEEv.exit.i:               ; preds = %.noexc24
-  %.sroa.0472.0.insert.insert.i = bitcast <2 x i32> %i.ay to i64
+  %.sroa.0472.0.insert.insert.i = bitcast <2 x i32> %.fr to i64
   %i.bl = getelementptr inbounds nuw i8, ptr %12, i64 432
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %i.bl) #18
   %i.bm = getelementptr inbounds nuw i8, ptr %12, i64 224
@@ -643,10 +644,9 @@ bb.bn:                                            ; preds = %bb.bm, %bb.bl, %bb.
   br i1 %exitcond.not.i, label %._crit_edge.i, label %bb.af, !llvm.loop !143
 
 .preheader488.i.split:                            ; preds = %._crit_edge501.i.loopexit
-  %23 = icmp sgt <2 x i32> %i.ay, splat (i32 2)   ; 2 uses
-  %24 = extractelement <2 x i1> %23, i64 0
-  %25 = extractelement <2 x i1> %23, i64 1
-  %or.cond = select i1 %25, i1 %24, i1 false
+  %23 = icmp slt <2 x i32> %.fr, splat (i32 3)
+  %24 = bitcast <2 x i1> %23 to i2
+  %or.cond = icmp eq i2 %24, 0
   br i1 %or.cond, label %.preheader487.preheader.i, label %.preheader485.i
 
 .preheader487.preheader.i:                        ; preds = %.preheader488.i.split

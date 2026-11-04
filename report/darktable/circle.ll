@@ -205,8 +205,9 @@ bb.j:                                             ; preds = %bb.i
   %i.fy = icmp slt <2 x i32> %i.fv, splat (i32 -2)
   %i.fz = select <2 x i1> %i.fy, <2 x i32> zeroinitializer, <2 x i32> %i.fw
   %i.ga = select <2 x i1> %i.fx, <2 x i32> %i.ba, <2 x i32> %i.fz ; 5 uses
-  %i.gb = sub <2 x i32> %i.ga, %i.fr              ; 4 uses
-  %i.gc = add nuw <2 x i32> %i.gb, splat (i32 1)  ; 3 uses
+  %i.gb = sub <2 x i32> %i.ga, %i.fr
+  %.fr = freeze <2 x i32> %i.gb                   ; 4 uses
+  %i.gc = add nuw <2 x i32> %.fr, splat (i32 1)   ; 3 uses
   %i.gd = zext <2 x i32> %i.gc to <2 x i64>
   tail call void @free(ptr noundef nonnull %i.cd) #14
   %i.ge = load i32, ptr getelementptr inbounds nuw (i8, ptr @darktable, i64 8), align 8, !tbaa !123
@@ -290,11 +291,10 @@ bb.p:                                             ; preds = %._crit_edge455
 
 bb.q:                                             ; preds = %bb.p, %._crit_edge455
   %.2432 = phi nsz double [ %.1, %._crit_edge455 ], [ %i.hs, %bb.p ] ; 2 uses
-  %i.hu = icmp slt <2 x i32> %i.gb, splat (i32 1) ; 2 uses
-  %14 = extractelement <2 x i1> %i.hu, i64 0
-  %15 = extractelement <2 x i1> %i.hu, i64 1
-  %or.cond = select i1 %14, i1 true, i1 %15
-  br i1 %or.cond, label %bb.ac, label %bb.r
+  %i.hu = icmp slt <2 x i32> %.fr, splat (i32 1)
+  %14 = bitcast <2 x i1> %i.hu to i2
+  %or.cond.not = icmp eq i2 %14, 0
+  br i1 %or.cond.not, label %bb.r, label %bb.ac
 
 bb.r:                                             ; preds = %bb.q
   %i.hv = extractelement <2 x i32> %i.gc, i64 0   ; 12 uses
@@ -324,7 +324,7 @@ bb.r:                                             ; preds = %bb.q
 .preheader444.preheader:                          ; preds = %.preheader444.lr.ph
   %i.ii = sext i32 %i.ie to i64                   ; 2 uses
   %i.ij = add <2 x i32> %i.ga, splat (i32 1)      ; 2 uses
-  %i.ik = extractelement <2 x i32> %i.gb, i64 0   ; 2 uses
+  %i.ik = extractelement <2 x i32> %.fr, i64 0    ; 2 uses
   %i.il = extractelement <2 x i32> %i.au, i64 1
   %i.im = extractelement <2 x i32> %i.ij, i64 1
   %i.in = zext i32 %i.hv to i64
@@ -552,7 +552,7 @@ bb.w:                                             ; preds = %bb.v
   %i.lx = add i32 %i.id, 1
   %i.ly = sub i32 %i.lx, %i.ie
   %wide.trip.count504 = zext i32 %i.ly to i64
-  %i.lz = extractelement <2 x i32> %i.gb, i64 0
+  %i.lz = extractelement <2 x i32> %.fr, i64 0
   %i.ma = zext i32 %i.hv to i64
   %min.iters.check598 = icmp ult i32 %i.lz, 7
   %i.mb = and i32 %i.hv, -8                       ; 2 uses
