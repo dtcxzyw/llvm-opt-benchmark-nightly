@@ -202,7 +202,7 @@ define dso_local void @_ZN14ItemDefinitionC2Ev(ptr noundef nonnull align 8 deref
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 328
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 576
   store i8 0, ptr %i.ad, align 8, !tbaa !52
-  %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 648 ; 2 uses
+  %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 648 ; 3 uses
   store i8 0, ptr %i.ae, align 8, !tbaa !54
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 656
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 704
@@ -286,6 +286,7 @@ define dso_local void @_ZN14ItemDefinitionC2Ev(ptr noundef nonnull align 8 deref
 
 bb.a:                                             ; preds = %._crit_edge.i.i.i.i.i
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 592
+  store i8 0, ptr %i.ae, align 8, !tbaa !54
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 608
   %i.bv = load ptr, ptr %i.bu, align 8, !tbaa !96
   invoke void @_ZNSt8_Rb_treeIfSt4pairIKfN5video6SColorEESt10_Select1stIS4_ESt4lessIfESaIS4_EE8_M_eraseEPSt13_Rb_tree_nodeIS4_E(ptr noundef nonnull align 8 dereferenceable(64) %i.bt, ptr noundef %i.bv)
@@ -311,11 +312,11 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 648 ; 2 uses
   %i.c = load i8, ptr %i.b, align 8, !tbaa !54, !range !25, !noundef !91
   %i.d = trunc nuw i8 %i.c to i1
-  store i8 0, ptr %i.b, align 8, !tbaa !54
   br i1 %i.d, label %bb.b, label %_ZNSt8optionalI13WearBarParamsEaSESt9nullopt_t.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 592
+  store i8 0, ptr %i.b, align 8, !tbaa !54
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 608
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !96
   invoke void @_ZNSt8_Rb_treeIfSt4pairIKfN5video6SColorEESt10_Select1stIS4_ESt4lessIfESaIS4_EE8_M_eraseEPSt13_Rb_tree_nodeIS4_E(ptr noundef nonnull align 8 dereferenceable(64) %i.e, ptr noundef %i.g)
@@ -389,10 +390,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !54, !range !25, !noundef !91
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !54
   br i1 %i.c, label %bb.b, label %_ZNSt17_Optional_payloadI13WearBarParamsLb0ELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !54
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !96
   invoke void @_ZNSt8_Rb_treeIfSt4pairIKfN5video6SColorEESt10_Select1stIS4_ESt4lessIfESaIS4_EE8_M_eraseEPSt13_Rb_tree_nodeIS4_E(ptr noundef nonnull align 8 dereferenceable(57) %0, ptr noundef %i.e)
@@ -473,7 +474,7 @@ define dso_local void @_ZN14ItemDefinitionC2ERKS_(ptr noundef nonnull align 8 de
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 576 ; 3 uses
   store i8 0, ptr %i.ae, align 8, !tbaa !52
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 592 ; 2 uses
-  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 648 ; 2 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 648 ; 3 uses
   store i8 0, ptr %i.ag, align 8, !tbaa !54
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 656 ; 2 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 704
@@ -556,6 +557,7 @@ define dso_local void @_ZN14ItemDefinitionC2ERKS_(ptr noundef nonnull align 8 de
   br i1 %i.bu, label %bb.a, label %bb.c
 
 bb.a:                                             ; preds = %._crit_edge.i.i.i.i.i
+  store i8 0, ptr %i.ag, align 8, !tbaa !54
   %i.bv = getelementptr inbounds nuw i8, ptr %0, i64 608
   %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !96
   invoke void @_ZNSt8_Rb_treeIfSt4pairIKfN5video6SColorEESt10_Select1stIS4_ESt4lessIfESaIS4_EE8_M_eraseEPSt13_Rb_tree_nodeIS4_E(ptr noundef nonnull align 8 dereferenceable(64) %i.af, ptr noundef %i.bw)
@@ -638,10 +640,10 @@ _ZN9SoundSpecD2Ev.exit31:                         ; preds = %_ZN9SoundSpecD2Ev.e
   tail call void @_ZNSt14_Optional_baseI13WearBarParamsLb0ELb0EED2Ev(ptr noundef nonnull align 8 dead_on_return(64) dereferenceable(64) %i.af) #26
   %i.cv = load i8, ptr %i.ae, align 8, !tbaa !52, !range !25, !noundef !91
   %i.cw = trunc nuw i8 %i.cv to i1
-  store i8 0, ptr %i.ae, align 8, !tbaa !52
   br i1 %i.cw, label %bb.f, label %_ZNSt14_Optional_baseI14PointabilitiesLb0ELb0EED2Ev.exit
 
 bb.f:                                             ; preds = %_ZN9SoundSpecD2Ev.exit31
+  store i8 0, ptr %i.ae, align 8, !tbaa !52
   tail call void @_ZN14PointabilitiesD2Ev(ptr noundef nonnull align 8 dead_on_return(224) dereferenceable(232) %i.ad) #26
   br label %_ZNSt14_Optional_baseI14PointabilitiesLb0ELb0EED2Ev.exit
 
@@ -830,10 +832,10 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZNSt8optionalI14PointabilitiesEaSERKS1_.exit
 
 bb.f:                                             ; preds = %bb.d
-  store i8 0, ptr %i.al, align 8, !tbaa !52
   br i1 %i.an, label %bb.g, label %_ZNSt8optionalI14PointabilitiesEaSERKS1_.exit
 
 bb.g:                                             ; preds = %bb.f
+  store i8 0, ptr %i.al, align 8, !tbaa !52
   tail call void @_ZN14PointabilitiesD2Ev(ptr noundef nonnull align 8 dead_on_return(224) dereferenceable(232) %i.ak) #26
   br label %_ZNSt8optionalI14PointabilitiesEaSERKS1_.exit
 
@@ -1100,11 +1102,11 @@ bb.a:
   %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 576 ; 2 uses
   %i.ai = load i8, ptr %i.ah, align 8, !tbaa !52, !range !25, !noundef !91
   %i.aj = trunc nuw i8 %i.ai to i1
-  store i8 0, ptr %i.ah, align 8, !tbaa !52
   br i1 %i.aj, label %bb.b, label %_ZNSt8optionalI14PointabilitiesEaSESt9nullopt_t.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 352
+  store i8 0, ptr %i.ah, align 8, !tbaa !52
   tail call void @_ZN14PointabilitiesD2Ev(ptr noundef nonnull align 8 dead_on_return(224) dereferenceable(232) %i.ak) #26
   br label %_ZNSt8optionalI14PointabilitiesEaSESt9nullopt_t.exit
 
@@ -1151,11 +1153,11 @@ bb.f:                                             ; preds = %_ZN16ToolCapabiliti
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 648 ; 2 uses
   %i.az = load i8, ptr %i.ay, align 8, !tbaa !54, !range !25, !noundef !91
   %i.ba = trunc nuw i8 %i.az to i1
-  store i8 0, ptr %i.ay, align 8, !tbaa !54
   br i1 %i.ba, label %bb.g, label %_ZNSt8optionalI13WearBarParamsE5resetEv.exit
 
 bb.g:                                             ; preds = %bb.f
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 592
+  store i8 0, ptr %i.ay, align 8, !tbaa !54
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 608
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !96
   invoke void @_ZNSt8_Rb_treeIfSt4pairIKfN5video6SColorEESt10_Select1stIS4_ESt4lessIfESaIS4_EE8_M_eraseEPSt13_Rb_tree_nodeIS4_E(ptr noundef nonnull align 8 dereferenceable(64) %i.bb, ptr noundef %i.bd)
@@ -1474,11 +1476,11 @@ _ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiSt4has
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 648 ; 2 uses
   %i.ay = load i8, ptr %i.ax, align 8, !tbaa !54, !range !25, !noundef !91
   %i.az = trunc nuw i8 %i.ay to i1
-  store i8 0, ptr %i.ax, align 8, !tbaa !54
   br i1 %i.az, label %bb.c, label %_ZNSt14_Optional_baseI13WearBarParamsLb0ELb0EED2Ev.exit
 
 bb.c:                                             ; preds = %_ZNSt13unordered_mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiSt4hashIS5_ESt8equal_toIS5_ESaISt4pairIKS5_iEEED2Ev.exit
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 592
+  store i8 0, ptr %i.ax, align 8, !tbaa !54
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 608
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !96
   invoke void @_ZNSt8_Rb_treeIfSt4pairIKfN5video6SColorEESt10_Select1stIS4_ESt4lessIfESaIS4_EE8_M_eraseEPSt13_Rb_tree_nodeIS4_E(ptr noundef nonnull align 8 dereferenceable(64) %i.ba, ptr noundef %i.bc)
@@ -1495,11 +1497,11 @@ _ZNSt14_Optional_baseI13WearBarParamsLb0ELb0EED2Ev.exit: ; preds = %_ZNSt13unord
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 576 ; 2 uses
   %i.bg = load i8, ptr %i.bf, align 8, !tbaa !52, !range !25, !noundef !91
   %i.bh = trunc nuw i8 %i.bg to i1
-  store i8 0, ptr %i.bf, align 8, !tbaa !52
   br i1 %i.bh, label %bb.e, label %_ZNSt14_Optional_baseI14PointabilitiesLb0ELb0EED2Ev.exit
 
 bb.e:                                             ; preds = %_ZNSt14_Optional_baseI13WearBarParamsLb0ELb0EED2Ev.exit
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 352
+  store i8 0, ptr %i.bf, align 8, !tbaa !52
   tail call void @_ZN14PointabilitiesD2Ev(ptr noundef nonnull align 8 dead_on_return(224) dereferenceable(232) %i.bi) #26
   br label %_ZNSt14_Optional_baseI14PointabilitiesLb0ELb0EED2Ev.exit
 
@@ -1902,10 +1904,10 @@ bb.cq:                                            ; preds = %bb.cp
   call void @_ZNSt22_Optional_payload_baseI14PointabilitiesE14_M_move_assignEOS1_(ptr noundef nonnull align 8 dereferenceable(232) %i.pr, ptr noundef nonnull align 8 dereferenceable(232) %17) #26
   %i.ps = load i8, ptr %i.pq, align 8, !tbaa !52, !range !25, !noundef !91
   %i.pt = trunc nuw i8 %i.ps to i1
-  store i8 0, ptr %i.pq, align 8, !tbaa !52
   br i1 %i.pt, label %bb.cr, label %_ZNSt14_Optional_baseI14PointabilitiesLb0ELb0EED2Ev.exit
 
 bb.cr:                                            ; preds = %bb.cq
+  store i8 0, ptr %i.pq, align 8, !tbaa !52
   call void @_ZN14PointabilitiesD2Ev(ptr noundef nonnull align 8 dead_on_return(224) dereferenceable(232) %17) #26
   br label %_ZNSt14_Optional_baseI14PointabilitiesLb0ELb0EED2Ev.exit
 
@@ -2308,10 +2310,10 @@ _ZNSt22_Optional_payload_baseI13WearBarParamsE12_M_constructIJRKS0_EEEvDpOT_.exi
   br label %_ZNSt22_Optional_payload_baseI13WearBarParamsE8_M_resetEv.exit
 
 bb.h:                                             ; preds = %bb.c
-  store i8 0, ptr %i.a, align 8, !tbaa !54
   br i1 %i.c, label %bb.i, label %_ZNSt22_Optional_payload_baseI13WearBarParamsE8_M_resetEv.exit
 
 bb.i:                                             ; preds = %bb.h
+  store i8 0, ptr %i.a, align 8, !tbaa !54
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !96
   invoke void @_ZNSt8_Rb_treeIfSt4pairIKfN5video6SColorEESt10_Select1stIS4_ESt4lessIfESaIS4_EE8_M_eraseEPSt13_Rb_tree_nodeIS4_E(ptr noundef nonnull align 8 dereferenceable(57) %0, ptr noundef %i.ac)
@@ -2714,10 +2716,10 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZN14PointabilitiesaSEOS_.exit
 
 bb.i:                                             ; preds = %bb.g
-  store i8 0, ptr %i.a, align 8, !tbaa !52
   br i1 %i.c, label %bb.j, label %_ZN14PointabilitiesaSEOS_.exit
 
 bb.j:                                             ; preds = %bb.i
+  store i8 0, ptr %i.a, align 8, !tbaa !52
   tail call void @_ZN14PointabilitiesD2Ev(ptr noundef nonnull align 8 dead_on_return(224) dereferenceable(225) %0) #26
   br label %_ZN14PointabilitiesaSEOS_.exit
 

@@ -202,10 +202,10 @@ bb.f:                                             ; preds = %bb.e
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 424 ; 2 uses
   %i.g = load i8, ptr %i.f, align 8, !tbaa !37, !range !43, !noundef !44
   %i.h = trunc nuw i8 %i.g to i1
-  store i8 0, ptr %i.f, align 8, !tbaa !37
   br i1 %i.h, label %bb.g, label %_ZNSt14_Optional_baseIN4absl12lts_2026052615status_internal6StreamELb0ELb0EED2Ev.exit.i.i
 
 bb.g:                                             ; preds = %bb.f
+  store i8 0, ptr %i.f, align 8, !tbaa !37
   %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 80
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.i, align 8, !tbaa !46
   %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 136
@@ -441,10 +441,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 424 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !37, !range !43, !noundef !44
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !37
   br i1 %i.c, label %bb.b, label %_ZNSt14_Optional_baseIN4absl12lts_2026052615status_internal6StreamELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !37
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 80
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.d, align 8, !tbaa !46
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 136
@@ -493,10 +493,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !37, !range !43, !noundef !44
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !37
   br i1 %i.c, label %bb.b, label %_ZNSt17_Optional_payloadIN4absl12lts_2026052615status_internal6StreamELb0ELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !37
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.d, align 8, !tbaa !46
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -694,10 +694,10 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 352 ; 3 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !37, !range !43, !noundef !44
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 8, !tbaa !37
   br i1 %i.c, label %bb.b, label %_ZNSt19_Optional_base_implIN4absl12lts_2026052615status_internal6StreamESt14_Optional_baseIS3_Lb0ELb0EEE8_M_resetEv.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.a, align 8, !tbaa !37
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.d, align 8, !tbaa !46
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -765,16 +765,18 @@ bb.c:                                             ; preds = %bb.b
   %i.e = inttoptr i64 %i.c to ptr
   call void @_ZNK4absl12lts_2026052615status_internal9StatusRep10GetPayloadESt17basic_string_viewIcSt11char_traitsIcEE(ptr dead_on_unwind nonnull writable sret(%"class.std::optional.4") align 8 %1, ptr noundef nonnull align 8 dereferenceable(72) %i.e, i64 42, ptr nonnull @.str)
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.pre = load i8, ptr %.phi.trans.insert, align 8, !tbaa !92, !range !43
-  %.pre5 = load i8, ptr %1, align 8
-  %2 = trunc nuw i8 %.pre to i1                   ; 2 uses
-  %i.f = trunc i8 %.pre5 to i1
+  %.pre5 = load i8, ptr %.phi.trans.insert, align 8, !tbaa !92, !range !43
+  %i.f = trunc nuw i8 %.pre5 to i1
+  br i1 %i.f, label %2, label %_ZNSt14_Optional_baseIN4absl12lts_202605264CordELb0ELb0EED2Ev.exit
+
+2:                                                ; preds = %bb.c
   %3 = getelementptr inbounds nuw i8, ptr %1, i64 16
   store i8 0, ptr %3, align 8, !tbaa !92
-  %or.cond.i.i.i = select i1 %2, i1 %i.f, i1 false
-  br i1 %or.cond.i.i.i, label %bb.d, label %_ZNSt14_Optional_baseIN4absl12lts_202605264CordELb0ELb0EED2Ev.exit
+  %4 = load i8, ptr %1, align 8, !tbaa !36
+  %5 = trunc i8 %4 to i1
+  br i1 %5, label %bb.d, label %_ZNSt14_Optional_baseIN4absl12lts_202605264CordELb0ELb0EED2Ev.exit
 
-bb.d:                                             ; preds = %bb.c
+bb.d:                                             ; preds = %2
   invoke void @_ZN4absl12lts_202605264Cord15DestroyCordSlowEv(ptr noundef nonnull align 8 dereferenceable(24) %1)
           to label %_ZNSt14_Optional_baseIN4absl12lts_202605264CordELb0ELb0EED2Ev.exit unwind label %bb.e
 
@@ -785,13 +787,13 @@ bb.e:                                             ; preds = %bb.d
   call void @__clang_call_terminate(ptr %i.h) #27
   unreachable
 
-_ZNSt14_Optional_baseIN4absl12lts_202605264CordELb0ELb0EED2Ev.exit: ; preds = %bb.b, %bb.c, %bb.d
-  %4 = phi i1 [ true, %bb.d ], [ %2, %bb.c ], [ false, %bb.b ]
+_ZNSt14_Optional_baseIN4absl12lts_202605264CordELb0ELb0EED2Ev.exit: ; preds = %bb.b, %bb.c, %2, %bb.d
+  %6 = phi i1 [ true, %bb.d ], [ false, %bb.c ], [ true, %2 ], [ false, %bb.b ]
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #26
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.a, %_ZNSt14_Optional_baseIN4absl12lts_202605264CordELb0ELb0EED2Ev.exit
-  %i.i = phi i1 [ %4, %_ZNSt14_Optional_baseIN4absl12lts_202605264CordELb0ELb0EED2Ev.exit ], [ false, %bb.a ]
+  %i.i = phi i1 [ %6, %_ZNSt14_Optional_baseIN4absl12lts_202605264CordELb0ELb0EED2Ev.exit ], [ false, %bb.a ]
   ret i1 %i.i
 }
 
@@ -1194,10 +1196,10 @@ bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 424 ; 2 uses
   %i.f = load i8, ptr %i.e, align 8, !tbaa !37, !range !43, !noundef !44
   %i.g = trunc nuw i8 %i.f to i1
-  store i8 0, ptr %i.e, align 8, !tbaa !37
   br i1 %i.g, label %bb.d, label %_ZNSt14_Optional_baseIN4absl12lts_2026052615status_internal6StreamELb0ELb0EED2Ev.exit.i.i
 
 bb.d:                                             ; preds = %bb.c
+  store i8 0, ptr %i.e, align 8, !tbaa !37
   %i.h = getelementptr inbounds nuw i8, ptr %i.d, i64 80
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.h, align 8, !tbaa !46
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 136
@@ -1389,10 +1391,10 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 424 ; 2 uses
   %i.c = load i8, ptr %i.b, align 8, !tbaa !37, !range !43, !noundef !44
   %i.d = trunc nuw i8 %i.c to i1
-  store i8 0, ptr %i.b, align 8, !tbaa !37
   br i1 %i.d, label %bb.c, label %_ZNSt14_Optional_baseIN4absl12lts_2026052615status_internal6StreamELb0ELb0EED2Ev.exit.i.i
 
 bb.c:                                             ; preds = %bb.b
+  store i8 0, ptr %i.b, align 8, !tbaa !37
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.e, align 8, !tbaa !46
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 136
@@ -1449,10 +1451,10 @@ bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 424 ; 2 uses
   %i.c = load i8, ptr %i.b, align 8, !tbaa !37, !range !43, !noundef !44
   %i.d = trunc nuw i8 %i.c to i1
-  store i8 0, ptr %i.b, align 8, !tbaa !37
   br i1 %i.d, label %bb.c, label %_ZNSt14_Optional_baseIN4absl12lts_2026052615status_internal6StreamELb0ELb0EED2Ev.exit.i
 
 bb.c:                                             ; preds = %bb.b
+  store i8 0, ptr %i.b, align 8, !tbaa !37
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 80
   store ptr getelementptr inbounds nuw inrange(-16, 112) (i8, ptr @_ZTVSt15basic_streambufIcSt11char_traitsIcEE, i64 16), ptr %i.e, align 8, !tbaa !46
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 136
