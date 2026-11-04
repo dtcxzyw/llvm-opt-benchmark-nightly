@@ -6,11 +6,11 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define hidden void @je_exp_grow_init(ptr nofree noundef writeonly captures(none) initializes((0, 8)) %0) local_unnamed_addr #0 {
+define hidden void @je_exp_grow_init(ptr nofree noundef writeonly captures(none) initializes((0, 8)) %0) local_unnamed_addr #0 !guid !11 {
 bb.a:
-  store i32 31, ptr %0, align 4, !tbaa !12
+  store i32 31, ptr %0, align 4, !tbaa !13
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 198, ptr %i.a, align 4, !tbaa !13
+  store i32 198, ptr %i.a, align 4, !tbaa !14
   ret void
 }
 
@@ -31,7 +31,8 @@ attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 !8 = !{!"omnipotent char", !7, i64 0}
 !9 = !{!"int", !8, i64 0}
 !10 = !{!9, !9, i64 0}
-!11 = !{!"exp_grow_s", !9, i64 0, !9, i64 4}
-!12 = !{!11, !9, i64 0}
-!13 = !{!11, !9, i64 4}
+!11 = !{i64 -963819600497439130}
+!12 = !{!"exp_grow_s", !9, i64 0, !9, i64 4}
+!13 = !{!12, !9, i64 0}
+!14 = !{!12, !9, i64 4}
 end_hunk_0

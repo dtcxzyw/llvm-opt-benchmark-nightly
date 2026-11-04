@@ -10,28 +10,28 @@ target triple = "x86_64-pc-linux-gnu"
 %union.anon = type { i64, [8 x i8] }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN4llvh3sys8StrErrorB5cxx11Ev(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0) local_unnamed_addr #0 {
+define hidden void @_ZN4llvh3sys8StrErrorB5cxx11Ev(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0) local_unnamed_addr #0 !guid !17 {
 bb.a:
   %i.a = alloca [2000 x i8], align 16             ; 4 uses
   %i.b = tail call ptr @__errno_location() #7
   %i.c = load i32, ptr %i.b, align 4, !tbaa !6    ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !17)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !18)
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  store ptr %i.d, ptr %0, align 8, !tbaa !10, !alias.scope !17
+  store ptr %i.d, ptr %0, align 8, !tbaa !10, !alias.scope !18
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  store i64 0, ptr %i.e, align 8, !tbaa !13, !alias.scope !17
-  store i8 0, ptr %i.d, align 8, !tbaa !14, !alias.scope !17
+  store i64 0, ptr %i.e, align 8, !tbaa !13, !alias.scope !18
+  store i8 0, ptr %i.d, align 8, !tbaa !14, !alias.scope !18
   %i.f = icmp eq i32 %i.c, 0
   br i1 %i.f, label %_ZN4llvh3sys8StrErrorB5cxx11Ei.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8, !noalias !17
-  store i8 0, ptr %i.a, align 16, !tbaa !14, !noalias !17
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8, !noalias !18
+  store i8 0, ptr %i.a, align 16, !tbaa !14, !noalias !18
   %i.g = call ptr @strerror_r(i32 noundef %i.c, ptr noundef nonnull %i.a, i64 noundef 1999) #8 ; 2 uses
-  %i.h = load i64, ptr %i.e, align 8, !tbaa !13, !alias.scope !17
+  %i.h = load i64, ptr %i.e, align 8, !tbaa !13, !alias.scope !18
   %i.i = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.g) #8
   %i.j = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %0, i64 noundef 0, i64 noundef %i.h, ptr noundef nonnull %i.g, i64 noundef %i.i) #8 ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8, !noalias !17
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8, !noalias !18
   br label %_ZN4llvh3sys8StrErrorB5cxx11Ei.exit
 
 _ZN4llvh3sys8StrErrorB5cxx11Ei.exit:              ; preds = %bb.a, %bb.b
@@ -39,7 +39,7 @@ _ZN4llvh3sys8StrErrorB5cxx11Ei.exit:              ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN4llvh3sys8StrErrorB5cxx11Ei(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, i32 noundef %1) local_unnamed_addr #0 {
+define hidden void @_ZN4llvh3sys8StrErrorB5cxx11Ei(ptr dead_on_unwind noalias writable sret(%"class.std::__cxx11::basic_string") align 8 %0, i32 noundef %1) local_unnamed_addr #0 !guid !19 {
 bb.a:
   %i.a = alloca [2000 x i8], align 16             ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -115,5 +115,7 @@ attributes #8 = { nounwind }
 !14 = !{!4, !4, i64 0}
 !15 = distinct !{!15, i1 true, !"_ZN4llvh3sys8StrErrorB5cxx11Ei"}
 !16 = distinct !{!16, !15, !"_ZN4llvh3sys8StrErrorB5cxx11Ei: argument 0"}
-!17 = !{!16}
+!17 = !{i64 -4239030997321406370}
+!18 = !{!16}
+!19 = !{i64 -2031166521748634001}
 end_hunk_0

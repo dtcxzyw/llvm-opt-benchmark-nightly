@@ -5,7 +5,7 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: mustprogress nofree nounwind willreturn memory(inaccessiblemem: readwrite, errnomem: write) uwtable
-define dso_local noalias noundef ptr @_ZN9Stockfish17std_aligned_allocEmm(i64 noundef %0, i64 noundef %1) local_unnamed_addr #0 {
+define dso_local noalias noundef ptr @_ZN9Stockfish17std_aligned_allocEmm(i64 noundef %0, i64 noundef %1) local_unnamed_addr #0 !guid !11 {
 bb.a:
   %i.a = tail call noalias ptr @aligned_alloc(i64 noundef %0, i64 noundef %1) #8 ; 2 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %i.a, i64 %0) ]
@@ -19,7 +19,7 @@ declare noalias noundef ptr @aligned_alloc(i64 allocalign noundef, i64 noundef) 
 declare void @llvm.assume(i1 noundef) #2
 
 ; Function Attrs: mustprogress nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable
-define dso_local void @_ZN9Stockfish16std_aligned_freeEPv(ptr noundef captures(none) %0) local_unnamed_addr #3 {
+define dso_local void @_ZN9Stockfish16std_aligned_freeEPv(ptr noundef captures(none) %0) local_unnamed_addr #3 !guid !12 {
 bb.a:
   tail call void @free(ptr noundef %0) #9
   ret void
@@ -29,7 +29,7 @@ bb.a:
 declare void @free(ptr allocptr noundef captures(none)) local_unnamed_addr #4
 
 ; Function Attrs: mustprogress nounwind uwtable
-define dso_local noundef ptr @_ZN9Stockfish25aligned_large_pages_allocEm(i64 noundef %0) local_unnamed_addr #5 {
+define dso_local noundef ptr @_ZN9Stockfish25aligned_large_pages_allocEm(i64 noundef %0) local_unnamed_addr #5 !guid !13 {
 bb.a:
   %i.a = add i64 %0, 2097151
   %i.b = and i64 %i.a, -2097152                   ; 2 uses
@@ -42,13 +42,13 @@ bb.a:
 declare i32 @madvise(ptr noundef, i64 noundef, i32 noundef) local_unnamed_addr #6
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local noundef zeroext i1 @_ZN9Stockfish15has_large_pagesEv() local_unnamed_addr #7 {
+define dso_local noundef zeroext i1 @_ZN9Stockfish15has_large_pagesEv() local_unnamed_addr #7 !guid !14 {
 bb.a:
   ret i1 true
 }
 
 ; Function Attrs: mustprogress nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite) uwtable
-define dso_local void @_ZN9Stockfish24aligned_large_pages_freeEPv(ptr noundef captures(none) %0) local_unnamed_addr #3 {
+define dso_local void @_ZN9Stockfish24aligned_large_pages_freeEPv(ptr noundef captures(none) %0) local_unnamed_addr #3 !guid !15 {
 bb.a:
   tail call void @free(ptr noundef %0) #9
   ret void
@@ -80,4 +80,9 @@ attributes #9 = { nounwind }
 !8 = !{!"int", !7, i64 0}
 !9 = !{!"__libc_errno", !8, i64 0}
 !10 = !{!9, !8, i64 0}
+!11 = !{i64 -6163910021013596703}
+!12 = !{i64 -2461844502134633729}
+!13 = !{i64 -7053410889929799056}
+!14 = !{i64 6809841980025022034}
+!15 = !{i64 5472492112806647500}
 end_hunk_0

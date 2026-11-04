@@ -4,7 +4,7 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define dso_local range(i64 -9223372036854775808, 9223372036854775807) i64 @redis_strlcpy(ptr nofree noundef writeonly captures(none) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 {
+define dso_local range(i64 -9223372036854775808, 9223372036854775807) i64 @redis_strlcpy(ptr nofree noundef writeonly captures(none) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 !guid !16 {
 bb.a:
   %.not = icmp eq i64 %2, 0
   br i1 %.not, label %.thread25, label %.preheader.preheader
@@ -53,7 +53,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define dso_local i64 @redis_strlcat(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 {
+define dso_local i64 @redis_strlcat(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 !guid !19 {
 bb.a:
   %.not31 = icmp eq i64 %2, 0
   br i1 %.not31, label %.critedge, label %.lr.ph.preheader
@@ -73,7 +73,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.b = add i64 %.in, -1                         ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %.02532, i64 1
   %.not = icmp eq i64 %i.b, 0
-  br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !16
+  br i1 %.not, label %.critedge, label %.lr.ph, !llvm.loop !17
 
 .critedge:                                        ; preds = %.lr.ph, %bb.b, %bb.a
   %.025.lcssa = phi ptr [ %0, %bb.a ], [ %scevgep, %bb.b ], [ %.02532, %.lr.ph ] ; 3 uses
@@ -117,7 +117,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph39
   %i.o = getelementptr inbounds nuw i8, ptr %.02437, i64 1 ; 3 uses
   %i.p = load i8, ptr %i.o, align 1, !tbaa !14    ; 2 uses
   %.not29 = icmp eq i8 %i.p, 0
-  br i1 %.not29, label %._crit_edge, label %.lr.ph39, !llvm.loop !17
+  br i1 %.not29, label %._crit_edge, label %.lr.ph39, !llvm.loop !18
 
 ._crit_edge:                                      ; preds = %bb.e, %.preheader
   %.126.lcssa = phi ptr [ %.025.lcssa, %.preheader ], [ %.227, %bb.e ]
@@ -161,6 +161,8 @@ attributes #2 = { nounwind willreturn memory(read) }
 !13 = !{!"llvm.loop.mustprogress"}
 !14 = !{!10, !10, i64 0}
 !15 = distinct !{!15, !13}
-!16 = distinct !{!16, !13}
+!16 = !{i64 5248443259436443689}
 !17 = distinct !{!17, !13}
+!18 = distinct !{!18, !13}
+!19 = !{i64 -9096864360363681266}
 end_hunk_0

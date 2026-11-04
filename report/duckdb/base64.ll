@@ -8,7 +8,7 @@ target triple = "x86_64-pc-linux-gnu"
 @mbedtls_ct_zero = external global i64, align 8
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
-define hidden range(i32 -42, 1) i32 @mbedtls_base64_encode(ptr noundef %0, i64 noundef %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, i64 noundef %4) local_unnamed_addr #0 {
+define hidden range(i32 -42, 1) i32 @mbedtls_base64_encode(ptr noundef %0, i64 noundef %1, ptr nofree noundef writeonly captures(none) %2, ptr nofree noundef readonly captures(none) %3, i64 noundef %4) local_unnamed_addr #0 !guid !12 {
 bb.a:
   %i.a = icmp eq i64 %4, 0
   br i1 %i.a, label %bb.b, label %bb.c
@@ -411,7 +411,7 @@ bb.n:                                             ; preds = %bb.m, %bb.f, %bb.d,
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, target_mem: none) uwtable
-define hidden range(i32 -110, 1) i32 @mbedtls_base64_decode(ptr noundef %0, i64 noundef %1, ptr nofree noundef captures(none) %2, ptr nofree noundef readonly captures(none) %3, i64 noundef %4) local_unnamed_addr #0 {
+define hidden range(i32 -110, 1) i32 @mbedtls_base64_decode(ptr noundef %0, i64 noundef %1, ptr nofree noundef captures(none) %2, ptr nofree noundef readonly captures(none) %3, i64 noundef %4) local_unnamed_addr #0 !guid !16 {
 bb.a:
   %.not = icmp eq i64 %4, 0
   br i1 %.not, label %.critedge._crit_edge, label %.preheader95
@@ -441,7 +441,7 @@ bb.b:                                             ; preds = %.preheader95
 bb.c:                                             ; preds = %.peel.next
   %i.h = add i64 %.17998, 1                       ; 2 uses
   %exitcond.not = icmp eq i64 %i.h, %umax
-  br i1 %exitcond.not, label %.critedge, label %.peel.next, !llvm.loop !12
+  br i1 %exitcond.not, label %.critedge, label %.peel.next, !llvm.loop !13
 
 .critedge:                                        ; preds = %bb.c, %.peel.next, %bb.b, %.preheader95
   %.179.lcssa = phi i64 [ %.078100, %.preheader95 ], [ %i.a, %bb.b ], [ %umax, %bb.c ], [ %.17998, %.peel.next ] ; 4 uses
@@ -560,7 +560,7 @@ bb.k:                                             ; preds = %._crit_edge, %bb.e,
   %.271 = phi i32 [ %.069102, %bb.e ], [ %.069102, %._crit_edge ], [ %.170, %bb.j ] ; 2 uses
   %i.cd = add nuw i64 %.179.lcssa, 1              ; 3 uses
   %i.ce = icmp ult i64 %i.cd, %4
-  br i1 %i.ce, label %.preheader95, label %.critedge._crit_edge.loopexit, !llvm.loop !13
+  br i1 %i.ce, label %.preheader95, label %.critedge._crit_edge.loopexit, !llvm.loop !14
 
 .critedge._crit_edge.loopexit:                    ; preds = %.critedge, %bb.k
   %.076.lcssa.ph = phi i64 [ %.177, %bb.k ], [ %.076101, %.critedge ]
@@ -697,7 +697,7 @@ bb.o:                                             ; preds = %.lr.ph, %.lr.ph, %.
   %i.fi = add i64 %.3110, -1                      ; 2 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %.082109, i64 1
   %.not90 = icmp eq i64 %i.fi, 0
-  br i1 %.not90, label %._crit_edge114, label %.lr.ph, !llvm.loop !14
+  br i1 %.not90, label %._crit_edge114, label %.lr.ph, !llvm.loop !15
 
 ._crit_edge114:                                   ; preds = %bb.o, %.lr.ph
   %.074.lcssa = phi i32 [ %.074111, %.lr.ph ], [ %.175, %bb.o ] ; 2 uses
@@ -767,8 +767,10 @@ attributes #1 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !9 = !{!4, !4, i64 0}
 !10 = !{!"llvm.loop.mustprogress"}
 !11 = distinct !{!11, !10}
-!12 = distinct !{!12, !10, !15}
-!13 = distinct !{!13, !10}
+!12 = !{i64 431061644906091081}
+!13 = distinct !{!13, !10, !17}
 !14 = distinct !{!14, !10}
-!15 = !{!"llvm.loop.peeled.count", i32 1}
+!15 = distinct !{!15, !10}
+!16 = !{i64 -7297578019586632665}
+!17 = !{!"llvm.loop.peeled.count", i32 1}
 end_hunk_1

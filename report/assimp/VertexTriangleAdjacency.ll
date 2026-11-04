@@ -11,7 +11,7 @@ target triple = "x86_64-pc-linux-gnu"
 @_ZN6Assimp23VertexTriangleAdjacencyD1Ev = unnamed_addr alias void (ptr), ptr @_ZN6Assimp23VertexTriangleAdjacencyD2Ev
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN6Assimp23VertexTriangleAdjacencyC2EP6aiFacejjb(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(28) %0, ptr nofree noundef readonly captures(address) %1, i32 noundef %2, i32 noundef %3, i1 noundef zeroext %4) unnamed_addr #0 align 2 {
+define void @_ZN6Assimp23VertexTriangleAdjacencyC2EP6aiFacejjb(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(28) %0, ptr nofree noundef readonly captures(address) %1, i32 noundef %2, i32 noundef %3, i1 noundef zeroext %4) unnamed_addr #0 align 2 !guid !8 {
 bb.a:
   %i.a = zext i32 %2 to i64
   %.idx = shl nuw nsw i64 %i.a, 4                 ; 2 uses
@@ -341,7 +341,7 @@ declare noundef nonnull ptr @_Znam(i64 noundef) local_unnamed_addr #1
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #2
 
 ; Function Attrs: mustprogress nounwind uwtable
-define void @_ZN6Assimp23VertexTriangleAdjacencyD2Ev(ptr nofree noundef nonnull readonly align 8 captures(none) dead_on_return(28) dereferenceable(28) %0) unnamed_addr #3 align 2 {
+define void @_ZN6Assimp23VertexTriangleAdjacencyD2Ev(ptr nofree noundef nonnull readonly align 8 captures(none) dead_on_return(28) dereferenceable(28) %0) unnamed_addr #3 align 2 !guid !11 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8                ; 2 uses
   %i.b = icmp eq ptr %i.a, null
@@ -400,11 +400,13 @@ attributes #8 = { builtin nounwind }
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
 !2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = distinct !{!3, !8}
-!4 = distinct !{!4, !8}
-!5 = distinct !{!5, !9}
-!6 = distinct !{!6, !8}
-!7 = distinct !{!7, !8}
-!8 = !{!"llvm.loop.mustprogress"}
-!9 = !{!"llvm.loop.unroll.disable"}
+!3 = distinct !{!3, !9}
+!4 = distinct !{!4, !9}
+!5 = distinct !{!5, !10}
+!6 = distinct !{!6, !9}
+!7 = distinct !{!7, !9}
+!8 = !{i64 610270758773221608}
+!9 = !{!"llvm.loop.mustprogress"}
+!10 = !{!"llvm.loop.unroll.disable"}
+!11 = !{i64 -8578412042928430555}
 end_hunk_0

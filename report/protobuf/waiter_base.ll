@@ -6,11 +6,11 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN4absl12lts_2025051224synchronization_internal10WaiterBase15MaybeBecomeIdleEv() local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN4absl12lts_2025051224synchronization_internal10WaiterBase15MaybeBecomeIdleEv() local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 !guid !7 {
 bb.a:
   %i.a = tail call noundef ptr @_ZN4absl12lts_2025051213base_internal30CurrentThreadIdentityIfPresentEv() ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 336 ; 2 uses
-  %i.c = load atomic i8, ptr %i.b monotonic, align 1, !range !7, !noundef !8
+  %i.c = load atomic i8, ptr %i.b monotonic, align 1, !range !8, !noundef !9
   %i.d = trunc nuw i8 %i.c to i1
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 328
   %i.f = load atomic i32, ptr %i.e monotonic, align 4
@@ -47,6 +47,7 @@ attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 !4 = !{!"omnipotent char", !3, i64 0}
 !5 = !{!"int", !4, i64 0}
 !6 = !{!5, !5, i64 0}
-!7 = !{i8 0, i8 2}
-!8 = !{}
+!7 = !{i64 5499934351405257242}
+!8 = !{i8 0, i8 2}
+!9 = !{}
 end_hunk_0

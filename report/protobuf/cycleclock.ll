@@ -8,10 +8,10 @@ target triple = "x86_64-pc-linux-gnu"
 %"struct.std::atomic" = type { %"struct.std::__atomic_base" }
 %"struct.std::__atomic_base" = type { ptr }
 
-@_ZN4absl12lts_2025051213base_internal10CycleClock19cycle_clock_source_E = local_unnamed_addr global %"struct.std::atomic" zeroinitializer, align 8
+@_ZN4absl12lts_2025051213base_internal10CycleClock19cycle_clock_source_E = local_unnamed_addr global %"struct.std::atomic" zeroinitializer, align 8, !guid !7
 
 ; Function Attrs: mustprogress norecurse nounwind willreturn uwtable
-define void @_ZN4absl12lts_2025051213base_internal16CycleClockSource8RegisterEPFlvE(ptr noundef %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN4absl12lts_2025051213base_internal16CycleClockSource8RegisterEPFlvE(ptr noundef %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 !guid !8 {
 bb.a:
   store atomic ptr %0, ptr @_ZN4absl12lts_2025051213base_internal10CycleClock19cycle_clock_source_E release, align 8
   ret void
@@ -32,4 +32,6 @@ attributes #0 = { mustprogress norecurse nounwind willreturn uwtable "min-legal-
 !4 = !{!"omnipotent char", !3, i64 0}
 !5 = !{!"int", !4, i64 0}
 !6 = !{!5, !5, i64 0}
+!7 = !{i64 -624427333417342167}
+!8 = !{i64 -450279681496565410}
 end_hunk_0

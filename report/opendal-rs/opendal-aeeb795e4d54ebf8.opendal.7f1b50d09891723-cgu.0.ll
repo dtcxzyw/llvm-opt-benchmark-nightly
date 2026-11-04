@@ -5,23 +5,23 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
-@_RNvNvNvCsGhLMDwXcBP_7opendal34register_default_operator_registry1__18___CTOR_PRIVATE_REF = constant ptr @_RNvNvNvNvCsGhLMDwXcBP_7opendal34register_default_operator_registry1__18___CTOR_PRIVATE_REF14___ctor_private, section ".init_array.500", align 8
-@0 = private unnamed_addr constant <{ [24 x i8], ptr, ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNSNvYNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtBd_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0INtNtNtCsgxBkk5gSRhY_4core3ops8function6FnOnceTRNtBd_9OnceStateEE9call_once6vtableB17_, ptr @_RNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtB8_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0B12_ }>, align 8
-@1 = private unnamed_addr constant [77 x i8] c"/rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/std/src/sync/once.rs\00", align 1
-@2 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"L\00\00\00\00\00\00\00\A6\00\00\002\00\00\00" }>, align 8
-@3 = private unnamed_addr constant [11 x i8] c"src/lib.rs\00", align 1
-@4 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @3, [16 x i8] c"\0A\00\00\00\00\00\00\00D\00\00\00\1B\00\00\00" }>, align 8
-@_RNvNvCsGhLMDwXcBP_7opendal21init_default_registry21DEFAULT_REGISTRY_INIT = internal global [4 x i8] c"\03\00\00\00", align 4
+@_RNvNvNvCsGhLMDwXcBP_7opendal34register_default_operator_registry1__18___CTOR_PRIVATE_REF = constant ptr @_RNvNvNvNvCsGhLMDwXcBP_7opendal34register_default_operator_registry1__18___CTOR_PRIVATE_REF14___ctor_private, section ".init_array.500", align 8, !guid !4
+@0 = private unnamed_addr constant <{ [24 x i8], ptr, ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNSNvYNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtBd_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0INtNtNtCsgxBkk5gSRhY_4core3ops8function6FnOnceTRNtBd_9OnceStateEE9call_once6vtableB17_, ptr @_RNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtB8_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0B12_ }>, align 8, !guid !5
+@1 = private unnamed_addr constant [77 x i8] c"/rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/std/src/sync/once.rs\00", align 1, !guid !5
+@2 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"L\00\00\00\00\00\00\00\A6\00\00\002\00\00\00" }>, align 8, !guid !5
+@3 = private unnamed_addr constant [11 x i8] c"src/lib.rs\00", align 1, !guid !5
+@4 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @3, [16 x i8] c"\0A\00\00\00\00\00\00\00D\00\00\00\1B\00\00\00" }>, align 8, !guid !5
+@_RNvNvCsGhLMDwXcBP_7opendal21init_default_registry21DEFAULT_REGISTRY_INIT = internal global [4 x i8] c"\03\00\00\00", align 4, !guid !6
 @llvm.used = appending global [1 x ptr] [ptr @_RNvNvNvCsGhLMDwXcBP_7opendal34register_default_operator_registry1__18___CTOR_PRIVATE_REF], section "llvm.metadata"
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal void @_RNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtB8_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0B12_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %0, ptr nofree nonnull readnone align 4 captures(none) %1) unnamed_addr #0 {
+define internal void @_RNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtB8_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0B12_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(8) %0, ptr nofree nonnull readnone align 4 captures(none) %1) unnamed_addr #0 !guid !10 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4 ; 2 uses
-  %i.b = load i8, ptr %i.a, align 1, !range !5, !noundef !4
+  %i.a = load ptr, ptr %0, align 8, !nonnull !7, !noundef !7 ; 2 uses
+  %i.b = load i8, ptr %i.a, align 1, !range !8, !noundef !7
   %i.c = trunc nuw i8 %i.b to i1
   store i8 0, ptr %i.a, align 1
-  br i1 %i.c, label %bb.b, label %bb.c, !prof !6
+  br i1 %i.c, label %bb.b, label %bb.c, !prof !9
 
 bb.b:                                             ; preds = %bb.a
   %i.d = tail call noundef nonnull align 8 ptr @_RNvMNtNtNtCs5XgW7KoffLW_12opendal_core5types8operator8registryNtB2_16OperatorRegistry3get()
@@ -34,33 +34,33 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal void @_RNSNvYNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtBd_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0INtNtNtCsgxBkk5gSRhY_4core3ops8function6FnOnceTRNtBd_9OnceStateEE9call_once6vtableB17_(ptr nofree noundef readonly captures(none) %0, ptr nofree nonnull readnone align 4 captures(none) %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal void @_RNSNvYNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtBd_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0INtNtNtCsgxBkk5gSRhY_4core3ops8function6FnOnceTRNtBd_9OnceStateEE9call_once6vtableB17_(ptr nofree noundef readonly captures(none) %0, ptr nofree nonnull readnone align 4 captures(none) %1) unnamed_addr #0 personality ptr @rust_eh_personality !guid !15 {
 bb.a:
-  %i.a = load ptr, ptr %0, align 8, !nonnull !4, !noundef !4 ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !11)
-  %i.b = load i8, ptr %i.a, align 1, !range !5, !alias.scope !11, !noalias !12, !noundef !4
+  %i.a = load ptr, ptr %0, align 8, !nonnull !7, !noundef !7 ; 2 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !16)
+  %i.b = load i8, ptr %i.a, align 1, !range !8, !alias.scope !16, !noalias !17, !noundef !7
   %i.c = trunc nuw i8 %i.b to i1
-  store i8 0, ptr %i.a, align 1, !alias.scope !11, !noalias !12
-  br i1 %i.c, label %_RNvYNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtBb_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0INtNtNtCsgxBkk5gSRhY_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB15_.exit, label %bb.b, !prof !6
+  store i8 0, ptr %i.a, align 1, !alias.scope !16, !noalias !17
+  br i1 %i.c, label %_RNvYNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtBb_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0INtNtNtCsgxBkk5gSRhY_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB15_.exit, label %bb.b, !prof !9
 
 bb.b:                                             ; preds = %bb.a
-  tail call void @_RNvNtCsgxBkk5gSRhY_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #8, !noalias !13
+  tail call void @_RNvNtCsgxBkk5gSRhY_4core6option13unwrap_failed(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #8, !noalias !18
   unreachable
 
 _RNvYNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtBb_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0INtNtNtCsgxBkk5gSRhY_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB15_.exit: ; preds = %bb.a
-  %i.d = tail call noundef nonnull align 8 ptr @_RNvMNtNtNtCs5XgW7KoffLW_12opendal_core5types8operator8registryNtB2_16OperatorRegistry3get(), !noalias !13
-  tail call void @_RNvNtNtCs5XgW7KoffLW_12opendal_core8services6memory23register_memory_service(ptr noundef nonnull align 8 %i.d), !noalias !13
+  %i.d = tail call noundef nonnull align 8 ptr @_RNvMNtNtNtCs5XgW7KoffLW_12opendal_core5types8operator8registryNtB2_16OperatorRegistry3get(), !noalias !18
+  tail call void @_RNvNtNtCs5XgW7KoffLW_12opendal_core8services6memory23register_memory_service(ptr noundef nonnull align 8 %i.d), !noalias !18
   ret void
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @_RNvCsGhLMDwXcBP_7opendal15install_default() unnamed_addr #1 personality ptr @rust_eh_personality {
+define void @_RNvCsGhLMDwXcBP_7opendal15install_default() unnamed_addr #1 personality ptr @rust_eh_personality !guid !19 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [1 x i8], align 1                 ; 4 uses
   %i.c = load atomic i32, ptr @_RNvNvCsGhLMDwXcBP_7opendal21init_default_registry21DEFAULT_REGISTRY_INIT acquire, align 4
   %i.d = icmp eq i32 %i.c, 0
-  br i1 %i.d, label %_RNvCsGhLMDwXcBP_7opendal21init_default_registry.exit, label %bb.b, !prof !6
+  br i1 %i.d, label %_RNvCsGhLMDwXcBP_7opendal21init_default_registry.exit, label %bb.b, !prof !9
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -78,13 +78,13 @@ _RNvCsGhLMDwXcBP_7opendal21init_default_registry.exit: ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @_RNvCsGhLMDwXcBP_7opendal21init_default_registry() unnamed_addr #1 personality ptr @rust_eh_personality {
+define void @_RNvCsGhLMDwXcBP_7opendal21init_default_registry() unnamed_addr #1 personality ptr @rust_eh_personality !guid !20 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [1 x i8], align 1                 ; 4 uses
   %i.c = load atomic i32, ptr @_RNvNvCsGhLMDwXcBP_7opendal21init_default_registry21DEFAULT_REGISTRY_INIT acquire, align 4
   %i.d = icmp eq i32 %i.c, 0
-  br i1 %i.d, label %_RINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtB6_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0EB10_.exit, label %bb.b, !prof !6
+  br i1 %i.d, label %_RINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtB6_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0EB10_.exit, label %bb.b, !prof !9
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -101,13 +101,13 @@ _RINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtB6_4Once9call_onceNCNvCsGhLMDwXcBP_7o
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define void @_RNvNvNvNvCsGhLMDwXcBP_7opendal34register_default_operator_registry1__18___CTOR_PRIVATE_REF14___ctor_private() unnamed_addr #2 section ".text.startup" personality ptr @rust_eh_personality {
+define void @_RNvNvNvNvCsGhLMDwXcBP_7opendal34register_default_operator_registry1__18___CTOR_PRIVATE_REF14___ctor_private() unnamed_addr #2 section ".text.startup" personality ptr @rust_eh_personality !guid !21 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [1 x i8], align 1                 ; 4 uses
   %i.c = load atomic i32, ptr @_RNvNvCsGhLMDwXcBP_7opendal21init_default_registry21DEFAULT_REGISTRY_INIT acquire, align 4
   %i.d = icmp eq i32 %i.c, 0
-  br i1 %i.d, label %_RNvCsGhLMDwXcBP_7opendal15install_default.exit.i, label %bb.b, !prof !6
+  br i1 %i.d, label %_RNvCsGhLMDwXcBP_7opendal15install_default.exit.i, label %bb.b, !prof !9
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -184,14 +184,22 @@ attributes #9 = { cold noreturn nounwind }
 !1 = !{i32 2, !"RtLibUseGOT", i32 1}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"rustc version 1.98.1 (48a229cea 2026-09-01)"}
-!4 = !{}
-!5 = !{i8 0, i8 2}
-!6 = !{!"branch_weights", !"expected", i32 2000, i32 1}
-!7 = distinct !{!7, i1 true, !"_RNvYNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtBb_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0INtNtNtCsgxBkk5gSRhY_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB15_"}
-!8 = distinct !{!8, !7, !"_RNvYNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtBb_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0INtNtNtCsgxBkk5gSRhY_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB15_: argument 0"}
-!9 = distinct !{!9, i1 true, !"_RNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtB8_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0B12_"}
-!10 = distinct !{!10, !9, !"_RNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtB8_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0B12_: argument 0"}
-!11 = !{!8}
-!12 = !{!10}
-!13 = !{!10, !8}
+!4 = !{i64 7842775304993004237}
+!5 = !{i64 5384958851807550478}
+!6 = !{i64 -8097906487863357456}
+!7 = !{}
+!8 = !{i8 0, i8 2}
+!9 = !{!"branch_weights", !"expected", i32 2000, i32 1}
+!10 = !{i64 5063432372798081994}
+!11 = distinct !{!11, i1 true, !"_RNvYNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtBb_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0INtNtNtCsgxBkk5gSRhY_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB15_"}
+!12 = distinct !{!12, !11, !"_RNvYNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtBb_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0INtNtNtCsgxBkk5gSRhY_4core3ops8function6FnOnceTRNtBb_9OnceStateEE9call_onceB15_: argument 0"}
+!13 = distinct !{!13, i1 true, !"_RNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtB8_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0B12_"}
+!14 = distinct !{!14, !13, !"_RNCINvMs0_NtNtCs9k3SxhrAWiO_3std4sync4onceNtB8_4Once9call_onceNCNvCsGhLMDwXcBP_7opendal21init_default_registry0E0B12_: argument 0"}
+!15 = !{i64 7439235094477597669}
+!16 = !{!12}
+!17 = !{!14}
+!18 = !{!14, !12}
+!19 = !{i64 6030365795813384660}
+!20 = !{i64 6406243220052019042}
+!21 = !{i64 -7237753208442394112}
 end_hunk_0

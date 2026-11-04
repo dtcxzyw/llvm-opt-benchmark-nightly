@@ -4,10 +4,10 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-@.str = private unnamed_addr constant [65 x i8] c"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/\00", align 1
+@.str = private unnamed_addr constant [65 x i8] c"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/\00", align 1, !guid !3
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define void @base64_init_encodestate(ptr nofree noundef writeonly captures(none) initializes((0, 5), (8, 12)) %0) local_unnamed_addr #0 {
+define void @base64_init_encodestate(ptr nofree noundef writeonly captures(none) initializes((0, 5), (8, 12)) %0) local_unnamed_addr #0 !guid !4 {
 bb.a:
   store i32 0, ptr %0, align 4
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
@@ -18,7 +18,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define signext i8 @base64_encode_value(i8 noundef signext %0) local_unnamed_addr #1 {
+define signext i8 @base64_encode_value(i8 noundef signext %0) local_unnamed_addr #1 !guid !5 {
 bb.a:
   %i.a = icmp sgt i8 %0, 63
   br i1 %i.a, label %bb.c, label %bb.b
@@ -35,7 +35,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define i32 @base64_encode_block(ptr nofree noundef readonly captures(address) %0, i32 noundef %1, ptr noundef %2, ptr nofree noundef captures(none) %3) local_unnamed_addr #2 {
+define i32 @base64_encode_block(ptr nofree noundef readonly captures(address) %0, i32 noundef %1, ptr noundef %2, ptr nofree noundef captures(none) %3) local_unnamed_addr #2 !guid !6 {
 bb.a:
   %i.a = sext i32 %1 to i64
   %i.b = getelementptr inbounds i8, ptr %0, i64 %i.a ; 3 uses
@@ -159,7 +159,7 @@ bb.k:                                             ; preds = %.sink.split, %bb.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define i32 @base64_encode_blockend(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #3 {
+define i32 @base64_encode_blockend(ptr noundef %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #3 !guid !7 {
 bb.a:
   %i.a = load i32, ptr %1, align 4
   switch i32 %i.a, label %bb.f [
@@ -231,4 +231,9 @@ attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
 !2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
+!3 = !{i64 4314484899015025353}
+!4 = !{i64 -8034989616862606279}
+!5 = !{i64 -4591138388245456305}
+!6 = !{i64 -4068696433555990180}
+!7 = !{i64 6074817387229517320}
 end_hunk_0

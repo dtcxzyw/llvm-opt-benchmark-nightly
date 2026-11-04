@@ -5,10 +5,10 @@ target triple = "x86_64-pc-linux-gnu"
 
 %struct.upb_alloc = type { ptr }
 
-@upb_alloc_global = hidden local_unnamed_addr global %struct.upb_alloc { ptr @upb_global_allocfunc }, align 8
+@upb_alloc_global = hidden local_unnamed_addr global %struct.upb_alloc { ptr @upb_global_allocfunc }, align 8, !guid !7
 
 ; Function Attrs: mustprogress nounwind willreturn memory(argmem: readwrite, inaccessiblemem: readwrite, errnomem: write) uwtable
-define internal noalias noundef ptr @upb_global_allocfunc(ptr nofree readnone captures(none) %0, ptr noundef captures(none) %1, i64 %2, i64 noundef %3, ptr nofree readnone captures(none) %4) #0 {
+define internal noalias noundef ptr @upb_global_allocfunc(ptr nofree readnone captures(none) %0, ptr noundef captures(none) %1, i64 %2, i64 noundef %3, ptr nofree readnone captures(none) %4) #0 !guid !8 {
 bb.a:
   %i.a = icmp eq i64 %3, 0
   br i1 %i.a, label %bb.b, label %bb.c
@@ -49,4 +49,6 @@ attributes #4 = { nounwind allocsize(1) }
 !4 = !{!"omnipotent char", !3, i64 0}
 !5 = !{!"int", !4, i64 0}
 !6 = !{!5, !5, i64 0}
+!7 = !{i64 -2508398445382950830}
+!8 = !{i64 -1609764269359832224}
 end_hunk_0

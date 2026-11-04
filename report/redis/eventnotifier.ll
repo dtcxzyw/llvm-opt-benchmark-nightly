@@ -4,7 +4,7 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: nounwind uwtable
-define dso_local noundef ptr @createEventNotifier() local_unnamed_addr #0 {
+define dso_local noundef ptr @createEventNotifier() local_unnamed_addr #0 !guid !15 {
 bb.a:
   %i.a = tail call noalias dereferenceable_or_null(4) ptr @zmalloc(i64 noundef 4) #8 ; 4 uses
   %.not = icmp eq ptr %i.a, null
@@ -40,25 +40,25 @@ declare void @zfree(ptr noundef) local_unnamed_addr #4
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define dso_local i32 @getReadEventFd(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #5 {
+define dso_local i32 @getReadEventFd(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #5 !guid !16 {
 bb.a:
   %i.a = load i32, ptr %0, align 4, !tbaa !14
   ret i32 %i.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define dso_local i32 @getWriteEventFd(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #5 {
+define dso_local i32 @getWriteEventFd(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #5 !guid !17 {
 bb.a:
   %i.a = load i32, ptr %0, align 4, !tbaa !14
   ret i32 %i.a
 }
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local noundef range(i32 -1, 1) i32 @triggerEventNotifier(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #6 {
+define dso_local noundef range(i32 -1, 1) i32 @triggerEventNotifier(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #6 !guid !18 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
-  store i64 1, ptr %i.a, align 8, !tbaa !16
+  store i64 1, ptr %i.a, align 8, !tbaa !20
   %i.b = load i32, ptr %0, align 4, !tbaa !14
   %i.c = call i64 @write(i32 noundef %i.b, ptr noundef nonnull %i.a, i64 noundef 8) #9
   %i.d = icmp eq i64 %i.c, -1
@@ -71,7 +71,7 @@ bb.a:
 declare noundef i64 @write(i32 noundef, ptr noundef readonly captures(none), i64 noundef) local_unnamed_addr #7
 
 ; Function Attrs: nofree nounwind uwtable
-define dso_local noundef range(i32 -1, 1) i32 @handleEventNotifier(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #6 {
+define dso_local noundef range(i32 -1, 1) i32 @handleEventNotifier(ptr nofree noundef readonly captures(none) %0) local_unnamed_addr #6 !guid !21 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
@@ -87,7 +87,7 @@ bb.a:
 declare noundef i64 @read(i32 noundef, ptr noundef captures(none), i64 noundef) local_unnamed_addr #7
 
 ; Function Attrs: nounwind uwtable
-define dso_local void @freeEventNotifier(ptr noundef %0) local_unnamed_addr #0 {
+define dso_local void @freeEventNotifier(ptr noundef %0) local_unnamed_addr #0 !guid !22 {
 bb.a:
   %i.a = load i32, ptr %0, align 4, !tbaa !14
   %i.b = tail call i32 @close(i32 noundef %i.a) #9 ; 0 uses
@@ -127,6 +127,12 @@ attributes #9 = { nounwind }
 !12 = !{!11, !11, i64 0}
 !13 = !{!"eventNotifier", !11, i64 0}
 !14 = !{!13, !11, i64 0}
-!15 = !{!"long", !10, i64 0}
-!16 = !{!15, !15, i64 0}
+!15 = !{i64 5289868162236800598}
+!16 = !{i64 617320245713155275}
+!17 = !{i64 -1316813526392183721}
+!18 = !{i64 -6513713945120216628}
+!19 = !{!"long", !10, i64 0}
+!20 = !{!19, !19, i64 0}
+!21 = !{i64 701237966836561315}
+!22 = !{i64 -7851347764435030028}
 end_hunk_0

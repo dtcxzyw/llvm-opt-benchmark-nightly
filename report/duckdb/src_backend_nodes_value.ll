@@ -4,7 +4,7 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef ptr @_ZN17duckdb_libpgquery11makeIntegerEl(i64 noundef %0) local_unnamed_addr #0 {
+define hidden noundef ptr @_ZN17duckdb_libpgquery11makeIntegerEl(i64 noundef %0) local_unnamed_addr #0 !guid !11 {
 bb.a:
   %i.a = tail call noundef ptr @_ZN17duckdb_libpgquery7newNodeEmNS_9PGNodeTagE(i64 noundef 16, i32 noundef 217) ; 3 uses
   store i32 218, ptr %i.a, align 8, !tbaa !9
@@ -16,7 +16,7 @@ bb.a:
 declare noundef ptr @_ZN17duckdb_libpgquery7newNodeEmNS_9PGNodeTagE(i64 noundef, i32 noundef) local_unnamed_addr #1
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef ptr @_ZN17duckdb_libpgquery9makeFloatEPc(ptr noundef %0) local_unnamed_addr #0 {
+define hidden noundef ptr @_ZN17duckdb_libpgquery9makeFloatEPc(ptr noundef %0) local_unnamed_addr #0 !guid !12 {
 bb.a:
   %i.a = tail call noundef ptr @_ZN17duckdb_libpgquery7newNodeEmNS_9PGNodeTagE(i64 noundef 16, i32 noundef 217) ; 3 uses
   store i32 219, ptr %i.a, align 8, !tbaa !9
@@ -26,7 +26,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define hidden noundef ptr @_ZN17duckdb_libpgquery10makeStringEPKc(ptr noundef %0) local_unnamed_addr #0 {
+define hidden noundef ptr @_ZN17duckdb_libpgquery10makeStringEPKc(ptr noundef %0) local_unnamed_addr #0 !guid !13 {
 bb.a:
   %i.a = tail call noundef ptr @_ZN17duckdb_libpgquery7newNodeEmNS_9PGNodeTagE(i64 noundef 16, i32 noundef 217) ; 3 uses
   store i32 220, ptr %i.a, align 8, !tbaa !9
@@ -53,4 +53,7 @@ attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 !8 = !{!"_ZTSN17duckdb_libpgquery7PGValueE", !7, i64 0, !4, i64 8}
 !9 = !{!8, !7, i64 0}
 !10 = !{!4, !4, i64 0}
+!11 = !{i64 4844947828182754410}
+!12 = !{i64 2577089623488133087}
+!13 = !{i64 735229279299950467}
 end_hunk_0

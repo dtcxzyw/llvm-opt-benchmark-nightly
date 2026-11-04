@@ -5,8 +5,8 @@ target triple = "x86_64-pc-linux-gnu"
 
 %struct.OnigEncodingTypeST = type { ptr, ptr, i32, i32, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, ptr, i32, i32 }
 
-@.str = private unnamed_addr constant [11 x i8] c"ASCII-8BIT\00", align 1
-@OnigEncodingASCII = dso_local local_unnamed_addr constant %struct.OnigEncodingTypeST { ptr @onigenc_single_byte_mbc_enc_len, ptr @.str, i32 1, i32 1, ptr @onigenc_is_mbc_newline_0x0a, ptr @onigenc_single_byte_mbc_to_code, ptr @onigenc_single_byte_code_to_mbclen, ptr @onigenc_single_byte_code_to_mbc, ptr @onigenc_ascii_mbc_case_fold, ptr @onigenc_ascii_apply_all_case_fold, ptr @onigenc_ascii_get_case_fold_codes_by_str, ptr @onigenc_minimum_property_name_to_ctype, ptr @onigenc_ascii_is_code_ctype, ptr @onigenc_not_support_get_ctype_code_range, ptr @onigenc_single_byte_left_adjust_char_head, ptr @onigenc_always_true_is_allowed_reverse_match, ptr @onigenc_single_byte_ascii_only_case_map, i32 0, i32 0 }, align 8
+@.str = private unnamed_addr constant [11 x i8] c"ASCII-8BIT\00", align 1, !guid !10
+@OnigEncodingASCII = dso_local local_unnamed_addr constant %struct.OnigEncodingTypeST { ptr @onigenc_single_byte_mbc_enc_len, ptr @.str, i32 1, i32 1, ptr @onigenc_is_mbc_newline_0x0a, ptr @onigenc_single_byte_mbc_to_code, ptr @onigenc_single_byte_code_to_mbclen, ptr @onigenc_single_byte_code_to_mbc, ptr @onigenc_ascii_mbc_case_fold, ptr @onigenc_ascii_apply_all_case_fold, ptr @onigenc_ascii_get_case_fold_codes_by_str, ptr @onigenc_minimum_property_name_to_ctype, ptr @onigenc_ascii_is_code_ctype, ptr @onigenc_not_support_get_ctype_code_range, ptr @onigenc_single_byte_left_adjust_char_head, ptr @onigenc_always_true_is_allowed_reverse_match, ptr @onigenc_single_byte_ascii_only_case_map, i32 0, i32 0 }, align 8, !guid !11
 
 declare i32 @onigenc_single_byte_mbc_enc_len(ptr noundef, ptr noundef, ptr noundef) #0
 
@@ -52,4 +52,6 @@ attributes #0 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 !7 = !{!"omnipotent char", !6, i64 0}
 !8 = !{!"int", !7, i64 0}
 !9 = !{!8, !8, i64 0}
+!10 = !{i64 3936085797184431410}
+!11 = !{i64 -5542300878765817848}
 end_hunk_0

@@ -6,11 +6,11 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define void @duckdb_je_exp_grow_init(ptr nofree noundef writeonly captures(none) initializes((0, 8)) %0) local_unnamed_addr #0 {
+define void @duckdb_je_exp_grow_init(ptr nofree noundef writeonly captures(none) initializes((0, 8)) %0) local_unnamed_addr #0 !guid !7 {
 bb.a:
-  store i32 31, ptr %0, align 4, !tbaa !8
+  store i32 31, ptr %0, align 4, !tbaa !9
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i32 198, ptr %i.a, align 4, !tbaa !9
+  store i32 198, ptr %i.a, align 4, !tbaa !10
   ret void
 }
 
@@ -27,7 +27,8 @@ attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 !4 = !{!"omnipotent char", !3, i64 0}
 !5 = !{!"int", !4, i64 0}
 !6 = !{!5, !5, i64 0}
-!7 = !{!"exp_grow_s", !5, i64 0, !5, i64 4}
-!8 = !{!7, !5, i64 0}
-!9 = !{!7, !5, i64 4}
+!7 = !{i64 6759185359557761659}
+!8 = !{!"exp_grow_s", !5, i64 0, !5, i64 4}
+!9 = !{!8, !5, i64 0}
+!10 = !{!8, !5, i64 4}
 end_hunk_0

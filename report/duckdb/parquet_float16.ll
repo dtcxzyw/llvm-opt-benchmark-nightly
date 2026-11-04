@@ -9,9 +9,9 @@ module asm
     ".globl _ZSt21ios_base_library_initv"
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define hidden noundef float @_ZN6duckdb16Float16ToFloat32ERKt(ptr nofree noundef nonnull readonly align 2 captures(none) dereferenceable(2) %0) local_unnamed_addr #0 {
+define hidden noundef float @_ZN6duckdb16Float16ToFloat32ERKt(ptr nofree noundef nonnull readonly align 2 captures(none) dereferenceable(2) %0) local_unnamed_addr #0 !guid !8 {
 bb.a:
-  %i.a = load i16, ptr %0, align 2, !tbaa !9
+  %i.a = load i16, ptr %0, align 2, !tbaa !10
   %i.b = zext i16 %i.a to i32                     ; 4 uses
   %i.c = lshr i32 %i.b, 15                        ; 4 uses
   %i.d = lshr i32 %i.b, 10
@@ -83,8 +83,9 @@ attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 !4 = !{!"omnipotent char", !3, i64 0}
 !5 = !{!"int", !4, i64 0}
 !6 = !{!5, !5, i64 0}
-!7 = distinct !{!7, !10}
-!8 = !{!"short", !4, i64 0}
-!9 = !{!8, !8, i64 0}
-!10 = !{!"llvm.loop.mustprogress"}
+!7 = distinct !{!7, !11}
+!8 = !{i64 3987093849295536613}
+!9 = !{!"short", !4, i64 0}
+!10 = !{!9, !9, i64 0}
+!11 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

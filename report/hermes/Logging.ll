@@ -6,19 +6,19 @@ target triple = "x86_64-pc-linux-gnu"
 %struct.__va_list_tag = type { i32, i32, ptr, ptr }
 
 @stderr = external local_unnamed_addr global ptr, align 8
-@.str = private unnamed_addr constant [5 x i8] c"%s: \00", align 1
+@.str = private unnamed_addr constant [5 x i8] c"%s: \00", align 1, !guid !7
 
 ; Function Attrs: cold mustprogress nofree nounwind uwtable
-define hidden void @_ZN6hermes9hermesLogEPKcS1_z(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ...) local_unnamed_addr #0 {
+define hidden void @_ZN6hermes9hermesLogEPKcS1_z(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, ...) local_unnamed_addr #0 !guid !8 {
 bb.a:
   %2 = alloca [1 x %struct.__va_list_tag], align 16 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #5
   call void @llvm.va_start.p0(ptr nonnull %2)
-  %i.a = load ptr, ptr @stderr, align 8, !tbaa !9
+  %i.a = load ptr, ptr @stderr, align 8, !tbaa !11
   %i.b = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.a, ptr noundef nonnull @.str, ptr noundef %0) #6 ; 0 uses
-  %i.c = load ptr, ptr @stderr, align 8, !tbaa !9
+  %i.c = load ptr, ptr @stderr, align 8, !tbaa !11
   %i.d = call i32 @vfprintf(ptr noundef %i.c, ptr noundef %1, ptr noundef nonnull %2) #6 ; 0 uses
-  %i.e = load ptr, ptr @stderr, align 8, !tbaa !9
+  %i.e = load ptr, ptr @stderr, align 8, !tbaa !11
   %fputc = call i32 @fputc(i32 10, ptr %i.e)      ; 0 uses
   call void @llvm.va_end.p0(ptr nonnull %2)
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #5
@@ -65,7 +65,9 @@ attributes #6 = { cold nounwind }
 !4 = !{!"omnipotent char", !3, i64 0}
 !5 = !{!"int", !4, i64 0}
 !6 = !{!5, !5, i64 0}
-!7 = !{!"any pointer", !4, i64 0}
-!8 = !{!"p1 _ZTS8_IO_FILE", !7, i64 0}
-!9 = !{!8, !8, i64 0}
+!7 = !{i64 2275128433357258750}
+!8 = !{i64 4882016233934541122}
+!9 = !{!"any pointer", !4, i64 0}
+!10 = !{!"p1 _ZTS8_IO_FILE", !9, i64 0}
+!11 = !{!10, !10, i64 0}
 end_hunk_0

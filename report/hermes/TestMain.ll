@@ -8,15 +8,15 @@ target triple = "x86_64-pc-linux-gnu"
 module asm
     ".globl _ZSt21ios_base_library_initv"
 
-@TestMainArgv0 = hidden local_unnamed_addr global ptr null, align 8
-@.str = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
+@TestMainArgv0 = hidden local_unnamed_addr global ptr null, align 8, !guid !7
+@.str = private unnamed_addr constant [1 x i8] zeroinitializer, align 1, !guid !8
 
 ; Function Attrs: mustprogress norecurse uwtable
-define hidden noundef i32 @main(i32 noundef %0, ptr noundef %1) local_unnamed_addr #0 {
+define hidden noundef i32 @main(i32 noundef %0, ptr noundef %1) local_unnamed_addr #0 !guid !9 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 3 uses
   store i32 %0, ptr %i.a, align 4, !tbaa !6
-  %i.b = load ptr, ptr %1, align 8, !tbaa !9      ; 3 uses
+  %i.b = load ptr, ptr %1, align 8, !tbaa !12     ; 3 uses
   %.not.i = icmp eq ptr %i.b, null
   br i1 %.not.i, label %_ZN4llvh9StringRefC2EPKc.exit, label %bb.b
 
@@ -30,8 +30,8 @@ _ZN4llvh9StringRefC2EPKc.exit:                    ; preds = %bb.a, %bb.b
   call void @_ZN7testing14InitGoogleMockEPiPPc(ptr noundef nonnull %i.a, ptr noundef nonnull %1)
   %i.e = load i32, ptr %i.a, align 4, !tbaa !6
   %i.f = call noundef zeroext i1 @_ZN4llvh2cl23ParseCommandLineOptionsEiPKPKcNS_9StringRefEPNS_11raw_ostreamE(i32 noundef %i.e, ptr noundef nonnull %1, ptr nonnull @.str, i64 0, ptr noundef null) ; 0 uses
-  %i.g = load ptr, ptr %1, align 8, !tbaa !9
-  store ptr %i.g, ptr @TestMainArgv0, align 8, !tbaa !9
+  %i.g = load ptr, ptr %1, align 8, !tbaa !12
+  store ptr %i.g, ptr @TestMainArgv0, align 8, !tbaa !12
   %i.h = call noundef ptr @_ZN7testing8UnitTest11GetInstanceEv()
   %i.i = call noundef i32 @_ZN7testing8UnitTest3RunEv(ptr noundef nonnull align 8 dereferenceable(72) %i.h)
   ret i32 %i.i
@@ -66,7 +66,10 @@ attributes #3 = { nounwind willreturn memory(read) }
 !4 = !{!"omnipotent char", !3, i64 0}
 !5 = !{!"int", !4, i64 0}
 !6 = !{!5, !5, i64 0}
-!7 = !{!"any pointer", !4, i64 0}
-!8 = !{!"p1 omnipotent char", !7, i64 0}
-!9 = !{!8, !8, i64 0}
+!7 = !{i64 -6348280384050090330}
+!8 = !{i64 -1510472005802204608}
+!9 = !{i64 -2624081020897602054}
+!10 = !{!"any pointer", !4, i64 0}
+!11 = !{!"p1 omnipotent char", !10, i64 0}
+!12 = !{!11, !11, i64 0}
 end_hunk_0

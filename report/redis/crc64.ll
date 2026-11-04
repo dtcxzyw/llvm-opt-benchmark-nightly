@@ -7,10 +7,10 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-@crc64_table = internal global [8 x [256 x i64]] zeroinitializer, align 16
+@crc64_table = internal global [8 x [256 x i64]] zeroinitializer, align 16, !guid !13
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: read) uwtable
-define dso_local noundef i64 @_crc64(i64 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) #0 {
+define dso_local noundef i64 @_crc64(i64 noundef %0, ptr nofree noundef readonly captures(none) %1, i64 noundef %2) #0 !guid !15 {
 bb.a:
   %.not27 = icmp eq i64 %2, 0
   br i1 %.not27, label %._crit_edge, label %.lr.ph
@@ -24,7 +24,7 @@ bb.a:
   %.01726 = phi i64 [ %i.ar, %.lr.ph ], [ 0, %bb.a ] ; 2 uses
   %.01925 = phi i64 [ %.2.7, %.lr.ph ], [ %0, %bb.a ] ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 %.01726
-  %i.c = load i8, ptr %i.b, align 1, !tbaa !14    ; 2 uses
+  %i.c = load i8, ptr %i.b, align 1, !tbaa !16    ; 2 uses
   %i.d = zext i8 %i.c to i32                      ; 7 uses
   %i.e = and i64 %.01925, -9223372036854775808    ; 2 uses
   %i.f = and i32 %i.d, 1
@@ -107,11 +107,11 @@ bb.a:
   %.2.7 = select i1 %.not22.7, i64 %i.ap, i64 %i.aq ; 2 uses
   %i.ar = add nuw i64 %.01726, 1                  ; 2 uses
   %exitcond.not = icmp eq i64 %i.ar, %2
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !13
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !14
 }
 
 ; Function Attrs: nounwind uwtable
-define dso_local void @crc64_init() local_unnamed_addr #1 {
+define dso_local void @crc64_init() local_unnamed_addr #1 !guid !18 {
 bb.a:
   tail call void @crcspeed64native_init(ptr noundef nonnull @_crc64, ptr noundef nonnull @crc64_table) #4
   ret void
@@ -120,7 +120,7 @@ bb.a:
 declare void @crcspeed64native_init(ptr noundef, ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nounwind uwtable
-define dso_local i64 @crc64(i64 noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #1 {
+define dso_local i64 @crc64(i64 noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #1 !guid !19 {
 bb.a:
   %i.a = tail call i64 @crcspeed64native(ptr noundef nonnull @crc64_table, i64 noundef %0, ptr noundef %1, i64 noundef %2) #4
   ret i64 %i.a
@@ -154,7 +154,11 @@ attributes #4 = { nounwind }
 !10 = !{!"omnipotent char", !9, i64 0}
 !11 = !{!"int", !10, i64 0}
 !12 = !{!11, !11, i64 0}
-!13 = distinct !{!13, !15}
-!14 = !{!10, !10, i64 0}
-!15 = !{!"llvm.loop.mustprogress"}
+!13 = !{i64 -5641558525922049497}
+!14 = distinct !{!14, !17}
+!15 = !{i64 -2443274043609286375}
+!16 = !{!10, !10, i64 0}
+!17 = !{!"llvm.loop.mustprogress"}
+!18 = !{i64 2237202181096343936}
+!19 = !{i64 8702721365179818308}
 end_hunk_0

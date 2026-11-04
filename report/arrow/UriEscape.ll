@@ -4,14 +4,14 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @uriEscapeA(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef writeonly captures(address, ret: address, provenance) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
+define noundef ptr @uriEscapeA(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef writeonly captures(address, ret: address, provenance) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 !guid !8 {
 bb.a:
   %i.a = tail call ptr @uriEscapeExA(ptr noundef %0, ptr noundef null, ptr noundef %1, i32 noundef %2, i32 noundef %3)
   ret ptr %i.a
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @uriEscapeExA(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef readnone captures(address) %1, ptr nofree noundef writeonly captures(address, ret: address, provenance) %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #0 {
+define noundef ptr @uriEscapeExA(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef readnone captures(address) %1, ptr nofree noundef writeonly captures(address, ret: address, provenance) %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #0 !guid !9 {
 bb.a:
   %i.a = icmp eq ptr %2, null
   %i.b = icmp eq ptr %0, %2
@@ -414,14 +414,14 @@ bb.au:                                            ; preds = %.sink.split, %bb.a
 declare signext i8 @uriHexToLetterA(i32 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define ptr @uriUnescapeInPlaceA(ptr nofree noundef captures(address, ret: address, provenance) %0) local_unnamed_addr #0 {
+define ptr @uriUnescapeInPlaceA(ptr nofree noundef captures(address, ret: address, provenance) %0) local_unnamed_addr #0 !guid !10 {
 bb.a:
   %i.a = tail call ptr @uriUnescapeInPlaceExA(ptr noundef %0, i32 noundef 0, i32 noundef 3)
   ret ptr %i.a
 }
 
 ; Function Attrs: nounwind uwtable
-define ptr @uriUnescapeInPlaceExA(ptr nofree noundef captures(address, ret: address, provenance) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
+define ptr @uriUnescapeInPlaceExA(ptr nofree noundef captures(address, ret: address, provenance) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 !guid !11 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %bb.ai, label %.preheader
@@ -668,14 +668,14 @@ bb.ai:                                            ; preds = %bb.c, %bb.d, %bb.a
 declare zeroext i8 @uriHexdigToIntA(i8 noundef signext) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @uriEscapeW(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef writeonly captures(address, ret: address, provenance) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 {
+define noundef ptr @uriEscapeW(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef writeonly captures(address, ret: address, provenance) %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 !guid !12 {
 bb.a:
   %i.a = tail call ptr @uriEscapeExW(ptr noundef %0, ptr noundef null, ptr noundef %1, i32 noundef %2, i32 noundef %3)
   ret ptr %i.a
 }
 
 ; Function Attrs: nounwind uwtable
-define noundef ptr @uriEscapeExW(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef readnone captures(address) %1, ptr nofree noundef writeonly captures(address, ret: address, provenance) %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #0 {
+define noundef ptr @uriEscapeExW(ptr nofree noundef readonly captures(address) %0, ptr nofree noundef readnone captures(address) %1, ptr nofree noundef writeonly captures(address, ret: address, provenance) %2, i32 noundef %3, i32 noundef %4) local_unnamed_addr #0 !guid !13 {
 bb.a:
   %i.a = icmp eq ptr %2, null
   %i.b = icmp eq ptr %0, %2
@@ -1078,14 +1078,14 @@ bb.au:                                            ; preds = %.sink.split, %bb.a
 declare i32 @uriHexToLetterW(i32 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define ptr @uriUnescapeInPlaceW(ptr nofree noundef captures(address, ret: address, provenance) %0) local_unnamed_addr #0 {
+define ptr @uriUnescapeInPlaceW(ptr nofree noundef captures(address, ret: address, provenance) %0) local_unnamed_addr #0 !guid !14 {
 bb.a:
   %i.a = tail call ptr @uriUnescapeInPlaceExW(ptr noundef %0, i32 noundef 0, i32 noundef 3)
   ret ptr %i.a
 }
 
 ; Function Attrs: nounwind uwtable
-define ptr @uriUnescapeInPlaceExW(ptr nofree noundef captures(address, ret: address, provenance) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 {
+define ptr @uriUnescapeInPlaceExW(ptr nofree noundef captures(address, ret: address, provenance) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #0 !guid !15 {
 bb.a:
   %i.a = icmp eq ptr %0, null
   br i1 %i.a, label %bb.ai, label %.preheader
@@ -1346,4 +1346,12 @@ attributes #2 = { nounwind }
 !5 = !{!"int", !4, i64 0}
 !6 = !{!5, !5, i64 0}
 !7 = !{!4, !4, i64 0}
+!8 = !{i64 6887595914900310683}
+!9 = !{i64 -2701251851137048078}
+!10 = !{i64 5638666487766769939}
+!11 = !{i64 -2162326009135553622}
+!12 = !{i64 -8916136238000178116}
+!13 = !{i64 -540167914970633338}
+!14 = !{i64 7109984839850853786}
+!15 = !{i64 -4755397200718223452}
 end_hunk_2

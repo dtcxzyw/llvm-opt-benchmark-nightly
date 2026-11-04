@@ -15,13 +15,13 @@ module asm
 %"struct.std::_Vector_base<std::__cxx11::basic_string<char>, std::allocator<std::__cxx11::basic_string<char>>>::_Vector_impl_data" = type { ptr, ptr, ptr }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define void @_ZN6duckdb15ExtensionHelper17LoadAllExtensionsERNS_6DuckDBE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(16) %0) local_unnamed_addr #0 align 2 {
+define void @_ZN6duckdb15ExtensionHelper17LoadAllExtensionsERNS_6DuckDBE(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(16) %0) local_unnamed_addr #0 align 2 !guid !7 {
 bb.a:
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define void @_ZN6duckdb15ExtensionHelper24LoadedExtensionTestPathsB5cxx11Ev(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.duckdb::vector") align 8 captures(none) initializes((0, 24)) %0) local_unnamed_addr #1 align 2 {
+define void @_ZN6duckdb15ExtensionHelper24LoadedExtensionTestPathsB5cxx11Ev(ptr dead_on_unwind noalias nofree writable writeonly sret(%"class.duckdb::vector") align 8 captures(none) initializes((0, 24)) %0) local_unnamed_addr #1 align 2 !guid !8 {
 bb.a:
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
   ret void
@@ -45,4 +45,6 @@ attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: wr
 !4 = !{!"omnipotent char", !3, i64 0}
 !5 = !{!"int", !4, i64 0}
 !6 = !{!5, !5, i64 0}
+!7 = !{i64 9081043509846463157}
+!8 = !{i64 -8917715484488004318}
 end_hunk_0

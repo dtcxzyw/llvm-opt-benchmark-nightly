@@ -5,71 +5,71 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
-@0 = private unnamed_addr constant [72 x i8] c"internal error: entered unreachable code: enum variants cannot be unions", align 1
-@1 = private unnamed_addr constant [113 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/derive-where-1.6.1/src/trait_/common_ord.rs\00", align 1
-@2 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00\82\01\00\00\22\00\00\00" }>, align 8
-@3 = private unnamed_addr constant [4 x i8] c"core", align 1
-@4 = private unnamed_addr constant [3 x i8] c"cmp", align 1
-@5 = private unnamed_addr constant [8 x i8] c"Ordering", align 1
-@6 = private unnamed_addr constant [5 x i8] c"Equal", align 1
-@7 = private unnamed_addr constant [6 x i8] c"option", align 1
-@8 = private unnamed_addr constant [6 x i8] c"Option", align 1
-@9 = private unnamed_addr constant [4 x i8] c"Some", align 1
-@10 = private unnamed_addr constant [11 x i8] c"partial_cmp", align 1
-@11 = private unnamed_addr constant [5 x i8] c"match", align 1
-@12 = private unnamed_addr constant [5 x i8] c"__cmp", align 1
-@13 = private unnamed_addr constant [74 x i8] c"internal error: entered unreachable code: unsupported trait in `build_ord`", align 1
-@14 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00`\01\00\00\0E\00\00\00" }>, align 8
-@15 = private unnamed_addr constant [6 x i8] c"unsafe", align 1
-@16 = private unnamed_addr constant [4 x i8] c"hint", align 1
-@17 = private unnamed_addr constant [21 x i8] c"unreachable_unchecked", align 1
-@18 = private unnamed_addr constant [4 x i8] c"self", align 1
-@19 = private unnamed_addr constant [7 x i8] c"__other", align 1
-@20 = private unnamed_addr constant [28 x i8] c"there should be > 1 variants", align 1
-@21 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00V\00\00\001\00\00\00" }>, align 8
-@22 = private unnamed_addr constant [2 x i8] c"if", align 1
-@23 = private unnamed_addr constant [7 x i8] c"matches", align 1
-@24 = private unnamed_addr constant [4 x i8] c"None", align 1
-@25 = private unnamed_addr constant [4 x i8] c"else", align 1
-@26 = private unnamed_addr constant [98 x i8] c"internal error: entered unreachable code: we should only generate this code with multiple variants", align 1
-@27 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00\91\00\00\00\1D\00\00\00" }>, align 8
-@28 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
-@29 = private unnamed_addr constant [5 x i8] c"clone", align 1
-@30 = private unnamed_addr constant [2 x i8] c"as", align 1
-@31 = private unnamed_addr constant [9 x i8] c"primitive", align 1
-@32 = private unnamed_addr constant [5 x i8] c"isize", align 1
-@33 = private unnamed_addr constant [5 x i8] c"const", align 1
-@34 = private unnamed_addr constant [4 x i8] c"from", align 1
-@35 = private unnamed_addr constant [4 x i8] c"cast", align 1
-@36 = private unnamed_addr constant [3 x i8] c"let", align 1
-@37 = private unnamed_addr constant [11 x i8] c"__self_disc", align 1
-@38 = private unnamed_addr constant [3 x i8] c"mem", align 1
-@39 = private unnamed_addr constant [12 x i8] c"discriminant", align 1
-@40 = private unnamed_addr constant [12 x i8] c"__other_disc", align 1
-@41 = private unnamed_addr constant [76 x i8] c"internal error: entered unreachable code: unsupported trait in `prepare_ord`", align 1
-@42 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00p\00\00\00\1A\00\00\00" }>, align 8
-@43 = private unnamed_addr constant [6 x i8] c"return", align 1
-@44 = private unnamed_addr constant [2 x i8] c"fn", align 1
-@45 = private unnamed_addr constant [14 x i8] c"__discriminant", align 1
-@46 = private unnamed_addr constant [6 x i8] c"__this", align 1
-@47 = private unnamed_addr constant [1 x i8] c"0", align 1
-@48 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00'\01\00\00\1E\00\00\00" }>, align 8
-@49 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00'\01\00\00B\00\00\00" }>, align 8
-@50 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00)\01\00\00\16\00\00\00" }>, align 8
-@51 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00\1F\01\00\00\1E\00\00\00" }>, align 8
-@52 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00\1F\01\00\00S\00\00\00" }>, align 8
-@53 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00!\01\00\00\16\00\00\00" }>, align 8
-@54 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00\15\01\00\00.\00\00\00" }>, align 8
-@55 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00\18\01\00\00\15\00\00\00" }>, align 8
+@0 = private unnamed_addr constant [72 x i8] c"internal error: entered unreachable code: enum variants cannot be unions", align 1, !guid !4
+@1 = private unnamed_addr constant [113 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/derive-where-1.6.1/src/trait_/common_ord.rs\00", align 1, !guid !4
+@2 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00\82\01\00\00\22\00\00\00" }>, align 8, !guid !4
+@3 = private unnamed_addr constant [4 x i8] c"core", align 1, !guid !4
+@4 = private unnamed_addr constant [3 x i8] c"cmp", align 1, !guid !4
+@5 = private unnamed_addr constant [8 x i8] c"Ordering", align 1, !guid !4
+@6 = private unnamed_addr constant [5 x i8] c"Equal", align 1, !guid !4
+@7 = private unnamed_addr constant [6 x i8] c"option", align 1, !guid !4
+@8 = private unnamed_addr constant [6 x i8] c"Option", align 1, !guid !4
+@9 = private unnamed_addr constant [4 x i8] c"Some", align 1, !guid !4
+@10 = private unnamed_addr constant [11 x i8] c"partial_cmp", align 1, !guid !4
+@11 = private unnamed_addr constant [5 x i8] c"match", align 1, !guid !4
+@12 = private unnamed_addr constant [5 x i8] c"__cmp", align 1, !guid !4
+@13 = private unnamed_addr constant [74 x i8] c"internal error: entered unreachable code: unsupported trait in `build_ord`", align 1, !guid !4
+@14 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00`\01\00\00\0E\00\00\00" }>, align 8, !guid !4
+@15 = private unnamed_addr constant [6 x i8] c"unsafe", align 1, !guid !4
+@16 = private unnamed_addr constant [4 x i8] c"hint", align 1, !guid !4
+@17 = private unnamed_addr constant [21 x i8] c"unreachable_unchecked", align 1, !guid !4
+@18 = private unnamed_addr constant [4 x i8] c"self", align 1, !guid !4
+@19 = private unnamed_addr constant [7 x i8] c"__other", align 1, !guid !4
+@20 = private unnamed_addr constant [28 x i8] c"there should be > 1 variants", align 1, !guid !4
+@21 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00V\00\00\001\00\00\00" }>, align 8, !guid !4
+@22 = private unnamed_addr constant [2 x i8] c"if", align 1, !guid !4
+@23 = private unnamed_addr constant [7 x i8] c"matches", align 1, !guid !4
+@24 = private unnamed_addr constant [4 x i8] c"None", align 1, !guid !4
+@25 = private unnamed_addr constant [4 x i8] c"else", align 1, !guid !4
+@26 = private unnamed_addr constant [98 x i8] c"internal error: entered unreachable code: we should only generate this code with multiple variants", align 1, !guid !4
+@27 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00\91\00\00\00\1D\00\00\00" }>, align 8, !guid !4
+@28 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1, !guid !4
+@29 = private unnamed_addr constant [5 x i8] c"clone", align 1, !guid !4
+@30 = private unnamed_addr constant [2 x i8] c"as", align 1, !guid !4
+@31 = private unnamed_addr constant [9 x i8] c"primitive", align 1, !guid !4
+@32 = private unnamed_addr constant [5 x i8] c"isize", align 1, !guid !4
+@33 = private unnamed_addr constant [5 x i8] c"const", align 1, !guid !4
+@34 = private unnamed_addr constant [4 x i8] c"from", align 1, !guid !4
+@35 = private unnamed_addr constant [4 x i8] c"cast", align 1, !guid !4
+@36 = private unnamed_addr constant [3 x i8] c"let", align 1, !guid !4
+@37 = private unnamed_addr constant [11 x i8] c"__self_disc", align 1, !guid !4
+@38 = private unnamed_addr constant [3 x i8] c"mem", align 1, !guid !4
+@39 = private unnamed_addr constant [12 x i8] c"discriminant", align 1, !guid !4
+@40 = private unnamed_addr constant [12 x i8] c"__other_disc", align 1, !guid !4
+@41 = private unnamed_addr constant [76 x i8] c"internal error: entered unreachable code: unsupported trait in `prepare_ord`", align 1, !guid !4
+@42 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00p\00\00\00\1A\00\00\00" }>, align 8, !guid !4
+@43 = private unnamed_addr constant [6 x i8] c"return", align 1, !guid !4
+@44 = private unnamed_addr constant [2 x i8] c"fn", align 1, !guid !4
+@45 = private unnamed_addr constant [14 x i8] c"__discriminant", align 1, !guid !4
+@46 = private unnamed_addr constant [6 x i8] c"__this", align 1, !guid !4
+@47 = private unnamed_addr constant [1 x i8] c"0", align 1, !guid !4
+@48 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00'\01\00\00\1E\00\00\00" }>, align 8, !guid !4
+@49 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00'\01\00\00B\00\00\00" }>, align 8, !guid !4
+@50 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00)\01\00\00\16\00\00\00" }>, align 8, !guid !4
+@51 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00\1F\01\00\00\1E\00\00\00" }>, align 8, !guid !4
+@52 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00\1F\01\00\00S\00\00\00" }>, align 8, !guid !4
+@53 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00!\01\00\00\16\00\00\00" }>, align 8, !guid !4
+@54 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00\15\01\00\00.\00\00\00" }>, align 8, !guid !4
+@55 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"p\00\00\00\00\00\00\00\18\01\00\00\15\00\00\00" }>, align 8, !guid !4
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden zeroext i1 @_RNCNvNtNtCs5aWdnx8MJVa_12derive_where6trait_10common_ord19build_ord_signature0B7_(ptr nofree readonly align 8 captures(none) %0, ptr align 8 %1) unnamed_addr #0 {
+define hidden zeroext i1 @_RNCNvNtNtCs5aWdnx8MJVa_12derive_where6trait_10common_ord19build_ord_signature0B7_(ptr nofree readonly align 8 captures(none) %0, ptr align 8 %1) unnamed_addr #0 !guid !7 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 24
-  %i.e = load ptr, ptr %i.d, align 8, !invariant.load !4, !nonnull !4
+  %i.e = load ptr, ptr %i.d, align 8, !invariant.load !5, !nonnull !5
   %i.f = tail call ptr %i.e(ptr %i.a) #6
   %i.g = load i8, ptr %i.f, align 1
   %i.h = tail call zeroext i1 @_RNvMNtCs5aWdnx8MJVa_12derive_where4dataNtB2_4Data8is_empty(ptr align 8 %1, i8 %i.g)
@@ -86,7 +86,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden void @_RNCNvNtNtCs5aWdnx8MJVa_12derive_where6trait_10common_ord24build_discriminant_order0B7_(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) %0, ptr nofree readnone captures(none) %1, ptr nofree readonly align 8 captures(none) %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RNCNvNtNtCs5aWdnx8MJVa_12derive_where6trait_10common_ord24build_discriminant_order0B7_(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) %0, ptr nofree readnone captures(none) %1, ptr nofree readonly align 8 captures(none) %2) unnamed_addr #0 personality ptr @rust_eh_personality !guid !8 {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 6 uses
   %i.b = alloca [8 x i8], align 8                 ; 2 uses
@@ -146,7 +146,7 @@ bb.k:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden void @_RNCNvNtNtCs5aWdnx8MJVa_12derive_where6trait_10common_ord26build_incomparable_patterns_0B7_(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) %0, ptr nofree readnone captures(none) %1, ptr align 8 %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RNCNvNtNtCs5aWdnx8MJVa_12derive_where6trait_10common_ord26build_incomparable_patterns_0B7_(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) %0, ptr nofree readnone captures(none) %1, ptr align 8 %2) unnamed_addr #0 personality ptr @rust_eh_personality !guid !9 {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 4 uses
   %i.b = alloca [32 x i8], align 8                ; 4 uses
@@ -273,7 +273,7 @@ bb.v:                                             ; preds = %bb.f
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvNtNtCs5aWdnx8MJVa_12derive_where6trait_10common_ord14build_ord_body(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) %0, ptr %1, ptr nofree readonly align 8 captures(none) %2, ptr align 8 %3) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden void @_RNvNtNtCs5aWdnx8MJVa_12derive_where6trait_10common_ord14build_ord_body(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) %0, ptr %1, ptr nofree readonly align 8 captures(none) %2, ptr align 8 %3) unnamed_addr #1 personality ptr @rust_eh_personality !guid !10 {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 11 uses
   %i.b = alloca [32 x i8], align 8                ; 2 uses
@@ -303,7 +303,7 @@ bb.a:
   %i.z = alloca [32 x i8], align 8                ; 9 uses
   %i.aa = alloca [48 x i8], align 8               ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 32
-  %i.ac = load ptr, ptr %i.ab, align 8, !invariant.load !4, !nonnull !4
+  %i.ac = load ptr, ptr %i.ab, align 8, !invariant.load !5, !nonnull !5
   call void %i.ac(ptr nonnull sret([48 x i8]) align 8 %i.aa, ptr %1) #6
   invoke void @_RNvMCs1K5DUQUZc67_11proc_macro2NtB2_11TokenStream3new(ptr nonnull sret([32 x i8]) align 8 %i.y)
           to label %bb.d unwind label %bb.c
@@ -359,7 +359,7 @@ bb.l:                                             ; preds = %bb.k
 bb.m:                                             ; preds = %bb.l
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.z, ptr noundef nonnull align 8 dereferenceable(32) %i.y, i64 32, i1 false)
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %i.ag = load ptr, ptr %i.af, align 8, !invariant.load !4, !nonnull !4 ; 3 uses
+  %i.ag = load ptr, ptr %i.af, align 8, !invariant.load !5, !nonnull !5 ; 3 uses
   %i.ah = invoke ptr %i.ag(ptr %1)
           to label %bb.p unwind label %bb.o
 
@@ -581,8 +581,8 @@ bb.be:                                            ; preds = %bb.bd
 
 bb.bf:                                            ; preds = %bb.be
   %i.az = extractvalue { ptr, ptr } %i.ax, 1
-  store ptr %i.ay, ptr %i.h, align 8, !captures !5
-  store ptr %i.az, ptr %i.g, align 8, !captures !5
+  store ptr %i.ay, ptr %i.h, align 8, !captures !6
+  store ptr %i.az, ptr %i.g, align 8, !captures !6
   invoke void @_RNvMCs1K5DUQUZc67_11proc_macro2NtB2_11TokenStream3new(ptr nonnull sret([32 x i8]) align 8 %i.e)
           to label %bb.bj unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -728,7 +728,7 @@ bb.cl:                                            ; preds = %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvNtNtCs5aWdnx8MJVa_12derive_where6trait_10common_ord19build_ord_signature(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) %0, ptr align 8 %1, ptr align 8 %2, ptr align 8 %3, ptr %4, ptr align 8 %5, ptr align 8 %6) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden void @_RNvNtNtCs5aWdnx8MJVa_12derive_where6trait_10common_ord19build_ord_signature(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) %0, ptr align 8 %1, ptr align 8 %2, ptr align 8 %3, ptr %4, ptr align 8 %5, ptr align 8 %6) unnamed_addr #1 personality ptr @rust_eh_personality !guid !11 {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 4 uses
   %i.b = alloca [32 x i8], align 8                ; 2 uses
@@ -921,7 +921,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.er, ptr noundef nonnull align 8 dereferenceable(32) %i.eq, i64 32, i1 false)
   %i.eu = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %i.ev = load ptr, ptr %i.eu, align 8, !invariant.load !4, !nonnull !4 ; 5 uses
+  %i.ev = load ptr, ptr %i.eu, align 8, !invariant.load !5, !nonnull !5 ; 5 uses
   %i.ew = invoke ptr %i.ev(ptr %4)
           to label %bb.m unwind label %bb.l
 
@@ -1324,7 +1324,7 @@ bb.fx:                                            ; preds = %bb.fw
 bb.fy:                                            ; preds = %bb.fv
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.db, ptr noundef nonnull align 8 dereferenceable(32) %i.da, i64 32, i1 false)
   %i.hl = getelementptr inbounds nuw i8, ptr %5, i64 32
-  %i.hm = load ptr, ptr %i.hl, align 8, !invariant.load !4, !nonnull !4
+  %i.hm = load ptr, ptr %i.hl, align 8, !invariant.load !5, !nonnull !5
   invoke void %i.hm(ptr nonnull sret([48 x i8]) align 8 %i.cj, ptr %4)
           to label %bb.gb unwind label %bb.ga
 
@@ -1486,7 +1486,7 @@ bb.hc:                                            ; preds = %bb.ha
   %i.ig = extractvalue { ptr, ptr } %i.ie, 0
   %i.ih = extractvalue { ptr, ptr } %i.ie, 1
   %i.ii = getelementptr inbounds nuw i8, ptr %i.ih, i64 32
-  %i.ij = load ptr, ptr %i.ii, align 8, !invariant.load !4, !nonnull !4
+  %i.ij = load ptr, ptr %i.ii, align 8, !invariant.load !5, !nonnull !5
   invoke void %i.ij(ptr nonnull sret([48 x i8]) align 8 %i.bx, ptr %i.ig)
           to label %bb.hd unwind label %bb.gt
 
@@ -1889,7 +1889,7 @@ bb.nd:                                            ; preds = %bb.kr
   %i.jf = extractvalue { ptr, ptr } %i.iy, 0
   %i.jg = extractvalue { ptr, ptr } %i.iy, 1
   %i.jh = getelementptr inbounds nuw i8, ptr %i.jg, i64 32
-  %i.ji = load ptr, ptr %i.jh, align 8, !invariant.load !4, !nonnull !4
+  %i.ji = load ptr, ptr %i.jh, align 8, !invariant.load !5, !nonnull !5
   invoke void %i.ji(ptr nonnull sret([48 x i8]) align 8 %i.bd, ptr %i.jf)
           to label %bb.ne unwind label %bb.gt
 
@@ -2292,7 +2292,7 @@ bb.xh:                                            ; preds = %.thread, %bb.k, %bb
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc void @_RNvNtNtCs5aWdnx8MJVa_12derive_where6trait_10common_ord24build_discriminant_order(ptr noalias nofree nonnull writeonly align 8 captures(none) %0, ptr align 8 %1, ptr align 8 %2, ptr align 8 %3, i64 %4, ptr nonnull align 8 %5, ptr nonnull align 8 %6) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc void @_RNvNtNtCs5aWdnx8MJVa_12derive_where6trait_10common_ord24build_discriminant_order(ptr noalias nofree nonnull writeonly align 8 captures(none) %0, ptr align 8 %1, ptr align 8 %2, ptr align 8 %3, i64 %4, ptr nonnull align 8 %5, ptr nonnull align 8 %6) unnamed_addr #1 personality ptr @rust_eh_personality !guid !12 {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 4 uses
   %i.b = alloca [32 x i8], align 8                ; 2 uses
@@ -2695,7 +2695,7 @@ bb.cp:                                            ; preds = %bb.cm
           to label %bb.cc unwind label %.thread53.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.cq:                                            ; preds = %bb.cd
-  store ptr %i.cc, ptr %i.ao, align 8, !captures !5
+  store ptr %i.cc, ptr %i.ao, align 8, !captures !6
   %i.cn = load i64, ptr %.sroa.311.0..sroa_idx, align 8
   %i.co = add i64 %i.cn, 1                        ; 2 uses
   store i64 %i.co, ptr %.sroa.311.0..sroa_idx, align 8
@@ -2773,7 +2773,7 @@ bb.dd:                                            ; preds = %bb.dc
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvNtNtCs5aWdnx8MJVa_12derive_where6trait_10common_ord26build_incomparable_pattern(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) %0, ptr align 8 %1, i64 %2) unnamed_addr #1 personality ptr @rust_eh_personality {
+define hidden void @_RNvNtNtCs5aWdnx8MJVa_12derive_where6trait_10common_ord26build_incomparable_pattern(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) %0, ptr align 8 %1, i64 %2) unnamed_addr #1 personality ptr @rust_eh_personality !guid !13 {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 6 uses
   %i.b = alloca [32 x i8], align 8                ; 5 uses
@@ -2917,7 +2917,7 @@ bb.r:                                             ; preds = %bb.d, %bb.b, %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden zeroext i1 @_RNvXs1_NtNtNtCshzWfHUSfYae_4core3ops8function5implsQNCNvNtNtCs5aWdnx8MJVa_12derive_where6trait_10common_ord19build_ord_signatures_0INtB7_5FnMutTRRNtNtBW_4data4DataEE8call_mutBW_(ptr nofree readnone align 8 captures(none) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #1 {
+define hidden zeroext i1 @_RNvXs1_NtNtNtCshzWfHUSfYae_4core3ops8function5implsQNCNvNtNtCs5aWdnx8MJVa_12derive_where6trait_10common_ord19build_ord_signatures_0INtB7_5FnMutTRRNtNtBW_4data4DataEE8call_mutBW_(ptr nofree readnone align 8 captures(none) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #1 !guid !14 {
 bb.a:
   %.val = load ptr, ptr %1, align 8
   %i.a = tail call zeroext i1 @_RNvMNtCs5aWdnx8MJVa_12derive_where4dataNtB2_4Data15is_incomparable(ptr align 8 %.val)
@@ -2926,7 +2926,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden zeroext i1 @_RNvXs1_NtNtNtCshzWfHUSfYae_4core3ops8function5implsQNCNvNtNtCs5aWdnx8MJVa_12derive_where6trait_10common_ord26build_incomparable_pattern0INtB7_5FnMutTRRNtNtBW_4data4DataEE8call_mutBW_(ptr nofree readnone align 8 captures(none) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #1 {
+define hidden zeroext i1 @_RNvXs1_NtNtNtCshzWfHUSfYae_4core3ops8function5implsQNCNvNtNtCs5aWdnx8MJVa_12derive_where6trait_10common_ord26build_incomparable_pattern0INtB7_5FnMutTRRNtNtBW_4data4DataEE8call_mutBW_(ptr nofree readnone align 8 captures(none) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #1 !guid !15 {
 bb.a:
   %.val = load ptr, ptr %1, align 8
   %i.a = tail call zeroext i1 @_RNvMNtCs5aWdnx8MJVa_12derive_where4dataNtB2_4Data15is_incomparable(ptr align 8 %.val)
@@ -3288,6 +3288,16 @@ attributes #10 = { noreturn }
 !1 = !{i32 2, !"RtLibUseGOT", i32 1}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"rustc version 1.99.0-nightly (73dc9167f 2026-08-01)"}
-!4 = !{}
-!5 = !{!"address", !"read_provenance"}
+!4 = !{i64 8076898689528867176}
+!5 = !{}
+!6 = !{!"address", !"read_provenance"}
+!7 = !{i64 -4560671297895873954}
+!8 = !{i64 -5597476635121529500}
+!9 = !{i64 6988924757362201457}
+!10 = !{i64 8727859729976025025}
+!11 = !{i64 -7674278147941280260}
+!12 = !{i64 -5583331077649763483}
+!13 = !{i64 -7135129488777174072}
+!14 = !{i64 -1390781848674166742}
+!15 = !{i64 -7060120193306824259}
 end_hunk_4

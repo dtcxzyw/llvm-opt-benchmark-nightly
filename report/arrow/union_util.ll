@@ -6,7 +6,7 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: mustprogress uwtable
-define noundef i64 @_ZN5arrow10union_util27LogicalSparseUnionNullCountERKNS_9ArraySpanE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(128) %0) local_unnamed_addr #0 {
+define noundef i64 @_ZN5arrow10union_util27LogicalSparseUnionNullCountERKNS_9ArraySpanE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(128) %0) local_unnamed_addr #0 !guid !49 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !16
@@ -107,7 +107,7 @@ _ZNK5arrow9ArraySpan6IsNullEl.exit:               ; preds = %bb.c, %bb.e, %bb.f,
 }
 
 ; Function Attrs: mustprogress uwtable
-define noundef i64 @_ZN5arrow10union_util26LogicalDenseUnionNullCountERKNS_9ArraySpanE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(128) %0) local_unnamed_addr #0 {
+define noundef i64 @_ZN5arrow10union_util26LogicalDenseUnionNullCountERKNS_9ArraySpanE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(128) %0) local_unnamed_addr #0 !guid !51 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8, !tbaa !16   ; 2 uses
@@ -211,7 +211,7 @@ _ZNK5arrow9ArraySpan6IsNullEl.exit:               ; preds = %bb.c, %bb.e, %bb.f,
   %i.bh = add nuw nsw i64 %.019, 1                ; 2 uses
   %i.bi = load i64, ptr %i.i, align 8, !tbaa !21
   %i.bj = icmp slt i64 %i.bh, %i.bi
-  br i1 %i.bj, label %bb.b, label %._crit_edge, !llvm.loop !49
+  br i1 %i.bj, label %bb.b, label %._crit_edge, !llvm.loop !50
 }
 
 declare noundef zeroext i1 @_ZNK5arrow9ArraySpan17IsNullSparseUnionEl(ptr noundef nonnull align 8 dereferenceable(128), i64 noundef) local_unnamed_addr #1
@@ -276,5 +276,7 @@ attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "t
 !46 = !{!15, !9, i64 16}
 !47 = !{!"llvm.loop.mustprogress"}
 !48 = distinct !{!48, !47}
-!49 = distinct !{!49, !47}
+!49 = !{i64 -346993769587394930}
+!50 = distinct !{!50, !47}
+!51 = !{i64 4964935373642704779}
 end_hunk_0

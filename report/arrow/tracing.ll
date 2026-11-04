@@ -8,20 +8,20 @@ target triple = "x86_64-pc-linux-gnu"
 @_ZN5arrow4util7tracing4SpanC1Ev = unnamed_addr alias void (ptr), ptr @_ZN5arrow4util7tracing4SpanC2Ev
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define void @_ZN5arrow4util7tracing4SpanC2Ev(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(8) initializes((0, 8)) %0) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define void @_ZN5arrow4util7tracing4SpanC2Ev(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(8) initializes((0, 8)) %0) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 !guid !7 {
 bb.a:
-  store ptr null, ptr %0, align 8, !tbaa !10
+  store ptr null, ptr %0, align 8, !tbaa !11
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define noundef zeroext i1 @_ZNK5arrow4util7tracing4Span5validEv(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(8) %0) local_unnamed_addr #1 align 2 {
+define noundef zeroext i1 @_ZNK5arrow4util7tracing4Span5validEv(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(8) %0) local_unnamed_addr #1 align 2 !guid !12 {
 bb.a:
   ret i1 false
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define void @_ZN5arrow4util7tracing4Span5resetEv(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(8) %0) local_unnamed_addr #1 align 2 {
+define void @_ZN5arrow4util7tracing4Span5resetEv(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(8) %0) local_unnamed_addr #1 align 2 !guid !13 {
 bb.a:
   ret void
 }
@@ -42,8 +42,11 @@ attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 !4 = !{!"omnipotent char", !3, i64 0}
 !5 = !{!"int", !4, i64 0}
 !6 = !{!5, !5, i64 0}
-!7 = !{!"any pointer", !4, i64 0}
-!8 = !{!"p1 _ZTSN5arrow4util7tracing11SpanDetailsE", !7, i64 0}
-!9 = !{!"_ZTSSt10_Head_baseILm0EPN5arrow4util7tracing11SpanDetailsELb0EE", !8, i64 0}
-!10 = !{!9, !8, i64 0}
+!7 = !{i64 1246394779070909154}
+!8 = !{!"any pointer", !4, i64 0}
+!9 = !{!"p1 _ZTSN5arrow4util7tracing11SpanDetailsE", !8, i64 0}
+!10 = !{!"_ZTSSt10_Head_baseILm0EPN5arrow4util7tracing11SpanDetailsELb0EE", !9, i64 0}
+!11 = !{!10, !9, i64 0}
+!12 = !{i64 2692594374432982032}
+!13 = !{i64 8287672020243336876}
 end_hunk_0

@@ -14,29 +14,29 @@ target triple = "x86_64-pc-linux-gnu"
 %struct.__pthread_internal_list = type { ptr, ptr }
 %struct.atomic_b_t = type { i8 }
 
-@je_opt_prof_stats = hidden local_unnamed_addr global i8 0, align 1
-@je_prof_stats_mtx = hidden local_unnamed_addr global %struct.malloc_mutex_s zeroinitializer, align 8
+@je_opt_prof_stats = hidden local_unnamed_addr global i8 0, align 1, !guid !11
+@je_prof_stats_mtx = hidden local_unnamed_addr global %struct.malloc_mutex_s zeroinitializer, align 8, !guid !12
 
 ; Function Attrs: mustprogress nofree norecurse noreturn nosync nounwind willreturn memory(none) uwtable
-define hidden void @je_prof_stats_inc(ptr nofree noundef readnone captures(none) %0, i32 noundef %1, i64 noundef %2) local_unnamed_addr #0 {
+define hidden void @je_prof_stats_inc(ptr nofree noundef readnone captures(none) %0, i32 noundef %1, i64 noundef %2) local_unnamed_addr #0 !guid !13 {
 bb.a:
   unreachable
 }
 
 ; Function Attrs: mustprogress nofree norecurse noreturn nosync nounwind willreturn memory(none) uwtable
-define hidden void @je_prof_stats_dec(ptr nofree noundef readnone captures(none) %0, i32 noundef %1, i64 noundef %2) local_unnamed_addr #0 {
+define hidden void @je_prof_stats_dec(ptr nofree noundef readnone captures(none) %0, i32 noundef %1, i64 noundef %2) local_unnamed_addr #0 !guid !14 {
 bb.a:
   unreachable
 }
 
 ; Function Attrs: mustprogress nofree norecurse noreturn nosync nounwind willreturn memory(none) uwtable
-define hidden void @je_prof_stats_get_live(ptr nofree noundef readnone captures(none) %0, i32 noundef %1, ptr nofree noundef readnone captures(none) %2) local_unnamed_addr #0 {
+define hidden void @je_prof_stats_get_live(ptr nofree noundef readnone captures(none) %0, i32 noundef %1, ptr nofree noundef readnone captures(none) %2) local_unnamed_addr #0 !guid !15 {
 bb.a:
   unreachable
 }
 
 ; Function Attrs: mustprogress nofree norecurse noreturn nosync nounwind willreturn memory(none) uwtable
-define hidden void @je_prof_stats_get_accum(ptr nofree noundef readnone captures(none) %0, i32 noundef %1, ptr nofree noundef readnone captures(none) %2) local_unnamed_addr #0 {
+define hidden void @je_prof_stats_get_accum(ptr nofree noundef readnone captures(none) %0, i32 noundef %1, ptr nofree noundef readnone captures(none) %2) local_unnamed_addr #0 !guid !16 {
 bb.a:
   unreachable
 }
@@ -58,4 +58,10 @@ attributes #0 = { mustprogress nofree norecurse noreturn nosync nounwind willret
 !8 = !{!"omnipotent char", !7, i64 0}
 !9 = !{!"int", !8, i64 0}
 !10 = !{!9, !9, i64 0}
+!11 = !{i64 5424167317417471795}
+!12 = !{i64 -8622449414804254475}
+!13 = !{i64 -8200582718229599064}
+!14 = !{i64 6682684594511968856}
+!15 = !{i64 -2863011825197750146}
+!16 = !{i64 8112789125338471849}
 end_hunk_0
