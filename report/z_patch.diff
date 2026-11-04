@@ -1,0 +1,1094 @@
+diff --git a/llvm/include/llvm/Transforms/Scalar/SROA.h b/llvm/include/llvm/Transforms/Scalar/SROA.h
+index 3c0e99f6dee19b..dfbc58826d4b53 100644
+--- a/llvm/include/llvm/Transforms/Scalar/SROA.h
++++ b/llvm/include/llvm/Transforms/Scalar/SROA.h
+@@ -26,9 +26,12 @@ struct SROAOptions {
+ 
+   CFGOption CFG;
+   bool AggregateToVector;
++  bool UnfoldTwoSlotGEPs;
+ 
+-  SROAOptions(CFGOption CFG = PreserveCFG, bool AggregateToVector = false)
+-      : CFG(CFG), AggregateToVector(AggregateToVector) {}
++  SROAOptions(CFGOption CFG = PreserveCFG, bool AggregateToVector = false,
++              bool UnfoldTwoSlotGEPs = false)
++      : CFG(CFG), AggregateToVector(AggregateToVector),
++        UnfoldTwoSlotGEPs(UnfoldTwoSlotGEPs) {}
+ };
+ 
+ class SROAPass : public OptionalPassInfoMixin<SROAPass> {
+diff --git a/llvm/lib/Passes/PassBuilder.cpp b/llvm/lib/Passes/PassBuilder.cpp
+index 7daabf9b38cd28..0538db76341b8a 100644
+--- a/llvm/lib/Passes/PassBuilder.cpp
++++ b/llvm/lib/Passes/PassBuilder.cpp
+@@ -1504,15 +1504,21 @@ Expected<SROAOptions> parseSROAOptions(StringRef Params) {
+       SawCFGOption = true;
+     } else if (ParamName == "aggregate-to-vector") {
+       Result.AggregateToVector = true;
++    } else if (ParamName == "unfold-two-slot-geps") {
++      Result.UnfoldTwoSlotGEPs = true;
+     } else {
+       return make_error<StringError>(
+           formatv("invalid SROA pass parameter '{}' (expected preserve-cfg, "
+-                  "modify-cfg, or aggregate-to-vector)",
++                  "modify-cfg, aggregate-to-vector, or unfold-two-slot-geps)",
+                   ParamName)
+               .str(),
+           inconvertibleErrorCode());
+     }
+   }
++  if (Result.UnfoldTwoSlotGEPs && Result.CFG == SROAOptions::PreserveCFG)
++    return make_error<StringError>(
++        "SROA pass parameter unfold-two-slot-geps requires modify-cfg",
++        inconvertibleErrorCode());
+   return Result;
+ }
+ 
+diff --git a/llvm/lib/Passes/PassBuilderPipelines.cpp b/llvm/lib/Passes/PassBuilderPipelines.cpp
+index d1229a93ecf275..415100fb63a72f 100644
+--- a/llvm/lib/Passes/PassBuilderPipelines.cpp
++++ b/llvm/lib/Passes/PassBuilderPipelines.cpp
+@@ -468,7 +468,9 @@ PassBuilder::buildO1FunctionSimplificationPipeline(OptimizationLevel Level,
+                                               /*UseMemorySSA=*/false));
+ 
+   // Delete small array after loop unroll.
+-  FPM.addPass(SROAPass(SROAOptions::ModifyCFG));
++  FPM.addPass(SROAPass(SROAOptions(SROAOptions::ModifyCFG,
++                                   /*AggregateToVector=*/false,
++                                   /*UnfoldTwoSlotGEPs=*/true)));
+ 
+   // Specially optimize memory movement as it doesn't look like dataflow in SSA.
+   FPM.addPass(MemCpyOptPass());
+@@ -651,7 +653,9 @@ PassBuilder::buildFunctionSimplificationPipeline(OptimizationLevel Level,
+                                               /*UseMemorySSA=*/false));
+ 
+   // Delete small array after loop unroll.
+-  FPM.addPass(SROAPass(SROAOptions::ModifyCFG));
++  FPM.addPass(SROAPass(SROAOptions(SROAOptions::ModifyCFG,
++                                   /*AggregateToVector=*/false,
++                                   /*UnfoldTwoSlotGEPs=*/true)));
+ 
+   // Try vectorization/scalarization transforms that are both improvements
+   // themselves and can allow further folds with GVN and InstCombine.
+diff --git a/llvm/lib/Passes/PassRegistry.def b/llvm/lib/Passes/PassRegistry.def
+index eb7eddfe9eae86..9c6dfb2521d321 100644
+--- a/llvm/lib/Passes/PassRegistry.def
++++ b/llvm/lib/Passes/PassRegistry.def
+@@ -731,7 +731,8 @@ FUNCTION_PASS_WITH_PARAMS(
+ FUNCTION_PASS_WITH_PARAMS(
+     "sroa", "SROAPass",
+     [](SROAOptions PreserveCFG) { return SROAPass(PreserveCFG); },
+-    parseSROAOptions, "preserve-cfg;modify-cfg;aggregate-to-vector")
++    parseSROAOptions,
++    "preserve-cfg;modify-cfg;aggregate-to-vector;unfold-two-slot-geps")
+ FUNCTION_PASS_WITH_PARAMS(
+     "structurizecfg", "StructurizeCFG",
+     [](bool SkipUniformRegions) {
+diff --git a/llvm/lib/Transforms/Scalar/SROA.cpp b/llvm/lib/Transforms/Scalar/SROA.cpp
+index d967fbdffdc5e5..7ada2e1a075d07 100644
+--- a/llvm/lib/Transforms/Scalar/SROA.cpp
++++ b/llvm/lib/Transforms/Scalar/SROA.cpp
+@@ -116,6 +116,8 @@ STATISTIC(
+     "Number of stores rewritten into predicated stores to allow promotion");
+ STATISTIC(NumDeleted, "Number of instructions deleted");
+ STATISTIC(NumVectorized, "Number of vectorized aggregates");
++STATISTIC(NumTwoSlotGEPsUnfolded,
++          "Number of variable-index GEPs unfolded into selects");
+ 
+ namespace {
+ 
+@@ -174,6 +176,7 @@ class SROA {
+   AssumptionCache *const AC;
+   const bool PreserveCFG;
+   const bool AggregateToVector;
++  const bool UnfoldTwoSlotGEPs;
+ 
+   /// Worklist of alloca instructions to simplify.
+   ///
+@@ -273,7 +276,8 @@ class SROA {
+        SROAOptions Options)
+       : C(C), DTU(DTU), AC(AC),
+         PreserveCFG(Options.CFG == SROAOptions::PreserveCFG),
+-        AggregateToVector(Options.AggregateToVector) {}
++        AggregateToVector(Options.AggregateToVector),
++        UnfoldTwoSlotGEPs(Options.UnfoldTwoSlotGEPs) {}
+ 
+   /// Main run method used by both the SROAPass and by the legacy pass.
+   std::pair<bool /*Changed*/, bool /*CFGChanged*/> runSROA(Function &F);
+@@ -287,6 +291,7 @@ class SROA {
+   bool splitAlloca(AllocaInst &AI, AllocaSlices &AS);
+   bool propagateStoredValuesToLoads(AllocaInst &AI, AllocaSlices &AS);
+   std::pair<bool /*Changed*/, bool /*CFGChanged*/> runOnAlloca(AllocaInst &AI);
++  bool unfoldTwoSlotGEPsOfAlloca(AllocaInst &AI);
+   void clobberUse(Use &U);
+   bool deleteDeadInstructions(SmallPtrSetImpl<AllocaInst *> &DeletedAllocas);
+   bool promoteAllocas();
+@@ -6399,6 +6404,279 @@ bool SROA::propagateStoredValuesToLoads(AllocaInst &AI, AllocaSlices &AS) {
+   return true;
+ }
+ 
++namespace {
++
++/// A GEP that, together with its loads and stores, only accesses its alloca at
++/// one of two known offsets at a known size.
++///
++/// Running example:
++///
++///     %alloca = alloca [2 x i32], align 4
++///     %gep = gep nusw [2 x i32], ptr %alloca, i64 0, i64 %idx
++///     %load = load i32, ptr %gep
++///     store i32 123, ptr %gep
++struct TwoSlotGEP {
++  /// The GEP that indexes its alloca in `Offset0` or `Offset1`, and with
++  /// loads/stores of size `Size`. %gep in the example.
++  GetElementPtrInst *const GEP;
++
++  /// The index value of the GEP. In the example, this is %idx.
++  Value *const Idx;
++
++  /// The value of `Idx` that accesses `Offset1`. 1 in the example.
++  ConstantInt *const Idx1;
++
++  /// Byte offsets of the slots. 0 and 4 in the example.
++  const uint64_t Offset0, Offset1;
++
++  /// The size of loads and stores through this GEP. 4 in the example.
++  const uint64_t Size;
++};
++
++} // end anonymous namespace
++
++/// See if the GEP, with loads and stores through it, can only index the alloca
++/// at two offsets.
++static std::optional<TwoSlotGEP> analyzeTwoSlotGEP(GetElementPtrInst &GEP,
++                                                   uint64_t AllocSize,
++                                                   const DataLayout &DL) {
++  // Known index GEPs are covered as a part of the known-offset alloca
++  // splitting. nusw makes it easier to check bounds below.
++  if (GEP.hasAllConstantIndices() || !GEP.hasNoUnsignedSignedWrap() ||
++      GEP.getType()->isVectorTy())
++    return std::nullopt;
++
++  unsigned IdxWidth = DL.getIndexTypeSizeInBits(GEP.getType());
++  SmallMapVector<Value *, APInt, 4> Idxs;
++  APInt ConstOffset(IdxWidth, 0);
++
++  if (!GEP.collectOffset(DL, IdxWidth, Idxs, ConstOffset) || Idxs.size() != 1)
++    return std::nullopt;
++
++  auto [Idx, Scale] = Idxs.front();
++  if (Scale.isZero())
++    return std::nullopt;
++
++  // The GEP must only be used by simple (non-atomic, non-volatile) loads and
++  // stores.
++  uint64_t LoadStoreSize = 0;
++  for (User *U : GEP.users()) {
++    if (auto *LI = dyn_cast<LoadInst>(U)) {
++      if (!LI->isSimple())
++        return std::nullopt;
++    } else if (auto *SI = dyn_cast<StoreInst>(U)) {
++      if (!SI->isSimple() || SI->getValueOperand() == &GEP)
++        return std::nullopt;
++    } else {
++      return std::nullopt;
++    }
++
++    TypeSize AccessSize = DL.getTypeStoreSize(getLoadStoreType(U));
++
++    if (AccessSize.isScalable())
++      return std::nullopt;
++
++    if (!LoadStoreSize)
++      LoadStoreSize = AccessSize.getFixedValue();
++
++    // With differently sized accesses we could duplicate the GEPs for each size
++    // class, but for now we keep it simple.
++    if (LoadStoreSize != AccessSize.getFixedValue())
++      return std::nullopt;
++  }
++
++  if (!LoadStoreSize)
++    return std::nullopt;
++
++  int64_t C = ConstOffset.getSExtValue();
++  int64_t S = Scale.getSExtValue();
++
++  // The accesses are in bounds iff
++  // `0 <= Offset + (Scale * Idx) <= AllocSize - AccessSize`.
++  int64_t IdxMin = divideCeilSigned(-C, S);
++  int64_t IdxMax =
++      divideFloorSigned((int64_t)(AllocSize - LoadStoreSize) - C, S);
++  auto *IdxTy = cast<IntegerType>(Idx->getType());
++  if (IdxMax - IdxMin != 1) {
++    // Alloca can be accessed with more than two index values.
++    return std::nullopt;
++  }
++
++  // If the valid Idx values do not fit into the variable as sign extended, do
++  // not transform.
++  // We could still transform (we know that at most one of the indices are
++  // valid, maybe none of them are), but it doesn't matter what we do here in
++  // practice.
++  unsigned IdxBits = IdxTy->getBitWidth();
++  if (!isIntN(IdxBits, IdxMin) || !isIntN(IdxBits, IdxMax))
++    return std::nullopt;
++
++  return TwoSlotGEP{&GEP,
++                    Idx,
++                    ConstantInt::getSigned(IdxTy, IdxMax),
++                    uint64_t(C + S * IdxMin),
++                    uint64_t(C + S * IdxMax),
++                    LoadStoreSize};
++}
++
++namespace {
++
++/// Visitor to analyze an alloca's GEPs, and loads and stores, and collect
++/// two-slot GEPs and known-offset accesses.
++///
++/// Because we only want to split an alloca if the smaller allocas will be
++/// promoted, we give up and return early when we see non-simple loads/stores(*)
++/// or dynamic sized uses other than two-slot GEPs.
++///
++/// (*): We could extend this to handle some of atomic loads and stores, but for
++/// now this should cover majority of the cases.
++class TwoSlotAllocaFinder : public PtrUseVisitor<TwoSlotAllocaFinder> {
++  friend class PtrUseVisitor<TwoSlotAllocaFinder>;
++  friend class InstVisitor<TwoSlotAllocaFinder>;
++
++  using Base = PtrUseVisitor<TwoSlotAllocaFinder>;
++
++public:
++  /// GEPs can only access the alloca in two offsets.
++  SmallVector<TwoSlotGEP, 2> TwoSlotGEPs;
++
++  TwoSlotAllocaFinder(const DataLayout &DL, uint64_t AllocSize)
++      : Base(DL), AllocSize(AllocSize) {}
++
++private:
++  const uint64_t AllocSize;
++
++  void insertAccess(Instruction &I, TypeSize Size) {
++    if (!IsOffsetKnown || Size.isScalable() || Offset.uge(AllocSize) ||
++        Size.getFixedValue() > AllocSize - Offset.getZExtValue())
++      return PI.setAborted(&I);
++  }
++
++  void visitGetElementPtrInst(GetElementPtrInst &GEPI) {
++    if (IsOffsetKnown && Offset.isZero()) {
++      if (auto TS = analyzeTwoSlotGEP(GEPI, AllocSize, DL)) {
++        TwoSlotGEPs.push_back(*TS);
++        return;
++      }
++    }
++
++    Base::visitGetElementPtrInst(GEPI);
++  }
++
++  void visitLoadInst(LoadInst &LI) {
++    if (!LI.isSimple())
++      return PI.setAborted(&LI);
++
++    Type *Ty = LI.getType();
++    insertAccess(LI, DL.getTypeStoreSize(Ty));
++  }
++
++  void visitStoreInst(StoreInst &SI) {
++    Value *ValOp = SI.getValueOperand();
++
++    if (ValOp == *U)
++      return PI.setEscapedAndAborted(&SI);
++
++    if (!SI.isSimple())
++      return PI.setAborted(&SI);
++
++    Type *Ty = ValOp->getType();
++    insertAccess(SI, DL.getTypeStoreSize(Ty));
++  }
++
++  void visitMemSetInst(MemSetInst &II) {
++    auto *Length = dyn_cast<ConstantInt>(II.getLength());
++
++    if (!Length || II.isVolatile())
++      return PI.setAborted(&II);
++
++    insertAccess(II, TypeSize::getFixed(Length->getLimitedValue()));
++  }
++
++  void visitMemTransferInst(MemTransferInst &II) {
++    auto *Length = dyn_cast<ConstantInt>(II.getLength());
++    if (!Length || II.isVolatile())
++      return PI.setAborted(&II);
++
++    insertAccess(II, TypeSize::getFixed(Length->getLimitedValue()));
++  }
++
++  void visitInstruction(Instruction &I) { PI.setAborted(&I); }
++};
++
++} // end anonymous namespace
++
++/// %gep = gep nusw [2 x i32], ptr %alloca, i64 0, i64 %idx
++/// ==>
++/// %gep.sroa.idx = icmp eq i64 %idx, <Idx1>
++/// %gep.sroa.slot0 = gep nusw i8, ptr %alloca, i64 <Offset0>
++/// %gep.sroa.slot1 = gep nusw i8, ptr %alloca, i64 <Offset1>
++/// %gep.sroa.sel = select i1 %gep.sroa.idx,
++///                   ptr %gep.sroa.slot1, ptr %gep.sroa.slot0
++static SelectInst *unfoldTwoSlotGEP(const TwoSlotGEP &TS, IRBuilderTy &IRB) {
++  GetElementPtrInst *GEP = TS.GEP;
++  IRB.SetInsertPoint(GEP);
++  Type *OffsetTy = GEP->getDataLayout().getIndexType(GEP->getType());
++  auto CreateSlot = [&](uint64_t Offset, const Twine &Name) {
++    return IRB.CreatePtrAdd(GEP->getPointerOperand(),
++                            ConstantInt::get(OffsetTy, Offset),
++                            GEP->getName() + Name, GEP->getNoWrapFlags());
++  };
++  Value *Cond = IRB.CreateICmpEQ(TS.Idx, TS.Idx1, GEP->getName() + ".sroa.idx");
++  Value *Slot0 = CreateSlot(TS.Offset0, ".sroa.slot0");
++  Value *Slot1 = CreateSlot(TS.Offset1, ".sroa.slot1");
++  Value *Sel = IRB.CreateSelectWithUnknownProfile(
++      Cond, Slot1, Slot0, DEBUG_TYPE, GEP->getName() + ".sroa.sel");
++  GEP->replaceAllUsesWith(Sel);
++  GEP->eraseFromParent();
++  ++NumTwoSlotGEPsUnfolded;
++  return cast<SelectInst>(Sel);
++}
++
++/// Find two-slot GEPs of the alloca and unfold them to selects of GEPs, to
++/// allow promotion. Example:
++///
++///     %alloca = alloca [2 x i32], align 4
++///     ...
++///     %gep = gep nusw [2 x i32], ptr %alloca, i64 0, i64 %idx
++///     %c = load i32, ptr %gep, align 4
++///     ...
++///     store i32 123, ptr %gep
++///
++/// Here we know that `%idx` can be 0 or 1 without UB. To allow promoting
++/// `%alloca`, we unfold the GEP as shown in `unfoldTwoSlotGEP` to:
++///
++///     %gep.sroa.idx = icmp eq i64 %idx, 1
++///     %gep.sroa.slot0 = gep nusw i8, ptr %alloca, i64 0
++///     %gep.sroa.slot1 = gep nusw i8, ptr %alloca, i64 4
++///     %gep.sroa.sel = select i1 %gep.sroa.idx,
++///                       ptr %gep.sroa.slot1, ptr %gep.sroa.slot0
++///
++/// Rest of the pass then processes the alloca, and speculates/predicates loads
++/// and stores through the select, allowing splitting and promotion.
++bool SROA::unfoldTwoSlotGEPsOfAlloca(AllocaInst &AI) {
++  const DataLayout &DL = AI.getDataLayout();
++
++  std::optional<TypeSize> Size = AI.getAllocationSize(DL);
++  if (AI.isArrayAllocation() || !Size || Size->isScalable() || Size->isZero())
++    return false;
++
++  TwoSlotAllocaFinder Finder(DL, Size->getFixedValue());
++  TwoSlotAllocaFinder::PtrInfo PtrI = Finder.visitPtr(AI);
++
++  if (PtrI.isEscaped() || PtrI.isAborted())
++    return false;
++
++  if (Finder.TwoSlotGEPs.empty())
++    return false;
++
++  IRBuilderTy IRB(&AI);
++  for (const TwoSlotGEP &TS : Finder.TwoSlotGEPs)
++    unfoldTwoSlotGEP(TS, IRB);
++
++  return true;
++}
++
+ /// Analyze an alloca for SROA.
+ ///
+ /// This analyzes the alloca to ensure we can reason about it, builds
+@@ -6425,8 +6703,16 @@ SROA::runOnAlloca(AllocaInst &AI) {
+   if (AI.isArrayAllocation() || !Size || Size->isScalable() || Size->isZero())
+     return {Changed, CFGChanged};
+ 
+-  // First, split any FCA loads and stores touching this alloca to promote
+-  // better splitting and promotion opportunities.
++  // Split GEPs of the alloca that indexes one of two possible offsets into
++  // selects of constant offset GEPs, to allow splitting and promotion.
++  // Unfolding the GEPs is only useful when we can split the alloca and then
++  // promote the smaller allocas. Promotion requires predication, which modified
++  // the CFG, so only unfold when we're allowed to modify the CFG.
++  if (UnfoldTwoSlotGEPs && !PreserveCFG)
++    Changed |= unfoldTwoSlotGEPsOfAlloca(AI);
++
++  // Split any FCA loads and stores touching this alloca to promote better
++  // splitting and promotion opportunities.
+   IRBuilderTy IRB(&AI);
+   AggLoadStoreRewriter AggRewriter(DL, IRB);
+   Changed |= AggRewriter.rewrite(AI);
+@@ -6638,6 +6924,8 @@ void SROAPass::printPipeline(
+                                                  : "modify-cfg");
+   if (Options.AggregateToVector)
+     OS << ";aggregate-to-vector";
++  if (Options.UnfoldTwoSlotGEPs)
++    OS << ";unfold-two-slot-geps";
+   OS << '>';
+ }
+ 
+diff --git a/llvm/test/Transforms/PhaseOrdering/X86/SROA-after-final-loop-unrolling-2.ll b/llvm/test/Transforms/PhaseOrdering/X86/SROA-after-final-loop-unrolling-2.ll
+index 51ea03f465c7e9..497cc4a012db12 100644
+--- a/llvm/test/Transforms/PhaseOrdering/X86/SROA-after-final-loop-unrolling-2.ll
++++ b/llvm/test/Transforms/PhaseOrdering/X86/SROA-after-final-loop-unrolling-2.ll
+@@ -28,30 +28,23 @@ define dso_local void @foo(i32 noundef %arg, ptr noundef nonnull align 4 derefer
+ ; CHECK-NEXT:    [[ARG_OFF:%.*]] = add i32 [[ARG]], 127
+ ; CHECK-NEXT:    [[TMP0:%.*]] = icmp ult i32 [[ARG_OFF]], 255
+ ; CHECK-NEXT:    br i1 [[TMP0]], label %[[BB12:.*]], label %[[BB13:.*]]
+-; CHECK:       [[BB12_LOOPEXIT:.*]]:
+-; CHECK-NEXT:    [[I3_SROA_8_0_INSERT_EXT:%.*]] = zext i32 [[I21_3:%.*]] to i64
+-; CHECK-NEXT:    [[I3_SROA_8_0_INSERT_SHIFT:%.*]] = shl nuw i64 [[I3_SROA_8_0_INSERT_EXT]], 32
+-; CHECK-NEXT:    [[I3_SROA_0_0_INSERT_EXT:%.*]] = zext i32 [[I21_2:%.*]] to i64
+-; CHECK-NEXT:    [[I3_SROA_0_0_INSERT_INSERT:%.*]] = or disjoint i64 [[I3_SROA_8_0_INSERT_SHIFT]], [[I3_SROA_0_0_INSERT_EXT]]
+-; CHECK-NEXT:    br label %[[BB12]]
+ ; CHECK:       [[BB12]]:
+-; CHECK-NEXT:    [[TMP1:%.*]] = phi i64 [ [[I3_SROA_0_0_INSERT_INSERT]], %[[BB12_LOOPEXIT]] ], [ 180388626456, %[[BB]] ]
+-; CHECK-NEXT:    store i64 [[TMP1]], ptr [[ARG1]], align 4, !tbaa [[CHAR_TBAA5:![0-9]+]]
++; CHECK-NEXT:    [[I3_SROA_0_0_LCSSA:%.*]] = phi i32 [ 24, %[[BB]] ], [ [[I21:%.*]], %[[BB13]] ]
++; CHECK-NEXT:    [[I3_SROA_5_0_LCSSA:%.*]] = phi i32 [ 42, %[[BB]] ], [ [[I21_1:%.*]], %[[BB13]] ]
++; CHECK-NEXT:    store i32 [[I3_SROA_0_0_LCSSA]], ptr [[ARG1]], align 4, !tbaa [[CHAR_TBAA5:![0-9]+]]
++; CHECK-NEXT:    [[ARG1_SROA_IDX:%.*]] = getelementptr inbounds nuw i8, ptr [[ARG1]], i64 4
++; CHECK-NEXT:    store i32 [[I3_SROA_5_0_LCSSA]], ptr [[ARG1_SROA_IDX]], align 4, !tbaa [[CHAR_TBAA5]]
+ ; CHECK-NEXT:    ret void
+ ; CHECK:       [[BB13]]:
+-; CHECK-NEXT:    [[I3_SROA_8_0:%.*]] = phi i32 [ [[I21_3]], %[[BB13]] ], [ 42, %[[BB]] ]
+-; CHECK-NEXT:    [[I3_SROA_0_0:%.*]] = phi i32 [ [[I21_2]], %[[BB13]] ], [ 24, %[[BB]] ]
+ ; CHECK-NEXT:    [[I4_05:%.*]] = phi i32 [ [[I24_3:%.*]], %[[BB13]] ], [ 0, %[[BB]] ]
+-; CHECK-NEXT:    [[I21:%.*]] = mul nsw i32 [[I3_SROA_0_0]], [[I4_05]]
++; CHECK-NEXT:    [[I3_SROA_5_09:%.*]] = phi i32 [ [[I21_1]], %[[BB13]] ], [ 42, %[[BB]] ]
++; CHECK-NEXT:    [[I3_SROA_0_08:%.*]] = phi i32 [ [[I21]], %[[BB13]] ], [ 24, %[[BB]] ]
++; CHECK-NEXT:    [[I21]] = mul nuw nsw i32 [[I3_SROA_0_08]], [[I4_05]]
+ ; CHECK-NEXT:    [[I24:%.*]] = or disjoint i32 [[I4_05]], 1
+-; CHECK-NEXT:    [[I21_1:%.*]] = mul nsw i32 [[I3_SROA_8_0]], [[I24]]
+-; CHECK-NEXT:    [[I24_1:%.*]] = or disjoint i32 [[I4_05]], 2
+-; CHECK-NEXT:    [[I21_2]] = mul nsw i32 [[I21]], [[I24_1]]
+-; CHECK-NEXT:    [[I24_2:%.*]] = or disjoint i32 [[I4_05]], 3
+-; CHECK-NEXT:    [[I21_3]] = mul nsw i32 [[I21_1]], [[I24_2]]
+-; CHECK-NEXT:    [[I24_3]] = add nuw nsw i32 [[I4_05]], 4
++; CHECK-NEXT:    [[I21_1]] = mul nuw nsw i32 [[I3_SROA_5_09]], [[I24]]
++; CHECK-NEXT:    [[I24_3]] = add nuw nsw i32 [[I4_05]], 2
+ ; CHECK-NEXT:    [[I11_NOT_3:%.*]] = icmp eq i32 [[I24_3]], [[I10]]
+-; CHECK-NEXT:    br i1 [[I11_NOT_3]], label %[[BB12_LOOPEXIT]], label %[[BB13]], !llvm.loop [[LOOP8:![0-9]+]]
++; CHECK-NEXT:    br i1 [[I11_NOT_3]], label %[[BB12]], label %[[BB13]], !llvm.loop [[LOOP8:![0-9]+]]
+ ;
+ bb:
+   %i = alloca i32, align 4
+@@ -171,7 +164,6 @@ attributes #3 = { nounwind }
+ ; CHECK: [[CHAR_TBAA5]] = !{[[META6:![0-9]+]], [[META6]], i64 0}
+ ; CHECK: [[META6]] = !{!"omnipotent char", [[META7:![0-9]+]], i64 0}
+ ; CHECK: [[META7]] = !{!"Simple C++ TBAA"}
+-; CHECK: [[LOOP8]] = distinct !{[[LOOP8]], [[META9:![0-9]+]], [[META10:![0-9]+]]}
++; CHECK: [[LOOP8]] = distinct !{[[LOOP8]], [[META9:![0-9]+]]}
+ ; CHECK: [[META9]] = !{!"llvm.loop.mustprogress"}
+-; CHECK: [[META10]] = !{!"llvm.loop.isvectorized", i32 1}
+ ;.
+diff --git a/llvm/test/Transforms/SROA/phi-gep.ll b/llvm/test/Transforms/SROA/phi-gep.ll
+index b01b999bd31ef0..a65185a1597900 100644
+--- a/llvm/test/Transforms/SROA/phi-gep.ll
++++ b/llvm/test/Transforms/SROA/phi-gep.ll
+@@ -531,17 +531,30 @@ bb.4:                                                ; preds = %bb.1, %bb.1, %bb
+ }
+ 
+ define i64 @test_phi_idx_mem2reg_const(i1 %arg) {
+-; CHECK-LABEL: @test_phi_idx_mem2reg_const(
+-; CHECK-NEXT:  bb:
+-; CHECK-NEXT:    br i1 [[ARG:%.*]], label [[BB1:%.*]], label [[BB2:%.*]]
+-; CHECK:       bb1:
+-; CHECK-NEXT:    br label [[END:%.*]]
+-; CHECK:       bb2:
+-; CHECK-NEXT:    br label [[END]]
+-; CHECK:       end:
+-; CHECK-NEXT:    [[PHI_SROA_PHI_SROA_SPECULATED:%.*]] = phi i64 [ 2, [[BB1]] ], [ 3, [[BB2]] ]
+-; CHECK-NEXT:    [[PHI:%.*]] = phi i64 [ 0, [[BB1]] ], [ 1, [[BB2]] ]
+-; CHECK-NEXT:    ret i64 [[PHI_SROA_PHI_SROA_SPECULATED]]
++; CHECK-PRESERVE-CFG-LABEL: @test_phi_idx_mem2reg_const(
++; CHECK-PRESERVE-CFG-NEXT:  bb:
++; CHECK-PRESERVE-CFG-NEXT:    br i1 [[ARG:%.*]], label [[BB1:%.*]], label [[BB2:%.*]]
++; CHECK-PRESERVE-CFG:       bb1:
++; CHECK-PRESERVE-CFG-NEXT:    br label [[END:%.*]]
++; CHECK-PRESERVE-CFG:       bb2:
++; CHECK-PRESERVE-CFG-NEXT:    br label [[END]]
++; CHECK-PRESERVE-CFG:       end:
++; CHECK-PRESERVE-CFG-NEXT:    [[PHI_SROA_PHI_SROA_SPECULATED:%.*]] = phi i64 [ 2, [[BB1]] ], [ 3, [[BB2]] ]
++; CHECK-PRESERVE-CFG-NEXT:    [[PHI:%.*]] = phi i64 [ 0, [[BB1]] ], [ 1, [[BB2]] ]
++; CHECK-PRESERVE-CFG-NEXT:    ret i64 [[PHI_SROA_PHI_SROA_SPECULATED]]
++;
++; CHECK-MODIFY-CFG-LABEL: @test_phi_idx_mem2reg_const(
++; CHECK-MODIFY-CFG-NEXT:  bb:
++; CHECK-MODIFY-CFG-NEXT:    br i1 [[ARG:%.*]], label [[BB1:%.*]], label [[BB2:%.*]]
++; CHECK-MODIFY-CFG:       bb1:
++; CHECK-MODIFY-CFG-NEXT:    br label [[END:%.*]]
++; CHECK-MODIFY-CFG:       bb2:
++; CHECK-MODIFY-CFG-NEXT:    br label [[END]]
++; CHECK-MODIFY-CFG:       end:
++; CHECK-MODIFY-CFG-NEXT:    [[PHI:%.*]] = phi i64 [ 0, [[BB1]] ], [ 1, [[BB2]] ]
++; CHECK-MODIFY-CFG-NEXT:    [[GETELEMENTPTR_SROA_IDX:%.*]] = icmp eq i64 [[PHI]], 1
++; CHECK-MODIFY-CFG-NEXT:    [[LOAD_SROA_SPECULATED:%.*]] = select i1 [[GETELEMENTPTR_SROA_IDX]], i64 3, i64 2
++; CHECK-MODIFY-CFG-NEXT:    ret i64 [[LOAD_SROA_SPECULATED]]
+ ;
+ bb:
+   %alloca = alloca [2 x i64], align 8
+@@ -564,22 +577,35 @@ end:
+ }
+ 
+ define i64 @test_phi_idx_mem2reg_not_const(i1 %arg, i64 %idx) {
+-; CHECK-LABEL: @test_phi_idx_mem2reg_not_const(
+-; CHECK-NEXT:  bb:
+-; CHECK-NEXT:    [[ALLOCA:%.*]] = alloca [2 x i64], align 8
+-; CHECK-NEXT:    [[GEP1:%.*]] = getelementptr inbounds i64, ptr [[ALLOCA]], i64 1
+-; CHECK-NEXT:    store i64 2, ptr [[ALLOCA]], align 4
+-; CHECK-NEXT:    store i64 3, ptr [[GEP1]], align 4
+-; CHECK-NEXT:    br i1 [[ARG:%.*]], label [[BB1:%.*]], label [[BB2:%.*]]
+-; CHECK:       bb1:
+-; CHECK-NEXT:    br label [[END:%.*]]
+-; CHECK:       bb2:
+-; CHECK-NEXT:    br label [[END]]
+-; CHECK:       end:
+-; CHECK-NEXT:    [[PHI:%.*]] = phi i64 [ 0, [[BB1]] ], [ [[IDX:%.*]], [[BB2]] ]
+-; CHECK-NEXT:    [[GETELEMENTPTR:%.*]] = getelementptr inbounds i64, ptr [[ALLOCA]], i64 [[PHI]]
+-; CHECK-NEXT:    [[LOAD:%.*]] = load i64, ptr [[GETELEMENTPTR]], align 4
+-; CHECK-NEXT:    ret i64 [[LOAD]]
++; CHECK-PRESERVE-CFG-LABEL: @test_phi_idx_mem2reg_not_const(
++; CHECK-PRESERVE-CFG-NEXT:  bb:
++; CHECK-PRESERVE-CFG-NEXT:    [[ALLOCA:%.*]] = alloca [2 x i64], align 8
++; CHECK-PRESERVE-CFG-NEXT:    [[GEP1:%.*]] = getelementptr inbounds i64, ptr [[ALLOCA]], i64 1
++; CHECK-PRESERVE-CFG-NEXT:    store i64 2, ptr [[ALLOCA]], align 4
++; CHECK-PRESERVE-CFG-NEXT:    store i64 3, ptr [[GEP1]], align 4
++; CHECK-PRESERVE-CFG-NEXT:    br i1 [[ARG:%.*]], label [[BB1:%.*]], label [[BB2:%.*]]
++; CHECK-PRESERVE-CFG:       bb1:
++; CHECK-PRESERVE-CFG-NEXT:    br label [[END:%.*]]
++; CHECK-PRESERVE-CFG:       bb2:
++; CHECK-PRESERVE-CFG-NEXT:    br label [[END]]
++; CHECK-PRESERVE-CFG:       end:
++; CHECK-PRESERVE-CFG-NEXT:    [[PHI:%.*]] = phi i64 [ 0, [[BB1]] ], [ [[IDX:%.*]], [[BB2]] ]
++; CHECK-PRESERVE-CFG-NEXT:    [[GETELEMENTPTR:%.*]] = getelementptr inbounds i64, ptr [[ALLOCA]], i64 [[PHI]]
++; CHECK-PRESERVE-CFG-NEXT:    [[LOAD:%.*]] = load i64, ptr [[GETELEMENTPTR]], align 4
++; CHECK-PRESERVE-CFG-NEXT:    ret i64 [[LOAD]]
++;
++; CHECK-MODIFY-CFG-LABEL: @test_phi_idx_mem2reg_not_const(
++; CHECK-MODIFY-CFG-NEXT:  bb:
++; CHECK-MODIFY-CFG-NEXT:    br i1 [[ARG:%.*]], label [[BB1:%.*]], label [[BB2:%.*]]
++; CHECK-MODIFY-CFG:       bb1:
++; CHECK-MODIFY-CFG-NEXT:    br label [[END:%.*]]
++; CHECK-MODIFY-CFG:       bb2:
++; CHECK-MODIFY-CFG-NEXT:    br label [[END]]
++; CHECK-MODIFY-CFG:       end:
++; CHECK-MODIFY-CFG-NEXT:    [[PHI:%.*]] = phi i64 [ 0, [[BB1]] ], [ [[IDX:%.*]], [[BB2]] ]
++; CHECK-MODIFY-CFG-NEXT:    [[GETELEMENTPTR_SROA_IDX:%.*]] = icmp eq i64 [[PHI]], 1
++; CHECK-MODIFY-CFG-NEXT:    [[LOAD_SROA_SPECULATED:%.*]] = select i1 [[GETELEMENTPTR_SROA_IDX]], i64 3, i64 2
++; CHECK-MODIFY-CFG-NEXT:    ret i64 [[LOAD_SROA_SPECULATED]]
+ ;
+ bb:
+   %alloca = alloca [2 x i64], align 8
+@@ -756,12 +782,15 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias nocapture writeonly, ptr noalias
+ !2 = !{!"branch_weights", i32 7, i32 11}
+ 
+ ;.
+-; CHECK: attributes #[[ATTR0:[0-9]+]] = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
++; CHECK-PRESERVE-CFG: attributes #[[ATTR0:[0-9]+]] = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
++;.
++; CHECK-MODIFY-CFG: attributes #[[ATTR0:[0-9]+]] = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
++;.
++; CHECK-PRESERVE-CFG: [[META0:![0-9]+]] = !{!"function_entry_count", i32 10}
++; CHECK-PRESERVE-CFG: [[PROF1]] = !{!"branch_weights", i32 3, i32 5}
++; CHECK-PRESERVE-CFG: [[PROF2]] = !{!"branch_weights", i32 7, i32 11}
+ ;.
+-; CHECK: [[META0:![0-9]+]] = !{!"function_entry_count", i32 10}
+-; CHECK: [[PROF1]] = !{!"branch_weights", i32 3, i32 5}
+-; CHECK: [[PROF2]] = !{!"branch_weights", i32 7, i32 11}
++; CHECK-MODIFY-CFG: [[META0:![0-9]+]] = !{!"function_entry_count", i32 10}
++; CHECK-MODIFY-CFG: [[PROF1]] = !{!"branch_weights", i32 3, i32 5}
++; CHECK-MODIFY-CFG: [[PROF2]] = !{!"branch_weights", i32 7, i32 11}
+ ;.
+-;; NOTE: These prefixes are unused and the list is autogenerated. Do not add tests below this line:
+-; CHECK-MODIFY-CFG: {{.*}}
+-; CHECK-PRESERVE-CFG: {{.*}}
+diff --git a/llvm/test/Transforms/SROA/select-gep.ll b/llvm/test/Transforms/SROA/select-gep.ll
+index ec55f8029be204..c657f7343e4a60 100644
+--- a/llvm/test/Transforms/SROA/select-gep.ll
++++ b/llvm/test/Transforms/SROA/select-gep.ll
+@@ -201,10 +201,16 @@ define i32 @test_select_idx_mem2reg(i1 %c) {
+ ; Test gep with a select-like zext index unfolding on an alloca that is
+ ; splittable and promotable.
+ define i64 @test_select_like_zext_idx_mem2reg(i1 %c) !prof !0 {
+-; CHECK-LABEL: @test_select_like_zext_idx_mem2reg(
+-; CHECK-NEXT:    [[IDX:%.*]] = zext i1 [[C:%.*]] to i64
+-; CHECK-NEXT:    [[RES:%.*]] = select i1 [[C]], i64 2, i64 1, !prof [[PROF1:![0-9]+]]
+-; CHECK-NEXT:    ret i64 [[RES]]
++; CHECK-PRESERVE-CFG-LABEL: @test_select_like_zext_idx_mem2reg(
++; CHECK-PRESERVE-CFG-NEXT:    [[IDX:%.*]] = zext i1 [[C:%.*]] to i64
++; CHECK-PRESERVE-CFG-NEXT:    [[RES_SROA_SPECULATED:%.*]] = select i1 [[C]], i64 2, i64 1, !prof [[PROF1:![0-9]+]]
++; CHECK-PRESERVE-CFG-NEXT:    ret i64 [[RES_SROA_SPECULATED]]
++;
++; CHECK-MODIFY-CFG-LABEL: @test_select_like_zext_idx_mem2reg(
++; CHECK-MODIFY-CFG-NEXT:    [[IDX:%.*]] = zext i1 [[C:%.*]] to i64
++; CHECK-MODIFY-CFG-NEXT:    [[GEP2_SROA_IDX:%.*]] = icmp eq i64 [[IDX]], 1
++; CHECK-MODIFY-CFG-NEXT:    [[RES_SROA_SPECULATED:%.*]] = select i1 [[GEP2_SROA_IDX]], i64 2, i64 1, !prof [[PROF1:![0-9]+]]
++; CHECK-MODIFY-CFG-NEXT:    ret i64 [[RES_SROA_SPECULATED]]
+ ;
+   %alloca = alloca [2 x i64], align 8
+   store i64 1, ptr %alloca
+@@ -219,15 +225,21 @@ define i64 @test_select_like_zext_idx_mem2reg(i1 %c) !prof !0 {
+ ; Test gep with a zext index that is not equivalent to a select. No unfolding
+ ; or promotion should take place.
+ define i64 @test_zext_unlike_select_idx_mem2reg(i8 %c) {
+-; CHECK-LABEL: @test_zext_unlike_select_idx_mem2reg(
+-; CHECK-NEXT:    [[ALLOCA:%.*]] = alloca [2 x i64], align 8
+-; CHECK-NEXT:    store i64 1, ptr [[ALLOCA]], align 4
+-; CHECK-NEXT:    [[GEP1:%.*]] = getelementptr inbounds i64, ptr [[ALLOCA]], i64 1
+-; CHECK-NEXT:    store i64 2, ptr [[GEP1]], align 4
+-; CHECK-NEXT:    [[IDX:%.*]] = zext i8 [[C:%.*]] to i64
+-; CHECK-NEXT:    [[GEP2:%.*]] = getelementptr inbounds i64, ptr [[ALLOCA]], i64 [[IDX]]
+-; CHECK-NEXT:    [[RES:%.*]] = load i64, ptr [[GEP2]], align 4
+-; CHECK-NEXT:    ret i64 [[RES]]
++; CHECK-PRESERVE-CFG-LABEL: @test_zext_unlike_select_idx_mem2reg(
++; CHECK-PRESERVE-CFG-NEXT:    [[ALLOCA:%.*]] = alloca [2 x i64], align 8
++; CHECK-PRESERVE-CFG-NEXT:    store i64 1, ptr [[ALLOCA]], align 4
++; CHECK-PRESERVE-CFG-NEXT:    [[GEP1:%.*]] = getelementptr inbounds i64, ptr [[ALLOCA]], i64 1
++; CHECK-PRESERVE-CFG-NEXT:    store i64 2, ptr [[GEP1]], align 4
++; CHECK-PRESERVE-CFG-NEXT:    [[IDX:%.*]] = zext i8 [[C:%.*]] to i64
++; CHECK-PRESERVE-CFG-NEXT:    [[GEP2:%.*]] = getelementptr inbounds i64, ptr [[ALLOCA]], i64 [[IDX]]
++; CHECK-PRESERVE-CFG-NEXT:    [[RES:%.*]] = load i64, ptr [[GEP2]], align 4
++; CHECK-PRESERVE-CFG-NEXT:    ret i64 [[RES]]
++;
++; CHECK-MODIFY-CFG-LABEL: @test_zext_unlike_select_idx_mem2reg(
++; CHECK-MODIFY-CFG-NEXT:    [[IDX:%.*]] = zext i8 [[C:%.*]] to i64
++; CHECK-MODIFY-CFG-NEXT:    [[GEP2_SROA_IDX:%.*]] = icmp eq i64 [[IDX]], 1
++; CHECK-MODIFY-CFG-NEXT:    [[RES_SROA_SPECULATED:%.*]] = select i1 [[GEP2_SROA_IDX]], i64 2, i64 1
++; CHECK-MODIFY-CFG-NEXT:    ret i64 [[RES_SROA_SPECULATED]]
+ ;
+   %alloca = alloca [2 x i64], align 8
+   store i64 1, ptr %alloca
+diff --git a/llvm/test/Transforms/SROA/two-slot-geps.ll b/llvm/test/Transforms/SROA/two-slot-geps.ll
+new file mode 100644
+index 00000000000000..7fc7bce052eb40
+--- /dev/null
++++ b/llvm/test/Transforms/SROA/two-slot-geps.ll
+@@ -0,0 +1,307 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt < %s -passes='sroa<modify-cfg>' -S | FileCheck %s
++
++target datalayout = "e-p:32:32"
++
++define i32 @minimal(i64 %idx, i32 %a, i32 %b) {
++; CHECK-LABEL: define i32 @minimal(
++; CHECK-SAME: i64 [[IDX:%.*]], i32 [[A:%.*]], i32 [[B:%.*]]) {
++; CHECK-NEXT:    [[GEP_SROA_IDX:%.*]] = icmp eq i64 [[IDX]], 1
++; CHECK-NEXT:    [[V_SROA_SPECULATED:%.*]] = select i1 [[GEP_SROA_IDX]], i32 [[B]], i32 [[A]]
++; CHECK-NEXT:    ret i32 [[V_SROA_SPECULATED]]
++;
++  %alloca = alloca [2 x i32]
++
++  store i32 %a, ptr %alloca
++
++  %alloca.1 = getelementptr nusw i8, ptr %alloca, i64 4
++  store i32 %b, ptr %alloca.1
++
++  %gep = getelementptr nusw [2 x i32], ptr %alloca, i64 0, i64 %idx
++  %v = load i32, ptr %gep
++
++  ret i32 %v
++}
++
++define i32 @three_slots(i64 %idx, i32 %a, i32 %b, i32 %c) {
++; CHECK-LABEL: define i32 @three_slots(
++; CHECK-SAME: i64 [[IDX:%.*]], i32 [[A:%.*]], i32 [[B:%.*]], i32 [[C:%.*]]) {
++; CHECK-NEXT:    [[ALLOCA:%.*]] = alloca [3 x i32], align 4
++; CHECK-NEXT:    store i32 [[A]], ptr [[ALLOCA]], align 4
++; CHECK-NEXT:    [[ALLOCA_1:%.*]] = getelementptr nusw i8, ptr [[ALLOCA]], i64 4
++; CHECK-NEXT:    store i32 [[B]], ptr [[ALLOCA_1]], align 4
++; CHECK-NEXT:    [[ALLOCA_2:%.*]] = getelementptr nusw i8, ptr [[ALLOCA]], i64 8
++; CHECK-NEXT:    store i32 [[C]], ptr [[ALLOCA_2]], align 4
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr nusw [3 x i32], ptr [[ALLOCA]], i64 0, i64 [[IDX]]
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[GEP]], align 4
++; CHECK-NEXT:    ret i32 [[V]]
++;
++  %alloca = alloca [3 x i32]
++
++  store i32 %a, ptr %alloca
++
++  %alloca.1 = getelementptr nusw i8, ptr %alloca, i64 4
++  store i32 %b, ptr %alloca.1
++
++  %alloca.2 = getelementptr nusw i8, ptr %alloca, i64 8
++  store i32 %c, ptr %alloca.2
++
++  %gep = getelementptr nusw [3 x i32], ptr %alloca, i64 0, i64 %idx
++  %v = load i32, ptr %gep
++
++  ret i32 %v
++}
++
++define i32 @no_nusw(i64 %idx, i32 %a, i32 %b) {
++; CHECK-LABEL: define i32 @no_nusw(
++; CHECK-SAME: i64 [[IDX:%.*]], i32 [[A:%.*]], i32 [[B:%.*]]) {
++; CHECK-NEXT:    [[ALLOCA:%.*]] = alloca [2 x i32], align 4
++; CHECK-NEXT:    store i32 [[A]], ptr [[ALLOCA]], align 4
++; CHECK-NEXT:    [[ALLOCA_1:%.*]] = getelementptr inbounds nuw i8, ptr [[ALLOCA]], i64 4
++; CHECK-NEXT:    store i32 [[B]], ptr [[ALLOCA_1]], align 4
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr [2 x i32], ptr [[ALLOCA]], i64 0, i64 [[IDX]]
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[GEP]], align 4
++; CHECK-NEXT:    ret i32 [[V]]
++;
++  %alloca = alloca [2 x i32]
++
++  store i32 %a, ptr %alloca
++
++  %alloca.1 = getelementptr inbounds nuw i8, ptr %alloca, i64 4
++  store i32 %b, ptr %alloca.1
++
++  %gep = getelementptr [2 x i32], ptr %alloca, i64 0, i64 %idx
++  %v = load i32, ptr %gep
++
++  ret i32 %v
++}
++
++define i32 @volatile_load(i64 %idx, i32 %a, i32 %b) {
++; CHECK-LABEL: define i32 @volatile_load(
++; CHECK-SAME: i64 [[IDX:%.*]], i32 [[A:%.*]], i32 [[B:%.*]]) {
++; CHECK-NEXT:    [[ALLOCA:%.*]] = alloca [2 x i32], align 4
++; CHECK-NEXT:    store i32 [[A]], ptr [[ALLOCA]], align 4
++; CHECK-NEXT:    [[ALLOCA_1:%.*]] = getelementptr nusw i8, ptr [[ALLOCA]], i64 4
++; CHECK-NEXT:    store i32 [[B]], ptr [[ALLOCA_1]], align 4
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr nusw [2 x i32], ptr [[ALLOCA]], i64 0, i64 [[IDX]]
++; CHECK-NEXT:    [[V:%.*]] = load volatile i32, ptr [[GEP]], align 4
++; CHECK-NEXT:    ret i32 [[V]]
++;
++  %alloca = alloca [2 x i32]
++
++  store i32 %a, ptr %alloca
++
++  %alloca.1 = getelementptr nusw i8, ptr %alloca, i64 4
++  store i32 %b, ptr %alloca.1
++
++  %gep = getelementptr nusw [2 x i32], ptr %alloca, i64 0, i64 %idx
++  %v = load volatile i32, ptr %gep
++
++  ret i32 %v
++}
++
++define i32 @escaping_alloca(i64 %idx, i32 %a, i32 %b) {
++; CHECK-LABEL: define i32 @escaping_alloca(
++; CHECK-SAME: i64 [[IDX:%.*]], i32 [[A:%.*]], i32 [[B:%.*]]) {
++; CHECK-NEXT:    [[ALLOCA:%.*]] = alloca [2 x i32], align 4
++; CHECK-NEXT:    store i32 [[A]], ptr [[ALLOCA]], align 4
++; CHECK-NEXT:    [[ALLOCA_1:%.*]] = getelementptr nusw i8, ptr [[ALLOCA]], i64 4
++; CHECK-NEXT:    store i32 [[B]], ptr [[ALLOCA_1]], align 4
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr nusw [2 x i32], ptr [[ALLOCA]], i64 0, i64 [[IDX]]
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[GEP]], align 4
++; CHECK-NEXT:    call void @use(ptr [[GEP]])
++; CHECK-NEXT:    ret i32 [[V]]
++;
++  %alloca = alloca [2 x i32]
++
++  store i32 %a, ptr %alloca
++
++  %alloca.1 = getelementptr nusw i8, ptr %alloca, i64 4
++  store i32 %b, ptr %alloca.1
++
++  %gep = getelementptr nusw [2 x i32], ptr %alloca, i64 0, i64 %idx
++  %v = load i32, ptr %gep
++
++  call void @use(ptr %gep)
++
++  ret i32 %v
++}
++
++define i32 @alloca_extra_uses(i1 %c, i64 %idx, i32 %a, i32 %b) {
++; CHECK-LABEL: define i32 @alloca_extra_uses(
++; CHECK-SAME: i1 [[C:%.*]], i64 [[IDX:%.*]], i32 [[A:%.*]], i32 [[B:%.*]]) {
++; CHECK-NEXT:    [[ALLOCA:%.*]] = alloca [2 x i32], align 4
++; CHECK-NEXT:    store i32 [[A]], ptr [[ALLOCA]], align 4
++; CHECK-NEXT:    [[ALLOCA_1:%.*]] = getelementptr nusw i8, ptr [[ALLOCA]], i64 4
++; CHECK-NEXT:    store i32 [[B]], ptr [[ALLOCA_1]], align 4
++; CHECK-NEXT:    [[SEL:%.*]] = select i1 [[C]], ptr [[ALLOCA]], ptr [[ALLOCA_1]]
++; CHECK-NEXT:    [[W:%.*]] = load i32, ptr [[SEL]], align 4
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr nusw [2 x i32], ptr [[ALLOCA]], i64 0, i64 [[IDX]]
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[GEP]], align 4
++; CHECK-NEXT:    [[R:%.*]] = add i32 [[V]], [[W]]
++; CHECK-NEXT:    ret i32 [[R]]
++;
++  %alloca = alloca [2 x i32]
++
++  store i32 %a, ptr %alloca
++
++  %alloca.1 = getelementptr nusw i8, ptr %alloca, i64 4
++  store i32 %b, ptr %alloca.1
++
++  %sel = select i1 %c, ptr %alloca, ptr %alloca.1
++  %w = load i32, ptr %sel
++
++  %gep = getelementptr nusw [2 x i32], ptr %alloca, i64 0, i64 %idx
++  %v = load i32, ptr %gep
++
++  %r = add i32 %v, %w
++  ret i32 %r
++}
++
++; The GEP is used with different sized loads/stores. We could unfold the GEP,
++; but to keep things simple we currently don't.
++; See the next test for an test for a case where unfolding the GEP with the
++; largest access size when access sizes differ would be a miscompile.
++define i32 @different_access_sizes_simple(i64 %idx, i32 %a, i32 %b) {
++; CHECK-LABEL: define i32 @different_access_sizes_simple(
++; CHECK-SAME: i64 [[IDX:%.*]], i32 [[A:%.*]], i32 [[B:%.*]]) {
++; CHECK-NEXT:    [[ALLOCA:%.*]] = alloca [2 x i32], align 4
++; CHECK-NEXT:    store i32 [[A]], ptr [[ALLOCA]], align 4
++; CHECK-NEXT:    [[ALLOCA_1:%.*]] = getelementptr nusw i8, ptr [[ALLOCA]], i64 4
++; CHECK-NEXT:    store i32 [[B]], ptr [[ALLOCA_1]], align 4
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr nusw [2 x i32], ptr [[ALLOCA]], i64 0, i64 [[IDX]]
++; CHECK-NEXT:    store i16 0, ptr [[GEP]], align 2
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[GEP]], align 4
++; CHECK-NEXT:    ret i32 [[V]]
++;
++  %alloca = alloca [2 x i32]
++
++  store i32 %a, ptr %alloca
++
++  %alloca.1 = getelementptr nusw i8, ptr %alloca, i64 4
++  store i32 %b, ptr %alloca.1
++
++  %gep = getelementptr nusw [2 x i32], ptr %alloca, i64 0, i64 %idx
++  store i16 0, ptr %gep
++  %v = load i32, ptr %gep
++
++  ret i32 %v
++}
++
++; Similar to the test above, but the access sizes are different in different
++; code paths.
++; We could sink the GEPs to the using blocks, or duplicate them at the current
++; block, but for now we keep it simple and just don't unfold a GEP if it's used
++; with different sized loads and stores.
++define i64 @different_access_sizes_tricky(i64 %idx, i1 %wide) {
++; CHECK-LABEL: define i64 @different_access_sizes_tricky(
++; CHECK-SAME: i64 [[IDX:%.*]], i1 [[WIDE:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[A:%.*]] = alloca [3 x i32], align 8
++; CHECK-NEXT:    store i32 11, ptr [[A]], align 4
++; CHECK-NEXT:    [[A1:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 1
++; CHECK-NEXT:    store i32 22, ptr [[A1]], align 4
++; CHECK-NEXT:    [[A2:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 2
++; CHECK-NEXT:    store i32 33, ptr [[A2]], align 4
++; CHECK-NEXT:    [[P:%.*]] = getelementptr inbounds i32, ptr [[A]], i64 [[IDX]]
++; CHECK-NEXT:    br i1 [[WIDE]], label %[[W:.*]], label %[[N:.*]]
++; CHECK:       [[W]]:
++; CHECK-NEXT:    [[V64:%.*]] = load i64, ptr [[P]], align 4
++; CHECK-NEXT:    ret i64 [[V64]]
++; CHECK:       [[N]]:
++; CHECK-NEXT:    [[V32:%.*]] = load i32, ptr [[P]], align 4
++; CHECK-NEXT:    [[Z:%.*]] = zext i32 [[V32]] to i64
++; CHECK-NEXT:    ret i64 [[Z]]
++;
++entry:
++  %a = alloca [3 x i32], align 8
++  store i32 11, ptr %a
++  %a1 = getelementptr inbounds i32, ptr %a, i64 1
++  store i32 22, ptr %a1
++  %a2 = getelementptr inbounds i32, ptr %a, i64 2
++  store i32 33, ptr %a2
++  %p = getelementptr inbounds i32, ptr %a, i64 %idx
++  br i1 %wide, label %w, label %n
++w:
++  %v64 = load i64, ptr %p, align 4
++  ret i64 %v64
++n:
++  %v32 = load i32, ptr %p, align 4
++  %z = zext i32 %v32 to i64
++  ret i64 %z
++}
++
++
++
++
++; This could be handled, but for now we keep it simple.
++define i32 @non_zero_offset_base(i64 %idx, i32 %a, i32 %b) {
++; CHECK-LABEL: define i32 @non_zero_offset_base(
++; CHECK-SAME: i64 [[IDX:%.*]], i32 [[A:%.*]], i32 [[B:%.*]]) {
++; CHECK-NEXT:    [[ALLOCA:%.*]] = alloca [3 x i32], align 4
++; CHECK-NEXT:    [[ALLOCA_1:%.*]] = getelementptr nusw i8, ptr [[ALLOCA]], i64 4
++; CHECK-NEXT:    store i32 [[A]], ptr [[ALLOCA_1]], align 4
++; CHECK-NEXT:    [[ALLOCA_2:%.*]] = getelementptr nusw i8, ptr [[ALLOCA]], i64 8
++; CHECK-NEXT:    store i32 [[B]], ptr [[ALLOCA_2]], align 4
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr nusw [2 x i32], ptr [[ALLOCA_1]], i64 0, i64 [[IDX]]
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[GEP]], align 4
++; CHECK-NEXT:    ret i32 [[V]]
++;
++  %alloca = alloca [3 x i32]
++
++  %alloca.1 = getelementptr nusw i8, ptr %alloca, i64 4
++  store i32 %a, ptr %alloca.1
++
++  %alloca.2 = getelementptr nusw i8, ptr %alloca, i64 8
++  store i32 %b, ptr %alloca.2
++
++  %gep = getelementptr nusw [2 x i32], ptr %alloca.1, i64 0, i64 %idx
++  %v = load i32, ptr %gep
++
++  ret i32 %v
++}
++
++; An edge case with an i1 index. It doesn't matter whether we transform this or
++; not, just make sure we don't crash.
++define i32 @i1_index(i1 %idx, i32 %a, i32 %b) {
++; CHECK-LABEL: define i32 @i1_index(
++; CHECK-SAME: i1 [[IDX:%.*]], i32 [[A:%.*]], i32 [[B:%.*]]) {
++; CHECK-NEXT:    [[ALLOCA:%.*]] = alloca [2 x i32], align 4
++; CHECK-NEXT:    store i32 [[A]], ptr [[ALLOCA]], align 4
++; CHECK-NEXT:    [[ALLOCA_1:%.*]] = getelementptr nusw i8, ptr [[ALLOCA]], i64 4
++; CHECK-NEXT:    store i32 [[B]], ptr [[ALLOCA_1]], align 4
++; CHECK-NEXT:    [[GEP:%.*]] = getelementptr nusw [2 x i32], ptr [[ALLOCA]], i64 0, i1 [[IDX]]
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[GEP]], align 4
++; CHECK-NEXT:    ret i32 [[V]]
++;
++  %alloca = alloca [2 x i32]
++
++  store i32 %a, ptr %alloca
++
++  %alloca.1 = getelementptr nusw i8, ptr %alloca, i64 4
++  store i32 %b, ptr %alloca.1
++
++  %gep = getelementptr nusw [2 x i32], ptr %alloca, i64 0, i1 %idx
++  %v = load i32, ptr %gep
++
++  ret i32 %v
++}
++
++; An edge case with the GEP's scale is zero.
++define i32 @zero_scale(i32 %i) {
++; CHECK-LABEL: define i32 @zero_scale(
++; CHECK-SAME: i32 [[I:%.*]]) {
++; CHECK-NEXT:    [[A:%.*]] = alloca i32, align 4
++; CHECK-NEXT:    store i32 123, ptr [[A]], align 4
++; CHECK-NEXT:    [[P:%.*]] = getelementptr nusw [4294967295 x i8], ptr [[A]], i32 [[I]], i32 [[I]]
++; CHECK-NEXT:    [[V:%.*]] = load i32, ptr [[P]], align 4
++; CHECK-NEXT:    ret i32 [[V]]
++;
++  %a = alloca i32
++  store i32 123, ptr %a
++  %p = getelementptr nusw [4294967295 x i8], ptr %a, i32 %i, i32 %i
++  %v = load i32, ptr %p
++  ret i32 %v
++}
++
++declare void @use(ptr %p)
+diff --git a/llvm/test/Transforms/SROA/widen-load-of-small-alloca-with-zero-upper-half.ll b/llvm/test/Transforms/SROA/widen-load-of-small-alloca-with-zero-upper-half.ll
+index 00e633858fcf09..bdd7c07231bfbc 100644
+--- a/llvm/test/Transforms/SROA/widen-load-of-small-alloca-with-zero-upper-half.ll
++++ b/llvm/test/Transforms/SROA/widen-load-of-small-alloca-with-zero-upper-half.ll
+@@ -1,23 +1,35 @@
+ ; NOTE: Assertions have been autogenerated by utils/update_test_checks.py
+-; RUN: opt -passes='sroa<preserve-cfg>' -data-layout="e-n8:16:32:64" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-64,CHECK-LE-64
+-; RUN: opt -passes='sroa<modify-cfg>' -data-layout="e-n8:16:32:64" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-64,CHECK-LE-64
+-; RUN: opt -passes='sroa<preserve-cfg>' -data-layout="e-n8:16:32" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-32,CHECK-LE-32
+-; RUN: opt -passes='sroa<modify-cfg>' -data-layout="e-n8:16:32" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-32,CHECK-LE-32
+-; RUN: opt -passes='sroa<preserve-cfg>' -data-layout="E-n8:16:32:64" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-64,CHECK-BE-64
+-; RUN: opt -passes='sroa<modify-cfg>' -data-layout="E-n8:16:32:64" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-64,CHECK-BE-64
+-; RUN: opt -passes='sroa<preserve-cfg>' -data-layout="E-n8:16:32" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-32,CHECK-BE-32
+-; RUN: opt -passes='sroa<modify-cfg>' -data-layout="E-n8:16:32" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-32,CHECK-BE-32
++; RUN: opt -passes='sroa<preserve-cfg>' -data-layout="e-n8:16:32:64" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-64,CHECK-LE-64,CHECK-PRESERVE-CFG
++; RUN: opt -passes='sroa<modify-cfg>' -data-layout="e-n8:16:32:64" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-64,CHECK-LE-64,CHECK-MODIFY-CFG
++; RUN: opt -passes='sroa<preserve-cfg>' -data-layout="e-n8:16:32" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-32,CHECK-LE-32,CHECK-PRESERVE-CFG
++; RUN: opt -passes='sroa<modify-cfg>' -data-layout="e-n8:16:32" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-32,CHECK-LE-32,CHECK-MODIFY-CFG
++; RUN: opt -passes='sroa<preserve-cfg>' -data-layout="E-n8:16:32:64" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-64,CHECK-BE-64,CHECK-PRESERVE-CFG
++; RUN: opt -passes='sroa<modify-cfg>' -data-layout="E-n8:16:32:64" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-64,CHECK-BE-64,CHECK-MODIFY-CFG
++; RUN: opt -passes='sroa<preserve-cfg>' -data-layout="E-n8:16:32" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-32,CHECK-BE-32,CHECK-PRESERVE-CFG
++; RUN: opt -passes='sroa<modify-cfg>' -data-layout="E-n8:16:32" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-32,CHECK-BE-32,CHECK-MODIFY-CFG
+ 
+ define void @load_1byte_chunk_of_2byte_alloca_with_zero_upper_half(ptr %src, i64 %byteOff, ptr %dst) nounwind {
+-; CHECK-ALL-LABEL: @load_1byte_chunk_of_2byte_alloca_with_zero_upper_half(
+-; CHECK-ALL-NEXT:    [[INTERMEDIATE:%.*]] = alloca [2 x i8], align 64
+-; CHECK-ALL-NEXT:    store <2 x i8> zeroinitializer, ptr [[INTERMEDIATE]], align 64
+-; CHECK-ALL-NEXT:    [[INIT:%.*]] = load <1 x i8>, ptr [[SRC:%.*]], align 1
+-; CHECK-ALL-NEXT:    store <1 x i8> [[INIT]], ptr [[INTERMEDIATE]], align 64
+-; CHECK-ALL-NEXT:    [[INTERMEDIATE_OFF_ADDR:%.*]] = getelementptr inbounds i8, ptr [[INTERMEDIATE]], i64 [[BYTEOFF:%.*]]
+-; CHECK-ALL-NEXT:    [[CHUNK:%.*]] = load <1 x i8>, ptr [[INTERMEDIATE_OFF_ADDR]], align 1
+-; CHECK-ALL-NEXT:    store <1 x i8> [[CHUNK]], ptr [[DST:%.*]], align 1
+-; CHECK-ALL-NEXT:    ret void
++; CHECK-PRESERVE-CFG-LABEL: @load_1byte_chunk_of_2byte_alloca_with_zero_upper_half(
++; CHECK-PRESERVE-CFG-NEXT:    [[INTERMEDIATE:%.*]] = alloca [2 x i8], align 64
++; CHECK-PRESERVE-CFG-NEXT:    store <2 x i8> zeroinitializer, ptr [[INTERMEDIATE]], align 64
++; CHECK-PRESERVE-CFG-NEXT:    [[INIT:%.*]] = load <1 x i8>, ptr [[SRC:%.*]], align 1
++; CHECK-PRESERVE-CFG-NEXT:    store <1 x i8> [[INIT]], ptr [[INTERMEDIATE]], align 64
++; CHECK-PRESERVE-CFG-NEXT:    [[INTERMEDIATE_OFF_ADDR:%.*]] = getelementptr inbounds i8, ptr [[INTERMEDIATE]], i64 [[BYTEOFF:%.*]]
++; CHECK-PRESERVE-CFG-NEXT:    [[CHUNK:%.*]] = load <1 x i8>, ptr [[INTERMEDIATE_OFF_ADDR]], align 1
++; CHECK-PRESERVE-CFG-NEXT:    store <1 x i8> [[CHUNK]], ptr [[DST:%.*]], align 1
++; CHECK-PRESERVE-CFG-NEXT:    ret void
++;
++; CHECK-MODIFY-CFG-LABEL: @load_1byte_chunk_of_2byte_alloca_with_zero_upper_half(
++; CHECK-MODIFY-CFG-NEXT:    [[INTERMEDIATE_SROA_0:%.*]] = alloca <2 x i8>, align 64
++; CHECK-MODIFY-CFG-NEXT:    store <2 x i8> zeroinitializer, ptr [[INTERMEDIATE_SROA_0]], align 64
++; CHECK-MODIFY-CFG-NEXT:    [[INIT:%.*]] = load <1 x i8>, ptr [[SRC:%.*]], align 1
++; CHECK-MODIFY-CFG-NEXT:    store <1 x i8> [[INIT]], ptr [[INTERMEDIATE_SROA_0]], align 64
++; CHECK-MODIFY-CFG-NEXT:    [[INTERMEDIATE_OFF_ADDR_SROA_IDX:%.*]] = icmp eq i64 [[BYTEOFF:%.*]], 1
++; CHECK-MODIFY-CFG-NEXT:    [[INTERMEDIATE_SROA_0_1_SLOT1_SROA_IDX1:%.*]] = getelementptr inbounds i8, ptr [[INTERMEDIATE_SROA_0]], i64 1
++; CHECK-MODIFY-CFG-NEXT:    [[INTERMEDIATE_OFF_ADDR_SROA_SEL:%.*]] = select i1 [[INTERMEDIATE_OFF_ADDR_SROA_IDX]], ptr [[INTERMEDIATE_SROA_0_1_SLOT1_SROA_IDX1]], ptr [[INTERMEDIATE_SROA_0]]
++; CHECK-MODIFY-CFG-NEXT:    [[CHUNK:%.*]] = load <1 x i8>, ptr [[INTERMEDIATE_OFF_ADDR_SROA_SEL]], align 1
++; CHECK-MODIFY-CFG-NEXT:    store <1 x i8> [[CHUNK]], ptr [[DST:%.*]], align 1
++; CHECK-MODIFY-CFG-NEXT:    ret void
+ ;
+   %intermediate = alloca [2 x i8], align 64
+   store <2 x i8> zeroinitializer,  ptr %intermediate, align 64
+diff --git a/llvm/test/Transforms/SROA/widen-load-of-small-alloca.ll b/llvm/test/Transforms/SROA/widen-load-of-small-alloca.ll
+index b4a99606a8b750..68bcf84d99159d 100644
+--- a/llvm/test/Transforms/SROA/widen-load-of-small-alloca.ll
++++ b/llvm/test/Transforms/SROA/widen-load-of-small-alloca.ll
+@@ -1,12 +1,12 @@
+ ; NOTE: Assertions have been autogenerated by utils/update_test_checks.py
+-; RUN: opt -passes='sroa<preserve-cfg>' -data-layout="e-n8:16:32:64" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-64,CHECK-LE-64
+-; RUN: opt -passes='sroa<modify-cfg>' -data-layout="e-n8:16:32:64" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-64,CHECK-LE-64
+-; RUN: opt -passes='sroa<preserve-cfg>' -data-layout="e-n8:16:32" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-32,CHECK-LE-32
+-; RUN: opt -passes='sroa<modify-cfg>' -data-layout="e-n8:16:32" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-32,CHECK-LE-32
+-; RUN: opt -passes='sroa<preserve-cfg>' -data-layout="E-n8:16:32:64" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-64,CHECK-BE-64
+-; RUN: opt -passes='sroa<modify-cfg>' -data-layout="E-n8:16:32:64" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-64,CHECK-BE-64
+-; RUN: opt -passes='sroa<preserve-cfg>' -data-layout="E-n8:16:32" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-32,CHECK-BE-32
+-; RUN: opt -passes='sroa<modify-cfg>' -data-layout="E-n8:16:32" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-32,CHECK-BE-32
++; RUN: opt -passes='sroa<preserve-cfg>' -data-layout="e-n8:16:32:64" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-64,CHECK-LE-64,CHECK-PRESERVE-CFG
++; RUN: opt -passes='sroa<modify-cfg>' -data-layout="e-n8:16:32:64" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-64,CHECK-LE-64,CHECK-MODIFY-CFG
++; RUN: opt -passes='sroa<preserve-cfg>' -data-layout="e-n8:16:32" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-32,CHECK-LE-32,CHECK-PRESERVE-CFG
++; RUN: opt -passes='sroa<modify-cfg>' -data-layout="e-n8:16:32" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-32,CHECK-LE-32,CHECK-MODIFY-CFG
++; RUN: opt -passes='sroa<preserve-cfg>' -data-layout="E-n8:16:32:64" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-64,CHECK-BE-64,CHECK-PRESERVE-CFG
++; RUN: opt -passes='sroa<modify-cfg>' -data-layout="E-n8:16:32:64" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-64,CHECK-BE-64,CHECK-MODIFY-CFG
++; RUN: opt -passes='sroa<preserve-cfg>' -data-layout="E-n8:16:32" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-32,CHECK-BE-32,CHECK-PRESERVE-CFG
++; RUN: opt -passes='sroa<modify-cfg>' -data-layout="E-n8:16:32" -S %s | FileCheck %s --check-prefixes=CHECK-ALL,CHECK-SCALAR,CHECK-SCALAR-32,CHECK-BE-32,CHECK-MODIFY-CFG
+ 
+ define void @load_1byte_chunk_of_1byte_alloca(ptr %src, i64 %byteOff, ptr %dst) nounwind {
+ ; CHECK-ALL-LABEL: @load_1byte_chunk_of_1byte_alloca(
+@@ -28,14 +28,25 @@ define void @load_1byte_chunk_of_1byte_alloca(ptr %src, i64 %byteOff, ptr %dst)
+ }
+ 
+ define void @load_1byte_chunk_of_2byte_alloca(ptr %src, i64 %byteOff, ptr %dst) nounwind {
+-; CHECK-ALL-LABEL: @load_1byte_chunk_of_2byte_alloca(
+-; CHECK-ALL-NEXT:    [[INTERMEDIATE:%.*]] = alloca [2 x i8], align 64
+-; CHECK-ALL-NEXT:    [[INIT:%.*]] = load <2 x i8>, ptr [[SRC:%.*]], align 1
+-; CHECK-ALL-NEXT:    store <2 x i8> [[INIT]], ptr [[INTERMEDIATE]], align 64
+-; CHECK-ALL-NEXT:    [[INTERMEDIATE_OFF_ADDR:%.*]] = getelementptr inbounds i8, ptr [[INTERMEDIATE]], i64 [[BYTEOFF:%.*]]
+-; CHECK-ALL-NEXT:    [[CHUNK:%.*]] = load <1 x i8>, ptr [[INTERMEDIATE_OFF_ADDR]], align 1
+-; CHECK-ALL-NEXT:    store <1 x i8> [[CHUNK]], ptr [[DST:%.*]], align 1
+-; CHECK-ALL-NEXT:    ret void
++; CHECK-PRESERVE-CFG-LABEL: @load_1byte_chunk_of_2byte_alloca(
++; CHECK-PRESERVE-CFG-NEXT:    [[INTERMEDIATE:%.*]] = alloca [2 x i8], align 64
++; CHECK-PRESERVE-CFG-NEXT:    [[INIT:%.*]] = load <2 x i8>, ptr [[SRC:%.*]], align 1
++; CHECK-PRESERVE-CFG-NEXT:    store <2 x i8> [[INIT]], ptr [[INTERMEDIATE]], align 64
++; CHECK-PRESERVE-CFG-NEXT:    [[INTERMEDIATE_OFF_ADDR:%.*]] = getelementptr inbounds i8, ptr [[INTERMEDIATE]], i64 [[BYTEOFF:%.*]]
++; CHECK-PRESERVE-CFG-NEXT:    [[CHUNK:%.*]] = load <1 x i8>, ptr [[INTERMEDIATE_OFF_ADDR]], align 1
++; CHECK-PRESERVE-CFG-NEXT:    store <1 x i8> [[CHUNK]], ptr [[DST:%.*]], align 1
++; CHECK-PRESERVE-CFG-NEXT:    ret void
++;
++; CHECK-MODIFY-CFG-LABEL: @load_1byte_chunk_of_2byte_alloca(
++; CHECK-MODIFY-CFG-NEXT:    [[INIT:%.*]] = load <2 x i8>, ptr [[SRC:%.*]], align 1
++; CHECK-MODIFY-CFG-NEXT:    [[INTERMEDIATE_OFF_ADDR_SROA_IDX:%.*]] = icmp eq i64 [[BYTEOFF:%.*]], 1
++; CHECK-MODIFY-CFG-NEXT:    [[INTERMEDIATE_SROA_0_1_VEC_EXTRACT:%.*]] = extractelement <2 x i8> [[INIT]], i64 1
++; CHECK-MODIFY-CFG-NEXT:    [[TMP1:%.*]] = bitcast i8 [[INTERMEDIATE_SROA_0_1_VEC_EXTRACT]] to <1 x i8>
++; CHECK-MODIFY-CFG-NEXT:    [[INTERMEDIATE_SROA_0_0_VEC_EXTRACT:%.*]] = extractelement <2 x i8> [[INIT]], i64 0
++; CHECK-MODIFY-CFG-NEXT:    [[TMP2:%.*]] = bitcast i8 [[INTERMEDIATE_SROA_0_0_VEC_EXTRACT]] to <1 x i8>
++; CHECK-MODIFY-CFG-NEXT:    [[CHUNK_SROA_SPECULATED:%.*]] = select i1 [[INTERMEDIATE_OFF_ADDR_SROA_IDX]], <1 x i8> [[TMP1]], <1 x i8> [[TMP2]]
++; CHECK-MODIFY-CFG-NEXT:    store <1 x i8> [[CHUNK_SROA_SPECULATED]], ptr [[DST:%.*]], align 1
++; CHECK-MODIFY-CFG-NEXT:    ret void
+ ;
+   %intermediate = alloca [2 x i8], align 64
+   %init = load <2 x i8>, ptr %src, align 1
