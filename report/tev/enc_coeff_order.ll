@@ -205,35 +205,35 @@ scalar.ph:                                        ; preds = %middle.block, %scal
   %niter715 = phi i64 [ 0, %.preheader263.us.us.us.us.us.us.preheader.new ], [ %niter715.next.7, %.preheader263.us.us.us.us.us.us ]
   %factor.op.mul.reass.us.us.us.us.us.us = mul nuw nsw i64 %factor.op.mul278.us.us.us, %.0169279.us.us.us.us.us.us
   %i.fj = getelementptr [8 x i8], ptr %i.cb, i64 %factor.op.mul.reass.us.us.us.us.us.us
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fj, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fj, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.fk = or disjoint i64 %.0169279.us.us.us.us.us.us, 1
   %factor.op.mul.reass.us.us.us.us.us.us.1717 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %i.fk
   %i.fl = getelementptr [8 x i8], ptr %i.cb, i64 %factor.op.mul.reass.us.us.us.us.us.us.1717
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fl, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fl, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.fm = or disjoint i64 %.0169279.us.us.us.us.us.us, 2
   %factor.op.mul.reass.us.us.us.us.us.us.2720 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %i.fm
   %i.fn = getelementptr [8 x i8], ptr %i.cb, i64 %factor.op.mul.reass.us.us.us.us.us.us.2720
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fn, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fn, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.fo = or disjoint i64 %.0169279.us.us.us.us.us.us, 3
   %factor.op.mul.reass.us.us.us.us.us.us.3 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %i.fo
   %i.fp = getelementptr [8 x i8], ptr %i.cb, i64 %factor.op.mul.reass.us.us.us.us.us.us.3
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fp, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fp, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.fq = or disjoint i64 %.0169279.us.us.us.us.us.us, 4
   %factor.op.mul.reass.us.us.us.us.us.us.4 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %i.fq
   %i.fr = getelementptr [8 x i8], ptr %i.cb, i64 %factor.op.mul.reass.us.us.us.us.us.us.4
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fr, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fr, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.fs = or disjoint i64 %.0169279.us.us.us.us.us.us, 5
   %factor.op.mul.reass.us.us.us.us.us.us.5 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %i.fs
   %i.ft = getelementptr [8 x i8], ptr %i.cb, i64 %factor.op.mul.reass.us.us.us.us.us.us.5
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ft, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ft, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.fu = or disjoint i64 %.0169279.us.us.us.us.us.us, 6
   %factor.op.mul.reass.us.us.us.us.us.us.6 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %i.fu
   %i.fv = getelementptr [8 x i8], ptr %i.cb, i64 %factor.op.mul.reass.us.us.us.us.us.us.6
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fv, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fv, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.fw = or disjoint i64 %.0169279.us.us.us.us.us.us, 7
   %factor.op.mul.reass.us.us.us.us.us.us.7 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %i.fw
   %i.fx = getelementptr [8 x i8], ptr %i.cb, i64 %factor.op.mul.reass.us.us.us.us.us.us.7
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fx, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fx, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.fy = add nuw nsw i64 %.0169279.us.us.us.us.us.us, 8 ; 2 uses
   %niter715.next.7 = add i64 %niter715, 8         ; 2 uses
   %niter715.ncmp.7 = icmp eq i64 %niter715.next.7, %unroll_iter714
@@ -254,7 +254,7 @@ scalar.ph:                                        ; preds = %middle.block, %scal
   %epil.iter711 = phi i64 [ %epil.iter711.next, %.preheader263.us.us.us.us.us.us.epil ], [ 0, %.preheader263.us.us.us.us.us.us.epil.preheader ]
   %factor.op.mul.reass.us.us.us.us.us.us.epil = mul nuw nsw i64 %factor.op.mul278.us.us.us, %.0169279.us.us.us.us.us.us.epil
   %i.fz = getelementptr [8 x i8], ptr %i.cb, i64 %factor.op.mul.reass.us.us.us.us.us.us.epil
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fz, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.fz, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.ga = add nuw nsw i64 %.0169279.us.us.us.us.us.us.epil, 1
   %epil.iter711.next = add i64 %epil.iter711, 1   ; 2 uses
   %epil.iter711.cmp.not = icmp eq i64 %epil.iter711.next, %xtraiter710
@@ -326,35 +326,35 @@ scalar.ph526:                                     ; preds = %middle.block537, %s
   %niter727 = phi i64 [ 0, %.preheader263.us.us.us.us.us.us.1.preheader.new ], [ %niter727.next.7, %.preheader263.us.us.us.us.us.us.1 ]
   %factor.op.mul.reass.us.us.us.us.us.us.1 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %.0169279.us.us.us.us.us.us.1
   %i.gz = getelementptr [8 x i8], ptr %i.ge, i64 %factor.op.mul.reass.us.us.us.us.us.us.1
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.gz, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.gz, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.ha = or disjoint i64 %.0169279.us.us.us.us.us.us.1, 1
   %factor.op.mul.reass.us.us.us.us.us.us.1.1 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %i.ha
   %i.hb = getelementptr [8 x i8], ptr %i.ge, i64 %factor.op.mul.reass.us.us.us.us.us.us.1.1
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.hb, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.hb, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.hc = or disjoint i64 %.0169279.us.us.us.us.us.us.1, 2
   %factor.op.mul.reass.us.us.us.us.us.us.1.2 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %i.hc
   %i.hd = getelementptr [8 x i8], ptr %i.ge, i64 %factor.op.mul.reass.us.us.us.us.us.us.1.2
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.hd, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.hd, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.he = or disjoint i64 %.0169279.us.us.us.us.us.us.1, 3
   %factor.op.mul.reass.us.us.us.us.us.us.1.3 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %i.he
   %i.hf = getelementptr [8 x i8], ptr %i.ge, i64 %factor.op.mul.reass.us.us.us.us.us.us.1.3
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.hf, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.hf, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.hg = or disjoint i64 %.0169279.us.us.us.us.us.us.1, 4
   %factor.op.mul.reass.us.us.us.us.us.us.1.4 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %i.hg
   %i.hh = getelementptr [8 x i8], ptr %i.ge, i64 %factor.op.mul.reass.us.us.us.us.us.us.1.4
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.hh, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.hh, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.hi = or disjoint i64 %.0169279.us.us.us.us.us.us.1, 5
   %factor.op.mul.reass.us.us.us.us.us.us.1.5 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %i.hi
   %i.hj = getelementptr [8 x i8], ptr %i.ge, i64 %factor.op.mul.reass.us.us.us.us.us.us.1.5
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.hj, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.hj, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.hk = or disjoint i64 %.0169279.us.us.us.us.us.us.1, 6
   %factor.op.mul.reass.us.us.us.us.us.us.1.6 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %i.hk
   %i.hl = getelementptr [8 x i8], ptr %i.ge, i64 %factor.op.mul.reass.us.us.us.us.us.us.1.6
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.hl, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.hl, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.hm = or disjoint i64 %.0169279.us.us.us.us.us.us.1, 7
   %factor.op.mul.reass.us.us.us.us.us.us.1.7 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %i.hm
   %i.hn = getelementptr [8 x i8], ptr %i.ge, i64 %factor.op.mul.reass.us.us.us.us.us.us.1.7
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.hn, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.hn, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.ho = add nuw nsw i64 %.0169279.us.us.us.us.us.us.1, 8 ; 2 uses
   %niter727.next.7 = add i64 %niter727, 8         ; 2 uses
   %niter727.ncmp.7 = icmp eq i64 %niter727.next.7, %unroll_iter726
@@ -375,7 +375,7 @@ scalar.ph526:                                     ; preds = %middle.block537, %s
   %epil.iter723 = phi i64 [ %epil.iter723.next, %.preheader263.us.us.us.us.us.us.1.epil ], [ 0, %.preheader263.us.us.us.us.us.us.1.epil.preheader ]
   %factor.op.mul.reass.us.us.us.us.us.us.1.epil = mul nuw nsw i64 %factor.op.mul278.us.us.us, %.0169279.us.us.us.us.us.us.1.epil
   %i.hp = getelementptr [8 x i8], ptr %i.ge, i64 %factor.op.mul.reass.us.us.us.us.us.us.1.epil
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.hp, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.hp, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.hq = add nuw nsw i64 %.0169279.us.us.us.us.us.us.1.epil, 1
   %epil.iter723.next = add i64 %epil.iter723, 1   ; 2 uses
   %epil.iter723.cmp.not = icmp eq i64 %epil.iter723.next, %xtraiter722
@@ -447,35 +447,35 @@ scalar.ph512:                                     ; preds = %middle.block523, %s
   %niter733 = phi i64 [ 0, %.preheader263.us.us.us.us.us.us.2.preheader.new ], [ %niter733.next.7, %.preheader263.us.us.us.us.us.us.2 ]
   %factor.op.mul.reass.us.us.us.us.us.us.2 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %.0169279.us.us.us.us.us.us.2
   %i.ip = getelementptr [8 x i8], ptr %i.hu, i64 %factor.op.mul.reass.us.us.us.us.us.us.2
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ip, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ip, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.iq = or disjoint i64 %.0169279.us.us.us.us.us.us.2, 1
   %factor.op.mul.reass.us.us.us.us.us.us.2.1 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %i.iq
   %i.ir = getelementptr [8 x i8], ptr %i.hu, i64 %factor.op.mul.reass.us.us.us.us.us.us.2.1
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ir, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ir, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.is = or disjoint i64 %.0169279.us.us.us.us.us.us.2, 2
   %factor.op.mul.reass.us.us.us.us.us.us.2.2 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %i.is
   %i.it = getelementptr [8 x i8], ptr %i.hu, i64 %factor.op.mul.reass.us.us.us.us.us.us.2.2
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.it, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.it, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.iu = or disjoint i64 %.0169279.us.us.us.us.us.us.2, 3
   %factor.op.mul.reass.us.us.us.us.us.us.2.3 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %i.iu
   %i.iv = getelementptr [8 x i8], ptr %i.hu, i64 %factor.op.mul.reass.us.us.us.us.us.us.2.3
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.iv, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.iv, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.iw = or disjoint i64 %.0169279.us.us.us.us.us.us.2, 4
   %factor.op.mul.reass.us.us.us.us.us.us.2.4 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %i.iw
   %i.ix = getelementptr [8 x i8], ptr %i.hu, i64 %factor.op.mul.reass.us.us.us.us.us.us.2.4
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ix, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ix, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.iy = or disjoint i64 %.0169279.us.us.us.us.us.us.2, 5
   %factor.op.mul.reass.us.us.us.us.us.us.2.5 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %i.iy
   %i.iz = getelementptr [8 x i8], ptr %i.hu, i64 %factor.op.mul.reass.us.us.us.us.us.us.2.5
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.iz, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.iz, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.ja = or disjoint i64 %.0169279.us.us.us.us.us.us.2, 6
   %factor.op.mul.reass.us.us.us.us.us.us.2.6 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %i.ja
   %i.jb = getelementptr [8 x i8], ptr %i.hu, i64 %factor.op.mul.reass.us.us.us.us.us.us.2.6
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.jb, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.jb, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.jc = or disjoint i64 %.0169279.us.us.us.us.us.us.2, 7
   %factor.op.mul.reass.us.us.us.us.us.us.2.7 = mul nuw nsw i64 %factor.op.mul278.us.us.us, %i.jc
   %i.jd = getelementptr [8 x i8], ptr %i.hu, i64 %factor.op.mul.reass.us.us.us.us.us.us.2.7
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.jd, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.jd, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.je = add nuw nsw i64 %.0169279.us.us.us.us.us.us.2, 8 ; 2 uses
   %niter733.next.7 = add i64 %niter733, 8         ; 2 uses
   %niter733.ncmp.7 = icmp eq i64 %niter733.next.7, %unroll_iter732
@@ -496,7 +496,7 @@ scalar.ph512:                                     ; preds = %middle.block523, %s
   %epil.iter729 = phi i64 [ %epil.iter729.next, %.preheader263.us.us.us.us.us.us.2.epil ], [ 0, %.preheader263.us.us.us.us.us.us.2.epil.preheader ]
   %factor.op.mul.reass.us.us.us.us.us.us.2.epil = mul nuw nsw i64 %factor.op.mul278.us.us.us, %.0169279.us.us.us.us.us.us.2.epil
   %i.jf = getelementptr [8 x i8], ptr %i.hu, i64 %factor.op.mul.reass.us.us.us.us.us.us.2.epil
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.jf, i8 -1, i64 %factor.op.mul278.us.us.us, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.jf, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us.us.us, i1 false), !tbaa !19
   %i.jg = add nuw nsw i64 %.0169279.us.us.us.us.us.us.2.epil, 1
   %epil.iter729.next = add i64 %epil.iter729, 1   ; 2 uses
   %epil.iter729.cmp.not = icmp eq i64 %epil.iter729.next, %xtraiter728
@@ -780,35 +780,35 @@ scalar.ph554:                                     ; preds = %middle.block565, %s
   %niter = phi i64 [ 0, %.preheader263.us288.us.us.preheader.new ], [ %niter.next.7, %.preheader263.us288.us.us ]
   %factor.op.mul.reass.us290.us.us = mul nuw nsw i64 %factor.op.mul278.us322, %.0169279.us289.us.us
   %i.ob = getelementptr [8 x i8], ptr %i.kt, i64 %factor.op.mul.reass.us290.us.us
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ob, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ob, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.oc = or disjoint i64 %.0169279.us289.us.us, 1
   %factor.op.mul.reass.us290.us.us.1693 = mul nuw nsw i64 %factor.op.mul278.us322, %i.oc
   %i.od = getelementptr [8 x i8], ptr %i.kt, i64 %factor.op.mul.reass.us290.us.us.1693
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.od, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.od, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.oe = or disjoint i64 %.0169279.us289.us.us, 2
   %factor.op.mul.reass.us290.us.us.2696 = mul nuw nsw i64 %factor.op.mul278.us322, %i.oe
   %i.of = getelementptr [8 x i8], ptr %i.kt, i64 %factor.op.mul.reass.us290.us.us.2696
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.of, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.of, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.og = or disjoint i64 %.0169279.us289.us.us, 3
   %factor.op.mul.reass.us290.us.us.3 = mul nuw nsw i64 %factor.op.mul278.us322, %i.og
   %i.oh = getelementptr [8 x i8], ptr %i.kt, i64 %factor.op.mul.reass.us290.us.us.3
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.oh, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.oh, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.oi = or disjoint i64 %.0169279.us289.us.us, 4
   %factor.op.mul.reass.us290.us.us.4 = mul nuw nsw i64 %factor.op.mul278.us322, %i.oi
   %i.oj = getelementptr [8 x i8], ptr %i.kt, i64 %factor.op.mul.reass.us290.us.us.4
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.oj, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.oj, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.ok = or disjoint i64 %.0169279.us289.us.us, 5
   %factor.op.mul.reass.us290.us.us.5 = mul nuw nsw i64 %factor.op.mul278.us322, %i.ok
   %i.ol = getelementptr [8 x i8], ptr %i.kt, i64 %factor.op.mul.reass.us290.us.us.5
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ol, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.ol, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.om = or disjoint i64 %.0169279.us289.us.us, 6
   %factor.op.mul.reass.us290.us.us.6 = mul nuw nsw i64 %factor.op.mul278.us322, %i.om
   %i.on = getelementptr [8 x i8], ptr %i.kt, i64 %factor.op.mul.reass.us290.us.us.6
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.on, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.on, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.oo = or disjoint i64 %.0169279.us289.us.us, 7
   %factor.op.mul.reass.us290.us.us.7 = mul nuw nsw i64 %factor.op.mul278.us322, %i.oo
   %i.op = getelementptr [8 x i8], ptr %i.kt, i64 %factor.op.mul.reass.us290.us.us.7
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.op, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.op, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.oq = add nuw nsw i64 %.0169279.us289.us.us, 8 ; 2 uses
   %niter.next.7 = add i64 %niter, 8               ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
@@ -829,7 +829,7 @@ scalar.ph554:                                     ; preds = %middle.block565, %s
   %epil.iter = phi i64 [ %epil.iter.next, %.preheader263.us288.us.us.epil ], [ 0, %.preheader263.us288.us.us.epil.preheader ]
   %factor.op.mul.reass.us290.us.us.epil = mul nuw nsw i64 %factor.op.mul278.us322, %.0169279.us289.us.us.epil
   %i.or = getelementptr [8 x i8], ptr %i.kt, i64 %factor.op.mul.reass.us290.us.us.epil
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.or, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.or, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.os = add nuw nsw i64 %.0169279.us289.us.us.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -901,35 +901,35 @@ scalar.ph610:                                     ; preds = %middle.block621, %s
   %niter703 = phi i64 [ 0, %.preheader263.us288.us.us.1.preheader.new ], [ %niter703.next.7, %.preheader263.us288.us.us.1 ]
   %factor.op.mul.reass.us290.us.us.1 = mul nuw nsw i64 %factor.op.mul278.us322, %.0169279.us289.us.us.1
   %i.pr = getelementptr [8 x i8], ptr %i.ow, i64 %factor.op.mul.reass.us290.us.us.1
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.pr, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.pr, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.ps = or disjoint i64 %.0169279.us289.us.us.1, 1
   %factor.op.mul.reass.us290.us.us.1.1 = mul nuw nsw i64 %factor.op.mul278.us322, %i.ps
   %i.pt = getelementptr [8 x i8], ptr %i.ow, i64 %factor.op.mul.reass.us290.us.us.1.1
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.pt, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.pt, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.pu = or disjoint i64 %.0169279.us289.us.us.1, 2
   %factor.op.mul.reass.us290.us.us.1.2 = mul nuw nsw i64 %factor.op.mul278.us322, %i.pu
   %i.pv = getelementptr [8 x i8], ptr %i.ow, i64 %factor.op.mul.reass.us290.us.us.1.2
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.pv, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.pv, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.pw = or disjoint i64 %.0169279.us289.us.us.1, 3
   %factor.op.mul.reass.us290.us.us.1.3 = mul nuw nsw i64 %factor.op.mul278.us322, %i.pw
   %i.px = getelementptr [8 x i8], ptr %i.ow, i64 %factor.op.mul.reass.us290.us.us.1.3
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.px, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.px, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.py = or disjoint i64 %.0169279.us289.us.us.1, 4
   %factor.op.mul.reass.us290.us.us.1.4 = mul nuw nsw i64 %factor.op.mul278.us322, %i.py
   %i.pz = getelementptr [8 x i8], ptr %i.ow, i64 %factor.op.mul.reass.us290.us.us.1.4
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.pz, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.pz, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.qa = or disjoint i64 %.0169279.us289.us.us.1, 5
   %factor.op.mul.reass.us290.us.us.1.5 = mul nuw nsw i64 %factor.op.mul278.us322, %i.qa
   %i.qb = getelementptr [8 x i8], ptr %i.ow, i64 %factor.op.mul.reass.us290.us.us.1.5
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.qb, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.qb, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.qc = or disjoint i64 %.0169279.us289.us.us.1, 6
   %factor.op.mul.reass.us290.us.us.1.6 = mul nuw nsw i64 %factor.op.mul278.us322, %i.qc
   %i.qd = getelementptr [8 x i8], ptr %i.ow, i64 %factor.op.mul.reass.us290.us.us.1.6
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.qd, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.qd, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.qe = or disjoint i64 %.0169279.us289.us.us.1, 7
   %factor.op.mul.reass.us290.us.us.1.7 = mul nuw nsw i64 %factor.op.mul278.us322, %i.qe
   %i.qf = getelementptr [8 x i8], ptr %i.ow, i64 %factor.op.mul.reass.us290.us.us.1.7
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.qf, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.qf, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.qg = add nuw nsw i64 %.0169279.us289.us.us.1, 8 ; 2 uses
   %niter703.next.7 = add i64 %niter703, 8         ; 2 uses
   %niter703.ncmp.7 = icmp eq i64 %niter703.next.7, %unroll_iter702
@@ -950,7 +950,7 @@ scalar.ph610:                                     ; preds = %middle.block621, %s
   %epil.iter699 = phi i64 [ %epil.iter699.next, %.preheader263.us288.us.us.1.epil ], [ 0, %.preheader263.us288.us.us.1.epil.preheader ]
   %factor.op.mul.reass.us290.us.us.1.epil = mul nuw nsw i64 %factor.op.mul278.us322, %.0169279.us289.us.us.1.epil
   %i.qh = getelementptr [8 x i8], ptr %i.ow, i64 %factor.op.mul.reass.us290.us.us.1.epil
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.qh, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.qh, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.qi = add nuw nsw i64 %.0169279.us289.us.us.1.epil, 1
   %epil.iter699.next = add i64 %epil.iter699, 1   ; 2 uses
   %epil.iter699.cmp.not = icmp eq i64 %epil.iter699.next, %xtraiter698
@@ -1022,35 +1022,35 @@ scalar.ph596:                                     ; preds = %middle.block607, %s
   %niter709 = phi i64 [ 0, %.preheader263.us288.us.us.2.preheader.new ], [ %niter709.next.7, %.preheader263.us288.us.us.2 ]
   %factor.op.mul.reass.us290.us.us.2 = mul nuw nsw i64 %factor.op.mul278.us322, %.0169279.us289.us.us.2
   %i.rh = getelementptr [8 x i8], ptr %i.qm, i64 %factor.op.mul.reass.us290.us.us.2
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.rh, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.rh, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.ri = or disjoint i64 %.0169279.us289.us.us.2, 1
   %factor.op.mul.reass.us290.us.us.2.1 = mul nuw nsw i64 %factor.op.mul278.us322, %i.ri
   %i.rj = getelementptr [8 x i8], ptr %i.qm, i64 %factor.op.mul.reass.us290.us.us.2.1
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.rj, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.rj, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.rk = or disjoint i64 %.0169279.us289.us.us.2, 2
   %factor.op.mul.reass.us290.us.us.2.2 = mul nuw nsw i64 %factor.op.mul278.us322, %i.rk
   %i.rl = getelementptr [8 x i8], ptr %i.qm, i64 %factor.op.mul.reass.us290.us.us.2.2
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.rl, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.rl, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.rm = or disjoint i64 %.0169279.us289.us.us.2, 3
   %factor.op.mul.reass.us290.us.us.2.3 = mul nuw nsw i64 %factor.op.mul278.us322, %i.rm
   %i.rn = getelementptr [8 x i8], ptr %i.qm, i64 %factor.op.mul.reass.us290.us.us.2.3
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.rn, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.rn, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.ro = or disjoint i64 %.0169279.us289.us.us.2, 4
   %factor.op.mul.reass.us290.us.us.2.4 = mul nuw nsw i64 %factor.op.mul278.us322, %i.ro
   %i.rp = getelementptr [8 x i8], ptr %i.qm, i64 %factor.op.mul.reass.us290.us.us.2.4
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.rp, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.rp, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.rq = or disjoint i64 %.0169279.us289.us.us.2, 5
   %factor.op.mul.reass.us290.us.us.2.5 = mul nuw nsw i64 %factor.op.mul278.us322, %i.rq
   %i.rr = getelementptr [8 x i8], ptr %i.qm, i64 %factor.op.mul.reass.us290.us.us.2.5
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.rr, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.rr, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.rs = or disjoint i64 %.0169279.us289.us.us.2, 6
   %factor.op.mul.reass.us290.us.us.2.6 = mul nuw nsw i64 %factor.op.mul278.us322, %i.rs
   %i.rt = getelementptr [8 x i8], ptr %i.qm, i64 %factor.op.mul.reass.us290.us.us.2.6
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.rt, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.rt, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.ru = or disjoint i64 %.0169279.us289.us.us.2, 7
   %factor.op.mul.reass.us290.us.us.2.7 = mul nuw nsw i64 %factor.op.mul278.us322, %i.ru
   %i.rv = getelementptr [8 x i8], ptr %i.qm, i64 %factor.op.mul.reass.us290.us.us.2.7
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.rv, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.rv, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.rw = add nuw nsw i64 %.0169279.us289.us.us.2, 8 ; 2 uses
   %niter709.next.7 = add i64 %niter709, 8         ; 2 uses
   %niter709.ncmp.7 = icmp eq i64 %niter709.next.7, %unroll_iter708
@@ -1071,7 +1071,7 @@ scalar.ph596:                                     ; preds = %middle.block607, %s
   %epil.iter705 = phi i64 [ %epil.iter705.next, %.preheader263.us288.us.us.2.epil ], [ 0, %.preheader263.us288.us.us.2.epil.preheader ]
   %factor.op.mul.reass.us290.us.us.2.epil = mul nuw nsw i64 %factor.op.mul278.us322, %.0169279.us289.us.us.2.epil
   %i.rx = getelementptr [8 x i8], ptr %i.qm, i64 %factor.op.mul.reass.us290.us.us.2.epil
-  tail call void @llvm.memset.p0.i64(ptr align 8 %i.rx, i8 -1, i64 %factor.op.mul278.us322, i1 false), !tbaa !19
+  tail call void @llvm.memset.p0.i64(ptr align 8 %i.rx, i8 -1, i64 range(i64 0, 2041) %factor.op.mul278.us322, i1 false), !tbaa !19
   %i.ry = add nuw nsw i64 %.0169279.us289.us.us.2.epil, 1
   %epil.iter705.next = add i64 %epil.iter705, 1   ; 2 uses
   %epil.iter705.cmp.not = icmp eq i64 %epil.iter705.next, %xtraiter704

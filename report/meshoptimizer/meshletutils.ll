@@ -205,8 +205,8 @@ define internal fastcc void @_ZN7meshoptL21computeBoundingSphereEPfPKfmmS2_mmPKj
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   %i.c = shl nuw nsw i64 %6, 2                    ; 2 uses
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.b, i8 0, i64 %i.c, i1 false), !tbaa !9
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.a, i8 0, i64 %i.c, i1 false), !tbaa !9
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.b, i8 0, i64 range(i64 0, 29) %i.c, i1 false), !tbaa !9
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(1) %i.a, i8 0, i64 range(i64 0, 29) %i.c, i1 false), !tbaa !9
   %i.d = lshr i64 %3, 2                           ; 18 uses
   %i.e = lshr i64 %5, 2                           ; 18 uses
   %.not225 = icmp eq i64 %2, 0                    ; 2 uses

@@ -205,7 +205,7 @@ bb.q:                                             ; preds = %.loopexit
 .lr.ph.1:                                         ; preds = %bb.q
   %i.cv = add i64 %i.cd, -16
   %scevgep307.1 = getelementptr i8, ptr %i.ck, i64 %i.az
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %scevgep.1, ptr align 8 %scevgep307.1, i64 %i.cv, i1 false), !tbaa !210
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %scevgep.1, ptr align 8 %scevgep307.1, i64 range(i64 0, 57) %i.cv, i1 false), !tbaa !210
   br label %.loopexit.1
 
 .loopexit.1:                                      ; preds = %.lr.ph.1, %bb.q
@@ -225,7 +225,7 @@ bb.r:                                             ; preds = %.loopexit.1
 .lr.ph.2:                                         ; preds = %bb.r
   %i.dc = add i64 %i.cd, -24
   %scevgep307.2 = getelementptr i8, ptr %i.ck, i64 %i.be
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %scevgep.2, ptr align 8 %scevgep307.2, i64 %i.dc, i1 false), !tbaa !210
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %scevgep.2, ptr align 8 %scevgep307.2, i64 range(i64 0, 57) %i.dc, i1 false), !tbaa !210
   br label %.loopexit.2
 
 .loopexit.2:                                      ; preds = %.lr.ph.2, %bb.r
@@ -245,7 +245,7 @@ bb.s:                                             ; preds = %.loopexit.2
 .lr.ph.3:                                         ; preds = %bb.s
   %i.dj = add i64 %i.cd, -32
   %scevgep307.3 = getelementptr i8, ptr %i.ck, i64 %i.bg
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %scevgep.3, ptr align 8 %scevgep307.3, i64 %i.dj, i1 false), !tbaa !210
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %scevgep.3, ptr align 8 %scevgep307.3, i64 range(i64 0, 57) %i.dj, i1 false), !tbaa !210
   br label %.loopexit.3
 
 .loopexit.3:                                      ; preds = %.lr.ph.3, %bb.s
@@ -265,7 +265,7 @@ bb.t:                                             ; preds = %.loopexit.3
 .lr.ph.4:                                         ; preds = %bb.t
   %i.dq = add i64 %i.cd, -40
   %scevgep307.4 = getelementptr i8, ptr %i.ck, i64 %i.bi
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %scevgep.4, ptr align 8 %scevgep307.4, i64 %i.dq, i1 false), !tbaa !210
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %scevgep.4, ptr align 8 %scevgep307.4, i64 range(i64 0, 57) %i.dq, i1 false), !tbaa !210
   br label %.loopexit.4
 
 .loopexit.4:                                      ; preds = %.lr.ph.4, %bb.t
@@ -285,7 +285,7 @@ bb.u:                                             ; preds = %.loopexit.4
 .lr.ph.5:                                         ; preds = %bb.u
   %i.dx = add i64 %i.cd, -48
   %scevgep307.5 = getelementptr i8, ptr %i.ck, i64 %i.bk
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %scevgep.5, ptr align 8 %scevgep307.5, i64 %i.dx, i1 false), !tbaa !210
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %scevgep.5, ptr align 8 %scevgep307.5, i64 range(i64 0, 57) %i.dx, i1 false), !tbaa !210
   br label %.loopexit.5
 
 .loopexit.5:                                      ; preds = %.lr.ph.5, %bb.u
@@ -305,7 +305,7 @@ bb.v:                                             ; preds = %.loopexit.5
 .lr.ph.6:                                         ; preds = %bb.v
   %i.ee = add i64 %i.cd, -56
   %scevgep307.6 = getelementptr i8, ptr %i.ck, i64 %i.bm
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %scevgep.6, ptr align 8 %scevgep307.6, i64 %i.ee, i1 false), !tbaa !210
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %scevgep.6, ptr align 8 %scevgep307.6, i64 range(i64 0, 57) %i.ee, i1 false), !tbaa !210
   br label %.loopexit.6
 
 .loopexit.6:                                      ; preds = %.lr.ph.6, %bb.v
@@ -322,7 +322,7 @@ bb.v:                                             ; preds = %.loopexit.5
   br label %._crit_edge
 
 .lr.ph:                                           ; preds = %.lr.ph292
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %scevgep, ptr align 8 %i.ck, i64 %i.ce, i1 false), !tbaa !210
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %scevgep, ptr align 8 %i.ck, i64 range(i64 0, 57) %i.ce, i1 false), !tbaa !210
   br label %.loopexit
 
 ._crit_edge:                                      ; preds = %.loopexit, %.loopexit.1, %.loopexit.2, %.loopexit.3, %.loopexit.4, %.loopexit.5, %.loopexit.6, %.loopexit.7, %.lr.ph295
@@ -725,7 +725,7 @@ bb.q:                                             ; preds = %.loopexit
 .lr.ph.1:                                         ; preds = %bb.q
   %i.cf = add i64 %i.bw, -16
   %scevgep297.1 = getelementptr i8, ptr %i.cd, i64 %i.az
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %scevgep.1, ptr align 8 %scevgep297.1, i64 %i.cf, i1 false), !tbaa !210
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %scevgep.1, ptr align 8 %scevgep297.1, i64 range(i64 0, 57) %i.cf, i1 false), !tbaa !210
   br label %.loopexit.1
 
 .loopexit.1:                                      ; preds = %.lr.ph.1, %bb.q
@@ -739,7 +739,7 @@ bb.r:                                             ; preds = %.loopexit.1
 .lr.ph.2:                                         ; preds = %bb.r
   %i.ch = add i64 %i.bw, -24
   %scevgep297.2 = getelementptr i8, ptr %i.cd, i64 %i.bc
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %scevgep.2, ptr align 8 %scevgep297.2, i64 %i.ch, i1 false), !tbaa !210
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %scevgep.2, ptr align 8 %scevgep297.2, i64 range(i64 0, 57) %i.ch, i1 false), !tbaa !210
   br label %.loopexit.2
 
 .loopexit.2:                                      ; preds = %.lr.ph.2, %bb.r
@@ -753,7 +753,7 @@ bb.s:                                             ; preds = %.loopexit.2
 .lr.ph.3:                                         ; preds = %bb.s
   %i.cj = add i64 %i.bw, -32
   %scevgep297.3 = getelementptr i8, ptr %i.cd, i64 %i.bd
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %scevgep.3, ptr align 8 %scevgep297.3, i64 %i.cj, i1 false), !tbaa !210
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %scevgep.3, ptr align 8 %scevgep297.3, i64 range(i64 0, 57) %i.cj, i1 false), !tbaa !210
   br label %.loopexit.3
 
 .loopexit.3:                                      ; preds = %.lr.ph.3, %bb.s
@@ -767,7 +767,7 @@ bb.t:                                             ; preds = %.loopexit.3
 .lr.ph.4:                                         ; preds = %bb.t
   %i.cl = add i64 %i.bw, -40
   %scevgep297.4 = getelementptr i8, ptr %i.cd, i64 %i.be
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %scevgep.4, ptr align 8 %scevgep297.4, i64 %i.cl, i1 false), !tbaa !210
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %scevgep.4, ptr align 8 %scevgep297.4, i64 range(i64 0, 57) %i.cl, i1 false), !tbaa !210
   br label %.loopexit.4
 
 .loopexit.4:                                      ; preds = %.lr.ph.4, %bb.t
@@ -781,7 +781,7 @@ bb.u:                                             ; preds = %.loopexit.4
 .lr.ph.5:                                         ; preds = %bb.u
   %i.cn = add i64 %i.bw, -48
   %scevgep297.5 = getelementptr i8, ptr %i.cd, i64 %i.bf
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %scevgep.5, ptr align 8 %scevgep297.5, i64 %i.cn, i1 false), !tbaa !210
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 %scevgep.5, ptr align 8 %scevgep297.5, i64 range(i64 0, 57) %i.cn, i1 false), !tbaa !210
   br label %.loopexit.5
 
 .loopexit.5:                                      ; preds = %.lr.ph.5, %bb.u
@@ -793,11 +793,11 @@ bb.u:                                             ; preds = %.loopexit.4
 .lr.ph.6:                                         ; preds = %.loopexit.5
   %i.cp = add i64 %i.bw, -56
   %scevgep297.6 = getelementptr i8, ptr %i.cd, i64 %i.bg
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %scevgep.6, ptr align 8 %scevgep297.6, i64 %i.cp, i1 false), !tbaa !210
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %scevgep.6, ptr align 8 %scevgep297.6, i64 range(i64 0, 57) %i.cp, i1 false), !tbaa !210
   br label %._crit_edge
 
 .lr.ph:                                           ; preds = %.lr.ph282
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %scevgep, ptr align 8 %i.cd, i64 %i.bx, i1 false), !tbaa !210
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %scevgep, ptr align 8 %i.cd, i64 range(i64 0, 57) %i.bx, i1 false), !tbaa !210
   br label %.loopexit
 
 ._crit_edge:                                      ; preds = %.lr.ph.6, %.loopexit, %.loopexit.1, %.loopexit.2, %.loopexit.3, %.loopexit.4, %.loopexit.5, %.lr.ph285

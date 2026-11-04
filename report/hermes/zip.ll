@@ -205,7 +205,7 @@ bb.by:                                            ; preds = %bb.bx
   %i.vn = zext i32 %.0270334.i to i64
   %scevgep403.i = getelementptr i8, ptr %i.b, i64 %i.vn
   %i.vo = zext nneg i32 %.0262336.i to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep403.i, i8 %.0337.i, i64 %i.vo, i1 false), !tbaa !19
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep403.i, i8 %.0337.i, i64 range(i64 0, 3) %i.vo, i1 false), !tbaa !19
   %i.vp = add i32 %.0270334.i, %.0262336.i
   br label %.loopexit322.i
 
@@ -261,7 +261,7 @@ bb.cc:                                            ; preds = %bb.cb
   %i.wo = zext i32 %.0270334.i to i64
   %scevgep.i4 = getelementptr i8, ptr %i.b, i64 %i.wo
   %i.wp = zext nneg i32 %.0264335.i to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i4, i8 0, i64 %i.wp, i1 false), !tbaa !19
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.i4, i8 0, i64 range(i64 0, 3) %i.wp, i1 false), !tbaa !19
   %i.wq = add i32 %.0270334.i, %.0264335.i
   br label %.loopexit324.i
 
@@ -317,7 +317,7 @@ bb.ch:                                            ; preds = %bb.cg
   %i.xl = zext i32 %.8.i to i64
   %scevgep401.i = getelementptr i8, ptr %i.b, i64 %i.xl
   %i.xm = zext nneg i32 %.0262336.i to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep401.i, i8 %.0337.i, i64 %i.xm, i1 false), !tbaa !19
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep401.i, i8 %.0337.i, i64 range(i64 0, 3) %i.xm, i1 false), !tbaa !19
   %i.xn = add i32 %.8.i, %.0262336.i
   br label %.loopexit323.i
 
@@ -395,7 +395,7 @@ bb.cm:                                            ; preds = %._crit_edge.i
   %i.yv = zext i32 %.14.i to i64
   %scevgep405.i = getelementptr i8, ptr %i.b, i64 %i.yv
   %i.yw = zext nneg i32 %.6.i to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep405.i, i8 %i.vg, i64 %i.yw, i1 false), !tbaa !19
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep405.i, i8 %i.vg, i64 range(i64 0, 3) %i.yw, i1 false), !tbaa !19
   %i.yx = add i32 %.6.i, %.14.i
   br label %.loopexit320.i
 
@@ -431,7 +431,7 @@ bb.cp:                                            ; preds = %bb.co
   %i.zm = zext i32 %.14.i to i64
   %scevgep409.i = getelementptr i8, ptr %i.b, i64 %i.zm
   %i.zn = zext nneg i32 %.4268.i to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep409.i, i8 0, i64 %i.zn, i1 false), !tbaa !19
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep409.i, i8 0, i64 range(i64 0, 3) %i.zn, i1 false), !tbaa !19
   %i.zo = add i32 %.4268.i, %.14.i
   br label %.loopexit320.i
 

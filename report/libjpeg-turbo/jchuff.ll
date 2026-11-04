@@ -80,7 +80,7 @@ bb.g:                                             ; preds = %bb.e, %bb.f
 
 .lr.ph:                                           ; preds = %bb.g
   %i.z = zext i8 %i.x to i64
-  call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.a, i8 1, i64 %i.z, i1 false), !tbaa !33
+  call void @llvm.memset.p0.i64(ptr nonnull align 16 %i.a, i8 1, i64 range(i64 0, 256) %i.z, i1 false), !tbaa !33
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.g
@@ -108,7 +108,7 @@ bb.i:                                             ; preds = %bb.h, %._crit_edge
   %i.ai = zext nneg i32 %.178.lcssa to i64
   %scevgep.1 = getelementptr i8, ptr %i.a, i64 %i.ai
   %i.aj = zext i8 %i.ab to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.1, i8 2, i64 %i.aj, i1 false), !tbaa !33
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.1, i8 2, i64 range(i64 0, 256) %i.aj, i1 false), !tbaa !33
   %i.ak = add nuw nsw i32 %.178.lcssa, %i.ac
   br label %._crit_edge.1
 
@@ -137,7 +137,7 @@ bb.k:                                             ; preds = %bb.j, %._crit_edge.
   %i.at = sext i32 %.178.lcssa.1 to i64
   %scevgep.2 = getelementptr i8, ptr %i.a, i64 %i.at
   %i.au = zext i8 %i.am to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.2, i8 3, i64 %i.au, i1 false), !tbaa !33
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.2, i8 3, i64 range(i64 0, 256) %i.au, i1 false), !tbaa !33
   %i.av = add nsw i32 %.178.lcssa.1, %i.an
   br label %._crit_edge.2
 
@@ -166,7 +166,7 @@ bb.m:                                             ; preds = %bb.l, %._crit_edge.
   %i.be = sext i32 %.178.lcssa.2 to i64
   %scevgep.3 = getelementptr i8, ptr %i.a, i64 %i.be
   %i.bf = zext i8 %i.ax to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.3, i8 4, i64 %i.bf, i1 false), !tbaa !33
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.3, i8 4, i64 range(i64 0, 256) %i.bf, i1 false), !tbaa !33
   %i.bg = add nsw i32 %.178.lcssa.2, %i.ay
   br label %._crit_edge.3
 
@@ -195,7 +195,7 @@ bb.o:                                             ; preds = %bb.n, %._crit_edge.
   %i.bp = sext i32 %.178.lcssa.3 to i64
   %scevgep.4 = getelementptr i8, ptr %i.a, i64 %i.bp
   %i.bq = zext i8 %i.bi to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.4, i8 5, i64 %i.bq, i1 false), !tbaa !33
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.4, i8 5, i64 range(i64 0, 256) %i.bq, i1 false), !tbaa !33
   %i.br = add i32 %.178.lcssa.3, %i.bj
   br label %._crit_edge.4
 
@@ -224,7 +224,7 @@ bb.q:                                             ; preds = %bb.p, %._crit_edge.
   %i.ca = sext i32 %.178.lcssa.4 to i64
   %scevgep.5 = getelementptr i8, ptr %i.a, i64 %i.ca
   %i.cb = zext i8 %i.bt to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.5, i8 6, i64 %i.cb, i1 false), !tbaa !33
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.5, i8 6, i64 range(i64 0, 256) %i.cb, i1 false), !tbaa !33
   %i.cc = add i32 %.178.lcssa.4, %i.bu
   br label %._crit_edge.5
 
@@ -253,7 +253,7 @@ bb.s:                                             ; preds = %bb.r, %._crit_edge.
   %i.cl = sext i32 %.178.lcssa.5 to i64
   %scevgep.6 = getelementptr i8, ptr %i.a, i64 %i.cl
   %i.cm = zext i8 %i.ce to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.6, i8 7, i64 %i.cm, i1 false), !tbaa !33
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.6, i8 7, i64 range(i64 0, 256) %i.cm, i1 false), !tbaa !33
   %i.cn = add i32 %.178.lcssa.5, %i.cf
   br label %._crit_edge.6
 
@@ -282,7 +282,7 @@ bb.u:                                             ; preds = %bb.t, %._crit_edge.
   %i.cw = sext i32 %.178.lcssa.6 to i64
   %scevgep.7 = getelementptr i8, ptr %i.a, i64 %i.cw
   %i.cx = zext i8 %i.cp to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.7, i8 8, i64 %i.cx, i1 false), !tbaa !33
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.7, i8 8, i64 range(i64 0, 256) %i.cx, i1 false), !tbaa !33
   %i.cy = add i32 %.178.lcssa.6, %i.cq
   br label %._crit_edge.7
 
@@ -311,7 +311,7 @@ bb.w:                                             ; preds = %bb.v, %._crit_edge.
   %i.dh = sext i32 %.178.lcssa.7 to i64
   %scevgep.8 = getelementptr i8, ptr %i.a, i64 %i.dh
   %i.di = zext i8 %i.da to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.8, i8 9, i64 %i.di, i1 false), !tbaa !33
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.8, i8 9, i64 range(i64 0, 256) %i.di, i1 false), !tbaa !33
   %i.dj = add i32 %.178.lcssa.7, %i.db
   br label %._crit_edge.8
 
@@ -340,7 +340,7 @@ bb.y:                                             ; preds = %bb.x, %._crit_edge.
   %i.ds = sext i32 %.178.lcssa.8 to i64
   %scevgep.9 = getelementptr i8, ptr %i.a, i64 %i.ds
   %i.dt = zext i8 %i.dl to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.9, i8 10, i64 %i.dt, i1 false), !tbaa !33
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.9, i8 10, i64 range(i64 0, 256) %i.dt, i1 false), !tbaa !33
   %i.du = add i32 %.178.lcssa.8, %i.dm
   br label %._crit_edge.9
 
@@ -369,7 +369,7 @@ bb.aa:                                            ; preds = %bb.z, %._crit_edge.
   %i.ed = sext i32 %.178.lcssa.9 to i64
   %scevgep.10 = getelementptr i8, ptr %i.a, i64 %i.ed
   %i.ee = zext i8 %i.dw to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.10, i8 11, i64 %i.ee, i1 false), !tbaa !33
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.10, i8 11, i64 range(i64 0, 256) %i.ee, i1 false), !tbaa !33
   %i.ef = add i32 %.178.lcssa.9, %i.dx
   br label %._crit_edge.10
 
@@ -398,7 +398,7 @@ bb.ac:                                            ; preds = %bb.ab, %._crit_edge
   %i.eo = sext i32 %.178.lcssa.10 to i64
   %scevgep.11 = getelementptr i8, ptr %i.a, i64 %i.eo
   %i.ep = zext i8 %i.eh to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.11, i8 12, i64 %i.ep, i1 false), !tbaa !33
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.11, i8 12, i64 range(i64 0, 256) %i.ep, i1 false), !tbaa !33
   %i.eq = add i32 %.178.lcssa.10, %i.ei
   br label %._crit_edge.11
 
@@ -427,7 +427,7 @@ bb.ae:                                            ; preds = %bb.ad, %._crit_edge
   %i.ez = sext i32 %.178.lcssa.11 to i64
   %scevgep.12 = getelementptr i8, ptr %i.a, i64 %i.ez
   %i.fa = zext i8 %i.es to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.12, i8 13, i64 %i.fa, i1 false), !tbaa !33
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.12, i8 13, i64 range(i64 0, 256) %i.fa, i1 false), !tbaa !33
   %i.fb = add i32 %.178.lcssa.11, %i.et
   br label %._crit_edge.12
 
@@ -456,7 +456,7 @@ bb.ag:                                            ; preds = %bb.af, %._crit_edge
   %i.fk = sext i32 %.178.lcssa.12 to i64
   %scevgep.13 = getelementptr i8, ptr %i.a, i64 %i.fk
   %i.fl = zext i8 %i.fd to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.13, i8 14, i64 %i.fl, i1 false), !tbaa !33
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.13, i8 14, i64 range(i64 0, 256) %i.fl, i1 false), !tbaa !33
   %i.fm = add i32 %.178.lcssa.12, %i.fe
   br label %._crit_edge.13
 
@@ -485,7 +485,7 @@ bb.ai:                                            ; preds = %bb.ah, %._crit_edge
   %i.fv = sext i32 %.178.lcssa.13 to i64
   %scevgep.14 = getelementptr i8, ptr %i.a, i64 %i.fv
   %i.fw = zext i8 %i.fo to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.14, i8 15, i64 %i.fw, i1 false), !tbaa !33
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.14, i8 15, i64 range(i64 0, 256) %i.fw, i1 false), !tbaa !33
   %i.fx = add i32 %.178.lcssa.13, %i.fp
   br label %._crit_edge.14
 
@@ -514,7 +514,7 @@ bb.ak:                                            ; preds = %bb.aj, %._crit_edge
   %i.gg = sext i32 %.178.lcssa.14 to i64
   %scevgep.15 = getelementptr i8, ptr %i.a, i64 %i.gg
   %i.gh = zext i8 %i.fz to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.15, i8 16, i64 %i.gh, i1 false), !tbaa !33
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep.15, i8 16, i64 range(i64 0, 256) %i.gh, i1 false), !tbaa !33
   %i.gi = add i32 %.178.lcssa.14, %i.ga
   br label %._crit_edge.15
 

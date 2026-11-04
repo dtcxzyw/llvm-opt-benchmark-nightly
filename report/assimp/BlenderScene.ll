@@ -205,7 +205,7 @@ bb.r:                                             ; preds = %bb.p
   %i.bn = shl nuw nsw i32 %.036.lcssa105, 4
   %narrow103 = sub nuw nsw i32 64, %i.bn
   %i.bo = zext nneg i32 %narrow103 to i64
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep96, i8 0, i64 %i.bo, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep96, i8 0, i64 range(i64 0, 65) %i.bo, i1 false)
   br label %.loopexit
 
 .preheader71:                                     ; preds = %bb.t
@@ -222,7 +222,7 @@ bb.r:                                             ; preds = %bb.p
   %i.bu = shl nuw nsw i32 %.0.lcssa107, 2
   %narrow = sub nuw nsw i32 16, %i.bu
   %i.bv = zext nneg i32 %narrow to i64
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep, i8 0, i64 %i.bv, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep, i8 0, i64 range(i64 0, 17) %i.bv, i1 false)
   br label %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit
 
 bb.s:                                             ; preds = %.lr.ph, %bb.t
@@ -534,7 +534,7 @@ bb.r:                                             ; preds = %bb.p
   %scevgep = getelementptr i8, ptr %1, i64 %i.bh
   %narrow = sub nuw nsw i32 32, %.0.lcssa68
   %i.bi = zext nneg i32 %narrow to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 %i.bi, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 range(i64 0, 33) %i.bi, i1 false)
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit.preheader, %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit
@@ -937,7 +937,7 @@ bb.r:                                             ; preds = %bb.p
   %scevgep = getelementptr i8, ptr %1, i64 %i.bh
   %narrow = sub nuw nsw i32 32, %.0.lcssa65
   %i.bi = zext nneg i32 %narrow to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 %i.bi, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 range(i64 0, 33) %i.bi, i1 false)
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit.preheader, %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit
@@ -1340,7 +1340,7 @@ bb.r:                                             ; preds = %bb.p
   %i.bj = shl nuw nsw i32 %.0.lcssa65, 2
   %narrow = sub nsw i32 12, %i.bj
   %i.bk = zext i32 %narrow to i64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i8 0, i64 %i.bk, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 13) %i.bk, i1 false)
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit.preheader, %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit
@@ -1743,7 +1743,7 @@ bb.s:                                             ; preds = %.lr.ph
   %i.bq = shl nuw nsw i32 %.036.lcssa100, 3
   %narrow = sub nuw nsw i32 32, %i.bq
   %i.br = zext nneg i32 %narrow to i64
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep, i8 0, i64 %i.br, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep, i8 0, i64 range(i64 0, 33) %i.br, i1 false)
   br label %.loopexit
 
 .lr.ph76:                                         ; preds = %bb.s, %.preheader69, %.preheader68.loopexit
@@ -2058,7 +2058,7 @@ bb.r:                                             ; preds = %bb.p
   %i.bj = shl nuw nsw i32 %.0.lcssa66, 2
   %narrow = sub nuw nsw i32 16, %i.bj
   %i.bk = zext nneg i32 %narrow to i64
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep, i8 0, i64 %i.bk, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep, i8 0, i64 range(i64 0, 17) %i.bk, i1 false)
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit.preheader, %_ZNK6Assimp7Blender9Structure7ConvertIiEEvRT_RKNS0_12FileDatabaseE.exit
@@ -2461,7 +2461,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ar = shl nuw nsw i64 %.037.lcssa77, 3        ; 2 uses
   %scevgep = getelementptr i8, ptr %4, i64 %i.ar
   %i.as = sub nuw nsw i64 144, %i.ar
-  call void @llvm.memset.p0.i64(ptr align 8 %scevgep, i8 0, i64 %i.as, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 8 %scevgep, i8 0, i64 range(i64 0, 145) %i.as, i1 false)
   br label %.preheader
 
 .lr.ph:                                           ; preds = %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit.preheader, %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit
@@ -2864,7 +2864,7 @@ bb.r:                                             ; preds = %bb.p
   %i.bj = shl nuw nsw i32 %.0.lcssa65, 2
   %narrow = sub nsw i32 12, %i.bj
   %i.bk = zext i32 %narrow to i64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i8 0, i64 %i.bk, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 13) %i.bk, i1 false)
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit.preheader, %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit
@@ -3169,7 +3169,7 @@ bb.r:                                             ; preds = %bb.p
   %i.bj = shl nuw nsw i32 %.0.lcssa68, 2
   %narrow = sub nsw i32 12, %i.bj
   %i.bk = zext i32 %narrow to i64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i8 0, i64 %i.bk, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 13) %i.bk, i1 false)
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit.preheader, %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit
@@ -3572,7 +3572,7 @@ bb.r:                                             ; preds = %bb.p
   %scevgep = getelementptr i8, ptr %1, i64 %i.bh
   %narrow = sub nuw nsw i32 1024, %.0.lcssa68
   %i.bi = zext nneg i32 %narrow to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 %i.bi, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 range(i64 0, 1025) %i.bi, i1 false)
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit.preheader, %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit
@@ -3975,7 +3975,7 @@ bb.r:                                             ; preds = %bb.p
   %scevgep = getelementptr i8, ptr %1, i64 %i.bh
   %narrow = sub nuw nsw i32 240, %.0.lcssa68
   %i.bi = zext nneg i32 %narrow to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 %i.bi, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 range(i64 0, 241) %i.bi, i1 false)
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit.preheader, %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit
@@ -4281,7 +4281,7 @@ bb.r:                                             ; preds = %bb.p
   %scevgep = getelementptr i8, ptr %1, i64 %i.bh
   %narrow = sub nuw nsw i32 240, %.0.lcssa65
   %i.bi = zext nneg i32 %narrow to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 %i.bi, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 range(i64 0, 241) %i.bi, i1 false)
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit.preheader, %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit
@@ -4684,7 +4684,7 @@ bb.r:                                             ; preds = %bb.p
   %i.bj = shl nuw nsw i32 %.0.lcssa69, 2
   %narrow = sub nsw i32 168, %i.bj
   %i.bk = zext i32 %narrow to i64
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i8 0, i64 %i.bk, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(1) %scevgep, i8 0, i64 range(i64 0, 169) %i.bk, i1 false)
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit.preheader, %_ZNK6Assimp7Blender9Structure7ConvertIiEEvRT_RKNS0_12FileDatabaseE.exit
@@ -5087,7 +5087,7 @@ bb.r:                                             ; preds = %bb.p
   %scevgep = getelementptr i8, ptr %1, i64 %i.bh
   %narrow = sub nuw nsw i32 64, %.0.lcssa68
   %i.bi = zext nneg i32 %narrow to i64
-  call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 %i.bi, i1 false)
+  call void @llvm.memset.p0.i64(ptr align 1 %scevgep, i8 0, i64 range(i64 0, 65) %i.bi, i1 false)
   br label %.loopexit
 
 .lr.ph:                                           ; preds = %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit.preheader, %_ZN6Assimp12StreamReaderILb1ELb1EE6IncPtrEl.exit

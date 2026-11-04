@@ -204,7 +204,7 @@ _ZN4entt7type_idIdEERKNS_9type_infoEv.exit:       ; preds = %_ZN4entt7type_idIcE
 
 .lr.ph.preheader:                                 ; preds = %_ZN4entt7type_idIdEERKNS_9type_infoEv.exit
   %i.k = shl nuw nsw i64 %i.j, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr nonnull align 16 %i.a, i64 %i.k, i1 false), !tbaa !160
+  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr nonnull align 16 %i.a, i64 range(i64 0, 17) %i.k, i1 false), !tbaa !160
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %_ZN4entt7type_idIdEERKNS_9type_infoEv.exit
@@ -607,7 +607,7 @@ _ZN4entt7type_idIdEERKNS_9type_infoEv.exit:       ; preds = %_ZN4entt7type_idIiE
 
 .lr.ph.preheader:                                 ; preds = %_ZN4entt7type_idIdEERKNS_9type_infoEv.exit
   %i.k = shl nuw nsw i64 %i.j, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr nonnull align 16 %i.a, i64 %i.k, i1 false), !tbaa !160
+  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr nonnull align 16 %i.a, i64 range(i64 0, 17) %i.k, i1 false), !tbaa !160
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %_ZN4entt7type_idIdEERKNS_9type_infoEv.exit
@@ -1010,7 +1010,7 @@ _ZN4entt7type_idIdEERKNS_9type_infoEv.exit:       ; preds = %_ZN4entt7type_idIcE
 
 .lr.ph.preheader:                                 ; preds = %_ZN4entt7type_idIdEERKNS_9type_infoEv.exit
   %i.o = shl nuw nsw i64 %i.n, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr nonnull align 16 %i.a, i64 %i.o, i1 false), !tbaa !160
+  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr nonnull align 16 %i.a, i64 range(i64 0, 25) %i.o, i1 false), !tbaa !160
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %_ZN4entt7type_idIdEERKNS_9type_infoEv.exit
@@ -1293,7 +1293,7 @@ _ZN4entt7type_idIcEERKNS_9type_infoEv.exit:       ; preds = %_ZN4entt7type_idIiE
 
 .lr.ph.preheader:                                 ; preds = %_ZN4entt7type_idIcEERKNS_9type_infoEv.exit
   %i.k = shl nuw nsw i64 %i.j, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr nonnull align 16 %i.a, i64 %i.k, i1 false), !tbaa !160
+  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr nonnull align 16 %i.a, i64 range(i64 0, 17) %i.k, i1 false), !tbaa !160
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %_ZN4entt7type_idIcEERKNS_9type_infoEv.exit
@@ -1696,7 +1696,7 @@ _ZN4entt7type_idIN9Organizer5clazzEEERKNS_9type_infoEv.exit: ; preds = %_ZN4entt
 
 .lr.ph.preheader:                                 ; preds = %_ZN4entt7type_idIN9Organizer5clazzEEERKNS_9type_infoEv.exit
   %i.k = shl nuw nsw i64 %i.j, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr nonnull align 16 %i.a, i64 %i.k, i1 false), !tbaa !160
+  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr nonnull align 16 %i.a, i64 range(i64 0, 17) %i.k, i1 false), !tbaa !160
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %_ZN4entt7type_idIN9Organizer5clazzEEERKNS_9type_infoEv.exit
@@ -2099,7 +2099,7 @@ _ZN4entt7type_idIdEERKNS_9type_infoEv.exit14:     ; preds = %_ZN4entt7type_idIcE
 
 .lr.ph.preheader:                                 ; preds = %_ZN4entt7type_idIdEERKNS_9type_infoEv.exit14
   %i.w = shl nuw nsw i64 %i.v, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr nonnull align 16 %i.a, i64 %i.w, i1 false), !tbaa !160
+  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr nonnull align 16 %i.a, i64 range(i64 0, 41) %i.w, i1 false), !tbaa !160
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %_ZN4entt7type_idIdEERKNS_9type_infoEv.exit14
@@ -2246,7 +2246,7 @@ _ZN4entt7type_idIdEERKNS_9type_infoEv.exit11:     ; preds = %_ZN4entt7type_idIdE
 
 .lr.ph.preheader:                                 ; preds = %_ZN4entt7type_idIdEERKNS_9type_infoEv.exit11
   %i.o = shl nuw nsw i64 %i.n, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr nonnull align 16 %i.a, i64 %i.o, i1 false), !tbaa !160
+  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr nonnull align 16 %i.a, i64 range(i64 0, 25) %i.o, i1 false), !tbaa !160
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %_ZN4entt7type_idIdEERKNS_9type_infoEv.exit11
@@ -2400,7 +2400,7 @@ _ZN4entt7type_idIdEERKNS_9type_infoEv.exit:       ; preds = %_ZN4entt7type_idIKd
 
 .lr.ph.preheader:                                 ; preds = %_ZN4entt7type_idIdEERKNS_9type_infoEv.exit
   %i.k = shl nuw nsw i64 %i.j, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr nonnull align 16 %i.a, i64 %i.k, i1 false), !tbaa !160
+  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr nonnull align 16 %i.a, i64 range(i64 0, 17) %i.k, i1 false), !tbaa !160
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %_ZN4entt7type_idIdEERKNS_9type_infoEv.exit
@@ -2803,7 +2803,7 @@ _ZN4entt7type_idImEERKNS_9type_infoEv.exit:       ; preds = %_ZN4entt7type_idIiE
 
 .lr.ph.preheader:                                 ; preds = %_ZN4entt7type_idImEERKNS_9type_infoEv.exit
   %i.k = shl nuw nsw i64 %i.j, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr nonnull align 16 %i.a, i64 %i.k, i1 false), !tbaa !160
+  call void @llvm.memcpy.p0.p0.i64(ptr align 8 %0, ptr nonnull align 16 %i.a, i64 range(i64 0, 17) %i.k, i1 false), !tbaa !160
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph.preheader, %_ZN4entt7type_idImEERKNS_9type_infoEv.exit

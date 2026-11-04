@@ -204,7 +204,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   %i.di = call i32 @llvm.umin.i32(i32 %narrow.i, i32 %i.dh) ; 2 uses
   %umin.i = zext nneg i32 %i.di to i64            ; 2 uses
   %i.dj = add nuw nsw i64 %umin.i, 1
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.097188.i, i8 %i.dg, i64 %i.dj, i1 false), !tbaa !42
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.097188.i, i8 %i.dg, i64 range(i64 0, 11) %i.dj, i1 false), !tbaa !42
   %scevgep.i = getelementptr i8, ptr %.097188.i, i64 1
   %scevgep208.i = getelementptr i8, ptr %scevgep.i, i64 %umin.i
   %i.dk = add nsw i32 %.0189.i, 1
@@ -293,7 +293,7 @@ bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %i.fi = call i32 @llvm.umin.i32(i32 %narrow237.i, i32 %i.fh) ; 2 uses
   %umin220.i = zext nneg i32 %i.fi to i64         ; 2 uses
   %i.fj = add nuw nsw i64 %umin220.i, 1
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.097188.i, i8 %i.fg, i64 %i.fj, i1 false), !tbaa !42
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.097188.i, i8 %i.fg, i64 range(i64 0, 28) %i.fj, i1 false), !tbaa !42
   %scevgep221.i = getelementptr i8, ptr %.097188.i, i64 1
   %scevgep223.i = getelementptr i8, ptr %scevgep221.i, i64 %umin220.i
   %i.fk = add nsw i32 %.0189.i, 1
@@ -352,7 +352,7 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
   %i.gq = call i32 @llvm.umin.i32(i32 %narrow235.i, i32 %i.gp) ; 2 uses
   %umin215.i = zext nneg i32 %i.gq to i64         ; 2 uses
   %i.gr = add nuw nsw i64 %umin215.i, 1
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.097188.i, i8 %i.go, i64 %i.gr, i1 false), !tbaa !42
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.097188.i, i8 %i.go, i64 range(i64 0, 285) %i.gr, i1 false), !tbaa !42
   %scevgep216.i = getelementptr i8, ptr %.097188.i, i64 1
   %scevgep218.i = getelementptr i8, ptr %scevgep216.i, i64 %umin215.i
   %i.gs = add nsw i32 %.0189.i, 1
@@ -375,7 +375,7 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   %i.gw = icmp ne i32 %i.bc, %.0189.i             ; 3 uses
   %umin210.i = zext i1 %i.gw to i64
   %i.gx = select i1 %i.gw, i64 2, i64 1
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.097188.i, i8 %.394.i, i64 %i.gx, i1 false), !tbaa !42
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.097188.i, i8 %.394.i, i64 range(i64 0, 3) %i.gx, i1 false), !tbaa !42
   %scevgep211.i = getelementptr i8, ptr %.097188.i, i64 1
   %scevgep213.i = getelementptr i8, ptr %scevgep211.i, i64 %umin210.i
   %i.gy = add nsw i32 %.0189.i, 1
@@ -572,7 +572,7 @@ bb.be:                                            ; preds = %bb.bc
   %i.kj = call i32 @llvm.umin.i32(i32 %narrow270.i, i32 %i.ki) ; 2 uses
   %umin251.i = zext nneg i32 %i.kj to i64         ; 2 uses
   %i.kk = add nuw nsw i64 %umin251.i, 1
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.0109212.i, i8 %spec.select, i64 %i.kk, i1 false), !tbaa !42
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.0109212.i, i8 %spec.select, i64 range(i64 0, 10) %i.kk, i1 false), !tbaa !42
   %scevgep252.i = getelementptr i8, ptr %.0109212.i, i64 1
   %scevgep254.i = getelementptr i8, ptr %scevgep252.i, i64 %umin251.i
   %i.kl = add nsw i32 %.0213.i, 1
@@ -643,7 +643,7 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bi
   %i.lz = call i32 @llvm.umin.i32(i32 %narrow269.i, i32 %i.ly) ; 2 uses
   %umin246.i = zext nneg i32 %i.lz to i64         ; 2 uses
   %i.ma = add nuw nsw i64 %umin246.i, 1
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.0109212.i, i8 %i.lx, i64 %i.ma, i1 false), !tbaa !42
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.0109212.i, i8 %i.lx, i64 range(i64 0, 8) %i.ma, i1 false), !tbaa !42
   %scevgep247.i = getelementptr i8, ptr %.0109212.i, i64 1
   %scevgep249.i = getelementptr i8, ptr %scevgep247.i, i64 %umin246.i
   %i.mb = add nsw i32 %.0213.i, 1
@@ -710,7 +710,7 @@ bb.bq:                                            ; preds = %bb.bp, %bb.bo
   %i.nh = call i32 @llvm.umin.i32(i32 %narrow267.i, i32 %i.ng) ; 2 uses
   %umin241.i = zext nneg i32 %i.nh to i64         ; 2 uses
   %i.ni = add nuw nsw i64 %umin241.i, 1
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.0109212.i, i8 %i.nf, i64 %i.ni, i1 false), !tbaa !42
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.0109212.i, i8 %i.nf, i64 range(i64 0, 25) %i.ni, i1 false), !tbaa !42
   %scevgep242.i = getelementptr i8, ptr %.0109212.i, i64 1
   %scevgep244.i = getelementptr i8, ptr %scevgep242.i, i64 %umin241.i
   %i.nj = add nsw i32 %.0213.i, 1
@@ -769,7 +769,7 @@ bb.bv:                                            ; preds = %bb.bu, %bb.bt
   %i.op = call i32 @llvm.umin.i32(i32 %narrow.i102, i32 %i.oo) ; 2 uses
   %umin236.i = zext nneg i32 %i.op to i64         ; 2 uses
   %i.oq = add nuw nsw i64 %umin236.i, 1
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.0109212.i, i8 %i.on, i64 %i.oq, i1 false), !tbaa !42
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.0109212.i, i8 %i.on, i64 range(i64 0, 281) %i.oq, i1 false), !tbaa !42
   %scevgep237.i = getelementptr i8, ptr %.0109212.i, i64 1
   %scevgep239.i = getelementptr i8, ptr %scevgep237.i, i64 %umin236.i
   %i.or = add nsw i32 %.0213.i, 1
@@ -786,7 +786,7 @@ bb.bw:                                            ; preds = %bb.bl
   %i.ov = icmp ne i32 %i.io, %.0213.i             ; 3 uses
   %umin.i98 = zext i1 %i.ov to i64
   %i.ow = select i1 %i.ov, i64 2, i64 1
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.0109212.i, i8 %spec.select134, i64 %i.ow, i1 false), !tbaa !42
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.0109212.i, i8 %spec.select134, i64 range(i64 0, 3) %i.ow, i1 false), !tbaa !42
   %scevgep.i99 = getelementptr i8, ptr %.0109212.i, i64 1
   %scevgep234.i = getelementptr i8, ptr %scevgep.i99, i64 %umin.i98
   %i.ox = add nsw i32 %.0213.i, 1
@@ -936,7 +936,7 @@ bytestream2_get_byte.exit67.us.us.i:              ; preds = %bb.ci, %bb.ch, %bb.
   %i.ri = call i32 @llvm.umin.i32(i32 %i.rg, i32 %i.rh) ; 2 uses
   %umin112.i = zext nneg i32 %i.ri to i64         ; 2 uses
   %i.rj = add nuw nsw i64 %umin112.i, 1
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.05543.us.us.i, i8 %.052.us.us.i, i64 %i.rj, i1 false), !tbaa !42
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.05543.us.us.i, i8 %.052.us.us.i, i64 range(i64 0, 128) %i.rj, i1 false), !tbaa !42
   %scevgep113.i = getelementptr i8, ptr %.05543.us.us.i, i64 1
   %scevgep115.i = getelementptr i8, ptr %scevgep113.i, i64 %umin112.i
   %i.rk = add nsw i32 %.044.us.us.fr.i, 1
@@ -1028,7 +1028,7 @@ bytestream2_get_byte.exit67.i:                    ; preds = %bb.cn
   %i.ss = call i32 @llvm.umin.i32(i32 %i.sq, i32 %i.sr) ; 2 uses
   %umin.i112 = zext nneg i32 %i.ss to i64         ; 2 uses
   %i.st = add nuw nsw i64 %umin.i112, 1
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.05543.i, i8 %.052126.i, i64 %i.st, i1 false), !tbaa !42
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %.05543.i, i8 %.052126.i, i64 range(i64 0, 128) %i.st, i1 false), !tbaa !42
   %scevgep.i113 = getelementptr i8, ptr %.05543.i, i64 1
   %scevgep110.i = getelementptr i8, ptr %scevgep.i113, i64 %umin.i112
   %i.su = add nsw i32 %.044.fr.i, 1

@@ -205,7 +205,7 @@ bb.al:                                            ; preds = %bb.ak
   br i1 %i.co, label %_ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit, label %_ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit.loopexit
 
 _ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit.loopexit: ; preds = %bb.al
-  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cm, i8 0, i64 %i.cl, i1 false), !tbaa !6423
+  call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.cm, i8 0, i64 range(i64 0, 2049) %i.cl, i1 false), !tbaa !6423
   br label %_ZNSt10unique_ptrIA_N7openvdb5v13_010PointIndexIjLj0EEESt14default_deleteIS4_EE5resetIPS3_vEEvT_.exit
 
 bb.am:                                            ; preds = %.invoke200, %.invoke198, %.invoke197, %.invoke196, %.invoke195

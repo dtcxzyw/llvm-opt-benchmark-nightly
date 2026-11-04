@@ -205,7 +205,7 @@ bb.a:
   %4 = alloca %"class.testing::Message", align 8  ; 7 uses
   %5 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %i.c = tail call noalias noundef nonnull dereferenceable(776) ptr @_Znwm(i64 noundef 776) #19, !noalias !67 ; 6 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(776) %i.c, i8 0, i64 776, i1 false), !tbaa !13, !noalias !67
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(776) %i.c, i8 0, i64 range(i64 0, 801) 776, i1 false), !tbaa !13, !noalias !67
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
@@ -608,7 +608,7 @@ bb.a:
   %2 = alloca %"class.testing::Message", align 8  ; 7 uses
   %3 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %i.c = tail call noalias noundef nonnull dereferenceable(800) ptr @_Znwm(i64 noundef 800) #19, !noalias !86 ; 10 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(800) %i.c, i8 0, i64 800, i1 false), !tbaa !13, !noalias !86
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(800) %i.c, i8 0, i64 range(i64 0, 801) 800, i1 false), !tbaa !13, !noalias !86
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
@@ -848,7 +848,7 @@ bb.a:
   %2 = alloca %"class.testing::Message", align 8  ; 7 uses
   %3 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %i.c = tail call noalias noundef nonnull dereferenceable(800) ptr @_Znwm(i64 noundef 800) #19, !noalias !90 ; 10 uses
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(800) %i.c, i8 0, i64 800, i1 false), !tbaa !13, !noalias !90
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(800) %i.c, i8 0, i64 range(i64 0, 801) 800, i1 false), !tbaa !13, !noalias !90
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a

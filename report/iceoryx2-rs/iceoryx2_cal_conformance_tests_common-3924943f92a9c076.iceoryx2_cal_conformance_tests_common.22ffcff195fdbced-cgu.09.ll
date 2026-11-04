@@ -205,7 +205,7 @@ _RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCs7gufeB8TUC6_12iceoryx2_cal13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   %i.bc = trunc nuw nsw i64 %.sroa.011.039 to i8
   %i.bd = shl nuw i8 %i.bc, 1
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bb, i8 %i.bd, i64 %i.ar, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bb, i8 %i.bd, i64 range(i64 0, 130) %i.ar, i1 false)
   %i.be = load i64, ptr %i.al, align 8, !alias.scope !1447, !noundef !4 ; 3 uses
   %i.bf = load i64, ptr %i.n, align 8, !range !15, !alias.scope !1447, !noundef !4
   %i.bg = icmp eq i64 %i.be, %i.bf
@@ -534,7 +534,7 @@ _RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCs7gufeB8TUC6_12iceoryx2_cal13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   %i.bc = trunc nuw nsw i64 %.sroa.011.039 to i8
   %i.bd = shl nuw i8 %i.bc, 1
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bb, i8 %i.bd, i64 %i.ar, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bb, i8 %i.bd, i64 range(i64 0, 130) %i.ar, i1 false)
   %i.be = load i64, ptr %i.al, align 8, !alias.scope !1476, !noundef !4 ; 3 uses
   %i.bf = load i64, ptr %i.n, align 8, !range !15, !alias.scope !1476, !noundef !4
   %i.bg = icmp eq i64 %i.be, %i.bf
@@ -863,7 +863,7 @@ _RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCs7gufeB8TUC6_12iceoryx2_cal13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   %i.bc = trunc nuw nsw i64 %.sroa.011.039 to i8
   %i.bd = shl nuw i8 %i.bc, 1
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bb, i8 %i.bd, i64 %i.ar, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bb, i8 %i.bd, i64 range(i64 0, 130) %i.ar, i1 false)
   %i.be = load i64, ptr %i.al, align 8, !alias.scope !1505, !noundef !4 ; 3 uses
   %i.bf = load i64, ptr %i.n, align 8, !range !15, !alias.scope !1505, !noundef !4
   %i.bg = icmp eq i64 %i.be, %i.bf
@@ -1266,7 +1266,7 @@ _RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCs7gufeB8TUC6_12iceoryx2_cal13
   %i.bb = load ptr, ptr %i.an, align 8, !alias.scope !1643, !noundef !4 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   %i.bc = trunc nuw nsw i64 %.sroa.011.039 to i8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bb, i8 %i.bc, i64 %i.ar, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bb, i8 %i.bc, i64 range(i64 0, 130) %i.ar, i1 false)
   %i.bd = load i64, ptr %i.al, align 8, !alias.scope !1645, !noundef !4 ; 3 uses
   %i.be = load i64, ptr %i.n, align 8, !range !15, !alias.scope !1645, !noundef !4
   %i.bf = icmp eq i64 %i.bd, %i.be
@@ -1593,7 +1593,7 @@ _RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCs7gufeB8TUC6_12iceoryx2_cal13
   %i.bb = load ptr, ptr %i.an, align 8, !alias.scope !1672, !noundef !4 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   %i.bc = trunc nuw nsw i64 %.sroa.011.039 to i8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bb, i8 %i.bc, i64 %i.ar, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bb, i8 %i.bc, i64 range(i64 0, 130) %i.ar, i1 false)
   %i.bd = load i64, ptr %i.al, align 8, !alias.scope !1674, !noundef !4 ; 3 uses
   %i.be = load i64, ptr %i.n, align 8, !range !15, !alias.scope !1674, !noundef !4
   %i.bf = icmp eq i64 %i.bd, %i.be
@@ -1920,7 +1920,7 @@ _RNvMNtCs8Chj7Szqq0n_4core6resultINtB2_6ResultNtNtCs7gufeB8TUC6_12iceoryx2_cal13
   %i.bb = load ptr, ptr %i.an, align 8, !alias.scope !1701, !noundef !4 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.m)
   %i.bc = trunc nuw nsw i64 %.sroa.011.039 to i8
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bb, i8 %i.bc, i64 %i.ar, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.bb, i8 %i.bc, i64 range(i64 0, 130) %i.ar, i1 false)
   %i.bd = load i64, ptr %i.al, align 8, !alias.scope !1703, !noundef !4 ; 3 uses
   %i.be = load i64, ptr %i.n, align 8, !range !15, !alias.scope !1703, !noundef !4
   %i.bf = icmp eq i64 %i.bd, %i.be
