@@ -205,7 +205,7 @@ bb.y:                                             ; preds = %bb.x
   %i.eh = shl i32 %i.ee, 2
   %i.ei = and i32 %i.eh, 28
   %i.ej = zext nneg i32 %i.ei to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %scevgep, ptr align 4 %i.eg, i64 %i.ej, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %scevgep, ptr align 4 %i.eg, i64 range(i64 0, 29) %i.ej, i1 false), !tbaa !10
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.preheader375
@@ -277,7 +277,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.fw = shl i32 %i.ft, 2
   %i.fx = and i32 %i.fw, 28
   %i.fy = zext nneg i32 %i.fx to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %scevgep.1, ptr align 4 %i.fv, i64 %i.fy, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %scevgep.1, ptr align 4 %i.fv, i64 range(i64 0, 29) %i.fy, i1 false), !tbaa !10
   br label %._crit_edge.1
 
 ._crit_edge.1:                                    ; preds = %.lr.ph.1, %.preheader375.1
@@ -352,7 +352,7 @@ bb.af:                                            ; preds = %bb.ae
   %i.hk = shl i32 %i.hh, 2
   %i.hl = and i32 %i.hk, 28
   %i.hm = zext nneg i32 %i.hl to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %scevgep.2, ptr align 4 %i.hj, i64 %i.hm, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %scevgep.2, ptr align 4 %i.hj, i64 range(i64 0, 29) %i.hm, i1 false), !tbaa !10
   br label %._crit_edge.2
 
 ._crit_edge.2:                                    ; preds = %.lr.ph.2, %.preheader375.2
@@ -427,7 +427,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.iy = shl i32 %i.iv, 2
   %i.iz = and i32 %i.iy, 28
   %i.ja = zext nneg i32 %i.iz to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %scevgep.3, ptr align 4 %i.ix, i64 %i.ja, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %scevgep.3, ptr align 4 %i.ix, i64 range(i64 0, 29) %i.ja, i1 false), !tbaa !10
   br label %onigenc_unicode_CaseUnfold_11_lookup.exit278.thread.3
 
 onigenc_unicode_CaseUnfold_11_lookup.exit278.thread.3: ; preds = %.preheader375.3, %.lr.ph.3, %bb.aj, %bb.ai, %bb.ah, %bb.ag
@@ -497,7 +497,7 @@ bb.an:                                            ; preds = %bb.am
   %i.kl = shl i32 %i.ki, 2
   %i.km = and i32 %i.kl, 28
   %i.kn = zext nneg i32 %i.km to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %scevgep.4, ptr align 4 %i.kk, i64 %i.kn, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %scevgep.4, ptr align 4 %i.kk, i64 range(i64 0, 29) %i.kn, i1 false), !tbaa !10
   br label %onigenc_unicode_CaseUnfold_11_lookup.exit278.thread.4
 
 onigenc_unicode_CaseUnfold_11_lookup.exit278.thread.4: ; preds = %.preheader375.4, %.lr.ph.4, %bb.an, %bb.am, %bb.al, %bb.ak
@@ -567,7 +567,7 @@ bb.ar:                                            ; preds = %bb.aq
   %i.ly = shl i32 %i.lv, 2
   %i.lz = and i32 %i.ly, 28
   %i.ma = zext nneg i32 %i.lz to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %scevgep.5, ptr align 4 %i.lx, i64 %i.ma, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %scevgep.5, ptr align 4 %i.lx, i64 range(i64 0, 29) %i.ma, i1 false), !tbaa !10
   br label %onigenc_unicode_CaseUnfold_11_lookup.exit278.thread.5
 
 onigenc_unicode_CaseUnfold_11_lookup.exit278.thread.5: ; preds = %.preheader375.5, %.lr.ph.5, %bb.ar, %bb.aq, %bb.ap, %bb.ao
@@ -637,7 +637,7 @@ bb.av:                                            ; preds = %bb.au
   %i.nl = shl i32 %i.ni, 2
   %i.nm = and i32 %i.nl, 28
   %i.nn = zext nneg i32 %i.nm to i64
-  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %scevgep.6, ptr align 4 %i.nk, i64 %i.nn, i1 false), !tbaa !10
+  call void @llvm.memcpy.p0.p0.i64(ptr align 4 %scevgep.6, ptr align 4 %i.nk, i64 range(i64 0, 29) %i.nn, i1 false), !tbaa !10
   br label %onigenc_unicode_CaseUnfold_11_lookup.exit278.thread.6
 
 onigenc_unicode_CaseUnfold_11_lookup.exit278.thread.6: ; preds = %bb.as, %bb.at, %bb.au, %bb.av, %.lr.ph.6, %.preheader375.6, %onigenc_unicode_CaseUnfold_11_lookup.exit278.thread.5, %onigenc_unicode_CaseUnfold_11_lookup.exit278.thread.4, %onigenc_unicode_CaseUnfold_11_lookup.exit278.thread.3, %onigenc_unicode_CaseUnfold_11_lookup.exit278.thread.2, %onigenc_unicode_CaseUnfold_11_lookup.exit278.thread.1

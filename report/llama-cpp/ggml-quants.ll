@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %make_qkx2_quants.ex
   br label %bb.i
 
 .preheader.preheader.i:                           ; preds = %.preheader123
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.et, i8 0, i64 16, i1 false), !tbaa !34, !alias.scope !129
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.et, i8 0, i64 range(i64 0, 33) 16, i1 false), !tbaa !34, !alias.scope !129
   br label %make_qkx2_quants.exit
 
 bb.c:                                             ; preds = %.preheader123
@@ -367,7 +367,7 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.js, label %.preheader202.preheader.i, label %.loopexit.i
 
 .preheader202.preheader.i:                        ; preds = %bb.g
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.et, ptr noundef nonnull align 16 dereferenceable(16) %i.b, i64 16, i1 false), !tbaa !34, !alias.scope !132
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.et, ptr noundef nonnull align 16 dereferenceable(16) %i.b, i64 range(i64 0, 33) 16, i1 false), !tbaa !34, !alias.scope !132
   br label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %.preheader202.preheader.i, %bb.g, %bb.e
@@ -770,7 +770,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.nk, label %.preheader.preheader.i.i.us, label %.loopexit.i.i.us
 
 .preheader.preheader.i.i.us:                      ; preds = %bb.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ib, ptr noundef nonnull align 16 dereferenceable(16) %i.b, i64 16, i1 false), !tbaa !34, !alias.scope !166, !noalias !159
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ib, ptr noundef nonnull align 16 dereferenceable(16) %i.b, i64 range(i64 0, 33) 16, i1 false), !tbaa !34, !alias.scope !166, !noalias !159
   br label %.loopexit.i.i.us
 
 .loopexit.i.i.us:                                 ; preds = %.preheader.preheader.i.i.us, %bb.i, %bb.h
@@ -1013,7 +1013,7 @@ bb.a:                                             ; preds = %bb.a, %.epil.prehea
   br i1 %i.d, label %.preheader.preheader, label %vector.ph
 
 .preheader.preheader:                             ; preds = %.epilog-lcssa
-  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %3, i8 0, i64 %wide.trip.count, i1 false), !tbaa !34
+  tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %3, i8 0, i64 range(i64 0, 33) %wide.trip.count, i1 false), !tbaa !34
   br label %.loopexit
 
 bb.b:                                             ; preds = %bb.b, %.new
@@ -1416,7 +1416,7 @@ bb.j:                                             ; preds = %.preheader204.i.pre
   br i1 %exitcond251.not.i.i.us, label %make_qx_quants.exit.i.us, label %bb.g, !llvm.loop !14
 
 .preheader.preheader.i.i.us:                      ; preds = %.preheader153.preheader.i.us
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.hl, i8 0, i64 16, i1 false), !tbaa !34, !alias.scope !213, !noalias !211
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.hl, i8 0, i64 range(i64 0, 33) 16, i1 false), !tbaa !34, !alias.scope !213, !noalias !211
   br label %make_qx_quants.exit.i.us
 
 make_qx_quants.exit.i.us:                         ; preds = %bb.j, %.preheader.preheader.i.i.us
@@ -1648,7 +1648,7 @@ bb.r:                                             ; preds = %.preheader204.i.us.
   br i1 %exitcond251.not.i.us, label %make_qx_quants.exit.us.loopexit, label %bb.o, !llvm.loop !14
 
 .preheader.preheader.i.us:                        ; preds = %bb.k
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.e, i8 0, i64 16, i1 false), !tbaa !34, !alias.scope !217, !noalias !211
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.e, i8 0, i64 range(i64 0, 33) 16, i1 false), !tbaa !34, !alias.scope !217, !noalias !211
   br label %make_qx_quants.exit.us
 
 make_qx_quants.exit.us.loopexit:                  ; preds = %bb.r
@@ -2051,7 +2051,7 @@ bb.b:                                             ; preds = %bb.c
   br i1 %i.gl, label %.preheader.preheader.i, label %bb.d
 
 .preheader.preheader.i:                           ; preds = %bb.b
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.gi, i8 0, i64 32, i1 false), !tbaa !34, !alias.scope !232
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.gi, i8 0, i64 range(i64 0, 33) 32, i1 false), !tbaa !34, !alias.scope !232
   br label %make_qkx2_quants.exit
 
 bb.c:                                             ; preds = %bb.c, %.preheader138
@@ -2178,7 +2178,7 @@ bb.i:                                             ; preds = %bb.j
   br i1 %i.jh, label %.preheader202.preheader.i, label %.loopexit.i
 
 .preheader202.preheader.i:                        ; preds = %bb.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.gi, ptr noundef nonnull align 16 dereferenceable(32) %i.b, i64 32, i1 false), !tbaa !34, !alias.scope !235
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.gi, ptr noundef nonnull align 16 dereferenceable(32) %i.b, i64 range(i64 0, 33) 32, i1 false), !tbaa !34, !alias.scope !235
   br label %.loopexit.i
 
 bb.j:                                             ; preds = %bb.j, %bb.h
@@ -2581,7 +2581,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.nl, label %.preheader.preheader.i.i.us, label %.loopexit.i.i.us
 
 .preheader.preheader.i.i.us:                      ; preds = %bb.m
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.jy, ptr noundef nonnull align 16 dereferenceable(32) %i.b, i64 32, i1 false), !tbaa !34, !alias.scope !270, !noalias !263
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.jy, ptr noundef nonnull align 16 dereferenceable(32) %i.b, i64 range(i64 0, 33) 32, i1 false), !tbaa !34, !alias.scope !270, !noalias !263
   br label %.loopexit.i.i.us
 
 .loopexit.i.i.us:                                 ; preds = %.preheader.preheader.i.i.us, %bb.m, %bb.j
@@ -2984,7 +2984,7 @@ bb.b:                                             ; preds = %bb.c
   br i1 %i.fv, label %.preheader.preheader.i, label %bb.d
 
 .preheader.preheader.i:                           ; preds = %bb.b
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.fs, i8 0, i64 32, i1 false), !tbaa !34, !alias.scope !286
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.fs, i8 0, i64 range(i64 0, 33) 32, i1 false), !tbaa !34, !alias.scope !286
   br label %make_qkx2_quants.exit
 
 bb.c:                                             ; preds = %bb.c, %.preheader164
@@ -3111,7 +3111,7 @@ bb.i:                                             ; preds = %bb.j
   br i1 %i.ir, label %.preheader202.preheader.i, label %.loopexit.i
 
 .preheader202.preheader.i:                        ; preds = %bb.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.fs, ptr noundef nonnull align 16 dereferenceable(32) %i.e, i64 32, i1 false), !tbaa !34, !alias.scope !289
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.fs, ptr noundef nonnull align 16 dereferenceable(32) %i.e, i64 range(i64 0, 33) 32, i1 false), !tbaa !34, !alias.scope !289
   br label %.loopexit.i
 
 bb.j:                                             ; preds = %bb.j, %bb.h
@@ -3514,7 +3514,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.mu, label %.preheader.preheader.i.i.us, label %.loopexit.i.i.us
 
 .preheader.preheader.i.i.us:                      ; preds = %bb.m
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.jh, ptr noundef nonnull align 16 dereferenceable(32) %i.b, i64 32, i1 false), !tbaa !34, !alias.scope !343, !noalias !336
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.jh, ptr noundef nonnull align 16 dereferenceable(32) %i.b, i64 range(i64 0, 33) 32, i1 false), !tbaa !34, !alias.scope !343, !noalias !336
   br label %.loopexit.i.i.us
 
 .loopexit.i.i.us:                                 ; preds = %.preheader.preheader.i.i.us, %bb.m, %bb.j
@@ -3917,7 +3917,7 @@ bb.c:                                             ; preds = %.preheader111, %mak
   br i1 %i.cj, label %.preheader.preheader.i, label %bb.d
 
 .preheader.preheader.i:                           ; preds = %bb.c
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ci, i8 0, i64 16, i1 false), !tbaa !34, !alias.scope !352
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.ci, i8 0, i64 range(i64 0, 33) 16, i1 false), !tbaa !34, !alias.scope !352
   br label %make_qx_quants.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -4320,7 +4320,7 @@ bb.i:                                             ; preds = %.preheader204.i.pre
   br i1 %exitcond251.not.i.i.us, label %make_qx_quants.exit.i.us, label %bb.f, !llvm.loop !14
 
 .preheader.preheader.i.i.us:                      ; preds = %bb.b
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.bw, i8 0, i64 16, i1 false), !tbaa !34, !alias.scope !371, !noalias !369
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.bw, i8 0, i64 range(i64 0, 33) 16, i1 false), !tbaa !34, !alias.scope !371, !noalias !369
   br label %make_qx_quants.exit.i.us
 
 make_qx_quants.exit.i.us:                         ; preds = %bb.i, %.preheader.preheader.i.i.us
@@ -4723,7 +4723,7 @@ bb.l:                                             ; preds = %vector.body, %bb.k,
   br i1 %exitcond251.not.i.us.us, label %make_qx_quants.exit.us.us.loopexit, label %bb.i, !llvm.loop !14
 
 .preheader.preheader.i.us.us:                     ; preds = %bb.e
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.b, i8 0, i64 32, i1 false), !tbaa !34, !alias.scope !411, !noalias !408
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.b, i8 0, i64 range(i64 0, 33) 32, i1 false), !tbaa !34, !alias.scope !411, !noalias !408
   br label %make_qx_quants.exit.us.us
 
 make_qx_quants.exit.us.us.loopexit:               ; preds = %bb.l
@@ -5126,7 +5126,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.mh, label %.preheader.preheader.i.us.us, label %.loopexit.i.us.us
 
 .preheader.preheader.i.us.us:                     ; preds = %bb.m
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.b, ptr noundef nonnull align 16 dereferenceable(32) %i.c, i64 32, i1 false), !tbaa !34, !alias.scope !432, !noalias !426
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.b, ptr noundef nonnull align 16 dereferenceable(32) %i.c, i64 range(i64 0, 33) 32, i1 false), !tbaa !34, !alias.scope !432, !noalias !426
   br label %.loopexit.i.us.us
 
 .loopexit.i.us.us:                                ; preds = %.preheader.preheader.i.us.us, %bb.m, %bb.j
@@ -5529,7 +5529,7 @@ bb.l:                                             ; preds = %vector.body65, %bb.
   br i1 %exitcond251.not.i.i.us.us, label %make_qx_quants.exit.i.us.us.loopexit, label %bb.i, !llvm.loop !14
 
 .preheader.preheader.i.i.us.us:                   ; preds = %bb.e
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.b, i8 0, i64 32, i1 false), !tbaa !34, !alias.scope !448, !noalias !446
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.b, i8 0, i64 range(i64 0, 33) 32, i1 false), !tbaa !34, !alias.scope !448, !noalias !446
   br label %make_qx_quants.exit.i.us.us
 
 make_qx_quants.exit.i.us.us.loopexit:             ; preds = %bb.l
@@ -5932,7 +5932,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %i.md, label %.preheader.preheader.i.i.us.us, label %.loopexit.i.i.us.us
 
 .preheader.preheader.i.i.us.us:                   ; preds = %bb.m
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.b, ptr noundef nonnull align 16 dereferenceable(32) %i.c, i64 32, i1 false), !tbaa !34, !alias.scope !471, !noalias !465
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.b, ptr noundef nonnull align 16 dereferenceable(32) %i.c, i64 range(i64 0, 33) 32, i1 false), !tbaa !34, !alias.scope !471, !noalias !465
   br label %.loopexit.i.i.us.us
 
 .loopexit.i.i.us.us:                              ; preds = %.preheader.preheader.i.i.us.us, %bb.m, %bb.j

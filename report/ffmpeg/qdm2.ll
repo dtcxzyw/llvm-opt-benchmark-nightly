@@ -205,39 +205,39 @@ bb.eb:                                            ; preds = %bb.ea
   %niter307 = phi i64 [ 0, %.preheader58.preheader.i.i.new ], [ %niter307.next.1, %.preheader58.i.i ]
   %i.bfd = shl nuw nsw i64 %indvar.i.i, 14
   %scevgep.i.i = getelementptr i8, ptr %i.bfb, i64 %i.bfd ; 8 uses
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i.i, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i.i, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %scevgep.1.i.i = getelementptr i8, ptr %scevgep.i.i, i64 128
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.1.i.i, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.1.i.i, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %scevgep.2.i.i = getelementptr i8, ptr %scevgep.i.i, i64 256
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.2.i.i, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.2.i.i, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %scevgep.3.i.i = getelementptr i8, ptr %scevgep.i.i, i64 384
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.3.i.i, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.3.i.i, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %scevgep.4.i.i = getelementptr i8, ptr %scevgep.i.i, i64 512
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.4.i.i, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.4.i.i, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %scevgep.5.i.i = getelementptr i8, ptr %scevgep.i.i, i64 640
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.5.i.i, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.5.i.i, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %scevgep.6.i.i = getelementptr i8, ptr %scevgep.i.i, i64 768
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.6.i.i, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.6.i.i, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %scevgep.7.i.i = getelementptr i8, ptr %scevgep.i.i, i64 896
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.7.i.i, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.7.i.i, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %indvar.next.i.i = shl i64 %indvar.i.i, 14
   %i.bfe = getelementptr i8, ptr %i.bfb, i64 %indvar.next.i.i ; 8 uses
   %scevgep.i.i.1 = getelementptr i8, ptr %i.bfe, i64 16384
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i.i.1, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i.i.1, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %scevgep.1.i.i.1 = getelementptr i8, ptr %i.bfe, i64 16512
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.1.i.i.1, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.1.i.i.1, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %scevgep.2.i.i.1 = getelementptr i8, ptr %i.bfe, i64 16640
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.2.i.i.1, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.2.i.i.1, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %scevgep.3.i.i.1 = getelementptr i8, ptr %i.bfe, i64 16768
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.3.i.i.1, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.3.i.i.1, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %scevgep.4.i.i.1 = getelementptr i8, ptr %i.bfe, i64 16896
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.4.i.i.1, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.4.i.i.1, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %scevgep.5.i.i.1 = getelementptr i8, ptr %i.bfe, i64 17024
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.5.i.i.1, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.5.i.i.1, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %scevgep.6.i.i.1 = getelementptr i8, ptr %i.bfe, i64 17152
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.6.i.i.1, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.6.i.i.1, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %scevgep.7.i.i.1 = getelementptr i8, ptr %i.bfe, i64 17280
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.7.i.i.1, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.7.i.i.1, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %indvar.next.i.i.1 = add nuw nsw i64 %indvar.i.i, 2 ; 2 uses
   %niter307.next.1 = add i64 %niter307, 2         ; 2 uses
   %niter307.ncmp.1 = icmp eq i64 %niter307.next.1, %unroll_iter306
@@ -253,21 +253,21 @@ bb.eb:                                            ; preds = %bb.ea
   call void @llvm.assume(i1 %lcmp.mod305)
   %i.bff = shl nuw nsw i64 %indvar.i.i.epil.init, 14
   %scevgep.i.i.epil = getelementptr i8, ptr %i.bfb, i64 %i.bff ; 8 uses
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i.i.epil, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.i.i.epil, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %scevgep.1.i.i.epil = getelementptr i8, ptr %scevgep.i.i.epil, i64 128
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.1.i.i.epil, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.1.i.i.epil, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %scevgep.2.i.i.epil = getelementptr i8, ptr %scevgep.i.i.epil, i64 256
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.2.i.i.epil, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.2.i.i.epil, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %scevgep.3.i.i.epil = getelementptr i8, ptr %scevgep.i.i.epil, i64 384
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.3.i.i.epil, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.3.i.i.epil, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %scevgep.4.i.i.epil = getelementptr i8, ptr %scevgep.i.i.epil, i64 512
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.4.i.i.epil, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.4.i.i.epil, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %scevgep.5.i.i.epil = getelementptr i8, ptr %scevgep.i.i.epil, i64 640
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.5.i.i.epil, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.5.i.i.epil, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %scevgep.6.i.i.epil = getelementptr i8, ptr %scevgep.i.i.epil, i64 768
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.6.i.i.epil, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.6.i.i.epil, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   %scevgep.7.i.i.epil = getelementptr i8, ptr %scevgep.i.i.epil, i64 896
-  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.7.i.i.epil, i8 0, i64 %i.bey, i1 false), !tbaa !32
+  call void @llvm.memset.p0.i64(ptr align 4 %scevgep.7.i.i.epil, i8 0, i64 range(i64 0, 129) %i.bey, i1 false), !tbaa !32
   br label %.preheader56.i.i
 
 .preheader56.i.i:                                 ; preds = %.preheader58.i.i.epil.preheader, %.preheader56.i.i.loopexit.unr-lcssa, %bb.eb

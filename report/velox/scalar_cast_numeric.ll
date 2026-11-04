@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %.noexc9
 .lr.ph38.i.i.i.i:                                 ; preds = %.preheader30.i.i.i.i
   %i.ar = zext nneg i32 %i.y to i64               ; 2 uses
   %i.as = shl nuw nsw i64 %i.ar, 1                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 %i.as, i1 false), !tbaa !158
+  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 range(i64 0, 65535) %i.as, i1 false), !tbaa !158
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0, i64 %i.as
   %i.at = add i64 %.02444.i.i.i.i, %i.ar
   br label %.loopexit.i.i.i.i
@@ -608,7 +608,7 @@ bb.e:                                             ; preds = %.noexc9
 .lr.ph38.i.i.i.i:                                 ; preds = %.preheader30.i.i.i.i
   %i.ap = zext nneg i32 %i.y to i64               ; 2 uses
   %i.aq = shl nuw nsw i64 %i.ap, 1                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 %i.aq, i1 false), !tbaa !158
+  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 range(i64 0, 65535) %i.aq, i1 false), !tbaa !158
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0, i64 %i.aq
   %i.ar = add i64 %.02444.i.i.i.i, %i.ap
   br label %.loopexit.i.i.i.i
@@ -1011,7 +1011,7 @@ bb.e:                                             ; preds = %.noexc9
 .lr.ph38.i.i.i.i:                                 ; preds = %.preheader30.i.i.i.i
   %i.ar = zext nneg i32 %i.y to i64               ; 2 uses
   %i.as = shl nuw nsw i64 %i.ar, 1                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 %i.as, i1 false), !tbaa !158
+  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 range(i64 0, 65535) %i.as, i1 false), !tbaa !158
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0, i64 %i.as
   %i.at = add i64 %.02444.i.i.i.i, %i.ar
   br label %.loopexit.i.i.i.i
@@ -1414,7 +1414,7 @@ bb.e:                                             ; preds = %.noexc9
 .lr.ph38.i.i.i.i:                                 ; preds = %.preheader30.i.i.i.i
   %i.ap = zext nneg i32 %i.y to i64               ; 2 uses
   %i.aq = shl nuw nsw i64 %i.ap, 1                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 %i.aq, i1 false), !tbaa !158
+  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 range(i64 0, 65535) %i.aq, i1 false), !tbaa !158
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0, i64 %i.aq
   %i.ar = add i64 %.02444.i.i.i.i, %i.ap
   br label %.loopexit.i.i.i.i
@@ -1634,7 +1634,7 @@ bb.g:                                             ; preds = %.noexc10
 .lr.ph39.i.i.i.i:                                 ; preds = %.preheader31.i.i.i.i
   %i.be = zext nneg i32 %i.y to i64               ; 2 uses
   %i.bf = shl nuw nsw i64 %i.be, 1                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 %i.bf, i1 false), !tbaa !158
+  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 range(i64 0, 65535) %i.bf, i1 false), !tbaa !158
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0, i64 %i.bf
   %i.bg = add i64 %.02445.i.i.i.i, %i.be
   br label %.loopexit.i.i.i.i
@@ -2037,7 +2037,7 @@ bb.q:                                             ; preds = %.noexc10
 .lr.ph55.i.i.i.i:                                 ; preds = %.preheader45.i.i.i.i
   %i.cv = zext nneg i32 %i.ak to i64              ; 3 uses
   %i.cw = shl nuw nsw i64 %i.cv, 1                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 %i.cw, i1 false), !tbaa !158
+  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 range(i64 0, 65535) %i.cw, i1 false), !tbaa !158
   %i.cx = mul nsw i64 %i.cv, %i.p
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0.i.i.i, i64 %i.cx
   %scevgep70.i.i.i.i = getelementptr i8, ptr %.0, i64 %i.cw
@@ -2440,7 +2440,7 @@ bb.q:                                             ; preds = %.noexc10
 .lr.ph55.i.i.i.i:                                 ; preds = %.preheader45.i.i.i.i
   %i.cu = zext nneg i32 %i.ak to i64              ; 3 uses
   %i.cv = shl nuw nsw i64 %i.cu, 1                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 %i.cv, i1 false), !tbaa !158
+  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 range(i64 0, 65535) %i.cv, i1 false), !tbaa !158
   %i.cw = mul nsw i64 %i.cu, %i.p
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0.i.i.i, i64 %i.cw
   %scevgep70.i.i.i.i = getelementptr i8, ptr %.0, i64 %i.cv
@@ -2843,7 +2843,7 @@ bb.ag:                                            ; preds = %.noexc10
 .lr.ph84.i.i.i.i:                                 ; preds = %.preheader72.i.i.i.i
   %i.dw = zext nneg i32 %i.aj to i64              ; 3 uses
   %i.dx = shl nuw nsw i64 %i.dw, 1                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 %i.dx, i1 false), !tbaa !158
+  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 range(i64 0, 65535) %i.dx, i1 false), !tbaa !158
   %i.dy = mul nsw i64 %i.dw, %i.q
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0.i.i.i, i64 %i.dy
   %scevgep99.i.i.i.i = getelementptr i8, ptr %.0, i64 %i.dx
@@ -3246,7 +3246,7 @@ bb.q:                                             ; preds = %.noexc10
 .lr.ph53.i.i.i.i:                                 ; preds = %.preheader43.i.i.i.i
   %i.cp = zext nneg i32 %i.ai to i64              ; 3 uses
   %i.cq = shl nuw nsw i64 %i.cp, 1                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 %i.cq, i1 false), !tbaa !158
+  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 range(i64 0, 65535) %i.cq, i1 false), !tbaa !158
   %i.cr = mul nsw i64 %i.cp, %i.p
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0.i.i.i, i64 %i.cr
   %scevgep68.i.i.i.i = getelementptr i8, ptr %.0, i64 %i.cq
@@ -3649,7 +3649,7 @@ bb.q:                                             ; preds = %.noexc10
 .lr.ph53.i.i.i.i:                                 ; preds = %.preheader43.i.i.i.i
   %i.co = zext nneg i32 %i.ai to i64              ; 3 uses
   %i.cp = shl nuw nsw i64 %i.co, 1                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 %i.cp, i1 false), !tbaa !158
+  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 range(i64 0, 65535) %i.cp, i1 false), !tbaa !158
   %i.cq = mul nsw i64 %i.co, %i.p
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0.i.i.i, i64 %i.cq
   %scevgep68.i.i.i.i = getelementptr i8, ptr %.0, i64 %i.cp
@@ -4052,7 +4052,7 @@ bb.ag:                                            ; preds = %.noexc10
 .lr.ph84.i.i.i.i:                                 ; preds = %.preheader72.i.i.i.i
   %i.dv = zext nneg i32 %i.aj to i64              ; 3 uses
   %i.dw = shl nuw nsw i64 %i.dv, 1                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 %i.dw, i1 false), !tbaa !158
+  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 range(i64 0, 65535) %i.dw, i1 false), !tbaa !158
   %i.dx = mul nsw i64 %i.dv, %i.q
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0.i.i.i, i64 %i.dx
   %scevgep99.i.i.i.i = getelementptr i8, ptr %.0, i64 %i.dw
@@ -4455,7 +4455,7 @@ bb.e:                                             ; preds = %.noexc9
 .lr.ph38.i.i.i.i:                                 ; preds = %.preheader30.i.i.i.i
   %i.ar = zext nneg i32 %i.y to i64               ; 2 uses
   %i.as = shl nuw nsw i64 %i.ar, 1                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 %i.as, i1 false), !tbaa !158
+  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 range(i64 0, 65535) %i.as, i1 false), !tbaa !158
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0, i64 %i.as
   %i.at = add i64 %.02444.i.i.i.i, %i.ar
   br label %.loopexit.i.i.i.i
@@ -4858,7 +4858,7 @@ bb.e:                                             ; preds = %.noexc9
 .lr.ph38.i.i.i.i:                                 ; preds = %.preheader30.i.i.i.i
   %i.ap = zext nneg i32 %i.y to i64               ; 2 uses
   %i.aq = shl nuw nsw i64 %i.ap, 1                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 %i.aq, i1 false), !tbaa !158
+  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 range(i64 0, 65535) %i.aq, i1 false), !tbaa !158
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0, i64 %i.aq
   %i.ar = add i64 %.02444.i.i.i.i, %i.ap
   br label %.loopexit.i.i.i.i
@@ -5078,7 +5078,7 @@ bb.g:                                             ; preds = %.noexc10
 .lr.ph39.i.i.i.i:                                 ; preds = %.preheader31.i.i.i.i
   %i.be = zext nneg i32 %i.y to i64               ; 2 uses
   %i.bf = shl nuw nsw i64 %i.be, 1                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 %i.bf, i1 false), !tbaa !158
+  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 range(i64 0, 65535) %i.bf, i1 false), !tbaa !158
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0, i64 %i.bf
   %i.bg = add i64 %.02445.i.i.i.i, %i.be
   br label %.loopexit.i.i.i.i
@@ -5481,7 +5481,7 @@ bb.q:                                             ; preds = %.noexc10
 .lr.ph55.i.i.i.i:                                 ; preds = %.preheader45.i.i.i.i
   %i.ct = zext nneg i32 %i.ai to i64              ; 3 uses
   %i.cu = shl nuw nsw i64 %i.ct, 1                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 %i.cu, i1 false), !tbaa !158
+  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 range(i64 0, 65535) %i.cu, i1 false), !tbaa !158
   %i.cv = mul nsw i64 %i.ct, %i.p
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0.i.i.i, i64 %i.cv
   %scevgep70.i.i.i.i = getelementptr i8, ptr %.0, i64 %i.cu
@@ -5884,7 +5884,7 @@ bb.q:                                             ; preds = %.noexc10
 .lr.ph55.i.i.i.i:                                 ; preds = %.preheader45.i.i.i.i
   %i.cs = zext nneg i32 %i.ai to i64              ; 3 uses
   %i.ct = shl nuw nsw i64 %i.cs, 1                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 %i.ct, i1 false), !tbaa !158
+  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 range(i64 0, 65535) %i.ct, i1 false), !tbaa !158
   %i.cu = mul nsw i64 %i.cs, %i.p
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0.i.i.i, i64 %i.cu
   %scevgep70.i.i.i.i = getelementptr i8, ptr %.0, i64 %i.ct
@@ -6287,7 +6287,7 @@ bb.ag:                                            ; preds = %.noexc10
 .lr.ph84.i.i.i.i:                                 ; preds = %.preheader72.i.i.i.i
   %i.du = zext nneg i32 %i.ah to i64              ; 3 uses
   %i.dv = shl nuw nsw i64 %i.du, 1                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 %i.dv, i1 false), !tbaa !158
+  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 range(i64 0, 65535) %i.dv, i1 false), !tbaa !158
   %i.dw = mul nsw i64 %i.du, %i.q
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0.i.i.i, i64 %i.dw
   %scevgep99.i.i.i.i = getelementptr i8, ptr %.0, i64 %i.dv
@@ -6690,7 +6690,7 @@ bb.q:                                             ; preds = %.noexc10
 .lr.ph53.i.i.i.i:                                 ; preds = %.preheader43.i.i.i.i
   %i.cn = zext nneg i32 %i.ag to i64              ; 3 uses
   %i.co = shl nuw nsw i64 %i.cn, 1                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 %i.co, i1 false), !tbaa !158
+  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 range(i64 0, 65535) %i.co, i1 false), !tbaa !158
   %i.cp = mul nsw i64 %i.cn, %i.p
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0.i.i.i, i64 %i.cp
   %scevgep68.i.i.i.i = getelementptr i8, ptr %.0, i64 %i.co
@@ -7093,7 +7093,7 @@ bb.q:                                             ; preds = %.noexc10
 .lr.ph53.i.i.i.i:                                 ; preds = %.preheader43.i.i.i.i
   %i.cm = zext nneg i32 %i.ag to i64              ; 3 uses
   %i.cn = shl nuw nsw i64 %i.cm, 1                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 %i.cn, i1 false), !tbaa !158
+  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 range(i64 0, 65535) %i.cn, i1 false), !tbaa !158
   %i.co = mul nsw i64 %i.cm, %i.p
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0.i.i.i, i64 %i.co
   %scevgep68.i.i.i.i = getelementptr i8, ptr %.0, i64 %i.cn
@@ -7496,7 +7496,7 @@ bb.ag:                                            ; preds = %.noexc10
 .lr.ph84.i.i.i.i:                                 ; preds = %.preheader72.i.i.i.i
   %i.dt = zext nneg i32 %i.ah to i64              ; 3 uses
   %i.du = shl nuw nsw i64 %i.dt, 1                ; 2 uses
-  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 %i.du, i1 false), !tbaa !158
+  call void @llvm.memset.p0.i64(ptr align 2 %.0, i8 0, i64 range(i64 0, 65535) %i.du, i1 false), !tbaa !158
   %i.dv = mul nsw i64 %i.dt, %i.q
   %scevgep.i.i.i.i = getelementptr i8, ptr %.0.i.i.i, i64 %i.dv
   %scevgep99.i.i.i.i = getelementptr i8, ptr %.0, i64 %i.du

@@ -205,7 +205,7 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.n = shl nuw nsw i64 %i.g, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.l, ptr nonnull align 8 %i.m, i64 %i.n, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.l, ptr nonnull align 8 %i.m, i64 range(i64 0, 65) %i.n, i1 false), !tbaa !189
   br label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -434,7 +434,7 @@ bb.l:                                             ; preds = %bb.k
   %i.bi = getelementptr inbounds nuw i8, ptr %13, i64 16
   %i.bj = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.bk = shl nuw nsw i64 %i.bd, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bi, ptr nonnull align 8 %i.bj, i64 %i.bk, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bi, ptr nonnull align 8 %i.bj, i64 range(i64 0, 65) %i.bk, i1 false), !tbaa !189
   br label %.loopexit
 
 bb.m:                                             ; preds = %bb.l
@@ -837,7 +837,7 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.n = shl nuw nsw i64 %i.g, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.l, ptr nonnull align 8 %i.m, i64 %i.n, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.l, ptr nonnull align 8 %i.m, i64 range(i64 0, 65) %i.n, i1 false), !tbaa !189
   br label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -925,7 +925,7 @@ bb.j:                                             ; preds = %_ZN4pbrt13InlinedVe
   %i.ap = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.ar = shl nuw nsw i64 %i.ak, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ap, ptr nonnull align 8 %i.aq, i64 %i.ar, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ap, ptr nonnull align 8 %i.aq, i64 range(i64 0, 65) %i.ar, i1 false), !tbaa !189
   br label %.loopexit
 
 bb.k:                                             ; preds = %bb.j
@@ -1328,7 +1328,7 @@ bb.m:                                             ; preds = %"_ZSt4bindIRZN4pbrt
   %i.ht = getelementptr inbounds nuw i8, ptr %i.hn, i64 48
   %i.hu = getelementptr inbounds nuw i8, ptr %9, i64 48
   %i.hv = shl nuw nsw i64 %i.ca, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ht, ptr nonnull align 8 %i.hu, i64 %i.hv, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ht, ptr nonnull align 8 %i.hu, i64 range(i64 0, 65) %i.hv, i1 false), !tbaa !189
   br label %_ZNSt14_Function_baseD2Ev.exit.i
 
 bb.n:                                             ; preds = %.noexc.i.i
@@ -1488,7 +1488,7 @@ bb.y:                                             ; preds = %.noexc39
   %i.jq = getelementptr inbounds nuw i8, ptr %i.jd, i64 48
   %i.jr = getelementptr inbounds nuw i8, ptr %7, i64 48
   %i.js = shl nuw nsw i64 %i.jl, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.jq, ptr nonnull align 8 %i.jr, i64 %i.js, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.jq, ptr nonnull align 8 %i.jr, i64 range(i64 0, 65) %i.js, i1 false), !tbaa !189
   br label %_ZN4pbrt11SceneEntityC2EOS0_.exit.i.i.i.i.i.i.i
 
 bb.z:                                             ; preds = %.noexc.i.i35
@@ -1891,7 +1891,7 @@ _ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_
   %i.bh = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.bi = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.bj = shl nuw nsw i64 %i.bc, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bh, ptr nonnull align 8 %i.bi, i64 %i.bj, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.bh, ptr nonnull align 8 %i.bi, i64 range(i64 0, 65) %i.bj, i1 false), !tbaa !189
   br label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit
 
 bb.j:                                             ; preds = %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EE6insertERKS5_.exit
@@ -1957,7 +1957,7 @@ _ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_alloca
   %i.cj = getelementptr inbounds nuw i8, ptr %9, i64 16
   %i.ck = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.cl = shl nuw nsw i64 %i.ce, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.cj, ptr nonnull align 8 %i.ck, i64 %i.cl, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.cj, ptr nonnull align 8 %i.ck, i64 range(i64 0, 65) %i.cl, i1 false), !tbaa !189
   br label %.loopexit
 
 bb.n:                                             ; preds = %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEED2Ev.exit
@@ -2360,7 +2360,7 @@ bb.f:                                             ; preds = %"_ZSt4bindIRZN4pbrt
   %i.iq = getelementptr inbounds nuw i8, ptr %i.ik, i64 48
   %i.ir = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.is = shl nuw nsw i64 %i.r, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.iq, ptr nonnull align 8 %i.ir, i64 %i.is, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.iq, ptr nonnull align 8 %i.ir, i64 range(i64 0, 65) %i.is, i1 false), !tbaa !189
   br label %_ZNSt14_Function_baseD2Ev.exit.i
 
 bb.g:                                             ; preds = %.noexc.i.i
@@ -2763,7 +2763,7 @@ bb.c:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.q = shl nuw nsw i64 %i.j, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.o, ptr nonnull align 8 %i.p, i64 %i.q, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.o, ptr nonnull align 8 %i.p, i64 range(i64 0, 65) %i.q, i1 false), !tbaa !189
   br label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -2829,7 +2829,7 @@ _ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_alloca
   %i.aq = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.ar = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.as = shl nuw nsw i64 %i.al, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.aq, ptr nonnull align 8 %i.ar, i64 %i.as, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.aq, ptr nonnull align 8 %i.ar, i64 range(i64 0, 65) %i.as, i1 false), !tbaa !189
   br label %.loopexit
 
 bb.h:                                             ; preds = %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEED2Ev.exit
@@ -3143,7 +3143,7 @@ bb.h:                                             ; preds = %.noexc
   %i.al = getelementptr inbounds nuw i8, ptr %i.w, i64 56
   %i.am = getelementptr inbounds nuw i8, ptr %2, i64 56
   %i.an = shl nuw nsw i64 %i.ag, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.al, ptr nonnull align 8 %i.am, i64 %i.an, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.al, ptr nonnull align 8 %i.am, i64 range(i64 0, 65) %i.an, i1 false), !tbaa !189
   br label %_ZN4pbrt22TransformedSceneEntityC2EOS0_.exit.i.i.i.i.i.i.i
 
 bb.i:                                             ; preds = %.noexc.i.i
@@ -3546,7 +3546,7 @@ bb.c:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.q = shl nuw nsw i64 %i.j, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.o, ptr nonnull align 8 %i.p, i64 %i.q, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.o, ptr nonnull align 8 %i.p, i64 range(i64 0, 65) %i.q, i1 false), !tbaa !189
   br label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -3949,7 +3949,7 @@ _ZN4pbrt11InternCacheINS_9TransformESt4hashIS1_EE6LookupERKS1_.exit: ; preds = %
   %i.hs = getelementptr inbounds nuw i8, ptr %13, i64 16
   %i.ht = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.hu = shl nuw nsw i64 %i.hn, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.hs, ptr nonnull align 8 %i.ht, i64 %i.hu, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.hs, ptr nonnull align 8 %i.ht, i64 range(i64 0, 65) %i.hu, i1 false), !tbaa !189
   br label %.loopexit
 
 bb.z:                                             ; preds = %_ZN4pbrt11InternCacheINS_9TransformESt4hashIS1_EE6LookupERKS1_.exit
@@ -4332,7 +4332,7 @@ _ZN4pbrt11InternCacheINS_9TransformESt4hashIS1_EE6LookupERKS1_.exit66: ; preds =
   %i.mv = getelementptr inbounds nuw i8, ptr %18, i64 16
   %i.mw = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.mx = shl nuw nsw i64 %i.mq, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.mv, ptr nonnull align 8 %i.mw, i64 %i.mx, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.mv, ptr nonnull align 8 %i.mw, i64 range(i64 0, 65) %i.mx, i1 false), !tbaa !189
   br label %.loopexit91
 
 bb.bc:                                            ; preds = %_ZN4pbrt11InternCacheINS_9TransformESt4hashIS1_EE6LookupERKS1_.exit66
@@ -4735,7 +4735,7 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.n = shl nuw nsw i64 %i.g, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.l, ptr nonnull align 8 %i.m, i64 %i.n, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.l, ptr nonnull align 8 %i.m, i64 range(i64 0, 65) %i.n, i1 false), !tbaa !189
   br label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -4823,7 +4823,7 @@ bb.j:                                             ; preds = %_ZN4pbrt13InlinedVe
   %i.ap = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.ar = shl nuw nsw i64 %i.ak, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ap, ptr nonnull align 8 %i.aq, i64 %i.ar, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ap, ptr nonnull align 8 %i.aq, i64 range(i64 0, 65) %i.ar, i1 false), !tbaa !189
   br label %.loopexit
 
 bb.k:                                             ; preds = %bb.j
@@ -4987,7 +4987,7 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.n = shl nuw nsw i64 %i.g, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.l, ptr nonnull align 8 %i.m, i64 %i.n, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.l, ptr nonnull align 8 %i.m, i64 range(i64 0, 65) %i.n, i1 false), !tbaa !189
   br label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -5075,7 +5075,7 @@ bb.j:                                             ; preds = %_ZN4pbrt13InlinedVe
   %i.ap = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.ar = shl nuw nsw i64 %i.ak, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ap, ptr nonnull align 8 %i.aq, i64 %i.ar, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ap, ptr nonnull align 8 %i.aq, i64 range(i64 0, 65) %i.ar, i1 false), !tbaa !189
   br label %.loopexit
 
 bb.k:                                             ; preds = %bb.j
@@ -5295,7 +5295,7 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.n = shl nuw nsw i64 %i.g, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.l, ptr nonnull align 8 %i.m, i64 %i.n, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.l, ptr nonnull align 8 %i.m, i64 range(i64 0, 65) %i.n, i1 false), !tbaa !189
   br label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -5383,7 +5383,7 @@ bb.j:                                             ; preds = %_ZN4pbrt13InlinedVe
   %i.ap = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.ar = shl nuw nsw i64 %i.ak, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ap, ptr nonnull align 8 %i.aq, i64 %i.ar, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ap, ptr nonnull align 8 %i.aq, i64 range(i64 0, 65) %i.ar, i1 false), !tbaa !189
   br label %.loopexit
 
 bb.k:                                             ; preds = %bb.j
@@ -5547,7 +5547,7 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.n = shl nuw nsw i64 %i.g, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.l, ptr nonnull align 8 %i.m, i64 %i.n, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.l, ptr nonnull align 8 %i.m, i64 range(i64 0, 65) %i.n, i1 false), !tbaa !189
   br label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -5635,7 +5635,7 @@ bb.j:                                             ; preds = %_ZN4pbrt13InlinedVe
   %i.ap = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.aq = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.ar = shl nuw nsw i64 %i.ak, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ap, ptr nonnull align 8 %i.aq, i64 %i.ar, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ap, ptr nonnull align 8 %i.aq, i64 range(i64 0, 65) %i.ar, i1 false), !tbaa !189
   br label %.loopexit
 
 bb.k:                                             ; preds = %bb.j
@@ -6038,7 +6038,7 @@ bb.i:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.an = getelementptr inbounds nuw i8, ptr %9, i64 16
   %i.ao = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.ap = shl nuw nsw i64 %i.ai, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.an, ptr nonnull align 8 %i.ao, i64 %i.ap, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.an, ptr nonnull align 8 %i.ao, i64 range(i64 0, 65) %i.ap, i1 false), !tbaa !189
   br label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit
 
 bb.j:                                             ; preds = %bb.i
@@ -6296,7 +6296,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %._cri
   %i.ed = getelementptr inbounds nuw i8, ptr %12, i64 16
   %i.ee = getelementptr inbounds nuw i8, ptr %8, i64 16
   %i.ef = shl nuw nsw i64 %i.dy, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ed, ptr nonnull align 8 %i.ee, i64 %i.ef, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ed, ptr nonnull align 8 %i.ee, i64 range(i64 0, 65) %i.ef, i1 false), !tbaa !189
   br label %.loopexit
 
 bb.v:                                             ; preds = %bb.u
@@ -6478,7 +6478,7 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag, %._c
   %i.gn = getelementptr inbounds nuw i8, ptr %17, i64 16
   %i.go = getelementptr inbounds nuw i8, ptr %8, i64 16
   %i.gp = shl nuw nsw i64 %i.gi, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.gn, ptr nonnull align 8 %i.go, i64 %i.gp, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.gn, ptr nonnull align 8 %i.go, i64 range(i64 0, 65) %i.gp, i1 false), !tbaa !189
   br label %.loopexit94
 
 bb.aj:                                            ; preds = %bb.ai
@@ -6800,7 +6800,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i: ; preds =
   %i.av = getelementptr inbounds nuw i8, ptr %6, i64 80
   %i.aw = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.ax = shl nuw nsw i64 %i.aq, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.av, ptr nonnull align 8 %i.aw, i64 %i.ax, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.av, ptr nonnull align 8 %i.aw, i64 range(i64 0, 65) %i.ax, i1 false), !tbaa !189
   br label %bb.g
 
 bb.f:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i
@@ -7203,7 +7203,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i64: ; preds
   %i.it = getelementptr inbounds nuw i8, ptr %12, i64 80
   %i.iu = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.iv = shl nuw nsw i64 %i.io, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.it, ptr nonnull align 8 %i.iu, i64 %i.iv, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.it, ptr nonnull align 8 %i.iu, i64 range(i64 0, 65) %i.iv, i1 false), !tbaa !189
   br label %bb.aj
 
 bb.ai:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i64
@@ -7473,7 +7473,7 @@ bb.aq:                                            ; preds = %.noexc88
   %i.mj = getelementptr inbounds nuw i8, ptr %i.lu, i64 56
   %i.mk = getelementptr inbounds nuw i8, ptr %3, i64 56
   %i.ml = shl nuw nsw i64 %i.me, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.mj, ptr nonnull align 8 %i.mk, i64 %i.ml, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.mj, ptr nonnull align 8 %i.mk, i64 range(i64 0, 65) %i.ml, i1 false), !tbaa !189
   br label %_ZNSt14_Function_baseD2Ev.exit.i
 
 bb.ar:                                            ; preds = %.noexc.i.i
@@ -7764,7 +7764,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i: ; preds =
   %i.ar = getelementptr inbounds nuw i8, ptr %6, i64 80
   %i.as = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.at = shl nuw nsw i64 %i.am, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ar, ptr nonnull align 8 %i.as, i64 %i.at, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ar, ptr nonnull align 8 %i.as, i64 range(i64 0, 65) %i.at, i1 false), !tbaa !189
   br label %bb.e
 
 bb.d:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i
@@ -8167,7 +8167,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i67: ; preds
   %i.iq = getelementptr inbounds nuw i8, ptr %12, i64 80
   %i.ir = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.is = shl nuw nsw i64 %i.il, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.iq, ptr nonnull align 8 %i.ir, i64 %i.is, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.iq, ptr nonnull align 8 %i.ir, i64 range(i64 0, 65) %i.is, i1 false), !tbaa !189
   br label %bb.ah
 
 bb.ag:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i67
@@ -8570,7 +8570,7 @@ bb.at:                                            ; preds = %.noexc109
   %i.po = getelementptr inbounds nuw i8, ptr %i.oz, i64 56
   %i.pp = getelementptr inbounds nuw i8, ptr %3, i64 56
   %i.pq = shl nuw nsw i64 %i.pj, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.po, ptr nonnull align 8 %i.pp, i64 %i.pq, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.po, ptr nonnull align 8 %i.pp, i64 range(i64 0, 65) %i.pq, i1 false), !tbaa !189
   br label %_ZNSt14_Function_baseD2Ev.exit.i
 
 bb.au:                                            ; preds = %.noexc.i.i
@@ -8803,7 +8803,7 @@ bb.c:                                             ; preds = %bb.a
   %i.o = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.q = shl nuw nsw i64 %i.j, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.o, ptr nonnull align 8 %i.p, i64 %i.q, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.o, ptr nonnull align 8 %i.p, i64 range(i64 0, 65) %i.q, i1 false), !tbaa !189
   br label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -8869,7 +8869,7 @@ _ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_alloca
   %i.aq = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.ar = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.as = shl nuw nsw i64 %i.al, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.aq, ptr nonnull align 8 %i.ar, i64 %i.as, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.aq, ptr nonnull align 8 %i.ar, i64 range(i64 0, 65) %i.as, i1 false), !tbaa !189
   br label %.loopexit
 
 bb.h:                                             ; preds = %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEED2Ev.exit
@@ -9182,7 +9182,7 @@ bb.i:                                             ; preds = %_ZNSt7__cxx1112basi
   %i.am = getelementptr inbounds nuw i8, ptr %7, i64 16
   %i.an = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.ao = shl nuw nsw i64 %i.ah, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.am, ptr nonnull align 8 %i.an, i64 %i.ao, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.am, ptr nonnull align 8 %i.an, i64 range(i64 0, 65) %i.ao, i1 false), !tbaa !189
   br label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit
 
 bb.j:                                             ; preds = %bb.i
@@ -9394,7 +9394,7 @@ bb.t:                                             ; preds = %._crit_edge.i.i22
   %i.de = getelementptr inbounds nuw i8, ptr %11, i64 16
   %i.df = getelementptr inbounds nuw i8, ptr %6, i64 16
   %i.dg = shl nuw nsw i64 %i.cz, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.de, ptr nonnull align 8 %i.df, i64 %i.dg, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.de, ptr nonnull align 8 %i.df, i64 range(i64 0, 65) %i.dg, i1 false), !tbaa !189
   br label %.loopexit
 
 bb.u:                                             ; preds = %._crit_edge.i.i25
@@ -9738,7 +9738,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i: ; preds =
   %i.ad = getelementptr inbounds nuw i8, ptr %3, i64 80
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.af = shl nuw nsw i64 %i.y, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ad, ptr nonnull align 8 %i.ae, i64 %i.af, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ad, ptr nonnull align 8 %i.ae, i64 range(i64 0, 65) %i.af, i1 false), !tbaa !189
   br label %bb.f
 
 bb.e:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i.i
@@ -10141,7 +10141,7 @@ bb.c:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.r = shl nuw nsw i64 %i.k, 3
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.p, ptr nonnull align 8 %i.q, i64 %i.r, i1 false), !tbaa !189
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.p, ptr nonnull align 8 %i.q, i64 range(i64 0, 65) %i.r, i1 false), !tbaa !189
   br label %_ZN4pbrt13InlinedVectorIPNS_15ParsedParameterELi8EN4pstd3pmr21polymorphic_allocatorIS2_EEEC2EOS7_.exit
 
 bb.d:                                             ; preds = %bb.c
@@ -10544,7 +10544,7 @@ _ZNKSt6vectorIN4pbrt16ShapeSceneEntityESaIS1_EE12_M_check_lenEmPKc.exit: ; preds
   %i.ad = getelementptr inbounds nuw i8, ptr %i.q, i64 48
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.af = shl nuw nsw i64 %i.y, 3
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ad, ptr nonnull align 8 %i.ae, i64 %i.af, i1 false), !tbaa !189
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ad, ptr nonnull align 8 %i.ae, i64 range(i64 0, 65) %i.af, i1 false), !tbaa !189
   br label %_ZN4pbrt11SceneEntityC2EOS0_.exit.i
 
 bb.c:                                             ; preds = %_ZNKSt6vectorIN4pbrt16ShapeSceneEntityESaIS1_EE12_M_check_lenEmPKc.exit
@@ -10947,7 +10947,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i: ; preds = %
   %i.ar = getelementptr inbounds nuw i8, ptr %i.q, i64 80
   %i.as = getelementptr inbounds nuw i8, ptr %2, i64 80
   %i.at = shl nuw nsw i64 %i.am, 3
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ar, ptr nonnull align 8 %i.as, i64 %i.at, i1 false), !tbaa !189
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ar, ptr nonnull align 8 %i.as, i64 range(i64 0, 65) %i.at, i1 false), !tbaa !189
   br label %.loopexit
 
 bb.d:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i
@@ -11350,7 +11350,7 @@ _ZNKSt6vectorIN4pbrt11SceneEntityESaIS1_EE12_M_check_lenEmPKc.exit: ; preds = %b
   %i.ad = getelementptr inbounds nuw i8, ptr %i.q, i64 48
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.af = shl nuw nsw i64 %i.y, 3
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ad, ptr nonnull align 8 %i.ae, i64 %i.af, i1 false), !tbaa !189
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ad, ptr nonnull align 8 %i.ae, i64 range(i64 0, 65) %i.af, i1 false), !tbaa !189
   br label %.loopexit
 
 bb.c:                                             ; preds = %_ZNKSt6vectorIN4pbrt11SceneEntityESaIS1_EE12_M_check_lenEmPKc.exit
@@ -11753,7 +11753,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i: ; preds = %
   %i.ar = getelementptr inbounds nuw i8, ptr %i.q, i64 80
   %i.as = getelementptr inbounds nuw i8, ptr %2, i64 80
   %i.at = shl nuw nsw i64 %i.am, 3
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ar, ptr nonnull align 8 %i.as, i64 %i.at, i1 false), !tbaa !189
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ar, ptr nonnull align 8 %i.as, i64 range(i64 0, 65) %i.at, i1 false), !tbaa !189
   br label %.loopexit
 
 bb.d:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EOS4_.exit.i

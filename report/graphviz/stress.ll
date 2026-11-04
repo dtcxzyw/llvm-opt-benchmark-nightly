@@ -205,35 +205,35 @@ gv_calloc.exit614.i:                              ; preds = %bb.bx
   %niter1028 = phi i64 [ 0, %.preheader637.preheader.i.new ], [ %niter1028.next.7, %.preheader637.i ]
   %i.ua = getelementptr inbounds nuw [8 x i8], ptr %i.sr, i64 %indvars.iv783.i
   %i.ub = load ptr, ptr %i.ua, align 8, !tbaa !12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ub, i8 0, i64 %i.tl, i1 false), !tbaa !35
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ub, i8 0, i64 range(i64 0, 401) %i.tl, i1 false), !tbaa !35
   %i.uc = getelementptr inbounds nuw [8 x i8], ptr %i.sr, i64 %indvars.iv783.i
   %i.ud = getelementptr inbounds nuw i8, ptr %i.uc, i64 8
   %i.ue = load ptr, ptr %i.ud, align 8, !tbaa !12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ue, i8 0, i64 %i.tl, i1 false), !tbaa !35
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ue, i8 0, i64 range(i64 0, 401) %i.tl, i1 false), !tbaa !35
   %i.uf = getelementptr inbounds nuw [8 x i8], ptr %i.sr, i64 %indvars.iv783.i
   %i.ug = getelementptr inbounds nuw i8, ptr %i.uf, i64 16
   %i.uh = load ptr, ptr %i.ug, align 8, !tbaa !12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.uh, i8 0, i64 %i.tl, i1 false), !tbaa !35
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.uh, i8 0, i64 range(i64 0, 401) %i.tl, i1 false), !tbaa !35
   %i.ui = getelementptr inbounds nuw [8 x i8], ptr %i.sr, i64 %indvars.iv783.i
   %i.uj = getelementptr inbounds nuw i8, ptr %i.ui, i64 24
   %i.uk = load ptr, ptr %i.uj, align 8, !tbaa !12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.uk, i8 0, i64 %i.tl, i1 false), !tbaa !35
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.uk, i8 0, i64 range(i64 0, 401) %i.tl, i1 false), !tbaa !35
   %i.ul = getelementptr inbounds nuw [8 x i8], ptr %i.sr, i64 %indvars.iv783.i
   %i.um = getelementptr inbounds nuw i8, ptr %i.ul, i64 32
   %i.un = load ptr, ptr %i.um, align 8, !tbaa !12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.un, i8 0, i64 %i.tl, i1 false), !tbaa !35
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.un, i8 0, i64 range(i64 0, 401) %i.tl, i1 false), !tbaa !35
   %i.uo = getelementptr inbounds nuw [8 x i8], ptr %i.sr, i64 %indvars.iv783.i
   %i.up = getelementptr inbounds nuw i8, ptr %i.uo, i64 40
   %i.uq = load ptr, ptr %i.up, align 8, !tbaa !12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.uq, i8 0, i64 %i.tl, i1 false), !tbaa !35
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.uq, i8 0, i64 range(i64 0, 401) %i.tl, i1 false), !tbaa !35
   %i.ur = getelementptr inbounds nuw [8 x i8], ptr %i.sr, i64 %indvars.iv783.i
   %i.us = getelementptr inbounds nuw i8, ptr %i.ur, i64 48
   %i.ut = load ptr, ptr %i.us, align 8, !tbaa !12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ut, i8 0, i64 %i.tl, i1 false), !tbaa !35
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.ut, i8 0, i64 range(i64 0, 401) %i.tl, i1 false), !tbaa !35
   %i.uu = getelementptr inbounds nuw [8 x i8], ptr %i.sr, i64 %indvars.iv783.i
   %i.uv = getelementptr inbounds nuw i8, ptr %i.uu, i64 56
   %i.uw = load ptr, ptr %i.uv, align 8, !tbaa !12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.uw, i8 0, i64 %i.tl, i1 false), !tbaa !35
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.uw, i8 0, i64 range(i64 0, 401) %i.tl, i1 false), !tbaa !35
   %indvars.iv.next784.i.7 = add nuw nsw i64 %indvars.iv783.i, 8 ; 2 uses
   %niter1028.next.7 = add i64 %niter1028, 8       ; 2 uses
   %niter1028.ncmp.7 = icmp eq i64 %niter1028.next.7, %unroll_iter1027
@@ -254,7 +254,7 @@ gv_calloc.exit614.i:                              ; preds = %bb.bx
   %epil.iter1024 = phi i64 [ 0, %.preheader637.i.epil.preheader ], [ %epil.iter1024.next, %.preheader637.i.epil ]
   %i.ux = getelementptr inbounds nuw [8 x i8], ptr %i.sr, i64 %indvars.iv783.i.epil
   %i.uy = load ptr, ptr %i.ux, align 8, !tbaa !12
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.uy, i8 0, i64 %i.tl, i1 false), !tbaa !35
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.uy, i8 0, i64 range(i64 0, 401) %i.tl, i1 false), !tbaa !35
   %indvars.iv.next784.i.epil = add nuw nsw i64 %indvars.iv783.i.epil, 1
   %epil.iter1024.next = add i64 %epil.iter1024, 1 ; 2 uses
   %epil.iter1024.cmp.not = icmp eq i64 %epil.iter1024.next, %xtraiter1023
@@ -308,7 +308,7 @@ bb.bz:                                            ; preds = %._crit_edge.i435
   br i1 %i.vo, label %.lr.ph696.i.preheader, label %.preheader634.i
 
 .preheader634.i:                                  ; preds = %bb.bz
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.vn, i8 0, i64 %i.tl, i1 false), !tbaa !35
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %i.vn, i8 0, i64 range(i64 0, 401) %i.tl, i1 false), !tbaa !35
   %i.vp = getelementptr inbounds nuw i8, ptr %i.vn, i64 8
   store double 1.000000e+00, ptr %i.vp, align 8, !tbaa !35
   br label %.lr.ph696.i.preheader

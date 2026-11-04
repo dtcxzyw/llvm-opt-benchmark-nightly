@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %.split.1
   %i.ar = shl nuw nsw i32 %.161, 3
   %i.as = sub nuw nsw i32 56, %i.ar
   %i.at = zext nneg i32 %i.as to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep155, ptr noundef nonnull align 8 dereferenceable(1) %scevgep156, i64 %i.at, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep155, ptr noundef nonnull align 8 dereferenceable(1) %scevgep156, i64 range(i64 0, 57) %i.at, i1 false)
   store ptr null, ptr %i.s, align 8
   br label %.split.2
 
@@ -239,7 +239,7 @@ bb.o:                                             ; preds = %.split.2
   %i.bc = shl nuw nsw i32 %.161.1, 3
   %i.bd = sub nuw nsw i32 56, %i.bc
   %i.be = zext nneg i32 %i.bd to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep150, ptr align 8 %scevgep151, i64 %i.be, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep150, ptr align 8 %scevgep151, i64 range(i64 0, 57) %i.be, i1 false)
   store ptr null, ptr %i.s, align 8
   br label %.split.3
 
@@ -274,7 +274,7 @@ bb.q:                                             ; preds = %.split.3
   %i.bn = shl nuw nsw i32 %.161.2, 3
   %i.bo = sub nuw nsw i32 56, %i.bn
   %i.bp = zext nneg i32 %i.bo to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep145, ptr align 8 %scevgep146, i64 %i.bp, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep145, ptr align 8 %scevgep146, i64 range(i64 0, 57) %i.bp, i1 false)
   store ptr null, ptr %i.s, align 8
   br label %.split.4
 
@@ -309,7 +309,7 @@ bb.s:                                             ; preds = %.split.4
   %i.by = shl nuw nsw i32 %.161.3, 3
   %i.bz = sub nuw nsw i32 56, %i.by
   %i.ca = zext nneg i32 %i.bz to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep140, ptr align 8 %scevgep141, i64 %i.ca, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep140, ptr align 8 %scevgep141, i64 range(i64 0, 57) %i.ca, i1 false)
   store ptr null, ptr %i.s, align 8
   br label %.split.5
 
@@ -344,7 +344,7 @@ bb.u:                                             ; preds = %.split.5
   %i.cj = shl nuw nsw i32 %.161.4, 3
   %i.ck = sub nuw nsw i32 56, %i.cj
   %i.cl = zext nneg i32 %i.ck to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep135, ptr align 8 %scevgep136, i64 %i.cl, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep135, ptr align 8 %scevgep136, i64 range(i64 0, 57) %i.cl, i1 false)
   store ptr null, ptr %i.s, align 8
   br label %.split.6
 
@@ -378,7 +378,7 @@ bb.w:                                             ; preds = %.split.6
   %i.ct = shl nuw nsw i32 %.161.5, 3
   %i.cu = sub nuw nsw i32 56, %i.ct
   %i.cv = zext nneg i32 %i.cu to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep130, ptr align 8 %scevgep131, i64 %i.cv, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep130, ptr align 8 %scevgep131, i64 range(i64 0, 57) %i.cv, i1 false)
   store ptr null, ptr %i.s, align 8
   br label %.split85.us
 
@@ -500,7 +500,7 @@ bb.y:                                             ; preds = %.split100.1
   %i.dz = shl nuw nsw i32 %.1, 3
   %i.ea = sub nuw nsw i32 56, %i.dz
   %i.eb = zext nneg i32 %i.ea to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep199, ptr noundef nonnull align 8 dereferenceable(1) %scevgep200, i64 %i.eb, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep199, ptr noundef nonnull align 8 dereferenceable(1) %scevgep200, i64 range(i64 0, 57) %i.eb, i1 false)
   store ptr null, ptr %i.cz, align 8
   br label %.split100.2
 
@@ -536,7 +536,7 @@ bb.aa:                                            ; preds = %.split100.2
   %i.el = shl nuw nsw i32 %.1.1, 3
   %i.em = sub nuw nsw i32 56, %i.el
   %i.en = zext nneg i32 %i.em to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep194, ptr align 8 %scevgep195, i64 %i.en, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep194, ptr align 8 %scevgep195, i64 range(i64 0, 57) %i.en, i1 false)
   store ptr null, ptr %i.cz, align 8
   br label %.split100.3
 
@@ -572,7 +572,7 @@ bb.ac:                                            ; preds = %.split100.3
   %i.ex = shl nuw nsw i32 %.1.2, 3
   %i.ey = sub nuw nsw i32 56, %i.ex
   %i.ez = zext nneg i32 %i.ey to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep189, ptr align 8 %scevgep190, i64 %i.ez, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep189, ptr align 8 %scevgep190, i64 range(i64 0, 57) %i.ez, i1 false)
   store ptr null, ptr %i.cz, align 8
   br label %.split100.4
 
@@ -608,7 +608,7 @@ bb.ae:                                            ; preds = %.split100.4
   %i.fj = shl nuw nsw i32 %.1.3, 3
   %i.fk = sub nuw nsw i32 56, %i.fj
   %i.fl = zext nneg i32 %i.fk to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep184, ptr align 8 %scevgep185, i64 %i.fl, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep184, ptr align 8 %scevgep185, i64 range(i64 0, 57) %i.fl, i1 false)
   store ptr null, ptr %i.cz, align 8
   br label %.split100.5
 
@@ -644,7 +644,7 @@ bb.ag:                                            ; preds = %.split100.5
   %i.fv = shl nuw nsw i32 %.1.4, 3
   %i.fw = sub nuw nsw i32 56, %i.fv
   %i.fx = zext nneg i32 %i.fw to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep179, ptr align 8 %scevgep180, i64 %i.fx, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep179, ptr align 8 %scevgep180, i64 range(i64 0, 57) %i.fx, i1 false)
   store ptr null, ptr %i.cz, align 8
   br label %.split100.6
 
@@ -680,7 +680,7 @@ bb.ai:                                            ; preds = %.split100.6
   %i.gh = shl nuw nsw i32 %.1.5, 3
   %i.gi = sub nuw nsw i32 56, %i.gh
   %i.gj = zext nneg i32 %i.gi to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep174, ptr align 8 %scevgep175, i64 %i.gj, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr align 8 %scevgep174, ptr align 8 %scevgep175, i64 range(i64 0, 57) %i.gj, i1 false)
   store ptr null, ptr %i.cz, align 8
   br label %.split100.7
 
@@ -720,7 +720,7 @@ bb.ak:                                            ; preds = %.split100.7
   %i.gu = shl nuw nsw i32 %.1.6, 3
   %narrow = sub nuw nsw i32 56, %i.gu
   %i.gv = zext nneg i32 %narrow to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep169, ptr noundef nonnull align 8 dereferenceable(1) %scevgep170, i64 %i.gv, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(1) %scevgep169, ptr noundef nonnull align 8 dereferenceable(1) %scevgep170, i64 range(i64 0, 57) %i.gv, i1 false)
   br label %._crit_edge96.7
 
 ._crit_edge96.7:                                  ; preds = %.lr.ph95.preheader.7, %.preheader.7

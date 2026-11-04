@@ -205,9 +205,9 @@ bb.h:                                             ; preds = %._crit_edge330.spli
   %i.gc = getelementptr [4 x i8], ptr %i.am, i64 %i.gb
   %i.gd = getelementptr [4 x i8], ptr %i.an, i64 %i.gb
   %i.ge = getelementptr [4 x i8], ptr %i.ao, i64 %i.gb
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.gc, i8 0, i64 %i.ji, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.gd, i8 0, i64 %i.ji, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ge, i8 0, i64 %i.ji, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.gc, i8 0, i64 range(i64 0, 1021) %i.ji, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.gd, i8 0, i64 range(i64 0, 1021) %i.ji, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ge, i8 0, i64 range(i64 0, 1021) %i.ji, i1 false), !tbaa !53
   %i.gf = add nuw nsw i64 %.0218333.us.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -292,33 +292,33 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.hv = getelementptr [4 x i8], ptr %i.am, i64 %i.hu
   %i.hw = getelementptr [4 x i8], ptr %i.an, i64 %i.hu
   %i.hx = getelementptr [4 x i8], ptr %i.ao, i64 %i.hu
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hv, i8 0, i64 %i.ji, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hw, i8 0, i64 %i.ji, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hx, i8 0, i64 %i.ji, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hv, i8 0, i64 range(i64 0, 1021) %i.ji, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hw, i8 0, i64 range(i64 0, 1021) %i.ji, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hx, i8 0, i64 range(i64 0, 1021) %i.ji, i1 false), !tbaa !53
   %i.hy = or disjoint i64 %.0218333.us, 1
   %i.hz = mul nuw nsw i64 %i.hy, %i.jh            ; 3 uses
   %i.ia = getelementptr [4 x i8], ptr %i.am, i64 %i.hz
   %i.ib = getelementptr [4 x i8], ptr %i.an, i64 %i.hz
   %i.ic = getelementptr [4 x i8], ptr %i.ao, i64 %i.hz
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ia, i8 0, i64 %i.ji, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ib, i8 0, i64 %i.ji, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ic, i8 0, i64 %i.ji, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ia, i8 0, i64 range(i64 0, 1021) %i.ji, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ib, i8 0, i64 range(i64 0, 1021) %i.ji, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ic, i8 0, i64 range(i64 0, 1021) %i.ji, i1 false), !tbaa !53
   %i.id = or disjoint i64 %.0218333.us, 2
   %i.ie = mul nuw nsw i64 %i.id, %i.jh            ; 3 uses
   %i.if = getelementptr [4 x i8], ptr %i.am, i64 %i.ie
   %i.ig = getelementptr [4 x i8], ptr %i.an, i64 %i.ie
   %i.ih = getelementptr [4 x i8], ptr %i.ao, i64 %i.ie
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.if, i8 0, i64 %i.ji, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ig, i8 0, i64 %i.ji, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ih, i8 0, i64 %i.ji, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.if, i8 0, i64 range(i64 0, 1021) %i.ji, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ig, i8 0, i64 range(i64 0, 1021) %i.ji, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ih, i8 0, i64 range(i64 0, 1021) %i.ji, i1 false), !tbaa !53
   %i.ii = or disjoint i64 %.0218333.us, 3
   %i.ij = mul nuw nsw i64 %i.ii, %i.jh            ; 3 uses
   %i.ik = getelementptr [4 x i8], ptr %i.am, i64 %i.ij
   %i.il = getelementptr [4 x i8], ptr %i.an, i64 %i.ij
   %i.im = getelementptr [4 x i8], ptr %i.ao, i64 %i.ij
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ik, i8 0, i64 %i.ji, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.il, i8 0, i64 %i.ji, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.im, i8 0, i64 %i.ji, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ik, i8 0, i64 range(i64 0, 1021) %i.ji, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.il, i8 0, i64 range(i64 0, 1021) %i.ji, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.im, i8 0, i64 range(i64 0, 1021) %i.ji, i1 false), !tbaa !53
   %i.in = add nuw nsw i64 %.0218333.us, 4         ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
@@ -721,9 +721,9 @@ bb.h:                                             ; preds = %._crit_edge330.spli
   %i.hk = getelementptr [4 x i8], ptr %i.am, i64 %i.hj
   %i.hl = getelementptr [4 x i8], ptr %i.an, i64 %i.hj
   %i.hm = getelementptr [4 x i8], ptr %i.ao, i64 %i.hj
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hk, i8 0, i64 %i.kq, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hl, i8 0, i64 %i.kq, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hm, i8 0, i64 %i.kq, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hk, i8 0, i64 range(i64 0, 1021) %i.kq, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hl, i8 0, i64 range(i64 0, 1021) %i.kq, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.hm, i8 0, i64 range(i64 0, 1021) %i.kq, i1 false), !tbaa !53
   %i.hn = add nuw nsw i64 %.0218333.us.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -808,33 +808,33 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.jd = getelementptr [4 x i8], ptr %i.am, i64 %i.jc
   %i.je = getelementptr [4 x i8], ptr %i.an, i64 %i.jc
   %i.jf = getelementptr [4 x i8], ptr %i.ao, i64 %i.jc
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jd, i8 0, i64 %i.kq, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.je, i8 0, i64 %i.kq, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jf, i8 0, i64 %i.kq, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jd, i8 0, i64 range(i64 0, 1021) %i.kq, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.je, i8 0, i64 range(i64 0, 1021) %i.kq, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jf, i8 0, i64 range(i64 0, 1021) %i.kq, i1 false), !tbaa !53
   %i.jg = or disjoint i64 %.0218333.us, 1
   %i.jh = mul nuw nsw i64 %i.jg, %i.kp            ; 3 uses
   %i.ji = getelementptr [4 x i8], ptr %i.am, i64 %i.jh
   %i.jj = getelementptr [4 x i8], ptr %i.an, i64 %i.jh
   %i.jk = getelementptr [4 x i8], ptr %i.ao, i64 %i.jh
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ji, i8 0, i64 %i.kq, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jj, i8 0, i64 %i.kq, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jk, i8 0, i64 %i.kq, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ji, i8 0, i64 range(i64 0, 1021) %i.kq, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jj, i8 0, i64 range(i64 0, 1021) %i.kq, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jk, i8 0, i64 range(i64 0, 1021) %i.kq, i1 false), !tbaa !53
   %i.jl = or disjoint i64 %.0218333.us, 2
   %i.jm = mul nuw nsw i64 %i.jl, %i.kp            ; 3 uses
   %i.jn = getelementptr [4 x i8], ptr %i.am, i64 %i.jm
   %i.jo = getelementptr [4 x i8], ptr %i.an, i64 %i.jm
   %i.jp = getelementptr [4 x i8], ptr %i.ao, i64 %i.jm
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jn, i8 0, i64 %i.kq, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jo, i8 0, i64 %i.kq, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jp, i8 0, i64 %i.kq, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jn, i8 0, i64 range(i64 0, 1021) %i.kq, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jo, i8 0, i64 range(i64 0, 1021) %i.kq, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jp, i8 0, i64 range(i64 0, 1021) %i.kq, i1 false), !tbaa !53
   %i.jq = or disjoint i64 %.0218333.us, 3
   %i.jr = mul nuw nsw i64 %i.jq, %i.kp            ; 3 uses
   %i.js = getelementptr [4 x i8], ptr %i.am, i64 %i.jr
   %i.jt = getelementptr [4 x i8], ptr %i.an, i64 %i.jr
   %i.ju = getelementptr [4 x i8], ptr %i.ao, i64 %i.jr
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.js, i8 0, i64 %i.kq, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jt, i8 0, i64 %i.kq, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ju, i8 0, i64 %i.kq, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.js, i8 0, i64 range(i64 0, 1021) %i.kq, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jt, i8 0, i64 range(i64 0, 1021) %i.kq, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ju, i8 0, i64 range(i64 0, 1021) %i.kq, i1 false), !tbaa !53
   %i.jv = add nuw nsw i64 %.0218333.us, 4         ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
@@ -1237,9 +1237,9 @@ bb.h:                                             ; preds = %._crit_edge332.spli
   %i.gx = getelementptr [4 x i8], ptr %i.am, i64 %i.gw
   %i.gy = getelementptr [4 x i8], ptr %i.an, i64 %i.gw
   %i.gz = getelementptr [4 x i8], ptr %i.ao, i64 %i.gw
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.gx, i8 0, i64 %i.kd, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.gy, i8 0, i64 %i.kd, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.gz, i8 0, i64 %i.kd, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.gx, i8 0, i64 range(i64 0, 1021) %i.kd, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.gy, i8 0, i64 range(i64 0, 1021) %i.kd, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.gz, i8 0, i64 range(i64 0, 1021) %i.kd, i1 false), !tbaa !53
   %i.ha = add nuw nsw i64 %.0218335.us.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
@@ -1324,33 +1324,33 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.iq = getelementptr [4 x i8], ptr %i.am, i64 %i.ip
   %i.ir = getelementptr [4 x i8], ptr %i.an, i64 %i.ip
   %i.is = getelementptr [4 x i8], ptr %i.ao, i64 %i.ip
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.iq, i8 0, i64 %i.kd, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ir, i8 0, i64 %i.kd, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.is, i8 0, i64 %i.kd, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.iq, i8 0, i64 range(i64 0, 1021) %i.kd, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ir, i8 0, i64 range(i64 0, 1021) %i.kd, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.is, i8 0, i64 range(i64 0, 1021) %i.kd, i1 false), !tbaa !53
   %i.it = or disjoint i64 %.0218335.us, 1
   %i.iu = mul nuw nsw i64 %i.it, %i.kc            ; 3 uses
   %i.iv = getelementptr [4 x i8], ptr %i.am, i64 %i.iu
   %i.iw = getelementptr [4 x i8], ptr %i.an, i64 %i.iu
   %i.ix = getelementptr [4 x i8], ptr %i.ao, i64 %i.iu
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.iv, i8 0, i64 %i.kd, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.iw, i8 0, i64 %i.kd, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ix, i8 0, i64 %i.kd, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.iv, i8 0, i64 range(i64 0, 1021) %i.kd, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.iw, i8 0, i64 range(i64 0, 1021) %i.kd, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ix, i8 0, i64 range(i64 0, 1021) %i.kd, i1 false), !tbaa !53
   %i.iy = or disjoint i64 %.0218335.us, 2
   %i.iz = mul nuw nsw i64 %i.iy, %i.kc            ; 3 uses
   %i.ja = getelementptr [4 x i8], ptr %i.am, i64 %i.iz
   %i.jb = getelementptr [4 x i8], ptr %i.an, i64 %i.iz
   %i.jc = getelementptr [4 x i8], ptr %i.ao, i64 %i.iz
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ja, i8 0, i64 %i.kd, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jb, i8 0, i64 %i.kd, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jc, i8 0, i64 %i.kd, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.ja, i8 0, i64 range(i64 0, 1021) %i.kd, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jb, i8 0, i64 range(i64 0, 1021) %i.kd, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jc, i8 0, i64 range(i64 0, 1021) %i.kd, i1 false), !tbaa !53
   %i.jd = or disjoint i64 %.0218335.us, 3
   %i.je = mul nuw nsw i64 %i.jd, %i.kc            ; 3 uses
   %i.jf = getelementptr [4 x i8], ptr %i.am, i64 %i.je
   %i.jg = getelementptr [4 x i8], ptr %i.an, i64 %i.je
   %i.jh = getelementptr [4 x i8], ptr %i.ao, i64 %i.je
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jf, i8 0, i64 %i.kd, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jg, i8 0, i64 %i.kd, i1 false), !tbaa !53
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jh, i8 0, i64 %i.kd, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jf, i8 0, i64 range(i64 0, 1021) %i.kd, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jg, i8 0, i64 range(i64 0, 1021) %i.kd, i1 false), !tbaa !53
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.jh, i8 0, i64 range(i64 0, 1021) %i.kd, i1 false), !tbaa !53
   %i.ji = add nuw nsw i64 %.0218335.us, 4         ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
   %niter.ncmp.3 = icmp eq i64 %niter.next.3, %unroll_iter
