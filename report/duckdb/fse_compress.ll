@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %bb.n
   %i.bh = lshr i64 %i.be, %i.bg                   ; 2 uses
   %i.bi = trunc i64 %i.bh to i32
   %i.bj = add nuw i32 %4, 1                       ; 3 uses
-  %wide.trip.count.i = zext i32 %i.bj to i64      ; 5 uses
+  %wide.trip.count.i = zext i32 %i.bj to i64      ; 6 uses
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.w, %bb.o
@@ -504,21 +504,20 @@ bb.an:                                            ; preds = %bb.ak
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.ar, %bb.an
-  %.0161.i.a = phi i64 [ %i.et, %bb.an ], [ %.2.i, %bb.ar ] ; 3 uses
-  %.4125160.i = phi i32 [ 0, %bb.an ], [ %7, %bb.ar ] ; 2 uses
-  %6 = zext i32 %.4125160.i to i64                ; 2 uses
-  %i.ez = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %6 ; 2 uses
+  %.0161.i.a = phi i64 [ %indvars.iv.next, %bb.ar ], [ 0, %bb.an ] ; 3 uses
+  %.0161.i = phi i64 [ %.2.i, %bb.ar ], [ %i.et, %bb.an ] ; 3 uses
+  %i.ez = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %.0161.i.a ; 2 uses
   %i.fa = load i16, ptr %i.ez, align 2, !tbaa !9
   %i.fb = icmp eq i16 %i.fa, -2
   br i1 %i.fb, label %bb.ap, label %bb.ar
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.fc = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %6
+  %i.fc = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %.0161.i.a
   %i.fd = load i32, ptr %i.fc, align 4, !tbaa !6
   %i.fe = zext i32 %i.fd to i64
   %i.ff = mul i64 %i.ey, %i.fe
-  %i.fg = add i64 %i.ff, %.0161.i.a               ; 2 uses
-  %i.fh = lshr i64 %.0161.i.a, %i.m               ; 2 uses
+  %i.fg = add i64 %i.ff, %.0161.i                 ; 2 uses
+  %i.fh = lshr i64 %.0161.i, %i.m                 ; 2 uses
   %i.fi = lshr i64 %i.fg, %i.m                    ; 2 uses
   %.not144.i = icmp eq i64 %i.fi, %i.fh
   br i1 %.not144.i, label %select.unfold, label %bb.aq
@@ -531,10 +530,10 @@ bb.aq:                                            ; preds = %bb.ap
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %bb.ao
-  %.2.i = phi i64 [ %i.fg, %bb.aq ], [ %.0161.i.a, %bb.ao ]
-  %7 = add i32 %.4125160.i, 1                     ; 2 uses
-  %.not143.not.i = icmp ugt i32 %7, %4
-  br i1 %.not143.not.i, label %select.unfold, label %bb.ao, !llvm.loop !46
+  %.2.i = phi i64 [ %i.fg, %bb.aq ], [ %.0161.i, %bb.ao ]
+  %indvars.iv.next = add nuw nsw i64 %.0161.i.a, 1 ; 2 uses
+  %exitcond = icmp eq i64 %indvars.iv.next, %wide.trip.count.i
+  br i1 %exitcond, label %select.unfold, label %bb.ao, !llvm.loop !46
 
 bb.as:                                            ; preds = %bb.n
   %i.fm = trunc i32 %.181 to i16
