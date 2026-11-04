@@ -205,10 +205,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.c = load <2 x i64>, ptr %i.a, align 8
   %i.d = load <2 x i64>, ptr %i.b, align 8
-  %i.e = icmp eq <2 x i64> %i.c, %i.d             ; 2 uses
-  %6 = extractelement <2 x i1> %i.e, i64 0
-  %7 = extractelement <2 x i1> %i.e, i64 1
-  %or.cond.i.i = select i1 %7, i1 %6, i1 false
+  %i.e = icmp eq <2 x i64> %i.c, %i.d
+  %6 = freeze <2 x i1> %i.e
+  %7 = bitcast <2 x i1> %6 to i2
+  %or.cond.i.i = icmp eq i2 %7, -1
   br i1 %or.cond.i.i, label %_ZN3gmxneIJLln1ELln1ELln1EEJLln1ELln1ELln1EEEEbRKNS_7extentsIJXspT_EEEERKNS1_IJXspT0_EEEE.exit, label %_ZN3gmxneIJLln1ELln1ELln1EEJLln1ELln1ELln1EEEEbRKNS_7extentsIJXspT_EEEERKNS1_IJXspT0_EEEE.exit.thread
 
 _ZN3gmxneIJLln1ELln1ELln1EEJLln1ELln1ELln1EEEEbRKNS_7extentsIJXspT_EEEERKNS1_IJXspT0_EEEE.exit: ; preds = %bb.a
@@ -307,10 +307,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.c = load <2 x i64>, ptr %i.a, align 8
   %i.d = load <2 x i64>, ptr %i.b, align 8
-  %i.e = icmp eq <2 x i64> %i.c, %i.d             ; 2 uses
-  %5 = extractelement <2 x i1> %i.e, i64 0
-  %6 = extractelement <2 x i1> %i.e, i64 1
-  %or.cond.i.i = select i1 %6, i1 %5, i1 false
+  %i.e = icmp eq <2 x i64> %i.c, %i.d
+  %5 = freeze <2 x i1> %i.e
+  %6 = bitcast <2 x i1> %5 to i2
+  %or.cond.i.i = icmp eq i2 %6, -1
   br i1 %or.cond.i.i, label %_ZN3gmxneIJLln1ELln1ELln1EEJLln1ELln1ELln1EEEEbRKNS_7extentsIJXspT_EEEERKNS1_IJXspT0_EEEE.exit, label %_ZN3gmxneIJLln1ELln1ELln1EEJLln1ELln1ELln1EEEEbRKNS_7extentsIJXspT_EEEERKNS1_IJXspT0_EEEE.exit.thread
 
 _ZN3gmxneIJLln1ELln1ELln1EEJLln1ELln1ELln1EEEEbRKNS_7extentsIJXspT_EEEERKNS1_IJXspT0_EEEE.exit: ; preds = %bb.a
@@ -713,7 +713,8 @@ bb.g:                                             ; preds = %_ZN3gmxneIJLln1ELln
   %i.ao = insertelement <2 x float> poison, float %i.ag, i64 0
   %i.ap = shufflevector <2 x float> %i.ao, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.aq = fdiv <2 x float> %i.an, %i.ap
-  %i.ar = fadd <2 x float> %i.aa, %i.aq
+  %.fr55 = freeze <2 x float> %i.aq
+  %i.ar = fadd <2 x float> %i.aa, %.fr55
   %i.as = extractelement <2 x float> %i.aj, i64 1
   %i.at = fmul float %i.as, %i.ae
   %i.au = extractelement <2 x float> %i.aj, i64 0
@@ -739,7 +740,8 @@ bb.g:                                             ; preds = %_ZN3gmxneIJLln1ELln
   %i.bo = insertelement <2 x float> poison, float %i.bg, i64 0
   %i.bp = shufflevector <2 x float> %i.bo, <2 x float> poison, <2 x i32> zeroinitializer ; 2 uses
   %i.bq = fdiv <2 x float> %i.bn, %i.bp
-  %i.br = fadd <2 x float> %i.ar, %i.bq           ; 3 uses
+  %.fr55.1 = freeze <2 x float> %i.bq
+  %i.br = fadd <2 x float> %i.ar, %.fr55.1        ; 3 uses
   %i.bs = extractelement <2 x float> %i.bj, i64 1
   %i.bt = fmul float %i.bs, %i.be
   %i.bu = extractelement <2 x float> %i.bj, i64 0
@@ -783,7 +785,8 @@ _ZN3gmx12_GLOBAL__N_120evaluateHelperValuesENS_12basic_mdspanIKfNS_7extentsIJLln
   %i.cp = insertelement <2 x float> poison, float %i.ch, i64 0
   %i.cq = shufflevector <2 x float> %i.cp, <2 x float> poison, <2 x i32> zeroinitializer
   %i.cr = fdiv <2 x float> %i.co, %i.cq
-  %i.cs = fadd <2 x float> %.epil.init57, %i.cr
+  %.fr55.epil = freeze <2 x float> %i.cr
+  %i.cs = fadd <2 x float> %.epil.init57, %.fr55.epil
   %i.ct = extractelement <2 x float> %i.ck, i64 1
   %i.cu = fmul float %i.ct, %i.cf
   %i.cv = extractelement <2 x float> %i.ck, i64 0
@@ -795,11 +798,10 @@ _ZN3gmx12_GLOBAL__N_120evaluateHelperValuesENS_12basic_mdspanIKfNS_7extentsIJLln
 _ZN3gmx12_GLOBAL__N_120evaluateHelperValuesENS_12basic_mdspanIKfNS_7extentsIJLln1ELln1ELln1EEEENS_12layout_rightENS_14accessor_basicIS2_EEEES8_.exit: ; preds = %_ZN3gmx12_GLOBAL__N_120evaluateHelperValuesENS_12basic_mdspanIKfNS_7extentsIJLln1ELln1ELln1EEEENS_12layout_rightENS_14accessor_basicIS2_EEEES8_.exit.unr-lcssa, %.lr.ph.i.epil.preheader
   %.lcssa55 = phi <2 x float> [ %i.br, %_ZN3gmx12_GLOBAL__N_120evaluateHelperValuesENS_12basic_mdspanIKfNS_7extentsIJLln1ELln1ELln1EEEENS_12layout_rightENS_14accessor_basicIS2_EEEES8_.exit.unr-lcssa ], [ %i.cs, %.lr.ph.i.epil.preheader ] ; 3 uses
   %.lcssa = phi float [ %i.bx, %_ZN3gmx12_GLOBAL__N_120evaluateHelperValuesENS_12basic_mdspanIKfNS_7extentsIJLln1ELln1ELln1EEEENS_12layout_rightENS_14accessor_basicIS2_EEEES8_.exit.unr-lcssa ], [ %i.cy, %.lr.ph.i.epil.preheader ] ; 2 uses
-  %i.cz = fcmp oeq <2 x float> %.lcssa55, zeroinitializer ; 2 uses
-  %5 = extractelement <2 x i1> %i.cz, i64 0
-  %6 = extractelement <2 x i1> %i.cz, i64 1
-  %or.cond = select i1 %6, i1 true, i1 %5
-  br i1 %or.cond, label %_ZN3gmx12_GLOBAL__N_120evaluateHelperValuesENS_12basic_mdspanIKfNS_7extentsIJLln1ELln1ELln1EEEENS_12layout_rightENS_14accessor_basicIS2_EEEES8_.exit.thread, label %bb.h
+  %i.cz = fcmp oeq <2 x float> %.lcssa55, zeroinitializer
+  %5 = bitcast <2 x i1> %i.cz to i2
+  %or.cond.not = icmp eq i2 %5, 0
+  br i1 %or.cond.not, label %bb.h, label %_ZN3gmx12_GLOBAL__N_120evaluateHelperValuesENS_12basic_mdspanIKfNS_7extentsIJLln1ELln1ELln1EEEENS_12layout_rightENS_14accessor_basicIS2_EEEES8_.exit.thread
 
 bb.h:                                             ; preds = %_ZN3gmx12_GLOBAL__N_120evaluateHelperValuesENS_12basic_mdspanIKfNS_7extentsIJLln1ELln1ELln1EEEENS_12layout_rightENS_14accessor_basicIS2_EEEES8_.exit
   %i.da = tail call noundef float @llvm.fabs.f32(float %.lcssa)

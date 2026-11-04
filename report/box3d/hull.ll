@@ -205,14 +205,16 @@ bb.a:
 define void @b3ScaleBox(ptr nofree noundef captures(none) %0, ptr nofree noundef captures(none) %1, <2 x float> %2, float %3, float noundef %4) local_unnamed_addr #3 {
 bb.a:
   %5 = alloca %struct.b3Matrix3, align 8          ; 12 uses
+  %.fr = freeze <2 x float> %2                    ; 7 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 12 ; 2 uses
   %.sroa.0185.0.copyload = load <2 x float>, ptr %i.a, align 4, !tbaa !23 ; 7 uses
   %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 2 uses
   %.sroa.10.0.copyload = load <2 x float>, ptr %.sroa.10.0..sroa_idx, align 4, !tbaa !23 ; 4 uses
-  %i.b = fcmp olt <2 x float> %2, zeroinitializer ; 3 uses
-  %i.c = extractelement <2 x i1> %i.b, i64 0      ; 2 uses
-  %i.d = extractelement <2 x i1> %i.b, i64 1      ; 2 uses
-  %or.cond = select i1 %i.c, i1 true, i1 %i.d
+  %i.b = fcmp olt <2 x float> %.fr, zeroinitializer ; 4 uses
+  %i.c = extractelement <2 x i1> %i.b, i64 0
+  %i.d = extractelement <2 x i1> %i.b, i64 1
+  %6 = bitcast <2 x i1> %i.b to i2
+  %or.cond = icmp ne i2 %6, 0
   %i.e = fcmp olt float %3, 0.000000e+00          ; 3 uses
   %or.cond5 = select i1 %or.cond, i1 true, i1 %i.e
   br i1 %or.cond5, label %bb.b, label %bb.l
@@ -242,14 +244,14 @@ bb.b:                                             ; preds = %bb.a
   %i.w = extractelement <2 x float> %foldExtExtBinop365, i64 0
   %i.x = fmul float %i.w, 2.000000e+00
   %i.y = fsub float 1.000000e+00, %i.x
-  %i.z = fmul <2 x float> %2, %i.t
+  %i.z = fmul <2 x float> %.fr, %i.t
   store <2 x float> %i.z, ptr %5, align 8, !tbaa !23
   %foldExtExtBinop367 = fsub <2 x float> %i.m, %i.o
   %i.aa = fsub float 1.000000e+00, %i.v
   %i.ab = shufflevector <2 x float> %foldExtExtBinop367, <2 x float> poison, <2 x i32> <i32 1, i32 poison>
   %i.ac = insertelement <2 x float> %i.ab, float %i.aa, i64 1
   %i.ad = fmul <2 x float> %i.ac, <float 2.000000e+00, float 1.000000e+00>
-  %i.ae = fmul <2 x float> %2, %i.ad
+  %i.ae = fmul <2 x float> %.fr, %i.ad
   store <2 x float> %i.ae, ptr %i.g, align 4, !tbaa !23
   %i.af = fmul <2 x float> %.sroa.0185.0.copyload, %i.n ; 4 uses
   %i.ag = shufflevector <2 x float> %.sroa.0185.0.copyload, <2 x float> poison, <2 x i32> <i32 1, i32 0>
@@ -265,7 +267,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ao = fsub <2 x float> %i.af, %i.ai
   %i.ap = shufflevector <2 x float> %i.an, <2 x float> %i.ao, <2 x i32> <i32 0, i32 3>
   %i.aq = fmul <2 x float> %i.ap, splat (float 2.000000e+00)
-  %i.ar = fmul <2 x float> %2, %i.aq
+  %i.ar = fmul <2 x float> %.fr, %i.aq
   store <2 x float> %i.ar, ptr %i.i, align 8, !tbaa !23
   %i.as = fmul float %3, %i.ak                    ; 3 uses
   %i.at = fmul float %3, %i.am                    ; 3 uses
@@ -381,7 +383,7 @@ bb.k:                                             ; preds = %bb.i, %bb.j
 bb.l:                                             ; preds = %bb.a, %bb.k
   %.sroa.0185.0 = phi <2 x float> [ %i.cg, %bb.k ], [ %.sroa.0185.0.copyload, %bb.a ] ; 13 uses
   %.sroa.10.0 = phi <2 x float> [ %i.ch, %bb.k ], [ %.sroa.10.0.copyload, %bb.a ] ; 9 uses
-  %i.ci = fneg <2 x float> %2
+  %i.ci = fneg <2 x float> %.fr
   %i.cj = fneg float %3
   %i.ck = select i1 %i.e, float %i.cj, float %3   ; 2 uses
   %.sroa.0123.0.copyload = load <2 x float>, ptr %0, align 4, !tbaa !23 ; 5 uses
@@ -409,7 +411,7 @@ bb.l:                                             ; preds = %bb.a, %bb.k
   %i.cx = fsub float %i.cm, %i.cl
   %i.cy = fsub float %i.cp, %i.co
   %i.cz = fsub float %i.cs, %i.cr
-  %i.da = select <2 x i1> %i.b, <2 x float> %i.ci, <2 x float> %2 ; 3 uses
+  %i.da = select <2 x i1> %i.b, <2 x float> %i.ci, <2 x float> %.fr ; 3 uses
   %i.db = fsub float %i.cq, %i.cv                 ; 2 uses
   %i.dc = insertelement <2 x float> poison, float %i.ct, i64 0
   %i.dd = insertelement <2 x float> %i.dc, float %i.cn, i64 1
@@ -530,7 +532,7 @@ bb.l:                                             ; preds = %bb.a, %bb.k
   %.sroa.06.0.copyload = load <2 x float>, ptr %1, align 4
   %.sroa.27.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %.sroa.27.0.copyload = load float, ptr %.sroa.27.0..sroa_idx, align 4
-  %i.hg = fmul <2 x float> %2, %.sroa.06.0.copyload
+  %i.hg = fmul <2 x float> %.fr, %.sroa.06.0.copyload
   %i.hh = fmul float %3, %.sroa.27.0.copyload
   store <2 x float> %i.hg, ptr %1, align 4, !tbaa !23
   store float %i.hh, ptr %.sroa.27.0..sroa_idx, align 4, !tbaa !23

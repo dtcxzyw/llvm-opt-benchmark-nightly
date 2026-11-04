@@ -202,12 +202,16 @@ bb.cg:                                            ; preds = %bb.cf
   %i.nj = icmp sgt i8 %.sroa.0296.0.extract.trunc, 0
   %i.nk = icmp sgt i8 %.sroa.11.0.extract.trunc, 0
   %i.nl = select i1 %i.nj, i1 true, i1 %i.nk
-  br i1 %i.nl, label %.lr.ph, label %._crit_edge
+  br i1 %i.nl, label %.lr.ph.preheader, label %._crit_edge
 
-.lr.ph:                                           ; preds = %bb.cg, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %.sroa.11.0372 = phi i8 [ %i.oe, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.sroa.11.0.extract.trunc, %bb.cg ]
-  %.sroa.0296.0371 = phi i8 [ %i.od, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.sroa.0296.0.extract.trunc, %bb.cg ]
-  %i.nm = phi <2 x i8> [ %i.oc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.mp, %bb.cg ]
+.lr.ph.preheader:                                 ; preds = %bb.cg
+  %.fr = freeze <2 x i8> %i.mp
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
+  %.sroa.11.0372 = phi i8 [ %i.oe, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.sroa.11.0.extract.trunc, %.lr.ph.preheader ]
+  %.sroa.0296.0371 = phi i8 [ %i.od, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.sroa.0296.0.extract.trunc, %.lr.ph.preheader ]
+  %i.nm = phi <2 x i8> [ %i.oc, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %.fr, %.lr.ph.preheader ]
   %.sroa.11.0.insert.ext309 = zext i8 %.sroa.11.0372 to i16
   %.sroa.11.0.insert.shift310 = shl nuw i16 %.sroa.11.0.insert.ext309, 8
   %.sroa.0296.0.insert.ext302 = zext i8 %.sroa.0296.0371 to i16
@@ -255,11 +259,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.cj
   %i.oc = call <2 x i8> @llvm.usub.sat.v2i8(<2 x i8> %i.nm, <2 x i8> splat (i8 1)) ; 4 uses
   %i.od = extractelement <2 x i8> %i.oc, i64 1    ; 2 uses
   %i.oe = extractelement <2 x i8> %i.oc, i64 0    ; 2 uses
-  %i.of = icmp sgt <2 x i8> %i.oc, zeroinitializer ; 2 uses
-  %5 = extractelement <2 x i1> %i.of, i64 0
-  %6 = extractelement <2 x i1> %i.of, i64 1
-  %7 = select i1 %6, i1 true, i1 %5
-  br i1 %7, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !98
+  %i.of = icmp sgt <2 x i8> %i.oc, zeroinitializer
+  %5 = bitcast <2 x i1> %i.of to i2
+  %.not417 = icmp eq i2 %5, 0
+  br i1 %.not417, label %._crit_edge.loopexit, label %.lr.ph, !llvm.loop !98
 
 bb.ck:                                            ; preds = %._crit_edge.i.i
   %i.og = landingpad { ptr, i32 }

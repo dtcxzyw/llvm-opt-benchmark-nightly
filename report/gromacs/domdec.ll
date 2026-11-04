@@ -205,15 +205,17 @@ bb.fj:                                            ; preds = %_ZN3gmx9CommSetupC2
   %i.akn = insertelement <2 x i32> poison, i32 %i.akh, i64 0
   %i.ako = shufflevector <2 x i32> %i.akn, <2 x i32> poison, <2 x i32> zeroinitializer
   %i.akp = srem <2 x i32> %i.akm, %i.ako
-  %i.akq = icmp eq <2 x i32> %i.akp, zeroinitializer ; 2 uses
-  %i.akr = extractelement <2 x i1> %i.akq, i64 0  ; 2 uses
-  %64 = extractelement <2 x i1> %i.akq, i64 1     ; 2 uses
-  %or.cond.i.i161 = select i1 %i.akr, i1 true, i1 %64
-  br i1 %or.cond.i.i161, label %bb.fk, label %bb.fo
+  %.fr = freeze <2 x i32> %i.akp
+  %i.akq = icmp eq <2 x i32> %.fr, zeroinitializer ; 3 uses
+  %i.akr = extractelement <2 x i1> %i.akq, i64 0
+  %64 = bitcast <2 x i1> %i.akq to i2
+  %or.cond.i.i161.not = icmp eq i2 %64, 0
+  br i1 %or.cond.i.i161.not, label %bb.fo, label %bb.fk
 
 bb.fk:                                            ; preds = %bb.fj
+  %65 = extractelement <2 x i1> %i.akq, i64 1
   store i8 1, ptr %i.ajt, align 8, !tbaa !26, !alias.scope !740
-  br i1 %64, label %bb.fl, label %bb.fm
+  br i1 %65, label %bb.fl, label %bb.fm
 
 bb.fl:                                            ; preds = %bb.fk
   %i.aks = getelementptr inbounds nuw i8, ptr %0, i64 492

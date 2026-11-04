@@ -202,19 +202,19 @@ bb.j:                                             ; preds = %.critedge113
   %i.aj = load i32, ptr %i.ai, align 8, !tbaa !69
   %i.ak = insertelement <2 x i32> poison, i32 %i.aj, i64 0
   %i.al = shufflevector <2 x i32> %i.ak, <2 x i32> poison, <2 x i32> zeroinitializer
-  %i.am = icmp eq <2 x i32> %i.al, <i32 2, i32 1>
+  %.fr.epil = freeze <2 x i32> %i.al
+  %i.am = icmp eq <2 x i32> %.fr.epil, <i32 2, i32 1>
   %i.an = zext <2 x i1> %i.am to <2 x i32>
-  %i.ao = add nuw nsw <2 x i32> %i.bk, %i.an
+  %i.ao = add <2 x i32> %i.bk, %i.an
   br label %bb.k
 
 bb.k:                                             ; preds = %.unr-lcssa, %.epil.preheader
   %.lcssa214 = phi <2 x i32> [ %i.bk, %.unr-lcssa ], [ %i.ao, %.epil.preheader ]
-  %i.ap = add nsw <2 x i32> %.lcssa214, <i32 0, i32 -3>
-  %i.aq = icmp ult <2 x i32> %i.ap, <i32 1, i32 -2> ; 2 uses
-  %1 = extractelement <2 x i1> %i.aq, i64 0
-  %2 = extractelement <2 x i1> %i.aq, i64 1
-  %or.cond6 = select i1 %2, i1 true, i1 %1
-  br i1 %or.cond6, label %bb.m, label %.lr.ph150
+  %i.ap = add <2 x i32> %.lcssa214, <i32 0, i32 -3>
+  %i.aq = icmp ult <2 x i32> %i.ap, <i32 1, i32 -2>
+  %1 = bitcast <2 x i1> %i.aq to i2
+  %or.cond6.not = icmp eq i2 %1, 0
+  br i1 %or.cond6.not, label %.lr.ph150, label %bb.m
 
 bb.l:                                             ; preds = %bb.l, %.preheader130
   %indvars.iv171 = phi i64 [ 0, %.preheader130 ], [ %indvars.iv.next172.1, %bb.l ] ; 3 uses
@@ -226,9 +226,10 @@ bb.l:                                             ; preds = %bb.l, %.preheader13
   %i.av = load i32, ptr %i.au, align 8, !tbaa !69
   %i.aw = insertelement <2 x i32> poison, i32 %i.av, i64 0
   %i.ax = shufflevector <2 x i32> %i.aw, <2 x i32> poison, <2 x i32> zeroinitializer
-  %i.ay = icmp eq <2 x i32> %i.ax, <i32 2, i32 1>
+  %.fr = freeze <2 x i32> %i.ax
+  %i.ay = icmp eq <2 x i32> %.fr, <i32 2, i32 1>
   %i.az = zext <2 x i1> %i.ay to <2 x i32>
-  %i.ba = add nuw nsw <2 x i32> %i.ar, %i.az
+  %i.ba = add <2 x i32> %i.ar, %i.az
   %i.bb = getelementptr inbounds nuw [8 x i8], ptr %i.af, i64 %indvars.iv171
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 8
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !67
@@ -236,9 +237,10 @@ bb.l:                                             ; preds = %bb.l, %.preheader13
   %i.bf = load i32, ptr %i.be, align 8, !tbaa !69
   %i.bg = insertelement <2 x i32> poison, i32 %i.bf, i64 0
   %i.bh = shufflevector <2 x i32> %i.bg, <2 x i32> poison, <2 x i32> zeroinitializer
-  %i.bi = icmp eq <2 x i32> %i.bh, <i32 2, i32 1>
+  %.fr.1 = freeze <2 x i32> %i.bh
+  %i.bi = icmp eq <2 x i32> %.fr.1, <i32 2, i32 1>
   %i.bj = zext <2 x i1> %i.bi to <2 x i32>
-  %i.bk = add nuw nsw <2 x i32> %i.ba, %i.bj      ; 3 uses
+  %i.bk = add <2 x i32> %i.ba, %i.bj              ; 3 uses
   %indvars.iv.next172.1 = add nuw nsw i64 %indvars.iv171, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter

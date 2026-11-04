@@ -202,14 +202,16 @@ bb.n:                                             ; preds = %bb.l, %bb.l
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.l, %bb.n, %bb.m
-  %i.cc = phi <2 x i1> [ %i.bp, %bb.m ], [ %i.cb, %bb.n ], [ zeroinitializer, %bb.l ] ; 2 uses
-  %i.cd = extractelement <2 x i1> %i.cc, i64 0    ; 2 uses
-  %2 = extractelement <2 x i1> %i.cc, i64 1       ; 3 uses
-  %or.cond = select i1 %2, i1 true, i1 %i.cd
-  br i1 %or.cond, label %bb.p, label %bb.ab
+  %i.cc = phi <2 x i1> [ %i.bp, %bb.m ], [ %i.cb, %bb.n ], [ zeroinitializer, %bb.l ]
+  %2 = freeze <2 x i1> %i.cc                      ; 3 uses
+  %i.cd = extractelement <2 x i1> %2, i64 1
+  %3 = bitcast <2 x i1> %2 to i2
+  %or.cond.not = icmp eq i2 %3, 0
+  br i1 %or.cond.not, label %bb.ab, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %or.cond3 = select i1 %2, i1 %i.cd, i1 false
+  %4 = bitcast <2 x i1> %2 to i2
+  %or.cond3 = icmp eq i2 %4, -1
   br i1 %or.cond3, label %.split, label %bb.q
 
 .split:                                           ; preds = %bb.p
@@ -221,7 +223,7 @@ bb.p:                                             ; preds = %bb.o
   br i1 %i.ci, label %bb.w, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  br i1 %2, label %bb.r, label %bb.w
+  br i1 %i.cd, label %bb.r, label %bb.w
 
 bb.r:                                             ; preds = %.split, %bb.q
   %i.cj = icmp sgt i32 %i.h, 1

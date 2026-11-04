@@ -205,10 +205,11 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.ga = call fast <2 x float> @llvm.floor.v2f32(<2 x float> %i.fp)
-  %i.gb = fptosi <2 x float> %i.ga to <2 x i32>   ; 3 uses
-  %i.gc = extractelement <2 x i32> %i.gb, i64 1   ; 5 uses
+  %i.gb = fptosi <2 x float> %i.ga to <2 x i32>
+  %.fr = freeze <2 x i32> %i.gb                   ; 3 uses
+  %i.gc = extractelement <2 x i32> %.fr, i64 1    ; 5 uses
   %i.gd = add nsw i32 %i.gc, 1                    ; 2 uses
-  %i.ge = extractelement <2 x i32> %i.gb, i64 0   ; 5 uses
+  %i.ge = extractelement <2 x i32> %.fr, i64 0    ; 5 uses
   %i.gf = add nsw i32 %i.ge, 1                    ; 2 uses
   %i.gg = sitofp fast i32 %i.gc to float
   %i.gh = fsub fast float %i.fq, %i.gg            ; 3 uses
@@ -216,22 +217,23 @@ bb.n:                                             ; preds = %bb.m
   %i.gj = fsub fast float %i.fs, %i.gi            ; 3 uses
   %i.gk = fsub fast float 1.000000e+00, %i.gh     ; 2 uses
   %i.gl = fsub fast float 1.000000e+00, %i.gj     ; 2 uses
-  %i.gm = icmp sgt <2 x i32> %i.gb, splat (i32 -1) ; 2 uses
-  %i.gn = extractelement <2 x i1> %i.gm, i64 0    ; 2 uses
-  %i.go = extractelement <2 x i1> %i.gm, i64 1    ; 2 uses
-  %15 = select i1 %i.go, i1 %i.gn, i1 false
+  %i.gm = icmp sgt <2 x i32> %.fr, splat (i32 -1) ; 3 uses
+  %i.gn = extractelement <2 x i1> %i.gm, i64 0
+  %i.go = extractelement <2 x i1> %i.gm, i64 1
+  %15 = bitcast <2 x i1> %i.gm to i2
+  %16 = icmp eq i2 %15, -1
   %i.gp = add nsw i32 %i.fx, -1
   %i.gq = icmp sgt i32 %i.gp, %i.ge               ; 2 uses
   %i.gr = select i1 %i.go, i1 %i.gq, i1 false
   %i.gs = add nsw i32 %i.fu, -1
   %i.gt = icmp sgt i32 %i.gs, %i.gc               ; 2 uses
-  %16 = select i1 %i.gt, i1 %i.gn, i1 false
+  %17 = and i1 %i.gt, %i.gn
   %i.gu = select i1 %i.gt, i1 %i.gq, i1 false
   %i.gv = fmul fast float %i.gl, %i.gk
   %i.gw = fmul fast float %i.gk, %i.gj
   %i.gx = fmul fast float %i.gl, %i.gh
   %i.gy = fmul fast float %i.gj, %i.gh
-  br i1 %15, label %bb.o, label %bb.p
+  br i1 %16, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
   %i.gz = zext nneg i32 %i.gc to i64
@@ -259,7 +261,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.p, %bb.q
   %i.ho = phi fast <16 x float> [ %i.hn, %bb.q ], [ zeroinitializer, %bb.p ]
-  br i1 %16, label %bb.s, label %bb.t
+  br i1 %17, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
   %i.hp = sext i32 %i.gd to i64
@@ -662,10 +664,11 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.ga = call fast <2 x float> @llvm.floor.v2f32(<2 x float> %i.fp)
-  %i.gb = fptosi <2 x float> %i.ga to <2 x i32>   ; 3 uses
-  %i.gc = extractelement <2 x i32> %i.gb, i64 1   ; 5 uses
+  %i.gb = fptosi <2 x float> %i.ga to <2 x i32>
+  %.fr = freeze <2 x i32> %i.gb                   ; 3 uses
+  %i.gc = extractelement <2 x i32> %.fr, i64 1    ; 5 uses
   %i.gd = add nsw i32 %i.gc, 1                    ; 2 uses
-  %i.ge = extractelement <2 x i32> %i.gb, i64 0   ; 5 uses
+  %i.ge = extractelement <2 x i32> %.fr, i64 0    ; 5 uses
   %i.gf = add nsw i32 %i.ge, 1                    ; 2 uses
   %i.gg = sitofp fast i32 %i.gc to float
   %i.gh = fsub fast float %i.fq, %i.gg            ; 3 uses
@@ -673,22 +676,23 @@ bb.n:                                             ; preds = %bb.m
   %i.gj = fsub fast float %i.fs, %i.gi            ; 3 uses
   %i.gk = fsub fast float 1.000000e+00, %i.gh     ; 2 uses
   %i.gl = fsub fast float 1.000000e+00, %i.gj     ; 2 uses
-  %i.gm = icmp sgt <2 x i32> %i.gb, splat (i32 -1) ; 2 uses
-  %i.gn = extractelement <2 x i1> %i.gm, i64 0    ; 2 uses
-  %i.go = extractelement <2 x i1> %i.gm, i64 1    ; 2 uses
-  %15 = select i1 %i.go, i1 %i.gn, i1 false
+  %i.gm = icmp sgt <2 x i32> %.fr, splat (i32 -1) ; 3 uses
+  %i.gn = extractelement <2 x i1> %i.gm, i64 0
+  %i.go = extractelement <2 x i1> %i.gm, i64 1
+  %15 = bitcast <2 x i1> %i.gm to i2
+  %16 = icmp eq i2 %15, -1
   %i.gp = add nsw i32 %i.fx, -1
   %i.gq = icmp sgt i32 %i.gp, %i.ge               ; 2 uses
   %i.gr = select i1 %i.go, i1 %i.gq, i1 false
   %i.gs = add nsw i32 %i.fu, -1
   %i.gt = icmp sgt i32 %i.gs, %i.gc               ; 2 uses
-  %16 = select i1 %i.gt, i1 %i.gn, i1 false
+  %17 = and i1 %i.gt, %i.gn
   %i.gu = select i1 %i.gt, i1 %i.gq, i1 false
   %i.gv = fmul fast float %i.gl, %i.gk
   %i.gw = fmul fast float %i.gk, %i.gj
   %i.gx = fmul fast float %i.gl, %i.gh
   %i.gy = fmul fast float %i.gj, %i.gh
-  br i1 %15, label %bb.o, label %bb.p
+  br i1 %16, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
   %i.gz = zext nneg i32 %i.gc to i64
@@ -716,7 +720,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.p, %bb.q
   %i.ho = phi fast <8 x float> [ %i.hn, %bb.q ], [ zeroinitializer, %bb.p ]
-  br i1 %16, label %bb.s, label %bb.t
+  br i1 %17, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
   %i.hp = sext i32 %i.gd to i64
@@ -1119,10 +1123,11 @@ bb.m:                                             ; preds = %bb.l
 
 bb.n:                                             ; preds = %bb.m
   %i.ga = call fast <2 x float> @llvm.floor.v2f32(<2 x float> %i.fp)
-  %i.gb = fptosi <2 x float> %i.ga to <2 x i32>   ; 3 uses
-  %i.gc = extractelement <2 x i32> %i.gb, i64 1   ; 5 uses
+  %i.gb = fptosi <2 x float> %i.ga to <2 x i32>
+  %.fr = freeze <2 x i32> %i.gb                   ; 3 uses
+  %i.gc = extractelement <2 x i32> %.fr, i64 1    ; 5 uses
   %i.gd = add nsw i32 %i.gc, 1                    ; 2 uses
-  %i.ge = extractelement <2 x i32> %i.gb, i64 0   ; 5 uses
+  %i.ge = extractelement <2 x i32> %.fr, i64 0    ; 5 uses
   %i.gf = add nsw i32 %i.ge, 1                    ; 2 uses
   %i.gg = sitofp fast i32 %i.gc to float
   %i.gh = fsub fast float %i.fq, %i.gg            ; 3 uses
@@ -1130,22 +1135,23 @@ bb.n:                                             ; preds = %bb.m
   %i.gj = fsub fast float %i.fs, %i.gi            ; 3 uses
   %i.gk = fsub fast float 1.000000e+00, %i.gh     ; 2 uses
   %i.gl = fsub fast float 1.000000e+00, %i.gj     ; 2 uses
-  %i.gm = icmp sgt <2 x i32> %i.gb, splat (i32 -1) ; 2 uses
-  %i.gn = extractelement <2 x i1> %i.gm, i64 0    ; 2 uses
-  %i.go = extractelement <2 x i1> %i.gm, i64 1    ; 2 uses
-  %15 = select i1 %i.go, i1 %i.gn, i1 false
+  %i.gm = icmp sgt <2 x i32> %.fr, splat (i32 -1) ; 3 uses
+  %i.gn = extractelement <2 x i1> %i.gm, i64 0
+  %i.go = extractelement <2 x i1> %i.gm, i64 1
+  %15 = bitcast <2 x i1> %i.gm to i2
+  %16 = icmp eq i2 %15, -1
   %i.gp = add nsw i32 %i.fx, -1
   %i.gq = icmp sgt i32 %i.gp, %i.ge               ; 2 uses
   %i.gr = select i1 %i.go, i1 %i.gq, i1 false
   %i.gs = add nsw i32 %i.fu, -1
   %i.gt = icmp sgt i32 %i.gs, %i.gc               ; 2 uses
-  %16 = select i1 %i.gt, i1 %i.gn, i1 false
+  %17 = and i1 %i.gt, %i.gn
   %i.gu = select i1 %i.gt, i1 %i.gq, i1 false
   %i.gv = fmul fast float %i.gl, %i.gk
   %i.gw = fmul fast float %i.gk, %i.gj
   %i.gx = fmul fast float %i.gl, %i.gh
   %i.gy = fmul fast float %i.gj, %i.gh
-  br i1 %15, label %bb.o, label %bb.p
+  br i1 %16, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
   %i.gz = zext nneg i32 %i.gc to i64
@@ -1173,7 +1179,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.p, %bb.q
   %i.ho = phi fast <4 x float> [ %i.hn, %bb.q ], [ zeroinitializer, %bb.p ]
-  br i1 %16, label %bb.s, label %bb.t
+  br i1 %17, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.r
   %i.hp = sext i32 %i.gd to i64

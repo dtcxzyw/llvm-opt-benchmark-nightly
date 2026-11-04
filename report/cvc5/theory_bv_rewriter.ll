@@ -204,19 +204,21 @@ bb.ah:                                            ; preds = %.lr.ph, %bb.bo
   %i.ek = getelementptr inbounds nuw i8, ptr %.sroa.0148.0183, i64 8 ; 2 uses
   %i.el = getelementptr inbounds nuw i8, ptr %.sroa.0148.0183, i64 16
   %i.em = load <2 x i32>, ptr %i.el, align 8, !tbaa !57
-  %i.en = and <2 x i32> %i.em, splat (i32 1)
-  %i.eo = icmp eq <2 x i32> %i.en, zeroinitializer ; 2 uses
-  %i.ep = extractelement <2 x i1> %i.eo, i64 0    ; 2 uses
-  %24 = extractelement <2 x i1> %i.eo, i64 1      ; 2 uses
-  %or.cond = select i1 %i.ep, i1 true, i1 %24
-  br i1 %or.cond, label %bb.aj, label %bb.ai
+  %.fr254 = freeze <2 x i32> %i.em
+  %i.en = and <2 x i32> %.fr254, splat (i32 1)
+  %i.eo = icmp eq <2 x i32> %i.en, zeroinitializer ; 3 uses
+  %i.ep = extractelement <2 x i1> %i.eo, i64 1
+  %24 = bitcast <2 x i1> %i.eo to i2
+  %or.cond.not = icmp eq i2 %24, 0
+  br i1 %or.cond.not, label %bb.ai, label %bb.aj
 
 bb.ai:                                            ; preds = %bb.ah
   %i.eq = add i32 %.020184, 1
   br label %bb.bo
 
 bb.aj:                                            ; preds = %bb.ah
-  br i1 %i.ep, label %bb.az, label %bb.ak
+  %25 = extractelement <2 x i1> %i.eo, i64 0
+  br i1 %25, label %bb.az, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #24
@@ -341,7 +343,7 @@ bb.ay:                                            ; preds = %bb.ax, %bb.aw
   br label %bb.dp
 
 bb.az:                                            ; preds = %bb.aj
-  br i1 %24, label %bb.bo, label %bb.ba
+  br i1 %i.ep, label %bb.bo, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #24

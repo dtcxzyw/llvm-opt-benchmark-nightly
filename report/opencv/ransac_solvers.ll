@@ -205,18 +205,20 @@ bb.bm:                                            ; preds = %bb.bl
   %i.tw = insertelement <2 x double> poison, double %i.tr, i64 0
   %i.tx = shufflevector <2 x double> %i.tw, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ty = fdiv <2 x double> %i.tv, %i.tx
-  %22 = fcmp olt <2 x double> %i.ty, splat (double 6.000000e-01) ; 2 uses
-  %23 = extractelement <2 x i1> %22, i64 0        ; 2 uses
-  %24 = extractelement <2 x i1> %22, i64 1        ; 2 uses
-  %or.cond = select i1 %23, i1 %24, i1 false
+  %.fr = freeze <2 x double> %i.ty
+  %22 = fcmp olt <2 x double> %.fr, splat (double 6.000000e-01) ; 3 uses
+  %23 = bitcast <2 x i1> %22 to i2
+  %or.cond = icmp eq i2 %23, -1
   br i1 %or.cond, label %.loopexit243, label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm
+  %24 = extractelement <2 x i1> %22, i64 1
+  %25 = extractelement <2 x i1> %22, i64 0
   %i.tz = sub nsw i32 %i.tq, %.0119
   store i32 %i.tz, ptr %i.z, align 4, !tbaa !62
   store i32 0, ptr %i.c, align 4, !tbaa !62
   store i32 0, ptr %i.d, align 4, !tbaa !62
-  call fastcc void @"_ZZN2cv4usac15UniversalRANSAC21getIndependentInliersERKNS_3MatERKSt6vectorIiSaIiEERS7_iENK3$_0clEbb"(ptr noundef nonnull align 8 dereferenceable(216) %21, i1 noundef zeroext %24, i1 noundef zeroext %23)
+  call fastcc void @"_ZZN2cv4usac15UniversalRANSAC21getIndependentInliersERKNS_3MatERKSt6vectorIiSaIiEERS7_iENK3$_0clEbb"(ptr noundef nonnull align 8 dereferenceable(216) %21, i1 noundef zeroext %24, i1 noundef zeroext %25)
   br label %.loopexit243
 
 bb.bo:                                            ; preds = %bb.bg
