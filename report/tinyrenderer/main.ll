@@ -204,7 +204,7 @@ bb.a:
   br label %.preheader
 
 .preheader:                                       ; preds = %bb.a, %.preheader
-  %indvars.iv = phi i64 [ 3, %bb.a ], [ %indvars.iv.next, %.preheader ] ; 7 uses
+  %indvars.iv = phi i64 [ 3, %bb.a ], [ %indvars.iv.next, %.preheader ] ; 8 uses
   %.0612 = phi i32 [ 4, %bb.a ], [ %i.by, %.preheader ] ; 3 uses
   %i.a = icmp samesign ult i32 %.0612, 4
   %i.b = select i1 %i.a, i64 3, i64 2
@@ -251,10 +251,9 @@ bb.a:
   %i.am = extractelement <2 x double> %i.al, i64 0
   %i.an = extractelement <2 x double> %i.al, i64 1 ; 2 uses
   %i.ao = tail call noundef double @llvm.fmuladd.f64(double %i.o, double %i.an, double %i.am) ; 2 uses
-  %3 = and i64 %indvars.iv, 1
-  %.not13.i.not = icmp eq i64 %3, 0
+  %3 = trunc i64 %indvars.iv to i1
   %i.ap = fneg double %i.ao
-  %i.aq = select i1 %.not13.i.not, double %i.ap, double %i.ao
+  %i.aq = select i1 %3, double %i.ao, double %i.ap
   %i.ar = getelementptr inbounds nuw i8, ptr %i.j, i64 24
   store double %i.aq, ptr %i.ar, align 8, !tbaa !14
   %spec.select.i.i8.1 = getelementptr inbounds nuw i8, ptr %i.c, i64 24
@@ -276,10 +275,9 @@ bb.a:
   %i.bf = extractelement <2 x double> %i.be, i64 0
   %i.bg = extractelement <2 x double> %i.be, i64 1 ; 2 uses
   %i.bh = tail call noundef double @llvm.fmuladd.f64(double %i.o, double %i.bg, double %i.bf) ; 2 uses
-  %4 = and i64 %indvars.iv, 1
-  %.not13.i.1 = icmp eq i64 %4, 0
+  %4 = trunc i64 %indvars.iv to i1
   %i.bi = fneg double %i.bh
-  %i.bj = select i1 %.not13.i.1, double %i.bh, double %i.bi
+  %i.bj = select i1 %4, double %i.bi, double %i.bh
   %i.bk = getelementptr inbounds nuw i8, ptr %i.j, i64 16
   store double %i.bj, ptr %i.bk, align 16, !tbaa !14
   %i.bl = tail call double @llvm.fmuladd.f64(double %i.au, double %i.y, double 0.000000e+00)
@@ -288,23 +286,20 @@ bb.a:
   %i.bo = tail call double @llvm.fmuladd.f64(double %i.at, double %i.bn, double 0.000000e+00)
   %i.bp = tail call noundef double @llvm.fmuladd.f64(double %i.ab, double %i.as, double %i.bo) ; 2 uses
   %i.bq = tail call noundef double @llvm.fmuladd.f64(double %i.o, double %i.bp, double %i.bm) ; 2 uses
-  %5 = and i64 %indvars.iv, 1
-  %.not13.i.2.not = icmp eq i64 %5, 0
+  %5 = trunc i64 %indvars.iv to i1
   %i.br = fneg double %i.bq
-  %i.bs = select i1 %.not13.i.2.not, double %i.br, double %i.bq
+  %i.bs = select i1 %5, double %i.bq, double %i.br
   %i.bt = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   store double %i.bs, ptr %i.bt, align 8, !tbaa !14
   %i.bu = fneg double %i.bg
   %i.bv = tail call double @llvm.fmuladd.f64(double %i.au, double %i.an, double 0.000000e+00)
   %i.bw = tail call double @llvm.fmuladd.f64(double %i.m, double %i.bu, double %i.bv)
-  %i.bx = tail call noundef double @llvm.fmuladd.f64(double %i.n, double %i.bp, double %i.bw)
-  %i.by = trunc nuw nsw i64 %indvars.iv to i32    ; 2 uses
-  %6 = and i32 %i.by, 1
-  %.not13.i.3 = icmp eq i32 %6, 0
-  %7 = select i1 %.not13.i.3, i32 1, i32 -1
-  %8 = sitofp i32 %7 to double
-  %9 = fmul double %i.bx, %8
-  store double %9, ptr %i.j, align 16, !tbaa !14
+  %i.bx = tail call noundef double @llvm.fmuladd.f64(double %i.n, double %i.bp, double %i.bw) ; 2 uses
+  %i.by = trunc nuw nsw i64 %indvars.iv to i32
+  %.not13.i.3 = trunc i64 %indvars.iv to i1
+  %6 = fneg double %i.bx
+  %7 = select i1 %.not13.i.3, double %6, double %i.bx
+  store double %7, ptr %i.j, align 16, !tbaa !14
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
   %.not = icmp eq i64 %indvars.iv, 0
   br i1 %.not, label %bb.b, label %.preheader, !llvm.loop !131

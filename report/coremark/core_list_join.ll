@@ -201,12 +201,10 @@ bb.d:                                             ; preds = %core_list_reverse.e
   %i.aa = add i16 %.052143, 1                     ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.0.i, i64 8
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !36
-  %i.ad = load i16, ptr %i.ac, align 2, !tbaa !32 ; 2 uses
-  %i.ae = and i16 %i.ad, 1
-  %.not63 = icmp eq i16 %i.ae, 0
-  %2 = lshr i16 %i.ad, 9
-  %3 = and i16 %2, 1
-  %4 = select i1 %.not63, i16 0, i16 %3           ; 2 uses
+  %i.ad = load i16, ptr %i.ac, align 2, !tbaa !32
+  %i.ae = and i16 %i.ad, 513
+  %.not63 = icmp eq i16 %i.ae, 513
+  %2 = zext i1 %.not63 to i16                     ; 2 uses
   %i.af = load ptr, ptr %.0.i, align 8, !tbaa !37 ; 4 uses
   %.not64 = icmp eq ptr %i.af, null
   br i1 %.not64, label %bb.f, label %bb.e
@@ -220,7 +218,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.d, %bb.e, %core_list_reverse.exit.thread
-  %.pn = phi i16 [ %i.z, %core_list_reverse.exit.thread ], [ %4, %bb.e ], [ %4, %bb.d ]
+  %.pn = phi i16 [ %i.z, %core_list_reverse.exit.thread ], [ %2, %bb.e ], [ %2, %bb.d ]
   %.153 = phi i16 [ %.052143, %core_list_reverse.exit.thread ], [ %i.aa, %bb.e ], [ %i.aa, %bb.d ] ; 2 uses
   %.151 = phi i16 [ %i.t, %core_list_reverse.exit.thread ], [ %.050144, %bb.e ], [ %.050144, %bb.d ] ; 2 uses
   %.256 = add i16 %.pn, %.054142                  ; 2 uses
