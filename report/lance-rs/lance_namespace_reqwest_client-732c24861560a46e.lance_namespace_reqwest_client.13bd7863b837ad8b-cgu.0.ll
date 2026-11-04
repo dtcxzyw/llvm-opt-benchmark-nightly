@@ -205,7 +205,7 @@ bb.a:
   store i64 %2, ptr %i.u, align 8
   %i.v = load i8, ptr %3, align 8, !range !718, !noundef !3
   %i.w = icmp eq i8 %i.v, 5
-  br i1 %i.w, label %.preheader, label %5, !prof !13
+  br i1 %i.w, label %.preheader, label %8, !prof !13
 
 .preheader:                                       ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s)
@@ -216,21 +216,14 @@ bb.a:
   store i64 0, ptr %i.y, align 8
   %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = load ptr, ptr %i.z, align 8, !noundef !3 ; 2 uses
-  %.not = icmp ne ptr %i.aa, null
+  %.not.not = icmp eq ptr %i.aa, null
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.ac = load i64, ptr %i.ab, align 8            ; 2 uses
-  %4 = icmp ne i64 %i.ac, 0
-  %.not234 = select i1 %.not, i1 %4, i1 false
-  br i1 %.not234, label %.lr.ph232, label %._crit_edge
-
-5:                                                ; preds = %bb.a
-  tail call void @_RNvNtCscI6d9CVNmLh_4core9panicking9panic_fmt(ptr noundef nonnull @7, ptr noundef nonnull inttoptr (i64 131 to ptr), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @9) #29
-  unreachable
+  %4 = icmp eq i64 %i.ac, 0
+  %.not234 = select i1 %.not.not, i1 true, i1 %4
+  br i1 %.not234, label %._crit_edge, label %.lr.ph232
 
 .lr.ph232:                                        ; preds = %.preheader
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 16
-  %7 = load i64, ptr %6, align 8
-  %8 = ptrtoint ptr %i.aa to i64
   %.sroa.450.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.ad = getelementptr inbounds nuw i8, ptr %i.o, i64 16
   %.sroa.454.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.o, i64 24
@@ -269,15 +262,22 @@ bb.a:
   %.sroa.5170.0..sroa_idx171 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %.sroa.6173.0..sroa_idx174 = getelementptr inbounds nuw i8, ptr %i.f, i64 16
   %i.ap = getelementptr inbounds nuw i8, ptr %i.f, i64 24
+  %5 = ptrtoint ptr %i.aa to i64
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 16
+  %7 = load i64, ptr %6, align 8
   br label %bb.b
 
-bb.b:                                             ; preds = %.loopexit, %.lr.ph232
-  %i.aq = phi ptr [ inttoptr (i64 8 to ptr), %.lr.ph232 ], [ %i.dg, %.loopexit ] ; 4 uses
-  %i.ar = phi i64 [ 0, %.lr.ph232 ], [ %i.dh, %.loopexit ] ; 13 uses
-  %.sroa.5.0178230 = phi ptr [ null, %.lr.ph232 ], [ %.sroa.07.0.i.i.i, %.loopexit ] ; 2 uses
-  %.sroa.14.0229 = phi i64 [ %7, %.lr.ph232 ], [ %.sroa.78.0.i.i.i, %.loopexit ] ; 6 uses
-  %.sroa.22.0228 = phi i64 [ %i.ac, %.lr.ph232 ], [ %i.as, %.loopexit ]
-  %.sroa.9.0227 = phi i64 [ %8, %.lr.ph232 ], [ 0, %.loopexit ] ; 2 uses
+8:                                                ; preds = %bb.a
+  tail call void @_RNvNtCscI6d9CVNmLh_4core9panicking9panic_fmt(ptr noundef nonnull @7, ptr noundef nonnull inttoptr (i64 131 to ptr), ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @9) #29
+  unreachable
+
+bb.b:                                             ; preds = %.lr.ph232, %.loopexit
+  %i.aq = phi ptr [ %i.dg, %.loopexit ], [ inttoptr (i64 8 to ptr), %.lr.ph232 ] ; 4 uses
+  %i.ar = phi i64 [ %i.dh, %.loopexit ], [ 0, %.lr.ph232 ] ; 13 uses
+  %.sroa.5.0178230 = phi ptr [ %.sroa.07.0.i.i.i, %.loopexit ], [ null, %.lr.ph232 ] ; 2 uses
+  %.sroa.14.0229 = phi i64 [ %.sroa.78.0.i.i.i, %.loopexit ], [ %7, %.lr.ph232 ] ; 6 uses
+  %.sroa.22.0228 = phi i64 [ %i.as, %.loopexit ], [ %i.ac, %.lr.ph232 ]
+  %.sroa.9.0227 = phi i64 [ 0, %.loopexit ], [ %5, %.lr.ph232 ] ; 2 uses
   %i.as = add i64 %.sroa.22.0228, -1              ; 2 uses
   %.not.i.i = icmp eq ptr %.sroa.5.0178230, null
   br i1 %.not.i.i, label %bb.c, label %_RNvMsc_NtNtNtCs40k4W9msRzi_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5ImmutNtNtBb_6string6StringNtNtCs5QD3CVEMyfH_10serde_json5value5ValueE10init_frontCs1H4IRjoHvx7_30lance_namespace_reqwest_client.exit.i

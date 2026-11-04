@@ -203,8 +203,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ad = sub nsw i64 %.val26, %.val24
   %i.ae = sitofp i64 %i.ad to double
   %i.af = fdiv nnan double %i.ae, 1.000000e+03
-  %i.ag = call nnan double @llvm.fmuladd.f64(double %i.ac, double 1.000000e+06, double %i.af)
-  %i.ah = fmul nnan double %i.ag, 5.000000e-01
+  %i.ag = call double @llvm.fmuladd.f64(double %i.ac, double 1.000000e+06, double %i.af)
+  %i.ah = fmul double %i.ag, 5.000000e-01
   store double %i.ah, ptr %0, align 8, !tbaa !14
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #13

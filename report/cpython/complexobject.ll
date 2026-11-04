@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.g
   %i.be = shufflevector <2 x double> %i.bd, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.bf = insertelement <2 x double> poison, double %2, i64 0
   %i.bg = shufflevector <2 x double> %i.bf, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.bh = tail call nnan <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ba, <2 x double> %i.bg, <2 x double> %i.be)
+  %i.bh = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ba, <2 x double> %i.bg, <2 x double> %i.be)
   %i.bi = fmul <2 x double> %i.bh, splat (double +inf)
   br label %bb.k
 
@@ -230,7 +230,7 @@ bb.j:                                             ; preds = %bb.i
   %i.bx = shufflevector <2 x double> %i.bw, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   %i.by = insertelement <2 x double> poison, double %i.bq, i64 0
   %i.bz = shufflevector <2 x double> %i.by, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.ca = tail call nnan <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.aq, <2 x double> %i.bz, <2 x double> %i.bx)
+  %i.ca = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.aq, <2 x double> %i.bz, <2 x double> %i.bx)
   %i.cb = fmul <2 x double> %i.ca, zeroinitializer
   br label %bb.k
 
