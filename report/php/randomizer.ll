@@ -202,7 +202,7 @@ bb.g:                                             ; preds = %bb.e
 bb.h:                                             ; preds = %bb.g
   %i.ac = getelementptr inbounds nuw i8, ptr %i.v, i64 %.064105
   store i64 %i.z, ptr %i.ac, align 1
-  %i.ad = add i64 %i.w, 8                         ; 2 uses
+  %i.ad = add nuw i64 %i.w, 8                     ; 2 uses
   %.not77 = icmp ugt i64 %i.ad, %i.m
   br i1 %.not77, label %.loopexit, label %bb.e, !llvm.loop !97
 

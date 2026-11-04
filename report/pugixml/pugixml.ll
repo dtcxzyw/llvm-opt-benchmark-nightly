@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.d, %bb.c
-  %.029 = phi i64 [ 1, %bb.c ], [ %i.p, %bb.d ]   ; 4 uses
+  %.029 = phi i64 [ 1, %bb.c ], [ %i.p, %bb.d ]   ; 5 uses
   %i.o = icmp ult i64 %.029, %i.n
   %i.p = shl i64 %.029, 1
   br i1 %i.o, label %bb.d, label %bb.e, !llvm.loop !744
@@ -268,7 +268,7 @@ _ZN4pugi4impl12_GLOBAL__N_115xpath_allocator8allocateEm.exit: ; preds = %bb.f, %
   br i1 %.not3246, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN4pugi4impl12_GLOBAL__N_115xpath_allocator8allocateEm.exit
-  %i.al = add i64 %.029, -1                       ; 3 uses
+  %i.al = add i64 %.029, -1                       ; 2 uses
   br label %bb.k
 
 ._crit_edge:                                      ; preds = %_ZN4pugi4impl12_GLOBAL__N_111hash_insertEPPKvmS3_.exit.thread, %_ZN4pugi4impl12_GLOBAL__N_115xpath_allocator8allocateEm.exit
@@ -329,11 +329,11 @@ bb.o:                                             ; preds = %bb.n
   br i1 %i.bf, label %_ZN4pugi4impl12_GLOBAL__N_111hash_insertEPPKvmS3_.exit.thread, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
-  %i.bg = add i64 %.02733.i, 1                    ; 3 uses
+  %i.bg = add nuw i64 %.02733.i, 1                ; 3 uses
   %i.bh = add i64 %i.bg, %.02832.i
   %i.bi = and i64 %i.bh, %i.al
-  %.not.not.i = icmp ugt i64 %i.bg, %i.al
-  br i1 %.not.not.i, label %_ZN4pugi4impl12_GLOBAL__N_111hash_insertEPPKvmS3_.exit.thread, label %bb.n, !llvm.loop !745
+  %exitcond = icmp eq i64 %i.bg, %.029
+  br i1 %exitcond, label %_ZN4pugi4impl12_GLOBAL__N_111hash_insertEPPKvmS3_.exit.thread, label %bb.n, !llvm.loop !745
 
 bb.q:                                             ; preds = %bb.n
   %i.bj = getelementptr inbounds nuw [8 x i8], ptr %.1.i, i64 %.02832.i

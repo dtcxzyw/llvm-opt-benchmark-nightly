@@ -150,7 +150,7 @@ bb.l:                                             ; preds = %bb.j
   br i1 %i.bf, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.bg = trunc nuw i64 %i.ba to i32
+  %i.bg = trunc nuw nsw i64 %i.ba to i32
   store i32 %i.bg, ptr %3, align 4, !tbaa !9
   br label %bb.r
 
@@ -169,7 +169,7 @@ bb.n:                                             ; preds = %bb.l
   br i1 %i.bp, label %bb.p, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  %i.bq = trunc nuw i64 %i.bk to i32
+  %i.bq = trunc nuw nsw i64 %i.bk to i32
   store i32 %i.bq, ptr %3, align 4, !tbaa !9
   br label %bb.r
 
