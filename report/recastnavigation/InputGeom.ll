@@ -204,9 +204,8 @@ bb.c:                                             ; preds = %bb.b
   %i.ca = load ptr, ptr %i.s, align 8, !tbaa !46
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 %indvars.iv
   %i.cc = load i8, ptr %i.cb, align 1, !tbaa !16
-  %3 = and i8 %i.cc, 1
-  %.not = icmp eq i8 %3, 0
-  %i.cd = select i1 %.not, float 0.000000e+00, float 6.000000e-01
+  %.not = trunc i8 %i.cc to i1
+  %i.cd = select i1 %.not, float 6.000000e-01, float 0.000000e+00
   tail call void @_Z11duAppendArcP11duDebugDrawfffffffffj(ptr noundef nonnull %1, float noundef %i.bu, float noundef %i.bv, float noundef %i.bw, float noundef %i.bx, float noundef %i.by, float noundef %i.bz, float noundef 2.500000e-01, float noundef %i.cd, float noundef 6.000000e-01, i32 noundef -1065353024) #14
   br label %bb.d
 

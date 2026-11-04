@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   store i32 %i.ai, ptr %i.aj, align 8
   %.val203 = load ptr, ptr %i.a, align 8
   %i.ak = call fastcc i32 @X11_GetXkbVirtualModifierMask(ptr %.val203, ptr noundef nonnull @.str.6)
-  %i.al = getelementptr inbounds nuw i8, ptr %i.b, i64 1804 ; 2 uses
+  %i.al = getelementptr inbounds nuw i8, ptr %i.b, i64 1804 ; 3 uses
   store i32 %i.ak, ptr %i.al, align 4
   %.val202 = load ptr, ptr %i.a, align 8
   %i.am = call fastcc i32 @X11_GetXkbVirtualModifierMask(ptr %.val202, ptr noundef nonnull @.str.7)
@@ -462,27 +462,33 @@ bb.w:                                             ; preds = %bb.v
 
 bb.x:                                             ; preds = %bb.w
   %i.em = getelementptr inbounds nuw i8, ptr %i.eg, i64 6
-  %i.en = load i8, ptr %i.em, align 2
-  %i.eo = zext i8 %i.en to i32                    ; 3 uses
+  %i.en = load i8, ptr %i.em, align 2             ; 2 uses
+  %i.eo = zext i8 %i.en to i32                    ; 5 uses
   %i.ep = or i32 %i.bc, %i.eo
   %i.eq = icmp eq i32 %i.ep, %i.bc
   br i1 %i.eq, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
+  %.not190 = trunc i8 %i.en to i1
+  %3 = select i1 %.not190, i32 3, i32 0
   %i.er = shl nuw nsw i32 %i.eo, 12
   %i.es = and i32 %i.er, 8192
+  %4 = or disjoint i32 %i.es, %3
   %i.et = load i32, ptr %i.ae, align 8
-  %3 = load <2 x i32>, ptr %i.aj, align 8
-  %4 = insertelement <4 x i32> <i32 1, i32 poison, i32 poison, i32 poison>, i32 %i.et, i64 1
-  %5 = shufflevector <2 x i32> %3, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 poison, i32 poison>
-  %6 = shufflevector <4 x i32> %4, <4 x i32> %5, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
-  %7 = insertelement <4 x i32> poison, i32 %i.eo, i64 0
-  %8 = shufflevector <4 x i32> %7, <4 x i32> poison, <4 x i32> zeroinitializer
-  %9 = and <4 x i32> %6, %8
-  %10 = icmp eq <4 x i32> %9, zeroinitializer
-  %11 = select <4 x i1> %10, <4 x i32> zeroinitializer, <4 x i32> <i32 3, i32 768, i32 16384, i32 4>
-  %12 = call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %11)
-  %op.rdx = or disjoint i32 %12, %i.es
+  %5 = and i32 %i.et, %i.eo
+  %.not192 = icmp eq i32 %5, 0
+  %6 = select i1 %.not192, i32 0, i32 768
+  %7 = or disjoint i32 %4, %6
+  %8 = load i32, ptr %i.aj, align 8
+  %9 = and i32 %8, %i.eo
+  %.not193 = icmp eq i32 %9, 0
+  %10 = select i1 %.not193, i32 0, i32 16384
+  %11 = or disjoint i32 %7, %10
+  %12 = load i32, ptr %i.al, align 4
+  %13 = and i32 %12, %i.eo
+  %.not194 = icmp eq i32 %13, 0
+  %14 = select i1 %.not194, i32 0, i32 4
+  %op.rdx = or disjoint i32 %11, %14
   %i.eu = trunc nuw nsw i32 %op.rdx to i16        ; 2 uses
   %i.ev = call i32 @SDL_GetKeyCodeFromKeySym(i32 noundef %i.ec, i32 noundef %i.bu, i16 noundef zeroext range(i16 0, -32768) %i.eu) #9 ; 2 uses
   %.not.i210 = icmp eq i32 %i.ev, 0
@@ -884,9 +890,6 @@ declare i32 @llvm.smin.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #8
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #7
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -202,9 +202,8 @@ bb.w:                                             ; preds = %.thread220, %bb.u
   %.2156228 = phi ptr [ %i.ay, %.thread220 ], [ %.2156, %bb.u ] ; 10 uses
   %.1161227 = phi i64 [ %.0160773, %.thread220 ], [ %.1161, %bb.u ]
   %.2165226 = phi i64 [ %i.at, %.thread220 ], [ %.2165, %bb.u ] ; 5 uses
-  %2 = and i64 %.2165226, 1
-  %.not205 = icmp eq i64 %2, 0
-  br i1 %.not205, label %select.unfold, label %bb.x
+  %.not205 = trunc i64 %.2165226 to i1
+  br i1 %.not205, label %bb.x, label %select.unfold
 
 bb.x:                                             ; preds = %bb.w
   %i.bd = getelementptr i8, ptr %.2156228, i64 %.2165226
@@ -223,7 +222,7 @@ bb.y:                                             ; preds = %select.unfold
   store i32 3, ptr %i.a, align 4, !tbaa !68
   br label %.thread250
 
-.lr.ph415.preheader:                              ; preds = %select.unfold, %bb.x
+.lr.ph415.preheader:                              ; preds = %bb.x, %select.unfold
   %.3166233 = phi i64 [ %.3166, %select.unfold ], [ %.2165226, %bb.x ] ; 2 uses
   %i.bi = load ptr, ptr %1, align 8, !tbaa !69
   %i.bj = ptrtoint ptr %i.bi to i64

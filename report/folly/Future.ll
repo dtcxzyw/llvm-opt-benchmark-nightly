@@ -205,7 +205,6 @@ _ZN5folly19shared_mutex_detail21getMaxDeferredReadersEv.exit: ; preds = %bb.a, %
   %i.i = sub i32 %i.c, %i.h                       ; 3 uses
   %i.j = xor i32 %3, -1
   %i.k = add i32 %i.c, %i.j
-  %xtraiter = and i32 %i.i, 1
   %i.l = icmp eq i32 %i.k, %indvar
   br i1 %i.l, label %.epil.preheader, label %.lr.ph.new
 
@@ -275,8 +274,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %bb.e, !llvm.loop !3413
 
 ._crit_edge.unr-lcssa:                            ; preds = %bb.i
-  %lcmp.mod.not = icmp eq i32 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.i to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge
 
 .epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.lr.ph
   %indvars.iv.epil.init = phi i64 [ %i.g, %.lr.ph ], [ %indvars.iv.next.1, %._crit_edge.unr-lcssa ]
@@ -652,7 +651,6 @@ bb.l:                                             ; preds = %bb.j
   %i.ag = zext i32 %.235.2 to i64                 ; 4 uses
   %wide.trip.count = zext i32 %i.c to i64         ; 2 uses
   %i.ah = sub nsw i64 %wide.trip.count, %i.ag     ; 3 uses
-  %xtraiter = and i64 %i.ah, 1
   %i.ai = add nsw i64 %wide.trip.count, -1
   %i.aj = icmp eq i64 %i.ai, %i.ag
   br i1 %i.aj, label %.epil.preheader, label %.lr.ph.new
@@ -706,8 +704,8 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %bb.m, !llvm.loop !3418
 
 ._crit_edge.unr-lcssa:                            ; preds = %bb.q
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.ah to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge
 
 .epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.lr.ph
   %indvars.iv.epil.init = phi i64 [ %i.ag, %.lr.ph ], [ %indvars.iv.next.1, %._crit_edge.unr-lcssa ]
@@ -892,7 +890,7 @@ bb.e:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: mustprogress uwtable
-define linkonce_odr void @_ZN5folly17atomic_grow_arrayINS_12SynchronizedINS_18threadlocal_detail14ThreadEntrySetENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEEENS_32atomic_grow_array_policy_defaultIS8_S5_EEE9del_arrayEPNSB_5arrayE(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %1) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
+define linkonce_odr void @_ZN5folly17atomic_grow_arrayINS_12SynchronizedINS_18threadlocal_detail14ThreadEntrySetENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEEENS_32atomic_grow_array_policy_defaultIS8_S5_EEE9del_arrayEPNSB_5arrayE(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef %1) #1 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
@@ -1136,9 +1134,8 @@ bb.g:                                             ; preds = %_ZN5folly14ThreadLo
 
 bb.h:                                             ; preds = %bb.g
   %i.ad = call noundef i64 @_ZN5folly18threadlocal_detail14ElementWrapper15castForgetAlignEPFvPvNS_18TLPDestructionModeEE(ptr noundef nonnull @_ZZN5folly18threadlocal_detail14ElementWrapper3setIPNS_10TLRefCount13LocalRefCountEEEvT_ENUlPvNS_18TLPDestructionModeEE_8__invokeES7_S8_) #23 ; 2 uses
-  %8 = and i64 %i.ad, 1
-  %.not5.i.i = icmp eq i64 %8, 0
-  br i1 %.not5.i.i, label %bb.k, label %bb.i
+  %.not5.i.i = trunc i64 %i.ad to i1
+  br i1 %.not5.i.i, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #23
@@ -1541,7 +1538,7 @@ bb.d:                                             ; preds = %.lr.ph64, %.critedg
   %i.ap = load atomic ptr, ptr %i.ao acquire, align 8 ; 2 uses
   %i.aq = load ptr, ptr %2, align 8, !tbaa !1736
   %.not44 = icmp eq ptr %i.ap, %i.aq
-  br i1 %.not44, label %.critedge, label %_ZNSt5_BindIFMN5folly17atomic_grow_arrayINS0_12SynchronizedINS0_18threadlocal_detail14ThreadEntrySetENS0_15SharedMutexImplILb0EvSt6atomicNS0_24SharedMutexPolicyDefaultEEEEENS0_32atomic_grow_array_policy_defaultIS9_S6_EEEEFvPNSC_5arrayEEPSC_SE_EE6__callIvJEJLm0ELm1EEEET_OSt5tupleIJDpT0_EESt12_Index_tupleIJXspT1_EEE.exit.i.i.i
+  br i1 %.not44, label %.critedge, label %3
 
 .critedge:                                        ; preds = %bb.d
   %i.ar = sub nuw i64 %.03563, %i.d
@@ -1557,9 +1554,19 @@ bb.d:                                             ; preds = %.lr.ph64, %.critedg
   %exitcond67.not = icmp eq i64 %i.aw, %1
   br i1 %exitcond67.not, label %_ZN5folly6detail14ScopeGuardImplISt5_BindIFMNS_17atomic_grow_arrayINS_12SynchronizedINS_18threadlocal_detail14ThreadEntrySetENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEEENS_32atomic_grow_array_policy_defaultISB_S8_EEEEFvPNSE_5arrayEEPSE_SG_EELb1EED2Ev.exit, label %bb.d, !llvm.loop !3494
 
-_ZNSt5_BindIFMN5folly17atomic_grow_arrayINS0_12SynchronizedINS0_18threadlocal_detail14ThreadEntrySetENS0_15SharedMutexImplILb0EvSt6atomicNS0_24SharedMutexPolicyDefaultEEEEENS0_32atomic_grow_array_policy_defaultIS9_S6_EEEEFvPNSC_5arrayEEPSC_SE_EE6__callIvJEJLm0ELm1EEEET_OSt5tupleIJDpT0_EESt12_Index_tupleIJXspT1_EEE.exit.i.i.i: ; preds = %bb.d
+3:                                                ; preds = %bb.d
   store ptr %i.ap, ptr %2, align 8, !tbaa !1736
-  invoke void @_ZN5folly17atomic_grow_arrayINS_12SynchronizedINS_18threadlocal_detail14ThreadEntrySetENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEEENS_32atomic_grow_array_policy_defaultIS8_S5_EEE9del_arrayEPNSB_5arrayE(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.r)
+  br i1 ptrtoint (ptr @_ZN5folly17atomic_grow_arrayINS_12SynchronizedINS_18threadlocal_detail14ThreadEntrySetENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEEENS_32atomic_grow_array_policy_defaultIS8_S5_EEE9del_arrayEPNSB_5arrayE to i1), label %4, label %_ZNSt5_BindIFMN5folly17atomic_grow_arrayINS0_12SynchronizedINS0_18threadlocal_detail14ThreadEntrySetENS0_15SharedMutexImplILb0EvSt6atomicNS0_24SharedMutexPolicyDefaultEEEEENS0_32atomic_grow_array_policy_defaultIS9_S6_EEEEFvPNSC_5arrayEEPSC_SE_EE6__callIvJEJLm0ELm1EEEET_OSt5tupleIJDpT0_EESt12_Index_tupleIJXspT1_EEE.exit.i.i.i
+
+4:                                                ; preds = %3
+  %5 = load ptr, ptr %0, align 8, !tbaa !127
+  %6 = getelementptr i8, ptr %5, i64 add (i64 ptrtoint (ptr @_ZN5folly17atomic_grow_arrayINS_12SynchronizedINS_18threadlocal_detail14ThreadEntrySetENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEEENS_32atomic_grow_array_policy_defaultIS8_S5_EEE9del_arrayEPNSB_5arrayE to i64), i64 -1)
+  %7 = load ptr, ptr %6, align 8, !nosanitize !181
+  br label %_ZNSt5_BindIFMN5folly17atomic_grow_arrayINS0_12SynchronizedINS0_18threadlocal_detail14ThreadEntrySetENS0_15SharedMutexImplILb0EvSt6atomicNS0_24SharedMutexPolicyDefaultEEEEENS0_32atomic_grow_array_policy_defaultIS9_S6_EEEEFvPNSC_5arrayEEPSC_SE_EE6__callIvJEJLm0ELm1EEEET_OSt5tupleIJDpT0_EESt12_Index_tupleIJXspT1_EEE.exit.i.i.i
+
+_ZNSt5_BindIFMN5folly17atomic_grow_arrayINS0_12SynchronizedINS0_18threadlocal_detail14ThreadEntrySetENS0_15SharedMutexImplILb0EvSt6atomicNS0_24SharedMutexPolicyDefaultEEEEENS0_32atomic_grow_array_policy_defaultIS9_S6_EEEEFvPNSC_5arrayEEPSC_SE_EE6__callIvJEJLm0ELm1EEEET_OSt5tupleIJDpT0_EESt12_Index_tupleIJXspT1_EEE.exit.i.i.i: ; preds = %3, %4
+  %8 = phi ptr [ %7, %4 ], [ @_ZN5folly17atomic_grow_arrayINS_12SynchronizedINS_18threadlocal_detail14ThreadEntrySetENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEEENS_32atomic_grow_array_policy_defaultIS8_S5_EEE9del_arrayEPNSB_5arrayE, %3 ]
+  invoke void %8(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %i.r)
           to label %_ZN5folly6detail14ScopeGuardImplISt5_BindIFMNS_17atomic_grow_arrayINS_12SynchronizedINS_18threadlocal_detail14ThreadEntrySetENS_15SharedMutexImplILb0EvSt6atomicNS_24SharedMutexPolicyDefaultEEEEENS_32atomic_grow_array_policy_defaultISB_S8_EEEEFvPNSE_5arrayEEPSE_SG_EELb1EED2Ev.exit unwind label %bb.e, !inline_history !3495
 
 bb.e:                                             ; preds = %_ZNSt5_BindIFMN5folly17atomic_grow_arrayINS0_12SynchronizedINS0_18threadlocal_detail14ThreadEntrySetENS0_15SharedMutexImplILb0EvSt6atomicNS0_24SharedMutexPolicyDefaultEEEEENS0_32atomic_grow_array_policy_defaultIS9_S6_EEEEFvPNSC_5arrayEEPSC_SE_EE6__callIvJEJLm0ELm1EEEET_OSt5tupleIJDpT0_EESt12_Index_tupleIJXspT1_EEE.exit.i.i.i
@@ -1962,7 +1969,6 @@ bb.l:                                             ; preds = %bb.j
   %i.ag = zext i32 %.235.2 to i64                 ; 4 uses
   %wide.trip.count = zext i32 %i.c to i64         ; 2 uses
   %i.ah = sub nsw i64 %wide.trip.count, %i.ag     ; 3 uses
-  %xtraiter = and i64 %i.ah, 1
   %i.ai = add nsw i64 %wide.trip.count, -1
   %i.aj = icmp eq i64 %i.ai, %i.ag
   br i1 %i.aj, label %.epil.preheader, label %.lr.ph.new
@@ -2016,8 +2022,8 @@ bb.q:                                             ; preds = %bb.p, %bb.o
   br i1 %niter.ncmp.1, label %._crit_edge.unr-lcssa, label %bb.m, !llvm.loop !3536
 
 ._crit_edge.unr-lcssa:                            ; preds = %bb.q
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.ah to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge
 
 .epil.preheader:                                  ; preds = %._crit_edge.unr-lcssa, %.lr.ph
   %indvars.iv.epil.init = phi i64 [ %i.ag, %.lr.ph ], [ %indvars.iv.next.1, %._crit_edge.unr-lcssa ]

@@ -65,6 +65,7 @@ bb.c:                                             ; preds = %bb.a
   %i.g = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ZS_experimentalDecoder, i64 32), align 8, !tbaa !22
   %i.h = tail call { i32, i64 } %i.g(ptr noundef nonnull %i.d, ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3) #9 ; 2 uses
   %i.i = extractvalue { i32, i64 } %i.h, 0
+  %5 = extractvalue { i32, i64 } %i.h, 1
   %i.j = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ZS_experimentalDecoder, i64 16), align 8, !tbaa !23
   tail call void %i.j(ptr noundef nonnull %i.d) #9
   %.not14 = icmp eq i32 %i.i, 0
@@ -80,14 +81,15 @@ bb.d:                                             ; preds = %bb.c
   %i.m = extractvalue { i32, ptr } %.sink, 1      ; 2 uses
   call void (i32, ptr, ptr, ...) @ZL_E_appendToMessage(i32 %i.l, ptr %i.m, ptr noundef nonnull @.str.5) #9
   %i.n = ptrtoint ptr %i.m to i64
-  %5 = insertvalue { i32, i64 } poison, i32 %i.l, 0
-  %6 = insertvalue { i32, i64 } %5, i64 %i.n, 1
   br label %bb.e
 
 bb.e:                                             ; preds = %.sink.split, %bb.c
-  %.fca.1.insert.merged = phi { i32, i64 } [ %i.h, %bb.c ], [ %6, %.sink.split ]
+  %.sroa.013.1 = phi i32 [ 0, %bb.c ], [ %i.l, %.sink.split ]
+  %.sroa.7.1 = phi i64 [ %5, %bb.c ], [ %i.n, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
-  ret { i32, i64 } %.fca.1.insert.merged
+  %.fca.0.insert = insertvalue { i32, i64 } poison, i32 %.sroa.013.1, 0
+  %.fca.1.insert = insertvalue { i32, i64 } %.fca.0.insert, i64 %.sroa.7.1, 1
+  ret { i32, i64 } %.fca.1.insert
 }
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
@@ -128,6 +130,7 @@ bb.c:                                             ; preds = %bb.a
   %i.g = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ZS_fastDecoder, i64 32), align 8, !tbaa !22
   %i.h = tail call { i32, i64 } %i.g(ptr noundef nonnull %i.d, ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3) #9 ; 2 uses
   %i.i = extractvalue { i32, i64 } %i.h, 0
+  %5 = extractvalue { i32, i64 } %i.h, 1
   %i.j = load ptr, ptr getelementptr inbounds nuw (i8, ptr @ZS_fastDecoder, i64 16), align 8, !tbaa !23
   tail call void %i.j(ptr noundef nonnull %i.d) #9
   %.not14 = icmp eq i32 %i.i, 0
@@ -143,14 +146,15 @@ bb.d:                                             ; preds = %bb.c
   %i.m = extractvalue { i32, ptr } %.sink, 1      ; 2 uses
   call void (i32, ptr, ptr, ...) @ZL_E_appendToMessage(i32 %i.l, ptr %i.m, ptr noundef nonnull @.str.5) #9
   %i.n = ptrtoint ptr %i.m to i64
-  %5 = insertvalue { i32, i64 } poison, i32 %i.l, 0
-  %6 = insertvalue { i32, i64 } %5, i64 %i.n, 1
   br label %bb.e
 
 bb.e:                                             ; preds = %.sink.split, %bb.c
-  %.fca.1.insert.merged = phi { i32, i64 } [ %i.h, %bb.c ], [ %6, %.sink.split ]
+  %.sroa.013.1 = phi i32 [ 0, %bb.c ], [ %i.l, %.sink.split ]
+  %.sroa.7.1 = phi i64 [ %5, %bb.c ], [ %i.n, %.sink.split ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #9
-  ret { i32, i64 } %.fca.1.insert.merged
+  %.fca.0.insert = insertvalue { i32, i64 } poison, i32 %.sroa.013.1, 0
+  %.fca.1.insert = insertvalue { i32, i64 } %.fca.0.insert, i64 %.sroa.7.1, 1
+  ret { i32, i64 } %.fca.1.insert
 }
 
 ; Function Attrs: nounwind uwtable

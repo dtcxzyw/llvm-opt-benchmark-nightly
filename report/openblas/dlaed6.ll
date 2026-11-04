@@ -204,24 +204,25 @@ bb.r:                                             ; preds = %bb.q
   %i.ei = icmp slt i32 %i.eh, 0
   %i.ej = fdiv double 1.000000e+00, %i.eb
   %.013.i = select i1 %i.ei, double %i.ej, double %i.eb ; 2 uses
-  %.012.i = tail call i32 @llvm.abs.i32(i32 %i.eh, i1 true)
-  %8 = zext nneg i32 %.012.i to i64               ; 2 uses
-  %9 = and i64 %8, 1
-  %.not1719.i = icmp eq i64 %9, 0
-  %spec.select20.i = select i1 %.not1719.i, double 1.000000e+00, double %.013.i ; 2 uses
-  %10 = lshr i64 %8, 1                            ; 2 uses
-  %.not1821.i = icmp eq i64 %10, 0
-  br i1 %.not1821.i, label %dpow_ui.exit, label %.lr.ph.i
+  %.012.i = tail call i32 @llvm.abs.i32(i32 %i.eh, i1 true) ; 2 uses
+  %.not1719.i = trunc i32 %.012.i to i1
+  %spec.select20.i = select i1 %.not1719.i, double %.013.i, double 1.000000e+00 ; 2 uses
+  %8 = lshr i32 %.012.i, 1                        ; 2 uses
+  %.not1821.i = icmp eq i32 %8, 0
+  br i1 %.not1821.i, label %dpow_ui.exit, label %.lr.ph.preheader.i
 
-.lr.ph.i:                                         ; preds = %bb.r, %.lr.ph.i
-  %i.ek = phi i64 [ %i.en, %.lr.ph.i ], [ %10, %bb.r ] ; 2 uses
-  %spec.select23.i = phi double [ %spec.select.i, %.lr.ph.i ], [ %spec.select20.i, %bb.r ] ; 2 uses
-  %.11422.i = phi double [ %i.el, %.lr.ph.i ], [ %.013.i, %bb.r ] ; 2 uses
+.lr.ph.preheader.i:                               ; preds = %bb.r
+  %9 = zext nneg i32 %8 to i64
+  br label %.lr.ph.i
+
+.lr.ph.i:                                         ; preds = %.lr.ph.i, %.lr.ph.preheader.i
+  %i.ek = phi i64 [ %i.en, %.lr.ph.i ], [ %9, %.lr.ph.preheader.i ] ; 2 uses
+  %spec.select23.i = phi double [ %spec.select.i, %.lr.ph.i ], [ %spec.select20.i, %.lr.ph.preheader.i ] ; 2 uses
+  %.11422.i = phi double [ %i.el, %.lr.ph.i ], [ %.013.i, %.lr.ph.preheader.i ] ; 2 uses
   %i.el = fmul double %.11422.i, %.11422.i        ; 2 uses
-  %11 = and i64 %i.ek, 1
-  %.not17.i = icmp eq i64 %11, 0
+  %.not17.i = trunc i64 %i.ek to i1
   %i.em = fmul double %spec.select23.i, %i.el
-  %spec.select.i = select i1 %.not17.i, double %spec.select23.i, double %i.em ; 2 uses
+  %spec.select.i = select i1 %.not17.i, double %i.em, double %spec.select23.i ; 2 uses
   %i.en = lshr i64 %i.ek, 1                       ; 2 uses
   %.not18.i = icmp eq i64 %i.en, 0
   br i1 %.not18.i, label %dpow_ui.exit, label %.lr.ph.i

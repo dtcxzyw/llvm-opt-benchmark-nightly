@@ -13,8 +13,8 @@ define dso_local noundef ptr @lxb_html_tokenizer_state_rcdata_before(ptr nofree 
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 236
   %i.b = load i8, ptr %i.a, align 4, !tbaa !20, !range !21, !noundef !22
-  %3 = icmp eq i8 %i.b, 0
-  br i1 %3, label %bb.b, label %bb.c
+  %3 = trunc nuw i8 %i.b to i1
+  br i1 %3, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 128
@@ -357,9 +357,8 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   %i.et = phi ptr [ %.pre, %bb.w ], [ %i.eh, %bb.v ] ; 2 uses
   %i.eu = getelementptr inbounds nuw i8, ptr %i.et, i64 88
   %i.ev = load i32, ptr %i.eu, align 8, !tbaa !40
-  %3 = and i32 %i.ev, 1
-  %.not89 = icmp eq i32 %3, 0
-  br i1 %.not89, label %bb.z, label %bb.y
+  %.not89 = trunc i32 %i.ev to i1
+  br i1 %.not89, label %bb.y, label %bb.z
 
 bb.y:                                             ; preds = %bb.x
   tail call void @lxb_html_tokenizer_validate_close_tag(ptr noundef nonnull %0) #6
@@ -762,9 +761,8 @@ bb.t:                                             ; preds = %bb.s, %bb.r
   %i.ey = phi ptr [ %.pre, %bb.s ], [ %i.em, %bb.r ] ; 2 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ey, i64 88
   %i.fa = load i32, ptr %i.ez, align 8, !tbaa !40
-  %3 = and i32 %i.fa, 1
-  %.not167 = icmp eq i32 %3, 0
-  br i1 %.not167, label %bb.v, label %bb.u
+  %.not167 = trunc i32 %i.fa to i1
+  br i1 %.not167, label %bb.u, label %bb.v
 
 bb.u:                                             ; preds = %bb.t
   tail call void @lxb_html_tokenizer_validate_close_tag(ptr noundef nonnull %0) #6
@@ -798,7 +796,7 @@ bb.y:                                             ; preds = %bb.v, %bb.q
   %i.fm = load ptr, ptr %i.dx, align 8, !tbaa !23
   store ptr %i.fm, ptr %i.cy, align 8, !tbaa !24
   %i.fn = load i64, ptr %i.eo, align 8, !tbaa !56
-  %i.fo = load ptr, ptr %i.el, align 8, !tbaa !25 ; 4 uses
+  %i.fo = load ptr, ptr %i.el, align 8, !tbaa !25 ; 5 uses
   %i.fp = getelementptr inbounds nuw i8, ptr %i.fo, i64 80
   store i64 %i.fn, ptr %i.fp, align 8, !tbaa !36
   %i.fq = getelementptr inbounds nuw i8, ptr %0, i64 112
@@ -808,30 +806,34 @@ bb.y:                                             ; preds = %bb.v, %bb.q
   store ptr %.0155217, ptr %i.fs, align 8, !tbaa !35
   %i.ft = getelementptr inbounds nuw i8, ptr %i.fo, i64 88 ; 2 uses
   %i.fu = load i32, ptr %i.ft, align 8, !tbaa !40
-  %i.fv = or i32 %i.fu, 1
+  %i.fv = or i32 %i.fu, 1                         ; 2 uses
   store i32 %i.fv, ptr %i.ft, align 8, !tbaa !40
   %i.fw = getelementptr inbounds nuw i8, ptr %0, i64 228
   %i.fx = load i32, ptr %i.fw, align 4, !tbaa !39
   %i.fy = and i32 %i.fx, 16
   %.not168 = icmp eq i32 %i.fy, 0
-  br i1 %.not168, label %bb.z, label %.thread
+  br i1 %.not168, label %bb.z, label %3
 
 bb.z:                                             ; preds = %bb.y
   tail call void @lxb_html_tokenizer_attr_last_duplicate(ptr noundef nonnull %0) #6
   %.pre225 = load ptr, ptr %i.el, align 8, !tbaa !25 ; 2 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre225, i64 88
   %.pre226 = load i32, ptr %.phi.trans.insert, align 8, !tbaa !40
-  %4 = and i32 %.pre226, 1
-  %5 = icmp eq i32 %4, 0
-  br i1 %5, label %bb.aa, label %.thread
+  br label %3
 
-.thread:                                          ; preds = %bb.y, %bb.z
+3:                                                ; preds = %bb.z, %bb.y
+  %4 = phi i32 [ %.pre226, %bb.z ], [ %i.fv, %bb.y ]
+  %5 = phi ptr [ %.pre225, %bb.z ], [ %i.fo, %bb.y ]
+  %.not169 = trunc i32 %4 to i1
+  br i1 %.not169, label %.thread, label %bb.aa
+
+.thread:                                          ; preds = %3
   tail call void @lxb_html_tokenizer_validate_close_tag(ptr noundef nonnull %0) #6
   %.pre227 = load ptr, ptr %i.el, align 8, !tbaa !25
   br label %bb.aa
 
-bb.aa:                                            ; preds = %.thread, %bb.z
-  %i.fz = phi ptr [ %.pre227, %.thread ], [ %.pre225, %bb.z ]
+bb.aa:                                            ; preds = %.thread, %3
+  %i.fz = phi ptr [ %.pre227, %.thread ], [ %5, %3 ]
   %i.ga = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.gb = load ptr, ptr %i.ga, align 8, !tbaa !41
   %i.gc = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -1008,9 +1010,8 @@ bb.ao:                                            ; preds = %bb.an, %bb.am
   %i.je = phi ptr [ %.pre228, %bb.an ], [ %i.iq, %bb.am ] ; 2 uses
   %i.jf = getelementptr inbounds nuw i8, ptr %i.je, i64 88
   %i.jg = load i32, ptr %i.jf, align 8, !tbaa !40
-  %6 = and i32 %i.jg, 1
-  %.not176 = icmp eq i32 %6, 0
-  br i1 %.not176, label %bb.aq, label %bb.ap
+  %.not176 = trunc i32 %i.jg to i1
+  br i1 %.not176, label %bb.ap, label %bb.aq
 
 bb.ap:                                            ; preds = %bb.ao
   tail call void @lxb_html_tokenizer_validate_close_tag(ptr noundef nonnull %0) #6

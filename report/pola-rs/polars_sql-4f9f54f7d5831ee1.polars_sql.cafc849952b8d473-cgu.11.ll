@@ -202,8 +202,8 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtCs76NdGGEXHxZ_6either6EitherINtN
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3063), !dbg !3070
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !3071 ; 4 uses
-  %1 = icmp eq i64 %i.a, 0, !dbg !3071
-  br i1 %1, label %bb.c, label %bb.e, !dbg !3071
+  %1 = trunc nuw i64 %i.a to i1, !dbg !3071
+  br i1 %1, label %bb.e, label %bb.c, !dbg !3071
 
 bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3064), !dbg !3071
@@ -278,8 +278,8 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCslpwjCj2YNBy_9polars_io5clou
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3137), !dbg !3146
-  %1 = icmp eq i64 %i.a, 0, !dbg !3147
-  br i1 %1, label %bb.c, label %bb.e, !dbg !3147
+  %1 = trunc nuw i64 %i.a to i1, !dbg !3147
+  br i1 %1, label %bb.e, label %bb.c, !dbg !3147
 
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !3147 ; 2 uses
@@ -603,8 +603,8 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtNtCsfcROwRM8ZtH_11polars_plan
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3413), !dbg !3417
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !3418 ; 3 uses
-  %1 = icmp eq i64 %i.a, 0, !dbg !3418
-  br i1 %1, label %bb.c, label %bb.e, !dbg !3418
+  %1 = trunc nuw i64 %i.a to i1, !dbg !3418
+  br i1 %1, label %bb.e, label %bb.c, !dbg !3418
 
 bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !3414), !dbg !3418
@@ -1007,8 +1007,8 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !9079), !dbg !9087
-  %1 = icmp eq i64 %i.a, 0, !dbg !9088
-  br i1 %1, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsfcROwRM8ZtH_11polars_plan8callback12PlanCallbackjNtNtCsgZ49sUHp3tW_5alloc6string6StringEEECshquuC4dCYVj_10polars_sql.exit, label %bb.c, !dbg !9088
+  %1 = trunc nuw i64 %i.a to i1, !dbg !9088
+  br i1 %1, label %bb.c, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtCsfcROwRM8ZtH_11polars_plan8callback12PlanCallbackjNtNtCsgZ49sUHp3tW_5alloc6string6StringEEECshquuC4dCYVj_10polars_sql.exit, !dbg !9088
 
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !9088 ; 2 uses
@@ -1411,7 +1411,7 @@ bb.aj:                                            ; preds = %bb.ai
   %i.ia = and i128 %i.hz, 79228162495817593524129366015
   %i.ib = mul i128 %i.ia, 1844674407370955161600000001 ; 2 uses
   %i.ic = icmp ult i128 %i.ib, 79228162514264337593543950336, !dbg !15120
-  %5 = icmp ne i32 %i.hm, 0
+  %5 = trunc nuw i32 %i.hm to i1
   %or.cond792 = and i1 %i.ic, %5, !dbg !15120
   br i1 %or.cond792, label %bb.ax, label %_RINvNtCs7TFy6xBzIN2_9atoi_simd8fallback12parse_fb_posKyffffffff_Kb1_ECshquuC4dCYVj_10polars_sql.exit.i.i.thread121.i299.thread, !dbg !15120
 
@@ -1814,8 +1814,8 @@ bb.aq:                                            ; preds = %bb.bs, %bb.br, %bb.
   call fastcc void @_RNvMs8_NtNtCs1LHh8CLbVkQ_11polars_core9datatypes9any_valueNtB5_8AnyValue7to_i128(ptr noalias noundef align 16 captures(none) dereferenceable(32) %i.b, ptr noalias noundef readonly align 16 captures(address, read_provenance) dereferenceable(48) %0), !dbg !18120
   %i.eg = load i128, ptr %i.b, align 16, !dbg !18120, !range !17921, !noundef !532
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !dbg !18120
-  %.not23 = icmp eq i128 %i.eg, 0, !dbg !18119
-  br i1 %.not23, label %bb.ea, label %bb.du, !dbg !18119
+  %2 = trunc nuw i128 %i.eg to i1, !dbg !18119
+  br i1 %2, label %bb.du, label %bb.ea, !dbg !18119
 
 bb.ar:                                            ; preds = %bb.ap
   %i.eh = icmp eq i8 %i.w, 1, !dbg !18032
@@ -2218,8 +2218,8 @@ bb.du:                                            ; preds = %bb.aq
   call fastcc void @_RNvMs8_NtNtCs1LHh8CLbVkQ_11polars_core9datatypes9any_valueNtB5_8AnyValue7to_i128(ptr noalias noundef align 16 captures(none) dereferenceable(32) %i.a, ptr noalias noundef readonly align 16 captures(address, read_provenance) dereferenceable(48) %1), !dbg !18291
   %i.og = load i128, ptr %i.a, align 16, !dbg !18291, !range !17921, !noundef !532
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !18291
-  %.not24 = icmp eq i128 %i.og, 0, !dbg !18290
-  br i1 %.not24, label %bb.ea, label %bb.dv, !dbg !18290
+  %3 = trunc nuw i128 %i.og to i1, !dbg !18290
+  br i1 %3, label %bb.dv, label %bb.ea, !dbg !18290
 
 bb.dv:                                            ; preds = %bb.du
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !dbg !18017
@@ -2622,7 +2622,7 @@ bb.c:                                             ; preds = %bb.b
   %i.k = load i8, ptr %0, align 2, !dbg !31094, !range !800, !noundef !532 ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 1, !dbg !31094
   %.not = icmp eq i8 %i.k, 2, !dbg !31094
-  %i.m = load i8, ptr %1, align 2, !dbg !31094, !range !800, !noundef !532 ; 2 uses
+  %i.m = load i8, ptr %1, align 2, !dbg !31094, !range !800, !noundef !532 ; 4 uses
   br i1 %.not, label %bb.f, label %bb.e, !dbg !31095
 
 bb.d:                                             ; preds = %bb.g, %bb.e, %bb.a, %bb.b, %bb.h, %bb.f
@@ -2631,16 +2631,20 @@ bb.d:                                             ; preds = %bb.g, %bb.e, %bb.a,
 
 bb.e:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 1, !dbg !31094
-  %i.o = icmp eq i8 %i.k, %i.m
-  br i1 %i.o, label %bb.g, label %bb.d, !dbg !31095
+  %i.o = icmp eq i8 %i.m, 2, !dbg !31094
+  %2 = xor i8 %i.m, %i.k
+  %3 = trunc i8 %2 to i1
+  %or.cond4 = or i1 %i.o, %3, !dbg !31095
+  br i1 %or.cond4, label %bb.d, label %bb.g, !dbg !31095
 
 bb.f:                                             ; preds = %bb.c
   %i.p = icmp eq i8 %i.m, 2, !dbg !31094
   br label %bb.d, !dbg !31095
 
 bb.g:                                             ; preds = %bb.e
-  %or.cond.not = icmp eq i8 %i.k, 0, !dbg !31097
-  br i1 %or.cond.not, label %bb.d, label %bb.h, !dbg !31097
+  %4 = and i8 %i.m, %i.k, !dbg !31097
+  %or.cond = trunc nuw i8 %4 to i1, !dbg !31097
+  br i1 %or.cond, label %bb.h, label %bb.d, !dbg !31097
 
 bb.h:                                             ; preds = %bb.g
   %i.q = load i8, ptr %i.l, align 1, !dbg !31098, !noundef !532

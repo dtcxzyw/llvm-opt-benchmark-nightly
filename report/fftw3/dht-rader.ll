@@ -62,9 +62,9 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i, label %applicable.exit.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  %i.o = load ptr, ptr %i.a, align 8, !tbaa !37
+  %i.o = load ptr, ptr %i.a, align 8, !tbaa !37   ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 8
-  %i.q = load i64, ptr %i.p, align 8, !tbaa !43   ; 3 uses
+  %i.q = load i64, ptr %i.p, align 8, !tbaa !43   ; 4 uses
   %i.r = icmp sgt i64 %i.q, 2
   br i1 %i.r, label %bb.f, label %applicable.exit.thread
 
@@ -82,17 +82,22 @@ bb.f:                                             ; preds = %bb.e
   %i.x = add nsw i64 %i.q, -1
   %i.y = tail call i32 @fftw_factors_into_small_primes(i64 noundef %i.x) #6
   %.not = icmp eq i32 %i.y, 0
-  br i1 %.not, label %applicable.exit.thread, label %bb.g
+  br i1 %.not, label %applicable.exit.thread, label %.split._crit_edge
+
+.split._crit_edge:                                ; preds = %.split
+  %.pre = load ptr, ptr %i.a, align 8, !tbaa !37  ; 2 uses
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 8
+  %.pre85 = load i64, ptr %.phi.trans.insert, align 8, !tbaa !43
+  br label %bb.g
 
 applicable.exit:                                  ; preds = %bb.f
   %or.cond.i = or i1 %i.v, %.not10.i
   br i1 %or.cond.i, label %bb.g, label %applicable.exit.thread
 
-bb.g:                                             ; preds = %.split, %applicable.exit
-  %3 = load ptr, ptr %i.a, align 8, !tbaa !37     ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %5 = load i64, ptr %4, align 8, !tbaa !43       ; 6 uses
-  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 16
+bb.g:                                             ; preds = %.split._crit_edge, %applicable.exit
+  %3 = phi i64 [ %.pre85, %.split._crit_edge ], [ %i.q, %applicable.exit ] ; 6 uses
+  %4 = phi ptr [ %.pre, %.split._crit_edge ], [ %i.o, %applicable.exit ]
+  %i.z = getelementptr inbounds nuw i8, ptr %4, i64 16
   %i.aa = load <2 x i64>, ptr %i.z, align 8, !tbaa !44
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.ac = load i32, ptr %i.ab, align 8, !tbaa !12
@@ -100,22 +105,21 @@ bb.g:                                             ; preds = %.split, %applicable
   br i1 %.not78, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
-  %i.ad = shl i64 %5, 1
+  %i.ad = shl i64 %3, 1
   %i.ae = add i64 %i.ad, -3
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %.critedge.i, %bb.h
   %.0.i = phi i64 [ %i.ae, %bb.h ], [ %i.ag, %.critedge.i ] ; 4 uses
   %i.af = tail call i32 @fftw_factors_into(i64 noundef %.0.i, ptr noundef nonnull @choose_transform_size.primes) #6
-  %.not.i82 = icmp ne i32 %i.af, 0
-  %6 = and i64 %.0.i, 1
-  %.not4.i = icmp eq i64 %6, 0
-  %or.cond.i83 = and i1 %.not.i82, %.not4.i
+  %.not.i82 = icmp eq i32 %i.af, 0
+  %.not4.i = trunc i64 %.0.i to i1
+  %or.cond.i83 = or i1 %.not.i82, %.not4.i
   %i.ag = add nsw i64 %.0.i, 1
-  br i1 %or.cond.i83, label %choose_transform_size.exit, label %.critedge.i, !llvm.loop !34
+  br i1 %or.cond.i83, label %.critedge.i, label %choose_transform_size.exit, !llvm.loop !34
 
 bb.i:                                             ; preds = %bb.g
-  %i.ah = add nsw i64 %5, -1
+  %i.ah = add nsw i64 %3, -1
   br label %choose_transform_size.exit
 
 choose_transform_size.exit:                       ; preds = %.critedge.i, %bb.i
@@ -157,7 +161,7 @@ bb.l:                                             ; preds = %bb.k
   %i.ba = getelementptr inbounds nuw i8, ptr %i.aw, i64 80
   store ptr null, ptr %i.ba, align 8, !tbaa !25
   %i.bb = getelementptr inbounds nuw i8, ptr %i.aw, i64 88
-  store i64 %5, ptr %i.bb, align 8, !tbaa !26
+  store i64 %3, ptr %i.bb, align 8, !tbaa !26
   %i.bc = getelementptr inbounds nuw i8, ptr %i.aw, i64 96
   store i64 %.072, ptr %i.bc, align 8, !tbaa !27
   %i.bd = getelementptr inbounds nuw i8, ptr %i.aw, i64 120
@@ -169,11 +173,11 @@ bb.l:                                             ; preds = %bb.k
   %i.bh = sdiv i64 %.072, 2
   %i.bi = add nsw i64 %i.bh, -1                   ; 3 uses
   %i.bj = mul nsw i64 %i.bi, 6
-  %i.bk = add nsw i64 %5, -1
+  %i.bk = add nsw i64 %3, -1
   %i.bl = load i32, ptr %i.ab, align 8, !tbaa !12
   %i.bm = sext i32 %i.bl to i64                   ; 4 uses
   %i.bn = mul nsw i64 %i.bk, %i.bm                ; 2 uses
-  %i.bo = add i64 %.072, %5
+  %i.bo = add i64 %.072, %3
   %i.bp = add i64 %i.bo, %i.bj
   %i.bq = add nsw i64 %i.bp, %i.bn
   %i.br = sitofp i64 %i.bq to double
@@ -194,7 +198,7 @@ bb.l:                                             ; preds = %bb.k
   %i.cg = load double, ptr %i.cf, align 8, !tbaa !47
   %i.ch = fadd double %i.cg, %i.ce
   store double %i.ch, ptr %i.cf, align 8, !tbaa !47
-  %i.ci = add nsw i64 %5, -2                      ; 2 uses
+  %i.ci = add nsw i64 %3, -2                      ; 2 uses
   %i.cj = sub nsw i64 %i.ci, %i.bm
   %i.ck = sitofp i64 %i.cj to double
   %i.cl = fadd double %i.bu, %i.ck
@@ -214,8 +218,8 @@ bb.m:                                             ; preds = %bb.k, %bb.j, %choos
   tail call void @fftw_plan_destroy_internal(ptr noundef %i.an) #6
   br label %applicable.exit.thread
 
-applicable.exit.thread:                           ; preds = %.split, %bb.a, %bb.b, %bb.c, %bb.d, %bb.e, %applicable.exit, %bb.m, %bb.l
-  %.073 = phi ptr [ %i.aw, %bb.l ], [ null, %bb.m ], [ null, %applicable.exit ], [ null, %bb.e ], [ null, %bb.d ], [ null, %bb.c ], [ null, %bb.b ], [ null, %bb.a ], [ null, %.split ]
+applicable.exit.thread:                           ; preds = %bb.a, %bb.b, %bb.c, %bb.d, %bb.e, %.split, %applicable.exit, %bb.m, %bb.l
+  %.073 = phi ptr [ %i.aw, %bb.l ], [ null, %bb.m ], [ null, %applicable.exit ], [ null, %.split ], [ null, %bb.e ], [ null, %bb.d ], [ null, %bb.c ], [ null, %bb.b ], [ null, %bb.a ]
   ret ptr %.073
 }
 
@@ -618,7 +622,6 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 .lr.ph179.preheader:                              ; preds = %._crit_edge
   %smax = tail call i64 @llvm.smax.i64(i64 %i.ap, i64 2) ; 2 uses
   %i.ar = add nsw i64 %smax, -1                   ; 3 uses
-  %xtraiter = and i64 %i.ar, 1
   %i.as = icmp slt i64 %i.d, 6
   br i1 %i.as, label %.lr.ph179.epil.preheader, label %.lr.ph179.preheader.new
 
@@ -688,8 +691,8 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %niter.ncmp.1, label %._crit_edge180.loopexit.unr-lcssa, label %.lr.ph179, !llvm.loop !64
 
 ._crit_edge180.loopexit.unr-lcssa:                ; preds = %.lr.ph179
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge180.loopexit, label %.lr.ph179.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.ar to i1
+  br i1 %lcmp.mod.not, label %.lr.ph179.epil.preheader, label %._crit_edge180.loopexit
 
 .lr.ph179.epil.preheader:                         ; preds = %._crit_edge180.loopexit.unr-lcssa, %.lr.ph179.preheader
   %.2177.epil.init = phi i64 [ 1, %.lr.ph179.preheader ], [ %i.cq, %._crit_edge180.loopexit.unr-lcssa ] ; 3 uses

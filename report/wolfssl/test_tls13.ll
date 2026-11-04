@@ -204,8 +204,8 @@ bb.a:
 
 .critedge87:                                      ; preds = %bb.a
   %i.b = call fastcc i32 @test_tls13_cipher_fuzz_cs(ptr noundef %0, ptr noundef nonnull @.str.189)
-  %.not91 = icmp eq i32 %i.b, 0
-  br i1 %.not91, label %bb.b, label %bb.d
+  %1 = trunc nuw i32 %i.b to i1
+  br i1 %1, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %.critedge87
   %i.c = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.2, ptr noundef nonnull @.str.3, i32 noundef 6695) ; 0 uses
@@ -266,9 +266,10 @@ bb.a:
   br label %.critedge5.preheader
 
 .critedge5.preheader:                             ; preds = %bb.a, %.critedge11
-  %.not701757.i = phi i1 [ true, %bb.a ], [ false, %.critedge11 ] ; 3 uses
-  %.071105 = phi i32 [ 0, %bb.a ], [ 1, %.critedge11 ]
+  %.not701757.i = phi i1 [ true, %bb.a ], [ false, %.critedge11 ]
+  %.071105 = phi i32 [ 0, %bb.a ], [ 1, %.critedge11 ] ; 2 uses
   %.073104 = phi i32 [ 3, %bb.a ], [ 1, %.critedge11 ]
+  %3 = trunc nuw i32 %.071105 to i1               ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.critedge5.preheader, %.critedge5
@@ -441,10 +442,10 @@ bb.i:                                             ; preds = %.critedge742.i
   br label %test_tls13_cipher_fuzz_once.exit.sink.split
 
 .critedge741.thread799.i:                         ; preds = %.critedge733.i
-  br i1 %.not701757.i, label %.thread, label %.thread.i
+  br i1 %3, label %.thread.i, label %.thread
 
 .critedge741.thread.i:                            ; preds = %.critedge742.i
-  br i1 %.not701757.i, label %.thread, label %.thread.i
+  br i1 %3, label %.thread.i, label %.thread
 
 .thread.i:                                        ; preds = %.critedge741.thread.i, %.critedge741.thread799.i
   %i.cb = load ptr, ptr %i.c, align 8, !tbaa !50
@@ -473,7 +474,7 @@ bb.k:                                             ; preds = %.thread.i
 .preheader.i:                                     ; preds = %bb.k, %.thread
   %i.cl = phi i32 [ %i.cj, %.thread ], [ %i.ck, %bb.k ] ; 4 uses
   %.0620.i89 = phi ptr [ %2, %.thread ], [ %i.i, %bb.k ] ; 2 uses
-  %.not701760.i88 = phi i1 [ true, %.thread ], [ false, %bb.k ]
+  %.not701760.i88 = phi i1 [ false, %.thread ], [ true, %bb.k ]
   %.not705779.i = icmp slt i32 %i.cl, 5
   br i1 %.not705779.i, label %.thread767.thread.i, label %.lr.ph.i
 
@@ -576,7 +577,7 @@ bb.o:                                             ; preds = %.peel.next.i
   %i.eg = load i8, ptr %i.ef, align 1, !tbaa !55
   %i.eh = xor i8 %i.eg, %.lcssa786.i
   store i8 %i.eh, ptr %i.ef, align 1, !tbaa !55
-  br i1 %.not701760.i88, label %bb.q, label %bb.p
+  br i1 %.not701760.i88, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %.critedge751.i
   %i.ei = load ptr, ptr %i.d, align 8, !tbaa !50
@@ -706,8 +707,8 @@ bb.a:
 
 .critedge87:                                      ; preds = %bb.a
   %i.b = call fastcc i32 @test_tls13_cipher_fuzz_cs(ptr noundef %0, ptr noundef nonnull @.str.198)
-  %.not91 = icmp eq i32 %i.b, 0
-  br i1 %.not91, label %bb.b, label %bb.d
+  %1 = trunc nuw i32 %i.b to i1
+  br i1 %1, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %.critedge87
   %i.c = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.2, ptr noundef nonnull @.str.3, i32 noundef 6719) ; 0 uses
@@ -760,8 +761,8 @@ bb.a:
 
 .critedge87:                                      ; preds = %bb.a
   %i.b = call fastcc i32 @test_tls13_cipher_fuzz_cs(ptr noundef %0, ptr noundef nonnull @.str.200)
-  %.not91 = icmp eq i32 %i.b, 0
-  br i1 %.not91, label %bb.b, label %bb.d
+  %1 = trunc nuw i32 %i.b to i1
+  br i1 %1, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %.critedge87
   %i.c = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.2, ptr noundef nonnull @.str.3, i32 noundef 6743) ; 0 uses
@@ -824,8 +825,8 @@ bb.a:
 define dso_local range(i32 0, 2) i32 @test_tls13_AEAD_limit_KU_aes128_gcm_sha256() local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc i32 @test_tls13_AEAD_limit_triggers_KeyUpdate_cs(ptr noundef nonnull @.str.189)
-  %.not = icmp eq i32 %i.a, 0
-  br i1 %.not, label %bb.b, label %bb.c
+  %0 = trunc nuw i32 %i.a to i1
+  br i1 %0, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.2, ptr noundef nonnull @.str.3, i32 noundef 6964) ; 0 uses
@@ -1228,8 +1229,8 @@ bb.af:                                            ; preds = %.critedge569
 define dso_local range(i32 0, 2) i32 @test_tls13_AEAD_limit_KU_aes256_gcm_sha384() local_unnamed_addr #0 {
 bb.a:
   %i.a = tail call fastcc i32 @test_tls13_AEAD_limit_triggers_KeyUpdate_cs(ptr noundef nonnull @.str.198)
-  %.not = icmp eq i32 %i.a, 0
-  br i1 %.not, label %bb.b, label %bb.c
+  %0 = trunc nuw i32 %i.a to i1
+  br i1 %0, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.2, ptr noundef nonnull @.str.3, i32 noundef 6978) ; 0 uses

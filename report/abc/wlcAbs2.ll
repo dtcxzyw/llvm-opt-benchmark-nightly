@@ -187,11 +187,10 @@ bb.h:                                             ; preds = %.lr.ph.i.i, %bb.s
   %i.bt = and i64 %i.bs, 134217727                ; 5 uses
   %i.bu = getelementptr inbounds nuw [4 x i8], ptr %.val59.i.i, i64 %i.bt
   %i.bv = load i32, ptr %i.bu, align 4, !tbaa !25
-  %i.bw = and i32 %i.br, 31
-  %5 = shl nuw i32 1, %i.bw                       ; 5 uses
-  %6 = and i32 %i.bv, %5
-  %.not50.i.i = icmp eq i32 %6, 0
-  br i1 %.not50.i.i, label %bb.i, label %bb.s
+  %i.bw = and i32 %i.br, 31                       ; 5 uses
+  %5 = lshr i32 %i.bv, %i.bw
+  %.not50.i.i = trunc i32 %5 to i1
+  br i1 %.not50.i.i, label %bb.s, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.bx = load i16, ptr %i.bq, align 8            ; 2 uses
@@ -220,9 +219,10 @@ bb.j:                                             ; preds = %bb.i, %bb.i, %bb.i
   br i1 %.not56.i.i, label %bb.s, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
+  %6 = shl nuw i32 1, %i.bw
   %i.cf = getelementptr inbounds nuw [4 x i8], ptr %i.bm, i64 %i.bt ; 2 uses
   %i.cg = load i32, ptr %i.cf, align 4, !tbaa !25
-  %i.ch = or i32 %i.cg, %5
+  %i.ch = or i32 %i.cg, %6
   store i32 %i.ch, ptr %i.cf, align 4, !tbaa !25
   %i.ci = add nsw i32 %.sroa.0.080.i.i, 1
   br label %bb.s
@@ -240,9 +240,10 @@ bb.l:                                             ; preds = %bb.i, %bb.i, %bb.i,
   br i1 %.not55.i.i, label %bb.s, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
+  %7 = shl nuw i32 1, %i.bw
   %i.cp = getelementptr inbounds nuw [4 x i8], ptr %i.bm, i64 %i.bt ; 2 uses
   %i.cq = load i32, ptr %i.cp, align 4, !tbaa !25
-  %i.cr = or i32 %i.cq, %5
+  %i.cr = or i32 %i.cq, %7
   store i32 %i.cr, ptr %i.cp, align 4, !tbaa !25
   %i.cs = add nsw i32 %.sroa.6.081.i.i, 1
   br label %bb.s
@@ -260,9 +261,10 @@ bb.n:                                             ; preds = %bb.i
   br i1 %.not54.i.i, label %bb.s, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
+  %8 = shl nuw i32 1, %i.bw
   %i.cz = getelementptr inbounds nuw [4 x i8], ptr %i.bm, i64 %i.bt ; 2 uses
   %i.da = load i32, ptr %i.cz, align 4, !tbaa !25
-  %i.db = or i32 %i.da, %5
+  %i.db = or i32 %i.da, %8
   store i32 %i.db, ptr %i.cz, align 4, !tbaa !25
   %i.dc = add nsw i32 %.sroa.9.082.i.i, 1
   br label %bb.s
@@ -287,9 +289,10 @@ bb.q:                                             ; preds = %bb.p
   br i1 %.not53.i.i, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
+  %9 = shl nuw i32 1, %i.bw
   %i.dk = getelementptr inbounds nuw [4 x i8], ptr %i.bm, i64 %i.bt ; 2 uses
   %i.dl = load i32, ptr %i.dk, align 4, !tbaa !25
-  %i.dm = or i32 %i.dl, %5
+  %i.dm = or i32 %i.dl, %9
   store i32 %i.dm, ptr %i.dk, align 4, !tbaa !25
   %i.dn = add nsw i32 %.sroa.12.083.i.i, 1
   br label %bb.s
@@ -613,10 +616,9 @@ bb.aj:                                            ; preds = %bb.ai
   %i.hn = getelementptr inbounds [4 x i8], ptr %i.gp, i64 %i.hm
   %i.ho = load i32, ptr %i.hn, align 4, !tbaa !25
   %i.hp = and i32 %i.hk, 31
-  %7 = shl nuw i32 1, %i.hp
-  %8 = and i32 %7, %i.ho
-  %.not40.i = icmp eq i32 %8, 0
-  br i1 %.not40.i, label %Vec_IntPushUniqueOrder.exit.i, label %bb.ak
+  %10 = lshr i32 %i.ho, %i.hp
+  %.not40.i = trunc i32 %10 to i1
+  br i1 %.not40.i, label %bb.ak, label %Vec_IntPushUniqueOrder.exit.i
 
 bb.ak:                                            ; preds = %.lr.ph67.i
   %i.hq = sub nsw i64 %indvars.iv77.i, %i.gt
@@ -1019,10 +1021,9 @@ bb.b:                                             ; preds = %bb.a
   %i.m = getelementptr inbounds [4 x i8], ptr %.val30, i64 %i.l
   %i.n = load i32, ptr %i.m, align 4, !tbaa !25
   %i.o = and i32 %i.i, 31
-  %6 = shl nuw i32 1, %i.o
-  %7 = and i32 %6, %i.n
-  %.not27 = icmp eq i32 %7, 0
-  br i1 %.not27, label %bb.m, label %bb.c
+  %6 = lshr i32 %i.n, %i.o
+  %.not = trunc i32 %6 to i1
+  br i1 %.not, label %bb.c, label %bb.m
 
 bb.c:                                             ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 3 uses

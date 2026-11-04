@@ -57,7 +57,7 @@ bb.b:                                             ; preds = %._crit_edge
   %.not.i = icmp ne i64 %i.u, 0
   tail call void @llvm.assume(i1 %.not.i)
   %i.v = tail call ptr @BrotliAllocate(ptr noundef %0, i64 noundef %i.u) #6 ; 6 uses
-  %i.w = zext i32 %i.f to i64                     ; 7 uses
+  %i.w = zext i32 %i.f to i64                     ; 6 uses
   %i.x = getelementptr inbounds nuw [4 x i8], ptr %i.v, i64 %i.w ; 3 uses
   %i.y = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %i.w ; 5 uses
   %i.z = zext nneg i32 %i.o to i64                ; 7 uses
@@ -177,7 +177,6 @@ bb.h:                                             ; preds = %bb.f
   %i.bz = getelementptr inbounds nuw i8, ptr %i.bp, i64 20
   store i32 %.013.lcssa, ptr %i.bz, align 4, !tbaa !13
   store ptr %1, ptr %i.bt, align 1
-  %xtraiter = and i64 %i.w, 1
   %unroll_iter = and i64 %i.w, 4294967294
   br label %bb.i
 
@@ -204,8 +203,6 @@ bb.i:                                             ; preds = %bb.i, %.new
   br i1 %niter.ncmp.1, label %.preheader.preheader.i.unr-lcssa, label %bb.i, !llvm.loop !17
 
 .preheader.preheader.i.unr-lcssa:                 ; preds = %bb.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  call void @llvm.assume(i1 %lcmp.mod.not)
   %i.ci = zext nneg i32 %i.h to i64
   br label %.preheader.i
 

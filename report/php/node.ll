@@ -204,10 +204,10 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #9
   store i64 0, ptr %i.f, align 8, !tbaa !103
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %4 = icmp eq i32 %2, 0                          ; 4 uses
+  %4 = trunc nuw i32 %2 to i1                     ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 44
   %i.i = load i32, ptr %i.h, align 4, !tbaa !22   ; 2 uses
-  br i1 %4, label %bb.b, label %bb.c
+  br i1 %4, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.j = call i32 (i32, ptr, ...) @zend_parse_parameters(i32 noundef %i.i, ptr noundef nonnull @.str.30, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #9
@@ -559,7 +559,7 @@ bb.ao:                                            ; preds = %bb.ai
 
 bb.ap:                                            ; preds = %._crit_edge, %bb.ao, %bb.ah
   %.0148 = phi ptr [ %i.df, %._crit_edge ], [ null, %bb.ao ], [ null, %bb.ah ] ; 4 uses
-  br i1 %4, label %bb.ar, label %bb.aq
+  br i1 %4, label %bb.aq, label %bb.ar
 
 bb.aq:                                            ; preds = %bb.ap
   %i.eg = load ptr, ptr %i.e, align 8, !tbaa !104
@@ -591,7 +591,7 @@ bb.av:                                            ; preds = %bb.at
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.au, %bb.av, %bb.as
-  %.0147 = phi i32 [ %i.en, %bb.au ], [ %i.eo, %bb.av ], [ -1, %bb.as ]
+  %.0147 = phi i32 [ %i.en, %bb.au ], [ %i.eo, %bb.av ], [ -1, %bb.as ] ; 2 uses
   %.not176 = icmp eq ptr %.0148, null
   br i1 %.not176, label %bb.ay, label %bb.ax
 
@@ -616,12 +616,12 @@ bb.bb:                                            ; preds = %bb.ba
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb, %bb.ba
-  %i.ep = icmp slt i32 %.0147, 0                  ; 2 uses
+  %i.ep = icmp slt i32 %.0147, 0
   %or.cond = select i1 %.not175, i1 true, i1 %i.ep
   br i1 %or.cond, label %bb.bg, label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc
-  br i1 %4, label %bb.be, label %.thread205
+  br i1 %4, label %.thread205, label %bb.be
 
 bb.be:                                            ; preds = %bb.bd
   %i.eq = call i64 @xmlOutputBufferGetSize(ptr noundef nonnull %.0146) #9 ; 5 uses
@@ -666,8 +666,9 @@ bb.bg:                                            ; preds = %bb.bc
 
 .thread205:                                       ; preds = %bb.bd, %bb.bg
   %i.fe = call i32 @xmlOutputBufferClose(ptr noundef nonnull %.0146) #9
-  %or.cond4.not = select i1 %4, i1 true, i1 %i.ep
-  br i1 %or.cond4.not, label %.critedge183, label %bb.bh
+  %5 = icmp sgt i32 %.0147, -1
+  %or.cond4.not = select i1 %4, i1 %5, i1 false
+  br i1 %or.cond4.not, label %bb.bh, label %.critedge183
 
 bb.bh:                                            ; preds = %.thread205
   %i.ff = sext i32 %i.fe to i64

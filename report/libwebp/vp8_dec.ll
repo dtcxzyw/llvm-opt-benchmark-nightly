@@ -204,13 +204,14 @@ VP8CheckSignature.exit:                           ; preds = %bb.c
   br i1 %.not, label %bb.d, label %VP8CheckSignature.exit.thread
 
 bb.d:                                             ; preds = %VP8CheckSignature.exit
-  %i.k = load i8, ptr %0, align 1, !tbaa !33
+  %i.k = load i8, ptr %0, align 1, !tbaa !33      ; 2 uses
   %i.l = zext i8 %i.k to i32                      ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.n = load i16, ptr %i.m, align 1
   %i.o = zext i16 %i.n to i32
   %i.p = shl nuw nsw i32 %i.o, 8
   %i.q = or disjoint i32 %i.p, %i.l
+  %.not34 = trunc i8 %i.k to i1
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 7
   %i.s = load i8, ptr %i.r, align 1, !tbaa !33
   %i.t = zext i8 %i.s to i32
@@ -229,12 +230,14 @@ bb.d:                                             ; preds = %VP8CheckSignature.e
   %i.af = zext i8 %i.ae to i32
   %.masked35 = and i32 %i.ac, 16128
   %i.ag = or disjoint i32 %.masked35, %i.af       ; 2 uses
-  %i.ah = and i32 %i.l, 25
+  %i.ah = and i32 %i.l, 24
   %or.cond42.not46 = icmp eq i32 %i.ah, 16
+  %not..not34 = xor i1 %.not34, true
+  %or.cond42 = select i1 %not..not34, i1 %or.cond42.not46, i1 false
   %i.ai = lshr i32 %i.q, 5
   %i.aj = zext nneg i32 %i.ai to i64
   %.not38 = icmp ugt i64 %2, %i.aj
-  %or.cond44 = select i1 %or.cond42.not46, i1 %.not38, i1 false
+  %or.cond44 = select i1 %or.cond42, i1 %.not38, i1 false
   br i1 %or.cond44, label %bb.e, label %VP8CheckSignature.exit.thread
 
 bb.e:                                             ; preds = %bb.d
@@ -296,7 +299,7 @@ VP8SetError.exit126:                              ; preds = %bb.c
   br label %.critedge.sink.split
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = load i8, ptr %i.g, align 1, !tbaa !33    ; 4 uses
+  %i.i = load i8, ptr %i.g, align 1, !tbaa !33    ; 5 uses
   %i.j = zext i8 %i.i to i32
   %i.k = getelementptr inbounds nuw i8, ptr %i.g, i64 1
   %i.l = load i16, ptr %i.k, align 1
@@ -304,15 +307,15 @@ bb.d:                                             ; preds = %bb.c
   %i.n = shl nuw nsw i32 %i.m, 8
   %i.o = or disjoint i32 %i.n, %i.j
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 68 ; 3 uses
-  %i.q = and i8 %i.i, 1                           ; 2 uses
+  %i.q = and i8 %i.i, 1
   %i.r = xor i8 %i.q, 1
   store i8 %i.r, ptr %i.p, align 4, !tbaa !54
   %i.s = lshr i8 %i.i, 1
   %i.t = and i8 %i.s, 7                           ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 69
   store i8 %i.t, ptr %i.u, align 1, !tbaa !55
-  %i.v = lshr i8 %i.i, 4
-  %i.w = and i8 %i.v, 1                           ; 2 uses
+  %i.v = lshr i8 %i.i, 4                          ; 2 uses
+  %i.w = and i8 %i.v, 1
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 70
   store i8 %i.w, ptr %i.x, align 2, !tbaa !56
   %i.y = lshr i32 %i.o, 5                         ; 2 uses
@@ -327,8 +330,8 @@ VP8SetError.exit127:                              ; preds = %bb.d
   br label %.critedge.sink.split
 
 bb.e:                                             ; preds = %bb.d
-  %.not = icmp eq i8 %i.w, 0
-  br i1 %.not, label %VP8SetError.exit128, label %bb.f
+  %.not = trunc i8 %i.v to i1
+  br i1 %.not, label %bb.f, label %VP8SetError.exit128
 
 VP8SetError.exit128:                              ; preds = %bb.e
   store i32 4, ptr %0, align 8, !tbaa !24
@@ -339,8 +342,8 @@ bb.f:                                             ; preds = %bb.e
   %i.ab = getelementptr inbounds nuw i8, ptr %i.g, i64 3 ; 2 uses
   %i.ac = add i64 %i.e, -3                        ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 76
-  %.not118.not = icmp eq i8 %i.q, 0
-  br i1 %.not118.not, label %bb.g, label %bb.k
+  %.not118.not = trunc i8 %i.i to i1
+  br i1 %.not118.not, label %bb.k, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.ae = icmp ult i64 %i.ac, 7
@@ -491,8 +494,8 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   %i.cy = getelementptr inbounds nuw i8, ptr %0, i64 132
   %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 1192
   %i.da = tail call fastcc i32 @ParseSegmentHeader(ptr noundef %i.cm, ptr noundef %i.cy, ptr noundef %i.cz)
-  %.not122 = icmp eq i32 %i.da, 0
-  br i1 %.not122, label %bb.q, label %bb.s
+  %.not122 = trunc nuw i32 %i.da to i1
+  br i1 %.not122, label %bb.s, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
   %i.db = load i32, ptr %0, align 8, !tbaa !24
@@ -506,8 +509,8 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.p
   %i.dd = tail call fastcc i32 @ParseFilterHeader(ptr noundef %i.cm, ptr noundef %0)
-  %.not123 = icmp eq i32 %i.dd, 0
-  br i1 %.not123, label %bb.t, label %bb.v
+  %.not123 = trunc nuw i32 %i.dd to i1
+  br i1 %.not123, label %bb.v, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
   %i.de = load i32, ptr %0, align 8, !tbaa !24
@@ -910,8 +913,8 @@ bb.e:                                             ; preds = %bb.b
 
 bb.f:                                             ; preds = %bb.e
   %i.i = tail call i32 @VP8GetHeaders(ptr noundef nonnull %0, ptr noundef nonnull %1)
-  %.not26 = icmp eq i32 %i.i, 0
-  br i1 %.not26, label %VP8SetError.exit, label %bb.g
+  %.not26 = trunc nuw i32 %i.i to i1
+  br i1 %.not26, label %bb.g, label %VP8SetError.exit
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.j = tail call i32 @VP8EnterCritical(ptr noundef nonnull %0, ptr noundef nonnull %1) #13
@@ -964,8 +967,8 @@ bb.k:                                             ; preds = %bb.j
 
 .lr.ph.i:                                         ; preds = %.preheader.i, %bb.m
   %i.ah = tail call i32 @VP8DecodeMB(ptr noundef nonnull %0, ptr noundef nonnull %i.aa)
-  %.not28.i = icmp eq i32 %i.ah, 0
-  br i1 %.not28.i, label %bb.l, label %bb.m
+  %.not28.i = trunc nuw i32 %i.ah to i1
+  br i1 %.not28.i, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %.lr.ph.i
   %i.ai = load i32, ptr %0, align 8, !tbaa !24
@@ -1038,8 +1041,8 @@ bb.q:                                             ; preds = %bb.h, %bb.k, %bb.l,
   %.1 = phi i32 [ 0, %bb.h ], [ 0, %bb.k ], [ 1, %._crit_edge37.i ], [ 1, %bb.o ], [ 0, %bb.p ], [ 0, %bb.l ], [ 0, %bb.n ], [ 0, %VP8SetError.exit31.sink.split.i ]
   %i.bj = tail call i32 @VP8ExitCritical(ptr noundef nonnull %0, ptr noundef nonnull %1) #13
   %i.bk = and i32 %i.bj, %.1
-  %.not28 = icmp eq i32 %i.bk, 0
-  br i1 %.not28, label %VP8Clear.exit, label %bb.r
+  %.not28 = trunc nuw i32 %i.bk to i1
+  br i1 %.not28, label %bb.r, label %VP8Clear.exit
 
 VP8Clear.exit:                                    ; preds = %bb.g, %bb.q
   %i.bl = tail call ptr @WebPGetWorkerInterface() #13

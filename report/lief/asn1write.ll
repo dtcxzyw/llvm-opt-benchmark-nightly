@@ -204,26 +204,28 @@ bb.b:                                             ; preds = %bb.a
   %i.g = load i8, ptr %i.f, align 1, !tbaa !15
   %i.h = zext i8 %i.g to i32
   %i.i = trunc i64 %i.c to i32
-  %i.j = lshr i32 %i.h, %i.i
-  %4 = trunc nuw i32 %i.j to i8                   ; 2 uses
-  %5 = and i8 %4, 1
-  %.not2627 = icmp eq i8 %5, 0
-  br i1 %.not2627, label %.lr.ph.preheader, label %.loopexit
+  %i.j = lshr i32 %i.h, %i.i                      ; 2 uses
+  %.not2627 = trunc i32 %i.j to i1
+  br i1 %.not2627, label %.loopexit, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.b
   %i.k = add i64 %3, -1                           ; 2 uses
   %i.l = icmp eq i64 %i.k, 0
-  br i1 %i.l, label %.loopexit, label %.lr.ph35.a
+  br i1 %i.l, label %.loopexit, label %.lr.ph35
+
+.lr.ph35:                                         ; preds = %.lr.ph.preheader
+  %4 = trunc nuw i32 %i.j to i8
+  br label %.lr.ph35.a
 
 .lr.ph:                                           ; preds = %bb.d
   %i.m = add i64 %i.o, -1                         ; 2 uses
   %i.n = icmp eq i64 %i.m, 0
   br i1 %i.n, label %.loopexit, label %.lr.ph35.a
 
-.lr.ph35.a:                                       ; preds = %.lr.ph.preheader, %.lr.ph
-  %i.o = phi i64 [ %i.m, %.lr.ph ], [ %i.k, %.lr.ph.preheader ] ; 3 uses
-  %.0182934 = phi ptr [ %.119, %.lr.ph ], [ %i.f, %.lr.ph.preheader ] ; 2 uses
-  %.in33 = phi i8 [ %.1, %.lr.ph ], [ %4, %.lr.ph.preheader ]
+.lr.ph35.a:                                       ; preds = %.lr.ph35, %.lr.ph
+  %i.o = phi i64 [ %i.k, %.lr.ph35 ], [ %i.m, %.lr.ph ] ; 3 uses
+  %.0182934 = phi ptr [ %i.f, %.lr.ph35 ], [ %.119, %.lr.ph ] ; 2 uses
+  %.in33 = phi i8 [ %4, %.lr.ph35 ], [ %.1, %.lr.ph ]
   %i.p = lshr i8 %.in33, 1
   %i.q = and i64 %i.o, 7
   %i.r = icmp eq i64 %i.q, 0
@@ -237,9 +239,8 @@ bb.c:                                             ; preds = %.lr.ph35.a
 bb.d:                                             ; preds = %bb.c, %.lr.ph35.a
   %.119 = phi ptr [ %i.s, %bb.c ], [ %.0182934, %.lr.ph35.a ]
   %.1 = phi i8 [ %i.t, %bb.c ], [ %i.p, %.lr.ph35.a ] ; 2 uses
-  %6 = and i8 %.1, 1
-  %.not26 = icmp eq i8 %6, 0
-  br i1 %.not26, label %.lr.ph, label %.loopexit
+  %.not26 = trunc i8 %.1 to i1
+  br i1 %.not26, label %.loopexit, label %.lr.ph
 
 .loopexit:                                        ; preds = %bb.d, %.lr.ph, %.lr.ph.preheader, %bb.b, %bb.a
   %.121 = phi i64 [ 0, %bb.a ], [ %3, %bb.b ], [ 0, %.lr.ph.preheader ], [ 0, %.lr.ph ], [ %i.o, %bb.d ]

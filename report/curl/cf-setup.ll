@@ -83,9 +83,8 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !14   ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 36 ; 4 uses
   %i.d = load i8, ptr %i.c, align 4
-  %3 = and i8 %i.d, 1
-  %.not.i46 = icmp eq i8 %3, 0
-  br i1 %.not.i46, label %.preheader.i.lr.ph, label %._crit_edge
+  %.not.i46 = trunc i8 %i.d to i1
+  br i1 %.not.i46, label %._crit_edge, label %.preheader.i.lr.ph
 
 .preheader.i.lr.ph:                               ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 8 uses
@@ -115,9 +114,8 @@ bb.a:
 bb.b:                                             ; preds = %.backedge.i
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 36
   %i.o = load i8, ptr %i.n, align 4
-  %4 = and i8 %i.o, 1
-  %.not58.i = icmp eq i8 %4, 0
-  br i1 %.not58.i, label %bb.c, label %bb.e
+  %.not58.i = trunc i8 %i.o to i1
+  br i1 %.not58.i, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.p = tail call i32 @Curl_conn_cf_connect(ptr noundef nonnull %i.m, ptr noundef %1, ptr noundef %2) #3 ; 2 uses
@@ -329,23 +327,22 @@ cf_setup_add_ip_happy.exit.i:                     ; preds = %bb.ah, %bb.e
 
 bb.ai:                                            ; preds = %cf_setup_add_ip_happy.exit.i
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cp, i64 36
-  %i.cr = load i8, ptr %i.cq, align 4
-  %5 = and i8 %i.cr, 1
-  %.not62.i = icmp eq i8 %5, 0
-  br i1 %.not62.i, label %.backedge.i.backedge, label %bb.aj
+  %i.cr = load i8, ptr %i.cq, align 4             ; 3 uses
+  %.not62.i = trunc i8 %i.cr to i1
+  br i1 %.not62.i, label %bb.aj, label %.backedge.i.backedge
 
 bb.aj:                                            ; preds = %bb.ai
   %i.cs = load ptr, ptr %i.a, align 8, !tbaa !14  ; 2 uses
   %i.ct = load i32, ptr %i.cs, align 4, !tbaa !84
   %i.cu = icmp ult i32 %i.ct, 2
-  br i1 %i.cu, label %bb.ak, label %cf_setup_add_socks.exit.thread.i.thread
+  br i1 %i.cu, label %bb.ak, label %cf_setup_add_socks.exit.thread.i
 
 bb.ak:                                            ; preds = %bb.aj
   %i.cv = load ptr, ptr %i.g, align 8, !tbaa !94  ; 4 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 176
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !100
   %.not.i75.i = icmp eq ptr %i.cx, null
-  br i1 %.not.i75.i, label %cf_setup_add_socks.exit.thread.i.thread, label %bb.al
+  br i1 %.not.i75.i, label %cf_setup_add_socks.exit.thread.i, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cv, i64 200
@@ -452,29 +449,32 @@ cf_setup_add_socks.exit.i:                        ; preds = %bb.ay, %bb.ax, %bb.
 cf_setup_add_socks.exit.thread.i.a:               ; preds = %cf_setup_add_socks.exit.i
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre.i, i64 36
   %.pre = load i8, ptr %.phi.trans.insert, align 4
-  %.pre66 = and i8 %.pre, 1
-  %6 = icmp eq i8 %.pre66, 0
-  br i1 %6, label %.backedge.i.backedge, label %cf_setup_add_socks.exit.thread.i.thread
+  br label %cf_setup_add_socks.exit.thread.i
 
-cf_setup_add_socks.exit.thread.i.thread:          ; preds = %bb.aj, %bb.ak, %cf_setup_add_socks.exit.thread.i.a
+cf_setup_add_socks.exit.thread.i:                 ; preds = %cf_setup_add_socks.exit.thread.i.a, %bb.ak, %bb.aj
+  %3 = phi i8 [ %.pre, %cf_setup_add_socks.exit.thread.i.a ], [ %i.cr, %bb.ak ], [ %i.cr, %bb.aj ] ; 4 uses
+  %.not65.i = trunc i8 %3 to i1
+  br i1 %.not65.i, label %cf_setup_add_socks.exit.thread.i.thread, label %.backedge.i.backedge
+
+cf_setup_add_socks.exit.thread.i.thread:          ; preds = %cf_setup_add_socks.exit.thread.i
   %i.ej = load ptr, ptr %i.a, align 8, !tbaa !14  ; 3 uses
   %i.ek = load i32, ptr %i.ej, align 4, !tbaa !84
   %i.el = icmp ult i32 %i.ek, 3
-  br i1 %i.el, label %bb.az, label %cf_setup_add_http_proxy.exit.thread.i.thread
+  br i1 %i.el, label %bb.az, label %cf_setup_add_http_proxy.exit.thread.i
 
 bb.az:                                            ; preds = %cf_setup_add_socks.exit.thread.i.thread
   %i.em = load ptr, ptr %i.g, align 8, !tbaa !94  ; 3 uses
   %i.en = getelementptr inbounds nuw i8, ptr %i.em, i64 200
   %i.eo = load ptr, ptr %i.en, align 8, !tbaa !101 ; 2 uses
   %.not.i77.i = icmp eq ptr %i.eo, null
-  br i1 %.not.i77.i, label %cf_setup_add_http_proxy.exit.thread.i.thread, label %bb.ba
+  br i1 %.not.i77.i, label %cf_setup_add_http_proxy.exit.thread.i, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
   %i.ep = getelementptr inbounds nuw i8, ptr %i.em, i64 720
   %i.eq = load i32, ptr %i.ep, align 8
   %i.er = and i32 %i.eq, 2
   %.not86.i78.i = icmp eq i32 %i.er, 0
-  br i1 %.not86.i78.i, label %bb.bb, label %cf_setup_add_http_proxy.exit.thread.i.thread
+  br i1 %.not86.i78.i, label %bb.bb, label %cf_setup_add_http_proxy.exit.thread.i
 
 bb.bb:                                            ; preds = %bb.ba
   %i.es = load i32, ptr %i.e, align 8, !tbaa !90
@@ -644,15 +644,18 @@ cf_setup_add_http_proxy.exit.i:                   ; preds = %bb.cc, %bb.cb, %bb.
 cf_setup_add_http_proxy.exit.thread.i.a:          ; preds = %cf_setup_add_http_proxy.exit.i
   %.phi.trans.insert60 = getelementptr inbounds nuw i8, ptr %.pre112.i, i64 36
   %.pre61 = load i8, ptr %.phi.trans.insert60, align 4
-  %.pre67 = and i8 %.pre61, 1
-  %7 = icmp eq i8 %.pre67, 0
-  br i1 %7, label %.backedge.i.backedge, label %cf_setup_add_http_proxy.exit.thread.i.thread
+  br label %cf_setup_add_http_proxy.exit.thread.i
 
-cf_setup_add_http_proxy.exit.thread.i.thread:     ; preds = %cf_setup_add_socks.exit.thread.i.thread, %bb.az, %bb.ba, %cf_setup_add_http_proxy.exit.thread.i.a
+cf_setup_add_http_proxy.exit.thread.i:            ; preds = %cf_setup_add_http_proxy.exit.thread.i.a, %bb.ba, %bb.az, %cf_setup_add_socks.exit.thread.i.thread
+  %4 = phi i8 [ %.pre61, %cf_setup_add_http_proxy.exit.thread.i.a ], [ %3, %bb.ba ], [ %3, %bb.az ], [ %3, %cf_setup_add_socks.exit.thread.i.thread ] ; 2 uses
+  %.not68.i = trunc i8 %4 to i1
+  br i1 %.not68.i, label %cf_setup_add_http_proxy.exit.thread.i.thread, label %.backedge.i.backedge
+
+cf_setup_add_http_proxy.exit.thread.i.thread:     ; preds = %cf_setup_add_http_proxy.exit.thread.i
   %i.gx = load ptr, ptr %i.a, align 8, !tbaa !14  ; 3 uses
   %i.gy = load i32, ptr %i.gx, align 4, !tbaa !84
   %i.gz = icmp ult i32 %i.gy, 4
-  br i1 %i.gz, label %bb.cd, label %cf_setup_add_haproxy.exit.thread.i.thread
+  br i1 %i.gz, label %bb.cd, label %cf_setup_add_haproxy.exit.thread.i
 
 bb.cd:                                            ; preds = %cf_setup_add_http_proxy.exit.thread.i.thread
   %i.ha = load i64, ptr %i.h, align 1
@@ -737,15 +740,18 @@ cf_setup_add_haproxy.exit.i:                      ; preds = %bb.cq, %bb.cp, %bb.
 cf_setup_add_haproxy.exit.thread.i.a:             ; preds = %cf_setup_add_haproxy.exit.i
   %.phi.trans.insert62 = getelementptr inbounds nuw i8, ptr %.pre113.i, i64 36
   %.pre63 = load i8, ptr %.phi.trans.insert62, align 4
-  %.pre69 = and i8 %.pre63, 1
-  %8 = icmp eq i8 %.pre69, 0
-  br i1 %8, label %.backedge.i.backedge, label %cf_setup_add_haproxy.exit.thread.i.thread
+  br label %cf_setup_add_haproxy.exit.thread.i
 
-cf_setup_add_haproxy.exit.thread.i.thread:        ; preds = %cf_setup_add_http_proxy.exit.thread.i.thread, %cf_setup_add_haproxy.exit.thread.i.a
+cf_setup_add_haproxy.exit.thread.i:               ; preds = %cf_setup_add_haproxy.exit.thread.i.a, %cf_setup_add_http_proxy.exit.thread.i.thread
+  %5 = phi i8 [ %.pre63, %cf_setup_add_haproxy.exit.thread.i.a ], [ %4, %cf_setup_add_http_proxy.exit.thread.i.thread ] ; 2 uses
+  %.not71.i = trunc i8 %5 to i1
+  br i1 %.not71.i, label %cf_setup_add_haproxy.exit.thread.i.thread, label %.backedge.i.backedge
+
+cf_setup_add_haproxy.exit.thread.i.thread:        ; preds = %cf_setup_add_haproxy.exit.thread.i
   %i.hy = load ptr, ptr %i.a, align 8, !tbaa !14  ; 3 uses
   %i.hz = load i32, ptr %i.hy, align 4, !tbaa !84
   %i.ia = icmp ult i32 %i.hz, 5
-  br i1 %i.ia, label %bb.cr, label %cf_setup_add_origin_filters.exit.thread.i.thread
+  br i1 %i.ia, label %bb.cr, label %cf_setup_add_origin_filters.exit.thread.i
 
 bb.cr:                                            ; preds = %cf_setup_add_haproxy.exit.thread.i.thread
   %i.ib = getelementptr inbounds nuw i8, ptr %i.hy, i64 4
@@ -765,9 +771,8 @@ bb.cs:                                            ; preds = %bb.cr
   %i.if = load ptr, ptr %i.ie, align 8, !tbaa !110
   %i.ig = getelementptr inbounds nuw i8, ptr %i.if, i64 32
   %i.ih = load i32, ptr %i.ig, align 8, !tbaa !113
-  %9 = and i32 %i.ih, 1
-  %.not49.i.i = icmp eq i32 %9, 0
-  br i1 %.not49.i.i, label %cf_setup_add_origin_filters.exit.i, label %bb.ct
+  %.not49.i.i = trunc i32 %i.ih to i1
+  br i1 %.not49.i.i, label %bb.ct, label %cf_setup_add_origin_filters.exit.i
 
 bb.ct:                                            ; preds = %bb.cs, %._crit_edge.i.i
   %i.ii = phi ptr [ %.pre.i89.i, %._crit_edge.i.i ], [ %i.id, %bb.cs ]
@@ -873,14 +878,17 @@ cf_setup_add_origin_filters.exit.i:               ; preds = %bb.dj, %bb.di, %bb.
 cf_setup_add_origin_filters.exit.thread.i.a:      ; preds = %cf_setup_add_origin_filters.exit.i
   %.phi.trans.insert64 = getelementptr inbounds nuw i8, ptr %.pre114.i, i64 36
   %.pre65 = load i8, ptr %.phi.trans.insert64, align 4
-  %.pre71 = and i8 %.pre65, 1
-  %10 = icmp eq i8 %.pre71, 0
-  br i1 %10, label %.backedge.i.backedge, label %cf_setup_add_origin_filters.exit.thread.i.thread
+  br label %cf_setup_add_origin_filters.exit.thread.i
 
-.backedge.i.backedge:                             ; preds = %cf_setup_add_origin_filters.exit.thread.i.a, %cf_setup_add_origin_filters.exit.i, %cf_setup_add_haproxy.exit.thread.i.a, %cf_setup_add_haproxy.exit.i, %cf_setup_add_http_proxy.exit.thread.i.a, %cf_setup_add_http_proxy.exit.i, %cf_setup_add_socks.exit.thread.i.a, %cf_setup_add_socks.exit.i, %bb.ai, %cf_setup_add_ip_happy.exit.i
+cf_setup_add_origin_filters.exit.thread.i:        ; preds = %cf_setup_add_origin_filters.exit.thread.i.a, %cf_setup_add_haproxy.exit.thread.i.thread
+  %6 = phi i8 [ %.pre65, %cf_setup_add_origin_filters.exit.thread.i.a ], [ %5, %cf_setup_add_haproxy.exit.thread.i.thread ]
+  %.not74.i = trunc i8 %6 to i1
+  br i1 %.not74.i, label %cf_setup_add_origin_filters.exit.thread.i.thread, label %.backedge.i.backedge
+
+.backedge.i.backedge:                             ; preds = %cf_setup_add_origin_filters.exit.thread.i, %cf_setup_add_origin_filters.exit.i, %cf_setup_add_haproxy.exit.thread.i, %cf_setup_add_haproxy.exit.i, %cf_setup_add_http_proxy.exit.thread.i, %cf_setup_add_http_proxy.exit.i, %cf_setup_add_socks.exit.thread.i, %cf_setup_add_socks.exit.i, %bb.ai, %cf_setup_add_ip_happy.exit.i
   br label %.backedge.i
 
-cf_setup_add_origin_filters.exit.thread.i.thread: ; preds = %cf_setup_add_haproxy.exit.thread.i.thread, %cf_setup_add_origin_filters.exit.thread.i.a
+cf_setup_add_origin_filters.exit.thread.i.thread: ; preds = %cf_setup_add_origin_filters.exit.thread.i
   store i32 6, ptr %i.k, align 4, !tbaa !84
   %i.jr = load i8, ptr %i.c, align 4
   %i.js = or i8 %i.jr, 1
@@ -936,9 +944,8 @@ bb.dr:                                            ; preds = %bb.dq, %bb.dp, %bb.
   tail call void @Curl_conn_cf_discard_chain(ptr noundef nonnull %i.f, ptr noundef %1) #3
   store i32 0, ptr %i.b, align 4, !tbaa !84
   %i.ki = load i8, ptr %i.c, align 4
-  %11 = and i8 %i.ki, 1
-  %.not.i = icmp eq i8 %11, 0
-  br i1 %.not.i, label %.preheader.i, label %._crit_edge
+  %.not.i = trunc i8 %i.ki to i1
+  br i1 %.not.i, label %._crit_edge, label %.preheader.i
 
 cf_setup_connect_steps.exit.thread:               ; preds = %cf_setup_connect_steps.exit, %bb.dk, %bb.d, %conn_get_first_origin.exit.i.i, %bb.am, %bb.m, %cf_setup_add_origin_filters.exit.thread.i.thread, %bb.cf, %._crit_edge
   %.0 = phi i32 [ 1, %bb.m ], [ 0, %bb.d ], [ 0, %cf_setup_add_origin_filters.exit.thread.i.thread ], [ 1, %bb.cf ], [ 0, %._crit_edge ], [ 2, %bb.am ], [ 2, %conn_get_first_origin.exit.i.i ], [ %.0.i, %cf_setup_connect_steps.exit ], [ 7, %bb.dk ]

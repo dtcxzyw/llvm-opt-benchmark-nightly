@@ -202,7 +202,7 @@ bb.n:                                             ; preds = %bb.m
 
 .lr.ph:                                           ; preds = %bb.n, %.thread108
   %.064125 = phi i64 [ %.165113, %.thread108 ], [ 0, %bb.n ] ; 7 uses
-  %.066124 = phi i32 [ %.167112, %.thread108 ], [ 0, %bb.n ]
+  %.066124 = phi i32 [ %.167112, %.thread108 ], [ 0, %bb.n ] ; 2 uses
   %.068123 = phi i32 [ %.169, %.thread108 ], [ 0, %bb.n ] ; 2 uses
   %.070122 = phi i32 [ %.171107, %.thread108 ], [ 0, %bb.n ]
   %.not91 = icmp eq i32 %.070122, 0
@@ -232,8 +232,8 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.q, %.lr.ph
-  %.not120 = icmp eq i32 %.068123, 0
-  br i1 %.not120, label %bb.s, label %.thread104
+  %2 = trunc nuw i32 %.068123 to i1
+  br i1 %2, label %.thread104, label %bb.s
 
 bb.s:                                             ; preds = %bb.r
   %i.av = call i32 @SSL_write(ptr noundef %i.w, ptr noundef nonnull @msg1, i32 noundef 17) #6
@@ -252,9 +252,9 @@ bb.t:                                             ; preds = %bb.s
 .thread104:                                       ; preds = %.thread, %bb.t, %bb.r
   %.171107 = phi i32 [ 1, %bb.r ], [ 1, %bb.t ], [ 0, %.thread ]
   %.169 = phi i32 [ 1, %bb.r ], [ 1, %bb.t ], [ %.068123, %.thread ] ; 2 uses
-  %2 = icmp ne i32 %.169, 0
-  %i.bb = icmp eq i32 %.066124, 0                 ; 2 uses
-  %or.cond3.not97 = and i1 %i.bb, %2
+  %3 = trunc nuw i32 %.169 to i1
+  %i.bb = icmp eq i32 %.066124, 0
+  %or.cond3.not97 = and i1 %i.bb, %3
   %i.bc = icmp ult i64 %.064125, 15999
   %or.cond5 = select i1 %or.cond3.not97, i1 %i.bc, i1 false
   br i1 %or.cond5, label %bb.u, label %bb.y
@@ -292,7 +292,8 @@ bb.x:                                             ; preds = %bb.u
   br i1 %.not99, label %.loopexit, label %.thread108
 
 bb.y:                                             ; preds = %.thread104
-  br i1 %i.bb, label %.thread108, label %bb.z
+  %.not101 = trunc nuw i32 %.066124 to i1
+  br i1 %.not101, label %bb.z, label %.thread108
 
 bb.z:                                             ; preds = %.thread114, %bb.y
   %i.bq = call i32 @SSL_shutdown(ptr noundef %i.w) #6

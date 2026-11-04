@@ -202,34 +202,38 @@ bb.a:
 bb.b:                                             ; preds = %bb.a, %bb.e
   %.02332 = phi i64 [ 0, %bb.a ], [ %i.i, %bb.e ] ; 3 uses
   %.02531 = phi ptr [ %0, %bb.a ], [ %i.j, %bb.e ] ; 2 uses
-  %i.a = load i8, ptr %.02531, align 1, !tbaa !8  ; 4 uses
-  %2 = zext i8 %i.a to i64
-  %i.b = add i8 %i.a, -48
+  %i.a = load i8, ptr %.02531, align 1, !tbaa !8  ; 5 uses
+  %i.b = add i8 %i.a, -48                         ; 2 uses
   %or.cond = icmp ult i8 %i.b, 10
   br i1 %or.cond, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.c = add i8 %i.a, -65
   %or.cond29 = icmp ult i8 %i.c, 6
-  br i1 %or.cond29, label %bb.e, label %bb.d
+  br i1 %or.cond29, label %2, label %bb.d
+
+2:                                                ; preds = %bb.c
+  %3 = add nsw i8 %i.a, -55
+  br label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.d = add i8 %i.a, -97
   %or.cond30 = icmp ult i8 %i.d, 6
-  br i1 %or.cond30, label %bb.e, label %bb.f
+  br i1 %or.cond30, label %4, label %bb.f
 
-bb.e:                                             ; preds = %bb.d, %bb.c, %bb.b
-  %.sink = phi i64 [ -48, %bb.b ], [ -55, %bb.c ], [ -87, %bb.d ]
-  %3 = add nsw i64 %.sink, %2
-  %4 = shl nuw nsw i64 %.02332, 2
-  %5 = and i64 %4, 4
-  %6 = xor i64 %5, 4
-  %7 = shl nuw nsw i64 %3, %6
+4:                                                ; preds = %bb.d
+  %5 = add nsw i8 %i.a, -87
+  br label %bb.e
+
+bb.e:                                             ; preds = %bb.b, %2, %4
+  %.0 = phi i8 [ %5, %4 ], [ %3, %2 ], [ %i.b, %bb.b ] ; 2 uses
+  %.not = trunc i64 %.02332 to i1
+  %6 = shl nuw i8 %.0, 4
+  %7 = select i1 %.not, i8 %.0, i8 %6
   %i.e = lshr i64 %.02332, 1
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 %i.e ; 2 uses
   %i.g = load i8, ptr %i.f, align 1, !tbaa !8
-  %8 = trunc i64 %7 to i8
-  %i.h = or i8 %i.g, %8
+  %i.h = or i8 %7, %i.g
   store i8 %i.h, ptr %i.f, align 1, !tbaa !8
   %i.i = add nuw nsw i64 %.02332, 1               ; 2 uses
   %i.j = getelementptr inbounds nuw i8, ptr %.02531, i64 1

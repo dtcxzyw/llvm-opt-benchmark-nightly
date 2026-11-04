@@ -202,9 +202,8 @@ declare i32 @UTF8_getc(ptr noundef, i32 noundef, ptr noundef) local_unnamed_addr
 ; Function Attrs: nounwind uwtable
 define dso_local ptr @OPENSSL_uni2utf8(ptr nofree noundef readonly captures(none) %0, i32 noundef %1) local_unnamed_addr #0 !guid !44 {
 bb.a:
-  %2 = and i32 %1, 1
-  %.not = icmp eq i32 %2, 0
-  br i1 %.not, label %.preheader87, label %OPENSSL_uni2asc.exit
+  %.not = trunc i32 %1 to i1
+  br i1 %.not, label %OPENSSL_uni2asc.exit, label %.preheader87
 
 .preheader87:                                     ; preds = %bb.a
   %i.a = icmp sgt i32 %1, 0                       ; 2 uses
@@ -289,22 +288,22 @@ iter.check:                                       ; preds = %.thread83, %.thread
   %i.ap = phi i64 [ %i.am, %.thread ], [ %i.aj, %.thread83 ]
   %i.aq = phi ptr [ %i.an, %.thread ], [ %i.ak, %.thread83 ] ; 5 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 25 uses
-  %3 = add nsw i64 %i.ae, -2                      ; 3 uses
-  %i.as = lshr exact i64 %3, 1
-  %i.at = add nuw i64 %i.as, 1                    ; 4 uses
-  %min.iters.check = icmp ult i64 %3, 16
+  %2 = tail call i64 @llvm.usub.sat.i64(i64 %i.ae, i64 2) ; 3 uses
+  %i.as = lshr exact i64 %2, 1
+  %i.at = add nuw nsw i64 %i.as, 1                ; 4 uses
+  %min.iters.check = icmp samesign ult i64 %2, 16
   br i1 %min.iters.check, label %.lr.ph.i.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %iter.check
-  %min.iters.check105 = icmp ult i64 %3, 32
+  %min.iters.check105 = icmp samesign ult i64 %2, 32
   br i1 %min.iters.check105, label %vec.epilog.ph, label %vector.ph
 
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.au = and i64 %i.at, 15                       ; 2 uses
   %i.av = icmp eq i64 %i.au, 0
   %i.aw = select i1 %i.av, i64 16, i64 %i.au      ; 2 uses
-  %n.vec = sub i64 %i.at, %i.aw                   ; 3 uses
-  %i.ax = shl i64 %n.vec, 1
+  %n.vec = sub nsw i64 %i.at, %i.aw               ; 3 uses
+  %i.ax = shl nsw i64 %n.vec, 1
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.ph, %vector.body
@@ -388,8 +387,8 @@ vec.epilog.ph:                                    ; preds = %vector.main.loop.it
   %i.dm = and i64 %i.at, 7                        ; 2 uses
   %i.dn = icmp eq i64 %i.dm, 0
   %i.do = select i1 %i.dn, i64 8, i64 %i.dm
-  %n.vec106 = sub i64 %i.at, %i.do                ; 2 uses
-  %i.dp = shl i64 %n.vec106, 1
+  %n.vec106 = sub nsw i64 %i.at, %i.do            ; 2 uses
+  %i.dp = shl nsw i64 %n.vec106, 1
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
@@ -681,6 +680,9 @@ declare i32 @UTF8_putc(ptr noundef, i32 noundef, i64 noundef) local_unnamed_addr
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.usub.sat.i64(i64, i64) #4
 
 attributes #0 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

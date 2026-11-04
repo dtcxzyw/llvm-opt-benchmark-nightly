@@ -204,7 +204,6 @@ bb.f:                                             ; preds = %bb.d, %bb.b, %bb.c,
 bb.g:                                             ; preds = %bb.z, %bb.f
   %.sroa.066.0 = phi <2 x float> [ %i.ac, %bb.f ], [ %i.im, %bb.z ] ; 2 uses
   %.sroa.16.0 = phi <2 x float> [ %.sroa.3.12.vec.insert.i, %bb.f ], [ %.sroa.3.12.vec.insert.i56, %bb.z ]
-  %8 = phi i1 [ true, %bb.f ], [ false, %bb.z ]
   %.036 = phi i1 [ false, %bb.f ], [ true, %bb.z ] ; 2 uses
   store float 1.000000e+00, ptr %5, align 4, !tbaa !10
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.bp, i8 0, i64 16, i1 false)
@@ -430,12 +429,13 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.v, %bb.u
   %.0 = phi float [ %i.ia, %bb.v ], [ 0.000000e+00, %bb.u ] ; 2 uses
-  %9 = fcmp ogt float %i.gv, 0.000000e+00
-  %10 = fcmp olt float %i.gv, %.0
-  %or.cond.not110.not114 = select i1 %9, i1 %10, i1 false
-  %brmerge.not111 = and i1 %.029.in, %or.cond.not110.not114
-  %or.cond47 = and i1 %8, %brmerge.not111
-  br i1 %or.cond47, label %bb.x, label %bb.aa
+  %8 = fcmp ule float %i.gv, 0.000000e+00
+  %9 = fcmp uge float %i.gv, %.0
+  %or.cond.not110.not114 = select i1 %8, i1 true, i1 %9
+  %.029.in.not = xor i1 %.029.in, true
+  %brmerge = or i1 %or.cond.not110.not114, %.029.in.not
+  %or.cond47 = or i1 %.036, %brmerge
+  br i1 %or.cond47, label %bb.aa, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
   %i.ib = load i8, ptr %i.cw, align 4, !tbaa !97, !range !42, !noundef !67
@@ -467,6 +467,7 @@ bb.z:                                             ; preds = %bb.y, %bb.x
   br label %bb.g
 
 bb.aa:                                            ; preds = %bb.w, %bb.y
+  %.036.lcssa = phi i1 [ %.036, %bb.w ], [ false, %bb.y ] ; 2 uses
   %i.ir = load ptr, ptr %i.ai, align 8, !tbaa !31 ; 2 uses
   %i.is = getelementptr inbounds nuw i8, ptr %i.ir, i64 224
   %i.it = load i32, ptr %i.is, align 8, !tbaa !77
@@ -483,11 +484,11 @@ bb.ab:                                            ; preds = %bb.aa
   %i.ja = getelementptr inbounds nuw i8, ptr %i.iz, i64 112
   %i.jb = load ptr, ptr %i.ja, align 8
   %i.jc = call noundef zeroext i1 %i.jb(ptr noundef nonnull align 8 dereferenceable(319) %0, ptr noundef nonnull %i.ir, ptr noundef %i.iy)
-  %or.cond48 = or i1 %.036, %i.jc
+  %or.cond48 = or i1 %.036.lcssa, %i.jc
   br i1 %or.cond48, label %bb.ad, label %bb.ai
 
 bb.ac:                                            ; preds = %bb.aa
-  br i1 %.036, label %bb.ad, label %bb.ai
+  br i1 %.036.lcssa, label %bb.ad, label %bb.ai
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %i.jd = getelementptr inbounds nuw i8, ptr %0, i64 152

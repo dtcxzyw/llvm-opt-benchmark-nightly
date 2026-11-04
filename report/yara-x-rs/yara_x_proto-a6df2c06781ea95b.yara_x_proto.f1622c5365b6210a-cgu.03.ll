@@ -204,11 +204,11 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.d = load i32, ptr %i.c, align 8, !range !9, !noundef !5
-  %.not6.i = icmp ne i32 %i.d, 0
+  %1 = trunc nuw i32 %i.d to i1
   br label %_RNvXs6_NtCskIStwd7HrDO_12yara_x_proto9test_jsonNtB5_7MessageNtNtCsg2CeFYmfPbl_8protobuf7message7Message14is_initialized.exit
 
 _RNvXs6_NtCskIStwd7HrDO_12yara_x_proto9test_jsonNtB5_7MessageNtNtCsg2CeFYmfPbl_8protobuf7message7Message14is_initialized.exit: ; preds = %bb.a, %bb.b
-  %.sroa.0.0.i = phi i1 [ %.not6.i, %bb.b ], [ false, %bb.a ]
+  %.sroa.0.0.i = phi i1 [ %1, %bb.b ], [ false, %bb.a ]
   ret i1 %.sroa.0.0.i
 }
 
@@ -611,7 +611,7 @@ bb.a:
   %i.d = tail call noundef nonnull align 8 ptr @_RINvMs4_NtCs69rhaJXEXoX_9once_cell4syncINtB6_8OnceCellNtNtNtCsg2CeFYmfPbl_8protobuf7reflect5enums14EnumDescriptorE15get_or_try_initNCINvB2_11get_or_initNCNvXsb_NtCskIStwd7HrDO_12yara_x_proto9test_jsonNtB2y_4EnumNtNtBW_9enum_full8EnumFull15enum_descriptor0E0NtNvMs4_B6_IBC_pE11get_or_init4VoidEB2A_(ptr noundef nonnull align 8 @_RNvNvXsb_NtCskIStwd7HrDO_12yara_x_proto9test_jsonNtB7_4EnumNtNtCsg2CeFYmfPbl_8protobuf9enum_full8EnumFull15enum_descriptor10descriptor), !noalias !224 ; 3 uses
   %i.e = load i64, ptr %i.d, align 8, !range !10, !noalias !224, !noundef !5
   %i.f = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
-  %i.g = trunc nuw i64 %i.e to i1                 ; 3 uses
+  %i.g = trunc nuw i64 %i.e to i1
   br i1 %i.g, label %bb.b, label %_RNvXsb_NtCskIStwd7HrDO_12yara_x_proto9test_jsonNtB5_4EnumNtNtCsg2CeFYmfPbl_8protobuf9enum_full8EnumFull15enum_descriptor.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -625,7 +625,7 @@ bb.c:                                             ; preds = %bb.b
   unreachable
 
 _RNvXsb_NtCskIStwd7HrDO_12yara_x_proto9test_jsonNtB5_4EnumNtNtCsg2CeFYmfPbl_8protobuf9enum_full8EnumFull15enum_descriptor.exit: ; preds = %bb.a, %bb.b
-  %i.k = phi i64 [ 0, %bb.a ], [ 1, %bb.b ]
+  %i.k = phi i64 [ 0, %bb.a ], [ 1, %bb.b ]       ; 3 uses
   %.sroa.5.0.i = load ptr, ptr %i.f, align 8, !noalias !224, !nonnull !5, !noundef !5 ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.m = load i64, ptr %i.l, align 8, !noalias !224, !noundef !5
@@ -640,7 +640,8 @@ _RNvXsb_NtCskIStwd7HrDO_12yara_x_proto9test_jsonNtB5_4EnumNtNtCsg2CeFYmfPbl_8pro
 bb.d:                                             ; preds = %_RNvXsb_NtCskIStwd7HrDO_12yara_x_proto9test_jsonNtB5_4EnumNtNtCsg2CeFYmfPbl_8protobuf9enum_full8EnumFull15enum_descriptor.exit
   %i.p = landingpad { ptr, i32 }
           cleanup
-  br i1 %i.g, label %bb.e, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsg2CeFYmfPbl_8protobuf7reflect5enums14EnumDescriptorECskIStwd7HrDO_12yara_x_proto.exit
+  %2 = trunc nuw i64 %i.k to i1
+  br i1 %2, label %bb.e, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsg2CeFYmfPbl_8protobuf7reflect5enums14EnumDescriptorECskIStwd7HrDO_12yara_x_proto.exit
 
 bb.e:                                             ; preds = %bb.d
   %i.q = atomicrmw add ptr %.sroa.5.0.i, i64 -1 release, align 8, !noalias !225
@@ -653,7 +654,8 @@ bb.f:                                             ; preds = %bb.e
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsg2CeFYmfPbl_8protobuf7reflect5enums14EnumDescriptorECskIStwd7HrDO_12yara_x_proto.exit unwind label %bb.j
 
 bb.g:                                             ; preds = %_RNvXsb_NtCskIStwd7HrDO_12yara_x_proto9test_jsonNtB5_4EnumNtNtCsg2CeFYmfPbl_8protobuf9enum_full8EnumFull15enum_descriptor.exit
-  br i1 %i.g, label %bb.h, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsg2CeFYmfPbl_8protobuf7reflect5enums14EnumDescriptorECskIStwd7HrDO_12yara_x_proto.exit2
+  %3 = trunc nuw i64 %i.k to i1
+  br i1 %3, label %bb.h, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsg2CeFYmfPbl_8protobuf7reflect5enums14EnumDescriptorECskIStwd7HrDO_12yara_x_proto.exit2
 
 bb.h:                                             ; preds = %bb.g
   %i.s = atomicrmw add ptr %.sroa.5.0.i, i64 -1 release, align 8, !noalias !226
@@ -726,7 +728,7 @@ switch.lookup:
   %i.e = tail call noundef nonnull align 8 ptr @_RINvMs4_NtCs69rhaJXEXoX_9once_cell4syncINtB6_8OnceCellNtNtNtCsg2CeFYmfPbl_8protobuf7reflect5enums14EnumDescriptorE15get_or_try_initNCINvB2_11get_or_initNCNvXsf_NtCskIStwd7HrDO_12yara_x_proto9test_jsonNtB2y_5FlagsNtNtBW_9enum_full8EnumFull15enum_descriptor0E0NtNvMs4_B6_IBC_pE11get_or_init4VoidEB2A_(ptr noundef nonnull align 8 @_RNvNvXsf_NtCskIStwd7HrDO_12yara_x_proto9test_jsonNtB7_5FlagsNtNtCsg2CeFYmfPbl_8protobuf9enum_full8EnumFull15enum_descriptor10descriptor), !noalias !250 ; 3 uses
   %i.f = load i64, ptr %i.e, align 8, !range !10, !noalias !250, !noundef !5
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
-  %i.h = trunc nuw i64 %i.f to i1                 ; 3 uses
+  %i.h = trunc nuw i64 %i.f to i1
   br i1 %i.h, label %bb.a, label %_RNvXsf_NtCskIStwd7HrDO_12yara_x_proto9test_jsonNtB5_5FlagsNtNtCsg2CeFYmfPbl_8protobuf9enum_full8EnumFull15enum_descriptor.exit
 
 bb.a:                                             ; preds = %switch.lookup
@@ -740,7 +742,7 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 _RNvXsf_NtCskIStwd7HrDO_12yara_x_proto9test_jsonNtB5_5FlagsNtNtCsg2CeFYmfPbl_8protobuf9enum_full8EnumFull15enum_descriptor.exit: ; preds = %switch.lookup, %bb.a
-  %i.l = phi i64 [ 0, %switch.lookup ], [ 1, %bb.a ]
+  %i.l = phi i64 [ 0, %switch.lookup ], [ 1, %bb.a ] ; 3 uses
   %.sroa.5.0.i = load ptr, ptr %i.g, align 8, !noalias !250, !nonnull !5, !noundef !5 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.n = load i64, ptr %i.m, align 8, !noalias !250, !noundef !5
@@ -755,7 +757,8 @@ _RNvXsf_NtCskIStwd7HrDO_12yara_x_proto9test_jsonNtB5_5FlagsNtNtCsg2CeFYmfPbl_8pr
 bb.c:                                             ; preds = %_RNvXsf_NtCskIStwd7HrDO_12yara_x_proto9test_jsonNtB5_5FlagsNtNtCsg2CeFYmfPbl_8protobuf9enum_full8EnumFull15enum_descriptor.exit
   %i.q = landingpad { ptr, i32 }
           cleanup
-  br i1 %i.h, label %bb.d, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsg2CeFYmfPbl_8protobuf7reflect5enums14EnumDescriptorECskIStwd7HrDO_12yara_x_proto.exit
+  %2 = trunc nuw i64 %i.l to i1
+  br i1 %2, label %bb.d, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsg2CeFYmfPbl_8protobuf7reflect5enums14EnumDescriptorECskIStwd7HrDO_12yara_x_proto.exit
 
 bb.d:                                             ; preds = %bb.c
   %i.r = atomicrmw add ptr %.sroa.5.0.i, i64 -1 release, align 8, !noalias !251
@@ -768,7 +771,8 @@ bb.e:                                             ; preds = %bb.d
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsg2CeFYmfPbl_8protobuf7reflect5enums14EnumDescriptorECskIStwd7HrDO_12yara_x_proto.exit unwind label %bb.i
 
 bb.f:                                             ; preds = %_RNvXsf_NtCskIStwd7HrDO_12yara_x_proto9test_jsonNtB5_5FlagsNtNtCsg2CeFYmfPbl_8protobuf9enum_full8EnumFull15enum_descriptor.exit
-  br i1 %i.h, label %bb.g, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsg2CeFYmfPbl_8protobuf7reflect5enums14EnumDescriptorECskIStwd7HrDO_12yara_x_proto.exit2
+  %3 = trunc nuw i64 %i.l to i1
+  br i1 %3, label %bb.g, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsg2CeFYmfPbl_8protobuf7reflect5enums14EnumDescriptorECskIStwd7HrDO_12yara_x_proto.exit2
 
 bb.g:                                             ; preds = %bb.f
   %i.t = atomicrmw add ptr %.sroa.5.0.i, i64 -1 release, align 8, !noalias !252

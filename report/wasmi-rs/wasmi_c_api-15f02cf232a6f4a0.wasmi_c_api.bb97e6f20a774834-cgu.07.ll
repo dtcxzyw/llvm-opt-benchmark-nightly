@@ -202,8 +202,8 @@ bb.e:                                             ; preds = %bb.j, %bb.i, %bb.h,
   call void @llvm.experimental.noalias.scope.decl(metadata !83)
   call void @llvm.experimental.noalias.scope.decl(metadata !84)
   %i.v = load i8, ptr %i.d, align 8, !range !8, !alias.scope !85, !noundef !5
-  %3 = icmp eq i8 %i.v, 0
-  br i1 %3, label %.body, label %bb.f
+  %3 = trunc nuw i8 %i.v to i1
+  br i1 %3, label %bb.f, label %.body
 
 bb.f:                                             ; preds = %.body.i
   call void @llvm.experimental.noalias.scope.decl(metadata !86)
@@ -295,8 +295,8 @@ bb.q:                                             ; preds = %bb.b
   call void @llvm.experimental.noalias.scope.decl(metadata !95)
   call void @llvm.experimental.noalias.scope.decl(metadata !96)
   %i.at = load i8, ptr %1, align 8, !range !8, !alias.scope !97, !noundef !5
-  %4 = icmp eq i8 %i.at, 0
-  br i1 %4, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit, label %bb.r
+  %4 = trunc nuw i8 %i.at to i1
+  br i1 %4, label %bb.r, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit
 
 bb.r:                                             ; preds = %.body
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -372,8 +372,8 @@ bb.z:                                             ; preds = %bb.y
   call void @llvm.experimental.noalias.scope.decl(metadata !103)
   call void @llvm.experimental.noalias.scope.decl(metadata !104)
   %i.bk = load i8, ptr %i.e, align 8, !range !8, !alias.scope !105, !noundef !5
-  %5 = icmp eq i8 %i.bk, 0
-  br i1 %5, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit.i16, label %bb.aa
+  %5 = trunc nuw i8 %i.bk to i1
+  br i1 %5, label %bb.aa, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit.i16
 
 bb.aa:                                            ; preds = %bb.z
   %i.bl = getelementptr inbounds nuw i8, ptr %i.e, i64 8 ; 2 uses
@@ -431,8 +431,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsefoF4u9kbII_5wasmi4func24HostFunc
   call void @llvm.experimental.noalias.scope.decl(metadata !120)
   call void @llvm.experimental.noalias.scope.decl(metadata !121)
   %i.bx = load i8, ptr %1, align 8, !range !8, !alias.scope !122, !noundef !5
-  %6 = icmp eq i8 %i.bx, 0
-  br i1 %6, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit20, label %bb.ag
+  %6 = trunc nuw i8 %i.bx to i1
+  br i1 %6, label %bb.ag, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit20
 
 bb.ag:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsefoF4u9kbII_5wasmi4func24HostFuncTrampolineEntityuEECsg6ypMx2A1Am_11wasmi_c_api.exit
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -608,8 +608,8 @@ bb.k:                                             ; preds = %bb.j
   call void @llvm.experimental.noalias.scope.decl(metadata !196)
   call void @llvm.experimental.noalias.scope.decl(metadata !197)
   %i.aq = load i8, ptr %i.e, align 8, !range !8, !alias.scope !198, !noundef !5
-  %3 = icmp eq i8 %i.aq, 0
-  br i1 %3, label %.body, label %bb.l
+  %3 = trunc nuw i8 %i.aq to i1
+  br i1 %3, label %bb.l, label %.body
 
 bb.l:                                             ; preds = %.body.i
   call void @llvm.experimental.noalias.scope.decl(metadata !199)
@@ -652,8 +652,8 @@ bb.q:                                             ; preds = %bb.b
   call void @llvm.experimental.noalias.scope.decl(metadata !204)
   call void @llvm.experimental.noalias.scope.decl(metadata !205)
   %i.ax = load i8, ptr %1, align 8, !range !8, !alias.scope !206, !noundef !5
-  %4 = icmp eq i8 %i.ax, 0
-  br i1 %4, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit, label %bb.r
+  %4 = trunc nuw i8 %i.ax to i1
+  br i1 %4, label %bb.r, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit
 
 bb.r:                                             ; preds = %.body
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -719,8 +719,8 @@ bb.z:                                             ; preds = %bb.y
   call void @llvm.experimental.noalias.scope.decl(metadata !212)
   call void @llvm.experimental.noalias.scope.decl(metadata !213)
   %i.bn = load i8, ptr %i.f, align 8, !range !8, !alias.scope !214, !noundef !5
-  %5 = icmp eq i8 %i.bn, 0
-  br i1 %5, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit.i16, label %bb.aa
+  %5 = trunc nuw i8 %i.bn to i1
+  br i1 %5, label %bb.aa, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit.i16
 
 bb.aa:                                            ; preds = %bb.z
   %i.bo = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
@@ -778,8 +778,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsefoF4u9kbII_5wasmi4func24HostFunc
   call void @llvm.experimental.noalias.scope.decl(metadata !229)
   call void @llvm.experimental.noalias.scope.decl(metadata !230)
   %i.ca = load i8, ptr %1, align 8, !range !8, !alias.scope !231, !noundef !5
-  %6 = icmp eq i8 %i.ca, 0
-  br i1 %6, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit20, label %bb.ag
+  %6 = trunc nuw i8 %i.ca to i1
+  br i1 %6, label %bb.ag, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit20
 
 bb.ag:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsefoF4u9kbII_5wasmi4func24HostFuncTrampolineEntityuEECsg6ypMx2A1Am_11wasmi_c_api.exit
   %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -915,8 +915,8 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !280)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !281)
   %i.a = load i8, ptr %0, align 8, !range !8, !alias.scope !282, !noundef !5
-  %1 = icmp eq i8 %i.a, 0
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit, label %bb.b
+  %1 = trunc nuw i8 %i.a to i1
+  br i1 %1, label %bb.b, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -1058,8 +1058,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !317)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !318)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !319)
-  %1 = icmp eq i8 %i.a, 0
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit.i.i.i, label %bb.c
+  %1 = trunc nuw i8 %i.a to i1
+  br i1 %1, label %bb.c, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit.i.i.i
 
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -1462,7 +1462,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !518)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !519
-  %i.i = trunc nuw i8 %i.d to i1                  ; 2 uses
+  %i.i = trunc nuw i8 %i.d to i1
   br i1 %i.i, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -1494,7 +1494,7 @@ bb.f:                                             ; preds = %bb.g, %bb.e
   %.sroa.6.sroa.0.0.i = phi i8 [ %.sroa.6.sroa.0.0.extract.trunc.i, %bb.g ], [ %i.s, %bb.e ]
   %.sroa.9.0.i = phi i32 [ undef, %bb.g ], [ %.sroa.46.0.copyload.i, %bb.e ]
   %.sroa.5.0.i = phi i8 [ undef, %bb.g ], [ %i.q, %bb.e ]
-  %.sroa.0.0.copyload9 = phi i8 [ 1, %bb.g ], [ 0, %bb.e ] ; 2 uses
+  %.sroa.0.0.copyload9 = phi i8 [ 1, %bb.g ], [ 0, %bb.e ] ; 3 uses
   %.sroa.10.0.in.i = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.sroa.10.0.i = load i64, ptr %.sroa.10.0.in.i, align 8, !alias.scope !518
   %.sroa.6.sroa.5.0.insert.shift.i = shl nuw i16 %.sroa.6.sroa.5.0.i, 8
@@ -1526,7 +1526,8 @@ bb.h:                                             ; preds = %bb.d
   unreachable
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsg6ypMx2A1Am_11wasmi_c_api3vec18wasm_valtype_vec_tEBF_.exit.i: ; preds = %bb.m, %bb.k
-  br i1 %i.i, label %bb.i, label %.body7
+  %1 = trunc nuw i8 %.sroa.0.0.copyload9 to i1
+  br i1 %1, label %bb.i, label %.body7
 
 bb.i:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsg6ypMx2A1Am_11wasmi_c_api3vec18wasm_valtype_vec_tEBF_.exit.i
   %i.y = atomicrmw add ptr %i.v, i64 -1 release, align 8, !noalias !521
@@ -1677,8 +1678,8 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !546)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !547)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !548)
-  %1 = icmp eq i8 %i.a, 0
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit.i.i.i.i.i, label %bb.c
+  %1 = trunc nuw i8 %i.a to i1
+  br i1 %1, label %bb.c, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsefoF4u9kbII_5wasmi4func2ty8FuncTypeECsg6ypMx2A1Am_11wasmi_c_api.exit.i.i.i.i.i
 
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses

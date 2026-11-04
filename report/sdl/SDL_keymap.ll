@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = and i16 %spec.select.i, 768
   %.not6.i = icmp eq i16 %i.e, 0
   %i.f = or i16 %spec.select.i, 768
-  %.1.i = select i1 %.not6.i, i16 %spec.select.i, i16 %i.f ; 4 uses
+  %.1.i = select i1 %.not6.i, i16 %spec.select.i, i16 %i.f ; 5 uses
   %i.g = zext nneg i16 %.1.i to i32               ; 8 uses
   %i.h = shl nuw nsw i32 %i.g, 16
   %i.i = or i32 %i.h, %1
@@ -226,7 +226,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not70, label %.thread97, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.q = and i16 %.1.i, 8192                      ; 3 uses
+  %i.q = and i16 %.1.i, 8192                      ; 2 uses
   %.not71.not = icmp eq i16 %i.q, 0               ; 4 uses
   %i.r = zext nneg i16 %i.q to i32                ; 16 uses
   %i.s = and i32 %i.g, 4
@@ -299,7 +299,8 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.aw, label %.split110.us, label %bb.k
 
 bb.k:                                             ; preds = %.thread93.us.peel
-  %.not72.us.peel = icmp eq i16 %i.q, 0
+  %3 = and i16 %.1.i, 8192
+  %.not72.us.peel = icmp eq i16 %3, 0
   br i1 %.not72.us.peel, label %.thread97, label %.thread.us
 
 .thread.us:                                       ; preds = %bb.k

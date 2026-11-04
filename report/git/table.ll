@@ -202,50 +202,63 @@ define internal i32 @table_iter_seek_void(ptr noundef %0, ptr noundef %1) #1 {
 bb.a:
   %2 = alloca %struct.reftable_record, align 8    ; 7 uses
   %3 = alloca %struct.reftable_record, align 8    ; 10 uses
-  %.val13.i = load i8, ptr %1, align 8, !tbaa !49 ; 2 uses
-  %i.a = load ptr, ptr %0, align 8, !tbaa !35     ; 2 uses
+  %.val13.i = load i8, ptr %1, align 8, !tbaa !49
+  %i.a = load ptr, ptr %0, align 8, !tbaa !35     ; 9 uses
   switch i8 %.val13.i, label %bb.b [
-    i8 114, label %table_offsets_for.exit.i.i
-    i8 103, label %4
+    i8 114, label %table_offsets_for.exit.thread.i
+    i8 103, label %table_offsets_for.exit.i.i
     i8 111, label %bb.c
   ]
+
+table_offsets_for.exit.thread.i:                  ; preds = %bb.a
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 80 ; 3 uses
+  %5 = load i64, ptr %4, align 8, !tbaa !74
+  %.not23.i = icmp eq i64 %5, 0
+  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 64
+  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 72
+  %8 = load i64, ptr %7, align 8, !tbaa !50
+  br i1 %.not23.i, label %table_iter_seek_start.exit.i, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   tail call void @abort() #11
   unreachable
 
-4:                                                ; preds = %bb.a
-  br label %table_offsets_for.exit.i.i
-
 bb.c:                                             ; preds = %bb.a
-  br label %table_offsets_for.exit.i.i
+  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 104 ; 3 uses
+  %10 = load i64, ptr %9, align 8, !tbaa !74
+  %.not21.i = icmp eq i64 %10, 0
+  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 88
+  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 96
+  %13 = load i64, ptr %12, align 8, !tbaa !50
+  br i1 %.not21.i, label %table_iter_seek_start.exit.i, label %bb.d
 
-table_offsets_for.exit.i.i:                       ; preds = %bb.c, %4, %bb.a
-  %.sink.i = phi i64 [ 128, %4 ], [ 104, %bb.c ], [ 80, %bb.a ]
-  %.sink.i.i.i = phi i64 [ 112, %4 ], [ 88, %bb.c ], [ 64, %bb.a ]
-  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sink.i ; 2 uses
+table_offsets_for.exit.i.i:                       ; preds = %bb.a
+  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 128 ; 3 uses
   %.in.in.i = load i64, ptr %i.b, align 8, !tbaa !74
   %.in.not.i = icmp eq i64 %.in.in.i, 0
-  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 %.sink.i.i.i ; 2 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 8
+  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 112
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 120
   %i.e = load i64, ptr %i.d, align 8, !tbaa !50
   br i1 %.in.not.i, label %table_iter_seek_start.exit.i, label %bb.d
 
-bb.d:                                             ; preds = %table_offsets_for.exit.i.i
-  %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 16
+bb.d:                                             ; preds = %table_offsets_for.exit.i.i, %bb.c, %table_offsets_for.exit.thread.i
+  %14 = phi ptr [ %11, %bb.c ], [ %i.c, %table_offsets_for.exit.i.i ], [ %6, %table_offsets_for.exit.thread.i ]
+  %15 = phi ptr [ %9, %bb.c ], [ %i.b, %table_offsets_for.exit.i.i ], [ %4, %table_offsets_for.exit.thread.i ]
+  %i.f = getelementptr inbounds nuw i8, ptr %14, i64 16
   %i.g = load i64, ptr %i.f, align 8, !tbaa !74   ; 2 uses
   %i.h = icmp eq i64 %i.g, 0
   br i1 %i.h, label %table_iter_seek_start.exit.thread.thread.i, label %table_iter_seek_start.exit.i
 
-table_iter_seek_start.exit.i:                     ; preds = %bb.d, %table_offsets_for.exit.i.i
-  %.010.i.i = phi i8 [ %.val13.i, %table_offsets_for.exit.i.i ], [ 105, %bb.d ]
-  %.0.i.i = phi i64 [ %i.e, %table_offsets_for.exit.i.i ], [ %i.g, %bb.d ]
+table_iter_seek_start.exit.i:                     ; preds = %bb.d, %table_offsets_for.exit.i.i, %bb.c, %table_offsets_for.exit.thread.i
+  %16 = phi ptr [ %i.b, %table_offsets_for.exit.i.i ], [ %15, %bb.d ], [ %9, %bb.c ], [ %4, %table_offsets_for.exit.thread.i ]
+  %.010.i.i = phi i8 [ 103, %table_offsets_for.exit.i.i ], [ 105, %bb.d ], [ 111, %bb.c ], [ 114, %table_offsets_for.exit.thread.i ]
+  %.0.i.i = phi i64 [ %i.e, %table_offsets_for.exit.i.i ], [ %i.g, %bb.d ], [ %13, %bb.c ], [ %8, %table_offsets_for.exit.thread.i ]
   %i.i = tail call fastcc i32 @table_iter_seek_to(ptr noundef nonnull %0, i64 noundef %.0.i.i, i8 noundef zeroext %.010.i.i) ; 2 uses
   %i.j = icmp slt i32 %i.i, 0
   br i1 %i.j, label %table_iter_seek.exit, label %table_iter_seek_start.exit.thread.i
 
 table_iter_seek_start.exit.thread.i:              ; preds = %table_iter_seek_start.exit.i
-  %.pre.i = load i64, ptr %i.b, align 8, !tbaa !74
+  %.pre.i = load i64, ptr %16, align 8, !tbaa !74
   %i.k = icmp eq i64 %.pre.i, 0
   br i1 %i.k, label %bb.o, label %table_iter_seek_start.exit.thread.thread.i
 

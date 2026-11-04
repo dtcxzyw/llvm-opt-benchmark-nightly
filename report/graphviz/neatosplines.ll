@@ -205,9 +205,8 @@ middle.block:                                     ; preds = %vector.body
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %vector.scevcheck, %gv_calloc.exit.split.us.split, %middle.block
   %.0270325.us.ph = phi i64 [ 0, %vector.memcheck ], [ 0, %vector.scevcheck ], [ 0, %gv_calloc.exit.split.us.split ], [ %n.vec, %middle.block ] ; 5 uses
   %.neg = or disjoint i64 %.0270325.us.ph, 1
-  %xtraiter = and i64 %.0267353, 1
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %scalar.ph.prol.loopexit, label %scalar.ph.prol
+  %lcmp.mod.not = trunc i64 %.0267353 to i1
+  br i1 %lcmp.mod.not, label %scalar.ph.prol, label %scalar.ph.prol.loopexit
 
 scalar.ph.prol:                                   ; preds = %scalar.ph.preheader
   %i.es = getelementptr inbounds nuw [16 x i8], ptr %.0269351, i64 %.0270325.us.ph
@@ -610,13 +609,12 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.f, label %.lr.ph.preheader.i, label %.thread.i.i
 
 .lr.ph.preheader.i:                               ; preds = %.loopexit
-  %wide.trip.count.i = zext nneg i32 %2 to i64    ; 2 uses
-  %xtraiter = and i64 %wide.trip.count.i, 1
   %i.y = icmp eq i32 %2, 1
   br i1 %i.y, label %.lr.ph.i.epil.preheader, label %.lr.ph.preheader.i.new
 
 .lr.ph.preheader.i.new:                           ; preds = %.lr.ph.preheader.i
-  %unroll_iter = and i64 %wide.trip.count.i, 2147483646
+  %6 = and i32 %2, 2147483646
+  %unroll_iter = zext nneg i32 %6 to i64
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.h, %.lr.ph.preheader.i.new
@@ -660,8 +658,8 @@ bb.h:                                             ; preds = %bb.g, %.lr.ph.i.1
   br i1 %niter.ncmp.1, label %._crit_edge.i.unr-lcssa, label %.lr.ph.i, !llvm.loop !142
 
 ._crit_edge.i.unr-lcssa:                          ; preds = %bb.h
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.i, label %.lr.ph.i.epil.preheader
+  %lcmp.mod.not = trunc i32 %2 to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i.epil.preheader, label %._crit_edge.i
 
 .lr.ph.i.epil.preheader:                          ; preds = %._crit_edge.i.unr-lcssa, %.lr.ph.preheader.i
   %indvars.iv.i.epil.init = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i.1, %._crit_edge.i.unr-lcssa ] ; 3 uses
@@ -1064,9 +1062,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %.084.i = phi i1 [ true, %bb.e ], [ false, %bb.d ] ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 132
   %i.q = load i32, ptr %i.p, align 4, !tbaa !179
-  %1 = and i32 %i.q, 1
-  %.not103.i = icmp eq i32 %1, 0                  ; 2 uses
-  br i1 %.not103.i, label %bb.h, label %bb.g
+  %.not103.i = trunc i32 %i.q to i1               ; 2 uses
+  br i1 %.not103.i, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.r = getelementptr inbounds nuw i8, ptr %i.o, i64 48 ; 2 uses
@@ -1169,7 +1166,7 @@ bb.t:                                             ; preds = %bb.s, %bb.r, %bb.p,
   %i.bq = insertelement <2 x i1> poison, i1 %.not103.i, i64 0
   %i.br = shufflevector <2 x i1> %i.bq, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.bs = shufflevector <2 x double> %i.bp, <2 x double> poison, <2 x i32> <i32 1, i32 0>
-  %i.bt = select <2 x i1> %i.br, <2 x double> %i.bp, <2 x double> %i.bs ; 11 uses
+  %i.bt = select <2 x i1> %i.br, <2 x double> %i.bp, <2 x double> %i.bs ; 10 uses
   %i.bu = load i32, ptr @Nop, align 4, !tbaa !68
   %i.bv = icmp sgt i32 %i.bu, 1
   br i1 %i.bv, label %bb.u, label %.loopexit.i
@@ -1180,11 +1177,14 @@ bb.u:                                             ; preds = %bb.t
   br i1 %.not105111.i, label %.loopexit.i, label %.lr.ph114.i
 
 .lr.ph114.i:                                      ; preds = %bb.u
-  %i.bx = fadd <2 x double> %i.bt, splat (double -1.000000e+00) ; 2 uses
+  %i.bx = fadd <2 x double> %i.bt, splat (double -1.000000e+00)
+  %1 = shufflevector <2 x double> %i.bx, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
+  %2 = shufflevector <2 x double> %i.bt, <2 x double> poison, <2 x i32> <i32 1, i32 0> ; 2 uses
+  %broadcast.splat57 = shufflevector <2 x double> %i.bt, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %broadcast.splat57.a = shufflevector <2 x double> %i.bt, <2 x double> poison, <2 x i32> zeroinitializer
   %broadcast.splat59 = shufflevector <2 x double> %i.bt, <2 x double> poison, <2 x i32> <i32 1, i32 1>
   %broadcast.splat41 = shufflevector <2 x double> %i.bt, <2 x double> poison, <2 x i32> zeroinitializer
-  %broadcast.splat43 = shufflevector <2 x double> %i.bt, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %3 = shufflevector <2 x double> %i.bt, <2 x double> poison, <2 x i32> <i32 1, i32 0>
   br label %bb.v
 
 bb.v:                                             ; preds = %._crit_edge.i, %.lr.ph114.i
@@ -1214,7 +1214,7 @@ bb.w:                                             ; preds = %.lr.ph.i
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 176
   %i.cm = load ptr, ptr %i.cl, align 8, !tbaa !94
   %i.cn = load <2 x double>, ptr %i.cm, align 8, !tbaa !14
-  %i.co = fmul <2 x double> %i.bx, %i.cn
+  %i.co = fmul <2 x double> %1, %i.cn
   %i.cp = fmul <2 x double> %i.co, splat (double 7.200000e+01) ; 5 uses
   %i.cq = icmp eq i32 %i.ce, 3
   %i.cr = select i1 %i.cq, i64 56, i64 120
@@ -1225,7 +1225,7 @@ bb.w:                                             ; preds = %.lr.ph.i
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 176
   %i.cx = load ptr, ptr %i.cw, align 8, !tbaa !94
   %i.cy = load <2 x double>, ptr %i.cx, align 8, !tbaa !14
-  %i.cz = fmul <2 x double> %i.bx, %i.cy
+  %i.cz = fmul <2 x double> %1, %i.cy
   %i.da = fmul <2 x double> %i.cz, splat (double 7.200000e+01) ; 9 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
   %i.dc = load i64, ptr %i.db, align 8, !tbaa !73 ; 3 uses
@@ -1285,8 +1285,8 @@ vector.body60:                                    ; preds = %vector.body60, %vec
   %strided.vec66 = shufflevector <4 x double> %wide.vec64, <4 x double> poison, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.dq = fadd <2 x double> %broadcast.splat53, %strided.vec65
   %i.dr = fadd <2 x double> %broadcast.splat55, %strided.vec66
-  %i.ds = fmul <2 x double> %broadcast.splat57.a, %strided.vec65
-  %i.dt = fmul <2 x double> %broadcast.splat59, %strided.vec66
+  %i.ds = fmul <2 x double> %broadcast.splat57, %strided.vec65
+  %i.dt = fmul <2 x double> %broadcast.splat57.a, %strided.vec66
   %i.du = select <2 x i1> %i.dp, <2 x double> %i.dq, <2 x double> %i.ds
   %i.dv = select <2 x i1> %i.dp, <2 x double> %i.dr, <2 x double> %i.dt
   %interleaved.vec67 = shufflevector <2 x double> %i.du, <2 x double> %i.dv, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
@@ -1334,8 +1334,8 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %strided.vec44 = shufflevector <4 x double> %wide.vec, <4 x double> poison, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.ee = fadd <2 x double> %broadcast.splat37, %strided.vec
   %i.ef = fadd <2 x double> %broadcast.splat39, %strided.vec44
-  %i.eg = fmul <2 x double> %broadcast.splat41, %strided.vec
-  %i.eh = fmul <2 x double> %broadcast.splat43, %strided.vec44
+  %i.eg = fmul <2 x double> %broadcast.splat59, %strided.vec
+  %i.eh = fmul <2 x double> %broadcast.splat41, %strided.vec44
   %i.ei = select <2 x i1> %i.ed, <2 x double> %i.ee, <2 x double> %i.eg
   %i.ej = select <2 x i1> %i.ed, <2 x double> %i.ef, <2 x double> %i.eh
   %interleaved.vec = shufflevector <2 x double> %i.ei, <2 x double> %i.ej, <4 x i32> <i32 0, i32 2, i32 1, i32 3>
@@ -1361,7 +1361,7 @@ middle.block:                                     ; preds = %vector.body
   %or.cond.us.i.i = icmp eq i64 %i.el, 0
   %i.em = load <2 x double>, ptr %.07283.us.i.i, align 8, !tbaa !14 ; 2 uses
   %i.en = fadd <2 x double> %i.da, %i.em
-  %i.eo = fmul <2 x double> %i.bt, %i.em
+  %i.eo = fmul <2 x double> %2, %i.em
   %i.ep = insertelement <2 x i1> poison, i1 %or.cond.us.i.i, i64 0
   %i.eq = shufflevector <2 x i1> %i.ep, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.er = select <2 x i1> %i.eq, <2 x double> %i.en, <2 x double> %i.eo
@@ -1399,7 +1399,7 @@ bb.y:                                             ; preds = %._crit_edge.loopexi
   %or.cond.i.i = icmp eq i64 %i.ez, 0
   %i.fa = load <2 x double>, ptr %.07283.i.i, align 8, !tbaa !14 ; 2 uses
   %i.fb = fadd <2 x double> %i.da, %i.fa
-  %i.fc = fmul <2 x double> %i.bt, %i.fa
+  %i.fc = fmul <2 x double> %2, %i.fa
   %i.fd = insertelement <2 x i1> poison, i1 %or.cond.i.i, i64 0
   %i.fe = shufflevector <2 x i1> %i.fd, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.ff = select <2 x i1> %i.fe, <2 x double> %i.fb, <2 x double> %i.fc
@@ -1444,7 +1444,7 @@ bb.ad:                                            ; preds = %._crit_edge90.i.i
 bb.ae:                                            ; preds = %bb.ad
   %i.fv = getelementptr inbounds nuw i8, ptr %i.dg, i64 72 ; 2 uses
   %i.fw = load <2 x double>, ptr %i.fv, align 8, !tbaa !14
-  %i.fx = fmul <2 x double> %i.bt, %i.fw
+  %i.fx = fmul <2 x double> %3, %i.fw
   store <2 x double> %i.fx, ptr %i.fv, align 8, !tbaa !14
   br label %bb.af
 
@@ -1499,16 +1499,20 @@ scaleEdge.exit.i:                                 ; preds = %bb.ak, %bb.aj, %bb.
 .loopexit.i:                                      ; preds = %._crit_edge.i, %bb.u, %bb.t
   %i.gq = tail call ptr @agfstnode(ptr noundef nonnull %0) #19 ; 2 uses
   %.not106115.i = icmp eq ptr %i.gq, null
-  br i1 %.not106115.i, label %._crit_edge119.i, label %.lr.ph118.i
+  br i1 %.not106115.i, label %._crit_edge119.i, label %.lr.ph118.i.preheader
 
-.lr.ph118.i:                                      ; preds = %.loopexit.i, %.lr.ph118.i
-  %.186116.i = phi ptr [ %i.gx, %.lr.ph118.i ], [ %i.gq, %.loopexit.i ] ; 2 uses
+.lr.ph118.i.preheader:                            ; preds = %.loopexit.i
+  %4 = shufflevector <2 x double> %i.bt, <2 x double> poison, <2 x i32> <i32 1, i32 0>
+  br label %.lr.ph118.i
+
+.lr.ph118.i:                                      ; preds = %.lr.ph118.i.preheader, %.lr.ph118.i
+  %.186116.i = phi ptr [ %i.gx, %.lr.ph118.i ], [ %i.gq, %.lr.ph118.i.preheader ] ; 2 uses
   %i.gr = getelementptr inbounds nuw i8, ptr %.186116.i, i64 16
   %i.gs = load ptr, ptr %i.gr, align 8, !tbaa !26
   %i.gt = getelementptr inbounds nuw i8, ptr %i.gs, i64 176
   %i.gu = load ptr, ptr %i.gt, align 8, !tbaa !94 ; 2 uses
   %i.gv = load <2 x double>, ptr %i.gu, align 8, !tbaa !14
-  %i.gw = fmul <2 x double> %i.bt, %i.gv
+  %i.gw = fmul <2 x double> %4, %i.gv
   store <2 x double> %i.gw, ptr %i.gu, align 8, !tbaa !14
   %i.gx = tail call ptr @agnxtnode(ptr noundef nonnull %0, ptr noundef nonnull %.186116.i) #19 ; 2 uses
   %.not106.i = icmp eq ptr %i.gx, null
@@ -1517,7 +1521,7 @@ scaleEdge.exit.i:                                 ; preds = %bb.ak, %bb.aj, %bb.
 ._crit_edge119.i:                                 ; preds = %.lr.ph118.i, %.loopexit.i
   %i.gy = extractelement <2 x double> %i.bt, i64 0
   %i.gz = extractelement <2 x double> %i.bt, i64 1
-  tail call fastcc void @scaleBB(ptr noundef nonnull %0, double noundef %i.gy, double noundef %i.gz)
+  tail call fastcc void @scaleBB(ptr noundef nonnull %0, double noundef %i.gz, double noundef %i.gy)
   br label %_neato_set_aspect.exit
 
 _neato_set_aspect.exit:                           ; preds = %bb.a, %bb.b, %bb.h, %bb.i, %bb.n, %bb.o, %._crit_edge119.i

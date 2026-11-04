@@ -202,14 +202,18 @@ _ZNK11ast_manager13proof_parents3endEv.exit:      ; preds = %bb.h, %.noexc52
   %.not4378 = icmp eq i32 %i.an, 0
   br i1 %.not4378, label %._crit_edge, label %.lr.ph
 
-._crit_edge:                                      ; preds = %_ZN6spacer18unsat_core_learner9is_b_openEP3app.exit.a, %_ZNK11ast_manager13proof_parents3endEv.exit
-  %.029.lcssa = phi i1 [ true, %_ZNK11ast_manager13proof_parents3endEv.exit ], [ %3, %_ZN6spacer18unsat_core_learner9is_b_openEP3app.exit.a ] ; 2 uses
+._crit_edge.loopexit:                             ; preds = %_ZN6spacer18unsat_core_learner9is_b_openEP3app.exit.a
+  %3 = trunc nuw i8 %4 to i1
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZNK11ast_manager13proof_parents3endEv.exit
+  %.029.lcssa = phi i1 [ true, %_ZNK11ast_manager13proof_parents3endEv.exit ], [ %3, %._crit_edge.loopexit ] ; 2 uses
   invoke void @_ZN8ast_mark4markEP3astb(ptr noundef nonnull align 8 dereferenceable(56) %i.g, ptr noundef %i.j, i1 noundef zeroext %.029.lcssa)
           to label %_ZN6spacer18unsat_core_learner10set_closedEP3appb.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .lr.ph:                                           ; preds = %_ZNK11ast_manager13proof_parents3endEv.exit, %_ZN6spacer18unsat_core_learner9is_b_openEP3app.exit.a
   %.02880 = phi ptr [ %i.av, %_ZN6spacer18unsat_core_learner9is_b_openEP3app.exit.a ], [ %i.ab, %_ZNK11ast_manager13proof_parents3endEv.exit ] ; 2 uses
-  %.02979 = phi i1 [ %3, %_ZN6spacer18unsat_core_learner9is_b_openEP3app.exit.a ], [ true, %_ZNK11ast_manager13proof_parents3endEv.exit ]
+  %.02979 = phi i8 [ %4, %_ZN6spacer18unsat_core_learner9is_b_openEP3app.exit.a ], [ 1, %_ZNK11ast_manager13proof_parents3endEv.exit ] ; 2 uses
   %i.aq = load ptr, ptr %.02880, align 8, !tbaa !129 ; 2 uses
   %i.ar = load ptr, ptr %i.a, align 8, !tbaa !60, !nonnull !26, !align !27
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 80
@@ -221,14 +225,17 @@ _ZNK11ast_manager13proof_parents3endEv.exit:      ; preds = %bb.h, %.noexc52
 
 bb.j:                                             ; preds = %.noexc54
   %i.au = invoke noundef zeroext i1 @_ZNK8ast_mark9is_markedEP3ast(ptr noundef nonnull align 8 dereferenceable(56) %i.g, ptr noundef %i.aq)
-          to label %_ZN6spacer18unsat_core_learner9is_b_openEP3app.exit.a unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %_ZN6spacer18unsat_core_learner9is_b_openEP3app.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-_ZN6spacer18unsat_core_learner9is_b_openEP3app.exit.a: ; preds = %bb.j, %.noexc54
-  %not. = phi i1 [ true, %.noexc54 ], [ %i.au, %bb.j ]
-  %3 = select i1 %not., i1 %.02979, i1 false      ; 2 uses
+_ZN6spacer18unsat_core_learner9is_b_openEP3app.exit: ; preds = %bb.j
+  %spec.select = select i1 %i.au, i8 %.02979, i8 0
+  br label %_ZN6spacer18unsat_core_learner9is_b_openEP3app.exit.a
+
+_ZN6spacer18unsat_core_learner9is_b_openEP3app.exit.a: ; preds = %_ZN6spacer18unsat_core_learner9is_b_openEP3app.exit, %.noexc54
+  %4 = phi i8 [ %.02979, %.noexc54 ], [ %spec.select, %_ZN6spacer18unsat_core_learner9is_b_openEP3app.exit ] ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %.02880, i64 8 ; 2 uses
   %.not43 = icmp eq ptr %i.av, %i.ap
-  br i1 %.not43, label %._crit_edge, label %.lr.ph
+  br i1 %.not43, label %._crit_edge.loopexit, label %.lr.ph
 
 _ZN6spacer18unsat_core_learner10set_closedEP3appb.exit: ; preds = %._crit_edge
   br i1 %.029.lcssa, label %_ZN6spacer18unsat_core_learner20compute_partial_coreEP3app.exit.backedge, label %_ZN6spacer18unsat_core_learner10set_closedEP3appb.exit.thread

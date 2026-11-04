@@ -204,7 +204,7 @@ VP8LoadNewBytes.exit.i109.i:                      ; preds = %bb.be, %bb.bd, %bb.
   %i.jy = zext i32 %i.ju to i64                   ; 2 uses
   %i.jz = lshr i64 %i.jx, %i.jy
   %i.ka = trunc i64 %i.jz to i32
-  %i.kb = icmp ult i32 %i.jw, %i.ka               ; 3 uses
+  %i.kb = icmp ult i32 %i.jw, %i.ka               ; 2 uses
   br i1 %i.kb, label %bb.bf, label %bb.bg
 
 bb.bf:                                            ; preds = %VP8LoadNewBytes.exit.i109.i
@@ -230,11 +230,13 @@ VP8GetBit.exit113.i:                              ; preds = %bb.bg, %bb.bf
   store i32 %i.km, ptr %i.j, align 4, !tbaa !26, !alias.scope !121
   %i.kn = add i32 %i.kl, -1                       ; 2 uses
   store i32 %i.kn, ptr %i.i, align 8, !tbaa !25, !alias.scope !121
-  %.pn143.i = zext i1 %i.kb to i64
+  %.pn143.i = zext i1 %i.kb to i64                ; 2 uses
   %.0.in.in144.i = getelementptr inbounds nuw i8, ptr @kYModesIntra4, i64 %.pn143.i
   %.0.in145.i = load i8, ptr %.0.in.in144.i, align 1, !tbaa !24
   %.0146.i = sext i8 %.0.in145.i to i32           ; 2 uses
-  br i1 %i.kb, label %.lr.ph.i, label %._crit_edge.i
+  %2 = lshr exact i64 41706, %.pn143.i
+  %.not134140.i = trunc i64 %2 to i1
+  br i1 %.not134140.i, label %.lr.ph.i, label %._crit_edge.i
 
 .lr.ph.i:                                         ; preds = %VP8GetBit.exit113.i, %VP8GetBit.exit118.i
   %i.ko = phi i64 [ %i.ls, %VP8GetBit.exit118.i ], [ %i.ki, %VP8GetBit.exit113.i ] ; 2 uses
@@ -313,10 +315,9 @@ VP8GetBit.exit118.i:                              ; preds = %bb.bl, %bb.bk
   %.0.in.in.i = getelementptr inbounds nuw i8, ptr @kYModesIntra4, i64 %.pn.i
   %.0.in.i = load i8, ptr %.0.in.in.i, align 1, !tbaa !24
   %.0.i = sext i8 %.0.in.i to i32                 ; 2 uses
-  %2 = shl nuw i64 1, %.pn.i
-  %3 = and i64 %2, 41706
-  %.not142.i = icmp eq i64 %3, 0
-  br i1 %.not142.i, label %._crit_edge.i, label %.lr.ph.i, !llvm.loop !73
+  %3 = lshr i64 41706, %.pn.i
+  %.not134.i = trunc i64 %3 to i1
+  br i1 %.not134.i, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !73
 
 ._crit_edge.i:                                    ; preds = %VP8GetBit.exit118.i, %VP8GetBit.exit113.i
   %.0.lcssa.i = phi i32 [ %.0146.i, %VP8GetBit.exit113.i ], [ %.0.i, %VP8GetBit.exit118.i ]

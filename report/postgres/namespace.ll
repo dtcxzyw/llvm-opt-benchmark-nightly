@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
 
 bb.f:                                             ; preds = %.lr.ph341, %.thread268
   %indvars.iv367 = phi i64 [ 0, %.lr.ph341 ], [ %indvars.iv.next368, %.thread268 ] ; 2 uses
-  %.0218336 = phi i1 [ false, %.lr.ph341 ], [ %.4, %.thread268 ] ; 11 uses
+  %.0218336 = phi i8 [ 0, %.lr.ph341 ], [ %.4, %.thread268 ] ; 11 uses
   %.0221332 = phi ptr [ null, %.lr.ph341 ], [ %.6, %.thread268 ] ; 26 uses
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.u, i64 %indvars.iv367
   %i.ab = load ptr, ptr %i.aa, align 8            ; 2 uses
@@ -608,13 +608,14 @@ bb.al:                                            ; preds = %bb.ak
   %i.fq = getelementptr inbounds nuw i8, ptr %i.ah, i64 88
   %i.fr = load i32, ptr %i.fq, align 4            ; 2 uses
   %i.fs = icmp ne i32 %i.fr, 0                    ; 2 uses
+  %8 = zext i1 %i.fs to i8
   %i.ft = zext i1 %i.fs to i8
-  %8 = or i1 %.0218336, %i.fs
+  %9 = or i8 %.0218336, %i.ft
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.ak, %bb.al
-  %.1219 = phi i1 [ %8, %bb.al ], [ %.0218336, %bb.ak ] ; 2 uses
-  %.0205 = phi i8 [ %i.ft, %bb.al ], [ 0, %bb.ak ] ; 2 uses
+  %.1219 = phi i8 [ %9, %bb.al ], [ %.0218336, %bb.ak ] ; 2 uses
+  %.0205 = phi i8 [ %8, %bb.al ], [ 0, %bb.ak ]   ; 2 uses
   %.0201 = phi i32 [ %i.fr, %bb.al ], [ 0, %bb.ak ]
   %.not369 = xor i1 %i.fp, true
   %or.cond13 = and i1 %4, %.not369
@@ -629,15 +630,15 @@ bb.an:                                            ; preds = %bb.am
   br i1 %i.fy, label %.thread268, label %bb.ao
 
 bb.ao:                                            ; preds = %bb.am, %bb.an
-  %.2220 = phi i1 [ true, %bb.an ], [ %.1219, %bb.am ] ; 2 uses
+  %.2220 = phi i8 [ 1, %bb.an ], [ %.1219, %bb.am ] ; 2 uses
   %.1204 = phi i8 [ 1, %bb.an ], [ 0, %bb.am ]    ; 2 uses
   br i1 %i.y, label %bb.ap, label %bb.aq
 
 bb.ap:                                            ; preds = %bb.ao
   %i.fz = icmp eq i32 %.1210, %1
   %i.ga = or i8 %.1204, %.0205
-  %9 = icmp ne i8 %i.ga, 0
-  %or.cond17 = select i1 %i.fz, i1 true, i1 %9
+  %10 = trunc nuw i8 %i.ga to i1
+  %or.cond17 = select i1 %i.fz, i1 true, i1 %10
   br i1 %or.cond17, label %bb.aq, label %.thread268
 
 bb.aq:                                            ; preds = %bb.ap, %bb.ao
@@ -649,7 +650,7 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao
 bb.ar:                                            ; preds = %bb.aq, %bb.aj
   %.0263 = phi ptr [ null, %bb.aq ], [ %i.cp, %bb.aj ] ; 7 uses
   %storemerge = phi i32 [ %i.gc, %bb.aq ], [ %i.fo, %bb.aj ]
-  %.3 = phi i1 [ %.2220, %bb.aq ], [ true, %bb.aj ] ; 5 uses
+  %.3 = phi i8 [ %.2220, %bb.aq ], [ 1, %bb.aj ]  ; 4 uses
   %.1206 = phi i1 [ %i.gd, %bb.aq ], [ false, %bb.aj ] ; 2 uses
   %.2 = phi i8 [ %.1204, %bb.aq ], [ %.0203274, %bb.aj ]
   %.1202 = phi i32 [ %.0201, %bb.aq ], [ 0, %bb.aj ] ; 2 uses
@@ -825,14 +826,15 @@ bb.av:                                            ; preds = %.loopexit306
   br i1 %.not251, label %.thread294, label %bb.aw
 
 bb.aw:                                            ; preds = %.loopexit304
-  %or.cond19.not = or i1 %i.v, %.3
+  %11 = trunc nuw i8 %.3 to i1                    ; 2 uses
+  %or.cond19.not = or i1 %i.v, %11
   br i1 %or.cond19.not, label %bb.ax, label %.thread294
 
 bb.ax:                                            ; preds = %bb.aw
   %i.ip = load i8, ptr %i.z, align 1, !range !4, !noundef !5
   %i.iq = trunc nuw i8 %i.ip to i1
   %.not20 = xor i1 %i.iq, true
-  %or.cond22 = or i1 %.3, %.not20
+  %or.cond22 = or i1 %11, %.not20
   br i1 %or.cond22, label %.lr.ph331, label %bb.ay
 
 bb.ay:                                            ; preds = %bb.ax
@@ -951,7 +953,7 @@ bb.bi:                                            ; preds = %bb.bh
 
 .thread268:                                       ; preds = %bb.i, %.lr.ph323, %bb.h, %.lr.ph, %.thread282.thread299, %.thread285, %MatchNamedCall.exit.thread, %bb.ap, %bb.an, %bb.ai, %bb.t, %bb.s, %bb.g, %.thread294
   %.6 = phi ptr [ %.0221332, %.thread285 ], [ %.0221332, %bb.g ], [ %.0221332, %MatchNamedCall.exit.thread ], [ %i.gi, %.thread294 ], [ %.0221332, %.thread282.thread299 ], [ %.0221332, %bb.t ], [ %.0221332, %bb.s ], [ %.0221332, %bb.ai ], [ %.0221332, %bb.an ], [ %.0221332, %bb.ap ], [ %.0221332, %bb.h ], [ %.0221332, %.lr.ph ], [ %.0221332, %.lr.ph323 ], [ %.0221332, %bb.i ] ; 2 uses
-  %.4 = phi i1 [ %.3, %.thread285 ], [ %.0218336, %bb.g ], [ %.0218336, %MatchNamedCall.exit.thread ], [ %.3, %.thread294 ], [ %.3, %.thread282.thread299 ], [ %.0218336, %bb.t ], [ %.0218336, %bb.s ], [ %.0218336, %bb.ai ], [ %.1219, %bb.an ], [ %.2220, %bb.ap ], [ %.0218336, %bb.h ], [ %.0218336, %.lr.ph ], [ %.0218336, %.lr.ph323 ], [ %.0218336, %bb.i ]
+  %.4 = phi i8 [ %.3, %.thread285 ], [ %.0218336, %bb.g ], [ %.0218336, %MatchNamedCall.exit.thread ], [ %.3, %.thread294 ], [ %.3, %.thread282.thread299 ], [ %.0218336, %bb.t ], [ %.0218336, %bb.s ], [ %.0218336, %bb.ai ], [ %.1219, %bb.an ], [ %.2220, %bb.ap ], [ %.0218336, %bb.h ], [ %.0218336, %.lr.ph ], [ %.0218336, %.lr.ph323 ], [ %.0218336, %bb.i ]
   %indvars.iv.next368 = add nuw nsw i64 %indvars.iv367, 1 ; 2 uses
   %i.ka = load i32, ptr %i.r, align 8
   %i.kb = sext i32 %i.ka to i64

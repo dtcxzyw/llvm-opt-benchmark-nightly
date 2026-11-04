@@ -202,9 +202,9 @@ bb.e:                                             ; preds = %bb.d
 _is_local_file.exit:                              ; preds = %bb.e
   %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %i.m = load i32, ptr %i.l, align 8
-  %i.n = add i32 %i.m, -1
-  %narrow.i = icmp ult i32 %i.n, 2
-  br i1 %narrow.i, label %bb.k, label %bb.f
+  %i.n = add i32 %i.m, -3
+  %narrow.i = icmp ult i32 %i.n, -2
+  br i1 %narrow.i, label %bb.f, label %bb.k
 
 .thread75:                                        ; preds = %bb.e, %bb.d
   store i32 0, ptr %1, align 4
@@ -272,9 +272,9 @@ bb.l:                                             ; preds = %bb.k
 _is_local_file.exit68:                            ; preds = %bb.l
   %i.ar = getelementptr inbounds nuw i8, ptr %i.am, i64 8
   %i.as = load i32, ptr %i.ar, align 8
-  %i.at = add i32 %i.as, -1
-  %narrow.i67 = icmp ult i32 %i.at, 2
-  br i1 %narrow.i67, label %.critedge, label %bb.m
+  %i.at = add i32 %i.as, -3
+  %narrow.i67 = icmp ult i32 %i.at, -2
+  br i1 %narrow.i67, label %bb.m, label %.critedge
 
 .thread79:                                        ; preds = %bb.l, %bb.k
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 12
@@ -363,9 +363,9 @@ bb.w:                                             ; preds = %.critedge
 _is_local_file.exit72:                            ; preds = %bb.w
   %i.cd = getelementptr inbounds nuw i8, ptr %i.by, i64 8
   %i.ce = load i32, ptr %i.cd, align 8
-  %i.cf = add i32 %i.ce, -1
-  %narrow.i71 = icmp ult i32 %i.cf, 2
-  br i1 %narrow.i71, label %bb.ab, label %bb.x
+  %i.cf = add i32 %i.ce, -3
+  %narrow.i71 = icmp ult i32 %i.cf, -2
+  br i1 %narrow.i71, label %bb.x, label %bb.ab
 
 bb.x:                                             ; preds = %_is_local_file.exit72
   %i.cg = tail call i32 (ptr, i32, ...) @open(ptr noundef nonnull %i.bz, i32 noundef %.1, i32 noundef 420) #17 ; 2 uses
@@ -768,7 +768,8 @@ bb.aw:                                            ; preds = %bb.av
   %i.em = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.en = load ptr, ptr %i.em, align 8
   %.not92.not = icmp eq i32 %.1, 0
-  %1 = select i1 %.not92.not, i32 3, i32 2
+  %1 = zext i1 %.not92.not to i32
+  %2 = or disjoint i32 %1, 2
   %.not8.i = icmp eq i32 %i.el, 0
   br i1 %.not8.i, label %_update_task_exit_state.exit, label %.lr.ph.preheader.i
 
@@ -780,7 +781,7 @@ bb.aw:                                            ; preds = %bb.av
   %indvars.iv.i112 = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i113, %.lr.ph.i111 ] ; 2 uses
   %i.eo = getelementptr inbounds nuw [4 x i8], ptr %i.en, i64 %indvars.iv.i112
   %i.ep = load i32, ptr %i.eo, align 4
-  call void @task_state_update(ptr noundef nonnull %i.ek, i32 noundef %i.ep, i32 noundef %1) #17
+  call void @task_state_update(ptr noundef nonnull %i.ek, i32 noundef %i.ep, i32 noundef %2) #17
   %indvars.iv.next.i113 = add nuw nsw i64 %indvars.iv.i112, 1 ; 2 uses
   %exitcond.not.i114 = icmp eq i64 %indvars.iv.next.i113, %wide.trip.count.i110
   br i1 %exitcond.not.i114, label %_update_task_exit_state.exit, label %.lr.ph.i111, !llvm.loop !25

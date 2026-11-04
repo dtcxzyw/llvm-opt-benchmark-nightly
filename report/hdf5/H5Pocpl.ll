@@ -204,6 +204,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   %i.aa = call i32 @H5E_clear_stack() #10         ; 0 uses
+  %.not = trunc i32 %1 to i1
   %i.ab = and i32 %1, 3
   %or.cond.not = icmp eq i32 %i.ab, 2
   br i1 %or.cond.not, label %bb.j, label %bb.k, !prof !18
@@ -240,10 +241,12 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.m
   %i.aq = load i8, ptr %i.a, align 1, !tbaa !19
   %i.ar = and i8 %i.aq, -13
+  %3 = select i1 %.not, i8 4, i8 0
   %i.as = trunc i32 %1 to i8
   %.tr = shl i8 %i.as, 2
-  %i.at = and i8 %.tr, 12
-  %i.au = or disjoint i8 %i.at, %i.ar
+  %i.at = and i8 %.tr, 8
+  %4 = or disjoint i8 %i.at, %3
+  %i.au = or disjoint i8 %4, %i.ar
   store i8 %i.au, ptr %i.a, align 1, !tbaa !19
   %i.av = call i32 @H5P_set(ptr noundef nonnull %i.ag, ptr noundef nonnull @.str.16, ptr noundef nonnull %i.a) #10
   %i.aw = icmp slt i32 %i.av, 0

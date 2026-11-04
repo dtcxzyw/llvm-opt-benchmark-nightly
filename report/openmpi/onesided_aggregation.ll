@@ -93,8 +93,8 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b, %bb.a
-  %15 = icmp sgt i32 %3, 0                        ; 2 uses
-  br i1 %15, label %.lr.ph.preheader, label %.critedge
+  %15 = icmp slt i32 %3, 1
+  br i1 %15, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.d
   %i.s = zext nneg i32 %3 to i64
@@ -333,7 +333,7 @@ bb.m:                                             ; preds = %._crit_edge, %bb.l
   br label %bb.n
 
 .preheader1297:                                   ; preds = %bb.q
-  %16 = icmp ne i32 %.11078, 0
+  %16 = trunc nuw i32 %.11078 to i1
   %wide.trip.count1495 = zext nneg i32 %i.bf to i64
   br label %.lr.ph1340
 
@@ -486,8 +486,9 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %._cri
   br label %._crit_edge1358
 
 ._crit_edge1358:                                  ; preds = %.lr.ph1357.preheader, %bb.u
+  %17 = icmp sgt i32 %3, 0
   %i.ev = icmp ne ptr %4, null
-  %or.cond = and i1 %15, %i.ev
+  %or.cond = and i1 %17, %i.ev
   %or.cond3 = select i1 %or.cond, i1 %.01085.lcssa, i1 false ; 2 uses
   br i1 %or.cond3, label %.preheader1295, label %.loopexit1296
 
@@ -890,8 +891,8 @@ bb.a:
   %i.e = alloca i64, align 8                      ; 5 uses
   %i.f = alloca ptr, align 8                      ; 6 uses
   %i.g = alloca ptr, align 8                      ; 6 uses
-  %13 = icmp sgt i32 %3, 0                        ; 2 uses
-  br i1 %13, label %.lr.ph.preheader, label %.critedge
+  %13 = icmp slt i32 %3, 1
+  br i1 %13, label %.critedge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %bb.a
   %i.h = zext nneg i32 %3 to i64
@@ -1065,13 +1066,12 @@ bb.f:                                             ; preds = %bb.e, %ADIOI_OneSid
   br i1 %i.bi, label %.lr.ph1094.preheader, label %._crit_edge
 
 .lr.ph1094.preheader:                             ; preds = %.preheader1063
-  %wide.trip.count1334 = zext nneg i32 %9 to i64  ; 2 uses
-  %xtraiter1777 = and i64 %wide.trip.count1334, 1
   %i.bj = icmp eq i32 %9, 1
   br i1 %i.bj, label %.lr.ph1094.epil.preheader, label %.lr.ph1094.preheader.new
 
 .lr.ph1094.preheader.new:                         ; preds = %.lr.ph1094.preheader
-  %unroll_iter1783 = and i64 %wide.trip.count1334, 2147483646
+  %14 = and i32 %9, 2147483646
+  %unroll_iter1780 = zext nneg i32 %14 to i64
   br label %.lr.ph1094
 
 .lr.ph1090.split:                                 ; preds = %.lr.ph1090.split, %.lr.ph1090.split.preheader.new
@@ -1130,12 +1130,12 @@ bb.f:                                             ; preds = %bb.e, %ADIOI_OneSid
   %.1895.1 = select i1 %i.ch, i64 %i.cj, i64 %.0894..1 ; 3 uses
   %indvars.iv.next1332.1 = add nuw nsw i64 %indvars.iv1331, 2 ; 2 uses
   %niter1784.next.1 = add i64 %niter1784, 2       ; 2 uses
-  %niter1784.ncmp.1 = icmp eq i64 %niter1784.next.1, %unroll_iter1783
+  %niter1784.ncmp.1 = icmp eq i64 %niter1784.next.1, %unroll_iter1780
   br i1 %niter1784.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %.lr.ph1094, !llvm.loop !112
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %.lr.ph1094
-  %lcmp.mod1779.not = icmp eq i64 %xtraiter1777, 0
-  br i1 %lcmp.mod1779.not, label %._crit_edge, label %.lr.ph1094.epil.preheader
+  %lcmp.mod1776.not = trunc i32 %9 to i1
+  br i1 %lcmp.mod1776.not, label %.lr.ph1094.epil.preheader, label %._crit_edge
 
 .lr.ph1094.epil.preheader:                        ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph1094.preheader
   %indvars.iv1331.epil.init = phi i64 [ 0, %.lr.ph1094.preheader ], [ %indvars.iv.next1332.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
@@ -1293,8 +1293,9 @@ bb.i:                                             ; preds = %.lr.ph1121, %._crit
   br label %._crit_edge1130
 
 ._crit_edge1130:                                  ; preds = %.lr.ph1129.preheader, %._crit_edge1126
+  %15 = icmp sgt i32 %3, 0
   %i.ep = icmp ne ptr %4, null
-  %or.cond = and i1 %13, %i.ep
+  %or.cond = and i1 %15, %i.ep
   %or.cond3 = select i1 %or.cond, i1 %.0902.lcssa, i1 false ; 2 uses
   br i1 %or.cond3, label %.preheader1060, label %._crit_edge1130..loopexit1061_crit_edge
 

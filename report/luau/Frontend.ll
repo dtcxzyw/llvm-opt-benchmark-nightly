@@ -204,7 +204,7 @@ _ZNSt6vectorIPN4Luau10SourceNodeESaIS2_EED2Ev.exit157.thread: ; preds = %_ZNKSt6
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph489, %.loopexit313
-  %.042488 = phi i1 [ false, %.lr.ph489 ], [ %.345, %.loopexit313 ] ; 9 uses
+  %.042488 = phi i8 [ 0, %.lr.ph489 ], [ %.345, %.loopexit313 ] ; 9 uses
   %.sroa.0255.1487 = phi ptr [ %i.f, %.lr.ph489 ], [ %.sroa.0255.8, %.loopexit313 ] ; 15 uses
   %.sroa.15.1486 = phi ptr [ %i.h, %.lr.ph489 ], [ %.sroa.15.5, %.loopexit313 ] ; 2 uses
   %.sroa.14.0485 = phi ptr [ null, %.lr.ph489 ], [ %.sroa.14.1, %.loopexit313 ] ; 11 uses
@@ -607,7 +607,8 @@ bb.ah:                                            ; preds = %bb.ag
 
 bb.ai:                                            ; preds = %bb.ah
   %i.hc = icmp eq i32 %i.hb, 1
-  %7 = or i1 %.042488, %i.hc
+  %7 = zext i1 %i.hc to i8
+  %8 = or i8 %.042488, %7
   br label %.loopexit313, !llvm.loop !1331
 
 .loopexit332:                                     ; preds = %bb.ag, %bb.d, %.noexc.i.i, %bb.i, %_ZNKSt6vectorIPN4Luau10SourceNodeESaIS2_EE12_M_check_lenEmPKc.exit.i.i82
@@ -1010,12 +1011,13 @@ _ZN4Luau6detail14DenseHashTableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaI
   %.sroa.14.1 = phi ptr [ %.sroa.14.0485, %bb.ai ], [ %.sroa.14.0485, %.loopexit315 ], [ %.sroa.14.0485, %_ZNKSt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.thread.i.us.i ], [ %.sroa.14.4, %.loopexit329 ], [ %.sroa.14.4, %_ZNKSt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.thread.i.us.i105 ], [ %.sroa.14.0485, %_ZNKSt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.thread.i.i ], [ %.sroa.14.0485, %_ZN4Luau6detail14DenseHashTableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_S7_NS0_16ItemInterfaceSetIS7_EESt4hashIS7_ESt8equal_toIS7_EE8iteratorppEv.exit ], [ %.sroa.14.4, %_ZN4Luau6detail14DenseHashTableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_S7_NS0_16ItemInterfaceSetIS7_EESt4hashIS7_ESt8equal_toIS7_EE8iteratorppEv.exit151 ], [ %.sroa.14.4, %_ZNKSt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.thread.i.i101 ] ; 2 uses
   %.sroa.15.5 = phi ptr [ %i.s, %bb.ai ], [ %i.s, %.loopexit315 ], [ %i.s, %_ZNKSt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.thread.i.us.i ], [ %.sroa.15.7, %.loopexit329 ], [ %.sroa.15.7, %_ZNKSt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.thread.i.us.i105 ], [ %i.s, %_ZNKSt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.thread.i.i ], [ %i.s, %_ZN4Luau6detail14DenseHashTableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_S7_NS0_16ItemInterfaceSetIS7_EESt4hashIS7_ESt8equal_toIS7_EE8iteratorppEv.exit ], [ %.sroa.15.4, %_ZN4Luau6detail14DenseHashTableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_S7_NS0_16ItemInterfaceSetIS7_EESt4hashIS7_ESt8equal_toIS7_EE8iteratorppEv.exit151 ], [ %.sroa.15.7, %_ZNKSt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.thread.i.i101 ] ; 2 uses
   %.sroa.0255.8 = phi ptr [ %.sroa.0255.1487, %bb.ai ], [ %.sroa.0255.1487, %.loopexit315 ], [ %.sroa.0255.1487, %_ZNKSt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.thread.i.us.i ], [ %.sroa.0255.12, %.loopexit329 ], [ %.sroa.0255.12, %_ZNKSt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.thread.i.us.i105 ], [ %.sroa.0255.1487, %_ZNKSt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.thread.i.i ], [ %.sroa.0255.1487, %_ZN4Luau6detail14DenseHashTableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_S7_NS0_16ItemInterfaceSetIS7_EESt4hashIS7_ESt8equal_toIS7_EE8iteratorppEv.exit ], [ %.sroa.0255.6, %_ZN4Luau6detail14DenseHashTableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_S7_NS0_16ItemInterfaceSetIS7_EESt4hashIS7_ESt8equal_toIS7_EE8iteratorppEv.exit151 ], [ %.sroa.0255.12, %_ZNKSt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.thread.i.i101 ] ; 5 uses
-  %.345 = phi i1 [ %7, %bb.ai ], [ %.042488, %.loopexit315 ], [ %.042488, %_ZNKSt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.thread.i.us.i ], [ %.042488, %.loopexit329 ], [ %.042488, %_ZNKSt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.thread.i.us.i105 ], [ %.042488, %_ZNKSt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.thread.i.i ], [ %.042488, %_ZN4Luau6detail14DenseHashTableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_S7_NS0_16ItemInterfaceSetIS7_EESt4hashIS7_ESt8equal_toIS7_EE8iteratorppEv.exit ], [ %.042488, %_ZN4Luau6detail14DenseHashTableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_S7_NS0_16ItemInterfaceSetIS7_EESt4hashIS7_ESt8equal_toIS7_EE8iteratorppEv.exit151 ], [ %.042488, %_ZNKSt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.thread.i.i101 ] ; 2 uses
+  %.345 = phi i8 [ %8, %bb.ai ], [ %.042488, %.loopexit315 ], [ %.042488, %_ZNKSt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.thread.i.us.i ], [ %.042488, %.loopexit329 ], [ %.042488, %_ZNKSt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.thread.i.us.i105 ], [ %.042488, %_ZNKSt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.thread.i.i ], [ %.042488, %_ZN4Luau6detail14DenseHashTableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_S7_NS0_16ItemInterfaceSetIS7_EESt4hashIS7_ESt8equal_toIS7_EE8iteratorppEv.exit ], [ %.042488, %_ZN4Luau6detail14DenseHashTableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES7_S7_NS0_16ItemInterfaceSetIS7_EESt4hashIS7_ESt8equal_toIS7_EE8iteratorppEv.exit151 ], [ %.042488, %_ZNKSt8equal_toINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclERKS5_S8_.exit.thread.i.i101 ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #34
   %i.rb = icmp eq ptr %.sroa.0255.8, %.sroa.15.5
   br i1 %i.rb, label %._crit_edge, label %bb.c
 
 ._crit_edge:                                      ; preds = %.loopexit313
+  %9 = trunc nuw i8 %.345 to i1
   %.not.i.i.i152 = icmp eq ptr %.sroa.0247.1, null
   br i1 %.not.i.i.i152, label %_ZNSt6vectorIPN4Luau10SourceNodeESaIS2_EED2Ev.exit, label %bb.ci
 
@@ -1043,7 +1045,7 @@ _ZNSt6vectorIPN4Luau10SourceNodeESaIS2_EED2Ev.exit154thread-pre-split: ; preds =
 
 _ZNSt6vectorIPN4Luau10SourceNodeESaIS2_EED2Ev.exit154: ; preds = %_ZNSt6vectorIPN4Luau10SourceNodeESaIS2_EED2Ev.exit154thread-pre-split, %bb.b
   %.val65 = phi ptr [ %.val65.pr, %_ZNSt6vectorIPN4Luau10SourceNodeESaIS2_EED2Ev.exit154thread-pre-split ], [ null, %bb.b ] ; 2 uses
-  %.042.lcssa677682 = phi i1 [ %.345, %_ZNSt6vectorIPN4Luau10SourceNodeESaIS2_EED2Ev.exit154thread-pre-split ], [ false, %bb.b ]
+  %.042.lcssa677682 = phi i1 [ %9, %_ZNSt6vectorIPN4Luau10SourceNodeESaIS2_EED2Ev.exit154thread-pre-split ], [ false, %bb.b ]
   %.not.i.i155 = icmp eq ptr %.val65, null
   br i1 %.not.i.i155, label %_ZN4Luau12DenseHashMapIPNS_10SourceNodeEZNS_8Frontend10parseGraphERSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaISA_EERKSA_RKNS_15TypeCheckLimitsEbSt8functionIFbSF_EEE4MarkNS_16DenseHashPointerESt8equal_toIS2_EED2Ev.exit, label %bb.cj
 
@@ -1446,7 +1448,6 @@ bb.b:                                             ; preds = %_ZNSt22_Optional_pa
 
 .lr.ph.i.i.i.preheader:                           ; preds = %.noexc31
   %.pre = load ptr, ptr %i.n, align 8, !tbaa !171 ; 3 uses
-  %xtraiter = and i64 %i.w, 1
   %i.x = icmp eq i64 %i.w, 1
   br i1 %i.x, label %.lr.ph.i.i.i.epil.preheader, label %.lr.ph.i.i.i.preheader.new
 
@@ -1470,8 +1471,8 @@ bb.b:                                             ; preds = %_ZNSt22_Optional_pa
   br i1 %niter.ncmp.1.not, label %_ZN4Luau12DenseHashMapINS_7AstNameEPNS_8AstLocalESt4hashIS1_ESt8equal_toIS1_EEC2ERKS8_.exit.i.loopexit.unr-lcssa, label %.lr.ph.i.i.i, !llvm.loop !43
 
 _ZN4Luau12DenseHashMapINS_7AstNameEPNS_8AstLocalESt4hashIS1_ESt8equal_toIS1_EEC2ERKS8_.exit.i.loopexit.unr-lcssa: ; preds = %.lr.ph.i.i.i
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %_ZN4Luau12DenseHashMapINS_7AstNameEPNS_8AstLocalESt4hashIS1_ESt8equal_toIS1_EEC2ERKS8_.exit.i.loopexit, label %.lr.ph.i.i.i.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.w to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i.i.i.epil.preheader, label %_ZN4Luau12DenseHashMapINS_7AstNameEPNS_8AstLocalESt4hashIS1_ESt8equal_toIS1_EEC2ERKS8_.exit.i.loopexit
 
 .lr.ph.i.i.i.epil.preheader:                      ; preds = %_ZN4Luau12DenseHashMapINS_7AstNameEPNS_8AstLocalESt4hashIS1_ESt8equal_toIS1_EEC2ERKS8_.exit.i.loopexit.unr-lcssa, %.lr.ph.i.i.i.preheader
   %.012.i.i.i.epil.init = phi i64 [ 0, %.lr.ph.i.i.i.preheader ], [ %i.ad, %_ZN4Luau12DenseHashMapINS_7AstNameEPNS_8AstLocalESt4hashIS1_ESt8equal_toIS1_EEC2ERKS8_.exit.i.loopexit.unr-lcssa ] ; 3 uses
@@ -1874,8 +1875,8 @@ bb.a:
   %i.h = getelementptr inbounds nuw [40 x i8], ptr %i.d, i64 %2
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 32
   %i.j = load i8, ptr %i.i, align 8, !tbaa !1264, !range !138, !noundef !139
-  %5 = icmp eq i8 %i.j, 0
-  br i1 %5, label %.lr.ph8, label %.critedge
+  %5 = trunc nuw i8 %i.j to i1
+  br i1 %5, label %.critedge, label %.lr.ph8
 
 .lr.ph8:                                          ; preds = %.lr.ph.split.us
   %i.k = load i64, ptr %i.e, align 8, !tbaa !535  ; 5 uses
@@ -1934,16 +1935,16 @@ _ZN4Luau6detail14DenseHashTableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaI
   %i.ag = getelementptr inbounds nuw [40 x i8], ptr %i.d, i64 %i.af
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 32
   %i.ai = load i8, ptr %i.ah, align 8, !tbaa !1264, !range !138, !noundef !139
-  %6 = icmp eq i8 %i.ai, 0
-  br i1 %6, label %bb.b, label %.critedge
+  %6 = trunc nuw i8 %i.ai to i1
+  br i1 %6, label %.critedge, label %bb.b
 
 .lr.ph.split:                                     ; preds = %.lr.ph, %_ZN4Luau6detail14DenseHashTableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIS7_bES8_IKS7_bENS0_16ItemInterfaceMapIS7_bEESt4hashIS7_ESt8equal_toIS7_EE14const_iteratorppEv.exit
   %i.aj = phi i64 [ %i.bh, %_ZN4Luau6detail14DenseHashTableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIS7_bES8_IKS7_bENS0_16ItemInterfaceMapIS7_bEESt4hashIS7_ESt8equal_toIS7_EE14const_iteratorppEv.exit ], [ %2, %.lr.ph ] ; 2 uses
   %i.ak = getelementptr inbounds nuw [40 x i8], ptr %i.d, i64 %i.aj
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 32
   %i.am = load i8, ptr %i.al, align 8, !tbaa !1264, !range !138, !noundef !139
-  %7 = icmp eq i8 %i.am, 0
-  br i1 %7, label %bb.c, label %.critedge
+  %7 = trunc nuw i8 %i.am to i1
+  br i1 %7, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.split
   %i.an = load i64, ptr %i.e, align 8, !tbaa !535 ; 5 uses
@@ -2346,8 +2347,8 @@ _ZN4Luau6detail14DenseHashTableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaI
   %i.ad = getelementptr inbounds nuw [40 x i8], ptr %i.i, i64 %i.ac
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 32
   %i.af = load i8, ptr %i.ae, align 8, !tbaa !1264, !range !138, !noundef !139
-  %1 = icmp eq i8 %i.af, 0
-  br i1 %1, label %bb.b, label %.critedge, !llvm.loop !2348
+  %1 = trunc nuw i8 %i.af to i1
+  br i1 %1, label %.critedge, label %bb.b, !llvm.loop !2348
 
 .split:                                           ; preds = %.split.preheader, %bb.c
   %.sroa.2.0.copyload.i = phi i64 [ %.sroa.2.0.copyload.i.pre, %.split.preheader ], [ %i.ba, %bb.c ]
@@ -2408,8 +2409,8 @@ bb.c:                                             ; preds = %_ZN4Luau6detail14De
   %i.bc = getelementptr inbounds nuw [40 x i8], ptr %i.bb, i64 %i.ba
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 32
   %i.be = load i8, ptr %i.bd, align 8, !tbaa !1264, !range !138, !noundef !139
-  %2 = icmp eq i8 %i.be, 0
-  br i1 %2, label %.split, label %.critedge, !llvm.loop !2348
+  %2 = trunc nuw i8 %i.be to i1
+  br i1 %2, label %.critedge, label %.split, !llvm.loop !2348
 
 .critedge:                                        ; preds = %bb.c, %_ZN4Luau6detail14DenseHashTableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIS7_bES8_IKS7_bENS0_16ItemInterfaceMapIS7_bEESt4hashIS7_ESt8equal_toIS7_EE14const_iteratorppEi.exit, %_ZN4Luau6detail14DenseHashTableINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIS7_bES8_IKS7_bENS0_16ItemInterfaceMapIS7_bEESt4hashIS7_ESt8equal_toIS7_EE14const_iteratorppEi.exit.us
   ret ptr %0

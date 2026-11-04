@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/hdf5/original/H5Centry?download=true
-inline.NumInlined: 22
+inline.NumInlined: 23
 inline.NumDeleted: 7
 begin_hunk_0_@H5C__flush_single_entry:bb.a
 bb.cy:                                            ; preds = %bb.cx, %bb.cr
@@ -202,9 +202,8 @@ bb.g:                                             ; preds = %bb.f
   br label %H5C__mark_flush_dep_serialized.exit.thread
 
 bb.h:                                             ; preds = %bb.f
-  %3 = and i32 %.pre, 1
-  %.not214 = icmp eq i32 %3, 0
-  br i1 %.not214, label %bb.n, label %bb.i
+  %.not214 = trunc i32 %.pre to i1
+  br i1 %.not214, label %bb.i, label %bb.n
 
 bb.i:                                             ; preds = %bb.h
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
@@ -607,9 +606,8 @@ bb.dd:                                            ; preds = %bb.dc
 bb.de:                                            ; preds = %bb.dc
   %i.pu = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 3 uses
   %i.pv = load i32, ptr %i.pu, align 4, !tbaa !71
-  %5 = and i32 %i.pv, 1
-  %.not.i248 = icmp eq i32 %5, 0
-  br i1 %.not.i248, label %bb.dh, label %bb.df
+  %.not.i248 = trunc i32 %i.pv to i1
+  br i1 %.not.i248, label %bb.df, label %bb.dh
 
 bb.df:                                            ; preds = %bb.de
   %i.pw = call fastcc i32 @H5C__verify_len_eoa(ptr noundef %0, ptr noundef nonnull %1, i64 noundef %2, ptr noundef %i.b, i1 noundef zeroext false)
@@ -1012,8 +1010,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.g, label %bb.c, label %bb.cq, !prof !138
 
 bb.c:                                             ; preds = %.thread, %bb.b
-  %4 = and i32 %3, 1
-  %.not = icmp eq i32 %4, 0
+  %.not = trunc i32 %3 to i1
   %i.h = and i32 %3, 4
   %.not204 = icmp eq i32 %i.h, 0                  ; 2 uses
   %i.i = and i32 %3, 8
@@ -1026,9 +1023,8 @@ bb.c:                                             ; preds = %.thread, %bb.b
   %i.o = load i8, ptr %i.n, align 1, !tbaa !135, !range !16, !noundef !17
   %i.p = zext nneg i8 %i.o to i32
   %i.q = lshr i32 %3, 1
-  %.lobit = and i32 %i.q, 1
-  %i.r = or i32 %.lobit, %i.p
-  %5 = icmp ne i32 %i.r, 0                        ; 4 uses
+  %i.r = or i32 %i.q, %i.p
+  %4 = trunc i32 %i.r to i1                       ; 4 uses
   %i.s = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 5 uses
   %i.t = load i8, ptr %i.s, align 8, !tbaa !55, !range !16, !noundef !17 ; 2 uses
   %i.u = trunc nuw i8 %i.t to i1                  ; 2 uses
@@ -1038,7 +1034,7 @@ bb.c:                                             ; preds = %.thread, %bb.b
   br i1 %i.x, label %bb.d, label %bb.s
 
 bb.d:                                             ; preds = %bb.c
-  br i1 %5, label %bb.e, label %bb.f
+  br i1 %4, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.y = load i64, ptr @H5E_CACHE_g, align 8, !tbaa !64
@@ -1135,7 +1131,7 @@ bb.s:                                             ; preds = %bb.c
   br i1 %i.bj, label %bb.t, label %bb.v
 
 bb.t:                                             ; preds = %bb.s
-  br i1 %5, label %bb.u, label %.thread233
+  br i1 %4, label %bb.u, label %.thread233
 
 bb.u:                                             ; preds = %bb.t
   %i.bk = load i64, ptr @H5E_CACHE_g, align 8, !tbaa !64
@@ -1168,10 +1164,10 @@ bb.w:                                             ; preds = %.thread233, %bb.v
   br label %bb.cq
 
 bb.x:                                             ; preds = %bb.v
-  %i.bw = select i1 %i.u, i1 true, i1 %5
+  %i.bw = select i1 %i.u, i1 true, i1 %4
   %i.bx = zext i1 %i.bw to i8
   store i8 %i.bx, ptr %i.s, align 8, !tbaa !55
-  br i1 %5, label %bb.y, label %H5C__mark_flush_dep_unserialized.exit
+  br i1 %4, label %bb.y, label %H5C__mark_flush_dep_unserialized.exit
 
 bb.y:                                             ; preds = %bb.x
   %i.by = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
@@ -1285,17 +1281,61 @@ bb.ah:                                            ; preds = %bb.ag
   br label %bb.cq
 
 bb.ai:                                            ; preds = %bb.ag, %bb.af
-  %i.eg = getelementptr inbounds nuw i8, ptr %2, i64 80
-  %i.eh = load i32, ptr %i.eg, align 8, !tbaa !107
+  %i.eg = getelementptr inbounds nuw i8, ptr %2, i64 80 ; 2 uses
+  %i.eh = load i32, ptr %i.eg, align 8, !tbaa !107 ; 2 uses
   %.not212 = icmp eq i32 %i.eh, 0
-  br i1 %.not212, label %H5C__mark_flush_dep_clean.exit.thread, label %bb.aj
+  br i1 %.not212, label %H5C__mark_flush_dep_clean.exit.thread, label %5
 
-bb.aj:                                            ; preds = %bb.ai
-  %6 = tail call fastcc i32 @H5C__mark_flush_dep_dirty(ptr noundef nonnull %2)
-  %i.ei = icmp slt i32 %6, 0
-  br i1 %i.ei, label %bb.ak, label %H5C__mark_flush_dep_clean.exit.thread
+5:                                                ; preds = %bb.ai
+  %6 = load i8, ptr @H5C_init_g, align 1, !tbaa !15, !range !16, !noundef !17
+  %7 = trunc nuw i8 %6 to i1
+  %8 = load i8, ptr @H5_libterm_g, align 1, !range !16
+  %9 = trunc nuw i8 %8 to i1
+  %10 = xor i1 %9, true
+  %11 = select i1 %7, i1 true, i1 %10
+  br i1 %11, label %.lr.ph.i225, label %H5C__mark_flush_dep_clean.exit.thread, !prof !18
+
+.lr.ph.i225:                                      ; preds = %5
+  %12 = getelementptr inbounds nuw i8, ptr %2, i64 72
+  br label %13
+
+13:                                               ; preds = %26, %.lr.ph.i225
+  %14 = phi i32 [ %i.eh, %.lr.ph.i225 ], [ %27, %26 ]
+  %indvars.iv.i226 = phi i64 [ 0, %.lr.ph.i225 ], [ %indvars.iv.next.i230, %26 ] ; 2 uses
+  %15 = load ptr, ptr %12, align 8, !tbaa !109
+  %16 = getelementptr inbounds nuw [8 x i8], ptr %15, i64 %indvars.iv.i226
+  %17 = load ptr, ptr %16, align 8, !tbaa !79     ; 3 uses
+  %18 = getelementptr inbounds nuw i8, ptr %17, i64 92 ; 2 uses
+  %19 = load i32, ptr %18, align 4, !tbaa !110
+  %20 = add i32 %19, 1
+  store i32 %20, ptr %18, align 4, !tbaa !110
+  %21 = getelementptr inbounds nuw i8, ptr %17, i64 40
+  %22 = load ptr, ptr %21, align 8, !tbaa !69
+  %23 = getelementptr inbounds nuw i8, ptr %22, i64 80
+  %24 = load ptr, ptr %23, align 8, !tbaa !76     ; 2 uses
+  %.not.i227 = icmp eq ptr %24, null
+  br i1 %.not.i227, label %26, label %bb.aj
+
+bb.aj:                                            ; preds = %13
+  %25 = tail call i32 %24(i32 noundef 6, ptr noundef nonnull %17) #8, !inline_history !137
+  %i.ei = icmp slt i32 %25, 0
+  br i1 %i.ei, label %bb.ak, label %._crit_edge.i228
+
+._crit_edge.i228:                                 ; preds = %bb.aj
+  %.pre.i229 = load i32, ptr %i.eg, align 8, !tbaa !107
+  br label %26
+
+26:                                               ; preds = %._crit_edge.i228, %13
+  %27 = phi i32 [ %.pre.i229, %._crit_edge.i228 ], [ %14, %13 ] ; 2 uses
+  %indvars.iv.next.i230 = add nuw nsw i64 %indvars.iv.i226, 1 ; 2 uses
+  %28 = zext i32 %27 to i64
+  %29 = icmp samesign ult i64 %indvars.iv.next.i230, %28
+  br i1 %29, label %13, label %H5C__mark_flush_dep_clean.exit.thread, !llvm.loop !5
 
 bb.ak:                                            ; preds = %bb.aj
+  %30 = load i64, ptr @H5E_CACHE_g, align 8, !tbaa !64
+  %31 = load i64, ptr @H5E_CANTNOTIFY_g, align 8, !tbaa !64
+  %32 = tail call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str, ptr noundef nonnull @__func__.H5C__mark_flush_dep_dirty, i32 noundef 1391, i64 noundef %30, i64 noundef %31, ptr noundef nonnull @.str.61) #8 ; 0 uses
   %i.ej = load i64, ptr @H5E_CACHE_g, align 8, !tbaa !64
   %i.ek = load i64, ptr @H5E_CANTMARKDIRTY_g, align 8, !tbaa !64
   %i.el = tail call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str, ptr noundef nonnull @__func__.H5C_unprotect, i32 noundef 3610, i64 noundef %i.ej, i64 noundef %i.ek, ptr noundef nonnull @.str.26) #8 ; 0 uses
@@ -1380,7 +1420,7 @@ bb.at:                                            ; preds = %bb.ar
   %i.fy = tail call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str, ptr noundef nonnull @__func__.H5C_unprotect, i32 noundef 3629, i64 noundef %i.fw, i64 noundef %i.fx, ptr noundef nonnull @.str.26) #8 ; 0 uses
   br label %bb.cq
 
-H5C__mark_flush_dep_clean.exit.thread:            ; preds = %bb.as, %bb.ap, %bb.ae, %.critedge, %bb.ao, %bb.ai, %bb.aj
+H5C__mark_flush_dep_clean.exit.thread:            ; preds = %26, %bb.as, %bb.ap, %5, %bb.ae, %.critedge, %bb.ao, %bb.ai
   br i1 %.not204, label %bb.ba, label %bb.au
 
 bb.au:                                            ; preds = %H5C__mark_flush_dep_clean.exit.thread
@@ -1660,7 +1700,7 @@ bb.cf:                                            ; preds = %bb.cd
   br label %bb.cg
 
 bb.cg:                                            ; preds = %bb.cf, %bb.cc, %bb.cb, %bb.ca
-  br i1 %.not, label %bb.cq, label %bb.ch
+  br i1 %.not, label %bb.ch, label %bb.cq
 
 bb.ch:                                            ; preds = %bb.cg
   %i.ku = lshr i64 %1, 3

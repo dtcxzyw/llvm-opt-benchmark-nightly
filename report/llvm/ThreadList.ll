@@ -205,7 +205,7 @@ _ZNSt12__shared_ptrIN12lldb_private6ThreadELN9__gnu_cxx12_Lock_policyE2EED2Ev.ex
 bb.as:                                            ; preds = %.lr.ph156, %_ZNSt12__shared_ptrIN12lldb_private6ThreadELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit78
   %.0154 = phi i8 [ 0, %.lr.ph156 ], [ %.1, %_ZNSt12__shared_ptrIN12lldb_private6ThreadELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit78 ] ; 2 uses
   %.137153 = phi i8 [ %.036, %.lr.ph156 ], [ %.2, %_ZNSt12__shared_ptrIN12lldb_private6ThreadELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit78 ] ; 2 uses
-  %.038152 = phi i1 [ false, %.lr.ph156 ], [ %.139, %_ZNSt12__shared_ptrIN12lldb_private6ThreadELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit78 ]
+  %.038152 = phi i8 [ 0, %.lr.ph156 ], [ %.139, %_ZNSt12__shared_ptrIN12lldb_private6ThreadELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit78 ]
   %.sroa.0119.1151 = phi ptr [ %i.dy, %.lr.ph156 ], [ %i.gp, %_ZNSt12__shared_ptrIN12lldb_private6ThreadELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit78 ] ; 3 uses
   %i.eg = load ptr, ptr %.sroa.0119.1151, align 8, !tbaa !71 ; 6 uses
   %i.eh = getelementptr inbounds nuw i8, ptr %.sroa.0119.1151, i64 8
@@ -311,11 +311,12 @@ _ZNSt12__shared_ptrIN12lldb_private7ProcessELN9__gnu_cxx12_Lock_policyE2EED2Ev.e
 
 bb.bc:                                            ; preds = %.split135, %.split, %_ZNK12lldb_private6Thread10GetProcessEv.exit.thread, %_ZNSt12__shared_ptrIN12lldb_private7ProcessELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
   %i.fs = call noundef zeroext i1 @_ZN12lldb_private6Thread23ThreadStoppedForAReasonEv(ptr noundef nonnull align 8 dereferenceable(576) %i.eg) #20
-  %6 = or i1 %.038152, %i.fs
+  %6 = zext i1 %i.fs to i8
+  %7 = or i8 %.038152, %6
   br label %bb.bd
 
 bb.bd:                                            ; preds = %.split135, %.split, %_ZNK12lldb_private6Thread10GetProcessEv.exit.thread, %_ZNSt12__shared_ptrIN12lldb_private7ProcessELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %bb.bc
-  %.139 = phi i1 [ %6, %bb.bc ], [ true, %_ZNSt12__shared_ptrIN12lldb_private7ProcessELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ true, %_ZNK12lldb_private6Thread10GetProcessEv.exit.thread ], [ true, %.split ], [ true, %.split135 ] ; 2 uses
+  %.139 = phi i8 [ %7, %bb.bc ], [ 1, %_ZNSt12__shared_ptrIN12lldb_private7ProcessELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ 1, %_ZNK12lldb_private6Thread10GetProcessEv.exit.thread ], [ 1, %.split ], [ 1, %.split135 ] ; 2 uses
   %i.ft = call noundef zeroext i1 @_ZN12lldb_private6Thread10ShouldStopEPNS_5EventE(ptr noundef nonnull align 8 dereferenceable(576) %i.eg, ptr noundef %1) #20
   br i1 %i.ft, label %bb.bg, label %bb.be
 
@@ -403,11 +404,12 @@ _ZNSt12__shared_ptrIN12lldb_private6ThreadELN9__gnu_cxx12_Lock_policyE2EED2Ev.ex
 
 ._crit_edge157:                                   ; preds = %_ZNSt12__shared_ptrIN12lldb_private6ThreadELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit78
   %i.gq = trunc nuw i8 %.1 to i1
+  %8 = trunc nuw i8 %.139 to i1
   br i1 %i.gq, label %bb.bn, label %._crit_edge157.thread
 
 ._crit_edge157.thread:                            ; preds = %._crit_edge149, %._crit_edge157
   %.137.lcssa206 = phi i8 [ %.2, %._crit_edge157 ], [ %.036, %._crit_edge149 ] ; 2 uses
-  %.038.lcssa205 = phi i1 [ %.139, %._crit_edge157 ], [ false, %._crit_edge149 ]
+  %.038.lcssa205 = phi i1 [ %8, %._crit_edge157 ], [ false, %._crit_edge149 ]
   %i.gr = trunc nuw i8 %.137.lcssa206 to i1
   %or.cond = select i1 %i.gr, i1 true, i1 %.038.lcssa205 ; 2 uses
   %brmerge48 = or i1 %.not, %or.cond
