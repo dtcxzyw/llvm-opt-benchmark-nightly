@@ -204,18 +204,19 @@ bb.f:                                             ; preds = %bb.d
 
 .lr.ph:                                           ; preds = %bb.f
   %i.ad = getelementptr i8, ptr %0, i64 20
+  %umax = add nuw nsw i16 %i.ac, 1
+  %wide.trip.count = zext nneg i16 %umax to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph, %bb.o
+  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %bb.o ] ; 3 uses
   %.0116 = phi i1 [ true, %.lr.ph ], [ %.2, %bb.o ] ; 2 uses
-  %.077115 = phi i16 [ 1, %.lr.ph ], [ %6, %bb.o ] ; 3 uses
   %.078114 = phi i32 [ 0, %.lr.ph ], [ %.179, %bb.o ] ; 4 uses
   %.080113 = phi i64 [ 0, %.lr.ph ], [ %.181, %bb.o ] ; 2 uses
   %.082112 = phi i32 [ 0, %.lr.ph ], [ %.183, %bb.o ] ; 4 uses
   %.084111 = phi ptr [ %3, %.lr.ph ], [ %.185, %bb.o ] ; 5 uses
   %.086110 = phi i32 [ %i.i, %.lr.ph ], [ %.288, %bb.o ] ; 3 uses
-  %5 = zext i16 %.077115 to i64
-  %i.ae = getelementptr [4 x i8], ptr %i.ad, i64 %5 ; 2 uses
+  %i.ae = getelementptr [4 x i8], ptr %i.ad, i64 %indvars.iv ; 2 uses
   %i.af = load i32, ptr %i.ae, align 4            ; 2 uses
   %i.ag = lshr i32 %i.af, 17                      ; 2 uses
   %i.ah = zext nneg i32 %i.ag to i64              ; 2 uses
@@ -250,7 +251,8 @@ bb.l:                                             ; preds = %bb.k
   %i.at = sext i32 %.078114 to i64
   %i.au = getelementptr inbounds [2 x i8], ptr %1, i64 %i.at
   %i.av = load i16, ptr %i.au, align 2
-  %i.aw = icmp eq i16 %.077115, %i.av
+  %5 = zext i16 %i.av to i64
+  %i.aw = icmp eq i64 %indvars.iv, %5
   br i1 %i.aw, label %bb.m, label %bb.n
 
 bb.m:                                             ; preds = %bb.l
@@ -288,9 +290,9 @@ bb.o:                                             ; preds = %bb.m, %bb.n
   %.181 = phi i64 [ %.080113, %bb.m ], [ %i.bh, %bb.n ] ; 3 uses
   %.179 = phi i32 [ %i.ax, %bb.m ], [ %.078114, %bb.n ] ; 2 uses
   %.2 = phi i1 [ %.0116, %bb.m ], [ %.0., %bb.n ] ; 2 uses
-  %6 = add i16 %.077115, 1                        ; 2 uses
-  %.not100 = icmp ugt i16 %6, %i.ac
-  br i1 %.not100, label %._crit_edge, label %bb.g, !llvm.loop !24
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond, label %._crit_edge, label %bb.g, !llvm.loop !24
 
 ._crit_edge:                                      ; preds = %bb.o
   %i.bn = icmp eq i32 %.179, %2

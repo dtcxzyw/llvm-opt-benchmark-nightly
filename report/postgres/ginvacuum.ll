@@ -202,7 +202,7 @@ BufferGetPage.exit.i:                             ; preds = %bb.o, %bb.n
   %i.cv = trunc i32 %i.cu to i16                  ; 2 uses
   %.not8892.i = icmp eq i16 %i.cv, 0
   %.not88.i = select i1 %i.cr, i1 true, i1 %.not8892.i
-  br i1 %.not88.i, label %ginVacuumEntryPage.exit.thread, label %.lr.ph.i.a
+  br i1 %.not88.i, label %ginVacuumEntryPage.exit.thread, label %.lr.ph.i
 
 ginVacuumEntryPage.exit.thread:                   ; preds = %BufferGetPage.exit.i
   %i.cw = getelementptr inbounds nuw i8, ptr %.0.i.i6678, i64 16
@@ -212,13 +212,17 @@ ginVacuumEntryPage.exit.thread:                   ; preds = %BufferGetPage.exit.
   %i.da = load i32, ptr %i.cz, align 4
   br label %bb.av
 
-.lr.ph.i.a:                                       ; preds = %BufferGetPage.exit.i, %bb.an
-  %.074 = phi i32 [ %.175, %bb.an ], [ 0, %BufferGetPage.exit.i ] ; 4 uses
-  %.06290.i = phi i16 [ %7, %bb.an ], [ 1, %BufferGetPage.exit.i ] ; 5 uses
-  %.06389.i = phi ptr [ %.3.i, %bb.an ], [ %.0.i.i6678, %BufferGetPage.exit.i ] ; 7 uses
-  %6 = zext i16 %.06290.i to i64                  ; 2 uses
+.lr.ph.i:                                         ; preds = %BufferGetPage.exit.i
+  %umax.i = add nuw nsw i16 %i.cv, 1
+  %wide.trip.count.i = zext i16 %umax.i to i64
+  br label %.lr.ph.i.a
+
+.lr.ph.i.a:                                       ; preds = %bb.an, %.lr.ph.i
+  %.074 = phi i32 [ 0, %.lr.ph.i ], [ %.175, %bb.an ] ; 4 uses
+  %indvars.iv.i = phi i64 [ 1, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.an ] ; 5 uses
+  %.06389.i = phi ptr [ %.0.i.i6678, %.lr.ph.i ], [ %.3.i, %bb.an ] ; 7 uses
   %i.db = getelementptr i8, ptr %.06389.i, i64 20
-  %i.dc = getelementptr [4 x i8], ptr %i.db, i64 %6
+  %i.dc = getelementptr [4 x i8], ptr %i.db, i64 %indvars.iv.i
   %.val73.i = load i32, ptr %i.dc, align 4
   %i.dd = and i32 %.val73.i, 32767
   %i.de = zext nneg i32 %i.dd to i64
@@ -370,7 +374,7 @@ bb.af:                                            ; preds = %bb.ae, %bb.ad
 bb.ag:                                            ; preds = %bb.af
   %i.fe = call ptr @PageGetTempPageCopy(ptr noundef %.0.i.i6678) #6 ; 3 uses
   %i.ff = getelementptr i8, ptr %i.fe, i64 20
-  %i.fg = getelementptr [4 x i8], ptr %i.ff, i64 %6
+  %i.fg = getelementptr [4 x i8], ptr %i.ff, i64 %indvars.iv.i
   %.val.i = load i32, ptr %i.fg, align 4
   %i.fh = and i32 %.val.i, 32767
   %i.fi = zext nneg i32 %i.fh to i64
@@ -393,13 +397,15 @@ bb.ai:                                            ; preds = %bb.ah
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai, %bb.ah
-  call void @PageIndexTupleDelete(ptr noundef %.1.i, i16 noundef zeroext %.06290.i) #6
+  %6 = trunc nuw i64 %indvars.iv.i to i16         ; 2 uses
+  call void @PageIndexTupleDelete(ptr noundef %.1.i, i16 noundef zeroext %6) #6
   %i.fp = getelementptr i8, ptr %i.fo, i64 6
   %.val86.i = load i16, ptr %i.fp, align 2
   %i.fq = and i16 %.val86.i, 8191
   %i.fr = zext nneg i16 %i.fq to i64
-  %i.fs = call zeroext i16 @PageAddItemExtended(ptr noundef %.1.i, ptr noundef %i.fo, i64 noundef %i.fr, i16 noundef zeroext %.06290.i, i32 noundef 0) #6
-  %.not72.i = icmp eq i16 %i.fs, %.06290.i
+  %i.fs = call zeroext i16 @PageAddItemExtended(ptr noundef %.1.i, ptr noundef %i.fo, i64 noundef %i.fr, i16 noundef zeroext %6, i32 noundef 0) #6
+  %7 = zext i16 %i.fs to i64
+  %.not72.i = icmp eq i64 %indvars.iv.i, %7
   br i1 %.not72.i, label %bb.al, label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj
@@ -426,9 +432,9 @@ bb.am:                                            ; preds = %bb.al, %bb.ac
 bb.an:                                            ; preds = %bb.am, %bb.p, %.lr.ph.i.a
   %.175 = phi i32 [ %.074, %bb.am ], [ %i.do, %bb.p ], [ %.074, %.lr.ph.i.a ] ; 3 uses
   %.3.i = phi ptr [ %.2.i, %bb.am ], [ %.06389.i, %bb.p ], [ %.06389.i, %.lr.ph.i.a ] ; 4 uses
-  %7 = add i16 %.06290.i, 1                       ; 2 uses
-  %.not.i = icmp ugt i16 %7, %i.cv
-  br i1 %.not.i, label %ginVacuumEntryPage.exit, label %.lr.ph.i.a, !llvm.loop !8
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %exitcond.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
+  br i1 %exitcond.i, label %ginVacuumEntryPage.exit, label %.lr.ph.i.a, !llvm.loop !8
 
 ginVacuumEntryPage.exit:                          ; preds = %bb.an
   %i.fz = icmp eq ptr %.3.i, %.0.i.i6678

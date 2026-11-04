@@ -202,13 +202,14 @@ bb.ho:                                            ; preds = %bb.hn
   %i.sm = lshr i32 %i.sf, 16
   %i.sn = trunc nuw i32 %i.sm to i16
   %i.so = trunc i32 %i.sf to i16
+  %umax.i.i.i = add nuw nsw i16 %i.sk, 1
+  %wide.trip.count.i.i.i = zext i16 %umax.i.i.i to i64
   br label %bb.hp
 
 bb.hp:                                            ; preds = %ScanSourceDatabasePgClassTuple.exit.thread.i.i.i, %.lr.ph.i.i.i
-  %.036.i.i.i = phi i16 [ 1, %.lr.ph.i.i.i ], [ %12, %ScanSourceDatabasePgClassTuple.exit.thread.i.i.i ] ; 3 uses
+  %indvars.iv.i.i.i = phi i64 [ 1, %.lr.ph.i.i.i ], [ %indvars.iv.next.i.i.i, %ScanSourceDatabasePgClassTuple.exit.thread.i.i.i ] ; 3 uses
   %.02335.i.i.i = phi ptr [ %.03134.i.i, %.lr.ph.i.i.i ], [ %.3.i.i.i, %ScanSourceDatabasePgClassTuple.exit.thread.i.i.i ] ; 6 uses
-  %11 = zext i16 %.036.i.i.i to i64
-  %i.sp = getelementptr [4 x i8], ptr %i.sl, i64 %11
+  %i.sp = getelementptr [4 x i8], ptr %i.sl, i64 %indvars.iv.i.i.i
   %i.sq = load i32, ptr %i.sp, align 4            ; 3 uses
   %i.sr = and i32 %i.sq, 98304
   %i.ss = icmp eq i32 %i.sr, 32768
@@ -217,7 +218,8 @@ bb.hp:                                            ; preds = %ScanSourceDatabaseP
 bb.hq:                                            ; preds = %bb.hp
   store i16 %i.sn, ptr %i.rj, align 4
   store i16 %i.so, ptr %i.rk, align 2
-  store i16 %.036.i.i.i, ptr %i.rl, align 8
+  %11 = trunc nuw i64 %indvars.iv.i.i.i to i16
+  store i16 %11, ptr %i.rl, align 8
   %i.st = and i32 %i.sq, 32767
   %i.su = zext nneg i32 %i.st to i64
   %i.sv = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i, i64 %i.su
@@ -299,9 +301,9 @@ bb.hx:                                            ; preds = %bb.hv, %bb.hu
 
 ScanSourceDatabasePgClassTuple.exit.thread.i.i.i: ; preds = %bb.hx, %bb.ht, %bb.hs, %bb.hr, %bb.hq, %bb.hp
   %.3.i.i.i = phi ptr [ %.02335.i.i.i, %bb.hq ], [ %i.ub, %bb.hx ], [ %.02335.i.i.i, %bb.hp ], [ %.02335.i.i.i, %bb.hs ], [ %.02335.i.i.i, %bb.ht ], [ %.02335.i.i.i, %bb.hr ] ; 2 uses
-  %12 = add i16 %.036.i.i.i, 1                    ; 2 uses
-  %.not.i.i.i = icmp ugt i16 %12, %i.sk
-  br i1 %.not.i.i.i, label %ScanSourceDatabasePgClassPage.exit.i.i, label %bb.hp, !llvm.loop !9
+  %indvars.iv.next.i.i.i = add nuw nsw i64 %indvars.iv.i.i.i, 1 ; 2 uses
+  %exitcond.i.i.i = icmp eq i64 %indvars.iv.next.i.i.i, %wide.trip.count.i.i.i
+  br i1 %exitcond.i.i.i, label %ScanSourceDatabasePgClassPage.exit.i.i, label %bb.hp, !llvm.loop !9
 
 ScanSourceDatabasePgClassPage.exit.i.i:           ; preds = %ScanSourceDatabasePgClassTuple.exit.thread.i.i.i, %bb.ho
   %.023.lcssa.i.i.i = phi ptr [ %.03134.i.i, %bb.ho ], [ %.3.i.i.i, %ScanSourceDatabasePgClassTuple.exit.thread.i.i.i ]

@@ -204,18 +204,17 @@ BufferGetPage.exit.i.i:                           ; preds = %bb.q, %bb.p
   %.val.i.i = load i16, ptr %i.dc, align 4        ; 2 uses
   %i.dd = icmp ult i16 %.val.i.i, 25
   %i.de = zext i16 %.val.i.i to i32
-  %i.df = add nuw nsw i32 %i.de, 262120           ; 2 uses
-  %8 = and i32 %i.df, 262140
-  %.not3740.i.i = icmp eq i32 %8, 0
+  %i.df = add nuw nsw i32 %i.de, 262120
+  %8 = lshr i32 %i.df, 2
+  %9 = trunc i32 %8 to i16                        ; 2 uses
+  %.not3740.i.i = icmp eq i16 %9, 0
   %.not37.i.i = select i1 %i.dd, i1 true, i1 %.not3740.i.i
   br i1 %.not37.i.i, label %._crit_edge.thread.i.i, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %BufferGetPage.exit.i.i
-  %9 = lshr i32 %i.df, 2
   %i.dg = getelementptr i8, ptr %.0.i.i31.i, i64 20
-  %10 = and i32 %9, 65535
-  %11 = add nuw nsw i32 %10, 1
-  %wide.trip.count.i.i = zext nneg i32 %11 to i64
+  %umax.i.i = add nuw nsw i16 %9, 1
+  %wide.trip.count.i.i = zext i16 %umax.i.i to i64
   br label %bb.r
 
 bb.r:                                             ; preds = %bb.u, %.lr.ph.i.i
@@ -618,12 +617,13 @@ bb.f:                                             ; preds = %bb.l, %bb.e
 .lr.ph:                                           ; preds = %bb.f
   %i.aw = getelementptr i8, ptr %i.aq, i64 20
   %i.ax = load i32, ptr %1, align 8
+  %umax = add nuw nsw i16 %i.av, 1
+  %wide.trip.count = zext i16 %umax to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph, %bb.h
-  %.0110 = phi i16 [ 1, %.lr.ph ], [ %3, %bb.h ]  ; 3 uses
-  %2 = zext i16 %.0110 to i64
-  %i.ay = getelementptr [4 x i8], ptr %i.aw, i64 %2
+  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %bb.h ] ; 3 uses
+  %i.ay = getelementptr [4 x i8], ptr %i.aw, i64 %indvars.iv
   %.val72 = load i32, ptr %i.ay, align 4
   %i.az = and i32 %.val72, 32767
   %i.ba = zext nneg i32 %i.az to i64
@@ -639,13 +639,14 @@ bb.g:                                             ; preds = %.lr.ph, %bb.h
   br i1 %i.bh, label %.thread, label %bb.h
 
 .thread:                                          ; preds = %bb.g
-  store i16 %.0110, ptr %i.b, align 2
+  %2 = trunc nuw i64 %indvars.iv to i16
+  store i16 %2, ptr %i.b, align 2
   br label %.loopexit
 
 bb.h:                                             ; preds = %bb.g
-  %3 = add i16 %.0110, 1                          ; 2 uses
-  %.not68 = icmp ugt i16 %3, %i.av
-  br i1 %.not68, label %._crit_edge, label %bb.g, !llvm.loop !32
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond, label %._crit_edge, label %bb.g, !llvm.loop !32
 
 ._crit_edge:                                      ; preds = %bb.h, %bb.f
   %i.bi = getelementptr inbounds nuw i8, ptr %i.aq, i64 16
@@ -836,13 +837,14 @@ bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t,
 
 .lr.ph.i:                                         ; preds = %bb.w
   %i.er = getelementptr i8, ptr %.0.i.i.i, i64 20
+  %umax.i = add nuw nsw i16 %i.eq, 1
+  %wide.trip.count.i = zext i16 %umax.i to i64
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.y, %.lr.ph.i
+  %indvars.iv.i = phi i64 [ 1, %.lr.ph.i ], [ %indvars.iv.next.i, %bb.y ] ; 4 uses
   %.285.i = phi ptr [ %.1.i, %.lr.ph.i ], [ %i.ff, %bb.y ]
-  %.06484.i = phi i16 [ 1, %.lr.ph.i ], [ %5, %bb.y ] ; 4 uses
-  %4 = zext i16 %.06484.i to i64
-  %i.es = getelementptr [4 x i8], ptr %i.er, i64 %4
+  %i.es = getelementptr [4 x i8], ptr %i.er, i64 %indvars.iv.i
   %.val73.i = load i32, ptr %i.es, align 4
   %i.et = and i32 %.val73.i, 32767
   %i.eu = zext nneg i32 %i.et to i64
@@ -861,13 +863,14 @@ bb.y:                                             ; preds = %bb.x
   %i.fc = tail call ptr @palloc0(i64 noundef 40) #8 ; 4 uses
   store i32 %i.fa, ptr %i.fc, align 8
   %i.fd = getelementptr inbounds nuw i8, ptr %i.fc, i64 26
-  store i16 %.06484.i, ptr %i.fd, align 2
+  %3 = trunc nuw i64 %indvars.iv.i to i16
+  store i16 %3, ptr %i.fd, align 2
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fc, i64 32
   store ptr %i.cm, ptr %i.fe, align 8
   %i.ff = tail call ptr @lappend(ptr noundef %.285.i, ptr noundef nonnull %i.fc) #8 ; 2 uses
-  %5 = add i16 %.06484.i, 1                       ; 2 uses
-  %.not72.i = icmp ugt i16 %5, %i.eq
-  br i1 %.not72.i, label %._crit_edge.i, label %bb.x, !llvm.loop !34
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
+  %exitcond.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
+  br i1 %exitcond.i, label %._crit_edge.i, label %bb.x, !llvm.loop !34
 
 ._crit_edge.i:                                    ; preds = %bb.y, %bb.w
   %.2.lcssa.i = phi ptr [ %.1.i, %bb.w ], [ %i.ff, %bb.y ] ; 2 uses
@@ -885,8 +888,9 @@ bb.y:                                             ; preds = %bb.x
   unreachable
 
 gistFindPath.exit:                                ; preds = %bb.x
+  %4 = trunc nuw i64 %indvars.iv.i to i16
   tail call void @UnlockReleaseBuffer(i32 noundef %i.cp) #8
-  store i16 %.06484.i, ptr %i.b, align 2
+  store i16 %4, ptr %i.b, align 2
   br label %bb.z
 
 bb.z:                                             ; preds = %gistFindPath.exit, %BufferGetPage.exit82
