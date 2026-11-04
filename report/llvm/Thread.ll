@@ -205,7 +205,7 @@ _ZNK12lldb_private21OptionValueProperties20GetPropertyAtIndexAsINS_12FileSpecLis
   %.pre = load i8, ptr %.phi.trans.insert, align 8, !tbaa !661, !range !94, !noalias !662
   %i.l = trunc nuw i8 %.pre to i1
   call void @llvm.experimental.noalias.scope.decl(metadata !662)
-  %i.m = getelementptr inbounds nuw i8, ptr %5, i64 24
+  %i.m = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
   br i1 %i.l, label %_ZNOSt8optionalIN12lldb_private12FileSpecListEE8value_orIRS1_EES1_OT_.exit.thread, label %bb.c
 
 _ZNOSt8optionalIN12lldb_private12FileSpecListEE8value_orIRS1_EES1_OT_.exit.thread: ; preds = %_ZNK12lldb_private21OptionValueProperties20GetPropertyAtIndexAsINS_12FileSpecListEEEDamPKNS_16ExecutionContextE.exit
@@ -215,7 +215,7 @@ _ZNOSt8optionalIN12lldb_private12FileSpecListEE8value_orIRS1_EES1_OT_.exit.threa
   %i.p = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.q = load ptr, ptr %i.p, align 16, !tbaa !666, !noalias !662
   store ptr %i.q, ptr %i.o, align 8, !tbaa !666, !alias.scope !662
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(25) %5, i8 0, i64 25, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %5, i8 0, i64 24, i1 false), !noalias !662
   br label %bb.f
 
 bb.c:                                             ; preds = %_ZNK12lldb_private21OptionValueProperties20GetPropertyAtIndexAsINS_12FileSpecListEEEDamPKNS_16ExecutionContextE.exit.thread, %_ZNK12lldb_private21OptionValueProperties20GetPropertyAtIndexAsINS_12FileSpecListEEEDamPKNS_16ExecutionContextE.exit
@@ -270,10 +270,11 @@ _ZNOSt8optionalIN12lldb_private12FileSpecListEE8value_orIRS1_EES1_OT_.exit: ; pr
   store ptr %.0.lcssa.i.i.i.i.i.i.i, ptr %i.ae, align 8, !tbaa !667, !alias.scope !662
   %.pre2 = load i8, ptr %i.r, align 8, !tbaa !661, !range !94
   %i.aj = trunc nuw i8 %.pre2 to i1
-  store i8 0, ptr %i.r, align 8, !tbaa !661
   br i1 %i.aj, label %bb.f, label %_ZNSt14_Optional_baseIN12lldb_private12FileSpecListELb0ELb0EED2Ev.exit
 
 bb.f:                                             ; preds = %_ZNOSt8optionalIN12lldb_private12FileSpecListEE8value_orIRS1_EES1_OT_.exit.thread, %_ZNOSt8optionalIN12lldb_private12FileSpecListEE8value_orIRS1_EES1_OT_.exit
+  %6 = phi ptr [ %i.m, %_ZNOSt8optionalIN12lldb_private12FileSpecListEE8value_orIRS1_EES1_OT_.exit.thread ], [ %i.r, %_ZNOSt8optionalIN12lldb_private12FileSpecListEE8value_orIRS1_EES1_OT_.exit ]
+  store i8 0, ptr %6, align 8, !tbaa !661
   call void @_ZN12lldb_private12FileSpecListD1Ev(ptr noundef nonnull align 8 dead_on_return(24) dereferenceable(32) %5) #32
   br label %_ZNSt14_Optional_baseIN12lldb_private12FileSpecListELb0ELb0EED2Ev.exit
 

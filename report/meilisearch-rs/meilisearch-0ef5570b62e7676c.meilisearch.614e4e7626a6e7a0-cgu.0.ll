@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.l, %bb.ab, %bb.z
   br label %bb.o
 
 _ZN7tracing4span4Span8do_enter17h936e449ccced4d74E.exit333: ; preds = %.noexc332, %bb.k, %.noexc331
-  %i.fm = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 6 uses
+  %i.fm = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 5 uses
   %i.fn = load i32, ptr %i.fm, align 8, !range !104, !alias.scope !15959, !noundef !45
   %i.fo = trunc nuw i32 %i.fn to i1
   br i1 %i.fo, label %.lr.ph, label %"_ZN2h25proto7streams5store14Queue$LT$N$GT$3pop17hcc899053021e6627E.exit.thread"
@@ -395,7 +395,6 @@ bb.s:                                             ; preds = %bb.q
   br i1 %.not.i339, label %bb.x, label %bb.w, !prof !58
 
 bb.t:                                             ; preds = %.noexc340
-  store i32 1, ptr %i.fm, align 8, !alias.scope !15960
   store <2 x i32> %i.jh, ptr %i.fp, align 4, !alias.scope !15960
   br label %bb.v
 
@@ -798,7 +797,6 @@ bb.e:                                             ; preds = %bb.b
   br i1 %.not, label %bb.j, label %bb.i, !prof !58
 
 bb.f:                                             ; preds = %bb.d
-  store i32 1, ptr %1, align 4
   store <2 x i32> %i.k, ptr %i.d, align 4
   br label %bb.h
 
@@ -1201,7 +1199,6 @@ bb.h:                                             ; preds = %"_ZN4slab13Slab$LT$
   br i1 %.not, label %bb.o, label %bb.n, !prof !58
 
 bb.i:                                             ; preds = %bb.g
-  store i64 1, ptr %1, align 8
   store i64 %i.u, ptr %i.d, align 8
   br label %bb.m
 
@@ -1604,7 +1601,7 @@ bb.ca:                                            ; preds = %bb.bz, %_ZN7tracing
   br i1 %.sroa.025.073.i.i, label %.lr.ph.i82.i, label %._crit_edge.i81.i
 
 .lr.ph.i82.i:                                     ; preds = %bb.ca
-  %i.og = getelementptr inbounds nuw i8, ptr %.0.val, i64 324 ; 3 uses
+  %i.og = getelementptr inbounds nuw i8, ptr %.0.val, i64 324 ; 2 uses
   %i.oh = getelementptr inbounds nuw i8, ptr %.0.val, i64 328 ; 2 uses
   %.sroa.7.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.0.val, i64 332
   %.sroa.10.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %.0.val, i64 336
@@ -1714,7 +1711,6 @@ bb.ch:                                            ; preds = %bb.cf
   br i1 %.not.i42.i.i, label %bb.cm, label %bb.cl, !prof !58
 
 bb.ci:                                            ; preds = %.noexc43.i.i
-  store i32 1, ptr %i.og, align 4, !alias.scope !16444
   store <2 x i32> %i.pf, ptr %i.oh, align 8, !alias.scope !16444
   br label %bb.ck
 
@@ -2117,7 +2113,7 @@ bb.g:                                             ; preds = %bb.f
   %i.al = load i64, ptr %i.ak, align 8, !alias.scope !31448, !noundef !45 ; 5 uses
   %.sroa.012.013.i.i = load ptr, ptr %i.aj, align 8, !alias.scope !31448, !nonnull !45, !noundef !45 ; 3 uses
   %i.am = icmp eq i64 %i.al, 0
-  br i1 %i.am, label %._crit_edge.i.i, label %.lr.ph.i.i2.preheader
+  br i1 %i.am, label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h798a5765bf576131E.exit.i", label %.lr.ph.i.i2.preheader
 
 .lr.ph.i.i2.preheader:                            ; preds = %bb.g
   %xtraiter = and i64 %i.al, 7                    ; 2 uses
@@ -2140,12 +2136,7 @@ bb.g:                                             ; preds = %bb.f
   %.sroa.012.015.i.i.unr = phi ptr [ %.sroa.012.013.i.i, %.lr.ph.i.i2.preheader ], [ %.sroa.012.0.i.i.prol, %.lr.ph.i.i2.prol ]
   %.sroa.011.014.i.i.unr = phi i64 [ %i.al, %.lr.ph.i.i2.preheader ], [ %i.ao, %.lr.ph.i.i2.prol ]
   %i.ap = icmp ult i64 %i.al, 8
-  br i1 %i.ap, label %._crit_edge.i.i, label %.lr.ph.i.i2
-
-._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g
-  %.sroa.012.0.lcssa.i.i = phi ptr [ %.sroa.012.013.i.i, %bb.g ], [ %.sroa.012.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.012.0.i.i.7, %.lr.ph.i.i2 ]
-  store i64 1, ptr %1, align 8, !alias.scope !31448
-  br label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h798a5765bf576131E.exit.i"
+  br i1 %i.ap, label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h798a5765bf576131E.exit.i", label %.lr.ph.i.i2
 
 .lr.ph.i.i2:                                      ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2
   %.sroa.012.015.i.i = phi ptr [ %.sroa.012.0.i.i.7, %.lr.ph.i.i2 ], [ %.sroa.012.015.i.i.unr, %.lr.ph.i.i2.prol.loopexit ]
@@ -2168,12 +2159,12 @@ bb.g:                                             ; preds = %bb.f
   %i.ay = add i64 %.sroa.011.014.i.i, -8          ; 2 uses
   %.sroa.012.0.i.i.7 = load ptr, ptr %i.ax, align 8, !noalias !31450, !nonnull !45, !noundef !45 ; 2 uses
   %i.az = icmp eq i64 %i.ay, 0
-  br i1 %i.az, label %._crit_edge.i.i, label %.lr.ph.i.i2
+  br i1 %i.az, label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h798a5765bf576131E.exit.i", label %.lr.ph.i.i2
 
-"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h798a5765bf576131E.exit.i": ; preds = %._crit_edge.i.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h798a5765bf576131E.exit_crit_edge.i"
-  %.sroa.37.0.copyload.i.i = phi i64 [ %.sroa.37.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h798a5765bf576131E.exit_crit_edge.i" ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.26.0.copyload.i.i = phi i64 [ %.sroa.26.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h798a5765bf576131E.exit_crit_edge.i" ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.05.0.copyload.i.i = phi ptr [ %i.ai, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h798a5765bf576131E.exit_crit_edge.i" ], [ %.sroa.012.0.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
+"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h798a5765bf576131E.exit.i": ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h798a5765bf576131E.exit_crit_edge.i"
+  %.sroa.37.0.copyload.i.i = phi i64 [ %.sroa.37.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h798a5765bf576131E.exit_crit_edge.i" ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.26.0.copyload.i.i = phi i64 [ %.sroa.26.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h798a5765bf576131E.exit_crit_edge.i" ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.05.0.copyload.i.i = phi ptr [ %i.ai, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h798a5765bf576131E.exit_crit_edge.i" ], [ %.sroa.012.013.i.i, %bb.g ], [ %.sroa.012.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.012.0.i.i.7, %.lr.ph.i.i2 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !31451)
   %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.05.0.copyload.i.i, i64 10
   %i.bb = load i16, ptr %i.ba, align 2, !noalias !31452, !noundef !45
@@ -2423,7 +2414,7 @@ bb.g:                                             ; preds = %bb.f
   %i.al = load i64, ptr %i.ak, align 8, !alias.scope !31501, !noundef !45 ; 5 uses
   %.sroa.012.013.i.i = load ptr, ptr %i.aj, align 8, !alias.scope !31501, !nonnull !45, !noundef !45 ; 3 uses
   %i.am = icmp eq i64 %i.al, 0
-  br i1 %i.am, label %._crit_edge.i.i, label %.lr.ph.i.i2.preheader
+  br i1 %i.am, label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h65b0c585aebc59e9E.exit.i", label %.lr.ph.i.i2.preheader
 
 .lr.ph.i.i2.preheader:                            ; preds = %bb.g
   %xtraiter = and i64 %i.al, 7                    ; 2 uses
@@ -2446,12 +2437,7 @@ bb.g:                                             ; preds = %bb.f
   %.sroa.012.015.i.i.unr = phi ptr [ %.sroa.012.013.i.i, %.lr.ph.i.i2.preheader ], [ %.sroa.012.0.i.i.prol, %.lr.ph.i.i2.prol ]
   %.sroa.011.014.i.i.unr = phi i64 [ %i.al, %.lr.ph.i.i2.preheader ], [ %i.ao, %.lr.ph.i.i2.prol ]
   %i.ap = icmp ult i64 %i.al, 8
-  br i1 %i.ap, label %._crit_edge.i.i, label %.lr.ph.i.i2
-
-._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g
-  %.sroa.012.0.lcssa.i.i = phi ptr [ %.sroa.012.013.i.i, %bb.g ], [ %.sroa.012.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.012.0.i.i.7, %.lr.ph.i.i2 ]
-  store i64 1, ptr %1, align 8, !alias.scope !31501
-  br label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h65b0c585aebc59e9E.exit.i"
+  br i1 %i.ap, label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h65b0c585aebc59e9E.exit.i", label %.lr.ph.i.i2
 
 .lr.ph.i.i2:                                      ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2
   %.sroa.012.015.i.i = phi ptr [ %.sroa.012.0.i.i.7, %.lr.ph.i.i2 ], [ %.sroa.012.015.i.i.unr, %.lr.ph.i.i2.prol.loopexit ]
@@ -2474,12 +2460,12 @@ bb.g:                                             ; preds = %bb.f
   %i.ay = add i64 %.sroa.011.014.i.i, -8          ; 2 uses
   %.sroa.012.0.i.i.7 = load ptr, ptr %i.ax, align 8, !noalias !31503, !nonnull !45, !noundef !45 ; 2 uses
   %i.az = icmp eq i64 %i.ay, 0
-  br i1 %i.az, label %._crit_edge.i.i, label %.lr.ph.i.i2
+  br i1 %i.az, label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h65b0c585aebc59e9E.exit.i", label %.lr.ph.i.i2
 
-"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h65b0c585aebc59e9E.exit.i": ; preds = %._crit_edge.i.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h65b0c585aebc59e9E.exit_crit_edge.i"
-  %.sroa.37.0.copyload.i.i = phi i64 [ %.sroa.37.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h65b0c585aebc59e9E.exit_crit_edge.i" ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.26.0.copyload.i.i = phi i64 [ %.sroa.26.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h65b0c585aebc59e9E.exit_crit_edge.i" ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.05.0.copyload.i.i = phi ptr [ %i.ai, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h65b0c585aebc59e9E.exit_crit_edge.i" ], [ %.sroa.012.0.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
+"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h65b0c585aebc59e9E.exit.i": ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h65b0c585aebc59e9E.exit_crit_edge.i"
+  %.sroa.37.0.copyload.i.i = phi i64 [ %.sroa.37.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h65b0c585aebc59e9E.exit_crit_edge.i" ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.26.0.copyload.i.i = phi i64 [ %.sroa.26.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h65b0c585aebc59e9E.exit_crit_edge.i" ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.05.0.copyload.i.i = phi ptr [ %i.ai, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h65b0c585aebc59e9E.exit_crit_edge.i" ], [ %.sroa.012.013.i.i, %bb.g ], [ %.sroa.012.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.012.0.i.i.7, %.lr.ph.i.i2 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !31504)
   %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.05.0.copyload.i.i, i64 362
   %i.bb = load i16, ptr %i.ba, align 2, !noalias !31505, !noundef !45
@@ -2729,7 +2715,7 @@ bb.g:                                             ; preds = %bb.f
   %i.al = load i64, ptr %i.ak, align 8, !alias.scope !31554, !noundef !45 ; 5 uses
   %.sroa.012.013.i.i = load ptr, ptr %i.aj, align 8, !alias.scope !31554, !nonnull !45, !noundef !45 ; 3 uses
   %i.am = icmp eq i64 %i.al, 0
-  br i1 %i.am, label %._crit_edge.i.i, label %.lr.ph.i.i2.preheader
+  br i1 %i.am, label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h2555420cac67de22E.exit.i", label %.lr.ph.i.i2.preheader
 
 .lr.ph.i.i2.preheader:                            ; preds = %bb.g
   %xtraiter = and i64 %i.al, 7                    ; 2 uses
@@ -2752,12 +2738,7 @@ bb.g:                                             ; preds = %bb.f
   %.sroa.012.015.i.i.unr = phi ptr [ %.sroa.012.013.i.i, %.lr.ph.i.i2.preheader ], [ %.sroa.012.0.i.i.prol, %.lr.ph.i.i2.prol ]
   %.sroa.011.014.i.i.unr = phi i64 [ %i.al, %.lr.ph.i.i2.preheader ], [ %i.ao, %.lr.ph.i.i2.prol ]
   %i.ap = icmp ult i64 %i.al, 8
-  br i1 %i.ap, label %._crit_edge.i.i, label %.lr.ph.i.i2
-
-._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g
-  %.sroa.012.0.lcssa.i.i = phi ptr [ %.sroa.012.013.i.i, %bb.g ], [ %.sroa.012.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.012.0.i.i.7, %.lr.ph.i.i2 ]
-  store i64 1, ptr %1, align 8, !alias.scope !31554
-  br label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h2555420cac67de22E.exit.i"
+  br i1 %i.ap, label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h2555420cac67de22E.exit.i", label %.lr.ph.i.i2
 
 .lr.ph.i.i2:                                      ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2
   %.sroa.012.015.i.i = phi ptr [ %.sroa.012.0.i.i.7, %.lr.ph.i.i2 ], [ %.sroa.012.015.i.i.unr, %.lr.ph.i.i2.prol.loopexit ]
@@ -2780,12 +2761,12 @@ bb.g:                                             ; preds = %bb.f
   %i.ay = add i64 %.sroa.011.014.i.i, -8          ; 2 uses
   %.sroa.012.0.i.i.7 = load ptr, ptr %i.ax, align 8, !noalias !31556, !nonnull !45, !noundef !45 ; 2 uses
   %i.az = icmp eq i64 %i.ay, 0
-  br i1 %i.az, label %._crit_edge.i.i, label %.lr.ph.i.i2
+  br i1 %i.az, label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h2555420cac67de22E.exit.i", label %.lr.ph.i.i2
 
-"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h2555420cac67de22E.exit.i": ; preds = %._crit_edge.i.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h2555420cac67de22E.exit_crit_edge.i"
-  %.sroa.37.0.copyload.i.i = phi i64 [ %.sroa.37.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h2555420cac67de22E.exit_crit_edge.i" ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.26.0.copyload.i.i = phi i64 [ %.sroa.26.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h2555420cac67de22E.exit_crit_edge.i" ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.05.0.copyload.i.i = phi ptr [ %i.ai, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h2555420cac67de22E.exit_crit_edge.i" ], [ %.sroa.012.0.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
+"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h2555420cac67de22E.exit.i": ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h2555420cac67de22E.exit_crit_edge.i"
+  %.sroa.37.0.copyload.i.i = phi i64 [ %.sroa.37.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h2555420cac67de22E.exit_crit_edge.i" ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.26.0.copyload.i.i = phi i64 [ %.sroa.26.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h2555420cac67de22E.exit_crit_edge.i" ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.05.0.copyload.i.i = phi ptr [ %i.ai, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17h2555420cac67de22E.exit_crit_edge.i" ], [ %.sroa.012.013.i.i, %bb.g ], [ %.sroa.012.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.012.0.i.i.7, %.lr.ph.i.i2 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !31557)
   %i.ba = getelementptr inbounds nuw i8, ptr %.sroa.05.0.copyload.i.i, i64 274
   %i.bb = load i16, ptr %i.ba, align 2, !noalias !31558, !noundef !45
@@ -3037,7 +3018,7 @@ bb.g:                                             ; preds = %bb.f
   %i.an = load i64, ptr %i.am, align 8, !alias.scope !31607, !noundef !45 ; 5 uses
   %.sroa.012.013.i.i = load ptr, ptr %i.al, align 8, !alias.scope !31607, !nonnull !45, !noundef !45 ; 3 uses
   %i.ao = icmp eq i64 %i.an, 0
-  br i1 %i.ao, label %._crit_edge.i.i, label %.lr.ph.i.i2.preheader
+  br i1 %i.ao, label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he9f0da3e3377fe03E.exit.i", label %.lr.ph.i.i2.preheader
 
 .lr.ph.i.i2.preheader:                            ; preds = %bb.g
   %xtraiter = and i64 %i.an, 7                    ; 2 uses
@@ -3060,12 +3041,7 @@ bb.g:                                             ; preds = %bb.f
   %.sroa.012.015.i.i.unr = phi ptr [ %.sroa.012.013.i.i, %.lr.ph.i.i2.preheader ], [ %.sroa.012.0.i.i.prol, %.lr.ph.i.i2.prol ]
   %.sroa.011.014.i.i.unr = phi i64 [ %i.an, %.lr.ph.i.i2.preheader ], [ %i.aq, %.lr.ph.i.i2.prol ]
   %i.ar = icmp ult i64 %i.an, 8
-  br i1 %i.ar, label %._crit_edge.i.i, label %.lr.ph.i.i2
-
-._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g
-  %.sroa.012.0.lcssa.i.i = phi ptr [ %.sroa.012.013.i.i, %bb.g ], [ %.sroa.012.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.012.0.i.i.7, %.lr.ph.i.i2 ]
-  store i64 1, ptr %1, align 8, !alias.scope !31607
-  br label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he9f0da3e3377fe03E.exit.i"
+  br i1 %i.ar, label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he9f0da3e3377fe03E.exit.i", label %.lr.ph.i.i2
 
 .lr.ph.i.i2:                                      ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2
   %.sroa.012.015.i.i = phi ptr [ %.sroa.012.0.i.i.7, %.lr.ph.i.i2 ], [ %.sroa.012.015.i.i.unr, %.lr.ph.i.i2.prol.loopexit ]
@@ -3088,12 +3064,12 @@ bb.g:                                             ; preds = %bb.f
   %i.ba = add i64 %.sroa.011.014.i.i, -8          ; 2 uses
   %.sroa.012.0.i.i.7 = load ptr, ptr %i.az, align 8, !noalias !31609, !nonnull !45, !noundef !45 ; 2 uses
   %i.bb = icmp eq i64 %i.ba, 0
-  br i1 %i.bb, label %._crit_edge.i.i, label %.lr.ph.i.i2
+  br i1 %i.bb, label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he9f0da3e3377fe03E.exit.i", label %.lr.ph.i.i2
 
-"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he9f0da3e3377fe03E.exit.i": ; preds = %._crit_edge.i.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he9f0da3e3377fe03E.exit_crit_edge.i"
-  %.sroa.37.0.copyload.i.i = phi i64 [ %.sroa.37.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he9f0da3e3377fe03E.exit_crit_edge.i" ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.26.0.copyload.i.i = phi i64 [ %.sroa.26.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he9f0da3e3377fe03E.exit_crit_edge.i" ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.05.0.copyload.i.i = phi ptr [ %i.ak, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he9f0da3e3377fe03E.exit_crit_edge.i" ], [ %.sroa.012.0.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
+"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he9f0da3e3377fe03E.exit.i": ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he9f0da3e3377fe03E.exit_crit_edge.i"
+  %.sroa.37.0.copyload.i.i = phi i64 [ %.sroa.37.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he9f0da3e3377fe03E.exit_crit_edge.i" ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.26.0.copyload.i.i = phi i64 [ %.sroa.26.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he9f0da3e3377fe03E.exit_crit_edge.i" ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.05.0.copyload.i.i = phi ptr [ %i.ak, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he9f0da3e3377fe03E.exit_crit_edge.i" ], [ %.sroa.012.013.i.i, %bb.g ], [ %.sroa.012.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.012.0.i.i.7, %.lr.ph.i.i2 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !31610)
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.05.0.copyload.i.i, i64 978
   %i.bd = load i16, ptr %i.bc, align 2, !noalias !31611, !noundef !45
@@ -3346,7 +3322,7 @@ bb.g:                                             ; preds = %bb.f
   %i.an = load i64, ptr %i.am, align 8, !alias.scope !31660, !noundef !45 ; 5 uses
   %.sroa.012.013.i.i = load ptr, ptr %i.al, align 8, !alias.scope !31660, !nonnull !45, !noundef !45 ; 3 uses
   %i.ao = icmp eq i64 %i.an, 0
-  br i1 %i.ao, label %._crit_edge.i.i, label %.lr.ph.i.i2.preheader
+  br i1 %i.ao, label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he1cfcb2262be287bE.exit.i", label %.lr.ph.i.i2.preheader
 
 .lr.ph.i.i2.preheader:                            ; preds = %bb.g
   %xtraiter = and i64 %i.an, 7                    ; 2 uses
@@ -3369,12 +3345,7 @@ bb.g:                                             ; preds = %bb.f
   %.sroa.012.015.i.i.unr = phi ptr [ %.sroa.012.013.i.i, %.lr.ph.i.i2.preheader ], [ %.sroa.012.0.i.i.prol, %.lr.ph.i.i2.prol ]
   %.sroa.011.014.i.i.unr = phi i64 [ %i.an, %.lr.ph.i.i2.preheader ], [ %i.aq, %.lr.ph.i.i2.prol ]
   %i.ar = icmp ult i64 %i.an, 8
-  br i1 %i.ar, label %._crit_edge.i.i, label %.lr.ph.i.i2
-
-._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g
-  %.sroa.012.0.lcssa.i.i = phi ptr [ %.sroa.012.013.i.i, %bb.g ], [ %.sroa.012.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.012.0.i.i.7, %.lr.ph.i.i2 ]
-  store i64 1, ptr %1, align 8, !alias.scope !31660
-  br label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he1cfcb2262be287bE.exit.i"
+  br i1 %i.ar, label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he1cfcb2262be287bE.exit.i", label %.lr.ph.i.i2
 
 .lr.ph.i.i2:                                      ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2
   %.sroa.012.015.i.i = phi ptr [ %.sroa.012.0.i.i.7, %.lr.ph.i.i2 ], [ %.sroa.012.015.i.i.unr, %.lr.ph.i.i2.prol.loopexit ]
@@ -3397,12 +3368,12 @@ bb.g:                                             ; preds = %bb.f
   %i.ba = add i64 %.sroa.011.014.i.i, -8          ; 2 uses
   %.sroa.012.0.i.i.7 = load ptr, ptr %i.az, align 8, !noalias !31662, !nonnull !45, !noundef !45 ; 2 uses
   %i.bb = icmp eq i64 %i.ba, 0
-  br i1 %i.bb, label %._crit_edge.i.i, label %.lr.ph.i.i2
+  br i1 %i.bb, label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he1cfcb2262be287bE.exit.i", label %.lr.ph.i.i2
 
-"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he1cfcb2262be287bE.exit.i": ; preds = %._crit_edge.i.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he1cfcb2262be287bE.exit_crit_edge.i"
-  %.sroa.37.0.copyload.i.i = phi i64 [ %.sroa.37.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he1cfcb2262be287bE.exit_crit_edge.i" ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.26.0.copyload.i.i = phi i64 [ %.sroa.26.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he1cfcb2262be287bE.exit_crit_edge.i" ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.05.0.copyload.i.i = phi ptr [ %i.ak, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he1cfcb2262be287bE.exit_crit_edge.i" ], [ %.sroa.012.0.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
+"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he1cfcb2262be287bE.exit.i": ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he1cfcb2262be287bE.exit_crit_edge.i"
+  %.sroa.37.0.copyload.i.i = phi i64 [ %.sroa.37.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he1cfcb2262be287bE.exit_crit_edge.i" ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.26.0.copyload.i.i = phi i64 [ %.sroa.26.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he1cfcb2262be287bE.exit_crit_edge.i" ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.05.0.copyload.i.i = phi ptr [ %i.ak, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17he1cfcb2262be287bE.exit_crit_edge.i" ], [ %.sroa.012.013.i.i, %bb.g ], [ %.sroa.012.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.012.0.i.i.7, %.lr.ph.i.i2 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !31663)
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.05.0.copyload.i.i, i64 450
   %i.bd = load i16, ptr %i.bc, align 2, !noalias !31664, !noundef !45
@@ -3655,7 +3626,7 @@ bb.g:                                             ; preds = %bb.f
   %i.an = load i64, ptr %i.am, align 8, !alias.scope !31713, !noundef !45 ; 5 uses
   %.sroa.012.013.i.i = load ptr, ptr %i.al, align 8, !alias.scope !31713, !nonnull !45, !noundef !45 ; 3 uses
   %i.ao = icmp eq i64 %i.an, 0
-  br i1 %i.ao, label %._crit_edge.i.i, label %.lr.ph.i.i2.preheader
+  br i1 %i.ao, label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17hb5faaa94c9aa755dE.exit.i", label %.lr.ph.i.i2.preheader
 
 .lr.ph.i.i2.preheader:                            ; preds = %bb.g
   %xtraiter = and i64 %i.an, 7                    ; 2 uses
@@ -3678,12 +3649,7 @@ bb.g:                                             ; preds = %bb.f
   %.sroa.012.015.i.i.unr = phi ptr [ %.sroa.012.013.i.i, %.lr.ph.i.i2.preheader ], [ %.sroa.012.0.i.i.prol, %.lr.ph.i.i2.prol ]
   %.sroa.011.014.i.i.unr = phi i64 [ %i.an, %.lr.ph.i.i2.preheader ], [ %i.aq, %.lr.ph.i.i2.prol ]
   %i.ar = icmp ult i64 %i.an, 8
-  br i1 %i.ar, label %._crit_edge.i.i, label %.lr.ph.i.i2
-
-._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g
-  %.sroa.012.0.lcssa.i.i = phi ptr [ %.sroa.012.013.i.i, %bb.g ], [ %.sroa.012.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.012.0.i.i.7, %.lr.ph.i.i2 ]
-  store i64 1, ptr %1, align 8, !alias.scope !31713
-  br label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17hb5faaa94c9aa755dE.exit.i"
+  br i1 %i.ar, label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17hb5faaa94c9aa755dE.exit.i", label %.lr.ph.i.i2
 
 .lr.ph.i.i2:                                      ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2
   %.sroa.012.015.i.i = phi ptr [ %.sroa.012.0.i.i.7, %.lr.ph.i.i2 ], [ %.sroa.012.015.i.i.unr, %.lr.ph.i.i2.prol.loopexit ]
@@ -3706,12 +3672,12 @@ bb.g:                                             ; preds = %bb.f
   %i.ba = add i64 %.sroa.011.014.i.i, -8          ; 2 uses
   %.sroa.012.0.i.i.7 = load ptr, ptr %i.az, align 8, !noalias !31715, !nonnull !45, !noundef !45 ; 2 uses
   %i.bb = icmp eq i64 %i.ba, 0
-  br i1 %i.bb, label %._crit_edge.i.i, label %.lr.ph.i.i2
+  br i1 %i.bb, label %"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17hb5faaa94c9aa755dE.exit.i", label %.lr.ph.i.i2
 
-"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17hb5faaa94c9aa755dE.exit.i": ; preds = %._crit_edge.i.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17hb5faaa94c9aa755dE.exit_crit_edge.i"
-  %.sroa.37.0.copyload.i.i = phi i64 [ %.sroa.37.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17hb5faaa94c9aa755dE.exit_crit_edge.i" ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.26.0.copyload.i.i = phi i64 [ %.sroa.26.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17hb5faaa94c9aa755dE.exit_crit_edge.i" ], [ 0, %._crit_edge.i.i ] ; 2 uses
-  %.sroa.05.0.copyload.i.i = phi ptr [ %i.ak, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17hb5faaa94c9aa755dE.exit_crit_edge.i" ], [ %.sroa.012.0.lcssa.i.i, %._crit_edge.i.i ] ; 3 uses
+"_ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17hb5faaa94c9aa755dE.exit.i": ; preds = %.lr.ph.i.i2.prol.loopexit, %.lr.ph.i.i2, %bb.g, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17hb5faaa94c9aa755dE.exit_crit_edge.i"
+  %.sroa.37.0.copyload.i.i = phi i64 [ %.sroa.37.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17hb5faaa94c9aa755dE.exit_crit_edge.i" ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.26.0.copyload.i.i = phi i64 [ %.sroa.26.0.copyload.i.pre.i, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17hb5faaa94c9aa755dE.exit_crit_edge.i" ], [ 0, %bb.g ], [ 0, %.lr.ph.i.i2 ], [ 0, %.lr.ph.i.i2.prol.loopexit ] ; 2 uses
+  %.sroa.05.0.copyload.i.i = phi ptr [ %i.ak, %"._ZN5alloc11collections5btree8navigate39LazyLeafRange$LT$BorrowType$C$K$C$V$GT$10init_front17hb5faaa94c9aa755dE.exit_crit_edge.i" ], [ %.sroa.012.013.i.i, %bb.g ], [ %.sroa.012.0.i.i.lcssa.unr, %.lr.ph.i.i2.prol.loopexit ], [ %.sroa.012.0.i.i.7, %.lr.ph.i.i2 ] ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !31716)
   %i.bc = getelementptr inbounds nuw i8, ptr %.sroa.05.0.copyload.i.i, i64 2914
   %i.bd = load i16, ptr %i.bc, align 2, !noalias !31717, !noundef !45

@@ -205,8 +205,7 @@ _ZN5boost13re_detail_50012perl_matcherIN9__gnu_cxx17__normal_iteratorIPKcNSt7__c
   %i.r = trunc nuw i8 %i.q to i1
   store i8 %i.d, ptr %i.e, align 4, !tbaa !9593
   store i8 0, ptr %i.f, align 1, !tbaa !9594
-  store i8 0, ptr %i.g, align 2, !tbaa !9595
-  br i1 %i.r, label %.critedge.a, label %.preheader
+  br i1 %i.r, label %.critedge, label %.preheader
 
 .preheader:                                       ; preds = %.lr.ph, %.preheader
   %i.s = load ptr, ptr %i.a, align 8, !tbaa !9596
@@ -225,7 +224,11 @@ _ZN5boost13re_detail_50012perl_matcherIN9__gnu_cxx17__normal_iteratorIPKcNSt7__c
   %.0.in.not = icmp eq ptr %.0.in.in, null
   br i1 %.0.in.not, label %.critedge5, label %.lr.ph, !llvm.loop !11703
 
-.critedge.a:                                      ; preds = %.lr.ph, %.critedge.a
+.critedge:                                        ; preds = %.lr.ph
+  store i8 0, ptr %i.g, align 2, !tbaa !9595
+  br label %.critedge.a
+
+.critedge.a:                                      ; preds = %.critedge.a, %.critedge
   %i.aa = load ptr, ptr %i.a, align 8, !tbaa !9596
   %i.ab = load i32, ptr %i.aa, align 8, !tbaa !413
   %i.ac = zext i32 %i.ab to i64

@@ -204,18 +204,18 @@ bb.a:
   %.sroa.858.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 16 ; 2 uses
   %.sroa.959.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 3 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 74
+  %i.g = getelementptr inbounds nuw i8, ptr %1, i64 74 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 68
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 56
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 75
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 69 ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 77 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %1, i64 77
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 70 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 76 ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 2 uses
-  %i.r = getelementptr inbounds nuw i8, ptr %1, i64 73 ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %1, i64 73
   %.sroa.634.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !84
@@ -349,8 +349,7 @@ bb.p:                                             ; preds = %bb.c
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(29) %i.o, i8 0, i64 29, i1 false), !alias.scope !83
   store i8 1, ptr %i.k, align 1, !alias.scope !83
   store i8 0, ptr %i.n, align 2, !alias.scope !83
-  store <4 x i8> <i8 1, i8 0, i8 1, i8 0>, ptr %i.r, align 1, !alias.scope !83
-  store i8 0, ptr %i.l, align 1, !alias.scope !83
+  store <4 x i8> <i8 0, i8 1, i8 0, i8 0>, ptr %i.g, align 2, !alias.scope !83
   br label %.backedge.i
 
 .backedge.i:                                      ; preds = %bb.q, %bb.p, %bb.n, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.e

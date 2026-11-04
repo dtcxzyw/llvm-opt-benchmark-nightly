@@ -202,10 +202,10 @@ _ZN9grpc_core4Rbac9CidrRangeD2Ev.exit:            ; preds = %_ZNSt12_Vector_base
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 184 ; 2 uses
   %i.t = load i8, ptr %i.s, align 8, !tbaa !107, !range !104, !noundef !105
   %i.u = trunc nuw i8 %i.t to i1
-  store i8 0, ptr %i.s, align 8, !tbaa !107
   br i1 %i.u, label %bb.c, label %_ZNSt14_Optional_baseIN9grpc_core13StringMatcherELb0ELb0EED2Ev.exit
 
 bb.c:                                             ; preds = %_ZN9grpc_core4Rbac9CidrRangeD2Ev.exit
+  store i8 0, ptr %i.s, align 8, !tbaa !107
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !99   ; 3 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.w, null
@@ -608,11 +608,10 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 128
   tail call void @_ZN9grpc_core13StringMatcherC1EOS0_(ptr noundef nonnull align 8 dereferenceable(64) %i.t, ptr noundef nonnull align 8 dereferenceable(64) %1) #23
+  store i8 1, ptr %i.l, align 8, !tbaa !107
   br label %_ZNSt8optionalIN9grpc_core13StringMatcherEEaSEOS2_.exit
 
 _ZNSt8optionalIN9grpc_core13StringMatcherEEaSEOS2_.exit: ; preds = %bb.a, %bb.b
-  %storemerge = phi i8 [ 1, %bb.b ], [ 0, %bb.a ]
-  store i8 %storemerge, ptr %i.l, align 8, !tbaa !107
   ret void
 }
 
@@ -1015,7 +1014,7 @@ _ZN9grpc_core4Rbac9CidrRangeaSEOS1_.exit:         ; preds = %bb.f, %_ZNSt7__cxx1
   store i32 %i.aw, ptr %i.ax, align 8, !tbaa !67
   br label %_ZNSt6vectorISt10unique_ptrIN9grpc_core4Rbac9PrincipalESt14default_deleteIS3_EESaIS6_EEaSEOS8_.exit
 
-_ZNSt6vectorISt10unique_ptrIN9grpc_core4Rbac9PrincipalESt14default_deleteIS3_EESaIS6_EEaSEOS8_.exit: ; preds = %bb.d, %bb.b, %bb.e, %_ZN9grpc_core4Rbac9CidrRangeaSEOS1_.exit, %bb.c, %bb.a
+_ZNSt6vectorISt10unique_ptrIN9grpc_core4Rbac9PrincipalESt14default_deleteIS3_EESaIS6_EEaSEOS8_.exit: ; preds = %bb.b, %bb.e, %bb.d, %_ZN9grpc_core4Rbac9CidrRangeaSEOS1_.exit, %bb.c, %bb.a
   ret void
 }
 
@@ -1114,10 +1113,10 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZNSt6vectorISt10unique_ptrIN9grpc_core4Rbac9PrincipalESt14default_deleteIS3_EESaIS6_EEaSEOS8_.exit
 
 bb.i:                                             ; preds = %bb.g
-  store i8 0, ptr %i.y, align 8, !tbaa !107
   br i1 %i.aa, label %bb.j, label %_ZNSt6vectorISt10unique_ptrIN9grpc_core4Rbac9PrincipalESt14default_deleteIS3_EESaIS6_EEaSEOS8_.exit
 
 bb.j:                                             ; preds = %bb.i
+  store i8 0, ptr %i.y, align 8, !tbaa !107
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !99 ; 3 uses
   %.not.i.i.i.i.i.i.i.i.i = icmp eq ptr %i.ag, null

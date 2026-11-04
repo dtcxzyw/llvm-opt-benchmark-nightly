@@ -205,11 +205,11 @@ Gia_ManCountDepth.exit:                           ; preds = %.lr.ph.i78, %bb.r, 
   %i.fi = load i32, ptr %i.s, align 8, !tbaa !51
   %i.fj = sitofp i32 %i.fi to double
   %i.fk = fmul nnan double %i.fj, 4.000000e+00
-  %i.fl = call nnan double @llvm.fmuladd.f64(double %i.ei, double %i.fh, double %i.fk)
+  %i.fl = call double @llvm.fmuladd.f64(double %i.ei, double %i.fh, double %i.fk)
   %i.fm = load i32, ptr %.pre111, align 8, !tbaa !47
   %i.fn = sitofp i32 %i.fm to double
-  %i.fo = call nnan double @llvm.fmuladd.f64(double %i.fn, double 8.000000e+00, double %i.fl)
-  %i.fp = fmul nnan double %i.fo, f0x3EB0000000000000
+  %i.fo = call double @llvm.fmuladd.f64(double %i.fn, double 8.000000e+00, double %i.fl)
+  %i.fp = fmul double %i.fo, f0x3EB0000000000000
   %i.fq = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.2, i32 noundef %i.dy, i32 noundef %.val68, double noundef %i.ej, i32 noundef %.0.lcssa.i, double noundef %i.fp) ; 0 uses
   call void (i32, ptr, ...) @Abc_Print(i32 poison, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.4)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22

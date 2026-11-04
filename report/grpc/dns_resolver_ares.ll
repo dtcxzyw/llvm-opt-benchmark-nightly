@@ -202,7 +202,7 @@ _ZN4absl12lts_2025051217internal_statusor12StatusOrDataIN9grpc_core13RefCountedP
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr void @_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE14_M_move_assignEOS3_(ptr noundef nonnull align 8 dereferenceable(121) %0, ptr noundef nonnull align 8 dereferenceable(121) %1) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 3 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !143, !range !126, !noundef !127
   %i.c = trunc nuw i8 %i.b to i1                  ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 120
@@ -324,17 +324,13 @@ _ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE12_M_constructIJS2_EE
   br label %_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE8_M_resetEv.exit
 
 bb.k:                                             ; preds = %bb.c
-  br i1 %i.c, label %bb.l, label %2
+  br i1 %i.c, label %bb.l, label %_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE8_M_resetEv.exit
 
 bb.l:                                             ; preds = %bb.k
   tail call void @_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE10_M_destroyEv(ptr noundef nonnull align 8 dereferenceable(121) %0) #32
   br label %_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE8_M_resetEv.exit
 
-2:                                                ; preds = %bb.k
-  store i8 0, ptr %i.a, align 8, !tbaa !143
-  br label %_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE8_M_resetEv.exit
-
-_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE8_M_resetEv.exit: ; preds = %2, %bb.l, %_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE12_M_constructIJS2_EEEvDpOT_.exit, %bb.b
+_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE8_M_resetEv.exit: ; preds = %bb.l, %bb.k, %_ZNSt22_Optional_payload_baseIN9grpc_core8Resolver6ResultEE12_M_constructIJS2_EEEvDpOT_.exit, %bb.b
   ret void
 }
 

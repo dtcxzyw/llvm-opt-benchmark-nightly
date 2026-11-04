@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 3 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
   %i.m = load i8, ptr %i.l, align 8, !range !46, !noundef !47
   %i.n = trunc nuw i8 %i.m to i1
   br i1 %i.n, label %bb.e, label %.critedge
@@ -254,7 +254,6 @@ _ZNRSt8optionalImE5valueEv.exit5:                 ; preds = %_ZNRSt8optionalImE5
 .thread:                                          ; preds = %_ZNRSt8optionalImE5valueEv.exit..thread_crit_edge, %_ZNRSt8optionalImE5valueEv.exit5
   %.pre-phi = phi i64 [ %.pre, %_ZNRSt8optionalImE5valueEv.exit..thread_crit_edge ], [ %i.ae, %_ZNRSt8optionalImE5valueEv.exit5 ]
   store i64 %.pre-phi, ptr %i.k, align 8
-  store i8 1, ptr %i.l, align 8
   br label %bb.h
 
 .critedge:                                        ; preds = %bb.c, %bb.d
@@ -298,18 +297,24 @@ bb.a:
   br i1 %i.c, label %bb.b, label %.sink.split
 
 .sink.split:                                      ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.f = load i8, ptr %i.e, align 8, !range !46, !noundef !47
   %i.g = trunc nuw i8 %i.f to i1
+  br i1 %i.g, label %_ZNRSt8optionalImE5valueEv.exit, label %3
+
+_ZNRSt8optionalImE5valueEv.exit:                  ; preds = %.sink.split
   %2 = load i64, ptr %i.d, align 8
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %2, i64 %1)
-  %.sink = select i1 %i.g, i64 %.sroa.speculated, i64 %1
-  store i64 %.sink, ptr %i.d, align 8
+  store i64 %.sroa.speculated, ptr %i.d, align 8
+  br label %bb.b
+
+3:                                                ; preds = %.sink.split
+  store i64 %1, ptr %i.d, align 8
   store i8 1, ptr %i.e, align 8
   br label %bb.b
 
-bb.b:                                             ; preds = %.sink.split, %bb.a
+bb.b:                                             ; preds = %bb.a, %3, %_ZNRSt8optionalImE5valueEv.exit
   ret void
 }
 

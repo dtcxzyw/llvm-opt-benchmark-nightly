@@ -202,10 +202,10 @@ _ZNK4llvm7ErrorOrISt10unique_ptrINS_12MemoryBufferESt14default_deleteIS2_EEE8get
   %i.an = getelementptr inbounds nuw i8, ptr %9, i64 80 ; 2 uses
   %i.ao = load i8, ptr %i.am, align 8, !tbaa !69, !range !21, !noundef !22
   %i.ap = trunc nuw i8 %i.ao to i1
-  store i8 0, ptr %i.am, align 8, !tbaa !69
   br i1 %i.ap, label %bb.h, label %_ZNSt14_Optional_baseISt8functionIFvPPN4llvm8MetadataEjS0_IFPNS1_4TypeEjEES0_IFjjjEEEELb0ELb0EED2Ev.exit.i
 
 bb.h:                                             ; preds = %_ZNK4llvm7ErrorOrISt10unique_ptrINS_12MemoryBufferESt14default_deleteIS2_EEE8getErrorEv.exit.thread
+  store i8 0, ptr %i.am, align 8, !tbaa !69
   %i.aq = getelementptr inbounds nuw i8, ptr %9, i64 96
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !13 ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.ar, null
@@ -219,10 +219,10 @@ _ZNSt14_Optional_baseISt8functionIFvPPN4llvm8MetadataEjS0_IFPNS1_4TypeEjEES0_IFj
   %i.at = getelementptr inbounds nuw i8, ptr %9, i64 40 ; 2 uses
   %i.au = load i8, ptr %i.al, align 8, !tbaa !71, !range !21, !noundef !22
   %i.av = trunc nuw i8 %i.au to i1
-  store i8 0, ptr %i.al, align 8, !tbaa !71
   br i1 %i.av, label %bb.j, label %_ZNSt14_Optional_baseISt8functionIFvPN4llvm5ValueEjS0_IFPNS1_4TypeEjEES0_IFjjjEEEELb0ELb0EED2Ev.exit.i
 
 bb.j:                                             ; preds = %_ZNSt14_Optional_baseISt8functionIFvPPN4llvm8MetadataEjS0_IFPNS1_4TypeEjEES0_IFjjjEEEELb0ELb0EED2Ev.exit.i
+  store i8 0, ptr %i.al, align 8, !tbaa !71
   %i.aw = getelementptr inbounds nuw i8, ptr %9, i64 56
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !13 ; 2 uses
   %.not.i.i.i.i.i1.i = icmp eq ptr %i.ax, null
@@ -235,10 +235,10 @@ bb.k:                                             ; preds = %bb.j
 _ZNSt14_Optional_baseISt8functionIFvPN4llvm5ValueEjS0_IFPNS1_4TypeEjEES0_IFjjjEEEELb0ELb0EED2Ev.exit.i: ; preds = %bb.k, %bb.j, %_ZNSt14_Optional_baseISt8functionIFvPPN4llvm8MetadataEjS0_IFPNS1_4TypeEjEES0_IFjjjEEEELb0ELb0EED2Ev.exit.i
   %i.az = load i8, ptr %i.ak, align 8, !tbaa !73, !range !21, !noundef !22
   %i.ba = trunc nuw i8 %i.az to i1
-  store i8 0, ptr %i.ak, align 8, !tbaa !73
   br i1 %i.ba, label %bb.l, label %_ZN4llvm15ParserCallbacksD2Ev.exit
 
 bb.l:                                             ; preds = %_ZNSt14_Optional_baseISt8functionIFvPN4llvm5ValueEjS0_IFPNS1_4TypeEjEES0_IFjjjEEEELb0ELb0EED2Ev.exit.i
+  store i8 0, ptr %i.ak, align 8, !tbaa !73
   %i.bb = getelementptr inbounds nuw i8, ptr %9, i64 16
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !13 ; 2 uses
   %.not.i.i.i.i.i2.i = icmp eq ptr %i.bc, null
@@ -641,11 +641,11 @@ bb.aw:                                            ; preds = %bb.au
   %i.hk = getelementptr inbounds nuw i8, ptr %i.gw, i64 136 ; 2 uses
   %i.hl = load i8, ptr %i.hk, align 8, !tbaa !100, !range !21, !noundef !22
   %i.hm = trunc nuw i8 %i.hl to i1
-  store i8 0, ptr %i.hk, align 8, !tbaa !100
   br i1 %i.hm, label %bb.ax, label %_ZNSt10unique_ptrIN4llvm14ToolOutputFileESt14default_deleteIS1_EED2Ev.exit
 
 bb.ax:                                            ; preds = %bb.aw
   %i.hn = getelementptr inbounds nuw i8, ptr %i.gw, i64 40
+  store i8 0, ptr %i.hk, align 8, !tbaa !100
   call void @_ZN4llvm14raw_fd_ostreamD1Ev(ptr noundef nonnull align 8 dead_on_return(96) dereferenceable(104) %i.hn) #17
   br label %_ZNSt10unique_ptrIN4llvm14ToolOutputFileESt14default_deleteIS1_EED2Ev.exit
 

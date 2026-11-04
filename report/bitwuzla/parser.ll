@@ -205,10 +205,10 @@ _ZN8bitwuzla4TermaSERKS0_.exit:                   ; preds = %bb.bu, %_ZNSt16_Sp_
   call void @_ZN8bitwuzla4TermD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %17) #30
   %i.pt = load i8, ptr %i.or, align 8, !tbaa !314, !range !211, !noundef !209
   %i.pu = trunc nuw i8 %i.pt to i1
-  store i8 0, ptr %i.or, align 8, !tbaa !314
   br i1 %i.pu, label %bb.cf, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.cf:                                            ; preds = %_ZN8bitwuzla4TermaSERKS0_.exit
+  store i8 0, ptr %i.or, align 8, !tbaa !314
   %i.pv = load ptr, ptr %19, align 8, !tbaa !154  ; 2 uses
   %i.pw = icmp eq ptr %i.pv, %i.oe
   br i1 %i.pw, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i
@@ -241,10 +241,10 @@ bb.ci:                                            ; preds = %bb.bt
           cleanup                                 ; 3 uses
   %i.qc = load i8, ptr %i.or, align 8, !tbaa !314, !range !211, !noundef !209
   %i.qd = trunc nuw i8 %i.qc to i1
-  store i8 0, ptr %i.or, align 8, !tbaa !314
   br i1 %i.qd, label %bb.cj, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit158
 
 bb.cj:                                            ; preds = %bb.ci
+  store i8 0, ptr %i.or, align 8, !tbaa !314
   %i.qe = load ptr, ptr %19, align 8, !tbaa !154  ; 2 uses
   %i.qf = icmp eq ptr %i.qe, %i.oe
   br i1 %i.qf, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit158, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i156
@@ -410,10 +410,10 @@ _ZN8bitwuzla4TermaSERKS0_.exit173:                ; preds = %bb.cp, %_ZNSt16_Sp_
   call void @_ZN8bitwuzla4TermD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %20) #30
   %i.rz = load i8, ptr %i.qx, align 8, !tbaa !314, !range !211, !noundef !209
   %i.sa = trunc nuw i8 %i.rz to i1
-  store i8 0, ptr %i.qx, align 8, !tbaa !314
   br i1 %i.sa, label %bb.da, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit176
 
 bb.da:                                            ; preds = %_ZN8bitwuzla4TermaSERKS0_.exit173
+  store i8 0, ptr %i.qx, align 8, !tbaa !314
   %i.sb = load ptr, ptr %21, align 8, !tbaa !154  ; 2 uses
   %i.sc = icmp eq ptr %i.sb, %i.qk
   br i1 %i.sc, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit176, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i174
@@ -439,10 +439,10 @@ bb.dc:                                            ; preds = %bb.co
           cleanup                                 ; 3 uses
   %i.sh = load i8, ptr %i.qx, align 8, !tbaa !314, !range !211, !noundef !209
   %i.si = trunc nuw i8 %i.sh to i1
-  store i8 0, ptr %i.qx, align 8, !tbaa !314
   br i1 %i.si, label %bb.dd, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit179
 
 bb.dd:                                            ; preds = %bb.dc
+  store i8 0, ptr %i.qx, align 8, !tbaa !314
   %i.sj = load ptr, ptr %21, align 8, !tbaa !154  ; 2 uses
   %i.sk = icmp eq ptr %i.sj, %i.qk
   br i1 %i.sk, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit179, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i177
@@ -845,10 +845,10 @@ _ZN8bitwuzla4SortaSERKS0_.exit:                   ; preds = %bb.bi, %_ZNSt16_Sp_
   call void @_ZN8bitwuzla4SortD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %14) #30
   %i.pb = load i8, ptr %i.nz, align 8, !tbaa !314, !range !211, !noundef !209
   %i.pc = trunc nuw i8 %i.pb to i1
-  store i8 0, ptr %i.nz, align 8, !tbaa !314
   br i1 %i.pc, label %bb.bt, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.bt:                                            ; preds = %_ZN8bitwuzla4SortaSERKS0_.exit
+  store i8 0, ptr %i.nz, align 8, !tbaa !314
   %i.pd = load ptr, ptr %15, align 8, !tbaa !154  ; 2 uses
   %i.pe = icmp eq ptr %i.pd, %i.nm
   br i1 %i.pe, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i
@@ -920,10 +920,10 @@ bb.bw:                                            ; preds = %_ZNSt8optionalINSt7
           cleanup
   %i.px = load i8, ptr %i.nz, align 8, !tbaa !314, !range !211, !noundef !209
   %i.py = trunc nuw i8 %i.px to i1
-  store i8 0, ptr %i.nz, align 8, !tbaa !314
   br i1 %i.py, label %bb.bx, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit148
 
 bb.bx:                                            ; preds = %bb.bw
+  store i8 0, ptr %i.nz, align 8, !tbaa !314
   %i.pz = load ptr, ptr %15, align 8, !tbaa !154  ; 2 uses
   %i.qa = icmp eq ptr %i.pz, %i.nm
   br i1 %i.qa, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit148, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i146
@@ -1326,10 +1326,10 @@ _ZN8bitwuzla4TermaSERKS0_.exit:                   ; preds = %bb.ci, %_ZNSt16_Sp_
   call void @_ZN8bitwuzla4TermD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %28) #30
   %i.ta = load i8, ptr %i.nq, align 8, !tbaa !314, !range !211, !noundef !209
   %i.tb = trunc nuw i8 %i.ta to i1
-  store i8 0, ptr %i.nq, align 8, !tbaa !314
   br i1 %i.tb, label %bb.ct, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.ct:                                            ; preds = %_ZN8bitwuzla4TermaSERKS0_.exit
+  store i8 0, ptr %i.nq, align 8, !tbaa !314
   %i.tc = load ptr, ptr %29, align 8, !tbaa !154  ; 2 uses
   %i.td = icmp eq ptr %i.tc, %i.no
   br i1 %i.td, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i
@@ -1395,10 +1395,10 @@ bb.da:                                            ; preds = %bb.ch
           cleanup                                 ; 3 uses
   %i.tt = load i8, ptr %i.nq, align 8, !tbaa !314, !range !211, !noundef !209
   %i.tu = trunc nuw i8 %i.tt to i1
-  store i8 0, ptr %i.nq, align 8, !tbaa !314
   br i1 %i.tu, label %bb.db, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit264
 
 bb.db:                                            ; preds = %bb.da
+  store i8 0, ptr %i.nq, align 8, !tbaa !314
   %i.tv = load ptr, ptr %29, align 8, !tbaa !154  ; 2 uses
   %i.tw = icmp eq ptr %i.tv, %i.no
   br i1 %i.tw, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit264, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i262
@@ -1801,10 +1801,10 @@ _ZN8bitwuzla4TermaSERKS0_.exit:                   ; preds = %bb.ai, %_ZNSt16_Sp_
   call void @_ZN8bitwuzla4TermD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %9) #30
   %i.hg = load i8, ptr %i.ge, align 8, !tbaa !314, !range !211, !noundef !209
   %i.hh = trunc nuw i8 %i.hg to i1
-  store i8 0, ptr %i.ge, align 8, !tbaa !314
   br i1 %i.hh, label %bb.at, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.at:                                            ; preds = %_ZN8bitwuzla4TermaSERKS0_.exit
+  store i8 0, ptr %i.ge, align 8, !tbaa !314
   %i.hi = load ptr, ptr %10, align 8, !tbaa !154  ; 2 uses
   %i.hj = icmp eq ptr %i.hi, %i.fr
   br i1 %i.hj, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i
@@ -1871,10 +1871,10 @@ bb.ba:                                            ; preds = %bb.ah
           cleanup                                 ; 3 uses
   %i.ia = load i8, ptr %i.ge, align 8, !tbaa !314, !range !211, !noundef !209
   %i.ib = trunc nuw i8 %i.ia to i1
-  store i8 0, ptr %i.ge, align 8, !tbaa !314
   br i1 %i.ib, label %bb.bb, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit142
 
 bb.bb:                                            ; preds = %bb.ba
+  store i8 0, ptr %i.ge, align 8, !tbaa !314
   %i.ic = load ptr, ptr %10, align 8, !tbaa !154  ; 2 uses
   %i.id = icmp eq ptr %i.ic, %i.fr
   br i1 %i.id, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit142, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i140
@@ -2277,7 +2277,7 @@ _ZNSt6vectorIN4bzla6parser4smt26Parser10ParsedItemESaIS4_EE8_M_eraseEN9__gnu_cxx
 define noundef zeroext i1 @_ZN4bzla6parser4smt26Parser23parse_open_term_indexedEv(ptr noundef nonnull align 8 dereferenceable(2056) %0) local_unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = alloca i64, align 8                      ; 5 uses
-  %1 = alloca %"class.bitwuzla::Term", align 16   ; 14 uses
+  %1 = alloca %"class.bitwuzla::Term", align 16   ; 11 uses
   %2 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %3 = alloca %"class.std::optional", align 8     ; 5 uses
   %i.b = alloca i64, align 8                      ; 5 uses
@@ -2345,7 +2345,7 @@ bb.c:                                             ; preds = %bb.a
 
 _ZN4bzla6parser4smt26Parser11check_tokenENS1_5TokenE.exit: ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 1592 ; 5 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 1624 ; 8 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 1624 ; 6 uses
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !316
   %i.s = getelementptr inbounds i8, ptr %i.r, i64 -8
   %i.t = load i64, ptr %i.s, align 8, !tbaa !164
@@ -2748,37 +2748,29 @@ bb.eb:                                            ; preds = %bb.dz
   %i.ve = atomicrmw volatile add ptr %i.va, i32 1 acq_rel, align 4 ; 0 uses
   %.pre336 = load i8, ptr %i.un, align 16, !tbaa !339, !range !211
   %i.vf = trunc nuw i8 %.pre336 to i1
-  store i32 8, ptr %i.ux, align 8, !tbaa !240
-  %38 = getelementptr inbounds i8, ptr %i.uy, i64 -128
-  %39 = call noundef nonnull align 8 dereferenceable(17) ptr @_ZNSt7variantIJPN4bzla6parser4smt211SymbolTable4NodeEN8bitwuzla4SortENS6_4TermEEEaSIRS8_EENSt9enable_ifIXaaaa14__exactly_onceINSt9_Nth_typeIX16__accepted_indexIOT_EEJS5_S7_S8_EE4typeEE18is_constructible_vISH_SE_E15is_assignable_vIRSH_SE_EERS9_E4typeESF_(ptr noundef nonnull align 8 dereferenceable(17) %38, ptr noundef nonnull align 8 dereferenceable(16) %1) #30 ; 0 uses
-  call void @_ZN8bitwuzla4TermD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %1) #30
-  %40 = load ptr, ptr %i.q, align 8, !tbaa !162
-  %41 = getelementptr inbounds i8, ptr %40, i64 -8
-  store ptr %41, ptr %i.q, align 8, !tbaa !162
-  call void @llvm.lifetime.end.p0(ptr nonnull %1)
-  store i8 0, ptr %i.un, align 16, !tbaa !339
-  br i1 %i.vf, label %bb.ec, label %_ZNSt14_Optional_baseIN8bitwuzla4TermELb0ELb0EED2Ev.exit
+  br label %.critedge460
 
-.critedge460:                                     ; preds = %.thread, %bb.dy, %bb.ea
-  %.ph = phi ptr [ %i.uj, %.thread ], [ %i.uv, %bb.dy ], [ %i.ux, %bb.ea ]
-  %.ph458 = phi ptr [ %i.ui, %.thread ], [ %i.uu, %bb.dy ], [ %i.uy, %bb.ea ]
-  %.ph459 = phi ptr [ %i.uh, %.thread ], [ %i.un, %bb.dy ], [ %i.un, %bb.ea ]
-  store i32 8, ptr %.ph, align 8, !tbaa !240
-  %i.vg = getelementptr inbounds i8, ptr %.ph458, i64 -128
+.critedge460:                                     ; preds = %.thread, %bb.eb, %bb.ea, %bb.dy
+  %38 = phi ptr [ %i.ux, %bb.eb ], [ %i.ux, %bb.ea ], [ %i.uv, %bb.dy ], [ %i.uj, %.thread ]
+  %39 = phi ptr [ %i.uy, %bb.eb ], [ %i.uy, %bb.ea ], [ %i.uu, %bb.dy ], [ %i.ui, %.thread ]
+  %40 = phi ptr [ %i.un, %bb.eb ], [ %i.un, %bb.ea ], [ %i.un, %bb.dy ], [ %i.uh, %.thread ]
+  %41 = phi i1 [ %i.vf, %bb.eb ], [ true, %bb.ea ], [ true, %bb.dy ], [ true, %.thread ]
+  store i32 8, ptr %38, align 8, !tbaa !240
+  %i.vg = getelementptr inbounds i8, ptr %39, i64 -128
   %i.vh = call noundef nonnull align 8 dereferenceable(17) ptr @_ZNSt7variantIJPN4bzla6parser4smt211SymbolTable4NodeEN8bitwuzla4SortENS6_4TermEEEaSIRS8_EENSt9enable_ifIXaaaa14__exactly_onceINSt9_Nth_typeIX16__accepted_indexIOT_EEJS5_S7_S8_EE4typeEE18is_constructible_vISH_SE_E15is_assignable_vIRSH_SE_EERS9_E4typeESF_(ptr noundef nonnull align 8 dereferenceable(17) %i.vg, ptr noundef nonnull align 8 dereferenceable(16) %1) #30 ; 0 uses
   call void @_ZN8bitwuzla4TermD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %1) #30
   %i.vi = load ptr, ptr %i.q, align 8, !tbaa !162
   %i.vj = getelementptr inbounds i8, ptr %i.vi, i64 -8
   store ptr %i.vj, ptr %i.q, align 8, !tbaa !162
   call void @llvm.lifetime.end.p0(ptr nonnull %1)
-  store i8 0, ptr %.ph459, align 8, !tbaa !339
-  br label %bb.ec
+  br i1 %41, label %bb.ec, label %_ZNSt14_Optional_baseIN8bitwuzla4TermELb0ELb0EED2Ev.exit
 
-bb.ec:                                            ; preds = %.critedge460, %bb.eb
+bb.ec:                                            ; preds = %.critedge460
+  store i8 0, ptr %40, align 8, !tbaa !339
   call void @_ZN8bitwuzla4TermD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(24) %35) #30
   br label %_ZNSt14_Optional_baseIN8bitwuzla4TermELb0ELb0EED2Ev.exit
 
-_ZNSt14_Optional_baseIN8bitwuzla4TermELb0ELb0EED2Ev.exit: ; preds = %bb.eb, %bb.ec
+_ZNSt14_Optional_baseIN8bitwuzla4TermELb0ELb0EED2Ev.exit: ; preds = %.critedge460, %bb.ec
   call void @llvm.lifetime.end.p0(ptr nonnull %35) #30
   call void @_ZN8bitwuzla4TermD1Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %26) #30
   call void @llvm.lifetime.end.p0(ptr nonnull %26) #30

@@ -204,10 +204,10 @@ bb.s:                                             ; preds = %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #23
   %i.co = load i8, ptr %i.bh, align 8, !tbaa !201, !range !87, !noundef !88
   %i.cp = trunc nuw i8 %i.co to i1
-  store i8 0, ptr %i.bh, align 8, !tbaa !201
   br i1 %i.cp, label %bb.t, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
 bb.t:                                             ; preds = %bb.s
+  store i8 0, ptr %i.bh, align 8, !tbaa !201
   %i.cq = load ptr, ptr %5, align 8, !tbaa !81    ; 2 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.cs = icmp eq ptr %i.cq, %i.cr
@@ -223,10 +223,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.threa
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #23
   %.pre = load i8, ptr %i.bh, align 8, !tbaa !201, !range !87
   %i.cv = trunc nuw i8 %.pre to i1
-  store i8 0, ptr %i.bh, align 8, !tbaa !201
   br i1 %i.cv, label %bb.u, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit57
 
 bb.u:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i53
+  store i8 0, ptr %i.bh, align 8, !tbaa !201
   %i.cw = load ptr, ptr %5, align 8, !tbaa !81    ; 2 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.cy = icmp eq ptr %i.cw, %i.cx
@@ -629,7 +629,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #23, !noalias !223
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 5 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 4 uses
   %i.p = load i8, ptr %i.o, align 8, !tbaa !101, !range !87, !noundef !88
   %i.q = trunc nuw i8 %i.p to i1
   br i1 %i.q, label %.thread, label %bb.c
@@ -646,7 +646,6 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.u, label %bb.i, label %bb.e
 
 .thread:                                          ; preds = %bb.b
-  store i8 1, ptr %i.o, align 8, !tbaa !101
   %i.v = load i64, ptr %i.j, align 8, !tbaa !73
   %i.w = icmp eq i64 %i.v, 0
   br i1 %i.w, label %.thread94, label %.thread50.thread

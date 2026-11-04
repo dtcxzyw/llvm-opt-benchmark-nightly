@@ -204,7 +204,6 @@ bb.d:                                             ; preds = %bb.c
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i.prol.loopexit, %.lr.ph.i, %bb.d
   %.sroa.013.0.lcssa.i = phi ptr [ %.sroa.013.015.i, %bb.d ], [ %.sroa.013.0.i.lcssa.unr, %.lr.ph.i.prol.loopexit ], [ %.sroa.013.0.i.7, %.lr.ph.i ]
-  store i64 1, ptr %0, align 8, !alias.scope !198
   store ptr %.sroa.013.0.lcssa.i, ptr %i.j, align 8, !alias.scope !198
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.l, i8 0, i64 16, i1 false), !alias.scope !198
   br label %_RNvMsc_NtNtNtCs1xwejQucwHj_5alloc11collections5btree8navigateINtB5_13LazyLeafRangeNtNtNtB7_4node6marker5ImmutINtNtNtNtCs8lmMd0ZksV9_6statrs12distribution9empirical7non_nan6NonNandEyE10init_frontB1S_.exit
@@ -306,7 +305,7 @@ bb.b:                                             ; preds = %bb.a
   %i.g = add i64 %i.e, -1
   store i64 %i.g, ptr %i.d, align 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !211)
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.i = load i64, ptr %i.h, align 8, !range !7, !alias.scope !211, !noundef !4
   %i.j = trunc nuw i64 %i.i to i1
   br i1 %i.j, label %bb.c, label %.critedge
@@ -430,7 +429,6 @@ _RNvMsn_NtNtNtCs1xwejQucwHj_5alloc11collections5btree8navigateINtNtB7_4node7Node
   %i.cg = getelementptr inbounds nuw i8, ptr %.sroa.03.0.lcssa.i.i, i64 186
   %i.ch = load i16, ptr %i.cg, align 2, !noalias !212, !noundef !4
   %i.ci = zext i16 %i.ch to i64
-  store i64 1, ptr %i.h, align 8, !alias.scope !211
   store ptr %.sroa.03.0.lcssa.i.i, ptr %i.k, align 8, !alias.scope !211
   store i64 0, ptr %i.m, align 8, !alias.scope !211
   store i64 %i.ci, ptr %i.o, align 8, !alias.scope !211

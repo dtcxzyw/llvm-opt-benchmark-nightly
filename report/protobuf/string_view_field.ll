@@ -204,10 +204,10 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
   %i.c = load i8, ptr %i.b, align 8, !tbaa !69, !range !37, !noundef !40
   %i.d = trunc nuw i8 %i.c to i1
-  store i8 0, ptr %i.b, align 8, !tbaa !69
   br i1 %i.d, label %bb.b, label %_ZNSt14_Optional_baseIN6google8protobuf2io7Printer16AnnotationRecordELb0ELb0EED2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
+  store i8 0, ptr %i.b, align 8, !tbaa !69
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 136
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !56   ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses

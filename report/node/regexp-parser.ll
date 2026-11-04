@@ -204,10 +204,10 @@ _ZN2v88internal6String14GetFlatContentERKNS0_25PerThreadAssertScopeEmptyILb0EJLN
   %i.ay = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   %i.az = load i8, ptr %i.ay, align 8, !range !15, !noundef !16
   %i.ba = trunc nuw i8 %i.az to i1
-  store i8 0, ptr %i.ay, align 8
   br i1 %i.ba, label %bb.n, label %_ZN2v88internal31SharedStringAccessGuardIfNeededD2Ev.exit
 
 bb.n:                                             ; preds = %_ZN2v88internal6String14GetFlatContentERKNS0_25PerThreadAssertScopeEmptyILb0EJLNS0_19PerThreadAssertTypeE1ELS3_2EEEERKNS0_31SharedStringAccessGuardIfNeededE.exit
+  store i8 0, ptr %i.ay, align 8
   %i.bb = load ptr, ptr %5, align 8               ; 2 uses
   %.not.i.i.i.i.i.i = icmp eq ptr %i.bb, null
   br i1 %.not.i.i.i.i.i.i, label %_ZN2v88internal31SharedStringAccessGuardIfNeededD2Ev.exit, label %bb.o
@@ -610,7 +610,7 @@ bb.af:                                            ; preds = %bb.ae
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z) #19
-  %i.ex = getelementptr inbounds nuw i8, ptr %0, i64 92 ; 11 uses
+  %i.ex = getelementptr inbounds nuw i8, ptr %0, i64 92 ; 10 uses
   %.val25132.i = load i8, ptr %i.ex, align 4, !range !15, !noundef !16
   %i.ey = trunc nuw i8 %.val25132.i to i1
   br i1 %i.ey, label %.lr.ph.i, label %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE16ParseClassRangesEPNS0_8ZoneListINS0_14CharacterRangeEEEb.exit
@@ -1013,7 +1013,6 @@ _ZN2v88internal12_GLOBAL__N_116RegExpParserImplIhE11ReportErrorENS0_11RegExpErro
   store i32 2097152, ptr %i.cj, align 4
   %.val.i68 = load i32, ptr %i.ae, align 8
   store i32 %.val.i68, ptr %i.af, align 8
-  store i8 0, ptr %i.ex, align 4
   br label %bb.kw
 
 bb.dq:                                            ; preds = %bb.dp
@@ -1416,7 +1415,7 @@ bb.l:                                             ; preds = %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y) #19
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z) #19
-  %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 92 ; 7 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 92 ; 6 uses
   %.val27111.i = load i8, ptr %i.bu, align 4, !range !15, !noundef !16
   %i.bv = trunc nuw i8 %.val27111.i to i1
   br i1 %i.bv, label %.lr.ph.i, label %_ZN2v88internal12_GLOBAL__N_116RegExpParserImplItE16ParseClassRangesEPNS0_8ZoneListINS0_14CharacterRangeEEEb.exit
@@ -1819,7 +1818,6 @@ _ZN2v88internal12_GLOBAL__N_116RegExpParserImplItE11ReportErrorENS0_11RegExpErro
   %i.lf = getelementptr inbounds nuw i8, ptr %0, i64 56
   %.val.i44 = load i32, ptr %i.lf, align 8
   store i32 %.val.i44, ptr %i.la, align 8
-  store i8 0, ptr %i.bu, align 4
   br label %bb.iy
 
 bb.cp:                                            ; preds = %bb.co
