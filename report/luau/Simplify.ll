@@ -204,8 +204,8 @@ _ZN4Luau3getINS_13SingletonTypeEEEPKT_PKNS_4TypeE.exit.i: ; preds = %bb.j
 call.0.i.i:                                       ; preds = %_ZN4Luau3getINS_13SingletonTypeEEEPKT_PKNS_4TypeE.exit.i
   %i.be = getelementptr inbounds nuw i8, ptr %i.aw, i64 16
   %i.bf = load i8, ptr %i.be, align 8, !tbaa !53, !range !54, !noundef !55
-  %5 = icmp eq i8 %i.bf, 0
-  br i1 %5, label %bb.k, label %.critedge97.i
+  %5 = trunc nuw i8 %i.bf to i1
+  br i1 %5, label %.critedge97.i, label %bb.k
 
 bb.k:                                             ; preds = %call.0.i.i, %_ZN4Luau3getINS_13PrimitiveTypeEEEPKT_PKNS_4TypeE.exit.i
   %.257.i = phi i1 [ false, %_ZN4Luau3getINS_13PrimitiveTypeEEEPKT_PKNS_4TypeE.exit.i ], [ true, %call.0.i.i ]
@@ -378,8 +378,8 @@ _ZN4Luau3getINS_13SingletonTypeEEEPKT_PKNS_4TypeE.exit126.i: ; preds = %bb.u
 call.0.i129.i:                                    ; preds = %_ZN4Luau3getINS_13SingletonTypeEEEPKT_PKNS_4TypeE.exit126.i
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dr, i64 16
   %i.ea = load i8, ptr %i.dz, align 8, !tbaa !53, !range !54, !noundef !55
-  %6 = icmp eq i8 %i.ea, 0
-  br i1 %6, label %bb.v, label %.critedge97.i
+  %6 = trunc nuw i8 %i.ea to i1
+  br i1 %6, label %.critedge97.i, label %bb.v
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.w, %bb.l, %_ZN4Luau12TypeIteratorINS_9UnionTypeEE7advanceEv.exit.i137.i, %_ZN4Luau12TypeIteratorINS_9UnionTypeEEdeEv.exit122.i, %.noexc120.i, %.noexc119.i, %bb.s, %_ZN4Luau12TypeIteratorINS_9UnionTypeEE7advanceEv.exit.i.i, %_ZN4Luau12TypeIteratorINS_9UnionTypeEEdeEv.exit.i, %.noexc102.i, %.noexc.i, %bb.h
   %lpad.loopexit.split-lp27 = landingpad { ptr, i32 }
@@ -782,8 +782,8 @@ bb.k:                                             ; preds = %.lr.ph, %bb.m
           to label %bb.l unwind label %.loopexit.split-lp57.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.l:                                             ; preds = %bb.k
-  %.not.not = icmp eq i32 %i.y, 0
-  br i1 %.not.not, label %_ZSt4swapIN4Luau7TypeIdsEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS5_ESt18is_move_assignableIS5_EEE5valueEvE4typeERS5_SE_.exit, label %.thread51
+  %.not = trunc nuw i32 %i.y to i1
+  br i1 %.not, label %.thread51, label %_ZSt4swapIN4Luau7TypeIdsEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS5_ESt18is_move_assignableIS5_EEE5valueEvE4typeERS5_SE_.exit
 
 .thread51:                                        ; preds = %bb.l
   %i.z = load ptr, ptr %0, align 8, !tbaa !123
@@ -1078,8 +1078,8 @@ _ZN4Luau12TypeIteratorINS_16IntersectionTypeEEdeEv.exit: ; preds = %.noexc55
           to label %bb.g unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.g:                                             ; preds = %_ZN4Luau12TypeIteratorINS_16IntersectionTypeEEdeEv.exit
-  %.not51.not = icmp eq i32 %i.al, 0
-  br i1 %.not51.not, label %bb.h, label %bb.l
+  %.not51 = trunc nuw i32 %i.al to i1
+  br i1 %.not51, label %bb.l, label %bb.h
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.i, %_ZN4Luau12TypeIteratorINS_16IntersectionTypeEE7advanceEv.exit.i, %.noexc55, %.noexc, %bb.f, %_ZN4Luau12TypeIteratorINS_16IntersectionTypeEEdeEv.exit
   %lpad.loopexit.split-lp98 = landingpad { ptr, i32 }
@@ -1426,7 +1426,7 @@ _ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit.preheader: ; preds = %bb.d
   br label %_ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit
 
 _ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit:  ; preds = %_ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit.preheader, %_ZN4Luau12TypeIteratorINS_9UnionTypeEE7advanceEv.exit.i
-  %.033 = phi i1 [ %.134.ph, %_ZN4Luau12TypeIteratorINS_9UnionTypeEE7advanceEv.exit.i ], [ false, %_ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit.preheader ] ; 3 uses
+  %.033 = phi i1 [ %.134.ph, %_ZN4Luau12TypeIteratorINS_9UnionTypeEE7advanceEv.exit.i ], [ false, %_ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit.preheader ] ; 2 uses
   %i.af = load i64, ptr %i.aa, align 8, !tbaa !25
   %i.ag = icmp eq i64 %i.af, 0                    ; 2 uses
   %i.ah = load i64, ptr %i.ab, align 8, !tbaa !25
@@ -1450,11 +1450,15 @@ _ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit:  ; preds = %_ZN4Luau12TypeItera
   %i.av = load i64, ptr %i.au, align 8
   %i.aw = icmp eq i64 %i.at, %i.av
   %i.ax = select i1 %i.ar, i1 %i.aw, i1 false
-  br i1 %i.ax, label %.loopexit77, label %bb.i
+  br i1 %i.ax, label %6, label %bb.i
 
 bb.e:                                             ; preds = %_ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit
   %.mux.i.i = select i1 %i.ag, i1 %i.ai, i1 false
-  br i1 %.mux.i.i, label %.loopexit77, label %bb.i
+  br i1 %.mux.i.i, label %6, label %bb.i
+
+6:                                                ; preds = %.split, %bb.e
+  %7 = xor i1 %.033, true
+  br label %.loopexit77
 
 bb.f:                                             ; preds = %bb.y, %bb.b
   %i.ay = landingpad { ptr, i32 }
@@ -1602,9 +1606,9 @@ _ZN4Luau12TypeIteratorINS_9UnionTypeEE7advanceEv.exit.i: ; preds = %_ZN4Luau8Vec
   invoke void @_ZN4Luau12TypeIteratorINS_9UnionTypeEE7descendEv(ptr noundef nonnull align 8 dereferenceable(72) %4)
           to label %_ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.loopexit77:                                      ; preds = %bb.e, %.split, %_ZN4Luau3getINS_9NeverTypeEEEPKT_PKNS_4TypeE.exit
-  %.2.mux = phi ptr [ %i.br, %_ZN4Luau3getINS_9NeverTypeEEEPKT_PKNS_4TypeE.exit ], [ %1, %.split ], [ %1, %bb.e ]
-  %6 = phi i1 [ false, %_ZN4Luau3getINS_9NeverTypeEEEPKT_PKNS_4TypeE.exit ], [ %.033, %.split ], [ %.033, %bb.e ]
+.loopexit77:                                      ; preds = %_ZN4Luau3getINS_9NeverTypeEEEPKT_PKNS_4TypeE.exit, %6
+  %.2.mux = phi ptr [ %i.br, %_ZN4Luau3getINS_9NeverTypeEEEPKT_PKNS_4TypeE.exit ], [ %1, %6 ]
+  %brmerge = phi i1 [ true, %_ZN4Luau3getINS_9NeverTypeEEEPKT_PKNS_4TypeE.exit ], [ %7, %6 ]
   %i.ct = getelementptr inbounds nuw i8, ptr %5, i64 32
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !36 ; 2 uses
   %.not.i.i.i = icmp eq ptr %i.cu, null
@@ -1636,7 +1640,7 @@ _ZN4Luau12TypeIteratorINS_9UnionTypeEED2Ev.exit68: ; preds = %_ZN4Luau12TypeIter
   %i.dd = shl i64 %i.dc, 4
   call void @_ZdlPvm(ptr noundef %i.db, i64 noundef %i.dd) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #22
-  br i1 %6, label %bb.y, label %bb.z
+  br i1 %brmerge, label %bb.z, label %bb.y
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.p
   %.pn55 = phi { ptr, i32 } [ %i.bs, %bb.p ], [ %lpad.loopexit.split-lp102, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
@@ -2039,7 +2043,7 @@ _ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit.preheader: ; preds = %bb.b
   br label %_ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit
 
 _ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit:  ; preds = %_ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit.preheader, %_ZN4Luau12TypeIteratorINS_9UnionTypeEE7advanceEv.exit.i
-  %.034 = phi i1 [ %.337.ph, %_ZN4Luau12TypeIteratorINS_9UnionTypeEE7advanceEv.exit.i ], [ false, %_ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit.preheader ] ; 5 uses
+  %.034 = phi i8 [ %.337.ph, %_ZN4Luau12TypeIteratorINS_9UnionTypeEE7advanceEv.exit.i ], [ 0, %_ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit.preheader ] ; 4 uses
   %i.q = load i64, ptr %i.j, align 8, !tbaa !25
   %i.r = icmp eq i64 %i.q, 0                      ; 2 uses
   %i.s = load i64, ptr %i.k, align 8, !tbaa !25
@@ -2185,7 +2189,8 @@ _ZNK4Luau14TypeSimplifier10mkNegationEPKNS_4TypeE.exit: ; preds = %bb.n, %bb.m, 
 
 bb.r:                                             ; preds = %_ZNK4Luau14TypeSimplifier10mkNegationEPKNS_4TypeE.exit
   %i.bm = icmp ne ptr %i.bl, %2
-  %8 = or i1 %.034, %i.bm
+  %8 = zext i1 %i.bm to i8
+  %9 = or i8 %.034, %8
   %.not.i.i56 = icmp eq ptr %i.bl, null
   br i1 %.not.i.i56, label %bb.t, label %bb.s
 
@@ -2215,7 +2220,7 @@ _ZN4Luau3getINS_9NeverTypeEEEPKT_PKNS_4TypeE.exit: ; preds = %bb.k, %bb.k
   br label %.loopexit77
 
 bb.u:                                             ; preds = %bb.t, %bb.k, %bb.l, %bb.s
-  %.337.ph = phi i1 [ true, %bb.s ], [ %8, %bb.t ], [ %.034, %bb.l ], [ %.034, %bb.k ]
+  %.337.ph = phi i8 [ 1, %bb.s ], [ %9, %bb.t ], [ %.034, %bb.l ], [ %.034, %bb.k ]
   %i.bs = load i64, ptr %i.j, align 8, !tbaa !25
   %i.bt = icmp eq i64 %i.bs, 0
   br i1 %i.bt, label %_ZN4Luau12TypeIteratorINS_9UnionTypeEE7advanceEv.exit.i, label %.lr.ph.i.i
@@ -2273,8 +2278,8 @@ _ZN4Luau12TypeIteratorINS_9UnionTypeEE7advanceEv.exit.i: ; preds = %_ZN4Luau8Vec
           to label %_ZN4Luau12TypeIteratorINS_9UnionTypeEEppEv.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .loopexit77:                                      ; preds = %bb.c, %.split, %_ZN4Luau3getINS_9NeverTypeEEEPKT_PKNS_4TypeE.exit
-  %.0.i.i111 = phi i1 [ false, %_ZN4Luau3getINS_9NeverTypeEEEPKT_PKNS_4TypeE.exit ], [ %.034, %.split ], [ %.034, %bb.c ]
-  %.241.mux = phi ptr [ %i.br, %_ZN4Luau3getINS_9NeverTypeEEEPKT_PKNS_4TypeE.exit ], [ %2, %.split ], [ %2, %bb.c ]
+  %.0.i.i111 = phi i1 [ false, %_ZN4Luau3getINS_9NeverTypeEEEPKT_PKNS_4TypeE.exit ], [ true, %.split ], [ true, %bb.c ]
+  %.241.mux = phi ptr [ %i.br, %_ZN4Luau3getINS_9NeverTypeEEEPKT_PKNS_4TypeE.exit ], [ undef, %.split ], [ undef, %bb.c ]
   %i.cs = getelementptr inbounds nuw i8, ptr %6, i64 32
   %i.ct = load ptr, ptr %i.cs, align 8, !tbaa !36 ; 2 uses
   %.not.i.i.i60 = icmp eq ptr %i.ct, null
@@ -2306,7 +2311,7 @@ _ZN4Luau12TypeIteratorINS_9UnionTypeEED2Ev.exit62: ; preds = %_ZN4Luau12TypeIter
   %i.dc = shl i64 %i.db, 4
   call void @_ZdlPvm(ptr noundef %i.da, i64 noundef %i.dc) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
-  br i1 %.0.i.i111, label %bb.ac, label %_ZN4Luau7TypeIdsD2Ev.exit
+  br i1 %.0.i.i111, label %10, label %_ZN4Luau7TypeIdsD2Ev.exit
 
 bb.aa:                                            ; preds = %.body, %bb.e
   %.pn46.pn = phi { ptr, i32 } [ %eh.lpad-body, %.body ], [ %i.ak, %bb.e ]
@@ -2319,7 +2324,11 @@ bb.ab:                                            ; preds = %bb.aa, %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #22
   br label %bb.aj
 
-bb.ac:                                            ; preds = %_ZN4Luau12TypeIteratorINS_9UnionTypeEED2Ev.exit62
+10:                                               ; preds = %_ZN4Luau12TypeIteratorINS_9UnionTypeEED2Ev.exit62
+  %11 = trunc nuw i8 %.034 to i1
+  br i1 %11, label %bb.ac, label %_ZN4Luau7TypeIdsD2Ev.exit
+
+bb.ac:                                            ; preds = %10
   %i.dd = load ptr, ptr %4, align 8, !tbaa !155
   store ptr %i.dd, ptr %7, align 8, !tbaa !155
   %i.de = getelementptr inbounds nuw i8, ptr %7, i64 8
@@ -2374,8 +2383,8 @@ bb.ag:                                            ; preds = %bb.ac
   call void @_ZN4Luau7TypeIdsD2Ev(ptr noundef nonnull align 8 dead_on_return(72) dereferenceable(72) %7) #22
   br label %bb.aj
 
-_ZN4Luau7TypeIdsD2Ev.exit:                        ; preds = %_ZN4Luau12TypeIteratorINS_9UnionTypeEED2Ev.exit62, %bb.af, %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EED2Ev.exit.i
-  %.342 = phi ptr [ %i.ds, %bb.af ], [ %.241.mux, %_ZN4Luau12TypeIteratorINS_9UnionTypeEED2Ev.exit62 ], [ %i.ds, %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EED2Ev.exit.i ]
+_ZN4Luau7TypeIdsD2Ev.exit:                        ; preds = %bb.af, %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EED2Ev.exit.i, %10, %_ZN4Luau12TypeIteratorINS_9UnionTypeEED2Ev.exit62
+  %.342 = phi ptr [ %2, %10 ], [ %.241.mux, %_ZN4Luau12TypeIteratorINS_9UnionTypeEED2Ev.exit62 ], [ %i.ds, %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EED2Ev.exit.i ], [ %i.ds, %bb.af ]
   %i.ea = load ptr, ptr %i.i, align 8, !tbaa !40  ; 3 uses
   %.not.i.i.i.i65 = icmp eq ptr %i.ea, null
   br i1 %.not.i.i.i.i65, label %_ZNSt6vectorIPKN4Luau4TypeESaIS3_EED2Ev.exit.i66, label %bb.ah

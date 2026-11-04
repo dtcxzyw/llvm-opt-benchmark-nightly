@@ -202,8 +202,8 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !55)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !56)
   %i.f = load i64, ptr %i.d, align 8, !range !5, !alias.scope !57, !noundef !4
-  %1 = icmp eq i64 %i.f, 0
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolECs3614Yh7QWq_13libp2p_stream.exit.i.i, label %bb.b
+  %1 = trunc nuw i64 %i.f to i1
+  br i1 %1, label %bb.b, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolECs3614Yh7QWq_13libp2p_stream.exit.i.i
 
 bb.b:                                             ; preds = %.lr.ph.i.i
   %i.g = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
@@ -236,8 +236,8 @@ bb.d:                                             ; preds = %bb.c
   tail call void @llvm.experimental.noalias.scope.decl(metadata !62)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !63)
   %i.p = load i64, ptr %i.n, align 8, !range !5, !alias.scope !64, !noundef !4
-  %2 = icmp eq i64 %i.p, 0
-  br i1 %2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolECs3614Yh7QWq_13libp2p_stream.exit8.i.i, label %bb.e
+  %2 = trunc nuw i64 %i.p to i1
+  br i1 %2, label %bb.e, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolECs3614Yh7QWq_13libp2p_stream.exit8.i.i
 
 bb.e:                                             ; preds = %.lr.ph12.i.i
   %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 8 ; 2 uses
@@ -640,8 +640,8 @@ bb.i:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !169)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !170)
   %i.q = load i64, ptr %1, align 8, !range !5, !alias.scope !171, !noundef !4
-  %2 = icmp eq i64 %i.q, 0
-  br i1 %2, label %.thread, label %bb.j
+  %2 = trunc nuw i64 %i.q to i1
+  br i1 %2, label %bb.j, label %.thread
 
 bb.j:                                             ; preds = %bb.i
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
@@ -748,8 +748,8 @@ bb.b:                                             ; preds = %bb.j, %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !220)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !221)
   %i.d = load i64, ptr %2, align 8, !range !5, !alias.scope !222, !noundef !4
-  %3 = icmp eq i64 %i.d, 0
-  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolECs3614Yh7QWq_13libp2p_stream.exit, label %bb.c
+  %3 = trunc nuw i64 %i.d to i1
+  br i1 %3, label %bb.c, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolECs3614Yh7QWq_13libp2p_stream.exit
 
 bb.c:                                             ; preds = %bb.b
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
@@ -845,8 +845,8 @@ _RINvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_8RawTableTNtNtCs6b9j1MKPRPC_12libp2
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 16
   store ptr %1, ptr %i.ap, align 8
   store i64 2, ptr %0, align 8
-  %4 = icmp eq i64 %i.r, 0
-  br i1 %4, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolECs3614Yh7QWq_13libp2p_stream.exit5, label %bb.h
+  %4 = trunc nuw i64 %i.r to i1
+  br i1 %4, label %bb.h, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolECs3614Yh7QWq_13libp2p_stream.exit5
 
 bb.h:                                             ; preds = %_RINvMs6_NtCsjqcU1oJFKXj_9hashbrown3rawINtB6_8RawTableTNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolINtNtCsgV0iE8Xkxiy_15futures_channel4mpsc6SenderTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtBU_6stream6StreamEEEE4findNCNvMNtB8_11rustc_entryINtNtB8_3map7HashMapBQ_B1T_NtNtNtCsG258MDvU3F_3std4hash6random11RandomStateE11rustc_entry0ECs3614Yh7QWq_13libp2p_stream.exit
   %i.aq = atomicrmw add ptr %i.q, i64 -1 release, align 8, !noalias !239
@@ -1249,8 +1249,8 @@ bb.i:                                             ; preds = %.noexc6
   tail call void @llvm.experimental.noalias.scope.decl(metadata !298)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !299)
   %i.as = load i64, ptr %2, align 8, !range !5, !alias.scope !300, !noundef !4
-  %4 = icmp eq i64 %i.as, 0
-  br i1 %4, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolECs3614Yh7QWq_13libp2p_stream.exit, label %bb.j
+  %4 = trunc nuw i64 %i.as to i1
+  br i1 %4, label %bb.j, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolECs3614Yh7QWq_13libp2p_stream.exit
 
 bb.j:                                             ; preds = %bb.i
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
@@ -1321,8 +1321,8 @@ bb.n:                                             ; preds = %.loopexit.split-lp.
   tail call void @llvm.experimental.noalias.scope.decl(metadata !306)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !307)
   %i.br = load i64, ptr %2, align 8, !range !5, !alias.scope !308, !noundef !4
-  %5 = icmp eq i64 %i.br, 0
-  br i1 %5, label %.critedge, label %bb.o
+  %5 = trunc nuw i64 %i.br to i1
+  br i1 %5, label %bb.o, label %.critedge
 
 bb.o:                                             ; preds = %bb.n
   %i.bs = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
@@ -1354,8 +1354,8 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !320)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !321)
   %i.d = load i64, ptr %i.b, align 8, !range !5, !alias.scope !322, !noundef !4
-  %3 = icmp eq i64 %i.d, 0
-  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolECs3614Yh7QWq_13libp2p_stream.exit, label %bb.b
+  %3 = trunc nuw i64 %i.d to i1
+  br i1 %3, label %bb.b, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolECs3614Yh7QWq_13libp2p_stream.exit
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
@@ -1538,7 +1538,7 @@ _RNvXsJ_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB5_4KeysNtNtCs6b9j1MKPRP
   tail call void @llvm.experimental.noalias.scope.decl(metadata !394)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !395)
   %i.m = load i64, ptr %i.l, align 8, !range !5, !alias.scope !396, !noalias !393, !noundef !4
-  %i.n = trunc nuw i64 %i.m to i1                 ; 2 uses
+  %i.n = trunc nuw i64 %i.m to i1
   %i.o = getelementptr inbounds i8, ptr %i.i, i64 -40
   %.val.i.i.i = load ptr, ptr %i.o, align 8, !alias.scope !396, !noalias !393, !nonnull !4, !noundef !4 ; 3 uses
   %i.p = getelementptr inbounds i8, ptr %i.i, i64 -32
@@ -1573,7 +1573,8 @@ bb.f:                                             ; preds = %_RNvXNtNtCsexYYUdYS
 bb.g:                                             ; preds = %bb.k, %bb.j
   %i.u = landingpad { ptr, i32 }
           cleanup                                 ; 3 uses
-  br i1 %i.n, label %bb.h, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolECs3614Yh7QWq_13libp2p_stream.exit
+  %2 = trunc nuw i64 %i.x to i1
+  br i1 %2, label %bb.h, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolECs3614Yh7QWq_13libp2p_stream.exit
 
 bb.h:                                             ; preds = %bb.g
   %i.v = atomicrmw add ptr %.val.i.i.i, i64 -1 release, align 8, !noalias !398
@@ -1587,7 +1588,7 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %._crit_edge, %_RNvXsJ_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB5_4KeysNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolINtNtCsgV0iE8Xkxiy_15futures_channel4mpsc6SenderTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtB13_6stream6StreamEEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs3614Yh7QWq_13libp2p_stream.exit.i
   %.val = phi i64 [ %i.k, %_RNvXsJ_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB5_4KeysNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolINtNtCsgV0iE8Xkxiy_15futures_channel4mpsc6SenderTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtB13_6stream6StreamEEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs3614Yh7QWq_13libp2p_stream.exit.i ], [ %.val.pre, %._crit_edge ]
-  %i.x = phi i64 [ 0, %_RNvXsJ_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB5_4KeysNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolINtNtCsgV0iE8Xkxiy_15futures_channel4mpsc6SenderTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtB13_6stream6StreamEEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs3614Yh7QWq_13libp2p_stream.exit.i ], [ 1, %._crit_edge ]
+  %i.x = phi i64 [ 0, %_RNvXsJ_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB5_4KeysNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolINtNtCsgV0iE8Xkxiy_15futures_channel4mpsc6SenderTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtB13_6stream6StreamEEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs3614Yh7QWq_13libp2p_stream.exit.i ], [ 1, %._crit_edge ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store i64 %i.x, ptr %i.d, align 8
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8 ; 2 uses
@@ -1660,7 +1661,7 @@ _RNvXsJ_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB5_4KeysNtNtCs6b9j1MKPRP
   call void @llvm.experimental.noalias.scope.decl(metadata !404)
   call void @llvm.experimental.noalias.scope.decl(metadata !405)
   %i.ao = load i64, ptr %i.an, align 8, !range !5, !alias.scope !406, !noalias !407, !noundef !4
-  %i.ap = trunc nuw i64 %i.ao to i1               ; 2 uses
+  %i.ap = trunc nuw i64 %i.ao to i1
   %i.aq = getelementptr inbounds i8, ptr %i.ak, i64 -40
   %.val.i.i.i.i.i = load ptr, ptr %i.aq, align 8, !alias.scope !406, !noalias !407, !nonnull !4, !noundef !4 ; 3 uses
   %i.ar = getelementptr inbounds i8, ptr %i.ak, i64 -32
@@ -1677,7 +1678,7 @@ bb.o:                                             ; preds = %bb.n
   unreachable
 
 _RNvXs_NtNtNtCskKLDkoKarTP_4core4iter8adapters6clonedINtB4_6ClonedINtNtNtNtCsG258MDvU3F_3std11collections4hash3map4KeysNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolINtNtCsgV0iE8Xkxiy_15futures_channel4mpsc6SenderTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtB1W_6stream6StreamEEEENtNtNtB8_6traits8iterator8Iterator4nextCs3614Yh7QWq_13libp2p_stream.exit.i.i: ; preds = %bb.n, %_RNvXsJ_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB5_4KeysNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolINtNtCsgV0iE8Xkxiy_15futures_channel4mpsc6SenderTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtB13_6stream6StreamEEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs3614Yh7QWq_13libp2p_stream.exit.i.i.i
-  %i.au = phi i64 [ 0, %_RNvXsJ_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB5_4KeysNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolINtNtCsgV0iE8Xkxiy_15futures_channel4mpsc6SenderTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtB13_6stream6StreamEEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs3614Yh7QWq_13libp2p_stream.exit.i.i.i ], [ 1, %bb.n ]
+  %i.au = phi i64 [ 0, %_RNvXsJ_NtNtNtCsG258MDvU3F_3std11collections4hash3mapINtB5_4KeysNtNtCs6b9j1MKPRPC_12libp2p_swarm15stream_protocol14StreamProtocolINtNtCsgV0iE8Xkxiy_15futures_channel4mpsc6SenderTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtB13_6stream6StreamEEENtNtNtNtCskKLDkoKarTP_4core4iter6traits8iterator8Iterator4nextCs3614Yh7QWq_13libp2p_stream.exit.i.i.i ], [ 1, %bb.n ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !409
   store i64 %i.au, ptr %i.a, align 8, !noalias !409
   store ptr %.val.i.i.i.i.i, ptr %.sroa.7.0..sroa_idx.i.i, align 8, !noalias !409
@@ -1703,7 +1704,8 @@ _RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecNtNtCs6b9j1MKPRPC_12libp2p_swarm15str
 bb.p:                                             ; preds = %bb.s
   %i.be = landingpad { ptr, i32 }
           cleanup                                 ; 3 uses
-  br i1 %i.ap, label %bb.q, label %.body
+  %3 = trunc nuw i64 %i.au to i1
+  br i1 %3, label %bb.q, label %.body
 
 bb.q:                                             ; preds = %bb.p
   %i.bf = atomicrmw add ptr %.val.i.i.i.i.i, i64 -1 release, align 8, !noalias !411

@@ -202,11 +202,12 @@ bb.a:
   %i.ar = getelementptr inbounds nuw i8, ptr %i.a, i64 13
   %i.as = getelementptr inbounds nuw i8, ptr %i.a, i64 14
   %i.at = getelementptr inbounds nuw i8, ptr %i.a, i64 15
-  %i.au = icmp eq i32 %1, 0                       ; 2 uses
+  %i.au = icmp eq i32 %1, 0
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 6 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.ac, i64 16 ; 3 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.ac, i64 24
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ac, i64 8 ; 2 uses
+  %4 = trunc nuw i32 %1 to i1
   %i.az = getelementptr inbounds nuw i8, ptr %i.j, i64 3
   %i.ba = getelementptr inbounds nuw i8, ptr %i.ac, i64 40
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ac, i64 32 ; 2 uses
@@ -609,9 +610,9 @@ bb.az:                                            ; preds = %bb.ay
   br label %bb.ba
 
 bb.ba:                                            ; preds = %bb.ay, %bb.az
-  %.not242 = icmp slt i64 %i.he, %2
-  %or.cond322 = or i1 %i.au, %.not242
-  br i1 %or.cond322, label %.thread276, label %bb.bb
+  %.not241 = icmp sge i64 %i.he, %2
+  %or.cond322.not = and i1 %.not241, %4
+  br i1 %or.cond322.not, label %bb.bb, label %.thread276
 
 bb.bb:                                            ; preds = %bb.ba
   %i.hj = add nuw nsw i32 %i.bd, 7

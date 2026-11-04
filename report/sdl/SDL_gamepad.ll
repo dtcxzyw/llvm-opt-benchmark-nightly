@@ -205,7 +205,7 @@ SDL_ObjectValid.exit.thread:                      ; preds = %bb.b, %SDL_ObjectVa
 
 bb.c:                                             ; preds = %.lr.ph, %bb.m
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.m ] ; 2 uses
-  %.04864 = phi i1 [ false, %.lr.ph ], [ %.2, %bb.m ] ; 9 uses
+  %.04864 = phi i8 [ 0, %.lr.ph ], [ %.2, %bb.m ] ; 9 uses
   %i.j = load ptr, ptr %i.i, align 8
   %i.k = getelementptr inbounds nuw [32 x i8], ptr %i.j, i64 %indvars.iv ; 9 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 16
@@ -251,7 +251,8 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.ag = icmp sle i32 %i.ad, %i.w
-  %2 = or i1 %.04864, %i.ag
+  %2 = zext i1 %i.ag to i8
+  %3 = or i8 %.04864, %2
   br label %bb.m
 
 bb.i:                                             ; preds = %bb.f
@@ -262,7 +263,8 @@ bb.i:                                             ; preds = %bb.f
 
 bb.j:                                             ; preds = %bb.i
   %i.ai = icmp sge i32 %i.ad, %i.w
-  %3 = or i1 %.04864, %i.ai
+  %4 = zext i1 %i.ai to i8
+  %5 = or i8 %.04864, %4
   br label %bb.m
 
 bb.k:                                             ; preds = %bb.e
@@ -270,7 +272,8 @@ bb.k:                                             ; preds = %bb.e
   %i.ak = getelementptr inbounds nuw i8, ptr %i.k, i64 4
   %i.al = load i32, ptr %i.ak, align 4
   %i.am = tail call zeroext i1 @SDL_GetJoystickButton_REAL(ptr noundef %i.aj, i32 noundef %i.al) #9
-  %4 = or i1 %.04864, %i.am
+  %6 = zext i1 %i.am to i8
+  %7 = or i8 %.04864, %6
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.e
@@ -283,23 +286,28 @@ bb.l:                                             ; preds = %bb.e
   %i.at = load i32, ptr %i.as, align 4
   %i.au = and i32 %i.at, %i.ar
   %i.av = icmp ne i32 %i.au, 0
-  %5 = or i1 %.04864, %i.av
+  %8 = zext i1 %i.av to i8
+  %9 = or i8 %.04864, %8
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.e, %bb.h, %bb.g, %bb.j, %bb.i, %bb.l, %bb.k, %bb.d, %bb.c
-  %.2 = phi i1 [ %.04864, %bb.c ], [ %4, %bb.k ], [ %5, %bb.l ], [ %.04864, %bb.e ], [ %.04864, %bb.d ], [ %2, %bb.h ], [ %.04864, %bb.g ], [ %3, %bb.j ], [ %.04864, %bb.i ] ; 2 uses
+  %.2 = phi i8 [ %.04864, %bb.c ], [ %7, %bb.k ], [ %9, %bb.l ], [ %.04864, %bb.e ], [ %.04864, %bb.d ], [ %3, %bb.h ], [ %.04864, %bb.g ], [ %5, %bb.j ], [ %.04864, %bb.i ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.aw = load i32, ptr %i.f, align 8
   %i.ax = sext i32 %i.aw to i64
   %i.ay = icmp slt i64 %indvars.iv.next, %i.ax
-  br i1 %i.ay, label %bb.c, label %._crit_edge, !llvm.loop !54
+  br i1 %i.ay, label %bb.c, label %._crit_edge.loopexit, !llvm.loop !54
 
 SDL_ObjectValid.exit.thread59:                    ; preds = %bb.a, %SDL_ObjectValid.exit, %SDL_ObjectValid.exit.thread
   %i.az = tail call zeroext i1 (ptr, ...) @SDL_SetError_REAL(ptr noundef nonnull @.str.4, ptr noundef nonnull @.str.5) #9 ; 0 uses
   br label %._crit_edge
 
-._crit_edge:                                      ; preds = %bb.m, %.preheader, %SDL_ObjectValid.exit.thread59
-  %.1 = phi i1 [ false, %SDL_ObjectValid.exit.thread59 ], [ false, %.preheader ], [ %.2, %bb.m ]
+._crit_edge.loopexit:                             ; preds = %bb.m
+  %10 = trunc nuw i8 %.2 to i1
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %.preheader, %._crit_edge.loopexit, %SDL_ObjectValid.exit.thread59
+  %.1 = phi i1 [ false, %SDL_ObjectValid.exit.thread59 ], [ false, %.preheader ], [ %10, %._crit_edge.loopexit ]
   tail call void @SDL_UnlockJoysticks_REAL() #9
   ret i1 %.1
 }
@@ -702,7 +710,7 @@ bb.e:                                             ; preds = %SDL_ObjectValid.exi
   br i1 %.not31, label %bb.i, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.p = load i32, ptr %i.g, align 8              ; 6 uses
+  %i.p = load i32, ptr %i.g, align 8              ; 7 uses
   %i.q = icmp sgt i32 %i.p, 0
   br i1 %i.q, label %.lr.ph, label %._crit_edge
 
@@ -710,13 +718,12 @@ bb.f:                                             ; preds = %bb.e
   %i.r = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.k ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.t = load ptr, ptr %i.s, align 8              ; 3 uses
-  %wide.trip.count = zext nneg i32 %i.p to i64    ; 2 uses
-  %xtraiter = and i64 %wide.trip.count, 1
   %i.u = icmp eq i32 %i.p, 1
   br i1 %i.u, label %.epil.preheader, label %.lr.ph.new
 
 .lr.ph.new:                                       ; preds = %.lr.ph
-  %unroll_iter = and i64 %wide.trip.count, 2147483646
+  %2 = and i32 %i.p, 2147483646
+  %unroll_iter = zext nneg i32 %2 to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.g, %.lr.ph.new
@@ -740,8 +747,8 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph.new
   br i1 %niter.ncmp.1, label %._crit_edge.loopexit.unr-lcssa, label %bb.g, !llvm.loop !60
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.g
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.loopexit, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.p to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge.loopexit
 
 .epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
   %indvars.iv.epil.init = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next.1, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses

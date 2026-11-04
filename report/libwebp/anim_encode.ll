@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %bb.e, %bb.d
 
 bb.g:                                             ; preds = %bb.c
   %i.l = tail call fastcc i32 @IncreasePreviousDuration(ptr noundef %0, i32 noundef %i.h)
-  %.not53 = icmp eq i32 %i.l, 0
-  br i1 %.not53, label %.critedge, label %bb.h
+  %.not53 = trunc nuw i32 %i.l to i1
+  br i1 %.not53, label %bb.h, label %.critedge
 
 bb.h:                                             ; preds = %bb.g
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 1120
@@ -218,8 +218,8 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.r = tail call fastcc i32 @FlushFrames(ptr noundef %0)
-  %.not54 = icmp eq i32 %i.r, 0
-  br i1 %.not54, label %.critedge, label %bb.k
+  %.not54 = trunc nuw i32 %i.r to i1
+  br i1 %.not54, label %bb.k, label %.critedge
 
 bb.j:                                             ; preds = %bb.b
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 1152
@@ -622,10 +622,10 @@ CacheFrame.exit.thread:                           ; preds = %bb.bg, %bb.bd
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #14
   %i.jf = call fastcc i32 @FlushFrames(ptr noundef %0)
-  %.not69 = icmp eq i32 %i.jf, 0
+  %.not69 = trunc nuw i32 %i.jf to i1
   store ptr null, ptr %i.ap, align 8, !tbaa !66
   store i32 1, ptr %i.aq, align 8, !tbaa !30
-  br i1 %.not69, label %.critedge, label %bb.bh
+  br i1 %.not69, label %bb.bh, label %.critedge
 
 bb.bh:                                            ; preds = %CacheFrame.exit.thread
   %i.jg = getelementptr inbounds nuw i8, ptr %0, i64 1156
@@ -966,8 +966,8 @@ bb.h:                                             ; preds = %bb.g
   %i.u = fdiv double %i.r, %i.t
   %i.v = fptosi double %i.u to i32
   %i.w = tail call fastcc i32 @IncreasePreviousDuration(ptr noundef %0, i32 noundef %i.v)
-  %.not47.not = icmp eq i32 %i.w, 0
-  br i1 %.not47.not, label %bb.p, label %bb.i
+  %.not47 = trunc nuw i32 %i.w to i1
+  br i1 %.not47, label %bb.i, label %bb.p
 
 bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 1120
@@ -975,8 +975,8 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 1128
   store i64 %i.y, ptr %i.z, align 8, !tbaa !72
   %i.aa = tail call fastcc i32 @FlushFrames(ptr noundef %0)
-  %.not48 = icmp eq i32 %i.aa, 0
-  br i1 %.not48, label %bb.p, label %bb.j
+  %.not48 = trunc nuw i32 %i.aa to i1
+  br i1 %.not48, label %bb.j, label %bb.p
 
 bb.j:                                             ; preds = %bb.i
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 1208
@@ -1379,8 +1379,8 @@ bb.a:
   %i.i = load i32, ptr %i.h, align 4, !tbaa !40   ; 3 uses
   %.not63 = icmp eq i32 %i.i, 0
   %i.j = zext i1 %.not63 to i32
-  %.not64 = icmp eq i32 %2, 0
-  br i1 %.not64, label %bb.b, label %bb.c
+  %.not64 = trunc nuw i32 %2 to i1
+  br i1 %.not64, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 1160
@@ -1783,14 +1783,14 @@ define internal fastcc i32 @GenerateCandidates(ptr noundef nonnull %0, ptr nound
 bb.a:
   %11 = alloca %struct.WebPConfig, align 4        ; 8 uses
   %12 = alloca %struct.WebPConfig, align 4        ; 8 uses
-  %13 = icmp eq i32 %2, 0                         ; 3 uses
-  %.idx = select i1 %13, i64 0, i64 104
+  %13 = trunc nuw i32 %2 to i1                    ; 3 uses
+  %.idx = select i1 %13, i64 104, i64 0
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 %.idx ; 19 uses
-  %.v = select i1 %13, i64 208, i64 312
+  %.v = select i1 %13, i64 312, i64 208
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 %.v ; 19 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 816
-  %i.e = select i1 %13, ptr %i.d, ptr %3          ; 8 uses
+  %i.e = select i1 %13, ptr %3, ptr %i.d          ; 8 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 552 ; 11 uses
   %i.g = load i32, ptr %i.f, align 8, !tbaa !30
   %.not.i = icmp eq i32 %i.g, 0
@@ -1809,8 +1809,8 @@ bb.b:                                             ; preds = %bb.a
   br label %CopyCurrentCanvas.exit
 
 CopyCurrentCanvas.exit:                           ; preds = %bb.a, %bb.b
-  %.not = icmp eq i32 %5, 0                       ; 5 uses
-  br i1 %.not, label %bb.c, label %.thread
+  %.not = trunc nuw i32 %5 to i1                  ; 5 uses
+  br i1 %.not, label %.thread, label %bb.c
 
 bb.c:                                             ; preds = %CopyCurrentCanvas.exit
   %i.n = getelementptr inbounds nuw i8, ptr %6, i64 8
@@ -1866,7 +1866,7 @@ bb.e:                                             ; preds = %bb.d
   %i.at = getelementptr [4 x i8], ptr %i.as, i64 %indvars.iv.i
   %i.au = load i32, ptr %i.at, align 4, !tbaa !12
   %.not26.i = icmp eq i32 %i.au, %i.an
-  br i1 %.not26.i, label %.critedge.i, label %.thread136
+  br i1 %.not26.i, label %.critedge.i, label %.loopexit
 
 .critedge.i:                                      ; preds = %bb.e, %bb.d
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, 1 ; 2 uses
@@ -1876,10 +1876,17 @@ bb.e:                                             ; preds = %bb.d
 ._crit_edge.i:                                    ; preds = %.critedge.i
   %indvars.iv.next35.i = add nsw i64 %indvars.iv34.i, 1 ; 2 uses
   %i.aw = icmp slt i64 %indvars.iv.next35.i, %i.aj
-  br i1 %i.aw, label %.lr.ph.i, label %.thread136, !llvm.loop !141
+  br i1 %i.aw, label %.lr.ph.i, label %.loopexit, !llvm.loop !141
 
-.thread136:                                       ; preds = %._crit_edge.i, %bb.e, %bb.c, %.lr.ph31.i
-  %14 = phi i1 [ true, %bb.c ], [ true, %.lr.ph31.i ], [ false, %bb.e ], [ true, %._crit_edge.i ] ; 7 uses
+.loopexit:                                        ; preds = %._crit_edge.i, %bb.e
+  %14 = phi i1 [ false, %bb.e ], [ true, %._crit_edge.i ] ; 2 uses
+  %15 = xor i1 %14, true
+  %16 = zext i1 %15 to i32
+  br label %.thread136
+
+.thread136:                                       ; preds = %.loopexit, %bb.c, %.lr.ph31.i
+  %17 = phi i32 [ %16, %.loopexit ], [ 0, %.lr.ph31.i ], [ 0, %bb.c ] ; 7 uses
+  %18 = phi i1 [ %14, %.loopexit ], [ true, %.lr.ph31.i ], [ true, %bb.c ] ; 7 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %6, i64 280
   %i.ay = getelementptr inbounds nuw i8, ptr %8, i64 4
   %i.az = load float, ptr %i.ay, align 4, !tbaa !94
@@ -1989,8 +1996,9 @@ PixelsAreSimilar.exit.i:                          ; preds = %bb.i
   br i1 %i.dm, label %.lr.ph.i98, label %.thread, !llvm.loop !143
 
 .thread:                                          ; preds = %._crit_edge.i103, %PixelsAreSimilar.exit.i, %bb.i, %bb.h, %bb.g, %.lr.ph35.i, %.thread136, %CopyCurrentCanvas.exit
-  %i.dn = phi i1 [ false, %CopyCurrentCanvas.exit ], [ %14, %.thread136 ], [ %14, %.lr.ph35.i ], [ %14, %PixelsAreSimilar.exit.i ], [ %14, %bb.g ], [ %14, %bb.h ], [ %14, %bb.i ], [ %14, %._crit_edge.i103 ] ; 3 uses
-  %i.do = phi i1 [ false, %CopyCurrentCanvas.exit ], [ true, %.thread136 ], [ true, %.lr.ph35.i ], [ false, %PixelsAreSimilar.exit.i ], [ false, %bb.g ], [ false, %bb.h ], [ false, %bb.i ], [ true, %._crit_edge.i103 ] ; 3 uses
+  %not..i = phi i32 [ 1, %CopyCurrentCanvas.exit ], [ %17, %PixelsAreSimilar.exit.i ], [ %17, %.thread136 ], [ %17, %.lr.ph35.i ], [ %17, %bb.g ], [ %17, %bb.h ], [ %17, %bb.i ], [ %17, %._crit_edge.i103 ]
+  %i.dn = phi i1 [ false, %CopyCurrentCanvas.exit ], [ %18, %PixelsAreSimilar.exit.i ], [ %18, %.thread136 ], [ %18, %.lr.ph35.i ], [ %18, %bb.g ], [ %18, %bb.h ], [ %18, %bb.i ], [ %18, %._crit_edge.i103 ] ; 2 uses
+  %i.do = phi i1 [ false, %CopyCurrentCanvas.exit ], [ false, %PixelsAreSimilar.exit.i ], [ true, %.thread136 ], [ true, %.lr.ph35.i ], [ false, %bb.g ], [ false, %bb.h ], [ false, %bb.i ], [ true, %._crit_edge.i103 ] ; 3 uses
   %i.dp = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.dq = load i32, ptr %i.dp, align 4, !tbaa !78
   %.not90 = icmp eq i32 %i.dq, 0
@@ -2163,10 +2171,8 @@ bb.q:                                             ; preds = %IncreaseTransparenc
   store <2 x i32> %i.gu, ptr %i.gt, align 8, !tbaa !12
   %i.gv = getelementptr inbounds nuw i8, ptr %i.a, i64 64
   store i32 0, ptr %i.gv, align 8, !tbaa !153
-  %not..i = xor i1 %i.dn, true
-  %15 = zext i1 %not..i to i32
   %i.gw = getelementptr inbounds nuw i8, ptr %i.a, i64 68
-  store i32 %15, ptr %i.gw, align 4, !tbaa !154
+  store i32 %not..i, ptr %i.gw, align 4, !tbaa !154
   %i.gx = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   store i32 0, ptr %i.gx, align 8, !tbaa !155
   tail call void @WebPMemoryWriterInit(ptr noundef nonnull %i.a) #14
@@ -2223,7 +2229,7 @@ bb.u:                                             ; preds = %bb.t
   br i1 %i.hq, label %bb.v, label %.split146
 
 bb.v:                                             ; preds = %bb.u, %bb.t
-  %.idx.i = select i1 %.not, i64 0, i64 48
+  %.idx.i = select i1 %.not, i64 48, i64 0
   %i.hr = getelementptr inbounds nuw i8, ptr %10, i64 %.idx.i ; 3 uses
   %i.hs = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.hr, ptr noundef nonnull align 8 dereferenceable(48) %i.hs, i64 48, i1 false), !tbaa.struct !160
@@ -2233,7 +2239,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   store ptr %.val.i, ptr %i.hr, align 8, !tbaa !53
   %i.hu = getelementptr inbounds nuw i8, ptr %i.hr, i64 8
   store i64 %.val30.i, ptr %i.hu, align 8, !tbaa !77
-  br i1 %.not, label %bb.w, label %bb.aa
+  br i1 %.not, label %bb.aa, label %bb.w
 
 bb.w:                                             ; preds = %bb.v
   %i.hv = getelementptr inbounds nuw i8, ptr %0, i64 1120
@@ -2636,7 +2642,7 @@ bb.br:                                            ; preds = %bb.bq
   br i1 %i.xn, label %bb.bs, label %bb.ca
 
 bb.bs:                                            ; preds = %bb.br, %bb.bq
-  %.idx.i124 = select i1 %.not, i64 0, i64 48
+  %.idx.i124 = select i1 %.not, i64 48, i64 0
   %i.xo = getelementptr inbounds nuw i8, ptr %10, i64 %.idx.i124 ; 3 uses
   %i.xp = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.xo, ptr noundef nonnull align 8 dereferenceable(48) %i.xp, i64 48, i1 false), !tbaa.struct !160
@@ -2646,7 +2652,7 @@ bb.bs:                                            ; preds = %bb.br, %bb.bq
   store ptr %.val.i125, ptr %i.xo, align 8, !tbaa !53
   %i.xr = getelementptr inbounds nuw i8, ptr %i.xo, i64 8
   store i64 %.val30.i126, ptr %i.xr, align 8, !tbaa !77
-  br i1 %.not, label %bb.bt, label %bb.bx
+  br i1 %.not, label %bb.bx, label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs
   %i.xs = getelementptr inbounds nuw i8, ptr %0, i64 1120

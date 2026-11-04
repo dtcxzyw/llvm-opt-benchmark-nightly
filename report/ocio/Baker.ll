@@ -202,9 +202,10 @@ bb.dl:                                            ; preds = %bb.dk
           to label %bb.dm unwind label %.loopexit.split-lp411.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.dm:                                            ; preds = %bb.dl
-  %i.jy = or i1 %i.jv, %i.jx
-  %32 = zext i1 %i.jy to i8
-  %33 = or i8 %.090, %32
+  %32 = trunc nuw i8 %.090 to i1
+  %i.jy = or i1 %i.jv, %32
+  %33 = or i1 %i.jy, %i.jx
+  %34 = zext i1 %33 to i8
   br label %bb.dn
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.noexc.i, %bb.dd
@@ -215,7 +216,7 @@ bb.dm:                                            ; preds = %bb.dl
 
 bb.dn:                                            ; preds = %bb.dm, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit274
   %.193 = phi i8 [ 1, %bb.dm ], [ %.092, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit274 ] ; 2 uses
-  %.191 = phi i8 [ %33, %bb.dm ], [ %.090, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit274 ] ; 2 uses
+  %.191 = phi i8 [ %34, %bb.dm ], [ %.090, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit274 ] ; 2 uses
   %i.jz = trunc nuw i8 %.193 to i1
   %i.ka = trunc nuw i8 %.191 to i1
   %or.cond5 = select i1 %i.jz, i1 %i.ka, i1 false

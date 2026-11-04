@@ -202,19 +202,17 @@ bb.a:
   %i.b = load i16, ptr %i.a, align 8, !tbaa !11   ; 2 uses
   %i.c = zext i16 %i.b to i32                     ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.e = load ptr, ptr %i.d, align 8, !tbaa !31   ; 3 uses
+  %i.e = load ptr, ptr %i.d, align 8, !tbaa !31   ; 5 uses
   %i.f = zext i16 %i.b to i64
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %i.f ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 186 ; 3 uses
-  %i.i = load i16, ptr %i.h, align 2, !tbaa !11
-  %1 = zext i16 %i.i to i32                       ; 2 uses
-  %2 = and i32 %1, 1
-  %.not = icmp eq i32 %2, 0
-  br i1 %.not, label %bb.b, label %.thread105
+  %i.i = load i16, ptr %i.h, align 2, !tbaa !11   ; 2 uses
+  %.not = trunc i16 %i.i to i1
+  br i1 %.not, label %.thread105, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %3 = and i32 %1, 2
-  %.not95 = icmp eq i32 %3, 0
+  %1 = and i16 %i.i, 2
+  %.not95 = icmp eq i16 %1, 0
   br i1 %.not95, label %bb.c, label %reassoc_xref.exit.thread
 
 bb.c:                                             ; preds = %bb.b
@@ -224,9 +222,10 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %._crit_edge133, %bb.c
-  %i.m = phi ptr [ %i.gl, %._crit_edge133 ], [ %i.e, %bb.c ] ; 5 uses
-  %.082 = phi ptr [ %i.gt, %._crit_edge133 ], [ %i.g, %bb.c ] ; 4 uses
-  %.077 = phi i32 [ %.2.i, %._crit_edge133 ], [ %i.c, %bb.c ] ; 4 uses
+  %2 = phi ptr [ %5, %._crit_edge133 ], [ %i.e, %bb.c ] ; 5 uses
+  %i.m = phi ptr [ %i.gl, %._crit_edge133 ], [ %i.e, %bb.c ]
+  %.082 = phi ptr [ %i.gt, %._crit_edge133 ], [ %i.g, %bb.c ] ; 3 uses
+  %.077 = phi i32 [ %.2.i, %._crit_edge133 ], [ %i.c, %bb.c ] ; 3 uses
   %.076 = phi i32 [ %.4.lcssa, %._crit_edge133 ], [ %i.l, %bb.c ] ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 600
   %i.o = load i16, ptr %i.n, align 8, !tbaa !33
@@ -242,11 +241,11 @@ bb.d:                                             ; preds = %._crit_edge133, %bb
 .lr.ph.a:                                         ; preds = %bb.d, %bb.k
   %.1121 = phi i32 [ %i.ax, %bb.k ], [ %.076, %bb.d ] ; 2 uses
   %i.u = zext nneg i32 %.1121 to i64
-  %i.v = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.u ; 3 uses
+  %i.v = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.u ; 3 uses
   %i.w = tail call fastcc i32 @aa_xref(ptr noundef nonnull %0, ptr noundef %.082, ptr noundef nonnull %i.a, ptr noundef nonnull %i.v)
   switch i32 %i.w, label %bb.k [
     i32 2, label %bb.e
-    i32 1, label %.thread105
+    i32 1, label %.loopexit.loopexit
   ]
 
 bb.e:                                             ; preds = %.lr.ph.a
@@ -256,7 +255,7 @@ bb.e:                                             ; preds = %.lr.ph.a
   %i.aa = getelementptr inbounds nuw i8, ptr %i.v, i64 2 ; 2 uses
   %i.ab = load i16, ptr %i.aa, align 2, !tbaa !11 ; 2 uses
   %i.ac = zext i16 %i.ab to i64
-  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.m, i64 %i.ac
+  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %i.ac
   %i.ae = getelementptr inbounds nuw i8, ptr %i.ad, i64 4
   %i.af = load i8, ptr %i.ae, align 4, !tbaa !11
   %i.ag = zext i8 %i.af to i32                    ; 2 uses
@@ -307,13 +306,18 @@ bb.k:                                             ; preds = %.lr.ph.a
   %i.aw = load i16, ptr %i.av, align 2, !tbaa !11
   %i.ax = zext i16 %i.aw to i32                   ; 2 uses
   %i.ay = icmp samesign ult i32 %.279, %i.ax
-  br i1 %i.ay, label %.lr.ph.a, label %.thread105
+  br i1 %i.ay, label %.lr.ph.a, label %.loopexit.loopexit
 
-.thread105:                                       ; preds = %bb.k, %.lr.ph.a, %bb.d, %bb.a
-  %4 = phi ptr [ %i.e, %bb.a ], [ %i.m, %bb.d ], [ %i.m, %.lr.ph.a ], [ %i.m, %bb.k ] ; 11 uses
-  %.185 = phi i32 [ %i.c, %bb.a ], [ %.077, %bb.d ], [ %.077, %.lr.ph.a ], [ %.077, %bb.k ] ; 2 uses
-  %.183 = phi ptr [ %i.g, %bb.a ], [ %.082, %bb.d ], [ %.082, %.lr.ph.a ], [ %.082, %bb.k ] ; 4 uses
-  %.5 = phi i32 [ %i.c, %bb.a ], [ %.279, %bb.d ], [ %.279, %bb.k ], [ %.1121, %.lr.ph.a ] ; 4 uses
+.loopexit.loopexit:                               ; preds = %bb.k, %.lr.ph.a
+  %.5.ph = phi i32 [ %.1121, %.lr.ph.a ], [ %.279, %bb.k ]
+  br label %.thread105
+
+.thread105:                                       ; preds = %.loopexit.loopexit, %bb.d, %bb.a
+  %3 = phi ptr [ %i.e, %bb.a ], [ %2, %bb.d ], [ %2, %.loopexit.loopexit ]
+  %4 = phi ptr [ %i.e, %bb.a ], [ %i.m, %bb.d ], [ %2, %.loopexit.loopexit ] ; 11 uses
+  %.185 = phi i32 [ %i.c, %bb.a ], [ %.077, %bb.d ], [ %.077, %.loopexit.loopexit ] ; 2 uses
+  %.183 = phi ptr [ %i.g, %bb.a ], [ %.082, %bb.d ], [ %.082, %.loopexit.loopexit ] ; 4 uses
+  %.5 = phi i32 [ %i.c, %bb.a ], [ %.279, %bb.d ], [ %.5.ph, %.loopexit.loopexit ] ; 4 uses
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 542
   %.3.in124 = load i16, ptr %i.az, align 2, !tbaa !11 ; 2 uses
   %.3125 = zext i16 %.3.in124 to i32              ; 2 uses
@@ -352,9 +356,8 @@ bb.n:                                             ; preds = %bb.m, %bb.l
 
 ._crit_edge:                                      ; preds = %bb.n, %.thread105
   %i.bp = load i16, ptr %i.h, align 2, !tbaa !11
-  %5 = and i16 %i.bp, 1
-  %.not96 = icmp eq i16 %5, 0
-  br i1 %.not96, label %bb.o, label %reassoc_xref.exit.thread
+  %.not96 = trunc i16 %i.bp to i1
+  br i1 %.not96, label %reassoc_xref.exit.thread, label %bb.o
 
 bb.o:                                             ; preds = %._crit_edge
   %i.bq = getelementptr inbounds nuw i8, ptr %0, i64 436
@@ -606,7 +609,7 @@ bb.ak:                                            ; preds = %reassoc_trycse.exit
   br i1 %i.fy, label %.lr.ph.i92.i, label %reassoc_xref.exit.thread
 
 .lr.ph.i92.i:                                     ; preds = %bb.ak
-  %i.fz = load ptr, ptr %i.d, align 8, !tbaa !31  ; 2 uses
+  %i.fz = load ptr, ptr %i.d, align 8, !tbaa !31  ; 3 uses
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.an, %.lr.ph.i92.i
@@ -634,6 +637,7 @@ bb.an:                                            ; preds = %bb.am, %bb.al
   br i1 %i.gk, label %bb.al, label %reassoc_xref.exit.thread, !llvm.loop !52
 
 reassoc_xref.exit:                                ; preds = %bb.am, %reassoc_trycse.exit86.i
+  %5 = phi ptr [ %3, %reassoc_trycse.exit86.i ], [ %i.fz, %bb.am ]
   %i.gl = phi ptr [ %4, %reassoc_trycse.exit86.i ], [ %i.fz, %bb.am ] ; 3 uses
   %.2.i = phi i32 [ %.02036.i82.i, %reassoc_trycse.exit86.i ], [ %.02036.i93.i, %bb.am ] ; 2 uses
   %i.gm = getelementptr inbounds nuw i8, ptr %0, i64 558

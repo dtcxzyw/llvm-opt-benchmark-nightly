@@ -98,7 +98,6 @@ bb.a:
 
 .lr.ph:                                           ; preds = %.preheader
   %i.h = getelementptr i8, ptr %0, i64 %i.d       ; 3 uses
-  %xtraiter = and i64 %2, 1
   %i.i = icmp eq i64 %2, 1
   br i1 %i.i, label %.epil.preheader, label %.lr.ph.new
 
@@ -107,8 +106,8 @@ bb.a:
   br label %bb.b
 
 ._crit_edge.loopexit.unr-lcssa:                   ; preds = %bb.b
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge, label %.epil.preheader
+  %lcmp.mod.not = trunc i64 %2 to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge
 
 .epil.preheader:                                  ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph
   %.026.epil.init = phi i64 [ 0, %.lr.ph ], [ %i.be, %._crit_edge.loopexit.unr-lcssa ] ; 2 uses
@@ -235,8 +234,8 @@ bb.a:
   store ptr null, ptr %i.c, align 8, !tbaa !13
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #8
   %i.e = call i32 @PEM_read_bio(ptr noundef %4, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d)
-  %.not36 = icmp eq i32 %i.e, 0
-  br i1 %.not36, label %._crit_edge, label %.lr.ph
+  %.not35 = trunc nuw i32 %i.e to i1
+  br i1 %.not35, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %check_pem.exit.thread25, %bb.a
   %i.f = tail call i32 @ERR_peek_error() #8
@@ -249,7 +248,7 @@ bb.b:                                             ; preds = %._crit_edge
   br label %bb.z
 
 .lr.ph:                                           ; preds = %bb.a, %check_pem.exit.thread25
-  %i.h = load ptr, ptr %i.a, align 8, !tbaa !13   ; 15 uses
+  %i.h = load ptr, ptr %i.a, align 8, !tbaa !13   ; 16 uses
   %i.i = tail call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.h, ptr noundef nonnull readonly dereferenceable(1) %3) #9
   %.not.i = icmp eq i32 %i.i, 0
   br i1 %.not.i, label %check_pem.exit.thread, label %bb.c
@@ -282,17 +281,22 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.c
   %i.o = tail call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %3, ptr noundef nonnull dereferenceable(11) @.str.21) #9
   %.not30.i = icmp eq i32 %i.o, 0
-  br i1 %.not30.i, label %bb.i, label %bb.k
+  br i1 %.not30.i, label %8, label %bb.k
 
-bb.i:                                             ; preds = %bb.h
-  %i.p = tail call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.h, ptr noundef nonnull dereferenceable(14) @.str.22) #9
+8:                                                ; preds = %bb.h
+  %9 = tail call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.h, ptr noundef nonnull dereferenceable(14) @.str.22) #9
+  %.not31.i = icmp eq i32 %9, 0
+  br i1 %.not31.i, label %check_pem.exit.thread, label %bb.i
+
+bb.i:                                             ; preds = %8
+  %i.p = tail call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.h, ptr noundef nonnull dereferenceable(15) @.str.23) #9
   %.not31.i.a = icmp eq i32 %i.p, 0
   br i1 %.not31.i.a, label %check_pem.exit.thread, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.q = tail call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.h, ptr noundef nonnull dereferenceable(15) @.str.23) #9
+  %i.q = tail call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.h, ptr noundef nonnull dereferenceable(14) @.str.24) #9
   %.not32.i = icmp eq i32 %i.q, 0
-  br i1 %.not32.i, label %check_pem.exit.thread, label %check_pem.exit
+  br i1 %.not32.i, label %check_pem.exit.thread, label %check_pem.exit.thread25
 
 bb.k:                                             ; preds = %bb.h
   %i.r = tail call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.h, ptr noundef nonnull dereferenceable(17) @.str.25) #9
@@ -350,33 +354,32 @@ bb.v:                                             ; preds = %bb.u
   %.not45.i = icmp eq i32 %i.aa, 0
   br i1 %.not45.i, label %check_pem.exit.thread, label %check_pem.exit.thread25
 
-check_pem.exit:                                   ; preds = %bb.j, %bb.g
-  %.str.20.sink = phi ptr [ @.str.20, %bb.g ], [ @.str.24, %bb.j ]
-  %i.ab = tail call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.h, ptr noundef nonnull dereferenceable(14) %.str.20.sink) #9
+check_pem.exit:                                   ; preds = %bb.g
+  %i.ab = tail call i32 @strcmp(ptr noundef nonnull readonly dereferenceable(1) %i.h, ptr noundef nonnull dereferenceable(16) @.str.20) #9
   %.0.shrunk.i.not = icmp eq i32 %i.ab, 0
   br i1 %.0.shrunk.i.not, label %check_pem.exit.thread, label %check_pem.exit.thread25
 
-check_pem.exit.thread25:                          ; preds = %bb.v, %bb.u, %check_pem.exit
+check_pem.exit.thread25:                          ; preds = %bb.v, %bb.u, %bb.j, %check_pem.exit
   tail call void @OPENSSL_free(ptr noundef nonnull %i.h) #8
   %i.ac = load ptr, ptr %i.b, align 8, !tbaa !13
   tail call void @OPENSSL_free(ptr noundef %i.ac) #8
   %i.ad = load ptr, ptr %i.c, align 8, !tbaa !13
   tail call void @OPENSSL_free(ptr noundef %i.ad) #8
   %i.ae = call i32 @PEM_read_bio(ptr noundef %4, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c, ptr noundef nonnull %i.d)
-  %.not = icmp eq i32 %i.ae, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph
+  %.not = trunc nuw i32 %i.ae to i1
+  br i1 %.not, label %.lr.ph, label %._crit_edge
 
-check_pem.exit.thread:                            ; preds = %bb.v, %bb.i, %bb.j, %bb.d, %bb.e, %bb.f, %bb.g, %.lr.ph, %bb.l, %bb.n, %bb.p, %bb.r, %bb.t, %check_pem.exit
+check_pem.exit.thread:                            ; preds = %bb.v, %8, %bb.i, %bb.d, %bb.e, %bb.f, %bb.g, %.lr.ph, %bb.l, %bb.n, %bb.p, %bb.r, %bb.t, %bb.j, %check_pem.exit
   %i.af = load ptr, ptr %i.b, align 8, !tbaa !13  ; 3 uses
   %i.ag = call i32 @PEM_get_EVP_CIPHER_INFO(ptr noundef %i.af, ptr noundef nonnull %7)
-  %.not19 = icmp eq i32 %i.ag, 0
-  br i1 %.not19, label %.thread, label %bb.w
+  %.not19 = trunc nuw i32 %i.ag to i1
+  br i1 %.not19, label %bb.w, label %.thread
 
 bb.w:                                             ; preds = %check_pem.exit.thread
   %i.ah = load ptr, ptr %i.c, align 8, !tbaa !13  ; 2 uses
   %i.ai = call i32 @PEM_do_header(ptr noundef nonnull %7, ptr noundef %i.ah, ptr noundef nonnull %i.d, ptr noundef %5, ptr noundef %6)
-  %.not20 = icmp eq i32 %i.ai, 0
-  br i1 %.not20, label %.thread, label %bb.x
+  %.not20 = trunc nuw i32 %i.ai to i1
+  br i1 %.not20, label %bb.x, label %.thread
 
 bb.x:                                             ; preds = %bb.w
   store ptr %i.ah, ptr %0, align 8, !tbaa !13
@@ -779,7 +782,7 @@ bb.i:                                             ; preds = %bb.h
   br i1 %.not, label %bb.y, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
-  %i.v = call i32 @EVP_CIPHER_iv_length(ptr noundef nonnull %4) #8 ; 4 uses
+  %i.v = call i32 @EVP_CIPHER_iv_length(ptr noundef nonnull %4) #8 ; 5 uses
   %i.w = icmp eq ptr %5, null
   br i1 %i.w, label %bb.k, label %bb.l
 
@@ -800,7 +803,7 @@ bb.m:                                             ; preds = %bb.l
   br label %.thread58
 
 bb.n:                                             ; preds = %bb.l
-  %i.z = zext i32 %i.v to i64                     ; 5 uses
+  %i.z = zext i32 %i.v to i64                     ; 4 uses
   %i.aa = call i32 @RAND_bytes(ptr noundef nonnull %i.f, i64 noundef %i.z) #8
   %i.ab = icmp eq i32 %i.aa, 1
   br i1 %i.ab, label %bb.p, label %bb.o
@@ -844,7 +847,6 @@ bb.s:                                             ; preds = %bb.r, %bb.q
 
 .lr.ph.i:                                         ; preds = %.preheader.i
   %i.aq = getelementptr i8, ptr %i.d, i64 %i.am   ; 3 uses
-  %xtraiter = and i64 %i.z, 1
   %i.ar = icmp eq i32 %i.v, 1
   br i1 %i.ar, label %.epil.preheader, label %.lr.ph.i.new
 
@@ -853,8 +855,8 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   br label %bb.t
 
 ._crit_edge.i.loopexit.unr-lcssa:                 ; preds = %bb.t
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge.i, label %.epil.preheader
+  %lcmp.mod.not = trunc i32 %i.v to i1
+  br i1 %lcmp.mod.not, label %.epil.preheader, label %._crit_edge.i
 
 .epil.preheader:                                  ; preds = %._crit_edge.i.loopexit.unr-lcssa, %.lr.ph.i
   %.026.i.epil.init = phi i64 [ 0, %.lr.ph.i ], [ %i.ck, %._crit_edge.i.loopexit.unr-lcssa ] ; 2 uses

@@ -202,12 +202,16 @@ bb.aj:                                            ; preds = %bb.aj, %.epil.prehe
   br i1 %i.cj, label %.lr.ph268.preheader, label %._crit_edge269.thread.a
 
 .lr.ph268.preheader:                              ; preds = %.loopexit234
-  %wide.trip.count305 = zext nneg i32 %4 to i64
+  %wide.trip.count305 = zext nneg i32 %4 to i64   ; 2 uses
+  br label %.lr.ph268.outer
+
+.lr.ph268.outer:                                  ; preds = %bb.ao, %.lr.ph268.preheader
+  %indvars.iv302.ph = phi i64 [ %indvars.iv.next303.a, %bb.ao ], [ 0, %.lr.ph268.preheader ]
+  %.0195266.ph = phi i1 [ false, %bb.ao ], [ true, %.lr.ph268.preheader ]
   br label %.lr.ph268
 
-.lr.ph268:                                        ; preds = %.lr.ph268.preheader, %bb.ao
-  %indvars.iv302 = phi i64 [ 0, %.lr.ph268.preheader ], [ %indvars.iv.next303.a, %bb.ao ] ; 3 uses
-  %.0195266 = phi i32 [ 1, %.lr.ph268.preheader ], [ %.1, %bb.ao ]
+.lr.ph268:                                        ; preds = %.lr.ph268.outer, %bb.an
+  %indvars.iv302 = phi i64 [ %indvars.iv.next303, %bb.an ], [ %indvars.iv302.ph, %.lr.ph268.outer ] ; 4 uses
   %i.ih = load i32, ptr %i.cf, align 8, !tbaa !77
   %.not224 = icmp eq i32 %i.ih, 0
   %i.ii = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv302
@@ -223,35 +227,36 @@ bb.al:                                            ; preds = %.lr.ph268
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %bb.ak
-  %.0194 = phi ptr [ %i.ik, %bb.ak ], [ %i.il, %bb.al ] ; 3 uses
+  %.0194 = phi ptr [ %i.ik, %bb.ak ], [ %i.il, %bb.al ] ; 4 uses
   tail call void @Cudd_Ref(ptr noundef %.0194) #11
   %i.im = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv302
   %i.in = load ptr, ptr %i.im, align 8, !tbaa !73
   %.not225 = icmp eq ptr %.0194, %i.in
-  br i1 %.not225, label %bb.ao, label %bb.an
+  br i1 %.not225, label %bb.an, label %bb.ao
 
 bb.an:                                            ; preds = %bb.am
+  tail call void @Cudd_RecursiveDeref(ptr noundef %1, ptr noundef %.0194) #11
+  %indvars.iv.next303 = add nuw nsw i64 %indvars.iv302, 1 ; 2 uses
+  %exitcond305.not = icmp eq i64 %indvars.iv.next303, %wide.trip.count305
+  br i1 %exitcond305.not, label %._crit_edge269, label %.lr.ph268, !llvm.loop !43
+
+bb.ao:                                            ; preds = %bb.am
   %puts226 = tail call i32 @puts(ptr nonnull dereferenceable(1) @str.6) ; 0 uses
   %6 = load ptr, ptr @stdout, align 8, !tbaa !81
   %7 = tail call i32 @fflush(ptr noundef %6)      ; 0 uses
-  br label %bb.ao
-
-bb.ao:                                            ; preds = %bb.an, %bb.am
-  %.1 = phi i32 [ 0, %bb.an ], [ %.0195266, %bb.am ] ; 2 uses
   tail call void @Cudd_RecursiveDeref(ptr noundef %1, ptr noundef %.0194) #11
   %indvars.iv.next303.a = add nuw nsw i64 %indvars.iv302, 1 ; 2 uses
   %exitcond306.not = icmp eq i64 %indvars.iv.next303.a, %wide.trip.count305
-  br i1 %exitcond306.not, label %._crit_edge269, label %.lr.ph268, !llvm.loop !43
+  br i1 %exitcond306.not, label %bb.ap, label %.lr.ph268.outer, !llvm.loop !43
 
-._crit_edge269:                                   ; preds = %bb.ao
-  %8 = icmp eq i32 %.1, 0
-  br i1 %8, label %bb.ap, label %._crit_edge269.thread.a
+._crit_edge269:                                   ; preds = %bb.an
+  br i1 %.0195266.ph, label %._crit_edge269.thread.a, label %bb.ap
 
 ._crit_edge269.thread.a:                          ; preds = %.loopexit234, %._crit_edge269
   %puts222 = tail call i32 @puts(ptr nonnull dereferenceable(1) @str.5) ; 0 uses
   br label %bb.ap
 
-bb.ap:                                            ; preds = %._crit_edge269.thread.a, %._crit_edge269
+bb.ap:                                            ; preds = %bb.ao, %._crit_edge269.thread.a, %._crit_edge269
   %i.io = load ptr, ptr %i.b, align 8, !tbaa !46
   %i.ip = icmp eq ptr %i.io, null
   %i.iq = icmp ne ptr %.0, null

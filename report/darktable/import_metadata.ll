@@ -204,12 +204,12 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 8, !tbaa !62   ; 2 uses
   %i.c = add i32 %i.b, 1
   %i.d = icmp ult i32 %i.c, -2
-  br i1 %i.d, label %.lr.ph, label %._crit_edge.a
+  br i1 %i.d, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %.not56 = icmp eq i32 %1, 0
-  br i1 %.not56, label %.lr.ph.split, label %.lr.ph.split.us
+  %2 = trunc nuw i32 %1 to i1
+  br i1 %2, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %.critedge.us
   %.053.us = phi i32 [ %i.o, %.critedge.us ], [ 1, %.lr.ph ] ; 2 uses
@@ -246,13 +246,15 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.r = icmp ult i32 %i.o, %i.q
   br i1 %i.r, label %.lr.ph.split.us, label %._crit_edge.a
 
-._crit_edge.a:                                    ; preds = %.critedge.us, %.critedge, %bb.a
-  %2 = phi i32 [ %i.af, %.critedge ], [ %i.b, %bb.a ], [ %i.p, %.critedge.us ]
-  %.not = icmp ne i32 %1, 0
-  %i.s = add i32 %2, 1
+._crit_edge:                                      ; preds = %bb.a
+  %.pre = trunc nuw i32 %1 to i1
+  br i1 %.pre, label %._crit_edge.a, label %.loopexit
+
+._crit_edge.a:                                    ; preds = %.critedge.us, %._crit_edge
+  %3 = phi i32 [ %i.b, %._crit_edge ], [ %i.p, %.critedge.us ]
+  %i.s = add i32 %3, 1
   %i.t = icmp ult i32 %i.s, -2
-  %or.cond = and i1 %.not, %i.t
-  br i1 %or.cond, label %.lr.ph55, label %.loopexit
+  br i1 %i.t, label %.lr.ph55, label %.loopexit
 
 .lr.ph55:                                         ; preds = %._crit_edge.a
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -292,10 +294,10 @@ bb.h:                                             ; preds = %.critedge48
 
 .critedge:                                        ; preds = %.lr.ph.split, %bb.h, %.critedge48, %bb.g
   %i.ae = add nuw i32 %.053, 1                    ; 2 uses
-  %i.af = load i32, ptr %i.a, align 8, !tbaa !62  ; 2 uses
+  %i.af = load i32, ptr %i.a, align 8, !tbaa !62
   %i.ag = add nsw i32 %i.af, 3
   %i.ah = icmp ult i32 %i.ae, %i.ag
-  br i1 %i.ah, label %.lr.ph.split, label %._crit_edge.a
+  br i1 %i.ah, label %.lr.ph.split, label %.loopexit
 
 bb.i:                                             ; preds = %.lr.ph55, %.critedge50
   %.03554 = phi i32 [ 1, %.lr.ph55 ], [ %i.aq, %.critedge50 ] ; 2 uses
@@ -331,7 +333,7 @@ bb.l:                                             ; preds = %bb.k, %bb.j
   %i.at = icmp ult i32 %i.aq, %i.as
   br i1 %i.at, label %bb.i, label %.loopexit
 
-.loopexit:                                        ; preds = %.critedge50, %._crit_edge.a
+.loopexit:                                        ; preds = %.critedge, %.critedge50, %._crit_edge.a, %._crit_edge
   ret void
 }
 

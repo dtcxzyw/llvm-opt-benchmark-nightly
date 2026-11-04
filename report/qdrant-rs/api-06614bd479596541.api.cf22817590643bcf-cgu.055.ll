@@ -104,8 +104,8 @@ bb.c:                                             ; preds = %bb.b
           cleanup
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load i64, ptr %i.d, align 8, !range !7, !alias.scope !25, !noundef !5
-  %1 = icmp eq i64 %i.e, 0
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3set8BTreeSetNtNtB16_6string6StringEEECshMzyYDJGtjv_3api.exit.i.i, label %bb.d
+  %1 = trunc nuw i64 %i.e to i1
+  br i1 %1, label %bb.d, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3set8BTreeSetNtNtB16_6string6StringEEECshMzyYDJGtjv_3api.exit.i.i
 
 bb.d:                                             ; preds = %bb.c
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -115,8 +115,8 @@ bb.d:                                             ; preds = %bb.c
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3set8BTreeSetNtNtNtCs607s0NAIaWN_7segment10data_types5index8LanguageEEECshMzyYDJGtjv_3api.exit.i.i: ; preds = %bb.a, %bb.b
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.h = load i64, ptr %i.g, align 8, !range !7, !alias.scope !26, !noundef !5
-  %2 = icmp eq i64 %i.h, 0
-  br i1 %2, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs607s0NAIaWN_7segment10data_types5index18StopwordsInterfaceECshMzyYDJGtjv_3api.exit, label %bb.e
+  %2 = trunc nuw i64 %i.h to i1
+  br i1 %2, label %bb.e, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs607s0NAIaWN_7segment10data_types5index18StopwordsInterfaceECshMzyYDJGtjv_3api.exit
 
 bb.e:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3set8BTreeSetNtNtNtCs607s0NAIaWN_7segment10data_types5index8LanguageEEECshMzyYDJGtjv_3api.exit.i.i
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -519,7 +519,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !229
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.f = load i64, ptr %i.e, align 8, !range !7, !alias.scope !228, !noundef !5 ; 2 uses
-  %.not27.not.i = icmp eq i64 %i.f, 0
+  %2 = trunc nuw i64 %i.f to i1
   %i.g = add nuw nsw i64 %i.f, %i.d
   call void @_RNvXs_NtNtCs8O45qwFIwQX_10serde_json5value3serNtB4_10SerializerNtNtCs4NSHK7GLW4I_10serde_core3ser10Serializer16serialize_struct(ptr noalias nofree noundef nonnull sret([96 x i8]) align 8 captures(address) dereferenceable(96) %i.b, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @0, i64 noundef 12, i64 noundef %i.g), !noalias !229
   %i.h = load i64, ptr %i.b, align 8, !range !4, !noalias !229, !noundef !5 ; 2 uses
@@ -536,7 +536,7 @@ bb.c:                                             ; preds = %bb.b
   br label %_RINvXNvNtNtCs607s0NAIaWN_7segment10data_types5indexs10_1__NtB5_12StopwordsSetNtNtCs4NSHK7GLW4I_10serde_core3ser9Serialize9serializeNtNtNtCs8O45qwFIwQX_10serde_json5value3ser10SerializerECshMzyYDJGtjv_3api.exit
 
 bb.d:                                             ; preds = %bb.b
-  %.not.not.i = icmp eq i64 %i.d, 0
+  %3 = trunc nuw i64 %i.d to i1
   %.sroa.422.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.sroa.422.0.copyload.i = load ptr, ptr %.sroa.422.0..sroa_idx.i, align 8, !noalias !229
   %.sroa.523.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.b, i64 16
@@ -546,7 +546,7 @@ bb.d:                                             ; preds = %bb.b
   store i64 %i.h, ptr %i.c, align 8, !noalias !229
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store ptr %.sroa.422.0.copyload.i, ptr %.sroa.4.0..sroa_idx.i, align 8, !noalias !229
-  br i1 %.not.not.i, label %bb.g, label %bb.e
+  br i1 %3, label %bb.e, label %bb.g
 
 bb.e:                                             ; preds = %bb.d
   %i.m = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8O45qwFIwQX_10serde_json5value3serNtB6_12SerializeMapNtNtCs4NSHK7GLW4I_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCskKLDkoKarTP_4core6option6OptionINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3set8BTreeSetNtNtNtCs607s0NAIaWN_7segment10data_types5index8LanguageEEECshMzyYDJGtjv_3api(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @1, i64 noundef 9, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %1)
@@ -557,7 +557,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not29.i, label %bb.g, label %bb.k
 
 bb.g:                                             ; preds = %bb.f, %bb.d
-  br i1 %.not27.not.i, label %bb.j, label %bb.h
+  br i1 %2, label %bb.h, label %bb.j
 
 bb.h:                                             ; preds = %bb.g
   %i.n = invoke noundef align 8 ptr @_RINvXs6_NtNtCs8O45qwFIwQX_10serde_json5value3serNtB6_12SerializeMapNtNtCs4NSHK7GLW4I_10serde_core3ser15SerializeStruct15serialize_fieldINtNtCskKLDkoKarTP_4core6option6OptionINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3set8BTreeSetNtNtB2U_6string6StringEEECshMzyYDJGtjv_3api(ptr noalias nofree noundef nonnull align 8 dereferenceable(96) %i.c, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @2, i64 noundef 6, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.e)
@@ -960,7 +960,7 @@ bb.i:                                             ; preds = %bb.d
 
 bb.j:                                             ; preds = %bb.a, %bb.i
   %.sroa.6.sroa.0.0 = phi ptr [ %i.x, %bb.i ], [ undef, %bb.a ]
-  %i.ab = phi i64 [ 1, %bb.i ], [ 0, %bb.a ]
+  %i.ab = phi i64 [ 1, %bb.i ], [ 0, %bb.a ]      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   store i64 %i.ab, ptr %i.f, align 8
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 8 ; 2 uses
@@ -1015,6 +1015,9 @@ bb.m:                                             ; preds = %bb.l
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #9
   unreachable
 
+.noexc:                                           ; preds = %bb.p, %bb.o
+  br i1 %i.o, label %.noexc.thread, label %common.resume
+
 bb.n:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3set8BTreeSetNtNtBK_6string6StringEECshMzyYDJGtjv_3api.exit, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtBG_6string6StringEECshMzyYDJGtjv_3api.exit35, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtBG_6string6StringEECshMzyYDJGtjv_3api.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   ret void
@@ -1022,11 +1025,12 @@ bb.n:                                             ; preds = %_RINvNtCskKLDkoKarT
 bb.o:                                             ; preds = %bb.r, %bb.j
   %i.ap = landingpad { ptr, i32 }
           cleanup                                 ; 2 uses
-  br i1 %i.o, label %.noexc.thread, label %bb.p
+  %2 = trunc nuw i64 %i.ab to i1
+  br i1 %2, label %bb.p, label %.noexc
 
 bb.p:                                             ; preds = %bb.o
   invoke void @_RNvXNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3mapINtB2_8BTreeMapNtNtNtCs607s0NAIaWN_7segment10data_types5index8LanguageNtNtB4_7set_val9SetValZSTENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCshMzyYDJGtjv_3api(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %.sroa.6.0..sroa_idx)
-          to label %common.resume unwind label %bb.w
+          to label %.noexc unwind label %bb.w
 
 bb.q:                                             ; preds = %bb.j
   %.not = icmp eq i64 %i.ad, 0
@@ -1070,8 +1074,8 @@ bb.v:                                             ; preds = %bb.u
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #9
   unreachable
 
-common.resume:                                    ; preds = %bb.p, %.noexc.thread, %.thread, %bb.l, %bb.u
-  %common.resume.op = phi { ptr, i32 } [ %i.aq, %bb.u ], [ %i.an, %bb.l ], [ %i.ap, %.noexc.thread ], [ %eh.lpad-body, %.thread ], [ %i.ap, %bb.p ]
+common.resume:                                    ; preds = %.noexc, %.noexc.thread, %.thread, %bb.l, %bb.u
+  %common.resume.op = phi { ptr, i32 } [ %i.aq, %bb.u ], [ %i.ap, %.noexc ], [ %i.ap, %.noexc.thread ], [ %eh.lpad-body, %.thread ], [ %i.an, %bb.l ]
   resume { ptr, i32 } %common.resume.op
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtBG_6string6StringEECshMzyYDJGtjv_3api.exit35: ; preds = %bb.t
@@ -1089,7 +1093,7 @@ bb.w:                                             ; preds = %bb.p, %.noexc.threa
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtBG_6string6StringEECshMzyYDJGtjv_3api(ptr noalias nofree noundef align 8 dereferenceable(24) %i.i) #11
           to label %common.resume unwind label %bb.w
 
-.noexc.thread:                                    ; preds = %bb.o
+.noexc.thread:                                    ; preds = %.noexc
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtBG_6string6StringEECshMzyYDJGtjv_3api(ptr noalias nofree noundef align 8 dereferenceable(24) %i.j) #11
           to label %common.resume unwind label %bb.w
 }
@@ -1344,8 +1348,8 @@ bb.z:                                             ; preds = %bb.y
           cleanup                                 ; 2 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %i.f, i64 32
   %i.bc = load i64, ptr %i.bb, align 8, !range !7, !alias.scope !522, !noundef !5
-  %2 = icmp eq i64 %i.bc, 0
-  br i1 %2, label %common.resume, label %bb.aa
+  %2 = trunc nuw i64 %i.bc to i1
+  br i1 %2, label %bb.aa, label %common.resume
 
 bb.aa:                                            ; preds = %bb.z
   %i.bd = getelementptr inbounds nuw i8, ptr %i.f, i64 40
@@ -1355,8 +1359,8 @@ bb.aa:                                            ; preds = %bb.z
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3set8BTreeSetNtNtNtCs607s0NAIaWN_7segment10data_types5index8LanguageEEECshMzyYDJGtjv_3api.exit.i.i.i: ; preds = %bb.y, %_RNvXsh_NtNtCshMzyYDJGtjv_3api4grpc11conversionsNtNtNtCs607s0NAIaWN_7segment10data_types5index13TokenizerTypeINtNtCskKLDkoKarTP_4core7convert7TryFromNtNtB7_6qdrant13TokenizerTypeE8try_from.exit
   %i.be = getelementptr inbounds nuw i8, ptr %i.f, i64 32
   %i.bf = load i64, ptr %i.be, align 8, !range !7, !alias.scope !523, !noundef !5
-  %3 = icmp eq i64 %i.bf, 0
-  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs607s0NAIaWN_7segment10data_types5index18StopwordsInterfaceEECshMzyYDJGtjv_3api.exit, label %bb.ab
+  %3 = trunc nuw i64 %i.bf to i1
+  br i1 %3, label %bb.ab, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs607s0NAIaWN_7segment10data_types5index18StopwordsInterfaceEECshMzyYDJGtjv_3api.exit
 
 bb.ab:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtNtNtCsexYYUdYSQU6_5alloc11collections5btree3set8BTreeSetNtNtNtCs607s0NAIaWN_7segment10data_types5index8LanguageEEECshMzyYDJGtjv_3api.exit.i.i.i
   %i.bg = getelementptr inbounds nuw i8, ptr %i.f, i64 40

@@ -202,63 +202,82 @@ SetAuthKeys.exit:                                 ; preds = %bb.h, %bb.a, %bb.i
 define noundef i32 @StoreKeys(ptr nofree noundef captures(none) %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) local_unnamed_addr #4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 748
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 730
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 730 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 739
   %i.d = load i8, ptr %i.c, align 1, !tbaa !44
   %.not = icmp eq i8 %i.d, 2                      ; 2 uses
   br i1 %.not, label %._crit_edge, label %bb.b
 
 ._crit_edge:                                      ; preds = %bb.a
-  %.pre = and i32 %2, 1
-  br label %bb.f
+  %.pre = trunc i32 %2 to i1
+  %3 = load i16, ptr %i.b, align 2, !tbaa !74     ; 3 uses
+  %4 = zext i16 %3 to i64                         ; 2 uses
+  br i1 %.pre, label %bb.g, label %bb.h
 
 bb.b:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 743
-  %i.f = load i8, ptr %i.e, align 1, !tbaa !74    ; 3 uses
-  %i.g = zext i8 %i.f to i64                      ; 2 uses
-  %3 = and i32 %2, 1                              ; 3 uses
-  %.not46 = icmp eq i32 %3, 0
-  br i1 %.not46, label %bb.d, label %bb.c
+  %i.f = load i8, ptr %i.e, align 1, !tbaa !75    ; 5 uses
+  %i.g = zext i8 %i.f to i64                      ; 3 uses
+  %.not46 = trunc i32 %2 to i1
+  br i1 %.not46, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.a, ptr align 1 %1, i64 %i.g, i1 false)
-  %i.h = zext i8 %i.f to i32
-  br label %bb.d
+  %i.h = zext i8 %i.f to i32                      ; 2 uses
+  %5 = and i32 %2, 2
+  %.not47 = icmp eq i32 %5, 0
+  br i1 %.not47, label %bb.f, label %bb.e
 
-bb.d:                                             ; preds = %bb.c, %bb.b
-  %.0 = phi i32 [ %i.h, %bb.c ], [ 0, %bb.b ]     ; 3 uses
+bb.d:                                             ; preds = %bb.b
   %i.i = and i32 %2, 2
   %.not47.a = icmp eq i32 %i.i, 0
-  br i1 %.not47.a, label %bb.f, label %bb.e
+  br i1 %.not47.a, label %.thread57, label %.split.thread
 
-bb.e:                                             ; preds = %bb.d
+.thread57:                                        ; preds = %bb.d
+  %6 = load i16, ptr %i.b, align 2, !tbaa !74     ; 2 uses
+  %7 = zext i16 %6 to i64
+  br label %bb.h
+
+.split.thread:                                    ; preds = %bb.d
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 812
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %8, ptr align 1 %1, i64 %i.g, i1 false)
+  %9 = zext i8 %i.f to i32
+  %10 = load i16, ptr %i.b, align 2, !tbaa !74    ; 2 uses
+  %11 = zext i16 %10 to i64
+  br label %bb.h
+
+bb.e:                                             ; preds = %bb.c
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 812
-  %i.k = zext nneg i32 %.0 to i64
+  %i.k = zext i8 %i.f to i64
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 %i.k
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.j, ptr align 1 %i.l, i64 %i.g, i1 false)
   %i.m = zext i8 %i.f to i32
-  %i.n = add nuw nsw i32 %.0, %i.m
+  %i.n = add nuw nsw i32 %i.h, %i.m
   br label %bb.f
 
-bb.f:                                             ; preds = %._crit_edge, %bb.d, %bb.e
-  %.pre-phi = phi i32 [ %.pre, %._crit_edge ], [ %3, %bb.d ], [ %3, %bb.e ]
-  %.1 = phi i32 [ 0, %._crit_edge ], [ %.0, %bb.d ], [ %i.n, %bb.e ] ; 3 uses
-  %i.o = load i16, ptr %i.b, align 2, !tbaa !75   ; 3 uses
-  %i.p = zext i16 %i.o to i64                     ; 2 uses
-  %.not48 = icmp eq i32 %.pre-phi, 0              ; 2 uses
-  br i1 %.not48, label %bb.h, label %bb.g
+bb.f:                                             ; preds = %bb.c, %bb.e
+  %.152.ph = phi i32 [ %i.n, %bb.e ], [ %i.h, %bb.c ]
+  %i.o = load i16, ptr %i.b, align 2, !tbaa !74   ; 2 uses
+  %i.p = zext i16 %i.o to i64
+  br label %bb.g
 
-bb.g:                                             ; preds = %bb.f
+bb.g:                                             ; preds = %bb.f, %._crit_edge
+  %12 = phi i64 [ %4, %._crit_edge ], [ %i.p, %bb.f ] ; 2 uses
+  %13 = phi i16 [ %3, %._crit_edge ], [ %i.o, %bb.f ] ; 2 uses
+  %.152 = phi i32 [ 0, %._crit_edge ], [ %.152.ph, %bb.f ] ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 876
-  %i.r = zext nneg i32 %.1 to i64
+  %i.r = zext nneg i32 %.152 to i64
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 %i.r
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.q, ptr align 1 %i.s, i64 %i.p, i1 false)
-  %i.t = zext i16 %i.o to i32
-  %i.u = add nuw nsw i32 %.1, %i.t
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.q, ptr align 1 %i.s, i64 %12, i1 false)
+  %i.t = zext i16 %13 to i32
+  %i.u = add nuw nsw i32 %.152, %i.t
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %bb.f
-  %.2 = phi i32 [ %i.u, %bb.g ], [ %.1, %bb.f ]   ; 3 uses
+bb.h:                                             ; preds = %.thread57, %.split.thread, %._crit_edge, %bb.g
+  %14 = phi i64 [ %12, %bb.g ], [ %11, %.split.thread ], [ %4, %._crit_edge ], [ %7, %.thread57 ]
+  %15 = phi i16 [ %13, %bb.g ], [ %10, %.split.thread ], [ %3, %._crit_edge ], [ %6, %.thread57 ]
+  %.not48.pre-phi50 = phi i1 [ true, %bb.g ], [ false, %.split.thread ], [ false, %._crit_edge ], [ false, %.thread57 ]
+  %.2 = phi i32 [ %i.u, %bb.g ], [ %9, %.split.thread ], [ 0, %._crit_edge ], [ 0, %.thread57 ] ; 3 uses
   %i.v = and i32 %2, 2
   %.not49 = icmp eq i32 %i.v, 0                   ; 2 uses
   br i1 %.not49, label %bb.j, label %bb.i
@@ -267,8 +286,8 @@ bb.i:                                             ; preds = %bb.h
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 908
   %i.x = zext nneg i32 %.2 to i64
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 %i.x
-  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.w, ptr align 1 %i.y, i64 %i.p, i1 false)
-  %i.z = zext i16 %i.o to i32
+  tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 4 %i.w, ptr align 1 %i.y, i64 %14, i1 false)
+  %i.z = zext i16 %15 to i32
   %i.aa = add nuw nsw i32 %.2, %i.z
   br label %bb.j
 
@@ -277,7 +296,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 732
   %i.ac = load i16, ptr %i.ab, align 2, !tbaa !76 ; 2 uses
   %i.ad = zext i16 %i.ac to i64                   ; 2 uses
-  br i1 %.not48, label %bb.l, label %bb.k
+  br i1 %.not48.pre-phi50, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 940
@@ -405,7 +424,7 @@ attributes #5 = { nounwind }
 !71 = !{!43, !8, i64 176}
 !72 = !{!43, !5, i64 1364}
 !73 = !{!43, !13, i64 152}
-!74 = !{!43, !4, i64 743}
-!75 = !{!43, !30, i64 730}
+!74 = !{!43, !30, i64 730}
+!75 = !{!43, !4, i64 743}
 !76 = !{!43, !30, i64 732}
 end_hunk_0

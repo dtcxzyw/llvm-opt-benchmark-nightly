@@ -202,16 +202,17 @@ bb.bi:                                            ; preds = %bb.bh
   br label %bb.bj
 
 bb.bj:                                            ; preds = %bb.bi, %bb.bh, %bb.bg
+  %.not.i.i98.i = xor i1 %i.ny, true
   %i.oh = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZL12SingleTrapBB, i64 120), align 8, !range !15
   %i.oi = and i8 %i.oh, %i.ld
-  %30 = icmp eq i8 %i.oi, 0
-  %or.cond45.not.i.i.i = select i1 %i.ny, i1 true, i1 %30
-  %spec.select.i = select i1 %or.cond45.not.i.i.i, ptr null, ptr %i.lb
+  %30 = trunc nuw i8 %i.oi to i1
+  %or.cond45.not.i.i.i = select i1 %.not.i.i98.i, i1 %30, i1 false
+  %spec.select.i = select i1 %or.cond45.not.i.i.i, ptr %i.lb, ptr null
   br label %bb.bk
 
 bb.bk:                                            ; preds = %bb.bj, %_ZN4llvm16dyn_cast_or_nullINS_11ConstantIntENS_5ValueEEEDaPT0_.exit.thread.i.i
-  %.1145.i = phi ptr [ %spec.select.i, %bb.bj ], [ %.0144166.i, %_ZN4llvm16dyn_cast_or_nullINS_11ConstantIntENS_5ValueEEEDaPT0_.exit.thread.i.i ] ; 2 uses
-  %.0.i.i.i = phi ptr [ %i.lb, %bb.bj ], [ %.0144166.i, %_ZN4llvm16dyn_cast_or_nullINS_11ConstantIntENS_5ValueEEEDaPT0_.exit.thread.i.i ] ; 2 uses
+  %.1145.i = phi ptr [ %.0144166.i, %_ZN4llvm16dyn_cast_or_nullINS_11ConstantIntENS_5ValueEEEDaPT0_.exit.thread.i.i ], [ %spec.select.i, %bb.bj ] ; 2 uses
+  %.0.i.i.i = phi ptr [ %.0144166.i, %_ZN4llvm16dyn_cast_or_nullINS_11ConstantIntENS_5ValueEEEDaPT0_.exit.thread.i.i ], [ %i.lb, %bb.bj ] ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.ky, null
   br i1 %.not.i.i.i.i.i, label %bb.bn, label %bb.bl
 

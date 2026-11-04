@@ -202,15 +202,17 @@ bb.es:                                            ; preds = %bb.en
   %.pre.i = load i8, ptr getelementptr inbounds nuw (i8, ptr @params, i64 18), align 2, !range !14
   %.pre44.i = load i8, ptr getelementptr inbounds nuw (i8, ptr @params, i64 82), align 2, !range !14
   %i.it = or i8 %.pre44.i, %.pre.i
-  %3 = icmp eq i8 %i.it, 0
-  %or.cond11.not31.i = select i1 %3, i1 true, i1 %i.ho
+  %3 = trunc nuw i8 %i.it to i1
+  %not.29.i = xor i1 %3, true
+  %or.cond11.not31.i = select i1 %not.29.i, i1 true, i1 %i.ho
   %or.cond13.i = select i1 %or.cond11.not31.i, i1 true, i1 %i.hq
   br i1 %or.cond13.i, label %bb.eu, label %bb.et
 
 .thread47.i:                                      ; preds = %bb.eq
   %i.iu = or i8 %i.ia, %i.hy
-  %4 = icmp eq i8 %i.iu, 0
-  %or.cond11.not3148.i = select i1 %4, i1 true, i1 %i.ho
+  %4 = trunc nuw i8 %i.iu to i1
+  %not.2946.i = xor i1 %4, true
+  %or.cond11.not3148.i = select i1 %not.2946.i, i1 true, i1 %i.ho
   %or.cond1349.i = select i1 %or.cond11.not3148.i, i1 true, i1 %i.hq
   br i1 %or.cond1349.i, label %.thread50.i, label %bb.et
 

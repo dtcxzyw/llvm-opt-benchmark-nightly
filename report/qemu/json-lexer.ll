@@ -70,13 +70,14 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.h = getelementptr i8, ptr %0, i64 4          ; 5 uses
   %i.i = zext i8 %1 to i64
   %invariant.gep = getelementptr inbounds nuw i8, ptr @json_lexer, i64 %i.i
+  %not..i = xor i1 %2, true
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 7 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 28 ; 3 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.o, %bb.c
-  %.0 = phi i1 [ true, %bb.c ], [ %narrow.i.not, %bb.o ]
+  %.0 = phi i1 [ false, %bb.c ], [ %narrow.i.not, %bb.o ]
   br i1 %2, label %.split, label %bb.e
 
 .split:                                           ; preds = %bb.d
@@ -86,7 +87,7 @@ bb.d:                                             ; preds = %bb.o, %bb.c
   br i1 %.not41, label %bb.p, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  br i1 %.0, label %._crit_edge, label %bb.p
+  br i1 %.0, label %bb.p, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.e
   %.val.pre = load i32, ptr %i.h, align 4
@@ -105,11 +106,11 @@ next_state.exit:                                  ; preds = %bb.f
   %i.p = zext nneg i32 %.val to i64
   %gep = getelementptr inbounds nuw [256 x i8], ptr %invariant.gep, i64 %i.p
   %i.q = load i8, ptr %gep, align 1               ; 2 uses
-  %.not.i42 = icmp slt i8 %i.q, 0
-  %narrow.i.not = select i1 %2, i1 true, i1 %.not.i42 ; 2 uses
+  %.not.i42 = icmp sgt i8 %i.q, -1
+  %narrow.i.not = select i1 %not..i, i1 %.not.i42, i1 false ; 2 uses
   %i.r = and i8 %i.q, 127                         ; 2 uses
   %i.s = zext nneg i8 %i.r to i32                 ; 2 uses
-  br i1 %narrow.i.not, label %g_string_append_c_inline.exit, label %bb.h
+  br i1 %narrow.i.not, label %bb.h, label %g_string_append_c_inline.exit
 
 bb.h:                                             ; preds = %next_state.exit
   %i.t = load ptr, ptr %i.j, align 8              ; 6 uses

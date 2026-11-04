@@ -205,8 +205,12 @@ _ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit:
   %wide.trip.count = zext i32 %i.ck to i64
   br label %bb.p
 
-._crit_edge:                                      ; preds = %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit
-  %.048.lcssa = phi i1 [ false, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit ], [ %.1, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit ]
+._crit_edge.loopexit:                             ; preds = %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit
+  %19 = trunc nuw i8 %.1 to i1
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.loopexit, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit
+  %.048.lcssa = phi i1 [ false, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE5resetEv.exit ], [ %19, %._crit_edge.loopexit ]
   %i.cm = load ptr, ptr %13, align 8, !tbaa !188  ; 2 uses
   %i.cn = icmp eq ptr %i.cm, null
   br i1 %i.cn, label %.critedge, label %_ZNK6vectorIP3appLb0EjE4sizeEv.exit81
@@ -219,7 +223,7 @@ _ZNK6vectorIP3appLb0EjE4sizeEv.exit81:            ; preds = %._crit_edge
 
 bb.p:                                             ; preds = %.lr.ph, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit ] ; 2 uses
-  %.048375 = phi i1 [ false, %.lr.ph ], [ %.1, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit ] ; 5 uses
+  %.048375 = phi i8 [ 0, %.lr.ph ], [ %.1, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit ] ; 5 uses
   %i.cr = getelementptr inbounds nuw [8 x i8], ptr %i.cl, i64 %indvars.iv
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !159 ; 17 uses
   %i.ct = load ptr, ptr %0, align 8, !tbaa !136   ; 3 uses
@@ -622,7 +626,8 @@ bb.bm:                                            ; preds = %bb.bk
   %i.jj = getelementptr inbounds nuw i8, ptr %.026.i.i.i124, i64 8
   %i.jk = load ptr, ptr %i.jj, align 8, !tbaa !259 ; 5 uses
   %i.jl = icmp ne ptr %i.cs, %i.jk
-  %19 = or i1 %.048375, %i.jl                     ; 2 uses
+  %20 = zext i1 %i.jl to i8
+  %21 = or i8 %.048375, %20                       ; 2 uses
   %.not.i.i.i.i128 = icmp eq ptr %i.jk, null
   br i1 %.not.i.i.i.i128, label %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE7inc_refEPS0_.exit.i129, label %bb.bn
 
@@ -703,7 +708,7 @@ bb.bt:                                            ; preds = %bb.bs, %.thread322
 _ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.sink.split: ; preds = %.noexc275, %.noexc278, %.noexc263, %.noexc264, %.noexc97, %.noexc106, %.noexc133, %.noexc138, %.noexc144
   %.pre.i.i141.sink = phi ptr [ %.pre.i.i141, %.noexc144 ], [ %.pre.i135, %.noexc138 ], [ %.pre.i.i130, %.noexc133 ], [ %.pre.i.i103, %.noexc106 ], [ %.pre.i.i94, %.noexc97 ], [ %i.di, %.noexc263 ], [ %i.em, %.noexc264 ], [ %i.gg, %.noexc278 ], [ %i.fc, %.noexc275 ] ; 2 uses
   %.sink.ph = phi ptr [ %i.cs, %.noexc144 ], [ %i.cs, %.noexc138 ], [ %i.jk, %.noexc133 ], [ %i.hy, %.noexc106 ], [ %i.hb, %.noexc97 ], [ %i.cv, %.noexc263 ], [ %i.cv, %.noexc264 ], [ %i.ep, %.noexc278 ], [ %i.ep, %.noexc275 ]
-  %.1.ph = phi i1 [ %.048375, %.noexc144 ], [ %.048375, %.noexc138 ], [ %19, %.noexc133 ], [ true, %.noexc106 ], [ true, %.noexc97 ], [ true, %.noexc263 ], [ true, %.noexc264 ], [ true, %.noexc278 ], [ true, %.noexc275 ]
+  %.1.ph = phi i8 [ %.048375, %.noexc144 ], [ %.048375, %.noexc138 ], [ %21, %.noexc133 ], [ 1, %.noexc106 ], [ 1, %.noexc97 ], [ 1, %.noexc263 ], [ 1, %.noexc264 ], [ 1, %.noexc278 ], [ 1, %.noexc275 ]
   %.phi.trans.insert.i.i142 = getelementptr inbounds i8, ptr %.pre.i.i141.sink, i64 -4
   %.pre2.i.i143 = load i32, ptr %.phi.trans.insert.i.i142, align 4, !tbaa !55
   br label %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit
@@ -712,7 +717,7 @@ _ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0
   %.sink549 = phi ptr [ %i.jw, %bb.bq ], [ %i.ic, %bb.bf ], [ %i.hf, %bb.ay ], [ %i.et, %bb.ag ], [ %i.cz, %bb.s ], [ %i.jp, %bb.bo ], [ %i.kg, %bb.bs ], [ %.pre.i.i141.sink, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.sink.split ] ; 2 uses
   %.sink548 = phi i32 [ %i.jz, %bb.bq ], [ %i.if, %bb.bf ], [ %i.hi, %bb.ay ], [ %i.ew, %bb.ag ], [ %i.dc, %bb.s ], [ %i.js, %bb.bo ], [ %i.kj, %bb.bs ], [ %.pre2.i.i143, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.sink.split ] ; 2 uses
   %.sink = phi ptr [ %i.cs, %bb.bq ], [ %i.hy, %bb.bf ], [ %i.hb, %bb.ay ], [ %i.ep, %bb.ag ], [ %i.cv, %bb.s ], [ %i.jk, %bb.bo ], [ %i.cs, %bb.bs ], [ %.sink.ph, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.sink.split ]
-  %.1 = phi i1 [ %.048375, %bb.bq ], [ true, %bb.bf ], [ true, %bb.ay ], [ true, %bb.ag ], [ true, %bb.s ], [ %19, %bb.bo ], [ %.048375, %bb.bs ], [ %.1.ph, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.sink.split ] ; 2 uses
+  %.1 = phi i8 [ %.048375, %bb.bq ], [ 1, %bb.bf ], [ 1, %bb.ay ], [ 1, %bb.ag ], [ 1, %bb.s ], [ %21, %bb.bo ], [ %.048375, %bb.bs ], [ %.1.ph, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit.sink.split ] ; 2 uses
   %i.kn = getelementptr inbounds i8, ptr %.sink549, i64 -4
   %i.ko = zext i32 %.sink548 to i64
   %i.kp = getelementptr inbounds nuw [8 x i8], ptr %.sink549, i64 %i.ko
@@ -721,7 +726,7 @@ _ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0
   store i32 %i.kq, ptr %i.kn, align 4, !tbaa !55
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.p, !llvm.loop !252
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.p, !llvm.loop !252
 
 bb.bu:                                            ; preds = %_ZNK6vectorIP3appLb0EjE4sizeEv.exit81
   %i.kr = load ptr, ptr %i.w, align 8, !tbaa !147 ; 5 uses

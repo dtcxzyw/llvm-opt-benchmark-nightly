@@ -202,8 +202,8 @@ bb.u:                                             ; preds = %find_create_memory_
   store volatile ptr %.0.i21, ptr %i.bz, align 8
   br label %find_create_memory_tier.exit.thread
 
-find_create_memory_tier.exit.thread:              ; preds = %.split44, %bb.l, %bb.o, %find_create_memory_tier.exit, %bb.u
-  %.0 = phi ptr [ %.0.i21, %find_create_memory_tier.exit ], [ %.0.i21, %bb.u ], [ inttoptr (i64 -22 to ptr), %.split44 ], [ inttoptr (i64 -22 to ptr), %bb.l ], [ inttoptr (i64 -12 to ptr), %bb.o ]
+find_create_memory_tier.exit.thread:              ; preds = %bb.l, %bb.o, %.split44, %find_create_memory_tier.exit, %bb.u
+  %.0 = phi ptr [ %.0.i21, %find_create_memory_tier.exit ], [ %.0.i21, %bb.u ], [ inttoptr (i64 -22 to ptr), %.split44 ], [ inttoptr (i64 -12 to ptr), %bb.o ], [ inttoptr (i64 -22 to ptr), %bb.l ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   ret ptr %.0
 }
@@ -606,10 +606,11 @@ bb.b:                                             ; preds = %bb.a
   br label %.loopexit
 
 bb.c:                                             ; preds = %bb.a
-  %4 = icmp eq i8 %i.a, 0
+  %4 = trunc nuw i8 %i.a to i1
+  %.not11 = xor i1 %4, true
   %i.d = load i8, ptr @numa_demotion_enabled, align 1, !range !19
   %i.e = trunc nuw i8 %i.d to i1
-  %or.cond = select i1 %4, i1 %i.e, i1 false
+  %or.cond = select i1 %.not11, i1 %i.e, i1 false
   br i1 %or.cond, label %bb.d, label %.loopexit
 
 bb.d:                                             ; preds = %bb.c

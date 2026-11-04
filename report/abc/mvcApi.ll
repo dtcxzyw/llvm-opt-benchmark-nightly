@@ -127,30 +127,32 @@ bb.a:
   br i1 %.not, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %bb.a
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %2 = load ptr, ptr %1, align 8, !tbaa !19
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load i32, ptr %i.c, align 8, !tbaa !17   ; 2 uses
   %i.e = icmp sgt i32 %i.d, 0
-  br i1 %i.e, label %.lr.ph.a, label %.critedge
+  br i1 %i.e, label %.lr.ph, label %.critedge
+
+.lr.ph:                                           ; preds = %bb.b
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %2 = load ptr, ptr %1, align 8, !tbaa !19
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 16
+  br label %.lr.ph.a
 
 bb.c:                                             ; preds = %.lr.ph.a
   %i.f = add nuw nsw i32 %.010, 1                 ; 2 uses
   %exitcond.not = icmp eq i32 %i.f, %i.d
   br i1 %exitcond.not, label %.critedge, label %.lr.ph.a, !llvm.loop !32
 
-.lr.ph.a:                                         ; preds = %bb.b, %bb.c
-  %.010 = phi i32 [ %i.f, %bb.c ], [ 0, %bb.b ]   ; 3 uses
+.lr.ph.a:                                         ; preds = %.lr.ph, %bb.c
+  %.010 = phi i32 [ 0, %.lr.ph ], [ %i.f, %bb.c ] ; 3 uses
   %i.g = lshr i32 %.010, 5
   %i.h = zext nneg i32 %i.g to i64
   %i.i = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.h
   %i.j = load i32, ptr %i.i, align 4, !tbaa !24
   %i.k = and i32 %.010, 31
-  %4 = shl nuw i32 1, %i.k
-  %5 = and i32 %i.j, %4
-  %6 = icmp eq i32 %5, 0
-  br i1 %6, label %.critedge, label %bb.c
+  %4 = lshr i32 %i.j, %i.k
+  %5 = trunc i32 %4 to i1
+  br i1 %5, label %bb.c, label %.critedge
 
 .critedge:                                        ; preds = %.lr.ph.a, %bb.c, %bb.b, %bb.a
   %.09 = phi i32 [ 0, %bb.a ], [ 1, %bb.b ], [ 0, %.lr.ph.a ], [ 1, %bb.c ]

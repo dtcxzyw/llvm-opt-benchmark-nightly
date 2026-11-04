@@ -64,9 +64,8 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %1 = and i32 %i.m, 1
-  %.not13 = icmp eq i32 %1, 0
-  br i1 %.not13, label %bb.f, label %bb.e
+  %.not13 = trunc i32 %i.m to i1
+  br i1 %.not13, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
   %i.ab = load i32, ptr %0, align 4, !tbaa !12
@@ -255,12 +254,15 @@ bb.af:                                            ; preds = %bb.ae
   ]
 
 ._crit_edgecondstore.split:                       ; preds = %bb.af, %bb.af, %bb.af
-  %2 = shl i32 %.pre, 1
-  %i.cj = and i32 %2, 10
-  %.ph = or i32 %i.cj, %.pre                      ; 3 uses
-  %3 = and i32 %.pre, 5
-  %.not65 = icmp eq i32 %3, 0
-  br i1 %.not65, label %._crit_edge, label %bb.ag
+  %.not27 = trunc i32 %.pre to i1                 ; 2 uses
+  %1 = or i32 %.pre, 2
+  %2 = select i1 %.not27, i32 %1, i32 %.pre       ; 2 uses
+  %i.cj = and i32 %2, 4                           ; 2 uses
+  %.not28 = icmp ne i32 %i.cj, 0
+  %3 = shl nuw nsw i32 %i.cj, 1
+  %.ph = or i32 %2, %3                            ; 3 uses
+  %4 = or i1 %.not28, %.not27
+  br i1 %4, label %bb.ag, label %._crit_edge
 
 bb.ag:                                            ; preds = %._crit_edgecondstore.split
   store i32 %.ph, ptr %0, align 4, !tbaa !12

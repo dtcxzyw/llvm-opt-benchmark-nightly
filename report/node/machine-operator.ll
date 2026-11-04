@@ -204,9 +204,9 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.a
   %i.j = icmp eq i32 %1, 8                        ; 2 uses
   %or.cond3 = and i1 %i.j, %i.f
-  %i.k = xor i1 %3, true                          ; 5 uses
-  %or.cond14 = and i1 %or.cond3, %i.k
-  br i1 %or.cond14, label %bb.d, label %bb.e
+  %i.k = xor i1 %or.cond3, true
+  %or.cond14 = or i1 %3, %i.k
+  br i1 %or.cond14, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -217,8 +217,9 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.c
   %i.o = icmp eq i32 %1, 16                       ; 2 uses
   %or.cond5 = and i1 %i.o, %i.f
-  %or.cond16 = and i1 %or.cond5, %i.k
-  br i1 %or.cond16, label %bb.f, label %bb.g
+  %or.cond5.not = xor i1 %or.cond5, true
+  %or.cond16 = or i1 %3, %or.cond5.not
+  br i1 %or.cond16, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -229,8 +230,9 @@ bb.f:                                             ; preds = %bb.e
 bb.g:                                             ; preds = %bb.e
   %i.s = icmp eq i32 %2, 4
   %or.cond7 = and i1 %i.e, %i.s
-  %or.cond18 = and i1 %or.cond7, %i.k
-  br i1 %or.cond18, label %bb.h, label %bb.i
+  %or.cond7.not = xor i1 %or.cond7, true
+  %or.cond18 = or i1 %3, %or.cond7.not
+  br i1 %or.cond18, label %bb.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -241,8 +243,9 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   %i.w = icmp eq i32 %2, 8
   %or.cond9 = and i1 %i.j, %i.w
-  %or.cond20 = and i1 %or.cond9, %i.k
-  br i1 %or.cond20, label %bb.j, label %bb.k
+  %or.cond9.not = xor i1 %or.cond9, true
+  %or.cond20 = or i1 %3, %or.cond9.not
+  br i1 %or.cond20, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -253,8 +256,9 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.i
   %i.aa = icmp eq i32 %2, 16
   %or.cond11 = and i1 %i.o, %i.aa
-  %or.cond22 = and i1 %or.cond11, %i.k
-  br i1 %or.cond22, label %bb.l, label %bb.m
+  %or.cond11.not = xor i1 %or.cond11, true
+  %or.cond22 = or i1 %3, %or.cond11.not
+  br i1 %or.cond22, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 8

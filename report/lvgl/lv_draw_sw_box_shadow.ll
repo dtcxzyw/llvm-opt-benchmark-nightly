@@ -172,10 +172,9 @@ bb.i:                                             ; preds = %bb.h
   %i.ci = shl nuw nsw i64 %i.cf, 1
   %wide.trip.count.i = zext nneg i32 %i.bp to i64
   %i.cj = add nsw i64 %wide.trip.count.i, -1      ; 3 uses
-  %xtraiter = and i64 %i.cj, 1
   %i.ck = icmp eq i32 %i.bp, 2                    ; 0 uses
   %unroll_iter = and i64 %i.cj, -2
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
+  %lcmp.mod.not = trunc i64 %i.cj to i1
   %lcmp.mod588 = trunc i64 %i.cj to i1
   br label %bb.j
 
@@ -251,7 +250,7 @@ bb.o:                                             ; preds = %bb.n, %.lr.ph.i.1
   br i1 %niter.ncmp.1, label %.loopexit104.i.loopexit.unr-lcssa, label %.lr.ph.i, !llvm.loop !15
 
 .loopexit104.i.loopexit.unr-lcssa:                ; preds = %bb.o
-  br i1 %lcmp.mod.not, label %.loopexit104.i, label %.lr.ph.i.epil.preheader
+  br i1 %lcmp.mod.not, label %.lr.ph.i.epil.preheader, label %.loopexit104.i
 
 .lr.ph.i.epil.preheader:                          ; preds = %bb.l, %.loopexit104.i.loopexit.unr-lcssa
   %.epil.init = phi i16 [ %i.cs, %bb.l ], [ %.sink.i.1, %.loopexit104.i.loopexit.unr-lcssa ]
@@ -654,8 +653,10 @@ declare void @lv_free(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nounwind uwtable
 define internal fastcc void @shadow_blur_corner(i32 noundef %0, i32 noundef range(i32 -1073741824, 1073741825) %1, ptr noundef nonnull %2) unnamed_addr #0 {
 bb.a:
-  %i.a = ashr i32 %1, 1                           ; 4 uses
-  %3 = and i32 %1, 1                              ; 2 uses
+  %i.a = ashr i32 %1, 1                           ; 3 uses
+  %3 = or i32 %1, -2
+  %.neg = add nsw i32 %3, 1
+  %spec.select = add nsw i32 %.neg, %i.a          ; 2 uses
   %i.b = sext i32 %0 to i64                       ; 15 uses
   %i.c = shl nsw i64 %i.b, 1                      ; 2 uses
   %i.d = tail call ptr @lv_malloc(i64 noundef %i.c) #6 ; 13 uses
@@ -663,7 +664,7 @@ bb.a:
   br i1 %i.e, label %.lr.ph.us.preheader, label %._crit_edge137
 
 .lr.ph.us.preheader:                              ; preds = %bb.a
-  %4 = add nsw i32 %3, %i.a
+  %4 = xor i32 %spec.select, -1
   %i.f = sext i32 %i.a to i64
   %i.g = zext nneg i32 %0 to i64
   br label %.lr.ph.us
@@ -699,7 +700,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %.0112.us = phi i32 [ %i.s, %bb.c ], [ 0, %bb.b ]
   %i.t = sub i32 %.0113132.us, %.0112.us
   %i.u = trunc nuw nsw i64 %indvars.iv to i32
-  %5 = sub i32 %i.u, %4
+  %5 = add i32 %i.u, %4
   %narrow.us = tail call i32 @llvm.smax.i32(i32 %5, i32 0)
   %.0111.in.in.idx.us = zext nneg i32 %narrow.us to i64
   %.0111.in.in.us = getelementptr inbounds nuw [2 x i8], ptr %.0114134.us, i64 %.0111.in.in.idx.us
@@ -949,7 +950,7 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
   br i1 %i.e, label %.lr.ph147, label %._crit_edge148
 
 .lr.ph147:                                        ; preds = %.preheader130
-  %i.dr = add nsw i32 %3, %i.a
+  %i.dr = add nsw i32 %spec.select, 1
   %i.ds = add nsw i32 %0, -1
   %i.dt = sext i32 %i.a to i64
   %wide.trip.count170 = zext nneg i32 %0 to i64   ; 4 uses

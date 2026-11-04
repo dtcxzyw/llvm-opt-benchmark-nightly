@@ -202,18 +202,22 @@ bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !28
   %i.o = tail call ptr @BN_dup(ptr noundef %i.n) #3 ; 2 uses
-  %.not.i.i13 = icmp eq ptr %i.o, null
-  br i1 %.not.i.i13, label %_ZL11dup_bn_intoPP9bignum_stS0_.exit.thread, label %_ZL11dup_bn_intoPP9bignum_stS0_.exit15.a
+  %.not.i.i13.not = icmp ne ptr %i.o, null        ; 2 uses
+  br i1 %.not.i.i13.not, label %_ZL11dup_bn_intoPP9bignum_stS0_.exit15.a, label %_ZL11dup_bn_intoPP9bignum_stS0_.exit15
 
 _ZL11dup_bn_intoPP9bignum_stS0_.exit15.a:         ; preds = %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !31
   tail call void @BN_free(ptr noundef %i.q) #3
   store ptr %i.o, ptr %i.p, align 8, !tbaa !31
+  br label %_ZL11dup_bn_intoPP9bignum_stS0_.exit15
+
+_ZL11dup_bn_intoPP9bignum_stS0_.exit15:           ; preds = %bb.c, %_ZL11dup_bn_intoPP9bignum_stS0_.exit15.a
+  %spec.select = zext i1 %.not.i.i13.not to i32
   br label %_ZL11dup_bn_intoPP9bignum_stS0_.exit.thread
 
-_ZL11dup_bn_intoPP9bignum_stS0_.exit.thread:      ; preds = %bb.b, %bb.a, %_ZL11dup_bn_intoPP9bignum_stS0_.exit15.a, %bb.c
-  %.0 = phi i32 [ 0, %bb.c ], [ 0, %bb.a ], [ 1, %_ZL11dup_bn_intoPP9bignum_stS0_.exit15.a ], [ 0, %bb.b ]
+_ZL11dup_bn_intoPP9bignum_stS0_.exit.thread:      ; preds = %bb.b, %bb.a, %_ZL11dup_bn_intoPP9bignum_stS0_.exit15
+  %.0 = phi i32 [ 0, %bb.a ], [ %spec.select, %_ZL11dup_bn_intoPP9bignum_stS0_.exit15 ], [ 0, %bb.b ]
   ret i32 %.0
 }
 

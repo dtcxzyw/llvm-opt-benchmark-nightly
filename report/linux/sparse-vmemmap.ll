@@ -202,8 +202,8 @@ bb.d:                                             ; preds = %bb.c
   br label %.critedge
 
 bb.e:                                             ; preds = %bb.b
-  %.not21 = icmp eq i64 %5, 0
-  br i1 %.not21, label %.critedge, label %bb.f
+  %.not21 = trunc nuw i64 %5 to i1
+  br i1 %.not21, label %bb.f, label %.critedge
 
 bb.f:                                             ; preds = %bb.e
   %i.u = load i64, ptr @vmemmap_base, align 8
@@ -244,7 +244,7 @@ bb.h:                                             ; preds = %bb.f
 
 .critedge:                                        ; preds = %.critedge12.i, %bb.h, %bb.g, %bb.e, %bb.d
   %.018 = phi i64 [ %i.t, %bb.d ], [ %4, %bb.e ], [ %4, %bb.g ], [ %4, %bb.h ], [ %4, %.critedge12.i ]
-  %i.ai = load i64, ptr @__default_kernel_pte_mask, align 8 ; 3 uses
+  %i.ai = load i64, ptr @__default_kernel_pte_mask, align 8 ; 4 uses
   %i.aj = and i64 %i.ai, -9223372036854775453     ; 2 uses
   %i.ak = and i64 %i.ai, 66
   %i.al = icmp eq i64 %i.ak, 64
@@ -260,13 +260,14 @@ pfn_pte.exit:                                     ; preds = %.critedge, %bb.i
   %i.am = shl i64 %.018, 12
   %.not.i.i.i23 = icmp ne i64 %i.aj, 0
   %i.an = and i64 %i.ai, 1
-  %.not2.i.i.i = icmp eq i64 %i.an, 0             ; 2 uses
+  %.not2.i.i.i = icmp eq i64 %i.an, 0
   %i.ao = and i1 %.not.i.i.i23, %.not2.i.i.i
   %i.ap = sext i1 %i.ao to i64
   %i.aq = xor i64 %i.am, %i.ap
   %i.ar = and i64 %i.aq, 4503599627366400
+  %.not.i.i10.i = trunc i64 %i.ai to i1
   %i.as = load i64, ptr @__supported_pte_mask, align 8
-  %i.at = select i1 %.not2.i.i.i, i64 -9223372036854775453, i64 %i.as
+  %i.at = select i1 %.not.i.i10.i, i64 %i.as, i64 -9223372036854775453
   %.0.i.i.i = and i64 %i.at, %i.aj
   %i.au = or disjoint i64 %.0.i.i.i, %i.ar
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i.i)

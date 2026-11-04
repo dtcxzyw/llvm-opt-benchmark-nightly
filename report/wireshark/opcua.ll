@@ -202,8 +202,8 @@ bb.ac:                                            ; preds = %.thread
 bb.ad:                                            ; preds = %bb.ac, %.thread
   %i.dt = load i32, ptr %i.d, align 4
   %i.du = call ptr @process_reassembled_data(ptr noundef %.1195, i32 noundef %i.dt, ptr noundef %1, ptr noundef @.str.50, ptr noundef %i.ds, ptr noundef @opcua_frag_items, ptr noundef null, ptr noundef %i.am) ; 2 uses
-  %.not207 = icmp eq ptr %i.du, null              ; 3 uses
-  br i1 %.not207, label %bb.af, label %bb.ae
+  %.not207 = icmp ne ptr %i.du, null              ; 3 uses
+  br i1 %.not207, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
   store i32 0, ptr %i.d, align 4
@@ -222,12 +222,13 @@ bb.ag:                                            ; preds = %bb.af, %bb.ae
 
 bb.ah:                                            ; preds = %bb.ag, %bb.ab
   %.4.ph = phi ptr [ %.1195, %bb.ab ], [ %.2196, %bb.ag ] ; 6 uses
-  %.2181.ph.not = phi i1 [ false, %bb.ab ], [ %.not207, %bb.ag ]
-  %.2177.ph = phi i1 [ true, %bb.ab ], [ %.not207, %bb.ag ]
+  %.2181.ph.not = phi i1 [ true, %bb.ab ], [ %.not207, %bb.ag ]
+  %.2177.ph = phi i1 [ false, %bb.ab ], [ %.not207, %bb.ag ]
   %i.dx = load i8, ptr %4, align 1, !range !15, !noundef !16
   %i.dy = trunc nuw i8 %i.dx to i1
-  %or.cond7.not = or i1 %.2181.ph.not, %i.dy
-  br i1 %or.cond7.not, label %.thread232, label %bb.ai
+  %.not = xor i1 %i.dy, true
+  %or.cond7 = and i1 %.2181.ph.not, %.not
+  br i1 %or.cond7, label %bb.ai, label %.thread232
 
 bb.ai:                                            ; preds = %bb.ah
   br i1 %i.af, label %bb.aj, label %bb.an
@@ -270,7 +271,7 @@ bb.ap:                                            ; preds = %bb.ao
   %i.ei = load ptr, ptr %i.eh, align 8
   %i.ej = call ptr @val_to_str(ptr noundef %i.ei, i32 noundef %i.eg, ptr noundef @g_requesttypes, ptr noundef @.str.54) ; 2 uses
   %i.ek = load ptr, ptr %i.k, align 8             ; 2 uses
-  br i1 %.2177.ph, label %bb.aq, label %bb.ar
+  br i1 %.2177.ph, label %bb.ar, label %bb.aq
 
 bb.aq:                                            ; preds = %bb.ap
   call void (ptr, i32, ptr, ...) @col_append_fstr(ptr noundef %i.ek, i32 noundef 25, ptr noundef @.str.56, ptr noundef %i.ej)

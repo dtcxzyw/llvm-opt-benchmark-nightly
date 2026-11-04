@@ -202,13 +202,13 @@ bb.f:                                             ; preds = %._crit_edge
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   store i1 true, ptr @ON_LINE, align 1
-  %4 = icmp eq i32 %3, 0                          ; 2 uses
-  br i1 %4, label %bb.h, label %.thread95
+  %4 = trunc nuw i32 %3 to i1
+  br i1 %4, label %.thread95, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.x = load ptr, ptr %0, align 8, !tbaa !16
   %.not84 = icmp eq ptr %i.x, null
-  br i1 %.not84, label %5, label %bb.i
+  br i1 %.not84, label %.thread94, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
   %i.y = load i32, ptr @ERROR_COUNT, align 4, !tbaa !20 ; 3 uses
@@ -325,14 +325,7 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   store i1 true, ptr @ON_LINE, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #25
-  br label %5
-
-5:                                                ; preds = %bb.h, %bb.x
-  store i32 %i.h, ptr @INDENT_LEVEL, align 4, !tbaa !20
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %7 = load ptr, ptr %6, align 8, !tbaa !11
-  %.not90 = icmp eq ptr %7, null
-  br i1 %.not90, label %bb.ag, label %bb.y
+  br label %.thread94
 
 .thread95:                                        ; preds = %bb.g
   store i32 %1, ptr @INDENT_LEVEL, align 4, !tbaa !20
@@ -347,21 +340,28 @@ bb.x:                                             ; preds = %bb.w, %bb.v
   %.not9096 = icmp eq ptr %i.bl, null
   br i1 %.not9096, label %bb.ag, label %.thread97
 
-bb.y:                                             ; preds = %5
+.thread94:                                        ; preds = %bb.h, %bb.x
+  store i32 %i.h, ptr @INDENT_LEVEL, align 4, !tbaa !20
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %6 = load ptr, ptr %5, align 8, !tbaa !11
+  %.not8995 = icmp eq ptr %6, null
+  br i1 %.not8995, label %bb.ag, label %bb.y
+
+.thread97:                                        ; preds = %.thread95
+  call fastcc void @iterateTestsWithLevel(ptr noundef nonnull %i.bl, i32 noundef %i.h, ptr noundef %2, i32 noundef 1)
+  br label %bb.ag
+
+bb.y:                                             ; preds = %.thread94
   %i.bm = load i32, ptr @ERROR_COUNT, align 4, !tbaa !20 ; 2 uses
   %i.bn = load i32, ptr @GLOBAL_PRINT_COUNT, align 4, !tbaa !20
   store i32 %1, ptr @INDENT_LEVEL, align 4, !tbaa !20
   call void (ptr, ...) @log_testinfo(ptr noundef nonnull @.str.71)
   store i32 %i.h, ptr @INDENT_LEVEL, align 4, !tbaa !20
-  %i.bo = load ptr, ptr %6, align 8, !tbaa !11
+  %i.bo = load ptr, ptr %5, align 8, !tbaa !11
   call fastcc void @iterateTestsWithLevel(ptr noundef %i.bo, i32 noundef %i.h, ptr noundef %2, i32 noundef 0)
   store i32 %1, ptr @INDENT_LEVEL, align 4, !tbaa !20
   call void (ptr, ...) @log_testinfo_i(ptr noundef nonnull @.str.72)
   br i1 %i.k, label %bb.z, label %bb.ab
-
-.thread97:                                        ; preds = %.thread95
-  call fastcc void @iterateTestsWithLevel(ptr noundef nonnull %i.bl, i32 noundef %i.h, ptr noundef %2, i32 noundef 1)
-  br label %bb.ag
 
 bb.z:                                             ; preds = %bb.y
   %i.bp = load i32, ptr @ERROR_COUNT, align 4, !tbaa !20 ; 2 uses
@@ -401,7 +401,7 @@ bb.af:                                            ; preds = %bb.ab, %bb.ae, %bb.
   store i1 true, ptr @ON_LINE, align 1
   br label %bb.ag
 
-bb.ag:                                            ; preds = %.thread97, %.thread95, %bb.af, %5
+bb.ag:                                            ; preds = %.thread97, %.thread94, %bb.af, %.thread95
   br i1 %i.e, label %bb.ah, label %bb.aj
 
 bb.ah:                                            ; preds = %bb.ag
@@ -422,8 +422,9 @@ print_timeDelta.exit:                             ; preds = %bb.ah, %bb.ai
   br label %bb.aj
 
 bb.aj:                                            ; preds = %print_timeDelta.exit, %bb.ag
+  %7 = icmp eq i32 %3, 0
   %.b = load i1, ptr @ON_LINE, align 1
-  %or.cond6 = select i1 %4, i1 %.b, i1 false
+  %or.cond6 = select i1 %7, i1 %.b, i1 false
   br i1 %or.cond6, label %bb.ak, label %bb.al
 
 bb.ak:                                            ; preds = %bb.aj
@@ -826,8 +827,8 @@ bb.a:
   %i.b = alloca [512 x ptr], align 16             ; 3 uses
   %i.c = load ptr, ptr @ARGV_0, align 8, !tbaa !22
   %i.d = tail call i32 @ctest_xml_init(ptr noundef %i.c)
-  %.not = icmp eq i32 %i.d, 0
-  br i1 %.not, label %.preheader, label %ctest_xml_fini.exit
+  %.not = trunc nuw i32 %i.d to i1
+  br i1 %.not, label %ctest_xml_fini.exit, label %.preheader
 
 .preheader:                                       ; preds = %bb.a
   %i.e = icmp sgt i32 %1, 1

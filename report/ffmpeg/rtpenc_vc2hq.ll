@@ -97,6 +97,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.an = getelementptr inbounds nuw i8, ptr %.050, i64 13
   %i.ao = load i32, ptr %i.an, align 1, !tbaa !13 ; 2 uses
+  %4 = lshr i32 %i.ao, 24
   %i.ap = getelementptr inbounds nuw i8, ptr %.050, i64 17 ; 22 uses
   %i.aq = add i32 %i.j, -17                       ; 2 uses
   %i.ar = shl nuw nsw i32 %i.aq, 3
@@ -499,10 +500,10 @@ get_interleaved_ue_golomb.exit182.i:              ; preds = %bb.af, %.preheader.
   %i.pq = getelementptr inbounds nuw i8, ptr %i.pp, i64 96 ; 5 uses
   %i.pr = load ptr, ptr %i.pq, align 8, !tbaa !34
   store i16 0, ptr %i.pr, align 1, !tbaa !13
-  %4 = and i32 %i.ao, 16777216
-  %.not16.i215.i = icmp eq i32 %4, 0
-  %5 = select i1 %.not16.i215.i, i8 2, i8 3
-  %i.ps = select i1 %.not.i, i8 0, i8 %5          ; 2 uses
+  %5 = trunc nuw i32 %4 to i8
+  %6 = and i8 %5, 1
+  %7 = or disjoint i8 %6, 2
+  %i.ps = select i1 %.not.i, i8 0, i8 %7          ; 2 uses
   %i.pt = load ptr, ptr %i.pq, align 8, !tbaa !34
   %i.pu = getelementptr inbounds nuw i8, ptr %i.pt, i64 2
   store i8 %i.ps, ptr %i.pu, align 1, !tbaa !13

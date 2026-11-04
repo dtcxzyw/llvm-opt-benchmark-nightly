@@ -204,9 +204,9 @@ bb.e:                                             ; preds = %_ZN6vectorIP4exprLb
 
 .lr.ph.i.preheader:                               ; preds = %bb.e
   %i.aa = zext i32 %i.z to i64
-  %i.ab = add nuw nsw i64 %i.aa, 2305843009213693951 ; 2 uses
+  %i.ab = add nuw nsw i64 %i.aa, 2305843009213693951
   %i.ac = and i64 %i.ab, 2305843009213693951      ; 2 uses
-  %i.ad = add nuw nsw i64 %i.ac, 1                ; 2 uses
+  %i.ad = add nuw nsw i64 %i.ac, 1                ; 3 uses
   %i.ae = icmp eq i64 %i.ac, 0
   br i1 %i.ae, label %.lr.ph.i.epil.preheader, label %.lr.ph.i.preheader.new
 
@@ -253,9 +253,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %niter.ncmp.1, label %._crit_edge.i.unr-lcssa, label %.lr.ph.i, !llvm.loop !430
 
 ._crit_edge.i.unr-lcssa:                          ; preds = %bb.j
-  %6 = and i64 %i.ab, 1
-  %lcmp.mod.not.not = icmp eq i64 %6, 0
-  br i1 %lcmp.mod.not.not, label %.lr.ph.i.epil.preheader, label %._crit_edge.i
+  %lcmp.mod.not = trunc i64 %i.ad to i1
+  br i1 %lcmp.mod.not, label %.lr.ph.i.epil.preheader, label %._crit_edge.i
 
 .lr.ph.i.epil.preheader:                          ; preds = %._crit_edge.i.unr-lcssa, %.lr.ph.i.preheader
   %.013.i.epil.init = phi ptr [ %i.x, %.lr.ph.i.preheader ], [ %i.am, %._crit_edge.i.unr-lcssa ] ; 2 uses
@@ -658,13 +657,17 @@ _ZNK7datalog8rule_set3endEv.exit:                 ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   br label %bb.b
 
-._crit_edge:                                      ; preds = %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit, %bb.a, %_ZNK7datalog8rule_set3endEv.exit
-  %.020.lcssa = phi i1 [ false, %_ZNK7datalog8rule_set3endEv.exit ], [ false, %bb.a ], [ %.134, %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit ]
+._crit_edge.loopexit:                             ; preds = %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit
+  %4 = trunc nuw i8 %.134 to i1
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %bb.a, %._crit_edge.loopexit, %_ZNK7datalog8rule_set3endEv.exit
+  %.020.lcssa = phi i1 [ false, %_ZNK7datalog8rule_set3endEv.exit ], [ %4, %._crit_edge.loopexit ], [ false, %bb.a ]
   ret i1 %.020.lcssa
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit
   %.01926 = phi ptr [ %i.e, %.lr.ph ], [ %i.t, %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit ] ; 2 uses
-  %.02025 = phi i1 [ false, %.lr.ph ], [ %.134, %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit ]
+  %.02025 = phi i8 [ 0, %.lr.ph ], [ %.134, %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit ]
   %i.m = load ptr, ptr %.01926, align 8, !tbaa !446 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #17
   store ptr null, ptr %3, align 8, !tbaa !101
@@ -686,7 +689,8 @@ bb.e:                                             ; preds = %bb.d
 
 .thread:                                          ; preds = %bb.e
   %i.o = icmp ne ptr %i.m, %.pre
-  %4 = or i1 %.02025, %i.o
+  %5 = zext i1 %i.o to i8
+  %6 = or i8 %.02025, %5
   br label %bb.h
 
 bb.f:                                             ; preds = %bb.b, %bb.d, %bb.e
@@ -701,7 +705,7 @@ bb.g:                                             ; preds = %bb.c
   br i1 %.not.i.i, label %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit, label %bb.h
 
 bb.h:                                             ; preds = %.thread, %bb.g
-  %.133 = phi i1 [ %4, %.thread ], [ true, %bb.g ]
+  %.133 = phi i8 [ %6, %.thread ], [ 1, %bb.g ]
   %i.q = load ptr, ptr %i.l, align 8, !tbaa !100, !nonnull !69, !align !70
   invoke void @_ZN7datalog12rule_manager7dec_refEPNS_4ruleE(ptr noundef nonnull align 8 dereferenceable(1104) %i.q, ptr noundef nonnull %.pre)
           to label %_ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit unwind label %bb.i
@@ -714,11 +718,11 @@ bb.i:                                             ; preds = %bb.h
   unreachable
 
 _ZN7obj_refIN7datalog4ruleENS0_12rule_managerEED2Ev.exit: ; preds = %bb.g, %bb.h
-  %.134 = phi i1 [ true, %bb.g ], [ %.133, %bb.h ] ; 2 uses
+  %.134 = phi i8 [ 1, %bb.g ], [ %.133, %bb.h ]   ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #17
   %i.t = getelementptr inbounds nuw i8, ptr %.01926, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.t, %i.k
-  br i1 %.not, label %._crit_edge, label %bb.b
+  br i1 %.not, label %._crit_edge.loopexit, label %bb.b
 }
 
 declare void @_ZN7datalog12rule_manager21mk_rule_rewrite_proofERNS_4ruleES2_(ptr noundef nonnull align 8 dereferenceable(1104), ptr noundef nonnull align 8 dereferenceable(80), ptr noundef nonnull align 8 dereferenceable(80)) local_unnamed_addr #2
@@ -1121,9 +1125,8 @@ bb.a:
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %.0.lcssa = phi i64 [ %1, %bb.a ], [ %spec.select, %.lr.ph ] ; 5 uses
-  %7 = and i64 %2, 1
-  %8 = icmp eq i64 %7, 0
-  br i1 %8, label %bb.b, label %bb.d
+  %7 = trunc i64 %2 to i1
+  br i1 %7, label %bb.d, label %bb.b
 
 bb.b:                                             ; preds = %._crit_edge
   %i.r = add nsw i64 %2, -2

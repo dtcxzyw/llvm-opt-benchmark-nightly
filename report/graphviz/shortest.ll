@@ -75,7 +75,7 @@ bb.d:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %4, i64 32
   store i64 0, ptr %i.l, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %4, i64 8
-  %i.n = load i64, ptr %i.a, align 8, !tbaa !49   ; 10 uses
+  %i.n = load i64, ptr %i.a, align 8, !tbaa !49   ; 9 uses
   %i.o = shl i64 %i.n, 1                          ; 2 uses
   store i64 %i.o, ptr %i.m, align 8, !tbaa !52
   %i.p = tail call noalias ptr @calloc(i64 noundef %i.o, i64 noundef 8) #13 ; 22 uses
@@ -125,16 +125,13 @@ bb.i:                                             ; preds = %._crit_edge
   %i.ac = add nsw i64 %i.aa, -1                   ; 7 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 3 uses
   store i64 %i.ac, ptr %i.ad, align 8, !tbaa !21
-  %.not352 = icmp eq i64 %i.n, 0
   %.pre = load ptr, ptr %0, align 8, !tbaa !55    ; 8 uses
-  br i1 %.not352, label %._crit_edge305.thread, label %.lr.ph304.preheader
+  switch i64 %i.n, label %.lr.ph304.preheader.new [
+    i64 0, label %._crit_edge305.thread
+    i64 1, label %.lr.ph304.epil.preheader
+  ]
 
-.lr.ph304.preheader:                              ; preds = %bb.i
-  %xtraiter = and i64 %i.n, 1
-  %5 = icmp eq i64 %i.n, 1
-  br i1 %5, label %.lr.ph304.epil.preheader, label %.lr.ph304.preheader.new
-
-.lr.ph304.preheader.new:                          ; preds = %.lr.ph304.preheader
+.lr.ph304.preheader.new:                          ; preds = %bb.i
   %unroll_iter = and i64 %i.n, -2
   br label %.lr.ph304
 
@@ -167,13 +164,13 @@ bb.i:                                             ; preds = %._crit_edge
   br i1 %niter.ncmp.1, label %._crit_edge305.unr-lcssa, label %.lr.ph304, !llvm.loop !37
 
 ._crit_edge305.unr-lcssa:                         ; preds = %.lr.ph304
-  %lcmp.mod.not = icmp eq i64 %xtraiter, 0
-  br i1 %lcmp.mod.not, label %._crit_edge305, label %.lr.ph304.epil.preheader
+  %lcmp.mod.not = trunc i64 %i.n to i1
+  br i1 %lcmp.mod.not, label %.lr.ph304.epil.preheader, label %._crit_edge305
 
-.lr.ph304.epil.preheader:                         ; preds = %._crit_edge305.unr-lcssa, %.lr.ph304.preheader
-  %.0225302.epil.init = phi double [ +inf, %.lr.ph304.preheader ], [ %.1226.1, %._crit_edge305.unr-lcssa ]
-  %.0227301.epil.init = phi i64 [ -1, %.lr.ph304.preheader ], [ %.1228.fr.1, %._crit_edge305.unr-lcssa ]
-  %.0229300.epil.init = phi i64 [ 0, %.lr.ph304.preheader ], [ %i.am, %._crit_edge305.unr-lcssa ] ; 2 uses
+.lr.ph304.epil.preheader:                         ; preds = %bb.i, %._crit_edge305.unr-lcssa
+  %.0225302.epil.init = phi double [ +inf, %bb.i ], [ %.1226.1, %._crit_edge305.unr-lcssa ]
+  %.0227301.epil.init = phi i64 [ -1, %bb.i ], [ %.1228.fr.1, %._crit_edge305.unr-lcssa ]
+  %.0229300.epil.init = phi i64 [ 0, %bb.i ], [ %i.am, %._crit_edge305.unr-lcssa ] ; 2 uses
   %lcmp.mod427 = trunc i64 %i.n to i1
   tail call void @llvm.assume(i1 %lcmp.mod427)
   %i.an = getelementptr inbounds nuw [16 x i8], ptr %.pre, i64 %.0229300.epil.init
@@ -531,9 +528,9 @@ connecttris.exit:                                 ; preds = %bb.ak
 .lr.ph326:                                        ; preds = %.preheader289, %bb.al
   %.1221325 = phi i64 [ %i.gg, %bb.al ], [ 0, %.preheader289 ] ; 3 uses
   %i.gf = tail call fastcc i32 @pointintri(i64 noundef %.1221325, ptr noundef %1)
-  %.not247 = icmp eq i32 %i.gf, 0
+  %.not247 = trunc nuw i32 %i.gf to i1
   %tris.val263.pre.pre = load i64, ptr getelementptr inbounds nuw (i8, ptr @tris, i64 16), align 8, !tbaa !51 ; 3 uses
-  br i1 %.not247, label %bb.al, label %._crit_edge327
+  br i1 %.not247, label %._crit_edge327, label %bb.al
 
 bb.al:                                            ; preds = %.lr.ph326
   %i.gg = add nuw i64 %.1221325, 1                ; 3 uses
@@ -543,12 +540,15 @@ bb.al:                                            ; preds = %.lr.ph326
 ._crit_edge327:                                   ; preds = %bb.al, %.lr.ph326
   %.1221.lcssa = phi i64 [ %i.gg, %bb.al ], [ %.1221325, %.lr.ph326 ] ; 6 uses
   %i.gi = icmp eq i64 %.1221.lcssa, %tris.val263.pre.pre
-  br i1 %i.gi, label %._crit_edge327.thread, label %.preheader.a
+  br i1 %i.gi, label %._crit_edge327.thread, label %.preheader
 
-.preheader.a:                                     ; preds = %._crit_edge327
-  %i.gj = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 5 uses
+.preheader:                                       ; preds = %._crit_edge327
   %.not356 = icmp eq i64 %tris.val263.pre.pre, 0
-  br i1 %.not356, label %._crit_edge334.thread, label %.lr.ph333
+  br i1 %.not356, label %._crit_edge334.thread, label %.preheader.a
+
+.preheader.a:                                     ; preds = %.preheader
+  %i.gj = getelementptr inbounds nuw i8, ptr %1, i64 16
+  br label %.lr.ph333
 
 ._crit_edge327.thread:                            ; preds = %.preheader291, %.preheader289, %._crit_edge327
   %i.gk = load ptr, ptr @stderr, align 8, !tbaa !12
@@ -559,11 +559,11 @@ bb.al:                                            ; preds = %.lr.ph326
   br label %bb.ce
 
 .lr.ph333:                                        ; preds = %.preheader.a, %bb.am
-  %.2222332 = phi i64 [ %i.gn, %bb.am ], [ 0, %.preheader.a ] ; 3 uses
+  %.2222332 = phi i64 [ 0, %.preheader.a ], [ %i.gn, %bb.am ] ; 3 uses
   %i.gm = tail call fastcc i32 @pointintri(i64 noundef %.2222332, ptr noundef nonnull %i.gj)
-  %.not248 = icmp eq i32 %i.gm, 0
+  %.not248 = trunc nuw i32 %i.gm to i1
   %tris.val.pre.pre = load i64, ptr getelementptr inbounds nuw (i8, ptr @tris, i64 16), align 8, !tbaa !51 ; 2 uses
-  br i1 %.not248, label %bb.am, label %._crit_edge334
+  br i1 %.not248, label %._crit_edge334, label %bb.am
 
 bb.am:                                            ; preds = %.lr.ph333
   %i.gn = add nuw i64 %.2222332, 1                ; 3 uses
@@ -575,7 +575,7 @@ bb.am:                                            ; preds = %.lr.ph333
   %i.gp = icmp eq i64 %.2222.lcssa.ph, %tris.val.pre.pre
   br i1 %i.gp, label %._crit_edge334.thread, label %bb.an
 
-._crit_edge334.thread:                            ; preds = %.preheader.a, %._crit_edge334
+._crit_edge334.thread:                            ; preds = %.preheader, %._crit_edge334
   %i.gq = load ptr, ptr @stderr, align 8, !tbaa !12
   %i.gr = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.gq, ptr noundef nonnull @.str, ptr noundef nonnull @.str.1, i32 noundef 193, ptr noundef nonnull @.str.7) #14 ; 0 uses
   tail call void @free(ptr noundef %i.p) #12
@@ -602,8 +602,9 @@ bb.ap:                                            ; preds = %bb.ao
   store i64 2, ptr %i.gw, align 8, !tbaa !49
   %i.gx = load ptr, ptr @ops, align 8, !tbaa !32  ; 3 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.gx, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !61
-  %i.gy = getelementptr inbounds nuw i8, ptr %i.gx, i64 16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.gy, ptr noundef nonnull align 8 dereferenceable(16) %i.gj, i64 16, i1 false), !tbaa.struct !61
+  %5 = getelementptr inbounds nuw i8, ptr %i.gx, i64 16
+  %i.gy = getelementptr inbounds nuw i8, ptr %1, i64 16
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %5, ptr noundef nonnull align 8 dereferenceable(16) %i.gy, i64 16, i1 false), !tbaa.struct !61
   store ptr %i.gx, ptr %2, align 8, !tbaa !55
   br label %bb.ce
 
@@ -640,8 +641,9 @@ bb.au:                                            ; preds = %bb.ar, %bb.at
   %i.hg = getelementptr inbounds nuw i8, ptr %2, i64 8
   store i64 2, ptr %i.hg, align 8, !tbaa !49
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.hf, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false), !tbaa.struct !61
-  %i.hh = getelementptr inbounds nuw i8, ptr %i.hf, i64 16
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.hh, ptr noundef nonnull align 8 dereferenceable(16) %i.gj, i64 16, i1 false), !tbaa.struct !61
+  %6 = getelementptr inbounds nuw i8, ptr %i.hf, i64 16
+  %i.hh = getelementptr inbounds nuw i8, ptr %1, i64 16
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %6, ptr noundef nonnull align 8 dereferenceable(16) %i.hh, i64 16, i1 false), !tbaa.struct !61
   store ptr %i.hf, ptr %2, align 8, !tbaa !55
   br label %bb.ce
 
@@ -649,8 +651,9 @@ bb.av:                                            ; preds = %bb.aq
   store ptr %1, ptr %3, align 16, !tbaa !26
   %i.hi = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 2 uses
   store ptr null, ptr %i.hi, align 8, !tbaa !58
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.hj = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 5 uses
-  store ptr %i.gj, ptr %i.hj, align 16, !tbaa !26
+  store ptr %7, ptr %i.hj, align 16, !tbaa !26
   %i.hk = getelementptr inbounds nuw i8, ptr %3, i64 24
   store ptr null, ptr %i.hk, align 8, !tbaa !58
   %.not19.i.not = icmp eq i64 %i.aa, 0
@@ -731,7 +734,7 @@ bb.bd:                                            ; preds = %bb.bc, %bb.bb
   %i.it = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.hq ; 2 uses
   %i.iu = load ptr, ptr %i.it, align 8, !tbaa !27
   %i.iv = load ptr, ptr %i.iu, align 8, !tbaa !26 ; 2 uses
-  %i.iw = load double, ptr %i.gj, align 8
+  %i.iw = load double, ptr %7, align 8
   %i.ix = load double, ptr %i.ho, align 8
   %i.iy = load double, ptr %i.is, align 8
   %i.iz = getelementptr inbounds nuw i8, ptr %i.is, i64 8

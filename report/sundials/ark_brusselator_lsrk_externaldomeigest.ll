@@ -204,17 +204,21 @@ check_flag.exit44.a:                              ; preds = %.thread56
   br label %.thread
 
 bb.f:                                             ; preds = %.thread56
-  %i.af = tail call i32 @SUNDomEigEstimator_Estimate(ptr noundef nonnull %.029, ptr noundef %3, ptr noundef %4) #8 ; 2 uses
+  %i.af = tail call i32 @SUNDomEigEstimator_Estimate(ptr noundef nonnull %.029, ptr noundef %3, ptr noundef %4) #8 ; 3 uses
   %i.ag = icmp slt i32 %i.af, 0
-  br i1 %i.ag, label %check_flag.exit46.a, label %.thread
+  br i1 %i.ag, label %check_flag.exit46.a, label %check_flag.exit46
 
 check_flag.exit46.a:                              ; preds = %bb.f
   %i.ah = load ptr, ptr @stderr, align 8, !tbaa !11
   %i.ai = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.ah, ptr noundef nonnull @.str.30, ptr noundef nonnull @.str.28, i32 noundef %i.af) #9 ; 0 uses
+  br label %check_flag.exit46
+
+check_flag.exit46:                                ; preds = %bb.f, %check_flag.exit46.a
+  %.lobit = ashr i32 %i.af, 31
   br label %.thread
 
-.thread:                                          ; preds = %check_flag.exit.a, %check_flag.exit40.a, %check_flag.exit46.a, %bb.f, %check_flag.exit44.a, %bb.e
-  %.1 = phi i32 [ 1, %bb.e ], [ 0, %bb.f ], [ -1, %check_flag.exit44.a ], [ -1, %check_flag.exit46.a ], [ -1, %check_flag.exit40.a ], [ -1, %check_flag.exit.a ]
+.thread:                                          ; preds = %check_flag.exit.a, %check_flag.exit40.a, %check_flag.exit44.a, %bb.e, %check_flag.exit46
+  %.1 = phi i32 [ 1, %bb.e ], [ %.lobit, %check_flag.exit46 ], [ -1, %check_flag.exit44.a ], [ -1, %check_flag.exit40.a ], [ -1, %check_flag.exit.a ]
   ret i32 %.1
 }
 

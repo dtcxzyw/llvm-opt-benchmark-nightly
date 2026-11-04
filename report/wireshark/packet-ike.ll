@@ -204,13 +204,13 @@ bb.ic:                                            ; preds = %bb.ic, %.lr.ph222.i
   br i1 %exitcond275.not.i.i, label %.loopexit.i.i, label %bb.ic, !llvm.loop !36
 
 bb.id:                                            ; preds = %bb.hg
-  %12 = and i32 %i.ajn, 1
-  %13 = icmp eq i32 %12, 0
-  br i1 %13, label %.lr.ph219.i.i, label %.loopexit.i.i
+  %12 = trunc i32 %i.ajn to i1
+  br i1 %12, label %.loopexit.i.i, label %.lr.ph219.i.i
 
 .lr.ph219.i.i:                                    ; preds = %bb.id
   %i.anh = lshr exact i32 %i.ajn, 1
   %i.ani = load ptr, ptr %i.l, align 8
+  %umax.i.i = call i32 @llvm.umax.i32(i32 %i.anh, i32 1)
   br label %bb.ie
 
 bb.ie:                                            ; preds = %bb.ie, %.lr.ph219.i.i
@@ -220,7 +220,7 @@ bb.ie:                                            ; preds = %bb.ie, %.lr.ph219.i
   %i.ank = call ptr @proto_tree_add_item(ptr noundef %i.ani, i32 noundef %i.anj, ptr noundef %0, i32 noundef %.9171217.i.i, i32 noundef 2, i32 noundef 0) ; 0 uses
   %i.anl = add i32 %.9171217.i.i, 2
   %i.anm = add nuw nsw i32 %.9218.i.i, 1          ; 2 uses
-  %exitcond274.not.i.i = icmp eq i32 %i.anm, %i.anh
+  %exitcond274.not.i.i = icmp eq i32 %i.anm, %umax.i.i
   br i1 %exitcond274.not.i.i, label %.loopexit.i.i, label %bb.ie, !llvm.loop !37
 
 bb.if:                                            ; preds = %bb.hg
@@ -623,9 +623,8 @@ bb.ad:                                            ; preds = %bb.ab
   br label %bb.al
 
 bb.ae:                                            ; preds = %bb.ad
-  %5 = and i8 %i.ad, 1
-  %.not227 = icmp eq i8 %5, 0
-  br i1 %.not227, label %.split213, label %bb.af
+  %.not227 = trunc i8 %i.ad to i1
+  br i1 %.not227, label %bb.af, label %.split213
 
 .split213:                                        ; preds = %bb.ae
   %i.fa = and i8 %i.de, 32
@@ -1027,6 +1026,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umax.i32(i32, i32) #16
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
