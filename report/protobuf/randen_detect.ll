@@ -6,9 +6,9 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef zeroext i1 @_ZN4absl12lts_2025051215random_internal22CPUSupportsRandenHwAesEv() local_unnamed_addr #0 {
+define noundef zeroext i1 @_ZN4absl12lts_2025051215random_internal22CPUSupportsRandenHwAesEv() local_unnamed_addr #0 !guid !7 {
 bb.a:
-  %i.a = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid \0A\09", "={ax},={bx},={cx},={dx},{ax},{cx},~{dirflag},~{fpsr},~{flags}"(i32 1, i32 0) #1, !srcloc !7
+  %i.a = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid \0A\09", "={ax},={bx},={cx},={dx},{ax},{cx},~{dirflag},~{fpsr},~{flags}"(i32 1, i32 0) #1, !srcloc !8
   %i.b = extractvalue { i32, i32, i32, i32 } %i.a, 2
   %i.c = and i32 %i.b, 33554432
   %i.d = icmp ne i32 %i.c, 0
@@ -29,5 +29,6 @@ attributes #1 = { nounwind }
 !4 = !{!"omnipotent char", !3, i64 0}
 !5 = !{!"int", !4, i64 0}
 !6 = !{!5, !5, i64 0}
-!7 = !{i64 2299, i64 2308}
+!7 = !{i64 -865370883938551811}
+!8 = !{i64 2299, i64 2308}
 end_hunk_0

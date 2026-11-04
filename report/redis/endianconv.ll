@@ -5,7 +5,7 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @memrev16(ptr nofree noundef captures(none) %0) local_unnamed_addr #0 {
+define dso_local void @memrev16(ptr nofree noundef captures(none) %0) local_unnamed_addr #0 !guid !14 {
 bb.a:
   %i.a = load i8, ptr %0, align 1, !tbaa !13
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1 ; 2 uses
@@ -16,7 +16,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @memrev32(ptr nofree noundef captures(none) %0) local_unnamed_addr #0 {
+define dso_local void @memrev32(ptr nofree noundef captures(none) %0) local_unnamed_addr #0 !guid !15 {
 bb.a:
   %i.a = load <4 x i8>, ptr %0, align 1, !tbaa !13
   %i.b = shufflevector <4 x i8> %i.a, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
@@ -25,7 +25,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @memrev64(ptr nofree noundef captures(none) %0) local_unnamed_addr #0 {
+define dso_local void @memrev64(ptr nofree noundef captures(none) %0) local_unnamed_addr #0 !guid !16 {
 bb.a:
   %i.a = load <8 x i8>, ptr %0, align 1, !tbaa !13
   %i.b = shufflevector <8 x i8> %i.a, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
@@ -34,21 +34,21 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local noundef zeroext i16 @intrev16(i16 noundef zeroext %0) local_unnamed_addr #1 {
+define dso_local noundef zeroext i16 @intrev16(i16 noundef zeroext %0) local_unnamed_addr #1 !guid !17 {
 bb.a:
   %.sroa.0.0.insert.insert = tail call i16 @llvm.bswap.i16(i16 %0)
   ret i16 %.sroa.0.0.insert.insert
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local noundef i32 @intrev32(i32 noundef %0) local_unnamed_addr #1 {
+define dso_local noundef i32 @intrev32(i32 noundef %0) local_unnamed_addr #1 !guid !18 {
 bb.a:
   %.sroa.0.0.insert.insert = tail call i32 @llvm.bswap.i32(i32 %0)
   ret i32 %.sroa.0.0.insert.insert
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local noundef i64 @intrev64(i64 noundef %0) local_unnamed_addr #1 {
+define dso_local noundef i64 @intrev64(i64 noundef %0) local_unnamed_addr #1 !guid !19 {
 bb.a:
   %.sroa.0.0.insert.insert = tail call i64 @llvm.bswap.i64(i64 %0)
   ret i64 %.sroa.0.0.insert.insert
@@ -85,4 +85,10 @@ attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !11 = !{!"int", !10, i64 0}
 !12 = !{!11, !11, i64 0}
 !13 = !{!10, !10, i64 0}
+!14 = !{i64 4257510819663091505}
+!15 = !{i64 7370427465141205258}
+!16 = !{i64 6294556910420893474}
+!17 = !{i64 -358679370299785661}
+!18 = !{i64 -7528928097461610993}
+!19 = !{i64 -7844265671839721173}
 end_hunk_0

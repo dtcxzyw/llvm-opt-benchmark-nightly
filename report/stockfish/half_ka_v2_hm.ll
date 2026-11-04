@@ -14,64 +14,64 @@ $_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm16PieceSquareIndexE = comdat any
 
 $_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm11KingBucketsE = comdat any
 
-@_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm9OrientTBLE = linkonce_odr dso_local local_unnamed_addr constant [64 x i32] [i32 7, i32 7, i32 7, i32 7, i32 0, i32 0, i32 0, i32 0, i32 7, i32 7, i32 7, i32 7, i32 0, i32 0, i32 0, i32 0, i32 7, i32 7, i32 7, i32 7, i32 0, i32 0, i32 0, i32 0, i32 7, i32 7, i32 7, i32 7, i32 0, i32 0, i32 0, i32 0, i32 7, i32 7, i32 7, i32 7, i32 0, i32 0, i32 0, i32 0, i32 7, i32 7, i32 7, i32 7, i32 0, i32 0, i32 0, i32 0, i32 7, i32 7, i32 7, i32 7, i32 0, i32 0, i32 0, i32 0, i32 7, i32 7, i32 7, i32 7, i32 0, i32 0, i32 0, i32 0], comdat, align 16
-@_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm16PieceSquareIndexE = linkonce_odr dso_local local_unnamed_addr constant [2 x [16 x i32]] [[16 x i32] [i32 0, i32 0, i32 128, i32 256, i32 384, i32 512, i32 640, i32 0, i32 0, i32 64, i32 192, i32 320, i32 448, i32 576, i32 640, i32 0], [16 x i32] [i32 0, i32 64, i32 192, i32 320, i32 448, i32 576, i32 640, i32 0, i32 0, i32 0, i32 128, i32 256, i32 384, i32 512, i32 640, i32 0]], comdat, align 16
-@_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm11KingBucketsE = linkonce_odr dso_local local_unnamed_addr constant [64 x i32] [i32 19712, i32 20416, i32 21120, i32 21824, i32 21824, i32 21120, i32 20416, i32 19712, i32 16896, i32 17600, i32 18304, i32 19008, i32 19008, i32 18304, i32 17600, i32 16896, i32 14080, i32 14784, i32 15488, i32 16192, i32 16192, i32 15488, i32 14784, i32 14080, i32 11264, i32 11968, i32 12672, i32 13376, i32 13376, i32 12672, i32 11968, i32 11264, i32 8448, i32 9152, i32 9856, i32 10560, i32 10560, i32 9856, i32 9152, i32 8448, i32 5632, i32 6336, i32 7040, i32 7744, i32 7744, i32 7040, i32 6336, i32 5632, i32 2816, i32 3520, i32 4224, i32 4928, i32 4928, i32 4224, i32 3520, i32 2816, i32 0, i32 704, i32 1408, i32 2112, i32 2112, i32 1408, i32 704, i32 0], comdat, align 16
+@_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm9OrientTBLE = linkonce_odr dso_local local_unnamed_addr constant [64 x i32] [i32 7, i32 7, i32 7, i32 7, i32 0, i32 0, i32 0, i32 0, i32 7, i32 7, i32 7, i32 7, i32 0, i32 0, i32 0, i32 0, i32 7, i32 7, i32 7, i32 7, i32 0, i32 0, i32 0, i32 0, i32 7, i32 7, i32 7, i32 7, i32 0, i32 0, i32 0, i32 0, i32 7, i32 7, i32 7, i32 7, i32 0, i32 0, i32 0, i32 0, i32 7, i32 7, i32 7, i32 7, i32 0, i32 0, i32 0, i32 0, i32 7, i32 7, i32 7, i32 7, i32 0, i32 0, i32 0, i32 0, i32 7, i32 7, i32 7, i32 7, i32 0, i32 0, i32 0, i32 0], comdat, align 16, !guid !11
+@_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm16PieceSquareIndexE = linkonce_odr dso_local local_unnamed_addr constant [2 x [16 x i32]] [[16 x i32] [i32 0, i32 0, i32 128, i32 256, i32 384, i32 512, i32 640, i32 0, i32 0, i32 64, i32 192, i32 320, i32 448, i32 576, i32 640, i32 0], [16 x i32] [i32 0, i32 64, i32 192, i32 320, i32 448, i32 576, i32 640, i32 0, i32 0, i32 0, i32 128, i32 256, i32 384, i32 512, i32 640, i32 0]], comdat, align 16, !guid !12
+@_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm11KingBucketsE = linkonce_odr dso_local local_unnamed_addr constant [64 x i32] [i32 19712, i32 20416, i32 21120, i32 21824, i32 21824, i32 21120, i32 20416, i32 19712, i32 16896, i32 17600, i32 18304, i32 19008, i32 19008, i32 18304, i32 17600, i32 16896, i32 14080, i32 14784, i32 15488, i32 16192, i32 16192, i32 15488, i32 14784, i32 14080, i32 11264, i32 11968, i32 12672, i32 13376, i32 13376, i32 12672, i32 11968, i32 11264, i32 8448, i32 9152, i32 9856, i32 10560, i32 10560, i32 9856, i32 9152, i32 8448, i32 5632, i32 6336, i32 7040, i32 7744, i32 7744, i32 7040, i32 6336, i32 5632, i32 2816, i32 3520, i32 4224, i32 4928, i32 4928, i32 4224, i32 3520, i32 2816, i32 0, i32 704, i32 1408, i32 2112, i32 2112, i32 1408, i32 704, i32 0], comdat, align 16, !guid !13
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local noundef i32 @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm10make_indexENS_5ColorENS_6SquareENS_5PieceES5_(i8 noundef zeroext %0, i8 noundef zeroext %1, i8 noundef zeroext %2, i8 noundef zeroext %3) local_unnamed_addr #0 align 2 {
+define dso_local noundef i32 @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm10make_indexENS_5ColorENS_6SquareENS_5PieceES5_(i8 noundef zeroext %0, i8 noundef zeroext %1, i8 noundef zeroext %2, i8 noundef zeroext %3) local_unnamed_addr #0 align 2 !guid !22 {
 bb.a:
   %i.a = zext i8 %0 to i32
   %i.b = mul nuw nsw i32 %i.a, 56                 ; 2 uses
   %i.c = zext i8 %1 to i32
   %i.d = zext i8 %3 to i64
   %i.e = getelementptr inbounds nuw [4 x i8], ptr @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm9OrientTBLE, i64 %i.d
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !11
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !14
   %i.g = xor i32 %i.f, %i.c
   %i.h = xor i32 %i.g, %i.b
   %i.i = zext i8 %0 to i64
   %i.j = getelementptr inbounds nuw [64 x i8], ptr @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm16PieceSquareIndexE, i64 %i.i
   %i.k = zext i8 %2 to i64
   %i.l = getelementptr inbounds nuw [4 x i8], ptr %i.j, i64 %i.k
-  %i.m = load i32, ptr %i.l, align 4, !tbaa !11
+  %i.m = load i32, ptr %i.l, align 4, !tbaa !14
   %i.n = add i32 %i.h, %i.m
   %i.o = zext i8 %3 to i32
   %i.p = xor i32 %i.b, %i.o
   %i.q = zext nneg i32 %i.p to i64
   %i.r = getelementptr inbounds nuw [4 x i8], ptr @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm11KingBucketsE, i64 %i.q
-  %i.s = load i32, ptr %i.r, align 4, !tbaa !11
+  %i.s = load i32, ptr %i.r, align 4, !tbaa !14
   %i.t = add i32 %i.n, %i.s
   ret i32 %i.t
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define dso_local void @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm21append_active_indicesENS_5ColorERKNS_8PositionERNS_9ValueListIjLm32EEE(i8 noundef zeroext %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(1048) %1, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(136) %2) local_unnamed_addr #1 align 2 {
+define dso_local void @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm21append_active_indicesENS_5ColorERKNS_8PositionERNS_9ValueListIjLm32EEE(i8 noundef zeroext %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(1048) %1, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(136) %2) local_unnamed_addr #1 align 2 !guid !24 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.b = load i64, ptr %i.a, align 8, !tbaa !20   ; 2 uses
+  %i.b = load i64, ptr %i.a, align 8, !tbaa !25   ; 2 uses
   %.not10 = icmp eq i64 %i.b, 0
   br i1 %.not10, label %bb.c, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 112
-  %i.d = load i64, ptr %i.c, align 8, !tbaa !20
+  %i.d = load i64, ptr %i.c, align 8, !tbaa !25
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 128
   %i.f = zext i8 %0 to i64                        ; 2 uses
   %i.g = getelementptr inbounds nuw [8 x i8], ptr %i.e, i64 %i.f
-  %i.h = load i64, ptr %i.g, align 8, !tbaa !20
+  %i.h = load i64, ptr %i.g, align 8, !tbaa !25
   %i.i = and i64 %i.d, %i.h
   %i.j = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.i, i1 true) ; 2 uses
   %i.k = zext i8 %0 to i32
   %i.l = mul nuw nsw i32 %i.k, 56                 ; 2 uses
   %i.m = getelementptr inbounds nuw [4 x i8], ptr @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm9OrientTBLE, i64 %i.j
-  %i.n = load i32, ptr %i.m, align 4, !tbaa !11
+  %i.n = load i32, ptr %i.m, align 4, !tbaa !14
   %i.o = getelementptr inbounds nuw [64 x i8], ptr @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm16PieceSquareIndexE, i64 %i.f
   %i.p = zext nneg i32 %i.l to i64
   %i.q = xor i64 %i.j, %i.p
   %i.r = getelementptr inbounds nuw [4 x i8], ptr @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm11KingBucketsE, i64 %i.q
-  %i.s = load i32, ptr %i.r, align 4, !tbaa !11
+  %i.s = load i32, ptr %i.r, align 4, !tbaa !14
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 128 ; 2 uses
-  %.promoted = load i64, ptr %i.t, align 8, !tbaa !14
+  %.promoted = load i64, ptr %i.t, align 8, !tbaa !17
   %invariant.op = xor i32 %i.n, %i.l
   br label %bb.b
 
@@ -83,21 +83,21 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
   %i.x = add i64 %.011, -1
   %i.y = and i64 %i.x, %.011                      ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 %i.v
-  %i.aa = load i8, ptr %i.z, align 1, !tbaa !21
+  %i.aa = load i8, ptr %i.z, align 1, !tbaa !26
   %.reass.reass.reass = xor i32 %i.w, %invariant.op
   %i.ab = zext i8 %i.aa to i64
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.o, i64 %i.ab
-  %i.ad = load i32, ptr %i.ac, align 4, !tbaa !11
+  %i.ad = load i32, ptr %i.ac, align 4, !tbaa !14
   %i.ae = add i32 %.reass.reass.reass, %i.ad
   %i.af = add i32 %i.ae, %i.s
   %i.ag = add i64 %i.u, 1                         ; 2 uses
   %i.ah = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %i.u
-  store i32 %i.af, ptr %i.ah, align 4, !tbaa !11
+  store i32 %i.af, ptr %i.ah, align 4, !tbaa !14
   %.not = icmp eq i64 %i.y, 0
-  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !19
+  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !23
 
 ._crit_edge:                                      ; preds = %bb.b
-  store i64 %i.ag, ptr %i.t, align 8, !tbaa !14
+  store i64 %i.ag, ptr %i.t, align 8, !tbaa !17
   br label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge, %bb.a
@@ -105,39 +105,39 @@ bb.c:                                             ; preds = %._crit_edge, %bb.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define dso_local void @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm22append_changed_indicesENS_5ColorENS_6SquareERKNS_10DirtyPieceERNS_9ValueListIjLm32EEESB_(i8 noundef zeroext %0, i8 noundef zeroext %1, ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(7) %2, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(136) %3, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(136) %4) local_unnamed_addr #2 align 2 {
+define dso_local void @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm22append_changed_indicesENS_5ColorENS_6SquareERKNS_10DirtyPieceERNS_9ValueListIjLm32EEESB_(i8 noundef zeroext %0, i8 noundef zeroext %1, ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(7) %2, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(136) %3, ptr nofree noundef nonnull align 8 captures(none) dereferenceable(136) %4) local_unnamed_addr #2 align 2 !guid !28 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 1
-  %i.b = load i8, ptr %i.a, align 1, !tbaa !23
-  %i.c = load i8, ptr %2, align 1, !tbaa !18
+  %i.b = load i8, ptr %i.a, align 1, !tbaa !29
+  %i.c = load i8, ptr %2, align 1, !tbaa !21
   %i.d = zext i8 %0 to i32
   %i.e = mul nuw nsw i32 %i.d, 56                 ; 5 uses
   %i.f = zext i8 %i.b to i32
   %i.g = zext i8 %1 to i64
   %i.h = getelementptr inbounds nuw [4 x i8], ptr @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm9OrientTBLE, i64 %i.g
-  %i.i = load i32, ptr %i.h, align 4, !tbaa !11   ; 4 uses
+  %i.i = load i32, ptr %i.h, align 4, !tbaa !14   ; 4 uses
   %i.j = xor i32 %i.e, %i.f
   %i.k = xor i32 %i.j, %i.i
   %i.l = zext i8 %0 to i64
   %i.m = getelementptr inbounds nuw [64 x i8], ptr @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm16PieceSquareIndexE, i64 %i.l ; 3 uses
   %i.n = zext i8 %i.c to i64
   %i.o = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.n
-  %i.p = load i32, ptr %i.o, align 4, !tbaa !11
+  %i.p = load i32, ptr %i.o, align 4, !tbaa !14
   %i.q = zext i8 %1 to i32
   %i.r = xor i32 %i.e, %i.q
   %i.s = zext nneg i32 %i.r to i64
   %i.t = getelementptr inbounds nuw [4 x i8], ptr @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm11KingBucketsE, i64 %i.s
-  %i.u = load i32, ptr %i.t, align 4, !tbaa !11   ; 3 uses
+  %i.u = load i32, ptr %i.t, align 4, !tbaa !14   ; 3 uses
   %i.v = add i32 %i.u, %i.p                       ; 2 uses
   %i.w = add i32 %i.v, %i.k
   %i.x = getelementptr inbounds nuw i8, ptr %3, i64 128 ; 4 uses
-  %i.y = load i64, ptr %i.x, align 8, !tbaa !14   ; 2 uses
+  %i.y = load i64, ptr %i.x, align 8, !tbaa !17   ; 2 uses
   %i.z = add i64 %i.y, 1
-  store i64 %i.z, ptr %i.x, align 8, !tbaa !14
+  store i64 %i.z, ptr %i.x, align 8, !tbaa !17
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.y
-  store i32 %i.w, ptr %i.aa, align 4, !tbaa !11
+  store i32 %i.w, ptr %i.aa, align 4, !tbaa !14
   %i.ab = getelementptr inbounds nuw i8, ptr %2, i64 2
-  %i.ac = load i8, ptr %i.ab, align 1, !tbaa !24  ; 2 uses
+  %i.ac = load i8, ptr %i.ab, align 1, !tbaa !30  ; 2 uses
   %.not = icmp eq i8 %i.ac, 64
   br i1 %.not, label %bb.c, label %bb.b
 
@@ -147,60 +147,60 @@ bb.b:                                             ; preds = %bb.a
   %i.af = xor i32 %i.ae, %i.i
   %i.ag = add i32 %i.v, %i.af
   %i.ah = getelementptr inbounds nuw i8, ptr %4, i64 128 ; 2 uses
-  %i.ai = load i64, ptr %i.ah, align 8, !tbaa !14 ; 2 uses
+  %i.ai = load i64, ptr %i.ah, align 8, !tbaa !17 ; 2 uses
   %i.aj = add i64 %i.ai, 1
-  store i64 %i.aj, ptr %i.ah, align 8, !tbaa !14
+  store i64 %i.aj, ptr %i.ah, align 8, !tbaa !17
   %i.ak = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.ai
-  store i32 %i.ag, ptr %i.ak, align 4, !tbaa !11
+  store i32 %i.ag, ptr %i.ak, align 4, !tbaa !14
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.al = getelementptr inbounds nuw i8, ptr %2, i64 3
-  %i.am = load i8, ptr %i.al, align 1, !tbaa !25  ; 2 uses
+  %i.am = load i8, ptr %i.al, align 1, !tbaa !31  ; 2 uses
   %.not22 = icmp eq i8 %i.am, 64
   br i1 %.not22, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.an = getelementptr inbounds nuw i8, ptr %2, i64 5
-  %i.ao = load i8, ptr %i.an, align 1, !tbaa !26
+  %i.ao = load i8, ptr %i.an, align 1, !tbaa !32
   %i.ap = zext i8 %i.am to i32
   %i.aq = xor i32 %i.e, %i.ap
   %i.ar = xor i32 %i.aq, %i.i
   %i.as = zext i8 %i.ao to i64
   %i.at = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.as
-  %i.au = load i32, ptr %i.at, align 4, !tbaa !11
+  %i.au = load i32, ptr %i.at, align 4, !tbaa !14
   %i.av = add i32 %i.ar, %i.u
   %i.aw = add i32 %i.av, %i.au
-  %i.ax = load i64, ptr %i.x, align 8, !tbaa !14  ; 2 uses
+  %i.ax = load i64, ptr %i.x, align 8, !tbaa !17  ; 2 uses
   %i.ay = add i64 %i.ax, 1
-  store i64 %i.ay, ptr %i.x, align 8, !tbaa !14
+  store i64 %i.ay, ptr %i.x, align 8, !tbaa !17
   %i.az = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.ax
-  store i32 %i.aw, ptr %i.az, align 4, !tbaa !11
+  store i32 %i.aw, ptr %i.az, align 4, !tbaa !14
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
   %i.ba = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %i.bb = load i8, ptr %i.ba, align 1, !tbaa !27  ; 2 uses
+  %i.bb = load i8, ptr %i.ba, align 1, !tbaa !33  ; 2 uses
   %.not23 = icmp eq i8 %i.bb, 64
   br i1 %.not23, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.bc = getelementptr inbounds nuw i8, ptr %2, i64 6
-  %i.bd = load i8, ptr %i.bc, align 1, !tbaa !28
+  %i.bd = load i8, ptr %i.bc, align 1, !tbaa !34
   %i.be = zext i8 %i.bb to i32
   %i.bf = xor i32 %i.e, %i.be
   %i.bg = xor i32 %i.bf, %i.i
   %i.bh = zext i8 %i.bd to i64
   %i.bi = getelementptr inbounds nuw [4 x i8], ptr %i.m, i64 %i.bh
-  %i.bj = load i32, ptr %i.bi, align 4, !tbaa !11
+  %i.bj = load i32, ptr %i.bi, align 4, !tbaa !14
   %i.bk = add i32 %i.bg, %i.u
   %i.bl = add i32 %i.bk, %i.bj
   %i.bm = getelementptr inbounds nuw i8, ptr %4, i64 128 ; 2 uses
-  %i.bn = load i64, ptr %i.bm, align 8, !tbaa !14 ; 2 uses
+  %i.bn = load i64, ptr %i.bm, align 8, !tbaa !17 ; 2 uses
   %i.bo = add i64 %i.bn, 1
-  store i64 %i.bo, ptr %i.bm, align 8, !tbaa !14
+  store i64 %i.bo, ptr %i.bm, align 8, !tbaa !17
   %i.bp = getelementptr inbounds nuw [4 x i8], ptr %4, i64 %i.bn
-  store i32 %i.bl, ptr %i.bp, align 4, !tbaa !11
+  store i32 %i.bl, ptr %i.bp, align 4, !tbaa !14
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -208,9 +208,9 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define dso_local noundef zeroext i1 @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm16requires_refreshERKNS_10DirtyPieceENS_5ColorE(ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(7) %0, i8 noundef zeroext %1) local_unnamed_addr #3 align 2 {
+define dso_local noundef zeroext i1 @_ZN9Stockfish4Eval4NNUE8Features11HalfKAv2_hm16requires_refreshERKNS_10DirtyPieceENS_5ColorE(ptr nofree noundef nonnull readonly align 1 captures(none) dereferenceable(7) %0, i8 noundef zeroext %1) local_unnamed_addr #3 align 2 !guid !35 {
 bb.a:
-  %i.a = load i8, ptr %0, align 1, !tbaa !18
+  %i.a = load i8, ptr %0, align 1, !tbaa !21
   %i.b = shl i8 %1, 3
   %i.c = or disjoint i8 %i.b, 6
   %i.d = icmp eq i8 %i.a, %i.c
@@ -241,22 +241,29 @@ attributes #4 = { nocallback nofree nosync nounwind speculatable willreturn memo
 !8 = !{!"int", !7, i64 0}
 !9 = !{!"__libc_errno", !8, i64 0}
 !10 = !{!9, !8, i64 0}
-!11 = !{!8, !8, i64 0}
-!12 = !{!"long", !7, i64 0}
-!13 = !{!"_ZTSN9Stockfish9ValueListIjLm32EEE", !7, i64 0, !12, i64 128}
-!14 = !{!13, !12, i64 128}
-!15 = !{!"_ZTSN9Stockfish5PieceE", !7, i64 0}
-!16 = !{!"_ZTSN9Stockfish6SquareE", !7, i64 0}
-!17 = !{!"_ZTSN9Stockfish10DirtyPieceE", !15, i64 0, !16, i64 1, !16, i64 2, !16, i64 3, !16, i64 4, !15, i64 5, !15, i64 6}
-!18 = !{!17, !15, i64 0}
-!19 = distinct !{!19, !22}
-!20 = !{!12, !12, i64 0}
-!21 = !{!15, !15, i64 0}
-!22 = !{!"llvm.loop.mustprogress"}
-!23 = !{!17, !16, i64 1}
-!24 = !{!17, !16, i64 2}
-!25 = !{!17, !16, i64 3}
-!26 = !{!17, !15, i64 5}
-!27 = !{!17, !16, i64 4}
-!28 = !{!17, !15, i64 6}
+!11 = !{i64 7379293094291948833}
+!12 = !{i64 5879509255929289753}
+!13 = !{i64 7635758984215824012}
+!14 = !{!8, !8, i64 0}
+!15 = !{!"long", !7, i64 0}
+!16 = !{!"_ZTSN9Stockfish9ValueListIjLm32EEE", !7, i64 0, !15, i64 128}
+!17 = !{!16, !15, i64 128}
+!18 = !{!"_ZTSN9Stockfish5PieceE", !7, i64 0}
+!19 = !{!"_ZTSN9Stockfish6SquareE", !7, i64 0}
+!20 = !{!"_ZTSN9Stockfish10DirtyPieceE", !18, i64 0, !19, i64 1, !19, i64 2, !19, i64 3, !19, i64 4, !18, i64 5, !18, i64 6}
+!21 = !{!20, !18, i64 0}
+!22 = !{i64 -5619373263200215957}
+!23 = distinct !{!23, !27}
+!24 = !{i64 1017439812089974476}
+!25 = !{!15, !15, i64 0}
+!26 = !{!18, !18, i64 0}
+!27 = !{!"llvm.loop.mustprogress"}
+!28 = !{i64 5489298582843295240}
+!29 = !{!20, !19, i64 1}
+!30 = !{!20, !19, i64 2}
+!31 = !{!20, !19, i64 3}
+!32 = !{!20, !18, i64 5}
+!33 = !{!20, !19, i64 4}
+!34 = !{!20, !18, i64 6}
+!35 = !{i64 1265703810083941064}
 end_hunk_0

@@ -5,58 +5,58 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
-@0 = private unnamed_addr constant [91 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/std/src/io/error/repr_bitpacked.rs\00", align 1
-@1 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"Z\00\00\00\00\00\00\00\11\01\00\00\1A\00\00\00" }>, align 8
-@2 = private unnamed_addr constant [8 x i8] c"fd != -1", align 1
-@3 = private unnamed_addr constant [77 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/std/src/os/fd/net.rs\00", align 1
-@4 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @3, [16 x i8] c"L\00\00\00\00\00\00\00!\00\00\00\01\00\00\00" }>, align 8
-@5 = private unnamed_addr constant [28 x i8] c"assertion failed: min <= max", align 1
-@6 = private unnamed_addr constant [72 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/core/src/cmp.rs\00", align 1
-@7 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @6, [16 x i8] c"G\00\00\00\00\00\00\00D\04\00\00\09\00\00\00" }>, align 8
-@8 = private unnamed_addr constant [84 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/core/src/str/validations.rs\00", align 1
-@9 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @8, [16 x i8] c"S\00\00\00\00\00\00\000\00\00\00$\00\00\00" }>, align 8
-@10 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @8, [16 x i8] c"S\00\00\00\00\00\00\007\00\00\00(\00\00\00" }>, align 8
-@11 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @8, [16 x i8] c"S\00\00\00\00\00\00\00?\00\00\00,\00\00\00" }>, align 8
-@12 = private unnamed_addr constant [199 x i8] c"unsafe precondition(s) violated: hint::unreachable_unchecked must never be reached\0A\0AThis indicates a bug in the program. This Undefined Behavior check is optional, and cannot be relied on for safety.", align 1
-@13 = private unnamed_addr constant [25 x i8] c"overflow in Duration::new", align 1
-@14 = private unnamed_addr constant [73 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/core/src/time.rs\00", align 1
-@15 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @14, [16 x i8] c"H\00\00\00\00\00\00\00\C9\00\00\00\12\00\00\00" }>, align 8
-@16 = private unnamed_addr constant [35 x i8] c"overflow when subtracting durations", align 1
-@17 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @14, [16 x i8] c"H\00\00\00\00\00\00\00\8D\04\00\00\1F\00\00\00" }>, align 8
-@18 = private unnamed_addr constant [7 x i8] c"SockRef", align 1
-@19 = private unnamed_addr constant [3 x i8] c"raw", align 1
-@20 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\04\00\00\00\00\00\00\00\04\00\00\00\00\00\00\00", ptr @"_ZN4core3fmt3num50_$LT$impl$u20$core..fmt..Debug$u20$for$u20$i32$GT$3fmt17h04579640a6d12344E" }>, align 8
-@21 = private unnamed_addr constant [10 x i8] c"local_addr", align 1
-@22 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\90\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @"_ZN66_$LT$core..option..Option$LT$T$GT$$u20$as$u20$core..fmt..Debug$GT$3fmt17h747890f6cd353507E" }>, align 8
-@23 = private unnamed_addr constant [9 x i8] c"peer_addr", align 1
-@24 = private unnamed_addr constant [4 x i8] c"None", align 1
-@25 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @"_ZN42_$LT$$RF$T$u20$as$u20$core..fmt..Debug$GT$3fmt17h09866a54e23a2266E" }>, align 8
-@26 = private unnamed_addr constant [4 x i8] c"Some", align 1
-@27 = private unnamed_addr constant [86 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/std/src/os/unix/net/stream.rs\00", align 1
-@28 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @27, [16 x i8] c"U\00\00\00\00\00\00\00\BD\02\00\00=\00\00\00" }>, align 8
-@29 = private unnamed_addr constant [75 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/alloc/src/slice.rs\00", align 1
-@30 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @29, [16 x i8] c"J\00\00\00\00\00\00\00\BD\01\00\00\1D\00\00\00" }>, align 8
-@31 = private unnamed_addr constant [88 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/std/src/os/unix/net/datagram.rs\00", align 1
-@32 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @31, [16 x i8] c"W\00\00\00\00\00\00\00\D1\03\00\00?\00\00\00" }>, align 8
-@33 = private unnamed_addr constant [88 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/std/src/os/unix/net/listener.rs\00", align 1
-@34 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @33, [16 x i8] c"W\00\00\00\00\00\00\00C\01\00\00?\00\00\00" }>, align 8
+@0 = private unnamed_addr constant [91 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/std/src/io/error/repr_bitpacked.rs\00", align 1, !guid !3
+@1 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"Z\00\00\00\00\00\00\00\11\01\00\00\1A\00\00\00" }>, align 8, !guid !3
+@2 = private unnamed_addr constant [8 x i8] c"fd != -1", align 1, !guid !3
+@3 = private unnamed_addr constant [77 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/std/src/os/fd/net.rs\00", align 1, !guid !3
+@4 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @3, [16 x i8] c"L\00\00\00\00\00\00\00!\00\00\00\01\00\00\00" }>, align 8, !guid !3
+@5 = private unnamed_addr constant [28 x i8] c"assertion failed: min <= max", align 1, !guid !3
+@6 = private unnamed_addr constant [72 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/core/src/cmp.rs\00", align 1, !guid !3
+@7 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @6, [16 x i8] c"G\00\00\00\00\00\00\00D\04\00\00\09\00\00\00" }>, align 8, !guid !3
+@8 = private unnamed_addr constant [84 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/core/src/str/validations.rs\00", align 1, !guid !3
+@9 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @8, [16 x i8] c"S\00\00\00\00\00\00\000\00\00\00$\00\00\00" }>, align 8, !guid !3
+@10 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @8, [16 x i8] c"S\00\00\00\00\00\00\007\00\00\00(\00\00\00" }>, align 8, !guid !3
+@11 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @8, [16 x i8] c"S\00\00\00\00\00\00\00?\00\00\00,\00\00\00" }>, align 8, !guid !3
+@12 = private unnamed_addr constant [199 x i8] c"unsafe precondition(s) violated: hint::unreachable_unchecked must never be reached\0A\0AThis indicates a bug in the program. This Undefined Behavior check is optional, and cannot be relied on for safety.", align 1, !guid !3
+@13 = private unnamed_addr constant [25 x i8] c"overflow in Duration::new", align 1, !guid !3
+@14 = private unnamed_addr constant [73 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/core/src/time.rs\00", align 1, !guid !3
+@15 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @14, [16 x i8] c"H\00\00\00\00\00\00\00\C9\00\00\00\12\00\00\00" }>, align 8, !guid !3
+@16 = private unnamed_addr constant [35 x i8] c"overflow when subtracting durations", align 1, !guid !3
+@17 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @14, [16 x i8] c"H\00\00\00\00\00\00\00\8D\04\00\00\1F\00\00\00" }>, align 8, !guid !3
+@18 = private unnamed_addr constant [7 x i8] c"SockRef", align 1, !guid !3
+@19 = private unnamed_addr constant [3 x i8] c"raw", align 1, !guid !3
+@20 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\04\00\00\00\00\00\00\00\04\00\00\00\00\00\00\00", ptr @"_ZN4core3fmt3num50_$LT$impl$u20$core..fmt..Debug$u20$for$u20$i32$GT$3fmt17h04579640a6d12344E" }>, align 8, !guid !3
+@21 = private unnamed_addr constant [10 x i8] c"local_addr", align 1, !guid !3
+@22 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\90\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @"_ZN66_$LT$core..option..Option$LT$T$GT$$u20$as$u20$core..fmt..Debug$GT$3fmt17h747890f6cd353507E" }>, align 8, !guid !3
+@23 = private unnamed_addr constant [9 x i8] c"peer_addr", align 1, !guid !3
+@24 = private unnamed_addr constant [4 x i8] c"None", align 1, !guid !3
+@25 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @"_ZN42_$LT$$RF$T$u20$as$u20$core..fmt..Debug$GT$3fmt17h09866a54e23a2266E" }>, align 8, !guid !3
+@26 = private unnamed_addr constant [4 x i8] c"Some", align 1, !guid !3
+@27 = private unnamed_addr constant [86 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/std/src/os/unix/net/stream.rs\00", align 1, !guid !3
+@28 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @27, [16 x i8] c"U\00\00\00\00\00\00\00\BD\02\00\00=\00\00\00" }>, align 8, !guid !3
+@29 = private unnamed_addr constant [75 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/alloc/src/slice.rs\00", align 1, !guid !3
+@30 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @29, [16 x i8] c"J\00\00\00\00\00\00\00\BD\01\00\00\1D\00\00\00" }>, align 8, !guid !3
+@31 = private unnamed_addr constant [88 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/std/src/os/unix/net/datagram.rs\00", align 1, !guid !3
+@32 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @31, [16 x i8] c"W\00\00\00\00\00\00\00\D1\03\00\00?\00\00\00" }>, align 8, !guid !3
+@33 = private unnamed_addr constant [88 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/std/src/os/unix/net/listener.rs\00", align 1, !guid !3
+@34 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @33, [16 x i8] c"W\00\00\00\00\00\00\00C\01\00\00?\00\00\00" }>, align 8, !guid !3
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @"_ZN100_$LT$core..net..ip_addr..Ipv6Addr$u20$as$u20$core..convert..From$LT$$u5b$u8$u3b$$u20$16$u5d$$GT$$GT$4from17h52ea82e657aa20e4E"(ptr nofree writeonly sret([16 x i8]) align 1 captures(none) initializes((0, 16)) %0, ptr nofree readonly align 1 captures(none) %1) unnamed_addr #0 {
+define hidden void @"_ZN100_$LT$core..net..ip_addr..Ipv6Addr$u20$as$u20$core..convert..From$LT$$u5b$u8$u3b$$u20$16$u5d$$GT$$GT$4from17h52ea82e657aa20e4E"(ptr nofree writeonly sret([16 x i8]) align 1 captures(none) initializes((0, 16)) %0, ptr nofree readonly align 1 captures(none) %1) unnamed_addr #0 !guid !4 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %0, ptr noundef nonnull align 1 dereferenceable(16) %1, i64 16, i1 false)
   ret void
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable
-define void @"_ZN145_$LT$core..option..Option$LT$T$GT$$u20$as$u20$core..ops..try_trait..FromResidual$LT$core..option..Option$LT$core..convert..Infallible$GT$$GT$$GT$13from_residual17hcb5f53fdb612f332E"(ptr nofree writeonly sret([120 x i8]) align 4 captures(none) initializes((0, 4)) %0) unnamed_addr #1 {
+define void @"_ZN145_$LT$core..option..Option$LT$T$GT$$u20$as$u20$core..ops..try_trait..FromResidual$LT$core..option..Option$LT$core..convert..Infallible$GT$$GT$$GT$13from_residual17hcb5f53fdb612f332E"(ptr nofree writeonly sret([120 x i8]) align 4 captures(none) initializes((0, 4)) %0) unnamed_addr #1 !guid !5 {
 bb.a:
   store i32 0, ptr %0, align 4
   ret void
 }
 
 ; Function Attrs: inlinehint nounwind nonlazybind uwtable
-define void @_ZN3std2io5error14repr_bitpacked11decode_repr17h05600539e446acf4E(ptr nofree writeonly sret([16 x i8]) align 8 captures(none) %0, ptr %1) unnamed_addr #2 personality ptr @rust_eh_personality {
+define void @_ZN3std2io5error14repr_bitpacked11decode_repr17h05600539e446acf4E(ptr nofree writeonly sret([16 x i8]) align 8 captures(none) %0, ptr %1) unnamed_addr #2 personality ptr @rust_eh_personality !guid !6 {
 bb.a:
   %i.a = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.b = and i64 %i.a, 3
@@ -110,7 +110,7 @@ bb.h:                                             ; preds = %bb.b, %bb.d, %bb.f,
 }
 
 ; Function Attrs: inlinehint nounwind nonlazybind uwtable
-define void @_ZN3std2io5error14repr_bitpacked11decode_repr17hd7d8d711b037539dE(ptr nofree writeonly sret([16 x i8]) align 8 captures(none) %0, ptr %1) unnamed_addr #2 personality ptr @rust_eh_personality {
+define void @_ZN3std2io5error14repr_bitpacked11decode_repr17hd7d8d711b037539dE(ptr nofree writeonly sret([16 x i8]) align 8 captures(none) %0, ptr %1) unnamed_addr #2 personality ptr @rust_eh_personality !guid !7 {
 bb.a:
   %i.a = ptrtoint ptr %1 to i64                   ; 3 uses
   %i.b = and i64 %i.a, 3
@@ -164,13 +164,13 @@ bb.h:                                             ; preds = %bb.b, %bb.d, %bb.f,
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define align 8 ptr @"_ZN3std2io5error14repr_bitpacked4Repr4data28_$u7b$$u7b$closure$u7d$$u7d$17h796a30c59fe8dc17E"(ptr nofree readnone returned captures(ret: address, provenance) %0) unnamed_addr #3 {
+define align 8 ptr @"_ZN3std2io5error14repr_bitpacked4Repr4data28_$u7b$$u7b$closure$u7d$$u7d$17h796a30c59fe8dc17E"(ptr nofree readnone returned captures(ret: address, provenance) %0) unnamed_addr #3 !guid !8 {
 bb.a:
   ret ptr %0
 }
 
 ; Function Attrs: inlinehint nounwind nonlazybind uwtable
-define hidden { i32, i32 } @_ZN3std2io5error5Error12raw_os_error17h2ba1b28a00d868ceE(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #2 personality ptr @rust_eh_personality {
+define hidden { i32, i32 } @_ZN3std2io5error5Error12raw_os_error17h2ba1b28a00d868ceE(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #2 personality ptr @rust_eh_personality !guid !9 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8                ; 2 uses
   %i.b = ptrtoint ptr %i.a to i64                 ; 2 uses
@@ -207,7 +207,7 @@ _ZN3std2io5error14repr_bitpacked11decode_repr17hd7d8d711b037539dE.exit.thread: ;
 }
 
 ; Function Attrs: inlinehint nofree nosync nounwind nonlazybind memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define hidden nonnull ptr @_ZN3std2io5error5Error13last_os_error17hfb456353084bdedeE() unnamed_addr #4 {
+define hidden nonnull ptr @_ZN3std2io5error5Error13last_os_error17hfb456353084bdedeE() unnamed_addr #4 !guid !10 {
 bb.a:
   %i.a = tail call ptr @__errno_location() #17
   %i.b = load i32, ptr %i.a, align 4
@@ -219,7 +219,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden nonnull ptr @_ZN3std2io5error5Error17from_raw_os_error17h0bb83ccdae1b136eE(i32 %0) unnamed_addr #3 {
+define hidden nonnull ptr @_ZN3std2io5error5Error17from_raw_os_error17h0bb83ccdae1b136eE(i32 %0) unnamed_addr #3 !guid !11 {
 bb.a:
   %i.a = sext i32 %0 to i64
   %i.b = shl nsw i64 %i.a, 32
@@ -229,7 +229,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden i8 @_ZN3std2io5error5Error4kind17hbfdcafd51671ea57E(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #5 personality ptr @rust_eh_personality {
+define hidden i8 @_ZN3std2io5error5Error4kind17hbfdcafd51671ea57E(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #5 personality ptr @rust_eh_personality !guid !12 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8                ; 4 uses
   %i.b = ptrtoint ptr %i.a to i64                 ; 3 uses
@@ -279,13 +279,13 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.e,
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden i32 @"_ZN3std2os2fd3net82_$LT$impl$u20$std..os..fd..raw..IntoRawFd$u20$for$u20$std..net..udp..UdpSocket$GT$11into_raw_fd17ha77bba827c5e97a9E"(i32 returned %0) unnamed_addr #3 {
+define hidden i32 @"_ZN3std2os2fd3net82_$LT$impl$u20$std..os..fd..raw..IntoRawFd$u20$for$u20$std..net..udp..UdpSocket$GT$11into_raw_fd17ha77bba827c5e97a9E"(i32 returned %0) unnamed_addr #3 !guid !13 {
 bb.a:
   ret i32 %0
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @_ZN3std2os4unix3net4addr10SocketAddr13from_pathname17hbdbd07ac583ea36dE(ptr nofree writeonly sret([120 x i8]) align 8 captures(none) initializes((0, 4), (8, 16)) %0, ptr align 1 %1, i64 %2) unnamed_addr #6 personality ptr @rust_eh_personality {
+define void @_ZN3std2os4unix3net4addr10SocketAddr13from_pathname17hbdbd07ac583ea36dE(ptr nofree writeonly sret([120 x i8]) align 8 captures(none) initializes((0, 4), (8, 16)) %0, ptr align 1 %1, i64 %2) unnamed_addr #6 personality ptr @rust_eh_personality !guid !14 {
 bb.a:
   %i.a = alloca [120 x i8], align 8               ; 5 uses
   %i.b = alloca [16 x i8], align 8                ; 3 uses
@@ -324,26 +324,26 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden void @_ZN3std3sys2fs4unix23debug_assert_fd_is_open17h0a475e148756e58dE(i32 %0) unnamed_addr #3 {
+define hidden void @_ZN3std3sys2fs4unix23debug_assert_fd_is_open17h0a475e148756e58dE(i32 %0) unnamed_addr #3 !guid !15 {
 bb.a:
   ret void
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden zeroext i1 @"_ZN41_$LT$bool$u20$as$u20$core..fmt..Debug$GT$3fmt17hb6c6cdc7c6769ba3E"(ptr align 1 %0, ptr align 8 %1) unnamed_addr #5 {
+define hidden zeroext i1 @"_ZN41_$LT$bool$u20$as$u20$core..fmt..Debug$GT$3fmt17hb6c6cdc7c6769ba3E"(ptr align 1 %0, ptr align 8 %1) unnamed_addr #5 !guid !16 {
 bb.a:
   %i.a = tail call zeroext i1 @"_ZN43_$LT$bool$u20$as$u20$core..fmt..Display$GT$3fmt17ha9a489cf5bee443fE"(ptr align 1 %0, ptr align 8 %1)
   ret i1 %i.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define noundef zeroext i1 @_ZN4core10intrinsics23is_val_statically_known17h967c867c1be34ad1E(i1 zeroext %0) unnamed_addr #7 {
+define noundef zeroext i1 @_ZN4core10intrinsics23is_val_statically_known17h967c867c1be34ad1E(i1 zeroext %0) unnamed_addr #7 !guid !17 {
 bb.a:
   ret i1 false
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
-define zeroext i1 @_ZN4core3cmp10PartialOrd2ge17he2840c1c4c933ac6E(ptr nofree readonly align 8 captures(none) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #8 {
+define zeroext i1 @_ZN4core3cmp10PartialOrd2ge17he2840c1c4c933ac6E(ptr nofree readonly align 8 captures(none) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #8 !guid !18 {
 bb.a:
   %i.a = load i64, ptr %0, align 8                ; 2 uses
   %i.b = load i64, ptr %1, align 8                ; 2 uses
@@ -368,35 +368,35 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define i64 @_ZN4core3cmp3Ord3max17hc00b886cd1a34a21E(i64 %0, i64 %1) unnamed_addr #3 personality ptr @rust_eh_personality {
+define i64 @_ZN4core3cmp3Ord3max17hc00b886cd1a34a21E(i64 %0, i64 %1) unnamed_addr #3 personality ptr @rust_eh_personality !guid !19 {
 bb.a:
   %.sroa.0.0.sroa.speculated = tail call i64 @llvm.umax.i64(i64 %1, i64 %0)
   ret i64 %.sroa.0.0.sroa.speculated
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define i64 @_ZN4core3cmp3Ord3min17h8befc36ab037aafaE(i64 %0, i64 %1) unnamed_addr #3 personality ptr @rust_eh_personality {
+define i64 @_ZN4core3cmp3Ord3min17h8befc36ab037aafaE(i64 %0, i64 %1) unnamed_addr #3 personality ptr @rust_eh_personality !guid !20 {
 bb.a:
   %.sroa.0.0.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %1, i64 %0)
   ret i64 %.sroa.0.0.sroa.speculated
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define i128 @_ZN4core3cmp3Ord3min17hdbc738a092d52484E(i128 %0, i128 %1) unnamed_addr #3 personality ptr @rust_eh_personality {
+define i128 @_ZN4core3cmp3Ord3min17hdbc738a092d52484E(i128 %0, i128 %1) unnamed_addr #3 personality ptr @rust_eh_personality !guid !21 {
 bb.a:
   %.sroa.0.0.sroa.speculated = tail call i128 @llvm.umin.i128(i128 %1, i128 %0)
   ret i128 %.sroa.0.0.sroa.speculated
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define i64 @_ZN4core3cmp3Ord3min17he3c2fba5ad8f4756E(i64 %0, i64 %1) unnamed_addr #3 personality ptr @rust_eh_personality {
+define i64 @_ZN4core3cmp3Ord3min17he3c2fba5ad8f4756E(i64 %0, i64 %1) unnamed_addr #3 personality ptr @rust_eh_personality !guid !22 {
 bb.a:
   %.sroa.0.0.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %1, i64 %0)
   ret i64 %.sroa.0.0.sroa.speculated
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define i128 @_ZN4core3cmp3Ord5clamp17h45c3447d2d95d554E(i128 %0, i128 %1, i128 %2) unnamed_addr #5 personality ptr @rust_eh_personality {
+define i128 @_ZN4core3cmp3Ord5clamp17h45c3447d2d95d554E(i128 %0, i128 %1, i128 %2) unnamed_addr #5 personality ptr @rust_eh_personality !guid !23 {
 bb.a:
   %.not = icmp ugt i128 %1, %2
   br i1 %.not, label %bb.b, label %bb.c
@@ -413,28 +413,28 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define i64 @_ZN4core3cmp3min17h45d1f18c856e997fE(i64 %0, i64 %1) unnamed_addr #3 personality ptr @rust_eh_personality {
+define i64 @_ZN4core3cmp3min17h45d1f18c856e997fE(i64 %0, i64 %1) unnamed_addr #3 personality ptr @rust_eh_personality !guid !24 {
 bb.a:
   %.sroa.0.0.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %0)
   ret i64 %.sroa.0.0.sroa.speculated.i
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define i64 @_ZN4core3cmp3min17h7ea8717f67e79f62E(i64 %0, i64 %1) unnamed_addr #3 personality ptr @rust_eh_personality {
+define i64 @_ZN4core3cmp3min17h7ea8717f67e79f62E(i64 %0, i64 %1) unnamed_addr #3 personality ptr @rust_eh_personality !guid !25 {
 bb.a:
   %.sroa.0.0.sroa.speculated.i = tail call i64 @llvm.umin.i64(i64 %1, i64 %0)
   ret i64 %.sroa.0.0.sroa.speculated.i
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define i128 @_ZN4core3cmp3min17hb2d7f1b899b54eacE(i128 %0, i128 %1) unnamed_addr #3 personality ptr @rust_eh_personality {
+define i128 @_ZN4core3cmp3min17hb2d7f1b899b54eacE(i128 %0, i128 %1) unnamed_addr #3 personality ptr @rust_eh_personality !guid !26 {
 bb.a:
   %.sroa.0.0.sroa.speculated.i = tail call i128 @llvm.umin.i128(i128 %1, i128 %0)
   ret i128 %.sroa.0.0.sroa.speculated.i
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define zeroext i1 @"_ZN4core3cmp5impls69_$LT$impl$u20$core..cmp..PartialEq$LT$$RF$B$GT$$u20$for$u20$$RF$A$GT$2eq17h516a2e6ce30523c7E"(ptr nofree readonly align 8 captures(none) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #5 {
+define zeroext i1 @"_ZN4core3cmp5impls69_$LT$impl$u20$core..cmp..PartialEq$LT$$RF$B$GT$$u20$for$u20$$RF$A$GT$2eq17h516a2e6ce30523c7E"(ptr nofree readonly align 8 captures(none) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #5 !guid !27 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -447,7 +447,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable
-define void @"_ZN4core3fmt2rt38_$LT$impl$u20$core..fmt..Arguments$GT$6new_v117h6201d5bdb75e94b1E"(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 40)) %0, ptr align 8 %1, ptr align 8 %2) unnamed_addr #1 {
+define void @"_ZN4core3fmt2rt38_$LT$impl$u20$core..fmt..Arguments$GT$6new_v117h6201d5bdb75e94b1E"(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 40)) %0, ptr align 8 %1, ptr align 8 %2) unnamed_addr #1 !guid !28 {
 bb.a:
   store ptr %1, ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -462,7 +462,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden zeroext i1 @_ZN4core3fmt9Formatter9write_fmt17h28570bb30db51d2cE(ptr nofree readonly align 8 captures(none) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #5 {
+define hidden zeroext i1 @_ZN4core3fmt9Formatter9write_fmt17h28570bb30db51d2cE(ptr nofree readonly align 8 captures(none) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #5 !guid !29 {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -474,13 +474,13 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden align 1 ptr @_ZN4core3net11socket_addr12SocketAddrV42ip17hba40fcbf8ea9ff14E(ptr nofree readnone returned align 2 captures(ret: address, provenance) %0) unnamed_addr #3 {
+define hidden align 1 ptr @_ZN4core3net11socket_addr12SocketAddrV42ip17hba40fcbf8ea9ff14E(ptr nofree readnone returned align 2 captures(ret: address, provenance) %0) unnamed_addr #3 !guid !30 {
 bb.a:
   ret ptr %0
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden i48 @_ZN4core3net11socket_addr12SocketAddrV43new17he06cf2e0d2f4770cE(i32 %0, i16 %1) unnamed_addr #3 {
+define hidden i48 @_ZN4core3net11socket_addr12SocketAddrV43new17he06cf2e0d2f4770cE(i32 %0, i16 %1) unnamed_addr #3 !guid !31 {
 bb.a:
   %.sroa.2.0.insert.ext = zext i16 %1 to i48
   %.sroa.2.0.insert.shift = shl nuw i48 %.sroa.2.0.insert.ext, 32
@@ -490,7 +490,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
-define hidden i16 @_ZN4core3net11socket_addr12SocketAddrV44port17h4fc15a1f77444172E(ptr nofree readonly align 2 captures(none) %0) unnamed_addr #8 {
+define hidden i16 @_ZN4core3net11socket_addr12SocketAddrV44port17h4fc15a1f77444172E(ptr nofree readonly align 2 captures(none) %0) unnamed_addr #8 !guid !32 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.b = load i16, ptr %i.a, align 2
@@ -498,13 +498,13 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden align 1 ptr @_ZN4core3net11socket_addr12SocketAddrV62ip17h8a79c49d21b40cc7E(ptr nofree readnone returned align 4 captures(ret: address, provenance) %0) unnamed_addr #3 {
+define hidden align 1 ptr @_ZN4core3net11socket_addr12SocketAddrV62ip17h8a79c49d21b40cc7E(ptr nofree readnone returned align 4 captures(ret: address, provenance) %0) unnamed_addr #3 !guid !33 {
 bb.a:
   ret ptr %0
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_ZN4core3net11socket_addr12SocketAddrV63new17h446beb7dd9cc3614E(ptr nofree writeonly sret([28 x i8]) align 4 captures(none) initializes((0, 26)) %0, ptr nofree readonly align 1 captures(none) %1, i16 %2, i32 %3, i32 %4) unnamed_addr #0 {
+define hidden void @_ZN4core3net11socket_addr12SocketAddrV63new17h446beb7dd9cc3614E(ptr nofree writeonly sret([28 x i8]) align 4 captures(none) initializes((0, 26)) %0, ptr nofree readonly align 1 captures(none) %1, i16 %2, i32 %3, i32 %4) unnamed_addr #0 !guid !34 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %0, ptr noundef nonnull align 1 dereferenceable(16) %1, i64 16, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -517,7 +517,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
-define hidden i16 @_ZN4core3net11socket_addr12SocketAddrV64port17h7fa6c7dee0c0a7ccE(ptr nofree readonly align 4 captures(none) %0) unnamed_addr #8 {
+define hidden i16 @_ZN4core3net11socket_addr12SocketAddrV64port17h7fa6c7dee0c0a7ccE(ptr nofree readonly align 4 captures(none) %0) unnamed_addr #8 !guid !35 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.b = load i16, ptr %i.a, align 4
@@ -525,7 +525,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
-define hidden i32 @_ZN4core3net11socket_addr12SocketAddrV68flowinfo17h384a8cc1a040fee8E(ptr nofree readonly align 4 captures(none) %0) unnamed_addr #8 {
+define hidden i32 @_ZN4core3net11socket_addr12SocketAddrV68flowinfo17h384a8cc1a040fee8E(ptr nofree readonly align 4 captures(none) %0) unnamed_addr #8 !guid !36 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i32, ptr %i.a, align 4
@@ -533,7 +533,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
-define hidden i32 @_ZN4core3net11socket_addr12SocketAddrV68scope_id17hcc7e58ce57800db4E(ptr nofree readonly align 4 captures(none) %0) unnamed_addr #8 {
+define hidden i32 @_ZN4core3net11socket_addr12SocketAddrV68scope_id17hcc7e58ce57800db4E(ptr nofree readonly align 4 captures(none) %0) unnamed_addr #8 !guid !37 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 20
   %i.b = load i32, ptr %i.a, align 4
@@ -541,33 +541,33 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
-define hidden i32 @_ZN4core3net7ip_addr8Ipv4Addr6octets17h4e30df8bc066ccc7E(ptr nofree readonly align 1 captures(none) %0) unnamed_addr #8 {
+define hidden i32 @_ZN4core3net7ip_addr8Ipv4Addr6octets17h4e30df8bc066ccc7E(ptr nofree readonly align 1 captures(none) %0) unnamed_addr #8 !guid !38 {
 bb.a:
   %.sroa.0.0.copyload = load i32, ptr %0, align 1
   ret i32 %.sroa.0.0.copyload
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_ZN4core3net7ip_addr8Ipv6Addr6octets17h4fc294c95e66b9aeE(ptr nofree writeonly sret([16 x i8]) align 1 captures(none) initializes((0, 16)) %0, ptr nofree readonly align 1 captures(none) %1) unnamed_addr #0 {
+define hidden void @_ZN4core3net7ip_addr8Ipv6Addr6octets17h4fc294c95e66b9aeE(ptr nofree writeonly sret([16 x i8]) align 1 captures(none) initializes((0, 16)) %0, ptr nofree readonly align 1 captures(none) %1) unnamed_addr #0 !guid !39 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(16) %0, ptr noundef nonnull align 1 dereferenceable(16) %1, i64 16, i1 false)
   ret void
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden i32 @"_ZN4core3num21_$LT$impl$u20$u32$GT$11to_ne_bytes17hdf377f93c8542ab6E"(i32 returned %0) unnamed_addr #3 {
+define hidden i32 @"_ZN4core3num21_$LT$impl$u20$u32$GT$11to_ne_bytes17hdf377f93c8542ab6E"(i32 returned %0) unnamed_addr #3 !guid !40 {
 bb.a:
   ret i32 %0
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden i32 @"_ZN4core3num21_$LT$impl$u20$u32$GT$13from_ne_bytes17h463f0e3c9bf83eddE"(i32 returned %0) unnamed_addr #3 {
+define hidden i32 @"_ZN4core3num21_$LT$impl$u20$u32$GT$13from_ne_bytes17h463f0e3c9bf83eddE"(i32 returned %0) unnamed_addr #3 !guid !41 {
 bb.a:
   ret i32 %0
 }
 
 ; Function Attrs: inlinehint nounwind nonlazybind uwtable
-define { i32, i32 } @_ZN4core3str11validations15next_code_point17ha1e55450b5bb6769E(ptr nofree align 8 captures(none) %0) unnamed_addr #2 {
+define { i32, i32 } @_ZN4core3str11validations15next_code_point17ha1e55450b5bb6769E(ptr nofree align 8 captures(none) %0) unnamed_addr #2 !guid !42 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8                ; 7 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -662,7 +662,7 @@ bb.i:                                             ; preds = %bb.h
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
-define hidden { ptr, i64 } @"_ZN4core3str6traits112_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeFrom$LT$usize$GT$$GT$3get17h5354088b4b2b891fE"(i64 %0, ptr align 1 %1, i64 %2) unnamed_addr #8 {
+define hidden { ptr, i64 } @"_ZN4core3str6traits112_$LT$impl$u20$core..slice..index..SliceIndex$LT$str$GT$$u20$for$u20$core..ops..range..RangeFrom$LT$usize$GT$$GT$3get17h5354088b4b2b891fE"(i64 %0, ptr align 1 %1, i64 %2) unnamed_addr #8 !guid !43 {
 bb.a:
   %i.a = icmp eq i64 %0, 0
   br i1 %i.a, label %bb.e, label %bb.b
@@ -695,7 +695,7 @@ bb.e:                                             ; preds = %.split, %bb.c, %bb.
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define { ptr, i64 } @"_ZN4core4bool22_$LT$impl$u20$bool$GT$4then17h0a43b19bca4a6e9aE"(i1 zeroext %0, ptr align 8 %1, ptr align 2 %2) unnamed_addr #5 {
+define { ptr, i64 } @"_ZN4core4bool22_$LT$impl$u20$bool$GT$4then17h0a43b19bca4a6e9aE"(i1 zeroext %0, ptr align 8 %1, ptr align 2 %2) unnamed_addr #5 !guid !44 {
 bb.a:
   br i1 %0, label %bb.b, label %bb.c
 
@@ -714,7 +714,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define align 2 ptr @"_ZN4core4bool22_$LT$impl$u20$bool$GT$4then17h7be0b8deb0cc0302E"(i1 zeroext %0, ptr align 8 %1) unnamed_addr #5 {
+define align 2 ptr @"_ZN4core4bool22_$LT$impl$u20$bool$GT$4then17h7be0b8deb0cc0302E"(i1 zeroext %0, ptr align 8 %1) unnamed_addr #5 !guid !45 {
 bb.a:
   br i1 %0, label %bb.b, label %bb.c
 
@@ -728,7 +728,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define { ptr, i64 } @"_ZN4core4bool22_$LT$impl$u20$bool$GT$4then17hcc6a473165370e55E"(i1 zeroext %0, ptr align 8 %1, ptr align 2 %2) unnamed_addr #5 {
+define { ptr, i64 } @"_ZN4core4bool22_$LT$impl$u20$bool$GT$4then17hcc6a473165370e55E"(i1 zeroext %0, ptr align 8 %1, ptr align 2 %2) unnamed_addr #5 !guid !46 {
 bb.a:
   br i1 %0, label %bb.b, label %bb.c
 
@@ -747,7 +747,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: cold inlinehint noreturn nounwind nonlazybind uwtable
-define internal fastcc void @_ZN4core4hint21unreachable_unchecked18precondition_check17h523c0ab19bddac2fE(ptr align 8 %0) unnamed_addr #9 {
+define internal fastcc void @_ZN4core4hint21unreachable_unchecked18precondition_check17h523c0ab19bddac2fE(ptr align 8 %0) unnamed_addr #9 !guid !47 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = alloca [48 x i8], align 8                ; 6 uses
@@ -768,7 +768,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { i64, i32 } @_ZN4core4time8Duration11from_millis17h9cbbaf85adef1a88E(i64 %0) unnamed_addr #3 {
+define hidden { i64, i32 } @_ZN4core4time8Duration11from_millis17h9cbbaf85adef1a88E(i64 %0) unnamed_addr #3 !guid !48 {
 bb.a:
   %i.a = udiv i64 %0, 1000
   %i.b = urem i64 %0, 1000
@@ -780,7 +780,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
-define hidden range(i32 0, 4294968) i32 @_ZN4core4time8Duration13subsec_micros17hec24aa7538e699faE(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #8 {
+define hidden range(i32 0, 4294968) i32 @_ZN4core4time8Duration13subsec_micros17hec24aa7538e699faE(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #8 !guid !49 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i32, ptr %i.a, align 8
@@ -789,7 +789,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden { i64, i32 } @_ZN4core4time8Duration3new17hf79334f7c042251cE(i64 %0, i32 %1) unnamed_addr #5 {
+define hidden { i64, i32 } @_ZN4core4time8Duration3new17hf79334f7c042251cE(i64 %0, i32 %1) unnamed_addr #5 !guid !50 {
 bb.a:
   %i.a = icmp ult i32 %1, 1000000000
   br i1 %i.a, label %bb.d, label %bb.b
@@ -815,14 +815,14 @@ bb.d:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
-define hidden i64 @_ZN4core4time8Duration7as_secs17hdd4d56d886b136d5E(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #8 {
+define hidden i64 @_ZN4core4time8Duration7as_secs17hdd4d56d886b136d5E(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #8 !guid !51 {
 bb.a:
   %i.a = load i64, ptr %0, align 8
   ret i64 %i.a
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
-define hidden range(i128 0, 18446744073709551619295) i128 @_ZN4core4time8Duration9as_millis17he38d2b054d1fef54E(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #8 {
+define hidden range(i128 0, 18446744073709551619295) i128 @_ZN4core4time8Duration9as_millis17he38d2b054d1fef54E(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #8 !guid !52 {
 bb.a:
   %i.a = load i64, ptr %0, align 8
   %i.b = zext i64 %i.a to i128
@@ -836,7 +836,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { i64, i32 } @_ZN4core4time8Duration9from_secs17h5c9ce1e4e4f6a9bbE(i64 %0) unnamed_addr #3 {
+define hidden { i64, i32 } @_ZN4core4time8Duration9from_secs17h5c9ce1e4e4f6a9bbE(i64 %0) unnamed_addr #3 !guid !53 {
 bb.a:
   %i.a = insertvalue { i64, i32 } poison, i64 %0, 0
   %i.b = insertvalue { i64, i32 } %i.a, i32 0, 1
@@ -844,7 +844,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define align 1 ptr @"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$5first17h4a0a0bd4afbff8c3E"(ptr nofree readnone align 1 captures(ret: address, provenance) %0, i64 %1) unnamed_addr #3 {
+define align 1 ptr @"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$5first17h4a0a0bd4afbff8c3E"(ptr nofree readnone align 1 captures(ret: address, provenance) %0, i64 %1) unnamed_addr #3 !guid !54 {
 bb.a:
   %.not = icmp eq i64 %1, 0
   %. = select i1 %.not, ptr null, ptr %0
@@ -852,7 +852,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_ZN4core5slice3raw14from_raw_parts17h53f1b78c11557109E(ptr %0, i64 %1, ptr nofree readnone align 8 captures(none) %2) unnamed_addr #3 {
+define { ptr, i64 } @_ZN4core5slice3raw14from_raw_parts17h53f1b78c11557109E(ptr %0, i64 %1, ptr nofree readnone align 8 captures(none) %2) unnamed_addr #3 !guid !55 {
 bb.a:
   %i.a = insertvalue { ptr, i64 } poison, ptr %0, 0
   %i.b = insertvalue { ptr, i64 } %i.a, i64 %1, 1
@@ -860,7 +860,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_ZN4core5slice3raw14from_raw_parts17h6624d0f0de25e6dcE(ptr %0, i64 %1, ptr nofree readnone align 8 captures(none) %2) unnamed_addr #3 {
+define { ptr, i64 } @_ZN4core5slice3raw14from_raw_parts17h6624d0f0de25e6dcE(ptr %0, i64 %1, ptr nofree readnone align 8 captures(none) %2) unnamed_addr #3 !guid !56 {
 bb.a:
   %i.a = insertvalue { ptr, i64 } poison, ptr %0, 0
   %i.b = insertvalue { ptr, i64 } %i.a, i64 %1, 1
@@ -868,7 +868,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @_ZN4core5slice3raw18from_raw_parts_mut17hf692ae50a317ed74E(ptr %0, i64 %1, ptr nofree readnone align 8 captures(none) %2) unnamed_addr #3 {
+define { ptr, i64 } @_ZN4core5slice3raw18from_raw_parts_mut17hf692ae50a317ed74E(ptr %0, i64 %1, ptr nofree readnone align 8 captures(none) %2) unnamed_addr #3 !guid !57 {
 bb.a:
   %i.a = insertvalue { ptr, i64 } poison, ptr %0, 0
   %i.b = insertvalue { ptr, i64 } %i.a, i64 %1, 1
@@ -876,14 +876,14 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define zeroext i1 @"_ZN4core6option15Option$LT$T$GT$17unwrap_or_default17h7889b8032fc3ba35E"(i8 %0) unnamed_addr #3 {
+define zeroext i1 @"_ZN4core6option15Option$LT$T$GT$17unwrap_or_default17h7889b8032fc3ba35E"(i8 %0) unnamed_addr #3 !guid !58 {
 bb.a:
   %spec.select = trunc i8 %0 to i1
   ret i1 %spec.select
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define range(i8 0, 3) i8 @"_ZN4core6option15Option$LT$T$GT$3map17ha5c505ce29ff2a80E"(ptr align 2 %0, ptr align 8 %1) unnamed_addr #5 {
+define range(i8 0, 3) i8 @"_ZN4core6option15Option$LT$T$GT$3map17ha5c505ce29ff2a80E"(ptr align 2 %0, ptr align 8 %1) unnamed_addr #5 !guid !59 {
 bb.a:
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.c, label %bb.b
@@ -899,7 +899,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define i32 @"_ZN4core6option15Option$LT$T$GT$6map_or17h0a995ba75bd49314E"(i32 %0, i32 %1) unnamed_addr #5 personality ptr @rust_eh_personality {
+define i32 @"_ZN4core6option15Option$LT$T$GT$6map_or17h0a995ba75bd49314E"(i32 %0, i32 %1) unnamed_addr #5 personality ptr @rust_eh_personality !guid !60 {
 bb.a:
   %.not = icmp eq i32 %0, 0
   br i1 %.not, label %bb.c, label %bb.b
@@ -914,7 +914,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define i32 @"_ZN4core6option15Option$LT$T$GT$6map_or17h2d877ea8b601012aE"(i32 %0, i32 %1, i32 %2) unnamed_addr #5 personality ptr @rust_eh_personality {
+define i32 @"_ZN4core6option15Option$LT$T$GT$6map_or17h2d877ea8b601012aE"(i32 %0, i32 %1, i32 %2) unnamed_addr #5 personality ptr @rust_eh_personality !guid !61 {
 bb.a:
   %i.a = trunc i32 %0 to i1
   br i1 %i.a, label %bb.b, label %bb.c
@@ -929,7 +929,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define i32 @"_ZN4core6option15Option$LT$T$GT$6map_or17hd510b640bd12027aE"(i32 %0, i32 %1, i32 %2) unnamed_addr #5 personality ptr @rust_eh_personality {
+define i32 @"_ZN4core6option15Option$LT$T$GT$6map_or17hd510b640bd12027aE"(i32 %0, i32 %1, i32 %2) unnamed_addr #5 personality ptr @rust_eh_personality !guid !62 {
 bb.a:
   %i.a = trunc i32 %0 to i1
   br i1 %i.a, label %bb.b, label %bb.c
@@ -944,7 +944,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define i32 @"_ZN4core6option15Option$LT$T$GT$6map_or17he7d4dd26887a61e4E"(i64 %0, i32 %1, i32 %2) unnamed_addr #5 personality ptr @rust_eh_personality {
+define i32 @"_ZN4core6option15Option$LT$T$GT$6map_or17he7d4dd26887a61e4E"(i64 %0, i32 %1, i32 %2) unnamed_addr #5 personality ptr @rust_eh_personality !guid !63 {
 bb.a:
   %.not = icmp eq i32 %1, 1000000000
   br i1 %.not, label %bb.c, label %bb.b
@@ -959,7 +959,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define { ptr, i64 } @"_ZN4core6option15Option$LT$T$GT$8and_then17h8be9c47550f87ea8E"(ptr align 2 %0, ptr align 8 %1) unnamed_addr #5 {
+define { ptr, i64 } @"_ZN4core6option15Option$LT$T$GT$8and_then17h8be9c47550f87ea8E"(ptr align 2 %0, ptr align 8 %1) unnamed_addr #5 !guid !64 {
 bb.a:
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.c, label %bb.b
@@ -979,7 +979,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define { ptr, i64 } @"_ZN4core6option15Option$LT$T$GT$8and_then17had9960789a0dd40aE"(ptr align 2 %0, ptr align 8 %1) unnamed_addr #5 {
+define { ptr, i64 } @"_ZN4core6option15Option$LT$T$GT$8and_then17had9960789a0dd40aE"(ptr align 2 %0, ptr align 8 %1) unnamed_addr #5 !guid !65 {
 bb.a:
   %.not = icmp eq ptr %0, null
   br i1 %.not, label %bb.c, label %bb.b
@@ -999,7 +999,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define nonnull ptr @"_ZN50_$LT$T$u20$as$u20$core..convert..Into$LT$U$GT$$GT$4into17h4359dffc19a55cccE"(i8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #3 {
+define nonnull ptr @"_ZN50_$LT$T$u20$as$u20$core..convert..Into$LT$U$GT$$GT$4into17h4359dffc19a55cccE"(i8 %0, ptr nofree readnone align 8 captures(none) %1) unnamed_addr #3 !guid !66 {
 bb.a:
   %i.a = zext i8 %0 to i64
   %i.b = shl nuw nsw i64 %i.a, 32
@@ -1009,21 +1009,21 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define void @"_ZN50_$LT$T$u20$as$u20$core..convert..Into$LT$U$GT$$GT$4into17h94cad9ffa75a543dE"(ptr sret([136 x i8]) align 8 %0, i48 %1, ptr nofree readnone align 8 captures(none) %2) unnamed_addr #5 {
+define void @"_ZN50_$LT$T$u20$as$u20$core..convert..Into$LT$U$GT$$GT$4into17h94cad9ffa75a543dE"(ptr sret([136 x i8]) align 8 %0, i48 %1, ptr nofree readnone align 8 captures(none) %2) unnamed_addr #5 !guid !67 {
 bb.a:
   tail call void @"_ZN111_$LT$socket2..sockaddr..SockAddr$u20$as$u20$core..convert..From$LT$core..net..socket_addr..SocketAddrV4$GT$$GT$4from17hd04c18b72f254cb3E"(ptr sret([136 x i8]) align 8 %0, i48 %1)
   ret void
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define void @"_ZN50_$LT$T$u20$as$u20$core..convert..Into$LT$U$GT$$GT$4into17hc7450498f9d22d33E"(ptr sret([136 x i8]) align 8 %0, ptr align 4 %1, ptr nofree readnone align 8 captures(none) %2) unnamed_addr #5 {
+define void @"_ZN50_$LT$T$u20$as$u20$core..convert..Into$LT$U$GT$$GT$4into17hc7450498f9d22d33E"(ptr sret([136 x i8]) align 8 %0, ptr align 4 %1, ptr nofree readnone align 8 captures(none) %2) unnamed_addr #5 !guid !68 {
 bb.a:
   tail call void @"_ZN111_$LT$socket2..sockaddr..SockAddr$u20$as$u20$core..convert..From$LT$core..net..socket_addr..SocketAddrV6$GT$$GT$4from17h94166250cea86e64E"(ptr sret([136 x i8]) align 8 %0, ptr align 4 %1)
   ret void
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define void @"_ZN50_$LT$T$u20$as$u20$core..convert..Into$LT$U$GT$$GT$4into17hef997416cab53326E"(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr nofree readonly align 1 captures(none) %1, i64 %2, ptr nofree readnone align 8 captures(none) %3) unnamed_addr #5 {
+define void @"_ZN50_$LT$T$u20$as$u20$core..convert..Into$LT$U$GT$$GT$4into17hef997416cab53326E"(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr nofree readonly align 1 captures(none) %1, i64 %2, ptr nofree readnone align 8 captures(none) %3) unnamed_addr #5 !guid !69 {
 bb.a:
   %i.a = tail call { i64, ptr } @"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hbd471b5e2d55a4f0E"(i64 %2, i64 1, i64 1, ptr nonnull align 8 @30) ; 2 uses
   %i.b = extractvalue { i64, ptr } %i.a, 0
@@ -1038,7 +1038,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define void @"_ZN5alloc5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$6to_vec17hd9fd864a1f242099E"(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr nofree readonly align 1 captures(none) %1, i64 %2) unnamed_addr #5 {
+define void @"_ZN5alloc5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$6to_vec17hd9fd864a1f242099E"(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr nofree readonly align 1 captures(none) %1, i64 %2) unnamed_addr #5 !guid !70 {
 bb.a:
   %i.a = tail call { i64, ptr } @"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hbd471b5e2d55a4f0E"(i64 %2, i64 1, i64 1, ptr nonnull align 8 @30) ; 2 uses
   %i.b = extractvalue { i64, ptr } %i.a, 0
@@ -1053,7 +1053,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden { i64, i32 } @"_ZN62_$LT$core..time..Duration$u20$as$u20$core..ops..arith..Sub$GT$3sub17ha172909ea40dc8bcE"(i64 %0, i32 %1, i64 %2, i32 %3) unnamed_addr #5 {
+define hidden { i64, i32 } @"_ZN62_$LT$core..time..Duration$u20$as$u20$core..ops..arith..Sub$GT$3sub17ha172909ea40dc8bcE"(i64 %0, i32 %1, i64 %2, i32 %3) unnamed_addr #5 !guid !71 {
 bb.a:
   %i.a = icmp ult i64 %0, %2
   br i1 %i.a, label %bb.i, label %bb.b
@@ -1104,7 +1104,7 @@ bb.i:                                             ; preds = %bb.a, %bb.c
 }
 
 ; Function Attrs: nonlazybind uwtable
-define zeroext i1 @"_ZN62_$LT$socket2..sockref..SockRef$u20$as$u20$core..fmt..Debug$GT$3fmt17hc05b07c5da158da1E"(ptr align 4 %0, ptr align 8 %1) unnamed_addr #6 {
+define zeroext i1 @"_ZN62_$LT$socket2..sockref..SockRef$u20$as$u20$core..fmt..Debug$GT$3fmt17hc05b07c5da158da1E"(ptr align 4 %0, ptr align 8 %1) unnamed_addr #6 !guid !72 {
 bb.a:
   %i.a = alloca [144 x i8], align 8               ; 2 uses
   %i.b = alloca [144 x i8], align 8               ; 2 uses
@@ -1127,7 +1127,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, ptr } @"_ZN63_$LT$I$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17hb1cb8ab69835f053E"(ptr %0, ptr %1) unnamed_addr #3 {
+define { ptr, ptr } @"_ZN63_$LT$I$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17hb1cb8ab69835f053E"(ptr %0, ptr %1) unnamed_addr #3 !guid !73 {
 bb.a:
   %i.a = insertvalue { ptr, ptr } poison, ptr %0, 0
   %i.b = insertvalue { ptr, ptr } %i.a, ptr %1, 1
@@ -1135,7 +1135,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nounwind nonlazybind uwtable
-define hidden void @"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$10deallocate17h7cec83b004107b2fE"(ptr nofree readnone align 1 captures(none) %0, ptr %1, i64 %2, i64 %3) unnamed_addr #2 {
+define hidden void @"_ZN63_$LT$alloc..alloc..Global$u20$as$u20$core..alloc..Allocator$GT$10deallocate17h7cec83b004107b2fE"(ptr nofree readnone align 1 captures(none) %0, ptr %1, i64 %2, i64 %3) unnamed_addr #2 !guid !74 {
 bb.a:
   %i.a = icmp eq i64 %3, 0
   br i1 %i.a, label %bb.b, label %bb.c
@@ -1149,7 +1149,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define zeroext i1 @"_ZN66_$LT$core..option..Option$LT$T$GT$$u20$as$u20$core..fmt..Debug$GT$3fmt17h747890f6cd353507E"(ptr align 8 %0, ptr align 8 %1) unnamed_addr #5 {
+define zeroext i1 @"_ZN66_$LT$core..option..Option$LT$T$GT$$u20$as$u20$core..fmt..Debug$GT$3fmt17h747890f6cd353507E"(ptr align 8 %0, ptr align 8 %1) unnamed_addr #5 !guid !75 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 2 uses
   %i.b = load i64, ptr %0, align 8
@@ -1172,7 +1172,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
-define hidden zeroext i1 @"_ZN66_$LT$std..io..error..ErrorKind$u20$as$u20$core..cmp..PartialEq$GT$2eq17hdc120447143bcfa4E"(ptr nofree readonly align 1 captures(none) %0, ptr nofree readonly align 1 captures(none) %1) unnamed_addr #8 {
+define hidden zeroext i1 @"_ZN66_$LT$std..io..error..ErrorKind$u20$as$u20$core..cmp..PartialEq$GT$2eq17hdc120447143bcfa4E"(ptr nofree readonly align 1 captures(none) %0, ptr nofree readonly align 1 captures(none) %1) unnamed_addr #8 !guid !76 {
 bb.a:
   %i.a = load i8, ptr %0, align 1
   %i.b = load i8, ptr %1, align 1
@@ -1181,13 +1181,13 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define align 4 ptr @"_ZN69_$LT$socket2..sockref..SockRef$u20$as$u20$core..ops..deref..Deref$GT$5deref17hef5990a41ad71aa2E"(ptr nofree readnone returned align 4 captures(ret: address, provenance) %0) unnamed_addr #7 {
+define align 4 ptr @"_ZN69_$LT$socket2..sockref..SockRef$u20$as$u20$core..ops..deref..Deref$GT$5deref17hef5990a41ad71aa2E"(ptr nofree readnone returned align 4 captures(ret: address, provenance) %0) unnamed_addr #7 !guid !77 {
 bb.a:
   ret ptr %0
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
-define zeroext i1 @"_ZN70_$LT$core..option..Option$LT$T$GT$$u20$as$u20$core..cmp..PartialEq$GT$2eq17hfc25f749a7d470e1E"(ptr nofree readonly align 4 captures(none) %0, ptr nofree readonly align 4 captures(none) %1) unnamed_addr #8 {
+define zeroext i1 @"_ZN70_$LT$core..option..Option$LT$T$GT$$u20$as$u20$core..cmp..PartialEq$GT$2eq17hfc25f749a7d470e1E"(ptr nofree readonly align 4 captures(none) %0, ptr nofree readonly align 4 captures(none) %1) unnamed_addr #8 !guid !78 {
 bb.a:
   %i.a = load i32, ptr %0, align 4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4
@@ -1216,7 +1216,7 @@ bb.e:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @"_ZN75_$LT$core..option..Option$LT$T$GT$$u20$as$u20$core..ops..try_trait..Try$GT$6branch17hbaa9f7514bcdf4e8E"(ptr align 1 %0, i64 %1) unnamed_addr #3 {
+define { ptr, i64 } @"_ZN75_$LT$core..option..Option$LT$T$GT$$u20$as$u20$core..ops..try_trait..Try$GT$6branch17hbaa9f7514bcdf4e8E"(ptr align 1 %0, i64 %1) unnamed_addr #3 !guid !79 {
 bb.a:
   %.not = icmp eq ptr %0, null
   %.5 = select i1 %.not, i64 undef, i64 %1
@@ -1226,7 +1226,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden void @"_ZN78_$LT$std..io..error..repr_bitpacked..Repr$u20$as$u20$core..ops..drop..Drop$GT$4drop17h0845cb8d4c079cdcE"(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #5 personality ptr @rust_eh_personality {
+define hidden void @"_ZN78_$LT$std..io..error..repr_bitpacked..Repr$u20$as$u20$core..ops..drop..Drop$GT$4drop17h0845cb8d4c079cdcE"(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #5 personality ptr @rust_eh_personality !guid !80 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 6 uses
   %i.b = load ptr, ptr %0, align 8                ; 4 uses
@@ -1283,13 +1283,13 @@ _ZN3std2io5error14repr_bitpacked11decode_repr17h05600539e446acf4E.exit: ; preds 
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define align 8 ptr @"_ZN78_$LT$std..io..error..repr_bitpacked..Repr$u20$as$u20$core..ops..drop..Drop$GT$4drop28_$u7b$$u7b$closure$u7d$$u7d$17h927c471c54052ca4E"(ptr nofree readnone returned captures(ret: address, provenance) %0) unnamed_addr #3 {
+define align 8 ptr @"_ZN78_$LT$std..io..error..repr_bitpacked..Repr$u20$as$u20$core..ops..drop..Drop$GT$4drop28_$u7b$$u7b$closure$u7d$$u7d$17h927c471c54052ca4E"(ptr nofree readnone returned captures(ret: address, provenance) %0) unnamed_addr #3 !guid !81 {
 bb.a:
   ret ptr %0
 }
 
 ; Function Attrs: nonlazybind uwtable
-define range(i32 0, -1) i32 @"_ZN7socket23sys119_$LT$impl$u20$core..convert..From$LT$socket2..socket..Socket$GT$$u20$for$u20$std..os..unix..net..stream..UnixStream$GT$4from17hdcf1c0a82cc5f766E"(i32 %0) unnamed_addr #6 {
+define range(i32 0, -1) i32 @"_ZN7socket23sys119_$LT$impl$u20$core..convert..From$LT$socket2..socket..Socket$GT$$u20$for$u20$std..os..unix..net..stream..UnixStream$GT$4from17hdcf1c0a82cc5f766E"(i32 %0) unnamed_addr #6 !guid !82 {
 bb.a:
   %i.a = tail call i32 @"_ZN7socket23sys81_$LT$impl$u20$std..os..fd..raw..IntoRawFd$u20$for$u20$socket2..socket..Socket$GT$11into_raw_fd17h754048157205fca3E"(i32 %0) ; 2 uses
   %.not.i = icmp eq i32 %i.a, -1
@@ -1304,7 +1304,7 @@ bb.b:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define range(i32 0, -1) i32 @"_ZN7socket23sys123_$LT$impl$u20$core..convert..From$LT$socket2..socket..Socket$GT$$u20$for$u20$std..os..unix..net..datagram..UnixDatagram$GT$4from17h8b30d289a645e4a6E"(i32 %0) unnamed_addr #6 {
+define range(i32 0, -1) i32 @"_ZN7socket23sys123_$LT$impl$u20$core..convert..From$LT$socket2..socket..Socket$GT$$u20$for$u20$std..os..unix..net..datagram..UnixDatagram$GT$4from17h8b30d289a645e4a6E"(i32 %0) unnamed_addr #6 !guid !83 {
 bb.a:
   %i.a = tail call i32 @"_ZN7socket23sys81_$LT$impl$u20$std..os..fd..raw..IntoRawFd$u20$for$u20$socket2..socket..Socket$GT$11into_raw_fd17h754048157205fca3E"(i32 %0) ; 2 uses
   %.not.i = icmp eq i32 %i.a, -1
@@ -1319,7 +1319,7 @@ bb.b:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define range(i32 0, -1) i32 @"_ZN7socket23sys123_$LT$impl$u20$core..convert..From$LT$socket2..socket..Socket$GT$$u20$for$u20$std..os..unix..net..listener..UnixListener$GT$4from17h29b832a09eb7a65eE"(i32 %0) unnamed_addr #6 {
+define range(i32 0, -1) i32 @"_ZN7socket23sys123_$LT$impl$u20$core..convert..From$LT$socket2..socket..Socket$GT$$u20$for$u20$std..os..unix..net..listener..UnixListener$GT$4from17h29b832a09eb7a65eE"(i32 %0) unnamed_addr #6 !guid !84 {
 bb.a:
   %i.a = tail call i32 @"_ZN7socket23sys81_$LT$impl$u20$std..os..fd..raw..IntoRawFd$u20$for$u20$socket2..socket..Socket$GT$11into_raw_fd17h754048157205fca3E"(i32 %0) ; 2 uses
   %.not.i = icmp eq i32 %i.a, -1
@@ -1334,7 +1334,7 @@ bb.b:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define range(i32 0, -1) i32 @"_ZN7socket26socket105_$LT$impl$u20$core..convert..From$LT$socket2..socket..Socket$GT$$u20$for$u20$std..net..udp..UdpSocket$GT$4from17h1630f88dabc2d3c8E"(i32 %0) unnamed_addr #6 {
+define range(i32 0, -1) i32 @"_ZN7socket26socket105_$LT$impl$u20$core..convert..From$LT$socket2..socket..Socket$GT$$u20$for$u20$std..net..udp..UdpSocket$GT$4from17h1630f88dabc2d3c8E"(i32 %0) unnamed_addr #6 !guid !85 {
 bb.a:
   %i.a = tail call i32 @"_ZN7socket23sys81_$LT$impl$u20$std..os..fd..raw..IntoRawFd$u20$for$u20$socket2..socket..Socket$GT$11into_raw_fd17h754048157205fca3E"(i32 %0) ; 2 uses
   %.not.i = icmp eq i32 %i.a, -1
@@ -1349,7 +1349,7 @@ bb.b:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { ptr, i64 } @"_ZN80_$LT$std..ffi..os_str..OsStr$u20$as$u20$std..os..unix..ffi..os_str..OsStrExt$GT$10from_bytes17h2d277a53ee266deeE"(ptr align 1 %0, i64 %1) unnamed_addr #3 {
+define hidden { ptr, i64 } @"_ZN80_$LT$std..ffi..os_str..OsStr$u20$as$u20$std..os..unix..ffi..os_str..OsStrExt$GT$10from_bytes17h2d277a53ee266deeE"(ptr align 1 %0, i64 %1) unnamed_addr #3 !guid !86 {
 bb.a:
   %i.a = insertvalue { ptr, i64 } poison, ptr %0, 0
   %i.b = insertvalue { ptr, i64 } %i.a, i64 %1, 1
@@ -1357,7 +1357,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { ptr, i64 } @"_ZN80_$LT$std..ffi..os_str..OsStr$u20$as$u20$std..os..unix..ffi..os_str..OsStrExt$GT$8as_bytes17h5a6e7bd0adee93c1E"(ptr align 1 %0, i64 %1) unnamed_addr #3 {
+define hidden { ptr, i64 } @"_ZN80_$LT$std..ffi..os_str..OsStr$u20$as$u20$std..os..unix..ffi..os_str..OsStrExt$GT$8as_bytes17h5a6e7bd0adee93c1E"(ptr align 1 %0, i64 %1) unnamed_addr #3 !guid !87 {
 bb.a:
   %i.a = insertvalue { ptr, i64 } poison, ptr %0, 0
   %i.b = insertvalue { ptr, i64 } %i.a, i64 %1, 1
@@ -1365,13 +1365,13 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden i32 @"_ZN86_$LT$std..os..unix..net..stream..UnixStream$u20$as$u20$std..os..fd..raw..IntoRawFd$GT$11into_raw_fd17h97cdc54987013f5eE"(i32 returned %0) unnamed_addr #3 {
+define hidden i32 @"_ZN86_$LT$std..os..unix..net..stream..UnixStream$u20$as$u20$std..os..fd..raw..IntoRawFd$GT$11into_raw_fd17h97cdc54987013f5eE"(i32 returned %0) unnamed_addr #3 !guid !88 {
 bb.a:
   ret i32 %0
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define void @"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17h8da8769108bfbdd2E"(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr nofree readonly align 1 captures(none) %1, i64 %2) unnamed_addr #5 {
+define void @"_ZN87_$LT$T$u20$as$u20$alloc..slice..$LT$impl$u20$$u5b$T$u5d$$GT$..to_vec_in..ConvertVec$GT$6to_vec17h8da8769108bfbdd2E"(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr nofree readonly align 1 captures(none) %1, i64 %2) unnamed_addr #5 !guid !89 {
 bb.a:
   %i.a = tail call { i64, ptr } @"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hbd471b5e2d55a4f0E"(i64 %2, i64 1, i64 1, ptr nonnull align 8 @30) ; 2 uses
   %i.b = extractvalue { i64, ptr } %i.a, 0
@@ -1386,7 +1386,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN87_$LT$alloc..vec..Vec$LT$T$GT$$u20$as$u20$core..convert..From$LT$$RF$$u5b$T$u5d$$GT$$GT$4from17h89494b5f4f7295b2E"(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr nofree readonly align 1 captures(none) %1, i64 %2, ptr nofree readnone align 8 captures(none) %3) unnamed_addr #6 {
+define void @"_ZN87_$LT$alloc..vec..Vec$LT$T$GT$$u20$as$u20$core..convert..From$LT$$RF$$u5b$T$u5d$$GT$$GT$4from17h89494b5f4f7295b2E"(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr nofree readonly align 1 captures(none) %1, i64 %2, ptr nofree readnone align 8 captures(none) %3) unnamed_addr #6 !guid !90 {
 bb.a:
   %i.a = tail call { i64, ptr } @"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hbd471b5e2d55a4f0E"(i64 %2, i64 1, i64 1, ptr nonnull align 8 @30) ; 2 uses
   %i.b = extractvalue { i64, ptr } %i.a, 0
@@ -1401,19 +1401,19 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden i32 @"_ZN90_$LT$std..os..unix..net..datagram..UnixDatagram$u20$as$u20$std..os..fd..raw..IntoRawFd$GT$11into_raw_fd17he879d1b0a082af38E"(i32 returned %0) unnamed_addr #3 {
+define hidden i32 @"_ZN90_$LT$std..os..unix..net..datagram..UnixDatagram$u20$as$u20$std..os..fd..raw..IntoRawFd$GT$11into_raw_fd17he879d1b0a082af38E"(i32 returned %0) unnamed_addr #3 !guid !91 {
 bb.a:
   ret i32 %0
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden i32 @"_ZN90_$LT$std..os..unix..net..listener..UnixListener$u20$as$u20$std..os..fd..raw..IntoRawFd$GT$11into_raw_fd17h3156575d582a954bE"(i32 returned %0) unnamed_addr #3 {
+define hidden i32 @"_ZN90_$LT$std..os..unix..net..listener..UnixListener$u20$as$u20$std..os..fd..raw..IntoRawFd$GT$11into_raw_fd17h3156575d582a954bE"(i32 returned %0) unnamed_addr #3 !guid !92 {
 bb.a:
   ret i32 %0
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define align 1 ptr @"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h41cf811a70e8abd1E"(ptr nofree align 8 captures(none) %0) unnamed_addr #0 {
+define align 1 ptr @"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h41cf811a70e8abd1E"(ptr nofree align 8 captures(none) %0) unnamed_addr #0 !guid !93 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8                ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1432,7 +1432,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define align 1 ptr @"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h60fb30d6b656666dE"(ptr nofree align 8 captures(none) %0) unnamed_addr #0 {
+define align 1 ptr @"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17h60fb30d6b656666dE"(ptr nofree align 8 captures(none) %0) unnamed_addr #0 !guid !94 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8                ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1451,7 +1451,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { ptr, i64 } @"_ZN95_$LT$std..ffi..os_str..OsStr$u20$as$u20$core..convert..AsRef$LT$std..ffi..os_str..OsStr$GT$$GT$6as_ref17hd1d2ebe475c21eefE"(ptr align 1 %0, i64 %1) unnamed_addr #3 {
+define hidden { ptr, i64 } @"_ZN95_$LT$std..ffi..os_str..OsStr$u20$as$u20$core..convert..AsRef$LT$std..ffi..os_str..OsStr$GT$$GT$6as_ref17hd1d2ebe475c21eefE"(ptr align 1 %0, i64 %1) unnamed_addr #3 !guid !95 {
 bb.a:
   %i.a = insertvalue { ptr, i64 } poison, ptr %0, 0
   %i.b = insertvalue { ptr, i64 } %i.a, i64 %1, 1
@@ -1459,7 +1459,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden i32 @"_ZN99_$LT$core..net..ip_addr..Ipv4Addr$u20$as$u20$core..convert..From$LT$$u5b$u8$u3b$$u20$4$u5d$$GT$$GT$4from17hf6272efbe32a1f0dE"(i32 returned %0) unnamed_addr #3 {
+define hidden i32 @"_ZN99_$LT$core..net..ip_addr..Ipv4Addr$u20$as$u20$core..convert..From$LT$$u5b$u8$u3b$$u20$4$u5d$$GT$$GT$4from17hf6272efbe32a1f0dE"(i32 returned %0) unnamed_addr #3 !guid !96 {
 bb.a:
   ret i32 %0
 }
@@ -1617,4 +1617,98 @@ attributes #19 = { noreturn nounwind }
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 2, !"RtLibUseGOT", i32 1}
 !2 = !{!"rustc version 1.91.1 (ed61e7d7e 2025-11-07)"}
+!3 = !{i64 1015547110904850236}
+!4 = !{i64 -8630730619364402250}
+!5 = !{i64 5027786853499607553}
+!6 = !{i64 -2202153368480349858}
+!7 = !{i64 2142611994763035866}
+!8 = !{i64 -8631675882238935306}
+!9 = !{i64 -5791005561609367655}
+!10 = !{i64 -2681687108337537870}
+!11 = !{i64 -3958212191505393597}
+!12 = !{i64 -3030124363778203679}
+!13 = !{i64 7282121264125590138}
+!14 = !{i64 -1417510390143475672}
+!15 = !{i64 -362637129505069025}
+!16 = !{i64 8704066612831885826}
+!17 = !{i64 100468065458371359}
+!18 = !{i64 447421409646859319}
+!19 = !{i64 -9199866948277864744}
+!20 = !{i64 -2140017381482796782}
+!21 = !{i64 3062578074470748117}
+!22 = !{i64 3236953450962349466}
+!23 = !{i64 -8365431913627705574}
+!24 = !{i64 6333252991220485775}
+!25 = !{i64 -2595938356360319121}
+!26 = !{i64 329828307286056976}
+!27 = !{i64 -3517270008873596754}
+!28 = !{i64 -1030816555468910348}
+!29 = !{i64 -2393011457864633539}
+!30 = !{i64 6198888776835634608}
+!31 = !{i64 8708371114378165252}
+!32 = !{i64 -5751888400417958626}
+!33 = !{i64 2835588098134028275}
+!34 = !{i64 -748789512093053828}
+!35 = !{i64 -6730795157250843218}
+!36 = !{i64 3681753926327199487}
+!37 = !{i64 5789717143178495571}
+!38 = !{i64 -126031846299196619}
+!39 = !{i64 -709672378809333331}
+!40 = !{i64 4535661894346297169}
+!41 = !{i64 -5478903675560009388}
+!42 = !{i64 -514586700932934090}
+!43 = !{i64 4235938075764472895}
+!44 = !{i64 -7697644538446617254}
+!45 = !{i64 -3554193706869307286}
+!46 = !{i64 -1019546915314409254}
+!47 = !{i64 7560361114029388920}
+!48 = !{i64 -1599320454235942825}
+!49 = !{i64 7630495108444697759}
+!50 = !{i64 -1305744797167044168}
+!51 = !{i64 4352335810131484553}
+!52 = !{i64 6685497030913569697}
+!53 = !{i64 5759687141447644396}
+!54 = !{i64 2759380916634328388}
+!55 = !{i64 5537804414956824390}
+!56 = !{i64 -4906921232418407359}
+!57 = !{i64 7403325255636378893}
+!58 = !{i64 6778997960336586062}
+!59 = !{i64 1049015829263701832}
+!60 = !{i64 -4983477968400537623}
+!61 = !{i64 1980360535643055962}
+!62 = !{i64 -708072634869407890}
+!63 = !{i64 3216471014542367579}
+!64 = !{i64 3880393833027779233}
+!65 = !{i64 8823655646120352029}
+!66 = !{i64 -4523343631145151872}
+!67 = !{i64 4899086800791190028}
+!68 = !{i64 -4326938325351138653}
+!69 = !{i64 4343148585593202726}
+!70 = !{i64 8603279639208629811}
+!71 = !{i64 4350555714826193095}
+!72 = !{i64 -8445974327233574547}
+!73 = !{i64 -8263967321718018202}
+!74 = !{i64 -2239180126945792575}
+!75 = !{i64 -1860495055444680166}
+!76 = !{i64 4270838660051538825}
+!77 = !{i64 6575501077677976153}
+!78 = !{i64 -3350136386287147563}
+!79 = !{i64 5347905980728331026}
+!80 = !{i64 -70776849747071753}
+!81 = !{i64 -4338495456144522411}
+!82 = !{i64 -4512301876796910583}
+!83 = !{i64 2775434831952100753}
+!84 = !{i64 -754660450457769115}
+!85 = !{i64 1566455630195494958}
+!86 = !{i64 3335766634508505131}
+!87 = !{i64 -5661276071723424061}
+!88 = !{i64 -8981339903225910946}
+!89 = !{i64 597208932166780565}
+!90 = !{i64 4582784530916410913}
+!91 = !{i64 -6195045831921240694}
+!92 = !{i64 -892541511827528645}
+!93 = !{i64 -1664559738447185573}
+!94 = !{i64 -6429724625002333539}
+!95 = !{i64 7740151994897315647}
+!96 = !{i64 -1053476413620426190}
 end_hunk_0

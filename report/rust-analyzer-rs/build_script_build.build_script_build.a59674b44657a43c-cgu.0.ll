@@ -7,15 +7,15 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
-@0 = private unnamed_addr constant <{ [24 x i8], ptr, ptr, ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNSNvYNCINvNtCscAsMj0W7j8b_3std2rt10lang_startuE0INtNtNtCshzWfHUSfYae_4core3ops8function6FnOnceuE9call_once6vtableCsedq0HQmH7V8_18build_script_build, ptr @_RNCINvNtCscAsMj0W7j8b_3std2rt10lang_startuE0Csedq0HQmH7V8_18build_script_build, ptr @_RNCINvNtCscAsMj0W7j8b_3std2rt10lang_startuE0Csedq0HQmH7V8_18build_script_build }>, align 8
-@1 = private unnamed_addr constant [32 x i8] c"cargo:rerun-if-changed=build.rs\0A", align 1
-@2 = private unnamed_addr constant [40 x i8] c"cargo:rustc-check-cfg=cfg(tsan_enabled)\0A", align 1
-@3 = private unnamed_addr constant [18 x i8] c"CARGO_CFG_SANITIZE", align 1
-@4 = private unnamed_addr constant [6 x i8] c"thread", align 1
-@5 = private unnamed_addr constant [29 x i8] c"cargo:rustc-cfg=tsan_enabled\0A", align 1
+@0 = private unnamed_addr constant <{ [24 x i8], ptr, ptr, ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @_RNSNvYNCINvNtCscAsMj0W7j8b_3std2rt10lang_startuE0INtNtNtCshzWfHUSfYae_4core3ops8function6FnOnceuE9call_once6vtableCsedq0HQmH7V8_18build_script_build, ptr @_RNCINvNtCscAsMj0W7j8b_3std2rt10lang_startuE0Csedq0HQmH7V8_18build_script_build, ptr @_RNCINvNtCscAsMj0W7j8b_3std2rt10lang_startuE0Csedq0HQmH7V8_18build_script_build }>, align 8, !guid !5
+@1 = private unnamed_addr constant [32 x i8] c"cargo:rerun-if-changed=build.rs\0A", align 1, !guid !5
+@2 = private unnamed_addr constant [40 x i8] c"cargo:rustc-check-cfg=cfg(tsan_enabled)\0A", align 1, !guid !5
+@3 = private unnamed_addr constant [18 x i8] c"CARGO_CFG_SANITIZE", align 1, !guid !5
+@4 = private unnamed_addr constant [6 x i8] c"thread", align 1, !guid !5
+@5 = private unnamed_addr constant [29 x i8] c"cargo:rustc-cfg=tsan_enabled\0A", align 1, !guid !5
 
 ; Function Attrs: nonlazybind uwtable
-define hidden i64 @_RINvNtCscAsMj0W7j8b_3std2rt10lang_startuECsedq0HQmH7V8_18build_script_build(ptr %0, i64 %1, ptr %2, i8 %3) unnamed_addr #0 {
+define hidden i64 @_RINvNtCscAsMj0W7j8b_3std2rt10lang_startuECsedq0HQmH7V8_18build_script_build(ptr %0, i64 %1, ptr %2, i8 %3) unnamed_addr #0 !guid !6 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 2 uses
   store ptr %0, ptr %i.a, align 8
@@ -24,7 +24,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECsedq0HQmH7V8_18build_script_build(ptr nonnull align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCsbSS6DM8SDEO_5alloc6string6StringECsedq0HQmH7V8_18build_script_build(ptr nonnull align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality !guid !7 {
 bb.a:
   invoke void @_RNvXsp_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VechENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs57dEzb6b5A8_5gimli(ptr nonnull align 8 %0)
           to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VechEECsedq0HQmH7V8_18build_script_build.exit unwind label %bb.b
@@ -50,15 +50,15 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VechEECsed
 }
 
 ; Function Attrs: noinline nonlazybind uwtable
-define internal fastcc void @_RINvNtNtCscAsMj0W7j8b_3std3sys9backtrace28___rust_begin_short_backtraceFEuuECsedq0HQmH7V8_18build_script_build(ptr nofree readonly captures(none) %0) unnamed_addr #1 {
+define internal fastcc void @_RINvNtNtCscAsMj0W7j8b_3std3sys9backtrace28___rust_begin_short_backtraceFEuuECsedq0HQmH7V8_18build_script_build(ptr nofree readonly captures(none) %0) unnamed_addr #1 !guid !9 {
 bb.a:
-  tail call void %0(), !inline_history !5
-  tail call void asm sideeffect "", "~{memory}"() #11, !srcloc !6
+  tail call void %0(), !inline_history !8
+  tail call void asm sideeffect "", "~{memory}"() #11, !srcloc !10
   ret void
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal noundef i32 @_RNCINvNtCscAsMj0W7j8b_3std2rt10lang_startuE0Csedq0HQmH7V8_18build_script_build(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #2 {
+define internal noundef i32 @_RNCINvNtCscAsMj0W7j8b_3std2rt10lang_startuE0Csedq0HQmH7V8_18build_script_build(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #2 !guid !11 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   tail call fastcc void @_RINvNtNtCscAsMj0W7j8b_3std3sys9backtrace28___rust_begin_short_backtraceFEuuECsedq0HQmH7V8_18build_script_build(ptr %i.a) #12
@@ -66,7 +66,7 @@ bb.a:
 }
 
 ; Function Attrs: cold inlinehint nofree norecurse nosync nounwind nonlazybind memory(read, inaccessiblemem: none, target_mem: none) uwtable
-define internal fastcc noundef zeroext i1 @_RNCNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_containss0_0Csedq0HQmH7V8_18build_script_build(ptr nofree nonnull readonly align 8 captures(none) %0, i64 %1, i16 range(i16 1, 0) %2, i1 zeroext %3) unnamed_addr #3 personality ptr @rust_eh_personality {
+define internal fastcc noundef zeroext i1 @_RNCNvNtNtCshzWfHUSfYae_4core3str7pattern13simd_containss0_0Csedq0HQmH7V8_18build_script_build(ptr nofree nonnull readonly align 8 captures(none) %0, i64 %1, i16 range(i16 1, 0) %2, i1 zeroext %3) unnamed_addr #3 personality ptr @rust_eh_personality !guid !12 {
 bb.a:
   br i1 %3, label %_RNvNtNtCshzWfHUSfYae_4core3str7pattern14small_slice_eqCsedq0HQmH7V8_18build_script_build.exit.thread, label %.preheader
 
@@ -179,7 +179,7 @@ _RNvNtNtCshzWfHUSfYae_4core3str7pattern14small_slice_eqCsedq0HQmH7V8_18build_scr
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal noundef i32 @_RNSNvYNCINvNtCscAsMj0W7j8b_3std2rt10lang_startuE0INtNtNtCshzWfHUSfYae_4core3ops8function6FnOnceuE9call_once6vtableCsedq0HQmH7V8_18build_script_build(ptr nofree readonly captures(none) %0) unnamed_addr #2 personality ptr @rust_eh_personality {
+define internal noundef i32 @_RNSNvYNCINvNtCscAsMj0W7j8b_3std2rt10lang_startuE0INtNtNtCshzWfHUSfYae_4core3ops8function6FnOnceuE9call_once6vtableCsedq0HQmH7V8_18build_script_build(ptr nofree readonly captures(none) %0) unnamed_addr #2 personality ptr @rust_eh_personality !guid !13 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   tail call fastcc void @_RINvNtNtCscAsMj0W7j8b_3std3sys9backtrace28___rust_begin_short_backtraceFEuuECsedq0HQmH7V8_18build_script_build(ptr readonly %i.a) #12
@@ -187,7 +187,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvCsedq0HQmH7V8_18build_script_build4main() unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RNvCsedq0HQmH7V8_18build_script_build4main() unnamed_addr #0 personality ptr @rust_eh_personality !guid !18 {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 14 uses
   %i.b = alloca [32 x i8], align 8                ; 4 uses
@@ -195,8 +195,8 @@ bb.a:
   tail call void @_RNvNtNtCscAsMj0W7j8b_3std2io5stdio6__print(ptr nonnull @1, ptr nonnull inttoptr (i64 65 to ptr))
   tail call void @_RNvNtNtCscAsMj0W7j8b_3std2io5stdio6__print(ptr nonnull @2, ptr nonnull inttoptr (i64 81 to ptr))
   call void @_RNvNvNtCscAsMj0W7j8b_3std3env3var5inner(ptr nonnull sret([32 x i8]) align 8 %i.b, ptr nonnull @3, i64 18)
-  call void @llvm.experimental.noalias.scope.decl(metadata !11)
-  %i.d = load i64, ptr %i.b, align 8, !noalias !11
+  call void @llvm.experimental.noalias.scope.decl(metadata !19)
+  %i.d = load i64, ptr %i.b, align 8, !noalias !19
   %i.e = trunc nuw i64 %i.d to i1
   br i1 %i.e, label %bb.c, label %bb.b
 
@@ -210,34 +210,34 @@ common.resume:                                    ; preds = %bb.g, %bb.t, %bb.e
   resume { ptr, i32 } %common.resume.op
 
 bb.c:                                             ; preds = %bb.a
-  store i64 0, ptr %i.c, align 8, !alias.scope !12
+  store i64 0, ptr %i.c, align 8, !alias.scope !20
   %.sroa.2.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8
-  store ptr inttoptr (i64 1 to ptr), ptr %.sroa.2.0..sroa_idx.i.i, align 8, !alias.scope !12
+  store ptr inttoptr (i64 1 to ptr), ptr %.sroa.2.0..sroa_idx.i.i, align 8, !alias.scope !20
   %.sroa.3.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 16
-  store i64 0, ptr %.sroa.3.0..sroa_idx.i.i, align 8, !alias.scope !12
+  store i64 0, ptr %.sroa.3.0..sroa_idx.i.i, align 8, !alias.scope !20
   %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 4 uses
-  %i.h = load i64, ptr %i.g, align 8, !noalias !11
+  %i.h = load i64, ptr %i.g, align 8, !noalias !19
   %i.i = icmp eq i64 %i.h, -1
   br i1 %i.i, label %bb.h, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   invoke void @_RNvXsp_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VechENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs57dEzb6b5A8_5gimli(ptr nonnull align 8 %i.g)
-          to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCscAsMj0W7j8b_3std3env8VarErrorECsedq0HQmH7V8_18build_script_build.exit.sink.split.i unwind label %bb.e, !noalias !11
+          to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCscAsMj0W7j8b_3std3env8VarErrorECsedq0HQmH7V8_18build_script_build.exit.sink.split.i unwind label %bb.e, !noalias !19
 
 bb.e:                                             ; preds = %bb.d
   %i.j = landingpad { ptr, i32 }
           cleanup
   invoke void @_RNvXs1_NtCsbSS6DM8SDEO_5alloc7raw_vecINtB5_6RawVechENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs57dEzb6b5A8_5gimli(ptr nonnull align 8 %i.g)
-          to label %common.resume unwind label %bb.f, !noalias !11
+          to label %common.resume unwind label %bb.f, !noalias !19
 
 bb.f:                                             ; preds = %bb.e
   %i.k = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #10, !noalias !11
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #10, !noalias !19
   unreachable
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCscAsMj0W7j8b_3std3env8VarErrorECsedq0HQmH7V8_18build_script_build.exit.sink.split.i: ; preds = %bb.d
-  call void @_RNvXs1_NtCsbSS6DM8SDEO_5alloc7raw_vecINtB5_6RawVechENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs57dEzb6b5A8_5gimli(ptr nonnull align 8 %i.g), !noalias !11
+  call void @_RNvXs1_NtCsbSS6DM8SDEO_5alloc7raw_vecINtB5_6RawVechENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs57dEzb6b5A8_5gimli(ptr nonnull align 8 %i.g), !noalias !19
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.v
@@ -532,7 +532,7 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 declare void @_RNvNtNtCscAsMj0W7j8b_3std2io5stdio6__print(ptr, ptr) unnamed_addr #0
 
 ; Function Attrs: nonlazybind
-define i32 @main(i32 %0, ptr %1) unnamed_addr #8 {
+define i32 @main(i32 %0, ptr %1) unnamed_addr #8 !guid !21 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = sext i32 %0 to i64
@@ -577,12 +577,21 @@ attributes #14 = { inlinehint }
 !2 = !{i32 2, !"RtLibUseGOT", i32 1}
 !3 = !{i32 7, !"uwtable", i32 2}
 !4 = !{!"rustc version 1.99.0-nightly (73dc9167f 2026-08-01)"}
-!5 = distinct !{null}
-!6 = !{i64 18092115946915468}
-!7 = distinct !{!7, i1 true, !"_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultNtNtCsbSS6DM8SDEO_5alloc6string6StringNtNtCscAsMj0W7j8b_3std3env8VarErrorE17unwrap_or_defaultCsedq0HQmH7V8_18build_script_build"}
-!8 = distinct !{!8, !7, !"_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultNtNtCsbSS6DM8SDEO_5alloc6string6StringNtNtCscAsMj0W7j8b_3std3env8VarErrorE17unwrap_or_defaultCsedq0HQmH7V8_18build_script_build: argument 0"}
-!9 = distinct !{!9, i1 true, !"_RNvXsp_NtCsbSS6DM8SDEO_5alloc6stringNtB5_6StringNtNtCshzWfHUSfYae_4core7default7Default7defaultCsedq0HQmH7V8_18build_script_build"}
-!10 = distinct !{!10, !9, !"_RNvXsp_NtCsbSS6DM8SDEO_5alloc6stringNtB5_6StringNtNtCshzWfHUSfYae_4core7default7Default7defaultCsedq0HQmH7V8_18build_script_build: argument 0"}
-!11 = !{!8}
-!12 = !{!10, !8}
+!5 = !{i64 -2351153588467968843}
+!6 = !{i64 1137557842289863598}
+!7 = !{i64 -7050956107506051334}
+!8 = distinct !{null}
+!9 = !{i64 -2124727928417858701}
+!10 = !{i64 18092115946915468}
+!11 = !{i64 2284599776268453241}
+!12 = !{i64 -8324420316285541856}
+!13 = !{i64 615778072508491442}
+!14 = distinct !{!14, i1 true, !"_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultNtNtCsbSS6DM8SDEO_5alloc6string6StringNtNtCscAsMj0W7j8b_3std3env8VarErrorE17unwrap_or_defaultCsedq0HQmH7V8_18build_script_build"}
+!15 = distinct !{!15, !14, !"_RNvMNtCshzWfHUSfYae_4core6resultINtB2_6ResultNtNtCsbSS6DM8SDEO_5alloc6string6StringNtNtCscAsMj0W7j8b_3std3env8VarErrorE17unwrap_or_defaultCsedq0HQmH7V8_18build_script_build: argument 0"}
+!16 = distinct !{!16, i1 true, !"_RNvXsp_NtCsbSS6DM8SDEO_5alloc6stringNtB5_6StringNtNtCshzWfHUSfYae_4core7default7Default7defaultCsedq0HQmH7V8_18build_script_build"}
+!17 = distinct !{!17, !16, !"_RNvXsp_NtCsbSS6DM8SDEO_5alloc6stringNtB5_6StringNtNtCshzWfHUSfYae_4core7default7Default7defaultCsedq0HQmH7V8_18build_script_build: argument 0"}
+!18 = !{i64 1772790033867899974}
+!19 = !{!15}
+!20 = !{!17, !15}
+!21 = !{i64 -2624081020897602054}
 end_hunk_0

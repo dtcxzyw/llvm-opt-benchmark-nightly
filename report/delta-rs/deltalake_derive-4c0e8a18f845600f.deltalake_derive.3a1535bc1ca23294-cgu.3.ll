@@ -7,15 +7,15 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
-@0 = private unnamed_addr constant [86 x i8] c"/rustc/1d8897a4e88051480b36c501e66809425c6e08ad/library/core/src/iter/adapters/mod.rs\00", align 1
-@1 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"U\00\00\00\00\00\00\00\A5\00\00\00\14\00\00\00" }>, align 8
-@2 = private unnamed_addr constant [80 x i8] c"/rustc/1d8897a4e88051480b36c501e66809425c6e08ad/library/core/src/str/pattern.rs\00", align 1
-@3 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @2, [16 x i8] c"O\00\00\00\00\00\00\00\22\07\00\00,\00\00\00" }>, align 8
-@4 = private unnamed_addr constant [1 x i8] c"\01", align 1
-@5 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @2, [16 x i8] c"O\00\00\00\00\00\00\00i\04\00\00$\00\00\00" }>, align 8
+@0 = private unnamed_addr constant [86 x i8] c"/rustc/1d8897a4e88051480b36c501e66809425c6e08ad/library/core/src/iter/adapters/mod.rs\00", align 1, !guid !3
+@1 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @0, [16 x i8] c"U\00\00\00\00\00\00\00\A5\00\00\00\14\00\00\00" }>, align 8, !guid !3
+@2 = private unnamed_addr constant [80 x i8] c"/rustc/1d8897a4e88051480b36c501e66809425c6e08ad/library/core/src/str/pattern.rs\00", align 1, !guid !3
+@3 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @2, [16 x i8] c"O\00\00\00\00\00\00\00\22\07\00\00,\00\00\00" }>, align 8, !guid !3
+@4 = private unnamed_addr constant [1 x i8] c"\01", align 1, !guid !3
+@5 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @2, [16 x i8] c"O\00\00\00\00\00\00\00i\04\00\00$\00\00\00" }>, align 8, !guid !3
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RINvNtNtCsbvkFyIu7lgC_4core4iter8adapters11try_processINtNtB2_10filter_map9FilterMapINtNtNtB6_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env0ENtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtB6_6result6ResultNtNtB6_7convert10InfallibleNtNtB1P_5error5ErrorENCINvXso_B42_IB40_INtNtCs6Po7BT7Nknu_5alloc3vec3VecB3j_EB4M_EINtNtNtB4_6traits7collect12FromIteratorIB40_B3j_B4M_EE9from_iterBQ_E0B5p_EB2n_(ptr sret([32 x i8]) align 8 %0, ptr %1, ptr %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RINvNtNtCsbvkFyIu7lgC_4core4iter8adapters11try_processINtNtB2_10filter_map9FilterMapINtNtNtB6_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env0ENtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtB6_6result6ResultNtNtB6_7convert10InfallibleNtNtB1P_5error5ErrorENCINvXso_B42_IB40_INtNtCs6Po7BT7Nknu_5alloc3vec3VecB3j_EB4M_EINtNtNtB4_6traits7collect12FromIteratorIB40_B3j_B4M_EE9from_iterBQ_E0B5p_EB2n_(ptr sret([32 x i8]) align 8 %0, ptr %1, ptr %2) unnamed_addr #0 personality ptr @rust_eh_personality !guid !4 {
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [24 x i8], align 8                ; 2 uses
@@ -95,7 +95,7 @@ bb.k:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RINvNtNtCsbvkFyIu7lgC_4core4iter8adapters11try_processINtNtB2_10filter_map9FilterMapINtNtNtB6_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive23generate_try_update_key0ENtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtB6_6result6ResultNtNtB6_7convert10InfallibleNtNtB1P_5error5ErrorENCINvXso_B43_IB41_INtNtCs6Po7BT7Nknu_5alloc3vec3VecB3k_EB4N_EINtNtNtB4_6traits7collect12FromIteratorIB41_B3k_B4N_EE9from_iterBQ_E0B5q_EB2n_(ptr sret([32 x i8]) align 8 %0, ptr %1, ptr %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RINvNtNtCsbvkFyIu7lgC_4core4iter8adapters11try_processINtNtB2_10filter_map9FilterMapINtNtNtB6_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive23generate_try_update_key0ENtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtB6_6result6ResultNtNtB6_7convert10InfallibleNtNtB1P_5error5ErrorENCINvXso_B43_IB41_INtNtCs6Po7BT7Nknu_5alloc3vec3VecB3k_EB4N_EINtNtNtB4_6traits7collect12FromIteratorIB41_B3k_B4N_EE9from_iterBQ_E0B5q_EB2n_(ptr sret([32 x i8]) align 8 %0, ptr %1, ptr %2) unnamed_addr #0 personality ptr @rust_eh_personality !guid !5 {
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [24 x i8], align 8                ; 2 uses
@@ -175,7 +175,7 @@ bb.k:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RINvNtNtCsbvkFyIu7lgC_4core4iter8adapters11try_processINtNtB2_3map3MapINtNtNtB6_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive20generate_config_keys0ENtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtB6_6result6ResultNtNtB6_7convert10InfallibleNtNtB1B_5error5ErrorENCINvXso_B3M_IB3K_INtNtCs6Po7BT7Nknu_5alloc3vec3VecB33_EB4w_EINtNtNtB4_6traits7collect12FromIteratorIB3K_B33_B4w_EE9from_iterBQ_E0B59_EB29_(ptr sret([32 x i8]) align 8 %0, ptr %1, ptr %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RINvNtNtCsbvkFyIu7lgC_4core4iter8adapters11try_processINtNtB2_3map3MapINtNtNtB6_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive20generate_config_keys0ENtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtB6_6result6ResultNtNtB6_7convert10InfallibleNtNtB1B_5error5ErrorENCINvXso_B3M_IB3K_INtNtCs6Po7BT7Nknu_5alloc3vec3VecB33_EB4w_EINtNtNtB4_6traits7collect12FromIteratorIB3K_B33_B4w_EE9from_iterBQ_E0B59_EB29_(ptr sret([32 x i8]) align 8 %0, ptr %1, ptr %2) unnamed_addr #0 personality ptr @rust_eh_personality !guid !6 {
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [24 x i8], align 8                ; 2 uses
@@ -255,7 +255,7 @@ bb.k:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringENtNtNtNtBa_4iter6traits8iterator8Iterator3mapNtCsbjGuDcEILED_11proc_macro211TokenStreamNCNCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env00EB2R_(ptr nofree writeonly sret([40 x i8]) align 8 captures(none) initializes((0, 40)) %0, ptr %1, ptr %2, ptr nofree readonly align 8 captures(none) %3) unnamed_addr #1 {
+define hidden void @_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringENtNtNtNtBa_4iter6traits8iterator8Iterator3mapNtCsbjGuDcEILED_11proc_macro211TokenStreamNCNCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env00EB2R_(ptr nofree writeonly sret([40 x i8]) align 8 captures(none) initializes((0, 40)) %0, ptr %1, ptr %2, ptr nofree readonly align 8 captures(none) %3) unnamed_addr #1 !guid !7 {
 bb.a:
   store ptr %1, ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -266,7 +266,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { ptr, ptr } @_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENtNtNtNtBa_4iter6traits8iterator8Iterator10filter_mapINtNtBa_6result6ResultNtCsbjGuDcEILED_11proc_macro211TokenStreamNtNtBO_5error5ErrorENCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env0EB3z_(ptr %0, ptr %1) unnamed_addr #2 {
+define hidden { ptr, ptr } @_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENtNtNtNtBa_4iter6traits8iterator8Iterator10filter_mapINtNtBa_6result6ResultNtCsbjGuDcEILED_11proc_macro211TokenStreamNtNtBO_5error5ErrorENCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env0EB3z_(ptr %0, ptr %1) unnamed_addr #2 !guid !8 {
 bb.a:
   %i.a = insertvalue { ptr, ptr } poison, ptr %0, 0
   %i.b = insertvalue { ptr, ptr } %i.a, ptr %1, 1
@@ -274,7 +274,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { ptr, ptr } @_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENtNtNtNtBa_4iter6traits8iterator8Iterator10filter_mapINtNtBa_6result6ResultNtCsbjGuDcEILED_11proc_macro211TokenStreamNtNtBO_5error5ErrorENCNvCs4ZaLwAtrTbk_16deltalake_derive23generate_try_update_key0EB3z_(ptr %0, ptr %1) unnamed_addr #2 {
+define hidden { ptr, ptr } @_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENtNtNtNtBa_4iter6traits8iterator8Iterator10filter_mapINtNtBa_6result6ResultNtCsbjGuDcEILED_11proc_macro211TokenStreamNtNtBO_5error5ErrorENCNvCs4ZaLwAtrTbk_16deltalake_derive23generate_try_update_key0EB3z_(ptr %0, ptr %1) unnamed_addr #2 !guid !9 {
 bb.a:
   %i.a = insertvalue { ptr, ptr } poison, ptr %0, 0
   %i.b = insertvalue { ptr, ptr } %i.a, ptr %1, 1
@@ -282,7 +282,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { ptr, ptr } @_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENtNtNtNtBa_4iter6traits8iterator8Iterator3mapINtNtBa_6result6ResultNtCsbjGuDcEILED_11proc_macro211TokenStreamNtNtBO_5error5ErrorENCNvCs4ZaLwAtrTbk_16deltalake_derive20generate_config_keys0EB3r_(ptr %0, ptr %1) unnamed_addr #2 {
+define hidden { ptr, ptr } @_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENtNtNtNtBa_4iter6traits8iterator8Iterator3mapINtNtBa_6result6ResultNtCsbjGuDcEILED_11proc_macro211TokenStreamNtNtBO_5error5ErrorENCNvCs4ZaLwAtrTbk_16deltalake_derive20generate_config_keys0EB3r_(ptr %0, ptr %1) unnamed_addr #2 !guid !10 {
 bb.a:
   %i.a = insertvalue { ptr, ptr } poison, ptr %0, 0
   %i.b = insertvalue { ptr, ptr } %i.a, ptr %1, 1
@@ -290,7 +290,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden void @_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1o_8adapters10filter_map19filter_map_try_foldRBJ_INtNtBa_6result6ResultNtCsbjGuDcEILED_11proc_macro211TokenStreamNtNtBO_5error5ErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB4s_B3q_EENCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env0NCINvXB2e_INtB2e_12GenericShuntINtB2c_9FilterMapB3_B5h_EIB35_NtNtBa_7convert10InfallibleB46_EEB1i_8try_folduNCINvNvB1i_12try_for_each4callB3q_B56_NcNtB56_5Break0E0B56_E0E0B4r_EB5l_(ptr sret([32 x i8]) align 8 %0, ptr nofree align 8 captures(none) %1, ptr align 8 %2) unnamed_addr #3 personality ptr @rust_eh_personality {
+define hidden void @_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1o_8adapters10filter_map19filter_map_try_foldRBJ_INtNtBa_6result6ResultNtCsbjGuDcEILED_11proc_macro211TokenStreamNtNtBO_5error5ErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB4s_B3q_EENCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env0NCINvXB2e_INtB2e_12GenericShuntINtB2c_9FilterMapB3_B5h_EIB35_NtNtBa_7convert10InfallibleB46_EEB1i_8try_folduNCINvNvB1i_12try_for_each4callB3q_B56_NcNtB56_5Break0E0B56_E0E0B4r_EB5l_(ptr sret([32 x i8]) align 8 %0, ptr nofree align 8 captures(none) %1, ptr align 8 %2) unnamed_addr #3 personality ptr @rust_eh_personality !guid !11 {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 2 uses
   %i.b = alloca [32 x i8], align 8                ; 2 uses
@@ -331,7 +331,7 @@ bb.e:                                             ; preds = %_RNvXs2J_NtNtCsbvkF
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden void @_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1o_8adapters10filter_map19filter_map_try_foldRBJ_INtNtBa_6result6ResultNtCsbjGuDcEILED_11proc_macro211TokenStreamNtNtBO_5error5ErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB4s_B3q_EENCNvCs4ZaLwAtrTbk_16deltalake_derive23generate_try_update_key0NCINvXB2e_INtB2e_12GenericShuntINtB2c_9FilterMapB3_B5h_EIB35_NtNtBa_7convert10InfallibleB46_EEB1i_8try_folduNCINvNvB1i_12try_for_each4callB3q_B56_NcNtB56_5Break0E0B56_E0E0B4r_EB5l_(ptr sret([32 x i8]) align 8 %0, ptr nofree align 8 captures(none) %1, ptr align 8 %2) unnamed_addr #3 personality ptr @rust_eh_personality {
+define hidden void @_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1o_8adapters10filter_map19filter_map_try_foldRBJ_INtNtBa_6result6ResultNtCsbjGuDcEILED_11proc_macro211TokenStreamNtNtBO_5error5ErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB4s_B3q_EENCNvCs4ZaLwAtrTbk_16deltalake_derive23generate_try_update_key0NCINvXB2e_INtB2e_12GenericShuntINtB2c_9FilterMapB3_B5h_EIB35_NtNtBa_7convert10InfallibleB46_EEB1i_8try_folduNCINvNvB1i_12try_for_each4callB3q_B56_NcNtB56_5Break0E0B56_E0E0B4r_EB5l_(ptr sret([32 x i8]) align 8 %0, ptr nofree align 8 captures(none) %1, ptr align 8 %2) unnamed_addr #3 personality ptr @rust_eh_personality !guid !12 {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 2 uses
   %i.b = alloca [32 x i8], align 8                ; 2 uses
@@ -372,7 +372,7 @@ bb.e:                                             ; preds = %_RNvXs2J_NtNtCsbvkF
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden void @_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1o_8adapters3map12map_try_foldRBJ_INtNtBa_6result6ResultNtCsbjGuDcEILED_11proc_macro211TokenStreamNtNtBO_5error5ErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB4d_B3b_EENCNvCs4ZaLwAtrTbk_16deltalake_derive20generate_config_keys0NCINvXB2e_INtB2e_12GenericShuntINtB2c_3MapB3_B52_EIB2Q_NtNtBa_7convert10InfallibleB3R_EEB1i_8try_folduNCINvNvB1i_12try_for_each4callB3b_B4R_NcNtB4R_5Break0E0B4R_E0E0B4c_EB56_(ptr sret([32 x i8]) align 8 %0, ptr nofree align 8 captures(none) %1, ptr align 8 %2) unnamed_addr #3 personality ptr @rust_eh_personality {
+define hidden void @_RINvYINtNtNtCsbvkFyIu7lgC_4core5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENtNtNtNtBa_4iter6traits8iterator8Iterator8try_folduNCINvNtNtB1o_8adapters3map12map_try_foldRBJ_INtNtBa_6result6ResultNtCsbjGuDcEILED_11proc_macro211TokenStreamNtNtBO_5error5ErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB4d_B3b_EENCNvCs4ZaLwAtrTbk_16deltalake_derive20generate_config_keys0NCINvXB2e_INtB2e_12GenericShuntINtB2c_3MapB3_B52_EIB2Q_NtNtBa_7convert10InfallibleB3R_EEB1i_8try_folduNCINvNvB1i_12try_for_each4callB3b_B4R_NcNtB4R_5Break0E0B4R_E0E0B4c_EB56_(ptr sret([32 x i8]) align 8 %0, ptr nofree align 8 captures(none) %1, ptr align 8 %2) unnamed_addr #3 personality ptr @rust_eh_personality !guid !13 {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 2 uses
   %i.b = alloca [32 x i8], align 8                ; 2 uses
@@ -413,7 +413,7 @@ bb.e:                                             ; preds = %_RNvXs2J_NtNtCsbvkF
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden void @_RNCINvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB5_12GenericShuntINtNtB5_10filter_map9FilterMapINtNtNtB9_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env0EINtNtB9_6result6ResultNtNtB9_7convert10InfallibleNtNtB1Z_5error5ErrorEENtNtNtB7_6traits8iterator8Iterator8try_folduNCINvNvB4C_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtB9_3ops12control_flow11ControlFlowB5O_ENcNtB6u_5Break0E0B6u_E0B2x_(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) %0, ptr nofree readonly align 8 captures(none) %1, ptr align 8 %2) unnamed_addr #3 personality ptr @rust_eh_personality {
+define hidden void @_RNCINvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB5_12GenericShuntINtNtB5_10filter_map9FilterMapINtNtNtB9_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env0EINtNtB9_6result6ResultNtNtB9_7convert10InfallibleNtNtB1Z_5error5ErrorEENtNtNtB7_6traits8iterator8Iterator8try_folduNCINvNvB4C_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtB9_3ops12control_flow11ControlFlowB5O_ENcNtB6u_5Break0E0B6u_E0B2x_(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) %0, ptr nofree readonly align 8 captures(none) %1, ptr align 8 %2) unnamed_addr #3 personality ptr @rust_eh_personality !guid !14 {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 2 uses
   %i.b = alloca [32 x i8], align 8                ; 2 uses
@@ -474,7 +474,7 @@ bb.h:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden void @_RNCINvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB5_12GenericShuntINtNtB5_10filter_map9FilterMapINtNtNtB9_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive23generate_try_update_key0EINtNtB9_6result6ResultNtNtB9_7convert10InfallibleNtNtB1Z_5error5ErrorEENtNtNtB7_6traits8iterator8Iterator8try_folduNCINvNvB4D_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtB9_3ops12control_flow11ControlFlowB5P_ENcNtB6v_5Break0E0B6v_E0B2x_(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) %0, ptr nofree readonly align 8 captures(none) %1, ptr align 8 %2) unnamed_addr #3 personality ptr @rust_eh_personality {
+define hidden void @_RNCINvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB5_12GenericShuntINtNtB5_10filter_map9FilterMapINtNtNtB9_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive23generate_try_update_key0EINtNtB9_6result6ResultNtNtB9_7convert10InfallibleNtNtB1Z_5error5ErrorEENtNtNtB7_6traits8iterator8Iterator8try_folduNCINvNvB4D_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtB9_3ops12control_flow11ControlFlowB5P_ENcNtB6v_5Break0E0B6v_E0B2x_(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) %0, ptr nofree readonly align 8 captures(none) %1, ptr align 8 %2) unnamed_addr #3 personality ptr @rust_eh_personality !guid !15 {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 2 uses
   %i.b = alloca [32 x i8], align 8                ; 2 uses
@@ -535,7 +535,7 @@ bb.h:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden void @_RNCINvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB5_12GenericShuntINtNtB5_3map3MapINtNtNtB9_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive20generate_config_keys0EINtNtB9_6result6ResultNtNtB9_7convert10InfallibleNtNtB1L_5error5ErrorEENtNtNtB7_6traits8iterator8Iterator8try_folduNCINvNvB4m_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtB9_3ops12control_flow11ControlFlowB5y_ENcNtB6e_5Break0E0B6e_E0B2j_(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) %0, ptr nofree readonly align 8 captures(none) %1, ptr align 8 %2) unnamed_addr #3 personality ptr @rust_eh_personality {
+define hidden void @_RNCINvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB5_12GenericShuntINtNtB5_3map3MapINtNtNtB9_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive20generate_config_keys0EINtNtB9_6result6ResultNtNtB9_7convert10InfallibleNtNtB1L_5error5ErrorEENtNtNtB7_6traits8iterator8Iterator8try_folduNCINvNvB4m_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtB9_3ops12control_flow11ControlFlowB5y_ENcNtB6e_5Break0E0B6e_E0B2j_(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) %0, ptr nofree readonly align 8 captures(none) %1, ptr align 8 %2) unnamed_addr #3 personality ptr @rust_eh_personality !guid !16 {
 bb.a:
   %i.a = alloca [32 x i8], align 8                ; 2 uses
   %i.b = alloca [32 x i8], align 8                ; 2 uses
@@ -596,7 +596,7 @@ bb.h:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { ptr, ptr } @_RNvMs4_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB5_4IterNtCsbjGuDcEILED_11proc_macro211TokenStreamE3newCs4ZaLwAtrTbk_16deltalake_derive(ptr align 8 %0, i64 %1) unnamed_addr #2 {
+define hidden { ptr, ptr } @_RNvMs4_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB5_4IterNtCsbjGuDcEILED_11proc_macro211TokenStreamE3newCs4ZaLwAtrTbk_16deltalake_derive(ptr align 8 %0, i64 %1) unnamed_addr #2 !guid !17 {
 bb.a:
   %i.a = getelementptr inbounds nuw [32 x i8], ptr %0, i64 %1
   %i.b = insertvalue { ptr, ptr } poison, ptr %0, 0
@@ -605,7 +605,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { ptr, ptr } @_RNvMs4_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB5_4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringE3newCs4ZaLwAtrTbk_16deltalake_derive(ptr align 8 %0, i64 %1) unnamed_addr #2 {
+define hidden { ptr, ptr } @_RNvMs4_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB5_4IterNtNtCs6Po7BT7Nknu_5alloc6string6StringE3newCs4ZaLwAtrTbk_16deltalake_derive(ptr align 8 %0, i64 %1) unnamed_addr #2 !guid !18 {
 bb.a:
   %i.a = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %1
   %i.b = insertvalue { ptr, ptr } poison, ptr %0, 0
@@ -614,7 +614,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden { ptr, ptr } @_RNvMs4_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB5_4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldE3newCs4ZaLwAtrTbk_16deltalake_derive(ptr align 8 %0, i64 %1) unnamed_addr #2 {
+define hidden { ptr, ptr } @_RNvMs4_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB5_4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldE3newCs4ZaLwAtrTbk_16deltalake_derive(ptr align 8 %0, i64 %1) unnamed_addr #2 !guid !19 {
 bb.a:
   %i.a = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %1
   %i.b = insertvalue { ptr, ptr } poison, ptr %0, 0
@@ -623,14 +623,14 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden void @_RNvNtCskxeEtmv7ubq_20unicode_segmentation8grapheme20new_grapheme_indicesCs4ZaLwAtrTbk_16deltalake_derive(ptr nofree writeonly sret([200 x i8]) align 8 captures(none) initializes((0, 200)) %0, ptr %1, i64 %2, i1 zeroext %3) unnamed_addr #3 {
+define hidden void @_RNvNtCskxeEtmv7ubq_20unicode_segmentation8grapheme20new_grapheme_indicesCs4ZaLwAtrTbk_16deltalake_derive(ptr nofree writeonly sret([200 x i8]) align 8 captures(none) initializes((0, 200)) %0, ptr %1, i64 %2, i1 zeroext %3) unnamed_addr #3 !guid !22 {
 bb.a:
   %i.a = alloca [88 x i8], align 8                ; 4 uses
   %.sroa.0 = alloca [176 x i8], align 8           ; 3 uses
   %i.b = ptrtoint ptr %1 to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %i.c = tail call i64 @_RNvMNtCsbvkFyIu7lgC_4core3stre3lenCs4ZaLwAtrTbk_16deltalake_derive(ptr %1, i64 %2) #15, !noalias !5 ; 3 uses
-  call void @_RNvMs4_NtCskxeEtmv7ubq_20unicode_segmentation8graphemeNtB5_14GraphemeCursor3new(ptr nonnull sret([88 x i8]) align 8 %i.a, i64 0, i64 %i.c, i1 zeroext %3), !noalias !5
+  %i.c = tail call i64 @_RNvMNtCsbvkFyIu7lgC_4core3stre3lenCs4ZaLwAtrTbk_16deltalake_derive(ptr %1, i64 %2) #15, !noalias !23 ; 3 uses
+  call void @_RNvMs4_NtCskxeEtmv7ubq_20unicode_segmentation8graphemeNtB5_14GraphemeCursor3new(ptr nonnull sret([88 x i8]) align 8 %i.a, i64 0, i64 %i.c, i1 zeroext %3), !noalias !23
   %.sroa.0.88..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0, i64 88
   call void @_RNvMs4_NtCskxeEtmv7ubq_20unicode_segmentation8graphemeNtB5_14GraphemeCursor3new(ptr nonnull sret([88 x i8]) align 8 %.sroa.0.88..sroa_idx, i64 %i.c, i64 %i.c, i1 zeroext %3)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %.sroa.0, ptr noundef nonnull align 8 dereferenceable(88) %i.a, i64 88, i1 false)
@@ -646,16 +646,16 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB2_12GenericShuntINtNtB2_10filter_map9FilterMapINtNtNtB6_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env0EINtNtB6_6result6ResultNtNtB6_7convert10InfallibleNtNtB1W_5error5ErrorEENtNtNtB4_6traits8iterator8Iterator4nextB2u_(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) initializes((0, 8)) %0, ptr align 8 %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RNvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB2_12GenericShuntINtNtB2_10filter_map9FilterMapINtNtNtB6_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env0EINtNtB6_6result6ResultNtNtB6_7convert10InfallibleNtNtB1W_5error5ErrorEENtNtNtB4_6traits8iterator8Iterator4nextB2u_(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) initializes((0, 8)) %0, ptr align 8 %1) unnamed_addr #0 personality ptr @rust_eh_personality !guid !26 {
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [32 x i8], align 8                ; 5 uses
   %i.c = alloca [32 x i8], align 8                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.e = load ptr, ptr %i.d, align 8, !noalias !8
-  call void @_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters10filter_mapINtB6_9FilterMapINtNtNtBc_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvXB8_INtB8_12GenericShuntBV_INtNtBc_6result6ResultNtNtBc_7convert10InfallibleNtNtB1G_5error5ErrorEEB3a_8try_folduNCINvNvB3a_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtBc_3ops12control_flow11ControlFlowB6f_ENcNtB6V_5Break0E0B6V_E0IB6W_B6V_EEB2e_(ptr nonnull sret([32 x i8]) align 8 %i.b, ptr align 8 %1, ptr nonnull %i.a, ptr align 8 %i.e), !noalias !8
-  %i.f = load i64, ptr %i.b, align 8, !noalias !8
+  %i.e = load ptr, ptr %i.d, align 8, !noalias !27
+  call void @_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters10filter_mapINtB6_9FilterMapINtNtNtBc_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvXB8_INtB8_12GenericShuntBV_INtNtBc_6result6ResultNtNtBc_7convert10InfallibleNtNtB1G_5error5ErrorEEB3a_8try_folduNCINvNvB3a_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtBc_3ops12control_flow11ControlFlowB6f_ENcNtB6V_5Break0E0B6V_E0IB6W_B6V_EEB2e_(ptr nonnull sret([32 x i8]) align 8 %i.b, ptr align 8 %1, ptr nonnull %i.a, ptr align 8 %i.e), !noalias !27
+  %i.f = load i64, ptr %i.b, align 8, !noalias !27
   %.not.i = icmp eq i64 %i.f, -9223372036854775806
   br i1 %.not.i, label %bb.c, label %bb.b
 
@@ -687,7 +687,7 @@ bb.f:                                             ; preds = %_RINvXNtNtCsbvkFyIu
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB2_12GenericShuntINtNtB2_10filter_map9FilterMapINtNtNtB6_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env0EINtNtB6_6result6ResultNtNtB6_7convert10InfallibleNtNtB1W_5error5ErrorEENtNtNtB4_6traits8iterator8Iterator9size_hintB2u_(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr align 8 %1) unnamed_addr #0 {
+define hidden void @_RNvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB2_12GenericShuntINtNtB2_10filter_map9FilterMapINtNtNtB6_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env0EINtNtB6_6result6ResultNtNtB6_7convert10InfallibleNtNtB1W_5error5ErrorEENtNtNtB4_6traits8iterator8Iterator9size_hintB2u_(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr align 8 %1) unnamed_addr #0 !guid !28 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -711,16 +711,16 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB2_12GenericShuntINtNtB2_10filter_map9FilterMapINtNtNtB6_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive23generate_try_update_key0EINtNtB6_6result6ResultNtNtB6_7convert10InfallibleNtNtB1W_5error5ErrorEENtNtNtB4_6traits8iterator8Iterator4nextB2u_(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) initializes((0, 8)) %0, ptr align 8 %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RNvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB2_12GenericShuntINtNtB2_10filter_map9FilterMapINtNtNtB6_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive23generate_try_update_key0EINtNtB6_6result6ResultNtNtB6_7convert10InfallibleNtNtB1W_5error5ErrorEENtNtNtB4_6traits8iterator8Iterator4nextB2u_(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) initializes((0, 8)) %0, ptr align 8 %1) unnamed_addr #0 personality ptr @rust_eh_personality !guid !31 {
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [32 x i8], align 8                ; 5 uses
   %i.c = alloca [32 x i8], align 8                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.e = load ptr, ptr %i.d, align 8, !noalias !11
-  call void @_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters10filter_mapINtB6_9FilterMapINtNtNtBc_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive23generate_try_update_key0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvXB8_INtB8_12GenericShuntBV_INtNtBc_6result6ResultNtNtBc_7convert10InfallibleNtNtB1G_5error5ErrorEEB3b_8try_folduNCINvNvB3b_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtBc_3ops12control_flow11ControlFlowB6g_ENcNtB6W_5Break0E0B6W_E0IB6X_B6W_EEB2e_(ptr nonnull sret([32 x i8]) align 8 %i.b, ptr align 8 %1, ptr nonnull %i.a, ptr align 8 %i.e), !noalias !11
-  %i.f = load i64, ptr %i.b, align 8, !noalias !11
+  %i.e = load ptr, ptr %i.d, align 8, !noalias !32
+  call void @_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters10filter_mapINtB6_9FilterMapINtNtNtBc_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive23generate_try_update_key0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvXB8_INtB8_12GenericShuntBV_INtNtBc_6result6ResultNtNtBc_7convert10InfallibleNtNtB1G_5error5ErrorEEB3b_8try_folduNCINvNvB3b_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtBc_3ops12control_flow11ControlFlowB6g_ENcNtB6W_5Break0E0B6W_E0IB6X_B6W_EEB2e_(ptr nonnull sret([32 x i8]) align 8 %i.b, ptr align 8 %1, ptr nonnull %i.a, ptr align 8 %i.e), !noalias !32
+  %i.f = load i64, ptr %i.b, align 8, !noalias !32
   %.not.i = icmp eq i64 %i.f, -9223372036854775806
   br i1 %.not.i, label %bb.c, label %bb.b
 
@@ -752,7 +752,7 @@ bb.f:                                             ; preds = %_RINvXNtNtCsbvkFyIu
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB2_12GenericShuntINtNtB2_10filter_map9FilterMapINtNtNtB6_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive23generate_try_update_key0EINtNtB6_6result6ResultNtNtB6_7convert10InfallibleNtNtB1W_5error5ErrorEENtNtNtB4_6traits8iterator8Iterator9size_hintB2u_(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr align 8 %1) unnamed_addr #0 {
+define hidden void @_RNvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB2_12GenericShuntINtNtB2_10filter_map9FilterMapINtNtNtB6_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive23generate_try_update_key0EINtNtB6_6result6ResultNtNtB6_7convert10InfallibleNtNtB1W_5error5ErrorEENtNtNtB4_6traits8iterator8Iterator9size_hintB2u_(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr align 8 %1) unnamed_addr #0 !guid !33 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -776,16 +776,16 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB2_12GenericShuntINtNtB2_3map3MapINtNtNtB6_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive20generate_config_keys0EINtNtB6_6result6ResultNtNtB6_7convert10InfallibleNtNtB1I_5error5ErrorEENtNtNtB4_6traits8iterator8Iterator4nextB2g_(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) initializes((0, 8)) %0, ptr align 8 %1) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RNvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB2_12GenericShuntINtNtB2_3map3MapINtNtNtB6_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive20generate_config_keys0EINtNtB6_6result6ResultNtNtB6_7convert10InfallibleNtNtB1I_5error5ErrorEENtNtNtB4_6traits8iterator8Iterator4nextB2g_(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) initializes((0, 8)) %0, ptr align 8 %1) unnamed_addr #0 personality ptr @rust_eh_personality !guid !36 {
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = alloca [32 x i8], align 8                ; 5 uses
   %i.c = alloca [32 x i8], align 8                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.e = load ptr, ptr %i.d, align 8, !noalias !14
-  call void @_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive20generate_config_keys0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvXB8_INtB8_12GenericShuntBN_INtNtBc_6result6ResultNtNtBc_7convert10InfallibleNtNtB1s_5error5ErrorEEB2U_8try_folduNCINvNvB2U_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtBc_3ops12control_flow11ControlFlowB5Z_ENcNtB6F_5Break0E0B6F_E0IB6G_B6F_EEB20_(ptr nonnull sret([32 x i8]) align 8 %i.b, ptr align 8 %1, ptr nonnull %i.a, ptr align 8 %i.e), !noalias !14
-  %i.f = load i64, ptr %i.b, align 8, !noalias !14
+  %i.e = load ptr, ptr %i.d, align 8, !noalias !37
+  call void @_RINvXs0_NtNtNtCsbvkFyIu7lgC_4core4iter8adapters3mapINtB6_3MapINtNtNtBc_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive20generate_config_keys0ENtNtNtBa_6traits8iterator8Iterator8try_folduNCINvXB8_INtB8_12GenericShuntBN_INtNtBc_6result6ResultNtNtBc_7convert10InfallibleNtNtB1s_5error5ErrorEEB2U_8try_folduNCINvNvB2U_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtBc_3ops12control_flow11ControlFlowB5Z_ENcNtB6F_5Break0E0B6F_E0IB6G_B6F_EEB20_(ptr nonnull sret([32 x i8]) align 8 %i.b, ptr align 8 %1, ptr nonnull %i.a, ptr align 8 %i.e), !noalias !37
+  %i.f = load i64, ptr %i.b, align 8, !noalias !37
   %.not.i = icmp eq i64 %i.f, -9223372036854775806
   br i1 %.not.i, label %bb.c, label %bb.b
 
@@ -817,7 +817,7 @@ bb.f:                                             ; preds = %_RINvXNtNtCsbvkFyIu
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB2_12GenericShuntINtNtB2_3map3MapINtNtNtB6_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive20generate_config_keys0EINtNtB6_6result6ResultNtNtB6_7convert10InfallibleNtNtB1I_5error5ErrorEENtNtNtB4_6traits8iterator8Iterator9size_hintB2g_(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr align 8 %1) unnamed_addr #0 {
+define hidden void @_RNvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB2_12GenericShuntINtNtB2_3map3MapINtNtNtB6_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive20generate_config_keys0EINtNtB6_6result6ResultNtNtB6_7convert10InfallibleNtNtB1I_5error5ErrorEENtNtNtB4_6traits8iterator8Iterator9size_hintB2g_(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr align 8 %1) unnamed_addr #0 !guid !38 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
@@ -841,28 +841,28 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RNvXNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collectINtNtB6_8adapters12GenericShuntINtNtBO_10filter_map9FilterMapINtNtNtB8_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env0EINtNtB8_6result6ResultNtNtB8_7convert10InfallibleNtNtB2f_5error5ErrorEENtB2_12IntoIterator9into_iterB2N_(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #1 {
+define hidden void @_RNvXNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collectINtNtB6_8adapters12GenericShuntINtNtBO_10filter_map9FilterMapINtNtNtB8_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env0EINtNtB8_6result6ResultNtNtB8_7convert10InfallibleNtNtB2f_5error5ErrorEENtB2_12IntoIterator9into_iterB2N_(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #1 !guid !39 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
   ret void
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RNvXNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collectINtNtB6_8adapters12GenericShuntINtNtBO_10filter_map9FilterMapINtNtNtB8_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive23generate_try_update_key0EINtNtB8_6result6ResultNtNtB8_7convert10InfallibleNtNtB2f_5error5ErrorEENtB2_12IntoIterator9into_iterB2N_(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #1 {
+define hidden void @_RNvXNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collectINtNtB6_8adapters12GenericShuntINtNtBO_10filter_map9FilterMapINtNtNtB8_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive23generate_try_update_key0EINtNtB8_6result6ResultNtNtB8_7convert10InfallibleNtNtB2f_5error5ErrorEENtB2_12IntoIterator9into_iterB2N_(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #1 !guid !40 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
   ret void
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RNvXNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collectINtNtB6_8adapters12GenericShuntINtNtBO_3map3MapINtNtNtB8_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive20generate_config_keys0EINtNtB8_6result6ResultNtNtB8_7convert10InfallibleNtNtB21_5error5ErrorEENtB2_12IntoIterator9into_iterB2z_(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #1 {
+define hidden void @_RNvXNtNtNtCsbvkFyIu7lgC_4core4iter6traits7collectINtNtB6_8adapters12GenericShuntINtNtBO_3map3MapINtNtNtB8_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive20generate_config_keys0EINtNtB8_6result6ResultNtNtB8_7convert10InfallibleNtNtB21_5error5ErrorEENtB2_12IntoIterator9into_iterB2z_(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #1 !guid !41 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
   ret void
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden align 8 ptr @_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterNtCsbjGuDcEILED_11proc_macro211TokenStreamENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4ZaLwAtrTbk_16deltalake_derive(ptr nofree align 8 captures(none) %0) unnamed_addr #1 {
+define hidden align 8 ptr @_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterNtCsbjGuDcEILED_11proc_macro211TokenStreamENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs4ZaLwAtrTbk_16deltalake_derive(ptr nofree align 8 captures(none) %0) unnamed_addr #1 !guid !42 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8                ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -881,7 +881,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENtNtNtNtBa_4iter6traits8iterator8Iterator9size_hintCs4ZaLwAtrTbk_16deltalake_derive(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #1 {
+define hidden void @_RNvXs2J_NtNtCsbvkFyIu7lgC_4core5slice4iterINtB6_4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENtNtNtNtBa_4iter6traits8iterator8Iterator9size_hintCs4ZaLwAtrTbk_16deltalake_derive(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #1 !guid !43 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.b = load ptr, ptr %i.a, align 8
@@ -899,7 +899,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden void @_RNvXs7_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_18MultiCharEqPatternNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_7Pattern13into_searcherCs4ZaLwAtrTbk_16deltalake_derive(ptr nofree writeonly sret([40 x i8]) align 8 captures(none) initializes((0, 40)) %0, ptr %1, i64 %2) unnamed_addr #3 personality ptr @rust_eh_personality {
+define hidden void @_RNvXs7_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_18MultiCharEqPatternNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_7Pattern13into_searcherCs4ZaLwAtrTbk_16deltalake_derive(ptr nofree writeonly sret([40 x i8]) align 8 captures(none) initializes((0, 40)) %0, ptr %1, i64 %2) unnamed_addr #3 personality ptr @rust_eh_personality !guid !44 {
 bb.a:
   %i.a = tail call { ptr, ptr } @_RNvMNtCsbvkFyIu7lgC_4core3stre5charsCs4ZaLwAtrTbk_16deltalake_derive(ptr %1, i64 %2) ; 2 uses
   %i.b = extractvalue { ptr, ptr } %i.a, 0
@@ -917,26 +917,26 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden void @_RNvXso_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs4ZaLwAtrTbk_16deltalake_derive(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) %0, ptr align 8 %1) unnamed_addr #3 {
+define hidden void @_RNvXso_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs4ZaLwAtrTbk_16deltalake_derive(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) %0, ptr align 8 %1) unnamed_addr #3 !guid !49 {
 bb.a:
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !19)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !50)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 40
   br label %bb.b
 
 bb.b:                                             ; preds = %_RNvXs8_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive.exit.i, %bb.a
-  %i.d = load ptr, ptr %i.b, align 8, !noalias !20
-  %i.e = load ptr, ptr %i.a, align 8, !noalias !20
-  %i.f = tail call { i64, i32 } @_RNvXs3_NtNtCsbvkFyIu7lgC_4core3str4iterNtB5_11CharIndicesNtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull align 8 %i.a) #15, !noalias !20 ; 2 uses
+  %i.d = load ptr, ptr %i.b, align 8, !noalias !51
+  %i.e = load ptr, ptr %i.a, align 8, !noalias !51
+  %i.f = tail call { i64, i32 } @_RNvXs3_NtNtCsbvkFyIu7lgC_4core3str4iterNtB5_11CharIndicesNtNtNtNtB9_4iter6traits8iterator8Iterator4nextCs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull align 8 %i.a) #15, !noalias !51 ; 2 uses
   %i.g = extractvalue { i64, i32 } %i.f, 1        ; 2 uses
   %.not.i.i = icmp eq i32 %i.g, 1114112
   br i1 %.not.i.i, label %_RNvYINtNtNtCsbvkFyIu7lgC_4core3str7pattern19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs4ZaLwAtrTbk_16deltalake_derive.exit, label %_RNvXs8_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive.exit.i
 
 _RNvXs8_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive.exit.i: ; preds = %bb.b
-  %i.h = load ptr, ptr %i.b, align 8, !noalias !20
-  %i.i = load ptr, ptr %i.a, align 8, !noalias !20
-  %i.j = tail call zeroext i1 @_RNvXs3_NtNtCsbvkFyIu7lgC_4core3str7patternNvMNtNtB9_4char7methodsc13is_whitespaceNtB5_11MultiCharEq7matchesCs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull %i.c, i32 %i.g) #15, !noalias !20
+  %i.h = load ptr, ptr %i.b, align 8, !noalias !51
+  %i.i = load ptr, ptr %i.a, align 8, !noalias !51
+  %i.j = tail call zeroext i1 @_RNvXs3_NtNtCsbvkFyIu7lgC_4core3str7patternNvMNtNtB9_4char7methodsc13is_whitespaceNtB5_11MultiCharEq7matchesCs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull %i.c, i32 %i.g) #15, !noalias !51
   br i1 %i.j, label %bb.b, label %bb.c
 
 bb.c:                                             ; preds = %_RNvXs8_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive.exit.i
@@ -950,38 +950,38 @@ bb.c:                                             ; preds = %_RNvXs8_NtNtCsbvkFy
   %i.r = sub i64 %i.p, %i.q
   %i.s = add i64 %i.r, %i.k
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.o, ptr %i.t, align 8, !alias.scope !19
+  store i64 %i.o, ptr %i.t, align 8, !alias.scope !50
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %i.s, ptr %i.u, align 8, !alias.scope !19
+  store i64 %i.s, ptr %i.u, align 8, !alias.scope !50
   br label %_RNvYINtNtNtCsbvkFyIu7lgC_4core3str7pattern19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs4ZaLwAtrTbk_16deltalake_derive.exit
 
 _RNvYINtNtNtCsbvkFyIu7lgC_4core3str7pattern19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs4ZaLwAtrTbk_16deltalake_derive.exit: ; preds = %bb.b, %bb.c
   %storemerge.i = phi i64 [ 1, %bb.c ], [ 0, %bb.b ]
-  store i64 %storemerge.i, ptr %0, align 8, !alias.scope !19
+  store i64 %storemerge.i, ptr %0, align 8, !alias.scope !50
   ret void
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden void @_RNvXsp_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_15ReverseSearcher16next_reject_backCs4ZaLwAtrTbk_16deltalake_derive(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) %0, ptr align 8 %1) unnamed_addr #3 {
+define hidden void @_RNvXsp_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_21CharPredicateSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_15ReverseSearcher16next_reject_backCs4ZaLwAtrTbk_16deltalake_derive(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) %0, ptr align 8 %1) unnamed_addr #3 !guid !56 {
 bb.a:
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !25)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !57)
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 40
   br label %bb.b
 
 bb.b:                                             ; preds = %_RNvXs9_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_15ReverseSearcher9next_backCs4ZaLwAtrTbk_16deltalake_derive.exit.i, %bb.a
-  %i.d = load ptr, ptr %i.b, align 8, !noalias !26
-  %i.e = load ptr, ptr %i.a, align 8, !noalias !26
-  %i.f = tail call { i64, i32 } @_RNvXs4_NtNtCsbvkFyIu7lgC_4core3str4iterNtB5_11CharIndicesNtNtNtNtB9_4iter6traits12double_ended19DoubleEndedIterator9next_backCs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull align 8 %i.a) #15, !noalias !26 ; 2 uses
+  %i.d = load ptr, ptr %i.b, align 8, !noalias !58
+  %i.e = load ptr, ptr %i.a, align 8, !noalias !58
+  %i.f = tail call { i64, i32 } @_RNvXs4_NtNtCsbvkFyIu7lgC_4core3str4iterNtB5_11CharIndicesNtNtNtNtB9_4iter6traits12double_ended19DoubleEndedIterator9next_backCs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull align 8 %i.a) #15, !noalias !58 ; 2 uses
   %i.g = extractvalue { i64, i32 } %i.f, 1        ; 2 uses
   %.not.i.i = icmp eq i32 %i.g, 1114112
   br i1 %.not.i.i, label %_RNvYINtNtNtCsbvkFyIu7lgC_4core3str7pattern19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_15ReverseSearcher16next_reject_backCs4ZaLwAtrTbk_16deltalake_derive.exit, label %_RNvXs9_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_15ReverseSearcher9next_backCs4ZaLwAtrTbk_16deltalake_derive.exit.i
 
 _RNvXs9_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_15ReverseSearcher9next_backCs4ZaLwAtrTbk_16deltalake_derive.exit.i: ; preds = %bb.b
-  %i.h = load ptr, ptr %i.b, align 8, !noalias !26
-  %i.i = load ptr, ptr %i.a, align 8, !noalias !26
-  %i.j = tail call zeroext i1 @_RNvXs3_NtNtCsbvkFyIu7lgC_4core3str7patternNvMNtNtB9_4char7methodsc13is_whitespaceNtB5_11MultiCharEq7matchesCs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull %i.c, i32 %i.g) #15, !noalias !26
+  %i.h = load ptr, ptr %i.b, align 8, !noalias !58
+  %i.i = load ptr, ptr %i.a, align 8, !noalias !58
+  %i.j = tail call zeroext i1 @_RNvXs3_NtNtCsbvkFyIu7lgC_4core3str7patternNvMNtNtB9_4char7methodsc13is_whitespaceNtB5_11MultiCharEq7matchesCs4ZaLwAtrTbk_16deltalake_derive(ptr nonnull %i.c, i32 %i.g) #15, !noalias !58
   br i1 %i.j, label %bb.b, label %bb.c
 
 bb.c:                                             ; preds = %_RNvXs9_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_15ReverseSearcher9next_backCs4ZaLwAtrTbk_16deltalake_derive.exit.i
@@ -995,19 +995,19 @@ bb.c:                                             ; preds = %_RNvXs9_NtNtCsbvkFy
   %i.r = sub i64 %i.p, %i.q
   %i.s = add i64 %i.r, %i.k
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i64 %i.o, ptr %i.t, align 8, !alias.scope !25
+  store i64 %i.o, ptr %i.t, align 8, !alias.scope !57
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 16
-  store i64 %i.s, ptr %i.u, align 8, !alias.scope !25
+  store i64 %i.s, ptr %i.u, align 8, !alias.scope !57
   br label %_RNvYINtNtNtCsbvkFyIu7lgC_4core3str7pattern19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_15ReverseSearcher16next_reject_backCs4ZaLwAtrTbk_16deltalake_derive.exit
 
 _RNvYINtNtNtCsbvkFyIu7lgC_4core3str7pattern19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_15ReverseSearcher16next_reject_backCs4ZaLwAtrTbk_16deltalake_derive.exit: ; preds = %bb.b, %bb.c
   %storemerge.i = phi i64 [ 1, %bb.c ], [ 0, %bb.b ]
-  store i64 %storemerge.i, ptr %0, align 8, !alias.scope !25
+  store i64 %storemerge.i, ptr %0, align 8, !alias.scope !57
   ret void
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define hidden zeroext i1 @_RNvXst_NtNtCsbvkFyIu7lgC_4core3str7patternReNtB5_7Pattern15is_contained_inCs4ZaLwAtrTbk_16deltalake_derive(ptr %0, i64 %1, ptr %2, i64 %3) unnamed_addr #3 {
+define hidden zeroext i1 @_RNvXst_NtNtCsbvkFyIu7lgC_4core3str7patternReNtB5_7Pattern15is_contained_inCs4ZaLwAtrTbk_16deltalake_derive(ptr %0, i64 %1, ptr %2, i64 %3) unnamed_addr #3 !guid !63 {
 bb.a:
   %i.a = alloca [1 x i8], align 1                 ; 5 uses
   %i.b = alloca [24 x i8], align 8                ; 7 uses
@@ -1056,9 +1056,9 @@ bb.g:                                             ; preds = %bb.d
 
 bb.h:                                             ; preds = %_RNvNtNtCsbvkFyIu7lgC_4core3str7pattern13simd_containsCs4ZaLwAtrTbk_16deltalake_derive.exit, %bb.f
   call void @_RNvMsu_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcher3new(ptr nonnull sret([104 x i8]) align 8 %i.n, ptr %2, i64 %3, ptr %0, i64 %1)
-  call void @llvm.experimental.noalias.scope.decl(metadata !31)
+  call void @llvm.experimental.noalias.scope.decl(metadata !64)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
-  %i.y = load i64, ptr %i.n, align 8, !noalias !31
+  %i.y = load i64, ptr %i.n, align 8, !noalias !64
   %i.z = trunc nuw i64 %i.y to i1
   %i.aa = getelementptr inbounds nuw i8, ptr %i.n, i64 8 ; 6 uses
   br i1 %i.z, label %bb.i, label %.preheader.i
@@ -1079,46 +1079,46 @@ bb.h:                                             ; preds = %_RNvNtNtCsbvkFyIu7l
 
 bb.i:                                             ; preds = %bb.h
   %i.am = getelementptr inbounds nuw i8, ptr %i.n, i64 56
-  %i.an = load i64, ptr %i.am, align 8, !noalias !31
+  %i.an = load i64, ptr %i.am, align 8, !noalias !64
   %i.ao = icmp eq i64 %i.an, -1
   %i.ap = getelementptr inbounds nuw i8, ptr %i.n, i64 72
-  %i.aq = load ptr, ptr %i.ap, align 8, !noalias !31 ; 2 uses
+  %i.aq = load ptr, ptr %i.ap, align 8, !noalias !64 ; 2 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %i.n, i64 80
-  %i.as = load i64, ptr %i.ar, align 8, !noalias !31 ; 2 uses
+  %i.as = load i64, ptr %i.ar, align 8, !noalias !64 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.n, i64 88
-  %i.au = load ptr, ptr %i.at, align 8, !noalias !31 ; 2 uses
+  %i.au = load ptr, ptr %i.at, align 8, !noalias !64 ; 2 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.n, i64 96
-  %i.aw = load i64, ptr %i.av, align 8, !noalias !31 ; 2 uses
+  %i.aw = load i64, ptr %i.av, align 8, !noalias !64 ; 2 uses
   br i1 %i.ao, label %bb.ae, label %bb.af
 
 bb.j:                                             ; preds = %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive.exit.i, %.preheader.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !32)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !31
-  %i.ax = load i64, ptr %i.n, align 8, !noalias !33
+  call void @llvm.experimental.noalias.scope.decl(metadata !65)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !64
+  %i.ax = load i64, ptr %i.n, align 8, !noalias !66
   %i.ay = trunc nuw i64 %i.ax to i1
   br i1 %i.ay, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.az = load i64, ptr %i.ai, align 8, !noalias !33
-  %i.ba = load i64, ptr %i.ae, align 8, !noalias !33 ; 2 uses
+  %i.az = load i64, ptr %i.ai, align 8, !noalias !66
+  %i.ba = load i64, ptr %i.ae, align 8, !noalias !66 ; 2 uses
   %i.bb = icmp eq i64 %i.az, %i.ba
   br i1 %i.bb, label %.sink.split.i.i, label %bb.x
 
 bb.l:                                             ; preds = %bb.j
-  %i.bc = load i8, ptr %i.ab, align 2, !noalias !33
+  %i.bc = load i8, ptr %i.ab, align 2, !noalias !66
   %i.bd = trunc nuw i8 %i.bc to i1
   br i1 %i.bd, label %.sink.split.i.i, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.be = load i8, ptr %i.ac, align 8, !noalias !33 ; 2 uses
+  %i.be = load i8, ptr %i.ac, align 8, !noalias !66 ; 2 uses
   %i.bf = trunc nuw i8 %i.be to i1                ; 2 uses
   %i.bg = and i8 %i.be, 1
   %i.bh = xor i8 %i.bg, 1
-  store i8 %i.bh, ptr %i.ac, align 8, !noalias !33
-  %i.bi = load i64, ptr %i.aa, align 8, !noalias !33 ; 5 uses
-  %i.bj = load ptr, ptr %i.ad, align 8, !noalias !33 ; 2 uses
-  %i.bk = load i64, ptr %i.ae, align 8, !noalias !33 ; 3 uses
-  %i.bl = call { ptr, i64 } @_RNvXs9_NtNtCsbvkFyIu7lgC_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3getCs4ZaLwAtrTbk_16deltalake_derive(i64 %i.bi, ptr %i.bj, i64 %i.bk) #15, !noalias !33 ; 2 uses
+  store i8 %i.bh, ptr %i.ac, align 8, !noalias !66
+  %i.bi = load i64, ptr %i.aa, align 8, !noalias !66 ; 5 uses
+  %i.bj = load ptr, ptr %i.ad, align 8, !noalias !66 ; 2 uses
+  %i.bk = load i64, ptr %i.ae, align 8, !noalias !66 ; 3 uses
+  %i.bl = call { ptr, i64 } @_RNvXs9_NtNtCsbvkFyIu7lgC_4core3str6traitsINtNtNtB9_3ops5range9RangeFromjEINtNtNtB9_5slice5index10SliceIndexeE3getCs4ZaLwAtrTbk_16deltalake_derive(i64 %i.bi, ptr %i.bj, i64 %i.bk) #15, !noalias !66 ; 2 uses
   %i.bm = extractvalue { ptr, i64 } %i.bl, 0      ; 3 uses
   %.not.i.i = icmp eq ptr %i.bm, null
   br i1 %.not.i.i, label %bb.o, label %bb.n
@@ -1126,16 +1126,16 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m
   %i.bn = extractvalue { ptr, i64 } %i.bl, 1
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bm, i64 %i.bn
-  store ptr %i.bm, ptr %i.l, align 8, !noalias !33
-  store ptr %i.bo, ptr %i.af, align 8, !noalias !33
-  %i.bp = call { i32, i32 } @_RINvNtNtCsbvkFyIu7lgC_4core3str11validations15next_code_pointINtNtNtB6_5slice4iter4IterhEECsbjGuDcEILED_11proc_macro2(ptr nonnull align 8 %i.l) #15, !noalias !33 ; 2 uses
+  store ptr %i.bm, ptr %i.l, align 8, !noalias !66
+  store ptr %i.bo, ptr %i.af, align 8, !noalias !66
+  %i.bp = call { i32, i32 } @_RINvNtNtCsbvkFyIu7lgC_4core3str11validations15next_code_pointINtNtNtB6_5slice4iter4IterhEECsbjGuDcEILED_11proc_macro2(ptr nonnull align 8 %i.l) #15, !noalias !66 ; 2 uses
   %i.bq = extractvalue { i32, i32 } %i.bp, 0
   %i.br = extractvalue { i32, i32 } %i.bp, 1      ; 3 uses
   %i.bs = trunc i32 %i.bq to i1
   br i1 %i.bs, label %bb.p, label %bb.q
 
 bb.o:                                             ; preds = %bb.m
-  call void @_RNvNtCsbvkFyIu7lgC_4core3str16slice_error_fail(ptr %i.bj, i64 %i.bk, i64 %i.bi, i64 %i.bk, ptr nonnull align 8 @5) #16, !noalias !33
+  call void @_RNvNtCsbvkFyIu7lgC_4core3str16slice_error_fail(ptr %i.bj, i64 %i.bk, i64 %i.bi, i64 %i.bk, ptr nonnull align 8 @5) #16, !noalias !66
   unreachable
 
 bb.p:                                             ; preds = %bb.n
@@ -1145,12 +1145,12 @@ bb.q:                                             ; preds = %bb.n
   br i1 %i.bf, label %bb.s, label %bb.r
 
 bb.r:                                             ; preds = %bb.q
-  store i8 1, ptr %i.ab, align 2, !noalias !33
+  store i8 1, ptr %i.ab, align 2, !noalias !66
   br label %.sink.split.i.i
 
 bb.s:                                             ; preds = %bb.q, %bb.p
-  store i64 %i.bi, ptr %i.ag, align 8, !alias.scope !32, !noalias !31
-  store i64 %i.bi, ptr %i.ah, align 8, !alias.scope !32, !noalias !31
+  store i64 %i.bi, ptr %i.ag, align 8, !alias.scope !65, !noalias !64
+  store i64 %i.bi, ptr %i.ah, align 8, !alias.scope !65, !noalias !64
   br label %.sink.split.i.i
 
 bb.t:                                             ; preds = %bb.p
@@ -1168,34 +1168,34 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.v, %bb.u, %bb.t
   %.sroa.01.0.i.i = phi i64 [ 2, %bb.u ], [ %..i.i, %bb.v ], [ 1, %bb.t ]
-  %i.bw = load i64, ptr %i.aa, align 8, !noalias !33
+  %i.bw = load i64, ptr %i.aa, align 8, !noalias !66
   %i.bx = add i64 %i.bw, %.sroa.01.0.i.i          ; 2 uses
-  store i64 %i.bx, ptr %i.aa, align 8, !noalias !33
-  store i64 %i.bi, ptr %i.ag, align 8, !alias.scope !32, !noalias !31
-  store i64 %i.bx, ptr %i.ah, align 8, !alias.scope !32, !noalias !31
+  store i64 %i.bx, ptr %i.aa, align 8, !noalias !66
+  store i64 %i.bi, ptr %i.ag, align 8, !alias.scope !65, !noalias !64
+  store i64 %i.bx, ptr %i.ah, align 8, !alias.scope !65, !noalias !64
   br label %.sink.split.i.i
 
 .sink.split.i.i:                                  ; preds = %.split._crit_edge.i.i, %bb.w, %bb.s, %bb.r, %bb.l, %bb.k
   %.sink.i.i = phi i64 [ 2, %bb.r ], [ 0, %bb.s ], [ 1, %bb.w ], [ 1, %.split._crit_edge.i.i ], [ 2, %bb.k ], [ 2, %bb.l ] ; 2 uses
-  store i64 %.sink.i.i, ptr %i.m, align 8, !alias.scope !32, !noalias !31
+  store i64 %.sink.i.i, ptr %i.m, align 8, !alias.scope !65, !noalias !64
   br label %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive.exit.i
 
 bb.x:                                             ; preds = %bb.k
-  %i.by = load i64, ptr %i.aj, align 8, !noalias !33
+  %i.by = load i64, ptr %i.aj, align 8, !noalias !66
   %i.bz = icmp eq i64 %i.by, -1
-  %i.ca = load ptr, ptr %i.ad, align 8, !noalias !33
-  %i.cb = load ptr, ptr %i.ak, align 8, !noalias !33
-  %i.cc = load i64, ptr %i.al, align 8, !noalias !33
-  call void @_RINvMsx_NtNtCsbvkFyIu7lgC_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_14RejectAndMatchECsbjGuDcEILED_11proc_macro2(ptr nonnull sret([24 x i8]) align 8 %i.m, ptr nonnull align 8 %i.aa, ptr %i.ca, i64 %i.ba, ptr %i.cb, i64 %i.cc, i1 zeroext %i.bz) #15, !noalias !31
-  %i.cd = load i64, ptr %i.m, align 8, !noalias !31 ; 2 uses
+  %i.ca = load ptr, ptr %i.ad, align 8, !noalias !66
+  %i.cb = load ptr, ptr %i.ak, align 8, !noalias !66
+  %i.cc = load i64, ptr %i.al, align 8, !noalias !66
+  call void @_RINvMsx_NtNtCsbvkFyIu7lgC_4core3str7patternNtB6_14TwoWaySearcher4nextNtB6_14RejectAndMatchECsbjGuDcEILED_11proc_macro2(ptr nonnull sret([24 x i8]) align 8 %i.m, ptr nonnull align 8 %i.aa, ptr %i.ca, i64 %i.ba, ptr %i.cb, i64 %i.cc, i1 zeroext %i.bz) #15, !noalias !64
+  %i.cd = load i64, ptr %i.m, align 8, !noalias !64 ; 2 uses
   %i.ce = icmp eq i64 %i.cd, 1
   br i1 %i.ce, label %bb.y, label %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive.exit.i
 
 bb.y:                                             ; preds = %bb.x
-  %i.cf = load i64, ptr %i.ag, align 8, !alias.scope !32, !noalias !31
-  %i.cg = load i64, ptr %i.ah, align 8, !alias.scope !32, !noalias !31 ; 2 uses
-  %i.ch = load ptr, ptr %i.ad, align 8, !noalias !33
-  %i.ci = load i64, ptr %i.ae, align 8, !noalias !33 ; 3 uses
+  %i.cf = load i64, ptr %i.ag, align 8, !alias.scope !65, !noalias !64
+  %i.cg = load i64, ptr %i.ah, align 8, !alias.scope !65, !noalias !64 ; 2 uses
+  %i.ch = load ptr, ptr %i.ad, align 8, !noalias !66
+  %i.ci = load i64, ptr %i.ae, align 8, !noalias !66 ; 3 uses
   %i.cj = icmp eq i64 %i.cg, 0
   br i1 %i.cj, label %.split._crit_edge.i.i, label %.lr.ph.i.i
 
@@ -1206,11 +1206,11 @@ bb.y:                                             ; preds = %bb.x
 
 .split._crit_edge.i.i:                            ; preds = %bb.aa, %bb.z, %.split.i.i, %bb.y
   %.sroa.02.0.lcssa.i.i = phi i64 [ 0, %bb.y ], [ %i.ci, %.split.i.i ], [ 0, %bb.aa ], [ %.sroa.02.015.i.i, %bb.z ] ; 2 uses
-  %i.ck = load i64, ptr %i.ai, align 8, !noalias !33
-  %i.cl = call i64 @_RNvYjNtNtCsbvkFyIu7lgC_4core3cmp3Ord3maxCsbjGuDcEILED_11proc_macro2(i64 %.sroa.02.0.lcssa.i.i, i64 %i.ck) #15, !noalias !31
-  store i64 %i.cl, ptr %i.ai, align 8, !noalias !33
-  store i64 %i.cf, ptr %i.ag, align 8, !alias.scope !32, !noalias !31
-  store i64 %.sroa.02.0.lcssa.i.i, ptr %i.ah, align 8, !alias.scope !32, !noalias !31
+  %i.ck = load i64, ptr %i.ai, align 8, !noalias !66
+  %i.cl = call i64 @_RNvYjNtNtCsbvkFyIu7lgC_4core3cmp3Ord3maxCsbjGuDcEILED_11proc_macro2(i64 %.sroa.02.0.lcssa.i.i, i64 %i.ck) #15, !noalias !64
+  store i64 %i.cl, ptr %i.ai, align 8, !noalias !66
+  store i64 %i.cf, ptr %i.ag, align 8, !alias.scope !65, !noalias !64
+  store i64 %.sroa.02.0.lcssa.i.i, ptr %i.ah, align 8, !alias.scope !65, !noalias !64
   br label %.sink.split.i.i
 
 .split.i.i:                                       ; preds = %.lr.ph.i.i
@@ -1219,7 +1219,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %.lr.ph.i.i
   %i.cn = getelementptr inbounds nuw i8, ptr %i.ch, i64 %.sroa.02.015.i.i
-  %i.co = load i8, ptr %i.cn, align 1, !noalias !31
+  %i.co = load i8, ptr %i.cn, align 1, !noalias !64
   %i.cp = icmp sgt i8 %i.co, -65
   br i1 %i.cp, label %.split._crit_edge.i.i, label %bb.aa
 
@@ -1230,7 +1230,7 @@ bb.aa:                                            ; preds = %bb.z, %.split.i.i
 
 _RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive.exit.i: ; preds = %bb.x, %.sink.split.i.i
   %i.cs = phi i64 [ %.sink.i.i, %.sink.split.i.i ], [ %i.cd, %bb.x ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !31
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !64
   switch i64 %i.cs, label %bb.ab [
     i64 0, label %bb.ac
     i64 1, label %bb.j
@@ -1241,11 +1241,11 @@ bb.ab:                                            ; preds = %_RNvXsv_NtNtCsbvkFy
   unreachable
 
 bb.ac:                                            ; preds = %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive.exit.i
-  store i64 1, ptr %i.o, align 8, !alias.scope !31
+  store i64 1, ptr %i.o, align 8, !alias.scope !64
   br label %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_matchCs4ZaLwAtrTbk_16deltalake_derive.exit
 
 bb.ad:                                            ; preds = %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive.exit.i
-  store i64 0, ptr %i.o, align 8, !alias.scope !31
+  store i64 0, ptr %i.o, align 8, !alias.scope !64
   br label %_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_matchCs4ZaLwAtrTbk_16deltalake_derive.exit
 
 bb.ae:                                            ; preds = %bb.i
@@ -1648,35 +1648,68 @@ attributes #16 = { noinline noreturn }
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 2, !"RtLibUseGOT", i32 1}
 !2 = !{!"rustc version 1.96.0-nightly (1d8897a4e 2026-03-13)"}
-!3 = distinct !{!3, i1 true, !"_RNvNtCskxeEtmv7ubq_20unicode_segmentation8grapheme13new_graphemesCs4ZaLwAtrTbk_16deltalake_derive"}
-!4 = distinct !{!4, !3, !"_RNvNtCskxeEtmv7ubq_20unicode_segmentation8grapheme13new_graphemesCs4ZaLwAtrTbk_16deltalake_derive: argument 0"}
-!5 = !{!4}
-!6 = distinct !{!6, i1 true, !"_RINvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_10filter_map9FilterMapINtNtNtB7_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env0EINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtNtB1X_5error5ErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB4A_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtB7_3ops12control_flow11ControlFlowB5M_ENcNtB6s_5Break0E0B6s_EB2v_"}
-!7 = distinct !{!7, !6, !"_RINvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_10filter_map9FilterMapINtNtNtB7_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env0EINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtNtB1X_5error5ErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB4A_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtB7_3ops12control_flow11ControlFlowB5M_ENcNtB6s_5Break0E0B6s_EB2v_: argument 0"}
-!8 = !{!7}
-!9 = distinct !{!9, i1 true, !"_RINvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_10filter_map9FilterMapINtNtNtB7_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive23generate_try_update_key0EINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtNtB1X_5error5ErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB4B_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtB7_3ops12control_flow11ControlFlowB5N_ENcNtB6t_5Break0E0B6t_EB2v_"}
-!10 = distinct !{!10, !9, !"_RINvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_10filter_map9FilterMapINtNtNtB7_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive23generate_try_update_key0EINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtNtB1X_5error5ErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB4B_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtB7_3ops12control_flow11ControlFlowB5N_ENcNtB6t_5Break0E0B6t_EB2v_: argument 0"}
-!11 = !{!10}
-!12 = distinct !{!12, i1 true, !"_RINvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_3map3MapINtNtNtB7_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive20generate_config_keys0EINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtNtB1J_5error5ErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB4k_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtB7_3ops12control_flow11ControlFlowB5w_ENcNtB6c_5Break0E0B6c_EB2h_"}
-!13 = distinct !{!13, !12, !"_RINvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_3map3MapINtNtNtB7_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive20generate_config_keys0EINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtNtB1J_5error5ErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB4k_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtB7_3ops12control_flow11ControlFlowB5w_ENcNtB6c_5Break0E0B6c_EB2h_: argument 0"}
-!14 = !{!13}
-!15 = distinct !{!15, i1 true, !"_RNvYINtNtNtCsbvkFyIu7lgC_4core3str7pattern19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs4ZaLwAtrTbk_16deltalake_derive"}
-!16 = distinct !{!16, !15, !"_RNvYINtNtNtCsbvkFyIu7lgC_4core3str7pattern19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs4ZaLwAtrTbk_16deltalake_derive: argument 0"}
-!17 = distinct !{!17, i1 true, !"_RNvXs8_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive"}
-!18 = distinct !{!18, !17, !"_RNvXs8_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive: argument 0"}
-!19 = !{!16}
-!20 = !{!18, !16}
-!21 = distinct !{!21, i1 true, !"_RNvYINtNtNtCsbvkFyIu7lgC_4core3str7pattern19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_15ReverseSearcher16next_reject_backCs4ZaLwAtrTbk_16deltalake_derive"}
-!22 = distinct !{!22, !21, !"_RNvYINtNtNtCsbvkFyIu7lgC_4core3str7pattern19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_15ReverseSearcher16next_reject_backCs4ZaLwAtrTbk_16deltalake_derive: argument 0"}
-!23 = distinct !{!23, i1 true, !"_RNvXs9_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_15ReverseSearcher9next_backCs4ZaLwAtrTbk_16deltalake_derive"}
-!24 = distinct !{!24, !23, !"_RNvXs9_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_15ReverseSearcher9next_backCs4ZaLwAtrTbk_16deltalake_derive: argument 0"}
-!25 = !{!22}
-!26 = !{!24, !22}
-!27 = distinct !{!27, i1 true, !"_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_matchCs4ZaLwAtrTbk_16deltalake_derive"}
-!28 = distinct !{!28, !27, !"_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_matchCs4ZaLwAtrTbk_16deltalake_derive: argument 0"}
-!29 = distinct !{!29, i1 true, !"_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive"}
-!30 = distinct !{!30, !29, !"_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive: argument 0"}
-!31 = !{!28}
+!3 = !{i64 -2811351851200680710}
+!4 = !{i64 6542584615658077689}
+!5 = !{i64 3321745473022555759}
+!6 = !{i64 1735896519932923131}
+!7 = !{i64 3439898193136882671}
+!8 = !{i64 4388483416702739359}
+!9 = !{i64 -333043344218863124}
+!10 = !{i64 5348845730928435008}
+!11 = !{i64 -267906845781038936}
+!12 = !{i64 -3003667531109291306}
+!13 = !{i64 5685351658443074510}
+!14 = !{i64 4278776399446614217}
+!15 = !{i64 5775951626016998825}
+!16 = !{i64 -373068985121304955}
+!17 = !{i64 3977201413237083286}
+!18 = !{i64 3676061969687127229}
+!19 = !{i64 8977657780541886230}
+!20 = distinct !{!20, i1 true, !"_RNvNtCskxeEtmv7ubq_20unicode_segmentation8grapheme13new_graphemesCs4ZaLwAtrTbk_16deltalake_derive"}
+!21 = distinct !{!21, !20, !"_RNvNtCskxeEtmv7ubq_20unicode_segmentation8grapheme13new_graphemesCs4ZaLwAtrTbk_16deltalake_derive: argument 0"}
+!22 = !{i64 -9139033879346517034}
+!23 = !{!21}
+!24 = distinct !{!24, i1 true, !"_RINvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_10filter_map9FilterMapINtNtNtB7_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env0EINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtNtB1X_5error5ErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB4A_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtB7_3ops12control_flow11ControlFlowB5M_ENcNtB6s_5Break0E0B6s_EB2v_"}
+!25 = distinct !{!25, !24, !"_RINvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_10filter_map9FilterMapINtNtNtB7_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive22generate_load_from_env0EINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtNtB1X_5error5ErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB4A_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtB7_3ops12control_flow11ControlFlowB5M_ENcNtB6s_5Break0E0B6s_EB2v_: argument 0"}
+!26 = !{i64 1336377746655567958}
+!27 = !{!25}
+!28 = !{i64 -4162556005425479760}
+!29 = distinct !{!29, i1 true, !"_RINvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_10filter_map9FilterMapINtNtNtB7_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive23generate_try_update_key0EINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtNtB1X_5error5ErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB4B_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtB7_3ops12control_flow11ControlFlowB5N_ENcNtB6t_5Break0E0B6t_EB2v_"}
+!30 = distinct !{!30, !29, !"_RINvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_10filter_map9FilterMapINtNtNtB7_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive23generate_try_update_key0EINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtNtB1X_5error5ErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB4B_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtB7_3ops12control_flow11ControlFlowB5N_ENcNtB6t_5Break0E0B6t_EB2v_: argument 0"}
+!31 = !{i64 -6184610746524977674}
 !32 = !{!30}
-!33 = !{!30, !28}
+!33 = !{i64 5913490598712779621}
+!34 = distinct !{!34, i1 true, !"_RINvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_3map3MapINtNtNtB7_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive20generate_config_keys0EINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtNtB1J_5error5ErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB4k_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtB7_3ops12control_flow11ControlFlowB5w_ENcNtB6c_5Break0E0B6c_EB2h_"}
+!35 = distinct !{!35, !34, !"_RINvXNtNtCsbvkFyIu7lgC_4core4iter8adaptersINtB3_12GenericShuntINtNtB3_3map3MapINtNtNtB7_5slice4iter4IterRNtNtCs7nQiqFc7Txl_3syn4data5FieldENCNvCs4ZaLwAtrTbk_16deltalake_derive20generate_config_keys0EINtNtB7_6result6ResultNtNtB7_7convert10InfallibleNtNtB1J_5error5ErrorEENtNtNtB5_6traits8iterator8Iterator8try_folduNCINvNvB4k_12try_for_each4callNtCsbjGuDcEILED_11proc_macro211TokenStreamINtNtNtB7_3ops12control_flow11ControlFlowB5w_ENcNtB6c_5Break0E0B6c_EB2h_: argument 0"}
+!36 = !{i64 8540241806018478204}
+!37 = !{!35}
+!38 = !{i64 -8497478453469848549}
+!39 = !{i64 -7290892227385540482}
+!40 = !{i64 -4232517315446855364}
+!41 = !{i64 7033957192349305423}
+!42 = !{i64 -5478668619662010259}
+!43 = !{i64 -5786039210635366082}
+!44 = !{i64 -3440433448084569797}
+!45 = distinct !{!45, i1 true, !"_RNvYINtNtNtCsbvkFyIu7lgC_4core3str7pattern19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs4ZaLwAtrTbk_16deltalake_derive"}
+!46 = distinct !{!46, !45, !"_RNvYINtNtNtCsbvkFyIu7lgC_4core3str7pattern19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher11next_rejectCs4ZaLwAtrTbk_16deltalake_derive: argument 0"}
+!47 = distinct !{!47, i1 true, !"_RNvXs8_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive"}
+!48 = distinct !{!48, !47, !"_RNvXs8_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive: argument 0"}
+!49 = !{i64 -4120120577255695910}
+!50 = !{!46}
+!51 = !{!48, !46}
+!52 = distinct !{!52, i1 true, !"_RNvYINtNtNtCsbvkFyIu7lgC_4core3str7pattern19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_15ReverseSearcher16next_reject_backCs4ZaLwAtrTbk_16deltalake_derive"}
+!53 = distinct !{!53, !52, !"_RNvYINtNtNtCsbvkFyIu7lgC_4core3str7pattern19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_15ReverseSearcher16next_reject_backCs4ZaLwAtrTbk_16deltalake_derive: argument 0"}
+!54 = distinct !{!54, i1 true, !"_RNvXs9_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_15ReverseSearcher9next_backCs4ZaLwAtrTbk_16deltalake_derive"}
+!55 = distinct !{!55, !54, !"_RNvXs9_NtNtCsbvkFyIu7lgC_4core3str7patternINtB5_19MultiCharEqSearcherNvMNtNtB9_4char7methodsc13is_whitespaceENtB5_15ReverseSearcher9next_backCs4ZaLwAtrTbk_16deltalake_derive: argument 0"}
+!56 = !{i64 -1927021043518848407}
+!57 = !{!53}
+!58 = !{!55, !53}
+!59 = distinct !{!59, i1 true, !"_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_matchCs4ZaLwAtrTbk_16deltalake_derive"}
+!60 = distinct !{!60, !59, !"_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher10next_matchCs4ZaLwAtrTbk_16deltalake_derive: argument 0"}
+!61 = distinct !{!61, i1 true, !"_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive"}
+!62 = distinct !{!62, !61, !"_RNvXsv_NtNtCsbvkFyIu7lgC_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCs4ZaLwAtrTbk_16deltalake_derive: argument 0"}
+!63 = !{i64 6712732870582323402}
+!64 = !{!60}
+!65 = !{!62}
+!66 = !{!62, !60}
 end_hunk_1

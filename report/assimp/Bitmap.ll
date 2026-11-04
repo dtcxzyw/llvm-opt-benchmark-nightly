@@ -6,7 +6,7 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: mustprogress uwtable
-define noundef zeroext i1 @_ZN6Assimp6Bitmap4SaveEP9aiTexturePNS_8IOStreamE(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
+define noundef zeroext i1 @_ZN6Assimp6Bitmap4SaveEP9aiTexturePNS_8IOStreamE(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) local_unnamed_addr #0 align 2 !guid !6 {
 bb.a:
   %i.a = alloca [4 x i8], align 1                 ; 7 uses
   %i.b = alloca [40 x i8], align 16               ; 11 uses
@@ -35,7 +35,7 @@ bb.b:                                             ; preds = %bb.a
   %i.p = load ptr, ptr %1, align 8
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 24
   %i.r = load ptr, ptr %i.q, align 8
-  %i.s = call noundef i64 %i.r(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %i.c, i64 noundef 14, i64 noundef 1), !inline_history !6 ; 0 uses
+  %i.s = call noundef i64 %i.r(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %i.c, i64 noundef 14, i64 noundef 1), !inline_history !7 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #3
   store i32 40, ptr %i.b, align 16
@@ -56,7 +56,7 @@ bb.b:                                             ; preds = %bb.a
   %i.aa = load ptr, ptr %1, align 8
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 24
   %i.ac = load ptr, ptr %i.ab, align 8
-  %i.ad = call noundef i64 %i.ac(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %i.b, i64 noundef 40, i64 noundef 1), !inline_history !7 ; 0 uses
+  %i.ad = call noundef i64 %i.ac(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %i.b, i64 noundef 40, i64 noundef 1), !inline_history !8 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
   %i.ae = load i32, ptr %i.f, align 4             ; 2 uses
@@ -107,7 +107,7 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.i
   %i.bc = load ptr, ptr %1, align 8
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 24
   %i.be = load ptr, ptr %i.bd, align 8
-  %i.bf = call noundef i64 %i.be(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %i.a, i64 noundef 4, i64 noundef 1), !inline_history !8 ; 0 uses
+  %i.bf = call noundef i64 %i.be(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %i.a, i64 noundef 4, i64 noundef 1), !inline_history !9 ; 0 uses
   %i.bg = add nuw nsw i64 %.022.i, 1              ; 2 uses
   %i.bh = load i32, ptr %0, align 8               ; 2 uses
   %i.bi = zext i32 %i.bh to i64                   ; 2 uses
@@ -138,7 +138,7 @@ bb.d:                                             ; preds = %bb.a, %_ZN6Assimp6B
 declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN6Assimp6Bitmap11WriteHeaderERNS0_6HeaderEPNS_8IOStreamE(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
+define void @_ZN6Assimp6Bitmap11WriteHeaderERNS0_6HeaderEPNS_8IOStreamE(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(16) %0, ptr noundef %1) local_unnamed_addr #0 align 2 !guid !10 {
 bb.a:
   %i.a = alloca [14 x i8], align 2                ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
@@ -165,7 +165,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN6Assimp6Bitmap8WriteDIBERNS0_3DIBEPNS_8IOStreamE(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(40) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
+define void @_ZN6Assimp6Bitmap8WriteDIBERNS0_3DIBEPNS_8IOStreamE(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(40) %0, ptr noundef %1) local_unnamed_addr #0 align 2 !guid !11 {
 bb.a:
   %i.a = alloca [40 x i8], align 16               ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
@@ -196,7 +196,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress uwtable
-define void @_ZN6Assimp6Bitmap9WriteDataEP9aiTexturePNS_8IOStreamE(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) local_unnamed_addr #0 align 2 {
+define void @_ZN6Assimp6Bitmap9WriteDataEP9aiTexturePNS_8IOStreamE(ptr nofree noundef readonly captures(none) %0, ptr noundef %1) local_unnamed_addr #0 align 2 !guid !12 {
 bb.a:
   %i.a = alloca [4 x i8], align 1                 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
@@ -293,7 +293,11 @@ attributes #3 = { nounwind }
 !3 = !{i32 7, !"uwtable", i32 2}
 !4 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
 !5 = !{!"llvm.loop.mustprogress"}
-!6 = !{ptr @_ZN6Assimp6Bitmap11WriteHeaderERNS0_6HeaderEPNS_8IOStreamE}
-!7 = !{ptr @_ZN6Assimp6Bitmap8WriteDIBERNS0_3DIBEPNS_8IOStreamE}
-!8 = !{ptr @_ZN6Assimp6Bitmap9WriteDataEP9aiTexturePNS_8IOStreamE}
+!6 = !{i64 9175012460886577398}
+!7 = !{ptr @_ZN6Assimp6Bitmap11WriteHeaderERNS0_6HeaderEPNS_8IOStreamE}
+!8 = !{ptr @_ZN6Assimp6Bitmap8WriteDIBERNS0_3DIBEPNS_8IOStreamE}
+!9 = !{ptr @_ZN6Assimp6Bitmap9WriteDataEP9aiTexturePNS_8IOStreamE}
+!10 = !{i64 7098794560842097554}
+!11 = !{i64 6286662113125199906}
+!12 = !{i64 5131812252947618590}
 end_hunk_0

@@ -3,14 +3,14 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-@.str = private unnamed_addr constant [15 x i8] c"malloc failure\00", align 1
+@.str = private unnamed_addr constant [15 x i8] c"malloc failure\00", align 1, !guid !7
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden noalias noundef nonnull ptr @_ZN6hermes13checkedMallocEm(i64 noundef %0) local_unnamed_addr #0 {
+define hidden noalias noundef nonnull ptr @_ZN6hermes13checkedMallocEm(i64 noundef %0) local_unnamed_addr #0 !guid !9 {
 bb.a:
   %i.a = tail call noalias ptr @malloc(i64 noundef %0) #4 ; 2 uses
   %.not = icmp eq ptr %i.a, null
-  br i1 %.not, label %bb.b, label %bb.c, !prof !7
+  br i1 %.not, label %bb.b, label %bb.c, !prof !8
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZN6hermes12hermes_fatalEPKc(ptr noundef nonnull @.str) #5
@@ -27,11 +27,11 @@ declare noalias noundef ptr @malloc(i64 noundef) local_unnamed_addr #1
 declare void @_ZN6hermes12hermes_fatalEPKc(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden noalias noundef nonnull ptr @_ZN6hermes13checkedCallocEmm(i64 noundef %0, i64 noundef %1) local_unnamed_addr #0 {
+define hidden noalias noundef nonnull ptr @_ZN6hermes13checkedCallocEmm(i64 noundef %0, i64 noundef %1) local_unnamed_addr #0 !guid !10 {
 bb.a:
   %i.a = tail call noalias ptr @calloc(i64 noundef %0, i64 noundef %1) #6 ; 2 uses
   %.not = icmp eq ptr %i.a, null
-  br i1 %.not, label %bb.b, label %bb.c, !prof !7
+  br i1 %.not, label %bb.b, label %bb.c, !prof !8
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_ZN6hermes12hermes_fatalEPKc(ptr noundef nonnull @.str) #5
@@ -63,5 +63,8 @@ attributes #6 = { nounwind allocsize(0,1) }
 !4 = !{!"omnipotent char", !3, i64 0}
 !5 = !{!"int", !4, i64 0}
 !6 = !{!5, !5, i64 0}
-!7 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!7 = !{i64 -3652435971894977084}
+!8 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!9 = !{i64 8685926771947301963}
+!10 = !{i64 -5926031508764655230}
 end_hunk_0

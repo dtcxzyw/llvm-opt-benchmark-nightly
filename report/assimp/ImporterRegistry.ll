@@ -26,13 +26,13 @@ $_ZN6Assimp12BaseImporterD2Ev = comdat any
 @_ZTVN6Assimp11FBXImporterE = external unnamed_addr constant { [8 x ptr] }, align 8
 @_ZTVN6Assimp14AssbinImporterE = external unnamed_addr constant { [8 x ptr] }, align 8
 @_ZTVN6Assimp12D3MFImporterE = external unnamed_addr constant { [8 x ptr] }, align 8
-@.str.2 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1
+@.str.2 = private unnamed_addr constant [26 x i8] c"vector::_M_realloc_insert\00", align 1, !guid !3
 
 ; Function Attrs: nobuiltin nounwind
 declare void @_ZdlPvm(ptr noundef, i64 noundef) local_unnamed_addr #0
 
 ; Function Attrs: mustprogress uwtable
-define hidden void @_ZN6Assimp23GetImporterInstanceListERSt6vectorIPNS_12BaseImporterESaIS2_EE(ptr nofree noundef nonnull align 8 dereferenceable(24) %0) local_unnamed_addr #1 personality ptr @__gxx_personality_v0 {
+define hidden void @_ZN6Assimp23GetImporterInstanceListERSt6vectorIPNS_12BaseImporterESaIS2_EE(ptr nofree noundef nonnull align 8 dereferenceable(24) %0) local_unnamed_addr #1 personality ptr @__gxx_personality_v0 !guid !4 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 147 uses
   %i.b = load ptr, ptr %i.a, align 8
@@ -435,7 +435,7 @@ declare void @_ZN6Assimp11MMDImporterC1Ev(ptr noundef nonnull align 8 dereferenc
 declare void @_ZN6Assimp11IQMImporterC1Ev(ptr noundef nonnull align 8 dereferenceable(80)) unnamed_addr #4
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @_ZN6Assimp26DeleteImporterInstanceListERSt6vectorIPNS_12BaseImporterESaIS2_EE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0) local_unnamed_addr #6 {
+define hidden void @_ZN6Assimp26DeleteImporterInstanceListERSt6vectorIPNS_12BaseImporterESaIS2_EE(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0) local_unnamed_addr #6 !guid !6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8
@@ -474,14 +474,14 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph
   %i.r = sub i64 %i.p, %i.q
   %i.s = ashr exact i64 %i.r, 3
   %i.t = icmp ult i64 %i.m, %i.s
-  br i1 %i.t, label %.lr.ph, label %._crit_edge, !llvm.loop !3
+  br i1 %i.t, label %.lr.ph, label %._crit_edge, !llvm.loop !5
 }
 
 ; Function Attrs: nounwind
 declare void @_ZN6Assimp12BaseImporterC2Ev(ptr noundef nonnull align 8 dereferenceable(72)) unnamed_addr #5
 
 ; Function Attrs: mustprogress nounwind uwtable
-define linkonce_odr void @_ZN6Assimp12BaseImporterD2Ev(ptr noundef nonnull align 8 dead_on_return(72) dereferenceable(72) %0) unnamed_addr #6 comdat align 2 personality ptr @__gxx_personality_v0 {
+define linkonce_odr void @_ZN6Assimp12BaseImporterD2Ev(ptr noundef nonnull align 8 dead_on_return(72) dereferenceable(72) %0) unnamed_addr #6 comdat align 2 personality ptr @__gxx_personality_v0 !guid !8 {
 bb.a:
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN6Assimp12BaseImporterE, i64 16), ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
@@ -552,6 +552,10 @@ attributes #14 = { noreturn }
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
 !2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = distinct !{!3, !4}
-!4 = !{!"llvm.loop.mustprogress"}
+!3 = !{i64 -3570400251294910297}
+!4 = !{i64 -2474344359738082014}
+!5 = distinct !{!5, !7}
+!6 = !{i64 4556024421073179936}
+!7 = !{!"llvm.loop.mustprogress"}
+!8 = !{i64 6546135721049386387}
 end_hunk_1

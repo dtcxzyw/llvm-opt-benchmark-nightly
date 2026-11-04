@@ -8,7 +8,7 @@ target triple = "x86_64-pc-linux-gnu"
 @_ZN3p2t14AdvancingFrontD1Ev = hidden unnamed_addr alias void (ptr), ptr @_ZN3p2t14AdvancingFrontD2Ev
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
-define hidden void @_ZN3p2t14AdvancingFrontC2ERNS_4NodeES2_(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %0, ptr noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull align 8 dereferenceable(40) %2) unnamed_addr #0 align 2 {
+define hidden void @_ZN3p2t14AdvancingFrontC2ERNS_4NodeES2_(ptr nofree noundef nonnull writeonly align 8 captures(none) dereferenceable(24) initializes((0, 24)) %0, ptr noundef nonnull align 8 dereferenceable(40) %1, ptr noundef nonnull align 8 dereferenceable(40) %2) unnamed_addr #0 align 2 !guid !4 {
 bb.a:
   store ptr %1, ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -19,7 +19,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden noundef ptr @_ZN3p2t14AdvancingFront10LocateNodeEd(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) %0, double noundef %1) local_unnamed_addr #1 align 2 {
+define hidden noundef ptr @_ZN3p2t14AdvancingFront10LocateNodeEd(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) %0, double noundef %1) local_unnamed_addr #1 align 2 !guid !7 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
@@ -39,7 +39,7 @@ bb.b:                                             ; preds = %.preheader
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 32
   %i.i = load double, ptr %i.h, align 8
   %i.j = fcmp ult double %1, %i.i
-  br i1 %i.j, label %.preheader, label %.loopexit.sink.split, !llvm.loop !4
+  br i1 %i.j, label %.preheader, label %.loopexit.sink.split, !llvm.loop !5
 
 .preheader18:                                     ; preds = %bb.a, %bb.c
   %.1 = phi ptr [ %i.l, %bb.c ], [ %i.b, %bb.a ]
@@ -52,7 +52,7 @@ bb.c:                                             ; preds = %.preheader18
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 32
   %i.n = load double, ptr %i.m, align 8
   %i.o = fcmp olt double %1, %i.n
-  br i1 %i.o, label %bb.d, label %.preheader18, !llvm.loop !5
+  br i1 %i.o, label %bb.d, label %.preheader18, !llvm.loop !6
 
 bb.d:                                             ; preds = %bb.c
   %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 24
@@ -70,7 +70,7 @@ bb.d:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define hidden noundef ptr @_ZN3p2t14AdvancingFront14FindSearchNodeEd(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, double noundef %1) local_unnamed_addr #2 align 2 {
+define hidden noundef ptr @_ZN3p2t14AdvancingFront14FindSearchNodeEd(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %0, double noundef %1) local_unnamed_addr #2 align 2 !guid !8 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load ptr, ptr %i.a, align 8
@@ -78,7 +78,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(read, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden noundef ptr @_ZN3p2t14AdvancingFront11LocatePointEPKNS_5PointE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef readonly captures(address) %1) local_unnamed_addr #1 align 2 {
+define hidden noundef ptr @_ZN3p2t14AdvancingFront11LocatePointEPKNS_5PointE(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(24) %0, ptr nofree noundef readonly captures(address) %1) local_unnamed_addr #1 align 2 !guid !11 {
 bb.a:
   %i.a = load double, ptr %1, align 8             ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -113,7 +113,7 @@ bb.d:                                             ; preds = %bb.a
 bb.e:                                             ; preds = %.preheader
   %i.n = load ptr, ptr %i.m, align 8
   %i.o = icmp eq ptr %1, %i.n
-  br i1 %i.o, label %.thread, label %.preheader, !llvm.loop !6
+  br i1 %i.o, label %.thread, label %.preheader, !llvm.loop !9
 
 .preheader43:                                     ; preds = %bb.d, %bb.f
   %.1 = phi ptr [ %i.q, %bb.f ], [ %i.c, %bb.d ]
@@ -125,7 +125,7 @@ bb.e:                                             ; preds = %.preheader
 bb.f:                                             ; preds = %.preheader43
   %i.r = load ptr, ptr %i.q, align 8
   %i.s = icmp eq ptr %1, %i.r
-  br i1 %i.s, label %.thread, label %.preheader43, !llvm.loop !7
+  br i1 %i.s, label %.thread, label %.preheader43, !llvm.loop !10
 
 bb.g:                                             ; preds = %bb.c
   %i.t = getelementptr inbounds nuw i8, ptr %i.c, i64 16
@@ -146,7 +146,7 @@ bb.g:                                             ; preds = %bb.c
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define hidden void @_ZN3p2t14AdvancingFrontD2Ev(ptr nofree nonnull readnone align 8 captures(none) dead_on_return(24) %0) unnamed_addr #3 align 2 {
+define hidden void @_ZN3p2t14AdvancingFrontD2Ev(ptr nofree nonnull readnone align 8 captures(none) dead_on_return(24) %0) unnamed_addr #3 align 2 !guid !12 {
 bb.a:
   ret void
 }
@@ -163,8 +163,13 @@ attributes #3 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 !1 = !{i32 7, !"uwtable", i32 2}
 !2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
 !3 = !{!"llvm.loop.mustprogress"}
-!4 = distinct !{!4, !3}
+!4 = !{i64 5007551347774731064}
 !5 = distinct !{!5, !3}
 !6 = distinct !{!6, !3}
-!7 = distinct !{!7, !3}
+!7 = !{i64 7844198701632201746}
+!8 = !{i64 -7230611498654626724}
+!9 = distinct !{!9, !3}
+!10 = distinct !{!10, !3}
+!11 = !{i64 4048963146296217735}
+!12 = !{i64 7141639566115703784}
 end_hunk_0

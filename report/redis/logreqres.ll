@@ -4,25 +4,25 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local void @reqresReset(ptr nofree noundef readnone captures(none) %0, i32 noundef %1) local_unnamed_addr #0 {
+define dso_local void @reqresReset(ptr nofree noundef readnone captures(none) %0, i32 noundef %1) local_unnamed_addr #0 !guid !13 {
 bb.a:
   ret void
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local void @reqresSaveClientReplyOffset(ptr nofree noundef readnone captures(none) %0) local_unnamed_addr #1 {
+define dso_local void @reqresSaveClientReplyOffset(ptr nofree noundef readnone captures(none) %0) local_unnamed_addr #1 !guid !14 {
 bb.a:
   ret void
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local noundef i64 @reqresAppendRequest(ptr nofree noundef readnone captures(none) %0) local_unnamed_addr #1 {
+define dso_local noundef i64 @reqresAppendRequest(ptr nofree noundef readnone captures(none) %0) local_unnamed_addr #1 !guid !15 {
 bb.a:
   ret i64 0
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local noundef i64 @reqresAppendResponse(ptr nofree noundef readnone captures(none) %0) local_unnamed_addr #1 {
+define dso_local noundef i64 @reqresAppendResponse(ptr nofree noundef readnone captures(none) %0) local_unnamed_addr #1 !guid !16 {
 bb.a:
   ret i64 0
 }
@@ -47,4 +47,8 @@ attributes #1 = { inlinehint mustprogress nofree norecurse nosync nounwind willr
 !10 = !{!"omnipotent char", !9, i64 0}
 !11 = !{!"int", !10, i64 0}
 !12 = !{!11, !11, i64 0}
+!13 = !{i64 -3979899641931996646}
+!14 = !{i64 -6367558729644129040}
+!15 = !{i64 5710235980667315425}
+!16 = !{i64 -2779424806405298269}
 end_hunk_0

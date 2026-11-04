@@ -14,29 +14,29 @@ target triple = "x86_64-pc-linux-gnu"
 %struct.__pthread_mutex_s = type { i32, i32, i32, i32, i32, i16, i16, %struct.__pthread_internal_list }
 %struct.__pthread_internal_list = type { ptr, ptr }
 
-@duckdb_je_opt_prof_stats = local_unnamed_addr global i8 0, align 1
-@duckdb_je_prof_stats_mtx = local_unnamed_addr global %struct.malloc_mutex_s zeroinitializer, align 8
+@duckdb_je_opt_prof_stats = local_unnamed_addr global i8 0, align 1, !guid !7
+@duckdb_je_prof_stats_mtx = local_unnamed_addr global %struct.malloc_mutex_s zeroinitializer, align 8, !guid !8
 
 ; Function Attrs: mustprogress nofree norecurse noreturn nosync nounwind willreturn memory(none) uwtable
-define void @duckdb_je_prof_stats_inc(ptr nofree noundef readnone captures(none) %0, i32 noundef %1, i64 noundef %2) local_unnamed_addr #0 {
+define void @duckdb_je_prof_stats_inc(ptr nofree noundef readnone captures(none) %0, i32 noundef %1, i64 noundef %2) local_unnamed_addr #0 !guid !9 {
 bb.a:
   unreachable
 }
 
 ; Function Attrs: mustprogress nofree norecurse noreturn nosync nounwind willreturn memory(none) uwtable
-define void @duckdb_je_prof_stats_dec(ptr nofree noundef readnone captures(none) %0, i32 noundef %1, i64 noundef %2) local_unnamed_addr #0 {
+define void @duckdb_je_prof_stats_dec(ptr nofree noundef readnone captures(none) %0, i32 noundef %1, i64 noundef %2) local_unnamed_addr #0 !guid !10 {
 bb.a:
   unreachable
 }
 
 ; Function Attrs: mustprogress nofree norecurse noreturn nosync nounwind willreturn memory(none) uwtable
-define void @duckdb_je_prof_stats_get_live(ptr nofree noundef readnone captures(none) %0, i32 noundef %1, ptr nofree noundef readnone captures(none) %2) local_unnamed_addr #0 {
+define void @duckdb_je_prof_stats_get_live(ptr nofree noundef readnone captures(none) %0, i32 noundef %1, ptr nofree noundef readnone captures(none) %2) local_unnamed_addr #0 !guid !11 {
 bb.a:
   unreachable
 }
 
 ; Function Attrs: mustprogress nofree norecurse noreturn nosync nounwind willreturn memory(none) uwtable
-define void @duckdb_je_prof_stats_get_accum(ptr nofree noundef readnone captures(none) %0, i32 noundef %1, ptr nofree noundef readnone captures(none) %2) local_unnamed_addr #0 {
+define void @duckdb_je_prof_stats_get_accum(ptr nofree noundef readnone captures(none) %0, i32 noundef %1, ptr nofree noundef readnone captures(none) %2) local_unnamed_addr #0 !guid !12 {
 bb.a:
   unreachable
 }
@@ -54,4 +54,10 @@ attributes #0 = { mustprogress nofree norecurse noreturn nosync nounwind willret
 !4 = !{!"omnipotent char", !3, i64 0}
 !5 = !{!"int", !4, i64 0}
 !6 = !{!5, !5, i64 0}
+!7 = !{i64 5671836507845580189}
+!8 = !{i64 -2390418514626631428}
+!9 = !{i64 4662691815431215775}
+!10 = !{i64 3052727359497492053}
+!11 = !{i64 -2795379857453011230}
+!12 = !{i64 1561240804594282952}
 end_hunk_0

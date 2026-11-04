@@ -6,7 +6,7 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-unknown-linux-gnu"
 
 ; Function Attrs: nonlazybind uwtable
-define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4attr9AttributeENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1F_8adapters3map12map_try_foldBX_BX_B2D_INtNtB1H_6result6ResultB2D_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB56_NtB4D_4Fold14fold_attributeE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B45_EB5a_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4attr9AttributeENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1F_8adapters3map12map_try_foldBX_BX_B2D_INtNtB1H_6result6ResultB2D_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB56_NtB4D_4Fold14fold_attributeE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B45_EB5a_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality !guid !4 {
 bb.a:
   %i.a = alloca [272 x i8], align 8               ; 3 uses
   %i.b = alloca [256 x i8], align 8               ; 2 uses
@@ -55,7 +55,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4attr9AttributeENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1F_8adapters3map12map_try_foldBX_BX_B2D_INtNtB1H_6result6ResultB2D_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB56_NtB4D_4Fold14fold_attributeE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B45_EB5a_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4attr9AttributeENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1F_8adapters3map12map_try_foldBX_BX_B2D_INtNtB1H_6result6ResultB2D_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB56_NtB4D_4Fold14fold_attributeE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B45_EB5a_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality !guid !5 {
 bb.a:
   %i.a = alloca [272 x i8], align 8               ; 3 uses
   %i.b = alloca [256 x i8], align 8               ; 2 uses
@@ -104,7 +104,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4expr3ArmENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1z_8adapters3map12map_try_foldBX_BX_B2x_INtNtB1B_6result6ResultB2x_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB50_NtB4x_4Fold8fold_armE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B3Z_EB54_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4expr3ArmENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1z_8adapters3map12map_try_foldBX_BX_B2x_INtNtB1B_6result6ResultB2x_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB50_NtB4x_4Fold8fold_armE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B3Z_EB54_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality !guid !6 {
 bb.a:
   %i.a = alloca [264 x i8], align 8               ; 3 uses
   %i.b = alloca [248 x i8], align 8               ; 2 uses
@@ -153,7 +153,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4expr3ArmENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1z_8adapters3map12map_try_foldBX_BX_B2x_INtNtB1B_6result6ResultB2x_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB50_NtB4x_4Fold8fold_armE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B3Z_EB54_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4expr3ArmENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1z_8adapters3map12map_try_foldBX_BX_B2x_INtNtB1B_6result6ResultB2x_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB50_NtB4x_4Fold8fold_armE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B3Z_EB54_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality !guid !7 {
 bb.a:
   %i.a = alloca [264 x i8], align 8               ; 3 uses
   %i.b = alloca [248 x i8], align 8               ; 2 uses
@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item11ForeignItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1I_8adapters3map12map_try_foldBX_BX_B2G_INtNtB1K_6result6ResultB2G_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB59_NtB4G_4Fold17fold_foreign_itemE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B48_EB5d_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item11ForeignItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1I_8adapters3map12map_try_foldBX_BX_B2G_INtNtB1K_6result6ResultB2G_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB59_NtB4G_4Fold17fold_foreign_itemE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B48_EB5d_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality !guid !8 {
 bb.a:
   %i.a = alloca [368 x i8], align 8               ; 3 uses
   %i.b = alloca [352 x i8], align 8               ; 2 uses
@@ -251,7 +251,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item11ForeignItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1I_8adapters3map12map_try_foldBX_BX_B2G_INtNtB1K_6result6ResultB2G_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB59_NtB4G_4Fold17fold_foreign_itemE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B48_EB5d_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item11ForeignItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1I_8adapters3map12map_try_foldBX_BX_B2G_INtNtB1K_6result6ResultB2G_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB59_NtB4G_4Fold17fold_foreign_itemE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B48_EB5d_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality !guid !9 {
 bb.a:
   %i.a = alloca [368 x i8], align 8               ; 3 uses
   %i.b = alloca [352 x i8], align 8               ; 2 uses
@@ -300,7 +300,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item4ItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1A_8adapters3map12map_try_foldBX_BX_B2y_INtNtB1C_6result6ResultB2y_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB51_NtB4y_4Fold9fold_itemE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B40_EB55_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item4ItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1A_8adapters3map12map_try_foldBX_BX_B2y_INtNtB1C_6result6ResultB2y_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB51_NtB4y_4Fold9fold_itemE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B40_EB55_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality !guid !10 {
 bb.a:
   %i.a = alloca [368 x i8], align 8               ; 3 uses
   %i.b = alloca [352 x i8], align 8               ; 2 uses
@@ -349,7 +349,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item4ItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1A_8adapters3map12map_try_foldBX_BX_B2y_INtNtB1C_6result6ResultB2y_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB51_NtB4y_4Fold9fold_itemE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B40_EB55_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item4ItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1A_8adapters3map12map_try_foldBX_BX_B2y_INtNtB1C_6result6ResultB2y_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB51_NtB4y_4Fold9fold_itemE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B40_EB55_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality !guid !11 {
 bb.a:
   %i.a = alloca [368 x i8], align 8               ; 3 uses
   %i.b = alloca [352 x i8], align 8               ; 2 uses
@@ -398,7 +398,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item8ImplItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1E_8adapters3map12map_try_foldBX_BX_B2C_INtNtB1G_6result6ResultB2C_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB55_NtB4C_4Fold14fold_impl_itemE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B44_EB59_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item8ImplItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1E_8adapters3map12map_try_foldBX_BX_B2C_INtNtB1G_6result6ResultB2C_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB55_NtB4C_4Fold14fold_impl_itemE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B44_EB59_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality !guid !12 {
 bb.a:
   %i.a = alloca [608 x i8], align 8               ; 3 uses
   %i.b = alloca [592 x i8], align 8               ; 2 uses
@@ -447,7 +447,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item8ImplItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1E_8adapters3map12map_try_foldBX_BX_B2C_INtNtB1G_6result6ResultB2C_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB55_NtB4C_4Fold14fold_impl_itemE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B44_EB59_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item8ImplItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1E_8adapters3map12map_try_foldBX_BX_B2C_INtNtB1G_6result6ResultB2C_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB55_NtB4C_4Fold14fold_impl_itemE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B44_EB59_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality !guid !13 {
 bb.a:
   %i.a = alloca [608 x i8], align 8               ; 3 uses
   %i.b = alloca [592 x i8], align 8               ; 2 uses
@@ -496,7 +496,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item9TraitItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1F_8adapters3map12map_try_foldBX_BX_B2D_INtNtB1H_6result6ResultB2D_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB56_NtB4D_4Fold15fold_trait_itemE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B45_EB5a_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item9TraitItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1F_8adapters3map12map_try_foldBX_BX_B2D_INtNtB1H_6result6ResultB2D_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB56_NtB4D_4Fold15fold_trait_itemE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B45_EB5a_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality !guid !14 {
 bb.a:
   %i.a = alloca [576 x i8], align 8               ; 3 uses
   %i.b = alloca [560 x i8], align 8               ; 2 uses
@@ -545,7 +545,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item9TraitItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1F_8adapters3map12map_try_foldBX_BX_B2D_INtNtB1H_6result6ResultB2D_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB56_NtB4D_4Fold15fold_trait_itemE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B45_EB5a_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item9TraitItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1F_8adapters3map12map_try_foldBX_BX_B2D_INtNtB1H_6result6ResultB2D_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB56_NtB4D_4Fold15fold_trait_itemE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B45_EB5a_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality !guid !15 {
 bb.a:
   %i.a = alloca [576 x i8], align 8               ; 3 uses
   %i.b = alloca [560 x i8], align 8               ; 2 uses
@@ -594,7 +594,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4stmt4StmtENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1A_8adapters3map12map_try_foldBX_BX_B2y_INtNtB1C_6result6ResultB2y_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB51_NtB4y_4Fold9fold_stmtE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B40_EB55_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4stmt4StmtENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1A_8adapters3map12map_try_foldBX_BX_B2y_INtNtB1C_6result6ResultB2y_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB51_NtB4y_4Fold9fold_stmtE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B40_EB55_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality !guid !16 {
 bb.a:
   %i.a = alloca [368 x i8], align 8               ; 3 uses
   %i.b = alloca [352 x i8], align 8               ; 2 uses
@@ -643,7 +643,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4stmt4StmtENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1A_8adapters3map12map_try_foldBX_BX_B2y_INtNtB1C_6result6ResultB2y_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB51_NtB4y_4Fold9fold_stmtE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B40_EB55_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden { ptr, ptr } @_RINvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB6_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4stmt4StmtENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator8try_foldINtNtB8_13in_place_drop11InPlaceDropBX_ENCINvNtNtB1A_8adapters3map12map_try_foldBX_BX_B2y_INtNtB1C_6result6ResultB2y_zENCINvNtNtB11_3gen4fold8fold_vecBX_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB51_NtB4y_4Fold9fold_stmtE0NCINvNtB8_16in_place_collect24write_in_place_with_dropBX_E0E0B40_EB55_(ptr nofree align 8 captures(none) %0, ptr %1, ptr %2, ptr align 8 %3, ptr %4) unnamed_addr #0 personality ptr @rust_eh_personality !guid !17 {
 bb.a:
   %i.a = alloca [368 x i8], align 8               ; 3 uses
   %i.b = alloca [352 x i8], align 8               ; 2 uses
@@ -692,7 +692,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.b
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4attr9AttributeENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB32_NtB2A_4Fold14fold_attributeE0EB36_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 {
+define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4attr9AttributeENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB32_NtB2A_4Fold14fold_attributeE0EB36_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 !guid !18 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -703,7 +703,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4attr9AttributeENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB32_NtB2A_4Fold14fold_attributeE0EB36_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 {
+define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4attr9AttributeENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB32_NtB2A_4Fold14fold_attributeE0EB36_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 !guid !19 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -714,7 +714,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4expr3ArmENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB2W_NtB2u_4Fold8fold_armE0EB30_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 {
+define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4expr3ArmENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB2W_NtB2u_4Fold8fold_armE0EB30_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 !guid !20 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -725,7 +725,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4expr3ArmENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB2W_NtB2u_4Fold8fold_armE0EB30_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 {
+define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4expr3ArmENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB2W_NtB2u_4Fold8fold_armE0EB30_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 !guid !21 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -736,7 +736,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item11ForeignItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB35_NtB2D_4Fold17fold_foreign_itemE0EB39_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 {
+define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item11ForeignItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB35_NtB2D_4Fold17fold_foreign_itemE0EB39_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 !guid !22 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -747,7 +747,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item11ForeignItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB35_NtB2D_4Fold17fold_foreign_itemE0EB39_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 {
+define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item11ForeignItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB35_NtB2D_4Fold17fold_foreign_itemE0EB39_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 !guid !23 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -758,7 +758,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item4ItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB2X_NtB2v_4Fold9fold_itemE0EB31_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 {
+define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item4ItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB2X_NtB2v_4Fold9fold_itemE0EB31_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 !guid !24 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -769,7 +769,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item4ItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB2X_NtB2v_4Fold9fold_itemE0EB31_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 {
+define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item4ItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB2X_NtB2v_4Fold9fold_itemE0EB31_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 !guid !25 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -780,7 +780,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item8ImplItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB31_NtB2z_4Fold14fold_impl_itemE0EB35_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 {
+define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item8ImplItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB31_NtB2z_4Fold14fold_impl_itemE0EB35_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 !guid !26 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -791,7 +791,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item8ImplItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB31_NtB2z_4Fold14fold_impl_itemE0EB35_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 {
+define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item8ImplItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB31_NtB2z_4Fold14fold_impl_itemE0EB35_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 !guid !27 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -802,7 +802,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item9TraitItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB32_NtB2A_4Fold15fold_trait_itemE0EB36_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 {
+define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item9TraitItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB32_NtB2A_4Fold15fold_trait_itemE0EB36_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 !guid !28 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -813,7 +813,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item9TraitItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB32_NtB2A_4Fold15fold_trait_itemE0EB36_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 {
+define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item9TraitItemENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB32_NtB2A_4Fold15fold_trait_itemE0EB36_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 !guid !29 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -824,7 +824,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4stmt4StmtENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB2X_NtB2v_4Fold9fold_stmtE0EB31_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 {
+define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4stmt4StmtENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive16replace_lifetime15ReplaceLifetimeNvYB2X_NtB2v_4Fold9fold_stmtE0EB31_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 !guid !30 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -835,7 +835,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4stmt4StmtENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB2X_NtB2v_4Fold9fold_stmtE0EB31_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 {
+define hidden void @_RINvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtNtCsgFSQ9XOTBNe_3syn4stmt4StmtENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator3mapBR_NCINvNtNtBV_3gen4fold8fold_vecBR_NtNvCs5KndGQj2IFn_15zerofrom_derive25replace_lifetime_and_type20ReplaceLifetimeAndTyNvYB2X_NtB2v_4Fold9fold_stmtE0EB31_(ptr nofree writeonly sret([48 x i8]) align 8 captures(none) initializes((0, 48)) %0, ptr nofree readonly align 8 captures(none) %1, ptr %2, ptr align 8 %3) unnamed_addr #1 !guid !31 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, i64 32, i1 false)
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
@@ -846,7 +846,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvMs0_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4attr9AttributeE32forget_allocation_drop_remainingCs5KndGQj2IFn_15zerofrom_derive(ptr align 8 %0) unnamed_addr #0 {
+define hidden void @_RNvMs0_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4attr9AttributeE32forget_allocation_drop_remainingCs5KndGQj2IFn_15zerofrom_derive(ptr align 8 %0) unnamed_addr #0 !guid !32 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = tail call { ptr, i64 } @_RNvMs0_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4attr9AttributeE16as_raw_mut_sliceB10_(ptr align 8 %0) ; 2 uses
@@ -869,7 +869,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvMs0_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4expr3ArmE32forget_allocation_drop_remainingCs5KndGQj2IFn_15zerofrom_derive(ptr nofree align 8 captures(none) initializes((0, 8), (16, 24)) %0) unnamed_addr #0 {
+define hidden void @_RNvMs0_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4expr3ArmE32forget_allocation_drop_remainingCs5KndGQj2IFn_15zerofrom_derive(ptr nofree align 8 captures(none) initializes((0, 8), (16, 24)) %0) unnamed_addr #0 !guid !33 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = getelementptr i8, ptr %0, i64 8          ; 2 uses
@@ -895,7 +895,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvMs0_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item11ForeignItemE32forget_allocation_drop_remainingCs5KndGQj2IFn_15zerofrom_derive(ptr nofree align 8 captures(none) initializes((0, 8), (16, 24)) %0) unnamed_addr #0 {
+define hidden void @_RNvMs0_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item11ForeignItemE32forget_allocation_drop_remainingCs5KndGQj2IFn_15zerofrom_derive(ptr nofree align 8 captures(none) initializes((0, 8), (16, 24)) %0) unnamed_addr #0 !guid !34 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = getelementptr i8, ptr %0, i64 8          ; 2 uses
@@ -921,7 +921,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvMs0_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item4ItemE32forget_allocation_drop_remainingCs5KndGQj2IFn_15zerofrom_derive(ptr nofree align 8 captures(none) initializes((0, 8), (16, 24)) %0) unnamed_addr #0 {
+define hidden void @_RNvMs0_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item4ItemE32forget_allocation_drop_remainingCs5KndGQj2IFn_15zerofrom_derive(ptr nofree align 8 captures(none) initializes((0, 8), (16, 24)) %0) unnamed_addr #0 !guid !35 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = getelementptr i8, ptr %0, i64 8          ; 2 uses
@@ -947,7 +947,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvMs0_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item8ImplItemE32forget_allocation_drop_remainingCs5KndGQj2IFn_15zerofrom_derive(ptr nofree align 8 captures(none) initializes((0, 8), (16, 24)) %0) unnamed_addr #0 {
+define hidden void @_RNvMs0_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item8ImplItemE32forget_allocation_drop_remainingCs5KndGQj2IFn_15zerofrom_derive(ptr nofree align 8 captures(none) initializes((0, 8), (16, 24)) %0) unnamed_addr #0 !guid !36 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = getelementptr i8, ptr %0, i64 8          ; 2 uses
@@ -973,7 +973,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvMs0_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item9TraitItemE32forget_allocation_drop_remainingCs5KndGQj2IFn_15zerofrom_derive(ptr nofree align 8 captures(none) initializes((0, 8), (16, 24)) %0) unnamed_addr #0 {
+define hidden void @_RNvMs0_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item9TraitItemE32forget_allocation_drop_remainingCs5KndGQj2IFn_15zerofrom_derive(ptr nofree align 8 captures(none) initializes((0, 8), (16, 24)) %0) unnamed_addr #0 !guid !37 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = getelementptr i8, ptr %0, i64 8          ; 2 uses
@@ -999,7 +999,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvMs0_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4stmt4StmtE32forget_allocation_drop_remainingCs5KndGQj2IFn_15zerofrom_derive(ptr nofree align 8 captures(none) initializes((0, 8), (16, 24)) %0) unnamed_addr #0 {
+define hidden void @_RNvMs0_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4stmt4StmtE32forget_allocation_drop_remainingCs5KndGQj2IFn_15zerofrom_derive(ptr nofree align 8 captures(none) initializes((0, 8), (16, 24)) %0) unnamed_addr #0 !guid !38 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = getelementptr i8, ptr %0, i64 8          ; 2 uses
@@ -1025,7 +1025,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB8_8IntoIterppENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropINtB2_9DropGuardNtCs1K5DUQUZc67_11proc_macro25IdentNtNtBc_5alloc6GlobalEB12_4dropCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #0 {
+define hidden void @_RNvXNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB8_8IntoIterppENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropINtB2_9DropGuardNtCs1K5DUQUZc67_11proc_macro25IdentNtNtBc_5alloc6GlobalEB12_4dropCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #0 !guid !39 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = load ptr, ptr %0, align 8                ; 2 uses
@@ -1040,7 +1040,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB8_8IntoIterppENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropINtB2_9DropGuardNtNtCsgFSQ9XOTBNe_3syn4expr3ArmNtNtBc_5alloc6GlobalEB12_4dropCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #0 {
+define hidden void @_RNvXNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB8_8IntoIterppENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropINtB2_9DropGuardNtNtCsgFSQ9XOTBNe_3syn4expr3ArmNtNtBc_5alloc6GlobalEB12_4dropCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #0 !guid !40 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = load ptr, ptr %0, align 8                ; 2 uses
@@ -1055,7 +1055,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB8_8IntoIterppENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropINtB2_9DropGuardNtNtCsgFSQ9XOTBNe_3syn4item11ForeignItemNtNtBc_5alloc6GlobalEB12_4dropCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #0 {
+define hidden void @_RNvXNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB8_8IntoIterppENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropINtB2_9DropGuardNtNtCsgFSQ9XOTBNe_3syn4item11ForeignItemNtNtBc_5alloc6GlobalEB12_4dropCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #0 !guid !41 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = load ptr, ptr %0, align 8                ; 2 uses
@@ -1070,7 +1070,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB8_8IntoIterppENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropINtB2_9DropGuardNtNtCsgFSQ9XOTBNe_3syn4item4ItemNtNtBc_5alloc6GlobalEB12_4dropCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #0 {
+define hidden void @_RNvXNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB8_8IntoIterppENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropINtB2_9DropGuardNtNtCsgFSQ9XOTBNe_3syn4item4ItemNtNtBc_5alloc6GlobalEB12_4dropCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #0 !guid !42 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = load ptr, ptr %0, align 8                ; 2 uses
@@ -1085,7 +1085,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB8_8IntoIterppENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropINtB2_9DropGuardNtNtCsgFSQ9XOTBNe_3syn4item8ImplItemNtNtBc_5alloc6GlobalEB12_4dropCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #0 {
+define hidden void @_RNvXNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB8_8IntoIterppENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropINtB2_9DropGuardNtNtCsgFSQ9XOTBNe_3syn4item8ImplItemNtNtBc_5alloc6GlobalEB12_4dropCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #0 !guid !43 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = load ptr, ptr %0, align 8                ; 2 uses
@@ -1100,7 +1100,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB8_8IntoIterppENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropINtB2_9DropGuardNtNtCsgFSQ9XOTBNe_3syn4item9TraitItemNtNtBc_5alloc6GlobalEB12_4dropCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #0 {
+define hidden void @_RNvXNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB8_8IntoIterppENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropINtB2_9DropGuardNtNtCsgFSQ9XOTBNe_3syn4item9TraitItemNtNtBc_5alloc6GlobalEB12_4dropCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #0 !guid !44 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = load ptr, ptr %0, align 8                ; 2 uses
@@ -1115,7 +1115,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB8_8IntoIterppENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropINtB2_9DropGuardNtNtCsgFSQ9XOTBNe_3syn4stmt4StmtNtNtBc_5alloc6GlobalEB12_4dropCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #0 {
+define hidden void @_RNvXNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB8_8IntoIterppENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropINtB2_9DropGuardNtNtCsgFSQ9XOTBNe_3syn4stmt4StmtNtNtBc_5alloc6GlobalEB12_4dropCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #0 !guid !45 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = load ptr, ptr %0, align 8                ; 2 uses
@@ -1130,7 +1130,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB8_8IntoIterppENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropINtB2_9DropGuardTNtCs1K5DUQUZc67_11proc_macro25IdentNtNtCsgFSQ9XOTBNe_3syn5token5CommaENtNtBc_5alloc6GlobalEB12_4dropCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #0 {
+define hidden void @_RNvXNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB8_8IntoIterppENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropINtB2_9DropGuardTNtCs1K5DUQUZc67_11proc_macro25IdentNtNtCsgFSQ9XOTBNe_3syn5token5CommaENtNtBc_5alloc6GlobalEB12_4dropCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #0 !guid !46 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = load ptr, ptr %0, align 8                ; 2 uses
@@ -1145,7 +1145,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden void @_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtCs1K5DUQUZc67_11proc_macro25IdentENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextCs5KndGQj2IFn_15zerofrom_derive(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((16, 17)) %0, ptr nofree align 8 captures(none) %1) unnamed_addr #2 {
+define hidden void @_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtCs1K5DUQUZc67_11proc_macro25IdentENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextCs5KndGQj2IFn_15zerofrom_derive(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((16, 17)) %0, ptr nofree align 8 captures(none) %1) unnamed_addr #2 !guid !47 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.b = load ptr, ptr %i.a, align 8
@@ -1170,7 +1170,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
-define hidden void @_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterTNtCs1K5DUQUZc67_11proc_macro25IdentNtNtCsgFSQ9XOTBNe_3syn5token5CommaEENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextCs5KndGQj2IFn_15zerofrom_derive(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) initializes((16, 17)) %0, ptr nofree align 8 captures(none) %1) unnamed_addr #2 {
+define hidden void @_RNvXs4_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterTNtCs1K5DUQUZc67_11proc_macro25IdentNtNtCsgFSQ9XOTBNe_3syn5token5CommaEENtNtNtNtCshzWfHUSfYae_4core4iter6traits8iterator8Iterator4nextCs5KndGQj2IFn_15zerofrom_derive(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) initializes((16, 17)) %0, ptr nofree align 8 captures(none) %1) unnamed_addr #2 !guid !48 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.b = load ptr, ptr %i.a, align 8
@@ -1195,7 +1195,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtCs1K5DUQUZc67_11proc_macro25IdentENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs5KndGQj2IFn_15zerofrom_derive(ptr align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtCs1K5DUQUZc67_11proc_macro25IdentENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs5KndGQj2IFn_15zerofrom_derive(ptr align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality !guid !49 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 3 uses
   store ptr %0, ptr %i.a, align 8
@@ -1231,7 +1231,7 @@ bb.e:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4expr3ArmENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs5KndGQj2IFn_15zerofrom_derive(ptr align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4expr3ArmENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs5KndGQj2IFn_15zerofrom_derive(ptr align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality !guid !50 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 3 uses
   store ptr %0, ptr %i.a, align 8
@@ -1267,7 +1267,7 @@ bb.e:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item11ForeignItemENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs5KndGQj2IFn_15zerofrom_derive(ptr align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item11ForeignItemENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs5KndGQj2IFn_15zerofrom_derive(ptr align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality !guid !51 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 3 uses
   store ptr %0, ptr %i.a, align 8
@@ -1303,7 +1303,7 @@ bb.e:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item4ItemENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs5KndGQj2IFn_15zerofrom_derive(ptr align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item4ItemENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs5KndGQj2IFn_15zerofrom_derive(ptr align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality !guid !52 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 3 uses
   store ptr %0, ptr %i.a, align 8
@@ -1339,7 +1339,7 @@ bb.e:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item8ImplItemENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs5KndGQj2IFn_15zerofrom_derive(ptr align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item8ImplItemENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs5KndGQj2IFn_15zerofrom_derive(ptr align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality !guid !53 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 3 uses
   store ptr %0, ptr %i.a, align 8
@@ -1375,7 +1375,7 @@ bb.e:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item9TraitItemENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs5KndGQj2IFn_15zerofrom_derive(ptr align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item9TraitItemENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs5KndGQj2IFn_15zerofrom_derive(ptr align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality !guid !54 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 3 uses
   store ptr %0, ptr %i.a, align 8
@@ -1411,7 +1411,7 @@ bb.e:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4stmt4StmtENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs5KndGQj2IFn_15zerofrom_derive(ptr align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4stmt4StmtENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs5KndGQj2IFn_15zerofrom_derive(ptr align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality !guid !55 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 3 uses
   store ptr %0, ptr %i.a, align 8
@@ -1447,7 +1447,7 @@ bb.e:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden void @_RNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterTNtCs1K5DUQUZc67_11proc_macro25IdentNtNtCsgFSQ9XOTBNe_3syn5token5CommaEENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs5KndGQj2IFn_15zerofrom_derive(ptr align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define hidden void @_RNvXse_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterTNtCs1K5DUQUZc67_11proc_macro25IdentNtNtCsgFSQ9XOTBNe_3syn5token5CommaEENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropCs5KndGQj2IFn_15zerofrom_derive(ptr align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality !guid !56 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 3 uses
   store ptr %0, ptr %i.a, align 8
@@ -1483,91 +1483,91 @@ bb.e:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden align 8 ptr @_RNvXsg_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4attr9AttributeENtNtNtCshzWfHUSfYae_4core4iter8adapters10SourceIter8as_innerCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #3 {
+define hidden align 8 ptr @_RNvXsg_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4attr9AttributeENtNtNtCshzWfHUSfYae_4core4iter8adapters10SourceIter8as_innerCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #3 !guid !57 {
 bb.a:
   ret ptr %0
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden align 8 ptr @_RNvXsg_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4expr3ArmENtNtNtCshzWfHUSfYae_4core4iter8adapters10SourceIter8as_innerCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #3 {
+define hidden align 8 ptr @_RNvXsg_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4expr3ArmENtNtNtCshzWfHUSfYae_4core4iter8adapters10SourceIter8as_innerCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #3 !guid !58 {
 bb.a:
   ret ptr %0
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden align 8 ptr @_RNvXsg_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item11ForeignItemENtNtNtCshzWfHUSfYae_4core4iter8adapters10SourceIter8as_innerCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #3 {
+define hidden align 8 ptr @_RNvXsg_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item11ForeignItemENtNtNtCshzWfHUSfYae_4core4iter8adapters10SourceIter8as_innerCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #3 !guid !59 {
 bb.a:
   ret ptr %0
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden align 8 ptr @_RNvXsg_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item4ItemENtNtNtCshzWfHUSfYae_4core4iter8adapters10SourceIter8as_innerCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #3 {
+define hidden align 8 ptr @_RNvXsg_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item4ItemENtNtNtCshzWfHUSfYae_4core4iter8adapters10SourceIter8as_innerCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #3 !guid !60 {
 bb.a:
   ret ptr %0
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden align 8 ptr @_RNvXsg_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item8ImplItemENtNtNtCshzWfHUSfYae_4core4iter8adapters10SourceIter8as_innerCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #3 {
+define hidden align 8 ptr @_RNvXsg_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item8ImplItemENtNtNtCshzWfHUSfYae_4core4iter8adapters10SourceIter8as_innerCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #3 !guid !61 {
 bb.a:
   ret ptr %0
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden align 8 ptr @_RNvXsg_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item9TraitItemENtNtNtCshzWfHUSfYae_4core4iter8adapters10SourceIter8as_innerCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #3 {
+define hidden align 8 ptr @_RNvXsg_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item9TraitItemENtNtNtCshzWfHUSfYae_4core4iter8adapters10SourceIter8as_innerCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #3 !guid !62 {
 bb.a:
   ret ptr %0
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden align 8 ptr @_RNvXsg_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4stmt4StmtENtNtNtCshzWfHUSfYae_4core4iter8adapters10SourceIter8as_innerCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #3 {
+define hidden align 8 ptr @_RNvXsg_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4stmt4StmtENtNtNtCshzWfHUSfYae_4core4iter8adapters10SourceIter8as_innerCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #3 !guid !63 {
 bb.a:
   ret ptr %0
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden align 8 ptr @_RNvXsh_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4attr9AttributeENtNtB7_16in_place_collect13AsVecIntoIter12as_into_iterCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #4 {
+define hidden align 8 ptr @_RNvXsh_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4attr9AttributeENtNtB7_16in_place_collect13AsVecIntoIter12as_into_iterCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #4 !guid !64 {
 bb.a:
   ret ptr %0
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden align 8 ptr @_RNvXsh_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4expr3ArmENtNtB7_16in_place_collect13AsVecIntoIter12as_into_iterCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #4 {
+define hidden align 8 ptr @_RNvXsh_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4expr3ArmENtNtB7_16in_place_collect13AsVecIntoIter12as_into_iterCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #4 !guid !65 {
 bb.a:
   ret ptr %0
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden align 8 ptr @_RNvXsh_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item11ForeignItemENtNtB7_16in_place_collect13AsVecIntoIter12as_into_iterCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #4 {
+define hidden align 8 ptr @_RNvXsh_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item11ForeignItemENtNtB7_16in_place_collect13AsVecIntoIter12as_into_iterCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #4 !guid !66 {
 bb.a:
   ret ptr %0
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden align 8 ptr @_RNvXsh_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item4ItemENtNtB7_16in_place_collect13AsVecIntoIter12as_into_iterCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #4 {
+define hidden align 8 ptr @_RNvXsh_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item4ItemENtNtB7_16in_place_collect13AsVecIntoIter12as_into_iterCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #4 !guid !67 {
 bb.a:
   ret ptr %0
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden align 8 ptr @_RNvXsh_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item8ImplItemENtNtB7_16in_place_collect13AsVecIntoIter12as_into_iterCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #4 {
+define hidden align 8 ptr @_RNvXsh_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item8ImplItemENtNtB7_16in_place_collect13AsVecIntoIter12as_into_iterCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #4 !guid !68 {
 bb.a:
   ret ptr %0
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden align 8 ptr @_RNvXsh_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item9TraitItemENtNtB7_16in_place_collect13AsVecIntoIter12as_into_iterCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #4 {
+define hidden align 8 ptr @_RNvXsh_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4item9TraitItemENtNtB7_16in_place_collect13AsVecIntoIter12as_into_iterCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #4 !guid !69 {
 bb.a:
   ret ptr %0
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define hidden align 8 ptr @_RNvXsh_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4stmt4StmtENtNtB7_16in_place_collect13AsVecIntoIter12as_into_iterCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #4 {
+define hidden align 8 ptr @_RNvXsh_NtNtCsbSS6DM8SDEO_5alloc3vec9into_iterINtB5_8IntoIterNtNtCsgFSQ9XOTBNe_3syn4stmt4StmtENtNtB7_16in_place_collect13AsVecIntoIter12as_into_iterCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readnone returned align 8 captures(ret: address, provenance) %0) unnamed_addr #4 !guid !70 {
 bb.a:
   ret ptr %0
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
-define hidden range(i64 0, 768614336404564651) i64 @_RNvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtCs1K5DUQUZc67_11proc_macro25IdentENtNtNtNtCshzWfHUSfYae_4core4iter6traits10exact_size17ExactSizeIterator3lenCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #5 {
+define hidden range(i64 0, 768614336404564651) i64 @_RNvYINtNtNtCsbSS6DM8SDEO_5alloc3vec9into_iter8IntoIterNtCs1K5DUQUZc67_11proc_macro25IdentENtNtNtNtCshzWfHUSfYae_4core4iter6traits10exact_size17ExactSizeIterator3lenCs5KndGQj2IFn_15zerofrom_derive(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #5 !guid !71 {
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 8
   %.val = load ptr, ptr %i.a, align 8
@@ -1777,4 +1777,72 @@ attributes #11 = { cold noreturn nounwind }
 !1 = !{i32 2, !"RtLibUseGOT", i32 1}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"rustc version 1.99.0-nightly (73dc9167f 2026-08-01)"}
+!4 = !{i64 8237530090322211072}
+!5 = !{i64 -1020233955885541472}
+!6 = !{i64 -6212168460309264168}
+!7 = !{i64 2036879938046949440}
+!8 = !{i64 7481766469349479346}
+!9 = !{i64 327315880245274491}
+!10 = !{i64 3328456051313230993}
+!11 = !{i64 4490027749991193849}
+!12 = !{i64 1037993858577221851}
+!13 = !{i64 -3544613294852234388}
+!14 = !{i64 1353206551639411066}
+!15 = !{i64 -7484657487679205624}
+!16 = !{i64 2954416004307028096}
+!17 = !{i64 3628368198269892701}
+!18 = !{i64 -3568752267091635306}
+!19 = !{i64 -421819415239516127}
+!20 = !{i64 2184045883728716836}
+!21 = !{i64 -614058386163197810}
+!22 = !{i64 9111671405174323980}
+!23 = !{i64 -6522783429120060832}
+!24 = !{i64 -6991261176007034245}
+!25 = !{i64 -4066376044054273536}
+!26 = !{i64 6121521335321893333}
+!27 = !{i64 -6000164904276919624}
+!28 = !{i64 3613405904883450068}
+!29 = !{i64 8409669721202658651}
+!30 = !{i64 6579248332249137763}
+!31 = !{i64 -2612839702237590029}
+!32 = !{i64 -2381992186075771259}
+!33 = !{i64 3915279138338914595}
+!34 = !{i64 -1141764718140875992}
+!35 = !{i64 -2321570106959731384}
+!36 = !{i64 -7941328651502260422}
+!37 = !{i64 -4189471965373795290}
+!38 = !{i64 -351840446860412831}
+!39 = !{i64 5058212510050823944}
+!40 = !{i64 -8208191272301207224}
+!41 = !{i64 3902042905047208340}
+!42 = !{i64 124375026301081312}
+!43 = !{i64 7135600659760994411}
+!44 = !{i64 7896904254208975395}
+!45 = !{i64 -1977114065963697808}
+!46 = !{i64 -2871141796797564350}
+!47 = !{i64 1830103623359512057}
+!48 = !{i64 4222343097053580041}
+!49 = !{i64 4790497312044771779}
+!50 = !{i64 -6088642150925354542}
+!51 = !{i64 2820884518042670793}
+!52 = !{i64 -4969286759021652279}
+!53 = !{i64 -6844758415075322621}
+!54 = !{i64 7282582615554781980}
+!55 = !{i64 244687647099872039}
+!56 = !{i64 -8154807985084379969}
+!57 = !{i64 1682208218083381858}
+!58 = !{i64 4185060332391098264}
+!59 = !{i64 7719891773420389202}
+!60 = !{i64 9156150177571239652}
+!61 = !{i64 -4036439488154364950}
+!62 = !{i64 8282210969453816612}
+!63 = !{i64 -1735598437500229871}
+!64 = !{i64 -6218506848687956120}
+!65 = !{i64 7990780616791452016}
+!66 = !{i64 7375501971071708970}
+!67 = !{i64 765278521910148257}
+!68 = !{i64 -4583620535530658121}
+!69 = !{i64 -6266627127709895616}
+!70 = !{i64 7481369446112577155}
+!71 = !{i64 -2913118200545230235}
 end_hunk_0

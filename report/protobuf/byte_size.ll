@@ -10,17 +10,17 @@ target triple = "x86_64-pc-linux-gnu"
 @upb_alloc_global = external global %struct.upb_alloc, align 8
 
 ; Function Attrs: nounwind uwtable
-define hidden i64 @upb_ByteSize(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 {
+define hidden i64 @upb_ByteSize(ptr noundef %0, ptr noundef %1) local_unnamed_addr #0 !guid !7 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 3 uses
   %i.b = alloca i64, align 8                      ; 5 uses
   %i.c = tail call ptr @upb_Arena_Init(ptr noundef null, i64 noundef 0, ptr noundef nonnull @upb_alloc_global) #3 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #3
-  store i64 0, ptr %i.b, align 8, !tbaa !8
+  store i64 0, ptr %i.b, align 8, !tbaa !9
   %i.d = call i32 @upb_Encode(ptr noundef %0, ptr noundef %1, i32 noundef 0, ptr noundef %i.c, ptr noundef nonnull %i.a, ptr noundef nonnull %i.b) #3 ; 0 uses
   call void @upb_Arena_Free(ptr noundef %i.c) #3
-  %i.e = load i64, ptr %i.b, align 8, !tbaa !8
+  %i.e = load i64, ptr %i.b, align 8, !tbaa !9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3
   ret i64 %i.e
@@ -54,6 +54,7 @@ attributes #3 = { nounwind }
 !4 = !{!"omnipotent char", !3, i64 0}
 !5 = !{!"int", !4, i64 0}
 !6 = !{!5, !5, i64 0}
-!7 = !{!"long", !4, i64 0}
-!8 = !{!7, !7, i64 0}
+!7 = !{i64 -2681273580654512635}
+!8 = !{!"long", !4, i64 0}
+!9 = !{!8, !8, i64 0}
 end_hunk_0

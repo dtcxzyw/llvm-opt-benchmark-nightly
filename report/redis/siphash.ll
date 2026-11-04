@@ -5,7 +5,7 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define dso_local i32 @siptlw(i32 noundef %0) local_unnamed_addr #0 {
+define dso_local i32 @siptlw(i32 noundef %0) local_unnamed_addr #0 !guid !17 {
 bb.a:
   %i.a = add i32 %0, -65
   %or.cond = icmp ult i32 %i.a, 26
@@ -15,7 +15,7 @@ bb.a:
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: read) uwtable
-define dso_local i64 @siphash(ptr nofree noundef readonly captures(address) %0, i64 noundef %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #1 {
+define dso_local i64 @siphash(ptr nofree noundef readonly captures(address) %0, i64 noundef %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #1 !guid !19 {
 bb.a:
   %i.a = load i64, ptr %2, align 8, !tbaa !14     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -57,7 +57,7 @@ bb.a:
   %i.ac = xor i64 %i.v, %i.m                      ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %.0163165, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.ad, %i.e
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !17
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !18
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %.0163.lcssa = phi ptr [ %0, %bb.a ], [ %i.e, %.lr.ph ] ; 7 uses
@@ -189,7 +189,7 @@ bb.i:                                             ; preds = %._crit_edge, %bb.h
 }
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: read) uwtable
-define dso_local i64 @siphash_nocase(ptr nofree noundef readonly captures(address) %0, i64 noundef %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #1 {
+define dso_local i64 @siphash_nocase(ptr nofree noundef readonly captures(address) %0, i64 noundef %1, ptr nofree noundef readonly captures(none) %2) local_unnamed_addr #1 !guid !21 {
 bb.a:
   %i.a = load i64, ptr %2, align 8, !tbaa !14     ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 8
@@ -238,7 +238,7 @@ bb.a:
   %i.aj = xor i64 %i.ac, %i.t                     ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %.0170200, i64 8 ; 2 uses
   %.not = icmp eq ptr %i.ak, %i.e
-  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !18
+  br i1 %.not, label %._crit_edge, label %.lr.ph, !llvm.loop !20
 
 ._crit_edge:                                      ; preds = %.lr.ph, %bb.a
   %.0170.lcssa = phi ptr [ %0, %bb.a ], [ %i.e, %.lr.ph ] ; 7 uses
@@ -428,6 +428,9 @@ attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !14 = !{!13, !13, i64 0}
 !15 = !{!"llvm.loop.mustprogress"}
 !16 = !{!10, !10, i64 0}
-!17 = distinct !{!17, !15}
+!17 = !{i64 -2627907559979712021}
 !18 = distinct !{!18, !15}
+!19 = !{i64 3036731444776270560}
+!20 = distinct !{!20, !15}
+!21 = !{i64 -8311014329876061998}
 end_hunk_0

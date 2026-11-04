@@ -5,21 +5,21 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
-@0 = private unnamed_addr constant [15 x i8] c"invalid edition", align 1
-@1 = private unnamed_addr constant [26 x i8] c"crates/edition/src/lib.rs\00", align 1
-@2 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"\19\00\00\00\00\00\00\00\1A\00\00\00\12\00\00\00" }>, align 8
-@3 = private unnamed_addr constant [20 x i8] c"\11invalid edition: \C0\00", align 1
-@4 = private unnamed_addr constant [4 x i8] c"2015", align 1
-@5 = private unnamed_addr constant [4 x i8] c"2018", align 1
-@6 = private unnamed_addr constant [4 x i8] c"2021", align 1
-@7 = private unnamed_addr constant [4 x i8] c"2024", align 1
+@0 = private unnamed_addr constant [15 x i8] c"invalid edition", align 1, !guid !4
+@1 = private unnamed_addr constant [26 x i8] c"crates/edition/src/lib.rs\00", align 1, !guid !4
+@2 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @1, [16 x i8] c"\19\00\00\00\00\00\00\00\1A\00\00\00\12\00\00\00" }>, align 8, !guid !4
+@3 = private unnamed_addr constant [20 x i8] c"\11invalid edition: \C0\00", align 1, !guid !4
+@4 = private unnamed_addr constant [4 x i8] c"2015", align 1, !guid !4
+@5 = private unnamed_addr constant [4 x i8] c"2018", align 1, !guid !4
+@6 = private unnamed_addr constant [4 x i8] c"2021", align 1, !guid !4
+@7 = private unnamed_addr constant [4 x i8] c"2024", align 1, !guid !4
 @switch.table._RNvXs2_Cs3gTr8JIMkcl_7editionNtB5_7EditionNtNtCshzWfHUSfYae_4core3fmt7Display3fmt = private unnamed_addr constant [4 x ptr] [ptr @4, ptr @5, ptr @6, ptr @7], align 8
 
 ; Function Attrs: nonlazybind uwtable
-define noundef range(i8 0, 4) i8 @_RNvMCs3gTr8JIMkcl_7editionNtB2_7Edition8from_u32(i32 noundef %0) unnamed_addr #0 {
+define noundef range(i8 0, 4) i8 @_RNvMCs3gTr8JIMkcl_7editionNtB2_7Edition8from_u32(i32 noundef %0) unnamed_addr #0 !guid !6 {
 bb.a:
   %i.a = icmp ult i32 %0, 4
-  br i1 %i.a, label %switch.lookup, label %bb.b, !prof !5
+  br i1 %i.a, label %switch.lookup, label %bb.b, !prof !7
 
 bb.b:                                             ; preds = %bb.a
   tail call void @_RNvNtCshzWfHUSfYae_4core9panicking9panic_fmt(ptr noundef nonnull @0, ptr noundef nonnull inttoptr (i64 31 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @2) #7
@@ -31,23 +31,23 @@ switch.lookup:                                    ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef zeroext i1 @_RNvXs0_Cs3gTr8JIMkcl_7editionNtB5_17ParseEditionErrorNtNtCshzWfHUSfYae_4core3fmt7Display3fmt(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #0 {
+define noundef zeroext i1 @_RNvXs0_Cs3gTr8JIMkcl_7editionNtB5_17ParseEditionErrorNtNtCshzWfHUSfYae_4core3fmt7Display3fmt(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #0 !guid !8 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %0, ptr %i.a, align 8
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store ptr @_RNvXsr_NtCsbSS6DM8SDEO_5alloc6stringNtB5_6StringNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt, ptr %.sroa.43.0..sroa_idx, align 8
-  %i.b = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4
+  %i.b = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !nonnull !4, !align !6, !noundef !4
+  %i.d = load ptr, ptr %i.c, align 8, !nonnull !5, !align !9, !noundef !5
   %i.e = call noundef zeroext i1 @_RNvNtCshzWfHUSfYae_4core3fmt5write(ptr noundef nonnull %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.d, ptr noundef nonnull @3, ptr noundef nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %i.e
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @_RNvXs1_Cs3gTr8JIMkcl_7editionNtB5_7EditionNtNtNtCshzWfHUSfYae_4core3str6traits7FromStr8from_str(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly captures(none) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define void @_RNvXs1_Cs3gTr8JIMkcl_7editionNtB5_7EditionNtNtNtCshzWfHUSfYae_4core3str6traits7FromStr8from_str(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef nonnull readonly captures(none) %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality !guid !12 {
 bb.a:
   %cond = icmp eq i64 %2, 4
   br i1 %cond, label %bb.b, label %bb.f
@@ -89,8 +89,8 @@ bb.g:                                             ; preds = %bb.f
   br i1 %i.r, label %_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs3gTr8JIMkcl_7edition.exit.thread19, label %.thread13
 
 .thread13:                                        ; preds = %bb.e, %bb.g
-  tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #8, !noalias !9
-  %i.s = tail call noundef ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef range(i64 1, -9223372036854775808) %2, i64 noundef 1) #8, !noalias !9 ; 3 uses
+  tail call void @_RNvCsiZ68L5R9VjM_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #8, !noalias !13
+  %i.s = tail call noundef ptr @_RNvCsiZ68L5R9VjM_7___rustc12___rust_alloc(i64 noundef range(i64 1, -9223372036854775808) %2, i64 noundef 1) #8, !noalias !13 ; 3 uses
   %i.t = icmp eq ptr %i.s, null
   br i1 %i.t, label %bb.h, label %bb.i
 
@@ -124,9 +124,9 @@ bb.k:                                             ; preds = %bb.e, %bb.d, %bb.c,
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef zeroext i1 @_RNvXs2_Cs3gTr8JIMkcl_7editionNtB5_7EditionNtNtCshzWfHUSfYae_4core3fmt7Display3fmt(ptr noalias nofree noundef readonly captures(none) dereferenceable(1) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #0 {
+define noundef zeroext i1 @_RNvXs2_Cs3gTr8JIMkcl_7editionNtB5_7EditionNtNtCshzWfHUSfYae_4core3fmt7Display3fmt(ptr noalias nofree noundef readonly captures(none) dereferenceable(1) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #0 !guid !14 {
 switch.lookup:
-  %i.a = load i8, ptr %0, align 1, !range !10, !noundef !4
+  %i.a = load i8, ptr %0, align 1, !range !15, !noundef !5
   %i.b = zext nneg i8 %i.a to i64
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._RNvXs2_Cs3gTr8JIMkcl_7editionNtB5_7EditionNtNtCshzWfHUSfYae_4core3fmt7Display3fmt, i64 %i.b
   %switch.load = load ptr, ptr %switch.gep, align 8
@@ -135,12 +135,12 @@ switch.lookup:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal noundef zeroext i1 @_RNvXsr_NtCsbSS6DM8SDEO_5alloc6stringNtB5_6StringNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #1 {
+define internal noundef zeroext i1 @_RNvXsr_NtCsbSS6DM8SDEO_5alloc6stringNtB5_6StringNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #1 !guid !16 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load ptr, ptr %i.a, align 8, !nonnull !4, !noundef !4
+  %i.b = load ptr, ptr %i.a, align 8, !nonnull !5, !noundef !5
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.d = load i64, ptr %i.c, align 8, !noundef !4
+  %i.d = load i64, ptr %i.c, align 8, !noundef !5
   %i.e = tail call noundef zeroext i1 @_RNvXsh_NtCshzWfHUSfYae_4core3fmteNtB5_5Debug3fmt(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.b, i64 noundef %i.d, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
   ret i1 %i.e
 }
@@ -196,11 +196,17 @@ attributes #9 = { noreturn }
 !1 = !{i32 2, !"RtLibUseGOT", i32 1}
 !2 = !{i32 7, !"uwtable", i32 2}
 !3 = !{!"rustc version 1.99.0-nightly (73dc9167f 2026-08-01)"}
-!4 = !{}
-!5 = !{!"branch_weights", i32 8000, i32 1}
-!6 = !{i64 8}
-!7 = distinct !{!7, i1 true, !"_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs3gTr8JIMkcl_7edition"}
-!8 = distinct !{!8, !7, !"_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs3gTr8JIMkcl_7edition: argument 0"}
-!9 = !{!8}
-!10 = !{i8 0, i8 4}
+!4 = !{i64 4311151166082984325}
+!5 = !{}
+!6 = !{i64 -1427746402727583016}
+!7 = !{!"branch_weights", i32 8000, i32 1}
+!8 = !{i64 2603267071026487162}
+!9 = !{i64 8}
+!10 = distinct !{!10, i1 true, !"_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs3gTr8JIMkcl_7edition"}
+!11 = distinct !{!11, !10, !"_RNvMs5_NtCsbSS6DM8SDEO_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs3gTr8JIMkcl_7edition: argument 0"}
+!12 = !{i64 -2411223420776188120}
+!13 = !{!11}
+!14 = !{i64 451284709236850137}
+!15 = !{i8 0, i8 4}
+!16 = !{i64 462220307931741538}
 end_hunk_0

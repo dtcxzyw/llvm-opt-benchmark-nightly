@@ -6,7 +6,7 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(errnomem: write) uwtable
-define noundef float @_ZN6Assimp13GeometryUtils5heronEfff(float noundef %0, float noundef %1, float noundef %2) local_unnamed_addr #0 align 2 {
+define noundef float @_ZN6Assimp13GeometryUtils5heronEfff(float noundef %0, float noundef %1, float noundef %2) local_unnamed_addr #0 align 2 !guid !3 {
 bb.a:
   %i.a = fadd float %0, %1
   %i.b = fadd float %i.a, %2
@@ -27,7 +27,7 @@ bb.a:
 declare double @pow(double noundef, double noundef) local_unnamed_addr #1
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read, errnomem: write) uwtable
-define noundef float @_ZN6Assimp13GeometryUtils10distance3DERK10aiVector3tIfES4_(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %1) local_unnamed_addr #2 align 2 {
+define noundef float @_ZN6Assimp13GeometryUtils10distance3DERK10aiVector3tIfES4_(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %1) local_unnamed_addr #2 align 2 !guid !4 {
 bb.a:
   %i.a = load float, ptr %1, align 4
   %i.b = load float, ptr %0, align 4
@@ -55,7 +55,7 @@ bb.a:
 declare float @llvm.fmuladd.f32(float, float, float) #3
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, errnomem: readwrite, target_mem: none) uwtable
-define noundef float @_ZN6Assimp13GeometryUtils23calculateAreaOfTriangleERK6aiFaceP6aiMesh(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree noundef readonly captures(address_is_null) %1) local_unnamed_addr #4 align 2 {
+define noundef float @_ZN6Assimp13GeometryUtils23calculateAreaOfTriangleERK6aiFaceP6aiMesh(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree noundef readonly captures(address_is_null) %1) local_unnamed_addr #4 align 2 !guid !5 {
 bb.a:
   %i.a = icmp eq ptr %1, null
   br i1 %i.a, label %bb.c, label %bb.b
@@ -143,7 +143,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #5
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
-define noundef zeroext i1 @_ZN6Assimp13GeometryUtils14PlaneIntersectERK5aiRayRK10aiVector3tIfES7_RS5_(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %1, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %2, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(12) %3) local_unnamed_addr #6 align 2 {
+define noundef zeroext i1 @_ZN6Assimp13GeometryUtils14PlaneIntersectERK5aiRayRK10aiVector3tIfES7_RS5_(ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(24) %0, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %1, ptr nofree noundef nonnull readonly align 4 captures(none) dereferenceable(12) %2, ptr nofree noundef nonnull writeonly align 4 captures(none) dereferenceable(12) %3) local_unnamed_addr #6 align 2 !guid !6 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load float, ptr %i.a, align 4            ; 2 uses
@@ -200,7 +200,7 @@ bb.d:                                             ; preds = %bb.b, %bb.a, %bb.c
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define void @_ZN6Assimp13GeometryUtils20normalizeVectorArrayEP10aiVector3tIfES3_m(ptr nofree noundef captures(address_is_null) %0, ptr nofree noundef writeonly captures(address_is_null) %1, i64 noundef %2) local_unnamed_addr #7 align 2 {
+define void @_ZN6Assimp13GeometryUtils20normalizeVectorArrayEP10aiVector3tIfES3_m(ptr nofree noundef captures(address_is_null) %0, ptr nofree noundef writeonly captures(address_is_null) %1, i64 noundef %2) local_unnamed_addr #7 align 2 !guid !8 {
 bb.a:
   %i.a = icmp ne ptr %0, null
   %i.b = icmp ne ptr %1, null
@@ -239,7 +239,7 @@ _ZN10aiVector3tIfE9NormalizeEv.exit:              ; preds = %.lr.ph, %_ZN10aiVec
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.r, ptr noundef nonnull align 4 dereferenceable(12) %i.d, i64 12, i1 false)
   %i.s = add nuw i64 %.011, 1                     ; 2 uses
   %exitcond.not = icmp eq i64 %i.s, %2
-  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !3
+  br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !7
 
 .loopexit:                                        ; preds = %_ZN10aiVector3tIfE9NormalizeEv.exit, %bb.a
   ret void
@@ -270,6 +270,11 @@ attributes #8 = { nounwind }
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
 !2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = distinct !{!3, !4}
-!4 = !{!"llvm.loop.mustprogress"}
+!3 = !{i64 1900528581837667201}
+!4 = !{i64 -7444714382138289959}
+!5 = !{i64 5833685077220379236}
+!6 = !{i64 3453460944121454697}
+!7 = distinct !{!7, !9}
+!8 = !{i64 4559457991769986760}
+!9 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

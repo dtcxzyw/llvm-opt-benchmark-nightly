@@ -3,12 +3,12 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-@_ZN4llvh7hashing6detail19fixed_seed_overrideE = hidden local_unnamed_addr global i64 0, align 8
+@_ZN4llvh7hashing6detail19fixed_seed_overrideE = hidden local_unnamed_addr global i64 0, align 8, !guid !7
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
-define hidden void @_ZN4llvh29set_fixed_execution_hash_seedEm(i64 noundef %0) local_unnamed_addr #0 {
+define hidden void @_ZN4llvh29set_fixed_execution_hash_seedEm(i64 noundef %0) local_unnamed_addr #0 !guid !8 {
 bb.a:
-  store i64 %0, ptr @_ZN4llvh7hashing6detail19fixed_seed_overrideE, align 8, !tbaa !8
+  store i64 %0, ptr @_ZN4llvh7hashing6detail19fixed_seed_overrideE, align 8, !tbaa !10
   ret void
 }
 
@@ -25,6 +25,8 @@ attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memor
 !4 = !{!"omnipotent char", !3, i64 0}
 !5 = !{!"int", !4, i64 0}
 !6 = !{!5, !5, i64 0}
-!7 = !{!"long", !4, i64 0}
-!8 = !{!7, !7, i64 0}
+!7 = !{i64 7088884762045220672}
+!8 = !{i64 -5240863098871874648}
+!9 = !{!"long", !4, i64 0}
+!10 = !{!9, !9, i64 0}
 end_hunk_0

@@ -5,10 +5,10 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
-@.str = private unnamed_addr constant [12 x i8] c"rstruct_len\00", align 1
+@.str = private unnamed_addr constant [12 x i8] c"rstruct_len\00", align 1, !guid !10
 
 ; Function Attrs: nounwind uwtable
-define void @Init_len(i64 noundef %0) local_unnamed_addr #0 {
+define void @Init_len(i64 noundef %0) local_unnamed_addr #0 !guid !11 {
 bb.a:
   tail call void @rb_define_method(i64 noundef %0, ptr noundef nonnull @.str, ptr noundef nonnull @bug_struct_len, i32 noundef 0) #2
   ret void
@@ -17,7 +17,7 @@ bb.a:
 declare extern_weak void @rb_define_method(i64 noundef, ptr noundef, ptr noundef, i32 noundef) local_unnamed_addr #1
 
 ; Function Attrs: nounwind uwtable
-define internal i64 @bug_struct_len(i64 noundef %0) #0 {
+define internal i64 @bug_struct_len(i64 noundef %0) #0 !guid !12 {
 bb.a:
   %i.a = tail call i64 @rb_struct_size(i64 noundef %0) #2 ; 3 uses
   %i.b = trunc i64 %i.a to i1
@@ -75,4 +75,7 @@ attributes #2 = { nounwind }
 !7 = !{!"omnipotent char", !6, i64 0}
 !8 = !{!"int", !7, i64 0}
 !9 = !{!8, !8, i64 0}
+!10 = !{i64 -4845947544677067042}
+!11 = !{i64 -6001414196867273376}
+!12 = !{i64 -205338825236539890}
 end_hunk_0

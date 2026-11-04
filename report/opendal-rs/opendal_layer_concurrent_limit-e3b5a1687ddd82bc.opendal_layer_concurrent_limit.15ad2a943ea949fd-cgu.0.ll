@@ -6,22 +6,22 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-unknown-linux-gnu"
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync8ArcInnerNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEECs1RnKLoV4x19_30opendal_layer_concurrent_limit(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(88) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync8ArcInnerNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEECs1RnKLoV4x19_30opendal_layer_concurrent_limit(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(88) %0) unnamed_addr #0 personality ptr @rust_eh_personality !guid !37 {
 bb.a:
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !37)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !38)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !39)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !40)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !41)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !42)
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !43)
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !44)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !45)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %.val.i.i.i.i.i.i.i.i = load ptr, ptr %i.b, align 8, !alias.scope !45, !nonnull !4, !noundef !4 ; 4 uses
+  %.val.i.i.i.i.i.i.i.i = load ptr, ptr %i.b, align 8, !alias.scope !46, !nonnull !4, !noundef !4 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %.val1.i.i.i.i.i.i.i.i = load i64, ptr %i.c, align 8, !alias.scope !45, !noundef !4 ; 4 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !46)
+  %.val1.i.i.i.i.i.i.i.i = load i64, ptr %i.c, align 8, !alias.scope !46, !noundef !4 ; 4 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !47)
   %i.d = icmp eq i64 %.val1.i.i.i.i.i.i.i.i, 0
   br i1 %i.d, label %_RNvXso_NtCs6i54tJFfzR_5alloc3vecINtB5_3VecINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB1b_9semaphore8WaitNodeEEENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i.i
 
@@ -29,30 +29,30 @@ bb.a:
   %.sroa.0.011.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.f, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB18_9semaphore8WaitNodeEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit.i.i.i.i.i.i.i.i.i.i ], [ 0, %bb.a ] ; 2 uses
   %i.e = getelementptr inbounds nuw [48 x i8], ptr %.val.i.i.i.i.i.i.i.i, i64 %.sroa.0.011.i.i.i.i.i.i.i.i.i.i ; 3 uses
   %i.f = add nuw nsw i64 %.sroa.0.011.i.i.i.i.i.i.i.i.i.i, 1 ; 4 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !47)
-  %i.g = load i64, ptr %i.e, align 8, !range !48, !alias.scope !49, !noalias !45, !noundef !4 ; 2 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !48)
+  %i.g = load i64, ptr %i.e, align 8, !range !49, !alias.scope !50, !noalias !46, !noundef !4 ; 2 uses
   %i.h = icmp eq i64 %i.g, 2
   br i1 %i.h, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB18_9semaphore8WaitNodeEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit.i.i.i.i.i.i.i.i.i.i, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !50)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !51)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !52)
   %i.i = icmp eq i64 %i.g, 0
   br i1 %i.i, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB18_9semaphore8WaitNodeEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit.i.i.i.i.i.i.i.i.i.i, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %i.e, i64 8
-  %.val.i.i.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.j, align 8, !alias.scope !52, !noalias !45, !align !53, !noundef !4 ; 2 uses
+  %.val.i.i.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.j, align 8, !alias.scope !53, !noalias !46, !align !54, !noundef !4 ; 2 uses
   %i.k = icmp eq ptr %.val.i.i.i.i.i.i.i.i.i.i.i.i.i, null
   br i1 %i.k, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB18_9semaphore8WaitNodeEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit.i.i.i.i.i.i.i.i.i.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 16
-  %.val1.i.i.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.l, align 8, !alias.scope !52, !noalias !45
+  %.val1.i.i.i.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.l, align 8, !alias.scope !53, !noalias !46
   %i.m = getelementptr inbounds nuw i8, ptr %.val.i.i.i.i.i.i.i.i.i.i.i.i.i, i64 24
-  %i.n = load ptr, ptr %i.m, align 8, !noalias !54, !nonnull !4, !noundef !4
+  %i.n = load ptr, ptr %i.m, align 8, !noalias !55, !nonnull !4, !noundef !4
   invoke void %i.n(ptr noundef %.val1.i.i.i.i.i.i.i.i.i.i.i.i.i)
-          to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB18_9semaphore8WaitNodeEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit.i.i.i.i.i.i.i.i.i.i unwind label %bb.e, !noalias !55, !inline_history !30
+          to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB18_9semaphore8WaitNodeEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit.i.i.i.i.i.i.i.i.i.i unwind label %bb.e, !noalias !56, !inline_history !30
 
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB18_9semaphore8WaitNodeEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.d, %bb.c, %bb.b, %.lr.ph.i.i.i.i.i.i.i.i.i.i
   %i.o = icmp eq i64 %i.f, %.val1.i.i.i.i.i.i.i.i
@@ -68,30 +68,30 @@ bb.e:                                             ; preds = %bb.d
   %.sroa.0.112.i.i.i.i.i.i.i.i.i.i = phi i64 [ %i.s, %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB18_9semaphore8WaitNodeEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit10.i.i.i.i.i.i.i.i.i.i ], [ %i.f, %bb.e ] ; 2 uses
   %i.r = getelementptr inbounds nuw [48 x i8], ptr %.val.i.i.i.i.i.i.i.i, i64 %.sroa.0.112.i.i.i.i.i.i.i.i.i.i ; 3 uses
   %i.s = add nuw nsw i64 %.sroa.0.112.i.i.i.i.i.i.i.i.i.i, 1 ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !56)
-  %i.t = load i64, ptr %i.r, align 8, !range !48, !alias.scope !57, !noalias !45, !noundef !4 ; 2 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !57)
+  %i.t = load i64, ptr %i.r, align 8, !range !49, !alias.scope !58, !noalias !46, !noundef !4 ; 2 uses
   %i.u = icmp eq i64 %i.t, 2
   br i1 %i.u, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB18_9semaphore8WaitNodeEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit10.i.i.i.i.i.i.i.i.i.i, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph14.i.i.i.i.i.i.i.i.i.i
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !58)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !59)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !60)
   %i.v = icmp eq i64 %i.t, 0
   br i1 %i.v, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB18_9semaphore8WaitNodeEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit10.i.i.i.i.i.i.i.i.i.i, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.w = getelementptr inbounds nuw i8, ptr %i.r, i64 8
-  %.val.i.i.i7.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.w, align 8, !alias.scope !60, !noalias !45, !align !53, !noundef !4 ; 2 uses
+  %.val.i.i.i7.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.w, align 8, !alias.scope !61, !noalias !46, !align !54, !noundef !4 ; 2 uses
   %i.x = icmp eq ptr %.val.i.i.i7.i.i.i.i.i.i.i.i.i.i, null
   br i1 %i.x, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB18_9semaphore8WaitNodeEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit10.i.i.i.i.i.i.i.i.i.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   %i.y = getelementptr inbounds nuw i8, ptr %i.r, i64 16
-  %.val1.i.i.i8.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.y, align 8, !alias.scope !60, !noalias !45
+  %.val1.i.i.i8.i.i.i.i.i.i.i.i.i.i = load ptr, ptr %i.y, align 8, !alias.scope !61, !noalias !46
   %i.z = getelementptr inbounds nuw i8, ptr %.val.i.i.i7.i.i.i.i.i.i.i.i.i.i, i64 24
-  %i.aa = load ptr, ptr %i.z, align 8, !noalias !61, !nonnull !4, !noundef !4
+  %i.aa = load ptr, ptr %i.z, align 8, !noalias !62, !nonnull !4, !noundef !4
   invoke void %i.aa(ptr noundef %.val1.i.i.i8.i.i.i.i.i.i.i.i.i.i)
-          to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB18_9semaphore8WaitNodeEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit10.i.i.i.i.i.i.i.i.i.i unwind label %bb.i, !noalias !55, !inline_history !30
+          to label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB18_9semaphore8WaitNodeEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit10.i.i.i.i.i.i.i.i.i.i unwind label %bb.i, !noalias !56, !inline_history !30
 
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB18_9semaphore8WaitNodeEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit10.i.i.i.i.i.i.i.i.i.i: ; preds = %bb.h, %bb.g, %bb.f, %.lr.ph14.i.i.i.i.i.i.i.i.i.i
   %i.ab = icmp eq i64 %i.s, %.val1.i.i.i.i.i.i.i.i
@@ -100,27 +100,27 @@ _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p
 bb.i:                                             ; preds = %bb.h
   %i.ac = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  tail call void @_RNvNtCsgxBkk5gSRhY_4core9panicking16panic_in_cleanup() #10, !noalias !55
+  tail call void @_RNvNtCsgxBkk5gSRhY_4core9panicking16panic_in_cleanup() #10, !noalias !56
   unreachable
 
 .body.i.i.i.i.i.i.i.i:                            ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB18_9semaphore8WaitNodeEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit10.i.i.i.i.i.i.i.i.i.i, %bb.e
-  %.val4.i.i.i.i.i.i.i.i = load i64, ptr %i.a, align 8, !range !62, !alias.scope !45, !noundef !4 ; 2 uses
+  %.val4.i.i.i.i.i.i.i.i = load i64, ptr %i.a, align 8, !range !63, !alias.scope !46, !noundef !4 ; 2 uses
   %i.ad = icmp eq i64 %.val4.i.i.i.i.i.i.i.i, 0
   br i1 %i.ad, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc7raw_vec6RawVecINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB1L_9semaphore8WaitNodeEEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit.i.i.i.i.i.i.i.i, label %bb.j
 
 bb.j:                                             ; preds = %.body.i.i.i.i.i.i.i.i
   %i.ae = mul nuw i64 %.val4.i.i.i.i.i.i.i.i, 48
-  tail call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i.i.i.i.i.i, i64 noundef %i.ae, i64 noundef range(i64 1, -9223372036854775807) 8) #11, !noalias !45
+  tail call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i.i.i.i.i.i, i64 noundef %i.ae, i64 noundef range(i64 1, -9223372036854775807) 8) #11, !noalias !46
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc7raw_vec6RawVecINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB1L_9semaphore8WaitNodeEEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit.i.i.i.i.i.i.i.i
 
 _RNvXso_NtCs6i54tJFfzR_5alloc3vecINtB5_3VecINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB1b_9semaphore8WaitNodeEEENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit.i.i.i.i.i.i.i.i: ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB18_9semaphore8WaitNodeEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit.i.i.i.i.i.i.i.i.i.i, %bb.a
-  %.val2.i.i.i.i.i.i.i.i = load i64, ptr %i.a, align 8, !range !62, !alias.scope !45, !noundef !4 ; 2 uses
+  %.val2.i.i.i.i.i.i.i.i = load i64, ptr %i.a, align 8, !range !63, !alias.scope !46, !noundef !4 ; 2 uses
   %i.af = icmp eq i64 %.val2.i.i.i.i.i.i.i.i, 0
   br i1 %i.af, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit, label %bb.k
 
 bb.k:                                             ; preds = %_RNvXso_NtCs6i54tJFfzR_5alloc3vecINtB5_3VecINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB1b_9semaphore8WaitNodeEEENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit.i.i.i.i.i.i.i.i
   %i.ag = mul nuw i64 %.val2.i.i.i.i.i.i.i.i, 48
-  tail call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i.i.i.i.i.i, i64 noundef %i.ag, i64 noundef range(i64 1, -9223372036854775807) 8) #11, !noalias !45
+  tail call void @_RNvCs1njKG4L9aB3_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i.i.i.i.i.i, i64 noundef %i.ag, i64 noundef range(i64 1, -9223372036854775807) 8) #11, !noalias !46
   br label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit
 
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc7raw_vec6RawVecINtCsl5ohi6LmI2a_4slab5EntryINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtB1L_9semaphore8WaitNodeEEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit.i.i.i.i.i.i.i.i: ; preds = %bb.j, %.body.i.i.i.i.i.i.i.i
@@ -131,12 +131,12 @@ _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtNtCsg4p3tUS9I08_9asyncband9semaphore9S
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtCs1RnKLoV4x19_30opendal_layer_concurrent_limit20ConcurrentLimitLayerEBD_(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define internal fastcc void @_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueNtCs1RnKLoV4x19_30opendal_layer_concurrent_limit20ConcurrentLimitLayerEBD_(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %0) unnamed_addr #0 personality ptr @rust_eh_personality !guid !80 {
 bb.a:
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !79)
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !80)
-  %i.a = load ptr, ptr %0, align 8, !alias.scope !81, !nonnull !4, !noundef !4
-  %i.b = atomicrmw add ptr %i.a, i64 -1 release, align 8, !noalias !81
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !81)
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !82)
+  %i.a = load ptr, ptr %0, align 8, !alias.scope !83, !nonnull !4, !noundef !4
+  %i.b = atomicrmw add ptr %i.a, i64 -1 release, align 8, !noalias !83
   %i.c = icmp eq i64 %i.b, 1
   br i1 %i.c, label %bb.b, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit
 
@@ -149,13 +149,13 @@ bb.c:                                             ; preds = %bb.b
   %i.d = landingpad { ptr, i32 }
           cleanup
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !82)
-  %i.f = load ptr, ptr %i.e, align 8, !alias.scope !82, !noundef !4 ; 2 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !84)
+  %i.f = load ptr, ptr %i.e, align 8, !alias.scope !84, !noundef !4 ; 2 uses
   %i.g = icmp eq ptr %i.f, null
   br i1 %i.g, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.h = atomicrmw add ptr %i.f, i64 -1 release, align 8, !noalias !83
+  %i.h = atomicrmw add ptr %i.f, i64 -1 release, align 8, !noalias !85
   %i.i = icmp eq i64 %i.h, 1
   br i1 %i.i, label %bb.e, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit
 
@@ -166,13 +166,13 @@ bb.e:                                             ; preds = %bb.d
 
 _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit: ; preds = %bb.a, %bb.b
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !84)
-  %i.k = load ptr, ptr %i.j, align 8, !alias.scope !84, !noundef !4 ; 2 uses
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !86)
+  %i.k = load ptr, ptr %i.j, align 8, !alias.scope !86, !noundef !4 ; 2 uses
   %i.l = icmp eq ptr %i.k, null
   br i1 %i.l, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit2, label %bb.f
 
 bb.f:                                             ; preds = %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit
-  %i.m = atomicrmw add ptr %i.k, i64 -1 release, align 8, !noalias !85
+  %i.m = atomicrmw add ptr %i.k, i64 -1 release, align 8, !noalias !87
   %i.n = icmp eq i64 %i.m, 1
   br i1 %i.n, label %bb.g, label %_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit2
 
@@ -195,7 +195,7 @@ _RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_
 }
 
 ; Function Attrs: nonlazybind uwtable
-define { ptr, ptr } @_RNvMs0_Cs1RnKLoV4x19_30opendal_layer_concurrent_limitNtB5_20ConcurrentLimitLayer26with_http_concurrent_limit(ptr noundef nonnull %0, ptr noundef %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define { ptr, ptr } @_RNvMs0_Cs1RnKLoV4x19_30opendal_layer_concurrent_limitNtB5_20ConcurrentLimitLayer26with_http_concurrent_limit(ptr noundef nonnull %0, ptr noundef %1, i64 noundef %2) unnamed_addr #0 personality ptr @rust_eh_personality !guid !96 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 6 uses
   %i.b = alloca [88 x i8], align 8                ; 13 uses
@@ -222,8 +222,8 @@ bb.a:
   %.sroa.44.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 80
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.03.sroa.5.sroa.8.0..sroa.03.sroa.5.0..sroa_idx.sroa_idx, i8 0, i64 24, i1 false)
   store i64 %2, ptr %.sroa.44.0..sroa_idx, align 8
-  tail call void @_RNvCs1njKG4L9aB3_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #11, !noalias !94
-  %i.g = tail call noundef align 8 dereferenceable_or_null(88) ptr @_RNvCs1njKG4L9aB3_7___rustc12___rust_alloc(i64 noundef 88, i64 noundef 8) #11, !noalias !94 ; 4 uses
+  tail call void @_RNvCs1njKG4L9aB3_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #11, !noalias !97
+  %i.g = tail call noundef align 8 dereferenceable_or_null(88) ptr @_RNvCs1njKG4L9aB3_7___rustc12___rust_alloc(i64 noundef 88, i64 noundef 8) #11, !noalias !97 ; 4 uses
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %bb.b, label %bb.e, !prof !5
 
@@ -257,7 +257,7 @@ bb.e:                                             ; preds = %bb.a
   br i1 %i.l, label %bb.j, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %i.m = atomicrmw add ptr %1, i64 -1 release, align 8, !noalias !95
+  %i.m = atomicrmw add ptr %1, i64 -1 release, align 8, !noalias !98
   %i.n = icmp eq i64 %i.m, 1
   br i1 %i.n, label %bb.g, label %bb.j
 
@@ -303,7 +303,7 @@ bb.k:                                             ; preds = %.body
 }
 
 ; Function Attrs: nonlazybind uwtable
-define { ptr, ptr } @_RNvMs0_Cs1RnKLoV4x19_30opendal_layer_concurrent_limitNtB5_20ConcurrentLimitLayer3new(i64 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality {
+define { ptr, ptr } @_RNvMs0_Cs1RnKLoV4x19_30opendal_layer_concurrent_limitNtB5_20ConcurrentLimitLayer3new(i64 noundef %0) unnamed_addr #0 personality ptr @rust_eh_personality !guid !101 {
 bb.a:
   %i.a = alloca [88 x i8], align 8                ; 13 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -324,8 +324,8 @@ bb.a:
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.02.sroa.5.sroa.8.0..sroa.02.sroa.5.0..sroa_idx.sroa_idx, i8 0, i64 24, i1 false)
   store i64 %0, ptr %.sroa.43.0..sroa_idx, align 8
-  tail call void @_RNvCs1njKG4L9aB3_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #11, !noalias !98
-  %i.d = tail call noundef align 8 dereferenceable_or_null(88) ptr @_RNvCs1njKG4L9aB3_7___rustc12___rust_alloc(i64 noundef 88, i64 noundef 8) #11, !noalias !98 ; 3 uses
+  tail call void @_RNvCs1njKG4L9aB3_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #11, !noalias !102
+  %i.d = tail call noundef align 8 dereferenceable_or_null(88) ptr @_RNvCs1njKG4L9aB3_7___rustc12___rust_alloc(i64 noundef 88, i64 noundef 8) #11, !noalias !102 ; 3 uses
   %i.e = icmp eq ptr %i.d, null
   br i1 %i.e, label %bb.b, label %_RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEE3newCs1RnKLoV4x19_30opendal_layer_concurrent_limit.exit, !prof !5
 
@@ -451,66 +451,70 @@ attributes #14 = { cold }
 !34 = distinct !{!34, !33, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtNtCsg4p3tUS9I08_9asyncband8internal8waitlist4NodeNtNtBG_9semaphore8WaitNodeEECs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
 !35 = distinct !{!35, i1 true, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsg4p3tUS9I08_9asyncband8internal9semaphore8WaitNodeEECs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
 !36 = distinct !{!36, !35, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsg4p3tUS9I08_9asyncband8internal9semaphore8WaitNodeEECs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
-!37 = !{!7}
-!38 = !{!9}
-!39 = !{!11}
-!40 = !{!13}
-!41 = !{!15}
-!42 = !{!17}
-!43 = !{!19}
-!44 = !{!21}
-!45 = !{!21, !19, !17, !15, !13, !11, !9, !7}
-!46 = !{!23}
-!47 = !{!25}
-!48 = !{i64 0, i64 3}
-!49 = !{!25, !23}
-!50 = !{!27}
-!51 = !{!29}
-!52 = !{!29, !27, !25, !23}
-!53 = !{i64 8}
-!54 = !{!29, !27, !25, !23, !21, !19, !17, !15, !13, !11, !9, !7}
-!55 = !{!23, !21, !19, !17, !15, !13, !11, !9, !7}
-!56 = !{!32}
-!57 = !{!32, !23}
-!58 = !{!34}
-!59 = !{!36}
-!60 = !{!36, !34, !32, !23}
-!61 = !{!36, !34, !32, !23, !21, !19, !17, !15, !13, !11, !9, !7}
-!62 = !{i64 0, i64 -9223372036854775808}
-!63 = distinct !{!63, i1 true, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEECs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
-!64 = distinct !{!64, !63, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEECs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
-!65 = distinct !{!65, i1 true, !"_RNvXsE_NtCs6i54tJFfzR_5alloc4syncINtB5_3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
-!66 = distinct !{!66, !65, !"_RNvXsE_NtCs6i54tJFfzR_5alloc4syncINtB5_3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
-!67 = distinct !{!67, i1 true, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
-!68 = distinct !{!68, !67, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
-!69 = distinct !{!69, i1 true, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEECs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
-!70 = distinct !{!70, !69, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEECs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
-!71 = distinct !{!71, i1 true, !"_RNvXsE_NtCs6i54tJFfzR_5alloc4syncINtB5_3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
-!72 = distinct !{!72, !71, !"_RNvXsE_NtCs6i54tJFfzR_5alloc4syncINtB5_3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
-!73 = distinct !{!73, i1 true, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
-!74 = distinct !{!74, !73, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
-!75 = distinct !{!75, i1 true, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEECs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
-!76 = distinct !{!76, !75, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEECs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
-!77 = distinct !{!77, i1 true, !"_RNvXsE_NtCs6i54tJFfzR_5alloc4syncINtB5_3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
-!78 = distinct !{!78, !77, !"_RNvXsE_NtCs6i54tJFfzR_5alloc4syncINtB5_3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
-!79 = !{!64}
-!80 = !{!66}
-!81 = !{!66, !64}
-!82 = !{!68}
-!83 = !{!72, !70, !68}
-!84 = !{!74}
-!85 = !{!78, !76, !74}
-!86 = distinct !{!86, i1 true, !"_RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEE3newCs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
-!87 = distinct !{!87, !86, !"_RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEE3newCs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
-!88 = distinct !{!88, i1 true, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
-!89 = distinct !{!89, !88, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
-!90 = distinct !{!90, i1 true, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEECs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
-!91 = distinct !{!91, !90, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEECs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
-!92 = distinct !{!92, i1 true, !"_RNvXsE_NtCs6i54tJFfzR_5alloc4syncINtB5_3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
-!93 = distinct !{!93, !92, !"_RNvXsE_NtCs6i54tJFfzR_5alloc4syncINtB5_3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
-!94 = !{!87}
-!95 = !{!93, !91, !89}
-!96 = distinct !{!96, i1 true, !"_RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEE3newCs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
-!97 = distinct !{!97, !96, !"_RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEE3newCs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
-!98 = !{!97}
+!37 = !{i64 6153889987225916753}
+!38 = !{!7}
+!39 = !{!9}
+!40 = !{!11}
+!41 = !{!13}
+!42 = !{!15}
+!43 = !{!17}
+!44 = !{!19}
+!45 = !{!21}
+!46 = !{!21, !19, !17, !15, !13, !11, !9, !7}
+!47 = !{!23}
+!48 = !{!25}
+!49 = !{i64 0, i64 3}
+!50 = !{!25, !23}
+!51 = !{!27}
+!52 = !{!29}
+!53 = !{!29, !27, !25, !23}
+!54 = !{i64 8}
+!55 = !{!29, !27, !25, !23, !21, !19, !17, !15, !13, !11, !9, !7}
+!56 = !{!23, !21, !19, !17, !15, !13, !11, !9, !7}
+!57 = !{!32}
+!58 = !{!32, !23}
+!59 = !{!34}
+!60 = !{!36}
+!61 = !{!36, !34, !32, !23}
+!62 = !{!36, !34, !32, !23, !21, !19, !17, !15, !13, !11, !9, !7}
+!63 = !{i64 0, i64 -9223372036854775808}
+!64 = distinct !{!64, i1 true, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEECs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
+!65 = distinct !{!65, !64, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEECs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
+!66 = distinct !{!66, i1 true, !"_RNvXsE_NtCs6i54tJFfzR_5alloc4syncINtB5_3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
+!67 = distinct !{!67, !66, !"_RNvXsE_NtCs6i54tJFfzR_5alloc4syncINtB5_3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
+!68 = distinct !{!68, i1 true, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
+!69 = distinct !{!69, !68, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
+!70 = distinct !{!70, i1 true, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEECs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
+!71 = distinct !{!71, !70, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEECs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
+!72 = distinct !{!72, i1 true, !"_RNvXsE_NtCs6i54tJFfzR_5alloc4syncINtB5_3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
+!73 = distinct !{!73, !72, !"_RNvXsE_NtCs6i54tJFfzR_5alloc4syncINtB5_3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
+!74 = distinct !{!74, i1 true, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
+!75 = distinct !{!75, !74, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
+!76 = distinct !{!76, i1 true, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEECs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
+!77 = distinct !{!77, !76, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEECs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
+!78 = distinct !{!78, i1 true, !"_RNvXsE_NtCs6i54tJFfzR_5alloc4syncINtB5_3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
+!79 = distinct !{!79, !78, !"_RNvXsE_NtCs6i54tJFfzR_5alloc4syncINtB5_3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
+!80 = !{i64 244423768743020213}
+!81 = !{!65}
+!82 = !{!67}
+!83 = !{!67, !65}
+!84 = !{!69}
+!85 = !{!73, !71, !69}
+!86 = !{!75}
+!87 = !{!79, !77, !75}
+!88 = distinct !{!88, i1 true, !"_RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEE3newCs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
+!89 = distinct !{!89, !88, !"_RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEE3newCs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
+!90 = distinct !{!90, i1 true, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
+!91 = distinct !{!91, !90, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEEECs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
+!92 = distinct !{!92, i1 true, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEECs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
+!93 = distinct !{!93, !92, !"_RINvNtCsgxBkk5gSRhY_4core3ptr9drop_glueINtNtCs6i54tJFfzR_5alloc4sync3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEECs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
+!94 = distinct !{!94, i1 true, !"_RNvXsE_NtCs6i54tJFfzR_5alloc4syncINtB5_3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
+!95 = distinct !{!95, !94, !"_RNvXsE_NtCs6i54tJFfzR_5alloc4syncINtB5_3ArcNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreENtNtNtCsgxBkk5gSRhY_4core3ops4drop4Drop4dropCs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
+!96 = !{i64 -1056863585109498477}
+!97 = !{!89}
+!98 = !{!95, !93, !91}
+!99 = distinct !{!99, i1 true, !"_RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEE3newCs1RnKLoV4x19_30opendal_layer_concurrent_limit"}
+!100 = distinct !{!100, !99, !"_RNvMNtCs6i54tJFfzR_5alloc5boxedINtB2_3BoxINtNtB4_4sync8ArcInnerNtNtCsg4p3tUS9I08_9asyncband9semaphore9SemaphoreEE3newCs1RnKLoV4x19_30opendal_layer_concurrent_limit: argument 0"}
+!101 = !{i64 3947808104688389337}
+!102 = !{!100}
 end_hunk_0

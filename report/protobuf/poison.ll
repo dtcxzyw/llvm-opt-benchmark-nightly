@@ -6,7 +6,7 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef ptr @_ZN4absl12lts_2025051213base_internal33InitializePoisonedPointerInternalEv() local_unnamed_addr #0 {
+define noundef ptr @_ZN4absl12lts_2025051213base_internal33InitializePoisonedPointerInternalEv() local_unnamed_addr #0 !guid !7 {
 bb.a:
   %i.a = tail call noundef i64 @sysconf(i32 noundef 30) #2 ; 2 uses
   %i.b = tail call i64 (i64, ...) @syscall(i64 noundef 9, i64 noundef 0, i64 noundef %i.a, i64 noundef 0, i64 noundef 34, i64 noundef -1, i64 noundef 0) #2 ; 2 uses
@@ -14,7 +14,7 @@ bb.a:
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
-  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(ptr nonnull inttoptr (i64 -4985279381848933680 to ptr)) #2, !srcloc !7
+  tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(ptr nonnull inttoptr (i64 -4985279381848933680 to ptr)) #2, !srcloc !8
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
@@ -49,5 +49,6 @@ attributes #2 = { nounwind }
 !4 = !{!"omnipotent char", !3, i64 0}
 !5 = !{!"int", !4, i64 0}
 !6 = !{!5, !5, i64 0}
-!7 = !{i64 24127}
+!7 = !{i64 7692340593258051653}
+!8 = !{i64 24127}
 end_hunk_0

@@ -8,7 +8,7 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define noundef zeroext i1 @_ZN14arrow_vendored17double_conversion13FastFixedDtoaEdiNS0_6VectorIcEEPiS3_(double noundef %0, i32 noundef %1, ptr nofree captures(none) %2, i32 %3, ptr nofree noundef captures(none) %4, ptr nofree noundef captures(none) %5) local_unnamed_addr #0 {
+define noundef zeroext i1 @_ZN14arrow_vendored17double_conversion13FastFixedDtoaEdiNS0_6VectorIcEEPiS3_(double noundef %0, i32 noundef %1, ptr nofree captures(none) %2, i32 %3, ptr nofree noundef captures(none) %4, ptr nofree noundef captures(none) %5) local_unnamed_addr #0 !guid !14 {
 bb.a:
   %i.a = bitcast double %0 to i64                 ; 3 uses
   %i.b = and i64 %i.a, 4503599627370495           ; 2 uses
@@ -411,7 +411,7 @@ bb.t:                                             ; preds = %_ZN14arrow_vendored
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define internal fastcc void @_ZN14arrow_vendored17double_conversionL12FillDigits64EmNS0_6VectorIcEEPi(i64 noundef %0, ptr nofree captures(none) %1, ptr nofree noundef captures(none) %2) unnamed_addr #0 {
+define internal fastcc void @_ZN14arrow_vendored17double_conversionL12FillDigits64EmNS0_6VectorIcEEPi(i64 noundef %0, ptr nofree captures(none) %1, ptr nofree noundef captures(none) %2) unnamed_addr #0 !guid !15 {
 bb.a:
   %i.a = urem i64 %0, 10000000                    ; 2 uses
   %i.b = trunc nuw nsw i64 %i.a to i32            ; 8 uses
@@ -728,7 +728,7 @@ _ZN14arrow_vendored17double_conversionL12FillDigits32EjNS0_6VectorIcEEPi.exit90:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define internal fastcc void @_ZN14arrow_vendored17double_conversionL15FillFractionalsEmiiNS0_6VectorIcEEPiS3_(i64 noundef %0, i32 noundef range(i32 -128, 0) %1, i32 noundef range(i32 -2147483648, 21) %2, ptr nofree captures(none) %3, ptr nofree noundef captures(none) %4, ptr nofree noundef captures(none) %5) unnamed_addr #0 {
+define internal fastcc void @_ZN14arrow_vendored17double_conversionL15FillFractionalsEmiiNS0_6VectorIcEEPiS3_(i64 noundef %0, i32 noundef range(i32 -128, 0) %1, i32 noundef range(i32 -2147483648, 21) %2, ptr nofree captures(none) %3, ptr nofree noundef captures(none) %4, ptr nofree noundef captures(none) %5) unnamed_addr #0 !guid !19 {
 bb.a:
   %i.a = sub nsw i32 0, %1                        ; 3 uses
   %i.b = icmp samesign ult i32 %i.a, 65
@@ -765,7 +765,7 @@ bb.b:                                             ; preds = %.lr.ph87
   %i.r = sub i64 %i.d, %i.q                       ; 2 uses
   %i.s = add nuw nsw i32 %.03784, 1               ; 2 uses
   %exitcond95.not = icmp eq i32 %i.s, %2
-  br i1 %exitcond95.not, label %._crit_edge88, label %.lr.ph87, !llvm.loop !14
+  br i1 %exitcond95.not, label %._crit_edge88, label %.lr.ph87, !llvm.loop !16
 
 ._crit_edge88:                                    ; preds = %bb.b, %.preheader
   %.036.lcssa = phi i32 [ %i.a, %.preheader ], [ %i.e, %bb.b ]
@@ -823,7 +823,7 @@ bb.g:                                             ; preds = %.lr.ph.i
   %i.am = add i8 %i.al, 1
   store i8 %i.am, ptr %i.ak, align 1, !tbaa !9
   %i.an = icmp samesign ugt i64 %indvars.iv.i, 2
-  br i1 %i.an, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !15
+  br i1 %i.an, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !17
 
 ._crit_edge.i:                                    ; preds = %bb.g, %bb.f
   %i.ao = load i8, ptr %3, align 1, !tbaa !9
@@ -906,7 +906,7 @@ _ZN14arrow_vendored17double_conversion7UInt12814DivModPowerOf2Ei.exit: ; preds =
   store i32 %i.bz, ptr %4, align 4, !tbaa !8
   %i.ca = add nuw nsw i32 %.03877, 1              ; 2 uses
   %exitcond.not = icmp eq i32 %i.ca, %2
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !16
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !18
 
 ._crit_edge.loopexit.split.loop.exit:             ; preds = %.lr.ph
   %i.cb = trunc nuw nsw i64 %indvars.iv to i32
@@ -968,7 +968,7 @@ bb.o:                                             ; preds = %.lr.ph.i47
   %i.cv = add i8 %i.cu, 1
   store i8 %i.cv, ptr %i.ct, align 1, !tbaa !9
   %i.cw = icmp samesign ugt i64 %indvars.iv.i48, 2
-  br i1 %i.cw, label %.lr.ph.i47, label %._crit_edge.i45, !llvm.loop !15
+  br i1 %i.cw, label %.lr.ph.i47, label %._crit_edge.i45, !llvm.loop !17
 
 ._crit_edge.i45:                                  ; preds = %bb.o, %bb.n
   %i.cx = load i8, ptr %3, align 1, !tbaa !9
@@ -1006,7 +1006,10 @@ attributes #0 = { mustprogress nofree norecurse nosync nounwind memory(argmem: r
 !11 = distinct !{!11, !10}
 !12 = distinct !{!12, !10}
 !13 = distinct !{!13, !10}
-!14 = distinct !{!14, !10}
-!15 = distinct !{!15, !10}
+!14 = !{i64 2860762191680562815}
+!15 = !{i64 5014462315235122584}
 !16 = distinct !{!16, !10}
+!17 = distinct !{!17, !10}
+!18 = distinct !{!18, !10}
+!19 = !{i64 7034089348172959892}
 end_hunk_1

@@ -9,10 +9,10 @@ target triple = "x86_64-pc-linux-gnu"
 %struct.__pthread_mutex_s = type { i32, i32, i32, i32, i32, i16, i16, %struct.__pthread_internal_list }
 %struct.__pthread_internal_list = type { ptr, ptr }
 
-@_ZL5mutex = internal global { %union.pthread_mutex_t } zeroinitializer, align 8
+@_ZL5mutex = internal global { %union.pthread_mutex_t } zeroinitializer, align 8, !guid !7
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @ACQUIRE_DTOA_LOCK(i32 noundef %0) local_unnamed_addr #0 {
+define hidden void @ACQUIRE_DTOA_LOCK(i32 noundef %0) local_unnamed_addr #0 !guid !8 {
 bb.a:
   %i.a = tail call noundef i32 @pthread_mutex_lock(ptr noundef nonnull @_ZL5mutex) #3 ; 2 uses
   %.not.i = icmp eq i32 %i.a, 0
@@ -27,7 +27,7 @@ _ZNSt5mutex4lockEv.exit:                          ; preds = %bb.a
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden void @FREE_DTOA_LOCK(i32 noundef %0) local_unnamed_addr #0 {
+define hidden void @FREE_DTOA_LOCK(i32 noundef %0) local_unnamed_addr #0 !guid !9 {
 bb.a:
   %i.a = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull @_ZL5mutex) #3 ; 0 uses
   ret void
@@ -59,4 +59,7 @@ attributes #4 = { noreturn nounwind }
 !4 = !{!"omnipotent char", !3, i64 0}
 !5 = !{!"int", !4, i64 0}
 !6 = !{!5, !5, i64 0}
+!7 = !{i64 3566204206149354097}
+!8 = !{i64 -3253486682594235149}
+!9 = !{i64 -4173493096964756938}
 end_hunk_0

@@ -9,12 +9,12 @@ target triple = "x86_64-pc-linux-gnu"
 %"struct.std::__cxx11::basic_string<char>::_Alloc_hider" = type { ptr }
 %union.anon = type { i64, [8 x i8] }
 
-@_ZZNK6Assimp8IOSystem16CurrentDirectoryB5cxx11EvE5DummyB5cxx11 = internal global %"class.std::__cxx11::basic_string" zeroinitializer, align 8
-@_ZGVZNK6Assimp8IOSystem16CurrentDirectoryB5cxx11EvE5DummyB5cxx11 = internal global i64 0, align 8
+@_ZZNK6Assimp8IOSystem16CurrentDirectoryB5cxx11EvE5DummyB5cxx11 = internal global %"class.std::__cxx11::basic_string" zeroinitializer, align 8, !guid !3
+@_ZGVZNK6Assimp8IOSystem16CurrentDirectoryB5cxx11EvE5DummyB5cxx11 = internal global i64 0, align 8, !guid !4
 @__dso_handle = external hidden global i8
 
 ; Function Attrs: mustprogress nounwind uwtable
-define noundef nonnull align 8 dereferenceable(32) ptr @_ZNK6Assimp8IOSystem16CurrentDirectoryB5cxx11Ev(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 {
+define noundef nonnull align 8 dereferenceable(32) ptr @_ZNK6Assimp8IOSystem16CurrentDirectoryB5cxx11Ev(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0) unnamed_addr #0 align 2 personality ptr @__gxx_personality_v0 !guid !5 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load ptr, ptr %i.a, align 8              ; 3 uses
@@ -26,7 +26,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.f = load atomic i8, ptr @_ZGVZNK6Assimp8IOSystem16CurrentDirectoryB5cxx11EvE5DummyB5cxx11 acquire, align 8
   %i.g = icmp eq i8 %i.f, 0
-  br i1 %i.g, label %bb.c, label %bb.f, !prof !3
+  br i1 %i.g, label %bb.c, label %bb.f, !prof !6
 
 bb.c:                                             ; preds = %bb.b
   %i.h = tail call i32 @__cxa_guard_acquire(ptr nonnull @_ZGVZNK6Assimp8IOSystem16CurrentDirectoryB5cxx11EvE5DummyB5cxx11) #2
@@ -78,5 +78,8 @@ attributes #2 = { nounwind }
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 7, !"uwtable", i32 2}
 !2 = !{!"Ubuntu clang version 23.0.0 (++20260326081736+e69c7312f31b-1~exp1~20260326081905.1542)"}
-!3 = !{!"branch_weights", i32 1, i32 1048575}
+!3 = !{i64 2429351679001468108}
+!4 = !{i64 -7108492426839913803}
+!5 = !{i64 -7354703115986780187}
+!6 = !{!"branch_weights", i32 1, i32 1048575}
 end_hunk_0

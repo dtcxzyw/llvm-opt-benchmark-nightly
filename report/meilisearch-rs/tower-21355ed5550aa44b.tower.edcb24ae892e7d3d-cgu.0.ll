@@ -9,71 +9,71 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-unknown-linux-gnu"
 
 @_ZN3std9panicking11panic_count18GLOBAL_PANIC_COUNT17h933148eac7c069a2E = external global { i64 }
-@0 = private unnamed_addr constant [40 x i8] c"there is no such thing as a release load", align 1
-@1 = private unnamed_addr constant <{ ptr, [8 x i8] }> <{ ptr @0, [8 x i8] c"(\00\00\00\00\00\00\00" }>, align 8
-@2 = private unnamed_addr constant [80 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/core/src/sync/atomic.rs\00", align 1
-@3 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @2, [16 x i8] c"O\00\00\00\00\00\00\00q\0F\00\00\18\00\00\00" }>, align 8
-@4 = private unnamed_addr constant [49 x i8] c"there is no such thing as an acquire-release load", align 1
-@5 = private unnamed_addr constant <{ ptr, [8 x i8] }> <{ ptr @4, [8 x i8] c"1\00\00\00\00\00\00\00" }>, align 8
-@6 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @2, [16 x i8] c"O\00\00\00\00\00\00\00r\0F\00\00\17\00\00\00" }>, align 8
-@7 = private unnamed_addr constant [42 x i8] c"there is no such thing as an acquire store", align 1
-@8 = private unnamed_addr constant <{ ptr, [8 x i8] }> <{ ptr @7, [8 x i8] c"*\00\00\00\00\00\00\00" }>, align 8
-@9 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @2, [16 x i8] c"O\00\00\00\00\00\00\00b\0F\00\00\18\00\00\00" }>, align 8
-@10 = private unnamed_addr constant [50 x i8] c"there is no such thing as an acquire-release store", align 1
-@11 = private unnamed_addr constant <{ ptr, [8 x i8] }> <{ ptr @10, [8 x i8] c"2\00\00\00\00\00\00\00" }>, align 8
-@12 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @2, [16 x i8] c"O\00\00\00\00\00\00\00c\0F\00\00\17\00\00\00" }>, align 8
-@13 = private unnamed_addr constant [73 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/core/src/time.rs\00", align 1
-@14 = private unnamed_addr constant [25 x i8] c"overflow in Duration::new", align 1
-@15 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @13, [16 x i8] c"H\00\00\00\00\00\00\00\C9\00\00\00\12\00\00\00" }>, align 8
-@16 = private unnamed_addr constant <{ ptr, [16 x i8], ptr }> <{ ptr @"_ZN4core3ptr147drop_in_place$LT$std..sync..poison..PoisonError$LT$std..sync..poison..mutex..MutexGuard$LT$tower..retry..budget..tps_budget..Generation$GT$$GT$$GT$17hd77b14ef1d5220f0E", [16 x i8] c"\10\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @"_ZN76_$LT$std..sync..poison..PoisonError$LT$T$GT$$u20$as$u20$core..fmt..Debug$GT$3fmt17h50f5a7791da37d96E" }>, align 8
-@17 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\10\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @"_ZN74_$LT$tower..retry..backoff..InvalidBackoff$u20$as$u20$core..fmt..Debug$GT$3fmt17hcde58933d4ee87f5E" }>, align 8
-@18 = private unnamed_addr constant [47 x i8] c"assertion failed: ttl >= Duration::from_secs(1)", align 1
-@19 = private unnamed_addr constant [112 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tower-0.5.3/src/retry/budget/tps_budget.rs\00", align 1
-@20 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00G\00\00\00\09\00\00\00" }>, align 8
-@21 = private unnamed_addr constant [48 x i8] c"assertion failed: ttl <= Duration::from_secs(60)", align 1
-@22 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00H\00\00\00\09\00\00\00" }>, align 8
-@23 = private unnamed_addr constant [38 x i8] c"assertion failed: retry_percent >= 0.0", align 1
-@24 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00I\00\00\00\09\00\00\00" }>, align 8
-@25 = private unnamed_addr constant [41 x i8] c"assertion failed: retry_percent <= 1000.0", align 1
-@26 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00J\00\00\00\09\00\00\00" }>, align 8
-@27 = private unnamed_addr constant [47 x i8] c"assertion failed: min_per_sec < i32::MAX as u32", align 1
-@28 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00K\00\00\00\09\00\00\00" }>, align 8
-@29 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00_\00\00\00\19\00\00\00" }>, align 8
-@30 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00j\00\00\00\1A\00\00\00" }>, align 8
-@31 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00a\00\00\00\13\00\00\00" }>, align 8
-@32 = private unnamed_addr constant [15 x i8] c"generation lock", align 1
-@33 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00s\00\00\00.\00\00\00" }>, align 8
-@34 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00}\00\00\00\09\00\00\00" }>, align 8
-@35 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00\80\00\00\00\17\00\00\00" }>, align 8
-@36 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00\82\00\00\00\0D\00\00\00" }>, align 8
-@37 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00\84\00\00\00\13\00\00\00" }>, align 8
-@38 = private unnamed_addr constant [22 x i8] c"jitter must not be NaN", align 1
-@39 = private unnamed_addr constant [35 x i8] c"jitter must not be greater than 100", align 1
-@40 = private unnamed_addr constant [27 x i8] c"jitter must not be negative", align 1
-@41 = private unnamed_addr constant [24 x i8] c"maximum must be non-zero", align 1
-@42 = private unnamed_addr constant [37 x i8] c"maximum must not be less than minimum", align 1
-@43 = private unnamed_addr constant [35 x i8] c"overflow when subtracting durations", align 1
-@44 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @13, [16 x i8] c"H\00\00\00\00\00\00\00\8D\04\00\00\1F\00\00\00" }>, align 8
-@45 = private unnamed_addr constant [17 x i8] c"request timed out", align 1
-@46 = private unnamed_addr constant ptr @_ZN4core3ops8function6FnOnce9call_once17hb8b5f45a2c04e0c7E, align 8
-@47 = private unnamed_addr constant [4 x i8] c"None", align 1
-@48 = private unnamed_addr constant <{ ptr, [8 x i8] }> <{ ptr @47, [8 x i8] c"\04\00\00\00\00\00\00\00" }>, align 8
-@49 = private unnamed_addr constant [14 x i8] c"InvalidBackoff", align 1
-@50 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @"_ZN42_$LT$$RF$T$u20$as$u20$core..fmt..Debug$GT$3fmt17h60fe18f8ebb34fa1E" }>, align 8
-@51 = private unnamed_addr constant [11 x i8] c"PoisonError", align 1
-@52 = private unnamed_addr constant [17 x i8] c"invalid backoff: ", align 1
-@53 = private unnamed_addr constant <{ ptr, [8 x i8] }> <{ ptr @52, [8 x i8] c"\11\00\00\00\00\00\00\00" }>, align 8
-@54 = private unnamed_addr constant [6 x i8] c"Budget", align 1
-@55 = private unnamed_addr constant [7 x i8] c"deposit", align 1
-@56 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @"_ZN4core3fmt3num52_$LT$impl$u20$core..fmt..Debug$u20$for$u20$isize$GT$3fmt17h6ed9026f019fbed5E" }>, align 8
-@57 = private unnamed_addr constant [8 x i8] c"withdraw", align 1
-@58 = private unnamed_addr constant [7 x i8] c"balance", align 1
-@59 = private unnamed_addr constant [35 x i8] c"Unable to create ExponentialBackoff", align 1
-@60 = private unnamed_addr constant [102 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tower-0.5.3/src/retry/backoff.rs\00", align 1
-@61 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @60, [16 x i8] c"e\00\00\00\00\00\00\00\C2\00\00\00\0A\00\00\00" }>, align 8
+@0 = private unnamed_addr constant [40 x i8] c"there is no such thing as a release load", align 1, !guid !3
+@1 = private unnamed_addr constant <{ ptr, [8 x i8] }> <{ ptr @0, [8 x i8] c"(\00\00\00\00\00\00\00" }>, align 8, !guid !3
+@2 = private unnamed_addr constant [80 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/core/src/sync/atomic.rs\00", align 1, !guid !3
+@3 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @2, [16 x i8] c"O\00\00\00\00\00\00\00q\0F\00\00\18\00\00\00" }>, align 8, !guid !3
+@4 = private unnamed_addr constant [49 x i8] c"there is no such thing as an acquire-release load", align 1, !guid !3
+@5 = private unnamed_addr constant <{ ptr, [8 x i8] }> <{ ptr @4, [8 x i8] c"1\00\00\00\00\00\00\00" }>, align 8, !guid !3
+@6 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @2, [16 x i8] c"O\00\00\00\00\00\00\00r\0F\00\00\17\00\00\00" }>, align 8, !guid !3
+@7 = private unnamed_addr constant [42 x i8] c"there is no such thing as an acquire store", align 1, !guid !3
+@8 = private unnamed_addr constant <{ ptr, [8 x i8] }> <{ ptr @7, [8 x i8] c"*\00\00\00\00\00\00\00" }>, align 8, !guid !3
+@9 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @2, [16 x i8] c"O\00\00\00\00\00\00\00b\0F\00\00\18\00\00\00" }>, align 8, !guid !3
+@10 = private unnamed_addr constant [50 x i8] c"there is no such thing as an acquire-release store", align 1, !guid !3
+@11 = private unnamed_addr constant <{ ptr, [8 x i8] }> <{ ptr @10, [8 x i8] c"2\00\00\00\00\00\00\00" }>, align 8, !guid !3
+@12 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @2, [16 x i8] c"O\00\00\00\00\00\00\00c\0F\00\00\17\00\00\00" }>, align 8, !guid !3
+@13 = private unnamed_addr constant [73 x i8] c"/rustc/ed61e7d7e242494fb7057f2657300d9e77bb4fcb/library/core/src/time.rs\00", align 1, !guid !3
+@14 = private unnamed_addr constant [25 x i8] c"overflow in Duration::new", align 1, !guid !3
+@15 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @13, [16 x i8] c"H\00\00\00\00\00\00\00\C9\00\00\00\12\00\00\00" }>, align 8, !guid !3
+@16 = private unnamed_addr constant <{ ptr, [16 x i8], ptr }> <{ ptr @"_ZN4core3ptr147drop_in_place$LT$std..sync..poison..PoisonError$LT$std..sync..poison..mutex..MutexGuard$LT$tower..retry..budget..tps_budget..Generation$GT$$GT$$GT$17hd77b14ef1d5220f0E", [16 x i8] c"\10\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @"_ZN76_$LT$std..sync..poison..PoisonError$LT$T$GT$$u20$as$u20$core..fmt..Debug$GT$3fmt17h50f5a7791da37d96E" }>, align 8, !guid !3
+@17 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\10\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @"_ZN74_$LT$tower..retry..backoff..InvalidBackoff$u20$as$u20$core..fmt..Debug$GT$3fmt17hcde58933d4ee87f5E" }>, align 8, !guid !3
+@18 = private unnamed_addr constant [47 x i8] c"assertion failed: ttl >= Duration::from_secs(1)", align 1, !guid !3
+@19 = private unnamed_addr constant [112 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tower-0.5.3/src/retry/budget/tps_budget.rs\00", align 1, !guid !3
+@20 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00G\00\00\00\09\00\00\00" }>, align 8, !guid !3
+@21 = private unnamed_addr constant [48 x i8] c"assertion failed: ttl <= Duration::from_secs(60)", align 1, !guid !3
+@22 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00H\00\00\00\09\00\00\00" }>, align 8, !guid !3
+@23 = private unnamed_addr constant [38 x i8] c"assertion failed: retry_percent >= 0.0", align 1, !guid !3
+@24 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00I\00\00\00\09\00\00\00" }>, align 8, !guid !3
+@25 = private unnamed_addr constant [41 x i8] c"assertion failed: retry_percent <= 1000.0", align 1, !guid !3
+@26 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00J\00\00\00\09\00\00\00" }>, align 8, !guid !3
+@27 = private unnamed_addr constant [47 x i8] c"assertion failed: min_per_sec < i32::MAX as u32", align 1, !guid !3
+@28 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00K\00\00\00\09\00\00\00" }>, align 8, !guid !3
+@29 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00_\00\00\00\19\00\00\00" }>, align 8, !guid !3
+@30 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00j\00\00\00\1A\00\00\00" }>, align 8, !guid !3
+@31 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00a\00\00\00\13\00\00\00" }>, align 8, !guid !3
+@32 = private unnamed_addr constant [15 x i8] c"generation lock", align 1, !guid !3
+@33 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00s\00\00\00.\00\00\00" }>, align 8, !guid !3
+@34 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00}\00\00\00\09\00\00\00" }>, align 8, !guid !3
+@35 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00\80\00\00\00\17\00\00\00" }>, align 8, !guid !3
+@36 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00\82\00\00\00\0D\00\00\00" }>, align 8, !guid !3
+@37 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @19, [16 x i8] c"o\00\00\00\00\00\00\00\84\00\00\00\13\00\00\00" }>, align 8, !guid !3
+@38 = private unnamed_addr constant [22 x i8] c"jitter must not be NaN", align 1, !guid !3
+@39 = private unnamed_addr constant [35 x i8] c"jitter must not be greater than 100", align 1, !guid !3
+@40 = private unnamed_addr constant [27 x i8] c"jitter must not be negative", align 1, !guid !3
+@41 = private unnamed_addr constant [24 x i8] c"maximum must be non-zero", align 1, !guid !3
+@42 = private unnamed_addr constant [37 x i8] c"maximum must not be less than minimum", align 1, !guid !3
+@43 = private unnamed_addr constant [35 x i8] c"overflow when subtracting durations", align 1, !guid !3
+@44 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @13, [16 x i8] c"H\00\00\00\00\00\00\00\8D\04\00\00\1F\00\00\00" }>, align 8, !guid !3
+@45 = private unnamed_addr constant [17 x i8] c"request timed out", align 1, !guid !3
+@46 = private unnamed_addr constant ptr @_ZN4core3ops8function6FnOnce9call_once17hb8b5f45a2c04e0c7E, align 8, !guid !3
+@47 = private unnamed_addr constant [4 x i8] c"None", align 1, !guid !3
+@48 = private unnamed_addr constant <{ ptr, [8 x i8] }> <{ ptr @47, [8 x i8] c"\04\00\00\00\00\00\00\00" }>, align 8, !guid !3
+@49 = private unnamed_addr constant [14 x i8] c"InvalidBackoff", align 1, !guid !3
+@50 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @"_ZN42_$LT$$RF$T$u20$as$u20$core..fmt..Debug$GT$3fmt17h60fe18f8ebb34fa1E" }>, align 8, !guid !3
+@51 = private unnamed_addr constant [11 x i8] c"PoisonError", align 1, !guid !3
+@52 = private unnamed_addr constant [17 x i8] c"invalid backoff: ", align 1, !guid !3
+@53 = private unnamed_addr constant <{ ptr, [8 x i8] }> <{ ptr @52, [8 x i8] c"\11\00\00\00\00\00\00\00" }>, align 8, !guid !3
+@54 = private unnamed_addr constant [6 x i8] c"Budget", align 1, !guid !3
+@55 = private unnamed_addr constant [7 x i8] c"deposit", align 1, !guid !3
+@56 = private unnamed_addr constant <{ [24 x i8], ptr }> <{ [24 x i8] c"\00\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00\08\00\00\00\00\00\00\00", ptr @"_ZN4core3fmt3num52_$LT$impl$u20$core..fmt..Debug$u20$for$u20$isize$GT$3fmt17h6ed9026f019fbed5E" }>, align 8, !guid !3
+@57 = private unnamed_addr constant [8 x i8] c"withdraw", align 1, !guid !3
+@58 = private unnamed_addr constant [7 x i8] c"balance", align 1, !guid !3
+@59 = private unnamed_addr constant [35 x i8] c"Unable to create ExponentialBackoff", align 1, !guid !3
+@60 = private unnamed_addr constant [102 x i8] c"/home/opt-bench/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tower-0.5.3/src/retry/backoff.rs\00", align 1, !guid !3
+@61 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @60, [16 x i8] c"e\00\00\00\00\00\00\00\C2\00\00\00\0A\00\00\00" }>, align 8, !guid !3
 
 ; Function Attrs: norecurse nounwind nonlazybind uwtable
-define i64 @"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E"(ptr %0, ptr %1, i64 %2) unnamed_addr #0 personality ptr @rust_eh_personality {
+define i64 @"_ZN102_$LT$core..iter..adapters..map..Map$LT$I$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h956c2c47fb25a057E"(ptr %0, ptr %1, i64 %2) unnamed_addr #0 personality ptr @rust_eh_personality !guid !4 {
 bb.a:
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h892299863ce45780E.exit", label %bb.b
@@ -127,14 +127,14 @@ bb.c:                                             ; preds = %bb.c, %.new
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN112_$LT$tower..builder..ServiceBuilder$LT$tower_layer..identity..Identity$GT$$u20$as$u20$core..default..Default$GT$7default17h4d37556a2d8a6457E"() unnamed_addr #1 {
+define void @"_ZN112_$LT$tower..builder..ServiceBuilder$LT$tower_layer..identity..Identity$GT$$u20$as$u20$core..default..Default$GT$7default17h4d37556a2d8a6457E"() unnamed_addr #1 !guid !5 {
 bb.a:
   tail call void @_ZN11tower_layer8identity8Identity3new17h0b781f6205840a7bE()
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable
-define void @_ZN3std4sync6poison10map_result17hf91adc73966c3c13E(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 17)) %0, i1 zeroext %1, i8 %2, ptr align 8 %3) unnamed_addr #2 {
+define void @_ZN3std4sync6poison10map_result17hf91adc73966c3c13E(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 17)) %0, i1 zeroext %1, i8 %2, ptr align 8 %3) unnamed_addr #2 !guid !6 {
 bb.a:
   %spec.select = zext i1 %1 to i64
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -146,7 +146,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define void @"_ZN3std4sync6poison5mutex14Mutex$LT$T$GT$3new17h08da2b31e989aad4E"(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) initializes((0, 5), (8, 32)) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #3 {
+define void @"_ZN3std4sync6poison5mutex14Mutex$LT$T$GT$3new17h08da2b31e989aad4E"(ptr nofree writeonly sret([32 x i8]) align 8 captures(none) initializes((0, 5), (8, 32)) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #3 !guid !7 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %1, i64 24, i1 false)
@@ -159,7 +159,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN3std4sync6poison5mutex14Mutex$LT$T$GT$4lock17ha4e22db25adc6f2cE"(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 17)) %0, ptr align 8 %1) unnamed_addr #1 {
+define void @"_ZN3std4sync6poison5mutex14Mutex$LT$T$GT$4lock17ha4e22db25adc6f2cE"(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 17)) %0, ptr align 8 %1) unnamed_addr #1 !guid !8 {
 bb.a:
   %i.a = tail call { i32, i32 } @_ZN4core4sync6atomic23atomic_compare_exchange17hd63cb86e8894341eE(ptr %1, i32 0, i32 1, i8 2, i8 0)
   %i.b = extractvalue { i32, i32 } %i.a, 0
@@ -197,7 +197,7 @@ _ZN3std4sync6poison4Flag5guard17he45ca8277d3e3d87E.exit: ; preds = %bb.c, %bb.d
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i1 } @"_ZN3std4sync6poison5mutex19MutexGuard$LT$T$GT$3new28_$u7b$$u7b$closure$u7d$$u7d$17hb5515d6f3117dfd8E"(ptr align 8 %0, i1 zeroext %1) unnamed_addr #4 {
+define { ptr, i1 } @"_ZN3std4sync6poison5mutex19MutexGuard$LT$T$GT$3new28_$u7b$$u7b$closure$u7d$$u7d$17hb5515d6f3117dfd8E"(ptr align 8 %0, i1 zeroext %1) unnamed_addr #4 !guid !9 {
 bb.a:
   %i.a = insertvalue { ptr, i1 } poison, ptr %0, 0
   %i.b = insertvalue { ptr, i1 } %i.a, i1 %1, 1
@@ -205,7 +205,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
-define zeroext i1 @_ZN4core3cmp10PartialOrd2le17h2245528a9c5d9e76E(ptr nofree readonly align 8 captures(none) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #5 {
+define zeroext i1 @_ZN4core3cmp10PartialOrd2le17h2245528a9c5d9e76E(ptr nofree readonly align 8 captures(none) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #5 !guid !10 {
 bb.a:
   %i.a = load i64, ptr %0, align 8                ; 2 uses
   %i.b = load i64, ptr %1, align 8                ; 2 uses
@@ -230,7 +230,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal zeroext i1 @"_ZN4core3fmt3num52_$LT$impl$u20$core..fmt..Debug$u20$for$u20$isize$GT$3fmt17h6ed9026f019fbed5E"(ptr align 8 %0, ptr align 8 %1) unnamed_addr #6 {
+define internal zeroext i1 @"_ZN4core3fmt3num52_$LT$impl$u20$core..fmt..Debug$u20$for$u20$isize$GT$3fmt17h6ed9026f019fbed5E"(ptr align 8 %0, ptr align 8 %1) unnamed_addr #6 !guid !11 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.b = load i32, ptr %i.a, align 8              ; 2 uses
@@ -261,7 +261,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e, %bb.c
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal ptr @_ZN4core3ops8function6FnOnce9call_once17hb8b5f45a2c04e0c7E(ptr align 8 %0) unnamed_addr #6 personality ptr @rust_eh_personality {
+define internal ptr @_ZN4core3ops8function6FnOnce9call_once17hb8b5f45a2c04e0c7E(ptr align 8 %0) unnamed_addr #6 personality ptr @rust_eh_personality !guid !12 {
 bb.a:
   %i.a = alloca [0 x i8], align 1
   %i.b = call ptr @"_ZN3std4hash6random11RandomState3new4KEYS29_$u7b$$u7b$constant$u7d$$u7d$28_$u7b$$u7b$closure$u7d$$u7d$17hfbe02e8b68fa78ebE"(ptr nonnull align 1 %i.a, ptr align 8 %0)
@@ -269,7 +269,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN4core3ptr109drop_in_place$LT$std..sync..poison..mutex..MutexGuard$LT$tower..retry..budget..tps_budget..Generation$GT$$GT$17h6e83cb5201f9216bE"(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #1 {
+define void @"_ZN4core3ptr109drop_in_place$LT$std..sync..poison..mutex..MutexGuard$LT$tower..retry..budget..tps_budget..Generation$GT$$GT$17h6e83cb5201f9216bE"(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #1 !guid !13 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4
@@ -307,7 +307,7 @@ bb.e:                                             ; preds = %_ZN3std4sync6poison
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN4core3ptr147drop_in_place$LT$std..sync..poison..PoisonError$LT$std..sync..poison..mutex..MutexGuard$LT$tower..retry..budget..tps_budget..Generation$GT$$GT$$GT$17hd77b14ef1d5220f0E"(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #1 {
+define void @"_ZN4core3ptr147drop_in_place$LT$std..sync..poison..PoisonError$LT$std..sync..poison..mutex..MutexGuard$LT$tower..retry..budget..tps_budget..Generation$GT$$GT$$GT$17hd77b14ef1d5220f0E"(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #1 !guid !14 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4
@@ -345,21 +345,21 @@ bb.e:                                             ; preds = %_ZN3std4sync6poison
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN4core3ptr75drop_in_place$LT$alloc..vec..Vec$LT$core..sync..atomic..AtomicIsize$GT$$GT$17h28ef71603cf7491dE"(ptr align 8 %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define void @"_ZN4core3ptr75drop_in_place$LT$alloc..vec..Vec$LT$core..sync..atomic..AtomicIsize$GT$$GT$17h28ef71603cf7491dE"(ptr align 8 %0) unnamed_addr #1 personality ptr @rust_eh_personality !guid !15 {
 bb.a:
   tail call void @"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$10deallocate17h568b30ca3d6e35ecE"(ptr align 8 %0, i64 8, i64 8)
   ret void
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN4core3ptr82drop_in_place$LT$alloc..raw_vec..RawVec$LT$core..sync..atomic..AtomicIsize$GT$$GT$17hc0d495e4973fe69dE"(ptr align 8 %0) unnamed_addr #1 {
+define void @"_ZN4core3ptr82drop_in_place$LT$alloc..raw_vec..RawVec$LT$core..sync..atomic..AtomicIsize$GT$$GT$17hc0d495e4973fe69dE"(ptr align 8 %0) unnamed_addr #1 !guid !16 {
 bb.a:
   tail call void @"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$10deallocate17h568b30ca3d6e35ecE"(ptr align 8 %0, i64 8, i64 8)
   ret void
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define void @"_ZN4core3ptr87drop_in_place$LT$alloc..boxed..Box$LT$$u5b$core..sync..atomic..AtomicIsize$u5d$$GT$$GT$17h364f63a51b0f0306E"(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #7 personality ptr @rust_eh_personality {
+define void @"_ZN4core3ptr87drop_in_place$LT$alloc..boxed..Box$LT$$u5b$core..sync..atomic..AtomicIsize$u5d$$GT$$GT$17h364f63a51b0f0306E"(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #7 personality ptr @rust_eh_personality !guid !17 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i64, ptr %i.a, align 8              ; 2 uses
@@ -377,7 +377,7 @@ bb.b:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define range(i64 0, 2305843009213693952) i64 @"_ZN4core3ptr8non_null16NonNull$LT$T$GT$20offset_from_unsigned17h86e3e83f5ce8d7ecE"(ptr %0, ptr %1) unnamed_addr #4 {
+define range(i64 0, 2305843009213693952) i64 @"_ZN4core3ptr8non_null16NonNull$LT$T$GT$20offset_from_unsigned17h86e3e83f5ce8d7ecE"(ptr %0, ptr %1) unnamed_addr #4 !guid !18 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
   %i.b = ptrtoint ptr %1 to i64
@@ -387,7 +387,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define { i32, i32 } @"_ZN4core4iter5range101_$LT$impl$u20$core..iter..traits..iterator..Iterator$u20$for$u20$core..ops..range..Range$LT$A$GT$$GT$4next17hf6d0a345e77a3d95E"(ptr nofree align 4 captures(none) %0) unnamed_addr #3 {
+define { i32, i32 } @"_ZN4core4iter5range101_$LT$impl$u20$core..iter..traits..iterator..Iterator$u20$for$u20$core..ops..range..Range$LT$A$GT$$GT$4next17hf6d0a345e77a3d95E"(ptr nofree align 4 captures(none) %0) unnamed_addr #3 !guid !19 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.b = load i32, ptr %0, align 4                ; 3 uses
@@ -408,7 +408,7 @@ bb.b:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, ptr } @_ZN4core4iter6traits8iterator8Iterator3map17hb45aeb3b8d252210E(ptr %0, ptr %1) unnamed_addr #4 {
+define { ptr, ptr } @_ZN4core4iter6traits8iterator8Iterator3map17hb45aeb3b8d252210E(ptr %0, ptr %1) unnamed_addr #4 !guid !20 {
 bb.a:
   %i.a = insertvalue { ptr, ptr } poison, ptr %0, 0
   %i.b = insertvalue { ptr, ptr } %i.a, ptr %1, 1
@@ -416,7 +416,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress norecurse nounwind nonlazybind willreturn uwtable
-define i64 @"_ZN4core4iter8adapters3map8map_fold28_$u7b$$u7b$closure$u7d$$u7d$17h1025798c6abf4307E"(ptr nofree readnone align 1 captures(none) %0, i64 %1, ptr nofree align 8 captures(none) %2) unnamed_addr #8 personality ptr @rust_eh_personality {
+define i64 @"_ZN4core4iter8adapters3map8map_fold28_$u7b$$u7b$closure$u7d$$u7d$17h1025798c6abf4307E"(ptr nofree readnone align 1 captures(none) %0, i64 %1, ptr nofree align 8 captures(none) %2) unnamed_addr #8 personality ptr @rust_eh_personality !guid !21 {
 bb.a:
   %i.a = load atomic i64, ptr %2 seq_cst, align 8
   %i.b = tail call i64 @llvm.sadd.sat.i64(i64 %1, i64 %i.a)
@@ -424,7 +424,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define i64 @_ZN4core4sync6atomic11atomic_load17hd2145c4f1cac223bE(ptr nofree captures(none) %0, i8 %1) unnamed_addr #6 {
+define i64 @_ZN4core4sync6atomic11atomic_load17hd2145c4f1cac223bE(ptr nofree captures(none) %0, i8 %1) unnamed_addr #6 !guid !22 {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 6 uses
   %i.b = alloca [48 x i8], align 8                ; 6 uses
@@ -483,7 +483,7 @@ bb.h:                                             ; preds = %bb.g, %bb.e, %bb.c
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define void @_ZN4core4sync6atomic12atomic_store17h321b1060dd7a0995E(ptr nofree captures(none) %0, i64 %1, i8 %2) unnamed_addr #6 {
+define void @_ZN4core4sync6atomic12atomic_store17h321b1060dd7a0995E(ptr nofree captures(none) %0, i64 %1, i8 %2) unnamed_addr #6 !guid !23 {
 bb.a:
   %i.a = alloca [48 x i8], align 8                ; 6 uses
   %i.b = alloca [48 x i8], align 8                ; 6 uses
@@ -541,7 +541,7 @@ bb.h:                                             ; preds = %bb.g, %bb.d, %bb.c
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, ptr } @"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$4iter17hd7164f22aecb2da5E"(ptr align 8 %0, i64 %1) unnamed_addr #4 {
+define { ptr, ptr } @"_ZN4core5slice29_$LT$impl$u20$$u5b$T$u5d$$GT$4iter17hd7164f22aecb2da5E"(ptr align 8 %0, i64 %1) unnamed_addr #4 !guid !24 {
 bb.a:
   %i.a = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %1
   %i.b = insertvalue { ptr, ptr } poison, ptr %0, 0
@@ -550,7 +550,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, ptr } @"_ZN4core5slice4iter13Iter$LT$T$GT$3new17h3ee55681fbad8de3E"(ptr align 8 %0, i64 %1) unnamed_addr #4 {
+define { ptr, ptr } @"_ZN4core5slice4iter13Iter$LT$T$GT$3new17h3ee55681fbad8de3E"(ptr align 8 %0, i64 %1) unnamed_addr #4 !guid !25 {
 bb.a:
   %i.a = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %1
   %i.b = insertvalue { ptr, ptr } poison, ptr %0, 0
@@ -559,7 +559,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define { ptr, i1 } @"_ZN4core6result19Result$LT$T$C$E$GT$6expect17h056c01c707e9a598E"(ptr nofree readonly align 8 captures(none) %0, ptr align 1 %1, i64 %2, ptr align 8 %3) unnamed_addr #6 personality ptr @rust_eh_personality {
+define { ptr, i1 } @"_ZN4core6result19Result$LT$T$C$E$GT$6expect17h056c01c707e9a598E"(ptr nofree readonly align 8 captures(none) %0, ptr align 1 %1, i64 %2, ptr align 8 %3) unnamed_addr #6 personality ptr @rust_eh_personality !guid !26 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   %i.b = load i64, ptr %0, align 8
@@ -603,7 +603,7 @@ bb.g:                                             ; preds = %bb.d
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define void @"_ZN4core6result19Result$LT$T$C$E$GT$6expect17hf460c4453691c5b8E"(ptr nofree writeonly sret([64 x i8]) align 8 captures(none) %0, ptr nofree readonly align 8 captures(none) %1, ptr align 1 %2, i64 %3, ptr align 8 %4) unnamed_addr #6 personality ptr @rust_eh_personality {
+define void @"_ZN4core6result19Result$LT$T$C$E$GT$6expect17hf460c4453691c5b8E"(ptr nofree writeonly sret([64 x i8]) align 8 captures(none) %0, ptr nofree readonly align 8 captures(none) %1, ptr align 1 %2, i64 %3, ptr align 8 %4) unnamed_addr #6 personality ptr @rust_eh_personality !guid !27 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 56
@@ -627,7 +627,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define void @"_ZN5alloc3vec12Vec$LT$T$GT$13with_capacity17h45b3c589ff116712E"(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, i64 %1, ptr align 8 %2) unnamed_addr #6 {
+define void @"_ZN5alloc3vec12Vec$LT$T$GT$13with_capacity17h45b3c589ff116712E"(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, i64 %1, ptr align 8 %2) unnamed_addr #6 !guid !28 {
 bb.a:
   %i.a = tail call { i64, ptr } @"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$16with_capacity_in17hc660af04fd9c42f5E"(i64 %1, i64 8, i64 8, ptr align 8 %2) ; 2 uses
   %i.b = extractvalue { i64, ptr } %i.a, 0
@@ -641,7 +641,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define void @"_ZN5alloc3vec16Vec$LT$T$C$A$GT$13shrink_to_fit17hbe0632b44233971fE"(ptr align 8 %0, ptr align 8 %1) unnamed_addr #6 {
+define void @"_ZN5alloc3vec16Vec$LT$T$C$A$GT$13shrink_to_fit17hbe0632b44233971fE"(ptr align 8 %0, ptr align 8 %1) unnamed_addr #6 !guid !29 {
 bb.a:
   %i.a = load i64, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -665,7 +665,7 @@ bb.d:                                             ; preds = %bb.b
 }
 
 ; Function Attrs: nonlazybind uwtable
-define { ptr, i64 } @"_ZN5alloc3vec16Vec$LT$T$C$A$GT$16into_boxed_slice17hed08685c27ccda50E"(ptr align 8 %0, ptr align 8 %1) unnamed_addr #1 personality ptr @rust_eh_personality {
+define { ptr, i64 } @"_ZN5alloc3vec16Vec$LT$T$C$A$GT$16into_boxed_slice17hed08685c27ccda50E"(ptr align 8 %0, ptr align 8 %1) unnamed_addr #1 personality ptr @rust_eh_personality !guid !30 {
 bb.a:
   %i.a = load i64, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
@@ -719,7 +719,7 @@ bb.g:                                             ; preds = %bb.f
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define void @"_ZN5alloc3vec16Vec$LT$T$C$A$GT$4push17hdf0081c64cf04c2aE"(ptr align 8 %0, i64 %1, ptr align 8 %2) unnamed_addr #6 personality ptr @rust_eh_personality {
+define void @"_ZN5alloc3vec16Vec$LT$T$C$A$GT$4push17hdf0081c64cf04c2aE"(ptr align 8 %0, i64 %1, ptr align 8 %2) unnamed_addr #6 personality ptr @rust_eh_personality !guid !31 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8              ; 3 uses
@@ -742,7 +742,7 @@ bb.b:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define align 8 ptr @"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17hf9dcc61f581d10e6E"(ptr align 8 %0, i64 %1, ptr align 8 %2) unnamed_addr #6 personality ptr @rust_eh_personality {
+define align 8 ptr @"_ZN5alloc3vec16Vec$LT$T$C$A$GT$8push_mut17hf9dcc61f581d10e6E"(ptr align 8 %0, i64 %1, ptr align 8 %2) unnamed_addr #6 personality ptr @rust_eh_personality !guid !32 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.b = load i64, ptr %i.a, align 8              ; 3 uses
@@ -765,7 +765,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 }
 
 ; Function Attrs: noinline nonlazybind uwtable
-define void @"_ZN5alloc7raw_vec19RawVec$LT$T$C$A$GT$8grow_one17h48b9326eb19a16b4E"(ptr align 8 %0, ptr align 8 %1) unnamed_addr #9 {
+define void @"_ZN5alloc7raw_vec19RawVec$LT$T$C$A$GT$8grow_one17h48b9326eb19a16b4E"(ptr align 8 %0, ptr align 8 %1) unnamed_addr #9 !guid !33 {
 bb.a:
   %i.a = load i64, ptr %0, align 8
   %i.b = tail call { i64, i64 } @"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$14grow_amortized17hdf6f3792cb1bc5ecE"(ptr nonnull align 8 %0, i64 %i.a, i64 1, i64 8, i64 8) ; 2 uses
@@ -783,7 +783,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { ptr, i64 } @"_ZN5alloc7raw_vec19RawVec$LT$T$C$A$GT$8into_box17h43521f0c87f793a0E"(i64 %0, ptr %1, i64 %2) unnamed_addr #10 {
+define { ptr, i64 } @"_ZN5alloc7raw_vec19RawVec$LT$T$C$A$GT$8into_box17h43521f0c87f793a0E"(i64 %0, ptr %1, i64 %2) unnamed_addr #10 !guid !34 {
 bb.a:
   %i.a = insertvalue { ptr, i64 } poison, ptr %1, 0
   %i.b = insertvalue { ptr, i64 } %i.a, i64 %2, 1
@@ -791,7 +791,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: write) uwtable
-define void @"_ZN5tower4util3rng18HasherRng$LT$H$GT$11with_hasher17h4fd65e4a0b541919E"(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, i64 %1, i64 %2) unnamed_addr #2 {
+define void @"_ZN5tower4util3rng18HasherRng$LT$H$GT$11with_hasher17h4fd65e4a0b541919E"(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0, i64 %1, i64 %2) unnamed_addr #2 !guid !35 {
 bb.a:
   store i64 %1, ptr %0, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -802,7 +802,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @_ZN5tower4util3rng9HasherRng3new17h00ae5e165d3c8053E(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0) unnamed_addr #1 {
+define void @_ZN5tower4util3rng9HasherRng3new17h00ae5e165d3c8053E(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0) unnamed_addr #1 !guid !36 {
 bb.a:
   %i.a = tail call { i64, i64 } @"_ZN3std6thread5local17LocalKey$LT$T$GT$4with17h20b1683c80098471E"(ptr nonnull align 8 @46) ; 2 uses
   %i.b = extractvalue { i64, i64 } %i.a, 0
@@ -816,13 +816,13 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define void @_ZN5tower4util8optional5error4None3new17h56b175cc1575e1b7E() unnamed_addr #10 {
+define void @_ZN5tower4util8optional5error4None3new17h56b175cc1575e1b7E() unnamed_addr #10 !guid !37 {
 bb.a:
   ret void
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @_ZN5tower5retry6budget10tps_budget9TpsBudget3new17h89d875e3cc15e9c4E(ptr nofree writeonly sret([96 x i8]) align 8 captures(none) %0, i64 %1, i32 %2, i32 %3, float %4) unnamed_addr #1 personality ptr @rust_eh_personality {
+define void @_ZN5tower5retry6budget10tps_budget9TpsBudget3new17h89d875e3cc15e9c4E(ptr nofree writeonly sret([96 x i8]) align 8 captures(none) %0, i64 %1, i32 %2, i32 %3, float %4) unnamed_addr #1 personality ptr @rust_eh_personality !guid !38 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 6 uses
   %i.b = alloca [24 x i8], align 8                ; 24 uses
@@ -1207,7 +1207,7 @@ bb.af:                                            ; preds = %"_ZN5alloc3vec16Vec
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc void @_ZN5tower5retry6budget10tps_budget9TpsBudget6expire17h90c49f74785091f1E(ptr align 8 %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define internal fastcc void @_ZN5tower5retry6budget10tps_budget9TpsBudget6expire17h90c49f74785091f1E(ptr align 8 %0) unnamed_addr #1 personality ptr @rust_eh_personality !guid !39 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 6 uses
   %i.b = alloca [16 x i8], align 8                ; 5 uses
@@ -1500,7 +1500,7 @@ bb.ah:                                            ; preds = %.loopexit.split-lp.
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN5tower5retry7backoff32ExponentialBackoffMaker$LT$R$GT$3new17h46aba8cf5ec9be71E"(ptr nofree writeonly sret([64 x i8]) align 8 captures(none) initializes((0, 8), (56, 60)) %0, i64 %1, i32 %2, i64 %3, i32 %4, double %5, ptr nofree readonly align 8 captures(none) %6) unnamed_addr #1 personality ptr @rust_eh_personality {
+define void @"_ZN5tower5retry7backoff32ExponentialBackoffMaker$LT$R$GT$3new17h46aba8cf5ec9be71E"(ptr nofree writeonly sret([64 x i8]) align 8 captures(none) initializes((0, 8), (56, 60)) %0, i64 %1, i32 %2, i64 %3, i32 %4, double %5, ptr nofree readonly align 8 captures(none) %6) unnamed_addr #1 personality ptr @rust_eh_personality !guid !40 {
 bb.a:
   %.sroa.2 = alloca [24 x i8], align 8            ; 2 uses
   %i.a = alloca [16 x i8], align 8                ; 4 uses
@@ -1579,20 +1579,20 @@ bb.l:                                             ; preds = %bb.c, %bb.e, %bb.g,
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN5tower7builder53ServiceBuilder$LT$tower_layer..identity..Identity$GT$3new17hfaa180db4efaedcaE"() unnamed_addr #1 {
+define void @"_ZN5tower7builder53ServiceBuilder$LT$tower_layer..identity..Identity$GT$3new17hfaa180db4efaedcaE"() unnamed_addr #1 !guid !41 {
 bb.a:
   tail call void @_ZN11tower_layer8identity8Identity3new17h0b781f6205840a7bE()
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define void @_ZN5tower7timeout5error7Elapsed3new17hc911b0bd34e7d536E() unnamed_addr #10 {
+define void @_ZN5tower7timeout5error7Elapsed3new17hc911b0bd34e7d536E() unnamed_addr #10 !guid !42 {
 bb.a:
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { i64, i32 } @_ZN5tower7timeout5layer12TimeoutLayer3new17h72944a0ccc2c4d97E(i64 %0, i32 %1) unnamed_addr #10 {
+define { i64, i32 } @_ZN5tower7timeout5layer12TimeoutLayer3new17h72944a0ccc2c4d97E(i64 %0, i32 %1) unnamed_addr #10 !guid !43 {
 bb.a:
   %i.a = insertvalue { i64, i32 } poison, i64 %0, 0
   %i.b = insertvalue { i64, i32 } %i.a, i32 %1, 1
@@ -1600,7 +1600,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define { i32, i32 } @"_ZN63_$LT$I$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17hdb03195453707f19E"(i32 %0, i32 %1) unnamed_addr #4 {
+define { i32, i32 } @"_ZN63_$LT$I$u20$as$u20$core..iter..traits..collect..IntoIterator$GT$9into_iter17hdb03195453707f19E"(i32 %0, i32 %1) unnamed_addr #4 !guid !44 {
 bb.a:
   %i.a = insertvalue { i32, i32 } poison, i32 %0, 0
   %i.b = insertvalue { i32, i32 } %i.a, i32 %1, 1
@@ -1608,20 +1608,20 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define zeroext i1 @"_ZN69_$LT$tower..timeout..error..Elapsed$u20$as$u20$core..fmt..Display$GT$3fmt17h8b5ffd0fc5e9917aE"(ptr nofree readnone align 1 captures(none) %0, ptr align 8 %1) unnamed_addr #1 {
+define zeroext i1 @"_ZN69_$LT$tower..timeout..error..Elapsed$u20$as$u20$core..fmt..Display$GT$3fmt17h8b5ffd0fc5e9917aE"(ptr nofree readnone align 1 captures(none) %0, ptr align 8 %1) unnamed_addr #1 !guid !45 {
 bb.a:
   %i.a = tail call zeroext i1 @_ZN4core3fmt9Formatter3pad17h36dd57a07a89d236E(ptr align 8 %1, ptr nonnull align 1 @45, i64 17)
   ret i1 %i.a
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(none) uwtable
-define void @"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h273a429130c23ff6E"(ptr nofree readnone align 8 captures(none) %0) unnamed_addr #10 {
+define void @"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h273a429130c23ff6E"(ptr nofree readnone align 8 captures(none) %0) unnamed_addr #10 !guid !46 {
 bb.a:
   ret void
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN70_$LT$tower..util..rng..HasherRng$u20$as$u20$core..default..Default$GT$7default17h1d67406e0141fd5dE"(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0) unnamed_addr #1 {
+define void @"_ZN70_$LT$tower..util..rng..HasherRng$u20$as$u20$core..default..Default$GT$7default17h1d67406e0141fd5dE"(ptr nofree writeonly sret([24 x i8]) align 8 captures(none) initializes((0, 24)) %0) unnamed_addr #1 !guid !47 {
 bb.a:
   %i.a = tail call { i64, i64 } @"_ZN3std6thread5local17LocalKey$LT$T$GT$4with17h20b1683c80098471E"(ptr nonnull align 8 @46) ; 2 uses
   %i.b = extractvalue { i64, i64 } %i.a, 0
@@ -1635,7 +1635,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nounwind nonlazybind uwtable
-define void @"_ZN72_$LT$alloc..boxed..Box$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h0dc4ada7ef6f8b78E"(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #11 {
+define void @"_ZN72_$LT$alloc..boxed..Box$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h0dc4ada7ef6f8b78E"(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #11 !guid !48 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.b = load i64, ptr %i.a, align 8              ; 2 uses
@@ -1653,7 +1653,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nonlazybind uwtable
-define zeroext i1 @"_ZN73_$LT$tower..util..optional..error..None$u20$as$u20$core..fmt..Display$GT$3fmt17h34d0b43c95beb366E"(ptr nofree readnone align 1 captures(none) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #1 {
+define zeroext i1 @"_ZN73_$LT$tower..util..optional..error..None$u20$as$u20$core..fmt..Display$GT$3fmt17h34d0b43c95beb366E"(ptr nofree readnone align 1 captures(none) %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #1 !guid !49 {
 _ZN4core3fmt9Formatter9write_fmt17h96efc16903c15f64E.exit:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   %i.b = alloca [48 x i8], align 8                ; 2 uses
@@ -1669,7 +1669,7 @@ _ZN4core3fmt9Formatter9write_fmt17h96efc16903c15f64E.exit:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal zeroext i1 @"_ZN74_$LT$tower..retry..backoff..InvalidBackoff$u20$as$u20$core..fmt..Debug$GT$3fmt17hcde58933d4ee87f5E"(ptr align 8 %0, ptr align 8 %1) unnamed_addr #6 {
+define internal zeroext i1 @"_ZN74_$LT$tower..retry..backoff..InvalidBackoff$u20$as$u20$core..fmt..Debug$GT$3fmt17hcde58933d4ee87f5E"(ptr align 8 %0, ptr align 8 %1) unnamed_addr #6 !guid !50 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 2 uses
   store ptr %0, ptr %i.a, align 8
@@ -1678,7 +1678,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define zeroext i1 @"_ZN76_$LT$std..sync..poison..PoisonError$LT$T$GT$$u20$as$u20$core..fmt..Debug$GT$3fmt17h50f5a7791da37d96E"(ptr nofree readnone align 8 captures(none) %0, ptr align 8 %1) unnamed_addr #1 {
+define zeroext i1 @"_ZN76_$LT$std..sync..poison..PoisonError$LT$T$GT$$u20$as$u20$core..fmt..Debug$GT$3fmt17h50f5a7791da37d96E"(ptr nofree readnone align 8 captures(none) %0, ptr align 8 %1) unnamed_addr #1 !guid !51 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 2 uses
   call void @_ZN4core3fmt9Formatter12debug_struct17heb67a1f9f98d9089E(ptr nonnull sret([16 x i8]) align 8 %i.a, ptr align 8 %1, ptr nonnull align 1 @51, i64 11)
@@ -1687,7 +1687,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define zeroext i1 @"_ZN76_$LT$tower..retry..backoff..InvalidBackoff$u20$as$u20$core..fmt..Display$GT$3fmt17h7144be6ad1140d71E"(ptr align 8 %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #1 {
+define zeroext i1 @"_ZN76_$LT$tower..retry..backoff..InvalidBackoff$u20$as$u20$core..fmt..Display$GT$3fmt17h7144be6ad1140d71E"(ptr align 8 %0, ptr nofree readonly align 8 captures(none) %1) unnamed_addr #1 !guid !52 {
 _ZN4core3fmt9Formatter9write_fmt17h96efc16903c15f64E.exit:
   %i.a = alloca [48 x i8], align 8                ; 4 uses
   %i.b = alloca [16 x i8], align 8                ; 2 uses
@@ -1707,14 +1707,14 @@ _ZN4core3fmt9Formatter9write_fmt17h96efc16903c15f64E.exit:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN77_$LT$alloc..raw_vec..RawVec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h6bdaddfb96b83709E"(ptr align 8 %0) unnamed_addr #1 {
+define void @"_ZN77_$LT$alloc..raw_vec..RawVec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h6bdaddfb96b83709E"(ptr align 8 %0) unnamed_addr #1 !guid !53 {
 bb.a:
   tail call void @"_ZN5alloc7raw_vec20RawVecInner$LT$A$GT$10deallocate17h568b30ca3d6e35ecE"(ptr align 8 %0, i64 8, i64 8)
   ret void
 }
 
 ; Function Attrs: nonlazybind uwtable
-define zeroext i1 @"_ZN80_$LT$tower..retry..budget..tps_budget..TpsBudget$u20$as$u20$core..fmt..Debug$GT$3fmt17hedfeb6cbc1bc70a4E"(ptr align 8 %0, ptr align 8 %1) unnamed_addr #1 personality ptr @rust_eh_personality {
+define zeroext i1 @"_ZN80_$LT$tower..retry..budget..tps_budget..TpsBudget$u20$as$u20$core..fmt..Debug$GT$3fmt17hedfeb6cbc1bc70a4E"(ptr align 8 %0, ptr align 8 %1) unnamed_addr #1 personality ptr @rust_eh_personality !guid !54 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 2 uses
   %i.b = alloca [16 x i8], align 8                ; 2 uses
@@ -1788,14 +1788,14 @@ _ZN5tower5retry6budget10tps_budget9TpsBudget3sum17h7046136ecb1547f3E.exit: ; pre
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN86_$LT$tower..retry..budget..tps_budget..TpsBudget$u20$as$u20$core..default..Default$GT$7default17h51d493777488b92eE"(ptr nofree writeonly sret([96 x i8]) align 8 captures(none) %0) unnamed_addr #1 {
+define void @"_ZN86_$LT$tower..retry..budget..tps_budget..TpsBudget$u20$as$u20$core..default..Default$GT$7default17h51d493777488b92eE"(ptr nofree writeonly sret([96 x i8]) align 8 captures(none) %0) unnamed_addr #1 !guid !55 {
 bb.a:
   tail call void @_ZN5tower5retry6budget10tps_budget9TpsBudget3new17h89d875e3cc15e9c4E(ptr sret([96 x i8]) align 8 %0, i64 10, i32 0, i32 10, float 2.000000e-01)
   ret void
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define void @"_ZN87_$LT$std..sync..poison..mutex..MutexGuard$LT$T$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h3d3795f9784e7353E"(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #6 {
+define void @"_ZN87_$LT$std..sync..poison..mutex..MutexGuard$LT$T$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17h3d3795f9784e7353E"(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #6 !guid !56 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 4
@@ -1833,7 +1833,7 @@ bb.f:                                             ; preds = %_ZN3std4sync6poison
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define { i32, i32 } @"_ZN89_$LT$core..ops..range..Range$LT$T$GT$$u20$as$u20$core..iter..range..RangeIteratorImpl$GT$9spec_next17hee4156b79bb1a688E"(ptr nofree align 4 captures(none) %0) unnamed_addr #3 {
+define { i32, i32 } @"_ZN89_$LT$core..ops..range..Range$LT$T$GT$$u20$as$u20$core..iter..range..RangeIteratorImpl$GT$9spec_next17hee4156b79bb1a688E"(ptr nofree align 4 captures(none) %0) unnamed_addr #3 !guid !57 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.b = load i32, ptr %0, align 4                ; 3 uses
@@ -1854,7 +1854,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
-define nonnull align 8 ptr @"_ZN89_$LT$std..sync..poison..mutex..MutexGuard$LT$T$GT$$u20$as$u20$core..ops..deref..Deref$GT$5deref17he99cd75f06d17dd5E"(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #12 {
+define nonnull align 8 ptr @"_ZN89_$LT$std..sync..poison..mutex..MutexGuard$LT$T$GT$$u20$as$u20$core..ops..deref..Deref$GT$5deref17he99cd75f06d17dd5E"(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #12 !guid !58 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -1862,7 +1862,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN89_$LT$tower..retry..backoff..ExponentialBackoffMaker$u20$as$u20$core..default..Default$GT$7default17h810a484a26cb1e09E"(ptr nofree writeonly sret([64 x i8]) align 8 captures(none) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define void @"_ZN89_$LT$tower..retry..backoff..ExponentialBackoffMaker$u20$as$u20$core..default..Default$GT$7default17h810a484a26cb1e09E"(ptr nofree writeonly sret([64 x i8]) align 8 captures(none) %0) unnamed_addr #1 personality ptr @rust_eh_personality !guid !59 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 6 uses
   %i.b = alloca [16 x i8], align 8                ; 7 uses
@@ -1937,7 +1937,7 @@ bb.c:                                             ; preds = %"_ZN5tower5retry7ba
 }
 
 ; Function Attrs: inlinehint norecurse nounwind nonlazybind uwtable
-define i64 @"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h892299863ce45780E"(ptr %0, ptr %1, i64 %2) unnamed_addr #13 personality ptr @rust_eh_personality {
+define i64 @"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4fold17h892299863ce45780E"(ptr %0, ptr %1, i64 %2) unnamed_addr #13 personality ptr @rust_eh_personality !guid !60 {
 bb.a:
   %i.a = icmp eq ptr %0, %1
   br i1 %i.a, label %.loopexit, label %bb.b
@@ -1991,7 +1991,7 @@ bb.c:                                             ; preds = %bb.c, %.new
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
-define nonnull align 8 ptr @"_ZN92_$LT$std..sync..poison..mutex..MutexGuard$LT$T$GT$$u20$as$u20$core..ops..deref..DerefMut$GT$9deref_mut17hf526521649e8e9bfE"(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #12 {
+define nonnull align 8 ptr @"_ZN92_$LT$std..sync..poison..mutex..MutexGuard$LT$T$GT$$u20$as$u20$core..ops..deref..DerefMut$GT$9deref_mut17hf526521649e8e9bfE"(ptr nofree readonly align 8 captures(none) %0) unnamed_addr #12 !guid !61 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -1999,7 +1999,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define void @"_ZN92_$LT$tower..retry..budget..tps_budget..TpsBudget$u20$as$u20$tower..retry..budget..Budget$GT$7deposit17hed8c7054f3e4ad18E"(ptr align 8 %0) unnamed_addr #1 {
+define void @"_ZN92_$LT$tower..retry..budget..tps_budget..TpsBudget$u20$as$u20$tower..retry..budget..Budget$GT$7deposit17hed8c7054f3e4ad18E"(ptr align 8 %0) unnamed_addr #1 !guid !62 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.b = load i64, ptr %i.a, align 8
@@ -2010,7 +2010,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define noundef zeroext i1 @"_ZN92_$LT$tower..retry..budget..tps_budget..TpsBudget$u20$as$u20$tower..retry..budget..Budget$GT$8withdraw17h739ce30717fc556cE"(ptr align 8 %0) unnamed_addr #1 personality ptr @rust_eh_personality {
+define noundef zeroext i1 @"_ZN92_$LT$tower..retry..budget..tps_budget..TpsBudget$u20$as$u20$tower..retry..budget..Budget$GT$8withdraw17h739ce30717fc556cE"(ptr align 8 %0) unnamed_addr #1 personality ptr @rust_eh_personality !guid !63 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.b = load i64, ptr %i.a, align 8              ; 2 uses
@@ -2269,4 +2269,65 @@ attributes #27 = { cold noreturn nounwind }
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 2, !"RtLibUseGOT", i32 1}
 !2 = !{!"rustc version 1.91.1 (ed61e7d7e 2025-11-07)"}
+!3 = !{i64 -1178389107795726760}
+!4 = !{i64 3159306711247963416}
+!5 = !{i64 2821610978592099238}
+!6 = !{i64 2775037747958031390}
+!7 = !{i64 -8625825424158199384}
+!8 = !{i64 -1361516252166143858}
+!9 = !{i64 -8486028591529606825}
+!10 = !{i64 -2145015937853036781}
+!11 = !{i64 -702629417051589265}
+!12 = !{i64 968715276429428793}
+!13 = !{i64 7827540579617585805}
+!14 = !{i64 5373280394667752810}
+!15 = !{i64 -2274672460439206143}
+!16 = !{i64 -4669401904115068820}
+!17 = !{i64 -902408436020169543}
+!18 = !{i64 -2753803480505395621}
+!19 = !{i64 8699452993007600412}
+!20 = !{i64 5124861313517174384}
+!21 = !{i64 -5288618829267604248}
+!22 = !{i64 -6472125440572838248}
+!23 = !{i64 2336981999074154968}
+!24 = !{i64 -2084589829355034516}
+!25 = !{i64 2283508673752948928}
+!26 = !{i64 1370471927458506514}
+!27 = !{i64 6376561026747178690}
+!28 = !{i64 -5555487444157702461}
+!29 = !{i64 -4766105592158916112}
+!30 = !{i64 1864647663542499395}
+!31 = !{i64 -5886823829068557065}
+!32 = !{i64 -2104722677871089531}
+!33 = !{i64 7022766075065054243}
+!34 = !{i64 7076752041832648822}
+!35 = !{i64 2612703301986856581}
+!36 = !{i64 8038850842625954208}
+!37 = !{i64 -5395607003630614529}
+!38 = !{i64 -138294609614874115}
+!39 = !{i64 2870572987820096400}
+!40 = !{i64 -311765009608461461}
+!41 = !{i64 -2009799251528311443}
+!42 = !{i64 5058144242093497660}
+!43 = !{i64 3975033079708916677}
+!44 = !{i64 5501400340786067194}
+!45 = !{i64 2310432485873298579}
+!46 = !{i64 -2334011559715410384}
+!47 = !{i64 4533325237389473114}
+!48 = !{i64 6109860433099704420}
+!49 = !{i64 6123320940015123827}
+!50 = !{i64 -370059329209803703}
+!51 = !{i64 3742934705594151861}
+!52 = !{i64 8720020559404648417}
+!53 = !{i64 4084576046333150033}
+!54 = !{i64 -8525320810630081954}
+!55 = !{i64 -1858341666525933751}
+!56 = !{i64 -9036492887008450666}
+!57 = !{i64 -4255385080199621461}
+!58 = !{i64 -568025005366111668}
+!59 = !{i64 -1012006068859263371}
+!60 = !{i64 6197227969432726103}
+!61 = !{i64 -2186105740187116696}
+!62 = !{i64 -8293111523572431728}
+!63 = !{i64 6112724918694204086}
 end_hunk_0

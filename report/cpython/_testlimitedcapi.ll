@@ -9,12 +9,12 @@ target triple = "x86_64-pc-linux-gnu"
 %union.anon = type { i64 }
 %struct.PyMethodDef = type { ptr, ptr, i32, ptr }
 
-@_testlimitedcapimodule = internal global %struct.PyModuleDef { %struct.PyModuleDef_Base { %struct._object { %union.anon { i64 1407378104778752 }, ptr null }, ptr null, i64 0, ptr null }, ptr @.str, ptr null, i64 0, ptr @TestMethods, ptr null, ptr null, ptr null, ptr null }, align 8
-@.str = private unnamed_addr constant [17 x i8] c"_testlimitedcapi\00", align 1
-@TestMethods = internal global [1 x %struct.PyMethodDef] zeroinitializer, align 16
+@_testlimitedcapimodule = internal global %struct.PyModuleDef { %struct.PyModuleDef_Base { %struct._object { %union.anon { i64 1407378104778752 }, ptr null }, ptr null, i64 0, ptr null }, ptr @.str, ptr null, i64 0, ptr @TestMethods, ptr null, ptr null, ptr null, ptr null }, align 8, !guid !10
+@.str = private unnamed_addr constant [17 x i8] c"_testlimitedcapi\00", align 1, !guid !11
+@TestMethods = internal global [1 x %struct.PyMethodDef] zeroinitializer, align 16, !guid !12
 
 ; Function Attrs: nounwind uwtable
-define ptr @PyInit__testlimitedcapi() local_unnamed_addr #0 {
+define ptr @PyInit__testlimitedcapi() local_unnamed_addr #0 !guid !13 {
 bb.a:
   %i.a = tail call ptr @PyModule_Create2(ptr noundef nonnull @_testlimitedcapimodule, i32 noundef 3) #2 ; 24 uses
   %i.b = icmp eq ptr %i.a, null
@@ -200,4 +200,8 @@ attributes #2 = { nounwind }
 !7 = !{!"omnipotent char", !6, i64 0}
 !8 = !{!"int", !7, i64 0}
 !9 = !{!8, !8, i64 0}
+!10 = !{i64 -4407461654273086951}
+!11 = !{i64 7898442717085763957}
+!12 = !{i64 -1766875629293023921}
+!13 = !{i64 8209257459634887238}
 end_hunk_0

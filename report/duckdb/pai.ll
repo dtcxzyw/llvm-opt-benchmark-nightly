@@ -6,7 +6,7 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: nounwind uwtable
-define i64 @duckdb_je_pai_alloc_batch_default(ptr noundef %0, ptr noundef %1, i64 noundef %2, i64 noundef %3, ptr nofree noundef captures(none) %4, i1 noundef zeroext %5, ptr nofree noundef captures(none) %6) local_unnamed_addr #0 {
+define i64 @duckdb_je_pai_alloc_batch_default(ptr noundef %0, ptr noundef %1, i64 noundef %2, i64 noundef %3, ptr nofree noundef captures(none) %4, i1 noundef zeroext %5, ptr nofree noundef captures(none) %6) local_unnamed_addr #0 !guid !19 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 6 uses
   %.not25 = icmp eq i64 %3, 0
@@ -16,7 +16,7 @@ bb.a:
   %.01524 = phi i64 [ %i.y, %bb.d ], [ 0, %bb.a ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #2
   store i8 0, ptr %i.a, align 1, !tbaa !8
-  %i.b = load ptr, ptr %1, align 8, !tbaa !19
+  %i.b = load ptr, ptr %1, align 8, !tbaa !20
   %i.c = call ptr %i.b(ptr noundef %0, ptr noundef nonnull %1, i64 noundef %2, i64 noundef 4096, i1 noundef zeroext false, i1 noundef zeroext false, i1 noundef zeroext %5, ptr noundef nonnull %i.a) #2, !inline_history !18 ; 8 uses
   %i.d = load i8, ptr %i.a, align 1, !tbaa !8, !range !11, !noundef !12
   %i.e = load i8, ptr %6, align 1, !tbaa !8, !range !11, !noundef !12
@@ -80,7 +80,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: nounwind uwtable
-define void @duckdb_je_pai_dalloc_batch_default(ptr noundef %0, ptr noundef %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(none) %3) local_unnamed_addr #0 {
+define void @duckdb_je_pai_dalloc_batch_default(ptr noundef %0, ptr noundef %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(none) %3) local_unnamed_addr #0 !guid !22 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 5 uses
   %.val7 = load ptr, ptr %2, align 8, !tbaa !17   ; 2 uses
@@ -130,8 +130,8 @@ bb.c:                                             ; preds = %bb.b
   br label %edata_list_active_remove.exit
 
 edata_list_active_remove.exit:                    ; preds = %.thread.i, %bb.c
-  %i.v = load ptr, ptr %i.b, align 8, !tbaa !21
-  call void %i.v(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %.val9, ptr noundef nonnull %i.a) #2, !inline_history !20
+  %i.v = load ptr, ptr %i.b, align 8, !tbaa !23
+  call void %i.v(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %.val9, ptr noundef nonnull %i.a) #2, !inline_history !21
   %i.w = load i8, ptr %i.a, align 1, !tbaa !8, !range !11, !noundef !12
   %i.x = load i8, ptr %3, align 1, !tbaa !8, !range !11, !noundef !12
   %i.y = or i8 %i.x, %i.w
@@ -172,7 +172,9 @@ attributes #2 = { nounwind }
 !16 = !{!"", !15, i64 0}
 !17 = !{!16, !14, i64 0}
 !18 = distinct !{null}
-!19 = !{!10, !9, i64 0}
-!20 = distinct !{null}
-!21 = !{!10, !9, i64 32}
+!19 = !{i64 3776640093507402628}
+!20 = !{!10, !9, i64 0}
+!21 = distinct !{null}
+!22 = !{i64 2135404040773950437}
+!23 = !{!10, !9, i64 32}
 end_hunk_0

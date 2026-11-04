@@ -5,16 +5,16 @@ begin_hunk_0
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
-@_RNvNvNtCs9t2b5OKaLX1_9deltalake28___deltalake_auto_register_s38register1f = constant ptr @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake28___deltalake_auto_register_s38register1f1f, section ".init_array", align 8
-@_RNvNvNtCs9t2b5OKaLX1_9deltalake29___deltalake_auto_register_gcs8register1f = constant ptr @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake29___deltalake_auto_register_gcs8register1f1f, section ".init_array", align 8
-@_RNvNvNtCs9t2b5OKaLX1_9deltalake30___deltalake_auto_register_hdfs8register1f = constant ptr @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake30___deltalake_auto_register_hdfs8register1f1f, section ".init_array", align 8
-@_RNvNvNtCs9t2b5OKaLX1_9deltalake31___deltalake_auto_register_azure8register1f = constant ptr @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake31___deltalake_auto_register_azure8register1f1f, section ".init_array", align 8
-@_RNvNvNtCs9t2b5OKaLX1_9deltalake31___deltalake_auto_register_unity8register1f = constant ptr @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake31___deltalake_auto_register_unity8register1f1f, section ".init_array", align 8
-@_RNvNvNtCs9t2b5OKaLX1_9deltalake32___deltalake_auto_register_lakefs8register1f = constant ptr @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake32___deltalake_auto_register_lakefs8register1f1f, section ".init_array", align 8
+@_RNvNvNtCs9t2b5OKaLX1_9deltalake28___deltalake_auto_register_s38register1f = constant ptr @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake28___deltalake_auto_register_s38register1f1f, section ".init_array", align 8, !guid !3
+@_RNvNvNtCs9t2b5OKaLX1_9deltalake29___deltalake_auto_register_gcs8register1f = constant ptr @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake29___deltalake_auto_register_gcs8register1f1f, section ".init_array", align 8, !guid !4
+@_RNvNvNtCs9t2b5OKaLX1_9deltalake30___deltalake_auto_register_hdfs8register1f = constant ptr @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake30___deltalake_auto_register_hdfs8register1f1f, section ".init_array", align 8, !guid !5
+@_RNvNvNtCs9t2b5OKaLX1_9deltalake31___deltalake_auto_register_azure8register1f = constant ptr @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake31___deltalake_auto_register_azure8register1f1f, section ".init_array", align 8, !guid !6
+@_RNvNvNtCs9t2b5OKaLX1_9deltalake31___deltalake_auto_register_unity8register1f = constant ptr @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake31___deltalake_auto_register_unity8register1f1f, section ".init_array", align 8, !guid !7
+@_RNvNvNtCs9t2b5OKaLX1_9deltalake32___deltalake_auto_register_lakefs8register1f = constant ptr @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake32___deltalake_auto_register_lakefs8register1f1f, section ".init_array", align 8, !guid !8
 @llvm.used = appending global [6 x ptr] [ptr @_RNvNvNtCs9t2b5OKaLX1_9deltalake28___deltalake_auto_register_s38register1f, ptr @_RNvNvNtCs9t2b5OKaLX1_9deltalake29___deltalake_auto_register_gcs8register1f, ptr @_RNvNvNtCs9t2b5OKaLX1_9deltalake30___deltalake_auto_register_hdfs8register1f, ptr @_RNvNvNtCs9t2b5OKaLX1_9deltalake31___deltalake_auto_register_azure8register1f, ptr @_RNvNvNtCs9t2b5OKaLX1_9deltalake31___deltalake_auto_register_unity8register1f, ptr @_RNvNvNtCs9t2b5OKaLX1_9deltalake32___deltalake_auto_register_lakefs8register1f], section "llvm.metadata"
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define void @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake28___deltalake_auto_register_s38register1f1f() unnamed_addr #0 section ".text.startup" personality ptr @rust_eh_personality {
+define void @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake28___deltalake_auto_register_s38register1f1f() unnamed_addr #0 section ".text.startup" personality ptr @rust_eh_personality !guid !9 {
 bb.a:
   %i.a = alloca [88 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -34,7 +34,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define void @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake29___deltalake_auto_register_gcs8register1f1f() unnamed_addr #0 section ".text.startup" personality ptr @rust_eh_personality {
+define void @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake29___deltalake_auto_register_gcs8register1f1f() unnamed_addr #0 section ".text.startup" personality ptr @rust_eh_personality !guid !10 {
 bb.a:
   %i.a = alloca [88 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -54,7 +54,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define void @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake30___deltalake_auto_register_hdfs8register1f1f() unnamed_addr #0 section ".text.startup" personality ptr @rust_eh_personality {
+define void @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake30___deltalake_auto_register_hdfs8register1f1f() unnamed_addr #0 section ".text.startup" personality ptr @rust_eh_personality !guid !11 {
 bb.a:
   %i.a = alloca [88 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -74,7 +74,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define void @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake31___deltalake_auto_register_azure8register1f1f() unnamed_addr #0 section ".text.startup" personality ptr @rust_eh_personality {
+define void @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake31___deltalake_auto_register_azure8register1f1f() unnamed_addr #0 section ".text.startup" personality ptr @rust_eh_personality !guid !12 {
 bb.a:
   %i.a = alloca [88 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -94,7 +94,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define void @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake31___deltalake_auto_register_unity8register1f1f() unnamed_addr #0 section ".text.startup" personality ptr @rust_eh_personality {
+define void @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake31___deltalake_auto_register_unity8register1f1f() unnamed_addr #0 section ".text.startup" personality ptr @rust_eh_personality !guid !13 {
 bb.a:
   %i.a = alloca [88 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -114,7 +114,7 @@ bb.c:                                             ; preds = %bb.a
 }
 
 ; Function Attrs: nounwind nonlazybind uwtable
-define void @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake32___deltalake_auto_register_lakefs8register1f1f() unnamed_addr #0 section ".text.startup" personality ptr @rust_eh_personality {
+define void @_RNvNvNvNtCs9t2b5OKaLX1_9deltalake32___deltalake_auto_register_lakefs8register1f1f() unnamed_addr #0 section ".text.startup" personality ptr @rust_eh_personality !guid !14 {
 bb.a:
   %i.a = alloca [88 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -175,4 +175,16 @@ attributes #4 = { cold noreturn nounwind }
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 2, !"RtLibUseGOT", i32 1}
 !2 = !{!"rustc version 1.96.0-nightly (1d8897a4e 2026-03-13)"}
+!3 = !{i64 -5993072953821218093}
+!4 = !{i64 3255600357913054382}
+!5 = !{i64 550936717881569046}
+!6 = !{i64 2687930304107901584}
+!7 = !{i64 1116291720532702897}
+!8 = !{i64 1546618461992711305}
+!9 = !{i64 2133750346921461254}
+!10 = !{i64 -5598762479229667351}
+!11 = !{i64 5047056604846635559}
+!12 = !{i64 8987683688912155564}
+!13 = !{i64 4171207886806006412}
+!14 = !{i64 981254580155110590}
 end_hunk_0

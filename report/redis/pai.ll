@@ -6,7 +6,7 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: nounwind uwtable
-define hidden i64 @je_pai_alloc_batch_default(ptr noundef %0, ptr noundef %1, i64 noundef %2, i64 noundef %3, ptr nofree noundef captures(none) %4, ptr nofree noundef captures(none) %5) local_unnamed_addr #0 {
+define hidden i64 @je_pai_alloc_batch_default(ptr noundef %0, ptr noundef %1, i64 noundef %2, i64 noundef %3, ptr nofree noundef captures(none) %4, ptr nofree noundef captures(none) %5) local_unnamed_addr #0 !guid !25 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 6 uses
   %.not24 = icmp eq i64 %3, 0
@@ -16,7 +16,7 @@ bb.a:
   %.01423 = phi i64 [ %i.y, %bb.d ], [ 0, %bb.a ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #2
   store i8 0, ptr %i.a, align 1, !tbaa !12
-  %i.b = load ptr, ptr %1, align 8, !tbaa !25
+  %i.b = load ptr, ptr %1, align 8, !tbaa !26
   %i.c = call ptr %i.b(ptr noundef %0, ptr noundef nonnull %1, i64 noundef %2, i64 noundef 4096, i1 noundef zeroext false, i1 noundef zeroext false, i1 noundef zeroext false, ptr noundef nonnull %i.a) #2, !inline_history !23 ; 8 uses
   %i.d = load i8, ptr %i.a, align 1, !tbaa !12, !range !15, !noundef !16
   %i.e = load i8, ptr %5, align 1, !tbaa !12, !range !15, !noundef !16
@@ -80,7 +80,7 @@ declare void @llvm.lifetime.start.p0(ptr captures(none)) #1
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 
 ; Function Attrs: nounwind uwtable
-define hidden void @je_pai_dalloc_batch_default(ptr noundef %0, ptr noundef %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(none) %3) local_unnamed_addr #0 {
+define hidden void @je_pai_dalloc_batch_default(ptr noundef %0, ptr noundef %1, ptr nofree noundef captures(none) %2, ptr nofree noundef captures(none) %3) local_unnamed_addr #0 !guid !29 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 5 uses
   %.val7 = load ptr, ptr %2, align 8, !tbaa !21   ; 2 uses
@@ -130,8 +130,8 @@ bb.c:                                             ; preds = %bb.b
   br label %edata_list_active_remove.exit
 
 edata_list_active_remove.exit:                    ; preds = %.thread.i, %bb.c
-  %i.v = load ptr, ptr %i.b, align 8, !tbaa !28
-  call void %i.v(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %.val9, ptr noundef nonnull %i.a) #2, !inline_history !26
+  %i.v = load ptr, ptr %i.b, align 8, !tbaa !30
+  call void %i.v(ptr noundef %0, ptr noundef %1, ptr noundef nonnull %.val9, ptr noundef nonnull %i.a) #2, !inline_history !27
   %i.w = load i8, ptr %i.a, align 1, !tbaa !12, !range !15, !noundef !16
   %i.x = load i8, ptr %3, align 1, !tbaa !12, !range !15, !noundef !16
   %i.y = or i8 %i.x, %i.w
@@ -139,7 +139,7 @@ edata_list_active_remove.exit:                    ; preds = %.thread.i, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #2
   %.val = load ptr, ptr %2, align 8, !tbaa !21    ; 2 uses
   %.not = icmp eq ptr %.val, null
-  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !27
+  br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !28
 
 ._crit_edge:                                      ; preds = %edata_list_active_remove.exit, %bb.a
   ret void
@@ -178,8 +178,10 @@ attributes #2 = { nounwind }
 !22 = !{!"llvm.loop.mustprogress"}
 !23 = distinct !{null}
 !24 = distinct !{!24, !22}
-!25 = !{!14, !13, i64 0}
-!26 = distinct !{null}
-!27 = distinct !{!27, !22}
-!28 = !{!14, !13, i64 32}
+!25 = !{i64 -2286183667099578604}
+!26 = !{!14, !13, i64 0}
+!27 = distinct !{null}
+!28 = distinct !{!28, !22}
+!29 = !{i64 6586262993021693521}
+!30 = !{!14, !13, i64 32}
 end_hunk_0

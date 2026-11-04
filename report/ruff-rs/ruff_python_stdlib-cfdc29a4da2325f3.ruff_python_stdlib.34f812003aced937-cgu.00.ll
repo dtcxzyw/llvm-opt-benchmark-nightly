@@ -4,7 +4,7 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-unknown-linux-gnu"
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
-define noundef zeroext i1 @_RNvNtNtCs4xX4QTdRF9r_18ruff_python_stdlib3sys12known_stdlib25is_known_standard_library(i8 noundef %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #0 {
+define noundef zeroext i1 @_RNvNtNtCs4xX4QTdRF9r_18ruff_python_stdlib3sys12known_stdlib25is_known_standard_library(i8 noundef %0, ptr noalias noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2) unnamed_addr #0 !guid !3 {
 bb.a:
   switch i64 %2, label %bb.jo [
     i64 9, label %bb.b
@@ -407,4 +407,5 @@ attributes #0 = { mustprogress nofree norecurse nosync nounwind nonlazybind will
 !0 = !{i32 8, !"PIC Level", i32 2}
 !1 = !{i32 2, !"RtLibUseGOT", i32 1}
 !2 = !{!"rustc version 1.97.1 (8bab26f4f 2026-07-14)"}
+!3 = !{i64 -2151976010878063260}
 end_hunk_1

@@ -7,24 +7,24 @@ target triple = "x86_64-pc-linux-gnu"
 
 %"struct.std::pair" = type { ptr, i64 }
 
-@_ZZN6hermes8oscompat19thread_stack_boundsEjE12cachedBounds = internal thread_local unnamed_addr global %"struct.std::pair" zeroinitializer, align 8
+@_ZZN6hermes8oscompat19thread_stack_boundsEjE12cachedBounds = internal thread_local unnamed_addr global %"struct.std::pair" zeroinitializer, align 8, !guid !7
 
 ; Function Attrs: mustprogress nounwind uwtable
-define hidden { ptr, i64 } @_ZN6hermes8oscompat19thread_stack_boundsEj(i32 noundef %0) local_unnamed_addr #0 {
+define hidden { ptr, i64 } @_ZN6hermes8oscompat19thread_stack_boundsEj(i32 noundef %0) local_unnamed_addr #0 !guid !8 {
 bb.a:
   %i.a = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZZN6hermes8oscompat19thread_stack_boundsEjE12cachedBounds) ; 3 uses
   %.sroa.07.0.copyload = load ptr, ptr %i.a, align 8 ; 2 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %.sroa.7.0.copyload = load i64, ptr %.sroa.7.0..sroa_idx, align 8
   %.not = icmp eq ptr %.sroa.07.0.copyload, null
-  br i1 %.not, label %bb.b, label %bb.c, !prof !7
+  br i1 %.not, label %bb.b, label %bb.c, !prof !9
 
 bb.b:                                             ; preds = %bb.a
   %i.b = tail call { ptr, i64 } @_ZN6hermes8oscompat6detail24thread_stack_bounds_implEv() #4 ; 2 uses
   %i.c = extractvalue { ptr, i64 } %i.b, 0        ; 2 uses
   %i.d = extractvalue { ptr, i64 } %i.b, 1        ; 2 uses
-  store ptr %i.c, ptr %i.a, align 8, !tbaa !11
-  store i64 %i.d, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !12
+  store ptr %i.c, ptr %i.a, align 8, !tbaa !13
+  store i64 %i.d, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !14
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a
@@ -62,10 +62,12 @@ attributes #4 = { nounwind }
 !4 = !{!"omnipotent char", !3, i64 0}
 !5 = !{!"int", !4, i64 0}
 !6 = !{!5, !5, i64 0}
-!7 = !{!"branch_weights", !"expected", i32 1, i32 2000}
-!8 = !{!"any pointer", !4, i64 0}
-!9 = !{!"long", !4, i64 0}
-!10 = !{!"_ZTSSt4pairIPKvmE", !8, i64 0, !9, i64 8}
-!11 = !{!10, !8, i64 0}
-!12 = !{!10, !9, i64 8}
+!7 = !{i64 -331249560681495679}
+!8 = !{i64 6638661687124895351}
+!9 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!10 = !{!"any pointer", !4, i64 0}
+!11 = !{!"long", !4, i64 0}
+!12 = !{!"_ZTSSt4pairIPKvmE", !10, i64 0, !11, i64 8}
+!13 = !{!12, !10, i64 0}
+!14 = !{!12, !11, i64 8}
 end_hunk_0

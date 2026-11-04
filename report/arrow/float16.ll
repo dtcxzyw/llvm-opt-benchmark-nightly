@@ -6,7 +6,7 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define noundef float @_ZNK5arrow4util7Float167ToFloatEv(ptr nofree noundef nonnull readonly align 2 captures(none) dereferenceable(2) %0) local_unnamed_addr #0 align 2 {
+define noundef float @_ZNK5arrow4util7Float167ToFloatEv(ptr nofree noundef nonnull readonly align 2 captures(none) dereferenceable(2) %0) local_unnamed_addr #0 align 2 !guid !12 {
 bb.a:
   %i.a = load i16, ptr %0, align 2, !tbaa !10     ; 5 uses
   %.signext.i = sext i16 %i.a to i32
@@ -72,7 +72,7 @@ _ZN5arrow4util12_GLOBAL__N_115BinaryConverterIjE12FromBinary16Et.exit: ; preds =
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define i16 @_ZN5arrow4util7Float169FromFloatEf(float noundef %0) local_unnamed_addr #1 align 2 {
+define i16 @_ZN5arrow4util7Float169FromFloatEf(float noundef %0) local_unnamed_addr #1 align 2 !guid !13 {
 bb.a:
   %i.a = bitcast float %0 to i32                  ; 6 uses
   %i.b = lshr i32 %i.a, 16                        ; 4 uses
@@ -146,7 +146,7 @@ _ZN5arrow4util12_GLOBAL__N_115BinaryConverterIjE10ToBinary16Ej.exit: ; preds = %
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define noundef double @_ZNK5arrow4util7Float168ToDoubleEv(ptr nofree noundef nonnull readonly align 2 captures(none) dereferenceable(2) %0) local_unnamed_addr #0 align 2 {
+define noundef double @_ZNK5arrow4util7Float168ToDoubleEv(ptr nofree noundef nonnull readonly align 2 captures(none) dereferenceable(2) %0) local_unnamed_addr #0 align 2 !guid !15 {
 bb.a:
   %i.a = load i16, ptr %0, align 2, !tbaa !10     ; 4 uses
   %i.b = zext i16 %i.a to i32                     ; 2 uses
@@ -184,7 +184,7 @@ bb.d:                                             ; preds = %bb.c
   %i.q = shl i64 %.023.i, 1                       ; 2 uses
   %i.r = and i64 %.023.i, 512
   %i.s = icmp eq i64 %i.r, 0
-  br i1 %i.s, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !12
+  br i1 %i.s, label %.lr.ph.i, label %._crit_edge.loopexit.i, !llvm.loop !14
 
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i
   %i.t = shl i64 %i.p, 52
@@ -214,7 +214,7 @@ _ZN5arrow4util12_GLOBAL__N_115BinaryConverterImE12FromBinary16Et.exit: ; preds =
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
-define i16 @_ZN5arrow4util7Float1610FromDoubleEd(double noundef %0) local_unnamed_addr #1 align 2 {
+define i16 @_ZN5arrow4util7Float1610FromDoubleEd(double noundef %0) local_unnamed_addr #1 align 2 !guid !16 {
 bb.a:
   %i.a = bitcast double %0 to i64                 ; 5 uses
   %i.b = lshr i64 %i.a, 48
@@ -287,7 +287,7 @@ _ZN5arrow4util12_GLOBAL__N_115BinaryConverterImE10ToBinary16Em.exit: ; preds = %
 }
 
 ; Function Attrs: mustprogress uwtable
-define noundef nonnull align 8 dereferenceable(8) ptr @_ZN5arrow4utillsERSoNS0_7Float16E(ptr noundef nonnull align 8 dereferenceable(8) %0, i16 %1) local_unnamed_addr #2 {
+define noundef nonnull align 8 dereferenceable(8) ptr @_ZN5arrow4utillsERSoNS0_7Float16E(ptr noundef nonnull align 8 dereferenceable(8) %0, i16 %1) local_unnamed_addr #2 !guid !17 {
 bb.a:
   %.signext.i.i = sext i16 %1 to i32
   %i.a = and i32 %.signext.i.i, -2147483648       ; 4 uses
@@ -380,5 +380,10 @@ attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind specul
 !9 = !{!"_ZTSN5arrow4util7Float16E", !8, i64 0}
 !10 = !{!9, !8, i64 0}
 !11 = !{!"llvm.loop.mustprogress"}
-!12 = distinct !{!12, !11}
+!12 = !{i64 7650153648638715769}
+!13 = !{i64 1024509452209879719}
+!14 = distinct !{!14, !11}
+!15 = !{i64 -3021278687602732540}
+!16 = !{i64 4690548341946983366}
+!17 = !{i64 1588265897234282044}
 end_hunk_0

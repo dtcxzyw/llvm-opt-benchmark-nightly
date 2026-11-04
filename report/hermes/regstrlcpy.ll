@@ -4,7 +4,7 @@ target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:
 target triple = "x86_64-pc-linux-gnu"
 
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
-define hidden range(i64 -9223372036854775808, 9223372036854775807) i64 @llvh_strlcpy(ptr nofree noundef writeonly captures(none) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 {
+define hidden range(i64 -9223372036854775808, 9223372036854775807) i64 @llvh_strlcpy(ptr nofree noundef writeonly captures(none) %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #0 !guid !8 {
 bb.a:
   %.not = icmp eq i64 %2, 0
   br i1 %.not, label %.thread26, label %.preheader.preheader
@@ -25,15 +25,15 @@ bb.a:
   %.01246 = phi ptr [ %i.e, %.preheader ], [ %1, %.preheader.preheader ] ; 2 uses
   %.01445 = phi ptr [ %i.b, %.preheader ], [ %0, %.preheader.preheader ] ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.01246, i64 1 ; 3 uses
-  %i.f = load i8, ptr %.01246, align 1, !tbaa !9  ; 2 uses
-  store i8 %i.f, ptr %.01445, align 1, !tbaa !9
+  %i.f = load i8, ptr %.01246, align 1, !tbaa !10 ; 2 uses
+  store i8 %i.f, ptr %.01445, align 1, !tbaa !10
   %i.g = icmp eq i8 %i.f, 0
   br i1 %i.g, label %.loopexit, label %.preheader, !llvm.loop !7
 
 .preheader._crit_edge:                            ; preds = %.preheader, %.preheader.preheader
   %.014.lcssa = phi ptr [ %0, %.preheader.preheader ], [ %i.b, %.preheader ]
   %.012.lcssa = phi ptr [ %1, %.preheader.preheader ], [ %i.e, %.preheader ]
-  store i8 0, ptr %.014.lcssa, align 1, !tbaa !9
+  store i8 0, ptr %.014.lcssa, align 1, !tbaa !10
   br label %.thread26
 
 .thread26:                                        ; preds = %bb.a, %.preheader._crit_edge
@@ -69,7 +69,8 @@ attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: re
 !4 = !{!"omnipotent char", !3, i64 0}
 !5 = !{!"int", !4, i64 0}
 !6 = !{!5, !5, i64 0}
-!7 = distinct !{!7, !8}
-!8 = !{!"llvm.loop.mustprogress"}
-!9 = !{!4, !4, i64 0}
+!7 = distinct !{!7, !9}
+!8 = !{i64 6756060833348212174}
+!9 = !{!"llvm.loop.mustprogress"}
+!10 = !{!4, !4, i64 0}
 end_hunk_0
