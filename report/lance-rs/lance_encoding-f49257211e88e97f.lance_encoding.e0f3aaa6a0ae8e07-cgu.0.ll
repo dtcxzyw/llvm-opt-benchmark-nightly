@@ -205,7 +205,7 @@ bb.ak:                                            ; preds = %bb.ap
   unreachable
 
 bb.al:                                            ; preds = %bb.aj
-  %i.fx = add i64 %.sroa.042.0.ph.i.i.i.i1176, -1
+  %i.fx = add nsw i64 %.sroa.042.0.ph.i.i.i.i1176, -1
   %umax.le.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.cs, i64 %i.fx)
   br label %.invoke391.i.i.i.i
 
@@ -301,7 +301,7 @@ _RNvMs9_NtCs1BCiKJoB9mN_4fsst4fsstNtB5_8Counters10count1_inc.exit.i.i.i.i: ; pre
   %i.he = call i16 @llvm.uadd.sat.i16(i16 %i.hd, i16 1)
   store i16 %i.he, ptr %i.hc, align 2, !noalias !4368
   %umax264.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.fy, i64 %i.cs)
-  %exitcond.not.i.i.i.i1170.not = icmp ult i64 %i.fy, %i.cs
+  %exitcond.not.i.i.i.i1170.not = icmp samesign ult i64 %i.fy, %i.cs
   br i1 %exitcond.not.i.i.i.i1170.not, label %.lr.ph, label %.outer.i.i.i.i._crit_edge
 
 bb.at:                                            ; preds = %bb.bg, %.lr.ph.i.i.i.i
@@ -704,7 +704,7 @@ bb.cw:                                            ; preds = %bb.db
   unreachable
 
 bb.cx:                                            ; preds = %bb.cv
-  %i.lg = add i64 %.sroa.042.0.ph.i.i.i.i.i1204, -1
+  %i.lg = add nsw i64 %.sroa.042.0.ph.i.i.i.i.i1204, -1
   %umax.le.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.ie, i64 %i.lg)
   br label %.invoke.i.i.i.i.i
 
@@ -785,7 +785,7 @@ _RNvMs9_NtCs1BCiKJoB9mN_4fsst4fsstNtB5_8Counters10count1_inc.exit.i.i.i.i.i: ; p
   %i.mi = call i16 @llvm.uadd.sat.i16(i16 %i.mh, i16 1)
   store i16 %i.mi, ptr %i.mg, align 2, !noalias !34003
   %umax231.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.lh, i64 %i.ie)
-  %exitcond.not.i.i.i.i.i1198.not = icmp ult i64 %i.lh, %i.ie
+  %exitcond.not.i.i.i.i.i1198.not = icmp samesign ult i64 %i.lh, %i.ie
   br i1 %exitcond.not.i.i.i.i.i1198.not, label %.lr.ph, label %.outer.i.i.i.i.i._crit_edge
 
 bb.de:                                            ; preds = %bb.dq, %.lr.ph.i.i.i.i.i
@@ -1188,13 +1188,13 @@ bb.s:                                             ; preds = %bb.r
 
 _RNvNtNtNtCsjjpCCFGI3ul_14lance_encoding14array_encoding8physical7bitpack20compute_start_offset.exit: ; preds = %bb.r
   %i.cj = sub nuw i64 %.sroa.0.0194, %i.bw
-  %i.ck = icmp ult i64 %i.bb, %i.r
+  %i.ck = icmp samesign ult i64 %i.bb, %i.r
   br i1 %i.ck, label %bb.j, label %.outer._crit_edge
 
 .outer:                                           ; preds = %bb.aj, %bb.ai, %bb.s
   %.sroa.014.2 = phi i64 [ %.sroa.014.0.ph289, %bb.s ], [ %.sroa.014.6, %bb.ai ], [ %.sroa.014.6, %bb.aj ]
   %.sroa.012.2 = phi i64 [ %.sroa.012.0.ph290, %bb.s ], [ %i.cn, %bb.ai ], [ %i.cn, %bb.aj ]
-  %i.cl = icmp ult i64 %i.bb, %i.r
+  %i.cl = icmp samesign ult i64 %i.bb, %i.r
   br i1 %i.cl, label %.lr.ph, label %.outer._crit_edge
 
 bb.t:                                             ; preds = %.lr.ph282, %bb.aj

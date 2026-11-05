@@ -202,7 +202,7 @@ bb.dv:                                            ; preds = %bb.dt, %bb.dm
   %i.ti = phi i64 [ %i.tp, %bb.dx ], [ %i.tb, %.preheader.i268 ]
   %i.tj = load ptr, ptr %i.sw, align 8, !tbaa !80
   %i.tk = mul nuw nsw i64 %i.ti, %indvars.iv27.i
-  %i.tl = getelementptr inbounds [8 x i8], ptr %i.tj, i64 %i.tk
+  %i.tl = getelementptr inbounds nuw [8 x i8], ptr %i.tj, i64 %i.tk
   %i.tm = getelementptr inbounds nuw [8 x i8], ptr %i.tl, i64 %indvars.iv.i271
   %i.tn = load ptr, ptr %i.tm, align 8, !tbaa !186 ; 2 uses
   %i.to = icmp eq ptr %i.tn, null
@@ -269,7 +269,7 @@ _Z15freeDeepBuffersIjEvRNSt7__cxx114listIN7Imf_3_47Array2DIPT_EESaIS6_EEE.exit: 
   %i.uh = phi i64 [ %i.uo, %bb.dz ], [ %i.ua, %.preheader.i283 ]
   %i.ui = load ptr, ptr %i.tv, align 8, !tbaa !83
   %i.uj = mul nuw nsw i64 %i.uh, %indvars.iv27.i284
-  %i.uk = getelementptr inbounds [8 x i8], ptr %i.ui, i64 %i.uj
+  %i.uk = getelementptr inbounds nuw [8 x i8], ptr %i.ui, i64 %i.uj
   %i.ul = getelementptr inbounds nuw [8 x i8], ptr %i.uk, i64 %indvars.iv.i288
   %i.um = load ptr, ptr %i.ul, align 8, !tbaa !92 ; 2 uses
   %i.un = icmp eq ptr %i.um, null
@@ -336,7 +336,7 @@ _Z15freeDeepBuffersIN9Imath_3_24halfEEvRNSt7__cxx114listIN7Imf_3_47Array2DIPT_EE
   %i.vg = phi i64 [ %i.vn, %bb.eb ], [ %i.uz, %.preheader.i301 ]
   %i.vh = load ptr, ptr %i.uu, align 8, !tbaa !86
   %i.vi = mul nuw nsw i64 %i.vg, %indvars.iv27.i302
-  %i.vj = getelementptr inbounds [8 x i8], ptr %i.vh, i64 %i.vi
+  %i.vj = getelementptr inbounds nuw [8 x i8], ptr %i.vh, i64 %i.vi
   %i.vk = getelementptr inbounds nuw [8 x i8], ptr %i.vj, i64 %indvars.iv.i306
   %i.vl = load ptr, ptr %i.vk, align 8, !tbaa !189 ; 2 uses
   %i.vm = icmp eq ptr %i.vl, null

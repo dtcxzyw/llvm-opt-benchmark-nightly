@@ -206,14 +206,14 @@ bb.aa:                                            ; preds = %bb.w
   br i1 %i.bx, label %_ZN5boost8charconv6detail3ryuL16copy_special_strEPclNS2_20floating_decimal_128E.exit, label %.loopexit
 
 .loopexit:                                        ; preds = %.preheader, %bb.y, %bb.z, %bb.aa, %bb.v
-  %.4 = phi i64 [ %.1120, %bb.v ], [ %.2121, %bb.z ], [ %.2121, %bb.y ], [ %.1120, %bb.aa ], [ %.3122, %.preheader ] ; 6 uses
+  %.4 = phi i64 [ %.1120, %bb.v ], [ %.2121, %bb.z ], [ %.2121, %bb.y ], [ %.1120, %bb.aa ], [ %.3122, %.preheader ] ; 5 uses
   %i.by = getelementptr inbounds nuw i8, ptr %1, i64 %.4
   store i8 101, ptr %i.by, align 1, !tbaa !20
   %i.bz = add nsw i32 %i.l, %i.b                  ; 3 uses
   %i.ca = icmp slt i32 %i.bz, 1
   %i.cb = getelementptr i8, ptr %1, i64 %.4
   %i.cc = getelementptr i8, ptr %i.cb, i64 1      ; 2 uses
-  %.5190 = add i64 %.4, 2                         ; 5 uses
+  %.5190 = add i64 %.4, 2                         ; 6 uses
   br i1 %i.ca, label %.thread, label %bb.ab
 
 .thread:                                          ; preds = %.loopexit
@@ -239,36 +239,34 @@ bb.ab:                                            ; preds = %.loopexit
   %i.cg = add nuw i32 %.07.i, 1                   ; 5 uses
   %i.ch = icmp ult i32 %.046.i, 10
   %indvar.next = add i64 %indvar, 1
-  br i1 %i.ch, label %.lr.ph157, label %.lr.ph.i, !llvm.loop !0
+  br i1 %i.ch, label %.lr.ph157.split.a, label %.lr.ph.i, !llvm.loop !0
 
-.lr.ph157:                                        ; preds = %.lr.ph.i
+.lr.ph157.split.a:                                ; preds = %.lr.ph.i
   %5 = icmp eq i32 %.07.i, 0
-  %6 = zext i32 %i.cg to i64                      ; 4 uses
-  br i1 %5, label %._crit_edge158.loopexit, label %.lr.ph157.split.a
+  %6 = zext i32 %i.cg to i64                      ; 3 uses
+  %invariant.gep = getelementptr i8, ptr %1, i64 %6 ; 2 uses
+  br i1 %5, label %._crit_edge158.loopexit, label %.lr.ph157.split
 
-.lr.ph157.split.a:                                ; preds = %.lr.ph157
-  %invariant.gep = getelementptr i8, ptr %1, i64 %6
-  %gep = getelementptr i8, ptr %invariant.gep, i64 %.5190 ; 3 uses
-  %xtraiter = and i64 %6, 1
-  %7 = icmp eq i64 %indvar, 0
-  br i1 %7, label %.epil.preheader, label %.lr.ph157.split.new
-
-.lr.ph157.split.new:                              ; preds = %.lr.ph157.split.a
-  %unroll_iter = and i64 %6, 4294967294
-  br label %bb.ac
-
-._crit_edge158.loopexit:                          ; preds = %.lr.ph157
-  %8 = getelementptr i8, ptr %1, i64 %.4
-  %9 = getelementptr i8, ptr %8, i64 %6
-  %scevgep = getelementptr i8, ptr %9, i64 2
+._crit_edge158.loopexit:                          ; preds = %.lr.ph157.split.a
   %i.ci = getelementptr inbounds nuw i8, ptr %1, i64 %.5190
   store i8 48, ptr %i.ci, align 1, !tbaa !20
   %i.cj = urem i32 %.0113192, 10
   %i.ck = trunc nuw nsw i32 %i.cj to i8
   %i.cl = or disjoint i8 %i.ck, 48
-  store i8 %i.cl, ptr %scevgep, align 1, !tbaa !20
+  %7 = getelementptr i8, ptr %invariant.gep, i64 %.5190
+  store i8 %i.cl, ptr %7, align 1, !tbaa !20
   %i.cm = add i64 %.4, 3
   br label %._crit_edge158.thread
+
+.lr.ph157.split:                                  ; preds = %.lr.ph157.split.a
+  %gep = getelementptr i8, ptr %invariant.gep, i64 %.5190 ; 3 uses
+  %xtraiter = and i64 %6, 1
+  %8 = icmp eq i64 %indvar, 0
+  br i1 %8, label %.epil.preheader, label %.lr.ph157.split.new
+
+.lr.ph157.split.new:                              ; preds = %.lr.ph157.split
+  %unroll_iter = and i64 %6, 4294967294
+  br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ac, %.lr.ph157.split.new
   %indvars.iv169 = phi i64 [ 0, %.lr.ph157.split.new ], [ %indvars.iv.next170.1, %bb.ac ] ; 3 uses
@@ -305,9 +303,9 @@ bb.ac:                                            ; preds = %bb.ac, %.lr.ph157.s
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %._crit_edge158.thread, label %.epil.preheader
 
-.epil.preheader:                                  ; preds = %._crit_edge158.thread.loopexit.unr-lcssa, %.lr.ph157.split.a
-  %indvars.iv169.epil.init = phi i64 [ 0, %.lr.ph157.split.a ], [ %indvars.iv.next170.1, %._crit_edge158.thread.loopexit.unr-lcssa ]
-  %.1114155.epil.init = phi i32 [ %.0113192, %.lr.ph157.split.a ], [ %i.cu, %._crit_edge158.thread.loopexit.unr-lcssa ]
+.epil.preheader:                                  ; preds = %._crit_edge158.thread.loopexit.unr-lcssa, %.lr.ph157.split
+  %indvars.iv169.epil.init = phi i64 [ 0, %.lr.ph157.split ], [ %indvars.iv.next170.1, %._crit_edge158.thread.loopexit.unr-lcssa ]
+  %.1114155.epil.init = phi i32 [ %.0113192, %.lr.ph157.split ], [ %i.cu, %._crit_edge158.thread.loopexit.unr-lcssa ]
   %lcmp.mod218 = trunc i32 %i.cg to i1
   tail call void @llvm.assume(i1 %lcmp.mod218)
   %i.dc = urem i32 %.1114155.epil.init, 10

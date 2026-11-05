@@ -205,9 +205,9 @@ bb.m:                                             ; preds = %_ZN6embree8vector_t
 
 .lr.ph123.preheader:                              ; preds = %.noexc32, %.preheader112
   %.0.i122.ph = phi i64 [ 0, %.noexc32 ], [ %i.cx, %.preheader112 ] ; 4 uses
-  %i.cl = sub i64 %i.az, %.0.i122.ph
+  %i.cl = sub nsw i64 %i.az, %.0.i122.ph
   %i.cm = zext i32 %.021 to i64
-  %i.cn = sub i64 %i.cm, %.0.i122.ph
+  %i.cn = sub nsw i64 %i.cm, %.0.i122.ph
   %xtraiter = and i64 %i.cl, 3                    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph123.prol.loopexit, label %.lr.ph123.prol

@@ -155,9 +155,9 @@ get_seg_by_num.exit:                              ; preds = %scalar.ph, %vector.
   br label %.loopexit
 
 bb.e:                                             ; preds = %bb.b, %bb.c
-  %i.bl = add i64 %.02833, 2
-  %i.bm = add i64 %i.bl, %i.q                     ; 2 uses
-  %i.bn = icmp ult i64 %i.bm, %i.l
+  %i.bl = add nuw nsw i64 %.02833, 2
+  %i.bm = add nuw nsw i64 %i.bl, %i.q             ; 2 uses
+  %i.bn = icmp samesign ult i64 %i.bm, %i.l
   br i1 %i.bn, label %.lr.ph, label %.loopexit, !llvm.loop !11
 
 .loopexit:                                        ; preds = %.lr.ph, %bb.e, %bb.a, %pdb_get_file_size.exit, %get_seg_by_num.exit

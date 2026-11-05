@@ -205,10 +205,9 @@ bb.f:                                             ; preds = %bb.e
 
 ._crit_edge.us:                                   ; preds = %bb.f, %._crit_edge.us.split.loop.exit347, %._crit_edge.us.split.loop.exit345, %._crit_edge.us.split.loop.exit343, %._crit_edge.us.split.loop.exit341
   %.1.lcssa.us = phi i32 [ %i.ae, %._crit_edge.us.split.loop.exit347 ], [ %i.ad, %._crit_edge.us.split.loop.exit345 ], [ %i.ac, %._crit_edge.us.split.loop.exit343 ], [ %i.ab, %._crit_edge.us.split.loop.exit341 ], [ %i.g, %bb.f ] ; 6 uses
-  %7 = trunc nuw i64 %i.m to i32
-  %8 = add nsw i32 %.1.lcssa.us, %7
-  %9 = sext i32 %8 to i64
-  %i.af = getelementptr inbounds [4 x i8], ptr %i.b, i64 %9 ; 4 uses
+  %7 = zext i32 %.1.lcssa.us to i64
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %i.m
+  %i.af = getelementptr inbounds nuw [4 x i8], ptr %8, i64 %7 ; 4 uses
   %i.ag = load i8, ptr %i.af, align 1
   %i.ah = icmp eq i8 %i.ag, %i.i
   br i1 %i.ah, label %bb.g, label %._crit_edge226.split.loop.exit361

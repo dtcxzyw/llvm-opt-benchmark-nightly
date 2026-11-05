@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i
   %i.al = getelementptr i8, ptr %.val.i.i, i64 520
   %i.am = load ptr, ptr %i.al, align 8
   %i.an = load ptr, ptr getelementptr inbounds nuw (i8, ptr @kmalloc_caches, i64 96), align 16
-  %i.ao = tail call noalias align 8 dereferenceable_or_null(4096) ptr @__kmalloc_cache_noprof(ptr noundef %i.an, i32 noundef 3264, i64 noundef 4096) #11 ; 4 uses
+  %i.ao = tail call noalias align 8 dereferenceable_or_null(4096) ptr @__kmalloc_cache_noprof(ptr noundef %i.an, i32 noundef 3264, i64 noundef 4096) #11 ; 5 uses
   %.not.i.i.i = icmp eq ptr %i.ao, null
   br i1 %.not.i.i.i, label %nfs_follow_referral.exit.i, label %bb.k
 
@@ -285,14 +285,14 @@ bb.s:                                             ; preds = %bb.r, %.lr.ph.i.i.i
   %i.bn = add nuw nsw i64 %.01219.i.i.i.i.i, %i.bm ; 3 uses
   %i.bo = icmp samesign ult i64 %i.bn, 4097
   %.not18.i.i.i.i.i = select i1 %i.bk, i1 %i.bo, i1 false
-  br i1 %.not18.i.i.i.i.i, label %bb.r, label %nfs4_validate_fspath.exit.i.i
+  br i1 %.not18.i.i.i.i.i, label %bb.r, label %nfs4_pathname_string.exit.thread.i.i.i
 
 .loopexit.i.i.i.i:                                ; preds = %bb.r, %bb.q
   %.013.i.ph.i.i.i.i = phi i64 [ 0, %bb.q ], [ %i.bn, %bb.r ] ; 2 uses
   %i.bp = add nuw nsw i64 %.013.i.ph.i.i.i.i, 1
   %i.bq = call noalias align 8 ptr @__kmalloc_noprof(i64 noundef range(i64 0, -9223372036854775807) %i.bp, i32 noundef 3264) #10 ; 8 uses
   %.not.i21.i.i.i = icmp eq ptr %i.bq, null
-  br i1 %.not.i21.i.i.i, label %nfs4_validate_fspath.exit.i.i, label %.preheader.i.i.i.i
+  br i1 %.not.i21.i.i.i, label %nfs4_pathname_string.exit.thread.i.i.i, label %.preheader.i.i.i.i
 
 .preheader.i.i.i.i:                               ; preds = %.loopexit.i.i.i.i
   %i.br = load i32, ptr %i.ai, align 16           ; 5 uses
@@ -364,7 +364,14 @@ nfs4_pathname_string.exit.i.i.i:                  ; preds = %.epil.preheader, %n
   %.025.lcssa.i.i.i.i = phi ptr [ %i.bq, %.preheader.i.i.i.i ], [ %i.ck, %nfs4_pathname_string.exit.i.i.i.loopexit.unr-lcssa ], [ %i.ct, %.epil.preheader ]
   store i8 0, ptr %.025.lcssa.i.i.i.i, align 1
   %i.cu = icmp ugt ptr %i.bq, inttoptr (i64 -4096 to ptr)
-  br i1 %i.cu, label %nfs4_validate_fspath.exit.i.i, label %bb.u
+  br i1 %i.cu, label %nfs4_pathname_string.exit.thread.i.i.i, label %bb.u
+
+nfs4_pathname_string.exit.thread.i.i.i:           ; preds = %bb.s, %nfs4_pathname_string.exit.i.i.i, %.loopexit.i.i.i.i
+  %.0.i4.i.i.i = phi ptr [ %i.bq, %nfs4_pathname_string.exit.i.i.i ], [ inttoptr (i64 -12 to ptr), %.loopexit.i.i.i.i ], [ inttoptr (i64 -36 to ptr), %bb.s ]
+  call void @kfree(ptr noundef nonnull %i.ao) #8
+  %2 = ptrtoint ptr %.0.i4.i.i.i to i64
+  %3 = trunc nsw i64 %2 to i32
+  br label %nfs_follow_referral.exit.i
 
 bb.u:                                             ; preds = %nfs4_pathname_string.exit.i.i.i
   %i.cv = call i32 @strncmp(ptr noundef %.1.i.i.i.i, ptr noundef nonnull %i.bq, i64 noundef %.013.i.ph.i.i.i.i) #8
@@ -373,10 +380,9 @@ bb.u:                                             ; preds = %nfs4_pathname_strin
   %.not19.i.i.i = icmp eq i32 %i.cv, 0
   br i1 %.not19.i.i.i, label %.preheader.i.i, label %nfs_follow_referral.exit.i
 
-nfs4_validate_fspath.exit.i.i:                    ; preds = %bb.s, %nfs4_pathname_string.exit.i.i.i, %.loopexit.i.i.i.i, %nfs4_path.exit.i.i.i
-  %.1.i.i.sink.i.i = phi ptr [ %.1.i.i.i.i, %nfs4_path.exit.i.i.i ], [ %i.bq, %nfs4_pathname_string.exit.i.i.i ], [ inttoptr (i64 -12 to ptr), %.loopexit.i.i.i.i ], [ inttoptr (i64 -36 to ptr), %bb.s ]
+nfs4_validate_fspath.exit.i.i:                    ; preds = %nfs4_path.exit.i.i.i
   call void @kfree(ptr noundef nonnull %i.ao) #8
-  %i.cw = ptrtoint ptr %.1.i.i.sink.i.i to i64
+  %i.cw = ptrtoint ptr %.1.i.i.i.i to i64
   %i.cx = trunc i64 %i.cw to i32                  ; 2 uses
   %i.cy = icmp slt i32 %i.cx, 0
   br i1 %i.cy, label %nfs_follow_referral.exit.i, label %.preheader.i.i
@@ -595,8 +601,8 @@ nfs4_pathname_string.exit.i50.i.i:                ; preds = %.epil.preheader79, 
 nfs4_pathname_string.exit.thread.i37.i.i:         ; preds = %bb.ac, %nfs4_pathname_string.exit.i50.i.i, %.loopexit.i.i39.i.i
   %.0.i9598.i.i.i = phi ptr [ %i.eu, %nfs4_pathname_string.exit.i50.i.i ], [ inttoptr (i64 -12 to ptr), %.loopexit.i.i39.i.i ], [ inttoptr (i64 -36 to ptr), %bb.ac ]
   %i.fz = ptrtoint ptr %.0.i9598.i.i.i to i64
-  %i.ga = trunc i64 %i.fz to i32
-  br label %try_location.exit.i.i
+  %i.ga = trunc nsw i64 %i.fz to i32
+  br label %try_location.exit.thread.i.i
 
 _kmalloc_noprof.exit.i.i.i:                       ; preds = %nfs4_pathname_string.exit.i50.i.i
   %i.gb = getelementptr i8, ptr %.val.i.i.i, i64 464 ; 3 uses
@@ -627,7 +633,7 @@ bb.ae:                                            ; preds = %_kmalloc_noprof.exi
 
 bb.af:                                            ; preds = %bb.aj, %.lr.ph110.i.i.i
   %indvars.iv118.i.i.i = phi i64 [ 0, %.lr.ph110.i.i.i ], [ %indvars.iv.next119.i.i.i, %bb.aj ] ; 2 uses
-  %.078107.i.i.i = phi i32 [ -2, %.lr.ph110.i.i.i ], [ %.179.ph.i.i.i, %bb.aj ] ; 2 uses
+  %.078107.i.i.i = phi i32 [ -2, %.lr.ph110.i.i.i ], [ %.179.ph.i.fr.i.i, %bb.aj ] ; 2 uses
   %i.gn = getelementptr [16 x i8], ptr %i.dl, i64 %indvars.iv118.i.i.i ; 5 uses
   %i.go = getelementptr i8, ptr %i.gn, i64 8      ; 3 uses
   %i.gp = load ptr, ptr %i.go, align 16           ; 4 uses
@@ -700,29 +706,28 @@ rpc_set_port.exit.i.i.i:                          ; preds = %.sink.split.i.i.i.i
   br i1 %i.ht, label %nfs_follow_referral.exit.i, label %bb.aj
 
 bb.aj:                                            ; preds = %rpc_set_port.exit.i.i.i, %nfs_parse_server_name.exit.i.i.i, %bb.af
-  %.179.ph.i.i.i = phi i32 [ %i.hs, %rpc_set_port.exit.i.i.i ], [ %.078107.i.i.i, %bb.af ], [ %.078107.i.i.i, %nfs_parse_server_name.exit.i.i.i ] ; 2 uses
+  %.179.ph.i.i.i = phi i32 [ %i.hs, %rpc_set_port.exit.i.i.i ], [ %.078107.i.i.i, %bb.af ], [ %.078107.i.i.i, %nfs_parse_server_name.exit.i.i.i ]
+  %.179.ph.i.fr.i.i = freeze i32 %.179.ph.i.i.i   ; 3 uses
   %indvars.iv.next119.i.i.i = add nuw nsw i64 %indvars.iv118.i.i.i, 1 ; 2 uses
   %i.hu = load i32, ptr %i.de, align 16
   %i.hv = zext i32 %i.hu to i64
   %i.hw = icmp samesign ult i64 %indvars.iv.next119.i.i.i, %i.hv
   br i1 %i.hw, label %bb.af, label %try_location.exit.i.i, !llvm.loop !17
 
-try_location.exit.i.i:                            ; preds = %bb.aj, %nfs4_pathname_string.exit.thread.i37.i.i
-  %.2.i.i.i = phi i32 [ %i.ga, %nfs4_pathname_string.exit.thread.i37.i.i ], [ %.179.ph.i.i.i, %bb.aj ]
-  %.2.i.fr.i.i = freeze i32 %.2.i.i.i             ; 2 uses
-  %i.hx = icmp eq i32 %.2.i.fr.i.i, 0
+try_location.exit.i.i:                            ; preds = %bb.aj
+  %i.hx = icmp eq i32 %.179.ph.i.fr.i.i, 0
   br i1 %i.hx, label %nfs_follow_referral.exit.i, label %try_location.exit.thread.i.i
 
-try_location.exit.thread.i.i:                     ; preds = %try_location.exit.i.i, %bb.ae, %_kmalloc_noprof.exit.i.i.i, %._crit_edge.i.i.i, %bb.x, %bb.w, %bb.v
-  %.123.ph.i.i = phi i32 [ %.2.i.fr.i.i, %try_location.exit.i.i ], [ %.02274.i.i, %bb.v ], [ %.02274.i.i, %bb.x ], [ %.02274.i.i, %bb.w ], [ -2, %bb.ae ], [ -12, %_kmalloc_noprof.exit.i.i.i ], [ -12, %._crit_edge.i.i.i ] ; 2 uses
+try_location.exit.thread.i.i:                     ; preds = %try_location.exit.i.i, %bb.ae, %_kmalloc_noprof.exit.i.i.i, %nfs4_pathname_string.exit.thread.i37.i.i, %._crit_edge.i.i.i, %bb.x, %bb.w, %bb.v
+  %.123.ph.i.i = phi i32 [ %.179.ph.i.fr.i.i, %try_location.exit.i.i ], [ %.02274.i.i, %bb.v ], [ %.02274.i.i, %bb.x ], [ %.02274.i.i, %bb.w ], [ -2, %bb.ae ], [ -12, %_kmalloc_noprof.exit.i.i.i ], [ -12, %._crit_edge.i.i.i ], [ %i.ga, %nfs4_pathname_string.exit.thread.i37.i.i ] ; 2 uses
   %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
   %i.hy = load i32, ptr %i.af, align 8
   %i.hz = sext i32 %i.hy to i64
   %i.ia = icmp slt i64 %indvars.iv.next.i.i, %i.hz
   br i1 %i.ia, label %bb.v, label %nfs_follow_referral.exit.i, !llvm.loop !18
 
-nfs_follow_referral.exit.i:                       ; preds = %try_location.exit.thread.i.i, %try_location.exit.i.i, %rpc_set_port.exit.i.i.i, %.preheader.i.i, %nfs4_validate_fspath.exit.i.i, %bb.u, %bb.j, %bb.i, %bb.h, %bb.g
-  %.032.i = phi i32 [ %i.ae, %bb.g ], [ -2, %bb.h ], [ -2, %bb.i ], [ %i.cx, %nfs4_validate_fspath.exit.i.i ], [ 0, %rpc_set_port.exit.i.i.i ], [ -2, %bb.u ], [ -12, %bb.j ], [ -2, %.preheader.i.i ], [ %.123.ph.i.i, %try_location.exit.thread.i.i ], [ 0, %try_location.exit.i.i ]
+nfs_follow_referral.exit.i:                       ; preds = %try_location.exit.thread.i.i, %try_location.exit.i.i, %rpc_set_port.exit.i.i.i, %.preheader.i.i, %nfs4_validate_fspath.exit.i.i, %bb.u, %nfs4_pathname_string.exit.thread.i.i.i, %bb.j, %bb.i, %bb.h, %bb.g
+  %.032.i = phi i32 [ %i.ae, %bb.g ], [ -2, %bb.h ], [ -2, %bb.i ], [ %i.cx, %nfs4_validate_fspath.exit.i.i ], [ 0, %rpc_set_port.exit.i.i.i ], [ %3, %nfs4_pathname_string.exit.thread.i.i.i ], [ -2, %bb.u ], [ -2, %.preheader.i.i ], [ -12, %bb.j ], [ %.123.ph.i.i, %try_location.exit.thread.i.i ], [ 0, %try_location.exit.i.i ]
   %i.ib = load ptr, ptr %i.x, align 4096
   call void @kfree(ptr noundef %i.ib) #8
   br label %bb.ak

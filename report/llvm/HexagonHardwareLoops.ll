@@ -204,7 +204,7 @@ bb.dj:                                            ; preds = %bb.di
   %i.abn = load i32, ptr %i.abm, align 4, !tbaa !281
   br label %bb.dk
 
-bb.dk:                                            ; preds = %bb.dh, %bb.dj, %bb.di
+bb.dk:                                            ; preds = %bb.dj, %bb.di, %bb.dh
   %.sroa.0170.1.i = phi i32 [ %.sroa.0170.0208.i, %bb.di ], [ %i.abn, %bb.dj ], [ %.sroa.0170.0208.i, %bb.dh ] ; 2 uses
   %.1117.i = phi ptr [ %.0116209.i, %bb.di ], [ %.0116209.i, %bb.dj ], [ %i.abh, %bb.dh ] ; 2 uses
   %i.abo = getelementptr inbounds nuw [32 x i8], ptr %i.aat, i64 %indvars.iv.i220 ; 3 uses
@@ -607,17 +607,16 @@ bb.j:                                             ; preds = %bb.i, %bb.i
   br label %.lr.ph218
 
 .lr.ph212:                                        ; preds = %.lr.ph212.preheader, %bb.l
-  %indvars.iv232 = phi i64 [ 1, %.lr.ph212.preheader ], [ %indvars.iv.next233, %bb.l ] ; 3 uses
-  %i.dg = load ptr, ptr %i.cm, align 8, !tbaa !292 ; 2 uses
-  %i.dh = getelementptr inbounds nuw [32 x i8], ptr %i.dg, i64 %indvars.iv232
+  %indvars.iv232 = phi i64 [ 1, %.lr.ph212.preheader ], [ %indvars.iv.next233, %bb.l ] ; 2 uses
+  %i.dg = load ptr, ptr %i.cm, align 8, !tbaa !292
+  %i.dh = getelementptr inbounds nuw [32 x i8], ptr %i.dg, i64 %indvars.iv232 ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr %i.dh, i64 48
   %i.dj = load ptr, ptr %i.di, align 8, !tbaa !281 ; 2 uses
   %i.dk = icmp eq ptr %i.dj, %i.m
   br i1 %i.dk, label %bb.l, label %bb.k
 
 bb.k:                                             ; preds = %.lr.ph212
-  %11 = getelementptr inbounds nuw [32 x i8], ptr %i.dg, i64 %indvars.iv232
-  %i.dl = load <2 x i32>, ptr %11, align 8
+  %i.dl = load <2 x i32>, ptr %i.dh, align 8
   %i.dm = and <2 x i32> %i.dl, <i32 1048320, i32 -1>
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #20
   store ptr null, ptr %i.bo, align 8, !tbaa !313, !alias.scope !434

@@ -205,18 +205,18 @@ bb.bu:                                            ; preds = %.lr.ph.i.i
 leapadd.exit.i:                                   ; preds = %bb.bu, %._crit_edge.loopexit.split.loop.exit.i.i, %.preheader.i.i
   %.0.lcssa.i.i = phi i32 [ 0, %.preheader.i.i ], [ %i.hc, %._crit_edge.loopexit.split.loop.exit.i.i ], [ %i.gx, %bb.bu ] ; 3 uses
   %i.hd = add nuw nsw i32 %.0.lcssa.i.i, 1
-  %1 = sext i32 %i.hd to i64                      ; 3 uses
-  %i.he = getelementptr inbounds [8 x i8], ptr @trans, i64 %1
+  %1 = zext nneg i32 %i.hd to i64                 ; 3 uses
+  %i.he = getelementptr inbounds nuw [8 x i8], ptr @trans, i64 %1
   %i.hf = zext nneg i32 %.0.lcssa.i.i to i64      ; 3 uses
   %i.hg = getelementptr inbounds nuw [8 x i8], ptr @trans, i64 %i.hf ; 2 uses
   %i.hh = sub nuw i32 %i.gx, %.0.lcssa.i.i
   %i.hi = sext i32 %i.hh to i64                   ; 2 uses
   %i.hj = shl nsw i64 %i.hi, 3                    ; 2 uses
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.he, ptr nonnull align 8 %i.hg, i64 %i.hj, i1 false)
-  %i.hk = getelementptr inbounds [8 x i8], ptr @corr, i64 %1
+  %i.hk = getelementptr inbounds nuw [8 x i8], ptr @corr, i64 %1
   %i.hl = getelementptr inbounds nuw [8 x i8], ptr @corr, i64 %i.hf ; 2 uses
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 8 %i.hk, ptr nonnull align 8 %i.hl, i64 %i.hj, i1 false)
-  %i.hm = getelementptr inbounds i8, ptr @roll, i64 %1
+  %i.hm = getelementptr inbounds nuw i8, ptr @roll, i64 %1
   %i.hn = getelementptr inbounds nuw i8, ptr @roll, i64 %i.hf ; 2 uses
   call void @llvm.memmove.p0.p0.i64(ptr nonnull align 1 %i.hm, ptr nonnull align 1 %i.hn, i64 %i.hi, i1 false)
   store i64 %i.gk, ptr %i.hg, align 8

@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.f, %.lr.ph170.ne
 
 .loopexit:                                        ; preds = %.lr.ph177, %.lr.ph177.prol.loopexit
   %.2131.lcssa = phi float [ %.2131.lcssa.unr, %.lr.ph177.prol.loopexit ], [ %.2131.1, %.lr.ph177 ] ; 2 uses
-  %.2128.lcssa = phi i32 [ %.2128.lcssa.unr, %.lr.ph177.prol.loopexit ], [ %.2128.1, %.lr.ph177 ] ; 5 uses
+  %.2128.lcssa = phi i32 [ %.2128.lcssa.unr, %.lr.ph177.prol.loopexit ], [ %.2128.1, %.lr.ph177 ] ; 6 uses
   %.2.lcssa = phi i32 [ %.2.lcssa.unr, %.lr.ph177.prol.loopexit ], [ %.2.1, %.lr.ph177 ] ; 5 uses
   %exitcond244.not = icmp eq i64 %indvars.iv.next241, %wide.trip.count269
   br i1 %exitcond244.not, label %.lr.ph194, label %.lr.ph177.preheader, !llvm.loop !414
@@ -490,7 +490,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.z
   store i32 -1, ptr %.3.lcssa, align 4, !tbaa !13
   %i.es = fpext float %.2131.lcssa to double
   %i.et = fmul double %i.es, 5.000000e-01         ; 2 uses
-  %i.eu = sext i32 %.2128.lcssa to i64            ; 5 uses
+  %i.eu = sext i32 %.2128.lcssa to i64            ; 4 uses
   %i.ev = getelementptr inbounds [4 x i8], ptr %i.az, i64 %i.eu ; 2 uses
   %i.ew = load float, ptr %i.ev, align 4, !tbaa !138
   %i.ex = getelementptr inbounds nuw [8 x i8], ptr %3, i64 %indvars.iv266
@@ -622,7 +622,6 @@ bb.af:                                            ; preds = %bb.ae
 bb.ag:                                            ; preds = %bb.af
   %.9..0 = tail call i32 @llvm.smin.i32(i32 %.9208, i32 %.2.lcssa)
   %.0..9 = tail call i32 @llvm.smax.i32(i32 %.9208, i32 %.2.lcssa)
-  %.pre271 = zext nneg i32 %.9208 to i64
   %.pre273 = zext nneg i32 %.0..9 to i64
   %.pre279 = sext i32 %.9..0 to i64
   br label %bb.ah
@@ -631,10 +630,11 @@ bb.ah:                                            ; preds = %._crit_edge276, %bb
   %.pre-phi280 = phi i64 [ %.pre277.a, %._crit_edge276 ], [ %.pre279, %bb.ag ]
   %.pre-phi278 = phi i64 [ %.pre277.a, %._crit_edge276 ], [ %i.eu, %bb.ag ]
   %.pre-phi274 = phi i64 [ %i.dq, %._crit_edge276 ], [ %.pre273, %bb.ag ]
-  %.pre-phi272 = phi i64 [ %i.eu, %._crit_edge276 ], [ %.pre271, %bb.ag ]
+  %.0139 = phi i32 [ %.2128.lcssa, %._crit_edge276 ], [ %.9208, %bb.ag ]
   %i.gz = getelementptr inbounds [8 x i8], ptr %i.ax, i64 %.pre-phi278
   %i.ha = load ptr, ptr %i.gz, align 8, !tbaa !136
-  %i.hb = getelementptr inbounds [4 x i8], ptr %i.ha, i64 %.pre-phi272 ; 2 uses
+  %4 = zext nneg i32 %.0139 to i64
+  %i.hb = getelementptr inbounds nuw [4 x i8], ptr %i.ha, i64 %4 ; 2 uses
   %i.hc = load float, ptr %i.hb, align 4, !tbaa !138 ; 3 uses
   %i.hd = getelementptr inbounds [8 x i8], ptr %i.ax, i64 %.pre-phi280
   %i.he = load ptr, ptr %i.hd, align 8, !tbaa !136

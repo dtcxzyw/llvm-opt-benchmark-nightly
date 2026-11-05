@@ -205,8 +205,8 @@ leapcorr.exit._crit_edge.i:                       ; preds = %leapcorr.exit._crit
 .lr.ph658.i:                                      ; preds = %leapcorr.exit._crit_edge.i
   %i.sp = getelementptr inbounds nuw i8, ptr %i.b, i64 59088
   %i.sq = getelementptr inbounds nuw i8, ptr %i.b, i64 75088
-  %4 = sext i32 %.8398.lcssa.i to i64
-  %5 = sext i32 %i.rs to i64
+  %4 = zext i32 %.8398.lcssa.i to i64
+  %wide.trip.count63 = zext i32 %i.rs to i64
   br label %bb.ay
 
 bb.ay:                                            ; preds = %leapcorr.exit485.i, %.lr.ph658.i
@@ -216,7 +216,7 @@ bb.ay:                                            ; preds = %leapcorr.exit485.i,
   br i1 %i.ss, label %bb.az, label %.critedge27.i
 
 bb.az:                                            ; preds = %bb.ay
-  %i.st = getelementptr inbounds [8 x i8], ptr %i.sp, i64 %indvars.iv752.i
+  %i.st = getelementptr inbounds nuw [8 x i8], ptr %i.sp, i64 %indvars.iv752.i
   %i.su = load i64, ptr %i.st, align 8            ; 2 uses
   %i.sv = load i32, ptr %2, align 8
   %i.sw = zext i32 %i.sv to i64
@@ -248,7 +248,7 @@ leapcorr.exit485.i:                               ; preds = %bb.ba, %bb.bc
   %i.tg = getelementptr inbounds [8 x i8], ptr %i.aw, i64 %i.tf
   store i64 %i.te, ptr %i.tg, align 8
   %i.th = load i32, ptr %i.at, align 8
-  %i.ti = getelementptr inbounds i8, ptr %i.sq, i64 %indvars.iv752.i
+  %i.ti = getelementptr inbounds nuw i8, ptr %i.sq, i64 %indvars.iv752.i
   %i.tj = load i8, ptr %i.ti, align 1
   %i.tk = trunc i32 %i.th to i8
   %i.tl = add i8 %i.tj, %i.tk
@@ -260,7 +260,7 @@ leapcorr.exit485.i:                               ; preds = %bb.ba, %bb.bc
   %i.tq = add i32 %i.tp, 1                        ; 2 uses
   store i32 %i.tq, ptr %i.as, align 4
   %indvars.iv.next753.i = add nuw nsw i64 %indvars.iv752.i, 1 ; 2 uses
-  %exitcond63.not = icmp eq i64 %indvars.iv.next753.i, %5
+  %exitcond63.not = icmp eq i64 %indvars.iv.next753.i, %wide.trip.count63
   br i1 %exitcond63.not, label %.critedge27.i, label %bb.ay, !llvm.loop !29
 
 .critedge27.i:                                    ; preds = %bb.ax, %leapcorr.exit485.i, %bb.ay, %leapcorr.exit._crit_edge.i

@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %.val2873 = load ptr, ptr %i.d, align 8, !tbaa !12
   %i.ao = getelementptr inbounds nuw i8, ptr %.val2873, i64 %i.an
   store i32 %i.am, ptr %i.ao, align 1
-  %i.ap = and i32 %.0.copyload.i2960, 2147483647  ; 7 uses
+  %i.ap = and i32 %.0.copyload.i2960, 2147483647  ; 6 uses
   %i.aq = icmp samesign ugt i32 %i.ap, 32
   br i1 %i.aq, label %bb.g, label %bb.h
 
@@ -237,17 +237,17 @@ bb.j:                                             ; preds = %._crit_edge, %bb.g
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.hs, %bb.j
-  %.02584 = phi i32 [ 0, %bb.j ], [ %i.ajo, %bb.hs ] ; 21 uses
+  %.02584 = phi i32 [ 0, %bb.j ], [ %i.ajo, %bb.hs ] ; 19 uses
   %.val2860 = load ptr, ptr %i.d, align 8, !tbaa !12
   %i.av = getelementptr inbounds nuw i8, ptr %.val2860, i64 %i.aj
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 20
   %.0.copyload.i2962 = load i32, ptr %i.aw, align 1 ; 24 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i2962) #8, !srcloc !14
-  %i.ax = and i32 %.0.copyload.i2962, 1073741824  ; 10 uses
+  %i.ax = and i32 %.0.copyload.i2962, 1073741824  ; 9 uses
   %.val2859 = load ptr, ptr %i.d, align 8, !tbaa !12
   %i.ay = getelementptr inbounds nuw i8, ptr %.val2859, i64 %i.aj
   %i.az = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
-  %.0.copyload.i2963 = load i32, ptr %i.az, align 1 ; 47 uses
+  %.0.copyload.i2963 = load i32, ptr %i.az, align 1 ; 48 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i32 %.0.copyload.i2963) #8, !srcloc !14
   %i.ba = icmp slt i32 %.0.copyload.i2962, 0      ; 9 uses
   %.not2668 = icmp eq i32 %i.ax, 0                ; 2 uses
@@ -326,7 +326,7 @@ bb.r:                                             ; preds = %bb.o
 bb.s:                                             ; preds = %bb.l, %bb.r, %bb.q, %bb.p, %bb.n
   %.02575 = phi i32 [ %.0.copyload.i2963, %bb.l ], [ %i.bm, %bb.n ], [ %i.bz, %bb.r ], [ %i.bo, %bb.p ], [ %i.bp, %bb.q ]
   %i.ca = and i32 %.0.copyload.i2962, 1073741823
-  %i.cb = add i32 %i.ca, %.02584
+  %i.cb = add nuw i32 %i.ca, %.02584
   %i.cc = add i32 %i.cb, %.02575
   %i.cd = zext i32 %i.cc to i64
   %.val2939 = load ptr, ptr %i.d, align 8, !tbaa !12
@@ -409,7 +409,7 @@ bb.z:                                             ; preds = %bb.w
 bb.aa:                                            ; preds = %bb.t, %bb.z, %bb.y, %bb.x, %bb.v
   %.12576 = phi i32 [ %.0.copyload.i2963, %bb.t ], [ %i.cr, %bb.v ], [ %i.de, %bb.z ], [ %i.ct, %bb.x ], [ %i.cu, %bb.y ]
   %i.df = and i32 %.0.copyload.i2962, 1073741823
-  %i.dg = add i32 %.02584, %i.df
+  %i.dg = add nuw i32 %.02584, %i.df
   %i.dh = shl i32 %i.dg, 1
   %i.di = add i32 %i.dh, %.12576
   %i.dj = zext i32 %i.di to i64
@@ -427,12 +427,12 @@ bb.ab:                                            ; preds = %bb.aa, %bb.s
   br i1 %.not2671, label %bb.ac, label %bb.hq
 
 bb.ac:                                            ; preds = %bb.ab
-  %i.dn = add i32 %.02584, 6
+  %i.dn = add nuw i32 %.02584, 6
   %i.do = icmp ugt i32 %i.dn, %i.ap
   br i1 %i.do, label %.loopexit, label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac
-  %i.dp = add nuw i32 %.02584, 1                  ; 5 uses
+  %i.dp = add nuw i32 %.02584, 1                  ; 6 uses
   %.not2676 = icmp eq i32 %i.ax, 0                ; 2 uses
   br i1 %i.ba, label %bb.ae, label %bb.ak
 
@@ -599,7 +599,7 @@ bb.at:                                            ; preds = %bb.ao, %bb.as, %bb.
   %.0.copyload.i2995 = load i16, ptr %i.gc, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i16 %.0.copyload.i2995) #8, !srcloc !37
   %.not2673 = icmp eq i16 %.0.copyload.i2995, 117
-  br i1 %.not2673, label %bb.au, label %5
+  br i1 %.not2673, label %bb.au, label %bb.fc
 
 bb.au:                                            ; preds = %bb.at
   %.val2838 = load ptr, ptr %i.d, align 8, !tbaa !12
@@ -755,12 +755,7 @@ bb.bh:                                            ; preds = %bb.ak
   %.0.copyload.i3011 = load i16, ptr %i.ij, align 1 ; 2 uses
   tail call void asm sideeffect "", "r,~{dirflag},~{fpsr},~{flags}"(i16 %.0.copyload.i3011) #8, !srcloc !37
   %i.ik = icmp eq i16 %.0.copyload.i3011, 117
-  br i1 %i.ik, label %bb.bi, label %5
-
-5:                                                ; preds = %bb.bh, %bb.at
-  %6 = add i32 %.02584, 3
-  %7 = icmp ugt i32 %6, %i.ap
-  br i1 %7, label %bb.hq, label %bb.fb
+  br i1 %i.ik, label %bb.bi, label %bb.fn
 
 bb.bi:                                            ; preds = %bb.bh, %bb.bf, %bb.be, %bb.bd, %bb.av
   %.12595 = phi i32 [ %.0.copyload.i2963, %bb.bh ], [ %i.gn, %bb.av ], [ %i.hy, %bb.bf ], [ %i.hn, %bb.bd ], [ %i.ho, %bb.be ]
@@ -782,7 +777,7 @@ bb.bk:                                            ; preds = %bb.bj, %bb.bi
   %.not2680 = icmp eq i32 %.02586, 0              ; 2 uses
   %i.iq = select i1 %.not2680, i32 0, i32 %i.ip   ; 2 uses
   %i.ir = add i32 %i.iq, 2                        ; 2 uses
-  %i.is = shl i32 %.02584, 1                      ; 3 uses
+  %i.is = shl nuw i32 %.02584, 1                  ; 3 uses
   %i.it = select i1 %.not2680, i32 %i.is, i32 0
   %i.iu = add i32 %i.it, %.52580
   %.not2681 = icmp eq i32 %i.iq, 0                ; 5 uses
@@ -1023,7 +1018,7 @@ bb.cj:                                            ; preds = %bb.ci, %bb.cg
   br i1 %.not2692, label %.loopexit3167, label %bb.cd
 
 .loopexit3167:                                    ; preds = %bb.cj, %bb.cb
-  %i.mi = add i32 %.02584, 2                      ; 2 uses
+  %i.mi = add nuw i32 %.02584, 2                  ; 2 uses
   %.not2696 = icmp eq i32 %i.ax, 0                ; 4 uses
   br i1 %i.ba, label %bb.ck, label %bb.cq
 
@@ -1248,7 +1243,7 @@ bb.dd:                                            ; preds = %bb.da
 
 bb.de:                                            ; preds = %bb.cx, %bb.dd, %bb.dc, %bb.db, %bb.cz
   %.9 = phi i32 [ %.0.copyload.i2963, %bb.cx ], [ %i.pg, %bb.cz ], [ %i.pt, %bb.dd ], [ %i.pi, %bb.db ], [ %i.pj, %bb.dc ]
-  %i.pu = add i32 %.02584, 3
+  %i.pu = add nuw i32 %.02584, 3
   %i.pv = add i32 %i.pu, %i.ok
   %i.pw = add i32 %i.pv, %.9
   %i.px = zext i32 %i.pw to i64
@@ -1376,7 +1371,7 @@ bb.do:                                            ; preds = %bb.dn, %bb.de
   %i.sa = select i1 %i.rw, i32 %i.ry, i32 %i.rz
   %i.sb = shl nsw i32 %i.sa, 8
   %i.sc = or i32 %i.sb, %.32589
-  %i.sd = add i32 %.02584, 4                      ; 2 uses
+  %i.sd = add nuw i32 %.02584, 4                  ; 2 uses
   %.not2702 = icmp eq i32 %i.ax, 0                ; 2 uses
   br i1 %i.ba, label %bb.dp, label %bb.dx
 
@@ -1558,7 +1553,7 @@ bb.ef:                                            ; preds = %bb.ee, %bb.dw
   %i.uv = select i1 %i.ur, i32 %i.ut, i32 %i.uu
   %i.uw = shl nsw i32 %i.uv, 4
   %i.ux = or i32 %i.sc, %i.uw
-  %i.uy = add i32 %.02584, 5                      ; 3 uses
+  %i.uy = add nuw i32 %.02584, 5                  ; 3 uses
   %.not2708 = icmp eq i32 %i.ax, 0                ; 2 uses
   br i1 %i.ba, label %bb.eg, label %bb.eo
 
@@ -1742,16 +1737,16 @@ bb.ew:                                            ; preds = %bb.ev, %bb.en
   br label %bb.hq
 
 .loopexit:                                        ; preds = %bb.ch, %bb.cf, %bb.bg, %bb.ar, %bb.ac
-  %i.xs = add i32 %.02584, 3
+  %i.xs = add nuw i32 %.02584, 3
   %i.xt = icmp ugt i32 %i.xs, %i.ap
   br i1 %i.xt, label %bb.hq, label %bb.ex
 
 bb.ex:                                            ; preds = %.loopexit
-  %i.xu = add i32 %.02584, 1                      ; 3 uses
+  %i.xu = add nuw i32 %.02584, 1                  ; 4 uses
+  %.not2711 = icmp eq i32 %i.ax, 0                ; 2 uses
   br i1 %i.ba, label %bb.ey, label %bb.fb
 
 bb.ey:                                            ; preds = %bb.ex
-  %.not2711 = icmp eq i32 %i.ax, 0
   br i1 %.not2711, label %bb.fi, label %bb.ez
 
 bb.ez:                                            ; preds = %bb.ey
@@ -1784,12 +1779,11 @@ bb.fa:                                            ; preds = %bb.ez
   %i.yg = select i1 %i.yf, i32 %.0.copyload.i3094, i32 %i.yc
   br label %bb.fi
 
-bb.fb:                                            ; preds = %bb.ex, %5
-  %.42590 = phi i32 [ %i.xu, %bb.ex ], [ %i.dp, %5 ] ; 2 uses
-  %.not2714 = icmp eq i32 %i.ax, 0
-  br i1 %.not2714, label %bb.fn, label %bb.fc
+bb.fb:                                            ; preds = %bb.ex
+  br i1 %.not2711, label %bb.fn, label %bb.fc
 
-bb.fc:                                            ; preds = %bb.fb
+bb.fc:                                            ; preds = %bb.at, %bb.fb
+  %.425903185 = phi i32 [ %i.xu, %bb.fb ], [ %i.dp, %bb.at ] ; 4 uses
   %i.yh = zext i32 %.0.copyload.i2963 to i64
   %.val2775 = load ptr, ptr %i.d, align 8, !tbaa !12
   %i.yi = getelementptr inbounds nuw i8, ptr %.val2775, i64 %i.yh
@@ -1906,10 +1900,11 @@ bb.fm:                                            ; preds = %bb.fj
   %i.zy = select i1 %i.zx, i32 %.0.copyload.i3105, i32 %i.zu
   br label %bb.fn
 
-bb.fn:                                            ; preds = %bb.fb, %bb.fm, %bb.fl, %bb.fk, %bb.fd
-  %.14 = phi i32 [ %.0.copyload.i2963, %bb.fb ], [ %i.zy, %bb.fm ], [ %i.zn, %bb.fk ], [ %i.zo, %bb.fl ], [ %i.ys, %bb.fd ]
+bb.fn:                                            ; preds = %bb.bh, %bb.fb, %bb.fm, %bb.fl, %bb.fk, %bb.fd
+  %.425903181 = phi i32 [ %i.xu, %bb.fb ], [ %.425903185, %bb.fm ], [ %.425903185, %bb.fk ], [ %.425903185, %bb.fl ], [ %.425903185, %bb.fd ], [ %i.dp, %bb.bh ] ; 2 uses
+  %.14 = phi i32 [ %.0.copyload.i2963, %bb.fb ], [ %i.zy, %bb.fm ], [ %i.zn, %bb.fk ], [ %i.zo, %bb.fl ], [ %i.ys, %bb.fd ], [ %.0.copyload.i2963, %bb.bh ]
   %i.zz = and i32 %.0.copyload.i2962, 1073741823
-  %i.aaa = add i32 %.42590, %i.zz
+  %i.aaa = add i32 %.425903181, %i.zz
   %i.aab = shl i32 %i.aaa, 1
   %i.aac = add i32 %i.aab, %.14
   %i.aad = zext i32 %i.aac to i64
@@ -1921,7 +1916,7 @@ bb.fn:                                            ; preds = %bb.fb, %bb.fm, %bb.
   br label %bb.fo
 
 bb.fo:                                            ; preds = %bb.fn, %bb.fi
-  %.52591 = phi i32 [ %.42590, %bb.fn ], [ %i.xu, %bb.fi ] ; 2 uses
+  %.52591 = phi i32 [ %.425903181, %bb.fn ], [ %i.xu, %bb.fi ] ; 2 uses
   %.15 = phi i32 [ %i.aaf, %bb.fn ], [ %i.zl, %bb.fi ] ; 2 uses
   %i.aag = add nsw i32 %.15, 65488
   %i.aah = and i32 %i.aag, 65534
@@ -1936,7 +1931,7 @@ bb.fp:                                            ; preds = %bb.fo
   br i1 %i.aam, label %bb.hq, label %bb.fq
 
 bb.fq:                                            ; preds = %bb.fp, %bb.fo
-  %i.aan = add i32 %.02584, 2                     ; 5 uses
+  %i.aan = add nuw i32 %.02584, 2                 ; 5 uses
   %.not2720 = icmp eq i32 %i.ax, 0                ; 4 uses
   br i1 %i.ba, label %bb.fr, label %bb.fx
 
@@ -2339,9 +2334,9 @@ bb.hp:                                            ; preds = %bb.ho, %bb.hg
   %i.aja = or i32 %i.aiz, %i.agh
   br label %bb.hq
 
-bb.hq:                                            ; preds = %bb.gk, %bb.ge, %bb.fp, %.loopexit, %5, %bb.ab, %bb.hp, %bb.ew
-  %.62600 = phi i32 [ %.22577, %bb.ab ], [ 37, %.loopexit ], [ 37, %bb.fp ], [ 37, %bb.ge ], [ %i.aja, %bb.hp ], [ 37, %bb.gk ], [ %i.xr, %bb.ew ], [ 37, %5 ]
-  %.12585 = phi i32 [ %.02584, %bb.ab ], [ %.02584, %.loopexit ], [ %.02584, %bb.fp ], [ %.02584, %bb.ge ], [ %i.aan, %bb.hp ], [ %.02584, %bb.gk ], [ %i.uy, %bb.ew ], [ %.02584, %5 ]
+bb.hq:                                            ; preds = %bb.gk, %bb.ge, %bb.fp, %.loopexit, %bb.ab, %bb.hp, %bb.ew
+  %.62600 = phi i32 [ %.22577, %bb.ab ], [ 37, %.loopexit ], [ 37, %bb.fp ], [ 37, %bb.ge ], [ %i.aja, %bb.hp ], [ 37, %bb.gk ], [ %i.xr, %bb.ew ]
+  %.12585 = phi i32 [ %.02584, %bb.ab ], [ %.02584, %.loopexit ], [ %.02584, %bb.fp ], [ %.02584, %bb.ge ], [ %i.aan, %bb.hp ], [ %.02584, %bb.gk ], [ %i.uy, %bb.ew ]
   %.val2738 = load ptr, ptr %i.d, align 8, !tbaa !12
   %i.ajb = getelementptr inbounds nuw i8, ptr %.val2738, i64 %i.ak
   %.0.copyload.i3156 = load i32, ptr %i.ajb, align 1 ; 3 uses

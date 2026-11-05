@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.i ], [ 1, %bb.f ]
   %.03751 = phi i64 [ %i.by, %bb.i ], [ %spec.select.peel, %bb.f ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #36
-  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 3 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.ap = trunc i64 %indvars.iv.next to i8
   store i8 %i.ap, ptr %i.c, align 1, !tbaa !80
   %i.aq = call i32 @HMAC_Init_ex(ptr noundef nonnull %7, ptr noundef null, i64 noundef 0, ptr noundef null, ptr poison)
@@ -608,13 +608,13 @@ bb.k:                                             ; preds = %bb.j
   %i.bg = getelementptr inbounds nuw i8, ptr %i.v, i64 58
   %i.bh = load i8, ptr %i.bg, align 1, !tbaa !80  ; 2 uses
   %i.bi = zext i8 %i.bh to i32                    ; 4 uses
-  %13 = icmp sgt i32 %.132.lcssa.2.i.i, %i.bi
+  %13 = icmp samesign ugt i32 %.132.lcssa.2.i.i, %i.bi
   %i.bj = icmp ugt i8 %i.bh, 55
   %or.cond49.3.i.i = or i1 %i.bj, %13
   br i1 %or.cond49.3.i.i, label %.thread66, label %.preheader51.3.i.i
 
 .preheader51.3.i.i:                               ; preds = %._crit_edge.2.i.i
-  %.not5060.3.i.i = icmp slt i32 %.132.lcssa.2.i.i, %i.bi
+  %.not5060.3.i.i = icmp samesign ult i32 %.132.lcssa.2.i.i, %i.bi
   br i1 %.not5060.3.i.i, label %.lr.ph.3.i.i, label %._crit_edge.3.i.i
 
 .lr.ph.3.i.i:                                     ; preds = %.preheader51.3.i.i
@@ -647,13 +647,13 @@ bb.m:                                             ; preds = %bb.l
   %i.bs = getelementptr inbounds nuw i8, ptr %i.v, i64 59
   %i.bt = load i8, ptr %i.bs, align 1, !tbaa !80  ; 2 uses
   %i.bu = zext i8 %i.bt to i32                    ; 4 uses
-  %14 = icmp sgt i32 %.132.lcssa.3.i.i, %i.bu
+  %14 = icmp samesign ugt i32 %.132.lcssa.3.i.i, %i.bu
   %i.bv = icmp ugt i8 %i.bt, 55
   %or.cond49.4.i.i = or i1 %i.bv, %14
   br i1 %or.cond49.4.i.i, label %.thread66, label %.preheader51.4.i.i
 
 .preheader51.4.i.i:                               ; preds = %._crit_edge.3.i.i
-  %.not5060.4.i.i = icmp slt i32 %.132.lcssa.3.i.i, %i.bu
+  %.not5060.4.i.i = icmp samesign ult i32 %.132.lcssa.3.i.i, %i.bu
   br i1 %.not5060.4.i.i, label %.lr.ph.4.i.i, label %._crit_edge.4.i.i
 
 .lr.ph.4.i.i:                                     ; preds = %.preheader51.4.i.i
@@ -686,13 +686,13 @@ bb.o:                                             ; preds = %bb.n
   %i.ce = getelementptr inbounds nuw i8, ptr %i.v, i64 60
   %i.cf = load i8, ptr %i.ce, align 1, !tbaa !80  ; 2 uses
   %i.cg = zext i8 %i.cf to i32                    ; 4 uses
-  %15 = icmp sgt i32 %.132.lcssa.4.i.i, %i.cg
+  %15 = icmp samesign ugt i32 %.132.lcssa.4.i.i, %i.cg
   %i.ch = icmp ugt i8 %i.cf, 55
   %or.cond49.5.i.i = or i1 %i.ch, %15
   br i1 %or.cond49.5.i.i, label %.thread66, label %.preheader51.5.i.i
 
 .preheader51.5.i.i:                               ; preds = %._crit_edge.4.i.i
-  %.not5060.5.i.i = icmp slt i32 %.132.lcssa.4.i.i, %i.cg
+  %.not5060.5.i.i = icmp samesign ult i32 %.132.lcssa.4.i.i, %i.cg
   br i1 %.not5060.5.i.i, label %.lr.ph.5.i.i, label %.preheader.i.i
 
 .lr.ph.5.i.i:                                     ; preds = %.preheader51.5.i.i
@@ -1095,13 +1095,13 @@ bb.l:                                             ; preds = %bb.k
   %i.az = getelementptr inbounds nuw i8, ptr %i.o, i64 78
   %i.ba = load i8, ptr %i.az, align 1, !tbaa !80  ; 2 uses
   %i.bb = zext i8 %i.ba to i32                    ; 4 uses
-  %14 = icmp sgt i32 %.132.lcssa.2.i.i, %i.bb
+  %14 = icmp samesign ugt i32 %.132.lcssa.2.i.i, %i.bb
   %i.bc = icmp ugt i8 %i.ba, 75
   %or.cond49.3.i.i = or i1 %i.bc, %14
   br i1 %or.cond49.3.i.i, label %.thread75, label %.preheader51.3.i.i
 
 .preheader51.3.i.i:                               ; preds = %._crit_edge.2.i.i
-  %.not5060.3.i.i = icmp slt i32 %.132.lcssa.2.i.i, %i.bb
+  %.not5060.3.i.i = icmp samesign ult i32 %.132.lcssa.2.i.i, %i.bb
   br i1 %.not5060.3.i.i, label %.lr.ph.3.i.i, label %._crit_edge.3.i.i
 
 .lr.ph.3.i.i:                                     ; preds = %.preheader51.3.i.i
@@ -1134,13 +1134,13 @@ bb.n:                                             ; preds = %bb.m
   %i.bl = getelementptr inbounds nuw i8, ptr %i.o, i64 79
   %i.bm = load i8, ptr %i.bl, align 1, !tbaa !80  ; 2 uses
   %i.bn = zext i8 %i.bm to i32                    ; 4 uses
-  %15 = icmp sgt i32 %.132.lcssa.3.i.i, %i.bn
+  %15 = icmp samesign ugt i32 %.132.lcssa.3.i.i, %i.bn
   %i.bo = icmp ugt i8 %i.bm, 75
   %or.cond49.4.i.i = or i1 %i.bo, %15
   br i1 %or.cond49.4.i.i, label %.thread75, label %.preheader51.4.i.i
 
 .preheader51.4.i.i:                               ; preds = %._crit_edge.3.i.i
-  %.not5060.4.i.i = icmp slt i32 %.132.lcssa.3.i.i, %i.bn
+  %.not5060.4.i.i = icmp samesign ult i32 %.132.lcssa.3.i.i, %i.bn
   br i1 %.not5060.4.i.i, label %.lr.ph.4.i.i, label %._crit_edge.4.i.i
 
 .lr.ph.4.i.i:                                     ; preds = %.preheader51.4.i.i
@@ -1173,13 +1173,13 @@ bb.p:                                             ; preds = %bb.o
   %i.bx = getelementptr inbounds nuw i8, ptr %i.o, i64 80
   %i.by = load i8, ptr %i.bx, align 1, !tbaa !80  ; 2 uses
   %i.bz = zext i8 %i.by to i32                    ; 4 uses
-  %16 = icmp sgt i32 %.132.lcssa.4.i.i, %i.bz
+  %16 = icmp samesign ugt i32 %.132.lcssa.4.i.i, %i.bz
   %i.ca = icmp ugt i8 %i.by, 75
   %or.cond49.5.i.i = or i1 %i.ca, %16
   br i1 %or.cond49.5.i.i, label %.thread75, label %.preheader51.5.i.i
 
 .preheader51.5.i.i:                               ; preds = %._crit_edge.4.i.i
-  %.not5060.5.i.i = icmp slt i32 %.132.lcssa.4.i.i, %i.bz
+  %.not5060.5.i.i = icmp samesign ult i32 %.132.lcssa.4.i.i, %i.bz
   br i1 %.not5060.5.i.i, label %.lr.ph.5.i.i, label %._crit_edge.5.i.i
 
 .lr.ph.5.i.i:                                     ; preds = %.preheader51.5.i.i
@@ -1212,13 +1212,13 @@ bb.r:                                             ; preds = %bb.q
   %i.cj = getelementptr inbounds nuw i8, ptr %i.o, i64 81
   %i.ck = load i8, ptr %i.cj, align 1, !tbaa !80  ; 2 uses
   %i.cl = zext i8 %i.ck to i32                    ; 4 uses
-  %17 = icmp sgt i32 %.132.lcssa.5.i.i, %i.cl
+  %17 = icmp samesign ugt i32 %.132.lcssa.5.i.i, %i.cl
   %i.cm = icmp ugt i8 %i.ck, 75
   %or.cond49.6.i.i = or i1 %i.cm, %17
   br i1 %or.cond49.6.i.i, label %.thread75, label %.preheader51.6.i.i
 
 .preheader51.6.i.i:                               ; preds = %._crit_edge.5.i.i
-  %.not5060.6.i.i = icmp slt i32 %.132.lcssa.5.i.i, %i.cl
+  %.not5060.6.i.i = icmp samesign ult i32 %.132.lcssa.5.i.i, %i.cl
   br i1 %.not5060.6.i.i, label %.lr.ph.6.i.i, label %._crit_edge.6.i.i
 
 .lr.ph.6.i.i:                                     ; preds = %.preheader51.6.i.i
@@ -1251,13 +1251,13 @@ bb.t:                                             ; preds = %bb.s
   %i.cv = getelementptr inbounds nuw i8, ptr %i.o, i64 82
   %i.cw = load i8, ptr %i.cv, align 1, !tbaa !80  ; 2 uses
   %i.cx = zext i8 %i.cw to i32                    ; 4 uses
-  %18 = icmp sgt i32 %.132.lcssa.6.i.i, %i.cx
+  %18 = icmp samesign ugt i32 %.132.lcssa.6.i.i, %i.cx
   %i.cy = icmp ugt i8 %i.cw, 75
   %or.cond49.7.i.i = or i1 %i.cy, %18
   br i1 %or.cond49.7.i.i, label %.thread75, label %.preheader51.7.i.i
 
 .preheader51.7.i.i:                               ; preds = %._crit_edge.6.i.i
-  %.not5060.7.i.i = icmp slt i32 %.132.lcssa.6.i.i, %i.cx
+  %.not5060.7.i.i = icmp samesign ult i32 %.132.lcssa.6.i.i, %i.cx
   br i1 %.not5060.7.i.i, label %.lr.ph.7.i.i, label %.preheader.i.i
 
 .lr.ph.7.i.i:                                     ; preds = %.preheader51.7.i.i

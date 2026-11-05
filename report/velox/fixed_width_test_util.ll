@@ -202,7 +202,7 @@ bb.a:
 bb.b:                                             ; preds = %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i, %.lr.ph.i
   %i.q = phi ptr [ null, %.lr.ph.i ], [ %i.ai, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i ] ; 4 uses
   %i.r = phi ptr [ null, %.lr.ph.i ], [ %i.ak, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i ] ; 2 uses
-  %i.s = phi i64 [ 0, %.lr.ph.i ], [ %i.ao, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i ] ; 3 uses
+  %i.s = phi i64 [ 0, %.lr.ph.i ], [ %i.ao, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i ] ; 2 uses
   %i.t = phi i64 [ 0, %.lr.ph.i ], [ %i.an, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i ] ; 4 uses
   %i.u = phi i64 [ 0, %.lr.ph.i ], [ %i.am, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i ]
   %i.v = phi ptr [ null, %.lr.ph.i ], [ %i.aj, %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i ] ; 3 uses
@@ -221,13 +221,8 @@ bb.d:                                             ; preds = %bb.b
 
 _ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i.i.i.i: ; preds = %bb.d
   %.sroa.speculated.i.i.i.i.i = call i64 @llvm.umax.i64(i64 %i.s, i64 1)
-  %i.y = add nsw i64 %.sroa.speculated.i.i.i.i.i, %i.s ; 2 uses
-  %5 = icmp ult i64 %i.y, %i.s
-  %6 = call i64 @llvm.umin.i64(i64 %i.y, i64 2305843009213693951)
-  %7 = select i1 %5, i64 2305843009213693951, i64 %6 ; 3 uses
-  %.not.i.i.i.i.i = icmp ne i64 %7, 0
-  call void @llvm.assume(i1 %.not.i.i.i.i.i)
-  %i.z = shl nuw nsw i64 %7, 2
+  %i.y = add nuw nsw i64 %.sroa.speculated.i.i.i.i.i, %i.s ; 2 uses
+  %i.z = shl nuw nsw i64 %i.y, 2
   %i.aa = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.z) #18
           to label %.noexc17 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 5 uses
 
@@ -256,7 +251,7 @@ bb.f:                                             ; preds = %_ZNSt6vectorIiSaIiE
 _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i: ; preds = %bb.f, %_ZNSt6vectorIiSaIiEE11_S_relocateEPiS2_S2_RS0_.exit16.i.i.i.i
   store ptr %i.aa, ptr %4, align 8, !tbaa !51
   store ptr %i.ad, ptr %i.b, align 8, !tbaa !65
-  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %7 ; 2 uses
+  %i.ah = getelementptr inbounds nuw [4 x i8], ptr %i.aa, i64 %i.y ; 2 uses
   store ptr %i.ah, ptr %i.c, align 8, !tbaa !133
   br label %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i
 

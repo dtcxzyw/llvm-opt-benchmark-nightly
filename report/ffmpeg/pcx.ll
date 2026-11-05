@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %bb.r
   br label %bb.t
 
 bb.t:                                             ; preds = %.preheader, %bb.aa
-  %.0163255 = phi ptr [ %i.bm, %.preheader ], [ %i.eo, %bb.aa ] ; 10 uses
+  %.0163255 = phi ptr [ %i.bm, %.preheader ], [ %i.eo, %bb.aa ] ; 4 uses
   %.0169254 = phi i32 [ 0, %.preheader ], [ %i.ep, %bb.aa ] ; 2 uses
   %i.cb = phi ptr [ %i.bg, %.preheader ], [ %i.dp, %bb.aa ] ; 5 uses
   %i.cc = ptrtoint ptr %i.cb to i64
@@ -309,34 +309,30 @@ pcx_rle_decode.exit.new:                          ; preds = %pcx_rle_decode.exit
   %niter381 = phi i64 [ %niter381.next.1, %pcx_rle_decode.exit.new ], [ 0, %pcx_rle_decode.exit ]
   %i.dq = getelementptr inbounds nuw i8, ptr %i.bs, i64 %indvars.iv288
   %i.dr = load i8, ptr %i.dq, align 1, !tbaa !15
-  %i.ds = mul nuw nsw i64 %indvars.iv288, 3       ; 3 uses
-  %i.dt = getelementptr inbounds nuw i8, ptr %.0163255, i64 %i.ds
+  %i.ds = mul nuw nsw i64 %indvars.iv288, 3
+  %i.dt = getelementptr inbounds nuw i8, ptr %.0163255, i64 %i.ds ; 3 uses
   store i8 %i.dr, ptr %i.dt, align 1, !tbaa !15
   %gep333 = getelementptr inbounds nuw i8, ptr %invariant.gep332, i64 %indvars.iv288
   %i.du = load i8, ptr %gep333, align 1, !tbaa !15
-  %5 = getelementptr inbounds nuw i8, ptr %.0163255, i64 %i.ds
-  %i.dv = getelementptr inbounds nuw i8, ptr %5, i64 1
+  %i.dv = getelementptr inbounds nuw i8, ptr %i.dt, i64 1
   store i8 %i.du, ptr %i.dv, align 1, !tbaa !15
   %gep335 = getelementptr inbounds nuw i8, ptr %invariant.gep334, i64 %indvars.iv288
   %i.dw = load i8, ptr %gep335, align 1, !tbaa !15
-  %6 = getelementptr inbounds nuw i8, ptr %.0163255, i64 %i.ds
-  %i.dx = getelementptr inbounds nuw i8, ptr %6, i64 2
+  %i.dx = getelementptr inbounds nuw i8, ptr %i.dt, i64 2
   store i8 %i.dw, ptr %i.dx, align 1, !tbaa !15
   %indvars.iv.next289 = or disjoint i64 %indvars.iv288, 1 ; 4 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %i.bs, i64 %indvars.iv.next289
   %i.dz = load i8, ptr %i.dy, align 1, !tbaa !15
-  %i.ea = mul nuw nsw i64 %indvars.iv.next289, 3  ; 3 uses
-  %i.eb = getelementptr inbounds nuw i8, ptr %.0163255, i64 %i.ea
+  %i.ea = mul nuw nsw i64 %indvars.iv.next289, 3
+  %i.eb = getelementptr inbounds nuw i8, ptr %.0163255, i64 %i.ea ; 3 uses
   store i8 %i.dz, ptr %i.eb, align 1, !tbaa !15
   %gep333.1 = getelementptr inbounds nuw i8, ptr %invariant.gep332, i64 %indvars.iv.next289
   %i.ec = load i8, ptr %gep333.1, align 1, !tbaa !15
-  %7 = getelementptr inbounds nuw i8, ptr %.0163255, i64 %i.ea
-  %i.ed = getelementptr inbounds nuw i8, ptr %7, i64 1
+  %i.ed = getelementptr inbounds nuw i8, ptr %i.eb, i64 1
   store i8 %i.ec, ptr %i.ed, align 1, !tbaa !15
   %gep335.1 = getelementptr inbounds nuw i8, ptr %invariant.gep334, i64 %indvars.iv.next289
   %i.ee = load i8, ptr %gep335.1, align 1, !tbaa !15
-  %8 = getelementptr inbounds nuw i8, ptr %.0163255, i64 %i.ea
-  %i.ef = getelementptr inbounds nuw i8, ptr %8, i64 2
+  %i.ef = getelementptr inbounds nuw i8, ptr %i.eb, i64 2
   store i8 %i.ee, ptr %i.ef, align 1, !tbaa !15
   %indvars.iv.next289.1 = add nuw nsw i64 %indvars.iv288, 2 ; 2 uses
   %niter381.next.1 = add i64 %niter381, 2         ; 2 uses
@@ -351,18 +347,16 @@ pcx_rle_decode.exit.new:                          ; preds = %pcx_rle_decode.exit
   tail call void @llvm.assume(i1 %lcmp.mod379)
   %i.eg = getelementptr inbounds nuw i8, ptr %i.bs, i64 %indvars.iv288.epil.init
   %i.eh = load i8, ptr %i.eg, align 1, !tbaa !15
-  %i.ei = mul nuw nsw i64 %indvars.iv288.epil.init, 3 ; 3 uses
-  %i.ej = getelementptr inbounds nuw i8, ptr %.0163255, i64 %i.ei
+  %i.ei = mul nuw nsw i64 %indvars.iv288.epil.init, 3
+  %i.ej = getelementptr inbounds nuw i8, ptr %.0163255, i64 %i.ei ; 3 uses
   store i8 %i.eh, ptr %i.ej, align 1, !tbaa !15
   %gep333.epil = getelementptr inbounds nuw i8, ptr %invariant.gep332, i64 %indvars.iv288.epil.init
   %i.ek = load i8, ptr %gep333.epil, align 1, !tbaa !15
-  %9 = getelementptr inbounds nuw i8, ptr %.0163255, i64 %i.ei
-  %i.el = getelementptr inbounds nuw i8, ptr %9, i64 1
+  %i.el = getelementptr inbounds nuw i8, ptr %i.ej, i64 1
   store i8 %i.ek, ptr %i.el, align 1, !tbaa !15
   %gep335.epil = getelementptr inbounds nuw i8, ptr %invariant.gep334, i64 %indvars.iv288.epil.init
   %i.em = load i8, ptr %gep335.epil, align 1, !tbaa !15
-  %10 = getelementptr inbounds nuw i8, ptr %.0163255, i64 %i.ei
-  %i.en = getelementptr inbounds nuw i8, ptr %10, i64 2
+  %i.en = getelementptr inbounds nuw i8, ptr %i.ej, i64 2
   store i8 %i.em, ptr %i.en, align 1, !tbaa !15
   br label %bb.aa
 

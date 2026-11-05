@@ -205,23 +205,23 @@ bb.f:                                             ; preds = %bb.e
   %i.bh = add nsw i64 %.04870, -1                 ; 4 uses
   %i.bi = getelementptr inbounds [8 x i8], ptr %i.bg, i64 %i.bh
   %i.bj = load i64, ptr %i.bi, align 8
-  %i.bk = getelementptr inbounds [8 x i8], ptr %i.bg, i64 %.04870
+  %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.bg, i64 %.04870
   store i64 %i.bj, ptr %i.bk, align 8
   %i.bl = load ptr, ptr %i.n, align 8             ; 2 uses
   %i.bm = getelementptr inbounds [8 x i8], ptr %i.bl, i64 %i.bh
   %i.bn = load i64, ptr %i.bm, align 8
-  %i.bo = getelementptr inbounds [8 x i8], ptr %i.bl, i64 %.04870
+  %i.bo = getelementptr inbounds nuw [8 x i8], ptr %i.bl, i64 %.04870
   store i64 %i.bn, ptr %i.bo, align 8
   %i.bp = load ptr, ptr %i.m, align 8             ; 2 uses
   %i.bq = add nsw i64 %.04870, -2                 ; 4 uses
   %i.br = getelementptr inbounds [8 x i8], ptr %i.bp, i64 %i.bq
   %i.bs = load i64, ptr %i.br, align 8
-  %i.bt = getelementptr inbounds [8 x i8], ptr %i.bp, i64 %i.bh
+  %i.bt = getelementptr inbounds nuw [8 x i8], ptr %i.bp, i64 %i.bh
   store i64 %i.bs, ptr %i.bt, align 8
   %i.bu = load ptr, ptr %i.n, align 8             ; 2 uses
   %i.bv = getelementptr inbounds [8 x i8], ptr %i.bu, i64 %i.bq
   %i.bw = load i64, ptr %i.bv, align 8
-  %i.bx = getelementptr inbounds [8 x i8], ptr %i.bu, i64 %i.bh
+  %i.bx = getelementptr inbounds nuw [8 x i8], ptr %i.bu, i64 %i.bh
   store i64 %i.bw, ptr %i.bx, align 8
   %i.by = icmp sgt i64 %i.bq, %.04969
   br i1 %i.by, label %.lr.ph71, label %._crit_edge.loopexit, !llvm.loop !1560
@@ -324,23 +324,23 @@ bb.k:                                             ; preds = %bb.i
   %i.dn = add nsw i64 %.04870.1, -1               ; 4 uses
   %i.do = getelementptr inbounds [8 x i8], ptr %i.dm, i64 %i.dn
   %i.dp = load i64, ptr %i.do, align 8
-  %i.dq = getelementptr inbounds [8 x i8], ptr %i.dm, i64 %.04870.1
+  %i.dq = getelementptr inbounds nuw [8 x i8], ptr %i.dm, i64 %.04870.1
   store i64 %i.dp, ptr %i.dq, align 8
   %i.dr = load ptr, ptr %i.n, align 8             ; 2 uses
   %i.ds = getelementptr inbounds [8 x i8], ptr %i.dr, i64 %i.dn
   %i.dt = load i64, ptr %i.ds, align 8
-  %i.du = getelementptr inbounds [8 x i8], ptr %i.dr, i64 %.04870.1
+  %i.du = getelementptr inbounds nuw [8 x i8], ptr %i.dr, i64 %.04870.1
   store i64 %i.dt, ptr %i.du, align 8
   %i.dv = load ptr, ptr %i.m, align 8             ; 2 uses
   %i.dw = add nsw i64 %.04870.1, -2               ; 4 uses
   %i.dx = getelementptr inbounds [8 x i8], ptr %i.dv, i64 %i.dw
   %i.dy = load i64, ptr %i.dx, align 8
-  %i.dz = getelementptr inbounds [8 x i8], ptr %i.dv, i64 %i.dn
+  %i.dz = getelementptr inbounds nuw [8 x i8], ptr %i.dv, i64 %i.dn
   store i64 %i.dy, ptr %i.dz, align 8
   %i.ea = load ptr, ptr %i.n, align 8             ; 2 uses
   %i.eb = getelementptr inbounds [8 x i8], ptr %i.ea, i64 %i.dw
   %i.ec = load i64, ptr %i.eb, align 8
-  %i.ed = getelementptr inbounds [8 x i8], ptr %i.ea, i64 %i.dn
+  %i.ed = getelementptr inbounds nuw [8 x i8], ptr %i.ea, i64 %i.dn
   store i64 %i.ec, ptr %i.ed, align 8
   %i.ee = icmp sgt i64 %i.dw, %.04969.1
   br i1 %i.ee, label %.lr.ph71.1, label %._crit_edge.loopexit.1, !llvm.loop !1560
@@ -447,23 +447,23 @@ bb.p:                                             ; preds = %bb.n
   %i.fu = add nsw i64 %.04870.2, -1               ; 4 uses
   %i.fv = getelementptr inbounds [8 x i8], ptr %i.ft, i64 %i.fu
   %i.fw = load i64, ptr %i.fv, align 8
-  %i.fx = getelementptr inbounds [8 x i8], ptr %i.ft, i64 %.04870.2
+  %i.fx = getelementptr inbounds nuw [8 x i8], ptr %i.ft, i64 %.04870.2
   store i64 %i.fw, ptr %i.fx, align 8
   %i.fy = load ptr, ptr %i.n, align 8             ; 2 uses
   %i.fz = getelementptr inbounds [8 x i8], ptr %i.fy, i64 %i.fu
   %i.ga = load i64, ptr %i.fz, align 8
-  %i.gb = getelementptr inbounds [8 x i8], ptr %i.fy, i64 %.04870.2
+  %i.gb = getelementptr inbounds nuw [8 x i8], ptr %i.fy, i64 %.04870.2
   store i64 %i.ga, ptr %i.gb, align 8
   %i.gc = load ptr, ptr %i.m, align 8             ; 2 uses
   %i.gd = add nsw i64 %.04870.2, -2               ; 4 uses
   %i.ge = getelementptr inbounds [8 x i8], ptr %i.gc, i64 %i.gd
   %i.gf = load i64, ptr %i.ge, align 8
-  %i.gg = getelementptr inbounds [8 x i8], ptr %i.gc, i64 %i.fu
+  %i.gg = getelementptr inbounds nuw [8 x i8], ptr %i.gc, i64 %i.fu
   store i64 %i.gf, ptr %i.gg, align 8
   %i.gh = load ptr, ptr %i.n, align 8             ; 2 uses
   %i.gi = getelementptr inbounds [8 x i8], ptr %i.gh, i64 %i.gd
   %i.gj = load i64, ptr %i.gi, align 8
-  %i.gk = getelementptr inbounds [8 x i8], ptr %i.gh, i64 %i.fu
+  %i.gk = getelementptr inbounds nuw [8 x i8], ptr %i.gh, i64 %i.fu
   store i64 %i.gj, ptr %i.gk, align 8
   %i.gl = icmp sgt i64 %i.gd, %.04969.2
   br i1 %i.gl, label %.lr.ph71.2, label %._crit_edge.loopexit.2, !llvm.loop !1560

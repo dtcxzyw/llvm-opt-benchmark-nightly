@@ -204,10 +204,10 @@ bb.a:
   %i.b = getelementptr i8, ptr %0, i64 56         ; 3 uses
   %i.c = getelementptr i8, ptr %0, i64 68
   %i.d = getelementptr i8, ptr %0, i64 72
-  %.164141 = add nsw i32 %.val86, -1
-  %i.e = zext nneg i32 %.val86 to i64             ; 2 uses
-  %5 = add nsw i64 %i.e, -1
-  %i.f = zext nneg i32 %.164141 to i64
+  %.164141 = add nsw i32 %.val86, -1              ; 2 uses
+  %i.e = zext nneg i32 %.164141 to i64
+  %5 = zext nneg i32 %.164141 to i64
+  %i.f = zext nneg i32 %.val86 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph154, %list_Delete.exit133
@@ -320,15 +320,15 @@ bb.e:                                             ; preds = %bb.d
 
 clause_LiteralAtom.exit103:                       ; preds = %bb.d, %bb.e
   %.0.i100 = phi ptr [ %.val6.val.i102, %bb.e ], [ %.val82, %bb.d ]
-  %i.al = icmp samesign ult i64 %indvars.iv162, %i.f
+  %i.al = icmp samesign ult i64 %indvars.iv162, %5
   br i1 %i.al, label %.lr.ph145, label %._crit_edge146
 
 .lr.ph145:                                        ; preds = %clause_LiteralAtom.exit103, %sort_Intersect.exit
-  %indvars.iv159 = phi i64 [ %indvars.iv.next160, %sort_Intersect.exit ], [ %5, %clause_LiteralAtom.exit103 ] ; 3 uses
+  %indvars.iv159 = phi i64 [ %indvars.iv.next160, %sort_Intersect.exit ], [ %i.e, %clause_LiteralAtom.exit103 ] ; 3 uses
   %.0143 = phi ptr [ %.1, %sort_Intersect.exit ], [ null, %clause_LiteralAtom.exit103 ] ; 4 uses
   %.059142 = phi ptr [ %.160, %sort_Intersect.exit ], [ null, %clause_LiteralAtom.exit103 ] ; 2 uses
   %.val88 = load ptr, ptr %i.b, align 8
-  %i.am = getelementptr inbounds [8 x i8], ptr %.val88, i64 %indvars.iv159
+  %i.am = getelementptr inbounds nuw [8 x i8], ptr %.val88, i64 %indvars.iv159
   %i.an = load ptr, ptr %i.am, align 8
   %i.ao = getelementptr i8, ptr %i.an, i64 24
   %.val1.i104 = load ptr, ptr %i.ao, align 8      ; 3 uses
@@ -507,7 +507,7 @@ inf_GetSortFromLits.exit:                         ; preds = %sort_Intersect.exit
 
 list_Delete.exit133:                              ; preds = %clause_GetLiteralAtom.exit.thread, %._crit_edge, %clause_GetLiteralAtom.exit
   %indvars.iv.next163 = add nuw nsw i64 %indvars.iv162, 1 ; 2 uses
-  %.not = icmp samesign ult i64 %indvars.iv.next163, %i.e
+  %.not = icmp samesign ult i64 %indvars.iv.next163, %i.f
   br i1 %.not, label %bb.b, label %.critedge, !llvm.loop !96
 
 .critedge:                                        ; preds = %list_Delete.exit133, %.lr.ph.i129, %.critedge156, %bb.a

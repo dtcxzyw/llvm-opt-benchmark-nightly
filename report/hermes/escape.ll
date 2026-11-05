@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.i
 _ZNK6hermes2vm10StringView13castToCharPtrEv.exit.i: ; preds = %bb.l, %bb.k, %bb.j, %bb.h, %bb.f
   %.0.i.sink.i.i = phi ptr [ %i.ad, %bb.f ], [ %i.ar, %bb.h ], [ %i.as, %bb.j ], [ %i.at, %bb.k ], [ %i.ay, %bb.l ]
   %i.az = getelementptr inbounds nuw i8, ptr %.0.i.sink.i.i, i64 %i.ag
-  %i.ba = zext i32 %.0334 to i64
+  %i.ba = zext nneg i32 %.0334 to i64
   %i.bb = getelementptr inbounds nuw i8, ptr %i.az, i64 %i.ba
   %i.bc = load i8, ptr %i.bb, align 1, !tbaa !48
   %i.bd = sext i8 %i.bc to i16
@@ -254,7 +254,7 @@ bb.s:                                             ; preds = %bb.p
 _ZNK6hermes2vm10StringView15castToChar16PtrEv.exit.i: ; preds = %bb.s, %bb.r, %bb.q, %bb.o, %bb.m
   %.0.i.sink.i6.i = phi ptr [ %i.ad, %bb.m ], [ %i.bj, %bb.o ], [ %i.bk, %bb.q ], [ %i.bl, %bb.r ], [ %i.bq, %bb.s ]
   %i.br = getelementptr inbounds nuw [2 x i8], ptr %.0.i.sink.i6.i, i64 %i.ag
-  %i.bs = zext i32 %.0334 to i64
+  %i.bs = zext nneg i32 %.0334 to i64
   %i.bt = getelementptr inbounds nuw [2 x i8], ptr %i.br, i64 %i.bs
   %i.bu = load i16, ptr %i.bt, align 2, !tbaa !50
   br label %_ZNK6hermes2vm10StringViewixEj.exit
@@ -265,7 +265,7 @@ _ZNK6hermes2vm10StringViewixEj.exit:              ; preds = %_ZNK6hermes2vm10Str
   br i1 %i.bv, label %bb.t, label %bb.ft
 
 bb.t:                                             ; preds = %_ZNK6hermes2vm10StringViewixEj.exit
-  %i.bw = add i32 %.0334, 6
+  %i.bw = add nuw i32 %.0334, 6
   %.not = icmp ugt i32 %i.bw, %i.u
   br i1 %.not, label %.critedge, label %bb.u
 
@@ -356,14 +356,14 @@ bb.ai:                                            ; preds = %bb.af
 _ZNK6hermes2vm10StringViewixEj.exit46:            ; preds = %bb.x, %bb.z, %bb.aa, %bb.ab
   %.0.i.sink.i.i44 = phi ptr [ %i.ck, %bb.ab ], [ %i.cd, %bb.x ], [ %i.ce, %bb.z ], [ %i.cf, %bb.aa ]
   %i.cy = getelementptr inbounds nuw i8, ptr %.0.i.sink.i.i44, i64 %i.ag
-  %i.cz = zext i32 %i.bx to i64
+  %i.cz = zext nneg i32 %i.bx to i64
   %i.da = getelementptr inbounds nuw i8, ptr %i.cy, i64 %i.cz
   %i.db = load i8, ptr %i.da, align 1, !tbaa !48
   %i.dc = icmp eq i8 %i.db, 117
   br i1 %i.dc, label %bb.aj, label %.critedge
 
 _ZNK6hermes2vm10StringViewixEj.exit46.thread386:  ; preds = %bb.v
-  %i.dd = zext i32 %i.bx to i64
+  %i.dd = zext nneg i32 %i.bx to i64
   %i.de = getelementptr inbounds nuw i8, ptr %i.ak, i64 %i.dd
   %i.df = load i8, ptr %i.de, align 1, !tbaa !48
   %i.dg = icmp eq i8 %i.df, 117
@@ -372,14 +372,14 @@ _ZNK6hermes2vm10StringViewixEj.exit46.thread386:  ; preds = %bb.v
 _ZNK6hermes2vm10StringViewixEj.exit46.thread:     ; preds = %bb.ae, %bb.ag, %bb.ah, %bb.ai
   %.0.i.sink.i6.i37 = phi ptr [ %i.cx, %bb.ai ], [ %i.cq, %bb.ae ], [ %i.cr, %bb.ag ], [ %i.cs, %bb.ah ]
   %i.dh = getelementptr inbounds nuw [2 x i8], ptr %.0.i.sink.i6.i37, i64 %i.ag
-  %i.di = zext i32 %i.bx to i64
+  %i.di = zext nneg i32 %i.bx to i64
   %i.dj = getelementptr inbounds nuw [2 x i8], ptr %i.dh, i64 %i.di
   %i.dk = load i16, ptr %i.dj, align 2, !tbaa !50
   %i.dl = icmp eq i16 %i.dk, 117
   br i1 %i.dl, label %.thread, label %.critedge.thread
 
 _ZNK6hermes2vm10StringViewixEj.exit46.thread.thread: ; preds = %bb.ac
-  %i.dm = zext i32 %i.bx to i64
+  %i.dm = zext nneg i32 %i.bx to i64
   %i.dn = getelementptr inbounds nuw [2 x i8], ptr %i.ai, i64 %i.dm
   %i.do = load i16, ptr %i.dn, align 2, !tbaa !50
   %i.dp = icmp eq i16 %i.do, 117
@@ -460,7 +460,7 @@ bb.at:                                            ; preds = %bb.aq
   br label %bb.ba
 
 .thread388:                                       ; preds = %_ZNK6hermes2vm10StringViewixEj.exit46.thread386
-  %i.eq = zext i32 %.0334 to i64                  ; 3 uses
+  %i.eq = zext nneg i32 %.0334 to i64             ; 3 uses
   %i.er = getelementptr inbounds nuw i8, ptr %i.al, i64 %i.eq
   %.sroa.3.0.idx.i393 = select i1 %.not.i392, i64 %i.eq, i64 0
   %.sroa.3.0.i54394 = getelementptr inbounds nuw [2 x i8], ptr null, i64 %.sroa.3.0.idx.i393
@@ -475,7 +475,7 @@ bb.at:                                            ; preds = %bb.aq
 bb.au:                                            ; preds = %bb.ak, %bb.am, %bb.an, %bb.ao
   %.0.i.sink.i.i52.ph = phi ptr [ %i.ec, %bb.ao ], [ %i.dx, %bb.an ], [ %i.dw, %bb.am ], [ %i.dv, %bb.ak ] ; 2 uses
   %i.et = getelementptr inbounds nuw i8, ptr %.0.i.sink.i.i52.ph, i64 %i.ag
-  %i.eu = zext i32 %.0334 to i64                  ; 6 uses
+  %i.eu = zext nneg i32 %.0334 to i64             ; 6 uses
   %.not.i392406 = icmp eq ptr %.0.i.sink.i.i52.ph, null ; 2 uses
   %i.ev = getelementptr inbounds nuw i8, ptr %i.et, i64 %i.eu
   %.sroa.3.0.idx.i393407 = select i1 %.not.i392406, i64 %i.eu, i64 0
@@ -531,7 +531,7 @@ _ZNK6hermes2vm10StringView13castToCharPtrEv.exit.i77: ; preds = %.thread388, %bb
   br label %_ZNK6hermes2vm10StringView5beginEv.exit80
 
 .thread.thread:                                   ; preds = %_ZNK6hermes2vm10StringViewixEj.exit46.thread.thread
-  %i.fm = zext i32 %.0334 to i64                  ; 2 uses
+  %i.fm = zext nneg i32 %.0334 to i64             ; 2 uses
   %.sroa.3.0.i54 = getelementptr inbounds nuw [2 x i8], ptr %i.aj, i64 %i.fm
   %.sroa.3.0.i60 = getelementptr inbounds nuw i8, ptr %.sroa.3.0.i54, i64 4
   br label %_ZNK6hermes2vm10StringView15castToChar16PtrEv.exit.i67
@@ -539,7 +539,7 @@ _ZNK6hermes2vm10StringView13castToCharPtrEv.exit.i77: ; preds = %.thread388, %bb
 bb.ba:                                            ; preds = %bb.at, %bb.as, %bb.ar, %bb.ap
   %.0.i.sink.i4.i.ph = phi ptr [ %i.ep, %bb.at ], [ %i.ek, %bb.as ], [ %i.ej, %bb.ar ], [ %i.ei, %bb.ap ]
   %i.fn = getelementptr inbounds nuw [2 x i8], ptr %.0.i.sink.i4.i.ph, i64 %i.ag
-  %i.fo = zext i32 %.0334 to i64                  ; 5 uses
+  %i.fo = zext nneg i32 %.0334 to i64             ; 5 uses
   %.sroa.3.0.i54423 = getelementptr inbounds nuw [2 x i8], ptr %i.fn, i64 %i.fo
   %.sroa.3.0.i60427 = getelementptr inbounds nuw i8, ptr %.sroa.3.0.i54423, i64 4 ; 4 uses
   %.sroa.0.0.copyload.i.i.i.i2.i65 = load i64, ptr %i.ad, align 8, !tbaa !32
@@ -875,7 +875,7 @@ _ZSt9__find_ifIN6hermes2vm10StringView14const_iteratorEN9__gnu_cxx5__ops12_Iter_
   br i1 %.0.i.i, label %bb.bk, label %.critedge
 
 bb.bk:                                            ; preds = %_ZSt9__find_ifIN6hermes2vm10StringView14const_iteratorEN9__gnu_cxx5__ops12_Iter_negateIPFbDsEEEET_SA_SA_T0_St26random_access_iterator_tag.exit
-  %i.kv = add i32 %.0334, 2                       ; 2 uses
+  %i.kv = add nuw i32 %.0334, 2                   ; 2 uses
   br i1 %i.af, label %bb.bl, label %bb.bs
 
 bb.bl:                                            ; preds = %bb.bk
@@ -969,7 +969,7 @@ bb.bz:                                            ; preds = %bb.bl, %bb.bn, %bb.
   %or.cond.i434 = icmp ult i16 %i.mb, 10
   %.v435 = select i1 %or.cond.i434, i16 0, i16 9
   %i.mc = add nsw i16 %.v435, %i.ma
-  %i.md = add i32 %.0334, 3
+  %i.md = add nuw i32 %.0334, 3
   br i1 %.not.i.i, label %_ZNK6hermes2vm10StringView13castToCharPtrEv.exit.i118, label %bb.ca
 
 bb.ca:                                            ; preds = %bb.bz
@@ -1028,7 +1028,7 @@ bb.cg:                                            ; preds = %bb.by, %bb.bx, %bb.
   %or.cond.i = icmp ult i16 %i.na, 10
   %.v = select i1 %or.cond.i, i16 0, i16 9
   %i.nb = add i16 %.v, %i.mz
-  %i.nc = add i32 %.0334, 3
+  %i.nc = add nuw i32 %.0334, 3
   br i1 %.not.i3.i, label %_ZNK6hermes2vm10StringView15castToChar16PtrEv.exit.i111, label %bb.ch
 
 bb.ch:                                            ; preds = %bb.cg
@@ -1088,7 +1088,7 @@ _ZNK6hermes2vm10StringViewixEj.exit121:           ; preds = %_ZNK6hermes2vm10Str
   %i.nz = select i1 %or.cond.i122, i16 %i.nx, i16 %i.ny
   %i.oa = shl i16 %i.nz, 8
   %i.ob = or i16 %i.oa, %i.nu
-  %i.oc = add i32 %.0334, 4                       ; 2 uses
+  %i.oc = add nuw i32 %.0334, 4                   ; 2 uses
   br i1 %i.af, label %bb.cn, label %bb.cu
 
 bb.cn:                                            ; preds = %_ZNK6hermes2vm10StringViewixEj.exit121
@@ -1198,7 +1198,7 @@ _ZNK6hermes2vm10StringViewixEj.exit138:           ; preds = %_ZNK6hermes2vm10Str
   %i.pq = select i1 %or.cond.i139, i16 %i.po, i16 %i.pp
   %i.pr = shl i16 %i.pq, 4
   %i.ps = or i16 %i.ob, %i.pr
-  %i.pt = add i32 %.0334, 5                       ; 3 uses
+  %i.pt = add nuw i32 %.0334, 5                   ; 3 uses
   br i1 %i.af, label %bb.db, label %bb.di
 
 bb.db:                                            ; preds = %_ZNK6hermes2vm10StringViewixEj.exit138
@@ -1309,12 +1309,12 @@ _ZNK6hermes2vm10StringViewixEj.exit155:           ; preds = %_ZNK6hermes2vm10Str
   br label %bb.ft
 
 .critedge:                                        ; preds = %_ZNK6hermes2vm10StringViewixEj.exit46.thread386, %_ZNK6hermes2vm10StringViewixEj.exit46, %bb.t, %_ZSt9__find_ifIN6hermes2vm10StringView14const_iteratorEN9__gnu_cxx5__ops12_Iter_negateIPFbDsEEEET_SA_SA_T0_St26random_access_iterator_tag.exit
-  %i.ri = add i32 %.0334, 3
+  %i.ri = add nuw i32 %.0334, 3
   %.not32 = icmp ugt i32 %i.ri, %i.u
   br i1 %.not32, label %bb.ft, label %bb.dp
 
 .critedge.thread:                                 ; preds = %_ZNK6hermes2vm10StringViewixEj.exit46.thread.thread, %_ZNK6hermes2vm10StringViewixEj.exit46.thread
-  %i.rj = add i32 %.0334, 3
+  %i.rj = add nuw i32 %.0334, 3
   %.not32302 = icmp ugt i32 %i.rj, %i.u
   br i1 %.not32302, label %bb.ft, label %.thread303
 
@@ -1365,7 +1365,7 @@ bb.dw:                                            ; preds = %bb.dt
 _ZNK6hermes2vm10StringView13castToCharPtrEv.exit.i169: ; preds = %bb.dw, %bb.dv, %bb.du, %bb.ds, %bb.dq
   %.0.i.sink.i.i170 = phi ptr [ %i.ad, %bb.dq ], [ %i.rq, %bb.ds ], [ %i.rr, %bb.du ], [ %i.rs, %bb.dv ], [ %i.rx, %bb.dw ]
   %i.ry = getelementptr inbounds nuw i8, ptr %.0.i.sink.i.i170, i64 %i.ag
-  %i.rz = zext i32 %i.rk to i64
+  %i.rz = zext nneg i32 %i.rk to i64
   %i.sa = getelementptr inbounds nuw i8, ptr %i.ry, i64 %i.rz
   %i.sb = load i8, ptr %i.sa, align 1, !tbaa !48
   %i.sc = sext i8 %i.sb to i16
@@ -1432,7 +1432,7 @@ _ZNK6hermes2vm10StringViewixEj.exit172:           ; preds = %_ZNK6hermes2vm10Str
   br i1 %i.ta, label %bb.ed, label %bb.ft
 
 bb.ed:                                            ; preds = %_ZNK6hermes2vm10StringViewixEj.exit172
-  %i.tb = add i32 %.0334, 2                       ; 5 uses
+  %i.tb = add nuw i32 %.0334, 2                   ; 5 uses
   br i1 %i.af, label %bb.ee, label %bb.el
 
 bb.ee:                                            ; preds = %bb.ed

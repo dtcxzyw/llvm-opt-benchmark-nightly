@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %._crit_edge.i.i
   %i.by = shl nuw nsw i64 %.0.lcssa.i.i, 1
   %i.bz = or disjoint i64 %i.by, 1                ; 2 uses
   %i.ca = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %i.bz
-  %i.cb = getelementptr inbounds [4 x i8], ptr %0, i64 %.0.lcssa.i.i
+  %i.cb = getelementptr inbounds nuw [4 x i8], ptr %0, i64 %.0.lcssa.i.i
   %i.cc = load i32, ptr %i.ca, align 4, !tbaa !92
   store i32 %i.cc, ptr %i.cb, align 4, !tbaa !92
   br label %.lr.ph.i.i.preheader.i

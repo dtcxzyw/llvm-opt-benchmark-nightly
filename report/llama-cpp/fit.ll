@@ -205,7 +205,11 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %.val69 = load ptr, ptr %1, align 8, !tbaa !132 ; 10 uses
   %.not220 = icmp eq i64 %i.c, 1
-  br i1 %.not220, label %._crit_edge.loopexit, label %.lr.ph.split.us
+  br i1 %.not220, label %.lr.ph.split.preheader, label %.lr.ph.split.us
+
+.lr.ph.split.preheader:                           ; preds = %.lr.ph
+  %22 = load i32, ptr %.val69, align 4, !tbaa !138
+  br label %.lr.ph216
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -291,12 +295,8 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %exitcond.not = icmp eq i64 %i.bg, %i.c
   br i1 %exitcond.not, label %.lr.ph216, label %scalar.ph, !llvm.loop !335
 
-._crit_edge.loopexit:                             ; preds = %.lr.ph
-  %.pre = load i32, ptr %.val69, align 4, !tbaa !138
-  br label %.lr.ph216
-
-.lr.ph216:                                        ; preds = %scalar.ph, %._crit_edge.loopexit
-  %.us-phi = phi i32 [ %.pre, %._crit_edge.loopexit ], [ %i.bd, %scalar.ph ] ; 2 uses
+.lr.ph216:                                        ; preds = %scalar.ph, %.lr.ph.split.preheader
+  %.us-phi = phi i32 [ %22, %.lr.ph.split.preheader ], [ %i.bd, %scalar.ph ] ; 2 uses
   store i32 %.us-phi, ptr %i.a, align 8, !tbaa !112
   %i.bh = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !365, !nonnull !61, !align !154

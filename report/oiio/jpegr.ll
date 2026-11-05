@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %.loopexit.i.i.i, %.
 .preheader.i.i.i:                                 ; preds = %bb.d, %.preheader163.i.i.i
   %indvars.iv181.i.i.i = phi i64 [ 0, %.preheader163.i.i.i ], [ %indvars.iv.next182.i.i.i, %bb.d ] ; 2 uses
   %i.bn = phi <2 x float> [ zeroinitializer, %.preheader163.i.i.i ], [ %i.em, %bb.d ]
-  %i.bo = add nuw i64 %indvars.iv181.i.i.i, %.0176.i.i.i ; 4 uses
+  %i.bo = add nuw nsw i64 %indvars.iv181.i.i.i, %.0176.i.i.i ; 4 uses
   %i.bp = mul nuw i64 %i.bo, %i.v
   %gep.i.i.i = getelementptr i8, ptr %invariant.gep.i.i.i, i64 %i.bp
   br label %bb.e
@@ -225,7 +225,7 @@ bb.e:                                             ; preds = %bb.l, %.preheader.i
   %i.bt = phi <2 x float> [ %i.bn, %.preheader.i.i.i ], [ %i.em, %bb.l ] ; 3 uses
   %i.bu = load ptr, ptr %i.ah, align 8, !tbaa !213
   %i.bv = load ptr, ptr %.val, align 8, !tbaa !207
-  %i.bw = add i64 %indvars.iv.i.i.i, %.0142171.i.i.i ; 3 uses
+  %i.bw = add nuw nsw i64 %indvars.iv.i.i.i, %.0142171.i.i.i ; 3 uses
   %i.bx = call { <2 x float>, float } %i.bu(ptr noundef %i.bv, i64 noundef %i.bw, i64 noundef %i.bo), !inline_history !863 ; 3 uses
   br i1 %i.e, label %_ZN8ultrahdr13globalTonemapERKSt5arrayIfLm3EEfb.exit.i.i.i, label %bb.f
 
@@ -371,12 +371,12 @@ bb.m:                                             ; preds = %bb.c
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.m, %bb.c
-  %i.ex = add i64 %.0142171.i.i.i, %i.ag          ; 2 uses
+  %i.ex = add nuw nsw i64 %.0142171.i.i.i, %i.ag  ; 2 uses
   %i.ey = load ptr, ptr %.val, align 8, !tbaa !207 ; 2 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ey, i64 16
   %i.fa = load i32, ptr %i.ez, align 8, !tbaa !235
   %i.fb = zext i32 %i.fa to i64
-  %i.fc = icmp ult i64 %i.ex, %i.fb
+  %i.fc = icmp samesign ult i64 %i.ex, %i.fb
   br i1 %i.fc, label %.preheader163.i.i.i, label %._crit_edge.i.i.i, !llvm.loop !865
 
 "_ZSt10__invoke_rIvRZN8ultrahdr5JpegR7toneMapEP14uhdr_raw_imageS3_E3$_0JEENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EES7_E4typeEOS8_DpOS9_.exit": ; preds = %.loopexit.i.i.i, %bb.a

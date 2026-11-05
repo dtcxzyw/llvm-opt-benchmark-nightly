@@ -205,7 +205,7 @@ _ZNK5boost5beast15buffers_adaptorINS0_14buffers_tripleEE4dataEv.exit1303: ; pred
   %exitcond2407 = icmp eq i64 %indvars.iv.next2403, %indvars.iv2405
   br i1 %exitcond2407, label %bb.lg, label %.preheader.preheader, !llvm.loop !270
 
-.preheader.preheader:                             ; preds = %.loopexit, %.preheader1763
+.preheader.preheader:                             ; preds = %.preheader1763, %.loopexit
   %indvars.iv2402 = phi i64 [ 3, %.preheader1763 ], [ %indvars.iv.next2403, %.loopexit ] ; 2 uses
   %storemerge2096 = phi i64 [ 1, %.preheader1763 ], [ %i.bus, %.loopexit ] ; 2 uses
   %.12095 = phi i8 [ %.02098, %.preheader1763 ], [ %i.buv, %.loopexit ]
@@ -220,8 +220,8 @@ bb.lg:                                            ; preds = %.loopexit
   br i1 %exitcond2408.not, label %._crit_edge2100, label %.preheader1763, !llvm.loop !271
 
 .preheader:                                       ; preds = %.preheader.preheader, %bb.lh
-  %storemerge792093 = phi i64 [ %i.buu, %bb.lh ], [ 1, %.preheader.preheader ] ; 2 uses
-  %.22092 = phi i8 [ %i.buv, %bb.lh ], [ %.12095, %.preheader.preheader ]
+  %storemerge792093 = phi i64 [ 1, %.preheader.preheader ], [ %i.buu, %bb.lh ] ; 2 uses
+  %.22092 = phi i8 [ %.12095, %.preheader.preheader ], [ %i.buv, %bb.lh ]
   br label %.lr.ph.i1305.preheader
 
 bb.lh:                                            ; preds = %_ZN5boost5beast9unit_test5suite6expectIbA1_cEEbRKT_RKT0_PKci.exit1598

@@ -205,8 +205,8 @@ bb.f:                                             ; preds = %._crit_edge
 
 ._crit_edge45:                                    ; preds = %.lr.ph44, %.lr.ph44.preheader, %._crit_edge45.loopexit.split.loop.exit54, %bb.f
   %.1 = phi i32 [ 0, %bb.f ], [ %i.q, %._crit_edge45.loopexit.split.loop.exit54 ], [ %.0.lcssa, %.lr.ph44.preheader ], [ %.0.lcssa, %.lr.ph44 ] ; 2 uses
-  %1 = sext i32 %.1 to i64
-  %i.r = getelementptr inbounds [8 x i8], ptr %i.i, i64 %1
+  %1 = zext nneg i32 %.1 to i64
+  %i.r = getelementptr inbounds nuw [8 x i8], ptr %i.i, i64 %1
   store ptr null, ptr %i.r, align 8
   br i1 %.not, label %bb.h, label %bb.g
 

@@ -205,7 +205,7 @@ _RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtCsdftwklc2oBO_7similar5types6Dif
 
 bb.n:                                             ; preds = %bb.k, %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtCsdftwklc2oBO_7similar5types6DiffOpE8push_mutCskXtk6F4WjxZ_4just.exit36
   %.sroa.016.158 = add nuw nsw i64 %.sroa.016.068, 1 ; 3 uses
-  %i.at = icmp ult i64 %.sroa.016.158, %6
+  %i.at = icmp samesign ult i64 %.sroa.016.158, %6
   br i1 %i.at, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.n
@@ -259,7 +259,7 @@ bb.p:                                             ; preds = %.lr.ph
 
 bb.q:                                             ; preds = %bb.p
   %i.bm = add nuw nsw i64 %.sroa.024.059, 1
-  %.sroa.016.1 = add i64 %.sroa.016.160, 1        ; 2 uses
+  %.sroa.016.1 = add nuw nsw i64 %.sroa.016.160, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %.sroa.016.1, %6
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph
 }
@@ -414,7 +414,7 @@ _RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtCsdftwklc2oBO_7similar5types6Dif
 
 bb.n:                                             ; preds = %bb.k, %_RNvMsG_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VecNtNtCsdftwklc2oBO_7similar5types6DiffOpE8push_mutCskXtk6F4WjxZ_4just.exit36
   %.sroa.016.158 = add nuw nsw i64 %.sroa.016.068, 1 ; 3 uses
-  %i.at = icmp ult i64 %.sroa.016.158, %6
+  %i.at = icmp samesign ult i64 %.sroa.016.158, %6
   br i1 %i.at, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.n
@@ -468,7 +468,7 @@ bb.p:                                             ; preds = %.lr.ph
 
 bb.q:                                             ; preds = %bb.p
   %i.bm = add nuw nsw i64 %.sroa.024.059, 1
-  %.sroa.016.1 = add i64 %.sroa.016.160, 1        ; 2 uses
+  %.sroa.016.1 = add nuw nsw i64 %.sroa.016.160, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %.sroa.016.1, %6
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph
 }

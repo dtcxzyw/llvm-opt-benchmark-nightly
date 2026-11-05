@@ -204,7 +204,7 @@ bb.a:
 .preheader:                                       ; preds = %bb.a, %bb.x
   %.03183 = phi i32 [ 0, %bb.a ], [ %i.ir, %bb.x ] ; 2 uses
   %.03382 = phi ptr [ %1, %bb.a ], [ %i.is, %bb.x ] ; 2 uses
-  %i.j = trunc i32 %.03183 to i8                  ; 2 uses
+  %i.j = trunc nsw i32 %.03183 to i8              ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %.thread
@@ -213,11 +213,11 @@ bb.b:                                             ; preds = %.preheader, %.threa
 
 bb.c:                                             ; preds = %bb.b
   store i8 %i.j, ptr %i.e, align 16, !tbaa !13
-  %i.k = trunc i64 %indvars.iv to i8
+  %i.k = trunc nsw i64 %indvars.iv to i8
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
-  %i.l = trunc i64 %indvars.iv to i8
+  %i.l = trunc nsw i64 %indvars.iv to i8
   store i8 %i.l, ptr %i.e, align 16, !tbaa !13
   br label %bb.e
 

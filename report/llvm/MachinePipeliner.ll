@@ -205,14 +205,14 @@ bb.e:                                             ; preds = %.critedge, %_ZN4llv
 
 .lr.ph:                                           ; preds = %bb.e
   %i.ab = getelementptr inbounds nuw i8, ptr %.0, i64 32
-  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !417 ; 2 uses
+  %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !417
   %i.ad = load ptr, ptr %i.h, align 8, !tbaa !777
   %i.ae = zext i24 %i.z to i64
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph, %bb.h
-  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %bb.h ] ; 3 uses
-  %i.af = getelementptr inbounds nuw [32 x i8], ptr %i.ac, i64 %indvars.iv
+  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %bb.h ] ; 2 uses
+  %i.af = getelementptr inbounds nuw [32 x i8], ptr %i.ac, i64 %indvars.iv ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 48
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !379
   %i.ai = icmp eq ptr %i.ah, %i.ad
@@ -220,8 +220,7 @@ bb.f:                                             ; preds = %.lr.ph, %bb.h
 
 bb.g:                                             ; preds = %bb.f
   %i.aj = load ptr, ptr %i.e, align 8, !tbaa !735, !nonnull !78, !align !205
-  %3 = getelementptr inbounds nuw [32 x i8], ptr %i.ac, i64 %indvars.iv
-  %i.ak = getelementptr inbounds nuw i8, ptr %3, i64 4
+  %i.ak = getelementptr inbounds nuw i8, ptr %i.af, i64 4
   %i.al = load i32, ptr %i.ak, align 4, !tbaa !379
   %i.am = call noundef ptr @_ZNK4llvm19MachineRegisterInfo10getVRegDefENS_8RegisterE(ptr noundef nonnull align 8 dereferenceable(520) %i.aj, i32 %i.al) #29
   br label %.loopexit

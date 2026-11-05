@@ -205,7 +205,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 7
   %i.an = load i8, ptr %i.am, align 1, !tbaa !121
   %i.ao = icmp eq i8 %i.an, 0                     ; 2 uses
-  %.not.i = icmp eq i32 %i.ak, 2                  ; 9 uses
+  %.not.i = icmp eq i32 %i.ak, 2                  ; 8 uses
   %.not95 = and i1 %i.ao, %.not.i
   br i1 %.not95, label %.critedge, label %.lr.ph
 
@@ -291,7 +291,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.cq = sext i32 %i.cp to i64
   %i.cr = getelementptr inbounds [4 x i8], ptr %i.cn, i64 %i.cq
   store ptr %i.cr, ptr %i.au, align 8, !tbaa !89
-  %i.cs = zext i1 %.not.i to i64
+  %i.cs = zext i1 %.not.i to i64                  ; 3 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %i.aj, i64 %i.cs
   store i8 1, ptr %i.ct, align 1, !tbaa !224
   %i.cu = load ptr, ptr %i.e, align 8, !tbaa !75  ; 2 uses
@@ -311,9 +311,8 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.dg = ashr i32 %i.bi, %i.df
   %i.dh = tail call i32 @llvm.smax.i32(i32 %i.dg, i32 1)
   %i.di = add nsw i32 %i.dh, %i.aw
-  %5 = zext i1 %.not.i to i64                     ; 2 uses
-  %i.dj = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %5
-  %i.dk = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %5
+  %i.dj = getelementptr inbounds nuw [8 x i8], ptr %i.ay, i64 %i.cs
+  %i.dk = getelementptr inbounds nuw [8 x i8], ptr %i.az, i64 %i.cs
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.k, %.lr.ph

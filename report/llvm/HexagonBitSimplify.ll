@@ -205,18 +205,17 @@ _ZNK4llvm10BitTracker6lookupEj.exit.i.i:          ; preds = %bb.m, %_ZNSt8_Rb_tr
 .critedge.lr.ph.i.i:                              ; preds = %_ZNK4llvm10BitTracker6lookupEj.exit.i.i
   %i.fj = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i.i29.i.i, i64 40
   %i.fk = load ptr, ptr %i.fj, align 8, !tbaa !38
+  %wide.trip.count.i.i = zext nneg i32 %i.fi to i64
   br label %.critedge.i.i
 
 bb.n:                                             ; preds = %.critedge.i.i
-  %21 = add nuw nsw i32 %.0144.i.i, 1             ; 2 uses
-  %exitcond.not.i.i = icmp eq i32 %21, %i.fi
+  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
+  %exitcond.not.i.i = icmp eq i64 %indvars.iv.next.i.i, %wide.trip.count.i.i
   br i1 %exitcond.not.i.i, label %.thread570.i, label %.critedge.i.i, !llvm.loop !467
 
 .critedge.i.i:                                    ; preds = %bb.n, %.critedge.lr.ph.i.i
-  %.0144.i.i = phi i32 [ 0, %.critedge.lr.ph.i.i ], [ %21, %bb.n ] ; 2 uses
-  %22 = and i32 %.0144.i.i, 65535
-  %23 = zext nneg i32 %22 to i64
-  %i.fl = getelementptr inbounds nuw [12 x i8], ptr %i.fk, i64 %23
+  %indvars.iv.i.i = phi i64 [ 0, %.critedge.lr.ph.i.i ], [ %indvars.iv.next.i.i, %bb.n ] ; 2 uses
+  %i.fl = getelementptr inbounds nuw [12 x i8], ptr %i.fk, i64 %indvars.iv.i.i
   %i.fm = load i32, ptr %i.fl, align 4, !tbaa !264
   %.off.i.i = add i32 %i.fm, -1
   %switch.i.i = icmp ult i32 %.off.i.i, 2

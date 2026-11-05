@@ -204,17 +204,17 @@ bb.v:                                             ; preds = %bb.m
   br i1 %i.dg, label %.preheader, label %bb.t, !dbg !1555
 
 .preheader:                                       ; preds = %bb.v
-  br i1 %.not.i, label %.loopexit, label %.lr.ph124, !dbg !1556
+  br i1 %.not.i, label %._crit_edge, label %.lr.ph124, !dbg !1556
 
 .lr.ph124:                                        ; preds = %.preheader
   %i.dh = add i64 %i.av, -1
   br label %bb.w, !dbg !1556
 
-._crit_edge:                                      ; preds = %bb.aa, %bb.w, %bb.z, %bb.y
-  %.sroa.7.1.lcssa = phi i64 [ %.sroa.7.1120, %bb.y ], [ %.fca.0.1.extract64, %bb.aa ], [ %.sroa.7.1120, %bb.w ], [ %.sroa.7.1120, %bb.z ], !dbg !1557 ; 3 uses
-  %.sroa.033.1.lcssa = phi i64 [ %.sroa.033.1121, %bb.y ], [ %.fca.0.0.extract63, %bb.aa ], [ %.sroa.033.1121, %bb.w ], [ %.sroa.033.1121, %bb.z ], !dbg !1557 ; 3 uses
-  %.sroa.025.1.lcssa = phi i64 [ %.sroa.025.1122, %bb.y ], [ %i.eg, %bb.aa ], [ %.sroa.025.1122, %bb.w ], [ %.sroa.025.1122, %bb.z ], !dbg !1558 ; 5 uses
-  %.sroa.017.0 = phi i64 [ %.sroa.049.0119, %bb.y ], [ %.sroa.0.0.i88, %bb.aa ], [ %.sroa.049.0119, %bb.w ], [ %.sroa.049.0119, %bb.z ], !dbg !1559 ; 3 uses
+._crit_edge:                                      ; preds = %bb.aa, %bb.w, %bb.z, %bb.y, %.preheader
+  %.sroa.7.1.lcssa = phi i64 [ %.fca.0.1.extract, %.preheader ], [ %.sroa.7.1120, %bb.y ], [ %.sroa.7.1120, %bb.z ], [ %.sroa.7.1120, %bb.w ], [ %.fca.0.1.extract64, %bb.aa ], !dbg !1557 ; 3 uses
+  %.sroa.033.1.lcssa = phi i64 [ %.fca.0.0.extract, %.preheader ], [ %.sroa.033.1121, %bb.y ], [ %.sroa.033.1121, %bb.z ], [ %.sroa.033.1121, %bb.w ], [ %.fca.0.0.extract63, %bb.aa ], !dbg !1557 ; 3 uses
+  %.sroa.025.1.lcssa = phi i64 [ %i.ay, %.preheader ], [ %.sroa.025.1122, %bb.y ], [ %.sroa.025.1122, %bb.z ], [ %.sroa.025.1122, %bb.w ], [ %i.eg, %bb.aa ], !dbg !1558 ; 5 uses
+  %.sroa.017.0 = phi i64 [ 0, %.preheader ], [ %.sroa.049.0119, %bb.y ], [ %.sroa.049.0119, %bb.z ], [ %.sroa.049.0119, %bb.w ], [ %.sroa.0.0.i88, %bb.aa ], !dbg !1559 ; 2 uses
   %i.di = getelementptr inbounds nuw i8, ptr %2, i64 24, !dbg !1560
   %i.dj = load i8, ptr %i.di, align 8, !dbg !1560, !range !172, !noundef !92
   %i.dk = icmp eq i8 %i.dj, 0, !dbg !1361
@@ -270,9 +270,9 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %exitcond157.not, label %._crit_edge, label %bb.w, !dbg !1556
 
 bb.ab:                                            ; preds = %._crit_edge
-  %i.eh = lshr i64 %.sroa.017.0, 1, !dbg !1585
-  %4 = icmp sgt i64 %.sroa.017.0, 1, !dbg !1586
-  br i1 %4, label %.lr.ph145, label %.loopexit, !dbg !1587
+  %i.eh = lshr i64 %.sroa.017.0, 1, !dbg !1585    ; 2 uses
+  %.not149 = icmp eq i64 %i.eh, 0, !dbg !1586
+  br i1 %.not149, label %.loopexit, label %.lr.ph145, !dbg !1587
 
 .lr.ph145:                                        ; preds = %bb.ab
   %.neg = sub i64 %.sroa.025.1.lcssa, %.sroa.017.0
@@ -308,10 +308,10 @@ bb.ac:                                            ; preds = %.lr.ph145, %bb.ac
   %exitcond158.not = icmp eq i64 %i.ej, %i.eh, !dbg !1586
   br i1 %exitcond158.not, label %.loopexit, label %bb.ac, !dbg !1587
 
-.loopexit:                                        ; preds = %bb.ac, %.preheader, %bb.ab, %._crit_edge, %bb.s
-  %.sroa.7.0 = phi i64 [ %.fca.0.1.extract, %bb.s ], [ %.sroa.7.1.lcssa, %._crit_edge ], [ %.sroa.7.1.lcssa, %bb.ab ], [ %.fca.0.1.extract, %.preheader ], [ %.sroa.7.1.lcssa, %bb.ac ], !dbg !1507 ; 2 uses
-  %.sroa.033.0 = phi i64 [ %.fca.0.0.extract, %bb.s ], [ %.sroa.033.1.lcssa, %._crit_edge ], [ %.sroa.033.1.lcssa, %bb.ab ], [ %.fca.0.0.extract, %.preheader ], [ %.sroa.033.1.lcssa, %bb.ac ], !dbg !1507 ; 2 uses
-  %.sroa.025.0 = phi i64 [ %i.cn, %bb.s ], [ %.sroa.025.1.lcssa, %._crit_edge ], [ %.sroa.025.1.lcssa, %bb.ab ], [ %i.ay, %.preheader ], [ %.sroa.025.1.lcssa, %bb.ac ], !dbg !1558
+.loopexit:                                        ; preds = %bb.ac, %bb.ab, %._crit_edge, %bb.s
+  %.sroa.7.0 = phi i64 [ %.fca.0.1.extract, %bb.s ], [ %.sroa.7.1.lcssa, %._crit_edge ], [ %.sroa.7.1.lcssa, %bb.ab ], [ %.sroa.7.1.lcssa, %bb.ac ], !dbg !1507 ; 2 uses
+  %.sroa.033.0 = phi i64 [ %.fca.0.0.extract, %bb.s ], [ %.sroa.033.1.lcssa, %._crit_edge ], [ %.sroa.033.1.lcssa, %bb.ab ], [ %.sroa.033.1.lcssa, %bb.ac ], !dbg !1507 ; 2 uses
+  %.sroa.025.0 = phi i64 [ %i.cn, %bb.s ], [ %.sroa.025.1.lcssa, %._crit_edge ], [ %.sroa.025.1.lcssa, %bb.ab ], [ %.sroa.025.1.lcssa, %bb.ac ], !dbg !1558
   fence release, !dbg !1600
   %i.ey = load ptr, ptr %2, align 8, !dbg !1601, !nonnull !92, !noundef !92
   %i.ez = getelementptr inbounds nuw i8, ptr %i.ey, i64 264, !dbg !1602

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.q = sub nuw nsw i64 %1, %i.n                 ; 9 uses
-  %i.r = icmp ult i64 %.04995, 7
+  %i.r = icmp samesign ult i64 %.04995, 7
   br i1 %i.r, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.d
@@ -433,7 +433,7 @@ mi_bchunk_try_clearN.exit:                        ; preds = %bb.y
 
 .thread65:                                        ; preds = %bb.w, %bb.v, %bb.u, %bb.s, %bb.c, %mi_bchunk_try_clearN.exit.thread86, %mi_bchunk_try_clearN.exit.thread83, %.split, %.thread71, %._crit_edge
   %.25163 = phi i64 [ %.04995, %mi_bchunk_try_clearN.exit.thread86 ], [ %.04995, %._crit_edge ], [ %.04995, %mi_bchunk_try_clearN.exit.thread83 ], [ %i.bp, %.thread71 ], [ %.04995, %bb.c ], [ %.04995, %.split ], [ %.04995, %bb.s ], [ %.04995, %bb.u ], [ %.04995, %bb.v ], [ %.04995, %bb.w ]
-  %i.cr = add i64 %.25163, 1                      ; 2 uses
+  %i.cr = add nuw i64 %.25163, 1                  ; 2 uses
   %.not58 = icmp ult i64 %i.cr, %i.f
   br i1 %.not58, label %bb.b, label %.critedge60, !llvm.loop !49
 

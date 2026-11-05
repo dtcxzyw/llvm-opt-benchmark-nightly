@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %.thread, %.thread.t
   %i.w = phi i32 [ %i.r, %.thread ], [ %i.t, %.thread.thread ] ; 2 uses
   %i.x = sdiv i32 %i.w, 3                         ; 2 uses
   %i.y = shl nsw i32 %i.x, 1
-  %i.z = add nsw i32 %i.y, %.066.lcssa133138      ; 4 uses
+  %i.z = add nsw i32 %i.y, %.066.lcssa133138      ; 3 uses
   %i.aa = sext i32 %i.z to i64
   %i.ab = shl nsw i64 %i.aa, 3
   %i.ac = tail call noalias ptr @zcalloc(i64 noundef %i.ab) #11 ; 7 uses
@@ -253,14 +253,14 @@ bb.h:                                             ; preds = %.lr.ph107, %bb.n
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !74
   %i.av = call i32 @getDoubleFromObjectOrReply(ptr noundef nonnull %0, ptr noundef %i.au, ptr noundef nonnull %i.a, ptr noundef null) #13
   %.not.i = icmp eq i32 %i.av, 0
-  br i1 %.not.i, label %bb.i, label %extractLongLatOrReply.exit
+  br i1 %.not.i, label %bb.i, label %.lr.ph109.preheader
 
 bb.i:                                             ; preds = %bb.h
   %i.aw = getelementptr inbounds nuw i8, ptr %i.at, i64 8
   %i.ax = load ptr, ptr %i.aw, align 8, !tbaa !74
   %i.ay = call i32 @getDoubleFromObjectOrReply(ptr noundef nonnull %0, ptr noundef %i.ax, ptr noundef nonnull %i.ai, ptr noundef null) #13
   %.not.1.i = icmp eq i32 %i.ay, 0
-  br i1 %.not.1.i, label %bb.j, label %extractLongLatOrReply.exit
+  br i1 %.not.1.i, label %bb.j, label %.lr.ph109.preheader
 
 bb.j:                                             ; preds = %bb.i
   %i.az = load double, ptr %i.a, align 16, !tbaa !64 ; 3 uses
@@ -274,14 +274,11 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %bb.j
   call void (ptr, ptr, ...) @addReplyErrorFormat(ptr noundef nonnull %0, ptr noundef nonnull @.str, double noundef %i.az, double noundef %.pre.i) #13
-  br label %extractLongLatOrReply.exit
+  br label %.lr.ph109.preheader
 
-extractLongLatOrReply.exit:                       ; preds = %bb.h, %bb.i, %bb.k
-  %2 = icmp sgt i32 %i.z, 0
-  br i1 %2, label %.lr.ph109.preheader, label %.thread89
-
-.lr.ph109.preheader:                              ; preds = %extractLongLatOrReply.exit
-  %wide.trip.count126 = zext nneg i32 %i.z to i64
+.lr.ph109.preheader:                              ; preds = %bb.i, %bb.h, %bb.k
+  %smax = call i32 @llvm.smax.i32(i32 %i.z, i32 1)
+  %wide.trip.count126 = zext nneg i32 %smax to i64
   br label %.lr.ph109
 
 .lr.ph109:                                        ; preds = %.lr.ph109.preheader, %bb.m
@@ -300,7 +297,7 @@ bb.m:                                             ; preds = %.lr.ph109, %bb.l
   %exitcond127.not = icmp eq i64 %indvars.iv.next124, %wide.trip.count126
   br i1 %exitcond127.not, label %.thread89, label %.lr.ph109, !llvm.loop !143
 
-.thread89:                                        ; preds = %bb.m, %extractLongLatOrReply.exit
+.thread89:                                        ; preds = %bb.m
   call void @zfree(ptr noundef nonnull %i.ac) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   br label %bb.o
@@ -701,6 +698,9 @@ declare double @llvm.fabs.f64(double) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smax.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #10

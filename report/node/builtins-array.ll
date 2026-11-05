@@ -204,12 +204,13 @@ _ZNSt6vectorIjSaIjEE5clearEv.exit:                ; preds = %bb.aj, %bb.ai, %_ZN
 bb.ak:                                            ; preds = %.lr.ph371, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit149
   %i.gt = phi ptr [ %.pre414.a, %.lr.ph371 ], [ %i.hq, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit149 ] ; 2 uses
   %i.gu = phi ptr [ %.pre412.a, %.lr.ph371 ], [ %i.hr, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit149 ] ; 2 uses
-  %storemerge98370 = phi i32 [ 0, %.lr.ph371 ], [ %5, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit149 ] ; 3 uses
+  %indvars.iv = phi i64 [ 0, %.lr.ph371 ], [ %indvars.iv.next, %_ZNSt6vectorIjSaIjEE9push_backERKj.exit149 ] ; 3 uses
   %.not.i142 = icmp eq ptr %i.gu, %i.gt
   br i1 %.not.i142, label %bb.am, label %bb.al
 
 bb.al:                                            ; preds = %bb.ak
-  store i32 %storemerge98370, ptr %i.gu, align 4
+  %5 = trunc nuw i64 %indvars.iv to i32
+  store i32 %5, ptr %i.gu, align 4
   %i.gv = load ptr, ptr %i.gr, align 8
   %i.gw = getelementptr inbounds nuw i8, ptr %i.gv, i64 4 ; 2 uses
   store ptr %i.gw, ptr %i.gr, align 8
@@ -240,7 +241,8 @@ _ZNKSt6vectorIjSaIjEE12_M_check_lenEmPKc.exit.i.i143: ; preds = %bb.am
   %i.hh = shl nuw nsw i64 %i.hg, 2
   %i.hi = call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.hh) #18 ; 4 uses
   %i.hj = getelementptr inbounds i8, ptr %i.hi, i64 %i.ha ; 2 uses
-  store i32 %storemerge98370, ptr %i.hj, align 4
+  %6 = trunc nuw i64 %indvars.iv to i32
+  store i32 %6, ptr %i.hj, align 4
   %i.hk = icmp sgt i64 %i.ha, 0
   br i1 %i.hk, label %bb.ao, label %_ZNSt6vectorIjSaIjEE11_S_relocateEPjS2_S2_RS0_.exit16.i.i146
 
@@ -270,10 +272,9 @@ _ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIP
 _ZNSt6vectorIjSaIjEE9push_backERKj.exit149:       ; preds = %bb.al, %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i148
   %i.hq = phi ptr [ %.pre413.a, %bb.al ], [ %i.hp, %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i148 ]
   %i.hr = phi ptr [ %i.gw, %bb.al ], [ %i.hl, %_ZNSt6vectorIjSaIjEE17_M_realloc_insertIJRKjEEEvN9__gnu_cxx17__normal_iteratorIPjS1_EEDpOT_.exit.i148 ]
-  %5 = add i32 %storemerge98370, 1                ; 2 uses
-  %6 = zext i32 %5 to i64
-  %7 = icmp ugt i64 %.085, %6
-  br i1 %7, label %bb.ak, label %._crit_edge372, !llvm.loop !102
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond405.not = icmp eq i64 %indvars.iv.next, %.085
+  br i1 %exitcond405.not, label %._crit_edge372, label %bb.ak, !llvm.loop !102
 
 bb.aq:                                            ; preds = %bb.a, %bb.a
   %i.hs = add i64 %i.b, 15

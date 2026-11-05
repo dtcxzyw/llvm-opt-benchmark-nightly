@@ -205,22 +205,23 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.ac, label %.loopexit.i, label %.lr.ph.i.i.i.i.1
 
 .lr.ph.i.i.i.i.1:                                 ; preds = %.lr.ph.i.i.i.i
-  %9 = icmp ult i32 %i.y, 2
-  br i1 %9, label %.loopexit.i, label %.lr.ph.i.i.i.i.2
+  %.not.i.i.i.1 = icmp ugt i32 %i.y, 1
+  br i1 %.not.i.i.i.1, label %.lr.ph.i.i.i.i.2, label %.loopexit.i
 
 .lr.ph.i.i.i.i.2:                                 ; preds = %.lr.ph.i.i.i.i.1
-  %10 = icmp ult i32 %i.y, 3
-  br i1 %10, label %.loopexit.i, label %.lr.ph.i.i.i.i.3
+  %.not.i.i.i.2 = icmp ugt i32 %i.y, 2
+  br i1 %.not.i.i.i.2, label %.lr.ph.i.i.i.i.3, label %.loopexit.i
 
 .lr.ph.i.i.i.i.3:                                 ; preds = %.lr.ph.i.i.i.i.2
-  %11 = icmp ult i32 %i.y, 4                      ; 2 uses
-  %brmerge = select i1 %11, i1 true, i1 %i.u
-  %.mux = select i1 %11, i64 3, i64 %i.w
+  %.not.i.i.i.3 = icmp ugt i32 %i.y, 3
+  %.not.i.i.i.3.not = xor i1 %.not.i.i.i.3, true  ; 2 uses
+  %brmerge = select i1 %.not.i.i.i.3.not, i1 true, i1 %i.u
+  %.mux = select i1 %.not.i.i.i.3.not, i64 3, i64 %i.w
   br i1 %brmerge, label %.loopexit.i, label %.lr.ph.i.i.i.i.4
 
 .lr.ph.i.i.i.i.4:                                 ; preds = %.lr.ph.i.i.i.i.3
-  %12 = icmp ult i32 %i.y, 5
-  %spec.select = select i1 %12, i64 4, i64 %i.w
+  %.not.i.i.i.4 = icmp ugt i32 %i.y, 4
+  %spec.select = select i1 %.not.i.i.i.4, i64 %i.w, i64 4
   br label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %.lr.ph.i.i.i.i.4, %.lr.ph.i.i.i.i, %.lr.ph.i.i.i.i.1, %.lr.ph.i.i.i.i.2, %.lr.ph.i.i.i.i.3, %bb.k
@@ -623,16 +624,16 @@ bb.i:                                             ; preds = %bb.h
 
 .lr.ph.i.i:                                       ; preds = %bb.i, %bb.k
   %.0918.i.i = phi i64 [ %i.s, %bb.k ], [ 0, %bb.i ] ; 3 uses
-  %.01017.i.i = phi i64 [ %.1.i.i, %bb.k ], [ 0, %bb.i ] ; 2 uses
+  %.01017.i.i = phi i64 [ %.1.i.i, %bb.k ], [ 0, %bb.i ] ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 %.0918.i.i
   %i.q = load i8, ptr %i.p, align 1, !tbaa !3012
   %.not14.i.i = icmp slt i8 %i.q, -64
   br i1 %.not14.i.i, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph.i.i
-  %i.r = add i64 %.01017.i.i, 1                   ; 2 uses
-  %5 = icmp ugt i64 %i.r, %i.n
-  br i1 %5, label %_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit, label %bb.k
+  %i.r = add nuw nsw i64 %.01017.i.i, 1
+  %.not.i = icmp ult i64 %.01017.i.i, %i.n
+  br i1 %.not.i, label %bb.k, label %_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit
 
 bb.k:                                             ; preds = %bb.j, %.lr.ph.i.i
   %.1.i.i = phi i64 [ %i.r, %bb.j ], [ %.01017.i.i, %.lr.ph.i.i ]
@@ -1035,16 +1036,16 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i.i:                                       ; preds = %bb.c, %bb.e
   %.0918.i.i = phi i64 [ %i.o, %bb.e ], [ 0, %bb.c ] ; 3 uses
-  %.01017.i.i = phi i64 [ %.1.i.i, %bb.e ], [ 0, %bb.c ] ; 2 uses
+  %.01017.i.i = phi i64 [ %.1.i.i, %bb.e ], [ 0, %bb.c ] ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 %.0918.i.i
   %i.m = load i8, ptr %i.l, align 1, !tbaa !3012
   %.not14.i.i = icmp slt i8 %i.m, -64
   br i1 %.not14.i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph.i.i
-  %i.n = add i64 %.01017.i.i, 1                   ; 2 uses
-  %5 = icmp ugt i64 %i.n, %i.j
-  br i1 %5, label %_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit, label %bb.e
+  %i.n = add nuw nsw i64 %.01017.i.i, 1
+  %.not.i = icmp ult i64 %.01017.i.i, %i.j
+  br i1 %.not.i, label %bb.e, label %_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit
 
 bb.e:                                             ; preds = %bb.d, %.lr.ph.i.i
   %.1.i.i = phi i64 [ %i.n, %bb.d ], [ %.01017.i.i, %.lr.ph.i.i ]

@@ -205,7 +205,7 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecNtNtNtC
 bb.c:                                             ; preds = %.lr.ph90, %_RNvNvNtNtCsks7Y7MMeG6s_5rayon5slice4sort10merge_sort8collapse.exit
   %i.g = phi ptr [ inttoptr (i64 8 to ptr), %.lr.ph90 ], [ %i.ah, %_RNvNvNtNtCsks7Y7MMeG6s_5rayon5slice4sort10merge_sort8collapse.exit ]
   %i.h = phi i64 [ 0, %.lr.ph90 ], [ %storemerge.lcssa, %_RNvNvNtNtCsks7Y7MMeG6s_5rayon5slice4sort10merge_sort8collapse.exit ] ; 3 uses
-  %.sroa.02.089 = phi i64 [ 0, %.lr.ph90 ], [ %.sroa.0.0.i31, %_RNvNvNtNtCsks7Y7MMeG6s_5rayon5slice4sort10merge_sort8collapse.exit ] ; 10 uses
+  %.sroa.02.089 = phi i64 [ 0, %.lr.ph90 ], [ %.sroa.0.0.i31, %_RNvNvNtNtCsks7Y7MMeG6s_5rayon5slice4sort10merge_sort8collapse.exit ] ; 8 uses
   %i.i = sub nuw nsw i64 %1, %.sroa.02.089        ; 7 uses
   %i.j = getelementptr inbounds nuw [24 x i8], ptr %0, i64 %.sroa.02.089 ; 7 uses
   %i.k = icmp samesign ult i64 %i.i, 2
@@ -260,7 +260,7 @@ bb.f:                                             ; preds = %.lr.ph7.i
 _RINvNtNtCsks7Y7MMeG6s_5rayon5slice4sort11find_streakNtCsgcf5BHVXlUt_7uu_sort4LineNCINvYSBO_INtB4_16ParallelSliceMutBO_E11par_sort_byNCNvBQ_7sort_by0E0EBQ_.exit: ; preds = %.lr.ph.i, %bb.e, %.lr.ph7.i, %bb.f, %bb.c, %.preheader1.i, %.preheader.i
   %.sroa.4.0.i = phi i1 [ false, %bb.c ], [ true, %.preheader.i ], [ true, %.lr.ph7.i ], [ false, %.preheader1.i ], [ true, %bb.f ], [ false, %bb.e ], [ false, %.lr.ph.i ] ; 2 uses
   %.sroa.0.0.i = phi i64 [ %i.i, %bb.c ], [ 2, %.preheader.i ], [ %.sroa.01.16.i, %.lr.ph7.i ], [ 2, %.preheader1.i ], [ %i.i, %bb.f ], [ %.sroa.01.03.i, %.lr.ph.i ], [ %i.i, %bb.e ] ; 6 uses
-  %i.y = add i64 %.sroa.0.0.i, %.sroa.02.089      ; 8 uses
+  %i.y = add nuw i64 %.sroa.0.0.i, %.sroa.02.089  ; 6 uses
   %i.z = icmp eq i64 %.sroa.02.089, 0
   %i.aa = icmp eq i64 %i.y, %1
   %or.cond = and i1 %i.z, %i.aa
@@ -274,10 +274,8 @@ bb.h:                                             ; preds = %_RINvNtNtCsks7Y7MMe
   br i1 %.sroa.4.0.i, label %bb.m, label %_RINvNvMNtCs6JMX4GRUq9U_4core5sliceSp7reverse7revswapNtCsgcf5BHVXlUt_7uu_sort4LineEBQ_.exit
 
 _RINvNvMNtCs6JMX4GRUq9U_4core5sliceSp7reverse7revswapNtCsgcf5BHVXlUt_7uu_sort4LineEBQ_.exit: ; preds = %_RNvMNtCs6JMX4GRUq9U_4core5sliceSNtCsgcf5BHVXlUt_7uu_sort4Line12split_at_mutBw_.exit11.i, %bb.o, %bb.h
-  %4 = icmp uge i64 %i.y, %.sroa.02.089
-  %5 = icmp ule i64 %i.y, %1
-  %or.cond.i = and i1 %4, %5
-  br i1 %or.cond.i, label %bb.j, label %bb.i, !prof !46
+  %.not92 = icmp ugt i64 %i.y, %1
+  br i1 %.not92, label %bb.i, label %bb.j, !prof !29
 
 bb.i:                                             ; preds = %_RINvNvMNtCs6JMX4GRUq9U_4core5sliceSp7reverse7revswapNtCsgcf5BHVXlUt_7uu_sort4LineEBQ_.exit
   tail call void @_RNvNtCs6JMX4GRUq9U_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @136, i64 noundef 44, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @137) #40, !noalias !7248
@@ -321,10 +319,8 @@ _RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecNtNtNtCsks7Y7MMeG6s_5rayon5slice4sor
   br i1 %i.al, label %.lr.ph, label %_RNvNvNtNtCsks7Y7MMeG6s_5rayon5slice4sort10merge_sort8collapse.exit
 
 bb.m:                                             ; preds = %bb.h
-  %6 = icmp ult i64 %i.y, %.sroa.02.089
   %.not = icmp ugt i64 %i.y, %1
-  %or.cond26 = or i1 %6, %.not
-  br i1 %or.cond26, label %bb.n, label %bb.o, !prof !29
+  br i1 %.not, label %bb.n, label %bb.o, !prof !29
 
 bb.n:                                             ; preds = %bb.m
   tail call void @_RNvNtNtCs6JMX4GRUq9U_4core5slice5index16slice_index_fail(i64 noundef %.sroa.02.089, i64 noundef %i.y, i64 noundef %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @128) #40
@@ -727,7 +723,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %bb.s, %bb.q
   %i.dd = add nuw nsw i64 %.sroa.07.094, 1        ; 2 uses
-  %i.de = icmp ult i64 %i.dd, %1
+  %i.de = icmp samesign ult i64 %i.dd, %1
   br i1 %i.de, label %bb.ac, label %select.unfold
 
 bb.s:                                             ; preds = %bb.o
@@ -809,7 +805,7 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc6borrow3CoweEEC
 bb.x:                                             ; preds = %bb.ac, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc6borrow3CoweEECsgcf5BHVXlUt_7uu_sort.exit64
   %.sroa.07.1 = phi i64 [ %i.fp, %bb.ac ], [ %i.eh, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc6borrow3CoweEECsgcf5BHVXlUt_7uu_sort.exit64 ] ; 4 uses
   %.sroa.04.1 = phi i64 [ %i.fo, %bb.ac ], [ %i.eg, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc6borrow3CoweEECsgcf5BHVXlUt_7uu_sort.exit64 ] ; 4 uses
-  %i.ej = add i64 %.sroa.07.1, -1                 ; 2 uses
+  %i.ej = add nsw i64 %.sroa.07.1, -1             ; 2 uses
   br i1 %i.n, label %select.unfold, label %bb.y
 
 bb.y:                                             ; preds = %bb.x

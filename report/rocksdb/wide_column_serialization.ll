@@ -205,7 +205,7 @@ _ZN7rocksdb12VarintLengthEm.exit270.i:            ; preds = %.lr.ph.i267.i.2, %.
   %.045.i274.i = phi i64 [ %i.lg, %.lr.ph.i272.i ], [ %i.fy, %_ZN7rocksdb12VarintLengthEm.exit270.i ] ; 2 uses
   %i.lg = lshr i64 %.045.i274.i, 7
   %i.lh = add nuw nsw i16 %.06.i273.i, 1          ; 2 uses
-  %i.li = icmp ugt i64 %.045.i274.i, 16383
+  %i.li = icmp samesign ugt i64 %.045.i274.i, 16383
   br i1 %i.li, label %.lr.ph.i272.i, label %_ZN7rocksdb12VarintLengthEm.exit275.loopexit.i, !llvm.loop !1
 
 _ZN7rocksdb12VarintLengthEm.exit275.loopexit.i:   ; preds = %.lr.ph.i272.i
@@ -222,7 +222,7 @@ _ZN7rocksdb12VarintLengthEm.exit275.i:            ; preds = %_ZN7rocksdb12Varint
   %.045.i279.i = phi i64 [ %i.ll, %.lr.ph.i277.i ], [ %i.kd, %_ZN7rocksdb12VarintLengthEm.exit275.i ] ; 2 uses
   %i.ll = lshr i64 %.045.i279.i, 7
   %i.lm = add nuw nsw i16 %.06.i278.i, 1          ; 2 uses
-  %i.ln = icmp ugt i64 %.045.i279.i, 16383
+  %i.ln = icmp samesign ugt i64 %.045.i279.i, 16383
   br i1 %i.ln, label %.lr.ph.i277.i, label %_ZN7rocksdb12VarintLengthEm.exit280.loopexit.i, !llvm.loop !1
 
 _ZN7rocksdb12VarintLengthEm.exit280.loopexit.i:   ; preds = %.lr.ph.i277.i
@@ -239,7 +239,7 @@ _ZN7rocksdb12VarintLengthEm.exit280.i:            ; preds = %_ZN7rocksdb12Varint
   %.045.i284.i = phi i64 [ %i.lq, %.lr.ph.i282.i ], [ %i.fz, %_ZN7rocksdb12VarintLengthEm.exit280.i ] ; 2 uses
   %i.lq = lshr i64 %.045.i284.i, 7
   %i.lr = add nuw nsw i16 %.06.i283.i, 1          ; 2 uses
-  %i.ls = icmp ugt i64 %.045.i284.i, 16383
+  %i.ls = icmp samesign ugt i64 %.045.i284.i, 16383
   br i1 %i.ls, label %.lr.ph.i282.i, label %_ZN7rocksdb12VarintLengthEm.exit285.loopexit.i, !llvm.loop !1
 
 _ZN7rocksdb12VarintLengthEm.exit285.loopexit.i:   ; preds = %.lr.ph.i282.i
@@ -642,7 +642,7 @@ _ZN7rocksdb12VarintLengthEm.exit269.i:            ; preds = %.lr.ph.i266.i.2, %.
   %.045.i273.i = phi i64 [ %i.lb, %.lr.ph.i271.i ], [ %i.ft, %_ZN7rocksdb12VarintLengthEm.exit269.i ] ; 2 uses
   %i.lb = lshr i64 %.045.i273.i, 7
   %i.lc = add nuw nsw i16 %.06.i272.i, 1          ; 2 uses
-  %i.ld = icmp ugt i64 %.045.i273.i, 16383
+  %i.ld = icmp samesign ugt i64 %.045.i273.i, 16383
   br i1 %i.ld, label %.lr.ph.i271.i, label %_ZN7rocksdb12VarintLengthEm.exit274.loopexit.i, !llvm.loop !1
 
 _ZN7rocksdb12VarintLengthEm.exit274.loopexit.i:   ; preds = %.lr.ph.i271.i
@@ -659,7 +659,7 @@ _ZN7rocksdb12VarintLengthEm.exit274.i:            ; preds = %_ZN7rocksdb12Varint
   %.045.i278.i = phi i64 [ %i.lg, %.lr.ph.i276.i ], [ %i.jy, %_ZN7rocksdb12VarintLengthEm.exit274.i ] ; 2 uses
   %i.lg = lshr i64 %.045.i278.i, 7
   %i.lh = add nuw nsw i16 %.06.i277.i, 1          ; 2 uses
-  %i.li = icmp ugt i64 %.045.i278.i, 16383
+  %i.li = icmp samesign ugt i64 %.045.i278.i, 16383
   br i1 %i.li, label %.lr.ph.i276.i, label %_ZN7rocksdb12VarintLengthEm.exit279.loopexit.i, !llvm.loop !1
 
 _ZN7rocksdb12VarintLengthEm.exit279.loopexit.i:   ; preds = %.lr.ph.i276.i
@@ -676,7 +676,7 @@ _ZN7rocksdb12VarintLengthEm.exit279.i:            ; preds = %_ZN7rocksdb12Varint
   %.045.i283.i = phi i64 [ %i.ll, %.lr.ph.i281.i ], [ %i.fu, %_ZN7rocksdb12VarintLengthEm.exit279.i ] ; 2 uses
   %i.ll = lshr i64 %.045.i283.i, 7
   %i.lm = add nuw nsw i16 %.06.i282.i, 1          ; 2 uses
-  %i.ln = icmp ugt i64 %.045.i283.i, 16383
+  %i.ln = icmp samesign ugt i64 %.045.i283.i, 16383
   br i1 %i.ln, label %.lr.ph.i281.i, label %_ZN7rocksdb12VarintLengthEm.exit284.loopexit.i, !llvm.loop !1
 
 _ZN7rocksdb12VarintLengthEm.exit284.loopexit.i:   ; preds = %.lr.ph.i281.i

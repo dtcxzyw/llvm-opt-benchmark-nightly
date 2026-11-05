@@ -205,8 +205,8 @@ bb.p:                                             ; preds = %bb.q, %.preheader38
 
 bb.q:                                             ; preds = %bb.p
   %i.bo = add nuw nsw i64 %.03339.i, 1            ; 3 uses
-  %i.bp = add i64 %i.bo, %.03540.i
-  %i.bq = icmp ult i64 %i.bp, %i.bk
+  %i.bp = add nuw nsw i64 %i.bo, %.03540.i
+  %i.bq = icmp samesign ult i64 %i.bp, %i.bk
   br i1 %i.bq, label %bb.p, label %bb.r, !llvm.loop !31
 
 bb.r:                                             ; preds = %bb.q, %bb.p
@@ -609,8 +609,8 @@ bb.i:                                             ; preds = %bb.j, %.preheader38
 
 bb.j:                                             ; preds = %bb.i
   %i.bo = add nuw nsw i64 %.03339.i, 1            ; 3 uses
-  %i.bp = add i64 %i.bo, %.03540.i
-  %i.bq = icmp ult i64 %i.bp, %i.bk
+  %i.bp = add nuw nsw i64 %i.bo, %.03540.i
+  %i.bq = icmp samesign ult i64 %i.bp, %i.bk
   br i1 %i.bq, label %bb.i, label %bb.k, !llvm.loop !31
 
 bb.k:                                             ; preds = %bb.j, %bb.i
@@ -783,8 +783,8 @@ bb.u:                                             ; preds = %bb.v, %.preheader38
 
 bb.v:                                             ; preds = %bb.u
   %i.dy = add nuw nsw i64 %.03339.i45, 1          ; 3 uses
-  %i.dz = add i64 %i.dy, %.03540.i43
-  %i.ea = icmp ult i64 %i.dz, %i.du
+  %i.dz = add nuw nsw i64 %i.dy, %.03540.i43
+  %i.ea = icmp samesign ult i64 %i.dz, %i.du
   br i1 %i.ea, label %bb.u, label %bb.w, !llvm.loop !31
 
 bb.w:                                             ; preds = %bb.v, %bb.u
@@ -987,8 +987,8 @@ bb.ah:                                            ; preds = %bb.ai, %.preheader3
 
 bb.ai:                                            ; preds = %bb.ah
   %i.gu = add nuw nsw i64 %.03339.i70, 1          ; 3 uses
-  %i.gv = add i64 %i.gu, %.03540.i68
-  %i.gw = icmp ult i64 %i.gv, %i.gq
+  %i.gv = add nuw nsw i64 %i.gu, %.03540.i68
+  %i.gw = icmp samesign ult i64 %i.gv, %i.gq
   br i1 %i.gw, label %bb.ah, label %bb.aj, !llvm.loop !31
 
 bb.aj:                                            ; preds = %bb.ai, %bb.ah
@@ -1155,8 +1155,8 @@ bb.at:                                            ; preds = %bb.au, %.preheader3
 
 bb.au:                                            ; preds = %bb.at
   %i.ix = add nuw nsw i64 %.03339.i92, 1          ; 3 uses
-  %i.iy = add i64 %i.ix, %.03540.i90
-  %i.iz = icmp ult i64 %i.iy, %i.it
+  %i.iy = add nuw nsw i64 %i.ix, %.03540.i90
+  %i.iz = icmp samesign ult i64 %i.iy, %i.it
   br i1 %i.iz, label %bb.at, label %bb.av, !llvm.loop !31
 
 bb.av:                                            ; preds = %bb.au, %bb.at

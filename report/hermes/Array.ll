@@ -202,7 +202,7 @@ _ZN6hermes2vm13MutableHandleINS0_11HermesValueEEC2ERNS0_15HandleRootOwnerES2_.ex
 bb.ag:                                            ; preds = %.lr.ph, %bb.aj
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.aj ] ; 2 uses
   %i.et = trunc nuw i64 %indvars.iv to i32        ; 2 uses
-  %i.eu = uitofp i32 %i.et to double
+  %i.eu = uitofp nneg i32 %i.et to double
   %i.ev = fadd double %i.bf, %i.eu
   store double %i.ev, ptr %.0.i.i.i.i.i.i219, align 8, !tbaa !35
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #9
@@ -236,8 +236,8 @@ bb.aj:                                            ; preds = %bb.ai, %bb.ah
   store ptr %i.fg, ptr %i.j, align 8, !tbaa !52
   store ptr %i.ep, ptr %i.i, align 8, !tbaa !51
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #9
-  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
-  %.not = icmp ugt i64 %.0193477480, %indvars.iv.next
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %.not = icmp samesign ugt i64 %.0193477480, %indvars.iv.next
   br i1 %.not, label %bb.ag, label %.critedge, !llvm.loop !273
 
 bb.ak:                                            ; preds = %bb.ag

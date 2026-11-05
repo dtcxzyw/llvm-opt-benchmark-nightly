@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %"_ZN4core3ptr102dro
   %i.bc = getelementptr inbounds nuw i8, ptr %4, i64 %.sroa.086.0170
   %i.bd = load i8, ptr %i.bc, align 1, !noundef !52 ; 11 uses
   %.sroa.0101.0159 = add nuw nsw i64 %.sroa.086.0170, 1 ; 3 uses
-  %i.be = icmp ult i64 %.sroa.086.0170, %.sroa.010.0137458
+  %i.be = icmp samesign ult i64 %.sroa.086.0170, %.sroa.010.0137458
   br i1 %i.be, label %.lr.ph162.preheader, label %._crit_edge163.thread
 
 .lr.ph162.preheader:                              ; preds = %.split

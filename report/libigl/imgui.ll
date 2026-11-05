@@ -205,7 +205,7 @@ bb.a:
   %i.d = alloca i8, align 1                       ; 5 uses
   %21 = alloca %struct.ImRect, align 8            ; 5 uses
   %i.e = alloca ptr, align 8                      ; 5 uses
-  %.sroa.4855 = alloca %struct.ImGuiLastItemData, align 8 ; 4 uses
+  %.sroa.4856 = alloca %struct.ImGuiLastItemData, align 8 ; 4 uses
   %22 = alloca %struct.ImRect, align 8            ; 5 uses
   %23 = alloca %struct.ImRect, align 16           ; 8 uses
   %24 = alloca %struct.ImRect, align 8            ; 6 uses
@@ -608,9 +608,9 @@ bb.ba:                                            ; preds = %_ZN8ImVectorIjE9pus
   %i.kq = phi i32 [ %.pre, %_ZN8ImVectorIjE9push_backERKj.exit ], [ %i.iv, %bb.at ] ; 6 uses
   %i.kr = getelementptr inbounds nuw i8, ptr %i.g, i64 7184 ; 2 uses
   store ptr %.01057, ptr %i.kr, align 8, !tbaa !214
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4855)
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4856)
   %i.ks = getelementptr inbounds nuw i8, ptr %i.g, i64 7368 ; 2 uses
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(60) %.sroa.4855, ptr noundef nonnull align 8 dereferenceable(60) %i.ks, i64 60, i1 false), !tbaa.struct !621
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(60) %.sroa.4856, ptr noundef nonnull align 8 dereferenceable(60) %i.ks, i64 60, i1 false), !tbaa.struct !621
   %i.kt = load ptr, ptr @GImGui, align 8, !tbaa !99 ; 10 uses
   %i.ku = getelementptr inbounds nuw i8, ptr %i.kt, i64 7184
   %i.kv = load ptr, ptr %i.ku, align 8, !tbaa !214
@@ -717,7 +717,7 @@ _ZN8ImVectorI20ImGuiWindowStackDataE9push_backERKS0_.exit: ; preds = %._ZN8ImVec
   %i.nb = getelementptr inbounds [88 x i8], ptr %i.mz, i64 %i.na ; 11 uses
   store ptr %.01057, ptr %i.nb, align 8
   %.sroa.4855.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.nb, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(60) %.sroa.4855.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(60) %.sroa.4855, i64 60, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(60) %.sroa.4855.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(60) %.sroa.4856, i64 60, i1 false)
   %.sroa.6856.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.nb, i64 68
   store i16 %i.ky, ptr %.sroa.6856.0..sroa_idx, align 4
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.nb, i64 70
@@ -1120,15 +1120,12 @@ bb.hb:                                            ; preds = %bb.ha
   %i.amz = getelementptr inbounds nuw i8, ptr %.01057, i64 208 ; 2 uses
   %i.ana = getelementptr inbounds nuw i8, ptr %i.alu, i64 8056 ; 3 uses
   %i.anb = getelementptr inbounds nuw i8, ptr %i.alu, i64 1061
-  %28 = getelementptr inbounds nuw i8, ptr %24, i64 12
   %i.anc = getelementptr inbounds nuw i8, ptr %i.alu, i64 296 ; 2 uses
   %i.and = getelementptr inbounds nuw i8, ptr %i.alu, i64 7296 ; 2 uses
   %i.ane = fneg float %i.ams
   %wide.trip.count.i = zext nneg i32 %i.alg to i64
-  %29 = load <2 x float>, ptr %i.aki, align 8     ; 3 uses
-  %i.anf = load float, ptr %28, align 4
+  %i.anf = load float, ptr %i.aki, align 8        ; 2 uses
   %i.ang = extractelement <2 x float> %i.akg, i64 0 ; 2 uses
-  %30 = extractelement <2 x float> %29, i64 0
   %i.anh = insertelement <2 x float> poison, float %i.ane, i64 0
   %i.ani = shufflevector <2 x float> %i.anh, <2 x float> poison, <2 x i32> zeroinitializer
   %i.anj = insertelement <2 x float> poison, float %i.amu, i64 0
@@ -1142,17 +1139,19 @@ bb.hb:                                            ; preds = %bb.ha
   br i1 %.not.i572, label %._crit_edge.i574, label %.lr.ph.i573
 
 .lr.ph.i573:                                      ; preds = %.preheader.i
+  %28 = getelementptr inbounds nuw i8, ptr %24, i64 12
   %i.ann = getelementptr inbounds nuw i8, ptr %21, i64 8
   %i.ano = getelementptr inbounds nuw i8, ptr %i.alu, i64 7252
+  %29 = load float, ptr %28, align 4
   %i.anp = extractelement <2 x float> %i.akg, i64 1
-  %i.anq = insertelement <2 x float> %29, float f0x7F7FFFFF, i64 0
-  %i.anr = insertelement <2 x float> %29, float f0x7F7FFFFF, i64 1
+  %i.anq = insertelement <2 x float> <float f0x7F7FFFFF, float poison>, float %29, i64 1
+  %i.anr = insertelement <2 x float> <float poison, float f0x7F7FFFFF>, float %i.anf, i64 0
   %i.ans = insertelement <2 x float> <float -4.000000e+00, float poison>, float %i.ams, i64 1 ; 4 uses
   %i.ant = insertelement <2 x float> <float poison, float -4.000000e+00>, float %i.ams, i64 0 ; 4 uses
   br label %bb.hu
 
 bb.hc:                                            ; preds = %bb.ht, %bb.hb
-  %indvars.iv.i = phi i64 [ 0, %bb.hb ], [ %indvars.iv.next.i, %bb.ht ] ; 7 uses
+  %indvars.iv.i = phi i64 [ 0, %bb.hb ], [ %indvars.iv.next.i, %bb.ht ] ; 8 uses
   %.013592.i = phi i1 [ false, %bb.hb ], [ %.177.i, %bb.ht ] ; 2 uses
   %.sroa.054.089.i = phi <2 x float> [ splat (float f0x7F7FFFFF), %bb.hb ], [ %.sroa.054.375.i, %bb.ht ] ; 3 uses
   %.sroa.051.088.i = phi <2 x float> [ splat (float f0x7F7FFFFF), %bb.hb ], [ %.sroa.051.173.i, %bb.ht ] ; 2 uses
@@ -1196,10 +1195,6 @@ bb.hf:                                            ; preds = %bb.he
   br label %bb.hg
 
 bb.hg:                                            ; preds = %bb.hf, %bb.he
-  %31 = trunc nuw nsw i64 %indvars.iv.i to i32    ; 7 uses
-  %.sroa.2.0.extract.shift.i.i = lshr i32 %31, 8
-  %.sroa.3.0.extract.shift.i.i = lshr i32 %31, 16
-  %.sroa.4.0.extract.shift.i.i = lshr i32 %31, 24
   %i.aon = load ptr, ptr %i.amz, align 8, !tbaa !318
   %i.aoo = load i32, ptr %i.jj, align 8, !tbaa !316
   %i.aop = sext i32 %i.aoo to i64
@@ -1208,30 +1203,28 @@ bb.hg:                                            ; preds = %bb.hf, %bb.he
   %i.aos = load i32, ptr %i.aor, align 4, !tbaa !94
   %i.aot = xor i32 %i.aos, -1                     ; 2 uses
   %i.aou = lshr i32 %i.aot, 8
-  %32 = xor i32 %i.aot, %31
-  %33 = and i32 %32, 255
-  %i.aov = zext nneg i32 %33 to i64
-  %i.aow = getelementptr inbounds nuw [4 x i8], ptr @_ZL17GCrc32LookupTable, i64 %i.aov
+  %.masked.i572 = and i32 %i.aot, 255
+  %30 = trunc i64 %indvars.iv.i to i32            ; 2 uses
+  %i.aov = zext nneg i32 %.masked.i572 to i64
+  %31 = xor i64 %indvars.iv.i, %i.aov
+  %i.aow = getelementptr inbounds nuw [4 x i8], ptr @_ZL17GCrc32LookupTable, i64 %31
   %i.aox = load i32, ptr %i.aow, align 4, !tbaa !94
   %i.aoy = xor i32 %i.aox, %i.aou                 ; 2 uses
   %i.aoz = lshr i32 %i.aoy, 8
-  %34 = xor i32 %i.aoy, %.sroa.2.0.extract.shift.i.i
-  %i.apa = and i32 %34, 255
+  %i.apa = and i32 %i.aoy, 255
   %i.apb = zext nneg i32 %i.apa to i64
   %i.apc = getelementptr inbounds nuw [4 x i8], ptr @_ZL17GCrc32LookupTable, i64 %i.apb
   %i.apd = load i32, ptr %i.apc, align 4, !tbaa !94
   %i.ape = xor i32 %i.aoz, %i.apd                 ; 2 uses
   %i.apf = lshr i32 %i.ape, 8
-  %35 = xor i32 %i.ape, %.sroa.3.0.extract.shift.i.i
-  %i.apg = and i32 %35, 255
+  %i.apg = and i32 %i.ape, 255
   %i.aph = zext nneg i32 %i.apg to i64
   %i.api = getelementptr inbounds nuw [4 x i8], ptr @_ZL17GCrc32LookupTable, i64 %i.aph
   %i.apj = load i32, ptr %i.api, align 4, !tbaa !94
   %i.apk = xor i32 %i.apf, %i.apj                 ; 2 uses
   %i.apl = lshr i32 %i.apk, 8
   %i.apm = and i32 %i.apk, 255
-  %36 = xor i32 %i.apm, %.sroa.4.0.extract.shift.i.i
-  %i.apn = zext nneg i32 %36 to i64
+  %i.apn = zext nneg i32 %i.apm to i64
   %i.apo = getelementptr inbounds nuw [4 x i8], ptr @_ZL17GCrc32LookupTable, i64 %i.apn
   %i.app = load i32, ptr %i.apo, align 4, !tbaa !94
   %i.apq = xor i32 %i.app, %i.apl
@@ -1333,7 +1326,7 @@ _ZL30CalcResizePosSizeFromAnyCornerP11ImGuiWindowRK6ImVec2S3_PS1_S4_.exit.thread
   br label %bb.hs
 
 bb.hp:                                            ; preds = %bb.hm
-  switch i32 %31, label %_ZL7ImClampRK6ImVec2S1_S_.exit.i [
+  switch i32 %30, label %_ZL7ImClampRK6ImVec2S1_S_.exit.i [
     i32 3, label %bb.hq
     i32 0, label %bb.hq
   ]
@@ -1343,23 +1336,19 @@ bb.hq:                                            ; preds = %bb.hp, %bb.hp
 
 _ZL7ImClampRK6ImVec2S1_S_.exit.i:                 ; preds = %bb.hq, %bb.hp
   %i.ari = phi float [ %i.ang, %bb.hq ], [ f0xFF7FFFFF, %bb.hp ]
-  %i.arj = add nsw i32 %31, -1
-  %37 = and i32 %31, 2147483646
-  %38 = fmul <2 x float> %i.aoc, %i.ani
+  %i.arj = add i32 %30, -1
   %i.ark = icmp ult i32 %i.arj, 2                 ; 2 uses
-  %i.arl = select i1 %i.ark, float %30, float f0x7F7FFFFF
-  %39 = icmp eq i32 %37, 2
-  %40 = select i1 %39, float %i.anf, float f0x7F7FFFFF
+  %i.arl = select i1 %i.ark, float %i.anf, float f0x7F7FFFFF
+  %32 = fmul <2 x float> %i.aoc, %i.ani
   %i.arm = load <2 x float>, ptr %i.anc, align 8, !tbaa !75
   %i.arn = load <2 x float>, ptr %i.and, align 8, !tbaa !75
   %i.aro = fsub <2 x float> %i.arm, %i.arn
-  %i.arp = fsub <2 x float> %38, %i.aod
+  %i.arp = fsub <2 x float> %32, %i.aod
   %i.arq = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.arp, <2 x float> %i.aoa, <2 x float> %i.aod)
   %i.arr = fadd <2 x float> %i.arq, %i.aro        ; 3 uses
   %i.ars = insertelement <2 x float> %i.akg, float %i.ari, i64 0 ; 2 uses
   %i.art = fcmp olt <2 x float> %i.arr, %i.ars
-  %41 = insertelement <2 x float> poison, float %i.arl, i64 0
-  %i.aru = insertelement <2 x float> %41, float %40, i64 1 ; 2 uses
+  %i.aru = insertelement <2 x float> <float poison, float f0x7F7FFFFF>, float %i.arl, i64 0 ; 2 uses
   %i.arv = fcmp ogt <2 x float> %i.arr, %i.aru
   %i.arw = select <2 x i1> %i.arv, <2 x float> %i.aru, <2 x float> %i.arr
   %i.arx = select <2 x i1> %i.art, <2 x float> %i.ars, <2 x float> %i.arw ; 3 uses
@@ -1762,7 +1751,7 @@ bb.qy:                                            ; preds = %_ZN11ImGuiWindow5Ge
   %i.dkt = phi i8 [ %.pre1145, %_ZN11ImGuiWindow5GetIDEPKcS1_.exit._crit_edge ], [ %.0, %bb.qx ]
   %i.dku = trunc nuw i8 %i.dkt to i1
   %i.dkv = xor i1 %i.dku, true
-  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4855)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4856)
   ret i1 %i.dkv
 }
 

@@ -205,12 +205,12 @@ bb.u:                                             ; preds = %_ZL21common_ngram_m
 
 .lr.ph602:                                        ; preds = %.preheader568
   %i.dh = load ptr, ptr %1, align 8, !tbaa !12
-  %invariant.gep = getelementptr [4 x i8], ptr %i.dh, i64 %i.dc
+  %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %i.dh, i64 %i.dc
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.v, %.lr.ph602
   %.0335600 = phi i64 [ 0, %.lr.ph602 ], [ %i.dl, %bb.v ] ; 3 uses
-  %gep = getelementptr [4 x i8], ptr %invariant.gep, i64 %.0335600
+  %gep = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep, i64 %.0335600
   %i.di = load i32, ptr %gep, align 4, !tbaa !14
   %i.dj = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0.4, i64 %.0335600
   %i.dk = load i32, ptr %i.dj, align 4, !tbaa !14

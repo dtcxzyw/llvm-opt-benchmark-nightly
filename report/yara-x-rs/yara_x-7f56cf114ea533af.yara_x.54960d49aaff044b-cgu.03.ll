@@ -204,7 +204,7 @@ bb.v:                                             ; preds = %.lr.ph.i.i.i.i.i
   br i1 %i.az, label %bb.p, label %bb.u
 
 bb.w:                                             ; preds = %bb.u
-  %.not79.i.i.i.i.i = icmp ult i64 %i.an, %.sroa.627.0.copyload.i.i.i
+  %.not79.i.i.i.i.i = icmp samesign ult i64 %i.an, %.sroa.627.0.copyload.i.i.i
   br i1 %.not79.i.i.i.i.i, label %bb.x, label %.thread.i.i.i.i.i
 
 bb.x:                                             ; preds = %bb.w
@@ -240,12 +240,12 @@ bb.aa:                                            ; preds = %bb.as, %bb.ap, %bb.
 bb.ab:                                            ; preds = %bb.o
   %i.bk = and i8 %i.am, -16
   %or.cond1.i.i.i.i.i = icmp eq i8 %i.bk, -32
-  %.not.i.i.i.i.i = icmp ult i64 %i.an, %.sroa.627.0.copyload.i.i.i
+  %.not.i.i.i.i.i = icmp samesign ult i64 %i.an, %.sroa.627.0.copyload.i.i.i
   %or.cond109.i.i.i.i.i = select i1 %or.cond1.i.i.i.i.i, i1 %.not.i.i.i.i.i, i1 false
   br i1 %or.cond109.i.i.i.i.i, label %bb.ad, label %.thread.i.i.i.i.i
 
 bb.ac:                                            ; preds = %bb.o
-  %.not78.i.i.i.i.i = icmp ult i64 %i.an, %.sroa.627.0.copyload.i.i.i
+  %.not78.i.i.i.i.i = icmp samesign ult i64 %i.an, %.sroa.627.0.copyload.i.i.i
   br i1 %.not78.i.i.i.i.i, label %bb.aq, label %.thread.i.i.i.i.i
 
 bb.ad:                                            ; preds = %bb.ab
@@ -258,7 +258,7 @@ bb.ad:                                            ; preds = %bb.ab
 bb.ae:                                            ; preds = %bb.ad
   %i.bp = and i8 %i.bm, -32
   %or.cond2.i.i.i.i.i = icmp eq i8 %i.bp, -96
-  %.not77.i.i.i.i.i = icmp ult i64 %i.bn, %.sroa.627.0.copyload.i.i.i
+  %.not77.i.i.i.i.i = icmp samesign ult i64 %i.bn, %.sroa.627.0.copyload.i.i.i
   %or.cond110.i.i.i.i.i = select i1 %or.cond2.i.i.i.i.i, i1 %.not77.i.i.i.i.i, i1 false
   br i1 %or.cond110.i.i.i.i.i, label %bb.an, label %.thread.i.i.i.i.i
 
@@ -267,7 +267,7 @@ bb.af:                                            ; preds = %bb.ad
   br i1 %or.cond99.i.i.i.i.i, label %bb.ah, label %.thread.i.i.i.i.i
 
 bb.ag:                                            ; preds = %bb.ah
-  %.not77.old.i.i.i.i.i = icmp ult i64 %i.bn, %.sroa.627.0.copyload.i.i.i
+  %.not77.old.i.i.i.i.i = icmp samesign ult i64 %i.bn, %.sroa.627.0.copyload.i.i.i
   br i1 %.not77.old.i.i.i.i.i, label %bb.an, label %.thread.i.i.i.i.i
 
 bb.ah:                                            ; preds = %bb.af

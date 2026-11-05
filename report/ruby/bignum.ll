@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.m, %ruby_nonempt
   br i1 %i.db, label %.lr.ph.i.i121.epil.preheader, label %.lr.ph.i.i121.preheader.new
 
 .lr.ph.i.i121.preheader.new:                      ; preds = %.lr.ph.i.i121.preheader
-  %unroll_iter185 = and i64 %.064.i.i, -2
+  %unroll_iter185 = and i64 %.064.i.i, 4611686018427387902
   br label %.lr.ph.i.i121
 
 .preheader72.i.i.loopexit.unr-lcssa:              ; preds = %.lr.ph.i.i121
@@ -608,7 +608,7 @@ bb.ab:                                            ; preds = %bb.aa, %bary_addc.e
   br i1 %i.ui, label %.lr.ph.i.i338.epil.preheader, label %.lr.ph.i.i338.preheader.new
 
 .lr.ph.i.i338.preheader.new:                      ; preds = %.lr.ph.i.i338.preheader
-  %unroll_iter858 = and i64 %.064.i.i, -2
+  %unroll_iter858 = and i64 %.064.i.i, 9223372036854775806
   br label %.lr.ph.i.i338
 
 .preheader72.i.i342.loopexit.unr-lcssa:           ; preds = %.lr.ph.i.i338

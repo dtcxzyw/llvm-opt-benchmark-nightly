@@ -204,15 +204,19 @@ bb.j:                                             ; preds = %.thread
   %i.bd = load volatile i32, ptr @num_active_timeouts, align 4 ; 2 uses
   %.012.i = add i32 %i.bd, -1                     ; 2 uses
   %.not13.i = icmp slt i32 %.012.i, %.020.lcssa
-  br i1 %.not13.i, label %insert_timeout.exit, label %.lr.ph.i26.preheader
+  br i1 %.not13.i, label %.insert_timeout.exit_crit_edge, label %.lr.ph.i26.preheader
+
+.insert_timeout.exit_crit_edge:                   ; preds = %bb.j
+  %.pre = zext nneg i32 %.020.lcssa to i64
+  br label %insert_timeout.exit
 
 .lr.ph.i26.preheader:                             ; preds = %bb.j
-  %4 = sext i32 %.012.i to i64
-  %5 = sext i32 %.020.lcssa to i64
+  %4 = zext nneg i32 %.012.i to i64
+  %5 = zext nneg i32 %.020.lcssa to i64           ; 2 uses
   %i.be = sext i32 %i.bd to i64
   br label %.lr.ph.i26
 
-.lr.ph.i26:                                       ; preds = %.lr.ph.i26.preheader, %.lr.ph.i26
+.lr.ph.i26:                                       ; preds = %.lr.ph.i26, %.lr.ph.i26.preheader
   %indvars.iv38 = phi i64 [ %4, %.lr.ph.i26.preheader ], [ %indvars.iv.next39, %.lr.ph.i26 ] ; 4 uses
   %.0.in14.i = phi i64 [ %i.be, %.lr.ph.i26.preheader ], [ %indvars.iv38, %.lr.ph.i26 ]
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %indvars.iv38
@@ -223,9 +227,9 @@ bb.j:                                             ; preds = %.thread
   %.not.not.i = icmp samesign ugt i64 %indvars.iv38, %5
   br i1 %.not.not.i, label %.lr.ph.i26, label %insert_timeout.exit, !llvm.loop !11
 
-insert_timeout.exit:                              ; preds = %.lr.ph.i26, %bb.j
-  %6 = zext nneg i32 %.020.lcssa to i64
-  %i.bi = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %6
+insert_timeout.exit:                              ; preds = %.lr.ph.i26, %.insert_timeout.exit_crit_edge
+  %.pre-phi = phi i64 [ %.pre, %.insert_timeout.exit_crit_edge ], [ %5, %.lr.ph.i26 ]
+  %i.bi = getelementptr inbounds nuw [8 x i8], ptr @active_timeouts, i64 %.pre-phi
   store volatile ptr %i.b, ptr %i.bi, align 8
   %i.bj = load volatile i32, ptr @num_active_timeouts, align 4
   %i.bk = add i32 %i.bj, 1

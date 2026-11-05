@@ -204,27 +204,28 @@ gsc_allocate_and_map_vma.exit.thread:             ; preds = %bb.d
   br label %bb.i
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.0.in.in.i = phi ptr [ %i.h, %bb.c ], [ %i.j, %bb.d ] ; 3 uses
+  %.0.in.in.i = phi ptr [ %i.h, %bb.c ], [ %i.j, %bb.d ]
+  %.0.in.i = ptrtoint ptr %.0.in.in.i to i64
+  %.0.i = trunc nsw i64 %.0.in.i to i32           ; 3 uses
   %i.p = tail call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.f, i32 -1, ptr elementtype(i32) %i.f) #5, !srcloc !10 ; 2 uses
   %i.q = icmp eq i32 %i.p, 1
   br i1 %i.q, label %bb.h, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.r = icmp slt i32 %i.p, 1
-  br i1 %i.r, label %bb.g, label %gsc_allocate_and_map_vma.exit, !prof !11
+  br i1 %i.r, label %bb.g, label %gsc_unmap_and_free_vma.exit, !prof !11
 
 bb.g:                                             ; preds = %bb.f
   tail call void @refcount_warn_saturate(ptr noundef %i.f, i32 noundef 3) #3
-  br label %gsc_allocate_and_map_vma.exit
+  br label %gsc_unmap_and_free_vma.exit
 
 bb.h:                                             ; preds = %bb.e
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #5, !srcloc !12
   tail call void @drm_gem_object_free(ptr noundef %i.f) #3
-  br label %gsc_allocate_and_map_vma.exit
+  br label %gsc_unmap_and_free_vma.exit
 
-gsc_allocate_and_map_vma.exit:                    ; preds = %bb.b, %bb.f, %bb.g, %bb.h
-  %.019.i.in.in = phi ptr [ %.0.in.in.i, %bb.g ], [ %.0.in.in.i, %bb.h ], [ %.0.in.in.i, %bb.f ], [ %i.f, %bb.b ]
-  %.019.i.in = ptrtoint ptr %.019.i.in.in to i64
+gsc_allocate_and_map_vma.exit:                    ; preds = %bb.b
+  %.019.i.in = ptrtoint ptr %i.f to i64
   %.019.i = trunc i64 %.019.i.in to i32           ; 2 uses
   %.not25 = icmp eq i32 %.019.i, 0
   br i1 %.not25, label %bb.i, label %gsc_unmap_and_free_vma.exit
@@ -292,8 +293,8 @@ bb.p:                                             ; preds = %bb.i
   store i32 7, ptr %i.aq, align 4
   br label %bb.s
 
-gsc_unmap_and_free_vma.exit:                      ; preds = %bb.o, %bb.n, %bb.m, %__drm_to_dev.exit, %gsc_allocate_and_map_vma.exit
-  %.0 = phi i32 [ %.019.i, %gsc_allocate_and_map_vma.exit ], [ %i.af, %__drm_to_dev.exit ], [ %i.af, %bb.m ], [ %i.af, %bb.n ], [ %i.af, %bb.o ]
+gsc_unmap_and_free_vma.exit:                      ; preds = %bb.h, %bb.g, %bb.f, %bb.o, %bb.n, %bb.m, %__drm_to_dev.exit, %gsc_allocate_and_map_vma.exit
+  %.0 = phi i32 [ %.019.i, %gsc_allocate_and_map_vma.exit ], [ %i.af, %bb.o ], [ %i.af, %__drm_to_dev.exit ], [ %i.af, %bb.m ], [ %i.af, %bb.n ], [ %.0.i, %bb.f ], [ %.0.i, %bb.g ], [ %.0.i, %bb.h ]
   tail call void @intel_uc_fw_fini(ptr noundef %0) #3
   br label %bb.q
 

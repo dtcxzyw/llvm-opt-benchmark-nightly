@@ -205,12 +205,12 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.v = and i64 %i.m, 24
   %n.vec = and i64 %i.m, -32                      ; 4 uses
-  %6 = add nsw i64 %.0.i30.lcssa64, %n.vec
+  %6 = or disjoint i64 %.0.i30.lcssa64, %n.vec
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %7 = add nuw i64 %.0.i30.lcssa64, %index        ; 2 uses
+  %7 = or disjoint i64 %.0.i30.lcssa64, %index    ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.j, i64 %7 ; 3 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.w, i64 16 ; 2 uses
   %wide.load = load <16 x i8>, ptr %i.w, align 1, !tbaa !16, !alias.scope !72, !noalias !73
@@ -370,12 +370,12 @@ vector.main.loop.iter.check97:                    ; preds = %vector.memcheck95
 vector.ph99:                                      ; preds = %vector.main.loop.iter.check97
   %i.cc = and i64 %i.by, 24
   %n.vec100 = and i64 %i.by, -32                  ; 4 uses
-  %8 = add nsw i64 %.0.i26.lcssa72, %n.vec100
+  %8 = or disjoint i64 %.0.i26.lcssa72, %n.vec100
   br label %vector.body101
 
 vector.body101:                                   ; preds = %vector.ph99, %vector.body101
   %index102 = phi i64 [ 0, %vector.ph99 ], [ %index.next107, %vector.body101 ] ; 2 uses
-  %9 = add nuw i64 %.0.i26.lcssa72, %index102     ; 3 uses
+  %9 = or disjoint i64 %.0.i26.lcssa72, %index102 ; 3 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %i.bx, i64 %9 ; 2 uses
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cd, i64 16
   %wide.load103 = load <16 x i8>, ptr %i.cd, align 1, !tbaa !16
@@ -556,12 +556,12 @@ vector.main.loop.iter.check137:                   ; preds = %vector.memcheck133
 vector.ph139:                                     ; preds = %vector.main.loop.iter.check137
   %i.fc = and i64 %i.et, 24
   %n.vec140 = and i64 %i.et, -32                  ; 4 uses
-  %10 = add nsw i64 %.0.i.lcssa74, %n.vec140
+  %10 = or disjoint i64 %.0.i.lcssa74, %n.vec140
   br label %vector.body141
 
 vector.body141:                                   ; preds = %vector.ph139, %vector.body141
   %index142 = phi i64 [ 0, %vector.ph139 ], [ %index.next147, %vector.body141 ] ; 2 uses
-  %11 = add nuw i64 %.0.i.lcssa74, %index142      ; 2 uses
+  %11 = or disjoint i64 %.0.i.lcssa74, %index142  ; 2 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %i.er, i64 %11 ; 3 uses
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fd, i64 16 ; 2 uses
   %wide.load143 = load <16 x i8>, ptr %i.fd, align 1, !tbaa !16, !alias.scope !75, !noalias !76
@@ -850,7 +850,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.ax = load i8, ptr %i.aw, align 1, !tbaa !16
   %i.ay = xor i8 %i.ax, %i.av
   store i8 %i.ay, ptr %i.au, align 1, !tbaa !16
-  %i.az = add nuw i64 %.1.i51.prol, 1             ; 2 uses
+  %i.az = add nuw nsw i64 %.1.i51.prol, 1         ; 2 uses
   %prol.iter.next = add i64 %prol.iter, 1         ; 2 uses
   %prol.iter.cmp.not = icmp eq i64 %prol.iter.next, %xtraiter
   br i1 %prol.iter.cmp.not, label %.lr.ph52.prol.loopexit, label %.lr.ph52.prol, !llvm.loop !82
@@ -879,28 +879,28 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.bi = load i8, ptr %i.bh, align 1, !tbaa !16
   %i.bj = xor i8 %i.bi, %i.bg
   store i8 %i.bj, ptr %i.bf, align 1, !tbaa !16
-  %i.bk = add nuw i64 %.1.i51, 1                  ; 2 uses
+  %i.bk = add nuw nsw i64 %.1.i51, 1              ; 2 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %4, i64 %i.bk ; 2 uses
   %i.bm = load i8, ptr %i.bl, align 1, !tbaa !16
   %i.bn = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.bk
   %i.bo = load i8, ptr %i.bn, align 1, !tbaa !16
   %i.bp = xor i8 %i.bo, %i.bm
   store i8 %i.bp, ptr %i.bl, align 1, !tbaa !16
-  %i.bq = add nuw i64 %.1.i51, 2                  ; 2 uses
+  %i.bq = add nuw nsw i64 %.1.i51, 2              ; 2 uses
   %i.br = getelementptr inbounds nuw i8, ptr %4, i64 %i.bq ; 2 uses
   %i.bs = load i8, ptr %i.br, align 1, !tbaa !16
   %i.bt = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.bq
   %i.bu = load i8, ptr %i.bt, align 1, !tbaa !16
   %i.bv = xor i8 %i.bu, %i.bs
   store i8 %i.bv, ptr %i.br, align 1, !tbaa !16
-  %i.bw = add nuw i64 %.1.i51, 3                  ; 2 uses
+  %i.bw = add nuw nsw i64 %.1.i51, 3              ; 2 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %4, i64 %i.bw ; 2 uses
   %i.by = load i8, ptr %i.bx, align 1, !tbaa !16
   %i.bz = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.bw
   %i.ca = load i8, ptr %i.bz, align 1, !tbaa !16
   %i.cb = xor i8 %i.ca, %i.by
   store i8 %i.cb, ptr %i.bx, align 1, !tbaa !16
-  %i.cc = add nuw i64 %.1.i51, 4                  ; 2 uses
+  %i.cc = add nuw nsw i64 %.1.i51, 4              ; 2 uses
   %exitcond.not.3 = icmp eq i64 %i.cc, %5
   br i1 %exitcond.not.3, label %mbedtls_xor.exit, label %.lr.ph52, !llvm.loop !84
 

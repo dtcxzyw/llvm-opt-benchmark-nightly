@@ -202,10 +202,10 @@ _ZL16EmitInlineAsmStrPKcPKN4llvm12MachineInstrEPNS1_17MachineModuleInfoERKNS1_9M
   br i1 %.not.i68, label %bb.cn, label %._crit_edge.i.i
 
 .lr.ph:                                           ; preds = %_ZL16EmitInlineAsmStrPKcPKN4llvm12MachineInstrEPNS1_17MachineModuleInfoERKNS1_9MCAsmInfoEPNS1_10AsmPrinterEmRNS1_11raw_ostreamE.exit, %bb.cj
-  %.05490 = phi i32 [ %i.ly, %bb.cj ], [ 2, %_ZL16EmitInlineAsmStrPKcPKN4llvm12MachineInstrEPNS1_17MachineModuleInfoERKNS1_9MCAsmInfoEPNS1_10AsmPrinterEmRNS1_11raw_ostreamE.exit ] ; 4 uses
-  %i.kw = load ptr, ptr %i.d, align 8, !tbaa !385 ; 2 uses
-  %i.kx = zext i32 %.05490 to i64
-  %i.ky = getelementptr inbounds nuw [32 x i8], ptr %i.kw, i64 %i.kx ; 2 uses
+  %.05490 = phi i32 [ %i.ly, %bb.cj ], [ 2, %_ZL16EmitInlineAsmStrPKcPKN4llvm12MachineInstrEPNS1_17MachineModuleInfoERKNS1_9MCAsmInfoEPNS1_10AsmPrinterEmRNS1_11raw_ostreamE.exit ] ; 3 uses
+  %i.kw = load ptr, ptr %i.d, align 8, !tbaa !385
+  %i.kx = zext nneg i32 %.05490 to i64
+  %i.ky = getelementptr inbounds nuw [32 x i8], ptr %i.kw, i64 %i.kx ; 3 uses
   %i.kz = load i32, ptr %i.ky, align 8
   %i.la = and i32 %i.kz, 255
   %i.lb = icmp eq i32 %i.la, 1
@@ -220,10 +220,7 @@ bb.ce:                                            ; preds = %.lr.ph
   br i1 %i.lg, label %bb.cf, label %_ZN4llvm23SmallVectorTemplateBaseINS_8RegisterELb1EE9push_backES1_.exit
 
 bb.cf:                                            ; preds = %bb.ce
-  %50 = add nuw nsw i32 %.05490, 1
-  %51 = zext i32 %50 to i64
-  %52 = getelementptr inbounds nuw [32 x i8], ptr %i.kw, i64 %51
-  %i.lh = getelementptr inbounds nuw i8, ptr %52, i64 4
+  %i.lh = getelementptr inbounds nuw i8, ptr %i.ky, i64 36
   %i.li = load i32, ptr %i.lh, align 4, !tbaa !297 ; 3 uses
   %i.lj = load ptr, ptr %i.kj, align 8, !tbaa !398
   %i.lk = load ptr, ptr %i.kq, align 8, !tbaa !336
@@ -255,7 +252,7 @@ bb.ci:                                            ; preds = %bb.cg
 _ZN4llvm23SmallVectorTemplateBaseINS_8RegisterELb1EE9push_backES1_.exit: ; preds = %bb.cf, %bb.ch, %bb.ci, %bb.ce
   %i.lv = lshr i32 %i.le, 3
   %i.lw = and i32 %i.lv, 8191
-  %i.lx = add i32 %i.lw, %.05490
+  %i.lx = add nuw nsw i32 %i.lw, %.05490
   br label %bb.cj
 
 bb.cj:                                            ; preds = %.lr.ph, %_ZN4llvm23SmallVectorTemplateBaseINS_8RegisterELb1EE9push_backES1_.exit

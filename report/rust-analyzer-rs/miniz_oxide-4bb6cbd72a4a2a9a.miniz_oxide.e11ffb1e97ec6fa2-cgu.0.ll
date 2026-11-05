@@ -205,7 +205,7 @@ _RNvMs8_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_9BitBuffer5flush.exit.i
 
 .preheader.i21:                                   ; preds = %bb.cn
   %i.ri = lshr exact i32 %.sroa.02.1.i, 1
-  %i.rj = add i64 %.sroa.07.1.i, 1                ; 3 uses
+  %i.rj = add nuw nsw i64 %.sroa.07.1.i, 1        ; 3 uses
   %i.rk = and i64 %.sroa.07.1.i, 65535
   %i.rl = getelementptr inbounds nuw i8, ptr %2, i64 %i.rk
   %i.rm = load i8, ptr %i.rl, align 1, !alias.scope !293, !noundef !5
@@ -223,13 +223,13 @@ _RNvMs8_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_9BitBuffer5flush.exit.i
   %i.ry = add i32 %.sroa.19.091.i, %i.rt          ; 3 uses
   %i.rz = and i32 %.sroa.02.1.i, 2
   %.not36.i = icmp eq i32 %i.rz, 0
-  %i.sa = icmp ult i64 %i.rj, %..i.i7
+  %i.sa = icmp samesign ult i64 %i.rj, %..i.i7
   %or.cond = select i1 %.not36.i, i1 %i.sa, i1 false
   br i1 %or.cond, label %.preheader.i21.1, label %.loopexit.i
 
 .preheader.i21.1:                                 ; preds = %.preheader.i21
   %i.sb = lshr exact i32 %.sroa.02.1.i, 2
-  %i.sc = add i64 %.sroa.07.1.i, 2                ; 3 uses
+  %i.sc = add nuw nsw i64 %.sroa.07.1.i, 2        ; 3 uses
   %i.sd = and i64 %i.rj, 65535
   %i.se = getelementptr inbounds nuw i8, ptr %2, i64 %i.sd
   %i.sf = load i8, ptr %i.se, align 1, !alias.scope !293, !noundef !5
@@ -247,13 +247,13 @@ _RNvMs8_NtNtCsjkkKzr5dxZe_11miniz_oxide7deflate4coreNtB5_9BitBuffer5flush.exit.i
   %i.sr = add i32 %i.ry, %i.sm                    ; 3 uses
   %i.ss = and i32 %.sroa.02.1.i, 4
   %.not36.i.1 = icmp eq i32 %i.ss, 0
-  %i.st = icmp ult i64 %i.sc, %..i.i7
+  %i.st = icmp samesign ult i64 %i.sc, %..i.i7
   %or.cond415 = select i1 %.not36.i.1, i1 %i.st, i1 false
   br i1 %or.cond415, label %.preheader.i21.2, label %.loopexit.i
 
 .preheader.i21.2:                                 ; preds = %.preheader.i21.1
   %i.su = lshr exact i32 %.sroa.02.1.i, 3
-  %i.sv = add i64 %.sroa.07.1.i, 3
+  %i.sv = add nuw nsw i64 %.sroa.07.1.i, 3
   %i.sw = and i64 %i.sc, 65535
   %i.sx = getelementptr inbounds nuw i8, ptr %2, i64 %i.sw
   %i.sy = load i8, ptr %i.sx, align 1, !alias.scope !293, !noundef !5

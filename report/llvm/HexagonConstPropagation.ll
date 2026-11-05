@@ -205,10 +205,10 @@ _ZNK12_GLOBAL__N_122MachineConstPropagator7CellMap3getEN4llvm8RegisterE.exit49: 
 
 .lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %.thread
   %i.bk = phi i8 [ %i.aw, %.lr.ph.split.preheader ], [ %i.dr, %.thread ] ; 9 uses
-  %indvars.iv = phi i64 [ 1, %.lr.ph.split.preheader ], [ %indvars.iv.next, %.thread ] ; 3 uses
+  %indvars.iv = phi i64 [ 1, %.lr.ph.split.preheader ], [ %indvars.iv.next, %.thread ] ; 2 uses
   %.0110 = phi i1 [ false, %.lr.ph.split.preheader ], [ %.289, %.thread ] ; 8 uses
-  %i.bl = load ptr, ptr %i.e, align 8, !tbaa !309 ; 2 uses
-  %i.bm = getelementptr inbounds nuw [32 x i8], ptr %i.bl, i64 %indvars.iv
+  %i.bl = load ptr, ptr %i.e, align 8, !tbaa !309
+  %i.bm = getelementptr inbounds nuw [32 x i8], ptr %i.bl, i64 %indvars.iv ; 3 uses
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bm, i64 48
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !310
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bo, i64 24
@@ -267,11 +267,10 @@ _ZNKSt4lessISt4pairIjjEEclERKS1_S4_.exit.i.i:     ; preds = %bb.m
   br i1 %i.ch, label %.thread, label %_ZNKSt3setISt4pairIjjESt4lessIS1_ESaIS1_EE5countERKS1_.exit
 
 _ZNKSt3setISt4pairIjjESt4lessIS1_ESaIS1_EE5countERKS1_.exit: ; preds = %_ZNKSt4lessISt4pairIjjEEclERKS1_S4_.exit.i.i, %bb.m
-  %5 = getelementptr inbounds nuw [32 x i8], ptr %i.bl, i64 %indvars.iv ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
-  %i.ci = getelementptr inbounds nuw i8, ptr %5, i64 4
+  %i.ci = getelementptr inbounds nuw i8, ptr %i.bm, i64 4
   %i.cj = load i32, ptr %i.ci, align 4, !tbaa !310 ; 6 uses
-  %i.ck = load i32, ptr %5, align 8
+  %i.ck = load i32, ptr %i.bm, align 8
   %i.cl = lshr i32 %i.ck, 8
   %i.cm = and i32 %i.cl, 4095
   %.sroa.2.0.insert.ext.i50 = zext nneg i32 %i.cm to i64

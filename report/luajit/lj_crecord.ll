@@ -204,7 +204,7 @@ bb.ag:                                            ; preds = %.lr.ph, %.lr.ph.i55
   store i32 %.123.i, ptr %i.dm, align 4, !tbaa !79
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i136, 1 ; 3 uses
   %i.dn = add nuw nsw i32 %i.dk, %.024.i          ; 2 uses
-  %.not.i56 = icmp ugt i32 %i.dn, %i.g
+  %.not.i56 = icmp samesign ugt i32 %i.dn, %i.g
   br i1 %.not.i56, label %._crit_edge.loopexit.i, label %.lr.ph.i55, !llvm.loop !121
 
 ._crit_edge.loopexit.i:                           ; preds = %bb.ag
@@ -504,8 +504,8 @@ bb.d:                                             ; preds = %.lr.ph, %.lr.ph.i
   %i.n = getelementptr inbounds nuw i8, ptr %i.m, i64 4
   store i32 %.0.i, ptr %i.n, align 4, !tbaa !79
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i3, 1 ; 3 uses
-  %i.o = add i32 %i.l, %.022.i                    ; 2 uses
-  %.not.i = icmp ugt i32 %i.o, %i.g
+  %i.o = add nuw nsw i32 %i.l, %.022.i            ; 2 uses
+  %.not.i = icmp samesign ugt i32 %i.o, %i.g
   br i1 %.not.i, label %._crit_edge.loopexit.i, label %.lr.ph.i, !llvm.loop !127
 
 ._crit_edge.loopexit.i:                           ; preds = %bb.d

@@ -205,18 +205,14 @@ bb.o:                                             ; preds = %.lr.ph, %_ZN11hb_ve
 .preheader.i:                                     ; preds = %bb.o, %.preheader.i
   %.043.i = phi i32 [ %i.ed, %.preheader.i ], [ 0, %bb.o ] ; 2 uses
   %i.eb = lshr i32 %.043.i, 1
-  %i.ec = add i32 %.043.i, 8
-  %i.ed = add i32 %i.ec, %i.eb                    ; 6 uses
-  %i.ee = icmp ult i32 %i.ed, %i.cs
-  br i1 %i.ee, label %.preheader.i, label %.thread.i, !llvm.loop !19
+  %i.ec = add nuw nsw i32 %.043.i, 8
+  %i.ed = add nuw nsw i32 %i.ec, %i.eb            ; 5 uses
+  %i.ee = icmp samesign ult i32 %i.ed, %i.cs
+  br i1 %i.ee, label %.preheader.i, label %_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i, !llvm.loop !19
 
-.thread.i:                                        ; preds = %.preheader.i
-  %6 = icmp ugt i32 %i.ed, 1073741823
-  br i1 %6, label %_ZN11hb_vector_tIfLb0EE5allocEjb.exit.thread195, label %_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i, !prof !99
-
-_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i: ; preds = %.thread.i
-  %i.ef = shl nuw i32 %i.ed, 2
-  %i.eg = zext i32 %i.ef to i64
+_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i: ; preds = %.preheader.i
+  %i.ef = shl nuw nsw i32 %i.ed, 2
+  %i.eg = zext nneg i32 %i.ef to i64
   %i.eh = call ptr @hb_realloc(ptr noundef null, i64 noundef %i.eg) #16 ; 2 uses
   %.not22.i = icmp eq ptr %i.eh, null
   br i1 %.not22.i, label %_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.thread53.i, label %_ZN11hb_vector_tIfLb0EE5allocEjb.exit, !prof !100
@@ -224,15 +220,11 @@ _ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_triviall
 _ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.thread53.i: ; preds = %_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i
   %.pre = load i32, ptr %i.be, align 8, !tbaa !229 ; 2 uses
   %.not23.i = icmp ugt i32 %i.ed, %.pre
-  br i1 %.not23.i, label %7, label %_ZN11hb_vector_tIfLb0EE5allocEjb.exit.thread
+  br i1 %.not23.i, label %_ZN11hb_vector_tIfLb0EE5allocEjb.exit.thread195, label %_ZN11hb_vector_tIfLb0EE5allocEjb.exit.thread
 
-7:                                                ; preds = %_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.thread53.i
-  %8 = xor i32 %.pre, -1
-  br label %_ZN11hb_vector_tIfLb0EE5allocEjb.exit.thread195
-
-_ZN11hb_vector_tIfLb0EE5allocEjb.exit.thread195:  ; preds = %.thread.i, %7
-  %.sink.i.ph = phi i32 [ %8, %7 ], [ -1, %.thread.i ]
-  store i32 %.sink.i.ph, ptr %i.be, align 8, !tbaa !229
+_ZN11hb_vector_tIfLb0EE5allocEjb.exit.thread195:  ; preds = %_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.thread53.i
+  %6 = xor i32 %.pre, -1
+  store i32 %6, ptr %i.be, align 8, !tbaa !229
   br label %.critedge
 
 _ZN11hb_vector_tIfLb0EE5allocEjb.exit:            ; preds = %_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i
@@ -268,9 +260,9 @@ bb.r:                                             ; preds = %bb.q
 .preheader.i.i:                                   ; preds = %bb.r, %.preheader.i.i
   %.053.i.i = phi i32 [ %i.eu, %.preheader.i.i ], [ %i.eq, %bb.r ] ; 2 uses
   %i.es = lshr i32 %.053.i.i, 1
-  %i.et = add nuw i32 %.053.i.i, 8
-  %i.eu = add nuw i32 %i.et, %i.es                ; 6 uses
-  %i.ev = icmp ult i32 %i.eu, %i.cs
+  %i.et = add nuw nsw i32 %.053.i.i, 8
+  %i.eu = add nuw nsw i32 %i.et, %i.es            ; 6 uses
+  %i.ev = icmp samesign ult i32 %i.eu, %i.cs
   br i1 %i.ev, label %.preheader.i.i, label %.thread39.i.i, !llvm.loop !980
 
 .thread39.i.i:                                    ; preds = %.preheader.i.i
@@ -283,7 +275,7 @@ bb.s:                                             ; preds = %.thread39.i.i
   br i1 %.not9.i.i.i.i, label %_ZN11hb_vector_tIbLb0EE14realloc_vectorIbTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPbj11hb_priorityILj0EE.exit.i.i, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %i.ex = zext i32 %i.eu to i64
+  %i.ex = zext nneg i32 %i.eu to i64
   %i.ey = call ptr @hb_malloc(i64 noundef %i.ex) #16 ; 4 uses
   %.not10.i.i.i.i = icmp eq ptr %i.ey, null
   br i1 %.not10.i.i.i.i, label %_ZN11hb_vector_tIbLb0EE14realloc_vectorIbTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPbj11hb_priorityILj0EE.exit.thread63.i.i, label %bb.u, !prof !99
@@ -301,7 +293,7 @@ bb.v:                                             ; preds = %bb.u
 
 _ZN11hb_vector_tIbLb0EE14realloc_vectorIbTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPbj11hb_priorityILj0EE.exit.i.i: ; preds = %bb.s, %.thread39.i.i
   %i.fc = phi ptr [ null, %bb.s ], [ %i.ew, %.thread39.i.i ]
-  %i.fd = zext i32 %i.eu to i64
+  %i.fd = zext nneg i32 %i.eu to i64
   %i.fe = call ptr @hb_realloc(ptr noundef %i.fc, i64 noundef %i.fd) #16 ; 2 uses
   %.not22.i.i = icmp eq ptr %i.fe, null
   br i1 %.not22.i.i, label %_ZN11hb_vector_tIbLb0EE14realloc_vectorIbTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPbj11hb_priorityILj0EE.exit.thread63.i.i, label %_ZN11hb_vector_tIbLb0EE5allocEjb.exit.thread4.i, !prof !152
@@ -704,7 +696,7 @@ begin_hunk_1_@llvm.vector.reduce.add.v8i64
 !997 = !{!88, !48, i64 116}
 !998 = !{!88, !77, i64 120}
 !999 = !{!986, !985}
-!1000 = !{!"branch_weights", !"expected", i32 2414338, i32 2145069310}
+!1000 = !{!"branch_weights", !"expected", i32 2403692, i32 2145079956}
 !1001 = !{!459, !48, i64 68}
 !1002 = !{!"branch_weights", !"expected", i32 1117922, i32 2146365726}
 !1003 = distinct !{!1003, !98}

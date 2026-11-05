@@ -205,11 +205,10 @@ emit_pdps.exit.thread15:                          ; preds = %i915_page_dir_dma_a
 emit_pdps.exit:                                   ; preds = %bb.e, %bb.b
   %.0.i.in.in = phi ptr [ %i.m, %bb.b ], [ %i.u, %bb.e ]
   %.0.i.in = ptrtoint ptr %.0.i.in.in to i64
-  %.0.i = trunc i64 %.0.i.in to i32               ; 2 uses
-  %.not = icmp eq i32 %.0.i, 0
-  br i1 %.not, label %bb.k, label %emit_pdps.exit.thread
+  %.0.i = trunc nsw i64 %.0.i.in to i32
+  br label %emit_pdps.exit.thread
 
-bb.k:                                             ; preds = %emit_pdps.exit.thread15, %emit_pdps.exit, %bb.a
+bb.k:                                             ; preds = %emit_pdps.exit.thread15, %bb.a
   %i.dc = getelementptr i8, ptr %0, i64 80
   %i.dd = load ptr, ptr %i.dc, align 8
   %i.de = getelementptr i8, ptr %i.dd, i64 880
@@ -224,7 +223,7 @@ bb.l:                                             ; preds = %bb.k
   store i32 %i.di, ptr %i.a, align 4
   br label %emit_pdps.exit.thread
 
-emit_pdps.exit.thread:                            ; preds = %bb.d, %bb.c, %bb.k, %emit_pdps.exit, %bb.l
+emit_pdps.exit.thread:                            ; preds = %emit_pdps.exit, %bb.d, %bb.c, %bb.k, %bb.l
   %.0 = phi i32 [ %.0.i, %emit_pdps.exit ], [ 0, %bb.l ], [ %i.dg, %bb.k ], [ %i.t, %bb.d ], [ %i.r, %bb.c ]
   ret i32 %.0
 }

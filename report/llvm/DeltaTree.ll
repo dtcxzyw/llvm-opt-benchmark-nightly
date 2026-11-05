@@ -188,7 +188,7 @@ bb.d:                                             ; preds = %bb.d, %.epil.prehea
 ._crit_edge69._crit_edge:                         ; preds = %._crit_edge.thread, %._crit_edge69
   %.4.lcssa100 = phi i32 [ %.4.lcssa, %._crit_edge69 ], [ %.035, %._crit_edge.thread ]
   %.034.lcssa879498 = phi i32 [ %.034.lcssa8794, %._crit_edge69 ], [ 0, %._crit_edge.thread ]
-  %.pre = zext i32 %.034.lcssa879498 to i64
+  %.pre = zext nneg i32 %.034.lcssa879498 to i64
   br label %bb.h
 
 bb.e:                                             ; preds = %bb.e, %.lr.ph68.new
@@ -224,7 +224,7 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph68.new
   br i1 %niter.ncmp.3, label %._crit_edge69.loopexit.unr-lcssa, label %bb.e, !llvm.loop !32
 
 bb.f:                                             ; preds = %._crit_edge69
-  %i.an = zext i32 %.034.lcssa8794 to i64         ; 3 uses
+  %i.an = zext nneg i32 %.034.lcssa8794 to i64    ; 3 uses
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %.037, i64 %i.an
   %i.ap = load i32, ptr %i.ao, align 4, !tbaa !22
   %i.aq = icmp eq i32 %i.ap, %1
@@ -318,7 +318,7 @@ bb.a:
   %.val119295 = phi i8 [ %.val119, %tailrecurse.backedge ], [ %.val119290, %bb.a ] ; 3 uses
   %ret.known.tr294 = phi i1 [ true, %tailrecurse.backedge ], [ false, %bb.a ] ; 4 uses
   %.tr125293 = phi ptr [ null, %tailrecurse.backedge ], [ %3, %bb.a ] ; 4 uses
-  %.tr292 = phi ptr [ %.tr.be, %tailrecurse.backedge ], [ %0, %bb.a ] ; 11 uses
+  %.tr292 = phi ptr [ %.tr.be, %tailrecurse.backedge ], [ %0, %bb.a ] ; 10 uses
   %i.g = zext i8 %.val119295 to i64
   br label %.lr.ph
 
@@ -348,7 +348,7 @@ bb.c:                                             ; preds = %.critedge
   br label %bb.p
 
 .critedge114:                                     ; preds = %bb.b, %.critedge
-  %.0105134 = phi i32 [ %i.k, %.critedge ], [ %i.f, %bb.b ] ; 5 uses
+  %.0105134 = phi i32 [ %i.k, %.critedge ], [ %i.f, %bb.b ] ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %.tr292, i64 121
   %.val = load i8, ptr %i.q, align 1, !tbaa !11, !range !16, !noundef !17
   %i.r = trunc nuw i8 %.val to i1
@@ -379,19 +379,17 @@ bb.e:                                             ; preds = %bb.d
   %.val119272 = phi i8 [ %.val119295, %bb.e ], [ %.val119.lcssa, %.critedge114.thread ]
   %i.x = phi ptr [ %i.w, %bb.e ], [ %i.s, %.critedge114.thread ]
   %.0105134204210214 = phi i32 [ %.0105134, %bb.e ], [ 0, %.critedge114.thread ]
-  %.pre197 = zext i32 %.0105134204210214 to i64
+  %.pre197 = zext nneg i32 %.0105134204210214 to i64
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %4 = add nuw nsw i32 %.0105134, 1
-  %i.y = zext i32 %4 to i64
-  %i.z = getelementptr inbounds nuw [8 x i8], ptr %.tr292, i64 %i.y
-  %5 = zext i32 %.0105134 to i64                  ; 2 uses
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %.tr292, i64 %5
+  %i.y = zext nneg i32 %.0105134 to i64           ; 2 uses
+  %i.z = getelementptr inbounds nuw [8 x i8], ptr %.tr292, i64 %i.y ; 2 uses
+  %4 = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   %i.aa = sub nuw nsw i32 %i.f, %.0105134
   %i.ab = shl nuw nsw i32 %i.aa, 3
   %i.ac = zext nneg i32 %i.ab to i64
-  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %i.z, ptr nonnull align 4 %6, i64 %i.ac, i1 false)
+  tail call void @llvm.memmove.p0.p0.i64(ptr nonnull align 4 %4, ptr nonnull align 4 %i.z, i64 %i.ac, i1 false)
   %.pre196 = load i8, ptr %i.w, align 4, !tbaa !10
   br label %bb.g
 
@@ -399,7 +397,7 @@ bb.g:                                             ; preds = %._crit_edge, %bb.f
   %.tr286 = phi ptr [ %.tr287, %._crit_edge ], [ %.tr292, %bb.f ]
   %ret.known.tr276 = phi i1 [ %ret.known.tr277, %._crit_edge ], [ %ret.known.tr294, %bb.f ]
   %i.ad = phi ptr [ %i.x, %._crit_edge ], [ %i.w, %bb.f ]
-  %.pre-phi.a = phi i64 [ %.pre197, %._crit_edge ], [ %5, %bb.f ]
+  %.pre-phi.a = phi i64 [ %.pre197, %._crit_edge ], [ %i.y, %bb.f ]
   %i.ae = phi i8 [ %.val119272, %._crit_edge ], [ %.pre196, %bb.f ]
   %.sroa.2.0.insert.ext.i = zext i32 %2 to i64
   %.sroa.2.0.insert.shift.i = shl nuw i64 %.sroa.2.0.insert.ext.i, 32
@@ -442,7 +440,7 @@ bb.h:                                             ; preds = %.loopexit, %.crited
   %.not131205 = phi i1 [ true, %.critedge114.thread ], [ %i.j, %.loopexit ]
   %.0105134203 = phi i32 [ 0, %.critedge114.thread ], [ %.0105134, %.loopexit ] ; 5 uses
   %i.as = getelementptr inbounds nuw i8, ptr %.tr288, i64 128 ; 4 uses
-  %i.at = zext i32 %.0105134203 to i64            ; 3 uses
+  %i.at = zext nneg i32 %.0105134203 to i64       ; 3 uses
   %i.au = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %i.at ; 4 uses
   %i.av = load ptr, ptr %i.au, align 8, !tbaa !19
   %i.aw = tail call fastcc noundef zeroext i1 @_ZN12_GLOBAL__N_113DeltaTreeNode11DoInsertionEjiPNS0_12InsertResultE(ptr noundef nonnull align 4 dereferenceable(128) %i.av, i32 noundef %1, i32 noundef %2, ptr noundef %.tr125282)
@@ -457,11 +455,11 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not131205, label %.critedge116, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
-  %i.ay = add i32 %.0105134203, 2
+  %i.ay = add nuw i32 %.0105134203, 2
   %i.az = zext i32 %i.ay to i64
   %i.ba = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %i.az
   %i.bb = add nuw nsw i32 %.0105134203, 1
-  %i.bc = zext i32 %i.bb to i64                   ; 2 uses
+  %i.bc = zext nneg i32 %i.bb to i64              ; 2 uses
   %i.bd = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %i.bc ; 2 uses
   %i.be = sub nuw nsw i32 %i.aq, %.0105134203
   %i.bf = shl nuw nsw i32 %i.be, 3
@@ -483,7 +481,7 @@ bb.k:                                             ; preds = %bb.j
   store ptr %i.bm, ptr %i.au, align 8, !tbaa !19
   %i.bn = getelementptr inbounds nuw i8, ptr %.tr125282, i64 8
   %i.bo = load ptr, ptr %i.bn, align 8, !tbaa !25
-  %i.bp = add i32 %.0105134203, 1
+  %i.bp = add nuw i32 %.0105134203, 1
   %i.bq = zext i32 %i.bp to i64
   %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.as, i64 %i.bq
   store ptr %i.bo, ptr %i.br, align 8, !tbaa !19
@@ -566,13 +564,13 @@ bb.n:                                             ; preds = %.lr.ph164
   br label %bb.o
 
 bb.o:                                             ; preds = %.critedge118, %.critedge117
-  %7 = phi i8 [ %.0.val, %.critedge118 ], [ %.pre195, %.critedge117 ]
-  %.1106129 = phi i64 [ %.1106.lcssa, %.critedge118 ], [ %indvars.iv192, %.critedge117 ]
-  %i.cy = getelementptr inbounds nuw [8 x i8], ptr %.0, i64 %.1106129 ; 2 uses
+  %.pre-phi = phi i64 [ %.1106.lcssa, %.critedge118 ], [ %indvars.iv192, %.critedge117 ]
+  %5 = phi i8 [ %.0.val, %.critedge118 ], [ %.pre195, %.critedge117 ]
+  %i.cy = getelementptr inbounds nuw [8 x i8], ptr %.0, i64 %.pre-phi ; 2 uses
   store i32 %.sroa.0.0.copyload, ptr %i.cy, align 8, !tbaa !26
   %.sroa.6.0..sroa_idx14 = getelementptr inbounds nuw i8, ptr %i.cy, i64 4
   store i32 %.sroa.6.0.copyload, ptr %.sroa.6.0..sroa_idx14, align 4, !tbaa !26
-  %i.cz = add i8 %7, 1
+  %i.cz = add i8 %5, 1
   store i8 %i.cz, ptr %i.cd, align 8, !tbaa !10
   %i.da = getelementptr i8, ptr %i.bz, i64 124
   %.val120 = load i32, ptr %i.da, align 4, !tbaa !12

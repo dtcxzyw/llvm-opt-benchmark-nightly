@@ -202,12 +202,12 @@ bb.bg:                                            ; preds = %_ZN4llvm19MachineRe
 
 bb.bh:                                            ; preds = %.loopexit.i, %.lr.ph288.i
   %.0125286.i = phi i32 [ 0, %.lr.ph288.i ], [ %.1126.ph.i, %.loopexit.i ]
-  %.0128285.i = phi i32 [ 2, %.lr.ph288.i ], [ %i.oh, %.loopexit.i ] ; 4 uses
+  %.0128285.i = phi i32 [ 2, %.lr.ph288.i ], [ %i.oh, %.loopexit.i ] ; 3 uses
   %.sroa.9.3284.i = phi i8 [ %.sroa.9.0294.i, %.lr.ph288.i ], [ %.sroa.9.6.ph.i, %.loopexit.i ] ; 9 uses
   %.sroa.0204.3283.i = phi i64 [ %.sroa.0204.0293.i, %.lr.ph288.i ], [ %.sroa.0204.6.ph.i, %.loopexit.i ] ; 10 uses
-  %i.mo = load ptr, ptr %i.mn, align 8, !tbaa !63 ; 3 uses
+  %i.mo = load ptr, ptr %i.mn, align 8, !tbaa !63 ; 2 uses
   %i.mp = zext nneg i32 %.0128285.i to i64
-  %i.mq = getelementptr inbounds nuw [32 x i8], ptr %i.mo, i64 %i.mp ; 4 uses
+  %i.mq = getelementptr inbounds nuw [32 x i8], ptr %i.mo, i64 %i.mp ; 5 uses
   %i.mr = load i32, ptr %i.mq, align 8
   %i.ms = and i32 %i.mr, 255
   %i.mt = icmp eq i32 %i.ms, 1
@@ -230,23 +230,20 @@ bb.bi:                                            ; preds = %bb.bh
   br i1 %.not135280.not.i, label %.loopexit.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i
-  %9 = add nuw nsw i32 %.0128285.i, 1
   %wide.trip.count.i = zext nneg i32 %i.my to i64
   br label %bb.bj
 
 bb.bj:                                            ; preds = %.critedge139.i, %.lr.ph.i
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.i ], [ %indvars.iv.next.i, %.critedge139.i ] ; 2 uses
-  %10 = trunc nuw nsw i64 %indvars.iv.i to i32
-  %11 = add i32 %9, %10
-  %12 = zext i32 %11 to i64
-  %13 = getelementptr inbounds nuw [32 x i8], ptr %i.mo, i64 %12 ; 2 uses
-  %i.nb = load i32, ptr %13, align 8
+  %gep.i = getelementptr inbounds nuw [32 x i8], ptr %i.mq, i64 %indvars.iv.i ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %gep.i, i64 32
+  %i.nb = load i32, ptr %9, align 8
   %i.nc = and i32 %i.nb, 255
   %i.nd = icmp eq i32 %i.nc, 0
   br i1 %i.nd, label %bb.bk, label %.critedge139.i
 
 bb.bk:                                            ; preds = %bb.bj
-  %i.ne = getelementptr inbounds nuw i8, ptr %13, i64 4
+  %i.ne = getelementptr inbounds nuw i8, ptr %gep.i, i64 36
   %i.nf = load i32, ptr %i.ne, align 4, !tbaa !64
   %i.ng = icmp eq i32 %i.nf, %i.kg
   br i1 %i.ng, label %.critedge13.thread238.i, label %.critedge139.i
@@ -316,10 +313,10 @@ bb.bs:                                            ; preds = %bb.bq
   %.sroa.9.6.ph.i = phi i8 [ 1, %bb.bs ], [ 1, %bb.br ], [ %.sroa.9.3284.i, %bb.bh ], [ %.sroa.9.3284.i, %bb.bo ], [ %.sroa.9.3284.i, %bb.bm ], [ %.sroa.9.3284.i, %bb.bn ], [ %.sroa.9.3284.i, %.preheader.i ], [ %.sroa.9.3284.i, %.critedge139.i ] ; 3 uses
   %.1126.ph.i = phi i32 [ 2, %bb.bs ], [ 2, %bb.br ], [ %.0125286.i, %bb.bh ], [ 2, %bb.bo ], [ 2, %bb.bm ], [ 2, %bb.bn ], [ 0, %.preheader.i ], [ %i.my, %.critedge139.i ] ; 2 uses
   %i.og = add nuw nsw i32 %.0128285.i, 1
-  %i.oh = add i32 %i.og, %.1126.ph.i              ; 2 uses
+  %i.oh = add nuw nsw i32 %i.og, %.1126.ph.i      ; 2 uses
   %i.oi = load i24, ptr %i.ml, align 8
   %i.oj = zext i24 %i.oi to i32
-  %.not262.i = icmp ult i32 %i.oh, %i.oj
+  %.not262.i = icmp samesign ult i32 %i.oh, %i.oj
   br i1 %.not262.i, label %bb.bh, label %.critedge13.i, !llvm.loop !103
 
 .critedge13.i:                                    ; preds = %.loopexit.i

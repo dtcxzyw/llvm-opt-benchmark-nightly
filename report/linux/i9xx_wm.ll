@@ -205,11 +205,10 @@ bb.v:                                             ; preds = %bb.u
 ilk_sanitize_watermarks_add_affected.exit:        ; preds = %.lr.ph.i, %bb.v
   %.4.i.in.in = phi ptr [ %i.bn, %bb.v ], [ %i.bd, %.lr.ph.i ]
   %.4.i.in = ptrtoint ptr %.4.i.in.in to i64
-  %.4.i = trunc i64 %.4.i.in to i32               ; 2 uses
-  %.not80 = icmp eq i32 %.4.i, 0
-  br i1 %.not80, label %ilk_sanitize_watermarks_add_affected.exit.thread, label %bb.ae
+  %.4.i = trunc nsw i64 %.4.i.in to i32
+  br label %bb.ae
 
-ilk_sanitize_watermarks_add_affected.exit.thread: ; preds = %bb.u, %ilk_sanitize_watermarks_add_affected.exit
+ilk_sanitize_watermarks_add_affected.exit.thread: ; preds = %bb.u
   %i.bp = load ptr, ptr %0, align 8
   %i.bq = call i32 @intel_atomic_check(ptr noundef %i.bp, ptr noundef nonnull %i.z) #12 ; 2 uses
   %.not81 = icmp eq i32 %i.bq, 0
@@ -273,7 +272,7 @@ bb.ad:                                            ; preds = %bb.ac
 .backedge:                                        ; preds = %bb.ad, %bb.ac
   br label %bb.z, !llvm.loop !44
 
-bb.ae:                                            ; preds = %ilk_sanitize_watermarks_add_affected.exit.thread, %ilk_sanitize_watermarks_add_affected.exit
+bb.ae:                                            ; preds = %ilk_sanitize_watermarks_add_affected.exit, %ilk_sanitize_watermarks_add_affected.exit.thread
   %.072 = phi i32 [ %.4.i, %ilk_sanitize_watermarks_add_affected.exit ], [ %i.bq, %ilk_sanitize_watermarks_add_affected.exit.thread ]
   %cond = icmp eq i32 %.072, -35
   br i1 %cond, label %bb.af, label %bb.ag, !prof !49

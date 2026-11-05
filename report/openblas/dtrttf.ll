@@ -202,7 +202,7 @@ iter.check1156:                                   ; preds = %._crit_edge510, %.p
   %i.ga = mul nsw i64 %indvars.iv.next721, %i.fh
   %i.gb = sext i32 %.3515 to i64                  ; 8 uses
   %invariant.gep1009 = getelementptr [8 x i8], ptr %3, i64 %i.ga ; 11 uses
-  %min.iters.check1140 = icmp ult i64 %indvars.iv720, 4
+  %min.iters.check1140 = icmp samesign ult i64 %indvars.iv720, 4
   br i1 %min.iters.check1140, label %vec.epilog.scalar.ph1158.preheader, label %vector.memcheck1141
 
 vector.memcheck1141:                              ; preds = %iter.check1156
@@ -215,12 +215,12 @@ vector.memcheck1141:                              ; preds = %iter.check1156
   br i1 %diff.check1142, label %vec.epilog.scalar.ph1158.preheader, label %vector.main.loop.iter.check1143
 
 vector.main.loop.iter.check1143:                  ; preds = %vector.memcheck1141
-  %min.iters.check1144 = icmp ult i64 %indvars.iv720, 16
+  %min.iters.check1144 = icmp samesign ult i64 %indvars.iv720, 16
   br i1 %min.iters.check1144, label %vec.epilog.ph1160, label %vector.ph1145
 
 vector.ph1145:                                    ; preds = %vector.main.loop.iter.check1143
   %i.gh = and i64 %indvars.iv720, 12
-  %n.vec1146 = and i64 %indvars.iv720, -16        ; 6 uses
+  %n.vec1146 = and i64 %indvars.iv720, 9223372036854775792 ; 6 uses
   %i.gi = add i64 %n.vec1146, %i.gb               ; 2 uses
   %invariant.gep2049 = getelementptr [8 x i8], ptr %5, i64 %i.gb
   br label %vector.body1147
@@ -248,7 +248,7 @@ vector.body1147:                                  ; preds = %vector.ph1145, %vec
   br i1 %i.gq, label %middle.block1154, label %vector.body1147, !llvm.loop !17
 
 middle.block1154:                                 ; preds = %vector.body1147
-  %ind.escape = add i64 %n.vec1146, -1
+  %ind.escape = add nsw i64 %n.vec1146, -1
   %cmp.n1155 = icmp eq i64 %indvars.iv720, %n.vec1146
   br i1 %cmp.n1155, label %._crit_edge503, label %vec.epilog.iter.check1157
 
@@ -258,7 +258,7 @@ vec.epilog.iter.check1157:                        ; preds = %middle.block1154
 
 vec.epilog.ph1160:                                ; preds = %vector.main.loop.iter.check1143, %vec.epilog.iter.check1157
   %vec.epilog.resume.val1161 = phi i64 [ %n.vec1146, %vec.epilog.iter.check1157 ], [ 0, %vector.main.loop.iter.check1143 ]
-  %n.vec1162 = and i64 %indvars.iv720, -4         ; 5 uses
+  %n.vec1162 = and i64 %indvars.iv720, 9223372036854775804 ; 5 uses
   %i.gr = add i64 %n.vec1162, %i.gb               ; 2 uses
   %invariant.gep2051 = getelementptr [8 x i8], ptr %5, i64 %i.gb
   br label %vec.epilog.vector.body1163
@@ -274,14 +274,14 @@ vec.epilog.vector.body1163:                       ; preds = %vec.epilog.vector.b
   br i1 %i.gt, label %vec.epilog.middle.block1167, label %vec.epilog.vector.body1163, !llvm.loop !18
 
 vec.epilog.middle.block1167:                      ; preds = %vec.epilog.vector.body1163
-  %ind.escape1168 = add i64 %n.vec1162, -1
+  %ind.escape1168 = add nsw i64 %n.vec1162, -1
   %cmp.n1169 = icmp eq i64 %indvars.iv720, %n.vec1162
   br i1 %cmp.n1169, label %._crit_edge503, label %vec.epilog.scalar.ph1158.preheader
 
 vec.epilog.scalar.ph1158.preheader:               ; preds = %iter.check1156, %vector.memcheck1141, %vec.epilog.iter.check1157, %vec.epilog.middle.block1167
   %indvars.iv702.ph = phi i64 [ 0, %iter.check1156 ], [ 0, %vector.memcheck1141 ], [ %n.vec1146, %vec.epilog.iter.check1157 ], [ %n.vec1162, %vec.epilog.middle.block1167 ] ; 4 uses
   %indvars.iv700.ph = phi i64 [ %i.gb, %iter.check1156 ], [ %i.gb, %vector.memcheck1141 ], [ %i.gi, %vec.epilog.iter.check1157 ], [ %i.gr, %vec.epilog.middle.block1167 ] ; 2 uses
-  %i.gu = sub i64 %indvars.iv720, %indvars.iv702.ph
+  %i.gu = sub nsw i64 %indvars.iv720, %indvars.iv702.ph
   %xtraiter1946 = and i64 %i.gu, 7                ; 2 uses
   %lcmp.mod1947.not = icmp eq i64 %xtraiter1946, 0
   br i1 %lcmp.mod1947.not, label %vec.epilog.scalar.ph1158.prol.loopexit, label %vec.epilog.scalar.ph1158.prol
@@ -684,7 +684,7 @@ iter.check1691:                                   ; preds = %.preheader469.lr.ph
   %i.afh = mul nsw i64 %indvars.iv.next927, %i.aes
   %i.afi = sext i32 %.19616 to i64                ; 7 uses
   %invariant.gep1041 = getelementptr [8 x i8], ptr %3, i64 %i.afh ; 11 uses
-  %min.iters.check1668 = icmp ult i64 %indvars.iv926, 4
+  %min.iters.check1668 = icmp samesign ult i64 %indvars.iv926, 4
   br i1 %min.iters.check1668, label %vec.epilog.scalar.ph1693.preheader, label %vector.memcheck1669
 
 vector.memcheck1669:                              ; preds = %iter.check1691
@@ -697,12 +697,12 @@ vector.memcheck1669:                              ; preds = %iter.check1691
   br i1 %diff.check1670, label %vec.epilog.scalar.ph1693.preheader, label %vector.main.loop.iter.check1671
 
 vector.main.loop.iter.check1671:                  ; preds = %vector.memcheck1669
-  %min.iters.check1672 = icmp ult i64 %indvars.iv926, 16
+  %min.iters.check1672 = icmp samesign ult i64 %indvars.iv926, 16
   br i1 %min.iters.check1672, label %vec.epilog.ph1695, label %vector.ph1673
 
 vector.ph1673:                                    ; preds = %vector.main.loop.iter.check1671
   %i.afo = and i64 %indvars.iv926, 12
-  %n.vec1674 = and i64 %indvars.iv926, -16        ; 5 uses
+  %n.vec1674 = and i64 %indvars.iv926, 9223372036854775792 ; 5 uses
   %i.afp = add i64 %n.vec1674, %i.afi             ; 2 uses
   %i.afq = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %.19616, i64 0
   %invariant.gep2101 = getelementptr [8 x i8], ptr %5, i64 %i.afi
@@ -753,7 +753,7 @@ vec.epilog.iter.check1692:                        ; preds = %middle.block1686
 vec.epilog.ph1695:                                ; preds = %vector.main.loop.iter.check1671, %vec.epilog.iter.check1692
   %vec.epilog.resume.val1696 = phi i64 [ %n.vec1674, %vec.epilog.iter.check1692 ], [ 0, %vector.main.loop.iter.check1671 ]
   %bc.merge.rdx1697 = phi i32 [ %i.agd, %vec.epilog.iter.check1692 ], [ %.19616, %vector.main.loop.iter.check1671 ]
-  %n.vec1698 = and i64 %indvars.iv926, -4         ; 4 uses
+  %n.vec1698 = and i64 %indvars.iv926, 9223372036854775804 ; 4 uses
   %i.age = add i64 %n.vec1698, %i.afi             ; 2 uses
   %i.agf = insertelement <4 x i32> <i32 poison, i32 0, i32 0, i32 0>, i32 %bc.merge.rdx1697, i64 0
   %invariant.gep2103 = getelementptr [8 x i8], ptr %5, i64 %i.afi
@@ -780,7 +780,7 @@ vec.epilog.scalar.ph1693.preheader:               ; preds = %iter.check1691, %ve
   %indvars.iv913.in.ph = phi i32 [ %.19616, %iter.check1691 ], [ %.19616, %vector.memcheck1669 ], [ %i.agd, %vec.epilog.iter.check1692 ], [ %i.agj, %vec.epilog.middle.block1704 ] ; 2 uses
   %indvars.iv906.ph = phi i64 [ 0, %iter.check1691 ], [ 0, %vector.memcheck1669 ], [ %n.vec1674, %vec.epilog.iter.check1692 ], [ %n.vec1698, %vec.epilog.middle.block1704 ] ; 4 uses
   %indvars.iv904.ph = phi i64 [ %i.afi, %iter.check1691 ], [ %i.afi, %vector.memcheck1669 ], [ %i.afp, %vec.epilog.iter.check1692 ], [ %i.age, %vec.epilog.middle.block1704 ] ; 2 uses
-  %i.agk = sub i64 %indvars.iv926, %indvars.iv906.ph
+  %i.agk = sub nsw i64 %indvars.iv926, %indvars.iv906.ph
   %xtraiter1985 = and i64 %i.agk, 7               ; 2 uses
   %lcmp.mod1986.not = icmp eq i64 %xtraiter1985, 0
   br i1 %lcmp.mod1986.not, label %vec.epilog.scalar.ph1693.prol.loopexit, label %vec.epilog.scalar.ph1693.prol

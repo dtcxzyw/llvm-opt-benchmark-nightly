@@ -150,7 +150,7 @@ _ZN6LibRaw5COLOREii.exit.thread.us.preheader:     ; preds = %bb.a
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !87
   %i.bd = mul nuw nsw i64 %indvars.iv69, %i.ah
   %invariant.gep = getelementptr inbounds nuw [8 x i8], ptr %i.bc, i64 %i.bd
-  %i.be = trunc i64 %indvars.iv69 to i32
+  %i.be = trunc nsw i64 %indvars.iv69 to i32
   %i.bf = add i32 %i.be, 4
   br label %bb.h
 
@@ -471,10 +471,10 @@ _ZN6LibRaw5COLOREii.exit266:                      ; preds = %bb.b, %_ZN6LibRaw5C
   %i.ci = trunc nuw nsw i64 %i.bz to i32
   %i.cj = trunc nuw nsw i64 %i.ca to i32
   %i.ck = trunc nuw nsw i64 %i.cb to i32
-  %i.cl = trunc i64 %indvars.iv to i32
+  %i.cl = trunc nsw i64 %indvars.iv to i32
   %i.cm = add i32 %i.cl, 2
-  %i.cn = trunc i64 %i.bw to i32
-  %i.co = trunc i64 %indvars.iv to i32
+  %i.cn = trunc nsw i64 %i.bw to i32
+  %i.co = trunc nsw i64 %indvars.iv to i32
   %i.cp = add i32 %i.co, 6
   %i.cq = trunc nuw nsw i64 %i.by to i32
   %i.cr = trunc nuw nsw i64 %i.ca to i32
@@ -507,10 +507,10 @@ _ZN6LibRaw5COLOREii.exit266:                      ; preds = %bb.b, %_ZN6LibRaw5C
   %i.dk = trunc nuw nsw i64 %i.cy to i32
   %i.dl = trunc nuw nsw i64 %i.da to i32
   %i.dm = trunc nuw nsw i64 %i.dd to i32
-  %i.dn = trunc i64 %indvars.iv to i32
+  %i.dn = trunc nsw i64 %indvars.iv to i32
   %i.do = add i32 %i.dn, 2
-  %i.dp = trunc i64 %i.cw to i32
-  %i.dq = trunc i64 %indvars.iv to i32
+  %i.dp = trunc nsw i64 %i.cw to i32
+  %i.dq = trunc nsw i64 %indvars.iv to i32
   %i.dr = add i32 %i.dq, 6
   %i.ds = trunc nuw nsw i64 %i.cx to i32
   %i.dt = trunc nuw nsw i64 %i.da to i32
@@ -913,7 +913,7 @@ bb.a:
   %i.n = shl nuw nsw i32 %indvars.iv28.tr, 1
   %i.o = and i32 %i.n, 14
   %i.p = mul nuw nsw i64 %indvars.iv28, %i.j
-  %i.q = trunc i64 %indvars.iv28 to i32
+  %i.q = trunc nsw i64 %indvars.iv28 to i32
   %i.r = add i32 %i.q, 4                          ; 2 uses
   br label %bb.b
 

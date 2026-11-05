@@ -204,7 +204,7 @@ bb.s:                                             ; preds = %.loopexit294, %.pre
   %.0149.i = phi i32 [ undef, %.preheader.i ], [ %.4153190.i, %.loopexit294 ]
   %.0139.i = phi ptr [ %i.ca, %.preheader.i ], [ %.2141.i, %.loopexit294 ]
   %.0135.i = phi i32 [ 0, %.preheader.i ], [ %.3138.i, %.loopexit294 ]
-  %i.dg = zext i32 %.sroa.4.0.i to i64
+  %i.dg = zext nneg i32 %.sroa.4.0.i to i64
   %i.dh = getelementptr inbounds nuw [8 x i8], ptr %i.bp, i64 %i.dg
   br label %bb.t
 
@@ -217,12 +217,12 @@ bb.t:                                             ; preds = %bb.u, %bb.s
 
 bb.u:                                             ; preds = %bb.t
   %i.dj = getelementptr inbounds nuw i8, ptr %.019.i.i, i64 8
-  %i.dk = add i32 %.020.i.i, 1                    ; 2 uses
-  %i.dl = icmp ult i32 %i.dk, %i.bn
+  %i.dk = add nuw nsw i32 %.020.i.i, 1            ; 2 uses
+  %i.dl = icmp samesign ult i32 %i.dk, %i.bn
   br i1 %i.dl, label %bb.t, label %ir_schedule_blocks_top_down.exit, !llvm.loop !166
 
 ir_bitqueue_pop.exit.i:                           ; preds = %bb.t
-  %i.dm = shl i32 %.020.i.i, 6
+  %i.dm = shl nuw i32 %.020.i.i, 6
   %i.dn = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 range(i64 1, 0) %i.di, i1 true)
   %i.do = trunc nuw nsw i64 %i.dn to i32
   %i.dp = or disjoint i32 %i.dm, %i.do            ; 3 uses

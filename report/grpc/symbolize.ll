@@ -204,8 +204,8 @@ _ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile19ReadFromO
 
 bb.k:                                             ; preds = %.lr.ph157, %bb.s
   %indvars.iv = phi i64 [ 0, %.lr.ph157 ], [ %indvars.iv.next, %bb.s ] ; 2 uses
-  %.sroa.21.0155 = phi i64 [ %.sroa.21.9, %.lr.ph157 ], [ %.sroa.21.1791202, %bb.s ]
-  %.sroa.34.0154 = phi i64 [ %.sroa.34.9, %.lr.ph157 ], [ %.sroa.34.1790204, %bb.s ]
+  %.sroa.21.0155 = phi i64 [ %.sroa.21.9, %.lr.ph157 ], [ %.sroa.21.1791, %bb.s ]
+  %.sroa.34.0154 = phi i64 [ %.sroa.34.9, %.lr.ph157 ], [ %.sroa.34.1790, %bb.s ]
   %i.ba = shl nuw nsw i64 %indvars.iv, 6
   %i.bb = add nsw i64 %i.y, %i.ba
   br label %.lr.ph.split.us.preheader.i.i40
@@ -271,7 +271,7 @@ _ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile19ReadFromO
   br i1 %i.bt, label %bb.o, label %.thread
 
 bb.o:                                             ; preds = %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile19ReadFromOffsetExactEPvml.exit50
-  br i1 %.not74.i, label %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile14ReadFromOffsetEPvml.exit.thread86.thread, label %.lr.ph.split.us.preheader.i.preheader
+  br i1 %.not74.i, label %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile14ReadFromOffsetEPvml.exit.thread86, label %.lr.ph.split.us.preheader.i.preheader
 
 .lr.ph.split.us.preheader.i.preheader:            ; preds = %bb.o
   %i.bu = load i32, ptr %3, align 8, !tbaa !24
@@ -332,23 +332,19 @@ bb.r:                                             ; preds = %.lr.ph150
   %i.cn = icmp ult i64 %i.cl, %2
   br i1 %i.cn, label %.lr.ph.split.us.preheader.i, label %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile14ReadFromOffsetEPvml.exit.thread86
 
-_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile14ReadFromOffsetEPvml.exit.thread86: ; preds = %.outer.i, %bb.p
-  %.sroa.34.17 = phi i64 [ 0, %bb.p ], [ %.sroa.34.15.lcssa, %.outer.i ] ; 2 uses
-  %.sroa.21.17 = phi i64 [ 0, %bb.p ], [ %.sroa.21.15.lcssa, %.outer.i ] ; 2 uses
-  %.2.i = phi i64 [ %.030.ph70.i, %bb.p ], [ %i.cl, %.outer.i ]
-  %i.co = icmp eq i64 %.2.i, %2
+_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile14ReadFromOffsetEPvml.exit.thread86: ; preds = %.outer.i, %bb.p, %bb.o
+  %.2.i92 = phi i64 [ 0, %bb.o ], [ %.030.ph70.i, %bb.p ], [ %i.cl, %.outer.i ]
+  %.sroa.21.1791 = phi i64 [ %.sroa.21.13, %bb.o ], [ 0, %bb.p ], [ %.sroa.21.15.lcssa, %.outer.i ]
+  %.sroa.34.1790 = phi i64 [ %.sroa.34.13, %bb.o ], [ 0, %bb.p ], [ %.sroa.34.15.lcssa, %.outer.i ]
+  %i.co = icmp eq i64 %.2.i92, %2
   br i1 %i.co, label %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile14ReadFromOffsetEPvml.exit.thread86.thread, label %bb.s
 
-_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile14ReadFromOffsetEPvml.exit.thread86.thread: ; preds = %bb.o, %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile14ReadFromOffsetEPvml.exit.thread86
-  %.sroa.34.1790205 = phi i64 [ %.sroa.34.17, %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile14ReadFromOffsetEPvml.exit.thread86 ], [ %.sroa.34.13, %bb.o ]
-  %.sroa.21.1791203 = phi i64 [ %.sroa.21.17, %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile14ReadFromOffsetEPvml.exit.thread86 ], [ %.sroa.21.13, %bb.o ]
+_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile14ReadFromOffsetEPvml.exit.thread86.thread: ; preds = %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile14ReadFromOffsetEPvml.exit.thread86
   %bcmp = call i32 @bcmp(ptr nonnull %i.a, ptr %1, i64 %2)
   %i.cp = icmp eq i32 %bcmp, 0
   br i1 %i.cp, label %.thread, label %bb.s
 
 bb.s:                                             ; preds = %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile14ReadFromOffsetEPvml.exit.thread86, %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile14ReadFromOffsetEPvml.exit.thread86.thread
-  %.sroa.34.1790204 = phi i64 [ %.sroa.34.17, %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile14ReadFromOffsetEPvml.exit.thread86 ], [ %.sroa.34.1790205, %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile14ReadFromOffsetEPvml.exit.thread86.thread ]
-  %.sroa.21.1791202 = phi i64 [ %.sroa.21.17, %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile14ReadFromOffsetEPvml.exit.thread86 ], [ %.sroa.21.1791203, %_ZN4absl12lts_2025051218debugging_internal12_GLOBAL__N_111CachingFile14ReadFromOffsetEPvml.exit.thread86.thread ]
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.thread, label %bb.k, !llvm.loop !62

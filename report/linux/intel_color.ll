@@ -205,11 +205,10 @@ bb.aj:                                            ; preds = %bb.ai
 glk_assign_luts.exit:                             ; preds = %ilk_lut_limited_range.exit.thread41.i, %bb.x
   %.2.i.in.in = phi ptr [ %i.da, %bb.x ], [ %i.fm, %ilk_lut_limited_range.exit.thread41.i ]
   %.2.i.in = ptrtoint ptr %.2.i.in.in to i64
-  %.2.i = trunc i64 %.2.i.in to i32               ; 2 uses
-  %.not58 = icmp eq i32 %.2.i, 0
-  br i1 %.not58, label %glk_assign_luts.exit.thread, label %bb.ao
+  %.2.i = trunc nsw i64 %.2.i.in to i32
+  br label %bb.ao
 
-glk_assign_luts.exit.thread:                      ; preds = %bb.ah, %bb.ai, %bb.aj, %.loopexit47.i, %glk_assign_luts.exit
+glk_assign_luts.exit.thread:                      ; preds = %bb.ah, %bb.ai, %bb.aj, %.loopexit47.i
   tail call fastcc void @ilk_assign_csc(ptr noundef %i.j) #14, !srcloc !175
   %i.hl = load ptr, ptr %i.a, align 8             ; 2 uses
   %.not.i76 = icmp eq ptr %i.hl, null

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.preheader, %bb.ca
   %.val.i194 = phi i64 [ %.val.i194278, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb0ELb0EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 6 uses
   %.039255 = phi i64 [ %i.bi, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb0ELb0EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.q = trunc i64 %.039255 to i32
+  %i.q = trunc nsw i64 %.039255 to i32
   store i32 %i.q, ptr %i.a, align 4, !tbaa !188
   %i.r = and i64 %.val.i194, 254
   %i.s = icmp eq i64 %i.r, 0
@@ -608,7 +608,7 @@ bb.ah:                                            ; preds = %_ZN7testing15Assert
 .lr.ph262:                                        ; preds = %bb.ah, %_ZN7testing15AssertionResultD2Ev.exit158
   %.0260 = phi i64 [ %i.jy, %_ZN7testing15AssertionResultD2Ev.exit158 ], [ 0, %bb.ah ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #43
-  %i.dt = trunc i64 %.0260 to i32                 ; 2 uses
+  %i.dt = trunc nsw i64 %.0260 to i32             ; 2 uses
   %.val.i = load i64, ptr %9, align 8             ; 6 uses
   %i.du = and i64 %.val.i, 254
   %i.dv = icmp eq i64 %i.du, 0
@@ -1011,7 +1011,7 @@ bb.b:                                             ; preds = %.preheader, %bb.ca
   %.val.i194 = phi i64 [ %.val.i194278, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb1ELb0EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 6 uses
   %.039255 = phi i64 [ %i.bi, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb1ELb0EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.q = trunc i64 %.039255 to i32
+  %i.q = trunc nsw i64 %.039255 to i32
   store i32 %i.q, ptr %i.a, align 4, !tbaa !188
   %i.r = and i64 %.val.i194, 254
   %i.s = icmp eq i64 %i.r, 0
@@ -1414,7 +1414,7 @@ bb.ah:                                            ; preds = %_ZN7testing15Assert
 .lr.ph262:                                        ; preds = %bb.ah, %_ZN7testing15AssertionResultD2Ev.exit158
   %.0260 = phi i64 [ %i.jy, %_ZN7testing15AssertionResultD2Ev.exit158 ], [ 0, %bb.ah ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #43
-  %i.dt = trunc i64 %.0260 to i32                 ; 2 uses
+  %i.dt = trunc nsw i64 %.0260 to i32             ; 2 uses
   %.val.i = load i64, ptr %9, align 8             ; 6 uses
   %i.du = and i64 %.val.i, 254
   %i.dv = icmp eq i64 %i.du, 0
@@ -1817,7 +1817,7 @@ bb.b:                                             ; preds = %.preheader, %bb.bs
   %.val.i183 = phi i64 [ %.val.i183263, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb1ELb1EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit ], [ 1, %bb.b ] ; 7 uses
   %.039242 = phi i64 [ %i.bh, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb1ELb1EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.o = trunc i64 %.039242 to i32
+  %i.o = trunc nsw i64 %.039242 to i32
   store i32 %i.o, ptr %i.a, align 4, !tbaa !188
   %i.p = and i64 %.val.i183, 254
   %i.q = icmp eq i64 %i.p, 0
@@ -2220,7 +2220,7 @@ bb.b:                                             ; preds = %.preheader, %bb.ca
   %.val.i183 = phi i64 [ %.val.i183260, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIaLb1ELb1EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit ], [ 1, %bb.b ] ; 8 uses
   %.039239 = phi i64 [ %i.bn, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIaLb1ELb1EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.r = trunc i64 %.039239 to i32
+  %i.r = trunc nsw i64 %.039239 to i32
   store i32 %i.r, ptr %i.a, align 4, !tbaa !188
   %i.s = and i64 %.val.i183, 254
   %i.t = icmp eq i64 %i.s, 0
@@ -2239,7 +2239,7 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111Val
 
 bb.d:                                             ; preds = %bb.c
   %.val8.i.i.i = load i8, ptr %i.e, align 8, !tbaa !161, !noalias !14517
-  %i.w = trunc i64 %.039239 to i8
+  %i.w = trunc nsw i64 %.039239 to i8
   %i.x = icmp eq i8 %.val8.i.i.i, %i.w
   br i1 %i.x, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIaLb1ELb1EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit, label %bb.e
 
@@ -2275,7 +2275,7 @@ bb.f:                                             ; preds = %.lr.ph
   %.val5.i.i = load ptr, ptr %i.f, align 8, !tbaa !161, !noalias !14518 ; 2 uses
   %i.am = insertelement <16 x i8> poison, i8 %i.al, i64 0
   %i.an = shufflevector <16 x i8> %i.am, <16 x i8> poison, <16 x i32> zeroinitializer
-  %i.ao = trunc i64 %.039239 to i8
+  %i.ao = trunc nsw i64 %.039239 to i8
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.i, %bb.f
@@ -2637,10 +2637,10 @@ bb.ah:                                            ; preds = %_ZN7testing15Assert
   br i1 %.not247, label %.critedge68, label %.lr.ph244
 
 .lr.ph244:                                        ; preds = %bb.ah, %_ZN7testing15AssertionResultD2Ev.exit157
-  %.0242 = phi i64 [ %i.kj, %_ZN7testing15AssertionResultD2Ev.exit157 ], [ 0, %bb.ah ] ; 5 uses
+  %.0242 = phi i64 [ %i.kj, %_ZN7testing15AssertionResultD2Ev.exit157 ], [ 0, %bb.ah ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #43
-  %i.ea = trunc i64 %.0242 to i32                 ; 2 uses
-  %i.eb = trunc i64 %.0242 to i8                  ; 3 uses
+  %i.ea = trunc nsw i64 %.0242 to i32
+  %i.eb = trunc nsw i64 %.0242 to i8              ; 3 uses
   %.val.i = load i64, ptr %9, align 8             ; 7 uses
   %i.ec = and i64 %.val.i, 254
   %i.ed = icmp eq i64 %i.ec, 0
@@ -2959,8 +2959,8 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111Val
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #43
   store i32 %i.ea, ptr %i.d, align 4, !tbaa !188
   %i.im = load i8, ptr %.pn.i131, align 1, !tbaa !161, !noalias !14523
-  %21 = sext i8 %i.im to i32
-  %i.in = icmp eq i32 %i.ea, %21
+  %21 = sext i8 %i.im to i64
+  %i.in = icmp eq i64 %.0242, %21
   br i1 %i.in, label %bb.bb, label %bb.bc
 
 bb.bb:                                            ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIaLb1ELb1EEEJEE10find_largeIaEENS6_8iteratorERKam.exit.i126
@@ -3363,7 +3363,7 @@ bb.b:                                             ; preds = %.preheader, %bb.ca
   %.val.i183 = phi i64 [ %.val.i183260, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIaLb0ELb1EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit ], [ 1, %bb.b ] ; 8 uses
   %.039239 = phi i64 [ %i.bn, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIaLb0ELb1EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.r = trunc i64 %.039239 to i32
+  %i.r = trunc nsw i64 %.039239 to i32
   store i32 %i.r, ptr %i.a, align 4, !tbaa !188
   %i.s = and i64 %.val.i183, 254
   %i.t = icmp eq i64 %i.s, 0
@@ -3382,7 +3382,7 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111Val
 
 bb.d:                                             ; preds = %bb.c
   %.val8.i.i.i = load i8, ptr %i.e, align 8, !tbaa !161, !noalias !14561
-  %i.w = trunc i64 %.039239 to i8
+  %i.w = trunc nsw i64 %.039239 to i8
   %i.x = icmp eq i8 %.val8.i.i.i, %i.w
   br i1 %i.x, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIaLb0ELb1EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit, label %bb.e
 
@@ -3418,7 +3418,7 @@ bb.f:                                             ; preds = %.lr.ph
   %.val5.i.i = load ptr, ptr %i.f, align 8, !tbaa !161, !noalias !14562 ; 2 uses
   %i.am = insertelement <16 x i8> poison, i8 %i.al, i64 0
   %i.an = shufflevector <16 x i8> %i.am, <16 x i8> poison, <16 x i32> zeroinitializer
-  %i.ao = trunc i64 %.039239 to i8
+  %i.ao = trunc nsw i64 %.039239 to i8
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.i, %bb.f
@@ -3780,10 +3780,10 @@ bb.ah:                                            ; preds = %_ZN7testing15Assert
   br i1 %.not247, label %.critedge68, label %.lr.ph244
 
 .lr.ph244:                                        ; preds = %bb.ah, %_ZN7testing15AssertionResultD2Ev.exit157
-  %.0242 = phi i64 [ %i.kj, %_ZN7testing15AssertionResultD2Ev.exit157 ], [ 0, %bb.ah ] ; 5 uses
+  %.0242 = phi i64 [ %i.kj, %_ZN7testing15AssertionResultD2Ev.exit157 ], [ 0, %bb.ah ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #43
-  %i.ea = trunc i64 %.0242 to i32                 ; 2 uses
-  %i.eb = trunc i64 %.0242 to i8                  ; 3 uses
+  %i.ea = trunc nsw i64 %.0242 to i32
+  %i.eb = trunc nsw i64 %.0242 to i8              ; 3 uses
   %.val.i = load i64, ptr %9, align 8             ; 7 uses
   %i.ec = and i64 %.val.i, 254
   %i.ed = icmp eq i64 %i.ec, 0
@@ -4102,8 +4102,8 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111Val
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #43
   store i32 %i.ea, ptr %i.d, align 4, !tbaa !188
   %i.im = load i8, ptr %.pn.i131, align 1, !tbaa !161, !noalias !14567
-  %21 = sext i8 %i.im to i32
-  %i.in = icmp eq i32 %i.ea, %21
+  %21 = sext i8 %i.im to i64
+  %i.in = icmp eq i64 %.0242, %21
   br i1 %i.in, label %bb.bb, label %bb.bc
 
 bb.bb:                                            ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIaLb0ELb1EEEJEE10find_largeIaEENS6_8iteratorERKam.exit.i126
@@ -4506,7 +4506,7 @@ bb.b:                                             ; preds = %.preheader, %bb.ca
   %.val.i183 = phi i64 [ %.val.i183260, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIsLb1ELb1EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit ], [ 1, %bb.b ] ; 8 uses
   %.039239 = phi i64 [ %i.bn, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIsLb1ELb1EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.r = trunc i64 %.039239 to i32
+  %i.r = trunc nsw i64 %.039239 to i32
   store i32 %i.r, ptr %i.a, align 4, !tbaa !188
   %i.s = and i64 %.val.i183, 254
   %i.t = icmp eq i64 %i.s, 0
@@ -4525,7 +4525,7 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111Val
 
 bb.d:                                             ; preds = %bb.c
   %.val8.i.i.i = load i16, ptr %i.e, align 8, !tbaa !604, !noalias !14605
-  %i.w = trunc i64 %.039239 to i16
+  %i.w = trunc nsw i64 %.039239 to i16
   %i.x = icmp eq i16 %.val8.i.i.i, %i.w
   br i1 %i.x, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIsLb1ELb1EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit, label %bb.e
 
@@ -4561,7 +4561,7 @@ bb.f:                                             ; preds = %.lr.ph
   %.val5.i.i = load ptr, ptr %i.f, align 8, !tbaa !161, !noalias !14606 ; 2 uses
   %i.am = insertelement <16 x i8> poison, i8 %i.al, i64 0
   %i.an = shufflevector <16 x i8> %i.am, <16 x i8> poison, <16 x i32> zeroinitializer
-  %i.ao = trunc i64 %.039239 to i16
+  %i.ao = trunc nsw i64 %.039239 to i16
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.i, %bb.f
@@ -4923,10 +4923,10 @@ bb.ah:                                            ; preds = %_ZN7testing15Assert
   br i1 %.not247, label %.critedge68, label %.lr.ph244
 
 .lr.ph244:                                        ; preds = %bb.ah, %_ZN7testing15AssertionResultD2Ev.exit157
-  %.0242 = phi i64 [ %i.kj, %_ZN7testing15AssertionResultD2Ev.exit157 ], [ 0, %bb.ah ] ; 5 uses
+  %.0242 = phi i64 [ %i.kj, %_ZN7testing15AssertionResultD2Ev.exit157 ], [ 0, %bb.ah ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #43
-  %i.ea = trunc i64 %.0242 to i32                 ; 2 uses
-  %i.eb = trunc i64 %.0242 to i16                 ; 3 uses
+  %i.ea = trunc nsw i64 %.0242 to i32
+  %i.eb = trunc nsw i64 %.0242 to i16             ; 3 uses
   %.val.i = load i64, ptr %9, align 8             ; 7 uses
   %i.ec = and i64 %.val.i, 254
   %i.ed = icmp eq i64 %i.ec, 0
@@ -5245,8 +5245,8 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111Val
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #43
   store i32 %i.ea, ptr %i.d, align 4, !tbaa !188
   %i.im = load i16, ptr %.pn.i131, align 2, !tbaa !604, !noalias !14611
-  %21 = sext i16 %i.im to i32
-  %i.in = icmp eq i32 %i.ea, %21
+  %21 = sext i16 %i.im to i64
+  %i.in = icmp eq i64 %.0242, %21
   br i1 %i.in, label %bb.bb, label %bb.bc
 
 bb.bb:                                            ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIsLb1ELb1EEEJEE10find_largeIsEENS6_8iteratorERKsm.exit.i126
@@ -5649,7 +5649,7 @@ bb.b:                                             ; preds = %.preheader, %bb.ca
   %.val.i183 = phi i64 [ %.val.i183260, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIsLb0ELb1EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit ], [ 1, %bb.b ] ; 8 uses
   %.039239 = phi i64 [ %i.bn, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIsLb0ELb1EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.r = trunc i64 %.039239 to i32
+  %i.r = trunc nsw i64 %.039239 to i32
   store i32 %i.r, ptr %i.a, align 4, !tbaa !188
   %i.s = and i64 %.val.i183, 254
   %i.t = icmp eq i64 %i.s, 0
@@ -5668,7 +5668,7 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111Val
 
 bb.d:                                             ; preds = %bb.c
   %.val8.i.i.i = load i16, ptr %i.e, align 8, !tbaa !604, !noalias !14649
-  %i.w = trunc i64 %.039239 to i16
+  %i.w = trunc nsw i64 %.039239 to i16
   %i.x = icmp eq i16 %.val8.i.i.i, %i.w
   br i1 %i.x, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIsLb0ELb1EEEJEE6insertIiLi0EEESt4pairINS6_8iteratorEbEOT_.exit, label %bb.e
 
@@ -5704,7 +5704,7 @@ bb.f:                                             ; preds = %.lr.ph
   %.val5.i.i = load ptr, ptr %i.f, align 8, !tbaa !161, !noalias !14650 ; 2 uses
   %i.am = insertelement <16 x i8> poison, i8 %i.al, i64 0
   %i.an = shufflevector <16 x i8> %i.am, <16 x i8> poison, <16 x i32> zeroinitializer
-  %i.ao = trunc i64 %.039239 to i16
+  %i.ao = trunc nsw i64 %.039239 to i16
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.i, %bb.f
@@ -6066,10 +6066,10 @@ bb.ah:                                            ; preds = %_ZN7testing15Assert
   br i1 %.not247, label %.critedge68, label %.lr.ph244
 
 .lr.ph244:                                        ; preds = %bb.ah, %_ZN7testing15AssertionResultD2Ev.exit157
-  %.0242 = phi i64 [ %i.kj, %_ZN7testing15AssertionResultD2Ev.exit157 ], [ 0, %bb.ah ] ; 5 uses
+  %.0242 = phi i64 [ %i.kj, %_ZN7testing15AssertionResultD2Ev.exit157 ], [ 0, %bb.ah ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #43
-  %i.ea = trunc i64 %.0242 to i32                 ; 2 uses
-  %i.eb = trunc i64 %.0242 to i16                 ; 3 uses
+  %i.ea = trunc nsw i64 %.0242 to i32
+  %i.eb = trunc nsw i64 %.0242 to i16             ; 3 uses
   %.val.i = load i64, ptr %9, align 8             ; 7 uses
   %i.ec = and i64 %.val.i, 254
   %i.ed = icmp eq i64 %i.ec, 0
@@ -6388,8 +6388,8 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111Val
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #43
   store i32 %i.ea, ptr %i.d, align 4, !tbaa !188
   %i.im = load i16, ptr %.pn.i131, align 2, !tbaa !604, !noalias !14655
-  %21 = sext i16 %i.im to i32
-  %i.in = icmp eq i32 %i.ea, %21
+  %21 = sext i16 %i.im to i64
+  %i.in = icmp eq i64 %.0242, %21
   br i1 %i.in, label %bb.bb, label %bb.bc
 
 bb.bb:                                            ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIsLb0ELb1EEEJEE10find_largeIsEENS6_8iteratorERKsm.exit.i126
@@ -6792,7 +6792,7 @@ bb.b:                                             ; preds = %.preheader, %bb.bu
   %.val.i183 = phi i64 [ %.val.i183249, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_10SizedValueILi16EEELb1ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 1, %bb.b ] ; 7 uses
   %.039228 = phi i64 [ %i.bi, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_10SizedValueILi16EEELb1ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.p = trunc i64 %.039228 to i32
+  %i.p = trunc nsw i64 %.039228 to i32
   store i32 %i.p, ptr %i.a, align 4, !tbaa !188
   %i.q = and i64 %.val.i183, 254
   %i.r = icmp eq i64 %i.q, 0
@@ -7195,7 +7195,7 @@ bb.ah:                                            ; preds = %_ZN7testing15Assert
 .lr.ph233:                                        ; preds = %bb.ah, %_ZN7testing15AssertionResultD2Ev.exit157
   %.0230 = phi i64 [ %i.jh, %_ZN7testing15AssertionResultD2Ev.exit157 ], [ 0, %bb.ah ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #43
-  %i.dv = trunc i64 %.0230 to i32
+  %i.dv = trunc nsw i64 %.0230 to i32
   %.val.i = load i64, ptr %7, align 8             ; 6 uses
   %i.dw = and i64 %.val.i, 254
   %i.dx = icmp eq i64 %i.dw, 0
@@ -7598,7 +7598,7 @@ bb.b:                                             ; preds = %.preheader, %bb.bu
   %.val.i = phi i64 [ %.val.i248, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_10SizedValueILi16EEELb0ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 1, %bb.b ] ; 7 uses
   %.039227 = phi i64 [ %i.bi, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_10SizedValueILi16EEELb0ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.p = trunc i64 %.039227 to i32
+  %i.p = trunc nsw i64 %.039227 to i32
   store i32 %i.p, ptr %i.a, align 4, !tbaa !188
   %i.q = and i64 %.val.i, 254
   %i.r = icmp eq i64 %i.q, 0
@@ -8001,7 +8001,7 @@ bb.ah:                                            ; preds = %_ZN7testing15Assert
 .lr.ph232:                                        ; preds = %bb.ah, %_ZN7testing15AssertionResultD2Ev.exit157
   %.0229 = phi i64 [ %i.jh, %_ZN7testing15AssertionResultD2Ev.exit157 ], [ 0, %bb.ah ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #43
-  %i.dv = trunc i64 %.0229 to i32
+  %i.dv = trunc nsw i64 %.0229 to i32
   %.val8.i = load i64, ptr %7, align 8            ; 6 uses
   %i.dw = and i64 %.val8.i, 254
   %i.dx = icmp eq i64 %i.dw, 0
@@ -8404,7 +8404,7 @@ bb.b:                                             ; preds = %.preheader, %bb.ca
   %.val.i = phi i64 [ %.val.i267, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_10SizedValueILi24EEELb1ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 6 uses
   %.039245 = phi i64 [ %i.bi, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_10SizedValueILi24EEELb1ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.q = trunc i64 %.039245 to i32
+  %i.q = trunc nsw i64 %.039245 to i32
   store i32 %i.q, ptr %i.a, align 4, !tbaa !188
   %i.r = and i64 %.val.i, 254
   %i.s = icmp eq i64 %i.r, 0
@@ -8807,7 +8807,7 @@ bb.ah:                                            ; preds = %_ZN7testing15Assert
 .lr.ph251:                                        ; preds = %bb.ah, %_ZN7testing15AssertionResultD2Ev.exit160
   %.0249 = phi i64 [ %i.jy, %_ZN7testing15AssertionResultD2Ev.exit160 ], [ 0, %bb.ah ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #43
-  %i.dt = trunc i64 %.0249 to i32                 ; 2 uses
+  %i.dt = trunc nsw i64 %.0249 to i32             ; 2 uses
   %.val7.i = load i64, ptr %9, align 8            ; 6 uses
   %i.du = and i64 %.val7.i, 254
   %i.dv = icmp eq i64 %i.du, 0
@@ -9210,7 +9210,7 @@ bb.b:                                             ; preds = %.preheader, %bb.ca
   %.val.i = phi i64 [ %.val.i267, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_10SizedValueILi24EEELb0ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 6 uses
   %.039245 = phi i64 [ %i.bi, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_10SizedValueILi24EEELb0ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.q = trunc i64 %.039245 to i32
+  %i.q = trunc nsw i64 %.039245 to i32
   store i32 %i.q, ptr %i.a, align 4, !tbaa !188
   %i.r = and i64 %.val.i, 254
   %i.s = icmp eq i64 %i.r, 0
@@ -9613,7 +9613,7 @@ bb.ah:                                            ; preds = %_ZN7testing15Assert
 .lr.ph251:                                        ; preds = %bb.ah, %_ZN7testing15AssertionResultD2Ev.exit160
   %.0249 = phi i64 [ %i.jy, %_ZN7testing15AssertionResultD2Ev.exit160 ], [ 0, %bb.ah ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #43
-  %i.dt = trunc i64 %.0249 to i32                 ; 2 uses
+  %i.dt = trunc nsw i64 %.0249 to i32             ; 2 uses
   %.val7.i = load i64, ptr %9, align 8            ; 6 uses
   %i.du = and i64 %.val7.i, 254
   %i.dv = icmp eq i64 %i.du, 0
@@ -10016,7 +10016,7 @@ bb.b:                                             ; preds = %.preheader, %bb.cc
   %.val.i194 = phi i64 [ %.val.i194275, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIhLb0ELb0EEEJNS0_13hash_internal4HashIhEESt8equal_toIhENS1_21MinimumAlignmentAllocIhEEEE6insertIiLi0EEESt4pairINSD_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 7 uses
   %.039252 = phi i64 [ %i.bl, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIhLb0ELb0EEEJNS0_13hash_internal4HashIhEESt8equal_toIhENS1_21MinimumAlignmentAllocIhEEEE6insertIiLi0EEESt4pairINSD_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.q = trunc i64 %.039252 to i32
+  %i.q = trunc nsw i64 %.039252 to i32
   store i32 %i.q, ptr %i.a, align 4, !tbaa !188
   %i.r = and i64 %.val.i194, 254
   %i.s = icmp eq i64 %i.r, 0
@@ -10031,7 +10031,7 @@ bb.c:                                             ; preds = %.lr.ph
 bb.d:                                             ; preds = %bb.c
   %.val3.i.i200 = load ptr, ptr %i.f, align 8, !tbaa !161, !noalias !14922
   %.val5.i.i = load i8, ptr %.val3.i.i200, align 1, !tbaa !161, !noalias !14922
-  %i.u = trunc i64 %.039252 to i8
+  %i.u = trunc nsw i64 %.039252 to i8
   %i.v = icmp eq i8 %.val5.i.i, %i.u
   br i1 %i.v, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIhLb0ELb0EEEJNS0_13hash_internal4HashIhEESt8equal_toIhENS1_21MinimumAlignmentAllocIhEEEE6insertIiLi0EEESt4pairINSD_8iteratorEbEOT_.exit, label %bb.e
 
@@ -10066,7 +10066,7 @@ bb.f:                                             ; preds = %.lr.ph
   %.val3.i4.i = load ptr, ptr %i.f, align 8, !tbaa !161, !noalias !14923 ; 2 uses
   %i.ak = insertelement <16 x i8> poison, i8 %i.aj, i64 0
   %i.al = shufflevector <16 x i8> %i.ak, <16 x i8> poison, <16 x i32> zeroinitializer
-  %i.am = trunc i64 %.039252 to i8
+  %i.am = trunc nsw i64 %.039252 to i8
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.i, %bb.f
@@ -10422,10 +10422,10 @@ bb.ah:                                            ; preds = %_ZN7testing15Assert
   br i1 %.not262, label %.critedge68, label %.lr.ph259
 
 .lr.ph259:                                        ; preds = %bb.ah, %_ZN7testing15AssertionResultD2Ev.exit158
-  %.0257 = phi i64 [ %i.kf, %_ZN7testing15AssertionResultD2Ev.exit158 ], [ 0, %bb.ah ] ; 5 uses
+  %.0257 = phi i64 [ %i.kf, %_ZN7testing15AssertionResultD2Ev.exit158 ], [ 0, %bb.ah ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #43
-  %i.dw = trunc i64 %.0257 to i32                 ; 2 uses
-  %i.dx = trunc i64 %.0257 to i8                  ; 3 uses
+  %i.dw = trunc nsw i64 %.0257 to i32
+  %i.dx = trunc nsw i64 %.0257 to i8              ; 3 uses
   %.val.i = load i64, ptr %9, align 8             ; 7 uses
   %i.dy = and i64 %.val.i, 254
   %i.dz = icmp eq i64 %i.dy, 0
@@ -10744,8 +10744,8 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111Val
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #43
   store i32 %i.dw, ptr %i.d, align 4, !tbaa !188
   %i.ii = load i8, ptr %.pn.i131, align 1, !tbaa !161, !noalias !14928
-  %21 = zext i8 %i.ii to i32
-  %i.ij = icmp eq i32 %i.dw, %21
+  %21 = zext i8 %i.ii to i64
+  %i.ij = icmp eq i64 %.0257, %21
   br i1 %i.ij, label %bb.bb, label %bb.bc
 
 bb.bb:                                            ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIhLb0ELb0EEEJNS0_13hash_internal4HashIhEESt8equal_toIhENS1_21MinimumAlignmentAllocIhEEEE10find_largeIhEENSD_8iteratorERKhm.exit.i126
@@ -11148,7 +11148,7 @@ bb.b:                                             ; preds = %.preheader, %bb.ca
   %.val.i194 = phi i64 [ %.val.i194279, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb0ELb0EEEJNS0_13hash_internal4HashIlEESt8equal_toIlENS3_11CustomAllocIlEEEE6insertIiLi0EEESt4pairINSD_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 6 uses
   %.039256 = phi i64 [ %i.bi, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb0ELb0EEEJNS0_13hash_internal4HashIlEESt8equal_toIlENS3_11CustomAllocIlEEEE6insertIiLi0EEESt4pairINSD_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.q = trunc i64 %.039256 to i32
+  %i.q = trunc nsw i64 %.039256 to i32
   store i32 %i.q, ptr %i.a, align 4, !tbaa !188
   %i.r = and i64 %.val.i194, 254
   %i.s = icmp eq i64 %i.r, 0
@@ -11551,7 +11551,7 @@ bb.ah:                                            ; preds = %_ZN7testing15Assert
 .lr.ph263:                                        ; preds = %bb.ah, %_ZN7testing15AssertionResultD2Ev.exit158
   %.0261 = phi i64 [ %i.jy, %_ZN7testing15AssertionResultD2Ev.exit158 ], [ 0, %bb.ah ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #43
-  %i.dt = trunc i64 %.0261 to i32                 ; 2 uses
+  %i.dt = trunc nsw i64 %.0261 to i32             ; 2 uses
   %.val.i = load i64, ptr %9, align 8             ; 6 uses
   %i.du = and i64 %.val.i, 254
   %i.dv = icmp eq i64 %i.du, 0
@@ -11954,7 +11954,7 @@ bb.b:                                             ; preds = %.preheader, %bb.ce
   %.val.i177 = phi i64 [ %.val.i177278, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb0ELb0EEEJNS0_13hash_internal4HashIlEESt8equal_toIlENS3_32ChangingSizeAndTrackingTypeAllocIlEEEE6insertIiLi0EEESt4pairINSD_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 6 uses
   %.039255 = phi i64 [ %i.bu, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb0ELb0EEEJNS0_13hash_internal4HashIlEESt8equal_toIlENS3_32ChangingSizeAndTrackingTypeAllocIlEEEE6insertIiLi0EEESt4pairINSD_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.ac = trunc i64 %.039255 to i32
+  %i.ac = trunc nsw i64 %.039255 to i32
   store i32 %i.ac, ptr %i.a, align 4, !tbaa !188
   %i.ad = and i64 %.val.i177, 254
   %i.ae = icmp eq i64 %i.ad, 0
@@ -12357,7 +12357,7 @@ bb.ah:                                            ; preds = %_ZN7testing15Assert
 .lr.ph262:                                        ; preds = %bb.ah, %_ZN7testing15AssertionResultD2Ev.exit159
   %.0260 = phi i64 [ %i.kk, %_ZN7testing15AssertionResultD2Ev.exit159 ], [ 0, %bb.ah ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #43
-  %i.ef = trunc i64 %.0260 to i32                 ; 2 uses
+  %i.ef = trunc nsw i64 %.0260 to i32             ; 2 uses
   %.val.i = load i64, ptr %11, align 8            ; 6 uses
   %i.eg = and i64 %.val.i, 254
   %i.eh = icmp eq i64 %i.eg, 0
@@ -12760,7 +12760,7 @@ bb.b:                                             ; preds = %.preheader, %bb.ca
   %.val.i194 = phi i64 [ %.val.i194279, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb0ELb0EEEJNS3_11BadFastHashESt8equal_toIlESaIiEEE6insertIiLi0EEESt4pairINSA_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 6 uses
   %.039256 = phi i64 [ %i.ay, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb0ELb0EEEJNS3_11BadFastHashESt8equal_toIlESaIiEEE6insertIiLi0EEESt4pairINSA_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.q = trunc i64 %.039256 to i32
+  %i.q = trunc nsw i64 %.039256 to i32
   store i32 %i.q, ptr %i.a, align 4, !tbaa !188
   %i.r = and i64 %.val.i194, 254
   %i.s = icmp eq i64 %i.r, 0
@@ -13154,7 +13154,7 @@ bb.ah:                                            ; preds = %_ZN7testing15Assert
 .lr.ph263:                                        ; preds = %bb.ah, %_ZN7testing15AssertionResultD2Ev.exit158
   %.0261 = phi i64 [ %i.iu, %_ZN7testing15AssertionResultD2Ev.exit158 ], [ 0, %bb.ah ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #43
-  %i.dj = trunc i64 %.0261 to i32                 ; 2 uses
+  %i.dj = trunc nsw i64 %.0261 to i32             ; 2 uses
   %.val.i = load i64, ptr %9, align 8             ; 6 uses
   %i.dk = and i64 %.val.i, 254
   %i.dl = icmp eq i64 %i.dk, 0
@@ -13557,7 +13557,7 @@ bb.b:                                             ; preds = %.preheader, %bb.bw
   %.val.i181 = phi i64 [ %.val.i181245, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueIhLi2EEELb1ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 1, %bb.b ] ; 8 uses
   %.039224 = phi i64 [ %i.bl, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueIhLi2EEELb1ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.p = trunc i64 %.039224 to i32
+  %i.p = trunc nsw i64 %.039224 to i32
   store i32 %i.p, ptr %i.a, align 4, !tbaa !188
   %i.q = and i64 %.val.i181, 254
   %i.r = icmp eq i64 %i.q, 0
@@ -13576,7 +13576,7 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111Val
 
 bb.d:                                             ; preds = %bb.c
   %.val8.i.i.i = load i16, ptr %i.e, align 8, !noalias !15161
-  %i.u = trunc i64 %.039224 to i16
+  %i.u = trunc nsw i64 %.039224 to i16
   %i.v = icmp eq i16 %.val8.i.i.i, %i.u
   br i1 %i.v, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueIhLi2EEELb1ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit, label %bb.e
 
@@ -13612,7 +13612,7 @@ bb.f:                                             ; preds = %.lr.ph
   %.val8.i.i = load ptr, ptr %i.f, align 8, !tbaa !161, !noalias !15162 ; 2 uses
   %i.ak = insertelement <16 x i8> poison, i8 %i.aj, i64 0
   %i.al = shufflevector <16 x i8> %i.ak, <16 x i8> poison, <16 x i32> zeroinitializer
-  %i.am = trunc i64 %.039224 to i16
+  %i.am = trunc nsw i64 %.039224 to i16
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.i, %bb.f
@@ -13976,8 +13976,8 @@ bb.ah:                                            ; preds = %_ZN7testing15Assert
 .lr.ph229:                                        ; preds = %bb.ah, %_ZN7testing15AssertionResultD2Ev.exit155
   %.0227 = phi i64 [ %i.jp, %_ZN7testing15AssertionResultD2Ev.exit155 ], [ 0, %bb.ah ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #43
-  %i.dy = trunc i64 %.0227 to i32
-  %i.dz = trunc i64 %.0227 to i16                 ; 3 uses
+  %i.dy = trunc nsw i64 %.0227 to i32
+  %i.dz = trunc nsw i64 %.0227 to i16             ; 3 uses
   %.val.i = load i64, ptr %7, align 8             ; 7 uses
   %i.ea = and i64 %.val.i, 254
   %i.eb = icmp eq i64 %i.ea, 0
@@ -14380,7 +14380,7 @@ bb.b:                                             ; preds = %.preheader, %bb.bw
   %.val.i = phi i64 [ %.val.i244, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueIhLi2EEELb0ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 1, %bb.b ] ; 8 uses
   %.039223 = phi i64 [ %i.bl, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueIhLi2EEELb0ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.p = trunc i64 %.039223 to i32
+  %i.p = trunc nsw i64 %.039223 to i32
   store i32 %i.p, ptr %i.a, align 4, !tbaa !188
   %i.q = and i64 %.val.i, 254
   %i.r = icmp eq i64 %i.q, 0
@@ -14399,7 +14399,7 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111Val
 
 bb.d:                                             ; preds = %bb.c
   %.val8.i.i.i = load i16, ptr %i.e, align 8, !noalias !15197
-  %i.u = trunc i64 %.039223 to i16
+  %i.u = trunc nsw i64 %.039223 to i16
   %i.v = icmp eq i16 %.val8.i.i.i, %i.u
   br i1 %i.v, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueIhLi2EEELb0ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit, label %bb.e
 
@@ -14435,7 +14435,7 @@ bb.f:                                             ; preds = %.lr.ph
   %.val8.i.i = load ptr, ptr %i.f, align 8, !tbaa !161, !noalias !15198 ; 2 uses
   %i.ak = insertelement <16 x i8> poison, i8 %i.aj, i64 0
   %i.al = shufflevector <16 x i8> %i.ak, <16 x i8> poison, <16 x i32> zeroinitializer
-  %i.am = trunc i64 %.039223 to i16
+  %i.am = trunc nsw i64 %.039223 to i16
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.i, %bb.f
@@ -14799,8 +14799,8 @@ bb.ah:                                            ; preds = %_ZN7testing15Assert
 .lr.ph228:                                        ; preds = %bb.ah, %_ZN7testing15AssertionResultD2Ev.exit155
   %.0226 = phi i64 [ %i.jp, %_ZN7testing15AssertionResultD2Ev.exit155 ], [ 0, %bb.ah ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #43
-  %i.dy = trunc i64 %.0226 to i32
-  %i.dz = trunc i64 %.0226 to i16                 ; 3 uses
+  %i.dy = trunc nsw i64 %.0226 to i32
+  %i.dz = trunc nsw i64 %.0226 to i16             ; 3 uses
   %.val7.i = load i64, ptr %7, align 8            ; 7 uses
   %i.ea = and i64 %.val7.i, 254
   %i.eb = icmp eq i64 %i.ea, 0
@@ -15203,7 +15203,7 @@ bb.b:                                             ; preds = %.preheader, %bb.bo
 .lr.ph:                                           ; preds = %bb.b, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueIhLi7EEELb1ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit
   %.039247 = phi i64 [ %i.ab, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueIhLi7EEELb1ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.r = trunc i64 %.039247 to i32
+  %i.r = trunc nsw i64 %.039247 to i32
   store i32 %i.r, ptr %i.a, align 4, !tbaa !188
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #43
   call void @llvm.experimental.noalias.scope.decl(metadata !15300)
@@ -15532,7 +15532,7 @@ bb.ab:                                            ; preds = %_ZN7testing15Assert
 .lr.ph251:                                        ; preds = %bb.ab, %_ZN7testing15AssertionResultD2Ev.exit152
   %.0249 = phi i64 [ %i.jp, %_ZN7testing15AssertionResultD2Ev.exit152 ], [ 0, %bb.ab ] ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #43
-  %i.co = trunc i64 %.0249 to i32
+  %i.co = trunc nsw i64 %.0249 to i32
   %i.cp = lshr i64 %.0249, 24                     ; 3 uses
   %i.cq = lshr i64 %.0249, 32                     ; 3 uses
   %i.cr = lshr i64 %.0249, 40                     ; 3 uses
@@ -15935,7 +15935,7 @@ bb.b:                                             ; preds = %.preheader, %bb.bo
 .lr.ph:                                           ; preds = %bb.b, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueIhLi7EEELb0ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit
   %.039247 = phi i64 [ %i.ab, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueIhLi7EEELb0ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.r = trunc i64 %.039247 to i32
+  %i.r = trunc nsw i64 %.039247 to i32
   store i32 %i.r, ptr %i.a, align 4, !tbaa !188
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #43
   call void @llvm.experimental.noalias.scope.decl(metadata !15331)
@@ -16264,7 +16264,7 @@ bb.ab:                                            ; preds = %_ZN7testing15Assert
 .lr.ph251:                                        ; preds = %bb.ab, %_ZN7testing15AssertionResultD2Ev.exit152
   %.0249 = phi i64 [ %i.jp, %_ZN7testing15AssertionResultD2Ev.exit152 ], [ 0, %bb.ab ] ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #43
-  %i.co = trunc i64 %.0249 to i32
+  %i.co = trunc nsw i64 %.0249 to i32
   %i.cp = lshr i64 %.0249, 24                     ; 3 uses
   %i.cq = lshr i64 %.0249, 32                     ; 3 uses
   %i.cr = lshr i64 %.0249, 40                     ; 3 uses
@@ -16667,7 +16667,7 @@ bb.b:                                             ; preds = %.preheader, %bb.bu
   %.val.i184 = phi i64 [ %.val.i184266, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueItLi3EEELb1ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 1, %bb.b ] ; 7 uses
   %.039246 = phi i64 [ %i.bu, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueItLi3EEELb1ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.q = trunc i64 %.039246 to i32                ; 5 uses
+  %i.q = trunc nsw i64 %.039246 to i32
   store i32 %i.q, ptr %i.a, align 4, !tbaa !188
   %i.r = and i64 %.val.i184, 254
   %i.s = icmp eq i64 %i.r, 0
@@ -16685,18 +16685,11 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111Val
 bb.d:                                             ; preds = %bb.c
   %.val8.i.i.i = load i16, ptr %i.e, align 8, !tbaa !604, !noalias !15370
   %.val9.i.i.i = load i32, ptr %i.g, align 2, !noalias !15370
-  %19 = lshr i32 %i.q, 16
-  %isneg.i.i.i.i.i.i.i = icmp slt i32 %i.q, 0
-  %.sroa.4.4.insert.ext.i.i.i.i.i.i.i = select i1 %isneg.i.i.i.i.i.i.i, i32 -65536, i32 0
-  %.sroa.4.4.insert.insert.i.i.i.i.i.i.i = or disjoint i32 %.sroa.4.4.insert.ext.i.i.i.i.i.i.i, %19
   %i.u = zext i32 %.val9.i.i.i to i64
   %i.v = shl nuw nsw i64 %i.u, 16
-  %20 = zext i16 %.val8.i.i.i to i64
-  %21 = or disjoint i64 %i.v, %20
-  %i.w = zext i32 %.sroa.4.4.insert.insert.i.i.i.i.i.i.i to i64
-  %22 = shl nuw nsw i64 %i.w, 16
-  %i.x = or disjoint i64 %22, %.039246
-  %i.y = icmp eq i64 %21, %i.x
+  %i.w = zext i16 %.val8.i.i.i to i64
+  %i.x = or disjoint i64 %i.v, %i.w
+  %i.y = icmp eq i64 %i.x, %.039246
   br i1 %i.y, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueItLi3EEELb1ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -16719,10 +16712,7 @@ bb.f:                                             ; preds = %.lr.ph
   call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i32 0, i32 1, i32 1), !noalias !15371
   %i.ac = lshr i64 %.val.i184, 8
   %i.ad = and i64 %i.ac, 255
-  %isneg.i.i.i.i = icmp slt i32 %i.q, 0           ; 2 uses
-  %.mask.i.i.i.i = select i1 %isneg.i.i.i.i, i64 281470681743360, i64 0
-  %.sroa.0.0.insert.insert.i.i.i.i = or disjoint i64 %.039246, %.mask.i.i.i.i
-  %i.ae = xor i64 %i.ad, %.sroa.0.0.insert.insert.i.i.i.i
+  %i.ae = xor i64 %i.ad, %.039246
   %i.af = zext nneg i64 %i.ae to i128
   %i.ag = mul nuw nsw i128 %i.af, 8779197792823184629 ; 2 uses
   %i.ah = lshr i128 %i.ag, 64
@@ -16734,12 +16724,6 @@ bb.f:                                             ; preds = %.lr.ph
   %.val8.i.i = load ptr, ptr %i.f, align 8, !tbaa !161, !noalias !15371 ; 2 uses
   %i.an = insertelement <16 x i8> poison, i8 %i.am, i64 0
   %i.ao = shufflevector <16 x i8> %i.an, <16 x i8> poison, <16 x i32> zeroinitializer
-  %23 = lshr i32 %i.q, 16
-  %.sroa.4.4.insert.ext.i.i.i.i.i.i = select i1 %isneg.i.i.i.i, i32 -65536, i32 0
-  %.sroa.4.4.insert.insert.i.i.i.i.i.i = or disjoint i32 %.sroa.4.4.insert.ext.i.i.i.i.i.i, %23
-  %24 = zext i32 %.sroa.4.4.insert.insert.i.i.i.i.i.i to i64
-  %25 = shl nuw nsw i64 %24, 16
-  %26 = or disjoint i64 %25, %.039246
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.i, %bb.f
@@ -16771,7 +16755,7 @@ bb.g:                                             ; preds = %bb.i, %bb.f
   %i.bd = shl nuw nsw i64 %i.bc, 16
   %i.be = zext i16 %.val3.i.i to i64
   %i.bf = or disjoint i64 %i.bd, %i.be
-  %i.bg = icmp eq i64 %i.bf, %26
+  %i.bg = icmp eq i64 %i.bf, %.039246
   br i1 %i.bg, label %.noexc, label %.critedge.i.i.i, !prof !241
 
 .critedge.i.i.i:                                  ; preds = %.lr.ph.i.i185
@@ -17112,7 +17096,7 @@ bb.ah:                                            ; preds = %_ZN7testing15Assert
 .lr.ph250:                                        ; preds = %bb.ah, %_ZN7testing15AssertionResultD2Ev.exit158
   %.0248 = phi i64 [ %i.km, %_ZN7testing15AssertionResultD2Ev.exit158 ], [ 0, %bb.ah ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #43
-  %i.eh = trunc i64 %.0248 to i32
+  %i.eh = trunc nsw i64 %.0248 to i32
   %i.ei = lshr i64 %.0248, 16                     ; 3 uses
   %i.ej = lshr i64 %.0248, 32                     ; 3 uses
   %.val.i = load i64, ptr %7, align 8             ; 6 uses
@@ -17515,7 +17499,7 @@ bb.b:                                             ; preds = %.preheader, %bb.bu
   %.val.i = phi i64 [ %.val.i265, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueItLi3EEELb0ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 1, %bb.b ] ; 7 uses
   %.039245 = phi i64 [ %i.bu, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueItLi3EEELb0ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.q = trunc i64 %.039245 to i32                ; 5 uses
+  %i.q = trunc nsw i64 %.039245 to i32
   store i32 %i.q, ptr %i.a, align 4, !tbaa !188
   %i.r = and i64 %.val.i, 254
   %i.s = icmp eq i64 %i.r, 0
@@ -17533,18 +17517,11 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111Val
 bb.d:                                             ; preds = %bb.c
   %.val8.i.i.i = load i16, ptr %i.e, align 8, !tbaa !604, !noalias !15406
   %.val9.i.i.i = load i32, ptr %i.g, align 2, !noalias !15406
-  %19 = lshr i32 %i.q, 16
-  %isneg.i.i.i.i.i.i.i = icmp slt i32 %i.q, 0
-  %.sroa.4.4.insert.ext.i.i.i.i.i.i.i = select i1 %isneg.i.i.i.i.i.i.i, i32 -65536, i32 0
-  %.sroa.4.4.insert.insert.i.i.i.i.i.i.i = or disjoint i32 %.sroa.4.4.insert.ext.i.i.i.i.i.i.i, %19
   %i.u = zext i32 %.val9.i.i.i to i64
   %i.v = shl nuw nsw i64 %i.u, 16
-  %20 = zext i16 %.val8.i.i.i to i64
-  %21 = or disjoint i64 %i.v, %20
-  %i.w = zext i32 %.sroa.4.4.insert.insert.i.i.i.i.i.i.i to i64
-  %22 = shl nuw nsw i64 %i.w, 16
-  %i.x = or disjoint i64 %22, %.039245
-  %i.y = icmp eq i64 %21, %i.x
+  %i.w = zext i16 %.val8.i.i.i to i64
+  %i.x = or disjoint i64 %i.v, %i.w
+  %i.y = icmp eq i64 %i.x, %.039245
   br i1 %i.y, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueItLi3EEELb0ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -17567,10 +17544,7 @@ bb.f:                                             ; preds = %.lr.ph
   call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i32 0, i32 1, i32 1), !noalias !15407
   %i.ac = lshr i64 %.val.i, 8
   %i.ad = and i64 %i.ac, 255
-  %isneg.i.i.i.i = icmp slt i32 %i.q, 0           ; 2 uses
-  %.mask.i.i.i.i = select i1 %isneg.i.i.i.i, i64 281470681743360, i64 0
-  %.sroa.0.0.insert.insert.i.i.i.i = or disjoint i64 %.039245, %.mask.i.i.i.i
-  %i.ae = xor i64 %i.ad, %.sroa.0.0.insert.insert.i.i.i.i
+  %i.ae = xor i64 %i.ad, %.039245
   %i.af = zext nneg i64 %i.ae to i128
   %i.ag = mul nuw nsw i128 %i.af, 8779197792823184629 ; 2 uses
   %i.ah = lshr i128 %i.ag, 64
@@ -17582,12 +17556,6 @@ bb.f:                                             ; preds = %.lr.ph
   %.val8.i.i = load ptr, ptr %i.f, align 8, !tbaa !161, !noalias !15407 ; 2 uses
   %i.an = insertelement <16 x i8> poison, i8 %i.am, i64 0
   %i.ao = shufflevector <16 x i8> %i.an, <16 x i8> poison, <16 x i32> zeroinitializer
-  %23 = lshr i32 %i.q, 16
-  %.sroa.4.4.insert.ext.i.i.i.i.i.i = select i1 %isneg.i.i.i.i, i32 -65536, i32 0
-  %.sroa.4.4.insert.insert.i.i.i.i.i.i = or disjoint i32 %.sroa.4.4.insert.ext.i.i.i.i.i.i, %23
-  %24 = zext i32 %.sroa.4.4.insert.insert.i.i.i.i.i.i to i64
-  %25 = shl nuw nsw i64 %24, 16
-  %26 = or disjoint i64 %25, %.039245
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.i, %bb.f
@@ -17619,7 +17587,7 @@ bb.g:                                             ; preds = %bb.i, %bb.f
   %i.bd = shl nuw nsw i64 %i.bc, 16
   %i.be = zext i16 %.val5.i.i185 to i64
   %i.bf = or disjoint i64 %i.bd, %i.be
-  %i.bg = icmp eq i64 %i.bf, %26
+  %i.bg = icmp eq i64 %i.bf, %.039245
   br i1 %i.bg, label %.noexc, label %.critedge.i.i.i, !prof !241
 
 .critedge.i.i.i:                                  ; preds = %.lr.ph.i.i184
@@ -17960,7 +17928,7 @@ bb.ah:                                            ; preds = %_ZN7testing15Assert
 .lr.ph249:                                        ; preds = %bb.ah, %_ZN7testing15AssertionResultD2Ev.exit158
   %.0247 = phi i64 [ %i.km, %_ZN7testing15AssertionResultD2Ev.exit158 ], [ 0, %bb.ah ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #43
-  %i.eh = trunc i64 %.0247 to i32
+  %i.eh = trunc nsw i64 %.0247 to i32
   %i.ei = lshr i64 %.0247, 16                     ; 3 uses
   %i.ej = lshr i64 %.0247, 32                     ; 3 uses
   %.val7.i = load i64, ptr %7, align 8            ; 6 uses
@@ -18363,7 +18331,7 @@ bb.b:                                             ; preds = %.preheader, %bb.bu
   %.val.i183 = phi i64 [ %.val.i183248, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueItLi5EEELb1ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 1, %bb.b ] ; 7 uses
   %.039228 = phi i64 [ %i.bt, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueItLi5EEELb1ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.p = trunc i64 %.039228 to i32                ; 3 uses
+  %i.p = trunc nsw i64 %.039228 to i32
   store i32 %i.p, ptr %i.a, align 4, !tbaa !188
   %i.q = and i64 %.val.i183, 254
   %i.r = icmp eq i64 %i.q, 0
@@ -18380,11 +18348,8 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111Val
 
 bb.d:                                             ; preds = %bb.c
   %.val8.i.i.i = load i64, ptr %i.e, align 8, !noalias !15442
-  %isneg.i.i.i.i.i.i.i = icmp slt i32 %i.p, 0
-  %.sroa.0.4.insert.ext.i.i.i.i.i.i.i = select i1 %isneg.i.i.i.i.i.i.i, i64 281470681743360, i64 0
   %i.t = and i64 %.039228, 9223090566173032447
-  %.sroa.0.6.insert.insert.i.i.i.i.i.i.i = or disjoint i64 %.sroa.0.4.insert.ext.i.i.i.i.i.i.i, %i.t
-  %i.u = icmp eq i64 %.val8.i.i.i, %.sroa.0.6.insert.insert.i.i.i.i.i.i.i
+  %i.u = icmp eq i64 %.val8.i.i.i, %i.t
   br i1 %i.u, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueItLi5EEELb1ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -18407,11 +18372,8 @@ bb.f:                                             ; preds = %.lr.ph
   call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i32 0, i32 1, i32 1), !noalias !15443
   %i.y = lshr i64 %.val.i183, 8
   %i.z = and i64 %i.y, 255
-  %isneg.i.i.i.i = icmp slt i32 %i.p, 0
-  %.sroa.0.4.insert.ext.i.i.i.i = select i1 %isneg.i.i.i.i, i64 281470681743360, i64 0
-  %i.aa = and i64 %.039228, 9223090566173032447
-  %.sroa.0.6.insert.insert.i.i.i.i = or disjoint i64 %.sroa.0.4.insert.ext.i.i.i.i, %i.aa ; 2 uses
-  %i.ab = xor i64 %i.z, %.sroa.0.6.insert.insert.i.i.i.i
+  %i.aa = and i64 %.039228, 9223090566173032447   ; 2 uses
+  %i.ab = xor i64 %i.z, %i.aa
   %i.ac = zext nneg i64 %i.ab to i128
   %i.ad = mul nuw nsw i128 %i.ac, 8779197792823184629 ; 2 uses
   %i.ae = lshr i128 %i.ad, 64
@@ -18448,7 +18410,7 @@ bb.g:                                             ; preds = %bb.i, %bb.f
   %i.aw = and i64 %i.av, %i.ah
   %i.ax = getelementptr inbounds nuw [10 x i8], ptr %.val7.i.i, i64 %i.aw
   %.val3.i.i = load i64, ptr %i.ax, align 2, !noalias !15443
-  %i.ay = icmp eq i64 %.val3.i.i, %.sroa.0.6.insert.insert.i.i.i.i
+  %i.ay = icmp eq i64 %.val3.i.i, %i.aa
   br i1 %i.ay, label %.noexc, label %.critedge.i.i.i, !prof !241
 
 .critedge.i.i.i:                                  ; preds = %.lr.ph.i.i184
@@ -18798,7 +18760,7 @@ bb.ah:                                            ; preds = %_ZN7testing15Assert
 .lr.ph232:                                        ; preds = %bb.ah, %_ZN7testing15AssertionResultD2Ev.exit157
   %.0230 = phi i64 [ %i.js, %_ZN7testing15AssertionResultD2Ev.exit157 ], [ 0, %bb.ah ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #43
-  %i.eg = trunc i64 %.0230 to i32
+  %i.eg = trunc nsw i64 %.0230 to i32
   %.val.i = load i64, ptr %7, align 8             ; 6 uses
   %i.eh = and i64 %.val.i, 254
   %i.ei = icmp eq i64 %i.eh, 0
@@ -19201,7 +19163,7 @@ bb.b:                                             ; preds = %.preheader, %bb.bu
   %.val.i = phi i64 [ %.val.i247, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueItLi5EEELb0ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 1, %bb.b ] ; 7 uses
   %.039227 = phi i64 [ %i.bt, %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueItLi5EEELb0ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit ], [ 0, %bb.b ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #43
-  %i.p = trunc i64 %.039227 to i32                ; 3 uses
+  %i.p = trunc nsw i64 %.039227 to i32
   store i32 %i.p, ptr %i.a, align 4, !tbaa !188
   %i.q = and i64 %.val.i, 254
   %i.r = icmp eq i64 %i.q, 0
@@ -19218,11 +19180,8 @@ _ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111Val
 
 bb.d:                                             ; preds = %bb.c
   %.val8.i.i.i = load i64, ptr %i.e, align 8, !noalias !15478
-  %isneg.i.i.i.i.i.i.i = icmp slt i32 %i.p, 0
-  %.sroa.0.4.insert.ext.i.i.i.i.i.i.i = select i1 %isneg.i.i.i.i.i.i.i, i64 281470681743360, i64 0
   %i.t = and i64 %.039227, 9223090566173032447
-  %.sroa.0.6.insert.insert.i.i.i.i.i.i.i = or disjoint i64 %.sroa.0.4.insert.ext.i.i.i.i.i.i.i, %i.t
-  %i.u = icmp eq i64 %.val8.i.i.i, %.sroa.0.6.insert.insert.i.i.i.i.i.i.i
+  %i.u = icmp eq i64 %.val8.i.i.i, %i.t
   br i1 %i.u, label %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyINS3_12AlignedValueItLi5EEELb0ELb1EEEJEE6insertIiLi0EEESt4pairINS8_8iteratorEbEOT_.exit, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
@@ -19245,11 +19204,8 @@ bb.f:                                             ; preds = %.lr.ph
   call void @llvm.prefetch.p0(ptr %.sroa.0.0.copyload.i.i.i.i.i.i, i32 0, i32 1, i32 1), !noalias !15479
   %i.y = lshr i64 %.val.i, 8
   %i.z = and i64 %i.y, 255
-  %isneg.i.i.i.i = icmp slt i32 %i.p, 0
-  %.sroa.0.4.insert.ext.i.i.i.i = select i1 %isneg.i.i.i.i, i64 281470681743360, i64 0
-  %i.aa = and i64 %.039227, 9223090566173032447
-  %.sroa.0.6.insert.insert.i.i.i.i = or disjoint i64 %.sroa.0.4.insert.ext.i.i.i.i, %i.aa ; 2 uses
-  %i.ab = xor i64 %i.z, %.sroa.0.6.insert.insert.i.i.i.i
+  %i.aa = and i64 %.039227, 9223090566173032447   ; 2 uses
+  %i.ab = xor i64 %i.z, %i.aa
   %i.ac = zext nneg i64 %i.ab to i128
   %i.ad = mul nuw nsw i128 %i.ac, 8779197792823184629 ; 2 uses
   %i.ae = lshr i128 %i.ad, 64
@@ -19286,7 +19242,7 @@ bb.g:                                             ; preds = %bb.i, %bb.f
   %i.aw = and i64 %i.av, %i.ah
   %i.ax = getelementptr inbounds nuw [10 x i8], ptr %.val7.i.i, i64 %i.aw
   %.val5.i.i = load i64, ptr %i.ax, align 2, !noalias !15479
-  %i.ay = icmp eq i64 %.val5.i.i, %.sroa.0.6.insert.insert.i.i.i.i
+  %i.ay = icmp eq i64 %.val5.i.i, %i.aa
   br i1 %i.ay, label %.noexc, label %.critedge.i.i.i, !prof !241
 
 .critedge.i.i.i:                                  ; preds = %.lr.ph.i.i183
@@ -19636,7 +19592,7 @@ bb.ah:                                            ; preds = %_ZN7testing15Assert
 .lr.ph231:                                        ; preds = %bb.ah, %_ZN7testing15AssertionResultD2Ev.exit157
   %.0229 = phi i64 [ %i.js, %_ZN7testing15AssertionResultD2Ev.exit157 ], [ 0, %bb.ah ] ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #43
-  %i.eg = trunc i64 %.0229 to i32
+  %i.eg = trunc nsw i64 %.0229 to i32
   %.val8.i = load i64, ptr %7, align 8            ; 6 uses
   %i.eh = and i64 %.val8.i, 254
   %i.ei = icmp eq i64 %i.eh, 0

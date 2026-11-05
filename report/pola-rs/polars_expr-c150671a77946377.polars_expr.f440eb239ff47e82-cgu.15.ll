@@ -205,7 +205,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNt
 
 .lr.ph101:                                        ; preds = %bb.a, %._crit_edge
   %i.f = phi i64 [ %i.cm, %._crit_edge ], [ 0, %bb.a ]
-  %.sroa.02.099 = phi i64 [ %.sroa.0.0.i31, %._crit_edge ], [ 0, %bb.a ] ; 10 uses
+  %.sroa.02.099 = phi i64 [ %.sroa.0.0.i31, %._crit_edge ], [ 0, %bb.a ] ; 8 uses
   %i.g = sub nuw nsw i64 %1, %.sroa.02.099, !dbg !67314 ; 7 uses
   %i.h = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.02.099, !dbg !67315 ; 9 uses
   %i.i = icmp samesign ult i64 %i.g, 2, !dbg !67316
@@ -279,7 +279,7 @@ bb.i:                                             ; preds = %bb.g
 .loopexit47:                                      ; preds = %bb.e, %.lr.ph.i, %bb.f, %.lr.ph7.i, %.preheader.i, %.preheader1.i, %.lr.ph101
   %.sroa.4.0.i = phi i1 [ false, %.lr.ph101 ], [ true, %.preheader.i ], [ true, %bb.f ], [ false, %.preheader1.i ], [ true, %.lr.ph7.i ], [ false, %.lr.ph.i ], [ false, %bb.e ], !dbg !67334 ; 2 uses
   %.sroa.0.0.i = phi i64 [ %i.g, %.lr.ph101 ], [ 2, %.preheader.i ], [ %i.g, %bb.f ], [ 2, %.preheader1.i ], [ %.sroa.01.16.i, %.lr.ph7.i ], [ %i.g, %bb.e ], [ %.sroa.01.03.i, %.lr.ph.i ], !dbg !67334 ; 7 uses
-  %i.w = add i64 %.sroa.0.0.i, %.sroa.02.099, !dbg !67335 ; 8 uses
+  %i.w = add nuw i64 %.sroa.0.0.i, %.sroa.02.099, !dbg !67335 ; 6 uses
   %i.x = icmp eq i64 %.sroa.02.099, 0, !dbg !67336
   %i.y = icmp eq i64 %i.w, %1
   %or.cond = and i1 %i.x, %i.y, !dbg !67336
@@ -311,13 +311,11 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmxE12split_at_mutCskY9G75ZWc4U_11polars_expr.e
   store i32 %i.ad, ptr %i.ac, align 8, !dbg !67343, !alias.scope !67264
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ac, i64 8, !dbg !67343
   store i64 %i.af, ptr %i.ag, align 8, !dbg !67343, !alias.scope !67264
-  br label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmxEECskY9G75ZWc4U_11polars_expr.exit, !dbg !67344
+  br label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmxEECskY9G75ZWc4U_11polars_expr.exit
 
 _RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmxEECskY9G75ZWc4U_11polars_expr.exit: ; preds = %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmxE12split_at_mutCskY9G75ZWc4U_11polars_expr.exit11.i.epil.preheader, %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmxEECskY9G75ZWc4U_11polars_expr.exit.loopexit.unr-lcssa, %bb.p, %bb.k
-  %4 = icmp uge i64 %i.w, %.sroa.02.099, !dbg !67344
-  %5 = icmp ule i64 %i.w, %1
-  %or.cond.i = and i1 %4, %5, !dbg !67344
-  br i1 %or.cond.i, label %bb.m, label %bb.l, !dbg !67344, !prof !3054
+  %.not103 = icmp ugt i64 %i.w, %1
+  br i1 %.not103, label %bb.l, label %bb.m, !dbg !67344, !prof !3014
 
 bb.l:                                             ; preds = %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmxEECskY9G75ZWc4U_11polars_expr.exit
   invoke void @_RNvNtCscgRAwXFJnXP_4core9panicking5panic(ptr noalias noundef nonnull readonly captures(address, read_provenance) @63, i64 noundef 44, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @64) #35
@@ -345,10 +343,8 @@ bb.n:                                             ; preds = %bb.m
   br label %_RINvNtNtCse67t6KqNqGQ_5rayon5slice4sort20provide_sorted_batchTmxENCINvYSBX_INtB4_16ParallelSliceMutBX_E11par_sort_byNCINvNtNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops4sort8arg_sort9sort_implxE0E0ECskY9G75ZWc4U_11polars_expr.exit, !dbg !67351
 
 bb.o:                                             ; preds = %bb.k
-  %6 = icmp ult i64 %i.w, %.sroa.02.099, !dbg !67353
   %.not = icmp ugt i64 %i.w, %1
-  %or.cond27 = or i1 %6, %.not, !dbg !67353
-  br i1 %or.cond27, label %.invoke, label %bb.p, !dbg !67353, !prof !3014
+  br i1 %.not, label %.invoke, label %bb.p, !dbg !67353, !prof !3014
 
 bb.p:                                             ; preds = %bb.o
   %i.al = lshr i64 %.sroa.0.0.i, 1, !dbg !67354   ; 4 uses
@@ -667,7 +663,7 @@ _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtCsgZ49sUHp3tW_5alloc3vec3VecNt
 
 .lr.ph101:                                        ; preds = %bb.a, %._crit_edge
   %i.f = phi i64 [ %i.cm, %._crit_edge ], [ 0, %bb.a ]
-  %.sroa.02.099 = phi i64 [ %.sroa.0.0.i31, %._crit_edge ], [ 0, %bb.a ] ; 10 uses
+  %.sroa.02.099 = phi i64 [ %.sroa.0.0.i31, %._crit_edge ], [ 0, %bb.a ] ; 8 uses
   %i.g = sub nuw nsw i64 %1, %.sroa.02.099, !dbg !67646 ; 7 uses
   %i.h = getelementptr inbounds nuw [16 x i8], ptr %0, i64 %.sroa.02.099, !dbg !67647 ; 9 uses
   %i.i = icmp samesign ult i64 %i.g, 2, !dbg !67648
@@ -741,7 +737,7 @@ bb.i:                                             ; preds = %bb.g
 .loopexit47:                                      ; preds = %bb.e, %.lr.ph.i, %bb.f, %.lr.ph7.i, %.preheader.i, %.preheader1.i, %.lr.ph101
   %.sroa.4.0.i = phi i1 [ false, %.lr.ph101 ], [ true, %.preheader.i ], [ true, %bb.f ], [ false, %.preheader1.i ], [ true, %.lr.ph7.i ], [ false, %.lr.ph.i ], [ false, %bb.e ], !dbg !67666 ; 2 uses
   %.sroa.0.0.i = phi i64 [ %i.g, %.lr.ph101 ], [ 2, %.preheader.i ], [ %i.g, %bb.f ], [ 2, %.preheader1.i ], [ %.sroa.01.16.i, %.lr.ph7.i ], [ %i.g, %bb.e ], [ %.sroa.01.03.i, %.lr.ph.i ], !dbg !67666 ; 7 uses
-  %i.w = add i64 %.sroa.0.0.i, %.sroa.02.099, !dbg !67667 ; 8 uses
+  %i.w = add nuw i64 %.sroa.0.0.i, %.sroa.02.099, !dbg !67667 ; 6 uses
   %i.x = icmp eq i64 %.sroa.02.099, 0, !dbg !67668
   %i.y = icmp eq i64 %i.w, %1
   %or.cond = and i1 %i.x, %i.y, !dbg !67668
@@ -773,13 +769,11 @@ _RNvMNtCscgRAwXFJnXP_4core5sliceSTmxE12split_at_mutCskY9G75ZWc4U_11polars_expr.e
   store i32 %i.ad, ptr %i.ac, align 8, !dbg !67675, !alias.scope !67596
   %i.ag = getelementptr inbounds nuw i8, ptr %i.ac, i64 8, !dbg !67675
   store i64 %i.af, ptr %i.ag, align 8, !dbg !67675, !alias.scope !67596
-  br label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmxEECskY9G75ZWc4U_11polars_expr.exit, !dbg !67676
+  br label %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmxEECskY9G75ZWc4U_11polars_expr.exit
 
 _RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmxEECskY9G75ZWc4U_11polars_expr.exit: ; preds = %_RNvMNtCscgRAwXFJnXP_4core5sliceSTmxE12split_at_mutCskY9G75ZWc4U_11polars_expr.exit11.i.epil.preheader, %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmxEECskY9G75ZWc4U_11polars_expr.exit.loopexit.unr-lcssa, %bb.p, %bb.k
-  %4 = icmp uge i64 %i.w, %.sroa.02.099, !dbg !67676
-  %5 = icmp ule i64 %i.w, %1
-  %or.cond.i = and i1 %4, %5, !dbg !67676
-  br i1 %or.cond.i, label %bb.m, label %bb.l, !dbg !67676, !prof !3054
+  %.not103 = icmp ugt i64 %i.w, %1
+  br i1 %.not103, label %bb.l, label %bb.m, !dbg !67676, !prof !3014
 
 bb.l:                                             ; preds = %_RINvNvMNtCscgRAwXFJnXP_4core5sliceSp7reverse7revswapTmxEECskY9G75ZWc4U_11polars_expr.exit
   invoke void @_RNvNtCscgRAwXFJnXP_4core9panicking5panic(ptr noalias noundef nonnull readonly captures(address, read_provenance) @63, i64 noundef 44, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @64) #35
@@ -807,10 +801,8 @@ bb.n:                                             ; preds = %bb.m
   br label %_RINvNtNtCse67t6KqNqGQ_5rayon5slice4sort20provide_sorted_batchTmxENCINvYSBX_INtB4_16ParallelSliceMutBX_E11par_sort_byNCNCINvNtNtNtCs1LHh8CLbVkQ_11polars_core13chunked_array3ops4sort14sort_by_branchBX_NCINvNtB1X_8arg_sort9sort_implxE0E00E0ECskY9G75ZWc4U_11polars_expr.exit, !dbg !67683
 
 bb.o:                                             ; preds = %bb.k
-  %6 = icmp ult i64 %i.w, %.sroa.02.099, !dbg !67685
   %.not = icmp ugt i64 %i.w, %1
-  %or.cond27 = or i1 %6, %.not, !dbg !67685
-  br i1 %or.cond27, label %.invoke, label %bb.p, !dbg !67685, !prof !3014
+  br i1 %.not, label %.invoke, label %bb.p, !dbg !67685, !prof !3014
 
 bb.p:                                             ; preds = %bb.o
   %i.al = lshr i64 %.sroa.0.0.i, 1, !dbg !67686   ; 4 uses

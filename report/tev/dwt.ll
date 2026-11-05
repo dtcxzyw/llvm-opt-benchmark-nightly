@@ -205,8 +205,9 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
 bb.f:                                             ; preds = %bb.d
   %i.ka = lshr i32 %i.da, 3
   %spec.select.i = tail call i32 @llvm.umin.i32(i32 %i.ka, i32 %i.y) ; 2 uses
-  %i.kb = udiv i32 %i.da, %spec.select.i
-  %7 = and i32 %i.kb, -8                          ; 2 uses
+  %7 = shl nuw i32 %spec.select.i, 3
+  %i.kb = udiv i32 %i.da, %7
+  %8 = shl nuw nsw i32 %i.kb, 3                   ; 2 uses
   %i.kc = and i32 %i.da, -8                       ; 2 uses
   br label %bb.g
 
@@ -255,9 +256,9 @@ bb.k:                                             ; preds = %bb.i
   store ptr %.1227318.i, ptr %i.ko, align 8, !tbaa !94, !noalias !300
   %i.kp = add nuw nsw i32 %.1225319.i, 1          ; 2 uses
   %.not410.i = icmp eq i32 %i.kp, %spec.select.i  ; 2 uses
-  %i.kq = mul i32 %.1225319.i, %7
+  %i.kq = mul i32 %.1225319.i, %8
   %i.kr = sub i32 %i.kc, %i.kq
-  %i.ks = select i1 %.not410.i, i32 %i.kr, i32 %7 ; 2 uses
+  %i.ks = select i1 %.not410.i, i32 %i.kr, i32 %8 ; 2 uses
   %i.kt = getelementptr inbounds nuw i8, ptr %i.kd, i64 56
   store i32 %i.ks, ptr %i.kt, align 8, !tbaa !95, !noalias !300
   %i.ku = mul i32 %i.ks, %i.x
@@ -532,8 +533,9 @@ opj_v8dwt_interleave_v.exit.i:                    ; preds = %.lr.ph29.i.i.epil.p
 bb.p:                                             ; preds = %.loopexit309.i
   %i.nw = lshr i32 %i.cv, 3
   %spec.select279.i = tail call i32 @llvm.umin.i32(i32 %i.nw, i32 %i.ce) ; 2 uses
-  %i.nx = udiv i32 %i.cv, %spec.select279.i
-  %8 = and i32 %i.nx, -8                          ; 2 uses
+  %9 = shl nuw i32 %spec.select279.i, 3
+  %i.nx = udiv i32 %i.cv, %9
+  %10 = shl nuw nsw i32 %i.nx, 3                  ; 2 uses
   %i.ny = and i32 %i.cv, -8
   br label %bb.q
 
@@ -582,9 +584,9 @@ bb.u:                                             ; preds = %bb.s
   store ptr %.6331.i, ptr %i.ok, align 8, !tbaa !94, !noalias !300
   %i.ol = add nuw nsw i32 %.5332.i, 1             ; 2 uses
   %.not411.i = icmp eq i32 %i.ol, %spec.select279.i ; 2 uses
-  %i.om = mul i32 %.5332.i, %8
+  %i.om = mul i32 %.5332.i, %10
   %i.on = sub i32 %i.ny, %i.om
-  %i.oo = select i1 %.not411.i, i32 %i.on, i32 %8 ; 2 uses
+  %i.oo = select i1 %.not411.i, i32 %i.on, i32 %10 ; 2 uses
   %i.op = getelementptr inbounds nuw i8, ptr %i.nz, i64 56
   store i32 %i.oo, ptr %i.op, align 8, !tbaa !95, !noalias !300
   %i.oq = zext i32 %i.oo to i64

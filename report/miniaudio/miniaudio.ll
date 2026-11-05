@@ -205,7 +205,7 @@ bb.x:                                             ; preds = %bb.v, %bb.v
   ]
 
 .sink.split183:                                   ; preds = %bb.x, %bb.x, %bb.w, %bb.w
-  %i.aj = trunc i32 %.03651.us.us.us.us to i8
+  %i.aj = trunc nuw i32 %.03651.us.us.us.us to i8
   store i8 %i.aj, ptr %i.t, align 1, !tbaa !119
   br label %bb.y
 

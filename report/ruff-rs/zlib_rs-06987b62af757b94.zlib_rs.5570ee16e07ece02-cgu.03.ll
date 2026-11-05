@@ -205,15 +205,19 @@ bb.bx:                                            ; preds = %bb.bw
   %i.md = getelementptr inbounds nuw i8, ptr %i.af, i64 152 ; 3 uses
   %i.me = zext i16 %.sroa.0309.0 to i64           ; 2 uses
   store i64 %i.me, ptr %i.md, align 8
-  %i.mf = and i8 %.sroa.0300.0, 15                ; 5 uses
-  %i.mg = zext nneg i8 %i.mf to i64               ; 3 uses
+  %i.mf = and i8 %.sroa.0300.0, 15                ; 4 uses
+  %i.mg = zext nneg i8 %i.mf to i64               ; 4 uses
   store i64 %i.mg, ptr %i.iv, align 32
   %.not402 = icmp eq i8 %i.mf, 0
   br i1 %.not402, label %bb.bz, label %.preheader422
 
 .preheader422:                                    ; preds = %bb.bx
   %i.mh = icmp ugt i8 %i.mf, %i.ma
-  br i1 %i.mh, label %.lr.ph1148, label %._crit_edge1149
+  br i1 %i.mh, label %.lr.ph1148.preheader, label %._crit_edge1149
+
+.lr.ph1148.preheader:                             ; preds = %.preheader422
+  %5 = zext nneg i8 %i.ma to i64
+  br label %.lr.ph1148
 
 bb.by:                                            ; preds = %bb.bw
   store i8 30, ptr %i.af, align 64
@@ -230,6 +234,7 @@ bb.bz:                                            ; preds = %._crit_edge1149, %b
   br label %bb.ca
 
 ._crit_edge1149.loopexit:                         ; preds = %bb.cf
+  %6 = trunc nuw nsw i64 %indvars.iv.next1965 to i8
   %.pre1978.a = load i64, ptr %i.md, align 8
   br label %._crit_edge1149
 
@@ -247,10 +252,10 @@ bb.bz:                                            ; preds = %._crit_edge1149, %b
   %i.mp = sub nuw i8 %.sroa.076.14.lcssa, %i.mf
   br label %bb.bz
 
-.lr.ph1148:                                       ; preds = %.preheader422, %bb.cf
-  %.sroa.018.141147.a = phi i64 [ %i.po, %bb.cf ], [ %i.lz, %.preheader422 ]
-  %.sroa.076.141146 = phi i8 [ %6, %bb.cf ], [ %i.ma, %.preheader422 ] ; 2 uses
-  %.sroa.0182.231145 = phi i32 [ %i.pj, %bb.cf ], [ %.sroa.0182.21, %.preheader422 ] ; 2 uses
+.lr.ph1148:                                       ; preds = %.lr.ph1148.preheader, %bb.cf
+  %.sroa.018.141147.a = phi i64 [ %5, %.lr.ph1148.preheader ], [ %indvars.iv.next1965, %bb.cf ] ; 2 uses
+  %.sroa.018.141147 = phi i64 [ %i.lz, %.lr.ph1148.preheader ], [ %i.po, %bb.cf ]
+  %.sroa.0182.231145 = phi i32 [ %.sroa.0182.21, %.lr.ph1148.preheader ], [ %i.pj, %bb.cf ] ; 2 uses
   %i.mq = icmp eq i32 %.sroa.0182.231145, 0
   br i1 %i.mq, label %bb.cd, label %bb.cf
 
@@ -455,14 +460,13 @@ bb.cf:                                            ; preds = %bb.cd, %.lr.ph1148
   %i.pj = add i32 %.sroa.0182.24, -1              ; 2 uses
   %i.pk = load ptr, ptr %i.f, align 8, !noundef !4 ; 2 uses
   %i.pl = load i8, ptr %i.pk, align 1, !noundef !4
-  %5 = zext i8 %i.pl to i64
-  %i.pm = zext nneg i8 %.sroa.076.141146 to i64
-  %i.pn = shl nuw nsw i64 %5, %i.pm
-  %i.po = add i64 %i.pn, %.sroa.018.141147.a      ; 2 uses
+  %i.pm = zext i8 %i.pl to i64
+  %i.pn = shl nuw nsw i64 %i.pm, %.sroa.018.141147.a
+  %i.po = add i64 %i.pn, %.sroa.018.141147        ; 2 uses
   %i.pp = getelementptr inbounds nuw i8, ptr %i.pk, i64 1
   store ptr %i.pp, ptr %i.f, align 8
-  %6 = add nuw nsw i8 %.sroa.076.141146, 8        ; 3 uses
-  %7 = icmp ugt i8 %i.mf, %6
+  %indvars.iv.next1965 = add nuw nsw i64 %.sroa.018.141147.a, 8 ; 3 uses
+  %7 = icmp samesign ult i64 %indvars.iv.next1965, %i.mg
   br i1 %7, label %.lr.ph1148, label %._crit_edge1149.loopexit
 
 bb.cg:                                            ; preds = %.lr.ph1139

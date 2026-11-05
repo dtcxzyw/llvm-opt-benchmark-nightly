@@ -205,14 +205,13 @@ _ZN4llvm11SmallVectorINS_7SDValueELj8EED2Ev.exit1084: ; preds = %._crit_edge1468
   call void @llvm.lifetime.end.p0(ptr nonnull %104) #39
   br label %.critedge928
 
-bb.hi:                                            ; preds = %.lr.ph1467, %_ZN4llvm11SmallVectorIiLj16EED2Ev.exit1085
-  %.08851466 = phi i32 [ 1, %.lr.ph1467 ], [ %i.amc, %_ZN4llvm11SmallVectorIiLj16EED2Ev.exit1085 ] ; 4 uses
+bb.hi:                                            ; preds = %_ZN4llvm11SmallVectorIiLj16EED2Ev.exit1085, %.lr.ph1467
+  %.08851466 = phi i32 [ 1, %.lr.ph1467 ], [ %i.amc, %_ZN4llvm11SmallVectorIiLj16EED2Ev.exit1085 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %105) #39
   store ptr %i.alh, ptr %105, align 8, !tbaa !83
   store i32 0, ptr %i.ali, align 8, !tbaa !633
   store i32 16, ptr %i.alj, align 4, !tbaa !634
-  %.not9081453 = icmp eq i32 %.08851466, 0
-  br i1 %.not9081453, label %._crit_edge1460, label %.lr.ph1456
+  br label %.lr.ph1456
 
 .lr.ph1456:                                       ; preds = %bb.hi, %.lr.ph1456
   %.08841454 = phi i32 [ %i.aly, %.lr.ph1456 ], [ 0, %bb.hi ] ; 2 uses
@@ -221,12 +220,12 @@ bb.hi:                                            ; preds = %.lr.ph1467, %_ZN4ll
   %.not908 = icmp eq i32 %i.aly, %.08851466
   br i1 %.not908, label %.lr.ph1459, label %.lr.ph1456, !llvm.loop !1529
 
-._crit_edge1460:                                  ; preds = %.lr.ph1459, %bb.hi
+._crit_edge1460:                                  ; preds = %.lr.ph1459
   %i.alz = load i32, ptr %i.ali, align 8, !tbaa !633
   %i.ama = zext i32 %i.alz to i64
   %i.amb = sub nsw i64 %i.acv, %i.ama
   call void @_ZN4llvm15SmallVectorImplIiE6appendEmi(ptr noundef nonnull align 8 dereferenceable(16) %105, i64 noundef %i.amb, i32 noundef -1)
-  %i.amc = shl i32 %.08851466, 1                  ; 3 uses
+  %i.amc = shl nuw nsw i32 %.08851466, 1          ; 3 uses
   %i.amd = call range(i32 1, 33) i32 @llvm.cttz.i32(i32 %i.amc, i1 true)
   %i.ame = lshr i32 %i.ab, %i.amd                 ; 2 uses
   %.not9101461 = icmp eq i32 %i.ame, 0
@@ -239,7 +238,7 @@ bb.hi:                                            ; preds = %.lr.ph1467, %_ZN4ll
 
 .lr.ph1459:                                       ; preds = %.lr.ph1456, %.lr.ph1459
   %.08831458 = phi i32 [ %i.amh, %.lr.ph1459 ], [ 0, %.lr.ph1456 ] ; 2 uses
-  %i.amg = add nuw i32 %.08831458, %i.ab
+  %i.amg = add nuw nsw i32 %.08831458, %i.ab
   call void @_ZN4llvm23SmallVectorTemplateBaseIiLb1EE9push_backEi(ptr noundef nonnull align 8 dereferenceable(16) %105, i32 noundef %i.amg)
   %i.amh = add nuw nsw i32 %.08831458, 1          ; 2 uses
   %.not909 = icmp eq i32 %i.amh, %.08851466
@@ -256,7 +255,7 @@ bb.hj:                                            ; preds = %._crit_edge1465
 
 _ZN4llvm11SmallVectorIiLj16EED2Ev.exit1085:       ; preds = %._crit_edge1465, %bb.hj
   call void @llvm.lifetime.end.p0(ptr nonnull %105) #39
-  %i.amk = icmp ult i32 %i.amc, %i.ab
+  %i.amk = icmp samesign ult i32 %i.amc, %i.ab
   br i1 %i.amk, label %bb.hi, label %._crit_edge1468, !llvm.loop !1531
 
 .lr.ph1464:                                       ; preds = %.lr.ph1464.preheader, %.lr.ph1464
@@ -659,7 +658,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.au, label %.loopexit, label %.critedge89
 
 .loopexit:                                        ; preds = %.split, %.thread, %.critedge, %.thread.thread
-  %i.ax = mul i32 %.053, %i.p                     ; 3 uses
+  %i.ax = mul nuw i32 %.053, %i.p                 ; 3 uses
   %i.ay = call { ptr, i32 } @_ZN4llvm19peekThroughBitcastsENS_7SDValueE(ptr %2, i32 %3) #39 ; 2 uses
   %.fca.0.extract27 = extractvalue { ptr, i32 } %i.ay, 0 ; 4 uses
   %.fca.1.extract28 = extractvalue { ptr, i32 } %i.ay, 1 ; 2 uses
@@ -732,7 +731,7 @@ _ZNK4llvm7SDValue24getScalarValueSizeInBitsEv.exit: ; preds = %bb.l, %bb.m
   %.pn.i.i.i = phi i64 [ %.sroa.0.0.copyload.i.i.i.i, %bb.l ], [ %i.bv, %bb.m ]
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #39
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #39
-  %i.bw = zext i32 %i.ax to i64
+  %i.bw = zext nneg i32 %i.ax to i64
   %i.bx = icmp eq i64 %.pn.i.i.i, %i.bw
   br i1 %i.bx, label %bb.n, label %bb.o
 
@@ -750,7 +749,7 @@ bb.o:                                             ; preds = %_ZNK4llvm7SDValue24
   br i1 %i.cb, label %bb.p, label %.critedge91
 
 bb.p:                                             ; preds = %bb.o
-  %i.cc = call range(i32 0, 32) i32 @llvm.ctpop.i32(i32 %i.ax)
+  %i.cc = call range(i32 1, 13) i32 @llvm.ctpop.i32(i32 %i.ax)
   %i.cd = icmp eq i32 %i.cc, 1
   br i1 %i.cd, label %.split.i, label %_ZN4llvm3MVT12getIntegerVTEj.exit
 
@@ -1153,7 +1152,7 @@ _ZNK4llvm3MVT19getScalarSizeInBitsEv.exit:        ; preds = %bb.b, %bb.c
 
 bb.d:                                             ; preds = %.lr.ph, %.critedge
   %.04676 = phi i32 [ 2, %.lr.ph ], [ %i.bi, %.critedge ] ; 4 uses
-  %i.w = mul i32 %.04676, %i.s                    ; 3 uses
+  %i.w = mul nuw i32 %.04676, %i.s                ; 3 uses
   %i.x = icmp ult i32 %i.w, 32
   br i1 %i.x, label %bb.e, label %bb.f
 
@@ -1230,7 +1229,7 @@ _ZN4llvm5APIntD2Ev.exit:                          ; preds = %bb.i
   br i1 %i.at, label %.loopexit71, label %.critedge
 
 .loopexit71:                                      ; preds = %.split, %_ZNK4llvm5APInt9isAllOnesEv.exit.thread, %_ZN4llvm5APIntD2Ev.exit, %_ZNK4llvm5APInt9isAllOnesEv.exit.thread.thread
-  %i.aw = call range(i32 0, 32) i32 @llvm.ctpop.i32(i32 %i.w)
+  %i.aw = call range(i32 1, 32) i32 @llvm.ctpop.i32(i32 %i.w)
   %i.ax = icmp eq i32 %i.aw, 1
   br i1 %i.ax, label %.split.i, label %_ZN4llvm3MVT12getIntegerVTEj.exit
 

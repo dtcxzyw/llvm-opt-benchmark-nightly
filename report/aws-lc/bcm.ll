@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %.lr.ph, %OPENSSL_memcpy.exit
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %OPENSSL_memcpy.exit ]
   %.051103 = phi i64 [ 0, %.lr.ph ], [ %i.bg, %OPENSSL_memcpy.exit ] ; 4 uses
-  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 3 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
   %i.aa = trunc nuw i64 %indvars.iv.next to i32
   %i.ab = call noundef i32 @llvm.bswap.i32(i32 %i.aa)
   store i32 %i.ab, ptr %i.c, align 4

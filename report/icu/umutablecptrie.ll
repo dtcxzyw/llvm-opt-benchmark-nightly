@@ -205,7 +205,7 @@ bb.aq:                                            ; preds = %_ZNK6icu_7812_GLOBA
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %_ZNK6icu_7812_GLOBAL__N_120MutableCodePointTrie13findHighStartEv.exit.i.i
-  %i.fg = phi i32 [ %i.ff, %bb.aq ], [ %.1.i.i.i, %_ZNK6icu_7812_GLOBAL__N_120MutableCodePointTrie13findHighStartEv.exit.i.i ]
+  %i.fg = phi i32 [ %.1.i.i.i, %_ZNK6icu_7812_GLOBAL__N_120MutableCodePointTrie13findHighStartEv.exit.i.i ], [ %i.ff, %bb.aq ]
   %i.fh = icmp samesign ult i32 %i.fc, %i.cn
   br i1 %i.fh, label %.thread.i.i, label %.loopexit133.i.i
 
@@ -218,9 +218,9 @@ bb.ar:                                            ; preds = %bb.aq, %_ZNK6icu_78
 
 .lr.ph.i124.i:                                    ; preds = %.thread.i.i
   %i.fm = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 5 uses
+  %7 = load ptr, ptr %0, align 8, !tbaa !22       ; 7 uses
   %i.fn = zext nneg i32 %i.fk to i64              ; 4 uses
   %wide.trip.count.i125.i = zext nneg i32 %i.co to i64 ; 3 uses
-  %7 = load ptr, ptr %0, align 8, !tbaa !22       ; 7 uses
   %i.fo = sub nsw i64 %wide.trip.count.i125.i, %i.fn
   %i.fp = getelementptr i8, ptr %0, i64 %i.fn
   %i.fq = getelementptr i8, ptr %i.fp, i64 64

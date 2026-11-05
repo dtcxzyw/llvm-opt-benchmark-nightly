@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph20, %._crit_e
   %i.v = load i32, ptr %i.u, align 4, !dbg !29932, !noundef !672
   %i.w = zext i32 %i.v to i64, !dbg !29932        ; 2 uses
   %i.x = add nuw nsw i64 %.sroa.0.018, 1, !dbg !29933 ; 3 uses
-  %i.y = icmp ult i64 %i.x, %3, !dbg !29933
+  %i.y = icmp samesign ult i64 %i.x, %3, !dbg !29933
   br i1 %i.y, label %.lr.ph.preheader, label %._crit_edge, !dbg !29933
 
 .lr.ph.preheader:                                 ; preds = %bb.b
@@ -238,7 +238,7 @@ bb.b:                                             ; preds = %.lr.ph20, %._crit_e
 
 bb.c:                                             ; preds = %.lr.ph
   %i.aj = add nuw nsw i64 %.sroa.05.013, 1, !dbg !29941 ; 3 uses
-  %i.ak = add i64 %i.aj, %.sroa.0.018, !dbg !29933
+  %i.ak = add nuw nsw i64 %i.aj, %.sroa.0.018, !dbg !29933
   %exitcond.not = icmp eq i64 %i.aj, %i.z, !dbg !29933
   br i1 %exitcond.not, label %._crit_edge.loopexit, label %.lr.ph, !dbg !29933
 }
@@ -327,7 +327,7 @@ bb.b:                                             ; preds = %.lr.ph36, %bb.d
   %i.aa = load i64, ptr %i.n, align 8, !dbg !30013, !noundef !672 ; 3 uses
   %i.ab = icmp ugt i64 %i.aa, %i.z, !dbg !30014
   %i.ac = add nuw nsw i64 %.sroa.0.033, 1, !dbg !30015 ; 3 uses
-  %i.ad = icmp ult i64 %i.ac, %3, !dbg !30015     ; 2 uses
+  %i.ad = icmp samesign ult i64 %i.ac, %3, !dbg !30015 ; 2 uses
   br i1 %i.ab, label %.preheader, label %.preheader23, !dbg !30016
 
 .preheader23:                                     ; preds = %bb.b
@@ -363,7 +363,7 @@ bb.b:                                             ; preds = %.lr.ph36, %bb.d
 
 bb.c:                                             ; preds = %.lr.ph
   %i.an = add nuw nsw i64 %.sroa.07.024, 1, !dbg !30026 ; 3 uses
-  %i.ao = add i64 %i.an, %.sroa.0.033, !dbg !30017
+  %i.ao = add nuw nsw i64 %i.an, %.sroa.0.033, !dbg !30017
   %exitcond.not = icmp eq i64 %i.an, %i.ae, !dbg !30017
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !dbg !30017
 
@@ -401,7 +401,7 @@ bb.d:                                             ; preds = %._crit_edge29, %._c
 
 bb.e:                                             ; preds = %.lr.ph28
   %i.bg = add nuw nsw i64 %.sroa.07.127, 1, !dbg !30035 ; 3 uses
-  %i.bh = add i64 %i.bg, %.sroa.0.033, !dbg !30019
+  %i.bh = add nuw nsw i64 %i.bg, %.sroa.0.033, !dbg !30019
   %exitcond39.not = icmp eq i64 %i.bg, %i.ag, !dbg !30019
   br i1 %exitcond39.not, label %._crit_edge29, label %.lr.ph28, !dbg !30019
 }
@@ -804,7 +804,7 @@ bb.d:                                             ; preds = %_RINvXs2J_NtNtCscgR
   %i.bf = load i32, ptr %i.be, align 4, !dbg !31093, !noundef !672
   %i.bg = zext i32 %i.bf to i64, !dbg !31093      ; 5 uses
   %i.bh = add nuw nsw i64 %.sroa.0.021, 1, !dbg !31094 ; 3 uses
-  %i.bi = icmp ult i64 %i.bh, %3, !dbg !31094
+  %i.bi = icmp samesign ult i64 %i.bh, %3, !dbg !31094
   br i1 %i.bi, label %.lr.ph.preheader, label %._crit_edge, !dbg !31094
 
 .lr.ph.preheader:                                 ; preds = %bb.d
@@ -880,7 +880,7 @@ _RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultuNtCsgjwxzEoLG5s_12polars_error11P
 
 bb.j:                                             ; preds = %.lr.ph
   %i.cg = add nuw nsw i64 %.sroa.05.016, 1, !dbg !31123 ; 3 uses
-  %i.ch = add i64 %i.cg, %.sroa.0.021, !dbg !31094
+  %i.ch = add nuw nsw i64 %i.cg, %.sroa.0.021, !dbg !31094
   %exitcond.not = icmp eq i64 %i.cg, %i.bj, !dbg !31094
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !dbg !31094
 }
@@ -1128,7 +1128,7 @@ bb.g:                                             ; preds = %_RINvXs2J_NtNtCscgR
   %i.br = add i64 %i.bq, -1, !dbg !31334          ; 3 uses
   %i.bs = icmp ugt i64 %i.br, %i.bp, !dbg !31335
   %i.bt = add nuw nsw i64 %.sroa.0.037, 1, !dbg !31336 ; 3 uses
-  %i.bu = icmp ult i64 %i.bt, %3, !dbg !31336     ; 2 uses
+  %i.bu = icmp samesign ult i64 %i.bt, %3, !dbg !31336 ; 2 uses
   br i1 %i.bs, label %.preheader, label %.preheader27, !dbg !31337
 
 .preheader27:                                     ; preds = %bb.g
@@ -1204,7 +1204,7 @@ bb.j:                                             ; preds = %._crit_edge
 
 bb.k:                                             ; preds = %.lr.ph
   %i.cw = add nuw nsw i64 %.sroa.07.028, 1, !dbg !31360 ; 3 uses
-  %i.cx = add i64 %i.cw, %.sroa.0.037, !dbg !31338
+  %i.cx = add nuw nsw i64 %i.cw, %.sroa.0.037, !dbg !31338
   %exitcond.not = icmp eq i64 %i.cw, %i.ca, !dbg !31338
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !dbg !31338
 
@@ -1282,7 +1282,7 @@ _RNvMNtCscgRAwXFJnXP_4core6resultINtB2_6ResultuNtCsgjwxzEoLG5s_12polars_error11P
 
 bb.q:                                             ; preds = %.lr.ph32
   %i.dv = add nuw nsw i64 %.sroa.07.131, 1, !dbg !31389 ; 3 uses
-  %i.dw = add i64 %i.dv, %.sroa.0.037, !dbg !31345
+  %i.dw = add nuw nsw i64 %i.dv, %.sroa.0.037, !dbg !31345
   %exitcond42.not = icmp eq i64 %i.dv, %i.cc, !dbg !31345
   br i1 %exitcond42.not, label %._crit_edge33, label %.lr.ph32, !dbg !31345
 }

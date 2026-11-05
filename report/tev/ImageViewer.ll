@@ -205,12 +205,11 @@ bb.aw:                                            ; preds = %"_ZNSt3__16invokeB8
 .thread:                                          ; preds = %.loopexit233, %"_ZNSt3__16invokeB8ne180100IRZN3tev11ImageViewer12updateFilterEvE3$_2JRNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEEEENS_13invoke_resultIT_JDpT0_EE4typeEOSD_DpOSE_.exit.i.i", %.lr.ph.i.i155
   %.in = phi i64 [ %indvars.iv, %"_ZNSt3__16invokeB8ne180100IRZN3tev11ImageViewer12updateFilterEvE3$_2JRNS_12basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEEEENS_13invoke_resultIT_JDpT0_EE4typeEOSD_DpOSE_.exit.i.i" ], [ %indvars.iv, %.lr.ph.i.i155 ], [ %i.hy, %.loopexit233 ]
   %i.kf = sext i32 %i.jf to i64
-  %11 = shl i64 %.in, 32
-  %12 = ashr exact i64 %11, 32
+  %11 = and i64 %.in, 4294967295
   br label %bb.ax
 
 bb.ax:                                            ; preds = %.thread, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2ERKS5_.exit149
-  %.290 = phi i64 [ %12, %.thread ], [ 0, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2ERKS5_.exit149 ]
+  %.290 = phi i64 [ %11, %.thread ], [ 0, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2ERKS5_.exit149 ]
   %.286 = phi i64 [ %i.kf, %.thread ], [ 0, %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2ERKS5_.exit149 ]
   br i1 %i.ht, label %bb.ay, label %_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit158
 

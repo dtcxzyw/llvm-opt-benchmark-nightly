@@ -205,7 +205,7 @@ bb.ar:                                            ; preds = %_ZNK6hermes2vm10Str
 bb.as:                                            ; preds = %bb.ar
   %i.eu = add nsw i32 %i.ed, -48                  ; 5 uses
   %i.ev = add nuw nsw i64 %.0547, 2               ; 7 uses
-  %i.ew = icmp ult i64 %i.ev, %.sroa.12.12.extract.shift
+  %i.ew = icmp samesign ult i64 %i.ev, %.sroa.12.12.extract.shift
   br i1 %i.ew, label %bb.at, label %bb.du
 
 bb.at:                                            ; preds = %bb.as
@@ -608,7 +608,7 @@ bb.fc:                                            ; preds = %bb.fb
 
 bb.fd:                                            ; preds = %bb.fc
   %i.td = add nuw nsw i64 %.0547, 2               ; 10 uses
-  %i.te = icmp ult i64 %i.td, %.sroa.12.12.extract.shift
+  %i.te = icmp samesign ult i64 %i.td, %.sroa.12.12.extract.shift
   br i1 %i.te, label %.lr.ph, label %.thread504.loopexit
 
 .lr.ph:                                           ; preds = %bb.fd
@@ -626,7 +626,7 @@ _ZNK6hermes2vm10StringView13castToCharPtrEv.exit.i327.us.us: ; preds = %.lr.ph.s
   br i1 %i.ti, label %.split.us, label %bb.fe
 
 bb.fe:                                            ; preds = %_ZNK6hermes2vm10StringView13castToCharPtrEv.exit.i327.us.us
-  %i.tj = add i64 %.0117526.us.us, 1              ; 2 uses
+  %i.tj = add nuw nsw i64 %.0117526.us.us, 1      ; 2 uses
   %exitcond569.not = icmp eq i64 %i.tj, %.sroa.12.12.extract.shift
   br i1 %exitcond569.not, label %.thread504.loopexit, label %_ZNK6hermes2vm10StringView13castToCharPtrEv.exit.i327.us.us, !llvm.loop !457
 
@@ -656,7 +656,7 @@ _ZNK6hermes2vm10StringView13castToCharPtrEv.exit.i327.us.us537: ; preds = %bb.ff
   br i1 %i.tw, label %.split.us, label %bb.ff
 
 bb.ff:                                            ; preds = %_ZNK6hermes2vm10StringView13castToCharPtrEv.exit.i327.us.us537
-  %i.tx = add i64 %.0117526.us.us536, 1           ; 2 uses
+  %i.tx = add nuw nsw i64 %.0117526.us.us536, 1   ; 2 uses
   %exitcond568.not = icmp eq i64 %i.tx, %.sroa.12.12.extract.shift
   br i1 %exitcond568.not, label %.thread504.loopexit, label %_ZNK6hermes2vm10StringView13castToCharPtrEv.exit.i327.us.us537, !llvm.loop !457
 
@@ -688,7 +688,7 @@ _ZNK6hermes2vm10StringView13castToCharPtrEv.exit.i327.us: ; preds = %.lr.ph.spli
   br i1 %i.ug, label %.split.us, label %bb.fi
 
 bb.fi:                                            ; preds = %_ZNK6hermes2vm10StringView13castToCharPtrEv.exit.i327.us
-  %i.uh = add i64 %.0117526.us, 1                 ; 2 uses
+  %i.uh = add nuw nsw i64 %.0117526.us, 1         ; 2 uses
   %exitcond567.not = icmp eq i64 %i.uh, %.sroa.12.12.extract.shift
   br i1 %exitcond567.not, label %.thread504.loopexit, label %.lr.ph.split.us.split.split, !llvm.loop !457
 
@@ -704,7 +704,7 @@ _ZNK6hermes2vm10StringView15castToChar16PtrEv.exit.i320.us: ; preds = %.lr.ph.sp
   br i1 %i.ul, label %.split.us, label %bb.fj
 
 bb.fj:                                            ; preds = %_ZNK6hermes2vm10StringView15castToChar16PtrEv.exit.i320.us
-  %i.um = add i64 %.0117526.us527, 1              ; 2 uses
+  %i.um = add nuw nsw i64 %.0117526.us527, 1      ; 2 uses
   %exitcond566.not = icmp eq i64 %i.um, %.sroa.12.12.extract.shift
   br i1 %exitcond566.not, label %.thread504.loopexit, label %_ZNK6hermes2vm10StringView15castToChar16PtrEv.exit.i320.us, !llvm.loop !457
 
@@ -734,7 +734,7 @@ _ZNK6hermes2vm10StringView15castToChar16PtrEv.exit.i320.us531: ; preds = %bb.fk,
   br i1 %i.uz, label %.split.us, label %bb.fk
 
 bb.fk:                                            ; preds = %_ZNK6hermes2vm10StringView15castToChar16PtrEv.exit.i320.us531
-  %i.va = add i64 %.0117526.us530, 1              ; 2 uses
+  %i.va = add nuw nsw i64 %.0117526.us530, 1      ; 2 uses
   %exitcond565.not = icmp eq i64 %i.va, %.sroa.12.12.extract.shift
   br i1 %exitcond565.not, label %.thread504.loopexit, label %_ZNK6hermes2vm10StringView15castToChar16PtrEv.exit.i320.us531, !llvm.loop !457
 
@@ -766,7 +766,7 @@ _ZNK6hermes2vm10StringView15castToChar16PtrEv.exit.i320: ; preds = %.lr.ph.split
   br i1 %i.vj, label %.split.us, label %bb.fn
 
 bb.fn:                                            ; preds = %_ZNK6hermes2vm10StringView15castToChar16PtrEv.exit.i320
-  %i.vk = add i64 %.0117526, 1                    ; 2 uses
+  %i.vk = add nuw nsw i64 %.0117526, 1            ; 2 uses
   %exitcond.not = icmp eq i64 %i.vk, %.sroa.12.12.extract.shift
   br i1 %exitcond.not, label %.thread504.loopexit, label %.lr.ph.split.split.split, !llvm.loop !457
 

@@ -205,10 +205,10 @@ bb.a:
 .lr.ph.preheader.i:                               ; preds = %.lr.ph.preheader.i.preheader, %unriffle.exit
   %.tr1215 = phi i32 [ %i.cl, %unriffle.exit ], [ %1, %.lr.ph.preheader.i.preheader ] ; 5 uses
   %.tr14 = phi ptr [ %i.ck, %unriffle.exit ], [ %0, %.lr.ph.preheader.i.preheader ] ; 15 uses
-  %i.b = zext i32 %.tr1215 to i64                 ; 3 uses
+  %i.b = zext nneg i32 %.tr1215 to i64            ; 3 uses
   %i.c = shl nuw nsw i64 %i.b, 2
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %2, ptr noundef nonnull readonly align 1 dereferenceable(1) %.tr14, i64 %i.c, i1 false)
-  %i.d = add i32 %.tr1215, -1                     ; 4 uses
+  %i.d = add nsw i32 %.tr1215, -1                 ; 4 uses
   %i.e = lshr i32 %i.d, 1
   %i.f = add nuw nsw i32 %i.e, 1
   %wide.trip.count.i = zext nneg i32 %i.f to i64  ; 7 uses

@@ -205,10 +205,10 @@ _ZN6vectorIP4exprLb0EjE6resizeEj.exit:            ; preds = %bb.m, %bb.n, %.lr.p
   br label %.lr.ph.split
 
 bb.o:                                             ; preds = %.lr.ph
-  %i.cb = getelementptr inbounds nuw i8, ptr %i.r, i64 24
-  %i.cc = getelementptr inbounds nuw i8, ptr %i.r, i64 40
-  %i.cd = getelementptr inbounds nuw i8, ptr %i.r, i64 4
-  %i.ce = load i32, ptr %i.cd, align 4
+  %i.cb = getelementptr inbounds nuw i8, ptr %i.r, i64 4
+  %i.cc = getelementptr inbounds nuw i8, ptr %i.r, i64 24
+  %i.cd = getelementptr inbounds nuw i8, ptr %i.r, i64 40
+  %i.ce = load i32, ptr %i.cb, align 4
   %i.cf = and i32 %i.ce, 65535
   %i.cg = icmp eq i32 %i.cf, 0
   br i1 %i.cg, label %bb.p, label %_ZNK11ast_manager6is_iteEPK4exprRPS0_S4_S4_.exit.thread
@@ -231,13 +231,13 @@ _ZNK11ast_manager5is_eqEPK4expr.exit.i28.us:      ; preds = %bb.p
   br i1 %i.cq, label %bb.q, label %_ZNK11ast_manager6is_iteEPK4exprRPS0_S4_S4_.exit.thread
 
 bb.q:                                             ; preds = %_ZNK11ast_manager5is_eqEPK4expr.exit.i28.us
-  %i.cr = load i32, ptr %i.cb, align 8, !tbaa !172
+  %i.cr = load i32, ptr %i.cc, align 8, !tbaa !172
   %i.cs = icmp eq i32 %i.cr, 2
   br i1 %i.cs, label %bb.r, label %_ZNK11ast_manager6is_iteEPK4exprRPS0_S4_S4_.exit.thread
 
 bb.r:                                             ; preds = %bb.q
   %i.ct = load ptr, ptr %i.ca, align 8, !tbaa !26 ; 3 uses
-  %i.cu = load ptr, ptr %i.cc, align 8, !tbaa !26 ; 3 uses
+  %i.cu = load ptr, ptr %i.cd, align 8, !tbaa !26 ; 3 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %i.ct, i64 4
   %i.cw = load i32, ptr %i.cv, align 4
   %i.cx = and i32 %i.cw, 65535

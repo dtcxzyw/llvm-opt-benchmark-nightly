@@ -206,12 +206,12 @@ bb.af:                                            ; preds = %bb.af, %.lr.ph.i
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1 ; 4 uses
   %i.ey = getelementptr inbounds i8, ptr %i.ex, i64 %indvars.iv.next.i
   %i.ez = load i8, ptr %i.ey, align 1, !tbaa !52
-  %i.fa = getelementptr inbounds i8, ptr %i.ex, i64 %indvars.iv.i
+  %i.fa = getelementptr inbounds nuw i8, ptr %i.ex, i64 %indvars.iv.i
   store i8 %i.ez, ptr %i.fa, align 1, !tbaa !52
   %i.fb = load ptr, ptr %i.j, align 8, !tbaa !149 ; 2 uses
   %i.fc = getelementptr inbounds [4 x i8], ptr %i.fb, i64 %indvars.iv.next.i
   %i.fd = load i32, ptr %i.fc, align 4, !tbaa !53
-  %i.fe = getelementptr inbounds [4 x i8], ptr %i.fb, i64 %indvars.iv.i
+  %i.fe = getelementptr inbounds nuw [4 x i8], ptr %i.fb, i64 %indvars.iv.i
   store i32 %i.fd, ptr %i.fe, align 4, !tbaa !53
   %i.ff = icmp samesign ugt i64 %indvars.iv.next.i, %i.ew
   br i1 %i.ff, label %bb.af, label %._crit_edge.loopexit.i, !llvm.loop !13
@@ -555,12 +555,12 @@ bb.bf:                                            ; preds = %bb.bf, %.lr.ph.i211
   %indvars.iv.next.i213 = add nsw i64 %indvars.iv.i212, -1 ; 4 uses
   %i.kh = getelementptr inbounds i8, ptr %i.kg, i64 %indvars.iv.next.i213
   %i.ki = load i8, ptr %i.kh, align 1, !tbaa !52
-  %i.kj = getelementptr inbounds i8, ptr %i.kg, i64 %indvars.iv.i212
+  %i.kj = getelementptr inbounds nuw i8, ptr %i.kg, i64 %indvars.iv.i212
   store i8 %i.ki, ptr %i.kj, align 1, !tbaa !52
   %i.kk = load ptr, ptr %i.j, align 8, !tbaa !149 ; 2 uses
   %i.kl = getelementptr inbounds [4 x i8], ptr %i.kk, i64 %indvars.iv.next.i213
   %i.km = load i32, ptr %i.kl, align 4, !tbaa !53
-  %i.kn = getelementptr inbounds [4 x i8], ptr %i.kk, i64 %indvars.iv.i212
+  %i.kn = getelementptr inbounds nuw [4 x i8], ptr %i.kk, i64 %indvars.iv.i212
   store i32 %i.km, ptr %i.kn, align 4, !tbaa !53
   %i.ko = icmp samesign ugt i64 %indvars.iv.next.i213, %i.kf
   br i1 %i.ko, label %bb.bf, label %._crit_edge.loopexit.i214, !llvm.loop !13
@@ -963,12 +963,12 @@ bb.cl:                                            ; preds = %bb.cl, %.lr.ph.i253
   %indvars.iv.next.i255 = add nsw i64 %indvars.iv.i254, -1 ; 4 uses
   %i.ri = getelementptr inbounds i8, ptr %i.rh, i64 %indvars.iv.next.i255
   %i.rj = load i8, ptr %i.ri, align 1, !tbaa !52
-  %i.rk = getelementptr inbounds i8, ptr %i.rh, i64 %indvars.iv.i254
+  %i.rk = getelementptr inbounds nuw i8, ptr %i.rh, i64 %indvars.iv.i254
   store i8 %i.rj, ptr %i.rk, align 1, !tbaa !52
   %i.rl = load ptr, ptr %i.j, align 8, !tbaa !149 ; 2 uses
   %i.rm = getelementptr inbounds [4 x i8], ptr %i.rl, i64 %indvars.iv.next.i255
   %i.rn = load i32, ptr %i.rm, align 4, !tbaa !53
-  %i.ro = getelementptr inbounds [4 x i8], ptr %i.rl, i64 %indvars.iv.i254
+  %i.ro = getelementptr inbounds nuw [4 x i8], ptr %i.rl, i64 %indvars.iv.i254
   store i32 %i.rn, ptr %i.ro, align 4, !tbaa !53
   %i.rp = icmp sgt i64 %indvars.iv.next.i255, %i.rg
   br i1 %i.rp, label %bb.cl, label %._crit_edge.loopexit.i256, !llvm.loop !13

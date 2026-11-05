@@ -204,7 +204,7 @@ _ZN4llvm12DenseMapBaseINS_13SmallDenseMapINS_9StringRefE7FDGroupLj4ENS_12DenseMa
   br label %bb.w
 
 bb.j:                                             ; preds = %bb.v, %.lr.ph.i
-  %.075.i = phi i64 [ 0, %.lr.ph.i ], [ %i.dk, %bb.v ] ; 6 uses
+  %.075.i = phi i64 [ 0, %.lr.ph.i ], [ %i.dk, %bb.v ] ; 5 uses
   %i.bh = load ptr, ptr %20, align 8, !tbaa !48, !noalias !465
   %i.bi = getelementptr inbounds nuw [16 x i8], ptr %i.bh, i64 %.075.i ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %i.bi, i64 8
@@ -232,7 +232,7 @@ _ZNSt4pairIN4llvm9StringRefE7FDGroupEC2IS1_S2_TnNSt9enable_ifIXaaclsr5_PCCPE18_C
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #28, !noalias !465
   %i.bw = load ptr, ptr %20, align 8, !tbaa !48, !noalias !465
   %i.bx = getelementptr inbounds nuw [16 x i8], ptr %i.bw, i64 %.075.i
-  %i.by = trunc nuw i64 %.075.i to i32
+  %i.by = trunc nuw i64 %.075.i to i32            ; 2 uses
   %i.bz = call noalias noundef nonnull dereferenceable(4) ptr @_Znwm(i64 noundef 4) #31, !noalias !465 ; 3 uses
   store i32 %i.by, ptr %i.bz, align 4, !tbaa !26, !noalias !465
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %14, ptr noundef nonnull align 8 dereferenceable(16) %i.bx, i64 16, i1 false), !tbaa.struct !57, !noalias !465
@@ -267,7 +267,7 @@ _ZN7FDGroupD2Ev.exit.i:                           ; preds = %bb.l, %_ZNSt4pairIN
 bb.m:                                             ; preds = %bb.k
   %..i.i.sroa.sel.v.i.sroa.sel.v.sroa.sel.v.sroa.sel.v = select i1 %.not.not.i.i.i, ptr %i.bu, ptr %i.bm
   %..i.i.sroa.sel.v.i.sroa.sel.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %..i.i.sroa.sel.v.i.sroa.sel.v.sroa.sel.v.sroa.sel.v, i64 16 ; 2 uses
-  %i.cj = trunc nuw i64 %.075.i to i32            ; 2 uses
+  %i.cj = trunc nuw i64 %.075.i to i32            ; 4 uses
   %..i.i.sroa.sel90.v.i.sroa.sel.v.sroa.sel.v.sroa.sel.v = select i1 %.not.not.i.i.i, ptr %i.bu, ptr %i.bm
   %..i.i.sroa.sel90.v.i.sroa.sel.v.sroa.sel.v.sroa.sel = getelementptr inbounds nuw i8, ptr %..i.i.sroa.sel90.v.i.sroa.sel.v.sroa.sel.v.sroa.sel.v, i64 24 ; 3 uses
   %i.ck = load ptr, ptr %..i.i.sroa.sel90.v.i.sroa.sel.v.sroa.sel.v.sroa.sel, align 8, !tbaa !469, !noalias !465 ; 4 uses
@@ -335,11 +335,12 @@ _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS
   br label %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i
 
 _ZNSt6vectorIiSaIiEE9push_backEOi.exit.i:         ; preds = %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i, %bb.n, %_ZN7FDGroupD2Ev.exit.i
-  %.sroa.061.0.i = phi ptr [ %.fca.0.extract.i.i.i, %_ZN7FDGroupD2Ev.exit.i ], [ %..i.i.i, %bb.n ], [ %..i.i.i, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i ] ; 4 uses
-  switch i64 %.075.i, label %bb.u [
-    i64 0, label %bb.s
-    i64 1, label %bb.t
-    i64 2, label %bb.t
+  %trunc.pre-phi.i = phi i32 [ %i.cj, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i ], [ %i.cj, %bb.n ], [ %i.by, %_ZN7FDGroupD2Ev.exit.i ]
+  %.sroa.061.0.i = phi ptr [ %..i.i.i, %_ZNSt6vectorIiSaIiEE17_M_realloc_insertIJiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_.exit.i.i.i ], [ %..i.i.i, %bb.n ], [ %.fca.0.extract.i.i.i, %_ZN7FDGroupD2Ev.exit.i ] ; 4 uses
+  switch i32 %trunc.pre-phi.i, label %bb.u [
+    i32 0, label %bb.s
+    i32 1, label %bb.t
+    i32 2, label %bb.t
   ]
 
 bb.s:                                             ; preds = %_ZNSt6vectorIiSaIiEE9push_backEOi.exit.i

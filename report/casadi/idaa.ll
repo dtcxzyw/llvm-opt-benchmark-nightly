@@ -204,21 +204,21 @@ bb.p:                                             ; preds = %.lr.ph, %bb.p
 
 .lr.ph268.us.us:                                  ; preds = %..loopexit245_crit_edge.us.us, %.preheader246.us
   %indvars.iv331 = phi i64 [ %indvars.iv.next332, %..loopexit245_crit_edge.us.us ], [ %i.fe, %.preheader246.us ] ; 6 uses
-  %i.fg = getelementptr inbounds [8 x i8], ptr %i.fa, i64 %indvars.iv331
+  %i.fg = getelementptr inbounds nuw [8 x i8], ptr %i.fa, i64 %indvars.iv331
   %i.fh = load double, ptr %i.fg, align 8, !tbaa !69
   %i.fi = sub nuw nsw i64 %indvars.iv331, %indvars.iv334
   %i.fj = getelementptr inbounds nuw [8 x i8], ptr %i.fa, i64 %i.fi
   %i.fk = load double, ptr %i.fj, align 8, !tbaa !69
   %i.fl = fsub double %i.fh, %i.fk
   %i.fm = fdiv double %i.ch, %i.fl                ; 3 uses
-  %i.fn = getelementptr inbounds [8 x i8], ptr %i.fb, i64 %indvars.iv331
+  %i.fn = getelementptr inbounds nuw [8 x i8], ptr %i.fb, i64 %indvars.iv331
   %i.fo = load ptr, ptr %i.fn, align 8, !tbaa !65 ; 2 uses
   %i.fp = fneg double %i.fm                       ; 2 uses
   %indvars.iv.next332 = add nsw i64 %indvars.iv331, -1 ; 3 uses
   %i.fq = getelementptr inbounds [8 x i8], ptr %i.fb, i64 %indvars.iv.next332
   %i.fr = load ptr, ptr %i.fq, align 8, !tbaa !65
   tail call void @N_VLinearSum(double noundef %i.fm, ptr noundef %i.fo, double noundef %i.fp, ptr noundef %i.fr, ptr noundef %i.fo) #7
-  %i.fs = getelementptr inbounds [8 x i8], ptr %i.fd, i64 %indvars.iv331
+  %i.fs = getelementptr inbounds nuw [8 x i8], ptr %i.fd, i64 %indvars.iv331
   %i.ft = getelementptr inbounds [8 x i8], ptr %i.fd, i64 %indvars.iv.next332
   br label %bb.q
 
@@ -250,14 +250,14 @@ bb.q:                                             ; preds = %bb.q, %.lr.ph268.us
 
 .loopexit245:                                     ; preds = %.preheader246, %.loopexit245
   %indvars.iv318 = phi i64 [ %i.fe, %.preheader246 ], [ %indvars.iv.next319, %.loopexit245 ] ; 5 uses
-  %i.ga = getelementptr inbounds [8 x i8], ptr %i.fa, i64 %indvars.iv318
+  %i.ga = getelementptr inbounds nuw [8 x i8], ptr %i.fa, i64 %indvars.iv318
   %i.gb = load double, ptr %i.ga, align 8, !tbaa !69
   %i.gc = sub nuw nsw i64 %indvars.iv318, %indvars.iv321
   %i.gd = getelementptr inbounds nuw [8 x i8], ptr %i.fa, i64 %i.gc
   %i.ge = load double, ptr %i.gd, align 8, !tbaa !69
   %i.gf = fsub double %i.gb, %i.ge
   %i.gg = fdiv double %i.ch, %i.gf                ; 2 uses
-  %i.gh = getelementptr inbounds [8 x i8], ptr %i.fb, i64 %indvars.iv318
+  %i.gh = getelementptr inbounds nuw [8 x i8], ptr %i.fb, i64 %indvars.iv318
   %i.gi = load ptr, ptr %i.gh, align 8, !tbaa !65 ; 2 uses
   %i.gj = fneg double %i.gg
   %indvars.iv.next319 = add nsw i64 %indvars.iv318, -1 ; 2 uses

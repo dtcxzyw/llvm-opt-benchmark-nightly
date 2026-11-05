@@ -204,22 +204,21 @@ bb.f:                                             ; preds = %bb.e
   br label %.thread
 
 bb.g:                                             ; preds = %bb.d, %bb.e
-  %.030 = phi i32 [ %3, %bb.e ], [ %.0.lcssa, %bb.d ] ; 4 uses
+  %.030 = phi i32 [ %3, %bb.e ], [ %.0.lcssa, %bb.d ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #9
-  %8 = icmp sgt i32 %.030, 47
+  %8 = icmp samesign ugt i32 %.030, 47
+  %9 = zext nneg i32 %.030 to i64                 ; 2 uses
   br i1 %8, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
   %i.q = load ptr, ptr @stderr, align 8, !tbaa !14
-  %9 = zext nneg i32 %.030 to i64
   %i.r = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.q, ptr noundef nonnull @.str.15, ptr noundef %0, i32 noundef %1, i64 noundef %9) #11 ; 0 uses
   store i32 15, ptr %7, align 4, !tbaa !9
   br label %bb.k
 
 bb.i:                                             ; preds = %bb.g
   call void @u_UCharsToChars_78(ptr noundef %2, ptr noundef nonnull %i.b, i32 noundef %.030)
-  %10 = sext i32 %.030 to i64
-  %i.s = getelementptr inbounds i8, ptr %i.b, i64 %10
+  %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 %9
   store i8 0, ptr %i.s, align 1, !tbaa !15
   %.not34 = icmp eq i8 %4, 0                      ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9

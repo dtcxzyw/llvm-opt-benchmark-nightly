@@ -205,27 +205,28 @@ bb.bd:                                            ; preds = %.lr.ph405
   %i.hu = getelementptr inbounds nuw i8, ptr %i.hq, i64 %.0.i329
   %i.hv = load i8, ptr %i.hu, align 1, !tbaa !54
   %i.hw = load ptr, ptr %i.gs, align 8, !tbaa !71
-  %2 = sext i32 %.0266404 to i64
-  %i.hx = getelementptr inbounds [32 x i8], ptr %i.hw, i64 %2
+  %2 = zext nneg i32 %.0266404 to i64
+  %i.hx = getelementptr inbounds nuw [32 x i8], ptr %i.hw, i64 %2
   %i.hy = getelementptr inbounds nuw i8, ptr %i.hx, i64 %indvars.iv461
   store i8 %i.hv, ptr %i.hy, align 1, !tbaa !54
-  %.1267394 = add nsw i32 %.0266404, 1            ; 2 uses
-  %3 = sext i32 %.1267394 to i64                  ; 2 uses
-  %4 = icmp sgt i64 %indvars.iv458, %3
+  %.1267394 = add nuw nsw i32 %.0266404, 1        ; 3 uses
+  %3 = zext i32 %.1267394 to i64
+  %4 = icmp samesign ugt i64 %indvars.iv458, %3
   br i1 %4, label %.lr.ph398.preheader, label %.loopexit
 
 .lr.ph398.preheader:                              ; preds = %bb.bd
+  %5 = sext i32 %.1267394 to i64
   %i.hz = sext i32 %.0266404 to i64
   br label %.lr.ph398
 
 .lr.ph398:                                        ; preds = %.lr.ph398.preheader, %.lr.ph398
-  %indvars.iv454 = phi i64 [ %3, %.lr.ph398.preheader ], [ %indvars.iv.next455, %.lr.ph398 ] ; 3 uses
+  %indvars.iv454 = phi i64 [ %5, %.lr.ph398.preheader ], [ %indvars.iv.next455, %.lr.ph398 ] ; 3 uses
   %.1267.in395 = phi i64 [ %i.hz, %.lr.ph398.preheader ], [ %indvars.iv454, %.lr.ph398 ]
   %i.ia = load ptr, ptr %i.gs, align 8, !tbaa !71 ; 2 uses
   %i.ib = getelementptr inbounds [32 x i8], ptr %i.ia, i64 %.1267.in395
   %i.ic = getelementptr inbounds nuw i8, ptr %i.ib, i64 %indvars.iv461
   %i.id = load i8, ptr %i.ic, align 1, !tbaa !54
-  %i.ie = getelementptr inbounds [32 x i8], ptr %i.ia, i64 %indvars.iv454
+  %i.ie = getelementptr inbounds nuw [32 x i8], ptr %i.ia, i64 %indvars.iv454
   %i.if = getelementptr inbounds nuw i8, ptr %i.ie, i64 %indvars.iv461
   store i8 %i.id, ptr %i.if, align 1, !tbaa !54
   %indvars.iv.next455 = add nsw i64 %indvars.iv454, 1 ; 3 uses

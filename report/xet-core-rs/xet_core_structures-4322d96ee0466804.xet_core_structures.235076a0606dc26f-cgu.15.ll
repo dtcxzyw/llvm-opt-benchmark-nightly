@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %.lr.ph, %bb.c
   br i1 %i.i, label %bb.e, label %bb.c
 
 bb.e:                                             ; preds = %bb.d
-  %i.j = add i64 %.sroa.8.0.i41, %.sroa.04.025    ; 3 uses
+  %i.j = add nuw nsw i64 %.sroa.8.0.i41, %.sroa.04.025 ; 3 uses
   %i.k = trunc nuw i64 %.sroa.010.024 to i1
   br i1 %i.k, label %bb.f, label %bb.g
 
@@ -218,7 +218,7 @@ bb.f:                                             ; preds = %bb.e
   br i1 %or.cond15, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.h, %bb.f, %bb.e
-  %i.n = add i64 %i.j, 1                          ; 2 uses
+  %i.n = add nuw i64 %i.j, 1                      ; 2 uses
   %i.o = icmp ult i64 %i.n, %1
   br i1 %i.o, label %bb.b, label %_RNvNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash19merkle_hash_subtree18next_cut_unbounded.exit
 
@@ -287,7 +287,7 @@ bb.f:                                             ; preds = %.lr.ph125, %bb.e
   br i1 %i.k, label %bb.g, label %bb.e
 
 bb.g:                                             ; preds = %bb.f
-  %i.l = add i64 %.sroa.8.0.i.i123, %.sroa.04.025.i ; 3 uses
+  %i.l = add nuw nsw i64 %.sroa.8.0.i.i123, %.sroa.04.025.i ; 3 uses
   %i.m = trunc nuw i64 %.sroa.010.024.i to i1
   br i1 %i.m, label %bb.h, label %bb.i
 
@@ -300,7 +300,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %or.cond15.i, label %bb.j, label %bb.i
 
 bb.i:                                             ; preds = %bb.j, %bb.h, %bb.g
-  %i.p = add i64 %i.l, 1                          ; 2 uses
+  %i.p = add nuw i64 %i.l, 1                      ; 2 uses
   %i.q = icmp ult i64 %i.p, %1
   br i1 %i.q, label %bb.d, label %_RNvNtNtCs31YAwBA1AlL_19xet_core_structures10merklehash19merkle_hash_subtree17find_stable_start.exit.thread
 

@@ -205,7 +205,7 @@ bb.o:                                             ; preds = %middle.block150, %b
   %i.ef = add i64 %i.ee, %.sroa.018.084, !dbg !17955 ; 3 uses
   %i.eg = add nuw nsw i64 %.sroa.08.085, 1, !dbg !17956 ; 3 uses
   %i.eh = icmp eq i64 %i.dx, 0, !dbg !17957
-  %i.ei = icmp ult i64 %i.eg, %i.at
+  %i.ei = icmp samesign ult i64 %i.eg, %i.at
   %or.cond = and i1 %i.ei, %i.eh, !dbg !17957
   br i1 %or.cond, label %.preheader, label %.loopexit, !dbg !17957
 
@@ -236,7 +236,7 @@ bb.r:                                             ; preds = %bb.p, %bb.q
   store i64 %i.bf, ptr %i.eq, align 8, !dbg !17966
   %i.er = add i64 %i.ek, 1, !dbg !17967           ; 2 uses
   store i64 %i.er, ptr %i.be, align 8, !dbg !17967, !alias.scope !17848
-  %i.es = add i64 %.sroa.08.2, 1, !dbg !17968     ; 2 uses
+  %i.es = add nuw nsw i64 %.sroa.08.2, 1, !dbg !17968 ; 2 uses
   %exitcond.not = icmp eq i64 %i.es, %i.at, !dbg !17969
   br i1 %exitcond.not, label %._crit_edge, label %.preheader, !dbg !17969
 
@@ -607,7 +607,7 @@ bb.o:                                             ; preds = %middle.block216, %b
   %i.eb = add i64 %i.ea, %.sroa.018.0148, !dbg !18300 ; 3 uses
   %i.ec = add nuw nsw i64 %.sroa.08.0149, 1, !dbg !18301 ; 3 uses
   %i.ed = icmp eq i64 %i.dt, 0, !dbg !18302
-  %i.ee = icmp ult i64 %i.ec, %i.au
+  %i.ee = icmp samesign ult i64 %i.ec, %i.au
   %or.cond = and i1 %i.ee, %i.ed, !dbg !18302
   br i1 %or.cond, label %.preheader, label %.loopexit, !dbg !18302
 
@@ -643,7 +643,7 @@ bb.r:                                             ; preds = %bb.p, %bb.q
   store i64 %i.bg, ptr %i.eq, align 8, !dbg !18316
   %i.er = add i64 %i.em, 1, !dbg !18317
   store i64 %i.er, ptr %i.bf, align 8, !dbg !18317, !alias.scope !18189
-  %i.es = add i64 %.sroa.08.2, 1, !dbg !18318     ; 2 uses
+  %i.es = add nuw nsw i64 %.sroa.08.2, 1, !dbg !18318 ; 2 uses
   %exitcond.not = icmp eq i64 %i.es, %i.au, !dbg !18319
   br i1 %exitcond.not, label %._crit_edge, label %.preheader, !dbg !18319
 
@@ -1014,7 +1014,7 @@ bb.o:                                             ; preds = %middle.block216, %b
   %i.eb = add i64 %i.ea, %.sroa.018.0148, !dbg !18650 ; 3 uses
   %i.ec = add nuw nsw i64 %.sroa.08.0149, 1, !dbg !18651 ; 3 uses
   %i.ed = icmp eq i64 %i.dt, 0, !dbg !18652
-  %i.ee = icmp ult i64 %i.ec, %i.au
+  %i.ee = icmp samesign ult i64 %i.ec, %i.au
   %or.cond = and i1 %i.ee, %i.ed, !dbg !18652
   br i1 %or.cond, label %.preheader, label %.loopexit, !dbg !18652
 
@@ -1050,7 +1050,7 @@ bb.r:                                             ; preds = %bb.p, %bb.q
   store i64 %i.bg, ptr %i.eq, align 8, !dbg !18666
   %i.er = add i64 %i.em, 1, !dbg !18667
   store i64 %i.er, ptr %i.bf, align 8, !dbg !18667, !alias.scope !18539
-  %i.es = add i64 %.sroa.08.2, 1, !dbg !18668     ; 2 uses
+  %i.es = add nuw nsw i64 %.sroa.08.2, 1, !dbg !18668 ; 2 uses
   %exitcond.not = icmp eq i64 %i.es, %i.au, !dbg !18669
   br i1 %exitcond.not, label %._crit_edge, label %.preheader, !dbg !18669
 

@@ -204,7 +204,7 @@ define internal fastcc void @get_coeffs(ptr nofree noundef readonly captures(non
 bb.a:
   %i.a = alloca [10 x double], align 16           ; 10 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.c = load ptr, ptr %i.b, align 8, !tbaa !19   ; 26 uses
+  %i.c = load ptr, ptr %i.b, align 8, !tbaa !19   ; 23 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !81
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !31
@@ -502,19 +502,15 @@ calc_q_factors.exit242:                           ; preds = %scalar.ph36, %middl
 bb.h:                                             ; preds = %calc_q_factors.exit242
   %i.ev = getelementptr inbounds nuw i8, ptr %i.c, i64 48
   %i.ew = fmul nsz double %i.n, 2.000000e+00      ; 3 uses
-  %1 = fadd nsz double %i.ew, 2.000000e+00        ; 2 uses
-  %2 = fdiv nsz double %i.ew, %1                  ; 2 uses
-  %i.ex = getelementptr inbounds nuw i8, ptr %i.c, i64 64
-  store double %2, ptr %i.ex, align 8, !tbaa !90
-  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 72
-  store double %2, ptr %3, align 8, !tbaa !91
-  %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 80
-  store double 0.000000e+00, ptr %4, align 8, !tbaa !55
-  %5 = fsub nsz double 2.000000e+00, %i.ew
-  %6 = fdiv nsz double %5, %1
-  store double %6, ptr %i.ev, align 8, !tbaa !56
-  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 56
-  store double 0.000000e+00, ptr %7, align 8, !tbaa !54
+  %1 = fsub nsz double 2.000000e+00, %i.ew
+  %i.ex = getelementptr inbounds nuw i8, ptr %i.c, i64 56
+  %2 = fadd nsz double %i.ew, 2.000000e+00        ; 2 uses
+  %3 = fdiv nsz double %i.ew, %2
+  %4 = fdiv nsz double %1, %2
+  store double %4, ptr %i.ev, align 8, !tbaa !56
+  %5 = insertelement <4 x double> <double 0.000000e+00, double poison, double poison, double 0.000000e+00>, double %3, i64 1
+  %6 = shufflevector <4 x double> %5, <4 x double> poison, <4 x i32> <i32 0, i32 1, i32 1, i32 3>
+  store <4 x double> %6, ptr %i.ex, align 8, !tbaa !52
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.h, %calc_q_factors.exit242

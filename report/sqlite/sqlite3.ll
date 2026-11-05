@@ -206,7 +206,7 @@ bb.by:                                            ; preds = %.lr.ph14.i
 
 .loopexit.loopexit35.i:                           ; preds = %.critedge2.i, %whereScanInit.exit.i
   %indvars.iv.next.lcssa.sink.i = phi i64 [ %indvars.iv.i480, %whereScanInit.exit.i ], [ %indvars.iv.next.i481, %.critedge2.i ]
-  %indvars.le.i = trunc i64 %indvars.iv.next.lcssa.sink.i to i32
+  %indvars.le.i = trunc nsw i64 %indvars.iv.next.lcssa.sink.i to i32
   br label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %.loopexit.loopexit35.i, %.loopexit.loopexit.i, %bb.bs
@@ -609,7 +609,7 @@ bb.ab:                                            ; preds = %.split, %bb.m, %ind
   br i1 %i.db, label %bb.m, label %findIndexCol.exit.thread.loopexit102.split.loop.exit115, !llvm.loop !5193
 
 findIndexCol.exit.thread.loopexit102.split.loop.exit115: ; preds = %bb.ab
-  %indvars.le = trunc i64 %indvars.iv.next90 to i32
+  %indvars.le = trunc nsw i64 %indvars.iv.next90 to i32
   br label %findIndexCol.exit.thread
 
 findIndexCol.exit.thread:                         ; preds = %bb.n, %indexColumnNotNull.exit, %.split, %.thread.i, %findIndexCol.exit.thread.loopexit102.split.loop.exit115, %.preheader

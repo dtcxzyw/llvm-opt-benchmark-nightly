@@ -204,7 +204,7 @@ _ZN5boost5beast17basic_flat_bufferISaIcEED2Ev.exit695: ; preds = %bb.ft, %bb.fu
   %exitcond1035 = icmp eq i64 %indvars.iv.next1031, %indvars.iv1033
   br i1 %exitcond1035, label %bb.fv, label %.preheader.preheader, !llvm.loop !563
 
-.preheader.preheader:                             ; preds = %.loopexit929, %.preheader930
+.preheader.preheader:                             ; preds = %.preheader930, %.loopexit929
   %indvars.iv1030 = phi i64 [ 3, %.preheader930 ], [ %indvars.iv.next1031, %.loopexit929 ] ; 2 uses
   %storemerge1008 = phi i64 [ 1, %.preheader930 ], [ %i.ase, %.loopexit929 ] ; 2 uses
   %.11007 = phi i8 [ %.01010, %.preheader930 ], [ %i.ash, %.loopexit929 ]
@@ -219,8 +219,8 @@ bb.fv:                                            ; preds = %.loopexit929
   br i1 %exitcond1036.not, label %._crit_edge1012, label %.preheader930, !llvm.loop !564
 
 .preheader:                                       ; preds = %.preheader.preheader, %bb.fw
-  %storemerge1461005 = phi i64 [ %i.asg, %bb.fw ], [ 1, %.preheader.preheader ] ; 2 uses
-  %.21004 = phi i8 [ %i.ash, %bb.fw ], [ %.11007, %.preheader.preheader ]
+  %storemerge1461005 = phi i64 [ 1, %.preheader.preheader ], [ %i.asg, %bb.fw ] ; 2 uses
+  %.21004 = phi i8 [ %.11007, %.preheader.preheader ], [ %i.ash, %bb.fw ]
   br label %.lr.ph.i697.preheader
 
 bb.fw:                                            ; preds = %_ZN5boost5beast17basic_flat_bufferISaIcEED2Ev.exit745
