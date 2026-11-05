@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %.loopexit.i.i.i
   br label %_RNvMsp_NtNtNtCscdodAO9FK5_5alloc11collections5btree8navigateINtNtB7_4node6HandleINtBZ_7NodeRefNtNtBZ_6marker3MutINtNtBb_4sync3ArcNtCs92BnbMq7p8c_15influxdb3_write11ParquetFileENtNtB7_7set_val9SetValZSTNtB1w_14LeafOrInternalENtB1w_2KVE14next_leaf_edgeB25_.exit.i.i.i
 
 bb.m:                                             ; preds = %.loopexit.i.i.i
-  %3 = icmp slt i64 %.sroa.10.0.ph.i.i.i, 11
+  %3 = icmp samesign ult i64 %.sroa.10.0.ph.i.i.i, 11
   call void @llvm.assume(i1 %3)
   %i.cy = getelementptr i8, ptr %.sroa.0.020.ph.i.i.i, i64 112
   %i.cz = getelementptr [8 x i8], ptr %i.cy, i64 %.sroa.10.0.ph.i.i.i ; 2 uses
@@ -272,7 +272,7 @@ bb.n:                                             ; preds = %bb.i
 
 bb.o:                                             ; preds = %bb.n
   %i.dp = getelementptr inbounds nuw i8, ptr %.sroa.0.020.ph.i.i.i, i64 104
-  %i.dq = icmp ult i64 %.sroa.10.0.ph.i.i.i, 12
+  %i.dq = icmp samesign ult i64 %.sroa.10.0.ph.i.i.i, 12
   call void @llvm.assume(i1 %i.dq)
   %i.dr = getelementptr inbounds nuw [8 x i8], ptr %i.dp, i64 %.sroa.10.0.ph.i.i.i
   %i.ds = load ptr, ptr %i.dr, align 8, !noalias !731, !nonnull !4, !noundef !4 ; 3 uses

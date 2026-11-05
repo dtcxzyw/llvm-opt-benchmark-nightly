@@ -204,7 +204,7 @@ bb.a:
 
 .outer:                                           ; preds = %bb.a, %bb.l
   %.sroa.032.0.ph = phi i64 [ %i.af, %bb.l ], [ 0, %bb.a ] ; 6 uses
-  %i.b = icmp ult i64 %.sroa.032.0.ph, %1
+  %i.b = icmp samesign ult i64 %.sroa.032.0.ph, %1
   br i1 %i.b, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %.outer
@@ -261,7 +261,7 @@ bb.e:                                             ; preds = %.lr.ph.preheader, %
   br i1 %or.cond36, label %.backedge, label %bb.f
 
 .backedge:                                        ; preds = %.lr.ph, %bb.f
-  %i.s = add i64 %i.n, 1                          ; 2 uses
+  %i.s = add nuw i64 %i.n, 1                      ; 2 uses
   %exitcond.not = icmp eq i64 %i.s, %1
   br i1 %exitcond.not, label %.._crit_edge.loopexit_crit_edge, label %.lr.ph, !llvm.loop !210
 
@@ -286,7 +286,7 @@ bb.e:                                             ; preds = %.lr.ph.preheader, %
 
 .preheader:                                       ; preds = %.lr.ph.jt2, %bb.g, %.lr.ph.jt3, %bb.h
   %.sroa.014.04458.ph = phi i64 [ %.sroa.014.044.jt3, %.lr.ph.jt3 ], [ %.sroa.014.044.jt3, %bb.h ], [ %.sroa.014.044.jt2, %bb.g ], [ %.sroa.014.044.jt2, %.lr.ph.jt2 ]
-  %i.ab = add i64 %.sroa.014.04458.ph, 1          ; 2 uses
+  %i.ab = add nuw i64 %.sroa.014.04458.ph, 1      ; 2 uses
   %exitcond.not90 = icmp eq i64 %i.ab, %1
   br i1 %exitcond.not90, label %._crit_edge, label %.lr.ph.lr.ph, !llvm.loop !210
 
@@ -343,14 +343,14 @@ bb.m:                                             ; preds = %bb.l
   ret i1 %.sroa.0.1
 
 bb.n:                                             ; preds = %bb.j
-  %i.ah = add i64 %.sroa.014.044.jt2, 1           ; 2 uses
+  %i.ah = add nuw i64 %.sroa.014.044.jt2, 1       ; 2 uses
   %exitcond.not.jt2 = icmp eq i64 %i.ah, %1
   br i1 %exitcond.not.jt2, label %._crit_edge, label %.lr.ph.jt2, !llvm.loop !210
 
 .loopexit67:                                      ; preds = %bb.g, %bb.f, %bb.i, %bb.k, %bb.h
   %.sroa.014.04462 = phi i64 [ %.sroa.014.044.jt3, %bb.k ], [ %i.n, %bb.f ], [ %.sroa.014.044.jt3, %bb.h ], [ %i.n, %bb.i ], [ %.sroa.014.044.jt2, %bb.g ]
   %.sroa.029.1.jt3 = phi i8 [ 1, %bb.k ], [ 3, %bb.f ], [ 3, %bb.h ], [ 1, %bb.i ], [ 3, %bb.g ] ; 2 uses
-  %i.ai = add i64 %.sroa.014.04462, 1             ; 2 uses
+  %i.ai = add nuw i64 %.sroa.014.04462, 1         ; 2 uses
   %exitcond.not.jt3 = icmp eq i64 %i.ai, %1
   br i1 %exitcond.not.jt3, label %._crit_edge, label %.lr.ph.jt3, !llvm.loop !210
 }

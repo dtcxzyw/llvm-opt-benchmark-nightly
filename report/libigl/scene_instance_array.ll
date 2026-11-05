@@ -205,12 +205,12 @@ bb.g:                                             ; preds = %._crit_edge, %_ZN6e
   br i1 %i.ad, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.ae = icmp ult i64 %i.ab, %i.e
+  %i.ae = icmp samesign ult i64 %i.ab, %i.e
   br i1 %i.ae, label %.lr.ph22, label %._crit_edge23
 
 .lr.ph22:                                         ; preds = %bb.h
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 3 uses
-  %i.ag = sub nuw i64 %i.e, %i.ab
+  %i.ag = sub nuw nsw i64 %i.e, %i.ab
   %xtraiter44 = and i64 %i.ag, 1
   %lcmp.mod45.not = icmp eq i64 %xtraiter44, 0
   br i1 %lcmp.mod45.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa

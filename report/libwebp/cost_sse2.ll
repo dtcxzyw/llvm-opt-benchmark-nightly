@@ -55,7 +55,7 @@ bb.a:
   %i.d = load i32, ptr %1, align 8, !tbaa !20     ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !21   ; 2 uses
-  %i.g = sext i32 %i.d to i64                     ; 10 uses
+  %i.g = sext i32 %i.d to i64                     ; 9 uses
   %i.h = getelementptr inbounds [33 x i8], ptr %i.f, i64 %i.g
   %i.i = sext i32 %0 to i64                       ; 2 uses
   %i.j = getelementptr inbounds [11 x i8], ptr %i.h, i64 %i.i
@@ -110,7 +110,7 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.ai, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %bb.e
-  %wide.trip.count = zext nneg i32 %i.u to i64    ; 5 uses
+  %wide.trip.count = zext nneg i32 %i.u to i64    ; 3 uses
   %i.aj = sub nsw i64 %wide.trip.count, %i.g
   %xtraiter = and i64 %i.aj, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -200,13 +200,13 @@ bb.e:                                             ; preds = %bb.c
   br i1 %exitcond.not.1, label %._crit_edge, label %.lr.ph, !llvm.loop !19
 
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %bb.e
-  %.pre-phi = phi i64 [ %i.g, %bb.e ], [ %wide.trip.count, %.lr.ph ], [ %wide.trip.count, %.lr.ph.prol.loopexit ] ; 4 uses
   %.062.lcssa = phi i32 [ %i.s, %bb.e ], [ %.lcssa83.unr, %.lr.ph.prol.loopexit ], [ %i.cp, %.lr.ph ]
   %.061.lcssa = phi ptr [ %i.p, %bb.e ], [ %.lcssa.unr, %.lr.ph.prol.loopexit ], [ %i.ct, %.lr.ph ]
-  %.060.lcssa = phi i32 [ %i.d, %bb.e ], [ %i.u, %.lr.ph ], [ %i.u, %.lr.ph.prol.loopexit ]
-  %i.cu = getelementptr inbounds i8, ptr %i.a, i64 %.pre-phi
+  %.060.lcssa = phi i32 [ %i.d, %bb.e ], [ %i.u, %.lr.ph ], [ %i.u, %.lr.ph.prol.loopexit ] ; 2 uses
+  %2 = zext nneg i32 %.060.lcssa to i64           ; 4 uses
+  %i.cu = getelementptr inbounds nuw i8, ptr %i.a, i64 %2
   %i.cv = load i8, ptr %i.cu, align 1, !tbaa !9
-  %i.cw = getelementptr inbounds [2 x i8], ptr %i.c, i64 %.pre-phi
+  %i.cw = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %2
   %i.cx = load i16, ptr %i.cw, align 2, !tbaa !25
   %i.cy = zext i16 %i.cx to i64
   %i.cz = getelementptr inbounds nuw [2 x i8], ptr @VP8LevelFixedCosts, i64 %i.cy
@@ -222,10 +222,10 @@ bb.e:                                             ; preds = %bb.c
   br i1 %i.di, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %._crit_edge
-  %i.dj = getelementptr i8, ptr @VP8EncBands, i64 %.pre-phi
+  %i.dj = getelementptr i8, ptr @VP8EncBands, i64 %2
   %i.dk = getelementptr i8, ptr %i.dj, i64 1
   %i.dl = load i8, ptr %i.dk, align 1, !tbaa !9
-  %i.dm = getelementptr inbounds i8, ptr %i.b, i64 %.pre-phi
+  %i.dm = getelementptr inbounds nuw i8, ptr %i.b, i64 %2
   %i.dn = load i8, ptr %i.dm, align 1, !tbaa !9
   %i.do = zext i8 %i.dl to i64
   %i.dp = getelementptr inbounds nuw [33 x i8], ptr %i.f, i64 %i.do

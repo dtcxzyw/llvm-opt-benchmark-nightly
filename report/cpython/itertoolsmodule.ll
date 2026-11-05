@@ -204,7 +204,7 @@ bb.q:                                             ; preds = %bb.p
 
 bb.r:                                             ; preds = %.lr.ph96, %Py_INCREF.exit
   %.15695 = phi i64 [ %.058, %.lr.ph96 ], [ %i.av, %Py_INCREF.exit ] ; 4 uses
-  %i.an = sub i64 %.15695, %.058
+  %i.an = sub nuw nsw i64 %.15695, %.058
   %i.ao = getelementptr [8 x i8], ptr %i.af, i64 %i.an
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !241 ; 3 uses
   %i.aq = load i32, ptr %i.ap, align 8, !tbaa !240 ; 2 uses

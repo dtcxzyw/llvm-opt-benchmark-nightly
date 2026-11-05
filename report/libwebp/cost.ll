@@ -70,7 +70,7 @@ bb.a:
   %i.a = load i32, ptr %1, align 8, !tbaa !22     ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !23   ; 2 uses
-  %i.d = sext i32 %i.a to i64                     ; 4 uses
+  %i.d = sext i32 %i.a to i64                     ; 3 uses
   %i.e = getelementptr inbounds [33 x i8], ptr %i.c, i64 %i.d
   %i.f = sext i32 %0 to i64                       ; 2 uses
   %i.g = getelementptr inbounds [11 x i8], ptr %i.e, i64 %i.f
@@ -105,7 +105,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
   br i1 %i.t, label %.lr.ph, label %._crit_edge
 
 .lr.ph:                                           ; preds = %.preheader
-  %wide.trip.count = zext nneg i32 %i.r to i64    ; 2 uses
+  %wide.trip.count = zext nneg i32 %i.r to i64
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.c
@@ -143,11 +143,11 @@ bb.e:                                             ; preds = %.lr.ph, %bb.e
   br i1 %exitcond.not, label %._crit_edge, label %bb.e, !llvm.loop !21
 
 ._crit_edge:                                      ; preds = %bb.e, %.preheader
-  %.pre-phi = phi i64 [ %i.d, %.preheader ], [ %wide.trip.count, %bb.e ] ; 2 uses
   %.041.lcssa = phi i32 [ %i.p, %.preheader ], [ %i.ak, %bb.e ]
   %.040.lcssa = phi ptr [ %i.m, %.preheader ], [ %i.ao, %bb.e ]
-  %.039.lcssa = phi i32 [ %i.a, %.preheader ], [ %i.r, %bb.e ]
-  %i.ap = getelementptr inbounds [2 x i8], ptr %i.v, i64 %.pre-phi
+  %.039.lcssa = phi i32 [ %i.a, %.preheader ], [ %i.r, %bb.e ] ; 2 uses
+  %2 = zext nneg i32 %.039.lcssa to i64           ; 2 uses
+  %i.ap = getelementptr inbounds nuw [2 x i8], ptr %i.v, i64 %2
   %i.aq = load i16, ptr %i.ap, align 2, !tbaa !16
   %i.ar = tail call i16 @llvm.abs.i16(i16 %i.aq, i1 false) ; 3 uses
   %i.as = zext i16 %i.ar to i64
@@ -165,7 +165,7 @@ bb.e:                                             ; preds = %.lr.ph, %bb.e
   br i1 %i.bd, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %._crit_edge
-  %i.be = getelementptr i8, ptr @VP8EncBands, i64 %.pre-phi
+  %i.be = getelementptr i8, ptr @VP8EncBands, i64 %2
   %i.bf = getelementptr i8, ptr %i.be, i64 1
   %i.bg = load i8, ptr %i.bf, align 1, !tbaa !24
   %i.bh = icmp eq i16 %i.ar, 1

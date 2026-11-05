@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %.lr.ph, %bb.o
 bb.p:                                             ; preds = %._crit_edge
   %i.af = add nuw nsw i64 %i.ac, 63
   %i.ag = lshr i64 %i.af, 3
-  %i.ah = and i64 %i.ag, 2305843009213693944      ; 2 uses
+  %i.ah = and i64 %i.ag, 1152921504606846968      ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr nonnull align 8 %i.ad, i8 0, i64 %i.ah, i1 false)
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 8 %i.ad, ptr align 8 %.05438, i64 %.05637, i1 false)
   tail call void @__sched_cpufree(ptr noundef %.05438) #19

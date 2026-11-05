@@ -201,8 +201,8 @@ bb.da:                                            ; preds = %.lr.ph760, %.lr.ph7
   %.12 = phi i32 [ %.10756, %bb.da ], [ %.6401742, %.split886 ], [ %i.gd, %bb.ck ], [ %.4399748, %switch.early.test ], [ 0, %bb.ci ], [ 0, %.preheader677 ], [ 0, %bb.cl ], [ 0, %.preheader680 ], [ 0, %.preheader682 ], [ %.2397765, %bb.cj ], [ %.2397765, %.split ], [ %.10756, %.split908 ], [ %.10756, %bb.cz ], [ %i.ho, %.thread648 ], [ %.4399748, %bb.cp ], [ %.4399748, %.split878 ], [ %i.gm, %.thread634 ], [ %i.gt, %bb.cr ], [ %.6401742, %bb.cq ], [ %.8403736, %.split897 ], [ %i.ha, %bb.ct ], [ %.8403736, %bb.cs ]
   %.2394 = phi i32 [ %.0392757, %bb.da ], [ 8, %.split886 ], [ 10, %.split ], [ 16, %.split878 ], [ 10, %bb.ci ], [ 10, %.preheader677 ], [ 16, %bb.cl ], [ 8, %.preheader680 ], [ 2, %.preheader682 ], [ 10, %bb.ck ], [ 10, %bb.cj ], [ %.0392757, %.split908 ], [ %.0392757, %bb.cz ], [ %.1393642, %.thread648 ], [ 16, %.thread634 ], [ 16, %bb.cp ], [ 16, %switch.early.test ], [ 8, %bb.cr ], [ 8, %bb.cq ], [ 2, %bb.ct ], [ 2, %bb.cs ], [ 2, %.split897 ] ; 4 uses
   %.1357 = phi i1 [ true, %.split908 ], [ false, %.split886 ], [ %.0356, %.split ], [ false, %.split878 ], [ %.0356, %bb.ci ], [ true, %.preheader677 ], [ false, %bb.cl ], [ false, %.preheader680 ], [ false, %.preheader682 ], [ %.0356, %bb.ck ], [ %.0356, %bb.cj ], [ true, %.thread648 ], [ true, %bb.da ], [ true, %bb.cz ], [ false, %.thread634 ], [ false, %bb.cp ], [ false, %switch.early.test ], [ false, %bb.cr ], [ false, %bb.cq ], [ false, %bb.ct ], [ false, %bb.cs ], [ false, %.split897 ] ; 2 uses
-  %5 = sext i32 %.12 to i64
-  %i.ht = getelementptr inbounds i8, ptr %i.a, i64 %5
+  %5 = zext nneg i32 %.12 to i64
+  %i.ht = getelementptr inbounds nuw i8, ptr %i.a, i64 %5
   store i8 0, ptr %i.ht, align 1
   %i.hu = call ptr @__errno() #15
   %i.hv = load i32, ptr %i.hu, align 4
@@ -486,13 +486,13 @@ bb.es:                                            ; preds = %bb.er, %.split918, 
 ._crit_edge784.loopexit:                          ; preds = %.split928, %.split927, %.split918, %bb.er, %bb.es
   %.14939 = phi i32 [ %i.kf, %bb.es ], [ %.13777, %bb.er ], [ %.13777, %.split918 ], [ %.13777, %.split927 ], [ %.13777, %.split928 ]
   %.22938 = phi i32 [ %i.kj, %bb.es ], [ %.21776, %bb.er ], [ %.21776, %.split918 ], [ 46, %.split927 ], [ %.21776, %.split928 ]
-  %6 = sext i32 %.14939 to i64
+  %6 = zext nneg i32 %.14939 to i64
   br label %._crit_edge784
 
 ._crit_edge784:                                   ; preds = %._crit_edge784.loopexit, %bb.ep
   %.21.lcssa = phi i32 [ %.20.lcssa, %bb.ep ], [ %.22938, %._crit_edge784.loopexit ] ; 2 uses
   %.13.lcssa = phi i64 [ 0, %bb.ep ], [ %6, %._crit_edge784.loopexit ]
-  %i.kk = getelementptr inbounds i8, ptr %i.a, i64 %.13.lcssa
+  %i.kk = getelementptr inbounds nuw i8, ptr %i.a, i64 %.13.lcssa
   store i8 0, ptr %i.kk, align 1
   %i.kl = call ptr @__errno() #15
   %i.km = load i32, ptr %i.kl, align 4

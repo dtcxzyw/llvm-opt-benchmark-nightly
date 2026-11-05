@@ -202,7 +202,7 @@ bb.h:                                             ; preds = %bb.g
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.m ], [ 2, %bb.h ] ; 3 uses
   %.04361 = phi i64 [ %i.ab, %bb.m ], [ %i.r, %bb.h ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
-  %i.s = trunc i64 %indvars.iv to i8
+  %i.s = trunc nuw i64 %indvars.iv to i8
   store i8 %i.s, ptr %i.b, align 1, !tbaa !31
   %i.t = call i32 @HMAC_Init_ex(ptr noundef nonnull %i.k, ptr noundef null, i32 noundef 0, ptr noundef null, ptr noundef null) #7
   %.not52 = icmp eq i32 %i.t, 0
@@ -239,7 +239,7 @@ bb.m:                                             ; preds = %bb.l
   call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.aa, ptr nonnull align 16 %i.a, i64 %i.z, i1 false)
   %i.ab = add i64 %i.z, %.04361
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
-  %indvars.iv.next = add nuw i64 %indvars.iv, 1
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %.not51.not = icmp ugt i64 %spec.select, %indvars.iv
   br i1 %.not51.not, label %.lr.ph.peel.next, label %.loopexit, !llvm.loop !54
 

@@ -205,7 +205,7 @@ _ZNSt6vectorIbSaIbEEC2EmRKbRKS0_.exit:            ; preds = %_ZNSt6vectorIiSaIiE
   br label %bb.d
 
 .preheader.loopexit:                              ; preds = %_ZL15Gia_ManAppendCiP10Gia_Man_t_.exit
-  %i.bg = add i32 %i.dv, 1
+  %i.bg = add nuw i32 %i.dv, 1
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %_ZNSt6vectorIbSaIbEEC2EmRKbRKS0_.exit
@@ -608,7 +608,7 @@ _ZNSt6vectorIP10Abc_Obj_t_SaIS1_EE9push_backERKS1_.exit:
   br i1 %.not136, label %.preheader, label %.lr.ph
 
 .preheader.loopexit:                              ; preds = %_ZNSt6vectorIP10Abc_Obj_t_SaIS1_EE9push_backERKS1_.exit64
-  %i.o = add i32 %i.bc, 1
+  %i.o = add nuw i32 %i.bc, 1
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.loopexit, %_ZNSt6vectorIP10Abc_Obj_t_SaIS1_EE9push_backERKS1_.exit
@@ -1011,7 +1011,7 @@ _ZNSt6vectorIP10Abc_Obj_t_SaIS1_EE9push_backERKS1_.exit:
   br i1 %.not269, label %.preheader233, label %.lr.ph
 
 .preheader233.loopexit:                           ; preds = %_ZNSt6vectorIP10Abc_Obj_t_SaIS1_EE9push_backERKS1_.exit81
-  %i.ad = add i32 %i.bp, 1
+  %i.ad = add nuw i32 %i.bp, 1
   br label %.preheader233
 
 .preheader233:                                    ; preds = %.preheader233.loopexit, %_ZNSt6vectorIP10Abc_Obj_t_SaIS1_EE9push_backERKS1_.exit

@@ -205,16 +205,16 @@ bb.b:                                             ; preds = %bb.a
 
 .lr.ph.i:                                         ; preds = %bb.b, %bb.d
   %.0918.i = phi i64 [ %i.k, %bb.d ], [ 0, %bb.b ] ; 3 uses
-  %.01017.i = phi i64 [ %.1.i, %bb.d ], [ 0, %bb.b ] ; 2 uses
+  %.01017.i = phi i64 [ %.1.i, %bb.d ], [ 0, %bb.b ] ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 %.0918.i
   %i.i = load i8, ptr %i.h, align 1, !tbaa !626
   %.not14.i = icmp slt i8 %i.i, -64
   br i1 %.not14.i, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.i
-  %i.j = add i64 %.01017.i, 1                     ; 2 uses
-  %7 = icmp ugt i64 %i.j, %i.f
-  br i1 %7, label %_ZN3fmt2v96detail16code_point_indexENS0_17basic_string_viewIcEEm.exit, label %bb.d
+  %i.j = add nuw nsw i64 %.01017.i, 1
+  %.not28 = icmp ult i64 %.01017.i, %i.f
+  br i1 %.not28, label %bb.d, label %_ZN3fmt2v96detail16code_point_indexENS0_17basic_string_viewIcEEm.exit
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph.i
   %.1.i = phi i64 [ %i.j, %bb.c ], [ %.01017.i, %.lr.ph.i ]

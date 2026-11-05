@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.b, %.preheader20
   %i.az = sext i32 %i.ay to i64
   %i.ba = getelementptr inbounds i8, ptr %2, i64 %i.az
   %i.bb = load i8, ptr %i.ba, align 1
-  %i.bc = getelementptr inbounds i8, ptr %1, i64 %indvars.iv39
+  %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv39
   store i8 %i.bb, ptr %i.bc, align 1
   %indvars.iv.next40 = add nsw i64 %indvars.iv39, -1 ; 2 uses
   %i.bd = trunc nsw i64 %indvars.iv.next40 to i32
@@ -213,7 +213,7 @@ bb.b:                                             ; preds = %bb.b, %.preheader20
   %i.bf = sext i32 %i.be to i64
   %i.bg = getelementptr inbounds i8, ptr %2, i64 %i.bf
   %i.bh = load i8, ptr %i.bg, align 1
-  %i.bi = getelementptr inbounds i8, ptr %1, i64 %indvars.iv.next40
+  %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv.next40
   store i8 %i.bh, ptr %i.bi, align 1
   %indvars.iv.next40.197 = add nsw i64 %indvars.iv39, -2 ; 2 uses
   %i.bj = trunc nsw i64 %indvars.iv.next40.197 to i32
@@ -221,7 +221,7 @@ bb.b:                                             ; preds = %bb.b, %.preheader20
   %i.bl = sext i32 %i.bk to i64
   %i.bm = getelementptr inbounds i8, ptr %2, i64 %i.bl
   %i.bn = load i8, ptr %i.bm, align 1
-  %i.bo = getelementptr inbounds i8, ptr %1, i64 %indvars.iv.next40.197
+  %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv.next40.197
   store i8 %i.bn, ptr %i.bo, align 1
   %indvars.iv.next40.2 = add nsw i64 %indvars.iv39, -3 ; 2 uses
   %i.bp = trunc nsw i64 %indvars.iv.next40.2 to i32
@@ -229,7 +229,7 @@ bb.b:                                             ; preds = %bb.b, %.preheader20
   %i.br = sext i32 %i.bq to i64
   %i.bs = getelementptr inbounds i8, ptr %2, i64 %i.br
   %i.bt = load i8, ptr %i.bs, align 1
-  %i.bu = getelementptr inbounds i8, ptr %1, i64 %indvars.iv.next40.2
+  %i.bu = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv.next40.2
   store i8 %i.bt, ptr %i.bu, align 1
   %indvars.iv.next40.3 = add nsw i64 %indvars.iv39, -4 ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
@@ -254,7 +254,7 @@ bb.c:                                             ; preds = %bb.c, %.epil.prehea
   %i.bx = sext i32 %i.bw to i64
   %i.by = getelementptr inbounds i8, ptr %2, i64 %i.bx
   %i.bz = load i8, ptr %i.by, align 1
-  %i.ca = getelementptr inbounds i8, ptr %1, i64 %indvars.iv39.epil
+  %i.ca = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv39.epil
   store i8 %i.bz, ptr %i.ca, align 1
   %indvars.iv.next40.epil = add nsw i64 %indvars.iv39.epil, -1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
@@ -280,7 +280,7 @@ bb.d:                                             ; preds = %bb.d, %..preheader_
   %i.cf = sext i32 %i.ce to i64
   %i.cg = getelementptr inbounds i8, ptr %2, i64 %i.cf
   %i.ch = load i8, ptr %i.cg, align 1
-  %i.ci = getelementptr inbounds i8, ptr %1, i64 %i.cc
+  %i.ci = getelementptr inbounds nuw i8, ptr %1, i64 %i.cc
   store i8 %i.ch, ptr %i.ci, align 1
   %i.cj = add nsw i64 %indvars.iv39.1, 15         ; 2 uses
   %i.ck = trunc nsw i64 %i.cj to i32
@@ -288,7 +288,7 @@ bb.d:                                             ; preds = %bb.d, %..preheader_
   %i.cm = sext i32 %i.cl to i64
   %i.cn = getelementptr inbounds i8, ptr %2, i64 %i.cm
   %i.co = load i8, ptr %i.cn, align 1
-  %i.cp = getelementptr inbounds i8, ptr %1, i64 %i.cj
+  %i.cp = getelementptr inbounds nuw i8, ptr %1, i64 %i.cj
   store i8 %i.co, ptr %i.cp, align 1
   %indvars.iv.next40.1.1 = add nsw i64 %indvars.iv39.1, -2 ; 2 uses
   %niter104.next.1 = add i64 %niter104, 2         ; 2 uses
@@ -309,7 +309,7 @@ bb.d:                                             ; preds = %bb.d, %..preheader_
   %i.ct = sext i32 %i.cs to i64
   %i.cu = getelementptr inbounds i8, ptr %2, i64 %i.ct
   %i.cv = load i8, ptr %i.cu, align 1
-  %i.cw = getelementptr inbounds i8, ptr %1, i64 %i.cq
+  %i.cw = getelementptr inbounds nuw i8, ptr %1, i64 %i.cq
   store i8 %i.cv, ptr %i.cw, align 1
   br label %..preheader_crit_edge.us.preheader.1
 

@@ -205,7 +205,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 6 uses
   %.not33 = icmp eq i32 %.fr32, 1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 6 uses
-  br i1 %.not33, label %.lr.ph.split.preheader._crit_edge, label %bb.b
+  br i1 %.not33, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
   %wide.trip.count = zext i32 %.fr32 to i64
@@ -244,19 +244,23 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.split.us.peel.next:                        ; preds = %bb.c, %.critedge.peel
   %i.v = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.34, i64 noundef 1) ; 0 uses
-  br label %bb.e
+  br label %.lr.ph.split.preheader._crit_edge
 
-.lr.ph.split.preheader._crit_edge:                ; preds = %.lr.ph
-  %.pre43 = load ptr, ptr %i.c, align 8, !tbaa !265 ; 2 uses
+.lr.ph.split.preheader._crit_edge:                ; preds = %.lr.ph.split.us.peel.next, %12
+  %indvars.iv = phi i64 [ 1, %.lr.ph.split.us.peel.next ], [ %indvars.iv.next, %12 ] ; 2 uses
+  %4 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.37, i64 noundef 1) ; 0 uses
+  %5 = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv ; 3 uses
+  %.pre43 = load ptr, ptr %5, align 8, !tbaa !265
   %i.w = ptrtoint ptr %.pre43 to i64
   %i.x = and i64 %i.w, 7
   %.not27.peel = icmp eq i64 %i.x, 0
+  %6 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.33, i64 noundef 1) ; 0 uses
   br i1 %.not27.peel, label %.critedge30.peel, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph.split.preheader._crit_edge
-  %4 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.33, i64 noundef 1) ; 0 uses
+  %7 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.33, i64 noundef 1) ; 0 uses
   %i.y = load ptr, ptr %i.d, align 8, !tbaa !184, !nonnull !73, !align !74
-  %i.z = load ptr, ptr %i.c, align 8, !tbaa !265
+  %i.z = load ptr, ptr %5, align 8, !tbaa !265
   %i.aa = ptrtoint ptr %i.z to i64
   %i.ab = and i64 %i.aa, -8
   %i.ac = inttoptr i64 %i.ab to ptr
@@ -265,31 +269,45 @@ bb.d:                                             ; preds = %.lr.ph.split.prehea
   %i.ad = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK10polynomial7manager7displayERSoPKNS_10polynomialERKNS_16display_var_procEb(ptr noundef nonnull align 8 dereferenceable(8) %i.y, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %i.ac, ptr noundef nonnull align 8 dereferenceable(8) %3, i1 noundef zeroext true) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #28
   %i.ae = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.38, i64 noundef 3) ; 0 uses
-  br label %._crit_edge
+  br label %12
 
 .critedge30.peel:                                 ; preds = %.lr.ph.split.preheader._crit_edge
   %i.af = load ptr, ptr %i.d, align 8, !tbaa !184, !nonnull !73, !align !74
+  %8 = load ptr, ptr %5, align 8, !tbaa !265
+  %9 = ptrtoint ptr %8 to i64
+  %10 = and i64 %9, -8
+  %11 = inttoptr i64 %10 to ptr
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #28
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN10polynomial16display_var_procE, i64 16), ptr %3, align 8, !tbaa !181
-  %i.ag = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK10polynomial7manager7displayERSoPKNS_10polynomialERKNS_16display_var_procEb(ptr noundef nonnull align 8 dereferenceable(8) %i.af, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %.pre43, ptr noundef nonnull align 8 dereferenceable(8) %3, i1 noundef zeroext true) ; 0 uses
+  %i.ag = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK10polynomial7manager7displayERSoPKNS_10polynomialERKNS_16display_var_procEb(ptr noundef nonnull align 8 dereferenceable(8) %i.af, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %11, ptr noundef nonnull align 8 dereferenceable(8) %3, i1 noundef zeroext true) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #28
-  br label %._crit_edge
+  br label %12
 
-bb.e:                                             ; preds = %.lr.ph.split.us.peel.next, %13
-  %indvars.iv = phi i64 [ 1, %.lr.ph.split.us.peel.next ], [ %indvars.iv.next, %13 ] ; 2 uses
-  %5 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.37, i64 noundef 1) ; 0 uses
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.c, i64 %indvars.iv ; 3 uses
-  %i.ah = load ptr, ptr %6, align 8, !tbaa !265
+12:                                               ; preds = %.critedge30.peel, %bb.d
+  %13 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.34, i64 noundef 1) ; 0 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split.preheader._crit_edge, !llvm.loop !624
+
+._crit_edge:                                      ; preds = %12, %bb.f, %.critedge, %bb.a
+  %14 = load i32, ptr %2, align 8, !tbaa !243
+  switch i32 %14, label %bb.j [
+    i32 1, label %bb.g
+    i32 2, label %bb.h
+    i32 0, label %bb.i
+  ]
+
+bb.e:                                             ; preds = %.lr.ph
+  %i.ah = load ptr, ptr %i.c, align 8, !tbaa !265 ; 2 uses
   %i.ai = ptrtoint ptr %i.ah to i64
   %i.aj = and i64 %i.ai, 7
   %.not27.us = icmp eq i64 %i.aj, 0
-  %7 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.33, i64 noundef 1) ; 0 uses
   br i1 %.not27.us, label %.critedge, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  %8 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.33, i64 noundef 1) ; 0 uses
+  %15 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.33, i64 noundef 1) ; 0 uses
   %i.ak = load ptr, ptr %i.d, align 8, !tbaa !184, !nonnull !73, !align !74
-  %i.al = load ptr, ptr %6, align 8, !tbaa !265
+  %i.al = load ptr, ptr %i.c, align 8, !tbaa !265
   %i.am = ptrtoint ptr %i.al to i64
   %i.an = and i64 %i.am, -8
   %i.ao = inttoptr i64 %i.an to ptr
@@ -298,33 +316,15 @@ bb.f:                                             ; preds = %bb.e
   %i.ap = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK10polynomial7manager7displayERSoPKNS_10polynomialERKNS_16display_var_procEb(ptr noundef nonnull align 8 dereferenceable(8) %i.ak, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %i.ao, ptr noundef nonnull align 8 dereferenceable(8) %3, i1 noundef zeroext true) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #28
   %i.aq = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.38, i64 noundef 3) ; 0 uses
-  br label %13
+  br label %._crit_edge
 
 .critedge:                                        ; preds = %bb.e
   %i.ar = load ptr, ptr %i.d, align 8, !tbaa !184, !nonnull !73, !align !74
-  %9 = load ptr, ptr %6, align 8, !tbaa !265
-  %10 = ptrtoint ptr %9 to i64
-  %11 = and i64 %10, -8
-  %12 = inttoptr i64 %11 to ptr
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #28
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN10polynomial16display_var_procE, i64 16), ptr %3, align 8, !tbaa !181
-  %i.as = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK10polynomial7manager7displayERSoPKNS_10polynomialERKNS_16display_var_procEb(ptr noundef nonnull align 8 dereferenceable(8) %i.ar, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %12, ptr noundef nonnull align 8 dereferenceable(8) %3, i1 noundef zeroext true) ; 0 uses
+  %i.as = call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK10polynomial7manager7displayERSoPKNS_10polynomialERKNS_16display_var_procEb(ptr noundef nonnull align 8 dereferenceable(8) %i.ar, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %i.ah, ptr noundef nonnull align 8 dereferenceable(8) %3, i1 noundef zeroext true) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #28
-  br label %13
-
-13:                                               ; preds = %.critedge, %bb.f
-  %14 = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.34, i64 noundef 1) ; 0 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge, label %bb.e, !llvm.loop !624
-
-._crit_edge:                                      ; preds = %13, %.critedge30.peel, %bb.d, %bb.a
-  %15 = load i32, ptr %2, align 8, !tbaa !243
-  switch i32 %15, label %bb.j [
-    i32 1, label %bb.g
-    i32 2, label %bb.h
-    i32 0, label %bb.i
-  ]
+  br label %._crit_edge
 
 bb.g:                                             ; preds = %._crit_edge
   %i.at = call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.39, i64 noundef 4) ; 0 uses
@@ -727,7 +727,7 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 8, !tbaa !263
   %.fr36 = freeze i32 %i.b                        ; 3 uses
   %.not = icmp eq i32 %.fr36, 0
-  br i1 %.not, label %._crit_edge, label %.lr.ph
+  br i1 %.not, label %.thread.peel, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 7 uses
@@ -782,7 +782,7 @@ bb.d:                                             ; preds = %.lr.ph.split.us.spl
 bb.e:                                             ; preds = %bb.d, %.lr.ph.split.us.split.us
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count51
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.split.us.split.us, !llvm.loop !812
+  br i1 %exitcond.not, label %.thread.peel, label %.lr.ph.split.us.split.us, !llvm.loop !812
 
 .lr.ph.split.us.split.peel.next:                  ; preds = %.lr.ph.split.us.split.peel.next.preheader, %bb.g
   %indvars.iv48 = phi i64 [ %indvars.iv.next49, %bb.g ], [ 1, %.lr.ph.split.us.split.peel.next.preheader ] ; 2 uses
@@ -808,17 +808,21 @@ bb.f:                                             ; preds = %.lr.ph.split.us.spl
 bb.g:                                             ; preds = %bb.f, %.lr.ph.split.us.split.peel.next
   %indvars.iv.next49 = add nuw nsw i64 %indvars.iv48, 1 ; 2 uses
   %exitcond52.not = icmp eq i64 %indvars.iv.next49, %wide.trip.count51
-  br i1 %exitcond52.not, label %._crit_edge, label %.lr.ph.split.us.split.peel.next, !llvm.loop !813
+  br i1 %exitcond52.not, label %.thread.peel, label %.lr.ph.split.us.split.peel.next, !llvm.loop !813
 
 .lr.ph.split:                                     ; preds = %.lr.ph
   %.pre65 = load ptr, ptr %i.c, align 8, !tbaa !265 ; 3 uses
   %i.am = ptrtoint ptr %.pre65 to i64
   %i.an = and i64 %i.am, 7
   %.not40.peel = icmp eq i64 %i.an, 0             ; 2 uses
-  br i1 %4, label %bb.h, label %.lr.ph.split.split.us
+  br i1 %4, label %.lr.ph.split.split.us, label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph.split
-  br i1 %.not40.peel, label %.thread.peel, label %bb.i
+  br i1 %.not40.peel, label %.thread.us, label %bb.i
+
+.thread.us:                                       ; preds = %bb.h
+  %5 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK5nlsat6solver3imp18display_polynomialERSoPN10polynomial10polynomialERKNS3_16display_var_procEb(ptr noundef nonnull align 8 dereferenceable(1017) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %.pre65, ptr noundef nonnull align 8 dereferenceable(8) %3, i1 noundef zeroext false) ; 0 uses
+  br label %.thread.peel
 
 bb.i:                                             ; preds = %bb.h
   %i.ao = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.33, i64 noundef 1) ; 0 uses
@@ -826,34 +830,12 @@ bb.i:                                             ; preds = %bb.h
   %i.aq = ptrtoint ptr %i.ap to i64
   %i.ar = and i64 %i.aq, -8
   %i.as = inttoptr i64 %i.ar to ptr
-  %i.at = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK5nlsat6solver3imp18display_polynomialERSoPN10polynomial10polynomialERKNS3_16display_var_procEb(ptr noundef nonnull align 8 dereferenceable(1017) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %i.as, ptr noundef nonnull align 8 dereferenceable(8) %3, i1 noundef zeroext true) ; 0 uses
+  %i.at = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK5nlsat6solver3imp18display_polynomialERSoPN10polynomial10polynomialERKNS3_16display_var_procEb(ptr noundef nonnull align 8 dereferenceable(1017) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %i.as, ptr noundef nonnull align 8 dereferenceable(8) %3, i1 noundef zeroext false) ; 0 uses
   %i.au = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.34, i64 noundef 1) ; 0 uses
   %i.av = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.206, i64 noundef 2) ; 0 uses
-  br label %._crit_edge
+  br label %.thread.peel
 
-.thread.peel:                                     ; preds = %bb.h
-  %5 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK5nlsat6solver3imp18display_polynomialERSoPN10polynomial10polynomialERKNS3_16display_var_procEb(ptr noundef nonnull align 8 dereferenceable(1017) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %.pre65, ptr noundef nonnull align 8 dereferenceable(8) %3, i1 noundef zeroext true) ; 0 uses
-  br label %._crit_edge
-
-.lr.ph.split.split.us:                            ; preds = %.lr.ph.split
-  br i1 %.not40.peel, label %.thread.us.a, label %bb.j
-
-.thread.us.a:                                     ; preds = %.lr.ph.split.split.us
-  %i.aw = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK5nlsat6solver3imp18display_polynomialERSoPN10polynomial10polynomialERKNS3_16display_var_procEb(ptr noundef nonnull align 8 dereferenceable(1017) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %.pre65, ptr noundef nonnull align 8 dereferenceable(8) %3, i1 noundef zeroext false) ; 0 uses
-  br label %._crit_edge
-
-bb.j:                                             ; preds = %.lr.ph.split.split.us
-  %i.ax = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.33, i64 noundef 1) ; 0 uses
-  %i.ay = load ptr, ptr %i.c, align 8, !tbaa !265
-  %i.az = ptrtoint ptr %i.ay to i64
-  %i.ba = and i64 %i.az, -8
-  %i.bb = inttoptr i64 %i.ba to ptr
-  %i.bc = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK5nlsat6solver3imp18display_polynomialERSoPN10polynomial10polynomialERKNS3_16display_var_procEb(ptr noundef nonnull align 8 dereferenceable(1017) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %i.bb, ptr noundef nonnull align 8 dereferenceable(8) %3, i1 noundef zeroext false) ; 0 uses
-  %i.bd = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.34, i64 noundef 1) ; 0 uses
-  %i.be = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.206, i64 noundef 2) ; 0 uses
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %bb.e, %bb.g, %bb.j, %.thread.us.a, %.thread.peel, %bb.i, %bb.a
+.thread.peel:                                     ; preds = %bb.e, %bb.g, %bb.j, %.thread.us.a, %.thread.us, %bb.i, %bb.a
   %6 = load i32, ptr %2, align 8, !tbaa !243
   switch i32 %6, label %bb.n [
     i32 1, label %bb.k
@@ -861,19 +843,37 @@ bb.j:                                             ; preds = %.lr.ph.split.split.
     i32 0, label %bb.m
   ]
 
-bb.k:                                             ; preds = %._crit_edge
+.lr.ph.split.split.us:                            ; preds = %.lr.ph.split
+  br i1 %.not40.peel, label %.thread.us.a, label %bb.j
+
+.thread.us.a:                                     ; preds = %.lr.ph.split.split.us
+  %i.aw = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK5nlsat6solver3imp18display_polynomialERSoPN10polynomial10polynomialERKNS3_16display_var_procEb(ptr noundef nonnull align 8 dereferenceable(1017) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %.pre65, ptr noundef nonnull align 8 dereferenceable(8) %3, i1 noundef zeroext true) ; 0 uses
+  br label %.thread.peel
+
+bb.j:                                             ; preds = %.lr.ph.split.split.us
+  %i.ax = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.33, i64 noundef 1) ; 0 uses
+  %i.ay = load ptr, ptr %i.c, align 8, !tbaa !265
+  %i.az = ptrtoint ptr %i.ay to i64
+  %i.ba = and i64 %i.az, -8
+  %i.bb = inttoptr i64 %i.ba to ptr
+  %i.bc = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNK5nlsat6solver3imp18display_polynomialERSoPN10polynomial10polynomialERKNS3_16display_var_procEb(ptr noundef nonnull align 8 dereferenceable(1017) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef %i.bb, ptr noundef nonnull align 8 dereferenceable(8) %3, i1 noundef zeroext true) ; 0 uses
+  %i.bd = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.34, i64 noundef 1) ; 0 uses
+  %i.be = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.206, i64 noundef 2) ; 0 uses
+  br label %.thread.peel
+
+bb.k:                                             ; preds = %.thread.peel
   %i.bf = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.39, i64 noundef 4) ; 0 uses
   br label %bb.o
 
-bb.l:                                             ; preds = %._crit_edge
+bb.l:                                             ; preds = %.thread.peel
   %i.bg = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.40, i64 noundef 4) ; 0 uses
   br label %bb.o
 
-bb.m:                                             ; preds = %._crit_edge
+bb.m:                                             ; preds = %.thread.peel
   %i.bh = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.207, i64 noundef 4) ; 0 uses
   br label %bb.o
 
-bb.n:                                             ; preds = %._crit_edge
+bb.n:                                             ; preds = %.thread.peel
   tail call void @_Z26notify_assertion_violationPKciS0_(ptr noundef nonnull @.str.11, i32 noundef 3697, ptr noundef nonnull @.str.12)
   tail call void @_Z18invoke_exit_actionj(i32 noundef 114)
   br label %bb.o

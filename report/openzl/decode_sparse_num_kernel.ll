@@ -84,7 +84,7 @@ vector.body134:                                   ; preds = %vector.body134, %ve
   %index135 = phi i64 [ 0, %vector.ph132 ], [ %index.next140, %vector.body134 ] ; 2 uses
   %vec.phi136 = phi <2 x i64> [ %i.n, %vector.ph132 ], [ %i.t, %vector.body134 ]
   %vec.phi137 = phi <2 x i64> [ zeroinitializer, %vector.ph132 ], [ %i.u, %vector.body134 ]
-  %i.o = shl i64 %index135, 1
+  %i.o = shl nuw i64 %index135, 1
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 %i.o ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 4
   %wide.load138 = load <2 x i16>, ptr %i.p, align 2, !tbaa !16
@@ -151,7 +151,7 @@ ZL_sparseNumReadDistance.exit.us:                 ; preds = %ZL_sparseNumReadDis
   %i.bh = load i8, ptr %i.bg, align 1, !tbaa !17
   %i.bi = zext i8 %i.bh to i64
   %i.bj = add i64 %i.be, %i.bi                    ; 3 uses
-  %i.bk = add nuw i64 %.02769.us, 8               ; 2 uses
+  %i.bk = add nuw nsw i64 %.02769.us, 8           ; 2 uses
   %niter.next.7 = add nuw i64 %niter, 8           ; 2 uses
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %.loopexit.loopexit.unr-lcssa, label %ZL_sparseNumReadDistance.exit.us, !llvm.loop !21
@@ -159,12 +159,12 @@ ZL_sparseNumReadDistance.exit.us:                 ; preds = %ZL_sparseNumReadDis
 ZL_sparseNumReadDistance.exit.us76:               ; preds = %ZL_sparseNumReadDistance.exit.us76.preheader146, %ZL_sparseNumReadDistance.exit.us76
   %.02769.us74 = phi i64 [ %i.bq, %ZL_sparseNumReadDistance.exit.us76 ], [ %.02769.us74.ph, %ZL_sparseNumReadDistance.exit.us76.preheader146 ] ; 2 uses
   %.02868.us75 = phi i64 [ %i.bp, %ZL_sparseNumReadDistance.exit.us76 ], [ %.02868.us75.ph, %ZL_sparseNumReadDistance.exit.us76.preheader146 ]
-  %i.bl = shl i64 %.02769.us74, 1
+  %i.bl = shl nuw i64 %.02769.us74, 1
   %i.bm = getelementptr inbounds nuw i8, ptr %0, i64 %i.bl
   %i.bn = load i16, ptr %i.bm, align 2, !tbaa !16
   %i.bo = zext i16 %i.bn to i64
   %i.bp = add i64 %.02868.us75, %i.bo             ; 2 uses
-  %i.bq = add nuw i64 %.02769.us74, 1             ; 2 uses
+  %i.bq = add nuw nsw i64 %.02769.us74, 1         ; 2 uses
   %exitcond101.not = icmp eq i64 %i.bq, %1
   br i1 %exitcond101.not, label %.loopexit, label %ZL_sparseNumReadDistance.exit.us76, !llvm.loop !22
 
@@ -176,7 +176,7 @@ ZL_sparseNumReadDistance.exit.us83:               ; preds = %ZL_sparseNumReadDis
   %i.bt = load i32, ptr %i.bs, align 4, !tbaa !11
   %i.bu = zext i32 %i.bt to i64
   %i.bv = add i64 %.02868.us82, %i.bu             ; 2 uses
-  %i.bw = add nuw i64 %.02769.us81, 1             ; 2 uses
+  %i.bw = add nuw nsw i64 %.02769.us81, 1         ; 2 uses
   %exitcond100.not = icmp eq i64 %i.bw, %1
   br i1 %exitcond100.not, label %.loopexit, label %ZL_sparseNumReadDistance.exit.us83, !llvm.loop !23
 
@@ -264,7 +264,7 @@ ZL_sparseNumReadDistance.exit.us.epil:            ; preds = %ZL_sparseNumReadDis
   %i.ct = load i8, ptr %i.cs, align 1, !tbaa !17
   %i.cu = zext i8 %i.ct to i64
   %i.cv = add i64 %.02868.us.epil, %i.cu          ; 2 uses
-  %i.cw = add nuw i64 %.02769.us.epil, 1
+  %i.cw = add nuw nsw i64 %.02769.us.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter
   br i1 %epil.iter.cmp.not, label %.loopexit, label %ZL_sparseNumReadDistance.exit.us.epil, !llvm.loop !25

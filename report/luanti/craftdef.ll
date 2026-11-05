@@ -205,7 +205,7 @@ _ZNSt10unique_ptrIA_tSt14default_deleteIS0_EED2Ev.exit49.i: ; preds = %_ZNKSt14d
   br label %bb.cc
 
 bb.cb:                                            ; preds = %_ZNSt6vectorItSaItEE9push_backERKt.exit
-  %indvars.iv.next241 = add nuw i64 %indvars.iv240, 1 ; 2 uses
+  %indvars.iv.next241 = add nuw nsw i64 %indvars.iv240, 1 ; 2 uses
   %i.sf = icmp ugt i64 %i.gd, %indvars.iv.next241
   br i1 %i.sf, label %.lr.ph214, label %._crit_edge215.loopexit, !llvm.loop !384
 
@@ -304,7 +304,7 @@ _ZNSt6vectorItSaItEE17_M_realloc_insertIJRKtEEEvN9__gnu_cxx17__normal_iteratorIP
   br label %.body
 
 _ZNSt6vectorItSaItEE9push_backERKt.exit:          ; preds = %_ZNSt6vectorItSaItEE17_M_realloc_insertIJRKtEEEvN9__gnu_cxx17__normal_iteratorIPtS1_EEDpOT_.exit.i, %bb.cf, %bb.cd
-  %indvars.iv.next = add nuw i64 %indvars.iv, 1   ; 2 uses
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.tm = icmp ugt i64 %i.gd, %indvars.iv.next
   br i1 %i.tm, label %bb.cc, label %bb.cb, !llvm.loop !385
 

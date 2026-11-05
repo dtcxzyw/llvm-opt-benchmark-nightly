@@ -202,12 +202,12 @@ bb.e:                                             ; preds = %bb.d
 
 bb.f:                                             ; preds = %bb.g, %bb.e
   %.02023.i = phi i64 [ 0, %bb.e ], [ %i.ab, %bb.g ] ; 3 uses
-  %i.w = sub nuw i64 %i.f, %.02023.i
+  %i.w = sub nuw nsw i64 %i.f, %.02023.i
   %i.x = call i64 @llvm.umin.i64(i64 %i.w, i64 65536) ; 3 uses
   store i8 1, ptr %5, align 8
   store i8 2, ptr %i.r, align 1
   store i64 %i.x, ptr %i.s, align 8
-  %i.y = add i64 %.02023.i, %i.g                  ; 2 uses
+  %i.y = add nuw nsw i64 %.02023.i, %i.g          ; 2 uses
   store i64 %i.y, ptr %i.t, align 8
   store i64 %i.u, ptr %i.v, align 8
   %i.z = call i32 (i32, i64, ...) @ioctl(i32 noundef %i.q, i64 noundef 3223369734, ptr noundef nonnull %5) #10
@@ -215,8 +215,8 @@ bb.f:                                             ; preds = %bb.g, %bb.e
   br i1 %i.aa, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.ab = add i64 %i.x, %.02023.i                 ; 2 uses
-  %i.ac = icmp ult i64 %i.ab, %i.f
+  %i.ab = add nuw nsw i64 %i.x, %.02023.i         ; 2 uses
+  %i.ac = icmp samesign ult i64 %i.ab, %i.f
   br i1 %i.ac, label %bb.f, label %set_dirty_pages.exit, !llvm.loop !12
 
 set_dirty_pages.exit:                             ; preds = %bb.g

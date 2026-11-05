@@ -205,7 +205,7 @@ bb.aq:                                            ; preds = %_ZNK6icu_7812_GLOBA
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %_ZNK6icu_7812_GLOBAL__N_120MutableCodePointTrie13findHighStartEv.exit.i.i
-  %i.fk = phi i32 [ %i.fj, %bb.aq ], [ %.1.i.i.i, %_ZNK6icu_7812_GLOBAL__N_120MutableCodePointTrie13findHighStartEv.exit.i.i ]
+  %i.fk = phi i32 [ %.1.i.i.i, %_ZNK6icu_7812_GLOBAL__N_120MutableCodePointTrie13findHighStartEv.exit.i.i ], [ %i.fj, %bb.aq ]
   %i.fl = icmp samesign ult i32 %i.fg, %i.cr
   br i1 %i.fl, label %.thread.i.i, label %.loopexit.i.i
 

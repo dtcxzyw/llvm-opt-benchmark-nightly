@@ -205,9 +205,9 @@ bb.f:                                             ; preds = %bb.e
   %i.av = getelementptr inbounds nuw [2 x i8], ptr %2, i64 %i.au
   %i.aw = load i16, ptr %i.av, align 2, !tbaa !9
   %i.ax = sext i16 %i.aw to i32                   ; 2 uses
-  %i.ay = shl nsw i32 %.0129231, 1
+  %i.ay = shl nuw nsw i32 %.0129231, 1
   %i.az = xor i32 %.0132230, -1
-  %i.ba = add i32 %i.ay, %i.az                    ; 2 uses
+  %i.ba = add nsw i32 %i.ay, %i.az                ; 2 uses
   %i.bb = tail call i32 @llvm.abs.i32(i32 %i.ax, i1 true)
   %i.bc = sub nsw i32 %.0132230, %i.bb            ; 6 uses
   %i.bd = add nsw i32 %i.ax, 1                    ; 2 uses
@@ -232,7 +232,7 @@ bb.f:                                             ; preds = %bb.e
   %.1130223 = phi i32 [ %6, %.lr.ph224 ], [ %.0129231, %.preheader ]
   %.1134222 = phi i32 [ %i.bn, %.lr.ph224 ], [ %.0133229, %.preheader ]
   %i.bn = add nsw i32 %.1134222, -1               ; 2 uses
-  %6 = ashr i32 %.1130223, 1                      ; 3 uses
+  %6 = lshr i32 %.1130223, 1                      ; 3 uses
   %i.bo = icmp slt i32 %i.bc, %6
   br i1 %i.bo, label %.lr.ph224, label %._crit_edge225, !llvm.loop !33
 

@@ -184,7 +184,7 @@ bb.h:                                             ; preds = %bb.g
 .preheader:                                       ; preds = %bb.g, %bb.i
   %.0 = phi i64 [ %i.z, %bb.i ], [ 0, %bb.g ]     ; 4 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 %.0
-  %i.u = sub i64 %i.n, %.0
+  %i.u = sub nsw i64 %i.n, %.0
   %i.v = tail call i64 @read(i32 noundef %.0.i, ptr noundef nonnull %i.t, i64 noundef %i.u) #21 ; 2 uses
   %i.w = trunc i64 %i.v to i32                    ; 2 uses
   %i.x = icmp sgt i32 %i.w, 0
@@ -192,7 +192,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %.preheader
   %i.y = and i64 %i.v, 2147483647
-  %i.z = add i64 %i.y, %.0                        ; 3 uses
+  %i.z = add nuw i64 %i.y, %.0                    ; 3 uses
   %.not37 = icmp ult i64 %i.z, %i.n
   br i1 %.not37, label %.preheader, label %.thread, !llvm.loop !6
 

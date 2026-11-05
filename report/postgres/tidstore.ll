@@ -204,11 +204,11 @@ shared_ts_node_4_get_insertpos.exit.i.i.i.i:      ; preds = %.lr.ph.i.i.i.i.i
   tail call void asm sideeffect "", "~{dirflag},~{fpsr},~{flags}"() #14, !inline_history !10, !srcloc !17
   %i.ej = getelementptr inbounds i8, ptr %i.ci, i64 %indvars.iv.next7.i.i.i.i
   %i.ek = load i8, ptr %i.ej, align 1
-  %i.el = getelementptr inbounds i8, ptr %i.ci, i64 %indvars.iv6.i.i.i.i
+  %i.el = getelementptr inbounds nuw i8, ptr %i.ci, i64 %indvars.iv6.i.i.i.i
   store i8 %i.ek, ptr %i.el, align 1
   %i.em = getelementptr [8 x i8], ptr %i.ce, i64 %indvars.iv6.i.i.i.i
   %i.en = load i64, ptr %i.em, align 8
-  %i.eo = getelementptr inbounds [8 x i8], ptr %i.ei, i64 %indvars.iv6.i.i.i.i
+  %i.eo = getelementptr inbounds nuw [8 x i8], ptr %i.ei, i64 %indvars.iv6.i.i.i.i
   store i64 %i.en, ptr %i.eo, align 8
   %.not.i16.not.i.i.i.i = icmp sgt i64 %indvars.iv.next7.i.i.i.i, %indvars.iv.i.i.i.i.i
   br i1 %.not.i16.not.i.i.i.i, label %.lr.ph.i15.i.i.i.i, label %shared_ts_shift_arrays_for_insert.exit.loopexit.i.i.i.i, !llvm.loop !12
@@ -611,11 +611,11 @@ local_ts_node_4_get_insertpos.exit.i.i.i.i:       ; preds = %.lr.ph.i.i.i.i.i92
   tail call void asm sideeffect "", "~{dirflag},~{fpsr},~{flags}"() #14, !inline_history !13, !srcloc !18
   %i.lg = getelementptr inbounds i8, ptr %i.je, i64 %indvars.iv.next7.i.i.i.i97
   %i.lh = load i8, ptr %i.lg, align 1
-  %i.li = getelementptr inbounds i8, ptr %i.je, i64 %indvars.iv6.i.i.i.i96
+  %i.li = getelementptr inbounds nuw i8, ptr %i.je, i64 %indvars.iv6.i.i.i.i96
   store i8 %i.lh, ptr %i.li, align 1
   %i.lj = getelementptr [8 x i8], ptr %i.ja, i64 %indvars.iv6.i.i.i.i96
   %i.lk = load ptr, ptr %i.lj, align 8
-  %i.ll = getelementptr inbounds [8 x i8], ptr %i.lf, i64 %indvars.iv6.i.i.i.i96
+  %i.ll = getelementptr inbounds nuw [8 x i8], ptr %i.lf, i64 %indvars.iv6.i.i.i.i96
   store ptr %i.lk, ptr %i.ll, align 8
   %.not.i16.not.i.i.i.i98 = icmp sgt i64 %indvars.iv.next7.i.i.i.i97, %indvars.iv.i.i.i.i.i93
   br i1 %.not.i16.not.i.i.i.i98, label %.lr.ph.i15.i.i.i.i95, label %local_ts_shift_arrays_for_insert.exit.loopexit.i.i.i.i, !llvm.loop !15

@@ -204,7 +204,7 @@ spec_iter.exit:                                   ; preds = %.lr.ph954
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dm, i64 11
   %i.dt = load i8, ptr %i.ds, align 1, !tbaa !32  ; 2 uses
   %i.du = getelementptr inbounds nuw i8, ptr %i.dn, i64 10
-  %i.dv = load i8, ptr %i.du, align 2, !tbaa !35  ; 8 uses
+  %i.dv = load i8, ptr %i.du, align 2, !tbaa !35  ; 6 uses
   %.not.i509 = icmp eq i8 %i.dv, 0
   br i1 %.not.i509, label %bb.ag, label %spec_iter.exit513
 
@@ -229,7 +229,7 @@ spec_iter.exit513:                                ; preds = %spec_iter.exit
   %i.eg = zext i8 %i.ef to i16
   %i.eh = add nuw nsw i16 %i.eg, %i.ed
   %i.ei = getelementptr inbounds nuw i8, ptr %i.dn, i64 8
-  %i.ej = load i8, ptr %i.ei, align 8, !tbaa !34  ; 6 uses
+  %i.ej = load i8, ptr %i.ei, align 8, !tbaa !34  ; 5 uses
   %i.ek = zext i8 %i.ej to i16                    ; 3 uses
   %i.el = sub nsw i16 %i.eh, %i.ek
   %i.em = sdiv i16 %i.el, %i.ed
@@ -263,10 +263,10 @@ bb.ak:                                            ; preds = %spec_iter.exit513
   br i1 %.not479821, label %._crit_edge828, label %.lr.ph827
 
 .lr.ph827:                                        ; preds = %bb.ak
-  %i.ew = zext i8 %i.ej to i32                    ; 6 uses
+  %i.ew = zext i8 %i.ej to i32                    ; 7 uses
   %i.ex = zext i8 %i.ef to i32                    ; 5 uses
   %.not480693 = icmp ugt i8 %i.ej, %i.ef
-  %i.ey = zext i8 %i.dv to i32                    ; 8 uses
+  %i.ey = zext i8 %i.dv to i32                    ; 10 uses
   %i.ez = zext i8 %i.dl to i32                    ; 2 uses
   br i1 %.not480693, label %._crit_edge828, label %.lr.ph827.split
 
@@ -297,27 +297,28 @@ bb.ak:                                            ; preds = %spec_iter.exit513
   %i.fl = add nuw nsw i32 %i.fk, %i.ey
   %i.fm = xor i32 %i.fi, -1
   %i.fn = add nsw i32 %i.fl, %i.fm
-  %broadcast.splatinsert1510 = insertelement <16 x i8> poison, i8 %i.ej, i64 0
-  %broadcast.splat1511 = shufflevector <16 x i8> %broadcast.splatinsert1510, <16 x i8> poison, <16 x i32> zeroinitializer
-  %broadcast.splatinsert1512 = insertelement <16 x i8> poison, i8 %i.dv, i64 0
-  %broadcast.splat1513 = shufflevector <16 x i8> %broadcast.splatinsert1512, <16 x i8> poison, <16 x i32> zeroinitializer
-  %4 = mul <16 x i8> %broadcast.splat1513, <i8 0, i8 1, i8 2, i8 3, i8 4, i8 5, i8 6, i8 7, i8 8, i8 9, i8 10, i8 11, i8 12, i8 13, i8 14, i8 15>
-  %induction = add <16 x i8> %broadcast.splat1511, %4
-  %5 = shl i8 %i.dv, 4
-  %broadcast.splatinsert1514 = insertelement <16 x i8> poison, i8 %5, i64 0
-  %broadcast.splat1515 = shufflevector <16 x i8> %broadcast.splatinsert1514, <16 x i8> poison, <16 x i32> zeroinitializer
+  %broadcast.splatinsert1508 = insertelement <16 x i32> poison, i32 %i.ew, i64 0
+  %broadcast.splat1509 = shufflevector <16 x i32> %broadcast.splatinsert1508, <16 x i32> poison, <16 x i32> zeroinitializer
+  %broadcast.splatinsert1510 = insertelement <16 x i32> poison, i32 %i.ey, i64 0
+  %broadcast.splat1511 = shufflevector <16 x i32> %broadcast.splatinsert1510, <16 x i32> poison, <16 x i32> zeroinitializer
+  %4 = mul nuw nsw <16 x i32> %broadcast.splat1511, <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
+  %induction = add nuw nsw <16 x i32> %broadcast.splat1509, %4
+  %5 = shl nuw nsw i32 %i.ey, 4
+  %broadcast.splatinsert1512 = insertelement <16 x i32> poison, i32 %5, i64 0
+  %broadcast.splat1513 = shufflevector <16 x i32> %broadcast.splatinsert1512, <16 x i32> poison, <16 x i32> zeroinitializer
   br label %.lr.ph697.us.us
 
 .lr.ph697.us.us:                                  ; preds = %.thread554.us928.us, %.lr.ph827.split.split.us.split.us
   %.0382825.us833.us = phi i32 [ 4, %.lr.ph827.split.split.us.split.us ], [ %.3385.us930.us, %.thread554.us928.us ] ; 7 uses
   %.0386824.us834.us = phi i8 [ 0, %.lr.ph827.split.split.us.split.us ], [ %.1387.lcssa.us929.us, %.thread554.us928.us ] ; 9 uses
   %.0417822.us835.us = phi i32 [ %i.eu, %.lr.ph827.split.split.us.split.us ], [ %i.hf, %.thread554.us928.us ]
-  %.0417822.us835.us.fr = freeze i32 %.0417822.us835.us ; 3 uses
-  %i.fo = trunc i32 %.0417822.us835.us.fr to i8   ; 7 uses
+  %.0417822.us835.us.fr = freeze i32 %.0417822.us835.us ; 6 uses
+  %i.fo = trunc nuw i32 %.0417822.us835.us.fr to i8 ; 4 uses
   %or.cond8.us.us.us.us = icmp slt i8 %i.fo, 32   ; 5 uses
-  switch i32 %.0417822.us835.us.fr, label %.lr.ph697.split.us.split.us.split.us.split.us.us.us [
-    i32 0, label %.lr.ph697.split.us.split.us.split.split.us.us.us
-    i32 255, label %spec_ith_char.exit.us.us.us.us915.us
+  %trunc1433 = trunc nuw i32 %.0417822.us835.us.fr to i8
+  switch i8 %trunc1433, label %.lr.ph697.split.us.split.us.split.us.split.us.us.us [
+    i8 0, label %.lr.ph697.split.us.split.us.split.split.us.us.us
+    i8 -1, label %spec_ith_char.exit.us.us.us.us915.us
   ]
 
 .lr.ph697.split.us.split.us.split.split.us.us.us: ; preds = %.lr.ph697.us.us
@@ -389,21 +390,21 @@ vector.ph:                                        ; preds = %spec_ith_char.exit.
   %n.vec = and i32 %i.gb, -16                     ; 3 uses
   %i.gc = mul i32 %n.vec, %i.ey
   %i.gd = add i32 %i.gc, %i.ew
-  %broadcast.splatinsert = insertelement <16 x i8> poison, i8 %i.fo, i64 0
-  %broadcast.splat = shufflevector <16 x i8> %broadcast.splatinsert, <16 x i8> poison, <16 x i32> zeroinitializer
+  %broadcast.splatinsert = insertelement <16 x i32> poison, i32 %.0417822.us835.us.fr, i64 0
+  %broadcast.splat = shufflevector <16 x i32> %broadcast.splatinsert, <16 x i32> poison, <16 x i32> zeroinitializer
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body.interim, %vector.ph
   %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body.interim ]
-  %vec.ind = phi <16 x i8> [ %induction, %vector.ph ], [ %vec.ind.next, %vector.body.interim ]
-  %vec.ind.fr = freeze <16 x i8> %vec.ind         ; 2 uses
-  %i.ge = icmp eq <16 x i8> %broadcast.splat, %vec.ind.fr
+  %vec.ind = phi <16 x i32> [ %induction, %vector.ph ], [ %vec.ind.next, %vector.body.interim ]
+  %vec.ind.fr = freeze <16 x i32> %vec.ind        ; 2 uses
+  %i.ge = icmp eq <16 x i32> %broadcast.splat, %vec.ind.fr
   %i.gf = bitcast <16 x i1> %i.ge to i16
   %.not1516 = icmp eq i16 %i.gf, 0
   br i1 %.not1516, label %vector.body.interim, label %.thread554.us928.us
 
 vector.body.interim:                              ; preds = %vector.body
-  %vec.ind.next = add <16 x i8> %vec.ind.fr, %broadcast.splat1515
+  %vec.ind.next = add nuw nsw <16 x i32> %vec.ind.fr, %broadcast.splat1513
   %index.next = add nuw i32 %index, 16            ; 2 uses
   %i.gg = icmp eq i32 %index.next, %n.vec
   br i1 %i.gg, label %middle.block, label %vector.body, !llvm.loop !11
@@ -418,8 +419,7 @@ spec_ith_char.exit.us.us.us.us.us.us.us.us.preheader1535: ; preds = %spec_ith_ch
 
 spec_ith_char.exit.us.us.us.us.us.us.us.us:       ; preds = %spec_ith_char.exit.us.us.us.us.us.us.us.us.preheader1535, %bb.ao
   %.0414694.us.us.us.us.us.us.us.us = phi i32 [ %i.gi, %bb.ao ], [ %.0414694.us.us.us.us.us.us.us.us.ph, %spec_ith_char.exit.us.us.us.us.us.us.us.us.preheader1535 ] ; 2 uses
-  %6 = trunc nuw i32 %.0414694.us.us.us.us.us.us.us.us to i8
-  %i.gh = icmp eq i8 %i.fo, %6
+  %i.gh = icmp eq i32 %.0417822.us835.us.fr, %.0414694.us.us.us.us.us.us.us.us
   br i1 %i.gh, label %.thread554.us928.us, label %bb.ao
 
 bb.ao:                                            ; preds = %spec_ith_char.exit.us.us.us.us.us.us.us.us
@@ -429,13 +429,13 @@ bb.ao:                                            ; preds = %spec_ith_char.exit.
 
 spec_ith_char.exit.us.us.us.us.us.us.us:          ; preds = %.lr.ph697.split.us.split.us.split.us.split.us.us.us.split.us, %bb.ap
   %.1387695.us.us.us.us.us.us.us = phi i8 [ %spec.select1062, %bb.ap ], [ %.0386824.us834.us, %.lr.ph697.split.us.split.us.split.us.split.us.us.us.split.us ] ; 2 uses
-  %.0414694.us.us.us.us.us.us.us = phi i32 [ %i.gk, %bb.ap ], [ %i.ew, %.lr.ph697.split.us.split.us.split.us.split.us.us.us.split.us ] ; 2 uses
-  %7 = trunc nuw i32 %.0414694.us.us.us.us.us.us.us to i8 ; 2 uses
-  %i.gj = icmp eq i8 %i.fo, %7
+  %.0414694.us.us.us.us.us.us.us = phi i32 [ %i.gk, %bb.ap ], [ %i.ew, %.lr.ph697.split.us.split.us.split.us.split.us.us.us.split.us ] ; 3 uses
+  %i.gj = icmp eq i32 %.0417822.us835.us.fr, %.0414694.us.us.us.us.us.us.us
   br i1 %i.gj, label %.thread554.us928.us, label %bb.ap
 
 bb.ap:                                            ; preds = %spec_ith_char.exit.us.us.us.us.us.us.us
-  %or.cond11.us.us.us.us.us.us.us = icmp slt i8 %7, 32
+  %6 = trunc nuw i32 %.0414694.us.us.us.us.us.us.us to i8
+  %or.cond11.us.us.us.us.us.us.us = icmp slt i8 %6, 32
   %spec.select1062 = select i1 %or.cond11.us.us.us.us.us.us.us, i8 1, i8 %.1387695.us.us.us.us.us.us.us ; 2 uses
   %i.gk = add nuw nsw i32 %.0414694.us.us.us.us.us.us.us, %i.ey ; 2 uses
   %.not480.us.us.us.us.us.us.us = icmp samesign ugt i32 %i.gk, %i.ex

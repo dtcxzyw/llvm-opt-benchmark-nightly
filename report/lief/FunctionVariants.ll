@@ -205,9 +205,9 @@ bb.n:                                             ; preds = %_ZNSt6vectorIN4LIEF
 bb.o:                                             ; preds = %bb.n, %_ZNSt6vectorIN4LIEF5MachO16FunctionVariants17RuntimeTableEntry5FLAGSESaIS4_EED2Ev.exit20
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #26
-  %i.cy = add nuw i64 %i.ar, 1                    ; 3 uses
+  %i.cy = add nuw nsw i64 %i.ar, 1                ; 3 uses
   store i64 %i.cy, ptr %i.c, align 8, !tbaa !72
-  %.not = icmp ult i64 %i.cy, %i.ag
+  %.not = icmp samesign ult i64 %i.cy, %i.ag
   br i1 %.not, label %bb.f, label %._crit_edge, !llvm.loop !387
 
 bb.p:                                             ; preds = %_ZNK4LIEF12BinaryStream4readINS_5MachO7details21runtime_table_entry_tEEENS_6resultIT_EEv.exit.thread, %bb.g

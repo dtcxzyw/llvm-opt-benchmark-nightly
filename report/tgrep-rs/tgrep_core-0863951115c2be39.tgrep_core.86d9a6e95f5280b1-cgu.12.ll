@@ -204,7 +204,7 @@ bb.aw:                                            ; preds = %._crit_edge.i, %bb.
   %i.du = add i64 %i.da, 1                        ; 3 uses
   store i64 %i.du, ptr %i.bj, align 8, !alias.scope !657
   %i.dv = sub nuw nsw i64 %.sroa.016.0.lcssa, %.sroa.08.0169 ; 3 uses
-  %i.dw = icmp ugt i64 %i.dv, 127
+  %i.dw = icmp samesign ugt i64 %i.dv, 127
   br i1 %i.dw, label %.lr.ph.i92, label %._crit_edge.i90
 
 ._crit_edge.i90:                                  ; preds = %_RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VechE8push_mutCsbzNSmZPCnTx_10tgrep_core.exit4.i95, %bb.aw
@@ -238,7 +238,7 @@ _RNvMsG_NtCsgCecv3eZDcN_5alloc3vecINtB5_3VechE8push_mutCsbzNSmZPCnTx_10tgrep_cor
   %i.eh = add i64 %i.ea, 1                        ; 3 uses
   store i64 %i.eh, ptr %i.bj, align 8, !alias.scope !660
   %i.ei = lshr i64 %.sroa.0.05.i94, 7             ; 2 uses
-  %i.ej = icmp ugt i64 %.sroa.0.05.i94, 16383
+  %i.ej = icmp samesign ugt i64 %.sroa.0.05.i94, 16383
   br i1 %i.ej, label %.lr.ph.i92, label %._crit_edge.i90
 
 bb.az:                                            ; preds = %._crit_edge.i90, %bb.ax
@@ -375,7 +375,7 @@ bb.bj:                                            ; preds = %._crit_edge, %bb.bn
   %i.gn = load i64, ptr %i.p, align 8, !noundef !5 ; 3 uses
   %i.go = icmp ult i64 %i.gn, 768614336404564651
   call void @llvm.assume(i1 %i.go)
-  %i.gp = icmp ult i64 %.sroa.016.0.lcssa, %i.gn
+  %i.gp = icmp samesign ult i64 %.sroa.016.0.lcssa, %i.gn
   br i1 %i.gp, label %bb.ab, label %._crit_edge173
 
 bb.bk:                                            ; preds = %bb.bi
@@ -778,7 +778,7 @@ bb.ec:                                            ; preds = %bb.ea
 
 bb.ed:                                            ; preds = %bb.dy
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !739
-  %i.js = icmp ult i64 %.sroa.012.0.lcssa.i, %i.ii
+  %i.js = icmp samesign ult i64 %.sroa.012.0.lcssa.i, %i.ii
   br i1 %i.js, label %.lr.ph.i65, label %._crit_edge.i69
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtCsbzNSmZPCnTx_10tgrep_core6ondisk12PostingEntryEEB1c_.exit27.i: ; preds = %bb.eb

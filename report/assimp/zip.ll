@@ -205,7 +205,7 @@ mz_zip_reader_filename_less.exit104:              ; preds = %mz_zip_reader_filen
 
 bb.k:                                             ; preds = %mz_zip_reader_filename_less.exit104, %.lr.ph50
   %i.dy = phi i64 [ 0, %.lr.ph50 ], [ %i.dx, %mz_zip_reader_filename_less.exit104 ]
-  %i.dz = add i64 %i.dy, %i.cm                    ; 3 uses
+  %i.dz = add nuw nsw i64 %i.dy, %i.cm            ; 3 uses
   %i.ea = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %.048
   %i.eb = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %i.dz ; 2 uses
   %i.ec = load i32, ptr %i.eb, align 4            ; 2 uses
@@ -272,9 +272,9 @@ mz_zip_reader_filename_less.exit:                 ; preds = %mz_zip_reader_filen
 bb.m:                                             ; preds = %mz_zip_reader_filename_less.exit
   store i32 %i.ec, ptr %i.ea, align 4
   store i32 %i.cj, ptr %i.eb, align 4
-  %i.ff = shl i64 %i.dz, 1                        ; 2 uses
+  %i.ff = shl nuw nsw i64 %i.dz, 1                ; 2 uses
   %i.fg = or disjoint i64 %i.ff, 1                ; 2 uses
-  %.not88 = icmp ult i64 %i.fg, %indvars.iv60
+  %.not88 = icmp samesign ult i64 %i.fg, %indvars.iv60
   br i1 %.not88, label %.lr.ph50, label %mz_zip_reader_filename_less.exit._crit_edge
 
 mz_zip_reader_filename_less.exit._crit_edge:      ; preds = %bb.m, %mz_zip_reader_filename_less.exit, %.lr.ph55

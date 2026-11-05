@@ -205,7 +205,7 @@ bb.k:                                             ; preds = %bb.f, %bb.f, %bb.f
 bb.l:                                             ; preds = %bb.f, %.fold.split, %.thread, %bb.g, %bb.h, %bb.k, %bb.j, %bb.i
   %.157 = phi i32 [ %.05677, %bb.f ], [ %i.z, %bb.h ], [ %i.ac, %bb.k ], [ %i.aa, %bb.i ], [ %i.ab, %bb.j ], [ 100, %bb.g ], [ 100, %.thread ], [ 100, %.fold.split ] ; 2 uses
   %.2 = phi i32 [ %.05578, %bb.f ], [ %.05578, %bb.h ], [ %.05578, %bb.k ], [ %.05578, %bb.i ], [ %.05578, %bb.j ], [ %.05578, %bb.g ], [ %i.w, %.thread ], [ %.05578, %.fold.split ] ; 2 uses
-  %1 = sub nuw nsw i64 9223372036854775807, %.05976
+  %1 = xor i64 %.05976, 9223372036854775807
   %i.ad = icmp samesign ugt i64 %.054, %1
   br i1 %i.ad, label %select.unfold, label %bb.m
 

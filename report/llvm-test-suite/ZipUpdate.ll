@@ -205,7 +205,7 @@ bb.di:                                            ; preds = %bb.au, %.thread565.
   br label %.body.i
 
 .thread561.i:                                     ; preds = %bb.at, %.thread558.i, %.thread.i, %bb.as
-  %.2276564.i = phi i32 [ %spec.store.select.i, %.thread.i ], [ %i.fz, %bb.at ], [ %i.fs, %.thread558.i ], [ %spec.store.select.i, %bb.as ] ; 7 uses
+  %.2276564.i = phi i32 [ %spec.store.select.i, %.thread.i ], [ %i.fz, %bb.at ], [ %i.fs, %.thread558.i ], [ %spec.store.select.i, %bb.as ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #14
   %i.ol = getelementptr inbounds nuw i8, ptr %15, i64 88 ; 2 uses
   store i8 0, ptr %i.ol, align 8, !tbaa !194
@@ -338,7 +338,7 @@ bb.dq:                                            ; preds = %bb.dn
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.qf, i8 0, i64 16, i1 false)
   store i64 4, ptr %i.qg, align 8, !tbaa !181
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTV13CRecordVectorIiE, i64 16), ptr %23, align 8, !tbaa !124
-  %i.qh = zext nneg i32 %.2276564.i to i64
+  %i.qh = zext nneg i32 %.2276564.i to i64        ; 3 uses
   %i.qi = shl nuw nsw i64 %i.qh, 9
   %i.qj = invoke noundef i32 @_ZN18CMemBlockManagerMt19AllocateSpaceAlwaysEPN8NWindows16NSynchronization8CSynchroEmm(ptr noundef nonnull align 8 dereferenceable(88) %19, ptr noundef nonnull %16, i64 noundef %i.qi, i64 noundef 0)
           to label %bb.dr unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 3 uses
@@ -453,7 +453,7 @@ bb.ec:                                            ; preds = %bb.ea
   store i32 %i.rk, ptr %i.qw, align 4, !tbaa !157
   call void @_ZN8NArchive4NZip11CThreadInfoD2Ev(ptr noundef nonnull align 8 dead_on_return(408) dereferenceable(408) %25) #14
   call void @llvm.lifetime.end.p0(ptr nonnull %25) #14
-  %i.rl = add nuw i32 %.0265701.i, 1              ; 2 uses
+  %i.rl = add nuw nsw i32 %.0265701.i, 1          ; 2 uses
   %exitcond.not.i = icmp eq i32 %i.rl, %.2276564.i
   br i1 %exitcond.not.i, label %.lr.ph705.i, label %bb.dy, !llvm.loop !267
 
@@ -478,8 +478,8 @@ bb.ef:                                            ; preds = %.body474.i, %bb.ed
   br label %.loopexit.split-lp.i
 
 bb.eg:                                            ; preds = %bb.eq
-  %33 = add nuw i32 %.1266704.i, 1                ; 2 uses
-  %exitcond855.not.i = icmp eq i32 %33, %.2276564.i
+  %indvars.iv.next856.i = add nuw nsw i64 %indvars.iv855.i, 1 ; 2 uses
+  %exitcond855.not.i = icmp eq i64 %indvars.iv.next856.i, %i.qh
   br i1 %exitcond855.not.i, label %.preheader.i, label %bb.eh, !llvm.loop !268
 
 .preheader.i:                                     ; preds = %bb.eg, %.preheader608.i
@@ -525,10 +525,9 @@ bb.eg:                                            ; preds = %bb.eq
   br label %.outer.outer.i
 
 bb.eh:                                            ; preds = %bb.eg, %.lr.ph705.i
-  %.1266704.i = phi i32 [ 0, %.lr.ph705.i ], [ %33, %bb.eg ] ; 3 uses
+  %indvars.iv855.i = phi i64 [ 0, %.lr.ph705.i ], [ %indvars.iv.next856.i, %bb.eg ] ; 3 uses
   %i.tb = load ptr, ptr %i.qv, align 8, !tbaa !158
-  %34 = sext i32 %.1266704.i to i64
-  %i.tc = getelementptr inbounds [8 x i8], ptr %i.tb, i64 %34
+  %i.tc = getelementptr inbounds nuw [8 x i8], ptr %i.tb, i64 %indvars.iv855.i
   %i.td = load ptr, ptr %i.tc, align 8, !tbaa !159 ; 11 uses
   %i.te = getelementptr inbounds nuw i8, ptr %i.td, i64 16 ; 2 uses
   %i.tf = load i32, ptr %i.te, align 8, !tbaa !203
@@ -647,7 +646,8 @@ bb.ep:                                            ; preds = %bb.eo, %.noexc484.i
   %i.uv = getelementptr inbounds nuw i8, ptr %i.uu, i64 16
   store ptr %18, ptr %i.uv, align 8, !tbaa !317
   %i.uw = getelementptr inbounds nuw i8, ptr %i.uu, i64 24
-  store i32 %.1266704.i, ptr %i.uw, align 8, !tbaa !318
+  %33 = trunc nuw nsw i64 %indvars.iv855.i to i32
+  store i32 %33, ptr %i.uw, align 8, !tbaa !318
   %i.ux = invoke noundef i32 @Thread_Create(ptr noundef nonnull align 8 dereferenceable(408) %i.td, ptr noundef nonnull @_ZN8NArchive4NZipL11CoderThreadEPv, ptr noundef nonnull align 8 dereferenceable(408) %i.td)
           to label %bb.eq unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
@@ -980,9 +980,8 @@ bb.fk:                                            ; preds = %bb.fi
   br label %bb.fl, !llvm.loop !269
 
 bb.fl:                                            ; preds = %.critedge455.i, %.lr.ph730.i
-  %.0728.i = phi i32 [ 0, %.lr.ph730.i ], [ %36, %.critedge455.i ] ; 3 uses
-  %35 = sext i32 %.0728.i to i64
-  %i.zb = getelementptr inbounds [8 x i8], ptr %i.za, i64 %35
+  %indvars.iv863.i = phi i64 [ 0, %.lr.ph730.i ], [ %indvars.iv.next864.i, %.critedge455.i ] ; 3 uses
+  %i.zb = getelementptr inbounds nuw [8 x i8], ptr %i.za, i64 %indvars.iv863.i
   %i.zc = load ptr, ptr %i.zb, align 8, !tbaa !159 ; 8 uses
   %i.zd = getelementptr inbounds nuw i8, ptr %i.zc, i64 400
   %i.ze = load i8, ptr %i.zd, align 8, !tbaa !313, !range !117, !noundef !118
@@ -991,6 +990,7 @@ bb.fl:                                            ; preds = %.critedge455.i, %.l
 
 bb.fm:                                            ; preds = %bb.fl
   %i.zg = getelementptr inbounds nuw i8, ptr %i.zc, i64 400
+  %34 = trunc nuw nsw i64 %indvars.iv863.i to i32
   store i8 0, ptr %i.zg, align 8, !tbaa !313
   %i.zh = getelementptr inbounds nuw i8, ptr %i.zc, i64 184 ; 2 uses
   %i.zi = load ptr, ptr %27, align 8, !tbaa !119  ; 4 uses
@@ -1082,15 +1082,15 @@ bb.fu:                                            ; preds = %bb.fs
   %i.aaq = load i32, ptr %i.ro, align 4, !tbaa !157
   %i.aar = sext i32 %i.aaq to i64
   %i.aas = getelementptr inbounds [4 x i8], ptr %i.aap, i64 %i.aar
-  store i32 %.0728.i, ptr %i.aas, align 4, !tbaa !15
+  store i32 %34, ptr %i.aas, align 4, !tbaa !15
   %i.aat = load i32, ptr %i.ro, align 4, !tbaa !157
   %i.aau = add nsw i32 %i.aat, 1
   store i32 %i.aau, ptr %i.ro, align 4, !tbaa !157
   br label %.loopexit.i, !llvm.loop !269
 
 .critedge455.i:                                   ; preds = %bb.fl
-  %36 = add nuw i32 %.0728.i, 1                   ; 2 uses
-  %exitcond860.not.i = icmp eq i32 %36, %.2276564.i
+  %indvars.iv.next864.i = add nuw nsw i64 %indvars.iv863.i, 1 ; 2 uses
+  %exitcond860.not.i = icmp eq i64 %indvars.iv.next864.i, %i.qh
   br i1 %exitcond860.not.i, label %..loopexit_crit_edge.i, label %bb.fl, !llvm.loop !276
 
 ..loopexit_crit_edge.i:                           ; preds = %.critedge455.i

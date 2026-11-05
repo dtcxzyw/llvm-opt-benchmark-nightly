@@ -205,8 +205,8 @@ bb.s:                                             ; preds = %bb.r, %vtable_inclu
 
 ._crit_edge.i:                                    ; preds = %bb.s, %bb.m
   %.026.lcssa.i = phi ptr [ %i.aw, %bb.m ], [ %i.bt, %bb.s ]
-  %.not48.i = icmp eq ptr %.026.lcssa.i, inttoptr (i64 1 to ptr)
-  br i1 %.not48.i, label %bb.t, label %local_id_ref.exit.thread
+  %.not48.i = icmp eq ptr %.026.lcssa.i, null
+  br i1 %.not48.i, label %local_id_ref.exit.thread, label %bb.t
 
 bb.t:                                             ; preds = %._crit_edge.i
   %i.bx = and i64 %i.as, 14
@@ -423,8 +423,8 @@ bb.k:                                             ; preds = %bb.j, %vtable_inclu
 
 ._crit_edge.i:                                    ; preds = %bb.k, %bb.e
   %.026.lcssa.i = phi ptr [ %i.j, %bb.e ], [ %i.ag, %bb.k ]
-  %.not48.i = icmp eq ptr %.026.lcssa.i, inttoptr (i64 1 to ptr)
-  br i1 %.not48.i, label %bb.l, label %rb_parser_dvar_defined_ref.exit.thread
+  %.not48.i = icmp eq ptr %.026.lcssa.i, null
+  br i1 %.not48.i, label %rb_parser_dvar_defined_ref.exit.thread, label %bb.l
 
 bb.l:                                             ; preds = %._crit_edge.i
   %i.ak = icmp ult i64 %1, 3776
@@ -827,8 +827,8 @@ bb.l:                                             ; preds = %bb.k, %vtable_inclu
 
 ._crit_edge:                                      ; preds = %vtable_included.exit43.thread.us, %bb.l, %bb.a
   %.026.lcssa = phi ptr [ %i.d, %bb.a ], [ %i.ax, %bb.l ], [ %i.aa, %vtable_included.exit43.thread.us ]
-  %.not48 = icmp eq ptr %.026.lcssa, inttoptr (i64 1 to ptr)
-  br i1 %.not48, label %bb.m, label %vtable_included.exit
+  %.not48 = icmp eq ptr %.026.lcssa, null
+  br i1 %.not48, label %vtable_included.exit, label %bb.m
 
 bb.m:                                             ; preds = %._crit_edge
   %i.bb = and i64 %1, 14
@@ -1228,8 +1228,8 @@ vtable_included.exit43.thread.us.i.i:             ; preds = %bb.e, %vtable_inclu
   br i1 %i.x, label %._crit_edge.i.i, label %.lr.ph.split.us.i.i, !llvm.loop !7
 
 ._crit_edge.i.i:                                  ; preds = %vtable_included.exit43.thread.us.i.i
-  %.not48.i.i = icmp eq ptr %i.w, inttoptr (i64 1 to ptr)
-  br i1 %.not48.i.i, label %bb.f, label %dyna_in_block.exit.thread
+  %.not48.i.i = icmp eq ptr %i.w, null
+  br i1 %.not48.i.i, label %dyna_in_block.exit.thread, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge.i.i
   %i.y = and i64 %1, 14
@@ -1632,8 +1632,8 @@ vtable_included.exit43.thread.us.i:               ; preds = %bb.e, %vtable_inclu
 
 ._crit_edge.i:                                    ; preds = %vtable_included.exit43.thread.us.i, %bb.a
   %.026.lcssa.i = phi ptr [ %i.d, %bb.a ], [ %i.w, %vtable_included.exit43.thread.us.i ]
-  %.not48.i = icmp eq ptr %.026.lcssa.i, inttoptr (i64 1 to ptr)
-  br i1 %.not48.i, label %bb.f, label %rb_parser_dvar_defined_ref.exit
+  %.not48.i = icmp eq ptr %.026.lcssa.i, null
+  br i1 %.not48.i, label %rb_parser_dvar_defined_ref.exit, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge.i
   %i.y = and i64 %1, 14
@@ -2036,8 +2036,8 @@ vtable_included.exit43.thread.us.i.i:             ; preds = %bb.o, %vtable_inclu
   br i1 %i.bx, label %._crit_edge.i.i, label %.lr.ph.split.us.i.i, !llvm.loop !7
 
 ._crit_edge.i.i:                                  ; preds = %vtable_included.exit43.thread.us.i.i
-  %.not48.i.i = icmp eq ptr %i.bw, inttoptr (i64 1 to ptr)
-  br i1 %.not48.i.i, label %bb.p, label %dvar_defined.exit.thread
+  %.not48.i.i = icmp eq ptr %i.bw, null
+  br i1 %.not48.i.i, label %dvar_defined.exit.thread, label %bb.p
 
 bb.p:                                             ; preds = %._crit_edge.i.i
   %i.by = and i64 %1, 14
@@ -2092,8 +2092,8 @@ dvar_defined.exit.thread:                         ; preds = %dvar_defined.exit.d
   %.02962.i.i.lcssa = phi ptr [ %i.ci, %.lr.ph.i.i31.preheader.split ], [ %i.cq, %.lr.ph.i.i31 ]
   %.03061.i.i.lcssa = phi ptr [ %i.cj, %.lr.ph.i.i31.preheader.split ], [ %i.co, %.lr.ph.i.i31 ]
   %.lcssa111 = phi ptr [ %i.cm, %.lr.ph.i.i31.preheader.split ], [ %i.cs, %.lr.ph.i.i31 ]
-  %.not66.i.i = icmp eq ptr %.lcssa111, inttoptr (i64 1 to ptr)
-  br i1 %.not66.i.i, label %local_id.exit, label %.critedge37.i.i
+  %.not66.i.i = icmp eq ptr %.lcssa111, null
+  br i1 %.not66.i.i, label %.critedge37.i.i, label %local_id.exit
 
 .critedge37.i.i:                                  ; preds = %.critedge.i.i, %dvar_defined.exit.thread
   %.03058.i.i = phi ptr [ %.03061.i.i.lcssa, %.critedge.i.i ], [ null, %dvar_defined.exit.thread ] ; 3 uses

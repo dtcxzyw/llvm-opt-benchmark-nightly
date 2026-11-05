@@ -205,7 +205,7 @@ vec.epilog.scalar.ph488:                          ; preds = %vec.epilog.scalar.p
 
 iter.check455:                                    ; preds = %.lr.ph215.split.us, %.preheader206.us
   %.0168.lcssa.us329 = phi i32 [ %i.ia, %.preheader206.us ], [ 0, %.lr.ph215.split.us ]
-  %i.id = zext i32 %.0168.lcssa.us329 to i64      ; 6 uses
+  %i.id = zext nneg i32 %.0168.lcssa.us329 to i64 ; 6 uses
   %i.ie = sub nsw i64 %wide.trip.count255, %i.id  ; 7 uses
   %min.iters.check441 = icmp ult i64 %i.ie, 4
   %or.cond564 = or i1 %min.iters.check441, %diff.check443

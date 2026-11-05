@@ -204,13 +204,13 @@ lead.exit154:                                     ; preds = %.critedge, %bb.ag, 
   %notmask121 = shl nsw i32 -1, %i.dv
   %i.dw = xor i32 %notmask121, -1
   %i.dx = and i32 %i.q, %i.dw                     ; 2 uses
-  %6 = sdiv i32 %.199, %i.dx                      ; 4 uses
-  %7 = srem i32 %.199, %i.dx                      ; 2 uses
-  %i.dy = icmp ugt i32 %6, 8
+  %6 = udiv i32 %.199, %i.dx                      ; 4 uses
+  %7 = urem i32 %.199, %i.dx                      ; 2 uses
+  %i.dy = icmp samesign ugt i32 %6, 8
   br i1 %i.dy, label %bb.bl, label %bb.bm
 
 bb.bl:                                            ; preds = %lead.exit154
-  %i.dz = add nsw i32 %.199, 33488896
+  %i.dz = add nuw nsw i32 %.199, 33488896
   br label %dyn_code.exit
 
 bb.bm:                                            ; preds = %lead.exit154
@@ -225,10 +225,10 @@ bb.bm:                                            ; preds = %lead.exit154
   %i.eg = shl i32 %i.ee, %i.ef
   %not. = xor i1 %i.ea, true
   %i.eh = zext i1 %not. to i32
-  %i.ei = add nsw i32 %7, %i.eh
+  %i.ei = add nuw nsw i32 %7, %i.eh
   %i.ej = add i32 %i.ei, %i.eg
   %i.ek = icmp ugt i32 %i.ed, 25
-  %i.el = add nsw i32 %.199, 33488896
+  %i.el = add nuw nsw i32 %.199, 33488896
   %spec.select.i156 = tail call i32 @llvm.umin.i32(i32 %i.ed, i32 25)
   %spec.select22.i = select i1 %i.ek, i32 %i.el, i32 %i.ej
   br label %dyn_code.exit

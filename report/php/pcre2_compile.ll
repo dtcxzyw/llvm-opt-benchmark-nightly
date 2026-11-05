@@ -205,7 +205,7 @@ bb.cn:                                            ; preds = %bb.cm
 
 bb.co:                                            ; preds = %bb.cn
   %i.jh = zext nneg i8 %i.jc to i32
-  %i.ji = shl i32 %.5278501, 3
+  %i.ji = shl nuw nsw i32 %.5278501, 3
   %i.jj = add nsw i32 %i.jh, -48
   %i.jk = or disjoint i32 %i.jj, %i.ji            ; 3 uses
   %i.jl = icmp ugt i32 %i.jk, %i.iz

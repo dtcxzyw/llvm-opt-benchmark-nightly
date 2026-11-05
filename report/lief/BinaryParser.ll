@@ -205,9 +205,9 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.h, %bb.g
   call void @_ZN4LIEF6ObjectD2Ev(ptr noundef nonnull align 8 dead_on_return(20) dereferenceable(20) %6) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #26
-  %i.ad = add nuw i64 %i.l, 1                     ; 3 uses
+  %i.ad = add nuw nsw i64 %i.l, 1                 ; 3 uses
   store i64 %i.ad, ptr %i.a, align 8, !tbaa !118
-  %.not = icmp ult i64 %i.ad, %i.e
+  %.not = icmp samesign ult i64 %i.ad, %i.e
   br i1 %.not, label %bb.b, label %._crit_edge, !llvm.loop !2233
 
 bb.j:                                             ; preds = %_ZNK4LIEF12BinaryStream4readINS_5MachO7details18data_in_code_entryEEENS_6resultIT_EEv.exit
@@ -610,9 +610,9 @@ bb.h:                                             ; preds = %bb.f
 bb.i:                                             ; preds = %bb.h, %bb.g
   call void @_ZN4LIEF6ObjectD2Ev(ptr noundef nonnull align 8 dead_on_return(20) dereferenceable(20) %6) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #26
-  %i.ad = add nuw i64 %i.l, 1                     ; 3 uses
+  %i.ad = add nuw nsw i64 %i.l, 1                 ; 3 uses
   store i64 %i.ad, ptr %i.a, align 8, !tbaa !118
-  %.not = icmp ult i64 %i.ad, %i.e
+  %.not = icmp samesign ult i64 %i.ad, %i.e
   br i1 %.not, label %bb.b, label %._crit_edge, !llvm.loop !2789
 
 bb.j:                                             ; preds = %_ZNK4LIEF12BinaryStream4readINS_5MachO7details18data_in_code_entryEEENS_6resultIT_EEv.exit

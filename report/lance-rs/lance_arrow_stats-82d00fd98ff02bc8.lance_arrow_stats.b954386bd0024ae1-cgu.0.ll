@@ -202,7 +202,7 @@ _RNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_arrayINtB4_14PrimitiveAr
   br i1 %i.aef, label %bb.cv, label %.split1801.i
 
 bb.cv:                                            ; preds = %_RNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_arrayINtB4_14PrimitiveArrayNtNtB8_5types11Float16TypeE5valueCsfUv75jb5FCv_17lance_arrow_stats.exit.i.us
-  %i.aeg = icmp ult i64 %i.aeb, %i.lu
+  %i.aeg = icmp samesign ult i64 %i.aeb, %i.lu
   br i1 %i.aeg, label %.lr.ph1788.split.i.us, label %.loopexit.i, !llvm.loop !315
 
 _RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float16TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.thread.us.preheader.i: ; preds = %.lr.ph1788.i
@@ -228,11 +228,11 @@ _RNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_arrayINtB4_14PrimitiveAr
   br i1 %i.ael, label %bb.cw, label %.split1801.i
 
 bb.cw:                                            ; preds = %_RNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_arrayINtB4_14PrimitiveArrayNtNtB8_5types11Float16TypeE5valueCsfUv75jb5FCv_17lance_arrow_stats.exit.us.i
-  %i.aem = icmp ult i64 %i.aeh, %i.lu
+  %i.aem = icmp samesign ult i64 %i.aeh, %i.lu
   br i1 %i.aem, label %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float16TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.thread.us.i, label %.loopexit.i
 
 bb.cx:                                            ; preds = %_RNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_arrayINtB4_14PrimitiveArrayNtNtB8_5types11Float16TypeE5valueCsfUv75jb5FCv_17lance_arrow_stats.exit.i, %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float16TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.i
-  %i.aen = icmp ult i64 %i.act, %i.lu
+  %i.aen = icmp samesign ult i64 %i.act, %i.lu
   br i1 %i.aen, label %.lr.ph1788.split.i, label %.loopexit.i, !llvm.loop !315
 
 .lr.ph1753.split.i:                               ; preds = %.lr.ph1753.split.i.preheader654, %bb.dd
@@ -356,7 +356,7 @@ bb.da:                                            ; preds = %bb.cz
 
 .lr.ph1753.split.i.us:                            ; preds = %.lr.ph1753.split.i.us.preheader, %bb.db
   %.sroa.0367.01752.i.us = phi i64 [ %i.afy, %bb.db ], [ %.sroa.0367.0.ph1778.i, %.lr.ph1753.split.i.us.preheader ] ; 5 uses
-  %i.afy = add nuw i64 %.sroa.0367.01752.i.us, 1  ; 3 uses
+  %i.afy = add nuw nsw i64 %.sroa.0367.01752.i.us, 1 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !445)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bn), !noalias !403
   store i64 %.sroa.0367.01752.i.us, ptr %i.bn, align 8, !noalias !403
@@ -371,7 +371,7 @@ _RNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_arrayINtB4_14PrimitiveAr
   br i1 %i.agb, label %bb.db, label %.split1766.i
 
 bb.db:                                            ; preds = %_RNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_arrayINtB4_14PrimitiveArrayNtNtB8_5types11Float32TypeE5valueCsfUv75jb5FCv_17lance_arrow_stats.exit.i.us
-  %i.agc = icmp ult i64 %i.afy, %i.mr
+  %i.agc = icmp samesign ult i64 %i.afy, %i.mr
   br i1 %i.agc, label %.lr.ph1753.split.i.us, label %.loopexit.i, !llvm.loop !316
 
 _RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float32TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.thread.us.preheader.i: ; preds = %.lr.ph1753.i
@@ -381,7 +381,7 @@ _RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNt
 
 _RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float32TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.thread.us.i: ; preds = %bb.dc, %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float32TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.thread.us.preheader.i
   %.sroa.0367.01752.us.i = phi i64 [ %i.agd, %bb.dc ], [ %.sroa.0367.0.ph1778.i, %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float32TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.thread.us.preheader.i ] ; 5 uses
-  %i.agd = add nuw i64 %.sroa.0367.01752.us.i, 1  ; 3 uses
+  %i.agd = add nuw nsw i64 %.sroa.0367.01752.us.i, 1 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !445)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bn), !noalias !403
   store i64 %.sroa.0367.01752.us.i, ptr %i.bn, align 8, !noalias !403
@@ -396,11 +396,11 @@ _RNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_arrayINtB4_14PrimitiveAr
   br i1 %i.agg, label %bb.dc, label %.split1766.i
 
 bb.dc:                                            ; preds = %_RNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_arrayINtB4_14PrimitiveArrayNtNtB8_5types11Float32TypeE5valueCsfUv75jb5FCv_17lance_arrow_stats.exit.us.i
-  %i.agh = icmp ult i64 %i.agd, %i.mr
+  %i.agh = icmp samesign ult i64 %i.agd, %i.mr
   br i1 %i.agh, label %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float32TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.thread.us.i, label %.loopexit.i
 
 bb.dd:                                            ; preds = %_RNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_arrayINtB4_14PrimitiveArrayNtNtB8_5types11Float32TypeE5valueCsfUv75jb5FCv_17lance_arrow_stats.exit.i, %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float32TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.i
-  %i.agi = icmp ult i64 %i.aeo, %i.mr
+  %i.agi = icmp samesign ult i64 %i.aeo, %i.mr
   br i1 %i.agi, label %.lr.ph1753.split.i, label %.loopexit.i, !llvm.loop !316
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.split.i.preheader663, %bb.dj
@@ -523,7 +523,7 @@ bb.dg:                                            ; preds = %bb.df
 
 .lr.ph.split.i.us:                                ; preds = %.lr.ph.split.i.us.preheader, %bb.dh
   %.sroa.0381.01722.i.us = phi i64 [ %i.aht, %bb.dh ], [ %.sroa.0381.0.ph1743.i, %.lr.ph.split.i.us.preheader ] ; 5 uses
-  %i.aht = add nuw i64 %.sroa.0381.01722.i.us, 1  ; 3 uses
+  %i.aht = add nuw nsw i64 %.sroa.0381.01722.i.us, 1 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !447)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bk), !noalias !403
   store i64 %.sroa.0381.01722.i.us, ptr %i.bk, align 8, !noalias !403
@@ -538,7 +538,7 @@ _RNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_arrayINtB4_14PrimitiveAr
   br i1 %i.ahw, label %bb.dh, label %.split1731.i
 
 bb.dh:                                            ; preds = %_RNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_arrayINtB4_14PrimitiveArrayNtNtB8_5types11Float64TypeE5valueCsfUv75jb5FCv_17lance_arrow_stats.exit.i.us
-  %i.ahx = icmp ult i64 %i.aht, %i.no
+  %i.ahx = icmp samesign ult i64 %i.aht, %i.no
   br i1 %i.ahx, label %.lr.ph.split.i.us, label %.loopexit.i, !llvm.loop !317
 
 _RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float64TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.thread.us.preheader.i: ; preds = %.lr.ph.i
@@ -548,7 +548,7 @@ _RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNt
 
 _RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float64TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.thread.us.i: ; preds = %bb.di, %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float64TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.thread.us.preheader.i
   %.sroa.0381.01722.us.i = phi i64 [ %i.ahy, %bb.di ], [ %.sroa.0381.0.ph1743.i, %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float64TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.thread.us.preheader.i ] ; 5 uses
-  %i.ahy = add nuw i64 %.sroa.0381.01722.us.i, 1  ; 3 uses
+  %i.ahy = add nuw nsw i64 %.sroa.0381.01722.us.i, 1 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !447)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bk), !noalias !403
   store i64 %.sroa.0381.01722.us.i, ptr %i.bk, align 8, !noalias !403
@@ -563,11 +563,11 @@ _RNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_arrayINtB4_14PrimitiveAr
   br i1 %i.aib, label %bb.di, label %.split1731.i
 
 bb.di:                                            ; preds = %_RNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_arrayINtB4_14PrimitiveArrayNtNtB8_5types11Float64TypeE5valueCsfUv75jb5FCv_17lance_arrow_stats.exit.us.i
-  %i.aic = icmp ult i64 %i.ahy, %i.no
+  %i.aic = icmp samesign ult i64 %i.ahy, %i.no
   br i1 %i.aic, label %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float64TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.thread.us.i, label %.loopexit.i
 
 bb.dj:                                            ; preds = %_RNvMs_NtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_arrayINtB4_14PrimitiveArrayNtNtB8_5types11Float64TypeE5valueCsfUv75jb5FCv_17lance_arrow_stats.exit.i, %_RNvYINtNtNtCs4ytUTZt2Gw9_11arrow_array5array15primitive_array14PrimitiveArrayNtNtB9_5types11Float64TypeENtB7_5Array7is_nullCsfUv75jb5FCv_17lance_arrow_stats.exit.i
-  %i.aid = icmp ult i64 %i.agj, %i.no
+  %i.aid = icmp samesign ult i64 %i.agj, %i.no
   br i1 %i.aid, label %.lr.ph.split.i, label %.loopexit.i, !llvm.loop !317
 
 default.unreachable:                              ; preds = %bb.ag, %bb.z

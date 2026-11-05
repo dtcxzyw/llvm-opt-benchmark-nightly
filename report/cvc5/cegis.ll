@@ -204,7 +204,7 @@ _ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit242: ; preds = %bb.gl, %bb.gk, %b
 .noexc244:                                        ; preds = %_ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit242
   %i.yh = icmp eq i32 %i.yg, 2
   %i.yi = zext i1 %i.yh to i64
-  %spec.select.i.i243 = add nuw i64 %.037323, %i.yi
+  %spec.select.i.i243 = add nuw nsw i64 %.037323, %i.yi
   %i.yj = getelementptr inbounds nuw i8, ptr %i.xn, i64 24
   %sext = shl i64 %spec.select.i.i243, 32
   %i.yk = ashr exact i64 %sext, 29
@@ -607,7 +607,7 @@ bb.s:                                             ; preds = %_ZN4cvc58internal11
 
 bb.t:                                             ; preds = %.lr.ph, %_ZNSt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEE4findERKj.exit
   %.0477 = phi i64 [ 0, %.lr.ph ], [ %i.ni, %_ZNSt13unordered_setIjSt4hashIjESt8equal_toIjESaIjEE4findERKj.exit ] ; 4 uses
-  %i.ch = trunc i64 %.0477 to i32                 ; 5 uses
+  %i.ch = trunc nuw i64 %.0477 to i32             ; 5 uses
   %i.ci = load i64, ptr %i.bq, align 8, !tbaa !393
   %.not.not.i.i = icmp eq i64 %i.ci, 0
   br i1 %.not.not.i.i, label %.preheader, label %bb.v

@@ -205,9 +205,9 @@ bb.u:                                             ; preds = %.critedge
   br i1 %.not122, label %.loopexit114, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader113
-  %.not60120 = icmp ugt i64 %.046123, %.045.in.lcssa
+  %.not60120 = icmp samesign ugt i64 %.046123, %.045.in.lcssa
   %i.cw = add nsw i64 %i.cs, -1
-  %i.cx = sub i64 %.045.lcssa, %.046123
+  %i.cx = sub nsw i64 %.045.lcssa, %.046123
   br i1 %.not60120, label %.loopexit114, label %.preheader
 
 ..loopexit111_crit_edge:                          ; preds = %bb.x
@@ -220,7 +220,7 @@ bb.u:                                             ; preds = %.critedge
   br label %bb.v
 
 bb.v:                                             ; preds = %.preheader, %bb.x
-  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 2 uses
+  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #11
   store i64 0, ptr %15, align 8, !tbaa !278
   store i64 %i.cw, ptr %i.bm, align 8, !tbaa !279
@@ -247,9 +247,9 @@ bb.w:                                             ; preds = %bb.v
   br label %.loopexit.split-lp
 
 bb.x:                                             ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit
-  %i.di = add i64 %.043121, 1                     ; 2 uses
-  %.not60 = icmp ugt i64 %i.di, %.045.in.lcssa
-  br i1 %.not60, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !803
+  %i.di = add nuw nsw i64 %.043121, 1
+  %exitcond136 = icmp eq i64 %.043121, %.045.in.lcssa
+  br i1 %exitcond136, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !803
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit, %bb.u
   %lpad.loopexit.split-lp163 = landingpad { ptr, i32 }
@@ -257,7 +257,7 @@ bb.x:                                             ; preds = %_ZNSt24uniform_int_
   br label %.loopexit.split-lp
 
 .loopexit114:                                     ; preds = %..loopexit111_crit_edge, %.preheader113, %.preheader.lr.ph, %.critedge
-  %i.dj = icmp ult i64 %.045.lcssa, %i.bk
+  %i.dj = icmp samesign ult i64 %.045.lcssa, %i.bk
   br i1 %i.dj, label %.preheader115, label %._crit_edge
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.w
@@ -660,9 +660,9 @@ bb.u:                                             ; preds = %.critedge
   br i1 %.not122, label %.loopexit114, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader113
-  %.not60120 = icmp ugt i64 %.046123, %.045.in.lcssa
+  %.not60120 = icmp samesign ugt i64 %.046123, %.045.in.lcssa
   %i.cw = add nsw i64 %i.cs, -1
-  %i.cx = sub i64 %.045.lcssa, %.046123
+  %i.cx = sub nsw i64 %.045.lcssa, %.046123
   br i1 %.not60120, label %.loopexit114, label %.preheader
 
 ..loopexit111_crit_edge:                          ; preds = %bb.x
@@ -675,7 +675,7 @@ bb.u:                                             ; preds = %.critedge
   br label %bb.v
 
 bb.v:                                             ; preds = %.preheader, %bb.x
-  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 2 uses
+  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #11
   store i64 0, ptr %15, align 8, !tbaa !278
   store i64 %i.cw, ptr %i.bm, align 8, !tbaa !279
@@ -702,9 +702,9 @@ bb.w:                                             ; preds = %bb.v
   br label %.loopexit.split-lp
 
 bb.x:                                             ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit
-  %i.di = add i64 %.043121, 1                     ; 2 uses
-  %.not60 = icmp ugt i64 %i.di, %.045.in.lcssa
-  br i1 %.not60, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !907
+  %i.di = add nuw nsw i64 %.043121, 1
+  %exitcond136 = icmp eq i64 %.043121, %.045.in.lcssa
+  br i1 %exitcond136, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !907
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit, %bb.u
   %lpad.loopexit.split-lp163 = landingpad { ptr, i32 }
@@ -712,7 +712,7 @@ bb.x:                                             ; preds = %_ZNSt24uniform_int_
   br label %.loopexit.split-lp
 
 .loopexit114:                                     ; preds = %..loopexit111_crit_edge, %.preheader113, %.preheader.lr.ph, %.critedge
-  %i.dj = icmp ult i64 %.045.lcssa, %i.bk
+  %i.dj = icmp samesign ult i64 %.045.lcssa, %i.bk
   br i1 %i.dj, label %.preheader115, label %._crit_edge
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.w
@@ -1115,9 +1115,9 @@ bb.u:                                             ; preds = %.critedge
   br i1 %.not122, label %.loopexit114, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader113
-  %.not60120 = icmp ugt i64 %.046123, %.045.in.lcssa
+  %.not60120 = icmp samesign ugt i64 %.046123, %.045.in.lcssa
   %i.cw = add nsw i64 %i.cs, -1
-  %i.cx = sub i64 %.045.lcssa, %.046123
+  %i.cx = sub nsw i64 %.045.lcssa, %.046123
   br i1 %.not60120, label %.loopexit114, label %.preheader
 
 ..loopexit111_crit_edge:                          ; preds = %bb.x
@@ -1130,7 +1130,7 @@ bb.u:                                             ; preds = %.critedge
   br label %bb.v
 
 bb.v:                                             ; preds = %.preheader, %bb.x
-  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 2 uses
+  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #11
   store i64 0, ptr %15, align 8, !tbaa !278
   store i64 %i.cw, ptr %i.bm, align 8, !tbaa !279
@@ -1157,9 +1157,9 @@ bb.w:                                             ; preds = %bb.v
   br label %.loopexit.split-lp
 
 bb.x:                                             ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit
-  %i.di = add i64 %.043121, 1                     ; 2 uses
-  %.not60 = icmp ugt i64 %i.di, %.045.in.lcssa
-  br i1 %.not60, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !1011
+  %i.di = add nuw nsw i64 %.043121, 1
+  %exitcond136 = icmp eq i64 %.043121, %.045.in.lcssa
+  br i1 %exitcond136, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !1011
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit, %bb.u
   %lpad.loopexit.split-lp163 = landingpad { ptr, i32 }
@@ -1167,7 +1167,7 @@ bb.x:                                             ; preds = %_ZNSt24uniform_int_
   br label %.loopexit.split-lp
 
 .loopexit114:                                     ; preds = %..loopexit111_crit_edge, %.preheader113, %.preheader.lr.ph, %.critedge
-  %i.dj = icmp ult i64 %.045.lcssa, %i.bk
+  %i.dj = icmp samesign ult i64 %.045.lcssa, %i.bk
   br i1 %i.dj, label %.preheader115, label %._crit_edge
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.w
@@ -1570,9 +1570,9 @@ bb.u:                                             ; preds = %.critedge
   br i1 %.not122, label %.loopexit114, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader113
-  %.not60120 = icmp ugt i64 %.046123, %.045.in.lcssa
+  %.not60120 = icmp samesign ugt i64 %.046123, %.045.in.lcssa
   %i.cw = add nsw i64 %i.cs, -1
-  %i.cx = sub i64 %.045.lcssa, %.046123
+  %i.cx = sub nsw i64 %.045.lcssa, %.046123
   br i1 %.not60120, label %.loopexit114, label %.preheader
 
 ..loopexit111_crit_edge:                          ; preds = %bb.x
@@ -1585,7 +1585,7 @@ bb.u:                                             ; preds = %.critedge
   br label %bb.v
 
 bb.v:                                             ; preds = %.preheader, %bb.x
-  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 2 uses
+  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #11
   store i64 0, ptr %15, align 8, !tbaa !278
   store i64 %i.cw, ptr %i.bm, align 8, !tbaa !279
@@ -1612,9 +1612,9 @@ bb.w:                                             ; preds = %bb.v
   br label %.loopexit.split-lp
 
 bb.x:                                             ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit
-  %i.di = add i64 %.043121, 1                     ; 2 uses
-  %.not60 = icmp ugt i64 %i.di, %.045.in.lcssa
-  br i1 %.not60, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !1079
+  %i.di = add nuw nsw i64 %.043121, 1
+  %exitcond136 = icmp eq i64 %.043121, %.045.in.lcssa
+  br i1 %exitcond136, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !1079
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit, %bb.u
   %lpad.loopexit.split-lp163 = landingpad { ptr, i32 }
@@ -1622,7 +1622,7 @@ bb.x:                                             ; preds = %_ZNSt24uniform_int_
   br label %.loopexit.split-lp
 
 .loopexit114:                                     ; preds = %..loopexit111_crit_edge, %.preheader113, %.preheader.lr.ph, %.critedge
-  %i.dj = icmp ult i64 %.045.lcssa, %i.bk
+  %i.dj = icmp samesign ult i64 %.045.lcssa, %i.bk
   br i1 %i.dj, label %.preheader115, label %._crit_edge
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.w
@@ -2025,9 +2025,9 @@ bb.u:                                             ; preds = %.critedge
   br i1 %.not122, label %.loopexit114, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader113
-  %.not60120 = icmp ugt i64 %.046123, %.045.in.lcssa
+  %.not60120 = icmp samesign ugt i64 %.046123, %.045.in.lcssa
   %i.cw = add nsw i64 %i.cs, -1
-  %i.cx = sub i64 %.045.lcssa, %.046123
+  %i.cx = sub nsw i64 %.045.lcssa, %.046123
   br i1 %.not60120, label %.loopexit114, label %.preheader
 
 ..loopexit111_crit_edge:                          ; preds = %bb.x
@@ -2040,7 +2040,7 @@ bb.u:                                             ; preds = %.critedge
   br label %bb.v
 
 bb.v:                                             ; preds = %.preheader, %bb.x
-  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 2 uses
+  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #11
   store i64 0, ptr %15, align 8, !tbaa !278
   store i64 %i.cw, ptr %i.bm, align 8, !tbaa !279
@@ -2067,9 +2067,9 @@ bb.w:                                             ; preds = %bb.v
   br label %.loopexit.split-lp
 
 bb.x:                                             ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit
-  %i.di = add i64 %.043121, 1                     ; 2 uses
-  %.not60 = icmp ugt i64 %i.di, %.045.in.lcssa
-  br i1 %.not60, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !1183
+  %i.di = add nuw nsw i64 %.043121, 1
+  %exitcond136 = icmp eq i64 %.043121, %.045.in.lcssa
+  br i1 %exitcond136, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !1183
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit, %bb.u
   %lpad.loopexit.split-lp163 = landingpad { ptr, i32 }
@@ -2077,7 +2077,7 @@ bb.x:                                             ; preds = %_ZNSt24uniform_int_
   br label %.loopexit.split-lp
 
 .loopexit114:                                     ; preds = %..loopexit111_crit_edge, %.preheader113, %.preheader.lr.ph, %.critedge
-  %i.dj = icmp ult i64 %.045.lcssa, %i.bk
+  %i.dj = icmp samesign ult i64 %.045.lcssa, %i.bk
   br i1 %i.dj, label %.preheader115, label %._crit_edge
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.w
@@ -2480,9 +2480,9 @@ bb.u:                                             ; preds = %.critedge
   br i1 %.not122, label %.loopexit114, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader113
-  %.not60120 = icmp ugt i64 %.046123, %.045.in.lcssa
+  %.not60120 = icmp samesign ugt i64 %.046123, %.045.in.lcssa
   %i.cw = add nsw i64 %i.cs, -1
-  %i.cx = sub i64 %.045.lcssa, %.046123
+  %i.cx = sub nsw i64 %.045.lcssa, %.046123
   br i1 %.not60120, label %.loopexit114, label %.preheader
 
 ..loopexit111_crit_edge:                          ; preds = %bb.x
@@ -2495,7 +2495,7 @@ bb.u:                                             ; preds = %.critedge
   br label %bb.v
 
 bb.v:                                             ; preds = %.preheader, %bb.x
-  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 2 uses
+  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #11
   store i64 0, ptr %15, align 8, !tbaa !278
   store i64 %i.cw, ptr %i.bm, align 8, !tbaa !279
@@ -2522,9 +2522,9 @@ bb.w:                                             ; preds = %bb.v
   br label %.loopexit.split-lp
 
 bb.x:                                             ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit
-  %i.di = add i64 %.043121, 1                     ; 2 uses
-  %.not60 = icmp ugt i64 %i.di, %.045.in.lcssa
-  br i1 %.not60, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !1249
+  %i.di = add nuw nsw i64 %.043121, 1
+  %exitcond136 = icmp eq i64 %.043121, %.045.in.lcssa
+  br i1 %exitcond136, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !1249
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit, %bb.u
   %lpad.loopexit.split-lp163 = landingpad { ptr, i32 }
@@ -2532,7 +2532,7 @@ bb.x:                                             ; preds = %_ZNSt24uniform_int_
   br label %.loopexit.split-lp
 
 .loopexit114:                                     ; preds = %..loopexit111_crit_edge, %.preheader113, %.preheader.lr.ph, %.critedge
-  %i.dj = icmp ult i64 %.045.lcssa, %i.bk
+  %i.dj = icmp samesign ult i64 %.045.lcssa, %i.bk
   br i1 %i.dj, label %.preheader115, label %._crit_edge
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.w
@@ -2935,9 +2935,9 @@ bb.u:                                             ; preds = %.critedge
   br i1 %.not122, label %.loopexit114, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader113
-  %.not60120 = icmp ugt i64 %.046123, %.045.in.lcssa
+  %.not60120 = icmp samesign ugt i64 %.046123, %.045.in.lcssa
   %i.cw = add nsw i64 %i.cs, -1
-  %i.cx = sub i64 %.045.lcssa, %.046123
+  %i.cx = sub nsw i64 %.045.lcssa, %.046123
   br i1 %.not60120, label %.loopexit114, label %.preheader
 
 ..loopexit111_crit_edge:                          ; preds = %bb.x
@@ -2950,7 +2950,7 @@ bb.u:                                             ; preds = %.critedge
   br label %bb.v
 
 bb.v:                                             ; preds = %.preheader, %bb.x
-  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 2 uses
+  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #11
   store i64 0, ptr %15, align 8, !tbaa !278
   store i64 %i.cw, ptr %i.bm, align 8, !tbaa !279
@@ -2977,9 +2977,9 @@ bb.w:                                             ; preds = %bb.v
   br label %.loopexit.split-lp
 
 bb.x:                                             ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit
-  %i.di = add i64 %.043121, 1                     ; 2 uses
-  %.not60 = icmp ugt i64 %i.di, %.045.in.lcssa
-  br i1 %.not60, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !1351
+  %i.di = add nuw nsw i64 %.043121, 1
+  %exitcond136 = icmp eq i64 %.043121, %.045.in.lcssa
+  br i1 %exitcond136, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !1351
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit, %bb.u
   %lpad.loopexit.split-lp163 = landingpad { ptr, i32 }
@@ -2987,7 +2987,7 @@ bb.x:                                             ; preds = %_ZNSt24uniform_int_
   br label %.loopexit.split-lp
 
 .loopexit114:                                     ; preds = %..loopexit111_crit_edge, %.preheader113, %.preheader.lr.ph, %.critedge
-  %i.dj = icmp ult i64 %.045.lcssa, %i.bk
+  %i.dj = icmp samesign ult i64 %.045.lcssa, %i.bk
   br i1 %i.dj, label %.preheader115, label %._crit_edge
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.w
@@ -3390,9 +3390,9 @@ bb.u:                                             ; preds = %.critedge
   br i1 %.not122, label %.loopexit114, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader113
-  %.not60120 = icmp ugt i64 %.046123, %.045.in.lcssa
+  %.not60120 = icmp samesign ugt i64 %.046123, %.045.in.lcssa
   %i.cw = add nsw i64 %i.cs, -1
-  %i.cx = sub i64 %.045.lcssa, %.046123
+  %i.cx = sub nsw i64 %.045.lcssa, %.046123
   br i1 %.not60120, label %.loopexit114, label %.preheader
 
 ..loopexit111_crit_edge:                          ; preds = %bb.x
@@ -3405,7 +3405,7 @@ bb.u:                                             ; preds = %.critedge
   br label %bb.v
 
 bb.v:                                             ; preds = %.preheader, %bb.x
-  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 2 uses
+  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #11
   store i64 0, ptr %15, align 8, !tbaa !278
   store i64 %i.cw, ptr %i.bm, align 8, !tbaa !279
@@ -3432,9 +3432,9 @@ bb.w:                                             ; preds = %bb.v
   br label %.loopexit.split-lp
 
 bb.x:                                             ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit
-  %i.di = add i64 %.043121, 1                     ; 2 uses
-  %.not60 = icmp ugt i64 %i.di, %.045.in.lcssa
-  br i1 %.not60, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !1417
+  %i.di = add nuw nsw i64 %.043121, 1
+  %exitcond136 = icmp eq i64 %.043121, %.045.in.lcssa
+  br i1 %exitcond136, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !1417
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit, %bb.u
   %lpad.loopexit.split-lp163 = landingpad { ptr, i32 }
@@ -3442,7 +3442,7 @@ bb.x:                                             ; preds = %_ZNSt24uniform_int_
   br label %.loopexit.split-lp
 
 .loopexit114:                                     ; preds = %..loopexit111_crit_edge, %.preheader113, %.preheader.lr.ph, %.critedge
-  %i.dj = icmp ult i64 %.045.lcssa, %i.bk
+  %i.dj = icmp samesign ult i64 %.045.lcssa, %i.bk
   br i1 %i.dj, label %.preheader115, label %._crit_edge
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.w
@@ -3845,9 +3845,9 @@ bb.u:                                             ; preds = %.critedge
   br i1 %.not122, label %.loopexit114, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader113
-  %.not60120 = icmp ugt i64 %.046123, %.045.in.lcssa
+  %.not60120 = icmp samesign ugt i64 %.046123, %.045.in.lcssa
   %i.cw = add nsw i64 %i.cs, -1
-  %i.cx = sub i64 %.045.lcssa, %.046123
+  %i.cx = sub nsw i64 %.045.lcssa, %.046123
   br i1 %.not60120, label %.loopexit114, label %.preheader
 
 ..loopexit111_crit_edge:                          ; preds = %bb.x
@@ -3860,7 +3860,7 @@ bb.u:                                             ; preds = %.critedge
   br label %bb.v
 
 bb.v:                                             ; preds = %.preheader, %bb.x
-  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 2 uses
+  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #11
   store i64 0, ptr %15, align 8, !tbaa !278
   store i64 %i.cw, ptr %i.bm, align 8, !tbaa !279
@@ -3887,9 +3887,9 @@ bb.w:                                             ; preds = %bb.v
   br label %.loopexit.split-lp
 
 bb.x:                                             ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit
-  %i.di = add i64 %.043121, 1                     ; 2 uses
-  %.not60 = icmp ugt i64 %i.di, %.045.in.lcssa
-  br i1 %.not60, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !1685
+  %i.di = add nuw nsw i64 %.043121, 1
+  %exitcond136 = icmp eq i64 %.043121, %.045.in.lcssa
+  br i1 %exitcond136, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !1685
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit, %bb.u
   %lpad.loopexit.split-lp163 = landingpad { ptr, i32 }
@@ -3897,7 +3897,7 @@ bb.x:                                             ; preds = %_ZNSt24uniform_int_
   br label %.loopexit.split-lp
 
 .loopexit114:                                     ; preds = %..loopexit111_crit_edge, %.preheader113, %.preheader.lr.ph, %.critedge
-  %i.dj = icmp ult i64 %.045.lcssa, %i.bk
+  %i.dj = icmp samesign ult i64 %.045.lcssa, %i.bk
   br i1 %i.dj, label %.preheader115, label %._crit_edge
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.w
@@ -4300,9 +4300,9 @@ bb.u:                                             ; preds = %.critedge
   br i1 %.not122, label %.loopexit114, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader113
-  %.not60120 = icmp ugt i64 %.046123, %.045.in.lcssa
+  %.not60120 = icmp samesign ugt i64 %.046123, %.045.in.lcssa
   %i.cw = add nsw i64 %i.cs, -1
-  %i.cx = sub i64 %.045.lcssa, %.046123
+  %i.cx = sub nsw i64 %.045.lcssa, %.046123
   br i1 %.not60120, label %.loopexit114, label %.preheader
 
 ..loopexit111_crit_edge:                          ; preds = %bb.x
@@ -4315,7 +4315,7 @@ bb.u:                                             ; preds = %.critedge
   br label %bb.v
 
 bb.v:                                             ; preds = %.preheader, %bb.x
-  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 2 uses
+  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #11
   store i64 0, ptr %15, align 8, !tbaa !278
   store i64 %i.cw, ptr %i.bm, align 8, !tbaa !279
@@ -4342,9 +4342,9 @@ bb.w:                                             ; preds = %bb.v
   br label %.loopexit.split-lp
 
 bb.x:                                             ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit
-  %i.di = add i64 %.043121, 1                     ; 2 uses
-  %.not60 = icmp ugt i64 %i.di, %.045.in.lcssa
-  br i1 %.not60, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !1750
+  %i.di = add nuw nsw i64 %.043121, 1
+  %exitcond136 = icmp eq i64 %.043121, %.045.in.lcssa
+  br i1 %exitcond136, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !1750
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit, %bb.u
   %lpad.loopexit.split-lp163 = landingpad { ptr, i32 }
@@ -4352,7 +4352,7 @@ bb.x:                                             ; preds = %_ZNSt24uniform_int_
   br label %.loopexit.split-lp
 
 .loopexit114:                                     ; preds = %..loopexit111_crit_edge, %.preheader113, %.preheader.lr.ph, %.critedge
-  %i.dj = icmp ult i64 %.045.lcssa, %i.bk
+  %i.dj = icmp samesign ult i64 %.045.lcssa, %i.bk
   br i1 %i.dj, label %.preheader115, label %._crit_edge
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.w
@@ -4755,9 +4755,9 @@ bb.u:                                             ; preds = %.critedge
   br i1 %.not122, label %.loopexit114, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader113
-  %.not60120 = icmp ugt i64 %.046123, %.045.in.lcssa
+  %.not60120 = icmp samesign ugt i64 %.046123, %.045.in.lcssa
   %i.cw = add nsw i64 %i.cs, -1
-  %i.cx = sub i64 %.045.lcssa, %.046123
+  %i.cx = sub nsw i64 %.045.lcssa, %.046123
   br i1 %.not60120, label %.loopexit114, label %.preheader
 
 ..loopexit111_crit_edge:                          ; preds = %bb.x
@@ -4770,7 +4770,7 @@ bb.u:                                             ; preds = %.critedge
   br label %bb.v
 
 bb.v:                                             ; preds = %.preheader, %bb.x
-  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 2 uses
+  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #11
   store i64 0, ptr %15, align 8, !tbaa !278
   store i64 %i.cw, ptr %i.bm, align 8, !tbaa !279
@@ -4797,9 +4797,9 @@ bb.w:                                             ; preds = %bb.v
   br label %.loopexit.split-lp
 
 bb.x:                                             ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit
-  %i.di = add i64 %.043121, 1                     ; 2 uses
-  %.not60 = icmp ugt i64 %i.di, %.045.in.lcssa
-  br i1 %.not60, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !1814
+  %i.di = add nuw nsw i64 %.043121, 1
+  %exitcond136 = icmp eq i64 %.043121, %.045.in.lcssa
+  br i1 %exitcond136, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !1814
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit, %bb.u
   %lpad.loopexit.split-lp163 = landingpad { ptr, i32 }
@@ -4807,7 +4807,7 @@ bb.x:                                             ; preds = %_ZNSt24uniform_int_
   br label %.loopexit.split-lp
 
 .loopexit114:                                     ; preds = %..loopexit111_crit_edge, %.preheader113, %.preheader.lr.ph, %.critedge
-  %i.dj = icmp ult i64 %.045.lcssa, %i.bk
+  %i.dj = icmp samesign ult i64 %.045.lcssa, %i.bk
   br i1 %i.dj, label %.preheader115, label %._crit_edge
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.w
@@ -5210,9 +5210,9 @@ bb.u:                                             ; preds = %.critedge
   br i1 %.not122, label %.loopexit114, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader113
-  %.not60120 = icmp ugt i64 %.046123, %.045.in.lcssa
+  %.not60120 = icmp samesign ugt i64 %.046123, %.045.in.lcssa
   %i.cw = add nsw i64 %i.cs, -1
-  %i.cx = sub i64 %.045.lcssa, %.046123
+  %i.cx = sub nsw i64 %.045.lcssa, %.046123
   br i1 %.not60120, label %.loopexit114, label %.preheader
 
 ..loopexit111_crit_edge:                          ; preds = %bb.x
@@ -5225,7 +5225,7 @@ bb.u:                                             ; preds = %.critedge
   br label %bb.v
 
 bb.v:                                             ; preds = %.preheader, %bb.x
-  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 2 uses
+  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #11
   store i64 0, ptr %15, align 8, !tbaa !278
   store i64 %i.cw, ptr %i.bm, align 8, !tbaa !279
@@ -5252,9 +5252,9 @@ bb.w:                                             ; preds = %bb.v
   br label %.loopexit.split-lp
 
 bb.x:                                             ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit
-  %i.di = add i64 %.043121, 1                     ; 2 uses
-  %.not60 = icmp ugt i64 %i.di, %.045.in.lcssa
-  br i1 %.not60, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !1874
+  %i.di = add nuw nsw i64 %.043121, 1
+  %exitcond136 = icmp eq i64 %.043121, %.045.in.lcssa
+  br i1 %exitcond136, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !1874
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit, %bb.u
   %lpad.loopexit.split-lp163 = landingpad { ptr, i32 }
@@ -5262,7 +5262,7 @@ bb.x:                                             ; preds = %_ZNSt24uniform_int_
   br label %.loopexit.split-lp
 
 .loopexit114:                                     ; preds = %..loopexit111_crit_edge, %.preheader113, %.preheader.lr.ph, %.critedge
-  %i.dj = icmp ult i64 %.045.lcssa, %i.bk
+  %i.dj = icmp samesign ult i64 %.045.lcssa, %i.bk
   br i1 %i.dj, label %.preheader115, label %._crit_edge
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.w
@@ -5665,9 +5665,9 @@ bb.u:                                             ; preds = %.critedge
   br i1 %.not122, label %.loopexit114, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader113
-  %.not60120 = icmp ugt i64 %.046123, %.045.in.lcssa
+  %.not60120 = icmp samesign ugt i64 %.046123, %.045.in.lcssa
   %i.cw = add nsw i64 %i.cs, -1
-  %i.cx = sub i64 %.045.lcssa, %.046123
+  %i.cx = sub nsw i64 %.045.lcssa, %.046123
   br i1 %.not60120, label %.loopexit114, label %.preheader
 
 ..loopexit111_crit_edge:                          ; preds = %bb.x
@@ -5680,7 +5680,7 @@ bb.u:                                             ; preds = %.critedge
   br label %bb.v
 
 bb.v:                                             ; preds = %.preheader, %bb.x
-  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 2 uses
+  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #11
   store i64 0, ptr %15, align 8, !tbaa !278
   store i64 %i.cw, ptr %i.bm, align 8, !tbaa !279
@@ -5707,9 +5707,9 @@ bb.w:                                             ; preds = %bb.v
   br label %.loopexit.split-lp
 
 bb.x:                                             ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit
-  %i.di = add i64 %.043121, 1                     ; 2 uses
-  %.not60 = icmp ugt i64 %i.di, %.045.in.lcssa
-  br i1 %.not60, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !2139
+  %i.di = add nuw nsw i64 %.043121, 1
+  %exitcond136 = icmp eq i64 %.043121, %.045.in.lcssa
+  br i1 %exitcond136, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !2139
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit, %bb.u
   %lpad.loopexit.split-lp163 = landingpad { ptr, i32 }
@@ -5717,7 +5717,7 @@ bb.x:                                             ; preds = %_ZNSt24uniform_int_
   br label %.loopexit.split-lp
 
 .loopexit114:                                     ; preds = %..loopexit111_crit_edge, %.preheader113, %.preheader.lr.ph, %.critedge
-  %i.dj = icmp ult i64 %.045.lcssa, %i.bk
+  %i.dj = icmp samesign ult i64 %.045.lcssa, %i.bk
   br i1 %i.dj, label %.preheader115, label %._crit_edge
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.w
@@ -6120,9 +6120,9 @@ bb.u:                                             ; preds = %.critedge
   br i1 %.not122, label %.loopexit114, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader113
-  %.not60120 = icmp ugt i64 %.046123, %.045.in.lcssa
+  %.not60120 = icmp samesign ugt i64 %.046123, %.045.in.lcssa
   %i.cw = add nsw i64 %i.cs, -1
-  %i.cx = sub i64 %.045.lcssa, %.046123
+  %i.cx = sub nsw i64 %.045.lcssa, %.046123
   br i1 %.not60120, label %.loopexit114, label %.preheader
 
 ..loopexit111_crit_edge:                          ; preds = %bb.x
@@ -6135,7 +6135,7 @@ bb.u:                                             ; preds = %.critedge
   br label %bb.v
 
 bb.v:                                             ; preds = %.preheader, %bb.x
-  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 2 uses
+  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #11
   store i64 0, ptr %15, align 8, !tbaa !278
   store i64 %i.cw, ptr %i.bm, align 8, !tbaa !279
@@ -6162,9 +6162,9 @@ bb.w:                                             ; preds = %bb.v
   br label %.loopexit.split-lp
 
 bb.x:                                             ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit
-  %i.di = add i64 %.043121, 1                     ; 2 uses
-  %.not60 = icmp ugt i64 %i.di, %.045.in.lcssa
-  br i1 %.not60, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !2207
+  %i.di = add nuw nsw i64 %.043121, 1
+  %exitcond136 = icmp eq i64 %.043121, %.045.in.lcssa
+  br i1 %exitcond136, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !2207
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit, %bb.u
   %lpad.loopexit.split-lp163 = landingpad { ptr, i32 }
@@ -6172,7 +6172,7 @@ bb.x:                                             ; preds = %_ZNSt24uniform_int_
   br label %.loopexit.split-lp
 
 .loopexit114:                                     ; preds = %..loopexit111_crit_edge, %.preheader113, %.preheader.lr.ph, %.critedge
-  %i.dj = icmp ult i64 %.045.lcssa, %i.bk
+  %i.dj = icmp samesign ult i64 %.045.lcssa, %i.bk
   br i1 %i.dj, label %.preheader115, label %._crit_edge
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.w
@@ -6575,9 +6575,9 @@ bb.u:                                             ; preds = %.critedge
   br i1 %.not122, label %.loopexit114, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader113
-  %.not60120 = icmp ugt i64 %.046123, %.045.in.lcssa
+  %.not60120 = icmp samesign ugt i64 %.046123, %.045.in.lcssa
   %i.cw = add nsw i64 %i.cs, -1
-  %i.cx = sub i64 %.045.lcssa, %.046123
+  %i.cx = sub nsw i64 %.045.lcssa, %.046123
   br i1 %.not60120, label %.loopexit114, label %.preheader
 
 ..loopexit111_crit_edge:                          ; preds = %bb.x
@@ -6590,7 +6590,7 @@ bb.u:                                             ; preds = %.critedge
   br label %bb.v
 
 bb.v:                                             ; preds = %.preheader, %bb.x
-  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 2 uses
+  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #11
   store i64 0, ptr %15, align 8, !tbaa !278
   store i64 %i.cw, ptr %i.bm, align 8, !tbaa !279
@@ -6617,9 +6617,9 @@ bb.w:                                             ; preds = %bb.v
   br label %.loopexit.split-lp
 
 bb.x:                                             ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit
-  %i.di = add i64 %.043121, 1                     ; 2 uses
-  %.not60 = icmp ugt i64 %i.di, %.045.in.lcssa
-  br i1 %.not60, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !2275
+  %i.di = add nuw nsw i64 %.043121, 1
+  %exitcond136 = icmp eq i64 %.043121, %.045.in.lcssa
+  br i1 %exitcond136, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !2275
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit, %bb.u
   %lpad.loopexit.split-lp163 = landingpad { ptr, i32 }
@@ -6627,7 +6627,7 @@ bb.x:                                             ; preds = %_ZNSt24uniform_int_
   br label %.loopexit.split-lp
 
 .loopexit114:                                     ; preds = %..loopexit111_crit_edge, %.preheader113, %.preheader.lr.ph, %.critedge
-  %i.dj = icmp ult i64 %.045.lcssa, %i.bk
+  %i.dj = icmp samesign ult i64 %.045.lcssa, %i.bk
   br i1 %i.dj, label %.preheader115, label %._crit_edge
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.w
@@ -7030,9 +7030,9 @@ bb.u:                                             ; preds = %.critedge
   br i1 %.not122, label %.loopexit114, label %.preheader.lr.ph
 
 .preheader.lr.ph:                                 ; preds = %.preheader113
-  %.not60120 = icmp ugt i64 %.046123, %.045.in.lcssa
+  %.not60120 = icmp samesign ugt i64 %.046123, %.045.in.lcssa
   %i.cw = add nsw i64 %i.cs, -1
-  %i.cx = sub i64 %.045.lcssa, %.046123
+  %i.cx = sub nsw i64 %.045.lcssa, %.046123
   br i1 %.not60120, label %.loopexit114, label %.preheader
 
 ..loopexit111_crit_edge:                          ; preds = %bb.x
@@ -7045,7 +7045,7 @@ bb.u:                                             ; preds = %.critedge
   br label %bb.v
 
 bb.v:                                             ; preds = %.preheader, %bb.x
-  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 2 uses
+  %.043121 = phi i64 [ %.046123, %.preheader ], [ %i.di, %bb.x ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %15) #11
   store i64 0, ptr %15, align 8, !tbaa !278
   store i64 %i.cw, ptr %i.bm, align 8, !tbaa !279
@@ -7072,9 +7072,9 @@ bb.w:                                             ; preds = %bb.v
   br label %.loopexit.split-lp
 
 bb.x:                                             ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit
-  %i.di = add i64 %.043121, 1                     ; 2 uses
-  %.not60 = icmp ugt i64 %i.di, %.045.in.lcssa
-  br i1 %.not60, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !2341
+  %i.di = add nuw nsw i64 %.043121, 1
+  %exitcond136 = icmp eq i64 %.043121, %.045.in.lcssa
+  br i1 %exitcond136, label %..loopexit111_crit_edge, label %bb.v, !llvm.loop !2341
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %_ZNSt24uniform_int_distributionImEclISt26linear_congruential_engineImLm48271ELm0ELm2147483647EEEEmRT_.exit, %bb.u
   %lpad.loopexit.split-lp163 = landingpad { ptr, i32 }
@@ -7082,7 +7082,7 @@ bb.x:                                             ; preds = %_ZNSt24uniform_int_
   br label %.loopexit.split-lp
 
 .loopexit114:                                     ; preds = %..loopexit111_crit_edge, %.preheader113, %.preheader.lr.ph, %.critedge
-  %i.dj = icmp ult i64 %.045.lcssa, %i.bk
+  %i.dj = icmp samesign ult i64 %.045.lcssa, %i.bk
   br i1 %i.dj, label %.preheader115, label %._crit_edge
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.w

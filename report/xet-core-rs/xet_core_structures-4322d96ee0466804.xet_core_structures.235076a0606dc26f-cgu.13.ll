@@ -202,7 +202,7 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a, %bb.f
   %.sroa.02.09 = phi i64 [ %i.e, %bb.f ], [ %i.b, %bb.a ] ; 3 uses
   %i.e = add nuw nsw i64 %.sroa.02.09, 1          ; 5 uses
-  %i.f = icmp ult i64 %i.e, %2
+  %i.f = icmp samesign ult i64 %i.e, %2
   br i1 %i.f, label %bb.b, label %bb.c
 
 ._crit_edge:                                      ; preds = %bb.f, %bb.g, %bb.a
@@ -216,7 +216,7 @@ bb.b:                                             ; preds = %.lr.ph
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %i.e
   %i.j = load i64, ptr %i.i, align 8, !noundef !4 ; 2 uses
   %i.k = add nuw nsw i64 %.sroa.02.09, 2          ; 3 uses
-  %i.l = icmp ult i64 %i.k, %2
+  %i.l = icmp samesign ult i64 %i.k, %2
   br i1 %i.l, label %bb.d, label %bb.e
 
 bb.c:                                             ; preds = %.lr.ph
@@ -237,7 +237,7 @@ bb.e:                                             ; preds = %bb.b
   unreachable
 
 bb.f:                                             ; preds = %bb.g, %bb.d
-  %i.s = icmp ult i64 %i.e, %i.c
+  %i.s = icmp samesign ult i64 %i.e, %i.c
   br i1 %i.s, label %.lr.ph, label %._crit_edge
 
 bb.g:                                             ; preds = %bb.d

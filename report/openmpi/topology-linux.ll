@@ -204,7 +204,12 @@ hwloc_read_path_by_length.exit.us.us:             ; preds = %bb.b
   %i.u = call i64 @__isoc23_strtoul(ptr noundef nonnull %i.e, ptr noundef nonnull %i.b, i32 noundef 0) #29
   %i.v = load ptr, ptr %i.b, align 8, !tbaa !66
   %.not5558.us.us = icmp eq ptr %i.v, %i.e
-  br i1 %.not5558.us.us, label %.sink.split.sink.split, label %._crit_edge.loopexit
+  br i1 %.not5558.us.us, label %.sink.split.sink.split, label %.lr.ph.us.us
+
+.lr.ph.us.us:                                     ; preds = %hwloc_read_path_by_length.exit.us.us
+  %5 = and i64 %i.u, 4294967295
+  store i64 %5, ptr %3, align 8, !tbaa !22
+  br label %.sink.split.sink.split
 
 .preheader.i.i.i.i.preheader.us:                  ; preds = %.preheader.i.i.i.i.preheader.us.preheader, %._crit_edge66
   %indvars.iv78 = phi i64 [ 0, %.preheader.i.i.i.i.preheader.us.preheader ], [ %indvars.iv.next79, %._crit_edge66 ] ; 2 uses
@@ -331,13 +336,8 @@ hwloc_read_path_by_length.exit:                   ; preds = %bb.f
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.sink.split, label %hwloc_open.exit.i, !llvm.loop !277
 
-._crit_edge.loopexit:                             ; preds = %hwloc_read_path_by_length.exit.us.us
-  %5 = and i64 %i.u, 4294967295
-  store i64 %5, ptr %3, align 8, !tbaa !22
-  br label %.sink.split.sink.split
-
-.sink.split.sink.split:                           ; preds = %hwloc_read_path_by_length.exit, %bb.f, %hwloc_open.exit.i, %.lr.ph113, %hwloc_read_path_by_length.exit.us, %bb.c, %hwloc_open.exit.i.loopexit.us, %bb.d, %hwloc_read_path_by_length.exit.us.us, %bb.b, %hwloc_open.exit.i.loopexit.us.us, %._crit_edge.loopexit
-  %.038.ph.ph = phi i32 [ 0, %._crit_edge.loopexit ], [ -1, %bb.d ], [ -1, %hwloc_read_path_by_length.exit.us.us ], [ -1, %hwloc_read_path_by_length.exit.us ], [ -1, %.lr.ph113 ], [ -1, %hwloc_open.exit.i.loopexit.us.us ], [ -1, %bb.b ], [ -1, %hwloc_open.exit.i.loopexit.us ], [ -1, %bb.c ], [ -1, %hwloc_open.exit.i ], [ -1, %bb.f ], [ -1, %hwloc_read_path_by_length.exit ]
+.sink.split.sink.split:                           ; preds = %hwloc_read_path_by_length.exit, %bb.f, %hwloc_open.exit.i, %.lr.ph113, %hwloc_read_path_by_length.exit.us, %bb.c, %hwloc_open.exit.i.loopexit.us, %bb.d, %hwloc_read_path_by_length.exit.us.us, %bb.b, %hwloc_open.exit.i.loopexit.us.us, %.lr.ph.us.us
+  %.038.ph.ph = phi i32 [ 0, %.lr.ph.us.us ], [ -1, %bb.d ], [ -1, %hwloc_read_path_by_length.exit.us.us ], [ -1, %hwloc_read_path_by_length.exit.us ], [ -1, %.lr.ph113 ], [ -1, %hwloc_open.exit.i.loopexit.us.us ], [ -1, %bb.b ], [ -1, %hwloc_open.exit.i.loopexit.us ], [ -1, %bb.c ], [ -1, %hwloc_open.exit.i ], [ -1, %bb.f ], [ -1, %hwloc_read_path_by_length.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #29
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #29
   br label %.sink.split

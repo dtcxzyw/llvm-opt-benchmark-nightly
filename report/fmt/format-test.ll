@@ -205,7 +205,17 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.q = icmp ugt i64 %i.h, 1
-  br i1 %i.q, label %.lr.ph.split.us, label %.lr.ph.split
+  br i1 %i.q, label %.lr.ph.split.us, label %.lr.ph.split.preheader
+
+.lr.ph.split.preheader:                           ; preds = %.lr.ph
+  %3 = load ptr, ptr %i.a, align 8, !tbaa !444
+  %4 = load ptr, ptr %3, align 8, !tbaa !431      ; 4 uses
+  %5 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull @.str.76, i64 noundef 1) ; 0 uses
+  tail call void @_ZNK7testing8internal15ExpectationBase18DescribeLocationToEPSo(ptr noundef nonnull align 8 dereferenceable(232) %4, ptr noundef nonnull %2)
+  %6 = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %7 = load ptr, ptr %6, align 8, !tbaa !133      ; 3 uses
+  %.not.i = icmp eq ptr %7, null
+  br i1 %.not.i, label %bb.d, label %bb.e
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.us
   %.021.us = phi i64 [ %i.ak, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.us ], [ 0, %.lr.ph ] ; 3 uses
@@ -246,26 +256,10 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.us: ; preds = %bb.c
   %exitcond24.not = icmp eq i64 %i.ak, %i.h
   br i1 %exitcond24.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !6263
 
-._crit_edge.loopexit23:                           ; preds = %bb.e, %bb.d
-  %3 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull @.str.2381, i64 noundef 4) ; 0 uses
-  tail call void @_ZNK7testing8internal16TypedExpectationIFPimEE20ExplainMatchResultToERKSt5tupleIJmEEPSo(ptr noundef nonnull align 8 dereferenceable(320) %5, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %2)
-  tail call void @_ZNK7testing8internal15ExpectationBase19DescribeCallCountToEPSo(ptr noundef nonnull align 8 dereferenceable(232) %5, ptr noundef nonnull %2)
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.us, %._crit_edge.loopexit23, %bb.a
+._crit_edge:                                      ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.us, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %bb.a
   ret void
 
-.lr.ph.split:                                     ; preds = %.lr.ph
-  %4 = load ptr, ptr %i.a, align 8, !tbaa !444
-  %5 = load ptr, ptr %4, align 8, !tbaa !431      ; 4 uses
-  %6 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull @.str.76, i64 noundef 1) ; 0 uses
-  tail call void @_ZNK7testing8internal15ExpectationBase18DescribeLocationToEPSo(ptr noundef nonnull align 8 dereferenceable(232) %5, ptr noundef nonnull %2)
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %8 = load ptr, ptr %7, align 8, !tbaa !133      ; 3 uses
-  %.not.i = icmp eq ptr %8, null
-  br i1 %.not.i, label %bb.d, label %bb.e
-
-bb.d:                                             ; preds = %.lr.ph.split
+bb.d:                                             ; preds = %.lr.ph.split.preheader
   %i.al = load ptr, ptr %2, align 8, !tbaa !105
   %i.am = getelementptr i8, ptr %i.al, i64 -24
   %i.an = load i64, ptr %i.am, align 8
@@ -274,12 +268,18 @@ bb.d:                                             ; preds = %.lr.ph.split
   %i.aq = load i32, ptr %i.ap, align 8, !tbaa !116
   %i.ar = or i32 %i.aq, 1
   tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate(ptr noundef nonnull align 8 dereferenceable(264) %i.ao, i32 noundef %i.ar)
-  br label %._crit_edge.loopexit23
+  br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
 
-bb.e:                                             ; preds = %.lr.ph.split
-  %i.as = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %8) #36
-  %i.at = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull %8, i64 noundef %i.as) ; 0 uses
-  br label %._crit_edge.loopexit23
+bb.e:                                             ; preds = %.lr.ph.split.preheader
+  %i.as = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %7) #36
+  %i.at = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull %7, i64 noundef %i.as) ; 0 uses
+  br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
+
+_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %bb.d, %bb.e
+  %8 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull @.str.2381, i64 noundef 4) ; 0 uses
+  tail call void @_ZNK7testing8internal16TypedExpectationIFPimEE20ExplainMatchResultToERKSt5tupleIJmEEPSo(ptr noundef nonnull align 8 dereferenceable(320) %4, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %2)
+  tail call void @_ZNK7testing8internal15ExpectationBase19DescribeCallCountToEPSo(ptr noundef nonnull align 8 dereferenceable(232) %4, ptr noundef nonnull %2)
+  br label %._crit_edge
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -682,7 +682,17 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.q = icmp ugt i64 %i.h, 1
-  br i1 %i.q, label %.lr.ph.split.us, label %.lr.ph.split
+  br i1 %i.q, label %.lr.ph.split.us, label %.lr.ph.split.preheader
+
+.lr.ph.split.preheader:                           ; preds = %.lr.ph
+  %3 = load ptr, ptr %i.a, align 8, !tbaa !444
+  %4 = load ptr, ptr %3, align 8, !tbaa !431      ; 4 uses
+  %5 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull @.str.76, i64 noundef 1) ; 0 uses
+  tail call void @_ZNK7testing8internal15ExpectationBase18DescribeLocationToEPSo(ptr noundef nonnull align 8 dereferenceable(232) %4, ptr noundef nonnull %2)
+  %6 = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %7 = load ptr, ptr %6, align 8, !tbaa !133      ; 3 uses
+  %.not.i = icmp eq ptr %7, null
+  br i1 %.not.i, label %bb.d, label %bb.e
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.us
   %.021.us = phi i64 [ %i.ak, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.us ], [ 0, %.lr.ph ] ; 3 uses
@@ -723,26 +733,10 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.us: ; preds = %bb.c
   %exitcond24.not = icmp eq i64 %i.ak, %i.h
   br i1 %exitcond24.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !6323
 
-._crit_edge.loopexit23:                           ; preds = %bb.e, %bb.d
-  %3 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull @.str.2381, i64 noundef 4) ; 0 uses
-  tail call void @_ZNK7testing8internal16TypedExpectationIFvPimEE20ExplainMatchResultToERKSt5tupleIJS2_mEEPSo(ptr noundef nonnull align 8 dereferenceable(344) %5, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull %2)
-  tail call void @_ZNK7testing8internal15ExpectationBase19DescribeCallCountToEPSo(ptr noundef nonnull align 8 dereferenceable(232) %5, ptr noundef nonnull %2)
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.us, %._crit_edge.loopexit23, %bb.a
+._crit_edge:                                      ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.us, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %bb.a
   ret void
 
-.lr.ph.split:                                     ; preds = %.lr.ph
-  %4 = load ptr, ptr %i.a, align 8, !tbaa !444
-  %5 = load ptr, ptr %4, align 8, !tbaa !431      ; 4 uses
-  %6 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull @.str.76, i64 noundef 1) ; 0 uses
-  tail call void @_ZNK7testing8internal15ExpectationBase18DescribeLocationToEPSo(ptr noundef nonnull align 8 dereferenceable(232) %5, ptr noundef nonnull %2)
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %8 = load ptr, ptr %7, align 8, !tbaa !133      ; 3 uses
-  %.not.i = icmp eq ptr %8, null
-  br i1 %.not.i, label %bb.d, label %bb.e
-
-bb.d:                                             ; preds = %.lr.ph.split
+bb.d:                                             ; preds = %.lr.ph.split.preheader
   %i.al = load ptr, ptr %2, align 8, !tbaa !105
   %i.am = getelementptr i8, ptr %i.al, i64 -24
   %i.an = load i64, ptr %i.am, align 8
@@ -751,12 +745,18 @@ bb.d:                                             ; preds = %.lr.ph.split
   %i.aq = load i32, ptr %i.ap, align 8, !tbaa !116
   %i.ar = or i32 %i.aq, 1
   tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate(ptr noundef nonnull align 8 dereferenceable(264) %i.ao, i32 noundef %i.ar)
-  br label %._crit_edge.loopexit23
+  br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
 
-bb.e:                                             ; preds = %.lr.ph.split
-  %i.as = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %8) #36
-  %i.at = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull %8, i64 noundef %i.as) ; 0 uses
-  br label %._crit_edge.loopexit23
+bb.e:                                             ; preds = %.lr.ph.split.preheader
+  %i.as = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %7) #36
+  %i.at = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull %7, i64 noundef %i.as) ; 0 uses
+  br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
+
+_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %bb.d, %bb.e
+  %8 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull @.str.2381, i64 noundef 4) ; 0 uses
+  tail call void @_ZNK7testing8internal16TypedExpectationIFvPimEE20ExplainMatchResultToERKSt5tupleIJS2_mEEPSo(ptr noundef nonnull align 8 dereferenceable(344) %4, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull %2)
+  tail call void @_ZNK7testing8internal15ExpectationBase19DescribeCallCountToEPSo(ptr noundef nonnull align 8 dereferenceable(232) %4, ptr noundef nonnull %2)
+  br label %._crit_edge
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -1159,7 +1159,17 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.q = icmp ugt i64 %i.h, 1
-  br i1 %i.q, label %.lr.ph.split.us, label %.lr.ph.split
+  br i1 %i.q, label %.lr.ph.split.us, label %.lr.ph.split.preheader
+
+.lr.ph.split.preheader:                           ; preds = %.lr.ph
+  %3 = load ptr, ptr %i.a, align 8, !tbaa !444
+  %4 = load ptr, ptr %3, align 8, !tbaa !431      ; 4 uses
+  %5 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull @.str.76, i64 noundef 1) ; 0 uses
+  tail call void @_ZNK7testing8internal15ExpectationBase18DescribeLocationToEPSo(ptr noundef nonnull align 8 dereferenceable(232) %4, ptr noundef nonnull %2)
+  %6 = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %7 = load ptr, ptr %6, align 8, !tbaa !133      ; 3 uses
+  %.not.i = icmp eq ptr %7, null
+  br i1 %.not.i, label %bb.d, label %bb.e
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.us
   %.021.us = phi i64 [ %i.ak, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.us ], [ 0, %.lr.ph ] ; 3 uses
@@ -1200,26 +1210,10 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.us: ; preds = %bb.c
   %exitcond24.not = icmp eq i64 %i.ak, %i.h
   br i1 %exitcond24.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !6475
 
-._crit_edge.loopexit23:                           ; preds = %bb.e, %bb.d
-  %3 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull @.str.2381, i64 noundef 4) ; 0 uses
-  tail call void @_ZNK7testing8internal16TypedExpectationIFPcmEE20ExplainMatchResultToERKSt5tupleIJmEEPSo(ptr noundef nonnull align 8 dereferenceable(320) %5, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %2)
-  tail call void @_ZNK7testing8internal15ExpectationBase19DescribeCallCountToEPSo(ptr noundef nonnull align 8 dereferenceable(232) %5, ptr noundef nonnull %2)
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.us, %._crit_edge.loopexit23, %bb.a
+._crit_edge:                                      ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.us, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %bb.a
   ret void
 
-.lr.ph.split:                                     ; preds = %.lr.ph
-  %4 = load ptr, ptr %i.a, align 8, !tbaa !444
-  %5 = load ptr, ptr %4, align 8, !tbaa !431      ; 4 uses
-  %6 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull @.str.76, i64 noundef 1) ; 0 uses
-  tail call void @_ZNK7testing8internal15ExpectationBase18DescribeLocationToEPSo(ptr noundef nonnull align 8 dereferenceable(232) %5, ptr noundef nonnull %2)
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %8 = load ptr, ptr %7, align 8, !tbaa !133      ; 3 uses
-  %.not.i = icmp eq ptr %8, null
-  br i1 %.not.i, label %bb.d, label %bb.e
-
-bb.d:                                             ; preds = %.lr.ph.split
+bb.d:                                             ; preds = %.lr.ph.split.preheader
   %i.al = load ptr, ptr %2, align 8, !tbaa !105
   %i.am = getelementptr i8, ptr %i.al, i64 -24
   %i.an = load i64, ptr %i.am, align 8
@@ -1228,12 +1222,18 @@ bb.d:                                             ; preds = %.lr.ph.split
   %i.aq = load i32, ptr %i.ap, align 8, !tbaa !116
   %i.ar = or i32 %i.aq, 1
   tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate(ptr noundef nonnull align 8 dereferenceable(264) %i.ao, i32 noundef %i.ar)
-  br label %._crit_edge.loopexit23
+  br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
 
-bb.e:                                             ; preds = %.lr.ph.split
-  %i.as = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %8) #36
-  %i.at = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull %8, i64 noundef %i.as) ; 0 uses
-  br label %._crit_edge.loopexit23
+bb.e:                                             ; preds = %.lr.ph.split.preheader
+  %i.as = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %7) #36
+  %i.at = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull %7, i64 noundef %i.as) ; 0 uses
+  br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
+
+_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %bb.d, %bb.e
+  %8 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull @.str.2381, i64 noundef 4) ; 0 uses
+  tail call void @_ZNK7testing8internal16TypedExpectationIFPcmEE20ExplainMatchResultToERKSt5tupleIJmEEPSo(ptr noundef nonnull align 8 dereferenceable(320) %4, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %2)
+  tail call void @_ZNK7testing8internal15ExpectationBase19DescribeCallCountToEPSo(ptr noundef nonnull align 8 dereferenceable(232) %4, ptr noundef nonnull %2)
+  br label %._crit_edge
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -1636,7 +1636,17 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.q = icmp ugt i64 %i.h, 1
-  br i1 %i.q, label %.lr.ph.split.us, label %.lr.ph.split
+  br i1 %i.q, label %.lr.ph.split.us, label %.lr.ph.split.preheader
+
+.lr.ph.split.preheader:                           ; preds = %.lr.ph
+  %3 = load ptr, ptr %i.a, align 8, !tbaa !444
+  %4 = load ptr, ptr %3, align 8, !tbaa !431      ; 4 uses
+  %5 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull @.str.76, i64 noundef 1) ; 0 uses
+  tail call void @_ZNK7testing8internal15ExpectationBase18DescribeLocationToEPSo(ptr noundef nonnull align 8 dereferenceable(232) %4, ptr noundef nonnull %2)
+  %6 = getelementptr inbounds nuw i8, ptr %4, i64 24
+  %7 = load ptr, ptr %6, align 8, !tbaa !133      ; 3 uses
+  %.not.i = icmp eq ptr %7, null
+  br i1 %.not.i, label %bb.d, label %bb.e
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.us
   %.021.us = phi i64 [ %i.ak, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.us ], [ 0, %.lr.ph ] ; 3 uses
@@ -1677,26 +1687,10 @@ _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.us: ; preds = %bb.c
   %exitcond24.not = icmp eq i64 %i.ak, %i.h
   br i1 %exitcond24.not, label %._crit_edge, label %.lr.ph.split.us, !llvm.loop !6522
 
-._crit_edge.loopexit23:                           ; preds = %bb.e, %bb.d
-  %3 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull @.str.2381, i64 noundef 4) ; 0 uses
-  tail call void @_ZNK7testing8internal16TypedExpectationIFvPcmEE20ExplainMatchResultToERKSt5tupleIJS2_mEEPSo(ptr noundef nonnull align 8 dereferenceable(344) %5, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull %2)
-  tail call void @_ZNK7testing8internal15ExpectationBase19DescribeCallCountToEPSo(ptr noundef nonnull align 8 dereferenceable(232) %5, ptr noundef nonnull %2)
-  br label %._crit_edge
-
-._crit_edge:                                      ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.us, %._crit_edge.loopexit23, %bb.a
+._crit_edge:                                      ; preds = %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit.us, %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit, %bb.a
   ret void
 
-.lr.ph.split:                                     ; preds = %.lr.ph
-  %4 = load ptr, ptr %i.a, align 8, !tbaa !444
-  %5 = load ptr, ptr %4, align 8, !tbaa !431      ; 4 uses
-  %6 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull @.str.76, i64 noundef 1) ; 0 uses
-  tail call void @_ZNK7testing8internal15ExpectationBase18DescribeLocationToEPSo(ptr noundef nonnull align 8 dereferenceable(232) %5, ptr noundef nonnull %2)
-  %7 = getelementptr inbounds nuw i8, ptr %5, i64 24
-  %8 = load ptr, ptr %7, align 8, !tbaa !133      ; 3 uses
-  %.not.i = icmp eq ptr %8, null
-  br i1 %.not.i, label %bb.d, label %bb.e
-
-bb.d:                                             ; preds = %.lr.ph.split
+bb.d:                                             ; preds = %.lr.ph.split.preheader
   %i.al = load ptr, ptr %2, align 8, !tbaa !105
   %i.am = getelementptr i8, ptr %i.al, i64 -24
   %i.an = load i64, ptr %i.am, align 8
@@ -1705,12 +1699,18 @@ bb.d:                                             ; preds = %.lr.ph.split
   %i.aq = load i32, ptr %i.ap, align 8, !tbaa !116
   %i.ar = or i32 %i.aq, 1
   tail call void @_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate(ptr noundef nonnull align 8 dereferenceable(264) %i.ao, i32 noundef %i.ar)
-  br label %._crit_edge.loopexit23
+  br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
 
-bb.e:                                             ; preds = %.lr.ph.split
-  %i.as = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %8) #36
-  %i.at = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull %8, i64 noundef %i.as) ; 0 uses
-  br label %._crit_edge.loopexit23
+bb.e:                                             ; preds = %.lr.ph.split.preheader
+  %i.as = tail call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %7) #36
+  %i.at = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull %7, i64 noundef %i.as) ; 0 uses
+  br label %_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit
+
+_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.exit: ; preds = %bb.d, %bb.e
+  %8 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %2, ptr noundef nonnull @.str.2381, i64 noundef 4) ; 0 uses
+  tail call void @_ZNK7testing8internal16TypedExpectationIFvPcmEE20ExplainMatchResultToERKSt5tupleIJS2_mEEPSo(ptr noundef nonnull align 8 dereferenceable(344) %4, ptr noundef nonnull align 8 dereferenceable(16) %1, ptr noundef nonnull %2)
+  tail call void @_ZNK7testing8internal15ExpectationBase19DescribeCallCountToEPSo(ptr noundef nonnull align 8 dereferenceable(232) %4, ptr noundef nonnull %2)
+  br label %._crit_edge
 }
 
 ; Function Attrs: mustprogress uwtable

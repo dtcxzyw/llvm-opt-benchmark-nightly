@@ -204,8 +204,8 @@ bb.m:                                             ; preds = %.lr.ph192
   br i1 %exitcond221.not, label %.lr.ph195.preheader, label %.lr.ph192, !llvm.loop !178
 
 .preheader:                                       ; preds = %bb.n
-  %7 = icmp sgt i32 %.3.lcssa, 0
-  br i1 %7, label %.lr.ph198, label %._crit_edge199
+  %.not201 = icmp eq i32 %.3.lcssa, 0
+  br i1 %.not201, label %._crit_edge199, label %.lr.ph198
 
 .lr.ph195:                                        ; preds = %.lr.ph195.preheader, %bb.n
   %.4134194 = phi i32 [ %i.bd, %bb.n ], [ %.1, %.lr.ph195.preheader ] ; 2 uses

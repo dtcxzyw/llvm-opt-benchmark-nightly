@@ -205,8 +205,8 @@ bb.da:                                            ; preds = %._crit_edge.i37.i
   %i.agd = zext nneg i32 %.lcssa.i.i to i64
   %i.age = zext i16 %.0.lcssa.i38.i to i64
   %i.agf = sub nuw nsw i32 %.lcssa.i.i, %.pre.i40.i
-  %3 = zext nneg i32 %i.agf to i64
-  %4 = shl nuw nsw i64 %3, 2
+  %3 = shl nuw nsw i32 %i.agf, 2
+  %4 = zext nneg i32 %3 to i64
   %i.agg = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.33, i64 noundef %i.agd, i64 noundef %i.age, i64 noundef %4) ; 0 uses
   br label %._crit_edge._crit_edge.i42.i
 
