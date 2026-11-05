@@ -205,10 +205,10 @@ vector.body399:                                   ; preds = %vector.ph397, %vect
   %next.gep402 = getelementptr i8, ptr %i.ky, i64 %i.lq
   %i.lr = shl i64 %index400, 2
   %next.gep403 = getelementptr i8, ptr %.9261, i64 %i.lr
-  %wide.vec = load <64 x i8>, ptr %next.gep402, align 1, !tbaa !90, !alias.scope !725
-  %wide.vec405 = load <64 x i8>, ptr %next.gep401, align 1, !tbaa !90, !alias.scope !726
-  %interleaved.vec408 = shufflevector <64 x i8> %wide.vec, <64 x i8> %wide.vec405, <128 x i32> <i32 0, i32 1, i32 64, i32 65, i32 2, i32 3, i32 66, i32 67, i32 4, i32 5, i32 68, i32 69, i32 6, i32 7, i32 70, i32 71, i32 8, i32 9, i32 72, i32 73, i32 10, i32 11, i32 74, i32 75, i32 12, i32 13, i32 76, i32 77, i32 14, i32 15, i32 78, i32 79, i32 16, i32 17, i32 80, i32 81, i32 18, i32 19, i32 82, i32 83, i32 20, i32 21, i32 84, i32 85, i32 22, i32 23, i32 86, i32 87, i32 24, i32 25, i32 88, i32 89, i32 26, i32 27, i32 90, i32 91, i32 28, i32 29, i32 92, i32 93, i32 30, i32 31, i32 94, i32 95, i32 32, i32 33, i32 96, i32 97, i32 34, i32 35, i32 98, i32 99, i32 36, i32 37, i32 100, i32 101, i32 38, i32 39, i32 102, i32 103, i32 40, i32 41, i32 104, i32 105, i32 42, i32 43, i32 106, i32 107, i32 44, i32 45, i32 108, i32 109, i32 46, i32 47, i32 110, i32 111, i32 48, i32 49, i32 112, i32 113, i32 50, i32 51, i32 114, i32 115, i32 52, i32 53, i32 116, i32 117, i32 54, i32 55, i32 118, i32 119, i32 56, i32 57, i32 120, i32 121, i32 58, i32 59, i32 122, i32 123, i32 60, i32 61, i32 124, i32 125, i32 62, i32 63, i32 126, i32 127>
-  store <128 x i8> %interleaved.vec408, ptr %next.gep403, align 1, !tbaa !90, !alias.scope !727, !noalias !728
+  %wide.vec = load <32 x i16>, ptr %next.gep402, align 1, !tbaa !90, !alias.scope !725
+  %wide.vec405 = load <32 x i16>, ptr %next.gep401, align 1, !tbaa !90, !alias.scope !726
+  %interleaved.vec408 = shufflevector <32 x i16> %wide.vec, <32 x i16> %wide.vec405, <64 x i32> <i32 0, i32 32, i32 1, i32 33, i32 2, i32 34, i32 3, i32 35, i32 4, i32 36, i32 5, i32 37, i32 6, i32 38, i32 7, i32 39, i32 8, i32 40, i32 9, i32 41, i32 10, i32 42, i32 11, i32 43, i32 12, i32 44, i32 13, i32 45, i32 14, i32 46, i32 15, i32 47, i32 16, i32 48, i32 17, i32 49, i32 18, i32 50, i32 19, i32 51, i32 20, i32 52, i32 21, i32 53, i32 22, i32 54, i32 23, i32 55, i32 24, i32 56, i32 25, i32 57, i32 26, i32 58, i32 27, i32 59, i32 28, i32 60, i32 29, i32 61, i32 30, i32 62, i32 31, i32 63>
+  store <64 x i16> %interleaved.vec408, ptr %next.gep403, align 1, !tbaa !90, !alias.scope !727, !noalias !728
   %index.next409 = add nuw i64 %index400, 32      ; 2 uses
   %i.ls = icmp eq i64 %index.next409, %n.vec398
   br i1 %i.ls, label %middle.block410, label %vector.body399, !llvm.loop !708
@@ -233,10 +233,10 @@ vec.epilog.vector.body419:                        ; preds = %vec.epilog.vector.b
   %next.gep422 = getelementptr i8, ptr %i.ky, i64 %i.lw
   %i.lx = shl i64 %index420, 2
   %next.gep423 = getelementptr i8, ptr %.9261, i64 %i.lx
-  %wide.vec424 = load <16 x i8>, ptr %next.gep422, align 1, !tbaa !90, !alias.scope !725
-  %wide.vec427 = load <16 x i8>, ptr %next.gep421, align 1, !tbaa !90, !alias.scope !726
-  %interleaved.vec430 = shufflevector <16 x i8> %wide.vec424, <16 x i8> %wide.vec427, <32 x i32> <i32 0, i32 1, i32 16, i32 17, i32 2, i32 3, i32 18, i32 19, i32 4, i32 5, i32 20, i32 21, i32 6, i32 7, i32 22, i32 23, i32 8, i32 9, i32 24, i32 25, i32 10, i32 11, i32 26, i32 27, i32 12, i32 13, i32 28, i32 29, i32 14, i32 15, i32 30, i32 31>
-  store <32 x i8> %interleaved.vec430, ptr %next.gep423, align 1, !tbaa !90, !alias.scope !727, !noalias !728
+  %wide.vec424 = load <8 x i16>, ptr %next.gep422, align 1, !tbaa !90, !alias.scope !725
+  %wide.vec427 = load <8 x i16>, ptr %next.gep421, align 1, !tbaa !90, !alias.scope !726
+  %interleaved.vec430 = shufflevector <8 x i16> %wide.vec424, <8 x i16> %wide.vec427, <16 x i32> <i32 0, i32 8, i32 1, i32 9, i32 2, i32 10, i32 3, i32 11, i32 4, i32 12, i32 5, i32 13, i32 6, i32 14, i32 7, i32 15>
+  store <16 x i16> %interleaved.vec430, ptr %next.gep423, align 1, !tbaa !90, !alias.scope !727, !noalias !728
   %index.next431 = add nuw i64 %index420, 8       ; 2 uses
   %i.ly = icmp eq i64 %index.next431, %n.vec418
   br i1 %i.ly, label %vec.epilog.middle.block432, label %vec.epilog.vector.body419, !llvm.loop !709
@@ -639,10 +639,10 @@ vector.body316:                                   ; preds = %vector.ph314, %vect
   %next.gep319 = getelementptr i8, ptr %i.mv, i64 %i.nn
   %i.no = shl i64 %index317, 2
   %next.gep320 = getelementptr i8, ptr %.9261.i, i64 %i.no
-  %wide.vec = load <64 x i8>, ptr %next.gep319, align 1, !tbaa !90, !alias.scope !795
-  %wide.vec322 = load <64 x i8>, ptr %next.gep318, align 1, !tbaa !90, !alias.scope !796
-  %interleaved.vec325 = shufflevector <64 x i8> %wide.vec, <64 x i8> %wide.vec322, <128 x i32> <i32 0, i32 1, i32 64, i32 65, i32 2, i32 3, i32 66, i32 67, i32 4, i32 5, i32 68, i32 69, i32 6, i32 7, i32 70, i32 71, i32 8, i32 9, i32 72, i32 73, i32 10, i32 11, i32 74, i32 75, i32 12, i32 13, i32 76, i32 77, i32 14, i32 15, i32 78, i32 79, i32 16, i32 17, i32 80, i32 81, i32 18, i32 19, i32 82, i32 83, i32 20, i32 21, i32 84, i32 85, i32 22, i32 23, i32 86, i32 87, i32 24, i32 25, i32 88, i32 89, i32 26, i32 27, i32 90, i32 91, i32 28, i32 29, i32 92, i32 93, i32 30, i32 31, i32 94, i32 95, i32 32, i32 33, i32 96, i32 97, i32 34, i32 35, i32 98, i32 99, i32 36, i32 37, i32 100, i32 101, i32 38, i32 39, i32 102, i32 103, i32 40, i32 41, i32 104, i32 105, i32 42, i32 43, i32 106, i32 107, i32 44, i32 45, i32 108, i32 109, i32 46, i32 47, i32 110, i32 111, i32 48, i32 49, i32 112, i32 113, i32 50, i32 51, i32 114, i32 115, i32 52, i32 53, i32 116, i32 117, i32 54, i32 55, i32 118, i32 119, i32 56, i32 57, i32 120, i32 121, i32 58, i32 59, i32 122, i32 123, i32 60, i32 61, i32 124, i32 125, i32 62, i32 63, i32 126, i32 127>
-  store <128 x i8> %interleaved.vec325, ptr %next.gep320, align 1, !tbaa !90, !alias.scope !797, !noalias !798
+  %wide.vec = load <32 x i16>, ptr %next.gep319, align 1, !tbaa !90, !alias.scope !795
+  %wide.vec322 = load <32 x i16>, ptr %next.gep318, align 1, !tbaa !90, !alias.scope !796
+  %interleaved.vec325 = shufflevector <32 x i16> %wide.vec, <32 x i16> %wide.vec322, <64 x i32> <i32 0, i32 32, i32 1, i32 33, i32 2, i32 34, i32 3, i32 35, i32 4, i32 36, i32 5, i32 37, i32 6, i32 38, i32 7, i32 39, i32 8, i32 40, i32 9, i32 41, i32 10, i32 42, i32 11, i32 43, i32 12, i32 44, i32 13, i32 45, i32 14, i32 46, i32 15, i32 47, i32 16, i32 48, i32 17, i32 49, i32 18, i32 50, i32 19, i32 51, i32 20, i32 52, i32 21, i32 53, i32 22, i32 54, i32 23, i32 55, i32 24, i32 56, i32 25, i32 57, i32 26, i32 58, i32 27, i32 59, i32 28, i32 60, i32 29, i32 61, i32 30, i32 62, i32 31, i32 63>
+  store <64 x i16> %interleaved.vec325, ptr %next.gep320, align 1, !tbaa !90, !alias.scope !797, !noalias !798
   %index.next326 = add nuw i64 %index317, 32      ; 2 uses
   %i.np = icmp eq i64 %index.next326, %n.vec315
   br i1 %i.np, label %middle.block327, label %vector.body316, !llvm.loop !757
@@ -667,10 +667,10 @@ vec.epilog.vector.body336:                        ; preds = %vec.epilog.vector.b
   %next.gep339 = getelementptr i8, ptr %i.mv, i64 %i.nt
   %i.nu = shl i64 %index337, 2
   %next.gep340 = getelementptr i8, ptr %.9261.i, i64 %i.nu
-  %wide.vec341 = load <16 x i8>, ptr %next.gep339, align 1, !tbaa !90, !alias.scope !795
-  %wide.vec344 = load <16 x i8>, ptr %next.gep338, align 1, !tbaa !90, !alias.scope !796
-  %interleaved.vec347 = shufflevector <16 x i8> %wide.vec341, <16 x i8> %wide.vec344, <32 x i32> <i32 0, i32 1, i32 16, i32 17, i32 2, i32 3, i32 18, i32 19, i32 4, i32 5, i32 20, i32 21, i32 6, i32 7, i32 22, i32 23, i32 8, i32 9, i32 24, i32 25, i32 10, i32 11, i32 26, i32 27, i32 12, i32 13, i32 28, i32 29, i32 14, i32 15, i32 30, i32 31>
-  store <32 x i8> %interleaved.vec347, ptr %next.gep340, align 1, !tbaa !90, !alias.scope !797, !noalias !798
+  %wide.vec341 = load <8 x i16>, ptr %next.gep339, align 1, !tbaa !90, !alias.scope !795
+  %wide.vec344 = load <8 x i16>, ptr %next.gep338, align 1, !tbaa !90, !alias.scope !796
+  %interleaved.vec347 = shufflevector <8 x i16> %wide.vec341, <8 x i16> %wide.vec344, <16 x i32> <i32 0, i32 8, i32 1, i32 9, i32 2, i32 10, i32 3, i32 11, i32 4, i32 12, i32 5, i32 13, i32 6, i32 14, i32 7, i32 15>
+  store <16 x i16> %interleaved.vec347, ptr %next.gep340, align 1, !tbaa !90, !alias.scope !797, !noalias !798
   %index.next348 = add nuw i64 %index337, 8       ; 2 uses
   %i.nv = icmp eq i64 %index.next348, %n.vec335
   br i1 %i.nv, label %vec.epilog.middle.block349, label %vec.epilog.vector.body336, !llvm.loop !758

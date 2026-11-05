@@ -205,7 +205,7 @@ bb.dh:                                            ; preds = %bb.dg
 bb.di:                                            ; preds = %bb.dg
   %.sroa.01482.0.copyload = load i8, ptr %.sroa.5.i, align 8, !noalias !41202
   %.sroa.41484.0..sroa.5.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.5.i, i64 2
-  %4 = load <2 x i16>, ptr %.sroa.41484.0..sroa.5.i.sroa_idx, align 2, !noalias !41202
+  %4 = load <1 x i32>, ptr %.sroa.41484.0..sroa.5.i.sroa_idx, align 2, !noalias !41202
   %.sroa.61487.0..sroa.5.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.5.i, i64 8
   %.sroa.61487.0.copyload = load ptr, ptr %.sroa.61487.0..sroa.5.i.sroa_idx, align 8, !noalias !41202 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !41207)
@@ -225,11 +225,11 @@ bb.dj:                                            ; preds = %bb.di
   br label %"_ZN95_$LT$rhai..ast..stmt..StmtBlock$u20$as$u20$core..convert..From$LT$rhai..ast..stmt..Stmt$GT$$GT$4from17h0ddbf52a413cc124E.exit.i"
 
 bb.dk:                                            ; preds = %bb.di
-  %5 = shufflevector <2 x i16> %4, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %.sroa.4.0..sroa_idx.i138.i = getelementptr inbounds nuw i8, ptr %i.ad, i64 128
   store i64 0, ptr %.sroa.4.0..sroa_idx.i138.i, align 8, !alias.scope !41207, !noalias !41202
   %i.ri = getelementptr inbounds nuw i8, ptr %i.ad, i64 136
-  store <4 x i16> %5, ptr %i.ri, align 8, !alias.scope !41207, !noalias !41202
+  %5 = shufflevector <1 x i32> %4, <1 x i32> poison, <2 x i32> zeroinitializer
+  store <2 x i32> %5, ptr %i.ri, align 8, !alias.scope !41207, !noalias !41202
   call fastcc void @"_ZN4core3ptr42drop_in_place$LT$rhai..ast..stmt..Stmt$GT$17h8c7cea9300790c9cE"(ptr noalias noundef nonnull readonly align 8 dereferenceable(16) %.sroa.5.i), !noalias !41203, !inline_history !40960
   br label %"_ZN95_$LT$rhai..ast..stmt..StmtBlock$u20$as$u20$core..convert..From$LT$rhai..ast..stmt..Stmt$GT$$GT$4from17h0ddbf52a413cc124E.exit.i"
 
@@ -632,7 +632,7 @@ bb.fi:                                            ; preds = %bb.fh
 bb.fj:                                            ; preds = %bb.fg
   %.sroa.01488.0.copyload = load i8, ptr %.sroa.527.i, align 8, !noalias !41202
   %.sroa.41490.0..sroa.527.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.527.i, i64 2
-  %6 = load <2 x i16>, ptr %.sroa.41490.0..sroa.527.i.sroa_idx, align 2, !noalias !41202
+  %6 = load <1 x i32>, ptr %.sroa.41490.0..sroa.527.i.sroa_idx, align 2, !noalias !41202
   %.sroa.61493.0..sroa.527.i.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.527.i, i64 8
   %.sroa.61493.0.copyload = load ptr, ptr %.sroa.61493.0..sroa.527.i.sroa_idx, align 8, !noalias !41202 ; 3 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !41227)
@@ -652,11 +652,11 @@ bb.fk:                                            ; preds = %bb.fj
   br label %"_ZN95_$LT$rhai..ast..stmt..StmtBlock$u20$as$u20$core..convert..From$LT$rhai..ast..stmt..Stmt$GT$$GT$4from17h0ddbf52a413cc124E.exit167.i"
 
 bb.fl:                                            ; preds = %bb.fj
-  %7 = shufflevector <2 x i16> %6, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %.sroa.4.0..sroa_idx.i155.i = getelementptr inbounds nuw i8, ptr %i.o, i64 128
   store i64 0, ptr %.sroa.4.0..sroa_idx.i155.i, align 8, !alias.scope !41227, !noalias !41202
   %i.ua = getelementptr inbounds nuw i8, ptr %i.o, i64 136
-  store <4 x i16> %7, ptr %i.ua, align 8, !alias.scope !41227, !noalias !41202
+  %7 = shufflevector <1 x i32> %6, <1 x i32> poison, <2 x i32> zeroinitializer
+  store <2 x i32> %7, ptr %i.ua, align 8, !alias.scope !41227, !noalias !41202
   invoke fastcc void @"_ZN4core3ptr42drop_in_place$LT$rhai..ast..stmt..Stmt$GT$17h8c7cea9300790c9cE"(ptr noalias noundef nonnull readonly align 8 dereferenceable(16) %.sroa.527.i)
           to label %"_ZN95_$LT$rhai..ast..stmt..StmtBlock$u20$as$u20$core..convert..From$LT$rhai..ast..stmt..Stmt$GT$$GT$4from17h0ddbf52a413cc124E.exit167.i" unwind label %bb.ff, !noalias !41203, !inline_history !40960
 
@@ -1059,9 +1059,9 @@ bb.qw:                                            ; preds = %bb.qu
   %.sroa.4.0..sroa_idx.i3762 = getelementptr inbounds nuw i8, ptr %i.mj, i64 128
   store i64 0, ptr %.sroa.4.0..sroa_idx.i3762, align 8, !alias.scope !42907
   %i.asy = getelementptr inbounds nuw i8, ptr %i.mj, i64 136
-  %5 = load <2 x i16>, ptr %i.asx, align 2, !alias.scope !42908
-  %6 = shufflevector <2 x i16> %5, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x i16> %6, ptr %i.asy, align 8, !alias.scope !42907
+  %5 = load <1 x i32>, ptr %i.asx, align 2, !alias.scope !42908
+  %6 = shufflevector <1 x i32> %5, <1 x i32> poison, <2 x i32> zeroinitializer
+  store <2 x i32> %6, ptr %i.asy, align 8, !alias.scope !42907
   call fastcc void @"_ZN4core3ptr42drop_in_place$LT$rhai..ast..stmt..Stmt$GT$17h8c7cea9300790c9cE"(ptr noalias noundef nonnull readonly align 8 dereferenceable(16) %.sroa.635), !noalias !42907
   br label %"_ZN95_$LT$rhai..ast..stmt..StmtBlock$u20$as$u20$core..convert..From$LT$rhai..ast..stmt..Stmt$GT$$GT$4from17h0ddbf52a413cc124E.exit3771"
 
@@ -1213,9 +1213,9 @@ bb.rk:                                            ; preds = %bb.ri
   %.sroa.4.0..sroa_idx.i3775 = getelementptr inbounds nuw i8, ptr %i.lx, i64 128
   store i64 0, ptr %.sroa.4.0..sroa_idx.i3775, align 8, !alias.scope !42911
   %i.aug = getelementptr inbounds nuw i8, ptr %i.lx, i64 136
-  %7 = load <2 x i16>, ptr %i.auf, align 2, !alias.scope !42912
-  %8 = shufflevector <2 x i16> %7, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x i16> %8, ptr %i.aug, align 8, !alias.scope !42911
+  %7 = load <1 x i32>, ptr %i.auf, align 2, !alias.scope !42912
+  %8 = shufflevector <1 x i32> %7, <1 x i32> poison, <2 x i32> zeroinitializer
+  store <2 x i32> %8, ptr %i.aug, align 8, !alias.scope !42911
   call fastcc void @"_ZN4core3ptr42drop_in_place$LT$rhai..ast..stmt..Stmt$GT$17h8c7cea9300790c9cE"(ptr noalias noundef nonnull readonly align 8 dereferenceable(16) %.sroa.659), !noalias !42911
   br label %"_ZN95_$LT$rhai..ast..stmt..StmtBlock$u20$as$u20$core..convert..From$LT$rhai..ast..stmt..Stmt$GT$$GT$4from17h0ddbf52a413cc124E.exit3784"
 
@@ -1374,9 +1374,9 @@ bb.rz:                                            ; preds = %bb.rx
   %.sroa.4.0..sroa_idx.i3788 = getelementptr inbounds nuw i8, ptr %i.md, i64 128
   store i64 0, ptr %.sroa.4.0..sroa_idx.i3788, align 8, !alias.scope !42915
   %i.avr = getelementptr inbounds nuw i8, ptr %i.md, i64 136
-  %9 = load <2 x i16>, ptr %i.avq, align 2, !alias.scope !42916
-  %10 = shufflevector <2 x i16> %9, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x i16> %10, ptr %i.avr, align 8, !alias.scope !42915
+  %9 = load <1 x i32>, ptr %i.avq, align 2, !alias.scope !42916
+  %10 = shufflevector <1 x i32> %9, <1 x i32> poison, <2 x i32> zeroinitializer
+  store <2 x i32> %10, ptr %i.avr, align 8, !alias.scope !42915
   call fastcc void @"_ZN4core3ptr42drop_in_place$LT$rhai..ast..stmt..Stmt$GT$17h8c7cea9300790c9cE"(ptr noalias noundef nonnull readonly align 8 dereferenceable(16) %.sroa.647), !noalias !42915
   br label %"_ZN95_$LT$rhai..ast..stmt..StmtBlock$u20$as$u20$core..convert..From$LT$rhai..ast..stmt..Stmt$GT$$GT$4from17h0ddbf52a413cc124E.exit3797"
 
@@ -1520,7 +1520,7 @@ bb.sm:                                            ; preds = %bb.sl
 bb.sn:                                            ; preds = %bb.sl
   %.sroa.03922.0.copyload = load i8, ptr %.sroa.641, align 8
   %.sroa.23924.0..sroa.641.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.641, i64 2
-  %11 = load <2 x i16>, ptr %.sroa.23924.0..sroa.641.sroa_idx, align 2
+  %11 = load <1 x i32>, ptr %.sroa.23924.0..sroa.641.sroa_idx, align 2
   %.sroa.43926.0..sroa.641.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.641, i64 8
   %.sroa.43926.0.copyload = load ptr, ptr %.sroa.43926.0..sroa.641.sroa_idx, align 8 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !42919)
@@ -1540,11 +1540,11 @@ bb.so:                                            ; preds = %bb.sn
   br label %"_ZN95_$LT$rhai..ast..stmt..StmtBlock$u20$as$u20$core..convert..From$LT$rhai..ast..stmt..Stmt$GT$$GT$4from17h0ddbf52a413cc124E.exit865"
 
 bb.sp:                                            ; preds = %bb.sn
-  %12 = shufflevector <2 x i16> %11, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %.sroa.4.0..sroa_idx.i856 = getelementptr inbounds nuw i8, ptr %i.mg, i64 128
   store i64 0, ptr %.sroa.4.0..sroa_idx.i856, align 8, !alias.scope !42919
   %i.axc = getelementptr inbounds nuw i8, ptr %i.mg, i64 136
-  store <4 x i16> %12, ptr %i.axc, align 8, !alias.scope !42919
+  %12 = shufflevector <1 x i32> %11, <1 x i32> poison, <2 x i32> zeroinitializer
+  store <2 x i32> %12, ptr %i.axc, align 8, !alias.scope !42919
   call fastcc void @"_ZN4core3ptr42drop_in_place$LT$rhai..ast..stmt..Stmt$GT$17h8c7cea9300790c9cE"(ptr noalias noundef nonnull readonly align 8 dereferenceable(16) %.sroa.641)
   br label %"_ZN95_$LT$rhai..ast..stmt..StmtBlock$u20$as$u20$core..convert..From$LT$rhai..ast..stmt..Stmt$GT$$GT$4from17h0ddbf52a413cc124E.exit865"
 
@@ -1705,9 +1705,9 @@ bb.te:                                            ; preds = %bb.tc
   %.sroa.4.0..sroa_idx.i3801 = getelementptr inbounds nuw i8, ptr %i.ma, i64 128
   store i64 0, ptr %.sroa.4.0..sroa_idx.i3801, align 8, !alias.scope !42923
   %i.aym = getelementptr inbounds nuw i8, ptr %i.ma, i64 136
-  %13 = load <2 x i16>, ptr %i.ayl, align 2, !alias.scope !42924
-  %14 = shufflevector <2 x i16> %13, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x i16> %14, ptr %i.aym, align 8, !alias.scope !42923
+  %13 = load <1 x i32>, ptr %i.ayl, align 2, !alias.scope !42924
+  %14 = shufflevector <1 x i32> %13, <1 x i32> poison, <2 x i32> zeroinitializer
+  store <2 x i32> %14, ptr %i.aym, align 8, !alias.scope !42923
   call fastcc void @"_ZN4core3ptr42drop_in_place$LT$rhai..ast..stmt..Stmt$GT$17h8c7cea9300790c9cE"(ptr noalias noundef nonnull readonly align 8 dereferenceable(16) %.sroa.653), !noalias !42923
   br label %"_ZN95_$LT$rhai..ast..stmt..StmtBlock$u20$as$u20$core..convert..From$LT$rhai..ast..stmt..Stmt$GT$$GT$4from17h0ddbf52a413cc124E.exit3810"
 
@@ -2110,9 +2110,9 @@ bb.ax:                                            ; preds = %bb.aw
 
 bb.ay:                                            ; preds = %bb.aw
   store i64 0, ptr %.sroa.4.0..sroa_idx.i489, align 8, !alias.scope !43465
-  %6 = load <2 x i16>, ptr %i.cz, align 2, !alias.scope !43466
-  %7 = shufflevector <2 x i16> %6, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x i16> %7, ptr %i.da, align 8, !alias.scope !43465
+  %6 = load <1 x i32>, ptr %i.cz, align 2, !alias.scope !43466
+  %7 = shufflevector <1 x i32> %6, <1 x i32> poison, <2 x i32> zeroinitializer
+  store <2 x i32> %7, ptr %i.da, align 8, !alias.scope !43465
   invoke fastcc void @"_ZN4core3ptr42drop_in_place$LT$rhai..ast..stmt..Stmt$GT$17h8c7cea9300790c9cE"(ptr noalias noundef nonnull readonly align 8 dereferenceable(16) %i.bz)
           to label %"_ZN95_$LT$rhai..ast..stmt..StmtBlock$u20$as$u20$core..convert..From$LT$rhai..ast..stmt..Stmt$GT$$GT$4from17h0ddbf52a413cc124E.exit" unwind label %.loopexit.split-lp1322.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -2515,7 +2515,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   %.sroa.0.0.copyload = load i8, ptr %.sroa.5, align 8
   %.sroa.2122.0..sroa.5.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.5, i64 2
-  %4 = load <2 x i16>, ptr %.sroa.2122.0..sroa.5.sroa_idx, align 2
+  %4 = load <1 x i32>, ptr %.sroa.2122.0..sroa.5.sroa_idx, align 2
   %.sroa.4123.0..sroa.5.sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.5, i64 8
   %.sroa.4123.0.copyload = load ptr, ptr %.sroa.4123.0..sroa.5.sroa_idx, align 8 ; 3 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !44530)
@@ -2535,11 +2535,11 @@ bb.j:                                             ; preds = %bb.i
   br label %"_ZN95_$LT$rhai..ast..stmt..StmtBlock$u20$as$u20$core..convert..From$LT$rhai..ast..stmt..Stmt$GT$$GT$4from17h0ddbf52a413cc124E.exit"
 
 bb.k:                                             ; preds = %bb.i
-  %5 = shufflevector <2 x i16> %4, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
   %.sroa.4.0..sroa_idx.i67 = getelementptr inbounds nuw i8, ptr %i.v, i64 128
   store i64 0, ptr %.sroa.4.0..sroa_idx.i67, align 8, !alias.scope !44530
   %i.az = getelementptr inbounds nuw i8, ptr %i.v, i64 136
-  store <4 x i16> %5, ptr %i.az, align 8, !alias.scope !44530
+  %5 = shufflevector <1 x i32> %4, <1 x i32> poison, <2 x i32> zeroinitializer
+  store <2 x i32> %5, ptr %i.az, align 8, !alias.scope !44530
   call fastcc void @"_ZN4core3ptr42drop_in_place$LT$rhai..ast..stmt..Stmt$GT$17h8c7cea9300790c9cE"(ptr noalias noundef nonnull readonly align 8 dereferenceable(16) %.sroa.5)
   br label %"_ZN95_$LT$rhai..ast..stmt..StmtBlock$u20$as$u20$core..convert..From$LT$rhai..ast..stmt..Stmt$GT$$GT$4from17h0ddbf52a413cc124E.exit"
 
@@ -2942,9 +2942,9 @@ bb.w:                                             ; preds = %bb.u
   %.sroa.4.0..sroa_idx.i102 = getelementptr inbounds nuw i8, ptr %i.q, i64 128
   store i64 0, ptr %.sroa.4.0..sroa_idx.i102, align 8, !alias.scope !44576
   %i.by = getelementptr inbounds nuw i8, ptr %i.q, i64 136
-  %4 = load <2 x i16>, ptr %i.bx, align 2, !alias.scope !44577
-  %5 = shufflevector <2 x i16> %4, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x i16> %5, ptr %i.by, align 8, !alias.scope !44576
+  %4 = load <1 x i32>, ptr %i.bx, align 2, !alias.scope !44577
+  %5 = shufflevector <1 x i32> %4, <1 x i32> poison, <2 x i32> zeroinitializer
+  store <2 x i32> %5, ptr %i.by, align 8, !alias.scope !44576
   invoke fastcc void @"_ZN4core3ptr42drop_in_place$LT$rhai..ast..stmt..Stmt$GT$17h8c7cea9300790c9cE"(ptr noalias noundef nonnull readonly align 8 dereferenceable(16) %.sroa.528)
           to label %"_ZN95_$LT$rhai..ast..stmt..StmtBlock$u20$as$u20$core..convert..From$LT$rhai..ast..stmt..Stmt$GT$$GT$4from17h0ddbf52a413cc124E.exit" unwind label %bb.o
 
@@ -3347,9 +3347,9 @@ bb.gf:                                            ; preds = %bb.el
   %.sroa.4497.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.am, i64 128
   store i64 0, ptr %.sroa.4497.0..sroa_idx, align 8
   %i.tm = getelementptr inbounds nuw i8, ptr %i.am, i64 136
-  %3 = load <2 x i16>, ptr %i.do, align 2
-  %4 = shufflevector <2 x i16> %3, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x i16> %4, ptr %i.tm, align 8
+  %3 = load <1 x i32>, ptr %i.do, align 2
+  %4 = shufflevector <1 x i32> %3, <1 x i32> poison, <2 x i32> zeroinitializer
+  store <2 x i32> %4, ptr %i.tm, align 8
   %i.tn = invoke fastcc noundef ptr @_ZN5alloc5alloc15exchange_malloc17hd05661b5acd38f93E(i64 noundef 144, i64 noundef 8)
           to label %bb.gr unwind label %bb.gg, !noalias !53588 ; 3 uses
 
@@ -3752,9 +3752,9 @@ bb.d:                                             ; preds = %bb.a
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 128
   store i64 0, ptr %.sroa.4.0..sroa_idx, align 8
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %2 = load <2 x i16>, ptr %i.e, align 2
-  %3 = shufflevector <2 x i16> %2, <2 x i16> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x i16> %3, ptr %i.f, align 8
+  %2 = load <1 x i32>, ptr %i.e, align 2
+  %3 = shufflevector <1 x i32> %2, <1 x i32> poison, <2 x i32> zeroinitializer
+  store <2 x i32> %3, ptr %i.f, align 8
   tail call fastcc void @"_ZN4core3ptr42drop_in_place$LT$rhai..ast..stmt..Stmt$GT$17h8c7cea9300790c9cE"(ptr noalias noundef align 8 dereferenceable(16) %1)
   br label %bb.c
 

@@ -205,10 +205,10 @@ bb.b:                                             ; preds = %bb.a
   %i.l = udiv i32 %i.k, 100000                    ; 2 uses
   %i.m = zext nneg i32 %i.l to i64
   %i.n = getelementptr inbounds nuw [2 x i8], ptr @_ZN6google8protobufL16two_ASCII_digitsE, i64 %i.m
-  %2 = load <2 x i8>, ptr %i.j, align 2, !tbaa !21
-  %3 = load <2 x i8>, ptr %i.n, align 2, !tbaa !21
-  %4 = shufflevector <2 x i8> %2, <2 x i8> %3, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  store <4 x i8> %4, ptr %i.e, align 1, !tbaa !21
+  %2 = load <1 x i16>, ptr %i.j, align 2, !tbaa !21
+  %3 = load <1 x i16>, ptr %i.n, align 2, !tbaa !21
+  %4 = shufflevector <1 x i16> %2, <1 x i16> %3, <2 x i32> <i32 0, i32 1>
+  store <2 x i16> %4, ptr %i.e, align 1, !tbaa !21
   %i.o = getelementptr inbounds nuw i8, ptr %i.e, i64 4
   %.neg53 = mul nsw i32 %i.l, -100000
   %i.p = add i32 %.neg53, %i.k                    ; 2 uses
@@ -220,10 +220,10 @@ bb.b:                                             ; preds = %bb.a
   %i.u = udiv i32 %i.t, 10                        ; 2 uses
   %i.v = zext nneg i32 %i.u to i64
   %i.w = getelementptr inbounds nuw [2 x i8], ptr @_ZN6google8protobufL16two_ASCII_digitsE, i64 %i.v
-  %5 = load <2 x i8>, ptr %i.s, align 2, !tbaa !21
-  %6 = load <2 x i8>, ptr %i.w, align 2, !tbaa !21
-  %7 = shufflevector <2 x i8> %5, <2 x i8> %6, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  store <4 x i8> %7, ptr %i.o, align 1, !tbaa !21
+  %5 = load <1 x i16>, ptr %i.s, align 2, !tbaa !21
+  %6 = load <1 x i16>, ptr %i.w, align 2, !tbaa !21
+  %7 = shufflevector <1 x i16> %5, <1 x i16> %6, <2 x i32> <i32 0, i32 1>
+  store <2 x i16> %7, ptr %i.o, align 1, !tbaa !21
   %i.x = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %.neg55 = mul nuw nsw i32 %i.u, 246
   %i.y = add i32 %.neg55, %i.t

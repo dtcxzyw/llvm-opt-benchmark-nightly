@@ -204,9 +204,10 @@ bb.k:                                             ; preds = %index_mb.exit.i.i
   %i.wo = shufflevector <2 x i8> %i.vy, <2 x i8> %i.wf, <16 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3, i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3>
   %i.wp = getelementptr inbounds nuw i8, ptr %i.vw, i64 32
   %i.wq = load <2 x i8>, ptr %i.un, align 1, !tbaa !56 ; 2 uses
-  %5 = load <2 x i8>, ptr %i.we, align 1, !tbaa !56
-  %6 = shufflevector <2 x i8> %5, <2 x i8> %i.wq, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  store <4 x i8> %6, ptr %i.up, align 1, !tbaa !56
+  %5 = load <1 x i16>, ptr %i.we, align 1, !tbaa !56
+  %.cast = bitcast <2 x i8> %i.wq to <1 x i16>
+  %6 = shufflevector <1 x i16> %5, <1 x i16> %.cast, <2 x i32> <i32 0, i32 1>
+  store <2 x i16> %6, ptr %i.up, align 1, !tbaa !56
   %i.wr = load <2 x i8>, ptr %i.wg, align 1, !tbaa !56
   %i.ws = load i8, ptr %i.wh, align 1, !tbaa !56
   %i.wt = load i8, ptr %i.wg, align 1, !tbaa !56
@@ -242,8 +243,10 @@ bb.k:                                             ; preds = %index_mb.exit.i.i
   %i.xt = getelementptr inbounds nuw i8, ptr %i.vw, i64 64
   %i.xu = load <2 x i8>, ptr %i.wz, align 1, !tbaa !56 ; 2 uses
   %i.xv = load <2 x i8>, ptr %i.xo, align 1, !tbaa !56 ; 2 uses
-  %7 = shufflevector <2 x i8> %i.xu, <2 x i8> %i.xv, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  store <4 x i8> %7, ptr %i.uv, align 1, !tbaa !56
+  %.cast210 = bitcast <2 x i8> %i.xu to <1 x i16>
+  %.cast211 = bitcast <2 x i8> %i.xv to <1 x i16>
+  %7 = shufflevector <1 x i16> %.cast210, <1 x i16> %.cast211, <2 x i32> <i32 0, i32 1>
+  store <2 x i16> %7, ptr %i.uv, align 1, !tbaa !56
   %i.xw = load <2 x i8>, ptr %i.xm, align 1, !tbaa !56
   %i.xx = load i8, ptr %i.xn, align 1, !tbaa !56
   %i.xy = load i8, ptr %i.xm, align 1, !tbaa !56
@@ -260,40 +263,40 @@ bb.k:                                             ; preds = %index_mb.exit.i.i
   %i.yf = load <2 x i8>, ptr %i.wi, align 1, !tbaa !56
   %i.yg = load i8, ptr %i.wj, align 1, !tbaa !56
   %i.yh = load i8, ptr %i.wi, align 1, !tbaa !56
-  %8 = load <2 x i8>, ptr %i.vd, align 1, !tbaa !56
+  %8 = load <1 x i16>, ptr %i.vd, align 1, !tbaa !56
   store i8 %i.yh, ptr %i.vf, align 1, !tbaa !56
   store i8 %i.yg, ptr %i.vg, align 1, !tbaa !56
-  %9 = load <2 x i8>, ptr %i.wk, align 1, !tbaa !56
-  %10 = shufflevector <2 x i8> %8, <2 x i8> %9, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  store <4 x i8> %10, ptr %i.ve, align 1, !tbaa !56
+  %9 = load <1 x i16>, ptr %i.wk, align 1, !tbaa !56
+  %10 = shufflevector <1 x i16> %8, <1 x i16> %9, <2 x i32> <i32 0, i32 1>
+  store <2 x i16> %10, ptr %i.ve, align 1, !tbaa !56
   %i.yi = load i8, ptr %i.vj, align 1, !tbaa !56
   store i8 %i.yi, ptr %i.vk, align 1, !tbaa !56
   %i.yj = load i8, ptr %i.vl, align 1, !tbaa !56
   store i8 %i.yj, ptr %i.vm, align 1, !tbaa !56
-  %11 = load <2 x i8>, ptr %i.xa, align 1, !tbaa !56
-  %12 = load <2 x i8>, ptr %i.xb, align 1, !tbaa !56
-  %13 = load <2 x i8>, ptr %i.xq, align 1, !tbaa !56
-  %14 = shufflevector <2 x i8> %12, <2 x i8> %13, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  store <4 x i8> %14, ptr %i.vi, align 1, !tbaa !56
-  %15 = load <2 x i8>, ptr %i.xp, align 1, !tbaa !56
-  %16 = shufflevector <2 x i8> %11, <2 x i8> %15, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  store <4 x i8> %16, ptr %i.vh, align 1, !tbaa !56
-  %17 = load <2 x i8>, ptr %i.wl, align 1, !tbaa !56
-  %18 = load <2 x i8>, ptr %i.vn, align 1, !tbaa !56
-  %19 = shufflevector <2 x i8> %17, <2 x i8> %18, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  store <4 x i8> %19, ptr %i.vp, align 1, !tbaa !56
+  %11 = load <1 x i16>, ptr %i.xa, align 1, !tbaa !56
+  %12 = load <1 x i16>, ptr %i.xb, align 1, !tbaa !56
+  %13 = load <1 x i16>, ptr %i.xq, align 1, !tbaa !56
+  %14 = shufflevector <1 x i16> %12, <1 x i16> %13, <2 x i32> <i32 0, i32 1>
+  store <2 x i16> %14, ptr %i.vi, align 1, !tbaa !56
+  %15 = load <1 x i16>, ptr %i.xp, align 1, !tbaa !56
+  %16 = shufflevector <1 x i16> %11, <1 x i16> %15, <2 x i32> <i32 0, i32 1>
+  store <2 x i16> %16, ptr %i.vh, align 1, !tbaa !56
+  %17 = load <1 x i16>, ptr %i.wl, align 1, !tbaa !56
+  %18 = load <1 x i16>, ptr %i.vn, align 1, !tbaa !56
+  %19 = shufflevector <1 x i16> %17, <1 x i16> %18, <2 x i32> <i32 0, i32 1>
+  store <2 x i16> %19, ptr %i.vp, align 1, !tbaa !56
   %i.yk = load i8, ptr %i.wm, align 1, !tbaa !56
   store i8 %i.yk, ptr %i.vr, align 1, !tbaa !56
   %i.yl = load i8, ptr %i.wn, align 1, !tbaa !56
   store i8 %i.yl, ptr %i.vs, align 1, !tbaa !56
-  %20 = load <2 x i8>, ptr %i.xc, align 1, !tbaa !56
-  %21 = load <2 x i8>, ptr %i.xd, align 1, !tbaa !56
-  %22 = load <2 x i8>, ptr %i.xs, align 1, !tbaa !56
-  %23 = shufflevector <2 x i8> %21, <2 x i8> %22, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  store <4 x i8> %23, ptr %i.vu, align 1, !tbaa !56
-  %24 = load <2 x i8>, ptr %i.xr, align 1, !tbaa !56
-  %25 = shufflevector <2 x i8> %20, <2 x i8> %24, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  store <4 x i8> %25, ptr %i.vt, align 1, !tbaa !56
+  %20 = load <1 x i16>, ptr %i.xc, align 1, !tbaa !56
+  %21 = load <1 x i16>, ptr %i.xd, align 1, !tbaa !56
+  %22 = load <1 x i16>, ptr %i.xs, align 1, !tbaa !56
+  %23 = shufflevector <1 x i16> %21, <1 x i16> %22, <2 x i32> <i32 0, i32 1>
+  store <2 x i16> %23, ptr %i.vu, align 1, !tbaa !56
+  %24 = load <1 x i16>, ptr %i.xr, align 1, !tbaa !56
+  %25 = shufflevector <1 x i16> %20, <1 x i16> %24, <2 x i32> <i32 0, i32 1>
+  store <2 x i16> %25, ptr %i.vt, align 1, !tbaa !56
   store <16 x i8> %i.wo, ptr %i.vw, align 1, !tbaa !56
   store <16 x i8> %i.xe, ptr %i.vx, align 1, !tbaa !56
   store <16 x i8> %i.xz, ptr %i.wp, align 1, !tbaa !56

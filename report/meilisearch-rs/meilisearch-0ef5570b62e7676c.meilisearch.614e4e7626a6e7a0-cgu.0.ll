@@ -205,9 +205,9 @@ bb.y:                                             ; preds = %bb.w, %bb.x, %bb.v,
   %i.fb = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i32 1, ptr %0, align 4
   %.sroa.445.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %2 = load <2 x i32>, ptr %i.fb, align 8
-  %3 = shufflevector <2 x i32> %2, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x i32> %3, ptr %.sroa.445.0..sroa_idx, align 4
+  %2 = load <1 x i64>, ptr %i.fb, align 8
+  %3 = shufflevector <1 x i64> %2, <1 x i64> poison, <2 x i32> zeroinitializer
+  store <2 x i64> %3, ptr %.sroa.445.0..sroa_idx, align 4
   br label %bb.aj
 
 bb.z:                                             ; preds = %bb.n
@@ -610,9 +610,9 @@ bb.y:                                             ; preds = %bb.w, %bb.x, %bb.v,
   %i.fc = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i32 1, ptr %0, align 4
   %.sroa.445.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %2 = load <2 x i32>, ptr %i.fc, align 8
-  %3 = shufflevector <2 x i32> %2, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x i32> %3, ptr %.sroa.445.0..sroa_idx, align 4
+  %2 = load <1 x i64>, ptr %i.fc, align 8
+  %3 = shufflevector <1 x i64> %2, <1 x i64> poison, <2 x i32> zeroinitializer
+  store <2 x i64> %3, ptr %.sroa.445.0..sroa_idx, align 4
   br label %bb.aj
 
 bb.z:                                             ; preds = %bb.n
@@ -1015,9 +1015,9 @@ bb.y:                                             ; preds = %bb.w, %bb.x, %bb.v,
   %i.fc = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i32 1, ptr %0, align 4
   %.sroa.445.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %2 = load <2 x i32>, ptr %i.fc, align 8
-  %3 = shufflevector <2 x i32> %2, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x i32> %3, ptr %.sroa.445.0..sroa_idx, align 4
+  %2 = load <1 x i64>, ptr %i.fc, align 8
+  %3 = shufflevector <1 x i64> %2, <1 x i64> poison, <2 x i32> zeroinitializer
+  store <2 x i64> %3, ptr %.sroa.445.0..sroa_idx, align 4
   br label %bb.aj
 
 bb.z:                                             ; preds = %bb.n

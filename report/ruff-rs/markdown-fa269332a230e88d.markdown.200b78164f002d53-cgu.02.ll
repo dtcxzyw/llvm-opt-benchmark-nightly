@@ -202,9 +202,9 @@ bb.a:
   %.sroa.53.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 136
   store i64 %i.i, ptr %.sroa.53.0..sroa_idx, align 8
   %.sroa.64.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 144
-  %3 = load <4 x i8>, ptr %i.b, align 8
-  %4 = shufflevector <4 x i8> %3, <4 x i8> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
-  store <4 x i8> %4, ptr %.sroa.64.0..sroa_idx, align 8
+  %3 = load <2 x i16>, ptr %i.b, align 8
+  %4 = shufflevector <2 x i16> %3, <2 x i16> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x i16> %4, ptr %.sroa.64.0..sroa_idx, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 448 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 464 ; 2 uses
   %i.o = load i64, ptr %i.n, align 8, !alias.scope !75, !noundef !7 ; 3 uses
@@ -607,9 +607,9 @@ bb.c:                                             ; preds = %bb.a
   %.sroa.0.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 136
   store i64 %i.u, ptr %.sroa.0.sroa.3.0..sroa_idx.i, align 8, !noalias !183
   %.sroa.0.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 144
-  %2 = load <4 x i8>, ptr %i.c, align 8, !alias.scope !182
-  %3 = shufflevector <4 x i8> %2, <4 x i8> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
-  store <4 x i8> %3, ptr %.sroa.0.sroa.4.0..sroa_idx.i, align 8, !noalias !183
+  %2 = load <2 x i16>, ptr %i.c, align 8, !alias.scope !182
+  %3 = shufflevector <2 x i16> %2, <2 x i16> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x i16> %3, ptr %.sroa.0.sroa.4.0..sroa_idx.i, align 8, !noalias !183
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 448 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 464 ; 2 uses
   %i.aa = load i64, ptr %i.z, align 8, !alias.scope !187, !noundef !7 ; 3 uses
@@ -781,9 +781,9 @@ bb.e:                                             ; preds = %bb.b
   %.sroa.0.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 136
   store i64 %i.v, ptr %.sroa.0.sroa.3.0..sroa_idx.i, align 8, !noalias !212
   %.sroa.0.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 144
-  %2 = load <4 x i8>, ptr %i.d, align 8, !alias.scope !211
-  %3 = shufflevector <4 x i8> %2, <4 x i8> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
-  store <4 x i8> %3, ptr %.sroa.0.sroa.4.0..sroa_idx.i, align 8, !noalias !212
+  %2 = load <2 x i16>, ptr %i.d, align 8, !alias.scope !211
+  %3 = shufflevector <2 x i16> %2, <2 x i16> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x i16> %3, ptr %.sroa.0.sroa.4.0..sroa_idx.i, align 8, !noalias !212
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 448 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 464 ; 2 uses
   %i.ab = load i64, ptr %i.aa, align 8, !alias.scope !216, !noundef !7 ; 3 uses
@@ -1186,9 +1186,9 @@ bb.a:
   %.sroa.53.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 136
   store i64 %i.i, ptr %.sroa.53.0..sroa_idx.i, align 8, !noalias !291
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 144
-  %2 = load <4 x i8>, ptr %i.b, align 8, !alias.scope !290
-  %3 = shufflevector <4 x i8> %2, <4 x i8> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
-  store <4 x i8> %3, ptr %.sroa.64.0..sroa_idx.i, align 8, !noalias !291
+  %2 = load <2 x i16>, ptr %i.b, align 8, !alias.scope !290
+  %3 = shufflevector <2 x i16> %2, <2 x i16> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x i16> %3, ptr %.sroa.64.0..sroa_idx.i, align 8, !noalias !291
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 448 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 464 ; 2 uses
   %i.o = load i64, ptr %i.n, align 8, !alias.scope !295, !noundef !7 ; 3 uses
@@ -1328,9 +1328,9 @@ bb.a:
   %.sroa.53.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 136
   store i64 %i.j, ptr %.sroa.53.0..sroa_idx.i, align 8, !noalias !321
   %.sroa.64.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 144
-  %2 = load <4 x i8>, ptr %i.c, align 8, !alias.scope !320
-  %3 = shufflevector <4 x i8> %2, <4 x i8> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
-  store <4 x i8> %3, ptr %.sroa.64.0..sroa_idx.i, align 8, !noalias !321
+  %2 = load <2 x i16>, ptr %i.c, align 8, !alias.scope !320
+  %3 = shufflevector <2 x i16> %2, <2 x i16> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x i16> %3, ptr %.sroa.64.0..sroa_idx.i, align 8, !noalias !321
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 448 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 464 ; 2 uses
   %i.p = load i64, ptr %i.o, align 8, !alias.scope !325, !noundef !7 ; 3 uses
@@ -1481,9 +1481,9 @@ bb.a:
   %.sroa.0.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 136
   store i64 %i.j, ptr %.sroa.0.sroa.3.0..sroa_idx.i, align 8, !noalias !354
   %.sroa.0.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.a, i64 144
-  %2 = load <4 x i8>, ptr %i.c, align 8, !alias.scope !353
-  %3 = shufflevector <4 x i8> %2, <4 x i8> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
-  store <4 x i8> %3, ptr %.sroa.0.sroa.4.0..sroa_idx.i, align 8, !noalias !354
+  %2 = load <2 x i16>, ptr %i.c, align 8, !alias.scope !353
+  %3 = shufflevector <2 x i16> %2, <2 x i16> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x i16> %3, ptr %.sroa.0.sroa.4.0..sroa_idx.i, align 8, !noalias !354
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 448 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 464 ; 2 uses
   %i.p = load i64, ptr %i.o, align 8, !alias.scope !358, !noundef !7 ; 3 uses
