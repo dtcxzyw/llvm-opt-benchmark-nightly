@@ -202,20 +202,24 @@ _ZNKSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EE16_M_get_use_countEv.exit.i
   br label %bb.cw
 
 bb.cw:                                            ; preds = %bb.dg, %.lr.ph328
-  %.0140327 = phi i32 [ 0, %.lr.ph328 ], [ %i.mx, %bb.dg ] ; 2 uses
+  %.0140327 = phi i32 [ 0, %.lr.ph328 ], [ %i.mx, %bb.dg ] ; 3 uses
   %.0141326 = phi i32 [ 0, %.lr.ph328 ], [ %.3, %bb.dg ] ; 6 uses
   switch i8 %.11312, label %.thread315.loopexit [
-    i8 4, label %bb.cy
+    i8 4, label %46
     i8 8, label %bb.cx
   ]
 
-bb.cx:                                            ; preds = %bb.cw
+46:                                               ; preds = %bb.cw
+  %47 = add nuw nsw i32 %.0140327, 64
   br label %bb.cy
 
-bb.cy:                                            ; preds = %bb.cw, %bb.cx
-  %.sink = phi i32 [ 256, %bb.cx ], [ 64, %bb.cw ]
-  %46 = add nuw nsw i32 %.0140327, %.sink
-  %i.lx = call noundef ptr @_ZN12lldb_private15RegisterContext15GetRegisterInfoEN4lldb12RegisterKindEj(ptr noundef nonnull align 8 dereferenceable(40) %i.ah, i32 noundef 1, i32 noundef %46) #20 ; 3 uses
+bb.cx:                                            ; preds = %bb.cw
+  %48 = or disjoint i32 %.0140327, 256
+  br label %bb.cy
+
+bb.cy:                                            ; preds = %bb.cx, %46
+  %.sink = phi i32 [ %47, %46 ], [ %48, %bb.cx ]
+  %i.lx = call noundef ptr @_ZN12lldb_private15RegisterContext15GetRegisterInfoEN4lldb12RegisterKindEj(ptr noundef nonnull align 8 dereferenceable(40) %i.ah, i32 noundef 1, i32 noundef %.sink) #20 ; 3 uses
   %i.ly = icmp eq ptr %i.lx, null
   br i1 %i.ly, label %.thread315.loopexit, label %bb.cz
 

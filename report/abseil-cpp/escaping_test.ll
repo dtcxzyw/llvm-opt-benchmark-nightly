@@ -204,9 +204,10 @@ bb.bw:                                            ; preds = %bb.bv, %bb.bu, %._c
 
 ._crit_edge.i.i283.i:                             ; preds = %.noexc285.i, %._crit_edge.i
   %i.hf = phi ptr [ %i.hd, %.noexc285.i ], [ %i.w, %._crit_edge.i ] ; 2 uses
-  switch i64 %i.hy, label %bb.by [
-    i64 1, label %bb.bx
-    i64 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i
+  %trunc.i = trunc nuw i64 %i.hy to i32
+  switch i32 %trunc.i, label %bb.by [
+    i32 1, label %bb.bx
+    i32 0, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit.i
   ]
 
 bb.bx:                                            ; preds = %._crit_edge.i.i283.i

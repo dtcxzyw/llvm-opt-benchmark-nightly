@@ -204,7 +204,7 @@ bb.a:
   br label %bb.b
 
 .preheader:                                       ; preds = %bb.f, %bb.a
-  %i.h = phi ptr [ %i.b, %bb.a ], [ %i.ai, %bb.f ]
+  %i.h = phi ptr [ %i.b, %bb.a ], [ %i.ai, %bb.f ] ; 2 uses
   %i.i = getelementptr i8, ptr %i.h, i64 688
   %i.j = load i32, ptr %i.i, align 8
   %i.k = icmp sgt i32 %i.j, 0
@@ -268,7 +268,8 @@ bb.f:                                             ; preds = %bb.b, %bb.e, %bb.d,
   br i1 %i.an, label %bb.b, label %.preheader, !llvm.loop !23
 
 bb.g:                                             ; preds = %.lr.ph59, %bb.q
-  %indvars.iv67 = phi i64 [ 0, %.lr.ph59 ], [ %indvars.iv.next68, %bb.q ] ; 2 uses
+  %2 = phi ptr [ %i.h, %.lr.ph59 ], [ %3, %bb.q ] ; 2 uses
+  %indvars.iv67 = phi i64 [ 0, %.lr.ph59 ], [ %indvars.iv.next71, %bb.q ] ; 2 uses
   %i.ao = load ptr, ptr %i.l, align 8
   %i.ap = getelementptr [56 x i8], ptr %i.ao, i64 %indvars.iv67 ; 3 uses
   %i.aq = load ptr, ptr %i.ap, align 8            ; 4 uses
@@ -467,27 +468,27 @@ drm_atomic_helper_crtc_normalize_zpos.exit.thread49: ; preds = %__drm_to_dev.exi
   %i.dw = or i8 %i.dv, 16
   store i8 %i.dw, ptr %i.du, align 2
   tail call void @kfree(ptr noundef nonnull %i.br) #7
+  %.pre75 = load ptr, ptr %i.a, align 8
   br label %bb.q
 
 drm_atomic_helper_crtc_normalize_zpos.exit:       ; preds = %bb.o, %bb.m
   %.us-phi.i = phi ptr [ %i.by, %bb.m ], [ %i.cn, %bb.o ]
   %i.dx = ptrtoint ptr %.us-phi.i to i64
-  %i.dy = trunc i64 %i.dx to i32                  ; 2 uses
+  %i.dy = trunc nsw i64 %i.dx to i32
   tail call void @kfree(ptr noundef nonnull %i.br) #7
-  %.not42 = icmp eq i32 %i.dy, 0
-  br i1 %.not42, label %bb.q, label %drm_atomic_helper_crtc_normalize_zpos.exit.thread
+  br label %drm_atomic_helper_crtc_normalize_zpos.exit.thread
 
-bb.q:                                             ; preds = %drm_atomic_helper_crtc_normalize_zpos.exit.thread49, %bb.g, %drm_atomic_helper_crtc_normalize_zpos.exit, %bb.i
-  %indvars.iv.next68 = add nuw nsw i64 %indvars.iv67, 1 ; 2 uses
-  %2 = load ptr, ptr %i.a, align 8
-  %i.dz = getelementptr i8, ptr %2, i64 688
+bb.q:                                             ; preds = %drm_atomic_helper_crtc_normalize_zpos.exit.thread49, %bb.g, %bb.i
+  %3 = phi ptr [ %.pre75, %drm_atomic_helper_crtc_normalize_zpos.exit.thread49 ], [ %2, %bb.g ], [ %2, %bb.i ] ; 2 uses
+  %indvars.iv.next71 = add nuw nsw i64 %indvars.iv67, 1 ; 2 uses
+  %i.dz = getelementptr i8, ptr %3, i64 688
   %i.ea = load i32, ptr %i.dz, align 8
   %i.eb = sext i32 %i.ea to i64
-  %i.ec = icmp slt i64 %indvars.iv.next68, %i.eb
+  %i.ec = icmp slt i64 %indvars.iv.next71, %i.eb
   br i1 %i.ec, label %bb.g, label %drm_atomic_helper_crtc_normalize_zpos.exit.thread, !llvm.loop !26
 
-drm_atomic_helper_crtc_normalize_zpos.exit.thread: ; preds = %drm_atomic_helper_crtc_normalize_zpos.exit, %bb.q, %__drm_to_dev.exit.i, %.preheader
-  %.036 = phi i32 [ 0, %.preheader ], [ 0, %bb.q ], [ -12, %__drm_to_dev.exit.i ], [ %i.dy, %drm_atomic_helper_crtc_normalize_zpos.exit ]
+drm_atomic_helper_crtc_normalize_zpos.exit.thread: ; preds = %bb.q, %__drm_to_dev.exit.i, %.preheader, %drm_atomic_helper_crtc_normalize_zpos.exit
+  %.036 = phi i32 [ %i.dy, %drm_atomic_helper_crtc_normalize_zpos.exit ], [ 0, %.preheader ], [ 0, %bb.q ], [ -12, %__drm_to_dev.exit.i ]
   ret i32 %.036
 }
 

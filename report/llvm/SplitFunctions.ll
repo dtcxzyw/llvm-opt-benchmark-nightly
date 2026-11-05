@@ -205,27 +205,29 @@ _ZN12_GLOBAL__N_118SplitCacheDirected17extractCoverCallsERKN4llvm4bolt14BinaryFu
   %i.hh = zext i32 %i.hg to i64
   %i.hi = call i64 @llvm.usub.sat.i64(i64 %i.hh, i64 1) ; 3 uses
   %exitcond.not.i177 = icmp ult i32 %i.hg, 2
-  br i1 %exitcond.not.i177, label %._crit_edge180, label %.lr.ph179
+  br i1 %exitcond.not.i177, label %._crit_edge.i, label %.lr.ph179
 
 bb.u:                                             ; preds = %.lr.ph179
   %exitcond.not.i = icmp eq i64 %i.hj, %i.hi
-  br i1 %exitcond.not.i, label %._crit_edge180, label %.lr.ph179, !llvm.loop !873
+  br i1 %exitcond.not.i, label %._crit_edge.i, label %.lr.ph179, !llvm.loop !873
+
+._crit_edge.i:                                    ; preds = %bb.u, %_ZN12_GLOBAL__N_118SplitCacheDirected17extractCoverCallsERKN4llvm4bolt14BinaryFunctionE.exit.i
+  %.pre182.i = add nuw nsw i64 %i.hi, 1
+  br label %._crit_edge180
 
 .lr.ph179:                                        ; preds = %_ZN12_GLOBAL__N_118SplitCacheDirected17extractCoverCallsERKN4llvm4bolt14BinaryFunctionE.exit.i, %bb.u
   %.022.i178 = phi i64 [ %i.hj, %bb.u ], [ 0, %_ZN12_GLOBAL__N_118SplitCacheDirected17extractCoverCallsERKN4llvm4bolt14BinaryFunctionE.exit.i ] ; 2 uses
-  %i.hj = add nuw nsw i64 %.022.i178, 1           ; 3 uses
+  %i.hj = add nuw nsw i64 %.022.i178, 1           ; 4 uses
   %i.hk = getelementptr inbounds nuw [8 x i8], ptr %i.hf, i64 %i.hj
   %i.hl = load ptr, ptr %i.hk, align 8, !tbaa !443
   %i.hm = getelementptr inbounds nuw i8, ptr %i.hl, i64 176
   %.sroa.0.0.copyload.i.i = load i32, ptr %i.hm, align 8, !tbaa !447
   %i.hn = icmp eq i32 %.sroa.0.0.copyload.i.i, 1
-  br i1 %i.hn, label %._crit_edge, label %bb.u, !llvm.loop !873
+  br i1 %i.hn, label %._crit_edge180, label %bb.u, !llvm.loop !873
 
-._crit_edge:                                      ; preds = %.lr.ph179
-  br label %._crit_edge180, !llvm.loop !873
-
-._crit_edge180:                                   ; preds = %bb.u, %._crit_edge, %_ZN12_GLOBAL__N_118SplitCacheDirected17extractCoverCallsERKN4llvm4bolt14BinaryFunctionE.exit.i
-  %.022.lcssa.i = phi i64 [ %.022.i178, %._crit_edge ], [ %i.hi, %_ZN12_GLOBAL__N_118SplitCacheDirected17extractCoverCallsERKN4llvm4bolt14BinaryFunctionE.exit.i ], [ %i.hi, %bb.u ] ; 2 uses
+._crit_edge180:                                   ; preds = %.lr.ph179, %._crit_edge.i
+  %.pre-phi.i = phi i64 [ %.pre182.i, %._crit_edge.i ], [ %i.hj, %.lr.ph179 ]
+  %.022.lcssa.i = phi i64 [ %i.hi, %._crit_edge.i ], [ %.022.i178, %.lr.ph179 ]
   %i.ho = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.hp = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 7 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %0, i64 24
@@ -262,10 +264,10 @@ bb.x:                                             ; preds = %bb.bm, %._crit_edge
   %i.if = load ptr, ptr %3, align 8, !tbaa !42    ; 3 uses
   %i.ig = getelementptr inbounds nuw [8 x i8], ptr %i.if, i64 %.0141.i
   %i.ih = load ptr, ptr %i.ig, align 8, !tbaa !443 ; 5 uses
-  %i.ii = add i64 %.0141.i, 1                     ; 4 uses
+  %i.ii = add nuw nsw i64 %.0141.i, 1             ; 4 uses
   %i.ij = load i32, ptr %i.e, align 8, !tbaa !431 ; 2 uses
   %i.ik = zext i32 %i.ij to i64
-  %i.il = icmp ult i64 %i.ii, %i.ik
+  %i.il = icmp samesign ult i64 %i.ii, %i.ik
   br i1 %i.il, label %bb.y, label %bb.ae
 
 bb.y:                                             ; preds = %bb.x
@@ -352,7 +354,7 @@ bb.ae:                                            ; preds = %thread-pre-split.i,
   br i1 %i.jo, label %.critedge.i.i.i, label %.lr.ph.i35.i, !llvm.loop !876
 
 .lr.ph.i35.i:                                     ; preds = %.lr.ph.i.i40.i
-  %.not.i.i36.i.not = icmp ult i64 %.055.i19.i.i183, %.0141.i
+  %.not.i.i36.i.not = icmp samesign ult i64 %.055.i19.i.i183, %.0141.i
   %spec.select.i.i.i = select i1 %.not.i.i36.i.not, i32 0, i32 2
   store i32 %spec.select.i.i.i, ptr %i.jn, align 8, !tbaa !447, !noalias !924
   %exitcond.not = icmp eq i64 %i.jk, %i.jj
@@ -755,8 +757,8 @@ bb.bm:                                            ; preds = %bb.bl, %_ZN12_GLOBA
   %.sroa.7.2.i = phi double [ %.sroa.7.0138.i, %_ZN12_GLOBAL__N_118SplitCacheDirected22getMostLikelySuccessorEPKN4llvm4bolt16BinaryBasicBlockE.exit.i ], [ %.sroa.9.9.i, %bb.bl ], [ %.sroa.7.0138.i, %_ZN12_GLOBAL__N_118SplitCacheDirected17computeSplitScoreERKN4llvm4bolt14BinaryFunctionERKNS1_11SmallVectorIPNS2_16BinaryBasicBlockELj0EEEmRKSt6vectorINS0_8CallInfoESaISD_EE.exit.i ]
   %.sroa.990.2.i = phi double [ %.sroa.990.0139.i, %_ZN12_GLOBAL__N_118SplitCacheDirected22getMostLikelySuccessorEPKN4llvm4bolt16BinaryBasicBlockE.exit.i ], [ %.sroa.12.1.i, %bb.bl ], [ %.sroa.990.0139.i, %_ZN12_GLOBAL__N_118SplitCacheDirected17computeSplitScoreERKN4llvm4bolt14BinaryFunctionERKNS1_11SmallVectorIPNS2_16BinaryBasicBlockELj0EEEmRKSt6vectorINS0_8CallInfoESaISD_EE.exit.i ]
   %.sroa.088.2.i = phi i64 [ %.sroa.088.0140.i, %_ZN12_GLOBAL__N_118SplitCacheDirected22getMostLikelySuccessorEPKN4llvm4bolt16BinaryBasicBlockE.exit.i ], [ %.0141.i, %bb.bl ], [ %.sroa.088.0140.i, %_ZN12_GLOBAL__N_118SplitCacheDirected17computeSplitScoreERKN4llvm4bolt14BinaryFunctionERKNS1_11SmallVectorIPNS2_16BinaryBasicBlockELj0EEEmRKSt6vectorINS0_8CallInfoESaISD_EE.exit.i ] ; 3 uses
-  %.not.i13 = icmp ugt i64 %i.ii, %.022.lcssa.i
-  br i1 %.not.i13, label %bb.v, label %bb.x, !llvm.loop !917
+  %exitcond174.i = icmp eq i64 %i.ii, %.pre-phi.i
+  br i1 %exitcond174.i, label %bb.v, label %bb.x, !llvm.loop !917
 
 _ZN12_GLOBAL__N_118SplitCacheDirected14findSplitIndexERKN4llvm4bolt14BinaryFunctionERKNS1_11SmallVectorIPNS2_16BinaryBasicBlockELj0EEE.exit: ; preds = %bb.v, %bb.w
   %i.agc = icmp eq i64 %.sroa.088.2.i, -1

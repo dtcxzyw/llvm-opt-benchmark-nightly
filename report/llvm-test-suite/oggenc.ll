@@ -205,15 +205,15 @@ declare double @frexp(double noundef, ptr noundef captures(none)) local_unnamed_
 define dso_local range(i32 -1, 1) i32 @vorbis_lpc_to_lsp(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2) local_unnamed_addr #13 !guid !4106 {
 bb.a:
   %i.a = add nsw i32 %2, 1
-  %i.b = ashr i32 %i.a, 1                         ; 15 uses
-  %i.c = add nsw i32 %i.b, 1                      ; 4 uses
+  %i.b = ashr i32 %i.a, 1                         ; 19 uses
+  %i.c = add nsw i32 %i.b, 1                      ; 3 uses
   %i.d = sext i32 %i.c to i64
   %i.e = shl nsw i64 %i.d, 2                      ; 4 uses
   %i.f = alloca i8, i64 %i.e, align 16            ; 16 uses
   %i.g = alloca i8, i64 %i.e, align 16            ; 19 uses
   %i.h = alloca i8, i64 %i.e, align 16            ; 6 uses
   %i.i = alloca i8, i64 %i.e, align 16            ; 6 uses
-  %i.j = ashr i32 %2, 1                           ; 21 uses
+  %i.j = ashr i32 %2, 1                           ; 24 uses
   %i.k = sext i32 %i.b to i64                     ; 4 uses
   %i.l = getelementptr inbounds [4 x i8], ptr %i.f, i64 %i.k
   store float 1.000000e+00, ptr %i.l, align 4
@@ -572,23 +572,23 @@ middle.block214:                                  ; preds = %vector.body209
   br i1 %.not19.i, label %cheby.exit, label %.preheader.preheader.i
 
 .preheader.preheader.i:                           ; preds = %.loopexit119
-  %i.ee = zext nneg i32 %i.b to i64               ; 6 uses
-  %wide.trip.count.i = zext nneg i32 %i.c to i64
+  %i.ee = zext nneg i32 %i.b to i64               ; 4 uses
   %i.ef = shl nuw nsw i64 %i.ee, 2
   %i.eg = getelementptr i8, ptr %i.f, i64 %i.ef
   %scevgep251 = getelementptr i8, ptr %i.eg, i64 -4
-  %3 = add nuw nsw i64 %i.ee, 1
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.loopexit250, %.preheader.preheader.i
-  %indvars.iv22.i = phi i64 [ 2, %.preheader.preheader.i ], [ %indvars.iv.next23.i, %.loopexit250 ] ; 3 uses
-  %4 = tail call i64 @llvm.smin.i64(i64 %indvars.iv22.i, i64 %i.ee)
-  %5 = sub nsw i64 %3, %4                         ; 3 uses
-  %min.iters.check218 = icmp ult i64 %5, 2
-  br i1 %min.iters.check218, label %scalar.ph217.preheader, label %vector.ph219
+  %.01520.i = phi i32 [ %7, %.loopexit250 ], [ 2, %.preheader.preheader.i ] ; 5 uses
+  %3 = tail call i32 @llvm.smin.i32(i32 %i.b, i32 %.01520.i)
+  %4 = sub nsw i32 %i.b, %3
+  %narrow = add nuw i32 %4, 1
+  %5 = zext i32 %narrow to i64                    ; 2 uses
+  %min.iters.check216.not = icmp sgt i32 %i.b, %.01520.i
+  br i1 %min.iters.check216.not, label %vector.ph219, label %scalar.ph217.preheader
 
 vector.ph219:                                     ; preds = %.preheader.i
-  %n.vec220 = and i64 %5, -2                      ; 3 uses
+  %n.vec220 = and i64 %5, 4294967294              ; 3 uses
   %i.eh = sub nsw i64 %i.ee, %n.vec220
   %load_initial252 = load <2 x float>, ptr %scevgep251, align 4
   %i.ei = shufflevector <2 x float> %load_initial252, <2 x float> poison, <2 x i32> <i32 1, i32 0>
@@ -598,7 +598,7 @@ vector.body221:                                   ; preds = %vector.body221, %ve
   %store_forwarded253 = phi <2 x float> [ %i.ei, %vector.ph219 ], [ %i.en, %vector.body221 ] ; 3 uses
   %index222 = phi i64 [ 0, %vector.ph219 ], [ %index.next229, %vector.body221 ] ; 2 uses
   %i.ej = sub i64 %i.ee, %index222
-  %i.ek = getelementptr inbounds [4 x i8], ptr %i.f, i64 %i.ej ; 2 uses
+  %i.ek = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.ej ; 2 uses
   %i.el = getelementptr inbounds i8, ptr %i.ek, i64 -4
   %i.em = getelementptr i8, ptr %i.ek, i64 -12    ; 2 uses
   %wide.load225 = load <2 x float>, ptr %i.em, align 4
@@ -614,7 +614,7 @@ vector.body221:                                   ; preds = %vector.body221, %ve
   br i1 %i.ep, label %middle.block230, label %vector.body221, !llvm.loop !4099
 
 middle.block230:                                  ; preds = %vector.body221
-  %cmp.n231 = icmp eq i64 %5, %n.vec220
+  %cmp.n231 = icmp eq i64 %n.vec220, %5
   br i1 %cmp.n231, label %.loopexit250, label %scalar.ph217.preheader
 
 scalar.ph217.preheader:                           ; preds = %.preheader.i, %middle.block230
@@ -623,7 +623,7 @@ scalar.ph217.preheader:                           ; preds = %.preheader.i, %midd
 
 scalar.ph217:                                     ; preds = %scalar.ph217.preheader, %scalar.ph217
   %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %scalar.ph217 ], [ %indvars.iv.i.ph, %scalar.ph217.preheader ] ; 3 uses
-  %i.eq = getelementptr inbounds [4 x i8], ptr %i.f, i64 %indvars.iv.i ; 3 uses
+  %i.eq = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv.i ; 3 uses
   %i.er = load float, ptr %i.eq, align 4          ; 3 uses
   %i.es = getelementptr i8, ptr %i.eq, i64 -8     ; 2 uses
   %i.et = load float, ptr %i.es, align 4
@@ -632,12 +632,13 @@ scalar.ph217:                                     ; preds = %scalar.ph217.prehea
   %i.ev = fadd float %i.er, %i.er
   store float %i.ev, ptr %i.eq, align 4
   %indvars.iv.next.i = add nsw i64 %indvars.iv.i, -1
-  %.not17.not.i = icmp sgt i64 %indvars.iv.i, %indvars.iv22.i
+  %6 = trunc nuw i64 %indvars.iv.i to i32
+  %.not17.not.i = icmp slt i32 %.01520.i, %6
   br i1 %.not17.not.i, label %scalar.ph217, label %.loopexit250, !llvm.loop !4100
 
 .loopexit250:                                     ; preds = %scalar.ph217, %middle.block230
-  %indvars.iv.next23.i = add nuw nsw i64 %indvars.iv22.i, 1 ; 2 uses
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next23.i, %wide.trip.count.i
+  %7 = add nuw nsw i32 %.01520.i, 1
+  %exitcond.not.i = icmp eq i32 %.01520.i, %i.b
   br i1 %exitcond.not.i, label %cheby.exit, label %.preheader.i, !llvm.loop !4101
 
 cheby.exit:                                       ; preds = %.loopexit250, %.loopexit119
@@ -648,24 +649,23 @@ cheby.exit:                                       ; preds = %.loopexit250, %.loo
   br i1 %.not19.i107, label %cheby.exit117, label %.preheader.preheader.i108
 
 .preheader.preheader.i108:                        ; preds = %cheby.exit
-  %i.ey = zext nneg i32 %i.j to i64               ; 6 uses
-  %6 = add nuw nsw i32 %i.j, 1
-  %wide.trip.count.i109 = zext nneg i32 %6 to i64
+  %i.ey = zext nneg i32 %i.j to i64               ; 4 uses
   %i.ez = shl nuw nsw i64 %i.ey, 2
   %i.fa = getelementptr i8, ptr %i.g, i64 %i.ez
   %scevgep = getelementptr i8, ptr %i.fa, i64 -4
-  %7 = add nuw nsw i64 %i.ey, 1
   br label %.preheader.i110
 
 .preheader.i110:                                  ; preds = %.loopexit249, %.preheader.preheader.i108
-  %indvars.iv22.i111 = phi i64 [ 2, %.preheader.preheader.i108 ], [ %indvars.iv.next23.i115, %.loopexit249 ] ; 3 uses
-  %8 = tail call i64 @llvm.smin.i64(i64 %indvars.iv22.i111, i64 %i.ey)
-  %9 = sub nsw i64 %7, %8                         ; 3 uses
-  %min.iters.check234 = icmp ult i64 %9, 2
-  br i1 %min.iters.check234, label %scalar.ph233.preheader, label %vector.ph235
+  %.01520.i110 = phi i32 [ %12, %.loopexit249 ], [ 2, %.preheader.preheader.i108 ] ; 5 uses
+  %8 = tail call i32 @llvm.smin.i32(i32 %i.j, i32 %.01520.i110)
+  %9 = sub nsw i32 %i.j, %8
+  %narrow261 = add nuw i32 %9, 1
+  %10 = zext i32 %narrow261 to i64                ; 2 uses
+  %min.iters.check232.not = icmp sgt i32 %i.j, %.01520.i110
+  br i1 %min.iters.check232.not, label %vector.ph235, label %scalar.ph233.preheader
 
 vector.ph235:                                     ; preds = %.preheader.i110
-  %n.vec236 = and i64 %9, -2                      ; 3 uses
+  %n.vec236 = and i64 %10, 4294967294             ; 3 uses
   %i.fb = sub nsw i64 %i.ey, %n.vec236
   %load_initial = load <2 x float>, ptr %scevgep, align 4
   %i.fc = shufflevector <2 x float> %load_initial, <2 x float> poison, <2 x i32> <i32 1, i32 0>
@@ -675,7 +675,7 @@ vector.body237:                                   ; preds = %vector.body237, %ve
   %store_forwarded = phi <2 x float> [ %i.fc, %vector.ph235 ], [ %i.fh, %vector.body237 ] ; 3 uses
   %index238 = phi i64 [ 0, %vector.ph235 ], [ %index.next245, %vector.body237 ] ; 2 uses
   %i.fd = sub i64 %i.ey, %index238
-  %i.fe = getelementptr inbounds [4 x i8], ptr %i.g, i64 %i.fd ; 2 uses
+  %i.fe = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %i.fd ; 2 uses
   %i.ff = getelementptr inbounds i8, ptr %i.fe, i64 -4
   %i.fg = getelementptr i8, ptr %i.fe, i64 -12    ; 2 uses
   %wide.load241 = load <2 x float>, ptr %i.fg, align 4
@@ -691,7 +691,7 @@ vector.body237:                                   ; preds = %vector.body237, %ve
   br i1 %i.fj, label %middle.block246, label %vector.body237, !llvm.loop !4102
 
 middle.block246:                                  ; preds = %vector.body237
-  %cmp.n247 = icmp eq i64 %9, %n.vec236
+  %cmp.n247 = icmp eq i64 %n.vec236, %10
   br i1 %cmp.n247, label %.loopexit249, label %scalar.ph233.preheader
 
 scalar.ph233.preheader:                           ; preds = %.preheader.i110, %middle.block246
@@ -700,7 +700,7 @@ scalar.ph233.preheader:                           ; preds = %.preheader.i110, %m
 
 scalar.ph233:                                     ; preds = %scalar.ph233.preheader, %scalar.ph233
   %indvars.iv.i112 = phi i64 [ %indvars.iv.next.i113, %scalar.ph233 ], [ %indvars.iv.i112.ph, %scalar.ph233.preheader ] ; 3 uses
-  %i.fk = getelementptr inbounds [4 x i8], ptr %i.g, i64 %indvars.iv.i112 ; 3 uses
+  %i.fk = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv.i112 ; 3 uses
   %i.fl = load float, ptr %i.fk, align 4          ; 3 uses
   %i.fm = getelementptr i8, ptr %i.fk, i64 -8     ; 2 uses
   %i.fn = load float, ptr %i.fm, align 4
@@ -709,12 +709,13 @@ scalar.ph233:                                     ; preds = %scalar.ph233.prehea
   %i.fp = fadd float %i.fl, %i.fl
   store float %i.fp, ptr %i.fk, align 4
   %indvars.iv.next.i113 = add nsw i64 %indvars.iv.i112, -1
-  %.not17.not.i114 = icmp sgt i64 %indvars.iv.i112, %indvars.iv22.i111
-  br i1 %.not17.not.i114, label %scalar.ph233, label %.loopexit249, !llvm.loop !4103
+  %11 = trunc nuw i64 %indvars.iv.i112 to i32
+  %.not17.not.i113 = icmp slt i32 %.01520.i110, %11
+  br i1 %.not17.not.i113, label %scalar.ph233, label %.loopexit249, !llvm.loop !4103
 
 .loopexit249:                                     ; preds = %scalar.ph233, %middle.block246
-  %indvars.iv.next23.i115 = add nuw nsw i64 %indvars.iv22.i111, 1 ; 2 uses
-  %exitcond.not.i116 = icmp eq i64 %indvars.iv.next23.i115, %wide.trip.count.i109
+  %12 = add nuw nsw i32 %.01520.i110, 1
+  %exitcond.not.i116 = icmp eq i32 %.01520.i110, %i.j
   br i1 %exitcond.not.i116, label %cheby.exit117, label %.preheader.i110, !llvm.loop !4101
 
 cheby.exit117:                                    ; preds = %.loopexit249, %cheby.exit

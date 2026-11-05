@@ -205,22 +205,23 @@ bb.d:                                             ; preds = %bb.b
   br i1 %i.n, label %_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit.i, label %.lr.ph.i.i.i.1
 
 .lr.ph.i.i.i.1:                                   ; preds = %.lr.ph.i.i.i
-  %3 = icmp ult i32 %i.j, 2
-  br i1 %3, label %_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit.i, label %.lr.ph.i.i.i.2
+  %.not.i.i.1 = icmp ugt i32 %i.j, 1
+  br i1 %.not.i.i.1, label %.lr.ph.i.i.i.2, label %_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit.i
 
 .lr.ph.i.i.i.2:                                   ; preds = %.lr.ph.i.i.i.1
-  %4 = icmp ult i32 %i.j, 3
-  br i1 %4, label %_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit.i, label %.lr.ph.i.i.i.3
+  %.not.i.i.2 = icmp ugt i32 %i.j, 2
+  br i1 %.not.i.i.2, label %.lr.ph.i.i.i.3, label %_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit.i
 
 .lr.ph.i.i.i.3:                                   ; preds = %.lr.ph.i.i.i.2
-  %5 = icmp ult i32 %i.j, 4                       ; 2 uses
-  %brmerge = or i1 %5, %1
-  %.mux = select i1 %5, i64 3, i64 %i.h
+  %.not.i.i.3 = icmp ugt i32 %i.j, 3
+  %.not.i.i.3.not = xor i1 %.not.i.i.3, true      ; 2 uses
+  %brmerge = or i1 %.not.i.i.3.not, %1
+  %.mux = select i1 %.not.i.i.3.not, i64 3, i64 %i.h
   br i1 %brmerge, label %_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit.i, label %.lr.ph.i.i.i.4
 
 .lr.ph.i.i.i.4:                                   ; preds = %.lr.ph.i.i.i.3
-  %6 = icmp ult i32 %i.j, 5
-  %spec.select = select i1 %6, i64 4, i64 %i.h
+  %.not.i.i.4 = icmp ugt i32 %i.j, 4
+  %spec.select = select i1 %.not.i.i.4, i64 %i.h, i64 4
   br label %_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit.i
 
 _ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit.i: ; preds = %.lr.ph.i.i.i.4, %.lr.ph.i.i.i, %.lr.ph.i.i.i.1, %.lr.ph.i.i.i.2, %.lr.ph.i.i.i.3, %bb.d
@@ -312,16 +313,16 @@ bb.c:                                             ; preds = %bb.b
 
 .lr.ph.i.i:                                       ; preds = %bb.c, %bb.e
   %.0918.i.i = phi i64 [ %i.o, %bb.e ], [ 0, %bb.c ] ; 3 uses
-  %.01017.i.i = phi i64 [ %.1.i.i, %bb.e ], [ 0, %bb.c ] ; 2 uses
+  %.01017.i.i = phi i64 [ %.1.i.i, %bb.e ], [ 0, %bb.c ] ; 3 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 %.0918.i.i
   %i.m = load i8, ptr %i.l, align 1, !tbaa !201
   %.not14.i.i = icmp slt i8 %i.m, -64
   br i1 %.not14.i.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph.i.i
-  %i.n = add i64 %.01017.i.i, 1                   ; 2 uses
-  %5 = icmp ugt i64 %i.n, %i.j
-  br i1 %5, label %_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit, label %bb.e
+  %i.n = add nuw nsw i64 %.01017.i.i, 1
+  %.not.i = icmp ult i64 %.01017.i.i, %i.j
+  br i1 %.not.i, label %bb.e, label %_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit
 
 bb.e:                                             ; preds = %bb.d, %.lr.ph.i.i
   %.1.i.i = phi i64 [ %i.n, %bb.d ], [ %.01017.i.i, %.lr.ph.i.i ]
@@ -724,16 +725,16 @@ bb.i:                                             ; preds = %bb.h
 
 .lr.ph.i.i:                                       ; preds = %bb.i, %bb.k
   %.0918.i.i = phi i64 [ %i.s, %bb.k ], [ 0, %bb.i ] ; 3 uses
-  %.01017.i.i = phi i64 [ %.1.i.i, %bb.k ], [ 0, %bb.i ] ; 2 uses
+  %.01017.i.i = phi i64 [ %.1.i.i, %bb.k ], [ 0, %bb.i ] ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 %.0918.i.i
   %i.q = load i8, ptr %i.p, align 1, !tbaa !201
   %.not14.i.i = icmp slt i8 %i.q, -64
   br i1 %.not14.i.i, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %.lr.ph.i.i
-  %i.r = add i64 %.01017.i.i, 1                   ; 2 uses
-  %5 = icmp ugt i64 %i.r, %i.n
-  br i1 %5, label %_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit, label %bb.k
+  %i.r = add nuw nsw i64 %.01017.i.i, 1
+  %.not.i = icmp ult i64 %.01017.i.i, %i.n
+  br i1 %.not.i, label %bb.k, label %_ZN10duckdb_fmt2v68internal12basic_writerINS0_12buffer_rangeIcEEE5writeIcEEvNS0_17basic_string_viewIT_EERKNS0_18basic_format_specsIcEE.exit
 
 bb.k:                                             ; preds = %bb.j, %.lr.ph.i.i
   %.1.i.i = phi i64 [ %i.r, %bb.j ], [ %.01017.i.i, %.lr.ph.i.i ]

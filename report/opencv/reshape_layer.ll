@@ -204,19 +204,20 @@ _ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i: ; preds = %_ZN2cv3dn
 
 _ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i.._crit_edge296.i_crit_edge: ; preds = %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i
   %.pre362 = call i32 @llvm.smax.i32(i32 %.pre360, i32 1)
+  %.pre383 = zext i32 %spec.select.i77.fr to i64
   br label %._crit_edge296.i
 
 .lr.ph.i.preheader:                               ; preds = %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i
   %.not25.i79 = icmp ugt i32 %spec.select.i77.fr, %narrow.i.i75
   %narrow.i26.i84 = call i32 @llvm.smax.i32(i32 %.pre360, i32 1) ; 4 uses
   %i.db = getelementptr inbounds nuw i8, ptr %i.ai, i64 12 ; 9 uses
-  %i.dc = zext i32 %spec.select.i77.fr to i64     ; 2 uses
+  %i.dc = zext i32 %spec.select.i77.fr to i64     ; 5 uses
   br i1 %.not25.i79, label %.lr.ph.i.us, label %.lr.ph.i
 
 .lr.ph.i.us:                                      ; preds = %.lr.ph.i.preheader
-  %spec.store.select.i76.us = add i32 %spec.select.i77.fr, -1
-  %.not.i78.us = icmp eq i32 %spec.select.i77.fr, -2147483648
-  br i1 %.not.i78.us, label %.split186.us, label %.split190.us
+  %spec.store.select.i76.us = add nsw i32 %spec.select.i77.fr, -1
+  %41 = icmp sgt i32 %spec.select.i77.fr, 0
+  br i1 %41, label %.split190.us, label %.split.us
 
 .lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %bb.x
   %.092.in294.i = phi i32 [ %.092295.i, %bb.x ], [ %spec.select.i77.fr, %.lr.ph.i.preheader ] ; 5 uses
@@ -231,17 +232,17 @@ _ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i.._crit_edge296.i_crit
   %i.dh = icmp sgt i32 %spec.store.select.i76, -1
   br i1 %i.dh, label %bb.r, label %.split.us
 
-.split.us:                                        ; preds = %.lr.ph.i
-  call void @_ZN2cv6detail17check_failed_autoEiiRKNS0_12CheckContextE(i32 noundef 0, i32 noundef %spec.store.select.i76, ptr noundef nonnull align 8 dereferenceable(48) @_ZZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEiiE15__cv_check__165) #22
+.split.us:                                        ; preds = %.lr.ph.i, %.lr.ph.i.us
+  %.us-phi = phi i32 [ %spec.store.select.i76.us, %.lr.ph.i.us ], [ %spec.store.select.i76, %.lr.ph.i ]
+  call void @_ZN2cv6detail17check_failed_autoEiiRKNS0_12CheckContextE(i32 noundef 0, i32 noundef %.us-phi, ptr noundef nonnull align 8 dereferenceable(48) @_ZZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEiiE15__cv_check__165) #22
   unreachable
 
 bb.r:                                             ; preds = %.lr.ph.i
   %.not.i78 = icmp samesign ugt i32 %spec.store.select.i76, %spec.select.i77.fr
   br i1 %.not.i78, label %.split186.us, label %.preheader.i80
 
-.split186.us:                                     ; preds = %bb.r, %.lr.ph.i.us
-  %.us-phi187 = phi i32 [ %spec.store.select.i76.us, %.lr.ph.i.us ], [ %spec.store.select.i76, %bb.r ]
-  call void @_ZN2cv6detail17check_failed_autoEiiRKNS0_12CheckContextE(i32 noundef %.us-phi187, i32 noundef %spec.select.i77.fr, ptr noundef nonnull align 8 dereferenceable(48) @_ZZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEiiE15__cv_check__166) #22
+.split186.us:                                     ; preds = %bb.r
+  call void @_ZN2cv6detail17check_failed_autoEiiRKNS0_12CheckContextE(i32 noundef %spec.store.select.i76, i32 noundef %spec.select.i77.fr, ptr noundef nonnull align 8 dereferenceable(48) @_ZZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEiiE15__cv_check__166) #22
   unreachable
 
 .preheader.i80:                                   ; preds = %bb.r
@@ -389,27 +390,27 @@ bb.x:                                             ; preds = %bb.w, %_ZN2cv3dnn14
   br i1 %.not.not.i, label %.lr.ph.i, label %._crit_edge296.i, !llvm.loop !139
 
 ._crit_edge296.i:                                 ; preds = %bb.x, %bb.w, %bb.v, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i.._crit_edge296.i_crit_edge
+  %.pre-phi = phi i64 [ %.pre383, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i.._crit_edge296.i_crit_edge ], [ %i.dc, %bb.v ], [ %i.dc, %bb.w ], [ %i.dc, %bb.x ] ; 2 uses
   %narrow.i26.i63.pre-phi = phi i32 [ %.pre362, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i.._crit_edge296.i_crit_edge ], [ %narrow.i26.i84, %bb.v ], [ %narrow.i26.i84, %bb.w ], [ %narrow.i26.i84, %bb.x ]
-  %.sroa.0.0.i = phi i32 [ %.sroa.0.0.extract.trunc258.i, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i.._crit_edge296.i_crit_edge ], [ %.sroa.0.0.extract.trunc258.i, %bb.x ], [ 0, %bb.w ], [ %.092.in294.i, %bb.v ] ; 4 uses
+  %.sroa.0.0.i = phi i32 [ %.sroa.0.0.extract.trunc258.i, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit.i.._crit_edge296.i_crit_edge ], [ %.sroa.0.0.extract.trunc258.i, %bb.x ], [ 0, %bb.w ], [ %.092.in294.i, %bb.v ] ; 5 uses
   %.not25.i = icmp ugt i32 %spec.select.i77.fr, %narrow.i.i75
   %i.fn = getelementptr inbounds nuw i8, ptr %i.ai, i64 12 ; 9 uses
-  %41 = zext i32 %spec.select.i77.fr to i64       ; 2 uses
   br i1 %.not25.i, label %._crit_edge296.i.split.us, label %._crit_edge296.i.split
 
 ._crit_edge296.i.split.us:                        ; preds = %._crit_edge296.i
   %i.fo = icmp eq i32 %.sroa.0.0.i, -1
-  %spec.store.select.i.us = select i1 %i.fo, i32 0, i32 %.sroa.0.0.i ; 3 uses
+  %spec.store.select.i.us = select i1 %i.fo, i32 0, i32 %.sroa.0.0.i ; 2 uses
   %i.fp = icmp sgt i32 %spec.store.select.i.us, -1
   br i1 %i.fp, label %bb.y, label %.split221.us
 
 bb.y:                                             ; preds = %._crit_edge296.i.split.us
-  %.not.i59.us = icmp sgt i32 %spec.store.select.i.us, %spec.select.i77.fr
+  %.not.i59.us = icmp samesign ugt i32 %spec.store.select.i.us, %spec.select.i77.fr
   br i1 %.not.i59.us, label %.split224.us, label %.split228.us
 
 ._crit_edge296.i.split:                           ; preds = %._crit_edge296.i, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit73
-  %.sroa.0.1.i = phi i32 [ %i.ia, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit73 ], [ %.sroa.0.0.i, %._crit_edge296.i ] ; 8 uses
+  %.sroa.0.1.i = phi i32 [ %i.ia, %_ZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEii.exit73 ], [ %.sroa.0.0.i, %._crit_edge296.i ] ; 9 uses
   %i.fq = icmp eq i32 %.sroa.0.1.i, -1
-  %spec.store.select.i = select i1 %i.fq, i32 0, i32 %.sroa.0.1.i ; 7 uses
+  %spec.store.select.i = select i1 %i.fq, i32 0, i32 %.sroa.0.1.i ; 6 uses
   %i.fr = icmp sgt i32 %spec.store.select.i, -1
   br i1 %i.fr, label %bb.z, label %.split221.us
 
@@ -419,11 +420,11 @@ bb.y:                                             ; preds = %._crit_edge296.i.sp
   unreachable
 
 bb.z:                                             ; preds = %._crit_edge296.i.split
-  %.not.i59 = icmp sgt i32 %spec.store.select.i, %spec.select.i77.fr
+  %.not.i59 = icmp samesign ugt i32 %spec.store.select.i, %spec.select.i77.fr
   br i1 %.not.i59, label %.split224.us, label %.preheader.i
 
 .split224.us:                                     ; preds = %bb.z, %bb.y
-  %.us-phi225 = phi i32 [ %spec.store.select.i.us, %bb.y ], [ %spec.store.select.i, %bb.z ]
+  %.us-phi225 = phi i32 [ %.sroa.0.0.i, %bb.y ], [ %.sroa.0.1.i, %bb.z ]
   call void @_ZN2cv6detail17check_failed_autoEiiRKNS0_12CheckContextE(i32 noundef %.us-phi225, i32 noundef %spec.select.i77.fr, ptr noundef nonnull align 8 dereferenceable(48) @_ZZN2cv3dnn14dnn5_v20260605L5totalERKNS_8MatShapeEiiE15__cv_check__166) #22
   unreachable
 
@@ -440,9 +441,9 @@ bb.z:                                             ; preds = %._crit_edge296.i.sp
 
 .lr.ph.split.i68:                                 ; preds = %.lr.ph.i62
   %i.fw = zext nneg i32 %spec.store.select.i to i64 ; 4 uses
-  %i.fx = sub nsw i64 %41, %i.fw                  ; 2 uses
+  %i.fx = sub nsw i64 %.pre-phi, %i.fw            ; 2 uses
   %xtraiter753 = and i64 %i.fx, 7                 ; 3 uses
-  %i.fy = sub nsw i64 %i.fw, %41
+  %i.fy = sub nsw i64 %i.fw, %.pre-phi
   %i.fz = icmp ugt i64 %i.fy, -8
   br i1 %i.fz, label %_ZNK2cv8MatShapeixEm.exit.i69.epil.preheader, label %.lr.ph.split.i68.new
 
@@ -613,7 +614,7 @@ bb.aj:                                            ; preds = %bb.ad
 .thread.i:                                        ; preds = %bb.aj, %._crit_edge.i
   %.sroa.0.2269.i = phi i32 [ %.sroa.0.1.i, %bb.aj ], [ %.sroa.0.0.extract.trunc258.i, %._crit_edge.i ] ; 3 uses
   %.not105.i = icmp sgt i32 %.sroa.0.2269.i, %spec.select.i77.fr
-  %.not106.i = icmp sgt i32 %spec.select.i77.fr, %narrow.i.i
+  %.not106.i = icmp samesign ugt i32 %spec.select.i77.fr, %narrow.i.i
   %or.cond.i = or i1 %.not106.i, %.not105.i
   br i1 %or.cond.i, label %bb.ak, label %bb.ap
 
@@ -657,7 +658,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit140.i: ; preds = %
 
 bb.ap:                                            ; preds = %.thread.i
   %.neg.i = add nuw i32 %narrow.i130.i, %narrow.i.i
-  %i.is = sub i32 %.neg.i, %spec.select.i77.fr
+  %i.is = sub nuw i32 %.neg.i, %spec.select.i77.fr
   %i.it = add i32 %i.is, %.sroa.0.2269.i
   %i.iu = sext i32 %i.it to i64
   call void @_ZN2cv8MatShape6resizeEmi(ptr noundef nonnull align 4 dereferenceable(52) %i.aj, i64 noundef %i.iu, i32 noundef 0)

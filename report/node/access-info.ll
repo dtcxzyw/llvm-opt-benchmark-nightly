@@ -202,8 +202,8 @@ bb.h:                                             ; preds = %bb.i
 bb.i:                                             ; preds = %.preheader, %bb.h
   %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %bb.h ] ; 3 uses
   %i.bs = mul i64 %indvars.iv, 103079215104
-  %sext.i.i20 = add i64 %i.bs, 137438953472
-  %10 = ashr exact i64 %sext.i.i20, 32            ; 2 uses
+  %sext.i.i20 = add i64 %i.bs, 137438953472       ; 2 uses
+  %10 = lshr exact i64 %sext.i.i20, 32
   %i.bt = add i64 %i.br, %10
   %i.bu = inttoptr i64 %i.bt to ptr
   %i.bv = load atomic volatile i64, ptr %i.bu monotonic, align 8
@@ -216,8 +216,9 @@ _ZN2v88internal15DescriptorArray6SearchENS0_6TaggedINS0_4NameEEENS2_INS0_3MapEEE
 
 bb.j:                                             ; preds = %bb.i
   store i64 %indvars.iv, ptr %4, align 8
+  %11 = ashr exact i64 %sext.i.i20, 32
   %i.bx = add i64 %i.bg, 7
-  %i.by = add i64 %i.bx, %10
+  %i.by = add i64 %i.bx, %11
   %i.bz = inttoptr i64 %i.by to ptr
   %i.ca = load atomic volatile i64, ptr %i.bz monotonic, align 8
   %i.cb = lshr i64 %i.ca, 32

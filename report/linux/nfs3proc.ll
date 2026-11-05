@@ -202,12 +202,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 
 PTR_ERR_OR_ZERO.exit:                             ; preds = %.preheader, %bb.g
   %i.am = phi ptr [ %i.aq, %bb.g ], [ %i.ak, %.preheader ] ; 2 uses
-  %4 = ptrtoint ptr %i.am to i64
-  %5 = trunc i64 %4 to i32                        ; 2 uses
-  switch i32 %5, label %.loopexit [
-    i32 -524, label %bb.e
-    i32 0, label %PTR_ERR_OR_ZERO.exit.thread
-  ]
+  %cond = icmp eq ptr %i.am, inttoptr (i64 -524 to ptr)
+  br i1 %cond, label %bb.e, label %.loopexit.loopexit.split.loop.exit
 
 bb.e:                                             ; preds = %PTR_ERR_OR_ZERO.exit
   %i.an = load i32, ptr %i.w, align 8
@@ -234,8 +230,8 @@ bb.g:                                             ; preds = %.sink.split, %bb.e
   %i.ar = icmp ugt ptr %i.aq, inttoptr (i64 -4096 to ptr)
   br i1 %i.ar, label %PTR_ERR_OR_ZERO.exit, label %PTR_ERR_OR_ZERO.exit.thread
 
-PTR_ERR_OR_ZERO.exit.thread:                      ; preds = %PTR_ERR_OR_ZERO.exit, %bb.g, %.preheader
-  %.lcssa = phi ptr [ %i.ak, %.preheader ], [ %i.aq, %bb.g ], [ %i.am, %PTR_ERR_OR_ZERO.exit ] ; 4 uses
+PTR_ERR_OR_ZERO.exit.thread:                      ; preds = %bb.g, %.preheader
+  %.lcssa = phi ptr [ %i.ak, %.preheader ], [ %i.aq, %bb.g ] ; 4 uses
   %.not56 = icmp eq ptr %.lcssa, null
   br i1 %.not56, label %bb.i, label %bb.h
 
@@ -291,8 +287,13 @@ bb.n:                                             ; preds = %bb.h, %bb.l, %bb.m
   call void @dput(ptr noundef %.lcssa) #11
   br label %.loopexit
 
-.loopexit:                                        ; preds = %PTR_ERR_OR_ZERO.exit, %bb.e, %bb.n
-  %.1 = phi i32 [ %.046, %bb.n ], [ -524, %bb.e ], [ %5, %PTR_ERR_OR_ZERO.exit ] ; 4 uses
+.loopexit.loopexit.split.loop.exit:               ; preds = %PTR_ERR_OR_ZERO.exit
+  %4 = ptrtoint ptr %i.am to i64
+  %5 = trunc nsw i64 %4 to i32
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.loopexit.loopexit.split.loop.exit, %bb.e, %bb.n
+  %.1 = phi i32 [ %.046, %bb.n ], [ %5, %.loopexit.loopexit.split.loop.exit ], [ -524, %bb.e ] ; 4 uses
   %i.bl = load ptr, ptr %i.b, align 8             ; 6 uses
   %.not.i61 = icmp eq ptr %i.bl, null
   br i1 %.not.i61, label %posix_acl_release.exit, label %bb.o

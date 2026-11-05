@@ -202,27 +202,27 @@ get_registers.exit.thread.a:                      ; preds = %bb.k
   br label %bb.q
 
 bb.l:                                             ; preds = %bb.k, %bb.g
-  %.0.in.in.i = phi ptr [ %i.p, %bb.g ], [ %i.af, %bb.k ] ; 3 uses
+  %.0.in.in.i = phi ptr [ %i.p, %bb.g ], [ %i.af, %bb.k ]
+  %.0.in.i = ptrtoint ptr %.0.in.in.i to i64      ; 3 uses
   %i.ai = tail call i32 asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock xaddl $0, $1", "=r,=*m,0,*m,~{memory},~{cc},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %.023.i, i32 -1, ptr elementtype(i32) %.023.i) #9, !srcloc !15 ; 2 uses
   %i.aj = icmp eq i32 %i.ai, 1
   br i1 %i.aj, label %bb.o, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.ak = icmp slt i32 %i.ai, 1
-  br i1 %i.ak, label %bb.n, label %get_registers.exit, !prof !13
+  br i1 %i.ak, label %bb.n, label %bb.p, !prof !13
 
 bb.n:                                             ; preds = %bb.m
   tail call void @refcount_warn_saturate(ptr noundef %.023.i, i32 noundef 3) #8
-  br label %get_registers.exit
+  br label %bb.p
 
 bb.o:                                             ; preds = %bb.l
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #9, !srcloc !17
   tail call void @drm_gem_object_free(ptr noundef %.023.i) #8
-  br label %get_registers.exit
+  br label %bb.p
 
-get_registers.exit:                               ; preds = %bb.f, %bb.m, %bb.n, %bb.o
-  %.024.i.in.in = phi ptr [ %.0.in.in.i, %bb.n ], [ %.0.in.in.i, %bb.o ], [ %.0.in.in.i, %bb.m ], [ %.023.i, %bb.f ]
-  %.024.i.in = ptrtoint ptr %.024.i.in.in to i64  ; 2 uses
+get_registers.exit:                               ; preds = %bb.f
+  %.024.i.in = ptrtoint ptr %.023.i to i64        ; 2 uses
   %i.al = and i64 %.024.i.in, 4294967295
   %.not29 = icmp eq i64 %i.al, 0
   br i1 %.not29, label %get_registers.exit._crit_edge, label %bb.p
@@ -232,9 +232,10 @@ get_registers.exit._crit_edge:                    ; preds = %get_registers.exit
   %.pre = load ptr, ptr %.phi.trans.insert, align 8
   br label %bb.q
 
-bb.p:                                             ; preds = %get_registers.exit
+bb.p:                                             ; preds = %bb.o, %bb.n, %bb.m, %get_registers.exit
+  %.024.i32 = phi i64 [ %.024.i.in, %get_registers.exit ], [ %.0.in.i, %bb.m ], [ %.0.in.i, %bb.n ], [ %.0.in.i, %bb.o ]
   tail call void @kfree(ptr noundef nonnull %i.g) #8
-  %sext = shl i64 %.024.i.in, 32
+  %sext = shl i64 %.024.i32, 32
   %i.am = ashr exact i64 %sext, 32
   %i.an = inttoptr i64 %i.am to ptr
   br label %bb.r

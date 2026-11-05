@@ -202,7 +202,7 @@ bb.a:
   br i1 %or.cond7.not127, label %.preheader145.preheader, label %.thread
 
 .preheader145.preheader:                          ; preds = %bb.a
-  %wide.trip.count = zext nneg i32 %4 to i64      ; 5 uses
+  %wide.trip.count = zext nneg i32 %4 to i64      ; 6 uses
   br label %.preheader145
 
 bb.b:                                             ; preds = %.preheader145
@@ -254,7 +254,6 @@ bb.c:                                             ; preds = %.lr.ph
 
 .preheader141.lr.ph:                              ; preds = %.lr.ph154
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %7 = zext nneg i32 %4 to i64
   %i.o = add nuw i32 %4, 1
   %wide.trip.count196 = zext i32 %i.o to i64
   br label %.preheader141
@@ -290,7 +289,7 @@ bb.d:                                             ; preds = %bb.h
   br i1 %exitcond197.not, label %.lr.ph162.preheader, label %.preheader141
 
 bb.e:                                             ; preds = %.preheader141, %bb.h
-  %indvars.iv190 = phi i64 [ %7, %.preheader141 ], [ %indvars.iv.next191, %bb.h ] ; 6 uses
+  %indvars.iv190 = phi i64 [ %wide.trip.count, %.preheader141 ], [ %indvars.iv.next191, %bb.h ] ; 6 uses
   %i.y = icmp eq i64 %indvars.iv190, 1
   br i1 %i.y, label %bb.f, label %bb.g
 
@@ -301,9 +300,9 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.e
   %i.aa = sub nuw nsw i64 %indvars.iv190, %indvars.iv193
-  %i.ab = getelementptr inbounds [8 x i8], ptr %i.a, i64 %i.aa
+  %i.ab = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %i.aa
   %i.ac = load double, ptr %i.ab, align 8, !tbaa !12
-  %i.ad = getelementptr inbounds [8 x i8], ptr %i.a, i64 %indvars.iv190
+  %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.a, i64 %indvars.iv190
   %i.ae = load double, ptr %i.ad, align 8, !tbaa !12
   %i.af = fsub double %i.ac, %i.ae
   %i.ag = fdiv double 1.000000e+00, %i.af         ; 2 uses
@@ -317,7 +316,9 @@ bb.g:                                             ; preds = %bb.e
 
 bb.h:                                             ; preds = %bb.f, %bb.g
   %indvars.iv.next191 = add nsw i64 %indvars.iv190, -1
-  %.not136.not = icmp sgt i64 %indvars.iv190, %indvars.iv193
+  %7 = shl i64 %indvars.iv190, 32
+  %8 = ashr exact i64 %7, 32
+  %.not136.not = icmp sgt i64 %8, %indvars.iv193
   br i1 %.not136.not, label %bb.e, label %bb.d
 
 .lr.ph162:                                        ; preds = %.lr.ph162.preheader, %.lr.ph162

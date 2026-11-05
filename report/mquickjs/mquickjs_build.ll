@@ -204,17 +204,19 @@ bb.v:                                             ; preds = %bb.u
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
-  %.0113 = phi i32 [ %i.cl, %bb.v ], [ %i.cf, %bb.u ] ; 6 uses
+  %.0113 = phi i32 [ %i.cl, %bb.v ], [ %i.cf, %bb.u ] ; 8 uses
   %i.cm = add nsw i32 %.0113, -1                  ; 2 uses
-  %4 = zext nneg i32 %.0113 to i64                ; 2 uses
-  %5 = shl nuw nsw i64 %4, 2                      ; 2 uses
+  %4 = shl nuw nsw i32 %.0113, 2
+  %5 = zext nneg i32 %4 to i64
   %i.cn = tail call noalias ptr @malloc(i64 noundef %5) #29 ; 4 uses
   %i.co = tail call noalias ptr @malloc(i64 noundef %i.j) #29 ; 2 uses
   %.not167 = icmp eq i32 %.0113, 0                ; 2 uses
   br i1 %.not167, label %.preheader, label %.lr.ph149.preheader
 
 .lr.ph149.preheader:                              ; preds = %bb.w
-  tail call void @llvm.memset.p0.i64(ptr align 4 %i.cn, i8 0, i64 %5, i1 false), !tbaa !14
+  %6 = shl nuw nsw i32 %.0113, 2
+  %7 = zext nneg i32 %6 to i64
+  tail call void @llvm.memset.p0.i64(ptr align 4 %i.cn, i8 0, i64 range(i64 0, 509) %7, i1 false), !tbaa !14
   br label %.preheader
 
 .preheader:                                       ; preds = %.lr.ph149.preheader, %bb.w
@@ -269,15 +271,19 @@ bb.z:                                             ; preds = %bb.x, %bb.y
   %i.dm = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.106, i32 noundef %i.dl) ; 0 uses
   %i.dn = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.111, i32 noundef %spec.select) ; 0 uses
   %i.do = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.112, i32 noundef %i.cm) ; 0 uses
-  br i1 %.not167, label %._crit_edge158, label %.lr.ph157
+  br i1 %.not167, label %._crit_edge158, label %.lr.ph157.preheader
 
-.lr.ph157:                                        ; preds = %._crit_edge154, %.lr.ph157
-  %indvars.iv180 = phi i64 [ %indvars.iv.next181, %.lr.ph157 ], [ 0, %._crit_edge154 ] ; 2 uses
+.lr.ph157.preheader:                              ; preds = %._crit_edge154
+  %wide.trip.count183 = zext nneg i32 %.0113 to i64
+  br label %.lr.ph157
+
+.lr.ph157:                                        ; preds = %.lr.ph157.preheader, %.lr.ph157
+  %indvars.iv180 = phi i64 [ 0, %.lr.ph157.preheader ], [ %indvars.iv.next181, %.lr.ph157 ] ; 2 uses
   %i.dp = getelementptr inbounds nuw [4 x i8], ptr %i.cn, i64 %indvars.iv180
   %i.dq = load i32, ptr %i.dp, align 4, !tbaa !14
   %i.dr = tail call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.113, i32 noundef %i.dq) ; 0 uses
   %indvars.iv.next181 = add nuw nsw i64 %indvars.iv180, 1 ; 2 uses
-  %exitcond184.not = icmp eq i64 %indvars.iv.next181, %4
+  %exitcond184.not = icmp eq i64 %indvars.iv.next181, %wide.trip.count183
   br i1 %exitcond184.not, label %._crit_edge158, label %.lr.ph157, !llvm.loop !96
 
 ._crit_edge158:                                   ; preds = %.lr.ph157, %._crit_edge154

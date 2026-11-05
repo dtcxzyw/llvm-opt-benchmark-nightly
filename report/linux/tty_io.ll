@@ -202,14 +202,12 @@ tty_open_current_tty.exit.thread:                 ; preds = %tty_open_current_tt
   br i1 %i.bz, label %tty_open_current_tty.exit.thread.thread, label %bb.ae
 
 tty_open_current_tty.exit.thread.thread:          ; preds = %bb.c, %tty_open_current_tty.exit.thread
-  %.04791 = phi ptr [ %.047, %tty_open_current_tty.exit.thread ], [ inttoptr (i64 -6 to ptr), %bb.c ]
+  %.04791 = phi ptr [ %.047, %tty_open_current_tty.exit.thread ], [ inttoptr (i64 -6 to ptr), %bb.c ] ; 2 uses
   %i.ca = load ptr, ptr %i.i, align 8
   store ptr null, ptr %i.i, align 8
   call void @kfree(ptr noundef %i.ca) #20
-  %2 = ptrtoint ptr %.04791 to i64
-  %3 = trunc i64 %2 to i32                        ; 2 uses
-  %.not57 = icmp eq i32 %3, -11
-  br i1 %.not57, label %test_tsk_thread_flag.exit.i, label %tty_alloc_file.exit
+  %.not57 = icmp eq ptr %.04791, inttoptr (i64 -11 to ptr)
+  br i1 %.not57, label %test_tsk_thread_flag.exit.i, label %tty_alloc_file.exit.loopexit.split.loop.exit94
 
 test_tsk_thread_flag.exit.i:                      ; preds = %tty_open_current_tty.exit.thread.thread
   %i.cb = call i64 asm "movq %gs:${1:a}, $0", "=r,i,~{dirflag},~{fpsr},~{flags}"(ptr @current_task) #25, !srcloc !26
@@ -341,8 +339,13 @@ bb.al:                                            ; preds = %bb.ak
   call void @tty_unlock(ptr noundef %.047) #20
   br label %tty_alloc_file.exit
 
-tty_alloc_file.exit:                              ; preds = %signal_pending.exit, %tty_open_current_tty.exit.thread.thread, %bb.ag, %signal_pending.exit73, %.backedge, %test_tsk_thread_flag.exit.i, %test_tsk_thread_flag.exit.i67, %bb.a, %.critedge
-  %.048 = phi i32 [ 0, %.critedge ], [ -12, %bb.a ], [ -11, %test_tsk_thread_flag.exit.i ], [ -12, %.backedge ], [ -512, %signal_pending.exit73 ], [ %3, %tty_open_current_tty.exit.thread.thread ], [ -11, %signal_pending.exit ], [ %.086, %bb.ag ], [ -512, %test_tsk_thread_flag.exit.i67 ]
+tty_alloc_file.exit.loopexit.split.loop.exit94:   ; preds = %tty_open_current_tty.exit.thread.thread
+  %2 = ptrtoint ptr %.04791 to i64
+  %3 = trunc nsw i64 %2 to i32
+  br label %tty_alloc_file.exit
+
+tty_alloc_file.exit:                              ; preds = %signal_pending.exit, %bb.ag, %signal_pending.exit73, %.backedge, %test_tsk_thread_flag.exit.i, %test_tsk_thread_flag.exit.i67, %tty_alloc_file.exit.loopexit.split.loop.exit94, %bb.a, %.critedge
+  %.048 = phi i32 [ 0, %.critedge ], [ %3, %tty_alloc_file.exit.loopexit.split.loop.exit94 ], [ -12, %bb.a ], [ -12, %.backedge ], [ -512, %signal_pending.exit73 ], [ %.086, %bb.ag ], [ -11, %signal_pending.exit ], [ -11, %test_tsk_thread_flag.exit.i ], [ -512, %test_tsk_thread_flag.exit.i67 ]
   ret i32 %.048
 }
 

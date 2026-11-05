@@ -205,7 +205,7 @@ bb.aw:                                            ; preds = %bb.y
   %i.ek = getelementptr inbounds nuw i8, ptr %2, i64 12
   br label %select.unfold.i
 
-select.unfold.i:                                  ; preds = %select.unfold.i.backedge, %bb.aw
+select.unfold.i:                                  ; preds = %intel_atomic_check_config_and_link.exit.thread.a, %bb.aw
   %i.el = load ptr, ptr %i.f, align 8             ; 2 uses
   %.not.i.i376 = icmp eq ptr %i.el, null
   br i1 %.not.i.i376, label %.thread.i, label %bb.ax
@@ -608,11 +608,10 @@ intel_crtc_is_joiner_primary.exit.thread.i.i.i.backedge: ; preds = %kill_joiner_
 intel_joiner_add_affected_crtcs.exit.i.i:         ; preds = %bb.ba, %bb.bm
   %.3.i.in.in.i.i = phi ptr [ %i.gv, %bb.bm ], [ %i.fc, %bb.ba ]
   %.3.i.in.i.i = ptrtoint ptr %.3.i.in.in.i.i to i64
-  %.3.i.i.i = trunc i64 %.3.i.in.i.i to i32       ; 2 uses
-  %.not98.i.i = icmp eq i32 %.3.i.i.i, 0
-  br i1 %.not98.i.i, label %intel_joiner_add_affected_crtcs.exit.thread185.i.i, label %intel_atomic_check_config.exit.i
+  %.3.i.i.i = trunc nsw i64 %.3.i.in.i.i to i32
+  br label %intel_atomic_check_config.exit.i
 
-intel_joiner_add_affected_crtcs.exit.thread185.i.i: ; preds = %bb.bv, %intel_joiner_add_affected_crtcs.exit.i.i
+intel_joiner_add_affected_crtcs.exit.thread185.i.i: ; preds = %bb.bv
   %i.lm = call i32 @intel_fdi_add_affected_crtcs(ptr noundef %1) #24 ; 2 uses
   %.not99.i.i = icmp eq i32 %i.lm, 0
   br i1 %.not99.i.i, label %bb.ch, label %intel_atomic_check_config.exit.i
@@ -1015,31 +1014,34 @@ intel_modeset_pipe_config_late.exit.thread.i.i:   ; preds = %.thread.i180.i.i, %
 intel_atomic_check_config.exit.i:                 ; preds = %bb.bq, %bb.bp, %.loopexit.i.i, %intel_joiner_add_affected_crtcs.exit.thread185.i.i, %intel_joiner_add_affected_crtcs.exit.i.i
   %.024.i = phi i32 [ -1, %intel_joiner_add_affected_crtcs.exit.i.i ], [ %i.ali, %.loopexit.i.i ], [ -1, %intel_joiner_add_affected_crtcs.exit.thread185.i.i ], [ -1, %bb.bp ], [ -1, %bb.bq ]
   %.0.i.i = phi i32 [ %.3.i.i.i, %intel_joiner_add_affected_crtcs.exit.i.i ], [ %.4.ph.i.i, %.loopexit.i.i ], [ %i.lm, %intel_joiner_add_affected_crtcs.exit.thread185.i.i ], [ %i.hl, %bb.bq ], [ %i.hk, %bb.bp ] ; 2 uses
-  %cond.i = icmp eq i32 %.0.i.i, -22
-  br i1 %cond.i, label %bb.hc, label %intel_atomic_check_config_and_link.exit.thread.a
+  switch i32 %.0.i.i, label %intel_atomic_check_config_and_link.exit [
+    i32 0, label %intel_atomic_check_config.exit.thread.i
+    i32 -22, label %bb.hc
+  ]
 
 bb.hc:                                            ; preds = %intel_atomic_check_config.exit.i
   %i.alj = call zeroext i1 @intel_link_bw_set_bpp_limit_for_pipe(ptr noundef %1, ptr noundef nonnull %4, ptr noundef nonnull %3, i32 noundef %.024.i) #24
-  br i1 %i.alj, label %select.unfold.i.backedge, label %intel_atomic_check_config_and_link.exit.thread.a
+  br i1 %i.alj, label %intel_atomic_check_config_and_link.exit.thread.a, label %intel_atomic_check_config_and_link.exit.thread
 
-intel_atomic_check_config.exit.thread.i:          ; preds = %bb.gp
+intel_atomic_check_config_and_link.exit.thread:   ; preds = %bb.hc
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
+  br label %.thread
+
+intel_atomic_check_config.exit.thread.i:          ; preds = %bb.gp, %intel_atomic_check_config.exit.i
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %4, ptr noundef nonnull align 4 dereferenceable(20) %3, i64 20, i1 false)
-  %i.alk = call i32 @intel_link_bw_atomic_check(ptr noundef %1, ptr noundef nonnull %3) #24 ; 3 uses
+  %i.alk = call i32 @intel_link_bw_atomic_check(ptr noundef %1, ptr noundef nonnull %3) #24 ; 2 uses
   %.not11.i = icmp eq i32 %i.alk, -11
-  br i1 %.not11.i, label %select.unfold.i.backedge, label %intel_atomic_check_config_and_link.exit
+  br i1 %.not11.i, label %intel_atomic_check_config_and_link.exit.thread.a, label %intel_atomic_check_config_and_link.exit
 
-select.unfold.i.backedge:                         ; preds = %intel_atomic_check_config.exit.thread.i, %bb.hc
+intel_atomic_check_config_and_link.exit.thread.a: ; preds = %intel_atomic_check_config.exit.thread.i, %bb.hc
   br label %select.unfold.i
 
-intel_atomic_check_config_and_link.exit.thread.a: ; preds = %intel_atomic_check_config.exit.i, %bb.hc
+intel_atomic_check_config_and_link.exit:          ; preds = %intel_atomic_check_config.exit.i, %intel_atomic_check_config.exit.thread.i
+  %.08.ph.i = phi i32 [ %i.alk, %intel_atomic_check_config.exit.thread.i ], [ %.0.i.i, %intel_atomic_check_config.exit.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
-  br label %.loopexit
-
-intel_atomic_check_config_and_link.exit:          ; preds = %intel_atomic_check_config.exit.thread.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #25
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #25
-  %.not294 = icmp eq i32 %i.alk, 0
+  %.not294 = icmp eq i32 %.08.ph.i, 0
   br i1 %.not294, label %bb.hd, label %.loopexit
 
 bb.hd:                                            ; preds = %intel_atomic_check_config_and_link.exit
@@ -1343,7 +1345,7 @@ intel_crtc_joiner_secondary_pipes.exit.i:         ; preds = %joiner_primary_pipe
 bb.if:                                            ; preds = %intel_crtc_joiner_secondary_pipes.exit.i
   %i.app = call ptr @intel_atomic_get_crtc_state(ptr noundef %1, ptr noundef %.057113.i) #24 ; 4 uses
   %i.apq = icmp ugt ptr %i.app, inttoptr (i64 -4096 to ptr)
-  br i1 %i.apq, label %intel_atomic_check_joiner.exit, label %bb.ig
+  br i1 %i.apq, label %.backedge1128, label %bb.ig
 
 bb.ig:                                            ; preds = %bb.if
   %i.apr = getelementptr i8, ptr %i.app, i64 8
@@ -1536,13 +1538,7 @@ bb.iq:                                            ; preds = %bb.ip
   %.not105.i = icmp eq ptr %.pn.i, %i.aoy
   br i1 %.not105.i, label %intel_crtc_is_joiner_secondary.exit.thread, label %bb.ie, !llvm.loop !301
 
-intel_atomic_check_joiner.exit:                   ; preds = %bb.if
-  %5 = ptrtoint ptr %i.app to i64
-  %6 = trunc i64 %5 to i32                        ; 2 uses
-  %.not336 = icmp eq i32 %6, 0
-  br i1 %.not336, label %intel_crtc_is_joiner_secondary.exit.thread, label %.loopexit
-
-intel_crtc_is_joiner_secondary.exit.thread:       ; preds = %.thread101.i, %bb.id, %bb.hv, %bb.hl, %bb.ho, %dev_name.exit394, %bb.hj, %intel_atomic_check_joiner.exit, %intel_crtc_is_joiner_secondary.exit, %bb.hm
+intel_crtc_is_joiner_secondary.exit.thread:       ; preds = %.thread101.i, %bb.id, %bb.hv, %bb.hl, %bb.ho, %dev_name.exit394, %bb.hj, %intel_crtc_is_joiner_secondary.exit, %bb.hm
   br label %bb.hg, !llvm.loop !302
 
 bb.ir:                                            ; preds = %bb.hi
@@ -1945,8 +1941,8 @@ bb.mg:                                            ; preds = %bb.me, %bb.mf
   %i.bdt = getelementptr i8, ptr %i.bds, i64 40
   br label %bb.mh
 
-bb.mh:                                            ; preds = %.backedge1128, %bb.mg
-  %.pn324.in = phi ptr [ %i.bdt, %bb.mg ], [ %.pn324, %.backedge1128 ]
+bb.mh:                                            ; preds = %.backedge1121, %bb.mg
+  %.pn324.in = phi ptr [ %i.bdt, %bb.mg ], [ %.pn324, %.backedge1121 ]
   %.pn324 = load ptr, ptr %.pn324.in, align 8     ; 4 uses
   %.7 = getelementptr i8, ptr %.pn324, i64 -1648
   %i.bdu = load ptr, ptr %i.f, align 8            ; 2 uses
@@ -1972,7 +1968,7 @@ bb.mk:                                            ; preds = %bb.mj
   %i.beb = getelementptr i8, ptr %i.bea, i64 24
   %i.bec = load ptr, ptr %i.beb, align 8          ; 6 uses
   %.not327 = icmp eq ptr %i.bec, null
-  br i1 %.not327, label %.backedge1128, label %bb.ml
+  br i1 %.not327, label %.backedge1121, label %bb.ml
 
 bb.ml:                                            ; preds = %bb.mk
   call void @intel_color_assert_luts(ptr noundef nonnull %i.bec) #24
@@ -2056,23 +2052,28 @@ bb.mt:                                            ; preds = %.critedge
   %i.bfa = getelementptr i8, ptr %i.bec, i64 844
   %.val374 = load i8, ptr %i.bfa, align 4, !range !34, !noundef !35
   %i.bfb = trunc nuw i8 %.val374 to i1
-  br i1 %i.bfb, label %bb.mu, label %.backedge1128
+  br i1 %i.bfb, label %bb.mu, label %.backedge1121
 
 bb.mu:                                            ; preds = %bb.mt, %.critedge
   %i.bfc = phi ptr [ @.str.214, %bb.mt ], [ @.str.213, %.critedge ]
   call void @intel_crtc_state_dump(ptr noundef nonnull %i.bec, ptr noundef %1, ptr noundef nonnull %i.bfc) #24
-  br label %.backedge1128
+  br label %.backedge1121
 
-.backedge1128:                                    ; preds = %bb.mu, %bb.mk, %bb.mt
+.backedge1121:                                    ; preds = %bb.mu, %bb.mk, %bb.mt
   br label %bb.mh, !llvm.loop !309
 
-.loopexit:                                        ; preds = %intel_atomic_check_joiner.exit, %intel_atomic_check_config_and_link.exit.thread.a, %bb.md, %bb.mc, %bb.mb, %bb.ma, %bb.ly, %bb.lx, %bb.lw, %bb.ln, %intel_atomic_check_config_and_link.exit, %bb.s
-  %.0242 = phi i32 [ %i.at, %bb.s ], [ %i.alk, %intel_atomic_check_config_and_link.exit ], [ %.0.i.i, %intel_atomic_check_config_and_link.exit.thread.a ], [ %i.bcs, %bb.ln ], [ %i.bdi, %bb.lw ], [ %i.bdj, %bb.lx ], [ %i.bdk, %bb.ly ], [ %i.bdm, %bb.ma ], [ %i.bdn, %bb.mb ], [ %i.bdo, %bb.mc ], [ %i.bdp, %bb.md ], [ %6, %intel_atomic_check_joiner.exit ] ; 2 uses
+.backedge1128:                                    ; preds = %bb.if
+  %5 = ptrtoint ptr %i.app to i64
+  %6 = trunc i64 %5 to i32
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %.backedge1128, %bb.md, %bb.mc, %bb.mb, %bb.ma, %bb.ly, %bb.lx, %bb.lw, %bb.ln, %intel_atomic_check_config_and_link.exit, %bb.s
+  %.0242 = phi i32 [ %i.at, %bb.s ], [ %.08.ph.i, %intel_atomic_check_config_and_link.exit ], [ %i.bdp, %bb.md ], [ %i.bcs, %bb.ln ], [ %i.bdi, %bb.lw ], [ %i.bdj, %bb.lx ], [ %i.bdk, %bb.ly ], [ %i.bdm, %bb.ma ], [ %i.bdn, %bb.mb ], [ %i.bdo, %bb.mc ], [ %6, %.backedge1128 ] ; 2 uses
   %i.bfd = icmp eq i32 %.0242, -35
   br i1 %i.bfd, label %intel_async_flip_check_uapi.exit.thread, label %.thread
 
-.thread:                                          ; preds = %bb.io, %bb.ml, %__drm_to_dev.exit92.i, %dev_name.exit83.i, %__drm_to_dev.exit86.i, %__drm_to_dev.exit425, %.loopexit
-  %.0242457 = phi i32 [ %.0242, %.loopexit ], [ -22, %__drm_to_dev.exit86.i ], [ -22, %__drm_to_dev.exit425 ], [ %i.bed, %bb.ml ], [ -22, %__drm_to_dev.exit92.i ], [ -22, %dev_name.exit83.i ], [ -12, %bb.io ]
+.thread:                                          ; preds = %bb.io, %bb.ml, %__drm_to_dev.exit92.i, %dev_name.exit83.i, %__drm_to_dev.exit86.i, %intel_atomic_check_config_and_link.exit.thread, %__drm_to_dev.exit425, %.loopexit
+  %.0242457 = phi i32 [ %.0242, %.loopexit ], [ -22, %__drm_to_dev.exit86.i ], [ -22, %intel_atomic_check_config_and_link.exit.thread ], [ -22, %__drm_to_dev.exit425 ], [ %i.bed, %bb.ml ], [ -22, %__drm_to_dev.exit92.i ], [ -22, %dev_name.exit83.i ], [ -12, %bb.io ]
   %i.bfe = load ptr, ptr %i.f, align 8            ; 2 uses
   %.not339 = icmp eq ptr %i.bfe, null
   br i1 %.not339, label %bb.mw, label %bb.mv
