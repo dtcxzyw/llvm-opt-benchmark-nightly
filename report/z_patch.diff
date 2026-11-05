@@ -1,0 +1,69 @@
+diff --git a/llvm/include/llvm/IR/PatternMatch.h b/llvm/include/llvm/IR/PatternMatch.h
+index 51a9052667d9b..5944542574232 100644
+--- a/llvm/include/llvm/IR/PatternMatch.h
++++ b/llvm/include/llvm/IR/PatternMatch.h
+@@ -2384,16 +2384,16 @@ template <typename OpTy> inline auto m_ZExtOrTruncOrSelf(const OpTy &Op) {
+   return m_CombineOr(m_ZExt(Op), m_Trunc(Op), Op);
+ }
+ 
+-template <typename LHS_t, typename RHS_t> struct ICmpLike_match {
++template <typename LHS_t, typename RHS_t, typename Class> struct CmpLike_match {
+   CmpPredicate &Pred;
+   LHS_t L;
+   RHS_t R;
+ 
+-  ICmpLike_match(CmpPredicate &P, const LHS_t &Left, const RHS_t &Right)
++  CmpLike_match(CmpPredicate &P, const LHS_t &Left, const RHS_t &Right)
+       : Pred(P), L(Left), R(Right) {}
+ 
+   template <typename OpTy> bool match(OpTy *V) const {
+-    if (PatternMatch::match(V, m_ICmp(Pred, L, R)))
++    if (PatternMatch::match(V, CmpClass_match<LHS_t, RHS_t, Class>(Pred, L, R)))
+       return true;
+     Value *A;
+     // trunc nuw x to i1 is equivalent to icmp ne x, 0
+@@ -2408,9 +2408,15 @@ template <typename LHS_t, typename RHS_t> struct ICmpLike_match {
+ };
+ 
+ template <typename LHS, typename RHS>
+-inline ICmpLike_match<LHS, RHS> m_ICmpLike(CmpPredicate &Pred, const LHS &L,
+-                                           const RHS &R) {
+-  return ICmpLike_match<LHS, RHS>(Pred, L, R);
++inline CmpLike_match<LHS, RHS, ICmpInst>
++m_ICmpLike(CmpPredicate &Pred, const LHS &L, const RHS &R) {
++  return CmpLike_match<LHS, RHS, ICmpInst>(Pred, L, R);
++}
++
++template <typename LHS, typename RHS>
++inline CmpLike_match<LHS, RHS, CmpInst> m_CmpLike(CmpPredicate &Pred,
++                                                  const LHS &L, const RHS &R) {
++  return CmpLike_match<LHS, RHS, CmpInst>(Pred, L, R);
+ }
+ 
+ template <typename CondTy, typename LTy, typename RTy> struct SelectLike_match {
+diff --git a/llvm/lib/Transforms/Scalar/JumpThreading.cpp b/llvm/lib/Transforms/Scalar/JumpThreading.cpp
+index 7f49cb33901d2..662be1e6efa02 100644
+--- a/llvm/lib/Transforms/Scalar/JumpThreading.cpp
++++ b/llvm/lib/Transforms/Scalar/JumpThreading.cpp
+@@ -576,7 +576,7 @@ bool JumpThreadingPass::computeValueKnownInPredecessorsImpl(
+       CmpPredicate Pred;
+       Value *Val;
+       Constant *Cst;
+-      if (!PredCst && match(V, m_Cmp(Pred, m_Value(Val), m_Constant(Cst))))
++      if (!PredCst && match(V, m_CmpLike(Pred, m_Value(Val), m_Constant(Cst))))
+         PredCst = LVI->getPredicateOnEdge(Pred, Val, Cst, P, BB, CtxI);
+       if (Constant *KC = getKnownConstant(PredCst, Preference))
+         Result.emplace_back(KC, P);
+diff --git a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+index 89295cec23498..24fcf636d1906 100644
+--- a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
++++ b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+@@ -5273,7 +5273,7 @@ bool SimplifyCFGOpt::simplifySwitchOnSelect(SwitchInst *SI,
+   ConstantInt *C;
+   if (Select->hasOneUse() &&
+       match(Select->getCondition(),
+-            m_ICmp(Pred, m_Value(X), m_ConstantInt(C))) &&
++            m_ICmpLike(Pred, m_Value(X), m_ConstantInt(C))) &&
+       ICmpInst::isEquality(Pred) &&
+       simplifySwitchOnSelectRemap(SI, Select, X, C, Pred == ICmpInst::ICMP_NE))
+     return true;
