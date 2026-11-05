@@ -205,7 +205,7 @@ _ZNK2cv8MatShapeclEv.exit:                        ; preds = %bb.f, %bb.g
   %i.bo = uitofp i8 %i.bn to double
   %i.bp = load i8, ptr %i.bm, align 1, !tbaa !23
   %i.bq = uitofp i8 %i.bp to double
-  %7 = tail call double @llvm.fmuladd.f64(double %i.bo, double %i.bq, double 0.000000e+00) ; 2 uses
+  %7 = fmul nnan double %i.bo, %i.bq              ; 2 uses
   br i1 %exitcond271.not, label %._crit_edge199.us.us.us.us, label %bb.h
 
 bb.h:                                             ; preds = %.preheader.us.us.us.us
@@ -608,7 +608,7 @@ _ZNK2cv8MatShapeclEv.exit:                        ; preds = %bb.f, %bb.g
   %i.bn = uitofp i8 %i.bm to double
   %i.bo = load i8, ptr %i.bl, align 1, !tbaa !23
   %i.bp = uitofp i8 %i.bo to double
-  %7 = tail call double @llvm.fmuladd.f64(double %i.bn, double %i.bp, double 0.000000e+00) ; 2 uses
+  %7 = fmul nnan double %i.bn, %i.bp              ; 2 uses
   br i1 %exitcond271.not, label %._crit_edge199.us.us.us.us, label %bb.h
 
 bb.h:                                             ; preds = %.preheader.us.us.us.us
@@ -1011,7 +1011,7 @@ _ZNK2cv8MatShapeclEv.exit:                        ; preds = %bb.f, %bb.g
   %i.bp = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %i.bo ; 3 uses
   %i.bq = load i16, ptr %i.bp, align 2, !tbaa !27
   %i.br = uitofp i16 %i.bq to double
-  %7 = tail call double @llvm.fmuladd.f64(double %i.bl, double %i.br, double 0.000000e+00) ; 2 uses
+  %7 = fmul nnan double %i.bl, %i.br              ; 2 uses
   br i1 %exitcond271.not, label %._crit_edge199.us.us.us.us, label %bb.h
 
 bb.h:                                             ; preds = %.preheader.us.us.us.us
@@ -1414,7 +1414,7 @@ _ZNK2cv8MatShapeclEv.exit:                        ; preds = %bb.f, %bb.g
   %i.bo = getelementptr inbounds nuw [2 x i8], ptr %i.c, i64 %i.bn ; 3 uses
   %i.bp = load i16, ptr %i.bo, align 2, !tbaa !27
   %i.bq = uitofp i16 %i.bp to double
-  %7 = tail call double @llvm.fmuladd.f64(double %i.bk, double %i.bq, double 0.000000e+00) ; 2 uses
+  %7 = fmul nnan double %i.bk, %i.bq              ; 2 uses
   br i1 %exitcond271.not, label %._crit_edge199.us.us.us.us, label %bb.h
 
 bb.h:                                             ; preds = %.preheader.us.us.us.us

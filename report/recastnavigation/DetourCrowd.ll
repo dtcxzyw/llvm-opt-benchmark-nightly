@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.v
   %i.fs = load float, ptr %i.db, align 8, !tbaa !31
   %i.ft = load float, ptr %i.fr, align 4, !tbaa !31
   %i.fu = fsub float %i.fs, %i.ft                 ; 2 uses
-  %3 = call float @llvm.fmuladd.f32(float %i.fu, float %i.fu, float 0.000000e+00)
+  %3 = fmul float %i.fu, %i.fu
   %i.fv = call noundef float @llvm.fmuladd.f32(float %i.fq, float %i.fq, float %3) ; 4 uses
   %i.fw = fcmp ogt float %i.fv, %i.ew
   br i1 %i.fw, label %_ZL12addNeighbourifP16dtCrowdNeighbourii.exit.i, label %bb.x
@@ -608,21 +608,22 @@ bb.ax:                                            ; preds = %bb.aw
   %i.os = insertelement <2 x float> %i.or, float %i.ol, i64 1
   %i.ot = fsub <2 x float> %i.os, %i.op           ; 4 uses
   %i.ou = shufflevector <2 x float> %i.oq, <2 x float> %i.ot, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %4 = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ou, <2 x float> %i.ou, <2 x float> zeroinitializer)
+  %4 = fmul <2 x float> %i.ou, %i.ou
   %i.ov = shufflevector <2 x float> %i.oq, <2 x float> %i.ot, <2 x i32> <i32 1, i32 3> ; 2 uses
-  %i.ow = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ov, <2 x float> %i.ov, <2 x float> %4)
-  %5 = call <2 x float> @llvm.sqrt.v2f32(<2 x float> %i.ow) ; 2 uses
-  %i.ox = extractelement <2 x float> %5, i64 1    ; 2 uses
-  %i.oy = fcmp ogt float %i.ox, 1.000000e-03
-  %i.oz = fdiv float 1.000000e+00, %i.ox
+  %i.ow = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ov, <2 x float> %i.ov, <2 x float> %4) ; 2 uses
+  %5 = extractelement <2 x float> %i.ow, i64 0
+  %sqrt.i.i = call noundef float @llvm.sqrt.f32(float %5)
+  %i.ox = extractelement <2 x float> %i.ow, i64 1
+  %sqrt.i18.i = call noundef float @llvm.sqrt.f32(float %i.ox) ; 2 uses
+  %i.oy = fcmp ogt float %sqrt.i18.i, 1.000000e-03
+  %i.oz = fdiv float 1.000000e+00, %sqrt.i18.i
   %i.pa = insertelement <2 x float> poison, float %i.oz, i64 0
   %i.pb = shufflevector <2 x float> %i.pa, <2 x float> poison, <2 x i32> zeroinitializer
   %i.pc = fmul <2 x float> %i.ot, %i.pb
   %i.pd = insertelement <2 x i1> poison, i1 %i.oy, i64 0
   %i.pe = shufflevector <2 x i1> %i.pd, <2 x i1> poison, <2 x i32> zeroinitializer
   %i.pf = select <2 x i1> %i.pe, <2 x float> %i.pc, <2 x float> %i.ot
-  %6 = extractelement <2 x float> %5, i64 0
-  %i.pg = fneg float %6
+  %i.pg = fneg float %sqrt.i.i
   %i.ph = insertelement <2 x float> poison, float %i.pg, i64 0
   %i.pi = shufflevector <2 x float> %i.ph, <2 x float> poison, <2 x i32> zeroinitializer
   %i.pj = fmul <2 x float> %i.pf, %i.pi
@@ -767,8 +768,8 @@ bb.be:                                            ; preds = %.lr.ph470, %bb.bg
   %i.sw = getelementptr inbounds nuw i8, ptr %i.ss, i64 424
   %i.sx = load float, ptr %i.sw, align 4, !tbaa !31
   %i.sy = fsub float %i.sl, %i.sx                 ; 3 uses
-  %7 = call float @llvm.fmuladd.f32(float %i.sv, float %i.sv, float 0.000000e+00)
-  %i.sz = call noundef float @llvm.fmuladd.f32(float %i.sy, float %i.sy, float %7) ; 3 uses
+  %6 = fmul float %i.sv, %i.sv
+  %i.sz = call noundef float @llvm.fmuladd.f32(float %i.sy, float %i.sy, float %6) ; 3 uses
   %i.ta = fcmp olt float %i.sz, f0x3727C5AC
   %i.tb = fcmp ogt float %i.sz, %i.sm
   %or.cond441 = select i1 %i.ta, i1 true, i1 %i.tb
@@ -1130,8 +1131,8 @@ bb.ca:                                            ; preds = %.lr.ph489, %bb.ch
   %i.aaj = getelementptr inbounds nuw i8, ptr %i.aaf, i64 424
   %i.aak = load float, ptr %i.aaj, align 4, !tbaa !31
   %i.aal = fsub float %.pre579, %i.aak            ; 3 uses
-  %8 = call float @llvm.fmuladd.f32(float %i.aai, float %i.aai, float 0.000000e+00)
-  %i.aam = call noundef float @llvm.fmuladd.f32(float %i.aal, float %i.aal, float %8) ; 2 uses
+  %7 = fmul float %i.aai, %i.aai
+  %i.aam = call noundef float @llvm.fmuladd.f32(float %i.aal, float %i.aal, float %7) ; 2 uses
   %i.aan = getelementptr inbounds nuw i8, ptr %i.aaf, i64 480
   %i.aao = load float, ptr %i.aan, align 8, !tbaa !67
   %i.aap = fadd float %.pre580, %i.aao            ; 3 uses
@@ -1478,9 +1479,6 @@ declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.vector.reduce.fadd.v2f32(float, <2 x float>) #10
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x float> @llvm.sqrt.v2f32(<2 x float>) #10
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

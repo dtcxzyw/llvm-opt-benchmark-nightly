@@ -205,11 +205,11 @@ bb.a:
   %i.cw = extractelement <2 x float> %i.co, i64 1
   %i.cx = call float @llvm.fmuladd.f32(float %i.l, float %i.cw, float %i.cv)
   %i.cy = fadd float %i.n, %i.cx
-  %i.cz = fpext <2 x float> %i.ct to <2 x double> ; 3 uses
-  %3 = extractelement <2 x double> %i.cz, i64 1   ; 2 uses
-  %4 = call double @llvm.fmuladd.f64(double %3, double %3, double 0.000000e+00)
+  %i.cz = fpext <2 x float> %i.ct to <2 x double> ; 4 uses
+  %foldExtExtBinop = fmul <2 x double> %i.cz, %i.cz
+  %3 = extractelement <2 x double> %foldExtExtBinop, i64 1
   %i.da = extractelement <2 x double> %i.cz, i64 0 ; 2 uses
-  %i.db = call double @llvm.fmuladd.f64(double %i.da, double %i.da, double %4)
+  %i.db = call double @llvm.fmuladd.f64(double %i.da, double %i.da, double %3)
   %i.dc = fpext float %i.cy to double             ; 3 uses
   %i.dd = call noundef double @llvm.fmuladd.f64(double %i.dc, double %i.dc, double %i.db) ; 2 uses
   %sqrt.i.i.i.i.i = call noundef double @llvm.sqrt.f64(double %i.dd)

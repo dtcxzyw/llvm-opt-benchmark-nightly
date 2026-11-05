@@ -205,7 +205,7 @@ _ZNK5Eigen10AlignedBoxIdLi3EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi
 
 bb.j:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi3EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEEEEbRKNS_10MatrixBaseIT_EE.exit54.thread
   %i.cm = fsub double %i.ck, %i.ch                ; 2 uses
-  %15 = call double @llvm.fmuladd.f64(double %i.cm, double %i.cm, double 0.000000e+00)
+  %15 = fmul double %i.cm, %i.cm
   br label %bb.m
 
 bb.k:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi3EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEEEEbRKNS_10MatrixBaseIT_EE.exit54.thread
@@ -216,7 +216,7 @@ bb.k:                                             ; preds = %_ZNK5Eigen10Aligned
 
 bb.l:                                             ; preds = %bb.k
   %i.cq = fsub double %i.ch, %i.co                ; 2 uses
-  %16 = call double @llvm.fmuladd.f64(double %i.cq, double %i.cq, double 0.000000e+00)
+  %16 = fmul double %i.cq, %i.cq
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
@@ -279,7 +279,7 @@ _ZNK5Eigen10AlignedBoxIdLi3EE23squaredExteriorDistanceINS_9TransposeIKNS_6Matrix
 
 bb.u:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi3EE23squaredExteriorDistanceINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEEEEdRKNS_10MatrixBaseIT_EE.exit
   %i.dt = fsub double %i.dr, %i.ch                ; 2 uses
-  %17 = call double @llvm.fmuladd.f64(double %i.dt, double %i.dt, double 0.000000e+00)
+  %17 = fmul double %i.dt, %i.dt
   br label %bb.x
 
 bb.v:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi3EE23squaredExteriorDistanceINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEEEEdRKNS_10MatrixBaseIT_EE.exit
@@ -290,7 +290,7 @@ bb.v:                                             ; preds = %_ZNK5Eigen10Aligned
 
 bb.w:                                             ; preds = %bb.v
   %i.dx = fsub double %i.ch, %i.dv                ; 2 uses
-  %18 = call double @llvm.fmuladd.f64(double %i.dx, double %i.dx, double 0.000000e+00)
+  %18 = fmul double %i.dx, %i.dx
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
@@ -636,7 +636,7 @@ _ZNK5Eigen10AlignedBoxIdLi2EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi2ELi1ELi
 
 bb.j:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi2EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi2ELi1ELi1ELi2EEEEEEEbRKNS_10MatrixBaseIT_EE.exit52.thread
   %i.bn = fsub double %i.bl, %i.bi                ; 2 uses
-  %15 = call double @llvm.fmuladd.f64(double %i.bn, double %i.bn, double 0.000000e+00)
+  %15 = fmul double %i.bn, %i.bn
   br label %bb.m
 
 bb.k:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi2EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi2ELi1ELi1ELi2EEEEEEEbRKNS_10MatrixBaseIT_EE.exit52.thread
@@ -647,7 +647,7 @@ bb.k:                                             ; preds = %_ZNK5Eigen10Aligned
 
 bb.l:                                             ; preds = %bb.k
   %i.br = fsub double %i.bi, %i.bp                ; 2 uses
-  %16 = call double @llvm.fmuladd.f64(double %i.br, double %i.br, double 0.000000e+00)
+  %16 = fmul double %i.br, %i.br
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
@@ -685,7 +685,7 @@ _ZNK5Eigen10AlignedBoxIdLi2EE23squaredExteriorDistanceINS_9TransposeIKNS_6Matrix
 
 bb.q:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi2EE23squaredExteriorDistanceINS_9TransposeIKNS_6MatrixIdLi1ELi2ELi1ELi1ELi2EEEEEEEdRKNS_10MatrixBaseIT_EE.exit
   %i.ci = fsub double %i.cg, %i.bi                ; 2 uses
-  %17 = call double @llvm.fmuladd.f64(double %i.ci, double %i.ci, double 0.000000e+00)
+  %17 = fmul double %i.ci, %i.ci
   br label %bb.t
 
 bb.r:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi2EE23squaredExteriorDistanceINS_9TransposeIKNS_6MatrixIdLi1ELi2ELi1ELi1ELi2EEEEEEEdRKNS_10MatrixBaseIT_EE.exit
@@ -696,7 +696,7 @@ bb.r:                                             ; preds = %_ZNK5Eigen10Aligned
 
 bb.s:                                             ; preds = %bb.r
   %i.cm = fsub double %i.bi, %i.ck                ; 2 uses
-  %18 = call double @llvm.fmuladd.f64(double %i.cm, double %i.cm, double 0.000000e+00)
+  %18 = fmul double %i.cm, %i.cm
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
@@ -1099,7 +1099,7 @@ _ZNK5Eigen10AlignedBoxIdLi3EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi
 
 bb.j:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi3EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEEEEbRKNS_10MatrixBaseIT_EE.exit54.thread
   %i.cm = fsub double %i.ck, %i.ch                ; 2 uses
-  %15 = call double @llvm.fmuladd.f64(double %i.cm, double %i.cm, double 0.000000e+00)
+  %15 = fmul double %i.cm, %i.cm
   br label %bb.m
 
 bb.k:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi3EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEEEEbRKNS_10MatrixBaseIT_EE.exit54.thread
@@ -1110,7 +1110,7 @@ bb.k:                                             ; preds = %_ZNK5Eigen10Aligned
 
 bb.l:                                             ; preds = %bb.k
   %i.cq = fsub double %i.ch, %i.co                ; 2 uses
-  %16 = call double @llvm.fmuladd.f64(double %i.cq, double %i.cq, double 0.000000e+00)
+  %16 = fmul double %i.cq, %i.cq
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
@@ -1173,7 +1173,7 @@ _ZNK5Eigen10AlignedBoxIdLi3EE23squaredExteriorDistanceINS_9TransposeIKNS_6Matrix
 
 bb.u:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi3EE23squaredExteriorDistanceINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEEEEdRKNS_10MatrixBaseIT_EE.exit
   %i.dt = fsub double %i.dr, %i.ch                ; 2 uses
-  %17 = call double @llvm.fmuladd.f64(double %i.dt, double %i.dt, double 0.000000e+00)
+  %17 = fmul double %i.dt, %i.dt
   br label %bb.x
 
 bb.v:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi3EE23squaredExteriorDistanceINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEEEEdRKNS_10MatrixBaseIT_EE.exit
@@ -1184,7 +1184,7 @@ bb.v:                                             ; preds = %_ZNK5Eigen10Aligned
 
 bb.w:                                             ; preds = %bb.v
   %i.dx = fsub double %i.ch, %i.dv                ; 2 uses
-  %18 = call double @llvm.fmuladd.f64(double %i.dx, double %i.dx, double 0.000000e+00)
+  %18 = fmul double %i.dx, %i.dx
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
@@ -1573,7 +1573,7 @@ _ZNK5Eigen10AlignedBoxIdLi3EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi
 
 bb.j:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi3EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEEEEbRKNS_10MatrixBaseIT_EE.exit54.thread
   %i.cm = fsub double %i.ck, %i.ch                ; 2 uses
-  %15 = call double @llvm.fmuladd.f64(double %i.cm, double %i.cm, double 0.000000e+00)
+  %15 = fmul double %i.cm, %i.cm
   br label %bb.m
 
 bb.k:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi3EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEEEEbRKNS_10MatrixBaseIT_EE.exit54.thread
@@ -1584,7 +1584,7 @@ bb.k:                                             ; preds = %_ZNK5Eigen10Aligned
 
 bb.l:                                             ; preds = %bb.k
   %i.cq = fsub double %i.ch, %i.co                ; 2 uses
-  %16 = call double @llvm.fmuladd.f64(double %i.cq, double %i.cq, double 0.000000e+00)
+  %16 = fmul double %i.cq, %i.cq
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
@@ -1647,7 +1647,7 @@ _ZNK5Eigen10AlignedBoxIdLi3EE23squaredExteriorDistanceINS_9TransposeIKNS_6Matrix
 
 bb.u:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi3EE23squaredExteriorDistanceINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEEEEdRKNS_10MatrixBaseIT_EE.exit
   %i.dt = fsub double %i.dr, %i.ch                ; 2 uses
-  %17 = call double @llvm.fmuladd.f64(double %i.dt, double %i.dt, double 0.000000e+00)
+  %17 = fmul double %i.dt, %i.dt
   br label %bb.x
 
 bb.v:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi3EE23squaredExteriorDistanceINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEEEEdRKNS_10MatrixBaseIT_EE.exit
@@ -1658,7 +1658,7 @@ bb.v:                                             ; preds = %_ZNK5Eigen10Aligned
 
 bb.w:                                             ; preds = %bb.v
   %i.dx = fsub double %i.ch, %i.dv                ; 2 uses
-  %18 = call double @llvm.fmuladd.f64(double %i.dx, double %i.dx, double 0.000000e+00)
+  %18 = fmul double %i.dx, %i.dx
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
@@ -2040,7 +2040,7 @@ _ZNK5Eigen10AlignedBoxIfLi3EE8containsINS_9TransposeIKNS_6MatrixIfLi1ELi3ELi1ELi
 
 bb.j:                                             ; preds = %_ZNK5Eigen10AlignedBoxIfLi3EE8containsINS_9TransposeIKNS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEEEEbRKNS_10MatrixBaseIT_EE.exit54.thread
   %i.cm = fsub float %i.ck, %i.ch                 ; 2 uses
-  %15 = call float @llvm.fmuladd.f32(float %i.cm, float %i.cm, float 0.000000e+00)
+  %15 = fmul float %i.cm, %i.cm
   br label %bb.m
 
 bb.k:                                             ; preds = %_ZNK5Eigen10AlignedBoxIfLi3EE8containsINS_9TransposeIKNS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEEEEbRKNS_10MatrixBaseIT_EE.exit54.thread
@@ -2051,7 +2051,7 @@ bb.k:                                             ; preds = %_ZNK5Eigen10Aligned
 
 bb.l:                                             ; preds = %bb.k
   %i.cq = fsub float %i.ch, %i.co                 ; 2 uses
-  %16 = call float @llvm.fmuladd.f32(float %i.cq, float %i.cq, float 0.000000e+00)
+  %16 = fmul float %i.cq, %i.cq
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
@@ -2114,7 +2114,7 @@ _ZNK5Eigen10AlignedBoxIfLi3EE23squaredExteriorDistanceINS_9TransposeIKNS_6Matrix
 
 bb.u:                                             ; preds = %_ZNK5Eigen10AlignedBoxIfLi3EE23squaredExteriorDistanceINS_9TransposeIKNS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEEEEfRKNS_10MatrixBaseIT_EE.exit
   %i.dt = fsub float %i.dr, %i.ch                 ; 2 uses
-  %17 = call float @llvm.fmuladd.f32(float %i.dt, float %i.dt, float 0.000000e+00)
+  %17 = fmul float %i.dt, %i.dt
   br label %bb.x
 
 bb.v:                                             ; preds = %_ZNK5Eigen10AlignedBoxIfLi3EE23squaredExteriorDistanceINS_9TransposeIKNS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEEEEfRKNS_10MatrixBaseIT_EE.exit
@@ -2125,7 +2125,7 @@ bb.v:                                             ; preds = %_ZNK5Eigen10Aligned
 
 bb.w:                                             ; preds = %bb.v
   %i.dx = fsub float %i.ch, %i.dv                 ; 2 uses
-  %18 = call float @llvm.fmuladd.f32(float %i.dx, float %i.dx, float 0.000000e+00)
+  %18 = fmul float %i.dx, %i.dx
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
@@ -2528,7 +2528,7 @@ _ZNK5Eigen10AlignedBoxIdLi3EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi
 
 bb.j:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi3EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEEEEbRKNS_10MatrixBaseIT_EE.exit54.thread
   %i.cm = fsub double %i.ck, %i.ch                ; 2 uses
-  %15 = call double @llvm.fmuladd.f64(double %i.cm, double %i.cm, double 0.000000e+00)
+  %15 = fmul double %i.cm, %i.cm
   br label %bb.m
 
 bb.k:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi3EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEEEEbRKNS_10MatrixBaseIT_EE.exit54.thread
@@ -2539,7 +2539,7 @@ bb.k:                                             ; preds = %_ZNK5Eigen10Aligned
 
 bb.l:                                             ; preds = %bb.k
   %i.cq = fsub double %i.ch, %i.co                ; 2 uses
-  %16 = call double @llvm.fmuladd.f64(double %i.cq, double %i.cq, double 0.000000e+00)
+  %16 = fmul double %i.cq, %i.cq
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
@@ -2602,7 +2602,7 @@ _ZNK5Eigen10AlignedBoxIdLi3EE23squaredExteriorDistanceINS_9TransposeIKNS_6Matrix
 
 bb.u:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi3EE23squaredExteriorDistanceINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEEEEdRKNS_10MatrixBaseIT_EE.exit
   %i.dt = fsub double %i.dr, %i.ch                ; 2 uses
-  %17 = call double @llvm.fmuladd.f64(double %i.dt, double %i.dt, double 0.000000e+00)
+  %17 = fmul double %i.dt, %i.dt
   br label %bb.x
 
 bb.v:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi3EE23squaredExteriorDistanceINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEEEEdRKNS_10MatrixBaseIT_EE.exit
@@ -2613,7 +2613,7 @@ bb.v:                                             ; preds = %_ZNK5Eigen10Aligned
 
 bb.w:                                             ; preds = %bb.v
   %i.dx = fsub double %i.ch, %i.dv                ; 2 uses
-  %18 = call double @llvm.fmuladd.f64(double %i.dx, double %i.dx, double 0.000000e+00)
+  %18 = fmul double %i.dx, %i.dx
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
@@ -3016,7 +3016,7 @@ _ZNK5Eigen10AlignedBoxIdLi2EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi2ELi1ELi
 
 bb.j:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi2EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi2ELi1ELi1ELi2EEEEEEEbRKNS_10MatrixBaseIT_EE.exit52.thread
   %i.bn = fsub double %i.bl, %i.bi                ; 2 uses
-  %15 = call double @llvm.fmuladd.f64(double %i.bn, double %i.bn, double 0.000000e+00)
+  %15 = fmul double %i.bn, %i.bn
   br label %bb.m
 
 bb.k:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi2EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi2ELi1ELi1ELi2EEEEEEEbRKNS_10MatrixBaseIT_EE.exit52.thread
@@ -3027,7 +3027,7 @@ bb.k:                                             ; preds = %_ZNK5Eigen10Aligned
 
 bb.l:                                             ; preds = %bb.k
   %i.br = fsub double %i.bi, %i.bp                ; 2 uses
-  %16 = call double @llvm.fmuladd.f64(double %i.br, double %i.br, double 0.000000e+00)
+  %16 = fmul double %i.br, %i.br
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
@@ -3065,7 +3065,7 @@ _ZNK5Eigen10AlignedBoxIdLi2EE23squaredExteriorDistanceINS_9TransposeIKNS_6Matrix
 
 bb.q:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi2EE23squaredExteriorDistanceINS_9TransposeIKNS_6MatrixIdLi1ELi2ELi1ELi1ELi2EEEEEEEdRKNS_10MatrixBaseIT_EE.exit
   %i.ci = fsub double %i.cg, %i.bi                ; 2 uses
-  %17 = call double @llvm.fmuladd.f64(double %i.ci, double %i.ci, double 0.000000e+00)
+  %17 = fmul double %i.ci, %i.ci
   br label %bb.t
 
 bb.r:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi2EE23squaredExteriorDistanceINS_9TransposeIKNS_6MatrixIdLi1ELi2ELi1ELi1ELi2EEEEEEEdRKNS_10MatrixBaseIT_EE.exit
@@ -3076,7 +3076,7 @@ bb.r:                                             ; preds = %_ZNK5Eigen10Aligned
 
 bb.s:                                             ; preds = %bb.r
   %i.cm = fsub double %i.bi, %i.ck                ; 2 uses
-  %18 = call double @llvm.fmuladd.f64(double %i.cm, double %i.cm, double 0.000000e+00)
+  %18 = fmul double %i.cm, %i.cm
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q
@@ -3430,7 +3430,7 @@ _ZNK5Eigen10AlignedBoxIfLi3EE8containsINS_9TransposeIKNS_6MatrixIfLi1ELi3ELi1ELi
 
 bb.j:                                             ; preds = %_ZNK5Eigen10AlignedBoxIfLi3EE8containsINS_9TransposeIKNS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEEEEbRKNS_10MatrixBaseIT_EE.exit54.thread
   %i.cm = fsub float %i.ck, %i.ch                 ; 2 uses
-  %15 = call float @llvm.fmuladd.f32(float %i.cm, float %i.cm, float 0.000000e+00)
+  %15 = fmul float %i.cm, %i.cm
   br label %bb.m
 
 bb.k:                                             ; preds = %_ZNK5Eigen10AlignedBoxIfLi3EE8containsINS_9TransposeIKNS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEEEEbRKNS_10MatrixBaseIT_EE.exit54.thread
@@ -3441,7 +3441,7 @@ bb.k:                                             ; preds = %_ZNK5Eigen10Aligned
 
 bb.l:                                             ; preds = %bb.k
   %i.cq = fsub float %i.ch, %i.co                 ; 2 uses
-  %16 = call float @llvm.fmuladd.f32(float %i.cq, float %i.cq, float 0.000000e+00)
+  %16 = fmul float %i.cq, %i.cq
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
@@ -3504,7 +3504,7 @@ _ZNK5Eigen10AlignedBoxIfLi3EE23squaredExteriorDistanceINS_9TransposeIKNS_6Matrix
 
 bb.u:                                             ; preds = %_ZNK5Eigen10AlignedBoxIfLi3EE23squaredExteriorDistanceINS_9TransposeIKNS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEEEEfRKNS_10MatrixBaseIT_EE.exit
   %i.dt = fsub float %i.dr, %i.ch                 ; 2 uses
-  %17 = call float @llvm.fmuladd.f32(float %i.dt, float %i.dt, float 0.000000e+00)
+  %17 = fmul float %i.dt, %i.dt
   br label %bb.x
 
 bb.v:                                             ; preds = %_ZNK5Eigen10AlignedBoxIfLi3EE23squaredExteriorDistanceINS_9TransposeIKNS_6MatrixIfLi1ELi3ELi1ELi1ELi3EEEEEEEfRKNS_10MatrixBaseIT_EE.exit
@@ -3515,7 +3515,7 @@ bb.v:                                             ; preds = %_ZNK5Eigen10Aligned
 
 bb.w:                                             ; preds = %bb.v
   %i.dx = fsub float %i.ch, %i.dv                 ; 2 uses
-  %18 = call float @llvm.fmuladd.f32(float %i.dx, float %i.dx, float 0.000000e+00)
+  %18 = fmul float %i.dx, %i.dx
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
@@ -3918,7 +3918,7 @@ _ZNK5Eigen10AlignedBoxIdLi3EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi
 
 bb.j:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi3EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEEEEbRKNS_10MatrixBaseIT_EE.exit54.thread
   %i.cm = fsub double %i.ck, %i.ch                ; 2 uses
-  %15 = call double @llvm.fmuladd.f64(double %i.cm, double %i.cm, double 0.000000e+00)
+  %15 = fmul double %i.cm, %i.cm
   br label %bb.m
 
 bb.k:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi3EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEEEEbRKNS_10MatrixBaseIT_EE.exit54.thread
@@ -3929,7 +3929,7 @@ bb.k:                                             ; preds = %_ZNK5Eigen10Aligned
 
 bb.l:                                             ; preds = %bb.k
   %i.cq = fsub double %i.ch, %i.co                ; 2 uses
-  %16 = call double @llvm.fmuladd.f64(double %i.cq, double %i.cq, double 0.000000e+00)
+  %16 = fmul double %i.cq, %i.cq
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
@@ -3992,7 +3992,7 @@ _ZNK5Eigen10AlignedBoxIdLi3EE23squaredExteriorDistanceINS_9TransposeIKNS_6Matrix
 
 bb.u:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi3EE23squaredExteriorDistanceINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEEEEdRKNS_10MatrixBaseIT_EE.exit
   %i.dt = fsub double %i.dr, %i.ch                ; 2 uses
-  %17 = call double @llvm.fmuladd.f64(double %i.dt, double %i.dt, double 0.000000e+00)
+  %17 = fmul double %i.dt, %i.dt
   br label %bb.x
 
 bb.v:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi3EE23squaredExteriorDistanceINS_9TransposeIKNS_6MatrixIdLi1ELi3ELi1ELi1ELi3EEEEEEEdRKNS_10MatrixBaseIT_EE.exit
@@ -4003,7 +4003,7 @@ bb.v:                                             ; preds = %_ZNK5Eigen10Aligned
 
 bb.w:                                             ; preds = %bb.v
   %i.dx = fsub double %i.ch, %i.dv                ; 2 uses
-  %18 = call double @llvm.fmuladd.f64(double %i.dx, double %i.dx, double 0.000000e+00)
+  %18 = fmul double %i.dx, %i.dx
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %bb.v, %bb.u
@@ -4351,7 +4351,7 @@ _ZNK5Eigen10AlignedBoxIdLi2EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi2ELi1ELi
 
 bb.j:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi2EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi2ELi1ELi1ELi2EEEEEEEbRKNS_10MatrixBaseIT_EE.exit52.thread
   %i.bn = fsub double %i.bl, %i.bi                ; 2 uses
-  %15 = call double @llvm.fmuladd.f64(double %i.bn, double %i.bn, double 0.000000e+00)
+  %15 = fmul double %i.bn, %i.bn
   br label %bb.m
 
 bb.k:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi2EE8containsINS_9TransposeIKNS_6MatrixIdLi1ELi2ELi1ELi1ELi2EEEEEEEbRKNS_10MatrixBaseIT_EE.exit52.thread
@@ -4362,7 +4362,7 @@ bb.k:                                             ; preds = %_ZNK5Eigen10Aligned
 
 bb.l:                                             ; preds = %bb.k
   %i.br = fsub double %i.bi, %i.bp                ; 2 uses
-  %16 = call double @llvm.fmuladd.f64(double %i.br, double %i.br, double 0.000000e+00)
+  %16 = fmul double %i.br, %i.br
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.l, %bb.k, %bb.j
@@ -4400,7 +4400,7 @@ _ZNK5Eigen10AlignedBoxIdLi2EE23squaredExteriorDistanceINS_9TransposeIKNS_6Matrix
 
 bb.q:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi2EE23squaredExteriorDistanceINS_9TransposeIKNS_6MatrixIdLi1ELi2ELi1ELi1ELi2EEEEEEEdRKNS_10MatrixBaseIT_EE.exit
   %i.ci = fsub double %i.cg, %i.bi                ; 2 uses
-  %17 = call double @llvm.fmuladd.f64(double %i.ci, double %i.ci, double 0.000000e+00)
+  %17 = fmul double %i.ci, %i.ci
   br label %bb.t
 
 bb.r:                                             ; preds = %_ZNK5Eigen10AlignedBoxIdLi2EE23squaredExteriorDistanceINS_9TransposeIKNS_6MatrixIdLi1ELi2ELi1ELi1ELi2EEEEEEEdRKNS_10MatrixBaseIT_EE.exit
@@ -4411,7 +4411,7 @@ bb.r:                                             ; preds = %_ZNK5Eigen10Aligned
 
 bb.s:                                             ; preds = %bb.r
   %i.cm = fsub double %i.bi, %i.ck                ; 2 uses
-  %18 = call double @llvm.fmuladd.f64(double %i.cm, double %i.cm, double 0.000000e+00)
+  %18 = fmul double %i.cm, %i.cm
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r, %bb.q

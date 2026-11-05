@@ -204,7 +204,7 @@ bb.a:
   %i.h = load double, ptr %i.f, align 8, !tbaa !76
   %i.i = load double, ptr %i.g, align 8, !tbaa !76
   %i.j = fsub double %i.h, %i.i                   ; 2 uses
-  %4 = tail call double @llvm.fmuladd.f64(double %i.j, double %i.j, double 0.000000e+00)
+  %4 = fmul double %i.j, %i.j
   %i.k = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.l = load double, ptr %i.k, align 8, !tbaa !76
   %i.m = getelementptr inbounds nuw i8, ptr %i.g, i64 8
@@ -235,7 +235,7 @@ bb.a:
   %i.ab = load double, ptr %i.z, align 8, !tbaa !76
   %i.ac = load double, ptr %i.aa, align 8, !tbaa !76
   %i.ad = fsub double %i.ab, %i.ac                ; 2 uses
-  %5 = tail call double @llvm.fmuladd.f64(double %i.ad, double %i.ad, double 0.000000e+00)
+  %5 = fmul double %i.ad, %i.ad
   %i.ae = getelementptr inbounds nuw i8, ptr %i.z, i64 8
   %i.af = load double, ptr %i.ae, align 8, !tbaa !76
   %i.ag = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
@@ -255,7 +255,7 @@ bb.a:
   %i.au = load double, ptr %i.as, align 8, !tbaa !76
   %i.av = load double, ptr %i.at, align 8, !tbaa !76
   %i.aw = fsub double %i.au, %i.av                ; 2 uses
-  %6 = tail call double @llvm.fmuladd.f64(double %i.aw, double %i.aw, double 0.000000e+00)
+  %6 = fmul double %i.aw, %i.aw
   %i.ax = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   %i.ay = load double, ptr %i.ax, align 8, !tbaa !76
   %i.az = getelementptr inbounds nuw i8, ptr %i.at, i64 8
@@ -658,7 +658,7 @@ bb.a:
   %.val.epil = load double, ptr %i.f, align 8, !tbaa !76
   %.val6.epil = load double, ptr %i.g, align 8, !tbaa !76
   %i.h = fsub double %.val.epil, %.val6.epil      ; 2 uses
-  %4 = tail call noundef double @llvm.fmuladd.f64(double %i.h, double %i.h, double 0.000000e+00)
+  %4 = fmul double %i.h, %i.h
   %i.i = fadd double %.0510.epil, %4              ; 2 uses
   %i.j = add nuw i64 %.011.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
@@ -680,7 +680,7 @@ bb.a:
   %.val = load double, ptr %i.m, align 8, !tbaa !76
   %.val6 = load double, ptr %i.n, align 8, !tbaa !76
   %i.o = fsub double %.val, %.val6                ; 2 uses
-  %5 = tail call noundef double @llvm.fmuladd.f64(double %i.o, double %i.o, double 0.000000e+00)
+  %5 = fmul double %i.o, %i.o
   %i.p = fadd double %.0510, %5
   %i.q = or disjoint i64 %.011, 1                 ; 2 uses
   %i.r = getelementptr inbounds [24 x i8], ptr %0, i64 %i.q
@@ -688,7 +688,7 @@ bb.a:
   %.val.1 = load double, ptr %i.r, align 8, !tbaa !76
   %.val6.1 = load double, ptr %i.s, align 8, !tbaa !76
   %i.t = fsub double %.val.1, %.val6.1            ; 2 uses
-  %6 = tail call noundef double @llvm.fmuladd.f64(double %i.t, double %i.t, double 0.000000e+00)
+  %6 = fmul double %i.t, %i.t
   %i.u = fadd double %i.p, %6
   %i.v = or disjoint i64 %.011, 2                 ; 2 uses
   %i.w = getelementptr inbounds [24 x i8], ptr %0, i64 %i.v
@@ -696,7 +696,7 @@ bb.a:
   %.val.2 = load double, ptr %i.w, align 8, !tbaa !76
   %.val6.2 = load double, ptr %i.x, align 8, !tbaa !76
   %i.y = fsub double %.val.2, %.val6.2            ; 2 uses
-  %7 = tail call noundef double @llvm.fmuladd.f64(double %i.y, double %i.y, double 0.000000e+00)
+  %7 = fmul double %i.y, %i.y
   %i.z = fadd double %i.u, %7
   %i.aa = or disjoint i64 %.011, 3                ; 2 uses
   %i.ab = getelementptr inbounds [24 x i8], ptr %0, i64 %i.aa
@@ -704,7 +704,7 @@ bb.a:
   %.val.3 = load double, ptr %i.ab, align 8, !tbaa !76
   %.val6.3 = load double, ptr %i.ac, align 8, !tbaa !76
   %i.ad = fsub double %.val.3, %.val6.3           ; 2 uses
-  %8 = tail call noundef double @llvm.fmuladd.f64(double %i.ad, double %i.ad, double 0.000000e+00)
+  %8 = fmul double %i.ad, %i.ad
   %i.ae = fadd double %i.z, %8                    ; 3 uses
   %i.af = add nuw i64 %.011, 4                    ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
@@ -753,7 +753,7 @@ bb.a:
   %i.i = getelementptr i8, ptr %i.g, i64 8
   %.val6.epil = load double, ptr %i.i, align 8, !tbaa !76
   %i.j = fsub double %.val.epil, %.val6.epil      ; 2 uses
-  %4 = tail call noundef double @llvm.fmuladd.f64(double %i.j, double %i.j, double 0.000000e+00)
+  %4 = fmul double %i.j, %i.j
   %i.k = fadd double %.0510.epil, %4              ; 2 uses
   %i.l = add nuw i64 %.011.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
@@ -777,7 +777,7 @@ bb.a:
   %i.r = getelementptr i8, ptr %i.p, i64 8
   %.val6 = load double, ptr %i.r, align 8, !tbaa !76
   %i.s = fsub double %.val, %.val6                ; 2 uses
-  %5 = tail call noundef double @llvm.fmuladd.f64(double %i.s, double %i.s, double 0.000000e+00)
+  %5 = fmul double %i.s, %i.s
   %i.t = fadd double %.0510, %5
   %i.u = or disjoint i64 %.011, 1                 ; 2 uses
   %i.v = getelementptr inbounds [24 x i8], ptr %0, i64 %i.u
@@ -787,7 +787,7 @@ bb.a:
   %i.y = getelementptr i8, ptr %i.w, i64 8
   %.val6.1 = load double, ptr %i.y, align 8, !tbaa !76
   %i.z = fsub double %.val.1, %.val6.1            ; 2 uses
-  %6 = tail call noundef double @llvm.fmuladd.f64(double %i.z, double %i.z, double 0.000000e+00)
+  %6 = fmul double %i.z, %i.z
   %i.aa = fadd double %i.t, %6
   %i.ab = or disjoint i64 %.011, 2                ; 2 uses
   %i.ac = getelementptr inbounds [24 x i8], ptr %0, i64 %i.ab
@@ -797,7 +797,7 @@ bb.a:
   %i.af = getelementptr i8, ptr %i.ad, i64 8
   %.val6.2 = load double, ptr %i.af, align 8, !tbaa !76
   %i.ag = fsub double %.val.2, %.val6.2           ; 2 uses
-  %7 = tail call noundef double @llvm.fmuladd.f64(double %i.ag, double %i.ag, double 0.000000e+00)
+  %7 = fmul double %i.ag, %i.ag
   %i.ah = fadd double %i.aa, %7
   %i.ai = or disjoint i64 %.011, 3                ; 2 uses
   %i.aj = getelementptr inbounds [24 x i8], ptr %0, i64 %i.ai
@@ -807,7 +807,7 @@ bb.a:
   %i.am = getelementptr i8, ptr %i.ak, i64 8
   %.val6.3 = load double, ptr %i.am, align 8, !tbaa !76
   %i.an = fsub double %.val.3, %.val6.3           ; 2 uses
-  %8 = tail call noundef double @llvm.fmuladd.f64(double %i.an, double %i.an, double 0.000000e+00)
+  %8 = fmul double %i.an, %i.an
   %i.ao = fadd double %i.ah, %8                   ; 3 uses
   %i.ap = add nuw i64 %.011, 4                    ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
@@ -856,7 +856,7 @@ bb.a:
   %i.i = getelementptr i8, ptr %i.g, i64 16
   %.val6.epil = load double, ptr %i.i, align 8, !tbaa !76
   %i.j = fsub double %.val.epil, %.val6.epil      ; 2 uses
-  %4 = tail call noundef double @llvm.fmuladd.f64(double %i.j, double %i.j, double 0.000000e+00)
+  %4 = fmul double %i.j, %i.j
   %i.k = fadd double %.0510.epil, %4              ; 2 uses
   %i.l = add nuw i64 %.011.epil, 1
   %epil.iter.next = add i64 %epil.iter, 1         ; 2 uses
@@ -880,7 +880,7 @@ bb.a:
   %i.r = getelementptr i8, ptr %i.p, i64 16
   %.val6 = load double, ptr %i.r, align 8, !tbaa !76
   %i.s = fsub double %.val, %.val6                ; 2 uses
-  %5 = tail call noundef double @llvm.fmuladd.f64(double %i.s, double %i.s, double 0.000000e+00)
+  %5 = fmul double %i.s, %i.s
   %i.t = fadd double %.0510, %5
   %i.u = or disjoint i64 %.011, 1                 ; 2 uses
   %i.v = getelementptr inbounds [24 x i8], ptr %0, i64 %i.u
@@ -890,7 +890,7 @@ bb.a:
   %i.y = getelementptr i8, ptr %i.w, i64 16
   %.val6.1 = load double, ptr %i.y, align 8, !tbaa !76
   %i.z = fsub double %.val.1, %.val6.1            ; 2 uses
-  %6 = tail call noundef double @llvm.fmuladd.f64(double %i.z, double %i.z, double 0.000000e+00)
+  %6 = fmul double %i.z, %i.z
   %i.aa = fadd double %i.t, %6
   %i.ab = or disjoint i64 %.011, 2                ; 2 uses
   %i.ac = getelementptr inbounds [24 x i8], ptr %0, i64 %i.ab
@@ -900,7 +900,7 @@ bb.a:
   %i.af = getelementptr i8, ptr %i.ad, i64 16
   %.val6.2 = load double, ptr %i.af, align 8, !tbaa !76
   %i.ag = fsub double %.val.2, %.val6.2           ; 2 uses
-  %7 = tail call noundef double @llvm.fmuladd.f64(double %i.ag, double %i.ag, double 0.000000e+00)
+  %7 = fmul double %i.ag, %i.ag
   %i.ah = fadd double %i.aa, %7
   %i.ai = or disjoint i64 %.011, 3                ; 2 uses
   %i.aj = getelementptr inbounds [24 x i8], ptr %0, i64 %i.ai
@@ -910,7 +910,7 @@ bb.a:
   %i.am = getelementptr i8, ptr %i.ak, i64 16
   %.val6.3 = load double, ptr %i.am, align 8, !tbaa !76
   %i.an = fsub double %.val.3, %.val6.3           ; 2 uses
-  %8 = tail call noundef double @llvm.fmuladd.f64(double %i.an, double %i.an, double 0.000000e+00)
+  %8 = fmul double %i.an, %i.an
   %i.ao = fadd double %i.ah, %8                   ; 3 uses
   %i.ap = add nuw i64 %.011, 4                    ; 2 uses
   %niter.next.3 = add i64 %niter, 4               ; 2 uses
@@ -963,7 +963,7 @@ bb.a:
   %i.k = getelementptr i8, ptr %i.g, i64 16
   %.val8.epil = load double, ptr %i.k, align 8, !tbaa !76
   %i.l = fsub double %.val.epil, %.val7.epil      ; 2 uses
-  %4 = tail call double @llvm.fmuladd.f64(double %i.l, double %i.l, double 0.000000e+00)
+  %4 = fmul double %i.l, %i.l
   %i.m = fsub double %.val6.epil, %.val8.epil     ; 2 uses
   %i.n = tail call noundef double @llvm.fmuladd.f64(double %i.m, double %i.m, double %4)
   %i.o = fadd double %.0512.epil, %i.n            ; 2 uses
@@ -993,7 +993,7 @@ bb.a:
   %i.x = getelementptr i8, ptr %i.t, i64 16
   %.val8 = load double, ptr %i.x, align 8, !tbaa !76
   %i.y = fsub double %.val, %.val7                ; 2 uses
-  %5 = tail call double @llvm.fmuladd.f64(double %i.y, double %i.y, double 0.000000e+00)
+  %5 = fmul double %i.y, %i.y
   %i.z = fsub double %.val6, %.val8               ; 2 uses
   %i.aa = tail call noundef double @llvm.fmuladd.f64(double %i.z, double %i.z, double %5)
   %i.ab = fadd double %.0512, %i.aa
@@ -1009,7 +1009,7 @@ bb.a:
   %i.ai = getelementptr i8, ptr %i.ae, i64 16
   %.val8.1 = load double, ptr %i.ai, align 8, !tbaa !76
   %i.aj = fsub double %.val.1, %.val7.1           ; 2 uses
-  %6 = tail call double @llvm.fmuladd.f64(double %i.aj, double %i.aj, double 0.000000e+00)
+  %6 = fmul double %i.aj, %i.aj
   %i.ak = fsub double %.val6.1, %.val8.1          ; 2 uses
   %i.al = tail call noundef double @llvm.fmuladd.f64(double %i.ak, double %i.ak, double %6)
   %i.am = fadd double %i.ab, %i.al
@@ -1025,7 +1025,7 @@ bb.a:
   %i.at = getelementptr i8, ptr %i.ap, i64 16
   %.val8.2 = load double, ptr %i.at, align 8, !tbaa !76
   %i.au = fsub double %.val.2, %.val7.2           ; 2 uses
-  %7 = tail call double @llvm.fmuladd.f64(double %i.au, double %i.au, double 0.000000e+00)
+  %7 = fmul double %i.au, %i.au
   %i.av = fsub double %.val6.2, %.val8.2          ; 2 uses
   %i.aw = tail call noundef double @llvm.fmuladd.f64(double %i.av, double %i.av, double %7)
   %i.ax = fadd double %i.am, %i.aw
@@ -1041,7 +1041,7 @@ bb.a:
   %i.be = getelementptr i8, ptr %i.ba, i64 16
   %.val8.3 = load double, ptr %i.be, align 8, !tbaa !76
   %i.bf = fsub double %.val.3, %.val7.3           ; 2 uses
-  %8 = tail call double @llvm.fmuladd.f64(double %i.bf, double %i.bf, double 0.000000e+00)
+  %8 = fmul double %i.bf, %i.bf
   %i.bg = fsub double %.val6.3, %.val8.3          ; 2 uses
   %i.bh = tail call noundef double @llvm.fmuladd.f64(double %i.bg, double %i.bg, double %8)
   %i.bi = fadd double %i.ax, %i.bh                ; 3 uses
@@ -1094,7 +1094,7 @@ bb.a:
   %i.i = getelementptr i8, ptr %i.g, i64 16
   %.val8.epil = load double, ptr %i.i, align 8, !tbaa !76
   %i.j = fsub double %.val.epil, %.val7.epil      ; 2 uses
-  %4 = tail call double @llvm.fmuladd.f64(double %i.j, double %i.j, double 0.000000e+00)
+  %4 = fmul double %i.j, %i.j
   %i.k = fsub double %.val6.epil, %.val8.epil     ; 2 uses
   %i.l = tail call noundef double @llvm.fmuladd.f64(double %i.k, double %i.k, double %4)
   %i.m = fadd double %.0512.epil, %i.l            ; 2 uses
@@ -1122,7 +1122,7 @@ bb.a:
   %i.t = getelementptr i8, ptr %i.r, i64 16
   %.val8 = load double, ptr %i.t, align 8, !tbaa !76
   %i.u = fsub double %.val, %.val7                ; 2 uses
-  %5 = tail call double @llvm.fmuladd.f64(double %i.u, double %i.u, double 0.000000e+00)
+  %5 = fmul double %i.u, %i.u
   %i.v = fsub double %.val6, %.val8               ; 2 uses
   %i.w = tail call noundef double @llvm.fmuladd.f64(double %i.v, double %i.v, double %5)
   %i.x = fadd double %.0512, %i.w
@@ -1136,7 +1136,7 @@ bb.a:
   %i.ac = getelementptr i8, ptr %i.aa, i64 16
   %.val8.1 = load double, ptr %i.ac, align 8, !tbaa !76
   %i.ad = fsub double %.val.1, %.val7.1           ; 2 uses
-  %6 = tail call double @llvm.fmuladd.f64(double %i.ad, double %i.ad, double 0.000000e+00)
+  %6 = fmul double %i.ad, %i.ad
   %i.ae = fsub double %.val6.1, %.val8.1          ; 2 uses
   %i.af = tail call noundef double @llvm.fmuladd.f64(double %i.ae, double %i.ae, double %6)
   %i.ag = fadd double %i.x, %i.af
@@ -1150,7 +1150,7 @@ bb.a:
   %i.al = getelementptr i8, ptr %i.aj, i64 16
   %.val8.2 = load double, ptr %i.al, align 8, !tbaa !76
   %i.am = fsub double %.val.2, %.val7.2           ; 2 uses
-  %7 = tail call double @llvm.fmuladd.f64(double %i.am, double %i.am, double 0.000000e+00)
+  %7 = fmul double %i.am, %i.am
   %i.an = fsub double %.val6.2, %.val8.2          ; 2 uses
   %i.ao = tail call noundef double @llvm.fmuladd.f64(double %i.an, double %i.an, double %7)
   %i.ap = fadd double %i.ag, %i.ao
@@ -1164,7 +1164,7 @@ bb.a:
   %i.au = getelementptr i8, ptr %i.as, i64 16
   %.val8.3 = load double, ptr %i.au, align 8, !tbaa !76
   %i.av = fsub double %.val.3, %.val7.3           ; 2 uses
-  %8 = tail call double @llvm.fmuladd.f64(double %i.av, double %i.av, double 0.000000e+00)
+  %8 = fmul double %i.av, %i.av
   %i.aw = fsub double %.val6.3, %.val8.3          ; 2 uses
   %i.ax = tail call noundef double @llvm.fmuladd.f64(double %i.aw, double %i.aw, double %8)
   %i.ay = fadd double %i.ap, %i.ax                ; 3 uses
@@ -1217,7 +1217,7 @@ bb.a:
   %i.i = getelementptr i8, ptr %i.g, i64 8
   %.val8.epil = load double, ptr %i.i, align 8, !tbaa !76
   %i.j = fsub double %.val.epil, %.val7.epil      ; 2 uses
-  %4 = tail call double @llvm.fmuladd.f64(double %i.j, double %i.j, double 0.000000e+00)
+  %4 = fmul double %i.j, %i.j
   %i.k = fsub double %.val6.epil, %.val8.epil     ; 2 uses
   %i.l = tail call noundef double @llvm.fmuladd.f64(double %i.k, double %i.k, double %4)
   %i.m = fadd double %.0512.epil, %i.l            ; 2 uses
@@ -1245,7 +1245,7 @@ bb.a:
   %i.t = getelementptr i8, ptr %i.r, i64 8
   %.val8 = load double, ptr %i.t, align 8, !tbaa !76
   %i.u = fsub double %.val, %.val7                ; 2 uses
-  %5 = tail call double @llvm.fmuladd.f64(double %i.u, double %i.u, double 0.000000e+00)
+  %5 = fmul double %i.u, %i.u
   %i.v = fsub double %.val6, %.val8               ; 2 uses
   %i.w = tail call noundef double @llvm.fmuladd.f64(double %i.v, double %i.v, double %5)
   %i.x = fadd double %.0512, %i.w
@@ -1259,7 +1259,7 @@ bb.a:
   %i.ac = getelementptr i8, ptr %i.aa, i64 8
   %.val8.1 = load double, ptr %i.ac, align 8, !tbaa !76
   %i.ad = fsub double %.val.1, %.val7.1           ; 2 uses
-  %6 = tail call double @llvm.fmuladd.f64(double %i.ad, double %i.ad, double 0.000000e+00)
+  %6 = fmul double %i.ad, %i.ad
   %i.ae = fsub double %.val6.1, %.val8.1          ; 2 uses
   %i.af = tail call noundef double @llvm.fmuladd.f64(double %i.ae, double %i.ae, double %6)
   %i.ag = fadd double %i.x, %i.af
@@ -1273,7 +1273,7 @@ bb.a:
   %i.al = getelementptr i8, ptr %i.aj, i64 8
   %.val8.2 = load double, ptr %i.al, align 8, !tbaa !76
   %i.am = fsub double %.val.2, %.val7.2           ; 2 uses
-  %7 = tail call double @llvm.fmuladd.f64(double %i.am, double %i.am, double 0.000000e+00)
+  %7 = fmul double %i.am, %i.am
   %i.an = fsub double %.val6.2, %.val8.2          ; 2 uses
   %i.ao = tail call noundef double @llvm.fmuladd.f64(double %i.an, double %i.an, double %7)
   %i.ap = fadd double %i.ag, %i.ao
@@ -1287,7 +1287,7 @@ bb.a:
   %i.au = getelementptr i8, ptr %i.as, i64 8
   %.val8.3 = load double, ptr %i.au, align 8, !tbaa !76
   %i.av = fsub double %.val.3, %.val7.3           ; 2 uses
-  %8 = tail call double @llvm.fmuladd.f64(double %i.av, double %i.av, double 0.000000e+00)
+  %8 = fmul double %i.av, %i.av
   %i.aw = fsub double %.val6.3, %.val8.3          ; 2 uses
   %i.ax = tail call noundef double @llvm.fmuladd.f64(double %i.aw, double %i.aw, double %8)
   %i.ay = fadd double %i.ap, %i.ax                ; 3 uses

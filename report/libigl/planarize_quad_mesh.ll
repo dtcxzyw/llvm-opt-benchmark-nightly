@@ -205,28 +205,28 @@ bb.c:                                             ; preds = %bb.a, %_ZN5Eigen10M
 bb.d:                                             ; preds = %bb.c
   %i.aq = getelementptr inbounds i8, ptr %1, i64 %.idx.i.i.i.i ; 2 uses
   %i.ar = getelementptr inbounds i8, ptr %0, i64 %.idx.i.i.i.i27 ; 8 uses
-  %2 = load double, ptr %i.aq, align 8, !tbaa !59 ; 3 uses
-  store double %2, ptr %i.ar, align 16
-  %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.a = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
-  store double 0.000000e+00, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.a, align 8, !tbaa !77
-  %3 = getelementptr inbounds nuw i8, ptr %i.ar, i64 16 ; 3 uses
-  %i.as = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
-  %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i.a = getelementptr inbounds nuw i8, ptr %i.ar, i64 24
-  store double 0.000000e+00, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i.a, align 8, !tbaa !77
-  %4 = getelementptr inbounds nuw i8, ptr %i.ar, i64 32 ; 3 uses
+  %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
+  store double 0.000000e+00, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !77
+  %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.a = getelementptr inbounds nuw i8, ptr %i.ar, i64 16 ; 3 uses
+  %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ar, i64 24
+  store double 0.000000e+00, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !77
+  %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 32 ; 3 uses
+  %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i.a = getelementptr inbounds nuw i8, ptr %i.aq, i64 16
+  %2 = load double, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i.a, align 8, !tbaa !59 ; 3 uses
+  store double %2, ptr %i.as, align 16
   %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.ar, i64 40
   store double 0.000000e+00, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.i.i, align 8, !tbaa !77
-  %5 = tail call noundef double @llvm.fmuladd.f64(double %2, double %2, double 0.000000e+00)
-  %i.at = load <2 x double>, ptr %i.as, align 8, !tbaa !59 ; 4 uses
+  %i.at = load <2 x double>, ptr %i.aq, align 8, !tbaa !59 ; 4 uses
   %i.au = extractelement <2 x double> %i.at, i64 0
-  store double %i.au, ptr %3, align 16
+  store double %i.au, ptr %i.ar, align 16
   %i.av = extractelement <2 x double> %i.at, i64 1
-  store double %i.av, ptr %4, align 16
-  %6 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.at, <2 x double> %i.at, <2 x double> zeroinitializer) ; 2 uses
-  %shift88 = shufflevector <2 x double> %6, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %foldExtExtBinop89 = fadd <2 x double> %6, %shift88
-  %i.aw = extractelement <2 x double> %foldExtExtBinop89, i64 0
-  %i.ax = fadd double %5, %i.aw                   ; 2 uses
+  store double %i.av, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.a, align 16
+  %3 = fmul <2 x double> %i.at, %i.at             ; 2 uses
+  %4 = fmul double %2, %2
+  %5 = extractelement <2 x double> %3, i64 1
+  %6 = fadd double %5, %4
+  %i.aw = extractelement <2 x double> %3, i64 0
+  %i.ax = fadd double %i.aw, %6                   ; 2 uses
   %i.ay = fcmp ogt double %i.ax, 0.000000e+00
   br i1 %i.ay, label %bb.e, label %_ZN5Eigen10MatrixBaseINS_5BlockINS_6MatrixISt7complexIdELi3ELi3ELi0ELi3ELi3EEELi3ELi1ELb1EEEE9normalizeEv.exit
 
@@ -254,7 +254,7 @@ bb.e:                                             ; preds = %bb.d
   %i.br = fadd <2 x double> %i.bp, %i.bq          ; 3 uses
   %i.bs = fdiv <2 x double> %i.bo, %i.br
   store <2 x double> %i.bs, ptr %i.ar, align 16, !tbaa !77
-  %i.bt = load <4 x i32>, ptr %3, align 16, !tbaa !77 ; 2 uses
+  %i.bt = load <4 x i32>, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.a, align 16, !tbaa !77 ; 2 uses
   %i.bu = bitcast <4 x i32> %i.bt to <2 x double>
   %i.bv = shufflevector <2 x double> %i.bu, <2 x double> poison, <2 x i32> zeroinitializer
   %i.bw = fmul <2 x double> %i.bv, %i.bc
@@ -266,8 +266,8 @@ bb.e:                                             ; preds = %bb.d
   %i.cc = bitcast <2 x i64> %i.cb to <2 x double>
   %i.cd = fadd <2 x double> %i.bw, %i.cc
   %i.ce = fdiv <2 x double> %i.cd, %i.br
-  store <2 x double> %i.ce, ptr %3, align 16, !tbaa !77
-  %i.cf = load <4 x i32>, ptr %4, align 16, !tbaa !77 ; 2 uses
+  store <2 x double> %i.ce, ptr %.sroa.4.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i.a, align 16, !tbaa !77
+  %i.cf = load <4 x i32>, ptr %i.as, align 16, !tbaa !77 ; 2 uses
   %i.cg = bitcast <4 x i32> %i.cf to <2 x double>
   %i.ch = shufflevector <2 x double> %i.cg, <2 x double> poison, <2 x i32> zeroinitializer
   %i.ci = fmul <2 x double> %i.ch, %i.bc
@@ -279,7 +279,7 @@ bb.e:                                             ; preds = %bb.d
   %i.co = bitcast <2 x i64> %i.cn to <2 x double>
   %i.cp = fadd <2 x double> %i.ci, %i.co
   %i.cq = fdiv <2 x double> %i.cp, %i.br
-  store <2 x double> %i.cq, ptr %4, align 16, !tbaa !77
+  store <2 x double> %i.cq, ptr %i.as, align 16, !tbaa !77
   br label %_ZN5Eigen10MatrixBaseINS_5BlockINS_6MatrixISt7complexIdELi3ELi3ELi0ELi3ELi3EEELi3ELi1ELb1EEEE9normalizeEv.exit
 
 bb.f:                                             ; preds = %.preheader

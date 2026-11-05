@@ -205,7 +205,7 @@ bb.a:
   %14 = alloca %"class.std::vector.40", align 8   ; 11 uses
   %15 = alloca %"class.cv::Mat", align 8          ; 14 uses
   %16 = alloca %"class.cv::Mat", align 8          ; 11 uses
-  %17 = alloca %"class.cv::Scalar_", align 8      ; 9 uses
+  %17 = alloca %"class.cv::Scalar_", align 8      ; 8 uses
   %18 = alloca %"class.cv::Scalar_", align 8      ; 9 uses
   %19 = alloca %"class.cv::Rect_", align 8        ; 7 uses
   %20 = alloca %"class.cv::Mat", align 8          ; 8 uses
@@ -563,20 +563,19 @@ _ZNK2cv11_InputArray6getMatEi.exit132:            ; preds = %bb.o, %bb.n
   %i.dj = getelementptr inbounds nuw i8, ptr %16, i64 84 ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %19, i64 8
   %i.dl = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %29 = getelementptr inbounds nuw i8, ptr %22, i64 16
-  %i.dm = getelementptr inbounds nuw i8, ptr %22, i64 20
-  %i.dn = getelementptr inbounds nuw i8, ptr %22, i64 8
-  %i.do = getelementptr inbounds nuw i8, ptr %24, i64 8
-  %i.dp = getelementptr inbounds nuw i8, ptr %24, i64 16
-  %i.dq = getelementptr inbounds nuw i8, ptr %25, i64 8
-  %i.dr = getelementptr inbounds nuw i8, ptr %25, i64 16
-  %i.ds = getelementptr inbounds nuw i8, ptr %26, i64 16
-  %i.dt = getelementptr inbounds nuw i8, ptr %26, i64 20
-  %i.du = getelementptr inbounds nuw i8, ptr %26, i64 8
-  %i.dv = getelementptr inbounds nuw i8, ptr %27, i64 16
-  %i.dw = getelementptr inbounds nuw i8, ptr %27, i64 8
-  %i.dx = getelementptr inbounds nuw i8, ptr %17, i64 8
-  %i.dy = getelementptr inbounds nuw i8, ptr %17, i64 16
+  %i.dm = getelementptr inbounds nuw i8, ptr %22, i64 16
+  %i.dn = getelementptr inbounds nuw i8, ptr %22, i64 20
+  %i.do = getelementptr inbounds nuw i8, ptr %22, i64 8
+  %i.dp = getelementptr inbounds nuw i8, ptr %24, i64 8
+  %i.dq = getelementptr inbounds nuw i8, ptr %24, i64 16
+  %i.dr = getelementptr inbounds nuw i8, ptr %25, i64 8
+  %i.ds = getelementptr inbounds nuw i8, ptr %25, i64 16
+  %i.dt = getelementptr inbounds nuw i8, ptr %26, i64 16
+  %i.du = getelementptr inbounds nuw i8, ptr %26, i64 20
+  %i.dv = getelementptr inbounds nuw i8, ptr %26, i64 8
+  %i.dw = getelementptr inbounds nuw i8, ptr %27, i64 16
+  %i.dx = getelementptr inbounds nuw i8, ptr %27, i64 8
+  %i.dy = getelementptr inbounds nuw i8, ptr %17, i64 8
   %i.dz = getelementptr inbounds nuw i8, ptr %17, i64 24
   %i.ea = getelementptr inbounds nuw i8, ptr %18, i64 8
   %i.eb = getelementptr inbounds nuw i8, ptr %18, i64 16
@@ -946,23 +945,23 @@ _ZNK2cv3MatclERKNS_5Rect_IiEE.exit:               ; preds = %_ZNK2cv11_InputArra
           to label %bb.az unwind label %bb.bg
 
 bb.az:                                            ; preds = %_ZNK2cv3MatclERKNS_5Rect_IiEE.exit
-  store i32 0, ptr %29, align 8, !tbaa !75
-  store i32 0, ptr %i.dm, align 4, !tbaa !76
+  store i32 0, ptr %i.dm, align 8, !tbaa !75
+  store i32 0, ptr %i.dn, align 4, !tbaa !76
   store i32 16842752, ptr %22, align 8, !tbaa !77
-  store ptr %23, ptr %i.dn, align 8, !tbaa !72
+  store ptr %23, ptr %i.do, align 8, !tbaa !72
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #27
   store i32 -1040056314, ptr %24, align 8, !tbaa !77
-  store ptr %17, ptr %i.do, align 8, !tbaa !72
-  store i64 17179869185, ptr %i.dp, align 8, !tbaa !61
+  store ptr %17, ptr %i.dp, align 8, !tbaa !72
+  store i64 17179869185, ptr %i.dq, align 8, !tbaa !61
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #27
   store i32 -1040056314, ptr %25, align 8, !tbaa !77
-  store ptr %18, ptr %i.dq, align 8, !tbaa !72
-  store i64 17179869185, ptr %i.dr, align 8, !tbaa !61
+  store ptr %18, ptr %i.dr, align 8, !tbaa !72
+  store i64 17179869185, ptr %i.ds, align 8, !tbaa !61
   call void @llvm.lifetime.start.p0(ptr nonnull %26) #27
-  store i32 0, ptr %i.ds, align 8, !tbaa !75
-  store i32 0, ptr %i.dt, align 4, !tbaa !76
+  store i32 0, ptr %i.dt, align 8, !tbaa !75
+  store i32 0, ptr %i.du, align 4, !tbaa !76
   store i32 16842752, ptr %26, align 8, !tbaa !77
-  store ptr %20, ptr %i.du, align 8, !tbaa !72
+  store ptr %20, ptr %i.dv, align 8, !tbaa !72
   invoke void @_ZN2cv10meanStdDevERKNS_11_InputArrayERKNS_12_OutputArrayES5_S2_(ptr noundef nonnull align 8 dereferenceable(24) %22, ptr noundef nonnull align 8 dereferenceable(24) %24, ptr noundef nonnull align 8 dereferenceable(24) %25, ptr noundef nonnull align 8 dereferenceable(24) %26)
           to label %bb.ba unwind label %bb.bh
 
@@ -977,8 +976,8 @@ bb.ba:                                            ; preds = %bb.az
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #27
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %28, i8 0, i64 32, i1 false)
   store i32 -1056833530, ptr %27, align 8, !tbaa !77
-  store ptr %28, ptr %i.dw, align 8, !tbaa !72
-  store i64 17179869185, ptr %i.dv, align 8, !tbaa !61
+  store ptr %28, ptr %i.dx, align 8, !tbaa !72
+  store i64 17179869185, ptr %i.dw, align 8, !tbaa !61
   %i.jd = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZN2cv7noArrayEv()
           to label %bb.bb unwind label %bb.bj
 
@@ -989,43 +988,46 @@ bb.bb:                                            ; preds = %bb.ba
 bb.bc:                                            ; preds = %bb.bb
   call void @llvm.lifetime.end.p0(ptr nonnull %28) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %27) #27
-  %i.jf = fpext float %i.gh to double             ; 2 uses
+  %i.jf = fpext float %i.gh to double             ; 3 uses
   %i.jg = fpext float %i.gj to double             ; 2 uses
   %i.jh = fpext float %i.gl to double             ; 3 uses
-  %30 = load double, ptr %i.dy, align 8, !tbaa !58 ; 2 uses
   %i.ji = load double, ptr %i.dz, align 8, !tbaa !58 ; 2 uses
   %i.jj = load double, ptr %17, align 8, !tbaa !58 ; 3 uses
   %i.jk = call double @llvm.fmuladd.f64(double %i.jj, double %i.jf, double 0.000000e+00)
-  %31 = load double, ptr %i.dx, align 8, !tbaa !58 ; 3 uses
-  %32 = call double @llvm.fmuladd.f64(double %31, double %i.jg, double %i.jk)
-  %i.jl = call double @llvm.fmuladd.f64(double %30, double %i.jh, double %32)
-  %33 = call noundef double @llvm.fmuladd.f64(double %i.ji, double 0.000000e+00, double %i.jl)
-  %34 = call double @llvm.fmuladd.f64(double %i.jj, double %i.jj, double 0.000000e+00)
-  %35 = call double @llvm.fmuladd.f64(double %31, double %31, double %34)
-  %i.jm = insertelement <2 x double> poison, double %30, i64 0
-  %i.jn = insertelement <2 x double> %i.jm, double %i.jf, i64 1 ; 2 uses
-  %36 = insertelement <2 x double> <double poison, double 0.000000e+00>, double %35, i64 0
-  %i.jo = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jn, <2 x double> %i.jn, <2 x double> %36)
-  %i.jp = insertelement <2 x double> poison, double %i.ji, i64 0
-  %i.jq = insertelement <2 x double> %i.jp, double %i.jg, i64 1 ; 2 uses
-  %i.jr = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jq, <2 x double> %i.jq, <2 x double> %i.jo) ; 2 uses
+  %29 = load <2 x double>, ptr %i.dy, align 8, !tbaa !58 ; 5 uses
+  %30 = extractelement <2 x double> %29, i64 0
+  %i.jl = call double @llvm.fmuladd.f64(double %30, double %i.jg, double %i.jk)
+  %31 = fmul double %i.jj, %i.jj
+  %32 = insertelement <2 x double> %29, double %i.jh, i64 1
+  %33 = insertelement <2 x double> poison, double %31, i64 0
+  %i.jm = insertelement <2 x double> %33, double %i.jl, i64 1
+  %34 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %29, <2 x double> %32, <2 x double> %i.jm)
+  %35 = shufflevector <2 x double> %29, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
+  %i.jn = insertelement <2 x double> %35, double %i.ji, i64 1
+  %36 = shufflevector <2 x double> %29, <2 x double> <double poison, double 0.000000e+00>, <2 x i32> <i32 1, i32 3>
+  %i.jo = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jn, <2 x double> %36, <2 x double> %34) ; 2 uses
+  %37 = fmul double %i.jf, %i.jf
+  %38 = insertelement <2 x double> poison, double %i.ji, i64 0
+  %i.jp = insertelement <2 x double> %38, double %i.jg, i64 1 ; 2 uses
+  %i.jq = insertelement <2 x double> %i.jo, double %37, i64 1
+  %i.jr = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jp, <2 x double> %i.jp, <2 x double> %i.jq) ; 2 uses
   %i.js = extractelement <2 x double> %i.jr, i64 1
   %i.jt = call noundef double @llvm.fmuladd.f64(double %i.jh, double %i.jh, double %i.js)
   %i.ju = insertelement <2 x double> %i.jr, double %i.jt, i64 1
   %i.jv = call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.ju) ; 2 uses
-  %37 = load double, ptr %18, align 8, !tbaa !58
-  %38 = insertelement <2 x double> %i.jv, double %37, i64 1 ; 2 uses
-  %39 = shufflevector <2 x double> %38, <2 x double> %i.jv, <2 x i32> <i32 3, i32 1>
-  %40 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %38, <2 x double> %39, <2 x double> <double f0x3E80000000000000, double 0.000000e+00>) ; 2 uses
-  %i.jw = extractelement <2 x double> %40, i64 0
-  %i.jx = fdiv double %33, %i.jw
+  %39 = extractelement <2 x double> %i.jv, i64 0
+  %40 = extractelement <2 x double> %i.jv, i64 1
+  %41 = call double @llvm.fmuladd.f64(double %39, double %40, double f0x3E80000000000000)
+  %i.jw = extractelement <2 x double> %i.jo, i64 1
+  %i.jx = fdiv double %i.jw, %41
   %i.jy = fptrunc double %i.jx to float
   %i.jz = fadd float %i.jy, 1.000000e+00
   %i.ka = fmul float %i.jz, 5.000000e-01
   %i.kb = fsub float 1.000000e+00, %i.ka
-  %i.kc = load double, ptr %i.ea, align 8, !tbaa !58 ; 2 uses
-  %41 = extractelement <2 x double> %40, i64 1
-  %i.kd = call double @llvm.fmuladd.f64(double %i.kc, double %i.kc, double %41)
+  %i.kc = load double, ptr %18, align 8, !tbaa !58 ; 2 uses
+  %42 = fmul double %i.kc, %i.kc
+  %43 = load double, ptr %i.ea, align 8, !tbaa !58 ; 2 uses
+  %i.kd = call double @llvm.fmuladd.f64(double %43, double %43, double %42)
   %i.ke = load double, ptr %i.eb, align 8, !tbaa !58 ; 2 uses
   %i.kf = call double @llvm.fmuladd.f64(double %i.ke, double %i.ke, double %i.kd)
   %i.kg = load double, ptr %i.ec, align 8, !tbaa !58 ; 2 uses

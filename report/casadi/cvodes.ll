@@ -205,7 +205,7 @@ bb.jd:                                            ; preds = %bb.jc
   store double %i.ctl, ptr %i.ctm, align 8, !tbaa !53
   %i.ctn = fdiv double %i.csp, %i.css             ; 3 uses
   %i.cto = fadd double %i.ctn, 0.000000e+00
-  %1 = tail call double @llvm.fmuladd.f64(double %i.ctn, double %i.ctn, double 0.000000e+00)
+  %1 = fmul double %i.ctn, %i.ctn
   %i.ctp = fdiv double %i.css, %i.csw             ; 3 uses
   %i.ctq = fadd double %i.cto, %i.ctp
   %i.ctr = tail call double @llvm.fmuladd.f64(double %i.ctp, double %i.ctp, double %1)
@@ -226,53 +226,56 @@ bb.jd:                                            ; preds = %bb.jc
   store double %i.cud, ptr %i.cue, align 8, !tbaa !53
   %i.cuf = load double, ptr %i.cso, align 8, !tbaa !53 ; 2 uses
   %i.cug = getelementptr inbounds nuw [8 x i8], ptr %i.csf, i64 %indvars.iv.i.i297
-  %i.cuh = load double, ptr %i.cug, align 8, !tbaa !53 ; 4 uses
+  %i.cuh = load double, ptr %i.cug, align 8, !tbaa !53
   %i.cui = getelementptr inbounds nuw [8 x i8], ptr %i.csg, i64 %indvars.iv.i.i297
   %i.cuj = load double, ptr %i.cui, align 8, !tbaa !53 ; 3 uses
-  %2 = fneg double %i.cuj
-  %3 = fmul double %i.cuj, %2
-  %4 = tail call double @llvm.fmuladd.f64(double %i.cuf, double %i.cuh, double %3) ; 2 uses
   %i.cuk = getelementptr inbounds nuw [8 x i8], ptr %i.csh, i64 %indvars.iv.i.i297
-  store double %4, ptr %i.cuk, align 8, !tbaa !53
   %i.cul = getelementptr inbounds nuw [8 x i8], ptr %i.csi, i64 %indvars.iv.i.i297
   %i.cum = load double, ptr %i.cul, align 8, !tbaa !53 ; 3 uses
-  %5 = fneg double %i.cum
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %i.csj, i64 %indvars.iv.i.i297
-  %7 = getelementptr inbounds nuw [8 x i8], ptr %i.csk, i64 %indvars.iv.i.i297
-  store double 0.000000e+00, ptr %7, align 8, !tbaa !53
-  %8 = getelementptr inbounds nuw [8 x i8], ptr %i.csl, i64 %indvars.iv.i.i297
-  %9 = load double, ptr %8, align 8, !tbaa !53    ; 2 uses
-  %i.cun = insertelement <2 x double> poison, double %i.cuf, i64 0
-  %i.cuo = insertelement <2 x double> %i.cun, double %i.cuh, i64 1
-  %i.cup = insertelement <2 x double> poison, double %5, i64 0
-  %i.cuq = shufflevector <2 x double> %i.cup, <2 x double> poison, <2 x i32> zeroinitializer
-  %10 = fmul <2 x double> %i.cuo, %i.cuq
-  %11 = insertelement <2 x double> poison, double %i.cuj, i64 0
-  %12 = shufflevector <2 x double> %11, <2 x double> poison, <2 x i32> zeroinitializer
-  %13 = insertelement <2 x double> poison, double %i.cuh, i64 0
-  %14 = insertelement <2 x double> %13, double %9, i64 1
-  %15 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %12, <2 x double> %14, <2 x double> %10) ; 2 uses
-  %16 = extractelement <2 x double> %15, i64 0    ; 2 uses
-  store double %16, ptr %6, align 8, !tbaa !53
+  %2 = insertelement <2 x double> poison, double %i.cum, i64 0
+  %3 = insertelement <2 x double> %2, double %i.cuj, i64 1
+  %4 = fneg <2 x double> %3                       ; 2 uses
+  %5 = insertelement <2 x double> poison, double %i.cuf, i64 0
+  %6 = insertelement <2 x double> %5, double %i.cuj, i64 1
+  %7 = fmul <2 x double> %6, %4
+  %i.cun = insertelement <2 x double> poison, double %i.cuj, i64 0 ; 2 uses
+  %i.cuo = insertelement <2 x double> %i.cun, double %i.cuf, i64 1
+  %i.cup = insertelement <2 x double> poison, double %i.cuh, i64 0
+  %i.cuq = shufflevector <2 x double> %i.cup, <2 x double> poison, <2 x i32> zeroinitializer ; 2 uses
+  %8 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.cuo, <2 x double> %i.cuq, <2 x double> %7) ; 2 uses
+  %9 = extractelement <2 x double> %8, i64 1      ; 2 uses
+  store double %9, ptr %i.cuk, align 8, !tbaa !53
+  %10 = getelementptr inbounds nuw [8 x i8], ptr %i.csj, i64 %indvars.iv.i.i297
+  %11 = extractelement <2 x double> %8, i64 0     ; 2 uses
+  store double %11, ptr %10, align 8, !tbaa !53
+  %12 = getelementptr inbounds nuw [8 x i8], ptr %i.csk, i64 %indvars.iv.i.i297
+  store double 0.000000e+00, ptr %12, align 8, !tbaa !53
+  %13 = getelementptr inbounds nuw [8 x i8], ptr %i.csl, i64 %indvars.iv.i.i297
+  %14 = load double, ptr %13, align 8, !tbaa !53  ; 2 uses
   %i.cur = getelementptr inbounds nuw [8 x i8], ptr %i.csm, i64 %indvars.iv.i.i297
-  %17 = extractelement <2 x double> %15, i64 1    ; 2 uses
-  store double %17, ptr %i.cur, align 8, !tbaa !53
-  %18 = fneg double %9
-  %19 = fmul double %i.cuh, %18
-  %20 = tail call double @llvm.fmuladd.f64(double %i.cum, double %i.cum, double %19) ; 2 uses
+  %15 = fneg double %14
+  %16 = insertelement <2 x double> %4, double %15, i64 1
+  %17 = fmul <2 x double> %i.cuq, %16
+  %18 = insertelement <2 x double> %i.cun, double %i.cum, i64 1
+  %19 = insertelement <2 x double> poison, double %14, i64 0
+  %20 = insertelement <2 x double> %19, double %i.cum, i64 1
+  %21 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %18, <2 x double> %20, <2 x double> %17) ; 2 uses
+  %22 = extractelement <2 x double> %21, i64 0    ; 2 uses
+  store double %22, ptr %i.cur, align 8, !tbaa !53
   %i.cus = getelementptr inbounds nuw [8 x i8], ptr %i.csn, i64 %indvars.iv.i.i297
-  store double %20, ptr %i.cus, align 8, !tbaa !53
+  %23 = extractelement <2 x double> %21, i64 1    ; 2 uses
+  store double %23, ptr %i.cus, align 8, !tbaa !53
   %invariant.gep352.i.i = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv.i.i297 ; 5 uses
   %gep353.i.i = getelementptr inbounds nuw i8, ptr %invariant.gep352.i.i, i64 32
-  store double %20, ptr %gep353.i.i, align 8, !tbaa !53
+  store double %23, ptr %gep353.i.i, align 8, !tbaa !53
   %gep353.1.i.i = getelementptr inbounds nuw i8, ptr %invariant.gep352.i.i, i64 64
-  store double %17, ptr %gep353.1.i.i, align 8, !tbaa !53
+  store double %22, ptr %gep353.1.i.i, align 8, !tbaa !53
   %gep353.2.i.i = getelementptr inbounds nuw i8, ptr %invariant.gep352.i.i, i64 96
   store double 0.000000e+00, ptr %gep353.2.i.i, align 8, !tbaa !53
   %gep353.3.i.i = getelementptr inbounds nuw i8, ptr %invariant.gep352.i.i, i64 128
-  store double %16, ptr %gep353.3.i.i, align 8, !tbaa !53
+  store double %11, ptr %gep353.3.i.i, align 8, !tbaa !53
   %gep353.4.i.i = getelementptr inbounds nuw i8, ptr %invariant.gep352.i.i, i64 160
-  store double %4, ptr %gep353.4.i.i, align 8, !tbaa !53
+  store double %9, ptr %gep353.4.i.i, align 8, !tbaa !53
   %indvars.iv.next.i.i298 = add nuw nsw i64 %indvars.iv.i.i297, 1 ; 2 uses
   %exitcond.not.i.i299 = icmp eq i64 %indvars.iv.next.i.i298, 4
   br i1 %exitcond.not.i.i299, label %bb.je, label %bb.jc, !llvm.loop !374

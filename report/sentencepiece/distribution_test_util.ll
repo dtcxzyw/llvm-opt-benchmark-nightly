@@ -80,7 +80,7 @@ bb.a:
 .prol.loopexit.unr-lcssa:                         ; preds = %.lr.ph36
   %i.r = load double, ptr %1, align 8, !tbaa !22
   %i.s = fsub double %i.r, %i.p                   ; 6 uses
-  %3 = tail call double @llvm.fmuladd.f64(double %i.s, double %i.s, double 0.000000e+00) ; 2 uses
+  %3 = fmul double %i.s, %i.s                     ; 2 uses
   %i.t = fmul double %i.s, %i.s                   ; 2 uses
   %i.u = fmul double %i.s, %i.t
   %i.v = insertelement <2 x double> poison, double %i.t, i64 0

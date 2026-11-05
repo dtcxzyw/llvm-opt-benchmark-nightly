@@ -204,11 +204,11 @@ _ZNSirsERd.exit112.1:                             ; preds = %_ZNSirsERd.exit112
           to label %_ZNSirsERd.exit112.2 unwind label %.loopexit.split-lp336.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 
 _ZNSirsERd.exit112.2:                             ; preds = %_ZNSirsERd.exit112.1
-  %i.em = load <2 x double>, ptr %spec.select.i.1.i.i.i, align 16, !tbaa !46, !noalias !81 ; 3 uses
-  %12 = extractelement <2 x double> %i.em, i64 1  ; 2 uses
-  %13 = call double @llvm.fmuladd.f64(double %12, double %12, double 0.000000e+00)
+  %i.em = load <2 x double>, ptr %spec.select.i.1.i.i.i, align 16, !tbaa !46, !noalias !81 ; 4 uses
+  %foldExtExtBinop = fmul <2 x double> %i.em, %i.em
+  %12 = extractelement <2 x double> %foldExtExtBinop, i64 1
   %i.en = extractelement <2 x double> %i.em, i64 0 ; 2 uses
-  %i.eo = call double @llvm.fmuladd.f64(double %i.en, double %i.en, double %13)
+  %i.eo = call double @llvm.fmuladd.f64(double %i.en, double %i.en, double %12)
   %i.ep = load <2 x double>, ptr %7, align 16, !tbaa !46, !noalias !81 ; 3 uses
   %i.eq = extractelement <2 x double> %i.ep, i64 1 ; 2 uses
   %i.er = call double @llvm.fmuladd.f64(double %i.eq, double %i.eq, double %i.eo)
@@ -611,7 +611,7 @@ bb.a:
   %i.n = fmul nnan double %i.m, 2.000000e+00
   %i.o = fdiv double %i.n, 2.550000e+02
   %i.p = fadd double %i.o, -1.000000e+00          ; 3 uses
-  %3 = tail call double @llvm.fmuladd.f64(double %i.p, double %i.p, double 0.000000e+00)
+  %3 = fmul double %i.p, %i.p
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.q = insertelement <2 x i40> poison, i40 %i.l, i64 0
   %i.r = shufflevector <2 x i40> %i.q, <2 x i40> poison, <2 x i32> zeroinitializer

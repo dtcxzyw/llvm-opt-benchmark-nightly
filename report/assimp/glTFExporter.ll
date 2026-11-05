@@ -205,7 +205,7 @@ bb.a:
 
 .lr.ph115.i.preheader:                            ; preds = %._crit_edge107.split.i
   %i.af = fsub float %i.ae, %i.ad                 ; 2 uses
-  %2 = tail call float @llvm.fmuladd.f32(float %i.af, float %i.af, float 0.000000e+00)
+  %2 = fmul float %i.af, %i.af
   %i.ag = fsub float %i.ac, %i.ab                 ; 2 uses
   %i.ah = tail call float @llvm.fmuladd.f32(float %i.ag, float %i.ag, float %2)
   %i.ai = fsub float %i.aa, %i.z                  ; 2 uses
@@ -363,7 +363,7 @@ _ZN5o3dgc19ComputeVectorMinMaxEPKfmmmPfS2_NS_27O3DGCSC3DMCQuantizationModeE.exit
 
 .lr.ph115.i26.preheader:                          ; preds = %._crit_edge107.split.i16
   %i.cy = fsub float %i.cx, %i.cw                 ; 2 uses
-  %3 = tail call float @llvm.fmuladd.f32(float %i.cy, float %i.cy, float 0.000000e+00)
+  %3 = fmul float %i.cy, %i.cy
   %i.cz = fsub float %i.cv, %i.cu                 ; 2 uses
   %i.da = tail call float @llvm.fmuladd.f32(float %i.cz, float %i.cz, float %3)
   %i.db = fsub float %i.ct, %i.cs                 ; 2 uses

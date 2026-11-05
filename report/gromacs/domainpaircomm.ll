@@ -205,24 +205,23 @@ bb.b:                                             ; preds = %bb.a
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ag = load float, ptr %i.af, align 4, !tbaa !123
   %i.ah = fsub float %i.ae, %i.ag
-  %i.ai = tail call float @llvm.fmuladd.f32(float %i.ah, float %i.ab, float %i.z) ; 5 uses
+  %i.ai = tail call float @llvm.fmuladd.f32(float %i.ah, float %i.ab, float %i.z) ; 3 uses
   %i.aj = fcmp ogt float %i.ai, 0.000000e+00
   br i1 %i.aj, label %bb.c, label %._crit_edge88.us.i
 
 bb.c:                                             ; preds = %._crit_edge.us.i
   %i.ak = load i32, ptr %i.g, align 8, !tbaa !140
   %.not53.us.i = icmp eq i32 %i.ak, 0
+  %4 = fmul nnan float %i.ai, %i.ai               ; 3 uses
   br i1 %.not53.us.i, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %4 = tail call float @llvm.fmuladd.f32(float %i.ai, float %i.ai, float 0.000000e+00)
   %.sroa.0.0.vec.insert.us.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %4, i64 0
   br label %._crit_edge88.us.i
 
 bb.e:                                             ; preds = %bb.c
-  %5 = fmul nnan float %i.ai, %i.ai               ; 2 uses
-  %i.al = fcmp ogt float %5, 0.000000e+00
-  %.sroa.speculated59.us.i = select i1 %i.al, float %5, float 0.000000e+00
+  %i.al = fcmp ogt float %4, 0.000000e+00
+  %.sroa.speculated59.us.i = select i1 %i.al, float %4, float 0.000000e+00
   %.sroa.0.0.vec.insert65.us.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %.sroa.speculated59.us.i, i64 0
   br label %._crit_edge88.us.i
 
@@ -443,24 +442,23 @@ bb.t:                                             ; preds = %bb.r
   %i.el = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.em = load float, ptr %i.el, align 4, !tbaa !123
   %i.en = fsub float %i.ek, %i.em
-  %i.eo = tail call float @llvm.fmuladd.f32(float %i.en, float %i.eh, float %i.ef) ; 5 uses
+  %i.eo = tail call float @llvm.fmuladd.f32(float %i.en, float %i.eh, float %i.ef) ; 3 uses
   %i.ep = fcmp ogt float %i.eo, 0.000000e+00
   br i1 %i.ep, label %bb.u, label %.split.1.i
 
 bb.u:                                             ; preds = %._crit_edge.i
   %i.eq = load i32, ptr %i.g, align 8, !tbaa !140
   %.not53.i = icmp eq i32 %i.eq, 0
+  %5 = fmul nnan float %i.eo, %i.eo               ; 3 uses
   br i1 %.not53.i, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
-  %6 = tail call float @llvm.fmuladd.f32(float %i.eo, float %i.eo, float 0.000000e+00)
-  %.sroa.0.0.vec.insert.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %6, i64 0
+  %.sroa.0.0.vec.insert.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %5, i64 0
   br label %.split.1.i
 
 bb.w:                                             ; preds = %bb.u
-  %7 = fmul nnan float %i.eo, %i.eo               ; 2 uses
-  %i.er = fcmp ogt float %7, 0.000000e+00
-  %.sroa.speculated59.i = select i1 %i.er, float %7, float 0.000000e+00
+  %i.er = fcmp ogt float %5, 0.000000e+00
+  %.sroa.speculated59.i = select i1 %i.er, float %5, float 0.000000e+00
   %.sroa.0.0.vec.insert65.i = insertelement <2 x float> <float poison, float 0.000000e+00>, float %.sroa.speculated59.i, i64 0
   br label %.split.1.i
 
@@ -576,8 +574,8 @@ bb.ae:                                            ; preds = %.split.us.preheader
   %i.go = load float, ptr %1, align 4, !tbaa !123
   %i.gp = fsub float %i.gn, %i.go                 ; 3 uses
   %i.gq = fcmp ogt float %i.gp, 0.000000e+00
-  %8 = tail call float @llvm.fmuladd.f32(float %i.gp, float %i.gp, float 0.000000e+00)
-  %.sroa.0.0.vec.insert.us.i24 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %8, i64 0
+  %6 = fmul float %i.gp, %i.gp
+  %.sroa.0.0.vec.insert.us.i24 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %6, i64 0
   %.sroa.0.1.us.i25 = select i1 %i.gq, <2 x float> %.sroa.0.0.vec.insert.us.i24, <2 x float> zeroinitializer ; 3 uses
   %i.gr = load float, ptr %2, align 4, !tbaa !123
   %i.gs = fsub float %i.gn, %i.gr                 ; 3 uses
@@ -655,8 +653,8 @@ bb.ak:                                            ; preds = %.split.preheader.i1
   %i.hy = load float, ptr %1, align 4, !tbaa !123
   %i.hz = fsub float %i.hx, %i.hy                 ; 3 uses
   %i.ia = fcmp ogt float %i.hz, 0.000000e+00
-  %9 = tail call float @llvm.fmuladd.f32(float %i.hz, float %i.hz, float 0.000000e+00)
-  %.sroa.0.0.vec.insert.i11 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %9, i64 0
+  %7 = fmul float %i.hz, %i.hz
+  %.sroa.0.0.vec.insert.i11 = insertelement <2 x float> <float poison, float 0.000000e+00>, float %7, i64 0
   %.sroa.0.1.i = select i1 %i.ia, <2 x float> %.sroa.0.0.vec.insert.i11, <2 x float> zeroinitializer
   br label %.split.1.i12
 

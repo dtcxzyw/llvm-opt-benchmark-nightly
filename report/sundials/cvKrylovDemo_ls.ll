@@ -204,103 +204,61 @@ bb.b:                                             ; preds = %.preheader
 define internal fastcc void @SetInitialProfiles(ptr noundef %0, double noundef nofpclass(nan inf zero sub nnorm) %1, double noundef nofpclass(nan inf zero sub nnorm) %2) unnamed_addr #0 {
 bb.a:
   %i.a = tail call ptr @N_VGetArrayPointer(ptr noundef %0) #10 ; 100 uses
-  %3 = insertelement <2 x double> poison, double %1, i64 1 ; 8 uses
-  %4 = fadd nnan double %1, -1.000000e+01
-  %5 = fmul nnan double %4, 1.000000e-01          ; 2 uses
-  %6 = fmul double %5, %5                         ; 3 uses
-  %i.b = fmul double %6, %6
-  %7 = insertelement <2 x double> %3, double %i.b, i64 0
-  %8 = fsub double 1.000000e+00, %6
-  %9 = insertelement <2 x double> <double poison, double 0.000000e+00>, double %8, i64 0
-  %10 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %7, <2 x double> <double 5.000000e-01, double 2.000000e+00>, <2 x double> %9) ; 2 uses
-  %11 = extractelement <2 x double> %10, i64 1
-  %i.c = fadd nnan double %11, -1.000000e+01
+  %i.b = fmul nnan double %1, 9.000000e+00
+  %i.c = fadd nnan double %i.b, -1.000000e+01
   %i.d = fmul nnan double %i.c, 1.000000e-01      ; 2 uses
   %i.e = fmul double %i.d, %i.d                   ; 3 uses
   %i.f = fmul double %i.e, %i.e
-  %12 = insertelement <2 x double> %3, double %i.f, i64 0
   %i.g = fsub double 1.000000e+00, %i.e
-  %13 = insertelement <2 x double> <double poison, double 0.000000e+00>, double %i.g, i64 0
-  %14 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %12, <2 x double> <double 5.000000e-01, double 3.000000e+00>, <2 x double> %13) ; 2 uses
-  %15 = extractelement <2 x double> %14, i64 1
-  %16 = fadd nnan double %15, -1.000000e+01
-  %17 = fmul nnan double %16, 1.000000e-01        ; 2 uses
-  %18 = fmul double %17, %17                      ; 3 uses
-  %19 = fmul double %18, %18
-  %20 = insertelement <2 x double> %3, double %19, i64 0
-  %21 = fsub double 1.000000e+00, %18
-  %i.h = insertelement <2 x double> <double poison, double 0.000000e+00>, double %21, i64 0
-  %22 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %20, <2 x double> <double 5.000000e-01, double 4.000000e+00>, <2 x double> %i.h) ; 2 uses
-  %23 = extractelement <2 x double> %22, i64 1
-  %24 = fadd nnan double %23, -1.000000e+01
-  %25 = fmul nnan double %24, 1.000000e-01        ; 2 uses
-  %26 = fmul double %25, %25                      ; 3 uses
-  %27 = fmul double %26, %26
-  %28 = insertelement <2 x double> %3, double %27, i64 0
-  %29 = fsub double 1.000000e+00, %26
-  %i.i = insertelement <2 x double> <double poison, double 0.000000e+00>, double %29, i64 0
-  %30 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %28, <2 x double> <double 5.000000e-01, double 5.000000e+00>, <2 x double> %i.i) ; 2 uses
-  %31 = extractelement <2 x double> %30, i64 1
-  %32 = fadd nnan double %31, -1.000000e+01
-  %33 = fmul nnan double %32, 1.000000e-01        ; 2 uses
-  %34 = fmul double %33, %33                      ; 3 uses
-  %35 = fmul double %34, %34
-  %36 = insertelement <2 x double> %3, double %35, i64 0
-  %37 = fsub double 1.000000e+00, %34
-  %38 = insertelement <2 x double> <double poison, double 0.000000e+00>, double %37, i64 0
-  %i.j = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %36, <2 x double> <double 5.000000e-01, double 6.000000e+00>, <2 x double> %38) ; 2 uses
-  %39 = extractelement <2 x double> %i.j, i64 1
-  %40 = fadd nnan double %39, -1.000000e+01
-  %41 = fmul nnan double %40, 1.000000e-01        ; 2 uses
-  %42 = fmul double %41, %41                      ; 3 uses
-  %43 = fmul double %42, %42
-  %44 = insertelement <2 x double> %3, double %43, i64 0
-  %45 = fsub double 1.000000e+00, %42
-  %46 = insertelement <2 x double> <double poison, double 0.000000e+00>, double %45, i64 0
-  %47 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %44, <2 x double> <double 5.000000e-01, double 7.000000e+00>, <2 x double> %46) ; 2 uses
-  %48 = extractelement <2 x double> %47, i64 1
-  %49 = fadd nnan double %48, -1.000000e+01
-  %50 = fmul nnan double %49, 1.000000e-01        ; 2 uses
-  %51 = fmul double %50, %50                      ; 3 uses
-  %52 = fmul double %51, %51
-  %53 = insertelement <2 x double> %3, double %52, i64 0
-  %54 = fsub double 1.000000e+00, %51
-  %55 = insertelement <2 x double> <double poison, double 0.000000e+00>, double %54, i64 0
-  %i.k = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %53, <2 x double> <double 5.000000e-01, double 8.000000e+00>, <2 x double> %55) ; 2 uses
-  %56 = extractelement <2 x double> %i.k, i64 1
-  %57 = fadd nnan double %56, -1.000000e+01
-  %58 = fmul nnan double %57, 1.000000e-01        ; 2 uses
-  %59 = fmul double %58, %58                      ; 3 uses
-  %60 = fmul double %59, %59
-  %61 = insertelement <2 x double> %3, double %60, i64 0
-  %62 = fsub double 1.000000e+00, %59
-  %63 = insertelement <2 x double> <double poison, double 0.000000e+00>, double %62, i64 0
-  %64 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %61, <2 x double> <double 5.000000e-01, double 9.000000e+00>, <2 x double> %63) ; 2 uses
-  %65 = extractelement <2 x double> %64, i64 1
-  %66 = fadd nnan double %65, -1.000000e+01
-  %67 = fmul nnan double %66, 1.000000e-01        ; 2 uses
-  %68 = fmul double %67, %67                      ; 3 uses
-  %69 = fmul double %68, %68
-  %70 = fsub double 1.000000e+00, %68
-  %71 = tail call double @llvm.fmuladd.f64(double %69, double 5.000000e-01, double %70)
-  %72 = insertelement <2 x double> poison, double %71, i64 0
-  %73 = shufflevector <2 x double> %72, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.l = fmul <2 x double> %73, <double 1.000000e+06, double 1.000000e+12> ; 10 uses
-  %i.m = shufflevector <2 x double> %64, <2 x double> poison, <2 x i32> zeroinitializer
+  %3 = tail call double @llvm.fmuladd.f64(double %i.f, double 5.000000e-01, double %i.g)
+  %i.h = insertelement <2 x double> poison, double %3, i64 0
+  %4 = shufflevector <2 x double> %i.h, <2 x double> poison, <2 x i32> zeroinitializer
+  %5 = fmul <2 x double> %4, <double 1.000000e+06, double 1.000000e+12> ; 10 uses
+  %i.i = insertelement <2 x double> poison, double %1, i64 0
+  %6 = shufflevector <2 x double> %i.i, <2 x double> poison, <2 x i32> zeroinitializer ; 4 uses
+  %7 = fmul nnan <2 x double> %6, <double 7.000000e+00, double 8.000000e+00>
+  %8 = fadd nnan <2 x double> %7, splat (double -1.000000e+01)
+  %9 = fmul nnan <2 x double> %8, splat (double 1.000000e-01) ; 2 uses
+  %10 = fmul <2 x double> %9, %9                  ; 3 uses
+  %11 = fmul <2 x double> %10, %10
+  %12 = fsub <2 x double> splat (double 1.000000e+00), %10
+  %i.j = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %11, <2 x double> splat (double 5.000000e-01), <2 x double> %12) ; 2 uses
+  %13 = shufflevector <2 x double> %i.j, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %14 = fmul <2 x double> %13, <double 1.000000e+06, double 1.000000e+12> ; 10 uses
+  %15 = shufflevector <2 x double> %i.j, <2 x double> poison, <2 x i32> zeroinitializer
+  %16 = fmul <2 x double> %15, <double 1.000000e+06, double 1.000000e+12> ; 10 uses
+  %17 = fmul nnan <2 x double> %6, <double 5.000000e+00, double 6.000000e+00>
+  %18 = fadd nnan <2 x double> %17, splat (double -1.000000e+01)
+  %19 = fmul nnan <2 x double> %18, splat (double 1.000000e-01) ; 2 uses
+  %20 = fmul <2 x double> %19, %19                ; 3 uses
+  %21 = fmul <2 x double> %20, %20
+  %22 = fsub <2 x double> splat (double 1.000000e+00), %20
+  %i.k = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %21, <2 x double> splat (double 5.000000e-01), <2 x double> %22) ; 2 uses
+  %23 = shufflevector <2 x double> %i.k, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %24 = fmul <2 x double> %23, <double 1.000000e+06, double 1.000000e+12> ; 10 uses
+  %25 = shufflevector <2 x double> %i.k, <2 x double> poison, <2 x i32> zeroinitializer
+  %26 = fmul <2 x double> %25, <double 1.000000e+06, double 1.000000e+12> ; 10 uses
+  %27 = fmul nnan <2 x double> %6, <double 3.000000e+00, double 4.000000e+00>
+  %28 = fadd nnan <2 x double> %27, splat (double -1.000000e+01)
+  %29 = fmul nnan <2 x double> %28, splat (double 1.000000e-01) ; 2 uses
+  %30 = fmul <2 x double> %29, %29                ; 3 uses
+  %31 = fmul <2 x double> %30, %30
+  %32 = fsub <2 x double> splat (double 1.000000e+00), %30
+  %33 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %31, <2 x double> splat (double 5.000000e-01), <2 x double> %32) ; 2 uses
+  %34 = shufflevector <2 x double> %33, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.l = fmul <2 x double> %34, <double 1.000000e+06, double 1.000000e+12> ; 10 uses
+  %i.m = shufflevector <2 x double> %33, <2 x double> poison, <2 x i32> zeroinitializer
   %i.n = fmul <2 x double> %i.m, <double 1.000000e+06, double 1.000000e+12> ; 10 uses
-  %74 = shufflevector <2 x double> %i.k, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.o = fmul <2 x double> %74, <double 1.000000e+06, double 1.000000e+12> ; 10 uses
-  %75 = shufflevector <2 x double> %47, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.p = fmul <2 x double> %75, <double 1.000000e+06, double 1.000000e+12> ; 10 uses
-  %76 = shufflevector <2 x double> %i.j, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.q = fmul <2 x double> %76, <double 1.000000e+06, double 1.000000e+12> ; 10 uses
-  %77 = shufflevector <2 x double> %30, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.r = fmul <2 x double> %77, <double 1.000000e+06, double 1.000000e+12> ; 10 uses
-  %78 = shufflevector <2 x double> %22, <2 x double> poison, <2 x i32> zeroinitializer
-  %79 = fmul <2 x double> %78, <double 1.000000e+06, double 1.000000e+12> ; 10 uses
-  %80 = shufflevector <2 x double> %14, <2 x double> poison, <2 x i32> zeroinitializer
-  %i.s = fmul <2 x double> %80, <double 1.000000e+06, double 1.000000e+12> ; 10 uses
-  %i.t = shufflevector <2 x double> %10, <2 x double> poison, <2 x i32> zeroinitializer
+  %i.o = fmul nnan <2 x double> %6, <double 1.000000e+00, double 2.000000e+00>
+  %35 = fadd nnan <2 x double> %i.o, splat (double -1.000000e+01)
+  %i.p = fmul nnan <2 x double> %35, splat (double 1.000000e-01) ; 2 uses
+  %i.q = fmul <2 x double> %i.p, %i.p             ; 3 uses
+  %i.r = fmul <2 x double> %i.q, %i.q
+  %36 = fsub <2 x double> splat (double 1.000000e+00), %i.q
+  %37 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.r, <2 x double> splat (double 5.000000e-01), <2 x double> %36) ; 2 uses
+  %38 = shufflevector <2 x double> %37, <2 x double> poison, <2 x i32> <i32 1, i32 1>
+  %i.s = fmul <2 x double> %38, <double 1.000000e+06, double 1.000000e+12> ; 10 uses
+  %i.t = shufflevector <2 x double> %37, <2 x double> poison, <2 x i32> zeroinitializer
   %i.u = fmul <2 x double> %i.t, <double 1.000000e+06, double 1.000000e+12> ; 10 uses
   store <2 x double> <double 2.500000e+05, double 2.500000e+11>, ptr %i.a, align 8, !tbaa !15
   %i.v = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -310,25 +268,25 @@ bb.a:
   %i.y = fmul <2 x double> %i.s, splat (double 5.000000e-01)
   store <2 x double> %i.y, ptr %i.x, align 8, !tbaa !15
   %i.z = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  %i.aa = fmul <2 x double> %79, splat (double 5.000000e-01)
+  %i.aa = fmul <2 x double> %i.n, splat (double 5.000000e-01)
   store <2 x double> %i.aa, ptr %i.z, align 8, !tbaa !15
   %i.ab = getelementptr inbounds nuw i8, ptr %i.a, i64 64
-  %i.ac = fmul <2 x double> %i.r, splat (double 5.000000e-01)
+  %i.ac = fmul <2 x double> %i.l, splat (double 5.000000e-01)
   store <2 x double> %i.ac, ptr %i.ab, align 8, !tbaa !15
   %i.ad = getelementptr inbounds nuw i8, ptr %i.a, i64 80
-  %i.ae = fmul <2 x double> %i.q, splat (double 5.000000e-01)
+  %i.ae = fmul <2 x double> %26, splat (double 5.000000e-01)
   store <2 x double> %i.ae, ptr %i.ad, align 8, !tbaa !15
   %i.af = getelementptr inbounds nuw i8, ptr %i.a, i64 96
-  %i.ag = fmul <2 x double> %i.p, splat (double 5.000000e-01)
+  %i.ag = fmul <2 x double> %24, splat (double 5.000000e-01)
   store <2 x double> %i.ag, ptr %i.af, align 8, !tbaa !15
   %i.ah = getelementptr inbounds nuw i8, ptr %i.a, i64 112
-  %i.ai = fmul <2 x double> %i.o, splat (double 5.000000e-01)
+  %i.ai = fmul <2 x double> %16, splat (double 5.000000e-01)
   store <2 x double> %i.ai, ptr %i.ah, align 8, !tbaa !15
   %i.aj = getelementptr inbounds nuw i8, ptr %i.a, i64 128
-  %i.ak = fmul <2 x double> %i.n, splat (double 5.000000e-01)
+  %i.ak = fmul <2 x double> %14, splat (double 5.000000e-01)
   store <2 x double> %i.ak, ptr %i.aj, align 8, !tbaa !15
   %i.al = getelementptr inbounds nuw i8, ptr %i.a, i64 144
-  %i.am = fmul <2 x double> %i.l, splat (double 5.000000e-01)
+  %i.am = fmul <2 x double> %5, splat (double 5.000000e-01)
   store <2 x double> %i.am, ptr %i.al, align 8, !tbaa !15
   %i.an = fadd nnan double %2, 3.000000e+01
   %i.ao = fadd nnan double %i.an, -4.000000e+01
@@ -349,25 +307,25 @@ bb.a:
   %i.bb = fmul <2 x double> %i.aw, %i.s
   store <2 x double> %i.bb, ptr %i.ba, align 8, !tbaa !15
   %i.bc = getelementptr inbounds nuw i8, ptr %i.a, i64 208
-  %i.bd = fmul <2 x double> %i.aw, %79
+  %i.bd = fmul <2 x double> %i.aw, %i.n
   store <2 x double> %i.bd, ptr %i.bc, align 8, !tbaa !15
   %i.be = getelementptr inbounds nuw i8, ptr %i.a, i64 224
-  %i.bf = fmul <2 x double> %i.aw, %i.r
+  %i.bf = fmul <2 x double> %i.aw, %i.l
   store <2 x double> %i.bf, ptr %i.be, align 8, !tbaa !15
   %i.bg = getelementptr inbounds nuw i8, ptr %i.a, i64 240
-  %i.bh = fmul <2 x double> %i.aw, %i.q
+  %i.bh = fmul <2 x double> %i.aw, %26
   store <2 x double> %i.bh, ptr %i.bg, align 8, !tbaa !15
   %i.bi = getelementptr inbounds nuw i8, ptr %i.a, i64 256
-  %i.bj = fmul <2 x double> %i.aw, %i.p
+  %i.bj = fmul <2 x double> %i.aw, %24
   store <2 x double> %i.bj, ptr %i.bi, align 8, !tbaa !15
   %i.bk = getelementptr inbounds nuw i8, ptr %i.a, i64 272
-  %i.bl = fmul <2 x double> %i.aw, %i.o
+  %i.bl = fmul <2 x double> %i.aw, %16
   store <2 x double> %i.bl, ptr %i.bk, align 8, !tbaa !15
   %i.bm = getelementptr inbounds nuw i8, ptr %i.a, i64 288
-  %i.bn = fmul <2 x double> %i.aw, %i.n
+  %i.bn = fmul <2 x double> %i.aw, %14
   store <2 x double> %i.bn, ptr %i.bm, align 8, !tbaa !15
   %i.bo = getelementptr inbounds nuw i8, ptr %i.a, i64 304
-  %i.bp = fmul <2 x double> %i.aw, %i.l
+  %i.bp = fmul <2 x double> %i.aw, %5
   store <2 x double> %i.bp, ptr %i.bo, align 8, !tbaa !15
   %i.bq = tail call nnan double @llvm.fmuladd.f64(double %2, double 2.000000e+00, double 3.000000e+01)
   %i.br = fadd nnan double %i.bq, -4.000000e+01
@@ -388,25 +346,25 @@ bb.a:
   %i.ce = fmul <2 x double> %i.bz, %i.s
   store <2 x double> %i.ce, ptr %i.cd, align 8, !tbaa !15
   %i.cf = getelementptr inbounds nuw i8, ptr %i.a, i64 368
-  %i.cg = fmul <2 x double> %i.bz, %79
+  %i.cg = fmul <2 x double> %i.bz, %i.n
   store <2 x double> %i.cg, ptr %i.cf, align 8, !tbaa !15
   %i.ch = getelementptr inbounds nuw i8, ptr %i.a, i64 384
-  %i.ci = fmul <2 x double> %i.bz, %i.r
+  %i.ci = fmul <2 x double> %i.bz, %i.l
   store <2 x double> %i.ci, ptr %i.ch, align 8, !tbaa !15
   %i.cj = getelementptr inbounds nuw i8, ptr %i.a, i64 400
-  %i.ck = fmul <2 x double> %i.bz, %i.q
+  %i.ck = fmul <2 x double> %i.bz, %26
   store <2 x double> %i.ck, ptr %i.cj, align 8, !tbaa !15
   %i.cl = getelementptr inbounds nuw i8, ptr %i.a, i64 416
-  %i.cm = fmul <2 x double> %i.bz, %i.p
+  %i.cm = fmul <2 x double> %i.bz, %24
   store <2 x double> %i.cm, ptr %i.cl, align 8, !tbaa !15
   %i.cn = getelementptr inbounds nuw i8, ptr %i.a, i64 432
-  %i.co = fmul <2 x double> %i.bz, %i.o
+  %i.co = fmul <2 x double> %i.bz, %16
   store <2 x double> %i.co, ptr %i.cn, align 8, !tbaa !15
   %i.cp = getelementptr inbounds nuw i8, ptr %i.a, i64 448
-  %i.cq = fmul <2 x double> %i.bz, %i.n
+  %i.cq = fmul <2 x double> %i.bz, %14
   store <2 x double> %i.cq, ptr %i.cp, align 8, !tbaa !15
   %i.cr = getelementptr inbounds nuw i8, ptr %i.a, i64 464
-  %i.cs = fmul <2 x double> %i.bz, %i.l
+  %i.cs = fmul <2 x double> %i.bz, %5
   store <2 x double> %i.cs, ptr %i.cr, align 8, !tbaa !15
   %i.ct = tail call nnan double @llvm.fmuladd.f64(double %2, double 3.000000e+00, double 3.000000e+01)
   %i.cu = fadd nnan double %i.ct, -4.000000e+01
@@ -427,25 +385,25 @@ bb.a:
   %i.dh = fmul <2 x double> %i.dc, %i.s
   store <2 x double> %i.dh, ptr %i.dg, align 8, !tbaa !15
   %i.di = getelementptr inbounds nuw i8, ptr %i.a, i64 528
-  %i.dj = fmul <2 x double> %i.dc, %79
+  %i.dj = fmul <2 x double> %i.dc, %i.n
   store <2 x double> %i.dj, ptr %i.di, align 8, !tbaa !15
   %i.dk = getelementptr inbounds nuw i8, ptr %i.a, i64 544
-  %i.dl = fmul <2 x double> %i.dc, %i.r
+  %i.dl = fmul <2 x double> %i.dc, %i.l
   store <2 x double> %i.dl, ptr %i.dk, align 8, !tbaa !15
   %i.dm = getelementptr inbounds nuw i8, ptr %i.a, i64 560
-  %i.dn = fmul <2 x double> %i.dc, %i.q
+  %i.dn = fmul <2 x double> %i.dc, %26
   store <2 x double> %i.dn, ptr %i.dm, align 8, !tbaa !15
   %i.do = getelementptr inbounds nuw i8, ptr %i.a, i64 576
-  %i.dp = fmul <2 x double> %i.dc, %i.p
+  %i.dp = fmul <2 x double> %i.dc, %24
   store <2 x double> %i.dp, ptr %i.do, align 8, !tbaa !15
   %i.dq = getelementptr inbounds nuw i8, ptr %i.a, i64 592
-  %i.dr = fmul <2 x double> %i.dc, %i.o
+  %i.dr = fmul <2 x double> %i.dc, %16
   store <2 x double> %i.dr, ptr %i.dq, align 8, !tbaa !15
   %i.ds = getelementptr inbounds nuw i8, ptr %i.a, i64 608
-  %i.dt = fmul <2 x double> %i.dc, %i.n
+  %i.dt = fmul <2 x double> %i.dc, %14
   store <2 x double> %i.dt, ptr %i.ds, align 8, !tbaa !15
   %i.du = getelementptr inbounds nuw i8, ptr %i.a, i64 624
-  %i.dv = fmul <2 x double> %i.dc, %i.l
+  %i.dv = fmul <2 x double> %i.dc, %5
   store <2 x double> %i.dv, ptr %i.du, align 8, !tbaa !15
   %i.dw = tail call nnan double @llvm.fmuladd.f64(double %2, double 4.000000e+00, double 3.000000e+01)
   %i.dx = fadd nnan double %i.dw, -4.000000e+01
@@ -466,25 +424,25 @@ bb.a:
   %i.ek = fmul <2 x double> %i.ef, %i.s
   store <2 x double> %i.ek, ptr %i.ej, align 8, !tbaa !15
   %i.el = getelementptr inbounds nuw i8, ptr %i.a, i64 688
-  %i.em = fmul <2 x double> %i.ef, %79
+  %i.em = fmul <2 x double> %i.ef, %i.n
   store <2 x double> %i.em, ptr %i.el, align 8, !tbaa !15
   %i.en = getelementptr inbounds nuw i8, ptr %i.a, i64 704
-  %i.eo = fmul <2 x double> %i.ef, %i.r
+  %i.eo = fmul <2 x double> %i.ef, %i.l
   store <2 x double> %i.eo, ptr %i.en, align 8, !tbaa !15
   %i.ep = getelementptr inbounds nuw i8, ptr %i.a, i64 720
-  %i.eq = fmul <2 x double> %i.ef, %i.q
+  %i.eq = fmul <2 x double> %i.ef, %26
   store <2 x double> %i.eq, ptr %i.ep, align 8, !tbaa !15
   %i.er = getelementptr inbounds nuw i8, ptr %i.a, i64 736
-  %i.es = fmul <2 x double> %i.ef, %i.p
+  %i.es = fmul <2 x double> %i.ef, %24
   store <2 x double> %i.es, ptr %i.er, align 8, !tbaa !15
   %i.et = getelementptr inbounds nuw i8, ptr %i.a, i64 752
-  %i.eu = fmul <2 x double> %i.ef, %i.o
+  %i.eu = fmul <2 x double> %i.ef, %16
   store <2 x double> %i.eu, ptr %i.et, align 8, !tbaa !15
   %i.ev = getelementptr inbounds nuw i8, ptr %i.a, i64 768
-  %i.ew = fmul <2 x double> %i.ef, %i.n
+  %i.ew = fmul <2 x double> %i.ef, %14
   store <2 x double> %i.ew, ptr %i.ev, align 8, !tbaa !15
   %i.ex = getelementptr inbounds nuw i8, ptr %i.a, i64 784
-  %i.ey = fmul <2 x double> %i.ef, %i.l
+  %i.ey = fmul <2 x double> %i.ef, %5
   store <2 x double> %i.ey, ptr %i.ex, align 8, !tbaa !15
   %i.ez = tail call nnan double @llvm.fmuladd.f64(double %2, double 5.000000e+00, double 3.000000e+01)
   %i.fa = fadd nnan double %i.ez, -4.000000e+01
@@ -505,25 +463,25 @@ bb.a:
   %i.fn = fmul <2 x double> %i.fi, %i.s
   store <2 x double> %i.fn, ptr %i.fm, align 8, !tbaa !15
   %i.fo = getelementptr inbounds nuw i8, ptr %i.a, i64 848
-  %i.fp = fmul <2 x double> %i.fi, %79
+  %i.fp = fmul <2 x double> %i.fi, %i.n
   store <2 x double> %i.fp, ptr %i.fo, align 8, !tbaa !15
   %i.fq = getelementptr inbounds nuw i8, ptr %i.a, i64 864
-  %i.fr = fmul <2 x double> %i.fi, %i.r
+  %i.fr = fmul <2 x double> %i.fi, %i.l
   store <2 x double> %i.fr, ptr %i.fq, align 8, !tbaa !15
   %i.fs = getelementptr inbounds nuw i8, ptr %i.a, i64 880
-  %i.ft = fmul <2 x double> %i.fi, %i.q
+  %i.ft = fmul <2 x double> %i.fi, %26
   store <2 x double> %i.ft, ptr %i.fs, align 8, !tbaa !15
   %i.fu = getelementptr inbounds nuw i8, ptr %i.a, i64 896
-  %i.fv = fmul <2 x double> %i.fi, %i.p
+  %i.fv = fmul <2 x double> %i.fi, %24
   store <2 x double> %i.fv, ptr %i.fu, align 8, !tbaa !15
   %i.fw = getelementptr inbounds nuw i8, ptr %i.a, i64 912
-  %i.fx = fmul <2 x double> %i.fi, %i.o
+  %i.fx = fmul <2 x double> %i.fi, %16
   store <2 x double> %i.fx, ptr %i.fw, align 8, !tbaa !15
   %i.fy = getelementptr inbounds nuw i8, ptr %i.a, i64 928
-  %i.fz = fmul <2 x double> %i.fi, %i.n
+  %i.fz = fmul <2 x double> %i.fi, %14
   store <2 x double> %i.fz, ptr %i.fy, align 8, !tbaa !15
   %i.ga = getelementptr inbounds nuw i8, ptr %i.a, i64 944
-  %i.gb = fmul <2 x double> %i.fi, %i.l
+  %i.gb = fmul <2 x double> %i.fi, %5
   store <2 x double> %i.gb, ptr %i.ga, align 8, !tbaa !15
   %i.gc = tail call nnan double @llvm.fmuladd.f64(double %2, double 6.000000e+00, double 3.000000e+01)
   %i.gd = fadd nnan double %i.gc, -4.000000e+01
@@ -544,25 +502,25 @@ bb.a:
   %i.gq = fmul <2 x double> %i.gl, %i.s
   store <2 x double> %i.gq, ptr %i.gp, align 8, !tbaa !15
   %i.gr = getelementptr inbounds nuw i8, ptr %i.a, i64 1008
-  %i.gs = fmul <2 x double> %i.gl, %79
+  %i.gs = fmul <2 x double> %i.gl, %i.n
   store <2 x double> %i.gs, ptr %i.gr, align 8, !tbaa !15
   %i.gt = getelementptr inbounds nuw i8, ptr %i.a, i64 1024
-  %i.gu = fmul <2 x double> %i.gl, %i.r
+  %i.gu = fmul <2 x double> %i.gl, %i.l
   store <2 x double> %i.gu, ptr %i.gt, align 8, !tbaa !15
   %i.gv = getelementptr inbounds nuw i8, ptr %i.a, i64 1040
-  %i.gw = fmul <2 x double> %i.gl, %i.q
+  %i.gw = fmul <2 x double> %i.gl, %26
   store <2 x double> %i.gw, ptr %i.gv, align 8, !tbaa !15
   %i.gx = getelementptr inbounds nuw i8, ptr %i.a, i64 1056
-  %i.gy = fmul <2 x double> %i.gl, %i.p
+  %i.gy = fmul <2 x double> %i.gl, %24
   store <2 x double> %i.gy, ptr %i.gx, align 8, !tbaa !15
   %i.gz = getelementptr inbounds nuw i8, ptr %i.a, i64 1072
-  %i.ha = fmul <2 x double> %i.gl, %i.o
+  %i.ha = fmul <2 x double> %i.gl, %16
   store <2 x double> %i.ha, ptr %i.gz, align 8, !tbaa !15
   %i.hb = getelementptr inbounds nuw i8, ptr %i.a, i64 1088
-  %i.hc = fmul <2 x double> %i.gl, %i.n
+  %i.hc = fmul <2 x double> %i.gl, %14
   store <2 x double> %i.hc, ptr %i.hb, align 8, !tbaa !15
   %i.hd = getelementptr inbounds nuw i8, ptr %i.a, i64 1104
-  %i.he = fmul <2 x double> %i.gl, %i.l
+  %i.he = fmul <2 x double> %i.gl, %5
   store <2 x double> %i.he, ptr %i.hd, align 8, !tbaa !15
   %i.hf = tail call nnan double @llvm.fmuladd.f64(double %2, double 7.000000e+00, double 3.000000e+01)
   %i.hg = fadd nnan double %i.hf, -4.000000e+01
@@ -583,25 +541,25 @@ bb.a:
   %i.ht = fmul <2 x double> %i.ho, %i.s
   store <2 x double> %i.ht, ptr %i.hs, align 8, !tbaa !15
   %i.hu = getelementptr inbounds nuw i8, ptr %i.a, i64 1168
-  %i.hv = fmul <2 x double> %i.ho, %79
+  %i.hv = fmul <2 x double> %i.ho, %i.n
   store <2 x double> %i.hv, ptr %i.hu, align 8, !tbaa !15
   %i.hw = getelementptr inbounds nuw i8, ptr %i.a, i64 1184
-  %i.hx = fmul <2 x double> %i.ho, %i.r
+  %i.hx = fmul <2 x double> %i.ho, %i.l
   store <2 x double> %i.hx, ptr %i.hw, align 8, !tbaa !15
   %i.hy = getelementptr inbounds nuw i8, ptr %i.a, i64 1200
-  %i.hz = fmul <2 x double> %i.ho, %i.q
+  %i.hz = fmul <2 x double> %i.ho, %26
   store <2 x double> %i.hz, ptr %i.hy, align 8, !tbaa !15
   %i.ia = getelementptr inbounds nuw i8, ptr %i.a, i64 1216
-  %i.ib = fmul <2 x double> %i.ho, %i.p
+  %i.ib = fmul <2 x double> %i.ho, %24
   store <2 x double> %i.ib, ptr %i.ia, align 8, !tbaa !15
   %i.ic = getelementptr inbounds nuw i8, ptr %i.a, i64 1232
-  %i.id = fmul <2 x double> %i.ho, %i.o
+  %i.id = fmul <2 x double> %i.ho, %16
   store <2 x double> %i.id, ptr %i.ic, align 8, !tbaa !15
   %i.ie = getelementptr inbounds nuw i8, ptr %i.a, i64 1248
-  %i.if = fmul <2 x double> %i.ho, %i.n
+  %i.if = fmul <2 x double> %i.ho, %14
   store <2 x double> %i.if, ptr %i.ie, align 8, !tbaa !15
   %i.ig = getelementptr inbounds nuw i8, ptr %i.a, i64 1264
-  %i.ih = fmul <2 x double> %i.ho, %i.l
+  %i.ih = fmul <2 x double> %i.ho, %5
   store <2 x double> %i.ih, ptr %i.ig, align 8, !tbaa !15
   %i.ii = tail call nnan double @llvm.fmuladd.f64(double %2, double 8.000000e+00, double 3.000000e+01)
   %i.ij = fadd nnan double %i.ii, -4.000000e+01
@@ -622,25 +580,25 @@ bb.a:
   %i.iw = fmul <2 x double> %i.ir, %i.s
   store <2 x double> %i.iw, ptr %i.iv, align 8, !tbaa !15
   %i.ix = getelementptr inbounds nuw i8, ptr %i.a, i64 1328
-  %i.iy = fmul <2 x double> %i.ir, %79
+  %i.iy = fmul <2 x double> %i.ir, %i.n
   store <2 x double> %i.iy, ptr %i.ix, align 8, !tbaa !15
   %i.iz = getelementptr inbounds nuw i8, ptr %i.a, i64 1344
-  %i.ja = fmul <2 x double> %i.ir, %i.r
+  %i.ja = fmul <2 x double> %i.ir, %i.l
   store <2 x double> %i.ja, ptr %i.iz, align 8, !tbaa !15
   %i.jb = getelementptr inbounds nuw i8, ptr %i.a, i64 1360
-  %i.jc = fmul <2 x double> %i.ir, %i.q
+  %i.jc = fmul <2 x double> %i.ir, %26
   store <2 x double> %i.jc, ptr %i.jb, align 8, !tbaa !15
   %i.jd = getelementptr inbounds nuw i8, ptr %i.a, i64 1376
-  %i.je = fmul <2 x double> %i.ir, %i.p
+  %i.je = fmul <2 x double> %i.ir, %24
   store <2 x double> %i.je, ptr %i.jd, align 8, !tbaa !15
   %i.jf = getelementptr inbounds nuw i8, ptr %i.a, i64 1392
-  %i.jg = fmul <2 x double> %i.ir, %i.o
+  %i.jg = fmul <2 x double> %i.ir, %16
   store <2 x double> %i.jg, ptr %i.jf, align 8, !tbaa !15
   %i.jh = getelementptr inbounds nuw i8, ptr %i.a, i64 1408
-  %i.ji = fmul <2 x double> %i.ir, %i.n
+  %i.ji = fmul <2 x double> %i.ir, %14
   store <2 x double> %i.ji, ptr %i.jh, align 8, !tbaa !15
   %i.jj = getelementptr inbounds nuw i8, ptr %i.a, i64 1424
-  %i.jk = fmul <2 x double> %i.ir, %i.l
+  %i.jk = fmul <2 x double> %i.ir, %5
   store <2 x double> %i.jk, ptr %i.jj, align 8, !tbaa !15
   %i.jl = tail call nnan double @llvm.fmuladd.f64(double %2, double 9.000000e+00, double 3.000000e+01)
   %i.jm = fadd nnan double %i.jl, -4.000000e+01
@@ -661,25 +619,25 @@ bb.a:
   %i.jz = fmul <2 x double> %i.ju, %i.s
   store <2 x double> %i.jz, ptr %i.jy, align 8, !tbaa !15
   %i.ka = getelementptr inbounds nuw i8, ptr %i.a, i64 1488
-  %i.kb = fmul <2 x double> %i.ju, %79
+  %i.kb = fmul <2 x double> %i.ju, %i.n
   store <2 x double> %i.kb, ptr %i.ka, align 8, !tbaa !15
   %i.kc = getelementptr inbounds nuw i8, ptr %i.a, i64 1504
-  %i.kd = fmul <2 x double> %i.ju, %i.r
+  %i.kd = fmul <2 x double> %i.ju, %i.l
   store <2 x double> %i.kd, ptr %i.kc, align 8, !tbaa !15
   %i.ke = getelementptr inbounds nuw i8, ptr %i.a, i64 1520
-  %i.kf = fmul <2 x double> %i.ju, %i.q
+  %i.kf = fmul <2 x double> %i.ju, %26
   store <2 x double> %i.kf, ptr %i.ke, align 8, !tbaa !15
   %i.kg = getelementptr inbounds nuw i8, ptr %i.a, i64 1536
-  %i.kh = fmul <2 x double> %i.ju, %i.p
+  %i.kh = fmul <2 x double> %i.ju, %24
   store <2 x double> %i.kh, ptr %i.kg, align 8, !tbaa !15
   %i.ki = getelementptr inbounds nuw i8, ptr %i.a, i64 1552
-  %i.kj = fmul <2 x double> %i.ju, %i.o
+  %i.kj = fmul <2 x double> %i.ju, %16
   store <2 x double> %i.kj, ptr %i.ki, align 8, !tbaa !15
   %i.kk = getelementptr inbounds nuw i8, ptr %i.a, i64 1568
-  %i.kl = fmul <2 x double> %i.ju, %i.n
+  %i.kl = fmul <2 x double> %i.ju, %14
   store <2 x double> %i.kl, ptr %i.kk, align 8, !tbaa !15
   %i.km = getelementptr inbounds nuw i8, ptr %i.a, i64 1584
-  %i.kn = fmul <2 x double> %i.ju, %i.l
+  %i.kn = fmul <2 x double> %i.ju, %5
   store <2 x double> %i.kn, ptr %i.km, align 8, !tbaa !15
   ret void
 }

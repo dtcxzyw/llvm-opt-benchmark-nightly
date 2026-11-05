@@ -205,7 +205,7 @@ bb.a:
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.l = load double, ptr %i.k, align 8, !tbaa !36, !noalias !120
   %i.m = fsub double %i.j, %i.l                   ; 3 uses
-  %6 = tail call double @llvm.fmuladd.f64(double %i.c, double %i.c, double 0.000000e+00)
+  %6 = fmul double %i.c, %i.c
   %i.n = tail call double @llvm.fmuladd.f64(double %i.h, double %i.h, double %6)
   %i.o = tail call double @llvm.fmuladd.f64(double %i.m, double %i.m, double %i.n)
   %sqrt = tail call double @llvm.sqrt.f64(double %i.o) ; 3 uses
@@ -608,12 +608,12 @@ bb.s:                                             ; preds = %bb.r
   %i.ds = load <2 x float>, ptr %i.di, align 4, !tbaa !53
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #26
   %i.dt = fpext <2 x float> %i.ds to <2 x double> ; 4 uses
-  %i.du = fsub <2 x double> %i.dt, %i.cv          ; 3 uses
+  %i.du = fsub <2 x double> %i.dt, %i.cv          ; 4 uses
   %i.dv = fsub double %i.dr, %i.cw                ; 3 uses
-  %27 = extractelement <2 x double> %i.du, i64 0  ; 2 uses
-  %28 = call double @llvm.fmuladd.f64(double %27, double %27, double 0.000000e+00)
+  %foldExtExtBinop = fmul <2 x double> %i.du, %i.du
+  %27 = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.dw = extractelement <2 x double> %i.du, i64 1 ; 2 uses
-  %i.dx = call double @llvm.fmuladd.f64(double %i.dw, double %i.dw, double %28)
+  %i.dx = call double @llvm.fmuladd.f64(double %i.dw, double %i.dw, double %27)
   %i.dy = call double @llvm.fmuladd.f64(double %i.dv, double %i.dv, double %i.dx)
   %sqrt.i = call double @llvm.sqrt.f64(double %i.dy) ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %19, i8 0, i64 24, i1 false)
@@ -1016,7 +1016,7 @@ bb.a:
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 192
   %i.n = load double, ptr %i.m, align 8, !tbaa !36, !noalias !148
   %i.o = fsub double %i.l, %i.n                   ; 2 uses
-  %3 = tail call double @llvm.fmuladd.f64(double %i.e, double %i.e, double 0.000000e+00)
+  %3 = fmul double %i.e, %i.e
   %i.p = tail call double @llvm.fmuladd.f64(double %i.j, double %i.j, double %3)
   %i.q = tail call double @llvm.fmuladd.f64(double %i.o, double %i.o, double %i.p)
   %sqrt = tail call double @llvm.sqrt.f64(double %i.q)
@@ -1048,12 +1048,12 @@ bb.a:
   %7 = alloca %"struct.cv::Ptr", align 8          ; 4 uses
   %8 = alloca %"struct.cv::Ptr.15", align 16      ; 9 uses
   %9 = alloca %"struct.cv::Ptr", align 16         ; 6 uses
-  %10 = alloca %"class.cv::Vec.0", align 16       ; 12 uses
+  %10 = alloca %"class.cv::Vec.0", align 16       ; 11 uses
   %11 = alloca %"class.cv::Vec", align 16         ; 9 uses
   %12 = alloca %"struct.cv::Ptr.15", align 8      ; 8 uses
   %13 = alloca %"class.std::vector.10", align 8   ; 10 uses
   %14 = alloca %"struct.cv::Ptr", align 8         ; 6 uses
-  %15 = alloca %"class.cv::Vec.0", align 16       ; 11 uses
+  %15 = alloca %"class.cv::Vec.0", align 16       ; 10 uses
   %16 = alloca %"class.cv::Vec", align 16         ; 8 uses
   %17 = alloca %"struct.cv::Ptr.15", align 8      ; 8 uses
   %18 = alloca %"class.std::vector.10", align 8   ; 10 uses
@@ -1326,7 +1326,7 @@ bb.u:                                             ; preds = %bb.t, %bb.s, %.lr.p
   %i.ct = getelementptr inbounds nuw i8, ptr %i.cg, i64 192
   %i.cu = load double, ptr %i.ct, align 8, !tbaa !36, !noalias !173
   %i.cv = fsub double %i.cs, %i.cu                ; 2 uses
-  %20 = call double @llvm.fmuladd.f64(double %i.cl, double %i.cl, double 0.000000e+00)
+  %20 = fmul double %i.cl, %i.cl
   %i.cw = call double @llvm.fmuladd.f64(double %i.cq, double %i.cq, double %20)
   %i.cx = call double @llvm.fmuladd.f64(double %i.cv, double %i.cv, double %i.cw)
   %sqrt.i = call double @llvm.sqrt.f64(double %i.cx)
@@ -1729,7 +1729,6 @@ _ZNSt6vectorIN2cv3PtrINS0_12ppf_match_3d6Pose3DEEESaIS4_EE6resizeEm.exit: ; pred
   br i1 %i.ke, label %.lr.ph324, label %.loopexit274
 
 .lr.ph324:                                        ; preds = %.preheader277
-  %21 = getelementptr inbounds nuw i8, ptr %15, i64 8
   %i.kf = getelementptr inbounds nuw i8, ptr %15, i64 16 ; 3 uses
   %i.kg = getelementptr inbounds nuw i8, ptr %15, i64 24
   %i.kh = getelementptr inbounds nuw i8, ptr %16, i64 16 ; 2 uses
@@ -1743,7 +1742,6 @@ _ZNSt6vectorIN2cv3PtrINS0_12ppf_match_3d6Pose3DEEESaIS4_EE6resizeEm.exit: ; pred
   br i1 %i.ke, label %.lr.ph350, label %.loopexit274
 
 .lr.ph350:                                        ; preds = %.preheader273
-  %22 = getelementptr inbounds nuw i8, ptr %10, i64 8
   %i.km = getelementptr inbounds nuw i8, ptr %10, i64 16 ; 4 uses
   %i.kn = getelementptr inbounds nuw i8, ptr %10, i64 24
   %i.ko = getelementptr inbounds nuw i8, ptr %11, i64 16 ; 3 uses
@@ -2018,18 +2016,17 @@ bb.co:                                            ; preds = %.lr.ph339, %bb.co
   store <2 x double> %i.pd, ptr %11, align 16, !tbaa !36
   %i.pe = fmul double %i.pa, %i.ow
   store double %i.pe, ptr %i.ko, align 16, !tbaa !36
-  %i.pf = fmul <2 x double> %i.pc, %i.ox          ; 3 uses
-  %23 = extractelement <2 x double> %i.pf, i64 0  ; 3 uses
-  store double %23, ptr %10, align 16, !tbaa !36
-  %i.pg = extractelement <2 x double> %i.pf, i64 1 ; 3 uses
-  store double %i.pg, ptr %22, align 8, !tbaa !36
+  %i.pf = fmul <2 x double> %i.pc, %i.ox          ; 5 uses
+  %i.pg = extractelement <2 x double> %i.pf, i64 1 ; 2 uses
+  store <2 x double> %i.pf, ptr %10, align 16, !tbaa !36
   %i.ph = fmul <2 x double> %i.pc, %i.oy          ; 3 uses
   %i.pi = extractelement <2 x double> %i.ph, i64 0 ; 3 uses
   store double %i.pi, ptr %i.km, align 16, !tbaa !36
   %i.pj = extractelement <2 x double> %i.ph, i64 1 ; 3 uses
   store double %i.pj, ptr %i.kn, align 8, !tbaa !36
-  %24 = call double @llvm.fmuladd.f64(double %23, double %23, double 0.000000e+00)
-  %i.pk = call double @llvm.fmuladd.f64(double %i.pg, double %i.pg, double %24)
+  %foldExtExtBinop = fmul <2 x double> %i.pf, %i.pf
+  %21 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %i.pk = call double @llvm.fmuladd.f64(double %i.pg, double %i.pg, double %21)
   %i.pl = call double @llvm.fmuladd.f64(double %i.pi, double %i.pi, double %i.pk)
   %i.pm = call double @llvm.fmuladd.f64(double %i.pj, double %i.pj, double %i.pl)
   %sqrt = call double @llvm.sqrt.f64(double %i.pm) ; 2 uses
@@ -2432,18 +2429,17 @@ _ZSt10_ConstructIN2cv3PtrINS0_12ppf_match_3d6Pose3DEEEJRKS4_EEvPT_DpOT0_.exit.i.
   store <2 x double> %i.xo, ptr %16, align 16, !tbaa !36
   %i.xp = fmul double %i.xl, %i.xg
   store double %i.xp, ptr %i.kh, align 16, !tbaa !36
-  %i.xq = fmul <2 x double> %i.xn, %i.xh          ; 3 uses
-  %25 = extractelement <2 x double> %i.xq, i64 0  ; 3 uses
-  store double %25, ptr %15, align 16, !tbaa !36
-  %i.xr = extractelement <2 x double> %i.xq, i64 1 ; 3 uses
-  store double %i.xr, ptr %21, align 8, !tbaa !36
+  %i.xq = fmul <2 x double> %i.xn, %i.xh          ; 5 uses
+  %i.xr = extractelement <2 x double> %i.xq, i64 1 ; 2 uses
+  store <2 x double> %i.xq, ptr %15, align 16, !tbaa !36
   %i.xs = fmul <2 x double> %i.xn, %i.xi          ; 3 uses
   %i.xt = extractelement <2 x double> %i.xs, i64 0 ; 3 uses
   store double %i.xt, ptr %i.kf, align 16, !tbaa !36
   %i.xu = extractelement <2 x double> %i.xs, i64 1 ; 3 uses
   store double %i.xu, ptr %i.kg, align 8, !tbaa !36
-  %26 = call double @llvm.fmuladd.f64(double %25, double %25, double 0.000000e+00)
-  %i.xv = call double @llvm.fmuladd.f64(double %i.xr, double %i.xr, double %26)
+  %foldExtExtBinop583 = fmul <2 x double> %i.xq, %i.xq
+  %22 = extractelement <2 x double> %foldExtExtBinop583, i64 0
+  %i.xv = call double @llvm.fmuladd.f64(double %i.xr, double %i.xr, double %22)
   %i.xw = call double @llvm.fmuladd.f64(double %i.xt, double %i.xt, double %i.xv)
   %i.xx = call double @llvm.fmuladd.f64(double %i.xu, double %i.xu, double %i.xw)
   %sqrt272 = call double @llvm.sqrt.f64(double %i.xx) ; 2 uses
@@ -2846,12 +2842,12 @@ bb.al:                                            ; preds = %bb.ak
   %i.kj = fpext float %i.ki to double             ; 3 uses
   %i.kk = load <2 x float>, ptr %i.kg, align 4, !tbaa !53
   %i.kl = fpext <2 x float> %i.kk to <2 x double> ; 4 uses
-  %i.km = fsub <2 x double> %i.kl, %i.is          ; 3 uses
+  %i.km = fsub <2 x double> %i.kl, %i.is          ; 4 uses
   %i.kn = fsub double %i.kj, %i.it                ; 3 uses
-  %68 = extractelement <2 x double> %i.km, i64 0  ; 2 uses
-  %69 = call double @llvm.fmuladd.f64(double %68, double %68, double 0.000000e+00)
+  %foldExtExtBinop = fmul <2 x double> %i.km, %i.km
+  %68 = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.ko = extractelement <2 x double> %i.km, i64 1 ; 2 uses
-  %i.kp = call double @llvm.fmuladd.f64(double %i.ko, double %i.ko, double %69)
+  %i.kp = call double @llvm.fmuladd.f64(double %i.ko, double %i.ko, double %68)
   %i.kq = call double @llvm.fmuladd.f64(double %i.kn, double %i.kn, double %i.kp)
   %sqrt.i = call double @llvm.sqrt.f64(double %i.kq) ; 3 uses
   %i.kr = fcmp ugt double %sqrt.i, f0x3E80000000000000
@@ -3254,7 +3250,7 @@ bb.a:
   br i1 %or.cond, label %_ZN2cv12ppf_match_3dL11TNormalize3ERNS_3VecIdLi3EEE.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %9 = tail call double @llvm.fmuladd.f64(double %i.d, double %i.d, double 0.000000e+00)
+  %9 = fmul double %i.d, %i.d
   %i.j = tail call double @llvm.fmuladd.f64(double %i.f, double %i.f, double %9)
   %sqrt.i = tail call double @llvm.sqrt.f64(double %i.j) ; 2 uses
   %i.k = fcmp ogt double %sqrt.i, f0x3E80000000000000

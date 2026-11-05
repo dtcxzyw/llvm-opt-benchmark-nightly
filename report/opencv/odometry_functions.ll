@@ -205,7 +205,7 @@ bb.ev:                                            ; preds = %_ZN2cv3MataSERKNS_7
   %i.jy = load <2 x float>, ptr %i.fi, align 4, !tbaa !23
   %i.jz = shufflevector <2 x float> %i.jy, <2 x float> poison, <2 x i32> <i32 1, i32 0>
   %i.ka = fpext float %i.jw to double             ; 3 uses
-  %122 = call double @llvm.fmuladd.f64(double %i.ka, double %i.ka, double 0.000000e+00)
+  %122 = fmul double %i.ka, %i.ka
   %i.kb = load <2 x float>, ptr %i.fg, align 4, !tbaa !23
   %i.kc = fpext <2 x float> %i.kb to <2 x double> ; 3 uses
   %i.kd = extractelement <2 x double> %i.kc, i64 0 ; 2 uses
@@ -608,15 +608,16 @@ bb.a:
   %i.a = load double, ptr %1, align 8, !tbaa !277, !noalias !276 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.d = load <2 x double>, ptr %i.b, align 8, !tbaa !71, !noalias !276 ; 2 uses
+  %i.d = load <2 x double>, ptr %i.b, align 8, !tbaa !71, !noalias !276 ; 4 uses
   store double %i.a, ptr %2, align 8, !tbaa !110, !alias.scope !276
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.f = extractelement <2 x double> %i.d, i64 0  ; 3 uses
+  %i.f = extractelement <2 x double> %i.d, i64 0
   store double %i.f, ptr %i.e, align 8, !tbaa !278, !alias.scope !276
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.h = load <2 x double>, ptr %i.c, align 8, !tbaa !71, !noalias !276 ; 4 uses
   store <2 x double> %i.h, ptr %i.g, align 8, !tbaa !71, !alias.scope !276
-  %4 = tail call double @llvm.fmuladd.f64(double %i.f, double %i.f, double 0.000000e+00)
+  %foldExtExtBinop = fmul <2 x double> %i.d, %i.d
+  %4 = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.i = extractelement <2 x double> %i.h, i64 0  ; 2 uses
   %i.j = tail call double @llvm.fmuladd.f64(double %i.i, double %i.i, double %4)
   %i.k = extractelement <2 x double> %i.h, i64 1  ; 2 uses
@@ -1019,7 +1020,7 @@ bb.l:                                             ; preds = %bb.k
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %7) #22
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #22
   %i.al = load double, ptr %6, align 8, !tbaa !71 ; 3 uses
-  %11 = call double @llvm.fmuladd.f64(double %i.al, double %i.al, double 0.000000e+00)
+  %11 = fmul double %i.al, %i.al
   %i.am = getelementptr inbounds nuw i8, ptr %6, i64 8
   %i.an = load double, ptr %i.am, align 8, !tbaa !71 ; 3 uses
   %i.ao = call double @llvm.fmuladd.f64(double %i.an, double %i.an, double %11)

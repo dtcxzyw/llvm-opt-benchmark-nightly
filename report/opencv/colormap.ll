@@ -205,7 +205,7 @@ bb.a:
   %.sink.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h
   %i.i = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.j = uitofp nneg i32 %i.i to float
-  %14 = call float @llvm.fmuladd.f32(float %i.j, float f0x3C820821, float 0.000000e+00)
+  %14 = fmul nnan float %i.j, f0x3C820821
   store float %14, ptr %.sink.i.i, align 4, !tbaa !67
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
   %i.k = load i64, ptr %i.f, align 8, !alias.scope !216
@@ -213,7 +213,7 @@ bb.a:
   %.sink.i.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.l
   %i.m = trunc nuw nsw i64 %indvars.iv.next.i to i32
   %i.n = uitofp nneg i32 %i.m to float
-  %15 = call float @llvm.fmuladd.f32(float %i.n, float f0x3C820821, float 0.000000e+00)
+  %15 = fmul nnan float %i.n, f0x3C820821
   store float %15, ptr %.sink.i.i.1, align 4, !tbaa !67
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, 64
@@ -499,7 +499,7 @@ bb.a:
   %.sink.i.i.epil = getelementptr inbounds nuw i8, ptr %i.i, i64 %i.y
   %i.z = trunc nuw nsw i64 %indvars.iv.i.epil.init to i32
   %i.aa = uitofp nneg i32 %i.z to float
-  %8 = call float @llvm.fmuladd.f32(float %i.aa, float %i.c, float 0.000000e+00)
+  %8 = fmul float %i.c, %i.aa
   store float %8, ptr %.sink.i.i.epil, align 4, !tbaa !67
   br label %.loopexit
 
@@ -577,7 +577,7 @@ bb.a:
   %.sink.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h
   %i.i = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.j = uitofp nneg i32 %i.i to float
-  %14 = call float @llvm.fmuladd.f32(float %i.j, float f0x3C820821, float 0.000000e+00)
+  %14 = fmul nnan float %i.j, f0x3C820821
   store float %14, ptr %.sink.i.i, align 4, !tbaa !67
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
   %i.k = load i64, ptr %i.f, align 8, !alias.scope !222
@@ -585,7 +585,7 @@ bb.a:
   %.sink.i.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.l
   %i.m = trunc nuw nsw i64 %indvars.iv.next.i to i32
   %i.n = uitofp nneg i32 %i.m to float
-  %15 = call float @llvm.fmuladd.f32(float %i.n, float f0x3C820821, float 0.000000e+00)
+  %15 = fmul nnan float %i.n, f0x3C820821
   store float %15, ptr %.sink.i.i.1, align 4, !tbaa !67
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, 64
@@ -822,7 +822,7 @@ bb.a:
   %.sink.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h
   %i.i = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.j = uitofp nneg i32 %i.i to float
-  %14 = call float @llvm.fmuladd.f32(float %i.j, float f0x3B808081, float 0.000000e+00)
+  %14 = fmul nnan float %i.j, f0x3B808081
   store float %14, ptr %.sink.i.i, align 4, !tbaa !67
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
   %i.k = load i64, ptr %i.f, align 8, !alias.scope !225
@@ -830,7 +830,7 @@ bb.a:
   %.sink.i.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.l
   %i.m = trunc nuw nsw i64 %indvars.iv.next.i to i32
   %i.n = uitofp nneg i32 %i.m to float
-  %15 = call float @llvm.fmuladd.f32(float %i.n, float f0x3B808081, float 0.000000e+00)
+  %15 = fmul nnan float %i.n, f0x3B808081
   store float %15, ptr %.sink.i.i.1, align 4, !tbaa !67
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, 256
@@ -1067,7 +1067,7 @@ bb.a:
   %.sink.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h
   %i.i = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.j = uitofp nneg i32 %i.i to float
-  %14 = call float @llvm.fmuladd.f32(float %i.j, float f0x3C820821, float 0.000000e+00)
+  %14 = fmul nnan float %i.j, f0x3C820821
   store float %14, ptr %.sink.i.i, align 4, !tbaa !67
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
   %i.k = load i64, ptr %i.f, align 8, !alias.scope !228
@@ -1075,7 +1075,7 @@ bb.a:
   %.sink.i.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.l
   %i.m = trunc nuw nsw i64 %indvars.iv.next.i to i32
   %i.n = uitofp nneg i32 %i.m to float
-  %15 = call float @llvm.fmuladd.f32(float %i.n, float f0x3C820821, float 0.000000e+00)
+  %15 = fmul nnan float %i.n, f0x3C820821
   store float %15, ptr %.sink.i.i.1, align 4, !tbaa !67
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, 64
@@ -1312,7 +1312,7 @@ bb.a:
   %.sink.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h
   %i.i = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.j = uitofp nneg i32 %i.i to float
-  %14 = call float @llvm.fmuladd.f32(float %i.j, float f0x3C820821, float 0.000000e+00)
+  %14 = fmul nnan float %i.j, f0x3C820821
   store float %14, ptr %.sink.i.i, align 4, !tbaa !67
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
   %i.k = load i64, ptr %i.f, align 8, !alias.scope !231
@@ -1320,7 +1320,7 @@ bb.a:
   %.sink.i.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.l
   %i.m = trunc nuw nsw i64 %indvars.iv.next.i to i32
   %i.n = uitofp nneg i32 %i.m to float
-  %15 = call float @llvm.fmuladd.f32(float %i.n, float f0x3C820821, float 0.000000e+00)
+  %15 = fmul nnan float %i.n, f0x3C820821
   store float %15, ptr %.sink.i.i.1, align 4, !tbaa !67
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, 64
@@ -1557,7 +1557,7 @@ bb.a:
   %.sink.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h
   %i.i = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.j = uitofp nneg i32 %i.i to float
-  %14 = call float @llvm.fmuladd.f32(float %i.j, float f0x3C820821, float 0.000000e+00)
+  %14 = fmul nnan float %i.j, f0x3C820821
   store float %14, ptr %.sink.i.i, align 4, !tbaa !67
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
   %i.k = load i64, ptr %i.f, align 8, !alias.scope !234
@@ -1565,7 +1565,7 @@ bb.a:
   %.sink.i.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.l
   %i.m = trunc nuw nsw i64 %indvars.iv.next.i to i32
   %i.n = uitofp nneg i32 %i.m to float
-  %15 = call float @llvm.fmuladd.f32(float %i.n, float f0x3C820821, float 0.000000e+00)
+  %15 = fmul nnan float %i.n, f0x3C820821
   store float %15, ptr %.sink.i.i.1, align 4, !tbaa !67
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, 64
@@ -1802,7 +1802,7 @@ bb.a:
   %.sink.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h
   %i.i = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.j = uitofp nneg i32 %i.i to float
-  %14 = call float @llvm.fmuladd.f32(float %i.j, float f0x3C820821, float 0.000000e+00)
+  %14 = fmul nnan float %i.j, f0x3C820821
   store float %14, ptr %.sink.i.i, align 4, !tbaa !67
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
   %i.k = load i64, ptr %i.f, align 8, !alias.scope !237
@@ -1810,7 +1810,7 @@ bb.a:
   %.sink.i.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.l
   %i.m = trunc nuw nsw i64 %indvars.iv.next.i to i32
   %i.n = uitofp nneg i32 %i.m to float
-  %15 = call float @llvm.fmuladd.f32(float %i.n, float f0x3C820821, float 0.000000e+00)
+  %15 = fmul nnan float %i.n, f0x3C820821
   store float %15, ptr %.sink.i.i.1, align 4, !tbaa !67
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, 64
@@ -2047,7 +2047,7 @@ bb.a:
   %.sink.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h
   %i.i = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.j = uitofp nneg i32 %i.i to float
-  %14 = call float @llvm.fmuladd.f32(float %i.j, float f0x3B808081, float 0.000000e+00)
+  %14 = fmul nnan float %i.j, f0x3B808081
   store float %14, ptr %.sink.i.i, align 4, !tbaa !67
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
   %i.k = load i64, ptr %i.f, align 8, !alias.scope !240
@@ -2055,7 +2055,7 @@ bb.a:
   %.sink.i.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.l
   %i.m = trunc nuw nsw i64 %indvars.iv.next.i to i32
   %i.n = uitofp nneg i32 %i.m to float
-  %15 = call float @llvm.fmuladd.f32(float %i.n, float f0x3B808081, float 0.000000e+00)
+  %15 = fmul nnan float %i.n, f0x3B808081
   store float %15, ptr %.sink.i.i.1, align 4, !tbaa !67
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, 256
@@ -2292,7 +2292,7 @@ bb.a:
   %.sink.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h
   %i.i = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.j = uitofp nneg i32 %i.i to float
-  %14 = call float @llvm.fmuladd.f32(float %i.j, float f0x3B808081, float 0.000000e+00)
+  %14 = fmul nnan float %i.j, f0x3B808081
   store float %14, ptr %.sink.i.i, align 4, !tbaa !67
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
   %i.k = load i64, ptr %i.f, align 8, !alias.scope !243
@@ -2300,7 +2300,7 @@ bb.a:
   %.sink.i.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.l
   %i.m = trunc nuw nsw i64 %indvars.iv.next.i to i32
   %i.n = uitofp nneg i32 %i.m to float
-  %15 = call float @llvm.fmuladd.f32(float %i.n, float f0x3B808081, float 0.000000e+00)
+  %15 = fmul nnan float %i.n, f0x3B808081
   store float %15, ptr %.sink.i.i.1, align 4, !tbaa !67
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, 256
@@ -2537,7 +2537,7 @@ bb.a:
   %.sink.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h
   %i.i = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.j = uitofp nneg i32 %i.i to float
-  %14 = call float @llvm.fmuladd.f32(float %i.j, float f0x3B808081, float 0.000000e+00)
+  %14 = fmul nnan float %i.j, f0x3B808081
   store float %14, ptr %.sink.i.i, align 4, !tbaa !67
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
   %i.k = load i64, ptr %i.f, align 8, !alias.scope !246
@@ -2545,7 +2545,7 @@ bb.a:
   %.sink.i.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.l
   %i.m = trunc nuw nsw i64 %indvars.iv.next.i to i32
   %i.n = uitofp nneg i32 %i.m to float
-  %15 = call float @llvm.fmuladd.f32(float %i.n, float f0x3B808081, float 0.000000e+00)
+  %15 = fmul nnan float %i.n, f0x3B808081
   store float %15, ptr %.sink.i.i.1, align 4, !tbaa !67
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, 256
@@ -2782,7 +2782,7 @@ bb.a:
   %.sink.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h
   %i.i = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.j = uitofp nneg i32 %i.i to float
-  %14 = call float @llvm.fmuladd.f32(float %i.j, float f0x3C820821, float 0.000000e+00)
+  %14 = fmul nnan float %i.j, f0x3C820821
   store float %14, ptr %.sink.i.i, align 4, !tbaa !67
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
   %i.k = load i64, ptr %i.f, align 8, !alias.scope !249
@@ -2790,7 +2790,7 @@ bb.a:
   %.sink.i.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.l
   %i.m = trunc nuw nsw i64 %indvars.iv.next.i to i32
   %i.n = uitofp nneg i32 %i.m to float
-  %15 = call float @llvm.fmuladd.f32(float %i.n, float f0x3C820821, float 0.000000e+00)
+  %15 = fmul nnan float %i.n, f0x3C820821
   store float %15, ptr %.sink.i.i.1, align 4, !tbaa !67
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, 64
@@ -3193,7 +3193,7 @@ bb.a:
   %.sink.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h
   %i.i = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.j = uitofp nneg i32 %i.i to float
-  %14 = call float @llvm.fmuladd.f32(float %i.j, float f0x3C820821, float 0.000000e+00)
+  %14 = fmul nnan float %i.j, f0x3C820821
   store float %14, ptr %.sink.i.i, align 4, !tbaa !67
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
   %i.k = load i64, ptr %i.f, align 8, !alias.scope !255
@@ -3201,7 +3201,7 @@ bb.a:
   %.sink.i.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.l
   %i.m = trunc nuw nsw i64 %indvars.iv.next.i to i32
   %i.n = uitofp nneg i32 %i.m to float
-  %15 = call float @llvm.fmuladd.f32(float %i.n, float f0x3C820821, float 0.000000e+00)
+  %15 = fmul nnan float %i.n, f0x3C820821
   store float %15, ptr %.sink.i.i.1, align 4, !tbaa !67
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, 64
@@ -3438,7 +3438,7 @@ bb.a:
   %.sink.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h
   %i.i = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.j = uitofp nneg i32 %i.i to float
-  %14 = call float @llvm.fmuladd.f32(float %i.j, float f0x3B808081, float 0.000000e+00)
+  %14 = fmul nnan float %i.j, f0x3B808081
   store float %14, ptr %.sink.i.i, align 4, !tbaa !67
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
   %i.k = load i64, ptr %i.f, align 8, !alias.scope !258
@@ -3446,7 +3446,7 @@ bb.a:
   %.sink.i.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.l
   %i.m = trunc nuw nsw i64 %indvars.iv.next.i to i32
   %i.n = uitofp nneg i32 %i.m to float
-  %15 = call float @llvm.fmuladd.f32(float %i.n, float f0x3B808081, float 0.000000e+00)
+  %15 = fmul nnan float %i.n, f0x3B808081
   store float %15, ptr %.sink.i.i.1, align 4, !tbaa !67
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, 256
@@ -3683,7 +3683,7 @@ bb.a:
   %.sink.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h
   %i.i = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.j = uitofp nneg i32 %i.i to float
-  %14 = call float @llvm.fmuladd.f32(float %i.j, float f0x3C820821, float 0.000000e+00)
+  %14 = fmul nnan float %i.j, f0x3C820821
   store float %14, ptr %.sink.i.i, align 4, !tbaa !67
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
   %i.k = load i64, ptr %i.f, align 8, !alias.scope !261
@@ -3691,7 +3691,7 @@ bb.a:
   %.sink.i.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.l
   %i.m = trunc nuw nsw i64 %indvars.iv.next.i to i32
   %i.n = uitofp nneg i32 %i.m to float
-  %15 = call float @llvm.fmuladd.f32(float %i.n, float f0x3C820821, float 0.000000e+00)
+  %15 = fmul nnan float %i.n, f0x3C820821
   store float %15, ptr %.sink.i.i.1, align 4, !tbaa !67
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, 64
@@ -3928,7 +3928,7 @@ bb.a:
   %.sink.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h
   %i.i = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.j = uitofp nneg i32 %i.i to float
-  %14 = call float @llvm.fmuladd.f32(float %i.j, float f0x3C820821, float 0.000000e+00)
+  %14 = fmul nnan float %i.j, f0x3C820821
   store float %14, ptr %.sink.i.i, align 4, !tbaa !67
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
   %i.k = load i64, ptr %i.f, align 8, !alias.scope !264
@@ -3936,7 +3936,7 @@ bb.a:
   %.sink.i.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.l
   %i.m = trunc nuw nsw i64 %indvars.iv.next.i to i32
   %i.n = uitofp nneg i32 %i.m to float
-  %15 = call float @llvm.fmuladd.f32(float %i.n, float f0x3C820821, float 0.000000e+00)
+  %15 = fmul nnan float %i.n, f0x3C820821
   store float %15, ptr %.sink.i.i.1, align 4, !tbaa !67
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, 64
@@ -4173,7 +4173,7 @@ bb.a:
   %.sink.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h
   %i.i = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.j = uitofp nneg i32 %i.i to float
-  %14 = call float @llvm.fmuladd.f32(float %i.j, float f0x3C820821, float 0.000000e+00)
+  %14 = fmul nnan float %i.j, f0x3C820821
   store float %14, ptr %.sink.i.i, align 4, !tbaa !67
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
   %i.k = load i64, ptr %i.f, align 8, !alias.scope !267
@@ -4181,7 +4181,7 @@ bb.a:
   %.sink.i.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.l
   %i.m = trunc nuw nsw i64 %indvars.iv.next.i to i32
   %i.n = uitofp nneg i32 %i.m to float
-  %15 = call float @llvm.fmuladd.f32(float %i.n, float f0x3C820821, float 0.000000e+00)
+  %15 = fmul nnan float %i.n, f0x3C820821
   store float %15, ptr %.sink.i.i.1, align 4, !tbaa !67
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, 64
@@ -4418,7 +4418,7 @@ bb.a:
   %.sink.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h
   %i.i = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.j = uitofp nneg i32 %i.i to float
-  %14 = call float @llvm.fmuladd.f32(float %i.j, float f0x3B808081, float 0.000000e+00)
+  %14 = fmul nnan float %i.j, f0x3B808081
   store float %14, ptr %.sink.i.i, align 4, !tbaa !67
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
   %i.k = load i64, ptr %i.f, align 8, !alias.scope !270
@@ -4426,7 +4426,7 @@ bb.a:
   %.sink.i.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.l
   %i.m = trunc nuw nsw i64 %indvars.iv.next.i to i32
   %i.n = uitofp nneg i32 %i.m to float
-  %15 = call float @llvm.fmuladd.f32(float %i.n, float f0x3B808081, float 0.000000e+00)
+  %15 = fmul nnan float %i.n, f0x3B808081
   store float %15, ptr %.sink.i.i.1, align 4, !tbaa !67
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, 256
@@ -4663,7 +4663,7 @@ bb.a:
   %.sink.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h
   %i.i = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.j = uitofp nneg i32 %i.i to float
-  %14 = call float @llvm.fmuladd.f32(float %i.j, float f0x3B00C122, float 0.000000e+00)
+  %14 = fmul nnan float %i.j, f0x3B00C122
   store float %14, ptr %.sink.i.i, align 4, !tbaa !67
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.k = load i64, ptr %i.f, align 8, !alias.scope !273
@@ -4671,7 +4671,7 @@ bb.a:
   %.sink.i.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.l
   %i.m = trunc nuw nsw i64 %indvars.iv.next.i to i32
   %i.n = uitofp nneg i32 %i.m to float
-  %15 = call float @llvm.fmuladd.f32(float %i.n, float f0x3B00C122, float 0.000000e+00)
+  %15 = fmul nnan float %i.n, f0x3B00C122
   store float %15, ptr %.sink.i.i.1, align 4, !tbaa !67
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %i.o = load i64, ptr %i.f, align 8, !alias.scope !273
@@ -4679,7 +4679,7 @@ bb.a:
   %.sink.i.i.2 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.p
   %i.q = trunc nuw nsw i64 %indvars.iv.next.i.1 to i32
   %i.r = uitofp nneg i32 %i.q to float
-  %16 = call float @llvm.fmuladd.f32(float %i.r, float f0x3B00C122, float 0.000000e+00)
+  %16 = fmul nnan float %i.r, f0x3B00C122
   store float %16, ptr %.sink.i.i.2, align 4, !tbaa !67
   %indvars.iv.next.i.2 = add nuw nsw i64 %indvars.iv.i, 3 ; 2 uses
   %exitcond.not.i.2 = icmp eq i64 %indvars.iv.next.i.2, 510
@@ -4916,7 +4916,7 @@ bb.a:
   %.sink.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h
   %i.i = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.j = uitofp nneg i32 %i.i to float
-  %14 = call float @llvm.fmuladd.f32(float %i.j, float f0x3B00C122, float 0.000000e+00)
+  %14 = fmul nnan float %i.j, f0x3B00C122
   store float %14, ptr %.sink.i.i, align 4, !tbaa !67
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %i.k = load i64, ptr %i.f, align 8, !alias.scope !276
@@ -4924,7 +4924,7 @@ bb.a:
   %.sink.i.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.l
   %i.m = trunc nuw nsw i64 %indvars.iv.next.i to i32
   %i.n = uitofp nneg i32 %i.m to float
-  %15 = call float @llvm.fmuladd.f32(float %i.n, float f0x3B00C122, float 0.000000e+00)
+  %15 = fmul nnan float %i.n, f0x3B00C122
   store float %15, ptr %.sink.i.i.1, align 4, !tbaa !67
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %i.o = load i64, ptr %i.f, align 8, !alias.scope !276
@@ -4932,7 +4932,7 @@ bb.a:
   %.sink.i.i.2 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.p
   %i.q = trunc nuw nsw i64 %indvars.iv.next.i.1 to i32
   %i.r = uitofp nneg i32 %i.q to float
-  %16 = call float @llvm.fmuladd.f32(float %i.r, float f0x3B00C122, float 0.000000e+00)
+  %16 = fmul nnan float %i.r, f0x3B00C122
   store float %16, ptr %.sink.i.i.2, align 4, !tbaa !67
   %indvars.iv.next.i.2 = add nuw nsw i64 %indvars.iv.i, 3 ; 2 uses
   %exitcond.not.i.2 = icmp eq i64 %indvars.iv.next.i.2, 510
@@ -5169,7 +5169,7 @@ bb.a:
   %.sink.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.h
   %i.i = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.j = uitofp nneg i32 %i.i to float
-  %14 = call float @llvm.fmuladd.f32(float %i.j, float f0x3B808081, float 0.000000e+00)
+  %14 = fmul nnan float %i.j, f0x3B808081
   store float %14, ptr %.sink.i.i, align 4, !tbaa !67
   %indvars.iv.next.i = or disjoint i64 %indvars.iv.i, 1 ; 2 uses
   %i.k = load i64, ptr %i.f, align 8, !alias.scope !279
@@ -5177,7 +5177,7 @@ bb.a:
   %.sink.i.i.1 = getelementptr inbounds nuw i8, ptr %i.e, i64 %i.l
   %i.m = trunc nuw nsw i64 %indvars.iv.next.i to i32
   %i.n = uitofp nneg i32 %i.m to float
-  %15 = call float @llvm.fmuladd.f32(float %i.n, float f0x3B808081, float 0.000000e+00)
+  %15 = fmul nnan float %i.n, f0x3B808081
   store float %15, ptr %.sink.i.i.1, align 4, !tbaa !67
   %indvars.iv.next.i.1 = add nuw nsw i64 %indvars.iv.i, 2 ; 2 uses
   %exitcond.not.i.1 = icmp eq i64 %indvars.iv.next.i.1, 256

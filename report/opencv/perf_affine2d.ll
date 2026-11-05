@@ -204,7 +204,7 @@ bb.a:
   %8 = alloca %"class.cv::_OutputArray", align 8  ; 6 uses
   %9 = alloca %"class.cv::Range", align 8         ; 4 uses
   %10 = alloca %"class.cv::Range", align 4        ; 5 uses
-  %i.a = alloca [6 x double], align 16            ; 5 uses
+  %i.a = alloca [6 x double], align 16            ; 10 uses
   %11 = alloca %"class.cv::Mat", align 8          ; 7 uses
   %12 = alloca %"class.cv::Mat", align 8          ; 7 uses
   %13 = alloca %"class.cv::Mat", align 8          ; 10 uses
@@ -253,63 +253,67 @@ bb.a:
   store i64 %i.l, ptr %i.g, align 8, !tbaa !361, !noalias !359
   %i.m = trunc i64 %i.l to i32
   %i.n = uitofp i32 %i.m to float
-  %37 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZN2cv6theRNGEv(), !noalias !359 ; 2 uses
-  %38 = load i64, ptr %37, align 8, !tbaa !361, !noalias !359 ; 2 uses
-  %39 = and i64 %38, 4294967295
-  %40 = mul nuw i64 %39, 4164903690
-  %41 = lshr i64 %38, 32
-  %42 = add nuw i64 %40, %41                      ; 2 uses
-  store i64 %42, ptr %37, align 8, !tbaa !361, !noalias !359
+  %37 = fmul nnan float %i.n, f0x2F800000
+  %38 = fmul nnan float %37, f0x40C90FDB
+  %39 = fpext float %38 to double                 ; 3 uses
   %i.o = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZN2cv6theRNGEv(), !noalias !359 ; 2 uses
   %i.p = load i64, ptr %i.o, align 8, !tbaa !361, !noalias !359 ; 2 uses
   %i.q = and i64 %i.p, 4294967295
   %i.r = mul nuw i64 %i.q, 4164903690
   %i.s = lshr i64 %i.p, 32
   %i.t = add nuw i64 %i.r, %i.s                   ; 2 uses
+  store i64 %i.t, ptr %i.o, align 8, !tbaa !361, !noalias !359
   %i.u = trunc i64 %i.t to i32
   %i.v = uitofp i32 %i.u to float
-  %43 = insertelement <2 x float> poison, float %i.n, i64 0
-  %44 = insertelement <2 x float> %43, float %i.v, i64 1
-  %45 = fmul nnan <2 x float> %44, splat (float f0x2F800000)
-  %46 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %45, <2 x float> <float f0x40C90FDB, float 4.000000e+00>, <2 x float> <float 0.000000e+00, float -2.000000e+00>) ; 2 uses
-  %47 = extractelement <2 x float> %46, i64 0
-  %48 = fpext float %47 to double                 ; 3 uses
-  %49 = trunc i64 %42 to i32
+  %40 = fmul nnan float %i.v, f0x2F800000
+  %41 = fmul nnan float %40, 3.000000e+00
+  %42 = fpext float %41 to double                 ; 4 uses
+  %43 = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZN2cv6theRNGEv(), !noalias !359 ; 2 uses
+  %44 = load i64, ptr %43, align 8, !tbaa !361, !noalias !359 ; 2 uses
+  %45 = and i64 %44, 4294967295
+  %46 = mul nuw i64 %45, 4164903690
+  %47 = lshr i64 %44, 32
+  %48 = add nuw i64 %46, %47                      ; 2 uses
+  store i64 %48, ptr %43, align 8, !tbaa !361, !noalias !359
+  %49 = trunc i64 %48 to i32
   %50 = uitofp i32 %49 to float
-  store i64 %i.t, ptr %i.o, align 8, !tbaa !361, !noalias !359
-  %51 = extractelement <2 x float> %46, i64 1
-  %52 = fpext float %51 to double
   %i.w = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZN2cv6theRNGEv(), !noalias !359 ; 2 uses
   %i.x = load i64, ptr %i.w, align 8, !tbaa !361, !noalias !359 ; 2 uses
   %i.y = and i64 %i.x, 4294967295
   %i.z = mul nuw i64 %i.y, 4164903690
   %i.aa = lshr i64 %i.x, 32
   %i.ab = add nuw i64 %i.z, %i.aa                 ; 2 uses
-  store i64 %i.ab, ptr %i.w, align 8, !tbaa !361, !noalias !359
   %i.ac = trunc i64 %i.ab to i32
   %i.ad = uitofp i32 %i.ac to float
   %i.ae = insertelement <2 x float> poison, float %50, i64 0
   %i.af = insertelement <2 x float> %i.ae, float %i.ad, i64 1
   %i.ag = fmul nnan <2 x float> %i.af, splat (float f0x2F800000)
-  %i.ah = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ag, <2 x float> <float 3.000000e+00, float 4.000000e+00>, <2 x float> <float 0.000000e+00, float -2.000000e+00>)
-  %53 = fpext <2 x float> %i.ah to <2 x double>   ; 3 uses
+  %i.ah = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.ag, <2 x float> splat (float 4.000000e+00), <2 x float> splat (float -2.000000e+00)) ; 2 uses
+  %51 = extractelement <2 x float> %i.ah, i64 0
+  %52 = fpext float %51 to double
+  store i64 %i.ab, ptr %i.w, align 8, !tbaa !361, !noalias !359
+  %53 = extractelement <2 x float> %i.ah, i64 1
+  %54 = fpext float %53 to double
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #30, !noalias !359
-  %i.ai = tail call double @cos(double noundef %48) #30, !noalias !359
-  %i.aj = tail call double @sin(double noundef %48) #30, !noalias !359 ; 2 uses
+  %i.ai = tail call double @cos(double noundef %39) #30, !noalias !359
+  %55 = fmul double %i.ai, %42
+  store double %55, ptr %i.a, align 16, !tbaa !127, !noalias !359
+  %56 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %i.aj = tail call double @sin(double noundef %39) #30, !noalias !359 ; 2 uses
   %i.ak = fneg double %i.aj
-  %54 = tail call double @cos(double noundef %48) #30, !noalias !359
-  %55 = shufflevector <2 x double> %53, <2 x double> poison, <6 x i32> <i32 0, i32 0, i32 poison, i32 poison, i32 poison, i32 poison>
-  %56 = shufflevector <6 x double> %55, <6 x double> <double poison, double poison, double 1.000000e+00, double poison, double poison, double 1.000000e+00>, <6 x i32> <i32 0, i32 1, i32 8, i32 poison, i32 poison, i32 11>
-  %57 = insertelement <6 x double> %56, double %i.aj, i64 3
-  %58 = insertelement <6 x double> %57, double %54, i64 4
-  %59 = shufflevector <2 x double> %53, <2 x double> poison, <6 x i32> <i32 poison, i32 poison, i32 poison, i32 0, i32 poison, i32 poison>
-  %60 = insertelement <6 x double> %59, double %i.ai, i64 0
-  %61 = insertelement <6 x double> %60, double %i.ak, i64 1
-  %62 = insertelement <6 x double> %61, double %52, i64 2
-  %63 = shufflevector <2 x double> %53, <2 x double> poison, <6 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison>
-  %64 = shufflevector <6 x double> %62, <6 x double> %63, <6 x i32> <i32 0, i32 1, i32 2, i32 3, i32 6, i32 7>
-  %65 = fmul <6 x double> %58, %64
-  store <6 x double> %65, ptr %i.a, align 16, !tbaa !127, !noalias !359
+  %57 = fmul double %42, %i.ak
+  store double %57, ptr %56, align 8, !tbaa !127, !noalias !359
+  %58 = getelementptr inbounds nuw i8, ptr %i.a, i64 16
+  store double %52, ptr %58, align 16, !tbaa !127, !noalias !359
+  %59 = getelementptr inbounds nuw i8, ptr %i.a, i64 24
+  %60 = fmul double %i.aj, %42
+  store double %60, ptr %59, align 8, !tbaa !127, !noalias !359
+  %61 = getelementptr inbounds nuw i8, ptr %i.a, i64 32
+  %62 = tail call double @cos(double noundef %39) #30, !noalias !359
+  %63 = fmul double %62, %42
+  store double %63, ptr %61, align 16, !tbaa !127, !noalias !359
+  %64 = getelementptr inbounds nuw i8, ptr %i.a, i64 40
+  store double %54, ptr %64, align 8, !tbaa !127, !noalias !359
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #30, !noalias !359
   call void @_ZN2cv3MatC1EiiiPvm(ptr noundef nonnull align 8 dereferenceable(208) %11, i32 noundef 2, i32 noundef 3, i32 noundef 6, ptr noundef nonnull %i.a, i64 noundef 0), !noalias !359
   invoke void @_ZNK2cv3Mat5cloneEv(ptr dead_on_unwind nonnull writable sret(%"class.cv::Mat") align 8 %12, ptr noundef nonnull align 8 dereferenceable(208) %11)

@@ -205,7 +205,7 @@ bb.a:
   %.0113134 = phi float [ 0.000000e+00, %.preheader126 ], [ %.1114, %make_qkx2_quants.exit ] ; 2 uses
   %i.aa = shl nuw nsw i64 %indvars.iv, 4          ; 5 uses
   %i.ab = getelementptr inbounds nuw [4 x i8], ptr %.0104145, i64 %i.aa ; 16 uses
-  %i.ac = load <4 x float>, ptr %i.ab, align 4, !tbaa !36 ; 3 uses
+  %i.ac = load <4 x float>, ptr %i.ab, align 4, !tbaa !36 ; 4 uses
   %i.ad = tail call <4 x float> @llvm.fabs.v4f32(<4 x float> %i.ac) ; 6 uses
   store <4 x float> %i.ad, ptr %i.c, align 16, !tbaa !36
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %.0104145, i64 %i.aa
@@ -228,7 +228,7 @@ bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !129)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !130)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !131)
-  %i.aq = extractelement <4 x float> %i.ad, i64 0 ; 2 uses
+  %i.aq = extractelement <4 x float> %i.ad, i64 0
   %i.ar = extractelement <4 x float> %i.ac, i64 0 ; 4 uses
   %foldExtExtBinop = fmul <4 x float> %i.ac, %i.ad
   %i.as = extractelement <4 x float> %foldExtExtBinop, i64 0
@@ -496,16 +496,19 @@ bb.g:                                             ; preds = %bb.e
   %i.hw = insertelement <4 x float> poison, float %.0171.i, i64 0
   %i.hx = shufflevector <4 x float> %i.hw, <4 x float> poison, <4 x i32> zeroinitializer ; 4 uses
   %i.hy = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.hv, <4 x float> %i.hi, <4 x float> %i.hx)
-  %i.hz = fsub <4 x float> %i.hy, %i.hh
-  %3 = tail call <4 x float> @llvm.fabs.v4f32(<4 x float> %i.hz) ; 4 uses
-  %i.ia = extractelement <4 x float> %3, i64 0
-  %4 = tail call float @llvm.fmuladd.f32(float %i.aq, float %i.ia, float 0.000000e+00)
-  %i.ib = extractelement <4 x float> %3, i64 1
-  %i.ic = tail call float @llvm.fmuladd.f32(float %i.ax, float %i.ib, float %4)
-  %i.id = extractelement <4 x float> %3, i64 2
-  %i.ie = tail call float @llvm.fmuladd.f32(float %i.be, float %i.id, float %i.ic)
-  %i.if = extractelement <4 x float> %3, i64 3
-  %i.ig = tail call float @llvm.fmuladd.f32(float %i.bl, float %i.if, float %i.ie)
+  %i.hz = fsub <4 x float> %i.hy, %i.hh           ; 4 uses
+  %foldExtExtBinop215 = fmul <4 x float> %i.ac, %i.hz
+  %i.ia = extractelement <4 x float> %foldExtExtBinop215, i64 0
+  %3 = tail call float @llvm.fabs.f32(float %i.ia)
+  %i.ib = extractelement <4 x float> %i.hz, i64 1
+  %4 = tail call float @llvm.fabs.f32(float %i.ib)
+  %i.ic = tail call float @llvm.fmuladd.f32(float %i.ax, float %4, float %3)
+  %i.id = extractelement <4 x float> %i.hz, i64 2
+  %5 = tail call float @llvm.fabs.f32(float %i.id)
+  %i.ie = tail call float @llvm.fmuladd.f32(float %i.be, float %5, float %i.ic)
+  %i.if = extractelement <4 x float> %i.hz, i64 3
+  %6 = tail call float @llvm.fabs.f32(float %i.if)
+  %i.ig = tail call float @llvm.fmuladd.f32(float %i.bl, float %6, float %i.ie)
   %i.ih = tail call <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.hv, <4 x float> %i.hk, <4 x float> %i.hx)
   %i.ii = fsub <4 x float> %i.ih, %i.hl
   %i.ij = tail call <4 x float> @llvm.fabs.v4f32(<4 x float> %i.ii) ; 4 uses
@@ -908,7 +911,7 @@ bb.a:
   %i.af = shl nuw nsw i64 %indvars.iv, 5          ; 33 uses
   %i.ag = getelementptr inbounds nuw [4 x i8], ptr %.0117159, i64 %i.af ; 8 uses
   %i.ah = load float, ptr %i.ag, align 4, !tbaa !36 ; 2 uses
-  %3 = tail call float @llvm.fmuladd.f32(float %i.ah, float %i.ah, float 0.000000e+00)
+  %3 = fmul float %i.ah, %i.ah
   %i.ai = getelementptr inbounds nuw [4 x i8], ptr %.0117159, i64 %i.af
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 4
   %i.ak = load float, ptr %i.aj, align 4, !tbaa !36 ; 2 uses
@@ -1311,7 +1314,7 @@ bb.a:
   %i.p = shl nuw nsw i64 %indvars.iv, 5           ; 33 uses
   %i.q = getelementptr inbounds nuw [4 x i8], ptr %.0138187, i64 %i.p ; 8 uses
   %i.r = load float, ptr %i.q, align 4, !tbaa !36 ; 2 uses
-  %3 = tail call float @llvm.fmuladd.f32(float %i.r, float %i.r, float 0.000000e+00)
+  %3 = fmul float %i.r, %i.r
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %.0138187, i64 %i.p
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 4
   %i.u = load float, ptr %i.t, align 4, !tbaa !36 ; 2 uses

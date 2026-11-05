@@ -205,11 +205,11 @@ bb.qa:                                            ; preds = %bb.pz
   call void @llvm.lifetime.end.p0(ptr nonnull %154) #23
   call void @llvm.lifetime.end.p0(ptr nonnull %153) #23
   %i.ayd = load double, ptr %i.avd, align 16, !tbaa !108 ; 3 uses
-  %i.aye = load <2 x double>, ptr %152, align 16, !tbaa !108 ; 3 uses
-  %343 = extractelement <2 x double> %i.aye, i64 0 ; 2 uses
-  %344 = call double @llvm.fmuladd.f64(double %343, double %343, double 0.000000e+00)
+  %i.aye = load <2 x double>, ptr %152, align 16, !tbaa !108 ; 4 uses
+  %foldExtExtBinop = fmul <2 x double> %i.aye, %i.aye
+  %343 = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.ayf = extractelement <2 x double> %i.aye, i64 1 ; 2 uses
-  %i.ayg = call double @llvm.fmuladd.f64(double %i.ayf, double %i.ayf, double %344)
+  %i.ayg = call double @llvm.fmuladd.f64(double %i.ayf, double %i.ayf, double %343)
   %i.ayh = call noundef double @llvm.fmuladd.f64(double %i.ayd, double %i.ayd, double %i.ayg)
   %sqrt.i.i = call noundef double @llvm.sqrt.f64(double %i.ayh)
   %i.ayi = fdiv double 1.000000e+00, %sqrt.i.i    ; 2 uses

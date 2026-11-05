@@ -195,7 +195,7 @@ bb.a:
   %28 = alloca %"class.std::__cxx11::basic_string", align 8 ; 6 uses
   %29 = alloca %"class.std::allocator", align 1   ; 3 uses
   %30 = alloca %"struct.cv::internal::IntrinsicParams", align 8 ; 32 uses
-  %31 = alloca %"struct.cv::internal::IntrinsicParams", align 8 ; 15 uses
+  %31 = alloca %"struct.cv::internal::IntrinsicParams", align 16 ; 16 uses
   %32 = alloca %"struct.cv::internal::IntrinsicParams", align 8 ; 9 uses
   %i.a = alloca i32, align 4                      ; 5 uses
   %i.b = alloca double, align 8                   ; 5 uses
@@ -598,37 +598,38 @@ bb.de:                                            ; preds = %bb.dd
   call void @llvm.lifetime.end.p0(ptr nonnull %42) #18
   %i.gp = getelementptr inbounds nuw i8, ptr %8, i64 4
   %i.gq = getelementptr inbounds nuw i8, ptr %8, i64 8
-  %i.gr = getelementptr inbounds nuw i8, ptr %46, i64 16
-  %i.gs = getelementptr inbounds nuw i8, ptr %46, i64 20
-  %i.gt = getelementptr inbounds nuw i8, ptr %46, i64 8
-  %i.gu = getelementptr inbounds nuw i8, ptr %47, i64 16
-  %i.gv = getelementptr inbounds nuw i8, ptr %47, i64 20
-  %i.gw = getelementptr inbounds nuw i8, ptr %47, i64 8
-  %i.gx = getelementptr inbounds nuw i8, ptr %49, i64 16
-  %i.gy = getelementptr inbounds nuw i8, ptr %49, i64 20
-  %i.gz = getelementptr inbounds nuw i8, ptr %49, i64 8
-  %i.ha = getelementptr inbounds nuw i8, ptr %50, i64 16
-  %i.hb = getelementptr inbounds nuw i8, ptr %50, i64 20
-  %i.hc = getelementptr inbounds nuw i8, ptr %50, i64 8
-  %i.hd = getelementptr inbounds nuw i8, ptr %51, i64 8
-  %i.he = getelementptr inbounds nuw i8, ptr %51, i64 16
-  %i.hf = getelementptr inbounds nuw i8, ptr %31, i64 16 ; 2 uses
-  %i.hg = getelementptr inbounds nuw i8, ptr %52, i64 16
-  %i.hh = getelementptr inbounds nuw i8, ptr %31, i64 32
-  %i.hi = getelementptr inbounds nuw i8, ptr %52, i64 32
-  %i.hj = getelementptr inbounds nuw i8, ptr %52, i64 64
-  %i.hk = getelementptr inbounds nuw i8, ptr %31, i64 64
-  %i.hl = getelementptr inbounds nuw i8, ptr %31, i64 72 ; 4 uses
-  %i.hm = getelementptr inbounds nuw i8, ptr %52, i64 72 ; 3 uses
-  %i.hn = getelementptr inbounds nuw i8, ptr %31, i64 88 ; 3 uses
-  %i.ho = getelementptr inbounds nuw i8, ptr %52, i64 88 ; 2 uses
-  %i.hp = getelementptr inbounds nuw i8, ptr %54, i64 432
-  %i.hq = getelementptr inbounds nuw i8, ptr %54, i64 224
-  %i.hr = getelementptr inbounds nuw i8, ptr %54, i64 16
-  %i.hs = getelementptr inbounds nuw i8, ptr %31, i64 8
+  %67 = getelementptr inbounds nuw i8, ptr %46, i64 16
+  %i.gr = getelementptr inbounds nuw i8, ptr %46, i64 20
+  %i.gs = getelementptr inbounds nuw i8, ptr %46, i64 8
+  %i.gt = getelementptr inbounds nuw i8, ptr %47, i64 16
+  %i.gu = getelementptr inbounds nuw i8, ptr %47, i64 20
+  %i.gv = getelementptr inbounds nuw i8, ptr %47, i64 8
+  %i.gw = getelementptr inbounds nuw i8, ptr %49, i64 16
+  %i.gx = getelementptr inbounds nuw i8, ptr %49, i64 20
+  %i.gy = getelementptr inbounds nuw i8, ptr %49, i64 8
+  %i.gz = getelementptr inbounds nuw i8, ptr %50, i64 16
+  %i.ha = getelementptr inbounds nuw i8, ptr %50, i64 20
+  %i.hb = getelementptr inbounds nuw i8, ptr %50, i64 8
+  %i.hc = getelementptr inbounds nuw i8, ptr %51, i64 8
+  %i.hd = getelementptr inbounds nuw i8, ptr %51, i64 16
+  %i.he = getelementptr inbounds nuw i8, ptr %31, i64 16 ; 2 uses
+  %i.hf = getelementptr inbounds nuw i8, ptr %52, i64 16
+  %i.hg = getelementptr inbounds nuw i8, ptr %31, i64 32
+  %i.hh = getelementptr inbounds nuw i8, ptr %52, i64 32
+  %i.hi = getelementptr inbounds nuw i8, ptr %52, i64 64
+  %i.hj = getelementptr inbounds nuw i8, ptr %31, i64 64
+  %i.hk = getelementptr inbounds nuw i8, ptr %31, i64 72 ; 4 uses
+  %i.hl = getelementptr inbounds nuw i8, ptr %52, i64 72 ; 3 uses
+  %i.hm = getelementptr inbounds nuw i8, ptr %31, i64 88 ; 3 uses
+  %i.hn = getelementptr inbounds nuw i8, ptr %52, i64 88 ; 2 uses
+  %i.ho = getelementptr inbounds nuw i8, ptr %54, i64 432
+  %i.hp = getelementptr inbounds nuw i8, ptr %54, i64 224
+  %i.hq = getelementptr inbounds nuw i8, ptr %54, i64 16
+  %i.hr = getelementptr inbounds nuw i8, ptr %31, i64 8
+  %i.hs = getelementptr inbounds nuw i8, ptr %31, i64 24
   %i.ht = getelementptr inbounds nuw i8, ptr %30, i64 8 ; 2 uses
   %i.hu = getelementptr inbounds nuw i8, ptr %30, i64 16 ; 2 uses
-  %i.hv = getelementptr inbounds nuw i8, ptr %30, i64 24
+  %i.hv = getelementptr inbounds nuw i8, ptr %30, i64 24 ; 2 uses
   %i.hw = getelementptr inbounds nuw i8, ptr %55, i64 8
   %i.hx = getelementptr inbounds nuw i8, ptr %55, i64 16
   %i.hy = getelementptr inbounds nuw i8, ptr %56, i64 8
@@ -683,8 +684,8 @@ bb.dk:                                            ; preds = %bb.dj
   call void @llvm.lifetime.start.p0(ptr nonnull %45) #18
   call void @_ZN2cv3MatC1Ev(ptr noundef nonnull align 8 dereferenceable(208) %45) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %46) #18
-  store i32 0, ptr %i.gr, align 8, !tbaa !41
-  store i32 0, ptr %i.gs, align 4, !tbaa !42
+  store i32 0, ptr %67, align 8, !tbaa !41
+  store i32 0, ptr %i.gr, align 4, !tbaa !42
   %i.im = load ptr, ptr %i.gc, align 8, !tbaa !38
   %i.in = load ptr, ptr %40, align 8, !tbaa !36
   %i.io = ptrtoint ptr %i.im to i64
@@ -703,10 +704,10 @@ bb.dl:                                            ; preds = %bb.dk
 
 bb.dm:                                            ; preds = %bb.dk
   store i32 -2130509754, ptr %46, align 8, !tbaa !24
-  store ptr %40, ptr %i.gt, align 8, !tbaa !23
+  store ptr %40, ptr %i.gs, align 8, !tbaa !23
   call void @llvm.lifetime.start.p0(ptr nonnull %47) #18
-  store i32 0, ptr %i.gu, align 8, !tbaa !41
-  store i32 0, ptr %i.gv, align 4, !tbaa !42
+  store i32 0, ptr %i.gt, align 8, !tbaa !41
+  store i32 0, ptr %i.gu, align 4, !tbaa !42
   %i.is = load ptr, ptr %i.gj, align 8, !tbaa !38
   %i.it = load ptr, ptr %41, align 8, !tbaa !36
   %i.iu = ptrtoint ptr %i.is to i64
@@ -725,7 +726,7 @@ bb.dn:                                            ; preds = %bb.dm
 
 bb.do:                                            ; preds = %bb.dm
   store i32 -2130509754, ptr %47, align 8, !tbaa !24
-  store ptr %41, ptr %i.gw, align 8, !tbaa !23
+  store ptr %41, ptr %i.gv, align 8, !tbaa !23
   invoke void @_ZN2cv8internal16ComputeJacobiansERKNS_11_InputArrayES3_RKNS0_15IntrinsicParamsES3_S3_RKiRKdRNS_3MatESC_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(96) %30, ptr noundef nonnull align 8 dereferenceable(24) %46, ptr noundef nonnull align 8 dereferenceable(24) %47, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 8 dereferenceable(8) %i.b, ptr noundef nonnull align 8 dereferenceable(208) %44, ptr noundef nonnull align 8 dereferenceable(208) %45)
           to label %bb.dp unwind label %.loopexit.split-lp388.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -735,19 +736,19 @@ bb.dp:                                            ; preds = %bb.do
   call void @llvm.lifetime.start.p0(ptr nonnull %48) #18
   call void @_ZN2cv3MatC1Ev(ptr noundef nonnull align 8 dereferenceable(208) %48) #18
   call void @llvm.lifetime.start.p0(ptr nonnull %49) #18
-  store i32 0, ptr %i.gx, align 8, !tbaa !41
-  store i32 0, ptr %i.gy, align 4, !tbaa !42
+  store i32 0, ptr %i.gw, align 8, !tbaa !41
+  store i32 0, ptr %i.gx, align 4, !tbaa !42
   store i32 16842752, ptr %49, align 8, !tbaa !24
-  store ptr %44, ptr %i.gz, align 8, !tbaa !23
+  store ptr %44, ptr %i.gy, align 8, !tbaa !23
   call void @llvm.lifetime.start.p0(ptr nonnull %50) #18
-  store i32 0, ptr %i.ha, align 8, !tbaa !41
-  store i32 0, ptr %i.hb, align 4, !tbaa !42
+  store i32 0, ptr %i.gz, align 8, !tbaa !41
+  store i32 0, ptr %i.ha, align 4, !tbaa !42
   store i32 16842752, ptr %50, align 8, !tbaa !24
-  store ptr %45, ptr %i.hc, align 8, !tbaa !23
+  store ptr %45, ptr %i.hb, align 8, !tbaa !23
   call void @llvm.lifetime.start.p0(ptr nonnull %51) #18
-  store i64 0, ptr %i.he, align 8
+  store i64 0, ptr %i.hd, align 8
   store i32 33619968, ptr %51, align 8, !tbaa !24
-  store ptr %48, ptr %i.hd, align 8, !tbaa !23
+  store ptr %48, ptr %i.hc, align 8, !tbaa !23
   %i.iy = invoke noundef zeroext i1 @_ZN2cv5solveERKNS_11_InputArrayES2_RKNS_12_OutputArrayEi(ptr noundef nonnull align 8 dereferenceable(24) %49, ptr noundef nonnull align 8 dereferenceable(24) %50, ptr noundef nonnull align 8 dereferenceable(24) %51, i32 noundef 0)
           to label %bb.dq unwind label %bb.dy     ; 0 uses
 
@@ -775,19 +776,19 @@ _ZNK2cv7MatExprcvNS_3MatEEv.exit:                 ; preds = %bb.dr
           to label %bb.ds unwind label %.body
 
 bb.ds:                                            ; preds = %_ZNK2cv7MatExprcvNS_3MatEEv.exit
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %31, ptr noundef nonnull align 8 dereferenceable(96) %52, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.hf, ptr noundef nonnull align 8 dereferenceable(16) %i.hg, i64 16, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.hh, ptr noundef nonnull align 8 dereferenceable(32) %i.hi, i64 32, i1 false)
-  %i.jd = load double, ptr %i.hj, align 8, !tbaa !33
-  store double %i.jd, ptr %i.hk, align 8, !tbaa !33
-  %i.je = load ptr, ptr %i.hl, align 8, !tbaa !17 ; 3 uses
-  %i.jf = load ptr, ptr %i.hn, align 8, !tbaa !55
-  %i.jg = load <2 x ptr>, ptr %i.hm, align 8, !tbaa !56
-  store <2 x ptr> %i.jg, ptr %i.hl, align 8, !tbaa !56
-  %i.jh = load ptr, ptr %i.ho, align 8, !tbaa !55
-  store ptr %i.jh, ptr %i.hn, align 8, !tbaa !55
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(96) %31, ptr noundef nonnull align 8 dereferenceable(96) %52, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.he, ptr noundef nonnull align 8 dereferenceable(16) %i.hf, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.hg, ptr noundef nonnull align 8 dereferenceable(32) %i.hh, i64 32, i1 false)
+  %i.jd = load double, ptr %i.hi, align 8, !tbaa !33
+  store double %i.jd, ptr %i.hj, align 16, !tbaa !33
+  %i.je = load ptr, ptr %i.hk, align 8, !tbaa !17 ; 3 uses
+  %i.jf = load ptr, ptr %i.hm, align 8, !tbaa !55
+  %i.jg = load <2 x ptr>, ptr %i.hl, align 8, !tbaa !56
+  store <2 x ptr> %i.jg, ptr %i.hk, align 8, !tbaa !56
+  %i.jh = load ptr, ptr %i.hn, align 8, !tbaa !55
+  store ptr %i.jh, ptr %i.hm, align 8, !tbaa !55
   %.not.i.i.i.i.i.i = icmp eq ptr %i.je, null
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.hm, i8 0, i64 24, i1 false)
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.hl, i8 0, i64 24, i1 false)
   br i1 %.not.i.i.i.i.i.i, label %_ZN2cv8internal15IntrinsicParamsaSEOS1_.exit.thread, label %_ZN2cv8internal15IntrinsicParamsaSEOS1_.exit
 
 _ZN2cv8internal15IntrinsicParamsaSEOS1_.exit:     ; preds = %bb.ds
@@ -795,12 +796,12 @@ _ZN2cv8internal15IntrinsicParamsaSEOS1_.exit:     ; preds = %bb.ds
   %i.jj = ptrtoint ptr %i.je to i64
   %i.jk = sub i64 %i.ji, %i.jj
   call void @_ZdlPvm(ptr noundef nonnull %i.je, i64 noundef %i.jk) #20
-  %.pr = load ptr, ptr %i.hm, align 8, !tbaa !17  ; 3 uses
+  %.pr = load ptr, ptr %i.hl, align 8, !tbaa !17  ; 3 uses
   %.not.i.i.i.i298 = icmp eq ptr %.pr, null
   br i1 %.not.i.i.i.i298, label %_ZN2cv8internal15IntrinsicParamsaSEOS1_.exit.thread, label %bb.dt
 
 bb.dt:                                            ; preds = %_ZN2cv8internal15IntrinsicParamsaSEOS1_.exit
-  %i.jl = load ptr, ptr %i.ho, align 8, !tbaa !55
+  %i.jl = load ptr, ptr %i.hn, align 8, !tbaa !55
   %i.jm = ptrtoint ptr %i.jl to i64
   %i.jn = ptrtoint ptr %.pr to i64
   %i.jo = sub i64 %i.jm, %i.jn
@@ -809,41 +810,43 @@ bb.dt:                                            ; preds = %_ZN2cv8internal15In
 
 _ZN2cv8internal15IntrinsicParamsaSEOS1_.exit.thread: ; preds = %bb.ds, %_ZN2cv8internal15IntrinsicParamsaSEOS1_.exit, %bb.dt
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %53) #18
+  call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %i.ho) #18
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %i.hp) #18
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %i.hq) #18
-  call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %i.hr) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %54) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %53) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %52) #18
-  %i.jp = load double, ptr %31, align 8, !tbaa !20 ; 2 uses
-  %i.jq = load double, ptr %i.hs, align 8, !tbaa !20 ; 2 uses
-  %i.jr = load double, ptr %30, align 8, !tbaa !20
-  %i.js = load double, ptr %i.ht, align 8, !tbaa !20
-  %i.jt = fsub double %i.jp, %i.jr                ; 2 uses
-  %i.ju = fsub double %i.jq, %i.js                ; 2 uses
-  %67 = call double @llvm.fmuladd.f64(double %i.jt, double %i.jt, double 0.000000e+00)
-  %i.jv = call double @llvm.fmuladd.f64(double %i.ju, double %i.ju, double %67)
-  %68 = insertelement <2 x double> <double poison, double 0.000000e+00>, double %i.jv, i64 0
-  %69 = load <2 x double>, ptr %i.hu, align 8, !tbaa !20
-  %70 = load <2 x double>, ptr %i.hf, align 8, !tbaa !20 ; 3 uses
-  %71 = fsub <2 x double> %70, %69                ; 2 uses
-  %72 = insertelement <2 x double> %71, double %i.jp, i64 1 ; 2 uses
-  %73 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %72, <2 x double> %72, <2 x double> %68)
-  %74 = shufflevector <2 x double> %71, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %i.jw = insertelement <2 x double> %74, double %i.jq, i64 1 ; 2 uses
-  %75 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.jw, <2 x double> %i.jw, <2 x double> %73) ; 2 uses
-  %76 = extractelement <2 x double> %75, i64 1
-  %i.jx = extractelement <2 x double> %70, i64 0  ; 2 uses
-  %i.jy = call double @llvm.fmuladd.f64(double %i.jx, double %i.jx, double %76)
-  %77 = extractelement <2 x double> %70, i64 1    ; 2 uses
-  %i.jz = call double @llvm.fmuladd.f64(double %77, double %77, double %i.jy)
-  %i.ka = insertelement <2 x double> %75, double %i.jz, i64 1
+  %68 = load double, ptr %30, align 8, !tbaa !20
+  %i.jp = load double, ptr %i.ht, align 8, !tbaa !20
+  %i.jq = load double, ptr %i.hu, align 8, !tbaa !20
+  %i.jr = load double, ptr %i.hv, align 8, !tbaa !20
+  %69 = load <2 x double>, ptr %31, align 16, !tbaa !20 ; 4 uses
+  %i.js = load double, ptr %i.hr, align 8, !tbaa !20
+  %70 = extractelement <2 x double> %69, i64 0
+  %i.jt = fsub double %70, %68                    ; 2 uses
+  %i.ju = fsub double %i.js, %i.jp                ; 2 uses
+  %71 = fmul double %i.jt, %i.jt
+  %i.jv = call double @llvm.fmuladd.f64(double %i.ju, double %i.ju, double %71)
+  %foldExtExtBinop = fmul <2 x double> %69, %69
+  %72 = load double, ptr %i.he, align 16, !tbaa !20 ; 3 uses
+  %73 = load double, ptr %i.hs, align 8, !tbaa !20 ; 3 uses
+  %74 = fsub double %72, %i.jq                    ; 2 uses
+  %75 = fsub double %73, %i.jr
+  %76 = call double @llvm.fmuladd.f64(double %74, double %74, double %i.jv)
+  %77 = insertelement <2 x double> %69, double %75, i64 0 ; 2 uses
+  %i.jw = insertelement <2 x double> poison, double %76, i64 0
+  %78 = shufflevector <2 x double> %i.jw, <2 x double> %foldExtExtBinop, <2 x i32> <i32 0, i32 2>
+  %79 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %77, <2 x double> %77, <2 x double> %78) ; 2 uses
+  %i.jx = extractelement <2 x double> %79, i64 1
+  %i.jy = call double @llvm.fmuladd.f64(double %72, double %72, double %i.jx)
+  %i.jz = call double @llvm.fmuladd.f64(double %73, double %73, double %i.jy)
+  %i.ka = insertelement <2 x double> %79, double %i.jz, i64 1
   %i.kb = call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.ka) ; 2 uses
   %i.kc = extractelement <2 x double> %i.kb, i64 0
   %i.kd = extractelement <2 x double> %i.kb, i64 1
   %i.ke = fdiv double %i.kc, %i.kd
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %30, ptr noundef nonnull align 8 dereferenceable(96) %31, i64 72, i1 false)
-  %i.kf = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNSt6vectorIhSaIhEEaSERKS1_(ptr noundef nonnull align 8 dereferenceable(24) %i.cl, ptr noundef nonnull align 8 dereferenceable(24) %i.hl)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %30, ptr noundef nonnull align 16 dereferenceable(96) %31, i64 72, i1 false)
+  %i.kf = invoke noundef nonnull align 8 dereferenceable(24) ptr @_ZNSt6vectorIhSaIhEEaSERKS1_(ptr noundef nonnull align 8 dereferenceable(24) %i.cl, ptr noundef nonnull align 8 dereferenceable(24) %i.hk)
           to label %_ZN2cv8internal15IntrinsicParamsaSERKS1_.exit unwind label %bb.eb ; 0 uses
 
 _ZN2cv8internal15IntrinsicParamsaSERKS1_.exit:    ; preds = %_ZN2cv8internal15IntrinsicParamsaSEOS1_.exit.thread
@@ -1246,12 +1249,12 @@ bb.hd:                                            ; preds = %_ZNSt6vectorIN2cv3V
 
 _ZN2cv8internal15IntrinsicParamsD2Ev.exit327:     ; preds = %_ZNSt6vectorIN2cv3VecIdLi3EEESaIS2_EED2Ev.exit325, %bb.hd
   call void @llvm.lifetime.end.p0(ptr nonnull %32) #18
-  %i.qx = load ptr, ptr %i.hl, align 8, !tbaa !17 ; 3 uses
+  %i.qx = load ptr, ptr %i.hk, align 8, !tbaa !17 ; 3 uses
   %.not.i.i.i.i328 = icmp eq ptr %i.qx, null
   br i1 %.not.i.i.i.i328, label %_ZN2cv8internal15IntrinsicParamsD2Ev.exit329, label %bb.he
 
 bb.he:                                            ; preds = %_ZN2cv8internal15IntrinsicParamsD2Ev.exit327
-  %i.qy = load ptr, ptr %i.hn, align 8, !tbaa !55
+  %i.qy = load ptr, ptr %i.hm, align 8, !tbaa !55
   %i.qz = ptrtoint ptr %i.qy to i64
   %i.ra = ptrtoint ptr %i.qx to i64
   %i.rb = sub i64 %i.qz, %i.ra
@@ -1654,7 +1657,7 @@ begin_hunk_3_@_ZN2cv7fisheye15stereoCalibrateERKNS_11_InputArrayES3_S3_RKNS_17_I
   %i.yh = getelementptr inbounds nuw i8, ptr %249, i64 8 ; 2 uses
   %i.yi = getelementptr inbounds nuw i8, ptr %249, i64 16 ; 4 uses
   %i.yj = getelementptr inbounds nuw i8, ptr %247, i64 8 ; 2 uses
-  %i.yk = getelementptr inbounds nuw i8, ptr %247, i64 16 ; 2 uses
+  %i.yk = getelementptr inbounds nuw i8, ptr %247, i64 16 ; 4 uses
   %i.yl = getelementptr inbounds nuw i8, ptr %251, i64 8
   %i.ym = getelementptr inbounds nuw i8, ptr %387, i64 8
   %i.yn = getelementptr inbounds nuw i8, ptr %387, i64 16 ; 3 uses
@@ -2057,8 +2060,9 @@ bb.uf:                                            ; preds = %bb.ue, %bb.mp
   %i.akp = load double, ptr %249, align 16, !tbaa !20
   %i.akq = load double, ptr %i.yh, align 8, !tbaa !20
   %i.akr = load double, ptr %i.yi, align 16, !tbaa !20
-  %i.aks = load double, ptr %247, align 16, !tbaa !20
-  %430 = load <2 x double>, ptr %i.yj, align 8, !tbaa !20
+  %430 = load double, ptr %247, align 16, !tbaa !20
+  %i.aks = load double, ptr %i.yj, align 8, !tbaa !20
+  %431 = load double, ptr %i.yk, align 16, !tbaa !20
   call void @llvm.lifetime.start.p0(ptr nonnull %387) #18
   %i.akt = load i32, ptr %i.yl, align 8, !tbaa !62 ; 3 uses
   %i.aku = sext i32 %i.akt to i64                 ; 3 uses
@@ -2461,33 +2465,34 @@ bb.ye:                                            ; preds = %bb.yd, %bb.ya
   br label %bb.yf
 
 ._crit_edge1495:                                  ; preds = %_ZNK2cv3MatcvNS_3VecIT_XT0_EEEIdLi3EEEv.exit1222, %bb.wf
-  %i.arh = load double, ptr %249, align 16, !tbaa !20 ; 2 uses
-  %i.ari = load double, ptr %i.yh, align 8, !tbaa !20 ; 2 uses
-  %i.arj = load double, ptr %i.yi, align 16, !tbaa !20 ; 3 uses
-  %431 = fsub double %i.arh, %i.akp               ; 2 uses
-  %i.ark = fsub double %i.ari, %i.akq             ; 2 uses
-  %i.arl = fsub double %i.arj, %i.akr             ; 2 uses
-  %432 = call double @llvm.fmuladd.f64(double %431, double %431, double 0.000000e+00)
-  %i.arm = call double @llvm.fmuladd.f64(double %i.ark, double %i.ark, double %432)
-  %i.arn = call double @llvm.fmuladd.f64(double %i.arl, double %i.arl, double %i.arm)
-  %433 = load double, ptr %247, align 16, !tbaa !20 ; 3 uses
-  %434 = fsub double %433, %i.aks                 ; 2 uses
-  %435 = load <2 x double>, ptr %i.yj, align 8, !tbaa !20 ; 3 uses
-  %436 = fsub <2 x double> %435, %430             ; 2 uses
-  %437 = shufflevector <2 x double> %436, <2 x double> poison, <2 x i32> <i32 1, i32 poison>
-  %438 = insertelement <2 x double> %437, double %i.ari, i64 1 ; 2 uses
-  %i.aro = call double @llvm.fmuladd.f64(double %434, double %434, double %i.arn)
-  %439 = insertelement <2 x double> %436, double %i.arh, i64 1 ; 2 uses
-  %i.arp = insertelement <2 x double> <double poison, double 0.000000e+00>, double %i.aro, i64 0
-  %440 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %439, <2 x double> %439, <2 x double> %i.arp)
-  %i.arq = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %438, <2 x double> %438, <2 x double> %440) ; 2 uses
+  %i.arh = load double, ptr %i.yi, align 16, !tbaa !20 ; 3 uses
+  %i.ari = load double, ptr %i.yk, align 16, !tbaa !20 ; 3 uses
+  %432 = fsub double %i.arh, %i.akr               ; 2 uses
+  %433 = fsub double %i.ari, %431
+  %434 = load <2 x double>, ptr %249, align 16, !tbaa !20 ; 4 uses
+  %i.arj = load double, ptr %i.yh, align 8, !tbaa !20
+  %435 = extractelement <2 x double> %434, i64 0
+  %i.ark = fsub double %435, %i.akp               ; 2 uses
+  %i.arl = fsub double %i.arj, %i.akq             ; 2 uses
+  %436 = fmul double %i.ark, %i.ark
+  %i.arm = call double @llvm.fmuladd.f64(double %i.arl, double %i.arl, double %436)
+  %i.arn = call double @llvm.fmuladd.f64(double %432, double %432, double %i.arm)
+  %foldExtExtBinop = fmul <2 x double> %434, %434
+  %437 = insertelement <2 x double> %434, double %433, i64 0 ; 2 uses
+  %438 = load double, ptr %247, align 16, !tbaa !20 ; 3 uses
+  %439 = load double, ptr %i.yj, align 8, !tbaa !20 ; 3 uses
+  %440 = fsub double %438, %430                   ; 2 uses
+  %441 = fsub double %439, %i.aks                 ; 2 uses
+  %i.aro = call double @llvm.fmuladd.f64(double %440, double %440, double %i.arn)
+  %442 = call double @llvm.fmuladd.f64(double %441, double %441, double %i.aro)
+  %i.arp = insertelement <2 x double> poison, double %442, i64 0
+  %443 = shufflevector <2 x double> %i.arp, <2 x double> %foldExtExtBinop, <2 x i32> <i32 0, i32 2>
+  %i.arq = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %437, <2 x double> %437, <2 x double> %443) ; 2 uses
   %i.arr = extractelement <2 x double> %i.arq, i64 1
-  %i.ars = call double @llvm.fmuladd.f64(double %i.arj, double %i.arj, double %i.arr)
-  %i.art = call double @llvm.fmuladd.f64(double %433, double %433, double %i.ars)
-  %441 = extractelement <2 x double> %435, i64 0  ; 2 uses
-  %i.aru = call double @llvm.fmuladd.f64(double %441, double %441, double %i.art)
-  %442 = extractelement <2 x double> %435, i64 1  ; 2 uses
-  %i.arv = call double @llvm.fmuladd.f64(double %442, double %442, double %i.aru)
+  %i.ars = call double @llvm.fmuladd.f64(double %i.arh, double %i.arh, double %i.arr)
+  %i.art = call double @llvm.fmuladd.f64(double %438, double %438, double %i.ars)
+  %i.aru = call double @llvm.fmuladd.f64(double %439, double %439, double %i.art)
+  %i.arv = call double @llvm.fmuladd.f64(double %i.ari, double %i.ari, double %i.aru)
   %i.arw = insertelement <2 x double> %i.arq, double %i.arv, i64 1
   %i.arx = call <2 x double> @llvm.sqrt.v2f64(<2 x double> %i.arw) ; 2 uses
   %i.ary = extractelement <2 x double> %i.arx, i64 0
@@ -2890,8 +2895,9 @@ bb.bt:                                            ; preds = %bb.bs
   %i.kj = fadd <2 x double> %i.hq, %i.ki          ; 3 uses
   %i.kk = load <2 x double>, ptr %i.gu, align 16, !tbaa !20, !noalias !505 ; 3 uses
   %i.kl = fadd <2 x double> %i.hr, %i.kk          ; 4 uses
-  %i.km = extractelement <2 x double> %i.ki, i64 0 ; 2 uses
-  %i.kn = extractelement <2 x double> %i.ki, i64 1 ; 2 uses
+  %44 = extractelement <2 x double> %i.ki, i64 0  ; 2 uses
+  %i.km = extractelement <2 x double> %i.ki, i64 1 ; 2 uses
+  %i.kn = extractelement <2 x double> %i.kk, i64 0 ; 2 uses
   %i.ko = extractelement <2 x double> %i.kj, i64 0 ; 3 uses
   %i.kp = extractelement <2 x double> %i.kj, i64 1 ; 3 uses
   %i.kq = extractelement <2 x double> %i.kl, i64 0 ; 2 uses
@@ -2901,17 +2907,17 @@ bb.bt:                                            ; preds = %bb.bs
   call void @llvm.lifetime.start.p0(ptr nonnull %41) #18
   %i.kt = load <2 x double>, ptr %35, align 16, !tbaa !20, !noalias !505 ; 3 uses
   %i.ku = fadd <2 x double> %i.hs, %i.kt          ; 4 uses
-  %i.kv = extractelement <2 x double> %i.kt, i64 0 ; 2 uses
-  %44 = extractelement <2 x double> %i.kt, i64 1  ; 2 uses
-  %45 = call double @llvm.fmuladd.f64(double %i.kv, double %i.kv, double 0.000000e+00)
-  %46 = call double @llvm.fmuladd.f64(double %44, double %44, double %45)
-  %i.kw = call double @llvm.fmuladd.f64(double %i.km, double %i.km, double %46)
-  %i.kx = call double @llvm.fmuladd.f64(double %i.kn, double %i.kn, double %i.kw)
-  %47 = shufflevector <2 x double> %i.kk, <2 x double> %i.ku, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %48 = insertelement <2 x double> <double poison, double 0.000000e+00>, double %i.kx, i64 0
-  %49 = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %47, <2 x double> %47, <2 x double> %48)
+  %i.kv = extractelement <2 x double> %i.kt, i64 1 ; 2 uses
+  %45 = shufflevector <2 x double> %i.kt, <2 x double> %i.ku, <2 x i32> <i32 0, i32 2> ; 2 uses
+  %46 = fmul <2 x double> %45, %45                ; 2 uses
+  %47 = extractelement <2 x double> %46, i64 0
+  %i.kw = call double @llvm.fmuladd.f64(double %i.kv, double %i.kv, double %47)
+  %i.kx = call double @llvm.fmuladd.f64(double %44, double %44, double %i.kw)
+  %48 = call double @llvm.fmuladd.f64(double %i.km, double %i.km, double %i.kx)
+  %49 = call double @llvm.fmuladd.f64(double %i.kn, double %i.kn, double %48)
   %50 = shufflevector <2 x double> %i.kk, <2 x double> %i.ku, <2 x i32> <i32 1, i32 3> ; 2 uses
-  %i.ky = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %50, <2 x double> %50, <2 x double> %49) ; 2 uses
+  %51 = insertelement <2 x double> %46, double %49, i64 0
+  %i.ky = call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %50, <2 x double> %50, <2 x double> %51) ; 2 uses
   %i.kz = extractelement <2 x double> %i.ky, i64 1
   %i.la = call double @llvm.fmuladd.f64(double %i.ko, double %i.ko, double %i.kz)
   %i.lb = call double @llvm.fmuladd.f64(double %i.kp, double %i.kp, double %i.la)
