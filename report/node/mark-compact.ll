@@ -205,22 +205,28 @@ bb.a:
   tail call void @_ZN2v88internal20MarkCompactCollector23PinPreciseRootsIfNeededEv(ptr noundef nonnull align 8 dereferenceable(912) %0)
   %i.d = load ptr, ptr %0, align 8
   %i.e = tail call noundef zeroext i1 @_ZNK2v88internal4Heap13IsGCWithStackEv(ptr noundef nonnull align 8 dereferenceable(2992) %i.d) #31
-  %11 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1200), align 16, !range !329
-  %12 = trunc nuw i8 %11 to i1
-  %13 = xor i1 %12, true
-  %14 = select i1 %i.e, i1 %13, i1 false
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 688
-  %16 = load ptr, ptr %15, align 8                ; 2 uses
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 696
-  %18 = load ptr, ptr %17, align 8                ; 2 uses
-  %19 = icmp eq ptr %16, %18
-  br i1 %19, label %._crit_edge, label %.lr.ph
+  br i1 %i.e, label %11, label %15
 
-._crit_edge:                                      ; preds = %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit, %bb.a
-  %.sroa.0137.0.lcssa = phi ptr [ null, %bb.a ], [ %.sroa.0137.7, %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit ] ; 2 uses
-  %.sroa.15.0.lcssa = phi ptr [ null, %bb.a ], [ %.sroa.15.6, %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit ] ; 2 uses
-  %.sroa.31.0.lcssa = phi ptr [ null, %bb.a ], [ %.sroa.31.7, %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit ] ; 2 uses
-  %.0.lcssa = phi i64 [ 0, %bb.a ], [ %i.x, %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit ] ; 2 uses
+11:                                               ; preds = %bb.a
+  %12 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1200), align 16, !range !329, !noundef !330
+  %13 = trunc nuw i8 %12 to i1
+  %14 = xor i1 %13, true
+  br label %15
+
+15:                                               ; preds = %11, %bb.a
+  %16 = phi i1 [ false, %bb.a ], [ %14, %11 ]
+  %17 = getelementptr inbounds nuw i8, ptr %0, i64 688
+  %18 = load ptr, ptr %17, align 8                ; 2 uses
+  %19 = getelementptr inbounds nuw i8, ptr %0, i64 696
+  %20 = load ptr, ptr %19, align 8                ; 2 uses
+  %21 = icmp eq ptr %18, %20
+  br i1 %21, label %._crit_edge, label %.lr.ph
+
+._crit_edge:                                      ; preds = %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit, %15
+  %.sroa.0137.0.lcssa = phi ptr [ null, %15 ], [ %.sroa.0137.7, %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit ] ; 2 uses
+  %.sroa.15.0.lcssa = phi ptr [ null, %15 ], [ %.sroa.15.6, %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit ] ; 2 uses
+  %.sroa.31.0.lcssa = phi ptr [ null, %15 ], [ %.sroa.31.7, %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit ] ; 2 uses
+  %.0.lcssa = phi i64 [ 0, %15 ], [ %i.x, %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit ] ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 792
   %i.g = load i64, ptr %i.f, align 8
   %.not.i.i = icmp ult i64 %i.g, 131072
@@ -255,12 +261,12 @@ _ZN4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPN2v88interna
   %i.t = icmp slt i8 %i.s, -1
   br i1 %i.t, label %.lr.ph.i.i, label %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPN2v88internal12PageMetadataEEENS0_6HashEqIS6_vE4HashENS9_2EqESaIS6_EE5beginEv.exit.preheader, !llvm.loop !804
 
-.lr.ph:                                           ; preds = %bb.a, %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit
-  %.0202 = phi i64 [ %i.x, %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit ], [ 0, %bb.a ]
-  %.sroa.0134.0201 = phi ptr [ %i.cp, %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit ], [ %16, %bb.a ] ; 2 uses
-  %.sroa.31.0200 = phi ptr [ %.sroa.31.7, %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit ], [ null, %bb.a ] ; 5 uses
-  %.sroa.15.0199 = phi ptr [ %.sroa.15.6, %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit ], [ null, %bb.a ] ; 4 uses
-  %.sroa.0137.0198 = phi ptr [ %.sroa.0137.7, %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit ], [ null, %bb.a ] ; 6 uses
+.lr.ph:                                           ; preds = %15, %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit
+  %.0202 = phi i64 [ %i.x, %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit ], [ 0, %15 ]
+  %.sroa.0134.0201 = phi ptr [ %i.cp, %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit ], [ %18, %15 ] ; 2 uses
+  %.sroa.31.0200 = phi ptr [ %.sroa.31.7, %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit ], [ null, %15 ] ; 5 uses
+  %.sroa.15.0199 = phi ptr [ %.sroa.15.6, %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit ], [ null, %15 ] ; 4 uses
+  %.sroa.0137.0198 = phi ptr [ %.sroa.0137.7, %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE12emplace_backIJS3_RPNS2_12PageMetadataEEEERS6_DpOT_.exit ], [ null, %15 ] ; 6 uses
   %i.u = load ptr, ptr %.sroa.0134.0201, align 8  ; 11 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 240
   %i.w = load atomic i64, ptr %i.v monotonic, align 8 ; 4 uses
@@ -321,7 +327,7 @@ bb.h:                                             ; preds = %bb.g
   br label %_ZN2v88internal12_GLOBAL__N_114ShouldMovePageEPNS0_12PageMetadataElNS1_19MemoryReductionModeE.exit
 
 _ZN2v88internal12_GLOBAL__N_114ShouldMovePageEPNS0_12PageMetadataElNS1_19MemoryReductionModeE.exit: ; preds = %bb.g, %bb.h
-  %or.cond = or i1 %14, %i.ar
+  %or.cond = or i1 %16, %i.ar
   br i1 %or.cond, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %_ZN2v88internal12_GLOBAL__N_114ShouldMovePageEPNS0_12PageMetadataElNS1_19MemoryReductionModeE.exit
@@ -414,7 +420,7 @@ _ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataE
   %.sroa.31.7 = phi ptr [ %i.co, %_ZNSt6vectorISt4pairIN2v88internal16ParallelWorkItemEPNS2_19MutablePageMetadataEESaIS6_EE17_M_realloc_insertIJS3_RPNS2_12PageMetadataEEEEvN9__gnu_cxx17__normal_iteratorIPS6_S8_EEDpOT_.exit.i ], [ %.sroa.31.0200, %bb.k ] ; 2 uses
   %.sroa.15.6 = getelementptr inbounds nuw i8, ptr %.0.lcssa.i.i.i.i.i.pn, i64 16 ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %.sroa.0134.0201, i64 8 ; 2 uses
-  %i.cq = icmp eq ptr %i.cp, %18
+  %i.cq = icmp eq ptr %i.cp, %20
   br i1 %i.cq, label %._crit_edge, label %.lr.ph
 
 _ZN4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPN2v88internal12PageMetadataEEENS0_6HashEqIS6_vE4HashENS9_2EqESaIS6_EE5beginEv.exit: ; preds = %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPN2v88internal12PageMetadataEEENS0_6HashEqIS6_vE4HashENS9_2EqESaIS6_EE5beginEv.exit.backedge, %_ZN4absl18container_internal12raw_hash_setINS0_17FlatHashSetPolicyIPN2v88internal12PageMetadataEEENS0_6HashEqIS6_vE4HashENS9_2EqESaIS6_EE5beginEv.exit.preheader

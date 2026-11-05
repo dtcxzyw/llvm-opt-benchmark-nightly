@@ -202,8 +202,8 @@ bb.w:                                             ; preds = %.noexc26
           cleanup
   br label %.body
 
-.loopexit.split-lp:                               ; preds = %.invoke, %bb.q, %bb.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtCsi1wr4QBDb3z_8smallvec8IntoIterATNtNtCsC8CapfvpQ1_5salsa3key16DatabaseKeyIndexNtNtB1g_5cycle14IterationStampEj4_EEB1g_.exit.i, %bb.t, %bb.u, %bb.v, %bb.w, %bb.ag, %.noexc37, %bb.ak, %6
-  %.sroa.07.2.ph = phi i1 [ true, %6 ], [ true, %.noexc37 ], [ true, %bb.ag ], [ false, %bb.q ], [ true, %bb.v ], [ true, %bb.u ], [ true, %bb.t ], [ true, %bb.i ], [ true, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtCsi1wr4QBDb3z_8smallvec8IntoIterATNtNtCsC8CapfvpQ1_5salsa3key16DatabaseKeyIndexNtNtB1g_5cycle14IterationStampEj4_EEB1g_.exit.i ], [ true, %bb.ak ], [ true, %.invoke ], [ true, %bb.w ]
+.loopexit.split-lp:                               ; preds = %.invoke, %bb.q, %bb.i, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtCsi1wr4QBDb3z_8smallvec8IntoIterATNtNtCsC8CapfvpQ1_5salsa3key16DatabaseKeyIndexNtNtB1g_5cycle14IterationStampEj4_EEB1g_.exit.i, %bb.t, %bb.u, %bb.v, %bb.w, %bb.ag, %.noexc37, %bb.ak, %7
+  %.sroa.07.2.ph = phi i1 [ true, %7 ], [ true, %.noexc37 ], [ true, %bb.ag ], [ false, %bb.q ], [ true, %bb.v ], [ true, %bb.u ], [ true, %bb.t ], [ true, %bb.i ], [ true, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtCsi1wr4QBDb3z_8smallvec8IntoIterATNtNtCsC8CapfvpQ1_5salsa3key16DatabaseKeyIndexNtNtB1g_5cycle14IterationStampEj4_EEB1g_.exit.i ], [ true, %bb.ak ], [ true, %.invoke ], [ true, %bb.w ]
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body
@@ -412,7 +412,7 @@ bb.aj:                                            ; preds = %_RNCNvMs4_NtCsC8Cap
 .noexc39:                                         ; preds = %bb.aj
   %i.eq = extractvalue { ptr, ptr } %i.ep, 0      ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.eq, null
-  br i1 %.not.i.i.i.i.i, label %6, label %bb.al, !prof !51
+  br i1 %.not.i.i.i.i.i, label %7, label %bb.al, !prof !51
 
 bb.ak:                                            ; preds = %_RNCNvMs4_NtCsC8CapfvpQ1_5salsa5cycleNtB7_10CycleHeads11iter_not_eq0B9_.exit.thread.i.i.i
   invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.ef, i64 noundef %i.eg, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #21
@@ -434,13 +434,24 @@ bb.al:                                            ; preds = %.noexc39
   %i.et = load i32, ptr %i.dt, align 4, !range !55, !noalias !221, !noundef !45
   %i.eu = load i32, ptr %i.du, align 4, !noalias !221, !noundef !45
   invoke void @_RNvMNtNtCsC8CapfvpQ1_5salsa8function4syncNtB2_9SyncTable10peek_claim(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.a, ptr noundef nonnull align 8 %i.es, ptr noundef nonnull align 8 %1, i32 noundef %i.et, i32 noundef %i.eu, i1 noundef zeroext true)
-          to label %.noexc42.a unwind label %.loopexit
+          to label %.noexc42 unwind label %.loopexit
 
-.noexc42.a:                                       ; preds = %.noexc41
+.noexc42:                                         ; preds = %.noexc41
   %5 = load i8, ptr %i.a, align 8, !range !48, !noalias !220, !noundef !45 ; 2 uses
+  %6 = icmp eq i8 %5, 2
+  br i1 %6, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCsC8CapfvpQ1_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.i.i, label %.noexc42.a
+
+7:                                                ; preds = %.noexc39
+  invoke void @_RNvNtCs4NRVxsYgnAr_4core6option13expect_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @7, i64 noundef 40, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @9) #21
+          to label %.noexc43 unwind label %.loopexit.split-lp
+
+.noexc43:                                         ; preds = %7
+  unreachable
+
+.noexc42.a:                                       ; preds = %.noexc42
   %.val5.i.i.i.i.i = load ptr, ptr %i.dr, align 8, !noalias !220 ; 5 uses
   %i.ev = icmp eq i8 %5, 1
-  br i1 %i.ev, label %bb.am, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCsC8CapfvpQ1_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.i.i
+  br i1 %i.ev, label %bb.am, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCsC8CapfvpQ1_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.thread.i.i
 
 bb.am:                                            ; preds = %.noexc42.a
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val5.i.i.i.i.i) ]
@@ -471,11 +482,11 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCsUsIPftNhTL_8lock_api5mutex10Mutex
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1.i.i.i.i.i.i.i.i) ]
   %i.fc = cmpxchg ptr %.val1.i.i.i.i.i.i.i.i, i8 1, i8 0 release monotonic, align 1, !noalias !221
   %i.fd = extractvalue { i8, i1 } %i.fc, 1
-  br i1 %i.fd, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCsC8CapfvpQ1_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.thread.i.i, label %bb.aq, !prof !46
+  br i1 %i.fd, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsC8CapfvpQ1_5salsa7runtime7RunningEBF_.exit.i.i.i.i.i.i, label %bb.aq, !prof !46
 
 bb.aq:                                            ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCsUsIPftNhTL_8lock_api5mutex10MutexGuardNtNtCscHkFMvyoPQb_11parking_lot9raw_mutex8RawMutexNtNtNtCsC8CapfvpQ1_5salsa7runtime16dependency_graph15DependencyGraphEEB2e_.exit.i.i.i.i.i.i.i.i.i
   invoke void @_RNvMs1_NtCscHkFMvyoPQb_11parking_lot9raw_mutexNtB5_8RawMutex11unlock_slow(ptr noundef nonnull %.val1.i.i.i.i.i.i.i.i, i1 noundef zeroext false)
-          to label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCsC8CapfvpQ1_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.thread.i.i unwind label %bb.as, !noalias !221
+          to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsC8CapfvpQ1_5salsa7runtime7RunningEBF_.exit.i.i.i.i.i.i unwind label %bb.as, !noalias !221
 
 bb.ar:                                            ; preds = %bb.ap
   %i.fe = landingpad { ptr, i32 }
@@ -493,27 +504,21 @@ bb.at:                                            ; preds = %bb.as, %bb.ap, %bb.
   call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val5.i.i.i.i.i, i64 noundef 48, i64 noundef 8) #20, !noalias !221
   br label %.body
 
-_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCsC8CapfvpQ1_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.thread.i.i: ; preds = %bb.aq, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCsUsIPftNhTL_8lock_api5mutex10MutexGuardNtNtCscHkFMvyoPQb_11parking_lot9raw_mutex8RawMutexNtNtNtCsC8CapfvpQ1_5salsa7runtime16dependency_graph15DependencyGraphEEB2e_.exit.i.i.i.i.i.i.i.i.i
+_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsC8CapfvpQ1_5salsa7runtime7RunningEBF_.exit.i.i.i.i.i.i: ; preds = %bb.aq, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCsUsIPftNhTL_8lock_api5mutex10MutexGuardNtNtCscHkFMvyoPQb_11parking_lot9raw_mutex8RawMutexNtNtNtCsC8CapfvpQ1_5salsa7runtime16dependency_graph15DependencyGraphEEB2e_.exit.i.i.i.i.i.i.i.i.i
   call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val5.i.i.i.i.i, i64 noundef 48, i64 noundef 8) #20, !noalias !221
+  br label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCsC8CapfvpQ1_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.thread.i.i
+
+_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCsC8CapfvpQ1_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.thread.i.i: ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCsC8CapfvpQ1_5salsa7runtime7RunningEBF_.exit.i.i.i.i.i.i, %.noexc42.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !220
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !220
   br label %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldRNtNtCsC8CapfvpQ1_5salsa5cycle9CycleHeaduINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs4_B18_NtB18_10CycleHeads11iter_not_eq0NCINvNvNtNtNtB8_6traits12double_ended19DoubleEndedIterator5rfind5checkB15_NCNvNtNtB1a_8function7execute11outer_cycles_0E0E0B1a_.exit.i.i
 
-6:                                                ; preds = %.noexc39
-  invoke void @_RNvNtCs4NRVxsYgnAr_4core6option13expect_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @7, i64 noundef 40, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @9) #21
-          to label %.noexc43 unwind label %.loopexit.split-lp
-
-.noexc43:                                         ; preds = %6
-  unreachable
-
-_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCsC8CapfvpQ1_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.i.i: ; preds = %.noexc42.a
-  %i.fg = load i8, ptr %i.ds, align 1, !range !56, !noalias !220
-  %7 = icmp ne i8 %5, 2
+_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCsC8CapfvpQ1_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.i.i: ; preds = %.noexc42
+  %i.fg = load i8, ptr %i.ds, align 1, !range !56, !noalias !220, !noundef !45
   %i.fh = trunc nuw i8 %i.fg to i1
-  %.sroa.0.0.i.not.i.i.i.i = select i1 %7, i1 true, i1 %i.fh
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !220
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !220
-  br i1 %.sroa.0.0.i.not.i.i.i.i, label %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldRNtNtCsC8CapfvpQ1_5salsa5cycle9CycleHeaduINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs4_B18_NtB18_10CycleHeads11iter_not_eq0NCINvNvNtNtNtB8_6traits12double_ended19DoubleEndedIterator5rfind5checkB15_NCNvNtNtB1a_8function7execute11outer_cycles_0E0E0B1a_.exit.i.i, label %_RINvYNtNtCsC8CapfvpQ1_5salsa5cycle18CycleHeadsIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNtNtBW_8adapters6filter15filter_try_foldRNtB5_9CycleHeaduINtNtNtBY_3ops12control_flow11ControlFlowB2W_ENCNvMs4_B5_NtB5_10CycleHeads11iter_not_eq0NCINvNvBQ_5rfind5checkB2W_NCNvNtNtB7_8function7execute11outer_cycles_0E0E0B3d_EB7_.exit.i
+  br i1 %i.fh, label %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldRNtNtCsC8CapfvpQ1_5salsa5cycle9CycleHeaduINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs4_B18_NtB18_10CycleHeads11iter_not_eq0NCINvNvNtNtNtB8_6traits12double_ended19DoubleEndedIterator5rfind5checkB15_NCNvNtNtB1a_8function7execute11outer_cycles_0E0E0B1a_.exit.i.i, label %_RINvYNtNtCsC8CapfvpQ1_5salsa5cycle18CycleHeadsIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNtNtBW_8adapters6filter15filter_try_foldRNtB5_9CycleHeaduINtNtNtBY_3ops12control_flow11ControlFlowB2W_ENCNvMs4_B5_NtB5_10CycleHeads11iter_not_eq0NCINvNvBQ_5rfind5checkB2W_NCNvNtNtB7_8function7execute11outer_cycles_0E0E0B3d_EB7_.exit.i
 
 _RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldRNtNtCsC8CapfvpQ1_5salsa5cycle9CycleHeaduINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs4_B18_NtB18_10CycleHeads11iter_not_eq0NCINvNvNtNtNtB8_6traits12double_ended19DoubleEndedIterator5rfind5checkB15_NCNvNtNtB1a_8function7execute11outer_cycles_0E0E0B1a_.exit.i.i: ; preds = %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCsC8CapfvpQ1_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.i.i, %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCsC8CapfvpQ1_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.thread.i.i, %_RNCNvMs4_NtCsC8CapfvpQ1_5salsa5cycleNtB7_10CycleHeads11iter_not_eq0B9_.exit.i.i.i
   %i.fi = invoke noundef align 4 ptr @_RNvXs8_NtCsC8CapfvpQ1_5salsa5cycleNtB5_18CycleHeadsIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator9next_back(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.c)

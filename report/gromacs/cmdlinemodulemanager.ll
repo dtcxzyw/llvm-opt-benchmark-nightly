@@ -202,7 +202,7 @@ bb.a:
   %i.a = alloca i64, align 8                      ; 6 uses
   %i.b = alloca i32, align 4                      ; 3 uses
   %i.c = alloca ptr, align 8                      ; 3 uses
-  %4 = alloca %"class.gmx::CommandLineCommonOptionsHolder", align 8 ; 20 uses
+  %4 = alloca %"class.gmx::CommandLineCommonOptionsHolder", align 8 ; 21 uses
   %5 = alloca %"class.gmx::CommandLineModuleSettings", align 8 ; 8 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 15 uses
   %7 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
@@ -216,7 +216,7 @@ bb.a:
   %i.h = load i8, ptr %i.g, align 8, !tbaa !107, !range !41, !noundef !42
   %i.i = trunc nuw i8 %i.h to i1
   %i.j = xor i1 %i.e, true
-  %i.k = or i1 %i.j, %i.i                         ; 2 uses
+  %i.k = or i1 %i.j, %i.i                         ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #26
   call void @_ZN3gmx30CommandLineCommonOptionsHolderC1Ev(ptr noundef nonnull align 8 dereferenceable(60) %4)
   invoke void @_ZN3gmx30CommandLineCommonOptionsHolder11initOptionsEv(ptr noundef nonnull align 8 dereferenceable(60) %4)
@@ -225,19 +225,24 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.l = load ptr, ptr %0, align 8, !tbaa !106
   %i.m = invoke noundef ptr @_ZN3gmx24CommandLineModuleManager4Impl20processCommonOptionsEPNS_30CommandLineCommonOptionsHolderEPiPPPc(ptr noundef nonnull align 8 dereferenceable(129) %i.l, ptr noundef nonnull %4, ptr noundef nonnull %i.b, ptr noundef nonnull %i.c)
-          to label %bb.c unwind label %bb.d       ; 6 uses
+          to label %9 unwind label %bb.d          ; 6 uses
 
-bb.c:                                             ; preds = %bb.b
-  %9 = getelementptr inbounds nuw i8, ptr %4, i64 42
-  %10 = load i8, ptr %9, align 2, !tbaa !45, !range !41, !noundef !42
-  %11 = trunc nuw i8 %10 to i1
+9:                                                ; preds = %bb.b
+  %10 = getelementptr inbounds nuw i8, ptr %4, i64 42
+  %11 = load i8, ptr %10, align 2, !tbaa !45, !range !41, !noundef !42
+  %12 = trunc nuw i8 %11 to i1
+  br i1 %12, label %bb.c, label %_ZNK3gmx30CommandLineCommonOptionsHolder13shouldBeQuietEv.exit
+
+bb.c:                                             ; preds = %9
   %i.n = getelementptr inbounds nuw i8, ptr %4, i64 43
-  %i.o = load i8, ptr %i.n, align 1, !range !41
-  %i.p = trunc nuw i8 %i.o to i1                  ; 2 uses
+  %i.o = load i8, ptr %i.n, align 1, !tbaa !40, !range !41, !noundef !42
+  %i.p = trunc nuw i8 %i.o to i1
   %i.q = xor i1 %i.p, true
-  %12 = select i1 %11, i1 %i.q, i1 false
-  %i.r = or i1 %i.k, %12                          ; 2 uses
+  %i.r = or i1 %i.k, %i.q
   br i1 %i.r, label %bb.l, label %bb.i
+
+_ZNK3gmx30CommandLineCommonOptionsHolder13shouldBeQuietEv.exit: ; preds = %9
+  br i1 %i.k, label %bb.l, label %bb.i
 
 bb.d:                                             ; preds = %bb.b, %bb.a
   %i.s = landingpad { ptr, i32 }
@@ -246,23 +251,28 @@ bb.d:                                             ; preds = %bb.b, %bb.a
   %i.t = extractvalue { ptr, i32 } %i.s, 1
   %i.u = call i32 @llvm.eh.typeid.for.p0(ptr nonnull @_ZTISt9exception) #26
   %i.v = icmp eq i32 %i.t, %i.u
-  br i1 %i.v, label %bb.e, label %bb.bf
+  br i1 %i.v, label %13, label %bb.bf
 
-bb.e:                                             ; preds = %bb.d
-  %13 = extractvalue { ptr, i32 } %i.s, 0
-  %14 = call ptr @__cxa_begin_catch(ptr %13) #26  ; 0 uses
-  %15 = getelementptr inbounds nuw i8, ptr %4, i64 42
-  %16 = load i8, ptr %15, align 2, !tbaa !45, !range !41, !noundef !42
-  %17 = trunc nuw i8 %16 to i1
+13:                                               ; preds = %bb.d
+  %14 = extractvalue { ptr, i32 } %i.s, 0
+  %15 = call ptr @__cxa_begin_catch(ptr %14) #26  ; 0 uses
+  %16 = getelementptr inbounds nuw i8, ptr %4, i64 42
+  %17 = load i8, ptr %16, align 2, !tbaa !45, !range !41, !noundef !42
+  %18 = trunc nuw i8 %17 to i1
+  br i1 %18, label %bb.e, label %_ZNK3gmx30CommandLineCommonOptionsHolder13shouldBeQuietEv.exit41
+
+bb.e:                                             ; preds = %13
   %i.w = getelementptr inbounds nuw i8, ptr %4, i64 43
-  %i.x = load i8, ptr %i.w, align 1, !range !41
+  %i.x = load i8, ptr %i.w, align 1, !tbaa !40, !range !41, !noundef !42
   %i.y = trunc nuw i8 %i.x to i1
   %i.z = xor i1 %i.y, true
-  %18 = select i1 %17, i1 %i.z, i1 false
-  %i.aa = or i1 %i.k, %18
+  %i.aa = or i1 %i.k, %i.z
   br i1 %i.aa, label %bb.h, label %bb.f
 
-bb.f:                                             ; preds = %bb.e
+_ZNK3gmx30CommandLineCommonOptionsHolder13shouldBeQuietEv.exit41: ; preds = %13
+  br i1 %i.k, label %bb.h, label %bb.f
+
+bb.f:                                             ; preds = %bb.e, %_ZNK3gmx30CommandLineCommonOptionsHolder13shouldBeQuietEv.exit41
   %i.ab = load ptr, ptr @stderr, align 8, !tbaa !121
   %i.ac = load ptr, ptr %0, align 8, !tbaa !106
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 72
@@ -277,14 +287,17 @@ bb.g:                                             ; preds = %bb.h, %bb.f
   invoke void @__cxa_end_catch()
           to label %bb.bf unwind label %bb.bg
 
-bb.h:                                             ; preds = %bb.f, %bb.e
+bb.h:                                             ; preds = %bb.e, %bb.f, %_ZNK3gmx30CommandLineCommonOptionsHolder13shouldBeQuietEv.exit41
   invoke void @__cxa_rethrow() #27
           to label %bb.bh unwind label %bb.g
 
-bb.i:                                             ; preds = %bb.c
+bb.i:                                             ; preds = %bb.c, %_ZNK3gmx30CommandLineCommonOptionsHolder13shouldBeQuietEv.exit
+  %19 = getelementptr inbounds nuw i8, ptr %4, i64 43
+  %20 = load i8, ptr %19, align 1, !tbaa !40, !range !41, !noundef !42
+  %21 = trunc nuw i8 %20 to i1
   %i.ah = load ptr, ptr @stdout, align 8
   %i.ai = load ptr, ptr @stderr, align 8
-  %i.aj = select i1 %i.p, ptr %i.ah, ptr %i.ai    ; 2 uses
+  %i.aj = select i1 %21, ptr %i.ah, ptr %i.ai     ; 2 uses
   %i.ak = load ptr, ptr %0, align 8, !tbaa !106
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 72
   %i.am = load ptr, ptr %i.al, align 8, !tbaa !89, !nonnull !42, !align !90
@@ -301,7 +314,8 @@ bb.k:                                             ; preds = %bb.i
           cleanup
   br label %bb.bf
 
-bb.l:                                             ; preds = %bb.j, %bb.c
+bb.l:                                             ; preds = %bb.c, %bb.j, %_ZNK3gmx30CommandLineCommonOptionsHolder13shouldBeQuietEv.exit
+  %22 = phi i1 [ true, %bb.c ], [ false, %bb.j ], [ true, %_ZNK3gmx30CommandLineCommonOptionsHolder13shouldBeQuietEv.exit ]
   %i.ap = icmp eq ptr %i.m, null
   br i1 %i.ap, label %bb.be, label %bb.m
 
@@ -636,7 +650,7 @@ bb.ay:                                            ; preds = %bb.ba, %bb.p, %bb.n
 
 bb.az:                                            ; preds = %bb.ax, %bb.aw
   %.0 = phi i32 [ 0, %bb.aw ], [ %i.eg, %bb.ax ]
-  br i1 %i.r, label %bb.bb, label %bb.ba
+  br i1 %22, label %bb.bb, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
   %i.ei = load ptr, ptr @stderr, align 8, !tbaa !121

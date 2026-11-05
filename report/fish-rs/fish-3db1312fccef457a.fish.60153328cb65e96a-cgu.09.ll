@@ -206,7 +206,7 @@ bb.c:                                             ; preds = %.outer
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtCshMbxjpSxucW_12fish_wgetopt9WGetopterECs8frGy5WneL6_4fish(ptr noalias nofree noundef align 8 dereferenceable(136) %i.v) #34
           to label %common.resume unwind label %bb.an
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp: ; preds = %bb.t, %bb.s, %bb.ch, %.lr.ph246, %bb.y, %bb.aa, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultINtNtNtB4_3num7nonzero7NonZeromENtNtBM_5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit, %bb.az, %bb.be, %.loopexit, %.loopexit548, %bb.g, %bb.i, %bb.k, %bb.v, %bb.z, %bb.al, %bb.bo, %bb.cd, %bb.ci, %bb.av, %.invoke, %.invoke388, %.invoke390, %.invoke392, %.outer.peel.newph, %.outer
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp: ; preds = %8, %bb.s, %bb.ch, %.lr.ph246, %bb.y, %bb.aa, %_RNvMNtCs3oUPovFnLWP_4core6resultINtB2_6ResultINtNtNtB4_3num7nonzero7NonZeromENtNtBM_5error15TryFromIntErrorE6unwrapCs8frGy5WneL6_4fish.exit, %bb.az, %bb.be, %.loopexit, %.loopexit548, %bb.g, %bb.i, %bb.k, %bb.v, %bb.z, %bb.al, %bb.bo, %bb.cd, %bb.ci, %bb.av, %.invoke, %.invoke388, %.invoke390, %.invoke392, %.outer.peel.newph, %.outer
   %lpad.loopexit.split-lp541 = landingpad { ptr, i32 }
           cleanup
   br label %.body
@@ -425,17 +425,23 @@ bb.t:                                             ; preds = %_RNvMs7_NtCs8frGy5W
   %i.da = load ptr, ptr %.sroa.045.0243, align 8, !nonnull !4, !noundef !4
   %i.db = getelementptr inbounds nuw i8, ptr %i.da, i64 16
   %i.dc = trunc nuw i8 %.sroa.03.0244 to i1
-  %4 = load i8, ptr %i.cd, align 1, !range !7
-  %5 = trunc nuw i8 %4 to i1
-  %6 = select i1 %i.dc, i1 true, i1 %5
-  %.sroa.048.0 = xor i1 %6, true
-  invoke fastcc void @_RNvNtNtCs8frGy5WneL6_4fish8builtins4jobs18builtin_jobs_print(ptr noundef nonnull align 8 %i.db, i8 noundef %.ph, i1 noundef zeroext %.sroa.048.0, ptr noalias nofree noundef align 8 dereferenceable(48) %1)
-          to label %_RNvMs7_NtCs8frGy5WneL6_4fish4procNtB5_3Job10is_visible.exit.thread unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp
+  br i1 %i.dc, label %8, label %4
 
-_RNvMs7_NtCs8frGy5WneL6_4fish4procNtB5_3Job10is_visible.exit.thread: ; preds = %bb.r, %_RNvMs7_NtCs8frGy5WneL6_4fish4procNtB5_3Job14is_constructed.exit.i, %bb.t, %_RNvMs7_NtCs8frGy5WneL6_4fish4procNtB5_3Job10is_visible.exit
-  %.sroa.03.1 = phi i8 [ %.sroa.03.0244, %_RNvMs7_NtCs8frGy5WneL6_4fish4procNtB5_3Job10is_visible.exit ], [ 1, %bb.t ], [ %.sroa.03.0244, %_RNvMs7_NtCs8frGy5WneL6_4fish4procNtB5_3Job14is_constructed.exit.i ], [ %.sroa.03.0244, %bb.r ] ; 2 uses
+_RNvMs7_NtCs8frGy5WneL6_4fish4procNtB5_3Job10is_visible.exit.thread: ; preds = %bb.r, %_RNvMs7_NtCs8frGy5WneL6_4fish4procNtB5_3Job14is_constructed.exit.i, %8, %_RNvMs7_NtCs8frGy5WneL6_4fish4procNtB5_3Job10is_visible.exit
+  %.sroa.03.1 = phi i8 [ %.sroa.03.0244, %_RNvMs7_NtCs8frGy5WneL6_4fish4procNtB5_3Job10is_visible.exit ], [ 1, %8 ], [ %.sroa.03.0244, %_RNvMs7_NtCs8frGy5WneL6_4fish4procNtB5_3Job14is_constructed.exit.i ], [ %.sroa.03.0244, %bb.r ] ; 2 uses
   %i.dd = icmp eq ptr %i.ce, %i.cb
   br i1 %i.dd, label %.loopexit167, label %bb.q
+
+4:                                                ; preds = %bb.t
+  %5 = load i8, ptr %i.cd, align 1, !range !7, !noundef !4
+  %6 = trunc nuw i8 %5 to i1
+  %7 = xor i1 %6, true
+  br label %8
+
+8:                                                ; preds = %bb.t, %4
+  %.sroa.048.0 = phi i1 [ %7, %4 ], [ false, %bb.t ]
+  invoke fastcc void @_RNvNtNtCs8frGy5WneL6_4fish8builtins4jobs18builtin_jobs_print(ptr noundef nonnull align 8 %i.db, i8 noundef %.ph, i1 noundef zeroext %.sroa.048.0, ptr noalias nofree noundef align 8 dereferenceable(48) %1)
+          to label %_RNvMs7_NtCs8frGy5WneL6_4fish4procNtB5_3Job10is_visible.exit.thread unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.loopexit.split-lp
 
 .loopexit167:                                     ; preds = %_RNvMs7_NtCs8frGy5WneL6_4fish4procNtB5_3Job10is_visible.exit.thread
   %i.de = trunc nuw i8 %.sroa.03.1 to i1

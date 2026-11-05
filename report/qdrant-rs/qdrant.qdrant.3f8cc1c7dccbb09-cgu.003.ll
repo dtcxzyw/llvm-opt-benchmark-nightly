@@ -204,10 +204,6 @@ bb.x:                                             ; preds = %.body32.i, %bb.h, %
   store i8 2, ptr %i.ck, align 8, !noalias !44432
   br label %.body33
 
-3:                                                ; preds = %bb.q
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !44440
-  br label %bb.ad
-
 bb.y:                                             ; preds = %.thread197, %bb.q
   %i.cm = phi ptr [ %i.cc, %.thread197 ], [ %i.ce, %bb.q ] ; 2 uses
   %i.cn = phi ptr [ %i.cb, %.thread197 ], [ %i.cd, %bb.q ] ; 2 uses
@@ -241,6 +237,10 @@ bb.y:                                             ; preds = %.thread197, %bb.q
   %.val51.i.i = load i8, ptr %i.di, align 1, !range !44, !noalias !44441, !noundef !40
   %.not118.i.i = icmp eq i8 %.val51.i.i, 0
   br i1 %.not118.i.i, label %bb.z, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtNtCsPYQCUnoTxQ_10collection10operations12verification5queryNtNtNtBK_15universal_query16collection_query5Query14check_fullscan0ECsl8OoimOLbh_6qdrant.exit.i.thread
+
+3:                                                ; preds = %bb.q
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !44440
+  br label %bb.ad
 
 bb.z:                                             ; preds = %bb.y
   %i.dj = load i64, ptr %i.ct, align 8, !range !148, !noalias !44441, !noundef !40 ; 2 uses

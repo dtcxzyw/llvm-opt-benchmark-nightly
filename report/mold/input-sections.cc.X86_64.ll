@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %bb.c
   %i.p = select i1 %i.i, i1 %i.o, i1 false
   br i1 %i.p, label %bb.e, label %.sink.split
 
-bb.e:                                             ; preds = %bb.b, %bb.d
+bb.e:                                             ; preds = %bb.d, %bb.b
   br label %.sink.split
 
 .sink.split:                                      ; preds = %bb.d, %bb.e

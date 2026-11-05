@@ -202,7 +202,7 @@ _ZN6symfpu3ITEIbN4cvc58internal13symfpuLiteral16wrappedBitVectorILb0EEEEEKT0_RKT
           to label %bb.bb unwind label %bb.cy     ; 2 uses
 
 bb.bb:                                            ; preds = %_ZN6symfpu3ITEIbN4cvc58internal13symfpuLiteral16wrappedBitVectorILb0EEEEEKT0_RKT_RS7_SB_.exit129
-  %i.dm = xor i1 %i.dl, true
+  %i.dm = xor i1 %i.dl, true                      ; 2 uses
   invoke void @__gmpz_clear(ptr noundef nonnull align 8 dereferenceable(16) %i.dk)
           to label %_ZN4cvc58internal9BitVectorD2Ev.exit130 unwind label %bb.bc
 
@@ -319,18 +319,24 @@ _ZN6symfpu13unpackedFloatIN4cvc58internal13symfpuLiteral6traitsEED2Ev.exit: ; pr
 .noexc138:                                        ; preds = %_ZN6symfpu13unpackedFloatIN4cvc58internal13symfpuLiteral6traitsEED2Ev.exit
   %i.ep = icmp eq i32 %i.en, %i.eo
   %i.eq = trunc nuw i8 %i.di to i1
-  %i.er = select i1 %i.cx, i1 %i.eq, i1 false     ; 3 uses
+  %i.er = select i1 %i.cx, i1 %i.eq, i1 false     ; 4 uses
   %or.cond = select i1 %i.ep, i1 %i.er, i1 false  ; 2 uses
   %brmerge.not = and i1 %i.dl, %or.cond
-  %33 = trunc nuw i8 %i.cp to i1
-  %34 = select i1 %i.cn, i1 %33, i1 false
-  %35 = select i1 %brmerge.not, i1 %34, i1 %or.cond
-  %36 = load i32, ptr %2, align 4, !tbaa !42
-  %37 = invoke noundef i32 @_ZN4cvc58internal13symfpuLiteral6traits3RNAEv()
+  br i1 %brmerge.not, label %33, label %36
+
+33:                                               ; preds = %.noexc138
+  %34 = trunc nuw i8 %i.cp to i1
+  %35 = select i1 %i.cn, i1 %34, i1 false
+  br label %36
+
+36:                                               ; preds = %.noexc138, %33
+  %37 = phi i1 [ %35, %33 ], [ %or.cond, %.noexc138 ]
+  %38 = load i32, ptr %2, align 4, !tbaa !42
+  %39 = invoke noundef i32 @_ZN4cvc58internal13symfpuLiteral6traits3RNAEv()
           to label %.noexc139 unwind label %bb.dg
 
-.noexc139:                                        ; preds = %.noexc138
-  %i.es = icmp eq i32 %36, %37
+.noexc139:                                        ; preds = %36
+  %i.es = icmp eq i32 %38, %39
   %spec.select = select i1 %i.es, i1 %i.er, i1 false
   %i.et = load i32, ptr %2, align 4, !tbaa !42
   %i.eu = invoke noundef i32 @_ZN4cvc58internal13symfpuLiteral6traits3RTPEv()
@@ -340,7 +346,7 @@ _ZN6symfpu13unpackedFloatIN4cvc58internal13symfpuLiteral6traitsEED2Ev.exit: ; pr
   %i.ev = icmp ne i32 %i.et, %i.eu
   %i.ew = trunc nuw i8 %i.m to i1                 ; 2 uses
   %or.cond208 = or i1 %i.ev, %i.ew
-  %spec.select209 = or i1 %i.er, %i.dm            ; 2 uses
+  %spec.select209 = or i1 %i.er, %i.dm
   %not.or.cond208 = xor i1 %or.cond208, true
   %i.ex = select i1 %not.or.cond208, i1 %spec.select209, i1 false
   %i.ey = load i32, ptr %2, align 4, !tbaa !42
@@ -354,8 +360,9 @@ _ZN6symfpu13unpackedFloatIN4cvc58internal13symfpuLiteral6traitsEED2Ev.exit: ; pr
 bb.bk:                                            ; preds = %.noexc141
   %i.fb = icmp eq i32 %i.ey, %i.ez
   %or.cond210 = and i1 %i.fb, %i.ew
-  %i.fc = select i1 %or.cond210, i1 %spec.select209, i1 false
-  %or.cond.i = select i1 %35, i1 true, i1 %spec.select
+  %spec.select211 = or i1 %i.er, %i.dm
+  %i.fc = select i1 %or.cond210, i1 %spec.select211, i1 false
+  %or.cond.i = select i1 %37, i1 true, i1 %spec.select
   %or.cond3.i = select i1 %or.cond.i, i1 true, i1 %i.ex
   %or.cond5.i = select i1 %or.cond3.i, i1 true, i1 %i.fc
   %i.fd = zext i1 %or.cond5.i to i8
@@ -758,7 +765,7 @@ bb.df:                                            ; preds = %bb.de, %bb.dd
   call void @llvm.lifetime.end.p0(ptr nonnull %30) #18
   br label %bb.do
 
-bb.dg:                                            ; preds = %.noexc141, %.noexc140, %.noexc139, %.noexc138, %_ZN6symfpu13unpackedFloatIN4cvc58internal13symfpuLiteral6traitsEED2Ev.exit
+bb.dg:                                            ; preds = %.noexc141, %.noexc140, %.noexc139, %36, %_ZN6symfpu13unpackedFloatIN4cvc58internal13symfpuLiteral6traitsEED2Ev.exit
   %i.iy = landingpad { ptr, i32 }
           cleanup
   br label %bb.dn
@@ -1161,20 +1168,20 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b, %bb.a
   %i.l = phi i1 [ false, %bb.a ], [ %i.k, %bb.b ] ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 1
-  %i.n = load i8, ptr %i.m, align 1, !tbaa !26, !range !28, !noundef !29 ; 3 uses
-  %i.o = trunc nuw i8 %i.n to i1                  ; 2 uses
+  %i.n = load i8, ptr %i.m, align 1, !tbaa !26, !range !28, !noundef !29 ; 2 uses
+  %i.o = trunc nuw i8 %i.n to i1                  ; 3 uses
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 3 ; 6 uses
   %i.q = load i8, ptr %i.p, align 1, !range !28   ; 3 uses
   %i.r = trunc nuw i8 %i.q to i1                  ; 5 uses
   %i.s = select i1 %i.o, i1 %i.r, i1 false
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 1
-  %i.u = load i8, ptr %i.t, align 1, !tbaa !26, !range !28, !noundef !29 ; 5 uses
+  %i.u = load i8, ptr %i.t, align 1, !tbaa !26, !range !28, !noundef !29 ; 2 uses
   %i.v = trunc nuw i8 %i.u to i1                  ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 3
-  %5 = load i8, ptr %4, align 1, !range !28       ; 5 uses
-  br i1 %i.s, label %bb.d, label %bb.e
+  br i1 %i.s, label %bb.d, label %6
 
 bb.d:                                             ; preds = %bb.c
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 3
+  %5 = load i8, ptr %4, align 1, !range !28
   %i.w = xor i1 %i.v, true
   %i.x = select i1 %3, i1 true, i1 %i.w
   %i.y = trunc nuw i8 %5 to i1
@@ -1182,11 +1189,14 @@ bb.d:                                             ; preds = %bb.c
   %i.aa = select i1 %i.x, i1 true, i1 %i.z
   br i1 %i.aa, label %.thread119, label %.thread110
 
-bb.e:                                             ; preds = %bb.c
-  %6 = trunc nuw i8 %5 to i1
-  %not. = xor i1 %i.v, true
-  %7 = select i1 %not., i1 true, i1 %6
-  br i1 %7, label %bb.g, label %bb.f
+6:                                                ; preds = %bb.c
+  br i1 %i.v, label %bb.e, label %bb.h
+
+bb.e:                                             ; preds = %6
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 3
+  %8 = load i8, ptr %7, align 1, !tbaa !30, !range !28, !noundef !29
+  %9 = trunc nuw i8 %8 to i1
+  br i1 %9, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.ab = xor i1 %i.o, true
@@ -1195,26 +1205,21 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.ad, label %.thread119, label %.thread110
 
 bb.g:                                             ; preds = %bb.e
-  %8 = and i8 %i.u, %i.n
-  %brmerge.demorgan.not = icmp eq i8 %8, 0
-  br i1 %brmerge.demorgan.not, label %bb.h, label %.thread110
+  br i1 %i.o, label %.thread110, label %bb.h
 
-.thread110:                                       ; preds = %bb.d, %bb.f, %bb.g
-  %9 = phi i8 [ %i.u, %bb.g ], [ 1, %bb.f ], [ 1, %bb.d ]
-  %i.ae = phi i8 [ %5, %bb.g ], [ 0, %bb.f ], [ 1, %bb.d ] ; 2 uses
+.thread110:                                       ; preds = %bb.f, %bb.d, %bb.g
+  %i.ae = phi i8 [ 1, %bb.g ], [ 1, %bb.d ], [ 0, %bb.f ]
   %i.af = icmp eq i8 %i.q, %i.ae
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %.thread110
-  %10 = phi i8 [ %9, %.thread110 ], [ %i.u, %bb.g ]
-  %11 = phi i8 [ %i.ae, %.thread110 ], [ %5, %bb.g ]
-  %12 = phi i1 [ %i.af, %.thread110 ], [ false, %bb.g ]
-  %i.ag = select i1 %3, i1 %12, i1 false
+bb.h:                                             ; preds = %6, %.thread110, %bb.g
+  %10 = phi i8 [ 0, %6 ], [ 1, %bb.g ], [ 1, %.thread110 ]
+  %11 = phi i1 [ false, %6 ], [ false, %bb.g ], [ %i.af, %.thread110 ]
+  %i.ag = select i1 %3, i1 %11, i1 false
   br label %.thread119
 
-.thread119:                                       ; preds = %bb.h, %bb.f, %bb.d
-  %13 = phi i8 [ 1, %bb.f ], [ %i.u, %bb.d ], [ %10, %bb.h ]
-  %i.ah = phi i8 [ 0, %bb.f ], [ %5, %bb.d ], [ %11, %bb.h ] ; 4 uses
+.thread119:                                       ; preds = %bb.f, %bb.h, %bb.d
+  %i.ah = phi i8 [ 1, %bb.f ], [ %i.u, %bb.d ], [ %10, %bb.h ]
   %i.ai = phi i1 [ true, %bb.f ], [ true, %bb.d ], [ %i.ag, %bb.h ] ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 2
   %i.ak = load i8, ptr %i.aj, align 2, !tbaa !21, !range !28, !noundef !29 ; 2 uses
@@ -1222,14 +1227,18 @@ bb.h:                                             ; preds = %bb.g, %.thread110
   %i.am = getelementptr inbounds nuw i8, ptr %2, i64 2
   %i.an = load i8, ptr %i.am, align 2, !tbaa !21, !range !28, !noundef !29 ; 2 uses
   %i.ao = trunc nuw i8 %i.an to i1                ; 3 uses
-  br i1 %i.al, label %bb.i, label %.thread111
+  br i1 %i.al, label %12, label %.thread111
 
-bb.i:                                             ; preds = %.thread119
-  %14 = trunc nuw i8 %i.ah to i1
-  %or.cond = select i1 %i.ao, i1 true, i1 %14
-  br i1 %or.cond, label %bb.j, label %bb.k
+12:                                               ; preds = %.thread119
+  br i1 %i.ao, label %bb.j, label %bb.i
 
-bb.j:                                             ; preds = %bb.i
+bb.i:                                             ; preds = %12
+  %13 = getelementptr inbounds nuw i8, ptr %2, i64 3
+  %14 = load i8, ptr %13, align 1, !tbaa !21, !range !28, !noundef !29
+  %15 = trunc nuw i8 %14 to i1
+  br i1 %15, label %bb.j, label %bb.k
+
+bb.j:                                             ; preds = %bb.i, %12
   %spec.select = and i1 %3, %i.ao
   %i.ap = or i1 %i.ai, %spec.select
   br label %.thread114
@@ -1244,35 +1253,45 @@ bb.j:                                             ; preds = %bb.i
   %i.at = trunc nuw i8 %i.an to i1
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.i, %.thread111, %.thread114
+bb.k:                                             ; preds = %.thread111, %.thread114, %bb.i
   %i.au = phi i1 [ true, %.thread111 ], [ false, %bb.i ], [ %i.at, %.thread114 ]
   %i.av = phi i1 [ %i.l, %.thread111 ], [ %i.l, %bb.i ], [ %i.as, %.thread114 ]
   br i1 %i.h, label %.critedge, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %i.aw = load i8, ptr %2, align 8, !tbaa !21, !range !28, !noundef !29
-  %i.ax = or i8 %13, %i.aw
+  %i.ax = or i8 %i.ah, %i.aw
   %i.ay = or i8 %i.ax, %i.ak
   %i.az = or i8 %i.ay, %i.n
   %or.cond145 = icmp ne i8 %i.az, 0
   %brmerge = select i1 %or.cond145, i1 true, i1 %i.au
-  br i1 %brmerge, label %.critedge, label %bb.m
+  br i1 %brmerge, label %.critedge, label %16
 
-bb.m:                                             ; preds = %bb.l
-  %i.ba = trunc nuw i8 %i.ah to i1
+16:                                               ; preds = %bb.l
+  %17 = getelementptr inbounds nuw i8, ptr %2, i64 3
+  %18 = load i8, ptr %17, align 1, !tbaa !21, !range !28 ; 2 uses
+  br i1 %i.r, label %bb.m, label %._crit_edge
+
+bb.m:                                             ; preds = %16
+  %i.ba = trunc nuw i8 %18 to i1
   %i.bb = xor i1 %i.ba, true
-  %15 = select i1 %i.r, i1 %i.bb, i1 false
-  %16 = icmp ne i8 %i.q, %i.ah
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %16, %bb.m
+  %19 = phi i1 [ %i.bb, %bb.m ], [ false, %16 ]
+  %20 = icmp ne i8 %i.q, %18
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.l, %bb.k, %bb.m
-  %i.bc = phi i1 [ false, %bb.m ], [ true, %bb.k ], [ true, %bb.l ]
-  %.0 = phi i1 [ %15, %bb.m ], [ false, %bb.k ], [ false, %bb.l ]
-  %i.bd = phi i1 [ %16, %bb.m ], [ true, %bb.k ], [ true, %bb.l ]
+.critedge:                                        ; preds = %bb.l, %bb.k, %._crit_edge
+  %i.bc = phi i1 [ false, %._crit_edge ], [ true, %bb.k ], [ true, %bb.l ]
+  %.0 = phi i1 [ %19, %._crit_edge ], [ false, %bb.k ], [ false, %bb.l ]
+  %i.bd = phi i1 [ %20, %._crit_edge ], [ true, %bb.k ], [ true, %bb.l ]
   br i1 %i.r, label %.thread, label %bb.n
 
 bb.n:                                             ; preds = %.critedge
-  %i.be = trunc nuw i8 %i.ah to i1
+  %21 = getelementptr inbounds nuw i8, ptr %2, i64 3
+  %22 = load i8, ptr %21, align 1, !tbaa !21, !range !28, !noundef !29
+  %i.be = trunc nuw i8 %22 to i1
   br i1 %i.be, label %.thread136.a, label %bb.o
 
 bb.o:                                             ; preds = %bb.n

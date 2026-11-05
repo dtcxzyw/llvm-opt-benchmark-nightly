@@ -204,24 +204,30 @@ bb.b:                                             ; preds = %bb.a
   %i.d = load i8, ptr %i.c, align 4, !range !267, !noundef !269
   %i.e = trunc nuw i8 %i.d to i1
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 85
-  %2 = load i8, ptr %i.f, align 1, !range !267
-  %3 = trunc nuw i8 %2 to i1
-  %or.cond.i = select i1 %i.e, i1 true, i1 %3     ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 82
-  %i.g = load i8, ptr %4, align 2, !range !267
+  %i.g = load i8, ptr %i.f, align 1, !range !267
   %i.h = trunc nuw i8 %i.g to i1
-  %i.i = select i1 %or.cond.i, i1 true, i1 %i.h
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %6 = load ptr, ptr %5, align 8                  ; 3 uses
-  %.not = icmp eq ptr %6, null
+  %i.i = select i1 %i.e, i1 true, i1 %i.h         ; 2 uses
+  br i1 %i.i, label %_ZNK4node12DebugOptions16wait_for_connectEv.exit, label %2
+
+2:                                                ; preds = %bb.b
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 82
+  %4 = load i8, ptr %3, align 2, !range !267, !noundef !269
+  %5 = trunc nuw i8 %4 to i1
+  br label %_ZNK4node12DebugOptions16wait_for_connectEv.exit
+
+_ZNK4node12DebugOptions16wait_for_connectEv.exit: ; preds = %bb.b, %2
+  %6 = phi i1 [ %5, %2 ], [ true, %bb.b ]
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %8 = load ptr, ptr %7, align 8                  ; 3 uses
+  %.not = icmp eq ptr %8, null
   br i1 %.not, label %_ZNSt12__shared_ptrIN4node9inspector16MainThreadHandleELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %bb.c
 
-bb.c:                                             ; preds = %bb.b
-  %i.j = getelementptr inbounds nuw i8, ptr %6, i64 56
+bb.c:                                             ; preds = %_ZNK4node12DebugOptions16wait_for_connectEv.exit
+  %i.j = getelementptr inbounds nuw i8, ptr %8, i64 56
   %i.k = load i8, ptr %i.j, align 8, !range !267, !noundef !269
   %i.l = trunc nuw i8 %i.k to i1                  ; 5 uses
   call void @_ZN4node9inspector19NodeInspectorClient15getThreadHandleEv(ptr dead_on_unwind nonnull writable sret(%"class.std::shared_ptr.433") align 8 %1, ptr noundef nonnull align 8 dereferenceable(184) %i.b)
-  call void @_ZN4node9inspector21ParentInspectorHandle13WorkerStartedESt10shared_ptrINS0_16MainThreadHandleEEb(ptr noundef nonnull align 8 dereferenceable(112) %6, ptr noundef nonnull %1, i1 noundef zeroext %i.l) #28
+  call void @_ZN4node9inspector21ParentInspectorHandle13WorkerStartedESt10shared_ptrINS0_16MainThreadHandleEEb(ptr noundef nonnull align 8 dereferenceable(112) %8, ptr noundef nonnull %1, i1 noundef zeroext %i.l) #28
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.n = load ptr, ptr %i.m, align 8              ; 8 uses
   %.not.i.i = icmp eq ptr %i.n, null
@@ -271,9 +277,9 @@ bb.i:                                             ; preds = %_ZN9__gnu_cxx27__ex
   call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.n) #28
   br label %_ZNSt12__shared_ptrIN4node9inspector16MainThreadHandleELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
 
-_ZNSt12__shared_ptrIN4node9inspector16MainThreadHandleELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.i, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i, %bb.e, %bb.c, %bb.b
-  %.0.in = phi i1 [ %or.cond.i, %bb.b ], [ %i.l, %bb.c ], [ %i.l, %bb.e ], [ %i.l, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i ], [ %i.l, %bb.i ] ; 2 uses
-  %or.cond = or i1 %i.i, %.0.in
+_ZNSt12__shared_ptrIN4node9inspector16MainThreadHandleELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.i, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i, %bb.e, %bb.c, %_ZNK4node12DebugOptions16wait_for_connectEv.exit
+  %.0.in = phi i1 [ %i.i, %_ZNK4node12DebugOptions16wait_for_connectEv.exit ], [ %i.l, %bb.c ], [ %i.l, %bb.e ], [ %i.l, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i ], [ %i.l, %bb.i ] ; 2 uses
+  %or.cond = or i1 %6, %.0.in
   br i1 %or.cond, label %bb.j, label %bb.w
 
 bb.j:                                             ; preds = %_ZNSt12__shared_ptrIN4node9inspector16MainThreadHandleELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit

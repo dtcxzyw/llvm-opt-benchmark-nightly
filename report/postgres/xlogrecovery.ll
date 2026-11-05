@@ -202,7 +202,7 @@ bb.ag:                                            ; preds = %bb.af
 bb.ah:                                            ; preds = %bb.ag
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dd, i64 44
   %i.dl = load i32, ptr %i.dk, align 4
-  br label %bb.al
+  br label %7
 
 bb.ai:                                            ; preds = %bb.ag
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dd, i64 72
@@ -211,12 +211,12 @@ bb.ai:                                            ; preds = %bb.ag
   call void @ParseCommitRecord(i8 noundef zeroext %i.dh, ptr noundef %i.dn, ptr noundef nonnull %4) #18
   %i.do = load i32, ptr %i.bl, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
-  br label %bb.al
+  br label %7
 
 bb.aj:                                            ; preds = %bb.ag
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dd, i64 44
   %i.dq = load i32, ptr %i.dp, align 4
-  br label %bb.al
+  br label %7
 
 bb.ak:                                            ; preds = %bb.ag
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dd, i64 72
@@ -225,19 +225,25 @@ bb.ak:                                            ; preds = %bb.ag
   call void @ParseAbortRecord(i8 noundef zeroext %i.dh, ptr noundef %i.ds, ptr noundef nonnull %5) #18
   %i.dt = load i32, ptr %i.bk, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #18
-  br label %bb.al
+  br label %7
 
-bb.al:                                            ; preds = %bb.ak, %bb.aj, %bb.ai, %bb.ah
+7:                                                ; preds = %bb.ak, %bb.aj, %bb.ai, %bb.ah
   %.031.i = phi i1 [ true, %bb.ah ], [ true, %bb.ai ], [ false, %bb.aj ], [ false, %bb.ak ]
   %.030.i = phi i32 [ %i.dl, %bb.ah ], [ %i.do, %bb.ai ], [ %i.dq, %bb.aj ], [ %i.dt, %bb.ak ] ; 2 uses
-  %7 = load i32, ptr @recoveryTarget, align 4     ; 2 uses
-  %8 = icmp ne i32 %7, 1
-  %9 = load i8, ptr @recoveryTargetInclusive, align 1, !range !4
-  %10 = trunc nuw i8 %9 to i1                     ; 2 uses
-  %or.cond5.i = select i1 %8, i1 true, i1 %10
-  %11 = load i32, ptr @recoveryTargetXid, align 4
-  %12 = icmp ne i32 %.030.i, %11
-  %.029.not.i = select i1 %or.cond5.i, i1 true, i1 %12 ; 2 uses
+  %8 = load i32, ptr @recoveryTarget, align 4     ; 2 uses
+  %9 = icmp ne i32 %8, 1
+  %10 = load i8, ptr @recoveryTargetInclusive, align 1, !range !4
+  %11 = trunc nuw i8 %10 to i1                    ; 2 uses
+  %or.cond5.i = select i1 %9, i1 true, i1 %11
+  br i1 %or.cond5.i, label %bb.al, label %12
+
+12:                                               ; preds = %7
+  %13 = load i32, ptr @recoveryTargetXid, align 4
+  %14 = icmp eq i32 %.030.i, %13
+  br label %bb.al
+
+bb.al:                                            ; preds = %12, %7
+  %.029.i = phi i1 [ false, %7 ], [ %14, %12 ]    ; 2 uses
   %.val.i = load ptr, ptr %i.dc, align 8          ; 3 uses
   %i.du = getelementptr inbounds nuw i8, ptr %.val.i, i64 56
   %i.dv = load i8, ptr %i.du, align 8             ; 2 uses
@@ -264,18 +270,18 @@ bb.an:                                            ; preds = %bb.am
   ]
 
 getRecordTimestamp.exit.thread.i:                 ; preds = %bb.an, %bb.am
-  br i1 %.029.not.i, label %recoveryStopsBefore.exit, label %bb.aq
+  br i1 %.029.i, label %bb.aq, label %recoveryStopsBefore.exit
 
 getRecordTimestamp.exit.i:                        ; preds = %bb.an, %bb.an, %bb.an, %bb.an, %bb.al
   %i.ee = getelementptr inbounds nuw i8, ptr %.val.i, i64 72
   %i.ef = load ptr, ptr %i.ee, align 8
   %i.eg = load i64, ptr %i.ef, align 8            ; 5 uses
-  %i.eh = icmp eq i32 %7, 2
+  %i.eh = icmp eq i32 %8, 2
   br i1 %i.eh, label %bb.ao, label %bb.ap
 
 bb.ao:                                            ; preds = %getRecordTimestamp.exit.i
   %i.ei = load i64, ptr @recoveryTargetTime, align 8 ; 2 uses
-  br i1 %10, label %.split.i, label %.split43.i
+  br i1 %11, label %.split.i, label %.split43.i
 
 .split.i:                                         ; preds = %bb.ao
   %i.ej = icmp sgt i64 %i.eg, %i.ei
@@ -286,7 +292,7 @@ bb.ao:                                            ; preds = %getRecordTimestamp.
   br i1 %.not45.i.a, label %recoveryStopsBefore.exit, label %bb.aq
 
 bb.ap:                                            ; preds = %getRecordTimestamp.exit.i
-  br i1 %.029.not.i, label %recoveryStopsBefore.exit, label %bb.aq
+  br i1 %.029.i, label %bb.aq, label %recoveryStopsBefore.exit
 
 bb.aq:                                            ; preds = %bb.ap, %.split43.i, %.split.i, %getRecordTimestamp.exit.thread.i
   %.0364041.i = phi i64 [ %i.eg, %.split.i ], [ %i.eg, %bb.ap ], [ 0, %getRecordTimestamp.exit.thread.i ], [ %i.eg, %.split43.i ]

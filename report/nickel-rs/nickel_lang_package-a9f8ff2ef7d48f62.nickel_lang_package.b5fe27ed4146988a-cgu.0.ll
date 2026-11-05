@@ -206,7 +206,7 @@ bb.fw:                                            ; preds = %bb.fu
   %i.rk = load i8, ptr %i.rj, align 1, !range !78, !noalias !12547, !noundef !43 ; 2 uses
   %i.rl = icmp eq i8 %i.rk, 1
   %i.rm = or i1 %i.qd, %i.rl                      ; 4 uses
-  %6 = select i1 %i.ic, i1 %i.rm, i1 false
+  %6 = and i1 %i.rm, %i.ic
   %i.rn = icmp ne i8 %i.rk, 2
   %or.cond419.not = or i1 %i.rn, %6
   br i1 %or.cond419.not, label %.thread.i, label %bb.fx

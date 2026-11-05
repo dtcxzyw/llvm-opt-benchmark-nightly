@@ -202,7 +202,7 @@ bb.x:                                             ; preds = %bb.u
   tail call void @_RNvNtCs4NRVxsYgnAr_4core9panicking16panic_in_cleanup() #24
   unreachable
 
-bb.y:                                             ; preds = %bb.v, %bb.r, %bb.q, %bb.p, %bb.w
+bb.y:                                             ; preds = %bb.w, %bb.p, %bb.q, %bb.r, %bb.v
   %.val270 = load ptr, ptr %i.dv, align 8, !nonnull !47, !align !52, !noundef !47 ; 2 uses
   %i.ep = getelementptr inbounds nuw i8, ptr %.val270, i64 40 ; 2 uses
   %.val271 = load i64, ptr %i.ep, align 8

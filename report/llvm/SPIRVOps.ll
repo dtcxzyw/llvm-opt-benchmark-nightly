@@ -204,14 +204,16 @@ bb.g:                                             ; preds = %bb.f
   %i.cc = load ptr, ptr %0, align 8, !tbaa !85
   %i.cd = getelementptr inbounds nuw i8, ptr %i.cc, i64 816
   %i.ce = load ptr, ptr %i.cd, align 8
-  %i.cf = call i16 %i.ce(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(28) %i.by, ptr %i.bz, i64 %i.cb, i1 noundef zeroext false) #17
-  %i.cg = and i16 %i.cf, 257
-  %11 = icmp ne i16 %i.cg, 256
-  %12 = zext i1 %11 to i8
+  %i.cf = call i16 %i.ce(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(28) %i.by, ptr %i.bz, i64 %i.cb, i1 noundef zeroext false) #17 ; 2 uses
+  %i.cg = and i16 %i.cf, 256
+  %.not62 = icmp eq i16 %i.cg, 0
+  %11 = trunc i16 %i.cf to i8
+  %12 = and i8 %11, 1
+  %13 = select i1 %.not62, i8 1, i8 %12
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %._crit_edge, %bb.g
-  %.sroa.060.0 = phi i8 [ %12, %bb.g ], [ 0, %._crit_edge ], [ 0, %bb.f ]
+  %.sroa.060.0 = phi i8 [ %13, %bb.g ], [ 0, %._crit_edge ], [ 0, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #17
   %i.ch = load ptr, ptr %8, align 8, !tbaa !80    ; 2 uses
   %i.ci = icmp eq ptr %i.ch, %i.x

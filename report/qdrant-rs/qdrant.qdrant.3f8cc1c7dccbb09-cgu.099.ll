@@ -202,10 +202,10 @@ bb.dr:                                            ; preds = %.body378.thread, %.
   %i.mk = trunc nuw i8 %.sroa.0168.0 to i1
   br i1 %i.mk, label %.thread, label %bb.dm
 
-bb.ds:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCs4hE0XgIM7pO_18tracing_subscriber6reload6HandleINtNtNtBG_6filter13layer_filters8FilteredINtNtB4_6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtNtBG_5layer5LayerINtNtB36_7layered7LayeredINtBE_5LayerIB1t_IB28_IB2u_DIB34_NtNtNtBG_8registry7sharded8RegistryENtNtB4_6marker4SendNtB4V_4SyncEL_EENtNtB1x_3env9EnvFilterB4j_EB4j_EB4j_EEB4T_B5c_EL_EEB5s_B3n_EB3n_EECsl8OoimOLbh_6qdrant.exit4.i, %bb.ea, %bb.dy, %bb.dw, %bb.du, %bb.dt, %bb.dq
-  %.sroa.0127.3 = phi i8 [ %.sroa.0127.9, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCs4hE0XgIM7pO_18tracing_subscriber6reload6HandleINtNtNtBG_6filter13layer_filters8FilteredINtNtB4_6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtNtBG_5layer5LayerINtNtB36_7layered7LayeredINtBE_5LayerIB1t_IB28_IB2u_DIB34_NtNtNtBG_8registry7sharded8RegistryENtNtB4_6marker4SendNtB4V_4SyncEL_EENtNtB1x_3env9EnvFilterB4j_EB4j_EB4j_EEB4T_B5c_EL_EEB5s_B3n_EB3n_EECsl8OoimOLbh_6qdrant.exit4.i ], [ 1, %bb.ea ], [ 1, %bb.dy ], [ 1, %bb.dw ], [ 1, %bb.du ], [ 1, %bb.dt ], [ 1, %bb.dq ]
-  %.sroa.0121.3 = phi i8 [ %.sroa.0121.13, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCs4hE0XgIM7pO_18tracing_subscriber6reload6HandleINtNtNtBG_6filter13layer_filters8FilteredINtNtB4_6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtNtBG_5layer5LayerINtNtB36_7layered7LayeredINtBE_5LayerIB1t_IB28_IB2u_DIB34_NtNtNtBG_8registry7sharded8RegistryENtNtB4_6marker4SendNtB4V_4SyncEL_EENtNtB1x_3env9EnvFilterB4j_EB4j_EB4j_EEB4T_B5c_EL_EEB5s_B3n_EB3n_EECsl8OoimOLbh_6qdrant.exit4.i ], [ 1, %bb.ea ], [ 1, %bb.dy ], [ 1, %bb.dw ], [ 1, %bb.du ], [ 1, %bb.dt ], [ 1, %bb.dq ]
-  %.sroa.0113.3 = phi i8 [ %.sroa.0113.44, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCs4hE0XgIM7pO_18tracing_subscriber6reload6HandleINtNtNtBG_6filter13layer_filters8FilteredINtNtB4_6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtNtBG_5layer5LayerINtNtB36_7layered7LayeredINtBE_5LayerIB1t_IB28_IB2u_DIB34_NtNtNtBG_8registry7sharded8RegistryENtNtB4_6marker4SendNtB4V_4SyncEL_EENtNtB1x_3env9EnvFilterB4j_EB4j_EB4j_EEB4T_B5c_EL_EEB5s_B3n_EB3n_EECsl8OoimOLbh_6qdrant.exit4.i ], [ 1, %bb.ea ], [ 1, %bb.dy ], [ 1, %bb.dw ], [ 1, %bb.du ], [ 1, %bb.dt ], [ 1, %bb.dq ]
+bb.ds:                                            ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCs4hE0XgIM7pO_18tracing_subscriber6reload6HandleINtNtNtBG_6filter13layer_filters8FilteredINtNtB4_6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtNtBG_5layer5LayerINtNtB36_7layered7LayeredINtBE_5LayerIB1t_IB28_IB2u_DIB34_NtNtNtBG_8registry7sharded8RegistryENtNtB4_6marker4SendNtB4V_4SyncEL_EENtNtB1x_3env9EnvFilterB4j_EB4j_EB4j_EEB4T_B5c_EL_EEB5s_B3n_EB3n_EECsl8OoimOLbh_6qdrant.exit4.i, %bb.ea, %bb.dy, %bb.dw, %4, %bb.dt, %bb.dq
+  %.sroa.0127.3 = phi i8 [ %.sroa.0127.9, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCs4hE0XgIM7pO_18tracing_subscriber6reload6HandleINtNtNtBG_6filter13layer_filters8FilteredINtNtB4_6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtNtBG_5layer5LayerINtNtB36_7layered7LayeredINtBE_5LayerIB1t_IB28_IB2u_DIB34_NtNtNtBG_8registry7sharded8RegistryENtNtB4_6marker4SendNtB4V_4SyncEL_EENtNtB1x_3env9EnvFilterB4j_EB4j_EB4j_EEB4T_B5c_EL_EEB5s_B3n_EB3n_EECsl8OoimOLbh_6qdrant.exit4.i ], [ 1, %bb.ea ], [ 1, %bb.dy ], [ 1, %bb.dw ], [ 1, %4 ], [ 1, %bb.dt ], [ 1, %bb.dq ]
+  %.sroa.0121.3 = phi i8 [ %.sroa.0121.13, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCs4hE0XgIM7pO_18tracing_subscriber6reload6HandleINtNtNtBG_6filter13layer_filters8FilteredINtNtB4_6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtNtBG_5layer5LayerINtNtB36_7layered7LayeredINtBE_5LayerIB1t_IB28_IB2u_DIB34_NtNtNtBG_8registry7sharded8RegistryENtNtB4_6marker4SendNtB4V_4SyncEL_EENtNtB1x_3env9EnvFilterB4j_EB4j_EB4j_EEB4T_B5c_EL_EEB5s_B3n_EB3n_EECsl8OoimOLbh_6qdrant.exit4.i ], [ 1, %bb.ea ], [ 1, %bb.dy ], [ 1, %bb.dw ], [ 1, %4 ], [ 1, %bb.dt ], [ 1, %bb.dq ]
+  %.sroa.0113.3 = phi i8 [ %.sroa.0113.44, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCs4hE0XgIM7pO_18tracing_subscriber6reload6HandleINtNtNtBG_6filter13layer_filters8FilteredINtNtB4_6option6OptionINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDINtNtBG_5layer5LayerINtNtB36_7layered7LayeredINtBE_5LayerIB1t_IB28_IB2u_DIB34_NtNtNtBG_8registry7sharded8RegistryENtNtB4_6marker4SendNtB4V_4SyncEL_EENtNtB1x_3env9EnvFilterB4j_EB4j_EB4j_EEB4T_B5c_EL_EEB5s_B3n_EB3n_EECsl8OoimOLbh_6qdrant.exit4.i ], [ 1, %bb.ea ], [ 1, %bb.dy ], [ 1, %bb.dw ], [ 1, %4 ], [ 1, %bb.dt ], [ 1, %bb.dq ]
   %i.ml = landingpad { ptr, i32 }
           cleanup
   br label %.thread
@@ -216,21 +216,27 @@ bb.dt:                                            ; preds = %bb.dq
   %i.mn = getelementptr inbounds nuw i8, ptr %i.hj, i64 1268
   %i.mo = load i8, ptr %i.mn, align 4, !range !15, !noundef !6
   invoke void @_RNvNtCslmvYCXbQjWR_6common10low_memory20init_low_memory_mode(i8 noundef %i.mo)
-          to label %bb.du unwind label %bb.ds
+          to label %0 unwind label %bb.ds
 
-bb.du:                                            ; preds = %bb.dt
-  %0 = getelementptr inbounds nuw i8, ptr %i.hj, i64 2032
-  %1 = load i8, ptr %0, align 8, !range !21, !noundef !6
-  %2 = trunc nuw i8 %1 to i1
-  %i.mp = load i8, ptr %.sroa.16.0..sroa_idx.i, align 1, !range !21
+0:                                                ; preds = %bb.dt
+  %1 = getelementptr inbounds nuw i8, ptr %i.hj, i64 2032
+  %2 = load i8, ptr %1, align 8, !range !21, !noundef !6
+  %3 = trunc nuw i8 %2 to i1
+  br i1 %3, label %4, label %bb.du
+
+bb.du:                                            ; preds = %0
+  %i.mp = load i8, ptr %.sroa.16.0..sroa_idx.i, align 1, !range !21, !noundef !6
   %i.mq = trunc nuw i8 %i.mp to i1
-  %3 = select i1 %2, i1 true, i1 %i.mq            ; 2 uses
-  %.sroa.011.0.a = xor i1 %3, true
+  %.sroa.011.0.a = xor i1 %i.mq, true
+  br label %4
+
+4:                                                ; preds = %0, %bb.du
+  %.sroa.011.0 = phi i1 [ %.sroa.011.0.a, %bb.du ], [ false, %0 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.hg)
   invoke void @_RNvMNtNtCsl8OoimOLbh_6qdrant6common9telemetryNtB2_18TelemetryCollector11generate_id(ptr noalias nofree noundef nonnull sret([16 x i8]) align 1 captures(address) dereferenceable(16) %i.hg)
           to label %bb.dv unwind label %bb.ds
 
-bb.dv:                                            ; preds = %bb.du
+bb.dv:                                            ; preds = %4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.hf)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.he)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.hd)
@@ -353,7 +359,7 @@ bb.ek:                                            ; preds = %bb.eh
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.hb, ptr noundef nonnull align 8 dereferenceable(24) %i.ap, i64 24, i1 false), !noalias !1342
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ao), !noalias !1340
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ap), !noalias !1340
-  invoke void @_RNvNtCsl8OoimOLbh_6qdrant7startup16setup_panic_hook(i1 noundef zeroext %.sroa.011.0.a, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.hb)
+  invoke void @_RNvNtCsl8OoimOLbh_6qdrant7startup16setup_panic_hook(i1 noundef zeroext %.sroa.011.0, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %i.hb)
           to label %bb.el unwind label %bb.ee
 
 bb.el:                                            ; preds = %bb.ek
@@ -756,7 +762,7 @@ bb.mg:                                            ; preds = %_RINvNtCskKLDkoKarT
   %i.aak = icmp ult i64 %i.aaj, 6
   call void @llvm.assume(i1 %i.aak)
   %i.aal = icmp samesign ugt i64 %i.aaj, 2        ; 2 uses
-  br i1 %3, label %bb.qc, label %bb.qg
+  br i1 %.sroa.011.0, label %bb.qg, label %bb.qc
 
 bb.mh:                                            ; preds = %bb.lo
   store ptr %i.yt, ptr %i.fo, align 8

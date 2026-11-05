@@ -202,23 +202,25 @@ bb.qz:                                            ; preds = %bb.qy, %bb.qx
   %i.ebr = trunc nuw i8 %i.ebq to i1
   %or.cond6.i = select i1 %i.ebo, i1 true, i1 %i.ebr
   %i.ebs = getelementptr inbounds nuw i8, ptr %0, i64 405
-  %166 = load i8, ptr %i.ebs, align 1, !range !24
-  %167 = trunc nuw i8 %166 to i1
-  %or.cond9.i = select i1 %or.cond6.i, i1 true, i1 %167
-  %168 = getelementptr inbounds nuw i8, ptr %0, i64 406
-  %i.ebt = load i8, ptr %168, align 2, !range !24
+  %i.ebt = load i8, ptr %i.ebs, align 1, !range !24
   %i.ebu = trunc nuw i8 %i.ebt to i1
-  %i.ebv = select i1 %or.cond9.i, i1 true, i1 %i.ebu
-  br i1 %i.ebv, label %bb.ra, label %bb.rb
+  %i.ebv = select i1 %or.cond6.i, i1 true, i1 %i.ebu
+  br i1 %i.ebv, label %bb.ra, label %_ZNK5video23COpenGLExtensionHandler12queryFeatureENS_22E_VIDEO_DRIVER_FEATUREE.exit
 
-bb.ra:                                            ; preds = %bb.qz
+_ZNK5video23COpenGLExtensionHandler12queryFeatureENS_22E_VIDEO_DRIVER_FEATUREE.exit: ; preds = %bb.qz
+  %166 = getelementptr inbounds nuw i8, ptr %0, i64 406
+  %167 = load i8, ptr %166, align 2, !tbaa !21, !range !24, !noundef !25
+  %168 = trunc nuw i8 %167 to i1
+  br i1 %168, label %bb.ra, label %bb.rb
+
+bb.ra:                                            ; preds = %bb.qz, %_ZNK5video23COpenGLExtensionHandler12queryFeatureENS_22E_VIDEO_DRIVER_FEATUREE.exit
   call void @glGetIntegerv(i32 noundef 36320, ptr noundef nonnull %i.dq)
   %i.ebw = load i32, ptr %i.dq, align 4, !tbaa !208
   %i.ebx = getelementptr inbounds nuw i8, ptr %0, i64 12
   store i32 %i.ebw, ptr %i.ebx, align 4, !tbaa !18
   br label %bb.rb
 
-bb.rb:                                            ; preds = %bb.ra, %bb.qz
+bb.rb:                                            ; preds = %bb.ra, %_ZNK5video23COpenGLExtensionHandler12queryFeatureENS_22E_VIDEO_DRIVER_FEATUREE.exit
   %i.eby = getelementptr inbounds nuw i8, ptr %0, i64 337
   %i.ebz = load i8, ptr %i.eby, align 1, !tbaa !21, !range !24, !noundef !25
   %i.eca = trunc nuw i8 %i.ebz to i1
@@ -576,13 +578,15 @@ bb.n:                                             ; preds = %bb.a
   %i.bd = trunc nuw i8 %i.bc to i1
   %or.cond6 = select i1 %i.ba, i1 true, i1 %i.bd
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 405
-  %2 = load i8, ptr %i.be, align 1, !range !24
-  %3 = trunc nuw i8 %2 to i1
-  %or.cond9 = select i1 %or.cond6, i1 true, i1 %3
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 406
-  %i.bf = load i8, ptr %4, align 2, !range !24
+  %i.bf = load i8, ptr %i.be, align 1, !range !24
   %i.bg = trunc nuw i8 %i.bf to i1
-  %i.bh = select i1 %or.cond9, i1 true, i1 %i.bg
+  %i.bh = select i1 %or.cond6, i1 true, i1 %i.bg
+  br i1 %i.bh, label %bb.ab, label %2
+
+2:                                                ; preds = %bb.n
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 406
+  %4 = load i8, ptr %3, align 2, !tbaa !21, !range !24, !noundef !25
+  %5 = trunc nuw i8 %4 to i1
   br label %bb.ab
 
 bb.o:                                             ; preds = %bb.a
@@ -648,13 +652,15 @@ bb.v:                                             ; preds = %bb.a
   %i.cu = load i16, ptr %i.ct, align 4, !tbaa !27
   %i.cv = icmp ugt i16 %i.cu, 102
   %i.cw = getelementptr inbounds nuw i8, ptr %0, i64 203
-  %5 = load i8, ptr %i.cw, align 1, !range !24
-  %6 = trunc nuw i8 %5 to i1
-  %or.cond12 = select i1 %i.cv, i1 true, i1 %6
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 331
-  %i.cx = load i8, ptr %7, align 1, !range !24
+  %i.cx = load i8, ptr %i.cw, align 1, !range !24
   %i.cy = trunc nuw i8 %i.cx to i1
-  %i.cz = select i1 %or.cond12, i1 true, i1 %i.cy
+  %i.cz = select i1 %i.cv, i1 true, i1 %i.cy
+  br i1 %i.cz, label %bb.ab, label %6
+
+6:                                                ; preds = %bb.v
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 331
+  %8 = load i8, ptr %7, align 1, !tbaa !21, !range !24, !noundef !25
+  %9 = trunc nuw i8 %8 to i1
   br label %bb.ab
 
 bb.w:                                             ; preds = %bb.a
@@ -696,8 +702,8 @@ bb.z:                                             ; preds = %bb.a
 bb.aa:                                            ; preds = %bb.a
   br label %bb.ab
 
-bb.ab:                                            ; preds = %bb.c, %bb.e, %bb.d, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.v, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.n, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.b
-  %.0 = phi i1 [ false, %bb.aa ], [ %i.dx, %bb.z ], [ true, %bb.a ], [ %i.c, %bb.b ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ %i.q, %bb.f ], [ %i.x, %bb.g ], [ %i.ae, %bb.h ], [ %i.ah, %bb.i ], [ true, %bb.d ], [ %i.ak, %bb.j ], [ %i.ar, %bb.k ], [ %i.au, %bb.l ], [ %i.o, %bb.e ], [ %i.ax, %bb.m ], [ %i.bh, %bb.n ], [ %i.bo, %bb.o ], [ %i.br, %bb.p ], [ %i.by, %bb.q ], [ %i.cf, %bb.r ], [ %i.ci, %bb.s ], [ %i.cl, %bb.t ], [ %i.cs, %bb.u ], [ false, %bb.c ], [ %i.cz, %bb.v ], [ %i.dc, %bb.w ], [ %i.dj, %bb.x ], [ %i.dq, %bb.y ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ]
+bb.ab:                                            ; preds = %bb.v, %6, %bb.n, %2, %bb.c, %bb.e, %bb.d, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.a, %bb.aa, %bb.z, %bb.y, %bb.x, %bb.w, %bb.u, %bb.t, %bb.s, %bb.r, %bb.q, %bb.p, %bb.o, %bb.m, %bb.l, %bb.k, %bb.j, %bb.i, %bb.h, %bb.g, %bb.f, %bb.b
+  %.0 = phi i1 [ false, %bb.aa ], [ %i.dx, %bb.z ], [ true, %bb.a ], [ %i.c, %bb.b ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ %i.q, %bb.f ], [ %i.x, %bb.g ], [ %i.ae, %bb.h ], [ %i.ah, %bb.i ], [ true, %bb.d ], [ %i.ak, %bb.j ], [ %i.ar, %bb.k ], [ %i.au, %bb.l ], [ %i.o, %bb.e ], [ %i.ax, %bb.m ], [ false, %bb.c ], [ %i.bo, %bb.o ], [ %i.br, %bb.p ], [ %i.by, %bb.q ], [ %i.cf, %bb.r ], [ %i.ci, %bb.s ], [ %i.cl, %bb.t ], [ %i.cs, %bb.u ], [ %5, %2 ], [ true, %bb.n ], [ %i.dc, %bb.w ], [ %i.dj, %bb.x ], [ %i.dq, %bb.y ], [ true, %bb.a ], [ true, %bb.a ], [ true, %bb.a ], [ %9, %6 ], [ true, %bb.v ]
   ret i1 %.0
 }
 

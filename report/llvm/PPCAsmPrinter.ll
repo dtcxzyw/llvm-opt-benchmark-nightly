@@ -204,17 +204,19 @@ bb.c:                                             ; preds = %bb.a
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 52
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !53
   %i.ac = icmp eq i32 %i.ab, 19
-  %5 = getelementptr inbounds nuw i8, ptr %i.z, i64 538
-  %6 = load i8, ptr %5, align 2, !range !26
-  %7 = trunc nuw i8 %6 to i1
-  %.not28 = select i1 %i.ac, i1 true, i1 %7
-  br i1 %.not28, label %.thread, label %bb.d
+  br i1 %i.ac, label %.thread, label %_ZNK4llvm12PPCSubtarget13is32BitELFABIEv.exit
 
-bb.d:                                             ; preds = %bb.c
+_ZNK4llvm12PPCSubtarget13is32BitELFABIEv.exit:    ; preds = %bb.c
+  %5 = getelementptr inbounds nuw i8, ptr %i.z, i64 538
+  %6 = load i8, ptr %5, align 2, !tbaa !538, !range !26, !noundef !27
+  %7 = trunc nuw i8 %6 to i1
+  br i1 %7, label %.thread, label %bb.d
+
+bb.d:                                             ; preds = %_ZNK4llvm12PPCSubtarget13is32BitELFABIEv.exit
   %i.ad = call noundef zeroext i1 @_ZNK4llvm10AsmPrinter21isPositionIndependentEv(ptr noundef nonnull align 8 dereferenceable(1073) %0) #21
   br i1 %i.ad, label %bb.e, label %.thread
 
-.thread:                                          ; preds = %bb.c, %bb.d
+.thread:                                          ; preds = %_ZNK4llvm12PPCSubtarget13is32BitELFABIEv.exit, %bb.d, %bb.c
   %i.ae = load ptr, ptr %i.u, align 8, !tbaa !595, !nonnull !27, !align !187
   %i.af = call noundef ptr @_ZN4llvm15MCSymbolRefExpr6createEPKNS_8MCSymbolEtRNS_9MCContextENS_5SMLocE(ptr noundef %i.y, i16 noundef zeroext %spec.select26, ptr noundef nonnull align 8 dereferenceable(2208) %i.ae, ptr null) #21
   br label %_ZN4llvm13MCInstBuilder7addExprEPKNS_6MCExprE.exit21

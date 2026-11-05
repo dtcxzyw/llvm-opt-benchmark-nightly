@@ -205,12 +205,27 @@ bb.he:                                            ; preds = %bb.gh, %bb.fk, %bb.
 define noundef zeroext i1 @_ZNK6casadi16FunctionInternal14has_derivativeEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(1312) %0) local_unnamed_addr #22 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 824
-  %1 = load <4 x i8>, ptr %i.a, align 8
-  %.fr = freeze <4 x i8> %1
-  %2 = trunc <4 x i8> %.fr to <4 x i1>
-  %3 = bitcast <4 x i1> %2 to i4
-  %4 = icmp ne i4 %3, 0
-  ret i1 %4
+  %1 = load i8, ptr %i.a, align 8, !tbaa !209, !range !175, !noundef !176
+  %2 = trunc nuw i8 %1 to i1
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 825
+  %4 = load i8, ptr %3, align 1, !range !175
+  %5 = trunc nuw i8 %4 to i1
+  %or.cond = select i1 %2, i1 true, i1 %5
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 826
+  %7 = load i8, ptr %6, align 2, !range !175
+  %8 = trunc nuw i8 %7 to i1
+  %or.cond5 = select i1 %or.cond, i1 true, i1 %8
+  br i1 %or.cond5, label %13, label %9
+
+9:                                                ; preds = %bb.a
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 827
+  %11 = load i8, ptr %10, align 1, !tbaa !212, !range !175, !noundef !176
+  %12 = trunc nuw i8 %11 to i1
+  br label %13
+
+13:                                               ; preds = %9, %bb.a
+  %14 = phi i1 [ true, %bb.a ], [ %12, %9 ]
+  ret i1 %14
 }
 
 declare void @_ZNK6casadi8Function7forwardEx(ptr dead_on_unwind writable sret(%"class.casadi::Function") align 8, ptr noundef nonnull align 8 dereferenceable(8), i64 noundef) local_unnamed_addr #4
@@ -613,16 +628,18 @@ bb.s:                                             ; preds = %bb.r
   %i.bd = load i8, ptr %i.bc, align 8, !tbaa !209, !range !175, !noundef !176
   %i.be = trunc nuw i8 %i.bd to i1
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 826
-  %71 = load i8, ptr %i.bf, align 2, !range !175
-  %72 = trunc nuw i8 %71 to i1
-  %or.cond5.i = select i1 %i.be, i1 true, i1 %72
-  %73 = getelementptr inbounds nuw i8, ptr %1, i64 827
-  %i.bg = load i8, ptr %73, align 1, !range !175
+  %i.bg = load i8, ptr %i.bf, align 2, !range !175
   %i.bh = trunc nuw i8 %i.bg to i1
-  %i.bi = select i1 %or.cond5.i, i1 true, i1 %i.bh
-  br i1 %i.bi, label %bb.aj, label %bb.t
+  %i.bi = select i1 %i.be, i1 true, i1 %i.bh
+  br i1 %i.bi, label %bb.aj, label %_ZNK6casadi16FunctionInternal14has_derivativeEv.exit
 
-bb.t:                                             ; preds = %bb.s
+_ZNK6casadi16FunctionInternal14has_derivativeEv.exit: ; preds = %bb.s
+  %71 = getelementptr inbounds nuw i8, ptr %1, i64 827
+  %72 = load i8, ptr %71, align 1, !tbaa !212, !range !175, !noundef !176
+  %73 = trunc nuw i8 %72 to i1
+  br i1 %73, label %bb.aj, label %bb.t
+
+bb.t:                                             ; preds = %_ZNK6casadi16FunctionInternal14has_derivativeEv.exit
   %i.bj = tail call ptr @__cxa_allocate_exception(i64 40) #38 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #38
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #38
@@ -843,7 +860,7 @@ bb.ai:                                            ; preds = %.sink.split946, %_Z
   call void @__cxa_free_exception(ptr %i.bj) #38
   br label %bb.fe
 
-bb.aj:                                            ; preds = %bb.s
+bb.aj:                                            ; preds = %bb.s, %_ZNK6casadi16FunctionInternal14has_derivativeEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %22) #38
   call void @_ZNK6casadi16FunctionInternal4wrapEv(ptr dead_on_unwind nonnull writable sret(%"class.casadi::Function") align 8 %22, ptr noundef nonnull align 8 dereferenceable(1312) %1)
   invoke void @_ZNK6casadi8Function7reverseEx(ptr dead_on_unwind writable sret(%"class.casadi::Function") align 8 %0, ptr noundef nonnull align 8 dereferenceable(8) %22, i64 noundef %2)
@@ -1246,14 +1263,25 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 824
-  %56 = load <4 x i8>, ptr %i.f, align 8
-  %.fr = freeze <4 x i8> %56
-  %57 = trunc <4 x i8> %.fr to <4 x i1>
-  %58 = bitcast <4 x i1> %57 to i4
-  %.not722 = icmp eq i4 %58, 0
-  br i1 %.not722, label %bb.c, label %bb.s
+  %56 = load i8, ptr %i.f, align 8, !tbaa !209, !range !175, !noundef !176
+  %57 = trunc nuw i8 %56 to i1
+  %58 = getelementptr inbounds nuw i8, ptr %1, i64 825
+  %59 = load i8, ptr %58, align 1, !range !175
+  %60 = trunc nuw i8 %59 to i1
+  %or.cond.i = select i1 %57, i1 true, i1 %60
+  %61 = getelementptr inbounds nuw i8, ptr %1, i64 826
+  %62 = load i8, ptr %61, align 2, !range !175
+  %63 = trunc nuw i8 %62 to i1
+  %or.cond5.i = select i1 %or.cond.i, i1 true, i1 %63
+  br i1 %or.cond5.i, label %bb.s, label %_ZNK6casadi16FunctionInternal14has_derivativeEv.exit
 
-bb.c:                                             ; preds = %bb.b
+_ZNK6casadi16FunctionInternal14has_derivativeEv.exit: ; preds = %bb.b
+  %64 = getelementptr inbounds nuw i8, ptr %1, i64 827
+  %65 = load i8, ptr %64, align 1, !tbaa !212, !range !175, !noundef !176
+  %66 = trunc nuw i8 %65 to i1
+  br i1 %66, label %bb.s, label %bb.c
+
+bb.c:                                             ; preds = %_ZNK6casadi16FunctionInternal14has_derivativeEv.exit
   %i.g = tail call ptr @__cxa_allocate_exception(i64 40) #38 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #38
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #38
@@ -1474,7 +1502,7 @@ bb.r:                                             ; preds = %.sink.split, %_ZNKS
   call void @__cxa_free_exception(ptr %i.g) #38
   br label %bb.ek
 
-bb.s:                                             ; preds = %bb.b
+bb.s:                                             ; preds = %bb.b, %_ZNK6casadi16FunctionInternal14has_derivativeEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #38
   call void @_ZNK6casadi16FunctionInternal4wrapEv(ptr dead_on_unwind nonnull writable sret(%"class.casadi::Function") align 8 %11, ptr noundef nonnull align 8 dereferenceable(1312) %1)
   invoke void @_ZNK6casadi8Function8jacobianEv(ptr dead_on_unwind writable sret(%"class.casadi::Function") align 8 %0, ptr noundef nonnull align 8 dereferenceable(8) %11)
@@ -1877,15 +1905,25 @@ bb.al:                                            ; preds = %.sink.split1457.a, 
 
 bb.am:                                            ; preds = %bb.r
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 824 ; 2 uses
-  %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 827
-  %103 = load <4 x i8>, ptr %i.dk, align 8
-  %.fr = freeze <4 x i8> %103
-  %104 = trunc <4 x i8> %.fr to <4 x i1>
-  %105 = bitcast <4 x i1> %104 to i4
-  %.not1545 = icmp eq i4 %105, 0
-  br i1 %.not1545, label %bb.an, label %bb.bd
+  %103 = load i8, ptr %i.dk, align 8, !tbaa !209, !range !175, !noundef !176
+  %104 = trunc nuw i8 %103 to i1
+  %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 825
+  %105 = load i8, ptr %i.dl, align 1, !range !175
+  %106 = trunc nuw i8 %105 to i1
+  %or.cond.i = select i1 %104, i1 true, i1 %106
+  %107 = getelementptr inbounds nuw i8, ptr %0, i64 826
+  %108 = load i8, ptr %107, align 2, !range !175
+  %109 = trunc nuw i8 %108 to i1
+  %or.cond5.i = select i1 %or.cond.i, i1 true, i1 %109
+  br i1 %or.cond5.i, label %bb.bd, label %_ZNK6casadi16FunctionInternal14has_derivativeEv.exit
 
-bb.an:                                            ; preds = %bb.am
+_ZNK6casadi16FunctionInternal14has_derivativeEv.exit: ; preds = %bb.am
+  %110 = getelementptr inbounds nuw i8, ptr %0, i64 827
+  %111 = load i8, ptr %110, align 1, !tbaa !212, !range !175, !noundef !176
+  %112 = trunc nuw i8 %111 to i1
+  br i1 %112, label %bb.bd, label %bb.an
+
+bb.an:                                            ; preds = %_ZNK6casadi16FunctionInternal14has_derivativeEv.exit
   %i.dm = tail call ptr @__cxa_allocate_exception(i64 40) #38 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %28) #38
   call void @llvm.lifetime.start.p0(ptr nonnull %29) #38
@@ -2106,7 +2144,7 @@ bb.bc:                                            ; preds = %.sink.split1458.a, 
   call void @__cxa_free_exception(ptr %i.dm) #38
   br label %bb.ia
 
-bb.bd:                                            ; preds = %bb.am
+bb.bd:                                            ; preds = %bb.am, %_ZNK6casadi16FunctionInternal14has_derivativeEv.exit
   %i.fk = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.fl = load ptr, ptr %i.fk, align 8, !tbaa !307 ; 2 uses
   %i.fm = load ptr, ptr %3, align 8, !tbaa !308   ; 2 uses
@@ -2509,7 +2547,8 @@ bb.ed:                                            ; preds = %bb.ec, %bb.bv
 bb.ee:                                            ; preds = %.critedge375
   %i.rn = load i8, ptr %i.dk, align 8, !tbaa !209, !range !175, !noundef !176
   %i.ro = trunc nuw i8 %i.rn to i1
-  %.pre = load i8, ptr %i.dl, align 1, !tbaa !212, !range !175
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 827
+  %.pre = load i8, ptr %.phi.trans.insert, align 1, !tbaa !212, !range !175
   %.pre1142 = trunc nuw i8 %.pre to i1            ; 2 uses
   br i1 %i.ro, label %bb.ew, label %bb.ef
 
@@ -2912,15 +2951,25 @@ bb.al:                                            ; preds = %.sink.split1572, %_
 
 bb.am:                                            ; preds = %bb.r
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 824
-  %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 825
-  %107 = load <4 x i8>, ptr %i.dk, align 8
-  %.fr = freeze <4 x i8> %107
-  %108 = trunc <4 x i8> %.fr to <4 x i1>
-  %109 = bitcast <4 x i1> %108 to i4
-  %.not1679 = icmp eq i4 %109, 0
-  br i1 %.not1679, label %bb.an, label %bb.bd
+  %107 = load i8, ptr %i.dk, align 8, !tbaa !209, !range !175, !noundef !176
+  %108 = trunc nuw i8 %107 to i1
+  %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 825 ; 2 uses
+  %109 = load i8, ptr %i.dl, align 1, !range !175
+  %110 = trunc nuw i8 %109 to i1
+  %or.cond.i = select i1 %108, i1 true, i1 %110
+  %111 = getelementptr inbounds nuw i8, ptr %0, i64 826
+  %112 = load i8, ptr %111, align 2, !range !175
+  %113 = trunc nuw i8 %112 to i1
+  %or.cond5.i = select i1 %or.cond.i, i1 true, i1 %113
+  br i1 %or.cond5.i, label %bb.bd, label %_ZNK6casadi16FunctionInternal14has_derivativeEv.exit
 
-bb.an:                                            ; preds = %bb.am
+_ZNK6casadi16FunctionInternal14has_derivativeEv.exit: ; preds = %bb.am
+  %114 = getelementptr inbounds nuw i8, ptr %0, i64 827
+  %115 = load i8, ptr %114, align 1, !tbaa !212, !range !175, !noundef !176
+  %116 = trunc nuw i8 %115 to i1
+  br i1 %116, label %bb.bd, label %bb.an
+
+bb.an:                                            ; preds = %_ZNK6casadi16FunctionInternal14has_derivativeEv.exit
   %i.dm = tail call ptr @__cxa_allocate_exception(i64 40) #38 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %30) #38
   call void @llvm.lifetime.start.p0(ptr nonnull %31) #38
@@ -3141,7 +3190,7 @@ bb.bc:                                            ; preds = %.sink.split1573, %_
   call void @__cxa_free_exception(ptr %i.dm) #38
   br label %bb.il
 
-bb.bd:                                            ; preds = %bb.am
+bb.bd:                                            ; preds = %bb.am, %_ZNK6casadi16FunctionInternal14has_derivativeEv.exit
   %i.fk = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 3 uses
   %i.fl = load ptr, ptr %i.fk, align 8, !tbaa !307 ; 2 uses
   %i.fm = load ptr, ptr %3, align 8, !tbaa !308   ; 2 uses

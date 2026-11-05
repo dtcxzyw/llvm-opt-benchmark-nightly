@@ -205,20 +205,17 @@ _RNvNtCs5EcwQX7phGK_5uu_ls7display23escape_name_with_locale.exit.i: ; preds = %b
   %i.acf = getelementptr inbounds nuw i8, ptr %i.be, i64 16 ; 22 uses
   %i.acg = load i64, ptr %i.acf, align 8, !noalias !9424, !noundef !4 ; 2 uses
   %.not.i.i108.i = icmp eq i64 %i.acg, 0
-  br i1 %.not.i.i108.i, label %_RNvNtCs5EcwQX7phGK_5uu_ls7display18os_str_starts_with.exit112.i, label %_RNvNtCs5EcwQX7phGK_5uu_ls7display18os_str_starts_with.exit.i
+  br i1 %.not.i.i108.i, label %_RNvNtCs5EcwQX7phGK_5uu_ls7display18os_str_starts_with.exit112.i, label %bb.dx
 
-_RNvNtCs5EcwQX7phGK_5uu_ls7display18os_str_starts_with.exit.i: ; preds = %_RNvNtCs5EcwQX7phGK_5uu_ls7display23escape_name_with_locale.exit.i
+bb.dx:                                            ; preds = %_RNvNtCs5EcwQX7phGK_5uu_ls7display23escape_name_with_locale.exit.i
   %rhsc.i.i = load i8, ptr %i.ace, align 1, !alias.scope !9425, !noalias !9424 ; 2 uses
-  %6 = icmp eq i8 %rhsc.i.i, 39
-  br i1 %6, label %_RNvNtCs5EcwQX7phGK_5uu_ls7display18os_str_starts_with.exit112.i, label %bb.dx
-
-bb.dx:                                            ; preds = %_RNvNtCs5EcwQX7phGK_5uu_ls7display18os_str_starts_with.exit.i
+  %6 = icmp ne i8 %rhsc.i.i, 39
   %i.ach = icmp ne i8 %rhsc.i.i, 34
-  %i.aci = and i1 %5, %i.ach
+  %i.aci = and i1 %6, %i.ach
   br label %_RNvNtCs5EcwQX7phGK_5uu_ls7display18os_str_starts_with.exit112.i
 
-_RNvNtCs5EcwQX7phGK_5uu_ls7display18os_str_starts_with.exit112.i: ; preds = %bb.dx, %_RNvNtCs5EcwQX7phGK_5uu_ls7display18os_str_starts_with.exit.i, %_RNvNtCs5EcwQX7phGK_5uu_ls7display23escape_name_with_locale.exit.i
-  %.sroa.03.0.i = phi i1 [ false, %_RNvNtCs5EcwQX7phGK_5uu_ls7display18os_str_starts_with.exit.i ], [ %i.aci, %bb.dx ], [ %5, %_RNvNtCs5EcwQX7phGK_5uu_ls7display23escape_name_with_locale.exit.i ] ; 4 uses
+_RNvNtCs5EcwQX7phGK_5uu_ls7display18os_str_starts_with.exit112.i: ; preds = %bb.dx, %_RNvNtCs5EcwQX7phGK_5uu_ls7display23escape_name_with_locale.exit.i
+  %.sroa.03.0.i = phi i1 [ %i.aci, %bb.dx ], [ true, %_RNvNtCs5EcwQX7phGK_5uu_ls7display23escape_name_with_locale.exit.i ]
   %i.acj = getelementptr inbounds nuw i8, ptr %2, i64 270
   %i.ack = load i8, ptr %i.acj, align 2, !range !11, !alias.scope !9422, !noundef !4
   %i.acl = trunc nuw i8 %i.ack to i1
@@ -621,13 +618,14 @@ _RINvNtCs5EcwQX7phGK_5uu_ls7display17display_item_nameNCNvB2_17display_item_long
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ar)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.au)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bf)
+  %spec.select559 = select i1 %5, i1 %.sroa.03.0.i, i1 false ; 4 uses
   br i1 %i.dr, label %bb.hd, label %bb.hc
 
 bb.hc:                                            ; preds = %_RNvNtCs5EcwQX7phGK_5uu_ls7display21update_dired_for_item.exit, %_RINvNtCs5EcwQX7phGK_5uu_ls7display17display_item_nameNCNvB2_17display_item_long0EB4_.exit
-  br i1 %.sroa.03.0.i, label %bb.hf, label %bb.hj
+  br i1 %spec.select559, label %bb.hf, label %bb.hj
 
 bb.hd:                                            ; preds = %_RINvNtCs5EcwQX7phGK_5uu_ls7display17display_item_nameNCNvB2_17display_item_long0EB4_.exit
-  %i.anh = zext i1 %.sroa.03.0.i to i64
+  %i.anh = zext i1 %spec.select559 to i64
   %spec.select = add i64 %.sroa.011.0251.i, %i.anh
   %i.ani = load i64, ptr %i.fe, align 8, !noundef !4 ; 3 uses
   %i.anj = icmp sgt i64 %i.ani, -1
@@ -665,7 +663,7 @@ _RNvNtCs5EcwQX7phGK_5uu_ls7display21update_dired_for_item.exit: ; preds = %bb.hd
   store i64 %i.anv, ptr %i.aoa, align 8, !noalias !9536
   %i.aob = add i64 %i.anp, 1
   store i64 %i.aob, ptr %i.ano, align 8, !alias.scope !9536
-  %i.aoc = select i1 %.sroa.03.0.i, i64 2, i64 1
+  %i.aoc = select i1 %spec.select559, i64 2, i64 1
   %i.aod = add i64 %i.aoc, %.sroa.4516.0.copyload518
   %i.aoe = add i64 %i.aod, %i.ani
   %i.aof = add i64 %i.aoe, %i.ann
@@ -760,7 +758,7 @@ bb.hm:                                            ; preds = %_RNvMsG_NtCs7tKScEo
 
 _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringECs5EcwQX7phGK_5uu_ls.exit: ; preds = %_RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VechE8push_mutCs5EcwQX7phGK_5uu_ls.exit204, %bb.hm
   %i.apg = icmp ne i64 %.sroa.0515.sroa.0.0.copyload, 0
-  %or.cond.not = select i1 %.sroa.03.0.i, i1 %i.apg, i1 false
+  %or.cond.not = select i1 %spec.select559, i1 %i.apg, i1 false
   br i1 %or.cond.not, label %bb.hp, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8OsStringECs5EcwQX7phGK_5uu_ls.exit210
 
 bb.hn:                                            ; preds = %bb.hf, %bb.hh

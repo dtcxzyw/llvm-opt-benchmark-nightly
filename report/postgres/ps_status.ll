@@ -202,8 +202,8 @@ bb.k:                                             ; preds = %bb.j
   br i1 %or.cond3.i, label %.lr.ph.preheader.i, label %flush_ps_display.exit.sink.split
 
 .lr.ph.preheader.i:                               ; preds = %bb.k
-  %i.ai = add i64 %i.z, 8
-  %i.aj = add i64 %i.ai, %i.w
+  %i.ai = add i64 %i.w, 8
+  %i.aj = add i64 %i.ai, %i.z
   %i.ak = add i64 %i.x, %i.z
   %umax.i = tail call i64 @llvm.umax.i64(i64 %i.aj, i64 %i.ak)
   %i.al = xor i64 %i.w, -1
@@ -231,18 +231,19 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(readwrite, argmem: write, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local void @set_ps_display_remove_suffix() local_unnamed_addr #8 {
-bb.a:
-  %0 = load i8, ptr @update_process_title, align 1, !range !5, !noundef !6
-  %1 = trunc nuw i8 %0 to i1
-  %2 = load i8, ptr @IsUnderPostmaster, align 1, !range !5
-  %3 = trunc nuw i8 %2 to i1
-  %or.cond.i = select i1 %1, i1 %3, i1 false
+  %1 = load i8, ptr @update_process_title, align 1, !range !5, !noundef !6
+  %2 = trunc nuw i8 %1 to i1
+  %3 = load i8, ptr @IsUnderPostmaster, align 1, !range !5
+  %4 = trunc nuw i8 %3 to i1
+  %or.cond.i = select i1 %2, i1 %4, i1 false
+  br i1 %or.cond.i, label %bb.a, label %bb.e
+
+bb.a:                                             ; preds = %0
   %i.a = load ptr, ptr @ps_buffer, align 8        ; 3 uses
   %.not.i = icmp ne ptr %i.a, null
-  %.0.i = select i1 %or.cond.i, i1 %.not.i, i1 false
   %i.b = load i64, ptr @ps_buffer_nosuffix_len, align 8 ; 8 uses
   %i.c = icmp ne i64 %i.b, 0
-  %or.cond.not = select i1 %.0.i, i1 %i.c, i1 false
+  %or.cond.not = select i1 %.not.i, i1 %i.c, i1 false
   br i1 %or.cond.not, label %bb.b, label %bb.e
 
 bb.b:                                             ; preds = %bb.a
@@ -270,8 +271,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %or.cond3.i, label %.lr.ph.preheader.i, label %flush_ps_display.exit.sink.split
 
 .lr.ph.preheader.i:                               ; preds = %bb.d
-  %i.o = add i64 %i.g, 8
-  %i.p = add i64 %i.o, %i.b
+  %i.o = add i64 %i.b, 8
+  %i.p = add i64 %i.o, %i.g
   %i.q = add i64 %i.e, %i.g
   %umax.i = tail call i64 @llvm.umax.i64(i64 %i.p, i64 %i.q)
   %i.r = xor i64 %i.b, -1
@@ -290,7 +291,7 @@ flush_ps_display.exit:                            ; preds = %flush_ps_display.ex
   store i64 %i.b, ptr @last_status_len, align 8
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.a, %flush_ps_display.exit
+bb.e:                                             ; preds = %0, %bb.a, %flush_ps_display.exit
   ret void
 }
 
@@ -355,8 +356,8 @@ bb.g:                                             ; preds = %bb.f
   br i1 %or.cond3.i, label %.lr.ph.preheader.i, label %flush_ps_display.exit.sink.split
 
 .lr.ph.preheader.i:                               ; preds = %bb.g
-  %i.aa = add i64 %i.r, 8
-  %i.ab = add i64 %i.aa, %storemerge
+  %i.aa = add i64 %storemerge, 8
+  %i.ab = add i64 %i.aa, %i.r
   %i.ac = add i64 %i.p, %i.r
   %umax.i = tail call i64 @llvm.umax.i64(i64 %i.ab, i64 %i.ac)
   %i.ad = xor i64 %storemerge, -1

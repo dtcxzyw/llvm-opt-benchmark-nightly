@@ -204,7 +204,7 @@ bb.a:
   %i.cd = alloca [24 x i8], align 8               ; 4 uses
   %i.ce = alloca [16 x i8], align 1               ; 18 uses
   %i.cf = alloca [24 x i8], align 8               ; 6 uses
-  %i.cg = alloca [40 x i8], align 8               ; 11 uses
+  %i.cg = alloca [40 x i8], align 8               ; 13 uses
   %i.ch = alloca [12 x i8], align 4               ; 7 uses
   %i.ci = alloca [24 x i8], align 8               ; 4 uses
   %i.cj = alloca [24 x i8], align 8               ; 12 uses
@@ -607,8 +607,8 @@ bb.au:                                            ; preds = %bb.as, %bb.aq, %bb.
   %.sroa.3.0 = phi i8 [ %i.ge, %bb.aw ], [ undef, %bb.aq ], [ undef, %bb.as ]
   %.sroa.08.0 = phi i8 [ %i.gd, %bb.aw ], [ 2, %bb.aq ], [ 2, %bb.as ]
   %i.gb = load i8, ptr %4, align 8, !range !35, !noundef !16
-  %.not92.not.not = icmp eq i8 %i.gb, -2          ; 3 uses
-  br i1 %.not92.not.not, label %bb.ay, label %bb.ax
+  %.not92.not = icmp ne i8 %i.gb, -2              ; 3 uses
+  br i1 %.not92.not, label %bb.ax, label %bb.ay
 
 bb.av:                                            ; preds = %bb.at
   %i.gc = invoke noundef zeroext i1 @_RNvMs1_NtCsf8NQSppxkmK_14ide_completion7contextNtB5_17CompletionContext12is_ops_trait(ptr noundef nonnull align 8 %i.dd, i32 noundef %i.fy, i32 noundef %i.fz)
@@ -625,7 +625,7 @@ bb.ax:                                            ; preds = %bb.au
   %i.gh = getelementptr inbounds nuw i8, ptr %i.gg, i64 66
   %i.gi = load i8, ptr %i.gh, align 2, !range !46, !noundef !16
   %i.gj = icmp eq i8 %i.gi, 2
-  br i1 %i.gj, label %.thread226, label %6
+  br i1 %i.gj, label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtCs6oosyzwIepl_6ide_db10SnippetCapE6filterNCNvNtNtCsf8NQSppxkmK_14ide_completion6render8function6renders1_0EB1x_.exit.thread.sink.split, label %5
 
 bb.ay:                                            ; preds = %bb.au
   %i.gk = getelementptr inbounds nuw i8, ptr %4, i64 8
@@ -633,35 +633,32 @@ bb.ay:                                            ; preds = %bb.au
   %i.gm = getelementptr inbounds nuw i8, ptr %i.gl, i64 64
   %i.gn = load i32, ptr %i.gm, align 8, !range !1297, !noundef !16
   %i.go = icmp slt i32 %i.gn, 12
-  br i1 %i.go, label %bb.az, label %.thread226
+  br i1 %i.go, label %bb.az, label %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtCs6oosyzwIepl_6ide_db10SnippetCapE6filterNCNvNtNtCsf8NQSppxkmK_14ide_completion6render8function6renders1_0EB1x_.exit.thread.sink.split
 
 bb.az:                                            ; preds = %bb.ay
   %i.gp = getelementptr inbounds nuw i8, ptr %i.gl, i64 224
   %i.gq = load i8, ptr %i.gp, align 8, !range !22, !noundef !16
   %i.gr = load ptr, ptr %i.ft, align 8, !nonnull !16, !align !24, !noundef !16
   %i.gs = trunc nuw i8 %i.gq to i1
-  %5 = xor i1 %i.gs, true
   br label %bb.ba
 
-6:                                                ; preds = %bb.ax
-  %7 = load ptr, ptr %i.ft, align 8, !nonnull !16, !align !24, !noundef !16
-  br label %bb.ba
-
-.thread226:                                       ; preds = %bb.ay, %bb.ax
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.cg)
-  br label %bb.bn
-
-bb.ba:                                            ; preds = %bb.az, %6
-  %i.gt = phi ptr [ %i.gr, %bb.az ], [ %7, %6 ]   ; 6 uses
-  %.sroa.012.0 = phi i1 [ %5, %bb.az ], [ true, %6 ] ; 2 uses
+bb.ba:                                            ; preds = %5, %bb.az
+  %i.gt = phi ptr [ %i.gr, %bb.az ], [ %6, %5 ]   ; 6 uses
+  %.sroa.012.0 = phi i1 [ %i.gs, %bb.az ], [ false, %5 ] ; 2 uses
   %.pn268.in = getelementptr inbounds nuw i8, ptr %i.gt, i64 408
   %.pn268 = load ptr, ptr %.pn268.in, align 8, !nonnull !16, !align !24, !noundef !16 ; 2 uses
   %.sroa.013.0.in = getelementptr inbounds nuw i8, ptr %.pn268, i64 122
   %.sroa.013.0 = load i8, ptr %.sroa.013.0.in, align 2, !range !22, !noundef !16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cg)
-  %i.gu = trunc nuw i8 %.sroa.013.0 to i1
-  %.sroa.01.0.i = select i1 %i.gu, i1 %.sroa.012.0, i1 false
-  br i1 %.sroa.01.0.i, label %bb.bb, label %bb.bn
+  %i.gu = trunc nuw i8 %.sroa.013.0 to i1         ; 2 uses
+  %.not267 = xor i1 %i.gu, true
+  %brmerge = select i1 %.not267, i1 true, i1 %.sroa.012.0
+  %.sroa.01.0.i = select i1 %i.gu, i1 true, i1 %.sroa.012.0
+  br i1 %brmerge, label %bb.bn, label %bb.bb
+
+5:                                                ; preds = %bb.ax
+  %6 = load ptr, ptr %i.ft, align 8, !nonnull !16, !align !24, !noundef !16
+  br label %bb.ba
 
 bb.bb:                                            ; preds = %bb.ba
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0210)
@@ -705,7 +702,7 @@ _RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRNtCs8Xq8PKFYOms_3hir4TypeE6filte
   br i1 %.not7.i, label %bb.bf, label %bb.be
 
 _RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionRNtCs8Xq8PKFYOms_3hir4TypeE6filterNCNvNtNtCsf8NQSppxkmK_14ide_completion6render8function6params0EB1o_.exit.thread.i: ; preds = %bb.bf, %bb.bd, %bb.bc
-  br i1 %.not92.not.not, label %bb.bm, label %bb.bl
+  br i1 %.not92.not, label %bb.bl, label %bb.bm
 
 bb.be:                                            ; preds = %.noexc139
   %i.hh = getelementptr inbounds nuw i8, ptr %i.bb, i64 48
@@ -795,11 +792,20 @@ bb.bm:                                            ; preds = %_RINvMNtCshzWfHUSfY
   invoke void @_RNvMsr_Cs8Xq8PKFYOms_3hirNtB5_8Function19params_without_self(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.ig, ptr noalias nofree noundef nonnull align 4 captures(address) dereferenceable(12) %i.bg, ptr noundef nonnull %i.if, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(560) @16)
           to label %bb.bo unwind label %bb.an
 
-bb.bn:                                            ; preds = %bb.ba, %.thread226, %bb.bq, %bb.bp
-  %.sink = phi i64 [ -1, %bb.bq ], [ %.sroa.5211.0.copyload213, %bb.bp ], [ -1, %.thread226 ], [ -1, %bb.ba ] ; 2 uses
-  %8 = phi i1 [ true, %bb.bq ], [ true, %bb.bp ], [ %.not92.not.not, %.thread226 ], [ %.sroa.012.0, %bb.ba ]
+_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtCs6oosyzwIepl_6ide_db10SnippetCapE6filterNCNvNtNtCsf8NQSppxkmK_14ide_completion6render8function6renders1_0EB1x_.exit.thread.sink.split: ; preds = %bb.ax, %bb.ay
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.cg)
+  br label %bb.bn
+
+bb.bn:                                            ; preds = %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtCs6oosyzwIepl_6ide_db10SnippetCapE6filterNCNvNtNtCsf8NQSppxkmK_14ide_completion6render8function6renders1_0EB1x_.exit.thread.sink.split, %bb.ba
+  %7 = phi i1 [ %.sroa.01.0.i, %bb.ba ], [ %.not92.not, %_RINvMNtCshzWfHUSfYae_4core6optionINtB3_6OptionNtCs6oosyzwIepl_6ide_db10SnippetCapE6filterNCNvNtNtCsf8NQSppxkmK_14ide_completion6render8function6renders1_0EB1x_.exit.thread.sink.split ]
   %i.ih = getelementptr inbounds nuw i8, ptr %i.cg, i64 16
-  store i64 %.sink, ptr %i.ih, align 8
+  store i64 -1, ptr %i.ih, align 8
+  %8 = xor i1 %7, true
+  br label %9
+
+9:                                                ; preds = %bb.bq, %bb.bp, %bb.bn
+  %10 = phi i64 [ -1, %bb.bq ], [ %.sroa.5211.0.copyload213, %bb.bp ], [ -1, %bb.bn ]
+  %.not117 = phi i1 [ true, %bb.bq ], [ true, %bb.bp ], [ %8, %bb.bn ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cf)
   br i1 %.not90, label %bb.bs, label %bb.br
 
@@ -811,7 +817,7 @@ bb.bn:                                            ; preds = %bb.ba, %.thread226,
 bb.bo:                                            ; preds = %.noexc144
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(12) %i.ax, ptr noundef nonnull align 4 dereferenceable(12) %i.ay, i64 12, i1 false), !noalias !1298
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.0210, ptr noundef nonnull align 8 dereferenceable(16) %i.ax, i64 16, i1 false), !noalias !1302
-  %.sroa.5211.0.copyload213 = load i64, ptr %i.ig, align 8, !noalias !1302 ; 2 uses
+  %.sroa.5211.0.copyload213 = load i64, ptr %i.ig, align 8, !noalias !1302 ; 3 uses
   %.sroa.8.0..sroa_idx214 = getelementptr inbounds nuw i8, ptr %i.ax, i64 24
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.8, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.8.0..sroa_idx214, i64 16, i1 false), !noalias !1302
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ax), !noalias !1298
@@ -826,20 +832,24 @@ bb.bp:                                            ; preds = %bb.bo
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.6.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.8, i64 16, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0210)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
-  br label %bb.bn
+  %.sroa.5217.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cg, i64 16
+  store i64 %.sroa.5211.0.copyload213, ptr %.sroa.5217.0..sroa_idx, align 8
+  br label %9
 
 bb.bq:                                            ; preds = %.thread231, %bb.bo
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0210)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.8)
-  br label %bb.bn
+  %11 = getelementptr inbounds nuw i8, ptr %i.cg, i64 16
+  store i64 -1, ptr %11, align 8
+  br label %9
 
-bb.br:                                            ; preds = %bb.bn
+bb.br:                                            ; preds = %9
   call void @llvm.lifetime.start.p0(ptr nonnull %i.bm)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(12) %i.bm, ptr noundef nonnull align 4 dereferenceable(12) %i.ch, i64 12, i1 false)
   invoke void @_RNvMs10_Cs8Xq8PKFYOms_3hirNtB6_9AssocItem15implementing_ty(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.cf, ptr noalias nofree noundef nonnull align 4 captures(address) dereferenceable(12) %i.bm, ptr noundef nonnull %i.df, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(560) @16)
           to label %bb.bu unwind label %bb.bt
 
-bb.bs:                                            ; preds = %bb.bn, %bb.bu
+bb.bs:                                            ; preds = %9, %bb.bu
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cf)
   br label %bb.bw
 
@@ -876,13 +886,13 @@ bb.bv:                                            ; preds = %bb.bu
           to label %bb.bx unwind label %bb.bt
 
 bb.bw:                                            ; preds = %bb.cj, %bb.bs
-  %i.iq = phi i64 [ %.pre, %bb.cj ], [ %.sink, %bb.bs ]
+  %i.iq = phi i64 [ %.pre, %bb.cj ], [ %10, %bb.bs ]
   %.sroa.316.0 = phi i16 [ %.sroa.483.2.insert.insert, %bb.cj ], [ undef, %bb.bs ]
   %.sroa.014.0 = phi i8 [ %.sroa.084.0, %bb.cj ], [ 2, %bb.bs ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ce)
   %i.ir = getelementptr inbounds nuw i8, ptr %i.cg, i64 16 ; 2 uses
   %.not95 = icmp eq i64 %i.iq, -1
-  %or.cond119 = select i1 %8, i1 %.not95, i1 false
+  %or.cond119 = select i1 %.not117, i1 %.not95, i1 false
   br i1 %or.cond119, label %bb.cl, label %bb.ck
 
 bb.bx:                                            ; preds = %bb.bv

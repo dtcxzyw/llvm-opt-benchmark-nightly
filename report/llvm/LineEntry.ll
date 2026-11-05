@@ -202,12 +202,18 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.e = load i8, ptr %i.d, align 8, !range !42
   %i.f = trunc nuw i8 %i.e to i1
-  %or.cond = select i1 %i.c, i1 true, i1 %i.f
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %2 = load i32, ptr %1, align 8
-  %3 = icmp ne i32 %2, -1
-  %i.g = select i1 %or.cond, i1 %3, i1 false
-  ret i1 %i.g
+  %i.g = select i1 %i.c, i1 true, i1 %i.f
+  br i1 %i.g, label %1, label %5
+
+1:                                                ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 72
+  %3 = load i32, ptr %2, align 8, !tbaa !37
+  %4 = icmp ne i32 %3, -1
+  br label %5
+
+5:                                                ; preds = %bb.a, %1
+  %6 = phi i1 [ false, %bb.a ], [ %4, %1 ]
+  ret i1 %6
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -610,7 +616,7 @@ bb.p:                                             ; preds = %bb.o
   %not. = xor i1 %i.bq, true
   br label %bb.q
 
-bb.q:                                             ; preds = %.sink.split, %_ZNK12lldb_private11SupportFile5EqualERKS0_NS0_19SupportFileEqualityE.exit.thread, %bb.o, %bb.p, %_ZN12lldb_private7Address5SlideEl.exit
+bb.q:                                             ; preds = %.sink.split, %_ZN12lldb_private7Address5SlideEl.exit, %_ZNK12lldb_private11SupportFile5EqualERKS0_NS0_19SupportFileEqualityE.exit.thread, %bb.o, %bb.p
   %.1 = phi i1 [ true, %bb.p ], [ true, %_ZN12lldb_private7Address5SlideEl.exit ], [ true, %bb.o ], [ true, %_ZNK12lldb_private11SupportFile5EqualERKS0_NS0_19SupportFileEqualityE.exit.thread ], [ %not., %.sink.split ]
   %i.br = load ptr, ptr %i.u, align 8, !tbaa !91  ; 4 uses
   %.not.i.i.i = icmp eq ptr %i.br, null

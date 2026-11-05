@@ -205,26 +205,28 @@ _ZN4llvm23SmallVectorTemplateBaseIN4mlir12OpFoldResultELb1EE9push_backES2_.exit1
   %i.fp = getelementptr inbounds nuw [8 x i8], ptr %i.fo, i64 %i.ef
   %.sroa.08.0.copyload = load i64, ptr %i.fp, align 8
   %i.fq = call { i64, i8 } @_ZN4mlir19getConstantIntValueENS_12OpFoldResultE(i64 %.sroa.042.1) #16 ; 2 uses
-  %25 = extractvalue { i64, i8 } %i.fq, 0
   %i.fr = extractvalue { i64, i8 } %i.fq, 1
   %i.fs = call { i64, i8 } @_ZN4mlir19getConstantIntValueENS_12OpFoldResultE(i64 %.sroa.08.0.copyload) #16 ; 2 uses
-  %26 = extractvalue { i64, i8 } %i.fs, 0
   %i.ft = extractvalue { i64, i8 } %i.fs, 1
   %i.fu = call { i64, i8 } @_ZN4mlir19getConstantIntValueENS_12OpFoldResultE(i64 %.sroa.052.0.copyload) #16 ; 2 uses
-  %27 = extractvalue { i64, i8 } %i.fu, 0
   %i.fv = extractvalue { i64, i8 } %i.fu, 1
   %i.fw = trunc nuw i8 %i.fr to i1
   %i.fx = trunc nuw i8 %i.ft to i1
   %or.cond.i = select i1 %i.fw, i1 %i.fx, i1 false
   %i.fy = trunc nuw i8 %i.fv to i1
-  %or.cond12.i = select i1 %or.cond.i, i1 %i.fy, i1 false
-  %28 = add nsw i64 %26, -1
-  %29 = mul nsw i64 %28, %25
-  %30 = icmp slt i64 %29, %27
-  %.0.i = select i1 %or.cond12.i, i1 %30, i1 false
-  br i1 %.0.i, label %bb.ad, label %bb.ac
+  %.0.i = select i1 %or.cond.i, i1 %i.fy, i1 false
+  br i1 %.0.i, label %_ZL30canOmitTileOffsetInBoundsCheckN4mlir12OpFoldResultES0_S0_.exit, label %bb.ac
 
-bb.ac:                                            ; preds = %_ZN4llvm23SmallVectorTemplateBaseIN4mlir12OpFoldResultELb1EE9push_backES2_.exit104
+_ZL30canOmitTileOffsetInBoundsCheckN4mlir12OpFoldResultES0_S0_.exit: ; preds = %_ZN4llvm23SmallVectorTemplateBaseIN4mlir12OpFoldResultELb1EE9push_backES2_.exit104
+  %25 = extractvalue { i64, i8 } %i.fu, 0
+  %26 = extractvalue { i64, i8 } %i.fs, 0
+  %27 = extractvalue { i64, i8 } %i.fq, 0
+  %28 = add nsw i64 %26, -1
+  %29 = mul nsw i64 %28, %27
+  %30 = icmp slt i64 %29, %25
+  br i1 %30, label %bb.ad, label %bb.ac
+
+bb.ac:                                            ; preds = %_ZN4llvm23SmallVectorTemplateBaseIN4mlir12OpFoldResultELb1EE9push_backES2_.exit104, %_ZL30canOmitTileOffsetInBoundsCheckN4mlir12OpFoldResultES0_S0_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %24) #16
   %i.fz = call ptr @_ZN4mlir7Builder12getIndexAttrEl(ptr noundef nonnull align 8 dereferenceable(8) %i.a, i64 noundef 0) #16
   %i.ga = ptrtoint ptr %i.fz to i64
@@ -239,8 +241,8 @@ bb.ac:                                            ; preds = %_ZN4llvm23SmallVect
   call void @llvm.lifetime.end.p0(ptr nonnull %24) #16
   br label %bb.ad
 
-bb.ad:                                            ; preds = %bb.ac, %_ZN4llvm23SmallVectorTemplateBaseIN4mlir12OpFoldResultELb1EE9push_backES2_.exit104
-  %.sroa.042.2 = phi i64 [ %i.gd, %bb.ac ], [ %.sroa.042.1, %_ZN4llvm23SmallVectorTemplateBaseIN4mlir12OpFoldResultELb1EE9push_backES2_.exit104 ] ; 2 uses
+bb.ad:                                            ; preds = %bb.ac, %_ZL30canOmitTileOffsetInBoundsCheckN4mlir12OpFoldResultES0_S0_.exit
+  %.sroa.042.2 = phi i64 [ %i.gd, %bb.ac ], [ %.sroa.042.1, %_ZL30canOmitTileOffsetInBoundsCheckN4mlir12OpFoldResultES0_S0_.exit ] ; 2 uses
   %i.ge = load i32, ptr %i.cu, align 8, !tbaa !23 ; 2 uses
   %i.gf = load i32, ptr %i.cf, align 4, !tbaa !24
   %.not.i105 = icmp ult i32 %i.ge, %i.gf

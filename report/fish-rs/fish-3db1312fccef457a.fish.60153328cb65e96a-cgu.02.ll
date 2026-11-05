@@ -205,6 +205,7 @@ _RNCNvXs4_NtCs8frGy5WneL6_4fish3keyNtNtCslLGyqsphxMB_10widestring9utfstring11Utf
   %i.g = alloca [24 x i8], align 8                ; 8 uses
   %.sroa.7 = alloca [16 x i8], align 8            ; 5 uses
   %.sroa.0.0.extract.trunc = trunc i64 %1 to i32  ; 7 uses
+  %.sroa.10.0.extract.shift = lshr i64 %1, 56     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.7)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !4000)
@@ -466,9 +467,12 @@ bb.r:                                             ; preds = %_RINvMNtCs3oUPovFnL
   br label %bb.t
 
 bb.s:                                             ; preds = %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringE7or_elseNCNvXs4_NtCs8frGy5WneL6_4fish3keyBI_INtNtB5_7convert4FromNtB1Q_3KeyE4froms_0EB1S_.exit.thread29, %_RINvMNtCs3oUPovFnLWP_4core6optionINtB3_6OptionNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringE7or_elseNCNvXs4_NtCs8frGy5WneL6_4fish3keyBI_INtNtB5_7convert4FromNtB1Q_3KeyE4froms_0EB1S_.exit
-  %i.am = and i64 %1, 72340172821233664
+  %i.am = and i64 %1, 282578783305728
   %.not34 = icmp eq i64 %i.am, 0
-  call void @_RNvNtCs8frGy5WneL6_4fish3key14char_to_symbol(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.f, i32 noundef %.sroa.0.0.extract.trunc, i1 noundef zeroext %.not34)
+  %2 = trunc i64 %.sroa.10.0.extract.shift to i1
+  %3 = xor i1 %2, true
+  %.sroa.010.0 = and i1 %.not34, %3
+  call void @_RNvNtCs8frGy5WneL6_4fish3key14char_to_symbol(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.f, i32 noundef %.sroa.0.0.extract.trunc, i1 noundef zeroext %.sroa.010.0)
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.r
@@ -501,9 +505,8 @@ bb.y:                                             ; preds = %bb.u
           to label %bb.x unwind label %bb.w
 
 bb.z:                                             ; preds = %bb.aa, %bb.x
-  %2 = and i64 %1, 72057594037927936
-  %.not38 = icmp eq i64 %2, 0
-  br i1 %.not38, label %bb.ab, label %bb.ac
+  %4 = trunc i64 %.sroa.10.0.extract.shift to i1
+  br i1 %4, label %bb.ac, label %bb.ab
 
 bb.aa:                                            ; preds = %bb.x
   invoke void @_RNvMs1G_NtCslLGyqsphxMB_10widestring9utfstringNtB6_11Utf32String12insert_slice(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.f, i64 noundef 0, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) @654, i64 noundef 5)

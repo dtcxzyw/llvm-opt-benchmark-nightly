@@ -206,24 +206,30 @@ bb.a:
   %i.m = alloca [40 x i8], align 8                ; 5 uses
   %i.n = alloca [40 x i8], align 8                ; 12 uses
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 10
-  %2 = load i8, ptr %i.o, align 2, !range !40, !noundef !12
-  %3 = trunc nuw i8 %2 to i1
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 11
-  %5 = load i8, ptr %4, align 1, !range !40
-  %6 = trunc nuw i8 %5 to i1
-  %7 = xor i1 %6, true
-  %.sroa.01.0 = select i1 %3, i1 %7, i1 false     ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 9
-  %i.p = load i8, ptr %8, align 1, !range !40, !noundef !12
+  %i.p = load i8, ptr %i.o, align 2, !range !40, !noundef !12
   %i.q = trunc nuw i8 %i.p to i1
+  br i1 %i.q, label %2, label %7
+
+2:                                                ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 11
+  %4 = load i8, ptr %3, align 1, !range !40, !noundef !12
+  %5 = trunc nuw i8 %4 to i1
+  %6 = xor i1 %5, true
+  br label %7
+
+7:                                                ; preds = %bb.a, %2
+  %.sroa.01.0 = phi i1 [ %6, %2 ], [ false, %bb.a ] ; 2 uses
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 9
+  %9 = load i8, ptr %8, align 1, !range !40, !noundef !12
+  %10 = trunc nuw i8 %9 to i1
   %.pre.pre = load ptr, ptr %0, align 8           ; 5 uses
   %.pre115.pre = load ptr, ptr %.pre.pre, align 8 ; 11 uses
-  br i1 %i.q, label %bb.c, label %bb.b
+  br i1 %10, label %bb.c, label %bb.b
 
-bb.b:                                             ; preds = %bb.d, %bb.c, %bb.a
+bb.b:                                             ; preds = %bb.d, %bb.c, %7
   br i1 %.sroa.01.0, label %bb.g, label %bb.f
 
-bb.c:                                             ; preds = %bb.a
+bb.c:                                             ; preds = %7
   %i.r = getelementptr inbounds nuw i8, ptr %.pre115.pre, i64 16
   %i.s = getelementptr inbounds nuw i8, ptr %.pre115.pre, i64 112
   %i.t = load i64, ptr %i.s, align 8, !range !14, !noundef !12

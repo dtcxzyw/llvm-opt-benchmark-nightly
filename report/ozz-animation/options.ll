@@ -205,26 +205,22 @@ bb.t:                                             ; preds = %_ZSt13__check_facet
   %i.dz = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5flushEv(ptr noundef nonnull align 8 dereferenceable(8) %i.dy) ; 0 uses
   br label %.thread107
 
-3:                                                ; preds = %.lr.ph141
-  %indvars.iv.next167 = add nuw nsw i64 %indvars.iv166, 1 ; 2 uses
-  %exitcond170.not = icmp eq i64 %indvars.iv.next167, %wide.trip.count169
-  br i1 %exitcond170.not, label %.lr.ph143, label %.lr.ph141, !llvm.loop !146
-
-.lr.ph141:                                        ; preds = %.lr.ph141.preheader, %3
-  %indvars.iv166 = phi i64 [ 0, %.lr.ph141.preheader ], [ %indvars.iv.next167, %3 ] ; 3 uses
+.lr.ph141:                                        ; preds = %.lr.ph141.preheader, %_ZNK3ozz7options6Option10statisfiedEv.exit.thread
+  %indvars.iv166 = phi i64 [ 0, %.lr.ph141.preheader ], [ %indvars.iv.next167, %_ZNK3ozz7options6Option10statisfiedEv.exit.thread ] ; 3 uses
   %i.ea = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv166
   %i.eb = load ptr, ptr %i.ea, align 8, !tbaa !67 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.eb, i64 25
-  %5 = load i8, ptr %4, align 1, !tbaa !25, !range !81, !noundef !82
-  %6 = trunc nuw i8 %5 to i1
-  %i.ec = getelementptr inbounds nuw i8, ptr %i.eb, i64 24
-  %i.ed = load i8, ptr %i.ec, align 8, !range !81
+  %i.ec = getelementptr inbounds nuw i8, ptr %i.eb, i64 25
+  %i.ed = load i8, ptr %i.ec, align 1, !tbaa !25, !range !81, !noundef !82
   %i.ee = trunc nuw i8 %i.ed to i1
-  %7 = xor i1 %i.ee, true
-  %8 = select i1 %6, i1 true, i1 %7
-  br i1 %8, label %3, label %bb.u
+  br i1 %i.ee, label %_ZNK3ozz7options6Option10statisfiedEv.exit.thread, label %_ZNK3ozz7options6Option10statisfiedEv.exit
 
-bb.u:                                             ; preds = %.lr.ph141
+_ZNK3ozz7options6Option10statisfiedEv.exit:       ; preds = %.lr.ph141
+  %3 = getelementptr inbounds nuw i8, ptr %i.eb, i64 24
+  %4 = load i8, ptr %3, align 8, !tbaa !24, !range !81, !noundef !82
+  %5 = trunc nuw i8 %4 to i1
+  br i1 %5, label %bb.u, label %_ZNK3ozz7options6Option10statisfiedEv.exit.thread
+
+bb.u:                                             ; preds = %_ZNK3ozz7options6Option10statisfiedEv.exit
   %i.ef = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv166
   %i.eg = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) @_ZSt4cout, ptr noundef nonnull @.str.12, i64 noundef 17) ; 0 uses
   %i.eh = load ptr, ptr %i.ef, align 8, !tbaa !67
@@ -289,9 +285,14 @@ bb.z:                                             ; preds = %_ZSt13__check_facet
   %i.fj = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo5flushEv(ptr noundef nonnull align 8 dereferenceable(8) %i.fi) ; 0 uses
   br label %.thread113
 
-.lr.ph143:                                        ; preds = %3, %_ZN3ozz7options6Option8ValidateEi.exit75.thread
-  %i.fk = phi i32 [ %i.fq, %_ZN3ozz7options6Option8ValidateEi.exit75.thread ], [ %i.cw, %3 ]
-  %indvars.iv171 = phi i64 [ %indvars.iv.next172, %_ZN3ozz7options6Option8ValidateEi.exit75.thread ], [ 0, %3 ] ; 2 uses
+_ZNK3ozz7options6Option10statisfiedEv.exit.thread: ; preds = %.lr.ph141, %_ZNK3ozz7options6Option10statisfiedEv.exit
+  %indvars.iv.next167 = add nuw nsw i64 %indvars.iv166, 1 ; 2 uses
+  %exitcond170.not = icmp eq i64 %indvars.iv.next167, %wide.trip.count169
+  br i1 %exitcond170.not, label %.lr.ph143, label %.lr.ph141, !llvm.loop !146
+
+.lr.ph143:                                        ; preds = %_ZNK3ozz7options6Option10statisfiedEv.exit.thread, %_ZN3ozz7options6Option8ValidateEi.exit75.thread
+  %i.fk = phi i32 [ %i.fq, %_ZN3ozz7options6Option8ValidateEi.exit75.thread ], [ %i.cw, %_ZNK3ozz7options6Option10statisfiedEv.exit.thread ]
+  %indvars.iv171 = phi i64 [ %indvars.iv.next172, %_ZN3ozz7options6Option8ValidateEi.exit75.thread ], [ 0, %_ZNK3ozz7options6Option10statisfiedEv.exit.thread ] ; 2 uses
   %i.fl = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv171
   %i.fm = load ptr, ptr %i.fl, align 8, !tbaa !67 ; 2 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %i.fm, i64 32

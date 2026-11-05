@@ -205,19 +205,21 @@ bb.a:
   switch i8 %i.b, label %bb.d [
     i8 0, label %bb.i
     i8 1, label %bb.i
-    i8 2, label %bb.b
+    i8 2, label %3
     i8 3, label %bb.c
   ]
 
-bb.b:                                             ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1201
-  %4 = load i8, ptr %3, align 1, !tbaa !1458, !range !457, !noundef !458
-  %5 = trunc nuw i8 %4 to i1
+3:                                                ; preds = %bb.a
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1201
+  %5 = load i8, ptr %4, align 1, !tbaa !1458, !range !457, !noundef !458
+  %6 = trunc nuw i8 %5 to i1
+  br i1 %6, label %bb.b, label %bb.i
+
+bb.b:                                             ; preds = %3
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1752
-  %i.d = load i8, ptr %i.c, align 8, !range !457
+  %i.d = load i8, ptr %i.c, align 8, !tbaa !1451, !range !457, !noundef !458
   %i.e = trunc nuw i8 %i.d to i1
   %i.f = xor i1 %i.e, true
-  %6 = select i1 %5, i1 %i.f, i1 false
   br label %bb.i
 
 bb.c:                                             ; preds = %bb.a
@@ -273,8 +275,8 @@ bb.h:                                             ; preds = %_ZNKSt7__cxx1112bas
   call void @__cxa_free_exception(ptr %i.i) #30
   br label %bb.j
 
-bb.i:                                             ; preds = %bb.a, %bb.a, %bb.c, %bb.b
-  %.06 = phi i1 [ %.not.i, %bb.c ], [ %6, %bb.b ], [ true, %bb.a ], [ true, %bb.a ]
+bb.i:                                             ; preds = %3, %bb.b, %bb.a, %bb.a, %bb.c
+  %.06 = phi i1 [ %.not.i, %bb.c ], [ true, %bb.a ], [ true, %bb.a ], [ false, %3 ], [ %i.f, %bb.b ]
   ret i1 %.06
 
 bb.j:                                             ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.h

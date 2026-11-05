@@ -120,7 +120,7 @@ bb.a:
   %i.y = alloca [6 x i8], align 1                 ; 8 uses
   %i.z = alloca i8, align 1                       ; 4 uses
   %i.aa = alloca i32, align 4                     ; 4 uses
-  %5 = alloca %union.anon, align 8                ; 27 uses
+  %5 = alloca %union.anon, align 8                ; 29 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #6
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 30
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(29) %5, i8 0, i64 29, i1 false)
@@ -135,38 +135,45 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.z) #6
   call void @llvm.lifetime.start.p0(ptr nonnull %i.aa) #6
   store i32 0, ptr %i.aa, align 4
-  %i.ad = getelementptr inbounds nuw i8, ptr %5, i64 144
-  %i.ae = getelementptr inbounds nuw i8, ptr %5, i64 152 ; 3 uses
-  %6 = load i8, ptr %i.ae, align 8, !range !8, !noundef !9
-  %7 = trunc nuw i8 %6 to i1
-  %i.af = getelementptr inbounds nuw i8, ptr %5, i64 168 ; 3 uses
-  %i.ag = load i8, ptr %i.af, align 8, !range !8
+  %i.ad = getelementptr inbounds nuw i8, ptr %5, i64 32
+  %i.ae = getelementptr inbounds nuw i8, ptr %5, i64 144
+  %i.af = getelementptr inbounds nuw i8, ptr %5, i64 152 ; 3 uses
+  %i.ag = load i8, ptr %i.af, align 8, !range !8, !noundef !9
   %i.ah = trunc nuw i8 %i.ag to i1
-  %or.cond = select i1 %7, i1 true, i1 %i.ah
-  %i.ai = getelementptr inbounds nuw i8, ptr %5, i64 184 ; 3 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %5, i64 168 ; 3 uses
   %i.aj = load i8, ptr %i.ai, align 8, !range !8
   %i.ak = trunc nuw i8 %i.aj to i1
-  %i.al = select i1 %or.cond, i1 true, i1 %i.ak   ; 2 uses
-  %8 = xor i1 %i.al, true
-  %9 = getelementptr inbounds nuw i8, ptr %5, i64 112
-  %10 = getelementptr inbounds nuw i8, ptr %5, i64 120
-  %11 = load i8, ptr %10, align 8, !range !8, !noundef !9 ; 2 uses
-  %12 = trunc nuw i8 %11 to i1
-  %13 = xor i8 %11, 1
-  %14 = getelementptr inbounds nuw i8, ptr %5, i64 128
-  %15 = getelementptr inbounds nuw i8, ptr %5, i64 136
-  %16 = load i8, ptr %15, align 8, !range !8, !noundef !9 ; 2 uses
-  %17 = trunc nuw i8 %16 to i1
-  %18 = xor i8 %16, 1
-  %19 = getelementptr inbounds nuw i8, ptr %5, i64 192
-  %20 = getelementptr inbounds nuw i8, ptr %5, i64 200
-  %21 = load i8, ptr %20, align 8, !range !8, !noundef !9 ; 2 uses
-  %22 = trunc nuw i8 %21 to i1
-  %23 = xor i8 %21, 1
-  %24 = call zeroext i1 @RecoveryInProgress() #6
-  br i1 %24, label %bb.b, label %bb.d
+  %i.al = select i1 %i.ah, i1 true, i1 %i.ak
+  br i1 %i.al, label %11, label %6
 
-bb.b:                                             ; preds = %bb.a
+6:                                                ; preds = %bb.a
+  %7 = getelementptr inbounds nuw i8, ptr %5, i64 184
+  %8 = load i8, ptr %7, align 8, !range !8, !noundef !9
+  %9 = trunc nuw i8 %8 to i1
+  %10 = xor i1 %9, true
+  br label %11
+
+11:                                               ; preds = %6, %bb.a
+  %12 = phi i1 [ %10, %6 ], [ false, %bb.a ]      ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %5, i64 112
+  %14 = getelementptr inbounds nuw i8, ptr %5, i64 120
+  %15 = load i8, ptr %14, align 8, !range !8, !noundef !9 ; 2 uses
+  %16 = trunc nuw i8 %15 to i1
+  %17 = xor i8 %15, 1
+  %18 = getelementptr inbounds nuw i8, ptr %5, i64 128
+  %19 = getelementptr inbounds nuw i8, ptr %5, i64 136
+  %20 = load i8, ptr %19, align 8, !range !8, !noundef !9 ; 2 uses
+  %21 = trunc nuw i8 %20 to i1
+  %22 = xor i8 %20, 1
+  %23 = getelementptr inbounds nuw i8, ptr %5, i64 192
+  %24 = getelementptr inbounds nuw i8, ptr %5, i64 200
+  %25 = load i8, ptr %24, align 8, !range !8, !noundef !9 ; 2 uses
+  %26 = trunc nuw i8 %25 to i1
+  %27 = xor i8 %25, 1
+  %28 = call zeroext i1 @RecoveryInProgress() #6
+  br i1 %28, label %bb.b, label %bb.d
+
+bb.b:                                             ; preds = %11
   %i.am = call zeroext i1 @errstart(i32 noundef 19, ptr noundef null) #6
   br i1 %i.am, label %bb.c, label %extended_statistics_update.exit
 
@@ -177,10 +184,9 @@ bb.c:                                             ; preds = %bb.b
   call void @errfinish(ptr noundef nonnull @.str.2, i32 noundef 371, ptr noundef nonnull @__func__.extended_statistics_update) #6
   br label %extended_statistics_update.exit
 
-bb.d:                                             ; preds = %bb.a
-  %25 = getelementptr inbounds nuw i8, ptr %5, i64 32
+bb.d:                                             ; preds = %11
   call void @stats_check_required_arg(ptr noundef nonnull %5, ptr noundef nonnull @extarginfo, i32 noundef 0) #6
-  %i.aq = load i64, ptr %25, align 8
+  %i.aq = load i64, ptr %i.ad, align 8
   %i.ar = inttoptr i64 %i.aq to ptr
   %i.as = call ptr @text_to_cstring(ptr noundef %i.ar) #6 ; 2 uses
   call void @stats_check_required_arg(ptr noundef nonnull %5, ptr noundef nonnull @extarginfo, i32 noundef 1) #6
@@ -368,7 +374,7 @@ list_length.exit.i:                               ; preds = %bb.x, %bb.w, %expan
   %.0179.i = phi ptr [ null, %expand_stxkind.exit.i ], [ null, %bb.w ], [ %i.dk, %bb.x ]
   %.0178.i = phi i32 [ 0, %expand_stxkind.exit.i ], [ 0, %bb.w ], [ %i.dm, %bb.x ] ; 8 uses
   %i.dn = add i32 %.0178.i, %i.dd                 ; 6 uses
-  %or.cond.i = select i1 %12, i1 true, i1 %.sroa.0.2.i ; 2 uses
+  %or.cond.i = select i1 %16, i1 true, i1 %.sroa.0.2.i ; 2 uses
   br i1 %or.cond.i, label %bb.aa, label %bb.y
 
 bb.y:                                             ; preds = %list_length.exit.i
@@ -384,8 +390,8 @@ bb.z:                                             ; preds = %bb.y
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z, %bb.y, %list_length.exit.i
-  %.sroa.0.0.i = phi i8 [ %13, %list_length.exit.i ], [ 0, %bb.z ], [ 0, %bb.y ]
-  %or.cond6.i = select i1 %17, i1 true, i1 %.sroa.5.2.i
+  %.sroa.0.0.i = phi i8 [ %17, %list_length.exit.i ], [ 0, %bb.z ], [ 0, %bb.y ]
+  %or.cond6.i = select i1 %21, i1 true, i1 %.sroa.5.2.i
   br i1 %or.cond6.i, label %bb.ad, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
@@ -401,17 +407,18 @@ bb.ac:                                            ; preds = %bb.ab
   br label %bb.ad
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab, %bb.aa
-  %.sroa.7.0.i = phi i8 [ %18, %bb.aa ], [ 0, %bb.ac ], [ 0, %bb.ab ]
+  %.sroa.7.0.i = phi i8 [ %22, %bb.aa ], [ 0, %bb.ac ], [ 0, %bb.ab ]
   %.1181.i = phi i1 [ %or.cond.i, %bb.aa ], [ false, %bb.ac ], [ false, %bb.ab ] ; 3 uses
   br i1 %.sroa.7.2.i, label %bb.ah, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.dy = load i8, ptr %i.ae, align 8, !range !8, !noundef !9
+  %i.dy = load i8, ptr %i.af, align 8, !range !8, !noundef !9
   %i.dz = trunc nuw i8 %i.dy to i1
-  %i.ea = load i8, ptr %i.af, align 8, !range !8
+  %i.ea = load i8, ptr %i.ai, align 8, !range !8
   %i.eb = trunc nuw i8 %i.ea to i1
   %or.cond13 = select i1 %i.dz, i1 %i.eb, i1 false
-  %i.ec = load i8, ptr %i.ai, align 8, !range !8
+  %29 = getelementptr inbounds nuw i8, ptr %5, i64 184
+  %i.ec = load i8, ptr %29, align 8, !range !8
   %i.ed = trunc nuw i8 %i.ec to i1
   %or.cond16 = select i1 %or.cond13, i1 %i.ed, i1 false
   br i1 %or.cond16, label %bb.al, label %bb.af
@@ -430,15 +437,16 @@ bb.ag:                                            ; preds = %bb.af
   br label %.sink.split.i
 
 bb.ah:                                            ; preds = %bb.ad
-  br i1 %i.al, label %bb.ai, label %bb.al
+  br i1 %12, label %bb.al, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah
-  %i.el = load i8, ptr %i.ae, align 8, !range !8, !noundef !9
+  %i.el = load i8, ptr %i.af, align 8, !range !8, !noundef !9
   %i.em = trunc nuw i8 %i.el to i1
-  %i.en = load i8, ptr %i.af, align 8, !range !8
+  %i.en = load i8, ptr %i.ai, align 8, !range !8
   %i.eo = trunc nuw i8 %i.en to i1
   %or.cond19 = select i1 %i.em, i1 %i.eo, i1 false
-  %i.ep = load i8, ptr %i.ai, align 8, !range !8
+  %30 = getelementptr inbounds nuw i8, ptr %5, i64 184
+  %i.ep = load i8, ptr %30, align 8, !range !8
   %i.eq = trunc nuw i8 %i.ep to i1
   %or.cond22 = select i1 %or.cond19, i1 %i.eq, i1 false
   br i1 %or.cond22, label %bb.al, label %bb.aj
@@ -461,9 +469,9 @@ bb.ak:                                            ; preds = %bb.aj
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.ai, %bb.ae, %.sink.split.i, %bb.aj, %bb.ah, %bb.af
-  %.sroa.11.0.shrunk.i = phi i1 [ true, %bb.ah ], [ false, %bb.ai ], [ false, %bb.af ], [ %8, %bb.ae ], [ false, %bb.aj ], [ false, %.sink.split.i ] ; 2 uses
+  %.sroa.11.0.shrunk.i = phi i1 [ true, %bb.ah ], [ false, %bb.ai ], [ false, %bb.af ], [ %12, %bb.ae ], [ false, %bb.aj ], [ false, %.sink.split.i ] ; 2 uses
   %.2.i = phi i1 [ %.1181.i, %bb.ah ], [ %.1181.i, %bb.ai ], [ false, %bb.af ], [ %.1181.i, %bb.ae ], [ false, %bb.aj ], [ false, %.sink.split.i ]
-  %or.cond10.i = select i1 %22, i1 true, i1 %.sroa.9.2.i
+  %or.cond10.i = select i1 %26, i1 true, i1 %.sroa.9.2.i
   br i1 %or.cond10.i, label %bb.ao, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
@@ -479,7 +487,7 @@ bb.an:                                            ; preds = %bb.am
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.an, %bb.am, %bb.al
-  %.sroa.16.0.i = phi i8 [ %23, %bb.al ], [ 0, %bb.an ], [ 0, %bb.am ]
+  %.sroa.16.0.i = phi i8 [ %27, %bb.al ], [ 0, %bb.an ], [ 0, %bb.am ]
   %.3.i = phi i1 [ %.2.i, %bb.al ], [ false, %bb.an ], [ false, %bb.am ] ; 2 uses
   %i.fc = trunc nuw i8 %.sroa.16.0.i to i1        ; 2 uses
   %or.cond13.i = select i1 %.sroa.11.0.shrunk.i, i1 true, i1 %i.fc
@@ -605,7 +613,7 @@ bb.av:                                            ; preds = %bb.av, %.lr.ph287.i
   br i1 %i.hi, label %bb.aw, label %bb.az
 
 bb.aw:                                            ; preds = %.loopexit.i
-  %i.hj = load i64, ptr %9, align 8               ; 2 uses
+  %i.hj = load i64, ptr %13, align 8              ; 2 uses
   %i.hk = inttoptr i64 %i.hj to ptr
   %i.hl = call ptr @pg_detoast_datum_packed(ptr noundef %i.hk) #6
   %i.hm = call ptr @statext_ndistinct_deserialize(ptr noundef %i.hl) #6 ; 2 uses
@@ -631,7 +639,7 @@ bb.az:                                            ; preds = %bb.ay, %.loopexit.i
   br i1 %i.hq, label %bb.ba, label %bb.bd
 
 bb.ba:                                            ; preds = %bb.az
-  %i.hr = load i64, ptr %14, align 8              ; 2 uses
+  %i.hr = load i64, ptr %18, align 8              ; 2 uses
   %i.hs = inttoptr i64 %i.hr to ptr
   %i.ht = call ptr @pg_detoast_datum_packed(ptr noundef %i.hs) #6
   %i.hu = call ptr @statext_dependencies_deserialize(ptr noundef %i.ht) #6 ; 2 uses
@@ -656,7 +664,7 @@ bb.bd:                                            ; preds = %bb.bc, %bb.az
   br i1 %.sroa.11.0.shrunk.i, label %bb.be, label %bb.bw
 
 bb.be:                                            ; preds = %bb.bd
-  %i.hy = load i64, ptr %i.ad, align 8
+  %i.hy = load i64, ptr %i.ae, align 8
   %i.hz = inttoptr i64 %i.hy to ptr
   %i.ia = call ptr @pg_detoast_datum(ptr noundef %i.hz) #6 ; 4 uses
   %i.ib = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -806,7 +814,7 @@ bb.bx:                                            ; preds = %bb.bw
   %i.kg = getelementptr inbounds [4 x i8], ptr %.0176.i, i64 %i.kf
   %i.kh = getelementptr inbounds [4 x i8], ptr %.0174.i, i64 %i.kf
   %i.ki = getelementptr inbounds [4 x i8], ptr %.0173.i, i64 %i.kf
-  %i.kj = load i64, ptr %19, align 8
+  %i.kj = load i64, ptr %23, align 8
   %i.kk = inttoptr i64 %i.kj to ptr
   %i.kl = call ptr @pg_detoast_datum(ptr noundef %i.kk) #6
   %i.km = load ptr, ptr getelementptr inbounds nuw (i8, ptr @extarginfo, i64 160), align 16 ; 3 uses

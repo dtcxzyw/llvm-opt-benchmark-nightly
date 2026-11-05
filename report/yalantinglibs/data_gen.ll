@@ -205,19 +205,21 @@ bb.bb:                                            ; preds = %_ZN7easylog6loggerI
   %i.gw = getelementptr inbounds nuw i8, ptr %0, i64 449
   %i.gx = load i8, ptr %i.gw, align 1, !tbaa !1306, !range !414, !noundef !366
   %i.gy = trunc nuw i8 %i.gx to i1
-  br i1 %i.gy, label %bb.cc, label %bb.bc
+  br i1 %i.gy, label %bb.cc, label %8
 
-bb.bc:                                            ; preds = %bb.bb
-  %8 = load i32, ptr %i.g, align 4, !tbaa !1615
-  %9 = load i32, ptr %i.e, align 8, !tbaa !1418
-  %10 = icmp ne i32 %8, %9
+8:                                                ; preds = %bb.bb
+  %9 = load i32, ptr %i.g, align 4, !tbaa !1615
+  %10 = load i32, ptr %i.e, align 8, !tbaa !1418
+  %11 = icmp eq i32 %9, %10
+  br i1 %11, label %bb.bc, label %bb.bd
+
+bb.bc:                                            ; preds = %8
   %i.gz = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %i.ha = load i8, ptr %i.gz, align 8, !range !414
+  %i.ha = load i8, ptr %i.gz, align 8, !tbaa !1421, !range !414, !noundef !366
   %i.hb = trunc nuw i8 %i.ha to i1
-  %.not62 = select i1 %10, i1 true, i1 %i.hb
-  br i1 %.not62, label %bb.bd, label %bb.cc
+  br i1 %i.hb, label %bb.bd, label %bb.cc
 
-bb.bd:                                            ; preds = %bb.bc
+bb.bd:                                            ; preds = %8, %bb.bc
   %i.hc = load i64, ptr %i.a, align 8, !tbaa !411
   %i.hd = load i32, ptr %i.ai, align 8, !tbaa !2609 ; 4 uses
   %i.he = load i32, ptr %i.ak, align 4, !tbaa !2598 ; 4 uses

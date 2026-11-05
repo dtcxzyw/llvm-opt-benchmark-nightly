@@ -204,21 +204,27 @@ bb.a:
   %i.a = getelementptr i8, ptr %0, i64 128
   %i.b = load i8, ptr %i.a, align 8, !range !175, !noundef !176
   %i.c = trunc nuw i8 %i.b to i1
-  br i1 %i.c, label %bb.b, label %bb.e
+  br i1 %i.c, label %5, label %bb.e
 
-bb.b:                                             ; preds = %bb.a
-  %5 = getelementptr i8, ptr %0, i64 129          ; 3 uses
-  %6 = load i8, ptr %5, align 1, !range !175, !noundef !176 ; 3 uses
-  %7 = trunc nuw i8 %6 to i1
-  %8 = and i1 %2, %7
-  %9 = xor i1 %8, true                            ; 2 uses
-  %i.d = zext i1 %9 to i8                         ; 2 uses
-  %.not.i = icmp eq i8 %6, %i.d
+5:                                                ; preds = %bb.a
+  %6 = getelementptr i8, ptr %0, i64 129          ; 3 uses
+  %7 = load i8, ptr %6, align 1, !range !175, !noundef !176 ; 3 uses
+  br i1 %2, label %8, label %bb.b
+
+8:                                                ; preds = %5
+  %9 = trunc nuw i8 %7 to i1
+  %10 = xor i1 %9, true
+  br label %bb.b
+
+bb.b:                                             ; preds = %5, %8
+  %11 = phi i1 [ %10, %8 ], [ true, %5 ]          ; 2 uses
+  %i.d = zext i1 %11 to i8                        ; 2 uses
+  %.not.i = icmp eq i8 %7, %i.d
   br i1 %.not.i, label %_ZN15QCPAbstractItem11setSelectedEb.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  store i8 %i.d, ptr %5, align 1
-  tail call void @_ZN15QCPAbstractItem16selectionChangedEb(ptr noundef align 8 dereferenceable_or_null(130) %0, i1 noundef zeroext %9)
+  store i8 %i.d, ptr %6, align 1
+  tail call void @_ZN15QCPAbstractItem16selectionChangedEb(ptr noundef align 8 dereferenceable_or_null(130) %0, i1 noundef zeroext %11)
   br label %_ZN15QCPAbstractItem11setSelectedEb.exit
 
 _ZN15QCPAbstractItem11setSelectedEb.exit:         ; preds = %bb.b, %bb.c
@@ -226,8 +232,8 @@ _ZN15QCPAbstractItem11setSelectedEb.exit:         ; preds = %bb.b, %bb.c
   br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %_ZN15QCPAbstractItem11setSelectedEb.exit
-  %i.e = load i8, ptr %5, align 1, !range !175, !noundef !176
-  %i.f = icmp ne i8 %i.e, %6
+  %i.e = load i8, ptr %6, align 1, !range !175, !noundef !176
+  %i.f = icmp ne i8 %i.e, %7
   %i.g = zext i1 %i.f to i8
   store i8 %i.g, ptr %4, align 1
   br label %bb.e
@@ -630,21 +636,27 @@ bb.b:                                             ; preds = %bb.a
   %.sroa.0.0.copyload.i = load i32, ptr %i.f, align 8
   %i.g = and i32 %.sroa.0.0.copyload.i, 2
   %.not4 = icmp eq i32 %i.g, 0
-  br i1 %.not4, label %.critedge, label %bb.c
+  br i1 %.not4, label %.critedge, label %5
 
-bb.c:                                             ; preds = %bb.b
-  %5 = getelementptr i8, ptr %0, i64 241          ; 3 uses
-  %6 = load i8, ptr %5, align 1, !range !175, !noundef !176 ; 3 uses
-  %7 = trunc nuw i8 %6 to i1
-  %8 = and i1 %2, %7
-  %9 = xor i1 %8, true                            ; 2 uses
-  %i.h = zext i1 %9 to i8                         ; 2 uses
-  %.not.i = icmp eq i8 %6, %i.h
+5:                                                ; preds = %bb.b
+  %6 = getelementptr i8, ptr %0, i64 241          ; 3 uses
+  %7 = load i8, ptr %6, align 1, !range !175, !noundef !176 ; 3 uses
+  br i1 %2, label %8, label %bb.c
+
+8:                                                ; preds = %5
+  %9 = trunc nuw i8 %7 to i1
+  %10 = xor i1 %9, true
+  br label %bb.c
+
+bb.c:                                             ; preds = %5, %8
+  %11 = phi i1 [ %10, %8 ], [ true, %5 ]          ; 2 uses
+  %i.h = zext i1 %11 to i8                        ; 2 uses
+  %.not.i = icmp eq i8 %7, %i.h
   br i1 %.not.i, label %_ZN21QCPAbstractLegendItem11setSelectedEb.exit, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  store i8 %i.h, ptr %5, align 1
-  tail call void @_ZN21QCPAbstractLegendItem16selectionChangedEb(ptr noundef align 8 dereferenceable_or_null(242) %0, i1 noundef zeroext %9)
+  store i8 %i.h, ptr %6, align 1
+  tail call void @_ZN21QCPAbstractLegendItem16selectionChangedEb(ptr noundef align 8 dereferenceable_or_null(242) %0, i1 noundef zeroext %11)
   br label %_ZN21QCPAbstractLegendItem11setSelectedEb.exit
 
 _ZN21QCPAbstractLegendItem11setSelectedEb.exit:   ; preds = %bb.c, %bb.d
@@ -652,8 +664,8 @@ _ZN21QCPAbstractLegendItem11setSelectedEb.exit:   ; preds = %bb.c, %bb.d
   br i1 %.not, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZN21QCPAbstractLegendItem11setSelectedEb.exit
-  %i.i = load i8, ptr %5, align 1, !range !175, !noundef !176
-  %i.j = icmp ne i8 %i.i, %6
+  %i.i = load i8, ptr %6, align 1, !range !175, !noundef !176
+  %i.j = icmp ne i8 %i.i, %7
   %i.k = zext i1 %i.j to i8
   store i8 %i.k, ptr %4, align 1
   br label %.critedge
@@ -1056,21 +1068,27 @@ bb.a:
   %i.a = getelementptr i8, ptr %0, i64 280
   %i.b = load i8, ptr %i.a, align 8, !range !175, !noundef !176
   %i.c = trunc nuw i8 %i.b to i1
-  br i1 %i.c, label %bb.b, label %bb.e
+  br i1 %i.c, label %5, label %bb.e
 
-bb.b:                                             ; preds = %bb.a
-  %5 = getelementptr i8, ptr %0, i64 281          ; 3 uses
-  %6 = load i8, ptr %5, align 1, !range !175, !noundef !176 ; 3 uses
-  %7 = trunc nuw i8 %6 to i1
-  %8 = and i1 %2, %7
-  %9 = xor i1 %8, true                            ; 2 uses
-  %i.d = zext i1 %9 to i8                         ; 2 uses
-  %.not.i = icmp eq i8 %6, %i.d
+5:                                                ; preds = %bb.a
+  %6 = getelementptr i8, ptr %0, i64 281          ; 3 uses
+  %7 = load i8, ptr %6, align 1, !range !175, !noundef !176 ; 3 uses
+  br i1 %2, label %8, label %bb.b
+
+8:                                                ; preds = %5
+  %9 = trunc nuw i8 %7 to i1
+  %10 = xor i1 %9, true
+  br label %bb.b
+
+bb.b:                                             ; preds = %5, %8
+  %11 = phi i1 [ %10, %8 ], [ true, %5 ]          ; 2 uses
+  %i.d = zext i1 %11 to i8                        ; 2 uses
+  %.not.i = icmp eq i8 %7, %i.d
   br i1 %.not.i, label %_ZN14QCPTextElement11setSelectedEb.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  store i8 %i.d, ptr %5, align 1
-  tail call void @_ZN14QCPTextElement16selectionChangedEb(ptr noundef align 8 dereferenceable_or_null(282) %0, i1 noundef zeroext %9)
+  store i8 %i.d, ptr %6, align 1
+  tail call void @_ZN14QCPTextElement16selectionChangedEb(ptr noundef align 8 dereferenceable_or_null(282) %0, i1 noundef zeroext %11)
   br label %_ZN14QCPTextElement11setSelectedEb.exit
 
 _ZN14QCPTextElement11setSelectedEb.exit:          ; preds = %bb.b, %bb.c
@@ -1078,8 +1096,8 @@ _ZN14QCPTextElement11setSelectedEb.exit:          ; preds = %bb.b, %bb.c
   br i1 %.not, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %_ZN14QCPTextElement11setSelectedEb.exit
-  %i.e = load i8, ptr %5, align 1, !range !175, !noundef !176
-  %i.f = icmp ne i8 %i.e, %6
+  %i.e = load i8, ptr %6, align 1, !range !175, !noundef !176
+  %i.f = icmp ne i8 %i.e, %7
   %i.g = zext i1 %i.f to i8
   store i8 %i.g, ptr %4, align 1
   br label %bb.e

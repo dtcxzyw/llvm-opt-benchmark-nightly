@@ -205,8 +205,8 @@ bb.ao:                                            ; preds = %.noexc32, %.split.i
           cleanup
   br label %.body23
 
-.loopexit.split-lp:                               ; preds = %.thread.invoke, %bb.q, %bb.t, %bb.u, %_RNCNCNvNtNtCs45bxiIjzMqg_5salsa8function7execute18try_complete_query0s_0B9_.exit.i.i, %bb.z, %_RNCNCNvNtNtCs45bxiIjzMqg_5salsa8function7execute18try_complete_query0s_0B9_.exit.i.i.i.i, %_RINvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11get_defaultbNCNCNvNtNtCs45bxiIjzMqg_5salsa8function7execute18try_complete_query0s_0EB16_.exit.i, %bb.ao, %bb.bg, %6
-  %.sroa.07.2.ph = phi i1 [ true, %bb.bg ], [ false, %bb.q ], [ true, %_RINvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11get_defaultbNCNCNvNtNtCs45bxiIjzMqg_5salsa8function7execute18try_complete_query0s_0EB16_.exit.i ], [ true, %_RNCNCNvNtNtCs45bxiIjzMqg_5salsa8function7execute18try_complete_query0s_0B9_.exit.i.i.i.i ], [ true, %bb.z ], [ true, %_RNCNCNvNtNtCs45bxiIjzMqg_5salsa8function7execute18try_complete_query0s_0B9_.exit.i.i ], [ true, %bb.u ], [ true, %bb.t ], [ true, %6 ], [ true, %.thread.invoke ], [ true, %bb.ao ]
+.loopexit.split-lp:                               ; preds = %.thread.invoke, %bb.q, %bb.t, %bb.u, %_RNCNCNvNtNtCs45bxiIjzMqg_5salsa8function7execute18try_complete_query0s_0B9_.exit.i.i, %bb.z, %_RNCNCNvNtNtCs45bxiIjzMqg_5salsa8function7execute18try_complete_query0s_0B9_.exit.i.i.i.i, %_RINvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11get_defaultbNCNCNvNtNtCs45bxiIjzMqg_5salsa8function7execute18try_complete_query0s_0EB16_.exit.i, %bb.ao, %bb.bg, %5
+  %.sroa.07.2.ph = phi i1 [ true, %5 ], [ false, %bb.q ], [ true, %_RINvNtCs3pBv9WGWlWf_12tracing_core10dispatcher11get_defaultbNCNCNvNtNtCs45bxiIjzMqg_5salsa8function7execute18try_complete_query0s_0EB16_.exit.i ], [ true, %_RNCNCNvNtNtCs45bxiIjzMqg_5salsa8function7execute18try_complete_query0s_0B9_.exit.i.i.i.i ], [ true, %bb.z ], [ true, %_RNCNCNvNtNtCs45bxiIjzMqg_5salsa8function7execute18try_complete_query0s_0B9_.exit.i.i ], [ true, %bb.u ], [ true, %bb.t ], [ true, %bb.bg ], [ true, %.thread.invoke ], [ true, %bb.ao ]
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body23
@@ -371,8 +371,8 @@ _RINvMs_NtCs45bxiIjzMqg_5salsa11zalsa_localNtB5_10ZalsaLocal26with_query_stack_u
   %.add7.i = add nuw nsw i64 %.idx6.i, 16
   %i.gq = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.gr = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.gs = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %i.gt = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %i.gs = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  %i.gt = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   br label %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldRNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeaduINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs4_B18_NtB18_10CycleHeads11iter_not_eq0NCINvNvNtNtNtB8_6traits12double_ended19DoubleEndedIterator5rfind5checkB15_NCNvNtNtB1a_8function7execute11outer_cycles_0E0E0B1a_.exit.i.i
 
 _RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldRNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeaduINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs4_B18_NtB18_10CycleHeads11iter_not_eq0NCINvNvNtNtNtB8_6traits12double_ended19DoubleEndedIterator5rfind5checkB15_NCNvNtNtB1a_8function7execute11outer_cycles_0E0E0B1a_.exit.i.i: ; preds = %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldRNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeaduINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs4_B18_NtB18_10CycleHeads11iter_not_eq0NCINvNvNtNtNtB8_6traits12double_ended19DoubleEndedIterator5rfind5checkB15_NCNvNtNtB1a_8function7execute11outer_cycles_0E0E0B1a_.exit.i.i.backedge, %.loopexit149
@@ -431,7 +431,7 @@ bb.bf:                                            ; preds = %_RNCNvMs4_NtCs45bxi
 .noexc44:                                         ; preds = %bb.bf
   %i.hs = extractvalue { ptr, ptr } %i.hr, 0      ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %i.hs, null
-  br i1 %.not.i.i.i.i.i, label %6, label %bb.bh, !prof !118
+  br i1 %.not.i.i.i.i.i, label %5, label %bb.bh, !prof !118
 
 bb.bg:                                            ; preds = %_RNCNvMs4_NtCs45bxiIjzMqg_5salsa5cycleNtB7_10CycleHeads11iter_not_eq0B9_.exit.thread.i.i.i
   invoke void @_RNvNtCs4NRVxsYgnAr_4core9panicking18panic_bounds_check(i64 noundef %i.hh, i64 noundef %i.hi, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @86) #60
@@ -456,33 +456,33 @@ bb.bh:                                            ; preds = %.noexc44
           to label %.noexc47 unwind label %.loopexit
 
 .noexc47:                                         ; preds = %.noexc46
-  %i.hz = load i8, ptr %i.a, align 8, !range !126, !noalias !7760, !noundef !117 ; 2 uses
-  %5 = icmp eq i8 %i.hz, 1
-  br i1 %5, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.thread.i.i, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.i.i
+  %i.hz = load i8, ptr %i.a, align 8, !range !126, !noalias !7760, !noundef !117
+  switch i8 %i.hz, label %.noexc48.a [
+    i8 2, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.i.i
+    i8 1, label %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.thread.i.i
+  ]
+
+5:                                                ; preds = %.noexc44
+  invoke void @_RNvNtCs4NRVxsYgnAr_4core6option13expect_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @87, i64 noundef 40, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @89) #60
+          to label %.noexc48 unwind label %.loopexit.split-lp
+
+.noexc48:                                         ; preds = %5
+  unreachable
 
 _RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.thread.i.i: ; preds = %.noexc47
-  %.val7.i.i.i.i.i = load ptr, ptr %i.gt, align 8, !noalias !7760, !nonnull !117, !noundef !117
+  %.val7.i.i.i.i.i = load ptr, ptr %i.gs, align 8, !noalias !7760, !nonnull !117, !noundef !117
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCs45bxiIjzMqg_5salsa7runtime7RunningEBF_(ptr nonnull %.val7.i.i.i.i.i)
           to label %.noexc48.a unwind label %.loopexit
 
-.noexc48.a:                                       ; preds = %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.thread.i.i
+.noexc48.a:                                       ; preds = %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.thread.i.i, %.noexc47
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !7760
   br label %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldRNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeaduINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs4_B18_NtB18_10CycleHeads11iter_not_eq0NCINvNvNtNtNtB8_6traits12double_ended19DoubleEndedIterator5rfind5checkB15_NCNvNtNtB1a_8function7execute11outer_cycles_0E0E0B1a_.exit.i.i.backedge
 
-6:                                                ; preds = %.noexc44
-  invoke void @_RNvNtCs4NRVxsYgnAr_4core6option13expect_failed(ptr noalias noundef nonnull readonly captures(address, read_provenance) @87, i64 noundef 40, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @89) #60
-          to label %.noexc49 unwind label %.loopexit.split-lp
-
-.noexc49:                                         ; preds = %6
-  unreachable
-
 _RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.i.i: ; preds = %.noexc47
-  %i.ia = load i8, ptr %i.gs, align 1, !range !137, !noalias !7760
-  %7 = icmp ne i8 %i.hz, 2
+  %i.ia = load i8, ptr %i.gt, align 1, !range !137, !noalias !7760, !noundef !117
   %i.ib = trunc nuw i8 %i.ia to i1
-  %.sroa.0.0.i.not.i.i.i.i = select i1 %7, i1 true, i1 %i.ib
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !7760
-  br i1 %.sroa.0.0.i.not.i.i.i.i, label %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldRNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeaduINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs4_B18_NtB18_10CycleHeads11iter_not_eq0NCINvNvNtNtNtB8_6traits12double_ended19DoubleEndedIterator5rfind5checkB15_NCNvNtNtB1a_8function7execute11outer_cycles_0E0E0B1a_.exit.i.i.backedge, label %_RINvYNtNtCs45bxiIjzMqg_5salsa5cycle18CycleHeadsIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNtNtBX_8adapters6filter15filter_try_foldRNtB5_9CycleHeaduINtNtNtBZ_3ops12control_flow11ControlFlowB2X_ENCNvMs4_B5_NtB5_10CycleHeads11iter_not_eq0NCINvNvBR_5rfind5checkB2X_NCNvNtNtB7_8function7execute11outer_cycles_0E0E0B3e_EB7_.exit.i
+  br i1 %i.ib, label %_RNCINvNtNtNtCs4NRVxsYgnAr_4core4iter8adapters6filter15filter_try_foldRNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeaduINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs4_B18_NtB18_10CycleHeads11iter_not_eq0NCINvNvNtNtNtB8_6traits12double_ended19DoubleEndedIterator5rfind5checkB15_NCNvNtNtB1a_8function7execute11outer_cycles_0E0E0B1a_.exit.i.i.backedge, label %_RINvYNtNtCs45bxiIjzMqg_5salsa5cycle18CycleHeadsIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNtNtBX_8adapters6filter15filter_try_foldRNtB5_9CycleHeaduINtNtNtBZ_3ops12control_flow11ControlFlowB2X_ENCNvMs4_B5_NtB5_10CycleHeads11iter_not_eq0NCINvNvBR_5rfind5checkB2X_NCNvNtNtB7_8function7execute11outer_cycles_0E0E0B3e_EB7_.exit.i
 
 _RINvYNtNtCs45bxiIjzMqg_5salsa5cycle18CycleHeadsIteratorNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNtNtBX_8adapters6filter15filter_try_foldRNtB5_9CycleHeaduINtNtNtBZ_3ops12control_flow11ControlFlowB2X_ENCNvMs4_B5_NtB5_10CycleHeads11iter_not_eq0NCINvNvBR_5rfind5checkB2X_NCNvNtNtB7_8function7execute11outer_cycles_0E0E0B3e_EB7_.exit.i: ; preds = %_RNCINvNvNtNtNtNtCs4NRVxsYgnAr_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCs45bxiIjzMqg_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.i.i
   %.sroa.0.0.copyload54 = load i32, ptr %.ptr9.le.i, align 4, !noalias !7761

@@ -1,8 +1,9 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/node/original/pgo?download=true
 inline.NumInlined: 881
 inline.NumDeleted: 482
+loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumRuntimeUnrolled: 1
-loop-unroll.NumUnrolled: 1
+loop-unroll.NumUnrolled: 2
 begin_hunk_0_@_ZN2v88internal4wasm7Decoder17read_leb_slowpathIiNS2_17FullValidationTagELNS2_9TraceFlagE1ELm32EEESt4pairIT_jEPKhNSt11conditionalIXsrT0_8validateEPKcNS2_6NoNameEE4typeE:bb.a
   %i.x = zext nneg i8 %i.w to i32
   %i.y = shl nuw nsw i32 %i.x, 21
@@ -204,7 +205,7 @@ _ZSt4sortIN9__gnu_cxx17__normal_iteratorIPjSt6vectorIjSaIjEEEEEvT_S7_.exit.threa
   %i.v = trunc i64 %i.u to i32
   tail call void @_ZN2v88internal4wasm10ZoneBuffer10write_u32vEj(ptr noundef nonnull align 8 dereferenceable(32) %1, i32 noundef %i.v)
   %i.w = getelementptr inbounds nuw i8, ptr %i.a, i64 584
-  %i.x = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 37 uses
+  %i.x = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 43 uses
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 8 uses
   %i.z = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 16 uses
   br label %bb.k
@@ -395,20 +396,17 @@ _ZNKSt13unordered_mapIjN2v88internal4wasm20FunctionTypeFeedbackESt4hashIjESt8equ
   br i1 %i.ck, label %_ZNK2v88internal4wasm16CallSiteFeedback9num_casesEv.exit, label %bb.q
 
 bb.q:                                             ; preds = %.lr.ph145
-  %2 = icmp ne i32 %i.cj, -1
+  %2 = icmp eq i32 %i.cj, -1
   %i.cl = getelementptr inbounds nuw i8, ptr %.045144, i64 5
   %i.cm = load i8, ptr %i.cl, align 1, !range !118
-  %i.cn = trunc nuw i8 %i.cm to i1                ; 2 uses
+  %i.cn = trunc nuw i8 %i.cm to i1
   %.not1.i = select i1 %2, i1 true, i1 %i.cn
-  br i1 %.not1.i, label %3, label %_ZNK2v88internal4wasm16CallSiteFeedback9num_casesEv.exit
-
-3:                                                ; preds = %bb.q
-  %4 = sub nsw i32 0, %i.cj
-  %spec.select.i = select i1 %i.cn, i32 0, i32 %4
+  %3 = sub nsw i32 0, %i.cj
+  %spec.select.i = select i1 %.not1.i, i32 0, i32 %3
   br label %_ZNK2v88internal4wasm16CallSiteFeedback9num_casesEv.exit
 
-_ZNK2v88internal4wasm16CallSiteFeedback9num_casesEv.exit: ; preds = %.lr.ph145, %bb.q, %3
-  %.0.i = phi i32 [ 0, %bb.q ], [ 1, %.lr.ph145 ], [ %spec.select.i, %3 ] ; 5 uses
+_ZNK2v88internal4wasm16CallSiteFeedback9num_casesEv.exit: ; preds = %.lr.ph145, %bb.q
+  %.0.i = phi i32 [ %spec.select.i, %bb.q ], [ 1, %.lr.ph145 ] ; 12 uses
   %i.co = load ptr, ptr %i.x, align 8             ; 2 uses
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 5
   %i.cq = load ptr, ptr %i.y, align 8             ; 2 uses
@@ -469,26 +467,58 @@ _ZN2v88internal4Zone13AllocateArrayIhNS0_4wasm10ZoneBuffer6BufferEEEPT_m.exit.i.
   store ptr %i.dv, ptr %i.y, align 8
   br label %.preheader.i.i.a
 
-.preheader.i.i.a:                                 ; preds = %_ZNK2v88internal4wasm16CallSiteFeedback9num_casesEv.exit, %_ZN2v88internal4Zone13AllocateArrayIhNS0_4wasm10ZoneBuffer6BufferEEEPT_m.exit.i.i
-  %i.dw = phi ptr [ %i.co, %_ZNK2v88internal4wasm16CallSiteFeedback9num_casesEv.exit ], [ %i.du, %_ZN2v88internal4Zone13AllocateArrayIhNS0_4wasm10ZoneBuffer6BufferEEEPT_m.exit.i.i ] ; 2 uses
+.preheader.i.i.a:                                 ; preds = %_ZN2v88internal4Zone13AllocateArrayIhNS0_4wasm10ZoneBuffer6BufferEEEPT_m.exit.i.i, %_ZNK2v88internal4wasm16CallSiteFeedback9num_casesEv.exit
+  %i.dw = phi ptr [ %i.du, %_ZN2v88internal4Zone13AllocateArrayIhNS0_4wasm10ZoneBuffer6BufferEEEPT_m.exit.i.i ], [ %i.co, %_ZNK2v88internal4wasm16CallSiteFeedback9num_casesEv.exit ] ; 2 uses
   %i.dx = icmp samesign ugt i32 %.0.i, 63
-  br i1 %i.dx, label %.lr.ph18.i.i.a, label %_ZN2v88internal4wasm10ZoneBuffer10write_i32vEi.exit
+  br i1 %i.dx, label %.lr.ph18.i.i, label %_ZN2v88internal4wasm10ZoneBuffer10write_i32vEi.exit
 
-.lr.ph18.i.i.a:                                   ; preds = %.preheader.i.i.a, %.lr.ph18.i.i.a
-  %.017.i.i = phi i32 [ %i.ec, %.lr.ph18.i.i.a ], [ %.0.i, %.preheader.i.i.a ] ; 3 uses
-  %i.dy = trunc i32 %.017.i.i to i8
+.lr.ph18.i.i:                                     ; preds = %.preheader.i.i.a
+  %4 = trunc i32 %.0.i to i8
+  %5 = or i8 %4, -128
+  %6 = load ptr, ptr %i.x, align 8                ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %6, i64 1
+  store ptr %7, ptr %i.x, align 8
+  store i8 %5, ptr %6, align 1
+  %8 = lshr i32 %.0.i, 7                          ; 2 uses
+  %9 = icmp ugt i32 %.0.i, 8191
+  br i1 %9, label %.lr.ph18.i.i.1, label %_ZN2v88internal4wasm10ZoneBuffer10write_i32vEi.exit.thread
+
+.lr.ph18.i.i.1:                                   ; preds = %.lr.ph18.i.i
+  %10 = trunc i32 %8 to i8
+  %11 = or i8 %10, -128
+  %12 = load ptr, ptr %i.x, align 8               ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 1
+  store ptr %13, ptr %i.x, align 8
+  store i8 %11, ptr %12, align 1
+  %14 = lshr i32 %.0.i, 14                        ; 2 uses
+  %15 = icmp ugt i32 %.0.i, 1048575
+  br i1 %15, label %.lr.ph18.i.i.a, label %_ZN2v88internal4wasm10ZoneBuffer10write_i32vEi.exit.thread
+
+.lr.ph18.i.i.a:                                   ; preds = %.lr.ph18.i.i.1
+  %i.dy = trunc i32 %14 to i8
   %i.dz = or i8 %i.dy, -128
   %i.ea = load ptr, ptr %i.x, align 8             ; 2 uses
   %i.eb = getelementptr inbounds nuw i8, ptr %i.ea, i64 1
   store ptr %i.eb, ptr %i.x, align 8
   store i8 %i.dz, ptr %i.ea, align 1
-  %i.ec = lshr i32 %.017.i.i, 7                   ; 2 uses
-  %i.ed = icmp ugt i32 %.017.i.i, 8191
-  br i1 %i.ed, label %.lr.ph18.i.i.a, label %_ZN2v88internal4wasm10ZoneBuffer10write_i32vEi.exit.thread, !llvm.loop !114
+  %i.ec = lshr i32 %.0.i, 21                      ; 2 uses
+  %i.ed = icmp ugt i32 %.0.i, 134217727
+  br i1 %i.ed, label %.lr.ph18.i.i.3, label %_ZN2v88internal4wasm10ZoneBuffer10write_i32vEi.exit.thread
 
-_ZN2v88internal4wasm10ZoneBuffer10write_i32vEi.exit.thread: ; preds = %.lr.ph18.i.i.a
+.lr.ph18.i.i.3:                                   ; preds = %.lr.ph18.i.i.a
+  %16 = trunc i32 %i.ec to i8
+  %17 = or i8 %16, -128
+  %18 = load ptr, ptr %i.x, align 8               ; 2 uses
+  %19 = getelementptr inbounds nuw i8, ptr %18, i64 1
+  store ptr %19, ptr %i.x, align 8
+  store i8 %17, ptr %18, align 1
+  %20 = lshr i32 %.0.i, 28
+  br label %_ZN2v88internal4wasm10ZoneBuffer10write_i32vEi.exit.thread
+
+_ZN2v88internal4wasm10ZoneBuffer10write_i32vEi.exit.thread: ; preds = %.lr.ph18.i.i.3, %.lr.ph18.i.i.a, %.lr.ph18.i.i.1, %.lr.ph18.i.i
+  %.lcssa = phi i32 [ %8, %.lr.ph18.i.i ], [ %14, %.lr.ph18.i.i.1 ], [ %i.ec, %.lr.ph18.i.i.a ], [ %20, %.lr.ph18.i.i.3 ]
   %.pre = load ptr, ptr %i.x, align 8             ; 2 uses
-  %i.ee = trunc nuw nsw i32 %i.ec to i8
+  %i.ee = trunc nuw nsw i32 %.lcssa to i8
   %i.ef = getelementptr inbounds nuw i8, ptr %.pre, i64 1
   store ptr %i.ef, ptr %i.x, align 8
   store i8 %i.ee, ptr %.pre, align 1

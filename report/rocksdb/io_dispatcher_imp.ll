@@ -204,19 +204,24 @@ _ZNK7rocksdb22RandomAccessFileReader13use_direct_ioEv.exit: ; preds = %_ZNK7rock
 
 .noexc94:                                         ; preds = %_ZNK7rocksdb22RandomAccessFileReader13use_direct_ioEv.exit
   %i.be = invoke { ptr, i8 } @_ZN7rocksdb32GetReadScopedBlockBufferProviderERKNS_11ReadOptionsEb(ptr noundef nonnull align 8 dereferenceable(192) %i.bc, i1 noundef zeroext %i.az)
-          to label %_ZN7rocksdbL21GetReadScopedIOConfigERKNS_22BlockBasedTableOptionsERKNS_10JobOptionsEbbb.exit unwind label %bb.j ; 2 uses
+          to label %.noexc95 unwind label %bb.j   ; 2 uses
 
-_ZN7rocksdbL21GetReadScopedIOConfigERKNS_22BlockBasedTableOptionsERKNS_10JobOptionsEbbb.exit: ; preds = %.noexc94
+.noexc95:                                         ; preds = %.noexc94
   %21 = extractvalue { ptr, i8 } %i.be, 0         ; 2 uses
-  %22 = extractvalue { ptr, i8 } %i.be, 1
-  %23 = trunc nuw i8 %22 to i1
-  %spec.select.i = and i1 %.not.i93, %23
-  %not.10.i = xor i1 %i.bd, true
-  %24 = select i1 %not.10.i, i1 %spec.select.i, i1 false ; 3 uses
-  %i.bf = zext i1 %24 to i8
-  %i.bg = and i1 %i.at, %24                       ; 2 uses
+  %22 = extractvalue { ptr, i8 } %i.be, 1         ; 2 uses
+  br i1 %i.bd, label %_ZN7rocksdbL21GetReadScopedIOConfigERKNS_22BlockBasedTableOptionsERKNS_10JobOptionsEbbb.exit, label %23
+
+23:                                               ; preds = %.noexc95
+  %24 = trunc nuw i8 %22 to i1
+  %spec.select.i = and i1 %.not.i93, %24
+  br label %_ZN7rocksdbL21GetReadScopedIOConfigERKNS_22BlockBasedTableOptionsERKNS_10JobOptionsEbbb.exit
+
+_ZN7rocksdbL21GetReadScopedIOConfigERKNS_22BlockBasedTableOptionsERKNS_10JobOptionsEbbb.exit: ; preds = %.noexc95, %23
+  %25 = phi i1 [ %spec.select.i, %23 ], [ false, %.noexc95 ] ; 3 uses
+  %i.bf = zext i1 %25 to i8
+  %i.bg = and i1 %i.at, %25                       ; 2 uses
   %not..i = xor i1 %i.at, true
-  %i.bh = and i1 %24, %not..i
+  %i.bh = and i1 %25, %not..i
   %i.bi = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !457
   %i.bk = load ptr, ptr %4, align 8, !tbaa !458
@@ -478,7 +483,7 @@ _ZNSt6vectorIN7rocksdb11BlockHandleESaIS1_EE12emplace_backIJRS1_EEES5_DpOT_.exit
 
 bb.u:                                             ; preds = %._crit_edge
   call void @llvm.lifetime.start.p0(ptr nonnull %17) #22
-  invoke void @_ZN7rocksdb36MakeReadScopedAlignedBufferAllocatorESt8optionalISt17reference_wrapperINS_29ReadScopedBlockBufferProviderEEEPNS2_5LeaseE(ptr dead_on_unwind nonnull writable sret(%"class.std::function.346") align 8 %17, ptr %21, i8 1, ptr noundef nonnull %i.cf)
+  invoke void @_ZN7rocksdb36MakeReadScopedAlignedBufferAllocatorESt8optionalISt17reference_wrapperINS_29ReadScopedBlockBufferProviderEEEPNS2_5LeaseE(ptr dead_on_unwind nonnull writable sret(%"class.std::function.346") align 8 %17, ptr %21, i8 %22, ptr noundef nonnull %i.cf)
           to label %bb.v unwind label %bb.ab
 
 bb.v:                                             ; preds = %bb.u
@@ -881,18 +886,23 @@ _ZNK7rocksdb22RandomAccessFileReader13use_direct_ioEv.exit: ; preds = %_ZNK7rock
 
 .noexc:                                           ; preds = %_ZNK7rocksdb22RandomAccessFileReader13use_direct_ioEv.exit
   %i.be = invoke { ptr, i8 } @_ZN7rocksdb32GetReadScopedBlockBufferProviderERKNS_11ReadOptionsEb(ptr noundef nonnull align 8 dereferenceable(192) %i.bc, i1 noundef zeroext %i.az)
-          to label %bb.i unwind label %bb.q       ; 2 uses
+          to label %.noexc156 unwind label %bb.q  ; 2 uses
 
-bb.i:                                             ; preds = %.noexc
+.noexc156:                                        ; preds = %.noexc
   %19 = extractvalue { ptr, i8 } %i.be, 0         ; 2 uses
-  %20 = extractvalue { ptr, i8 } %i.be, 1
-  %21 = trunc nuw i8 %20 to i1
-  %spec.select.i = and i1 %.not.i, %21
-  %not.10.i = xor i1 %i.bd, true
-  %22 = select i1 %not.10.i, i1 %spec.select.i, i1 false ; 3 uses
-  %i.bf = and i1 %i.at, %22                       ; 2 uses
+  %20 = extractvalue { ptr, i8 } %i.be, 1         ; 2 uses
+  br i1 %i.bd, label %bb.i, label %21
+
+21:                                               ; preds = %.noexc156
+  %22 = trunc nuw i8 %20 to i1
+  %spec.select.i = and i1 %.not.i, %22
+  br label %bb.i
+
+bb.i:                                             ; preds = %.noexc156, %21
+  %23 = phi i1 [ %spec.select.i, %21 ], [ false, %.noexc156 ] ; 3 uses
+  %i.bf = and i1 %i.at, %23                       ; 2 uses
   %not..i = xor i1 %i.at, true
-  %i.bg = and i1 %22, %not..i                     ; 2 uses
+  %i.bg = and i1 %23, %not..i                     ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #22
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %10, i8 0, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #22
@@ -911,7 +921,7 @@ bb.i:                                             ; preds = %.noexc
 
 bb.j:                                             ; preds = %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #22
-  invoke void @_ZN7rocksdb36MakeReadScopedAlignedBufferAllocatorESt8optionalISt17reference_wrapperINS_29ReadScopedBlockBufferProviderEEEPNS2_5LeaseE(ptr dead_on_unwind nonnull writable sret(%"class.std::function.346") align 8 %16, ptr %19, i8 1, ptr noundef nonnull %12)
+  invoke void @_ZN7rocksdb36MakeReadScopedAlignedBufferAllocatorESt8optionalISt17reference_wrapperINS_29ReadScopedBlockBufferProviderEEEPNS2_5LeaseE(ptr dead_on_unwind nonnull writable sret(%"class.std::function.346") align 8 %16, ptr %19, i8 %20, ptr noundef nonnull %12)
           to label %bb.k unwind label %bb.r
 
 bb.k:                                             ; preds = %bb.j
@@ -1314,7 +1324,7 @@ bb.av:                                            ; preds = %bb.at, %bb.au
   %i.jn = load i64, ptr %.sroa.0215.0262, align 8, !tbaa !62
   %i.jo = load ptr, ptr %i.jm, align 8, !tbaa !54
   %i.jp = getelementptr inbounds nuw [32 x i8], ptr %i.jo, i64 %i.jn
-  invoke fastcc void @_ZN7rocksdbL27CreateAndPinBlockFromBufferERKSt10shared_ptrINS_5IOJobEERKNS_11BlockHandleEmRKNS_5SliceERKNS_18SharedCleanablePtrEbRNS_13CachableEntryINS_5BlockEEE(ptr dead_on_unwind noalias nonnull writable align 8 %0, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.jb, i64 noundef %i.jc, ptr noundef nonnull align 8 dereferenceable(16) %i.ix, ptr noundef nonnull align 8 dereferenceable(8) %18, i1 noundef zeroext %22, ptr noundef nonnull align 8 dereferenceable(25) %i.jp)
+  invoke fastcc void @_ZN7rocksdbL27CreateAndPinBlockFromBufferERKSt10shared_ptrINS_5IOJobEERKNS_11BlockHandleEmRKNS_5SliceERKNS_18SharedCleanablePtrEbRNS_13CachableEntryINS_5BlockEEE(ptr dead_on_unwind noalias nonnull writable align 8 %0, ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull align 8 dereferenceable(16) %i.jb, i64 noundef %i.jc, ptr noundef nonnull align 8 dereferenceable(16) %i.ix, ptr noundef nonnull align 8 dereferenceable(8) %18, i1 noundef zeroext %23, ptr noundef nonnull align 8 dereferenceable(25) %i.jp)
           to label %bb.az unwind label %bb.ax
 
 bb.aw:                                            ; preds = %bb.at

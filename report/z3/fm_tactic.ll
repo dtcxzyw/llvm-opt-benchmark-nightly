@@ -205,7 +205,7 @@ _ZNK17arith_recognizers6is_addEPK4expr.exit.thread: ; preds = %_ZNK17arith_recog
 
 bb.c:                                             ; preds = %.lr.ph, %.loopexit
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %.loopexit ] ; 2 uses
-  %.01752 = phi i1 [ true, %.lr.ph ], [ %.2.ph, %.loopexit ] ; 4 uses
+  %.01752 = phi i1 [ true, %.lr.ph ], [ %.2.ph, %.loopexit ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #20
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %.01975, i64 %indvars.iv
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !155
@@ -468,7 +468,7 @@ bb.q:                                             ; preds = %bb.c, %bb.g, %bb.h,
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
   resume { ptr, i32 } %i.dm
 
-.critedge:                                        ; preds = %bb.e, %bb.d
+.critedge:                                        ; preds = %bb.d, %bb.e
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #20
   br label %.loopexit44
 
@@ -477,11 +477,14 @@ bb.q:                                             ; preds = %bb.c, %bb.g, %bb.h,
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #20
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit44, label %bb.c, !llvm.loop !383
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.c, !llvm.loop !383
 
-.loopexit44:                                      ; preds = %.loopexit, %.critedge
-  %.01750.ph = phi i1 [ %.01752, %.critedge ], [ %.2.ph, %.loopexit ] ; 2 uses
-  %.not47.ph = phi i1 [ false, %.critedge ], [ true, %.loopexit ] ; 2 uses
+._crit_edge.loopexit:                             ; preds = %.loopexit
+  %3 = xor i1 %.2.ph, true
+  br label %.loopexit44
+
+.loopexit44:                                      ; preds = %._crit_edge.loopexit, %.critedge
+  %.not47.ph = phi i1 [ %3, %._crit_edge.loopexit ], [ false, %.critedge ] ; 2 uses
   %.pr = load i32, ptr %i.ab, align 8, !tbaa !253 ; 2 uses
   %i.dn = load ptr, ptr %2, align 8, !tbaa !252   ; 4 uses
   %i.do = zext i32 %.pr to i64
@@ -550,8 +553,7 @@ bb.q:                                             ; preds = %bb.c, %bb.g, %bb.h,
   br label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %.loopexit44.thread, %.loopexit.loopexit.i, %.loopexit44
-  %.not4781 = phi i1 [ %.not47.ph, %.loopexit.loopexit.i ], [ %.not47.ph, %.loopexit44 ], [ true, %.loopexit44.thread ]
-  %.0175080 = phi i1 [ %.01750.ph, %.loopexit.loopexit.i ], [ %.01750.ph, %.loopexit44 ], [ true, %.loopexit44.thread ]
+  %.0175080 = phi i1 [ %.not47.ph, %.loopexit.loopexit.i ], [ %.not47.ph, %.loopexit44 ], [ false, %.loopexit44.thread ]
   %i.et = phi ptr [ %i.ac, %.loopexit.loopexit.i ], [ %i.ac, %.loopexit44 ], [ %i.w, %.loopexit44.thread ]
   %i.eu = phi ptr [ %i.ab, %.loopexit.loopexit.i ], [ %i.ab, %.loopexit44 ], [ %i.x, %.loopexit44.thread ]
   %i.ev = phi ptr [ %.pre.i, %.loopexit.loopexit.i ], [ %i.dn, %.loopexit44 ], [ %i.z, %.loopexit44.thread ] ; 3 uses
@@ -573,10 +575,8 @@ bb.s:                                             ; preds = %bb.r
   unreachable
 
 _ZN13ast_fast_markILj2EED2Ev.exit:                ; preds = %.loopexit.i, %bb.r
-  %3 = xor i1 %.0175080, true
-  %.324 = select i1 %.not4781, i1 %3, i1 false
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #20
-  ret i1 %.324
+  ret i1 %.0175080
 }
 
 ; Function Attrs: mustprogress uwtable

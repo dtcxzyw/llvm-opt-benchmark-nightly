@@ -202,8 +202,8 @@ _RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit: ; preds = %bb.a
   %i.p = icmp eq i8 %i.o, 42
   br i1 %i.p, label %bb.d, label %bb.c
 
-bb.c:                                             ; preds = %bb.a, %bb.a, %bb.b, %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit, %bb.d, %bb.e
-  %.sroa.0.0 = phi i1 [ false, %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit ], [ %.sroa.0.0.i2, %bb.e ], [ false, %bb.d ], [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.a ]
+bb.c:                                             ; preds = %bb.a, %bb.a, %bb.b, %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit, %bb.d, %_RINvNtNtCslghKHtsL3a4_5tokio7runtime7runtime10display_eqRDNtNtCs3oUPovFnLWP_4core5error5ErrorNtNtBY_6marker4SendNtB1v_4SyncEL_EB6_.exit
+  %.sroa.0.0 = phi i1 [ false, %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit ], [ %.sroa.0.0.i2, %_RINvNtNtCslghKHtsL3a4_5tokio7runtime7runtime10display_eqRDNtNtCs3oUPovFnLWP_4core5error5ErrorNtNtBY_6marker4SendNtB1v_4SyncEL_EB6_.exit ], [ false, %bb.d ], [ false, %bb.a ], [ false, %bb.b ], [ false, %bb.a ]
   ret i1 %.sroa.0.0
 
 bb.d:                                             ; preds = %_RNvMs1_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_5Error4kind.exit
@@ -233,10 +233,16 @@ bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !923
   %i.y = load i64, ptr %i.v, align 8, !noalias !923, !noundef !9
   %i.z = icmp eq i64 %i.y, 0
-  %1 = load i8, ptr %i.w, align 8, !range !17, !noalias !923
-  %2 = trunc nuw i8 %1 to i1
-  %3 = xor i1 %2, true
-  %.sroa.0.0.i2 = select i1 %i.z, i1 %3, i1 false
+  br i1 %i.z, label %1, label %_RINvNtNtCslghKHtsL3a4_5tokio7runtime7runtime10display_eqRDNtNtCs3oUPovFnLWP_4core5error5ErrorNtNtBY_6marker4SendNtB1v_4SyncEL_EB6_.exit
+
+1:                                                ; preds = %bb.e
+  %2 = load i8, ptr %i.w, align 8, !range !17, !noalias !923, !noundef !9
+  %3 = trunc nuw i8 %2 to i1
+  %4 = xor i1 %3, true
+  br label %_RINvNtNtCslghKHtsL3a4_5tokio7runtime7runtime10display_eqRDNtNtCs3oUPovFnLWP_4core5error5ErrorNtNtBY_6marker4SendNtB1v_4SyncEL_EB6_.exit
+
+_RINvNtNtCslghKHtsL3a4_5tokio7runtime7runtime10display_eqRDNtNtCs3oUPovFnLWP_4core5error5ErrorNtNtBY_6marker4SendNtB1v_4SyncEL_EB6_.exit: ; preds = %bb.e, %1
+  %.sroa.0.0.i2 = phi i1 [ %4, %1 ], [ false, %bb.e ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !923
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %bb.c

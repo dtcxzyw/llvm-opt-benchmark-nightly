@@ -204,33 +204,36 @@ _ZNSt12_Vector_baseISt6vectorIN5boost9unit_test9framework4impl11name_filter9comp
 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr hidden void @_ZNSt6vectorIN5boost9unit_test9framework4impl11name_filter9componentESaIS5_EE19_M_range_initializeINS1_5utils27basic_string_token_iteratorIcNS9_9ut_detail20default_char_compareIcEEEEEEvT_SF_St18input_iterator_tag(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef align 8 dead_on_return %1, ptr noundef align 8 dead_on_return %2) local_unnamed_addr #1 comdat align 2 personality ptr @__gxx_personality_v0 {
-  %4 = alloca ptr, align 8                        ; 5 uses
-  %5 = alloca %"class.boost::unit_test::basic_cstring", align 8 ; 6 uses
-  %6 = load i8, ptr %1, align 8, !tbaa !59, !range !74, !noundef !75 ; 2 uses
-  %7 = trunc nuw i8 %6 to i1
-  %8 = load i8, ptr %2, align 8, !range !74
-  %9 = trunc nuw i8 %8 to i1
-  %10 = select i1 %7, i1 true, i1 %9
-  br i1 %10, label %.lr.ph, label %._crit_edge
-
-.lr.ph:                                           ; preds = %3
+.lr.ph:
+  %3 = alloca ptr, align 8                        ; 5 uses
+  %4 = alloca %"class.boost::unit_test::basic_cstring", align 8 ; 6 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.b = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %i.b = getelementptr inbounds nuw i8, ptr %4, i64 8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 104
-  br label %bb.a
+  %.pre = load i8, ptr %1, align 8, !tbaa !59, !range !74
+  br label %_ZN5boost9iterators6detail20iterator_facade_baseINS_9unit_test5utils27basic_string_token_iteratorIcNS4_9ut_detail20default_char_compareIcEEEENS3_13basic_cstringIKcEENS0_21forward_traversal_tagESC_lLb0ELb0EEppEv.exit
 
-bb.a:                                             ; preds = %.lr.ph, %_ZN5boost9iterators6detail20iterator_facade_baseINS_9unit_test5utils27basic_string_token_iteratorIcNS4_9ut_detail20default_char_compareIcEEEENS3_13basic_cstringIKcEENS0_21forward_traversal_tagESC_lLb0ELb0EEppEv.exit
-  %11 = phi i8 [ %6, %.lr.ph ], [ %12, %_ZN5boost9iterators6detail20iterator_facade_baseINS_9unit_test5utils27basic_string_token_iteratorIcNS4_9ut_detail20default_char_compareIcEEEENS3_13basic_cstringIKcEENS0_21forward_traversal_tagESC_lLb0ELb0EEppEv.exit ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #24
+_ZN5boost9iterators6detail20iterator_facade_baseINS_9unit_test5utils27basic_string_token_iteratorIcNS4_9ut_detail20default_char_compareIcEEEENS3_13basic_cstringIKcEENS0_21forward_traversal_tagESC_lLb0ELb0EEppEv.exit: ; preds = %_ZN5boost9iterators6detail20iterator_facade_baseINS_9unit_test5utils27basic_string_token_iteratorIcNS4_9ut_detail20default_char_compareIcEEEENS3_13basic_cstringIKcEENS0_21forward_traversal_tagESC_lLb0ELb0EEppEv.exit.backedge, %.lr.ph
+  %5 = phi i8 [ %.pre, %.lr.ph ], [ %.be, %_ZN5boost9iterators6detail20iterator_facade_baseINS_9unit_test5utils27basic_string_token_iteratorIcNS4_9ut_detail20default_char_compareIcEEEENS3_13basic_cstringIKcEENS0_21forward_traversal_tagESC_lLb0ELb0EEppEv.exit.backedge ] ; 2 uses
+  %6 = trunc nuw i8 %5 to i1
+  br i1 %6, label %bb.a, label %_ZN5boost9iteratorsneINS_9unit_test5utils27basic_string_token_iteratorIcNS3_9ut_detail20default_char_compareIcEEEENS2_13basic_cstringIKcEENS0_21forward_traversal_tagESB_lS8_SB_SC_SB_lEENS0_6detail23enable_if_interoperableIT_T4_bE4typeERKNS0_15iterator_facadeISF_T0_T1_T2_T3_EERKNSJ_ISG_T5_T6_T7_T8_EE.exit
+
+_ZN5boost9iteratorsneINS_9unit_test5utils27basic_string_token_iteratorIcNS3_9ut_detail20default_char_compareIcEEEENS2_13basic_cstringIKcEENS0_21forward_traversal_tagESB_lS8_SB_SC_SB_lEENS0_6detail23enable_if_interoperableIT_T4_bE4typeERKNS0_15iterator_facadeISF_T0_T1_T2_T3_EERKNSJ_ISG_T5_T6_T7_T8_EE.exit: ; preds = %_ZN5boost9iterators6detail20iterator_facade_baseINS_9unit_test5utils27basic_string_token_iteratorIcNS4_9ut_detail20default_char_compareIcEEEENS3_13basic_cstringIKcEENS0_21forward_traversal_tagESC_lLb0ELb0EEppEv.exit
+  %7 = load i8, ptr %2, align 8, !tbaa !59, !range !74, !noundef !75
+  %8 = trunc nuw i8 %7 to i1
+  br i1 %8, label %bb.a, label %._crit_edge
+
+bb.a:                                             ; preds = %_ZN5boost9iterators6detail20iterator_facade_baseINS_9unit_test5utils27basic_string_token_iteratorIcNS4_9ut_detail20default_char_compareIcEEEENS3_13basic_cstringIKcEENS0_21forward_traversal_tagESC_lLb0ELb0EEppEv.exit, %_ZN5boost9iteratorsneINS_9unit_test5utils27basic_string_token_iteratorIcNS3_9ut_detail20default_char_compareIcEEEENS2_13basic_cstringIKcEENS0_21forward_traversal_tagESB_lS8_SB_SC_SB_lEENS0_6detail23enable_if_interoperableIT_T4_bE4typeERKNS0_15iterator_facadeISF_T0_T1_T2_T3_EERKNSJ_ISG_T5_T6_T7_T8_EE.exit
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
   call void @llvm.experimental.noalias.scope.decl(metadata !681)
   call void @llvm.experimental.noalias.scope.decl(metadata !682)
   call void @llvm.experimental.noalias.scope.decl(metadata !683)
   %i.h = load ptr, ptr %i.a, align 8, !tbaa !45, !noalias !684 ; 12 uses
-  store ptr %i.h, ptr %5, align 8, !tbaa !45, !alias.scope !684
+  store ptr %i.h, ptr %4, align 8, !tbaa !45, !alias.scope !684
   %i.i = load ptr, ptr %i.c, align 8, !tbaa !46, !noalias !684 ; 6 uses
   store ptr %i.i, ptr %i.b, align 8, !tbaa !46, !alias.scope !684
   %i.j = load ptr, ptr %i.d, align 8, !tbaa !339  ; 10 uses
@@ -314,7 +317,7 @@ _ZN5boost9unit_test9framework4impl11name_filter9componentC2ENS0_13basic_cstringI
   br label %_ZNSt6vectorIN5boost9unit_test9framework4impl11name_filter9componentESaIS5_EE12emplace_backIJNS1_13basic_cstringIKcEEEEERS5_DpOT_.exit
 
 bb.f:                                             ; preds = %bb.a
-  invoke void @_ZNSt6vectorIN5boost9unit_test9framework4impl11name_filter9componentESaIS5_EE17_M_realloc_insertIJNS1_13basic_cstringIKcEEEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %i.j, ptr noundef nonnull align 8 dereferenceable(16) %5)
+  invoke void @_ZNSt6vectorIN5boost9unit_test9framework4impl11name_filter9componentESaIS5_EE17_M_realloc_insertIJNS1_13basic_cstringIKcEEEEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr %i.j, ptr noundef nonnull align 8 dereferenceable(16) %4)
           to label %._ZNSt6vectorIN5boost9unit_test9framework4impl11name_filter9componentESaIS5_EE12emplace_backIJNS1_13basic_cstringIKcEEEEERS5_DpOT_.exit_crit_edge unwind label %bb.i
 
 ._ZNSt6vectorIN5boost9unit_test9framework4impl11name_filter9componentESaIS5_EE12emplace_backIJNS1_13basic_cstringIKcEEEEERS5_DpOT_.exit_crit_edge: ; preds = %bb.f
@@ -322,34 +325,30 @@ bb.f:                                             ; preds = %bb.a
   br label %_ZNSt6vectorIN5boost9unit_test9framework4impl11name_filter9componentESaIS5_EE12emplace_backIJNS1_13basic_cstringIKcEEEEERS5_DpOT_.exit
 
 _ZNSt6vectorIN5boost9unit_test9framework4impl11name_filter9componentESaIS5_EE12emplace_backIJNS1_13basic_cstringIKcEEEEERS5_DpOT_.exit: ; preds = %._ZNSt6vectorIN5boost9unit_test9framework4impl11name_filter9componentESaIS5_EE12emplace_backIJNS1_13basic_cstringIKcEEEEERS5_DpOT_.exit_crit_edge, %_ZN5boost9unit_test9framework4impl11name_filter9componentC2ENS0_13basic_cstringIKcEE.exit.i
-  %i.ah = phi i8 [ %.pre.a, %._ZNSt6vectorIN5boost9unit_test9framework4impl11name_filter9componentESaIS5_EE12emplace_backIJNS1_13basic_cstringIKcEEEEERS5_DpOT_.exit_crit_edge ], [ %11, %_ZN5boost9unit_test9framework4impl11name_filter9componentC2ENS0_13basic_cstringIKcEE.exit.i ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #24
+  %i.ah = phi i8 [ %.pre.a, %._ZNSt6vectorIN5boost9unit_test9framework4impl11name_filter9componentESaIS5_EE12emplace_backIJNS1_13basic_cstringIKcEEEEERS5_DpOT_.exit_crit_edge ], [ %5, %_ZN5boost9unit_test9framework4impl11name_filter9componentC2ENS0_13basic_cstringIKcEE.exit.i ]
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
   %i.ai = trunc nuw i8 %i.ah to i1
-  br i1 %i.ai, label %bb.g, label %_ZN5boost9iterators6detail20iterator_facade_baseINS_9unit_test5utils27basic_string_token_iteratorIcNS4_9ut_detail20default_char_compareIcEEEENS3_13basic_cstringIKcEENS0_21forward_traversal_tagESC_lLb0ELb0EEppEv.exit
+  br i1 %i.ai, label %bb.g, label %_ZN5boost9iterators6detail20iterator_facade_baseINS_9unit_test5utils27basic_string_token_iteratorIcNS4_9ut_detail20default_char_compareIcEEEENS3_13basic_cstringIKcEENS0_21forward_traversal_tagESC_lLb0ELb0EEppEv.exit.backedge
+
+_ZN5boost9iterators6detail20iterator_facade_baseINS_9unit_test5utils27basic_string_token_iteratorIcNS4_9ut_detail20default_char_compareIcEEEENS3_13basic_cstringIKcEENS0_21forward_traversal_tagESC_lLb0ELb0EEppEv.exit.backedge: ; preds = %_ZNSt6vectorIN5boost9unit_test9framework4impl11name_filter9componentESaIS5_EE12emplace_backIJNS1_13basic_cstringIKcEEEEERS5_DpOT_.exit, %.noexc3
+  %.be = phi i8 [ 0, %_ZNSt6vectorIN5boost9unit_test9framework4impl11name_filter9componentESaIS5_EE12emplace_backIJNS1_13basic_cstringIKcEEEEERS5_DpOT_.exit ], [ %i.an, %.noexc3 ]
+  br label %_ZN5boost9iterators6detail20iterator_facade_baseINS_9unit_test5utils27basic_string_token_iteratorIcNS4_9ut_detail20default_char_compareIcEEEENS3_13basic_cstringIKcEENS0_21forward_traversal_tagESC_lLb0ELb0EEppEv.exit
 
 bb.g:                                             ; preds = %_ZNSt6vectorIN5boost9unit_test9framework4impl11name_filter9componentESaIS5_EE12emplace_backIJNS1_13basic_cstringIKcEEEEERS5_DpOT_.exit
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #24
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #24
   %i.aj = load ptr, ptr %i.f, align 8, !tbaa !45
-  store ptr %i.aj, ptr %4, align 8, !tbaa !49
+  store ptr %i.aj, ptr %3, align 8, !tbaa !49
   %i.ak = load ptr, ptr %i.g, align 8, !tbaa !46
-  %i.al = invoke noundef zeroext i1 @_ZN5boost9unit_test5utils19token_iterator_baseINS1_27basic_string_token_iteratorIcNS1_9ut_detail20default_char_compareIcEEEEcS6_NS0_13basic_cstringIKcEESA_NS_9iterators21forward_traversal_tagEE3getIPS9_EEbRT_SG_(ptr noundef nonnull align 8 dereferenceable(112) %1, ptr noundef nonnull align 8 dereferenceable(8) %4, ptr noundef %i.ak)
+  %i.al = invoke noundef zeroext i1 @_ZN5boost9unit_test5utils19token_iterator_baseINS1_27basic_string_token_iteratorIcNS1_9ut_detail20default_char_compareIcEEEEcS6_NS0_13basic_cstringIKcEESA_NS_9iterators21forward_traversal_tagEE3getIPS9_EEbRT_SG_(ptr noundef nonnull align 8 dereferenceable(112) %1, ptr noundef nonnull align 8 dereferenceable(8) %3, ptr noundef %i.ak)
           to label %.noexc3 unwind label %bb.h
 
 .noexc3:                                          ; preds = %bb.g
-  %i.am = load ptr, ptr %4, align 8, !tbaa !49
+  %i.am = load ptr, ptr %3, align 8, !tbaa !49
   store ptr %i.am, ptr %i.f, align 8, !tbaa !45
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #24
   %i.an = zext i1 %i.al to i8                     ; 2 uses
   store i8 %i.an, ptr %1, align 8, !tbaa !59
-  br label %_ZN5boost9iterators6detail20iterator_facade_baseINS_9unit_test5utils27basic_string_token_iteratorIcNS4_9ut_detail20default_char_compareIcEEEENS3_13basic_cstringIKcEENS0_21forward_traversal_tagESC_lLb0ELb0EEppEv.exit
-
-_ZN5boost9iterators6detail20iterator_facade_baseINS_9unit_test5utils27basic_string_token_iteratorIcNS4_9ut_detail20default_char_compareIcEEEENS3_13basic_cstringIKcEENS0_21forward_traversal_tagESC_lLb0ELb0EEppEv.exit: ; preds = %_ZNSt6vectorIN5boost9unit_test9framework4impl11name_filter9componentESaIS5_EE12emplace_backIJNS1_13basic_cstringIKcEEEEERS5_DpOT_.exit, %.noexc3
-  %12 = phi i8 [ 0, %_ZNSt6vectorIN5boost9unit_test9framework4impl11name_filter9componentESaIS5_EE12emplace_backIJNS1_13basic_cstringIKcEEEEERS5_DpOT_.exit ], [ %i.an, %.noexc3 ] ; 2 uses
-  %13 = trunc nuw i8 %12 to i1
-  %14 = load i8, ptr %2, align 8, !range !74
-  %15 = trunc nuw i8 %14 to i1
-  %16 = select i1 %13, i1 true, i1 %15
-  br i1 %16, label %bb.a, label %._crit_edge
+  br label %_ZN5boost9iterators6detail20iterator_facade_baseINS_9unit_test5utils27basic_string_token_iteratorIcNS4_9ut_detail20default_char_compareIcEEEENS3_13basic_cstringIKcEENS0_21forward_traversal_tagESC_lLb0ELb0EEppEv.exit.backedge
 
 bb.h:                                             ; preds = %bb.g
   %i.ao = landingpad { ptr, i32 }
@@ -359,7 +358,7 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.f
   %i.ap = landingpad { ptr, i32 }
           catch ptr null
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
@@ -385,7 +384,7 @@ bb.k:                                             ; preds = %_ZNSt6vectorIN5boos
   invoke void @__cxa_end_catch()
           to label %bb.l unwind label %bb.m
 
-._crit_edge:                                      ; preds = %_ZN5boost9iterators6detail20iterator_facade_baseINS_9unit_test5utils27basic_string_token_iteratorIcNS4_9ut_detail20default_char_compareIcEEEENS3_13basic_cstringIKcEENS0_21forward_traversal_tagESC_lLb0ELb0EEppEv.exit, %3
+._crit_edge:                                      ; preds = %_ZN5boost9iteratorsneINS_9unit_test5utils27basic_string_token_iteratorIcNS3_9ut_detail20default_char_compareIcEEEENS2_13basic_cstringIKcEENS0_21forward_traversal_tagESB_lS8_SB_SC_SB_lEENS0_6detail23enable_if_interoperableIT_T4_bE4typeERKNS0_15iterator_facadeISF_T0_T1_T2_T3_EERKNSJ_ISG_T5_T6_T7_T8_EE.exit
   ret void
 
 bb.l:                                             ; preds = %bb.k

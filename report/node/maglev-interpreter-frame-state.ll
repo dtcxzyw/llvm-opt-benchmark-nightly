@@ -204,19 +204,21 @@ bb.h:                                             ; preds = %bb.i, %.lr.ph.i
   %.sroa.010.031.i = phi ptr [ %.sroa.010.0.ph34.i, %.lr.ph.i ], [ %i.x, %bb.i ] ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %.sroa.010.031.i, i64 40
   %i.w = load i32, ptr %i.v, align 8              ; 2 uses
-  %8 = icmp ne i32 %i.w, 262143
-  %9 = getelementptr inbounds nuw i8, ptr %.sroa.010.031.i, i64 45
-  %10 = load i8, ptr %9, align 1, !range !111
-  %11 = trunc nuw i8 %10 to i1
-  %.not17.i = select i1 %8, i1 true, i1 %11
-  br i1 %.not17.i, label %bb.j, label %bb.i
+  %8 = icmp eq i32 %i.w, 262143
+  br i1 %8, label %_ZN2v88internal6maglev12_GLOBAL__N_115NodeInfoIsEmptyERKNS1_8NodeInfoE.exit.i, label %bb.j
 
-bb.i:                                             ; preds = %bb.h
+_ZN2v88internal6maglev12_GLOBAL__N_115NodeInfoIsEmptyERKNS1_8NodeInfoE.exit.i: ; preds = %bb.h
+  %9 = getelementptr inbounds nuw i8, ptr %.sroa.010.031.i, i64 45
+  %10 = load i8, ptr %9, align 1, !range !111, !noundef !112
+  %11 = trunc nuw i8 %10 to i1
+  br i1 %11, label %bb.j, label %bb.i
+
+bb.i:                                             ; preds = %_ZN2v88internal6maglev12_GLOBAL__N_115NodeInfoIsEmptyERKNS1_8NodeInfoE.exit.i
   %i.x = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.010.031.i) #21 ; 2 uses
   %i.y = icmp eq ptr %i.x, %i.q
   br i1 %i.y, label %_ZN2v88internal6maglev12_GLOBAL__N_114AspectIncludesINS0_7ZoneMapIPNS1_9ValueNodeENS1_8NodeInfoESt4lessIS6_EEESA_FbRKS7_SC_EPFbSC_EEEbRKT_RKT0_RKT1_T2_.exit, label %bb.h, !llvm.loop !142
 
-bb.j:                                             ; preds = %bb.h
+bb.j:                                             ; preds = %_ZN2v88internal6maglev12_GLOBAL__N_115NodeInfoIsEmptyERKNS1_8NodeInfoE.exit.i, %bb.h
   %i.z = icmp eq ptr %.sroa.03.0.ph33.i, %i.u
   br i1 %i.z, label %.loopexit, label %.preheader.i
 
@@ -279,22 +281,24 @@ bb.p:                                             ; preds = %bb.f
   br label %bb.q
 
 bb.q:                                             ; preds = %bb.r, %.lr.ph.i14
-  %.sroa.010.031.i17 = phi ptr [ %.sroa.010.0.ph34.i15, %.lr.ph.i14 ], [ %i.ay, %bb.r ] ; 7 uses
+  %.sroa.010.031.i17 = phi ptr [ %.sroa.010.0.ph34.i15, %.lr.ph.i14 ], [ %i.ay, %bb.r ] ; 8 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.sroa.010.031.i17, i64 40
   %i.ax = load i32, ptr %i.aw, align 8            ; 2 uses
-  %12 = icmp ne i32 %i.ax, 262143
-  %13 = getelementptr inbounds nuw i8, ptr %.sroa.010.031.i17, i64 45
-  %14 = load i8, ptr %13, align 1, !range !111
-  %15 = trunc nuw i8 %14 to i1                    ; 2 uses
-  %.not17.i18 = select i1 %12, i1 true, i1 %15
-  br i1 %.not17.i18, label %bb.s, label %bb.r
+  %12 = icmp eq i32 %i.ax, 262143
+  br i1 %12, label %_ZN2v88internal6maglev12_GLOBAL__N_115NodeInfoIsEmptyERKNS1_8NodeInfoE.exit.i22, label %bb.s
 
-bb.r:                                             ; preds = %bb.q
+_ZN2v88internal6maglev12_GLOBAL__N_115NodeInfoIsEmptyERKNS1_8NodeInfoE.exit.i22: ; preds = %bb.q
+  %13 = getelementptr inbounds nuw i8, ptr %.sroa.010.031.i17, i64 45
+  %14 = load i8, ptr %13, align 1, !range !111, !noundef !112
+  %15 = trunc nuw i8 %14 to i1
+  br i1 %15, label %bb.s, label %bb.r
+
+bb.r:                                             ; preds = %_ZN2v88internal6maglev12_GLOBAL__N_115NodeInfoIsEmptyERKNS1_8NodeInfoE.exit.i22
   %i.ay = tail call noundef ptr @_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base(ptr noundef nonnull %.sroa.010.031.i17) #21 ; 2 uses
   %i.az = icmp eq ptr %i.ay, %i.q
   br i1 %i.az, label %_ZN2v88internal6maglev12_GLOBAL__N_114AspectIncludesINS0_7ZoneMapIPNS1_9ValueNodeENS1_8NodeInfoESt4lessIS6_EEESA_FbRKS7_SC_EPFbSC_EEEbRKT_RKT0_RKT1_T2_.exit22, label %bb.q, !llvm.loop !142
 
-bb.s:                                             ; preds = %bb.q
+bb.s:                                             ; preds = %_ZN2v88internal6maglev12_GLOBAL__N_115NodeInfoIsEmptyERKNS1_8NodeInfoE.exit.i22, %bb.q
   %i.ba = icmp eq ptr %.sroa.03.0.ph33.i16, %i.av
   br i1 %i.ba, label %_ZN2v88internal6maglev12_GLOBAL__N_116NodeInfoIncludesERKNS1_8NodeInfoES5_.exit.thread, label %.preheader.i19
 
@@ -328,10 +332,13 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.bn, label %bb.x, label %_ZN2v88internal6maglev12_GLOBAL__N_116NodeInfoIncludesERKNS1_8NodeInfoES5_.exit.thread
 
 bb.x:                                             ; preds = %bb.w
+  %16 = getelementptr inbounds nuw i8, ptr %.sroa.010.031.i17, i64 45
+  %17 = load i8, ptr %16, align 1, !range !111, !noundef !112
+  %18 = trunc nuw i8 %17 to i1
   %i.bo = getelementptr inbounds nuw i8, ptr %.sroa.010.031.i17, i64 44
   %i.bp = load i8, ptr %i.bo, align 4, !range !111
   %i.bq = trunc nuw i8 %i.bp to i1
-  %or.cond.i = select i1 %15, i1 %i.bq, i1 false
+  %or.cond.i = select i1 %18, i1 %i.bq, i1 false
   br i1 %or.cond.i, label %bb.y, label %.outer.i21
 
 bb.y:                                             ; preds = %bb.x

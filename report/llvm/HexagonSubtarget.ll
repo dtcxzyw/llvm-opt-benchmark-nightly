@@ -205,13 +205,18 @@ bb.a:
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local noundef zeroext i1 @_ZNK4llvm16HexagonSubtarget22enableMachineSchedulerEv(ptr nofree nonnull readnone align 8 captures(none) %0) unnamed_addr #11 align 2 {
-bb.a:
-  %1 = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL21DisableHexagonMISched, i64 8), align 8, !tbaa !596
-  %.not = icmp eq i16 %1, 0
-  %i.a = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZL21DisableHexagonMISched, i64 120), align 8, !range !146
+  %2 = load i16, ptr getelementptr inbounds nuw (i8, ptr @_ZL21DisableHexagonMISched, i64 8), align 8, !tbaa !596
+  %.not = icmp eq i16 %2, 0
+  br i1 %.not, label %3, label %bb.a
+
+bb.a:                                             ; preds = %1
+  %i.a = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZL21DisableHexagonMISched, i64 120), align 8, !tbaa !178, !range !146, !noundef !150
   %i.b = trunc nuw i8 %i.a to i1
   %i.c = xor i1 %i.b, true
-  %.0 = select i1 %.not, i1 true, i1 %i.c
+  br label %3
+
+3:                                                ; preds = %1, %bb.a
+  %.0 = phi i1 [ %i.c, %bb.a ], [ true, %1 ]
   ret i1 %.0
 }
 

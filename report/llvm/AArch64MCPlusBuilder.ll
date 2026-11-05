@@ -205,15 +205,23 @@ bb.a:
   %i.b = load ptr, ptr %0, align 8, !tbaa !30
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 256
   %i.d = load ptr, ptr %i.c, align 8
-  %i.e = call i32 %i.d(ptr noundef nonnull align 8 dereferenceable(544) %0, ptr noundef nonnull align 8 dereferenceable(128) %1, ptr noundef nonnull align 1 dereferenceable(1) %i.a) #25
+  %i.e = call i32 %i.d(ptr noundef nonnull align 8 dereferenceable(544) %0, ptr noundef nonnull align 8 dereferenceable(128) %1, ptr noundef nonnull align 1 dereferenceable(1) %i.a) #25 ; 2 uses
   %i.f = load i8, ptr %i.a, align 1, !tbaa !286, !range !37, !noundef !38
   %i.g = trunc nuw i8 %i.f to i1
-  %.not = xor i1 %i.g, true
-  %i.h = and i32 %i.e, 131071
-  %i.i = icmp eq i32 %i.h, 65542
-  %i.j = select i1 %.not, i1 %i.i, i1 false
+  %i.h = and i32 %i.e, 65536
+  %i.i = icmp eq i32 %i.h, 0
+  %i.j = select i1 %i.g, i1 true, i1 %i.i
+  br i1 %i.j, label %5, label %2
+
+2:                                                ; preds = %bb.a
+  %3 = and i32 %i.e, 65535
+  %4 = icmp eq i32 %3, 6
+  br label %5
+
+5:                                                ; preds = %2, %bb.a
+  %6 = phi i1 [ %4, %2 ], [ false, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
-  ret i1 %i.j
+  ret i1 %6
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable

@@ -204,10 +204,6 @@ bb.a:
 default.unreachable117:                           ; preds = %bb.a
   unreachable
 
-3:                                                ; preds = %bb.a
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
-  br label %bb.h
-
 bb.b:                                             ; preds = %bb.a
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 184
   store i8 0, ptr %i.r, align 8
@@ -237,6 +233,10 @@ bb.b:                                             ; preds = %bb.a
   %.val51 = load i8, ptr %i.aj, align 1, !range !27, !noundef !24
   %.not118 = icmp eq i8 %.val51, 0
   br i1 %.not118, label %bb.c, label %bb.e
+
+3:                                                ; preds = %bb.a
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.o)
+  br label %bb.h
 
 bb.c:                                             ; preds = %bb.b
   %i.ak = load i64, ptr %i.u, align 8, !range !104, !noundef !24 ; 2 uses
@@ -640,7 +640,7 @@ bb.ag:                                            ; preds = %bb.ae
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   br label %bb.ah
 
-bb.ah:                                            ; preds = %bb.o, %bb.x, %bb.af, %bb.b, %bb.v, %bb.ab, %bb.ag, %bb.ai
+bb.ah:                                            ; preds = %bb.o, %bb.b, %bb.x, %bb.af, %bb.v, %bb.ab, %bb.ag, %bb.ai
   %.sroa.857.0 = phi ptr [ %.sroa.3.0.copyload, %bb.ai ], [ undef, %bb.x ], [ undef, %bb.b ], [ %.sroa.852.sroa.0.0.copyload, %bb.ag ], [ %.sroa.846.sroa.0.0.copyload, %bb.ab ], [ %.sroa.8.sroa.0.0.copyload, %bb.v ], [ undef, %bb.af ], [ undef, %bb.o ]
   %.sroa.056.0 = phi i64 [ %i.aa, %bb.ai ], [ -1, %bb.x ], [ -1, %bb.b ], [ %i.be, %bb.ag ], [ %i.ba, %bb.ab ], [ %i.at, %bb.v ], [ -1, %bb.af ], [ -1, %bb.o ]
   store i64 %.sroa.056.0, ptr %0, align 8

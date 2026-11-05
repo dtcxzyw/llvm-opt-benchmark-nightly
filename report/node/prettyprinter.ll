@@ -202,16 +202,21 @@ _ZN2v88internal24IncrementalStringBuilder13AppendCStringIcEEvPKT_.exit: ; preds 
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden noundef zeroext i1 @_ZN2v88internal11CallPrinter11ShouldPrintEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(120) %0) local_unnamed_addr #3 align 2 !guid !60 {
-bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 60
-  %2 = load i8, ptr %1, align 4, !range !45, !noundef !46
-  %3 = trunc nuw i8 %2 to i1
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 60
+  %3 = load i8, ptr %2, align 4, !range !45, !noundef !46
+  %4 = trunc nuw i8 %3 to i1
+  br i1 %4, label %bb.a, label %5
+
+bb.a:                                             ; preds = %1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 61
-  %i.b = load i8, ptr %i.a, align 1, !range !45
+  %i.b = load i8, ptr %i.a, align 1, !range !45, !noundef !46
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = xor i1 %i.c, true
-  %4 = select i1 %3, i1 %i.d, i1 false
-  ret i1 %4
+  br label %5
+
+5:                                                ; preds = %bb.a, %1
+  %6 = phi i1 [ false, %1 ], [ %i.d, %bb.a ]
+  ret i1 %6
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -274,7 +279,7 @@ _ZN2v88internal24IncrementalStringBuilder15AppendCharacterEh.exit.sink.split: ; 
   tail call void @_ZN2v88internal24IncrementalStringBuilder6ExtendEv(ptr noundef nonnull align 8 dereferenceable(40) %i.k) #7
   br label %_ZN2v88internal24IncrementalStringBuilder15AppendCharacterEh.exit
 
-_ZN2v88internal24IncrementalStringBuilder15AppendCharacterEh.exit: ; preds = %_ZN2v88internal24IncrementalStringBuilder15AppendCharacterEh.exit.sink.split, %bb.c, %bb.d, %bb.a
+_ZN2v88internal24IncrementalStringBuilder15AppendCharacterEh.exit: ; preds = %_ZN2v88internal24IncrementalStringBuilder15AppendCharacterEh.exit.sink.split, %bb.a, %bb.c, %bb.d
   ret void
 }
 
@@ -677,7 +682,7 @@ _ZN2v88internal11CallPrinter5PrintENS0_12DirectHandleINS0_6StringEEE.exit23: ; p
   tail call void @_ZN2v88internal24IncrementalStringBuilder12AppendStringENS0_12DirectHandleINS0_6StringEEE(ptr noundef nonnull align 8 dereferenceable(40) %i.ed, ptr nonnull %.tr94127.lcssa156) #7
   br label %_ZN2v88internal11CallPrinter5PrintENS0_12DirectHandleINS0_6StringEEE.exit20
 
-_ZN2v88internal11CallPrinter5PrintENS0_12DirectHandleINS0_6StringEEE.exit20: ; preds = %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit, %_ZN2v88internal8IsSymbolENS0_6TaggedINS0_6ObjectEEE.exit, %bb.p, %bb.f, %_ZN2v88internal8IsSymbolENS0_6TaggedINS0_6ObjectEEE.exit.peel, %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit.peel, %bb.a, %bb.o, %_ZN2v88internal8IsNumberENS0_6TaggedINS0_6ObjectEEE.exit.thread, %_ZN2v88internal11CallPrinter5PrintENS0_12DirectHandleINS0_6StringEEE.exit23, %.loopexit147, %.loopexit149, %.loopexit150, %.loopexit148, %_ZN2v88internal11CallPrinter5PrintENS0_12DirectHandleINS0_6StringEEE.exit
+_ZN2v88internal11CallPrinter5PrintENS0_12DirectHandleINS0_6StringEEE.exit20: ; preds = %_ZN2v88internal8IsSymbolENS0_6TaggedINS0_6ObjectEEE.exit, %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit, %bb.p, %bb.f, %_ZN2v88internal8IsSymbolENS0_6TaggedINS0_6ObjectEEE.exit.peel, %_ZN2v88internal11HandleScope12CreateHandleEPNS0_7IsolateEm.exit.peel, %bb.a, %_ZN2v88internal11CallPrinter5PrintENS0_12DirectHandleINS0_6StringEEE.exit23, %bb.o, %_ZN2v88internal8IsNumberENS0_6TaggedINS0_6ObjectEEE.exit.thread, %.loopexit147, %.loopexit149, %.loopexit150, %.loopexit148, %_ZN2v88internal11CallPrinter5PrintENS0_12DirectHandleINS0_6StringEEE.exit
   ret void
 }
 
@@ -1080,22 +1085,23 @@ _ZN2v88internal11CallPrinter4FindEPNS0_7AstNodeEb.exit: ; preds = %bb.j, %bb.h, 
   %i.ap = load i32, ptr %i.ao, align 4
   %i.aq = and i32 %i.ap, 128
   %.not47 = icmp eq i32 %i.aq, 0
-  br i1 %.not47, label %bb.l, label %bb.k
+  br i1 %.not47, label %2, label %bb.k
 
 bb.k:                                             ; preds = %_ZN2v88internal11CallPrinter4FindEPNS0_7AstNodeEb.exit
   tail call void @_ZN2v88internal11CallPrinter5PrintEPKc(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull @.str.9)
-  br label %bb.l
+  br label %2
 
-bb.l:                                             ; preds = %bb.k, %_ZN2v88internal11CallPrinter4FindEPNS0_7AstNodeEb.exit
+2:                                                ; preds = %bb.k, %_ZN2v88internal11CallPrinter4FindEPNS0_7AstNodeEb.exit
   tail call void @_ZN2v88internal11CallPrinter5PrintEPKc(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull @.str.10)
-  %2 = load i8, ptr %i.u, align 4, !range !45, !noundef !46
-  %3 = trunc nuw i8 %2 to i1
+  %3 = load i8, ptr %i.u, align 4, !range !45, !noundef !46
+  %4 = trunc nuw i8 %3 to i1
+  br i1 %4, label %bb.l, label %bb.ad
+
+bb.l:                                             ; preds = %2
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 61
-  %i.as = load i8, ptr %i.ar, align 1, !range !45
+  %i.as = load i8, ptr %i.ar, align 1, !range !45, !noundef !46
   %i.at = trunc nuw i8 %i.as to i1
-  %not. = xor i1 %3, true
-  %4 = select i1 %not., i1 true, i1 %i.at
-  br i1 %4, label %bb.ad, label %bb.m
+  br i1 %i.at, label %bb.ad, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.au = load ptr, ptr %0, align 8
@@ -1238,7 +1244,7 @@ _ZN2v88internal11CallPrinter4FindEPNS0_7AstNodeEb.exit19: ; preds = %bb.ac, %bb.
   tail call void @_ZN2v88internal11CallPrinter5PrintEPKc(ptr noundef nonnull align 8 dereferenceable(120) %0, ptr noundef nonnull @.str.6)
   br label %bb.ad
 
-bb.ad:                                            ; preds = %bb.m, %_ZN2v88internal11CallPrinter4FindEPNS0_7AstNodeEb.exit19, %bb.l
+bb.ad:                                            ; preds = %2, %bb.m, %_ZN2v88internal11CallPrinter4FindEPNS0_7AstNodeEb.exit19, %bb.l
   ret void
 }
 

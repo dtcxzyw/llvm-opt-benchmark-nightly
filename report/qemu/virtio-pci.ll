@@ -204,44 +204,50 @@ bb.a:
   %i.a = getelementptr i8, ptr %0, i64 34184      ; 7 uses
   %.val = load ptr, ptr %i.a, align 8             ; 2 uses
   %.not.i = icmp eq ptr %.val, null
-  br i1 %.not.i, label %virtio_bus_get_device.exit.a, label %bb.b
+  br i1 %.not.i, label %virtio_bus_get_device.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %.val, i64 16
   %i.c = load ptr, ptr %i.b, align 8
-  br label %virtio_bus_get_device.exit.a
+  br label %virtio_bus_get_device.exit
 
-virtio_bus_get_device.exit.a:                     ; preds = %bb.a, %bb.b
+virtio_bus_get_device.exit:                       ; preds = %bb.a, %bb.b
   %3 = phi ptr [ %i.c, %bb.b ], [ null, %bb.a ]   ; 4 uses
   %4 = tail call ptr @object_get_class(ptr noundef %3) #13
   %5 = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %4, ptr noundef nonnull @.str.46, ptr noundef nonnull @.str.47, i32 noundef 91, ptr noundef nonnull @__func__.VIRTIO_DEVICE_GET_CLASS) #13 ; 2 uses
   %6 = tail call i32 @msix_enabled(ptr noundef nonnull %0) #13
-  %.not = icmp ne i32 %6, 0
-  %i.d = load i8, ptr @mshv_allowed, align 1, !range !10
+  %.not = icmp eq i32 %6, 0
+  br i1 %.not, label %7, label %virtio_bus_get_device.exit.a
+
+virtio_bus_get_device.exit.a:                     ; preds = %virtio_bus_get_device.exit
+  %i.d = load i8, ptr @mshv_allowed, align 1, !range !10, !noundef !9
   %i.e = trunc nuw i8 %i.d to i1
   %i.f = load i8, ptr @kvm_msi_via_irqfd_allowed, align 1, !range !10
   %i.g = trunc nuw i8 %i.f to i1
-  %7 = select i1 %i.e, i1 true, i1 %i.g
-  %i.h = select i1 %.not, i1 %7, i1 false         ; 5 uses
-  %8 = tail call i32 @llvm.smin.i32(i32 %1, i32 1024) ; 7 uses
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 34096 ; 2 uses
+  %i.h = select i1 %i.e, i1 true, i1 %i.g
+  br label %7
+
+7:                                                ; preds = %virtio_bus_get_device.exit.a, %virtio_bus_get_device.exit
+  %8 = phi i1 [ false, %virtio_bus_get_device.exit ], [ %i.h, %virtio_bus_get_device.exit.a ] ; 5 uses
+  %9 = tail call i32 @llvm.smin.i32(i32 %1, i32 1024) ; 7 uses
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 34096 ; 2 uses
   br i1 %2, label %.critedge, label %bb.c
 
-bb.c:                                             ; preds = %virtio_bus_get_device.exit.a
-  %i.i = load i32, ptr %9, align 16               ; 2 uses
+bb.c:                                             ; preds = %7
+  %i.i = load i32, ptr %10, align 16              ; 2 uses
   %.not89 = icmp eq i32 %i.i, 0
   br i1 %.not89, label %bb.as, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.j = icmp eq i32 %8, %i.i
+  %i.j = icmp eq i32 %9, %i.i
   br i1 %i.j, label %.critedge.thread, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   tail call void @__assert_fail(ptr noundef nonnull @.str.44, ptr noundef nonnull @.str.5, i32 noundef 1263, ptr noundef nonnull @__PRETTY_FUNCTION__.virtio_pci_set_guest_notifiers) #14
   unreachable
 
-.critedge:                                        ; preds = %virtio_bus_get_device.exit.a
-  store i32 %8, ptr %9, align 16
+.critedge:                                        ; preds = %7
+  store i32 %9, ptr %10, align 16
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 34088 ; 3 uses
   %i.l = load ptr, ptr %i.k, align 8
   %.not90 = icmp eq ptr %i.l, null
@@ -298,7 +304,7 @@ virtio_bus_get_device.exit.i:                     ; preds = %bb.i, %bb.h
 bb.j:                                             ; preds = %.lr.ph.i
   tail call fastcc void @kvm_virtio_pci_vector_release_one(ptr noundef nonnull %0, i32 noundef %.07.i)
   %i.ac = add nuw nsw i32 %.07.i, 1               ; 2 uses
-  %exitcond.not.i = icmp eq i32 %i.ac, %8
+  %exitcond.not.i = icmp eq i32 %i.ac, %9
   br i1 %exitcond.not.i, label %kvm_virtio_pci_vector_vq_release.exit, label %.lr.ph.i, !llvm.loop !0
 
 kvm_virtio_pci_vector_vq_release.exit:            ; preds = %.lr.ph.i, %bb.j, %virtio_bus_get_device.exit.i
@@ -337,7 +343,7 @@ virtio_bus_get_device.exit.i96:                   ; preds = %bb.n, %bb.m
   %i.ak = phi ptr [ %i.aj, %bb.n ], [ null, %bb.m ] ; 4 uses
   %i.al = tail call ptr @object_get_class(ptr noundef %i.ak) #13
   %i.am = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.al, ptr noundef nonnull @.str.46, ptr noundef nonnull @.str.47, i32 noundef 91, ptr noundef nonnull @__func__.VIRTIO_DEVICE_GET_CLASS) #13
-  %i.an = tail call i32 @virtio_set_guest_notifier(ptr noundef %i.ak, i32 noundef %.080148, i1 noundef zeroext %2, i1 noundef zeroext %i.h) #13 ; 2 uses
+  %i.an = tail call i32 @virtio_set_guest_notifier(ptr noundef %i.ak, i32 noundef %.080148, i1 noundef zeroext %2, i1 noundef zeroext %8) #13 ; 2 uses
   %i.ao = icmp slt i32 %i.an, 0
   br i1 %i.ao, label %virtio_pci_set_guest_notifier.exit, label %bb.o
 
@@ -364,11 +370,11 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r, %bb.q, %bb.p, %bb.o
   %i.av = add nuw nsw i32 %.080148, 1             ; 2 uses
-  %exitcond.not = icmp eq i32 %i.av, %8
+  %exitcond.not = icmp eq i32 %i.av, %9
   br i1 %exitcond.not, label %._crit_edge, label %bb.l, !llvm.loop !15
 
 ._crit_edge:                                      ; preds = %bb.s, %bb.l, %bb.k
-  %.080.lcssa = phi i32 [ 0, %bb.k ], [ %.080148, %bb.l ], [ %8, %bb.s ] ; 5 uses
+  %.080.lcssa = phi i32 [ 0, %bb.k ], [ %.080148, %bb.l ], [ %9, %bb.s ] ; 5 uses
   %.val.i98 = load ptr, ptr %i.a, align 8         ; 2 uses
   %.not.i.i99 = icmp eq ptr %.val.i98, null
   br i1 %.not.i.i99, label %virtio_bus_get_device.exit.i100, label %bb.t
@@ -382,7 +388,7 @@ virtio_bus_get_device.exit.i100:                  ; preds = %bb.t, %._crit_edge
   %i.ay = phi ptr [ %i.ax, %bb.t ], [ null, %._crit_edge ] ; 4 uses
   %i.az = tail call ptr @object_get_class(ptr noundef %i.ay) #13
   %i.ba = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.az, ptr noundef nonnull @.str.46, ptr noundef nonnull @.str.47, i32 noundef 91, ptr noundef nonnull @__func__.VIRTIO_DEVICE_GET_CLASS) #13
-  %i.bb = tail call i32 @virtio_set_guest_notifier(ptr noundef %i.ay, i32 noundef -1, i1 noundef zeroext %2, i1 noundef zeroext %i.h) #13 ; 2 uses
+  %i.bb = tail call i32 @virtio_set_guest_notifier(ptr noundef %i.ay, i32 noundef -1, i1 noundef zeroext %2, i1 noundef zeroext %8) #13 ; 2 uses
   %i.bc = icmp slt i32 %i.bb, 0
   br i1 %i.bc, label %virtio_pci_set_guest_notifier.exit104, label %bb.u
 
@@ -409,7 +415,7 @@ bb.x:                                             ; preds = %bb.w
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w, %bb.v, %bb.u
-  br i1 %i.h, label %bb.ab, label %bb.z
+  br i1 %8, label %bb.ab, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   %i.bk = getelementptr inbounds nuw i8, ptr %3, i64 481
@@ -455,7 +461,7 @@ virtio_bus_get_device.exit.i107:                  ; preds = %bb.ad, %bb.ac
 bb.ae:                                            ; preds = %.lr.ph.i108
   %i.by = tail call fastcc i32 @kvm_virtio_pci_vector_use_one(ptr noundef nonnull %0, i32 noundef %.0911.i) ; 2 uses
   %i.bz = add nuw nsw i32 %.0911.i, 1             ; 2 uses
-  %exitcond.not.i110 = icmp eq i32 %i.bz, %8
+  %exitcond.not.i110 = icmp eq i32 %i.bz, %9
   br i1 %exitcond.not.i110, label %kvm_virtio_pci_vector_vq_use.exit, label %.lr.ph.i108, !llvm.loop !16
 
 kvm_virtio_pci_vector_vq_use.exit:                ; preds = %bb.ae
@@ -489,7 +495,7 @@ bb.ag:                                            ; preds = %bb.af
 
 .thread136:                                       ; preds = %bb.ag, %.thread142
   %i.cl = phi i32 [ %i.ch, %.thread142 ], [ %i.cf, %bb.ag ]
-  tail call fastcc void @kvm_virtio_pci_vector_vq_release(ptr noundef nonnull %0, i32 noundef %8)
+  tail call fastcc void @kvm_virtio_pci_vector_vq_release(ptr noundef nonnull %0, i32 noundef %9)
   br label %.thread140
 
 .thread140:                                       ; preds = %bb.af, %.thread139, %.thread136
@@ -513,7 +519,7 @@ virtio_bus_get_device.exit.i113:                  ; preds = %bb.ah, %virtio_pci_
   %i.cp = phi ptr [ %i.co, %bb.ah ], [ null, %virtio_pci_set_guest_notifier.exit104 ] ; 4 uses
   %i.cq = tail call ptr @object_get_class(ptr noundef %i.cp) #13
   %i.cr = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.cq, ptr noundef nonnull @.str.46, ptr noundef nonnull @.str.47, i32 noundef 91, ptr noundef nonnull @__func__.VIRTIO_DEVICE_GET_CLASS) #13
-  %i.cs = tail call i32 @virtio_set_guest_notifier(ptr noundef %i.cp, i32 noundef -1, i1 noundef zeroext %i.cm, i1 noundef zeroext %i.h) #13
+  %i.cs = tail call i32 @virtio_set_guest_notifier(ptr noundef %i.cp, i32 noundef -1, i1 noundef zeroext %i.cm, i1 noundef zeroext %8) #13
   %i.ct = icmp slt i32 %i.cs, 0
   br i1 %i.ct, label %virtio_pci_set_guest_notifier.exit, label %bb.ai
 
@@ -567,7 +573,7 @@ virtio_bus_get_device.exit.i120:                  ; preds = %bb.an, %.lr.ph151
   %i.df = phi ptr [ %i.de, %bb.an ], [ null, %.lr.ph151 ] ; 4 uses
   %i.dg = tail call ptr @object_get_class(ptr noundef %i.df) #13
   %i.dh = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.dg, ptr noundef nonnull @.str.46, ptr noundef nonnull @.str.47, i32 noundef 91, ptr noundef nonnull @__func__.VIRTIO_DEVICE_GET_CLASS) #13
-  %i.di = tail call i32 @virtio_set_guest_notifier(ptr noundef %i.df, i32 noundef %i.dc, i1 noundef zeroext false, i1 noundef zeroext %i.h) #13
+  %i.di = tail call i32 @virtio_set_guest_notifier(ptr noundef %i.df, i32 noundef %i.dc, i1 noundef zeroext false, i1 noundef zeroext %8) #13
   %i.dj = icmp slt i32 %i.di, 0
   br i1 %i.dj, label %virtio_pci_set_guest_notifier.exit124, label %bb.ao
 

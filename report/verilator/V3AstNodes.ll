@@ -204,43 +204,50 @@ bb.c:                                             ; preds = %bb.a
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !77
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 352
   %i.m = load ptr, ptr %i.l, align 8
-  %i.n = tail call noundef ptr %i.m(ptr noundef nonnull align 8 dereferenceable(162) %i.j), !inline_history !554 ; 4 uses
+  %i.n = tail call noundef ptr %i.m(ptr noundef nonnull align 8 dereferenceable(162) %i.j), !inline_history !554 ; 6 uses
   %.not = icmp eq ptr %i.n, null
-  br i1 %.not, label %._crit_edge.i.i, label %bb.d
+  br i1 %.not, label %._crit_edge.i.i, label %3
 
-bb.d:                                             ; preds = %bb.c
-  %3 = getelementptr inbounds nuw i8, ptr %i.n, i64 164
-  %.sroa.0.0.copyload.i.i = load i8, ptr %3, align 4, !tbaa !178 ; 2 uses
-  %4 = icmp eq i8 %.sroa.0.0.copyload.i.i, 1
-  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 24
-  %i.p = load ptr, ptr %i.o, align 8
-  %.not.i.i11 = icmp ne ptr %i.p, null
-  %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 176
-  %i.r = load i8, ptr %i.q, align 8, !range !149
-  %i.s = trunc nuw i8 %i.r to i1
-  %5 = select i1 %.not.i.i11, i1 true, i1 %i.s    ; 2 uses
-  %i.t = select i1 %4, i1 %5, i1 false            ; 2 uses
-  br i1 %i.t, label %_ZNK13AstBasicDType13isDpiLogicVecEv.exit.thread.a, label %6
-
-6:                                                ; preds = %bb.d
+3:                                                ; preds = %bb.c
+  %4 = getelementptr inbounds nuw i8, ptr %i.n, i64 164
+  %.sroa.0.0.copyload.i.i = load i8, ptr %4, align 4, !tbaa !178
   switch i8 %.sroa.0.0.copyload.i.i, label %_ZNK13AstBasicDType13isDpiLogicVecEv.exit.thread16 [
+    i8 1, label %bb.d
     i8 8, label %_ZNK13AstBasicDType13isDpiLogicVecEv.exit
     i8 7, label %_ZNK13AstBasicDType13isDpiLogicVecEv.exit.thread.a
     i8 12, label %_ZNK13AstBasicDType13isDpiLogicVecEv.exit.thread.a
     i8 27, label %_ZNK13AstBasicDType13isDpiLogicVecEv.exit.thread.a
   ]
 
-_ZNK13AstBasicDType13isDpiLogicVecEv.exit:        ; preds = %6
-  br i1 %5, label %_ZNK13AstBasicDType13isDpiLogicVecEv.exit.thread.a, label %_ZNK13AstBasicDType13isDpiLogicVecEv.exit.thread16
+bb.d:                                             ; preds = %3
+  %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 24
+  %i.p = load ptr, ptr %i.o, align 8, !tbaa !61
+  %.not.i.i11 = icmp ne ptr %i.p, null
+  %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 176
+  %i.r = load i8, ptr %i.q, align 8, !range !149
+  %i.s = trunc nuw i8 %i.r to i1
+  %i.t = select i1 %.not.i.i11, i1 true, i1 %i.s
+  br i1 %i.t, label %_ZNK13AstBasicDType13isDpiLogicVecEv.exit.thread.a, label %_ZNK13AstBasicDType13isDpiLogicVecEv.exit.thread16
 
-_ZNK13AstBasicDType13isDpiLogicVecEv.exit.thread.a: ; preds = %6, %6, %6, %_ZNK13AstBasicDType13isDpiLogicVecEv.exit, %bb.d
+_ZNK13AstBasicDType13isDpiLogicVecEv.exit:        ; preds = %3
+  %5 = getelementptr inbounds nuw i8, ptr %i.n, i64 24
+  %6 = load ptr, ptr %5, align 8, !tbaa !61
+  %.not.i.i13 = icmp ne ptr %6, null
+  %7 = getelementptr inbounds nuw i8, ptr %i.n, i64 176
+  %8 = load i8, ptr %7, align 8, !range !149
+  %9 = trunc nuw i8 %8 to i1
+  %10 = select i1 %.not.i.i13, i1 true, i1 %9
+  br i1 %10, label %_ZNK13AstBasicDType13isDpiLogicVecEv.exit.thread.a, label %_ZNK13AstBasicDType13isDpiLogicVecEv.exit.thread16
+
+_ZNK13AstBasicDType13isDpiLogicVecEv.exit.thread.a: ; preds = %bb.d, %3, %3, %3, %_ZNK13AstBasicDType13isDpiLogicVecEv.exit
+  %11 = phi i1 [ false, %3 ], [ false, %_ZNK13AstBasicDType13isDpiLogicVecEv.exit ], [ false, %3 ], [ false, %3 ], [ true, %bb.d ]
   %i.u = load ptr, ptr %1, align 8, !tbaa !77
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   %i.w = load ptr, ptr %i.v, align 8
-  tail call void %i.w(ptr dead_on_unwind writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %2, i1 noundef zeroext %i.t)
+  tail call void %i.w(ptr dead_on_unwind writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull %2, i1 noundef zeroext %11)
   br label %bb.e
 
-_ZNK13AstBasicDType13isDpiLogicVecEv.exit.thread16: ; preds = %6, %_ZNK13AstBasicDType13isDpiLogicVecEv.exit
+_ZNK13AstBasicDType13isDpiLogicVecEv.exit.thread16: ; preds = %3, %bb.d, %_ZNK13AstBasicDType13isDpiLogicVecEv.exit
   %i.x = load ptr, ptr %1, align 8, !tbaa !77
   %i.y = getelementptr inbounds nuw i8, ptr %i.x, i64 16
   %i.z = load ptr, ptr %i.y, align 8

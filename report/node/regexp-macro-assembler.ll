@@ -202,15 +202,20 @@ bb.b:                                             ; preds = %.sink.split, %bb.a
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable
 define hidden noundef zeroext i1 @_ZNK2v88internal26NativeRegExpMacroAssembler16CanReadUnalignedEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(104) %0) unnamed_addr #6 align 2 !guid !36 {
-bb.a:
-  %1 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1366), align 2, !range !37, !noundef !38
-  %2 = trunc nuw i8 %1 to i1
+  %2 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 1366), align 2, !range !37, !noundef !38
+  %3 = trunc nuw i8 %2 to i1
+  br i1 %3, label %bb.a, label %4
+
+bb.a:                                             ; preds = %1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i8, ptr %i.a, align 8, !range !37
+  %i.b = load i8, ptr %i.a, align 8, !range !37, !noundef !38
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = xor i1 %i.c, true
-  %3 = select i1 %2, i1 %i.d, i1 false
-  ret i1 %3
+  br label %4
+
+4:                                                ; preds = %bb.a, %1
+  %5 = phi i1 [ false, %1 ], [ %i.d, %bb.a ]
+  ret i1 %5
 }
 
 ; Function Attrs: mustprogress nounwind uwtable

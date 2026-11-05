@@ -204,14 +204,19 @@ bb.a:
 
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden noundef zeroext i1 @_ZN6casadi4Expm11get_diff_inEx(ptr noundef nonnull align 8 dereferenceable(1329) %0, i64 noundef %1) unnamed_addr #5 comdat align 2 {
-bb.a:
-  %.not = icmp ne i64 %1, 0
+  %.not = icmp eq i64 %1, 0
+  br i1 %.not, label %bb.a, label %3
+
+bb.a:                                             ; preds = %2
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 1328
-  %i.b = load i8, ptr %i.a, align 8, !range !110
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !109, !range !110, !noundef !111
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = xor i1 %i.c, true
-  %2 = select i1 %.not, i1 true, i1 %i.d
-  ret i1 %2
+  br label %3
+
+3:                                                ; preds = %bb.a, %2
+  %4 = phi i1 [ true, %2 ], [ %i.d, %bb.a ]
+  ret i1 %4
 }
 
 ; Function Attrs: mustprogress nounwind uwtable

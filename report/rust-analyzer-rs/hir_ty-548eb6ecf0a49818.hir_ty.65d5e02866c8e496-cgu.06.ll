@@ -205,14 +205,20 @@ _RNvXs9_NtCs8K4cjrcxBsw_6hir_ty17method_resolutionNtB5_11CandidateIdNtNtCshzWfHU
   %or.cond = select i1 %.not, i1 %i.w, i1 false
   %i.x = load i64, ptr %0, align 8, !range !250
   %i.y = trunc nuw i64 %i.x to i1
-  %or.cond3 = select i1 %or.cond, i1 %i.y, i1 false
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %4 = load i64, ptr %3, align 8
-  %5 = load i64, ptr %2, align 8
-  %6 = icmp ugt i64 %4, %5
-  %.sroa.0.0.a = select i1 %or.cond3, i1 %6, i1 false
-  ret i1 %.sroa.0.0.a
+  %.sroa.0.0.a = select i1 %or.cond, i1 %i.y, i1 false
+  br i1 %.sroa.0.0.a, label %3, label %2
+
+2:                                                ; preds = %_RNvXs9_NtCs8K4cjrcxBsw_6hir_ty17method_resolutionNtB5_11CandidateIdNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit, %3
+  %.sroa.0.0 = phi i1 [ %8, %3 ], [ false, %_RNvXs9_NtCs8K4cjrcxBsw_6hir_ty17method_resolutionNtB5_11CandidateIdNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit ]
+  ret i1 %.sroa.0.0
+
+3:                                                ; preds = %_RNvXs9_NtCs8K4cjrcxBsw_6hir_ty17method_resolutionNtB5_11CandidateIdNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq.exit
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %6 = load i64, ptr %5, align 8, !noundef !245
+  %7 = load i64, ptr %4, align 8, !noundef !245
+  %8 = icmp ugt i64 %6, %7
+  br label %2
 }
 
 ; Function Attrs: nonlazybind uwtable

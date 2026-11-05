@@ -202,12 +202,18 @@ bb.a:
   %i.a = load i8, ptr @_ZN9CGOptions5klee_E, align 1, !tbaa !20, !range !21, !noundef !22
   %i.b = trunc nuw i8 %i.a to i1
   %i.c = load i8, ptr @_ZN9CGOptions6crest_E, align 1, !range !21
-  %0 = trunc nuw i8 %i.c to i1
-  %or.cond = select i1 %i.b, i1 true, i1 %0
-  %1 = load i8, ptr @_ZN9CGOptions14coverage_test_E, align 1, !range !21
-  %i.d = trunc nuw i8 %1 to i1
-  %i.e = select i1 %or.cond, i1 true, i1 %i.d
-  ret i1 %i.e
+  %i.d = trunc nuw i8 %i.c to i1
+  %i.e = select i1 %i.b, i1 true, i1 %i.d
+  br i1 %i.e, label %3, label %0
+
+0:                                                ; preds = %bb.a
+  %1 = load i8, ptr @_ZN9CGOptions14coverage_test_E, align 1, !tbaa !20, !range !21, !noundef !22
+  %2 = trunc nuw i8 %1 to i1
+  br label %3
+
+3:                                                ; preds = %0, %bb.a
+  %4 = phi i1 [ %2, %0 ], [ true, %bb.a ]
+  ret i1 %4
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -432,12 +438,18 @@ bb.a:
   %i.g = select i1 %or.cond.i, i1 true, i1 %i.f
   %.not = xor i1 %i.g, true
   %i.h = load i8, ptr @_ZN9CGOptions7math64_E, align 1, !range !21
-  %0 = trunc nuw i8 %i.h to i1
-  %or.cond = select i1 %.not, i1 %0, i1 false
-  %1 = load i8, ptr @_ZN9CGOptions9longlong_E, align 1, !range !21
-  %i.i = trunc nuw i8 %1 to i1
-  %i.j = select i1 %or.cond, i1 %i.i, i1 false
-  ret i1 %i.j
+  %i.i = trunc nuw i8 %i.h to i1
+  %i.j = select i1 %.not, i1 %i.i, i1 false
+  br i1 %i.j, label %0, label %_ZN9CGOptions21has_extension_supportEv.exit.thread
+
+0:                                                ; preds = %bb.a
+  %1 = load i8, ptr @_ZN9CGOptions9longlong_E, align 1, !tbaa !20, !range !21, !noundef !22
+  %2 = trunc nuw i8 %1 to i1
+  br label %_ZN9CGOptions21has_extension_supportEv.exit.thread
+
+_ZN9CGOptions21has_extension_supportEv.exit.thread: ; preds = %bb.a, %0
+  %3 = phi i1 [ %2, %0 ], [ false, %bb.a ]
+  ret i1 %3
 }
 
 ; Function Attrs: mustprogress uwtable

@@ -206,7 +206,7 @@ bb.a:
   %i.at = zext i1 %i.as to i8
   store i8 %i.at, ptr %i.ap, align 2, !alias.scope !2703
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 139 ; 6 uses
-  %i.av = load i8, ptr %i.au, align 1, !range !19, !alias.scope !2703
+  %i.av = load i8, ptr %i.au, align 1, !range !19
   %i.aw = trunc nuw i8 %i.av to i1
   %.sroa.0.0.i = select i1 %i.as, i1 true, i1 %i.aw
   br i1 %.sroa.0.0.i, label %_RNvMs_NtNtCs8frGy5WneL6_4fish8wildcard8expanderNtB4_16WildCardExpander21expand_trailing_slash.exit, label %bb.b
@@ -609,7 +609,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ag)
   br label %_RNvMs_NtNtCs8frGy5WneL6_4fish8wildcard8expanderNtB4_16WildCardExpander21expand_trailing_slash.exit
 
-bb.ba:                                            ; preds = %.thread, %bb.bc, %bb.bb, %_RINvNtCs8frGy5WneL6_4fish8wildcard21wildcard_has_internalRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrEB4_.exit
+bb.ba:                                            ; preds = %bb.bc, %.thread, %bb.bb, %_RINvNtCs8frGy5WneL6_4fish8wildcard21wildcard_has_internalRNtNtCslLGyqsphxMB_10widestring6utfstr8Utf32StrEB4_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x)
   %i.ez = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 3 uses
   %i.fa = load i16, ptr %i.ez, align 8, !noundef !10
@@ -643,7 +643,7 @@ bb.bc:                                            ; preds = %bb.bb
   %i.fp = or i1 %i.fm, %i.fo                      ; 2 uses
   %i.fq = zext i1 %i.fp to i8
   store i8 %i.fq, ptr %i.ap, align 2, !alias.scope !2725
-  %i.fr = load i8, ptr %i.au, align 1, !range !19, !alias.scope !2725
+  %i.fr = load i8, ptr %i.au, align 1, !range !19
   %i.fs = trunc nuw i8 %i.fr to i1
   %.sroa.0.0.i93 = select i1 %i.fp, i1 true, i1 %i.fs
   br i1 %.sroa.0.0.i93, label %_RNvMs_NtNtCs8frGy5WneL6_4fish8wildcard8expanderNtB4_16WildCardExpander21expand_trailing_slash.exit, label %bb.ba
@@ -687,7 +687,7 @@ bb.bf:                                            ; preds = %bb.bd
   %i.gc = or i1 %i.fz, %i.gb                      ; 2 uses
   %i.gd = zext i1 %i.gc to i8
   store i8 %i.gd, ptr %i.ap, align 2, !alias.scope !2728
-  %i.ge = load i8, ptr %i.au, align 1, !range !19, !alias.scope !2728
+  %i.ge = load i8, ptr %i.au, align 1, !range !19, !alias.scope !2726
   %i.gf = trunc nuw i8 %i.ge to i1
   %.sroa.0.0.i29.i = select i1 %i.gc, i1 true, i1 %i.gf
   br i1 %.sroa.0.0.i29.i, label %_RNvMs_NtNtCs8frGy5WneL6_4fish8wildcard8expanderNtB4_16WildCardExpander19expand_last_segment.exit, label %.lr.ph.i
@@ -886,7 +886,7 @@ bb.bv:                                            ; preds = %bb.bq
   %i.ie = or i1 %i.ib, %i.id                      ; 2 uses
   %i.if = zext i1 %i.ie to i8
   store i8 %i.if, ptr %i.ap, align 2, !alias.scope !2739
-  %i.ig = load i8, ptr %i.au, align 1, !range !19, !alias.scope !2739
+  %i.ig = load i8, ptr %i.au, align 1, !range !19, !alias.scope !2726
   %i.ih = trunc nuw i8 %i.ig to i1
   %.sroa.0.0.i.i = select i1 %i.ie, i1 true, i1 %i.ih
   br i1 %.sroa.0.0.i.i, label %_RNvMs_NtNtCs8frGy5WneL6_4fish8wildcard8expanderNtB4_16WildCardExpander19expand_last_segment.exit, label %bb.bg
@@ -1194,7 +1194,7 @@ bb.dd:                                            ; preds = %bb.ba
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x)
   br label %_RNvMs_NtNtCs8frGy5WneL6_4fish8wildcard8expanderNtB4_16WildCardExpander21expand_trailing_slash.exit
 
-_RNvMs_NtNtCs8frGy5WneL6_4fish8wildcard8expanderNtB4_16WildCardExpander21expand_trailing_slash.exit: ; preds = %bb.eu, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter7DirIterEBH_.exit.i, %bb.dm, %bb.dh, %bb.df, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter7DirIterEBH_.exit, %bb.dd, %bb.bc, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish.exit92, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter7DirIterEBH_.exit114, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish.exit131, %bb.a
+_RNvMs_NtNtCs8frGy5WneL6_4fish8wildcard8expanderNtB4_16WildCardExpander21expand_trailing_slash.exit: ; preds = %bb.bc, %bb.a, %bb.eu, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter7DirIterEBH_.exit.i, %bb.dm, %bb.dh, %bb.df, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter7DirIterEBH_.exit, %bb.dd, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish.exit92, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter7DirIterEBH_.exit114, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish.exit131
   ret void
 
 .thread135:                                       ; preds = %bb.e
@@ -1224,7 +1224,7 @@ bb.df:                                            ; preds = %.thread135
   %i.lp = or i1 %i.lm, %i.lo                      ; 2 uses
   %i.lq = zext i1 %i.lp to i8
   store i8 %i.lq, ptr %i.ap, align 2, !alias.scope !2760
-  %i.lr = load i8, ptr %i.au, align 1, !range !19, !alias.scope !2760
+  %i.lr = load i8, ptr %i.au, align 1, !range !19, !alias.scope !2758
   %i.ls = trunc nuw i8 %i.lr to i1
   %.sroa.0.0.i.i115 = select i1 %i.lp, i1 true, i1 %i.ls
   br i1 %.sroa.0.0.i.i115, label %_RNvMs_NtNtCs8frGy5WneL6_4fish8wildcard8expanderNtB4_16WildCardExpander21expand_trailing_slash.exit, label %bb.dg
@@ -1303,14 +1303,14 @@ bb.do:                                            ; preds = %bb.di
   %i.mo = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultRNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter8DirEntryNtNtNtB4_2io5error5ErrorEEEB1q_.exit31.i
 
-.loopexit.split-lp.i:                             ; preds = %.loopexit.split-lp45.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.eh, %bb.el, %bb.en
-  %.pn11.i = phi { ptr, i32 } [ %i.on, %bb.en ], [ %i.om, %bb.el ], [ %i.oe, %bb.eh ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp45.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.loopexit.split-lp.i:                             ; preds = %.loopexit.split-lp53.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.eh, %bb.el, %bb.en
+  %.pn11.i = phi { ptr, i32 } [ %i.on, %bb.en ], [ %i.om, %bb.el ], [ %i.oe, %bb.eh ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp53.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter7DirIterEBH_(ptr noalias nofree noundef align 8 dereferenceable(88) %i.g) #37
           to label %common.resume unwind label %bb.ep, !noalias !2758
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultRNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter8DirEntryNtNtNtB4_2io5error5ErrorEEEB1q_.exit31.i: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultRNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter8DirEntryNtNtNtB4_2io5error5ErrorEEEB1q_.exit31.i.backedge, %bb.do
   %i.mp = invoke { i64, ptr } @_RNvMs1_NtNtCs8frGy5WneL6_4fish5wutil8dir_iterNtB5_7DirIter4next(ptr noalias nofree noundef nonnull align 8 dereferenceable(88) %i.g)
-          to label %bb.dp unwind label %.loopexit.split-lp45.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !2758 ; 2 uses
+          to label %bb.dp unwind label %.loopexit.split-lp53.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !2758 ; 2 uses
 
 bb.dp:                                            ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultRNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter8DirEntryNtNtNtB4_2io5error5ErrorEEEB1q_.exit31.i
   %i.mq = extractvalue { i64, ptr } %i.mp, 0
@@ -1347,7 +1347,7 @@ bb.ds:                                            ; preds = %bb.dq
   store ptr %i.mx, ptr %i.my, align 8, !alias.scope !2763, !noalias !2762
   store i8 3, ptr %i.a, align 8, !alias.scope !2763, !noalias !2762
   invoke void @_RNvXsd_NtNtCs3oUPovFnLWP_4core2io5errorNtB5_11CustomOwnerNtNtNtB9_3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.my)
-          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8frGy5WneL6_4fish.exit.i.i.i124 unwind label %.loopexit.split-lp45.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !2758
+          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8frGy5WneL6_4fish.exit.i.i.i124 unwind label %.loopexit.split-lp53.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !2758
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECs8frGy5WneL6_4fish.exit.i.i.i124: ; preds = %bb.ds, %bb.dr, %bb.dq, %bb.dq
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !2762
@@ -1360,12 +1360,7 @@ bb.dt:                                            ; preds = %bb.dp
   %i.nb = getelementptr inbounds nuw i8, ptr %i.na, i64 32
   %i.nc = load ptr, ptr %i.nb, align 8, !invariant.load !10, !noalias !2765, !nonnull !10
   %i.nd = invoke noundef zeroext i1 %i.nc(ptr noundef nonnull %i.mz) #43
-          to label %bb.du unwind label %.loopexit.split-lp45.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !2758, !inline_history !5
-
-.loopexit.split-lp45.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.dt, %bb.dw, %bb.dz, %bb.eb, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecmEECs8frGy5WneL6_4fish.exit.i.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultRNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter8DirEntryNtNtNtB4_2io5error5ErrorEEEB1q_.exit31.i, %bb.ds, %bb.ed
-  %lpad.loopexit.split-lp = landingpad { ptr, i32 }
-          cleanup
-  br label %.loopexit.split-lp.i
+          to label %bb.du unwind label %.loopexit.split-lp53.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !2758, !inline_history !5
 
 bb.du:                                            ; preds = %bb.dt
   %i.ne = load i8, ptr %i.ap, align 2, !range !19, !alias.scope !2765, !noundef !10
@@ -1373,17 +1368,22 @@ bb.du:                                            ; preds = %bb.dt
   %i.ng = or i1 %i.nd, %i.nf                      ; 2 uses
   %i.nh = zext i1 %i.ng to i8
   store i8 %i.nh, ptr %i.ap, align 2, !alias.scope !2765
-  %i.ni = load i8, ptr %i.au, align 1, !range !19, !alias.scope !2765
+  %i.ni = load i8, ptr %i.au, align 1, !range !19, !alias.scope !2758
   %i.nj = trunc nuw i8 %i.ni to i1
   %.sroa.0.0.i22.i = select i1 %i.ng, i1 true, i1 %i.nj
   br i1 %.sroa.0.0.i22.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultRNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter8DirEntryNtNtNtB4_2io5error5ErrorEEEB1q_.exit27.i, label %bb.dv
+
+.loopexit.split-lp53.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.dt, %bb.dw, %bb.dz, %bb.eb, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecmEECs8frGy5WneL6_4fish.exit.i.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultRNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter8DirEntryNtNtNtB4_2io5error5ErrorEEEB1q_.exit31.i, %bb.ds, %bb.ed
+  %lpad.loopexit.split-lp = landingpad { ptr, i32 }
+          cleanup
+  br label %.loopexit.split-lp.i
 
 bb.dv:                                            ; preds = %bb.du
   br i1 %.not7.i, label %bb.dx, label %bb.dw
 
 bb.dw:                                            ; preds = %bb.dv
   %i.nk = invoke noundef zeroext i1 @_RNvMNtNtCs8frGy5WneL6_4fish5wutil8dir_iterNtB2_8DirEntry6is_dir(ptr noundef nonnull align 8 %i.mr)
-          to label %bb.dy unwind label %.loopexit.split-lp45.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !2758
+          to label %bb.dy unwind label %.loopexit.split-lp53.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !2758
 
 bb.dx:                                            ; preds = %bb.dy, %bb.dv
   %i.nl = getelementptr inbounds nuw i8, ptr %i.mr, i64 16 ; 3 uses
@@ -1398,7 +1398,7 @@ bb.dy:                                            ; preds = %bb.dw
 
 bb.dz:                                            ; preds = %bb.dx
   %i.np = invoke noundef zeroext i1 @_RINvYNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringNtCskr4qsHYS30i_15fish_widestring4WExt11starts_withcECs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.mr, i32 noundef 46)
-          to label %bb.ea unwind label %.loopexit.split-lp45.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !2758
+          to label %bb.ea unwind label %.loopexit.split-lp53.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !2758
 
 bb.ea:                                            ; preds = %bb.dz
   br i1 %i.np, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultRNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter8DirEntryNtNtNtB4_2io5error5ErrorEEEB1q_.exit31.i.backedge, label %bb.eb
@@ -1408,7 +1408,7 @@ bb.eb:                                            ; preds = %bb.ea
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !2762
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !2762
   invoke void @_RNvMs5_NtCs1xwejQucwHj_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, i64 noundef %2, i1 noundef zeroext false, i64 noundef 4, i64 noundef 4)
-          to label %bb.ec unwind label %.loopexit.split-lp45.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !2758
+          to label %bb.ec unwind label %.loopexit.split-lp53.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !2758
 
 bb.ec:                                            ; preds = %bb.eb
   %i.nq = load i64, ptr %i.b, align 8, !range !26, !noalias !2762, !noundef !10
@@ -1419,7 +1419,7 @@ bb.ec:                                            ; preds = %bb.eb
 bb.ed:                                            ; preds = %bb.ec
   %i.nt = load i64, ptr %i.ml, align 8, !noalias !2762
   invoke void @_RNvNtCs1xwejQucwHj_5alloc7raw_vec12handle_error(i64 noundef %i.ns, i64 %i.nt) #42
-          to label %bb.eq unwind label %.loopexit.split-lp45.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !2758
+          to label %bb.eq unwind label %.loopexit.split-lp53.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !2758
 
 bb.ee:                                            ; preds = %bb.ec
   %i.nu = load ptr, ptr %i.ml, align 8, !noalias !2762, !nonnull !10, !noundef !10 ; 2 uses
@@ -1507,7 +1507,7 @@ bb.eo:                                            ; preds = %bb.en
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecmEECs8frGy5WneL6_4fish.exit.i.i: ; preds = %bb.em
   invoke void @_RNvXs1_NtCs1xwejQucwHj_5alloc7raw_vecINtB5_6RawVecmENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCs8frGy5WneL6_4fish(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.e)
-          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish.exit.i123 unwind label %.loopexit.split-lp45.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !2758
+          to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish.exit.i123 unwind label %.loopexit.split-lp53.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !2758
 
 _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring11Utf32StringECs8frGy5WneL6_4fish.exit.i123: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc3vec3VecmEECs8frGy5WneL6_4fish.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !2762
@@ -1910,16 +1910,23 @@ bb.dv:                                            ; preds = %_RINvNtCs3oUPovFnLW
   call void @llvm.experimental.noalias.scope.decl(metadata !3915)
   %i.jh = load ptr, ptr %i.hu, align 8, !invariant.load !10, !noalias !3916, !nonnull !10
   %i.ji = invoke noundef zeroext i1 %i.jh(ptr noundef nonnull %i.hr) #43
-          to label %11 unwind label %.loopexit.split-lp55.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !3913, !inline_history !5
+          to label %.noexc44.i unwind label %.loopexit.split-lp55.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !3913, !inline_history !5
 
-.loopexit87.i:                                    ; preds = %11, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultRNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter8DirEntryNtNtNtB4_2io5error5ErrorEEEB1q_.exit38.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultRNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter8DirEntryNtNtNtB4_2io5error5ErrorEEEB1q_.exit38.thread.i
-  call void @llvm.experimental.noalias.scope.decl(metadata !3917)
+.noexc44.i:                                       ; preds = %bb.dv
+  %11 = or i1 %i.ib, %i.ji                        ; 2 uses
+  %12 = zext i1 %11 to i8
+  store i8 %12, ptr %i.hv, align 2, !alias.scope !3917
+  %or.cond.i = select i1 %11, i1 true, i1 %i.hy
+  br i1 %or.cond.i, label %.loopexit87.i, label %bb.dz
+
+.loopexit87.i:                                    ; preds = %.noexc44.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultRNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter8DirEntryNtNtNtB4_2io5error5ErrorEEEB1q_.exit38.i, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultRNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter8DirEntryNtNtNtB4_2io5error5ErrorEEEB1q_.exit38.thread.i
   call void @llvm.experimental.noalias.scope.decl(metadata !3918)
   call void @llvm.experimental.noalias.scope.decl(metadata !3919)
-  %i.jj = load ptr, ptr %i.hz, align 8, !alias.scope !3920, !noalias !3912, !nonnull !10, !noundef !10 ; 2 uses
-  %i.jk = load i64, ptr %i.jj, align 8, !noalias !3921, !noundef !10
+  call void @llvm.experimental.noalias.scope.decl(metadata !3920)
+  %i.jj = load ptr, ptr %i.hz, align 8, !alias.scope !3921, !noalias !3912, !nonnull !10, !noundef !10 ; 2 uses
+  %i.jk = load i64, ptr %i.jj, align 8, !noalias !3922, !noundef !10
   %i.jl = add i64 %i.jk, -1                       ; 2 uses
-  store i64 %i.jl, ptr %i.jj, align 8, !noalias !3921
+  store i64 %i.jl, ptr %i.jj, align 8, !noalias !3922
   %i.jm = icmp eq i64 %i.jl, 0
   br i1 %i.jm, label %bb.dw, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs1xwejQucwHj_5alloc2rc2RcNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter5DirFdEEB1c_.exit.i.i
 
@@ -1943,14 +1950,7 @@ bb.dy:                                            ; preds = %bb.dx
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #38, !noalias !3913
   unreachable
 
-11:                                               ; preds = %bb.dv
-  %12 = or i1 %i.ib, %i.ji                        ; 2 uses
-  %13 = zext i1 %12 to i8
-  store i8 %13, ptr %i.hv, align 2, !alias.scope !3922
-  %.sroa.0.0.i.i34 = select i1 %12, i1 true, i1 %i.hy
-  br i1 %.sroa.0.0.i.i34, label %.loopexit87.i, label %bb.dz
-
-bb.dz:                                            ; preds = %11
+bb.dz:                                            ; preds = %.noexc44.i
   %i.jp = load ptr, ptr %.sroa.3.0..sroa_idx3.i, align 8, !noalias !3912, !nonnull !10, !noundef !10
   %i.jq = load i64, ptr %.sroa.4.0..sroa_idx5.i, align 8, !noalias !3912, !noundef !10
   invoke void @_RNvNtCs8frGy5WneL6_4fish4path21append_path_component(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.h, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %i.jp, i64 noundef %i.jq)
@@ -2283,7 +2283,7 @@ _RNvXsK_NtNtCs3oUPovFnLWP_4core5slice3cmpcNtB5_13SliceContains14slice_contains.e
   %i.ar = zext i1 %i.aq to i8
   store i8 %i.ar, ptr %i.an, align 2, !alias.scope !4012
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 139 ; 2 uses
-  %i.at = load i8, ptr %i.as, align 1, !range !19, !alias.scope !4012
+  %i.at = load i8, ptr %i.as, align 1, !range !19
   %i.au = trunc nuw i8 %i.at to i1
   %.sroa.0.0.i31107 = select i1 %i.aq, i1 true, i1 %i.au
   br i1 %.sroa.0.0.i31107, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultRNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter8DirEntryNtNtNtB4_2io5error5ErrorEEEB1q_.exit, label %.lr.ph
@@ -2401,7 +2401,7 @@ bb.h:                                             ; preds = %_RINvNtCs3oUPovFnLW
   %i.ct = or i1 %i.cq, %i.cs                      ; 2 uses
   %i.cu = zext i1 %i.ct to i8
   store i8 %i.cu, ptr %i.an, align 2, !alias.scope !4014
-  %i.cv = load i8, ptr %i.as, align 1, !range !19, !alias.scope !4014
+  %i.cv = load i8, ptr %i.as, align 1, !range !19
   %i.cw = trunc nuw i8 %i.cv to i1
   %.sroa.0.0.i31 = select i1 %i.ct, i1 true, i1 %i.cw
   br i1 %.sroa.0.0.i31, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultRNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter8DirEntryNtNtNtB4_2io5error5ErrorEEEB1q_.exit, label %bb.d
@@ -2804,7 +2804,7 @@ bb.a:
   %i.u = zext i1 %i.t to i8
   store i8 %i.u, ptr %i.q, align 2, !alias.scope !4087
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 139 ; 2 uses
-  %i.w = load i8, ptr %i.v, align 1, !range !19, !alias.scope !4087
+  %i.w = load i8, ptr %i.v, align 1, !range !19
   %i.x = trunc nuw i8 %i.w to i1
   %.sroa.0.0.i91 = select i1 %i.t, i1 true, i1 %i.x
   br i1 %.sroa.0.0.i91, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultRNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter8DirEntryNtNtNtB4_2io5error5ErrorEEEB1q_.exit, label %.lr.ph93
@@ -3207,7 +3207,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtCslLGyqsphxMB_10widestring9utfstring
   %i.ff = or i1 %i.fc, %i.fe                      ; 2 uses
   %i.fg = zext i1 %i.ff to i8
   store i8 %i.fg, ptr %i.q, align 2, !alias.scope !4106
-  %i.fh = load i8, ptr %i.v, align 1, !range !19, !alias.scope !4106
+  %i.fh = load i8, ptr %i.v, align 1, !range !19
   %i.fi = trunc nuw i8 %i.fh to i1
   %.sroa.0.0.i = select i1 %i.ff, i1 true, i1 %i.fi
   br i1 %.sroa.0.0.i, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtB4_6result6ResultRNtNtNtCs8frGy5WneL6_4fish5wutil8dir_iter8DirEntryNtNtNtB4_2io5error5ErrorEEEB1q_.exit, label %bb.b
@@ -3610,12 +3610,12 @@ begin_hunk_5_@llvm.abs.i64
 !3914 = !{!3865}
 !3915 = !{!3867}
 !3916 = !{!3867, !3863, !3861}
-!3917 = !{!3869}
-!3918 = !{!3871}
-!3919 = !{!3873}
-!3920 = !{!3873, !3871, !3869}
-!3921 = !{!3873, !3871, !3869, !3863, !3861}
-!3922 = !{!3867, !3861}
+!3917 = !{!3867, !3861}
+!3918 = !{!3869}
+!3919 = !{!3871}
+!3920 = !{!3873}
+!3921 = !{!3873, !3871, !3869}
+!3922 = !{!3873, !3871, !3869, !3863, !3861}
 !3923 = !{!3875}
 !3924 = !{!3877, !3862}
 !3925 = !{!3879}

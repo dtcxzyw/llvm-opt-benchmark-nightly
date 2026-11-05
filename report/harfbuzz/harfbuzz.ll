@@ -205,8 +205,8 @@ bb.ag:                                            ; preds = %bb.af
   %i.ex = trunc nuw i8 %i.ew to i1
   %i.ey = load i8, ptr %i.i, align 8, !range !380
   %i.ez = trunc nuw i8 %i.ey to i1
-  %i.fa = select i1 %i.ex, i1 %i.ez, i1 false
-  br i1 %i.fa, label %bb.ah, label %_ZN8hb_set_taSEOS_.exit, !prof !267
+  %i.fa = select i1 %i.ex, i1 %i.ez, i1 false, !prof !956
+  br i1 %i.fa, label %bb.ah, label %_ZN8hb_set_taSEOS_.exit, !prof !956
 
 bb.ah:                                            ; preds = %bb.ag
   %i.fb = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 64 ; 2 uses
@@ -289,8 +289,8 @@ bb.a:
   %i.b = trunc nuw i8 %i.a to i1
   %i.c = load i8, ptr %1, align 8, !range !380
   %i.d = trunc nuw i8 %i.c to i1
-  %i.e = select i1 %i.b, i1 %i.d, i1 false
-  br i1 %i.e, label %bb.b, label %_Z4swapR12hb_bit_set_tS0_.exit, !prof !267
+  %i.e = select i1 %i.b, i1 %i.d, i1 false, !prof !956
+  br i1 %i.e, label %bb.b, label %_Z4swapR12hb_bit_set_tS0_.exit, !prof !956
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
@@ -401,7 +401,7 @@ bb.d:                                             ; preds = %bb.a
   %i.w = getelementptr inbounds nuw i8, ptr %i.p, i64 16 ; 2 uses
   %i.x = load i8, ptr %i.w, align 8, !range !380
   %i.y = trunc nuw i8 %i.x to i1
-  br i1 %i.y, label %bb.e, label %_ZN8hb_set_tC2EOS_.exit, !prof !267
+  br i1 %i.y, label %bb.e, label %_ZN8hb_set_tC2EOS_.exit, !prof !956
 
 bb.e:                                             ; preds = %bb.d
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 64
@@ -804,8 +804,8 @@ bb.h:                                             ; preds = %bb.g, %.loopexit.th
   %i.bd = trunc nuw i8 %i.bc to i1
   %i.be = load i8, ptr %i.ba, align 8, !range !380
   %i.bf = trunc nuw i8 %i.be to i1
-  %i.bg = select i1 %i.bd, i1 %i.bf, i1 false
-  br i1 %i.bg, label %bb.i, label %_ZN8hb_set_taSEOS_.exit, !prof !267
+  %i.bg = select i1 %i.bd, i1 %i.bf, i1 false, !prof !956
+  br i1 %i.bg, label %bb.i, label %_ZN8hb_set_taSEOS_.exit, !prof !956
 
 bb.i:                                             ; preds = %bb.h
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ao, i64 72 ; 2 uses
@@ -1104,8 +1104,8 @@ bb.h:                                             ; preds = %bb.g, %.loopexit.th
   %i.bd = trunc nuw i8 %i.bc to i1
   %i.be = load i8, ptr %i.ba, align 8, !range !380
   %i.bf = trunc nuw i8 %i.be to i1
-  %i.bg = select i1 %i.bd, i1 %i.bf, i1 false
-  br i1 %i.bg, label %bb.i, label %_ZN8hb_set_taSEOS_.exit, !prof !267
+  %i.bg = select i1 %i.bd, i1 %i.bf, i1 false, !prof !956
+  br i1 %i.bg, label %bb.i, label %_ZN8hb_set_taSEOS_.exit, !prof !956
 
 bb.i:                                             ; preds = %bb.h
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ao, i64 72 ; 2 uses
@@ -1508,8 +1508,8 @@ bb.a:
   %i.b = trunc nuw i8 %i.a to i1
   %i.c = load i8, ptr %1, align 8, !range !380
   %i.d = trunc nuw i8 %i.c to i1
-  %i.e = select i1 %i.b, i1 %i.d, i1 false
-  br i1 %i.e, label %bb.b, label %_ZN12hb_bit_set_taSEOS_.exit, !prof !267
+  %i.e = select i1 %i.b, i1 %i.d, i1 false, !prof !956
+  br i1 %i.e, label %bb.b, label %_ZN12hb_bit_set_taSEOS_.exit, !prof !956
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
@@ -1569,8 +1569,8 @@ _ZN12hb_bit_set_taSEOS_.exit:                     ; preds = %bb.a, %bb.b
   %i.an = trunc nuw i8 %i.am to i1
   %i.ao = load i8, ptr %i.al, align 8, !range !380
   %i.ap = trunc nuw i8 %i.ao to i1
-  %i.aq = select i1 %i.an, i1 %i.ap, i1 false
-  br i1 %i.aq, label %bb.c, label %_ZN12hb_bit_set_taSEOS_.exit5, !prof !267
+  %i.aq = select i1 %i.an, i1 %i.ap, i1 false, !prof !956
+  br i1 %i.aq, label %bb.c, label %_ZN12hb_bit_set_taSEOS_.exit5, !prof !956
 
 bb.c:                                             ; preds = %_ZN12hb_bit_set_taSEOS_.exit
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 52 ; 2 uses

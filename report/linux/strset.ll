@@ -204,40 +204,27 @@ bb.g:                                             ; preds = %.preheader58, %strs
   %i.w = shl nuw nsw i32 1, %i.v
   %i.x = and i32 %.val, %i.w
   %.not57 = icmp eq i32 %i.x, 0
-  br i1 %.not57, label %strset_include.exit.thread, label %.split._crit_edge
-
-.split._crit_edge:                                ; preds = %.split
-  %.phi.trans.insert = getelementptr [16 x i8], ptr %i.d, i64 %indvars.iv
-  %.pre = load i8, ptr %.phi.trans.insert, align 8, !range !11
-  br label %bb.i
+  br i1 %.not57, label %strset_include.exit.thread, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.y = getelementptr [16 x i8], ptr %i.d, i64 %indvars.iv ; 2 uses
-  %i.z = load i8, ptr %i.y, align 8, !range !11, !noundef !12 ; 3 uses
-  %i.aa = trunc nuw i8 %i.z to i1                 ; 2 uses
-  br i1 %i.aa, label %strset_include.exit, label %3
+  %i.y = getelementptr [16 x i8], ptr %i.d, i64 %indvars.iv
+  %i.z = load i8, ptr %i.y, align 8, !range !11, !noundef !12
+  %i.aa = trunc nuw i8 %i.z to i1
+  br i1 %i.aa, label %strset_include.exit, label %strset_include.exit.thread
 
-3:                                                ; preds = %bb.h
-  %4 = getelementptr i8, ptr %i.y, i64 8
-  %5 = load ptr, ptr %4, align 8
-  %.not12.i = icmp eq ptr %5, null
-  br i1 %.not12.i, label %strset_include.exit.thread, label %strset_include.exit
-
-strset_include.exit:                              ; preds = %bb.h, %3
+strset_include.exit:                              ; preds = %bb.h
   %i.ab = load ptr, ptr %1, align 8
   %.not13.i = icmp eq ptr %i.ab, null
-  %6 = icmp ne i8 %i.z, 0
-  %7 = xor i1 %i.aa, true
-  %8 = select i1 %.not13.i, i1 %7, i1 %6
-  br i1 %8, label %bb.i, label %strset_include.exit.thread
+  br i1 %.not13.i, label %strset_include.exit.thread, label %bb.j
 
-bb.i:                                             ; preds = %.split._crit_edge, %strset_include.exit
-  %9 = phi i8 [ %.pre, %.split._crit_edge ], [ %i.z, %strset_include.exit ]
-  %10 = getelementptr [16 x i8], ptr %i.d, i64 %indvars.iv ; 3 uses
-  %i.ac = trunc nuw i8 %9 to i1
+bb.i:                                             ; preds = %.split
+  %.phi.trans.insert = getelementptr [16 x i8], ptr %i.d, i64 %indvars.iv
+  %.pre = load i8, ptr %.phi.trans.insert, align 8, !range !11
+  %i.ac = trunc nuw i8 %.pre to i1
   br i1 %i.ac, label %bb.j, label %strset_include.exit.thread
 
-bb.j:                                             ; preds = %bb.i
+bb.j:                                             ; preds = %strset_include.exit, %bb.i
+  %3 = getelementptr [16 x i8], ptr %i.d, i64 %indvars.iv ; 3 uses
   %i.ad = load i8, ptr %i.s, align 4, !range !11, !noundef !12
   %i.ae = trunc nuw i8 %i.ad to i1
   %i.af = load ptr, ptr @ethtool_phy_ops, align 8 ; 4 uses
@@ -323,19 +310,19 @@ bb.v:                                             ; preds = %bb.t, %bb.s, %bb.r
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.v, %bb.u
-  %i.bi = getelementptr i8, ptr %10, i64 8
+  %i.bi = getelementptr i8, ptr %3, i64 8
   store ptr %i.ax, ptr %i.bi, align 8
-  %i.bj = getelementptr i8, ptr %10, i64 1
+  %i.bj = getelementptr i8, ptr %3, i64 1
   store i8 1, ptr %i.bj, align 1
   br label %strset_prepare_set.exit
 
 strset_prepare_set.exit:                          ; preds = %bb.n, %bb.o, %bb.q, %bb.w
   %.048.sink.i = phi i32 [ %.mux.i, %bb.q ], [ 0, %bb.n ], [ 0, %bb.o ], [ %.048.i, %bb.w ]
-  %i.bk = getelementptr i8, ptr %10, i64 4
+  %i.bk = getelementptr i8, ptr %3, i64 4
   store i32 %.048.sink.i, ptr %i.bk, align 4
   br label %strset_include.exit.thread
 
-strset_include.exit.thread:                       ; preds = %3, %strset_prepare_set.exit, %.split, %strset_include.exit, %bb.i
+strset_include.exit.thread:                       ; preds = %bb.h, %strset_include.exit, %strset_prepare_set.exit, %.split, %bb.i
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 23
   br i1 %exitcond.not, label %bb.x, label %bb.g, !llvm.loop !19
@@ -370,27 +357,29 @@ bb.a:
 
 .split39.us:                                      ; preds = %bb.a, %strset_include.exit.thread.us
   %indvars.iv46 = phi i64 [ %indvars.iv.next47, %strset_include.exit.thread.us ], [ 0, %bb.a ] ; 2 uses
-  %.02238.us = phi i32 [ %.1.ph.us, %strset_include.exit.thread.us ], [ 4, %bb.a ] ; 3 uses
+  %.02238.us = phi i32 [ %.1.ph.us, %strset_include.exit.thread.us ], [ 4, %bb.a ] ; 4 uses
   %i.d = getelementptr [16 x i8], ptr %i.b, i64 %indvars.iv46 ; 4 uses
-  %i.e = load i8, ptr %i.d, align 8, !range !11, !noundef !12 ; 2 uses
-  %i.f = trunc nuw i8 %i.e to i1                  ; 2 uses
+  %i.e = load i8, ptr %i.d, align 8, !range !11, !noundef !12
+  %i.f = trunc nuw i8 %i.e to i1
   br i1 %i.f, label %strset_include.exit.us, label %bb.b
 
 bb.b:                                             ; preds = %.split39.us
   %i.g = getelementptr i8, ptr %i.d, i64 8
   %i.h = load ptr, ptr %i.g, align 8
   %.not12.i.us = icmp eq ptr %i.h, null
-  br i1 %.not12.i.us, label %strset_include.exit.thread.us, label %strset_include.exit.us
+  br i1 %.not12.i.us, label %strset_include.exit.thread.us, label %.thread38.us
 
-strset_include.exit.us:                           ; preds = %bb.b, %.split39.us
+.thread38.us:                                     ; preds = %bb.b
+  %2 = load ptr, ptr %1, align 8
+  %.not13.i39.us = icmp eq ptr %2, null
+  br i1 %.not13.i39.us, label %bb.c, label %strset_include.exit.thread.us
+
+strset_include.exit.us:                           ; preds = %.split39.us
   %i.i = load ptr, ptr %1, align 8
   %.not13.i.us = icmp eq ptr %i.i, null
-  %2 = icmp ne i8 %i.e, 0
-  %3 = xor i1 %i.f, true
-  %4 = select i1 %.not13.i.us, i1 %3, i1 %2
-  br i1 %4, label %bb.c, label %strset_include.exit.thread.us
+  br i1 %.not13.i.us, label %strset_include.exit.thread.us, label %bb.c
 
-bb.c:                                             ; preds = %strset_include.exit.us
+bb.c:                                             ; preds = %strset_include.exit.us, %.thread38.us
   %i.j = load i8, ptr %i.c, align 4, !range !11, !noundef !12
   %i.k = trunc nuw i8 %i.j to i1
   %i.l = getelementptr i8, ptr %i.d, i64 4
@@ -429,8 +418,8 @@ strset_set_size.exit.thread.us:                   ; preds = %strset_set_size.exi
   %i.y = add i32 %.0.i2831.us, %.02238.us
   br label %strset_include.exit.thread.us
 
-strset_include.exit.thread.us:                    ; preds = %strset_set_size.exit.thread.us, %strset_include.exit.us, %bb.b
-  %.1.ph.us = phi i32 [ %.02238.us, %bb.b ], [ %.02238.us, %strset_include.exit.us ], [ %i.y, %strset_set_size.exit.thread.us ] ; 2 uses
+strset_include.exit.thread.us:                    ; preds = %strset_set_size.exit.thread.us, %strset_include.exit.us, %.thread38.us, %bb.b
+  %.1.ph.us = phi i32 [ %.02238.us, %bb.b ], [ %.02238.us, %strset_include.exit.us ], [ %.02238.us, %.thread38.us ], [ %i.y, %strset_set_size.exit.thread.us ] ; 2 uses
   %indvars.iv.next47 = add nuw nsw i64 %indvars.iv46, 1 ; 2 uses
   %exitcond49.not = icmp eq i64 %indvars.iv.next47, 23
   br i1 %exitcond49.not, label %.split41.us, label %.split39.us, !llvm.loop !22
@@ -485,7 +474,7 @@ strset_set_size.exit.thread:                      ; preds = %bb.e, %strset_set_s
   br label %strset_include.exit.thread
 
 strset_include.exit.thread:                       ; preds = %strset_set_size.exit.thread, %.split
-  %.1.ph = phi i32 [ %.02238, %.split ], [ %i.as, %strset_set_size.exit.thread ] ; 2 uses
+  %.1.ph = phi i32 [ %i.as, %strset_set_size.exit.thread ], [ %.02238, %.split ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 23
   br i1 %exitcond.not, label %.split41.us, label %.split, !llvm.loop !22
@@ -515,65 +504,80 @@ bb.a:
 
 .preheader:                                       ; preds = %bb.a
   %i.j = getelementptr i8, ptr %1, i64 16
-  %i.k = getelementptr i8, ptr %2, i64 8          ; 3 uses
-  %i.l = getelementptr i8, ptr %1, i64 20
+  %i.k = getelementptr i8, ptr %2, i64 8          ; 6 uses
+  %i.l = getelementptr i8, ptr %1, i64 20         ; 3 uses
   %i.m = getelementptr i8, ptr %0, i64 112
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader, %strset_fill_set.exit
-  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %strset_fill_set.exit ] ; 6 uses
+  %indvars.iv = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %strset_fill_set.exit ] ; 9 uses
   %.val = load i32, ptr %i.j, align 8             ; 2 uses
   %.not.i = icmp eq i32 %.val, 0
-  br i1 %.not.i, label %bb.c, label %.split
+  br i1 %.not.i, label %.split._crit_edge, label %.split
 
 .split:                                           ; preds = %bb.b
   %i.n = trunc nuw nsw i64 %indvars.iv to i32
   %i.o = shl nuw nsw i32 1, %i.n
   %i.p = and i32 %.val, %i.o
   %.not34 = icmp eq i32 %i.p, 0
-  br i1 %.not34, label %strset_fill_set.exit, label %.split._crit_edge
+  br i1 %.not34, label %strset_fill_set.exit, label %bb.e
 
-.split._crit_edge:                                ; preds = %.split
-  %.phi.trans.insert.a = getelementptr [16 x i8], ptr %i.k, i64 %indvars.iv
-  %.pre.a = load i8, ptr %.phi.trans.insert.a, align 8, !range !11
-  br label %bb.e
+.split._crit_edge:                                ; preds = %bb.b
+  %.phi.trans.insert.a = getelementptr [16 x i8], ptr %i.k, i64 %indvars.iv ; 2 uses
+  %.pre.a = load i8, ptr %.phi.trans.insert.a, align 8, !range !11, !noundef !12
+  %3 = trunc nuw i8 %.pre.a to i1
+  br i1 %3, label %7, label %4
 
-bb.c:                                             ; preds = %bb.b
-  %i.q = getelementptr [16 x i8], ptr %i.k, i64 %indvars.iv ; 2 uses
-  %i.r = load i8, ptr %i.q, align 8, !range !11, !noundef !12 ; 3 uses
-  %i.s = trunc nuw i8 %i.r to i1                  ; 2 uses
-  br i1 %i.s, label %strset_include.exit, label %bb.d
+4:                                                ; preds = %.split._crit_edge
+  %5 = getelementptr i8, ptr %.phi.trans.insert.a, i64 8
+  %6 = load ptr, ptr %5, align 8
+  %.not12.i = icmp eq ptr %6, null
+  br i1 %.not12.i, label %strset_fill_set.exit, label %bb.d
 
-bb.d:                                             ; preds = %bb.c
-  %3 = getelementptr i8, ptr %i.q, i64 8
-  %i.t = load ptr, ptr %3, align 8
+7:                                                ; preds = %.split._crit_edge
+  %8 = load ptr, ptr %2, align 8
+  %.not13.i = icmp eq ptr %8, null
+  br i1 %.not13.i, label %strset_fill_set.exit, label %bb.c
+
+bb.c:                                             ; preds = %7
+  %i.q = getelementptr [16 x i8], ptr %i.k, i64 %indvars.iv
+  %i.r = load i8, ptr %i.l, align 4, !range !11, !noundef !12
+  %i.s = trunc nuw i8 %i.r to i1
+  br label %bb.g
+
+bb.d:                                             ; preds = %4
+  %i.t = load ptr, ptr %2, align 8
   %.not12.i.a = icmp eq ptr %i.t, null
-  br i1 %.not12.i.a, label %strset_fill_set.exit, label %strset_include.exit
+  br i1 %.not12.i.a, label %strset_include.exit, label %strset_fill_set.exit
 
-strset_include.exit:                              ; preds = %bb.c, %bb.d
-  %4 = load ptr, ptr %2, align 8
-  %.not13.i = icmp eq ptr %4, null
-  %5 = icmp ne i8 %i.r, 0
-  %6 = xor i1 %i.s, true
-  %7 = select i1 %.not13.i, i1 %6, i1 %5
-  br i1 %7, label %bb.e, label %strset_fill_set.exit
+strset_include.exit:                              ; preds = %bb.d
+  %9 = getelementptr [16 x i8], ptr %i.k, i64 %indvars.iv
+  %10 = load i8, ptr %i.l, align 4, !range !11, !noundef !12
+  %11 = trunc nuw i8 %10 to i1
+  br label %bb.f
 
-bb.e:                                             ; preds = %.split._crit_edge, %strset_include.exit
-  %8 = phi i8 [ %.pre.a, %.split._crit_edge ], [ %i.r, %strset_include.exit ]
-  %i.u = getelementptr [16 x i8], ptr %i.k, i64 %indvars.iv ; 3 uses
+bb.e:                                             ; preds = %.split
+  %.phi.trans.insert = getelementptr [16 x i8], ptr %i.k, i64 %indvars.iv
+  %.pre = load i8, ptr %.phi.trans.insert, align 8, !range !11
+  %12 = trunc nuw i8 %.pre to i1
+  %i.u = getelementptr [16 x i8], ptr %i.k, i64 %indvars.iv ; 2 uses
   %i.v = load i8, ptr %i.l, align 4, !range !11, !noundef !12
-  %9 = trunc nuw i8 %i.v to i1
-  %i.w = trunc nuw i8 %8 to i1
-  br i1 %i.w, label %bb.g, label %bb.f
+  %i.w = trunc nuw i8 %i.v to i1                  ; 2 uses
+  br i1 %12, label %bb.g, label %bb.f
 
-bb.f:                                             ; preds = %bb.e
-  %i.x = getelementptr i8, ptr %i.u, i64 8
+bb.f:                                             ; preds = %strset_include.exit, %bb.e
+  %13 = phi i1 [ %11, %strset_include.exit ], [ %i.w, %bb.e ]
+  %14 = phi ptr [ %9, %strset_include.exit ], [ %i.u, %bb.e ]
+  %15 = getelementptr [16 x i8], ptr %i.k, i64 %indvars.iv
+  %i.x = getelementptr i8, ptr %15, i64 8
   %i.y = load ptr, ptr %i.x, align 8
   %.not.i27 = icmp eq ptr %i.y, null
   br i1 %.not.i27, label %.loopexit, label %bb.g
 
-bb.g:                                             ; preds = %bb.f, %bb.e
-  %i.z = getelementptr i8, ptr %i.u, i64 4        ; 4 uses
+bb.g:                                             ; preds = %bb.c, %bb.f, %bb.e
+  %16 = phi i1 [ %i.s, %bb.c ], [ %13, %bb.f ], [ %i.w, %bb.e ]
+  %17 = phi ptr [ %i.q, %bb.c ], [ %14, %bb.f ], [ %i.u, %bb.e ] ; 2 uses
+  %i.z = getelementptr i8, ptr %17, i64 4         ; 4 uses
   %i.aa = load i32, ptr %i.z, align 4
   %i.ab = icmp eq i32 %i.aa, 0
   br i1 %i.ab, label %strset_fill_set.exit, label %bb.h
@@ -608,7 +612,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not29.i, label %bb.k, label %strset_fill_string.exit.thread.i
 
 bb.k:                                             ; preds = %bb.j
-  br i1 %9, label %bb.r, label %bb.l
+  br i1 %16, label %bb.r, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
   %.val.i.i31.i = load i32, ptr %i.d, align 4
@@ -627,7 +631,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not45.i, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %.preheader.i
-  %i.ap = getelementptr i8, ptr %i.u, i64 8
+  %i.ap = getelementptr i8, ptr %17, i64 8
   br label %bb.m
 
 bb.m:                                             ; preds = %bb.q, %.lr.ph.i
@@ -756,7 +760,7 @@ nla_nest_cancel.exit.i:                           ; preds = %bb.s, %strset_fill_
   call void @skb_trim(ptr noundef %0, i32 noundef %i.cr) #7
   br label %.loopexit
 
-strset_fill_set.exit:                             ; preds = %bb.d, %bb.r, %bb.g, %.split, %strset_include.exit
+strset_fill_set.exit:                             ; preds = %7, %bb.d, %4, %bb.r, %bb.g, %.split
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 23
   br i1 %exitcond.not, label %bb.t, label %bb.b, !llvm.loop !24

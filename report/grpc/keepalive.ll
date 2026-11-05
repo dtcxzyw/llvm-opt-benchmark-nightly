@@ -204,13 +204,13 @@ define noundef zeroext i1 @_ZN9grpc_core5http216KeepaliveManager21IsKeepAliveLoo
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.b = load i64, ptr %i.a, align 8, !tbaa !59
-  %1 = icmp ne i64 %i.b, 9223372036854775807
+  %.not.i = icmp eq i64 %i.b, 9223372036854775807
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 26
   %i.d = load i8, ptr %i.c, align 2, !range !46
   %i.e = trunc nuw i8 %i.d to i1
-  %2 = xor i1 %i.e, true
-  %3 = select i1 %1, i1 %2, i1 false
-  ret i1 %3
+  %or.cond.not = select i1 %.not.i, i1 true, i1 %i.e
+  %1 = xor i1 %or.cond.not, true
+  ret i1 %1
 }
 
 ; Function Attrs: mustprogress uwtable

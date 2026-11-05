@@ -205,7 +205,7 @@ _ZNK17arith_recognizers6is_addEPK4expr.exit.thread: ; preds = %_ZNK17arith_recog
 
 bb.c:                                             ; preds = %.lr.ph, %bb.m
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.m ] ; 2 uses
-  %.01639 = phi i1 [ true, %.lr.ph ], [ %.218.ph, %bb.m ] ; 3 uses
+  %.01639 = phi i1 [ true, %.lr.ph ], [ %.218.ph, %bb.m ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #25
   %i.af = getelementptr inbounds nuw [8 x i8], ptr %.02055, i64 %indvars.iv
   %i.ag = load ptr, ptr %i.af, align 8, !tbaa !42
@@ -418,7 +418,7 @@ _ZNK17arith_recognizers6is_intEPK4expr.exit:      ; preds = %_ZNK4decl13get_fami
 _ZNK17arith_recognizers6is_intEPK4expr.exit.thread: ; preds = %.noexc23, %_ZNK4decl13get_family_idEv.exit.thread.i.i.i.i, %_ZNK17arith_recognizers6is_intEPK4expr.exit, %_ZNK8uint_set8containsEj.exit.thread
   br label %bb.m
 
-bb.l:                                             ; preds = %bb.f, %bb.d
+bb.l:                                             ; preds = %bb.d, %bb.f
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #25
   br label %.loopexit
 
@@ -427,11 +427,14 @@ bb.m:                                             ; preds = %_ZNK17arith_recogni
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #25
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %.loopexit, label %bb.c, !llvm.loop !709
+  br i1 %exitcond.not, label %._crit_edge.loopexit, label %bb.c, !llvm.loop !709
 
-.loopexit:                                        ; preds = %bb.m, %bb.l
-  %.01637.ph = phi i1 [ %.01639, %bb.l ], [ %.218.ph, %bb.m ] ; 2 uses
-  %.not34.ph = phi i1 [ false, %bb.l ], [ true, %bb.m ] ; 2 uses
+._crit_edge.loopexit:                             ; preds = %bb.m
+  %3 = xor i1 %.218.ph, true
+  br label %.loopexit
+
+.loopexit:                                        ; preds = %._crit_edge.loopexit, %bb.l
+  %.not34.ph = phi i1 [ %3, %._crit_edge.loopexit ], [ false, %bb.l ] ; 2 uses
   %.pr = load i32, ptr %i.ab, align 8, !tbaa !405 ; 2 uses
   %i.cz = load ptr, ptr %2, align 8, !tbaa !404   ; 4 uses
   %i.da = zext i32 %.pr to i64
@@ -500,8 +503,7 @@ bb.m:                                             ; preds = %_ZNK17arith_recogni
   br label %.loopexit.i
 
 .loopexit.i:                                      ; preds = %.loopexit.thread, %.loopexit.loopexit.i, %.loopexit
-  %.not3462 = phi i1 [ %.not34.ph, %.loopexit.loopexit.i ], [ %.not34.ph, %.loopexit ], [ true, %.loopexit.thread ]
-  %.0163761 = phi i1 [ %.01637.ph, %.loopexit.loopexit.i ], [ %.01637.ph, %.loopexit ], [ true, %.loopexit.thread ]
+  %.0163761 = phi i1 [ %.not34.ph, %.loopexit.loopexit.i ], [ %.not34.ph, %.loopexit ], [ false, %.loopexit.thread ]
   %i.ef = phi ptr [ %i.ac, %.loopexit.loopexit.i ], [ %i.ac, %.loopexit ], [ %i.w, %.loopexit.thread ]
   %i.eg = phi ptr [ %i.ab, %.loopexit.loopexit.i ], [ %i.ab, %.loopexit ], [ %i.x, %.loopexit.thread ]
   %i.eh = phi ptr [ %.pre.i, %.loopexit.loopexit.i ], [ %i.cz, %.loopexit ], [ %i.z, %.loopexit.thread ] ; 3 uses
@@ -523,10 +525,8 @@ bb.o:                                             ; preds = %bb.n
   unreachable
 
 _ZN13ast_fast_markILj2EED2Ev.exit:                ; preds = %.loopexit.i, %bb.n
-  %3 = xor i1 %.0163761, true
-  %.3 = select i1 %.not3462, i1 %3, i1 false
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #25
-  ret i1 %.3
+  ret i1 %.0163761
 }
 
 ; Function Attrs: mustprogress uwtable

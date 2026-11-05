@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %.lr.ph, %_ZN5graph7
   %i.az = getelementptr inbounds nuw i8, ptr %i.ac, i64 112
   %i.ba = load i8, ptr %i.az, align 8, !range !187
   %i.bb = trunc nuw i8 %i.ba to i1
-  br i1 %i.bb, label %bb.e, label %_ZN12hb_hashmap_tIjjLb0EEaSEOS0_.exit.i, !prof !121
+  br i1 %i.bb, label %bb.e, label %_ZN12hb_hashmap_tIjjLb0EEaSEOS0_.exit.i, !prof !403
 
 bb.e:                                             ; preds = %bb.d
   %i.bc = getelementptr inbounds nuw i8, ptr %i.ac, i64 114 ; 2 uses
@@ -246,7 +246,7 @@ _ZN12hb_hashmap_tIjjLb0EEaSEOS0_.exit.i:          ; preds = %bb.e, %bb.d
   %i.bw = getelementptr inbounds nuw i8, ptr %i.ac, i64 160 ; 2 uses
   %i.bx = load i8, ptr %i.bw, align 8, !range !187
   %i.by = trunc nuw i8 %i.bx to i1
-  br i1 %i.by, label %bb.f, label %_ZN5graph7graph_t8vertex_taSEOS1_.exit, !prof !120
+  br i1 %i.by, label %bb.f, label %_ZN5graph7graph_t8vertex_taSEOS1_.exit, !prof !269
 
 bb.f:                                             ; preds = %_ZN12hb_hashmap_tIjjLb0EEaSEOS0_.exit.i
   %i.bz = getelementptr inbounds nuw i8, ptr %i.k, i64 208
@@ -343,8 +343,8 @@ bb.a:
   %i.b = trunc nuw i8 %i.a to i1
   %i.c = load i8, ptr %1, align 8, !range !187
   %i.d = trunc nuw i8 %i.c to i1
-  %i.e = select i1 %i.b, i1 %i.d, i1 false
-  br i1 %i.e, label %bb.b, label %_Z4swapR12hb_bit_set_tS0_.exit, !prof !120
+  %i.e = select i1 %i.b, i1 %i.d, i1 false, !prof !269
+  br i1 %i.e, label %bb.b, label %_Z4swapR12hb_bit_set_tS0_.exit, !prof !269
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
@@ -747,23 +747,29 @@ _ZN5graph7graph_t8vertex_t10add_parentEjb.exit52: ; preds = %.loopexit.i49, %_ZN
   %lcmp.mod489 = trunc i32 %i.e to i1
   tail call void @llvm.assume(i1 %lcmp.mod489)
   %i.aau = getelementptr inbounds nuw [216 x i8], ptr %i.aj, i64 %indvars.iv322.epil.init ; 2 uses
-  %1 = getelementptr inbounds nuw i8, ptr %i.aau, i64 112
-  %2 = load i8, ptr %1, align 8, !tbaa !421, !range !187, !noundef !274
-  %3 = trunc nuw i8 %2 to i1
-  %i.aav = getelementptr inbounds nuw i8, ptr %i.aau, i64 160
-  %i.aaw = load i8, ptr %i.aav, align 8, !range !187
-  %4 = trunc nuw i8 %i.aaw to i1
-  %5 = select i1 %3, i1 %4, i1 false
-  %i.aax = trunc nuw i8 %.epil.init to i1
-  %.not.i53.epil = xor i1 %i.aax, true
+  %i.aav = getelementptr inbounds nuw i8, ptr %i.aau, i64 112
+  %i.aaw = load i8, ptr %i.aav, align 8, !tbaa !421, !range !187, !noundef !274
+  %i.aax = trunc nuw i8 %i.aaw to i1
+  br i1 %i.aax, label %1, label %_ZNK5graph7graph_t8vertex_t8in_errorEv.exit.epil
+
+1:                                                ; preds = %.epil.preheader
+  %2 = getelementptr inbounds nuw i8, ptr %i.aau, i64 160
+  %3 = load i8, ptr %2, align 8, !tbaa !354, !range !187, !noundef !274
+  %4 = trunc nuw i8 %3 to i1
+  br label %_ZNK5graph7graph_t8vertex_t8in_errorEv.exit.epil
+
+_ZNK5graph7graph_t8vertex_t8in_errorEv.exit.epil: ; preds = %1, %.epil.preheader
+  %5 = phi i1 [ false, %.epil.preheader ], [ %4, %1 ]
+  %6 = trunc nuw i8 %.epil.init to i1
+  %.not.i53.epil = xor i1 %6, true
   %brmerge.i.epil = or i1 %5, %.not.i53.epil
   br i1 %brmerge.i.epil, label %._crit_edge295, label %bb.dl
 
-bb.dl:                                            ; preds = %.epil.preheader
+bb.dl:                                            ; preds = %_ZNK5graph7graph_t8vertex_t8in_errorEv.exit.epil
   store i8 0, ptr %i.ak, align 1, !tbaa !340
   br label %._crit_edge295
 
-._crit_edge295:                                   ; preds = %._crit_edge295.loopexit.unr-lcssa, %bb.dl, %.epil.preheader, %bb.b
+._crit_edge295:                                   ; preds = %._crit_edge295.loopexit.unr-lcssa, %bb.dl, %_ZNK5graph7graph_t8vertex_t8in_errorEv.exit.epil, %bb.b
   store i8 0, ptr %i.a, align 8, !tbaa !932
   br label %bb.dp
 
@@ -772,43 +778,55 @@ bb.dm:                                            ; preds = %_ZN5graph7graph_t13
   %i.aay = phi i8 [ %.promoted, %.lr.ph294.new ], [ %i.abi, %_ZN5graph7graph_t13check_successEb.exit.1 ] ; 2 uses
   %niter = phi i64 [ 0, %.lr.ph294.new ], [ %niter.next.1, %_ZN5graph7graph_t13check_successEb.exit.1 ]
   %i.aaz = getelementptr inbounds nuw [216 x i8], ptr %i.aj, i64 %indvars.iv322 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.aaz, i64 112
-  %7 = load i8, ptr %6, align 8, !tbaa !421, !range !187, !noundef !274
-  %8 = trunc nuw i8 %7 to i1
-  %i.aba = getelementptr inbounds nuw i8, ptr %i.aaz, i64 160
-  %i.abb = load i8, ptr %i.aba, align 8, !range !187
-  %9 = trunc nuw i8 %i.abb to i1
-  %10 = select i1 %8, i1 %9, i1 false
-  %i.abc = trunc nuw i8 %i.aay to i1
-  %.not.i53 = xor i1 %i.abc, true
-  %brmerge.i = or i1 %10, %.not.i53
+  %i.aba = getelementptr inbounds nuw i8, ptr %i.aaz, i64 112
+  %i.abb = load i8, ptr %i.aba, align 8, !tbaa !421, !range !187, !noundef !274
+  %i.abc = trunc nuw i8 %i.abb to i1
+  br i1 %i.abc, label %7, label %_ZNK5graph7graph_t8vertex_t8in_errorEv.exit
+
+7:                                                ; preds = %bb.dm
+  %8 = getelementptr inbounds nuw i8, ptr %i.aaz, i64 160
+  %9 = load i8, ptr %8, align 8, !tbaa !354, !range !187, !noundef !274
+  %10 = trunc nuw i8 %9 to i1
+  br label %_ZNK5graph7graph_t8vertex_t8in_errorEv.exit
+
+_ZNK5graph7graph_t8vertex_t8in_errorEv.exit:      ; preds = %bb.dm, %7
+  %11 = phi i1 [ false, %bb.dm ], [ %10, %7 ]
+  %12 = trunc nuw i8 %i.aay to i1
+  %.not.i53 = xor i1 %12, true
+  %brmerge.i = or i1 %11, %.not.i53
   br i1 %brmerge.i, label %_ZN5graph7graph_t13check_successEb.exit, label %bb.dn
 
-bb.dn:                                            ; preds = %bb.dm
+bb.dn:                                            ; preds = %_ZNK5graph7graph_t8vertex_t8in_errorEv.exit
   store i8 0, ptr %i.ak, align 1, !tbaa !340
   br label %_ZN5graph7graph_t13check_successEb.exit
 
-_ZN5graph7graph_t13check_successEb.exit:          ; preds = %bb.dm, %bb.dn
-  %i.abd = phi i8 [ %i.aay, %bb.dm ], [ 0, %bb.dn ] ; 2 uses
+_ZN5graph7graph_t13check_successEb.exit:          ; preds = %_ZNK5graph7graph_t8vertex_t8in_errorEv.exit, %bb.dn
+  %i.abd = phi i8 [ %i.aay, %_ZNK5graph7graph_t8vertex_t8in_errorEv.exit ], [ 0, %bb.dn ] ; 2 uses
   %i.abe = getelementptr inbounds nuw [216 x i8], ptr %i.aj, i64 %indvars.iv322 ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %i.abe, i64 328
-  %12 = load i8, ptr %11, align 8, !tbaa !421, !range !187, !noundef !274
-  %13 = trunc nuw i8 %12 to i1
-  %i.abf = getelementptr inbounds nuw i8, ptr %i.abe, i64 376
-  %i.abg = load i8, ptr %i.abf, align 8, !range !187
-  %14 = trunc nuw i8 %i.abg to i1
-  %15 = select i1 %13, i1 %14, i1 false
-  %i.abh = trunc nuw i8 %i.abd to i1
-  %.not.i53.1 = xor i1 %i.abh, true
-  %brmerge.i.1 = or i1 %15, %.not.i53.1
+  %i.abf = getelementptr inbounds nuw i8, ptr %i.abe, i64 328
+  %i.abg = load i8, ptr %i.abf, align 8, !tbaa !421, !range !187, !noundef !274
+  %i.abh = trunc nuw i8 %i.abg to i1
+  br i1 %i.abh, label %13, label %_ZNK5graph7graph_t8vertex_t8in_errorEv.exit.1
+
+13:                                               ; preds = %_ZN5graph7graph_t13check_successEb.exit
+  %14 = getelementptr inbounds nuw i8, ptr %i.abe, i64 376
+  %15 = load i8, ptr %14, align 8, !tbaa !354, !range !187, !noundef !274
+  %16 = trunc nuw i8 %15 to i1
+  br label %_ZNK5graph7graph_t8vertex_t8in_errorEv.exit.1
+
+_ZNK5graph7graph_t8vertex_t8in_errorEv.exit.1:    ; preds = %13, %_ZN5graph7graph_t13check_successEb.exit
+  %17 = phi i1 [ false, %_ZN5graph7graph_t13check_successEb.exit ], [ %16, %13 ]
+  %18 = trunc nuw i8 %i.abd to i1
+  %.not.i53.1 = xor i1 %18, true
+  %brmerge.i.1 = or i1 %17, %.not.i53.1
   br i1 %brmerge.i.1, label %_ZN5graph7graph_t13check_successEb.exit.1, label %bb.do
 
-bb.do:                                            ; preds = %_ZN5graph7graph_t13check_successEb.exit
+bb.do:                                            ; preds = %_ZNK5graph7graph_t8vertex_t8in_errorEv.exit.1
   store i8 0, ptr %i.ak, align 1, !tbaa !340
   br label %_ZN5graph7graph_t13check_successEb.exit.1
 
-_ZN5graph7graph_t13check_successEb.exit.1:        ; preds = %bb.do, %_ZN5graph7graph_t13check_successEb.exit
-  %i.abi = phi i8 [ %i.abd, %_ZN5graph7graph_t13check_successEb.exit ], [ 0, %bb.do ] ; 2 uses
+_ZN5graph7graph_t13check_successEb.exit.1:        ; preds = %bb.do, %_ZNK5graph7graph_t8vertex_t8in_errorEv.exit.1
+  %i.abi = phi i8 [ %i.abd, %_ZNK5graph7graph_t8vertex_t8in_errorEv.exit.1 ], [ 0, %bb.do ] ; 2 uses
   %indvars.iv.next323.1 = add nuw nsw i64 %indvars.iv322, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
@@ -1211,8 +1229,8 @@ bb.h:                                             ; preds = %bb.g, %.loopexit.th
   %i.bd = trunc nuw i8 %i.bc to i1
   %i.be = load i8, ptr %i.ba, align 8, !range !187
   %i.bf = trunc nuw i8 %i.be to i1
-  %i.bg = select i1 %i.bd, i1 %i.bf, i1 false
-  br i1 %i.bg, label %bb.i, label %_ZN8hb_set_taSEOS_.exit, !prof !120
+  %i.bg = select i1 %i.bd, i1 %i.bf, i1 false, !prof !269
+  br i1 %i.bg, label %bb.i, label %_ZN8hb_set_taSEOS_.exit, !prof !269
 
 bb.i:                                             ; preds = %bb.h
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ao, i64 72 ; 2 uses
@@ -1511,8 +1529,8 @@ bb.h:                                             ; preds = %bb.g, %.loopexit.th
   %i.bd = trunc nuw i8 %i.bc to i1
   %i.be = load i8, ptr %i.ba, align 8, !range !187
   %i.bf = trunc nuw i8 %i.be to i1
-  %i.bg = select i1 %i.bd, i1 %i.bf, i1 false
-  br i1 %i.bg, label %bb.i, label %_ZN8hb_set_taSEOS_.exit, !prof !120
+  %i.bg = select i1 %i.bd, i1 %i.bf, i1 false, !prof !269
+  br i1 %i.bg, label %bb.i, label %_ZN8hb_set_taSEOS_.exit, !prof !269
 
 bb.i:                                             ; preds = %bb.h
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ao, i64 72 ; 2 uses
@@ -1915,7 +1933,7 @@ bb.d:                                             ; preds = %.lr.ph, %_ZN5graph1
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 16 ; 2 uses
   %i.v = load i8, ptr %i.u, align 8, !range !187
   %i.w = trunc nuw i8 %i.v to i1
-  br i1 %i.w, label %bb.e, label %_ZN5graph18MarkBasePosFormat112class_info_taSEOS1_.exit, !prof !120
+  br i1 %i.w, label %bb.e, label %_ZN5graph18MarkBasePosFormat112class_info_taSEOS1_.exit, !prof !269
 
 bb.e:                                             ; preds = %bb.d
   %i.x = getelementptr inbounds nuw i8, ptr %i.k, i64 64

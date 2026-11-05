@@ -204,21 +204,27 @@ bb.e:                                             ; preds = %bb.d
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !198, !range !72, !noundef !73 ; 2 uses
   %i.ad = trunc nuw i8 %i.ac to i1                ; 2 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %i.o, i64 106
-  %2 = load i8, ptr %i.ae, align 2, !range !72
-  %3 = trunc nuw i8 %2 to i1
-  %or.cond29 = select i1 %i.ad, i1 true, i1 %3
-  %4 = getelementptr inbounds nuw i8, ptr %i.o, i64 108
-  %5 = load i8, ptr %4, align 4, !range !72
-  %6 = trunc nuw i8 %5 to i1
-  %7 = select i1 %or.cond29, i1 true, i1 %6
-  %8 = getelementptr inbounds nuw i8, ptr %i.h, i64 107
-  %i.af = load i8, ptr %8, align 1, !tbaa !198, !range !72, !noundef !73
-  %i.ag = trunc nuw i8 %i.af to i1                ; 2 uses
-  %or.cond.a = select i1 %i.ag, i1 %7, i1 false
-  br i1 %or.cond.a, label %bb.l, label %bb.f
+  %i.af = load i8, ptr %i.ae, align 2, !range !72
+  %i.ag = trunc nuw i8 %i.af to i1
+  %or.cond.a = select i1 %i.ad, i1 true, i1 %i.ag
+  br i1 %or.cond.a, label %6, label %2
 
-bb.f:                                             ; preds = %bb.e
-  br i1 %i.ag, label %.critedge, label %bb.g
+2:                                                ; preds = %bb.e
+  %3 = getelementptr inbounds nuw i8, ptr %i.o, i64 108
+  %4 = load i8, ptr %3, align 4, !tbaa !200, !range !72, !noundef !73
+  %5 = trunc nuw i8 %4 to i1
+  br label %6
+
+6:                                                ; preds = %2, %bb.e
+  %7 = phi i1 [ %5, %2 ], [ true, %bb.e ]
+  %8 = getelementptr inbounds nuw i8, ptr %i.h, i64 107
+  %9 = load i8, ptr %8, align 1, !tbaa !198, !range !72, !noundef !73
+  %10 = trunc nuw i8 %9 to i1                     ; 2 uses
+  %or.cond = select i1 %10, i1 %7, i1 false
+  br i1 %or.cond, label %bb.l, label %bb.f
+
+bb.f:                                             ; preds = %6
+  br i1 %10, label %.critedge, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.ah = getelementptr inbounds nuw i8, ptr %i.h, i64 106
@@ -252,8 +258,8 @@ bb.k:                                             ; preds = %bb.j
   %i.at = tail call fastcc noundef zeroext i1 @_ZN12_GLOBAL__N_111areDisjointERKSt3setIPK6AstVarSt4lessIS3_ESaIS3_EES9_(ptr noundef nonnull align 8 dereferenceable(48) %i.ar, ptr noundef nonnull align 8 dereferenceable(48) %i.ao)
   br label %bb.l
 
-bb.l:                                             ; preds = %bb.h, %bb.e, %bb.k, %bb.j, %bb.i, %.critedge, %bb.d, %_ZNK20AstUserAllocatorBaseI11AstNodeStmtN12_GLOBAL__N_114StmtPropertiesELi3EEclEPKS0_.exit37
-  %.2 = phi i1 [ false, %bb.d ], [ false, %_ZNK20AstUserAllocatorBaseI11AstNodeStmtN12_GLOBAL__N_114StmtPropertiesELi3EEclEPKS0_.exit37 ], [ false, %bb.i ], [ false, %bb.e ], [ false, %.critedge ], [ false, %bb.j ], [ %i.at, %bb.k ], [ false, %bb.h ]
+bb.l:                                             ; preds = %bb.h, %6, %bb.k, %bb.j, %bb.i, %.critedge, %bb.d, %_ZNK20AstUserAllocatorBaseI11AstNodeStmtN12_GLOBAL__N_114StmtPropertiesELi3EEclEPKS0_.exit37
+  %.2 = phi i1 [ false, %bb.d ], [ false, %_ZNK20AstUserAllocatorBaseI11AstNodeStmtN12_GLOBAL__N_114StmtPropertiesELi3EEclEPKS0_.exit37 ], [ false, %bb.i ], [ false, %6 ], [ false, %.critedge ], [ false, %bb.j ], [ %i.at, %bb.k ], [ false, %bb.h ]
   ret i1 %.2
 }
 

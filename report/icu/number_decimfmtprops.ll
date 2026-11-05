@@ -191,22 +191,26 @@ declare void @_ZN6icu_7813UnicodeString10setToBogusEv(ptr noundef nonnull align 
 
 ; Function Attrs: mustprogress uwtable
 define noundef zeroext i1 @_ZNK6icu_786number4impl23DecimalFormatProperties7_equalsERKS2_b(ptr noundef nonnull align 8 dereferenceable(757) %0, ptr noundef nonnull align 8 dereferenceable(757) %1, i1 noundef zeroext %2) local_unnamed_addr #0 align 2 {
-bb.a:
-  %3 = load i8, ptr %0, align 8, !tbaa !11, !range !66, !noundef !67 ; 2 uses
-  %4 = load i8, ptr %1, align 8, !tbaa !11, !range !66, !noundef !67 ; 2 uses
-  %5 = or i8 %4, %3
-  %brmerge.not.i = icmp eq i8 %5, 0
-  %6 = and i8 %4, %3
-  %.mux.i = icmp ne i8 %6, 0
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.b = load i32, ptr %i.a, align 4
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.d = load i32, ptr %i.c, align 4
-  %i.e = icmp eq i32 %i.b, %i.d
-  %7 = select i1 %brmerge.not.i, i1 %i.e, i1 %.mux.i
-  br i1 %7, label %bb.b, label %.critedge129
+  %4 = load i8, ptr %0, align 8, !tbaa !11, !range !66, !noundef !67 ; 2 uses
+  %5 = load i8, ptr %1, align 8, !tbaa !11, !range !66, !noundef !67 ; 2 uses
+  %6 = or i8 %5, %4
+  %brmerge.not.i = icmp eq i8 %6, 0
+  br i1 %brmerge.not.i, label %bb.a, label %_ZNK6icu_786number4impl13NullableValueI19UNumberCompactStyleEeqERKS4_.exit
 
-bb.b:                                             ; preds = %bb.a
+bb.a:                                             ; preds = %3
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 4
+  %i.b = load i32, ptr %i.a, align 4, !tbaa !68
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %i.d = load i32, ptr %i.c, align 4, !tbaa !68
+  %i.e = icmp eq i32 %i.b, %i.d
+  br i1 %i.e, label %bb.b, label %.critedge129
+
+_ZNK6icu_786number4impl13NullableValueI19UNumberCompactStyleEeqERKS4_.exit: ; preds = %3
+  %7 = and i8 %5, %4
+  %.mux.i.not = icmp eq i8 %7, 0
+  br i1 %.mux.i.not, label %.critedge129, label %bb.b
+
+bb.b:                                             ; preds = %bb.a, %_ZNK6icu_786number4impl13NullableValueI19UNumberCompactStyleEeqERKS4_.exit
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.h = load i8, ptr %i.f, align 8, !tbaa !19, !range !66, !noundef !67 ; 2 uses
@@ -240,46 +244,51 @@ _ZNK6icu_786number4impl13NullableValueINS_12CurrencyUnitEEeqERKS4_.exit: ; preds
   %i.v = load i8, ptr %i.t, align 8, !tbaa !25, !range !66, !noundef !67 ; 2 uses
   %i.w = load i8, ptr %i.u, align 8, !tbaa !25, !range !66, !noundef !67 ; 2 uses
   %i.x = or i8 %i.w, %i.v
-  %brmerge.not.i132 = icmp eq i8 %i.x, 0
-  %8 = and i8 %i.w, %i.v
-  %.mux.i133 = icmp ne i8 %8, 0
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 60
-  %10 = load i32, ptr %9, align 4
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 60
-  %12 = load i32, ptr %11, align 4
-  %i.y = icmp eq i32 %10, %12
-  %13 = select i1 %brmerge.not.i132, i1 %i.y, i1 %.mux.i133
-  br i1 %13, label %.critedge91, label %.critedge129
+  %i.y = icmp eq i8 %i.x, 0
+  br i1 %i.y, label %.split141, label %_ZNK6icu_786number4impl13NullableValueI14UCurrencyUsageEeqERKS4_.exit
 
-.critedge91:                                      ; preds = %.critedge90
+.split141:                                        ; preds = %.critedge90
+  %8 = getelementptr inbounds nuw i8, ptr %0, i64 60
+  %9 = load i32, ptr %8, align 4, !tbaa !69
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 60
+  %11 = load i32, ptr %10, align 4, !tbaa !69
+  %12 = icmp eq i32 %9, %11
+  br i1 %12, label %.critedge91, label %.critedge129
+
+_ZNK6icu_786number4impl13NullableValueI14UCurrencyUsageEeqERKS4_.exit: ; preds = %.critedge90
+  %13 = and i8 %i.w, %i.v
+  %.mux.i133.not = icmp eq i8 %13, 0
+  br i1 %.mux.i133.not, label %.critedge129, label %.critedge91
+
+.critedge91:                                      ; preds = %.split141, %_ZNK6icu_786number4impl13NullableValueI14UCurrencyUsageEeqERKS4_.exit
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 65
-  %i.aa = load i8, ptr %i.z, align 1, !tbaa !68, !range !66, !noundef !67
+  %i.aa = load i8, ptr %i.z, align 1, !tbaa !70, !range !66, !noundef !67
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 65
-  %i.ac = load i8, ptr %i.ab, align 1, !tbaa !68, !range !66, !noundef !67
+  %i.ac = load i8, ptr %i.ab, align 1, !tbaa !70, !range !66, !noundef !67
   %i.ad = icmp eq i8 %i.aa, %i.ac
   br i1 %i.ad, label %.critedge92, label %.critedge129
 
 .critedge92:                                      ; preds = %.critedge91
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 66
-  %i.af = load i8, ptr %i.ae, align 2, !tbaa !69, !range !66, !noundef !67
+  %i.af = load i8, ptr %i.ae, align 2, !tbaa !71, !range !66, !noundef !67
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 66
-  %i.ah = load i8, ptr %i.ag, align 2, !tbaa !69, !range !66, !noundef !67
+  %i.ah = load i8, ptr %i.ag, align 2, !tbaa !71, !range !66, !noundef !67
   %i.ai = icmp eq i8 %i.af, %i.ah
   br i1 %i.ai, label %.critedge93, label %.critedge129
 
 .critedge93:                                      ; preds = %.critedge92
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 67
-  %i.ak = load i8, ptr %i.aj, align 1, !tbaa !70, !range !66, !noundef !67
+  %i.ak = load i8, ptr %i.aj, align 1, !tbaa !72, !range !66, !noundef !67
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 67
-  %i.am = load i8, ptr %i.al, align 1, !tbaa !70, !range !66, !noundef !67
+  %i.am = load i8, ptr %i.al, align 1, !tbaa !72, !range !66, !noundef !67
   %i.an = icmp eq i8 %i.ak, %i.am
   br i1 %i.an, label %.critedge94, label %.critedge129
 
 .critedge94:                                      ; preds = %.critedge93
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 68
-  %i.ap = load i8, ptr %i.ao, align 4, !tbaa !71, !range !66, !noundef !67
+  %i.ap = load i8, ptr %i.ao, align 4, !tbaa !73, !range !66, !noundef !67
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 68
-  %i.ar = load i8, ptr %i.aq, align 4, !tbaa !71, !range !66, !noundef !67
+  %i.ar = load i8, ptr %i.aq, align 4, !tbaa !73, !range !66, !noundef !67
   %i.as = icmp eq i8 %i.ap, %i.ar
   br i1 %i.as, label %.critedge95, label %.critedge129
 
@@ -301,33 +310,33 @@ _ZNK6icu_786number4impl13NullableValueINS_12CurrencyUnitEEeqERKS4_.exit: ; preds
 
 .critedge97:                                      ; preds = %.critedge96
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %i.be = load i32, ptr %i.bd, align 8, !tbaa !72
+  %i.be = load i32, ptr %i.bd, align 8, !tbaa !74
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 96
-  %i.bg = load i32, ptr %i.bf, align 8, !tbaa !72
+  %i.bg = load i32, ptr %i.bf, align 8, !tbaa !74
   %i.bh = icmp eq i32 %i.be, %i.bg
   br i1 %i.bh, label %.critedge98, label %.critedge129
 
 .critedge98:                                      ; preds = %.critedge97
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 100
-  %i.bj = load i32, ptr %i.bi, align 4, !tbaa !73
+  %i.bj = load i32, ptr %i.bi, align 4, !tbaa !75
   %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 100
-  %i.bl = load i32, ptr %i.bk, align 4, !tbaa !73
+  %i.bl = load i32, ptr %i.bk, align 4, !tbaa !75
   %i.bm = icmp eq i32 %i.bj, %i.bl
   br i1 %i.bm, label %.critedge99, label %.critedge129
 
 .critedge99:                                      ; preds = %.critedge98
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 108
-  %i.bo = load i32, ptr %i.bn, align 4, !tbaa !74
+  %i.bo = load i32, ptr %i.bn, align 4, !tbaa !76
   %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 108
-  %i.bq = load i32, ptr %i.bp, align 4, !tbaa !74
+  %i.bq = load i32, ptr %i.bp, align 4, !tbaa !76
   %i.br = icmp eq i32 %i.bo, %i.bq
   br i1 %i.br, label %.critedge100, label %.critedge129
 
 .critedge100:                                     ; preds = %.critedge99
   %i.bs = getelementptr inbounds nuw i8, ptr %0, i64 116
-  %i.bt = load i32, ptr %i.bs, align 4, !tbaa !75
+  %i.bt = load i32, ptr %i.bs, align 4, !tbaa !77
   %i.bu = getelementptr inbounds nuw i8, ptr %1, i64 116
-  %i.bv = load i32, ptr %i.bu, align 4, !tbaa !75
+  %i.bv = load i32, ptr %i.bu, align 4, !tbaa !77
   %i.bw = icmp eq i32 %i.bt, %i.bv
   br i1 %i.bw, label %.critedge101, label %.critedge129
 
@@ -365,18 +374,23 @@ _ZNK6icu_786number4impl13NullableValueINS_12CurrencyUnitEEeqERKS4_.exit: ; preds
   %i.cp = load i8, ptr %i.cn, align 8, !tbaa !31, !range !66, !noundef !67 ; 2 uses
   %i.cq = load i8, ptr %i.co, align 8, !tbaa !31, !range !66, !noundef !67 ; 2 uses
   %i.cr = or i8 %i.cq, %i.cp
-  %brmerge.not.i134 = icmp eq i8 %i.cr, 0
-  %14 = and i8 %i.cq, %i.cp
-  %.mux.i135 = icmp ne i8 %14, 0
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 388
-  %16 = load i32, ptr %15, align 4
-  %17 = getelementptr inbounds nuw i8, ptr %1, i64 388
-  %18 = load i32, ptr %17, align 4
-  %i.cs = icmp eq i32 %16, %18
-  %19 = select i1 %brmerge.not.i134, i1 %i.cs, i1 %.mux.i135
-  br i1 %19, label %.critedge106, label %.critedge129
+  %i.cs = icmp eq i8 %i.cr, 0
+  br i1 %i.cs, label %.split142, label %_ZNK6icu_786number4impl13NullableValueI24UNumberFormatPadPositionEeqERKS4_.exit
 
-.critedge106:                                     ; preds = %.critedge105
+.split142:                                        ; preds = %.critedge105
+  %14 = getelementptr inbounds nuw i8, ptr %0, i64 388
+  %15 = load i32, ptr %14, align 4, !tbaa !78
+  %16 = getelementptr inbounds nuw i8, ptr %1, i64 388
+  %17 = load i32, ptr %16, align 4, !tbaa !78
+  %18 = icmp eq i32 %15, %17
+  br i1 %18, label %.critedge106, label %.critedge129
+
+_ZNK6icu_786number4impl13NullableValueI24UNumberFormatPadPositionEeqERKS4_.exit: ; preds = %.critedge105
+  %19 = and i8 %i.cq, %i.cp
+  %.mux.i135.not = icmp eq i8 %19, 0
+  br i1 %.mux.i135.not, label %.critedge129, label %.critedge106
+
+.critedge106:                                     ; preds = %.split142, %_ZNK6icu_786number4impl13NullableValueI24UNumberFormatPadPositionEeqERKS4_.exit
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 392
   %i.cu = getelementptr inbounds nuw i8, ptr %1, i64 392
   %i.cv = tail call noundef zeroext i1 @_ZNK6icu_7813UnicodeStringeqERKS0_(ptr noundef nonnull align 8 dereferenceable(64) %i.ct, ptr noundef nonnull align 8 dereferenceable(64) %i.cu)
@@ -408,18 +422,23 @@ _ZNK6icu_786number4impl13NullableValueINS_12CurrencyUnitEEeqERKS4_.exit: ; preds
   %i.dj = load i8, ptr %i.dh, align 8, !tbaa !37, !range !66, !noundef !67 ; 2 uses
   %i.dk = load i8, ptr %i.di, align 8, !tbaa !37, !range !66, !noundef !67 ; 2 uses
   %i.dl = or i8 %i.dk, %i.dj
-  %brmerge.not.i136 = icmp eq i8 %i.dl, 0
-  %20 = and i8 %i.dk, %i.dj
-  %.mux.i137 = icmp ne i8 %20, 0
-  %21 = getelementptr inbounds nuw i8, ptr %0, i64 748
-  %22 = load i32, ptr %21, align 4
-  %23 = getelementptr inbounds nuw i8, ptr %1, i64 748
-  %24 = load i32, ptr %23, align 4
-  %i.dm = icmp eq i32 %22, %24
-  %25 = select i1 %brmerge.not.i136, i1 %i.dm, i1 %.mux.i137
-  br i1 %25, label %.critedge111, label %.critedge129
+  %i.dm = icmp eq i8 %i.dl, 0
+  br i1 %i.dm, label %.split143, label %_ZNK6icu_786number4impl13NullableValueI25UNumberFormatRoundingModeEeqERKS4_.exit
 
-.critedge111:                                     ; preds = %.critedge110
+.split143:                                        ; preds = %.critedge110
+  %20 = getelementptr inbounds nuw i8, ptr %0, i64 748
+  %21 = load i32, ptr %20, align 4, !tbaa !79
+  %22 = getelementptr inbounds nuw i8, ptr %1, i64 748
+  %23 = load i32, ptr %22, align 4, !tbaa !79
+  %24 = icmp eq i32 %21, %23
+  br i1 %24, label %.critedge111, label %.critedge129
+
+_ZNK6icu_786number4impl13NullableValueI25UNumberFormatRoundingModeEeqERKS4_.exit: ; preds = %.critedge110
+  %25 = and i8 %i.dk, %i.dj
+  %.mux.i137.not = icmp eq i8 %25, 0
+  br i1 %.mux.i137.not, label %.critedge129, label %.critedge111
+
+.critedge111:                                     ; preds = %.split143, %_ZNK6icu_786number4impl13NullableValueI25UNumberFormatRoundingModeEeqERKS4_.exit
   %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 752
   %i.do = load i32, ptr %i.dn, align 8, !tbaa !57
   %i.dp = getelementptr inbounds nuw i8, ptr %1, i64 752
@@ -456,33 +475,33 @@ bb.c:                                             ; preds = %.critedge112
 
 .critedge115:                                     ; preds = %.critedge114
   %i.eh = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.ei = load i32, ptr %i.eh, align 8, !tbaa !76
+  %i.ei = load i32, ptr %i.eh, align 8, !tbaa !80
   %i.ej = getelementptr inbounds nuw i8, ptr %1, i64 104
-  %i.ek = load i32, ptr %i.ej, align 8, !tbaa !76
+  %i.ek = load i32, ptr %i.ej, align 8, !tbaa !80
   %i.el = icmp eq i32 %i.ei, %i.ek
   br i1 %i.el, label %.critedge116, label %.critedge129
 
 .critedge116:                                     ; preds = %.critedge115
   %i.em = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %i.en = load i32, ptr %i.em, align 8, !tbaa !77
+  %i.en = load i32, ptr %i.em, align 8, !tbaa !81
   %i.eo = getelementptr inbounds nuw i8, ptr %1, i64 88
-  %i.ep = load i32, ptr %i.eo, align 8, !tbaa !77
+  %i.ep = load i32, ptr %i.eo, align 8, !tbaa !81
   %i.eq = icmp eq i32 %i.en, %i.ep
   br i1 %i.eq, label %.critedge117, label %.critedge129
 
 .critedge117:                                     ; preds = %.critedge116
   %i.er = getelementptr inbounds nuw i8, ptr %0, i64 92
-  %i.es = load i32, ptr %i.er, align 4, !tbaa !78
+  %i.es = load i32, ptr %i.er, align 4, !tbaa !82
   %i.et = getelementptr inbounds nuw i8, ptr %1, i64 92
-  %i.eu = load i32, ptr %i.et, align 4, !tbaa !78
+  %i.eu = load i32, ptr %i.et, align 4, !tbaa !82
   %i.ev = icmp eq i32 %i.es, %i.eu
   br i1 %i.ev, label %.critedge118, label %.critedge129
 
 .critedge118:                                     ; preds = %.critedge117
   %i.ew = getelementptr inbounds nuw i8, ptr %0, i64 112
-  %i.ex = load i32, ptr %i.ew, align 8, !tbaa !79
+  %i.ex = load i32, ptr %i.ew, align 8, !tbaa !83
   %i.ey = getelementptr inbounds nuw i8, ptr %1, i64 112
-  %i.ez = load i32, ptr %i.ey, align 8, !tbaa !79
+  %i.ez = load i32, ptr %i.ey, align 8, !tbaa !83
   %i.fa = icmp eq i32 %i.ex, %i.ez
   br i1 %i.fa, label %.critedge119, label %.critedge129
 
@@ -512,9 +531,9 @@ bb.c:                                             ; preds = %.critedge112
 
 .critedge123:                                     ; preds = %.critedge122
   %i.fn = getelementptr inbounds nuw i8, ptr %0, i64 64
-  %i.fo = load i8, ptr %i.fn, align 8, !tbaa !80, !range !66, !noundef !67
+  %i.fo = load i8, ptr %i.fn, align 8, !tbaa !84, !range !66, !noundef !67
   %i.fp = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.fq = load i8, ptr %i.fp, align 8, !tbaa !80, !range !66, !noundef !67
+  %i.fq = load i8, ptr %i.fp, align 8, !tbaa !84, !range !66, !noundef !67
   %i.fr = icmp eq i8 %i.fo, %i.fq
   br i1 %i.fr, label %.critedge124, label %.critedge129
 
@@ -540,18 +559,23 @@ bb.c:                                             ; preds = %.critedge112
   %i.ge = load i8, ptr %i.gc, align 4, !tbaa !34, !range !66, !noundef !67 ; 2 uses
   %i.gf = load i8, ptr %i.gd, align 4, !tbaa !34, !range !66, !noundef !67 ; 2 uses
   %i.gg = or i8 %i.gf, %i.ge
-  %brmerge.not.i138 = icmp eq i8 %i.gg, 0
-  %26 = and i8 %i.gf, %i.ge
-  %.mux.i139 = icmp ne i8 %26, 0
-  %27 = getelementptr inbounds nuw i8, ptr %0, i64 464
-  %28 = load i32, ptr %27, align 8
-  %29 = getelementptr inbounds nuw i8, ptr %1, i64 464
-  %30 = load i32, ptr %29, align 8
-  %i.gh = icmp eq i32 %28, %30
-  %31 = select i1 %brmerge.not.i138, i1 %i.gh, i1 %.mux.i139
-  br i1 %31, label %.critedge127, label %.critedge129
+  %i.gh = icmp eq i8 %i.gg, 0
+  br i1 %i.gh, label %.split147, label %_ZNK6icu_786number4impl13NullableValueINS1_9ParseModeEEeqERKS4_.exit
 
-.critedge127:                                     ; preds = %.critedge126
+.split147:                                        ; preds = %.critedge126
+  %26 = getelementptr inbounds nuw i8, ptr %0, i64 464
+  %27 = load i32, ptr %26, align 8, !tbaa !85
+  %28 = getelementptr inbounds nuw i8, ptr %1, i64 464
+  %29 = load i32, ptr %28, align 8, !tbaa !85
+  %30 = icmp eq i32 %27, %29
+  br i1 %30, label %.critedge127, label %.critedge129
+
+_ZNK6icu_786number4impl13NullableValueINS1_9ParseModeEEeqERKS4_.exit: ; preds = %.critedge126
+  %31 = and i8 %i.gf, %i.ge
+  %.mux.i139.not = icmp eq i8 %31, 0
+  br i1 %.mux.i139.not, label %.critedge129, label %.critedge127
+
+.critedge127:                                     ; preds = %.split147, %_ZNK6icu_786number4impl13NullableValueINS1_9ParseModeEEeqERKS4_.exit
   %i.gi = getelementptr inbounds nuw i8, ptr %0, i64 468
   %i.gj = load i8, ptr %i.gi, align 4, !tbaa !53, !range !66, !noundef !67
   %i.gk = getelementptr inbounds nuw i8, ptr %1, i64 468
@@ -575,8 +599,8 @@ bb.d:                                             ; preds = %.critedge128
   %i.gw = icmp eq i32 %i.gt, %i.gv
   br label %.critedge129
 
-.critedge129:                                     ; preds = %.split, %.critedge110, %.critedge108, %.critedge106, %.critedge104, %.critedge102, %.critedge100, %.critedge98, %.critedge96, %.critedge94, %.critedge92, %.critedge90, %_ZNK6icu_786number4impl13NullableValueINS_12CurrencyUnitEEeqERKS4_.exit, %bb.a, %.critedge, %.critedge91, %.critedge93, %.critedge95, %.critedge97, %.critedge99, %.critedge101, %.critedge103, %.critedge105, %.critedge107, %.critedge109, %.critedge111, %.critedge112, %.critedge128, %bb.d, %.critedge126, %.critedge124, %.critedge122, %.critedge120, %.critedge118, %.critedge116, %.critedge114, %bb.c, %.critedge115, %.critedge117, %.critedge119, %.critedge121, %.critedge123, %.critedge125, %.critedge127
-  %.0 = phi i1 [ %.mux, %.critedge112 ], [ false, %.critedge128 ], [ %i.gw, %bb.d ], [ false, %.critedge126 ], [ false, %.critedge124 ], [ false, %.critedge122 ], [ false, %.critedge120 ], [ false, %.critedge118 ], [ false, %.critedge116 ], [ false, %.critedge114 ], [ false, %.critedge127 ], [ false, %bb.c ], [ false, %.critedge115 ], [ false, %.critedge117 ], [ false, %.critedge119 ], [ false, %.critedge121 ], [ false, %.critedge123 ], [ false, %.critedge125 ], [ false, %.critedge111 ], [ false, %.critedge109 ], [ false, %.critedge107 ], [ false, %.critedge105 ], [ false, %.critedge103 ], [ false, %.critedge101 ], [ false, %.critedge99 ], [ false, %.critedge97 ], [ false, %.critedge95 ], [ false, %.critedge93 ], [ false, %.critedge91 ], [ false, %.critedge ], [ false, %bb.a ], [ false, %_ZNK6icu_786number4impl13NullableValueINS_12CurrencyUnitEEeqERKS4_.exit ], [ false, %.critedge90 ], [ false, %.critedge92 ], [ false, %.critedge94 ], [ false, %.critedge96 ], [ false, %.critedge98 ], [ false, %.critedge100 ], [ false, %.critedge102 ], [ false, %.critedge104 ], [ false, %.critedge106 ], [ false, %.critedge108 ], [ false, %.critedge110 ], [ false, %.split ]
+.critedge129:                                     ; preds = %.split143, %.split142, %.split141, %.split, %bb.a, %_ZNK6icu_786number4impl13NullableValueI25UNumberFormatRoundingModeEeqERKS4_.exit, %.critedge108, %.critedge106, %.critedge104, %.critedge102, %.critedge100, %.critedge98, %.critedge96, %.critedge94, %.critedge92, %_ZNK6icu_786number4impl13NullableValueI14UCurrencyUsageEeqERKS4_.exit, %_ZNK6icu_786number4impl13NullableValueINS_12CurrencyUnitEEeqERKS4_.exit, %_ZNK6icu_786number4impl13NullableValueI19UNumberCompactStyleEeqERKS4_.exit, %.critedge, %.critedge91, %.critedge93, %.critedge95, %.critedge97, %.critedge99, %.critedge101, %.critedge103, %_ZNK6icu_786number4impl13NullableValueI24UNumberFormatPadPositionEeqERKS4_.exit, %.critedge107, %.critedge109, %.critedge111, %.split147, %.critedge112, %.critedge128, %bb.d, %_ZNK6icu_786number4impl13NullableValueINS1_9ParseModeEEeqERKS4_.exit, %.critedge124, %.critedge122, %.critedge120, %.critedge118, %.critedge116, %.critedge114, %bb.c, %.critedge115, %.critedge117, %.critedge119, %.critedge121, %.critedge123, %.critedge125, %.critedge127
+  %.0 = phi i1 [ %.mux, %.critedge112 ], [ false, %.critedge128 ], [ %i.gw, %bb.d ], [ false, %_ZNK6icu_786number4impl13NullableValueINS1_9ParseModeEEeqERKS4_.exit ], [ false, %.critedge124 ], [ false, %.critedge122 ], [ false, %.critedge120 ], [ false, %.critedge118 ], [ false, %.critedge116 ], [ false, %.critedge114 ], [ false, %.critedge127 ], [ false, %bb.c ], [ false, %.critedge115 ], [ false, %.critedge117 ], [ false, %.critedge119 ], [ false, %.critedge121 ], [ false, %.critedge123 ], [ false, %.critedge125 ], [ false, %.split147 ], [ false, %.critedge111 ], [ false, %.critedge109 ], [ false, %.critedge107 ], [ false, %_ZNK6icu_786number4impl13NullableValueI24UNumberFormatPadPositionEeqERKS4_.exit ], [ false, %.critedge103 ], [ false, %.critedge101 ], [ false, %.critedge99 ], [ false, %.critedge97 ], [ false, %.critedge95 ], [ false, %.critedge93 ], [ false, %.critedge91 ], [ false, %.critedge ], [ false, %_ZNK6icu_786number4impl13NullableValueI19UNumberCompactStyleEeqERKS4_.exit ], [ false, %_ZNK6icu_786number4impl13NullableValueINS_12CurrencyUnitEEeqERKS4_.exit ], [ false, %_ZNK6icu_786number4impl13NullableValueI14UCurrencyUsageEeqERKS4_.exit ], [ false, %.critedge92 ], [ false, %.critedge94 ], [ false, %.critedge96 ], [ false, %.critedge98 ], [ false, %.critedge100 ], [ false, %.critedge102 ], [ false, %.critedge104 ], [ false, %.critedge106 ], [ false, %.critedge108 ], [ false, %_ZNK6icu_786number4impl13NullableValueI25UNumberFormatRoundingModeEeqERKS4_.exit ], [ false, %bb.a ], [ false, %.split ], [ false, %.split141 ], [ false, %.split142 ], [ false, %.split143 ]
   ret i1 %.0
 }
 
@@ -772,17 +796,22 @@ attributes #5 = { nounwind }
 !65 = distinct !{null}
 !66 = !{i8 0, i8 2}
 !67 = !{}
-!68 = !{!44, !8, i64 65}
-!69 = !{!44, !8, i64 66}
-!70 = !{!44, !8, i64 67}
-!71 = !{!44, !8, i64 68}
-!72 = !{!44, !5, i64 96}
-!73 = !{!44, !5, i64 100}
-!74 = !{!44, !5, i64 108}
-!75 = !{!44, !5, i64 116}
-!76 = !{!44, !5, i64 104}
-!77 = !{!44, !5, i64 88}
-!78 = !{!44, !5, i64 92}
-!79 = !{!44, !5, i64 112}
-!80 = !{!44, !8, i64 64}
+!68 = !{!10, !9, i64 4}
+!69 = !{!24, !23, i64 4}
+!70 = !{!44, !8, i64 65}
+!71 = !{!44, !8, i64 66}
+!72 = !{!44, !8, i64 67}
+!73 = !{!44, !8, i64 68}
+!74 = !{!44, !5, i64 96}
+!75 = !{!44, !5, i64 100}
+!76 = !{!44, !5, i64 108}
+!77 = !{!44, !5, i64 116}
+!78 = !{!30, !29, i64 4}
+!79 = !{!36, !35, i64 4}
+!80 = !{!44, !5, i64 104}
+!81 = !{!44, !5, i64 88}
+!82 = !{!44, !5, i64 92}
+!83 = !{!44, !5, i64 112}
+!84 = !{!44, !8, i64 64}
+!85 = !{!33, !32, i64 4}
 end_hunk_0

@@ -202,9 +202,8 @@ bb.do:                                            ; preds = %bb.dn
   store ptr %i.ez, ptr %i.z, align 8, !alias.scope !3807
   %i.fa = getelementptr inbounds nuw i8, ptr %i.ex, i64 1432
   %i.fb = load i8, ptr %i.fa, align 8, !range !21, !noalias !3808, !noundef !12
-  %2 = and i8 %i.fb, 1
-  %.sroa.0.0.i.i.i.i.i.i.i = icmp eq i8 %2, 0
-  br i1 %.sroa.0.0.i.i.i.i.i.i.i, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterNtNtCsluMP4ekZjHw_14diesel_derives5field5FieldENCNvNtB1w_17queryable_by_name6derives0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1w_.exit.i.i.i, label %bb.dn
+  %.sroa.0.0.i.i.i.i.i.i.i = icmp eq i8 %i.fb, 1
+  br i1 %.sroa.0.0.i.i.i.i.i.i.i, label %bb.dn, label %_RNvXs1_NtNtNtCscI6d9CVNmLh_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterNtNtCsluMP4ekZjHw_14diesel_derives5field5FieldENCNvNtB1w_17queryable_by_name6derives0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1w_.exit.i.i.i
 
 _RNvXs1_NtNtNtCscI6d9CVNmLh_4core4iter8adapters6filterINtB5_6FilterINtNtNtBb_5slice4iter4IterNtNtCsluMP4ekZjHw_14diesel_derives5field5FieldENCNvNtB1w_17queryable_by_name6derives0_0ENtNtNtB9_6traits8iterator8Iterator4nextB1w_.exit.i.i.i: ; preds = %bb.do
   %.val.i.i.i = load ptr, ptr %i.dy, align 8, !alias.scope !3809, !nonnull !12, !align !15, !noundef !12

@@ -204,8 +204,8 @@ bb.a:
   %i.h = load i8, ptr %i.g, align 1, !range !117
   %i.i = trunc nuw i8 %i.h to i1
   %not. = xor i1 %1, true
-  %i.j = select i1 %not., i1 true, i1 %i.i
-  br i1 %i.j, label %bb.p, label %bb.b, !prof !62
+  %i.j = select i1 %not., i1 true, i1 %i.i, !prof !180
+  br i1 %i.j, label %bb.p, label %bb.b, !prof !180
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #22
@@ -336,11 +336,11 @@ _ZSt4fillIPmmEvT_S1_RKT0_.exit.loopexit:          ; preds = %.lr.ph.i.i.i, %.lr.
 
 _ZSt4fillIPmmEvT_S1_RKT0_.exit:                   ; preds = %_ZSt4fillIPmmEvT_S1_RKT0_.exit.loopexit, %bb.g
   %i.an = phi i64 [ %.pre11, %_ZSt4fillIPmmEvT_S1_RKT0_.exit.loopexit ], [ 0, %bb.g ]
-  store i8 1, ptr %i.g, align 1, !tbaa !181
+  store i8 1, ptr %i.g, align 1, !tbaa !182
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #22
   %i.ao = getelementptr inbounds nuw i8, ptr %7, i64 48
   %i.ap = getelementptr inbounds nuw i8, ptr %7, i64 56 ; 3 uses
-  store ptr %0, ptr %7, align 16, !tbaa !182
+  store ptr %0, ptr %7, align 16, !tbaa !183
   store ptr @"_ZN5folly6detail8function5call_IZNS_6fibers5Fiber4initEbE3$_0Lb1ELb0EvJEEET2_DpT3_RNS1_4DataE", ptr %i.ao, align 16, !tbaa !122
   store ptr @_ZN5folly6detail8function20DispatchSmallTrivial5exec_ILm16EEEmNS1_2OpEPNS1_4DataES6_, ptr %i.ap, align 8, !tbaa !123
   invoke void @_ZN5folly6fibers9FiberImplC2ENS_8FunctionIFvvEEEPhm(ptr noundef nonnull align 16 dereferenceable(96) %6, ptr noundef nonnull align 16 %7, ptr noundef %i.y, i64 noundef %i.an)
@@ -403,7 +403,7 @@ _ZN5folly8FunctionIFvvEED2Ev.exit7:               ; preds = %bb.n, %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #22
   resume { ptr, i32 } %i.ba
 
-bb.p:                                             ; preds = %_ZN5folly8FunctionIFvvEED2Ev.exit, %bb.a
+bb.p:                                             ; preds = %bb.a, %_ZN5folly8FunctionIFvvEED2Ev.exit
   ret void
 }
 
@@ -420,7 +420,7 @@ bb.a:
   br i1 %.not.i.i, label %_ZNK5folly8FunctionIFvvEE4execENS_6detail8function2OpEPNS4_4DataES7_.exit.i, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.f = tail call noundef i64 %i.e(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %i.b, ptr noundef null) #22, !inline_history !183 ; 0 uses
+  %i.f = tail call noundef i64 %i.e(i32 noundef 1, ptr noundef nonnull align 16 dereferenceable(64) %i.b, ptr noundef null) #22, !inline_history !184 ; 0 uses
   br label %_ZNK5folly8FunctionIFvvEE4execENS_6detail8function2OpEPNS4_4DataES7_.exit.i
 
 _ZNK5folly8FunctionIFvvEE4execENS_6detail8function2OpEPNS4_4DataES7_.exit.i: ; preds = %bb.b, %bb.a
@@ -434,7 +434,7 @@ bb.c:                                             ; preds = %_ZNK5folly8Function
   br i1 %.not.i9.i, label %_ZNK5folly8FunctionIFvvEE4execENS_6detail8function2OpEPNS4_4DataES7_.exit11.i, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %i.i = tail call noundef i64 %i.h(i32 noundef 0, ptr noundef nonnull align 16 dereferenceable(64) %i.c, ptr noundef nonnull align 16 dereferenceable(64) %i.b) #22, !inline_history !183 ; 0 uses
+  %i.i = tail call noundef i64 %i.h(i32 noundef 0, ptr noundef nonnull align 16 dereferenceable(64) %i.c, ptr noundef nonnull align 16 dereferenceable(64) %i.b) #22, !inline_history !184 ; 0 uses
   %.pre.i = load ptr, ptr %i.g, align 8, !tbaa !123
   br label %_ZNK5folly8FunctionIFvvEE4execENS_6detail8function2OpEPNS4_4DataES7_.exit11.i
 
@@ -501,7 +501,7 @@ declare noundef nonnull align 8 dereferenceable(8) ptr @_ZNSo9_M_insertImEERSoT_
 ; Function Attrs: mustprogress noreturn uwtable
 define internal void @"_ZN5folly6detail8function5call_IZNS_6fibers5Fiber4initEbE3$_0Lb1ELb0EvJEEET2_DpT3_RNS1_4DataE"(ptr nofree noundef nonnull readonly align 16 captures(none) dereferenceable(48) %0) #7 {
 bb.a:
-  %.val = load ptr, ptr %0, align 16, !tbaa !185
+  %.val = load ptr, ptr %0, align 16, !tbaa !186
   tail call void @_ZN5folly6fibers5Fiber9fiberFuncEv(ptr noundef nonnull align 64 dereferenceable(928) %.val) #24
   unreachable
 }
@@ -586,7 +586,7 @@ bb.g:                                             ; preds = %_ZN5folly8FunctionI
 
 _ZN5folly8FunctionIFvvEED2Ev.exit6:               ; preds = %_ZN5folly8FunctionIFvvEED2Ev.exit4, %bb.g
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 152
-  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !187 ; 8 uses
+  %i.af = load ptr, ptr %i.ae, align 8, !tbaa !188 ; 8 uses
   %.not.i.i7 = icmp eq ptr %i.af, null
   br i1 %.not.i.i7, label %_ZNSt12__shared_ptrIN5folly14RequestContextELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, label %bb.h
 
@@ -598,17 +598,17 @@ bb.h:                                             ; preds = %_ZN5folly8FunctionI
   br i1 %i.ai, label %bb.i, label %bb.j
 
 bb.i:                                             ; preds = %bb.h
-  store i32 0, ptr %i.ag, align 8, !tbaa !189
+  store i32 0, ptr %i.ag, align 8, !tbaa !190
   %i.ak = getelementptr inbounds nuw i8, ptr %i.af, i64 12
-  store i32 0, ptr %i.ak, align 4, !tbaa !190
+  store i32 0, ptr %i.ak, align 4, !tbaa !191
   %i.al = load ptr, ptr %i.af, align 8, !tbaa !53
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 16
   %i.an = load ptr, ptr %i.am, align 8
-  tail call void %i.an(ptr noundef nonnull align 8 dereferenceable(16) %i.af) #22, !call_target !148, !inline_history !186
+  tail call void %i.an(ptr noundef nonnull align 8 dereferenceable(16) %i.af) #22, !call_target !148, !inline_history !187
   %i.ao = load ptr, ptr %i.af, align 8, !tbaa !53
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 24
   %i.aq = load ptr, ptr %i.ap, align 8
-  tail call void %i.aq(ptr noundef nonnull align 8 dereferenceable(16) %i.af) #22, !call_target !150, !inline_history !186
+  tail call void %i.aq(ptr noundef nonnull align 8 dereferenceable(16) %i.af) #22, !call_target !150, !inline_history !187
   br label %_ZNSt12__shared_ptrIN5folly14RequestContextELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit
 
 bb.j:                                             ; preds = %bb.h
@@ -814,7 +814,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !47, !nonnull !48, !align !49
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 352
-  %i.f = load ptr, ptr %i.e, align 16, !tbaa !204 ; 3 uses
+  %i.f = load ptr, ptr %i.e, align 16, !tbaa !205 ; 3 uses
   %.not = icmp eq ptr %i.f, null
   br i1 %.not, label %bb.g, label %bb.b
 
@@ -828,7 +828,7 @@ bb.b:                                             ; preds = %bb.a
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.k = load ptr, ptr %i.j, align 8
   invoke void %i.k(ptr noundef nonnull align 8 dereferenceable(8) %i.f, ptr noundef nonnull align 16 %3)
-          to label %bb.c unwind label %bb.e, !call_target !209
+          to label %bb.c unwind label %bb.e, !call_target !210
 
 bb.c:                                             ; preds = %bb.b
   %i.l = load ptr, ptr %i.h, align 8, !tbaa !123  ; 2 uses
@@ -878,7 +878,7 @@ bb.a:
   %6 = alloca %"class.google::LogMessageFatal", align 8 ; 5 uses
   %i.e = load ptr, ptr %0, align 8, !tbaa !156    ; 11 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !327, !nonnull !48
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !328, !nonnull !48
   %i.h = load i8, ptr %i.g, align 1, !tbaa !154
   %.not = icmp eq i8 %i.h, 5
   br i1 %.not, label %bb.o, label %bb.b
@@ -947,17 +947,17 @@ _ZNSt15__exception_ptr13exception_ptrD2Ev.exit11: ; preds = %.critedge, %bb.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #22
   %i.t = load ptr, ptr %i.i, align 8, !tbaa !47, !nonnull !48, !align !49
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 472
-  %i.v = load i64, ptr %i.u, align 8, !tbaa !328  ; 2 uses
+  %i.v = load i64, ptr %i.u, align 8, !tbaa !329  ; 2 uses
   store i64 %i.v, ptr %i.c, align 8, !tbaa !129
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #22
   %i.w = call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_ZZN5folly19uncaught_exceptionsEvE2ct) ; 2 uses
-  %i.x = load ptr, ptr %i.w, align 8, !tbaa !329  ; 2 uses
+  %i.x = load ptr, ptr %i.w, align 8, !tbaa !330  ; 2 uses
   %.not.i = icmp eq ptr %i.x, null
   br i1 %.not.i, label %bb.j, label %_ZN5folly19uncaught_exceptionsEv.exit, !prof !133
 
 bb.j:                                             ; preds = %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit11
   %i.y = call noundef ptr @_ZN5folly6detail23uncaught_exceptions_ptrEv() #22 ; 2 uses
-  store ptr %i.y, ptr %i.w, align 8, !tbaa !329
+  store ptr %i.y, ptr %i.w, align 8, !tbaa !330
   br label %_ZN5folly19uncaught_exceptionsEv.exit
 
 _ZN5folly19uncaught_exceptionsEv.exit:            ; preds = %_ZNSt15__exception_ptr13exception_ptrD2Ev.exit11, %bb.j
@@ -1041,14 +1041,14 @@ _ZN5folly6fibers12thread_clock3nowEv.exit:        ; preds = %bb.r, %bb.s
   %.sroa.0.0.copyload.i2.i = load i64, ptr %i.at, align 8, !tbaa !129
   %i.au = sub i64 %.sroa.04.0.i, %.sroa.0.0.copyload.i2.i
   %i.av = getelementptr inbounds nuw i8, ptr %i.e, i64 248 ; 2 uses
-  %i.aw = load i64, ptr %i.av, align 8, !tbaa !330
+  %i.aw = load i64, ptr %i.av, align 8, !tbaa !331
   %i.ax = add nsw i64 %i.au, %i.aw
-  store i64 %i.ax, ptr %i.av, align 8, !tbaa !330
+  store i64 %i.ax, ptr %i.av, align 8, !tbaa !331
   store i64 %.sroa.04.0.i, ptr %i.at, align 16, !tbaa !129
   br label %bb.t
 
 bb.t:                                             ; preds = %_ZN5folly6fibers12thread_clock3nowEv.exit, %bb.o
-  %i.ay = load ptr, ptr %i.f, align 8, !tbaa !327, !nonnull !48
+  %i.ay = load ptr, ptr %i.f, align 8, !tbaa !328, !nonnull !48
   %i.az = load i8, ptr %i.ay, align 1, !tbaa !154
   store i8 %i.az, ptr %i.e, align 64, !tbaa !46
   call void @_ZN5folly6fibers5Fiber19recordStackPositionEv(ptr noundef nonnull align 64 dereferenceable(928) %i.e)
@@ -1123,7 +1123,7 @@ bb.z:                                             ; preds = %_ZN5folly6fibers12t
 ; Function Attrs: mustprogress uwtable
 define internal void @"_ZN5folly6detail8function5call_ISt17reference_wrapperIZNS_6fibers5Fiber7preemptENS5_5StateEE3$_0ELb1ELb0EvJEEET2_DpT3_RNS1_4DataE"(ptr nofree noundef nonnull readonly align 16 captures(none) dereferenceable(48) %0) #0 {
 bb.a:
-  %.val = load ptr, ptr %0, align 16, !tbaa !332
+  %.val = load ptr, ptr %0, align 16, !tbaa !333
   tail call fastcc void @"_ZZN5folly6fibers5Fiber7preemptENS1_5StateEEN3$_0clEv"(ptr noundef nonnull readonly align 8 dereferenceable(16) %.val)
   ret void
 }
@@ -1243,13 +1243,13 @@ bb.h:                                             ; preds = %_ZN5folly6fibers12t
   %.sroa.02.0 = phi i64 [ %i.ac, %_ZN5folly6fibers12thread_clock3nowEv.exit ], [ %i.f, %bb.c ], [ %i.f, %bb.b ]
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.02.0, ptr %0, align 8, !tbaa !129
-  store i8 1, ptr %i.ad, align 8, !tbaa !335
+  store i8 1, ptr %i.ad, align 8, !tbaa !336
   br label %bb.j
 
 bb.i:                                             ; preds = %bb.a
   store i8 0, ptr %0, align 8, !tbaa !126
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 0, ptr %i.ae, align 8, !tbaa !336
+  store i8 0, ptr %i.ae, align 8, !tbaa !337
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.i, %bb.h
@@ -1332,12 +1332,12 @@ bb.a:                                             ; preds = %_ZN5folly6fibers5Fi
 
 bb.b:                                             ; preds = %bb.a
   %i.j = load ptr, ptr %i.c, align 8, !tbaa !161
-  %i.k = tail call noundef ptr %i.j(ptr noundef nonnull align 64 dereferenceable(176) %0, ptr noundef %i.h), !inline_history !337
+  %i.k = tail call noundef ptr %i.j(ptr noundef nonnull align 64 dereferenceable(176) %0, ptr noundef %i.h), !inline_history !338
   br label %.sink.split.i
 
 bb.c:                                             ; preds = %bb.a
   %i.l = load ptr, ptr %i.b, align 8, !tbaa !162
-  %i.m = tail call noundef ptr %i.l(ptr noundef %i.h), !inline_history !337
+  %i.m = tail call noundef ptr %i.l(ptr noundef %i.h), !inline_history !338
   br label %.sink.split.i
 
 .sink.split.i:                                    ; preds = %bb.c, %bb.b
@@ -1622,164 +1622,165 @@ attributes #25 = { nounwind willreturn memory(none) }
 !175 = distinct !{!175, !137}
 !176 = !{!100, !20, i64 48}
 !177 = distinct !{null}
-!178 = distinct !{!178, !180}
+!178 = distinct !{!178, !181}
 !179 = distinct !{!179, !137}
-!180 = !{!"llvm.loop.unroll.disable"}
-!181 = !{!45, !18, i64 3}
-!182 = !{!34, !34, i64 0}
-!183 = distinct !{null, null}
-!184 = !{!"_ZTSZN5folly6fibers5Fiber4initEbE3$_0", !34, i64 0}
-!185 = !{!184, !34, i64 0}
-!186 = distinct !{null, null, null}
-!187 = !{!28, !27, i64 0}
-!188 = !{!"_ZTSSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE", !14, i64 8, !14, i64 12}
-!189 = !{!188, !14, i64 8}
-!190 = !{!188, !14, i64 12}
-!191 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "function<void ()>", scope: !149, file: !286, line: 334, size: 256, flags: DIFlagFwdDecl | DIFlagNonTrivial, identifier: "_ZTSSt8functionIFvvEE")
-!192 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "FunctionTraitsSharedProxy<void (), false, void>", scope: !288, file: !210, line: 296, flags: DIFlagFwdDecl | DIFlagNonTrivial, identifier: "_ZTSN5folly6detail8function25FunctionTraitsSharedProxyIFvvELb0EvJEEE")
-!193 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "CoerceTag", scope: !288, file: !210, line: 248, size: 8, flags: DIFlagTypePassByValue, elements: !48, identifier: "_ZTSN5folly6detail8function9CoerceTagE")
-!194 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "Function<void () const>", scope: !60, file: !210, line: 630, flags: DIFlagFwdDecl | DIFlagNonTrivial, identifier: "_ZTSN5folly8FunctionIKFvvEEE")
-!195 = distinct !DICompositeType(tag: DW_TAG_enumeration_type, name: "Op", scope: !288, file: !210, line: 234, baseType: !289, size: 32, flags: DIFlagEnumClass, elements: !293, identifier: "_ZTSN5folly6detail8function2OpE")
-!196 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "aligned_storage<48UL, 16UL>", scope: !287, file: !297, line: 652, size: 8, flags: DIFlagTypePassByValue, elements: !48, templateParams: !303, identifier: "_ZTSN5folly6detail15aligned_storageILm48ELm16EEE")
-!197 = distinct !DICompositeType(tag: DW_TAG_enumeration_type, name: "byte", scope: !149, file: !309, line: 69, baseType: !310, size: 8, flags: DIFlagEnumClass, elements: !48, identifier: "_ZTSSt4byte")
-!198 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "type", scope: !196, file: !297, line: 653, size: 384, flags: DIFlagTypePassByValue, elements: !308, identifier: "_ZTSN5folly6detail15aligned_storageILm48ELm16EE4typeE")
-!199 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "BigTrivialLayout", scope: !200, file: !210, line: 237, size: 192, flags: DIFlagTypePassByValue, elements: !314, identifier: "_ZTSN5folly6detail8function4Data16BigTrivialLayoutE")
-!200 = distinct !DICompositeType(tag: DW_TAG_union_type, name: "Data", scope: !288, file: !210, line: 236, size: 384, flags: DIFlagTypePassByValue, elements: !300, identifier: "_ZTSN5folly6detail8function4DataE")
-!201 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "FunctionTraits<void ()>", scope: !288, file: !210, line: 351, size: 8, flags: DIFlagTypePassByValue, elements: !322, templateParams: !326, identifier: "_ZTSN5folly6detail8function14FunctionTraitsIFvvEEE")
-!202 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "Function<void ()>", scope: !60, file: !210, line: 630, size: 512, flags: DIFlagTypePassByReference | DIFlagNonTrivial, elements: !285, templateParams: !326, identifier: "_ZTSN5folly8FunctionIFvvEEE")
-!203 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "InlineFunctionRunner", scope: !61, file: !205, line: 61, size: 64, flags: DIFlagFwdDecl | DIFlagNonTrivial, identifier: "_ZTSN5folly6fibers20InlineFunctionRunnerE")
-!204 = !{!116, !95, i64 352}
-!205 = !DIFile(filename: "folly/fibers/FiberManagerInternal.h", directory: "/opt-bench/work/folly/folly", checksumkind: CSK_MD5, checksum: "2d2b367a151c27ac90fa58893877af51")
-!206 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !203, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!207 = !{null, !206, !202}
-!208 = !DISubroutineType(types: !207)
-!209 = !DISubprogram(name: "run", linkageName: "_ZN5folly6fibers20InlineFunctionRunner3runENS_8FunctionIFvvEEE", scope: !203, file: !205, line: 68, type: !208, scopeLine: 68, containingType: !203, virtualIndex: 2, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
-!210 = !DIFile(filename: "folly/Function.h", directory: "/opt-bench/work/folly/folly", checksumkind: CSK_MD5, checksum: "98295d376a0a0e12899624ed2210ad51")
-!211 = !DIDerivedType(tag: DW_TAG_inheritance, scope: !202, baseType: !201, extraData: i32 0)
-!212 = !DIDerivedType(tag: DW_TAG_typedef, name: "Data", scope: !202, file: !210, line: 634, baseType: !200)
-!213 = !DIDerivedType(tag: DW_TAG_member, name: "data_", scope: !202, file: !210, line: 646, baseType: !212, size: 384)
-!214 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !200, size: 64)
-!215 = !{null, !214}
-!216 = !DISubroutineType(types: !215)
-!217 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !216, size: 64)
-!218 = !DIDerivedType(tag: DW_TAG_typedef, name: "Call", scope: !201, file: !210, line: 352, baseType: !217)
-!219 = !DIDerivedType(tag: DW_TAG_typedef, name: "Call", scope: !202, file: !210, line: 639, baseType: !218)
-!220 = !DIDerivedType(tag: DW_TAG_member, name: "call_", scope: !202, file: !210, line: 647, baseType: !219, size: 64, offset: 384)
-!221 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../include/x86_64-linux-gnu/c++/13/bits/c++config.h", directory: "", checksumkind: CSK_MD5, checksum: "449d6dbeca4f3eea299d97c24eb9ed95")
-!222 = !DIBasicType(name: "unsigned long", size: 64, encoding: DW_ATE_unsigned)
-!223 = !DIDerivedType(tag: DW_TAG_typedef, name: "size_t", scope: !149, file: !221, line: 308, baseType: !222)
-!224 = !DIDerivedType(tag: DW_TAG_typedef, name: "Op", scope: !202, file: !210, line: 635, baseType: !195)
-!225 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !212, size: 64)
-!226 = !{!223, !224, !225, !225}
-!227 = !DISubroutineType(types: !226)
-!228 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !227, size: 64)
-!229 = !DIDerivedType(tag: DW_TAG_typedef, name: "Exec", scope: !202, file: !210, line: 640, baseType: !228)
-!230 = !DIDerivedType(tag: DW_TAG_member, name: "exec_", scope: !202, file: !210, line: 648, baseType: !229, size: 64, offset: 448)
-!231 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !202)
-!232 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !231, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!233 = !{!223, !232, !224, !225, !225}
-!234 = !DISubroutineType(types: !233)
-!235 = !DISubprogram(name: "exec", linkageName: "_ZNK5folly8FunctionIFvvEE4execENS_6detail8function2OpEPNS4_4DataES7_", scope: !202, file: !210, line: 650, type: !234, scopeLine: 650, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!236 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !202, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!237 = !DIDerivedType(tag: DW_TAG_rvalue_reference_type, baseType: !194, size: 64)
-!238 = !DIDerivedType(tag: DW_TAG_typedef, name: "CoerceTag", scope: !202, file: !210, line: 636, baseType: !193)
-!239 = !{null, !236, !237, !238}
-!240 = !DISubroutineType(types: !239)
-!241 = !DISubprogram(name: "Function", linkageName: "_ZN5folly8FunctionIFvvEEC4EONS0_IKFvvEEENS_6detail8function9CoerceTagE", scope: !202, file: !210, line: 672, type: !240, scopeLine: 672, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!242 = !{null, !236}
-!243 = !DISubroutineType(types: !242)
-!244 = !DISubprogram(name: "Function", linkageName: "_ZN5folly8FunctionIFvvEEC4Ev", scope: !202, file: !210, line: 683, type: !243, scopeLine: 683, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!245 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !231, size: 64)
-!246 = !{null, !236, !245}
-!247 = !DISubroutineType(types: !246)
-!248 = !DISubprogram(name: "Function", linkageName: "_ZN5folly8FunctionIFvvEEC4ERKS2_", scope: !202, file: !210, line: 686, type: !247, scopeLine: 686, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized | DISPFlagDeleted)
-!249 = !DIDerivedType(tag: DW_TAG_rvalue_reference_type, baseType: !202, size: 64)
-!250 = !{null, !236, !249}
-!251 = !DISubroutineType(types: !250)
-!252 = !DISubprogram(name: "Function", linkageName: "_ZN5folly8FunctionIFvvEEC4EOS2_", scope: !202, file: !210, line: 699, type: !251, scopeLine: 699, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!253 = !DIBasicType(tag: DW_TAG_unspecified_type, name: "decltype(nullptr)")
-!254 = !DIDerivedType(tag: DW_TAG_typedef, name: "nullptr_t", scope: !149, file: !221, line: 312, baseType: !253)
-!255 = !{null, !236, !254}
-!256 = !DISubroutineType(types: !255)
-!257 = !DISubprogram(name: "Function", linkageName: "_ZN5folly8FunctionIFvvEEC4EDn", scope: !202, file: !210, line: 709, type: !256, scopeLine: 709, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!258 = !DISubprogram(name: "~Function", linkageName: "_ZN5folly8FunctionIFvvEED4Ev", scope: !202, file: !210, line: 798, type: !243, scopeLine: 798, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!259 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !202, size: 64)
-!260 = !{!259, !236, !245}
-!261 = !DISubroutineType(types: !260)
-!262 = !DISubprogram(name: "operator=", linkageName: "_ZN5folly8FunctionIFvvEEaSERKS2_", scope: !202, file: !210, line: 800, type: !261, scopeLine: 800, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized | DISPFlagDeleted)
-!263 = !{!259, !236, !249}
-!264 = !DISubroutineType(types: !263)
-!265 = !DISubprogram(name: "operator=", linkageName: "_ZN5folly8FunctionIFvvEEaSEOS2_", scope: !202, file: !210, line: 820, type: !264, scopeLine: 820, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!266 = !{!259, !236, !254}
-!267 = !DISubroutineType(types: !266)
-!268 = !DISubprogram(name: "operator=", linkageName: "_ZN5folly8FunctionIFvvEEaSEDn", scope: !202, file: !210, line: 873, type: !267, scopeLine: 873, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!269 = !{null, !236, !259}
-!270 = !DISubroutineType(types: !269)
-!271 = !DISubprogram(name: "swap", linkageName: "_ZN5folly8FunctionIFvvEE4swapERS2_", scope: !202, file: !210, line: 897, type: !270, scopeLine: 897, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!272 = !{!55, !232}
-!273 = !DISubroutineType(types: !272)
-!274 = !DISubprogram(name: "operator bool", linkageName: "_ZNK5folly8FunctionIFvvEEcvbEv", scope: !202, file: !210, line: 903, type: !273, scopeLine: 903, flags: DIFlagPublic | DIFlagExplicit | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!275 = !{!223, !232}
-!276 = !DISubroutineType(types: !275)
-!277 = !DISubprogram(name: "heapAllocatedMemory", linkageName: "_ZNK5folly8FunctionIFvvEE19heapAllocatedMemoryEv", scope: !202, file: !210, line: 910, type: !276, scopeLine: 910, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!278 = !DIDerivedType(tag: DW_TAG_typedef, name: "SharedProxy", scope: !201, file: !210, line: 373, baseType: !192)
-!279 = !{!278, !236}
-!280 = !DISubroutineType(flags: DIFlagRValueReference, types: !279)
-!281 = !DISubprogram(name: "asSharedProxy", linkageName: "_ZNO5folly8FunctionIFvvEE13asSharedProxyEv", scope: !202, file: !210, line: 920, type: !280, scopeLine: 920, flags: DIFlagPublic | DIFlagPrototyped | DIFlagRValueReference, spFlags: DISPFlagOptimized)
-!282 = !{!191, !236}
-!283 = !DISubroutineType(flags: DIFlagRValueReference, types: !282)
-!284 = !DISubprogram(name: "asStdFunction", linkageName: "_ZNO5folly8FunctionIFvvEE13asStdFunctionEv", scope: !202, file: !210, line: 927, type: !283, scopeLine: 927, flags: DIFlagPublic | DIFlagPrototyped | DIFlagRValueReference, spFlags: DISPFlagOptimized)
-!285 = !{!211, !213, !220, !230, !235, !241, !244, !248, !252, !257, !258, !262, !265, !268, !271, !274, !277, !281, !284}
-!286 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/std_function.h", directory: "")
-!287 = !DINamespace(name: "detail", scope: !60)
-!288 = !DINamespace(name: "function", scope: !287)
-!289 = !DIBasicType(name: "int", size: 32, encoding: DW_ATE_signed)
-!290 = !DIEnumerator(name: "MOVE", value: 0)
-!291 = !DIEnumerator(name: "NUKE", value: 1)
-!292 = !DIEnumerator(name: "HEAP", value: 2)
-!293 = !{!290, !291, !292}
-!294 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: null, size: 64)
-!295 = !DIDerivedType(tag: DW_TAG_member, name: "big", scope: !200, file: !210, line: 243, baseType: !294, size: 64)
-!296 = !DIDerivedType(tag: DW_TAG_member, name: "bigt", scope: !200, file: !210, line: 244, baseType: !199, size: 192)
-!297 = !DIFile(filename: "folly/Traits.h", directory: "/opt-bench/work/folly/folly", checksumkind: CSK_MD5, checksum: "77cec74a2c7120078ff7cc1fa3bac842")
-!298 = !DIDerivedType(tag: DW_TAG_typedef, name: "aligned_storage_t<6 * sizeof(void *)>", scope: !60, file: !297, line: 662, baseType: !198)
-!299 = !DIDerivedType(tag: DW_TAG_member, name: "tiny", scope: !200, file: !210, line: 245, baseType: !298, size: 384)
-!300 = !{!295, !296, !299}
-!301 = !DITemplateValueParameter(name: "Len", type: !222, value: i64 48)
-!302 = !DITemplateValueParameter(name: "Align", type: !222, value: i64 16)
-!303 = !{!301, !302}
-!304 = !DISubrange(count: 48)
-!305 = !{!304}
-!306 = !DICompositeType(tag: DW_TAG_array_type, baseType: !197, size: 384, elements: !305)
-!307 = !DIDerivedType(tag: DW_TAG_member, name: "data", scope: !198, file: !297, line: 654, baseType: !306, size: 384, align: 128)
-!308 = !{!307}
-!309 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/cstddef", directory: "")
-!310 = !DIBasicType(name: "unsigned char", size: 8, encoding: DW_ATE_unsigned_char)
-!311 = !DIDerivedType(tag: DW_TAG_member, name: "big", scope: !199, file: !210, line: 238, baseType: !294, size: 64)
-!312 = !DIDerivedType(tag: DW_TAG_member, name: "size", scope: !199, file: !210, line: 239, baseType: !223, size: 64, offset: 64)
-!313 = !DIDerivedType(tag: DW_TAG_member, name: "align", scope: !199, file: !210, line: 240, baseType: !223, size: 64, offset: 128)
-!314 = !{!311, !312, !313}
-!315 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !218)
-!316 = !DIDerivedType(tag: DW_TAG_variable, name: "call", scope: !201, file: !210, line: 361, baseType: !315, flags: DIFlagStaticMember)
-!317 = !DISubprogram(name: "uninitCall", linkageName: "_ZN5folly6detail8function14FunctionTraitsIFvvEE10uninitCallERNS1_4DataE", scope: !201, file: !210, line: 364, type: !216, scopeLine: 364, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized)
-!318 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !201, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
-!319 = !{null, !318}
-!320 = !DISubroutineType(types: !319)
-!321 = !DISubprogram(name: "operator()", linkageName: "_ZN5folly6detail8function14FunctionTraitsIFvvEEclEv", scope: !201, file: !210, line: 368, type: !320, scopeLine: 368, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
-!322 = !{!316, !316, !316, !316, !317, !321}
-!323 = !{null}
-!324 = !DISubroutineType(types: !323)
-!325 = !DITemplateTypeParameter(name: "FunctionType", type: !324)
-!326 = !{!325}
-!327 = !{!155, !20, i64 8}
-!328 = !{!116, !22, i64 472}
-!329 = !{!138, !138, i64 0}
-!330 = !{!32, !22, i64 0}
-!331 = !{!"_ZTSSt17reference_wrapperIZN5folly6fibers5Fiber7preemptENS2_5StateEE3$_0E", !20, i64 0}
-!332 = !{!331, !20, i64 0}
-!333 = !{!"_ZTSN5folly6detail36OptionalStorageTriviallyDestructibleINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEE", !13, i64 0, !18, i64 8}
-!334 = !{!"_ZTSN5folly6detail15OptionalStorageINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEE", !333, i64 0}
-!335 = !{!334, !18, i64 8}
-!336 = !{!333, !18, i64 8}
-!337 = !{ptr @_ZN5folly6fibers5Fiber9LocalDataaSERKS2_}
+!180 = !{!"branch_weights", i32 4001, i32 1}
+!181 = !{!"llvm.loop.unroll.disable"}
+!182 = !{!45, !18, i64 3}
+!183 = !{!34, !34, i64 0}
+!184 = distinct !{null, null}
+!185 = !{!"_ZTSZN5folly6fibers5Fiber4initEbE3$_0", !34, i64 0}
+!186 = !{!185, !34, i64 0}
+!187 = distinct !{null, null, null}
+!188 = !{!28, !27, i64 0}
+!189 = !{!"_ZTSSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE", !14, i64 8, !14, i64 12}
+!190 = !{!189, !14, i64 8}
+!191 = !{!189, !14, i64 12}
+!192 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "function<void ()>", scope: !149, file: !287, line: 334, size: 256, flags: DIFlagFwdDecl | DIFlagNonTrivial, identifier: "_ZTSSt8functionIFvvEE")
+!193 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "FunctionTraitsSharedProxy<void (), false, void>", scope: !289, file: !211, line: 296, flags: DIFlagFwdDecl | DIFlagNonTrivial, identifier: "_ZTSN5folly6detail8function25FunctionTraitsSharedProxyIFvvELb0EvJEEE")
+!194 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "CoerceTag", scope: !289, file: !211, line: 248, size: 8, flags: DIFlagTypePassByValue, elements: !48, identifier: "_ZTSN5folly6detail8function9CoerceTagE")
+!195 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "Function<void () const>", scope: !60, file: !211, line: 630, flags: DIFlagFwdDecl | DIFlagNonTrivial, identifier: "_ZTSN5folly8FunctionIKFvvEEE")
+!196 = distinct !DICompositeType(tag: DW_TAG_enumeration_type, name: "Op", scope: !289, file: !211, line: 234, baseType: !290, size: 32, flags: DIFlagEnumClass, elements: !294, identifier: "_ZTSN5folly6detail8function2OpE")
+!197 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "aligned_storage<48UL, 16UL>", scope: !288, file: !298, line: 652, size: 8, flags: DIFlagTypePassByValue, elements: !48, templateParams: !304, identifier: "_ZTSN5folly6detail15aligned_storageILm48ELm16EEE")
+!198 = distinct !DICompositeType(tag: DW_TAG_enumeration_type, name: "byte", scope: !149, file: !310, line: 69, baseType: !311, size: 8, flags: DIFlagEnumClass, elements: !48, identifier: "_ZTSSt4byte")
+!199 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "type", scope: !197, file: !298, line: 653, size: 384, flags: DIFlagTypePassByValue, elements: !309, identifier: "_ZTSN5folly6detail15aligned_storageILm48ELm16EE4typeE")
+!200 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "BigTrivialLayout", scope: !201, file: !211, line: 237, size: 192, flags: DIFlagTypePassByValue, elements: !315, identifier: "_ZTSN5folly6detail8function4Data16BigTrivialLayoutE")
+!201 = distinct !DICompositeType(tag: DW_TAG_union_type, name: "Data", scope: !289, file: !211, line: 236, size: 384, flags: DIFlagTypePassByValue, elements: !301, identifier: "_ZTSN5folly6detail8function4DataE")
+!202 = distinct !DICompositeType(tag: DW_TAG_structure_type, name: "FunctionTraits<void ()>", scope: !289, file: !211, line: 351, size: 8, flags: DIFlagTypePassByValue, elements: !323, templateParams: !327, identifier: "_ZTSN5folly6detail8function14FunctionTraitsIFvvEEE")
+!203 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "Function<void ()>", scope: !60, file: !211, line: 630, size: 512, flags: DIFlagTypePassByReference | DIFlagNonTrivial, elements: !286, templateParams: !327, identifier: "_ZTSN5folly8FunctionIFvvEEE")
+!204 = distinct !DICompositeType(tag: DW_TAG_class_type, name: "InlineFunctionRunner", scope: !61, file: !206, line: 61, size: 64, flags: DIFlagFwdDecl | DIFlagNonTrivial, identifier: "_ZTSN5folly6fibers20InlineFunctionRunnerE")
+!205 = !{!116, !95, i64 352}
+!206 = !DIFile(filename: "folly/fibers/FiberManagerInternal.h", directory: "/opt-bench/work/folly/folly", checksumkind: CSK_MD5, checksum: "2d2b367a151c27ac90fa58893877af51")
+!207 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !204, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!208 = !{null, !207, !203}
+!209 = !DISubroutineType(types: !208)
+!210 = !DISubprogram(name: "run", linkageName: "_ZN5folly6fibers20InlineFunctionRunner3runENS_8FunctionIFvvEEE", scope: !204, file: !206, line: 68, type: !209, scopeLine: 68, containingType: !204, virtualIndex: 2, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagPureVirtual | DISPFlagOptimized)
+!211 = !DIFile(filename: "folly/Function.h", directory: "/opt-bench/work/folly/folly", checksumkind: CSK_MD5, checksum: "98295d376a0a0e12899624ed2210ad51")
+!212 = !DIDerivedType(tag: DW_TAG_inheritance, scope: !203, baseType: !202, extraData: i32 0)
+!213 = !DIDerivedType(tag: DW_TAG_typedef, name: "Data", scope: !203, file: !211, line: 634, baseType: !201)
+!214 = !DIDerivedType(tag: DW_TAG_member, name: "data_", scope: !203, file: !211, line: 646, baseType: !213, size: 384)
+!215 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !201, size: 64)
+!216 = !{null, !215}
+!217 = !DISubroutineType(types: !216)
+!218 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !217, size: 64)
+!219 = !DIDerivedType(tag: DW_TAG_typedef, name: "Call", scope: !202, file: !211, line: 352, baseType: !218)
+!220 = !DIDerivedType(tag: DW_TAG_typedef, name: "Call", scope: !203, file: !211, line: 639, baseType: !219)
+!221 = !DIDerivedType(tag: DW_TAG_member, name: "call_", scope: !203, file: !211, line: 647, baseType: !220, size: 64, offset: 384)
+!222 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../include/x86_64-linux-gnu/c++/13/bits/c++config.h", directory: "", checksumkind: CSK_MD5, checksum: "449d6dbeca4f3eea299d97c24eb9ed95")
+!223 = !DIBasicType(name: "unsigned long", size: 64, encoding: DW_ATE_unsigned)
+!224 = !DIDerivedType(tag: DW_TAG_typedef, name: "size_t", scope: !149, file: !222, line: 308, baseType: !223)
+!225 = !DIDerivedType(tag: DW_TAG_typedef, name: "Op", scope: !203, file: !211, line: 635, baseType: !196)
+!226 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !213, size: 64)
+!227 = !{!224, !225, !226, !226}
+!228 = !DISubroutineType(types: !227)
+!229 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !228, size: 64)
+!230 = !DIDerivedType(tag: DW_TAG_typedef, name: "Exec", scope: !203, file: !211, line: 640, baseType: !229)
+!231 = !DIDerivedType(tag: DW_TAG_member, name: "exec_", scope: !203, file: !211, line: 648, baseType: !230, size: 64, offset: 448)
+!232 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !203)
+!233 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !232, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!234 = !{!224, !233, !225, !226, !226}
+!235 = !DISubroutineType(types: !234)
+!236 = !DISubprogram(name: "exec", linkageName: "_ZNK5folly8FunctionIFvvEE4execENS_6detail8function2OpEPNS4_4DataES7_", scope: !203, file: !211, line: 650, type: !235, scopeLine: 650, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!237 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !203, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!238 = !DIDerivedType(tag: DW_TAG_rvalue_reference_type, baseType: !195, size: 64)
+!239 = !DIDerivedType(tag: DW_TAG_typedef, name: "CoerceTag", scope: !203, file: !211, line: 636, baseType: !194)
+!240 = !{null, !237, !238, !239}
+!241 = !DISubroutineType(types: !240)
+!242 = !DISubprogram(name: "Function", linkageName: "_ZN5folly8FunctionIFvvEEC4EONS0_IKFvvEEENS_6detail8function9CoerceTagE", scope: !203, file: !211, line: 672, type: !241, scopeLine: 672, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!243 = !{null, !237}
+!244 = !DISubroutineType(types: !243)
+!245 = !DISubprogram(name: "Function", linkageName: "_ZN5folly8FunctionIFvvEEC4Ev", scope: !203, file: !211, line: 683, type: !244, scopeLine: 683, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!246 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !232, size: 64)
+!247 = !{null, !237, !246}
+!248 = !DISubroutineType(types: !247)
+!249 = !DISubprogram(name: "Function", linkageName: "_ZN5folly8FunctionIFvvEEC4ERKS2_", scope: !203, file: !211, line: 686, type: !248, scopeLine: 686, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized | DISPFlagDeleted)
+!250 = !DIDerivedType(tag: DW_TAG_rvalue_reference_type, baseType: !203, size: 64)
+!251 = !{null, !237, !250}
+!252 = !DISubroutineType(types: !251)
+!253 = !DISubprogram(name: "Function", linkageName: "_ZN5folly8FunctionIFvvEEC4EOS2_", scope: !203, file: !211, line: 699, type: !252, scopeLine: 699, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!254 = !DIBasicType(tag: DW_TAG_unspecified_type, name: "decltype(nullptr)")
+!255 = !DIDerivedType(tag: DW_TAG_typedef, name: "nullptr_t", scope: !149, file: !222, line: 312, baseType: !254)
+!256 = !{null, !237, !255}
+!257 = !DISubroutineType(types: !256)
+!258 = !DISubprogram(name: "Function", linkageName: "_ZN5folly8FunctionIFvvEEC4EDn", scope: !203, file: !211, line: 709, type: !257, scopeLine: 709, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!259 = !DISubprogram(name: "~Function", linkageName: "_ZN5folly8FunctionIFvvEED4Ev", scope: !203, file: !211, line: 798, type: !244, scopeLine: 798, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!260 = !DIDerivedType(tag: DW_TAG_reference_type, baseType: !203, size: 64)
+!261 = !{!260, !237, !246}
+!262 = !DISubroutineType(types: !261)
+!263 = !DISubprogram(name: "operator=", linkageName: "_ZN5folly8FunctionIFvvEEaSERKS2_", scope: !203, file: !211, line: 800, type: !262, scopeLine: 800, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized | DISPFlagDeleted)
+!264 = !{!260, !237, !250}
+!265 = !DISubroutineType(types: !264)
+!266 = !DISubprogram(name: "operator=", linkageName: "_ZN5folly8FunctionIFvvEEaSEOS2_", scope: !203, file: !211, line: 820, type: !265, scopeLine: 820, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!267 = !{!260, !237, !255}
+!268 = !DISubroutineType(types: !267)
+!269 = !DISubprogram(name: "operator=", linkageName: "_ZN5folly8FunctionIFvvEEaSEDn", scope: !203, file: !211, line: 873, type: !268, scopeLine: 873, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!270 = !{null, !237, !260}
+!271 = !DISubroutineType(types: !270)
+!272 = !DISubprogram(name: "swap", linkageName: "_ZN5folly8FunctionIFvvEE4swapERS2_", scope: !203, file: !211, line: 897, type: !271, scopeLine: 897, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!273 = !{!55, !233}
+!274 = !DISubroutineType(types: !273)
+!275 = !DISubprogram(name: "operator bool", linkageName: "_ZNK5folly8FunctionIFvvEEcvbEv", scope: !203, file: !211, line: 903, type: !274, scopeLine: 903, flags: DIFlagPublic | DIFlagExplicit | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!276 = !{!224, !233}
+!277 = !DISubroutineType(types: !276)
+!278 = !DISubprogram(name: "heapAllocatedMemory", linkageName: "_ZNK5folly8FunctionIFvvEE19heapAllocatedMemoryEv", scope: !203, file: !211, line: 910, type: !277, scopeLine: 910, flags: DIFlagPublic | DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!279 = !DIDerivedType(tag: DW_TAG_typedef, name: "SharedProxy", scope: !202, file: !211, line: 373, baseType: !193)
+!280 = !{!279, !237}
+!281 = !DISubroutineType(flags: DIFlagRValueReference, types: !280)
+!282 = !DISubprogram(name: "asSharedProxy", linkageName: "_ZNO5folly8FunctionIFvvEE13asSharedProxyEv", scope: !203, file: !211, line: 920, type: !281, scopeLine: 920, flags: DIFlagPublic | DIFlagPrototyped | DIFlagRValueReference, spFlags: DISPFlagOptimized)
+!283 = !{!192, !237}
+!284 = !DISubroutineType(flags: DIFlagRValueReference, types: !283)
+!285 = !DISubprogram(name: "asStdFunction", linkageName: "_ZNO5folly8FunctionIFvvEE13asStdFunctionEv", scope: !203, file: !211, line: 927, type: !284, scopeLine: 927, flags: DIFlagPublic | DIFlagPrototyped | DIFlagRValueReference, spFlags: DISPFlagOptimized)
+!286 = !{!212, !214, !221, !231, !236, !242, !245, !249, !253, !258, !259, !263, !266, !269, !272, !275, !278, !282, !285}
+!287 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/bits/std_function.h", directory: "")
+!288 = !DINamespace(name: "detail", scope: !60)
+!289 = !DINamespace(name: "function", scope: !288)
+!290 = !DIBasicType(name: "int", size: 32, encoding: DW_ATE_signed)
+!291 = !DIEnumerator(name: "MOVE", value: 0)
+!292 = !DIEnumerator(name: "NUKE", value: 1)
+!293 = !DIEnumerator(name: "HEAP", value: 2)
+!294 = !{!291, !292, !293}
+!295 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: null, size: 64)
+!296 = !DIDerivedType(tag: DW_TAG_member, name: "big", scope: !201, file: !211, line: 243, baseType: !295, size: 64)
+!297 = !DIDerivedType(tag: DW_TAG_member, name: "bigt", scope: !201, file: !211, line: 244, baseType: !200, size: 192)
+!298 = !DIFile(filename: "folly/Traits.h", directory: "/opt-bench/work/folly/folly", checksumkind: CSK_MD5, checksum: "77cec74a2c7120078ff7cc1fa3bac842")
+!299 = !DIDerivedType(tag: DW_TAG_typedef, name: "aligned_storage_t<6 * sizeof(void *)>", scope: !60, file: !298, line: 662, baseType: !199)
+!300 = !DIDerivedType(tag: DW_TAG_member, name: "tiny", scope: !201, file: !211, line: 245, baseType: !299, size: 384)
+!301 = !{!296, !297, !300}
+!302 = !DITemplateValueParameter(name: "Len", type: !223, value: i64 48)
+!303 = !DITemplateValueParameter(name: "Align", type: !223, value: i64 16)
+!304 = !{!302, !303}
+!305 = !DISubrange(count: 48)
+!306 = !{!305}
+!307 = !DICompositeType(tag: DW_TAG_array_type, baseType: !198, size: 384, elements: !306)
+!308 = !DIDerivedType(tag: DW_TAG_member, name: "data", scope: !199, file: !298, line: 654, baseType: !307, size: 384, align: 128)
+!309 = !{!308}
+!310 = !DIFile(filename: "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../include/c++/13/cstddef", directory: "")
+!311 = !DIBasicType(name: "unsigned char", size: 8, encoding: DW_ATE_unsigned_char)
+!312 = !DIDerivedType(tag: DW_TAG_member, name: "big", scope: !200, file: !211, line: 238, baseType: !295, size: 64)
+!313 = !DIDerivedType(tag: DW_TAG_member, name: "size", scope: !200, file: !211, line: 239, baseType: !224, size: 64, offset: 64)
+!314 = !DIDerivedType(tag: DW_TAG_member, name: "align", scope: !200, file: !211, line: 240, baseType: !224, size: 64, offset: 128)
+!315 = !{!312, !313, !314}
+!316 = !DIDerivedType(tag: DW_TAG_const_type, baseType: !219)
+!317 = !DIDerivedType(tag: DW_TAG_variable, name: "call", scope: !202, file: !211, line: 361, baseType: !316, flags: DIFlagStaticMember)
+!318 = !DISubprogram(name: "uninitCall", linkageName: "_ZN5folly6detail8function14FunctionTraitsIFvvEE10uninitCallERNS1_4DataE", scope: !202, file: !211, line: 364, type: !217, scopeLine: 364, flags: DIFlagPrototyped | DIFlagStaticMember, spFlags: DISPFlagOptimized)
+!319 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !202, size: 64, flags: DIFlagArtificial | DIFlagObjectPointer)
+!320 = !{null, !319}
+!321 = !DISubroutineType(types: !320)
+!322 = !DISubprogram(name: "operator()", linkageName: "_ZN5folly6detail8function14FunctionTraitsIFvvEEclEv", scope: !202, file: !211, line: 368, type: !321, scopeLine: 368, flags: DIFlagPrototyped, spFlags: DISPFlagOptimized)
+!323 = !{!317, !317, !317, !317, !318, !322}
+!324 = !{null}
+!325 = !DISubroutineType(types: !324)
+!326 = !DITemplateTypeParameter(name: "FunctionType", type: !325)
+!327 = !{!326}
+!328 = !{!155, !20, i64 8}
+!329 = !{!116, !22, i64 472}
+!330 = !{!138, !138, i64 0}
+!331 = !{!32, !22, i64 0}
+!332 = !{!"_ZTSSt17reference_wrapperIZN5folly6fibers5Fiber7preemptENS2_5StateEE3$_0E", !20, i64 0}
+!333 = !{!332, !20, i64 0}
+!334 = !{!"_ZTSN5folly6detail36OptionalStorageTriviallyDestructibleINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEE", !13, i64 0, !18, i64 8}
+!335 = !{!"_ZTSN5folly6detail15OptionalStorageINSt6chrono8durationIlSt5ratioILl1ELl1000000000EEEEEE", !334, i64 0}
+!336 = !{!335, !18, i64 8}
+!337 = !{!334, !18, i64 8}
+!338 = !{ptr @_ZN5folly6fibers5Fiber9LocalDataaSERKS2_}
 end_hunk_0

@@ -205,25 +205,31 @@ bb.aac:                                           ; preds = %bb.aab
   %.sroa.51710.0..sroa_idx = getelementptr inbounds nuw i8, ptr %73, i64 14
   %.sroa.51710.0.copyload = load i8, ptr %.sroa.51710.0..sroa_idx, align 2, !tbaa !96
   %.sroa.61711.0.copyload = load i8, ptr %i.chj, align 1, !tbaa !96
-  %.sroa.81713.0..sroa_idx = getelementptr inbounds nuw i8, ptr %73, i64 19
-  %.sroa.81713.0.copyload = load i8, ptr %.sroa.81713.0..sroa_idx, align 1, !tbaa !96
-  %.sroa.91714.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %73, i64 20
-  %.sroa.91714.0.copyload.a = load i8, ptr %.sroa.91714.0..sroa_idx.a, align 4, !tbaa !96
-  %130 = trunc nuw i8 %.sroa.21707.0.copyload to i1
-  %131 = trunc nuw i8 %.sroa.91714.0.copyload.a to i1
-  %132 = xor i1 %131, true
-  %133 = select i1 %130, i1 %132, i1 false
-  %134 = trunc nuw i8 %.sroa.51710.0.copyload to i1
-  %or.cond.i1293 = select i1 %133, i1 true, i1 %134
-  %135 = trunc nuw i8 %.sroa.61711.0.copyload to i1
-  %or.cond5.i1294 = select i1 %or.cond.i1293, i1 true, i1 %135
-  %136 = trunc nuw i8 %.sroa.81713.0.copyload to i1
-  %or.cond8.i = select i1 %or.cond5.i1294, i1 true, i1 %136
-  %i.cji = trunc nuw i8 %.sroa.41709.0.copyload to i1
-  %137 = select i1 %or.cond8.i, i1 true, i1 %i.cji
-  br i1 %137, label %bb.aad, label %bb.aai
+  %.sroa.91714.0..sroa_idx.a = getelementptr inbounds nuw i8, ptr %73, i64 19
+  %.sroa.91714.0.copyload.a = load i8, ptr %.sroa.91714.0..sroa_idx.a, align 1, !tbaa !96
+  %i.cji = trunc nuw i8 %.sroa.21707.0.copyload to i1
+  br i1 %i.cji, label %130, label %133
 
-bb.aad:                                           ; preds = %bb.aac
+130:                                              ; preds = %bb.aac
+  %.sroa.91714.0..sroa_idx = getelementptr inbounds nuw i8, ptr %73, i64 20
+  %.sroa.91714.0.copyload = load i8, ptr %.sroa.91714.0..sroa_idx, align 4, !tbaa !96
+  %131 = trunc nuw i8 %.sroa.91714.0.copyload to i1
+  %132 = xor i1 %131, true
+  br label %133
+
+133:                                              ; preds = %130, %bb.aac
+  %134 = phi i1 [ false, %bb.aac ], [ %132, %130 ]
+  %135 = trunc nuw i8 %.sroa.51710.0.copyload to i1
+  %or.cond.i1293 = select i1 %134, i1 true, i1 %135
+  %136 = trunc nuw i8 %.sroa.61711.0.copyload to i1
+  %or.cond5.i1294 = select i1 %or.cond.i1293, i1 true, i1 %136
+  %137 = trunc nuw i8 %.sroa.91714.0.copyload.a to i1
+  %or.cond8.i = select i1 %or.cond5.i1294, i1 true, i1 %137
+  %138 = trunc nuw i8 %.sroa.41709.0.copyload to i1
+  %139 = select i1 %or.cond8.i, i1 true, i1 %138
+  br i1 %139, label %bb.aad, label %bb.aai
+
+bb.aad:                                           ; preds = %133
   %i.cjj = load i32, ptr %i.cba, align 4, !tbaa !658
   %i.cjk = icmp ne i32 %i.cjj, 0
   %or.cond25 = or i1 %i.cjk, %i.as
@@ -285,7 +291,7 @@ bb.aah:                                           ; preds = %bb.aae, %bb.aaf
           catch ptr @_ZTISt9exception
   br label %.body1297
 
-bb.aai:                                           ; preds = %_ZNSt10unique_ptrIN3gmx22StatePropagatorDataGpuESt14default_deleteIS1_EED2Ev.exit, %bb.aac, %bb.aab
+bb.aai:                                           ; preds = %_ZNSt10unique_ptrIN3gmx22StatePropagatorDataGpuESt14default_deleteIS1_EED2Ev.exit, %133, %bb.aab
   call void @llvm.lifetime.start.p0(ptr nonnull %125) #31
   invoke void @_ZN3gmx16SimulatorBuilderC1Ev(ptr noundef nonnull align 8 dereferenceable(128) %125)
           to label %bb.aaj unwind label %bb.abb

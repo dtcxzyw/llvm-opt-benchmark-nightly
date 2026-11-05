@@ -205,26 +205,28 @@ bb.hl:                                            ; preds = %bb.hk, %bb.hj
   %.sroa.010.0.copyload.i.i.i = load i64, ptr %.sroa.10.0115.i.i.i, align 8, !noalias !574
   %.sroa.09.0.copyload.i.i.i = load i64, ptr %i.bct, align 8, !noalias !575
   %i.bde = call { i64, i8 } @_ZN4mlir19getConstantIntValueENS_12OpFoldResultE(i64 %.sroa.011.0.copyload.i.i.i) #19, !noalias !574 ; 2 uses
-  %198 = extractvalue { i64, i8 } %i.bde, 0
   %i.bdf = extractvalue { i64, i8 } %i.bde, 1
   %i.bdg = call { i64, i8 } @_ZN4mlir19getConstantIntValueENS_12OpFoldResultE(i64 %.sroa.010.0.copyload.i.i.i) #19, !noalias !574 ; 2 uses
-  %199 = extractvalue { i64, i8 } %i.bdg, 0
   %i.bdh = extractvalue { i64, i8 } %i.bdg, 1
   %i.bdi = call { i64, i8 } @_ZN4mlir19getConstantIntValueENS_12OpFoldResultE(i64 %.sroa.09.0.copyload.i.i.i) #19, !noalias !574 ; 2 uses
-  %200 = extractvalue { i64, i8 } %i.bdi, 0
   %i.bdj = extractvalue { i64, i8 } %i.bdi, 1
   %i.bdk = trunc nuw i8 %i.bdf to i1
   %i.bdl = trunc nuw i8 %i.bdh to i1
   %or.cond.i.i.i.i = select i1 %i.bdk, i1 %i.bdl, i1 false
   %i.bdm = trunc nuw i8 %i.bdj to i1
-  %or.cond12.i.i.i.i = select i1 %or.cond.i.i.i.i, i1 %i.bdm, i1 false
-  %201 = add nsw i64 %199, -1
-  %202 = mul nsw i64 %201, %198
-  %203 = icmp slt i64 %202, %200
-  %.0.i.i.i.i = select i1 %or.cond12.i.i.i.i, i1 %203, i1 false
-  br i1 %.0.i.i.i.i, label %bb.hn, label %bb.hm
+  %.0.i.i.i.i = select i1 %or.cond.i.i.i.i, i1 %i.bdm, i1 false
+  br i1 %.0.i.i.i.i, label %_ZL30canOmitTileOffsetInBoundsCheckN4mlir12OpFoldResultES0_S0_.exit.i.i.i, label %bb.hm
 
-bb.hm:                                            ; preds = %bb.hl
+_ZL30canOmitTileOffsetInBoundsCheckN4mlir12OpFoldResultES0_S0_.exit.i.i.i: ; preds = %bb.hl
+  %198 = extractvalue { i64, i8 } %i.bdi, 0
+  %199 = extractvalue { i64, i8 } %i.bdg, 0
+  %200 = extractvalue { i64, i8 } %i.bde, 0
+  %201 = add nsw i64 %199, -1
+  %202 = mul nsw i64 %201, %200
+  %203 = icmp slt i64 %202, %198
+  br i1 %203, label %bb.hn, label %bb.hm
+
+bb.hm:                                            ; preds = %_ZL30canOmitTileOffsetInBoundsCheckN4mlir12OpFoldResultES0_S0_.exit.i.i.i, %bb.hl
   %i.bdn = load ptr, ptr %i.ai, align 8, !tbaa !79, !noalias !575
   %i.bdo = call ptr @_ZN4mlir9AffineMap22getMultiDimIdentityMapEjPNS_11MLIRContextE(i32 noundef 2, ptr noundef %i.bdn) #19, !noalias !574
   call void @llvm.lifetime.start.p0(ptr nonnull %49) #19, !noalias !575
@@ -236,8 +238,8 @@ bb.hm:                                            ; preds = %bb.hl
   call void @llvm.lifetime.end.p0(ptr nonnull %49) #19, !noalias !575
   br label %bb.hn
 
-bb.hn:                                            ; preds = %bb.hm, %bb.hl
-  %.sroa.024.1.i.i.i = phi i64 [ %.sroa.024.0.i.i.i, %bb.hl ], [ %i.bdr, %bb.hm ] ; 2 uses
+bb.hn:                                            ; preds = %bb.hm, %_ZL30canOmitTileOffsetInBoundsCheckN4mlir12OpFoldResultES0_S0_.exit.i.i.i
+  %.sroa.024.1.i.i.i = phi i64 [ %.sroa.024.0.i.i.i, %_ZL30canOmitTileOffsetInBoundsCheckN4mlir12OpFoldResultES0_S0_.exit.i.i.i ], [ %i.bdr, %bb.hm ] ; 2 uses
   %i.bds = load i32, ptr %i.azu, align 8, !tbaa !28, !noalias !575 ; 2 uses
   %i.bdt = load i32, ptr %i.azv, align 4, !tbaa !29, !noalias !575
   %.not.i82.i.i.i = icmp ult i32 %i.bds, %i.bdt

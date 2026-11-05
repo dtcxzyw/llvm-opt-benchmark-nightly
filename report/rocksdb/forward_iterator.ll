@@ -205,16 +205,21 @@ bb.h:                                             ; preds = %bb.f, %bb.g, %bb.a,
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef zeroext i1 @_ZNK7rocksdb15ForwardIterator5ValidEv(ptr nofree noundef nonnull readonly align 16 captures(none) dereferenceable(2960) %0) unnamed_addr #12 align 2 {
-bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 400
-  %2 = load i8, ptr %1, align 16, !tbaa !395, !range !297, !noundef !298
-  %3 = trunc nuw i8 %2 to i1
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 400
+  %3 = load i8, ptr %2, align 16, !tbaa !395, !range !297, !noundef !298
+  %4 = trunc nuw i8 %3 to i1
+  br i1 %4, label %bb.a, label %5
+
+bb.a:                                             ; preds = %1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 441
-  %i.b = load i8, ptr %i.a, align 1, !range !297
+  %i.b = load i8, ptr %i.a, align 1, !tbaa !119, !range !297, !noundef !298
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = xor i1 %i.c, true
-  %4 = select i1 %3, i1 %i.d, i1 false
-  ret i1 %4
+  br label %5
+
+5:                                                ; preds = %1, %bb.a
+  %6 = phi i1 [ %i.d, %bb.a ], [ false, %1 ]
+  ret i1 %6
 }
 
 ; Function Attrs: mustprogress uwtable

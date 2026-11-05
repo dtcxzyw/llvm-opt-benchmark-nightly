@@ -205,14 +205,19 @@ bb.a:
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read) uwtable
 define hidden noundef zeroext i1 @_RNvYNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver6consts5ConstINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir8inherent5ConstNtNtB6_8interner10DbInternerE9is_ct_varB8_(ptr nofree noundef nonnull readonly captures(none) %0) unnamed_addr #4 !guid !12011 {
-bb.a:
   %.sroa.0.0.copyload = load i32, ptr %0, align 8
+  %2 = icmp eq i32 %.sroa.0.0.copyload, 1
+  br i1 %2, label %bb.a, label %3
+
+bb.a:                                             ; preds = %1
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
   %.sroa.4.0.copyload = load i32, ptr %.sroa.4.0..sroa_idx, align 4
-  %1 = icmp eq i32 %.sroa.0.0.copyload, 1
   %i.a = trunc nuw i32 %.sroa.4.0.copyload to i1
   %i.b = xor i1 %i.a, true
-  %.sroa.0.0 = select i1 %1, i1 %i.b, i1 false
+  br label %3
+
+3:                                                ; preds = %1, %bb.a
+  %.sroa.0.0 = phi i1 [ %i.b, %bb.a ], [ false, %1 ]
   ret i1 %.sroa.0.0
 }
 

@@ -204,7 +204,7 @@ declare void @device_class_set_parent_realize(ptr noundef, ptr noundef, ptr noun
 define internal void @x86_cpu_realizefn(ptr noundef %0, ptr noundef %1) #4 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 11 uses
-  %i.b = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str.461, ptr noundef nonnull @.str.462, i32 noundef 31, ptr noundef nonnull @__func__.X86_CPU) #20 ; 96 uses
+  %i.b = tail call ptr @object_dynamic_cast_assert(ptr noundef %0, ptr noundef nonnull @.str.461, ptr noundef nonnull @.str.462, i32 noundef 31, ptr noundef nonnull @__func__.X86_CPU) #20 ; 95 uses
   %i.c = tail call ptr @object_get_class(ptr noundef %0) #20
   %i.d = tail call ptr @object_class_dynamic_cast_assert(ptr noundef %i.c, ptr noundef nonnull @.str.461, ptr noundef nonnull @.str.462, i32 noundef 31, ptr noundef nonnull @__func__.X86_CPU_GET_CLASS) #20 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #20
@@ -305,38 +305,28 @@ bb.n:                                             ; preds = %bb.m, %bb.j
 
 .split:                                           ; preds = %bb.n
   %i.ak = getelementptr inbounds nuw i8, ptr %i.b, i64 31905
-  %2 = load i8, ptr %i.ak, align 1, !range !10, !noundef !11
-  %3 = trunc nuw i8 %2 to i1
-  %4 = load i8, ptr @tcg_allowed, align 1, !range !10
-  %5 = trunc nuw i8 %4 to i1
-  %i.al = load i8, ptr @qtest_allowed, align 1, !range !10
+  %i.al = load i8, ptr %i.ak, align 1, !range !10, !noundef !11
   %i.am = trunc nuw i8 %i.al to i1
-  %6 = select i1 %5, i1 true, i1 %i.am
-  %7 = select i1 %6, ptr @.str.542, ptr @.str.541 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 31906 ; 3 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 31936 ; 3 uses
-  br i1 %3, label %.split.i.preheader, label %.split.us.i.a
+  br i1 %i.am, label %bb.o, label %.split.i.preheader
 
-bb.o:                                             ; preds = %bb.n
-  %i.an = load i8, ptr @tcg_allowed, align 1, !range !10
+bb.o:                                             ; preds = %bb.n, %.split
+  %i.an = load i8, ptr @tcg_allowed, align 1, !range !10, !noundef !11
   %i.ao = trunc nuw i8 %i.an to i1
   %i.ap = load i8, ptr @qtest_allowed, align 1, !range !10
   %i.aq = trunc nuw i8 %i.ap to i1
   %i.ar = select i1 %i.ao, i1 true, i1 %i.aq
-  %i.as = select i1 %i.ar, ptr @.str.542, ptr @.str.541
-  %i.at = getelementptr inbounds nuw i8, ptr %i.b, i64 31906
-  %i.au = getelementptr inbounds nuw i8, ptr %i.b, i64 31936
-  br label %.split.i.preheader
-
-.split.i.preheader:                               ; preds = %.split, %bb.o
-  %.ph = phi ptr [ %9, %.split ], [ %i.au, %bb.o ]
-  %.ph130 = phi ptr [ %8, %.split ], [ %i.at, %bb.o ] ; 2 uses
-  %.ph131 = phi ptr [ %7, %.split ], [ %i.as, %bb.o ] ; 2 uses
-  %i.av = getelementptr inbounds nuw i8, ptr %i.b, i64 31936
+  %i.as = select i1 %i.ar, ptr @.str.542, ptr @.str.541 ; 2 uses
+  %i.at = getelementptr inbounds nuw i8, ptr %i.b, i64 31906 ; 2 uses
+  %i.au = getelementptr inbounds nuw i8, ptr %i.b, i64 31936 ; 2 uses
   br label %.split.i
 
-.split.us.i.a:                                    ; preds = %.split, %mark_unavailable_features.exit.us.i
-  %indvars.iv.i.a = phi i64 [ %indvars.iv.next.i.a, %mark_unavailable_features.exit.us.i ], [ 0, %.split ] ; 4 uses
+.split.i.preheader:                               ; preds = %.split
+  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 31906 ; 2 uses
+  %i.av = getelementptr inbounds nuw i8, ptr %i.b, i64 31936 ; 2 uses
+  br label %.split.us.i.a
+
+.split.us.i.a:                                    ; preds = %mark_unavailable_features.exit.us.i, %.split.i.preheader
+  %indvars.iv.i.a = phi i64 [ 0, %.split.i.preheader ], [ %indvars.iv.next.i.a, %mark_unavailable_features.exit.us.i ] ; 4 uses
   %i.aw = getelementptr inbounds nuw [568 x i8], ptr @feature_word_info, i64 %indvars.iv.i.a ; 2 uses
   %i.ax = load i8, ptr @tcg_allowed, align 1, !range !10, !noundef !11
   %i.ay = trunc nuw i8 %i.ax to i1
@@ -357,7 +347,7 @@ x86_cpu_get_supported_feature_word.exit.us.i:     ; preds = %bb.p, %.split.us.i.
   %i.bf = load i64, ptr %i.be, align 8
   %i.bg = and i64 %i.bf, %.021.i.us.i             ; 2 uses
   %i.bh = call fastcc ptr @feature_word_description(ptr noundef nonnull %i.aw)
-  %i.bi = load i8, ptr %8, align 2, !range !10, !noundef !11
+  %i.bi = load i8, ptr %2, align 2, !range !10, !noundef !11
   %i.bj = trunc nuw i8 %i.bi to i1
   br i1 %i.bj, label %mark_unavailable_features.exit.us.i, label %bb.q
 
@@ -369,7 +359,7 @@ bb.q:                                             ; preds = %x86_cpu_get_support
   br label %mark_unavailable_features.exit.us.i
 
 mark_unavailable_features.exit.us.i:              ; preds = %bb.q, %x86_cpu_get_supported_feature_word.exit.us.i
-  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %9, i64 %indvars.iv.i.a ; 2 uses
+  %i.bn = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %indvars.iv.i.a ; 2 uses
   %i.bo = load i64, ptr %i.bn, align 8
   %i.bp = or i64 %i.bo, %i.bg
   store i64 %i.bp, ptr %i.bn, align 8
@@ -378,8 +368,8 @@ mark_unavailable_features.exit.us.i:              ; preds = %bb.q, %x86_cpu_get_
   %exitcond.not.i.a = icmp eq i64 %indvars.iv.next.i.a, 48
   br i1 %exitcond.not.i.a, label %.split44.us.i, label %.split.us.i.a, !llvm.loop !34
 
-.split.i:                                         ; preds = %.split.i.preheader, %mark_unavailable_features.exit.loopexit.i
-  %indvars.iv47.i = phi i64 [ %indvars.iv.next48.i, %mark_unavailable_features.exit.loopexit.i ], [ 0, %.split.i.preheader ] ; 4 uses
+.split.i:                                         ; preds = %mark_unavailable_features.exit.loopexit.i, %bb.o
+  %indvars.iv47.i = phi i64 [ 0, %bb.o ], [ %indvars.iv.next48.i, %mark_unavailable_features.exit.loopexit.i ] ; 4 uses
   %i.bq = getelementptr inbounds nuw [568 x i8], ptr @feature_word_info, i64 %indvars.iv47.i ; 3 uses
   %i.br = load i8, ptr @tcg_allowed, align 1, !range !10, !noundef !11
   %i.bs = trunc nuw i8 %i.br to i1
@@ -400,7 +390,7 @@ x86_cpu_get_supported_feature_word.exit.i:        ; preds = %bb.r, %.split.i
   %i.bz = load i64, ptr %i.by, align 8
   %i.ca = and i64 %i.bz, %.021.i.i                ; 3 uses
   %i.cb = call fastcc ptr @feature_word_description(ptr noundef nonnull %i.bq) ; 2 uses
-  %i.cc = load i8, ptr %.ph130, align 2, !range !10, !noundef !11
+  %i.cc = load i8, ptr %i.at, align 2, !range !10, !noundef !11
   %i.cd = trunc nuw i8 %i.cc to i1
   br i1 %i.cd, label %.preheader.i.i, label %bb.s
 
@@ -412,7 +402,7 @@ bb.s:                                             ; preds = %x86_cpu_get_support
   br label %.preheader.i.i
 
 .preheader.i.i:                                   ; preds = %bb.s, %x86_cpu_get_supported_feature_word.exit.i
-  %i.ch = getelementptr inbounds nuw [8 x i8], ptr %i.av, i64 %indvars.iv47.i ; 2 uses
+  %i.ch = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %indvars.iv47.i ; 2 uses
   %i.ci = load i64, ptr %i.ch, align 8
   %i.cj = or i64 %i.ci, %i.ca
   store i64 %i.cj, ptr %i.ch, align 8
@@ -433,7 +423,7 @@ bb.u:                                             ; preds = %bb.t
   %i.cp = select i1 %.not25.i.i, ptr @.str.411, ptr @.str.410
   %spec.select.i.i = select i1 %.not25.i.i, ptr @.str.411, ptr %i.co
   %i.cq = trunc nuw nsw i64 %indvars.iv.i.i to i32
-  call void (ptr, ...) @warn_report(ptr noundef nonnull @.str.409, ptr noundef nonnull %.ph131, ptr noundef %i.cb, ptr noundef nonnull %i.cp, ptr noundef nonnull %spec.select.i.i, i32 noundef %i.cq) #20
+  call void (ptr, ...) @warn_report(ptr noundef nonnull @.str.409, ptr noundef nonnull %i.as, ptr noundef %i.cb, ptr noundef nonnull %i.cp, ptr noundef nonnull %spec.select.i.i, i32 noundef %i.cq) #20
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %bb.t
@@ -448,11 +438,11 @@ mark_unavailable_features.exit.loopexit.i:        ; preds = %bb.v
   br i1 %exitcond50.not.i, label %.split44.us.i, label %.split.i, !llvm.loop !34
 
 .split44.us.i:                                    ; preds = %mark_unavailable_features.exit.us.i, %mark_unavailable_features.exit.loopexit.i
-  %10 = phi ptr [ %.ph, %mark_unavailable_features.exit.loopexit.i ], [ %9, %mark_unavailable_features.exit.us.i ]
-  %i.cr = phi ptr [ %.ph130, %mark_unavailable_features.exit.loopexit.i ], [ %8, %mark_unavailable_features.exit.us.i ]
-  %i.cs = phi ptr [ %.ph131, %mark_unavailable_features.exit.loopexit.i ], [ %7, %mark_unavailable_features.exit.us.i ] ; 3 uses
-  %11 = phi i1 [ true, %mark_unavailable_features.exit.loopexit.i ], [ false, %mark_unavailable_features.exit.us.i ] ; 3 uses
-  %i.ct = load i64, ptr %10, align 8
+  %3 = phi i1 [ true, %mark_unavailable_features.exit.loopexit.i ], [ false, %mark_unavailable_features.exit.us.i ] ; 3 uses
+  %i.cr = phi ptr [ %i.au, %mark_unavailable_features.exit.loopexit.i ], [ %i.av, %mark_unavailable_features.exit.us.i ]
+  %i.cs = phi ptr [ %i.at, %mark_unavailable_features.exit.loopexit.i ], [ %2, %mark_unavailable_features.exit.us.i ]
+  %.03253.i = phi ptr [ %i.as, %mark_unavailable_features.exit.loopexit.i ], [ null, %mark_unavailable_features.exit.us.i ] ; 3 uses
+  %i.ct = load i64, ptr %i.cr, align 8
   %.not.not.i.i = icmp eq i64 %i.ct, 0
   br i1 %.not.not.i.i, label %bb.w, label %x86_cpu_have_filtered_features.exit.i
 
@@ -754,15 +744,15 @@ bb.br:                                            ; preds = %x86_cpu_have_filter
   br i1 %.not41.i, label %x86_cpu_filter_features.exit, label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br
-  %i.gq = load i8, ptr %i.cr, align 2, !range !10, !noundef !11
+  %i.gq = load i8, ptr %i.cs, align 2, !range !10, !noundef !11
   %i.gr = trunc nuw i8 %i.gq to i1
   br i1 %i.gr, label %bb.bw, label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs
-  br i1 %11, label %bb.bu, label %bb.bv
+  br i1 %3, label %bb.bu, label %bb.bv
 
 bb.bu:                                            ; preds = %bb.bt
-  call void (ptr, ...) @warn_report(ptr noundef nonnull @.str.543, ptr noundef nonnull %i.cs, i32 noundef %i.gp, i32 noundef 0) #20
+  call void (ptr, ...) @warn_report(ptr noundef nonnull @.str.543, ptr noundef nonnull %.03253.i, i32 noundef %i.gp, i32 noundef 0) #20
   br label %bb.bv
 
 bb.bv:                                            ; preds = %bb.bu, %bb.bt
@@ -770,21 +760,21 @@ bb.bv:                                            ; preds = %bb.bu, %bb.bt
   br label %x86_cpu_filter_features.exit.thread
 
 bb.bw:                                            ; preds = %bb.bs
-  br i1 %11, label %bb.bx, label %x86_cpu_filter_features.exit.thread
+  br i1 %3, label %bb.bx, label %x86_cpu_filter_features.exit.thread
 
 bb.bx:                                            ; preds = %bb.bw
-  call void (ptr, ...) @warn_report(ptr noundef nonnull @.str.544, ptr noundef nonnull %i.cs, i32 noundef %i.gp) #20
+  call void (ptr, ...) @warn_report(ptr noundef nonnull @.str.544, ptr noundef nonnull %.03253.i, i32 noundef %i.gp) #20
   br label %x86_cpu_filter_features.exit.thread
 
 bb.by:                                            ; preds = %x86_cpu_have_filtered_features.exit.i
   %.not37.i = icmp ne i8 %i.go, 0                 ; 2 uses
-  %brmerge.not.i = and i1 %11, %.not37.i
+  %brmerge.not.i = and i1 %3, %.not37.i
   %.not.lcssa.i.mux.i = select i1 %.not37.i, i1 true, i1 %.not.lcssa.i.i
   br i1 %brmerge.not.i, label %bb.bz, label %x86_cpu_filter_features.exit
 
 bb.bz:                                            ; preds = %bb.by
   %i.gs = zext i8 %i.go to i32
-  call void (ptr, ...) @warn_report(ptr noundef nonnull @.str.544, ptr noundef nonnull %i.cs, i32 noundef %i.gs) #20
+  call void (ptr, ...) @warn_report(ptr noundef nonnull @.str.544, ptr noundef nonnull %.03253.i, i32 noundef %i.gs) #20
   br label %x86_cpu_filter_features.exit.thread
 
 x86_cpu_filter_features.exit:                     ; preds = %bb.br, %bb.by
@@ -799,11 +789,12 @@ x86_cpu_filter_features.exit.thread:              ; preds = %bb.bz, %bb.bx, %bb.
 
 bb.ca:                                            ; preds = %x86_cpu_filter_features.exit.thread
   %i.gw = load i8, ptr @tcg_allowed, align 1, !range !10, !noundef !11
-  %12 = trunc nuw i8 %i.gw to i1
-  %13 = load i8, ptr @qtest_allowed, align 1, !range !10
-  %14 = trunc nuw i8 %13 to i1
-  %15 = select i1 %12, i1 true, i1 %14
-  %i.gx = select i1 %15, ptr @.str.530, ptr @.str.529
+  %4 = load i8, ptr @qtest_allowed, align 1, !range !10
+  %.fr137 = freeze i8 %4
+  %.fr137.masked = and i8 %.fr137, 1
+  %5 = or i8 %.fr137.masked, %i.gw
+  %.not138 = icmp eq i8 %5, 0
+  %i.gx = select i1 %.not138, ptr @.str.529, ptr @.str.530
   call void (ptr, ptr, i32, ptr, ptr, ...) @error_setg_internal(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.408, i32 noundef 10145, ptr noundef nonnull @__func__.x86_cpu_realizefn, ptr noundef nonnull %i.gx) #20
   br label %bb.dv
 

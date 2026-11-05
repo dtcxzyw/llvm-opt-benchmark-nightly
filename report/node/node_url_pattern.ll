@@ -204,14 +204,20 @@ bb.a:
   %i.r = trunc nuw i8 %i.q to i1
   %or.cond14.i = select i1 %or.cond11.i, i1 true, i1 %i.r
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 768
-  %1 = load i8, ptr %i.s, align 8, !range !170
-  %2 = trunc nuw i8 %1 to i1
-  %or.cond17.i = select i1 %or.cond14.i, i1 true, i1 %2
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 872
-  %i.t = load i8, ptr %3, align 8, !range !170
+  %i.t = load i8, ptr %i.s, align 8, !range !170
   %i.u = trunc nuw i8 %i.t to i1
-  %i.v = select i1 %or.cond17.i, i1 true, i1 %i.u
-  ret i1 %i.v
+  %i.v = select i1 %or.cond14.i, i1 true, i1 %i.u
+  br i1 %i.v, label %_ZNK3ada11url_patternIN4node11url_pattern23URLPatternRegexProviderEE17has_regexp_groupsEv.exit, label %1
+
+1:                                                ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 872
+  %3 = load i8, ptr %2, align 8, !range !170, !noundef !173
+  %4 = trunc nuw i8 %3 to i1
+  br label %_ZNK3ada11url_patternIN4node11url_pattern23URLPatternRegexProviderEE17has_regexp_groupsEv.exit
+
+_ZNK3ada11url_patternIN4node11url_pattern23URLPatternRegexProviderEE17has_regexp_groupsEv.exit: ; preds = %bb.a, %1
+  %5 = phi i1 [ true, %bb.a ], [ %4, %1 ]
+  ret i1 %5
 }
 
 ; Function Attrs: mustprogress nounwind uwtable
@@ -614,25 +620,32 @@ bb.d:                                             ; preds = %_ZN4node10BaseObjec
   %i.an = trunc nuw i8 %i.am to i1
   %or.cond14.i.i = select i1 %or.cond11.i.i, i1 true, i1 %i.an
   %i.ao = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 768
-  %1 = load i8, ptr %i.ao, align 8, !range !170
-  %2 = trunc nuw i8 %1 to i1
-  %or.cond17.i.i = select i1 %or.cond14.i.i, i1 true, i1 %2
-  %3 = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 872
-  %i.ap = load i8, ptr %3, align 8, !range !170
+  %i.ap = load i8, ptr %i.ao, align 8, !range !170
   %i.aq = trunc nuw i8 %i.ap to i1
-  %i.ar = select i1 %or.cond17.i.i, i1 true, i1 %i.aq
-  %4 = getelementptr inbounds nuw i8, ptr %i.u, i64 8
-  %5 = load ptr, ptr %4, align 8
-  %6 = ptrtoint ptr %5 to i64
-  %7 = add i64 %6, 648
-  %8 = select i1 %i.ar, i64 24, i64 32
-  %9 = add i64 %7, %8
+  %i.ar = select i1 %or.cond14.i.i, i1 true, i1 %i.aq
+  br i1 %i.ar, label %_ZNK4node11url_pattern10URLPattern15HasRegExpGroupsEv.exit.thread, label %_ZNK4node11url_pattern10URLPattern15HasRegExpGroupsEv.exit
+
+_ZNK4node11url_pattern10URLPattern15HasRegExpGroupsEv.exit: ; preds = %bb.d
+  %1 = getelementptr inbounds nuw i8, ptr %.0.i.i, i64 872
+  %2 = load i8, ptr %1, align 8, !range !170, !noundef !173
+  %3 = trunc nuw i8 %2 to i1
+  br i1 %3, label %_ZNK4node11url_pattern10URLPattern15HasRegExpGroupsEv.exit.thread, label %4
+
+_ZNK4node11url_pattern10URLPattern15HasRegExpGroupsEv.exit.thread: ; preds = %bb.d, %_ZNK4node11url_pattern10URLPattern15HasRegExpGroupsEv.exit
+  br label %4
+
+4:                                                ; preds = %_ZNK4node11url_pattern10URLPattern15HasRegExpGroupsEv.exit, %_ZNK4node11url_pattern10URLPattern15HasRegExpGroupsEv.exit.thread
+  %5 = phi i64 [ 672, %_ZNK4node11url_pattern10URLPattern15HasRegExpGroupsEv.exit.thread ], [ 680, %_ZNK4node11url_pattern10URLPattern15HasRegExpGroupsEv.exit ]
+  %6 = getelementptr inbounds nuw i8, ptr %i.u, i64 8
+  %7 = load ptr, ptr %6, align 8
+  %8 = ptrtoint ptr %7 to i64
+  %9 = add i64 %5, %8
   %10 = inttoptr i64 %9 to ptr
   %11 = load i64, ptr %10, align 8
   store i64 %11, ptr %i.v, align 8
   br label %bb.e
 
-bb.e:                                             ; preds = %_ZN4node10BaseObject12FromJSObjectEN2v85LocalINS1_5ValueEEE.exit, %bb.d
+bb.e:                                             ; preds = %_ZN4node10BaseObject12FromJSObjectEN2v85LocalINS1_5ValueEEE.exit, %4
   ret void
 }
 

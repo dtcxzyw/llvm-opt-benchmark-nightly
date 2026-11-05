@@ -202,15 +202,21 @@ bb.a:
   %i.l = trunc nuw i8 %i.k to i1
   %or.cond11 = select i1 %or.cond7, i1 true, i1 %i.l
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 132
-  %1 = load i8, ptr %i.m, align 4, !range !45
-  %2 = trunc nuw i8 %1 to i1
-  %or.cond15 = select i1 %or.cond11, i1 true, i1 %2
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 140
-  %i.n = load i8, ptr %3, align 4, !range !45
+  %i.n = load i8, ptr %i.m, align 4, !range !45
   %i.o = trunc nuw i8 %i.n to i1
-  %i.p = select i1 %or.cond15, i1 true, i1 %i.o
-  %4 = xor i1 %i.p, true
-  ret i1 %4
+  %i.p = select i1 %or.cond11, i1 true, i1 %i.o
+  br i1 %i.p, label %6, label %1
+
+1:                                                ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 140
+  %3 = load i8, ptr %2, align 4, !tbaa !20, !range !45, !noundef !46
+  %4 = trunc nuw i8 %3 to i1
+  %5 = xor i1 %4, true
+  br label %6
+
+6:                                                ; preds = %1, %bb.a
+  %7 = phi i1 [ false, %bb.a ], [ %5, %1 ]
+  ret i1 %7
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable
