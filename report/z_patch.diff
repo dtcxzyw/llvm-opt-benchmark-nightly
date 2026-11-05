@@ -1,0 +1,125 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+index 41061cea05376..1b1229a8c86c3 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineCalls.cpp
+@@ -3310,11 +3310,24 @@ Instruction *InstCombinerImpl::visitCallInst(CallInst &CI) {
+       return BinaryOperator::CreateFAddFMF(V, Src2, II->getFastMathFlags());
+ 
+     // fma x, y, 0 -> fmul x, y
+-    // This is always valid for -0.0, but requires nsz for +0.0 as
+-    // -0.0 + 0.0 = 0.0, which would not be the same as the fmul on its own.
+-    if (match(Src2, m_NegZeroFP()) ||
+-        (match(Src2, m_PosZeroFP()) && II->getFastMathFlags().noSignedZeros()))
++    // This is always valid for -0.0. For +0.0 it needs nsz or a product that
++    // cannot be -0.0 (-0.0 + 0.0 = 0.0): x * x, or operands of the same sign.
++    if (match(Src2, m_NegZeroFP()))
+       return BinaryOperator::CreateFMulFMF(Src0, Src1, II);
++    if (match(Src2, m_PosZeroFP())) {
++      auto SameSign = [&] {
++        if (Src0 == Src1)
++          return true;
++        SimplifyQuery Q = SQ.getWithInstruction(II);
++        std::optional<bool> Sign0 = computeKnownFPSignBit(Src0, Q);
++        if (!Sign0)
++          return false;
++        std::optional<bool> Sign1 = computeKnownFPSignBit(Src1, Q);
++        return Sign1 && *Sign0 == *Sign1;
++      };
++      if (II->getFastMathFlags().noSignedZeros() || SameSign())
++        return BinaryOperator::CreateFMulFMF(Src0, Src1, II);
++    }
+ 
+     // fma x, -1.0, y -> fsub y, x
+     if (match(Src1, m_SpecificFP(-1.0)))
+diff --git a/llvm/test/Transforms/InstCombine/fma.ll b/llvm/test/Transforms/InstCombine/fma.ll
+index 28ed96fa42499..8e92c252638c9 100644
+--- a/llvm/test/Transforms/InstCombine/fma.ll
++++ b/llvm/test/Transforms/InstCombine/fma.ll
+@@ -445,6 +445,87 @@ define float @fmuladd_x_y_0_nsz(float %x, float %y) {
+   ret float %fma
+ }
+ 
++define float @fma_x_x_0(float %x) {
++; CHECK-LABEL: @fma_x_x_0(
++; CHECK-NEXT:    [[FMA:%.*]] = fmul float [[X:%.*]], [[X]]
++; CHECK-NEXT:    ret float [[FMA]]
++;
++  %fma = call float @llvm.fma.f32(float %x, float %x, float 0.0)
++  ret float %fma
++}
++
++define float @fmuladd_x_x_0(float %x) {
++; CHECK-LABEL: @fmuladd_x_x_0(
++; CHECK-NEXT:    [[FMA:%.*]] = fmul float [[X:%.*]], [[X]]
++; CHECK-NEXT:    ret float [[FMA]]
++;
++  %fma = call float @llvm.fmuladd.f32(float %x, float %x, float 0.0)
++  ret float %fma
++}
++
++define <8 x half> @fma_x_x_0_v(<8 x half> %x) {
++; CHECK-LABEL: @fma_x_x_0_v(
++; CHECK-NEXT:    [[FMA:%.*]] = fmul <8 x half> [[X:%.*]], [[X]]
++; CHECK-NEXT:    ret <8 x half> [[FMA]]
++;
++  %fma = call <8 x half> @llvm.fma.v8f16(<8 x half> %x, <8 x half> %x, <8 x half> zeroinitializer)
++  ret <8 x half> %fma
++}
++
++define float @fma_fabs_x_fabs_y_0(float %x, float %y) {
++; CHECK-LABEL: @fma_fabs_x_fabs_y_0(
++; CHECK-NEXT:    [[Y:%.*]] = fmul float [[X:%.*]], [[Y1:%.*]]
++; CHECK-NEXT:    [[AY:%.*]] = call float @llvm.fabs.f32(float [[Y]])
++; CHECK-NEXT:    ret float [[AY]]
++;
++  %ax = call float @llvm.fabs.f32(float %x)
++  %ay = call float @llvm.fabs.f32(float %y)
++  %fma = call float @llvm.fma.f32(float %ax, float %ay, float 0.0)
++  ret float %fma
++}
++
++define float @fma_nabs_x_nabs_y_0(float %x, float %y) {
++; CHECK-LABEL: @fma_nabs_x_nabs_y_0(
++; CHECK-NEXT:    [[Y:%.*]] = fmul float [[X:%.*]], [[Y1:%.*]]
++; CHECK-NEXT:    [[AY:%.*]] = call float @llvm.fabs.f32(float [[Y]])
++; CHECK-NEXT:    ret float [[AY]]
++;
++  %ax = call float @llvm.fabs.f32(float %x)
++  %ay = call float @llvm.fabs.f32(float %y)
++  %nx = fneg float %ax
++  %ny = fneg float %ay
++  %fma = call float @llvm.fma.f32(float %nx, float %ny, float 0.0)
++  ret float %fma
++}
++
++; The product of a positive and a negative operand can be -0.0.
++define float @fma_fabs_x_nabs_y_0(float %x, float %y) {
++; CHECK-LABEL: @fma_fabs_x_nabs_y_0(
++; CHECK-NEXT:    [[AX:%.*]] = call float @llvm.fabs.f32(float [[X:%.*]])
++; CHECK-NEXT:    [[AY:%.*]] = call float @llvm.fabs.f32(float [[Y:%.*]])
++; CHECK-NEXT:    [[NY:%.*]] = fneg float [[AY]]
++; CHECK-NEXT:    [[FMA:%.*]] = call float @llvm.fma.f32(float [[AX]], float [[NY]], float 0.000000e+00)
++; CHECK-NEXT:    ret float [[FMA]]
++;
++  %ax = call float @llvm.fabs.f32(float %x)
++  %ay = call float @llvm.fabs.f32(float %y)
++  %ny = fneg float %ay
++  %fma = call float @llvm.fma.f32(float %ax, float %ny, float 0.0)
++  ret float %fma
++}
++
++; Only one sign known.
++define float @fma_fabs_x_y_0(float %x, float %y) {
++; CHECK-LABEL: @fma_fabs_x_y_0(
++; CHECK-NEXT:    [[AX:%.*]] = call float @llvm.fabs.f32(float [[X:%.*]])
++; CHECK-NEXT:    [[FMA:%.*]] = call float @llvm.fma.f32(float [[AX]], float [[Y:%.*]], float 0.000000e+00)
++; CHECK-NEXT:    ret float [[FMA]]
++;
++  %ax = call float @llvm.fabs.f32(float %x)
++  %fma = call float @llvm.fma.f32(float %ax, float %y, float 0.0)
++  ret float %fma
++}
++
+ define float @fma_x_y_m0(float %x, float %y) {
+ ; CHECK-LABEL: @fma_x_y_m0(
+ ; CHECK-NEXT:    [[FMA:%.*]] = fmul float [[X:%.*]], [[Y:%.*]]
