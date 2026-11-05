@@ -205,12 +205,14 @@ _ZNK8NArchive3N7z16CArchiveDatabase7IsEmptyEv.exit.thread: ; preds = %bb.e
 bb.g:                                             ; preds = %_ZNK8NArchive3N7z16CArchiveDatabase7IsEmptyEv.exit.thread
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 12
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !76
-  %11 = icmp ne i32 %i.ar, 0
+  %11 = icmp eq i32 %i.ar, 0
   %i.as = getelementptr inbounds nuw i8, ptr %2, i64 68
-  %i.at = load i8, ptr %i.as, align 4, !range !62
+  %i.at = load i8, ptr %i.as, align 4, !tbaa !107, !range !62
   %i.au = trunc nuw i8 %i.at to i1                ; 2 uses
-  %.not98 = select i1 %11, i1 true, i1 %i.au
-  br i1 %.not98, label %bb.h, label %.thread
+  br i1 %11, label %_ZNK8NArchive3N7z22CCompressionMethodMode7IsEmptyEv.exit, label %bb.h
+
+_ZNK8NArchive3N7z22CCompressionMethodMode7IsEmptyEv.exit: ; preds = %bb.g
+  br i1 %i.au, label %bb.j, label %.thread
 
 bb.h:                                             ; preds = %bb.g
   br i1 %i.au, label %bb.j, label %bb.i
@@ -220,12 +222,12 @@ bb.i:                                             ; preds = %bb.h
   %i.aw = trunc nuw i8 %i.av to i1
   br i1 %i.aw, label %bb.j, label %.thread
 
-bb.j:                                             ; preds = %bb.i, %bb.h
+bb.j:                                             ; preds = %_ZNK8NArchive3N7z22CCompressionMethodMode7IsEmptyEv.exit, %bb.i, %bb.h
   br label %.thread
 
-.thread:                                          ; preds = %bb.g, %_ZNK8NArchive3N7z16CArchiveDatabase7IsEmptyEv.exit.thread, %bb.i, %bb.j
-  %.06490 = phi ptr [ %2, %bb.j ], [ %2, %bb.i ], [ null, %_ZNK8NArchive3N7z16CArchiveDatabase7IsEmptyEv.exit.thread ], [ null, %bb.g ] ; 5 uses
-  %.053 = phi i1 [ true, %bb.j ], [ false, %bb.i ], [ false, %_ZNK8NArchive3N7z16CArchiveDatabase7IsEmptyEv.exit.thread ], [ false, %bb.g ] ; 2 uses
+.thread:                                          ; preds = %_ZNK8NArchive3N7z22CCompressionMethodMode7IsEmptyEv.exit, %_ZNK8NArchive3N7z16CArchiveDatabase7IsEmptyEv.exit.thread, %bb.i, %bb.j
+  %.06490 = phi ptr [ %2, %bb.j ], [ %2, %bb.i ], [ null, %_ZNK8NArchive3N7z16CArchiveDatabase7IsEmptyEv.exit.thread ], [ null, %_ZNK8NArchive3N7z22CCompressionMethodMode7IsEmptyEv.exit ] ; 5 uses
+  %.053 = phi i1 [ true, %bb.j ], [ false, %bb.i ], [ false, %_ZNK8NArchive3N7z16CArchiveDatabase7IsEmptyEv.exit.thread ], [ false, %_ZNK8NArchive3N7z22CCompressionMethodMode7IsEmptyEv.exit ] ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 8 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 120
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !46

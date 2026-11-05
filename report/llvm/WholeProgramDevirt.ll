@@ -205,15 +205,20 @@ _ZNSt14_Function_baseD2Ev.exit:                   ; preds = %_ZN4llvm9MapVectorI
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, argmem: none, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local noundef zeroext i1 @_ZN4llvm25hasWholeProgramVisibilityEb(i1 noundef zeroext %0) local_unnamed_addr #5 {
-bb.a:
-  %1 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvmL22WholeProgramVisibilityE, i64 120), align 8, !range !78
-  %2 = trunc nuw i8 %1 to i1
-  %or.cond = select i1 %0, i1 true, i1 %2
-  %i.a = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvmL29DisableWholeProgramVisibilityE, i64 120), align 8, !range !78
+  %2 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvmL22WholeProgramVisibilityE, i64 120), align 8, !range !78
+  %3 = trunc nuw i8 %2 to i1
+  %or.cond = select i1 %0, i1 true, i1 %3
+  br i1 %or.cond, label %bb.a, label %4
+
+bb.a:                                             ; preds = %1
+  %i.a = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN4llvmL29DisableWholeProgramVisibilityE, i64 120), align 8, !tbaa !164, !range !78, !noundef !79
   %i.b = trunc nuw i8 %i.a to i1
   %i.c = xor i1 %i.b, true
-  %3 = select i1 %or.cond, i1 %i.c, i1 false
-  ret i1 %3
+  br label %4
+
+4:                                                ; preds = %1, %bb.a
+  %5 = phi i1 [ false, %1 ], [ %i.c, %bb.a ]
+  ret i1 %5
 }
 
 ; Function Attrs: mustprogress nounwind uwtable

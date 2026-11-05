@@ -204,67 +204,74 @@ bb.t:                                             ; preds = %_RNCNvNtCsbNLsQi0Ju
   %i.oa = trunc nuw i8 %i.nz to i1                ; 2 uses
   %or.cond = select i1 %i.nx, i1 true, i1 %i.oa   ; 2 uses
   %i.ob = getelementptr inbounds nuw i8, ptr %7, i64 574 ; 2 uses
-  %10 = load i8, ptr %i.ob, align 2, !range !8
-  %11 = trunc nuw i8 %10 to i1                    ; 2 uses
-  %or.cond5 = select i1 %or.cond, i1 true, i1 %11
-  %12 = getelementptr inbounds nuw i8, ptr %7, i64 591
-  %i.oc = load i8, ptr %12, align 1, !range !8
+  %i.oc = load i8, ptr %i.ob, align 2, !range !8
   %i.od = trunc nuw i8 %i.oc to i1                ; 2 uses
-  %i.oe = select i1 %or.cond5, i1 true, i1 %i.od  ; 2 uses
+  %i.oe = select i1 %or.cond, i1 true, i1 %i.od
+  br i1 %i.oe, label %16, label %11
+
+.loopexit1399:                                    ; preds = %bb.n, %.lr.ph.i.i, %_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsbNLsQi0JuJ4_5tgrep.exit.i.i
+  store i64 %i.my, ptr %i.ni, align 8, !noalias !868
+  %10 = getelementptr inbounds nuw i8, ptr %i.da, i64 24
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %10, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false), !noalias !870
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !868
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.da, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false), !noalias !870
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !867
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.lv, ptr noundef nonnull align 8 dereferenceable(48) %i.da, i64 48, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.da)
+  br label %bb.t
+
+11:                                               ; preds = %bb.t
+  %12 = getelementptr inbounds nuw i8, ptr %7, i64 591
+  %13 = load i8, ptr %12, align 1, !range !8, !noundef !6
+  %14 = trunc nuw i8 %13 to i1
+  %15 = xor i1 %14, true
+  br label %16
+
+16:                                               ; preds = %bb.t, %11
+  %.sroa.027.0 = phi i1 [ %15, %11 ], [ false, %bb.t ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.lu)
-  %13 = getelementptr inbounds nuw i8, ptr %7, i64 619
-  %14 = load i8, ptr %13, align 1, !range !11, !alias.scope !870, !noundef !6
-  %15 = invoke noundef zeroext i1 @_RNvMs_NtCsbNLsQi0JuJ4_5tgrep6outputNtB4_9ColorMode10is_enabled(i8 noundef %14)
+  %17 = getelementptr inbounds nuw i8, ptr %7, i64 619
+  %18 = load i8, ptr %17, align 1, !range !11, !alias.scope !871, !noundef !6
+  %19 = invoke noundef zeroext i1 @_RNvMs_NtCsbNLsQi0JuJ4_5tgrep6outputNtB4_9ColorMode10is_enabled(i8 noundef %18)
           to label %.noexc871 unwind label %bb.w
 
-.noexc871:                                        ; preds = %bb.t
-  br i1 %15, label %bb.x, label %bb.u
+.noexc871:                                        ; preds = %16
+  br i1 %19, label %bb.x, label %bb.u
 
 bb.u:                                             ; preds = %.noexc871
   %i.of = getelementptr inbounds nuw i8, ptr %7, i64 578
-  %i.og = load i8, ptr %i.of, align 2, !range !8, !alias.scope !870, !noundef !6
+  %i.og = load i8, ptr %i.of, align 2, !range !8, !alias.scope !871, !noundef !6
   %i.oh = trunc nuw i8 %i.og to i1
   %i.oi = getelementptr inbounds nuw i8, ptr %7, i64 579
-  %i.oj = load i8, ptr %i.oi, align 1, !range !8, !alias.scope !870
+  %i.oj = load i8, ptr %i.oi, align 1, !range !8, !alias.scope !871
   %i.ok = trunc nuw i8 %i.oj to i1
   %or.cond.i = select i1 %i.oh, i1 true, i1 %i.ok
   %i.ol = getelementptr inbounds nuw i8, ptr %7, i64 604
-  %i.om = load i8, ptr %i.ol, align 4, !range !8, !alias.scope !870
+  %i.om = load i8, ptr %i.ol, align 4, !range !8, !alias.scope !871
   %i.on = trunc nuw i8 %i.om to i1
   %or.cond5.i = select i1 %or.cond.i, i1 true, i1 %i.on
   %or.cond8.i = select i1 %or.cond5.i, i1 true, i1 %i.oa
   %i.oo = getelementptr inbounds nuw i8, ptr %7, i64 584
-  %i.op = load i8, ptr %i.oo, align 8, !range !8, !alias.scope !870
+  %i.op = load i8, ptr %i.oo, align 8, !range !8, !alias.scope !871
   %i.oq = trunc nuw i8 %i.op to i1
   %or.cond11.i = select i1 %or.cond8.i, i1 true, i1 %i.oq
   %i.or = getelementptr inbounds nuw i8, ptr %7, i64 496
-  %i.os = load i64, ptr %i.or, align 8, !range !15, !alias.scope !870
+  %i.os = load i64, ptr %i.or, align 8, !range !15, !alias.scope !871
   %.not.i = icmp ne i64 %i.os, -1
   %or.cond13.not.i = select i1 %or.cond11.i, i1 true, i1 %.not.i
   br i1 %or.cond13.not.i, label %bb.x, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
   %i.ot = getelementptr inbounds nuw i8, ptr %7, i64 580
-  %i.ou = load i8, ptr %i.ot, align 4, !range !8, !alias.scope !870, !noundef !6
+  %i.ou = load i8, ptr %i.ot, align 4, !range !8, !alias.scope !871, !noundef !6
   br label %bb.x
-
-.loopexit1399:                                    ; preds = %bb.n, %.lr.ph.i.i, %_RNvMs5_NtCsgCecv3eZDcN_5alloc7raw_vecNtB5_11RawVecInner16with_capacity_inCsbNLsQi0JuJ4_5tgrep.exit.i.i
-  store i64 %i.my, ptr %i.ni, align 8, !noalias !868
-  %16 = getelementptr inbounds nuw i8, ptr %i.da, i64 24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %16, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false), !noalias !871
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !868
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.da, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false), !noalias !871
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !867
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.lv, ptr noundef nonnull align 8 dereferenceable(48) %i.da, i64 48, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.da)
-  br label %bb.t
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs6MoqnCnVQOT_10serde_json3map3MapNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtBG_5value5ValueEECsbNLsQi0JuJ4_5tgrep.exit: ; preds = %bb.y, %.body, %bb.w
   %.pn710.pn = phi { ptr, i32 } [ %.pn705, %.body ], [ %i.ov, %bb.w ], [ %.pn710, %bb.y ]
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCsgCecv3eZDcN_5alloc3vec3VecNtNtBG_6string6StringEECsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef align 8 dereferenceable(24) %i.lw) #22
           to label %.body1059 unwind label %bb.xu
 
-bb.w:                                             ; preds = %bb.t, %bb.aew, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderRNtNtNtCs5Xr050g3D4S_3std3net3tcp9TcpStreamEECsbNLsQi0JuJ4_5tgrep.exit1051
+bb.w:                                             ; preds = %16, %bb.aew, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderRNtNtNtCs5Xr050g3D4S_3std3net3tcp9TcpStreamEECsbNLsQi0JuJ4_5tgrep.exit1051
   %i.ov = landingpad { ptr, i32 }
           cleanup
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtCs6MoqnCnVQOT_10serde_json3map3MapNtNtCsgCecv3eZDcN_5alloc6string6StringNtNtBG_5value5ValueEECsbNLsQi0JuJ4_5tgrep.exit
@@ -667,10 +674,10 @@ bb.hq:                                            ; preds = %bb.ho
   call void @llvm.lifetime.start.p0(ptr nonnull %i.is)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ir)
   %i.abq = getelementptr inbounds nuw i8, ptr %7, i64 578 ; 2 uses
-  %.val861 = load i8, ptr %i.abq, align 2
   %i.abr = getelementptr inbounds nuw i8, ptr %7, i64 584
   %.val862 = load i8, ptr %i.abr, align 8, !range !8, !noundef !6
   %i.abs = trunc nuw i8 %.val862 to i1
+  %.val861 = load i8, ptr %i.abq, align 2
   %i.abt = and i8 %.val861, 1
   %i.abu = xor i8 %i.abt, 1
   %i.abv = select i1 %i.abs, i8 %i.abu, i8 0
@@ -765,7 +772,7 @@ bb.ib:                                            ; preds = %bb.hz
   call void @llvm.lifetime.start.p0(ptr nonnull %i.io)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.in)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.im)
-  br i1 %i.oe, label %_RNvMs0_NtCsbNLsQi0JuJ4_5tgrep6searchNtB5_13SearchOptions9after_ctx.exit, label %bb.ic
+  br i1 %.sroa.027.0, label %bb.ic, label %_RNvMs0_NtCsbNLsQi0JuJ4_5tgrep6searchNtB5_13SearchOptions9after_ctx.exit
 
 bb.ic:                                            ; preds = %bb.ib
   %i.acn = getelementptr inbounds nuw i8, ptr %7, i64 16
@@ -876,7 +883,7 @@ bb.io:                                            ; preds = %bb.im
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ij)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ii)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ih)
-  br i1 %i.oe, label %_RNvMs0_NtCsbNLsQi0JuJ4_5tgrep6searchNtB5_13SearchOptions10before_ctx.exit, label %bb.ip
+  br i1 %.sroa.027.0, label %bb.ip, label %_RNvMs0_NtCsbNLsQi0JuJ4_5tgrep6searchNtB5_13SearchOptions10before_ctx.exit
 
 bb.ip:                                            ; preds = %bb.io
   %i.adk = getelementptr inbounds nuw i8, ptr %7, i64 32
@@ -1279,7 +1286,10 @@ bb.uk:                                            ; preds = %bb.uf, %bb.vm
   %i.awh = icmp ult i64 %i.awg, 288230376151711744
   call void @llvm.assume(i1 %i.awh)
   %i.awi = icmp ne i64 %i.awg, 0                  ; 2 uses
-  br i1 %i.od, label %.loopexit1359, label %bb.vn
+  %20 = getelementptr inbounds nuw i8, ptr %7, i64 591
+  %21 = load i8, ptr %20, align 1, !range !8, !noundef !6
+  %22 = trunc nuw i8 %21 to i1
+  br i1 %22, label %.loopexit1359, label %bb.vn
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3set7HashSetNtNtCsgCecv3eZDcN_5alloc6string6StringEECsbNLsQi0JuJ4_5tgrep.exit: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapRejEECsbNLsQi0JuJ4_5tgrep.exit, %bb.ul
   %.sroa.0298.1 = phi i8 [ %.sroa.0298.2, %bb.ul ], [ %.sroa.0298.3, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3map7HashMapRejEECsbNLsQi0JuJ4_5tgrep.exit ]
@@ -1534,7 +1544,7 @@ bb.vm:                                            ; preds = %_RINvNtCsf3Ta7LF998
   br label %bb.uk
 
 bb.vn:                                            ; preds = %bb.uk
-  br i1 %11, label %bb.vp, label %bb.vo
+  br i1 %i.od, label %bb.vp, label %bb.vo
 
 .loopexit1359:                                    ; preds = %bb.xy, %bb.vr, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtNtNtCs5Xr050g3D4S_3std11collections4hash3set7HashSetNtNtCsgCecv3eZDcN_5alloc6string6StringEECsbNLsQi0JuJ4_5tgrep.exit1036, %bb.abq, %bb.uk
   %i.ayf = load i8, ptr %i.aqr, align 4, !range !8, !noundef !6
@@ -1937,8 +1947,8 @@ begin_hunk_3_@llvm.experimental.noalias.scope.decl
 !867 = !{!558, !557}
 !868 = !{!561, !560, !558, !557}
 !869 = !{!561, !558, !557}
-!870 = !{!563}
-!871 = !{!557}
+!870 = !{!557}
+!871 = !{!563}
 !872 = !{!565}
 !873 = !{!566}
 !874 = !{!565, !566, !567}

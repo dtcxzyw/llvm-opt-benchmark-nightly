@@ -204,34 +204,45 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local noundef zeroext i1 @_ZNK4Luau8Property8isSharedEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(176) %0) local_unnamed_addr #12 align 2 {
 bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.b = load i8, ptr %i.a, align 8, !tbaa !170, !range !55, !noundef !56
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 168
   %i.e = load i8, ptr %i.d, align 8, !range !55
   %i.f = trunc nuw i8 %i.e to i1
-  %or.cond = select i1 %i.c, i1 %i.f, i1 false
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 160
-  %3 = load ptr, ptr %1, align 8
+  %i.g = select i1 %i.c, i1 %i.f, i1 false
+  br i1 %i.g, label %1, label %7
+
+1:                                                ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 144
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 160
   %4 = load ptr, ptr %2, align 8
-  %5 = icmp eq ptr %3, %4
-  %i.g = select i1 %or.cond, i1 %5, i1 false
-  ret i1 %i.g
+  %5 = load ptr, ptr %3, align 8
+  %6 = icmp eq ptr %4, %5
+  br label %7
+
+7:                                                ; preds = %1, %bb.a
+  %8 = phi i1 [ %6, %1 ], [ false, %bb.a ]
+  ret i1 %8
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local noundef zeroext i1 @_ZNK4Luau8Property10isReadOnlyEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(176) %0) local_unnamed_addr #12 align 2 {
-bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 152
-  %2 = load i8, ptr %1, align 8, !tbaa !170, !range !55, !noundef !56
-  %3 = trunc nuw i8 %2 to i1
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 152
+  %3 = load i8, ptr %2, align 8, !tbaa !170, !range !55, !noundef !56
+  %4 = trunc nuw i8 %3 to i1
+  br i1 %4, label %bb.a, label %5
+
+bb.a:                                             ; preds = %1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %i.b = load i8, ptr %i.a, align 8, !range !55
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !170, !range !55, !noundef !56
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = xor i1 %i.c, true
-  %4 = select i1 %3, i1 %i.d, i1 false
-  ret i1 %4
+  br label %5
+
+5:                                                ; preds = %bb.a, %1
+  %6 = phi i1 [ false, %1 ], [ %i.d, %bb.a ]
+  ret i1 %6
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable

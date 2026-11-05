@@ -205,21 +205,22 @@ bb.c:                                             ; preds = %bb.b
   tail call void @llvm.experimental.noalias.scope.decl(metadata !41596)
   %i.ba = load atomic i32, ptr @_RNvNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled7ENABLED acquire, align 4, !noalias !41596
   %i.bb = icmp eq i32 %i.ba, 0
-  br i1 %i.bb, label %bb.e, label %bb.d, !prof !109
+  br i1 %i.bb, label %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit.i, label %bb.d, !prof !109
 
 bb.d:                                             ; preds = %bb.c
   invoke fastcc void @_RINvMNtNtCsgczF5crJ4sT_3std4sync9once_lockINtB3_8OnceLockbE10initializeNCINvB2_11get_or_initNCNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled0E0zEB1A_()
-          to label %bb.e unwind label %bb.g
+          to label %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit.i unwind label %bb.g
 
-bb.e:                                             ; preds = %bb.c, %bb.d
+_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit.i: ; preds = %bb.d, %bb.c
   %2 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled7ENABLED, i64 4), align 4, !range !106, !noalias !41596, !noundef !97
   %3 = trunc nuw i8 %2 to i1
+  br i1 %3, label %bb.e, label %common.ret
+
+bb.e:                                             ; preds = %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit.i
   %i.bc = getelementptr inbounds nuw i8, ptr %i.at, i64 121
-  %i.bd = load i8, ptr %i.bc, align 1, !range !106, !alias.scope !41596
+  %i.bd = load i8, ptr %i.bc, align 1, !range !106, !alias.scope !41596, !noundef !97
   %i.be = trunc nuw i8 %i.bd to i1
-  %not. = xor i1 %3, true
-  %4 = select i1 %not., i1 true, i1 %i.be
-  br i1 %4, label %common.ret, label %bb.f
+  br i1 %i.be, label %common.ret, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.bf = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
@@ -622,9 +623,9 @@ bb.ab:                                            ; preds = %_RINvNtCscI6d9CVNmL
   call void @_RNvCs9hJ03s5DiqP_7___rustc14___rust_dealloc(ptr noundef nonnull %.val1.i.i, i64 noundef %.val.i.i, i64 noundef range(i64 1, -9223372036854775807) 1) #76, !noalias !41674
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs3PfUT229lOd_12object_store4path4PathECs9KQ7US1M400_11lance_table.exit
 
-common.ret:                                       ; preds = %bb.jx, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VechEECs9KQ7US1M400_11lance_table.exit51, %bb.b, %bb.e, %bb.jh
-  %storemerge = phi i8 [ 3, %bb.jh ], [ 1, %bb.b ], [ 1, %bb.e ], [ 1, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VechEECs9KQ7US1M400_11lance_table.exit51 ], [ 1, %bb.jx ]
-  %common.ret.op = phi i1 [ true, %bb.jh ], [ false, %bb.b ], [ false, %bb.e ], [ false, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VechEECs9KQ7US1M400_11lance_table.exit51 ], [ false, %bb.jx ]
+common.ret:                                       ; preds = %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit.i, %bb.jx, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VechEECs9KQ7US1M400_11lance_table.exit51, %bb.b, %bb.e, %bb.jh
+  %storemerge = phi i8 [ 3, %bb.jh ], [ 1, %bb.jx ], [ 1, %bb.e ], [ 1, %bb.b ], [ 1, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VechEECs9KQ7US1M400_11lance_table.exit51 ], [ 1, %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit.i ]
+  %common.ret.op = phi i1 [ true, %bb.jh ], [ false, %bb.jx ], [ false, %bb.e ], [ false, %bb.b ], [ false, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VechEECs9KQ7US1M400_11lance_table.exit51 ], [ false, %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit.i ]
   store i8 %storemerge, ptr %i.ar, align 8
   ret i1 %common.ret.op
 
@@ -1027,8 +1028,8 @@ bb.ck:                                            ; preds = %bb.a
   ]
 
 bb.cl:                                            ; preds = %.thread, %bb.ck
-  %i.kg = phi ptr [ %i.cm, %.thread ], [ %i.kf, %bb.ck ] ; 7 uses
-  %i.kh = phi ptr [ %i.cl, %.thread ], [ %i.ke, %bb.ck ] ; 7 uses
+  %i.kg = phi ptr [ %i.cm, %.thread ], [ %i.kf, %bb.ck ] ; 8 uses
+  %i.kh = phi ptr [ %i.cl, %.thread ], [ %i.ke, %bb.ck ] ; 8 uses
   %i.ki = getelementptr inbounds nuw i8, ptr %1, i64 344 ; 3 uses
   %i.kj = load ptr, ptr %i.kh, align 8, !noalias !43602, !nonnull !97, !align !102, !noundef !97 ; 2 uses
   store ptr %i.kj, ptr %i.ki, align 8, !noalias !43602
@@ -1047,11 +1048,16 @@ bb.cn:                                            ; preds = %bb.cm
   call void @llvm.experimental.noalias.scope.decl(metadata !43604)
   %i.kp = load atomic i32, ptr @_RNvNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled7ENABLED acquire, align 4, !noalias !43605
   %i.kq = icmp eq i32 %i.kp, 0
-  br i1 %i.kq, label %bb.cr, label %bb.co, !prof !109
+  br i1 %i.kq, label %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit.i.i, label %bb.co, !prof !109
 
 bb.co:                                            ; preds = %bb.cn
   invoke fastcc void @_RINvMNtNtCsgczF5crJ4sT_3std4sync9once_lockINtB3_8OnceLockbE10initializeNCINvB2_11get_or_initNCNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled0E0zEB1A_()
-          to label %bb.cr unwind label %bb.cq, !noalias !43603
+          to label %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit.i.i unwind label %bb.cq, !noalias !43603
+
+_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit.i.i: ; preds = %bb.co, %bb.cn
+  %3 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled7ENABLED, i64 4), align 4, !range !106, !noalias !43605, !noundef !97
+  %4 = trunc nuw i8 %3 to i1
+  br i1 %4, label %bb.cr, label %.thread.i
 
 bb.cp:                                            ; preds = %bb.cm
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y), !noalias !43602
@@ -1066,15 +1072,11 @@ bb.cq:                                            ; preds = %bb.if, %bb.dg, %bb.
           cleanup
   br label %bb.dj
 
-bb.cr:                                            ; preds = %bb.co, %bb.cn
-  %3 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled7ENABLED, i64 4), align 4, !range !106, !noalias !43605, !noundef !97
-  %4 = trunc nuw i8 %3 to i1
+bb.cr:                                            ; preds = %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit.i.i
   %i.kv = getelementptr inbounds nuw i8, ptr %i.ko, i64 121
-  %i.kw = load i8, ptr %i.kv, align 1, !range !106, !alias.scope !43604, !noalias !43603
+  %i.kw = load i8, ptr %i.kv, align 1, !range !106, !alias.scope !43604, !noalias !43603, !noundef !97
   %i.kx = trunc nuw i8 %i.kw to i1
-  %not..i = xor i1 %4, true
-  %5 = select i1 %not..i, i1 true, i1 %i.kx
-  br i1 %5, label %.thread.i, label %bb.cs
+  br i1 %i.kx, label %.thread.i, label %bb.cs
 
 bb.cs:                                            ; preds = %bb.cr
   %i.ky = getelementptr inbounds nuw i8, ptr %1, i64 368
@@ -1206,9 +1208,9 @@ bb.dh:                                            ; preds = %_RINvNtCscI6d9CVNmL
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.47.sroa.11.i, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.3.sroa.9.i, i64 7, i1 false)
   br label %bb.ii
 
-.thread.i:                                        ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCNvNtNtCs9KQ7US1M400_11lance_table2io6commit27read_version_hint_and_probe0EBJ_.exit.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtB4_6option6OptionNtNtNtCs9KQ7US1M400_11lance_table2io6commit16ManifestLocationENtNtNtCsgczF5crJ4sT_3std2io5error5ErrorEEB1p_.exit26.i, %bb.cr
-  %6 = phi ptr [ %i.lh, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCNvNtNtCs9KQ7US1M400_11lance_table2io6commit27read_version_hint_and_probe0EBJ_.exit.i ], [ %i.kg, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtB4_6option6OptionNtNtNtCs9KQ7US1M400_11lance_table2io6commit16ManifestLocationENtNtNtCsgczF5crJ4sT_3std2io5error5ErrorEEB1p_.exit26.i ], [ %i.kg, %bb.cr ]
-  %7 = phi ptr [ %i.li, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCNvNtNtCs9KQ7US1M400_11lance_table2io6commit27read_version_hint_and_probe0EBJ_.exit.i ], [ %i.kh, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtB4_6option6OptionNtNtNtCs9KQ7US1M400_11lance_table2io6commit16ManifestLocationENtNtNtCsgczF5crJ4sT_3std2io5error5ErrorEEB1p_.exit26.i ], [ %i.kh, %bb.cr ]
+.thread.i:                                        ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCNvNtNtCs9KQ7US1M400_11lance_table2io6commit27read_version_hint_and_probe0EBJ_.exit.i, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtB4_6option6OptionNtNtNtCs9KQ7US1M400_11lance_table2io6commit16ManifestLocationENtNtNtCsgczF5crJ4sT_3std2io5error5ErrorEEB1p_.exit26.i, %bb.cr, %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit.i.i
+  %5 = phi ptr [ %i.lh, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCNvNtNtCs9KQ7US1M400_11lance_table2io6commit27read_version_hint_and_probe0EBJ_.exit.i ], [ %i.kg, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtB4_6option6OptionNtNtNtCs9KQ7US1M400_11lance_table2io6commit16ManifestLocationENtNtNtCsgczF5crJ4sT_3std2io5error5ErrorEEB1p_.exit26.i ], [ %i.kg, %bb.cr ], [ %i.kg, %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit.i.i ]
+  %6 = phi ptr [ %i.li, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNCNvNtNtCs9KQ7US1M400_11lance_table2io6commit27read_version_hint_and_probe0EBJ_.exit.i ], [ %i.kh, %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultINtNtB4_6option6OptionNtNtNtCs9KQ7US1M400_11lance_table2io6commit16ManifestLocationENtNtNtCsgczF5crJ4sT_3std2io5error5ErrorEEB1p_.exit26.i ], [ %i.kh, %bb.cr ], [ %i.kh, %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit.i.i ]
   %i.ls = getelementptr inbounds nuw i8, ptr %1, i64 344
   %i.lt = load ptr, ptr %i.ls, align 8, !noalias !43602, !nonnull !97, !align !102, !noundef !97 ; 2 uses
   %i.lu = getelementptr inbounds nuw i8, ptr %1, i64 352
@@ -1283,8 +1285,8 @@ bb.dl:                                            ; preds = %bb.ck
   br label %bb.dm
 
 bb.dm:                                            ; preds = %._crit_edge388, %.thread.i
-  %i.mf = phi ptr [ %6, %.thread.i ], [ %i.kf, %._crit_edge388 ] ; 2 uses
-  %i.mg = phi ptr [ %7, %.thread.i ], [ %i.ke, %._crit_edge388 ] ; 2 uses
+  %i.mf = phi ptr [ %5, %.thread.i ], [ %i.kf, %._crit_edge388 ] ; 2 uses
+  %i.mg = phi ptr [ %6, %.thread.i ], [ %i.ke, %._crit_edge388 ] ; 2 uses
   %i.mh = phi ptr [ %i.lv, %.thread.i ], [ %.pre392, %._crit_edge388 ] ; 2 uses
   %i.mi = phi ptr [ %i.lt, %.thread.i ], [ %.pre390, %._crit_edge388 ] ; 2 uses
   %i.mj = phi ptr [ %.sroa.1046.0..sroa_idx.i, %.thread.i ], [ %.phi.trans.insert.i, %._crit_edge388 ] ; 2 uses
@@ -1687,20 +1689,26 @@ define noundef zeroext i1 @_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit17uses_v
 bb.a:
   %i.a = load atomic i32, ptr @_RNvNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled7ENABLED acquire, align 4
   %i.b = icmp eq i32 %i.a, 0
-  br i1 %i.b, label %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit.a, label %bb.b, !prof !109
+  br i1 %i.b, label %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit, label %bb.b, !prof !109
 
 bb.b:                                             ; preds = %bb.a
   tail call fastcc void @_RINvMNtNtCsgczF5crJ4sT_3std4sync9once_lockINtB3_8OnceLockbE10initializeNCINvB2_11get_or_initNCNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled0E0zEB1A_()
-  br label %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit.a
+  br label %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit
 
-_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit.a: ; preds = %bb.a, %bb.b
+_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit: ; preds = %bb.a, %bb.b
   %1 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_RNvNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled7ENABLED, i64 4), align 4, !range !106, !noundef !97
   %2 = trunc nuw i8 %1 to i1
+  br i1 %2, label %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit.a, label %3
+
+_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit.a: ; preds = %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 121
-  %i.d = load i8, ptr %i.c, align 1, !range !106
+  %i.d = load i8, ptr %i.c, align 1, !range !106, !noundef !97
   %i.e = trunc nuw i8 %i.d to i1
   %i.f = xor i1 %i.e, true
-  %.sroa.0.0 = select i1 %2, i1 %i.f, i1 false
+  br label %3
+
+3:                                                ; preds = %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit, %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit.a
+  %.sroa.0.0 = phi i1 [ %i.f, %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit.a ], [ false, %_RNvNtNtCs9KQ7US1M400_11lance_table2io6commit29version_hint_globally_enabled.exit ]
   ret i1 %.sroa.0.0
 }
 

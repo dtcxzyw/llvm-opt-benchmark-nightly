@@ -204,16 +204,21 @@ _ZN6duckdb9CSVOptionIbE3SetEbb.exit:              ; preds = %bb.a, %bb.b
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef zeroext i1 @_ZNK6duckdb16CSVReaderOptions12IgnoreErrorsEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(1033) %0) local_unnamed_addr #5 align 2 !guid !846 {
-bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 145
-  %2 = load i8, ptr %1, align 1, !tbaa !350, !range !300, !noundef !301
-  %3 = trunc nuw i8 %2 to i1
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 145
+  %3 = load i8, ptr %2, align 1, !tbaa !350, !range !300, !noundef !301
+  %4 = trunc nuw i8 %3 to i1
+  br i1 %4, label %bb.a, label %5
+
+bb.a:                                             ; preds = %1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 147
-  %i.b = load i8, ptr %i.a, align 1, !range !300
+  %i.b = load i8, ptr %i.a, align 1, !tbaa !350, !range !300, !noundef !301
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = xor i1 %i.c, true
-  %4 = select i1 %3, i1 %i.d, i1 false
-  ret i1 %4
+  br label %5
+
+5:                                                ; preds = %bb.a, %1
+  %6 = phi i1 [ false, %1 ], [ %i.d, %bb.a ]
+  ret i1 %6
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable

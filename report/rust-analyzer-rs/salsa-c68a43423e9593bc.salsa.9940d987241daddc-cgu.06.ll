@@ -202,8 +202,8 @@ bb.p:                                             ; preds = %bb.b
           cleanup
   br label %.body
 
-.loopexit.split-lp:                               ; preds = %bb.am, %bb.av, %bb.h, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtCsjpcu9PwIgok_8smallvec8IntoIterATNtNtCsd9Lm8bEdjjY_5salsa3key16DatabaseKeyIndexNtNtB1g_5cycle14IterationStampEj4_EEB1g_.exit.i, %bb.x, %.noexc30, %6, %bb.ar, %bb.as, %bb.at, %.noexc39, %bb.au
-  %.sroa.07.2.ph = phi i1 [ true, %bb.as ], [ true, %bb.ar ], [ true, %6 ], [ true, %.noexc39 ], [ true, %.noexc30 ], [ true, %bb.x ], [ true, %bb.h ], [ true, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtCsjpcu9PwIgok_8smallvec8IntoIterATNtNtCsd9Lm8bEdjjY_5salsa3key16DatabaseKeyIndexNtNtB1g_5cycle14IterationStampEj4_EEB1g_.exit.i ], [ true, %bb.at ], [ true, %bb.am ], [ true, %bb.au ], [ false, %bb.av ]
+.loopexit.split-lp:                               ; preds = %bb.am, %bb.av, %bb.h, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtCsjpcu9PwIgok_8smallvec8IntoIterATNtNtCsd9Lm8bEdjjY_5salsa3key16DatabaseKeyIndexNtNtB1g_5cycle14IterationStampEj4_EEB1g_.exit.i, %bb.x, %.noexc30, %7, %bb.ar, %bb.as, %bb.at, %.noexc39, %bb.au
+  %.sroa.07.2.ph = phi i1 [ true, %bb.as ], [ true, %bb.ar ], [ true, %7 ], [ true, %.noexc39 ], [ true, %.noexc30 ], [ true, %bb.x ], [ true, %bb.h ], [ true, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtCsjpcu9PwIgok_8smallvec8IntoIterATNtNtCsd9Lm8bEdjjY_5salsa3key16DatabaseKeyIndexNtNtB1g_5cycle14IterationStampEj4_EEB1g_.exit.i ], [ true, %bb.at ], [ true, %bb.am ], [ true, %bb.au ], [ false, %bb.av ]
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.body
@@ -380,7 +380,7 @@ _RNCNvMs4_NtCsd9Lm8bEdjjY_5salsa5cycleNtB7_10CycleHeads11iter_not_eq0B9_.exit.th
   %i.dn = zext i32 %i.dm to i64                   ; 3 uses
   %i.do = load i64, ptr %i.cz, align 8, !noalias !214, !noundef !42 ; 2 uses
   %i.dp = icmp ugt i64 %i.do, %i.dn
-  br i1 %i.dp, label %bb.aa, label %6
+  br i1 %i.dp, label %bb.aa, label %7
 
 bb.aa:                                            ; preds = %_RNCNvMs4_NtCsd9Lm8bEdjjY_5salsa5cycleNtB7_10CycleHeads11iter_not_eq0B9_.exit.thread.i.i.i
   %i.dq = load ptr, ptr %i.da, align 8, !noalias !214, !nonnull !42, !noundef !42
@@ -393,13 +393,24 @@ bb.aa:                                            ; preds = %_RNCNvMs4_NtCsd9Lm8
   %i.dw = getelementptr inbounds nuw i8, ptr %i.du, i64 96
   %i.dx = load ptr, ptr %i.dw, align 8, !invariant.load !42, !noalias !213, !nonnull !42
   invoke void %i.dx(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.d, ptr noundef nonnull %i.ds, ptr noundef nonnull align 8 %1, i32 noundef %i.dv, i32 noundef %i.df) #23
-          to label %.noexc32.a unwind label %.loopexit, !inline_history !184
+          to label %.noexc32 unwind label %.loopexit, !inline_history !184
 
-.noexc32.a:                                       ; preds = %bb.aa
+.noexc32:                                         ; preds = %bb.aa
   %5 = load i8, ptr %i.d, align 8, !range !45, !noalias !214, !noundef !42 ; 2 uses
+  %6 = icmp eq i8 %5, 2
+  br i1 %6, label %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCsd9Lm8bEdjjY_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.i.i, label %.noexc32.a
+
+7:                                                ; preds = %_RNCNvMs4_NtCsd9Lm8bEdjjY_5salsa5cycleNtB7_10CycleHeads11iter_not_eq0B9_.exit.thread.i.i.i
+  invoke void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.dn, i64 noundef %i.do, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #22
+          to label %.noexc33 unwind label %.loopexit.split-lp
+
+.noexc33:                                         ; preds = %7
+  unreachable
+
+.noexc32.a:                                       ; preds = %.noexc32
   %.val2.i.i.i.i.i = load ptr, ptr %i.db, align 8, !noalias !214 ; 5 uses
   %i.dy = icmp eq i8 %5, 0
-  br i1 %i.dy, label %bb.ab, label %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCsd9Lm8bEdjjY_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.i.i
+  br i1 %i.dy, label %bb.ab, label %.noexc33.a
 
 bb.ab:                                            ; preds = %.noexc32.a
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2.i.i.i.i.i) ]
@@ -454,25 +465,19 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ae, %bb.
 
 _RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCsd9Lm8bEdjjY_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.thread.i.i: ; preds = %bb.af, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs8E1BR24LTvI_8lock_api5mutex10MutexGuardNtNtCsaWIbZW7RmAr_11parking_lot9raw_mutex8RawMutexNtNtNtCsd9Lm8bEdjjY_5salsa7runtime16dependency_graph15DependencyGraphEEB2f_.exit.i.i.i.i.i.i.i.i.i
   call void @_RNvCsiZ68L5R9VjM_7___rustc14___rust_dealloc(ptr noundef nonnull %.val2.i.i.i.i.i, i64 noundef 48, i64 noundef 8) #21, !noalias !213
+  br label %.noexc33.a
+
+.noexc33.a:                                       ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCsd9Lm8bEdjjY_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.thread.i.i, %.noexc32.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !214
   br label %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6filter15filter_try_foldRNtNtCsd9Lm8bEdjjY_5salsa5cycle9CycleHeaduINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs4_B18_NtB18_10CycleHeads11iter_not_eq0NCINvNvNtNtNtB8_6traits12double_ended19DoubleEndedIterator5rfind5checkB15_NCNvNtNtB1a_8function7execute11outer_cycles_0E0E0B1a_.exit.i.i
 
-6:                                                ; preds = %_RNCNvMs4_NtCsd9Lm8bEdjjY_5salsa5cycleNtB7_10CycleHeads11iter_not_eq0B9_.exit.thread.i.i.i
-  invoke void @_RNvNtCshzWfHUSfYae_4core9panicking18panic_bounds_check(i64 noundef %i.dn, i64 noundef %i.do, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @6) #22
-          to label %.noexc33.a unwind label %.loopexit.split-lp
-
-.noexc33.a:                                       ; preds = %6
-  unreachable
-
-_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCsd9Lm8bEdjjY_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.i.i: ; preds = %.noexc32.a
-  %i.ej = load i8, ptr %i.dc, align 1, !range !215, !noalias !214
-  %7 = icmp ne i8 %5, 2
+_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCsd9Lm8bEdjjY_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.i.i: ; preds = %.noexc32
+  %i.ej = load i8, ptr %i.dc, align 1, !range !215, !noalias !214, !noundef !42
   %i.ek = trunc nuw i8 %i.ej to i1
-  %.sroa.0.0.i.not.i.i.i.i = select i1 %7, i1 true, i1 %i.ek
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !214
-  br i1 %.sroa.0.0.i.not.i.i.i.i, label %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6filter15filter_try_foldRNtNtCsd9Lm8bEdjjY_5salsa5cycle9CycleHeaduINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs4_B18_NtB18_10CycleHeads11iter_not_eq0NCINvNvNtNtNtB8_6traits12double_ended19DoubleEndedIterator5rfind5checkB15_NCNvNtNtB1a_8function7execute11outer_cycles_0E0E0B1a_.exit.i.i, label %_RINvYNtNtCsd9Lm8bEdjjY_5salsa5cycle18CycleHeadsIteratorNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNtNtBX_8adapters6filter15filter_try_foldRNtB5_9CycleHeaduINtNtNtBZ_3ops12control_flow11ControlFlowB2X_ENCNvMs4_B5_NtB5_10CycleHeads11iter_not_eq0NCINvNvBR_5rfind5checkB2X_NCNvNtNtB7_8function7execute11outer_cycles_0E0E0B3e_EB7_.exit.i
+  br i1 %i.ek, label %_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6filter15filter_try_foldRNtNtCsd9Lm8bEdjjY_5salsa5cycle9CycleHeaduINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs4_B18_NtB18_10CycleHeads11iter_not_eq0NCINvNvNtNtNtB8_6traits12double_ended19DoubleEndedIterator5rfind5checkB15_NCNvNtNtB1a_8function7execute11outer_cycles_0E0E0B1a_.exit.i.i, label %_RINvYNtNtCsd9Lm8bEdjjY_5salsa5cycle18CycleHeadsIteratorNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator9try_rfolduNCINvNtNtBX_8adapters6filter15filter_try_foldRNtB5_9CycleHeaduINtNtNtBZ_3ops12control_flow11ControlFlowB2X_ENCNvMs4_B5_NtB5_10CycleHeads11iter_not_eq0NCINvNvBR_5rfind5checkB2X_NCNvNtNtB7_8function7execute11outer_cycles_0E0E0B3e_EB7_.exit.i
 
-_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6filter15filter_try_foldRNtNtCsd9Lm8bEdjjY_5salsa5cycle9CycleHeaduINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs4_B18_NtB18_10CycleHeads11iter_not_eq0NCINvNvNtNtNtB8_6traits12double_ended19DoubleEndedIterator5rfind5checkB15_NCNvNtNtB1a_8function7execute11outer_cycles_0E0E0B1a_.exit.i.i: ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCsd9Lm8bEdjjY_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.i.i, %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCsd9Lm8bEdjjY_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.thread.i.i, %_RNCNvMs4_NtCsd9Lm8bEdjjY_5salsa5cycleNtB7_10CycleHeads11iter_not_eq0B9_.exit.i.i.i
+_RNCINvNtNtNtCshzWfHUSfYae_4core4iter8adapters6filter15filter_try_foldRNtNtCsd9Lm8bEdjjY_5salsa5cycle9CycleHeaduINtNtNtBa_3ops12control_flow11ControlFlowB15_ENCNvMs4_B18_NtB18_10CycleHeads11iter_not_eq0NCINvNvNtNtNtB8_6traits12double_ended19DoubleEndedIterator5rfind5checkB15_NCNvNtNtB1a_8function7execute11outer_cycles_0E0E0B1a_.exit.i.i: ; preds = %_RNCINvNvNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator5rfind5checkRNtNtCsd9Lm8bEdjjY_5salsa5cycle9CycleHeadNCNvNtNtB1z_8function7execute11outer_cycles_0E0B1z_.exit.i.i.i, %.noexc33.a, %_RNCNvMs4_NtCsd9Lm8bEdjjY_5salsa5cycleNtB7_10CycleHeads11iter_not_eq0B9_.exit.i.i.i
   %i.el = invoke noundef align 4 ptr @_RNvXs8_NtCsd9Lm8bEdjjY_5salsa5cycleNtB5_18CycleHeadsIteratorNtNtNtNtCshzWfHUSfYae_4core4iter6traits12double_ended19DoubleEndedIterator9next_back(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.e)
           to label %.noexc34 unwind label %.loopexit ; 2 uses
 

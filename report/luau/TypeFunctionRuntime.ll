@@ -205,18 +205,19 @@ bb.y:                                             ; preds = %_ZNSt3mapINSt7__cxx
 
 bb.z:                                             ; preds = %bb.y, %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4Luau20TypeFunctionPropertyESt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit
   %.not83 = icmp eq ptr %.sroa.0.0.i.i, %i.au
-  br i1 %.not83, label %.critedge, label %bb.aa
+  br i1 %.not83, label %.critedge, label %4
 
-bb.aa:                                            ; preds = %bb.z
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 72 ; 2 uses
-  %5 = load i8, ptr %4, align 8, !tbaa !273, !range !100, !noundef !101
-  %6 = trunc nuw i8 %5 to i1
+4:                                                ; preds = %bb.z
+  %5 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 72 ; 2 uses
+  %6 = load i8, ptr %5, align 8, !tbaa !273, !range !100, !noundef !101
+  %7 = trunc nuw i8 %6 to i1
+  br i1 %7, label %bb.aa, label %bb.ac
+
+bb.aa:                                            ; preds = %4
   %i.bs = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 88
-  %i.bt = load i8, ptr %i.bs, align 8, !range !100
+  %i.bt = load i8, ptr %i.bs, align 8, !tbaa !273, !range !100, !noundef !101
   %i.bu = trunc nuw i8 %i.bt to i1
-  %not. = xor i1 %6, true
-  %7 = select i1 %not., i1 true, i1 %i.bu
-  br i1 %7, label %bb.ac, label %bb.ab
+  br i1 %i.bu, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   %i.bv = tail call { ptr, ptr } @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N4Luau20TypeFunctionPropertyEESt10_Select1stISA_ESt4lessIS5_ESaISA_EE11equal_rangeERS7_(ptr noundef nonnull align 8 dereferenceable(48) %i.i, ptr noundef nonnull align 8 dereferenceable(32) %i.ak) ; 2 uses
@@ -225,8 +226,8 @@ bb.ab:                                            ; preds = %bb.aa
   tail call void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N4Luau20TypeFunctionPropertyEESt10_Select1stISA_ESt4lessIS5_ESaISA_EE12_M_erase_auxESt23_Rb_tree_const_iteratorISA_ESI_(ptr noundef nonnull align 8 dereferenceable(48) %i.i, ptr %i.bw, ptr %i.bx)
   br label %.critedge
 
-bb.ac:                                            ; preds = %bb.aa
-  store i8 0, ptr %4, align 8, !tbaa !273
+bb.ac:                                            ; preds = %4, %bb.aa
+  store i8 0, ptr %5, align 8, !tbaa !273
   br label %.critedge
 
 bb.ad:                                            ; preds = %bb.y
@@ -546,18 +547,19 @@ bb.y:                                             ; preds = %_ZNSt3mapINSt7__cxx
 
 bb.z:                                             ; preds = %bb.y, %_ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN4Luau20TypeFunctionPropertyESt4lessIS5_ESaISt4pairIKS5_S7_EEE4findERSB_.exit
   %.not83 = icmp eq ptr %.sroa.0.0.i.i, %i.au
-  br i1 %.not83, label %.critedge, label %bb.aa
+  br i1 %.not83, label %.critedge, label %4
 
-bb.aa:                                            ; preds = %bb.z
-  %4 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 88 ; 2 uses
-  %5 = load i8, ptr %4, align 8, !tbaa !273, !range !100, !noundef !101
-  %6 = trunc nuw i8 %5 to i1
+4:                                                ; preds = %bb.z
+  %5 = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 88 ; 2 uses
+  %6 = load i8, ptr %5, align 8, !tbaa !273, !range !100, !noundef !101
+  %7 = trunc nuw i8 %6 to i1
+  br i1 %7, label %bb.aa, label %bb.ac
+
+bb.aa:                                            ; preds = %4
   %i.bs = getelementptr inbounds nuw i8, ptr %.sroa.0.0.i.i, i64 72
-  %i.bt = load i8, ptr %i.bs, align 8, !range !100
+  %i.bt = load i8, ptr %i.bs, align 8, !tbaa !273, !range !100, !noundef !101
   %i.bu = trunc nuw i8 %i.bt to i1
-  %not. = xor i1 %6, true
-  %7 = select i1 %not., i1 true, i1 %i.bu
-  br i1 %7, label %bb.ac, label %bb.ab
+  br i1 %i.bu, label %bb.ac, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
   %i.bv = tail call { ptr, ptr } @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N4Luau20TypeFunctionPropertyEESt10_Select1stISA_ESt4lessIS5_ESaISA_EE11equal_rangeERS7_(ptr noundef nonnull align 8 dereferenceable(48) %i.i, ptr noundef nonnull align 8 dereferenceable(32) %i.ak) ; 2 uses
@@ -566,8 +568,8 @@ bb.ab:                                            ; preds = %bb.aa
   tail call void @_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N4Luau20TypeFunctionPropertyEESt10_Select1stISA_ESt4lessIS5_ESaISA_EE12_M_erase_auxESt23_Rb_tree_const_iteratorISA_ESI_(ptr noundef nonnull align 8 dereferenceable(48) %i.i, ptr %i.bw, ptr %i.bx)
   br label %.critedge
 
-bb.ac:                                            ; preds = %bb.aa
-  store i8 0, ptr %4, align 8, !tbaa !273
+bb.ac:                                            ; preds = %4, %bb.aa
+  store i8 0, ptr %5, align 8, !tbaa !273
   br label %.critedge
 
 bb.ad:                                            ; preds = %bb.y
@@ -970,41 +972,57 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.e = load i8, ptr %i.d, align 8, !range !100
   %i.f = trunc nuw i8 %i.e to i1
-  %or.cond = select i1 %i.c, i1 %i.f, i1 false
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %2 = load ptr, ptr %0, align 8
-  %3 = load ptr, ptr %1, align 8
-  %4 = icmp eq ptr %2, %3
-  %i.g = select i1 %or.cond, i1 %4, i1 false
-  ret i1 %i.g
+  %i.g = select i1 %i.c, i1 %i.f, i1 false
+  br i1 %i.g, label %1, label %6
+
+1:                                                ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %3 = load ptr, ptr %0, align 8
+  %4 = load ptr, ptr %2, align 8
+  %5 = icmp eq ptr %3, %4
+  br label %6
+
+6:                                                ; preds = %1, %bb.a
+  %7 = phi i1 [ %5, %1 ], [ false, %bb.a ]
+  ret i1 %7
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local noundef zeroext i1 @_ZNK4Luau20TypeFunctionProperty10isReadOnlyEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0) local_unnamed_addr #20 align 2 {
-bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %2 = load i8, ptr %1, align 8, !tbaa !273, !range !100, !noundef !101
-  %3 = trunc nuw i8 %2 to i1
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %3 = load i8, ptr %2, align 8, !tbaa !273, !range !100, !noundef !101
+  %4 = trunc nuw i8 %3 to i1
+  br i1 %4, label %bb.a, label %5
+
+bb.a:                                             ; preds = %1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.b = load i8, ptr %i.a, align 8, !range !100
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !273, !range !100, !noundef !101
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = xor i1 %i.c, true
-  %4 = select i1 %3, i1 %i.d, i1 false
-  ret i1 %4
+  br label %5
+
+5:                                                ; preds = %bb.a, %1
+  %6 = phi i1 [ false, %1 ], [ %i.d, %bb.a ]
+  ret i1 %6
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local noundef zeroext i1 @_ZNK4Luau20TypeFunctionProperty11isWriteOnlyEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %0) local_unnamed_addr #20 align 2 {
-bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %2 = load i8, ptr %1, align 8, !tbaa !273, !range !100, !noundef !101
-  %3 = trunc nuw i8 %2 to i1
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %3 = load i8, ptr %2, align 8, !tbaa !273, !range !100, !noundef !101
+  %4 = trunc nuw i8 %3 to i1
+  br i1 %4, label %bb.a, label %5
+
+bb.a:                                             ; preds = %1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i8, ptr %i.a, align 8, !range !100
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !273, !range !100, !noundef !101
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = xor i1 %i.c, true
-  %4 = select i1 %3, i1 %i.d, i1 false
-  ret i1 %4
+  br label %5
+
+5:                                                ; preds = %bb.a, %1
+  %6 = phi i1 [ false, %1 ], [ %i.d, %bb.a ]
+  ret i1 %6
 }
 
 ; Function Attrs: mustprogress uwtable

@@ -205,16 +205,18 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 481
   %i.h = load i8, ptr %i.g, align 1, !range !607
   %i.i = trunc nuw i8 %i.h to i1
-  %or.cond.i = select i1 %.not.i, i1 %i.i, i1 false
-  %13 = getelementptr inbounds nuw i8, ptr %0, i64 200
-  %14 = load ptr, ptr %13, align 8                ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %0, i64 208
-  %16 = load ptr, ptr %15, align 8                ; 2 uses
-  %17 = icmp eq ptr %14, %16
-  %.0.i = select i1 %or.cond.i, i1 true, i1 %17
-  br i1 %.0.i, label %.thread61, label %bb.c
+  %.0.i = select i1 %.not.i, i1 %i.i, i1 false
+  br i1 %.0.i, label %.thread61, label %_ZNK8facebook5velox4exec4Expr31skipFieldDependentOptimizationsEv.exit
 
-bb.c:                                             ; preds = %bb.b
+_ZNK8facebook5velox4exec4Expr31skipFieldDependentOptimizationsEv.exit: ; preds = %bb.b
+  %13 = getelementptr inbounds nuw i8, ptr %0, i64 200
+  %14 = load ptr, ptr %13, align 8, !tbaa !746    ; 2 uses
+  %15 = getelementptr inbounds nuw i8, ptr %0, i64 208
+  %16 = load ptr, ptr %15, align 8, !tbaa !746    ; 2 uses
+  %17 = icmp eq ptr %14, %16
+  br i1 %17, label %.thread61, label %bb.c
+
+bb.c:                                             ; preds = %_ZNK8facebook5velox4exec4Expr31skipFieldDependentOptimizationsEv.exit
   %i.j = load ptr, ptr %2, align 8, !tbaa !771
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 18
   %i.l = load i8, ptr %i.k, align 2, !tbaa !923, !range !607, !noundef !608
@@ -617,7 +619,7 @@ bb.cd:                                            ; preds = %bb.bw, %_ZN9__gnu_c
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #30
   br label %bb.ce
 
-.thread61:                                        ; preds = %bb.i, %_ZN8facebook5velox4exec12_GLOBAL__N_16isFlatERKNS0_10BaseVectorE.exit, %_ZNSt12__shared_ptrIN8facebook5velox10BaseVectorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit36, %bb.c, %bb.b, %bb.a
+.thread61:                                        ; preds = %bb.i, %_ZN8facebook5velox4exec12_GLOBAL__N_16isFlatERKNS0_10BaseVectorE.exit, %_ZNSt12__shared_ptrIN8facebook5velox10BaseVectorELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit36, %bb.b, %bb.c, %_ZNK8facebook5velox4exec4Expr31skipFieldDependentOptimizationsEv.exit, %bb.a
   call void @_ZN8facebook5velox4exec4Expr13evalWithNullsERKNS0_17SelectivityVectorERNS1_7EvalCtxERSt10shared_ptrINS0_10BaseVectorEE(ptr noundef nonnull align 8 dereferenceable(482) %0, ptr noundef nonnull align 8 dereferenceable(38) %1, ptr noundef nonnull align 8 dereferenceable(104) %2, ptr noundef nonnull align 8 dereferenceable(16) %3)
   br label %bb.ce
 
@@ -1020,16 +1022,18 @@ bb.d:                                             ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 481
   %i.p = load i8, ptr %i.o, align 1, !range !607
   %i.q = trunc nuw i8 %i.p to i1
-  %or.cond.i = select i1 %.not.i, i1 %i.q, i1 false
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 200
-  %6 = load ptr, ptr %5, align 8                  ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 208
-  %8 = load ptr, ptr %7, align 8                  ; 2 uses
-  %9 = icmp eq ptr %6, %8
-  %.0.i = select i1 %or.cond.i, i1 true, i1 %9
-  br i1 %.0.i, label %.thread67, label %.lr.ph
+  %.0.i = select i1 %.not.i, i1 %i.q, i1 false
+  br i1 %.0.i, label %.thread67, label %_ZNK8facebook5velox4exec4Expr31skipFieldDependentOptimizationsEv.exit
 
-.lr.ph:                                           ; preds = %bb.d
+_ZNK8facebook5velox4exec4Expr31skipFieldDependentOptimizationsEv.exit: ; preds = %bb.d
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 200
+  %6 = load ptr, ptr %5, align 8, !tbaa !746      ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 208
+  %8 = load ptr, ptr %7, align 8, !tbaa !746      ; 2 uses
+  %9 = icmp eq ptr %6, %8
+  br i1 %9, label %.thread67, label %.lr.ph
+
+.lr.ph:                                           ; preds = %_ZNK8facebook5velox4exec4Expr31skipFieldDependentOptimizationsEv.exit
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 16
   br label %bb.e
 
@@ -1277,7 +1281,7 @@ bb.ae:                                            ; preds = %_ZNKSt14default_del
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #30
   br label %bb.af
 
-.thread67:                                        ; preds = %bb.j, %_ZN8facebook5velox4exec22LocalSelectivityVectorD2Ev.exit55, %bb.d, %bb.c
+.thread67:                                        ; preds = %bb.j, %_ZN8facebook5velox4exec22LocalSelectivityVectorD2Ev.exit55, %bb.d, %_ZNK8facebook5velox4exec4Expr31skipFieldDependentOptimizationsEv.exit, %bb.c
   call void @_ZN8facebook5velox4exec4Expr7evalAllERKNS0_17SelectivityVectorERNS1_7EvalCtxERSt10shared_ptrINS0_10BaseVectorEE(ptr noundef nonnull align 8 dereferenceable(482) %0, ptr noundef nonnull align 8 dereferenceable(38) %1, ptr noundef nonnull align 8 dereferenceable(104) %2, ptr noundef nonnull align 8 dereferenceable(16) %3)
   br label %bb.af
 

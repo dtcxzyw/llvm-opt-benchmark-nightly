@@ -205,7 +205,7 @@ bb.ct:                                            ; preds = %bb.cs, %bb.cr
   br label %bb.cu
 
 bb.cu:                                            ; preds = %.lr.ph1661, %bb.dg
-  %i.vs = phi i32 [ %i.vi, %.lr.ph1661 ], [ %49, %bb.dg ] ; 2 uses
+  %i.vs = phi i32 [ %i.vi, %.lr.ph1661 ], [ %48, %bb.dg ] ; 3 uses
   %indvars.iv1979 = phi i64 [ 0, %.lr.ph1661 ], [ %indvars.iv.next1980, %bb.dg ] ; 3 uses
   %i.vt = load ptr, ptr %i.vk, align 8, !tbaa !124
   %i.vu = getelementptr inbounds nuw [8 x i8], ptr %i.vt, i64 %indvars.iv1979
@@ -222,14 +222,16 @@ bb.cv:                                            ; preds = %bb.cu
   %i.wc = getelementptr inbounds nuw i8, ptr %i.vv, i64 62
   %i.wd = load i8, ptr %i.wc, align 2, !range !130
   %i.we = trunc nuw i8 %i.wd to i1
-  %or.cond.i = select i1 %i.wb, i1 true, i1 %i.we
-  %46 = getelementptr inbounds nuw i8, ptr %i.vv, i64 32
-  %47 = load i64, ptr %46, align 8                ; 2 uses
-  %48 = icmp eq i64 %47, 0
-  %.not1185 = select i1 %or.cond.i, i1 true, i1 %48
-  br i1 %.not1185, label %bb.dg, label %bb.cw
+  %.not1185 = select i1 %i.wb, i1 true, i1 %i.we
+  br i1 %.not1185, label %bb.dg, label %_ZNK8NArchive3N7z11CUpdateItem9HasStreamEv.exit
 
-bb.cw:                                            ; preds = %bb.cv
+_ZNK8NArchive3N7z11CUpdateItem9HasStreamEv.exit:  ; preds = %bb.cv
+  %46 = getelementptr inbounds nuw i8, ptr %i.vv, i64 32
+  %47 = load i64, ptr %46, align 8, !tbaa !189    ; 2 uses
+  %.not1183 = icmp eq i64 %47, 0
+  br i1 %.not1183, label %bb.dg, label %bb.cw
+
+bb.cw:                                            ; preds = %_ZNK8NArchive3N7z11CUpdateItem9HasStreamEv.exit
   br i1 %i.vl, label %bb.cx, label %_ZN8NArchive3N7zL9IsExeFileERKNS0_11CUpdateItemE.exit
 
 bb.cx:                                            ; preds = %bb.cw
@@ -243,7 +245,7 @@ bb.cy:                                            ; preds = %bb.cx
   %i.wi = and i32 %i.wg, 4784128
   %.not23.i = icmp ne i32 %i.wi, 0
   %i.wj = icmp ugt i64 %47, 2047
-  %or.cond.i690 = select i1 %.not23.i, i1 %i.wj, i1 false
+  %or.cond.i690 = and i1 %.not23.i, %i.wj
   br i1 %or.cond.i690, label %_ZN8NWindows5NFile3NIO7CInFileC2Ev.exit.i, label %_ZN8NArchive3N7zL9IsExeFileERKNS0_11CUpdateItemE.exit
 
 _ZN8NWindows5NFile3NIO7CInFileC2Ev.exit.i:        ; preds = %bb.cy
@@ -353,10 +355,10 @@ _ZN13CRecordVectorIjE3AddEj.exit:                 ; preds = %_ZN8NArchive3N7zL9I
   %.pre2036.a = load i32, ptr %i.se, align 4, !tbaa !123
   br label %bb.dg
 
-bb.dg:                                            ; preds = %_ZN13CRecordVectorIjE3AddEj.exit, %bb.cu, %bb.cv
-  %49 = phi i32 [ %.pre2036.a, %_ZN13CRecordVectorIjE3AddEj.exit ], [ %i.vs, %bb.cu ], [ %i.vs, %bb.cv ] ; 2 uses
+bb.dg:                                            ; preds = %bb.cv, %_ZN13CRecordVectorIjE3AddEj.exit, %bb.cu, %_ZNK8NArchive3N7z11CUpdateItem9HasStreamEv.exit
+  %48 = phi i32 [ %i.vs, %bb.cv ], [ %.pre2036.a, %_ZN13CRecordVectorIjE3AddEj.exit ], [ %i.vs, %bb.cu ], [ %i.vs, %_ZNK8NArchive3N7z11CUpdateItem9HasStreamEv.exit ] ; 2 uses
   %indvars.iv.next1980 = add nuw nsw i64 %indvars.iv1979, 1 ; 2 uses
-  %i.xl = sext i32 %49 to i64
+  %i.xl = sext i32 %48 to i64
   %i.xm = icmp slt i64 %indvars.iv.next1980, %i.xl
   br i1 %i.xm, label %bb.cu, label %._crit_edge1662, !llvm.loop !273
 
@@ -759,12 +761,14 @@ bb.mn:                                            ; preds = %bb.mm
   %i.btn = getelementptr inbounds nuw i8, ptr %i.btg, i64 62
   %i.bto = load i8, ptr %i.btn, align 2, !range !130
   %i.btp = trunc nuw i8 %i.bto to i1
-  %or.cond.i927 = select i1 %i.btm, i1 true, i1 %i.btp
-  %50 = getelementptr inbounds nuw i8, ptr %i.btg, i64 32
-  %51 = load i64, ptr %50, align 8
-  %52 = icmp eq i64 %51, 0
-  %.not1182 = select i1 %or.cond.i927, i1 true, i1 %52
-  br i1 %.not1182, label %bb.mq, label %bb.mr
+  %.not1182 = select i1 %i.btm, i1 true, i1 %i.btp
+  br i1 %.not1182, label %bb.mq, label %_ZNK8NArchive3N7z11CUpdateItem9HasStreamEv.exit928
+
+_ZNK8NArchive3N7z11CUpdateItem9HasStreamEv.exit928: ; preds = %bb.mn
+  %49 = getelementptr inbounds nuw i8, ptr %i.btg, i64 32
+  %50 = load i64, ptr %49, align 8, !tbaa !189
+  %.not1181 = icmp eq i64 %50, 0
+  br i1 %.not1181, label %bb.mq, label %bb.mr
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.mq, %._crit_edge1721
   %lpad.loopexit.split-lp2817 = landingpad { ptr, i32 }
@@ -786,7 +790,7 @@ bb.mp:                                            ; preds = %bb.mo
   %i.btx = trunc nuw i8 %i.btw to i1
   br i1 %i.btx, label %bb.mr, label %bb.mq
 
-bb.mq:                                            ; preds = %bb.mo, %bb.mp, %bb.mn
+bb.mq:                                            ; preds = %bb.mn, %bb.mo, %bb.mp, %_ZNK8NArchive3N7z11CUpdateItem9HasStreamEv.exit928
   invoke void @_ZN17CBaseRecordVector18ReserveOnePositionEv(ptr noundef nonnull align 8 dereferenceable(32) %43)
           to label %_ZN13CRecordVectorIiE3AddEi.exit930 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -803,8 +807,8 @@ _ZN13CRecordVectorIiE3AddEi.exit930:              ; preds = %bb.mq
   %.pre2041 = load i32, ptr %i.se, align 4, !tbaa !123
   br label %bb.mr
 
-bb.mr:                                            ; preds = %_ZN13CRecordVectorIiE3AddEi.exit930, %bb.mp, %bb.mn
-  %i.buf = phi i32 [ %.pre2041, %_ZN13CRecordVectorIiE3AddEi.exit930 ], [ %i.btd, %bb.mp ], [ %i.btd, %bb.mn ] ; 2 uses
+bb.mr:                                            ; preds = %_ZN13CRecordVectorIiE3AddEi.exit930, %bb.mp, %_ZNK8NArchive3N7z11CUpdateItem9HasStreamEv.exit928
+  %i.buf = phi i32 [ %.pre2041, %_ZN13CRecordVectorIiE3AddEi.exit930 ], [ %i.btd, %bb.mp ], [ %i.btd, %_ZNK8NArchive3N7z11CUpdateItem9HasStreamEv.exit928 ] ; 2 uses
   %indvars.iv.next2027 = add nuw nsw i64 %indvars.iv2026, 1 ; 2 uses
   %i.bug = sext i32 %i.buf to i64
   %i.buh = icmp slt i64 %indvars.iv.next2027, %i.bug
@@ -1207,8 +1211,8 @@ bb.j:                                             ; preds = %bb.g, %_ZN11CString
   store i8 %i.bk, ptr %i.bl, align 4, !tbaa !225
   %i.bm = getelementptr inbounds nuw i8, ptr %2, i64 35
   store i8 0, ptr %i.bm, align 1, !tbaa !441
-  %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %i.bo = load i64, ptr %i.bn, align 8, !tbaa !189
+  %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.bo = load i64, ptr %i.bn, align 8, !tbaa !189 ; 2 uses
   store i64 %i.bo, ptr %1, align 8, !tbaa !127
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 63
   %i.bq = load i8, ptr %i.bp, align 1, !tbaa !190, !range !130, !noundef !131 ; 2 uses
@@ -1218,8 +1222,7 @@ bb.j:                                             ; preds = %bb.g, %_ZN11CString
   %i.bt = load i8, ptr %i.bj, align 2, !range !130
   %i.bu = trunc nuw i8 %i.bt to i1
   %or.cond.i = select i1 %i.bs, i1 true, i1 %i.bu
-  %4 = load i64, ptr %i.bn, align 8
-  %i.bv = icmp ne i64 %4, 0
+  %i.bv = icmp ne i64 %i.bo, 0
   %not.or.cond.i = xor i1 %or.cond.i, true
   %i.bw = select i1 %not.or.cond.i, i1 %i.bv, i1 false
   %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 32

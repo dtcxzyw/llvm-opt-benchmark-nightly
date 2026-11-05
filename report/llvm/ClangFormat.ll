@@ -204,24 +204,30 @@ bb.e:                                             ; preds = %.lr.ph, %_ZN4llvm12
   call void @_ZNK4llvm9SourceMgr10GetMessageENS_5SMLocENS0_8DiagKindERKNS_5TwineENS_8ArrayRefINS_7SMRangeEEENS6_INS_7SMFixItEEE(ptr dead_on_unwind nonnull writable sret(%"class.llvm::SMDiagnostic") align 8 %4, ptr noundef nonnull align 8 dereferenceable(72) %3, ptr %i.ai, i32 noundef %not., ptr noundef nonnull align 8 dereferenceable(34) %5, ptr noundef nonnull byval(%"class.llvm::ArrayRef.392") align 8 %6, ptr noundef nonnull byval(%"class.llvm::ArrayRef.393") align 8 %7) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #25
   %i.al = call noundef nonnull align 8 dereferenceable(96) ptr @_ZN4llvm4errsEv() #25
-  %8 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZL10ShowColors, i64 120), align 8, !tbaa !62, !range !23, !noundef !24
-  %9 = trunc nuw i8 %8 to i1
-  %i.am = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZL12NoShowColors, i64 120), align 8, !range !23
+  %i.am = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZL10ShowColors, i64 120), align 8, !tbaa !62, !range !23, !noundef !24
   %i.an = trunc nuw i8 %i.am to i1
-  %10 = xor i1 %i.an, true
-  %11 = select i1 %9, i1 %10, i1 false
-  call void @_ZNK4llvm12SMDiagnostic5printEPKcRNS_11raw_ostreamEbbb(ptr noundef nonnull align 8 dereferenceable(360) %4, ptr noundef null, ptr noundef nonnull align 8 dereferenceable(48) %i.al, i1 noundef zeroext %11, i1 noundef zeroext true, i1 noundef zeroext true) #25
-  %12 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL10ErrorLimit, i64 120), align 8, !tbaa !154 ; 2 uses
-  %.not = icmp eq i32 %12, 0
+  br i1 %i.an, label %8, label %12
+
+8:                                                ; preds = %bb.e
+  %9 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZL12NoShowColors, i64 120), align 8, !tbaa !62, !range !23, !noundef !24
+  %10 = trunc nuw i8 %9 to i1
+  %11 = xor i1 %10, true
+  br label %12
+
+12:                                               ; preds = %8, %bb.e
+  %13 = phi i1 [ false, %bb.e ], [ %11, %8 ]
+  call void @_ZNK4llvm12SMDiagnostic5printEPKcRNS_11raw_ostreamEbbb(ptr noundef nonnull align 8 dereferenceable(360) %4, ptr noundef null, ptr noundef nonnull align 8 dereferenceable(48) %i.al, i1 noundef zeroext %13, i1 noundef zeroext true, i1 noundef zeroext true) #25
+  %14 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL10ErrorLimit, i64 120), align 8, !tbaa !154 ; 2 uses
+  %.not = icmp eq i32 %14, 0
   br i1 %.not, label %bb.g, label %bb.f
 
-bb.f:                                             ; preds = %bb.e
+bb.f:                                             ; preds = %12
   %i.ao = add i32 %.012, 1                        ; 2 uses
-  %.not12 = icmp ult i32 %i.ao, %12
+  %.not12 = icmp ult i32 %i.ao, %14
   br i1 %.not12, label %bb.g, label %.critedge
 
-bb.g:                                             ; preds = %bb.f, %bb.e
-  %.2 = phi i32 [ %.012, %bb.e ], [ %i.ao, %bb.f ]
+bb.g:                                             ; preds = %bb.f, %12
+  %.2 = phi i32 [ %.012, %12 ], [ %i.ao, %bb.f ]
   %i.ap = load ptr, ptr %i.u, align 8, !tbaa !27  ; 3 uses
   %i.aq = load i32, ptr %i.v, align 8, !tbaa !53  ; 2 uses
   %.not4.i.i.i = icmp eq i32 %i.aq, 0

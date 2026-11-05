@@ -204,13 +204,15 @@ bb.al:                                            ; preds = %_RINvNtNtCsh036I4OH
   call void @llvm.lifetime.start.p0(ptr nonnull %i.an)
   call void @_RNvCsezjqemSh5Uq_7uu_comm19are_files_identical(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.an, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val127, i64 noundef %.val128, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val129, i64 noundef %.val130) #23
   %i.ez = load i8, ptr %i.an, align 8, !range !11, !noundef !5
-  %7 = trunc nuw i8 %i.ez to i1                   ; 2 uses
+  %i.fa = trunc nuw i8 %i.ez to i1
+  br i1 %i.fa, label %bb.am, label %7
+
+7:                                                ; preds = %bb.al
   %8 = getelementptr inbounds nuw i8, ptr %i.an, i64 1
-  %9 = load i8, ptr %8, align 1, !range !11
-  %i.fa = trunc nuw i8 %9 to i1
-  %10 = xor i1 %i.fa, true
-  %.sroa.016.0 = select i1 %7, i1 true, i1 %10
-  br i1 %7, label %bb.am, label %bb.an
+  %9 = load i8, ptr %8, align 1, !range !11, !noundef !5
+  %10 = trunc nuw i8 %9 to i1
+  %11 = xor i1 %10, true
+  br label %bb.an
 
 bb.am:                                            ; preds = %bb.al
   %i.fb = getelementptr inbounds nuw i8, ptr %i.an, i64 8
@@ -218,12 +220,13 @@ bb.am:                                            ; preds = %bb.al
   call fastcc void @_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtB4_6result6ResultbNtNtNtB4_2io5error5ErrorEECsezjqemSh5Uq_7uu_comm(i8 1, ptr %.val132) #23
   br label %bb.an
 
-bb.an:                                            ; preds = %bb.am, %bb.al
+bb.an:                                            ; preds = %7, %bb.am
+  %.sroa.016.0280 = phi i1 [ true, %bb.am ], [ %11, %7 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.an)
   br label %bb.ao
 
 bb.ao:                                            ; preds = %bb.t, %bb.an, %_RINvNtNtCsh036I4OHgIr_6uucore8features2fs24paths_refer_to_same_fileRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrECsezjqemSh5Uq_7uu_comm.exit
-  %.sroa.012.0 = phi i1 [ false, %_RINvNtNtCsh036I4OHgIr_6uucore8features2fs24paths_refer_to_same_fileRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrECsezjqemSh5Uq_7uu_comm.exit ], [ %not., %bb.t ], [ %.sroa.016.0, %bb.an ] ; 4 uses
+  %.sroa.012.0 = phi i1 [ false, %_RINvNtNtCsh036I4OHgIr_6uucore8features2fs24paths_refer_to_same_fileRNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str5OsStrECsezjqemSh5Uq_7uu_comm.exit ], [ %not., %bb.t ], [ %.sroa.016.0280, %bb.an ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.am)
   store i64 0, ptr %i.am, align 8
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.am, i64 8 ; 3 uses

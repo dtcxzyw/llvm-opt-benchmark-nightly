@@ -206,14 +206,25 @@ bb.bx:                                            ; preds = %bb.bw
 
 bb.by:                                            ; preds = %bb.bx
   %i.fz = getelementptr inbounds nuw i8, ptr %0, i64 152
-  %2 = load <4 x i8>, ptr %i.fz, align 8, !alias.scope !227202, !noalias !227168
-  %.fr = freeze <4 x i8> %2
-  %3 = trunc <4 x i8> %.fr to <4 x i1>
-  %4 = bitcast <4 x i1> %3 to i4
-  %.not = icmp eq i4 %4, 0
-  br i1 %.not, label %bb.bz, label %bb.cd
+  %2 = load i8, ptr %i.fz, align 8, !range !423, !alias.scope !227202, !noalias !227168, !noundef !411
+  %3 = trunc nuw i8 %2 to i1
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 153
+  %5 = load i8, ptr %4, align 1, !range !423, !alias.scope !227202, !noalias !227168
+  %6 = trunc nuw i8 %5 to i1
+  %or.cond.i.i = select i1 %3, i1 true, i1 %6
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 154
+  %8 = load i8, ptr %7, align 2, !range !423, !alias.scope !227202, !noalias !227168
+  %9 = trunc nuw i8 %8 to i1
+  %or.cond5.i.i = select i1 %or.cond.i.i, i1 true, i1 %9
+  br i1 %or.cond5.i.i, label %bb.cd, label %_RNvMs2_NtNtCshkPeWWG1flk_5lance7dataset8fragmentNtB5_14FragReadConfig15has_system_cols.exit.i
 
-bb.bz:                                            ; preds = %bb.by
+_RNvMs2_NtNtCshkPeWWG1flk_5lance7dataset8fragmentNtB5_14FragReadConfig15has_system_cols.exit.i: ; preds = %bb.by
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 155
+  %11 = load i8, ptr %10, align 1, !range !423, !alias.scope !227202, !noalias !227168, !noundef !411
+  %12 = trunc nuw i8 %11 to i1
+  br i1 %12, label %bb.cd, label %bb.bz
+
+bb.bz:                                            ; preds = %_RNvMs2_NtNtCshkPeWWG1flk_5lance7dataset8fragmentNtB5_14FragReadConfig15has_system_cols.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !227168
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !noalias !227168
   %i.ga = getelementptr inbounds nuw i8, ptr %0, i64 88
@@ -256,7 +267,7 @@ bb.cc:                                            ; preds = %bb.el, %bb.cx, %bb.
   %i.gi = trunc nuw i8 %i.gh to i1
   br i1 %i.gi, label %bb.fm, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs40k4W9msRzi_5alloc4sync3ArcNtNtCs9KQ7US1M400_11lance_table6rowids13RowIdSequenceEEECsfR8GmIBoxTX_21lance_namespace_impls.exit146.i
 
-bb.cd:                                            ; preds = %bb.by, %bb.bx
+bb.cd:                                            ; preds = %_RNvMs2_NtNtCshkPeWWG1flk_5lance7dataset8fragmentNtB5_14FragReadConfig15has_system_cols.exit.i, %bb.by, %bb.bx
   %i.gj = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.gk = load ptr, ptr %i.gj, align 8, !noalias !227168, !nonnull !411, !align !412, !noundef !411
   %i.gl = getelementptr inbounds nuw i8, ptr %0, i64 248

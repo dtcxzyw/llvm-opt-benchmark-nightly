@@ -109,7 +109,7 @@ module asm
 @__libc_single_threaded = external local_unnamed_addr global i8, align 1
 
 ; Function Attrs: mustprogress uwtable
-define noundef zeroext i1 @_ZN22photos_editing_formats8image_io10gcontainer18WriteImageAndFilesERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS7_SaIS7_EES9_(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(32) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 !guid !80 {
+define noundef zeroext i1 @_ZN22photos_editing_formats8image_io10gcontainer18WriteImageAndFilesERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEERKSt6vectorIS7_SaIS7_EES9_(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(32) %2) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 !guid !81 {
 bb.a:
   %3 = alloca %"class.photos_editing_formats::image_io::MessageHandler", align 8 ; 14 uses
   %4 = alloca %"class.std::unique_ptr.10", align 8 ; 8 uses
@@ -144,7 +144,7 @@ _ZNSt10unique_ptrISoSt14default_deleteISoEED2Ev.exit: ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %5, i64 8
   store ptr %i.a, ptr %i.d, align 8, !tbaa !26
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 16
-  store ptr %3, ptr %i.e, align 8, !tbaa !81
+  store ptr %3, ptr %i.e, align 8, !tbaa !82
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
   store i64 0, ptr %i.f, align 8, !tbaa !35
   %i.g = getelementptr inbounds nuw i8, ptr %5, i64 32 ; 3 uses
@@ -154,7 +154,7 @@ _ZNSt10unique_ptrISoSt14default_deleteISoEED2Ev.exit: ; preds = %bb.b
   store i64 0, ptr %i.i, align 8, !tbaa !37
   store i8 0, ptr %i.h, align 8, !tbaa !38
   %i.j = getelementptr inbounds nuw i8, ptr %5, i64 64 ; 2 uses
-  store i8 0, ptr %i.j, align 8, !tbaa !82
+  store i8 0, ptr %i.j, align 8, !tbaa !83
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN22photos_editing_formats8image_io22OStreamDataDestinationE, i64 16), ptr %5, align 8, !tbaa !40
   %i.k = getelementptr inbounds nuw i8, ptr %5, i64 72 ; 2 uses
   store i64 %i.c, ptr %i.k, align 8, !tbaa !26
@@ -211,7 +211,7 @@ bb.k:                                             ; preds = %bb.j
   %i.u = ptrtoint ptr %i.q to i64
   store i64 %i.u, ptr %i.t, align 8, !tbaa !42
   store ptr null, ptr %9, align 8, !tbaa !42
-  %i.v = load i64, ptr %6, align 8, !tbaa !83
+  %i.v = load i64, ptr %6, align 8, !tbaa !84
   %i.w = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   %i.x = load i64, ptr %i.w, align 8, !tbaa !44
   %spec.select.i = call noundef i64 @llvm.usub.sat.i64(i64 %i.x, i64 %i.v)
@@ -219,12 +219,12 @@ bb.k:                                             ; preds = %bb.j
           to label %bb.l unwind label %bb.n       ; 0 uses
 
 bb.l:                                             ; preds = %bb.k
-  %i.z = load i64, ptr %6, align 8, !tbaa !83
+  %i.z = load i64, ptr %6, align 8, !tbaa !84
   %i.aa = load i64, ptr %i.w, align 8, !tbaa !44
   %spec.select.i42 = call noundef i64 @llvm.usub.sat.i64(i64 %i.aa, i64 %i.z) ; 2 uses
-  %i.ab = load ptr, ptr %1, align 8, !tbaa !85    ; 2 uses
+  %i.ab = load ptr, ptr %1, align 8, !tbaa !86    ; 2 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !85 ; 2 uses
+  %i.ad = load ptr, ptr %i.ac, align 8, !tbaa !86 ; 2 uses
   %.not7781 = icmp eq ptr %i.ab, %i.ad
   br i1 %.not7781, label %._crit_edge, label %.lr.ph
 
@@ -238,7 +238,7 @@ bb.l:                                             ; preds = %bb.k
 ._crit_edge:                                      ; preds = %bb.al, %bb.l
   %.0.lcssa = phi i64 [ %spec.select.i42, %bb.l ], [ %.2, %bb.al ]
   invoke void @_ZN22photos_editing_formats8image_io25OStreamRefDataDestination14FinishTransferEv(ptr noundef nonnull align 8 dereferenceable(65) %5)
-          to label %bb.ao unwind label %bb.n
+          to label %13 unwind label %bb.n
 
 bb.m:                                             ; preds = %bb.j
   %i.ai = landingpad { ptr, i32 }
@@ -264,7 +264,7 @@ bb.p:                                             ; preds = %bb.o
           to label %bb.q unwind label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  %i.an = load ptr, ptr %10, align 8, !tbaa !86   ; 4 uses
+  %i.an = load ptr, ptr %10, align 8, !tbaa !87   ; 4 uses
   %.not78 = icmp eq ptr %i.an, null
   br i1 %.not78, label %bb.ae, label %bb.s
 
@@ -276,7 +276,7 @@ bb.r:                                             ; preds = %bb.p
 bb.s:                                             ; preds = %bb.q
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #12
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN22photos_editing_formats8image_io21DataSegmentDataSourceE, i64 16), ptr %11, align 8, !tbaa !40
-  store ptr %i.an, ptr %i.ae, align 8, !tbaa !86
+  store ptr %i.an, ptr %i.ae, align 8, !tbaa !87
   %i.ap = load ptr, ptr %i.ag, align 8, !tbaa !49 ; 3 uses
   store ptr %i.ap, ptr %i.af, align 8, !tbaa !49
   %.not.i.i.i.i = icmp eq ptr %i.ap, null
@@ -296,14 +296,14 @@ bb.u:                                             ; preds = %bb.t
 
 bb.v:                                             ; preds = %bb.t
   %i.au = atomicrmw volatile add ptr %i.aq, i32 1 acq_rel, align 4 ; 0 uses
-  %.pre = load ptr, ptr %10, align 8, !tbaa !86
+  %.pre = load ptr, ptr %10, align 8, !tbaa !87
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.s, %bb.u, %bb.v
   %i.av = phi ptr [ %i.an, %bb.s ], [ %i.an, %bb.u ], [ %.pre, %bb.v ]
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #12
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %12, ptr noundef nonnull align 8 dereferenceable(16) %i.av, i64 16, i1 false), !tbaa.struct !51
-  %i.aw = load i64, ptr %12, align 8, !tbaa !83
+  %i.aw = load i64, ptr %12, align 8, !tbaa !84
   %i.ax = load i64, ptr %i.ah, align 8, !tbaa !44
   %spec.select.i43 = call noundef i64 @llvm.usub.sat.i64(i64 %i.ax, i64 %i.aw) ; 2 uses
   %i.ay = add i64 %spec.select.i43, %.083
@@ -331,11 +331,11 @@ bb.z:                                             ; preds = %bb.y
   %i.bg = load ptr, ptr %i.ba, align 8, !tbaa !40
   %i.bh = getelementptr inbounds nuw i8, ptr %i.bg, i64 16
   %i.bi = load ptr, ptr %i.bh, align 8
-  call void %i.bi(ptr noundef nonnull align 8 dereferenceable(16) %i.ba) #12, !inline_history !79
+  call void %i.bi(ptr noundef nonnull align 8 dereferenceable(16) %i.ba) #12, !inline_history !80
   %i.bj = load ptr, ptr %i.ba, align 8, !tbaa !40
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 24
   %i.bl = load ptr, ptr %i.bk, align 8
-  call void %i.bl(ptr noundef nonnull align 8 dereferenceable(16) %i.ba) #12, !inline_history !79
+  call void %i.bl(ptr noundef nonnull align 8 dereferenceable(16) %i.ba) #12, !inline_history !80
   br label %_ZN22photos_editing_formats8image_io21DataSegmentDataSourceD2Ev.exit
 
 bb.aa:                                            ; preds = %bb.y
@@ -439,13 +439,19 @@ bb.an:                                            ; preds = %bb.am, %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #12
   br label %bb.av
 
-bb.ao:                                            ; preds = %._crit_edge
-  %13 = load i64, ptr %i.f, align 8, !tbaa !35
-  %14 = icmp eq i64 %13, %.0.lcssa
-  %15 = load i8, ptr %i.j, align 8, !range !56
-  %16 = trunc nuw i8 %15 to i1
-  %17 = xor i1 %16, true
-  %18 = select i1 %14, i1 %17, i1 false
+13:                                               ; preds = %._crit_edge
+  %14 = load i64, ptr %i.f, align 8, !tbaa !35
+  %15 = icmp eq i64 %14, %.0.lcssa
+  br i1 %15, label %16, label %bb.ao
+
+16:                                               ; preds = %13
+  %17 = load i8, ptr %i.j, align 8, !tbaa !83, !range !56, !noundef !57
+  %18 = trunc nuw i8 %17 to i1
+  %19 = xor i1 %18, true
+  br label %bb.ao
+
+bb.ao:                                            ; preds = %16, %13
+  %20 = phi i1 [ false, %13 ], [ %19, %16 ]
   store ptr getelementptr inbounds nuw inrange(-16, 40) (i8, ptr @_ZTVN22photos_editing_formats8image_io17IStreamDataSourceE, i64 16), ptr %8, align 8, !tbaa !40
   %i.ci = load ptr, ptr %i.t, align 8, !tbaa !42  ; 3 uses
   %.not.i.i47 = icmp eq ptr %i.ci, null
@@ -506,7 +512,7 @@ _ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i: ; preds = %bb.at,
   br i1 %i.dc, label %bb.au, label %_ZN22photos_editing_formats8image_io17IStreamDataSourceD2Ev.exit, !prof !55
 
 bb.au:                                            ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i
-  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.cn) #12, !inline_history !57
+  call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.cn) #12, !inline_history !58
   br label %_ZN22photos_editing_formats8image_io17IStreamDataSourceD2Ev.exit
 
 _ZN22photos_editing_formats8image_io17IStreamDataSourceD2Ev.exit: ; preds = %_ZNSt10unique_ptrISiSt14default_deleteISiEED2Ev.exit.i, %bb.aq, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i, %bb.au
@@ -524,7 +530,7 @@ bb.aw:                                            ; preds = %bb.av, %bb.m
   br label %bb.ay
 
 bb.ax:                                            ; preds = %bb.e, %_ZN22photos_editing_formats8image_io17IStreamDataSourceD2Ev.exit
-  %.027 = phi i1 [ %18, %_ZN22photos_editing_formats8image_io17IStreamDataSourceD2Ev.exit ], [ false, %bb.e ] ; 2 uses
+  %.027 = phi i1 [ %20, %_ZN22photos_editing_formats8image_io17IStreamDataSourceD2Ev.exit ], [ false, %bb.e ] ; 2 uses
   %i.dd = load ptr, ptr %7, align 8, !tbaa !42    ; 3 uses
   %.not.i50 = icmp eq ptr %i.dd, null
   br i1 %.not.i50, label %_ZNSt10unique_ptrISiSt14default_deleteISiEED2Ev.exit52, label %_ZNKSt14default_deleteISiEclEPSi.exit.i51
@@ -553,14 +559,14 @@ _ZNKSt14default_deleteISoEclEPSo.exit.i.i:        ; preds = %_ZNSt10unique_ptrIS
 
 _ZNSt10unique_ptrISoSt14default_deleteISoEED2Ev.exit.i: ; preds = %_ZNKSt14default_deleteISoEclEPSo.exit.i.i, %_ZNSt10unique_ptrISiSt14default_deleteISiEED2Ev.exit52
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN22photos_editing_formats8image_io25OStreamRefDataDestinationE, i64 16), ptr %5, align 8, !tbaa !40
-  %i.dl = load ptr, ptr %i.g, align 8, !tbaa !58  ; 2 uses
+  %i.dl = load ptr, ptr %i.g, align 8, !tbaa !59  ; 2 uses
   %i.dm = icmp eq ptr %i.dl, %i.h
   br i1 %i.dm, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %_ZNSt10unique_ptrISoSt14default_deleteISoEED2Ev.exit.i
   %i.dn = load i64, ptr %i.h, align 8, !tbaa !38
   %i.do = add i64 %i.dn, 1
-  call void @_ZdlPvm(ptr noundef %i.dl, i64 noundef %i.do) #13, !inline_history !59
+  call void @_ZdlPvm(ptr noundef %i.dl, i64 noundef %i.do) #13, !inline_history !60
   br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i.i
 
 bb.ay:                                            ; preds = %bb.aw, %bb.h
@@ -664,7 +670,7 @@ bb.bf:                                            ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZNSt12__shared_ptrIN22photos_editing_formats8image_io12MessageStatsELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i: ; preds = %bb.bf, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i65, %bb.bb, %_ZNSt10unique_ptrISoSt14default_deleteISoEED2Ev.exit62
   %i.er = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.es = load ptr, ptr %i.er, align 8, !tbaa !61 ; 3 uses
+  %i.es = load ptr, ptr %i.er, align 8, !tbaa !62 ; 3 uses
   %.not.i.i67 = icmp eq ptr %i.es, null
   br i1 %.not.i.i67, label %_ZNSt10unique_ptrIN22photos_editing_formats8image_io12MessageStoreESt14default_deleteIS2_EED2Ev.exit.i, label %_ZNKSt14default_deleteIN22photos_editing_formats8image_io12MessageStoreEEclEPS2_.exit.i.i
 
@@ -676,7 +682,7 @@ _ZNKSt14default_deleteIN22photos_editing_formats8image_io12MessageStoreEEclEPS2_
   br label %_ZNSt10unique_ptrIN22photos_editing_formats8image_io12MessageStoreESt14default_deleteIS2_EED2Ev.exit.i
 
 _ZNSt10unique_ptrIN22photos_editing_formats8image_io12MessageStoreESt14default_deleteIS2_EED2Ev.exit.i: ; preds = %_ZNKSt14default_deleteIN22photos_editing_formats8image_io12MessageStoreEEclEPS2_.exit.i.i, %_ZNSt12__shared_ptrIN22photos_editing_formats8image_io12MessageStatsELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
-  %i.ew = load ptr, ptr %3, align 8, !tbaa !63    ; 3 uses
+  %i.ew = load ptr, ptr %3, align 8, !tbaa !64    ; 3 uses
   %.not.i1.i = icmp eq ptr %i.ew, null
   br i1 %.not.i1.i, label %_ZN22photos_editing_formats8image_io14MessageHandlerD2Ev.exit, label %_ZNKSt14default_deleteIN22photos_editing_formats8image_io13MessageWriterEEclEPS2_.exit.i.i
 
@@ -711,17 +717,17 @@ declare i32 @__gxx_personality_v0(...)
 declare void @_ZN22photos_editing_formats8image_io13OpenInputFileERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEPNS0_14MessageHandlerE(ptr dead_on_unwind writable sret(%"class.std::unique_ptr.18") align 8, ptr noundef nonnull align 8 dereferenceable(32), ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: mustprogress uwtable
-define internal fastcc noundef zeroext i1 @_ZN22photos_editing_formats8image_io10gcontainer12_GLOBAL__N_123ExtractFirstImageInJpegERSiPNS0_14MessageHandlerEPNS0_9DataRangeE(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %1, ptr nofree noundef nonnull writeonly captures(none) %2) unnamed_addr #0 personality ptr @__gxx_personality_v0 !guid !89 {
+define internal fastcc noundef zeroext i1 @_ZN22photos_editing_formats8image_io10gcontainer12_GLOBAL__N_123ExtractFirstImageInJpegERSiPNS0_14MessageHandlerEPNS0_9DataRangeE(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull %1, ptr nofree noundef nonnull writeonly captures(none) %2) unnamed_addr #0 personality ptr @__gxx_personality_v0 !guid !90 {
 bb.a:
   %3 = alloca %"class.photos_editing_formats::image_io::IStreamRefDataSource", align 8 ; 11 uses
   %4 = alloca %"class.photos_editing_formats::image_io::JpegInfoBuilder", align 8 ; 10 uses
   %5 = alloca %"class.photos_editing_formats::image_io::JpegScanner", align 8 ; 10 uses
   %6 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !92
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !93
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, i8 0, i64 24, i1 false)
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.d = load ptr, ptr %i.c, align 8, !tbaa !61   ; 3 uses
+  %i.d = load ptr, ptr %i.c, align 8, !tbaa !62   ; 3 uses
   %.not.i = icmp eq ptr %i.d, null
   br i1 %.not.i, label %_ZN22photos_editing_formats8image_io14MessageHandler13ClearMessagesEv.exit, label %bb.b
 
@@ -729,7 +735,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !40
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.g = load ptr, ptr %i.f, align 8
-  tail call void %i.g(ptr noundef nonnull align 8 dereferenceable(8) %i.d), !inline_history !87
+  tail call void %i.g(ptr noundef nonnull align 8 dereferenceable(8) %i.d), !inline_history !88
   br label %_ZN22photos_editing_formats8image_io14MessageHandler13ClearMessagesEv.exit
 
 _ZN22photos_editing_formats8image_io14MessageHandler13ClearMessagesEv.exit: ; preds = %bb.a, %bb.b
@@ -745,9 +751,9 @@ _ZN22photos_editing_formats8image_io14MessageHandler13ClearMessagesEv.exit: ; pr
 
 bb.c:                                             ; preds = %_ZN22photos_editing_formats8image_io14MessageHandler13ClearMessagesEv.exit
   %i.j = getelementptr inbounds nuw i8, ptr %4, i64 8
-  store i32 1, ptr %i.j, align 8, !tbaa !115
+  store i32 1, ptr %i.j, align 8, !tbaa !116
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
-  store ptr %1, ptr %5, align 8, !tbaa !122
+  store ptr %1, ptr %5, align 8, !tbaa !123
   %i.k = getelementptr inbounds nuw i8, ptr %5, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(90) %i.k, i8 0, i64 90, i1 false)
   invoke void @_ZN22photos_editing_formats8image_io11JpegScanner3RunEPNS0_10DataSourceEPNS0_20JpegSegmentProcessorE(ptr noundef nonnull align 8 dereferenceable(98) %5, ptr noundef nonnull %3, ptr noundef nonnull %4)
@@ -759,7 +765,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 97
-  %i.m = load i8, ptr %i.l, align 1, !tbaa !123, !range !56, !noundef !124
+  %i.m = load i8, ptr %i.l, align 1, !tbaa !124, !range !56, !noundef !57
   %i.n = trunc nuw i8 %i.m to i1
   br i1 %i.n, label %bb.l, label %bb.h
 
@@ -794,7 +800,7 @@ bb.h:                                             ; preds = %bb.e
           to label %bb.i unwind label %bb.j
 
 bb.i:                                             ; preds = %._crit_edge.i.i
-  %i.x = load ptr, ptr %6, align 8, !tbaa !58     ; 2 uses
+  %i.x = load ptr, ptr %6, align 8, !tbaa !59     ; 2 uses
   %i.y = icmp eq ptr %i.x, %i.u
   br i1 %i.y, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
 
@@ -811,7 +817,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.i,
 bb.j:                                             ; preds = %._crit_edge.i.i
   %i.ab = landingpad { ptr, i32 }
           cleanup
-  %i.ac = load ptr, ptr %6, align 8, !tbaa !58    ; 2 uses
+  %i.ac = load ptr, ptr %6, align 8, !tbaa !59    ; 2 uses
   %i.ad = icmp eq ptr %i.ac, %i.u
   br i1 %i.ad, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit27, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i25
 
@@ -850,11 +856,11 @@ bb.n:                                             ; preds = %bb.m
   %i.an = load ptr, ptr %i.ah, align 8, !tbaa !40
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 16
   %i.ap = load ptr, ptr %i.ao, align 8
-  call void %i.ap(ptr noundef nonnull align 8 dereferenceable(16) %i.ah) #12, !inline_history !88
+  call void %i.ap(ptr noundef nonnull align 8 dereferenceable(16) %i.ah) #12, !inline_history !89
   %i.aq = load ptr, ptr %i.ah, align 8, !tbaa !40
   %i.ar = getelementptr inbounds nuw i8, ptr %i.aq, i64 24
   %i.as = load ptr, ptr %i.ar, align 8
-  call void %i.as(ptr noundef nonnull align 8 dereferenceable(16) %i.ah) #12, !inline_history !88
+  call void %i.as(ptr noundef nonnull align 8 dereferenceable(16) %i.ah) #12, !inline_history !89
   br label %_ZNSt12__shared_ptrIN22photos_editing_formats8image_io11DataSegmentELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
 
 bb.o:                                             ; preds = %bb.m
@@ -900,11 +906,11 @@ bb.t:                                             ; preds = %bb.s
   %i.be = load ptr, ptr %i.ay, align 8, !tbaa !40
   %i.bf = getelementptr inbounds nuw i8, ptr %i.be, i64 16
   %i.bg = load ptr, ptr %i.bf, align 8
-  call void %i.bg(ptr noundef nonnull align 8 dereferenceable(16) %i.ay) #12, !inline_history !88
+  call void %i.bg(ptr noundef nonnull align 8 dereferenceable(16) %i.ay) #12, !inline_history !89
   %i.bh = load ptr, ptr %i.ay, align 8, !tbaa !40
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 24
   %i.bj = load ptr, ptr %i.bi, align 8
-  call void %i.bj(ptr noundef nonnull align 8 dereferenceable(16) %i.ay) #12, !inline_history !88
+  call void %i.bj(ptr noundef nonnull align 8 dereferenceable(16) %i.ay) #12, !inline_history !89
   br label %_ZN22photos_editing_formats8image_io11JpegScannerD2Ev.exit
 
 bb.u:                                             ; preds = %bb.s
@@ -1230,7 +1236,7 @@ _ZNKSt14default_deleteISoEclEPSo.exit.i:          ; preds = %bb.a
 _ZNSt10unique_ptrISoSt14default_deleteISoEED2Ev.exit: ; preds = %bb.a, %_ZNKSt14default_deleteISoEclEPSo.exit.i
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN22photos_editing_formats8image_io25OStreamRefDataDestinationE, i64 16), ptr %0, align 8, !tbaa !40
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !58   ; 2 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !59   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.i = icmp eq ptr %i.g, %i.h
   br i1 %i.i, label %_ZN22photos_editing_formats8image_io25OStreamRefDataDestinationD2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
@@ -1299,7 +1305,7 @@ bb.g:                                             ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZNSt12__shared_ptrIN22photos_editing_formats8image_io12MessageStatsELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.a, %bb.c, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i, %bb.g
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.s = load ptr, ptr %i.r, align 8, !tbaa !61   ; 3 uses
+  %i.s = load ptr, ptr %i.r, align 8, !tbaa !62   ; 3 uses
   %.not.i = icmp eq ptr %i.s, null
   br i1 %.not.i, label %_ZNSt10unique_ptrIN22photos_editing_formats8image_io12MessageStoreESt14default_deleteIS2_EED2Ev.exit, label %_ZNKSt14default_deleteIN22photos_editing_formats8image_io12MessageStoreEEclEPS2_.exit.i
 
@@ -1311,7 +1317,7 @@ _ZNKSt14default_deleteIN22photos_editing_formats8image_io12MessageStoreEEclEPS2_
   br label %_ZNSt10unique_ptrIN22photos_editing_formats8image_io12MessageStoreESt14default_deleteIS2_EED2Ev.exit
 
 _ZNSt10unique_ptrIN22photos_editing_formats8image_io12MessageStoreESt14default_deleteIS2_EED2Ev.exit: ; preds = %_ZNSt12__shared_ptrIN22photos_editing_formats8image_io12MessageStatsELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit, %_ZNKSt14default_deleteIN22photos_editing_formats8image_io12MessageStoreEEclEPS2_.exit.i
-  %i.w = load ptr, ptr %0, align 8, !tbaa !63     ; 3 uses
+  %i.w = load ptr, ptr %0, align 8, !tbaa !64     ; 3 uses
   %.not.i1 = icmp eq ptr %i.w, null
   br i1 %.not.i1, label %_ZNSt10unique_ptrIN22photos_editing_formats8image_io13MessageWriterESt14default_deleteIS2_EED2Ev.exit, label %_ZNKSt14default_deleteIN22photos_editing_formats8image_io13MessageWriterEEclEPS2_.exit.i
 
@@ -1402,7 +1408,7 @@ bb.f:                                             ; preds = %bb.e
           to label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit unwind label %bb.g
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6resizeEm.exit: ; preds = %bb.f
-  %i.o = load ptr, ptr %3, align 8, !tbaa !58
+  %i.o = load ptr, ptr %3, align 8, !tbaa !59
   %i.p = invoke noundef nonnull align 8 dereferenceable(16) ptr @_ZNSi4readEPcl(ptr noundef nonnull align 8 dereferenceable(16) %2, ptr noundef nonnull %i.o, i64 noundef %spec.select.i)
           to label %bb.h unwind label %bb.g       ; 0 uses
 
@@ -1467,7 +1473,7 @@ bb.n:                                             ; preds = %_ZN9__gnu_cxx27__ex
 
 _ZNSt12__shared_ptrIN22photos_editing_formats8image_io12MessageStatsELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i: ; preds = %bb.n, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i, %bb.j, %bb.h
   %i.ai = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !61 ; 3 uses
+  %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !62 ; 3 uses
   %.not.i.i = icmp eq ptr %i.aj, null
   br i1 %.not.i.i, label %_ZNSt10unique_ptrIN22photos_editing_formats8image_io12MessageStoreESt14default_deleteIS2_EED2Ev.exit.i, label %_ZNKSt14default_deleteIN22photos_editing_formats8image_io12MessageStoreEEclEPS2_.exit.i.i
 
@@ -1479,7 +1485,7 @@ _ZNKSt14default_deleteIN22photos_editing_formats8image_io12MessageStoreEEclEPS2_
   br label %_ZNSt10unique_ptrIN22photos_editing_formats8image_io12MessageStoreESt14default_deleteIS2_EED2Ev.exit.i
 
 _ZNSt10unique_ptrIN22photos_editing_formats8image_io12MessageStoreESt14default_deleteIS2_EED2Ev.exit.i: ; preds = %_ZNKSt14default_deleteIN22photos_editing_formats8image_io12MessageStoreEEclEPS2_.exit.i.i, %_ZNSt12__shared_ptrIN22photos_editing_formats8image_io12MessageStatsELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit.i
-  %i.an = load ptr, ptr %5, align 8, !tbaa !63    ; 3 uses
+  %i.an = load ptr, ptr %5, align 8, !tbaa !64    ; 3 uses
   %.not.i1.i = icmp eq ptr %i.an, null
   br i1 %.not.i1.i, label %_ZN22photos_editing_formats8image_io14MessageHandlerD2Ev.exit, label %_ZNKSt14default_deleteIN22photos_editing_formats8image_io13MessageWriterEEclEPS2_.exit.i.i
 
@@ -1528,7 +1534,7 @@ _ZNKSt14default_deleteISoEclEPSo.exit.i.i:        ; preds = %bb.a
 _ZNSt10unique_ptrISoSt14default_deleteISoEED2Ev.exit.i: ; preds = %_ZNKSt14default_deleteISoEclEPSo.exit.i.i, %bb.a
   store ptr getelementptr inbounds nuw inrange(-16, 48) (i8, ptr @_ZTVN22photos_editing_formats8image_io25OStreamRefDataDestinationE, i64 16), ptr %0, align 8, !tbaa !40
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !58   ; 2 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !59   ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.i = icmp eq ptr %i.g, %i.h
   br i1 %i.i, label %_ZN22photos_editing_formats8image_io22OStreamDataDestinationD2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
@@ -1536,7 +1542,7 @@ _ZNSt10unique_ptrISoSt14default_deleteISoEED2Ev.exit.i: ; preds = %_ZNKSt14defau
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i: ; preds = %_ZNSt10unique_ptrISoSt14default_deleteISoEED2Ev.exit.i
   %i.j = load i64, ptr %i.h, align 8, !tbaa !38
   %i.k = add i64 %i.j, 1
-  tail call void @_ZdlPvm(ptr noundef %i.g, i64 noundef %i.k) #13, !inline_history !59
+  tail call void @_ZdlPvm(ptr noundef %i.g, i64 noundef %i.k) #13, !inline_history !60
   br label %_ZN22photos_editing_formats8image_io22OStreamDataDestinationD2Ev.exit
 
 _ZN22photos_editing_formats8image_io22OStreamDataDestinationD2Ev.exit: ; preds = %_ZNSt10unique_ptrISoSt14default_deleteISoEED2Ev.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
@@ -1699,13 +1705,13 @@ _ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 232
   tail call void @_ZN22photos_editing_formats8image_io8JpegInfoD2Ev(ptr noundef nonnull align 8 dead_on_return(104) dereferenceable(104) %i.f) #12
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 192
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !76   ; 3 uses
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !77   ; 3 uses
   %.not.i.i.i.i = icmp eq ptr %i.h, null
   br i1 %.not.i.i.i.i, label %_ZN22photos_editing_formats8image_io18JpegXmpInfoBuilderD2Ev.exit, label %bb.c
 
 bb.c:                                             ; preds = %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EED2Ev.exit
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 208
-  %i.j = load ptr, ptr %i.i, align 8, !tbaa !77
+  %i.j = load ptr, ptr %i.i, align 8, !tbaa !78
   %i.k = ptrtoint ptr %i.j to i64
   %i.l = ptrtoint ptr %i.h to i64
   %i.m = sub i64 %i.k, %i.l
@@ -1714,13 +1720,13 @@ bb.c:                                             ; preds = %_ZNSt3setINSt7__cxx
 
 _ZN22photos_editing_formats8image_io18JpegXmpInfoBuilderD2Ev.exit: ; preds = %_ZNSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EED2Ev.exit, %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 144
-  %i.o = load ptr, ptr %i.n, align 8, !tbaa !76   ; 3 uses
+  %i.o = load ptr, ptr %i.n, align 8, !tbaa !77   ; 3 uses
   %.not.i.i.i.i1 = icmp eq ptr %i.o, null
   br i1 %.not.i.i.i.i1, label %_ZN22photos_editing_formats8image_io18JpegXmpInfoBuilderD2Ev.exit2, label %bb.d
 
 bb.d:                                             ; preds = %_ZN22photos_editing_formats8image_io18JpegXmpInfoBuilderD2Ev.exit
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 160
-  %i.q = load ptr, ptr %i.p, align 8, !tbaa !77
+  %i.q = load ptr, ptr %i.p, align 8, !tbaa !78
   %i.r = ptrtoint ptr %i.q to i64
   %i.s = ptrtoint ptr %i.o to i64
   %i.t = sub i64 %i.r, %i.s
@@ -1729,7 +1735,7 @@ bb.d:                                             ; preds = %_ZN22photos_editing
 
 _ZN22photos_editing_formats8image_io18JpegXmpInfoBuilderD2Ev.exit2: ; preds = %_ZN22photos_editing_formats8image_io18JpegXmpInfoBuilderD2Ev.exit, %bb.d
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 104
-  %i.v = load ptr, ptr %i.u, align 8, !tbaa !58   ; 2 uses
+  %i.v = load ptr, ptr %i.u, align 8, !tbaa !59   ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   %i.x = icmp eq ptr %i.v, %i.w
   br i1 %i.x, label %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
@@ -1862,13 +1868,13 @@ bb.a:
 .lr.ph.i.i.i:                                     ; preds = %bb.a, %_ZSt8_DestroyIN22photos_editing_formats8image_io11JpegXmpInfoEEvPT_.exit.i.i.i
   %.05.i.i.i = phi ptr [ %i.r, %_ZSt8_DestroyIN22photos_editing_formats8image_io11JpegXmpInfoEEvPT_.exit.i.i.i ], [ %i.b, %bb.a ] ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 40
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !76   ; 3 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !77   ; 3 uses
   %.not.i.i.i.i.i.i.i.i = icmp eq ptr %i.f, null
   br i1 %.not.i.i.i.i.i.i.i.i, label %_ZNSt6vectorIN22photos_editing_formats8image_io9DataRangeESaIS2_EED2Ev.exit.i.i.i.i.i, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.i.i.i
   %i.g = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 56
-  %i.h = load ptr, ptr %i.g, align 8, !tbaa !77
+  %i.h = load ptr, ptr %i.g, align 8, !tbaa !78
   %i.i = ptrtoint ptr %i.h to i64
   %i.j = ptrtoint ptr %i.f to i64
   %i.k = sub i64 %i.i, %i.j
@@ -1877,7 +1883,7 @@ bb.b:                                             ; preds = %.lr.ph.i.i.i
 
 _ZNSt6vectorIN22photos_editing_formats8image_io9DataRangeESaIS2_EED2Ev.exit.i.i.i.i.i: ; preds = %bb.b, %.lr.ph.i.i.i
   %i.l = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 8
-  %i.m = load ptr, ptr %i.l, align 8, !tbaa !58   ; 2 uses
+  %i.m = load ptr, ptr %i.l, align 8, !tbaa !59   ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %.05.i.i.i, i64 24 ; 2 uses
   %i.o = icmp eq ptr %i.m, %i.n
   br i1 %i.o, label %_ZSt8_DestroyIN22photos_editing_formats8image_io11JpegXmpInfoEEvPT_.exit.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i
@@ -1937,7 +1943,7 @@ bb.d:                                             ; preds = %.lr.ph.i.i.i2
 
 _ZNSt6vectorIhSaIhEED2Ev.exit.i.i.i.i.i:          ; preds = %bb.d, %.lr.ph.i.i.i2
   %i.aj = getelementptr inbounds nuw i8, ptr %.05.i.i.i3, i64 24
-  %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !58 ; 2 uses
+  %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !59 ; 2 uses
   %i.al = getelementptr inbounds nuw i8, ptr %.05.i.i.i3, i64 40 ; 2 uses
   %i.am = icmp eq ptr %i.ak, %i.al
   br i1 %i.am, label %_ZSt8_DestroyIN22photos_editing_formats8image_io15JpegSegmentInfoEEvPT_.exit.i.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i5
@@ -1972,13 +1978,13 @@ bb.e:                                             ; preds = %_ZSt8_DestroyIPN22p
   br label %_ZNSt6vectorIN22photos_editing_formats8image_io15JpegSegmentInfoESaIS2_EED2Ev.exit
 
 _ZNSt6vectorIN22photos_editing_formats8image_io15JpegSegmentInfoESaIS2_EED2Ev.exit: ; preds = %_ZSt8_DestroyIPN22photos_editing_formats8image_io15JpegSegmentInfoES2_EvT_S4_RSaIT0_E.exit.i, %bb.e
-  %i.aw = load ptr, ptr %0, align 8, !tbaa !76    ; 3 uses
+  %i.aw = load ptr, ptr %0, align 8, !tbaa !77    ; 3 uses
   %.not.i.i.i10 = icmp eq ptr %i.aw, null
   br i1 %.not.i.i.i10, label %_ZNSt6vectorIN22photos_editing_formats8image_io9DataRangeESaIS2_EED2Ev.exit, label %bb.f
 
 bb.f:                                             ; preds = %_ZNSt6vectorIN22photos_editing_formats8image_io15JpegSegmentInfoESaIS2_EED2Ev.exit
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !77
+  %i.ay = load ptr, ptr %i.ax, align 8, !tbaa !78
   %i.az = ptrtoint ptr %i.ay to i64
   %i.ba = ptrtoint ptr %i.aw to i64
   %i.bb = sub i64 %i.az, %i.ba
@@ -2003,7 +2009,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %.07, i64 16
   %i.d = load ptr, ptr %i.c, align 8, !tbaa !161  ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %.07, i64 32
-  %i.f = load ptr, ptr %i.e, align 8, !tbaa !58   ; 2 uses
+  %i.f = load ptr, ptr %i.e, align 8, !tbaa !59   ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.07, i64 48 ; 2 uses
   %i.h = icmp eq ptr %i.f, %i.g
   br i1 %i.h, label %_ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St9_IdentityIS5_ESt4lessIS5_ESaIS5_EE12_M_drop_nodeEPSt13_Rb_tree_nodeIS5_E.exit, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
@@ -2087,7 +2093,7 @@ _ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i: ; preds = %bb.f, 
   br i1 %i.v, label %bb.g, label %_ZN22photos_editing_formats8image_io17IStreamDataSourceD2Ev.exit, !prof !55
 
 bb.g:                                             ; preds = %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i
-  tail call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.g) #12, !inline_history !57
+  tail call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.g) #12, !inline_history !58
   br label %_ZN22photos_editing_formats8image_io17IStreamDataSourceD2Ev.exit
 
 _ZN22photos_editing_formats8image_io17IStreamDataSourceD2Ev.exit: ; preds = %_ZNSt10unique_ptrISiSt14default_deleteISiEED2Ev.exit.i, %bb.c, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i.i, %bb.g
@@ -2221,75 +2227,75 @@ attributes #15 = { noreturn nounwind }
 !54 = !{!52, !15, i64 12}
 !55 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !56 = !{i8 0, i8 2}
-!57 = !{ptr @_ZN22photos_editing_formats8image_io17IStreamDataSourceD2Ev}
-!58 = !{!32, !30, i64 0}
-!59 = !{ptr @_ZN22photos_editing_formats8image_io22OStreamDataDestinationD2Ev}
-!60 = !{!"p1 _ZTSN22photos_editing_formats8image_io12MessageStoreE", !24, i64 0}
-!61 = !{!60, !60, i64 0}
-!62 = !{!"p1 _ZTSN22photos_editing_formats8image_io13MessageWriterE", !24, i64 0}
-!63 = !{!62, !62, i64 0}
-!64 = !{!"p1 int", !24, i64 0}
-!65 = !{!"_ZTSNSt12_Vector_baseIiSaIiEE17_Vector_impl_dataE", !64, i64 0, !64, i64 8, !64, i64 16}
-!66 = !{!"p1 _ZTSN22photos_editing_formats8image_io9DataRangeE", !24, i64 0}
-!67 = !{!"_ZTSNSt12_Vector_baseIN22photos_editing_formats8image_io9DataRangeESaIS2_EE17_Vector_impl_dataE", !66, i64 0, !66, i64 8, !66, i64 16}
-!68 = !{!"p1 _ZTSN22photos_editing_formats8image_io15JpegSegmentInfoE", !24, i64 0}
-!69 = !{!"_ZTSNSt12_Vector_baseIN22photos_editing_formats8image_io15JpegSegmentInfoESaIS2_EE17_Vector_impl_dataE", !68, i64 0, !68, i64 8, !68, i64 16}
-!70 = !{!"p1 _ZTSN22photos_editing_formats8image_io11JpegXmpInfoE", !24, i64 0}
-!71 = !{!"_ZTSNSt12_Vector_baseIN22photos_editing_formats8image_io11JpegXmpInfoESaIS2_EE17_Vector_impl_dataE", !70, i64 0, !70, i64 8, !70, i64 16}
-!72 = !{!"_ZTSSt14_Rb_tree_color", !14, i64 0}
-!73 = !{!"p1 _ZTSSt18_Rb_tree_node_base", !24, i64 0}
-!74 = !{!"_ZTSSt18_Rb_tree_node_base", !72, i64 0, !73, i64 8, !73, i64 16, !73, i64 24}
-!75 = !{!"_ZTSSt15_Rb_tree_header", !74, i64 0, !29, i64 32}
-!76 = !{!67, !66, i64 0}
-!77 = !{!67, !66, i64 16}
-!78 = !{!"llvm.loop.mustprogress"}
-!79 = distinct !{ptr @_ZN22photos_editing_formats8image_io21DataSegmentDataSourceD2Ev, ptr @_ZNSt12__shared_ptrIN22photos_editing_formats8image_io11DataSegmentELN9__gnu_cxx12_Lock_policyE2EED2Ev, null, null}
-!80 = !{i64 -889416479599222447}
-!81 = !{!34, !28, i64 16}
-!82 = !{!34, !33, i64 64}
-!83 = !{!43, !29, i64 0}
-!84 = !{!"p1 _ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !24, i64 0}
-!85 = !{!84, !84, i64 0}
-!86 = !{!48, !45, i64 0}
-!87 = distinct !{null}
-!88 = distinct !{ptr @_ZN22photos_editing_formats8image_io11JpegScannerD2Ev, ptr @_ZNSt12__shared_ptrIN22photos_editing_formats8image_io11DataSegmentELN9__gnu_cxx12_Lock_policyE2EED2Ev, null, null}
-!89 = !{i64 2814715786650970825}
-!90 = !{!"p1 _ZTSN22photos_editing_formats8image_io12MessageStatsE", !24, i64 0}
-!91 = !{!"_ZTSSt12__shared_ptrIN22photos_editing_formats8image_io12MessageStatsELN9__gnu_cxx12_Lock_policyE2EE", !90, i64 0, !47, i64 8}
-!92 = !{!91, !90, i64 0}
-!93 = !{!"_ZTSN22photos_editing_formats8image_io20JpegSegmentProcessorE"}
-!94 = !{!"_ZTSNSt12_Vector_baseIiSaIiEE12_Vector_implE", !65, i64 0}
-!95 = !{!"_ZTSSt12_Vector_baseIiSaIiEE", !94, i64 0}
-!96 = !{!"_ZTSSt6vectorIiSaIiEE", !95, i64 0}
-!97 = !{!"_ZTSN22photos_editing_formats8image_io11JpegXmpInfo4TypeE", !14, i64 0}
-!98 = !{!"_ZTSNSt12_Vector_baseIN22photos_editing_formats8image_io9DataRangeESaIS2_EE12_Vector_implE", !67, i64 0}
-!99 = !{!"_ZTSSt12_Vector_baseIN22photos_editing_formats8image_io9DataRangeESaIS2_EE", !98, i64 0}
-!100 = !{!"_ZTSSt6vectorIN22photos_editing_formats8image_io9DataRangeESaIS2_EE", !99, i64 0}
-!101 = !{!"_ZTSN22photos_editing_formats8image_io18JpegXmpInfoBuilderE", !97, i64 0, !100, i64 8, !43, i64 32}
-!102 = !{!"_ZTSNSt12_Vector_baseIN22photos_editing_formats8image_io15JpegSegmentInfoESaIS2_EE12_Vector_implE", !69, i64 0}
-!103 = !{!"_ZTSSt12_Vector_baseIN22photos_editing_formats8image_io15JpegSegmentInfoESaIS2_EE", !102, i64 0}
-!104 = !{!"_ZTSSt6vectorIN22photos_editing_formats8image_io15JpegSegmentInfoESaIS2_EE", !103, i64 0}
-!105 = !{!"_ZTSNSt12_Vector_baseIN22photos_editing_formats8image_io11JpegXmpInfoESaIS2_EE12_Vector_implE", !71, i64 0}
-!106 = !{!"_ZTSSt12_Vector_baseIN22photos_editing_formats8image_io11JpegXmpInfoESaIS2_EE", !105, i64 0}
-!107 = !{!"_ZTSSt6vectorIN22photos_editing_formats8image_io11JpegXmpInfoESaIS2_EE", !106, i64 0}
-!108 = !{!"_ZTSN22photos_editing_formats8image_io8JpegInfoE", !100, i64 0, !104, i64 24, !43, i64 48, !43, i64 64, !107, i64 80}
-!109 = !{!"_ZTSSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE"}
-!110 = !{!"_ZTSSt20_Rb_tree_key_compareISt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE", !109, i64 0}
-!111 = !{!"_ZTSNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St9_IdentityIS5_ESt4lessIS5_ESaIS5_EE13_Rb_tree_implIS9_Lb1EEE", !110, i64 0, !75, i64 8}
-!112 = !{!"_ZTSSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St9_IdentityIS5_ESt4lessIS5_ESaIS5_EE", !111, i64 0}
-!113 = !{!"_ZTSSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EE", !112, i64 0}
-!114 = !{!"_ZTSN22photos_editing_formats8image_io15JpegInfoBuilderE", !93, i64 0, !15, i64 8, !15, i64 12, !96, i64 16, !96, i64 40, !96, i64 64, !43, i64 88, !32, i64 104, !101, i64 136, !101, i64 184, !108, i64 232, !113, i64 336}
-!115 = !{!114, !15, i64 8}
-!116 = !{!"p1 _ZTSN22photos_editing_formats8image_io10DataSourceE", !24, i64 0}
-!117 = !{!"p1 _ZTSN22photos_editing_formats8image_io20JpegSegmentProcessorE", !24, i64 0}
-!118 = !{!"_ZTSSt12_Base_bitsetILm4EE", !14, i64 0}
-!119 = !{!"_ZTSSt6bitsetILm256EE", !118, i64 0}
-!120 = !{!"_ZTSSt10shared_ptrIN22photos_editing_formats8image_io11DataSegmentEE", !48, i64 0}
-!121 = !{!"_ZTSN22photos_editing_formats8image_io11JpegScannerE", !28, i64 0, !116, i64 8, !117, i64 16, !119, i64 24, !120, i64 56, !120, i64 72, !29, i64 88, !33, i64 96, !33, i64 97}
-!122 = !{!121, !28, i64 0}
-!123 = !{!121, !33, i64 97}
-!124 = !{}
-!125 = !{!66, !66, i64 0}
+!57 = !{}
+!58 = !{ptr @_ZN22photos_editing_formats8image_io17IStreamDataSourceD2Ev}
+!59 = !{!32, !30, i64 0}
+!60 = !{ptr @_ZN22photos_editing_formats8image_io22OStreamDataDestinationD2Ev}
+!61 = !{!"p1 _ZTSN22photos_editing_formats8image_io12MessageStoreE", !24, i64 0}
+!62 = !{!61, !61, i64 0}
+!63 = !{!"p1 _ZTSN22photos_editing_formats8image_io13MessageWriterE", !24, i64 0}
+!64 = !{!63, !63, i64 0}
+!65 = !{!"p1 int", !24, i64 0}
+!66 = !{!"_ZTSNSt12_Vector_baseIiSaIiEE17_Vector_impl_dataE", !65, i64 0, !65, i64 8, !65, i64 16}
+!67 = !{!"p1 _ZTSN22photos_editing_formats8image_io9DataRangeE", !24, i64 0}
+!68 = !{!"_ZTSNSt12_Vector_baseIN22photos_editing_formats8image_io9DataRangeESaIS2_EE17_Vector_impl_dataE", !67, i64 0, !67, i64 8, !67, i64 16}
+!69 = !{!"p1 _ZTSN22photos_editing_formats8image_io15JpegSegmentInfoE", !24, i64 0}
+!70 = !{!"_ZTSNSt12_Vector_baseIN22photos_editing_formats8image_io15JpegSegmentInfoESaIS2_EE17_Vector_impl_dataE", !69, i64 0, !69, i64 8, !69, i64 16}
+!71 = !{!"p1 _ZTSN22photos_editing_formats8image_io11JpegXmpInfoE", !24, i64 0}
+!72 = !{!"_ZTSNSt12_Vector_baseIN22photos_editing_formats8image_io11JpegXmpInfoESaIS2_EE17_Vector_impl_dataE", !71, i64 0, !71, i64 8, !71, i64 16}
+!73 = !{!"_ZTSSt14_Rb_tree_color", !14, i64 0}
+!74 = !{!"p1 _ZTSSt18_Rb_tree_node_base", !24, i64 0}
+!75 = !{!"_ZTSSt18_Rb_tree_node_base", !73, i64 0, !74, i64 8, !74, i64 16, !74, i64 24}
+!76 = !{!"_ZTSSt15_Rb_tree_header", !75, i64 0, !29, i64 32}
+!77 = !{!68, !67, i64 0}
+!78 = !{!68, !67, i64 16}
+!79 = !{!"llvm.loop.mustprogress"}
+!80 = distinct !{ptr @_ZN22photos_editing_formats8image_io21DataSegmentDataSourceD2Ev, ptr @_ZNSt12__shared_ptrIN22photos_editing_formats8image_io11DataSegmentELN9__gnu_cxx12_Lock_policyE2EED2Ev, null, null}
+!81 = !{i64 -889416479599222447}
+!82 = !{!34, !28, i64 16}
+!83 = !{!34, !33, i64 64}
+!84 = !{!43, !29, i64 0}
+!85 = !{!"p1 _ZTSNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE", !24, i64 0}
+!86 = !{!85, !85, i64 0}
+!87 = !{!48, !45, i64 0}
+!88 = distinct !{null}
+!89 = distinct !{ptr @_ZN22photos_editing_formats8image_io11JpegScannerD2Ev, ptr @_ZNSt12__shared_ptrIN22photos_editing_formats8image_io11DataSegmentELN9__gnu_cxx12_Lock_policyE2EED2Ev, null, null}
+!90 = !{i64 2814715786650970825}
+!91 = !{!"p1 _ZTSN22photos_editing_formats8image_io12MessageStatsE", !24, i64 0}
+!92 = !{!"_ZTSSt12__shared_ptrIN22photos_editing_formats8image_io12MessageStatsELN9__gnu_cxx12_Lock_policyE2EE", !91, i64 0, !47, i64 8}
+!93 = !{!92, !91, i64 0}
+!94 = !{!"_ZTSN22photos_editing_formats8image_io20JpegSegmentProcessorE"}
+!95 = !{!"_ZTSNSt12_Vector_baseIiSaIiEE12_Vector_implE", !66, i64 0}
+!96 = !{!"_ZTSSt12_Vector_baseIiSaIiEE", !95, i64 0}
+!97 = !{!"_ZTSSt6vectorIiSaIiEE", !96, i64 0}
+!98 = !{!"_ZTSN22photos_editing_formats8image_io11JpegXmpInfo4TypeE", !14, i64 0}
+!99 = !{!"_ZTSNSt12_Vector_baseIN22photos_editing_formats8image_io9DataRangeESaIS2_EE12_Vector_implE", !68, i64 0}
+!100 = !{!"_ZTSSt12_Vector_baseIN22photos_editing_formats8image_io9DataRangeESaIS2_EE", !99, i64 0}
+!101 = !{!"_ZTSSt6vectorIN22photos_editing_formats8image_io9DataRangeESaIS2_EE", !100, i64 0}
+!102 = !{!"_ZTSN22photos_editing_formats8image_io18JpegXmpInfoBuilderE", !98, i64 0, !101, i64 8, !43, i64 32}
+!103 = !{!"_ZTSNSt12_Vector_baseIN22photos_editing_formats8image_io15JpegSegmentInfoESaIS2_EE12_Vector_implE", !70, i64 0}
+!104 = !{!"_ZTSSt12_Vector_baseIN22photos_editing_formats8image_io15JpegSegmentInfoESaIS2_EE", !103, i64 0}
+!105 = !{!"_ZTSSt6vectorIN22photos_editing_formats8image_io15JpegSegmentInfoESaIS2_EE", !104, i64 0}
+!106 = !{!"_ZTSNSt12_Vector_baseIN22photos_editing_formats8image_io11JpegXmpInfoESaIS2_EE12_Vector_implE", !72, i64 0}
+!107 = !{!"_ZTSSt12_Vector_baseIN22photos_editing_formats8image_io11JpegXmpInfoESaIS2_EE", !106, i64 0}
+!108 = !{!"_ZTSSt6vectorIN22photos_editing_formats8image_io11JpegXmpInfoESaIS2_EE", !107, i64 0}
+!109 = !{!"_ZTSN22photos_editing_formats8image_io8JpegInfoE", !101, i64 0, !105, i64 24, !43, i64 48, !43, i64 64, !108, i64 80}
+!110 = !{!"_ZTSSt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE"}
+!111 = !{!"_ZTSSt20_Rb_tree_key_compareISt4lessINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE", !110, i64 0}
+!112 = !{!"_ZTSNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St9_IdentityIS5_ESt4lessIS5_ESaIS5_EE13_Rb_tree_implIS9_Lb1EEE", !111, i64 0, !76, i64 8}
+!113 = !{!"_ZTSSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEES5_St9_IdentityIS5_ESt4lessIS5_ESaIS5_EE", !112, i64 0}
+!114 = !{!"_ZTSSt3setINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4lessIS5_ESaIS5_EE", !113, i64 0}
+!115 = !{!"_ZTSN22photos_editing_formats8image_io15JpegInfoBuilderE", !94, i64 0, !15, i64 8, !15, i64 12, !97, i64 16, !97, i64 40, !97, i64 64, !43, i64 88, !32, i64 104, !102, i64 136, !102, i64 184, !109, i64 232, !114, i64 336}
+!116 = !{!115, !15, i64 8}
+!117 = !{!"p1 _ZTSN22photos_editing_formats8image_io10DataSourceE", !24, i64 0}
+!118 = !{!"p1 _ZTSN22photos_editing_formats8image_io20JpegSegmentProcessorE", !24, i64 0}
+!119 = !{!"_ZTSSt12_Base_bitsetILm4EE", !14, i64 0}
+!120 = !{!"_ZTSSt6bitsetILm256EE", !119, i64 0}
+!121 = !{!"_ZTSSt10shared_ptrIN22photos_editing_formats8image_io11DataSegmentEE", !48, i64 0}
+!122 = !{!"_ZTSN22photos_editing_formats8image_io11JpegScannerE", !28, i64 0, !117, i64 8, !118, i64 16, !120, i64 24, !121, i64 56, !121, i64 72, !29, i64 88, !33, i64 96, !33, i64 97}
+!123 = !{!122, !28, i64 0}
+!124 = !{!122, !33, i64 97}
+!125 = !{!67, !67, i64 0}
 !126 = !{i64 8475216465593584673}
 !127 = distinct !{null, null}
 !128 = !{i64 8986616616557952690}
@@ -2306,26 +2312,26 @@ attributes #15 = { noreturn nounwind }
 !139 = !{i64 1080103601501470593}
 !140 = !{i64 -6199317989715737582}
 !141 = !{i64 8676029262094392585}
-!142 = !{!75, !73, i64 8}
-!143 = !{!65, !64, i64 0}
-!144 = !{!65, !64, i64 16}
+!142 = !{!76, !74, i64 8}
+!143 = !{!66, !65, i64 0}
+!144 = !{!66, !65, i64 16}
 !145 = !{i64 4616944572757209602}
-!146 = distinct !{!146, !78}
-!147 = distinct !{!147, !78}
+!146 = distinct !{!146, !79}
+!147 = distinct !{!147, !79}
 !148 = !{i64 -1544981303869942557}
-!149 = !{!71, !70, i64 0}
-!150 = !{!71, !70, i64 8}
-!151 = !{!71, !70, i64 16}
-!152 = !{!69, !68, i64 0}
-!153 = !{!69, !68, i64 8}
+!149 = !{!72, !71, i64 0}
+!150 = !{!72, !71, i64 8}
+!151 = !{!72, !71, i64 16}
+!152 = !{!70, !69, i64 0}
+!153 = !{!70, !69, i64 8}
 !154 = !{!"_ZTSNSt12_Vector_baseIhSaIhEE17_Vector_impl_dataE", !30, i64 0, !30, i64 8, !30, i64 16}
 !155 = !{!154, !30, i64 0}
 !156 = !{!154, !30, i64 16}
-!157 = !{!69, !68, i64 16}
-!158 = distinct !{!158, !78}
+!157 = !{!70, !69, i64 16}
+!158 = distinct !{!158, !79}
 !159 = !{i64 -2076133162968456094}
-!160 = !{!74, !73, i64 24}
-!161 = !{!74, !73, i64 16}
+!160 = !{!75, !74, i64 24}
+!161 = !{!75, !74, i64 16}
 !162 = !{i64 6090866691582951211}
 !163 = distinct !{null}
 !164 = !{i64 -227505617863360783}

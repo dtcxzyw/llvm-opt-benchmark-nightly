@@ -205,15 +205,20 @@ declare void @_Z18layout_button_gridN4core8vector2dIjEEP20ISimpleTextureSourceRK
 
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_ZN13TouchControls16updateVisibilityEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(712) %0) local_unnamed_addr #0 align 2 {
-bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  %2 = load i8, ptr %1, align 8, !tbaa !111, !range !199, !noundef !155
-  %3 = trunc nuw i8 %2 to i1
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 448 ; 2 uses
-  %5 = load i8, ptr %4, align 8, !range !199
-  %6 = trunc nuw i8 %5 to i1
-  %7 = xor i1 %6, true
-  %8 = select i1 %3, i1 %7, i1 false              ; 5 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %3 = load i8, ptr %2, align 8, !tbaa !111, !range !199, !noundef !155
+  %4 = trunc nuw i8 %3 to i1
+  br i1 %4, label %5, label %bb.a
+
+5:                                                ; preds = %1
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 448
+  %7 = load i8, ptr %6, align 8, !tbaa !213, !range !199, !noundef !155
+  %8 = trunc nuw i8 %7 to i1
+  %9 = xor i1 %8, true
+  br label %bb.a
+
+bb.a:                                             ; preds = %5, %1
+  %10 = phi i1 [ false, %1 ], [ %9, %5 ]          ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 408
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !100  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 416
@@ -227,10 +232,10 @@ bb.a:
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !83
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 120
   %i.i = load ptr, ptr %i.h, align 8
-  tail call void %i.i(ptr noundef nonnull align 8 dereferenceable(308) %i.f, i1 noundef zeroext %8)
+  tail call void %i.i(ptr noundef nonnull align 8 dereferenceable(308) %i.f, i1 noundef zeroext %10)
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 360
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !99   ; 2 uses
-  br i1 %8, label %bb.b, label %bb.c
+  br i1 %10, label %bb.b, label %bb.c
 
 .lr.ph:                                           ; preds = %bb.a, %.lr.ph
   %.sroa.025.031 = phi ptr [ %i.q, %.lr.ph ], [ %i.b, %bb.a ] ; 2 uses
@@ -239,14 +244,14 @@ bb.a:
   %i.n = load ptr, ptr %i.m, align 8, !tbaa !83
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 120
   %i.p = load ptr, ptr %i.o, align 8
-  tail call void %i.p(ptr noundef nonnull align 8 dereferenceable(308) %i.m, i1 noundef zeroext %8)
+  tail call void %i.p(ptr noundef nonnull align 8 dereferenceable(308) %i.m, i1 noundef zeroext %10)
   %i.q = getelementptr inbounds nuw i8, ptr %.sroa.025.031, i64 128 ; 2 uses
   %.not = icmp eq ptr %i.q, %i.d
   br i1 %.not, label %._crit_edge, label %.lr.ph
 
 bb.b:                                             ; preds = %._crit_edge
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 330
-  %i.s = load i8, ptr %i.r, align 2, !tbaa !213, !range !199, !noundef !155
+  %i.s = load i8, ptr %i.r, align 2, !tbaa !214, !range !199, !noundef !155
   %i.t = trunc nuw i8 %i.s to i1
   %i.u = xor i1 %i.t, true
   br label %bb.c
@@ -259,11 +264,11 @@ bb.c:                                             ; preds = %bb.b, %._crit_edge
   tail call void %i.y(ptr noundef nonnull align 8 dereferenceable(308) %i.k, i1 noundef zeroext %i.v)
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 376
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !99  ; 2 uses
-  br i1 %8, label %bb.d, label %bb.e
+  br i1 %10, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
   %i.ab = getelementptr inbounds nuw i8, ptr %0, i64 330
-  %i.ac = load i8, ptr %i.ab, align 2, !tbaa !213, !range !199, !noundef !155
+  %i.ac = load i8, ptr %i.ab, align 2, !tbaa !214, !range !199, !noundef !155
   %i.ad = trunc nuw i8 %i.ac to i1
   br label %bb.e
 
@@ -275,11 +280,11 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   tail call void %i.ah(ptr noundef nonnull align 8 dereferenceable(308) %i.aa, i1 noundef zeroext %i.ae)
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 392
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !99 ; 2 uses
-  br i1 %8, label %bb.f, label %bb.g
+  br i1 %10, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 330
-  %i.al = load i8, ptr %i.ak, align 2, !tbaa !213, !range !199, !noundef !155
+  %i.al = load i8, ptr %i.ak, align 2, !tbaa !214, !range !199, !noundef !155
   %i.am = trunc nuw i8 %i.al to i1
   br label %bb.g
 
@@ -289,12 +294,13 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 120
   %i.aq = load ptr, ptr %i.ap, align 8
   tail call void %i.aq(ptr noundef nonnull align 8 dereferenceable(308) %i.aj, i1 noundef zeroext %i.an)
-  %i.ar = load i8, ptr %1, align 8, !tbaa !111, !range !199, !noundef !155
+  %i.ar = load i8, ptr %2, align 8, !tbaa !111, !range !199, !noundef !155
   %i.as = trunc nuw i8 %i.ar to i1
   br i1 %i.as, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.at = load i8, ptr %4, align 8, !tbaa !214, !range !199, !noundef !155
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 448
+  %i.at = load i8, ptr %11, align 8, !tbaa !213, !range !199, !noundef !155
   %i.au = trunc nuw i8 %i.at to i1
   br label %bb.i
 
@@ -697,7 +703,7 @@ bb.j:                                             ; preds = %bb.h, %bb.g, %bb.f,
 
 bb.k:                                             ; preds = %bb.d, %bb.c
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 330 ; 2 uses
-  %i.af = load i8, ptr %i.ae, align 2, !tbaa !213, !range !199, !noundef !155
+  %i.af = load i8, ptr %i.ae, align 2, !tbaa !214, !range !199, !noundef !155
   %i.ag = trunc nuw i8 %i.af to i1
   br i1 %i.ag, label %bb.l, label %bb.p
 
@@ -709,7 +715,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.ak, label %bb.m, label %bb.p
 
 bb.m:                                             ; preds = %bb.l
-  store i8 0, ptr %i.ae, align 2, !tbaa !213
+  store i8 0, ptr %i.ae, align 2, !tbaa !214
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 348
   %i.am = getelementptr inbounds nuw i8, ptr %0, i64 67
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(9) %i.al, i8 0, i64 9, i1 false)
@@ -1112,7 +1118,7 @@ _ZNSt13unordered_mapImN4core8vector2dIiEESt4hashImESt8equal_toImESaISt4pairIKmS2
   %i.dj = load ptr, ptr %i.di, align 8
   %i.dk = call noundef ptr %i.dj(ptr noundef nonnull align 8 dereferenceable(308) %i.dg, ptr noundef nonnull align 4 dereferenceable(8) %3) ; 4 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 448 ; 4 uses
-  %i.dm = load i8, ptr %i.dl, align 8, !tbaa !214, !range !199, !noundef !155 ; 2 uses
+  %i.dm = load i8, ptr %i.dl, align 8, !tbaa !213, !range !199, !noundef !155 ; 2 uses
   %i.dn = trunc nuw i8 %i.dm to i1
   br i1 %i.dn, label %.preheader, label %bb.s
 
@@ -1142,7 +1148,7 @@ bb.s:                                             ; preds = %_ZNSt13unordered_ma
   br i1 %i.ec, label %bb.t, label %bb.y
 
 bb.t:                                             ; preds = %bb.s
-  store i8 1, ptr %i.dl, align 8, !tbaa !214
+  store i8 1, ptr %i.dl, align 8, !tbaa !213
   call void @_ZN13TouchControls16updateVisibilityEv(ptr noundef nonnull align 8 dereferenceable(712) %0)
   br label %.critedge
 
@@ -1186,9 +1192,9 @@ _ZNK4core4rectIiE13isPointInsideERKNS_8vector2dIiEE.exit.thread: ; preds = %bb.u
   br i1 %i.ep, label %.critedge, label %bb.x
 
 bb.x:                                             ; preds = %.loopexit208
-  %i.eq = load i8, ptr %i.dl, align 8, !tbaa !214, !range !199, !noundef !155
+  %i.eq = load i8, ptr %i.dl, align 8, !tbaa !213, !range !199, !noundef !155
   %i.er = xor i8 %i.eq, 1
-  store i8 %i.er, ptr %i.dl, align 8, !tbaa !214
+  store i8 %i.er, ptr %i.dl, align 8, !tbaa !213
   call void @_ZN13TouchControls16updateVisibilityEv(ptr noundef nonnull align 8 dereferenceable(712) %0)
   %i.es = load ptr, ptr %i.db, align 8, !tbaa !110 ; 2 uses
   %i.et = load ptr, ptr %i.es, align 8, !tbaa !83
@@ -1275,12 +1281,12 @@ bb.ac:                                            ; preds = %.loopexit
 
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %i.gc = getelementptr inbounds nuw i8, ptr %0, i64 330 ; 2 uses
-  %i.gd = load i8, ptr %i.gc, align 2, !tbaa !213, !range !199, !noundef !155
+  %i.gd = load i8, ptr %i.gc, align 2, !tbaa !214, !range !199, !noundef !155
   %i.ge = trunc nuw i8 %i.gd to i1
   br i1 %i.ge, label %.critedge, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  store i8 1, ptr %i.gc, align 2, !tbaa !213
+  store i8 1, ptr %i.gc, align 2, !tbaa !214
   %i.gf = getelementptr inbounds nuw i8, ptr %0, i64 336
   store i64 %i.bg, ptr %i.gf, align 8, !tbaa !225
   %i.gg = getelementptr inbounds nuw i8, ptr %0, i64 344
@@ -1467,7 +1473,7 @@ _ZN11StreamProxylsEPFRSoS0_E.exit96:              ; preds = %_ZTW13verbosestream
 
 bb.as:                                            ; preds = %bb.k
   %i.jc = getelementptr inbounds nuw i8, ptr %0, i64 330 ; 2 uses
-  %i.jd = load i8, ptr %i.jc, align 2, !tbaa !213, !range !199, !noundef !155
+  %i.jd = load i8, ptr %i.jc, align 2, !tbaa !214, !range !199, !noundef !155
   %i.je = trunc nuw i8 %i.jd to i1
   br i1 %i.je, label %bb.at, label %bb.au
 
@@ -1805,7 +1811,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit140: ; preds = %bb
   br label %common.resume
 
 bb.bn:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.bk, %bb.bf, %_ZNSt13unordered_mapImN4core8vector2dIiEESt4hashImESt8equal_toImESaISt4pairIKmS2_EEEixERS8_.exit133
-  %i.ot = load i8, ptr %i.jc, align 2, !tbaa !213, !range !199, !noundef !155
+  %i.ot = load i8, ptr %i.jc, align 2, !tbaa !214, !range !199, !noundef !155
   %i.ou = trunc nuw i8 %i.ot to i1
   br i1 %i.ou, label %bb.bo, label %.critedge
 
@@ -2008,9 +2014,9 @@ _ZNSt8__detail9_Map_baseImSt4pairIKmN4core8vector2dIiEEESaIS6_ENS_10_Select1stES
 define dso_local void @_ZN13TouchControls18toggleOverflowMenuEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(712) %0) local_unnamed_addr #0 align 2 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 448 ; 2 uses
-  %i.b = load i8, ptr %i.a, align 8, !tbaa !214, !range !199, !noundef !155
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !213, !range !199, !noundef !155
   %i.c = xor i8 %i.b, 1
-  store i8 %i.c, ptr %i.a, align 8, !tbaa !214
+  store i8 %i.c, ptr %i.a, align 8, !tbaa !213
   tail call void @_ZN13TouchControls16updateVisibilityEv(ptr noundef nonnull align 8 dereferenceable(712) %0)
   ret void
 }
@@ -2413,7 +2419,7 @@ bb.g:                                             ; preds = %bb.f
 
 _ZN13TouchControls10releaseAllEv.exit:            ; preds = %bb.f, %bb.g
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 448
-  store i8 0, ptr %i.aj, align 8, !tbaa !214
+  store i8 0, ptr %i.aj, align 8, !tbaa !213
   br label %bb.h
 
 bb.h:                                             ; preds = %_ZN13TouchControls10releaseAllEv.exit, %bb.b
@@ -2504,7 +2510,7 @@ bb.f:                                             ; preds = %bb.e
 
 _ZN13TouchControls10releaseAllEv.exit.i:          ; preds = %bb.f, %bb.e
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 448
-  store i8 0, ptr %i.ai, align 8, !tbaa !214
+  store i8 0, ptr %i.ai, align 8, !tbaa !213
   call void @_ZN13TouchControls16updateVisibilityEv(ptr noundef nonnull align 8 dereferenceable(712) %0)
   br label %_ZN13TouchControls10setVisibleEb.exit
 
@@ -2907,8 +2913,8 @@ begin_hunk_4_@llvm.fmuladd.v2f64
 !210 = !{!209, !209, i64 0}
 !211 = !{!64, !63, i64 0}
 !212 = !{ptr @_ZN13TouchControls17loadButtonTextureEPN3gui9IGUIImageERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE}
-!213 = !{!80, !29, i64 330}
-!214 = !{!80, !29, i64 448}
+!213 = !{!80, !29, i64 448}
+!214 = !{!80, !29, i64 330}
 !215 = !{!76, !36, i64 24}
 !216 = !{!"_ZTSSt4pairIKmN4core8vector2dIiEEE", !36, i64 0, !52, i64 8}
 !217 = !{!216, !36, i64 0}

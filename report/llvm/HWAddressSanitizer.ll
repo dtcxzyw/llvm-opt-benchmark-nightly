@@ -204,10 +204,16 @@ _ZN4llvm9IRBuilderINS_14ConstantFolderENS_24IRBuilderDefaultInserterEEC2EPNS_10B
   %.not.i26 = icmp ne i32 %i.chd, 0
   %.val111.i = load i8, ptr %i.fj, align 1, !range !43
   %i.che = trunc nuw i8 %.val111.i to i1
-  %or.cond = select i1 %.not.i26, i1 %i.che, i1 false
-  %199 = load i32, ptr %i.ais, align 8
-  %.not.i.i123.i = icmp ne i32 %199, 0
-  %i.chf = select i1 %or.cond, i1 %.not.i.i123.i, i1 false ; 2 uses
+  %i.chf = select i1 %.not.i26, i1 %i.che, i1 false
+  br i1 %i.chf, label %199, label %201
+
+199:                                              ; preds = %_ZN4llvm9IRBuilderINS_14ConstantFolderENS_24IRBuilderDefaultInserterEEC2EPNS_10BasicBlockENS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ES4_EELb0ELb0EEEPNS_6MDNodeENS_8ArrayRefINS_17OperandBundleDefTIPNS_5ValueEEEEE.exit.i
+  %200 = load i32, ptr %i.ais, align 8, !tbaa !194
+  %.not.i.i123.i = icmp ne i32 %200, 0
+  br label %201
+
+201:                                              ; preds = %199, %_ZN4llvm9IRBuilderINS_14ConstantFolderENS_24IRBuilderDefaultInserterEEC2EPNS_10BasicBlockENS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ES4_EELb0ELb0EEEPNS_6MDNodeENS_8ArrayRefINS_17OperandBundleDefTIPNS_5ValueEEEEE.exit.i
+  %202 = phi i1 [ %.not.i.i123.i, %199 ], [ false, %_ZN4llvm9IRBuilderINS_14ConstantFolderENS_24IRBuilderDefaultInserterEEC2EPNS_10BasicBlockENS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ES4_EELb0ELb0EEEPNS_6MDNodeENS_8ArrayRefINS_17OperandBundleDefTIPNS_5ValueEEEEE.exit.i ] ; 2 uses
   %.val.i155 = load i32, ptr %i.ff, align 8, !tbaa !136
   switch i32 %.val.i155, label %bb.hr [
     i32 3, label %bb.hs
@@ -215,7 +221,7 @@ _ZN4llvm9IRBuilderINS_14ConstantFolderENS_24IRBuilderDefaultInserterEEC2EPNS_10B
     i32 2, label %bb.hp
   ]
 
-bb.hn:                                            ; preds = %_ZN4llvm9IRBuilderINS_14ConstantFolderENS_24IRBuilderDefaultInserterEEC2EPNS_10BasicBlockENS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ES4_EELb0ELb0EEEPNS_6MDNodeENS_8ArrayRefINS_17OperandBundleDefTIPNS_5ValueEEEEE.exit.i
+bb.hn:                                            ; preds = %201
   %i.chg = load ptr, ptr %i.cw, align 8, !tbaa !118
   %.val7.i.i = load i64, ptr %i.ann, align 8, !tbaa !135
   %i.chh = call noundef ptr @_ZN4llvm11ConstantInt3getEPNS_4TypeEmbb(ptr noundef %i.chg, i64 noundef %.val7.i.i, i1 noundef zeroext false, i1 noundef zeroext false) #24
@@ -249,7 +255,7 @@ _ZN12_GLOBAL__N_118HWAddressSanitizer17getOpaqueNoopCastERN4llvm9IRBuilderINS1_1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r) #24
   br label %bb.hw
 
-bb.hp:                                            ; preds = %_ZN4llvm9IRBuilderINS_14ConstantFolderENS_24IRBuilderDefaultInserterEEC2EPNS_10BasicBlockENS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ES4_EELb0ELb0EEEPNS_6MDNodeENS_8ArrayRefINS_17OperandBundleDefTIPNS_5ValueEEEEE.exit.i
+bb.hp:                                            ; preds = %201
   %.val10.i.i = load ptr, ptr %i.db, align 8, !tbaa !119
   %.val11.i.i = load ptr, ptr %i.amf, align 8, !tbaa !737 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o) #24
@@ -279,7 +285,7 @@ _ZN12_GLOBAL__N_118HWAddressSanitizer21getDynamicShadowIfuncERN4llvm9IRBuilderIN
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p) #24
   br label %bb.hw
 
-bb.hr:                                            ; preds = %_ZN4llvm9IRBuilderINS_14ConstantFolderENS_24IRBuilderDefaultInserterEEC2EPNS_10BasicBlockENS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ES4_EELb0ELb0EEEPNS_6MDNodeENS_8ArrayRefINS_17OperandBundleDefTIPNS_5ValueEEEEE.exit.i
+bb.hr:                                            ; preds = %201
   %i.chy = load ptr, ptr %i.anj, align 8, !tbaa !211
   %i.chz = getelementptr inbounds nuw i8, ptr %i.chy, i64 72
   %i.cia = load ptr, ptr %i.chz, align 8, !tbaa !749
@@ -313,8 +319,8 @@ bb.hr:                                            ; preds = %_ZN4llvm9IRBuilderI
   call void @llvm.lifetime.end.p0(ptr nonnull %42) #24
   br label %bb.hw
 
-bb.hs:                                            ; preds = %_ZN4llvm9IRBuilderINS_14ConstantFolderENS_24IRBuilderDefaultInserterEEC2EPNS_10BasicBlockENS_21ilist_iterator_w_bitsINS_12ilist_detail12node_optionsINS_11InstructionELb0ELb0EvLb1ES4_EELb0ELb0EEEPNS_6MDNodeENS_8ArrayRefINS_17OperandBundleDefTIPNS_5ValueEEEEE.exit.i
-  br i1 %i.chf, label %bb.hx, label %bb.ht
+bb.hs:                                            ; preds = %201
+  br i1 %202, label %bb.hx, label %bb.ht
 
 bb.ht:                                            ; preds = %bb.hs
   %i.cio = load i32, ptr %i.gm, align 8, !tbaa !615
@@ -359,7 +365,7 @@ _ZN12_GLOBAL__N_118HWAddressSanitizer21getDynamicShadowIfuncERN4llvm9IRBuilderIN
 bb.hw:                                            ; preds = %bb.hr, %_ZN12_GLOBAL__N_118HWAddressSanitizer21getDynamicShadowIfuncERN4llvm9IRBuilderINS1_14ConstantFolderENS1_24IRBuilderDefaultInserterEEE.exit.i.i, %_ZN12_GLOBAL__N_118HWAddressSanitizer17getOpaqueNoopCastERN4llvm9IRBuilderINS1_14ConstantFolderENS1_24IRBuilderDefaultInserterEEEPNS1_5ValueE.exit.i.i
   %.0.i.i157 = phi ptr [ %i.chq, %_ZN12_GLOBAL__N_118HWAddressSanitizer17getOpaqueNoopCastERN4llvm9IRBuilderINS1_14ConstantFolderENS1_24IRBuilderDefaultInserterEEEPNS1_5ValueE.exit.i.i ], [ %i.chx, %_ZN12_GLOBAL__N_118HWAddressSanitizer21getDynamicShadowIfuncERN4llvm9IRBuilderINS1_14ConstantFolderENS1_24IRBuilderDefaultInserterEEE.exit.i.i ], [ %i.cij, %bb.hr ] ; 2 uses
   store ptr %.0.i.i157, ptr %i.dt, align 8, !tbaa !258
-  br i1 %i.chf, label %._crit_edge273, label %.thread.i158
+  br i1 %202, label %._crit_edge273, label %.thread.i158
 
 ._crit_edge273:                                   ; preds = %bb.hw
   %.pre274 = load i32, ptr getelementptr inbounds nuw (i8, ptr @_ZL20ClRecordStackHistory, i64 120), align 8, !tbaa !269

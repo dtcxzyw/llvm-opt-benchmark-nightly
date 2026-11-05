@@ -67,14 +67,20 @@ bb.a:
   %i.o = trunc nuw i8 %i.n to i1
   %or.cond15 = select i1 %or.cond11, i1 true, i1 %i.o
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 1912
-  %1 = load i8, ptr %i.p, align 8, !range !12
-  %2 = trunc nuw i8 %1 to i1
-  %or.cond19 = select i1 %or.cond15, i1 true, i1 %2
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 1968
-  %i.q = load i8, ptr %3, align 8, !range !12
+  %i.q = load i8, ptr %i.p, align 8, !range !12
   %i.r = trunc nuw i8 %i.q to i1
-  %i.s = select i1 %or.cond19, i1 true, i1 %i.r
-  ret i1 %i.s
+  %i.s = select i1 %or.cond15, i1 true, i1 %i.r
+  br i1 %i.s, label %5, label %1
+
+1:                                                ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1968
+  %3 = load i8, ptr %2, align 8, !tbaa !11, !range !12, !noundef !13
+  %4 = trunc nuw i8 %3 to i1
+  br label %5
+
+5:                                                ; preds = %1, %bb.a
+  %6 = phi i1 [ %4, %1 ], [ true, %bb.a ]
+  ret i1 %6
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
@@ -477,16 +483,18 @@ bb.bq:                                            ; preds = %bb.bp, %bb.bo
   %i.nx = trunc nuw i8 %i.nw to i1
   %or.cond15.i = select i1 %or.cond11.i, i1 true, i1 %i.nx
   %i.ny = getelementptr inbounds nuw i8, ptr %0, i64 1912 ; 2 uses
-  %4 = load i8, ptr %i.ny, align 8, !range !12
-  %5 = trunc nuw i8 %4 to i1
-  %or.cond19.i = select i1 %or.cond15.i, i1 true, i1 %5
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 1968 ; 2 uses
-  %i.nz = load i8, ptr %6, align 8, !range !12
+  %i.nz = load i8, ptr %i.ny, align 8, !range !12
   %i.oa = trunc nuw i8 %i.nz to i1
-  %i.ob = select i1 %or.cond19.i, i1 true, i1 %i.oa
-  br i1 %i.ob, label %bb.br, label %.thread
+  %i.ob = select i1 %or.cond15.i, i1 true, i1 %i.oa
+  br i1 %i.ob, label %bb.br, label %_ZNK5Ipopt16TimingStatistics31IsFunctionEvaluationTimeEnabledEv.exit
 
-bb.br:                                            ; preds = %bb.bq
+_ZNK5Ipopt16TimingStatistics31IsFunctionEvaluationTimeEnabledEv.exit: ; preds = %bb.bq
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 1968
+  %5 = load i8, ptr %4, align 8, !tbaa !11, !range !12, !noundef !13
+  %6 = trunc nuw i8 %5 to i1
+  br i1 %6, label %bb.br, label %.thread
+
+bb.br:                                            ; preds = %_ZNK5Ipopt16TimingStatistics31IsFunctionEvaluationTimeEnabledEv.exit, %bb.bq
   %i.oc = getelementptr inbounds nuw i8, ptr %0, i64 1592
   %i.od = load double, ptr %i.oc, align 8, !tbaa !14
   %i.oe = getelementptr inbounds nuw i8, ptr %0, i64 1648
@@ -568,7 +576,7 @@ bb.bs:                                            ; preds = %bb.br
   tail call void (ptr, i32, i32, ptr, ...) %i.qw(ptr noundef nonnull align 8 dereferenceable(40) %1, i32 noundef %2, i32 noundef %3, ptr noundef nonnull @.str.31, double noundef %i.qp, double noundef %i.qr, double noundef %i.qt)
   br label %.thread
 
-.thread:                                          ; preds = %bb.bq, %bb.bs, %bb.br
+.thread:                                          ; preds = %_ZNK5Ipopt16TimingStatistics31IsFunctionEvaluationTimeEnabledEv.exit, %bb.bs, %bb.br
   %i.qx = load i8, ptr %i.nm, align 8, !tbaa !11, !range !12, !noundef !13
   %i.qy = trunc nuw i8 %i.qx to i1
   br i1 %i.qy, label %bb.bt, label %bb.bu
@@ -659,7 +667,8 @@ bb.cb:                                            ; preds = %bb.ca
   br label %bb.cc
 
 bb.cc:                                            ; preds = %bb.cb, %bb.ca
-  %i.ta = load i8, ptr %6, align 8, !tbaa !11, !range !12, !noundef !13
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 1968
+  %i.ta = load i8, ptr %7, align 8, !tbaa !11, !range !12, !noundef !13
   %i.tb = trunc nuw i8 %i.ta to i1
   br i1 %i.tb, label %bb.cd, label %bb.ce
 

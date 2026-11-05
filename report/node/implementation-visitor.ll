@@ -204,24 +204,30 @@ bb.dm:                                            ; preds = %bb.dl
 bb.dn:                                            ; preds = %bb.dm
   %i.ud = extractvalue { ptr, i8 } %i.ua, 0
   %i.ue = invoke noundef nonnull align 8 dereferenceable(128) ptr @_ZNK2v88internal6torque13AggregateType11LookupFieldERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(224) %i.ud, ptr noundef nonnull align 8 dereferenceable(32) %3)
-          to label %bb.do unwind label %bb.dx     ; 4 uses
+          to label %50 unwind label %bb.dx        ; 4 uses
 
-bb.do:                                            ; preds = %bb.dn
-  %50 = getelementptr inbounds nuw i8, ptr %i.ue, i64 96
-  %51 = load ptr, ptr %50, align 8
-  %52 = load i8, ptr %i.a, align 1, !range !872, !noundef !873
-  %53 = trunc nuw i8 %52 to i1
+50:                                               ; preds = %bb.dn
+  %51 = getelementptr inbounds nuw i8, ptr %i.ue, i64 96
+  %52 = load ptr, ptr %51, align 8
+  %53 = load i8, ptr %i.a, align 1, !range !872, !noundef !873
+  %54 = trunc nuw i8 %53 to i1
+  br i1 %54, label %55, label %bb.do
+
+bb.do:                                            ; preds = %50
   %i.uf = getelementptr inbounds nuw i8, ptr %i.ue, i64 121
-  %i.ug = load i8, ptr %i.uf, align 1, !range !872
+  %i.ug = load i8, ptr %i.uf, align 1, !range !872, !noundef !873
   %i.uh = trunc nuw i8 %i.ug to i1
   %i.ui = xor i1 %4, true
   %i.uj = and i1 %i.ui, %i.uh
-  %54 = select i1 %53, i1 true, i1 %i.uj
+  br label %55
+
+55:                                               ; preds = %bb.do, %50
+  %56 = phi i1 [ true, %50 ], [ %i.uj, %bb.do ]
   call void @llvm.lifetime.start.p0(ptr nonnull %9)
-  %55 = invoke noundef ptr @_ZN2v88internal6torque10TypeOracle19GetReferenceGenericEb(i1 noundef zeroext %54)
+  %57 = invoke noundef ptr @_ZN2v88internal6torque10TypeOracle19GetReferenceGenericEb(i1 noundef zeroext %56)
           to label %.noexc266 unwind label %bb.dx
 
-.noexc266:                                        ; preds = %bb.do
+.noexc266:                                        ; preds = %55
   %i.uk = invoke noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #29
           to label %.noexc267 unwind label %bb.dx ; 3 uses
 
@@ -230,10 +236,10 @@ bb.do:                                            ; preds = %bb.dn
   %i.ul = getelementptr inbounds nuw i8, ptr %i.uk, i64 8 ; 2 uses
   %i.um = getelementptr inbounds nuw i8, ptr %9, i64 16 ; 3 uses
   store ptr %i.ul, ptr %i.um, align 8
-  store ptr %51, ptr %i.uk, align 8
+  store ptr %52, ptr %i.uk, align 8
   %i.un = getelementptr inbounds nuw i8, ptr %9, i64 8
   store ptr %i.ul, ptr %i.un, align 8
-  %i.uo = invoke noundef ptr @_ZN2v88internal6torque10TypeOracle22GetGenericTypeInstanceEPNS1_11GenericTypeESt6vectorIPKNS1_4TypeESaIS8_EE(ptr noundef %55, ptr noundef nonnull align 8 %9)
+  %i.uo = invoke noundef ptr @_ZN2v88internal6torque10TypeOracle22GetGenericTypeInstanceEPNS1_11GenericTypeESt6vectorIPKNS1_4TypeESaIS8_EE(ptr noundef %57, ptr noundef nonnull align 8 %9)
           to label %bb.dp unwind label %bb.dr     ; 7 uses
 
 bb.dp:                                            ; preds = %.noexc267
@@ -285,7 +291,7 @@ bb.dv:                                            ; preds = %bb.du
 bb.dw:                                            ; preds = %bb.dv
   unreachable
 
-bb.dx:                                            ; preds = %_ZN2v88internal6torque11VisitResultC2ERKS2_.exit262, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i.i.i.i.i.i.i.i410, %.noexc6.i.i.i.i.i.i.i.i.i411, %.noexc.i.i.i.i.i.i.i.i.i412, %.noexc266, %bb.do, %bb.dl, %bb.dn
+bb.dx:                                            ; preds = %_ZN2v88internal6torque11VisitResultC2ERKS2_.exit262, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm.exit.i.i.i.i.i.i.i.i.i.i410, %.noexc6.i.i.i.i.i.i.i.i.i411, %.noexc.i.i.i.i.i.i.i.i.i412, %.noexc266, %55, %bb.dl, %bb.dn
   %i.ve = landingpad { ptr, i32 }
           cleanup
   br label %.body

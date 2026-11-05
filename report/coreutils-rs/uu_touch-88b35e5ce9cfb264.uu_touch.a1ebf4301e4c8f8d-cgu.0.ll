@@ -204,11 +204,8 @@ bb.i:                                             ; preds = %bb.e
   unreachable
 
 _RNCNvCsdTU8hOCbdCr_8uu_touch28determine_atime_mtime_change0B3_.exit: ; preds = %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i.i, %bb.b, %bb.f, %bb.l, %bb.k, %bb.j, %bb.a
-  %.sroa.05.0 = phi i8 [ 2, %bb.a ], [ 1, %bb.j ], [ %i.ba, %bb.l ], [ 1, %bb.k ], [ 2, %bb.b ], [ 2, %bb.f ], [ 2, %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i.i ] ; 2 uses
-  %1 = call noundef zeroext i1 @_RNvMNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matchesNtB2_10ArgMatches8get_flag(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @31, i64 noundef 6) #27 ; 2 uses
-  %2 = trunc i8 %.sroa.05.0 to i1                 ; 2 uses
-  %.sroa.010.1 = or i1 %1, %2                     ; 2 uses
-  %i.au = call noundef zeroext i1 @_RNvMNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matchesNtB2_10ArgMatches8get_flag(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @97, i64 noundef 12) #27
+  %.sroa.05.0 = phi i8 [ 2, %bb.a ], [ 1, %bb.j ], [ %i.ba, %bb.l ], [ 1, %bb.k ], [ 2, %bb.b ], [ 2, %bb.f ], [ 2, %_RNvXs_NtNtCs6JMX4GRUq9U_4core3str6traitseNtNtB8_3cmp9PartialEq2eq.exit.backedge.i.i.i ] ; 4 uses
+  %i.au = call noundef zeroext i1 @_RNvMNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matchesNtB2_10ArgMatches8get_flag(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @31, i64 noundef 6) #27
   br i1 %i.au, label %bb.n, label %bb.m
 
 bb.j:                                             ; preds = %bb.g
@@ -229,29 +226,44 @@ bb.l:                                             ; preds = %bb.k
   br label %_RNCNvCsdTU8hOCbdCr_8uu_touch28determine_atime_mtime_change0B3_.exit
 
 bb.m:                                             ; preds = %_RNCNvCsdTU8hOCbdCr_8uu_touch28determine_atime_mtime_change0B3_.exit
-  %.not24.not = icmp eq i8 %.sroa.05.0, 2
-  br i1 %.not24.not, label %bb.p, label %bb.o
+  %.sroa.010.0 = trunc i8 %.sroa.05.0 to i1       ; 3 uses
+  %1 = call noundef zeroext i1 @_RNvMNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matchesNtB2_10ArgMatches8get_flag(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @97, i64 noundef 12) #27
+  br i1 %1, label %3, label %bb.o
 
 bb.n:                                             ; preds = %_RNCNvCsdTU8hOCbdCr_8uu_touch28determine_atime_mtime_change0B3_.exit
-  br i1 %.sroa.010.1, label %bb.s, label %bb.t
+  %2 = call noundef zeroext i1 @_RNvMNtNtNtCsgNwXemyrBWj_12clap_builder6parser7matches11arg_matchesNtB2_10ArgMatches8get_flag(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %0, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @97, i64 noundef 12) #27
+  br i1 %2, label %bb.s, label %bb.p
 
 bb.o:                                             ; preds = %bb.m
-  br i1 %2, label %bb.q, label %bb.r
+  %.not25 = icmp eq i8 %.sroa.05.0, 2
+  br i1 %.not25, label %bb.s, label %4
 
-bb.p:                                             ; preds = %bb.m
-  br i1 %.sroa.010.1, label %bb.q, label %bb.s
+bb.p:                                             ; preds = %bb.n
+  %.not2543 = icmp eq i8 %.sroa.05.0, 2
+  br i1 %.not2543, label %bb.s, label %bb.q
 
-bb.q:                                             ; preds = %bb.o, %bb.p
-  br label %bb.s
+bb.q:                                             ; preds = %bb.p
+  %.pre = trunc nuw i8 %.sroa.05.0 to i1
+  br label %4
 
-bb.r:                                             ; preds = %bb.o
-  br i1 %1, label %bb.s, label %bb.t
+3:                                                ; preds = %bb.m
+  br i1 %.sroa.010.0, label %bb.s, label %bb.t
 
-bb.s:                                             ; preds = %bb.r, %bb.n, %bb.p, %bb.t, %bb.q
-  %.sroa.0.0 = phi i8 [ 0, %bb.q ], [ 1, %bb.t ], [ 2, %bb.p ], [ 2, %bb.n ], [ 2, %bb.r ]
+4:                                                ; preds = %bb.q, %bb.o
+  %.pre-phi = phi i1 [ %.pre, %bb.q ], [ %.sroa.010.0, %bb.o ] ; 2 uses
+  %.sroa.010.13744 = phi i1 [ true, %bb.q ], [ %.sroa.010.0, %bb.o ] ; 2 uses
+  %5 = select i1 %.sroa.010.13744, i1 %.pre-phi, i1 false
+  br i1 %5, label %bb.s, label %bb.r
+
+bb.r:                                             ; preds = %4
+  %or.cond4 = or i1 %.sroa.010.13744, %.pre-phi
+  br i1 %or.cond4, label %bb.s, label %bb.t
+
+bb.s:                                             ; preds = %4, %bb.p, %bb.o, %bb.n, %bb.r, %3, %bb.t
+  %.sroa.0.0 = phi i8 [ 2, %bb.o ], [ 1, %bb.t ], [ 2, %bb.n ], [ 2, %3 ], [ 2, %bb.r ], [ 0, %bb.p ], [ 0, %4 ]
   ret i8 %.sroa.0.0
 
-bb.t:                                             ; preds = %bb.r, %bb.n
+bb.t:                                             ; preds = %bb.r, %3
   br label %bb.s
 }
 

@@ -204,29 +204,35 @@ bb.h:                                             ; preds = %bb.g, %.split7.i, %
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.aj = load i16, ptr %i.ai, align 4, !noundef !8 ; 3 uses
   %i.ak = and i16 %i.aj, 48
-  %3 = icmp ne i16 %i.ak, 0
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 10
-  %5 = load i8, ptr %4, align 2, !range !15
-  %6 = trunc nuw i8 %5 to i1
-  %7 = xor i1 %6, true
-  %.sroa.0.0 = select i1 %3, i1 %7, i1 false
-  call void @_RNvNtNtCs8CpBcHC8tKo_21ruff_python_formatter6string9normalize16normalize_string(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.h, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.ah, i64 noundef %i.ag, i64 noundef 0, i16 noundef %i.aj, i1 noundef zeroext %.sroa.0.0)
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 11
-  %9 = load i8, ptr %8, align 1, !range !15, !noundef !8
-  %10 = trunc nuw i8 %9 to i1
-  br i1 %10, label %bb.k, label %bb.j
+  %3 = icmp eq i16 %i.ak, 0
+  br i1 %3, label %9, label %4
 
 bb.i:                                             ; preds = %bb.g, %bb.e, %bb.a, %.split.i, %.split7.i
   tail call void @_RNvNtCs4NRVxsYgnAr_4core3str16slice_error_fail(ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.o, i64 noundef %i.q, i64 noundef %i.u, i64 noundef %i.v, ptr noalias noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @86) #20
   unreachable
 
-bb.j:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECs8CpBcHC8tKo_21ruff_python_formatter.exit, %bb.n, %bb.h
+4:                                                ; preds = %bb.h
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 10
+  %6 = load i8, ptr %5, align 2, !range !15, !noundef !8
+  %7 = trunc nuw i8 %6 to i1
+  %8 = xor i1 %7, true
+  br label %9
+
+9:                                                ; preds = %bb.h, %4
+  %.sroa.0.0 = phi i1 [ %8, %4 ], [ false, %bb.h ]
+  call void @_RNvNtNtCs8CpBcHC8tKo_21ruff_python_formatter6string9normalize16normalize_string(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.h, ptr noalias noundef nonnull readonly captures(address, read_provenance) %i.ah, i64 noundef %i.ag, i64 noundef 0, i16 noundef %i.aj, i1 noundef zeroext %.sroa.0.0)
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 11
+  %11 = load i8, ptr %10, align 1, !range !15, !noundef !8
+  %12 = trunc nuw i8 %11 to i1
+  br i1 %12, label %bb.k, label %bb.j
+
+bb.j:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtCscdodAO9FK5_5alloc6borrow3CoweEECs8CpBcHC8tKo_21ruff_python_formatter.exit, %bb.n, %9
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.am = load i8, ptr %i.al, align 4, !range !15, !noundef !8
   %i.an = trunc nuw i8 %i.am to i1                ; 2 uses
   br i1 %i.an, label %bb.z, label %thread-pre-split
 
-bb.k:                                             ; preds = %bb.h
+bb.k:                                             ; preds = %9
   %i.ao = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 3 uses
   %i.ap = load ptr, ptr %i.ao, align 8, !nonnull !8
   %i.aq = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 4 uses

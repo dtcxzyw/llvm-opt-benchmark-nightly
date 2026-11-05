@@ -205,16 +205,21 @@ bb.a:
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define noundef zeroext i1 @_ZNK7httplib9SSLServer8is_validEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(1140) %0) unnamed_addr #3 align 2 {
-bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 1088
-  %2 = load ptr, ptr %1, align 8, !tbaa !874
-  %.not = icmp ne ptr %2, null
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1088
+  %3 = load ptr, ptr %2, align 8, !tbaa !874
+  %.not = icmp eq ptr %3, null
+  br i1 %.not, label %4, label %bb.a
+
+bb.a:                                             ; preds = %1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 182
-  %i.b = load i8, ptr %i.a, align 2, !range !197
+  %i.b = load i8, ptr %i.a, align 2, !tbaa !714, !range !197, !noundef !198
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = xor i1 %i.c, true
-  %3 = select i1 %.not, i1 %i.d, i1 false
-  ret i1 %3
+  br label %4
+
+4:                                                ; preds = %bb.a, %1
+  %5 = phi i1 [ false, %1 ], [ %i.d, %bb.a ]
+  ret i1 %5
 }
 
 ; Function Attrs: mustprogress uwtable

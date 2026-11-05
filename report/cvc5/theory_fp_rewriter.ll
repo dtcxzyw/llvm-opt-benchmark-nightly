@@ -204,22 +204,28 @@ _ZNK4cvc58internal4expr9NodeValue8iteratorINS0_12NodeTemplateILb1EEEEdeEv.exit20
 
 bb.ao:                                            ; preds = %_ZNK4cvc58internal4expr9NodeValue8iteratorINS0_12NodeTemplateILb1EEEEdeEv.exit202
   %i.ed = invoke noundef zeroext i1 @_ZNK4cvc58internal8TypeNode6isRealEv(ptr noundef nonnull align 8 dereferenceable(8) %32)
-          to label %.critedge unwind label %bb.bg
+          to label %66 unwind label %bb.bg
 
-.critedge:                                        ; preds = %bb.ao
-  %66 = trunc nuw i8 %.063502 to i1
-  %67 = xor i1 %66, true
-  %68 = select i1 %i.ed, i1 %67, i1 false
-  %i.ee = load ptr, ptr %32, align 8, !tbaa !28   ; 3 uses
-  %i.ef = load i64, ptr %i.ee, align 8            ; 3 uses
-  %i.eg = and i64 %i.ef, 1152920405095219200
-  %.not.i.i203 = icmp eq i64 %i.eg, 1152920405095219200
-  br i1 %.not.i.i203, label %_ZN4cvc58internal8TypeNodeD2Ev.exit204, label %bb.ap, !prof !17
+66:                                               ; preds = %bb.ao
+  br i1 %i.ed, label %.thread453, label %.critedge
+
+.thread453:                                       ; preds = %66
+  %67 = trunc nuw i8 %.063502 to i1
+  %68 = xor i1 %67, true
+  br label %.critedge
 
 69:                                               ; preds = %bb.aj
   %70 = trunc nuw i8 %.063502 to i1
   %71 = xor i1 %70, true
   br label %.critedge155
+
+.critedge:                                        ; preds = %66, %.thread453
+  %72 = phi i1 [ %68, %.thread453 ], [ false, %66 ]
+  %i.ee = load ptr, ptr %32, align 8, !tbaa !28   ; 3 uses
+  %i.ef = load i64, ptr %i.ee, align 8            ; 3 uses
+  %i.eg = and i64 %i.ef, 1152920405095219200
+  %.not.i.i203 = icmp eq i64 %i.eg, 1152920405095219200
+  br i1 %.not.i.i203, label %_ZN4cvc58internal8TypeNodeD2Ev.exit204, label %bb.ap, !prof !17
 
 bb.ap:                                            ; preds = %.critedge
   %i.eh = add i64 %i.ef, 1152920405095219200
@@ -274,7 +280,7 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit206: ; preds = %_ZN4cvc58internal8
   br label %.critedge155
 
 .critedge155:                                     ; preds = %69, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit206
-  %.ph = phi i1 [ %68, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit206 ], [ %71, %69 ]
+  %.ph = phi i1 [ %72, %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit206 ], [ %71, %69 ]
   %i.ey = load ptr, ptr %30, align 8, !tbaa !28   ; 3 uses
   %i.ez = load i64, ptr %i.ey, align 8            ; 3 uses
   %i.fa = and i64 %i.ez, 1152920405095219200

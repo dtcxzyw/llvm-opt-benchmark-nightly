@@ -205,12 +205,18 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 8
   %i.c = icmp ne i32 %i.b, 1                      ; 2 uses
   %brmerge = or i1 %1, %i.c
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 408
-  %3 = load i8, ptr %2, align 8, !range !132
-  %4 = trunc nuw i8 %3 to i1
-  %.v = select i1 %brmerge, i1 %i.c, i1 %4
-  %5 = xor i1 %.v, true
-  ret i1 %5
+  br i1 %brmerge, label %6, label %2
+
+2:                                                ; preds = %bb.a
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 408
+  %4 = load i8, ptr %3, align 8, !range !132, !noundef !134
+  %5 = trunc nuw i8 %4 to i1
+  br label %6
+
+6:                                                ; preds = %bb.a, %2
+  %.in = phi i1 [ %i.c, %bb.a ], [ %5, %2 ]
+  %7 = xor i1 %.in, true
+  ret i1 %7
 }
 
 declare noundef zeroext i1 @_ZNK12v8_inspector16V8DebuggerScript13setBreakpointERKNS_8String16EPN2v85debug8LocationEPi(ptr noundef nonnull align 8 dereferenceable(304), ptr noundef nonnull align 8 dereferenceable(40), ptr noundef, ptr noundef) local_unnamed_addr #2
@@ -613,17 +619,19 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.f = load i32, ptr %i.e, align 8
   %i.g = tail call noundef zeroext i1 @_ZNK12v8_inspector10V8Debugger22isPausedInContextGroupEi(ptr noundef nonnull align 8 dereferenceable(817) %i.b, i32 noundef %i.f) #19
-  br i1 %i.g, label %_ZNSt10unique_ptrIN12v8_inspector8protocol15DictionaryValueESt14default_deleteIS2_EED2Ev.exit, label %bb.b
+  br i1 %i.g, label %_ZNSt10unique_ptrIN12v8_inspector8protocol15DictionaryValueESt14default_deleteIS2_EED2Ev.exit, label %4
 
-bb.b:                                             ; preds = %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %5 = load i32, ptr %4, align 8
-  %6 = icmp ne i32 %5, 1
+4:                                                ; preds = %bb.a
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %6 = load i32, ptr %5, align 8
+  %.not = icmp eq i32 %6, 1
+  br i1 %.not, label %bb.b, label %_ZNSt10unique_ptrIN12v8_inspector8protocol15DictionaryValueESt14default_deleteIS2_EED2Ev.exit
+
+bb.b:                                             ; preds = %4
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 408
-  %i.i = load i8, ptr %i.h, align 8, !range !132
+  %i.i = load i8, ptr %i.h, align 8, !range !132, !noundef !134
   %i.j = trunc nuw i8 %i.i to i1
-  %.v.i = select i1 %6, i1 true, i1 %i.j
-  br i1 %.v.i, label %_ZNSt10unique_ptrIN12v8_inspector8protocol15DictionaryValueESt14default_deleteIS2_EED2Ev.exit, label %bb.c
+  br i1 %i.j, label %_ZNSt10unique_ptrIN12v8_inspector8protocol15DictionaryValueESt14default_deleteIS2_EED2Ev.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 409
@@ -663,7 +671,7 @@ _ZNKSt14default_deleteIN12v8_inspector8protocol15DictionaryValueEEclEPS2_.exit.i
   tail call void %i.aa(ptr noundef nonnull align 8 dereferenceable(96) %i.x) #19, !inline_history !7
   br label %_ZNSt10unique_ptrIN12v8_inspector8protocol15DictionaryValueESt14default_deleteIS2_EED2Ev.exit
 
-_ZNSt10unique_ptrIN12v8_inspector8protocol15DictionaryValueESt14default_deleteIS2_EED2Ev.exit: ; preds = %_ZNKSt14default_deleteIN12v8_inspector8protocol15DictionaryValueEEclEPS2_.exit.i, %bb.f, %bb.a, %bb.b, %bb.c
+_ZNSt10unique_ptrIN12v8_inspector8protocol15DictionaryValueESt14default_deleteIS2_EED2Ev.exit: ; preds = %4, %_ZNKSt14default_deleteIN12v8_inspector8protocol15DictionaryValueEEclEPS2_.exit.i, %bb.f, %bb.a, %bb.b, %bb.c
   ret void
 }
 
@@ -677,17 +685,19 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 16
   %i.f = load i32, ptr %i.e, align 8
   %i.g = tail call noundef zeroext i1 @_ZNK12v8_inspector10V8Debugger22isPausedInContextGroupEi(ptr noundef nonnull align 8 dereferenceable(817) %i.b, i32 noundef %i.f) #19
-  br i1 %i.g, label %_ZN12v8_inspector19V8DebuggerAgentImpl15popBreakDetailsEv.exit, label %bb.b
+  br i1 %i.g, label %_ZN12v8_inspector19V8DebuggerAgentImpl15popBreakDetailsEv.exit, label %1
 
-bb.b:                                             ; preds = %bb.a
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %2 = load i32, ptr %1, align 8
-  %3 = icmp ne i32 %2, 1
+1:                                                ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %3 = load i32, ptr %2, align 8
+  %.not = icmp eq i32 %3, 1
+  br i1 %.not, label %bb.b, label %_ZN12v8_inspector19V8DebuggerAgentImpl15popBreakDetailsEv.exit
+
+bb.b:                                             ; preds = %1
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 408
-  %i.i = load i8, ptr %i.h, align 8, !range !132
+  %i.i = load i8, ptr %i.h, align 8, !range !132, !noundef !134
   %i.j = trunc nuw i8 %i.i to i1
-  %.v.i = select i1 %3, i1 true, i1 %i.j
-  br i1 %.v.i, label %_ZN12v8_inspector19V8DebuggerAgentImpl15popBreakDetailsEv.exit, label %bb.c
+  br i1 %i.j, label %_ZN12v8_inspector19V8DebuggerAgentImpl15popBreakDetailsEv.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 409
@@ -750,7 +760,7 @@ _ZNKSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE11_M_is_localEv.exit.i.
   tail call void @_ZdlPvm(ptr noundef %i.ai, i64 noundef %i.an) #18
   br label %_ZN12v8_inspector19V8DebuggerAgentImpl15popBreakDetailsEv.exit
 
-_ZN12v8_inspector19V8DebuggerAgentImpl15popBreakDetailsEv.exit: ; preds = %_ZNSt10unique_ptrIN12v8_inspector8protocol15DictionaryValueESt14default_deleteIS2_EED2Ev.exit.i.i.i.i, %_ZNKSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE11_M_is_localEv.exit.i.i.i.i.i.i.i, %bb.f, %bb.a, %bb.b, %bb.c
+_ZN12v8_inspector19V8DebuggerAgentImpl15popBreakDetailsEv.exit: ; preds = %_ZNSt10unique_ptrIN12v8_inspector8protocol15DictionaryValueESt14default_deleteIS2_EED2Ev.exit.i.i.i.i, %1, %_ZNKSt7__cxx1112basic_stringIDsSt11char_traitsIDsESaIDsEE11_M_is_localEv.exit.i.i.i.i.i.i.i, %bb.f, %bb.a, %bb.b, %bb.c
   ret void
 }
 

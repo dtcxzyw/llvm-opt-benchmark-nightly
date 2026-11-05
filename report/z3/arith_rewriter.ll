@@ -205,16 +205,21 @@ bb.a:
 
 ; Function Attrs: mustprogress uwtable
 define weak_odr hidden noundef zeroext i1 @_ZNK13poly_rewriterI19arith_rewriter_coreE9use_powerEv(ptr noundef nonnull align 8 dereferenceable(84) %0) local_unnamed_addr #0 comdat align 2 {
-bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 33
-  %2 = load i8, ptr %1, align 1, !tbaa !76, !range !86, !noundef !39
-  %3 = trunc nuw i8 %2 to i1
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 33
+  %3 = load i8, ptr %2, align 1, !tbaa !76, !range !86, !noundef !39
+  %4 = trunc nuw i8 %3 to i1
+  br i1 %4, label %bb.a, label %_ZNK19arith_rewriter_core9use_powerEv.exit
+
+bb.a:                                             ; preds = %1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.b = load i8, ptr %i.a, align 8, !range !86
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !75, !range !86, !noundef !39
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = xor i1 %i.c, true
-  %4 = select i1 %3, i1 %i.d, i1 false
-  ret i1 %4
+  br label %_ZNK19arith_rewriter_core9use_powerEv.exit
+
+_ZNK19arith_rewriter_core9use_powerEv.exit:       ; preds = %1, %bb.a
+  %5 = phi i1 [ false, %1 ], [ %i.d, %bb.a ]
+  ret i1 %5
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -617,17 +622,18 @@ bb.ch:                                            ; preds = %_ZNK13poly_rewriter
   br i1 %exitcond461.not, label %._crit_edge419, label %.lr.ph418, !llvm.loop !692
 
 bb.ci:                                            ; preds = %._crit_edge419.thread, %._crit_edge419
-  %i.ps = phi ptr [ %i.mx, %._crit_edge419.thread ], [ %i.pp, %._crit_edge419 ] ; 2 uses
+  %i.ps = phi ptr [ %i.mx, %._crit_edge419.thread ], [ %i.pp, %._crit_edge419 ] ; 3 uses
   %i.pt = phi i32 [ 0, %._crit_edge419.thread ], [ %i.pr, %._crit_edge419 ]
   %i.pu = getelementptr inbounds nuw i8, ptr %0, i64 33
-  %16 = load i8, ptr %i.pu, align 1, !tbaa !76, !range !86, !noundef !39
-  %17 = trunc nuw i8 %16 to i1
-  %18 = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.pv = load i8, ptr %18, align 8, !range !86
+  %i.pv = load i8, ptr %i.pu, align 1, !tbaa !76, !range !86, !noundef !39
   %i.pw = trunc nuw i8 %i.pv to i1
-  %not. = xor i1 %17, true
-  %19 = select i1 %not., i1 true, i1 %i.pw
-  br i1 %19, label %bb.co, label %.thread379
+  br i1 %i.pw, label %_ZNK13poly_rewriterI19arith_rewriter_coreE9use_powerEv.exit, label %bb.co
+
+_ZNK13poly_rewriterI19arith_rewriter_coreE9use_powerEv.exit: ; preds = %bb.ci
+  %16 = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %17 = load i8, ptr %16, align 8, !tbaa !75, !range !86, !noundef !39
+  %18 = trunc nuw i8 %17 to i1
+  br i1 %18, label %bb.co, label %.thread379
 
 .loopexit.split-lp395.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.cb, %bb.cc, %.noexc206, %bb.ce, %bb.cf, %bb.cn, %bb.cm, %bb.cl, %.thread379, %bb.ck
   %lpad.loopexit.split-lp782 = landingpad { ptr, i32 }
@@ -651,9 +657,9 @@ bb.ck:                                            ; preds = %bb.cj
   %.pre484 = load ptr, ptr %10, align 8, !tbaa !110
   br label %.thread379
 
-.thread379:                                       ; preds = %._crit_edge419.thread, %..thread379_crit_edge, %bb.ci, %bb.cj
-  %i.pz = phi ptr [ %.pre484, %..thread379_crit_edge ], [ %i.ps, %bb.ci ], [ %i.pp, %bb.cj ], [ %i.mx, %._crit_edge419.thread ]
-  %i.qa = phi i32 [ %.pre483, %..thread379_crit_edge ], [ %i.pt, %bb.ci ], [ %i.pr, %bb.cj ], [ 0, %._crit_edge419.thread ]
+.thread379:                                       ; preds = %._crit_edge419.thread, %..thread379_crit_edge, %_ZNK13poly_rewriterI19arith_rewriter_coreE9use_powerEv.exit, %bb.cj
+  %i.pz = phi ptr [ %.pre484, %..thread379_crit_edge ], [ %i.ps, %_ZNK13poly_rewriterI19arith_rewriter_coreE9use_powerEv.exit ], [ %i.pp, %bb.cj ], [ %i.mx, %._crit_edge419.thread ]
+  %i.qa = phi i32 [ %.pre483, %..thread379_crit_edge ], [ %i.pt, %_ZNK13poly_rewriterI19arith_rewriter_coreE9use_powerEv.exit ], [ %i.pr, %bb.cj ], [ 0, %._crit_edge419.thread ]
   %i.qb = invoke noundef ptr @_ZN13poly_rewriterI19arith_rewriter_coreE10mk_mul_appEjPKP4expr(ptr noundef nonnull align 8 dereferenceable(84) %0, i32 noundef %i.qa, ptr noundef %i.pz)
           to label %bb.cl unwind label %.loopexit.split-lp395.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
@@ -674,16 +680,16 @@ bb.cn:                                            ; preds = %bb.cm
   %.pre486.a = load ptr, ptr %10, align 8, !tbaa !110
   br label %bb.co
 
-bb.co:                                            ; preds = %._crit_edge485, %bb.ci
-  %20 = phi ptr [ %i.ps, %bb.ci ], [ %.pre486.a, %._crit_edge485 ] ; 3 uses
-  %.1 = phi i32 [ 5, %bb.ci ], [ 4, %._crit_edge485 ]
-  %.not.i.i.i227 = icmp eq ptr %20, %i.mx
-  %i.qg = icmp eq ptr %20, null
+bb.co:                                            ; preds = %._crit_edge485, %bb.ci, %_ZNK13poly_rewriterI19arith_rewriter_coreE9use_powerEv.exit
+  %19 = phi ptr [ %i.ps, %_ZNK13poly_rewriterI19arith_rewriter_coreE9use_powerEv.exit ], [ %.pre486.a, %._crit_edge485 ], [ %i.ps, %bb.ci ] ; 3 uses
+  %.1 = phi i32 [ 5, %_ZNK13poly_rewriterI19arith_rewriter_coreE9use_powerEv.exit ], [ 4, %._crit_edge485 ], [ 5, %bb.ci ]
+  %.not.i.i.i227 = icmp eq ptr %19, %i.mx
+  %i.qg = icmp eq ptr %19, null
   %or.cond.i.i.i228 = or i1 %.not.i.i.i227, %i.qg
   br i1 %or.cond.i.i.i228, label %_ZN6bufferIP4exprLb0ELj16EED2Ev.exit229, label %bb.cp
 
 bb.cp:                                            ; preds = %bb.co
-  invoke void @_ZN6memory10deallocateEPv(ptr noundef nonnull %20)
+  invoke void @_ZN6memory10deallocateEPv(ptr noundef nonnull %19)
           to label %_ZN6bufferIP4exprLb0ELj16EED2Ev.exit229 unwind label %bb.cq
 
 bb.cq:                                            ; preds = %bb.cp
@@ -1086,17 +1092,19 @@ bb.b:                                             ; preds = %bb.a
 
 _Z18is_essentially_varP4expri.exit:               ; preds = %bb.b
   %i.t = load i32, ptr %i.r, align 8, !tbaa !132
-  %.not39 = icmp eq i32 %i.t, 5
-  %i.u = icmp eq i32 %i.m, 0
-  %or.cond = and i1 %.not39, %i.u
-  br i1 %or.cond, label %_ZNK13poly_rewriterI19arith_rewriter_coreE6is_mulEP4expr.exit, label %.sink.split
+  %i.u = icmp eq i32 %i.t, 5
+  br i1 %i.u, label %4, label %.sink.split
 
 bb.c:                                             ; preds = %bb.f
   %i.v = landingpad { ptr, i32 }
           cleanup
   br label %bb.q
 
-_ZNK13poly_rewriterI19arith_rewriter_coreE6is_mulEP4expr.exit: ; preds = %_Z18is_essentially_varP4expri.exit
+4:                                                ; preds = %_Z18is_essentially_varP4expri.exit
+  %5 = icmp ne i32 %i.m, 0                        ; 2 uses
+  br i1 %5, label %.thread33, label %_ZNK13poly_rewriterI19arith_rewriter_coreE6is_mulEP4expr.exit
+
+_ZNK13poly_rewriterI19arith_rewriter_coreE6is_mulEP4expr.exit: ; preds = %4
   %i.w = getelementptr inbounds nuw i8, ptr %i.r, i64 4
   %i.x = load i32, ptr %i.w, align 4
   %i.y = icmp eq i32 %i.x, 9
@@ -1134,19 +1142,21 @@ _ZNK13poly_rewriterI19arith_rewriter_coreE10is_numeralEP4expr.exit27: ; preds = 
   %i.ar = icmp eq i32 %i.aq, 0
   br i1 %i.ar, label %bb.o, label %.thread33
 
-.thread33:                                        ; preds = %_ZNK13poly_rewriterI19arith_rewriter_coreE10is_numeralEP4expr.exit27
+.thread33:                                        ; preds = %4, %_ZNK13poly_rewriterI19arith_rewriter_coreE10is_numeralEP4expr.exit27
   %i.as = load ptr, ptr %0, align 8, !tbaa !245, !nonnull !39, !align !40 ; 3 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.as, i64 33
-  %5 = load i8, ptr %4, align 1, !tbaa !76, !range !86, !noundef !39
-  %6 = trunc nuw i8 %5 to i1
-  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 32
-  %i.au = load i8, ptr %i.at, align 8, !range !86
+  %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 33
+  %i.au = load i8, ptr %i.at, align 1, !tbaa !76, !range !86, !noundef !39
   %i.av = trunc nuw i8 %i.au to i1
-  %not. = xor i1 %6, true
-  %7 = select i1 %not., i1 true, i1 %i.av
-  br i1 %7, label %.sink.split, label %_ZNK13poly_rewriterI19arith_rewriter_coreE8is_powerEP4expr.exit
+  br i1 %i.av, label %_ZNK13poly_rewriterI19arith_rewriter_coreE9use_powerEv.exit, label %.sink.split
 
-_ZNK13poly_rewriterI19arith_rewriter_coreE8is_powerEP4expr.exit: ; preds = %.thread33
+_ZNK13poly_rewriterI19arith_rewriter_coreE9use_powerEv.exit: ; preds = %.thread33
+  %6 = getelementptr inbounds nuw i8, ptr %i.as, i64 32
+  %7 = load i8, ptr %6, align 8, !tbaa !75, !range !86, !noundef !39
+  %8 = trunc nuw i8 %7 to i1
+  %brmerge = or i1 %5, %8
+  br i1 %brmerge, label %.sink.split, label %_ZNK13poly_rewriterI19arith_rewriter_coreE8is_powerEP4expr.exit
+
+_ZNK13poly_rewriterI19arith_rewriter_coreE8is_powerEP4expr.exit: ; preds = %_ZNK13poly_rewriterI19arith_rewriter_coreE9use_powerEv.exit
   %i.aw = getelementptr inbounds nuw i8, ptr %i.r, i64 4
   %i.ax = load i32, ptr %i.aw, align 4
   %i.ay = icmp eq i32 %i.ax, 22
@@ -1216,8 +1226,8 @@ bb.n:                                             ; preds = %bb.l, %bb.m
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !97
   br label %.sink.split
 
-.sink.split:                                      ; preds = %.sink.split.sink.split, %.critedge, %.thread33, %_ZNK13poly_rewriterI19arith_rewriter_coreE8is_powerEP4expr.exit, %bb.g, %_ZNK13poly_rewriterI19arith_rewriter_coreE10is_numeralEP4expr.exit, %bb.d, %bb.e, %_Z18is_essentially_varP4expri.exit, %bb.a, %bb.b
-  %.sink = phi ptr [ %1, %_ZNK13poly_rewriterI19arith_rewriter_coreE10is_numeralEP4expr.exit ], [ %1, %.thread33 ], [ %1, %_Z18is_essentially_varP4expri.exit ], [ %1, %.critedge ], [ %1, %bb.b ], [ %1, %bb.a ], [ %1, %bb.e ], [ %1, %bb.d ], [ %i.bl, %.sink.split.sink.split ], [ %1, %bb.g ], [ %1, %_ZNK13poly_rewriterI19arith_rewriter_coreE8is_powerEP4expr.exit ]
+.sink.split:                                      ; preds = %.sink.split.sink.split, %.critedge, %.thread33, %_ZNK13poly_rewriterI19arith_rewriter_coreE8is_powerEP4expr.exit, %bb.g, %_ZNK13poly_rewriterI19arith_rewriter_coreE9use_powerEv.exit, %_ZNK13poly_rewriterI19arith_rewriter_coreE10is_numeralEP4expr.exit, %bb.d, %bb.e, %_Z18is_essentially_varP4expri.exit, %bb.a, %bb.b
+  %.sink = phi ptr [ %1, %_ZNK13poly_rewriterI19arith_rewriter_coreE10is_numeralEP4expr.exit ], [ %1, %.thread33 ], [ %1, %_Z18is_essentially_varP4expri.exit ], [ %1, %.critedge ], [ %1, %bb.b ], [ %1, %bb.a ], [ %1, %bb.e ], [ %1, %bb.d ], [ %1, %_ZNK13poly_rewriterI19arith_rewriter_coreE9use_powerEv.exit ], [ %1, %bb.g ], [ %1, %_ZNK13poly_rewriterI19arith_rewriter_coreE8is_powerEP4expr.exit ], [ %i.bl, %.sink.split.sink.split ]
   %i.bm = load i32, ptr %.sink, align 4, !tbaa !215
   br label %bb.o
 

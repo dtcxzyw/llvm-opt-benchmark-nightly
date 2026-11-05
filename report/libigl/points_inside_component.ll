@@ -205,22 +205,24 @@ define linkonce_odr dso_local void @_ZN4CGAL7Kd_treeINS_21Search_traits_adapterI
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 4
   %i.b = load i32, ptr %i.a, align 4, !tbaa !447  ; 4 uses
-  %5 = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.d = load i8, ptr %i.c, align 8, !tbaa !433, !range !82, !noundef !83
   %i.e = trunc nuw i8 %i.d to i1
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.g = load i8, ptr %i.f, align 8, !range !82
   %i.h = trunc nuw i8 %i.g to i1
-  %or.cond.i = select i1 %i.e, i1 %i.h, i1 false
-  %6 = getelementptr inbounds nuw i8, ptr %3, i64 24
-  %7 = load ptr, ptr %5, align 8
-  %8 = load ptr, ptr %6, align 8
-  %9 = icmp ne ptr %7, %8
-  %.not126 = select i1 %or.cond.i, i1 %9, i1 false
-  br i1 %.not126, label %bb.b, label %bb.m
+  %.not126 = select i1 %i.e, i1 %i.h, i1 false
+  br i1 %.not126, label %_ZNK4CGAL15Point_containerINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEEE5emptyEv.exit, label %bb.m
 
-bb.b:                                             ; preds = %bb.a
+_ZNK4CGAL15Point_containerINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEEE5emptyEv.exit: ; preds = %bb.a
+  %5 = getelementptr inbounds nuw i8, ptr %3, i64 8
+  %6 = getelementptr inbounds nuw i8, ptr %3, i64 24
+  %7 = load ptr, ptr %5, align 8, !tbaa !431
+  %8 = load ptr, ptr %6, align 8, !tbaa !431
+  %9 = icmp eq ptr %7, %8
+  br i1 %9, label %bb.m, label %bb.b
+
+bb.b:                                             ; preds = %_ZNK4CGAL15Point_containerINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEEE5emptyEv.exit
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 152
   %i.j = icmp slt i32 %i.b, 3
   tail call void @llvm.assume(i1 %i.j)
@@ -351,7 +353,7 @@ bb.l:                                             ; preds = %bb.j, %bb.k
   tail call void %i.bl(ptr noundef nonnull align 8 dereferenceable(12) %i.as) #21, !inline_history !0
   br label %_ZN4CGAL6HandleD2Ev.exit25
 
-bb.m:                                             ; preds = %bb.a
+bb.m:                                             ; preds = %bb.a, %_ZNK4CGAL15Point_containerINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEEE5emptyEv.exit
   %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.bn = load ptr, ptr %i.bm, align 8, !tbaa !136, !noalias !2220 ; 3 uses
   %i.bo = load i8, ptr @__libc_single_threaded, align 1, !tbaa !140, !noalias !2220
@@ -477,35 +479,41 @@ bb.w:                                             ; preds = %bb.u, %bb.v
   br label %_ZN4CGAL6HandleD2Ev.exit25
 
 _ZN4CGAL6HandleD2Ev.exit25:                       ; preds = %bb.w, %bb.v, %bb.t, %bb.s, %_ZNK4CGAL21Kd_tree_internal_nodeINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEENS_16Sliding_midpointISP_NS_15Plane_separatorINS_13Lazy_exact_ntIN5boost14multiprecision6numberINSU_8backends16rational_adaptorINSW_15cpp_int_backendILm0ELm0ELNSU_16cpp_integer_typeE1ELNSU_18cpp_int_check_typeE0ESaIyEEEEELNSU_26expression_template_optionE1EEEEEEEEESK_IbLb1EESL_E13cutting_valueEv.exit31, %_ZNK4CGAL21Kd_tree_internal_nodeINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEENS_16Sliding_midpointISP_NS_15Plane_separatorINS_13Lazy_exact_ntIN5boost14multiprecision6numberINSU_8backends16rational_adaptorINSW_15cpp_int_backendILm0ELm0ELNSU_16cpp_integer_typeE1ELNSU_18cpp_int_check_typeE0ESaIyEEEEELNSU_26expression_template_optionE1EEEEEEEEESK_IbLb1EESL_E13cutting_valueEv.exit31.thread, %bb.l, %bb.k, %bb.i, %bb.h, %_ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEENS_13Dimension_tagILi3EEEE9max_coordEi.exit, %_ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEENS_13Dimension_tagILi3EEEE9max_coordEi.exit.thread
-  %10 = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.dl = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.dm = load i8, ptr %i.dl, align 8, !tbaa !433, !range !82, !noundef !83
   %i.dn = trunc nuw i8 %i.dm to i1
   %i.do = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.dp = load i8, ptr %i.do, align 8, !range !82
   %i.dq = trunc nuw i8 %i.dp to i1
-  %or.cond.i35 = select i1 %i.dn, i1 %i.dq, i1 false
-  %11 = getelementptr inbounds nuw i8, ptr %2, i64 24
-  %12 = load ptr, ptr %10, align 8
-  %13 = load ptr, ptr %11, align 8
-  %14 = icmp ne ptr %12, %13
-  %.not127 = select i1 %or.cond.i35, i1 %14, i1 false
-  br i1 %.not127, label %bb.x, label %bb.ai
+  %.not127 = select i1 %i.dn, i1 %i.dq, i1 false
+  br i1 %.not127, label %_ZNK4CGAL15Point_containerINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEEE5emptyEv.exit36, label %_ZN4CGAL6HandleD2Ev.exit25._ZNK4CGAL15Point_containerINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEEE5emptyEv.exit36.thread_crit_edge
 
-bb.x:                                             ; preds = %_ZN4CGAL6HandleD2Ev.exit25
+_ZN4CGAL6HandleD2Ev.exit25._ZNK4CGAL15Point_containerINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEEE5emptyEv.exit36.thread_crit_edge: ; preds = %_ZN4CGAL6HandleD2Ev.exit25
+  %.pre = load i8, ptr @__libc_single_threaded, align 1, !tbaa !140, !noalias !2222
+  br label %bb.ai
+
+_ZNK4CGAL15Point_containerINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEEE5emptyEv.exit36: ; preds = %_ZN4CGAL6HandleD2Ev.exit25
+  %10 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %11 = getelementptr inbounds nuw i8, ptr %2, i64 24
+  %12 = load ptr, ptr %10, align 8, !tbaa !431
+  %13 = load ptr, ptr %11, align 8, !tbaa !431
+  %14 = icmp eq ptr %12, %13
+  %.pre126 = load i8, ptr @__libc_single_threaded, align 1, !tbaa !140, !noalias !83 ; 2 uses
+  br i1 %14, label %bb.ai, label %bb.x
+
+bb.x:                                             ; preds = %_ZNK4CGAL15Point_containerINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEEE5emptyEv.exit36
   %i.dr = getelementptr inbounds nuw i8, ptr %2, i64 152
   %i.ds = icmp slt i32 %i.b, 3
   tail call void @llvm.assume(i1 %i.ds)
   %i.dt = sext i32 %i.b to i64                    ; 2 uses
   %i.du = getelementptr inbounds nuw [16 x i8], ptr %i.dr, i64 %i.dt
-  %i.dv = load ptr, ptr %i.du, align 8, !tbaa !136, !noalias !2222 ; 3 uses
-  %15 = load i8, ptr @__libc_single_threaded, align 1, !tbaa !140, !noalias !2222
-  %.not.i.i.i.i.i37 = icmp eq i8 %15, 0
+  %i.dv = load ptr, ptr %i.du, align 8, !tbaa !136, !noalias !2223 ; 3 uses
+  %.not.i.i.i.i.i37 = icmp eq i8 %.pre126, 0
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dv, i64 8 ; 3 uses
   br i1 %.not.i.i.i.i.i37, label %_ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEENS_13Dimension_tagILi3EEEE9min_coordEi.exit38, label %_ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEENS_13Dimension_tagILi3EEEE9min_coordEi.exit38.thread
 
 _ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEENS_13Dimension_tagILi3EEEE9min_coordEi.exit38: ; preds = %bb.x
-  %i.dx = atomicrmw add ptr %i.dw, i32 1 monotonic, align 4, !noalias !2222 ; 0 uses
+  %i.dx = atomicrmw add ptr %i.dw, i32 1 monotonic, align 4, !noalias !2223 ; 0 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.dz = load ptr, ptr %i.dy, align 8, !tbaa !430 ; 4 uses
   store ptr %i.dv, ptr %i.dy, align 8, !tbaa !430
@@ -513,9 +521,9 @@ _ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberIN
   br i1 %.not.i.i39, label %_ZN4CGAL6HandleD2Ev.exit41, label %bb.aa
 
 _ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEENS_13Dimension_tagILi3EEEE9min_coordEi.exit38.thread: ; preds = %bb.x
-  %i.ea = load atomic i32, ptr %i.dw monotonic, align 4, !noalias !2222
+  %i.ea = load atomic i32, ptr %i.dw monotonic, align 4, !noalias !2223
   %i.eb = add nsw i32 %i.ea, 1
-  store atomic i32 %i.eb, ptr %i.dw monotonic, align 4, !noalias !2222
+  store atomic i32 %i.eb, ptr %i.dw monotonic, align 4, !noalias !2223
   %i.ec = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.ed = load ptr, ptr %i.ec, align 8, !tbaa !430 ; 4 uses
   store ptr %i.dv, ptr %i.ec, align 8, !tbaa !430
@@ -562,14 +570,14 @@ bb.ac:                                            ; preds = %bb.aa, %bb.ab
 _ZN4CGAL6HandleD2Ev.exit41:                       ; preds = %_ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEENS_13Dimension_tagILi3EEEE9min_coordEi.exit38.thread, %_ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEENS_13Dimension_tagILi3EEEE9min_coordEi.exit38, %bb.y, %bb.z, %bb.ab, %bb.ac
   %i.et = getelementptr inbounds nuw i8, ptr %2, i64 200
   %i.eu = getelementptr inbounds nuw [16 x i8], ptr %i.et, i64 %i.dt
-  %i.ev = load ptr, ptr %i.eu, align 8, !tbaa !136, !noalias !2223 ; 3 uses
-  %i.ew = load i8, ptr @__libc_single_threaded, align 1, !tbaa !140, !noalias !2223
+  %i.ev = load ptr, ptr %i.eu, align 8, !tbaa !136, !noalias !2224 ; 3 uses
+  %i.ew = load i8, ptr @__libc_single_threaded, align 1, !tbaa !140, !noalias !2224
   %.not.i.i.i.i.i42 = icmp eq i8 %i.ew, 0
   %i.ex = getelementptr inbounds nuw i8, ptr %i.ev, i64 8 ; 3 uses
   br i1 %.not.i.i.i.i.i42, label %_ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEENS_13Dimension_tagILi3EEEE9max_coordEi.exit43, label %_ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEENS_13Dimension_tagILi3EEEE9max_coordEi.exit43.thread
 
 _ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEENS_13Dimension_tagILi3EEEE9max_coordEi.exit43: ; preds = %_ZN4CGAL6HandleD2Ev.exit41
-  %i.ey = atomicrmw add ptr %i.ex, i32 1 monotonic, align 4, !noalias !2223 ; 0 uses
+  %i.ey = atomicrmw add ptr %i.ex, i32 1 monotonic, align 4, !noalias !2224 ; 0 uses
   %i.ez = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %i.fa = load ptr, ptr %i.ez, align 8, !tbaa !430 ; 4 uses
   store ptr %i.ev, ptr %i.ez, align 8, !tbaa !430
@@ -577,9 +585,9 @@ _ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberIN
   br i1 %.not.i.i44, label %_ZN4CGAL6HandleD2Ev.exit46, label %bb.af
 
 _ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEENS_13Dimension_tagILi3EEEE9max_coordEi.exit43.thread: ; preds = %_ZN4CGAL6HandleD2Ev.exit41
-  %i.fb = load atomic i32, ptr %i.ex monotonic, align 4, !noalias !2223
+  %i.fb = load atomic i32, ptr %i.ex monotonic, align 4, !noalias !2224
   %i.fc = add nsw i32 %i.fb, 1
-  store atomic i32 %i.fc, ptr %i.ex monotonic, align 4, !noalias !2223
+  store atomic i32 %i.fc, ptr %i.ex monotonic, align 4, !noalias !2224
   %i.fd = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
   %i.fe = load ptr, ptr %i.fd, align 8, !tbaa !430 ; 4 uses
   store ptr %i.ev, ptr %i.fd, align 8, !tbaa !430
@@ -623,16 +631,16 @@ bb.ah:                                            ; preds = %bb.af, %bb.ag
   tail call void %i.ft(ptr noundef nonnull align 8 dereferenceable(12) %i.fa) #21, !inline_history !0
   br label %_ZN4CGAL6HandleD2Ev.exit46
 
-bb.ai:                                            ; preds = %_ZN4CGAL6HandleD2Ev.exit25
+bb.ai:                                            ; preds = %_ZN4CGAL6HandleD2Ev.exit25._ZNK4CGAL15Point_containerINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEEE5emptyEv.exit36.thread_crit_edge, %_ZNK4CGAL15Point_containerINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEEE5emptyEv.exit36
+  %15 = phi i8 [ %.pre, %_ZN4CGAL6HandleD2Ev.exit25._ZNK4CGAL15Point_containerINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEEE5emptyEv.exit36.thread_crit_edge ], [ %.pre126, %_ZNK4CGAL15Point_containerINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEEE5emptyEv.exit36 ]
   %i.fu = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.fv = load ptr, ptr %i.fu, align 8, !tbaa !136, !noalias !2224 ; 3 uses
-  %16 = load i8, ptr @__libc_single_threaded, align 1, !tbaa !140, !noalias !2224
-  %.not.i.i.i.i.i47 = icmp eq i8 %16, 0
+  %i.fv = load ptr, ptr %i.fu, align 8, !tbaa !136, !noalias !2222 ; 3 uses
+  %.not.i.i.i.i.i47 = icmp eq i8 %15, 0
   %i.fw = getelementptr inbounds nuw i8, ptr %i.fv, i64 8 ; 3 uses
   br i1 %.not.i.i.i.i.i47, label %_ZNK4CGAL21Kd_tree_internal_nodeINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEENS_16Sliding_midpointISP_NS_15Plane_separatorINS_13Lazy_exact_ntIN5boost14multiprecision6numberINSU_8backends16rational_adaptorINSW_15cpp_int_backendILm0ELm0ELNSU_16cpp_integer_typeE1ELNSU_18cpp_int_check_typeE0ESaIyEEEEELNSU_26expression_template_optionE1EEEEEEEEESK_IbLb1EESL_E13cutting_valueEv.exit48, label %_ZNK4CGAL21Kd_tree_internal_nodeINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEENS_16Sliding_midpointISP_NS_15Plane_separatorINS_13Lazy_exact_ntIN5boost14multiprecision6numberINSU_8backends16rational_adaptorINSW_15cpp_int_backendILm0ELm0ELNSU_16cpp_integer_typeE1ELNSU_18cpp_int_check_typeE0ESaIyEEEEELNSU_26expression_template_optionE1EEEEEEEEESK_IbLb1EESL_E13cutting_valueEv.exit48.thread
 
 _ZNK4CGAL21Kd_tree_internal_nodeINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEENS_16Sliding_midpointISP_NS_15Plane_separatorINS_13Lazy_exact_ntIN5boost14multiprecision6numberINSU_8backends16rational_adaptorINSW_15cpp_int_backendILm0ELm0ELNSU_16cpp_integer_typeE1ELNSU_18cpp_int_check_typeE0ESaIyEEEEELNSU_26expression_template_optionE1EEEEEEEEESK_IbLb1EESL_E13cutting_valueEv.exit48: ; preds = %bb.ai
-  %i.fx = atomicrmw add ptr %i.fw, i32 1 monotonic, align 4, !noalias !2224 ; 0 uses
+  %i.fx = atomicrmw add ptr %i.fw, i32 1 monotonic, align 4, !noalias !2222 ; 0 uses
   %i.fy = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.fz = load ptr, ptr %i.fy, align 8, !tbaa !430 ; 4 uses
   store ptr %i.fv, ptr %i.fy, align 8, !tbaa !430
@@ -640,9 +648,9 @@ _ZNK4CGAL21Kd_tree_internal_nodeINS_21Search_traits_adapterISt4pairINS_7Point_3I
   br i1 %.not.i.i49, label %_ZN4CGAL6HandleD2Ev.exit51, label %bb.al
 
 _ZNK4CGAL21Kd_tree_internal_nodeINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEENS_16Sliding_midpointISP_NS_15Plane_separatorINS_13Lazy_exact_ntIN5boost14multiprecision6numberINSU_8backends16rational_adaptorINSW_15cpp_int_backendILm0ELm0ELNSU_16cpp_integer_typeE1ELNSU_18cpp_int_check_typeE0ESaIyEEEEELNSU_26expression_template_optionE1EEEEEEEEESK_IbLb1EESL_E13cutting_valueEv.exit48.thread: ; preds = %bb.ai
-  %i.ga = load atomic i32, ptr %i.fw monotonic, align 4, !noalias !2224
+  %i.ga = load atomic i32, ptr %i.fw monotonic, align 4, !noalias !2222
   %i.gb = add nsw i32 %i.ga, 1
-  store atomic i32 %i.gb, ptr %i.fw monotonic, align 4, !noalias !2224
+  store atomic i32 %i.gb, ptr %i.fw monotonic, align 4, !noalias !2222
   %i.gc = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.gd = load ptr, ptr %i.gc, align 8, !tbaa !430 ; 4 uses
   store ptr %i.fv, ptr %i.gc, align 8, !tbaa !430
@@ -1045,12 +1053,12 @@ begin_hunk_1_@llvm.fmuladd.v2f64
 !2207 = distinct !{!2207, !2206, !"_ZNK4CGAL21Kd_tree_internal_nodeINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEENS_16Sliding_midpointISP_NS_15Plane_separatorINS_13Lazy_exact_ntIN5boost14multiprecision6numberINSU_8backends16rational_adaptorINSW_15cpp_int_backendILm0ELm0ELNSU_16cpp_integer_typeE1ELNSU_18cpp_int_check_typeE0ESaIyEEEEELNSU_26expression_template_optionE1EEEEEEEEESK_IbLb1EESL_E13cutting_valueEv: argument 0"}
 !2208 = distinct !{!2208, i1 true, !"_ZNK4CGAL21Kd_tree_internal_nodeINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEENS_16Sliding_midpointISP_NS_15Plane_separatorINS_13Lazy_exact_ntIN5boost14multiprecision6numberINSU_8backends16rational_adaptorINSW_15cpp_int_backendILm0ELm0ELNSU_16cpp_integer_typeE1ELNSU_18cpp_int_check_typeE0ESaIyEEEEELNSU_26expression_template_optionE1EEEEEEEEESK_IbLb1EESL_E13cutting_valueEv"}
 !2209 = distinct !{!2209, !2208, !"_ZNK4CGAL21Kd_tree_internal_nodeINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEENS_16Sliding_midpointISP_NS_15Plane_separatorINS_13Lazy_exact_ntIN5boost14multiprecision6numberINSU_8backends16rational_adaptorINSW_15cpp_int_backendILm0ELm0ELNSU_16cpp_integer_typeE1ELNSU_18cpp_int_check_typeE0ESaIyEEEEELNSU_26expression_template_optionE1EEEEEEEEESK_IbLb1EESL_E13cutting_valueEv: argument 0"}
-!2210 = distinct !{!2210, i1 true, !"_ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEENS_13Dimension_tagILi3EEEE9min_coordEi"}
-!2211 = distinct !{!2211, !2210, !"_ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEENS_13Dimension_tagILi3EEEE9min_coordEi: argument 0"}
-!2212 = distinct !{!2212, i1 true, !"_ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEENS_13Dimension_tagILi3EEEE9max_coordEi"}
-!2213 = distinct !{!2213, !2212, !"_ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEENS_13Dimension_tagILi3EEEE9max_coordEi: argument 0"}
-!2214 = distinct !{!2214, i1 true, !"_ZNK4CGAL21Kd_tree_internal_nodeINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEENS_16Sliding_midpointISP_NS_15Plane_separatorINS_13Lazy_exact_ntIN5boost14multiprecision6numberINSU_8backends16rational_adaptorINSW_15cpp_int_backendILm0ELm0ELNSU_16cpp_integer_typeE1ELNSU_18cpp_int_check_typeE0ESaIyEEEEELNSU_26expression_template_optionE1EEEEEEEEESK_IbLb1EESL_E13cutting_valueEv"}
-!2215 = distinct !{!2215, !2214, !"_ZNK4CGAL21Kd_tree_internal_nodeINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEENS_16Sliding_midpointISP_NS_15Plane_separatorINS_13Lazy_exact_ntIN5boost14multiprecision6numberINSU_8backends16rational_adaptorINSW_15cpp_int_backendILm0ELm0ELNSU_16cpp_integer_typeE1ELNSU_18cpp_int_check_typeE0ESaIyEEEEELNSU_26expression_template_optionE1EEEEEEEEESK_IbLb1EESL_E13cutting_valueEv: argument 0"}
+!2210 = distinct !{!2210, i1 true, !"_ZNK4CGAL21Kd_tree_internal_nodeINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEENS_16Sliding_midpointISP_NS_15Plane_separatorINS_13Lazy_exact_ntIN5boost14multiprecision6numberINSU_8backends16rational_adaptorINSW_15cpp_int_backendILm0ELm0ELNSU_16cpp_integer_typeE1ELNSU_18cpp_int_check_typeE0ESaIyEEEEELNSU_26expression_template_optionE1EEEEEEEEESK_IbLb1EESL_E13cutting_valueEv"}
+!2211 = distinct !{!2211, !2210, !"_ZNK4CGAL21Kd_tree_internal_nodeINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEENS_16Sliding_midpointISP_NS_15Plane_separatorINS_13Lazy_exact_ntIN5boost14multiprecision6numberINSU_8backends16rational_adaptorINSW_15cpp_int_backendILm0ELm0ELNSU_16cpp_integer_typeE1ELNSU_18cpp_int_check_typeE0ESaIyEEEEELNSU_26expression_template_optionE1EEEEEEEEESK_IbLb1EESL_E13cutting_valueEv: argument 0"}
+!2212 = distinct !{!2212, i1 true, !"_ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEENS_13Dimension_tagILi3EEEE9min_coordEi"}
+!2213 = distinct !{!2213, !2212, !"_ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEENS_13Dimension_tagILi3EEEE9min_coordEi: argument 0"}
+!2214 = distinct !{!2214, i1 true, !"_ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEENS_13Dimension_tagILi3EEEE9max_coordEi"}
+!2215 = distinct !{!2215, !2214, !"_ZNK4CGAL17Kd_tree_rectangleINS_13Lazy_exact_ntIN5boost14multiprecision6numberINS3_8backends16rational_adaptorINS5_15cpp_int_backendILm0ELm0ELNS3_16cpp_integer_typeE1ELNS3_18cpp_int_check_typeE0ESaIyEEEEELNS3_26expression_template_optionE1EEEEENS_13Dimension_tagILi3EEEE9max_coordEi: argument 0"}
 !2216 = distinct !{!2216, i1 true, !"_ZNK4CGAL21Kd_tree_internal_nodeINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEENS_16Sliding_midpointISP_NS_15Plane_separatorINS_13Lazy_exact_ntIN5boost14multiprecision6numberINSU_8backends16rational_adaptorINSW_15cpp_int_backendILm0ELm0ELNSU_16cpp_integer_typeE1ELNSU_18cpp_int_check_typeE0ESaIyEEEEELNSU_26expression_template_optionE1EEEEEEEEESK_IbLb1EESL_E13cutting_valueEv"}
 !2217 = distinct !{!2217, !2216, !"_ZNK4CGAL21Kd_tree_internal_nodeINS_21Search_traits_adapterISt4pairINS_7Point_3INS_5EpeckEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS4_EESt6vectorIS9_SaIS9_EEEEENS_26First_of_pair_property_mapISF_EENS_13AABB_traits_3IS4_NS_25AABB_triangle_primitive_3IS4_SE_St17integral_constantIbLb0EEEENS_7DefaultEEEEENS_16Sliding_midpointISP_NS_15Plane_separatorINS_13Lazy_exact_ntIN5boost14multiprecision6numberINSU_8backends16rational_adaptorINSW_15cpp_int_backendILm0ELm0ELNSU_16cpp_integer_typeE1ELNSU_18cpp_int_check_typeE0ESaIyEEEEELNSU_26expression_template_optionE1EEEEEEEEESK_IbLb1EESL_E13cutting_valueEv: argument 0"}
 !2218 = !{!2203}

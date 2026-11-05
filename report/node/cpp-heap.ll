@@ -204,20 +204,25 @@ bb.a:
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define hidden noundef zeroext i1 @_ZNK2v88internal7CppHeap32ShouldFinalizeIncrementalMarkingEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(672) %0) local_unnamed_addr #6 align 2 !guid !246 {
-bb.a:
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 481
-  %2 = load i8, ptr %1, align 1
-  %.not = icmp eq i8 %2, 0
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 481
+  %3 = load i8, ptr %2, align 1
+  %.not = icmp eq i8 %3, 0
+  br i1 %.not, label %4, label %bb.a
+
+bb.a:                                             ; preds = %1
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 554
-  %i.b = load i8, ptr %i.a, align 2, !range !142
+  %i.b = load i8, ptr %i.a, align 2, !range !142, !noundef !143
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 552
   %i.e = load i8, ptr %i.d, align 8, !range !142
   %i.f = trunc nuw i8 %i.e to i1
   %not..i = xor i1 %i.c, true
-  %3 = select i1 %.not, i1 true, i1 %not..i
-  %i.g = select i1 %3, i1 true, i1 %i.f
-  ret i1 %i.g
+  %i.g = select i1 %not..i, i1 true, i1 %i.f
+  br label %4
+
+4:                                                ; preds = %bb.a, %1
+  %5 = phi i1 [ true, %1 ], [ %i.g, %bb.a ]
+  ret i1 %5
 }
 
 ; Function Attrs: mustprogress nounwind uwtable

@@ -205,7 +205,7 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.backedge, %bb.a
-  %i.w = load i32, ptr %i.c, align 8, !tbaa !336  ; 3 uses
+  %i.w = load i32, ptr %i.c, align 8, !tbaa !336  ; 2 uses
   %.not.i = icmp eq i32 %i.w, 0
   br i1 %.not.i, label %_ZN5nlsat6solver3imp14should_reorderEv.exit.thread, label %_ZN5nlsat6solver3imp14should_reorderEv.exit
 
@@ -217,11 +217,9 @@ _ZN5nlsat6solver3imp14should_reorderEv.exit:      ; preds = %bb.b
 
 bb.c:                                             ; preds = %_ZN5nlsat6solver3imp14should_reorderEv.exit
   call void @_ZN5nlsat6solver3imp10do_reorderEv(ptr noundef nonnull align 8 dereferenceable(1017) %0)
-  %.pre = load i32, ptr %i.c, align 8
   br label %_ZN5nlsat6solver3imp14should_reorderEv.exit.thread
 
 _ZN5nlsat6solver3imp14should_reorderEv.exit.thread: ; preds = %bb.b, %bb.c, %_ZN5nlsat6solver3imp14should_reorderEv.exit
-  %2 = phi i32 [ 0, %bb.b ], [ %.pre, %bb.c ], [ %i.w, %_ZN5nlsat6solver3imp14should_reorderEv.exit ]
   %i.aa = load i8, ptr %i.e, align 4, !tbaa !218, !range !75, !noundef !73
   %i.ab = trunc nuw i8 %i.aa to i1
   %i.ac = load i8, ptr %i.f, align 4, !range !75
@@ -230,12 +228,15 @@ _ZN5nlsat6solver3imp14should_reorderEv.exit.thread: ; preds = %bb.b, %bb.c, %_ZN
   %or.cond.not.i = select i1 %i.ab, i1 true, i1 %.not6.i
   %i.ae = load i8, ptr %i.g, align 8, !range !75
   %i.af = trunc nuw i8 %i.ae to i1
-  %or.cond5.i = select i1 %or.cond.not.i, i1 true, i1 %i.af
-  %3 = icmp ult i32 %2, 101
-  %.not59 = select i1 %or.cond5.i, i1 true, i1 %3
-  br i1 %.not59, label %bb.f, label %bb.d
+  %.not59 = select i1 %or.cond.not.i, i1 true, i1 %i.af
+  br i1 %.not59, label %bb.f, label %_ZN5nlsat6solver3imp15should_simplifyEv.exit
 
-bb.d:                                             ; preds = %_ZN5nlsat6solver3imp14should_reorderEv.exit.thread
+_ZN5nlsat6solver3imp15should_simplifyEv.exit:     ; preds = %_ZN5nlsat6solver3imp14should_reorderEv.exit.thread
+  %2 = load i32, ptr %i.c, align 8, !tbaa !336
+  %3 = icmp ugt i32 %2, 100
+  br i1 %3, label %bb.d, label %bb.f
+
+bb.d:                                             ; preds = %_ZN5nlsat6solver3imp15should_simplifyEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #28
   call void @_ZN5nlsat6solver3imp10undo_untilINS1_9true_predEEEvRKT_(ptr noundef nonnull align 8 dereferenceable(1017) %0, ptr noundef nonnull align 1 dereferenceable(1) %1)
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #28
@@ -322,7 +323,7 @@ _ZN5nlsat6solver3imp11do_simplifyEv.exit:         ; preds = %._crit_edge8.i.i.i,
   call void @_ZN5nlsat8simplifyclEv(ptr noundef nonnull align 8 dereferenceable(8) %i.m)
   br label %bb.f
 
-bb.f:                                             ; preds = %_ZN5nlsat6solver3imp11do_simplifyEv.exit, %_ZN5nlsat6solver3imp14should_reorderEv.exit.thread
+bb.f:                                             ; preds = %_ZN5nlsat6solver3imp14should_reorderEv.exit.thread, %_ZN5nlsat6solver3imp11do_simplifyEv.exit, %_ZN5nlsat6solver3imp15should_simplifyEv.exit
   %i.bd = load i32, ptr %i.b, align 4, !tbaa !229
   %i.be = icmp eq i32 %i.bd, -1
   br i1 %i.be, label %bb.g, label %bb.m

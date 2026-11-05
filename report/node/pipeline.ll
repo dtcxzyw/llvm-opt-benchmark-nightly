@@ -205,11 +205,11 @@ _ZNKSt8functionIFPN2v88internal8compiler14CallDescriptorEPNS1_4ZoneEEEclES6_.exi
   %or.cond.i = select i1 %i.am, i1 %i.ao, i1 false
   %i.ap = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 630), align 2, !range !319
   %i.aq = trunc nuw i8 %i.ap to i1
+  %.not = xor i1 %i.aq, true
+  %or.cond3.i.not = select i1 %or.cond.i, i1 %.not, i1 false
   %11 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 648), align 8
   %.not.i = icmp eq ptr %11, null
-  %.not4.i = xor i1 %i.aq, true
-  %not.or.cond3.i = select i1 %or.cond.i, i1 %.not4.i, i1 false
-  %i.ar = select i1 %not.or.cond3.i, i1 %.not.i, i1 false
+  %i.ar = select i1 %or.cond3.i.not, i1 %.not.i, i1 false
   br i1 %i.ar, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_ZNKSt8functionIFPN2v88internal8compiler14CallDescriptorEPNS1_4ZoneEEEclES6_.exit
@@ -269,14 +269,20 @@ bb.a:
   %i.d = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 669), align 1, !range !319
   %i.e = trunc nuw i8 %i.d to i1
   %or.cond = select i1 %i.c, i1 %i.e, i1 false
+  %or.cond.not = xor i1 %or.cond, true
   %1 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 630), align 2, !range !319
   %2 = trunc nuw i8 %1 to i1
-  %3 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 648), align 8
-  %.not = icmp eq ptr %3, null
-  %.not4 = xor i1 %2, true
-  %not.or.cond3 = select i1 %or.cond, i1 %.not4, i1 false
-  %i.f = select i1 %not.or.cond3, i1 %.not, i1 false
-  ret i1 %i.f
+  %i.f = select i1 %or.cond.not, i1 true, i1 %2
+  br i1 %i.f, label %5, label %3
+
+3:                                                ; preds = %bb.a
+  %4 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 648), align 8
+  %.not = icmp eq ptr %4, null
+  br label %5
+
+5:                                                ; preds = %3, %bb.a
+  %6 = phi i1 [ false, %bb.a ], [ %.not, %3 ]
+  ret i1 %6
 }
 
 ; Function Attrs: nobuiltin allocsize(0)
@@ -679,11 +685,11 @@ _ZN2v88internal8compiler10turboshaft12ZoneWithNameIXtlNS_4base3tmp13StringLitera
   %or.cond.i = select i1 %i.bs, i1 %i.bu, i1 false
   %i.bv = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 630), align 2, !range !319
   %i.bw = trunc nuw i8 %i.bv to i1
+  %.not = xor i1 %i.bw, true
+  %or.cond3.i.not = select i1 %or.cond.i, i1 %.not, i1 false
   %12 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 648), align 8
   %.not.i = icmp eq ptr %12, null
-  %.not4.i = xor i1 %i.bw, true
-  %not.or.cond3.i = select i1 %or.cond.i, i1 %.not4.i, i1 false
-  %i.bx = select i1 %not.or.cond3.i, i1 %.not.i, i1 false
+  %i.bx = select i1 %or.cond3.i.not, i1 %.not.i, i1 false
   br i1 %i.bx, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %_ZN2v88internal8compiler10turboshaft12ZoneWithNameIXtlNS_4base3tmp13StringLiteralILm25EEEtlSt5arrayIcLm25EEtlA25_cLc98ELc117ELc105ELc108ELc116ELc105ELc110ELc45ELc99ELc111ELc109ELc112ELc105ELc108ELc97ELc116ELc105ELc111ELc110ELc45ELc122ELc111ELc110ELc101EEEEEEcvPNS0_4ZoneEEv.exit
@@ -739,14 +745,20 @@ bb.a:
   %i.d = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 669), align 1, !range !319
   %i.e = trunc nuw i8 %i.d to i1
   %or.cond = select i1 %i.c, i1 %i.e, i1 false
+  %or.cond.not = xor i1 %or.cond, true
   %2 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 630), align 2, !range !319
   %3 = trunc nuw i8 %2 to i1
-  %4 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 648), align 8
-  %.not = icmp eq ptr %4, null
-  %.not4 = xor i1 %3, true
-  %not.or.cond3 = select i1 %or.cond, i1 %.not4, i1 false
-  %i.f = select i1 %not.or.cond3, i1 %.not, i1 false
-  ret i1 %i.f
+  %i.f = select i1 %or.cond.not, i1 true, i1 %3
+  br i1 %i.f, label %6, label %4
+
+4:                                                ; preds = %bb.a
+  %5 = load ptr, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 648), align 8
+  %.not = icmp eq ptr %5, null
+  br label %6
+
+6:                                                ; preds = %4, %bb.a
+  %7 = phi i1 [ false, %bb.a ], [ %.not, %4 ]
+  ret i1 %7
 }
 
 ; Function Attrs: mustprogress nounwind uwtable

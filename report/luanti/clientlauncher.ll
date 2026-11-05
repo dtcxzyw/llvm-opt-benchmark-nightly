@@ -204,7 +204,7 @@ bb.bw:                                            ; preds = %_ZNSt7__cxx1112basi
 
 bb.bx:                                            ; preds = %bb.bw, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit244
   %i.mp = phi i8 [ 0, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit244 ], [ %i.mo, %bb.bw ]
-  %i.mq = getelementptr inbounds nuw i8, ptr %3, i64 512 ; 2 uses
+  %i.mq = getelementptr inbounds nuw i8, ptr %3, i64 512
   store i8 %i.mp, ptr %i.mq, align 8, !tbaa !397
   %i.mr = load ptr, ptr %17, align 8, !tbaa !174  ; 3 uses
   %i.ms = getelementptr inbounds nuw i8, ptr %17, i64 8
@@ -278,7 +278,6 @@ _ZNSt6vectorI9WorldSpecSaIS0_EED2Ev.exit:         ; preds = %_ZSt8_DestroyIP9Wor
   call void @llvm.lifetime.end.p0(ptr nonnull %17) #27
   call void @_ZN12MainMenuDataD2Ev(ptr noundef nonnull align 8 dead_on_return(252) dereferenceable(252) %15) #27
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #27
-  %.pre414 = load i8, ptr %i.mq, align 8, !range !131
   br label %bb.cf
 
 bb.bz:                                            ; preds = %bb.bq, %bb.bp
@@ -312,19 +311,28 @@ bb.cd:                                            ; preds = %bb.cc
   br label %bb.ce
 
 bb.ce:                                            ; preds = %bb.cd, %bb.cc, %bb.cb
-  %i.oc = phi i8 [ 0, %bb.cc ], [ 0, %bb.cb ], [ %i.ob, %bb.cd ] ; 2 uses
+  %i.oc = phi i8 [ 0, %bb.cc ], [ 0, %bb.cb ], [ %i.ob, %bb.cd ]
   %i.od = getelementptr inbounds nuw i8, ptr %3, i64 512
   store i8 %i.oc, ptr %i.od, align 8, !tbaa !397
   br label %bb.cf
 
 bb.cf:                                            ; preds = %_ZNSt6vectorI9WorldSpecSaIS0_EED2Ev.exit, %bb.ce
-  %22 = phi i8 [ %.pre414, %_ZNSt6vectorI9WorldSpecSaIS0_EED2Ev.exit ], [ %i.oc, %bb.ce ]
   %i.oe = getelementptr inbounds nuw i8, ptr %3, i64 488 ; 2 uses
   %i.of = load i64, ptr %i.oe, align 8, !tbaa !124
-  %23 = icmp ne i64 %i.of, 0
-  %24 = trunc nuw i8 %22 to i1
-  %.not411 = select i1 %23, i1 true, i1 %24
-  br i1 %.not411, label %bb.cg, label %bb.cq
+  %22 = icmp eq i64 %i.of, 0
+  br i1 %22, label %_ZNK13GameStartData14isSinglePlayerEv.exit, label %bb.cg
+
+_ZNK13GameStartData14isSinglePlayerEv.exit:       ; preds = %bb.cf
+  %23 = getelementptr inbounds nuw i8, ptr %3, i64 512
+  %24 = load i8, ptr %23, align 8, !tbaa !397, !range !131, !noundef !95
+  %25 = trunc nuw i8 %24 to i1
+  br i1 %25, label %26, label %bb.cq
+
+26:                                               ; preds = %_ZNK13GameStartData14isSinglePlayerEv.exit
+  %27 = getelementptr inbounds nuw i8, ptr %3, i64 424
+  %28 = load i64, ptr %27, align 8, !tbaa !124
+  %29 = icmp eq i64 %28, 0
+  br i1 %29, label %bb.ch, label %._crit_edge.i.i266
 
 bb.cg:                                            ; preds = %bb.cf
   %i.og = getelementptr inbounds nuw i8, ptr %3, i64 424
@@ -332,7 +340,7 @@ bb.cg:                                            ; preds = %bb.cf
   %i.oi = icmp eq i64 %i.oh, 0
   br i1 %i.oi, label %bb.ch, label %._crit_edge.i.i266
 
-bb.ch:                                            ; preds = %bb.cg
+bb.ch:                                            ; preds = %bb.cg, %26
   %i.oj = call ptr @gettext(ptr noundef nonnull @.str.32) #27 ; 2 uses
   %i.ok = load i64, ptr %i.h, align 8, !tbaa !124
   %i.ol = call noundef i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.oj) #27
@@ -439,7 +447,7 @@ bb.cp:                                            ; preds = %_ZSt13__check_facet
   %i.pw = invoke noundef signext i8 %i.pv(ptr noundef nonnull align 8 dereferenceable(570) %i.pq, i8 noundef signext 10)
           to label %_ZNKSt9basic_iosIcSt11char_traitsIcEE5widenEc.exit.i378.invoke unwind label %bb.ed, !inline_history !6
 
-bb.cq:                                            ; preds = %bb.cf
+bb.cq:                                            ; preds = %_ZNK13GameStartData14isSinglePlayerEv.exit
   %i.px = getelementptr inbounds nuw i8, ptr %3, i64 416
   %i.py = getelementptr inbounds nuw i8, ptr %3, i64 424
   %i.pz = load i64, ptr %i.py, align 8, !tbaa !124
@@ -462,7 +470,7 @@ bb.cr:                                            ; preds = %_ZNSt7__cxx1112basi
   store i16 %i.qg, ptr %3, align 8, !tbaa !389
   br label %bb.cu
 
-._crit_edge.i.i266:                               ; preds = %bb.cg
+._crit_edge.i.i266:                               ; preds = %26, %bb.cg
   %i.qh = load ptr, ptr @g_settings, align 8, !tbaa !38
   call void @llvm.lifetime.start.p0(ptr nonnull %18) #27
   %i.qi = getelementptr inbounds nuw i8, ptr %18, i64 16 ; 6 uses

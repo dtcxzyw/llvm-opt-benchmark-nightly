@@ -204,11 +204,6 @@ _ZN4cvc58internal12NodeTemplateILb1EEC2ERKNS1_ILb0EEE.exit: ; preds = %bb.b, %bb
   %i.s = icmp eq i64 %i.r, 107
   br i1 %i.s, label %bb.e, label %.thread
 
-.thread:                                          ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKNS1_ILb0EEE.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  br label %bb.af
-
 bb.e:                                             ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKNS1_ILb0EEE.exit
   tail call void @llvm.experimental.noalias.scope.decl(metadata !748)
   %i.t = invoke noundef i32 @_ZN4cvc58internal4kind10metaKindOfENS1_6Kind_tE(i32 noundef 107)
@@ -222,22 +217,30 @@ bb.e:                                             ; preds = %_ZN4cvc58internal12
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !43, !noalias !748
   store ptr %i.x, ptr %4, align 8, !tbaa !40, !alias.scope !748
   %i.y = invoke noundef i32 @_ZN4cvc58internal6theory2bv5utils11isPow2ConstENS0_12NodeTemplateILb0EEERb(ptr noundef nonnull align 8 %4, ptr noundef nonnull align 1 dereferenceable(1) %i.a)
-          to label %bb.f unwind label %bb.aa
+          to label %.noexc9 unwind label %bb.aa
 
-bb.f:                                             ; preds = %.noexc
-  %11 = icmp eq i32 %i.y, 0
-  %.pre.i = load i8, ptr %i.a, align 1, !range !51
-  %i.z = trunc nuw i8 %.pre.i to i1
-  %.not41 = select i1 %11, i1 true, i1 %i.z
+.noexc9:                                          ; preds = %.noexc
+  %.not.i = icmp eq i32 %i.y, 0
+  %.pre43.pre = load ptr, ptr %1, align 8, !tbaa !40 ; 3 uses
+  br i1 %.not.i, label %.thread, label %bb.f
+
+.thread:                                          ; preds = %.noexc9, %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKNS1_ILb0EEE.exit
+  %.pre43 = phi ptr [ %.pre43.pre, %.noexc9 ], [ %i.o, %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKNS1_ILb0EEE.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %.pre43 = load ptr, ptr %1, align 8, !tbaa !40  ; 2 uses
-  br i1 %.not41, label %bb.af, label %bb.g
+  br label %bb.af
+
+bb.f:                                             ; preds = %.noexc9
+  %.pre.i = load i8, ptr %i.a, align 1, !tbaa !49, !range !51, !noundef !52
+  %i.z = trunc nuw i8 %.pre.i to i1
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  br i1 %i.z, label %bb.af, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  store ptr %.pre43, ptr %3, align 8, !tbaa !40, !noalias !749
+  store ptr %.pre43.pre, ptr %3, align 8, !tbaa !40, !noalias !749
   invoke void @_ZN4cvc58internal6theory2bv11RewriteRuleILNS2_13RewriteRuleIdE99EE5applyENS0_12NodeTemplateILb0EEE(ptr dead_on_unwind nonnull writable sret(%"class.cvc5::internal::NodeTemplate") align 8 %6, ptr noundef nonnull align 8 %3)
           to label %bb.h unwind label %bb.ab
 
@@ -445,7 +448,7 @@ bb.ae:                                            ; preds = %bb.w
   br label %bb.bg
 
 bb.af:                                            ; preds = %.thread, %bb.f
-  %i.ct = phi ptr [ %i.o, %.thread ], [ %.pre43, %bb.f ]
+  %i.ct = phi ptr [ %.pre43, %.thread ], [ %.pre43.pre, %bb.f ]
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
   store ptr %i.ct, ptr %9, align 8, !tbaa !40
   invoke void @_ZN4cvc58internal6theory2bv21LinearRewriteStrategyINS2_11RewriteRuleILNS2_13RewriteRuleIdE48EEENS4_ILS5_100EEENS4_ILS5_101EEENS4_ILS5_0EEES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_E5applyENS0_12NodeTemplateILb0EEE(ptr dead_on_unwind nonnull writable sret(%"class.cvc5::internal::NodeTemplate") align 8 %8, ptr noundef nonnull align 8 %9)
@@ -848,11 +851,6 @@ _ZN4cvc58internal12NodeTemplateILb1EEC2ERKNS1_ILb0EEE.exit: ; preds = %bb.b, %bb
   %i.s = icmp eq i64 %i.r, 108
   br i1 %i.s, label %bb.e, label %.thread
 
-.thread:                                          ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKNS1_ILb0EEE.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
-  call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  br label %bb.af
-
 bb.e:                                             ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKNS1_ILb0EEE.exit
   tail call void @llvm.experimental.noalias.scope.decl(metadata !779)
   %i.t = invoke noundef i32 @_ZN4cvc58internal4kind10metaKindOfENS1_6Kind_tE(i32 noundef 108)
@@ -866,22 +864,30 @@ bb.e:                                             ; preds = %_ZN4cvc58internal12
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !43, !noalias !779
   store ptr %i.x, ptr %4, align 8, !tbaa !40, !alias.scope !779
   %i.y = invoke noundef i32 @_ZN4cvc58internal6theory2bv5utils11isPow2ConstENS0_12NodeTemplateILb0EEERb(ptr noundef nonnull align 8 %4, ptr noundef nonnull align 1 dereferenceable(1) %i.a)
-          to label %bb.f unwind label %bb.aa
+          to label %.noexc9 unwind label %bb.aa
 
-bb.f:                                             ; preds = %.noexc
-  %11 = icmp eq i32 %i.y, 0
-  %.pre.i = load i8, ptr %i.a, align 1, !range !51
-  %i.z = trunc nuw i8 %.pre.i to i1
-  %.not41 = select i1 %11, i1 true, i1 %i.z
+.noexc9:                                          ; preds = %.noexc
+  %.not.i = icmp eq i32 %i.y, 0
+  %.pre43.pre = load ptr, ptr %1, align 8, !tbaa !40 ; 3 uses
+  br i1 %.not.i, label %.thread, label %bb.f
+
+.thread:                                          ; preds = %.noexc9, %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKNS1_ILb0EEE.exit
+  %.pre43 = phi ptr [ %.pre43.pre, %.noexc9 ], [ %i.o, %_ZN4cvc58internal12NodeTemplateILb1EEC2ERKNS1_ILb0EEE.exit ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %.pre43 = load ptr, ptr %1, align 8, !tbaa !40  ; 2 uses
-  br i1 %.not41, label %bb.af, label %bb.g
+  br label %bb.af
+
+bb.f:                                             ; preds = %.noexc9
+  %.pre.i = load i8, ptr %i.a, align 1, !tbaa !49, !range !51, !noundef !52
+  %i.z = trunc nuw i8 %.pre.i to i1
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #24
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  br i1 %i.z, label %bb.af, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  store ptr %.pre43, ptr %3, align 8, !tbaa !40, !noalias !780
+  store ptr %.pre43.pre, ptr %3, align 8, !tbaa !40, !noalias !780
   invoke void @_ZN4cvc58internal6theory2bv11RewriteRuleILNS2_13RewriteRuleIdE102EE5applyENS0_12NodeTemplateILb0EEE(ptr dead_on_unwind nonnull writable sret(%"class.cvc5::internal::NodeTemplate") align 8 %6, ptr noundef nonnull align 8 %3)
           to label %bb.h unwind label %bb.ab
 
@@ -1089,7 +1095,7 @@ bb.ae:                                            ; preds = %bb.w
   br label %bb.bg
 
 bb.af:                                            ; preds = %.thread, %bb.f
-  %i.ct = phi ptr [ %i.o, %.thread ], [ %.pre43, %bb.f ]
+  %i.ct = phi ptr [ %.pre43, %.thread ], [ %.pre43.pre, %bb.f ]
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #24
   store ptr %i.ct, ptr %9, align 8, !tbaa !40
   invoke void @_ZN4cvc58internal6theory2bv21LinearRewriteStrategyINS2_11RewriteRuleILNS2_13RewriteRuleIdE49EEENS4_ILS5_103EEENS4_ILS5_104EEENS4_ILS5_0EEES9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_S9_E5applyENS0_12NodeTemplateILb0EEE(ptr dead_on_unwind nonnull writable sret(%"class.cvc5::internal::NodeTemplate") align 8 %8, ptr noundef nonnull align 8 %9)

@@ -84,7 +84,7 @@ declare void @Curl_attach_connection(ptr noundef, ptr noundef) local_unnamed_add
 define internal fastcc void @cshutdn_run_once(ptr noundef %0, ptr noundef %1, ptr nofree noundef writeonly captures(none) initializes((0, 1)) %2) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i8, align 1                       ; 5 uses
-  %i.b = alloca i8, align 1                       ; 4 uses
+  %i.b = alloca i8, align 1                       ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   %i.c = tail call zeroext i1 @Curl_shutdown_started(ptr noundef %0, i32 noundef 0) #7
@@ -182,32 +182,41 @@ bb.o:                                             ; preds = %bb.n, %bb.m
   %i.ad = load i32, ptr %i.d, align 8
   %i.ae = and i32 %i.ad, 1
   %.not19 = icmp eq i32 %i.ae, 0
-  br i1 %.not19, label %bb.p, label %bb.r
+  br i1 %.not19, label %bb.p, label %3
 
 bb.p:                                             ; preds = %bb.o
   %i.af = call zeroext i1 @Curl_conn_is_connected(ptr noundef nonnull %1, i32 noundef 1) #7
-  br i1 %i.af, label %bb.q, label %bb.r
+  br i1 %i.af, label %bb.q, label %3
 
 bb.q:                                             ; preds = %bb.p
   %i.ag = call i32 @Curl_conn_shutdown(ptr noundef %0, i32 noundef 1, ptr noundef nonnull %i.b) #7
   %i.ah = icmp ne i32 %i.ag, 0
-  %.pre = load i8, ptr %i.b, align 1, !range !77
-  %3 = trunc nuw i8 %.pre to i1
-  br label %bb.r
+  br label %4
 
-bb.r:                                             ; preds = %bb.o, %bb.p, %bb.q
-  %4 = phi i1 [ %3, %bb.q ], [ true, %bb.p ], [ true, %bb.o ]
-  %.0 = phi i1 [ %i.ah, %bb.q ], [ false, %bb.p ], [ false, %bb.o ]
+3:                                                ; preds = %bb.p, %bb.o
+  store i8 1, ptr %i.b, align 1, !tbaa !76
+  br label %4
+
+4:                                                ; preds = %3, %bb.q
+  %.0 = phi i1 [ false, %3 ], [ %i.ah, %bb.q ]
   %or.cond = select i1 %.017, i1 true, i1 %.0
-  %i.ai = load i8, ptr %i.a, align 1, !range !77
+  br i1 %or.cond, label %.critedge, label %bb.r
+
+bb.r:                                             ; preds = %4
+  %5 = load i8, ptr %i.a, align 1, !tbaa !76, !range !77, !noundef !78
+  %6 = trunc nuw i8 %5 to i1
+  %i.ai = load i8, ptr %i.b, align 1, !range !77
   %i.aj = trunc nuw i8 %i.ai to i1
-  %5 = select i1 %i.aj, i1 %4, i1 false
-  %i.ak = select i1 %or.cond, i1 true, i1 %5      ; 2 uses
+  %i.ak = select i1 %6, i1 %i.aj, i1 false        ; 2 uses
   %i.al = zext i1 %i.ak to i8
   store i8 %i.al, ptr %2, align 1, !tbaa !76
   br i1 %i.ak, label %bb.s, label %bb.t
 
-bb.s:                                             ; preds = %bb.r
+.critedge:                                        ; preds = %4
+  store i8 1, ptr %2, align 1, !tbaa !76
+  br label %bb.s
+
+bb.s:                                             ; preds = %.critedge, %bb.r
   %i.am = load i32, ptr %i.d, align 8
   %i.an = or i32 %i.am, 4194304
   store i32 %i.an, ptr %i.d, align 8

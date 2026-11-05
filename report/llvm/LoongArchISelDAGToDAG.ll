@@ -202,6 +202,8 @@ bb.d:                                             ; preds = %bb.b
 
 _ZNK4llvm3EVT13getSizeInBitsEv.exit.i:            ; preds = %bb.d, %bb.c
   %.pn.i.i = phi { i64, i8 } [ %.fca.1.insert.i.i.i, %bb.c ], [ %i.i, %bb.d ] ; 2 uses
+  %.fca.0.extract1.i = extractvalue { i64, i8 } %.pn.i.i, 0
+  %.fca.1.extract2.i = extractvalue { i64, i8 } %.pn.i.i, 1
   %.not.i5.i = icmp eq i16 %1, 0
   br i1 %.not.i5.i, label %bb.f, label %bb.e
 
@@ -220,23 +222,27 @@ bb.f:                                             ; preds = %_ZNK4llvm3EVT13getS
   %i.m = call { i64, i8 } @_ZNK4llvm3EVT21getExtendedSizeInBitsEv(ptr noundef nonnull align 8 dereferenceable(16) %3) #19
   br label %_ZNK4llvm3EVT11knownBitsLEES0_.exit.a
 
-_ZNK4llvm3EVT11knownBitsLEES0_.exit.a:            ; preds = %bb.e, %bb.f
+_ZNK4llvm3EVT11knownBitsLEES0_.exit.a:            ; preds = %bb.f, %bb.e
   %.pn.i11.i = phi { i64, i8 } [ %.fca.1.insert.i.i10.i, %bb.e ], [ %i.m, %bb.f ] ; 2 uses
-  %.fca.1.extract2.i = extractvalue { i64, i8 } %.pn.i.i, 1
-  %.fca.0.extract1.i = extractvalue { i64, i8 } %.pn.i.i, 0
-  %.fca.0.extract.i = extractvalue { i64, i8 } %.pn.i11.i, 0
   %.fca.1.extract.i = extractvalue { i64, i8 } %.pn.i11.i, 1
   %i.n = trunc nuw i8 %.fca.1.extract2.i to i1
   %.not.i13.i = xor i1 %i.n, true
   %i.o = trunc nuw i8 %.fca.1.extract.i to i1
-  %or.cond.i.i = select i1 %.not.i13.i, i1 true, i1 %i.o
-  %4 = icmp ule i64 %.fca.0.extract1.i, %.fca.0.extract.i
-  %.0.i.i.a = select i1 %or.cond.i.i, i1 %4, i1 false
+  %.0.i.i.a = select i1 %.not.i13.i, i1 true, i1 %i.o
+  br i1 %.0.i.i.a, label %4, label %_ZNK4llvm3EVT11knownBitsLEES0_.exit
+
+4:                                                ; preds = %_ZNK4llvm3EVT11knownBitsLEES0_.exit.a
+  %.fca.0.extract.i = extractvalue { i64, i8 } %.pn.i11.i, 0
+  %5 = icmp ule i64 %.fca.0.extract1.i, %.fca.0.extract.i
+  br label %_ZNK4llvm3EVT11knownBitsLEES0_.exit
+
+_ZNK4llvm3EVT11knownBitsLEES0_.exit:              ; preds = %_ZNK4llvm3EVT11knownBitsLEES0_.exit.a, %4
+  %.0.i.i = phi i1 [ %5, %4 ], [ false, %_ZNK4llvm3EVT11knownBitsLEES0_.exit.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   br label %bb.g
 
-bb.g:                                             ; preds = %bb.a, %_ZNK4llvm3EVT11knownBitsLEES0_.exit.a
-  %.0 = phi i1 [ %.0.i.i.a, %_ZNK4llvm3EVT11knownBitsLEES0_.exit.a ], [ true, %bb.a ]
+bb.g:                                             ; preds = %bb.a, %_ZNK4llvm3EVT11knownBitsLEES0_.exit
+  %.0 = phi i1 [ %.0.i.i, %_ZNK4llvm3EVT11knownBitsLEES0_.exit ], [ true, %bb.a ]
   ret i1 %.0
 }
 

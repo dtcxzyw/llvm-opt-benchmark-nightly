@@ -202,7 +202,7 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsd9r5UMv47dc_
   br i1 %.sroa.044.0, label %bb.am, label %bb.al, !prof !11
 
 bb.al:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsd9r5UMv47dc_16parking_lot_core11parking_lot10ThreadDataEECsaWIbZW7RmAr_11parking_lot.exit30
-  br i1 %or.cond, label %bb.ao, label %bb.an
+  br i1 %or.cond, label %.thread54, label %bb.an
 
 bb.am:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsd9r5UMv47dc_16parking_lot_core11parking_lot10ThreadDataEECsaWIbZW7RmAr_11parking_lot.exit30
   call void @_RNvNtCshzWfHUSfYae_4core9panicking9panic_fmt(ptr noundef nonnull @11, ptr noundef nonnull inttoptr (i64 125 to ptr), ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @13) #19
@@ -213,13 +213,17 @@ bb.an:                                            ; preds = %bb.al
   %.sroa.18.0.in.i = extractvalue { i8, i1 } %i.eq, 1
   br i1 %.sroa.18.0.in.i, label %bb.ao, label %bb.ap, !prof !10
 
-bb.ao:                                            ; preds = %bb.ap, %bb.an, %bb.al
+bb.ao:                                            ; preds = %bb.ap, %bb.an
   %.sroa.08.0.a = xor i1 %.sroa.040.1.shrunk, true
-  ret i1 %.sroa.08.0.a
+  br label %.thread54
 
 bb.ap:                                            ; preds = %bb.an
   %i.er = call noundef zeroext i1 @_RNvMs1_NtCsaWIbZW7RmAr_11parking_lot9raw_mutexNtB5_8RawMutex9lock_slow(ptr noundef nonnull %1, i64 undef, i32 noundef -1) ; 0 uses
   br label %bb.ao
+
+.thread54:                                        ; preds = %bb.ao, %bb.al
+  %.sroa.08.0 = phi i1 [ false, %bb.al ], [ %.sroa.08.0.a, %bb.ao ]
+  ret i1 %.sroa.08.0
 }
 
 ; Function Attrs: cold nonlazybind uwtable

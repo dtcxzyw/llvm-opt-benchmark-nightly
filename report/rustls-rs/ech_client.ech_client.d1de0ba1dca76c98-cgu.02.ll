@@ -202,15 +202,22 @@ bb.a:
   %.sroa.021.0 = phi i64 [ 0, %bb.a ], [ %.sroa.021.1328, %.backedge.backedge ] ; 3 uses
   %.sroa.0.0 = phi i8 [ 0, %bb.a ], [ %.sroa.0.1, %.backedge.backedge ]
   %.val86 = load i8, ptr %i.n, align 2, !range !5, !noundef !6
-  %.val87 = load i8, ptr %i.o, align 1
-  %3 = trunc nuw i8 %.val86 to i1
-  %i.ad = trunc nuw i8 %.val87 to i1
-  %4 = select i1 %3, i1 %i.ad, i1 false           ; 4 uses
-  %.val91 = load i64, ptr %i.p, align 8, !noundef !6
-  %.not313 = icmp eq i64 %.val91, 0
-  br i1 %.not313, label %bb.b, label %.lr.ph
+  %i.ad = trunc nuw i8 %.val86 to i1
+  br i1 %i.ad, label %3, label %6
 
-bb.b:                                             ; preds = %.backedge
+3:                                                ; preds = %.backedge
+  %.val87 = load i8, ptr %i.o, align 1
+  %4 = trunc nuw i8 %.val87 to i1
+  %5 = xor i1 %4, true
+  br label %6
+
+6:                                                ; preds = %3, %.backedge
+  %.sroa.0.0.i = phi i1 [ %5, %3 ], [ true, %.backedge ] ; 4 uses
+  %.val91 = load i64, ptr %i.p, align 8, !noundef !6
+  %.not323 = icmp eq i64 %.val91, 0
+  br i1 %.not323, label %bb.b, label %.lr.ph
+
+bb.b:                                             ; preds = %6
   %i.ae = load i64, ptr %i.q, align 8, !alias.scope !83, !noundef !6
   %i.af = icmp ne i64 %i.ae, 0
   %i.ag = load i8, ptr %i.r, align 1, !range !5, !alias.scope !83
@@ -270,17 +277,17 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsi17nFaBu4HY_1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
   br label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECsi17nFaBu4HY_10ech_client.exit125
 
-.lr.ph:                                           ; preds = %.backedge, %bb.l
-  %.sroa.021.1505 = phi i64 [ %i.bm, %bb.l ], [ %.sroa.021.0, %.backedge ] ; 3 uses
+.lr.ph:                                           ; preds = %6, %bb.l
+  %.sroa.021.1505 = phi i64 [ %i.bm, %bb.l ], [ %.sroa.021.0, %6 ] ; 3 uses
   %i.as = invoke { i64, ptr } @_RNvMs_NtCs7ZUl82OSlxp_6rustls6vecbufNtB4_14ChunkVecBuffer8write_to(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.s, ptr noundef nonnull %2, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(80) @0)
           to label %_RNvMs0_NtCs7ZUl82OSlxp_6rustls4connINtB5_16ConnectionCommonNtNtNtB7_6client11client_conn20ClientConnectionDataE9write_tlsCsi17nFaBu4HY_10ech_client.exit unwind label %.thread236.loopexit.split-lp.loopexit ; 2 uses
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECsi17nFaBu4HY_10ech_client.exit134: ; preds = %bb.l, %bb.b, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit
   %.sroa.021.1328 = phi i64 [ %.sroa.021.1505, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit ], [ %.sroa.021.0, %bb.b ], [ %i.bm, %bb.l ] ; 8 uses
   %.sroa.0.5 = phi ptr [ %i.au, %_RNvMs1_NtNtCsj6eKBz9Db1c_4core2io5errorNtB5_5Error4kind.exit ], [ null, %bb.b ], [ null, %bb.l ] ; 17 uses
-  %5 = icmp ne i64 %.sroa.021.1328, 0             ; 2 uses
-  %or.cond15.not.not = and i1 %4, %5
-  br i1 %or.cond15.not.not, label %bb.o, label %bb.p
+  %7 = icmp eq i64 %.sroa.021.1328, 0             ; 2 uses
+  %or.cond15.not = or i1 %.sroa.0.0.i, %7
+  br i1 %or.cond15.not, label %bb.p, label %bb.o
 
 _RNvMs0_NtCs7ZUl82OSlxp_6rustls4connINtB5_16ConnectionCommonNtNtNtB7_6client11client_conn20ClientConnectionDataE9write_tlsCsi17nFaBu4HY_10ech_client.exit: ; preds = %.lr.ph
   %i.at = extractvalue { i64, ptr } %i.as, 0
@@ -413,7 +420,7 @@ _RNvMNtCs7ZUl82OSlxp_6rustls12common_stateNtB2_11CommonState10wants_read.exit137
 
 bb.s:                                             ; preds = %_RNvMNtCs7ZUl82OSlxp_6rustls12common_stateNtB2_11CommonState10wants_read.exit137
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  br i1 %5, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECsi17nFaBu4HY_10ech_client.exit194.thread309, label %bb.t
+  br i1 %7, label %bb.t, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECsi17nFaBu4HY_10ech_client.exit194.thread309
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECsi17nFaBu4HY_10ech_client.exit194.thread309: ; preds = %bb.s
   store i64 %.sroa.033.0, ptr %i.cg, align 8
@@ -734,7 +741,7 @@ bb.ba:                                            ; preds = %_RNvMs_NtCs7ZUl82OS
   br i1 %brmerge3, label %bb.bb, label %bb.bc
 
 bb.bb:                                            ; preds = %bb.ba
-  br i1 %4, label %bb.be, label %bb.bf
+  br i1 %.sroa.0.0.i, label %bb.bf, label %bb.be
 
 bb.bc:                                            ; preds = %bb.ba
   %i.fg = icmp eq i64 %.sroa.033.1, 0
@@ -758,13 +765,8 @@ bb.be:                                            ; preds = %bb.bf, %bb.bb
   %i.fk = extractvalue { ptr, ptr } %i.fj, 0      ; 9 uses
   %i.fl = extractvalue { ptr, ptr } %i.fj, 1      ; 12 uses
   %.val = load i8, ptr %i.n, align 2, !range !5, !noundef !6
-  %.val83 = load i8, ptr %i.o, align 1
-  %6 = trunc nuw i8 %.val to i1
-  %i.fm = trunc nuw i8 %.val83 to i1
-  %7 = select i1 %6, i1 %i.fm, i1 false
-  %.sroa.0.0.i180 = xor i1 %7, true               ; 2 uses
-  %or.cond7 = select i1 %4, i1 true, i1 %.sroa.0.0.i180
-  br i1 %or.cond7, label %bb.bn, label %bb.bo
+  %i.fm = trunc nuw i8 %.val to i1
+  br i1 %i.fm, label %_RNvMNtCs7ZUl82OSlxp_6rustls12common_stateNtB2_11CommonState14is_handshaking.exit182, label %bb.bn
 
 bb.bf:                                            ; preds = %bb.bb
   %.val84 = load i8, ptr %i.n, align 2, !range !5, !noundef !6
@@ -843,14 +845,22 @@ _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsi17nFaBu4HY_1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br label %.backedge.backedge
 
-bb.bn:                                            ; preds = %bb.be
+_RNvMNtCs7ZUl82OSlxp_6rustls12common_stateNtB2_11CommonState14is_handshaking.exit182: ; preds = %bb.be
+  %.val83 = load i8, ptr %i.o, align 1
+  %8 = trunc nuw i8 %.val83 to i1                 ; 2 uses
+  %9 = xor i1 %8, true
+  %10 = select i1 %.sroa.0.0.i, i1 %8, i1 false
+  br i1 %10, label %bb.bo, label %bb.bn
+
+bb.bn:                                            ; preds = %bb.be, %_RNvMNtCs7ZUl82OSlxp_6rustls12common_stateNtB2_11CommonState14is_handshaking.exit182
+  %.sroa.0.0.i181304 = phi i1 [ %9, %_RNvMNtCs7ZUl82OSlxp_6rustls12common_stateNtB2_11CommonState14is_handshaking.exit182 ], [ true, %bb.be ]
   %i.gc = icmp ne ptr %i.fk, null                 ; 2 uses
   %i.gd = or i64 %.sroa.033.1, %.sroa.021.1328
   %i.ge = icmp eq i64 %i.gd, 0
   %or.cond19 = select i1 %i.gc, i1 %i.ge, i1 false
   br i1 %or.cond19, label %bb.br, label %bb.bq
 
-bb.bo:                                            ; preds = %bb.be
+bb.bo:                                            ; preds = %_RNvMNtCs7ZUl82OSlxp_6rustls12common_stateNtB2_11CommonState14is_handshaking.exit182
   %i.gf = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 %.sroa.033.1, ptr %i.gf, align 8
   %i.gg = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -864,7 +874,7 @@ bb.bp:                                            ; preds = %bb.by, %bb.bv, %bb.
   br i1 %.not73, label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtB4_2io5error5ErrorEECsi17nFaBu4HY_10ech_client.exit125, label %bb.cg
 
 bb.bq:                                            ; preds = %bb.bn
-  br i1 %4, label %bb.bv, label %bb.bw
+  br i1 %.sroa.0.0.i, label %bb.bw, label %bb.bv
 
 bb.br:                                            ; preds = %bb.bn
   %i.gh = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -914,7 +924,7 @@ bb.bv:                                            ; preds = %bb.bq
 
 bb.bw:                                            ; preds = %bb.bq
   %i.gr = trunc nuw i8 %.sroa.0.1 to i1
-  %or.cond10 = select i1 %i.gr, i1 %.sroa.0.0.i180, i1 false
+  %or.cond10 = select i1 %i.gr, i1 %.sroa.0.0.i181304, i1 false
   br i1 %or.cond10, label %bb.by, label %bb.bx
 
 bb.bx:                                            ; preds = %bb.bw

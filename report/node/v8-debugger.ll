@@ -202,21 +202,27 @@ bb.c:                                             ; preds = %bb.b
   br i1 %or.cond, label %bb.e, label %bb.g
 
 .critedge:                                        ; preds = %bb.b
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 666 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 666 ; 3 uses
   %i.f = load i8, ptr %i.e, align 2, !range !77, !noundef !73
   %i.g = trunc nuw i8 %i.f to i1
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 665
-  %3 = load i8, ptr %i.h, align 1, !range !77
-  %4 = trunc nuw i8 %3 to i1
-  %or.cond.i = select i1 %i.g, i1 true, i1 %4
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 664
-  %i.i = load i8, ptr %5, align 8, !range !77
+  %i.i = load i8, ptr %i.h, align 1, !range !77
   %i.j = trunc nuw i8 %i.i to i1
-  %i.k = select i1 %or.cond.i, i1 true, i1 %i.j
-  store i8 1, ptr %i.e, align 2
-  br i1 %i.k, label %bb.g, label %bb.d
+  %i.k = select i1 %i.g, i1 true, i1 %i.j
+  br i1 %i.k, label %_ZNK12v8_inspector10V8Debugger35hasScheduledBreakOnNextFunctionCallEv.exit.thread, label %_ZNK12v8_inspector10V8Debugger35hasScheduledBreakOnNextFunctionCallEv.exit
 
-bb.d:                                             ; preds = %.critedge
+_ZNK12v8_inspector10V8Debugger35hasScheduledBreakOnNextFunctionCallEv.exit.thread: ; preds = %.critedge
+  store i8 1, ptr %i.e, align 2
+  br label %bb.g
+
+_ZNK12v8_inspector10V8Debugger35hasScheduledBreakOnNextFunctionCallEv.exit: ; preds = %.critedge
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 664
+  %4 = load i8, ptr %3, align 8, !range !77, !noundef !73
+  %5 = trunc nuw i8 %4 to i1
+  store i8 1, ptr %i.e, align 2
+  br i1 %5, label %bb.g, label %bb.d
+
+bb.d:                                             ; preds = %_ZNK12v8_inspector10V8Debugger35hasScheduledBreakOnNextFunctionCallEv.exit
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 60
   store i32 %2, ptr %i.l, align 4
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 16
@@ -242,7 +248,7 @@ bb.f:                                             ; preds = %bb.e
   tail call void @_ZN2v85debug28ClearBreakOnNextFunctionCallEPNS_7IsolateE(ptr noundef %i.x) #24
   br label %bb.g
 
-bb.g:                                             ; preds = %.critedge, %bb.d, %bb.c, %bb.e, %bb.f, %bb.a
+bb.g:                                             ; preds = %bb.e, %_ZNK12v8_inspector10V8Debugger35hasScheduledBreakOnNextFunctionCallEv.exit.thread, %_ZNK12v8_inspector10V8Debugger35hasScheduledBreakOnNextFunctionCallEv.exit, %bb.d, %bb.c, %bb.f, %bb.a
   ret void
 }
 
@@ -253,14 +259,20 @@ bb.a:
   %i.b = load i8, ptr %i.a, align 2, !range !77, !noundef !73
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 665
-  %1 = load i8, ptr %i.d, align 1, !range !77
-  %2 = trunc nuw i8 %1 to i1
-  %or.cond = select i1 %i.c, i1 true, i1 %2
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 664
-  %i.e = load i8, ptr %3, align 8, !range !77
+  %i.e = load i8, ptr %i.d, align 1, !range !77
   %i.f = trunc nuw i8 %i.e to i1
-  %i.g = select i1 %or.cond, i1 true, i1 %i.f
-  ret i1 %i.g
+  %i.g = select i1 %i.c, i1 true, i1 %i.f
+  br i1 %i.g, label %5, label %1
+
+1:                                                ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 664
+  %3 = load i8, ptr %2, align 8, !range !77, !noundef !73
+  %4 = trunc nuw i8 %3 to i1
+  br label %5
+
+5:                                                ; preds = %1, %bb.a
+  %6 = phi i1 [ %4, %1 ], [ true, %bb.a ]
+  ret i1 %6
 }
 
 declare void @_ZN2v85debug26SetBreakOnNextFunctionCallEPNS_7IsolateE(ptr noundef) local_unnamed_addr #1
@@ -663,18 +675,24 @@ bb.b:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 666
   %i.d = load i8, ptr %i.c, align 2, !range !77, !noundef !73
   %i.e = trunc nuw i8 %i.d to i1
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 665 ; 2 uses
-  %3 = load i8, ptr %i.f, align 1, !range !77
-  %4 = trunc nuw i8 %3 to i1
-  %or.cond.i = select i1 %i.e, i1 true, i1 %4
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 664
-  %i.g = load i8, ptr %5, align 8, !range !77
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 665 ; 3 uses
+  %i.g = load i8, ptr %i.f, align 1, !range !77
   %i.h = trunc nuw i8 %i.g to i1
-  %i.i = select i1 %or.cond.i, i1 true, i1 %i.h
-  store i8 1, ptr %i.f, align 1
-  br i1 %i.i, label %bb.g, label %bb.c
+  %i.i = select i1 %i.e, i1 true, i1 %i.h
+  br i1 %i.i, label %_ZNK12v8_inspector10V8Debugger35hasScheduledBreakOnNextFunctionCallEv.exit.thread, label %_ZNK12v8_inspector10V8Debugger35hasScheduledBreakOnNextFunctionCallEv.exit
 
-bb.c:                                             ; preds = %bb.b
+_ZNK12v8_inspector10V8Debugger35hasScheduledBreakOnNextFunctionCallEv.exit.thread: ; preds = %bb.b
+  store i8 1, ptr %i.f, align 1
+  br label %bb.g
+
+_ZNK12v8_inspector10V8Debugger35hasScheduledBreakOnNextFunctionCallEv.exit: ; preds = %bb.b
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 664
+  %4 = load i8, ptr %3, align 8, !range !77, !noundef !73
+  %5 = trunc nuw i8 %4 to i1
+  store i8 1, ptr %i.f, align 1
+  br i1 %5, label %bb.g, label %bb.c
+
+bb.c:                                             ; preds = %_ZNK12v8_inspector10V8Debugger35hasScheduledBreakOnNextFunctionCallEv.exit
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.k = load ptr, ptr %i.j, align 8
   %i.l = tail call noundef zeroext i1 @_ZN2v87Isolate9InContextEv(ptr noundef nonnull align 1 dereferenceable(1) %i.k) #24
@@ -733,7 +751,7 @@ _ZN12v8_inspector10V8Debugger21currentContextGroupIdEv.exit: ; preds = %bb.c, %_
   call void @_ZN2v85debug26SetBreakOnNextFunctionCallEPNS_7IsolateE(ptr noundef %i.aj) #24
   br label %bb.g
 
-bb.g:                                             ; preds = %_ZN12v8_inspector10V8Debugger21currentContextGroupIdEv.exit, %bb.b, %bb.a
+bb.g:                                             ; preds = %_ZNK12v8_inspector10V8Debugger35hasScheduledBreakOnNextFunctionCallEv.exit.thread, %_ZN12v8_inspector10V8Debugger21currentContextGroupIdEv.exit, %_ZNK12v8_inspector10V8Debugger35hasScheduledBreakOnNextFunctionCallEv.exit, %bb.a
   ret void
 }
 
@@ -1136,14 +1154,20 @@ bb.o:                                             ; preds = %_ZNSt6vectorIPvSaIS
   %i.bu = load i8, ptr %i.bt, align 1, !range !77
   %i.bv = trunc nuw i8 %i.bu to i1
   %or.cond.i = select i1 %i.bs, i1 true, i1 %i.bv
-  %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 664 ; 2 uses
-  %3 = load i8, ptr %i.bw, align 8, !range !77
-  %4 = trunc nuw i8 %3 to i1
-  %5 = select i1 %or.cond.i, i1 true, i1 %4
-  store i8 1, ptr %i.bw, align 8
-  br i1 %5, label %bb.t, label %bb.p
+  %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 664 ; 3 uses
+  br i1 %or.cond.i, label %_ZNK12v8_inspector10V8Debugger35hasScheduledBreakOnNextFunctionCallEv.exit.thread, label %_ZNK12v8_inspector10V8Debugger35hasScheduledBreakOnNextFunctionCallEv.exit
 
-bb.p:                                             ; preds = %bb.o
+_ZNK12v8_inspector10V8Debugger35hasScheduledBreakOnNextFunctionCallEv.exit.thread: ; preds = %bb.o
+  store i8 1, ptr %i.bw, align 8
+  br label %bb.t
+
+_ZNK12v8_inspector10V8Debugger35hasScheduledBreakOnNextFunctionCallEv.exit: ; preds = %bb.o
+  %3 = load i8, ptr %i.bw, align 8, !range !77, !noundef !73
+  %4 = trunc nuw i8 %3 to i1
+  store i8 1, ptr %i.bw, align 8
+  br i1 %4, label %bb.t, label %bb.p
+
+bb.p:                                             ; preds = %_ZNK12v8_inspector10V8Debugger35hasScheduledBreakOnNextFunctionCallEv.exit
   %i.bx = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
   %i.by = load ptr, ptr %i.bx, align 8
   %i.bz = tail call noundef zeroext i1 @_ZN2v87Isolate9InContextEv(ptr noundef nonnull align 1 dereferenceable(1) %i.by) #24
@@ -1202,7 +1226,7 @@ _ZN12v8_inspector10V8Debugger21currentContextGroupIdEv.exit: ; preds = %bb.p, %_
   call void @_ZN2v85debug26SetBreakOnNextFunctionCallEPNS_7IsolateE(ptr noundef %i.cx) #24
   br label %bb.t
 
-bb.t:                                             ; preds = %_ZN12v8_inspector10V8Debugger21currentContextGroupIdEv.exit, %bb.o, %_ZNSt6vectorIPvSaIS0_EE9push_backEOS0_.exit, %bb.a, %bb.b
+bb.t:                                             ; preds = %_ZNK12v8_inspector10V8Debugger35hasScheduledBreakOnNextFunctionCallEv.exit.thread, %_ZN12v8_inspector10V8Debugger21currentContextGroupIdEv.exit, %_ZNK12v8_inspector10V8Debugger35hasScheduledBreakOnNextFunctionCallEv.exit, %_ZNSt6vectorIPvSaIS0_EE9push_backEOS0_.exit, %bb.a, %bb.b
   ret void
 }
 

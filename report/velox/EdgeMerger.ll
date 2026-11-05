@@ -202,46 +202,83 @@ declare void @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EPKcRKS3_(p
 
 ; Function Attrs: inlinehint mustprogress uwtable
 define linkonce_odr void @_ZN4geos9operation9overlayng4Edge5mergeEPKS2_(ptr noundef nonnull align 8 dereferenceable(32) %0, ptr noundef %1) local_unnamed_addr #3 comdat align 2 !guid !70 {
-bb.a:
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %.sink.in.i14.i = load i32, ptr %0, align 8, !tbaa !71 ; 2 uses
-  %.sink.i15.i.not = icmp eq i32 %.sink.in.i14.i, 2
-  %.sink4.i16.i = load i8, ptr %2, align 8, !range !72
-  %.not = select i1 %.sink.i15.i.not, i8 %.sink4.i16.i, i8 1
-  %i.a = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.sink.in.i8.i = load i32, ptr %1, align 4, !tbaa !71 ; 3 uses
-  %.sink.i9.i.not = icmp eq i32 %.sink.in.i8.i, 2
-  %.sink4.i10.i = load i8, ptr %i.a, align 4, !range !72
-  %.not18 = select i1 %.sink.i9.i.not, i8 %.sink4.i10.i, i8 1
-  %.not19 = and i8 %.not18, %.not
-  store i8 %.not19, ptr %2, align 8, !tbaa !81
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 20 ; 2 uses
-  %.sink.in.i.i = load i32, ptr %i.b, align 4, !tbaa !71 ; 2 uses
-  %.sink.i.i.not = icmp eq i32 %.sink.in.i.i, 2
-  %.sink4.i.i = load i8, ptr %3, align 4, !range !72
-  %.not22 = select i1 %.sink.i.i.not, i8 %.sink4.i.i, i8 1
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 20
-  %.sink.in.i8.i13 = load i32, ptr %4, align 4, !tbaa !71 ; 3 uses
-  %.sink.i9.i14.not = icmp eq i32 %.sink.in.i8.i13, 2
-  %.sink4.i10.i15 = load i8, ptr %5, align 4, !range !72
-  %.not23 = select i1 %.sink.i9.i14.not, i8 %.sink4.i10.i15, i8 1
-  %.not24 = and i8 %.not23, %.not22
-  store i8 %.not24, ptr %3, align 4, !tbaa !82
-  %6 = icmp sgt i32 %.sink.in.i8.i, %.sink.in.i14.i
-  br i1 %6, label %bb.b, label %bb.c
+  %3 = load i32, ptr %0, align 8, !tbaa !79       ; 2 uses
+  %4 = icmp eq i32 %3, 2
+  br i1 %4, label %5, label %10
 
-bb.b:                                             ; preds = %bb.a
-  store i32 %.sink.in.i8.i, ptr %0, align 8, !tbaa !83
+5:                                                ; preds = %2
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %7 = load i8, ptr %6, align 8, !tbaa !80, !range !81, !noundef !82
+  %8 = trunc nuw i8 %7 to i1
+  %9 = xor i1 %8, true
+  br label %10
+
+10:                                               ; preds = %5, %2
+  %.0.i.ph.i = phi i1 [ false, %2 ], [ %9, %5 ]   ; 2 uses
+  %11 = load i32, ptr %1, align 8, !tbaa !79      ; 3 uses
+  %12 = icmp eq i32 %11, 2
+  br i1 %12, label %13, label %bb.a
+
+13:                                               ; preds = %10
+  %14 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %15 = load i8, ptr %14, align 8, !tbaa !80, !range !81, !noundef !82
+  %16 = trunc nuw i8 %15 to i1
+  %17 = xor i1 %16, true
+  %18 = or i1 %.0.i.ph.i, %17
+  br label %bb.a
+
+bb.a:                                             ; preds = %10, %13
+  %.0.i6.i = phi i1 [ %18, %13 ], [ %.0.i.ph.i, %10 ]
+  %19 = xor i1 %.0.i6.i, true
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %20 = zext i1 %19 to i8
+  store i8 %20, ptr %i.a, align 8, !tbaa !80
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
+  %.sink.in.i8.i13 = load i32, ptr %i.b, align 4, !tbaa !83 ; 2 uses
+  %.sink.i9.i14.not = icmp eq i32 %.sink.in.i8.i13, 2
+  br i1 %.sink.i9.i14.not, label %21, label %_ZNK4geos9operation9overlayng4Edge7isShellEi.exit.i
+
+21:                                               ; preds = %bb.a
+  %22 = getelementptr inbounds nuw i8, ptr %0, i64 20
+  %23 = load i8, ptr %22, align 4, !tbaa !84, !range !81, !noundef !82
+  %24 = trunc nuw i8 %23 to i1
+  %25 = xor i1 %24, true
+  br label %_ZNK4geos9operation9overlayng4Edge7isShellEi.exit.i
+
+_ZNK4geos9operation9overlayng4Edge7isShellEi.exit.i: ; preds = %21, %bb.a
+  %.0.i.i = phi i1 [ false, %bb.a ], [ %25, %21 ] ; 2 uses
+  %26 = getelementptr inbounds nuw i8, ptr %1, i64 12
+  %27 = load i32, ptr %26, align 4, !tbaa !83     ; 3 uses
+  %28 = icmp eq i32 %27, 2
+  br i1 %28, label %29, label %_ZN4geos9operation9overlayng4Edge12isHoleMergedEiPKS2_S4_.exit14
+
+29:                                               ; preds = %_ZNK4geos9operation9overlayng4Edge7isShellEi.exit.i
+  %30 = getelementptr inbounds nuw i8, ptr %1, i64 20
+  %31 = load i8, ptr %30, align 4, !tbaa !84, !range !81, !noundef !82
+  %32 = trunc nuw i8 %31 to i1
+  %33 = xor i1 %32, true
+  %34 = or i1 %.0.i.i, %33
+  br label %_ZN4geos9operation9overlayng4Edge12isHoleMergedEiPKS2_S4_.exit14
+
+_ZN4geos9operation9overlayng4Edge12isHoleMergedEiPKS2_S4_.exit14: ; preds = %_ZNK4geos9operation9overlayng4Edge7isShellEi.exit.i, %29
+  %.0.i6.i13 = phi i1 [ %.0.i.i, %_ZNK4geos9operation9overlayng4Edge7isShellEi.exit.i ], [ %34, %29 ]
+  %35 = xor i1 %.0.i6.i13, true
+  %36 = getelementptr inbounds nuw i8, ptr %0, i64 20
+  %37 = zext i1 %35 to i8
+  store i8 %37, ptr %36, align 4, !tbaa !84
+  %38 = icmp sgt i32 %11, %3
+  br i1 %38, label %bb.b, label %bb.c
+
+bb.b:                                             ; preds = %_ZN4geos9operation9overlayng4Edge12isHoleMergedEiPKS2_S4_.exit14
+  store i32 %11, ptr %0, align 8, !tbaa !79
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.b, %bb.a
-  %i.c = icmp sgt i32 %.sink.in.i8.i13, %.sink.in.i.i
+bb.c:                                             ; preds = %bb.b, %_ZN4geos9operation9overlayng4Edge12isHoleMergedEiPKS2_S4_.exit14
+  %i.c = icmp sgt i32 %27, %.sink.in.i8.i13
   br i1 %i.c, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  store i32 %.sink.in.i8.i13, ptr %i.b, align 4, !tbaa !84
+  store i32 %27, ptr %i.b, align 4, !tbaa !83
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -644,22 +681,22 @@ attributes #22 = { nounwind willreturn memory(read) }
 !68 = !{i64 -1207406218365317579}
 !69 = distinct !{null, null}
 !70 = !{i64 2156618920098447117}
-!71 = !{!6, !6, i64 0}
-!72 = !{i8 0, i8 2}
-!73 = !{!"bool", !5, i64 0}
-!74 = !{!"_ZTSSt10_Head_baseILm0EPN4geos4geom18CoordinateSequenceELb0EE", !27, i64 0}
-!75 = !{!"_ZTSSt11_Tuple_implILm0EJPN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EEE", !74, i64 0}
-!76 = !{!"_ZTSSt5tupleIJPN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EEE", !75, i64 0}
-!77 = !{!"_ZTSSt15__uniq_ptr_implIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EE", !76, i64 0}
-!78 = !{!"_ZTSSt15__uniq_ptr_dataIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_ELb1ELb1EE", !77, i64 0}
-!79 = !{!"_ZTSSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EE", !78, i64 0}
-!80 = !{!"_ZTSN4geos9operation9overlayng4EdgeE", !6, i64 0, !6, i64 4, !73, i64 8, !6, i64 12, !6, i64 16, !73, i64 20, !79, i64 24}
-!81 = !{!80, !73, i64 8}
-!82 = !{!80, !73, i64 20}
-!83 = !{!80, !6, i64 0}
-!84 = !{!80, !6, i64 12}
-!85 = !{!80, !6, i64 4}
-!86 = !{!80, !6, i64 16}
+!71 = !{!"bool", !5, i64 0}
+!72 = !{!"_ZTSSt10_Head_baseILm0EPN4geos4geom18CoordinateSequenceELb0EE", !27, i64 0}
+!73 = !{!"_ZTSSt11_Tuple_implILm0EJPN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EEE", !72, i64 0}
+!74 = !{!"_ZTSSt5tupleIJPN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EEE", !73, i64 0}
+!75 = !{!"_ZTSSt15__uniq_ptr_implIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EE", !74, i64 0}
+!76 = !{!"_ZTSSt15__uniq_ptr_dataIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_ELb1ELb1EE", !75, i64 0}
+!77 = !{!"_ZTSSt10unique_ptrIN4geos4geom18CoordinateSequenceESt14default_deleteIS2_EE", !76, i64 0}
+!78 = !{!"_ZTSN4geos9operation9overlayng4EdgeE", !6, i64 0, !6, i64 4, !71, i64 8, !6, i64 12, !6, i64 16, !71, i64 20, !77, i64 24}
+!79 = !{!78, !6, i64 0}
+!80 = !{!78, !71, i64 8}
+!81 = !{i8 0, i8 2}
+!82 = !{}
+!83 = !{!78, !6, i64 12}
+!84 = !{!78, !71, i64 20}
+!85 = !{!78, !6, i64 4}
+!86 = !{!78, !6, i64 16}
 !87 = !{i64 -2930715054567517504}
 !88 = !{i64 1080103601501470593}
 !89 = distinct !{null}

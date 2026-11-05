@@ -202,16 +202,16 @@ bb.i:                                             ; preds = %_ZNK2v88internal8co
   %i.bn = load i32, ptr %i.av, align 4
   %i.bo = and i32 %i.bn, 251658240
   %.not.i.i.i.i66 = icmp eq i32 %i.bo, 251658240
-  br i1 %.not.i.i.i.i66, label %bb.j, label %_ZNK2v88internal8compiler17JSNodeWrapperBase11frame_stateEv.exit.a
+  br i1 %.not.i.i.i.i66, label %bb.j, label %_ZNK2v88internal8compiler17JSNodeWrapperBase11frame_stateEv.exit
 
 bb.j:                                             ; preds = %bb.i
   %i.bp = load ptr, ptr %i.ba, align 8
   %i.bq = ptrtoint ptr %i.bp to i64
   %i.br = add i64 %i.bq, 16
   %i.bs = inttoptr i64 %i.br to ptr
-  br label %_ZNK2v88internal8compiler17JSNodeWrapperBase11frame_stateEv.exit.a
+  br label %_ZNK2v88internal8compiler17JSNodeWrapperBase11frame_stateEv.exit
 
-_ZNK2v88internal8compiler17JSNodeWrapperBase11frame_stateEv.exit.a: ; preds = %bb.i, %bb.j
+_ZNK2v88internal8compiler17JSNodeWrapperBase11frame_stateEv.exit: ; preds = %bb.i, %bb.j
   %.sink.i.i.i.i67 = phi ptr [ %i.bs, %bb.j ], [ %i.ba, %bb.i ]
   %9 = zext i1 %i.bm to i32
   %10 = add nsw i32 %i.bl, %9
@@ -223,16 +223,22 @@ _ZNK2v88internal8compiler17JSNodeWrapperBase11frame_stateEv.exit.a: ; preds = %b
   %16 = load ptr, ptr %15, align 8                ; 2 uses
   %17 = getelementptr inbounds nuw i8, ptr %16, i64 28
   %18 = load i32, ptr %17, align 4                ; 2 uses
-  %19 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 681), align 1, !range !68
-  %20 = trunc nuw i8 %19 to i1
-  %21 = select i1 %.sroa.084.0, i1 true, i1 %20
+  br i1 %.sroa.084.0, label %_ZNK2v88internal8compiler17JSNodeWrapperBase11frame_stateEv.exit.a, label %19
+
+19:                                               ; preds = %_ZNK2v88internal8compiler17JSNodeWrapperBase11frame_stateEv.exit
+  %20 = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 681), align 1, !range !68, !noundef !73
+  %21 = trunc nuw i8 %20 to i1
   %22 = xor i1 %21, true
+  br label %_ZNK2v88internal8compiler17JSNodeWrapperBase11frame_stateEv.exit.a
+
+_ZNK2v88internal8compiler17JSNodeWrapperBase11frame_stateEv.exit.a: ; preds = %19, %_ZNK2v88internal8compiler17JSNodeWrapperBase11frame_stateEv.exit
+  %23 = phi i1 [ false, %_ZNK2v88internal8compiler17JSNodeWrapperBase11frame_stateEv.exit ], [ %22, %19 ]
   %i.bt = load ptr, ptr %16, align 8
   %i.bu = getelementptr inbounds nuw i8, ptr %15, i64 800
   %i.bv = load ptr, ptr %i.bu, align 8
   %i.bw = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.bx = load ptr, ptr %i.bw, align 8
-  tail call void @_ZN2v88internal8compiler27BuildInlinedJSToWasmWrapperEPNS0_4ZoneEPNS1_12MachineGraphEPKNS0_4wasm12CanonicalSigEPNS0_7IsolateEPNS1_19SourcePositionTableEPNS1_4NodeEb(ptr noundef %i.bt, ptr noundef nonnull %15, ptr noundef %i.aa, ptr noundef %i.bv, ptr noundef %i.bx, ptr noundef %14, i1 noundef zeroext %22) #16
+  tail call void @_ZN2v88internal8compiler27BuildInlinedJSToWasmWrapperEPNS0_4ZoneEPNS1_12MachineGraphEPKNS0_4wasm12CanonicalSigEPNS0_7IsolateEPNS1_19SourcePositionTableEPNS1_4NodeEb(ptr noundef %i.bt, ptr noundef nonnull %15, ptr noundef %i.aa, ptr noundef %i.bv, ptr noundef %i.bx, ptr noundef %14, i1 noundef zeroext %23) #16
   %i.by = load ptr, ptr %i.aj, align 8
   %i.bz = load ptr, ptr %i.by, align 8            ; 2 uses
   %i.ca = getelementptr inbounds nuw i8, ptr %i.bz, i64 8

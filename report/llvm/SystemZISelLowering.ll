@@ -205,7 +205,7 @@ bb.a:
 ; Function Attrs: mustprogress nounwind uwtable
 define linkonce_odr hidden { i16, ptr } @_ZNK4llvm14TargetLowering19getTypeForExtReturnERNS_11LLVMContextENS_3EVTENS_3ISD8NodeTypeE(ptr noundef nonnull align 8 dereferenceable(518435) %0, ptr noundef nonnull align 8 dereferenceable(8) %1, i16 %2, ptr %3, i32 noundef %4) unnamed_addr #3 comdat align 2 {
 bb.a:
-  %5 = alloca %"struct.llvm::EVT", align 8        ; 5 uses
+  %5 = alloca %"struct.llvm::EVT", align 8        ; 6 uses
   %6 = alloca %"struct.llvm::EVT", align 8        ; 3 uses
   store i16 %2, ptr %6, align 8
   %i.a = getelementptr inbounds nuw i8, ptr %6, i64 8
@@ -242,6 +242,8 @@ bb.d:                                             ; preds = %bb.b
 
 _ZNK4llvm3EVT13getSizeInBitsEv.exit.i.i:          ; preds = %bb.d, %bb.c
   %.pn.i.i.i = phi { i64, i8 } [ %.fca.1.insert.i.i.i.i, %bb.c ], [ %i.h, %bb.d ] ; 2 uses
+  %.fca.0.extract1.i.i = extractvalue { i64, i8 } %.pn.i.i.i, 0
+  %.fca.1.extract2.i.i = extractvalue { i64, i8 } %.pn.i.i.i, 1
   %.not.i5.i.i = icmp eq i16 %.sroa.01.0.copyload.i, 0
   br i1 %.not.i5.i.i, label %bb.f, label %bb.e
 
@@ -254,33 +256,37 @@ bb.e:                                             ; preds = %_ZNK4llvm3EVT13getS
   %.sroa.2.0.copyload.i.i8.i.i = load i8, ptr %.sroa.2.0..sroa_idx.i.i7.i.i, align 8
   %.fca.0.insert.i.i9.i.i = insertvalue { i64, i8 } poison, i64 %.sroa.0.0.copyload.i.i6.i.i, 0
   %.fca.1.insert.i.i10.i.i = insertvalue { i64, i8 } %.fca.0.insert.i.i9.i.i, i8 %.sroa.2.0.copyload.i.i8.i.i, 1
-  br label %_ZNK4llvm3EVT6bitsLTES0_.exit
+  br label %_ZNK4llvm3EVT13getSizeInBitsEv.exit12.i.i
 
 bb.f:                                             ; preds = %_ZNK4llvm3EVT13getSizeInBitsEv.exit.i.i
   %i.l = call { i64, i8 } @_ZNK4llvm3EVT21getExtendedSizeInBitsEv(ptr noundef nonnull align 8 dereferenceable(16) %5) #28
-  br label %_ZNK4llvm3EVT6bitsLTES0_.exit
+  br label %_ZNK4llvm3EVT13getSizeInBitsEv.exit12.i.i
 
-_ZNK4llvm3EVT6bitsLTES0_.exit:                    ; preds = %bb.e, %bb.f
+_ZNK4llvm3EVT13getSizeInBitsEv.exit12.i.i:        ; preds = %bb.f, %bb.e
   %.pn.i11.i.i = phi { i64, i8 } [ %.fca.1.insert.i.i10.i.i, %bb.e ], [ %i.l, %bb.f ] ; 2 uses
-  %.fca.1.extract2.i.i = extractvalue { i64, i8 } %.pn.i.i.i, 1
-  %.fca.0.extract1.i.i = extractvalue { i64, i8 } %.pn.i.i.i, 0
-  %.fca.0.extract.i.i = extractvalue { i64, i8 } %.pn.i11.i.i, 0
   %.fca.1.extract.i.i = extractvalue { i64, i8 } %.pn.i11.i.i, 1
   %7 = trunc nuw i8 %.fca.1.extract2.i.i to i1
   %.not.i13.i.i = xor i1 %7, true
   %8 = trunc nuw i8 %.fca.1.extract.i.i to i1
   %or.cond.i.i.i = select i1 %.not.i13.i.i, i1 true, i1 %8
+  br i1 %or.cond.i.i.i, label %_ZNK4llvm3EVT6bitsLTES0_.exit, label %_ZNK4llvm3EVT6bitsLTES0_.exit.thread13
+
+_ZNK4llvm3EVT6bitsLTES0_.exit.thread13:           ; preds = %_ZNK4llvm3EVT13getSizeInBitsEv.exit12.i.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %5)
+  br label %.thread
+
+_ZNK4llvm3EVT6bitsLTES0_.exit:                    ; preds = %_ZNK4llvm3EVT13getSizeInBitsEv.exit12.i.i
+  %.fca.0.extract.i.i = extractvalue { i64, i8 } %.pn.i11.i.i, 0
   %i.m = icmp ult i64 %.fca.0.extract1.i.i, %.fca.0.extract.i.i
-  %.0.i.i.i = select i1 %or.cond.i.i.i, i1 %i.m, i1 false
-  %cond.fr = freeze i1 %.0.i.i.i                  ; 2 uses
+  %cond.fr = freeze i1 %i.m                       ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   %spec.select = select i1 %cond.fr, i16 %.sroa.01.0.copyload.i, i16 %2
   %spec.select17 = select i1 %cond.fr, ptr null, ptr %3
   br label %.thread
 
-.thread:                                          ; preds = %_ZNK4llvm3EVT6bitsLTES0_.exit, %bb.a
-  %9 = phi i16 [ %2, %bb.a ], [ %spec.select, %_ZNK4llvm3EVT6bitsLTES0_.exit ]
-  %10 = phi ptr [ null, %bb.a ], [ %spec.select17, %_ZNK4llvm3EVT6bitsLTES0_.exit ]
+.thread:                                          ; preds = %_ZNK4llvm3EVT6bitsLTES0_.exit, %bb.a, %_ZNK4llvm3EVT6bitsLTES0_.exit.thread13
+  %9 = phi i16 [ %2, %bb.a ], [ %spec.select, %_ZNK4llvm3EVT6bitsLTES0_.exit ], [ %2, %_ZNK4llvm3EVT6bitsLTES0_.exit.thread13 ]
+  %10 = phi ptr [ null, %bb.a ], [ %spec.select17, %_ZNK4llvm3EVT6bitsLTES0_.exit ], [ %3, %_ZNK4llvm3EVT6bitsLTES0_.exit.thread13 ]
   %.fca.0.insert = insertvalue { i16, ptr } poison, i16 %9, 0
   %.fca.1.insert = insertvalue { i16, ptr } %.fca.0.insert, ptr %10, 1
   ret { i16, ptr } %.fca.1.insert

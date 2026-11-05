@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/hermes/original/JSLexer?download=true
-inline.NumInlined: 2539
+inline.NumInlined: 2540
 inline.NumDeleted: 512
 loop-unroll.NumCompletelyUnrolled: 6
 loop-unroll.NumRuntimeUnrolled: 1
@@ -205,14 +205,12 @@ bb.b:                                             ; preds = %bb.a
   %i.y = load i32, ptr %i.a, align 8, !tbaa !444  ; 3 uses
   %.sroa.016.0.extract.trunc = trunc i64 %1 to i32
   %i.z = and i64 %1, 4294967296
-  %.not = icmp eq i64 %i.z, 0
-  %2 = icmp eq i32 %i.y, %.sroa.016.0.extract.trunc
-  %3 = and i64 %1, 1095216660480
-  %.not.i = icmp eq i64 %3, 4294967296
-  %.0.i = select i1 %.not, i1 %.not.i, i1 %2
+  %2 = icmp ne i64 %i.z, 0
+  %.not.i = icmp eq i32 %i.y, %.sroa.016.0.extract.trunc
+  %.0.i = select i1 %2, i1 %.not.i, i1 false
   br i1 %.0.i, label %bb.i, label %bb.c
 
-bb.c:                                             ; preds = %bb.a, %bb.b
+bb.c:                                             ; preds = %bb.b, %bb.a
   %.sroa.017.0 = phi i32 [ %i.y, %bb.b ], [ 0, %bb.a ] ; 2 uses
   %.sroa.419.0 = phi i64 [ 1, %bb.b ], [ 0, %bb.a ] ; 2 uses
   store <2 x ptr> %i.h, ptr %i.g, align 8, !tbaa !445
@@ -615,11 +613,9 @@ bb.a:
   %i.u = tail call noundef ptr @_ZN6hermes6parser7JSLexer7advanceENS1_14GrammarContextE(ptr noundef nonnull align 8 dereferenceable(1160) %0, i32 noundef 0) ; 0 uses
   %i.v = load i32, ptr %i.a, align 8, !tbaa !444  ; 2 uses
   %i.w = and i64 %1, 4294967296
-  %.not = icmp eq i64 %i.w, 0
-  %2 = icmp eq i32 %i.v, %.sroa.014.0.extract.trunc
-  %3 = and i64 %1, 1095216660480
-  %.not.i = icmp eq i64 %3, 4294967296
-  %.0.i = select i1 %.not, i1 %.not.i, i1 %2
+  %2 = icmp ne i64 %i.w, 0
+  %.not.i = icmp eq i32 %i.v, %.sroa.014.0.extract.trunc
+  %.0.i = select i1 %2, i1 %.not.i, i1 false
   br i1 %.0.i, label %bb.h, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
@@ -1022,12 +1018,12 @@ declare noundef i32 @_ZN6hermes18SourceErrorManager18addNewSourceBufferESt10uniq
 ; Function Attrs: mustprogress nounwind uwtable
 define hidden noundef zeroext i1 @_ZN6hermes6parser7JSLexer24isLetFollowedByDeclStartEv(ptr noundef nonnull align 8 dereferenceable(1160) %0) local_unnamed_addr #0 align 2 !guid !679 {
 bb.a:
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 2 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 144 ; 3 uses
   %.promoted.i = load ptr, ptr %i.a, align 8, !tbaa !476
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.c, %bb.a
-  %i.b = phi ptr [ %i.d, %bb.c ], [ %.promoted.i, %bb.a ] ; 3 uses
+  %i.b = phi ptr [ %i.d, %bb.c ], [ %.promoted.i, %bb.a ] ; 4 uses
   %i.c = load i8, ptr %i.b, align 1, !tbaa !493   ; 5 uses
   switch i8 %i.c, label %"_ZZN6hermes6parser7JSLexer24isLetFollowedByDeclStartEvENK3$_0clEv.exit" [
     i8 12, label %bb.c
@@ -1069,24 +1065,98 @@ bb.e:                                             ; preds = %_ZN6hermes22isASCII
   %i.m = icmp eq i8 %i.l, 110
   br i1 %i.m, label %bb.f, label %switch.edge
 
-bb.f:                                             ; preds = %bb.e, %_ZN6hermes22isASCIIIdentifierStartEj.exit
-  %1 = tail call i64 @_ZN6hermes6parser7JSLexer10lookahead1ILb0EEENS_8OptValueINS0_9TokenKindEEES5_(ptr noundef nonnull align 8 dereferenceable(1160) %0, i64 0) ; 3 uses
-  %2 = and i64 %1, 4294967296
-  %.not = icmp ne i64 %2, 0
-  %.sroa.08.0.extract.trunc = trunc i64 %1 to i32
-  %i.n = icmp ult i32 %.sroa.08.0.extract.trunc, 56
-  %or.cond19 = and i1 %.not, %i.n
-  br i1 %or.cond19, label %switch.lookup, label %switch.edge
+bb.f:                                             ; preds = %_ZN6hermes22isASCIIIdentifierStartEj.exit, %bb.e
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 5 uses
+  %2 = load i32, ptr %1, align 8, !tbaa !444      ; 4 uses
+  %3 = icmp eq i32 %2, 1
+  %4 = add i32 %2, -4
+  %i.n = icmp ult i32 %4, 44
+  %or.cond.i = or i1 %3, %i.n
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 3 uses
+  %6 = load ptr, ptr %5, align 8
+  %.0.i = select i1 %or.cond.i, ptr %6, ptr undef ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
+  %8 = load ptr, ptr %0, align 8, !tbaa !477, !nonnull !478, !align !479 ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 336 ; 3 uses
+  %10 = load i64, ptr %9, align 8
+  store i32 0, ptr %9, align 8, !tbaa !481
+  %.sroa.4.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %8, i64 340
+  store i8 1, ptr %.sroa.4.0..sroa_idx.i.i, align 4, !tbaa !482
+  %11 = getelementptr inbounds nuw i8, ptr %0, i64 1112 ; 2 uses
+  %12 = getelementptr inbounds nuw i8, ptr %0, i64 1120 ; 3 uses
+  %13 = load ptr, ptr %12, align 8, !tbaa !483
+  %14 = load ptr, ptr %11, align 8, !tbaa !484
+  %15 = ptrtoint ptr %13 to i64
+  %16 = ptrtoint ptr %14 to i64
+  %17 = sub i64 %15, %16
+  %18 = load <2 x ptr>, ptr %7, align 8, !tbaa !445
+  %19 = tail call noundef ptr @_ZN6hermes6parser7JSLexer7advanceENS1_14GrammarContextE(ptr noundef nonnull align 8 dereferenceable(1160) %0, i32 noundef 0) ; 0 uses
+  %20 = load i32, ptr %1, align 8, !tbaa !444     ; 2 uses
+  store <2 x ptr> %18, ptr %7, align 8, !tbaa !445
+  switch i32 %2, label %23 [
+    i32 1, label %21
+    i32 91, label %22
+  ]
 
-switch.lookup:                                    ; preds = %bb.f
-  %3 = trunc i64 %1 to i56
-  %switch.cast = and i56 %3, 63
+21:                                               ; preds = %bb.f
+  store i32 1, ptr %1, align 8, !tbaa !444
+  store ptr %.0.i, ptr %5, align 8, !tbaa !487
+  br label %24
+
+22:                                               ; preds = %bb.f
+  store i32 91, ptr %1, align 8, !tbaa !444
+  br label %24
+
+23:                                               ; preds = %bb.f
+  store i32 %2, ptr %1, align 8, !tbaa !444
+  store ptr %.0.i, ptr %5, align 8, !tbaa !487
+  br label %24
+
+24:                                               ; preds = %23, %22, %21
+  store ptr %i.b, ptr %i.a, align 8, !tbaa !476
+  %25 = getelementptr inbounds nuw i8, ptr %0, i64 50
+  %26 = load i8, ptr %25, align 2, !tbaa !488, !range !486, !noundef !478
+  %27 = trunc nuw i8 %26 to i1
+  br i1 %27, label %28, label %32, !prof !489
+
+28:                                               ; preds = %24
+  %29 = getelementptr inbounds nuw i8, ptr %0, i64 1144 ; 2 uses
+  %30 = load ptr, ptr %29, align 8, !tbaa !490
+  %31 = getelementptr inbounds i8, ptr %30, i64 -24
+  store ptr %31, ptr %29, align 8, !tbaa !490
+  br label %32
+
+32:                                               ; preds = %28, %24
+  %33 = getelementptr inbounds nuw i8, ptr %0, i64 49
+  %34 = load i8, ptr %33, align 1, !tbaa !491, !range !486, !noundef !478
+  %35 = trunc nuw i8 %34 to i1
+  br i1 %35, label %36, label %_ZN6hermes6parser7JSLexer10lookahead1ILb0EEENS_8OptValueINS0_9TokenKindEEES5_.exit
+
+36:                                               ; preds = %32
+  %37 = load ptr, ptr %11, align 8, !tbaa !492
+  %38 = getelementptr inbounds i8, ptr %37, i64 %17 ; 2 uses
+  %39 = load ptr, ptr %12, align 8, !tbaa !492
+  %.not.i.i.i.i.i = icmp eq ptr %38, %39
+  br i1 %.not.i.i.i.i.i, label %_ZN6hermes6parser7JSLexer10lookahead1ILb0EEENS_8OptValueINS0_9TokenKindEEES5_.exit, label %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN6hermes6parser13StoredCommentESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i.i.i.i.i
+
+_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN6hermes6parser13StoredCommentESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i.i.i.i.i: ; preds = %36
+  store ptr %38, ptr %12, align 8, !tbaa !483
+  br label %_ZN6hermes6parser7JSLexer10lookahead1ILb0EEENS_8OptValueINS0_9TokenKindEEES5_.exit
+
+_ZN6hermes6parser7JSLexer10lookahead1ILb0EEENS_8OptValueINS0_9TokenKindEEES5_.exit: ; preds = %32, %36, %_ZSt4moveIN9__gnu_cxx17__normal_iteratorIPN6hermes6parser13StoredCommentESt6vectorIS4_SaIS4_EEEES9_ET0_T_SB_SA_.exit.i.i.i.i.i
+  %.sroa.411.8.extract.trunc.i = trunc i64 %10 to i40
+  store i40 %.sroa.411.8.extract.trunc.i, ptr %9, align 8
+  %40 = icmp ult i32 %20, 56
+  br i1 %40, label %switch.lookup, label %switch.edge
+
+switch.lookup:                                    ; preds = %_ZN6hermes6parser7JSLexer10lookahead1ILb0EEENS_8OptValueINS0_9TokenKindEEES5_.exit
+  %switch.cast = zext nneg i32 %20 to i56
   %switch.downshift = lshr i56 -35465847065542654, %switch.cast
   %switch.masked = trunc i56 %switch.downshift to i1
   br label %switch.edge
 
-switch.edge:                                      ; preds = %switch.lookup, %bb.d, %bb.d, %bb.f, %_ZN6hermes22isASCIIIdentifierStartEj.exit.thread, %bb.e, %"_ZZN6hermes6parser7JSLexer24isLetFollowedByDeclStartEvENK3$_0clEv.exit"
-  %.0 = phi i1 [ true, %"_ZZN6hermes6parser7JSLexer24isLetFollowedByDeclStartEvENK3$_0clEv.exit" ], [ true, %_ZN6hermes22isASCIIIdentifierStartEj.exit.thread ], [ true, %bb.e ], [ false, %bb.f ], [ %switch.masked, %switch.lookup ], [ true, %bb.d ], [ true, %bb.d ]
+switch.edge:                                      ; preds = %_ZN6hermes6parser7JSLexer10lookahead1ILb0EEENS_8OptValueINS0_9TokenKindEEES5_.exit, %switch.lookup, %bb.d, %bb.d, %_ZN6hermes22isASCIIIdentifierStartEj.exit.thread, %bb.e, %"_ZZN6hermes6parser7JSLexer24isLetFollowedByDeclStartEvENK3$_0clEv.exit"
+  %.0 = phi i1 [ true, %"_ZZN6hermes6parser7JSLexer24isLetFollowedByDeclStartEvENK3$_0clEv.exit" ], [ true, %_ZN6hermes22isASCIIIdentifierStartEj.exit.thread ], [ true, %bb.e ], [ %switch.masked, %switch.lookup ], [ true, %bb.d ], [ true, %bb.d ], [ false, %_ZN6hermes6parser7JSLexer10lookahead1ILb0EEENS_8OptValueINS0_9TokenKindEEES5_.exit ]
   ret i1 %.0
 }
 

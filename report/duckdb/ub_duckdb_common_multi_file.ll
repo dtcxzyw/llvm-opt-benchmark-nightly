@@ -204,14 +204,20 @@ bb.a:
   %i.a = load i8, ptr %0, align 8, !tbaa !402, !range !390, !noundef !391
   %i.b = trunc nuw i8 %i.a to i1
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %1 = load i8, ptr %i.c, align 1, !range !390
-  %2 = trunc nuw i8 %1 to i1
-  %or.cond = select i1 %i.b, i1 true, i1 %2
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  %i.d = load i8, ptr %3, align 1, !range !390
+  %i.d = load i8, ptr %i.c, align 1, !range !390
   %i.e = trunc nuw i8 %i.d to i1
-  %i.f = select i1 %or.cond, i1 true, i1 %i.e
-  ret i1 %i.f
+  %i.f = select i1 %i.b, i1 true, i1 %i.e
+  br i1 %i.f, label %5, label %1
+
+1:                                                ; preds = %bb.a
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 3
+  %3 = load i8, ptr %2, align 1, !tbaa !550, !range !390, !noundef !391
+  %4 = trunc nuw i8 %3 to i1
+  br label %5
+
+5:                                                ; preds = %1, %bb.a
+  %6 = phi i1 [ %4, %1 ], [ true, %bb.a ]
+  ret i1 %6
 }
 
 declare void @_ZN6duckdb16HivePartitioning8GetValueERNS_13ClientContextERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESA_RKNS_11LogicalTypeE(ptr dead_on_unwind writable sret(%"class.duckdb::Value") align 8, ptr noundef nonnull align 8 dereferenceable(512), ptr noundef nonnull align 8 dereferenceable(32), ptr noundef nonnull align 8 dereferenceable(32), ptr noundef nonnull align 8 dereferenceable(24)) local_unnamed_addr #8

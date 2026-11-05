@@ -204,12 +204,12 @@ bb.a:
   %i.e = alloca i8, align 1                       ; 4 uses
   %i.f = alloca i8, align 1                       ; 4 uses
   %5 = alloca %"struct.cv::optflow::(anonymous namespace)::PartitionPredicate2", align 16 ; 14 uses
-  %i.g = alloca i8, align 1                       ; 4 uses
-  %i.h = alloca i8, align 1                       ; 4 uses
-  %i.i = alloca i8, align 1                       ; 4 uses
-  %i.j = alloca i8, align 1                       ; 4 uses
-  %i.k = alloca i8, align 1                       ; 4 uses
-  %i.l = alloca i8, align 1                       ; 4 uses
+  %i.g = alloca i8, align 1                       ; 5 uses
+  %i.h = alloca i8, align 1                       ; 5 uses
+  %i.i = alloca i8, align 1                       ; 5 uses
+  %i.j = alloca i8, align 1                       ; 5 uses
+  %i.k = alloca i8, align 1                       ; 5 uses
+  %i.l = alloca i8, align 1                       ; 5 uses
   %6 = alloca %"struct.cv::optflow::(anonymous namespace)::PartitionPredicate1", align 16 ; 14 uses
   %7 = alloca %"class.cv::Vec", align 8           ; 27 uses
   %i.m = alloca i8, align 1                       ; 4 uses
@@ -612,69 +612,90 @@ bb.ax:                                            ; preds = %bb.aw, %bb.av
   br i1 %.not220290, label %.loopexit225, label %.lr.ph.i.i131
 
 .lr.ph.i.i131:                                    ; preds = %._crit_edge320, %.noexc132
-  %.sroa.0.021.i.i = phi ptr [ %.sroa.0.1.i.i, %.noexc132 ], [ %3, %._crit_edge320 ] ; 2 uses
+  %.sroa.0.021.i.i = phi ptr [ %.sroa.0.0.pn.i.i.a, %.noexc132 ], [ %3, %._crit_edge320 ] ; 2 uses
   %.sroa.08.020.i.i = phi ptr [ %i.qx, %.noexc132 ], [ %2, %._crit_edge320 ]
-  br label %bb.ay
+  br label %8
 
-bb.ay:                                            ; preds = %bb.az, %.lr.ph.i.i131
-  %.sroa.08.117.i.i = phi ptr [ %.sroa.08.020.i.i, %.lr.ph.i.i131 ], [ %i.qp, %bb.az ] ; 6 uses
+8:                                                ; preds = %11, %.lr.ph.i.i131
+  %.sroa.09.122.i.i = phi ptr [ %.sroa.08.020.i.i, %.lr.ph.i.i131 ], [ %12, %11 ] ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l) #28
-  call void @_ZNK2cv7optflow14GPCPatchSample13getDirectionsERbS2_S2_RKNS_3VecIdLi18EEEd(ptr noundef nonnull readonly align 8 dereferenceable(432) %.sroa.08.117.i.i, ptr noundef nonnull align 1 dereferenceable(1) %i.j, ptr noundef nonnull align 1 dereferenceable(1) %i.k, ptr noundef nonnull align 1 dereferenceable(1) %i.l, ptr noundef nonnull readonly align 8 dereferenceable(152) %6, double noundef %i.pj)
-  %8 = load i8, ptr %i.j, align 1, !tbaa !17, !range !18, !noundef !19
-  %9 = icmp eq i8 %8, 0
-  %i.qk = load i8, ptr %i.k, align 1, !range !18
-  %i.ql = icmp eq i8 %i.qk, 0
-  %i.qm = load i8, ptr %i.l, align 1, !range !18
-  %i.qn = trunc nuw i8 %i.qm to i1
-  %10 = select i1 %i.ql, i1 true, i1 %i.qn
-  %i.qo = select i1 %9, i1 %10, i1 false
+  call void @_ZNK2cv7optflow14GPCPatchSample13getDirectionsERbS2_S2_RKNS_3VecIdLi18EEEd(ptr noundef nonnull readonly align 8 dereferenceable(432) %.sroa.09.122.i.i, ptr noundef nonnull align 1 dereferenceable(1) %i.j, ptr noundef nonnull align 1 dereferenceable(1) %i.k, ptr noundef nonnull align 1 dereferenceable(1) %i.l, ptr noundef nonnull readonly align 8 dereferenceable(152) %6, double noundef %i.pj)
+  %9 = load i8, ptr %i.j, align 1, !tbaa !17, !range !18, !noundef !19
+  %10 = icmp eq i8 %9, 0
+  br i1 %10, label %bb.ay, label %_ZNK2cv7optflow12_GLOBAL__N_119PartitionPredicate1clERKNS0_14GPCPatchSampleE.exit.thread.i.i
+
+_ZNK2cv7optflow12_GLOBAL__N_119PartitionPredicate1clERKNS0_14GPCPatchSampleE.exit.thread.i.i: ; preds = %8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #28
-  br i1 %i.qo, label %bb.az, label %.preheader.i.i.a
+  br label %bb.az
 
-bb.az:                                            ; preds = %bb.ay
-  %i.qp = getelementptr inbounds nuw i8, ptr %.sroa.08.117.i.i, i64 432 ; 3 uses
-  %i.qq = icmp eq ptr %i.qp, %.sroa.0.021.i.i
-  br i1 %i.qq, label %.loopexit225, label %bb.ay, !llvm.loop !137
+bb.ay:                                            ; preds = %8
+  %i.qk = load i8, ptr %i.k, align 1, !tbaa !17, !range !18, !noundef !19
+  %i.ql = icmp eq i8 %i.qk, 0
+  %i.qm = load i8, ptr %i.l, align 1, !range !18
+  %i.qn = trunc nuw i8 %i.qm to i1
+  %i.qo = select i1 %i.ql, i1 true, i1 %i.qn
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.l) #28
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.k) #28
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #28
+  br i1 %i.qo, label %11, label %bb.az
 
-.preheader.i.i.a:                                 ; preds = %bb.ay, %bb.ba
-  %.sroa.0.0.pn.i.i.a = phi ptr [ %.sroa.0.1.i.i, %bb.ba ], [ %.sroa.0.021.i.i, %bb.ay ]
-  %.sroa.0.1.i.i = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i.i.a, i64 -432 ; 6 uses
-  %i.qr = icmp eq ptr %.sroa.08.117.i.i, %.sroa.0.1.i.i
-  br i1 %i.qr, label %.loopexit225, label %bb.ba
+11:                                               ; preds = %bb.ay
+  %12 = getelementptr inbounds nuw i8, ptr %.sroa.09.122.i.i, i64 432 ; 3 uses
+  %13 = icmp eq ptr %12, %.sroa.0.021.i.i
+  br i1 %13, label %.loopexit225, label %8, !llvm.loop !137
 
-bb.ba:                                            ; preds = %.preheader.i.i.a
+bb.az:                                            ; preds = %bb.ay, %_ZNK2cv7optflow12_GLOBAL__N_119PartitionPredicate1clERKNS0_14GPCPatchSampleE.exit.thread.i.i
+  %i.qp = getelementptr inbounds i8, ptr %.sroa.0.021.i.i, i64 -432 ; 2 uses
+  %i.qq = icmp eq ptr %.sroa.09.122.i.i, %i.qp
+  br i1 %i.qq, label %.loopexit225, label %.preheader.i.i.a
+
+.preheader.i.i.a:                                 ; preds = %bb.az, %15
+  %.sroa.0.0.pn.i.i.a = phi ptr [ %.sroa.0.1.i.i, %15 ], [ %i.qp, %bb.az ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i) #28
-  call void @_ZNK2cv7optflow14GPCPatchSample13getDirectionsERbS2_S2_RKNS_3VecIdLi18EEEd(ptr noundef nonnull readonly align 8 dereferenceable(432) %.sroa.0.1.i.i, ptr noundef nonnull align 1 dereferenceable(1) %i.g, ptr noundef nonnull align 1 dereferenceable(1) %i.h, ptr noundef nonnull align 1 dereferenceable(1) %i.i, ptr noundef nonnull readonly align 8 dereferenceable(152) %6, double noundef %i.pj)
-  %11 = load i8, ptr %i.g, align 1, !tbaa !17, !range !18, !noundef !19
-  %12 = icmp eq i8 %11, 0
-  %i.qs = load i8, ptr %i.h, align 1, !range !18
-  %i.qt = icmp eq i8 %i.qs, 0
-  %i.qu = load i8, ptr %i.i, align 1, !range !18
-  %i.qv = trunc nuw i8 %i.qu to i1
-  %13 = select i1 %i.qt, i1 true, i1 %i.qv
-  %i.qw = select i1 %12, i1 %13, i1 false
+  call void @_ZNK2cv7optflow14GPCPatchSample13getDirectionsERbS2_S2_RKNS_3VecIdLi18EEEd(ptr noundef nonnull readonly align 8 dereferenceable(432) %.sroa.0.0.pn.i.i.a, ptr noundef nonnull align 1 dereferenceable(1) %i.g, ptr noundef nonnull align 1 dereferenceable(1) %i.h, ptr noundef nonnull align 1 dereferenceable(1) %i.i, ptr noundef nonnull readonly align 8 dereferenceable(152) %6, double noundef %i.pj)
+  %14 = load i8, ptr %i.g, align 1, !tbaa !17, !range !18, !noundef !19
+  %i.qr = icmp eq i8 %14, 0
+  br i1 %i.qr, label %bb.ba, label %_ZNK2cv7optflow12_GLOBAL__N_119PartitionPredicate1clERKNS0_14GPCPatchSampleE.exit4.thread.i.i
+
+_ZNK2cv7optflow12_GLOBAL__N_119PartitionPredicate1clERKNS0_14GPCPatchSampleE.exit4.thread.i.i: ; preds = %.preheader.i.i.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #28
-  br i1 %i.qw, label %bb.bb, label %.preheader.i.i.a, !llvm.loop !138
+  br label %15
+
+bb.ba:                                            ; preds = %.preheader.i.i.a
+  %i.qs = load i8, ptr %i.h, align 1, !tbaa !17, !range !18, !noundef !19
+  %i.qt = icmp eq i8 %i.qs, 0
+  %i.qu = load i8, ptr %i.i, align 1, !range !18
+  %i.qv = trunc nuw i8 %i.qu to i1
+  %i.qw = select i1 %i.qt, i1 true, i1 %i.qv
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i) #28
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #28
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g) #28
+  br i1 %i.qw, label %bb.bb, label %15
+
+15:                                               ; preds = %bb.ba, %_ZNK2cv7optflow12_GLOBAL__N_119PartitionPredicate1clERKNS0_14GPCPatchSampleE.exit4.thread.i.i
+  %.sroa.0.1.i.i = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i.i.a, i64 -432 ; 2 uses
+  %16 = icmp eq ptr %.sroa.09.122.i.i, %.sroa.0.1.i.i
+  br i1 %16, label %.loopexit225, label %.preheader.i.i.a, !llvm.loop !138
 
 bb.bb:                                            ; preds = %bb.ba
-  invoke void @_ZSt4swapIN2cv7optflow14GPCPatchSampleEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS6_ESt18is_move_assignableIS6_EEE5valueEvE4typeERS6_SF_(ptr noundef nonnull align 8 dereferenceable(432) %.sroa.08.117.i.i, ptr noundef nonnull align 8 dereferenceable(432) %.sroa.0.1.i.i)
+  invoke void @_ZSt4swapIN2cv7optflow14GPCPatchSampleEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS6_ESt18is_move_assignableIS6_EEE5valueEvE4typeERS6_SF_(ptr noundef nonnull align 8 dereferenceable(432) %.sroa.09.122.i.i, ptr noundef nonnull align 8 dereferenceable(432) %.sroa.0.0.pn.i.i.a)
           to label %.noexc132 unwind label %.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc132:                                        ; preds = %bb.bb
-  %i.qx = getelementptr inbounds nuw i8, ptr %.sroa.08.117.i.i, i64 432 ; 3 uses
-  %i.qy = icmp eq ptr %i.qx, %.sroa.0.1.i.i
+  %i.qx = getelementptr inbounds nuw i8, ptr %.sroa.09.122.i.i, i64 432 ; 3 uses
+  %i.qy = icmp eq ptr %i.qx, %.sroa.0.0.pn.i.i.a
   br i1 %i.qy, label %.loopexit225, label %.lr.ph.i.i131, !llvm.loop !139
 
-.loopexit225:                                     ; preds = %.noexc132, %bb.az, %.preheader.i.i.a, %._crit_edge320
-  %.sroa.08.115.i.i = phi ptr [ %i.qp, %bb.az ], [ %.sroa.08.117.i.i, %.preheader.i.i.a ], [ %2, %._crit_edge320 ], [ %i.qx, %.noexc132 ] ; 4 uses
+.loopexit225:                                     ; preds = %bb.az, %.noexc132, %11, %15, %._crit_edge320
+  %.sroa.09.119.i.i = phi ptr [ %12, %11 ], [ %2, %._crit_edge320 ], [ %.sroa.09.122.i.i, %15 ], [ %i.qx, %.noexc132 ], [ %.sroa.09.122.i.i, %bb.az ] ; 4 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %6)
   %i.qz = load double, ptr %i.bu, align 8, !tbaa !78 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5)
@@ -706,12 +727,12 @@ bb.bb:                                            ; preds = %bb.ba
   store <2 x double> %i.rq, ptr %i.rp, align 16, !tbaa !15
   %i.rr = getelementptr inbounds nuw i8, ptr %5, i64 144
   store double %i.qz, ptr %i.rr, align 16, !tbaa !148
-  %i.rs = icmp eq ptr %.sroa.08.115.i.i, %3
+  %i.rs = icmp eq ptr %.sroa.09.119.i.i, %3
   br i1 %i.rs, label %.loopexit, label %.lr.ph.i.i133
 
 .lr.ph.i.i133:                                    ; preds = %.loopexit225, %.noexc138
   %.sroa.0.022.i.i = phi ptr [ %.sroa.0.1.i.i137, %.noexc138 ], [ %3, %.loopexit225 ] ; 2 uses
-  %.sroa.09.021.i.i = phi ptr [ %i.sg, %.noexc138 ], [ %.sroa.08.115.i.i, %.loopexit225 ]
+  %.sroa.09.021.i.i = phi ptr [ %i.sg, %.noexc138 ], [ %.sroa.09.119.i.i, %.loopexit225 ]
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bd, %.lr.ph.i.i133
@@ -768,12 +789,12 @@ bb.bf:                                            ; preds = %bb.be
   br i1 %i.sh, label %.loopexit, label %.lr.ph.i.i133, !llvm.loop !142
 
 .loopexit:                                        ; preds = %.noexc138, %bb.bd, %.preheader.i.i135, %.loopexit225
-  %.sroa.09.116.i.i = phi ptr [ %i.ry, %bb.bd ], [ %.sroa.09.118.i.i, %.preheader.i.i135 ], [ %.sroa.08.115.i.i, %.loopexit225 ], [ %i.sg, %.noexc138 ]
+  %.sroa.09.116.i.i = phi ptr [ %i.ry, %bb.bd ], [ %.sroa.09.118.i.i, %.preheader.i.i135 ], [ %.sroa.09.119.i.i, %.loopexit225 ], [ %i.sg, %.noexc138 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5)
   %i.si = shl i64 %1, 1                           ; 2 uses
   %i.sj = or disjoint i64 %i.si, 1                ; 2 uses
   %i.sk = add nuw i32 %4, 1                       ; 2 uses
-  %i.sl = invoke noundef zeroext i1 @_ZN2cv7optflow7GPCTree9trainNodeEmN9__gnu_cxx17__normal_iteratorIPNS0_14GPCPatchSampleESt6vectorIS4_SaIS4_EEEES9_j(ptr noundef nonnull align 8 dereferenceable(48) %0, i64 noundef %i.sj, ptr %2, ptr %.sroa.08.115.i.i, i32 noundef %i.sk)
+  %i.sl = invoke noundef zeroext i1 @_ZN2cv7optflow7GPCTree9trainNodeEmN9__gnu_cxx17__normal_iteratorIPNS0_14GPCPatchSampleESt6vectorIS4_SaIS4_EEEES9_j(ptr noundef nonnull align 8 dereferenceable(48) %0, i64 noundef %i.sj, ptr %2, ptr %.sroa.09.119.i.i, i32 noundef %i.sk)
           to label %bb.bg unwind label %.loopexit.split-lp.loopexit.split-lp
 
 bb.bg:                                            ; preds = %.loopexit
@@ -815,7 +836,7 @@ bb.bj:                                            ; preds = %bb.bi
   tail call void @_ZdlPvm(ptr noundef nonnull %.sroa.0184.2.lcssa419423, i64 noundef %i.sw) #30
   br label %_ZNSt6vectorIdSaIdEED2Ev.exit
 
-.loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp232
+.loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.loopexit.split-lp232
   %.sroa.26200.4 = phi ptr [ %.sroa.26200.2261, %.loopexit.split-lp232 ], [ %.sroa.26200.3.ph.ph, %.loopexit.split-lp.loopexit.split-lp ], [ %.sroa.26200.2.lcssa417427, %.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   %.sroa.0184.4 = phi ptr [ %.sroa.0184.2254, %.loopexit.split-lp232 ], [ %.sroa.0184.3.ph.ph, %.loopexit.split-lp.loopexit.split-lp ], [ %.sroa.0184.2.lcssa419423, %.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ] ; 3 uses
   %.pn118.pn.pn.pn.pn = phi { ptr, i32 } [ %lpad.phi234, %.loopexit.split-lp232 ], [ %lpad.loopexit.split-lp228, %.loopexit.split-lp.loopexit.split-lp ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]

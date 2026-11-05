@@ -204,21 +204,27 @@ bb.co:                                            ; preds = %_ZN6duckdb10unique_
   %i.kg = trunc nuw i8 %i.kf to i1
   %or.cond10 = select i1 %i.kd, i1 true, i1 %i.kg
   %i.kh = getelementptr inbounds nuw i8, ptr %7, i64 11
-  %30 = load i8, ptr %i.kh, align 1, !range !224
-  %31 = trunc nuw i8 %30 to i1
-  %or.cond13 = select i1 %or.cond10, i1 true, i1 %31
-  %i.ki = load i8, ptr %0, align 8, !range !224
+  %i.ki = load i8, ptr %i.kh, align 1, !range !224
   %i.kj = trunc nuw i8 %i.ki to i1
-  %i.kk = select i1 %or.cond13, i1 true, i1 %i.kj
+  %i.kk = select i1 %or.cond10, i1 true, i1 %i.kj
+  br i1 %i.kk, label %33, label %30
+
+30:                                               ; preds = %bb.co
+  %31 = load i8, ptr %0, align 8, !tbaa !439, !range !224, !noundef !225
+  %32 = trunc nuw i8 %31 to i1
+  br label %33
+
+33:                                               ; preds = %30, %bb.co
+  %34 = phi i1 [ true, %bb.co ], [ %32, %30 ]
   call void @llvm.lifetime.start.p0(ptr nonnull %25) #31
-  call void @_ZN6duckdb22DuckTransactionManager17RemoveTransactionERNS_15DuckTransactionEb(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::unique_ptr.340") align 8 %25, ptr noundef nonnull align 8 dereferenceable(400) %1, ptr noundef nonnull align 8 dereferenceable(480) %3, i1 noundef zeroext %i.kk) #31
-  %32 = invoke noundef ptr @_ZNK6duckdb10unique_ptrINS_15DuckCleanupInfoESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %25)
+  call void @_ZN6duckdb22DuckTransactionManager17RemoveTransactionERNS_15DuckTransactionEb(ptr dead_on_unwind nonnull writable sret(%"class.duckdb::unique_ptr.340") align 8 %25, ptr noundef nonnull align 8 dereferenceable(400) %1, ptr noundef nonnull align 8 dereferenceable(480) %3, i1 noundef zeroext %34) #31
+  %35 = invoke noundef ptr @_ZNK6duckdb10unique_ptrINS_15DuckCleanupInfoESt14default_deleteIS1_ELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(8) %25)
           to label %bb.cp unwind label %bb.cu     ; 2 uses
 
-bb.cp:                                            ; preds = %bb.co
-  %i.kl = getelementptr inbounds nuw i8, ptr %32, i64 8
+bb.cp:                                            ; preds = %33
+  %i.kl = getelementptr inbounds nuw i8, ptr %35, i64 8
   %i.km = load ptr, ptr %i.kl, align 8, !tbaa !165
-  %i.kn = getelementptr inbounds nuw i8, ptr %32, i64 16
+  %i.kn = getelementptr inbounds nuw i8, ptr %35, i64 16
   %i.ko = load ptr, ptr %i.kn, align 8, !tbaa !165
   %.not294 = icmp eq ptr %i.km, %i.ko
   br i1 %.not294, label %bb.cx, label %bb.cq
@@ -262,8 +268,8 @@ _ZNSt5queueIN6duckdb10unique_ptrINS0_15DuckCleanupInfoESt14default_deleteIS2_ELb
   %i.kz = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.kp) #31 ; 0 uses
   br label %bb.cx
 
-bb.cu:                                            ; preds = %bb.db, %_ZN6duckdb10unique_ptrISt10lock_guardISt5mutexESt14default_deleteIS3_ELb1EE5resetEPS3_.exit, %bb.co
-  %.sroa.9264.2 = phi i1 [ false, %bb.db ], [ false, %_ZN6duckdb10unique_ptrISt10lock_guardISt5mutexESt14default_deleteIS3_ELb1EE5resetEPS3_.exit ], [ true, %bb.co ]
+bb.cu:                                            ; preds = %bb.db, %_ZN6duckdb10unique_ptrISt10lock_guardISt5mutexESt14default_deleteIS3_ELb1EE5resetEPS3_.exit, %33
+  %.sroa.9264.2 = phi i1 [ false, %bb.db ], [ false, %_ZN6duckdb10unique_ptrISt10lock_guardISt5mutexESt14default_deleteIS3_ELb1EE5resetEPS3_.exit ], [ true, %33 ]
   %i.la = landingpad { ptr, i32 }
           cleanup
   br label %bb.dx

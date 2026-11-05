@@ -205,7 +205,7 @@ bb.bb:                                            ; preds = %.lr.ph, %bb.bd
   %i.jc = getelementptr inbounds i8, ptr %i.jb, i64 %i.ix
   %i.jd = load i8, ptr %i.jc, align 1, !range !6, !noundef !7
   %i.je = trunc nuw i8 %i.jd to i1
-  br i1 %i.je, label %bb.bd, label %bb.bc
+  br i1 %i.je, label %7, label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bb
   %i.jf = getelementptr inbounds nuw i8, ptr %i.iz, i64 24
@@ -213,18 +213,27 @@ bb.bc:                                            ; preds = %bb.bb
   %i.jh = getelementptr inbounds [8 x i8], ptr %i.jg, i64 %i.ix
   %i.ji = load i64, ptr %i.jh, align 8
   %i.jj = icmp ne i64 %i.ji, 0
+  br label %7
+
+7:                                                ; preds = %bb.bc, %bb.bb
+  %.0228 = phi i1 [ false, %bb.bb ], [ %i.jj, %bb.bc ] ; 2 uses
+  %8 = getelementptr inbounds i8, ptr %i.r, i64 %i.iy
+  %9 = load i8, ptr %8, align 1, !range !6, !noundef !7
+  %10 = trunc nuw i8 %9 to i1                     ; 2 uses
+  br i1 %4, label %11, label %13
+
+11:                                               ; preds = %7
+  %12 = or i1 %.0228, %10
   br label %bb.bd
 
-bb.bd:                                            ; preds = %bb.bc, %bb.bb
-  %.0228.a = phi i1 [ false, %bb.bb ], [ %i.jj, %bb.bc ] ; 2 uses
-  %7 = getelementptr inbounds i8, ptr %i.r, i64 %i.iy
-  %8 = load i8, ptr %7, align 1, !range !6, !noundef !7
-  %9 = trunc nuw i8 %8 to i1                      ; 2 uses
-  %10 = or i1 %.0228.a, %9
-  %11 = and i1 %.0228.a, %9
-  %.in245 = select i1 %4, i1 %10, i1 %11
+13:                                               ; preds = %7
+  %14 = and i1 %.0228, %10
+  br label %bb.bd
+
+bb.bd:                                            ; preds = %13, %11
+  %.0228.a = phi i1 [ %12, %11 ], [ %14, %13 ]
   %i.jk = getelementptr inbounds i8, ptr %i.r, i64 %i.iy
-  %i.jl = zext i1 %.in245 to i8
+  %i.jl = zext i1 %.0228.a to i8
   store i8 %i.jl, ptr %i.jk, align 1
   %i.jm = add nuw i32 %.022924, 1                 ; 2 uses
   %i.jn = load i32, ptr %i.o, align 8

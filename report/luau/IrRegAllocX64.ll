@@ -205,22 +205,27 @@ bb.c:                                             ; preds = %bb.b
   store i8 -128, ptr %i.g, align 2, !tbaa !54
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
+bb.d:                                             ; preds = %bb.a, %bb.b, %bb.c
   ret void
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
 define dso_local noundef zeroext i1 @_ZNK4Luau7CodeGen3X6413IrRegAllocX6412isLastUseRegERKNS0_6IrInstEj(ptr nofree noundef nonnull readnone align 8 captures(none) dereferenceable(332) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(59) %1, i32 noundef %2) local_unnamed_addr #3 align 2 {
-bb.a:
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %4 = load i32, ptr %3, align 8, !tbaa !64
-  %5 = icmp eq i32 %4, %2
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 48
+  %5 = load i32, ptr %4, align 8, !tbaa !64
+  %6 = icmp eq i32 %5, %2
+  br i1 %6, label %bb.a, label %7
+
+bb.a:                                             ; preds = %3
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 56
-  %i.b = load i8, ptr %i.a, align 8, !range !41
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !65, !range !41, !noundef !42
   %i.c = trunc nuw i8 %i.b to i1
   %i.d = xor i1 %i.c, true
-  %6 = select i1 %5, i1 %i.d, i1 false
-  ret i1 %6
+  br label %7
+
+7:                                                ; preds = %bb.a, %3
+  %8 = phi i1 [ false, %3 ], [ %i.d, %bb.a ]
+  ret i1 %8
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable
@@ -346,9 +351,9 @@ bb.c:                                             ; preds = %.lr.ph
   %i.ab = getelementptr inbounds nuw i8, ptr %i.y, i64 13
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !54  ; 3 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.y, i64 12
-  %i.ae = load i8, ptr %i.ad, align 4, !tbaa !104 ; 5 uses
-  %i.af = icmp eq i8 %i.ae, -1
-  br i1 %i.af, label %bb.d, label %.thread
+  %i.ae = load i8, ptr %i.ad, align 4, !tbaa !104 ; 6 uses
+  %i.af = icmp eq i8 %i.ae, -1                    ; 2 uses
+  br i1 %i.af, label %bb.d, label %bb.f
 
 bb.d:                                             ; preds = %bb.c
   %i.ag = and i64 %i.h, 4294967295                ; 2 uses
@@ -361,36 +366,35 @@ bb.d:                                             ; preds = %bb.c
   %i.an = sub i64 %i.al, %i.am
   %i.ao = ashr exact i64 %i.an, 3
   %.not.i.i = icmp ugt i64 %i.ao, %i.ag
-  br i1 %.not.i.i, label %bb.e, label %bb.f
+  br i1 %.not.i.i, label %bb.e, label %_ZNK4Luau7CodeGen10IrFunction19findRestoreLocationERKNS0_6IrInstEb.exit
 
 bb.e:                                             ; preds = %bb.d
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %i.ak, i64 %i.ag
   %i.aq = load i64, ptr %i.ap, align 4
+  br label %_ZNK4Luau7CodeGen10IrFunction19findRestoreLocationERKNS0_6IrInstEb.exit
+
+_ZNK4Luau7CodeGen10IrFunction19findRestoreLocationERKNS0_6IrInstEb.exit: ; preds = %bb.d, %bb.e
+  %.sroa.023.1.i.i = phi i64 [ 0, %bb.d ], [ %i.aq, %bb.e ]
+  %4 = trunc i64 %.sroa.023.1.i.i to i56
   br label %bb.f
 
-bb.f:                                             ; preds = %bb.e, %bb.d
-  %.sroa.023.1.i.i = phi i64 [ 0, %bb.d ], [ %i.aq, %bb.e ]
-  %4 = trunc i64 %.sroa.023.1.i.i to i56          ; 2 uses
+bb.f:                                             ; preds = %_ZNK4Luau7CodeGen10IrFunction19findRestoreLocationERKNS0_6IrInstEb.exit, %bb.c
+  %.sroa.1335.0 = phi i56 [ %4, %_ZNK4Luau7CodeGen10IrFunction19findRestoreLocationERKNS0_6IrInstEb.exit ], [ 0, %bb.c ] ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.as = load i32, ptr %i.ar, align 8, !tbaa !64
-  %5 = icmp ne i32 %i.as, %3
-  %6 = getelementptr inbounds nuw i8, ptr %2, i64 56
-  %7 = load i8, ptr %6, align 8, !range !41
-  %8 = trunc nuw i8 %7 to i1
-  %.not46 = select i1 %5, i1 true, i1 %8
-  br i1 %.not46, label %.loopexit47, label %.loopexit
+  %5 = icmp eq i32 %i.as, %3
+  br i1 %5, label %.thread, label %.loopexit47
 
-.thread:                                          ; preds = %bb.c
-  %9 = getelementptr inbounds nuw i8, ptr %2, i64 48
-  %10 = load i32, ptr %9, align 8, !tbaa !64
-  %11 = icmp ne i32 %10, %3
+.thread:                                          ; preds = %bb.f
   %i.at = getelementptr inbounds nuw i8, ptr %2, i64 56
-  %i.au = load i8, ptr %i.at, align 8, !range !41
+  %i.au = load i8, ptr %i.at, align 8, !tbaa !65, !range !41, !noundef !42
   %i.av = trunc nuw i8 %i.au to i1
-  %.not45 = select i1 %11, i1 true, i1 %i.av
-  br i1 %.not45, label %.loopexit47, label %.thread38
+  br i1 %i.av, label %.loopexit47, label %6
 
-.thread38:                                        ; preds = %.thread
+6:                                                ; preds = %.thread
+  br i1 %i.af, label %.loopexit, label %.thread38
+
+.thread38:                                        ; preds = %6
   %i.aw = zext i8 %i.ae to i32                    ; 2 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %i.y, i64 4
   %i.ay = load i8, ptr %i.ax, align 4, !tbaa !105
@@ -429,8 +433,7 @@ _ZNSt6bitsetILm512EE3setEmb.exit:                 ; preds = %bb.g
   %exitcond69.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond69.not, label %.loopexit, label %bb.g, !llvm.loop !158
 
-.loopexit:                                        ; preds = %_ZNSt6bitsetILm512EE3setEmb.exit, %.thread38, %bb.f
-  %.sroa.1334.03741 = phi i56 [ %4, %bb.f ], [ 0, %.thread38 ], [ 0, %_ZNSt6bitsetILm512EE3setEmb.exit ]
+.loopexit:                                        ; preds = %_ZNSt6bitsetILm512EE3setEmb.exit, %.thread38, %6
   store i8 0, ptr %i.j, align 1, !tbaa !73
   store i8 0, ptr %i.m, align 2, !tbaa !95
   %i.bn = getelementptr inbounds i8, ptr %i.r, i64 -16
@@ -468,11 +471,11 @@ bb.j:                                             ; preds = %bb.i
   store i8 -128, ptr %i.bq, align 2, !tbaa !54
   br label %.loopexit47
 
-.loopexit47:                                      ; preds = %bb.b, %.preheader, %.thread, %.loopexit, %bb.f, %bb.i, %bb.j
-  %.sroa.1334.1 = phi i56 [ %.sroa.1334.03741, %.loopexit ], [ %4, %bb.f ], [ 0, %.thread ], [ 0, %bb.j ], [ 0, %bb.i ], [ 0, %.preheader ], [ 0, %bb.b ]
-  %.sroa.10.0 = phi i8 [ %i.ac, %.loopexit ], [ %i.ac, %bb.f ], [ %i.ac, %.thread ], [ %i.br, %bb.j ], [ %i.br, %bb.i ], [ -128, %.preheader ], [ -128, %bb.b ]
-  %.sroa.7.0 = phi i8 [ %i.ae, %.loopexit ], [ -1, %bb.f ], [ %i.ae, %.thread ], [ -1, %bb.j ], [ -1, %bb.i ], [ -1, %.preheader ], [ -1, %bb.b ]
-  %.sroa.5.0 = phi i8 [ -128, %.loopexit ], [ -128, %bb.f ], [ -128, %.thread ], [ %i.br, %bb.j ], [ %i.br, %bb.i ], [ -128, %.preheader ], [ -128, %bb.b ]
+.loopexit47:                                      ; preds = %bb.b, %.preheader, %bb.i, %bb.f, %.loopexit, %.thread, %bb.j
+  %.sroa.1334.1 = phi i56 [ %.sroa.1335.0, %.loopexit ], [ %.sroa.1335.0, %.thread ], [ %.sroa.1335.0, %bb.f ], [ 0, %bb.j ], [ 0, %bb.i ], [ 0, %.preheader ], [ 0, %bb.b ]
+  %.sroa.10.0 = phi i8 [ %i.ac, %.loopexit ], [ %i.ac, %.thread ], [ %i.ac, %bb.f ], [ %i.br, %bb.j ], [ %i.br, %bb.i ], [ -128, %.preheader ], [ -128, %bb.b ]
+  %.sroa.7.0 = phi i8 [ %i.ae, %.loopexit ], [ %i.ae, %.thread ], [ %i.ae, %bb.f ], [ -1, %bb.j ], [ -1, %bb.i ], [ -1, %.preheader ], [ -1, %bb.b ]
+  %.sroa.5.0 = phi i8 [ -128, %.loopexit ], [ -128, %.thread ], [ -128, %bb.f ], [ %i.br, %bb.j ], [ %i.br, %bb.i ], [ -128, %.preheader ], [ -128, %bb.b ]
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 296 ; 3 uses
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 3 uses
   %i.ci = load i64, ptr %i.ch, align 8, !tbaa !106 ; 2 uses

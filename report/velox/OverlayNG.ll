@@ -204,7 +204,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 3 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !59, !range !72, !noundef !73
   %i.c = trunc nuw i8 %i.b to i1                  ; 2 uses
-  %i.d = xor i1 %i.c, true
+  %i.d = xor i1 %i.c, true                        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
   call void @_ZN4geos9operation9overlayng12OverlayGraph18getResultAreaEdgesEv(ptr dead_on_unwind nonnull writable sret(%"class.std::vector.93") align 8 %4, ptr noundef nonnull align 8 dereferenceable(264) %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #18
@@ -271,8 +271,8 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 56
-  %i.v = load i32, ptr %i.u, align 8, !tbaa !57   ; 2 uses
-  switch i32 %i.v, label %bb.s [
+  %i.v = load i32, ptr %i.u, align 8, !tbaa !57
+  switch i32 %i.v, label %13 [
     i32 4, label %.critedge
     i32 2, label %.critedge
   ]
@@ -427,9 +427,7 @@ bb.m:                                             ; preds = %_ZSt8_DestroyIPSt10
 
 _ZN4geos9operation9overlayng11LineBuilderD2Ev.exit: ; preds = %_ZSt8_DestroyIPSt10unique_ptrIN4geos4geom10LineStringESt14default_deleteIS3_EES6_EvT_S8_RSaIT0_E.exit.i.i, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #18
-  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 56
-  %.pre = load i32, ptr %.phi.trans.insert, align 8, !tbaa !57
-  br label %bb.s
+  br label %13
 
 bb.n:                                             ; preds = %_ZN4geos9operation9overlayng14PolygonBuilderC2ERSt6vectorIPNS1_11OverlayEdgeESaIS5_EEPKNS_4geom15GeometryFactoryE.exit
   %i.bo = landingpad { ptr, i32 }
@@ -458,20 +456,26 @@ bb.r:                                             ; preds = %bb.q, %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #18
   br label %bb.an
 
-bb.s:                                             ; preds = %bb.h, %_ZN4geos9operation9overlayng11LineBuilderD2Ev.exit
-  %13 = phi i32 [ %i.v, %bb.h ], [ %.pre, %_ZN4geos9operation9overlayng11LineBuilderD2Ev.exit ]
-  %i.bs = load ptr, ptr %7, align 16
-  %i.bt = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %i.bu = load ptr, ptr %i.bt, align 8
-  %14 = icmp eq ptr %i.bs, %i.bu
-  %not.99 = xor i1 %i.q, true
-  %15 = select i1 %not.99, i1 %14, i1 false
-  %not. = select i1 %15, i1 true, i1 %i.d
-  %i.bv = icmp eq i32 %13, 1
-  %or.cond3.a = select i1 %i.bv, i1 %not., i1 false
-  br i1 %or.cond3.a, label %bb.t, label %bb.z
+13:                                               ; preds = %bb.h, %_ZN4geos9operation9overlayng11LineBuilderD2Ev.exit
+  br i1 %i.q, label %14, label %bb.s
 
-bb.t:                                             ; preds = %bb.s
+bb.s:                                             ; preds = %13
+  %i.bs = load ptr, ptr %7, align 16, !tbaa !269
+  %i.bt = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.bu = load ptr, ptr %i.bt, align 8, !tbaa !269
+  %i.bv = icmp eq ptr %i.bs, %i.bu
+  %or.cond3.a = select i1 %i.bv, i1 true, i1 %i.d
+  br label %14
+
+14:                                               ; preds = %bb.s, %13
+  %not. = phi i1 [ %i.d, %13 ], [ %or.cond3.a, %bb.s ]
+  %15 = getelementptr inbounds nuw i8, ptr %1, i64 56
+  %16 = load i32, ptr %15, align 8, !tbaa !57
+  %17 = icmp eq i32 %16, 1
+  %or.cond3 = select i1 %17, i1 %not., i1 false
+  br i1 %or.cond3, label %bb.t, label %bb.z
+
+bb.t:                                             ; preds = %14
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #18
   %i.bw = load ptr, ptr %i.e, align 8, !tbaa !56
   store ptr %3, ptr %11, align 8, !tbaa !275
@@ -616,7 +620,7 @@ bb.y:                                             ; preds = %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #18
   br label %bb.an
 
-bb.z:                                             ; preds = %bb.s, %_ZN4geos9operation9overlayng24IntersectionPointBuilderD2Ev.exit, %bb.f
+bb.z:                                             ; preds = %14, %_ZN4geos9operation9overlayng24IntersectionPointBuilderD2Ev.exit, %bb.f
   %i.dh = load ptr, ptr %6, align 8, !tbaa !256
   %i.di = load ptr, ptr %i.o, align 8, !tbaa !256
   %i.dj = icmp eq ptr %i.dh, %i.di
