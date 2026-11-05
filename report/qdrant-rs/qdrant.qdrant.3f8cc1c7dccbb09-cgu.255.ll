@@ -202,11 +202,10 @@ bb.a:
   %i.a = alloca [48 x i8], align 8                ; 5 uses
   %i.b = alloca [48 x i8], align 8                ; 6 uses
   %.sroa.6 = alloca [48 x i8], align 8            ; 6 uses
-  %2 = alloca [56 x i8], align 8                  ; 5 uses
+  %2 = alloca [120 x i8], align 8                 ; 5 uses
   %i.c = alloca [56 x i8], align 8                ; 5 uses
-  %3 = alloca [120 x i8], align 8                 ; 6 uses
   %i.d = alloca [56 x i8], align 8                ; 5 uses
-  %.sroa.4 = alloca [56 x i8], align 8            ; 5 uses
+  %.sroa.4 = alloca [56 x i8], align 8            ; 4 uses
   %i.e = alloca [56 x i8], align 8                ; 6 uses
   %i.f = alloca [56 x i8], align 8                ; 5 uses
   %.sroa.9 = alloca [40 x i8], align 8            ; 4 uses
@@ -433,18 +432,13 @@ bb.v:                                             ; preds = %bb.r
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sroa.9.0..sroa_idx44, ptr noundef nonnull align 8 dereferenceable(40) %.sroa.9, i64 40, i1 false)
   %.sroa.946.0..sroa_idx49 = getelementptr inbounds nuw i8, ptr %i.e, i64 48
   store i64 %.sroa.946.0, ptr %.sroa.946.0..sroa_idx49, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %3)
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 272
-  call void @_RNvXs1_NtCs9XvERIT2X68_9itertools10merge_joinNCINvNtNtNtCsl8OoimOLbh_6qdrant6common9inference7service20merge_position_itemsNtNtNtCs5QaNqjAn6vc_5shard10operations9point_ops15VectorPersistedINtNtCsexYYUdYSQU6_5alloc3vec3VecB1X_EB30_E0INtB5_14OrderingOrBoolTB1X_jEB44_E5mergeBS_(ptr noalias nofree noundef nonnull sret([120 x i8]) align 8 captures(none) dereferenceable(120) %3, ptr noalias nofree noundef nonnull %i.as, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(56) %i.f, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(56) %i.e)
+  call void @_RNvXs1_NtCs9XvERIT2X68_9itertools10merge_joinNCINvNtNtNtCsl8OoimOLbh_6qdrant6common9inference7service20merge_position_itemsNtNtNtCs5QaNqjAn6vc_5shard10operations9point_ops15VectorPersistedINtNtCsexYYUdYSQU6_5alloc3vec3VecB1X_EB30_E0INtB5_14OrderingOrBoolTB1X_jEB44_E5mergeBS_(ptr noalias nofree noundef nonnull sret([120 x i8]) align 8 captures(none) dereferenceable(120) %2, ptr noalias nofree noundef nonnull %i.as, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(56) %i.f, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(56) %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.4)
-  %.sroa.0.0.copyload = load i64, ptr %3, align 8
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %3, i64 8
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.4, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.4.0..sroa_idx, i64 56, i1 false)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
-  %i.at = getelementptr inbounds nuw i8, ptr %3, i64 64
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.d, ptr noundef nonnull align 8 dereferenceable(56) %i.at, i64 56, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3)
-  switch i64 %.sroa.0.0.copyload, label %bb.x [
+  %i.at = getelementptr inbounds nuw i8, ptr %2, i64 64 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %.sroa.4, ptr noundef nonnull align 8 dereferenceable(56) %i.at, i64 56, i1 false)
+  %3 = load i64, ptr %2, align 8, !range !9, !noundef !6
+  switch i64 %3, label %bb.x [
     i64 2, label %bb.w
     i64 0, label %bb.z
   ]
@@ -457,49 +451,50 @@ bb.v:                                             ; preds = %bb.r
   br label %bb.u
 
 bb.w:                                             ; preds = %bb.v, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtNtCs5QaNqjAn6vc_5shard10operations9point_ops15VectorPersistedjEEECsl8OoimOLbh_6qdrant.exit31, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtNtCs5QaNqjAn6vc_5shard10operations9point_ops15VectorPersistedjEEECsl8OoimOLbh_6qdrant.exit33
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr noundef nonnull align 8 dereferenceable(56) %i.d, i64 56, i1 false)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr noundef nonnull align 8 dereferenceable(56) %i.at, i64 56, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.4)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br label %bb.u
 
 bb.x:                                             ; preds = %bb.v
-  call void @llvm.lifetime.start.p0(ptr nonnull %2)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %2, ptr noundef nonnull align 8 dereferenceable(56) %i.x, i64 56, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.x, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.4, i64 56, i1 false)
-  %i.au = load i64, ptr %2, align 8, !range !10, !alias.scope !612, !noundef !6
+  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.c, ptr noundef nonnull align 8 dereferenceable(56) %i.x, i64 56, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.x, ptr noundef nonnull align 8 dereferenceable(56) %4, i64 56, i1 false)
+  %i.au = load i64, ptr %i.c, align 8, !range !10, !alias.scope !612, !noundef !6
   %i.av = icmp eq i64 %i.au, -1
   br i1 %i.av, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtNtCs5QaNqjAn6vc_5shard10operations9point_ops15VectorPersistedjEEECsl8OoimOLbh_6qdrant.exit31, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs5QaNqjAn6vc_5shard10operations9point_ops15VectorPersistedECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %2)
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs5QaNqjAn6vc_5shard10operations9point_ops15VectorPersistedECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.c)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtNtCs5QaNqjAn6vc_5shard10operations9point_ops15VectorPersistedjEEECsl8OoimOLbh_6qdrant.exit31 unwind label %bb.ab
 
 bb.z:                                             ; preds = %bb.v
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.c, ptr noundef nonnull align 8 dereferenceable(56) %1, i64 56, i1 false)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %1, ptr noundef nonnull align 8 dereferenceable(56) %.sroa.4, i64 56, i1 false)
-  %i.aw = load i64, ptr %i.c, align 8, !range !10, !alias.scope !613, !noundef !6
+  %5 = getelementptr inbounds nuw i8, ptr %2, i64 8
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.d, ptr noundef nonnull align 8 dereferenceable(56) %1, i64 56, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %1, ptr noundef nonnull align 8 dereferenceable(56) %5, i64 56, i1 false)
+  %i.aw = load i64, ptr %i.d, align 8, !range !10, !alias.scope !613, !noundef !6
   %i.ax = icmp eq i64 %i.aw, -1
   br i1 %i.ax, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtNtCs5QaNqjAn6vc_5shard10operations9point_ops15VectorPersistedjEEECsl8OoimOLbh_6qdrant.exit33, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs5QaNqjAn6vc_5shard10operations9point_ops15VectorPersistedECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.c)
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs5QaNqjAn6vc_5shard10operations9point_ops15VectorPersistedECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.d)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtNtCs5QaNqjAn6vc_5shard10operations9point_ops15VectorPersistedjEEECsl8OoimOLbh_6qdrant.exit33 unwind label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa, %bb.y
   %i.ay = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs5QaNqjAn6vc_5shard10operations9point_ops15VectorPersistedECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.d)
+  invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs5QaNqjAn6vc_5shard10operations9point_ops15VectorPersistedECsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %.sroa.4)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtNtCs5QaNqjAn6vc_5shard10operations9point_ops15VectorPersistedjEEECsl8OoimOLbh_6qdrant.exit unwind label %bb.q
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtNtCs5QaNqjAn6vc_5shard10operations9point_ops15VectorPersistedjEEECsl8OoimOLbh_6qdrant.exit33: ; preds = %bb.z, %bb.aa
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   br label %bb.w
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionTNtNtNtCs5QaNqjAn6vc_5shard10operations9point_ops15VectorPersistedjEEECsl8OoimOLbh_6qdrant.exit31: ; preds = %bb.x, %bb.y
-  call void @llvm.lifetime.end.p0(ptr nonnull %2)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %bb.w
 }
 
