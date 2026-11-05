@@ -205,7 +205,7 @@ bb.s:                                             ; preds = %bb.r, %bb.q
   br i1 %i.hr, label %bb.ck, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  %27 = tail call float @llvm.fmuladd.f32(float %i.ed, float %i.ed, float 0.000000e+00) ; 2 uses
+  %27 = fmul float %i.ed, %i.ed                   ; 2 uses
   %i.hs = tail call float @llvm.fmuladd.f32(float %i.dx, float %i.dx, float %27)
   %sqrt = tail call float @llvm.sqrt.f32(float %i.hs) ; 3 uses
   %i.ht = fcmp ogt float %sqrt, f0x34000000
@@ -248,7 +248,7 @@ bb.w:                                             ; preds = %bb.u, %bb.v, %bb.t
   br i1 %i.iq, label %bb.ck, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
-  %28 = tail call float @llvm.fmuladd.f32(float %i.dm, float %i.dm, float 0.000000e+00) ; 2 uses
+  %28 = fmul float %i.dm, %i.dm                   ; 2 uses
   %i.ir = tail call float @llvm.fmuladd.f32(float %i.dz, float %i.dz, float %28)
   %sqrt967 = tail call float @llvm.sqrt.f32(float %i.ir) ; 3 uses
   %i.is = fcmp ogt float %sqrt967, f0x34000000
@@ -290,7 +290,7 @@ bb.aa:                                            ; preds = %bb.y, %bb.z, %bb.x
   br i1 %i.jo, label %bb.ck, label %bb.ab
 
 bb.ab:                                            ; preds = %bb.aa
-  %29 = tail call float @llvm.fmuladd.f32(float %i.dq, float %i.dq, float 0.000000e+00) ; 2 uses
+  %29 = fmul float %i.dq, %i.dq                   ; 2 uses
   %i.jp = tail call float @llvm.fmuladd.f32(float %i.eb, float %i.eb, float %29)
   %sqrt968 = tail call float @llvm.sqrt.f32(float %i.jp) ; 3 uses
   %i.jq = fcmp ogt float %sqrt968, f0x34000000

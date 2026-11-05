@@ -205,7 +205,7 @@ begin_hunk_0_@_ZN2cv8ximgproc15EdgeDrawingImpl10EllipseFitEPdS2_iP15EllipseEquat
   %.pre400 = load ptr, ptr %i.dr, align 8, !tbaa !277 ; 7 uses
   %i.adz = getelementptr inbounds nuw i8, ptr %.pre395, i64 8 ; 3 uses
   %i.aea = load double, ptr %i.adz, align 8, !tbaa !44 ; 2 uses
-  %5 = tail call double @llvm.fmuladd.f64(double %i.aea, double %i.aea, double 0.000000e+00)
+  %5 = fmul double %i.aea, %i.aea
   %i.aeb = getelementptr inbounds nuw i8, ptr %.pre396, i64 8 ; 3 uses
   %i.aec = load double, ptr %i.aeb, align 8, !tbaa !44 ; 2 uses
   %i.aed = tail call double @llvm.fmuladd.f64(double %i.aec, double %i.aec, double %5)
@@ -242,7 +242,7 @@ begin_hunk_0_@_ZN2cv8ximgproc15EdgeDrawingImpl10EllipseFitEPdS2_iP15EllipseEquat
   store double %i.afc, ptr %i.aen, align 8, !tbaa !44
   %i.afd = getelementptr inbounds nuw i8, ptr %.pre395, i64 16 ; 3 uses
   %i.afe = load double, ptr %i.afd, align 8, !tbaa !44 ; 2 uses
-  %6 = tail call double @llvm.fmuladd.f64(double %i.afe, double %i.afe, double 0.000000e+00)
+  %6 = fmul double %i.afe, %i.afe
   %i.aff = getelementptr inbounds nuw i8, ptr %.pre396, i64 16 ; 3 uses
   %i.afg = load double, ptr %i.aff, align 8, !tbaa !44 ; 2 uses
   %i.afh = tail call double @llvm.fmuladd.f64(double %i.afg, double %i.afg, double %6)
@@ -279,7 +279,7 @@ begin_hunk_0_@_ZN2cv8ximgproc15EdgeDrawingImpl10EllipseFitEPdS2_iP15EllipseEquat
   store double %i.agg, ptr %i.afr, align 8, !tbaa !44
   %i.agh = getelementptr inbounds nuw i8, ptr %.pre395, i64 24 ; 3 uses
   %i.agi = load double, ptr %i.agh, align 8, !tbaa !44 ; 2 uses
-  %7 = tail call double @llvm.fmuladd.f64(double %i.agi, double %i.agi, double 0.000000e+00)
+  %7 = fmul double %i.agi, %i.agi
   %i.agj = getelementptr inbounds nuw i8, ptr %.pre396, i64 24 ; 3 uses
   %i.agk = load double, ptr %i.agj, align 8, !tbaa !44 ; 2 uses
   %i.agl = tail call double @llvm.fmuladd.f64(double %i.agk, double %i.agk, double %7)
@@ -316,7 +316,7 @@ begin_hunk_0_@_ZN2cv8ximgproc15EdgeDrawingImpl10EllipseFitEPdS2_iP15EllipseEquat
   store double %i.ahk, ptr %i.agv, align 8, !tbaa !44
   %i.ahl = getelementptr inbounds nuw i8, ptr %.pre395, i64 32 ; 3 uses
   %i.ahm = load double, ptr %i.ahl, align 8, !tbaa !44 ; 2 uses
-  %8 = tail call double @llvm.fmuladd.f64(double %i.ahm, double %i.ahm, double 0.000000e+00)
+  %8 = fmul double %i.ahm, %i.ahm
   %i.ahn = getelementptr inbounds nuw i8, ptr %.pre396, i64 32 ; 3 uses
   %i.aho = load double, ptr %i.ahn, align 8, !tbaa !44 ; 2 uses
   %i.ahp = tail call double @llvm.fmuladd.f64(double %i.aho, double %i.aho, double %8)
@@ -353,7 +353,7 @@ begin_hunk_0_@_ZN2cv8ximgproc15EdgeDrawingImpl10EllipseFitEPdS2_iP15EllipseEquat
   store double %i.aio, ptr %i.ahz, align 8, !tbaa !44
   %i.aip = getelementptr inbounds nuw i8, ptr %.pre395, i64 40 ; 3 uses
   %i.aiq = load double, ptr %i.aip, align 8, !tbaa !44 ; 2 uses
-  %9 = tail call double @llvm.fmuladd.f64(double %i.aiq, double %i.aiq, double 0.000000e+00)
+  %9 = fmul double %i.aiq, %i.aiq
   %i.air = getelementptr inbounds nuw i8, ptr %.pre396, i64 40 ; 3 uses
   %i.ais = load double, ptr %i.air, align 8, !tbaa !44 ; 2 uses
   %i.ait = tail call double @llvm.fmuladd.f64(double %i.ais, double %i.ais, double %9)
@@ -390,7 +390,7 @@ begin_hunk_0_@_ZN2cv8ximgproc15EdgeDrawingImpl10EllipseFitEPdS2_iP15EllipseEquat
   store double %i.ajs, ptr %i.ajd, align 8, !tbaa !44
   %i.ajt = getelementptr inbounds nuw i8, ptr %.pre395, i64 48 ; 3 uses
   %i.aju = load double, ptr %i.ajt, align 8, !tbaa !44 ; 2 uses
-  %10 = tail call double @llvm.fmuladd.f64(double %i.aju, double %i.aju, double 0.000000e+00)
+  %10 = fmul double %i.aju, %i.aju
   %i.ajv = getelementptr inbounds nuw i8, ptr %.pre396, i64 48 ; 3 uses
   %i.ajw = load double, ptr %i.ajv, align 8, !tbaa !44 ; 2 uses
   %i.ajx = tail call double @llvm.fmuladd.f64(double %i.ajw, double %i.ajw, double %10)

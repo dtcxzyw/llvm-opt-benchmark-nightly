@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %i.y = getelementptr inbounds [8 x i8], ptr %i.q, i64 %i.r
   %i.z = load double, ptr %i.y, align 8, !tbaa !88
   %i.aa = fsub double %i.x, %i.z                  ; 2 uses
-  %5 = call double @llvm.fmuladd.f64(double %i.aa, double %i.aa, double 0.000000e+00) ; 2 uses
+  %5 = fmul double %i.aa, %i.aa                   ; 2 uses
   store double %5, ptr %i.e, align 8, !tbaa !88
   %indvars.iv.next.prol = add nsw i64 %i.r, 1
   br label %.prol.loopexit

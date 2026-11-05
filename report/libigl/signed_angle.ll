@@ -67,7 +67,7 @@ bb.a:
   %i.w = fsub <2 x double> %i.q, %i.v             ; 7 uses
   %i.x = extractelement <2 x double> %i.w, i64 0  ; 3 uses
   %i.y = shufflevector <2 x double> %i.w, <2 x double> %i.t, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %3 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.y, <2 x double> %i.y, <2 x double> zeroinitializer)
+  %3 = fmul <2 x double> %i.y, %i.y
   %i.z = shufflevector <2 x double> %i.w, <2 x double> %i.t, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.aa = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.z, <2 x double> %i.z, <2 x double> %3) ; 2 uses
   %i.ab = extractelement <2 x double> %i.aa, i64 0
@@ -163,7 +163,7 @@ bb.a:
   %i.w = fsub <2 x double> %i.q, %i.v             ; 7 uses
   %i.x = extractelement <2 x double> %i.w, i64 0  ; 3 uses
   %i.y = shufflevector <2 x double> %i.w, <2 x double> %i.t, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %3 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.y, <2 x double> %i.y, <2 x double> zeroinitializer)
+  %3 = fmul <2 x double> %i.y, %i.y
   %i.z = shufflevector <2 x double> %i.w, <2 x double> %i.t, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.aa = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.z, <2 x double> %i.z, <2 x double> %3) ; 2 uses
   %i.ab = extractelement <2 x double> %i.aa, i64 0
@@ -250,7 +250,7 @@ bb.a:
   %i.w = fsub <2 x double> %i.q, %i.v             ; 7 uses
   %i.x = extractelement <2 x double> %i.w, i64 0  ; 3 uses
   %i.y = shufflevector <2 x double> %i.w, <2 x double> %i.t, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %3 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.y, <2 x double> %i.y, <2 x double> zeroinitializer)
+  %3 = fmul <2 x double> %i.y, %i.y
   %i.z = shufflevector <2 x double> %i.w, <2 x double> %i.t, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.aa = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.z, <2 x double> %i.z, <2 x double> %3) ; 2 uses
   %i.ab = extractelement <2 x double> %i.aa, i64 0
@@ -344,7 +344,7 @@ bb.a:
   %i.ad = fsub <2 x double> %i.aa, %i.ac          ; 6 uses
   %i.ae = fsub double %i.u, %i.w                  ; 5 uses
   %i.af = insertelement <2 x double> %i.ad, double %i.r, i64 0 ; 2 uses
-  %3 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.af, <2 x double> %i.af, <2 x double> zeroinitializer)
+  %3 = fmul <2 x double> %i.af, %i.af
   %i.ag = shufflevector <2 x double> %i.ad, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
   %i.ah = insertelement <2 x double> %i.ag, double %i.ae, i64 0 ; 2 uses
   %i.ai = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ah, <2 x double> %i.ah, <2 x double> %3) ; 2 uses
@@ -408,7 +408,7 @@ bb.a:
   %i.g = fsub <2 x double> %i.c, %i.f             ; 7 uses
   %i.h = extractelement <2 x double> %i.g, i64 0  ; 3 uses
   %i.i = shufflevector <2 x double> %i.g, <2 x double> %i.e, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %3 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.i, <2 x double> %i.i, <2 x double> zeroinitializer)
+  %3 = fmul <2 x double> %i.i, %i.i
   %i.j = shufflevector <2 x double> %i.g, <2 x double> %i.e, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.k = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.j, <2 x double> %i.j, <2 x double> %3) ; 2 uses
   %i.l = extractelement <2 x double> %i.k, i64 0
@@ -479,7 +479,7 @@ bb.a:
   %i.g = fsub <2 x double> %i.c, %i.f             ; 7 uses
   %i.h = extractelement <2 x double> %i.g, i64 0  ; 3 uses
   %i.i = shufflevector <2 x double> %i.g, <2 x double> %i.e, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %3 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.i, <2 x double> %i.i, <2 x double> zeroinitializer)
+  %3 = fmul <2 x double> %i.i, %i.i
   %i.j = shufflevector <2 x double> %i.g, <2 x double> %i.e, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.k = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.j, <2 x double> %i.j, <2 x double> %3) ; 2 uses
   %i.l = extractelement <2 x double> %i.k, i64 0
@@ -567,7 +567,7 @@ bb.a:
   %i.x = fsub float %i.w, %i.n                    ; 4 uses
   %i.y = shufflevector <2 x float> %i.v, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.z = insertelement <2 x float> %i.y, float %i.s, i64 0 ; 2 uses
-  %3 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.z, <2 x float> %i.z, <2 x float> zeroinitializer)
+  %3 = fmul <2 x float> %i.z, %i.z
   %i.aa = insertelement <2 x float> %i.v, float %i.x, i64 0 ; 2 uses
   %i.ab = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aa, <2 x float> %i.aa, <2 x float> %3) ; 2 uses
   %i.ac = extractelement <2 x float> %i.ab, i64 0
@@ -653,7 +653,7 @@ bb.a:
   %i.l = fsub float %i.k, %i.e                    ; 4 uses
   %i.m = shufflevector <2 x float> %i.j, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.n = insertelement <2 x float> %i.m, float %i.h, i64 0 ; 2 uses
-  %3 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.n, <2 x float> %i.n, <2 x float> zeroinitializer)
+  %3 = fmul <2 x float> %i.n, %i.n
   %i.o = insertelement <2 x float> %i.j, float %i.l, i64 0 ; 2 uses
   %i.p = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.o, <2 x float> %i.o, <2 x float> %3) ; 2 uses
   %i.q = extractelement <2 x float> %i.p, i64 0
@@ -751,7 +751,7 @@ bb.a:
   %i.x = fsub float %i.w, %i.n                    ; 4 uses
   %i.y = shufflevector <2 x float> %i.v, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.z = insertelement <2 x float> %i.y, float %i.s, i64 0 ; 2 uses
-  %3 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.z, <2 x float> %i.z, <2 x float> zeroinitializer)
+  %3 = fmul <2 x float> %i.z, %i.z
   %i.aa = insertelement <2 x float> %i.v, float %i.x, i64 0 ; 2 uses
   %i.ab = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aa, <2 x float> %i.aa, <2 x float> %3) ; 2 uses
   %i.ac = extractelement <2 x float> %i.ab, i64 0
@@ -855,7 +855,7 @@ bb.a:
   %i.ad = fsub <2 x double> %i.aa, %i.ac          ; 6 uses
   %i.ae = fsub double %i.u, %i.w                  ; 5 uses
   %i.af = insertelement <2 x double> %i.ad, double %i.r, i64 0 ; 2 uses
-  %3 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.af, <2 x double> %i.af, <2 x double> zeroinitializer)
+  %3 = fmul <2 x double> %i.af, %i.af
   %i.ag = shufflevector <2 x double> %i.ad, <2 x double> poison, <2 x i32> <i32 poison, i32 0>
   %i.ah = insertelement <2 x double> %i.ag, double %i.ae, i64 0 ; 2 uses
   %i.ai = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.ah, <2 x double> %i.ah, <2 x double> %3) ; 2 uses
@@ -935,7 +935,7 @@ bb.a:
   %i.w = fsub <2 x double> %i.q, %i.v             ; 7 uses
   %i.x = extractelement <2 x double> %i.w, i64 0  ; 3 uses
   %i.y = shufflevector <2 x double> %i.w, <2 x double> %i.t, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %3 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.y, <2 x double> %i.y, <2 x double> zeroinitializer)
+  %3 = fmul <2 x double> %i.y, %i.y
   %i.z = shufflevector <2 x double> %i.w, <2 x double> %i.t, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.aa = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.z, <2 x double> %i.z, <2 x double> %3) ; 2 uses
   %i.ab = extractelement <2 x double> %i.aa, i64 0
@@ -1022,7 +1022,7 @@ bb.a:
   %i.w = fsub <2 x double> %i.q, %i.v             ; 7 uses
   %i.x = extractelement <2 x double> %i.w, i64 0  ; 3 uses
   %i.y = shufflevector <2 x double> %i.w, <2 x double> %i.t, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %3 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.y, <2 x double> %i.y, <2 x double> zeroinitializer)
+  %3 = fmul <2 x double> %i.y, %i.y
   %i.z = shufflevector <2 x double> %i.w, <2 x double> %i.t, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.aa = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.z, <2 x double> %i.z, <2 x double> %3) ; 2 uses
   %i.ab = extractelement <2 x double> %i.aa, i64 0
@@ -1109,7 +1109,7 @@ bb.a:
   %i.w = fsub <2 x double> %i.q, %i.v             ; 7 uses
   %i.x = extractelement <2 x double> %i.w, i64 0  ; 3 uses
   %i.y = shufflevector <2 x double> %i.w, <2 x double> %i.t, <2 x i32> <i32 0, i32 2> ; 2 uses
-  %3 = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.y, <2 x double> %i.y, <2 x double> zeroinitializer)
+  %3 = fmul <2 x double> %i.y, %i.y
   %i.z = shufflevector <2 x double> %i.w, <2 x double> %i.t, <2 x i32> <i32 1, i32 3> ; 2 uses
   %i.aa = tail call <2 x double> @llvm.fmuladd.v2f64(<2 x double> %i.z, <2 x double> %i.z, <2 x double> %3) ; 2 uses
   %i.ab = extractelement <2 x double> %i.aa, i64 0
@@ -1197,7 +1197,7 @@ bb.a:
   %i.x = fsub float %i.w, %i.n                    ; 4 uses
   %i.y = shufflevector <2 x float> %i.v, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.z = insertelement <2 x float> %i.y, float %i.s, i64 0 ; 2 uses
-  %3 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.z, <2 x float> %i.z, <2 x float> zeroinitializer)
+  %3 = fmul <2 x float> %i.z, %i.z
   %i.aa = insertelement <2 x float> %i.v, float %i.x, i64 0 ; 2 uses
   %i.ab = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.aa, <2 x float> %i.aa, <2 x float> %3) ; 2 uses
   %i.ac = extractelement <2 x float> %i.ab, i64 0
@@ -1283,7 +1283,7 @@ bb.a:
   %i.l = fsub float %i.k, %i.e                    ; 4 uses
   %i.m = shufflevector <2 x float> %i.j, <2 x float> poison, <2 x i32> <i32 poison, i32 0>
   %i.n = insertelement <2 x float> %i.m, float %i.h, i64 0 ; 2 uses
-  %3 = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.n, <2 x float> %i.n, <2 x float> zeroinitializer)
+  %3 = fmul <2 x float> %i.n, %i.n
   %i.o = insertelement <2 x float> %i.j, float %i.l, i64 0 ; 2 uses
   %i.p = tail call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.o, <2 x float> %i.o, <2 x float> %3) ; 2 uses
   %i.q = extractelement <2 x float> %i.p, i64 0

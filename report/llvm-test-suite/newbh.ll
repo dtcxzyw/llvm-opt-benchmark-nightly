@@ -203,11 +203,11 @@ bb.a:                                             ; preds = %.preheader98
   %i.bj = tail call double (double, ...) @my_rand(double noundef %i.bh) #20 ; 3 uses
   %i.bk = tail call double (double, double, double, ...) @xrand(double noundef -1.000000e+00, double noundef 1.000000e+00, double noundef %i.bj) #20 ; 4 uses
   store double %i.bk, ptr %i.be, align 8, !tbaa !29
-  %i.bl = load <2 x double>, ptr %i.bc, align 8, !tbaa !29 ; 3 uses
-  %4 = extractelement <2 x double> %i.bl, i64 0   ; 2 uses
-  %5 = tail call double @llvm.fmuladd.f64(double %4, double %4, double 0.000000e+00)
+  %i.bl = load <2 x double>, ptr %i.bc, align 8, !tbaa !29 ; 4 uses
+  %foldExtExtBinop = fmul <2 x double> %i.bl, %i.bl
+  %4 = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.bm = extractelement <2 x double> %i.bl, i64 1 ; 2 uses
-  %i.bn = tail call double @llvm.fmuladd.f64(double %i.bm, double %i.bm, double %5)
+  %i.bn = tail call double @llvm.fmuladd.f64(double %i.bm, double %i.bm, double %4)
   %i.bo = tail call double @llvm.fmuladd.f64(double %i.bk, double %i.bk, double %i.bn) ; 2 uses
   %i.bp = fcmp ogt double %i.bo, 1.000000e+00
   br i1 %i.bp, label %.preheader, label %.preheader97, !llvm.loop !65
@@ -610,11 +610,11 @@ define dso_local void @gravsub(ptr dead_on_unwind noalias nofree writable writeo
   %i.i = fsub double %i.d, %i.f                   ; 3 uses
   %i.j = load <2 x double>, ptr %i.a, align 8, !tbaa !29
   %i.k = load <2 x double>, ptr %i.b, align 8, !tbaa !29
-  %i.l = fsub <2 x double> %i.j, %i.k             ; 3 uses
-  %3 = extractelement <2 x double> %i.l, i64 0    ; 2 uses
-  %4 = tail call double @llvm.fmuladd.f64(double %3, double %3, double 0.000000e+00)
+  %i.l = fsub <2 x double> %i.j, %i.k             ; 4 uses
+  %foldExtExtBinop = fmul <2 x double> %i.l, %i.l
+  %3 = extractelement <2 x double> %foldExtExtBinop, i64 0
   %i.m = extractelement <2 x double> %i.l, i64 1  ; 2 uses
-  %i.n = tail call double @llvm.fmuladd.f64(double %i.m, double %i.m, double %4)
+  %i.n = tail call double @llvm.fmuladd.f64(double %i.m, double %i.m, double %3)
   %i.o = tail call double @llvm.fmuladd.f64(double %i.i, double %i.i, double %i.n)
   %i.p = fadd double %i.o, f0x3F647AE147AE147C    ; 2 uses
   %i.q = tail call double @sqrt(double noundef %i.p) #20, !tbaa !9
@@ -661,7 +661,7 @@ bb.a:
   %i.o = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.p = load double, ptr %i.o, align 8, !tbaa !29
   %i.q = fsub double %i.n, %i.p                   ; 2 uses
-  %4 = tail call double @llvm.fmuladd.f64(double %i.g, double %i.g, double 0.000000e+00)
+  %4 = fmul double %i.g, %i.g
   %i.r = tail call double @llvm.fmuladd.f64(double %i.l, double %i.l, double %4)
   %i.s = tail call double @llvm.fmuladd.f64(double %i.q, double %i.q, double %i.r)
   %i.t = fmul double %2, %i.s

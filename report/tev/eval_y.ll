@@ -205,7 +205,7 @@ bb.fd:                                            ; preds = %.prol.preheader3669
   %i.aqm = load i64, ptr %i.aql, align 8, !tbaa !26
   %i.aqn = sitofp i64 %i.aqm to double
   %i.aqo = fsub double %i.aqn, %i.aqb             ; 2 uses
-  %3 = call double @llvm.fmuladd.f64(double %i.aqo, double %i.aqo, double 0.000000e+00) ; 2 uses
+  %3 = fmul double %i.aqo, %i.aqo                 ; 2 uses
   br label %.prol.loopexit3670
 
 .prol.loopexit3670:                               ; preds = %.prol.preheader3669, %bb.fd, %.lr.ph2369
@@ -404,7 +404,7 @@ bb.fq:                                            ; preds = %.prol.preheader3657
   %i.atr = getelementptr inbounds [8 x i8], ptr %i.atq, i64 %i.atm
   %i.ats = load double, ptr %i.atr, align 8, !tbaa !32
   %i.att = fsub double %i.ats, %i.ath             ; 2 uses
-  %4 = call double @llvm.fmuladd.f64(double %i.att, double %i.att, double 0.000000e+00) ; 2 uses
+  %4 = fmul double %i.att, %i.att                 ; 2 uses
   br label %.prol.loopexit3658
 
 .prol.loopexit3658:                               ; preds = %.prol.preheader3657, %bb.fq, %.lr.ph2348
