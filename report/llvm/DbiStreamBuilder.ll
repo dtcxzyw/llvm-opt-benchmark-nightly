@@ -204,7 +204,7 @@ _ZN4llvm23WritableBinaryStreamRefC2ERKS0_.exit.i.i: ; preds = %bb.l, %bb.k, %bb.
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.8, ptr noundef nonnull align 16 dereferenceable(16) %i.dm, i64 16, i1 false)
   %.sroa.10.16..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
   %.sroa.10.16.copyload = load i64, ptr %.sroa.10.16..sroa_idx, align 16 ; 4 uses
-  %.sroa.12.16.copyload = load i8, ptr %i.cx, align 8
+  %.sroa.12.16.copyload = load i8, ptr %i.cx, align 8 ; 2 uses
   %.sroa.14.16..sroa_idx = getelementptr inbounds nuw i8, ptr %4, i64 41
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.14, ptr noundef nonnull align 1 dereferenceable(7) %.sroa.14.16..sroa_idx, i64 7, i1 false)
   %i.dw = trunc nuw i8 %.sroa.12.16.copyload to i1
@@ -267,7 +267,7 @@ bb.r:                                             ; preds = %bb.q
   br label %_ZNK4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEE10keep_frontEm.exit
 
 _ZNK4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEE10keep_frontEm.exit: ; preds = %_ZNK4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEE9getLengthEv.exit.i.i.thread, %bb.h, %_ZNK4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEE9getLengthEv.exit.i.i, %._crit_edge.i.i
-  %.sroa.12.1 = phi i8 [ 0, %bb.h ], [ 0, %_ZNK4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEE9getLengthEv.exit.i.i ], [ 1, %._crit_edge.i.i ], [ 1, %_ZNK4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEE9getLengthEv.exit.i.i.thread ]
+  %.sroa.12.1 = phi i8 [ 0, %bb.h ], [ %.sroa.12.16.copyload, %_ZNK4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEE9getLengthEv.exit.i.i ], [ 1, %._crit_edge.i.i ], [ 1, %_ZNK4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEE9getLengthEv.exit.i.i.thread ]
   %.sroa.10.0 = phi i64 [ 0, %bb.h ], [ %.sroa.10.16.copyload, %_ZNK4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEE9getLengthEv.exit.i.i ], [ %i.eu, %._crit_edge.i.i ], [ %.sroa.10.16.copyload, %_ZNK4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEE9getLengthEv.exit.i.i.thread ]
   %.sroa.5224.0 = phi ptr [ null, %bb.h ], [ %i.dp, %_ZNK4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEE9getLengthEv.exit.i.i ], [ %i.dp, %._crit_edge.i.i ], [ %i.dp, %_ZNK4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEE9getLengthEv.exit.i.i.thread ] ; 9 uses
   %i.ev = phi <2 x ptr> [ splat (ptr null), %bb.h ], [ %i.dq, %_ZNK4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEE9getLengthEv.exit.i.i ], [ %i.dq, %._crit_edge.i.i ], [ %i.dq, %_ZNK4llvm19BinaryStreamRefBaseINS_23WritableBinaryStreamRefENS_20WritableBinaryStreamEE9getLengthEv.exit.i.i.thread ]
