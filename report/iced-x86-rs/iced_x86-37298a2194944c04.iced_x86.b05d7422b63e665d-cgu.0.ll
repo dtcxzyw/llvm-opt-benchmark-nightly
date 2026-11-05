@@ -205,10 +205,10 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 68
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 69
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 458
-  %2 = load <2 x i8>, ptr %i.e, align 1
-  %3 = load <2 x i8>, ptr %i.h, align 2
-  %4 = shufflevector <2 x i8> %2, <2 x i8> %3, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
-  store <4 x i8> %4, ptr %i.f, align 4
+  %2 = load <1 x i16>, ptr %i.e, align 1
+  %3 = load <1 x i16>, ptr %i.h, align 2
+  %4 = shufflevector <1 x i16> %2, <1 x i16> %3, <2 x i32> <i32 0, i32 1>
+  store <2 x i16> %4, ptr %i.f, align 4
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 392 ; 6 uses
   %i.j = load i64, ptr %i.i, align 8, !noundef !21 ; 8 uses
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 416

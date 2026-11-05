@@ -205,9 +205,9 @@ bb.n:                                             ; preds = %bb.m
   br label %bb.p
 
 bb.o:                                             ; preds = %bb.m
-  %3 = load <2 x i32>, ptr %i.ai, align 4
-  %4 = shufflevector <2 x i32> %3, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x i32> %4, ptr %i.n, align 16
+  %3 = load <1 x i64>, ptr %i.ai, align 4
+  %4 = shufflevector <1 x i64> %3, <1 x i64> poison, <2 x i32> zeroinitializer
+  store <2 x i64> %4, ptr %i.n, align 16
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %bb.n

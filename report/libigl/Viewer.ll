@@ -205,9 +205,9 @@ define linkonce_odr dso_local noundef zeroext i1 @_ZN3igl9serializeIN5Eigen10Qua
   %i.a = alloca i64, align 8                      ; 5 uses
   %3 = alloca %"class.std::__cxx11::basic_string", align 8 ; 12 uses
   %i.b = tail call noalias noundef nonnull dereferenceable(16) ptr @_Znwm(i64 noundef 16) #36 ; 4 uses
-  %4 = load <16 x i8>, ptr %0, align 16, !tbaa !138
-  %5 = shufflevector <16 x i8> %4, <16 x i8> poison, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11>
-  store <16 x i8> %5, ptr %i.b, align 1, !tbaa !138
+  %4 = load <4 x i32>, ptr %0, align 16, !tbaa !138
+  %5 = shufflevector <4 x i32> %4, <4 x i32> poison, <4 x i32> <i32 3, i32 0, i32 1, i32 2>
+  store <4 x i32> %5, ptr %i.b, align 1, !tbaa !138
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #30
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 6 uses
   store ptr %i.c, ptr %3, align 8, !tbaa !154
@@ -610,9 +610,9 @@ bb.g:                                             ; preds = %._crit_edge
   ret i1 %.lcssa67145
 
 .rtvec:                                           ; preds = %bb.g
-  %7 = load <16 x i8>, ptr %.sroa.048.1, align 1, !tbaa !138
-  %8 = shufflevector <16 x i8> %7, <16 x i8> poison, <16 x i32> <i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 0, i32 1, i32 2, i32 3>
-  store <16 x i8> %8, ptr %0, align 16, !tbaa !138
+  %7 = load <4 x i32>, ptr %.sroa.048.1, align 1, !tbaa !138
+  %8 = shufflevector <4 x i32> %7, <4 x i32> poison, <4 x i32> <i32 1, i32 2, i32 3, i32 0>
+  store <4 x i32> %8, ptr %0, align 16, !tbaa !138
   br label %._crit_edge.thread
 
 .rtscalar:                                        ; preds = %bb.g

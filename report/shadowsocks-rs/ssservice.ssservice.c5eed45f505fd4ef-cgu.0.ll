@@ -205,12 +205,12 @@ bb.a:
   %.sroa.6.sroa.0.sroa.10.sroa.7.0..sroa.6.sroa.0.sroa.10.0..sroa.6.0..sroa_idx.sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 9371
   %.sroa.6.sroa.0.sroa.10.sroa.8.0..sroa.6.sroa.0.sroa.10.0..sroa.6.0..sroa_idx.sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 9372
   %.sroa.6.sroa.0.sroa.10.sroa.9.0..sroa.6.sroa.0.sroa.10.0..sroa.6.0..sroa_idx.sroa_idx.sroa_idx.i = getelementptr inbounds nuw i8, ptr %1, i64 9373
-  %5 = load <4 x i8>, ptr %.sroa.6.0..sroa_idx.i, align 2, !alias.scope !3648
+  %5 = load <1 x i32>, ptr %.sroa.6.0..sroa_idx.i, align 2, !alias.scope !3648
   %.sroa.6.sroa.0.sroa.7.0.copyload.i = load i8, ptr %.sroa.6.sroa.0.sroa.7.0..sroa.6.0..sroa_idx.sroa_idx.i, align 1, !alias.scope !3648
   %.sroa.6.sroa.0.sroa.6.0.copyload.i = load i8, ptr %.sroa.6.sroa.0.sroa.6.0..sroa.6.0..sroa_idx.sroa_idx.i, align 4, !alias.scope !3648
   %.sroa.6.sroa.0.sroa.5.0.copyload.i = load i8, ptr %.sroa.6.sroa.0.sroa.5.0..sroa.6.0..sroa_idx.sroa_idx.i, align 1, !alias.scope !3648
   %.sroa.6.sroa.0.sroa.0.0.copyload.i = load i8, ptr %.sroa.6.0..sroa_idx.i, align 2, !alias.scope !3648
-  %6 = load <4 x i8>, ptr %.sroa.6.sroa.0.sroa.10.sroa.6.0..sroa.6.sroa.0.sroa.10.0..sroa.6.0..sroa_idx.sroa_idx.sroa_idx.i, align 2, !alias.scope !3648
+  %6 = load <1 x i32>, ptr %.sroa.6.sroa.0.sroa.10.sroa.6.0..sroa.6.sroa.0.sroa.10.0..sroa.6.0..sroa_idx.sroa_idx.sroa_idx.i, align 2, !alias.scope !3648
   %.sroa.6.sroa.0.sroa.10.sroa.9.0.copyload.i = load i8, ptr %.sroa.6.sroa.0.sroa.10.sroa.9.0..sroa.6.sroa.0.sroa.10.0..sroa.6.0..sroa_idx.sroa_idx.sroa_idx.i, align 1, !alias.scope !3648
   %.sroa.6.sroa.0.sroa.10.sroa.8.0.copyload.i = load i8, ptr %.sroa.6.sroa.0.sroa.10.sroa.8.0..sroa.6.sroa.0.sroa.10.0..sroa.6.0..sroa_idx.sroa_idx.sroa_idx.i, align 4, !alias.scope !3648
   %.sroa.6.sroa.0.sroa.10.sroa.7.0.copyload.i = load i8, ptr %.sroa.6.sroa.0.sroa.10.sroa.7.0..sroa.6.sroa.0.sroa.10.0..sroa.6.0..sroa_idx.sroa_idx.sroa_idx.i, align 1, !alias.scope !3648
@@ -385,8 +385,8 @@ bb.j:                                             ; preds = %bb.l, %bb.i, %bb.e
   %i.bk = getelementptr inbounds nuw i8, ptr %i.ag, i64 1
   store i8 %.sroa.6.sroa.0.sroa.10.sroa.5.0.copyload.i, ptr %i.bk, align 1, !noalias !3650
   %i.bl = getelementptr inbounds nuw i8, ptr %i.ag, i64 2
-  %7 = shufflevector <4 x i8> %6, <4 x i8> %5, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  store <8 x i8> %7, ptr %i.bl, align 1, !noalias !3650
+  %7 = shufflevector <1 x i32> %6, <1 x i32> %5, <2 x i32> <i32 0, i32 1>
+  store <2 x i32> %7, ptr %i.bl, align 1, !noalias !3650
   %i.bm = getelementptr inbounds nuw i8, ptr %i.ag, i64 10
   store i8 %.sroa.6.sroa.0.sroa.8.0.copyload.i, ptr %i.bm, align 1, !noalias !3650
   %i.bn = getelementptr inbounds nuw i8, ptr %i.ag, i64 11
@@ -789,9 +789,9 @@ bb.l:                                             ; preds = %bb.j, %bb.i, %bb.h,
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i32 1, ptr %0, align 4
   %.sroa.441.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %2 = load <2 x i32>, ptr %i.am, align 8
-  %3 = shufflevector <2 x i32> %2, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x i32> %3, ptr %.sroa.441.0..sroa_idx, align 4
+  %2 = load <1 x i64>, ptr %i.am, align 8
+  %3 = shufflevector <1 x i64> %2, <1 x i64> poison, <2 x i32> zeroinitializer
+  store <2 x i64> %3, ptr %.sroa.441.0..sroa_idx, align 4
   br label %bb.t
 
 bb.m:                                             ; preds = %bb.k
@@ -1045,9 +1045,9 @@ bb.l:                                             ; preds = %bb.j, %bb.i, %bb.h,
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i32 1, ptr %0, align 4
   %.sroa.441.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %2 = load <2 x i32>, ptr %i.al, align 8
-  %3 = shufflevector <2 x i32> %2, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x i32> %3, ptr %.sroa.441.0..sroa_idx, align 4
+  %2 = load <1 x i64>, ptr %i.al, align 8
+  %3 = shufflevector <1 x i64> %2, <1 x i64> poison, <2 x i32> zeroinitializer
+  store <2 x i64> %3, ptr %.sroa.441.0..sroa_idx, align 4
   br label %bb.t
 
 bb.m:                                             ; preds = %bb.k
@@ -1295,9 +1295,9 @@ bb.l:                                             ; preds = %bb.j, %bb.i, %bb.h,
   %i.am = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i32 1, ptr %0, align 4
   %.sroa.441.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %2 = load <2 x i32>, ptr %i.am, align 8
-  %3 = shufflevector <2 x i32> %2, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x i32> %3, ptr %.sroa.441.0..sroa_idx, align 4
+  %2 = load <1 x i64>, ptr %i.am, align 8
+  %3 = shufflevector <1 x i64> %2, <1 x i64> poison, <2 x i32> zeroinitializer
+  store <2 x i64> %3, ptr %.sroa.441.0..sroa_idx, align 4
   br label %bb.t
 
 bb.m:                                             ; preds = %bb.k

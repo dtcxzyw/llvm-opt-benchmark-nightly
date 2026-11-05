@@ -204,9 +204,9 @@ bb.dw:                                            ; preds = %bb.dv
   %i.zu = sub nsw i32 %i.zr, %i.zt
   %i.zv = load i32, ptr %i.zo, align 8, !tbaa !96
   tail call fastcc void @mpeg1_encode_motion(ptr noundef nonnull %0, i32 noundef %i.zu, i32 noundef %i.zv)
-  %4 = load <2 x i32>, ptr %i.zj, align 16, !tbaa !79
-  %5 = shufflevector <2 x i32> %4, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x i32> %5, ptr %i.zl, align 16, !tbaa !79
+  %4 = load <1 x i64>, ptr %i.zj, align 16, !tbaa !79
+  %5 = shufflevector <1 x i64> %4, <1 x i64> poison, <2 x i32> zeroinitializer
+  store <2 x i64> %5, ptr %i.zl, align 16, !tbaa !79
   %.pre287 = load i32, ptr %i.zg, align 8, !tbaa !187
   br label %bb.dx
 
@@ -232,9 +232,9 @@ bb.dy:                                            ; preds = %bb.dx
   %i.aaj = sub nsw i32 %i.aag, %i.aai
   %i.aak = load i32, ptr %i.aad, align 4, !tbaa !97
   tail call fastcc void @mpeg1_encode_motion(ptr noundef nonnull %0, i32 noundef %i.aaj, i32 noundef %i.aak)
-  %6 = load <2 x i32>, ptr %i.zy, align 16, !tbaa !79
-  %7 = shufflevector <2 x i32> %6, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x i32> %7, ptr %i.aaa, align 16, !tbaa !79
+  %6 = load <1 x i64>, ptr %i.zy, align 16, !tbaa !79
+  %7 = shufflevector <1 x i64> %6, <1 x i64> poison, <2 x i32> zeroinitializer
+  store <2 x i64> %7, ptr %i.aaa, align 16, !tbaa !79
   br label %.loopexit
 
 bb.dz:                                            ; preds = %bb.dk
@@ -637,9 +637,9 @@ bb.ko:                                            ; preds = %bb.kn
   %i.blw = sub nsw i32 %i.blt, %i.blv
   %i.blx = load i32, ptr %i.blq, align 8, !tbaa !96
   tail call fastcc void @mpeg1_encode_motion(ptr noundef nonnull %0, i32 noundef %i.blw, i32 noundef %i.blx)
-  %8 = load <2 x i32>, ptr %i.bll, align 16, !tbaa !79
-  %9 = shufflevector <2 x i32> %8, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x i32> %9, ptr %i.bln, align 16, !tbaa !79
+  %8 = load <1 x i64>, ptr %i.bll, align 16, !tbaa !79
+  %9 = shufflevector <1 x i64> %8, <1 x i64> poison, <2 x i32> zeroinitializer
+  store <2 x i64> %9, ptr %i.bln, align 16, !tbaa !79
   %.pre285 = load i32, ptr %i.bli, align 8, !tbaa !187
   br label %bb.kp
 
@@ -665,9 +665,9 @@ bb.kq:                                            ; preds = %bb.kp
   %i.bml = sub nsw i32 %i.bmi, %i.bmk
   %i.bmm = load i32, ptr %i.bmf, align 4, !tbaa !97
   tail call fastcc void @mpeg1_encode_motion(ptr noundef nonnull %0, i32 noundef %i.bml, i32 noundef %i.bmm)
-  %10 = load <2 x i32>, ptr %i.bma, align 16, !tbaa !79
-  %11 = shufflevector <2 x i32> %10, <2 x i32> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
-  store <4 x i32> %11, ptr %i.bmc, align 16, !tbaa !79
+  %10 = load <1 x i64>, ptr %i.bma, align 16, !tbaa !79
+  %11 = shufflevector <1 x i64> %10, <1 x i64> poison, <2 x i32> zeroinitializer
+  store <2 x i64> %11, ptr %i.bmc, align 16, !tbaa !79
   br label %.loopexit257
 
 bb.kr:                                            ; preds = %bb.kc
