@@ -205,7 +205,7 @@ _ZN7V3Error10v3errorStrB5cxx11Ev.exit336:         ; preds = %bb.cj, %bb.ck, %bb.
   call void @_ZNK7AstNode10v3errorEndERKNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(152) %i.cn, ptr noundef nonnull align 8 dereferenceable(112) %i.oo)
   br label %bb.co
 
-bb.co:                                            ; preds = %_ZN7V3Error10v3errorStrB5cxx11Ev.exit336, %bb.ci, %bb.ch, %bb.cg
+bb.co:                                            ; preds = %bb.ci, %_ZN7V3Error10v3errorStrB5cxx11Ev.exit336, %bb.ch, %bb.cg
   %i.oq = call noundef zeroext i1 @_ZN12LinkDotState14repairIfaceRefEP7VSymEntP6AstVarP16AstIfaceRefDTypeb(ptr noundef nonnull align 8 dereferenceable(344) %0, ptr noundef %i.ca, ptr noundef nonnull %i.cn, ptr noundef nonnull %.01346.i, i1 noundef zeroext true)
   br i1 %i.oq, label %.critedge, label %bb.cp
 
@@ -608,7 +608,7 @@ _ZN7AstNode2asI13AstNodeModuleS_EEPT_PT0_.exit:   ; preds = %bb.bc, %.lr.ph
 bb.h:                                             ; preds = %_ZN7AstNode2asI13AstNodeModuleS_EEPT_PT0_.exit
   %i.ar = call noundef i32 @_ZL5debugv()
   %i.as = icmp sgt i32 %i.ar, 7
-  br i1 %i.as, label %bb.i, label %12, !prof !69
+  br i1 %i.as, label %bb.i, label %bb.y, !prof !69
 
 bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #26
@@ -778,7 +778,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit96: ; preds = %_ZS
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #26
   call void @_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev(ptr noundef nonnull align 8 dereferenceable(112) %2) #26
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #26
-  br label %12
+  br label %bb.y
 
 bb.v:                                             ; preds = %bb.t
   %i.cm = landingpad { ptr, i32 }
@@ -809,21 +809,19 @@ bb.x:                                             ; preds = %_ZNSt7__cxx1112basi
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #26
   br label %common.resume
 
-12:                                               ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit96, %bb.h
-  %13 = load i64, ptr %i.x, align 8, !tbaa !75
-  %14 = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.w, i64 noundef 0, i64 noundef %13, ptr noundef nonnull @.str.56, i64 noundef 3) ; 0 uses
-  %15 = load ptr, ptr %i.c, align 8, !tbaa !206   ; 4 uses
-  %16 = getelementptr inbounds nuw i8, ptr %15, i64 336
-  %17 = load i8, ptr %16, align 8, !tbaa !187
-  %spec.select.i = icmp ult i8 %17, 2
-  br i1 %spec.select.i, label %bb.y, label %.loopexit
-
-bb.y:                                             ; preds = %12
-  %i.cs = load i8, ptr getelementptr inbounds nuw (i8, ptr @v3Global, i64 992), align 8, !tbaa !278, !range !144, !noundef !145
+bb.y:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit96, %bb.h
+  %12 = load i64, ptr %i.x, align 8, !tbaa !75
+  %13 = call noundef nonnull align 8 dereferenceable(32) ptr @_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm(ptr noundef nonnull align 8 dereferenceable(32) %i.w, i64 noundef 0, i64 noundef %12, ptr noundef nonnull @.str.56, i64 noundef 3) ; 0 uses
+  %14 = load ptr, ptr %i.c, align 8, !tbaa !206   ; 3 uses
+  %15 = getelementptr inbounds nuw i8, ptr %14, i64 336
+  %16 = load i8, ptr %15, align 8, !tbaa !187
+  %spec.select.i = icmp ult i8 %16, 2
+  %i.cs = load i8, ptr getelementptr inbounds nuw (i8, ptr @v3Global, i64 992), align 8, !range !144
   %i.ct = trunc nuw i8 %i.cs to i1
+  %or.cond = select i1 %spec.select.i, i1 %i.ct, i1 false
   %i.cu = load i8, ptr getelementptr inbounds nuw (i8, ptr @v3Global, i64 989), align 1, !range !144
   %i.cv = trunc nuw i8 %i.cu to i1
-  %not. = xor i1 %i.ct, true
+  %not. = xor i1 %or.cond, true
   %i.cw = select i1 %not., i1 true, i1 %i.cv
   br i1 %i.cw, label %.loopexit, label %bb.z
 
@@ -1226,9 +1224,9 @@ _ZN9VNDeleter11pushDeletepEP7AstNode.exit:        ; preds = %_ZN7AstNode2isI16As
   %.pre307 = load ptr, ptr %i.c, align 8, !tbaa !206
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.z, %bb.y, %12
-  %18 = phi ptr [ %.pre307, %.loopexit.loopexit ], [ %15, %bb.z ], [ %15, %bb.y ], [ %15, %12 ]
-  %i.jv = call noundef ptr @_ZN12LinkDotState13insertTopCellEP13AstNodeModuleRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(344) %18, ptr noundef nonnull %.059279, ptr noundef nonnull align 8 dereferenceable(32) %i.w) ; 2 uses
+.loopexit:                                        ; preds = %.loopexit.loopexit, %bb.z, %bb.y
+  %17 = phi ptr [ %.pre307, %.loopexit.loopexit ], [ %14, %bb.z ], [ %14, %bb.y ]
+  %i.jv = call noundef ptr @_ZN12LinkDotState13insertTopCellEP13AstNodeModuleRKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(344) %17, ptr noundef nonnull %.059279, ptr noundef nonnull align 8 dereferenceable(32) %i.w) ; 2 uses
   store ptr %i.jv, ptr %i.aj, align 8, !tbaa !422
   store ptr %i.jv, ptr %i.ak, align 8, !tbaa !419
   %i.jw = load ptr, ptr %.059279, align 8, !tbaa !52

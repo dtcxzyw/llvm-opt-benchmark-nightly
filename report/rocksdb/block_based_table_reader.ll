@@ -205,9 +205,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.e = icmp eq i32 %i.d, 1
   %i.f = getelementptr inbounds nuw i8, ptr %3, i64 73
   %i.g = load i8, ptr %i.f, align 1, !range !119
-  %9 = trunc nuw i8 %i.g to i1
-  %10 = xor i1 %9, true
-  %11 = select i1 %i.e, i1 true, i1 %10           ; 2 uses
+  %9 = xor i8 %i.g, 1
+  %10 = select i1 %i.e, i8 1, i8 %9               ; 2 uses
   %i.h = load i8, ptr %5, align 8, !tbaa !521
   %i.i = tail call noundef zeroext i1 @_ZN7rocksdb21BlockCacheTraceHelper26IsGetOrMultiGetOnDataBlockENS_9TraceTypeENS_17TableReaderCallerE(i8 noundef signext 10, i8 noundef signext %i.h)
   br i1 %i.i, label %bb.d, label %bb.g
@@ -216,11 +215,10 @@ bb.d:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #38
   call void @_ZNK7rocksdb5Slice8ToStringB5cxx11Eb(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %6, ptr noundef nonnull align 8 dereferenceable(16) %1, i1 noundef zeroext false)
   %i.j = zext i1 %2 to i8
-  %12 = zext i1 %11 to i8
   %i.k = getelementptr inbounds nuw i8, ptr %5, i64 1
   store i8 %i.j, ptr %i.k, align 1, !tbaa !522
   %i.l = getelementptr inbounds nuw i8, ptr %5, i64 2
-  store i8 %12, ptr %i.l, align 2, !tbaa !523
+  store i8 %10, ptr %i.l, align 2, !tbaa !523
   %i.m = getelementptr inbounds nuw i8, ptr %5, i64 3
   store i8 10, ptr %i.m, align 1, !tbaa !513
   %i.n = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -273,11 +271,10 @@ bb.g:                                             ; preds = %bb.c
   store i64 0, ptr %i.ac, align 8, !tbaa !361
   store i8 0, ptr %i.ab, align 8, !tbaa !96
   %i.ad = zext i1 %2 to i8
-  %13 = zext i1 %11 to i8
   %i.ae = getelementptr inbounds nuw i8, ptr %5, i64 1
   store i8 %i.ad, ptr %i.ae, align 1, !tbaa !522
   %i.af = getelementptr inbounds nuw i8, ptr %5, i64 2
-  store i8 %13, ptr %i.af, align 2, !tbaa !523
+  store i8 %10, ptr %i.af, align 2, !tbaa !523
   %i.ag = getelementptr inbounds nuw i8, ptr %5, i64 3
   store i8 10, ptr %i.ag, align 1, !tbaa !513
   %i.ah = getelementptr inbounds nuw i8, ptr %5, i64 8

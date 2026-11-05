@@ -205,19 +205,16 @@ _ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i: ; preds = %bb.i
 _ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIbLj3EEELj4EEELj5EEEE9findCoordERKNS0_4math5CoordE.exit: ; preds = %bb.i, %bb.g, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i
   %i.as = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i, i64 48 ; 2 uses
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !502 ; 2 uses
-  %i.au = icmp eq ptr %i.at, null                 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i, i64 57
-  %4 = load i8, ptr %3, align 1, !range !125
-  %5 = trunc nuw i8 %4 to i1                      ; 2 uses
-  %not. = xor i1 %i.au, true
-  %6 = select i1 %not., i1 true, i1 %5
-  br i1 %6, label %bb.j, label %.critedge
+  %i.au = icmp eq ptr %i.at, null
+  br i1 %i.au, label %bb.j, label %bb.k
 
 bb.j:                                             ; preds = %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIbLj3EEELj4EEELj5EEEE9findCoordERKNS0_4math5CoordE.exit
-  %7 = select i1 %i.au, i1 %5, i1 false
-  br i1 %7, label %.critedge, label %bb.k
+  %3 = getelementptr inbounds nuw i8, ptr %.19.i.i.i.i, i64 57
+  %4 = load i8, ptr %3, align 1, !tbaa !1181, !range !125, !noundef !126
+  %5 = trunc nuw i8 %4 to i1
+  br label %.critedge
 
-bb.k:                                             ; preds = %bb.j
+bb.k:                                             ; preds = %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIbLj3EEELj4EEELj5EEEE9findCoordERKNS0_4math5CoordE.exit
   %i.av = and i32 %i.p, -4096
   %i.aw = and i32 %i.b, -4096
   %i.ax = and i32 %i.g, -4096
@@ -232,7 +229,7 @@ bb.k:                                             ; preds = %bb.j
   store i32 %i.ax, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !207
   %i.ba = getelementptr inbounds nuw i8, ptr %2, i64 64
   store ptr %i.at, ptr %i.ba, align 8, !tbaa !499
-  %i.bb = load ptr, ptr %i.as, align 8, !tbaa !1182 ; 3 uses
+  %i.bb = load ptr, ptr %i.as, align 8, !tbaa !1183 ; 3 uses
   %i.bc = load i32, ptr %1, align 4, !tbaa !298   ; 2 uses
   %i.bd = shl i32 %i.bc, 3
   %i.be = and i32 %i.bd, 31744
@@ -349,8 +346,8 @@ _ZNK7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIbLj3EEELj4EEELj5EE17isV
   %.0.i = icmp ne i64 %.0.in.i, 0
   br label %.critedge
 
-.critedge:                                        ; preds = %bb.h, %bb.f, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i, %_ZNKSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIbLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE14_M_lower_boundEPKSt13_Rb_tree_nodeISF_EPKSt18_Rb_tree_node_baseRS5_.exit.i.i.i, %bb.a, %bb.j, %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIbLj3EEELj4EEELj5EEEE9findCoordERKNS0_4math5CoordE.exit, %_ZNK7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIbLj3EEELj4EEELj5EE17isValueOnAndCacheIKNS1_17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeIS6_EEEELb0EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEEEEbRKNS0_4math5CoordERT_.exit
-  %.0 = phi i1 [ %.0.i, %_ZNK7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIbLj3EEELj4EEELj5EE17isValueOnAndCacheIKNS1_17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeIS6_EEEELb0EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEEEEbRKNS0_4math5CoordERT_.exit ], [ false, %_ZNK7openvdb5v13_04tree8RootNodeINS1_12InternalNodeINS3_INS1_8LeafNodeIbLj3EEELj4EEELj5EEEE9findCoordERKNS0_4math5CoordE.exit ], [ true, %bb.j ], [ false, %bb.h ], [ false, %bb.a ], [ false, %_ZNKSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIbLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE14_M_lower_boundEPKSt13_Rb_tree_nodeISF_EPKSt18_Rb_tree_node_baseRS5_.exit.i.i.i ], [ false, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i ], [ false, %bb.f ]
+.critedge:                                        ; preds = %bb.j, %bb.h, %bb.f, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i, %_ZNKSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIbLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE14_M_lower_boundEPKSt13_Rb_tree_nodeISF_EPKSt18_Rb_tree_node_baseRS5_.exit.i.i.i, %bb.a, %_ZNK7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIbLj3EEELj4EEELj5EE17isValueOnAndCacheIKNS1_17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeIS6_EEEELb0EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEEEEbRKNS0_4math5CoordERT_.exit
+  %.0 = phi i1 [ %.0.i, %_ZNK7openvdb5v13_04tree12InternalNodeINS2_INS1_8LeafNodeIbLj3EEELj4EEELj5EE17isValueOnAndCacheIKNS1_17ValueAccessorImplIKNS1_4TreeINS1_8RootNodeIS6_EEEELb0EvNS0_14index_sequenceIJLm0ELm1ELm2EEEEEEEEbRKNS0_4math5CoordERT_.exit ], [ %5, %bb.j ], [ false, %bb.f ], [ false, %bb.h ], [ false, %bb.a ], [ false, %_ZNKSt8_Rb_treeIN7openvdb5v13_04math5CoordESt4pairIKS3_NS1_4tree8RootNodeINS6_12InternalNodeINS8_INS6_8LeafNodeIbLj3EEELj4EEELj5EEEE10NodeStructEESt10_Select1stISF_ESt4lessIS3_ESaISF_EE14_M_lower_boundEPKSt13_Rb_tree_nodeISF_EPKSt18_Rb_tree_node_baseRS5_.exit.i.i.i ], [ false, %_ZNKSt4lessIN7openvdb5v13_04math5CoordEEclERKS3_S6_.exit.i.i.i ]
   ret i1 %.0
 }
 
@@ -488,7 +485,7 @@ bb.d:                                             ; preds = %bb.c
   %i.i = load ptr, ptr %i.g, align 8, !tbaa !100
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %i.k = load ptr, ptr %i.j, align 8
-  tail call void %i.k(ptr noundef nonnull align 8 dereferenceable(1232) %i.g) #17, !inline_history !1183
+  tail call void %i.k(ptr noundef nonnull align 8 dereferenceable(1232) %i.g) #17, !inline_history !1184
   br label %_ZNKSt14default_deleteIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEEEclEPSJ_.exit.i
 
 _ZNKSt14default_deleteIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEEEclEPSJ_.exit.i: ; preds = %bb.d, %bb.c, %bb.b
@@ -516,7 +513,7 @@ bb.g:                                             ; preds = %bb.f
   %i.s = load ptr, ptr %i.q, align 8, !tbaa !100
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 8
   %i.u = load ptr, ptr %i.t, align 8
-  tail call void %i.u(ptr noundef nonnull align 8 dereferenceable(1232) %i.q) #17, !inline_history !1183
+  tail call void %i.u(ptr noundef nonnull align 8 dereferenceable(1232) %i.q) #17, !inline_history !1184
   br label %_ZNKSt14default_deleteIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEEEclEPSJ_.exit.i2
 
 _ZNKSt14default_deleteIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEEEclEPSJ_.exit.i2: ; preds = %bb.g, %bb.f, %bb.e
@@ -578,7 +575,7 @@ bb.d:                                             ; preds = %bb.c
   %i.j = load ptr, ptr %i.h, align 8, !tbaa !100
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.l = load ptr, ptr %i.k, align 8
-  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(1232) %i.h) #17, !inline_history !1184
+  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(1232) %i.h) #17, !inline_history !1185
   br label %_ZNKSt14default_deleteIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEEEclEPSJ_.exit.i.i
 
 _ZNKSt14default_deleteIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEEEclEPSJ_.exit.i.i: ; preds = %bb.d, %bb.c, %bb.b
@@ -606,7 +603,7 @@ bb.g:                                             ; preds = %bb.f
   %i.t = load ptr, ptr %i.r, align 8, !tbaa !100
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.v = load ptr, ptr %i.u, align 8
-  tail call void %i.v(ptr noundef nonnull align 8 dereferenceable(1232) %i.r) #17, !inline_history !1184
+  tail call void %i.v(ptr noundef nonnull align 8 dereferenceable(1232) %i.r) #17, !inline_history !1185
   br label %_ZNKSt14default_deleteIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEEEclEPSJ_.exit.i2.i
 
 _ZNKSt14default_deleteIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEEEclEPSJ_.exit.i2.i: ; preds = %bb.g, %bb.f, %bb.e
@@ -668,11 +665,11 @@ bb.d:                                             ; preds = %bb.c
   %i.j = load ptr, ptr %i.h, align 8, !tbaa !100
   %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 8
   %i.l = load ptr, ptr %i.k, align 8
-  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(1232) %i.h) #17, !inline_history !1185
+  tail call void %i.l(ptr noundef nonnull align 8 dereferenceable(1232) %i.h) #17, !inline_history !1186
   br label %_ZNKSt14default_deleteIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEEEclEPSJ_.exit.i.i.i
 
 _ZNKSt14default_deleteIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEEEclEPSJ_.exit.i.i.i: ; preds = %bb.d, %bb.c, %bb.b
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.d, i64 noundef 496) #25, !inline_history !1186
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.d, i64 noundef 496) #25, !inline_history !1187
   br label %_ZNSt10unique_ptrIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEESt14default_deleteISJ_EED2Ev.exit.i.i
 
 _ZNSt10unique_ptrIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEESt14default_deleteISJ_EED2Ev.exit.i.i: ; preds = %_ZNKSt14default_deleteIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEEEclEPSJ_.exit.i.i.i, %bb.a
@@ -696,11 +693,11 @@ bb.g:                                             ; preds = %bb.f
   %i.t = load ptr, ptr %i.r, align 8, !tbaa !100
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 8
   %i.v = load ptr, ptr %i.u, align 8
-  tail call void %i.v(ptr noundef nonnull align 8 dereferenceable(1232) %i.r) #17, !inline_history !1185
+  tail call void %i.v(ptr noundef nonnull align 8 dereferenceable(1232) %i.r) #17, !inline_history !1186
   br label %_ZNKSt14default_deleteIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEEEclEPSJ_.exit.i2.i.i
 
 _ZNKSt14default_deleteIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEEEclEPSJ_.exit.i2.i.i: ; preds = %bb.g, %bb.f, %bb.e
-  tail call void @_ZdlPvm(ptr noundef nonnull %i.n, i64 noundef 496) #25, !inline_history !1186
+  tail call void @_ZdlPvm(ptr noundef nonnull %i.n, i64 noundef 496) #25, !inline_history !1187
   br label %_ZNSt10unique_ptrIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEESt14default_deleteISJ_EED2Ev.exit3.i.i
 
 _ZNSt10unique_ptrIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEESt14default_deleteISJ_EED2Ev.exit3.i.i: ; preds = %_ZNKSt14default_deleteIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEEEclEPSJ_.exit.i2.i.i, %_ZNSt10unique_ptrIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEESt14default_deleteISJ_EED2Ev.exit.i.i
@@ -715,7 +712,7 @@ bb.h:                                             ; preds = %_ZNSt10unique_ptrIN
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #17
   store ptr %i.b, ptr %i.a, align 8, !tbaa !169
   %i.z = invoke noundef zeroext i1 @_ZN3tbb6detail2d219concurrent_hash_mapIPN7openvdb5v13_04tree17ValueAccessorBaseIKNS5_4TreeINS5_8RootNodeINS5_12InternalNodeINS9_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EEEbNS0_2d116tbb_hash_compareISI_EENSJ_13tbb_allocatorISt4pairIKSI_bEEEE14internal_eraseISI_EEbRKT_(ptr noundef nonnull align 8 dereferenceable(570) %i.y, ptr noundef nonnull align 8 dereferenceable(8) %i.a)
-          to label %_ZNK7openvdb5v13_04tree4TreeINS1_8RootNodeINS1_12InternalNodeINS4_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEEEE15releaseAccessorERNS1_17ValueAccessorBaseIKSA_Lb1EEE.exit.i.i.i unwind label %bb.i, !inline_history !1187 ; 0 uses
+          to label %_ZNK7openvdb5v13_04tree4TreeINS1_8RootNodeINS1_12InternalNodeINS4_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEEEE15releaseAccessorERNS1_17ValueAccessorBaseIKSA_Lb1EEE.exit.i.i.i unwind label %bb.i, !inline_history !1188 ; 0 uses
 
 _ZNK7openvdb5v13_04tree4TreeINS1_8RootNodeINS1_12InternalNodeINS4_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEEEE15releaseAccessorERNS1_17ValueAccessorBaseIKSA_Lb1EEE.exit.i.i.i: ; preds = %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #17
@@ -725,7 +722,7 @@ bb.i:                                             ; preds = %bb.h
   %i.aa = landingpad { ptr, i32 }
           catch ptr null
   %i.ab = extractvalue { ptr, i32 } %i.aa, 0
-  call void @__clang_call_terminate(ptr %i.ab) #26, !inline_history !1187
+  call void @__clang_call_terminate(ptr %i.ab) #26, !inline_history !1188
   unreachable
 
 _ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools12VolumeRenderINS7_20VolumeRayIntersectorINS6_4GridINS6_4tree4TreeINSB_8RootNodeINSB_12InternalNodeINSE_INSB_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS6_4math3RayIdEEEENS7_10BoxSamplerEEEKNS1_16auto_partitionerEED2Ev.exit: ; preds = %_ZNSt10unique_ptrIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEESt14default_deleteISJ_EED2Ev.exit3.i.i, %_ZNK7openvdb5v13_04tree4TreeINS1_8RootNodeINS1_12InternalNodeINS4_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEEEE15releaseAccessorERNS1_17ValueAccessorBaseIKSA_Lb1EEE.exit.i.i.i
@@ -933,7 +930,7 @@ _ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit: ; preds = %bb.b, %b
 _ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit11: ; preds = %_ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit11.backedge, %_ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
   store ptr null, ptr %4, align 8, !tbaa !248
-  %i.u = call noundef ptr @_ZN3tbb6detail2r18allocateERPNS0_2d117small_object_poolEmRKNS2_14execution_dataE(ptr noundef nonnull align 8 dereferenceable(8) %4, i64 noundef 384, ptr noundef nonnull align 8 dereferenceable(12) %3), !inline_history !1188 ; 12 uses
+  %i.u = call noundef ptr @_ZN3tbb6detail2r18allocateERPNS0_2d117small_object_poolEmRKNS2_14execution_dataE(ptr noundef nonnull align 8 dereferenceable(8) %4, i64 noundef 384, ptr noundef nonnull align 8 dereferenceable(12) %3), !inline_history !1189 ; 12 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.v, i8 0, i64 56, i1 false)
   store ptr getelementptr inbounds nuw inrange(-16, 32) (i8, ptr @_ZTVN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools12VolumeRenderINS7_20VolumeRayIntersectorINS6_4GridINS6_4tree4TreeINSB_8RootNodeINSB_12InternalNodeINSE_INSB_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS6_4math3RayIdEEEENS7_10BoxSamplerEEEKNS1_16auto_partitionerEEE, i64 16), ptr %i.u, align 64, !tbaa !100
@@ -951,7 +948,7 @@ _ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit11: ; preds = %_ZN3tb
   %i.ae = load i64, ptr %i.p, align 16, !tbaa !124
   store i64 %i.ae, ptr %i.ad, align 16, !tbaa !124
   %i.af = getelementptr inbounds nuw i8, ptr %i.u, i64 88
-  call void @_ZN7openvdb5v13_05tools12VolumeRenderINS1_20VolumeRayIntersectorINS0_4GridINS0_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS0_4math3RayIdEEEENS1_10BoxSamplerEEC1ERKSL_(ptr noundef nonnull align 8 dereferenceable(248) %i.af, ptr noundef nonnull align 8 dereferenceable(248) %i.q), !inline_history !1189
+  call void @_ZN7openvdb5v13_05tools12VolumeRenderINS1_20VolumeRayIntersectorINS0_4GridINS0_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS0_4math3RayIdEEEENS1_10BoxSamplerEEC1ERKSL_(ptr noundef nonnull align 8 dereferenceable(248) %i.af, ptr noundef nonnull align 8 dereferenceable(248) %i.q), !inline_history !1190
   %i.ag = getelementptr inbounds nuw i8, ptr %i.u, i64 336 ; 2 uses
   store ptr null, ptr %i.ag, align 16, !tbaa !354
   %i.ah = getelementptr inbounds nuw i8, ptr %i.u, i64 344
@@ -967,7 +964,7 @@ _ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit11: ; preds = %_ZN3tb
   %i.an = getelementptr inbounds nuw i8, ptr %i.u, i64 360
   %i.ao = load i64, ptr %4, align 8, !tbaa !263
   store i64 %i.ao, ptr %i.an, align 8, !tbaa !263
-  %i.ap = call noundef ptr @_ZN3tbb6detail2r18allocateERPNS0_2d117small_object_poolEmRKNS2_14execution_dataE(ptr noundef nonnull align 8 dereferenceable(8) %4, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %3), !inline_history !1190 ; 6 uses
+  %i.ap = call noundef ptr @_ZN3tbb6detail2r18allocateERPNS0_2d117small_object_poolEmRKNS2_14execution_dataE(ptr noundef nonnull align 8 dereferenceable(8) %4, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %3), !inline_history !1191 ; 6 uses
   %i.aq = load ptr, ptr %i.t, align 16, !tbaa !456
   store ptr %i.aq, ptr %i.ap, align 8, !tbaa !267
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ap, i64 8
@@ -980,7 +977,7 @@ _ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit11: ; preds = %_ZN3tb
   store ptr %i.ap, ptr %i.t, align 16, !tbaa !354
   store ptr %i.ap, ptr %i.ag, align 16, !tbaa !354
   %i.av = load ptr, ptr %3, align 8, !tbaa !459
-  call void @_ZN3tbb6detail2r15spawnERNS0_2d14taskERNS2_18task_group_contextE(ptr noundef nonnull align 64 dereferenceable(368) %i.u, ptr noundef nonnull align 8 dereferenceable(128) %i.av), !inline_history !1190
+  call void @_ZN3tbb6detail2r15spawnERNS0_2d14taskERNS2_18task_group_contextE(ptr noundef nonnull align 64 dereferenceable(368) %i.u, ptr noundef nonnull align 8 dereferenceable(128) %i.av), !inline_history !1191
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #17
   %i.aw = load i64, ptr %i.a, align 8, !tbaa !124
   %i.ax = load i64, ptr %2, align 8, !tbaa !122
@@ -995,7 +992,7 @@ bb.f:                                             ; preds = %_ZN3tbb6detail2d119
   br i1 %i.bc, label %_ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit11.backedge, label %bb.g
 
 _ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit11.backedge: ; preds = %bb.f, %bb.i
-  br label %_ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit11, !llvm.loop !1191
+  br label %_ZN3tbb6detail2d119auto_partition_type12is_divisibleEv.exit11, !llvm.loop !1192
 
 bb.g:                                             ; preds = %bb.f
   %.not.i8 = icmp eq i64 %i.bb, 0
@@ -1161,7 +1158,7 @@ bb.h:                                             ; preds = %_ZN3tbb6detail2d112
   %i.bm = load i8, ptr %i.bl, align 1, !tbaa !207
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #17
   store ptr null, ptr %4, align 8, !tbaa !248
-  %i.bn = call noundef ptr @_ZN3tbb6detail2r18allocateERPNS0_2d117small_object_poolEmRKNS2_14execution_dataE(ptr noundef nonnull align 8 dereferenceable(8) %4, i64 noundef 384, ptr noundef nonnull align 8 dereferenceable(12) %3), !inline_history !1192 ; 10 uses
+  %i.bn = call noundef ptr @_ZN3tbb6detail2r18allocateERPNS0_2d117small_object_poolEmRKNS2_14execution_dataE(ptr noundef nonnull align 8 dereferenceable(8) %4, i64 noundef 384, ptr noundef nonnull align 8 dereferenceable(12) %3), !inline_history !1193 ; 10 uses
   %i.bo = getelementptr inbounds nuw [24 x i8], ptr %i.n, i64 %i.bk
   %i.bp = getelementptr inbounds nuw i8, ptr %i.bn, i64 8
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.bp, i8 0, i64 56, i1 false)
@@ -1169,7 +1166,7 @@ bb.h:                                             ; preds = %_ZN3tbb6detail2d112
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bn, i64 64
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 64 dereferenceable(24) %i.bq, ptr noundef nonnull align 8 dereferenceable(24) %i.bo, i64 24, i1 false), !tbaa.struct !250
   %i.br = getelementptr inbounds nuw i8, ptr %i.bn, i64 88
-  call void @_ZN7openvdb5v13_05tools12VolumeRenderINS1_20VolumeRayIntersectorINS0_4GridINS0_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS0_4math3RayIdEEEENS1_10BoxSamplerEEC1ERKSL_(ptr noundef nonnull align 8 dereferenceable(248) %i.br, ptr noundef nonnull align 8 dereferenceable(248) %i.p), !inline_history !1192
+  call void @_ZN7openvdb5v13_05tools12VolumeRenderINS1_20VolumeRayIntersectorINS0_4GridINS0_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS0_4math3RayIdEEEENS1_10BoxSamplerEEC1ERKSL_(ptr noundef nonnull align 8 dereferenceable(248) %i.br, ptr noundef nonnull align 8 dereferenceable(248) %i.p), !inline_history !1193
   %i.bs = getelementptr inbounds nuw i8, ptr %i.bn, i64 336 ; 2 uses
   store ptr null, ptr %i.bs, align 16, !tbaa !354
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bn, i64 344
@@ -1186,7 +1183,7 @@ bb.h:                                             ; preds = %_ZN3tbb6detail2d112
   store i64 %i.ca, ptr %i.bz, align 8, !tbaa !263
   %i.cb = sub i8 %i.by, %i.bm
   store i8 %i.cb, ptr %i.bx, align 4, !tbaa !261
-  %i.cc = call noundef ptr @_ZN3tbb6detail2r18allocateERPNS0_2d117small_object_poolEmRKNS2_14execution_dataE(ptr noundef nonnull align 8 dereferenceable(8) %4, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %3), !inline_history !1192 ; 6 uses
+  %i.cc = call noundef ptr @_ZN3tbb6detail2r18allocateERPNS0_2d117small_object_poolEmRKNS2_14execution_dataE(ptr noundef nonnull align 8 dereferenceable(8) %4, i64 noundef 32, ptr noundef nonnull align 8 dereferenceable(12) %3), !inline_history !1193 ; 6 uses
   %i.cd = load ptr, ptr %i.o, align 16, !tbaa !456
   store ptr %i.cd, ptr %i.cc, align 8, !tbaa !267
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
@@ -1199,7 +1196,7 @@ bb.h:                                             ; preds = %_ZN3tbb6detail2d112
   store ptr %i.cc, ptr %i.o, align 16, !tbaa !354
   store ptr %i.cc, ptr %i.bs, align 16, !tbaa !354
   %i.ci = load ptr, ptr %3, align 8, !tbaa !459
-  call void @_ZN3tbb6detail2r15spawnERNS0_2d14taskERNS2_18task_group_contextE(ptr noundef nonnull align 64 dereferenceable(368) %i.bn, ptr noundef nonnull align 8 dereferenceable(128) %i.ci), !inline_history !1192
+  call void @_ZN3tbb6detail2r15spawnERNS0_2d14taskERNS2_18task_group_contextE(ptr noundef nonnull align 64 dereferenceable(368) %i.bn, ptr noundef nonnull align 8 dereferenceable(128) %i.ci), !inline_history !1193
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #17
   %i.cj = load i8, ptr %i.l, align 2, !tbaa !462
   %i.ck = add i8 %i.cj, -1                        ; 2 uses
@@ -1256,7 +1253,7 @@ _ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit: ; pr
   %i.do = load ptr, ptr %i.dn, align 8
   %.0.i.i = select i1 %i.dm, ptr %i.do, ptr %i.dj
   %i.dp = call noundef zeroext i1 @_ZN3tbb6detail2r128is_group_execution_cancelledERNS0_2d118task_group_contextE(ptr noundef nonnull align 8 dereferenceable(128) %.0.i.i)
-  br i1 %i.dp, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeImEELh8EED2Ev.exit22, label %thread-pre-split, !llvm.loop !1193
+  br i1 %i.dp, label %_ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeImEELh8EED2Ev.exit22, label %thread-pre-split, !llvm.loop !1194
 
 _ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeImEELh8EED2Ev.exit22: ; preds = %thread-pre-split23, %_ZN3tbb6detail2d118task_group_context28is_group_execution_cancelledEv.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #17
@@ -1659,17 +1656,18 @@ begin_hunk_1_@llvm.fmuladd.v2f64
 !1178 = distinct !{!1178, !1176, !"_ZSt19__relocate_object_aIN7openvdb5v13_04math3RayIdE8TimeSpanES5_SaIS5_EEvPT_PT0_RT1_: argument 0"}
 !1179 = distinct !{!1179, !286}
 !1180 = !{!1178, !1177}
-!1181 = !{!"_ZTSSt4pairIKN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS5_12InternalNodeINS7_INS5_8LeafNodeIbLj3EEELj4EEELj5EEEE10NodeStructEE", !79, i64 0, !501, i64 16}
-!1182 = !{!1181, !176, i64 16}
-!1183 = distinct !{ptr @_ZNSt10unique_ptrIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEESt14default_deleteISJ_EED2Ev, null, null}
-!1184 = distinct !{ptr @_ZN7openvdb5v13_05tools12VolumeRenderINS1_20VolumeRayIntersectorINS0_4GridINS0_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS0_4math3RayIdEEEENS1_10BoxSamplerEED2Ev, ptr @_ZNSt10unique_ptrIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEESt14default_deleteISJ_EED2Ev, null, null}
-!1185 = distinct !{ptr @_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools12VolumeRenderINS7_20VolumeRayIntersectorINS6_4GridINS6_4tree4TreeINSB_8RootNodeINSB_12InternalNodeINSE_INSB_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS6_4math3RayIdEEEENS7_10BoxSamplerEEEKNS1_16auto_partitionerEED2Ev, ptr @_ZN7openvdb5v13_05tools12VolumeRenderINS1_20VolumeRayIntersectorINS0_4GridINS0_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS0_4math3RayIdEEEENS1_10BoxSamplerEED2Ev, ptr @_ZNSt10unique_ptrIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEESt14default_deleteISJ_EED2Ev, null, null}
-!1186 = !{ptr @_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools12VolumeRenderINS7_20VolumeRayIntersectorINS6_4GridINS6_4tree4TreeINSB_8RootNodeINSB_12InternalNodeINSE_INSB_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS6_4math3RayIdEEEENS7_10BoxSamplerEEEKNS1_16auto_partitionerEED2Ev}
-!1187 = !{ptr @_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools12VolumeRenderINS7_20VolumeRayIntersectorINS6_4GridINS6_4tree4TreeINSB_8RootNodeINSB_12InternalNodeINSE_INSB_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS6_4math3RayIdEEEENS7_10BoxSamplerEEEKNS1_16auto_partitionerEED2Ev, ptr @_ZN7openvdb5v13_04tree17ValueAccessorBaseIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EED2Ev}
-!1188 = distinct !{null, null, null}
-!1189 = distinct !{null, null, null, null}
-!1190 = distinct !{null, null}
-!1191 = distinct !{!1191, !286}
-!1192 = distinct !{null}
-!1193 = distinct !{!1193, !286}
+!1181 = !{!501, !45, i64 9}
+!1182 = !{!"_ZTSSt4pairIKN7openvdb5v13_04math5CoordENS1_4tree8RootNodeINS5_12InternalNodeINS7_INS5_8LeafNodeIbLj3EEELj4EEELj5EEEE10NodeStructEE", !79, i64 0, !501, i64 16}
+!1183 = !{!1182, !176, i64 16}
+!1184 = distinct !{ptr @_ZNSt10unique_ptrIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEESt14default_deleteISJ_EED2Ev, null, null}
+!1185 = distinct !{ptr @_ZN7openvdb5v13_05tools12VolumeRenderINS1_20VolumeRayIntersectorINS0_4GridINS0_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS0_4math3RayIdEEEENS1_10BoxSamplerEED2Ev, ptr @_ZNSt10unique_ptrIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEESt14default_deleteISJ_EED2Ev, null, null}
+!1186 = distinct !{ptr @_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools12VolumeRenderINS7_20VolumeRayIntersectorINS6_4GridINS6_4tree4TreeINSB_8RootNodeINSB_12InternalNodeINSE_INSB_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS6_4math3RayIdEEEENS7_10BoxSamplerEEEKNS1_16auto_partitionerEED2Ev, ptr @_ZN7openvdb5v13_05tools12VolumeRenderINS1_20VolumeRayIntersectorINS0_4GridINS0_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS0_4math3RayIdEEEENS1_10BoxSamplerEED2Ev, ptr @_ZNSt10unique_ptrIN7openvdb5v13_05tools20VolumeRayIntersectorINS1_4GridINS1_4tree4TreeINS5_8RootNodeINS5_12InternalNodeINS8_INS5_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS1_4math3RayIdEEEESt14default_deleteISJ_EED2Ev, null, null}
+!1187 = !{ptr @_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools12VolumeRenderINS7_20VolumeRayIntersectorINS6_4GridINS6_4tree4TreeINSB_8RootNodeINSB_12InternalNodeINSE_INSB_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS6_4math3RayIdEEEENS7_10BoxSamplerEEEKNS1_16auto_partitionerEED2Ev}
+!1188 = !{ptr @_ZN3tbb6detail2d19start_forINS1_13blocked_rangeImEEN7openvdb5v13_05tools12VolumeRenderINS7_20VolumeRayIntersectorINS6_4GridINS6_4tree4TreeINSB_8RootNodeINSB_12InternalNodeINSE_INSB_8LeafNodeIdLj3EEELj4EEELj5EEEEEEEEELi2ENS6_4math3RayIdEEEENS7_10BoxSamplerEEEKNS1_16auto_partitionerEED2Ev, ptr @_ZN7openvdb5v13_04tree17ValueAccessorBaseIKNS1_4TreeINS1_8RootNodeINS1_12InternalNodeINS5_INS1_8LeafNodeIdLj3EEELj4EEELj5EEEEEEELb1EED2Ev}
+!1189 = distinct !{null, null, null}
+!1190 = distinct !{null, null, null, null}
+!1191 = distinct !{null, null}
+!1192 = distinct !{!1192, !286}
+!1193 = distinct !{null}
+!1194 = distinct !{!1194, !286}
 end_hunk_1
