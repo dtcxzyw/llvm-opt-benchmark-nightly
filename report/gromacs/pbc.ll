@@ -205,7 +205,7 @@ bb.l:                                             ; preds = %bb.l, %.lr.ph284.2
   %i.ke = phi float [ %i.jk, %.preheader229 ], [ %i.kb, %.preheader225.us ] ; 2 uses
   %i.kf = phi float [ %i.jl, %.preheader229 ], [ %i.jz, %.preheader225.us ] ; 2 uses
   %.lcssa244 = phi float [ %i.jm, %.preheader229 ], [ %i.jx, %.preheader225.us ] ; 4 uses
-  %5 = tail call float @llvm.fmuladd.f32(float %.lcssa244, float %.lcssa244, float 0.000000e+00) ; 2 uses
+  %5 = fmul float %.lcssa244, %.lcssa244          ; 2 uses
   %.not204.1 = icmp eq i32 %i.v, 1
   br i1 %.not204.1, label %.preheader230.2, label %.preheader230.1
 
@@ -353,13 +353,13 @@ bb.o:                                             ; preds = %bb.q
   %i.mv = phi float [ %i.ng, %bb.o ], [ %i.mk, %.lr.ph531.preheader ]
   %i.mw = getelementptr inbounds nuw [12 x i8], ptr %i.ms, i64 %indvars.iv529 ; 2 uses
   %i.mx = load <2 x float>, ptr %i.mw, align 4, !tbaa !23
-  %i.my = fadd <2 x float> %i.mu, %i.mx           ; 3 uses
+  %i.my = fadd <2 x float> %i.mu, %i.mx           ; 4 uses
   %i.mz = getelementptr inbounds nuw i8, ptr %i.mw, i64 8
   %i.na = load float, ptr %i.mz, align 4, !tbaa !23
   %i.nb = fadd float %i.mh, %i.na                 ; 3 uses
-  %6 = extractelement <2 x float> %i.my, i64 0    ; 2 uses
-  %7 = tail call float @llvm.fmuladd.f32(float %6, float %6, float 0.000000e+00)
-  %spec.select = select i1 %.not204.2450, float 0.000000e+00, float %7 ; 2 uses
+  %foldExtExtBinop539 = fmul <2 x float> %i.my, %i.my
+  %6 = extractelement <2 x float> %foldExtExtBinop539, i64 0
+  %spec.select = select i1 %.not204.2450, float 0.000000e+00, float %6 ; 2 uses
   %i.nc = extractelement <2 x float> %i.my, i64 1 ; 2 uses
   %i.nd = tail call float @llvm.fmuladd.f32(float %i.nc, float %i.nc, float %spec.select)
   %.1187.1 = select i1 %.not204.1441447, float %spec.select, float %i.nd ; 2 uses
@@ -762,7 +762,7 @@ bb.an:                                            ; preds = %.sink.split535, %bb
   %i.hv = phi float [ %i.h, %bb.am ], [ %.sink541, %.sink.split535 ] ; 2 uses
   %i.hw = phi float [ %i.g, %bb.am ], [ %.ph538, %.sink.split535 ] ; 2 uses
   %i.hx = phi float [ %i.m, %bb.am ], [ %.ph539, %.sink.split535 ] ; 4 uses
-  %6 = tail call float @llvm.fmuladd.f32(float %i.hx, float %i.hx, float 0.000000e+00) ; 2 uses
+  %6 = fmul float %i.hx, %i.hx                    ; 2 uses
   %.not304.1 = icmp eq i32 %i.u, 1
   br i1 %.not304.1, label %.thread501, label %.thread495
 
@@ -924,13 +924,13 @@ bb.ax:                                            ; preds = %bb.az
   %i.kr = phi <2 x i32> [ %i.lk, %bb.ax ], [ %i.kf, %.lr.ph.preheader ]
   %i.ks = getelementptr inbounds nuw [12 x i8], ptr %i.kl, i64 %indvars.iv557 ; 2 uses
   %i.kt = load <2 x float>, ptr %i.ks, align 4, !tbaa !23
-  %i.ku = fadd <2 x float> %i.ko, %i.kt           ; 3 uses
+  %i.ku = fadd <2 x float> %i.ko, %i.kt           ; 4 uses
   %i.kv = getelementptr inbounds nuw i8, ptr %i.ks, i64 8
   %i.kw = load float, ptr %i.kv, align 4, !tbaa !23
   %i.kx = fadd float %i.kd, %i.kw                 ; 3 uses
-  %7 = extractelement <2 x float> %i.ku, i64 0    ; 2 uses
-  %8 = tail call float @llvm.fmuladd.f32(float %7, float %7, float 0.000000e+00)
-  %spec.select = select i1 %.not303, float 0.000000e+00, float %8 ; 2 uses
+  %foldExtExtBinop577 = fmul <2 x float> %i.ku, %i.ku
+  %7 = extractelement <2 x float> %foldExtExtBinop577, i64 0
+  %spec.select = select i1 %.not303, float 0.000000e+00, float %7 ; 2 uses
   %i.ky = extractelement <2 x float> %i.ku, i64 1 ; 2 uses
   %i.kz = tail call float @llvm.fmuladd.f32(float %i.ky, float %i.ky, float %spec.select)
   %.1.1 = select i1 %.not304.1500506, float %spec.select, float %i.kz ; 2 uses
@@ -1275,7 +1275,7 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 2 uses
   %i.j = load double, ptr %i.i, align 8, !tbaa !103
   %i.k = fsub double %i.h, %i.j                   ; 10 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 8 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 7 uses
   store <2 x double> %i.e, ptr %3, align 8, !tbaa !103
   %i.m = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 8 uses
   store double %i.k, ptr %i.m, align 8, !tbaa !103
@@ -1531,7 +1531,7 @@ bb.i:                                             ; preds = %bb.a, %bb.a
 bb.j:                                             ; preds = %.loopexit329, %.preheader150
   %.lcssa160 = phi double [ %i.dc, %.preheader150 ], [ %i.dp, %.loopexit329 ] ; 4 uses
   %i.ds = phi <2 x double> [ %i.dd, %.preheader150 ], [ %i.dq, %.loopexit329 ] ; 3 uses
-  %5 = tail call double @llvm.fmuladd.f64(double %.lcssa160, double %.lcssa160, double 0.000000e+00) ; 2 uses
+  %5 = fmul double %.lcssa160, %.lcssa160         ; 2 uses
   %.not140.1 = icmp eq i32 %i.ci, 1
   %i.dt = extractelement <2 x double> %i.ds, i64 0
   %i.du = extractelement <2 x double> %i.ds, i64 1 ; 2 uses
@@ -1677,40 +1677,43 @@ bb.m:                                             ; preds = %bb.l
   %smax = tail call i32 @llvm.smax.i32(i32 %i.gc, i32 0)
   %wide.trip.count = zext nneg i32 %smax to i64
   %exitcond.not392 = icmp slt i32 %i.gc, 1
-  br i1 %exitcond.not392, label %.critedge, label %.preheader144
+  br i1 %exitcond.not392, label %.critedge, label %.preheader144.preheader
+
+.preheader144.preheader:                          ; preds = %bb.m
+  %6 = insertelement <2 x double> poison, double %i.fw, i64 0
+  %7 = insertelement <2 x double> %6, double %i.fu, i64 1
+  br label %.preheader144
 
 bb.n:                                             ; preds = %bb.p
   %indvars.iv.next = add nuw nsw i64 %indvars.iv393, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %.critedge, label %.preheader144, !llvm.loop !98
 
-.preheader144:                                    ; preds = %bb.m, %bb.n
-  %.2131199394 = phi double [ %.3132, %bb.n ], [ %.1130.2, %bb.m ] ; 2 uses
-  %indvars.iv393 = phi i64 [ %indvars.iv.next, %bb.n ], [ 0, %bb.m ] ; 2 uses
+.preheader144:                                    ; preds = %.preheader144.preheader, %bb.n
+  %.2131199394 = phi double [ %.3132, %bb.n ], [ %.1130.2, %.preheader144.preheader ] ; 2 uses
+  %indvars.iv393 = phi i64 [ %indvars.iv.next, %bb.n ], [ 0, %.preheader144.preheader ] ; 2 uses
   %i.ge = getelementptr inbounds nuw [12 x i8], ptr %i.gd, i64 %indvars.iv393 ; 2 uses
-  %6 = load float, ptr %i.ge, align 4, !tbaa !23
-  %7 = fpext float %6 to double
-  %8 = fadd double %i.fw, %7                      ; 3 uses
-  %i.gf = getelementptr inbounds nuw i8, ptr %i.ge, i64 4
-  %9 = load <2 x float>, ptr %i.gf, align 4, !tbaa !23
-  %10 = fpext <2 x float> %9 to <2 x double>      ; 2 uses
-  %11 = extractelement <2 x double> %10, i64 0
-  %i.gg = fadd double %i.fu, %11                  ; 3 uses
-  %12 = extractelement <2 x double> %10, i64 1
-  %13 = fadd double %i.fv, %12                    ; 3 uses
-  %14 = tail call double @llvm.fmuladd.f64(double %8, double %8, double 0.000000e+00)
-  %spec.select = select i1 %.not140.2327, double 0.000000e+00, double %14 ; 2 uses
-  %i.gh = tail call double @llvm.fmuladd.f64(double %i.gg, double %i.gg, double %spec.select)
+  %8 = load <2 x float>, ptr %i.ge, align 4, !tbaa !23
+  %9 = fpext <2 x float> %8 to <2 x double>
+  %10 = fadd <2 x double> %7, %9                  ; 4 uses
+  %i.gf = getelementptr inbounds nuw i8, ptr %i.ge, i64 8
+  %11 = load float, ptr %i.gf, align 4, !tbaa !23
+  %12 = fpext float %11 to double
+  %i.gg = fadd double %i.fv, %12                  ; 3 uses
+  %foldExtExtBinop = fmul <2 x double> %10, %10
+  %13 = extractelement <2 x double> %foldExtExtBinop, i64 0
+  %spec.select = select i1 %.not140.2327, double 0.000000e+00, double %13 ; 2 uses
+  %14 = extractelement <2 x double> %10, i64 1    ; 2 uses
+  %i.gh = tail call double @llvm.fmuladd.f64(double %14, double %14, double %spec.select)
   %.1128.1 = select i1 %.not140.1318324, double %spec.select, double %i.gh ; 2 uses
-  %i.gi = tail call double @llvm.fmuladd.f64(double %13, double %13, double %.1128.1)
+  %i.gi = tail call double @llvm.fmuladd.f64(double %i.gg, double %i.gg, double %.1128.1)
   %.1128.2 = select i1 %.not140, double %.1128.1, double %i.gi ; 2 uses
   %i.gj = fcmp olt double %.1128.2, %.2131199394
   br i1 %i.gj, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %.preheader144
-  store double %8, ptr %3, align 8, !tbaa !103
-  store double %i.gg, ptr %i.l, align 8, !tbaa !103
-  store double %13, ptr %i.m, align 8, !tbaa !103
+  store <2 x double> %10, ptr %3, align 8, !tbaa !103
+  store double %i.gg, ptr %i.m, align 8, !tbaa !103
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.o, %.preheader144
