@@ -204,15 +204,15 @@ bb.a:
   %i.a = alloca [32 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 101
-  %i.c = load i8, ptr %i.b, align 1, !range !16, !noundef !5 ; 3 uses
-  %.not = icmp eq i8 %i.c, -1
-  br i1 %.not, label %bb.b, label %.thread
+  %i.c = load i8, ptr %i.b, align 1, !range !16, !noundef !5 ; 2 uses
+  switch i8 %i.c, label %.thread [
+    i8 -1, label %bb.b
+    i8 2, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCsjRvGck33osM_6diesel10connection19transaction_manager29ValidTransactionManagerStatusNtNtB14_6result5ErrorEEB14_.exit
+  ]
 
 .thread:                                          ; preds = %bb.a
-  %.not2 = icmp ne i8 %i.c, 2
   %i.d = trunc nuw i8 %i.c to i1
   %i.e = xor i1 %i.d, true
-  %.sroa.0.0.ph = select i1 %.not2, i1 %i.e, i1 false
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCsjRvGck33osM_6diesel10connection19transaction_manager29ValidTransactionManagerStatusNtNtB14_6result5ErrorEEB14_.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -220,8 +220,8 @@ bb.b:                                             ; preds = %bb.a
   call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsjRvGck33osM_6diesel6result5ErrorEBF_(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.a)
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCsjRvGck33osM_6diesel10connection19transaction_manager29ValidTransactionManagerStatusNtNtB14_6result5ErrorEEB14_.exit
 
-_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCsjRvGck33osM_6diesel10connection19transaction_manager29ValidTransactionManagerStatusNtNtB14_6result5ErrorEEB14_.exit: ; preds = %.thread, %bb.b
-  %.sroa.0.04 = phi i1 [ %.sroa.0.0.ph, %.thread ], [ true, %bb.b ]
+_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCsjRvGck33osM_6diesel10connection19transaction_manager29ValidTransactionManagerStatusNtNtB14_6result5ErrorEEB14_.exit: ; preds = %bb.a, %.thread, %bb.b
+  %.sroa.0.04 = phi i1 [ true, %bb.b ], [ %i.e, %.thread ], [ false, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %.sroa.0.04
 }
@@ -232,15 +232,15 @@ bb.a:
   %i.a = alloca [32 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 53
-  %i.c = load i8, ptr %i.b, align 1, !range !16, !noundef !5 ; 3 uses
-  %.not = icmp eq i8 %i.c, -1
-  br i1 %.not, label %bb.b, label %.thread
+  %i.c = load i8, ptr %i.b, align 1, !range !16, !noundef !5 ; 2 uses
+  switch i8 %i.c, label %.thread [
+    i8 -1, label %bb.b
+    i8 2, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCsjRvGck33osM_6diesel10connection19transaction_manager29ValidTransactionManagerStatusNtNtB14_6result5ErrorEEB14_.exit
+  ]
 
 .thread:                                          ; preds = %bb.a
-  %.not2 = icmp ne i8 %i.c, 2
   %i.d = trunc nuw i8 %i.c to i1
   %i.e = xor i1 %i.d, true
-  %.sroa.0.0.ph = select i1 %.not2, i1 %i.e, i1 false
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCsjRvGck33osM_6diesel10connection19transaction_manager29ValidTransactionManagerStatusNtNtB14_6result5ErrorEEB14_.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -248,8 +248,8 @@ bb.b:                                             ; preds = %bb.a
   call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsjRvGck33osM_6diesel6result5ErrorEBF_(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.a)
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCsjRvGck33osM_6diesel10connection19transaction_manager29ValidTransactionManagerStatusNtNtB14_6result5ErrorEEB14_.exit
 
-_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCsjRvGck33osM_6diesel10connection19transaction_manager29ValidTransactionManagerStatusNtNtB14_6result5ErrorEEB14_.exit: ; preds = %.thread, %bb.b
-  %.sroa.0.04 = phi i1 [ %.sroa.0.0.ph, %.thread ], [ true, %bb.b ]
+_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCsjRvGck33osM_6diesel10connection19transaction_manager29ValidTransactionManagerStatusNtNtB14_6result5ErrorEEB14_.exit: ; preds = %bb.a, %.thread, %bb.b
+  %.sroa.0.04 = phi i1 [ true, %bb.b ], [ %i.e, %.thread ], [ false, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %.sroa.0.04
 }
@@ -260,15 +260,15 @@ bb.a:
   %i.a = alloca [32 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 29
-  %i.c = load i8, ptr %i.b, align 1, !range !16, !noundef !5 ; 3 uses
-  %.not = icmp eq i8 %i.c, -1
-  br i1 %.not, label %bb.b, label %.thread
+  %i.c = load i8, ptr %i.b, align 1, !range !16, !noundef !5 ; 2 uses
+  switch i8 %i.c, label %.thread [
+    i8 -1, label %bb.b
+    i8 2, label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCsjRvGck33osM_6diesel10connection19transaction_manager29ValidTransactionManagerStatusNtNtB14_6result5ErrorEEB14_.exit
+  ]
 
 .thread:                                          ; preds = %bb.a
-  %.not2 = icmp ne i8 %i.c, 2
   %i.d = trunc nuw i8 %i.c to i1
   %i.e = xor i1 %i.d, true
-  %.sroa.0.0.ph = select i1 %.not2, i1 %i.e, i1 false
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCsjRvGck33osM_6diesel10connection19transaction_manager29ValidTransactionManagerStatusNtNtB14_6result5ErrorEEB14_.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -276,8 +276,8 @@ bb.b:                                             ; preds = %bb.a
   call void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCsjRvGck33osM_6diesel6result5ErrorEBF_(ptr noalias noundef nonnull align 8 dereferenceable(32) %i.a)
   br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCsjRvGck33osM_6diesel10connection19transaction_manager29ValidTransactionManagerStatusNtNtB14_6result5ErrorEEB14_.exit
 
-_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCsjRvGck33osM_6diesel10connection19transaction_manager29ValidTransactionManagerStatusNtNtB14_6result5ErrorEEB14_.exit: ; preds = %.thread, %bb.b
-  %.sroa.0.04 = phi i1 [ %.sroa.0.0.ph, %.thread ], [ true, %bb.b ]
+_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6result6ResultQNtNtNtCsjRvGck33osM_6diesel10connection19transaction_manager29ValidTransactionManagerStatusNtNtB14_6result5ErrorEEB14_.exit: ; preds = %bb.a, %.thread, %bb.b
+  %.sroa.0.04 = phi i1 [ true, %bb.b ], [ %i.e, %.thread ], [ false, %bb.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   ret i1 %.sroa.0.04
 }

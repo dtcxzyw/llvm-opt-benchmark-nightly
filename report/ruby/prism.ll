@@ -205,8 +205,8 @@ bb.mj:                                            ; preds = %bb.t
   %i.aow = icmp ne i32 %i.aov, 0
   %not.or.cond24 = xor i1 %or.cond24, true
   %i.aox = select i1 %not.or.cond24, i1 true, i1 %i.aow
-  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.123265)
   %8 = zext i1 %i.aox to i8                       ; 2 uses
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.123265)
   %.sroa.123265.3..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.123265, i64 3
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(37) %.sroa.123265.3..sroa_idx, i8 0, i64 37, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(3) %.sroa.123265, ptr noundef nonnull align 1 dereferenceable(3) getelementptr inbounds nuw (i8, ptr @.str.56, i64 4), i64 3, i1 false)

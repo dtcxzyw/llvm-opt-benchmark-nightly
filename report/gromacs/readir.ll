@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #30
   br label %bb.gc
 
-.critedge:                                        ; preds = %_ZNSt10filesystem7__cxx114pathD2Ev.exit, %bb.e, %bb.d
+.critedge:                                        ; preds = %bb.d, %_ZNSt10filesystem7__cxx114pathD2Ev.exit, %bb.e
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.v = load i32, ptr %i.u, align 4, !tbaa !141
   %i.w = icmp eq i32 %i.v, 0
@@ -608,7 +608,7 @@ bb.z:                                             ; preds = %bb.y
   call void @_ZN14WarningHandler10addWarningESt17basic_string_viewIcSt11char_traitsIcEE(ptr noundef nonnull align 8 dereferenceable(64) %3, i64 158, ptr nonnull @.str.721)
   br label %.critedge2
 
-.critedge2:                                       ; preds = %.loopexit364, %bb.x, %bb.w, %_ZL21haveAbsoluteReferenceRK10t_inputrec.exit, %.thread, %bb.z, %bb.y
+.critedge2:                                       ; preds = %bb.w, %_ZL21haveAbsoluteReferenceRK10t_inputrec.exit, %.loopexit364, %bb.x, %.thread, %bb.z, %bb.y
   %i.hw = getelementptr inbounds nuw i8, ptr %1, i64 204 ; 8 uses
   %i.hx = load i32, ptr %i.hw, align 4, !tbaa !152 ; 2 uses
   %i.hy = icmp eq i32 %i.hx, 5

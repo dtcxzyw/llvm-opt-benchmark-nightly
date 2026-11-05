@@ -160,37 +160,6 @@ bb.d:                                             ; preds = %.epil.preheader
   %.not.i = icmp eq ptr %i.ar, null
   br i1 %.not.i, label %list_length.exit, label %bb.e
 
-bb.e:                                             ; preds = %.thread156
-  %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 4
-  %i.at = load i32, ptr %i.as, align 4
-  br label %list_length.exit
-
-list_length.exit:                                 ; preds = %.thread156, %bb.e
-  %i.au = phi i32 [ %i.at, %bb.e ], [ 0, %.thread156 ] ; 7 uses
-  %i.av = tail call noundef ptr @palloc0(i64 noundef 8) #6 ; 3 uses
-  store i32 65, ptr %i.av, align 4
-  %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
-  %i.ax = load i32, ptr %i.aw, align 8
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.av, i64 4
-  store i32 %i.ax, ptr %i.ay, align 4
-  %i.az = tail call ptr @list_make1_impl(i32 noundef 1, ptr nonnull %i.av) #6
-  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 4 uses
-  %i.bb = load ptr, ptr %i.ba, align 8
-  %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
-  %i.bd = load ptr, ptr %i.bc, align 8
-  %i.be = tail call ptr @makeFromExpr(ptr noundef %i.az, ptr noundef %i.bd) #6
-  %i.bf = load ptr, ptr %i.ba, align 8
-  %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 8
-  %i.bh = load ptr, ptr %i.bg, align 8
-  %i.bi = getelementptr i8, ptr %i.bh, i64 16
-  %.val = load ptr, ptr %i.bi, align 8
-  %i.bj = load ptr, ptr %.val, align 8            ; 4 uses
-  %i.bk = load i32, ptr %i.bj, align 4
-  switch i32 %i.bk, label %bb.g [
-    i32 65, label %bb.h
-    i32 66, label %bb.f
-  ]
-
 1:                                                ; preds = %bb.c
   %2 = getelementptr inbounds nuw i8, ptr %i.o, i64 4
   %3 = load i32, ptr %2, align 4
@@ -221,6 +190,37 @@ list_length.exit:                                 ; preds = %.thread156, %bb.e
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.critedge.unr-lcssa, label %bb.c
+
+bb.e:                                             ; preds = %.thread156
+  %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 4
+  %i.at = load i32, ptr %i.as, align 4
+  br label %list_length.exit
+
+list_length.exit:                                 ; preds = %.thread156, %bb.e
+  %i.au = phi i32 [ %i.at, %bb.e ], [ 0, %.thread156 ] ; 7 uses
+  %i.av = tail call noundef ptr @palloc0(i64 noundef 8) #6 ; 3 uses
+  store i32 65, ptr %i.av, align 4
+  %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
+  %i.ax = load i32, ptr %i.aw, align 8
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.av, i64 4
+  store i32 %i.ax, ptr %i.ay, align 4
+  %i.az = tail call ptr @list_make1_impl(i32 noundef 1, ptr nonnull %i.av) #6
+  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 4 uses
+  %i.bb = load ptr, ptr %i.ba, align 8
+  %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
+  %i.bd = load ptr, ptr %i.bc, align 8
+  %i.be = tail call ptr @makeFromExpr(ptr noundef %i.az, ptr noundef %i.bd) #6
+  %i.bf = load ptr, ptr %i.ba, align 8
+  %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 8
+  %i.bh = load ptr, ptr %i.bg, align 8
+  %i.bi = getelementptr i8, ptr %i.bh, i64 16
+  %.val = load ptr, ptr %i.bi, align 8
+  %i.bj = load ptr, ptr %.val, align 8            ; 4 uses
+  %i.bk = load i32, ptr %i.bj, align 4
+  switch i32 %i.bk, label %bb.g [
+    i32 65, label %bb.h
+    i32 66, label %bb.f
+  ]
 
 bb.f:                                             ; preds = %list_length.exit
   br label %bb.h

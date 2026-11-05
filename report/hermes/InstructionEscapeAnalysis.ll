@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.d, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = load i32, ptr %0, align 4
+  %i.e = load i32, ptr %0, align 4, !tbaa !10
   %i.f = icmp eq i32 %i.e, %.sroa.0.0.extract.trunc
   br label %bb.e
 

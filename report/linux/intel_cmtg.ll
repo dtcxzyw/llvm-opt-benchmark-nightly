@@ -202,7 +202,7 @@ bb.q:                                             ; preds = %bb.p
   tail call void @intel_dmc_wl_put(ptr noundef %0, i32 287072) #2
   br label %intel_cmtg_disable.exit
 
-intel_cmtg_disable.exit:                          ; preds = %bb.q, %bb.p, %__drm_to_dev.exit.i, %bb.a, %bb.b
+intel_cmtg_disable.exit:                          ; preds = %__drm_to_dev.exit.i, %bb.q, %bb.p, %bb.a, %bb.b
   ret void
 }
 

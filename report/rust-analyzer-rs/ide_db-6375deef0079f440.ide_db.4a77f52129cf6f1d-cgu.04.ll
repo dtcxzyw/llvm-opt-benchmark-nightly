@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.v
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %1) #39
           to label %.thread48 unwind label %bb.n
 
-.thread56:                                        ; preds = %bb.d, %bb.e
+.thread56:                                        ; preds = %bb.e, %bb.d
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %1) ]
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 48 ; 2 uses
   %i.au = load i32, ptr %i.at, align 4, !noundef !8

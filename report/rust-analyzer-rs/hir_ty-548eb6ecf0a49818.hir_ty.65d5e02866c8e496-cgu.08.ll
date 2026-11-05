@@ -205,7 +205,7 @@ bb.a:
   br i1 %.not.i.us, label %_RNCNCNvMNtNtCs8K4cjrcxBsw_6hir_ty11next_solver7fulfillNtB6_17ObligationStorage23on_fulfillment_overflow00Ba_.exit.thread.us, label %_RNCNCNvMNtNtCs8K4cjrcxBsw_6hir_ty11next_solver7fulfillNtB6_17ObligationStorage23on_fulfillment_overflow00Ba_.exit.us
 
 _RNCNCNvMNtNtCs8K4cjrcxBsw_6hir_ty11next_solver7fulfillNtB6_17ObligationStorage23on_fulfillment_overflow00Ba_.exit.us: ; preds = %.lr.ph.split.us
-  %i.v = load i8, ptr %i.j, align 4, !range !133, !noalias !9830
+  %i.v = load i8, ptr %i.j, align 4, !range !133, !noalias !9830, !noundef !119
   %i.w = trunc nuw i8 %i.v to i1
   call fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCshbspv01vNlV_29ra_ap_rustc_next_trait_solver5solve13GoalStalledOnNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerEEEB2c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(88) %i.b), !noalias !9830
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !9830
@@ -260,7 +260,7 @@ _RNCNCNvMNtNtCs8K4cjrcxBsw_6hir_ty11next_solver7fulfillNtB6_17ObligationStorage2
   br label %bb.d
 
 _RNCNCNvMNtNtCs8K4cjrcxBsw_6hir_ty11next_solver7fulfillNtB6_17ObligationStorage23on_fulfillment_overflow00Ba_.exit: ; preds = %.lr.ph.split
-  %i.am = load i8, ptr %i.j, align 4, !range !133, !noalias !9830
+  %i.am = load i8, ptr %i.j, align 4, !range !133, !noalias !9830, !noundef !119
   %i.an = trunc nuw i8 %i.am to i1
   call fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCshbspv01vNlV_29ra_ap_rustc_next_trait_solver5solve13GoalStalledOnNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerEEEB2c_(ptr noalias nofree noundef nonnull align 8 dereferenceable(88) %i.b), !noalias !9830
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !9830

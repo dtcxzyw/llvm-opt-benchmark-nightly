@@ -205,8 +205,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskeugdADtBsi_12pingora_core.exit
-  %.sroa.4.0 = phi i64 [ undef, %bb.a ], [ undef, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskeugdADtBsi_12pingora_core.exit ], [ %i.j, %bb.b ]
-  %.sroa.0.0 = phi i64 [ 0, %bb.a ], [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskeugdADtBsi_12pingora_core.exit ], [ 1, %bb.b ]
+  %.sroa.4.0 = phi i64 [ %i.j, %bb.b ], [ undef, %bb.a ], [ undef, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskeugdADtBsi_12pingora_core.exit ]
+  %.sroa.0.0 = phi i64 [ 1, %bb.b ], [ 0, %bb.a ], [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskeugdADtBsi_12pingora_core.exit ]
   %i.l = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0
   %i.m = insertvalue { i64, i64 } %i.l, i64 %.sroa.4.0, 1
   ret { i64, i64 } %i.m
@@ -268,8 +268,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.k, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskeugdADtBsi_12pingora_core.exit
-  %.sroa.4.0 = phi i64 [ undef, %bb.a ], [ undef, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskeugdADtBsi_12pingora_core.exit ], [ %i.j, %bb.b ]
-  %.sroa.0.0 = phi i64 [ 0, %bb.a ], [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskeugdADtBsi_12pingora_core.exit ], [ 1, %bb.b ]
+  %.sroa.4.0 = phi i64 [ %i.j, %bb.b ], [ undef, %bb.a ], [ undef, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskeugdADtBsi_12pingora_core.exit ]
+  %.sroa.0.0 = phi i64 [ 1, %bb.b ], [ 0, %bb.a ], [ 0, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6result6ResultjNtNtNtB4_2io5error5ErrorEECskeugdADtBsi_12pingora_core.exit ]
   %i.l = insertvalue { i64, i64 } poison, i64 %.sroa.0.0, 0
   %i.m = insertvalue { i64, i64 } %i.l, i64 %.sroa.4.0, 1
   ret { i64, i64 } %i.m

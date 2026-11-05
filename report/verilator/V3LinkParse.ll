@@ -204,7 +204,7 @@ _ZNK8VVarType15isVPIAccessibleEv.exit.sink.split: ; preds = %_ZN7AstNode2isI10As
   store i64 %i.tp, ptr %i.tn, align 4
   br label %_ZNK8VVarType15isVPIAccessibleEv.exit
 
-_ZNK8VVarType15isVPIAccessibleEv.exit:            ; preds = %_ZNK8VVarType15isVPIAccessibleEv.exit.sink.split, %_ZN7AstNode2isI20AstIfaceGenericDType12AstNodeDTypeEEbPKT0_.exit, %bb.dn, %bb.dq, %_ZN7AstNode2isI10AstPackage13AstNodeModuleEEbPKT0_.exit432
+_ZNK8VVarType15isVPIAccessibleEv.exit:            ; preds = %_ZNK8VVarType15isVPIAccessibleEv.exit.sink.split, %bb.dq, %_ZN7AstNode2isI20AstIfaceGenericDType12AstNodeDTypeEEbPKT0_.exit, %bb.dn, %_ZN7AstNode2isI10AstPackage13AstNodeModuleEEbPKT0_.exit432
   %i.tq = load i32, ptr getelementptr inbounds nuw (i8, ptr @v3Global, i64 1184), align 8, !tbaa !561 ; 2 uses
   %.not188 = icmp eq i32 %i.tq, 0
   br i1 %.not188, label %bb.dv, label %bb.ds

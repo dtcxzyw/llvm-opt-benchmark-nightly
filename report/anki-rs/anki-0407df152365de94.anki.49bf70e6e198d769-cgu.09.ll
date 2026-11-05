@@ -205,14 +205,14 @@ bb.ab:                                            ; preds = %bb.aa
   br label %bb.o
 
 bb.ac:                                            ; preds = %bb.o
-  %3 = getelementptr inbounds nuw i8, ptr %i.j, i64 52
-  %4 = load float, ptr %3, align 4, !noalias !11347
   %i.cn = getelementptr inbounds nuw i8, ptr %i.j, i64 72
   %i.co = load i32, ptr %i.cn, align 8, !range !42, !noalias !11347, !noundef !7
   %i.cp = trunc nuw i32 %i.co to i1
   %i.cq = getelementptr inbounds nuw i8, ptr %i.j, i64 76
   %i.cr = load float, ptr %i.cq, align 4, !noalias !11347
   %.sroa.02.0.i.i.i = select i1 %i.cp, float %i.cr, float 5.000000e-01 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.j, i64 52
+  %4 = load float, ptr %3, align 4, !noalias !11347, !noundef !7
   %i.cs = uitofp i32 %.sroa.01.0.i.i.i to float
   %i.ct = fdiv nnan float %i.cs, 8.640000e+04
   %i.cu = fneg float %.sroa.02.0.i.i.i

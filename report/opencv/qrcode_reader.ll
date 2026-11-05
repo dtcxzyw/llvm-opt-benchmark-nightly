@@ -205,7 +205,7 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   %.not67.us = icmp uge i32 %i.cu, %i.s
   %i.cv = trunc nuw i8 %i.ct to i1
   %spec.select.us = or i1 %.not67.us, %i.cv
-  %.0.us = select i1 %.not.us, i1 %spec.select.us, i1 false ; 2 uses
+  %.0.us = select i1 %.not.us, i1 %spec.select.us, i1 false
   br i1 %.0.us, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %scalar.ph
@@ -214,8 +214,8 @@ bb.b:                                             ; preds = %scalar.ph
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %scalar.ph
-  %4 = zext i1 %.0.us to i8
-  %.not68.us = icmp ne i8 %i.ct, %4
+  %.070.us = phi i8 [ 0, %scalar.ph ], [ 1, %bb.b ]
+  %.not68.us = icmp ne i8 %i.ct, %.070.us
   %i.cx = zext i1 %.not68.us to i32
   %i.cy = add i32 %.171.us, %i.cx                 ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
