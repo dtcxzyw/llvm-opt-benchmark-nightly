@@ -204,7 +204,7 @@ bb.a:
   %5 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %i.f = alloca i16, align 2                      ; 6 uses
   %6 = alloca [3 x %"class.draco::VectorD"], align 16 ; 14 uses
-  %7 = alloca %"class.draco::VectorD", align 8    ; 9 uses
+  %7 = alloca %"class.draco::VectorD", align 8    ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #13
   call void @_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEC1Ev(ptr noundef nonnull align 8 dereferenceable(128) %2)
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 5 uses
@@ -595,7 +595,6 @@ bb.w:                                             ; preds = %bb.q
   br i1 %.not116, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.w
-  %8 = getelementptr inbounds nuw i8, ptr %7, i64 4
   %i.ff = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 2 uses
   %i.fg = getelementptr inbounds nuw i8, ptr %7, i64 12
   %i.fh = getelementptr inbounds nuw i8, ptr %i.f, i64 2
@@ -701,11 +700,9 @@ bb.z:                                             ; preds = %.thread, %.else.i76
   %i.hk = fsub <2 x float> %.28., %.4.            ; 2 uses
   %i.hl = fneg <2 x float> %i.hk
   %i.hm = fmul <2 x float> %i.hg, %i.hl
-  %i.hn = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.hb, <2 x float> %i.hj, <2 x float> %i.hm) ; 3 uses
-  %9 = extractelement <2 x float> %i.hn, i64 0    ; 3 uses
-  store float %9, ptr %7, align 8, !tbaa !120, !alias.scope !155
-  %i.ho = extractelement <2 x float> %i.hn, i64 1 ; 3 uses
-  store float %i.ho, ptr %8, align 4, !tbaa !120, !alias.scope !155
+  %i.hn = call <2 x float> @llvm.fmuladd.v2f32(<2 x float> %i.hb, <2 x float> %i.hj, <2 x float> %i.hm) ; 5 uses
+  %i.ho = extractelement <2 x float> %i.hn, i64 1 ; 2 uses
+  store <2 x float> %i.hn, ptr %7, align 8, !tbaa !120, !alias.scope !155
   %i.hp = extractelement <2 x float> %i.hj, i64 1
   %i.hq = fneg float %i.hp
   %i.hr = extractelement <2 x float> %i.hb, i64 0
@@ -714,8 +711,9 @@ bb.z:                                             ; preds = %.thread, %.else.i76
   %i.hu = extractelement <2 x float> %i.hk, i64 0
   %i.hv = call float @llvm.fmuladd.f32(float %i.ht, float %i.hu, float %i.hs) ; 4 uses
   store float %i.hv, ptr %i.ff, align 8, !tbaa !120, !alias.scope !155
-  %10 = call float @llvm.fmuladd.f32(float %9, float %9, float 0.000000e+00)
-  %i.hw = call float @llvm.fmuladd.f32(float %i.ho, float %i.ho, float %10)
+  %foldExtExtBinop = fmul <2 x float> %i.hn, %i.hn
+  %8 = extractelement <2 x float> %foldExtExtBinop, i64 0
+  %i.hw = call float @llvm.fmuladd.f32(float %i.ho, float %i.ho, float %8)
   %i.hx = call noundef float @llvm.fmuladd.f32(float %i.hv, float %i.hv, float %i.hw) ; 2 uses
   %i.hy = fcmp oeq float %i.hx, 0.000000e+00
   br i1 %i.hy, label %_ZN5draco7VectorDIfLi3EE9NormalizeEv.exit, label %.preheader.preheader.i

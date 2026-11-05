@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %_ZNK4CGAL7Kd_treeIN
 bb.h:                                             ; preds = %bb.g
   %i.bd = fsub double %i.bb, %i.ba                ; 3 uses
   store double %i.bd, ptr %i.az, align 8, !tbaa !192
-  %8 = tail call double @llvm.fmuladd.f64(double %i.bd, double %i.bd, double 0.000000e+00)
+  %8 = fmul double %i.bd, %i.bd
   br label %bb.k
 
 bb.i:                                             ; preds = %bb.g
@@ -217,7 +217,7 @@ bb.i:                                             ; preds = %bb.g
 bb.j:                                             ; preds = %bb.i
   %i.bh = fsub double %i.ba, %i.bf                ; 3 uses
   store double %i.bh, ptr %i.az, align 8, !tbaa !192
-  %9 = tail call double @llvm.fmuladd.f64(double %i.bh, double %i.bh, double 0.000000e+00)
+  %9 = fmul double %i.bh, %i.bh
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h
@@ -336,7 +336,7 @@ bb.w:                                             ; preds = %.body
   br label %_ZNSt6vectorIdSaIdEED2Ev.exit
 
 bb.x:                                             ; preds = %._crit_edge
-  br i1 %i.ap, label %10, label %bb.y
+  br i1 %i.ap, label %bb.aa, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
   %i.da = getelementptr inbounds nuw i8, ptr %1, i64 280 ; 3 uses
@@ -361,40 +361,31 @@ _ZNSt11unique_lockISt5mutexED2Ev.exit.i.i38:      ; preds = %bb.z
 
 _ZNK4CGAL7Kd_treeINS_21Search_traits_adapterISt4pairINS_7Point_3INS_16Simple_cartesianIdEEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS5_EESt6vectorISA_SaISA_EEEEENS_26First_of_pair_property_mapISG_EENS_13AABB_traits_3IS5_NS_25AABB_triangle_primitive_3IS5_SF_St17integral_constantIbLb0EEEENS_7DefaultEEEEENS_16Sliding_midpointISQ_NS_15Plane_separatorIdEEEESL_IbLb1EESM_E11const_buildEv.exit.i39: ; preds = %bb.z, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit.i.i37
   %i.dg = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.da) #21 ; 0 uses
-  br label %10
+  br label %bb.aa
 
-10:                                               ; preds = %_ZNK4CGAL7Kd_treeINS_21Search_traits_adapterISt4pairINS_7Point_3INS_16Simple_cartesianIdEEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS5_EESt6vectorISA_SaISA_EEEEENS_26First_of_pair_property_mapISG_EENS_13AABB_traits_3IS5_NS_25AABB_triangle_primitive_3IS5_SF_St17integral_constantIbLb0EEEENS_7DefaultEEEEENS_16Sliding_midpointISQ_NS_15Plane_separatorIdEEEESL_IbLb1EESM_E11const_buildEv.exit.i39, %bb.x
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 192
-  %12 = load ptr, ptr %11, align 8, !tbaa !545    ; 6 uses
-  %13 = getelementptr inbounds nuw i8, ptr %12, i64 24
-  %14 = load ptr, ptr %i.y, align 8               ; 3 uses
-  %15 = load double, ptr %2, align 8, !tbaa !192  ; 3 uses
+bb.aa:                                            ; preds = %_ZNK4CGAL7Kd_treeINS_21Search_traits_adapterISt4pairINS_7Point_3INS_16Simple_cartesianIdEEEEN9__gnu_cxx17__normal_iteratorIPNS_10Triangle_3IS5_EESt6vectorISA_SaISA_EEEEENS_26First_of_pair_property_mapISG_EENS_13AABB_traits_3IS5_NS_25AABB_triangle_primitive_3IS5_SF_St17integral_constantIbLb0EEEENS_7DefaultEEEEENS_16Sliding_midpointISQ_NS_15Plane_separatorIdEEEESL_IbLb1EESM_E11const_buildEv.exit.i39, %bb.x
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 192
+  %11 = load ptr, ptr %10, align 8, !tbaa !545    ; 6 uses
+  %12 = getelementptr inbounds nuw i8, ptr %11, i64 24
+  %13 = load ptr, ptr %i.y, align 8               ; 3 uses
+  %14 = load double, ptr %2, align 8, !tbaa !192  ; 3 uses
+  %15 = load double, ptr %11, align 8, !tbaa !192 ; 2 uses
   %16 = load double, ptr %12, align 8, !tbaa !192 ; 2 uses
-  %17 = load double, ptr %13, align 8, !tbaa !192 ; 2 uses
-  %18 = fadd double %16, %17
-  %19 = fmul double %18, 5.000000e-01
-  %20 = fcmp ugt double %15, %19
-  br i1 %20, label %24, label %21
-
-21:                                               ; preds = %10
-  %22 = fsub double %17, %15                      ; 3 uses
-  %23 = tail call double @llvm.fmuladd.f64(double %22, double %22, double 0.000000e+00)
-  br label %bb.aa
-
-24:                                               ; preds = %10
-  %25 = fsub double %15, %16                      ; 3 uses
-  %26 = tail call double @llvm.fmuladd.f64(double %25, double %25, double 0.000000e+00)
-  br label %bb.aa
-
-bb.aa:                                            ; preds = %24, %21
-  %.sink.i.i = phi double [ %25, %24 ], [ %22, %21 ]
-  %.1.i.i44 = phi double [ %26, %24 ], [ %23, %21 ] ; 2 uses
-  store double %.sink.i.i, ptr %14, align 8, !tbaa !192
+  %17 = fadd double %15, %16
+  %18 = fmul double %17, 5.000000e-01
+  %19 = fcmp ugt double %14, %18                  ; 2 uses
+  %20 = fsub double %14, %15                      ; 3 uses
+  %21 = fmul double %20, %20
+  %22 = fsub double %16, %14                      ; 3 uses
+  %23 = fmul double %22, %22
+  %.sink.i.i = select i1 %19, double %20, double %22
+  %.1.i.i44 = select i1 %19, double %21, double %23 ; 2 uses
+  store double %.sink.i.i, ptr %13, align 8, !tbaa !192
   %.032.ptr.1.i.i = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.dh = load double, ptr %.032.ptr.1.i.i, align 8, !tbaa !192 ; 3 uses
-  %i.di = getelementptr inbounds nuw i8, ptr %12, i64 8
+  %i.di = getelementptr inbounds nuw i8, ptr %11, i64 8
   %i.dj = load double, ptr %i.di, align 8, !tbaa !192 ; 2 uses
-  %i.dk = getelementptr inbounds nuw i8, ptr %12, i64 32
+  %i.dk = getelementptr inbounds nuw i8, ptr %11, i64 32
   %i.dl = load double, ptr %i.dk, align 8, !tbaa !192 ; 2 uses
   %i.dm = fadd double %i.dj, %i.dl
   %i.dn = fmul double %i.dm, 5.000000e-01
@@ -414,13 +405,13 @@ bb.ac:                                            ; preds = %bb.aa
 bb.ad:                                            ; preds = %bb.ac, %bb.ab
   %.sink38.i.i = phi double [ %i.dr, %bb.ac ], [ %i.dp, %bb.ab ]
   %.1.1.i.i45 = phi double [ %i.ds, %bb.ac ], [ %i.dq, %bb.ab ] ; 2 uses
-  %i.dt = getelementptr inbounds nuw i8, ptr %14, i64 8
+  %i.dt = getelementptr inbounds nuw i8, ptr %13, i64 8
   store double %.sink38.i.i, ptr %i.dt, align 8, !tbaa !192
   %.032.ptr.2.i.i = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.du = load double, ptr %.032.ptr.2.i.i, align 8, !tbaa !192 ; 3 uses
-  %i.dv = getelementptr inbounds nuw i8, ptr %12, i64 16
+  %i.dv = getelementptr inbounds nuw i8, ptr %11, i64 16
   %i.dw = load double, ptr %i.dv, align 8, !tbaa !192 ; 2 uses
-  %i.dx = getelementptr inbounds nuw i8, ptr %12, i64 40
+  %i.dx = getelementptr inbounds nuw i8, ptr %11, i64 40
   %i.dy = load double, ptr %i.dx, align 8, !tbaa !192 ; 2 uses
   %i.dz = fadd double %i.dw, %i.dy
   %i.ea = fmul double %i.dz, 5.000000e-01
@@ -440,7 +431,7 @@ bb.af:                                            ; preds = %bb.ad
 bb.ag:                                            ; preds = %bb.af, %bb.ae
   %.sink39.i.i = phi double [ %i.ee, %bb.af ], [ %i.ec, %bb.ae ]
   %.1.2.i.i46 = phi double [ %i.ef, %bb.af ], [ %i.ed, %bb.ae ]
-  %i.eg = getelementptr inbounds nuw i8, ptr %14, i64 16
+  %i.eg = getelementptr inbounds nuw i8, ptr %13, i64 16
   store double %.sink39.i.i, ptr %i.eg, align 8, !tbaa !192
   %i.eh = load i8, ptr %i.an, align 8, !tbaa !544, !range !74, !noundef !75
   %i.ei = trunc nuw i8 %i.eh to i1
@@ -843,7 +834,7 @@ bb.c:                                             ; preds = %.lr.ph28, %bb.e
   %i.bb = load double, ptr %i.ax, align 8, !tbaa !192
   %i.bc = load double, ptr %.sroa.011.126, align 8, !tbaa !192
   %i.bd = fsub double %i.bb, %i.bc                ; 2 uses
-  %4 = call double @llvm.fmuladd.f64(double %i.bd, double %i.bd, double 0.000000e+00)
+  %4 = fmul double %i.bd, %i.bd
   %i.be = getelementptr inbounds nuw i8, ptr %.sroa.011.126, i64 8
   %i.bf = load double, ptr %.254.ptr.1.i.i.i, align 8, !tbaa !192
   %i.bg = load double, ptr %i.be, align 8, !tbaa !192

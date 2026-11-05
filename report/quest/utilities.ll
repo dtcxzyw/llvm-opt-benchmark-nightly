@@ -205,7 +205,7 @@ vector.body:                                      ; preds = %vector.body.interim
   %.fr102 = freeze <16 x i1> %i.ba
   %i.bb = uitofp <16 x i1> %.fr102 to <16 x double>
   %i.bc = fsub <16 x double> zeroinitializer, %i.bb ; 2 uses
-  %2 = tail call <16 x double> @llvm.fmuladd.v16f64(<16 x double> %i.bc, <16 x double> %i.bc, <16 x double> zeroinitializer)
+  %2 = fmul <16 x double> %i.bc, %i.bc
   %i.bd = fcmp ogt <16 x double> %2, %broadcast.splat100
   %i.be = bitcast <16 x i1> %i.bd to i16
   %.not103 = icmp eq i16 %i.be, 0
@@ -234,7 +234,7 @@ bb.g:                                             ; preds = %.preheader50
   %i.bh = icmp eq i64 %.02671, %.02464
   %i.bi = uitofp i1 %i.bh to double
   %i.bj = fsub double 0.000000e+00, %i.bi         ; 2 uses
-  %3 = tail call noundef double @llvm.fmuladd.f64(double %i.bj, double %i.bj, double 0.000000e+00)
+  %3 = fmul double %i.bj, %i.bj
   %i.bk = fcmp ule double %3, %1
   br i1 %i.bk, label %bb.g, label %.split.us
 
@@ -636,9 +636,6 @@ declare i64 @llvm.vector.reduce.xor.v2i64(<2 x i64>) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #12
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <16 x double> @llvm.fmuladd.v16f64(<16 x double>, <16 x double>, <16 x double>) #12
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

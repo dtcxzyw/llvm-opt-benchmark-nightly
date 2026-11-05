@@ -205,7 +205,7 @@ RemapValClamped.exit.i.i:                         ; preds = %bb.y
   %i.dn = uitofp nneg i32 %i.dm to float
   %i.do = fdiv float %i.dn, 2.600000e+04          ; 2 uses
   %i.dp = fcmp ogt float %i.do, 1.000000e+00
-  %1 = call float @llvm.fmuladd.f32(float %i.do, float 3.276700e+04, float 0.000000e+00)
+  %1 = fmul nnan float %i.do, 3.276700e+04
   %i.dq = select i1 %i.dp, float 3.276700e+04, float %1
   %i.dr = fptoui float %i.dq to i16
   store i16 %i.dr, ptr %i.ax, align 4
@@ -217,7 +217,7 @@ RemapValClamped.exit.i.i:                         ; preds = %bb.y
   %i.dx = uitofp nneg i32 %i.dw to float
   %i.dy = fdiv float %i.dx, 2.600000e+04          ; 2 uses
   %i.dz = fcmp ogt float %i.dy, 1.000000e+00
-  %2 = call float @llvm.fmuladd.f32(float %i.dy, float 3.276700e+04, float 0.000000e+00)
+  %2 = fmul nnan float %i.dy, 3.276700e+04
   %i.ea = select i1 %i.dz, float 3.276700e+04, float %2
   %i.eb = fptoui float %i.ea to i16
   store i16 %i.eb, ptr %i.ay, align 2
@@ -620,7 +620,7 @@ RemapValClamped.exit:                             ; preds = %bb.j, %bb.i
   %i.cs = uitofp nneg i32 %i.cr to float
   %i.ct = fdiv float %i.cs, 2.600000e+04          ; 2 uses
   %i.cu = fcmp ogt float %i.ct, 1.000000e+00
-  %2 = tail call float @llvm.fmuladd.f32(float %i.ct, float 3.276700e+04, float 0.000000e+00)
+  %2 = fmul nnan float %i.ct, 3.276700e+04
   %i.cv = select i1 %i.cu, float 3.276700e+04, float %2
   %i.cw = fptoui float %i.cv to i16
   %i.cx = getelementptr inbounds nuw i8, ptr %0, i64 36
@@ -633,16 +633,13 @@ RemapValClamped.exit:                             ; preds = %bb.j, %bb.i
   %i.dd = uitofp nneg i32 %i.dc to float
   %i.de = fdiv float %i.dd, 2.600000e+04          ; 2 uses
   %i.df = fcmp ogt float %i.de, 1.000000e+00
-  %3 = tail call float @llvm.fmuladd.f32(float %i.de, float 3.276700e+04, float 0.000000e+00)
+  %3 = fmul nnan float %i.de, 3.276700e+04
   %i.dg = select i1 %i.df, float 3.276700e+04, float %3
   %i.dh = fptoui float %i.dg to i16
   %i.di = getelementptr inbounds nuw i8, ptr %0, i64 38
   store i16 %i.dh, ptr %i.di, align 2
   ret void
 }
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare float @llvm.fmuladd.f32(float, float, float) #6
 
 declare float @SDL_cosf_REAL(float noundef) local_unnamed_addr #2
 
