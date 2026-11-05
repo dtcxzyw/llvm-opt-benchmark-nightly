@@ -204,11 +204,11 @@ bb.g:                                             ; preds = %._crit_edge88, %_ZN
   br i1 %i.cu, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.cv = icmp ult i64 %i.cs, %i.by
+  %i.cv = icmp samesign ult i64 %i.cs, %i.by
   br i1 %i.cv, label %.noexc42.preheader, label %._crit_edge104
 
 .noexc42.preheader:                               ; preds = %bb.h
-  %i.cw = sub nuw i64 %i.by, %i.cs
+  %i.cw = sub nuw nsw i64 %i.by, %i.cs
   %xtraiter159 = and i64 %i.cw, 1
   %lcmp.mod160.not = icmp eq i64 %xtraiter159, 0
   br i1 %lcmp.mod160.not, label %.noexc42.prol.loopexit, label %.noexc42.prol
@@ -611,12 +611,12 @@ bb.f:                                             ; preds = %._crit_edge, %_ZN6e
   br i1 %i.aa, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.ab = icmp ult i64 %i.y, %i.b
+  %i.ab = icmp samesign ult i64 %i.y, %i.b
   br i1 %i.ab, label %.lr.ph44, label %._crit_edge45
 
 .lr.ph44:                                         ; preds = %bb.g
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 224 ; 3 uses
-  %i.ad = sub nuw i64 %i.b, %i.y
+  %i.ad = sub nuw nsw i64 %i.b, %i.y
   %xtraiter100 = and i64 %i.ad, 1
   %lcmp.mod101.not = icmp eq i64 %xtraiter100, 0
   br i1 %lcmp.mod101.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa
@@ -802,14 +802,13 @@ bb.k:                                             ; preds = %bb.j
   br i1 %i.dd, label %_ZN6embree8vector_tINS_10BufferViewINS_6Vec3faEEENS_6Device9allocatorIS3_Lm8EEEE18internal_grow_sizeEm.exit, label %.lr.ph47
 
 .lr.ph47:                                         ; preds = %bb.k, %.lr.ph47
-  %.0.i1146 = phi i64 [ %.sroa.speculated23, %.lr.ph47 ], [ %i.dc, %bb.k ]
-  %i.de = shl i64 %.0.i1146, 1
-  %.sroa.speculated23 = tail call i64 @llvm.umax.i64(i64 %i.de, i64 1) ; 3 uses
-  %i.df = icmp ult i64 %.sroa.speculated23, %i.b
+  %.0.i1146 = phi i64 [ %i.de, %.lr.ph47 ], [ %i.dc, %bb.k ]
+  %i.de = shl nuw nsw i64 %.0.i1146, 1            ; 3 uses
+  %i.df = icmp samesign ult i64 %i.de, %i.b
   br i1 %i.df, label %.lr.ph47, label %_ZN6embree8vector_tINS_10BufferViewINS_6Vec3faEEENS_6Device9allocatorIS3_Lm8EEEE18internal_grow_sizeEm.exit, !llvm.loop !2
 
 _ZN6embree8vector_tINS_10BufferViewINS_6Vec3faEEENS_6Device9allocatorIS3_Lm8EEEE18internal_grow_sizeEm.exit: ; preds = %.lr.ph47, %bb.j, %bb.k
-  %.07.i10 = phi i64 [ %i.b, %bb.k ], [ %i.dc, %bb.j ], [ %.sroa.speculated23, %.lr.ph47 ] ; 3 uses
+  %.07.i10 = phi i64 [ %i.b, %bb.k ], [ %i.dc, %bb.j ], [ %i.de, %.lr.ph47 ] ; 3 uses
   %i.dg = getelementptr inbounds nuw i8, ptr %0, i64 240 ; 7 uses
   %i.dh = load i64, ptr %i.dg, align 16           ; 3 uses
   %i.di = icmp ugt i64 %i.dh, %i.b
@@ -865,12 +864,12 @@ bb.o:                                             ; preds = %._crit_edge51, %_ZN
   br i1 %i.dz, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  %i.ea = icmp ult i64 %i.dx, %i.b
+  %i.ea = icmp samesign ult i64 %i.dx, %i.b
   br i1 %i.ea, label %.lr.ph59, label %._crit_edge60
 
 .lr.ph59:                                         ; preds = %bb.p
   %i.eb = getelementptr inbounds nuw i8, ptr %0, i64 256 ; 3 uses
-  %i.ec = sub nuw i64 %i.b, %i.dx
+  %i.ec = sub nuw nsw i64 %i.b, %i.dx
   %xtraiter106 = and i64 %i.ec, 1
   %lcmp.mod107.not = icmp eq i64 %xtraiter106, 0
   br i1 %lcmp.mod107.not, label %.prol.loopexit105, label %.prol.loopexit105.unr-lcssa
@@ -1121,12 +1120,12 @@ bb.f:                                             ; preds = %._crit_edge, %_ZN6e
   br i1 %i.aa, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.ab = icmp ult i64 %i.y, %i.b
+  %i.ab = icmp samesign ult i64 %i.y, %i.b
   br i1 %i.ab, label %.lr.ph20, label %._crit_edge21
 
 .lr.ph20:                                         ; preds = %bb.g
   %i.ac = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 3 uses
-  %i.ad = sub nuw i64 %i.b, %i.y
+  %i.ad = sub nuw nsw i64 %i.b, %i.y
   %xtraiter41 = and i64 %i.ad, 1
   %lcmp.mod42.not = icmp eq i64 %xtraiter41, 0
   br i1 %lcmp.mod42.not, label %.prol.loopexit, label %.prol.loopexit.unr-lcssa

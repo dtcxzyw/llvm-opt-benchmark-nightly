@@ -205,7 +205,7 @@ bb.vq:                                            ; preds = %bb.vp
   %i.crl = load ptr, ptr %i.iq, align 8, !alias.scope !16348, !nonnull !10, !noundef !10 ; 2 uses
   %i.crm = getelementptr inbounds nuw [4 x i8], ptr %i.crl, i64 %i.cri
   %i.crn = load i32, ptr %i.crm, align 4, !noalias !16349, !noundef !10 ; 2 uses
-  %i.cro = add nuw i64 %i.cri, 1                  ; 6 uses
+  %i.cro = add nuw i64 %i.cri, 1                  ; 5 uses
   store i64 %i.cro, ptr %i.io, align 8, !alias.scope !16348
   %i.crp = icmp ult i64 %i.cro, %i.crj
   br i1 %i.crp, label %bb.vr, label %.invoke2392
@@ -243,26 +243,22 @@ bb.vt:                                            ; preds = %bb.vs
 
 .invoke2388:                                      ; preds = %bb.vt, %bb.xl
   %.sink2402 = phi ptr [ %i.cyu, %bb.xl ], [ %i.csa, %bb.vt ]
-  %.sink2401 = phi i64 [ %i.cyr, %bb.xl ], [ %i.crx, %bb.vt ]
-  %.sink = phi i64 [ %i.cyl, %bb.xl ], [ %i.cro, %bb.vt ]
+  %.sink = phi i64 [ %i.cyr, %bb.xl ], [ %i.crx, %bb.vt ]
   %i.csd = phi i32 [ %i.cyk, %bb.xl ], [ %i.crn, %bb.vt ]
   %i.cse = phi i32 [ %i.cyo, %bb.xl ], [ %i.cru, %bb.vt ] ; 2 uses
   %.sroa.6.0..sroa_idx.i.i.i174 = getelementptr inbounds nuw i8, ptr %.sink2402, i64 4
-  %.sroa.6.0.copyload.i.i.i175 = load i32, ptr %.sroa.6.0..sroa_idx.i.i.i174, align 4, !noalias !10
-  %i.csf = add nuw i64 %.sink2401, 1
+  %.sroa.6.0.copyload.i.i.i175 = load i32, ptr %.sroa.6.0..sroa_idx.i.i.i174, align 4, !noalias !10 ; 2 uses
+  %i.csf = add nuw i64 %.sink, 1
   store i64 %i.csf, ptr %i.is, align 8
-  %.sroa.54.8.insert.ext.i.i = zext i32 %.sroa.6.0.copyload.i.i.i175 to i64
-  %.sroa.54.8.insert.shift.i.i = shl nuw i64 %.sroa.54.8.insert.ext.i.i, 32
-  %.sroa.54.8.insert.insert.i.i = add nuw nsw i64 %.sroa.54.8.insert.shift.i.i, %.sink ; 2 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !16353)
   call void @llvm.experimental.noalias.scope.decl(metadata !16354)
-  %.sroa.4.0.extract.shift.i = lshr i64 %.sroa.54.8.insert.insert.i.i, 32
-  %.sroa.4.0.extract.trunc.i = trunc i64 %.sroa.4.0.extract.shift.i to i16 ; 2 uses
+  %.sroa.4.0.extract.trunc.i = trunc i32 %.sroa.6.0.copyload.i.i.i175 to i16 ; 2 uses
   %.not.i2409 = icmp eq i16 %.sroa.4.0.extract.trunc.i, 0
   br i1 %.not.i2409, label %._crit_edge.i, label %.lr.ph.i
 
 ._crit_edge.i:                                    ; preds = %.noexc2429, %.invoke2388
-  %.sroa.5.0.extract.shift.i = lshr i64 %.sroa.54.8.insert.insert.i.i, 48 ; 2 uses
+  %6 = lshr i32 %.sroa.6.0.copyload.i.i.i175, 16  ; 2 uses
+  %.sroa.5.0.extract.shift.i = zext nneg i32 %6 to i64
   %i.csg = load i64, ptr %i.iu, align 8, !alias.scope !16355, !noundef !10 ; 2 uses
   %.not.i.i2410 = icmp eq i64 %i.csg, 0
   br i1 %.not.i.i2410, label %.invoke4170, label %_RNvXs1_NtNtCs8jFhWeO2DFb_9typst_pdf4tags4treeNtB5_15TraversalStatesNtNtNtCs3oUPovFnLWP_4core3ops5deref8DerefMut9deref_mut.exit.i, !prof !13
@@ -285,7 +281,7 @@ _RNvXs1_NtNtCs8jFhWeO2DFb_9typst_pdf4tags4treeNtB5_15TraversalStatesNtNtNtCs3oUP
   %i.csq = load i64, ptr %i.csp, align 16, !alias.scope !16357, !noalias !16356, !noundef !10 ; 6 uses
   %i.csr = icmp ult i64 %i.csq, 230584300921369396
   call void @llvm.assume(i1 %i.csr)
-  %i.css = icmp eq i64 %.sroa.5.0.extract.shift.i, 0
+  %i.css = icmp eq i32 %6, 0
   br i1 %i.css, label %_RNvNtNtCs8jFhWeO2DFb_9typst_pdf4tags4tree10step_break.exit, label %.lr.ph.i.i2412
 
 .lr.ph.i.i2412:                                   ; preds = %_RNvXs1_NtNtCs8jFhWeO2DFb_9typst_pdf4tags4treeNtB5_15TraversalStatesNtNtNtCs3oUPovFnLWP_4core3ops5deref8DerefMut9deref_mut.exit.i
@@ -688,7 +684,7 @@ bb.xi:                                            ; preds = %bb.xh
   %i.cyi = load ptr, ptr %i.iq, align 8, !alias.scope !16417, !nonnull !10, !noundef !10 ; 2 uses
   %i.cyj = getelementptr inbounds nuw [4 x i8], ptr %i.cyi, i64 %i.cyf
   %i.cyk = load i32, ptr %i.cyj, align 4, !noalias !16418, !noundef !10 ; 3 uses
-  %i.cyl = add nuw i64 %i.cyf, 1                  ; 6 uses
+  %i.cyl = add nuw i64 %i.cyf, 1                  ; 5 uses
   store i64 %i.cyl, ptr %i.io, align 8, !alias.scope !16417
   %i.cym = icmp ult i64 %i.cyl, %i.cyg
   br i1 %i.cym, label %bb.xj, label %.invoke2392

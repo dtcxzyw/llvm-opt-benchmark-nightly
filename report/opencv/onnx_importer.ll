@@ -205,7 +205,7 @@ _ZNSt3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN2cv3dnn14dnn5_v20
 bb.co:                                            ; preds = %.lr.ph649, %_ZNSt6vectorIN2cv3MatESaIS1_EE9push_backERKS1_.exit
   %.050648 = phi i64 [ 2, %.lr.ph649 ], [ %i.po, %_ZNSt6vectorIN2cv3MatESaIS1_EE9push_backERKS1_.exit ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %47) #28
-  %i.or = trunc i64 %.050648 to i32
+  %i.or = trunc nuw i64 %.050648 to i32
   %i.os = load i32, ptr %i.l, align 8, !tbaa !52, !noalias !1374
   %i.ot = icmp sgt i32 %i.os, %i.or
   br i1 %i.ot, label %bb.cs, label %bb.cp
@@ -245,9 +245,8 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i298: ; preds = %
 bb.cs:                                            ; preds = %bb.co
   %i.pa = load ptr, ptr %i.u, align 8, !tbaa !53, !noalias !1374
   %i.pb = getelementptr inbounds nuw i8, ptr %i.pa, i64 8
-  %sext = shl nuw i64 %.050648, 32
-  %63 = ashr exact i64 %sext, 29
-  %i.pc = getelementptr inbounds i8, ptr %i.pb, i64 %63
+  %sext = shl nuw nsw i64 %.050648, 3
+  %i.pc = getelementptr inbounds nuw i8, ptr %i.pb, i64 %sext
   %i.pd = load ptr, ptr %i.pc, align 8, !tbaa !54, !noalias !1374
   invoke void @_ZN2cv3dnn14dnn5_v2026060512ONNXImporter7getBlobERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE(ptr dead_on_unwind nonnull writable sret(%"class.cv::Mat") align 8 %47, ptr noundef nonnull align 8 dereferenceable(720) %0, ptr noundef nonnull align 8 dereferenceable(32) %i.pd)
           to label %_ZN2cv3dnn14dnn5_v2026060512ONNXImporter7getBlobERKN11opencv_onnx9NodeProtoEi.exit304 unwind label %.loopexit.split-lp517.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp

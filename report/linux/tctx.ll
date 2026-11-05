@@ -194,12 +194,8 @@ io_init_wq_offload.exit:                          ; preds = %bb.d, %bb.f
 
 bb.g:                                             ; preds = %io_init_wq_offload.exit.thread, %io_init_wq_offload.exit
   %.0.i38 = phi ptr [ inttoptr (i64 -12 to ptr), %io_init_wq_offload.exit.thread ], [ %i.t, %io_init_wq_offload.exit ]
-  %3 = ptrtoint ptr %.0.i38 to i64
   call void @percpu_counter_destroy_many(ptr noundef %i.c, i32 noundef 1) #8
   call void @kfree(ptr noundef nonnull %i.b) #8
-  %4 = shl i64 %3, 32
-  %5 = ashr exact i64 %4, 32
-  %6 = inttoptr i64 %5 to ptr
   br label %bb.i
 
 bb.h:                                             ; preds = %io_init_wq_offload.exit
@@ -232,7 +228,7 @@ bb.h:                                             ; preds = %io_init_wq_offload.
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.a, %bb.h, %bb.g, %bb.c
-  %.0 = phi ptr [ %i.b, %bb.h ], [ %i.f, %bb.c ], [ %6, %bb.g ], [ inttoptr (i64 -12 to ptr), %bb.a ]
+  %.0 = phi ptr [ %i.b, %bb.h ], [ %i.f, %bb.c ], [ %.0.i38, %bb.g ], [ inttoptr (i64 -12 to ptr), %bb.a ]
   ret ptr %.0
 }
 

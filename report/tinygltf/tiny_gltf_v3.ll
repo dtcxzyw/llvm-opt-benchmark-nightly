@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %bb.t
   %.0.copyload75.i = load i32, ptr %i.bc, align 1
   %i.bd = zext i32 %.0.copyload75.i to i64        ; 2 uses
   %i.be = add nuw nsw i64 %i.bb, %i.bd            ; 4 uses
-  %.not54.i = icmp ugt i64 %i.be, %3
+  %.not54.i = icmp samesign ugt i64 %i.be, %3
   br i1 %.not54.i, label %bb.v, label %bb.aa
 
 bb.v:                                             ; preds = %.lr.ph.i
@@ -608,22 +608,18 @@ bb.w:                                             ; preds = %bb.v
   br i1 %exitcond165.not.i, label %._crit_edge129.us.i, label %bb.t, !llvm.loop !506
 
 ._crit_edge129.us.i:                              ; preds = %bb.w, %bb.s, %.thread.i
-  %indvars.iv.next167.i = add nuw nsw i64 %indvars.iv166.i, 1 ; 4 uses
+  %indvars.iv.next167.i = add nuw nsw i64 %indvars.iv166.i, 1 ; 3 uses
   %.not25.i.i.i.us.i = icmp eq i64 %indvars.iv166.i, 0
-  br i1 %.not25.i.i.i.us.i, label %._crit_edge.i.i.i.us.i, label %.lr.ph.i.i.i.us.i
+  br i1 %.not25.i.i.i.us.i, label %._crit_edge.i.i.i.us.i, label %bb.x
 
-.lr.ph.i.i.i.us.i:                                ; preds = %._crit_edge129.us.i, %bb.x
-  %.027.i.i.i.us.i = phi i64 [ %i.cf, %bb.x ], [ %indvars.iv166.i, %._crit_edge129.us.i ] ; 2 uses
-  %14 = icmp slt i64 %.027.i.i.i.us.i, 0
-  br i1 %14, label %._crit_edge.i.i.i.us.i, label %bb.x
-
-bb.x:                                             ; preds = %.lr.ph.i.i.i.us.i
+bb.x:                                             ; preds = %._crit_edge129.us.i, %bb.x
+  %.027.i.i.i.us.i = phi i64 [ %i.cf, %bb.x ], [ %indvars.iv166.i, %._crit_edge129.us.i ]
   %i.cf = shl nuw i64 %.027.i.i.i.us.i, 1         ; 3 uses
   %.not = icmp ugt i64 %i.cf, %indvars.iv166.i
-  br i1 %.not, label %._crit_edge.i.i.i.us.i, label %.lr.ph.i.i.i.us.i, !llvm.loop !1
+  br i1 %.not, label %._crit_edge.i.i.i.us.i, label %bb.x, !llvm.loop !1
 
-._crit_edge.i.i.i.us.i:                           ; preds = %bb.x, %.lr.ph.i.i.i.us.i, %._crit_edge129.us.i
-  %.1.i.i.i.us.i = phi i64 [ 8, %._crit_edge129.us.i ], [ %i.cf, %bb.x ], [ %indvars.iv.next167.i, %.lr.ph.i.i.i.us.i ] ; 2 uses
+._crit_edge.i.i.i.us.i:                           ; preds = %bb.x, %._crit_edge129.us.i
+  %.1.i.i.i.us.i = phi i64 [ 8, %._crit_edge129.us.i ], [ %i.cf, %bb.x ] ; 2 uses
   %i.cg = icmp ugt i64 %.1.i.i.i.us.i, 768614336404564650
   br i1 %i.cg, label %.split.us.i, label %bb.y
 
@@ -1026,22 +1022,18 @@ bb.c:                                             ; preds = %.tg3json__init_valu
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   store i32 3, ptr %4, align 8, !tbaa !37
   store double %i.h, ptr %i.c, align 8, !tbaa !34
-  %i.i = add nuw nsw i64 %i.f, 1                  ; 3 uses
+  %i.i = add nuw nsw i64 %i.f, 1                  ; 2 uses
   %.not25.i.i.i.i.i = icmp eq i64 %i.f, 0
-  br i1 %.not25.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %.lr.ph.i.i.i.i.i
+  br i1 %.not25.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.d
 
-.lr.ph.i.i.i.i.i:                                 ; preds = %bb.c, %bb.d
-  %.027.i.i.i.i.i = phi i64 [ %i.j, %bb.d ], [ %i.f, %bb.c ] ; 2 uses
-  %6 = icmp slt i64 %.027.i.i.i.i.i, 0
-  br i1 %6, label %._crit_edge.i.i.i.i.i, label %bb.d
-
-bb.d:                                             ; preds = %.lr.ph.i.i.i.i.i
+bb.d:                                             ; preds = %bb.c, %bb.d
+  %.027.i.i.i.i.i = phi i64 [ %i.j, %bb.d ], [ %i.f, %bb.c ]
   %i.j = shl nuw i64 %.027.i.i.i.i.i, 1           ; 3 uses
   %.not = icmp ugt i64 %i.j, %i.f
-  br i1 %.not, label %._crit_edge.i.i.i.i.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !1
+  br i1 %.not, label %._crit_edge.i.i.i.i.i, label %bb.d, !llvm.loop !1
 
-._crit_edge.i.i.i.i.i:                            ; preds = %bb.d, %.lr.ph.i.i.i.i.i, %bb.c
-  %.1.i.i.i.i.i = phi i64 [ 8, %bb.c ], [ %i.i, %.lr.ph.i.i.i.i.i ], [ %i.j, %bb.d ] ; 2 uses
+._crit_edge.i.i.i.i.i:                            ; preds = %bb.d, %bb.c
+  %.1.i.i.i.i.i = phi i64 [ 8, %bb.c ], [ %i.j, %bb.d ] ; 2 uses
   %i.k = icmp ugt i64 %.1.i.i.i.i.i, 768614336404564650
   br i1 %i.k, label %tg3__json_from_double_array.exit.thread, label %bb.e
 
@@ -1117,22 +1109,18 @@ bb.c:                                             ; preds = %.tg3json__init_valu
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   store i32 2, ptr %4, align 8, !tbaa !37
   store i64 %i.i, ptr %i.c, align 8, !tbaa !34
-  %i.j = add nuw nsw i64 %i.f, 1                  ; 3 uses
+  %i.j = add nuw nsw i64 %i.f, 1                  ; 2 uses
   %.not25.i.i.i.i.i = icmp eq i64 %i.f, 0
-  br i1 %.not25.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %.lr.ph.i.i.i.i.i
+  br i1 %.not25.i.i.i.i.i, label %._crit_edge.i.i.i.i.i, label %bb.d
 
-.lr.ph.i.i.i.i.i:                                 ; preds = %bb.c, %bb.d
-  %.027.i.i.i.i.i = phi i64 [ %i.k, %bb.d ], [ %i.f, %bb.c ] ; 2 uses
-  %6 = icmp slt i64 %.027.i.i.i.i.i, 0
-  br i1 %6, label %._crit_edge.i.i.i.i.i, label %bb.d
-
-bb.d:                                             ; preds = %.lr.ph.i.i.i.i.i
+bb.d:                                             ; preds = %bb.c, %bb.d
+  %.027.i.i.i.i.i = phi i64 [ %i.k, %bb.d ], [ %i.f, %bb.c ]
   %i.k = shl nuw i64 %.027.i.i.i.i.i, 1           ; 3 uses
   %.not = icmp ugt i64 %i.k, %i.f
-  br i1 %.not, label %._crit_edge.i.i.i.i.i, label %.lr.ph.i.i.i.i.i, !llvm.loop !1
+  br i1 %.not, label %._crit_edge.i.i.i.i.i, label %bb.d, !llvm.loop !1
 
-._crit_edge.i.i.i.i.i:                            ; preds = %bb.d, %.lr.ph.i.i.i.i.i, %bb.c
-  %.1.i.i.i.i.i = phi i64 [ 8, %bb.c ], [ %i.j, %.lr.ph.i.i.i.i.i ], [ %i.k, %bb.d ] ; 2 uses
+._crit_edge.i.i.i.i.i:                            ; preds = %bb.d, %bb.c
+  %.1.i.i.i.i.i = phi i64 [ 8, %bb.c ], [ %i.k, %bb.d ] ; 2 uses
   %i.l = icmp ugt i64 %.1.i.i.i.i.i, 768614336404564650
   br i1 %i.l, label %tg3__json_from_int_array.exit.thread, label %bb.e
 

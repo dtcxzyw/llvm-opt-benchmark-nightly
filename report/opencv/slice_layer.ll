@@ -204,8 +204,7 @@ _ZNSt6vectorIN2cv5RangeESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__norma
 _ZNSt6vectorIN2cv5RangeESaIS1_EE9push_backEOS1_.exit: ; preds = %_ZNSt6vectorIN2cv5RangeESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_.exit.i.i, %bb.at
   %i.iv = add nuw nsw i32 %.027124, 1             ; 2 uses
   %i.iw = load i32, ptr %11, align 4, !tbaa !23
-  %narrow.i74 = call i32 @llvm.smax.i32(i32 %i.iw, i32 0)
-  %19 = icmp samesign ugt i32 %narrow.i74, %i.iv
+  %19 = icmp sgt i32 %i.iw, %i.iv
   br i1 %19, label %.lr.ph125, label %.preheader.loopexit, !llvm.loop !219
 
 ._crit_edge:                                      ; preds = %bb.bc, %.preheader

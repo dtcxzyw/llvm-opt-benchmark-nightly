@@ -205,23 +205,19 @@ bb.r:                                             ; preds = %_ZNK16hb_lazy_loade
 .preheader.i:                                     ; preds = %bb.r, %.preheader.i
   %.043.i = phi i32 [ %i.br, %.preheader.i ], [ 0, %bb.r ] ; 2 uses
   %i.bp = lshr i32 %.043.i, 1
-  %i.bq = add i32 %.043.i, 8
-  %i.br = add i32 %i.bq, %i.bp                    ; 10 uses
-  %i.bs = icmp ult i32 %i.br, %.sroa.9697.8.extract.trunc709
-  br i1 %i.bs, label %.preheader.i, label %.thread.i, !llvm.loop !374
+  %i.bq = add nuw nsw i32 %.043.i, 8
+  %i.br = add nuw nsw i32 %i.bq, %i.bp            ; 9 uses
+  %i.bs = icmp samesign ult i32 %i.br, %.sroa.9697.8.extract.trunc709
+  br i1 %i.bs, label %.preheader.i, label %_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i, !llvm.loop !374
 
-.thread.i:                                        ; preds = %.preheader.i
-  %8 = icmp ugt i32 %i.br, 1073741823
-  br i1 %8, label %_ZN11hb_vector_tIfLb0EE6resizeEi.exit.thread, label %_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i, !prof !32
-
-_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i: ; preds = %.thread.i
-  %i.bt = shl nuw i32 %i.br, 2
-  %i.bu = zext i32 %i.bt to i64
+_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i: ; preds = %.preheader.i
+  %i.bt = shl nuw nsw i32 %i.br, 2
+  %i.bu = zext nneg i32 %i.bt to i64
   %i.bv = tail call ptr @hb_realloc(ptr noundef null, i64 noundef %i.bu) #10 ; 8 uses
   %.not22.i = icmp eq ptr %i.bv, null
   br i1 %.not22.i, label %_ZN11hb_vector_tIfLb0EE6resizeEi.exit.thread, label %_ZN11hb_vector_tIfLb0EE6resizeEi.exit, !prof !133
 
-_ZN11hb_vector_tIfLb0EE6resizeEi.exit.thread:     ; preds = %_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i, %.thread.i
+_ZN11hb_vector_tIfLb0EE6resizeEi.exit.thread:     ; preds = %_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i
   store i8 0, ptr %i.aw, align 8, !tbaa !132
   br label %_ZN11hb_vector_tIfLb0EED2Ev.exit455
 
@@ -250,23 +246,19 @@ _ZN11hb_vector_tIfLb0EE6resizeEi.exit.thread730:  ; preds = %bb.r
 .preheader.i463:                                  ; preds = %_ZN11hb_vector_tIfLb0EE6resizeEi.exit, %.preheader.i463
   %.043.i464 = phi i32 [ %i.cg, %.preheader.i463 ], [ 0, %_ZN11hb_vector_tIfLb0EE6resizeEi.exit ] ; 2 uses
   %i.ce = lshr i32 %.043.i464, 1
-  %i.cf = add i32 %.043.i464, 8
-  %i.cg = add i32 %i.cf, %i.ce                    ; 8 uses
-  %i.ch = icmp ult i32 %i.cg, %.sroa.9697.8.extract.trunc709
-  br i1 %i.ch, label %.preheader.i463, label %.thread.i465, !llvm.loop !374
+  %i.cf = add nuw nsw i32 %.043.i464, 8
+  %i.cg = add nuw nsw i32 %i.cf, %i.ce            ; 7 uses
+  %i.ch = icmp samesign ult i32 %i.cg, %.sroa.9697.8.extract.trunc709
+  br i1 %i.ch, label %.preheader.i463, label %_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i468, !llvm.loop !374
 
-.thread.i465:                                     ; preds = %.preheader.i463
-  %9 = icmp ugt i32 %i.cg, 1073741823
-  br i1 %9, label %_ZN11hb_vector_tIfLb0EE6resizeEi.exit200.thread, label %_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i468, !prof !32
-
-_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i468: ; preds = %.thread.i465
-  %i.ci = shl nuw i32 %i.cg, 2
-  %i.cj = zext i32 %i.ci to i64
+_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i468: ; preds = %.preheader.i463
+  %i.ci = shl nuw nsw i32 %i.cg, 2
+  %i.cj = zext nneg i32 %i.ci to i64
   %i.ck = tail call ptr @hb_realloc(ptr noundef null, i64 noundef %i.cj) #10 ; 6 uses
   %.not22.i469 = icmp eq ptr %i.ck, null
   br i1 %.not22.i469, label %_ZN11hb_vector_tIfLb0EE6resizeEi.exit200.thread, label %_ZN11hb_vector_tIfLb0EE6resizeEi.exit200, !prof !133
 
-_ZN11hb_vector_tIfLb0EE6resizeEi.exit200.thread:  ; preds = %_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i468, %.thread.i465
+_ZN11hb_vector_tIfLb0EE6resizeEi.exit200.thread:  ; preds = %_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i468
   store i8 0, ptr %i.aw, align 8, !tbaa !132
   br label %_ZN11hb_vector_tIfLb0EED2Ev.exit453
 
@@ -279,23 +271,19 @@ _ZN11hb_vector_tIfLb0EE6resizeEi.exit200:         ; preds = %_ZN11hb_vector_tIfL
 .preheader.i484:                                  ; preds = %_ZN11hb_vector_tIfLb0EE6resizeEi.exit200, %.preheader.i484
   %.043.i485 = phi i32 [ %i.cp, %.preheader.i484 ], [ 0, %_ZN11hb_vector_tIfLb0EE6resizeEi.exit200 ] ; 2 uses
   %i.cn = lshr i32 %.043.i485, 1
-  %i.co = add i32 %.043.i485, 8
-  %i.cp = add i32 %i.co, %i.cn                    ; 6 uses
-  %i.cq = icmp ult i32 %i.cp, %.sroa.9697.8.extract.trunc709
-  br i1 %i.cq, label %.preheader.i484, label %.thread.i486, !llvm.loop !374
+  %i.co = add nuw nsw i32 %.043.i485, 8
+  %i.cp = add nuw nsw i32 %i.co, %i.cn            ; 5 uses
+  %i.cq = icmp samesign ult i32 %i.cp, %.sroa.9697.8.extract.trunc709
+  br i1 %i.cq, label %.preheader.i484, label %_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i489, !llvm.loop !374
 
-.thread.i486:                                     ; preds = %.preheader.i484
-  %10 = icmp ugt i32 %i.cp, 1073741823
-  br i1 %10, label %_ZN11hb_vector_tIfLb0EE6resizeEi.exit204.thread, label %_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i489, !prof !32
-
-_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i489: ; preds = %.thread.i486
-  %i.cr = shl nuw i32 %i.cp, 2
-  %i.cs = zext i32 %i.cr to i64
+_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i489: ; preds = %.preheader.i484
+  %i.cr = shl nuw nsw i32 %i.cp, 2
+  %i.cs = zext nneg i32 %i.cr to i64
   %i.ct = tail call ptr @hb_realloc(ptr noundef null, i64 noundef %i.cs) #10 ; 4 uses
   %.not22.i490 = icmp eq ptr %i.ct, null
   br i1 %.not22.i490, label %_ZN11hb_vector_tIfLb0EE6resizeEi.exit204.thread, label %_ZN11hb_vector_tIfLb0EE6resizeEi.exit204, !prof !133
 
-_ZN11hb_vector_tIfLb0EE6resizeEi.exit204.thread:  ; preds = %_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i489, %.thread.i486
+_ZN11hb_vector_tIfLb0EE6resizeEi.exit204.thread:  ; preds = %_ZN11hb_vector_tIfLb0EE14realloc_vectorIfTnPN12hb_enable_ifIXsr3std28is_trivially_copy_assignableIT_EE5valueEvE4typeELPv0EEEPfj11hb_priorityILj0EE.exit.i489
   store i8 0, ptr %i.aw, align 8, !tbaa !132
   br label %_ZN11hb_vector_tIfLb0EED2Ev.exit
 
@@ -698,8 +686,9 @@ bb.cu:                                            ; preds = %_ZN11hb_vector_tIfL
   %.sroa.14680.1 = phi ptr [ %.sroa.14680.01019, %.critedge ], [ %i.bv, %_ZN11hb_vector_tIfLb0EE6resizeEi.exit204 ] ; 2 uses
   %.sroa.0672.1 = phi i32 [ %.sroa.0672.010201053, %.critedge ], [ %i.br, %_ZN11hb_vector_tIfLb0EE6resizeEi.exit204 ] ; 2 uses
   %.4 = phi i1 [ %.3, %.critedge ], [ false, %_ZN11hb_vector_tIfLb0EE6resizeEi.exit204 ] ; 2 uses
-  %.not = icmp eq i32 %.sroa.0621.1, 0
-  br i1 %.not, label %_ZN11hb_vector_tIfLb0EED2Ev.exit, label %bb.cv
+  %8 = add i32 %.sroa.0621.1, -1
+  %spec.select.i.i.i = icmp ult i32 %8, -2
+  br i1 %spec.select.i.i.i, label %bb.cv, label %_ZN11hb_vector_tIfLb0EED2Ev.exit
 
 bb.cv:                                            ; preds = %bb.cu
   call void @hb_free(ptr noundef %.sroa.14629.1) #10
@@ -711,8 +700,9 @@ _ZN11hb_vector_tIfLb0EED2Ev.exit:                 ; preds = %_ZN11hb_vector_tIfL
   %.sroa.14680.1858 = phi ptr [ %.sroa.14680.1, %bb.cv ], [ %.sroa.14680.1, %bb.cu ], [ %i.bv, %_ZN11hb_vector_tIfLb0EE6resizeEi.exit200 ], [ %i.bv, %_ZN11hb_vector_tIfLb0EE6resizeEi.exit204.thread ] ; 2 uses
   %.sroa.0645.1857 = phi i32 [ %.sroa.0645.1, %bb.cv ], [ %.sroa.0645.1, %bb.cu ], [ %i.cg, %_ZN11hb_vector_tIfLb0EE6resizeEi.exit200 ], [ %i.cg, %_ZN11hb_vector_tIfLb0EE6resizeEi.exit204.thread ]
   %.sroa.15654.1856 = phi ptr [ %.sroa.15654.1, %bb.cv ], [ %.sroa.15654.1, %bb.cu ], [ %i.ck, %_ZN11hb_vector_tIfLb0EE6resizeEi.exit200 ], [ %i.ck, %_ZN11hb_vector_tIfLb0EE6resizeEi.exit204.thread ]
-  %.not990 = icmp eq i32 %.sroa.0645.1857, 0
-  br i1 %.not990, label %_ZN11hb_vector_tIfLb0EED2Ev.exit453, label %bb.cw
+  %9 = add i32 %.sroa.0645.1857, -1
+  %spec.select.i.i.i452 = icmp ult i32 %9, -2
+  br i1 %spec.select.i.i.i452, label %bb.cw, label %_ZN11hb_vector_tIfLb0EED2Ev.exit453
 
 bb.cw:                                            ; preds = %_ZN11hb_vector_tIfLb0EED2Ev.exit
   call void @hb_free(ptr noundef %.sroa.15654.1856) #10
@@ -722,8 +712,9 @@ _ZN11hb_vector_tIfLb0EED2Ev.exit453:              ; preds = %_ZN11hb_vector_tIfL
   %.sroa.14680.1858869 = phi ptr [ %.sroa.14680.1858, %bb.cw ], [ %.sroa.14680.1858, %_ZN11hb_vector_tIfLb0EED2Ev.exit ], [ %i.bv, %_ZN11hb_vector_tIfLb0EE6resizeEi.exit ], [ %i.bv, %_ZN11hb_vector_tIfLb0EE6resizeEi.exit200.thread ]
   %.sroa.0672.1859868 = phi i32 [ %.sroa.0672.1859, %bb.cw ], [ %.sroa.0672.1859, %_ZN11hb_vector_tIfLb0EED2Ev.exit ], [ %i.br, %_ZN11hb_vector_tIfLb0EE6resizeEi.exit ], [ %i.br, %_ZN11hb_vector_tIfLb0EE6resizeEi.exit200.thread ]
   %.4860867 = phi i1 [ %.4860, %bb.cw ], [ %.4860, %_ZN11hb_vector_tIfLb0EED2Ev.exit ], [ false, %_ZN11hb_vector_tIfLb0EE6resizeEi.exit ], [ false, %_ZN11hb_vector_tIfLb0EE6resizeEi.exit200.thread ] ; 2 uses
-  %.not991 = icmp eq i32 %.sroa.0672.1859868, 0
-  br i1 %.not991, label %_ZN11hb_vector_tIfLb0EED2Ev.exit455, label %bb.cx
+  %10 = add i32 %.sroa.0672.1859868, -1
+  %spec.select.i.i.i454 = icmp ult i32 %10, -2
+  br i1 %spec.select.i.i.i454, label %bb.cx, label %_ZN11hb_vector_tIfLb0EED2Ev.exit455
 
 bb.cx:                                            ; preds = %_ZN11hb_vector_tIfLb0EED2Ev.exit453
   call void @hb_free(ptr noundef %.sroa.14680.1858869) #10

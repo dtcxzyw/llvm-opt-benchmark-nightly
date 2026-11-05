@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %arena_ptr_array_flu
   %.0113 = phi ptr [ %7, %bb.a ], [ null, %arena_ptr_array_flush_impl.exit ] ; 4 uses
   %.0 = phi i32 [ 0, %bb.a ], [ %i.qx, %arena_ptr_array_flush_impl.exit ] ; 4 uses
   %i.z = sub i32 %3, %.0                          ; 2 uses
-  %spec.store.select = call i32 @llvm.umin.i32(i32 %i.z, i32 255) ; 8 uses
+  %spec.store.select = call i32 @llvm.umin.i32(i32 %i.z, i32 255) ; 7 uses
   %i.aa = load ptr, ptr %i.b, align 8, !tbaa !120
   %i.ab = zext i32 %.0 to i64
   %i.ac = getelementptr inbounds nuw [8 x i8], ptr %i.aa, i64 %i.ab ; 6 uses
@@ -213,7 +213,7 @@ bb.b:                                             ; preds = %arena_ptr_array_flu
   %i.ad = add nuw nsw i32 %spec.store.select, 1
   %i.ae = zext nneg i32 %i.ad to i64              ; 2 uses
   %8 = alloca %union.emap_batch_lookup_result_u, i64 %i.ae, align 16 ; 12 uses
-  %i.af = zext nneg i32 %spec.store.select to i64 ; 3 uses
+  %i.af = zext nneg i32 %spec.store.select to i64 ; 4 uses
   %.not = icmp eq i32 %3, %.0
   br i1 %.not, label %emap_edata_lookup_batch.exit, label %.lr.ph
 
@@ -430,7 +430,7 @@ arena_get.exit:                                   ; preds = %.thread, %arena_dec
   %i.dt = and i64 %i.dp, 63
   %i.du = getelementptr inbounds nuw [224 x i8], ptr %i.ds, i64 %i.dt ; 14 uses
   %i.dv = add nuw nsw i32 %.099.i159, 1           ; 3 uses
-  %i.dw = icmp ult i32 %i.dv, %spec.store.select
+  %i.dw = icmp samesign ult i32 %i.dv, %spec.store.select
   br i1 %i.dw, label %.lr.ph147.preheader, label %._crit_edge148
 
 .lr.ph147.preheader:                              ; preds = %arena_get.exit
@@ -511,8 +511,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m, %bb.l, %.lr.ph147
   %.2101.i = phi i32 [ %i.ez, %bb.m ], [ %.1100.i146, %bb.l ], [ %.1100.i146, %.lr.ph147 ] ; 2 uses
   %indvars.iv.next183 = add nuw nsw i64 %indvars.iv182, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next183 to i32
-  %exitcond185.not = icmp eq i32 %spec.store.select, %lftr.wideiv
+  %exitcond185.not = icmp eq i64 %indvars.iv.next183, %i.af
   br i1 %exitcond185.not, label %._crit_edge148, label %.lr.ph147, !llvm.loop !184
 
 bb.o:                                             ; preds = %malloc_mutex_lock.exit

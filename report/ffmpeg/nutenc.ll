@@ -204,7 +204,7 @@ write_globalinfo.exit:                            ; preds = %._crit_edge, %put_v
   br label %bb.cb
 
 .lr.ph129:                                        ; preds = %write_globalinfo.exit, %bb.ca
-  %indvars.iv159 = phi i64 [ %indvars.iv.next160.pre-phi, %bb.ca ], [ 0, %write_globalinfo.exit ] ; 8 uses
+  %indvars.iv159 = phi i64 [ %indvars.iv.next160.pre-phi, %bb.ca ], [ 0, %write_globalinfo.exit ] ; 7 uses
   %i.rq = phi ptr [ %i.vh, %bb.ca ], [ %i.ri, %write_globalinfo.exit ]
   %i.rr = load ptr, ptr %i.h, align 8, !tbaa !86  ; 8 uses
   %i.rs = getelementptr i8, ptr %i.rq, i64 48
@@ -394,29 +394,27 @@ bb.bs:                                            ; preds = %bb.br, %._crit_edge
 
 bb.bt:                                            ; preds = %bb.bs
   %i.uj = add nuw nsw i64 %indvars.iv159, 1       ; 3 uses
-  %.not.i.i.i69 = icmp ult i64 %indvars.iv159, 127 ; 2 uses
-  br i1 %.not.i.i.i69, label %put_v.exit.i75, label %2
+  %.not.i.i.i69 = icmp samesign ult i64 %indvars.iv159, 127
+  br i1 %.not.i.i.i69, label %get_v_length.exit.preheader.i.i71, label %bb.bu
 
-2:                                                ; preds = %bb.bt
-  %.not.i.i.i69.1 = icmp ult i64 %indvars.iv159, 16383
-  br i1 %.not.i.i.i69.1, label %get_v_length.exit.preheader.i.i71, label %bb.bu
-
-bb.bu:                                            ; preds = %2
-  %.not.i.i.i69.2.a = icmp ult i64 %indvars.iv159, 2097151
+bb.bu:                                            ; preds = %bb.bt
+  %.not.i.i.i69.2.a = icmp samesign ult i64 %indvars.iv159, 16383
   br i1 %.not.i.i.i69.2.a, label %get_v_length.exit.preheader.i.i71, label %bb.bv
 
 bb.bv:                                            ; preds = %bb.bu
-  %.not.i.i.i69.3.a = icmp ult i64 %indvars.iv159, 268435455
+  %.not.i.i.i69.3.a = icmp samesign ult i64 %indvars.iv159, 2097151
   br i1 %.not.i.i.i69.3.a, label %get_v_length.exit.preheader.i.i71, label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv
-  %.not.i.i.i69.4 = icmp ult i64 %indvars.iv159, 34359738367
-  %spec.select286 = select i1 %.not.i.i.i69.4, i64 5, i64 6
+  %.not.i.i.i69.4 = icmp samesign ult i64 %indvars.iv159, 268435455
+  %spec.select286 = select i1 %.not.i.i.i69.4, i64 4, i64 5
   br label %get_v_length.exit.preheader.i.i71
 
-get_v_length.exit.preheader.i.i71:                ; preds = %bb.bw, %bb.bv, %bb.bu, %2
-  %indvars.iv.i.i67.lcssa = phi i64 [ %spec.select286, %bb.bw ], [ 2, %2 ], [ 3, %bb.bu ], [ 4, %bb.bv ]
-  br i1 %.not.i.i.i69, label %put_v.exit.i75, label %get_v_length.exit.i.i72
+get_v_length.exit.preheader.i.i71:                ; preds = %bb.bw, %bb.bv, %bb.bu, %bb.bt
+  %indvars.iv.i.i67.lcssa = phi i64 [ 1, %bb.bt ], [ 2, %bb.bu ], [ 3, %bb.bv ], [ %spec.select286, %bb.bw ] ; 2 uses
+  %2 = and i64 %indvars.iv.i.i67.lcssa, 4294967294
+  %.not17.i = icmp eq i64 %2, 0
+  br i1 %.not17.i, label %put_v.exit.i75, label %get_v_length.exit.i.i72
 
 get_v_length.exit.i.i72:                          ; preds = %get_v_length.exit.preheader.i.i71, %get_v_length.exit.i.i72
   %indvars.iv9.i.i73 = phi i64 [ %indvars.iv.next10.i.i74, %get_v_length.exit.i.i72 ], [ %indvars.iv.i.i67.lcssa, %get_v_length.exit.preheader.i.i71 ] ; 2 uses
@@ -430,7 +428,7 @@ get_v_length.exit.i.i72:                          ; preds = %get_v_length.exit.p
   %i.up = icmp sgt i64 %indvars.iv9.i.i73, 2
   br i1 %i.up, label %get_v_length.exit.i.i72, label %put_v.exit.i75, !llvm.loop !1
 
-put_v.exit.i75:                                   ; preds = %bb.bt, %get_v_length.exit.i.i72, %get_v_length.exit.preheader.i.i71
+put_v.exit.i75:                                   ; preds = %get_v_length.exit.i.i72, %get_v_length.exit.preheader.i.i71
   %i.uq = trunc nuw i64 %i.uj to i32
   %i.ur = and i32 %i.uq, 127
   call void @avio_w8(ptr noundef %i.rr, i32 noundef %i.ur) #13

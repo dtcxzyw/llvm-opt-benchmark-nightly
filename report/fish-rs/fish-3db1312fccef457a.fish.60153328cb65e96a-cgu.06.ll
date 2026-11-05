@@ -206,11 +206,14 @@ bb.ib:                                            ; preds = %bb.ia
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.aw, ptr noundef nonnull align 8 dereferenceable(24) %i.ax, i64 24, i1 false), !noalias !5033
   br label %.outer.i.i.i.a
 
-.outer.i.i.i.a:                                   ; preds = %.outer.i.i.i.backedge, %bb.ib
-  %.sroa.01.0.ph.i.i.i = phi i64 [ 0, %bb.ib ], [ %.sroa.01.0.ph.i.i.i.be, %.outer.i.i.i.backedge ] ; 3 uses
+.outer.i.i.i.a:                                   ; preds = %.outer.i.i.i.outer.backedge, %bb.ib
+  %.sroa.01.0.ph.i.i.i = phi i64 [ 0, %bb.ib ], [ %.sroa.01.0.ph.i.i.i.ph.be, %.outer.i.i.i.outer.backedge ] ; 2 uses
+  br label %.outer.i.i.i
+
+.outer.i.i.i:                                     ; preds = %.outer.i.i.i.a, %bb.ip
   br label %bb.ic
 
-bb.ic:                                            ; preds = %bb.iq, %.outer.i.i.i.a
+bb.ic:                                            ; preds = %bb.iq, %.outer.i.i.i
   %i.wi = invoke { ptr, ptr } @_RNvXsx_NtCs8frGy5WneL6_4fish3astNtB5_9TraversalNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4next(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.aw)
           to label %bb.id unwind label %.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !5034 ; 2 uses
 
@@ -304,7 +307,7 @@ bb.ip:                                            ; preds = %bb.io
   %i.wy = icmp ult i64 %i.wx, 1152921504606846976
   call void @llvm.assume(i1 %i.wy)
   %.not2355.i.i.i = icmp eq i64 %.sroa.01.0.ph.i.i.i, %i.wx
-  br i1 %.not2355.i.i.i, label %._crit_edge.thread.i.i.i, label %.lr.ph.i.i.i
+  br i1 %.not2355.i.i.i, label %.outer.i.i.i, label %.lr.ph.i.i.i
 
 bb.iq:                                            ; preds = %bb.io
   call void @llvm.lifetime.end.p0(ptr nonnull %i.av), !noalias !5033
@@ -316,17 +319,11 @@ bb.iq:                                            ; preds = %bb.io
   %i.xa = icmp ult i64 %.sroa.01.156.i.i.i, %i.wz
   br i1 %i.xa, label %bb.ir, label %.invoke.i.i.i
 
-._crit_edge.thread.i.i.i:                         ; preds = %bb.jg, %bb.ip
-  %.ph.i.i.i = phi i64 [ %.sroa.01.0.ph.i.i.i, %bb.ip ], [ %.pre.pre.i.i.i, %bb.jg ] ; 2 uses
-  %3 = icmp samesign ult i64 %.ph.i.i.i, 1152921504606846976
-  call void @llvm.assume(i1 %3)
-  br label %.outer.i.i.i.backedge
-
 ._crit_edge.i.i.i:                                ; preds = %bb.it
   %i.xb = icmp ult i64 %.pre.pre.i.i.i, 1152921504606846976
   call void @llvm.assume(i1 %i.xb)
   %.not24.i.i.i = icmp eq i64 %.sroa.01.156.i.i.i, %.pre.pre.i.i.i
-  br i1 %.not24.i.i.i, label %.outer.i.i.i.backedge, label %bb.iu
+  br i1 %.not24.i.i.i, label %.outer.i.i.i.outer.backedge, label %bb.iu
 
 bb.ir:                                            ; preds = %.lr.ph.i.i.i
   %i.xc = load ptr, ptr %i.kd, align 8, !noalias !5033, !nonnull !10, !noundef !10
@@ -410,7 +407,11 @@ bb.ja:                                            ; preds = %bb.iz
 
 bb.jb:                                            ; preds = %bb.ja
   %i.yb = icmp ult i64 %i.xo, %i.ya
-  br i1 %i.yb, label %bb.jc, label %.outer.i.i.i.backedge
+  br i1 %i.yb, label %bb.jc, label %.outer.i.i.i.outer.backedge
+
+.outer.i.i.i.outer.backedge:                      ; preds = %bb.jg, %bb.jb, %_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecjE8push_mutCs8frGy5WneL6_4fish.exit.i.i.i, %._crit_edge.i.i.i
+  %.sroa.01.0.ph.i.i.i.ph.be = phi i64 [ %.sroa.01.156.i.i.i, %bb.jb ], [ %.sroa.01.156.i.i.i, %._crit_edge.i.i.i ], [ %.sroa.01.156.i.i.i, %_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecjE8push_mutCs8frGy5WneL6_4fish.exit.i.i.i ], [ %.pre.pre.i.i.i, %bb.jg ]
+  br label %.outer.i.i.i.a
 
 bb.jc:                                            ; preds = %bb.jb
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ar), !noalias !5033
@@ -444,18 +445,14 @@ _RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecjE8push_mutCs8frGy5WneL6_4fish.exit.
   store i64 %i.yg, ptr %i.yl, align 8, !noalias !5034
   %i.ym = add i64 %i.yh, 1
   store i64 %i.ym, ptr %i.ka, align 8, !alias.scope !5036, !noalias !5033
-  br label %.outer.i.i.i.backedge
-
-.outer.i.i.i.backedge:                            ; preds = %_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecjE8push_mutCs8frGy5WneL6_4fish.exit.i.i.i, %bb.jb, %._crit_edge.i.i.i, %._crit_edge.thread.i.i.i
-  %.sroa.01.0.ph.i.i.i.be = phi i64 [ %.ph.i.i.i, %._crit_edge.thread.i.i.i ], [ %.sroa.01.156.i.i.i, %_RNvMsG_NtCs1xwejQucwHj_5alloc3vecINtB5_3VecjE8push_mutCs8frGy5WneL6_4fish.exit.i.i.i ], [ %.sroa.01.156.i.i.i, %._crit_edge.i.i.i ], [ %.sroa.01.156.i.i.i, %bb.jb ]
-  br label %.outer.i.i.i.a
+  br label %.outer.i.i.i.outer.backedge
 
 bb.jg:                                            ; preds = %bb.it
   %i.yn = add nuw nsw i64 %.sroa.01.156.i.i.i, 1  ; 2 uses
   %i.yo = icmp ult i64 %.pre.pre.i.i.i, 1152921504606846976
   call void @llvm.assume(i1 %i.yo)
   %.not23.i.i.i = icmp eq i64 %i.yn, %.pre.pre.i.i.i
-  br i1 %.not23.i.i.i, label %._crit_edge.thread.i.i.i, label %.lr.ph.i.i.i
+  br i1 %.not23.i.i.i, label %.outer.i.i.i.outer.backedge, label %.lr.ph.i.i.i
 
 bb.jh:                                            ; preds = %.thread.i.i.i, %.loopexit.split-lp.loopexit.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.body.i.i.i
   %i.yp = landingpad { ptr, i32 }

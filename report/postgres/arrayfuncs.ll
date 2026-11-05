@@ -205,7 +205,7 @@ bb.bm:                                            ; preds = %bb.bl, %bb.bk
   %i.lb = shl nuw nsw i32 %i.t, 3
   %i.lc = zext nneg i32 %i.lb to i64
   %i.ld = getelementptr inbounds nuw i8, ptr %i.ke, i64 %i.lc ; 2 uses
-  %i.le = select i1 %.not.i, ptr null, ptr %i.ld  ; 7 uses
+  %i.le = select i1 %.not.i, ptr null, ptr %i.ld  ; 6 uses
   br i1 %.not136.i, label %bb.bo, label %bb.bn
 
 bb.bn:                                            ; preds = %bb.bm
@@ -234,7 +234,7 @@ bb.bq:                                            ; preds = %bb.bp, %bb.bo
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #16
-  %i.lr = call i32 @ArrayGetOffset(i32 noundef range(i32 2, 7) %i.t, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef %3) #16 ; 8 uses
+  %i.lr = call i32 @ArrayGetOffset(i32 noundef range(i32 2, 7) %i.t, ptr noundef nonnull %i.e, ptr noundef nonnull %i.f, ptr noundef %3) #16 ; 7 uses
   %i.ls = call fastcc ptr @array_seek(ptr noundef %i.ks, i32 noundef 0, ptr noundef readonly %i.lj, i32 noundef %i.lr, i32 noundef %9, i8 noundef signext %11)
   %i.lt = ptrtoint ptr %i.ls to i64
   %i.lu = ptrtoint ptr %i.ks to i64
@@ -250,17 +250,13 @@ bb.bq:                                            ; preds = %bb.bp, %bb.bo
 
 bb.br:                                            ; preds = %bb.bq
   %i.ma = load i8, ptr %i.ld, align 1
-  %i.mb = zext i8 %i.ma to i32                    ; 4 uses
+  %i.mb = zext i8 %i.ma to i32                    ; 3 uses
   %.not.i.i = icmp eq ptr %i.lj, null
   br i1 %.not.i.i, label %.lr.ph94.i.outer.i.preheader, label %.lr.ph.preheader.i.i
 
 .lr.ph94.i.outer.i.preheader:                     ; preds = %bb.br
   %i.mc = icmp samesign ugt i32 %i.lr, 1
-  br i1 %i.mc, label %.lr.ph94.i.1.i.preheader, label %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit428.i
-
-.lr.ph94.i.1.i.preheader:                         ; preds = %.lr.ph94.i.outer.i.preheader
-  %12 = icmp sgt i32 %i.lr, 2
-  br i1 %12, label %.lr.ph94.i.2.i.a, label %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit425.i
+  br i1 %i.mc, label %.lr.ph94.i.2.i.a, label %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit428.i
 
 .lr.ph.preheader.i.i:                             ; preds = %bb.br
   %i.md = load i8, ptr %i.lj, align 1
@@ -328,44 +324,44 @@ bb.bw:                                            ; preds = %bb.bv
   br i1 %.not64.i.i, label %array_bitmap_copy.exit.i, label %._crit_edge95.thread.sink.split.i.i
 
 bb.bx:                                            ; preds = %.lr.ph94.i.6.i
-  %i.mw = add nsw i32 %.in99.i.ph.i498739, -8     ; 3 uses
-  store i8 -1, ptr %.25491.i.ph.i500737, align 1
+  %i.mw = add nsw i32 %.in99.i.ph.i498, -8        ; 3 uses
+  store i8 -1, ptr %.25491.i.ph.i500, align 1
   %.not82.i.i = icmp eq i32 %i.mw, 0
   br i1 %.not82.i.i, label %array_bitmap_copy.exit.i, label %.thread.i
 
-.lr.ph94.i.1.i:                                   ; preds = %.thread.i
-  %13 = icmp sgt i32 %.in99.i.ph.i498739, 10
-  br i1 %13, label %.lr.ph94.i.2.i.a, label %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit425.i, !llvm.loop !1
+.lr.ph94.i.2.i.a:                                 ; preds = %.lr.ph94.i.outer.i.preheader, %.thread.i
+  %.25491.i.ph.i500 = phi ptr [ %i.mz, %.thread.i ], [ %i.le, %.lr.ph94.i.outer.i.preheader ] ; 8 uses
+  %.393.i.ph.i499738 = phi i32 [ %i.nb, %.thread.i ], [ %i.mb, %.lr.ph94.i.outer.i.preheader ] ; 6 uses
+  %.in99.i.ph.i498 = phi i32 [ %i.mw, %.thread.i ], [ %i.lr, %.lr.ph94.i.outer.i.preheader ] ; 7 uses
+  %12 = icmp samesign ugt i32 %.in99.i.ph.i498, 2
+  br i1 %12, label %.lr.ph94.i.2.i, label %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit425.i
 
-.lr.ph94.i.2.i.a:                                 ; preds = %.lr.ph94.i.1.i.preheader, %.lr.ph94.i.1.i
-  %.in99.i.ph.i498739 = phi i32 [ %i.mw, %.lr.ph94.i.1.i ], [ %i.lr, %.lr.ph94.i.1.i.preheader ] ; 7 uses
-  %.393.i.ph.i499738 = phi i32 [ %i.nb, %.lr.ph94.i.1.i ], [ %i.mb, %.lr.ph94.i.1.i.preheader ] ; 5 uses
-  %.25491.i.ph.i500737 = phi ptr [ %i.mz, %.lr.ph94.i.1.i ], [ %i.le, %.lr.ph94.i.1.i.preheader ] ; 7 uses
-  %.not393.i = icmp eq i32 %.in99.i.ph.i498739, 3
+.lr.ph94.i.2.i:                                   ; preds = %.lr.ph94.i.2.i.a
+  %.not393.i = icmp eq i32 %.in99.i.ph.i498, 3
   br i1 %.not393.i, label %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit422.i, label %.lr.ph94.i.3.i
 
-.lr.ph94.i.3.i:                                   ; preds = %.lr.ph94.i.2.i.a
-  %i.mx = icmp samesign ugt i32 %.in99.i.ph.i498739, 4
+.lr.ph94.i.3.i:                                   ; preds = %.lr.ph94.i.2.i
+  %i.mx = icmp samesign ugt i32 %.in99.i.ph.i498, 4
   br i1 %i.mx, label %.lr.ph94.i.4.i, label %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit419.i
 
 .lr.ph94.i.4.i:                                   ; preds = %.lr.ph94.i.3.i
-  %.not394.i = icmp eq i32 %.in99.i.ph.i498739, 5
+  %.not394.i = icmp eq i32 %.in99.i.ph.i498, 5
   br i1 %.not394.i, label %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit416.i, label %.lr.ph94.i.5.i
 
 .lr.ph94.i.5.i:                                   ; preds = %.lr.ph94.i.4.i
-  %i.my = icmp samesign ugt i32 %.in99.i.ph.i498739, 6
+  %i.my = icmp samesign ugt i32 %.in99.i.ph.i498, 6
   br i1 %i.my, label %.lr.ph94.i.6.i, label %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit413.i
 
 .lr.ph94.i.6.i:                                   ; preds = %.lr.ph94.i.5.i
-  %.not395.i = icmp eq i32 %.in99.i.ph.i498739, 7
+  %.not395.i = icmp eq i32 %.in99.i.ph.i498, 7
   br i1 %.not395.i, label %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit.i, label %bb.bx
 
 .thread.i:                                        ; preds = %bb.bx
-  %i.mz = getelementptr inbounds nuw i8, ptr %.25491.i.ph.i500737, i64 1 ; 4 uses
+  %i.mz = getelementptr inbounds nuw i8, ptr %.25491.i.ph.i500, i64 1 ; 3 uses
   %i.na = load i8, ptr %i.mz, align 1
-  %i.nb = zext i8 %i.na to i32                    ; 3 uses
+  %i.nb = zext i8 %i.na to i32                    ; 2 uses
   %.not505 = icmp eq i32 %i.mw, 1
-  br i1 %.not505, label %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit428.i, label %.lr.ph94.i.1.i, !llvm.loop !1
+  br i1 %.not505, label %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit428.i, label %.lr.ph94.i.2.i.a, !llvm.loop !1
 
 ._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit.i: ; preds = %.lr.ph94.i.6.i
   %i.nc = or i32 %.393.i.ph.i499738, 127
@@ -383,14 +379,12 @@ bb.bx:                                            ; preds = %.lr.ph94.i.6.i
   %i.nf = or i32 %.393.i.ph.i499738, 15
   br label %._crit_edge95.thread.sink.split.i.i
 
-._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit422.i: ; preds = %.lr.ph94.i.2.i.a
+._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit422.i: ; preds = %.lr.ph94.i.2.i
   %i.ng = or i32 %.393.i.ph.i499738, 7
   br label %._crit_edge95.thread.sink.split.i.i
 
-._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit425.i: ; preds = %.lr.ph94.i.1.i, %.lr.ph94.i.1.i.preheader
-  %.25491.i.ph.i500.lcssa = phi ptr [ %i.le, %.lr.ph94.i.1.i.preheader ], [ %i.mz, %.lr.ph94.i.1.i ]
-  %.393.i.ph.i499.lcssa = phi i32 [ %i.mb, %.lr.ph94.i.1.i.preheader ], [ %i.nb, %.lr.ph94.i.1.i ]
-  %i.nh = or i32 %.393.i.ph.i499.lcssa, 3
+._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit425.i: ; preds = %.lr.ph94.i.2.i.a
+  %i.nh = or i32 %.393.i.ph.i499738, 3
   br label %._crit_edge95.thread.sink.split.i.i
 
 ._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit428.i: ; preds = %.thread.i, %.lr.ph94.i.outer.i.preheader
@@ -401,7 +395,7 @@ bb.bx:                                            ; preds = %.lr.ph94.i.6.i
 
 ._crit_edge95.thread.sink.split.i.i:              ; preds = %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit428.i, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit425.i, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit422.i, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit419.i, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit416.i, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit413.i, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit.i, %._crit_edge.i.i
   %.273110.sink.i.i = phi i32 [ %.2.i.i, %._crit_edge.i.i ], [ %i.nh, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit425.i ], [ %i.ng, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit422.i ], [ %i.nf, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit419.i ], [ %i.ne, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit416.i ], [ %i.nd, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit413.i ], [ %i.nc, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit.i ], [ %i.ni, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit428.i ]
-  %.15369112.sink.i.i = phi ptr [ %.153.i.i, %._crit_edge.i.i ], [ %.25491.i.ph.i500.lcssa, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit425.i ], [ %.25491.i.ph.i500737, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit422.i ], [ %.25491.i.ph.i500737, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit419.i ], [ %.25491.i.ph.i500737, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit416.i ], [ %.25491.i.ph.i500737, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit413.i ], [ %.25491.i.ph.i500737, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit.i ], [ %.25491.i.ph.i.lcssa, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit428.i ]
+  %.15369112.sink.i.i = phi ptr [ %.153.i.i, %._crit_edge.i.i ], [ %.25491.i.ph.i500, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit425.i ], [ %.25491.i.ph.i500, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit422.i ], [ %.25491.i.ph.i500, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit419.i ], [ %.25491.i.ph.i500, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit416.i ], [ %.25491.i.ph.i500, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit413.i ], [ %.25491.i.ph.i500, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit.i ], [ %.25491.i.ph.i.lcssa, %._crit_edge95.thread.sink.split.i.loopexit.split.loop.exit428.i ]
   %i.nj = trunc i32 %.273110.sink.i.i to i8
   store i8 %i.nj, ptr %.15369112.sink.i.i, align 1
   br label %array_bitmap_copy.exit.i

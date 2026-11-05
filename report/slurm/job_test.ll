@@ -202,8 +202,8 @@ bb.bt:                                            ; preds = %bb.bs
 
 bb.bu:                                            ; preds = %bb.bt, %bb.bs
   %i.km = trunc nuw nsw i64 %indvars.iv715 to i32
-  %i.kn = udiv i32 %i.km, %i.bc                   ; 2 uses
-  %i.ko = zext nneg i32 %i.kn to i64
+  %i.kn = udiv i32 %i.km, %i.bc
+  %i.ko = zext nneg i32 %i.kn to i64              ; 2 uses
   %i.kp = getelementptr inbounds nuw [2 x i8], ptr %i.q, i64 %i.ko ; 2 uses
   %i.kq = load i16, ptr %i.kp, align 2            ; 2 uses
   %i.kr = icmp ne i16 %i.kq, 0
@@ -212,8 +212,7 @@ bb.bu:                                            ; preds = %bb.bt, %bb.bs
   br i1 %or.cond10, label %bb.bv, label %bb.cb
 
 bb.bv:                                            ; preds = %bb.bu
-  %7 = zext nneg i32 %i.kn to i64
-  %i.kt = getelementptr inbounds nuw [2 x i8], ptr %i.r, i64 %7 ; 2 uses
+  %i.kt = getelementptr inbounds nuw [2 x i8], ptr %i.r, i64 %i.ko ; 2 uses
   %i.ku = load i16, ptr %i.kt, align 2            ; 3 uses
   %.not.i481 = icmp eq i16 %i.ku, 0
   br i1 %.not.i481, label %bb.by, label %bb.bw

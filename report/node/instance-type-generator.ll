@@ -202,7 +202,7 @@ _ZSt8_DestroyIPSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTr
   br label %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS5_EESaIS8_EE5clearEv.exit
 
 _ZNSt6vectorISt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS5_EESaIS8_EE5clearEv.exit: ; preds = %bb.f, %._crit_edge, %_ZSt8_DestroyIPSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS5_EES8_EvT_SA_RSaIT0_E.exit.i.i
-  %.val129575 = phi ptr [ %.val129574, %._crit_edge ], [ %.val129574, %_ZSt8_DestroyIPSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS5_EES8_EvT_SA_RSaIT0_E.exit.i.i ], [ null, %bb.f ] ; 3 uses
+  %.val129575 = phi ptr [ %.val129574, %._crit_edge ], [ %.val129574, %_ZSt8_DestroyIPSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS5_EES8_EvT_SA_RSaIT0_E.exit.i.i ], [ null, %bb.f ] ; 2 uses
   %.val130572 = phi ptr [ %.val130571, %._crit_edge ], [ %.val130571, %_ZSt8_DestroyIPSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS5_EES8_EvT_SA_RSaIT0_E.exit.i.i ], [ null, %bb.f ] ; 2 uses
   %.val106 = phi ptr [ %.val107.pre, %._crit_edge ], [ %.val106.pre, %_ZSt8_DestroyIPSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS5_EES8_EvT_SA_RSaIT0_E.exit.i.i ], [ %.val124, %bb.f ] ; 2 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.val106, i64 48
@@ -605,7 +605,6 @@ bb.bt:                                            ; preds = %bb.bp
   br label %bb.di
 
 _ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS4_EED2Ev.exit: ; preds = %_ZNKSt14default_deleteIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeEEclEPS4_.exit.i, %bb.bq, %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS5_EESaIS8_EE5clearEv.exit
-  %.val129576 = phi ptr [ %.val129575, %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS5_EESaIS8_EE5clearEv.exit ], [ null, %bb.bq ], [ null, %_ZNKSt14default_deleteIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeEEclEPS4_.exit.i ] ; 5 uses
   %.0 = phi i32 [ %1, %_ZNSt6vectorISt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS5_EESaIS8_EE5clearEv.exit ], [ %i.ol, %bb.bq ], [ %i.ol, %_ZNKSt14default_deleteIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeEEclEPS4_.exit.i ] ; 3 uses
   %.val144 = load ptr, ptr %i.aa, align 8         ; 2 uses
   %i.ox = icmp eq ptr %.val144, %i.y
@@ -1008,47 +1007,6 @@ _ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14defau
   call fastcc void @_ZNSt8_Rb_treeIiSt4pairIKiSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS7_EEESt10_Select1stISB_ESt4lessIiESaISB_EE8_M_eraseEPSt13_Rb_tree_nodeISB_E(ptr noundef %.val158)
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #20
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #20
-  %.not.i310 = icmp eq ptr %.val129576, null
-  br i1 %.not.i310, label %_ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS4_EED2Ev.exit322, label %21
-
-21:                                               ; preds = %_ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS4_EED2Ev.exit309
-  %22 = getelementptr inbounds nuw i8, ptr %.val129576, i64 8 ; 2 uses
-  %23 = load ptr, ptr %22, align 8                ; 3 uses
-  %24 = getelementptr inbounds nuw i8, ptr %.val129576, i64 16
-  %25 = load ptr, ptr %24, align 8                ; 2 uses
-  %.not.i2.i.i.i311 = icmp eq ptr %23, %25
-  br i1 %.not.i2.i.i.i311, label %_ZSt8_DestroyIPSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS5_EES8_EvT_SA_RSaIT0_E.exit.i.i.i317, label %.lr.ph.i.i.i312
-
-.lr.ph.i.i.i312:                                  ; preds = %21, %.lr.ph.i.i.i312
-  %.0.i3.i.i.i313 = phi ptr [ %26, %.lr.ph.i.i.i312 ], [ %23, %21 ] ; 2 uses
-  call fastcc void @_ZSt10destroy_atISt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS5_EEEvPT_(ptr noundef %.0.i3.i.i.i313), !inline_history !6
-  %26 = getelementptr inbounds nuw i8, ptr %.0.i3.i.i.i313, i64 8 ; 2 uses
-  %.not.i.i.i.i314 = icmp eq ptr %26, %25
-  br i1 %.not.i.i.i.i314, label %_ZSt8_DestroyIPSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS5_EES8_EvT_SA_RSaIT0_E.exit.loopexit.i.i.i315, label %.lr.ph.i.i.i312, !llvm.loop !1
-
-_ZSt8_DestroyIPSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS5_EES8_EvT_SA_RSaIT0_E.exit.loopexit.i.i.i315: ; preds = %.lr.ph.i.i.i312
-  %.val.pre.i.i.i316 = load ptr, ptr %22, align 8
-  br label %_ZSt8_DestroyIPSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS5_EES8_EvT_SA_RSaIT0_E.exit.i.i.i317
-
-_ZSt8_DestroyIPSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS5_EES8_EvT_SA_RSaIT0_E.exit.i.i.i317: ; preds = %_ZSt8_DestroyIPSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS5_EES8_EvT_SA_RSaIT0_E.exit.loopexit.i.i.i315, %21
-  %.val.i.i.i318 = phi ptr [ %.val.pre.i.i.i316, %_ZSt8_DestroyIPSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS5_EES8_EvT_SA_RSaIT0_E.exit.loopexit.i.i.i315 ], [ %23, %21 ] ; 3 uses
-  %.not.i.i.i.i.i319 = icmp eq ptr %.val.i.i.i318, null
-  br i1 %.not.i.i.i.i.i319, label %_ZNKSt14default_deleteIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeEEclEPS4_.exit.i321, label %27
-
-27:                                               ; preds = %_ZSt8_DestroyIPSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS5_EES8_EvT_SA_RSaIT0_E.exit.i.i.i317
-  %28 = getelementptr inbounds nuw i8, ptr %.val129576, i64 24
-  %.val1.i.i.i320 = load ptr, ptr %28, align 8
-  %29 = ptrtoint ptr %.val1.i.i.i320 to i64
-  %30 = ptrtoint ptr %.val.i.i.i318 to i64
-  %31 = sub i64 %29, %30
-  call void @_ZdlPvm(ptr noundef nonnull %.val.i.i.i318, i64 noundef %31) #22, !inline_history !7
-  br label %_ZNKSt14default_deleteIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeEEclEPS4_.exit.i321
-
-_ZNKSt14default_deleteIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeEEclEPS4_.exit.i321: ; preds = %27, %_ZSt8_DestroyIPSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS5_EES8_EvT_SA_RSaIT0_E.exit.i.i.i317
-  call void @_ZdlPvm(ptr noundef nonnull %.val129576, i64 noundef 56) #22, !inline_history !8
-  br label %_ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS4_EED2Ev.exit322
-
-_ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS4_EED2Ev.exit322: ; preds = %_ZNSt10unique_ptrIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeESt14default_deleteIS4_EED2Ev.exit309, %_ZNKSt14default_deleteIN2v88internal6torque12_GLOBAL__N_116InstanceTypeTreeEEclEPS4_.exit.i321
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #20
   ret i32 %.7
 

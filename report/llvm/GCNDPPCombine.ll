@@ -204,13 +204,13 @@ bb.w:                                             ; preds = %bb.v
   br i1 %i.ea, label %.lr.ph, label %.thread259
 
 .lr.ph:                                           ; preds = %bb.w
-  %i.eb = load ptr, ptr %i.ds, align 8, !tbaa !345 ; 2 uses
+  %i.eb = load ptr, ptr %i.ds, align 8, !tbaa !345
   %i.ec = zext i24 %i.dz to i64
   br label %bb.x
 
 bb.x:                                             ; preds = %.lr.ph, %bb.y
-  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %bb.y ] ; 4 uses
-  %i.ed = getelementptr inbounds nuw [32 x i8], ptr %i.eb, i64 %indvars.iv
+  %indvars.iv = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next, %bb.y ] ; 3 uses
+  %i.ed = getelementptr inbounds nuw [32 x i8], ptr %i.eb, i64 %indvars.iv ; 2 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %i.ed, i64 4
   %i.ef = load i32, ptr %i.ee, align 4, !tbaa !344
   %i.eg = icmp eq i32 %i.ef, %i.f
@@ -223,10 +223,7 @@ bb.y:                                             ; preds = %bb.x
 
 bb.z:                                             ; preds = %bb.x
   %i.ei = trunc nuw nsw i64 %indvars.iv to i32    ; 2 uses
-  %10 = add nuw i64 %indvars.iv, 1
-  %11 = and i64 %10, 4294967295
-  %12 = getelementptr inbounds nuw [32 x i8], ptr %i.eb, i64 %11
-  %i.ej = getelementptr inbounds nuw i8, ptr %12, i64 16
+  %i.ej = getelementptr inbounds nuw i8, ptr %i.ed, i64 48
   %i.ek = load i64, ptr %i.ej, align 8, !tbaa !344
   %i.el = trunc i64 %i.ek to i32                  ; 2 uses
   %.not193 = icmp eq i32 %i.el, 0

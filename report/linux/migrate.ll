@@ -205,7 +205,6 @@ find_mm_struct.exit.i.i:                          ; preds = %put_task_struct.exi
 find_mm_struct.exit.thread.i.i:                   ; preds = %find_mm_struct.exit.i.i, %put_task_struct.exit.i.i.i, %bb.f
   %.0.i34.i.i = phi ptr [ %.0.i.i.i, %find_mm_struct.exit.i.i ], [ inttoptr (i64 -3 to ptr), %bb.f ], [ inttoptr (i64 -22 to ptr), %put_task_struct.exit.i.i.i ]
   %i.ak = ptrtoint ptr %.0.i34.i.i to i64
-  %13 = trunc i64 %i.ak to i32
   br label %__do_sys_move_pages.exit
 
 bb.p:                                             ; preds = %find_mm_struct.exit.i.i
@@ -608,12 +607,12 @@ do_pages_stat.exit.i.i:                           ; preds = %get_compat_pages_ar
 bb.bw:                                            ; preds = %do_pages_stat.exit.i.i, %do_pages_move.exit.i.i
   %.0.i.i = phi i32 [ %.4.i.i.i, %do_pages_move.exit.i.i ], [ %i.iv, %do_pages_stat.exit.i.i ]
   call void @mmput(ptr noundef %.0.i.i.i) #10
+  %13 = sext i32 %.0.i.i to i64
   br label %__do_sys_move_pages.exit
 
 __do_sys_move_pages.exit:                         ; preds = %bb.a, %bb.c, %find_mm_struct.exit.thread.i.i, %bb.bw
-  %.018.i.i = phi i32 [ -22, %bb.a ], [ %13, %find_mm_struct.exit.thread.i.i ], [ %.0.i.i, %bb.bw ], [ -1, %bb.c ]
-  %14 = sext i32 %.018.i.i to i64
-  ret i64 %14
+  %.018.i.i = phi i64 [ -22, %bb.a ], [ %i.ak, %find_mm_struct.exit.thread.i.i ], [ %13, %bb.bw ], [ -1, %bb.c ]
+  ret i64 %.018.i.i
 }
 
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong

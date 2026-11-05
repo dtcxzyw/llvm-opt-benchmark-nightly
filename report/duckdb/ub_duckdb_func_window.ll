@@ -205,8 +205,7 @@ _ZNKSt6vectorISt5tupleIJmmEESaIS1_EE12_M_check_lenEmPKc.exit.i: ; preds = %_ZNKS
 
 bb.e:                                             ; preds = %.noexc52
   %i.an = shl nuw i64 %i.aj, 5
-  %5 = and i64 %.067, 576460752303423457
-  %i.ao = or disjoint i64 %5, 2
+  %i.ao = or disjoint i64 %.067, 2
   %i.ap = mul i64 %i.an, %i.ao                    ; 5 uses
   %.not = icmp eq i64 %i.ap, 0
   br i1 %.not, label %_ZNSt6vectorImSaImEE6resizeEm.exit, label %bb.f

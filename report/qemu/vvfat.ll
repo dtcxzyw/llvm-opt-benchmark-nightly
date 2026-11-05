@@ -205,9 +205,8 @@ bb.af:                                            ; preds = %.lr.ph143
 
 .critedge:                                        ; preds = %.lr.ph143, %bb.af
   %.097.lcssa.ph.in = phi i64 [ %indvars.iv, %.lr.ph143 ], [ %indvars.iv.next, %bb.af ]
-  %.097.lcssa.ph = trunc i64 %.097.lcssa.ph.in to i32
-  %3 = add i32 %.097.lcssa.ph, -1                 ; 2 uses
-  %i.dt = icmp sgt i32 %3, 0
+  %.097.lcssa.ph = trunc i64 %.097.lcssa.ph.in to i32 ; 2 uses
+  %i.dt = icmp sgt i32 %.097.lcssa.ph, 1
   br i1 %i.dt, label %.lr.ph147, label %.loopexit
 
 .lr.ph147:                                        ; preds = %.critedge
@@ -215,10 +214,10 @@ bb.af:                                            ; preds = %.lr.ph143
   br label %bb.ag
 
 bb.ag:                                            ; preds = %.lr.ph147, %bb.ag
-  %i.dv = phi i32 [ %3, %.lr.ph147 ], [ %4, %bb.ag ] ; 2 uses
+  %i.dv = phi i32 [ %.097.lcssa.ph, %.lr.ph147 ], [ %3, %bb.ag ] ; 2 uses
+  %3 = add nsw i32 %i.dv, -1
   tail call fastcc void @remove_mapping(ptr noundef %0, i32 noundef %i.du)
-  %4 = add nsw i32 %i.dv, -1
-  %i.dw = icmp samesign ugt i32 %i.dv, 1
+  %i.dw = icmp samesign ugt i32 %i.dv, 2
   br i1 %i.dw, label %bb.ag, label %.loopexit, !llvm.loop !60
 
 .loopexit:                                        ; preds = %bb.ag, %array_index.exit, %.critedge, %._crit_edge

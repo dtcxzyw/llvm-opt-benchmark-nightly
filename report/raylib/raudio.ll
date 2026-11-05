@@ -205,7 +205,7 @@ bb.am:                                            ; preds = %bb.ak, %bb.ak
   ]
 
 .sink.split183.i:                                 ; preds = %bb.am, %bb.am, %bb.al, %bb.al
-  %i.dm = trunc i32 %.03651.us.us.us.us.i to i8
+  %i.dm = trunc nuw i32 %.03651.us.us.us.us.i to i8
   store i8 %i.dm, ptr %i.cw, align 1
   br label %bb.an
 
@@ -608,10 +608,8 @@ bb.bs:                                            ; preds = %._crit_edge
 
 bb.bt:                                            ; preds = %bb.bs, %bb.br
   %i.mu = phi i16 [ %i.mr, %bb.bs ], [ %i.mt, %bb.br ]
-  %4 = zext i16 %i.mu to i32
-  %5 = zext nneg i16 %.lcssa to i32
-  %6 = shl nuw nsw i32 %5, 6
-  %i.mv = icmp eq i32 %6, %4
+  %4 = shl nuw nsw i16 %.lcssa, 6
+  %i.mv = icmp eq i16 %4, %i.mu
   br i1 %i.mv, label %bb.bu, label %.sink.split
 
 bb.bu:                                            ; preds = %bb.bt

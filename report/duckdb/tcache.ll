@@ -205,9 +205,9 @@ bb.a:
 
 bb.b:                                             ; preds = %tcache_bin_flush_impl_small.exit, %bb.a
   %.0.i = phi i32 [ 0, %bb.a ], [ %i.ly, %tcache_bin_flush_impl_small.exit ] ; 4 uses
-  %i.ae = sub i32 %i.q, %.0.i
-  %spec.store.select.i = tail call i32 @llvm.umin.i32(i32 %i.ae, i32 256) ; 8 uses
-  %i.af = zext i32 %.0.i to i64
+  %i.ae = sub nsw i32 %i.q, %.0.i
+  %spec.store.select.i = tail call i32 @llvm.umin.i32(i32 %i.ae, i32 256) ; 7 uses
+  %i.af = zext nneg i32 %.0.i to i64
   %i.ag = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.af ; 7 uses
   %savedstack = tail call ptr @llvm.stacksave.p0()
   %i.ah = load ptr, ptr %1, align 8, !tbaa !56
@@ -218,7 +218,7 @@ bb.b:                                             ; preds = %tcache_bin_flush_im
   %i.am = add nuw nsw i32 %spec.store.select.i, 1
   %i.an = zext nneg i32 %i.am to i64              ; 2 uses
   %6 = alloca %union.emap_batch_lookup_result_u, i64 %i.an, align 16 ; 8 uses
-  %i.ao = zext nneg i32 %spec.store.select.i to i64
+  %i.ao = zext nneg i32 %spec.store.select.i to i64 ; 2 uses
   call fastcc void @tcache_bin_flush_edatas_lookup(ptr noundef %0, ptr %i.ag, i64 noundef %i.ao, ptr noundef %6)
   %i.ap = alloca ptr, i64 %i.an, align 16         ; 3 uses
   %.not128 = icmp eq i32 %.0.i, %i.q
@@ -259,7 +259,7 @@ arena_get.exit:                                   ; preds = %bb.b, %arena_decay_
   %i.bh = getelementptr inbounds nuw [256 x i8], ptr %i.bc, i64 %i.bf
   %.0.i29 = select i1 %i.be, ptr %i.bg, ptr %i.bh ; 26 uses
   %i.bi = add nuw nsw i32 %.0162.i117, 1          ; 3 uses
-  %i.bj = icmp ult i32 %i.bi, %spec.store.select.i
+  %i.bj = icmp samesign ult i32 %i.bi, %spec.store.select.i
   br i1 %i.bj, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %arena_get.exit
@@ -316,8 +316,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d, %bb.c, %.lr.ph
   %.2164.i = phi i32 [ %i.ci, %bb.d ], [ %.1163.i87, %bb.c ], [ %.1163.i87, %.lr.ph ] ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %spec.store.select.i, %lftr.wideiv
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.ao
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph
 
 bb.f:                                             ; preds = %._crit_edge
@@ -720,8 +719,8 @@ malloc_mutex_lock.exit38:                         ; preds = %bb.ak, %bb.al
 
 tcache_bin_flush_impl_small.exit:                 ; preds = %._crit_edge127, %malloc_mutex_lock.exit38
   call void @llvm.stackrestore.p0(ptr %savedstack)
-  %i.ly = add i32 %spec.store.select.i, %.0.i     ; 2 uses
-  %i.lz = icmp ult i32 %i.ly, %i.q
+  %i.ly = add nuw nsw i32 %spec.store.select.i, %.0.i ; 2 uses
+  %i.lz = icmp samesign ult i32 %i.ly, %i.q
   br i1 %i.lz, label %bb.b, label %tcache_bin_flush_impl.exit
 
 tcache_bin_flush_impl.exit:                       ; preds = %tcache_bin_flush_impl_small.exit
@@ -794,9 +793,9 @@ bb.a:
 
 bb.b:                                             ; preds = %tcache_bin_flush_impl_large.exit, %bb.a
   %.0.i = phi i32 [ 0, %bb.a ], [ %i.de, %tcache_bin_flush_impl_large.exit ] ; 4 uses
-  %i.y = sub i32 %i.q, %.0.i
+  %i.y = sub nsw i32 %i.q, %.0.i
   %spec.store.select.i = tail call i32 @llvm.umin.i32(i32 %i.y, i32 256) ; 4 uses
-  %i.z = zext i32 %.0.i to i64
+  %i.z = zext nneg i32 %.0.i to i64
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.p, i64 %i.z ; 3 uses
   %savedstack = tail call ptr @llvm.stacksave.p0()
   %i.ab = load ptr, ptr %1, align 8, !tbaa !56
@@ -1009,8 +1008,8 @@ bb.u:                                             ; preds = %bb.t, %bb.s
 
 tcache_bin_flush_impl_large.exit:                 ; preds = %._crit_edge, %._crit_edge.thread
   call void @llvm.stackrestore.p0(ptr %savedstack)
-  %i.de = add i32 %spec.store.select.i, %.0.i     ; 2 uses
-  %i.df = icmp ult i32 %i.de, %i.q
+  %i.de = add nuw nsw i32 %spec.store.select.i, %.0.i ; 2 uses
+  %i.df = icmp samesign ult i32 %i.de, %i.q
   br i1 %i.df, label %bb.b, label %tcache_bin_flush_impl.exit
 
 tcache_bin_flush_impl.exit:                       ; preds = %tcache_bin_flush_impl_large.exit
@@ -1098,9 +1097,9 @@ bb.b:                                             ; preds = %bb.a
 
 .split178.us:                                     ; preds = %bb.b, %tcache_bin_flush_impl_small.exit.us
   %.0.i.us = phi i32 [ %i.lq, %tcache_bin_flush_impl_small.exit.us ], [ 0, %bb.b ] ; 4 uses
-  %i.ah = sub i32 %i.l, %.0.i.us
-  %spec.store.select.i.us = tail call i32 @llvm.umin.i32(i32 %i.ah, i32 256) ; 8 uses
-  %i.ai = zext i32 %.0.i.us to i64
+  %i.ah = sub nsw i32 %i.l, %.0.i.us
+  %spec.store.select.i.us = tail call i32 @llvm.umin.i32(i32 %i.ah, i32 256) ; 7 uses
+  %i.ai = zext nneg i32 %.0.i.us to i64
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %i.ai ; 7 uses
   %savedstack.us = tail call ptr @llvm.stacksave.p0()
   %i.ak = load ptr, ptr %1, align 8, !tbaa !56
@@ -1111,7 +1110,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ap = add nuw nsw i32 %spec.store.select.i.us, 1
   %i.aq = zext nneg i32 %i.ap to i64              ; 2 uses
   %6 = alloca %union.emap_batch_lookup_result_u, i64 %i.aq, align 16 ; 8 uses
-  %i.ar = zext nneg i32 %spec.store.select.i.us to i64
+  %i.ar = zext nneg i32 %spec.store.select.i.us to i64 ; 2 uses
   call fastcc void @tcache_bin_flush_edatas_lookup(ptr noundef %0, ptr %i.aj, i64 noundef %i.ar, ptr noundef %6)
   %i.as = alloca ptr, i64 %i.aq, align 16         ; 3 uses
   %.not = icmp eq i32 %.0.i.us, %i.l
@@ -1143,7 +1142,7 @@ arena_get.exit.us:                                ; preds = %.split178.us, %aren
   %i.bj = getelementptr inbounds nuw [256 x i8], ptr %i.be, i64 %i.bh
   %.0.i50.us = select i1 %i.bg, ptr %i.bi, ptr %i.bj ; 26 uses
   %i.bk = add nuw nsw i32 %.0162.i167.us, 1       ; 3 uses
-  %i.bl = icmp ult i32 %i.bk, %spec.store.select.i.us
+  %i.bl = icmp samesign ult i32 %i.bk, %spec.store.select.i.us
   br i1 %i.bl, label %.lr.ph.us.preheader, label %._crit_edge136.us
 
 .lr.ph.us.preheader:                              ; preds = %arena_get.exit.us
@@ -1187,8 +1186,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d, %bb.c, %.lr.ph.us
   %.2164.i.us = phi i32 [ %i.cd, %bb.d ], [ %.1163.i135.us, %bb.c ], [ %.1163.i135.us, %.lr.ph.us ] ; 2 uses
   %indvars.iv.next193 = add nuw nsw i64 %indvars.iv192, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next193 to i32
-  %exitcond195.not = icmp eq i32 %spec.store.select.i.us, %lftr.wideiv
+  %exitcond195.not = icmp eq i64 %indvars.iv.next193, %i.ar
   br i1 %exitcond195.not, label %._crit_edge136.us, label %.lr.ph.us
 
 ._crit_edge136.us:                                ; preds = %bb.e, %arena_get.exit.us
@@ -1591,8 +1589,8 @@ malloc_mutex_lock.exit59.us:                      ; preds = %bb.al, %bb.ak
 
 tcache_bin_flush_impl_small.exit.us:              ; preds = %malloc_mutex_lock.exit59.us, %._crit_edge177.us
   call void @llvm.stackrestore.p0(ptr %savedstack.us)
-  %i.lq = add i32 %spec.store.select.i.us, %.0.i.us ; 2 uses
-  %i.lr = icmp ult i32 %i.lq, %i.l
+  %i.lq = add nuw nsw i32 %spec.store.select.i.us, %.0.i.us ; 2 uses
+  %i.lr = icmp samesign ult i32 %i.lq, %i.l
   br i1 %i.lr, label %.split178.us, label %tcache_bin_flush_impl.exit
 
 .preheader.us:                                    ; preds = %malloc_mutex_trylock.exit.us
@@ -1639,9 +1637,9 @@ tcache_bin_flush_impl_small.exit.us:              ; preds = %malloc_mutex_lock.e
 
 .split178:                                        ; preds = %bb.b, %tcache_bin_flush_impl_large.exit
   %.0.i = phi i32 [ %i.pj, %tcache_bin_flush_impl_large.exit ], [ 0, %bb.b ] ; 4 uses
-  %i.md = sub i32 %i.l, %.0.i
+  %i.md = sub nsw i32 %i.l, %.0.i
   %spec.store.select.i = tail call i32 @llvm.umin.i32(i32 %i.md, i32 256) ; 4 uses
-  %i.me = zext i32 %.0.i to i64
+  %i.me = zext nneg i32 %.0.i to i64
   %i.mf = getelementptr inbounds nuw [8 x i8], ptr %i.q, i64 %i.me ; 3 uses
   %savedstack20 = tail call ptr @llvm.stacksave.p0()
   %i.mg = load ptr, ptr %1, align 8, !tbaa !56
@@ -1854,8 +1852,8 @@ bb.be:                                            ; preds = %bb.bd, %bb.bc
 
 tcache_bin_flush_impl_large.exit:                 ; preds = %._crit_edge, %._crit_edge.thread
   call void @llvm.stackrestore.p0(ptr %savedstack20)
-  %i.pj = add i32 %spec.store.select.i, %.0.i     ; 2 uses
-  %i.pk = icmp ult i32 %i.pj, %i.l
+  %i.pj = add nuw nsw i32 %spec.store.select.i, %.0.i ; 2 uses
+  %i.pk = icmp samesign ult i32 %i.pj, %i.l
   br i1 %i.pk, label %.split178, label %tcache_bin_flush_impl.exit
 
 tcache_bin_flush_impl.exit:                       ; preds = %tcache_bin_flush_impl_large.exit, %tcache_bin_flush_impl_small.exit.us

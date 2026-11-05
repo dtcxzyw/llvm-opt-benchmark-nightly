@@ -205,8 +205,8 @@ bb.bo:                                            ; preds = %bb.n, %bb.u, %bb.ar
 define linkonce_odr hidden ptr @_ZN3fmt3v126detail5writeIcNS0_14basic_appenderIcEEsTnNSt9enable_ifIXaaaasr11is_integralIT1_EE5valuentsr3std7is_sameIS6_bEE5valuentsr3std7is_sameIS6_T_EE5valueEiE4typeELi0EEET0_SA_S6_(ptr %0, i16 noundef signext %1) local_unnamed_addr #2 comdat {
 bb.a:
   %i.a = icmp slt i16 %1, 0                       ; 2 uses
-  %i.b = tail call i16 @llvm.abs.i16(i16 %1, i1 false) ; 4 uses
-  %spec.select = zext i16 %i.b to i32             ; 3 uses
+  %i.b = tail call i16 @llvm.abs.i16(i16 %1, i1 false) ; 3 uses
+  %spec.select = zext i16 %i.b to i32             ; 4 uses
   %i.c = or i32 %spec.select, 1
   %i.d = tail call range(i32 0, 32) i32 @llvm.ctlz.i32(i32 %i.c, i1 true)
   %i.e = xor i32 %i.d, 31
@@ -260,17 +260,14 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.c, %bb.b
   %.020 = phi ptr [ %i.ac, %bb.c ], [ %i.ab, %bb.b ] ; 3 uses
   %i.ad = icmp ugt i16 %i.b, 99
-  br i1 %i.ad, label %.lr.ph.i.preheader, label %._crit_edge.i
+  br i1 %i.ad, label %.lr.ph.i, label %._crit_edge.i
 
-.lr.ph.i.preheader:                               ; preds = %bb.d
-  %2 = zext i16 %i.b to i64
-  br label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %.lr.ph.i.preheader, %.lr.ph.i
-  %.022.i = phi i64 [ %i.am, %.lr.ph.i ], [ %2, %.lr.ph.i.preheader ] ; 2 uses
-  %.02021.i = phi i32 [ %i.ae, %.lr.ph.i ], [ %i.l, %.lr.ph.i.preheader ]
+.lr.ph.i:                                         ; preds = %bb.d, %.lr.ph.i
+  %.022.i = phi i32 [ %3, %.lr.ph.i ], [ %spec.select, %bb.d ] ; 2 uses
+  %.02021.i = phi i32 [ %i.ae, %.lr.ph.i ], [ %i.l, %bb.d ]
   %i.ae = add i32 %.02021.i, -2                   ; 3 uses
-  %i.af = mul nuw nsw i64 %.022.i, 5497558139     ; 2 uses
+  %2 = zext nneg i32 %.022.i to i64
+  %i.af = mul nuw nsw i64 %2, 5497558139          ; 2 uses
   %i.ag = zext i32 %i.ae to i64
   %i.ah = getelementptr inbounds nuw i8, ptr %.020, i64 %i.ag
   %i.ai = lshr i64 %i.af, 31
@@ -278,17 +275,14 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.ak = getelementptr inbounds nuw i8, ptr @_ZZN3fmt3v126detail9digits2_iEmE4data, i64 %i.aj
   %i.al = load i16, ptr %i.ak, align 2
   store i16 %i.al, ptr %i.ah, align 1
-  %i.am = lshr i64 %i.af, 39                      ; 2 uses
-  %i.an = icmp samesign ugt i64 %.022.i, 9999
-  br i1 %i.an, label %.lr.ph.i, label %._crit_edge.i.loopexit, !llvm.loop !29
+  %i.am = lshr i64 %i.af, 39
+  %3 = trunc nuw nsw i64 %i.am to i32             ; 2 uses
+  %i.an = icmp ugt i32 %.022.i, 9999
+  br i1 %i.an, label %.lr.ph.i, label %._crit_edge.i, !llvm.loop !29
 
-._crit_edge.i.loopexit:                           ; preds = %.lr.ph.i
-  %3 = trunc nuw nsw i64 %i.am to i32
-  br label %._crit_edge.i
-
-._crit_edge.i:                                    ; preds = %._crit_edge.i.loopexit, %bb.d
-  %.020.lcssa.i = phi i32 [ %i.l, %bb.d ], [ %i.ae, %._crit_edge.i.loopexit ] ; 2 uses
-  %.0.lcssa.i = phi i32 [ %spec.select, %bb.d ], [ %3, %._crit_edge.i.loopexit ] ; 3 uses
+._crit_edge.i:                                    ; preds = %.lr.ph.i, %bb.d
+  %.020.lcssa.i = phi i32 [ %i.l, %bb.d ], [ %i.ae, %.lr.ph.i ] ; 2 uses
+  %.0.lcssa.i = phi i32 [ %spec.select, %bb.d ], [ %3, %.lr.ph.i ] ; 3 uses
   %i.ao = icmp samesign ugt i32 %.0.lcssa.i, 9
   br i1 %i.ao, label %bb.e, label %bb.f
 
