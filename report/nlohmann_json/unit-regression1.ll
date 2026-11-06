@@ -205,7 +205,7 @@ _ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.a, 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIjEEvT_b(ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef %1, i1 noundef zeroext %2) local_unnamed_addr #3 comdat align 2 {
 bb.a:
-  %3 = alloca %"struct.std::array.553", align 4   ; 8 uses
+  %3 = alloca %"struct.std::array.553", align 4   ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #31
   store i32 %1, ptr %3, align 4
   %i.a = load i8, ptr %0, align 8, !tbaa !643, !range !89, !noundef !90
@@ -214,20 +214,8 @@ bb.a:
   br i1 %.not, label %_ZSt7reverseIPhEvT_S1_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
-  %4 = lshr i32 %1, 16
-  %5 = trunc i32 %4 to i8
-  %6 = lshr i32 %1, 8
-  %7 = trunc i32 %6 to i8
-  %8 = lshr i32 %1, 24
-  %9 = trunc nuw i32 %8 to i8
-  %10 = trunc i32 %1 to i8
-  %.012.i.i = getelementptr inbounds nuw i8, ptr %3, i64 3
-  store i8 %9, ptr %3, align 4, !tbaa !103
-  store i8 %10, ptr %.012.i.i, align 1, !tbaa !103
-  %11 = getelementptr inbounds nuw i8, ptr %3, i64 1
-  %.0.i.i = getelementptr inbounds nuw i8, ptr %3, i64 2
-  store i8 %5, ptr %11, align 1, !tbaa !103
-  store i8 %7, ptr %.0.i.i, align 2, !tbaa !103
+  %4 = tail call i32 @llvm.bswap.i32(i32 %1)
+  store i32 %4, ptr %3, align 4, !tbaa !103
   br label %_ZSt7reverseIPhEvT_S1_.exit
 
 _ZSt7reverseIPhEvT_S1_.exit:                      ; preds = %.lr.ph.i.i, %bb.a
@@ -253,9 +241,8 @@ bb.a:
   br i1 %.not, label %_ZSt7reverseIPhEvT_S1_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
-  %4 = bitcast i64 %1 to <8 x i8>
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %5, ptr %3, align 8, !tbaa !103
+  %4 = tail call i64 @llvm.bswap.i64(i64 %1)
+  store i64 %4, ptr %3, align 8, !tbaa !103
   br label %_ZSt7reverseIPhEvT_S1_.exit
 
 _ZSt7reverseIPhEvT_S1_.exit:                      ; preds = %.lr.ph.i.i, %bb.a
@@ -273,7 +260,7 @@ _ZSt7reverseIPhEvT_S1_.exit:                      ; preds = %.lr.ph.i.i, %bb.a
 define linkonce_odr dso_local void @_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE19write_compact_floatEdNS1_14input_format_tE(ptr noundef nonnull align 8 dereferenceable(24) %0, double noundef %1, i32 noundef %2) local_unnamed_addr #3 comdat align 2 {
 bb.a:
   %3 = alloca %"struct.std::array.613", align 8   ; 5 uses
-  %4 = alloca %"struct.std::array.553", align 4   ; 8 uses
+  %4 = alloca %"struct.std::array.553", align 4   ; 5 uses
   %i.a = tail call double @llvm.fabs.f64(double %1)
   %or.cond = fcmp ugt double %i.a, f0x47EFFFFFE0000000
   br i1 %or.cond, label %bb.d, label %bb.b
@@ -299,21 +286,9 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not.i, label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIfEEvT_b.exit, label %.lr.ph.i.i.i
 
 .lr.ph.i.i.i:                                     ; preds = %bb.c
-  %i.k = bitcast float %i.b to i32                ; 4 uses
-  %5 = lshr i32 %i.k, 16
-  %6 = trunc i32 %5 to i8
-  %7 = lshr i32 %i.k, 8
-  %8 = trunc i32 %7 to i8
-  %9 = lshr i32 %i.k, 24
-  %10 = trunc nuw i32 %9 to i8
-  %11 = trunc i32 %i.k to i8
-  %.012.i.i.i = getelementptr inbounds nuw i8, ptr %4, i64 3
-  store i8 %10, ptr %4, align 4, !tbaa !103
-  store i8 %11, ptr %.012.i.i.i, align 1, !tbaa !103
-  %12 = getelementptr inbounds nuw i8, ptr %4, i64 1
-  %.0.i.i.i = getelementptr inbounds nuw i8, ptr %4, i64 2
-  store i8 %6, ptr %12, align 1, !tbaa !103
-  store i8 %8, ptr %.0.i.i.i, align 2, !tbaa !103
+  %i.k = bitcast float %i.b to i32
+  %5 = tail call i32 @llvm.bswap.i32(i32 %i.k)
+  store i32 %5, ptr %4, align 4, !tbaa !103
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIfEEvT_b.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIfEEvT_b.exit: ; preds = %bb.c, %.lr.ph.i.i.i
@@ -340,9 +315,9 @@ bb.d:                                             ; preds = %bb.b, %bb.a
   br i1 %.not.i12, label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIdEEvT_b.exit, label %.lr.ph.i.i.i13
 
 .lr.ph.i.i.i13:                                   ; preds = %bb.d
-  %13 = bitcast double %1 to <8 x i8>
-  %14 = shufflevector <8 x i8> %13, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %14, ptr %3, align 8, !tbaa !103
+  %6 = bitcast double %1 to i64
+  %7 = tail call i64 @llvm.bswap.i64(i64 %6)
+  store i64 %7, ptr %3, align 8, !tbaa !103
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIdEEvT_b.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIdEEvT_b.exit: ; preds = %bb.d, %.lr.ph.i.i.i13
@@ -744,6 +719,12 @@ declare i64 @llvm.smin.i64(i64, i64) #27
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #30
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #27
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #27
 
 attributes #0 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

@@ -169,9 +169,8 @@ define dso_local void @_Z18WriteCAFFChunkSizeP8_IO_FILEl(ptr nofree noundef capt
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
-  %2 = bitcast i64 %1 to <8 x i8>
-  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %3, ptr %i.a, align 8, !tbaa !31
+  %2 = tail call i64 @llvm.bswap.i64(i64 %1)
+  store i64 %2, ptr %i.a, align 8, !tbaa !31
   %i.b = call i64 @fwrite(ptr noundef nonnull %i.a, i64 noundef 1, i64 noundef 8, ptr noundef %0) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret void
@@ -180,26 +179,14 @@ bb.a:
 ; Function Attrs: mustprogress nofree nounwind uwtable
 define dso_local void @_Z18WriteCAFFchanChunkP8_IO_FILEj(ptr nofree noundef captures(none) %0, i32 noundef %1) local_unnamed_addr #0 !guid !45 {
 bb.a:
-  %i.a = alloca [24 x i8], align 16               ; 9 uses
+  %i.a = alloca [24 x i8], align 16               ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(24) %i.a, ptr noundef nonnull align 16 dereferenceable(24) @__const._Z18WriteCAFFchanChunkP8_IO_FILEj.theBuffer, i64 24, i1 false)
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 11
-  store i8 12, ptr %2, align 1, !tbaa !31
-  %3 = lshr i32 %1, 24
-  %4 = trunc nuw i32 %3 to i8
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  store i8 %4, ptr %5, align 4, !tbaa !31
-  %6 = lshr i32 %1, 16
-  %7 = trunc i32 %6 to i8
-  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 13
-  store i8 %7, ptr %i.b, align 1, !tbaa !31
-  %8 = lshr i32 %1, 8
-  %9 = trunc i32 %8 to i8
-  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 14
-  store i8 %9, ptr %i.c, align 2, !tbaa !31
-  %10 = trunc i32 %1 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 15
-  store i8 %10, ptr %11, align 1, !tbaa !31
+  %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 11
+  store i8 12, ptr %i.b, align 1, !tbaa !31
+  %i.c = getelementptr inbounds nuw i8, ptr %i.a, i64 12
+  %2 = tail call i32 @llvm.bswap.i32(i32 %1)
+  store i32 %2, ptr %i.c, align 4, !tbaa !31
   %i.d = call i64 @fwrite(ptr noundef nonnull %i.a, i64 noundef 1, i64 noundef 24, ptr noundef %0) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret void
@@ -208,29 +195,17 @@ bb.a:
 ; Function Attrs: mustprogress nofree nounwind uwtable
 define dso_local void @_Z18WriteCAFFfreeChunkP8_IO_FILEj(ptr nofree noundef captures(none) %0, i32 noundef %1) local_unnamed_addr #0 !guid !47 {
 bb.a:
-  %i.a = alloca [12 x i8], align 8                ; 8 uses
+  %i.a = alloca [12 x i8], align 8                ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   store i64 1701147238, ptr %i.a, align 8
-  %i.b = add i32 %1, -12                          ; 6 uses
+  %i.b = add i32 %1, -12                          ; 3 uses
   %i.c = icmp ugt i32 %1, 11
   br i1 %i.c, label %bb.b, label %.loopexit
 
 bb.b:                                             ; preds = %bb.a
-  %2 = lshr i32 %i.b, 24
-  %3 = trunc nuw i32 %2 to i8
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i8 %3, ptr %i.d, align 8, !tbaa !31
-  %4 = lshr i32 %i.b, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  store i8 %5, ptr %6, align 1, !tbaa !31
-  %7 = lshr i32 %i.b, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  store i8 %8, ptr %9, align 2, !tbaa !31
-  %10 = trunc i32 %i.b to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 11
-  store i8 %10, ptr %11, align 1, !tbaa !31
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.b)
+  store i32 %2, ptr %i.d, align 8, !tbaa !31
   %i.e = call i64 @fwrite(ptr noundef nonnull %i.a, i64 noundef 1, i64 noundef 12, ptr noundef %0) ; 0 uses
   %.not = icmp eq i32 %i.b, 0
   br i1 %.not, label %.loopexit, label %.lr.ph
@@ -250,7 +225,7 @@ bb.b:                                             ; preds = %bb.a
 ; Function Attrs: mustprogress uwtable
 define dso_local void @_Z24WriteCAFFpaktChunkHeaderP8_IO_FILEP25port_CAFPacketTableHeaderj(ptr nofree noundef captures(none) %0, ptr nofree noundef captures(none) %1, i32 noundef %2) local_unnamed_addr #3 !guid !48 {
 bb.a:
-  %i.a = alloca [12 x i8], align 4                ; 9 uses
+  %i.a = alloca [12 x i8], align 4                ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #9
   %i.b = load i64, ptr %1, align 1, !tbaa !34
   %i.c = tail call i64 @Swap64NtoB(i64 noundef %i.b)
@@ -268,23 +243,11 @@ bb.a:
   %i.l = tail call i32 @Swap32NtoB(i32 noundef %i.k)
   store i32 %i.l, ptr %i.j, align 1, !tbaa !37
   store <4 x i8> <i8 112, i8 97, i8 107, i8 116>, ptr %i.a, align 4, !tbaa !31
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %4 = lshr i32 %2, 24
-  %5 = trunc nuw i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i32 0, ptr %3, align 4
-  store i8 %5, ptr %6, align 4, !tbaa !31
-  %7 = lshr i32 %2, 16
-  %8 = trunc i32 %7 to i8
-  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  store i8 %8, ptr %i.m, align 1, !tbaa !31
-  %9 = lshr i32 %2, 8
-  %10 = trunc i32 %9 to i8
-  %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  store i8 %10, ptr %i.n, align 2, !tbaa !31
-  %11 = trunc i32 %2 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 11
-  store i8 %11, ptr %12, align 1, !tbaa !31
+  %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %i.n = getelementptr inbounds nuw i8, ptr %i.a, i64 8
+  store i32 0, ptr %i.m, align 4
+  %3 = tail call i32 @llvm.bswap.i32(i32 %2)
+  store i32 %3, ptr %i.n, align 4, !tbaa !31
   %i.o = call i64 @fwrite(ptr noundef nonnull %i.a, i64 noundef 1, i64 noundef 12, ptr noundef %0) ; 0 uses
   %i.p = tail call i64 @fwrite(ptr noundef nonnull %1, i64 noundef 1, i64 noundef 24, ptr noundef %0) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
@@ -686,6 +649,9 @@ declare noundef i32 @fputc(i32 noundef, ptr noundef captures(none)) local_unname
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #8
 
 attributes #0 = { mustprogress nofree nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

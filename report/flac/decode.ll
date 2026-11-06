@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 define internal fastcc range(i32 0, 2) i32 @write_iff_headers(ptr nofree noundef captures(address) %0, ptr nofree noundef nonnull captures(none) %1, i64 noundef %2) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
-  %i.b = alloca i32, align 4                      ; 7 uses
+  %i.b = alloca i32, align 4                      ; 4 uses
   %i.c = alloca i16, align 2                      ; 5 uses
   %i.d = alloca i32, align 4                      ; 4 uses
   %i.e = alloca i32, align 4                      ; 4 uses
@@ -213,7 +213,7 @@ bb.a:
   %i.g = alloca i16, align 2                      ; 5 uses
   %i.h = alloca i32, align 4                      ; 7 uses
   %i.i = alloca i16, align 2                      ; 5 uses
-  %i.j = alloca i32, align 4                      ; 7 uses
+  %i.j = alloca i32, align 4                      ; 4 uses
   %i.k = alloca i32, align 4                      ; 7 uses
   %i.l = alloca i64, align 8                      ; 4 uses
   %i.m = alloca i32, align 4                      ; 4 uses
@@ -616,22 +616,10 @@ bb.cb:                                            ; preds = %._crit_edge326, %.t
   br i1 %.not.i286, label %bb.cc, label %write_aiff_form_comm_chunk.exit.thread
 
 bb.cc:                                            ; preds = %bb.cb
-  %i.jm = add i32 %i.jh, -12                      ; 4 uses
+  %i.jm = add i32 %i.jh, -12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
-  %3 = getelementptr inbounds nuw i8, ptr %i.j, i64 3
-  %4 = lshr i32 %i.jm, 24
-  %5 = trunc nuw i32 %4 to i8
-  %6 = trunc i32 %i.jm to i8
-  store i8 %6, ptr %3, align 1, !tbaa !13
-  store i8 %5, ptr %i.j, align 4, !tbaa !13
-  %7 = getelementptr inbounds nuw i8, ptr %i.j, i64 2
-  %8 = lshr i32 %i.jm, 16
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %i.j, i64 1
-  %11 = lshr i32 %i.jm, 8
-  %12 = trunc i32 %11 to i8
-  store i8 %12, ptr %7, align 2, !tbaa !13
-  store i8 %9, ptr %10, align 1, !tbaa !13
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.jm)
+  store i32 %3, ptr %i.j, align 4, !tbaa !13
   %i.jn = call i64 @fwrite(ptr noundef nonnull %i.j, i64 noundef 1, i64 noundef 4, ptr noundef %0)
   %.not37.i = icmp eq i64 %i.jn, 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j)
@@ -737,22 +725,10 @@ bb.ck:                                            ; preds = %.preheader.i.i
   br i1 %.not.i.i287, label %bb.cl, label %write_aiff_form_comm_chunk.exit.thread
 
 bb.cl:                                            ; preds = %bb.ck
-  %i.kz = shl i32 %i.ji, %.0.i.i                  ; 4 uses
+  %i.kz = shl i32 %i.ji, %.0.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %13 = getelementptr inbounds nuw i8, ptr %i.b, i64 3
-  %14 = lshr i32 %i.kz, 24
-  %15 = trunc nuw i32 %14 to i8
-  %16 = trunc i32 %i.kz to i8
-  store i8 %16, ptr %13, align 1, !tbaa !13
-  store i8 %15, ptr %i.b, align 4, !tbaa !13
-  %17 = getelementptr inbounds nuw i8, ptr %i.b, i64 2
-  %18 = lshr i32 %i.kz, 16
-  %19 = trunc i32 %18 to i8
-  %20 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %21 = lshr i32 %i.kz, 8
-  %22 = trunc i32 %21 to i8
-  store i8 %22, ptr %17, align 2, !tbaa !13
-  store i8 %19, ptr %20, align 1, !tbaa !13
+  %4 = tail call i32 @llvm.bswap.i32(i32 %i.kz)
+  store i32 %4, ptr %i.b, align 4, !tbaa !13
   %i.la = call i64 @fwrite(ptr noundef nonnull %i.b, i64 noundef 1, i64 noundef 4, ptr noundef %0)
   %.not23.i.i = icmp eq i64 %i.la, 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
@@ -1128,21 +1104,9 @@ bb.o:                                             ; preds = %bb.m, %bb.k, %bb.j,
 ; Function Attrs: nofree nounwind sspstrong uwtable
 define internal fastcc noundef range(i32 0, 2) i32 @write_big_endian_uint32(ptr nofree noundef captures(none) %0, i32 noundef %1) unnamed_addr #10 {
 bb.a:
-  %i.a = alloca i32, align 4                      ; 5 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  %3 = lshr i32 %1, 24
-  %4 = trunc nuw i32 %3 to i8
-  %5 = trunc i32 %1 to i8
-  store i8 %5, ptr %2, align 1, !tbaa !13
-  store i8 %4, ptr %i.a, align 4, !tbaa !13
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %7 = lshr i32 %1, 16
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %10 = lshr i32 %1, 8
-  %11 = trunc i32 %10 to i8
-  store i8 %11, ptr %6, align 2, !tbaa !13
-  store i8 %8, ptr %9, align 1, !tbaa !13
+  %i.a = alloca i32, align 4                      ; 2 uses
+  %2 = tail call i32 @llvm.bswap.i32(i32 %1)
+  store i32 %2, ptr %i.a, align 4, !tbaa !13
   %i.b = call i64 @fwrite(ptr noundef nonnull %i.a, i64 noundef 1, i64 noundef 4, ptr noundef %0)
   %i.c = icmp eq i64 %i.b, 4
   %i.d = zext i1 %i.c to i32
@@ -1167,6 +1131,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #8
 
 attributes #0 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

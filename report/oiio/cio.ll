@@ -204,9 +204,9 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define void @opj_write_double_LE(ptr nofree noundef writeonly captures(none) initializes((0, 8)) %0, double noundef %1) local_unnamed_addr #4 !guid !54 {
 bb.a:
-  %2 = bitcast double %1 to <8 x i8>
-  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %3, ptr %0, align 1, !tbaa !11
+  %2 = bitcast double %1 to i64
+  %3 = tail call i64 @llvm.bswap.i64(i64 %2)
+  store i64 %3, ptr %0, align 1, !tbaa !11
   ret void
 }
 
@@ -264,21 +264,9 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define void @opj_write_float_LE(ptr nofree noundef writeonly captures(none) initializes((0, 4)) %0, float noundef %1) local_unnamed_addr #4 !guid !58 {
 bb.a:
-  %i.a = bitcast float %1 to i32                  ; 4 uses
-  %.3.extract.shift = lshr i32 %i.a, 24
-  %.3.extract.trunc = trunc nuw i32 %.3.extract.shift to i8
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %.3.extract.trunc, ptr %0, align 1, !tbaa !11
-  %.2.extract.shift = lshr i32 %i.a, 16
-  %.2.extract.trunc = trunc i32 %.2.extract.shift to i8
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i8 %.2.extract.trunc, ptr %2, align 1, !tbaa !11
-  %.1.extract.shift = lshr i32 %i.a, 8
-  %.1.extract.trunc = trunc i32 %.1.extract.shift to i8
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  store i8 %.1.extract.trunc, ptr %3, align 1, !tbaa !11
-  %.0.extract.trunc = trunc i32 %i.a to i8
-  store i8 %.0.extract.trunc, ptr %4, align 1, !tbaa !11
+  %i.a = bitcast float %1 to i32
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.a)
+  store i32 %2, ptr %0, align 1, !tbaa !11
   ret void
 }
 
@@ -313,21 +301,21 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define ptr @opj_stream_create(i64 noundef %0, i32 noundef %1) local_unnamed_addr #5 !guid !61 {
 bb.a:
-  %i.a = tail call ptr @opj_calloc(i64 noundef 1, i64 noundef 120) #9 ; 13 uses
+  %i.a = tail call ptr @opj_calloc(i64 noundef 1, i64 noundef 120) #10 ; 13 uses
   %.not = icmp eq ptr %i.a, null
   br i1 %.not, label %bb.e, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 104
   store i64 %0, ptr %i.b, align 8, !tbaa !20
-  %i.c = tail call ptr @opj_malloc(i64 noundef %0) #9 ; 3 uses
+  %i.c = tail call ptr @opj_malloc(i64 noundef %0) #10 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   store ptr %i.c, ptr %i.d, align 8, !tbaa !21
   %.not23 = icmp eq ptr %i.c, null
   br i1 %.not23, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @opj_free(ptr noundef nonnull %i.a) #9
+  tail call void @opj_free(ptr noundef nonnull %i.a) #10
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
@@ -443,7 +431,7 @@ bb.h:                                             ; preds = %.lr.ph, %bb.m
   br i1 %i.af, label %bb.i, label %bb.k
 
 bb.i:                                             ; preds = %bb.h
-  %i.ag = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %2, i32 noundef 4, ptr noundef nonnull @.str) #9 ; 0 uses
+  %i.ag = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %2, i32 noundef 4, ptr noundef nonnull @.str) #10 ; 0 uses
   %i.ah = load i64, ptr %i.y, align 8, !tbaa !31
   %i.ai = add nsw i64 %i.ah, %.180                ; 3 uses
   store i64 %i.ai, ptr %i.y, align 8, !tbaa !31
@@ -457,7 +445,7 @@ bb.i:                                             ; preds = %bb.h
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.ap = load ptr, ptr %i.ao, align 8, !tbaa !29
   %i.aq = load ptr, ptr %0, align 8, !tbaa !33
-  %i.ar = tail call i32 %i.ap(i64 noundef %i.aj, ptr noundef %i.aq) #9, !inline_history !64
+  %i.ar = tail call i32 %i.ap(i64 noundef %i.aj, ptr noundef %i.aq) #10, !inline_history !64
   %.not.i = icmp eq i32 %i.ar, 0
   %i.as = load i32, ptr %i.j, align 8, !tbaa !23
   br i1 %.not.i, label %opj_stream_read_seek.exit, label %bb.j
@@ -476,12 +464,12 @@ opj_stream_read_seek.exit:                        ; preds = %bb.i, %bb.j
 bb.k:                                             ; preds = %bb.h
   %i.au = load ptr, ptr %i.aa, align 8, !tbaa !28
   %i.av = load ptr, ptr %0, align 8, !tbaa !33
-  %i.aw = tail call i64 %i.au(i64 noundef %.16479, ptr noundef %i.av) #9 ; 3 uses
+  %i.aw = tail call i64 %i.au(i64 noundef %.16479, ptr noundef %i.av) #10 ; 3 uses
   %i.ax = icmp eq i64 %i.aw, -1
   br i1 %i.ax, label %bb.l, label %bb.m
 
 bb.l:                                             ; preds = %bb.k
-  %i.ay = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %2, i32 noundef 4, ptr noundef nonnull @.str) #9 ; 0 uses
+  %i.ay = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %2, i32 noundef 4, ptr noundef nonnull @.str) #10 ; 0 uses
   %i.az = load i32, ptr %i.j, align 8, !tbaa !23
   %i.ba = or i32 %i.az, 4
   store i32 %i.ba, ptr %i.j, align 8, !tbaa !23
@@ -523,7 +511,7 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !29
   %i.g = load ptr, ptr %0, align 8, !tbaa !33
-  %i.h = tail call i32 %i.f(i64 noundef %1, ptr noundef %i.g) #9
+  %i.h = tail call i32 %i.f(i64 noundef %1, ptr noundef %i.g) #10
   %.not = icmp eq i32 %i.h, 0
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 3 uses
   %i.j = load i32, ptr %i.i, align 8, !tbaa !23   ; 2 uses
@@ -574,7 +562,7 @@ bb.c:                                             ; preds = %bb.d, %.lr.ph.i
   %i.k = phi i64 [ %i.h, %.lr.ph.i ], [ %i.s, %bb.d ]
   %i.l = load ptr, ptr %i.i, align 8, !tbaa !27
   %i.m = load ptr, ptr %0, align 8, !tbaa !33
-  %i.n = tail call i64 %i.l(ptr noundef %i.j, i64 noundef %i.k, ptr noundef %i.m) #9, !inline_history !34 ; 3 uses
+  %i.n = tail call i64 %i.l(ptr noundef %i.j, i64 noundef %i.k, ptr noundef %i.m) #10, !inline_history !34 ; 3 uses
   %i.o = icmp eq i64 %i.n, -1
   br i1 %i.o, label %bb.e, label %bb.d
 
@@ -606,7 +594,7 @@ bb.e:                                             ; preds = %bb.c
   %i.w = load i32, ptr %i.a, align 8, !tbaa !23
   %i.x = or i32 %i.w, 8
   store i32 %i.x, ptr %i.a, align 8, !tbaa !23
-  %i.y = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %2, i32 noundef 4, ptr noundef nonnull @.str.1) #9 ; 0 uses
+  %i.y = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %2, i32 noundef 4, ptr noundef nonnull @.str.1) #10 ; 0 uses
   %i.z = load i32, ptr %i.a, align 8, !tbaa !23
   %i.aa = or i32 %i.z, 8
   store i32 %i.aa, ptr %i.a, align 8, !tbaa !23
@@ -618,12 +606,12 @@ bb.f:                                             ; preds = %.lr.ph, %bb.h
   %.02532 = phi i64 [ %1, %.lr.ph ], [ %i.am, %bb.h ] ; 2 uses
   %i.ab = load ptr, ptr %i.v, align 8, !tbaa !28
   %i.ac = load ptr, ptr %0, align 8, !tbaa !33
-  %i.ad = tail call i64 %i.ab(i64 noundef %.02532, ptr noundef %i.ac) #9 ; 3 uses
+  %i.ad = tail call i64 %i.ab(i64 noundef %.02532, ptr noundef %i.ac) #10 ; 3 uses
   %i.ae = icmp eq i64 %i.ad, -1
   br i1 %i.ae, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %i.af = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %2, i32 noundef 4, ptr noundef nonnull @.str.2) #9 ; 0 uses
+  %i.af = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %2, i32 noundef 4, ptr noundef nonnull @.str.2) #10 ; 0 uses
   %i.ag = load i32, ptr %i.a, align 8, !tbaa !23
   %i.ah = or i32 %i.ag, 8
   store i32 %i.ah, ptr %i.a, align 8, !tbaa !23
@@ -675,7 +663,7 @@ bb.b:                                             ; preds = %bb.c, %.lr.ph.i
   %i.h = phi i64 [ %i.e, %.lr.ph.i ], [ %i.p, %bb.c ]
   %i.i = load ptr, ptr %i.f, align 8, !tbaa !27
   %i.j = load ptr, ptr %0, align 8, !tbaa !33
-  %i.k = tail call i64 %i.i(ptr noundef %i.g, i64 noundef %i.h, ptr noundef %i.j) #9, !inline_history !34 ; 3 uses
+  %i.k = tail call i64 %i.i(ptr noundef %i.g, i64 noundef %i.h, ptr noundef %i.j) #10, !inline_history !34 ; 3 uses
   %i.l = icmp eq i64 %i.k, -1
   br i1 %i.l, label %bb.d, label %bb.c
 
@@ -698,7 +686,7 @@ bb.d:                                             ; preds = %bb.b
   %i.r = load i32, ptr %i.q, align 8, !tbaa !23
   %i.s = or i32 %i.r, 8
   store i32 %i.s, ptr %i.q, align 8, !tbaa !23
-  %i.t = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %2, i32 noundef 4, ptr noundef nonnull @.str.1) #9 ; 0 uses
+  %i.t = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %2, i32 noundef 4, ptr noundef nonnull @.str.1) #10 ; 0 uses
   %i.u = load i32, ptr %i.q, align 8, !tbaa !23
   %i.v = or i32 %i.u, 8
   store i32 %i.v, ptr %i.q, align 8, !tbaa !23
@@ -711,7 +699,7 @@ bb.e:                                             ; preds = %._crit_edge.loopexi
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.y = load ptr, ptr %i.x, align 8, !tbaa !29
   %i.z = load ptr, ptr %0, align 8, !tbaa !33
-  %i.aa = tail call i32 %i.y(i64 noundef %1, ptr noundef %i.z) #9
+  %i.aa = tail call i32 %i.y(i64 noundef %1, ptr noundef %i.z) #10
   %.not12 = icmp eq i32 %i.aa, 0
   br i1 %.not12, label %bb.f, label %bb.g
 
@@ -759,21 +747,21 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define ptr @opj_stream_default_create(i32 noundef %0) local_unnamed_addr #5 !guid !73 {
 bb.a:
-  %i.a = tail call ptr @opj_calloc(i64 noundef 1, i64 noundef 120) #9 ; 13 uses
+  %i.a = tail call ptr @opj_calloc(i64 noundef 1, i64 noundef 120) #10 ; 13 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %opj_stream_create.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 104
   store i64 1048576, ptr %i.b, align 8, !tbaa !20
-  %i.c = tail call ptr @opj_malloc(i64 noundef 1048576) #9 ; 3 uses
+  %i.c = tail call ptr @opj_malloc(i64 noundef 1048576) #10 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   store ptr %i.c, ptr %i.d, align 8, !tbaa !21
   %.not23.i = icmp eq ptr %i.c, null
   br i1 %.not23.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @opj_free(ptr noundef nonnull %i.a) #9
+  tail call void @opj_free(ptr noundef nonnull %i.a) #10
   br label %opj_stream_create.exit
 
 bb.d:                                             ; preds = %bb.b
@@ -820,15 +808,15 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.c = load ptr, ptr %0, align 8, !tbaa !33
-  tail call void %i.b(ptr noundef %i.c) #9
+  tail call void %i.b(ptr noundef %i.c) #10
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !21
-  tail call void @opj_free(ptr noundef %i.e) #9
+  tail call void @opj_free(ptr noundef %i.e) #10
   store ptr null, ptr %i.d, align 8, !tbaa !21
-  tail call void @opj_free(ptr noundef nonnull %0) #9
+  tail call void @opj_free(ptr noundef nonnull %0) #10
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.a
@@ -1039,13 +1027,13 @@ bb.i:                                             ; preds = %bb.t, %bb.h
   br i1 %i.as, label %bb.j, label %bb.o
 
 bb.j:                                             ; preds = %bb.i
-  %i.av = tail call i64 %i.at(ptr noundef %i.aq, i64 noundef %i.ar, ptr noundef %i.au) #9 ; 5 uses
+  %i.av = tail call i64 %i.at(ptr noundef %i.aq, i64 noundef %i.ar, ptr noundef %i.au) #10 ; 5 uses
   store i64 %i.av, ptr %i.a, align 8, !tbaa !30
   %i.aw = icmp eq i64 %i.av, -1
   br i1 %i.aw, label %bb.k, label %bb.l
 
 bb.k:                                             ; preds = %bb.j
-  %i.ax = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %3, i32 noundef 4, ptr noundef nonnull @.str) #9 ; 0 uses
+  %i.ax = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %3, i32 noundef 4, ptr noundef nonnull @.str) #10 ; 0 uses
   store i64 0, ptr %i.a, align 8, !tbaa !30
   %i.ay = load i32, ptr %i.l, align 8, !tbaa !23
   %i.az = or i32 %i.ay, 4
@@ -1082,13 +1070,13 @@ bb.n:                                             ; preds = %bb.l
   br label %bb.u
 
 bb.o:                                             ; preds = %bb.i
-  %i.bn = tail call i64 %i.at(ptr noundef %.1122, i64 noundef %.1119, ptr noundef %i.au) #9 ; 7 uses
+  %i.bn = tail call i64 %i.at(ptr noundef %.1122, i64 noundef %.1119, ptr noundef %i.au) #10 ; 7 uses
   store i64 %i.bn, ptr %i.a, align 8, !tbaa !30
   %i.bo = icmp eq i64 %i.bn, -1
   br i1 %i.bo, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %bb.o
-  %i.bp = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %3, i32 noundef 4, ptr noundef nonnull @.str) #9 ; 0 uses
+  %i.bp = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %3, i32 noundef 4, ptr noundef nonnull @.str) #10 ; 0 uses
   store i64 0, ptr %i.a, align 8, !tbaa !30
   %i.bq = load i32, ptr %i.l, align 8, !tbaa !23
   %i.br = or i32 %i.bq, 4
@@ -1227,7 +1215,7 @@ bb.d:                                             ; preds = %._crit_edge60, %bb.
   %i.ak = phi i64 [ %i.av, %bb.e ], [ %i.ah, %bb.d ]
   %i.al = load ptr, ptr %i.l, align 8, !tbaa !27
   %i.am = load ptr, ptr %0, align 8, !tbaa !33
-  %i.an = tail call i64 %i.al(ptr noundef %i.aj, i64 noundef %i.ak, ptr noundef %i.am) #9, !inline_history !34 ; 3 uses
+  %i.an = tail call i64 %i.al(ptr noundef %i.aj, i64 noundef %i.ak, ptr noundef %i.am) #10, !inline_history !34 ; 3 uses
   %i.ao = icmp eq i64 %i.an, -1
   br i1 %i.ao, label %opj_stream_flush.exit.thread, label %bb.e
 
@@ -1235,7 +1223,7 @@ opj_stream_flush.exit.thread:                     ; preds = %.lr.ph.i
   %i.ap = load i32, ptr %i.a, align 8, !tbaa !23
   %i.aq = or i32 %i.ap, 8
   store i32 %i.aq, ptr %i.a, align 8, !tbaa !23
-  %i.ar = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %3, i32 noundef 4, ptr noundef nonnull @.str.1) #9 ; 0 uses
+  %i.ar = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %3, i32 noundef 4, ptr noundef nonnull @.str.1) #10 ; 0 uses
   br label %bb.f
 
 bb.e:                                             ; preds = %.lr.ph.i
@@ -1285,7 +1273,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.d
   %i.h = phi i64 [ %i.e, %.lr.ph ], [ %i.t, %bb.d ]
   %i.i = load ptr, ptr %i.f, align 8, !tbaa !27
   %i.j = load ptr, ptr %0, align 8, !tbaa !33
-  %i.k = tail call i64 %i.i(ptr noundef %i.g, i64 noundef %i.h, ptr noundef %i.j) #9 ; 3 uses
+  %i.k = tail call i64 %i.i(ptr noundef %i.g, i64 noundef %i.h, ptr noundef %i.j) #10 ; 3 uses
   %i.l = icmp eq i64 %i.k, -1
   br i1 %i.l, label %bb.c, label %bb.d
 
@@ -1294,7 +1282,7 @@ bb.c:                                             ; preds = %bb.b
   %i.n = load i32, ptr %i.m, align 8, !tbaa !23
   %i.o = or i32 %i.n, 8
   store i32 %i.o, ptr %i.m, align 8, !tbaa !23
-  %i.p = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %1, i32 noundef 4, ptr noundef nonnull @.str.1) #9 ; 0 uses
+  %i.p = tail call i32 (ptr, i32, ptr, ...) @opj_event_msg(ptr noundef %1, i32 noundef 4, ptr noundef nonnull @.str.1) #10 ; 0 uses
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.b
@@ -1353,7 +1341,7 @@ define i64 @opj_stream_skip(ptr noundef %0, i64 noundef %1, ptr noundef %2) loca
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !24
-  %i.c = tail call i64 %i.b(ptr noundef %0, i64 noundef %1, ptr noundef %2) #9
+  %i.c = tail call i64 %i.b(ptr noundef %0, i64 noundef %1, ptr noundef %2) #10
   ret i64 %i.c
 }
 
@@ -1362,7 +1350,7 @@ define i32 @opj_stream_seek(ptr noundef %0, i64 noundef %1, ptr noundef %2) loca
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !25
-  %i.c = tail call i32 %i.b(ptr noundef %0, i64 noundef %1, ptr noundef %2) #9
+  %i.c = tail call i32 %i.b(ptr noundef %0, i64 noundef %1, ptr noundef %2) #10
   ret i32 %i.c
 }
 
@@ -1376,6 +1364,12 @@ bb.a:
   ret i32 %i.d
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #9
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { nofree norecurse nosync nounwind memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -1385,7 +1379,8 @@ attributes #5 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-mat
 attributes #6 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #7 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #8 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #9 = { nounwind }
+attributes #9 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #10 = { nounwind }
 
 !llvm.module.flags = !{!1, !2}
 !llvm.ident = !{!3}

@@ -204,40 +204,16 @@ _ZN9grpc_core8channelz15ZTraceCollectorINS_29http2_ztrace_collector_detail6Confi
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.j = load ptr, ptr %i.i, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 9
-  %i.l = select i1 %.not25, ptr %i.k, ptr %i.j    ; 10 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.l, i64 4
+  %i.l = select i1 %.not25, ptr %i.k, ptr %i.j    ; 4 uses
+  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 4
   store <4 x i8> <i8 0, i8 0, i8 4, i8 3>, ptr %i.l, align 1, !tbaa !56
-  %9 = getelementptr inbounds nuw i8, ptr %i.l, i64 5
-  store i8 0, ptr %8, align 1, !tbaa !56
-  %10 = lshr i32 %1, 24
-  %11 = trunc nuw i32 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.l, i64 6
-  store i8 %11, ptr %9, align 1, !tbaa !56
-  %13 = lshr i32 %1, 16
-  %14 = trunc i32 %13 to i8
-  %15 = getelementptr inbounds nuw i8, ptr %i.l, i64 7
-  store i8 %14, ptr %12, align 1, !tbaa !56
-  %16 = lshr i32 %1, 8
-  %17 = trunc i32 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %i.l, i64 8
-  store i8 %17, ptr %15, align 1, !tbaa !56
-  %19 = trunc i32 %1 to i8
-  %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 9
-  store i8 %19, ptr %18, align 1, !tbaa !56
-  %20 = lshr i32 %2, 24
-  %21 = trunc nuw i32 %20 to i8
-  %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 10
-  store i8 %21, ptr %i.m, align 1, !tbaa !56
-  %22 = lshr i32 %2, 16
-  %23 = trunc i32 %22 to i8
-  %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 11
-  store i8 %23, ptr %i.n, align 1, !tbaa !56
-  %24 = lshr i32 %2, 8
-  %25 = trunc i32 %24 to i8
-  %26 = getelementptr inbounds nuw i8, ptr %i.l, i64 12
-  store i8 %25, ptr %i.o, align 1, !tbaa !56
-  %27 = trunc i32 %2 to i8
-  store i8 %27, ptr %26, align 1, !tbaa !56
+  %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 5
+  store i8 0, ptr %i.m, align 1, !tbaa !56
+  %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 9
+  %8 = call i32 @llvm.bswap.i32(i32 %1)
+  store i32 %8, ptr %i.n, align 1, !tbaa !56
+  %9 = call i32 @llvm.bswap.i32(i32 %2)
+  store i32 %9, ptr %i.o, align 1, !tbaa !56
   ret void
 }
 

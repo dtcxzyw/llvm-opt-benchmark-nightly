@@ -202,7 +202,7 @@ bb.bt:                                            ; preds = %bb.bs
   br label %get_or_create_sak_info.exit
 
 get_or_create_sak_info.exit:                      ; preds = %bb.bs, %bb.bt
-  %.0.i119 = phi ptr [ %i.ns, %bb.bt ], [ %i.nm, %bb.bs ] ; 15 uses
+  %.0.i119 = phi ptr [ %i.ns, %bb.bt ], [ %i.nm, %bb.bs ] ; 12 uses
   %i.ob = add nsw i32 %i.mq, -8                   ; 2 uses
   %i.oc = getelementptr i8, ptr %.0.i119, i64 88  ; 3 uses
   store i32 %i.ob, ptr %i.oc, align 8
@@ -235,21 +235,9 @@ bb.bx:                                            ; preds = %bb.bv
   %i.ok = getelementptr i8, ptr %.0.i119, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef align 8 dereferenceable(12) %i.ok, ptr noundef nonnull align 1 dereferenceable(12) %i.oj, i64 noundef 12, i1 noundef false) #16
   %i.ol = getelementptr i8, ptr %.0.i119, i64 44
-  %i.om = load i32, ptr %i.g, align 4             ; 4 uses
-  %8 = lshr i32 %i.om, 24
-  %9 = trunc nuw i32 %8 to i8
-  store i8 %9, ptr %i.ol, align 4
-  %10 = lshr i32 %i.om, 16
-  %11 = trunc i32 %10 to i8
-  %12 = getelementptr i8, ptr %.0.i119, i64 45
-  store i8 %11, ptr %12, align 1
-  %13 = lshr i32 %i.om, 8
-  %14 = trunc i32 %13 to i8
-  %15 = getelementptr i8, ptr %.0.i119, i64 46
-  store i8 %14, ptr %15, align 2
-  %16 = trunc i32 %i.om to i8
-  %17 = getelementptr i8, ptr %.0.i119, i64 47
-  store i8 %16, ptr %17, align 1
+  %i.om = load i32, ptr %i.g, align 4
+  %8 = call i32 @llvm.bswap.i32(i32 %i.om)
+  store i32 %8, ptr %i.ol, align 4
   %i.on = load i64, ptr %i.f, align 8
   %i.oo = getelementptr i8, ptr %.0.i119, i64 80
   store i64 %i.on, ptr %i.oo, align 8
@@ -650,6 +638,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.xor.v4i32(<4 x i32>) #15

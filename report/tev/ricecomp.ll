@@ -32,22 +32,10 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.t
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %i.g = load i32, ptr %0, align 4, !tbaa !9      ; 5 uses
-  %5 = lshr i32 %i.g, 24
-  %6 = trunc nuw i32 %5 to i8
-  %7 = getelementptr inbounds nuw i8, ptr %2, i64 1
-  store i8 %6, ptr %2, align 1, !tbaa !10
-  %8 = lshr i32 %i.g, 16
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %2, i64 2
-  store i8 %9, ptr %7, align 1, !tbaa !10
-  %11 = lshr i32 %i.g, 8
-  %12 = trunc i32 %11 to i8
-  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 3
-  store i8 %12, ptr %10, align 1, !tbaa !10
-  %13 = trunc i32 %i.g to i8
-  %14 = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
-  store i8 %13, ptr %i.h, align 1, !tbaa !10
+  %i.g = load i32, ptr %0, align 4, !tbaa !9      ; 2 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
+  %5 = tail call i32 @llvm.bswap.i32(i32 %i.g)
+  store i32 %5, ptr %2, align 1, !tbaa !10
   %i.i = icmp sgt i32 %1, 0
   br i1 %i.i, label %.lr.ph259.preheader, label %done_outputing_bits.exit
 
@@ -62,7 +50,7 @@ bb.b:                                             ; preds = %bb.a
   %.0135257 = phi i32 [ %4, %.lr.ph259.preheader ], [ %spec.select, %output_nbits.exit170 ]
   %.sroa.0.0255 = phi i32 [ %i.g, %.lr.ph259.preheader ], [ %.sroa.0.2, %output_nbits.exit170 ] ; 6 uses
   %.sroa.16.0254 = phi i32 [ 8, %.lr.ph259.preheader ], [ %.sroa.16.2, %output_nbits.exit170 ] ; 11 uses
-  %.sroa.33.0253 = phi ptr [ %14, %.lr.ph259.preheader ], [ %.sroa.33.7, %output_nbits.exit170 ] ; 9 uses
+  %.sroa.33.0253 = phi ptr [ %i.h, %.lr.ph259.preheader ], [ %.sroa.33.7, %output_nbits.exit170 ] ; 9 uses
   %i.l = sub nsw i64 %i.k, %indvars.iv294         ; 2 uses
   %i.m = icmp slt i64 %i.l, %i.c
   %i.n = trunc nsw i64 %i.l to i32
@@ -465,7 +453,7 @@ bb.s:                                             ; preds = %._crit_edge260
   br label %done_outputing_bits.exit
 
 done_outputing_bits.exit:                         ; preds = %.lr.ph.i, %._crit_edge260, %bb.s
-  %.sroa.33.23 = phi ptr [ %i.jr, %bb.s ], [ %.sroa.33.7, %._crit_edge260 ], [ %14, %.lr.ph.i ]
+  %.sroa.33.23 = phi ptr [ %i.jr, %bb.s ], [ %.sroa.33.7, %._crit_edge260 ], [ %i.h, %.lr.ph.i ]
   tail call void @free(ptr noundef %i.e) #9
   %i.js = ptrtoint ptr %.sroa.33.23 to i64
   %i.jt = ptrtoint ptr %2 to i64
@@ -868,11 +856,11 @@ declare i8 @llvm.ctlz.i8(i8, i1 immarg) #4
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #5
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #7
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #5
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #7
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

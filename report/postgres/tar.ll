@@ -204,21 +204,9 @@ bb.e:                                             ; preds = %bb.d, %.critedge
   br label %print_tar_number.exit58
 
 .lr.ph.i50:                                       ; preds = %.lr.ph24.i
-  %8 = trunc i32 %5 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 115
-  store i8 %8, ptr %9, align 1
-  %10 = lshr i32 %5, 8
-  %11 = trunc i32 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %0, i64 114
-  store i8 %11, ptr %12, align 1
-  %13 = lshr i32 %5, 16
-  %14 = trunc i32 %13 to i8
-  %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 113
-  store i8 %14, ptr %i.bk, align 1
-  %15 = lshr i32 %5, 24
-  %16 = trunc nuw i32 %15 to i8
-  %17 = getelementptr inbounds nuw i8, ptr %0, i64 112
-  store i8 %16, ptr %17, align 1
+  %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 112
+  %8 = tail call i32 @llvm.bswap.i32(i32 %5)
+  store i32 %8, ptr %i.bk, align 1
   br label %print_tar_number.exit58
 
 print_tar_number.exit58:                          ; preds = %.lr.ph.i50, %.lr.ph24.i54
@@ -265,21 +253,9 @@ print_tar_number.exit58:                          ; preds = %.lr.ph.i50, %.lr.ph
   br label %print_tar_number.exit68
 
 .lr.ph.i60:                                       ; preds = %print_tar_number.exit58
-  %18 = trunc i32 %6 to i8
-  %19 = getelementptr inbounds nuw i8, ptr %0, i64 123
-  store i8 %18, ptr %19, align 1
-  %20 = lshr i32 %6, 8
-  %21 = trunc i32 %20 to i8
-  %22 = getelementptr inbounds nuw i8, ptr %0, i64 122
-  store i8 %21, ptr %22, align 1
-  %23 = lshr i32 %6, 16
-  %24 = trunc i32 %23 to i8
-  %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 121
-  store i8 %24, ptr %i.cq, align 1
-  %25 = lshr i32 %6, 24
-  %26 = trunc nuw i32 %25 to i8
-  %27 = getelementptr inbounds nuw i8, ptr %0, i64 120
-  store i8 %26, ptr %27, align 1
+  %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 120
+  %9 = tail call i32 @llvm.bswap.i32(i32 %6)
+  store i32 %9, ptr %i.cq, align 1
   br label %print_tar_number.exit68
 
 print_tar_number.exit68:                          ; preds = %.lr.ph.i60, %.lr.ph24.i64
@@ -346,9 +322,8 @@ bb.f:                                             ; preds = %print_tar_number.ex
 
 .lr.ph.i75:                                       ; preds = %bb.f
   %i.ef = getelementptr inbounds nuw i8, ptr %0, i64 128
-  %28 = bitcast i64 %3 to <8 x i8>
-  %29 = shufflevector <8 x i8> %28, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %29, ptr %i.ef, align 1
+  %10 = tail call i64 @llvm.bswap.i64(i64 %3)
+  store i64 %10, ptr %i.ef, align 1
   store <4 x i8> <i8 -128, i8 0, i8 0, i8 0>, ptr %i.ct, align 1
   br label %print_tar_number.exit73
 
@@ -402,9 +377,8 @@ print_tar_number.exit73:                          ; preds = %.lr.ph.i75, %.lr.ph
 
 .lr.ph.i85:                                       ; preds = %print_tar_number.exit73
   %i.fr = getelementptr inbounds nuw i8, ptr %0, i64 140
-  %30 = bitcast i64 %7 to <8 x i8>
-  %31 = shufflevector <8 x i8> %30, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %31, ptr %i.fr, align 1
+  %11 = tail call i64 @llvm.bswap.i64(i64 %7)
+  store i64 %11, ptr %i.fr, align 1
   store <4 x i8> <i8 -128, i8 0, i8 0, i8 0>, ptr %i.eg, align 1
   br label %print_tar_number.exit93
 
@@ -578,6 +552,12 @@ declare i32 @llvm.smin.i32(i32, i32) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #7
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #7
 
 attributes #0 = { nofree norecurse nosync nounwind memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree norecurse nosync nounwind memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

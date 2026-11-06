@@ -202,7 +202,7 @@ declare i32 @address_space_rw(ptr noundef, i64 noundef, i64, ptr noundef, i64 no
 ; Function Attrs: nounwind sspstrong uwtable
 define internal range(i64 -1, 4294967296) i64 @emc_receive(ptr noundef %0, ptr noundef %1, i64 noundef %2) #0 {
 bb.a:
-  %3 = alloca %struct.MACAddr, align 1            ; 11 uses
+  %3 = alloca %struct.MACAddr, align 4            ; 8 uses
   %4 = alloca %struct.NPCM7xxEMCRxDesc, align 4   ; 15 uses
   %i.a = alloca i32, align 4                      ; 6 uses
   %i.b = tail call ptr @qemu_get_nic_opaque(ptr noundef %0) #9
@@ -376,27 +376,15 @@ bb.t:                                             ; preds = %emc_set_mista.exit
 
 bb.u:                                             ; preds = %bb.t
   %i.bl = getelementptr inbounds nuw i8, ptr %i.c, i64 9340
-  %i.bm = load i32, ptr %i.bl, align 4            ; 4 uses
-  %5 = lshr i32 %i.bm, 24
-  %6 = trunc nuw i32 %5 to i8
-  store i8 %6, ptr %3, align 1
-  %7 = lshr i32 %i.bm, 16
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %3, i64 1
-  store i8 %8, ptr %9, align 1
-  %10 = lshr i32 %i.bm, 8
-  %11 = trunc i32 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %3, i64 2
-  store i8 %11, ptr %12, align 1
-  %13 = trunc i32 %i.bm to i8
-  %14 = getelementptr inbounds nuw i8, ptr %3, i64 3
-  store i8 %13, ptr %14, align 1
+  %i.bm = load i32, ptr %i.bl, align 4
+  %5 = tail call i32 @llvm.bswap.i32(i32 %i.bm)
+  store i32 %5, ptr %3, align 4
   %i.bn = getelementptr inbounds nuw i8, ptr %i.c, i64 9344
   %i.bo = load i32, ptr %i.bn, align 4            ; 2 uses
   %i.bp = lshr i32 %i.bo, 24
   %i.bq = trunc nuw i32 %i.bp to i8
   %i.br = getelementptr inbounds nuw i8, ptr %3, i64 4
-  store i8 %i.bq, ptr %i.br, align 1
+  store i8 %i.bq, ptr %i.br, align 4
   %i.bs = lshr i32 %i.bo, 16
   %i.bt = trunc i32 %i.bs to i8
   %i.bu = getelementptr inbounds nuw i8, ptr %3, i64 5
@@ -414,12 +402,12 @@ bb.v:                                             ; preds = %bb.u
 
 bb.w:                                             ; preds = %bb.v
   %i.bz = load i32, ptr %1, align 1
-  %i.ca = load i32, ptr %3, align 1
+  %i.ca = load i32, ptr %3, align 4
   %i.cb = xor i32 %i.bz, %i.ca
   %i.cc = getelementptr i8, ptr %1, i64 4
   %i.cd = getelementptr i8, ptr %3, i64 4
   %i.ce = load i16, ptr %i.cc, align 1
-  %i.cf = load i16, ptr %i.cd, align 1
+  %i.cf = load i16, ptr %i.cd, align 4
   %i.cg = zext i16 %i.ce to i32
   %i.ch = zext i16 %i.cf to i32
   %i.ci = xor i32 %i.cg, %i.ch

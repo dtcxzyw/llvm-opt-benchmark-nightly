@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.r = tail call i16 @llvm.umax.i16(i16 %i.q, i16 12)
   %spec.store.select.i = zext i16 %i.r to i64     ; 3 uses
   %i.s = add nsw i64 %spec.store.select.i, -8     ; 3 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.s ; 21 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.n, i64 %i.s ; 15 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 1040
   %i.v = load i64, ptr %i.u, align 16
   %i.w = and i64 %i.v, 131072
@@ -228,37 +228,13 @@ bb.e:                                             ; preds = %bb.d
   br label %WriteSEQTls13.exit.i
 
 WriteSEQTls13.exit.i:                             ; preds = %bb.e, %bb.d, %.thread
-  %.sroa.0.0.i.i = phi i32 [ 0, %.thread ], [ %i.y, %bb.e ], [ %i.y, %bb.d ] ; 4 uses
-  %.sroa.6.0.i.i = phi i32 [ 0, %.thread ], [ -1, %bb.e ], [ %i.aa, %bb.d ] ; 4 uses
-  %6 = lshr i32 %.sroa.0.0.i.i, 24
-  %7 = trunc nuw i32 %6 to i8
-  store i8 %7, ptr %i.t, align 1, !tbaa !57
-  %8 = lshr i32 %.sroa.0.0.i.i, 16
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %i.t, i64 1
-  store i8 %9, ptr %10, align 1, !tbaa !57
-  %11 = lshr i32 %.sroa.0.0.i.i, 8
-  %12 = trunc i32 %11 to i8
-  %13 = getelementptr inbounds nuw i8, ptr %i.t, i64 2
-  store i8 %12, ptr %13, align 1, !tbaa !57
-  %14 = trunc i32 %.sroa.0.0.i.i to i8
-  %15 = getelementptr inbounds nuw i8, ptr %i.t, i64 3
-  store i8 %14, ptr %15, align 1, !tbaa !57
+  %.sroa.0.0.i.i = phi i32 [ 0, %.thread ], [ %i.y, %bb.e ], [ %i.y, %bb.d ]
+  %.sroa.6.0.i.i = phi i32 [ 0, %.thread ], [ -1, %bb.e ], [ %i.aa, %bb.d ]
+  %6 = tail call i32 @llvm.bswap.i32(i32 %.sroa.0.0.i.i)
+  store i32 %6, ptr %i.t, align 1, !tbaa !57
   %i.ae = getelementptr inbounds nuw i8, ptr %i.t, i64 4
-  %16 = lshr i32 %.sroa.6.0.i.i, 24
-  %17 = trunc nuw i32 %16 to i8
-  store i8 %17, ptr %i.ae, align 1, !tbaa !57
-  %18 = lshr i32 %.sroa.6.0.i.i, 16
-  %19 = trunc i32 %18 to i8
-  %20 = getelementptr inbounds nuw i8, ptr %i.t, i64 5
-  store i8 %19, ptr %20, align 1, !tbaa !57
-  %21 = lshr i32 %.sroa.6.0.i.i, 8
-  %22 = trunc i32 %21 to i8
-  %23 = getelementptr inbounds nuw i8, ptr %i.t, i64 6
-  store i8 %22, ptr %23, align 1, !tbaa !57
-  %24 = trunc i32 %.sroa.6.0.i.i to i8
-  %25 = getelementptr inbounds nuw i8, ptr %i.t, i64 7
-  store i8 %24, ptr %25, align 1, !tbaa !57
+  %7 = tail call i32 @llvm.bswap.i32(i32 %.sroa.6.0.i.i)
+  store i32 %7, ptr %i.ae, align 1, !tbaa !57
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.n, ptr nonnull align 16 %i.o, i64 %i.s, i1 false)
   %i.af = getelementptr inbounds nuw i8, ptr %i.o, i64 %i.s ; 11 uses
   %i.ag = ptrtoint ptr %i.t to i64                ; 3 uses
@@ -661,7 +637,7 @@ bb.p:                                             ; preds = %bb.o
   %i.bb = tail call i16 @llvm.umax.i16(i16 %i.ba, i16 12)
   %spec.store.select.i.i = zext i16 %i.bb to i64  ; 3 uses
   %i.bc = add nsw i64 %spec.store.select.i.i, -8  ; 3 uses
-  %i.bd = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.bc ; 21 uses
+  %i.bd = getelementptr inbounds nuw i8, ptr %i.ax, i64 %i.bc ; 15 uses
   %i.be = load i64, ptr %i.v, align 8
   %i.bf = and i64 %i.be, 131072
   %.not.i.i.i = icmp eq i64 %i.bf, 0
@@ -683,37 +659,13 @@ bb.r:                                             ; preds = %bb.q
   br label %WriteSEQTls13.exit.i.i
 
 WriteSEQTls13.exit.i.i:                           ; preds = %bb.r, %bb.q, %.thread.i
-  %.sroa.0.0.i.i.i = phi i32 [ 0, %.thread.i ], [ %i.bh, %bb.r ], [ %i.bh, %bb.q ] ; 4 uses
-  %.sroa.6.0.i.i.i = phi i32 [ 0, %.thread.i ], [ -1, %bb.r ], [ %i.bj, %bb.q ] ; 4 uses
-  %9 = lshr i32 %.sroa.0.0.i.i.i, 24
-  %10 = trunc nuw i32 %9 to i8
-  store i8 %10, ptr %i.bd, align 1, !tbaa !57
-  %11 = lshr i32 %.sroa.0.0.i.i.i, 16
-  %12 = trunc i32 %11 to i8
-  %13 = getelementptr inbounds nuw i8, ptr %i.bd, i64 1
-  store i8 %12, ptr %13, align 1, !tbaa !57
-  %14 = lshr i32 %.sroa.0.0.i.i.i, 8
-  %15 = trunc i32 %14 to i8
-  %16 = getelementptr inbounds nuw i8, ptr %i.bd, i64 2
-  store i8 %15, ptr %16, align 1, !tbaa !57
-  %17 = trunc i32 %.sroa.0.0.i.i.i to i8
-  %18 = getelementptr inbounds nuw i8, ptr %i.bd, i64 3
-  store i8 %17, ptr %18, align 1, !tbaa !57
+  %.sroa.0.0.i.i.i = phi i32 [ 0, %.thread.i ], [ %i.bh, %bb.r ], [ %i.bh, %bb.q ]
+  %.sroa.6.0.i.i.i = phi i32 [ 0, %.thread.i ], [ -1, %bb.r ], [ %i.bj, %bb.q ]
+  %9 = tail call i32 @llvm.bswap.i32(i32 %.sroa.0.0.i.i.i)
+  store i32 %9, ptr %i.bd, align 1, !tbaa !57
   %i.bn = getelementptr inbounds nuw i8, ptr %i.bd, i64 4
-  %19 = lshr i32 %.sroa.6.0.i.i.i, 24
-  %20 = trunc nuw i32 %19 to i8
-  store i8 %20, ptr %i.bn, align 1, !tbaa !57
-  %21 = lshr i32 %.sroa.6.0.i.i.i, 16
-  %22 = trunc i32 %21 to i8
-  %23 = getelementptr inbounds nuw i8, ptr %i.bd, i64 5
-  store i8 %22, ptr %23, align 1, !tbaa !57
-  %24 = lshr i32 %.sroa.6.0.i.i.i, 8
-  %25 = trunc i32 %24 to i8
-  %26 = getelementptr inbounds nuw i8, ptr %i.bd, i64 6
-  store i8 %25, ptr %26, align 1, !tbaa !57
-  %27 = trunc i32 %.sroa.6.0.i.i.i to i8
-  %28 = getelementptr inbounds nuw i8, ptr %i.bd, i64 7
-  store i8 %27, ptr %28, align 1, !tbaa !57
+  %10 = tail call i32 @llvm.bswap.i32(i32 %.sroa.6.0.i.i.i)
+  store i32 %10, ptr %i.bn, align 1, !tbaa !57
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ax, ptr nonnull align 4 %i.ay, i64 %i.bc, i1 false)
   %i.bo = getelementptr inbounds nuw i8, ptr %i.ay, i64 %i.bc ; 11 uses
   %i.bp = ptrtoint ptr %i.bd to i64               ; 3 uses
@@ -1114,6 +1066,9 @@ declare i16 @llvm.umax.i16(i16, i16) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #9

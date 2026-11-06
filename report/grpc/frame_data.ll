@@ -204,7 +204,7 @@ bb.a:
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 15
   %.sroa.11.0.copyload = load i8, ptr %.sroa.11.0..sroa_idx, align 1
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 16
-  %.sroa.12.0.copyload = load ptr, ptr %.sroa.12.0..sroa_idx, align 8 ; 11 uses
+  %.sroa.12.0.copyload = load ptr, ptr %.sroa.12.0..sroa_idx, align 8 ; 8 uses
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %9, i64 24
   %.sroa.15.0.copyload = load i64, ptr %.sroa.15.0..sroa_idx, align 8, !tbaa !43
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #27
@@ -268,20 +268,8 @@ bb.c:                                             ; preds = %bb.b
   %i.t = zext i1 %i.s to i8
   %.sroa.gep48 = getelementptr inbounds nuw i8, ptr %.sroa.12.0.copyload, i64 5
   store i8 %i.t, ptr %.sroa.gep45, align 1, !tbaa !43
-  %13 = lshr i32 %0, 24
-  %14 = trunc nuw i32 %13 to i8
-  %.sroa.gep51 = getelementptr inbounds nuw i8, ptr %.sroa.12.0.copyload, i64 6
-  store i8 %14, ptr %.sroa.gep48, align 1, !tbaa !43
-  %15 = lshr i32 %0, 16
-  %16 = trunc i32 %15 to i8
-  %.sroa.gep54 = getelementptr inbounds nuw i8, ptr %.sroa.12.0.copyload, i64 7
-  store i8 %16, ptr %.sroa.gep51, align 1, !tbaa !43
-  %17 = lshr i32 %0, 8
-  %18 = trunc i32 %17 to i8
-  %.sroa.gep57 = getelementptr inbounds nuw i8, ptr %.sroa.12.0.copyload, i64 8
-  store i8 %18, ptr %.sroa.gep54, align 1, !tbaa !43
-  %19 = trunc i32 %0 to i8
-  store i8 %19, ptr %.sroa.gep57, align 1, !tbaa !43
+  %13 = call i32 @llvm.bswap.i32(i32 %0)
+  store i32 %13, ptr %.sroa.gep48, align 1, !tbaa !43
   br label %.critedge.cont
 
 .critedge.cont:                                   ; preds = %.critedge.else, %.critedge.then

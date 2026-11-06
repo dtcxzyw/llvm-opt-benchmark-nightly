@@ -204,11 +204,8 @@ declare void @_ZN15QAbstractButton12animateClickEv(ptr noundef align 8 dereferen
 ; Function Attrs: mustprogress null_pointer_is_valid sspstrong uwtable
 define noundef i64 @_ZN15RtpPlayerDialog17saveAudioHeaderAUEP5QFilejj(ptr nofree readnone align 8 captures(none) %0, ptr noundef %1, i32 noundef %2, i32 noundef %3) local_unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca [4 x i8], align 4                 ; 17 uses
+  %i.a = alloca [4 x i8], align 4                 ; 14 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 3 ; 2 uses
   store <4 x i8> <i8 46, i8 115, i8 110, i8 100>, ptr %i.a, align 4
   %i.b = call noundef i64 @_ZN9QIODevice5writeEPKcx(ptr noundef align 8 dereferenceable_or_null(16) %1, ptr noundef nonnull %i.a, i64 noundef 4)
   %.not = icmp eq i64 %i.b, 4
@@ -233,33 +230,15 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not17, label %bb.e, label %bb.h
 
 bb.e:                                             ; preds = %bb.d
-  %7 = lshr i32 %3, 24
-  %8 = trunc nuw i32 %7 to i8
-  store i8 %8, ptr %i.a, align 4
-  %9 = lshr i32 %3, 16
-  %10 = trunc i32 %9 to i8
-  store i8 %10, ptr %4, align 1
-  %11 = lshr i32 %3, 8
-  %12 = trunc i32 %11 to i8
-  store i8 %12, ptr %5, align 2
-  %13 = trunc i32 %3 to i8
-  store i8 %13, ptr %6, align 1
+  %4 = call i32 @llvm.bswap.i32(i32 %3)
+  store i32 %4, ptr %i.a, align 4
   %i.f = call noundef i64 @_ZN9QIODevice5writeEPKcx(ptr noundef align 8 dereferenceable_or_null(16) %1, ptr noundef nonnull %i.a, i64 noundef 4)
   %.not18 = icmp eq i64 %i.f, 4
   br i1 %.not18, label %bb.f, label %bb.h
 
 bb.f:                                             ; preds = %bb.e
-  %14 = lshr i32 %2, 24
-  %15 = trunc nuw i32 %14 to i8
-  store i8 %15, ptr %i.a, align 4
-  %16 = lshr i32 %2, 16
-  %17 = trunc i32 %16 to i8
-  store i8 %17, ptr %4, align 1
-  %18 = lshr i32 %2, 8
-  %19 = trunc i32 %18 to i8
-  store i8 %19, ptr %5, align 2
-  %20 = trunc i32 %2 to i8
-  store i8 %20, ptr %6, align 1
+  %5 = call i32 @llvm.bswap.i32(i32 %2)
+  store i32 %5, ptr %i.a, align 4
   %i.g = call noundef i64 @_ZN9QIODevice5writeEPKcx(ptr noundef align 8 dereferenceable_or_null(16) %1, ptr noundef nonnull %i.a, i64 noundef 4)
   %.not19 = icmp eq i64 %i.g, 4
   br i1 %.not19, label %bb.g, label %bb.h
@@ -661,6 +640,9 @@ declare <2 x double> @llvm.copysign.v2f64(<2 x double>, <2 x double>) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare double @llvm.vector.reduce.fadd.v2f64(double, <2 x double>) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #19
 
 attributes #0 = { mustprogress null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

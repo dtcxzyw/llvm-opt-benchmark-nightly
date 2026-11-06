@@ -205,13 +205,13 @@ bb.a:
   br i1 %or.cond3, label %bb.z, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = load i32, ptr %1, align 4, !tbaa !63     ; 7 uses
+  %i.d = load i32, ptr %1, align 4, !tbaa !63     ; 4 uses
   %i.e = icmp eq i32 %i.d, 0
   br i1 %i.e, label %bb.z, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !64   ; 7 uses
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !64   ; 4 uses
   %i.h = icmp eq i32 %i.g, 0
   br i1 %i.h, label %bb.z, label %bb.d
 
@@ -240,42 +240,18 @@ bb.g:                                             ; preds = %bb.f
   %i.r = mul i32 %i.p, %i.q
   %i.s = add i32 %i.r, 22
   %i.t = sext i32 %i.s to i64
-  %i.u = tail call noalias ptr @malloc(i64 noundef %i.t) #36 ; 21 uses
+  %i.u = tail call noalias ptr @malloc(i64 noundef %i.t) #36 ; 15 uses
   %.not185 = icmp eq ptr %i.u, null
   br i1 %.not185, label %bb.z, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
   store <4 x i8> <i8 113, i8 111, i8 105, i8 102>, ptr %i.u, align 1, !tbaa !67
-  %4 = lshr i32 %i.d, 24
-  %5 = trunc nuw i32 %4 to i8
   %i.v = getelementptr inbounds nuw i8, ptr %i.u, i64 4
-  store i8 %5, ptr %i.v, align 1, !tbaa !67
-  %6 = lshr i32 %i.d, 16
-  %7 = trunc i32 %6 to i8
-  %8 = getelementptr inbounds nuw i8, ptr %i.u, i64 5
-  store i8 %7, ptr %8, align 1, !tbaa !67
-  %9 = lshr i32 %i.d, 8
-  %10 = trunc i32 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.u, i64 6
-  store i8 %10, ptr %11, align 1, !tbaa !67
-  %12 = trunc i32 %i.d to i8
-  %13 = getelementptr inbounds nuw i8, ptr %i.u, i64 7
-  store i8 %12, ptr %13, align 1, !tbaa !67
-  %14 = lshr i32 %i.g, 24
-  %15 = trunc nuw nsw i32 %14 to i8
+  %4 = tail call i32 @llvm.bswap.i32(i32 %i.d)
+  store i32 %4, ptr %i.v, align 1, !tbaa !67
   %i.w = getelementptr inbounds nuw i8, ptr %i.u, i64 8
-  store i8 %15, ptr %i.w, align 1, !tbaa !67
-  %16 = lshr i32 %i.g, 16
-  %17 = trunc i32 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %i.u, i64 9
-  store i8 %17, ptr %18, align 1, !tbaa !67
-  %19 = lshr i32 %i.g, 8
-  %20 = trunc i32 %19 to i8
-  %21 = getelementptr inbounds nuw i8, ptr %i.u, i64 10
-  store i8 %20, ptr %21, align 1, !tbaa !67
-  %22 = trunc i32 %i.g to i8
-  %23 = getelementptr inbounds nuw i8, ptr %i.u, i64 11
-  store i8 %22, ptr %23, align 1, !tbaa !67
+  %5 = tail call i32 @llvm.bswap.i32(i32 %i.g)
+  store i32 %5, ptr %i.w, align 1, !tbaa !67
   %i.x = getelementptr inbounds nuw i8, ptr %i.u, i64 12
   store i8 %i.j, ptr %i.x, align 1, !tbaa !67
   %i.y = getelementptr inbounds nuw i8, ptr %i.u, i64 13

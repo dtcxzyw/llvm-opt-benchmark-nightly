@@ -201,7 +201,7 @@ cli_pmemstr.exit:                                 ; preds = %bb.d, %bb.c, %bb.a,
   %.061134 = phi i32 [ %.465, %bb.q ], [ 0, %cli_pmemstr.exit ] ; 16 uses
   %.066133 = phi i32 [ %.6, %bb.q ], [ 0, %cli_pmemstr.exit ] ; 6 uses
   %.072132 = phi ptr [ %i.w, %bb.q ], [ %0, %cli_pmemstr.exit ] ; 2 uses
-  %.074131 = phi ptr [ %.579, %bb.q ], [ %2, %cli_pmemstr.exit ] ; 14 uses
+  %.074131 = phi ptr [ %.579, %bb.q ], [ %2, %cli_pmemstr.exit ] ; 11 uses
   %.080130 = phi i64 [ %i.v, %bb.q ], [ %1, %cli_pmemstr.exit ] ; 2 uses
   %i.v = add nsw i64 %.080130, -1                 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %.072132, i64 1 ; 2 uses
@@ -224,27 +224,15 @@ bb.g:                                             ; preds = %bb.f, %.lr.ph
 
 bb.h:                                             ; preds = %bb.g
   %i.ad = mul i32 %.066133, 85
-  %i.ae = add i32 %i.ac, %i.ad                    ; 5 uses
+  %i.ae = add i32 %i.ac, %i.ad                    ; 2 uses
   %i.af = add nsw i32 %.061134, 1                 ; 2 uses
   %i.ag = icmp eq i32 %i.af, 5
   br i1 %i.ag, label %bb.i, label %bb.q
 
 bb.i:                                             ; preds = %bb.h
-  %3 = lshr i32 %i.ae, 24
-  %4 = trunc nuw i32 %3 to i8
-  %5 = getelementptr inbounds nuw i8, ptr %.074131, i64 1
-  store i8 %4, ptr %.074131, align 1, !tbaa !68
-  %6 = lshr i32 %i.ae, 16
-  %7 = trunc i32 %6 to i8
-  %8 = getelementptr inbounds nuw i8, ptr %.074131, i64 2
-  store i8 %7, ptr %5, align 1, !tbaa !68
-  %9 = lshr i32 %i.ae, 8
-  %10 = trunc i32 %9 to i8
-  %i.ah = getelementptr inbounds nuw i8, ptr %.074131, i64 3
-  store i8 %10, ptr %8, align 1, !tbaa !68
-  %11 = trunc i32 %i.ae to i8
-  %12 = getelementptr inbounds nuw i8, ptr %.074131, i64 4
-  store i8 %11, ptr %i.ah, align 1, !tbaa !68
+  %i.ah = getelementptr inbounds nuw i8, ptr %.074131, i64 4
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.ae)
+  store i32 %3, ptr %.074131, align 1, !tbaa !68
   %i.ai = add nsw i32 %.059135, 4
   br label %bb.q
 
@@ -441,7 +429,7 @@ bb.p:                                             ; preds = %bb.o
   br label %.thread
 
 bb.q:                                             ; preds = %bb.i, %bb.h, %bb.o, %bb.m
-  %.579 = phi ptr [ %.074131, %bb.o ], [ %.074131, %bb.h ], [ %i.aj, %bb.m ], [ %12, %bb.i ]
+  %.579 = phi ptr [ %.074131, %bb.o ], [ %.074131, %bb.h ], [ %i.aj, %bb.m ], [ %i.ah, %bb.i ]
   %.6 = phi i32 [ %.066133, %bb.o ], [ %i.ae, %bb.h ], [ %.066133, %bb.m ], [ 0, %bb.i ]
   %.465 = phi i32 [ %.061134, %bb.o ], [ %i.af, %bb.h ], [ 0, %bb.m ], [ 0, %bb.i ]
   %.4 = phi i32 [ %.059135, %bb.o ], [ %.059135, %bb.h ], [ %i.ak, %bb.m ], [ %i.ai, %bb.i ] ; 2 uses
@@ -702,6 +690,9 @@ declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immar
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.mul.v4i32(<4 x i32>) #13
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #13
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

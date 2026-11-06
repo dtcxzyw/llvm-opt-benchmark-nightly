@@ -205,9 +205,8 @@ bb.a:
   %i.k = sext i32 %i.d to i64
   %i.l = getelementptr i8, ptr %i.g, i64 %i.k
   %i.m = getelementptr i8, ptr %i.l, i64 56
-  %2 = bitcast i64 %i.j to <8 x i8>
-  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %3, ptr %i.m, align 1
+  %2 = tail call i64 @llvm.bswap.i64(i64 %i.j)
+  store i64 %2, ptr %i.m, align 1
   %i.n = icmp sgt i32 %i.e, 0
   br i1 %i.n, label %.lr.ph.preheader, label %bb.b
 
@@ -396,9 +395,8 @@ define noundef nonnull ptr @ComputeSHA256(ptr nofree noundef readonly captures(n
   store i8 -128, ptr %i.i, align 1
   %i.j = getelementptr i8, ptr %i.h, i64 %i.f
   %i.k = getelementptr i8, ptr %i.j, i64 60
-  %2 = bitcast i64 %i.c to <8 x i8>
-  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %3, ptr %i.k, align 1
+  %2 = tail call i64 @llvm.bswap.i64(i64 %i.c)
+  store i64 %2, ptr %i.k, align 1
   %i.l = lshr i64 %i.g, 6                         ; 2 uses
   %.not = icmp eq i64 %i.l, 0
   br i1 %.not, label %bb.a, label %.lr.ph.preheader
@@ -799,6 +797,9 @@ declare i32 @llvm.vector.reduce.add.v8i32(<8 x i32>) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <3 x float> @llvm.fmuladd.v3f32(<3 x float>, <3 x float>, <3 x float>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #5
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smax.i64(i64, i64) #5

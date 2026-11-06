@@ -200,7 +200,7 @@ begin_hunk_0_@ossl_aria_encrypt:bb.a
   %i.oi = load i32, ptr %i.oh, align 4, !tbaa !11
   %i.oj = and i32 %i.oi, 255
   %i.ok = or disjoint i32 %i.oe, %i.oj
-  %i.ol = xor i32 %i.ok, %i.nj                    ; 4 uses
+  %i.ol = xor i32 %i.ok, %i.nj
   %i.om = getelementptr inbounds nuw i8, ptr %.0279, i64 36
   %i.on = load i32, ptr %i.om, align 4, !tbaa !10
   %i.oo = lshr i32 %i.mz, 24
@@ -230,7 +230,7 @@ begin_hunk_0_@ossl_aria_encrypt:bb.a
   %i.pm = load i32, ptr %i.pl, align 4, !tbaa !11
   %i.pn = and i32 %i.pm, 255
   %i.po = or disjoint i32 %i.pi, %i.pn
-  %i.pp = xor i32 %i.po, %i.on                    ; 4 uses
+  %i.pp = xor i32 %i.po, %i.on
   %i.pq = getelementptr inbounds nuw i8, ptr %.0279, i64 40
   %i.pr = load i32, ptr %i.pq, align 4, !tbaa !10
   %i.ps = lshr i32 %i.nd, 24
@@ -260,7 +260,7 @@ begin_hunk_0_@ossl_aria_encrypt:bb.a
   %i.qq = load i32, ptr %i.qp, align 4, !tbaa !11
   %i.qr = and i32 %i.qq, 255
   %i.qs = or disjoint i32 %i.qm, %i.qr
-  %i.qt = xor i32 %i.qs, %i.pr                    ; 4 uses
+  %i.qt = xor i32 %i.qs, %i.pr
   %i.qu = getelementptr inbounds nuw i8, ptr %.0279, i64 44
   %i.qv = load i32, ptr %i.qu, align 4, !tbaa !10
   %i.qw = lshr i32 %i.nh, 24
@@ -290,66 +290,18 @@ begin_hunk_0_@ossl_aria_encrypt:bb.a
   %i.ru = load i32, ptr %i.rt, align 4, !tbaa !11
   %i.rv = and i32 %i.ru, 255
   %i.rw = or disjoint i32 %i.rq, %i.rv
-  %i.rx = xor i32 %i.rw, %i.qv                    ; 4 uses
-  %3 = lshr i32 %i.ol, 24
-  %4 = trunc nuw i32 %3 to i8
-  store i8 %4, ptr %1, align 1, !tbaa !10
-  %5 = lshr i32 %i.ol, 16
-  %6 = trunc i32 %5 to i8
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 1
-  store i8 %6, ptr %7, align 1, !tbaa !10
-  %8 = lshr i32 %i.ol, 8
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 2
-  store i8 %9, ptr %10, align 1, !tbaa !10
-  %11 = trunc i32 %i.ol to i8
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 3
-  store i8 %11, ptr %12, align 1, !tbaa !10
-  %13 = lshr i32 %i.pp, 24
-  %14 = trunc nuw i32 %13 to i8
+  %i.rx = xor i32 %i.rw, %i.qv
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.ol)
+  store i32 %3, ptr %1, align 1, !tbaa !10
   %i.ry = getelementptr inbounds nuw i8, ptr %1, i64 4
-  store i8 %14, ptr %i.ry, align 1, !tbaa !10
-  %15 = lshr i32 %i.pp, 16
-  %16 = trunc i32 %15 to i8
-  %17 = getelementptr inbounds nuw i8, ptr %1, i64 5
-  store i8 %16, ptr %17, align 1, !tbaa !10
-  %18 = lshr i32 %i.pp, 8
-  %19 = trunc i32 %18 to i8
-  %20 = getelementptr inbounds nuw i8, ptr %1, i64 6
-  store i8 %19, ptr %20, align 1, !tbaa !10
-  %21 = trunc i32 %i.pp to i8
-  %22 = getelementptr inbounds nuw i8, ptr %1, i64 7
-  store i8 %21, ptr %22, align 1, !tbaa !10
-  %23 = lshr i32 %i.qt, 24
-  %24 = trunc nuw i32 %23 to i8
+  %4 = tail call i32 @llvm.bswap.i32(i32 %i.pp)
+  store i32 %4, ptr %i.ry, align 1, !tbaa !10
   %i.rz = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i8 %24, ptr %i.rz, align 1, !tbaa !10
-  %25 = lshr i32 %i.qt, 16
-  %26 = trunc i32 %25 to i8
-  %27 = getelementptr inbounds nuw i8, ptr %1, i64 9
-  store i8 %26, ptr %27, align 1, !tbaa !10
-  %28 = lshr i32 %i.qt, 8
-  %29 = trunc i32 %28 to i8
-  %30 = getelementptr inbounds nuw i8, ptr %1, i64 10
-  store i8 %29, ptr %30, align 1, !tbaa !10
-  %31 = trunc i32 %i.qt to i8
-  %32 = getelementptr inbounds nuw i8, ptr %1, i64 11
-  store i8 %31, ptr %32, align 1, !tbaa !10
-  %33 = lshr i32 %i.rx, 24
-  %34 = trunc nuw i32 %33 to i8
+  %5 = tail call i32 @llvm.bswap.i32(i32 %i.qt)
+  store i32 %5, ptr %i.rz, align 1, !tbaa !10
   %i.sa = getelementptr inbounds nuw i8, ptr %1, i64 12
-  store i8 %34, ptr %i.sa, align 1, !tbaa !10
-  %35 = lshr i32 %i.rx, 16
-  %36 = trunc i32 %35 to i8
-  %37 = getelementptr inbounds nuw i8, ptr %1, i64 13
-  store i8 %36, ptr %37, align 1, !tbaa !10
-  %38 = lshr i32 %i.rx, 8
-  %39 = trunc i32 %38 to i8
-  %40 = getelementptr inbounds nuw i8, ptr %1, i64 14
-  store i8 %39, ptr %40, align 1, !tbaa !10
-  %41 = trunc i32 %i.rx to i8
-  %42 = getelementptr inbounds nuw i8, ptr %1, i64 15
-  store i8 %41, ptr %42, align 1, !tbaa !10
+  %6 = tail call i32 @llvm.bswap.i32(i32 %i.rx)
+  store i32 %6, ptr %i.sa, align 1, !tbaa !10
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %bb.a, %._crit_edge

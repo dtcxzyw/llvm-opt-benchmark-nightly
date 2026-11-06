@@ -205,21 +205,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 544
-  %i.h = load i32, ptr %i.g, align 8, !tbaa !27   ; 4 uses
-  %2 = lshr i32 %i.h, 24
-  %3 = trunc nuw i32 %2 to i8
-  store i8 %3, ptr %i.c, align 8, !tbaa !8
-  %4 = lshr i32 %i.h, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 1129
-  store i8 %5, ptr %6, align 1, !tbaa !8
-  %7 = lshr i32 %i.h, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 1130
-  store i8 %8, ptr %9, align 2, !tbaa !8
-  %10 = trunc i32 %i.h to i8
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 1131
-  store i8 %10, ptr %11, align 1, !tbaa !8
+  %i.h = load i32, ptr %i.g, align 8, !tbaa !27
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.h)
+  store i32 %2, ptr %i.c, align 8, !tbaa !8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 1132
   store i8 0, ptr %i.i, align 4, !tbaa !8
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 1144
@@ -622,28 +610,16 @@ declare noalias ptr @png_malloc(ptr noundef, i64 noundef) local_unnamed_addr #4
 ; Function Attrs: nounwind uwtable
 define internal fastcc noundef i32 @png_inflate_claim(ptr noalias noundef %0, i32 noundef %1) unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [64 x i8], align 16               ; 8 uses
+  %i.a = alloca [64 x i8], align 16               ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 3 uses
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !61   ; 5 uses
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !61   ; 2 uses
   %.not = icmp eq i32 %i.c, 0
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
-  %2 = lshr i32 %i.c, 24
-  %3 = trunc nuw i32 %2 to i8
-  store i8 %3, ptr %i.a, align 16, !tbaa !8
-  %4 = lshr i32 %i.c, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %5, ptr %6, align 1, !tbaa !8
-  %7 = lshr i32 %i.c, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %8, ptr %9, align 2, !tbaa !8
-  %10 = trunc i32 %i.c to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %10, ptr %11, align 1, !tbaa !8
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.c)
+  store i32 %2, ptr %i.a, align 16, !tbaa !8
   %i.d = call i64 @png_safecat(ptr noundef nonnull %i.a, i64 noundef 64, i64 noundef 4, ptr noundef nonnull @.str.57) #13 ; 0 uses
   call void @png_chunk_warning(ptr noundef nonnull %0, ptr noundef nonnull %i.a) #13
   store i32 0, ptr %i.b, align 8, !tbaa !61

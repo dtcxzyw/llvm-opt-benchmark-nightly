@@ -119,9 +119,9 @@ _ZN4geos2io15ByteOrderValues7getLongEPKhi.exit:   ; preds = %bb.b, %bb.c
 define void @_ZN4geos2io15ByteOrderValues9putDoubleEdPhi(double noundef %0, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %1, i32 noundef %2) local_unnamed_addr #1 align 2 !guid !16 {
 _ZN4geos2io15ByteOrderValues7putLongElPhi.exit:
   %i.a = icmp eq i32 %2, 0
-  %3 = bitcast double %0 to <8 x i8>
-  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  %i.b = bitcast <8 x i8> %4 to double
+  %3 = bitcast double %0 to i64
+  %4 = tail call i64 @llvm.bswap.i64(i64 %3)
+  %i.b = bitcast i64 %4 to double
   %storemerge = select i1 %i.a, double %i.b, double %0
   store double %storemerge, ptr %1, align 1
   ret void

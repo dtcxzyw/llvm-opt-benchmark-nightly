@@ -203,7 +203,7 @@ bb.a:
 define dso_local range(i32 -13, 1) i32 @put_int(ptr nofree noundef captures(none) %0, i32 noundef %1) local_unnamed_addr #5 !guid !40 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
-  %i.b = load ptr, ptr %i.a, align 8, !tbaa !19   ; 14 uses
+  %i.b = load ptr, ptr %i.a, align 8, !tbaa !19   ; 11 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 5 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !20
@@ -258,20 +258,8 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.f
   %i.z = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   store i8 -1, ptr %i.b, align 1, !tbaa !21
-  %2 = lshr i32 %1, 24
-  %3 = trunc nuw i32 %2 to i8
-  %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 2
-  store i8 %3, ptr %i.z, align 1, !tbaa !21
-  %5 = lshr i32 %1, 16
-  %6 = trunc i32 %5 to i8
-  %7 = getelementptr inbounds nuw i8, ptr %i.b, i64 3
-  store i8 %6, ptr %4, align 1, !tbaa !21
-  %8 = lshr i32 %1, 8
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  store i8 %9, ptr %7, align 1, !tbaa !21
-  %11 = trunc i32 %1 to i8
-  store i8 %11, ptr %10, align 1, !tbaa !21
+  %2 = tail call i32 @llvm.bswap.i32(i32 %1)
+  store i32 %2, ptr %i.z, align 1, !tbaa !21
   br label %bb.i
 
 bb.i:                                             ; preds = %bb.e, %bb.h, %bb.g, %bb.c
@@ -405,16 +393,16 @@ bb.a:
   %i.z = load i32, ptr %i.y, align 8, !tbaa !28   ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 132 ; 2 uses
   %i.ab = load i32, ptr %i.aa, align 4, !tbaa !29 ; 2 uses
-  %i.ac = sub nsw i32 %i.x, %i.ab                 ; 9 uses
+  %i.ac = sub nsw i32 %i.x, %i.ab                 ; 6 uses
   %i.ad = icmp ne i32 %i.z, %i.p                  ; 2 uses
   %i.ae = icmp eq i32 %i.ab, %i.x                 ; 2 uses
   %or.cond = select i1 %i.ad, i1 true, i1 %i.ae
   br i1 %or.cond, label %bb.b, label %bb.j
 
 bb.b:                                             ; preds = %bb.a
-  %i.af = sub nsw i32 %i.p, %i.z                  ; 9 uses
+  %i.af = sub nsw i32 %i.p, %i.z                  ; 6 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
-  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !19 ; 14 uses
+  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !19 ; 11 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 5 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 96
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !20
@@ -469,20 +457,8 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.g
   %i.bf = getelementptr inbounds nuw i8, ptr %i.ah, i64 1
   store i8 -1, ptr %i.ah, align 1, !tbaa !21
-  %5 = lshr i32 %i.af, 24
-  %6 = trunc nuw i32 %5 to i8
-  %7 = getelementptr inbounds nuw i8, ptr %i.ah, i64 2
-  store i8 %6, ptr %i.bf, align 1, !tbaa !21
-  %8 = lshr i32 %i.af, 16
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %i.ah, i64 3
-  store i8 %9, ptr %7, align 1, !tbaa !21
-  %11 = lshr i32 %i.af, 8
-  %12 = trunc i32 %11 to i8
-  %13 = getelementptr inbounds nuw i8, ptr %i.ah, i64 4
-  store i8 %12, ptr %10, align 1, !tbaa !21
-  %14 = trunc i32 %i.af to i8
-  store i8 %14, ptr %13, align 1, !tbaa !21
+  %5 = call i32 @llvm.bswap.i32(i32 %i.af)
+  store i32 %5, ptr %i.bf, align 1, !tbaa !21
   br label %put_int.exit
 
 put_int.exit:                                     ; preds = %bb.d, %bb.f, %bb.h, %bb.i
@@ -492,7 +468,7 @@ put_int.exit:                                     ; preds = %bb.d, %bb.f, %bb.h,
 
 bb.j:                                             ; preds = %put_int.exit, %bb.a
   %i.bg = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 3 uses
-  %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !19 ; 16 uses
+  %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !19 ; 13 uses
   br i1 %i.ae, label %bb.s, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
@@ -550,20 +526,8 @@ bb.q:                                             ; preds = %bb.p
 bb.r:                                             ; preds = %bb.p
   %i.cf = getelementptr inbounds nuw i8, ptr %i.bh, i64 1
   store i8 -1, ptr %i.bh, align 1, !tbaa !21
-  %15 = lshr i32 %i.ac, 24
-  %16 = trunc nuw i32 %15 to i8
-  %17 = getelementptr inbounds nuw i8, ptr %i.bh, i64 2
-  store i8 %16, ptr %i.cf, align 1, !tbaa !21
-  %18 = lshr i32 %i.ac, 16
-  %19 = trunc i32 %18 to i8
-  %20 = getelementptr inbounds nuw i8, ptr %i.bh, i64 3
-  store i8 %19, ptr %17, align 1, !tbaa !21
-  %21 = lshr i32 %i.ac, 8
-  %22 = trunc i32 %21 to i8
-  %23 = getelementptr inbounds nuw i8, ptr %i.bh, i64 4
-  store i8 %22, ptr %20, align 1, !tbaa !21
-  %24 = trunc i32 %i.ac to i8
-  store i8 %24, ptr %23, align 1, !tbaa !21
+  %6 = call i32 @llvm.bswap.i32(i32 %i.ac)
+  store i32 %6, ptr %i.cf, align 1, !tbaa !21
   br label %.thread
 
 bb.s:                                             ; preds = %bb.j
@@ -965,6 +929,9 @@ declare i64 @llvm.smin.i64(i64, i64) #7
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #7
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

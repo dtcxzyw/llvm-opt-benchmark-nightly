@@ -13,7 +13,7 @@ target triple = "x86_64-pc-linux-gnu"
 define range(i32 0, 2) i32 @PKCS5_PBKDF2_HMAC(ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3, i32 noundef %4, ptr noundef %5, i64 noundef %6, ptr nofree noundef captures(none) %7) local_unnamed_addr #0 {
 bb.a:
   %8 = alloca %"class.bssl::internal::StackAllocated", align 8 ; 24 uses
-  %i.a = alloca [4 x i8], align 4                 ; 18 uses
+  %i.a = alloca [4 x i8], align 4                 ; 15 uses
   %i.b = alloca [64 x i8], align 16               ; 20 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #4
   call void @HMAC_CTX_init(ptr noundef nonnull align 8 dereferenceable(104) %8) #4
@@ -28,30 +28,18 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not4864, label %._crit_edge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.b
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 3 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 3 uses
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 3 ; 3 uses
   %i.e = icmp eq i64 %.fr87, 0                    ; 2 uses
   %.not5661 = icmp ugt i32 %4, 1
   br i1 %.not5661, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %..critedge_crit_edge.us
-  %.03868.us = phi i32 [ %i.al, %..critedge_crit_edge.us ], [ 1, %.lr.ph ] ; 5 uses
+  %.03868.us = phi i32 [ %i.al, %..critedge_crit_edge.us ], [ 1, %.lr.ph ] ; 2 uses
   %.04166.us = phi ptr [ %i.ak, %..critedge_crit_edge.us ], [ %7, %.lr.ph ] ; 5 uses
   %.04365.us = phi i64 [ %i.aj, %..critedge_crit_edge.us ], [ %6, %.lr.ph ] ; 2 uses
   %spec.select.us = call i64 @llvm.umin.i64(i64 %.fr87, i64 %.04365.us) ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
-  %12 = lshr i32 %.03868.us, 24
-  %13 = trunc nuw i32 %12 to i8
-  store i8 %13, ptr %i.a, align 4, !tbaa !16
-  %14 = lshr i32 %.03868.us, 16
-  %15 = trunc i32 %14 to i8
-  store i8 %15, ptr %9, align 1, !tbaa !16
-  %16 = lshr i32 %.03868.us, 8
-  %17 = trunc i32 %16 to i8
-  store i8 %17, ptr %10, align 2, !tbaa !16
-  %18 = trunc i32 %.03868.us to i8
-  store i8 %18, ptr %11, align 1, !tbaa !16
+  %9 = call i32 @llvm.bswap.i32(i32 %.03868.us)
+  store i32 %9, ptr %i.a, align 4, !tbaa !16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #4
   %i.f = call i32 @HMAC_Init_ex(ptr noundef nonnull %8, ptr noundef null, i64 noundef 0, ptr noundef null, ptr noundef null) #4
   %.not49.us = icmp eq i32 %i.f, 0
@@ -231,43 +219,25 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not52.us84, label %.critedge58, label %_ZL14OPENSSL_memcpyPvPKvm.exit.us85
 
 _ZL14OPENSSL_memcpyPvPKvm.exit.us85:              ; preds = %bb.l
-  %i.aq = add i32 %.03868.us77116, 1              ; 5 uses
+  %i.aq = add i32 %.03868.us77116, 1              ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
-  %19 = lshr i32 %i.aq, 24
-  %20 = trunc nuw i32 %19 to i8
-  store i8 %20, ptr %i.a, align 4, !tbaa !16
-  %21 = lshr i32 %i.aq, 16
-  %22 = trunc i32 %21 to i8
-  store i8 %22, ptr %9, align 1, !tbaa !16
-  %23 = lshr i32 %i.aq, 8
-  %24 = trunc i32 %23 to i8
-  store i8 %24, ptr %10, align 2, !tbaa !16
-  %25 = trunc i32 %i.aq to i8
-  store i8 %25, ptr %11, align 1, !tbaa !16
+  %10 = call i32 @llvm.bswap.i32(i32 %i.aq)
+  store i32 %10, ptr %i.a, align 4, !tbaa !16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #4
   %i.ar = call i32 @HMAC_Init_ex(ptr noundef nonnull %8, ptr noundef null, i64 noundef 0, ptr noundef null, ptr noundef null) #4
   %.not49.us81 = icmp eq i32 %i.ar, 0
   br i1 %.not49.us81, label %.critedge58, label %.lr.ph117
 
 .lr.ph.split.split:                               ; preds = %.lr.ph.split, %_ZL14OPENSSL_memcpyPvPKvm.exit
-  %.03868 = phi i32 [ %i.ay, %_ZL14OPENSSL_memcpyPvPKvm.exit ], [ 1, %.lr.ph.split ] ; 5 uses
+  %.03868 = phi i32 [ %i.ay, %_ZL14OPENSSL_memcpyPvPKvm.exit ], [ 1, %.lr.ph.split ] ; 2 uses
   %.04166 = phi ptr [ %i.ax, %_ZL14OPENSSL_memcpyPvPKvm.exit ], [ %7, %.lr.ph.split ] ; 2 uses
   %.04365 = phi i64 [ %i.aw, %_ZL14OPENSSL_memcpyPvPKvm.exit ], [ %6, %.lr.ph.split ] ; 2 uses
   %spec.select = call i64 @llvm.umin.i64(i64 %.fr87, i64 %.04365) ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
-  %26 = lshr i32 %.03868, 24
-  %27 = trunc nuw i32 %26 to i8
-  store i8 %27, ptr %i.a, align 4, !tbaa !16
-  %28 = lshr i32 %.03868, 16
-  %29 = trunc i32 %28 to i8
-  store i8 %29, ptr %9, align 1, !tbaa !16
-  %30 = lshr i32 %.03868, 8
-  %31 = trunc i32 %30 to i8
-  store i8 %31, ptr %10, align 2, !tbaa !16
-  %32 = trunc i32 %.03868 to i8
-  store i8 %32, ptr %11, align 1, !tbaa !16
+  %11 = call i32 @llvm.bswap.i32(i32 %.03868)
+  store i32 %11, ptr %i.a, align 4, !tbaa !16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #4
   %i.as = call i32 @HMAC_Init_ex(ptr noundef nonnull %8, ptr noundef null, i64 noundef 0, ptr noundef null, ptr noundef null) #4
   %.not49 = icmp eq i32 %i.as, 0
@@ -348,6 +318,9 @@ declare void @HMAC_CTX_cleanup(ptr noundef) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #3
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "warn-stack-size"="25344" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

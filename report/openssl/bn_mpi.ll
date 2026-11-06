@@ -21,21 +21,9 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %.0 = zext i1 %narrow to i32
-  %i.h = add nsw i32 %i.c, %.0                    ; 4 uses
-  %2 = lshr i32 %i.h, 24
-  %3 = trunc nuw i32 %2 to i8
-  store i8 %3, ptr %1, align 1, !tbaa !8
-  %4 = lshr i32 %i.h, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 1
-  store i8 %5, ptr %6, align 1, !tbaa !8
-  %7 = lshr i32 %i.h, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 2
-  store i8 %8, ptr %9, align 1, !tbaa !8
-  %10 = trunc i32 %i.h to i8
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 3
-  store i8 %10, ptr %11, align 1, !tbaa !8
+  %i.h = add nsw i32 %i.c, %.0
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.h)
+  store i32 %2, ptr %1, align 1, !tbaa !8
   br i1 %narrow, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b

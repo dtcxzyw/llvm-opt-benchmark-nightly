@@ -204,7 +204,7 @@ declare i32 @wc_HmacSetKey(ptr noundef, i32 noundef, ptr noundef, i32 noundef) l
 define internal fastcc i32 @Hmac_UpdateFinal_CT(ptr noundef nonnull %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, i32 noundef range(i32 0, 256) %4, ptr noundef nonnull %5, i32 noundef %6) unnamed_addr #0 {
 bb.a:
   %7 = alloca [1 x %struct.wc_HashAlg], align 16  ; 7 uses
-  %i.a = alloca [8 x i8], align 1                 ; 11 uses
+  %i.a = alloca [8 x i8], align 1                 ; 8 uses
   %i.b = alloca [144 x i8], align 16              ; 18 uses
   %i.c = alloca i8, align 1                       ; 4 uses
   %i.d = alloca i8, align 1                       ; 4 uses
@@ -273,22 +273,10 @@ switch.lookup:                                    ; preds = %bb.b
   %i.aq = trunc nuw nsw i32 %i.an to i8
   %i.ar = getelementptr inbounds nuw i8, ptr %i.a, i64 3
   store i8 %i.aq, ptr %i.ar, align 1, !tbaa !63
-  %i.as = shl i32 %i.am, 3                        ; 4 uses
+  %i.as = shl i32 %i.am, 3
   %i.at = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %8 = lshr i32 %i.as, 24
-  %9 = trunc nuw i32 %8 to i8
-  store i8 %9, ptr %i.at, align 1, !tbaa !63
-  %10 = lshr i32 %i.as, 16
-  %11 = trunc i32 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %11, ptr %12, align 1, !tbaa !63
-  %13 = lshr i32 %i.as, 8
-  %14 = trunc i32 %13 to i8
-  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %14, ptr %15, align 1, !tbaa !63
-  %16 = trunc i32 %i.as to i8
-  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  store i8 %16, ptr %17, align 1, !tbaa !63
+  %8 = tail call i32 @llvm.bswap.i32(i32 %i.as)
+  store i32 %8, ptr %i.at, align 1, !tbaa !63
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 416 ; 4 uses
   switch i8 %i.g, label %Hmac_HashUpdate.exit.thread [
     i8 4, label %bb.c
@@ -690,6 +678,9 @@ declare i32 @llvm.smin.i32(i32, i32) #14
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umin.i16(i16, i16) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #14
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

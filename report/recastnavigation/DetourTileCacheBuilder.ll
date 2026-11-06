@@ -205,14 +205,7 @@ bb.i:                                             ; preds = %bb.b, %bb.c, %bb.d,
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define noundef zeroext i1 @_Z27dtTileCacheHeaderSwapEndianPhi(ptr nofree noundef captures(none) %0, i32 noundef %1) local_unnamed_addr #11 {
 bb.a:
-  %i.a = load i32, ptr %0, align 4                ; 5 uses
-  %2 = trunc i32 %i.a to i8
-  %3 = lshr i32 %i.a, 24
-  %4 = trunc nuw nsw i32 %3 to i8
-  %5 = lshr i32 %i.a, 8
-  %6 = trunc i32 %5 to i8
-  %7 = lshr i32 %i.a, 16
-  %8 = trunc i32 %7 to i8
+  %i.a = load i32, ptr %0, align 4                ; 2 uses
   switch i32 %i.a, label %.thread [
     i32 1146375250, label %bb.b
     i32 1380734020, label %bb.c
@@ -235,13 +228,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.f = trunc i32 %.in.in to i8
   %.in = lshr i32 %.in.in, 24
   %i.g = trunc nuw nsw i32 %.in to i8
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  store i8 %4, ptr %0, align 4, !tbaa !66
-  store i8 %2, ptr %9, align 1, !tbaa !66
-  %10 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i8 %8, ptr %10, align 1, !tbaa !66
-  store i8 %6, ptr %11, align 2, !tbaa !66
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.a)
+  store i32 %2, ptr %0, align 4, !tbaa !66
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 7
   store i8 %i.g, ptr %i.h, align 4, !tbaa !66
@@ -643,6 +631,9 @@ declare <2 x float> @llvm.fmuladd.v2f32(<2 x float>, <2 x float>, <2 x float>) #
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x float> @llvm.floor.v2f32(<2 x float>) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #9
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

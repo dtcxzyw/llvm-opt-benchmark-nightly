@@ -30,7 +30,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %bb.d, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 1088, ptr noundef nonnull @.str, i32 noundef 202) #11 ; 7 uses
+  %i.g = tail call noalias ptr @CRYPTO_zalloc(i64 noundef 1088, ptr noundef nonnull @.str, i32 noundef 202) #12 ; 7 uses
   %i.h = icmp eq ptr %i.g, null
   br i1 %i.h, label %bb.d, label %.preheader
 
@@ -144,7 +144,7 @@ ossl_list_rxe_remove.exit.i:                      ; preds = %bb.h
   %i.o = add i64 %i.n, -1
   store i64 %i.o, ptr %i.d, align 8, !tbaa !37
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false)
-  tail call void @CRYPTO_free(ptr noundef nonnull %.08.i, ptr noundef nonnull @.str, i32 noundef 225) #11
+  tail call void @CRYPTO_free(ptr noundef nonnull %.08.i, ptr noundef nonnull @.str, i32 noundef 225) #12
   %.pre = load ptr, ptr %i.b, align 8, !tbaa !24
   br label %bb.c, !llvm.loop !95
 
@@ -153,7 +153,7 @@ ossl_list_rxe_remove.exit.i:                      ; preds = %bb.h
   %i.q = add i64 %i.p, -1
   store i64 %i.q, ptr %i.d, align 8, !tbaa !37
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.f, i8 0, i64 16, i1 false)
-  tail call void @CRYPTO_free(ptr noundef nonnull %.08.i, ptr noundef nonnull @.str, i32 noundef 225) #11
+  tail call void @CRYPTO_free(ptr noundef nonnull %.08.i, ptr noundef nonnull @.str, i32 noundef 225) #12
   br label %qrx_cleanup_rxl.exit
 
 qrx_cleanup_rxl.exit:                             ; preds = %bb.b, %._crit_edge.loopexit.critedge.i
@@ -210,7 +210,7 @@ ossl_list_rxe_remove.exit.i20:                    ; preds = %bb.n
   %i.ae = add i64 %i.ad, -1
   store i64 %i.ae, ptr %i.t, align 8, !tbaa !37
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.v, i8 0, i64 16, i1 false)
-  tail call void @CRYPTO_free(ptr noundef nonnull %.08.i15, ptr noundef nonnull @.str, i32 noundef 225) #11
+  tail call void @CRYPTO_free(ptr noundef nonnull %.08.i15, ptr noundef nonnull @.str, i32 noundef 225) #12
   %.pre44 = load ptr, ptr %i.r, align 8, !tbaa !24
   br label %bb.i, !llvm.loop !95
 
@@ -219,7 +219,7 @@ ossl_list_rxe_remove.exit.i20:                    ; preds = %bb.n
   %i.ag = add i64 %i.af, -1
   store i64 %i.ag, ptr %i.t, align 8, !tbaa !37
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.v, i8 0, i64 16, i1 false)
-  tail call void @CRYPTO_free(ptr noundef nonnull %.08.i15, ptr noundef nonnull @.str, i32 noundef 225) #11
+  tail call void @CRYPTO_free(ptr noundef nonnull %.08.i15, ptr noundef nonnull @.str, i32 noundef 225) #12
   br label %qrx_cleanup_rxl.exit22
 
 qrx_cleanup_rxl.exit22:                           ; preds = %qrx_cleanup_rxl.exit, %._crit_edge.loopexit.critedge.i21
@@ -276,7 +276,7 @@ ossl_list_urxe_remove.exit.i:                     ; preds = %bb.t
   store i64 %i.at, ptr %i.aj, align 8, !tbaa !45
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.09.i, i8 0, i64 16, i1 false)
   %i.au = load ptr, ptr %i.ak, align 8, !tbaa !22
-  tail call void @ossl_quic_demux_release_urxe(ptr noundef %i.au, ptr noundef nonnull %.09.i) #11
+  tail call void @ossl_quic_demux_release_urxe(ptr noundef %i.au, ptr noundef nonnull %.09.i) #12
   %.pre45 = load ptr, ptr %i.ah, align 8, !tbaa !39
   br label %bb.o, !llvm.loop !96
 
@@ -286,7 +286,7 @@ ossl_list_urxe_remove.exit.i:                     ; preds = %bb.t
   store i64 %i.aw, ptr %i.aj, align 8, !tbaa !45
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.09.i, i8 0, i64 16, i1 false)
   %i.ax = load ptr, ptr %i.ak, align 8, !tbaa !22
-  tail call void @ossl_quic_demux_release_urxe(ptr noundef %i.ax, ptr noundef nonnull %.09.i) #11
+  tail call void @ossl_quic_demux_release_urxe(ptr noundef %i.ax, ptr noundef nonnull %.09.i) #12
   br label %qrx_cleanup_urxl.exit
 
 qrx_cleanup_urxl.exit:                            ; preds = %qrx_cleanup_rxl.exit22, %._crit_edge.loopexit.critedge.i29
@@ -343,7 +343,7 @@ ossl_list_urxe_remove.exit.i38:                   ; preds = %bb.z
   store i64 %i.bk, ptr %i.ba, align 8, !tbaa !45
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.09.i33, i8 0, i64 16, i1 false)
   %i.bl = load ptr, ptr %i.bb, align 8, !tbaa !22
-  tail call void @ossl_quic_demux_release_urxe(ptr noundef %i.bl, ptr noundef nonnull %.09.i33) #11
+  tail call void @ossl_quic_demux_release_urxe(ptr noundef %i.bl, ptr noundef nonnull %.09.i33) #12
   %.pre46 = load ptr, ptr %i.ay, align 8, !tbaa !39
   br label %bb.u, !llvm.loop !96
 
@@ -353,16 +353,16 @@ ossl_list_urxe_remove.exit.i38:                   ; preds = %bb.z
   store i64 %i.bn, ptr %i.ba, align 8, !tbaa !45
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.09.i33, i8 0, i64 16, i1 false)
   %i.bo = load ptr, ptr %i.bb, align 8, !tbaa !22
-  tail call void @ossl_quic_demux_release_urxe(ptr noundef %i.bo, ptr noundef nonnull %.09.i33) #11
+  tail call void @ossl_quic_demux_release_urxe(ptr noundef %i.bo, ptr noundef nonnull %.09.i33) #12
   br label %qrx_cleanup_urxl.exit40
 
 qrx_cleanup_urxl.exit40:                          ; preds = %qrx_cleanup_urxl.exit, %._crit_edge.loopexit.critedge.i39
   %i.bp = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 4 uses
-  tail call void @ossl_qrl_enc_level_set_discard(ptr noundef nonnull %i.bp, i32 noundef 0) #11
-  tail call void @ossl_qrl_enc_level_set_discard(ptr noundef nonnull %i.bp, i32 noundef 1) #11
-  tail call void @ossl_qrl_enc_level_set_discard(ptr noundef nonnull %i.bp, i32 noundef 2) #11
-  tail call void @ossl_qrl_enc_level_set_discard(ptr noundef nonnull %i.bp, i32 noundef 3) #11
-  tail call void @CRYPTO_free(ptr noundef nonnull %0, ptr noundef nonnull @.str, i32 noundef 267) #11
+  tail call void @ossl_qrl_enc_level_set_discard(ptr noundef nonnull %i.bp, i32 noundef 0) #12
+  tail call void @ossl_qrl_enc_level_set_discard(ptr noundef nonnull %i.bp, i32 noundef 1) #12
+  tail call void @ossl_qrl_enc_level_set_discard(ptr noundef nonnull %i.bp, i32 noundef 2) #12
+  tail call void @ossl_qrl_enc_level_set_discard(ptr noundef nonnull %i.bp, i32 noundef 3) #12
+  tail call void @CRYPTO_free(ptr noundef nonnull %0, ptr noundef nonnull @.str, i32 noundef 267) #12
   br label %bb.aa
 
 bb.aa:                                            ; preds = %bb.a, %qrx_cleanup_urxl.exit40
@@ -421,7 +421,7 @@ bb.e:                                             ; preds = %ossl_list_urxe_inse
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !49
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 1072
   %i.t = load ptr, ptr %i.s, align 8, !tbaa !50
-  tail call void %i.m(i32 noundef 0, i32 noundef 1, i32 noundef 512, ptr noundef nonnull %i.n, i64 noundef %i.p, ptr noundef %i.r, ptr noundef %i.t) #11
+  tail call void %i.m(i32 noundef 0, i32 noundef 1, i32 noundef 512, ptr noundef nonnull %i.n, i64 noundef %i.p, ptr noundef %i.r, ptr noundef %i.t) #12
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %ossl_list_urxe_insert_tail.exit
@@ -519,12 +519,12 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.c, i8 0, i64 16, i1 false)
   %i.g = load i64, ptr %i.f, align 8, !tbaa !48   ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   store i64 0, ptr %i.a, align 8, !tbaa !14
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   store i64 -1, ptr %i.b, align 8, !tbaa !14
   %i.h = icmp slt i64 %i.g, 0
   br i1 %i.h, label %qrx_validate_initial_pkt.exit, label %bb.b
@@ -544,7 +544,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.m = add nuw i64 %i.g, 464
-  %i.n = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.m, ptr noundef nonnull @.str, i32 noundef 564) #11 ; 10 uses
+  %i.n = tail call noalias ptr @CRYPTO_malloc(i64 noundef %i.m, ptr noundef nonnull @.str, i32 noundef 564) #12 ; 10 uses
   %i.o = icmp eq ptr %i.n, null
   br i1 %i.o, label %qrx_validate_initial_pkt.exit, label %bb.d
 
@@ -589,7 +589,7 @@ ossl_list_rxe_insert_tail.exit.i.i:               ; preds = %bb.g, %bb.f
 qrx_ensure_free_rxe.exit.i:                       ; preds = %ossl_list_rxe_insert_tail.exit.i.i, %bb.b
   %.0.i47.i = phi ptr [ %.val8.i.i, %bb.b ], [ %i.n, %ossl_list_rxe_insert_tail.exit.i.i ] ; 7 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %.0.i47.i, i64 112 ; 3 uses
-  %i.ad = call i32 @ossl_quic_wire_decode_pkt_hdr(ptr noundef nonnull %3, i64 noundef 0, i32 noundef 1, i32 noundef 0, ptr noundef nonnull %i.ac, ptr noundef nonnull %5, ptr noundef null) #11
+  %i.ad = call i32 @ossl_quic_wire_decode_pkt_hdr(ptr noundef nonnull %3, i64 noundef 0, i32 noundef 1, i32 noundef 0, ptr noundef nonnull %i.ac, ptr noundef nonnull %5, ptr noundef null) #12
   %.not35.i = icmp eq i32 %i.ad, 0
   br i1 %.not35.i, label %qrx_validate_initial_pkt.exit, label %bb.h
 
@@ -607,7 +607,7 @@ bb.i:                                             ; preds = %bb.h
 
 qrx_validate_hdr_early.exit.i:                    ; preds = %bb.i
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
-  %i.aj = call i32 @ossl_qrl_enc_level_set_have_el(ptr noundef nonnull %i.ai, i32 noundef 0) #11
+  %i.aj = call i32 @ossl_qrl_enc_level_set_have_el(ptr noundef nonnull %i.ai, i32 noundef 0) #12
   %.not38.i = icmp eq i32 %i.aj, 1
   br i1 %.not38.i, label %bb.j, label %qrx_validate_initial_pkt.exit
 
@@ -646,8 +646,8 @@ bb.n:                                             ; preds = %qrx_relocate_buffer
   %.126.i = phi ptr [ %.025.ph.i, %qrx_relocate_buffer.exit.thread42.i ], [ %.0.i47.i, %bb.j ] ; 5 uses
   %.1.i = phi i64 [ %i.aq, %qrx_relocate_buffer.exit.thread42.i ], [ 0, %bb.j ] ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %3, ptr noundef nonnull align 8 dereferenceable(24) %4, i64 24, i1 false), !tbaa.struct !58
-  %i.av = call ptr @ossl_qrl_enc_level_set_get(ptr noundef nonnull %i.ai, i32 noundef 0, i32 noundef 1) #11
-  %i.aw = call i32 @ossl_quic_hdr_protector_decrypt(ptr noundef %i.av, ptr noundef nonnull %5) #11
+  %i.av = call ptr @ossl_qrl_enc_level_set_get(ptr noundef nonnull %i.ai, i32 noundef 0, i32 noundef 1) #12
+  %i.aw = call i32 @ossl_quic_hdr_protector_decrypt(ptr noundef %i.av, ptr noundef nonnull %5) #12
   %.not40.i = icmp eq i32 %i.aw, 0
   br i1 %.not40.i, label %qrx_validate_initial_pkt.exit, label %bb.o
 
@@ -656,7 +656,7 @@ bb.o:                                             ; preds = %bb.n
   %i.ay = or i64 %i.ax, 1
   store i64 %i.ay, ptr %i.d, align 8, !tbaa !14
   %i.az = getelementptr inbounds nuw i8, ptr %.126.i, i64 112
-  %i.ba = call i32 @ossl_quic_wire_decode_pkt_hdr(ptr noundef nonnull %3, i64 noundef 0, i32 noundef 0, i32 noundef 0, ptr noundef nonnull %i.az, ptr noundef null, ptr noundef null) #11
+  %i.ba = call i32 @ossl_quic_wire_decode_pkt_hdr(ptr noundef nonnull %3, i64 noundef 0, i32 noundef 0, i32 noundef 0, ptr noundef nonnull %i.az, ptr noundef null, ptr noundef null) #12
   %.not41.i = icmp eq i32 %i.ba, 1
   br i1 %.not41.i, label %bb.p, label %qrx_validate_initial_pkt.exit
 
@@ -791,11 +791,11 @@ ossl_list_rxe_insert_tail.exit.i:                 ; preds = %bb.y, %bb.x
 
 qrx_validate_initial_pkt.exit:                    ; preds = %bb.a, %bb.c, %qrx_ensure_free_rxe.exit.i, %bb.h, %bb.i, %qrx_validate_hdr_early.exit.i, %bb.l, %bb.n, %bb.o, %bb.p, %bb.q, %bb.r, %bb.s, %ossl_list_rxe_insert_tail.exit.i
   %.031.i = phi i32 [ 0, %bb.l ], [ 1, %ossl_list_rxe_insert_tail.exit.i ], [ 0, %bb.a ], [ 0, %qrx_ensure_free_rxe.exit.i ], [ 0, %bb.s ], [ 0, %bb.r ], [ 0, %bb.q ], [ 0, %bb.p ], [ 0, %bb.o ], [ 0, %bb.n ], [ 0, %qrx_validate_hdr_early.exit.i ], [ 0, %bb.c ], [ 0, %bb.h ], [ 0, %bb.i ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   ret i32 %.031.i
 }
 
@@ -812,7 +812,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !98
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1056
   %i.g = load i8, ptr %i.f, align 8, !tbaa !23
-  %i.h = tail call i32 @ossl_qrl_enc_level_set_provide_secret(ptr noundef nonnull %i.b, ptr noundef %i.c, ptr noundef %i.e, i32 noundef %1, i32 noundef %2, ptr noundef %3, ptr noundef %4, i64 noundef %5, i8 noundef zeroext %i.g, i32 noundef 0) #11
+  %i.h = tail call i32 @ossl_qrl_enc_level_set_provide_secret(ptr noundef nonnull %i.b, ptr noundef %i.c, ptr noundef %i.e, i32 noundef %1, i32 noundef %2, ptr noundef %3, ptr noundef %4, i64 noundef %5, i8 noundef zeroext %i.g, i32 noundef 0) #12
   %.not = icmp eq i32 %i.h, 0
   br i1 %.not, label %qrx_requeue_deferred.exit, label %bb.c
 
@@ -909,7 +909,7 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 168
-  tail call void @ossl_qrl_enc_level_set_discard(ptr noundef nonnull %i.b, i32 noundef %1) #11
+  tail call void @ossl_qrl_enc_level_set_discard(ptr noundef nonnull %i.b, i32 noundef %1) #12
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -1000,8 +1000,8 @@ bb.c:                                             ; preds = %qrx_process_one_urx
   %.val20.i = phi ptr [ %.val18.i, %.lr.ph.i ], [ %.val.i34, %qrx_process_one_urxe.exit.i ] ; 20 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %.val20.i, i64 16
   %i.af = load i64, ptr %i.ae, align 8, !tbaa !48 ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #12
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(21) %5, ptr noundef nonnull align 1 dereferenceable(21) @__const.qrx_process_datagram.first_dcid, i64 21, i1 false)
   %i.ag = load i64, ptr %i.e, align 8, !tbaa !73
   %i.ah = add i64 %i.ag, %i.af
@@ -1036,13 +1036,13 @@ bb.d:                                             ; preds = %bb.br, %.lr.ph.i.i.
   br i1 %or.cond.i.i.i, label %qrx_process_datagram.exit.i.i, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   store i64 0, ptr %i.a, align 8, !tbaa !14
   call void @llvm.lifetime.start.p0(ptr nonnull %2)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %2, ptr noundef nonnull align 8 dereferenceable(24) %4, i64 24, i1 false), !tbaa.struct !58
   %.val113.i.i.i.i = load ptr, ptr %4, align 8, !tbaa !55 ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #11
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #12
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   store i64 -1, ptr %i.b, align 8, !tbaa !14
   %.val8.i.i.i.i.i = load ptr, ptr %i.h, align 8, !tbaa !24 ; 2 uses
   %.not.i.i.i.i.i = icmp eq ptr %.val8.i.i.i.i.i, null
@@ -1054,7 +1054,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %i.at = add nuw i64 %.val1628.i.i.i, 464
-  %i.au = call noalias ptr @CRYPTO_malloc(i64 noundef %i.at, ptr noundef nonnull @.str, i32 noundef 564) #11 ; 10 uses
+  %i.au = call noalias ptr @CRYPTO_malloc(i64 noundef %i.at, ptr noundef nonnull @.str, i32 noundef 564) #12 ; 10 uses
   %i.av = icmp eq ptr %i.au, null
   br i1 %i.av, label %PACKET_forward.exit135.i.i.i.i, label %bb.h
 
@@ -1107,7 +1107,7 @@ qrx_ensure_free_rxe.exit.i.i.i.i:                 ; preds = %ossl_list_rxe_inser
   %i.bm = xor i32 %i.bl, 1
   %i.bn = load i64, ptr %i.k, align 8, !tbaa !74
   %i.bo = getelementptr inbounds nuw i8, ptr %.0.i.i.i.i.i, i64 112 ; 3 uses
-  %i.bp = call i32 @ossl_quic_wire_decode_pkt_hdr(ptr noundef nonnull %4, i64 noundef %i.bn, i32 noundef %i.bm, i32 noundef 0, ptr noundef nonnull %i.bo, ptr noundef nonnull %3, ptr noundef null) #11
+  %i.bp = call i32 @ossl_quic_wire_decode_pkt_hdr(ptr noundef nonnull %4, i64 noundef %i.bn, i32 noundef %i.bm, i32 noundef 0, ptr noundef nonnull %i.bo, ptr noundef nonnull %3, ptr noundef null) #12
   %.not96.i.i.i.i = icmp eq i32 %i.bp, 0
   br i1 %.not96.i.i.i.i, label %PACKET_forward.exit135.i.i.i.i, label %bb.l
 
@@ -1295,7 +1295,7 @@ bb.ah:                                            ; preds = %qrx_validate_hdr_ea
 qrx_determine_enc_level.exit.i.i.i.i:             ; preds = %bb.ah, %bb.ag, %bb.af, %qrx_validate_hdr_early.exit.thread.i.i.i.i
   %i.dt = phi i1 [ false, %bb.ah ], [ true, %bb.ag ], [ false, %bb.af ], [ false, %qrx_validate_hdr_early.exit.thread.i.i.i.i ]
   %.0.i124.i.i.i.i = phi i32 [ 0, %bb.ah ], [ 3, %bb.ag ], [ 1, %bb.af ], [ 2, %qrx_validate_hdr_early.exit.thread.i.i.i.i ] ; 3 uses
-  %i.du = call i32 @ossl_qrl_enc_level_set_have_el(ptr noundef nonnull %i.m, i32 noundef %.0.i124.i.i.i.i) #11
+  %i.du = call i32 @ossl_qrl_enc_level_set_have_el(ptr noundef nonnull %i.m, i32 noundef %.0.i124.i.i.i.i) #12
   switch i32 %i.du, label %qrx_relocate_buffer.exit.i.i.i.i [
     i32 1, label %bb.ai
     i32 0, label %bb.bm
@@ -1344,12 +1344,12 @@ bb.ao:                                            ; preds = %qrx_relocate_buffer
   %.0174.i.i.i.i = phi ptr [ %.1175.ph.i.i.i.i, %qrx_relocate_buffer.exit.thread191.i.i.i.i ], [ %.0.i.i.i.i.i, %bb.ak ] ; 8 uses
   %.0173.i.i.i.i = phi i64 [ %i.ec, %qrx_relocate_buffer.exit.thread191.i.i.i.i ], [ 0, %bb.ak ] ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 24, i1 false), !tbaa.struct !58
-  %i.eh = call ptr @ossl_qrl_enc_level_set_get(ptr noundef nonnull %i.m, i32 noundef %.0.i124.i.i.i.i, i32 noundef 1) #11 ; 2 uses
+  %i.eh = call ptr @ossl_qrl_enc_level_set_get(ptr noundef nonnull %i.m, i32 noundef %.0.i124.i.i.i.i, i32 noundef 1) #12 ; 2 uses
   %.not102.not.i.i.i.i = icmp eq i32 %i.bl, 0
   br i1 %.not102.not.i.i.i.i, label %bb.ap, label %bb.ar
 
 bb.ap:                                            ; preds = %bb.ao
-  %i.ei = call i32 @ossl_quic_hdr_protector_decrypt(ptr noundef %i.eh, ptr noundef nonnull %3) #11
+  %i.ei = call i32 @ossl_quic_hdr_protector_decrypt(ptr noundef %i.eh, ptr noundef nonnull %3) #12
   %.not103.i.i.i.i = icmp eq i32 %i.ei, 0
   br i1 %.not103.i.i.i.i, label %qrx_relocate_buffer.exit.i.i.i.i, label %bb.aq
 
@@ -1359,7 +1359,7 @@ bb.aq:                                            ; preds = %bb.ap
   store i64 %i.ek, ptr %i.al, align 8, !tbaa !14
   %i.el = load i64, ptr %i.k, align 8, !tbaa !74
   %i.em = getelementptr inbounds nuw i8, ptr %.0174.i.i.i.i, i64 112
-  %i.en = call i32 @ossl_quic_wire_decode_pkt_hdr(ptr noundef nonnull %4, i64 noundef %i.el, i32 noundef 0, i32 noundef 0, ptr noundef nonnull %i.em, ptr noundef null, ptr noundef null) #11
+  %i.en = call i32 @ossl_quic_wire_decode_pkt_hdr(ptr noundef nonnull %4, i64 noundef %i.el, i32 noundef 0, i32 noundef 0, ptr noundef nonnull %i.em, ptr noundef null, ptr noundef null) #12
   %.not104.i.i.i.i = icmp eq i32 %i.en, 1
   br i1 %.not104.i.i.i.i, label %bb.ar, label %qrx_relocate_buffer.exit.i.i.i.i
 
@@ -1387,7 +1387,7 @@ qrx_validate_hdr.exit.i:                          ; preds = %bb.ar, %switch.look
   %i.ev = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %.0.i1.i.i11.i
   %i.ew = load i64, ptr %i.ev, align 8, !tbaa !14
   %i.ex = getelementptr inbounds nuw i8, ptr %.0174.i.i.i.i, i64 200
-  %i.ey = call i32 @ossl_quic_wire_decode_pkt_hdr_pn(ptr noundef nonnull %i.er, i64 noundef %i.eu, i64 noundef %i.ew, ptr noundef nonnull %i.ex) #11
+  %i.ey = call i32 @ossl_quic_wire_decode_pkt_hdr_pn(ptr noundef nonnull %i.er, i64 noundef %i.eu, i64 noundef %i.ew, ptr noundef nonnull %i.ex) #12
   %.not.i12.not.i = icmp eq i32 %i.ey, 0
   br i1 %.not.i12.not.i, label %qrx_relocate_buffer.exit.i.i.i.i, label %bb.as
 
@@ -1405,7 +1405,7 @@ bb.at:                                            ; preds = %bb.as
   %i.ff = sub i64 %i.fa, %i.fe
   %i.fg = load ptr, ptr %i.p, align 8, !tbaa !49
   %i.fh = load ptr, ptr %i.q, align 8, !tbaa !50
-  call void %i.ez(i32 noundef 0, i32 noundef 1, i32 noundef 513, ptr noundef %.val113.i.i.i.i, i64 noundef %i.ff, ptr noundef %i.fg, ptr noundef %i.fh) #11, !inline_history !99
+  call void %i.ez(i32 noundef 0, i32 noundef 1, i32 noundef 513, ptr noundef %.val113.i.i.i.i, i64 noundef %i.ff, ptr noundef %i.fg, ptr noundef %i.fh) #12, !inline_history !99
   br label %bb.au
 
 bb.au:                                            ; preds = %bb.at, %bb.as
@@ -1462,7 +1462,7 @@ rxe_determine_pn_space.exit.i.i:                  ; preds = %bb.aw, %switch.look
 bb.ax:                                            ; preds = %rxe_determine_pn_space.exit.i.i
   %i.gj = load i64, ptr %i.fz, align 8, !tbaa !66
   %i.gk = load ptr, ptr %i.v, align 8, !tbaa !77
-  %i.gl = call i32 %i.gi(i64 noundef %i.gj, i32 noundef %.0.i1.i.i.i, ptr noundef %i.gk) #11, !inline_history !100
+  %i.gl = call i32 %i.gi(i64 noundef %i.gj, i32 noundef %.0.i1.i.i.i, ptr noundef %i.gk) #12, !inline_history !100
   %.not7.i.i = icmp eq i32 %i.gl, 0
   br i1 %.not7.i.i, label %qrx_relocate_buffer.exit.i.i.i.i, label %.qrx_validate_hdr_late.exit_crit_edge.i
 
@@ -1667,17 +1667,17 @@ PACKET_forward.exit135.i.i.i.i:                   ; preds = %qrx_relocate_buffer
 
 qrx_process_pkt.exit.i.i.i:                       ; preds = %bb.bn, %bb.bm
   %.val1632.i.i.i = phi i64 [ %.val.i.i.i.i.i, %bb.bm ], [ %i.in, %bb.bn ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   br label %bb.br
 
 bb.bq:                                            ; preds = %PACKET_forward.exit135.i.i.i.i, %bb.bp, %bb.bo, %ossl_list_rxe_insert_tail.exit128.i.i.i.i, %ossl_list_rxe_insert_tail.exit.i.i.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   call void @llvm.lifetime.end.p0(ptr nonnull %2)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   %.val16.pre.i.i.i = load i64, ptr %i.g, align 8, !tbaa !56
   br label %bb.br
 
@@ -1689,8 +1689,8 @@ bb.br:                                            ; preds = %bb.bq, %qrx_process
   br i1 %.not14.i.i.i, label %qrx_process_datagram.exit.i.i, label %bb.d, !llvm.loop !101
 
 qrx_process_datagram.exit.thread.i.i:             ; preds = %PACKET_buf_init.exit.i.i.i, %bb.c
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   br label %bb.bs
 
 qrx_process_datagram.exit.i.i:                    ; preds = %bb.br, %bb.d
@@ -1698,8 +1698,8 @@ qrx_process_datagram.exit.i.i:                    ; preds = %bb.br, %bb.d
   %.pre.i.i = load ptr, ptr %i.d, align 8, !tbaa !39
   %i.jd = icmp eq ptr %.pre.i.i, %.val20.i
   %i.je = icmp eq i32 %.013.i.ph.i.i, 0           ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %5) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %5) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #12
   br i1 %i.jd, label %bb.bs, label %bb.bt
 
 bb.bs:                                            ; preds = %qrx_process_datagram.exit.i.i, %qrx_process_datagram.exit.thread.i.i
@@ -1803,7 +1803,7 @@ bb.cg:                                            ; preds = %bb.cf
 
 .thread.i.i:                                      ; preds = %bb.cg, %bb.cf, %bb.bz
   %i.ka = load ptr, ptr %i.ad, align 8, !tbaa !22
-  call void @ossl_quic_demux_release_urxe(ptr noundef %i.ka, ptr noundef nonnull %.val20.i) #11
+  call void @ossl_quic_demux_release_urxe(ptr noundef %i.ka, ptr noundef nonnull %.val20.i) #12
   br label %qrx_process_one_urxe.exit.i
 
 qrx_process_one_urxe.exit.i:                      ; preds = %.thread.i.i, %bb.ce, %ossl_list_urxe_insert_tail.exit.i.i
@@ -1877,13 +1877,13 @@ bb.cn:                                            ; preds = %bb.cm, %bb.cl
   %i.ky = getelementptr inbounds nuw i8, ptr %.val.i36, i64 24
   store i64 %i.kx, ptr %i.ky, align 8, !tbaa !109
   %i.kz = getelementptr inbounds nuw i8, ptr %.val.i36, i64 208 ; 2 uses
-  %i.la = call i32 @BIO_ADDR_family(ptr noundef nonnull %i.kz) #11
+  %i.la = call i32 @BIO_ADDR_family(ptr noundef nonnull %i.kz) #12
   %.not32 = icmp eq i32 %i.la, 0
   %i.lb = select i1 %.not32, ptr null, ptr %i.kz
   %i.lc = getelementptr inbounds nuw i8, ptr %.val.i36, i64 8
   store ptr %i.lb, ptr %i.lc, align 8, !tbaa !110
   %i.ld = getelementptr inbounds nuw i8, ptr %.val.i36, i64 320 ; 2 uses
-  %i.le = call i32 @BIO_ADDR_family(ptr noundef nonnull %i.ld) #11
+  %i.le = call i32 @BIO_ADDR_family(ptr noundef nonnull %i.ld) #12
   %.not33 = icmp eq i32 %i.le, 0
   %i.lf = select i1 %.not33, ptr null, ptr %i.ld
   %i.lg = getelementptr inbounds nuw i8, ptr %.val.i36, i64 16
@@ -2011,7 +2011,7 @@ bb.a:
 define i64 @ossl_qrx_get_key_epoch(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %i.b = tail call ptr @ossl_qrl_enc_level_set_get(ptr noundef nonnull %i.a, i32 noundef 3, i32 noundef 1) #11 ; 2 uses
+  %i.b = tail call ptr @ossl_qrl_enc_level_set_get(ptr noundef nonnull %i.a, i32 noundef 3, i32 noundef 1) #12 ; 2 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %bb.c, label %bb.b
 
@@ -2031,7 +2031,7 @@ declare ptr @ossl_qrl_enc_level_set_get(ptr noundef, i32 noundef, i32 noundef) l
 define range(i32 0, 2) i32 @ossl_qrx_key_update_timeout(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 3 uses
-  %i.b = tail call ptr @ossl_qrl_enc_level_set_get(ptr noundef nonnull %i.a, i32 noundef 3, i32 noundef 1) #11 ; 2 uses
+  %i.b = tail call ptr @ossl_qrl_enc_level_set_get(ptr noundef nonnull %i.a, i32 noundef 3, i32 noundef 1) #12 ; 2 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %bb.h, label %bb.b
 
@@ -2042,7 +2042,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.f, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = tail call i32 @ossl_qrl_enc_level_set_key_update_done(ptr noundef nonnull %i.a, i32 noundef 3) #11
+  %i.g = tail call i32 @ossl_qrl_enc_level_set_key_update_done(ptr noundef nonnull %i.a, i32 noundef 3) #12
   %.not = icmp eq i32 %i.g, 0
   br i1 %.not, label %bb.h, label %bb.d
 
@@ -2056,7 +2056,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.i, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  %i.j = tail call i32 @ossl_qrl_enc_level_set_key_cooldown_done(ptr noundef nonnull %i.a, i32 noundef 3) #11
+  %i.j = tail call i32 @ossl_qrl_enc_level_set_key_cooldown_done(ptr noundef nonnull %i.a, i32 noundef 3) #12
   %.not9 = icmp eq i32 %i.j, 0
   br i1 %.not9, label %bb.h, label %bb.g
 
@@ -2084,14 +2084,14 @@ bb.a:
 define i64 @ossl_qrx_get_max_forged_pkt_count(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %i.b = tail call ptr @ossl_qrl_enc_level_set_get(ptr noundef nonnull %i.a, i32 noundef %1, i32 noundef 1) #11 ; 2 uses
+  %i.b = tail call ptr @ossl_qrl_enc_level_set_get(ptr noundef nonnull %i.a, i32 noundef %1, i32 noundef 1) #12 ; 2 uses
   %i.c = icmp eq ptr %i.b, null
   br i1 %i.c, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 96
   %i.e = load i32, ptr %i.d, align 8, !tbaa !88
-  %i.f = tail call i64 @ossl_qrl_get_suite_max_forged_pkt(i32 noundef %i.e) #11
+  %i.f = tail call i64 @ossl_qrl_get_suite_max_forged_pkt(i32 noundef %i.e) #12
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
@@ -2310,7 +2310,7 @@ rxe_determine_pn_space.exit:                      ; preds = %bb.a, %switch.looku
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %.0.i1.i
   %i.j = load i64, ptr %i.i, align 8, !tbaa !14
   %i.k = getelementptr inbounds nuw i8, ptr %1, i64 200
-  %i.l = tail call i32 @ossl_quic_wire_decode_pkt_hdr_pn(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef %i.j, ptr noundef nonnull %i.k) #11
+  %i.l = tail call i32 @ossl_quic_wire_decode_pkt_hdr_pn(ptr noundef nonnull %i.d, i64 noundef %i.g, i64 noundef %i.j, ptr noundef nonnull %i.k) #12
   %.not = icmp ne i32 %i.l, 0
   %. = zext i1 %.not to i32
   ret i32 %.
@@ -2384,7 +2384,7 @@ ossl_list_rxe_remove.exit.i:                      ; preds = %bb.i, %bb.h
 
 bb.j:                                             ; preds = %ossl_list_rxe_remove.exit.i
   %i.u = add nuw i64 %2, 464
-  %i.v = tail call ptr @CRYPTO_realloc(ptr noundef nonnull %1, i64 noundef %i.u, ptr noundef nonnull @.str, i32 noundef 625) #11 ; 12 uses
+  %i.v = tail call ptr @CRYPTO_realloc(ptr noundef nonnull %1, i64 noundef %i.u, ptr noundef nonnull @.str, i32 noundef 625) #12 ; 12 uses
   %i.w = icmp eq ptr %i.v, null
   br i1 %i.w, label %bb.k, label %bb.t
 
@@ -2515,13 +2515,13 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 6 uses
   %i.b = alloca i32, align 4                      ; 4 uses
   %i.c = alloca [16 x i8], align 16               ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   store i32 0, ptr %i.a, align 4, !tbaa !116
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #12
   store i32 0, ptr %i.b, align 4, !tbaa !116
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #11
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #12
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %i.e = tail call ptr @ossl_qrl_enc_level_set_get(ptr noundef nonnull %i.d, i32 noundef %8, i32 noundef 1) #11 ; 9 uses
+  %i.e = tail call ptr @ossl_qrl_enc_level_set_get(ptr noundef nonnull %i.d, i32 noundef %8, i32 noundef 1) #12 ; 9 uses
   %i.f = or i64 %6, %3
   %or.cond.not = icmp ugt i64 %i.f, 2147483647
   %.not = icmp eq ptr %i.e, null
@@ -2540,7 +2540,7 @@ bb.c:                                             ; preds = %bb.b
   %i.k = load i64, ptr %i.j, align 8, !tbaa !87
   %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 96
   %i.m = load i32, ptr %i.l, align 8, !tbaa !88
-  %i.n = tail call i64 @ossl_qrl_get_suite_max_forged_pkt(i32 noundef %i.m) #11
+  %i.n = tail call i64 @ossl_qrl_get_suite_max_forged_pkt(i32 noundef %i.m) #12
   %.not55 = icmp ult i64 %i.k, %i.n
   br i1 %.not55, label %bb.d, label %bb.p
 
@@ -2602,7 +2602,7 @@ qrx_get_cipher_ctx_idx.exit.thread:               ; preds = %bb.f, %qrx_get_ciph
   %i.ah = getelementptr inbounds nuw i8, ptr %i.e, i64 48
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %i.ah, i64 %.0.i67
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !119 ; 6 uses
-  %i.ak = tail call i32 @EVP_CIPHER_CTX_get_iv_length(ptr noundef %i.aj) #11 ; 2 uses
+  %i.ak = tail call i32 @EVP_CIPHER_CTX_get_iv_length(ptr noundef %i.aj) #12 ; 2 uses
   %i.al = icmp sgt i32 %i.ak, 7
   br i1 %i.al, label %bb.i, label %bb.p, !prof !52
 
@@ -2614,11 +2614,11 @@ bb.i:                                             ; preds = %qrx_get_cipher_ctx_
   %invariant.gep = getelementptr i8, ptr %i.c, i64 %i.ao
   %gep.7 = getelementptr i8, ptr %invariant.gep, i64 -8 ; 2 uses
   %i.ap = load <8 x i8>, ptr %gep.7, align 1, !tbaa !69
-  %11 = bitcast i64 %7 to <8 x i8>
-  %12 = shufflevector <8 x i8> %11, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  %11 = tail call i64 @llvm.bswap.i64(i64 %7)
+  %12 = bitcast i64 %11 to <8 x i8>
   %i.aq = xor <8 x i8> %i.ap, %12
   store <8 x i8> %i.aq, ptr %gep.7, align 1, !tbaa !69
-  %i.ar = call i32 @EVP_CipherInit_ex(ptr noundef %i.aj, ptr noundef null, ptr noundef null, ptr noundef null, ptr noundef nonnull %i.c, i32 noundef 0) #11
+  %i.ar = call i32 @EVP_CipherInit_ex(ptr noundef %i.aj, ptr noundef null, ptr noundef null, ptr noundef null, ptr noundef nonnull %i.c, i32 noundef 0) #12
   %.not58 = icmp eq i32 %i.ar, 1
   br i1 %.not58, label %bb.j, label %bb.p
 
@@ -2628,13 +2628,13 @@ bb.j:                                             ; preds = %bb.i
   %i.au = zext i32 %i.as to i64
   %i.av = sub nsw i64 0, %i.au
   %i.aw = getelementptr inbounds i8, ptr %i.at, i64 %i.av
-  %i.ax = call i32 @EVP_CIPHER_CTX_ctrl(ptr noundef %i.aj, i32 noundef 17, i32 noundef %i.as, ptr noundef nonnull %i.aw) #11
+  %i.ax = call i32 @EVP_CIPHER_CTX_ctrl(ptr noundef %i.aj, i32 noundef 17, i32 noundef %i.as, ptr noundef nonnull %i.aw) #12
   %.not59 = icmp eq i32 %i.ax, 1
   br i1 %.not59, label %bb.k, label %bb.p
 
 bb.k:                                             ; preds = %bb.j
   %i.ay = trunc nuw nsw i64 %6 to i32
-  %i.az = call i32 @EVP_CipherUpdate(ptr noundef %i.aj, ptr noundef null, ptr noundef nonnull %i.a, ptr noundef %5, i32 noundef %i.ay) #11
+  %i.az = call i32 @EVP_CipherUpdate(ptr noundef %i.aj, ptr noundef null, ptr noundef nonnull %i.a, ptr noundef %5, i32 noundef %i.ay) #12
   %.not60 = icmp eq i32 %i.az, 1
   br i1 %.not60, label %bb.l, label %bb.p
 
@@ -2642,12 +2642,12 @@ bb.l:                                             ; preds = %bb.k
   %i.ba = load i32, ptr %i.g, align 4, !tbaa !118
   %i.bb = trunc nuw nsw i64 %3 to i32
   %i.bc = sub i32 %i.bb, %i.ba
-  %i.bd = call i32 @EVP_CipherUpdate(ptr noundef %i.aj, ptr noundef %1, ptr noundef nonnull %i.a, ptr noundef nonnull %2, i32 noundef %i.bc) #11
+  %i.bd = call i32 @EVP_CipherUpdate(ptr noundef %i.aj, ptr noundef %1, ptr noundef nonnull %i.a, ptr noundef nonnull %2, i32 noundef %i.bc) #12
   %.not61 = icmp eq i32 %i.bd, 1
   br i1 %.not61, label %bb.m, label %bb.p
 
 bb.m:                                             ; preds = %bb.l
-  %i.be = call i32 @EVP_CipherFinal_ex(ptr noundef %i.aj, ptr noundef null, ptr noundef nonnull %i.b) #11
+  %i.be = call i32 @EVP_CipherFinal_ex(ptr noundef %i.aj, ptr noundef null, ptr noundef nonnull %i.b) #12
   %.not62 = icmp eq i32 %i.be, 1
   br i1 %.not62, label %bb.o, label %bb.n
 
@@ -2665,9 +2665,9 @@ bb.o:                                             ; preds = %bb.m
 
 bb.p:                                             ; preds = %bb.l, %bb.k, %bb.j, %bb.i, %qrx_get_cipher_ctx_idx.exit.thread, %bb.h, %bb.c, %bb.b, %bb.a, %bb.o, %bb.n
   %.048 = phi i32 [ 0, %bb.a ], [ 0, %bb.l ], [ 0, %bb.b ], [ 0, %bb.c ], [ 0, %qrx_get_cipher_ctx_idx.exit.thread ], [ 0, %bb.i ], [ 0, %bb.j ], [ 0, %bb.k ], [ 0, %bb.n ], [ 1, %bb.o ], [ 0, %bb.h ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #11
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #12
   ret i32 %.048
 }
 
@@ -2700,7 +2700,7 @@ bb.b:                                             ; preds = %rxe_determine_pn_sp
   %i.g = load i64, ptr %i.f, align 8, !tbaa !66
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 1032
   %i.i = load ptr, ptr %i.h, align 8, !tbaa !77
-  %i.j = tail call i32 %i.e(i64 noundef %i.g, i32 noundef %.0.i1.i, ptr noundef %i.i) #11
+  %i.j = tail call i32 %i.e(i64 noundef %i.g, i32 noundef %.0.i1.i, ptr noundef %i.i) #12
   %.not7 = icmp eq i32 %i.j, 0
   br i1 %.not7, label %bb.d, label %bb.c
 
@@ -2732,7 +2732,7 @@ declare i32 @EVP_CipherFinal_ex(ptr noundef, ptr noundef, ptr noundef) local_unn
 define internal fastcc void @qrx_key_update_initiated(ptr noundef %0, i64 noundef %1) unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 168
-  %i.b = tail call i32 @ossl_qrl_enc_level_set_key_update(ptr noundef nonnull %i.a, i32 noundef 3) #11
+  %i.b = tail call i32 @ossl_qrl_enc_level_set_key_update(ptr noundef nonnull %i.a, i32 noundef 3) #12
   %.not = icmp eq i32 %i.b, 0
   br i1 %.not, label %bb.d, label %bb.b
 
@@ -2747,7 +2747,7 @@ bb.b:                                             ; preds = %bb.a
 bb.c:                                             ; preds = %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 1048
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !85
-  tail call void %i.e(i64 noundef %1, ptr noundef %i.g) #11
+  tail call void %i.e(i64 noundef %1, ptr noundef %i.g) #12
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.a, %bb.c, %bb.b
@@ -2758,6 +2758,9 @@ declare i32 @ossl_qrl_enc_level_set_key_update(ptr noundef, i32 noundef) local_u
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #11
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -2770,7 +2773,8 @@ attributes #7 = { nofree norecurse nosync nounwind memory(readwrite, inaccessibl
 attributes #8 = { inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(write, argmem: readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #9 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #10 = { nocallback nofree nosync nounwind willreturn memory(argmem: read) }
-attributes #11 = { nounwind }
+attributes #11 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #12 = { nounwind }
 
 !llvm.module.flags = !{!1, !2}
 !llvm.ident = !{!3}

@@ -202,43 +202,19 @@ bb.b:                                             ; preds = %._crit_edge
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local void @SHA1Final(ptr nofree noundef writeonly captures(none) %0, ptr nofree noundef captures(none) %1) local_unnamed_addr #5 !guid !19 {
 bb.a:
-  %i.a = alloca [8 x i8], align 1                 ; 11 uses
+  %i.a = alloca [8 x i8], align 4                 ; 5 uses
   %i.b = alloca i8, align 1                       ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #7
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 20 ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 24
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !12   ; 4 uses
-  %2 = lshr i32 %i.e, 24
-  %3 = trunc nuw i32 %2 to i8
-  store i8 %3, ptr %i.a, align 1, !tbaa !20
-  %4 = lshr i32 %i.e, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %5, ptr %6, align 1, !tbaa !20
-  %7 = lshr i32 %i.e, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %8, ptr %9, align 1, !tbaa !20
-  %10 = trunc i32 %i.e to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %10, ptr %11, align 1, !tbaa !20
-  %i.f = load i32, ptr %i.c, align 4, !tbaa !12   ; 4 uses
-  %12 = lshr i32 %i.f, 24
-  %13 = trunc nuw i32 %12 to i8
-  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %13, ptr %14, align 1, !tbaa !20
-  %15 = lshr i32 %i.f, 16
-  %16 = trunc i32 %15 to i8
-  %17 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %16, ptr %17, align 1, !tbaa !20
-  %18 = lshr i32 %i.f, 8
-  %19 = trunc i32 %18 to i8
-  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %19, ptr %i.g, align 1, !tbaa !20
-  %20 = trunc i32 %i.f to i8
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  store i8 %20, ptr %21, align 1, !tbaa !20
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !12
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.e)
+  store i32 %2, ptr %i.a, align 4, !tbaa !20
+  %i.f = load i32, ptr %i.c, align 4, !tbaa !12
+  %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.f)
+  store i32 %3, ptr %i.g, align 4, !tbaa !20
   store i8 -128, ptr %i.b, align 1, !tbaa !20
   call void @SHA1Update(ptr noundef %1, ptr noundef nonnull %i.b, i32 noundef 1)
   %i.h = load i32, ptr %i.c, align 4, !tbaa !12

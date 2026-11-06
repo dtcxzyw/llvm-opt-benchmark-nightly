@@ -205,7 +205,7 @@ bb.a:
   %i.b = alloca [2048 x i8], align 16             ; 11 uses
   %i.c = alloca ptr, align 8                      ; 19 uses
   %i.d = alloca [80 x i8], align 16               ; 4 uses
-  %i.e = alloca i32, align 4                      ; 10 uses
+  %i.e = alloca i32, align 4                      ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #40
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #40
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #40
@@ -572,9 +572,6 @@ bb.ae:                                            ; preds = %bb.l
   %i.cs = getelementptr inbounds nuw i8, ptr %i.al, i64 4 ; 3 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %i.al, i64 16 ; 8 uses
   %i.cu = getelementptr inbounds nuw i8, ptr %i.al, i64 40 ; 13 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.e, i64 3
-  %3 = getelementptr inbounds nuw i8, ptr %i.e, i64 2
-  %4 = getelementptr inbounds nuw i8, ptr %i.e, i64 1
   br label %bb.af
 
 bb.af:                                            ; preds = %.lr.ph, %bb.av
@@ -591,30 +588,20 @@ bb.ag:                                            ; preds = %bb.af
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #40
   store i32 0, ptr %i.e, align 4, !tbaa !57
   %i.cw = call i64 @fread(ptr noundef nonnull %i.e, i64 noundef 4, i64 noundef 1, ptr noundef nonnull %i.n)
-  %i.cx = load i32, ptr %i.e, align 4, !tbaa !57  ; 6 uses
+  %i.cx = load i32, ptr %i.e, align 4, !tbaa !57  ; 3 uses
   %i.cy = icmp ugt i32 %i.cx, 100000000           ; 2 uses
   br i1 %i.cy, label %.preheader135, label %_ZL9SwapBytesPcii.exit
 
 .preheader135:                                    ; preds = %bb.ag
-  %5 = trunc i32 %i.cx to i8
-  store i8 %5, ptr %2, align 1, !tbaa !48
-  %6 = lshr i32 %i.cx, 8
-  %7 = trunc i32 %6 to i8
-  store i8 %7, ptr %3, align 2, !tbaa !48
-  %8 = lshr i32 %i.cx, 16
-  %9 = trunc i32 %8 to i8
-  store i8 %9, ptr %4, align 1, !tbaa !48
-  %10 = lshr i32 %i.cx, 24
-  %11 = trunc nuw i32 %10 to i8
-  store i8 %11, ptr %i.e, align 4, !tbaa !48
-  %.pre = load i32, ptr %i.e, align 4
+  %2 = call i32 @llvm.bswap.i32(i32 %i.cx)        ; 2 uses
+  store i32 %2, ptr %i.e, align 4, !tbaa !48
   br label %_ZL9SwapBytesPcii.exit
 
 _ZL9SwapBytesPcii.exit:                           ; preds = %.preheader135, %bb.ag
-  %i.cz = phi i32 [ %.pre, %.preheader135 ], [ %i.cx, %bb.ag ] ; 3 uses
+  %i.cz = phi i32 [ %2, %.preheader135 ], [ %i.cx, %bb.ag ] ; 3 uses
   %i.da = icmp ne i64 %i.cw, 0
   %i.db = icmp ne i32 %i.cz, 0
-  %or.cond = select i1 %i.da, i1 %i.db, i1 false
+  %or.cond = and i1 %i.da, %i.db
   br i1 %or.cond, label %bb.ah, label %bb.av
 
 bb.ah:                                            ; preds = %_ZL9SwapBytesPcii.exit
@@ -633,201 +620,57 @@ bb.ah:                                            ; preds = %_ZL9SwapBytesPcii.e
   %indvars.iv = phi i64 [ 0, %.preheader134.preheader ], [ %indvars.iv.next, %_ZN10tetgenmesh9arraypool8getblockEi.exit.2 ] ; 2 uses
   %i.dh = mul i64 %indvars.iv, 50
   %i.di = and i64 %i.dh, 4294967294
-  %i.dj = getelementptr inbounds nuw i8, ptr %i.de, i64 %i.di ; 55 uses
+  %i.dj = getelementptr inbounds nuw i8, ptr %i.de, i64 %i.di ; 19 uses
   br i1 %i.cy, label %.preheader.preheader, label %_ZL9SwapBytesPcii.exit115
 
 .preheader.preheader:                             ; preds = %.preheader134
-  %i.dk = load i32, ptr %i.dj, align 1            ; 4 uses
-  %12 = trunc i32 %i.dk to i8
-  %13 = getelementptr inbounds nuw i8, ptr %i.dj, i64 3
-  store i8 %12, ptr %13, align 1, !tbaa !48
-  %14 = lshr i32 %i.dk, 8
-  %15 = trunc i32 %14 to i8
-  %16 = getelementptr inbounds nuw i8, ptr %i.dj, i64 2
-  store i8 %15, ptr %16, align 1, !tbaa !48
-  %17 = lshr i32 %i.dk, 16
-  %18 = trunc i32 %17 to i8
-  %19 = getelementptr inbounds nuw i8, ptr %i.dj, i64 1
-  store i8 %18, ptr %19, align 1, !tbaa !48
-  %20 = lshr i32 %i.dk, 24
-  %21 = trunc nuw i32 %20 to i8
-  store i8 %21, ptr %i.dj, align 1, !tbaa !48
+  %i.dk = load i32, ptr %i.dj, align 1
+  %3 = call i32 @llvm.bswap.i32(i32 %i.dk)
+  store i32 %3, ptr %i.dj, align 1, !tbaa !48
   %i.dl = getelementptr inbounds nuw i8, ptr %i.dj, i64 4 ; 2 uses
-  %i.dm = load i32, ptr %i.dl, align 1            ; 4 uses
-  %22 = trunc i32 %i.dm to i8
-  %23 = getelementptr inbounds nuw i8, ptr %i.dj, i64 7
-  store i8 %22, ptr %23, align 1, !tbaa !48
-  %24 = lshr i32 %i.dm, 8
-  %25 = trunc i32 %24 to i8
-  %26 = getelementptr inbounds nuw i8, ptr %i.dj, i64 6
-  store i8 %25, ptr %26, align 1, !tbaa !48
-  %27 = lshr i32 %i.dm, 16
-  %28 = trunc i32 %27 to i8
-  %29 = getelementptr inbounds nuw i8, ptr %i.dj, i64 5
-  store i8 %28, ptr %29, align 1, !tbaa !48
-  %30 = lshr i32 %i.dm, 24
-  %31 = trunc nuw i32 %30 to i8
-  store i8 %31, ptr %i.dl, align 1, !tbaa !48
+  %i.dm = load i32, ptr %i.dl, align 1
+  %4 = call i32 @llvm.bswap.i32(i32 %i.dm)
+  store i32 %4, ptr %i.dl, align 1, !tbaa !48
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dj, i64 8 ; 2 uses
-  %i.do = load i32, ptr %i.dn, align 1            ; 4 uses
-  %32 = trunc i32 %i.do to i8
-  %33 = getelementptr inbounds nuw i8, ptr %i.dj, i64 11
-  store i8 %32, ptr %33, align 1, !tbaa !48
-  %34 = lshr i32 %i.do, 8
-  %35 = trunc i32 %34 to i8
-  %36 = getelementptr inbounds nuw i8, ptr %i.dj, i64 10
-  store i8 %35, ptr %36, align 1, !tbaa !48
-  %37 = lshr i32 %i.do, 16
-  %38 = trunc i32 %37 to i8
-  %39 = getelementptr inbounds nuw i8, ptr %i.dj, i64 9
-  store i8 %38, ptr %39, align 1, !tbaa !48
-  %40 = lshr i32 %i.do, 24
-  %41 = trunc nuw i32 %40 to i8
-  store i8 %41, ptr %i.dn, align 1, !tbaa !48
+  %i.do = load i32, ptr %i.dn, align 1
+  %5 = call i32 @llvm.bswap.i32(i32 %i.do)
+  store i32 %5, ptr %i.dn, align 1, !tbaa !48
   %i.dp = getelementptr inbounds nuw i8, ptr %i.dj, i64 12 ; 2 uses
-  %i.dq = load i32, ptr %i.dp, align 1            ; 4 uses
-  %42 = trunc i32 %i.dq to i8
-  %43 = getelementptr inbounds nuw i8, ptr %i.dj, i64 15
-  store i8 %42, ptr %43, align 1, !tbaa !48
-  %44 = lshr i32 %i.dq, 8
-  %45 = trunc i32 %44 to i8
-  %46 = getelementptr inbounds nuw i8, ptr %i.dj, i64 14
-  store i8 %45, ptr %46, align 1, !tbaa !48
-  %47 = lshr i32 %i.dq, 16
-  %48 = trunc i32 %47 to i8
-  %49 = getelementptr inbounds nuw i8, ptr %i.dj, i64 13
-  store i8 %48, ptr %49, align 1, !tbaa !48
-  %50 = lshr i32 %i.dq, 24
-  %51 = trunc nuw i32 %50 to i8
-  store i8 %51, ptr %i.dp, align 1, !tbaa !48
+  %i.dq = load i32, ptr %i.dp, align 1
+  %6 = call i32 @llvm.bswap.i32(i32 %i.dq)
+  store i32 %6, ptr %i.dp, align 1, !tbaa !48
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dj, i64 16 ; 2 uses
-  %i.ds = load i32, ptr %i.dr, align 1            ; 4 uses
-  %52 = trunc i32 %i.ds to i8
-  %53 = getelementptr inbounds nuw i8, ptr %i.dj, i64 19
-  store i8 %52, ptr %53, align 1, !tbaa !48
-  %54 = lshr i32 %i.ds, 8
-  %55 = trunc i32 %54 to i8
-  %56 = getelementptr inbounds nuw i8, ptr %i.dj, i64 18
-  store i8 %55, ptr %56, align 1, !tbaa !48
-  %57 = lshr i32 %i.ds, 16
-  %58 = trunc i32 %57 to i8
-  %59 = getelementptr inbounds nuw i8, ptr %i.dj, i64 17
-  store i8 %58, ptr %59, align 1, !tbaa !48
-  %60 = lshr i32 %i.ds, 24
-  %61 = trunc nuw i32 %60 to i8
-  store i8 %61, ptr %i.dr, align 1, !tbaa !48
+  %i.ds = load i32, ptr %i.dr, align 1
+  %7 = call i32 @llvm.bswap.i32(i32 %i.ds)
+  store i32 %7, ptr %i.dr, align 1, !tbaa !48
   %i.dt = getelementptr inbounds nuw i8, ptr %i.dj, i64 20 ; 2 uses
-  %i.du = load i32, ptr %i.dt, align 1            ; 4 uses
-  %62 = trunc i32 %i.du to i8
-  %63 = getelementptr inbounds nuw i8, ptr %i.dj, i64 23
-  store i8 %62, ptr %63, align 1, !tbaa !48
-  %64 = lshr i32 %i.du, 8
-  %65 = trunc i32 %64 to i8
-  %66 = getelementptr inbounds nuw i8, ptr %i.dj, i64 22
-  store i8 %65, ptr %66, align 1, !tbaa !48
-  %67 = lshr i32 %i.du, 16
-  %68 = trunc i32 %67 to i8
-  %69 = getelementptr inbounds nuw i8, ptr %i.dj, i64 21
-  store i8 %68, ptr %69, align 1, !tbaa !48
-  %70 = lshr i32 %i.du, 24
-  %71 = trunc nuw i32 %70 to i8
-  store i8 %71, ptr %i.dt, align 1, !tbaa !48
+  %i.du = load i32, ptr %i.dt, align 1
+  %8 = call i32 @llvm.bswap.i32(i32 %i.du)
+  store i32 %8, ptr %i.dt, align 1, !tbaa !48
   %i.dv = getelementptr inbounds nuw i8, ptr %i.dj, i64 24 ; 2 uses
-  %i.dw = load i32, ptr %i.dv, align 1            ; 4 uses
-  %72 = trunc i32 %i.dw to i8
-  %73 = getelementptr inbounds nuw i8, ptr %i.dj, i64 27
-  store i8 %72, ptr %73, align 1, !tbaa !48
-  %74 = lshr i32 %i.dw, 8
-  %75 = trunc i32 %74 to i8
-  %76 = getelementptr inbounds nuw i8, ptr %i.dj, i64 26
-  store i8 %75, ptr %76, align 1, !tbaa !48
-  %77 = lshr i32 %i.dw, 16
-  %78 = trunc i32 %77 to i8
-  %79 = getelementptr inbounds nuw i8, ptr %i.dj, i64 25
-  store i8 %78, ptr %79, align 1, !tbaa !48
-  %80 = lshr i32 %i.dw, 24
-  %81 = trunc nuw i32 %80 to i8
-  store i8 %81, ptr %i.dv, align 1, !tbaa !48
+  %i.dw = load i32, ptr %i.dv, align 1
+  %9 = call i32 @llvm.bswap.i32(i32 %i.dw)
+  store i32 %9, ptr %i.dv, align 1, !tbaa !48
   %i.dx = getelementptr inbounds nuw i8, ptr %i.dj, i64 28 ; 2 uses
-  %i.dy = load i32, ptr %i.dx, align 1            ; 4 uses
-  %82 = trunc i32 %i.dy to i8
-  %83 = getelementptr inbounds nuw i8, ptr %i.dj, i64 31
-  store i8 %82, ptr %83, align 1, !tbaa !48
-  %84 = lshr i32 %i.dy, 8
-  %85 = trunc i32 %84 to i8
-  %86 = getelementptr inbounds nuw i8, ptr %i.dj, i64 30
-  store i8 %85, ptr %86, align 1, !tbaa !48
-  %87 = lshr i32 %i.dy, 16
-  %88 = trunc i32 %87 to i8
-  %89 = getelementptr inbounds nuw i8, ptr %i.dj, i64 29
-  store i8 %88, ptr %89, align 1, !tbaa !48
-  %90 = lshr i32 %i.dy, 24
-  %91 = trunc nuw i32 %90 to i8
-  store i8 %91, ptr %i.dx, align 1, !tbaa !48
+  %i.dy = load i32, ptr %i.dx, align 1
+  %10 = call i32 @llvm.bswap.i32(i32 %i.dy)
+  store i32 %10, ptr %i.dx, align 1, !tbaa !48
   %i.dz = getelementptr inbounds nuw i8, ptr %i.dj, i64 32 ; 2 uses
-  %i.ea = load i32, ptr %i.dz, align 1            ; 4 uses
-  %92 = trunc i32 %i.ea to i8
-  %93 = getelementptr inbounds nuw i8, ptr %i.dj, i64 35
-  store i8 %92, ptr %93, align 1, !tbaa !48
-  %94 = lshr i32 %i.ea, 8
-  %95 = trunc i32 %94 to i8
-  %96 = getelementptr inbounds nuw i8, ptr %i.dj, i64 34
-  store i8 %95, ptr %96, align 1, !tbaa !48
-  %97 = lshr i32 %i.ea, 16
-  %98 = trunc i32 %97 to i8
-  %99 = getelementptr inbounds nuw i8, ptr %i.dj, i64 33
-  store i8 %98, ptr %99, align 1, !tbaa !48
-  %100 = lshr i32 %i.ea, 24
-  %101 = trunc nuw i32 %100 to i8
-  store i8 %101, ptr %i.dz, align 1, !tbaa !48
+  %i.ea = load i32, ptr %i.dz, align 1
+  %11 = call i32 @llvm.bswap.i32(i32 %i.ea)
+  store i32 %11, ptr %i.dz, align 1, !tbaa !48
   %i.eb = getelementptr inbounds nuw i8, ptr %i.dj, i64 36 ; 2 uses
-  %i.ec = load i32, ptr %i.eb, align 1            ; 4 uses
-  %102 = trunc i32 %i.ec to i8
-  %103 = getelementptr inbounds nuw i8, ptr %i.dj, i64 39
-  store i8 %102, ptr %103, align 1, !tbaa !48
-  %104 = lshr i32 %i.ec, 8
-  %105 = trunc i32 %104 to i8
-  %106 = getelementptr inbounds nuw i8, ptr %i.dj, i64 38
-  store i8 %105, ptr %106, align 1, !tbaa !48
-  %107 = lshr i32 %i.ec, 16
-  %108 = trunc i32 %107 to i8
-  %109 = getelementptr inbounds nuw i8, ptr %i.dj, i64 37
-  store i8 %108, ptr %109, align 1, !tbaa !48
-  %110 = lshr i32 %i.ec, 24
-  %111 = trunc nuw i32 %110 to i8
-  store i8 %111, ptr %i.eb, align 1, !tbaa !48
+  %i.ec = load i32, ptr %i.eb, align 1
+  %12 = call i32 @llvm.bswap.i32(i32 %i.ec)
+  store i32 %12, ptr %i.eb, align 1, !tbaa !48
   %i.ed = getelementptr inbounds nuw i8, ptr %i.dj, i64 40 ; 2 uses
-  %i.ee = load i32, ptr %i.ed, align 1            ; 4 uses
-  %112 = trunc i32 %i.ee to i8
-  %113 = getelementptr inbounds nuw i8, ptr %i.dj, i64 43
-  store i8 %112, ptr %113, align 1, !tbaa !48
-  %114 = lshr i32 %i.ee, 8
-  %115 = trunc i32 %114 to i8
-  %116 = getelementptr inbounds nuw i8, ptr %i.dj, i64 42
-  store i8 %115, ptr %116, align 1, !tbaa !48
-  %117 = lshr i32 %i.ee, 16
-  %118 = trunc i32 %117 to i8
-  %119 = getelementptr inbounds nuw i8, ptr %i.dj, i64 41
-  store i8 %118, ptr %119, align 1, !tbaa !48
-  %120 = lshr i32 %i.ee, 24
-  %121 = trunc nuw i32 %120 to i8
-  store i8 %121, ptr %i.ed, align 1, !tbaa !48
+  %i.ee = load i32, ptr %i.ed, align 1
+  %13 = call i32 @llvm.bswap.i32(i32 %i.ee)
+  store i32 %13, ptr %i.ed, align 1, !tbaa !48
   %i.ef = getelementptr inbounds nuw i8, ptr %i.dj, i64 44 ; 2 uses
-  %i.eg = load i32, ptr %i.ef, align 1            ; 4 uses
-  %122 = trunc i32 %i.eg to i8
-  %123 = getelementptr inbounds nuw i8, ptr %i.dj, i64 47
-  store i8 %122, ptr %123, align 1, !tbaa !48
-  %124 = lshr i32 %i.eg, 8
-  %125 = trunc i32 %124 to i8
-  %126 = getelementptr inbounds nuw i8, ptr %i.dj, i64 46
-  store i8 %125, ptr %126, align 1, !tbaa !48
-  %127 = lshr i32 %i.eg, 16
-  %128 = trunc i32 %127 to i8
-  %129 = getelementptr inbounds nuw i8, ptr %i.dj, i64 45
-  store i8 %128, ptr %129, align 1, !tbaa !48
-  %130 = lshr i32 %i.eg, 24
-  %131 = trunc nuw i32 %130 to i8
-  store i8 %131, ptr %i.ef, align 1, !tbaa !48
+  %i.eg = load i32, ptr %i.ef, align 1
+  %14 = call i32 @llvm.bswap.i32(i32 %i.eg)
+  store i32 %14, ptr %i.ef, align 1, !tbaa !48
   br label %_ZL9SwapBytesPcii.exit115
 
 _ZL9SwapBytesPcii.exit115:                        ; preds = %.preheader.preheader, %.preheader134
@@ -1228,6 +1071,9 @@ declare void @llvm.assume(i1 noundef) #39
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #2

@@ -205,14 +205,12 @@ define { i64, i64 } @_ZN6duckdb8BaseUUID8FromBlobEPKh(ptr nofree noundef readonl
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define void @_ZN6duckdb8BaseUUID6ToBlobENS_9hugeint_tEPh(i64 %0, i64 %1, ptr nofree noundef writeonly captures(none) initializes((0, 16)) %2) local_unnamed_addr #19 align 2 !guid !2638 {
 .preheader.preheader:
-  %3 = bitcast i64 %1 to <8 x i8>
-  %4 = xor <8 x i8> %3, <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 -128>
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %5, ptr %2, align 1, !tbaa !871
+  %3 = xor i64 %1, -9223372036854775808
+  %.inner = tail call i64 @llvm.bswap.i64(i64 %3)
+  store i64 %.inner, ptr %2, align 1, !tbaa !871
   %i.a = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %6 = bitcast i64 %0 to <8 x i8>
-  %7 = shufflevector <8 x i8> %6, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %7, ptr %i.a, align 1, !tbaa !871
+  %4 = tail call i64 @llvm.bswap.i64(i64 %0)
+  store i64 %4, ptr %i.a, align 1, !tbaa !871
   ret void
 }
 

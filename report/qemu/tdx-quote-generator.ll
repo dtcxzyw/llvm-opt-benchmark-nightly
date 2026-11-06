@@ -29,11 +29,11 @@ bb.a:
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 24 ; 4 uses
   %i.f = load ptr, ptr %i.e, align 8
   %i.g = add i64 %i.b, 28
-  %i.h = tail call ptr @g_realloc(ptr noundef %i.f, i64 noundef %i.g) #3 ; 3 uses
+  %i.h = tail call ptr @g_realloc(ptr noundef %i.f, i64 noundef %i.g) #4 ; 3 uses
   store ptr %i.h, ptr %i.e, align 8
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 28
   %i.j = load i64, ptr %i.a, align 8
-  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 %i.i, ptr noundef nonnull align 1 %i.h, i64 noundef %i.j, i1 noundef false) #3
+  tail call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 %i.i, ptr noundef nonnull align 1 %i.h, i64 noundef %i.j, i1 noundef false) #4
   %i.k = load ptr, ptr %i.e, align 8              ; 7 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 4
   store i16 1, ptr %i.l, align 1
@@ -49,37 +49,25 @@ bb.a:
   store i32 %i.c, ptr %.sroa.8.0..sroa_idx, align 1
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.k, i64 24
   store i32 0, ptr %.sroa.9.0..sroa_idx, align 1
-  %i.m = load ptr, ptr %i.e, align 8              ; 4 uses
+  %i.m = load ptr, ptr %i.e, align 8
   %i.n = load i64, ptr %i.a, align 8
   %i.o = trunc i64 %i.n to i32
-  %i.p = add i32 %i.o, 24                         ; 4 uses
-  %2 = lshr i32 %i.p, 24
-  %3 = trunc nuw i32 %2 to i8
-  store i8 %3, ptr %i.m, align 1
-  %4 = lshr i32 %i.p, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.m, i64 1
-  store i8 %5, ptr %6, align 1
-  %7 = lshr i32 %i.p, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.m, i64 2
-  store i8 %8, ptr %9, align 1
-  %10 = trunc i32 %i.p to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.m, i64 3
-  store i8 %10, ptr %11, align 1
+  %i.p = add i32 %i.o, 24
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.p)
+  store i32 %2, ptr %i.m, align 1
   %i.q = load i64, ptr %i.a, align 8
   %i.r = add i64 %i.q, 28
   store i64 %i.r, ptr %i.a, align 8
-  %i.s = tail call ptr @qio_channel_socket_new() #3 ; 2 uses
+  %i.s = tail call ptr @qio_channel_socket_new() #4 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 96
   store ptr %i.s, ptr %i.t, align 8
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
-  tail call void @timer_init_full(ptr noundef nonnull %i.u, ptr noundef null, i32 noundef 1, i32 noundef 1000000, i32 noundef 0, ptr noundef nonnull @getquote_expired, ptr noundef %0) #3
-  %i.v = tail call i64 @qemu_clock_get_ns(i32 noundef 1) #3
+  tail call void @timer_init_full(ptr noundef nonnull %i.u, ptr noundef null, i32 noundef 1, i32 noundef 1000000, i32 noundef 0, ptr noundef nonnull @getquote_expired, ptr noundef %0) #4
+  %i.v = tail call i64 @qemu_clock_get_ns(i32 noundef 1) #4
   %i.w = sdiv i64 %i.v, 1000000
   %i.x = add nsw i64 %i.w, 30000
-  tail call void @timer_mod(ptr noundef nonnull %i.u, i64 noundef %i.x) #3
-  tail call void @qio_channel_socket_connect_async(ptr noundef %i.s, ptr noundef %1, ptr noundef nonnull @tdx_quote_generator_connected, ptr noundef %0, ptr noundef null, ptr noundef null) #3
+  tail call void @timer_mod(ptr noundef nonnull %i.u, i64 noundef %i.x) #4
+  tail call void @qio_channel_socket_connect_async(ptr noundef %i.s, ptr noundef %1, ptr noundef nonnull @tdx_quote_generator_connected, ptr noundef %0, ptr noundef null, ptr noundef null) #4
   ret void
 }
 
@@ -99,18 +87,18 @@ declare void @qio_channel_socket_connect_async(ptr noundef, ptr noundef, ptr nou
 define internal void @tdx_quote_generator_connected(ptr noundef %0, ptr noundef %1) #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   store ptr null, ptr %i.a, align 8
-  %i.b = call zeroext i1 @qio_task_propagate_error(ptr noundef %0, ptr noundef nonnull %i.a) #3
+  %i.b = call zeroext i1 @qio_task_propagate_error(ptr noundef %0, ptr noundef nonnull %i.a) #4
   br i1 %i.b, label %bb.b, label %bb.d
 
 bb.b:                                             ; preds = %bb.a
   %i.c = load ptr, ptr %i.a, align 8
-  call void @error_report_err(ptr noundef %i.c) #3
+  call void @error_report_err(ptr noundef %i.c) #4
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 64
   store i64 -9223372036854775807, ptr %i.d, align 8
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 112
-  call void @timer_del(ptr noundef nonnull %i.e) #3
+  call void @timer_del(ptr noundef nonnull %i.e) #4
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
   %i.g = load i32, ptr %i.f, align 8              ; 2 uses
   %.not.i = icmp eq i32 %i.g, 0
@@ -118,32 +106,32 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   store i32 0, ptr %i.f, align 8
-  %i.h = call i32 @g_source_remove(i32 noundef %i.g) #3 ; 0 uses
+  %i.h = call i32 @g_source_remove(i32 noundef %i.g) #4 ; 0 uses
   br label %tdx_generate_quote_cleanup.exit
 
 tdx_generate_quote_cleanup.exit:                  ; preds = %bb.b, %bb.c
   %i.i = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
   %i.j = load ptr, ptr %i.i, align 8
-  %i.k = call ptr @object_dynamic_cast_assert(ptr noundef %i.j, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, i32 noundef 30, ptr noundef nonnull @__func__.QIO_CHANNEL) #3
-  %i.l = call i32 @qio_channel_close(ptr noundef %i.k, ptr noundef null) #3 ; 0 uses
+  %i.k = call ptr @object_dynamic_cast_assert(ptr noundef %i.j, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, i32 noundef 30, ptr noundef nonnull @__func__.QIO_CHANNEL) #4
+  %i.l = call i32 @qio_channel_close(ptr noundef %i.k, ptr noundef null) #4 ; 0 uses
   %i.m = load ptr, ptr %i.i, align 8
-  call void @object_unref(ptr noundef %i.m) #3
+  call void @object_unref(ptr noundef %i.m) #4
   %i.n = getelementptr inbounds nuw i8, ptr %1, i64 160
   %i.o = load ptr, ptr %i.n, align 8
-  call void %i.o(ptr noundef nonnull %1) #3, !inline_history !0
+  call void %i.o(ptr noundef nonnull %1) #4, !inline_history !0
   br label %bb.e
 
 bb.d:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 96
   %i.q = load ptr, ptr %i.p, align 8
-  %i.r = call ptr @object_dynamic_cast_assert(ptr noundef %i.q, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, i32 noundef 30, ptr noundef nonnull @__func__.QIO_CHANNEL) #3
-  %i.s = call i32 @qio_channel_add_watch(ptr noundef %i.r, i32 noundef 4, ptr noundef nonnull @tdx_send_report, ptr noundef %1, ptr noundef null) #3
+  %i.r = call ptr @object_dynamic_cast_assert(ptr noundef %i.q, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, i32 noundef 30, ptr noundef nonnull @__func__.QIO_CHANNEL) #4
+  %i.s = call i32 @qio_channel_add_watch(ptr noundef %i.r, i32 noundef 4, ptr noundef nonnull @tdx_send_report, ptr noundef %1, ptr noundef null) #4
   %i.t = getelementptr inbounds nuw i8, ptr %1, i64 104
   store i32 %i.s, ptr %i.t, align 8
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %tdx_generate_quote_cleanup.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   ret void
 }
 
@@ -153,7 +141,7 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64
   store i64 -9223372036854775808, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 112
-  tail call void @timer_del(ptr noundef nonnull %i.b) #3
+  tail call void @timer_del(ptr noundef nonnull %i.b) #4
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
   %i.d = load i32, ptr %i.c, align 8              ; 2 uses
   %.not.i = icmp eq i32 %i.d, 0
@@ -161,19 +149,19 @@ bb.a:
 
 bb.b:                                             ; preds = %bb.a
   store i32 0, ptr %i.c, align 8
-  %i.e = tail call i32 @g_source_remove(i32 noundef %i.d) #3 ; 0 uses
+  %i.e = tail call i32 @g_source_remove(i32 noundef %i.d) #4 ; 0 uses
   br label %tdx_generate_quote_cleanup.exit
 
 tdx_generate_quote_cleanup.exit:                  ; preds = %bb.a, %bb.b
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 2 uses
   %i.g = load ptr, ptr %i.f, align 8
-  %i.h = tail call ptr @object_dynamic_cast_assert(ptr noundef %i.g, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, i32 noundef 30, ptr noundef nonnull @__func__.QIO_CHANNEL) #3
-  %i.i = tail call i32 @qio_channel_close(ptr noundef %i.h, ptr noundef null) #3 ; 0 uses
+  %i.h = tail call ptr @object_dynamic_cast_assert(ptr noundef %i.g, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, i32 noundef 30, ptr noundef nonnull @__func__.QIO_CHANNEL) #4
+  %i.i = tail call i32 @qio_channel_close(ptr noundef %i.h, ptr noundef null) #4 ; 0 uses
   %i.j = load ptr, ptr %i.f, align 8
-  tail call void @object_unref(ptr noundef %i.j) #3
+  tail call void @object_unref(ptr noundef %i.j) #4
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.l = load ptr, ptr %i.k, align 8
-  tail call void %i.l(ptr noundef nonnull %0) #3, !inline_history !0
+  tail call void %i.l(ptr noundef nonnull %0) #4, !inline_history !0
   ret void
 }
 
@@ -203,7 +191,7 @@ declare i32 @qio_channel_add_watch(ptr noundef, i32 noundef, ptr noundef, ptr no
 define internal range(i32 0, 2) i32 @tdx_send_report(ptr noundef %0, i32 %1, ptr noundef %2) #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   store ptr null, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.c = load ptr, ptr %i.b, align 8
@@ -213,7 +201,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
   %i.h = load i64, ptr %i.g, align 8
   %i.i = sub i64 %i.h, %i.e
-  %i.j = call i64 @qio_channel_write(ptr noundef %0, ptr noundef %i.f, i64 noundef %i.i, ptr noundef nonnull %i.a) #3 ; 2 uses
+  %i.j = call i64 @qio_channel_write(ptr noundef %0, ptr noundef %i.f, i64 noundef %i.i, ptr noundef nonnull %i.a) #4 ; 2 uses
   %i.k = trunc i64 %i.j to i32                    ; 2 uses
   %i.l = icmp slt i32 %i.k, 0
   br i1 %i.l, label %bb.b, label %bb.e
@@ -224,11 +212,11 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.n = load ptr, ptr %i.a, align 8
-  call void @error_report_err(ptr noundef %i.n) #3
+  call void @error_report_err(ptr noundef %i.n) #4
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 64
   store i64 -9223372036854775808, ptr %i.o, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 112
-  call void @timer_del(ptr noundef nonnull %i.p) #3
+  call void @timer_del(ptr noundef nonnull %i.p) #4
   %i.q = getelementptr inbounds nuw i8, ptr %2, i64 104 ; 2 uses
   %i.r = load i32, ptr %i.q, align 8              ; 2 uses
   %.not.i = icmp eq i32 %i.r, 0
@@ -236,19 +224,19 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   store i32 0, ptr %i.q, align 8
-  %i.s = call i32 @g_source_remove(i32 noundef %i.r) #3 ; 0 uses
+  %i.s = call i32 @g_source_remove(i32 noundef %i.r) #4 ; 0 uses
   br label %tdx_generate_quote_cleanup.exit
 
 tdx_generate_quote_cleanup.exit:                  ; preds = %bb.c, %bb.d
   %i.t = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 2 uses
   %i.u = load ptr, ptr %i.t, align 8
-  %i.v = call ptr @object_dynamic_cast_assert(ptr noundef %i.u, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, i32 noundef 30, ptr noundef nonnull @__func__.QIO_CHANNEL) #3
-  %i.w = call i32 @qio_channel_close(ptr noundef %i.v, ptr noundef null) #3 ; 0 uses
+  %i.v = call ptr @object_dynamic_cast_assert(ptr noundef %i.u, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, i32 noundef 30, ptr noundef nonnull @__func__.QIO_CHANNEL) #4
+  %i.w = call i32 @qio_channel_close(ptr noundef %i.v, ptr noundef null) #4 ; 0 uses
   %i.x = load ptr, ptr %i.t, align 8
-  call void @object_unref(ptr noundef %i.x) #3
+  call void @object_unref(ptr noundef %i.x) #4
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 160
   %i.z = load ptr, ptr %i.y, align 8
-  call void %i.z(ptr noundef nonnull %2) #3, !inline_history !0
+  call void %i.z(ptr noundef nonnull %2) #4, !inline_history !0
   br label %bb.g
 
 bb.e:                                             ; preds = %bb.b, %bb.a
@@ -264,15 +252,15 @@ bb.e:                                             ; preds = %bb.b, %bb.a
 bb.f:                                             ; preds = %bb.e
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 96
   %i.ag = load ptr, ptr %i.af, align 8
-  %i.ah = call ptr @object_dynamic_cast_assert(ptr noundef %i.ag, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, i32 noundef 30, ptr noundef nonnull @__func__.QIO_CHANNEL) #3
-  %i.ai = call i32 @qio_channel_add_watch(ptr noundef %i.ah, i32 noundef 1, ptr noundef nonnull @tdx_get_quote_read, ptr noundef nonnull %2, ptr noundef null) #3
+  %i.ah = call ptr @object_dynamic_cast_assert(ptr noundef %i.ag, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, i32 noundef 30, ptr noundef nonnull @__func__.QIO_CHANNEL) #4
+  %i.ai = call i32 @qio_channel_add_watch(ptr noundef %i.ah, i32 noundef 1, ptr noundef nonnull @tdx_get_quote_read, ptr noundef nonnull %2, ptr noundef null) #4
   %i.aj = getelementptr inbounds nuw i8, ptr %2, i64 104
   store i32 %i.ai, ptr %i.aj, align 8
   br label %bb.g
 
 bb.g:                                             ; preds = %tdx_generate_quote_cleanup.exit, %bb.f, %bb.e
   %.017 = phi i32 [ 1, %bb.e ], [ 0, %bb.f ], [ 0, %tdx_generate_quote_cleanup.exit ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   ret i32 %.017
 }
 
@@ -282,7 +270,7 @@ declare i64 @qio_channel_write(ptr noundef, ptr noundef, i64 noundef, ptr nounde
 define internal range(i32 0, 2) i32 @tdx_get_quote_read(ptr noundef %0, i32 %1, ptr noundef %2) #0 {
 bb.a:
   %i.a = alloca ptr, align 8                      ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #3
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   store ptr null, ptr %i.a, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 4 uses
   %i.c = load ptr, ptr %i.b, align 8
@@ -292,7 +280,7 @@ bb.a:
   %i.g = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 5 uses
   %i.h = load i64, ptr %i.g, align 8
   %i.i = sub i64 %i.h, %i.e
-  %i.j = call i64 @qio_channel_read(ptr noundef %0, ptr noundef %i.f, i64 noundef %i.i, ptr noundef nonnull %i.a) #3 ; 2 uses
+  %i.j = call i64 @qio_channel_read(ptr noundef %0, ptr noundef %i.f, i64 noundef %i.i, ptr noundef nonnull %i.a) #4 ; 2 uses
   %i.k = trunc i64 %i.j to i32                    ; 3 uses
   %i.l = icmp slt i32 %i.k, 0
   br i1 %i.l, label %bb.b, label %bb.d
@@ -303,7 +291,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.n = load ptr, ptr %i.a, align 8
-  call void @error_report_err(ptr noundef %i.n) #3
+  call void @error_report_err(ptr noundef %i.n) #4
   br label %.thread104
 
 bb.d:                                             ; preds = %bb.a
@@ -311,7 +299,7 @@ bb.d:                                             ; preds = %bb.a
   br i1 %i.o, label %bb.e, label %bb.f
 
 bb.e:                                             ; preds = %bb.d
-  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.4) #3
+  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.4) #4
   br label %.thread104
 
 bb.f:                                             ; preds = %bb.d
@@ -357,14 +345,14 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %._crit_edge115, %bb.h
   %.pre-phi = phi i64 [ %.pre116, %._crit_edge115 ], [ %i.an, %bb.h ]
-  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.5, i32 noundef %i.ak, i64 noundef %.pre-phi) #3
+  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.5, i32 noundef %i.ak, i64 noundef %.pre-phi) #4
   br label %.thread104
 
 bb.j:                                             ; preds = %bb.h
   %i.ap = add i32 %i.ak, 4
   %i.aq = zext i32 %i.ap to i64                   ; 2 uses
   store i64 %i.aq, ptr %i.g, align 8
-  %i.ar = call ptr @g_realloc(ptr noundef nonnull %i.t, i64 noundef %i.aq) #3 ; 8 uses
+  %i.ar = call ptr @g_realloc(ptr noundef nonnull %i.t, i64 noundef %i.aq) #4 ; 8 uses
   store ptr %i.ar, ptr %i.b, align 8
   %.pr = load i64, ptr %i.d, align 8              ; 5 uses
   %i.as = icmp ugt i64 %.pr, 19
@@ -387,7 +375,7 @@ bb.k:                                             ; preds = %bb.j
 ._crit_edge:                                      ; preds = %bb.k
   %i.ax = zext i16 %i.au to i32
   %i.ay = zext i16 %i.aw to i32
-  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.6, i32 noundef %i.ax, i32 noundef %i.ay) #3
+  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.6, i32 noundef %i.ax, i32 noundef %i.ay) #4
   br label %.thread104
 
 bb.l:                                             ; preds = %bb.k
@@ -397,7 +385,7 @@ bb.l:                                             ; preds = %bb.k
   br i1 %.not96, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.7, i32 noundef %i.ba) #3
+  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.7, i32 noundef %i.ba) #4
   br label %.thread104
 
 bb.n:                                             ; preds = %bb.l
@@ -410,7 +398,7 @@ bb.n:                                             ; preds = %bb.l
   br i1 %i.bg, label %bb.o, label %bb.p
 
 bb.o:                                             ; preds = %bb.n
-  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.8, i32 noundef %i.bc, i64 noundef %i.be) #3
+  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.8, i32 noundef %i.bc, i64 noundef %i.be) #4
   br label %.thread104
 
 bb.p:                                             ; preds = %bb.n
@@ -420,7 +408,7 @@ bb.p:                                             ; preds = %bb.n
   br i1 %.not97, label %bb.r, label %bb.q
 
 bb.q:                                             ; preds = %bb.p
-  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.9, i32 noundef %i.bi) #3
+  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.9, i32 noundef %i.bi) #4
   br label %.thread104
 
 bb.r:                                             ; preds = %bb.p
@@ -434,7 +422,7 @@ bb.s:                                             ; preds = %bb.r
   br i1 %.not98, label %bb.u, label %bb.t
 
 bb.t:                                             ; preds = %bb.s
-  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.10, i32 noundef %i.bl) #3
+  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.10, i32 noundef %i.bl) #4
   br label %.thread104
 
 bb.u:                                             ; preds = %bb.s
@@ -447,7 +435,7 @@ bb.u:                                             ; preds = %bb.s
 
 bb.v:                                             ; preds = %bb.u
   %i.bq = add i64 %i.be, -24
-  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.11, i32 noundef %i.bo, i64 noundef %i.bq) #3
+  call void (ptr, ...) @error_report(ptr noundef nonnull @.str.11, i32 noundef %i.bo, i64 noundef %i.bq) #4
   br label %.thread104
 
 .thread108:                                       ; preds = %..thread108_crit_edge, %bb.f, %bb.u, %bb.r
@@ -460,7 +448,7 @@ bb.w:                                             ; preds = %.thread108
   %i.bu = load ptr, ptr %i.b, align 8             ; 2 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.bu, i64 28
   %i.bw = add i64 %i.br, -28
-  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 %i.bu, ptr noundef nonnull align 1 %i.bv, i64 noundef %i.bw, i1 noundef false) #3
+  call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 1 %i.bu, ptr noundef nonnull align 1 %i.bv, i64 noundef %i.bw, i1 noundef false) #4
   %i.bx = load i64, ptr %i.d, align 8
   %i.by = add i64 %i.bx, -28
   store i64 %i.by, ptr %i.d, align 8
@@ -471,7 +459,7 @@ bb.w:                                             ; preds = %.thread108
   %i.bz = getelementptr inbounds nuw i8, ptr %2, i64 64
   store i64 %.sink, ptr %i.bz, align 8
   %i.ca = getelementptr inbounds nuw i8, ptr %2, i64 112
-  call void @timer_del(ptr noundef nonnull %i.ca) #3
+  call void @timer_del(ptr noundef nonnull %i.ca) #4
   %i.cb = getelementptr inbounds nuw i8, ptr %2, i64 104 ; 2 uses
   %i.cc = load i32, ptr %i.cb, align 8            ; 2 uses
   %.not.i = icmp eq i32 %i.cc, 0
@@ -479,24 +467,24 @@ bb.w:                                             ; preds = %.thread108
 
 bb.x:                                             ; preds = %.thread104
   store i32 0, ptr %i.cb, align 8
-  %i.cd = call i32 @g_source_remove(i32 noundef %i.cc) #3 ; 0 uses
+  %i.cd = call i32 @g_source_remove(i32 noundef %i.cc) #4 ; 0 uses
   br label %tdx_generate_quote_cleanup.exit
 
 tdx_generate_quote_cleanup.exit:                  ; preds = %.thread104, %bb.x
   %i.ce = getelementptr inbounds nuw i8, ptr %2, i64 96 ; 2 uses
   %i.cf = load ptr, ptr %i.ce, align 8
-  %i.cg = call ptr @object_dynamic_cast_assert(ptr noundef %i.cf, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, i32 noundef 30, ptr noundef nonnull @__func__.QIO_CHANNEL) #3
-  %i.ch = call i32 @qio_channel_close(ptr noundef %i.cg, ptr noundef null) #3 ; 0 uses
+  %i.cg = call ptr @object_dynamic_cast_assert(ptr noundef %i.cf, ptr noundef nonnull @.str.2, ptr noundef nonnull @.str.3, i32 noundef 30, ptr noundef nonnull @__func__.QIO_CHANNEL) #4
+  %i.ch = call i32 @qio_channel_close(ptr noundef %i.cg, ptr noundef null) #4 ; 0 uses
   %i.ci = load ptr, ptr %i.ce, align 8
-  call void @object_unref(ptr noundef %i.ci) #3
+  call void @object_unref(ptr noundef %i.ci) #4
   %i.cj = getelementptr inbounds nuw i8, ptr %2, i64 160
   %i.ck = load ptr, ptr %i.cj, align 8
-  call void %i.ck(ptr noundef nonnull %2) #3, !inline_history !0
+  call void %i.ck(ptr noundef nonnull %2) #4, !inline_history !0
   br label %bb.y
 
 bb.y:                                             ; preds = %.thread108, %bb.b, %tdx_generate_quote_cleanup.exit
   %.0 = phi i32 [ 1, %bb.b ], [ 0, %tdx_generate_quote_cleanup.exit ], [ 1, %.thread108 ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #3
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   ret i32 %.0
 }
 
@@ -507,10 +495,14 @@ declare void @error_report(ptr noundef, ...) local_unnamed_addr #2
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #1
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #3
+
 attributes #0 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
-attributes #3 = { nounwind }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nounwind }
 
 !llvm.module.flags = !{!1, !2, !3, !4, !5, !6}
 !llvm.ident = !{!7}

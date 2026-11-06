@@ -202,14 +202,14 @@ bb.c:                                             ; preds = %bb.b
   store i8 %i.v, ptr %i.w, align 1, !tbaa !15
   %i.x = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %1 = load <8 x i8>, ptr %i.y, align 8, !tbaa !42
-  %2 = shufflevector <8 x i8> %1, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %2, ptr %i.x, align 8, !tbaa !15
+  %1 = load i64, ptr %i.y, align 8, !tbaa !42
+  %2 = tail call i64 @llvm.bswap.i64(i64 %1)
+  store i64 %2, ptr %i.x, align 8, !tbaa !15
   %i.z = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.aa = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %3 = load <8 x i8>, ptr %i.aa, align 8, !tbaa !43
-  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %4, ptr %i.z, align 16, !tbaa !15
+  %3 = load i64, ptr %i.aa, align 8, !tbaa !43
+  %4 = tail call i64 @llvm.bswap.i64(i64 %3)
+  store i64 %4, ptr %i.z, align 16, !tbaa !15
   switch i32 %.val18.i, label %padded_write.exit [
     i32 89, label %writer_write_header.exit
     i32 0, label %writer_write_header.exit
@@ -301,14 +301,14 @@ bb.h:                                             ; preds = %padded_write.exit, 
   store i8 %i.bo, ptr %i.bp, align 1, !tbaa !15
   %i.bq = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.br = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %5 = load <8 x i8>, ptr %i.br, align 8, !tbaa !42
-  %6 = shufflevector <8 x i8> %5, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %6, ptr %i.bq, align 8, !tbaa !15
+  %5 = load i64, ptr %i.br, align 8, !tbaa !42
+  %6 = call i64 @llvm.bswap.i64(i64 %5)
+  store i64 %6, ptr %i.bq, align 8, !tbaa !15
   %i.bs = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   %i.bt = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %7 = load <8 x i8>, ptr %i.bt, align 8, !tbaa !43
-  %8 = shufflevector <8 x i8> %7, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %8, ptr %i.bs, align 16, !tbaa !15
+  %7 = load i64, ptr %i.bt, align 8, !tbaa !43
+  %8 = call i64 @llvm.bswap.i64(i64 %7)
+  store i64 %8, ptr %i.bs, align 16, !tbaa !15
   switch i32 %.val18.i46, label %writer_write_header.exit52 [
     i32 89, label %bb.i
     i32 0, label %bb.i
@@ -334,9 +334,9 @@ writer_write_header.exit52:                       ; preds = %bb.h, %bb.i
   %i.cb = sext i32 %.1.i51 to i64
   %i.cc = getelementptr inbounds i8, ptr %i.a, i64 %i.cb ; 9 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %0, i64 368
-  %9 = load <8 x i8>, ptr %i.cd, align 8, !tbaa !90
-  %10 = shufflevector <8 x i8> %9, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %10, ptr %i.cc, align 1, !tbaa !15
+  %9 = load i64, ptr %i.cd, align 8, !tbaa !90
+  %10 = call i64 @llvm.bswap.i64(i64 %9)
+  store i64 %10, ptr %i.cc, align 1, !tbaa !15
   %i.ce = getelementptr inbounds nuw i8, ptr %i.cc, i64 8
   %i.cf = getelementptr inbounds nuw i8, ptr %0, i64 400
   %i.cg = load i64, ptr %i.cf, align 8, !tbaa !91
@@ -345,24 +345,23 @@ writer_write_header.exit52:                       ; preds = %bb.h, %bb.i
   %i.cj = load i32, ptr %i.ci, align 8, !tbaa !58
   %i.ck = sext i32 %i.cj to i64
   %i.cl = or i64 %i.ch, %i.ck
-  %11 = bitcast i64 %i.cl to <8 x i8>
-  %12 = shufflevector <8 x i8> %11, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %12, ptr %i.ce, align 1, !tbaa !15
+  %11 = call i64 @llvm.bswap.i64(i64 %i.cl)
+  store i64 %11, ptr %i.ce, align 1, !tbaa !15
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cc, i64 16
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 408
-  %13 = load <8 x i8>, ptr %i.cn, align 8, !tbaa !92
-  %14 = shufflevector <8 x i8> %13, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %14, ptr %i.cm, align 1, !tbaa !15
+  %12 = load i64, ptr %i.cn, align 8, !tbaa !92
+  %13 = call i64 @llvm.bswap.i64(i64 %12)
+  store i64 %13, ptr %i.cm, align 1, !tbaa !15
   %i.co = getelementptr inbounds nuw i8, ptr %i.cc, i64 24
   %i.cp = getelementptr inbounds nuw i8, ptr %0, i64 480
-  %15 = load <8 x i8>, ptr %i.cp, align 8, !tbaa !93
-  %16 = shufflevector <8 x i8> %15, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %16, ptr %i.co, align 1, !tbaa !15
+  %14 = load i64, ptr %i.cp, align 8, !tbaa !93
+  %15 = call i64 @llvm.bswap.i64(i64 %14)
+  store i64 %15, ptr %i.co, align 1, !tbaa !15
   %i.cq = getelementptr inbounds nuw i8, ptr %i.cc, i64 32
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 488
-  %17 = load <8 x i8>, ptr %i.cr, align 8, !tbaa !94
-  %18 = shufflevector <8 x i8> %17, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %18, ptr %i.cq, align 1, !tbaa !15
+  %16 = load i64, ptr %i.cr, align 8, !tbaa !94
+  %17 = call i64 @llvm.bswap.i64(i64 %16)
+  store i64 %17, ptr %i.cq, align 1, !tbaa !15
   %i.cs = getelementptr inbounds nuw i8, ptr %i.cc, i64 40
   %i.ct = add i32 %.1.i51, 40
   %i.cu = call i64 @crc32(i64 noundef 0, ptr noundef nonnull %i.a, i32 noundef %i.ct) #12 ; 4 uses
@@ -616,14 +615,14 @@ bb.a:
   store i8 %i.o, ptr %i.p, align 1, !tbaa !15
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 88
-  %2 = load <8 x i8>, ptr %i.r, align 8, !tbaa !42
-  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %3, ptr %i.q, align 1, !tbaa !15
+  %2 = load i64, ptr %i.r, align 8, !tbaa !42
+  %3 = tail call i64 @llvm.bswap.i64(i64 %2)
+  store i64 %3, ptr %i.q, align 1, !tbaa !15
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 96
-  %4 = load <8 x i8>, ptr %i.t, align 8, !tbaa !43
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %5, ptr %i.s, align 1, !tbaa !15
+  %4 = load i64, ptr %i.t, align 8, !tbaa !43
+  %5 = tail call i64 @llvm.bswap.i64(i64 %4)
+  store i64 %5, ptr %i.s, align 1, !tbaa !15
   %.val17 = load i32, ptr %i.a, align 4, !tbaa !37 ; 3 uses
   switch i32 %.val17, label %bb.c [
     i32 89, label %bb.b
@@ -1025,6 +1024,9 @@ declare i32 @llvm.smin.i32(i32, i32) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #11
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #11
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

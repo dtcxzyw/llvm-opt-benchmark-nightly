@@ -206,7 +206,7 @@ bb.f:                                             ; preds = %bb.c, %bb.d, %bb.e,
 define void @GHASH(ptr nofree noundef readonly captures(address_is_null) %0, ptr noundef %1, i32 noundef %2, ptr noundef %3, i32 noundef %4, ptr nofree noundef writeonly captures(none) %5, i32 noundef %6) local_unnamed_addr #7 {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 24 uses
-  %i.b = alloca [16 x i8], align 16               ; 27 uses
+  %i.b = alloca [16 x i8], align 16               ; 21 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.c = icmp eq ptr %0, null
@@ -609,7 +609,7 @@ GMULT.exit157:                                    ; preds = %bb.k
   %i.ss = phi i64 [ %i.pp, %._crit_edge262 ], [ %i.sn, %GMULT.exit157 ], [ %i.jf, %bb.g ]
   %i.st = phi i64 [ %i.pq, %._crit_edge262 ], [ %i.sr, %GMULT.exit157 ], [ %i.jg, %bb.g ]
   %i.su = lshr i32 %2, 29
-  %i.sv = shl i32 %2, 3                           ; 4 uses
+  %i.sv = shl i32 %2, 3
   store i8 0, ptr %i.b, align 16, !tbaa !21
   %.1..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 1
   store i8 0, ptr %.1..sroa_idx, align 1, !tbaa !21
@@ -618,23 +618,11 @@ GMULT.exit157:                                    ; preds = %bb.k
   %i.sw = trunc nuw nsw i32 %i.su to i8
   %.3..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 3
   store i8 %i.sw, ptr %.3..sroa_idx, align 1, !tbaa !21
-  %7 = lshr i32 %i.sv, 24
-  %8 = trunc nuw i32 %7 to i8
   %.4..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  store i8 %8, ptr %.4..sroa_idx, align 4, !tbaa !21
-  %9 = lshr i32 %i.sv, 16
-  %10 = trunc i32 %9 to i8
-  %.5..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 5
-  store i8 %10, ptr %.5..sroa_idx, align 1, !tbaa !21
-  %11 = lshr i32 %i.sv, 8
-  %12 = trunc i32 %11 to i8
-  %.6..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 6
-  store i8 %12, ptr %.6..sroa_idx, align 2, !tbaa !21
-  %13 = trunc i32 %i.sv to i8
-  %.7..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 7
-  store i8 %13, ptr %.7..sroa_idx, align 1, !tbaa !21
+  %7 = tail call i32 @llvm.bswap.i32(i32 %i.sv)
+  store i32 %7, ptr %.4..sroa_idx, align 4, !tbaa !21
   %i.sx = lshr i32 %4, 29
-  %i.sy = shl i32 %4, 3                           ; 4 uses
+  %i.sy = shl i32 %4, 3
   %.8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   store i8 0, ptr %.8..sroa_idx, align 8, !tbaa !21
   %.9..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 9
@@ -644,21 +632,9 @@ GMULT.exit157:                                    ; preds = %bb.k
   %i.sz = trunc nuw nsw i32 %i.sx to i8
   %.11..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 11
   store i8 %i.sz, ptr %.11..sroa_idx, align 1, !tbaa !21
-  %14 = lshr i32 %i.sy, 24
-  %15 = trunc nuw i32 %14 to i8
   %.12..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 12
-  store i8 %15, ptr %.12..sroa_idx, align 4, !tbaa !21
-  %16 = lshr i32 %i.sy, 16
-  %17 = trunc i32 %16 to i8
-  %.13..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 13
-  store i8 %17, ptr %.13..sroa_idx, align 1, !tbaa !21
-  %18 = lshr i32 %i.sy, 8
-  %19 = trunc i32 %18 to i8
-  %.14..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 14
-  store i8 %19, ptr %.14..sroa_idx, align 2, !tbaa !21
-  %20 = trunc i32 %i.sy to i8
-  %.15..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 15
-  store i8 %20, ptr %.15..sroa_idx, align 1, !tbaa !21
+  %8 = tail call i32 @llvm.bswap.i32(i32 %i.sy)
+  store i32 %8, ptr %.12..sroa_idx, align 4, !tbaa !21
   %.0.280 = load i64, ptr %i.b, align 16, !tbaa !20
   %i.ta = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
   %i.tb = xor i64 %i.st, %.0.280                  ; 3 uses

@@ -204,9 +204,8 @@ bb.a:
   store i8 %i.g, ptr %i.f, align 1, !tbaa !46
   %i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 9
   store i32 0, ptr %i.h, align 1
-  %3 = bitcast i64 %2 to <8 x i8>
-  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %4, ptr %i.i, align 1, !tbaa !46
+  %3 = tail call i64 @llvm.bswap.i64(i64 %2)
+  store i64 %3, ptr %i.i, align 1, !tbaa !46
   ret void
 }
 

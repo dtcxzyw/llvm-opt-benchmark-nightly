@@ -205,7 +205,7 @@ bb.a:
   %i.b = alloca [64 x i8], align 16               ; 7 uses
   %8 = alloca %struct.hmac_ctx_st, align 8        ; 16 uses
   %i.c = alloca [64 x i8], align 16               ; 10 uses
-  %i.d = alloca [4 x i8], align 1                 ; 8 uses
+  %i.d = alloca [4 x i8], align 4                 ; 5 uses
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 4
   %i.f = load i32, ptr %i.e, align 4, !tbaa !207  ; 2 uses
   %i.g = zext i32 %i.f to i64                     ; 2 uses
@@ -221,9 +221,6 @@ bb.a:
   br i1 %.not53112, label %._crit_edge117, label %.lr.ph116
 
 .lr.ph116:                                        ; preds = %.preheader
-  %9 = getelementptr inbounds nuw i8, ptr %i.d, i64 1
-  %10 = getelementptr inbounds nuw i8, ptr %i.d, i64 2
-  %11 = getelementptr inbounds nuw i8, ptr %i.d, i64 3
   %i.i = getelementptr inbounds nuw i8, ptr %8, i64 1216 ; 10 uses
   %i.j = getelementptr inbounds nuw i8, ptr %8, i64 8 ; 7 uses
   %i.k = getelementptr inbounds nuw i8, ptr %8, i64 16 ; 13 uses
@@ -234,22 +231,13 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph116, %._crit_edge111
-  %.044115 = phi i32 [ 1, %.lr.ph116 ], [ %i.cg, %._crit_edge111 ] ; 5 uses
+  %.044115 = phi i32 [ 1, %.lr.ph116 ], [ %i.cg, %._crit_edge111 ] ; 2 uses
   %.047114 = phi ptr [ %7, %.lr.ph116 ], [ %i.cf, %._crit_edge111 ] ; 5 uses
   %.049113 = phi i64 [ %6, %.lr.ph116 ], [ %i.ce, %._crit_edge111 ] ; 2 uses
   %spec.select = call i64 @llvm.umin.i64(i64 %.049113, i64 %i.g) ; 8 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #46
-  %12 = lshr i32 %.044115, 24
-  %13 = trunc nuw i32 %12 to i8
-  store i8 %13, ptr %i.d, align 1, !tbaa !76
-  %14 = lshr i32 %.044115, 16
-  %15 = trunc i32 %14 to i8
-  store i8 %15, ptr %9, align 1, !tbaa !76
-  %16 = lshr i32 %.044115, 8
-  %17 = trunc i32 %16 to i8
-  store i8 %17, ptr %10, align 1, !tbaa !76
-  %18 = trunc i32 %.044115 to i8
-  store i8 %18, ptr %11, align 1, !tbaa !76
+  %9 = call i32 @llvm.bswap.i32(i32 %.044115)
+  store i32 %9, ptr %i.d, align 4, !tbaa !76
   %i.o = call i32 @HMAC_Init_ex(ptr noundef nonnull %8, ptr noundef null, i64 noundef 0, ptr noundef null, ptr poison)
   %.not54 = icmp eq i32 %i.o, 0
   br i1 %.not54, label %.thread101, label %bb.c
@@ -652,7 +640,7 @@ OPENSSL_memcpy.exit:                              ; preds = %bb.f, %bb.e, %bb.d,
 define range(i32 0, 2) i32 @PKCS1_MGF1(ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3, ptr noundef %4) local_unnamed_addr #0 {
 bb.a:
   %5 = alloca %struct.env_md_ctx_st, align 8      ; 18 uses
-  %i.a = alloca [4 x i8], align 1                 ; 8 uses
+  %i.a = alloca [4 x i8], align 4                 ; 5 uses
   %i.b = alloca [64 x i8], align 16               ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #46
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %5, i8 0, i64 48, i1 false)
@@ -663,29 +651,17 @@ bb.a:
   br i1 %.not71, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
   %i.f = getelementptr inbounds nuw i8, ptr %5, i64 16 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.l
-  %.02474 = phi i32 [ 0, %.lr.ph ], [ %i.am, %bb.l ] ; 5 uses
+  %.02474 = phi i32 [ 0, %.lr.ph ], [ %i.am, %bb.l ] ; 2 uses
   %.02773 = phi ptr [ %0, %.lr.ph ], [ %i.ak, %bb.l ] ; 3 uses
   %.03072 = phi i64 [ %1, %.lr.ph ], [ %i.al, %bb.l ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #46
-  %9 = lshr i32 %.02474, 24
-  %10 = trunc nuw i32 %9 to i8
-  store i8 %10, ptr %i.a, align 1, !tbaa !76
-  %11 = lshr i32 %.02474, 16
-  %12 = trunc i32 %11 to i8
-  store i8 %12, ptr %6, align 1, !tbaa !76
-  %13 = lshr i32 %.02474, 8
-  %14 = trunc i32 %13 to i8
-  store i8 %14, ptr %7, align 1, !tbaa !76
-  %15 = trunc i32 %.02474 to i8
-  store i8 %15, ptr %8, align 1, !tbaa !76
+  %6 = call i32 @llvm.bswap.i32(i32 %.02474)
+  store i32 %6, ptr %i.a, align 4, !tbaa !76
   %i.h = call i32 @EVP_DigestInit_ex(ptr noundef nonnull %5, ptr noundef %4, ptr poison)
   %.not34 = icmp eq i32 %i.h, 0
   br i1 %.not34, label %.loopexit.sink.split, label %bb.c

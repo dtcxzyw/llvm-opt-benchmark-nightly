@@ -205,9 +205,8 @@ bb.y:                                             ; preds = %bb.x
   %i.ay = add nsw i64 %2, -8                      ; 2 uses
   tail call void @llvm.memset.p0.i64(ptr align 1 %1, i8 %i.av, i64 %i.ay, i1 false), !tbaa !182
   %scevgep = getelementptr i8, ptr %1, i64 %i.ay
-  %4 = bitcast i64 %i.z to <8 x i8>
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %5, ptr %scevgep, align 1, !tbaa !182
+  %4 = tail call i64 @llvm.bswap.i64(i64 %i.z)
+  store i64 %4, ptr %scevgep, align 1, !tbaa !182
   br label %_fits_in_n_bits.exit.thread
 
 bb.z:                                             ; preds = %._crit_edge172
@@ -608,6 +607,9 @@ declare i64 @llvm.umax.i64(i64, i64) #2
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.ctlz.i32(i32, i1 immarg) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare { i64, i1 } @llvm.umul.with.overflow.i64(i64, i64) #2

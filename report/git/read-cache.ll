@@ -205,7 +205,7 @@ bb.a:
   %i.ad = alloca i32, align 4                     ; 4 uses
   %i.ae = alloca i32, align 4                     ; 4 uses
   %i.af = alloca i32, align 4                     ; 4 uses
-  %i.ag = alloca i32, align 4                     ; 11 uses
+  %i.ag = alloca i32, align 4                     ; 8 uses
   %i.ah = alloca i32, align 4                     ; 7 uses
   %i.ai = alloca [16 x i8], align 16              ; 4 uses
   %4 = alloca %struct.stat, align 8               ; 5 uses
@@ -608,9 +608,6 @@ bb.bg:                                            ; preds = %bb.bf
 
 strbuf_setlen.exit:                               ; preds = %bb.be, %bb.bf
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ag) #28
-  %10 = getelementptr inbounds nuw i8, ptr %i.ag, i64 1 ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %i.ag, i64 2 ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %i.ag, i64 3 ; 2 uses
   store <4 x i8> <i8 0, i8 0, i8 0, i8 1>, ptr %i.ag, align 4, !tbaa !45
   call void @strbuf_add(ptr noundef nonnull %9, ptr noundef nonnull %i.ag, i64 noundef 4) #28
   %i.kz = load i32, ptr %.1176, align 4, !tbaa !40
@@ -624,32 +621,14 @@ strbuf_setlen.exit:                               ; preds = %bb.be, %bb.bf
 bb.bh:                                            ; preds = %bb.bh, %.lr.ph.i259
   %indvars.iv.i260 = phi i64 [ 0, %.lr.ph.i259 ], [ %indvars.iv.next.i261, %bb.bh ] ; 2 uses
   %i.lc = getelementptr inbounds nuw [8 x i8], ptr %i.lb, i64 %indvars.iv.i260 ; 2 uses
-  %i.ld = load i32, ptr %i.lc, align 4, !tbaa !105 ; 4 uses
-  %13 = lshr i32 %i.ld, 24
-  %14 = trunc nuw i32 %13 to i8
-  store i8 %14, ptr %i.ag, align 4, !tbaa !45
-  %15 = lshr i32 %i.ld, 16
-  %16 = trunc i32 %15 to i8
-  store i8 %16, ptr %10, align 1, !tbaa !45
-  %17 = lshr i32 %i.ld, 8
-  %18 = trunc i32 %17 to i8
-  store i8 %18, ptr %11, align 2, !tbaa !45
-  %19 = trunc i32 %i.ld to i8
-  store i8 %19, ptr %12, align 1, !tbaa !45
+  %i.ld = load i32, ptr %i.lc, align 4, !tbaa !105
+  %10 = call i32 @llvm.bswap.i32(i32 %i.ld)
+  store i32 %10, ptr %i.ag, align 4, !tbaa !45
   call void @strbuf_add(ptr noundef nonnull %9, ptr noundef nonnull %i.ag, i64 noundef 4) #28
   %i.le = getelementptr inbounds nuw i8, ptr %i.lc, i64 4
-  %i.lf = load i32, ptr %i.le, align 4, !tbaa !106 ; 4 uses
-  %20 = lshr i32 %i.lf, 24
-  %21 = trunc nuw i32 %20 to i8
-  store i8 %21, ptr %i.ag, align 4, !tbaa !45
-  %22 = lshr i32 %i.lf, 16
-  %23 = trunc i32 %22 to i8
-  store i8 %23, ptr %10, align 1, !tbaa !45
-  %24 = lshr i32 %i.lf, 8
-  %25 = trunc i32 %24 to i8
-  store i8 %25, ptr %11, align 2, !tbaa !45
-  %26 = trunc i32 %i.lf to i8
-  store i8 %26, ptr %12, align 1, !tbaa !45
+  %i.lf = load i32, ptr %i.le, align 4, !tbaa !106
+  %11 = call i32 @llvm.bswap.i32(i32 %i.lf)
+  store i32 %11, ptr %i.ag, align 4, !tbaa !45
   call void @strbuf_add(ptr noundef nonnull %9, ptr noundef nonnull %i.ag, i64 noundef 4) #28
   %indvars.iv.next.i261 = add nuw nsw i64 %indvars.iv.i260, 1 ; 2 uses
   %i.lg = load i32, ptr %.1176, align 4, !tbaa !40

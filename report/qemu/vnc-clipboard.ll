@@ -28,7 +28,7 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 103256
-  %i.d = tail call ptr @qemu_clipboard_info_new(ptr noundef nonnull %i.c, i32 noundef 0) #5 ; 3 uses
+  %i.d = tail call ptr @qemu_clipboard_info_new(ptr noundef nonnull %i.c, i32 noundef 0) #6 ; 3 uses
   %i.e = and i32 %2, 1
   %.not52 = icmp eq i32 %i.e, 0
   br i1 %.not52, label %bb.e, label %bb.d
@@ -39,8 +39,8 @@ bb.d:                                             ; preds = %bb.c
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  tail call void @qemu_clipboard_update(ptr noundef %i.d) #5
-  tail call void @qemu_clipboard_info_unref(ptr noundef %i.d) #5
+  tail call void @qemu_clipboard_update(ptr noundef %i.d) #6
+  tail call void @qemu_clipboard_info_unref(ptr noundef %i.d) #6
   br label %bb.x
 
 bb.f:                                             ; preds = %bb.b
@@ -63,18 +63,18 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h
   %i.n = add i32 %1, -4
-  call void @llvm.lifetime.start.p0(ptr nonnull %4) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %4) #6
   %i.o = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %i.o, i8 0, i64 104, i1 false)
   store ptr %3, ptr %4, align 8
   store i32 %i.n, ptr %i.o, align 8
-  %i.p = tail call noalias dereferenceable_or_null(8) ptr @g_malloc(i64 noundef 8) #6 ; 4 uses
+  %i.p = tail call noalias dereferenceable_or_null(8) ptr @g_malloc(i64 noundef 8) #7 ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %4, i64 40 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %4, i64 24 ; 2 uses
   store ptr %i.p, ptr %i.r, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %4, i64 32 ; 2 uses
   store i32 8, ptr %i.s, align 8
-  %i.t = call i32 @inflateInit_(ptr noundef nonnull %4, ptr noundef nonnull @.str.2, i32 noundef 112) #5
+  %i.t = call i32 @inflateInit_(ptr noundef nonnull %4, ptr noundef nonnull @.str.2, i32 noundef 112) #6
   %.not.i = icmp eq i32 %i.t, 0
   br i1 %.not.i, label %.preheader.i, label %inflate_buffer.exit.thread
 
@@ -86,7 +86,7 @@ bb.i:                                             ; preds = %bb.h
 .lr.ph.i:                                         ; preds = %.preheader.i, %bb.l
   %.027.i = phi ptr [ %.1.i, %bb.l ], [ %i.p, %.preheader.i ] ; 4 uses
   %.01826.i = phi i32 [ %.119.i, %bb.l ], [ 8, %.preheader.i ] ; 2 uses
-  %i.v = call i32 @inflate(ptr noundef nonnull %4, i32 noundef 4) #5
+  %i.v = call i32 @inflate(ptr noundef nonnull %4, i32 noundef 4) #6
   switch i32 %i.v, label %bb.m [
     i32 0, label %bb.l
     i32 1, label %inflate_buffer.exit
@@ -100,7 +100,7 @@ bb.j:                                             ; preds = %.lr.ph.i
 
 bb.k:                                             ; preds = %bb.j
   %i.y = zext nneg i32 %i.w to i64
-  %i.z = call ptr @g_realloc(ptr noundef %.027.i, i64 noundef %i.y) #5 ; 2 uses
+  %i.z = call ptr @g_realloc(ptr noundef %.027.i, i64 noundef %i.y) #6 ; 2 uses
   %i.aa = load i64, ptr %i.q, align 8             ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.z, i64 %i.aa
   store ptr %i.ab, ptr %i.r, align 8
@@ -117,21 +117,21 @@ bb.l:                                             ; preds = %bb.k, %.lr.ph.i
   br i1 %.not22.i, label %inflate_buffer.exit, label %.lr.ph.i, !llvm.loop !11
 
 bb.m:                                             ; preds = %bb.j, %.lr.ph.i
-  %i.af = call i32 @inflateEnd(ptr noundef nonnull %4) #5 ; 0 uses
+  %i.af = call i32 @inflateEnd(ptr noundef nonnull %4) #6 ; 0 uses
   br label %inflate_buffer.exit.thread
 
 inflate_buffer.exit.thread:                       ; preds = %bb.i, %bb.m
   %.2.i = phi ptr [ %i.p, %bb.i ], [ %.027.i, %bb.m ]
-  call void @g_free(ptr noundef %.2.i) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
+  call void @g_free(ptr noundef %.2.i) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #6
   br label %bb.p
 
 inflate_buffer.exit:                              ; preds = %bb.l, %.lr.ph.i, %.preheader.i
   %.020.i = phi ptr [ %i.p, %.preheader.i ], [ %.027.i, %.lr.ph.i ], [ %.1.i, %bb.l ] ; 6 uses
   %i.ag = load i64, ptr %i.q, align 8
-  %i.ah = call i32 @inflateEnd(ptr noundef nonnull %4) #5 ; 0 uses
+  %i.ah = call i32 @inflateEnd(ptr noundef nonnull %4) #6 ; 0 uses
   %.0 = trunc i64 %i.ag to i32                    ; 2 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #6
   %i.ai = trunc i32 %2 to i1
   %i.aj = icmp ne ptr %.020.i, null
   %or.cond = select i1 %i.ai, i1 %i.aj, i1 false
@@ -140,26 +140,26 @@ inflate_buffer.exit:                              ; preds = %bb.l, %.lr.ph.i, %.
   br i1 %or.cond3, label %bb.n, label %bb.p
 
 bb.n:                                             ; preds = %inflate_buffer.exit
-  %i.al = call i32 @read_u32(ptr noundef nonnull %.020.i, i64 noundef 0) #5 ; 3 uses
+  %i.al = call i32 @read_u32(ptr noundef nonnull %.020.i, i64 noundef 0) #6 ; 3 uses
   %i.am = add i32 %.0, -4                         ; 2 uses
   %.not46.not = icmp ugt i32 %i.al, %i.am
   br i1 %.not46.not, label %.thread, label %bb.o
 
 .thread:                                          ; preds = %bb.n
-  call void (ptr, ...) @error_report(ptr noundef nonnull @.str, i32 noundef %i.al, i32 noundef %i.am) #5
-  call void @vnc_client_error(ptr noundef %0) #5
+  call void (ptr, ...) @error_report(ptr noundef nonnull @.str, i32 noundef %i.al, i32 noundef %i.am) #6
+  call void @vnc_client_error(ptr noundef %0) #6
   br label %bb.p
 
 bb.o:                                             ; preds = %bb.n
   %i.an = getelementptr inbounds nuw i8, ptr %.020.i, i64 4
   %i.ao = load ptr, ptr %i.h, align 8
-  call void @qemu_clipboard_set_data(ptr noundef nonnull %i.l, ptr noundef %i.ao, i32 noundef 0, i32 noundef %i.al, ptr noundef nonnull %i.an, i1 noundef zeroext true) #5
+  call void @qemu_clipboard_set_data(ptr noundef nonnull %i.l, ptr noundef %i.ao, i32 noundef 0, i32 noundef %i.al, ptr noundef nonnull %i.an, i1 noundef zeroext true) #6
   br label %bb.p
 
 bb.p:                                             ; preds = %inflate_buffer.exit, %inflate_buffer.exit.thread, %bb.o, %.thread
   %.020.i62 = phi ptr [ %.020.i, %.thread ], [ null, %inflate_buffer.exit.thread ], [ %.020.i, %bb.o ], [ %.020.i, %inflate_buffer.exit ]
   %.1 = phi i1 [ true, %.thread ], [ false, %inflate_buffer.exit.thread ], [ false, %bb.o ], [ false, %inflate_buffer.exit ]
-  call void @g_free(ptr noundef %.020.i62) #5
+  call void @g_free(ptr noundef %.020.i62) #6
   %i.ap = and i32 %2, 33554432
   %.not47 = icmp eq i32 %i.ap, 0
   %or.cond53 = or i1 %.not47, %.1
@@ -207,7 +207,7 @@ bb.w:                                             ; preds = %bb.u
   %i.bc = load i32, ptr %i.bb, align 8
   %i.bd = or i32 %i.bc, 1
   store i32 %i.bd, ptr %i.bb, align 8
-  call void @qemu_clipboard_request(ptr noundef nonnull %i.ar, i32 noundef 0) #5
+  call void @qemu_clipboard_request(ptr noundef nonnull %i.ar, i32 noundef 0) #6
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.p, %bb.t, %bb.w, %bb.v, %bb.a, %bb.s, %bb.r, %bb.q, %bb.e
@@ -242,47 +242,35 @@ bb.a:
   %i.b = load i32, ptr %i.a, align 4
   %i.c = add i32 %i.b, 4
   %i.d = zext i32 %i.c to i64
-  %i.e = tail call noalias ptr @g_malloc(i64 noundef %i.d) #6 ; 7 uses
-  %i.f = load i32, ptr %i.a, align 4              ; 6 uses
-  %3 = lshr i32 %i.f, 24
-  %4 = trunc nuw i32 %3 to i8
-  store i8 %4, ptr %i.e, align 1
-  %5 = lshr i32 %i.f, 16
-  %6 = trunc i32 %5 to i8
-  %7 = getelementptr inbounds nuw i8, ptr %i.e, i64 1
-  store i8 %6, ptr %7, align 1
-  %8 = lshr i32 %i.f, 8
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %i.e, i64 2
-  store i8 %9, ptr %10, align 1
-  %11 = trunc i32 %i.f to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.e, i64 3
-  store i8 %11, ptr %12, align 1
+  %i.e = tail call noalias ptr @g_malloc(i64 noundef %i.d) #7 ; 4 uses
+  %i.f = load i32, ptr %i.a, align 4              ; 3 uses
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.f)
+  store i32 %3, ptr %i.e, align 1
   %i.g = getelementptr inbounds nuw i8, ptr %i.e, i64 4
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.i = load ptr, ptr %i.h, align 8
   %i.j = zext i32 %i.f to i64
-  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.g, ptr noundef nonnull align 1 %i.i, i64 noundef range(i64 0, 4294967296) %i.j, i1 noundef false) #5
+  tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 %i.g, ptr noundef nonnull align 1 %i.i, i64 noundef range(i64 0, 4294967296) %i.j, i1 noundef false) #6
   %i.k = add i32 %i.f, 4
-  call void @llvm.lifetime.start.p0(ptr nonnull %2) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %2) #6
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(104) %i.l, i8 0, i64 104, i1 false)
   store ptr %i.e, ptr %2, align 8
   store i32 %i.k, ptr %i.l, align 8
-  %i.m = tail call noalias dereferenceable_or_null(8) ptr @g_malloc(i64 noundef 8) #6 ; 3 uses
+  %i.m = tail call noalias dereferenceable_or_null(8) ptr @g_malloc(i64 noundef 8) #7 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 24 ; 2 uses
   store ptr %i.m, ptr %i.o, align 8
   %i.p = getelementptr inbounds nuw i8, ptr %2, i64 32 ; 2 uses
   store i32 8, ptr %i.p, align 8
-  %i.q = call i32 @deflateInit_(ptr noundef nonnull %2, i32 noundef -1, ptr noundef nonnull @.str.2, i32 noundef 112) #5
+  %i.q = call i32 @deflateInit_(ptr noundef nonnull %2, i32 noundef -1, ptr noundef nonnull @.str.2, i32 noundef 112) #6
   %.not.i = icmp eq i32 %i.q, 0
   br i1 %.not.i, label %.preheader.i, label %deflate_buffer.exit.thread
 
 .preheader.i:                                     ; preds = %bb.a, %bb.d
   %.01726.i = phi ptr [ %.1.i, %bb.d ], [ %i.m, %bb.a ] ; 4 uses
   %.01825.i = phi i32 [ %.119.i, %bb.d ], [ 8, %bb.a ] ; 3 uses
-  %i.r = call i32 @deflate(ptr noundef nonnull %2, i32 noundef 4) #5 ; 2 uses
+  %i.r = call i32 @deflate(ptr noundef nonnull %2, i32 noundef 4) #6 ; 2 uses
   switch i32 %i.r, label %bb.e [
     i32 0, label %bb.d
     i32 1, label %bb.d
@@ -296,7 +284,7 @@ bb.b:                                             ; preds = %.preheader.i
 
 bb.c:                                             ; preds = %bb.b
   %i.u = zext nneg i32 %i.s to i64
-  %i.v = call ptr @g_realloc(ptr noundef %.01726.i, i64 noundef %i.u) #5 ; 2 uses
+  %i.v = call ptr @g_realloc(ptr noundef %.01726.i, i64 noundef %i.u) #6 ; 2 uses
   %i.w = load i64, ptr %i.n, align 8              ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 %i.w
   store ptr %i.x, ptr %i.o, align 8
@@ -312,19 +300,19 @@ bb.d:                                             ; preds = %bb.c, %.preheader.i
   br i1 %.not23.i, label %deflate_buffer.exit, label %.preheader.i, !llvm.loop !12
 
 bb.e:                                             ; preds = %bb.b, %.preheader.i
-  %i.aa = call i32 @deflateEnd(ptr noundef nonnull %2) #5 ; 0 uses
+  %i.aa = call i32 @deflateEnd(ptr noundef nonnull %2) #6 ; 0 uses
   br label %deflate_buffer.exit.thread
 
 deflate_buffer.exit.thread:                       ; preds = %bb.a, %bb.e
   %.2.i = phi ptr [ %i.m, %bb.a ], [ %.01726.i, %bb.e ]
-  call void @g_free(ptr noundef %.2.i) #5
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #5
+  call void @g_free(ptr noundef %.2.i) #6
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #6
   br label %bb.g
 
 deflate_buffer.exit:                              ; preds = %bb.d
   %i.ab = load i64, ptr %i.n, align 8             ; 2 uses
-  %i.ac = call i32 @deflateEnd(ptr noundef nonnull %2) #5 ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %2) #5
+  %i.ac = call i32 @deflateEnd(ptr noundef nonnull %2) #6 ; 0 uses
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #6
   %.not = icmp eq ptr %.1.i, null
   br i1 %.not, label %bb.g, label %bb.f
 
@@ -332,24 +320,24 @@ bb.f:                                             ; preds = %deflate_buffer.exit
   %i.ad = trunc i64 %i.ab to i32
   %i.ae = load atomic ptr, ptr @qemu_mutex_lock_func monotonic, align 8
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 86744 ; 2 uses
-  call void %i.ae(ptr noundef nonnull %i.af, ptr noundef nonnull @.str.3, i32 noundef 61) #5, !inline_history !0
-  call void @vnc_write_u8(ptr noundef %0, i8 noundef zeroext 3) #5
-  call void @vnc_write_u8(ptr noundef %0, i8 noundef zeroext 0) #5
-  call void @vnc_write_u8(ptr noundef %0, i8 noundef zeroext 0) #5
-  call void @vnc_write_u8(ptr noundef %0, i8 noundef zeroext 0) #5
+  call void %i.ae(ptr noundef nonnull %i.af, ptr noundef nonnull @.str.3, i32 noundef 61) #6, !inline_history !0
+  call void @vnc_write_u8(ptr noundef %0, i8 noundef zeroext 3) #6
+  call void @vnc_write_u8(ptr noundef %0, i8 noundef zeroext 0) #6
+  call void @vnc_write_u8(ptr noundef %0, i8 noundef zeroext 0) #6
+  call void @vnc_write_u8(ptr noundef %0, i8 noundef zeroext 0) #6
   %i.ag = sub i32 -4, %i.ad
-  call void @vnc_write_s32(ptr noundef %0, i32 noundef %i.ag) #5
-  call void @vnc_write_u32(ptr noundef %0, i32 noundef 268435457) #5
+  call void @vnc_write_s32(ptr noundef %0, i32 noundef %i.ag) #6
+  call void @vnc_write_u32(ptr noundef %0, i32 noundef 268435457) #6
   %i.ah = and i64 %i.ab, 4294967295
-  call void @vnc_write(ptr noundef %0, ptr noundef nonnull %.1.i, i64 noundef %i.ah) #5
-  call void @qemu_mutex_unlock_impl(ptr noundef nonnull %i.af, ptr noundef nonnull @.str.3, i32 noundef 66) #5
-  call void @vnc_flush(ptr noundef %0) #5
+  call void @vnc_write(ptr noundef %0, ptr noundef nonnull %.1.i, i64 noundef %i.ah) #6
+  call void @qemu_mutex_unlock_impl(ptr noundef nonnull %i.af, ptr noundef nonnull @.str.3, i32 noundef 66) #6
+  call void @vnc_flush(ptr noundef %0) #6
   br label %bb.g
 
 bb.g:                                             ; preds = %deflate_buffer.exit.thread, %deflate_buffer.exit, %bb.f
   %.020.i39 = phi ptr [ null, %deflate_buffer.exit.thread ], [ null, %deflate_buffer.exit ], [ %.1.i, %bb.f ]
-  call void @g_free(ptr noundef %.020.i39) #5
-  call void @g_free(ptr noundef nonnull %i.e) #5
+  call void @g_free(ptr noundef %.020.i39) #6
+  call void @g_free(ptr noundef nonnull %i.e) #6
   ret void
 }
 
@@ -359,10 +347,10 @@ declare void @qemu_clipboard_request(ptr noundef, i32 noundef) local_unnamed_add
 define dso_local void @vnc_client_cut_text(ptr noundef %0, i64 noundef %1, ptr noundef %2) local_unnamed_addr #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 103256 ; 2 uses
-  %i.b = tail call ptr @qemu_clipboard_info_new(ptr noundef nonnull %i.a, i32 noundef 0) #5 ; 2 uses
+  %i.b = tail call ptr @qemu_clipboard_info_new(ptr noundef nonnull %i.a, i32 noundef 0) #6 ; 2 uses
   %i.c = trunc i64 %1 to i32
-  tail call void @qemu_clipboard_set_data(ptr noundef nonnull %i.a, ptr noundef %i.b, i32 noundef 0, i32 noundef %i.c, ptr noundef %2, i1 noundef zeroext true) #5
-  tail call void @qemu_clipboard_info_unref(ptr noundef %i.b) #5
+  tail call void @qemu_clipboard_set_data(ptr noundef nonnull %i.a, ptr noundef %i.b, i32 noundef 0, i32 noundef %i.c, ptr noundef %2, i1 noundef zeroext true) #6
+  tail call void @qemu_clipboard_info_unref(ptr noundef %i.b) #6
   ret void
 }
 
@@ -370,7 +358,7 @@ bb.a:
 define dso_local void @vnc_server_cut_text_caps(ptr noundef %0) local_unnamed_addr #0 {
 bb.a:
   %i.a = alloca [2 x i32], align 8                ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %i.b = getelementptr i8, ptr %0, i64 86452
   %.val = load i32, ptr %i.b, align 4
   %i.c = and i32 %.val, 16384
@@ -391,11 +379,11 @@ bb.c:                                             ; preds = %bb.b
   store ptr @vnc_clipboard_notify, ptr %i.d, align 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 103288
   store ptr @vnc_clipboard_request, ptr %i.g, align 8
-  tail call void @qemu_clipboard_peer_register(ptr noundef nonnull %i.f) #5
+  tail call void @qemu_clipboard_peer_register(ptr noundef nonnull %i.f) #6
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.b, %bb.c, %bb.a
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret void
 }
 
@@ -407,13 +395,13 @@ define internal fastcc void @vnc_clipboard_send(ptr noundef %0, i32 noundef rang
 bb.a:
   %i.a = load atomic ptr, ptr @qemu_mutex_lock_func monotonic, align 8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 86744 ; 2 uses
-  tail call void %i.a(ptr noundef nonnull %i.b, ptr noundef nonnull @.str.3, i32 noundef 61) #5, !inline_history !0
-  tail call void @vnc_write_u8(ptr noundef %0, i8 noundef zeroext 3) #5
-  tail call void @vnc_write_u8(ptr noundef %0, i8 noundef zeroext 0) #5
-  tail call void @vnc_write_u8(ptr noundef %0, i8 noundef zeroext 0) #5
-  tail call void @vnc_write_u8(ptr noundef %0, i8 noundef zeroext 0) #5
+  tail call void %i.a(ptr noundef nonnull %i.b, ptr noundef nonnull @.str.3, i32 noundef 61) #6, !inline_history !0
+  tail call void @vnc_write_u8(ptr noundef %0, i8 noundef zeroext 3) #6
+  tail call void @vnc_write_u8(ptr noundef %0, i8 noundef zeroext 0) #6
+  tail call void @vnc_write_u8(ptr noundef %0, i8 noundef zeroext 0) #6
+  tail call void @vnc_write_u8(ptr noundef %0, i8 noundef zeroext 0) #6
   %.neg = mul nsw i32 %1, -4
-  tail call void @vnc_write_s32(ptr noundef %0, i32 noundef %.neg) #5
+  tail call void @vnc_write_s32(ptr noundef %0, i32 noundef %.neg) #6
   %wide.trip.count = zext nneg i32 %1 to i64
   br label %bb.b
 
@@ -421,14 +409,14 @@ bb.b:                                             ; preds = %bb.a, %bb.b
   %indvars.iv = phi i64 [ 0, %bb.a ], [ %indvars.iv.next, %bb.b ] ; 2 uses
   %i.c = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv
   %i.d = load i32, ptr %i.c, align 4
-  tail call void @vnc_write_u32(ptr noundef nonnull %0, i32 noundef %i.d) #5
+  tail call void @vnc_write_u32(ptr noundef nonnull %0, i32 noundef %i.d) #6
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %bb.c, label %bb.b, !llvm.loop !14
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @qemu_mutex_unlock_impl(ptr noundef nonnull %i.b, ptr noundef nonnull @.str.3, i32 noundef 66) #5
-  tail call void @vnc_flush(ptr noundef nonnull %0) #5
+  tail call void @qemu_mutex_unlock_impl(ptr noundef nonnull %i.b, ptr noundef nonnull @.str.3, i32 noundef 66) #6
+  tail call void @vnc_flush(ptr noundef nonnull %0) #6
   ret void
 }
 
@@ -448,15 +436,15 @@ bb.b:                                             ; preds = %bb.a
   %i.g = load ptr, ptr %i.f, align 8
   %i.h = getelementptr inbounds i8, ptr %0, i64 -8
   %i.i = icmp eq ptr %i.g, %i.h                   ; 2 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
   %i.k = load ptr, ptr %i.j, align 8              ; 2 uses
   %.not.i = icmp eq ptr %i.e, %i.k
   br i1 %.not.i, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @qemu_clipboard_info_unref(ptr noundef %i.k) #5
-  %i.l = tail call ptr @qemu_clipboard_info_ref(ptr noundef nonnull %i.e) #5
+  tail call void @qemu_clipboard_info_unref(ptr noundef %i.k) #6
+  %i.l = tail call ptr @qemu_clipboard_info_ref(ptr noundef nonnull %i.e) #6
   store ptr %i.l, ptr %i.j, align 8
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 40
   store i32 0, ptr %i.m, align 8
@@ -488,7 +476,7 @@ bb.g:                                             ; preds = %bb.f
   br label %vnc_clipboard_update_info.exit
 
 vnc_clipboard_update_info.exit:                   ; preds = %bb.c, %bb.d, %bb.e, %bb.f, %bb.g
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.a, %vnc_clipboard_update_info.exit
@@ -501,7 +489,7 @@ bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.c = load ptr, ptr %i.b, align 8
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   %.not = icmp eq i32 %1, 0
   br i1 %.not, label %bb.b, label %bb.c
 
@@ -512,7 +500,7 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret void
 }
 
@@ -554,13 +542,17 @@ declare ptr @qemu_clipboard_info_ref(ptr noundef) local_unnamed_addr #2
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #5
+
 attributes #0 = { nounwind sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #4 = { allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx16,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "zero-call-used-regs"="used-gpr" }
-attributes #5 = { nounwind }
-attributes #6 = { nounwind allocsize(0) }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { nounwind }
+attributes #7 = { nounwind allocsize(0) }
 
 !llvm.module.flags = !{!1, !2, !3, !4, !5, !6}
 !llvm.ident = !{!7}

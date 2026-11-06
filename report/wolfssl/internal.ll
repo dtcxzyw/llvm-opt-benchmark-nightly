@@ -205,37 +205,13 @@ bb.f:                                             ; preds = %bb.e
   br label %GetSEQIncrement.exit
 
 GetSEQIncrement.exit:                             ; preds = %bb.f, %bb.e, %bb.d, %bb.c, %bb.a
-  %.sroa.6.0 = phi i32 [ 0, %bb.a ], [ -1, %bb.f ], [ %i.n, %bb.e ], [ -1, %bb.d ], [ %i.g, %bb.c ] ; 4 uses
-  %.sroa.0.0 = phi i32 [ 0, %bb.a ], [ %i.l, %bb.f ], [ %i.l, %bb.e ], [ %i.e, %bb.d ], [ %i.e, %bb.c ] ; 4 uses
-  %3 = lshr i32 %.sroa.0.0, 24
-  %4 = trunc nuw i32 %3 to i8
-  store i8 %4, ptr %2, align 1, !tbaa !52
-  %5 = lshr i32 %.sroa.0.0, 16
-  %6 = trunc i32 %5 to i8
-  %7 = getelementptr inbounds nuw i8, ptr %2, i64 1
-  store i8 %6, ptr %7, align 1, !tbaa !52
-  %8 = lshr i32 %.sroa.0.0, 8
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %2, i64 2
-  store i8 %9, ptr %10, align 1, !tbaa !52
-  %11 = trunc i32 %.sroa.0.0 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %2, i64 3
-  store i8 %11, ptr %12, align 1, !tbaa !52
+  %.sroa.6.0 = phi i32 [ 0, %bb.a ], [ -1, %bb.f ], [ %i.n, %bb.e ], [ -1, %bb.d ], [ %i.g, %bb.c ]
+  %.sroa.0.0 = phi i32 [ 0, %bb.a ], [ %i.l, %bb.f ], [ %i.l, %bb.e ], [ %i.e, %bb.d ], [ %i.e, %bb.c ]
+  %3 = tail call i32 @llvm.bswap.i32(i32 %.sroa.0.0)
+  store i32 %3, ptr %2, align 1, !tbaa !52
   %i.r = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %13 = lshr i32 %.sroa.6.0, 24
-  %14 = trunc nuw i32 %13 to i8
-  store i8 %14, ptr %i.r, align 1, !tbaa !52
-  %15 = lshr i32 %.sroa.6.0, 16
-  %16 = trunc i32 %15 to i8
-  %17 = getelementptr inbounds nuw i8, ptr %2, i64 5
-  store i8 %16, ptr %17, align 1, !tbaa !52
-  %18 = lshr i32 %.sroa.6.0, 8
-  %19 = trunc i32 %18 to i8
-  %20 = getelementptr inbounds nuw i8, ptr %2, i64 6
-  store i8 %19, ptr %20, align 1, !tbaa !52
-  %21 = trunc i32 %.sroa.6.0 to i8
-  %22 = getelementptr inbounds nuw i8, ptr %2, i64 7
-  store i8 %21, ptr %22, align 1, !tbaa !52
+  %4 = tail call i32 @llvm.bswap.i32(i32 %.sroa.6.0)
+  store i32 %4, ptr %i.r, align 1, !tbaa !52
   ret void
 }
 
@@ -638,7 +614,7 @@ bb.a:
 define i32 @ChachaAEADEncrypt(ptr noundef %0, ptr noundef %1, ptr noundef %2, i16 noundef zeroext %3, i8 noundef zeroext %4) local_unnamed_addr #4 {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 6 uses
-  %i.b = alloca [13 x i8], align 8                ; 18 uses
+  %i.b = alloca [13 x i8], align 8                ; 12 uses
   %i.c = alloca [12 x i8], align 1                ; 72 uses
   %i.d = alloca [32 x i8], align 16               ; 13 uses
   %i.e = zext i16 %3 to i32
@@ -675,37 +651,13 @@ bb.c:                                             ; preds = %bb.b
   br label %writeAeadAuthData.exit
 
 writeAeadAuthData.exit:                           ; preds = %bb.a, %bb.b, %bb.c
-  %.sroa.6.0.i.i = phi i32 [ 0, %bb.a ], [ -1, %bb.c ], [ %i.p, %bb.b ] ; 4 uses
-  %.sroa.0.0.i.i = phi i32 [ 0, %bb.a ], [ %i.n, %bb.c ], [ %i.n, %bb.b ] ; 4 uses
-  %5 = lshr i32 %.sroa.0.0.i.i, 24
-  %6 = trunc nuw i32 %5 to i8
-  store i8 %6, ptr %i.b, align 8, !tbaa !52
-  %7 = lshr i32 %.sroa.0.0.i.i, 16
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  store i8 %8, ptr %9, align 1, !tbaa !52
-  %10 = lshr i32 %.sroa.0.0.i.i, 8
-  %11 = trunc i32 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.b, i64 2
-  store i8 %11, ptr %12, align 2, !tbaa !52
-  %13 = trunc i32 %.sroa.0.0.i.i to i8
-  %14 = getelementptr inbounds nuw i8, ptr %i.b, i64 3
-  store i8 %13, ptr %14, align 1, !tbaa !52
+  %.sroa.6.0.i.i = phi i32 [ 0, %bb.a ], [ -1, %bb.c ], [ %i.p, %bb.b ]
+  %.sroa.0.0.i.i = phi i32 [ 0, %bb.a ], [ %i.n, %bb.c ], [ %i.n, %bb.b ]
+  %5 = tail call i32 @llvm.bswap.i32(i32 %.sroa.0.0.i.i)
+  store i32 %5, ptr %i.b, align 8, !tbaa !52
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  %15 = lshr i32 %.sroa.6.0.i.i, 24
-  %16 = trunc nuw i32 %15 to i8
-  store i8 %16, ptr %i.t, align 4, !tbaa !52
-  %17 = lshr i32 %.sroa.6.0.i.i, 16
-  %18 = trunc i32 %17 to i8
-  %19 = getelementptr inbounds nuw i8, ptr %i.b, i64 5
-  store i8 %18, ptr %19, align 1, !tbaa !52
-  %20 = lshr i32 %.sroa.6.0.i.i, 8
-  %21 = trunc i32 %20 to i8
-  %22 = getelementptr inbounds nuw i8, ptr %i.b, i64 6
-  store i8 %21, ptr %22, align 2, !tbaa !52
-  %23 = trunc i32 %.sroa.6.0.i.i to i8
-  %24 = getelementptr inbounds nuw i8, ptr %i.b, i64 7
-  store i8 %23, ptr %24, align 1, !tbaa !52
+  %6 = tail call i32 @llvm.bswap.i32(i32 %.sroa.6.0.i.i)
+  store i32 %6, ptr %i.t, align 4, !tbaa !52
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 726
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i8 %4, ptr %i.v, align 8, !tbaa !52
@@ -1108,37 +1060,13 @@ bb.h:                                             ; preds = %bb.g
   br label %WriteSEQ.exit
 
 WriteSEQ.exit:                                    ; preds = %bb.c, %bb.e, %bb.f, %bb.g, %bb.h
-  %.sroa.6.0.i = phi i32 [ 0, %bb.c ], [ -1, %bb.h ], [ %i.n, %bb.g ], [ -1, %bb.f ], [ %i.g, %bb.e ] ; 4 uses
-  %.sroa.0.0.i = phi i32 [ 0, %bb.c ], [ %i.l, %bb.h ], [ %i.l, %bb.g ], [ %i.e, %bb.f ], [ %i.e, %bb.e ] ; 4 uses
-  %7 = lshr i32 %.sroa.0.0.i, 24
-  %8 = trunc nuw i32 %7 to i8
-  store i8 %8, ptr %3, align 1, !tbaa !52
-  %9 = lshr i32 %.sroa.0.0.i, 16
-  %10 = trunc i32 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %3, i64 1
-  store i8 %10, ptr %11, align 1, !tbaa !52
-  %12 = lshr i32 %.sroa.0.0.i, 8
-  %13 = trunc i32 %12 to i8
-  %14 = getelementptr inbounds nuw i8, ptr %3, i64 2
-  store i8 %13, ptr %14, align 1, !tbaa !52
-  %15 = trunc i32 %.sroa.0.0.i to i8
-  %16 = getelementptr inbounds nuw i8, ptr %3, i64 3
-  store i8 %15, ptr %16, align 1, !tbaa !52
+  %.sroa.6.0.i = phi i32 [ 0, %bb.c ], [ -1, %bb.h ], [ %i.n, %bb.g ], [ -1, %bb.f ], [ %i.g, %bb.e ]
+  %.sroa.0.0.i = phi i32 [ 0, %bb.c ], [ %i.l, %bb.h ], [ %i.l, %bb.g ], [ %i.e, %bb.f ], [ %i.e, %bb.e ]
+  %7 = tail call i32 @llvm.bswap.i32(i32 %.sroa.0.0.i)
+  store i32 %7, ptr %3, align 1, !tbaa !52
   %i.r = getelementptr inbounds nuw i8, ptr %3, i64 4
-  %17 = lshr i32 %.sroa.6.0.i, 24
-  %18 = trunc nuw i32 %17 to i8
-  store i8 %18, ptr %i.r, align 1, !tbaa !52
-  %19 = lshr i32 %.sroa.6.0.i, 16
-  %20 = trunc i32 %19 to i8
-  %21 = getelementptr inbounds nuw i8, ptr %3, i64 5
-  store i8 %20, ptr %21, align 1, !tbaa !52
-  %22 = lshr i32 %.sroa.6.0.i, 8
-  %23 = trunc i32 %22 to i8
-  %24 = getelementptr inbounds nuw i8, ptr %3, i64 6
-  store i8 %23, ptr %24, align 1, !tbaa !52
-  %25 = trunc i32 %.sroa.6.0.i to i8
-  %26 = getelementptr inbounds nuw i8, ptr %3, i64 7
-  store i8 %25, ptr %26, align 1, !tbaa !52
+  %8 = tail call i32 @llvm.bswap.i32(i32 %.sroa.6.0.i)
+  store i32 %8, ptr %i.r, align 1, !tbaa !52
   %.not28 = icmp eq i8 %4, 0
   br i1 %.not28, label %.critedge, label %bb.i
 
@@ -1316,7 +1244,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f,
 ; Function Attrs: nounwind uwtable
 define i32 @ChachaAEADDecrypt(ptr noundef %0, ptr noundef %1, ptr noundef %2, i16 noundef zeroext %3) local_unnamed_addr #4 {
 bb.a:
-  %i.a = alloca [13 x i8], align 8                ; 18 uses
+  %i.a = alloca [13 x i8], align 8                ; 12 uses
   %i.b = alloca [12 x i8], align 1                ; 72 uses
   %i.c = alloca [16 x i8], align 16               ; 7 uses
   %i.d = alloca [32 x i8], align 16               ; 12 uses
@@ -1357,37 +1285,13 @@ bb.d:                                             ; preds = %bb.c
   br label %writeAeadAuthData.exit
 
 writeAeadAuthData.exit:                           ; preds = %bb.b, %bb.c, %bb.d
-  %.sroa.6.0.i.i = phi i32 [ 0, %bb.b ], [ -1, %bb.d ], [ %i.o, %bb.c ] ; 4 uses
-  %.sroa.0.0.i.i = phi i32 [ 0, %bb.b ], [ %i.m, %bb.d ], [ %i.m, %bb.c ] ; 4 uses
-  %4 = lshr i32 %.sroa.0.0.i.i, 24
-  %5 = trunc nuw i32 %4 to i8
-  store i8 %5, ptr %i.a, align 8, !tbaa !52
-  %6 = lshr i32 %.sroa.0.0.i.i, 16
-  %7 = trunc i32 %6 to i8
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %7, ptr %8, align 1, !tbaa !52
-  %9 = lshr i32 %.sroa.0.0.i.i, 8
-  %10 = trunc i32 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %10, ptr %11, align 2, !tbaa !52
-  %12 = trunc i32 %.sroa.0.0.i.i to i8
-  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %12, ptr %13, align 1, !tbaa !52
+  %.sroa.6.0.i.i = phi i32 [ 0, %bb.b ], [ -1, %bb.d ], [ %i.o, %bb.c ]
+  %.sroa.0.0.i.i = phi i32 [ 0, %bb.b ], [ %i.m, %bb.d ], [ %i.m, %bb.c ]
+  %4 = tail call i32 @llvm.bswap.i32(i32 %.sroa.0.0.i.i)
+  store i32 %4, ptr %i.a, align 8, !tbaa !52
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %14 = lshr i32 %.sroa.6.0.i.i, 24
-  %15 = trunc nuw i32 %14 to i8
-  store i8 %15, ptr %i.s, align 4, !tbaa !52
-  %16 = lshr i32 %.sroa.6.0.i.i, 16
-  %17 = trunc i32 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %17, ptr %18, align 1, !tbaa !52
-  %19 = lshr i32 %.sroa.6.0.i.i, 8
-  %20 = trunc i32 %19 to i8
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %20, ptr %21, align 2, !tbaa !52
-  %22 = trunc i32 %.sroa.6.0.i.i to i8
-  %23 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  store i8 %22, ptr %23, align 1, !tbaa !52
+  %5 = tail call i32 @llvm.bswap.i32(i32 %.sroa.6.0.i.i)
+  store i32 %5, ptr %i.s, align 4, !tbaa !52
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 717
   %i.u = load i8, ptr %i.t, align 1, !tbaa !256
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 718
@@ -1790,7 +1694,7 @@ bb.k:                                             ; preds = %bb.i, %bb.i
   %i.ae = trunc i32 %i.ab to i16
   %i.af = sub i16 %i.ae, %i.ad                    ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 2 uses
-  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !471 ; 13 uses
+  %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !471 ; 7 uses
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 1040
   %i.aj = load i64, ptr %i.ai, align 8
   %i.ak = and i64 %i.aj, 131072
@@ -1813,37 +1717,13 @@ bb.m:                                             ; preds = %bb.l
   br label %writeAeadAuthData.exit.i
 
 writeAeadAuthData.exit.i:                         ; preds = %bb.m, %bb.l, %bb.k
-  %.sroa.6.0.i.i.i = phi i32 [ 0, %bb.k ], [ -1, %bb.m ], [ %i.ao, %bb.l ] ; 4 uses
-  %.sroa.0.0.i.i.i = phi i32 [ 0, %bb.k ], [ %i.am, %bb.m ], [ %i.am, %bb.l ] ; 4 uses
-  %5 = lshr i32 %.sroa.0.0.i.i.i, 24
-  %6 = trunc nuw i32 %5 to i8
-  store i8 %6, ptr %i.ah, align 1, !tbaa !52
-  %7 = lshr i32 %.sroa.0.0.i.i.i, 16
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.ah, i64 1
-  store i8 %8, ptr %9, align 1, !tbaa !52
-  %10 = lshr i32 %.sroa.0.0.i.i.i, 8
-  %11 = trunc i32 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.ah, i64 2
-  store i8 %11, ptr %12, align 1, !tbaa !52
-  %13 = trunc i32 %.sroa.0.0.i.i.i to i8
-  %14 = getelementptr inbounds nuw i8, ptr %i.ah, i64 3
-  store i8 %13, ptr %14, align 1, !tbaa !52
+  %.sroa.6.0.i.i.i = phi i32 [ 0, %bb.k ], [ -1, %bb.m ], [ %i.ao, %bb.l ]
+  %.sroa.0.0.i.i.i = phi i32 [ 0, %bb.k ], [ %i.am, %bb.m ], [ %i.am, %bb.l ]
+  %5 = tail call i32 @llvm.bswap.i32(i32 %.sroa.0.0.i.i.i)
+  store i32 %5, ptr %i.ah, align 1, !tbaa !52
   %i.as = getelementptr inbounds nuw i8, ptr %i.ah, i64 4
-  %15 = lshr i32 %.sroa.6.0.i.i.i, 24
-  %16 = trunc nuw i32 %15 to i8
-  store i8 %16, ptr %i.as, align 1, !tbaa !52
-  %17 = lshr i32 %.sroa.6.0.i.i.i, 16
-  %18 = trunc i32 %17 to i8
-  %19 = getelementptr inbounds nuw i8, ptr %i.ah, i64 5
-  store i8 %18, ptr %19, align 1, !tbaa !52
-  %20 = lshr i32 %.sroa.6.0.i.i.i, 8
-  %21 = trunc i32 %20 to i8
-  %22 = getelementptr inbounds nuw i8, ptr %i.ah, i64 6
-  store i8 %21, ptr %22, align 1, !tbaa !52
-  %23 = trunc i32 %.sroa.6.0.i.i.i to i8
-  %24 = getelementptr inbounds nuw i8, ptr %i.ah, i64 7
-  store i8 %23, ptr %24, align 1, !tbaa !52
+  %6 = tail call i32 @llvm.bswap.i32(i32 %.sroa.6.0.i.i.i)
+  store i32 %6, ptr %i.as, align 1, !tbaa !52
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 726
   %i.au = getelementptr inbounds nuw i8, ptr %i.ah, i64 8
   store i8 %4, ptr %i.au, align 1, !tbaa !52
@@ -2246,7 +2126,7 @@ bb.i:                                             ; preds = %bb.g, %bb.g
   %i.ab = trunc i32 %i.y to i16
   %i.ac = sub i16 %i.ab, %i.aa                    ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 312 ; 2 uses
-  %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !528 ; 13 uses
+  %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !528 ; 7 uses
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 1040
   %i.ag = load i64, ptr %i.af, align 16
   %i.ah = and i64 %i.ag, 131072
@@ -2269,37 +2149,13 @@ bb.k:                                             ; preds = %bb.j
   br label %writeAeadAuthData.exit.i
 
 writeAeadAuthData.exit.i:                         ; preds = %bb.k, %bb.j, %bb.i
-  %.sroa.6.0.i.i.i = phi i32 [ 0, %bb.i ], [ -1, %bb.k ], [ %i.al, %bb.j ] ; 4 uses
-  %.sroa.0.0.i.i.i = phi i32 [ 0, %bb.i ], [ %i.aj, %bb.k ], [ %i.aj, %bb.j ] ; 4 uses
-  %4 = lshr i32 %.sroa.0.0.i.i.i, 24
-  %5 = trunc nuw i32 %4 to i8
-  store i8 %5, ptr %i.ae, align 1, !tbaa !52
-  %6 = lshr i32 %.sroa.0.0.i.i.i, 16
-  %7 = trunc i32 %6 to i8
-  %8 = getelementptr inbounds nuw i8, ptr %i.ae, i64 1
-  store i8 %7, ptr %8, align 1, !tbaa !52
-  %9 = lshr i32 %.sroa.0.0.i.i.i, 8
-  %10 = trunc i32 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.ae, i64 2
-  store i8 %10, ptr %11, align 1, !tbaa !52
-  %12 = trunc i32 %.sroa.0.0.i.i.i to i8
-  %13 = getelementptr inbounds nuw i8, ptr %i.ae, i64 3
-  store i8 %12, ptr %13, align 1, !tbaa !52
+  %.sroa.6.0.i.i.i = phi i32 [ 0, %bb.i ], [ -1, %bb.k ], [ %i.al, %bb.j ]
+  %.sroa.0.0.i.i.i = phi i32 [ 0, %bb.i ], [ %i.aj, %bb.k ], [ %i.aj, %bb.j ]
+  %4 = tail call i32 @llvm.bswap.i32(i32 %.sroa.0.0.i.i.i)
+  store i32 %4, ptr %i.ae, align 1, !tbaa !52
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ae, i64 4
-  %14 = lshr i32 %.sroa.6.0.i.i.i, 24
-  %15 = trunc nuw i32 %14 to i8
-  store i8 %15, ptr %i.ap, align 1, !tbaa !52
-  %16 = lshr i32 %.sroa.6.0.i.i.i, 16
-  %17 = trunc i32 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %i.ae, i64 5
-  store i8 %17, ptr %18, align 1, !tbaa !52
-  %19 = lshr i32 %.sroa.6.0.i.i.i, 8
-  %20 = trunc i32 %19 to i8
-  %21 = getelementptr inbounds nuw i8, ptr %i.ae, i64 6
-  store i8 %20, ptr %21, align 1, !tbaa !52
-  %22 = trunc i32 %.sroa.6.0.i.i.i to i8
-  %23 = getelementptr inbounds nuw i8, ptr %i.ae, i64 7
-  store i8 %22, ptr %23, align 1, !tbaa !52
+  %5 = tail call i32 @llvm.bswap.i32(i32 %.sroa.6.0.i.i.i)
+  store i32 %5, ptr %i.ap, align 1, !tbaa !52
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 717
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !256
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 718
@@ -2568,6 +2424,9 @@ declare i64 @llvm.umin.i64(i64, i64) #24
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.abs.i32(i32, i1 immarg) #25
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #24
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #24

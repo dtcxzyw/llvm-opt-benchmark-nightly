@@ -204,9 +204,9 @@ bb.l:                                             ; preds = %bb.j
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 832
   store i32 %i.at, ptr %i.av, align 8, !tbaa !292
   %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 5472
-  %3 = load <8 x i8>, ptr %i.aw, align 8, !tbaa !293
-  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %4, ptr %i.n, align 8, !tbaa !215
+  %3 = load i64, ptr %i.aw, align 8, !tbaa !293
+  %4 = call i64 @llvm.bswap.i64(i64 %3)
+  store i64 %4, ptr %i.n, align 8, !tbaa !215
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 1596
   %i.ay = getelementptr inbounds nuw i8, ptr %i.au, i64 80
   %i.az = call i32 @tls13_hkdf_expand(ptr noundef nonnull %0, ptr noundef %i.z, ptr noundef nonnull %i.ax, ptr noundef nonnull @tls_construct_new_session_ticket.nonce_label, i64 noundef 10, ptr noundef nonnull %i.n, i64 noundef 8, ptr noundef nonnull %i.ay, i64 noundef %i.ac, i32 noundef 1) #11
@@ -608,6 +608,9 @@ declare i32 @llvm.umin.i32(i32, i32) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #9
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "frame-pointer"="all" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

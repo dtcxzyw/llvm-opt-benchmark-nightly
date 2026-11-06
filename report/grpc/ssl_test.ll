@@ -205,11 +205,11 @@ _ZNK4bssl4SpanIhE7subspanEmm.exit167:             ; preds = %bb.aq
   %i.ee = call i64 @SSL_get_write_sequence(ptr noundef %0)
   %i.ef = getelementptr inbounds nuw i8, ptr %i.h, i64 80 ; 2 uses
   %i.eg = load <8 x i8>, ptr %i.ef, align 16, !tbaa !1105
-  %29 = bitcast i64 %i.ee to <8 x i8>
-  %30 = shufflevector <8 x i8> %29, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0> ; 2 uses
+  %29 = call i64 @llvm.bswap.i64(i64 %i.ee)       ; 2 uses
+  %30 = bitcast i64 %29 to <8 x i8>
   %i.eh = xor <8 x i8> %i.eg, %30
   store <8 x i8> %i.eh, ptr %i.ef, align 16, !tbaa !1105
-  store <8 x i8> %30, ptr %i.i, align 8, !tbaa !1105
+  store i64 %29, ptr %i.i, align 8, !tbaa !1105
   %i.ei = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   store <4 x i8> <i8 22, i8 3, i8 3, i8 0>, ptr %i.ei, align 8, !tbaa !1105
   %i.ej = getelementptr inbounds nuw i8, ptr %i.i, i64 12
@@ -611,6 +611,9 @@ declare i64 @llvm.usub.sat.i64(i64, i64) #41
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #41
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #41
 
 attributes #0 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "warn-stack-size"="25344" }

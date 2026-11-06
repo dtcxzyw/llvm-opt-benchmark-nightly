@@ -203,21 +203,9 @@ bb.a:
   br i1 %i.b, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %4 = trunc i32 %3 to i8
-  %i.c = getelementptr i8, ptr %0, i64 %2         ; 4 uses
-  %5 = getelementptr i8, ptr %i.c, i64 3
-  store i8 %4, ptr %5, align 1, !tbaa !11
-  %6 = lshr i32 %3, 8
-  %7 = trunc i32 %6 to i8
-  %8 = getelementptr i8, ptr %i.c, i64 2
-  store i8 %7, ptr %8, align 1, !tbaa !11
-  %9 = lshr i32 %3, 16
-  %10 = trunc i32 %9 to i8
-  %11 = getelementptr i8, ptr %i.c, i64 1
-  store i8 %10, ptr %11, align 1, !tbaa !11
-  %12 = lshr i32 %3, 24
-  %13 = trunc nuw i32 %12 to i8
-  store i8 %13, ptr %i.c, align 1, !tbaa !11
+  %i.c = getelementptr i8, ptr %0, i64 %2
+  %4 = tail call i32 @llvm.bswap.i32(i32 %3)
+  store i32 %4, ptr %i.c, align 1, !tbaa !11
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.a, %bb.b

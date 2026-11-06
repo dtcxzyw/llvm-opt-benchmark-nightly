@@ -202,29 +202,16 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define internal void @wbe(i32 noundef %0, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %1) #9 {
 bb.a:
-  %2 = lshr i32 %0, 16
-  %3 = lshr i32 %0, 24
-  %4 = trunc nuw i32 %3 to i8
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 1
-  store i8 %4, ptr %1, align 1, !tbaa !12
-  %6 = trunc i32 %2 to i8
-  store i8 %6, ptr %5, align 1, !tbaa !12
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 2
-  %8 = lshr i32 %0, 8
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 3
-  store i8 %9, ptr %7, align 1, !tbaa !12
-  %11 = trunc i32 %0 to i8
-  store i8 %11, ptr %10, align 1, !tbaa !12
+  %2 = tail call i32 @llvm.bswap.i32(i32 %0)
+  store i32 %2, ptr %1, align 1, !tbaa !12
   ret void
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define internal void @w8be(i64 noundef %0, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %1) #9 {
 bb.a:
-  %2 = bitcast i64 %0 to <8 x i8>
-  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %3, ptr %1, align 1, !tbaa !12
+  %2 = tail call i64 @llvm.bswap.i64(i64 %0)
+  store i64 %2, ptr %1, align 1, !tbaa !12
   ret void
 }
 

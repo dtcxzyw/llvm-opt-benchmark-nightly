@@ -6,21 +6,9 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define dso_local void @gdcmuuid_uuid_pack(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) initializes((0, 16)) %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = load i32, ptr %0, align 4, !tbaa !11     ; 4 uses
-  %2 = trunc i32 %i.a to i8
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 3
-  store i8 %2, ptr %3, align 1, !tbaa !12
-  %4 = lshr i32 %i.a, 8
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 2
-  store i8 %5, ptr %6, align 1, !tbaa !12
-  %7 = lshr i32 %i.a, 16
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 1
-  store i8 %8, ptr %9, align 1, !tbaa !12
-  %10 = lshr i32 %i.a, 24
-  %11 = trunc nuw i32 %10 to i8
-  store i8 %11, ptr %1, align 1, !tbaa !12
+  %i.a = load i32, ptr %0, align 4, !tbaa !11
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.a)
+  store i32 %2, ptr %1, align 1, !tbaa !12
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.c = load i16, ptr %i.b, align 4, !tbaa !13   ; 2 uses
   %i.d = trunc i16 %i.c to i8
@@ -57,8 +45,12 @@ bb.a:
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #2
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
+attributes #2 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

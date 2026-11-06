@@ -205,10 +205,9 @@ bb.ay:                                            ; preds = %bb.ax
 
 .loopexit.i152:                                   ; preds = %.lr.ph.i148.2, %bb.ay
   %i.fi = getelementptr inbounds nuw i8, ptr %1, i64 108
-  %6 = bitcast i64 %i.cm to <8 x i8>
-  %7 = or <8 x i8> %6, <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 -128>
-  %8 = shufflevector <8 x i8> %7, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %8, ptr %i.fi, align 1, !tbaa !20
+  %6 = or i64 %i.cm, -9223372036854775808
+  %.inner = call i64 @llvm.bswap.i64(i64 %6)
+  store i64 %.inner, ptr %i.fi, align 1, !tbaa !20
   br label %format_number.exit164.thread.thread492
 
 format_number.exit164.thread.thread492:           ; preds = %._crit_edge.i27.i161, %.loopexit.i152
@@ -363,10 +362,9 @@ bb.ba:                                            ; preds = %format_number.exit1
   %.16494498 = phi i32 [ %.14, %format_number.exit164.thread.thread492 ], [ -25, %bb.ba ], [ %.16494497, %.lr.ph.i176.2 ]
   %i.ij = phi i64 [ %i.fj, %format_number.exit164.thread.thread492 ], [ %i.fl, %bb.ba ], [ %i.gp, %.lr.ph.i176.2 ]
   %i.ik = getelementptr inbounds nuw i8, ptr %1, i64 116
-  %9 = bitcast i64 %i.ij to <8 x i8>
-  %10 = or <8 x i8> %9, <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 -128>
-  %11 = shufflevector <8 x i8> %10, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %11, ptr %i.ik, align 1, !tbaa !20
+  %7 = or i64 %i.ij, -9223372036854775808
+  %.inner541 = call i64 @llvm.bswap.i64(i64 %7)
+  store i64 %.inner541, ptr %i.ik, align 1, !tbaa !20
   br label %format_number.exit192.thread.thread499
 
 format_number.exit192.thread.thread499:           ; preds = %._crit_edge.i27.i189, %.loopexit.i180
@@ -531,9 +529,8 @@ bb.bd:                                            ; preds = %.lr.ph.i204.1, %.lr
   %.17501505 = phi i32 [ %.17.ph, %format_number.exit192.thread.thread499 ], [ -25, %bb.bc ], [ %.17501504, %.lr.ph.i204.1 ]
   %i.ll = phi i64 [ %i.il, %format_number.exit192.thread.thread499 ], [ %i.in, %bb.bc ], [ %i.kc, %.lr.ph.i204.1 ] ; 2 uses
   %i.lm = getelementptr inbounds nuw i8, ptr %1, i64 128
-  %12 = bitcast i64 %i.ll to <8 x i8>
-  %13 = shufflevector <8 x i8> %12, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %13, ptr %i.lm, align 1, !tbaa !20
+  %8 = call i64 @llvm.bswap.i64(i64 %i.ll)
+  store i64 %8, ptr %i.lm, align 1, !tbaa !20
   %i.ln = ashr i64 %i.ll, 63
   %i.lo = getelementptr inbounds nuw i8, ptr %1, i64 124
   %i.lp = trunc nsw i64 %i.ln to i8
@@ -667,9 +664,8 @@ bb.bf:                                            ; preds = %format_number.exit2
   %.18508511 = phi i32 [ %.18.ph, %format_number.exit220.thread.thread506 ], [ -25, %bb.bf ], [ %.18508510, %.lr.ph.i232 ]
   %i.ot = phi i64 [ %i.lt, %format_number.exit220.thread.thread506 ], [ %i.lv, %bb.bf ], [ %i.ni, %.lr.ph.i232 ] ; 2 uses
   %i.ou = getelementptr inbounds nuw i8, ptr %1, i64 139
-  %14 = bitcast i64 %i.ot to <8 x i8>
-  %15 = shufflevector <8 x i8> %14, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %15, ptr %i.ou, align 1, !tbaa !20
+  %9 = call i64 @llvm.bswap.i64(i64 %i.ot)
+  store i64 %9, ptr %i.ou, align 1, !tbaa !20
   %i.ov = ashr i64 %i.ot, 63                      ; 3 uses
   %i.ow = trunc nsw i64 %i.ov to i8
   %i.ox = getelementptr inbounds nuw i8, ptr %1, i64 138
@@ -838,10 +834,9 @@ bb.bj:                                            ; preds = %bb.bh
 
 .loopexit.i264:                                   ; preds = %.lr.ph.i260.2, %bb.bj
   %i.sd = getelementptr inbounds nuw i8, ptr %1, i64 329
-  %16 = bitcast i64 %i.ph to <8 x i8>
-  %17 = or <8 x i8> %16, <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 -128>
-  %18 = shufflevector <8 x i8> %17, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %18, ptr %i.sd, align 1, !tbaa !20
+  %10 = or i64 %i.ph, -9223372036854775808
+  %.inner542 = call i64 @llvm.bswap.i64(i64 %10)
+  store i64 %.inner542, ptr %i.sd, align 1, !tbaa !20
   br label %format_number.exit276.thread.thread512
 
 format_number.exit276.thread.thread512:           ; preds = %._crit_edge.i27.i273, %.loopexit.i264
@@ -991,10 +986,9 @@ bb.bl:                                            ; preds = %format_number.exit2
   %.20514518 = phi i32 [ %.19, %format_number.exit276.thread.thread512 ], [ -25, %bb.bl ], [ %.20514517, %.lr.ph.i288.2 ]
   %i.vc = phi i64 [ %i.se, %format_number.exit276.thread.thread512 ], [ %i.sg, %bb.bl ], [ %i.ti, %.lr.ph.i288.2 ]
   %i.vd = getelementptr inbounds nuw i8, ptr %1, i64 337
-  %19 = bitcast i64 %i.vc to <8 x i8>
-  %20 = or <8 x i8> %19, <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 -128>
-  %21 = shufflevector <8 x i8> %20, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %21, ptr %i.vd, align 1, !tbaa !20
+  %11 = or i64 %i.vc, -9223372036854775808
+  %.inner543 = call i64 @llvm.bswap.i64(i64 %11)
+  store i64 %.inner543, ptr %i.vd, align 1, !tbaa !20
   br label %format_number.exit304.thread
 
 format_number.exit304:                            ; preds = %.lr.ph27.preheader.i29.i303, %.lr.ph27.preheader.i.i284, %.preheader.i.i286
@@ -1232,6 +1226,9 @@ declare i32 @llvm.smin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #8
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

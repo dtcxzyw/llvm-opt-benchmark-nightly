@@ -204,7 +204,7 @@ bb.a:
   %i.r = alloca [9 x i8], align 1                 ; 9 uses
   %i.s = alloca [9 x i8], align 1                 ; 12 uses
   %i.t = alloca [9 x i8], align 1                 ; 4 uses
-  %i.u = alloca [8 x i8], align 4                 ; 8 uses
+  %i.u = alloca [8 x i8], align 4                 ; 5 uses
   %i.v = alloca [4 x i8], align 4                 ; 5 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 248
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !35   ; 3 uses
@@ -607,9 +607,6 @@ bb.ax:                                            ; preds = %enc_uint64.exit227
 
 .lr.ph309:                                        ; preds = %.preheader
   %i.ha = getelementptr inbounds nuw i8, ptr %i.u, i64 4
-  %7 = getelementptr inbounds nuw i8, ptr %i.u, i64 5
-  %8 = getelementptr inbounds nuw i8, ptr %i.u, i64 6
-  %9 = getelementptr inbounds nuw i8, ptr %i.u, i64 7
   %i.hb = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 3 uses
   %i.hc = getelementptr inbounds nuw i8, ptr %i.f, i64 1
   %i.hd = getelementptr inbounds nuw i8, ptr %i.f, i64 2
@@ -634,27 +631,18 @@ bb.ay:                                            ; preds = %.lr.ph309, %.crited
 
 bb.az:                                            ; preds = %bb.ay
   %i.ho = load i32, ptr %4, align 8, !tbaa !115   ; 4 uses
-  %10 = lshr i32 %i.ho, 24                        ; 2 uses
-  %11 = trunc nuw i32 %10 to i8
   store i32 0, ptr %i.u, align 4
-  store i8 %11, ptr %i.ha, align 4, !tbaa !40
-  %12 = lshr i32 %i.ho, 16
-  %13 = trunc i32 %12 to i8                       ; 2 uses
-  store i8 %13, ptr %7, align 1, !tbaa !40
-  %14 = lshr i32 %i.ho, 8
-  %15 = trunc i32 %14 to i8                       ; 2 uses
-  store i8 %15, ptr %8, align 2, !tbaa !40
-  %16 = trunc i32 %i.ho to i8
-  store i8 %16, ptr %9, align 1, !tbaa !40
-  %.not176.4 = icmp eq i32 %10, 0
+  %7 = call i32 @llvm.bswap.i32(i32 %i.ho)
+  store i32 %7, ptr %i.ha, align 4, !tbaa !40
+  %.not176.4 = icmp ult i32 %i.ho, 16777216
   br i1 %.not176.4, label %bb.ba, label %bb.bc
 
 bb.ba:                                            ; preds = %bb.az
-  %.not176.5 = icmp eq i8 %13, 0
+  %.not176.5 = icmp ult i32 %i.ho, 65536
   br i1 %.not176.5, label %bb.bb, label %bb.bc
 
 bb.bb:                                            ; preds = %bb.ba
-  %.not176.6 = icmp eq i8 %15, 0
+  %.not176.6 = icmp ult i32 %i.ho, 256
   %spec.select = select i1 %.not176.6, i32 1, i32 2
   br label %bb.bc
 
@@ -1056,6 +1044,9 @@ declare i32 @llvm.smax.i32(i32, i32) #15
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #15
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #15
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(read, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

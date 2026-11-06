@@ -202,7 +202,7 @@ _ZN12_GLOBAL__N_17GetDataEP6bio_st.exit.thread:   ; preds = %bb.a, %_ZN12_GLOBAL
 ; Function Attrs: mustprogress uwtable
 define internal noundef i32 @_ZN12_GLOBAL__N_113PacketedWriteEP6bio_stPKci(ptr noundef %0, ptr noundef %1, i32 noundef %2) #0 {
 bb.a:
-  %i.a = alloca [5 x i8], align 1                 ; 8 uses
+  %i.a = alloca [5 x i8], align 1                 ; 5 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !36
   %i.d = icmp eq ptr %i.c, null
@@ -212,21 +212,9 @@ bb.b:                                             ; preds = %bb.a
   tail call void @BIO_clear_retry_flags(ptr noundef nonnull %0)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
   store i8 80, ptr %i.a, align 1, !tbaa !19
-  %3 = lshr i32 %2, 24
-  %4 = trunc nuw i32 %3 to i8
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %4, ptr %i.e, align 1, !tbaa !19
-  %5 = lshr i32 %2, 16
-  %6 = trunc i32 %5 to i8
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %6, ptr %7, align 1, !tbaa !19
-  %8 = lshr i32 %2, 8
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %9, ptr %10, align 1, !tbaa !19
-  %11 = trunc i32 %2 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %11, ptr %12, align 1, !tbaa !19
+  %3 = tail call i32 @llvm.bswap.i32(i32 %2)
+  store i32 %3, ptr %i.e, align 1, !tbaa !19
   %i.f = load ptr, ptr %i.b, align 8, !tbaa !36
   %i.g = call i32 @BIO_write(ptr noundef %i.f, ptr noundef nonnull %i.a, i32 noundef 5) ; 2 uses
   %i.h = icmp slt i32 %i.g, 1

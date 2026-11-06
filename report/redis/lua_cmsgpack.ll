@@ -204,8 +204,8 @@ mp_buf_append.exit:                               ; preds = %._crit_edge.i, %bb.
   br label %bb.h
 
 .lr.ph.i8:                                        ; preds = %bb.a
-  %3 = bitcast double %2 to <8 x i8>
-  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  %3 = bitcast double %2 to i64
+  %4 = tail call i64 @llvm.bswap.i64(i64 %3)
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !48 ; 2 uses
   %i.ac = icmp ult i64 %i.ab, 9
@@ -250,7 +250,7 @@ mp_buf_append.exit21:                             ; preds = %._crit_edge.i16, %b
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ap, i64 %i.ao ; 2 uses
   store i8 -53, ptr %i.ar, align 1
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ar, i64 1
-  store <8 x i8> %4, ptr %.sroa.6.0..sroa_idx, align 1
+  store i64 %4, ptr %.sroa.6.0..sroa_idx, align 1
   %i.as = load <2 x i64>, ptr %i.aq, align 8, !tbaa !56
   %i.at = add <2 x i64> %i.as, <i64 9, i64 -9>
   store <2 x i64> %i.at, ptr %i.aq, align 8, !tbaa !56
@@ -329,10 +329,9 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.h
   store i8 -49, ptr %i.b, align 1, !tbaa !40
-  %3 = bitcast i64 %2 to <8 x i8>
-  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  %3 = tail call i64 @llvm.bswap.i64(i64 %2)
   %.1..1..1..sroa_idx92 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  store <8 x i8> %4, ptr %.1..1..1..sroa_idx92, align 1, !tbaa !40
+  store i64 %3, ptr %.1..1..1..sroa_idx92, align 1, !tbaa !40
   br label %bb.t
 
 bb.k:                                             ; preds = %bb.a
@@ -395,10 +394,9 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.q
   store i8 -45, ptr %i.b, align 1, !tbaa !40
-  %5 = bitcast i64 %2 to <8 x i8>
-  %6 = shufflevector <8 x i8> %5, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
+  %4 = tail call i64 @llvm.bswap.i64(i64 %2)
   %.1..1..1..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  store <8 x i8> %6, ptr %.1..1..1..sroa_idx, align 1, !tbaa !40
+  store i64 %4, ptr %.1..1..1..sroa_idx, align 1, !tbaa !40
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.l, %bb.p, %bb.s, %bb.r, %bb.n, %bb.c, %bb.g, %bb.j, %bb.i, %bb.e

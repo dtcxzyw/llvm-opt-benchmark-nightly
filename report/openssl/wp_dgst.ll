@@ -139,7 +139,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not152, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  tail call void @whirlpool_block(ptr noundef %0, ptr noundef %.1118175, i64 noundef %i.ad) #5
+  tail call void @whirlpool_block(ptr noundef %0, ptr noundef %.1118175, i64 noundef %i.ad) #6
   %i.ae = lshr i64 %.1136173, 3
   %i.af = and i64 %i.ae, 2305843009213693888
   %i.ag = getelementptr inbounds nuw i8, ptr %.1118175, i64 %i.af
@@ -161,7 +161,7 @@ bb.f:                                             ; preds = %bb.e
   %i.ap = zext nneg i32 %i.am to i64              ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.ao, ptr align 1 %.1118175, i64 %i.ap, i1 false)
   %i.aq = getelementptr inbounds nuw i8, ptr %.1118175, i64 %i.ap
-  tail call void @whirlpool_block(ptr noundef %0, ptr noundef nonnull %i.ab, i64 noundef 1) #5
+  tail call void @whirlpool_block(ptr noundef %0, ptr noundef nonnull %i.ab, i64 noundef 1) #6
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.e
@@ -213,7 +213,7 @@ bb.j:                                             ; preds = %.lr.ph210
   br i1 %i.bk, label %bb.k, label %.loopexit159
 
 bb.k:                                             ; preds = %bb.j
-  tail call void @whirlpool_block(ptr noundef nonnull %0, ptr noundef nonnull %i.x, i64 noundef 1) #5
+  tail call void @whirlpool_block(ptr noundef nonnull %0, ptr noundef nonnull %i.x, i64 noundef 1) #6
   br label %.loopexit159
 
 bb.l:                                             ; preds = %.lr.ph210
@@ -257,7 +257,7 @@ bb.p:                                             ; preds = %bb.o, %bb.n
   br i1 %i.cg, label %bb.q, label %bb.r
 
 bb.q:                                             ; preds = %bb.p
-  tail call void @whirlpool_block(ptr noundef nonnull %0, ptr noundef nonnull %i.x, i64 noundef 1) #5
+  tail call void @whirlpool_block(ptr noundef nonnull %0, ptr noundef nonnull %i.x, i64 noundef 1) #6
   %i.ch = and i32 %i.ce, 511
   br label %bb.r
 
@@ -299,7 +299,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   br i1 %i.cv, label %bb.x, label %bb.y
 
 bb.x:                                             ; preds = %bb.w
-  tail call void @whirlpool_block(ptr noundef nonnull %0, ptr noundef nonnull %i.x, i64 noundef 1) #5
+  tail call void @whirlpool_block(ptr noundef nonnull %0, ptr noundef nonnull %i.x, i64 noundef 1) #6
   br label %bb.y
 
 bb.y:                                             ; preds = %bb.x, %bb.w
@@ -391,7 +391,7 @@ bb.f:                                             ; preds = %bb.e
 
 .thread:                                          ; preds = %bb.e, %bb.f
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 64
-  tail call void @whirlpool_block(ptr noundef nonnull %1, ptr noundef nonnull %i.w, i64 noundef 1) #5
+  tail call void @whirlpool_block(ptr noundef nonnull %1, ptr noundef nonnull %i.w, i64 noundef 1) #6
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.d
@@ -410,33 +410,33 @@ bb.h:                                             ; preds = %.thread, %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 136
-  %2 = load <8 x i8>, ptr %i.ad, align 8, !tbaa !13
+  %2 = load i64, ptr %i.ad, align 8, !tbaa !13
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 120
-  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %3, ptr %i.ae, align 8, !tbaa !14
+  %3 = tail call i64 @llvm.bswap.i64(i64 %2)
+  store i64 %3, ptr %i.ae, align 8, !tbaa !14
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 144
-  %4 = load <8 x i8>, ptr %i.af, align 8, !tbaa !13
+  %4 = load i64, ptr %i.af, align 8, !tbaa !13
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 112
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %5, ptr %i.ag, align 8, !tbaa !14
+  %5 = tail call i64 @llvm.bswap.i64(i64 %4)
+  store i64 %5, ptr %i.ag, align 8, !tbaa !14
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 152
-  %6 = load <8 x i8>, ptr %i.ah, align 8, !tbaa !13
+  %6 = load i64, ptr %i.ah, align 8, !tbaa !13
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 104
-  %7 = shufflevector <8 x i8> %6, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %7, ptr %i.ai, align 8, !tbaa !14
+  %7 = tail call i64 @llvm.bswap.i64(i64 %6)
+  store i64 %7, ptr %i.ai, align 8, !tbaa !14
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 160
-  %8 = load <8 x i8>, ptr %i.aj, align 8, !tbaa !13
+  %8 = load i64, ptr %i.aj, align 8, !tbaa !13
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 96
-  %9 = shufflevector <8 x i8> %8, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %9, ptr %i.ak, align 8, !tbaa !14
+  %9 = tail call i64 @llvm.bswap.i64(i64 %8)
+  store i64 %9, ptr %i.ak, align 8, !tbaa !14
   %i.al = getelementptr inbounds nuw i8, ptr %1, i64 64
-  tail call void @whirlpool_block(ptr noundef nonnull %1, ptr noundef nonnull %i.al, i64 noundef 1) #5
+  tail call void @whirlpool_block(ptr noundef nonnull %1, ptr noundef nonnull %i.al, i64 noundef 1) #6
   %.not46 = icmp eq ptr %0, null
   br i1 %.not46, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %bb.i
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(64) %1, i64 64, i1 false)
-  tail call void @OPENSSL_cleanse(ptr noundef nonnull %1, i64 noundef 168) #5
+  tail call void @OPENSSL_cleanse(ptr noundef nonnull %1, i64 noundef 168) #6
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.i, %bb.j
@@ -450,7 +450,7 @@ declare void @OPENSSL_cleanse(ptr noundef, i64 noundef) local_unnamed_addr #4
 define noundef nonnull ptr @WHIRLPOOL(ptr noundef %0, i64 noundef %1, ptr nofree noundef writeonly captures(address_is_null, ret: address, provenance) %2) local_unnamed_addr #2 {
 bb.a:
   %3 = alloca %struct.WHIRLPOOL_CTX, align 8      ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %3) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %3) #6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(168) %3, i8 0, i64 168, i1 false)
   %i.a = icmp ugt i64 %1, 1152921504606846975
   br i1 %i.a, label %.lr.ph.i, label %._crit_edge.i
@@ -479,16 +479,20 @@ WHIRLPOOL_Update.exit:                            ; preds = %._crit_edge.i, %bb.
   %i.f = icmp eq ptr %2, null
   %spec.store.select = select i1 %i.f, ptr @WHIRLPOOL.m, ptr %2 ; 2 uses
   %i.g = call i32 @WHIRLPOOL_Final(ptr noundef nonnull %spec.store.select, ptr noundef nonnull %3) ; 0 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %3) #5
+  call void @llvm.lifetime.end.p0(ptr nonnull %3) #6
   ret ptr %spec.store.select
 }
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #5
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #2 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #4 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { nounwind }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!1, !2}
 !llvm.ident = !{!3}

@@ -204,7 +204,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   %i.q = phi ptr [ %i.p, %bb.d ], [ null, %bb.c ] ; 7 uses
   %i.r = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.b) #17 ; 2 uses
   %i.s = trunc i64 %i.r to i32
-  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 3 ; 4 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 3 ; 3 uses
   store i8 -1, ptr %i.t, align 1, !tbaa !19
   %i.u = call i32 @av_strcasecmp(ptr noundef nonnull %i.b, ptr noundef nonnull @.str.2) #15
   %.not77 = icmp eq i32 %i.u, 0
@@ -216,20 +216,9 @@ bb.f:                                             ; preds = %bb.e
   br i1 %.not78, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f, %bb.e
-  %i.w = call i32 @av_get_random_seed() #15       ; 4 uses
-  %4 = lshr i32 %i.w, 24
-  %5 = trunc nuw i32 %4 to i8
-  store i8 %5, ptr %0, align 1, !tbaa !19
-  %6 = lshr i32 %i.w, 16
-  %7 = trunc i32 %6 to i8
-  %8 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %7, ptr %8, align 1, !tbaa !19
-  %9 = lshr i32 %i.w, 8
-  %10 = trunc i32 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i8 %10, ptr %11, align 1, !tbaa !19
-  %12 = trunc i32 %i.w to i8
-  store i8 %12, ptr %i.t, align 1, !tbaa !19
+  %i.w = call i32 @av_get_random_seed() #15
+  %4 = call i32 @llvm.bswap.i32(i32 %i.w)
+  store i32 %4, ptr %0, align 1, !tbaa !19
   br label %bb.r
 
 bb.h:                                             ; preds = %bb.f
@@ -631,6 +620,9 @@ declare i32 @av_strncasecmp(ptr noundef, ptr noundef, i64 noundef) local_unnamed
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #14
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #14
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-signed-zeros-fp-math"="true" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

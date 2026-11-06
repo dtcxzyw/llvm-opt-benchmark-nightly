@@ -205,27 +205,15 @@ common.resume:                                    ; preds = %bb.f, %bb.g
 
 _ZNSt3__16vectorIhNS_9allocatorIhEEEC2Em.exit:    ; preds = %bb.a
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %0, i8 0, i64 24, i1 false)
-  %i.v = tail call noalias noundef nonnull dereferenceable(4) ptr @_Znwm(i64 noundef 4) #38 ; 6 uses
+  %i.v = tail call noalias noundef nonnull dereferenceable(4) ptr @_Znwm(i64 noundef 4) #38 ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 8
   store ptr %i.v, ptr %0, align 8, !tbaa !37
   %i.x = getelementptr inbounds nuw i8, ptr %i.v, i64 4 ; 2 uses
   store ptr %i.x, ptr %i.d, align 8, !tbaa !39
   store ptr %i.x, ptr %i.w, align 8, !tbaa !38
-  %i.y = load i32, ptr %i.a, align 8, !tbaa !36   ; 4 uses
-  %2 = lshr i32 %i.y, 24
-  %3 = trunc nuw i32 %2 to i8
-  store i8 %3, ptr %i.v, align 1, !tbaa !40
-  %4 = lshr i32 %i.y, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.v, i64 1
-  store i8 %5, ptr %6, align 1, !tbaa !40
-  %7 = lshr i32 %i.y, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.v, i64 2
-  store i8 %8, ptr %9, align 1, !tbaa !40
-  %10 = trunc i32 %i.y to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.v, i64 3
-  store i8 %10, ptr %11, align 1, !tbaa !40
+  %i.y = load i32, ptr %i.a, align 8, !tbaa !36
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.y)
+  store i32 %2, ptr %i.v, align 1, !tbaa !40
   br label %_ZNSt3__16vectorIhNS_9allocatorIhEEEC2ERKS3_.exit
 
 _ZNSt3__16vectorIhNS_9allocatorIhEEEC2ERKS3_.exit: ; preds = %_ZNSt3__16vectorIhNS_9allocatorIhEEE18__construct_at_endIPhS5_EEvT_T0_m.exit.i.i, %bb.b, %_ZNSt3__16vectorIhNS_9allocatorIhEEEC2Em.exit
@@ -626,6 +614,9 @@ declare i64 @llvm.umin.i64(i64, i64) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #23
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #23
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <2 x double> @llvm.fmuladd.v2f64(<2 x double>, <2 x double>, <2 x double>) #23

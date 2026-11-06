@@ -17,12 +17,12 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: mustprogress nofree nounwind uwtable
 define noundef zeroext i1 @_ZN7msdfgen8saveRgbaENS_18BitmapConstSectionIhLi1EEEPKc(ptr nofree noundef byval(%"struct.msdfgen::BitmapConstSection") align 8 captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca [12 x i8], align 4                ; 12 uses
+  %i.a = alloca [12 x i8], align 4                ; 6 uses
   %i.b = alloca [4 x i8], align 4                 ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !19   ; 6 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !19   ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !20   ; 7 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !20   ; 4 uses
   %i.g = tail call noalias ptr @fopen(ptr noundef %1, ptr noundef nonnull @.str) ; 4 uses
   %.not.i = icmp ne ptr %i.g, null                ; 2 uses
   br i1 %.not.i, label %bb.b, label %_ZN7msdfgen14RgbaFileOutputD2Ev.exit16
@@ -30,36 +30,12 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   store i32 1094862674, ptr %i.a, align 4
-  %2 = lshr i32 %i.d, 24
-  %3 = trunc nuw i32 %2 to i8
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %3, ptr %i.h, align 4, !tbaa !11
-  %4 = lshr i32 %i.d, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %5, ptr %6, align 1, !tbaa !11
-  %7 = lshr i32 %i.d, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %8, ptr %9, align 2, !tbaa !11
-  %10 = trunc i32 %i.d to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  store i8 %10, ptr %11, align 1, !tbaa !11
-  %12 = lshr i32 %i.f, 24
-  %13 = trunc nuw i32 %12 to i8
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.d)
+  store i32 %2, ptr %i.h, align 4, !tbaa !11
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i8 %13, ptr %i.i, align 4, !tbaa !11
-  %14 = lshr i32 %i.f, 16
-  %15 = trunc i32 %14 to i8
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  store i8 %15, ptr %16, align 1, !tbaa !11
-  %17 = lshr i32 %i.f, 8
-  %18 = trunc i32 %17 to i8
-  %19 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  store i8 %18, ptr %19, align 2, !tbaa !11
-  %20 = trunc i32 %i.f to i8
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 11
-  store i8 %20, ptr %21, align 1, !tbaa !11
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.f)
+  store i32 %3, ptr %i.i, align 4, !tbaa !11
   %i.j = call i64 @fwrite(ptr noundef nonnull %i.a, i64 noundef 1, i64 noundef 12, ptr noundef nonnull %i.g) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #4
@@ -141,12 +117,12 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress nofree nounwind uwtable
 define noundef zeroext i1 @_ZN7msdfgen8saveRgbaENS_18BitmapConstSectionIhLi3EEEPKc(ptr nofree noundef byval(%"struct.msdfgen::BitmapConstSection.0") align 8 captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca [12 x i8], align 4                ; 12 uses
+  %i.a = alloca [12 x i8], align 4                ; 6 uses
   %i.b = alloca [4 x i8], align 4                 ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !27   ; 6 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !27   ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !28   ; 7 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !28   ; 4 uses
   %i.g = tail call noalias ptr @fopen(ptr noundef %1, ptr noundef nonnull @.str) ; 4 uses
   %.not.i = icmp ne ptr %i.g, null                ; 2 uses
   br i1 %.not.i, label %bb.b, label %_ZN7msdfgen14RgbaFileOutputD2Ev.exit18
@@ -154,36 +130,12 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   store i32 1094862674, ptr %i.a, align 4
-  %2 = lshr i32 %i.d, 24
-  %3 = trunc nuw i32 %2 to i8
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %3, ptr %i.h, align 4, !tbaa !11
-  %4 = lshr i32 %i.d, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %5, ptr %6, align 1, !tbaa !11
-  %7 = lshr i32 %i.d, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %8, ptr %9, align 2, !tbaa !11
-  %10 = trunc i32 %i.d to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  store i8 %10, ptr %11, align 1, !tbaa !11
-  %12 = lshr i32 %i.f, 24
-  %13 = trunc nuw i32 %12 to i8
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.d)
+  store i32 %2, ptr %i.h, align 4, !tbaa !11
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i8 %13, ptr %i.i, align 4, !tbaa !11
-  %14 = lshr i32 %i.f, 16
-  %15 = trunc i32 %14 to i8
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  store i8 %15, ptr %16, align 1, !tbaa !11
-  %17 = lshr i32 %i.f, 8
-  %18 = trunc i32 %17 to i8
-  %19 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  store i8 %18, ptr %19, align 2, !tbaa !11
-  %20 = trunc i32 %i.f to i8
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 11
-  store i8 %20, ptr %21, align 1, !tbaa !11
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.f)
+  store i32 %3, ptr %i.i, align 4, !tbaa !11
   %i.j = call i64 @fwrite(ptr noundef nonnull %i.a, i64 noundef 1, i64 noundef 12, ptr noundef nonnull %i.g) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #4
@@ -262,11 +214,11 @@ _ZN7msdfgen14RgbaFileOutputD2Ev.exit18:           ; preds = %bb.a, %_ZN7msdfgen1
 ; Function Attrs: mustprogress nofree nounwind uwtable
 define noundef zeroext i1 @_ZN7msdfgen8saveRgbaENS_18BitmapConstSectionIhLi4EEEPKc(ptr nofree noundef byval(%"struct.msdfgen::BitmapConstSection.1") align 8 captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca [12 x i8], align 4                ; 12 uses
+  %i.a = alloca [12 x i8], align 4                ; 6 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.c = load i32, ptr %i.b, align 8, !tbaa !34   ; 5 uses
+  %i.c = load i32, ptr %i.b, align 8, !tbaa !34   ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !35   ; 7 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !35   ; 4 uses
   %i.f = tail call noalias ptr @fopen(ptr noundef %1, ptr noundef nonnull @.str) ; 4 uses
   %.not.i = icmp ne ptr %i.f, null                ; 2 uses
   br i1 %.not.i, label %bb.b, label %_ZN7msdfgen14RgbaFileOutputD2Ev.exit
@@ -274,36 +226,12 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   store i32 1094862674, ptr %i.a, align 4
-  %2 = lshr i32 %i.c, 24
-  %3 = trunc nuw i32 %2 to i8
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %3, ptr %i.g, align 4, !tbaa !11
-  %4 = lshr i32 %i.c, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %5, ptr %6, align 1, !tbaa !11
-  %7 = lshr i32 %i.c, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %8, ptr %9, align 2, !tbaa !11
-  %10 = trunc i32 %i.c to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  store i8 %10, ptr %11, align 1, !tbaa !11
-  %12 = lshr i32 %i.e, 24
-  %13 = trunc nuw i32 %12 to i8
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.c)
+  store i32 %2, ptr %i.g, align 4, !tbaa !11
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i8 %13, ptr %i.h, align 4, !tbaa !11
-  %14 = lshr i32 %i.e, 16
-  %15 = trunc i32 %14 to i8
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  store i8 %15, ptr %16, align 1, !tbaa !11
-  %17 = lshr i32 %i.e, 8
-  %18 = trunc i32 %17 to i8
-  %19 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  store i8 %18, ptr %19, align 2, !tbaa !11
-  %20 = trunc i32 %i.e to i8
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 11
-  store i8 %20, ptr %21, align 1, !tbaa !11
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.e)
+  store i32 %3, ptr %i.h, align 4, !tbaa !11
   %i.i = call i64 @fwrite(ptr noundef nonnull %i.a, i64 noundef 1, i64 noundef 12, ptr noundef nonnull %i.f) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 20
@@ -361,12 +289,12 @@ declare noundef i64 @fwrite(ptr noundef readonly captures(none), i64 noundef, i6
 ; Function Attrs: mustprogress nofree nounwind uwtable
 define noundef zeroext i1 @_ZN7msdfgen8saveRgbaENS_18BitmapConstSectionIfLi1EEEPKc(ptr nofree noundef byval(%"struct.msdfgen::BitmapConstSection.2") align 8 captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca [12 x i8], align 4                ; 12 uses
+  %i.a = alloca [12 x i8], align 4                ; 6 uses
   %i.b = alloca [4 x i8], align 4                 ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !42   ; 6 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !42   ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !43   ; 7 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !43   ; 4 uses
   %i.g = tail call noalias ptr @fopen(ptr noundef %1, ptr noundef nonnull @.str) ; 4 uses
   %.not.i = icmp ne ptr %i.g, null                ; 2 uses
   br i1 %.not.i, label %bb.b, label %_ZN7msdfgen14RgbaFileOutputD2Ev.exit16
@@ -374,36 +302,12 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   store i32 1094862674, ptr %i.a, align 4
-  %2 = lshr i32 %i.d, 24
-  %3 = trunc nuw i32 %2 to i8
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %3, ptr %i.h, align 4, !tbaa !11
-  %4 = lshr i32 %i.d, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %5, ptr %6, align 1, !tbaa !11
-  %7 = lshr i32 %i.d, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %8, ptr %9, align 2, !tbaa !11
-  %10 = trunc i32 %i.d to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  store i8 %10, ptr %11, align 1, !tbaa !11
-  %12 = lshr i32 %i.f, 24
-  %13 = trunc nuw i32 %12 to i8
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.d)
+  store i32 %2, ptr %i.h, align 4, !tbaa !11
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i8 %13, ptr %i.i, align 4, !tbaa !11
-  %14 = lshr i32 %i.f, 16
-  %15 = trunc i32 %14 to i8
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  store i8 %15, ptr %16, align 1, !tbaa !11
-  %17 = lshr i32 %i.f, 8
-  %18 = trunc i32 %17 to i8
-  %19 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  store i8 %18, ptr %19, align 2, !tbaa !11
-  %20 = trunc i32 %i.f to i8
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 11
-  store i8 %20, ptr %21, align 1, !tbaa !11
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.f)
+  store i32 %3, ptr %i.i, align 4, !tbaa !11
   %i.j = call i64 @fwrite(ptr noundef nonnull %i.a, i64 noundef 1, i64 noundef 12, ptr noundef nonnull %i.g) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #4
@@ -488,12 +392,12 @@ _ZN7msdfgen14RgbaFileOutputD2Ev.exit16:           ; preds = %bb.a, %_ZN7msdfgen1
 ; Function Attrs: mustprogress nofree nounwind uwtable
 define noundef zeroext i1 @_ZN7msdfgen8saveRgbaENS_18BitmapConstSectionIfLi3EEEPKc(ptr nofree noundef byval(%"struct.msdfgen::BitmapConstSection.3") align 8 captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca [12 x i8], align 4                ; 12 uses
+  %i.a = alloca [12 x i8], align 4                ; 6 uses
   %i.b = alloca [4 x i8], align 4                 ; 7 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !50   ; 6 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !50   ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !51   ; 7 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !51   ; 4 uses
   %i.g = tail call noalias ptr @fopen(ptr noundef %1, ptr noundef nonnull @.str) ; 4 uses
   %.not.i = icmp ne ptr %i.g, null                ; 2 uses
   br i1 %.not.i, label %bb.b, label %_ZN7msdfgen14RgbaFileOutputD2Ev.exit20
@@ -501,36 +405,12 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   store i32 1094862674, ptr %i.a, align 4
-  %2 = lshr i32 %i.d, 24
-  %3 = trunc nuw i32 %2 to i8
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %3, ptr %i.h, align 4, !tbaa !11
-  %4 = lshr i32 %i.d, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %5, ptr %6, align 1, !tbaa !11
-  %7 = lshr i32 %i.d, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %8, ptr %9, align 2, !tbaa !11
-  %10 = trunc i32 %i.d to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  store i8 %10, ptr %11, align 1, !tbaa !11
-  %12 = lshr i32 %i.f, 24
-  %13 = trunc nuw i32 %12 to i8
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.d)
+  store i32 %2, ptr %i.h, align 4, !tbaa !11
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i8 %13, ptr %i.i, align 4, !tbaa !11
-  %14 = lshr i32 %i.f, 16
-  %15 = trunc i32 %14 to i8
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  store i8 %15, ptr %16, align 1, !tbaa !11
-  %17 = lshr i32 %i.f, 8
-  %18 = trunc i32 %17 to i8
-  %19 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  store i8 %18, ptr %19, align 2, !tbaa !11
-  %20 = trunc i32 %i.f to i8
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 11
-  store i8 %20, ptr %21, align 1, !tbaa !11
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.f)
+  store i32 %3, ptr %i.i, align 4, !tbaa !11
   %i.j = call i64 @fwrite(ptr noundef nonnull %i.a, i64 noundef 1, i64 noundef 12, ptr noundef nonnull %i.g) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #4
@@ -640,12 +520,12 @@ _ZN7msdfgen14RgbaFileOutputD2Ev.exit20:           ; preds = %bb.a, %_ZN7msdfgen1
 ; Function Attrs: mustprogress nofree nounwind uwtable
 define noundef zeroext i1 @_ZN7msdfgen8saveRgbaENS_18BitmapConstSectionIfLi4EEEPKc(ptr nofree noundef byval(%"struct.msdfgen::BitmapConstSection.4") align 8 captures(none) %0, ptr nofree noundef readonly captures(none) %1) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = alloca [12 x i8], align 4                ; 12 uses
+  %i.a = alloca [12 x i8], align 4                ; 6 uses
   %i.b = alloca [4 x i8], align 4                 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.d = load i32, ptr %i.c, align 8, !tbaa !58   ; 6 uses
+  %i.d = load i32, ptr %i.c, align 8, !tbaa !58   ; 3 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !59   ; 7 uses
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !59   ; 4 uses
   %i.g = tail call noalias ptr @fopen(ptr noundef %1, ptr noundef nonnull @.str) ; 4 uses
   %.not.i = icmp ne ptr %i.g, null                ; 2 uses
   br i1 %.not.i, label %bb.b, label %_ZN7msdfgen14RgbaFileOutputD2Ev.exit22
@@ -653,36 +533,12 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   store i32 1094862674, ptr %i.a, align 4
-  %2 = lshr i32 %i.d, 24
-  %3 = trunc nuw i32 %2 to i8
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %3, ptr %i.h, align 4, !tbaa !11
-  %4 = lshr i32 %i.d, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %5, ptr %6, align 1, !tbaa !11
-  %7 = lshr i32 %i.d, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %8, ptr %9, align 2, !tbaa !11
-  %10 = trunc i32 %i.d to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  store i8 %10, ptr %11, align 1, !tbaa !11
-  %12 = lshr i32 %i.f, 24
-  %13 = trunc nuw i32 %12 to i8
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.d)
+  store i32 %2, ptr %i.h, align 4, !tbaa !11
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  store i8 %13, ptr %i.i, align 4, !tbaa !11
-  %14 = lshr i32 %i.f, 16
-  %15 = trunc i32 %14 to i8
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 9
-  store i8 %15, ptr %16, align 1, !tbaa !11
-  %17 = lshr i32 %i.f, 8
-  %18 = trunc i32 %17 to i8
-  %19 = getelementptr inbounds nuw i8, ptr %i.a, i64 10
-  store i8 %18, ptr %19, align 2, !tbaa !11
-  %20 = trunc i32 %i.f to i8
-  %21 = getelementptr inbounds nuw i8, ptr %i.a, i64 11
-  store i8 %20, ptr %21, align 1, !tbaa !11
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.f)
+  store i32 %3, ptr %i.i, align 4, !tbaa !11
   %i.j = call i64 @fwrite(ptr noundef nonnull %i.a, i64 noundef 1, i64 noundef 12, ptr noundef nonnull %i.g) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #4
@@ -768,6 +624,9 @@ declare noundef i32 @fclose(ptr noundef captures(none)) local_unnamed_addr #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare float @llvm.fmuladd.f32(float, float, float) #3
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #3

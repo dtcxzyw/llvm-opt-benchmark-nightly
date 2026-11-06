@@ -204,12 +204,10 @@ bb.c:                                             ; preds = %.lr.ph, %_ZN2cm6app
   br i1 %i.v, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %4 = bitcast i64 %i.r to <8 x i8>
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %5, ptr %3, align 8, !tbaa !22
-  %6 = bitcast i64 %i.t to <8 x i8>
-  %7 = shufflevector <8 x i8> %6, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %7, ptr %i.n, align 8, !tbaa !22
+  %4 = call i64 @llvm.bswap.i64(i64 %i.r)
+  store i64 %4, ptr %3, align 8, !tbaa !22
+  %5 = call i64 @llvm.bswap.i64(i64 %i.t)
+  store i64 %5, ptr %i.n, align 8, !tbaa !22
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
@@ -611,6 +609,9 @@ declare i64 @llvm.umax.i64(i64, i64) #18
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i16 @llvm.umax.i16(i16, i16) #18
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #18
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
