@@ -204,24 +204,23 @@ _ZN8simdjson7haswell12_GLOBAL__N_16stage113json_minifier4stepILm128EEEvPKhRNS2_1
   %i.dw = zext i8 %i.dv to i64
   %i.dx = shl nuw nsw i64 %i.dt, 3
   %i.dy = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internalL20pshufb_combine_tableE, i64 %i.dx
-  %5 = load <4 x i32>, ptr %i.dy, align 8, !tbaa !36
+  %5 = load <2 x i64>, ptr %i.dy, align 8, !tbaa !36
   %i.dz = shl nuw nsw i64 %i.dw, 3
   %i.ea = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internalL20pshufb_combine_tableE, i64 %i.dz
-  %6 = load <4 x i32>, ptr %i.ea, align 8, !tbaa !36
-  %7 = shufflevector <4 x i32> %5, <4 x i32> %6, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.eb = bitcast <8 x i32> %7 to <32 x i8>
-  %i.ec = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %i.dq, <32 x i8> %i.eb) ; 2 uses
-  %i.ed = bitcast <32 x i8> %i.ec to <4 x i64>
+  %6 = load <2 x i64>, ptr %i.ea, align 8, !tbaa !36
+  %7 = shufflevector <2 x i64> %5, <2 x i64> %6, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.eb = bitcast <4 x i64> %7 to <32 x i8>
+  %i.ec = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %i.dq, <32 x i8> %i.eb)
+  %i.ed = bitcast <32 x i8> %i.ec to <4 x i64>    ; 2 uses
   %i.ee = shufflevector <4 x i64> %i.ed, <4 x i64> poison, <2 x i32> <i32 0, i32 1>
   store <2 x i64> %i.ee, ptr %.sroa.41.0614.i, align 1, !tbaa !36
-  %8 = bitcast <32 x i8> %i.ec to <8 x i32>
-  %9 = shufflevector <8 x i32> %8, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %8 = shufflevector <4 x i64> %i.ed, <4 x i64> poison, <2 x i32> <i32 2, i32 3>
   %i.ef = getelementptr inbounds nuw i8, ptr %.sroa.41.0614.i, i64 16
   %i.eg = and i64 %i.ct, 65535
   %i.eh = tail call noundef range(i64 0, 17) i64 @llvm.ctpop.i64(i64 %i.eg)
   %i.ei = sub nsw i64 0, %i.eh
   %i.ej = getelementptr inbounds i8, ptr %i.ef, i64 %i.ei
-  store <4 x i32> %9, ptr %i.ej, align 1, !tbaa !36
+  store <2 x i64> %8, ptr %i.ej, align 1, !tbaa !36
   %i.ek = getelementptr inbounds nuw i8, ptr %.sroa.41.0614.i, i64 32
   %i.el = and i64 %i.ct, 4294967295
   %i.em = tail call noundef range(i64 0, 33) i64 @llvm.ctpop.i64(i64 %i.el)
@@ -256,24 +255,23 @@ _ZN8simdjson7haswell12_GLOBAL__N_16stage113json_minifier4stepILm128EEEvPKhRNS2_1
   %i.fp = zext i8 %i.fo to i64
   %i.fq = shl nuw nsw i64 %i.fm, 3
   %i.fr = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internalL20pshufb_combine_tableE, i64 %i.fq
-  %10 = load <4 x i32>, ptr %i.fr, align 8, !tbaa !36
+  %9 = load <2 x i64>, ptr %i.fr, align 8, !tbaa !36
   %i.fs = shl nuw nsw i64 %i.fp, 3
   %i.ft = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internalL20pshufb_combine_tableE, i64 %i.fs
-  %11 = load <4 x i32>, ptr %i.ft, align 8, !tbaa !36
-  %12 = shufflevector <4 x i32> %10, <4 x i32> %11, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.fu = bitcast <8 x i32> %12 to <32 x i8>
-  %i.fv = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %i.fj, <32 x i8> %i.fu) ; 2 uses
-  %i.fw = bitcast <32 x i8> %i.fv to <4 x i64>
+  %10 = load <2 x i64>, ptr %i.ft, align 8, !tbaa !36
+  %11 = shufflevector <2 x i64> %9, <2 x i64> %10, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.fu = bitcast <4 x i64> %11 to <32 x i8>
+  %i.fv = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %i.fj, <32 x i8> %i.fu)
+  %i.fw = bitcast <32 x i8> %i.fv to <4 x i64>    ; 2 uses
   %i.fx = shufflevector <4 x i64> %i.fw, <4 x i64> poison, <2 x i32> <i32 0, i32 1>
   store <2 x i64> %i.fx, ptr %i.eo, align 1, !tbaa !36
-  %13 = bitcast <32 x i8> %i.fv to <8 x i32>
-  %14 = shufflevector <8 x i32> %13, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %12 = shufflevector <4 x i64> %i.fw, <4 x i64> poison, <2 x i32> <i32 2, i32 3>
   %i.fy = getelementptr inbounds nuw i8, ptr %i.eo, i64 16
   %i.fz = and i64 %i.cu, 65535
   %i.ga = tail call noundef range(i64 0, 17) i64 @llvm.ctpop.i64(i64 %i.fz)
   %i.gb = sub nsw i64 0, %i.ga
   %i.gc = getelementptr inbounds i8, ptr %i.fy, i64 %i.gb
-  store <4 x i32> %14, ptr %i.gc, align 1, !tbaa !36
+  store <2 x i64> %12, ptr %i.gc, align 1, !tbaa !36
   %i.gd = xor i64 %i.ct, -1
   %i.ge = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.gd)
   %i.gf = getelementptr inbounds nuw i8, ptr %.sroa.41.0614.i, i64 %i.ge ; 4 uses
@@ -310,24 +308,23 @@ _ZN8simdjson7haswell12_GLOBAL__N_16stage113json_minifier4stepILm128EEEvPKhRNS2_1
   %i.hk = zext i8 %i.hj to i64
   %i.hl = shl nuw nsw i64 %i.hh, 3
   %i.hm = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internalL20pshufb_combine_tableE, i64 %i.hl
-  %15 = load <4 x i32>, ptr %i.hm, align 8, !tbaa !36
+  %13 = load <2 x i64>, ptr %i.hm, align 8, !tbaa !36
   %i.hn = shl nuw nsw i64 %i.hk, 3
   %i.ho = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internalL20pshufb_combine_tableE, i64 %i.hn
-  %16 = load <4 x i32>, ptr %i.ho, align 8, !tbaa !36
-  %17 = shufflevector <4 x i32> %15, <4 x i32> %16, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.hp = bitcast <8 x i32> %17 to <32 x i8>
-  %i.hq = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %i.he, <32 x i8> %i.hp) ; 2 uses
-  %i.hr = bitcast <32 x i8> %i.hq to <4 x i64>
+  %14 = load <2 x i64>, ptr %i.ho, align 8, !tbaa !36
+  %15 = shufflevector <2 x i64> %13, <2 x i64> %14, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.hp = bitcast <4 x i64> %15 to <32 x i8>
+  %i.hq = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %i.he, <32 x i8> %i.hp)
+  %i.hr = bitcast <32 x i8> %i.hq to <4 x i64>    ; 2 uses
   %i.hs = shufflevector <4 x i64> %i.hr, <4 x i64> poison, <2 x i32> <i32 0, i32 1>
   store <2 x i64> %i.hs, ptr %i.gf, align 1, !tbaa !36
-  %18 = bitcast <32 x i8> %i.hq to <8 x i32>
-  %19 = shufflevector <8 x i32> %18, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %16 = shufflevector <4 x i64> %i.hr, <4 x i64> poison, <2 x i32> <i32 2, i32 3>
   %i.ht = getelementptr inbounds nuw i8, ptr %i.gf, i64 16
   %i.hu = and i64 %i.gh, 65535
   %i.hv = tail call noundef range(i64 0, 17) i64 @llvm.ctpop.i64(i64 %i.hu)
   %i.hw = sub nsw i64 0, %i.hv
   %i.hx = getelementptr inbounds i8, ptr %i.ht, i64 %i.hw
-  store <4 x i32> %19, ptr %i.hx, align 1, !tbaa !36
+  store <2 x i64> %16, ptr %i.hx, align 1, !tbaa !36
   %i.hy = getelementptr inbounds nuw i8, ptr %i.gf, i64 32
   %i.hz = and i64 %i.gh, 4294967295
   %i.ia = tail call noundef range(i64 0, 33) i64 @llvm.ctpop.i64(i64 %i.hz)
@@ -362,24 +359,23 @@ _ZN8simdjson7haswell12_GLOBAL__N_16stage113json_minifier4stepILm128EEEvPKhRNS2_1
   %i.jd = zext i8 %i.jc to i64
   %i.je = shl nuw nsw i64 %i.ja, 3
   %i.jf = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internalL20pshufb_combine_tableE, i64 %i.je
-  %20 = load <4 x i32>, ptr %i.jf, align 8, !tbaa !36
+  %17 = load <2 x i64>, ptr %i.jf, align 8, !tbaa !36
   %i.jg = shl nuw nsw i64 %i.jd, 3
   %i.jh = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internalL20pshufb_combine_tableE, i64 %i.jg
-  %21 = load <4 x i32>, ptr %i.jh, align 8, !tbaa !36
-  %22 = shufflevector <4 x i32> %20, <4 x i32> %21, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.ji = bitcast <8 x i32> %22 to <32 x i8>
-  %i.jj = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %i.ix, <32 x i8> %i.ji) ; 2 uses
-  %i.jk = bitcast <32 x i8> %i.jj to <4 x i64>
+  %18 = load <2 x i64>, ptr %i.jh, align 8, !tbaa !36
+  %19 = shufflevector <2 x i64> %17, <2 x i64> %18, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.ji = bitcast <4 x i64> %19 to <32 x i8>
+  %i.jj = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %i.ix, <32 x i8> %i.ji)
+  %i.jk = bitcast <32 x i8> %i.jj to <4 x i64>    ; 2 uses
   %i.jl = shufflevector <4 x i64> %i.jk, <4 x i64> poison, <2 x i32> <i32 0, i32 1>
   store <2 x i64> %i.jl, ptr %i.ic, align 1, !tbaa !36
-  %23 = bitcast <32 x i8> %i.jj to <8 x i32>
-  %24 = shufflevector <8 x i32> %23, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %20 = shufflevector <4 x i64> %i.jk, <4 x i64> poison, <2 x i32> <i32 2, i32 3>
   %i.jm = getelementptr inbounds nuw i8, ptr %i.ic, i64 16
   %i.jn = and i64 %i.gi, 65535
   %i.jo = tail call noundef range(i64 0, 17) i64 @llvm.ctpop.i64(i64 %i.jn)
   %i.jp = sub nsw i64 0, %i.jo
   %i.jq = getelementptr inbounds i8, ptr %i.jm, i64 %i.jp
-  store <4 x i32> %24, ptr %i.jq, align 1, !tbaa !36
+  store <2 x i64> %20, ptr %i.jq, align 1, !tbaa !36
   %i.jr = xor i64 %i.gh, -1
   %i.js = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.jr)
   %i.jt = getelementptr inbounds nuw i8, ptr %i.gf, i64 %i.js ; 2 uses
@@ -543,24 +539,23 @@ _ZN8simdjson7haswell12_GLOBAL__N_16stage113json_minifier4stepILm128EEEvPKhRNS2_1
   %i.oj = zext i8 %i.oi to i64
   %i.ok = shl nuw nsw i64 %i.og, 3
   %i.ol = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internalL20pshufb_combine_tableE, i64 %i.ok
-  %25 = load <4 x i32>, ptr %i.ol, align 8, !tbaa !36
+  %21 = load <2 x i64>, ptr %i.ol, align 8, !tbaa !36
   %i.om = shl nuw nsw i64 %i.oj, 3
   %i.on = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internalL20pshufb_combine_tableE, i64 %i.om
-  %26 = load <4 x i32>, ptr %i.on, align 8, !tbaa !36
-  %27 = shufflevector <4 x i32> %25, <4 x i32> %26, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.oo = bitcast <8 x i32> %27 to <32 x i8>
-  %i.op = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %i.od, <32 x i8> %i.oo) ; 2 uses
-  %i.oq = bitcast <32 x i8> %i.op to <4 x i64>
+  %22 = load <2 x i64>, ptr %i.on, align 8, !tbaa !36
+  %23 = shufflevector <2 x i64> %21, <2 x i64> %22, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.oo = bitcast <4 x i64> %23 to <32 x i8>
+  %i.op = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %i.od, <32 x i8> %i.oo)
+  %i.oq = bitcast <32 x i8> %i.op to <4 x i64>    ; 2 uses
   %i.or = shufflevector <4 x i64> %i.oq, <4 x i64> poison, <2 x i32> <i32 0, i32 1>
   store <2 x i64> %i.or, ptr %i.b, align 16, !tbaa !36
-  %28 = bitcast <32 x i8> %i.op to <8 x i32>
-  %29 = shufflevector <8 x i32> %28, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %24 = shufflevector <4 x i64> %i.oq, <4 x i64> poison, <2 x i32> <i32 2, i32 3>
   %i.os = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   %i.ot = and i64 %i.ng, 65535
   %i.ou = tail call noundef range(i64 0, 17) i64 @llvm.ctpop.i64(i64 %i.ot)
   %i.ov = sub nsw i64 0, %i.ou
   %i.ow = getelementptr inbounds i8, ptr %i.os, i64 %i.ov
-  store <4 x i32> %29, ptr %i.ow, align 1, !tbaa !36
+  store <2 x i64> %24, ptr %i.ow, align 1, !tbaa !36
   %i.ox = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   %i.oy = and i64 %i.ng, 4294967295
   %i.oz = tail call noundef range(i64 0, 33) i64 @llvm.ctpop.i64(i64 %i.oy)
@@ -595,24 +590,23 @@ _ZN8simdjson7haswell12_GLOBAL__N_16stage113json_minifier4stepILm128EEEvPKhRNS2_1
   %i.qc = zext i8 %i.qb to i64
   %i.qd = shl nuw nsw i64 %i.pz, 3
   %i.qe = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internalL20pshufb_combine_tableE, i64 %i.qd
-  %30 = load <4 x i32>, ptr %i.qe, align 8, !tbaa !36
+  %25 = load <2 x i64>, ptr %i.qe, align 8, !tbaa !36
   %i.qf = shl nuw nsw i64 %i.qc, 3
   %i.qg = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internalL20pshufb_combine_tableE, i64 %i.qf
-  %31 = load <4 x i32>, ptr %i.qg, align 8, !tbaa !36
-  %32 = shufflevector <4 x i32> %30, <4 x i32> %31, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.qh = bitcast <8 x i32> %32 to <32 x i8>
-  %i.qi = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %i.pw, <32 x i8> %i.qh) ; 2 uses
-  %i.qj = bitcast <32 x i8> %i.qi to <4 x i64>
+  %26 = load <2 x i64>, ptr %i.qg, align 8, !tbaa !36
+  %27 = shufflevector <2 x i64> %25, <2 x i64> %26, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.qh = bitcast <4 x i64> %27 to <32 x i8>
+  %i.qi = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %i.pw, <32 x i8> %i.qh)
+  %i.qj = bitcast <32 x i8> %i.qi to <4 x i64>    ; 2 uses
   %i.qk = shufflevector <4 x i64> %i.qj, <4 x i64> poison, <2 x i32> <i32 0, i32 1>
   store <2 x i64> %i.qk, ptr %i.pb, align 1, !tbaa !36
-  %33 = bitcast <32 x i8> %i.qi to <8 x i32>
-  %34 = shufflevector <8 x i32> %33, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %28 = shufflevector <4 x i64> %i.qj, <4 x i64> poison, <2 x i32> <i32 2, i32 3>
   %i.ql = getelementptr inbounds nuw i8, ptr %i.pb, i64 16
   %i.qm = and i64 %i.nh, 65535
   %i.qn = tail call noundef range(i64 0, 17) i64 @llvm.ctpop.i64(i64 %i.qm)
   %i.qo = sub nsw i64 0, %i.qn
   %i.qp = getelementptr inbounds i8, ptr %i.ql, i64 %i.qo
-  store <4 x i32> %34, ptr %i.qp, align 1, !tbaa !36
+  store <2 x i64> %28, ptr %i.qp, align 1, !tbaa !36
   %i.qq = xor i64 %i.ng, -1
   %i.qr = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.qq) ; 2 uses
   %i.qs = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.qr ; 3 uses
@@ -649,24 +643,23 @@ _ZN8simdjson7haswell12_GLOBAL__N_16stage113json_minifier4stepILm128EEEvPKhRNS2_1
   %i.rx = zext i8 %i.rw to i64
   %i.ry = shl nuw nsw i64 %i.ru, 3
   %i.rz = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internalL20pshufb_combine_tableE, i64 %i.ry
-  %35 = load <4 x i32>, ptr %i.rz, align 8, !tbaa !36
+  %29 = load <2 x i64>, ptr %i.rz, align 8, !tbaa !36
   %i.sa = shl nuw nsw i64 %i.rx, 3
   %i.sb = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internalL20pshufb_combine_tableE, i64 %i.sa
-  %36 = load <4 x i32>, ptr %i.sb, align 8, !tbaa !36
-  %37 = shufflevector <4 x i32> %35, <4 x i32> %36, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.sc = bitcast <8 x i32> %37 to <32 x i8>
-  %i.sd = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %i.rr, <32 x i8> %i.sc) ; 2 uses
-  %i.se = bitcast <32 x i8> %i.sd to <4 x i64>
+  %30 = load <2 x i64>, ptr %i.sb, align 8, !tbaa !36
+  %31 = shufflevector <2 x i64> %29, <2 x i64> %30, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.sc = bitcast <4 x i64> %31 to <32 x i8>
+  %i.sd = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %i.rr, <32 x i8> %i.sc)
+  %i.se = bitcast <32 x i8> %i.sd to <4 x i64>    ; 2 uses
   %i.sf = shufflevector <4 x i64> %i.se, <4 x i64> poison, <2 x i32> <i32 0, i32 1>
   store <2 x i64> %i.sf, ptr %i.qs, align 1, !tbaa !36
-  %38 = bitcast <32 x i8> %i.sd to <8 x i32>
-  %39 = shufflevector <8 x i32> %38, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %32 = shufflevector <4 x i64> %i.se, <4 x i64> poison, <2 x i32> <i32 2, i32 3>
   %i.sg = getelementptr inbounds nuw i8, ptr %i.qs, i64 16
   %i.sh = and i64 %i.qu, 65535
   %i.si = tail call noundef range(i64 0, 17) i64 @llvm.ctpop.i64(i64 %i.sh)
   %i.sj = sub nsw i64 0, %i.si
   %i.sk = getelementptr inbounds i8, ptr %i.sg, i64 %i.sj
-  store <4 x i32> %39, ptr %i.sk, align 1, !tbaa !36
+  store <2 x i64> %32, ptr %i.sk, align 1, !tbaa !36
   %i.sl = getelementptr inbounds nuw i8, ptr %i.qs, i64 32
   %i.sm = and i64 %i.qu, 4294967295
   %i.sn = tail call noundef range(i64 0, 33) i64 @llvm.ctpop.i64(i64 %i.sm)
@@ -701,24 +694,23 @@ _ZN8simdjson7haswell12_GLOBAL__N_16stage113json_minifier4stepILm128EEEvPKhRNS2_1
   %i.tq = zext i8 %i.tp to i64
   %i.tr = shl nuw nsw i64 %i.tn, 3
   %i.ts = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internalL20pshufb_combine_tableE, i64 %i.tr
-  %40 = load <4 x i32>, ptr %i.ts, align 8, !tbaa !36
+  %33 = load <2 x i64>, ptr %i.ts, align 8, !tbaa !36
   %i.tt = shl nuw nsw i64 %i.tq, 3
   %i.tu = getelementptr inbounds nuw i8, ptr @_ZN8simdjson8internalL20pshufb_combine_tableE, i64 %i.tt
-  %41 = load <4 x i32>, ptr %i.tu, align 8, !tbaa !36
-  %42 = shufflevector <4 x i32> %40, <4 x i32> %41, <8 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7>
-  %i.tv = bitcast <8 x i32> %42 to <32 x i8>
-  %i.tw = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %i.tk, <32 x i8> %i.tv) ; 2 uses
-  %i.tx = bitcast <32 x i8> %i.tw to <4 x i64>
+  %34 = load <2 x i64>, ptr %i.tu, align 8, !tbaa !36
+  %35 = shufflevector <2 x i64> %33, <2 x i64> %34, <4 x i32> <i32 0, i32 1, i32 2, i32 3>
+  %i.tv = bitcast <4 x i64> %35 to <32 x i8>
+  %i.tw = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %i.tk, <32 x i8> %i.tv)
+  %i.tx = bitcast <32 x i8> %i.tw to <4 x i64>    ; 2 uses
   %i.ty = shufflevector <4 x i64> %i.tx, <4 x i64> poison, <2 x i32> <i32 0, i32 1>
   store <2 x i64> %i.ty, ptr %i.sp, align 1, !tbaa !36
-  %43 = bitcast <32 x i8> %i.tw to <8 x i32>
-  %44 = shufflevector <8 x i32> %43, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
+  %36 = shufflevector <4 x i64> %i.tx, <4 x i64> poison, <2 x i32> <i32 2, i32 3>
   %i.tz = getelementptr inbounds nuw i8, ptr %i.sp, i64 16
   %i.ua = and i64 %i.qv, 65535
   %i.ub = tail call noundef range(i64 0, 17) i64 @llvm.ctpop.i64(i64 %i.ua)
   %i.uc = sub nsw i64 0, %i.ub
   %i.ud = getelementptr inbounds i8, ptr %i.tz, i64 %i.uc
-  store <4 x i32> %44, ptr %i.ud, align 1, !tbaa !36
+  store <2 x i64> %36, ptr %i.ud, align 1, !tbaa !36
   %i.ue = xor i64 %i.qu, -1
   %i.uf = tail call range(i64 0, 65) i64 @llvm.ctpop.i64(i64 %i.ue)
   %i.ug = add nuw nsw i64 %i.uf, %i.qr

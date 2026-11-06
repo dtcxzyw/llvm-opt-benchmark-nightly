@@ -204,69 +204,63 @@ bb.a:
   %i.fg = bitcast <2 x i64> %i.bk to <16 x i8>
   %i.fh = xor <16 x i8> %i.fg, splat (i8 -128)
   %i.fi = tail call <16 x i8> @llvm.ssub.sat.v16i8(<16 x i8> %i.fh, <16 x i8> %i.fc)
-  %.inner179 = xor <16 x i8> %i.ff, splat (i8 -128) ; 2 uses
-  %6 = bitcast <16 x i8> %.inner179 to <2 x i64>
-  %.inner180 = xor <16 x i8> %i.fi, splat (i8 -128) ; 2 uses
-  %7 = bitcast <16 x i8> %.inner180 to <2 x i64>
+  %6 = bitcast <16 x i8> %i.ff to <2 x i64>
+  %7 = xor <2 x i64> %6, splat (i64 -9187201950435737472) ; 2 uses
+  %8 = bitcast <16 x i8> %i.fi to <2 x i64>
+  %9 = xor <2 x i64> %8, splat (i64 -9187201950435737472) ; 2 uses
   %i.fj = ashr <8 x i16> %i.ew, splat (i16 7)
   %i.fk = ashr <8 x i16> %i.ex, splat (i16 7)
   %i.fl = tail call <16 x i8> @llvm.x86.sse2.packsswb.128(<8 x i16> %i.fj, <8 x i16> %i.fk) ; 2 uses
   %i.fm = tail call <16 x i8> @llvm.sadd.sat.v16i8(<16 x i8> %i.dh, <16 x i8> %i.fl)
   %i.fn = tail call <16 x i8> @llvm.ssub.sat.v16i8(<16 x i8> %i.dn, <16 x i8> %i.fl)
-  %.inner181 = xor <16 x i8> %i.fm, splat (i8 -128) ; 2 uses
-  %8 = bitcast <16 x i8> %.inner181 to <2 x i64>
-  %.inner182 = xor <16 x i8> %i.fn, splat (i8 -128) ; 2 uses
-  %9 = bitcast <16 x i8> %.inner182 to <2 x i64>
+  %10 = bitcast <16 x i8> %i.fm to <2 x i64>
+  %11 = xor <2 x i64> %10, splat (i64 -9187201950435737472) ; 2 uses
+  %12 = bitcast <16 x i8> %i.fn to <2 x i64>
+  %13 = xor <2 x i64> %12, splat (i64 -9187201950435737472) ; 2 uses
   %i.fo = ashr <8 x i16> %i.ey, splat (i16 7)
   %i.fp = ashr <8 x i16> %i.ez, splat (i16 7)
   %i.fq = tail call <16 x i8> @llvm.x86.sse2.packsswb.128(<8 x i16> %i.fo, <8 x i16> %i.fp) ; 2 uses
   %i.fr = tail call <16 x i8> @llvm.sadd.sat.v16i8(<16 x i8> %i.el, <16 x i8> %i.fq)
   %i.fs = tail call <16 x i8> @llvm.ssub.sat.v16i8(<16 x i8> %i.ek, <16 x i8> %i.fq)
-  %.inner183 = xor <16 x i8> %i.fr, splat (i8 -128) ; 2 uses
-  %10 = bitcast <16 x i8> %.inner183 to <2 x i64>
-  %.inner184 = xor <16 x i8> %i.fs, splat (i8 -128) ; 2 uses
-  %11 = bitcast <16 x i8> %.inner184 to <2 x i64>
+  %14 = bitcast <16 x i8> %i.fr to <2 x i64>
+  %15 = xor <2 x i64> %14, splat (i64 -9187201950435737472) ; 2 uses
+  %16 = bitcast <16 x i8> %i.fs to <2 x i64>
+  %17 = xor <2 x i64> %16, splat (i64 -9187201950435737472) ; 2 uses
   %i.ft = mul nsw i32 %2, -3
   %i.fu = sext i32 %i.ft to i64                   ; 2 uses
   %i.fv = getelementptr inbounds i8, ptr %0, i64 %i.fu
-  %i.fw = extractelement <2 x i64> %6, i64 0
+  %i.fw = extractelement <2 x i64> %7, i64 0
   store i64 %i.fw, ptr %i.fv, align 1, !tbaa !8
-  %12 = bitcast <16 x i8> %.inner179 to <2 x i64>
   %i.fx = getelementptr inbounds i8, ptr %1, i64 %i.fu
-  %i.fy = extractelement <2 x i64> %12, i64 1
+  %i.fy = extractelement <2 x i64> %7, i64 1
   store i64 %i.fy, ptr %i.fx, align 1, !tbaa !8
   %i.fz = mul nsw i32 %2, -2
   %i.ga = sext i32 %i.fz to i64                   ; 2 uses
   %i.gb = getelementptr inbounds i8, ptr %0, i64 %i.ga
-  %i.gc = extractelement <2 x i64> %8, i64 0
+  %i.gc = extractelement <2 x i64> %11, i64 0
   store i64 %i.gc, ptr %i.gb, align 1, !tbaa !8
-  %13 = bitcast <16 x i8> %.inner181 to <2 x i64>
   %i.gd = getelementptr inbounds i8, ptr %1, i64 %i.ga
-  %i.ge = extractelement <2 x i64> %13, i64 1
+  %i.ge = extractelement <2 x i64> %11, i64 1
   store i64 %i.ge, ptr %i.gd, align 1, !tbaa !8
   %i.gf = sub nsw i32 0, %2
   %i.gg = sext i32 %i.gf to i64                   ; 2 uses
   %i.gh = getelementptr inbounds i8, ptr %0, i64 %i.gg
-  %i.gi = extractelement <2 x i64> %10, i64 0
+  %i.gi = extractelement <2 x i64> %15, i64 0
   store i64 %i.gi, ptr %i.gh, align 1, !tbaa !8
-  %14 = bitcast <16 x i8> %.inner183 to <2 x i64>
   %i.gj = getelementptr inbounds i8, ptr %1, i64 %i.gg
-  %i.gk = extractelement <2 x i64> %14, i64 1
+  %i.gk = extractelement <2 x i64> %15, i64 1
   store i64 %i.gk, ptr %i.gj, align 1, !tbaa !8
-  %i.gl = extractelement <2 x i64> %11, i64 0
+  %i.gl = extractelement <2 x i64> %17, i64 0
   store i64 %i.gl, ptr %0, align 1, !tbaa !8
-  %15 = bitcast <16 x i8> %.inner184 to <2 x i64>
-  %i.gm = extractelement <2 x i64> %15, i64 1
+  %i.gm = extractelement <2 x i64> %17, i64 1
   store i64 %i.gm, ptr %1, align 1, !tbaa !8
-  %i.gn = extractelement <2 x i64> %9, i64 0
+  %i.gn = extractelement <2 x i64> %13, i64 0
   store i64 %i.gn, ptr %i.az, align 1, !tbaa !8
-  %16 = bitcast <16 x i8> %.inner182 to <2 x i64>
-  %i.go = extractelement <2 x i64> %16, i64 1
+  %i.go = extractelement <2 x i64> %13, i64 1
   store i64 %i.go, ptr %i.bc, align 1, !tbaa !8
-  %i.gp = extractelement <2 x i64> %7, i64 0
+  %i.gp = extractelement <2 x i64> %9, i64 0
   store i64 %i.gp, ptr %i.bf, align 1, !tbaa !8
-  %17 = bitcast <16 x i8> %.inner180 to <2 x i64>
-  %i.gq = extractelement <2 x i64> %17, i64 1
+  %i.gq = extractelement <2 x i64> %9, i64 1
   store i64 %i.gq, ptr %i.bi, align 1, !tbaa !8
   ret void
 }
@@ -669,46 +663,42 @@ bb.a:
   %i.ej = tail call <16 x i8> @llvm.x86.sse2.packsswb.128(<8 x i16> %i.eg, <8 x i16> %i.ei) ; 2 uses
   %i.ek = tail call <16 x i8> @llvm.sadd.sat.v16i8(<16 x i8> %i.dn, <16 x i8> %i.ec)
   %i.el = tail call <16 x i8> @llvm.ssub.sat.v16i8(<16 x i8> %i.dl, <16 x i8> %i.ej)
-  %.inner139 = xor <16 x i8> %i.ek, splat (i8 -128) ; 2 uses
-  %6 = bitcast <16 x i8> %.inner139 to <2 x i64>
-  %.inner140 = xor <16 x i8> %i.el, splat (i8 -128) ; 2 uses
-  %7 = bitcast <16 x i8> %.inner140 to <2 x i64>
+  %6 = bitcast <16 x i8> %i.ek to <2 x i64>
+  %7 = xor <2 x i64> %6, splat (i64 -9187201950435737472) ; 2 uses
+  %8 = bitcast <16 x i8> %i.el to <2 x i64>
+  %9 = xor <2 x i64> %8, splat (i64 -9187201950435737472) ; 2 uses
   %i.em = xor <16 x i8> %i.ej, splat (i8 -128)
   %i.en = tail call <16 x i8> @llvm.x86.sse2.pavg.b(<16 x i8> %i.em, <16 x i8> zeroinitializer)
   %i.eo = add <16 x i8> %i.en, splat (i8 -64)
   %i.ep = select <16 x i1> %.not.i, <16 x i8> zeroinitializer, <16 x i8> %i.eo ; 2 uses
   %i.eq = tail call <16 x i8> @llvm.ssub.sat.v16i8(<16 x i8> %i.di, <16 x i8> %i.ep)
   %i.er = tail call <16 x i8> @llvm.sadd.sat.v16i8(<16 x i8> %i.dg, <16 x i8> %i.ep)
-  %.inner141 = xor <16 x i8> %i.er, splat (i8 -128) ; 2 uses
-  %8 = bitcast <16 x i8> %.inner141 to <2 x i64>
-  %.inner142 = xor <16 x i8> %i.eq, splat (i8 -128) ; 2 uses
-  %9 = bitcast <16 x i8> %.inner142 to <2 x i64>
+  %10 = bitcast <16 x i8> %i.er to <2 x i64>
+  %11 = xor <2 x i64> %10, splat (i64 -9187201950435737472) ; 2 uses
+  %12 = bitcast <16 x i8> %i.eq to <2 x i64>
+  %13 = xor <2 x i64> %12, splat (i64 -9187201950435737472) ; 2 uses
   %i.es = mul nsw i32 %2, -2
   %i.et = sext i32 %i.es to i64                   ; 2 uses
   %i.eu = getelementptr inbounds i8, ptr %i.as, i64 %i.et
-  %i.ev = extractelement <2 x i64> %8, i64 0
+  %i.ev = extractelement <2 x i64> %11, i64 0
   store i64 %i.ev, ptr %i.eu, align 1, !tbaa !8
-  %10 = bitcast <16 x i8> %.inner141 to <2 x i64>
   %i.ew = getelementptr inbounds i8, ptr %i.at, i64 %i.et
-  %i.ex = extractelement <2 x i64> %10, i64 1
+  %i.ex = extractelement <2 x i64> %11, i64 1
   store i64 %i.ex, ptr %i.ew, align 1, !tbaa !8
   %i.ey = sub nsw i32 0, %2
   %i.ez = sext i32 %i.ey to i64                   ; 2 uses
   %i.fa = getelementptr inbounds i8, ptr %i.as, i64 %i.ez
-  %i.fb = extractelement <2 x i64> %6, i64 0
+  %i.fb = extractelement <2 x i64> %7, i64 0
   store i64 %i.fb, ptr %i.fa, align 1, !tbaa !8
-  %11 = bitcast <16 x i8> %.inner139 to <2 x i64>
   %i.fc = getelementptr inbounds i8, ptr %i.at, i64 %i.ez
-  %i.fd = extractelement <2 x i64> %11, i64 1
+  %i.fd = extractelement <2 x i64> %7, i64 1
   store i64 %i.fd, ptr %i.fc, align 1, !tbaa !8
-  %i.fe = extractelement <2 x i64> %7, i64 0
+  %i.fe = extractelement <2 x i64> %9, i64 0
   store i64 %i.fe, ptr %i.as, align 1, !tbaa !8
-  %12 = bitcast <16 x i8> %.inner140 to <2 x i64>
-  %i.ff = extractelement <2 x i64> %12, i64 1
+  %i.ff = extractelement <2 x i64> %9, i64 1
   store i64 %i.ff, ptr %i.at, align 1, !tbaa !8
-  %i.fg = extractelement <2 x i64> %9, i64 0
+  %i.fg = extractelement <2 x i64> %13, i64 0
   store i64 %i.fg, ptr %i.ay, align 1, !tbaa !8
-  %13 = bitcast <16 x i8> %.inner142 to <2 x i64>
   %i.fh = extractelement <2 x i64> %13, i64 1
   store i64 %i.fh, ptr %i.bb, align 1, !tbaa !8
   ret void

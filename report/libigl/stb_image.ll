@@ -205,41 +205,37 @@ begin_hunk_0_@_ZL15stbi__idct_simdPhiPs:bb.a
   %i.iw = shufflevector <16 x i8> %i.ir, <16 x i8> %i.it, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
   %i.ix = shufflevector <16 x i8> %i.is, <16 x i8> %i.iu, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23> ; 2 uses
   %i.iy = shufflevector <16 x i8> %i.is, <16 x i8> %i.iu, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
-  %i.iz = shufflevector <16 x i8> %i.iv, <16 x i8> %i.ix, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23> ; 2 uses
-  %i.ja = bitcast <16 x i8> %i.iz to <2 x i64>
-  %i.jb = shufflevector <16 x i8> %i.iv, <16 x i8> %i.ix, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
-  %i.jc = bitcast <16 x i8> %i.jb to <2 x i64>
-  %i.jd = shufflevector <16 x i8> %i.iw, <16 x i8> %i.iy, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23> ; 2 uses
-  %i.je = bitcast <16 x i8> %i.jd to <2 x i64>
-  %i.jf = shufflevector <16 x i8> %i.iw, <16 x i8> %i.iy, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
-  %i.jg = bitcast <16 x i8> %i.jf to <2 x i64>
+  %i.iz = shufflevector <16 x i8> %i.iv, <16 x i8> %i.ix, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
+  %i.ja = bitcast <16 x i8> %i.iz to <2 x i64>    ; 2 uses
+  %i.jb = shufflevector <16 x i8> %i.iv, <16 x i8> %i.ix, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
+  %i.jc = bitcast <16 x i8> %i.jb to <2 x i64>    ; 2 uses
+  %i.jd = shufflevector <16 x i8> %i.iw, <16 x i8> %i.iy, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23>
+  %i.je = bitcast <16 x i8> %i.jd to <2 x i64>    ; 2 uses
+  %i.jf = shufflevector <16 x i8> %i.iw, <16 x i8> %i.iy, <16 x i32> <i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
+  %i.jg = bitcast <16 x i8> %i.jf to <2 x i64>    ; 2 uses
   %i.jh = extractelement <2 x i64> %i.ja, i64 0
   store i64 %i.jh, ptr %0, align 1, !tbaa !34
   %i.ji = sext i32 %1 to i64                      ; 7 uses
   %i.jj = getelementptr inbounds i8, ptr %0, i64 %i.ji ; 2 uses
-  %3 = bitcast <16 x i8> %i.iz to <2 x i64>
-  %i.jk = extractelement <2 x i64> %3, i64 1
+  %i.jk = extractelement <2 x i64> %i.ja, i64 1
   store i64 %i.jk, ptr %i.jj, align 1, !tbaa !34
   %i.jl = getelementptr inbounds i8, ptr %i.jj, i64 %i.ji ; 2 uses
   %i.jm = extractelement <2 x i64> %i.jc, i64 0
   store i64 %i.jm, ptr %i.jl, align 1, !tbaa !34
   %i.jn = getelementptr inbounds i8, ptr %i.jl, i64 %i.ji ; 2 uses
-  %4 = bitcast <16 x i8> %i.jb to <2 x i64>
-  %i.jo = extractelement <2 x i64> %4, i64 1
+  %i.jo = extractelement <2 x i64> %i.jc, i64 1
   store i64 %i.jo, ptr %i.jn, align 1, !tbaa !34
   %i.jp = getelementptr inbounds i8, ptr %i.jn, i64 %i.ji ; 2 uses
   %i.jq = extractelement <2 x i64> %i.je, i64 0
   store i64 %i.jq, ptr %i.jp, align 1, !tbaa !34
   %i.jr = getelementptr inbounds i8, ptr %i.jp, i64 %i.ji ; 2 uses
-  %5 = bitcast <16 x i8> %i.jd to <2 x i64>
-  %i.js = extractelement <2 x i64> %5, i64 1
+  %i.js = extractelement <2 x i64> %i.je, i64 1
   store i64 %i.js, ptr %i.jr, align 1, !tbaa !34
   %i.jt = getelementptr inbounds i8, ptr %i.jr, i64 %i.ji ; 2 uses
   %i.ju = extractelement <2 x i64> %i.jg, i64 0
   store i64 %i.ju, ptr %i.jt, align 1, !tbaa !34
   %i.jv = getelementptr inbounds i8, ptr %i.jt, i64 %i.ji
-  %6 = bitcast <16 x i8> %i.jf to <2 x i64>
-  %i.jw = extractelement <2 x i64> %6, i64 1
+  %i.jw = extractelement <2 x i64> %i.jg, i64 1
   store i64 %i.jw, ptr %i.jv, align 1, !tbaa !34
   ret void
 }
