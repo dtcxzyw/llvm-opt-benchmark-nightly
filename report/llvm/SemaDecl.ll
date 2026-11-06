@@ -205,7 +205,7 @@ define internal fastcc void @"_ZSt25__unguarded_linear_insertIPZN5clang4Sema13Ac
 bb.a:
   %.sroa.0.0.copyload = load i32, ptr %0, align 8 ; 3 uses
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.a = load i64, ptr %.sroa.5.0..sroa_idx, align 4 ; 2 uses
+  %i.a = load i64, ptr %.sroa.5.0..sroa_idx, align 4
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.d = load i32, ptr %i.c, align 8, !tbaa !1594
@@ -219,8 +219,6 @@ bb.a:
   br i1 %i.h, label %.lr.ph, label %._crit_edge.thread
 
 ._crit_edge.thread:                               ; preds = %bb.a
-  %.sroa.5.0..09.sroa_idx32 = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i64 %i.a, ptr %.sroa.5.0..09.sroa_idx32, align 4
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
   br label %_ZZN5clang4Sema13ActOnPopScopeENS_14SourceLocationEPNS_5ScopeEEN10LocAndDiagaSEOS4_.exit16
 

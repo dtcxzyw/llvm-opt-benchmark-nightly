@@ -205,7 +205,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.e = load i64, ptr %0, align 8, !tbaa !144    ; 2 uses
-  %i.f = inttoptr i64 %i.e to ptr                 ; 13 uses
+  %i.f = inttoptr i64 %i.e to ptr                 ; 12 uses
   %i.g = getelementptr inbounds i8, ptr %i.f, i64 -4 ; 7 uses
   %i.h = sub i64 %i.e, %i.c
   %.fr = freeze i64 %i.h                          ; 2 uses
@@ -323,34 +323,23 @@ bb.d:                                             ; preds = %_ZSt10__pop_heapISt
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split
   %i.bj = icmp eq i64 %i.o, 0
   %.pre32 = load i32, ptr %i.g, align 4, !tbaa !148 ; 2 uses
-  br i1 %i.bj, label %.lr.ph.split.split.us.split.us.preheader, label %.lr.ph.split.split.us.split
+  br i1 %i.bj, label %.lr.ph.split.split.us.split.us, label %.lr.ph.split.split.us.split
 
-.lr.ph.split.split.us.split.us.preheader:         ; preds = %.lr.ph.split.split.us
-  %6 = getelementptr inbounds i8, ptr %i.f, i64 -8
-  br label %.lr.ph.split.split.us.split.us
-
-.lr.ph.split.split.us.split.us:                   ; preds = %.lr.ph.split.split.us.split.us.preheader, %bb.e
-  %i.bk = phi i32 [ %i.bq, %bb.e ], [ %.pre32, %.lr.ph.split.split.us.split.us.preheader ] ; 3 uses
-  %.sroa.06.09.us10.us = phi ptr [ %i.bl, %bb.e ], [ %i.d, %.lr.ph.split.split.us.split.us.preheader ]
+.lr.ph.split.split.us.split.us:                   ; preds = %.lr.ph.split.split.us, %bb.e
+  %i.bk = phi i32 [ %i.bq, %bb.e ], [ %.pre32, %.lr.ph.split.split.us ] ; 3 uses
+  %.sroa.06.09.us10.us = phi ptr [ %i.bl, %bb.e ], [ %i.d, %.lr.ph.split.split.us ]
   %i.bl = getelementptr inbounds i8, ptr %.sroa.06.09.us10.us, i64 -4 ; 4 uses
   %i.bm = load i32, ptr %i.bl, align 4, !tbaa !148 ; 3 uses
   %i.bn = icmp ult i32 %i.bm, %i.bk
-  br i1 %i.bn, label %._crit_edge.i.i.us11.us, label %bb.e
+  br i1 %i.bn, label %_ZSt10__pop_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN4entt6entityESt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterISt4lessIvEEEEvT_SG_SG_RT0_.exit.loopexit.us18.us, label %bb.e
 
-._crit_edge.i.i.us11.us:                          ; preds = %.lr.ph.split.split.us.split.us
+_ZSt10__pop_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN4entt6entityESt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterISt4lessIvEEEEvT_SG_SG_RT0_.exit.loopexit.us18.us: ; preds = %.lr.ph.split.split.us.split.us
   store i32 %i.bk, ptr %i.bl, align 4, !tbaa !148
-  %7 = load i32, ptr %i.bi, align 4, !tbaa !148   ; 3 uses
-  store i32 %7, ptr %i.g, align 4, !tbaa !148
-  %8 = icmp ult i32 %7, %i.bm
-  br i1 %8, label %9, label %_ZSt10__pop_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN4entt6entityESt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterISt4lessIvEEEEvT_SG_SG_RT0_.exit.loopexit.us18.us
-
-9:                                                ; preds = %._crit_edge.i.i.us11.us
-  store i32 %7, ptr %6, align 4, !tbaa !148
-  br label %_ZSt10__pop_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN4entt6entityESt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterISt4lessIvEEEEvT_SG_SG_RT0_.exit.loopexit.us18.us
-
-_ZSt10__pop_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN4entt6entityESt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterISt4lessIvEEEEvT_SG_SG_RT0_.exit.loopexit.us18.us: ; preds = %9, %._crit_edge.i.i.us11.us
-  %.09.lcssa.i.i.i.ph.us19.us.neg = phi i64 [ -1, %._crit_edge.i.i.us11.us ], [ 0, %9 ]
-  %i.bo = getelementptr inbounds [4 x i8], ptr %i.f, i64 %.09.lcssa.i.i.i.ph.us19.us.neg
+  %6 = load i32, ptr %i.bi, align 4, !tbaa !148   ; 2 uses
+  store i32 %6, ptr %i.g, align 4, !tbaa !148
+  %7 = icmp uge i32 %6, %i.bm
+  %spec.select = sext i1 %7 to i64
+  %i.bo = getelementptr inbounds [4 x i8], ptr %i.f, i64 %spec.select
   %i.bp = getelementptr inbounds i8, ptr %i.bo, i64 -4
   store i32 %i.bm, ptr %i.bp, align 4, !tbaa !148
   %.pre31 = load i32, ptr %i.g, align 4, !tbaa !148
@@ -753,7 +742,7 @@ bb.a:
 
 .lr.ph:                                           ; preds = %bb.a
   %i.e = load i64, ptr %0, align 8, !tbaa !144    ; 2 uses
-  %i.f = inttoptr i64 %i.e to ptr                 ; 13 uses
+  %i.f = inttoptr i64 %i.e to ptr                 ; 12 uses
   %i.g = getelementptr inbounds i8, ptr %i.f, i64 -4 ; 7 uses
   %i.h = sub i64 %i.e, %i.c
   %.fr = freeze i64 %i.h                          ; 2 uses
@@ -871,34 +860,23 @@ bb.d:                                             ; preds = %_ZSt10__pop_heapISt
 .lr.ph.split.split.us:                            ; preds = %.lr.ph.split
   %i.bj = icmp eq i64 %i.o, 0
   %.pre32 = load i32, ptr %i.g, align 4, !tbaa !180 ; 2 uses
-  br i1 %i.bj, label %.lr.ph.split.split.us.split.us.preheader, label %.lr.ph.split.split.us.split
+  br i1 %i.bj, label %.lr.ph.split.split.us.split.us, label %.lr.ph.split.split.us.split
 
-.lr.ph.split.split.us.split.us.preheader:         ; preds = %.lr.ph.split.split.us
-  %6 = getelementptr inbounds i8, ptr %i.f, i64 -8
-  br label %.lr.ph.split.split.us.split.us
-
-.lr.ph.split.split.us.split.us:                   ; preds = %.lr.ph.split.split.us.split.us.preheader, %bb.e
-  %i.bk = phi i32 [ %i.bq, %bb.e ], [ %.pre32, %.lr.ph.split.split.us.split.us.preheader ] ; 3 uses
-  %.sroa.06.09.us10.us = phi ptr [ %i.bl, %bb.e ], [ %i.d, %.lr.ph.split.split.us.split.us.preheader ]
+.lr.ph.split.split.us.split.us:                   ; preds = %.lr.ph.split.split.us, %bb.e
+  %i.bk = phi i32 [ %i.bq, %bb.e ], [ %.pre32, %.lr.ph.split.split.us ] ; 3 uses
+  %.sroa.06.09.us10.us = phi ptr [ %i.bl, %bb.e ], [ %i.d, %.lr.ph.split.split.us ]
   %i.bl = getelementptr inbounds i8, ptr %.sroa.06.09.us10.us, i64 -4 ; 4 uses
   %i.bm = load i32, ptr %i.bl, align 4, !tbaa !180 ; 3 uses
   %i.bn = icmp ult i32 %i.bm, %i.bk
-  br i1 %i.bn, label %._crit_edge.i.i.us11.us, label %bb.e
+  br i1 %i.bn, label %_ZSt10__pop_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN13SparseSetBase9my_entityESt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterISt4lessIvEEEEvT_SG_SG_RT0_.exit.loopexit.us18.us, label %bb.e
 
-._crit_edge.i.i.us11.us:                          ; preds = %.lr.ph.split.split.us.split.us
+_ZSt10__pop_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN13SparseSetBase9my_entityESt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterISt4lessIvEEEEvT_SG_SG_RT0_.exit.loopexit.us18.us: ; preds = %.lr.ph.split.split.us.split.us
   store i32 %i.bk, ptr %i.bl, align 4, !tbaa !180
-  %7 = load i32, ptr %i.bi, align 4, !tbaa !180   ; 3 uses
-  store i32 %7, ptr %i.g, align 4, !tbaa !180
-  %8 = icmp ult i32 %7, %i.bm
-  br i1 %8, label %9, label %_ZSt10__pop_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN13SparseSetBase9my_entityESt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterISt4lessIvEEEEvT_SG_SG_RT0_.exit.loopexit.us18.us
-
-9:                                                ; preds = %._crit_edge.i.i.us11.us
-  store i32 %7, ptr %6, align 4, !tbaa !180
-  br label %_ZSt10__pop_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN13SparseSetBase9my_entityESt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterISt4lessIvEEEEvT_SG_SG_RT0_.exit.loopexit.us18.us
-
-_ZSt10__pop_heapISt16reverse_iteratorIN9__gnu_cxx17__normal_iteratorIPN13SparseSetBase9my_entityESt6vectorIS4_SaIS4_EEEEENS1_5__ops15_Iter_comp_iterISt4lessIvEEEEvT_SG_SG_RT0_.exit.loopexit.us18.us: ; preds = %9, %._crit_edge.i.i.us11.us
-  %.09.lcssa.i.i.i.ph.us19.us.neg = phi i64 [ -1, %._crit_edge.i.i.us11.us ], [ 0, %9 ]
-  %i.bo = getelementptr inbounds [4 x i8], ptr %i.f, i64 %.09.lcssa.i.i.i.ph.us19.us.neg
+  %6 = load i32, ptr %i.bi, align 4, !tbaa !180   ; 2 uses
+  store i32 %6, ptr %i.g, align 4, !tbaa !180
+  %7 = icmp uge i32 %6, %i.bm
+  %spec.select = sext i1 %7 to i64
+  %i.bo = getelementptr inbounds [4 x i8], ptr %i.f, i64 %spec.select
   %i.bp = getelementptr inbounds i8, ptr %i.bo, i64 -4
   store i32 %i.bm, ptr %i.bp, align 4, !tbaa !180
   %.pre31 = load i32, ptr %i.g, align 4, !tbaa !180

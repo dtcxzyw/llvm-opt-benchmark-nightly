@@ -205,22 +205,21 @@ bb.ub:                                            ; preds = %_ZNSt17_Temporary_b
 
 .lr.ph.i.i1933:                                   ; preds = %bb.ub, %_ZSt16__insertion_sortIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10less_firstEEEEvT_SG_T0_.exit.loopexit.i1946
   %i.dis = phi i64 [ %i.dtl, %_ZSt16__insertion_sortIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10less_firstEEEEvT_SG_T0_.exit.loopexit.i1946 ], [ %i.diq, %bb.ub ] ; 6 uses
-  %.039.i1934 = phi ptr [ %i.dtk, %_ZSt16__insertion_sortIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10less_firstEEEEvT_SG_T0_.exit.loopexit.i1946 ], [ %.val.i.i.pre293.i, %bb.ub ] ; 32 uses
-  %i.dit = getelementptr inbounds nuw i8, ptr %.039.i1934, i64 8 ; 6 uses
+  %.039.i1934 = phi ptr [ %i.dtk, %_ZSt16__insertion_sortIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10less_firstEEEEvT_SG_T0_.exit.loopexit.i1946 ], [ %.val.i.i.pre293.i, %bb.ub ] ; 30 uses
+  %i.dit = getelementptr inbounds nuw i8, ptr %.039.i1934, i64 8 ; 5 uses
   %.pre21.i.i1936 = load ptr, ptr %.039.i1934, align 8, !tbaa !1442 ; 2 uses
-  %.019.i.i1937.ptr = getelementptr inbounds nuw i8, ptr %.039.i1934, i64 16 ; 6 uses
-  %121 = load ptr, ptr %.019.i.i1937.ptr, align 8, !tbaa !1442 ; 3 uses
-  %122 = icmp ult ptr %121, %.pre21.i.i1936
-  %.sroa.4.0..0.sroa_idx.i.i1939 = getelementptr inbounds nuw i8, ptr %.039.i1934, i64 24
-  %.sroa.4.0.copyload.i.i1940 = load ptr, ptr %.sroa.4.0..0.sroa_idx.i.i1939, align 8 ; 2 uses
-  br i1 %122, label %bb.uc, label %_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops14_Val_comp_iterIN4llvm10less_firstEEEEvT_T0_.exit.i.i1941.a
+  %.019.i.i1937.ptr = getelementptr inbounds nuw i8, ptr %.039.i1934, i64 16 ; 7 uses
+  %121 = load <2 x ptr>, ptr %.019.i.i1937.ptr, align 8
+  %122 = load ptr, ptr %.019.i.i1937.ptr, align 8, !tbaa !1442 ; 2 uses
+  %123 = icmp ult ptr %122, %.pre21.i.i1936
+  br i1 %123, label %bb.uc, label %bb.ud
 
 bb.uc:                                            ; preds = %.lr.ph.i.i1933
   %i.diu = ptrtoint ptr %.019.i.i1937.ptr to i64
   %i.div = sub i64 %i.diu, %i.dis
   %i.diw = ashr exact i64 %i.div, 4               ; 5 uses
   %i.dix = icmp sgt i64 %i.diw, 0
-  br i1 %i.dix, label %.lr.ph.i.i.i.i.i.preheader.i.i1980, label %_ZSt13move_backwardIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEES9_ET0_T_SB_SA_.exit.i.i1979
+  br i1 %i.dix, label %.lr.ph.i.i.i.i.i.preheader.i.i1980, label %_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops14_Val_comp_iterIN4llvm10less_firstEEEEvT_T0_.exit.i.i1941.a
 
 .lr.ph.i.i.i.i.i.preheader.i.i1980:               ; preds = %bb.uc
   %i.diy = getelementptr inbounds nuw i8, ptr %.039.i1934, i64 32 ; 2 uses
@@ -247,7 +246,7 @@ bb.uc:                                            ; preds = %.lr.ph.i.i1933
   %.069.i.i.i.i.i.i.i1983.unr = phi ptr [ %i.diy, %.lr.ph.i.i.i.i.i.preheader.i.i1980 ], [ %i.dja, %.lr.ph.i.i.i.i.i.i.i1981.prol ]
   %.078.i.i.i.i.i.i.i1984.unr = phi ptr [ %.019.i.i1937.ptr, %.lr.ph.i.i.i.i.i.preheader.i.i1980 ], [ %i.diz, %.lr.ph.i.i.i.i.i.i.i1981.prol ]
   %i.djd = icmp ult i64 %i.diw, 8
-  br i1 %i.djd, label %_ZSt13move_backwardIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEES9_ET0_T_SB_SA_.exit.i.i1979, label %.lr.ph.i.i.i.i.i.i.i1981
+  br i1 %i.djd, label %_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops14_Val_comp_iterIN4llvm10less_firstEEEEvT_T0_.exit.i.i1941.a, label %.lr.ph.i.i.i.i.i.i.i1981
 
 .lr.ph.i.i.i.i.i.i.i1981:                         ; preds = %.lr.ph.i.i.i.i.i.i.i1981.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i1981
   %.010.i.i.i.i.i.i.i1982 = phi i64 [ %i.dkc, %.lr.ph.i.i.i.i.i.i.i1981 ], [ %.010.i.i.i.i.i.i.i1982.unr, %.lr.ph.i.i.i.i.i.i.i1981.prol.loopexit ] ; 2 uses
@@ -287,20 +286,14 @@ bb.uc:                                            ; preds = %.lr.ph.i.i1933
   store <2 x ptr> %i.dkb, ptr %i.dka, align 8, !tbaa !1249
   %i.dkc = add nsw i64 %.010.i.i.i.i.i.i.i1982, -8
   %i.dkd = icmp sgt i64 %.010.i.i.i.i.i.i.i1982, 8
-  br i1 %i.dkd, label %.lr.ph.i.i.i.i.i.i.i1981, label %_ZSt13move_backwardIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEES9_ET0_T_SB_SA_.exit.i.i1979, !llvm.loop !15
+  br i1 %i.dkd, label %.lr.ph.i.i.i.i.i.i.i1981, label %_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops14_Val_comp_iterIN4llvm10less_firstEEEEvT_T0_.exit.i.i1941.a, !llvm.loop !15
 
-_ZSt13move_backwardIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEES9_ET0_T_SB_SA_.exit.i.i1979: ; preds = %.lr.ph.i.i.i.i.i.i.i1981.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i1981, %bb.uc
-  store ptr %121, ptr %.039.i1934, align 8, !tbaa !1444
-  store ptr %.sroa.4.0.copyload.i.i1940, ptr %i.dit, align 8, !tbaa !1445
+_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops14_Val_comp_iterIN4llvm10less_firstEEEEvT_T0_.exit.i.i1941.a: ; preds = %.lr.ph.i.i.i.i.i.i.i1981.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i1981, %bb.uc
+  store <2 x ptr> %121, ptr %.039.i1934, align 8, !tbaa !1249
   br label %bb.ud
 
-_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops14_Val_comp_iterIN4llvm10less_firstEEEEvT_T0_.exit.i.i1941.a: ; preds = %.lr.ph.i.i1933
-  %123 = getelementptr inbounds nuw i8, ptr %.039.i1934, i64 24
-  store ptr %.sroa.4.0.copyload.i.i1940, ptr %123, align 8, !tbaa !1445
-  br label %bb.ud
-
-bb.ud:                                            ; preds = %_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops14_Val_comp_iterIN4llvm10less_firstEEEEvT_T0_.exit.i.i1941.a, %_ZSt13move_backwardIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEES9_ET0_T_SB_SA_.exit.i.i1979
-  %i.dke = phi ptr [ %121, %_ZSt13move_backwardIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEES9_ET0_T_SB_SA_.exit.i.i1979 ], [ %.pre21.i.i1936, %_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops14_Val_comp_iterIN4llvm10less_firstEEEEvT_T0_.exit.i.i1941.a ]
+bb.ud:                                            ; preds = %.lr.ph.i.i1933, %_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops14_Val_comp_iterIN4llvm10less_firstEEEEvT_T0_.exit.i.i1941.a
+  %i.dke = phi ptr [ %122, %_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops14_Val_comp_iterIN4llvm10less_firstEEEEvT_T0_.exit.i.i1941.a ], [ %.pre21.i.i1936, %.lr.ph.i.i1933 ]
   %.019.i.i1937.ptr.1 = getelementptr inbounds nuw i8, ptr %.039.i1934, i64 32 ; 8 uses
   %i.dkf = load ptr, ptr %.019.i.i1937.ptr.1, align 8, !tbaa !1442 ; 6 uses
   %i.dkg = icmp ult ptr %i.dkf, %i.dke
@@ -703,22 +696,21 @@ _ZSt24__merge_sort_with_bufferIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEES
 
 .lr.ph.i.i1788:                                   ; preds = %_ZSt24__merge_sort_with_bufferIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEES9_N9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10less_firstEEEEvT_SG_T0_T1_.exit.i, %_ZSt16__insertion_sortIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10less_firstEEEEvT_SG_T0_.exit.loopexit.i
   %i.eiy = phi i64 [ %i.etr, %_ZSt16__insertion_sortIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10less_firstEEEEvT_SG_T0_.exit.loopexit.i ], [ %i.dip, %_ZSt24__merge_sort_with_bufferIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEES9_N9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10less_firstEEEEvT_SG_T0_T1_.exit.i ] ; 6 uses
-  %.039.i = phi ptr [ %i.etq, %_ZSt16__insertion_sortIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10less_firstEEEEvT_SG_T0_.exit.loopexit.i ], [ %i.dio, %_ZSt24__merge_sort_with_bufferIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEES9_N9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10less_firstEEEEvT_SG_T0_T1_.exit.i ] ; 32 uses
-  %i.eiz = getelementptr inbounds nuw i8, ptr %.039.i, i64 8 ; 6 uses
+  %.039.i = phi ptr [ %i.etq, %_ZSt16__insertion_sortIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10less_firstEEEEvT_SG_T0_.exit.loopexit.i ], [ %i.dio, %_ZSt24__merge_sort_with_bufferIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEES9_N9__gnu_cxx5__ops15_Iter_comp_iterIN4llvm10less_firstEEEEvT_SG_T0_T1_.exit.i ] ; 30 uses
+  %i.eiz = getelementptr inbounds nuw i8, ptr %.039.i, i64 8 ; 5 uses
   %.pre21.i.i = load ptr, ptr %.039.i, align 8, !tbaa !1442 ; 2 uses
-  %.019.i.i.ptr = getelementptr inbounds nuw i8, ptr %.039.i, i64 16 ; 6 uses
-  %124 = load ptr, ptr %.019.i.i.ptr, align 8, !tbaa !1442 ; 3 uses
-  %125 = icmp ult ptr %124, %.pre21.i.i
-  %.sroa.4.0..0.sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.039.i, i64 24
-  %.sroa.4.0.copyload.i.i = load ptr, ptr %.sroa.4.0..0.sroa_idx.i.i, align 8 ; 2 uses
-  br i1 %125, label %bb.vk, label %_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops14_Val_comp_iterIN4llvm10less_firstEEEEvT_T0_.exit.i.i.a
+  %.019.i.i.ptr = getelementptr inbounds nuw i8, ptr %.039.i, i64 16 ; 7 uses
+  %124 = load <2 x ptr>, ptr %.019.i.i.ptr, align 8
+  %125 = load ptr, ptr %.019.i.i.ptr, align 8, !tbaa !1442 ; 2 uses
+  %126 = icmp ult ptr %125, %.pre21.i.i
+  br i1 %126, label %bb.vk, label %bb.vl
 
 bb.vk:                                            ; preds = %.lr.ph.i.i1788
   %i.eja = ptrtoint ptr %.019.i.i.ptr to i64
   %i.ejb = sub i64 %i.eja, %i.eiy
   %i.ejc = ashr exact i64 %i.ejb, 4               ; 5 uses
   %i.ejd = icmp sgt i64 %i.ejc, 0
-  br i1 %i.ejd, label %.lr.ph.i.i.i.i.i.preheader.i.i, label %_ZSt13move_backwardIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEES9_ET0_T_SB_SA_.exit.i.i
+  br i1 %i.ejd, label %.lr.ph.i.i.i.i.i.preheader.i.i, label %_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops14_Val_comp_iterIN4llvm10less_firstEEEEvT_T0_.exit.i.i.a
 
 .lr.ph.i.i.i.i.i.preheader.i.i:                   ; preds = %bb.vk
   %i.eje = getelementptr inbounds nuw i8, ptr %.039.i, i64 32 ; 2 uses
@@ -745,7 +737,7 @@ bb.vk:                                            ; preds = %.lr.ph.i.i1788
   %.069.i.i.i.i.i.i.i1799.unr = phi ptr [ %i.eje, %.lr.ph.i.i.i.i.i.preheader.i.i ], [ %i.ejg, %.lr.ph.i.i.i.i.i.i.i1797.prol ]
   %.078.i.i.i.i.i.i.i1800.unr = phi ptr [ %.019.i.i.ptr, %.lr.ph.i.i.i.i.i.preheader.i.i ], [ %i.ejf, %.lr.ph.i.i.i.i.i.i.i1797.prol ]
   %i.ejj = icmp ult i64 %i.ejc, 8
-  br i1 %i.ejj, label %_ZSt13move_backwardIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEES9_ET0_T_SB_SA_.exit.i.i, label %.lr.ph.i.i.i.i.i.i.i1797
+  br i1 %i.ejj, label %_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops14_Val_comp_iterIN4llvm10less_firstEEEEvT_T0_.exit.i.i.a, label %.lr.ph.i.i.i.i.i.i.i1797
 
 .lr.ph.i.i.i.i.i.i.i1797:                         ; preds = %.lr.ph.i.i.i.i.i.i.i1797.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i1797
   %.010.i.i.i.i.i.i.i1798 = phi i64 [ %i.eki, %.lr.ph.i.i.i.i.i.i.i1797 ], [ %.010.i.i.i.i.i.i.i1798.unr, %.lr.ph.i.i.i.i.i.i.i1797.prol.loopexit ] ; 2 uses
@@ -785,20 +777,14 @@ bb.vk:                                            ; preds = %.lr.ph.i.i1788
   store <2 x ptr> %i.ekh, ptr %i.ekg, align 8, !tbaa !1249
   %i.eki = add nsw i64 %.010.i.i.i.i.i.i.i1798, -8
   %i.ekj = icmp sgt i64 %.010.i.i.i.i.i.i.i1798, 8
-  br i1 %i.ekj, label %.lr.ph.i.i.i.i.i.i.i1797, label %_ZSt13move_backwardIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEES9_ET0_T_SB_SA_.exit.i.i, !llvm.loop !15
+  br i1 %i.ekj, label %.lr.ph.i.i.i.i.i.i.i1797, label %_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops14_Val_comp_iterIN4llvm10less_firstEEEEvT_T0_.exit.i.i.a, !llvm.loop !15
 
-_ZSt13move_backwardIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEES9_ET0_T_SB_SA_.exit.i.i: ; preds = %.lr.ph.i.i.i.i.i.i.i1797.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i1797, %bb.vk
-  store ptr %124, ptr %.039.i, align 8, !tbaa !1444
-  store ptr %.sroa.4.0.copyload.i.i, ptr %i.eiz, align 8, !tbaa !1445
+_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops14_Val_comp_iterIN4llvm10less_firstEEEEvT_T0_.exit.i.i.a: ; preds = %.lr.ph.i.i.i.i.i.i.i1797.prol.loopexit, %.lr.ph.i.i.i.i.i.i.i1797, %bb.vk
+  store <2 x ptr> %124, ptr %.039.i, align 8, !tbaa !1249
   br label %bb.vl
 
-_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops14_Val_comp_iterIN4llvm10less_firstEEEEvT_T0_.exit.i.i.a: ; preds = %.lr.ph.i.i1788
-  %126 = getelementptr inbounds nuw i8, ptr %.039.i, i64 24
-  store ptr %.sroa.4.0.copyload.i.i, ptr %126, align 8, !tbaa !1445
-  br label %bb.vl
-
-bb.vl:                                            ; preds = %_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops14_Val_comp_iterIN4llvm10less_firstEEEEvT_T0_.exit.i.i.a, %_ZSt13move_backwardIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEES9_ET0_T_SB_SA_.exit.i.i
-  %i.ekk = phi ptr [ %124, %_ZSt13move_backwardIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEES9_ET0_T_SB_SA_.exit.i.i ], [ %.pre21.i.i, %_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops14_Val_comp_iterIN4llvm10less_firstEEEEvT_T0_.exit.i.i.a ]
+bb.vl:                                            ; preds = %.lr.ph.i.i1788, %_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops14_Val_comp_iterIN4llvm10less_firstEEEEvT_T0_.exit.i.i.a
+  %i.ekk = phi ptr [ %125, %_ZSt25__unguarded_linear_insertIPSt4pairIPKN5clang14AttributedTypeEPKNS1_4AttrEEN9__gnu_cxx5__ops14_Val_comp_iterIN4llvm10less_firstEEEEvT_T0_.exit.i.i.a ], [ %.pre21.i.i, %.lr.ph.i.i1788 ]
   %.019.i.i.ptr.1 = getelementptr inbounds nuw i8, ptr %.039.i, i64 32 ; 8 uses
   %i.ekl = load ptr, ptr %.019.i.i.ptr.1, align 8, !tbaa !1442 ; 6 uses
   %i.ekm = icmp ult ptr %i.ekl, %i.ekk

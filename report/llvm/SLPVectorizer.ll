@@ -205,7 +205,7 @@ _ZSt13move_backwardIPSt4pairIPN4llvm8LoadInstElES5_ET0_T_S7_S6_.exit.i.i: ; pred
   store i64 %.0.val.i.i, ptr %i.h, align 8, !tbaa !1119
   br label %"_ZSt25__unguarded_linear_insertIPSt4pairIPN4llvm8LoadInstElEN9__gnu_cxx5__ops14_Val_comp_iterIZNS1_13slpvectorizer7BoUpSLP27tryToVectorizeGatheredLoadsERKNS1_14SmallMapVectorISt5tupleIJPNS1_10BasicBlockEPNS1_5ValueEPNS1_4TypeEEENS1_11SmallVectorINSK_IS4_Lj3EEELj1EEELj8EEEE3$_1EEEvT_T0_.exit.i.i"
 
-"_ZSt25__unguarded_linear_insertIPSt4pairIPN4llvm8LoadInstElEN9__gnu_cxx5__ops14_Val_comp_iterIZNS1_13slpvectorizer7BoUpSLP27tryToVectorizeGatheredLoadsERKNS1_14SmallMapVectorISt5tupleIJPNS1_10BasicBlockEPNS1_5ValueEPNS1_4TypeEEENS1_11SmallVectorINSK_IS4_Lj3EEELj1EEELj8EEEE3$_1EEEvT_T0_.exit.i.i": ; preds = %.lr.ph.i, %_ZSt13move_backwardIPSt4pairIPN4llvm8LoadInstElES5_ET0_T_S7_S6_.exit.i.i
+"_ZSt25__unguarded_linear_insertIPSt4pairIPN4llvm8LoadInstElEN9__gnu_cxx5__ops14_Val_comp_iterIZNS1_13slpvectorizer7BoUpSLP27tryToVectorizeGatheredLoadsERKNS1_14SmallMapVectorISt5tupleIJPNS1_10BasicBlockEPNS1_5ValueEPNS1_4TypeEEENS1_11SmallVectorINSK_IS4_Lj3EEELj1EEELj8EEEE3$_1EEEvT_T0_.exit.i.i": ; preds = %_ZSt13move_backwardIPSt4pairIPN4llvm8LoadInstElES5_ET0_T_S7_S6_.exit.i.i, %.lr.ph.i
   %.val23.i.i = phi i64 [ %.0.val.i.i, %_ZSt13move_backwardIPSt4pairIPN4llvm8LoadInstElES5_ET0_T_S7_S6_.exit.i.i ], [ %.val.pre21.i.i, %.lr.ph.i ]
   %.019.i.ptr.1.i = getelementptr inbounds nuw i8, ptr %.039.i, i64 32 ; 6 uses
   %i.ax = getelementptr i8, ptr %.039.i, i64 40   ; 2 uses

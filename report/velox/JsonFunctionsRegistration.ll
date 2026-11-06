@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.d, label %bb.b, label %.thread563
 
 bb.b:                                             ; preds = %bb.a
-  %i.e = load ptr, ptr %1, align 8, !tbaa !1189   ; 23 uses
+  %i.e = load ptr, ptr %1, align 8, !tbaa !1189   ; 21 uses
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !1190 ; 11 uses
   %i.h = load ptr, ptr %i.e, align 8, !tbaa !993  ; 16 uses
@@ -239,7 +239,7 @@ bb.c:                                             ; preds = %bb.b
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !1161, !noalias !12107 ; 4 uses
   %i.p = icmp eq ptr %i.o, %i.g
   %i.q = getelementptr inbounds nuw i8, ptr %i.e, i64 36
-  %i.r = load i32, ptr %i.q, align 4, !tbaa !1172, !noalias !12107 ; 4 uses
+  %i.r = load i32, ptr %i.q, align 4, !tbaa !1172, !noalias !12107 ; 3 uses
   %i.s = load i32, ptr %i.m, align 8, !tbaa !1191, !noalias !12107 ; 2 uses
   %i.t = icmp eq i32 %i.r, %i.s
   br i1 %i.p, label %bb.d, label %._crit_edge627
@@ -310,8 +310,6 @@ bb.f:                                             ; preds = %._crit_edge627
   br label %.lr.ph702
 
 _ZNR8simdjson8fallback8ondemand5value12count_fieldsEv.exit.thread: ; preds = %bb.d
-  %2 = getelementptr inbounds nuw i8, ptr %i.e, i64 36
-  store i32 %i.r, ptr %2, align 4, !tbaa !1172
   store ptr %i.g, ptr %i.n, align 8, !tbaa !1161
   br label %.thread563
 
@@ -565,7 +563,7 @@ bb.y:                                             ; preds = %bb.b
   %i.er = load ptr, ptr %i.eq, align 8, !tbaa !1161, !noalias !12110 ; 4 uses
   %i.es = icmp eq ptr %i.er, %i.g
   %i.et = getelementptr inbounds nuw i8, ptr %i.e, i64 36
-  %i.eu = load i32, ptr %i.et, align 4, !tbaa !1172, !noalias !12110 ; 4 uses
+  %i.eu = load i32, ptr %i.et, align 4, !tbaa !1172, !noalias !12110 ; 3 uses
   %i.ev = load i32, ptr %i.ep, align 8, !tbaa !1191, !noalias !12110 ; 2 uses
   %i.ew = icmp eq i32 %i.eu, %i.ev
   br i1 %i.es, label %bb.z, label %._crit_edge
@@ -608,8 +606,6 @@ bb.ab:                                            ; preds = %._crit_edge
   br label %.split581.lr.ph
 
 _ZNR8simdjson8fallback8ondemand5value14count_elementsEv.exit.thread: ; preds = %bb.z
-  %3 = getelementptr inbounds nuw i8, ptr %i.e, i64 36
-  store i32 %i.eu, ptr %3, align 4, !tbaa !1172
   store ptr %i.g, ptr %i.eq, align 8, !tbaa !1161
   br label %.thread563
 

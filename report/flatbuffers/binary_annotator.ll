@@ -205,7 +205,7 @@ _ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryAnnota
   %.val1.i.i.1.pre.i = load i16, ptr %i.h, align 8, !tbaa !130
   br label %"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryAnnotator6VTable5EntryESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_comp_iterIZNS3_10BuildTableEmNS2_17BinarySectionTypeEPKN10reflection6ObjectEE3$_0EEEvT_T0_.exit.i.i"
 
-"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryAnnotator6VTable5EntryESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_comp_iterIZNS3_10BuildTableEmNS2_17BinarySectionTypeEPKN10reflection6ObjectEE3$_0EEEvT_T0_.exit.i.i": ; preds = %.lr.ph.i.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryAnnotator6VTable5EntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i.i
+"_ZSt25__unguarded_linear_insertIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryAnnotator6VTable5EntryESt6vectorIS5_SaIS5_EEEENS0_5__ops14_Val_comp_iterIZNS3_10BuildTableEmNS2_17BinarySectionTypeEPKN10reflection6ObjectEE3$_0EEEvT_T0_.exit.i.i": ; preds = %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryAnnotator6VTable5EntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i.i, %.lr.ph.i.i
   %.val1.i.i.1.i = phi i16 [ %.val1.i.i.1.pre.i, %_ZSt13move_backwardIN9__gnu_cxx17__normal_iteratorIPN11flatbuffers15BinaryAnnotator6VTable5EntryESt6vectorIS5_SaIS5_EEEESA_ET0_T_SC_SB_.exit.i.i ], [ %.val1.i.i.i, %.lr.ph.i.i ]
   %.sroa.0.019.i.ptr.1.i = getelementptr inbounds nuw i8, ptr %.sroa.031.034.i, i64 32 ; 6 uses
   %i.s = getelementptr i8, ptr %.sroa.031.034.i, i64 40 ; 2 uses
