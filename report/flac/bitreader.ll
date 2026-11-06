@@ -205,9 +205,9 @@ bb.i:                                             ; preds = %bb.h
   store i32 %i.w, ptr %i.k, align 4, !tbaa !18
   %i.x = zext i32 %i.s to i64
   %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.v, i64 %i.x
-  %3 = load <8 x i8>, ptr %i.y, align 8, !tbaa !25
-  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %4, ptr %.14269, align 1, !tbaa !31
+  %3 = load i64, ptr %i.y, align 8, !tbaa !25
+  %4 = tail call i64 @llvm.bswap.i64(i64 %3)
+  store i64 %4, ptr %.14269, align 1, !tbaa !31
   %i.z = getelementptr inbounds nuw i8, ptr %.14269, i64 8 ; 2 uses
   %i.aa = add i32 %.170, -8                       ; 2 uses
   %i.ab = load i32, ptr %i.b, align 8, !tbaa !12

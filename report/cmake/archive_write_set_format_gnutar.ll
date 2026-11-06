@@ -204,10 +204,9 @@ bb.p:                                             ; preds = %format_octal.exit
 
 format_256.exit.i:                                ; preds = %format_octal.exit
   %i.cb = getelementptr inbounds nuw i8, ptr %1, i64 108
-  %4 = bitcast i64 %i.aw to <8 x i8>
-  %5 = or disjoint <8 x i8> %4, <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 -128>
-  %6 = shufflevector <8 x i8> %5, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %6, ptr %i.cb, align 1, !tbaa !20
+  %4 = or disjoint i64 %i.aw, -9223372036854775808
+  %.inner = tail call i64 @llvm.bswap.i64(i64 %4)
+  store i64 %.inner, ptr %i.cb, align 1, !tbaa !20
   br label %format_number.exit.thread
 
 format_number.exit.thread:                        ; preds = %bb.p, %format_256.exit.i
@@ -254,10 +253,9 @@ bb.q:                                             ; preds = %format_number.exit.
 
 format_256.exit.i102:                             ; preds = %format_number.exit.thread
   %i.dh = getelementptr inbounds nuw i8, ptr %1, i64 116
-  %7 = bitcast i64 %i.cc to <8 x i8>
-  %8 = or disjoint <8 x i8> %7, <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 -128>
-  %9 = shufflevector <8 x i8> %8, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %9, ptr %i.dh, align 1, !tbaa !20
+  %5 = or disjoint i64 %i.cc, -9223372036854775808
+  %.inner214 = tail call i64 @llvm.bswap.i64(i64 %5)
+  store i64 %.inner214, ptr %i.dh, align 1, !tbaa !20
   br label %format_number.exit109.thread
 
 format_number.exit109.thread:                     ; preds = %bb.q, %format_256.exit.i102
@@ -307,9 +305,8 @@ bb.r:                                             ; preds = %format_number.exit1
 
 format_256.exit.i113:                             ; preds = %format_number.exit109.thread
   %i.er = getelementptr inbounds nuw i8, ptr %1, i64 128
-  %10 = bitcast i64 %i.di to <8 x i8>
-  %11 = shufflevector <8 x i8> %10, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %11, ptr %i.er, align 1, !tbaa !20
+  %6 = tail call i64 @llvm.bswap.i64(i64 %i.di)
+  store i64 %6, ptr %i.er, align 1, !tbaa !20
   %i.es = getelementptr inbounds nuw i8, ptr %1, i64 127
   store i8 0, ptr %i.es, align 1, !tbaa !20
   %i.et = getelementptr inbounds nuw i8, ptr %1, i64 126
@@ -571,6 +568,9 @@ declare i32 @llvm.smin.i32(i32, i32) #8
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #8
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #8
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
