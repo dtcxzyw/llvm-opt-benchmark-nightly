@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %.loopexit
 define internal fastcc void @_bt_delete_or_dedup_one_page(ptr noundef %0, ptr noundef %1, ptr nofree noundef nonnull captures(none) %2, i1 noundef zeroext %3, i1 noundef zeroext %4, i1 noundef zeroext %5, i1 noundef zeroext %6) unnamed_addr #0 {
 bb.a:
   %7 = alloca %struct.TM_IndexDeleteOp, align 8   ; 10 uses
-  %i.a = alloca [408 x i16], align 16             ; 4 uses
+  %i.a = alloca [408 x i16], align 16             ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 24
   %i.c = load i32, ptr %i.b, align 8              ; 9 uses
@@ -238,7 +238,7 @@ BufferGetPage.exit:                               ; preds = %bb.b, %bb.c
   %i.u = getelementptr inbounds nuw i8, ptr %i.t, i64 4
   %i.v = load i32, ptr %i.u, align 4
   %i.w = icmp eq i32 %i.v, 0
-  %i.x = select i1 %i.w, i16 1, i16 2             ; 3 uses
+  %i.x = select i1 %i.w, i16 1, i16 2             ; 11 uses
   %i.y = getelementptr i8, ptr %.0.i.i, i64 12
   %.val = load i16, ptr %i.y, align 4             ; 2 uses
   %i.z = icmp ult i16 %.val, 25
@@ -246,17 +246,74 @@ BufferGetPage.exit:                               ; preds = %bb.b, %bb.c
   %i.ab = add nuw nsw i32 %i.aa, 262120
   %i.ac = lshr i32 %i.ab, 2
   %i.ad = trunc i32 %i.ac to i16
-  %.0.i = select i1 %i.z, i16 0, i16 %i.ad        ; 3 uses
+  %.0.i = select i1 %i.z, i16 0, i16 %i.ad        ; 5 uses
   %.not5361 = icmp ugt i16 %i.x, %.0.i
-  br i1 %.not5361, label %._crit_edge.thread, label %.lr.ph.a
+  br i1 %.not5361, label %._crit_edge.thread, label %.lr.ph
 
-.lr.ph.a:                                         ; preds = %BufferGetPage.exit
-  %8 = getelementptr i8, ptr %.0.i.i, i64 20
+.lr.ph:                                           ; preds = %BufferGetPage.exit
+  %8 = getelementptr i8, ptr %.0.i.i, i64 20      ; 2 uses
+  %9 = add i16 %.0.i, 1
+  %10 = add nuw nsw i16 %i.x, 1
+  %11 = tail call i16 @llvm.umax.i16(i16 %9, i16 %10)
+  %12 = xor i16 %i.x, -1
+  %13 = add i16 %11, %12                          ; 2 uses
+  %14 = zext i16 %13 to i32
+  %15 = add nuw nsw i32 %14, 1                    ; 2 uses
+  %min.iters.check = icmp ult i16 %13, 15
+  br i1 %min.iters.check, label %.lr.ph.a, label %vector.scevcheck
+
+vector.scevcheck:                                 ; preds = %.lr.ph
+  %16 = add i16 %.0.i, 1
+  %17 = add nuw nsw i16 %i.x, 1
+  %umax = tail call i16 @llvm.umax.i16(i16 %16, i16 %17)
+  %18 = add i16 %umax, -1
+  %19 = icmp ult i16 %18, %i.x
+  br i1 %19, label %.lr.ph.a, label %vector.ph
+
+vector.ph:                                        ; preds = %vector.scevcheck
+  %n.vec = and i32 %15, 131068                    ; 3 uses
+  %20 = trunc i32 %n.vec to i16
+  %21 = or disjoint i16 %i.x, %20
+  %broadcast.splatinsert = insertelement <4 x i16> poison, i16 %i.x, i64 0
+  %broadcast.splat = shufflevector <4 x i16> %broadcast.splatinsert, <4 x i16> poison, <4 x i32> zeroinitializer
+  %induction = add nuw nsw <4 x i16> %broadcast.splat, <i16 0, i16 1, i16 2, i16 3>
+  br label %vector.body
+
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i32 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
+  %vec.ind = phi <4 x i16> [ %induction, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
+  %conditional.iv = phi i32 [ 0, %vector.ph ], [ %conditional.step, %vector.body ] ; 2 uses
+  %22 = trunc i32 %index to i16
+  %23 = or disjoint i16 %i.x, %22
+  %24 = zext i16 %23 to i64
+  %25 = getelementptr [4 x i8], ptr %8, i64 %24
+  %wide.load = load <4 x i32>, ptr %25, align 4
+  %26 = and <4 x i32> %wide.load, splat (i32 98304)
+  %27 = icmp eq <4 x i32> %26, splat (i32 98304)  ; 2 uses
+  %28 = sext i32 %conditional.iv to i64
+  %29 = getelementptr inbounds [2 x i8], ptr %i.a, i64 %28
+  call void @llvm.masked.compressstore.v4i16.p0(<4 x i16> %vec.ind, ptr nonnull align 2 %29, <4 x i1> %27)
+  %30 = bitcast <4 x i1> %27 to i4
+  %31 = tail call range(i4 0, 5) i4 @llvm.ctpop.i4(i4 %30)
+  %32 = zext nneg i4 %31 to i32
+  %conditional.step = add i32 %conditional.iv, %32 ; 3 uses
+  %index.next = add nuw i32 %index, 4             ; 2 uses
+  %vec.ind.next = add <4 x i16> %vec.ind, splat (i16 4)
+  %33 = icmp eq i32 %index.next, %n.vec
+  br i1 %33, label %middle.block, label %vector.body, !llvm.loop !17
+
+middle.block:                                     ; preds = %vector.body
+  %cmp.n = icmp eq i32 %15, %n.vec
+  br i1 %cmp.n, label %._crit_edge, label %.lr.ph.a
+
+.lr.ph.a:                                         ; preds = %vector.scevcheck, %.lr.ph, %middle.block
+  %.063.ph = phi i16 [ %i.x, %vector.scevcheck ], [ %i.x, %.lr.ph ], [ %21, %middle.block ]
+  %.04962.ph = phi i32 [ 0, %vector.scevcheck ], [ 0, %.lr.ph ], [ %conditional.step, %middle.block ]
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph.a, %bb.f
-  %.063 = phi i16 [ %i.x, %.lr.ph.a ], [ %i.am, %bb.f ] ; 3 uses
-  %.04962 = phi i32 [ 0, %.lr.ph.a ], [ %.1, %bb.f ] ; 3 uses
+  %.063 = phi i16 [ %i.am, %bb.f ], [ %.063.ph, %.lr.ph.a ] ; 3 uses
+  %.04962 = phi i32 [ %.1, %bb.f ], [ %.04962.ph, %.lr.ph.a ] ; 3 uses
   %i.ae = zext i16 %.063 to i64
   %i.af = getelementptr [4 x i8], ptr %8, i64 %i.ae
   %i.ag = load i32, ptr %i.af, align 4
@@ -272,13 +329,14 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.d
-  %.1 = phi i32 [ %i.aj, %bb.e ], [ %.04962, %bb.d ] ; 4 uses
+  %.1 = phi i32 [ %i.aj, %bb.e ], [ %.04962, %bb.d ] ; 2 uses
   %i.am = add i16 %.063, 1                        ; 2 uses
   %.not53 = icmp ugt i16 %i.am, %.0.i
-  br i1 %.not53, label %._crit_edge, label %bb.d, !llvm.loop !17
+  br i1 %.not53, label %._crit_edge, label %bb.d, !llvm.loop !18
 
-._crit_edge:                                      ; preds = %bb.f
-  %i.an = icmp sgt i32 %.1, 0
+._crit_edge:                                      ; preds = %bb.f, %middle.block
+  %.1.lcssa = phi i32 [ %conditional.step, %middle.block ], [ %.1, %bb.f ] ; 3 uses
+  %i.an = icmp sgt i32 %.1.lcssa, 0
   br i1 %i.an, label %bb.g, label %._crit_edge.thread
 
 bb.g:                                             ; preds = %._crit_edge
@@ -304,7 +362,7 @@ bb.i:                                             ; preds = %bb.g
 BufferGetPage.exit.i:                             ; preds = %bb.i, %bb.h
   %.0.i.i.i = phi ptr [ %i.at, %bb.h ], [ %i.ay, %bb.i ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #8
-  %i.az = add nuw i32 %.1, 1                      ; 2 uses
+  %i.az = add nuw i32 %.1.lcssa, 1                ; 2 uses
   %i.ba = sext i32 %i.az to i64
   %i.bb = tail call ptr @palloc_mul(i64 noundef 4, i64 noundef %i.ba) #8 ; 2 uses
   %.val63.i.i = load i16, ptr %i.ao, align 2
@@ -316,7 +374,7 @@ BufferGetPage.exit.i:                             ; preds = %bb.i, %bb.h
   %i.bg = or disjoint i32 %i.be, %i.bf
   store i32 %i.bg, ptr %i.bb, align 4
   %i.bh = getelementptr i8, ptr %.0.i.i.i, i64 20 ; 2 uses
-  %wide.trip.count77.i.i = zext nneg i32 %.1 to i64
+  %wide.trip.count77.i.i = zext nneg i32 %.1.lcssa to i64
   br label %bb.o
 
 bb.j:                                             ; preds = %.loopexit.i.i
@@ -352,7 +410,7 @@ bb.m:                                             ; preds = %bb.l, %bb.k, %.preh
   %.1.i.i.i = phi i64 [ %i.bq, %bb.l ], [ %.0231.i.i.i, %bb.k ], [ %.02.i.i.i, %.preheader.i.i.i ] ; 2 uses
   %i.bt = add nuw i64 %.0231.i.i.i, 1             ; 2 uses
   %exitcond.not.i.i.i = icmp eq i64 %i.bt, %i.bi
-  br i1 %exitcond.not.i.i.i, label %bb.n, label %.preheader.i.i.i, !llvm.loop !18
+  br i1 %exitcond.not.i.i.i, label %bb.n, label %.preheader.i.i.i, !llvm.loop !19
 
 bb.n:                                             ; preds = %bb.m
   %i.bu = trunc i64 %.1.i.i.i to i32
@@ -490,7 +548,7 @@ bb.u:                                             ; preds = %bb.u, %.lr.ph.i.i.n
   %indvars.iv.next.i.i.1 = add nuw nsw i64 %indvars.iv.i.i, 2 ; 2 uses
   %niter.next.1 = add i64 %niter, 2               ; 2 uses
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
-  br i1 %niter.ncmp.1, label %.loopexit.i.i.loopexit.unr-lcssa, label %bb.u, !llvm.loop !19
+  br i1 %niter.ncmp.1, label %.loopexit.i.i.loopexit.unr-lcssa, label %bb.u, !llvm.loop !20
 
 .loopexit.i.i.loopexit.unr-lcssa:                 ; preds = %bb.u
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
@@ -528,7 +586,7 @@ bb.u:                                             ; preds = %bb.u, %.lr.ph.i.i.n
   %.3.i.i = phi i32 [ %.1.i.i, %bb.q ], [ %.2.i.i, %bb.t ], [ %.2.i.i, %.loopexit.i.i.loopexit.unr-lcssa ], [ %.2.i.i, %.epil.preheader ]
   %indvars.iv.next75.i.i = add nuw nsw i64 %indvars.iv74.i.i, 1 ; 2 uses
   %exitcond78.not.i.i = icmp eq i64 %indvars.iv.next75.i.i, %wide.trip.count77.i.i
-  br i1 %exitcond78.not.i.i, label %bb.j, label %bb.o, !llvm.loop !20
+  br i1 %exitcond78.not.i.i, label %bb.j, label %bb.o, !llvm.loop !21
 
 _bt_deadblocks.exit.i:                            ; preds = %bb.n, %bb.j
   %.024.i.i.i = phi i32 [ %i.bv, %bb.n ], [ %.255.i.i, %bb.j ] ; 2 uses
@@ -612,7 +670,7 @@ bb.y:                                             ; preds = %bb.x, %.lr.ph.i64.i
   %.117.i.i = phi i64 [ %i.gj, %bb.x ], [ %.01620.i.i, %.lr.ph.i64.i ] ; 2 uses
   %.1.i66.i = phi i64 [ %.021.i.i, %bb.x ], [ %i.ge, %.lr.ph.i64.i ] ; 2 uses
   %i.gk = icmp ult i64 %.117.i.i, %.1.i66.i
-  br i1 %i.gk, label %.lr.ph.i64.i, label %bsearch.exit.thread.i, !llvm.loop !21
+  br i1 %i.gk, label %.lr.ph.i64.i, label %bsearch.exit.thread.i, !llvm.loop !22
 
 bsearch.exit.i:                                   ; preds = %bb.w
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %i.fp, ptr noundef nonnull align 2 dereferenceable(6) %i.fm, i64 6, i1 false)
@@ -694,7 +752,7 @@ bb.ac:                                            ; preds = %bb.ab, %.lr.ph.i69.
   %.117.i73.i = phi i64 [ %i.hr, %bb.ab ], [ %.01620.i71.i, %.lr.ph.i69.i ] ; 2 uses
   %.1.i74.i = phi i64 [ %.021.i70.i, %bb.ab ], [ %i.hm, %.lr.ph.i69.i ] ; 2 uses
   %i.hs = icmp ult i64 %.117.i73.i, %.1.i74.i
-  br i1 %i.hs, label %.lr.ph.i69.i, label %bsearch.exit76.thread.i, !llvm.loop !21
+  br i1 %i.hs, label %.lr.ph.i69.i, label %bsearch.exit76.thread.i, !llvm.loop !22
 
 bsearch.exit76.i:                                 ; preds = %bb.aa
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 2 dereferenceable(6) %.05287.i, ptr noundef nonnull align 2 dereferenceable(6) %i.hf, i64 6, i1 false)
@@ -725,14 +783,14 @@ bsearch.exit76.thread.i:                          ; preds = %bb.ac, %bsearch.exi
   %.1.i = phi ptr [ %i.id, %bsearch.exit76.i ], [ %.05188.i, %bb.ac ]
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  br i1 %exitcond.not.i, label %bsearch.exit.thread.i, label %.lr.ph.i69.preheader.i, !llvm.loop !22
+  br i1 %exitcond.not.i, label %bsearch.exit.thread.i, label %.lr.ph.i69.preheader.i, !llvm.loop !23
 
 bsearch.exit.thread.i:                            ; preds = %bsearch.exit76.thread.i, %bb.y, %.lr.ph.i, %bb.z, %bsearch.exit.i, %BTreeTupleIsPosting.exit.thread.i
   %i.ih = phi i32 [ %i.fi, %bb.y ], [ %i.gv, %bsearch.exit.i ], [ %i.fi, %bb.z ], [ %i.fi, %.lr.ph.i ], [ %i.fi, %BTreeTupleIsPosting.exit.thread.i ], [ %i.ig, %bsearch.exit76.thread.i ]
   %indvars.iv.next97.i = add nuw nsw i64 %indvars.iv96.i, 1 ; 2 uses
   %indvars.i = trunc i64 %indvars.iv.next97.i to i16
   %.not.i = icmp ult i16 %.0.i, %indvars.i
-  br i1 %.not.i, label %_bt_simpledel_pass.exit, label %bb.v, !llvm.loop !23
+  br i1 %.not.i, label %_bt_simpledel_pass.exit, label %bb.v, !llvm.loop !24
 
 _bt_simpledel_pass.exit:                          ; preds = %bsearch.exit.thread.i
   tail call void @pfree(ptr noundef %.352.i.i) #8
@@ -881,6 +939,12 @@ declare i16 @llvm.umax.i16(i16, i16) #7
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #7
 
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
+declare void @llvm.masked.compressstore.v4i16.p0(<4 x i16>, ptr captures(none), <4 x i1>) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i4 @llvm.ctpop.i4(i4) #7
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
@@ -912,11 +976,14 @@ attributes #9 = { cold nounwind }
 !14 = distinct !{!14, !8}
 !15 = distinct !{!15, !8}
 !16 = distinct !{!16, !7}
-!17 = distinct !{!17, !8}
-!18 = distinct !{!18, !8}
+!17 = distinct !{!17, !8, !25, !26}
+!18 = distinct !{!18, !8, !25}
 !19 = distinct !{!19, !8}
 !20 = distinct !{!20, !8}
 !21 = distinct !{!21, !8}
 !22 = distinct !{!22, !8}
 !23 = distinct !{!23, !8}
+!24 = distinct !{!24, !8}
+!25 = !{!"llvm.loop.isvectorized", i32 1}
+!26 = !{!"llvm.loop.unroll.runtime.disable"}
 end_hunk_0
