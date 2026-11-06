@@ -205,11 +205,11 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 16
   %i.k = load ptr, ptr %i.j, align 8
   %i.l = tail call i32 %i.k(ptr noundef nonnull align 8 dereferenceable(8) %i.h, i32 noundef 0)
-  %2 = bitcast i32 %1 to <4 x i8>
-  %3 = shufflevector <4 x i8> %2, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %2 = tail call i32 @llvm.bswap.i32(i32 %1)
+  %3 = bitcast i32 %2 to <4 x i8>
   %i.m = uitofp <4 x i8> %3 to <4 x float>        ; 4 uses
-  %4 = bitcast i32 %i.l to <4 x i8>
-  %5 = shufflevector <4 x i8> %4, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %4 = tail call i32 @llvm.bswap.i32(i32 %i.l)
+  %5 = bitcast i32 %4 to <4 x i8>
   %i.n = uitofp <4 x i8> %5 to <4 x float>
   %i.o = fmul nnan nsz <4 x float> %i.n, splat (float 6.500000e-01)
   %i.p = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.m, <4 x float> splat (float f0x3EB33334), <4 x float> %i.o)
@@ -245,8 +245,8 @@ bb.a:
   %i.as = getelementptr inbounds nuw i8, ptr %i.ar, i64 16
   %i.at = load ptr, ptr %i.as, align 8
   %i.au = tail call i32 %i.at(ptr noundef nonnull align 8 dereferenceable(8) %i.aq, i32 noundef 1)
-  %6 = bitcast i32 %i.au to <4 x i8>
-  %7 = shufflevector <4 x i8> %6, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %6 = tail call i32 @llvm.bswap.i32(i32 %i.au)
+  %7 = bitcast i32 %6 to <4 x i8>
   %i.av = uitofp <4 x i8> %7 to <4 x float>
   %i.aw = fmul nnan nsz <4 x float> %i.av, splat (float 6.500000e-01)
   %i.ax = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.m, <4 x float> splat (float f0x3EB33334), <4 x float> %i.aw)
@@ -283,8 +283,8 @@ bb.a:
   %i.cb = getelementptr inbounds nuw i8, ptr %i.ca, i64 16
   %i.cc = load ptr, ptr %i.cb, align 8
   %i.cd = tail call i32 %i.cc(ptr noundef nonnull align 8 dereferenceable(8) %i.bz, i32 noundef 2)
-  %8 = bitcast i32 %i.cd to <4 x i8>
-  %9 = shufflevector <4 x i8> %8, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %8 = tail call i32 @llvm.bswap.i32(i32 %i.cd)
+  %9 = bitcast i32 %8 to <4 x i8>
   %i.ce = uitofp <4 x i8> %9 to <4 x float>
   %i.cf = fmul nnan nsz <4 x float> %i.ce, splat (float 6.500000e-01)
   %i.cg = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.m, <4 x float> splat (float f0x3EB33334), <4 x float> %i.cf)
@@ -321,8 +321,8 @@ bb.a:
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 16
   %i.dl = load ptr, ptr %i.dk, align 8
   %i.dm = tail call i32 %i.dl(ptr noundef nonnull align 8 dereferenceable(8) %i.di, i32 noundef 3)
-  %10 = bitcast i32 %i.dm to <4 x i8>
-  %11 = shufflevector <4 x i8> %10, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %10 = tail call i32 @llvm.bswap.i32(i32 %i.dm)
+  %11 = bitcast i32 %10 to <4 x i8>
   %i.dn = uitofp <4 x i8> %11 to <4 x float>
   %i.do = fmul nnan nsz <4 x float> %i.dn, splat (float 6.500000e-01)
   %i.dp = tail call nsz <4 x float> @llvm.fmuladd.v4f32(<4 x float> %i.m, <4 x float> splat (float f0x3EB33334), <4 x float> %i.do)
@@ -723,6 +723,9 @@ declare i64 @llvm.umax.i64(i64, i64) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <4 x float> @llvm.fmuladd.v4f32(<4 x float>, <4 x float>, <4 x float>) #16

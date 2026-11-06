@@ -204,7 +204,7 @@ bb.by:                                            ; preds = %.peel.next.i.i.i
 
 bb.bz:                                            ; preds = %bb.bw
   %gepdiff.i.i = sub nsw i64 %i.ip, %i.hy
-  %4 = load <8 x i8>, ptr %i.dd, align 8, !tbaa !92
+  %4 = load i64, ptr %i.dd, align 8, !tbaa !92
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #10
   store i32 0, ptr %i.a, align 4, !tbaa !95
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #10
@@ -241,8 +241,9 @@ bb.cd:                                            ; preds = %bb.cc
   %invariant.gep.i.i.i = getelementptr i8, ptr %i.c, i64 %i.jp
   %gep.7.i.i.i = getelementptr i8, ptr %invariant.gep.i.i.i, i64 -8 ; 2 uses
   %i.jq = load <8 x i8>, ptr %gep.7.i.i.i, align 1, !tbaa !97
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  %i.jr = xor <8 x i8> %i.jq, %5
+  %5 = call i64 @llvm.bswap.i64(i64 %4)
+  %6 = bitcast i64 %5 to <8 x i8>
+  %i.jr = xor <8 x i8> %i.jq, %6
   store <8 x i8> %i.jr, ptr %gep.7.i.i.i, align 1, !tbaa !97
   %i.js = call i32 @EVP_CipherInit_ex(ptr noundef nonnull %i.jl, ptr noundef null, ptr noundef null, ptr noundef null, ptr noundef nonnull %i.c, i32 noundef 1) #10
   %.not48.i.i.i = icmp eq i32 %i.js, 1
@@ -644,6 +645,9 @@ declare i64 @llvm.usub.sat.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.add.v2i64(<2 x i64>) #9
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #9
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

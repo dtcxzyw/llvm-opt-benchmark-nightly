@@ -205,54 +205,54 @@ bb.a:
 SHA512_Pad.exit:                                  ; preds = %.preheader28.i, %.lr.ph.i
   %i.q = getelementptr i8, ptr %0, i64 64
   %i.r = getelementptr i8, ptr %0, i64 192
-  %2 = load <8 x i8>, ptr %i.q, align 8
-  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %3, ptr %i.r, align 8
+  %2 = load i64, ptr %i.q, align 8
+  %3 = call i64 @llvm.bswap.i64(i64 %2)
+  store i64 %3, ptr %i.r, align 8
   %i.s = getelementptr i8, ptr %0, i64 200
-  %4 = load <8 x i8>, ptr %i.b, align 8
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %5, ptr %i.s, align 8
+  %4 = load i64, ptr %i.b, align 8
+  %5 = call i64 @llvm.bswap.i64(i64 %4)
+  store i64 %5, ptr %i.s, align 8
   %i.t = getelementptr i8, ptr %0, i64 80
   %i.u = getelementptr inbounds nuw i8, ptr %i.a, i64 640
   call fastcc void @SHA512_Transform(ptr noundef nonnull %0, ptr noundef %i.t, ptr noundef nonnull %i.a, ptr noundef nonnull %i.u)
-  %6 = load <8 x i8>, ptr %0, align 8
-  %7 = shufflevector <8 x i8> %6, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %7, ptr %1, align 1
+  %6 = load i64, ptr %0, align 8
+  %7 = call i64 @llvm.bswap.i64(i64 %6)
+  store i64 %7, ptr %1, align 1
   %i.v = getelementptr i8, ptr %1, i64 8
   %i.w = getelementptr i8, ptr %0, i64 8
-  %8 = load <8 x i8>, ptr %i.w, align 8
-  %9 = shufflevector <8 x i8> %8, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %9, ptr %i.v, align 1
+  %8 = load i64, ptr %i.w, align 8
+  %9 = call i64 @llvm.bswap.i64(i64 %8)
+  store i64 %9, ptr %i.v, align 1
   %i.x = getelementptr i8, ptr %1, i64 16
   %i.y = getelementptr i8, ptr %0, i64 16
-  %10 = load <8 x i8>, ptr %i.y, align 8
-  %11 = shufflevector <8 x i8> %10, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %11, ptr %i.x, align 1
+  %10 = load i64, ptr %i.y, align 8
+  %11 = call i64 @llvm.bswap.i64(i64 %10)
+  store i64 %11, ptr %i.x, align 1
   %i.z = getelementptr i8, ptr %1, i64 24
   %i.aa = getelementptr i8, ptr %0, i64 24
-  %12 = load <8 x i8>, ptr %i.aa, align 8
-  %13 = shufflevector <8 x i8> %12, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %13, ptr %i.z, align 1
+  %12 = load i64, ptr %i.aa, align 8
+  %13 = call i64 @llvm.bswap.i64(i64 %12)
+  store i64 %13, ptr %i.z, align 1
   %i.ab = getelementptr i8, ptr %1, i64 32
   %i.ac = getelementptr i8, ptr %0, i64 32
-  %14 = load <8 x i8>, ptr %i.ac, align 8
-  %15 = shufflevector <8 x i8> %14, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %15, ptr %i.ab, align 1
+  %14 = load i64, ptr %i.ac, align 8
+  %15 = call i64 @llvm.bswap.i64(i64 %14)
+  store i64 %15, ptr %i.ab, align 1
   %i.ad = getelementptr i8, ptr %1, i64 40
   %i.ae = getelementptr i8, ptr %0, i64 40
-  %16 = load <8 x i8>, ptr %i.ae, align 8
-  %17 = shufflevector <8 x i8> %16, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %17, ptr %i.ad, align 1
+  %16 = load i64, ptr %i.ae, align 8
+  %17 = call i64 @llvm.bswap.i64(i64 %16)
+  store i64 %17, ptr %i.ad, align 1
   %i.af = getelementptr i8, ptr %1, i64 48
   %i.ag = getelementptr i8, ptr %0, i64 48
-  %18 = load <8 x i8>, ptr %i.ag, align 8
-  %19 = shufflevector <8 x i8> %18, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %19, ptr %i.af, align 1
+  %18 = load i64, ptr %i.ag, align 8
+  %19 = call i64 @llvm.bswap.i64(i64 %18)
+  store i64 %19, ptr %i.af, align 1
   %i.ah = getelementptr i8, ptr %1, i64 56
   %i.ai = getelementptr i8, ptr %0, i64 56
-  %20 = load <8 x i8>, ptr %i.ai, align 8
-  %21 = shufflevector <8 x i8> %20, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %21, ptr %i.ah, align 1
+  %20 = load i64, ptr %i.ai, align 8
+  %21 = call i64 @llvm.bswap.i64(i64 %20)
+  store i64 %21, ptr %i.ah, align 1
   call void @sodium_memzero(ptr noundef nonnull %i.a, i64 noundef 704) #6
   call void @sodium_memzero(ptr noundef nonnull %0, i64 noundef 208) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
@@ -281,6 +281,9 @@ declare i64 @llvm.fshl.i64(i64, i64, i64) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #5
 
 attributes #0 = { nofree norecurse nosync nounwind ssp memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind ssp uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

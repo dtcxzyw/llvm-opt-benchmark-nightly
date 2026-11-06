@@ -205,9 +205,8 @@ bb.f:                                             ; preds = %bb.c
 
 bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #23
-  %7 = bitcast i64 %3 to <8 x i8>
-  %8 = shufflevector <8 x i8> %7, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %8, ptr %i.c, align 8, !tbaa !183
+  %7 = call i64 @llvm.bswap.i64(i64 %3)
+  store i64 %7, ptr %i.c, align 8, !tbaa !183
   %i.ak = load ptr, ptr %0, align 8, !tbaa !200
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 56
   %i.am = load ptr, ptr %i.al, align 8
@@ -609,6 +608,9 @@ declare i64 @llvm.smin.i64(i64, i64) #41
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #41
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #41
 
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite, inaccessiblemem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -2,8 +2,8 @@ Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchm
 inline.NumInlined: 51
 inline.NumDeleted: 6
 loop-unroll.NumCompletelyUnrolled: 56
-loop-unroll.NumRuntimeUnrolled: 43
-loop-unroll.NumUnrolled: 99
+loop-unroll.NumRuntimeUnrolled: 44
+loop-unroll.NumUnrolled: 100
 begin_hunk_0_@copy_wchar_heterogeneous:datatype_check.exit
   %.not34 = icmp eq i32 %i.k, 0
   %i.l = shl i64 %.030, 2                         ; 5 uses
@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   br label %datatype_check.exit
 
 datatype_check.exit:                              ; preds = %bb.a, %bb.b
-  %.0154 = phi i64 [ %i.g, %bb.b ], [ %1, %bb.a ] ; 29 uses
+  %.0154 = phi i64 [ %i.g, %bb.b ], [ %1, %bb.a ] ; 32 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.i = load i32, ptr %i.h, align 8, !tbaa !34
   %i.j = load i32, ptr @opal_local_arch, align 4, !tbaa !24 ; 2 uses
@@ -332,7 +332,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not121, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
-  br i1 %.not122, label %.preheader170.a, label %.preheader172
+  br i1 %.not122, label %.preheader170, label %.preheader172
 
 .preheader172:                                    ; preds = %bb.f
   br i1 %.not219, label %.loopexit, label %.lr.ph.preheader
@@ -346,8 +346,17 @@ bb.f:                                             ; preds = %bb.e
   %unroll_iter = and i64 %.0154, -2
   br label %.lr.ph
 
-.preheader170.a:                                  ; preds = %bb.f
-  br i1 %.not219, label %.loopexit, label %.lr.ph180
+.preheader170:                                    ; preds = %bb.f
+  br i1 %.not219, label %.loopexit, label %.preheader170.a
+
+.preheader170.a:                                  ; preds = %.preheader170
+  %xtraiter287 = and i64 %.0154, 1
+  %9 = icmp eq i64 %.0154, 1
+  br i1 %9, label %.lr.ph180.epil.preheader, label %.lr.ph180.preheader.new
+
+.lr.ph180.preheader.new:                          ; preds = %.preheader170.a
+  %unroll_iter290 = and i64 %.0154, -2
+  br label %.lr.ph180
 
 .lr.ph:                                           ; preds = %.lr.ph, %.lr.ph.preheader.new
   %.2176 = phi ptr [ %2, %.lr.ph.preheader.new ], [ %i.cd, %.lr.ph ] ; 2 uses
@@ -391,47 +400,57 @@ bb.f:                                             ; preds = %bb.e
   %niter.ncmp.1 = icmp eq i64 %niter.next.1, %unroll_iter
   br i1 %niter.ncmp.1, label %.loopexit.loopexit285.unr-lcssa, label %.lr.ph, !llvm.loop !88
 
-.lr.ph180:                                        ; preds = %.preheader170.a, %.lr.ph180
-  %.3179 = phi ptr [ %i.cm, %.lr.ph180 ], [ %2, %.preheader170.a ] ; 2 uses
-  %.3102178 = phi ptr [ %i.cl, %.lr.ph180 ], [ %5, %.preheader170.a ] ; 9 uses
-  %.3112177 = phi i64 [ %i.cn, %.lr.ph180 ], [ 0, %.preheader170.a ]
-  %i.ce = load i32, ptr %.3179, align 4, !tbaa !24 ; 6 uses
+.lr.ph180:                                        ; preds = %.lr.ph180, %.lr.ph180.preheader.new
+  %.3179 = phi ptr [ %2, %.lr.ph180.preheader.new ], [ %i.cm, %.lr.ph180 ] ; 2 uses
+  %.3102178 = phi ptr [ %5, %.lr.ph180.preheader.new ], [ %i.cl, %.lr.ph180 ] ; 6 uses
+  %.3112177 = phi i64 [ 0, %.lr.ph180.preheader.new ], [ %i.cn, %.lr.ph180 ]
+  %i.ce = load i32, ptr %.3179, align 4, !tbaa !24 ; 3 uses
   %i.cf = sext i32 %i.ce to i64                   ; 3 uses
-  %.sroa.0244.0.extract.trunc = trunc i32 %i.ce to i8
-  %9 = lshr i32 %i.ce, 8
-  %.sroa.4245.0.extract.trunc = trunc i32 %9 to i8
-  %10 = lshr i32 %i.ce, 16
-  %.sroa.5246.0.extract.trunc = trunc i32 %10 to i8
-  %11 = lshr i32 %i.ce, 24
-  %.sroa.6247.0.extract.trunc = trunc nuw i32 %11 to i8
-  %12 = ashr i32 %i.ce, 31
-  %.sroa.7248.0.extract.trunc = trunc nsw i32 %12 to i8
+  %10 = ashr i32 %i.ce, 31
+  %.sroa.0244.0.extract.trunc = trunc nsw i32 %10 to i8
   %.sroa.8249.0.extract.shift = lshr i64 %i.cf, 40
-  %.sroa.8249.0.extract.trunc = trunc i64 %.sroa.8249.0.extract.shift to i8
+  %.sroa.4245.0.extract.trunc = trunc i64 %.sroa.8249.0.extract.shift to i8
   %.sroa.9250.0.extract.shift = lshr i64 %i.cf, 48
-  %.sroa.9250.0.extract.trunc = trunc i64 %.sroa.9250.0.extract.shift to i8
+  %.sroa.5246.0.extract.trunc = trunc i64 %.sroa.9250.0.extract.shift to i8
   %.sroa.10251.0.extract.shift = lshr i64 %i.cf, 56
-  %.sroa.10251.0.extract.trunc = trunc nuw i64 %.sroa.10251.0.extract.shift to i8
-  %13 = getelementptr inbounds nuw i8, ptr %.3102178, i64 7
+  %.sroa.6247.0.extract.trunc = trunc nuw i64 %.sroa.10251.0.extract.shift to i8
+  %11 = getelementptr inbounds nuw i8, ptr %.3102178, i64 4
+  %12 = tail call i32 @llvm.bswap.i32(i32 %i.ce)
+  store i32 %12, ptr %11, align 1, !tbaa !27
+  %13 = getelementptr inbounds nuw i8, ptr %.3102178, i64 3
   store i8 %.sroa.0244.0.extract.trunc, ptr %13, align 1, !tbaa !27
-  %i.cg = getelementptr inbounds nuw i8, ptr %.3102178, i64 6
-  store i8 %.sroa.4245.0.extract.trunc, ptr %i.cg, align 1, !tbaa !27
-  %14 = getelementptr inbounds nuw i8, ptr %.3102178, i64 5
-  store i8 %.sroa.5246.0.extract.trunc, ptr %14, align 1, !tbaa !27
-  %i.ch = getelementptr inbounds nuw i8, ptr %.3102178, i64 4
-  store i8 %.sroa.6247.0.extract.trunc, ptr %i.ch, align 1, !tbaa !27
-  %i.ci = getelementptr inbounds nuw i8, ptr %.3102178, i64 3
-  store i8 %.sroa.7248.0.extract.trunc, ptr %i.ci, align 1, !tbaa !27
-  %i.cj = getelementptr inbounds nuw i8, ptr %.3102178, i64 2
-  store i8 %.sroa.8249.0.extract.trunc, ptr %i.cj, align 1, !tbaa !27
-  %i.ck = getelementptr inbounds nuw i8, ptr %.3102178, i64 1
-  store i8 %.sroa.9250.0.extract.trunc, ptr %i.ck, align 1, !tbaa !27
-  store i8 %.sroa.10251.0.extract.trunc, ptr %.3102178, align 1, !tbaa !27
-  %i.cl = getelementptr inbounds i8, ptr %.3102178, i64 %7
-  %i.cm = getelementptr inbounds i8, ptr %.3179, i64 %4
-  %i.cn = add nuw i64 %.3112177, 1                ; 2 uses
-  %exitcond231.not = icmp eq i64 %i.cn, %.0154
-  br i1 %exitcond231.not, label %.loopexit, label %.lr.ph180, !llvm.loop !89
+  %14 = getelementptr inbounds nuw i8, ptr %.3102178, i64 2
+  store i8 %.sroa.4245.0.extract.trunc, ptr %14, align 1, !tbaa !27
+  %15 = getelementptr inbounds nuw i8, ptr %.3102178, i64 1
+  store i8 %.sroa.5246.0.extract.trunc, ptr %15, align 1, !tbaa !27
+  store i8 %.sroa.6247.0.extract.trunc, ptr %.3102178, align 1, !tbaa !27
+  %16 = getelementptr inbounds i8, ptr %.3102178, i64 %7 ; 6 uses
+  %i.cg = getelementptr inbounds i8, ptr %.3179, i64 %4 ; 2 uses
+  %17 = load i32, ptr %i.cg, align 4, !tbaa !24   ; 3 uses
+  %18 = sext i32 %17 to i64                       ; 3 uses
+  %19 = ashr i32 %17, 31
+  %.sroa.7248.0.extract.trunc.1 = trunc nsw i32 %19 to i8
+  %.sroa.8249.0.extract.shift.1 = lshr i64 %18, 40
+  %.sroa.8249.0.extract.trunc.1 = trunc i64 %.sroa.8249.0.extract.shift.1 to i8
+  %.sroa.9250.0.extract.shift.1 = lshr i64 %18, 48
+  %.sroa.9250.0.extract.trunc.1 = trunc i64 %.sroa.9250.0.extract.shift.1 to i8
+  %.sroa.10251.0.extract.shift.1 = lshr i64 %18, 56
+  %.sroa.10251.0.extract.trunc.1 = trunc nuw i64 %.sroa.10251.0.extract.shift.1 to i8
+  %i.ch = getelementptr inbounds nuw i8, ptr %16, i64 4
+  %20 = tail call i32 @llvm.bswap.i32(i32 %17)
+  store i32 %20, ptr %i.ch, align 1, !tbaa !27
+  %i.ci = getelementptr inbounds nuw i8, ptr %16, i64 3
+  store i8 %.sroa.7248.0.extract.trunc.1, ptr %i.ci, align 1, !tbaa !27
+  %i.cj = getelementptr inbounds nuw i8, ptr %16, i64 2
+  store i8 %.sroa.8249.0.extract.trunc.1, ptr %i.cj, align 1, !tbaa !27
+  %i.ck = getelementptr inbounds nuw i8, ptr %16, i64 1
+  store i8 %.sroa.9250.0.extract.trunc.1, ptr %i.ck, align 1, !tbaa !27
+  store i8 %.sroa.10251.0.extract.trunc.1, ptr %16, align 1, !tbaa !27
+  %i.cl = getelementptr inbounds i8, ptr %16, i64 %7 ; 2 uses
+  %i.cm = getelementptr inbounds i8, ptr %i.cg, i64 %4 ; 2 uses
+  %i.cn = add nuw i64 %.3112177, 2                ; 2 uses
+  %exitcond231.not = icmp eq i64 %i.cn, %unroll_iter290
+  br i1 %exitcond231.not, label %.loopexit.loopexit284.unr-lcssa, label %.lr.ph180, !llvm.loop !89
 
 bb.g:                                             ; preds = %bb.e
   br i1 %.not122, label %.preheader166, label %.preheader168
@@ -834,6 +853,37 @@ begin_hunk_1_@copy_long_heterogeneous:bb.a
   %epil.iter.cmp.not = icmp eq i64 %epil.iter.next, %xtraiter287.a
   br i1 %epil.iter.cmp.not, label %.loopexit, label %.lr.ph184.epil, !llvm.loop !101
 
+.loopexit.loopexit284.unr-lcssa:                  ; preds = %.lr.ph180
+  %lcmp.mod288.not = icmp eq i64 %xtraiter287, 0
+  br i1 %lcmp.mod288.not, label %.loopexit, label %.lr.ph180.epil.preheader
+
+.lr.ph180.epil.preheader:                         ; preds = %.loopexit.loopexit284.unr-lcssa, %.preheader170.a
+  %.3179.epil.init = phi ptr [ %2, %.preheader170.a ], [ %i.cm, %.loopexit.loopexit284.unr-lcssa ]
+  %.3102178.epil.init = phi ptr [ %5, %.preheader170.a ], [ %i.cl, %.loopexit.loopexit284.unr-lcssa ] ; 5 uses
+  %lcmp.mod289 = trunc i64 %.0154 to i1
+  tail call void @llvm.assume(i1 %lcmp.mod289)
+  %21 = load i32, ptr %.3179.epil.init, align 4, !tbaa !24 ; 3 uses
+  %22 = sext i32 %21 to i64                       ; 3 uses
+  %23 = ashr i32 %21, 31
+  %.sroa.7248.0.extract.trunc.epil = trunc nsw i32 %23 to i8
+  %.sroa.8249.0.extract.shift.epil = lshr i64 %22, 40
+  %.sroa.8249.0.extract.trunc.epil = trunc i64 %.sroa.8249.0.extract.shift.epil to i8
+  %.sroa.9250.0.extract.shift.epil = lshr i64 %22, 48
+  %.sroa.9250.0.extract.trunc.epil = trunc i64 %.sroa.9250.0.extract.shift.epil to i8
+  %.sroa.10251.0.extract.shift.epil = lshr i64 %22, 56
+  %.sroa.10251.0.extract.trunc.epil = trunc nuw i64 %.sroa.10251.0.extract.shift.epil to i8
+  %24 = getelementptr inbounds nuw i8, ptr %.3102178.epil.init, i64 4
+  %25 = tail call i32 @llvm.bswap.i32(i32 %21)
+  store i32 %25, ptr %24, align 1, !tbaa !27
+  %26 = getelementptr inbounds nuw i8, ptr %.3102178.epil.init, i64 3
+  store i8 %.sroa.7248.0.extract.trunc.epil, ptr %26, align 1, !tbaa !27
+  %27 = getelementptr inbounds nuw i8, ptr %.3102178.epil.init, i64 2
+  store i8 %.sroa.8249.0.extract.trunc.epil, ptr %27, align 1, !tbaa !27
+  %28 = getelementptr inbounds nuw i8, ptr %.3102178.epil.init, i64 1
+  store i8 %.sroa.9250.0.extract.trunc.epil, ptr %28, align 1, !tbaa !27
+  store i8 %.sroa.10251.0.extract.trunc.epil, ptr %.3102178.epil.init, align 1, !tbaa !27
+  br label %.loopexit
+
 .loopexit.loopexit285.unr-lcssa:                  ; preds = %.lr.ph
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.loopexit, label %.lr.ph.epil.preheader
@@ -860,7 +910,7 @@ begin_hunk_1_@copy_long_heterogeneous:bb.a
   store i8 %.sroa.6255.0.extract.trunc.epil, ptr %.2101175.epil.init, align 1, !tbaa !27
   br label %.loopexit
 
-.loopexit:                                        ; preds = %.lr.ph.epil.preheader, %.loopexit.loopexit285.unr-lcssa, %.lr.ph180, %.loopexit.loopexit283.unr-lcssa, %.lr.ph184.epil, %.loopexit.loopexit282.unr-lcssa, %.lr.ph188.epil, %.loopexit.loopexit281.unr-lcssa, %.lr.ph192.epil, %.lr.ph196, %.loopexit.loopexit279.unr-lcssa, %.lr.ph200.epil, %.loopexit.loopexit278.unr-lcssa, %.lr.ph204.epil, %.preheader155, %.loopexit.loopexit.unr-lcssa, %.lr.ph211.epil, %.preheader172, %.preheader170.a, %.preheader168, %.preheader166, %.preheader164, %.preheader162, %.preheader160, %.preheader158, %.preheader156, %.preheader
+.loopexit:                                        ; preds = %.lr.ph.epil.preheader, %.loopexit.loopexit285.unr-lcssa, %.lr.ph180.epil.preheader, %.loopexit.loopexit284.unr-lcssa, %.loopexit.loopexit283.unr-lcssa, %.lr.ph184.epil, %.loopexit.loopexit282.unr-lcssa, %.lr.ph188.epil, %.loopexit.loopexit281.unr-lcssa, %.lr.ph192.epil, %.lr.ph196, %.loopexit.loopexit279.unr-lcssa, %.lr.ph200.epil, %.loopexit.loopexit278.unr-lcssa, %.lr.ph204.epil, %.preheader155, %.loopexit.loopexit.unr-lcssa, %.lr.ph211.epil, %.preheader172, %.preheader170, %.preheader168, %.preheader166, %.preheader164, %.preheader162, %.preheader160, %.preheader158, %.preheader156, %.preheader
   %i.js = mul i64 %.0154, %4
   store i64 %i.js, ptr %8, align 8, !tbaa !28
   %i.jt = trunc i64 %.0154 to i32

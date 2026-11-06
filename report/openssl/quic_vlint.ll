@@ -50,10 +50,9 @@ bb.d:                                             ; preds = %bb.a
   br label %bb.f
 
 bb.e:                                             ; preds = %bb.a
-  %3 = bitcast i64 %1 to <8 x i8>
-  %4 = or <8 x i8> %3, <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 -64>
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %5, ptr %0, align 1, !tbaa !9
+  %3 = or i64 %1, -4611686018427387904
+  %.inner = tail call i64 @llvm.bswap.i64(i64 %3)
+  store i64 %.inner, ptr %0, align 1, !tbaa !9
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.c, %bb.e, %bb.d, %bb.b
@@ -108,10 +107,9 @@ ossl_quic_vlint_encode_len.exit.thread5:          ; preds = %bb.c
   br label %ossl_quic_vlint_encode_n.exit
 
 ossl_quic_vlint_encode_len.exit:                  ; preds = %bb.c
-  %2 = bitcast i64 %1 to <8 x i8>
-  %3 = or <8 x i8> %2, <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 -64>
-  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %4, ptr %0, align 1, !tbaa !9
+  %2 = or i64 %1, -4611686018427387904
+  %.inner = tail call i64 @llvm.bswap.i64(i64 %2)
+  store i64 %.inner, ptr %0, align 1, !tbaa !9
   br label %ossl_quic_vlint_encode_n.exit
 
 ossl_quic_vlint_encode_n.exit:                    ; preds = %ossl_quic_vlint_encode_len.exit.thread, %ossl_quic_vlint_encode_len.exit.thread3, %ossl_quic_vlint_encode_len.exit.thread5, %ossl_quic_vlint_encode_len.exit
@@ -294,9 +292,13 @@ bb.g:                                             ; preds = %bb.b, %bb.a, %ossl_
   ret i32 %.0
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #3
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}
