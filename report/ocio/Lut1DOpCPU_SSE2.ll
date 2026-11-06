@@ -202,6 +202,7 @@ _ZN16OpenColorIO_v2_512SSE2RGBAPackILNS_8BitDepthE7EE5StoreEPN9Imath_3_14halfEDv
   %i.jb = shufflevector <8 x i16> %i.ja, <8 x i16> poison, <8 x i32> <i32 0, i32 2, i32 poison, i32 poison, i32 4, i32 6, i32 5, i32 5>
   %i.jc = bitcast <8 x i16> %i.jb to <4 x i32>
   %i.jd = shufflevector <4 x i32> %i.jc, <4 x i32> poison, <4 x i32> <i32 0, i32 2, i32 3, i32 3>
+  %8 = bitcast <4 x i32> %i.jd to <2 x i64>
   %i.je = bitcast <4 x float> %i.fw to <4 x i32>
   %i.jf = lshr <4 x i32> %i.je, splat (i32 13)
   %i.jg = and <4 x i32> %i.jf, splat (i32 31744)
@@ -214,6 +215,8 @@ _ZN16OpenColorIO_v2_512SSE2RGBAPackILNS_8BitDepthE7EE5StoreEPN9Imath_3_14halfEDv
   %i.jn = bitcast <4 x i32> %i.jm to <8 x i16>
   %i.jo = shufflevector <8 x i16> %i.jn, <8 x i16> poison, <8 x i32> <i32 0, i32 2, i32 poison, i32 poison, i32 4, i32 6, i32 5, i32 5>
   %i.jp = bitcast <8 x i16> %i.jo to <4 x i32>
+  %9 = shufflevector <4 x i32> %i.jp, <4 x i32> poison, <4 x i32> <i32 0, i32 2, i32 3, i32 3>
+  %10 = bitcast <4 x i32> %9 to <2 x i64>
   %i.jq = bitcast <4 x float> %i.eu to <4 x i32>
   %i.jr = lshr <4 x i32> %i.jq, splat (i32 13)
   %i.js = and <4 x i32> %i.jr, splat (i32 31744)
@@ -227,6 +230,7 @@ _ZN16OpenColorIO_v2_512SSE2RGBAPackILNS_8BitDepthE7EE5StoreEPN9Imath_3_14halfEDv
   %i.ka = shufflevector <8 x i16> %i.jz, <8 x i16> poison, <8 x i32> <i32 0, i32 2, i32 poison, i32 poison, i32 4, i32 6, i32 5, i32 5>
   %i.kb = bitcast <8 x i16> %i.ka to <4 x i32>
   %i.kc = shufflevector <4 x i32> %i.kb, <4 x i32> poison, <4 x i32> <i32 0, i32 2, i32 3, i32 3>
+  %11 = bitcast <4 x i32> %i.kc to <2 x i64>
   %i.kd = bitcast <4 x float> %i.ia to <4 x i32>
   %i.ke = lshr <4 x i32> %i.kd, splat (i32 13)
   %i.kf = bitcast <4 x float> %i.ei to <4 x i32>
@@ -239,13 +243,15 @@ _ZN16OpenColorIO_v2_512SSE2RGBAPackILNS_8BitDepthE7EE5StoreEPN9Imath_3_14halfEDv
   %i.km = bitcast <4 x i32> %i.kl to <8 x i16>
   %i.kn = shufflevector <8 x i16> %i.km, <8 x i16> poison, <8 x i32> <i32 0, i32 2, i32 poison, i32 poison, i32 4, i32 6, i32 5, i32 5>
   %i.ko = bitcast <8 x i16> %i.kn to <4 x i32>
-  %8 = shufflevector <4 x i32> %i.jp, <4 x i32> poison, <4 x i32> <i32 3, i32 3, i32 0, i32 2>
-  %9 = xor <4 x i32> %8, %i.kc
-  store <4 x i32> %9, ptr %.049183, align 1, !tbaa !8
-  %10 = shufflevector <4 x i32> %i.ko, <4 x i32> poison, <4 x i32> <i32 3, i32 3, i32 0, i32 2>
-  %11 = xor <4 x i32> %10, %i.jd
+  %12 = shufflevector <4 x i32> %i.ko, <4 x i32> poison, <4 x i32> <i32 0, i32 2, i32 3, i32 3>
+  %13 = bitcast <4 x i32> %12 to <2 x i64>
+  %14 = shufflevector <2 x i64> %10, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
+  %15 = xor <2 x i64> %14, %11
+  store <2 x i64> %15, ptr %.049183, align 1, !tbaa !8
+  %16 = shufflevector <2 x i64> %13, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
+  %17 = xor <2 x i64> %16, %8
   %i.kp = getelementptr inbounds nuw i8, ptr %.049183, i64 16
-  store <4 x i32> %11, ptr %i.kp, align 1, !tbaa !8
+  store <2 x i64> %17, ptr %i.kp, align 1, !tbaa !8
   %i.kq = getelementptr inbounds nuw i8, ptr %.050182, i64 64 ; 2 uses
   %i.kr = getelementptr inbounds nuw i8, ptr %.049183, i64 32 ; 2 uses
   %i.ks = add nuw nsw i32 %.048184, 4             ; 2 uses
@@ -610,6 +616,7 @@ _ZN16OpenColorIO_v2_512SSE2RGBAPackILNS_8BitDepthE7EE5StoreEPN9Imath_3_14halfEDv
   %i.up = shufflevector <8 x i16> %i.uo, <8 x i16> poison, <8 x i32> <i32 0, i32 2, i32 poison, i32 poison, i32 4, i32 6, i32 5, i32 5>
   %i.uq = bitcast <8 x i16> %i.up to <4 x i32>
   %i.ur = shufflevector <4 x i32> %i.uq, <4 x i32> poison, <4 x i32> <i32 0, i32 2, i32 3, i32 3>
+  %18 = bitcast <4 x i32> %i.ur to <2 x i64>
   %i.us = bitcast <4 x float> %i.rk to <4 x i32>
   %i.ut = lshr <4 x i32> %i.us, splat (i32 13)
   %i.uu = and <4 x i32> %i.ut, splat (i32 31744)
@@ -622,6 +629,8 @@ _ZN16OpenColorIO_v2_512SSE2RGBAPackILNS_8BitDepthE7EE5StoreEPN9Imath_3_14halfEDv
   %i.vb = bitcast <4 x i32> %i.va to <8 x i16>
   %i.vc = shufflevector <8 x i16> %i.vb, <8 x i16> poison, <8 x i32> <i32 0, i32 2, i32 poison, i32 poison, i32 4, i32 6, i32 5, i32 5>
   %i.vd = bitcast <8 x i16> %i.vc to <4 x i32>
+  %19 = shufflevector <4 x i32> %i.vd, <4 x i32> poison, <4 x i32> <i32 0, i32 2, i32 3, i32 3>
+  %20 = bitcast <4 x i32> %19 to <2 x i64>
   %i.ve = bitcast <4 x float> %i.qi to <4 x i32>
   %i.vf = lshr <4 x i32> %i.ve, splat (i32 13)
   %i.vg = and <4 x i32> %i.vf, splat (i32 31744)
@@ -635,6 +644,7 @@ _ZN16OpenColorIO_v2_512SSE2RGBAPackILNS_8BitDepthE7EE5StoreEPN9Imath_3_14halfEDv
   %i.vo = shufflevector <8 x i16> %i.vn, <8 x i16> poison, <8 x i32> <i32 0, i32 2, i32 poison, i32 poison, i32 4, i32 6, i32 5, i32 5>
   %i.vp = bitcast <8 x i16> %i.vo to <4 x i32>
   %i.vq = shufflevector <4 x i32> %i.vp, <4 x i32> poison, <4 x i32> <i32 0, i32 2, i32 3, i32 3>
+  %21 = bitcast <4 x i32> %i.vq to <2 x i64>
   %i.vr = bitcast <4 x float> %i.to to <4 x i32>
   %i.vs = lshr <4 x i32> %i.vr, splat (i32 13)
   %i.vt = bitcast <4 x float> %i.pw to <4 x i32>
@@ -647,13 +657,15 @@ _ZN16OpenColorIO_v2_512SSE2RGBAPackILNS_8BitDepthE7EE5StoreEPN9Imath_3_14halfEDv
   %i.wa = bitcast <4 x i32> %i.vz to <8 x i16>
   %i.wb = shufflevector <8 x i16> %i.wa, <8 x i16> poison, <8 x i32> <i32 0, i32 2, i32 poison, i32 poison, i32 4, i32 6, i32 5, i32 5>
   %i.wc = bitcast <8 x i16> %i.wb to <4 x i32>
-  %12 = shufflevector <4 x i32> %i.vd, <4 x i32> poison, <4 x i32> <i32 3, i32 3, i32 0, i32 2>
-  %13 = xor <4 x i32> %12, %i.vq
-  store <4 x i32> %13, ptr %7, align 16, !tbaa !8
-  %14 = shufflevector <4 x i32> %i.wc, <4 x i32> poison, <4 x i32> <i32 3, i32 3, i32 0, i32 2>
-  %15 = xor <4 x i32> %14, %i.ur
+  %22 = shufflevector <4 x i32> %i.wc, <4 x i32> poison, <4 x i32> <i32 0, i32 2, i32 3, i32 3>
+  %23 = bitcast <4 x i32> %22 to <2 x i64>
+  %24 = shufflevector <2 x i64> %20, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
+  %25 = xor <2 x i64> %24, %21
+  store <2 x i64> %25, ptr %7, align 16, !tbaa !8
+  %26 = shufflevector <2 x i64> %23, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
+  %27 = xor <2 x i64> %26, %18
   %i.wd = getelementptr inbounds nuw i8, ptr %7, i64 16
-  store <4 x i32> %15, ptr %i.wd, align 16, !tbaa !8
+  store <2 x i64> %27, ptr %i.wd, align 16, !tbaa !8
   br i1 %i.kv, label %.lr.ph194.preheader, label %._crit_edge195
 
 .lr.ph194.preheader:                              ; preds = %_ZN16OpenColorIO_v2_512SSE2RGBAPackILNS_8BitDepthE7EE5StoreEPN9Imath_3_14halfEDv4_fS6_S6_S6_.exit156

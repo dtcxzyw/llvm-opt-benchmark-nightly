@@ -13,9 +13,12 @@ bb.a:
   %i.a = load <2 x i64>, ptr %0, align 1, !tbaa !8
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.c = load <2 x i64>, ptr %i.b, align 1, !tbaa !8
-  %i.d = or <2 x i64> %i.c, %i.a
-  %1 = bitcast <2 x i64> %i.d to <4 x i32>
-  %i.e = tail call i32 @llvm.vector.reduce.or.v4i32(<4 x i32> %1)
+  %1 = or <2 x i64> %i.c, %i.a                    ; 2 uses
+  %2 = shufflevector <2 x i64> %1, <2 x i64> poison, <2 x i32> <i32 1, i32 poison>
+  %i.d = or <2 x i64> %2, %1
+  %3 = shufflevector <2 x i64> %i.d, <2 x i64> poison, <1 x i32> zeroinitializer
+  %4 = bitcast <1 x i64> %3 to <2 x i32>
+  %i.e = tail call i32 @llvm.vector.reduce.or.v2i32(<2 x i32> %4)
   ret i32 %i.e
 }
 
@@ -418,7 +421,7 @@ declare <4 x i64> @llvm.x86.avx2.pslli.q(<4 x i64>, i32) #3
 declare <4 x i64> @llvm.x86.avx2.psrli.q(<4 x i64>, i32) #3
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.vector.reduce.or.v4i32(<4 x i32>) #4
+declare i32 @llvm.vector.reduce.or.v2i32(<2 x i32>) #4
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.vector.reduce.or.v2i64(<2 x i64>) #4

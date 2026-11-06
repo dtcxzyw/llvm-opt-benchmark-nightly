@@ -204,10 +204,11 @@ bb.w:                                             ; preds = %bb.v
   %i.df = zext i16 %.sroa.0.0.copyload.i94.i to i64
   %i.dg = getelementptr inbounds nuw i8, ptr @permute_table, i64 %i.df
   %i.dh = load <32 x i8>, ptr %i.dg, align 32, !tbaa !13
-  %4 = load <16 x i8>, ptr %1, align 1, !tbaa !13
+  %4 = load <2 x i64>, ptr %1, align 1, !tbaa !13
   %i.di = add <32 x i8> %i.dh, <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16>
-  %5 = shufflevector <16 x i8> %4, <16 x i8> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %i.dj = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %5, <32 x i8> %i.di)
+  %5 = shufflevector <2 x i64> %4, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %6 = bitcast <4 x i64> %5 to <32 x i8>
+  %i.dj = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %6, <32 x i8> %i.di)
   %i.dk = bitcast <32 x i8> %i.dj to <4 x i64>
   br label %GET_CHUNK_MAG.exit.i
 
@@ -610,10 +611,11 @@ bb.bo:                                            ; preds = %bb.bn
   %i.wl = zext i16 %.sroa.0.0.copyload.i94.i to i64
   %i.wm = getelementptr inbounds nuw i8, ptr @permute_table, i64 %i.wl
   %i.wn = load <32 x i8>, ptr %i.wm, align 32, !tbaa !13
-  %2 = load <16 x i8>, ptr %i.ut, align 1, !tbaa !13
+  %2 = load <2 x i64>, ptr %i.ut, align 1, !tbaa !13
   %i.wo = add <32 x i8> %i.wn, <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16>
-  %3 = shufflevector <16 x i8> %2, <16 x i8> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %i.wp = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %3, <32 x i8> %i.wo)
+  %3 = shufflevector <2 x i64> %2, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %4 = bitcast <4 x i64> %3 to <32 x i8>
+  %i.wp = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %4, <32 x i8> %i.wo)
   %i.wq = bitcast <32 x i8> %i.wp to <4 x i64>
   br label %GET_CHUNK_MAG.exit.i
 
@@ -1016,10 +1018,11 @@ bb.w:                                             ; preds = %bb.v
   %i.dp = zext i16 %.sroa.0.0.copyload.i94.i to i64
   %i.dq = getelementptr inbounds nuw i8, ptr @permute_table, i64 %i.dp
   %i.dr = load <32 x i8>, ptr %i.dq, align 32, !tbaa !13
-  %4 = load <16 x i8>, ptr %1, align 1, !tbaa !13
+  %4 = load <2 x i64>, ptr %1, align 1, !tbaa !13
   %i.ds = add <32 x i8> %i.dr, <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16>
-  %5 = shufflevector <16 x i8> %4, <16 x i8> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %i.dt = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %5, <32 x i8> %i.ds)
+  %5 = shufflevector <2 x i64> %4, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %6 = bitcast <4 x i64> %5 to <32 x i8>
+  %i.dt = tail call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %6, <32 x i8> %i.ds)
   %i.du = bitcast <32 x i8> %i.dt to <4 x i64>
   br label %GET_CHUNK_MAG.exit.i
 

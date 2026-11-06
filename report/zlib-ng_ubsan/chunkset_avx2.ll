@@ -202,10 +202,11 @@ bb.ce:                                            ; preds = %_mm256_load_si256.e
   br label %_mm_loadu_si128.exit29.i, !nosanitize !13
 
 _mm_loadu_si128.exit29.i:                         ; preds = %bb.ce, %_mm256_load_si256.exit.i
-  %3 = load <16 x i8>, ptr %1, align 1, !tbaa !15
+  %3 = load <2 x i64>, ptr %1, align 1, !tbaa !15
   %i.ee = add <32 x i8> %i.ed, <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16, i8 16>
-  %4 = shufflevector <16 x i8> %3, <16 x i8> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15>
-  %i.ef = call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %4, <32 x i8> %i.ee)
+  %4 = shufflevector <2 x i64> %3, <2 x i64> poison, <4 x i32> <i32 0, i32 1, i32 0, i32 1>
+  %5 = bitcast <4 x i64> %4 to <32 x i8>
+  %i.ef = call <32 x i8> @llvm.x86.avx2.pshuf.b(<32 x i8> %5, <32 x i8> %i.ee)
   %i.eg = bitcast <32 x i8> %i.ef to <4 x i64>
   br label %GET_CHUNK_MAG.exit
 

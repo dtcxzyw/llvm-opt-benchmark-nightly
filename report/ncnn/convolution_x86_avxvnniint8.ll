@@ -204,24 +204,25 @@ bb.i:                                             ; preds = %.loopexit218.i.i, %
   %i.agl = mul <8 x i32> %i.agk, %i.abs
   %i.agm = sub <8 x i32> %i.afv, %i.agl
   %i.agn = mul <8 x i32> %i.agm, %i.abu           ; 2 uses
-  %i.ago = mul <8 x i32> %i.agk, %i.abw           ; 4 uses
+  %i.ago = mul <8 x i32> %i.agk, %i.abw           ; 3 uses
   %i.agp = add <8 x i32> %i.agn, %i.ago           ; 8 uses
-  %shift418 = shufflevector <8 x i32> %i.ago, <8 x i32> poison, <8 x i32> <i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
-  %12 = icmp eq <8 x i32> %i.ago, %shift418
-  %13 = extractelement <8 x i1> %12, i64 0
-  %or.cond.i.i = and i1 %i.g, %13
+  %12 = extractelement <8 x i32> %i.ago, i64 0    ; 2 uses
+  %13 = extractelement <8 x i32> %i.ago, i64 7
+  %14 = icmp eq i32 %12, %13
+  %or.cond.i.i = and i1 %i.g, %14
   br i1 %or.cond.i.i, label %bb.j, label %bb.o
 
 bb.j:                                             ; preds = %bb.i
-  %foldExtExtBinop = add nsw <8 x i32> %i.agn, %i.ago ; 2 uses
-  %14 = extractelement <8 x i32> %foldExtExtBinop, i64 0 ; 3 uses
+  %15 = extractelement <8 x i32> %i.agn, i64 0
+  %16 = add nsw i32 %15, %12                      ; 4 uses
   br i1 %i.abx, label %.preheader222.i.i, label %.loopexit220.i.i
 
 .preheader222.i.i:                                ; preds = %bb.j
   br i1 %i.aby, label %.lr.ph247.i.i, label %.preheader221.i.i
 
 .lr.ph247.i.i:                                    ; preds = %.preheader222.i.i
-  %i.agq = shufflevector <8 x i32> %foldExtExtBinop, <8 x i32> poison, <4 x i32> zeroinitializer
+  %17 = insertelement <4 x i32> poison, i32 %16, i64 0
+  %i.agq = shufflevector <4 x i32> %17, <4 x i32> poison, <4 x i32> zeroinitializer
   br label %bb.k
 
 .preheader221.i.i:                                ; preds = %bb.k, %.preheader222.i.i
@@ -232,7 +233,7 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.ags, label %.lr.ph252.i.i, label %.preheader219.i.i
 
 .lr.ph252.i.i:                                    ; preds = %.preheader221.i.i
-  %i.agt = sext i32 %14 to i64                    ; 2 uses
+  %i.agt = sext i32 %16 to i64                    ; 2 uses
   br label %bb.l
 
 bb.k:                                             ; preds = %bb.k, %.lr.ph247.i.i
@@ -304,7 +305,7 @@ bb.k:                                             ; preds = %bb.k, %.lr.ph247.i.
   br i1 %i.aiy, label %.lr.ph257.i.i, label %.loopexit218.i.i
 
 .lr.ph257.i.i:                                    ; preds = %.preheader219.i.i
-  %i.aiz = sext i32 %14 to i64
+  %i.aiz = sext i32 %16 to i64
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.l, %.lr.ph252.i.i
@@ -383,7 +384,7 @@ bb.m:                                             ; preds = %bb.m, %.lr.ph257.i.
   br i1 %brmerge375.i.i, label %.loopexit218.i.i, label %.lr.ph261.i.i
 
 .lr.ph261.i.i:                                    ; preds = %.loopexit220.i.i
-  %i.alh = sext i32 %14 to i64
+  %i.alh = sext i32 %16 to i64
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.n, %.lr.ph261.i.i
