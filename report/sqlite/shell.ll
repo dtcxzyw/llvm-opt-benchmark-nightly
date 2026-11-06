@@ -206,9 +206,8 @@ bb.u:                                             ; preds = %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #45
   %i.cz = load ptr, ptr %i.b, align 8, !tbaa !109
   %i.da = call i64 @sqlite3_column_int64(ptr noundef %i.cz, i32 noundef %.085) #45
-  %4 = bitcast i64 %i.da to <8 x i8>
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %5, ptr %i.q, align 1, !tbaa !52
+  %4 = call i64 @llvm.bswap.i64(i64 %i.da)
+  store i64 %4, ptr %i.q, align 1, !tbaa !52
   store i8 73, ptr %i.d, align 1, !tbaa !52
   %i.db = load i32, ptr %i.k, align 4, !tbaa !53  ; 3 uses
   %i.dc = add i32 %i.db, 72
@@ -253,9 +252,9 @@ bb.y:                                             ; preds = %.lr.ph
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #45
   %i.ds = load ptr, ptr %i.b, align 8, !tbaa !109
   %i.dt = call double @sqlite3_column_double(ptr noundef %i.ds, i32 noundef %.085) #45
-  %6 = bitcast double %i.dt to <8 x i8>
-  %7 = shufflevector <8 x i8> %6, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %7, ptr %i.p, align 1, !tbaa !52
+  %5 = bitcast double %i.dt to i64
+  %6 = call i64 @llvm.bswap.i64(i64 %5)
+  store i64 %6, ptr %i.p, align 1, !tbaa !52
   store i8 70, ptr %i.e, align 1, !tbaa !52
   %i.du = load i32, ptr %i.k, align 4, !tbaa !53  ; 3 uses
   %i.dv = add i32 %i.du, 72
@@ -658,9 +657,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.h = load ptr, ptr %2, align 8, !tbaa !126
   %i.i = tail call double @sqlite3_value_double(ptr noundef %i.h) #45
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #45
-  %3 = bitcast double %i.i to <8 x i8>
-  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %4, ptr %i.a, align 8, !tbaa !52
+  %3 = bitcast double %i.i to i64
+  %4 = tail call i64 @llvm.bswap.i64(i64 %3)
+  store i64 %4, ptr %i.a, align 8, !tbaa !52
   call void @sqlite3_result_blob(ptr noundef %0, ptr noundef nonnull %i.a, i32 noundef 8, ptr noundef nonnull inttoptr (i64 -1 to ptr)) #45
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #45
   br label %bb.d
@@ -1063,9 +1062,8 @@ bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #45
   %i.o = tail call i64 @sqlite3_value_int64(ptr noundef %1) #45
   %i.p = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %2 = bitcast i64 %i.o to <8 x i8>
-  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %3, ptr %i.p, align 1, !tbaa !52
+  %2 = tail call i64 @llvm.bswap.i64(i64 %i.o)
+  store i64 %2, ptr %i.p, align 1, !tbaa !52
   store i8 73, ptr %i.a, align 1, !tbaa !52
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 1604 ; 7 uses
   %i.r = load i32, ptr %i.q, align 4, !tbaa !131  ; 3 uses
@@ -1140,10 +1138,10 @@ SHA3Update.exit39:                                ; preds = %bb.g
 bb.h:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #45
   %i.aw = tail call double @sqlite3_value_double(ptr noundef %1) #45
+  %3 = bitcast double %i.aw to i64
   %4 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  %5 = bitcast double %i.aw to <8 x i8>
-  %6 = shufflevector <8 x i8> %5, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %6, ptr %4, align 1, !tbaa !52
+  %5 = tail call i64 @llvm.bswap.i64(i64 %3)
+  store i64 %5, ptr %4, align 1, !tbaa !52
   store i8 70, ptr %i.b, align 1, !tbaa !52
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 1604 ; 7 uses
   %i.ay = load i32, ptr %i.ax, align 4, !tbaa !131 ; 3 uses
@@ -1546,41 +1544,13 @@ hash_step.exit33:                                 ; preds = %._crit_edge, %bb.k
   %.sroa.043.0.insert.insert = or disjoint i64 %.sroa.4.0.insert.insert, %.sroa.043.0.insert.ext
   store i64 %.sroa.043.0.insert.insert, ptr %i.aq, align 4
   tail call fastcc void @SHA1Transform(ptr noundef nonnull %0, ptr noundef nonnull %i.q)
-  %i.aw = load i32, ptr %0, align 4, !tbaa !53    ; 4 uses
-  %3 = lshr i32 %i.aw, 24
-  %4 = trunc nuw i32 %3 to i8                     ; 3 uses
-  %5 = lshr i32 %i.aw, 16
-  %6 = trunc i32 %5 to i8                         ; 3 uses
-  %7 = lshr i32 %i.aw, 8
-  %8 = trunc i32 %7 to i8                         ; 3 uses
-  %9 = trunc i32 %i.aw to i8                      ; 3 uses
+  %i.aw = load i32, ptr %0, align 4, !tbaa !53    ; 5 uses
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 4
-  %i.ay = load i32, ptr %i.ax, align 4, !tbaa !53 ; 4 uses
-  %10 = lshr i32 %i.ay, 24
-  %11 = trunc nuw i32 %10 to i8                   ; 3 uses
-  %12 = lshr i32 %i.ay, 16
-  %13 = trunc i32 %12 to i8                       ; 3 uses
-  %14 = lshr i32 %i.ay, 8
-  %15 = trunc i32 %14 to i8                       ; 3 uses
-  %16 = trunc i32 %i.ay to i8                     ; 3 uses
+  %i.ay = load i32, ptr %i.ax, align 4, !tbaa !53 ; 5 uses
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.ba = load i32, ptr %i.az, align 4, !tbaa !53 ; 4 uses
-  %17 = lshr i32 %i.ba, 24
-  %18 = trunc nuw i32 %17 to i8                   ; 3 uses
-  %19 = lshr i32 %i.ba, 16
-  %20 = trunc i32 %19 to i8                       ; 3 uses
-  %21 = lshr i32 %i.ba, 8
-  %22 = trunc i32 %21 to i8                       ; 3 uses
-  %23 = trunc i32 %i.ba to i8                     ; 3 uses
+  %i.ba = load i32, ptr %i.az, align 4, !tbaa !53 ; 5 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %0, i64 12
-  %i.bc = load i32, ptr %i.bb, align 4, !tbaa !53 ; 4 uses
-  %24 = lshr i32 %i.bc, 24
-  %25 = trunc nuw i32 %24 to i8                   ; 3 uses
-  %26 = lshr i32 %i.bc, 16
-  %27 = trunc i32 %26 to i8                       ; 3 uses
-  %28 = lshr i32 %i.bc, 8
-  %29 = trunc i32 %28 to i8                       ; 3 uses
-  %30 = trunc i32 %i.bc to i8                     ; 3 uses
+  %i.bc = load i32, ptr %i.bb, align 4, !tbaa !53 ; 5 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.be = load i32, ptr %i.bd, align 4, !tbaa !53 ; 4 uses
   %i.bf = lshr i32 %i.be, 24
@@ -1594,192 +1564,220 @@ hash_step.exit33:                                 ; preds = %._crit_edge, %bb.k
   br i1 %.not27, label %.preheader.preheader, label %bb.l
 
 .preheader.preheader:                             ; preds = %hash_step.exit33
-  %i.bm = lshr i8 %4, 4
+  %3 = trunc i32 %i.bc to i8                      ; 2 uses
+  %4 = lshr i32 %i.bc, 8
+  %5 = trunc i32 %4 to i8                         ; 2 uses
+  %6 = lshr i32 %i.bc, 16
+  %7 = trunc i32 %6 to i8                         ; 2 uses
+  %8 = lshr i32 %i.bc, 24
+  %9 = trunc nuw i32 %8 to i8                     ; 2 uses
+  %10 = trunc i32 %i.ba to i8                     ; 2 uses
+  %11 = lshr i32 %i.ba, 8
+  %12 = trunc i32 %11 to i8                       ; 2 uses
+  %13 = lshr i32 %i.ba, 16
+  %14 = trunc i32 %13 to i8                       ; 2 uses
+  %15 = lshr i32 %i.ba, 24
+  %16 = trunc nuw i32 %15 to i8                   ; 2 uses
+  %17 = trunc i32 %i.ay to i8                     ; 2 uses
+  %18 = lshr i32 %i.ay, 8
+  %19 = trunc i32 %18 to i8                       ; 2 uses
+  %20 = lshr i32 %i.ay, 16
+  %21 = trunc i32 %20 to i8                       ; 2 uses
+  %22 = lshr i32 %i.ay, 24
+  %23 = trunc nuw i32 %22 to i8                   ; 2 uses
+  %24 = trunc i32 %i.aw to i8                     ; 2 uses
+  %25 = lshr i32 %i.aw, 8
+  %26 = trunc i32 %25 to i8                       ; 2 uses
+  %27 = lshr i32 %i.aw, 16
+  %28 = trunc i32 %27 to i8                       ; 2 uses
+  %29 = lshr i32 %i.aw, 24
+  %30 = trunc nuw i32 %29 to i8                   ; 2 uses
+  %i.bm = lshr i8 %30, 4
   %i.bn = zext nneg i8 %i.bm to i64
   %i.bo = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.bn
   %i.bp = load i8, ptr %i.bo, align 1, !tbaa !52
   store i8 %i.bp, ptr %1, align 1, !tbaa !52
-  %i.bq = and i8 %4, 15
+  %i.bq = and i8 %30, 15
   %i.br = zext nneg i8 %i.bq to i64
   %i.bs = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.br
   %i.bt = load i8, ptr %i.bs, align 1, !tbaa !52
   %i.bu = getelementptr inbounds nuw i8, ptr %1, i64 1
   store i8 %i.bt, ptr %i.bu, align 1, !tbaa !52
-  %i.bv = lshr i8 %6, 4
+  %i.bv = lshr i8 %28, 4
   %i.bw = zext nneg i8 %i.bv to i64
   %i.bx = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.bw
   %i.by = load i8, ptr %i.bx, align 1, !tbaa !52
   %i.bz = getelementptr inbounds nuw i8, ptr %1, i64 2
   store i8 %i.by, ptr %i.bz, align 1, !tbaa !52
-  %i.ca = and i8 %6, 15
+  %i.ca = and i8 %28, 15
   %i.cb = zext nneg i8 %i.ca to i64
   %i.cc = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.cb
   %i.cd = load i8, ptr %i.cc, align 1, !tbaa !52
   %i.ce = getelementptr inbounds nuw i8, ptr %1, i64 3
   store i8 %i.cd, ptr %i.ce, align 1, !tbaa !52
-  %i.cf = lshr i8 %8, 4
+  %i.cf = lshr i8 %26, 4
   %i.cg = zext nneg i8 %i.cf to i64
   %i.ch = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.cg
   %i.ci = load i8, ptr %i.ch, align 1, !tbaa !52
   %i.cj = getelementptr inbounds nuw i8, ptr %1, i64 4
   store i8 %i.ci, ptr %i.cj, align 1, !tbaa !52
-  %i.ck = and i8 %8, 15
+  %i.ck = and i8 %26, 15
   %i.cl = zext nneg i8 %i.ck to i64
   %i.cm = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.cl
   %i.cn = load i8, ptr %i.cm, align 1, !tbaa !52
   %i.co = getelementptr inbounds nuw i8, ptr %1, i64 5
   store i8 %i.cn, ptr %i.co, align 1, !tbaa !52
-  %i.cp = lshr i8 %9, 4
+  %i.cp = lshr i8 %24, 4
   %i.cq = zext nneg i8 %i.cp to i64
   %i.cr = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.cq
   %i.cs = load i8, ptr %i.cr, align 1, !tbaa !52
   %i.ct = getelementptr inbounds nuw i8, ptr %1, i64 6
   store i8 %i.cs, ptr %i.ct, align 1, !tbaa !52
-  %i.cu = and i8 %9, 15
+  %i.cu = and i8 %24, 15
   %i.cv = zext nneg i8 %i.cu to i64
   %i.cw = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.cv
   %i.cx = load i8, ptr %i.cw, align 1, !tbaa !52
   %i.cy = getelementptr inbounds nuw i8, ptr %1, i64 7
   store i8 %i.cx, ptr %i.cy, align 1, !tbaa !52
-  %i.cz = lshr i8 %11, 4
+  %i.cz = lshr i8 %23, 4
   %i.da = zext nneg i8 %i.cz to i64
   %i.db = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.da
   %i.dc = load i8, ptr %i.db, align 1, !tbaa !52
   %i.dd = getelementptr inbounds nuw i8, ptr %1, i64 8
   store i8 %i.dc, ptr %i.dd, align 1, !tbaa !52
-  %i.de = and i8 %11, 15
+  %i.de = and i8 %23, 15
   %i.df = zext nneg i8 %i.de to i64
   %i.dg = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.df
   %i.dh = load i8, ptr %i.dg, align 1, !tbaa !52
   %i.di = getelementptr inbounds nuw i8, ptr %1, i64 9
   store i8 %i.dh, ptr %i.di, align 1, !tbaa !52
-  %i.dj = lshr i8 %13, 4
+  %i.dj = lshr i8 %21, 4
   %i.dk = zext nneg i8 %i.dj to i64
   %i.dl = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.dk
   %i.dm = load i8, ptr %i.dl, align 1, !tbaa !52
   %i.dn = getelementptr inbounds nuw i8, ptr %1, i64 10
   store i8 %i.dm, ptr %i.dn, align 1, !tbaa !52
-  %i.do = and i8 %13, 15
+  %i.do = and i8 %21, 15
   %i.dp = zext nneg i8 %i.do to i64
   %i.dq = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.dp
   %i.dr = load i8, ptr %i.dq, align 1, !tbaa !52
   %i.ds = getelementptr inbounds nuw i8, ptr %1, i64 11
   store i8 %i.dr, ptr %i.ds, align 1, !tbaa !52
-  %i.dt = lshr i8 %15, 4
+  %i.dt = lshr i8 %19, 4
   %i.du = zext nneg i8 %i.dt to i64
   %i.dv = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.du
   %i.dw = load i8, ptr %i.dv, align 1, !tbaa !52
   %i.dx = getelementptr inbounds nuw i8, ptr %1, i64 12
   store i8 %i.dw, ptr %i.dx, align 1, !tbaa !52
-  %i.dy = and i8 %15, 15
+  %i.dy = and i8 %19, 15
   %i.dz = zext nneg i8 %i.dy to i64
   %i.ea = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.dz
   %i.eb = load i8, ptr %i.ea, align 1, !tbaa !52
   %i.ec = getelementptr inbounds nuw i8, ptr %1, i64 13
   store i8 %i.eb, ptr %i.ec, align 1, !tbaa !52
-  %i.ed = lshr i8 %16, 4
+  %i.ed = lshr i8 %17, 4
   %i.ee = zext nneg i8 %i.ed to i64
   %i.ef = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.ee
   %i.eg = load i8, ptr %i.ef, align 1, !tbaa !52
   %i.eh = getelementptr inbounds nuw i8, ptr %1, i64 14
   store i8 %i.eg, ptr %i.eh, align 1, !tbaa !52
-  %i.ei = and i8 %16, 15
+  %i.ei = and i8 %17, 15
   %i.ej = zext nneg i8 %i.ei to i64
   %i.ek = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.ej
   %i.el = load i8, ptr %i.ek, align 1, !tbaa !52
   %i.em = getelementptr inbounds nuw i8, ptr %1, i64 15
   store i8 %i.el, ptr %i.em, align 1, !tbaa !52
-  %i.en = lshr i8 %18, 4
+  %i.en = lshr i8 %16, 4
   %i.eo = zext nneg i8 %i.en to i64
   %i.ep = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.eo
   %i.eq = load i8, ptr %i.ep, align 1, !tbaa !52
   %i.er = getelementptr inbounds nuw i8, ptr %1, i64 16
   store i8 %i.eq, ptr %i.er, align 1, !tbaa !52
-  %i.es = and i8 %18, 15
+  %i.es = and i8 %16, 15
   %i.et = zext nneg i8 %i.es to i64
   %i.eu = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.et
   %i.ev = load i8, ptr %i.eu, align 1, !tbaa !52
   %i.ew = getelementptr inbounds nuw i8, ptr %1, i64 17
   store i8 %i.ev, ptr %i.ew, align 1, !tbaa !52
-  %i.ex = lshr i8 %20, 4
+  %i.ex = lshr i8 %14, 4
   %i.ey = zext nneg i8 %i.ex to i64
   %i.ez = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.ey
   %i.fa = load i8, ptr %i.ez, align 1, !tbaa !52
   %i.fb = getelementptr inbounds nuw i8, ptr %1, i64 18
   store i8 %i.fa, ptr %i.fb, align 1, !tbaa !52
-  %i.fc = and i8 %20, 15
+  %i.fc = and i8 %14, 15
   %i.fd = zext nneg i8 %i.fc to i64
   %i.fe = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.fd
   %i.ff = load i8, ptr %i.fe, align 1, !tbaa !52
   %i.fg = getelementptr inbounds nuw i8, ptr %1, i64 19
   store i8 %i.ff, ptr %i.fg, align 1, !tbaa !52
-  %i.fh = lshr i8 %22, 4
+  %i.fh = lshr i8 %12, 4
   %i.fi = zext nneg i8 %i.fh to i64
   %i.fj = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.fi
   %i.fk = load i8, ptr %i.fj, align 1, !tbaa !52
   %i.fl = getelementptr inbounds nuw i8, ptr %1, i64 20
   store i8 %i.fk, ptr %i.fl, align 1, !tbaa !52
-  %i.fm = and i8 %22, 15
+  %i.fm = and i8 %12, 15
   %i.fn = zext nneg i8 %i.fm to i64
   %i.fo = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.fn
   %i.fp = load i8, ptr %i.fo, align 1, !tbaa !52
   %i.fq = getelementptr inbounds nuw i8, ptr %1, i64 21
   store i8 %i.fp, ptr %i.fq, align 1, !tbaa !52
-  %i.fr = lshr i8 %23, 4
+  %i.fr = lshr i8 %10, 4
   %i.fs = zext nneg i8 %i.fr to i64
   %i.ft = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.fs
   %i.fu = load i8, ptr %i.ft, align 1, !tbaa !52
   %i.fv = getelementptr inbounds nuw i8, ptr %1, i64 22
   store i8 %i.fu, ptr %i.fv, align 1, !tbaa !52
-  %i.fw = and i8 %23, 15
+  %i.fw = and i8 %10, 15
   %i.fx = zext nneg i8 %i.fw to i64
   %i.fy = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.fx
   %i.fz = load i8, ptr %i.fy, align 1, !tbaa !52
   %i.ga = getelementptr inbounds nuw i8, ptr %1, i64 23
   store i8 %i.fz, ptr %i.ga, align 1, !tbaa !52
-  %i.gb = lshr i8 %25, 4
+  %i.gb = lshr i8 %9, 4
   %i.gc = zext nneg i8 %i.gb to i64
   %i.gd = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.gc
   %i.ge = load i8, ptr %i.gd, align 1, !tbaa !52
   %i.gf = getelementptr inbounds nuw i8, ptr %1, i64 24
   store i8 %i.ge, ptr %i.gf, align 1, !tbaa !52
-  %i.gg = and i8 %25, 15
+  %i.gg = and i8 %9, 15
   %i.gh = zext nneg i8 %i.gg to i64
   %i.gi = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.gh
   %i.gj = load i8, ptr %i.gi, align 1, !tbaa !52
   %i.gk = getelementptr inbounds nuw i8, ptr %1, i64 25
   store i8 %i.gj, ptr %i.gk, align 1, !tbaa !52
-  %i.gl = lshr i8 %27, 4
+  %i.gl = lshr i8 %7, 4
   %i.gm = zext nneg i8 %i.gl to i64
   %i.gn = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.gm
   %i.go = load i8, ptr %i.gn, align 1, !tbaa !52
   %i.gp = getelementptr inbounds nuw i8, ptr %1, i64 26
   store i8 %i.go, ptr %i.gp, align 1, !tbaa !52
-  %i.gq = and i8 %27, 15
+  %i.gq = and i8 %7, 15
   %i.gr = zext nneg i8 %i.gq to i64
   %i.gs = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.gr
   %i.gt = load i8, ptr %i.gs, align 1, !tbaa !52
   %i.gu = getelementptr inbounds nuw i8, ptr %1, i64 27
   store i8 %i.gt, ptr %i.gu, align 1, !tbaa !52
-  %i.gv = lshr i8 %29, 4
+  %i.gv = lshr i8 %5, 4
   %i.gw = zext nneg i8 %i.gv to i64
   %i.gx = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.gw
   %i.gy = load i8, ptr %i.gx, align 1, !tbaa !52
   %i.gz = getelementptr inbounds nuw i8, ptr %1, i64 28
   store i8 %i.gy, ptr %i.gz, align 1, !tbaa !52
-  %i.ha = and i8 %29, 15
+  %i.ha = and i8 %5, 15
   %i.hb = zext nneg i8 %i.ha to i64
   %i.hc = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.hb
   %i.hd = load i8, ptr %i.hc, align 1, !tbaa !52
   %i.he = getelementptr inbounds nuw i8, ptr %1, i64 29
   store i8 %i.hd, ptr %i.he, align 1, !tbaa !52
-  %i.hf = lshr i8 %30, 4
+  %i.hf = lshr i8 %3, 4
   %i.hg = zext nneg i8 %i.hf to i64
   %i.hh = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.hg
   %i.hi = load i8, ptr %i.hh, align 1, !tbaa !52
   %i.hj = getelementptr inbounds nuw i8, ptr %1, i64 30
   store i8 %i.hi, ptr %i.hj, align 1, !tbaa !52
-  %i.hk = and i8 %30, 15
+  %i.hk = and i8 %3, 15
   %i.hl = zext nneg i8 %i.hk to i64
   %i.hm = getelementptr inbounds nuw i8, ptr @hash_finish.zEncode, i64 %i.hl
   %i.hn = load i8, ptr %i.hm, align 1, !tbaa !52
@@ -1834,37 +1832,17 @@ hash_step.exit33:                                 ; preds = %._crit_edge, %bb.k
   br label %bb.m
 
 bb.l:                                             ; preds = %hash_step.exit33
-  store i8 %4, ptr %1, align 1
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 1
-  store i8 %6, ptr %.sroa.5.0..sroa_idx, align 1
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 2
-  store i8 %8, ptr %.sroa.7.0..sroa_idx, align 1
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 3
-  store i8 %9, ptr %.sroa.9.0..sroa_idx, align 1
+  %31 = tail call i32 @llvm.bswap.i32(i32 %i.aw)
+  store i32 %31, ptr %1, align 1
   %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 4
-  store i8 %11, ptr %.sroa.11.0..sroa_idx, align 1
-  %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 5
-  store i8 %13, ptr %.sroa.13.0..sroa_idx, align 1
-  %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 6
-  store i8 %15, ptr %.sroa.15.0..sroa_idx, align 1
-  %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 7
-  store i8 %16, ptr %.sroa.17.0..sroa_idx, align 1
+  %32 = tail call i32 @llvm.bswap.i32(i32 %i.ay)
+  store i32 %32, ptr %.sroa.11.0..sroa_idx, align 1
   %.sroa.19.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 8
-  store i8 %18, ptr %.sroa.19.0..sroa_idx, align 1
-  %.sroa.21.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 9
-  store i8 %20, ptr %.sroa.21.0..sroa_idx, align 1
-  %.sroa.23.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 10
-  store i8 %22, ptr %.sroa.23.0..sroa_idx, align 1
-  %.sroa.25.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 11
-  store i8 %23, ptr %.sroa.25.0..sroa_idx, align 1
+  %33 = tail call i32 @llvm.bswap.i32(i32 %i.ba)
+  store i32 %33, ptr %.sroa.19.0..sroa_idx, align 1
   %.sroa.27.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 12
-  store i8 %25, ptr %.sroa.27.0..sroa_idx, align 1
-  %.sroa.29.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 13
-  store i8 %27, ptr %.sroa.29.0..sroa_idx, align 1
-  %.sroa.31.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 14
-  store i8 %29, ptr %.sroa.31.0..sroa_idx, align 1
-  %.sroa.33.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 15
-  store i8 %30, ptr %.sroa.33.0..sroa_idx, align 1
+  %34 = tail call i32 @llvm.bswap.i32(i32 %i.bc)
+  store i32 %34, ptr %.sroa.27.0..sroa_idx, align 1
   %.sroa.35.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 16
   store i8 %i.bg, ptr %.sroa.35.0..sroa_idx, align 1
   %.sroa.37.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 17
@@ -2267,9 +2245,8 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #45
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(17) %i.a, ptr noundef nonnull align 1 dereferenceable(17) @.str.60, i64 17, i1 false)
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 17
-  %4 = bitcast i64 %.pre to <8 x i8>
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %5, ptr %i.j, align 1, !tbaa !52
+  %4 = tail call i64 @llvm.bswap.i64(i64 %.pre)
+  store i64 %4, ptr %i.j, align 1, !tbaa !52
   %i.k = load ptr, ptr %i.e, align 8, !tbaa !271
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 24
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !276
@@ -2312,9 +2289,8 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #45
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(17) %i.a, ptr noundef nonnull align 1 dereferenceable(17) @.str.60, i64 17, i1 false)
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 17
-  %2 = bitcast i64 %i.d to <8 x i8>
-  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %3, ptr %i.e, align 1, !tbaa !52
+  %2 = tail call i64 @llvm.bswap.i64(i64 %i.d)
+  store i64 %2, ptr %i.e, align 1, !tbaa !52
   %i.f = add nsw i64 %i.d, %1                     ; 3 uses
   %i.g = load ptr, ptr %i.b, align 8, !tbaa !271
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 24
@@ -2717,17 +2693,17 @@ bb.e:                                             ; preds = %bb.d
   %i.v = load i8, ptr %i.u, align 1, !tbaa !52
   %i.w = zext i8 %i.v to i32
   %i.x = shl nuw i32 %i.w, 24
-  %i.y = getelementptr inbounds nuw i8, ptr %1, i64 57 ; 2 uses
+  %i.y = getelementptr inbounds nuw i8, ptr %1, i64 57
   %i.z = load i8, ptr %i.y, align 1, !tbaa !52
   %i.aa = zext i8 %i.z to i32
   %i.ab = shl nuw nsw i32 %i.aa, 16
   %i.ac = or disjoint i32 %i.ab, %i.x
-  %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 58 ; 2 uses
+  %i.ad = getelementptr inbounds nuw i8, ptr %1, i64 58
   %i.ae = load i8, ptr %i.ad, align 1, !tbaa !52
   %i.af = zext i8 %i.ae to i32
   %i.ag = shl nuw nsw i32 %i.af, 8
   %i.ah = or disjoint i32 %i.ac, %i.ag
-  %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 59 ; 2 uses
+  %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 59
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !52
   %i.ak = zext i8 %i.aj to i32
   %i.al = or disjoint i32 %i.ah, %i.ak            ; 3 uses
@@ -2777,12 +2753,14 @@ bb.j:                                             ; preds = %.thread, %bb.i
   %i.bd = zext i32 %.08599 to i64
   %i.be = sdiv i64 %i.bc, %i.bd
   %i.bf = trunc i64 %i.be to i32
+  %4 = call i32 @llvm.bswap.i32(i32 %i.bf)
+  %5 = bitcast i32 %4 to <4 x i8>
   br label %bb.k
 
 bb.k:                                             ; preds = %bb.j, %bb.i
   %.084102 = phi i32 [ %.084101, %bb.j ], [ %i.t, %bb.i ] ; 2 uses
   %.085100 = phi i32 [ %.08599, %bb.j ], [ 0, %bb.i ] ; 3 uses
-  %.083 = phi i32 [ %i.bf, %bb.j ], [ 0, %bb.i ]  ; 4 uses
+  %.083 = phi <4 x i8> [ %5, %bb.j ], [ zeroinitializer, %bb.i ]
   %i.bg = getelementptr inbounds nuw i8, ptr %i.am, i64 88 ; 4 uses
   %i.bh = load ptr, ptr %i.bg, align 8, !tbaa !331
   call void @sqlite3_free(ptr noundef %i.bh) #45
@@ -2813,25 +2791,10 @@ bb.n:                                             ; preds = %bb.l
   %or.cond5 = icmp ne i32 %i.bq, 1
   %i.br = icmp ne i32 %i.al, 2
   %or.cond7 = and i1 %i.br, %or.cond5
-  %spec.store.select9 = select i1 %or.cond7, i32 1, i32 %i.al ; 4 uses
   %i.bs = zext nneg i32 %2 to i64                 ; 4 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bp, i64 %i.bs ; 2 uses
   store ptr %i.bt, ptr %i.bi, align 8, !tbaa !666
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.bt, ptr nonnull align 1 %1, i64 %i.bs, i1 false)
-  %4 = lshr i32 %.083, 24
-  %5 = trunc nuw i32 %4 to i8
-  %6 = lshr i32 %.083, 16
-  %7 = trunc i32 %6 to i8
-  %8 = lshr i32 %.083, 8
-  %9 = trunc i32 %8 to i8
-  %10 = trunc i32 %.083 to i8
-  %11 = lshr i32 %spec.store.select9, 24
-  %12 = trunc nuw i32 %11 to i8
-  %13 = lshr i32 %spec.store.select9, 16
-  %14 = trunc i32 %13 to i8
-  %15 = lshr i32 %spec.store.select9, 8
-  %16 = trunc i32 %15 to i8
-  %17 = trunc i32 %spec.store.select9 to i8
   %i.bu = sub i32 %.085100, %.084102              ; 2 uses
   %i.bv = lshr i32 %i.bu, 8
   %i.bw = trunc i32 %i.bv to i8
@@ -2849,19 +2812,12 @@ bb.n:                                             ; preds = %bb.l
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 21
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %.sroa.9.0..sroa_idx, ptr noundef nonnull align 1 dereferenceable(7) getelementptr inbounds nuw (i8, ptr @__const.recoverVfsRead.aHdr, i64 21), i64 7, i1 false)
   %.sroa.9112.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 28
-  store i8 %5, ptr %.sroa.9112.0..sroa_idx, align 1
-  %.sroa.10.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 29
-  store i8 %7, ptr %.sroa.10.0..sroa_idx, align 1
-  %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 30
-  store i8 %9, ptr %.sroa.11.0..sroa_idx, align 1
-  %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 31
-  store i8 %10, ptr %.sroa.12.0..sroa_idx, align 1
+  store <4 x i8> %.083, ptr %.sroa.9112.0..sroa_idx, align 1
   %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 40
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %.sroa.15.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(12) getelementptr inbounds nuw (i8, ptr @__const.recoverVfsRead.aHdr, i64 40), i64 12, i1 false)
-  store i8 %12, ptr %i.u, align 1
-  store i8 %14, ptr %i.y, align 1
-  store i8 %16, ptr %i.ad, align 1
-  store i8 %17, ptr %i.ai, align 1
+  %6 = call i32 @llvm.bswap.i32(i32 %i.al)
+  %7 = select i1 %or.cond7, i32 16777216, i32 %6
+  store i32 %7, ptr %i.u, align 1
   %.sroa.23.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 72
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(33) %.sroa.23.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(33) getelementptr inbounds nuw (i8, ptr @__const.recoverVfsRead.aHdr, i64 72), i64 33, i1 false)
   %.sroa.23128.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 105

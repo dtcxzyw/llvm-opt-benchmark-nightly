@@ -205,23 +205,11 @@ bb.a:
 define hidden noundef i32 @qoa_encode_header(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %1) local_unnamed_addr #17 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.b = load i32, ptr %i.a, align 4              ; 4 uses
+  %i.b = load i32, ptr %i.a, align 4
   store <4 x i8> <i8 113, i8 111, i8 97, i8 102>, ptr %1, align 1
-  %2 = lshr i32 %i.b, 24
-  %3 = trunc nuw i32 %2 to i8
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 4
-  store i8 %3, ptr %i.c, align 1
-  %4 = lshr i32 %i.b, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 5
-  store i8 %5, ptr %6, align 1
-  %7 = lshr i32 %i.b, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 6
-  store i8 %8, ptr %9, align 1
-  %10 = trunc i32 %i.b to i8
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 7
-  store i8 %10, ptr %11, align 1
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.b)
+  store i32 %2, ptr %i.c, align 1
   ret i32 8
 }
 
@@ -591,9 +579,8 @@ bb.f:                                             ; preds = %bb.e, %.thread.us.u
   %i.gv = zext i32 %.2160209.us to i64
   %i.gw = getelementptr inbounds nuw i8, ptr %3, i64 %i.gv
   %i.gx = add i32 %.2160209.us, 8                 ; 3 uses
-  %4 = bitcast i64 %i.gu to <8 x i8>
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %5, ptr %i.gw, align 1
+  %4 = tail call i64 @llvm.bswap.i64(i64 %i.gu)
+  store i64 %4, ptr %i.gw, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0148)
   %indvars.iv.next260 = add nuw nsw i64 %indvars.iv259, 1 ; 2 uses
   %exitcond263.not = icmp eq i64 %indvars.iv.next260, %i.j
@@ -650,7 +637,7 @@ bb.d:                                             ; preds = %bb.c
   %i.p = add nuw nsw i32 %i.m, 8
   %i.q = add i32 %i.p, %reass.mul
   %i.r = zext i32 %i.q to i64
-  %i.s = tail call noalias ptr @malloc(i64 noundef %i.r) #74 ; 7 uses
+  %i.s = tail call noalias ptr @malloc(i64 noundef %i.r) #74 ; 4 uses
   %i.t = load i32, ptr %1, align 4                ; 3 uses
   %.not = icmp eq i32 %i.t, 0
   br i1 %.not, label %._crit_edge, label %.lr.ph
@@ -689,23 +676,11 @@ bb.e:                                             ; preds = %bb.e, %.epil.prehea
   br i1 %epil.iter.cmp.not, label %._crit_edge, label %bb.e, !llvm.loop !1116
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %bb.e, %bb.d
-  %i.y = load i32, ptr %i.a, align 4              ; 6 uses
+  %i.y = load i32, ptr %i.a, align 4              ; 3 uses
   store <4 x i8> <i8 113, i8 111, i8 97, i8 102>, ptr %i.s, align 1
-  %3 = lshr i32 %i.y, 24
-  %4 = trunc nuw i32 %3 to i8
   %i.z = getelementptr inbounds nuw i8, ptr %i.s, i64 4
-  store i8 %4, ptr %i.z, align 1
-  %5 = lshr i32 %i.y, 16
-  %6 = trunc i32 %5 to i8
-  %7 = getelementptr inbounds nuw i8, ptr %i.s, i64 5
-  store i8 %6, ptr %7, align 1
-  %8 = lshr i32 %i.y, 8
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %i.s, i64 6
-  store i8 %9, ptr %10, align 1
-  %11 = trunc i32 %i.y to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.s, i64 7
-  store i8 %11, ptr %12, align 1
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.y)
+  store i32 %3, ptr %i.z, align 1
   %.not66 = icmp eq i32 %i.y, 0
   br i1 %.not66, label %._crit_edge65, label %.lr.ph64
 

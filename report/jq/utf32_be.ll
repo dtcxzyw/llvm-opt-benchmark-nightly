@@ -83,20 +83,8 @@ bb.a:
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define internal noundef i32 @utf32be_code_to_mbc(i32 noundef %0, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %1) #2 {
 bb.a:
-  %2 = lshr i32 %0, 24
-  %3 = trunc nuw i32 %2 to i8
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 1
-  store i8 %3, ptr %1, align 1, !tbaa !12
-  %5 = lshr i32 %0, 16
-  %6 = trunc i32 %5 to i8
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 2
-  store i8 %6, ptr %4, align 1, !tbaa !12
-  %8 = lshr i32 %0, 8
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 3
-  store i8 %9, ptr %7, align 1, !tbaa !12
-  %11 = trunc i32 %0 to i8
-  store i8 %11, ptr %10, align 1, !tbaa !12
+  %2 = tail call i32 @llvm.bswap.i32(i32 %0)
+  store i32 %2, ptr %1, align 1, !tbaa !12
   ret i32 4
 }
 
@@ -144,7 +132,7 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.g
 
 bb.f:                                             ; preds = %bb.d, %bb.c, %bb.b, %bb.a
-  %i.v = tail call i32 @onigenc_unicode_mbc_case_fold(ptr noundef nonnull @OnigEncodingUTF32_BE, i32 noundef %0, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3) #5
+  %i.v = tail call i32 @onigenc_unicode_mbc_case_fold(ptr noundef nonnull @OnigEncodingUTF32_BE, i32 noundef %0, ptr noundef nonnull %1, ptr noundef %2, ptr noundef %3) #6
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.f, %bb.e
@@ -157,7 +145,7 @@ declare i32 @onigenc_unicode_apply_all_case_fold(i32 noundef, ptr noundef, ptr n
 ; Function Attrs: nounwind uwtable
 define internal i32 @utf32be_get_case_fold_codes_by_str(i32 noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) #3 {
 bb.a:
-  %i.a = tail call i32 @onigenc_unicode_get_case_fold_codes_by_str(ptr noundef nonnull @OnigEncodingUTF32_BE, i32 noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) #5
+  %i.a = tail call i32 @onigenc_unicode_get_case_fold_codes_by_str(ptr noundef nonnull @OnigEncodingUTF32_BE, i32 noundef %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) #6
   ret i32 %i.a
 }
 
@@ -192,7 +180,7 @@ declare i32 @onigenc_always_false_is_allowed_reverse_match(ptr noundef, ptr noun
 ; Function Attrs: nounwind uwtable
 define internal i32 @is_valid_mbc_string(ptr noundef %0, ptr noundef %1) #3 {
 bb.a:
-  %i.a = tail call i32 @onigenc_length_check_is_valid_mbc_string(ptr noundef nonnull @OnigEncodingUTF32_BE, ptr noundef %0, ptr noundef %1) #5
+  %i.a = tail call i32 @onigenc_length_check_is_valid_mbc_string(ptr noundef nonnull @OnigEncodingUTF32_BE, ptr noundef %0, ptr noundef %1) #6
   ret i32 %i.a
 }
 
@@ -202,12 +190,16 @@ declare i32 @onigenc_unicode_get_case_fold_codes_by_str(ptr noundef, i32 noundef
 
 declare i32 @onigenc_length_check_is_valid_mbc_string(ptr noundef, ptr noundef, ptr noundef) local_unnamed_addr #4
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #5
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #5 = { nounwind }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}

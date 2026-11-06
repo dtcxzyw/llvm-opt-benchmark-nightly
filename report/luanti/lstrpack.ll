@@ -128,9 +128,9 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph
   switch i32 %i.l, label %default.unreachable200 [
     i32 0, label %bb.e
     i32 1, label %bb.k
-    i32 2, label %3
-    i32 3, label %14
-    i32 4, label %23
+    i32 2, label %copywithendian.exit.loopexit
+    i32 3, label %copywithendian.exit97
+    i32 4, label %copywithendian.exit104
     i32 5, label %bb.q
     i32 6, label %bb.v
     i32 7, label %bb.ab
@@ -533,87 +533,49 @@ bb.p:                                             ; preds = %.thread133, %bb.n
   store ptr %i.fk, ptr %1, align 8, !tbaa !34
   br label %packint.exit
 
-3:                                                ; preds = %._crit_edge
-  %4 = call double @luaL_checknumber(ptr noundef %0, i32 noundef %i.z) #7
-  %5 = fptrunc double %4 to float                 ; 2 uses
-  %6 = call ptr @luaL_prepbuffer(ptr noundef nonnull %1) #7 ; 5 uses
-  %7 = load i32, ptr %i.h, align 8, !tbaa !16
-  %8 = icmp eq i32 %7, 1
-  br i1 %8, label %9, label %copywithendian.exit.loopexit
-
-9:                                                ; preds = %3
-  store float %5, ptr %6, align 1
-  br label %copywithendian.exit
-
-copywithendian.exit.loopexit:                     ; preds = %3
-  %.0.i = getelementptr i8, ptr %6, i64 3
-  %10 = bitcast float %5 to i32                   ; 4 uses
-  %.0.extract.trunc176 = trunc i32 %10 to i8
-  store i8 %.0.extract.trunc176, ptr %.0.i, align 1, !tbaa !18
-  %.0.i.1 = getelementptr i8, ptr %6, i64 2
-  %.1.extract.shift179 = lshr i32 %10, 8
-  %.1.extract.trunc180 = trunc i32 %.1.extract.shift179 to i8
-  store i8 %.1.extract.trunc180, ptr %.0.i.1, align 1, !tbaa !18
-  %.0.i.2 = getelementptr i8, ptr %6, i64 1
-  %.2.extract.shift182 = lshr i32 %10, 16
-  %.2.extract.trunc183 = trunc i32 %.2.extract.shift182 to i8
-  store i8 %.2.extract.trunc183, ptr %.0.i.2, align 1, !tbaa !18
-  %.3.extract.shift185 = lshr i32 %10, 24
-  %.3.extract.trunc186 = trunc nuw i32 %.3.extract.shift185 to i8
-  store i8 %.3.extract.trunc186, ptr %6, align 1, !tbaa !18
-  br label %copywithendian.exit
-
-copywithendian.exit:                              ; preds = %copywithendian.exit.loopexit, %9
+copywithendian.exit.loopexit:                     ; preds = %._crit_edge
+  %3 = call double @luaL_checknumber(ptr noundef %0, i32 noundef %i.z) #7
+  %4 = fptrunc double %3 to float                 ; 2 uses
+  %5 = call ptr @luaL_prepbuffer(ptr noundef nonnull %1) #7
+  %6 = load i32, ptr %i.h, align 8, !tbaa !16
+  %7 = icmp eq i32 %6, 1
+  %8 = bitcast float %4 to i32
+  %9 = call i32 @llvm.bswap.i32(i32 %8)
+  %10 = bitcast float %4 to i32
+  %storemerge206 = select i1 %7, i32 %10, i32 %9
+  store i32 %storemerge206, ptr %5, align 1
   %11 = load ptr, ptr %1, align 8, !tbaa !34
   %12 = sext i32 %i.n to i64
   %13 = getelementptr inbounds i8, ptr %11, i64 %12
   store ptr %13, ptr %1, align 8, !tbaa !34
   br label %packint.exit
 
-14:                                               ; preds = %._crit_edge
-  %15 = call double @luaL_checknumber(ptr noundef %0, i32 noundef %i.z) #7 ; 2 uses
-  %16 = call ptr @luaL_prepbuffer(ptr noundef nonnull %1) #7
-  %17 = load i32, ptr %i.h, align 8, !tbaa !16
-  %18 = icmp eq i32 %17, 1
-  br i1 %18, label %19, label %copywithendian.exit97.loopexit
-
-19:                                               ; preds = %14
-  %20 = bitcast double %15 to <8 x i8>
-  br label %copywithendian.exit97
-
-copywithendian.exit97.loopexit:                   ; preds = %14
-  %21 = bitcast double %15 to <8 x i8>
-  %22 = shufflevector <8 x i8> %21, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  br label %copywithendian.exit97
-
-copywithendian.exit97:                            ; preds = %copywithendian.exit97.loopexit, %19
-  %storemerge205 = phi <8 x i8> [ %22, %copywithendian.exit97.loopexit ], [ %20, %19 ]
-  store <8 x i8> %storemerge205, ptr %16, align 1
+copywithendian.exit97:                            ; preds = %._crit_edge
+  %14 = call double @luaL_checknumber(ptr noundef %0, i32 noundef %i.z) #7 ; 2 uses
+  %15 = call ptr @luaL_prepbuffer(ptr noundef nonnull %1) #7
+  %16 = load i32, ptr %i.h, align 8, !tbaa !16
+  %17 = icmp eq i32 %16, 1
+  %18 = bitcast double %14 to i64
+  %19 = call i64 @llvm.bswap.i64(i64 %18)
+  %20 = bitcast double %14 to i64
+  %storemerge205 = select i1 %17, i64 %20, i64 %19
+  store i64 %storemerge205, ptr %15, align 1
   %i.fl = load ptr, ptr %1, align 8, !tbaa !34
   %i.fm = sext i32 %i.n to i64
   %i.fn = getelementptr inbounds i8, ptr %i.fl, i64 %i.fm
   store ptr %i.fn, ptr %1, align 8, !tbaa !34
   br label %packint.exit
 
-23:                                               ; preds = %._crit_edge
-  %24 = call double @luaL_checknumber(ptr noundef %0, i32 noundef %i.z) #7 ; 2 uses
-  %25 = call ptr @luaL_prepbuffer(ptr noundef nonnull %1) #7
-  %26 = load i32, ptr %i.h, align 8, !tbaa !16
-  %27 = icmp eq i32 %26, 1
-  br i1 %27, label %28, label %copywithendian.exit104.loopexit
-
-28:                                               ; preds = %23
-  %29 = bitcast double %24 to <8 x i8>
-  br label %copywithendian.exit104
-
-copywithendian.exit104.loopexit:                  ; preds = %23
-  %30 = bitcast double %24 to <8 x i8>
-  %31 = shufflevector <8 x i8> %30, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  br label %copywithendian.exit104
-
-copywithendian.exit104:                           ; preds = %copywithendian.exit104.loopexit, %28
-  %storemerge = phi <8 x i8> [ %31, %copywithendian.exit104.loopexit ], [ %29, %28 ]
-  store <8 x i8> %storemerge, ptr %25, align 1
+copywithendian.exit104:                           ; preds = %._crit_edge
+  %21 = call double @luaL_checknumber(ptr noundef %0, i32 noundef %i.z) #7 ; 2 uses
+  %22 = call ptr @luaL_prepbuffer(ptr noundef nonnull %1) #7
+  %23 = load i32, ptr %i.h, align 8, !tbaa !16
+  %24 = icmp eq i32 %23, 1
+  %25 = bitcast double %21 to i64
+  %26 = call i64 @llvm.bswap.i64(i64 %25)
+  %27 = bitcast double %21 to i64
+  %storemerge = select i1 %24, i64 %27, i64 %26
+  store i64 %storemerge, ptr %22, align 1
   %i.fo = load ptr, ptr %1, align 8, !tbaa !34
   %i.fp = sext i32 %i.n to i64
   %i.fq = getelementptr inbounds i8, ptr %i.fo, i64 %i.fp
@@ -920,9 +882,9 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
 default.unreachable200:                           ; preds = %._crit_edge
   unreachable
 
-packint.exit:                                     ; preds = %.loopexit.i64, %bb.o, %.loopexit.i, %bb.i, %._crit_edge, %._crit_edge, %bb.ai, %bb.af, %packint.exit130, %._crit_edge140, %copywithendian.exit104, %copywithendian.exit97, %copywithendian.exit
-  %.155 = phi i64 [ %i.jl, %bb.af ], [ %i.q, %._crit_edge ], [ %i.q, %.loopexit.i ], [ %i.q, %copywithendian.exit ], [ %i.q, %copywithendian.exit97 ], [ %i.q, %copywithendian.exit104 ], [ %i.q, %._crit_edge140 ], [ %i.ix, %packint.exit130 ], [ %i.q, %bb.ai ], [ %i.q, %._crit_edge ], [ %i.q, %bb.i ], [ %i.q, %bb.o ], [ %i.q, %.loopexit.i64 ]
-  %.1 = phi i32 [ %i.z, %bb.af ], [ %.0143, %._crit_edge ], [ %i.z, %.loopexit.i ], [ %i.z, %copywithendian.exit ], [ %i.z, %copywithendian.exit97 ], [ %i.z, %copywithendian.exit104 ], [ %i.z, %._crit_edge140 ], [ %i.z, %packint.exit130 ], [ %.0143, %bb.ai ], [ %.0143, %._crit_edge ], [ %i.z, %bb.i ], [ %i.z, %bb.o ], [ %i.z, %.loopexit.i64 ]
+packint.exit:                                     ; preds = %.loopexit.i64, %bb.o, %.loopexit.i, %bb.i, %._crit_edge, %._crit_edge, %bb.ai, %bb.af, %packint.exit130, %._crit_edge140, %copywithendian.exit104, %copywithendian.exit97, %copywithendian.exit.loopexit
+  %.155 = phi i64 [ %i.jl, %bb.af ], [ %i.q, %._crit_edge ], [ %i.q, %.loopexit.i ], [ %i.q, %copywithendian.exit.loopexit ], [ %i.q, %copywithendian.exit97 ], [ %i.q, %copywithendian.exit104 ], [ %i.q, %._crit_edge140 ], [ %i.ix, %packint.exit130 ], [ %i.q, %bb.ai ], [ %i.q, %._crit_edge ], [ %i.q, %bb.i ], [ %i.q, %bb.o ], [ %i.q, %.loopexit.i64 ]
+  %.1 = phi i32 [ %i.z, %bb.af ], [ %.0143, %._crit_edge ], [ %i.z, %.loopexit.i ], [ %i.z, %copywithendian.exit.loopexit ], [ %i.z, %copywithendian.exit97 ], [ %i.z, %copywithendian.exit104 ], [ %i.z, %._crit_edge140 ], [ %i.z, %packint.exit130 ], [ %.0143, %bb.ai ], [ %.0143, %._crit_edge ], [ %i.z, %bb.i ], [ %i.z, %bb.o ], [ %i.z, %.loopexit.i64 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #7
   %i.jr = load ptr, ptr %i.a, align 8, !tbaa !12
@@ -1325,11 +1287,14 @@ declare i64 @llvm.umin.i64(i64, i64) #4
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #5
 
-; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
-declare void @llvm.assume(i1 noundef) #6
-
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #4
+
+; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
+declare void @llvm.assume(i1 noundef) #6
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

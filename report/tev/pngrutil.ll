@@ -205,21 +205,9 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 544
-  %i.h = load i32, ptr %i.g, align 8, !tbaa !29   ; 4 uses
-  %2 = lshr i32 %i.h, 24
-  %3 = trunc nuw i32 %2 to i8
-  store i8 %3, ptr %i.c, align 8, !tbaa !10
-  %4 = lshr i32 %i.h, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 1145
-  store i8 %5, ptr %6, align 1, !tbaa !10
-  %7 = lshr i32 %i.h, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 1146
-  store i8 %8, ptr %9, align 2, !tbaa !10
-  %10 = trunc i32 %i.h to i8
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 1147
-  store i8 %10, ptr %11, align 1, !tbaa !10
+  %i.h = load i32, ptr %i.g, align 8, !tbaa !29
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.h)
+  store i32 %2, ptr %i.c, align 8, !tbaa !10
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 1148
   store i8 0, ptr %i.i, align 4, !tbaa !10
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 1160

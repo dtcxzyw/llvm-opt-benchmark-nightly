@@ -204,33 +204,21 @@ bb.a:
   %.val = load ptr, ptr %0, align 8
   %i.a = getelementptr i8, ptr %0, i64 24         ; 3 uses
   %.val8 = load i64, ptr %i.a, align 8
-  %i.b = getelementptr i8, ptr %.val, i64 %.val8  ; 9 uses
+  %i.b = getelementptr i8, ptr %.val, i64 %.val8  ; 6 uses
   store i64 0, ptr %i.b, align 1
   %i.c = lshr i16 %1, 8
   %i.d = trunc nuw i16 %i.c to i8
   store i8 %i.d, ptr %i.b, align 1
   %i.e = trunc i16 %1 to i8
-  %3 = getelementptr i8, ptr %i.b, i64 1
-  store i8 %i.e, ptr %3, align 1
-  %4 = getelementptr i8, ptr %i.b, i64 2
-  store i8 0, ptr %4, align 1
-  %i.f = getelementptr i8, ptr %i.b, i64 3
-  store i8 4, ptr %i.f, align 1
-  %i.g = getelementptr i8, ptr %i.b, i64 4
-  %5 = lshr i32 %2, 24
-  %6 = trunc nuw i32 %5 to i8
-  store i8 %6, ptr %i.g, align 1
-  %7 = lshr i32 %2, 16
-  %8 = trunc i32 %7 to i8
-  %i.h = getelementptr i8, ptr %i.b, i64 5
-  store i8 %8, ptr %i.h, align 1
-  %9 = lshr i32 %2, 8
-  %10 = trunc i32 %9 to i8
-  %i.i = getelementptr i8, ptr %i.b, i64 6
-  store i8 %10, ptr %i.i, align 1
-  %11 = trunc i32 %2 to i8
-  %12 = getelementptr i8, ptr %i.b, i64 7
-  store i8 %11, ptr %12, align 1
+  %i.f = getelementptr i8, ptr %i.b, i64 1
+  store i8 %i.e, ptr %i.f, align 1
+  %i.g = getelementptr i8, ptr %i.b, i64 2
+  store i8 0, ptr %i.g, align 1
+  %i.h = getelementptr i8, ptr %i.b, i64 3
+  store i8 4, ptr %i.h, align 1
+  %i.i = getelementptr i8, ptr %i.b, i64 4
+  %3 = tail call i32 @llvm.bswap.i32(i32 %2)
+  store i32 %3, ptr %i.i, align 1
   %i.j = load i64, ptr %i.a, align 8
   %i.k = add i64 %i.j, 8
   store i64 %i.k, ptr %i.a, align 8
@@ -447,6 +435,9 @@ declare void @llvm.assume(i1 noundef) #19
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #2
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #17
 
 attributes #0 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

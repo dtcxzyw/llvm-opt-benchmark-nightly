@@ -205,7 +205,7 @@ declare zeroext i1 @qcrypto_tls_creds_reload(ptr noundef, ptr noundef) local_unn
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local void @vnc_framebuffer_update(ptr noundef %0, i32 noundef %1, i32 noundef %2, i32 noundef %3, i32 noundef %4, i32 noundef %5) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [4 x i8], align 1                 ; 7 uses
+  %i.a = alloca [4 x i8], align 4                 ; 4 uses
   %i.b = alloca [2 x i8], align 1                 ; 5 uses
   %i.c = alloca [2 x i8], align 1                 ; 5 uses
   %i.d = alloca [2 x i8], align 1                 ; 5 uses
@@ -247,20 +247,8 @@ bb.a:
   call void @vnc_write(ptr noundef %0, ptr noundef nonnull %i.b, i64 noundef 2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
-  %6 = lshr i32 %5, 24
-  %7 = trunc nuw i32 %6 to i8
-  store i8 %7, ptr %i.a, align 1
-  %8 = lshr i32 %5, 16
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %9, ptr %10, align 1
-  %11 = lshr i32 %5, 8
-  %12 = trunc i32 %11 to i8
-  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %12, ptr %13, align 1
-  %14 = trunc i32 %5 to i8
-  %15 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %14, ptr %15, align 1
+  %6 = call i32 @llvm.bswap.i32(i32 %5)
+  store i32 %6, ptr %i.a, align 4
   call void @vnc_write(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
   ret void
@@ -285,22 +273,10 @@ bb.a:
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local void @vnc_write_s32(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [4 x i8], align 1                 ; 7 uses
+  %i.a = alloca [4 x i8], align 4                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
-  %2 = lshr i32 %1, 24
-  %3 = trunc nuw i32 %2 to i8
-  store i8 %3, ptr %i.a, align 1
-  %4 = lshr i32 %1, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %5, ptr %6, align 1
-  %7 = lshr i32 %1, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %8, ptr %9, align 1
-  %10 = trunc i32 %1 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %10, ptr %11, align 1
+  %2 = tail call i32 @llvm.bswap.i32(i32 %1)
+  store i32 %2, ptr %i.a, align 4
   call void @vnc_write(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
   ret void
@@ -375,7 +351,7 @@ bb.a:
   %i.ah = load i8, ptr %i.ag, align 2
   %i.ai = zext nneg i8 %i.ah to i32
   %i.aj = shl i32 %i.af, %i.ai
-  %i.ak = or i32 %i.ae, %i.aj                     ; 9 uses
+  %i.ak = or i32 %i.ae, %i.aj                     ; 6 uses
   %i.al = getelementptr inbounds nuw i8, ptr %0, i64 86657
   %i.am = load i8, ptr %i.al, align 1
   switch i8 %i.am, label %bb.f [
@@ -415,20 +391,8 @@ bb.f:                                             ; preds = %bb.a
   br i1 %i.ay, label %bb.g, label %bb.h
 
 bb.g:                                             ; preds = %bb.f
-  %3 = lshr i32 %i.ak, 24
-  %4 = trunc nuw i32 %3 to i8
-  store i8 %4, ptr %1, align 1
-  %5 = lshr i32 %i.ak, 16
-  %6 = trunc i32 %5 to i8
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 1
-  store i8 %6, ptr %7, align 1
-  %8 = lshr i32 %i.ak, 8
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 2
-  store i8 %9, ptr %10, align 1
-  %11 = trunc i32 %i.ak to i8
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 3
-  store i8 %11, ptr %12, align 1
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.ak)
+  store i32 %3, ptr %1, align 1
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.f
@@ -831,22 +795,10 @@ declare void @buffer_append(ptr noundef, ptr noundef, i64 noundef) local_unnamed
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local void @vnc_write_u32(ptr noundef %0, i32 noundef %1) local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca [4 x i8], align 1                 ; 7 uses
+  %i.a = alloca [4 x i8], align 4                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
-  %2 = lshr i32 %1, 24
-  %3 = trunc nuw i32 %2 to i8
-  store i8 %3, ptr %i.a, align 1
-  %4 = lshr i32 %1, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %5, ptr %6, align 1
-  %7 = lshr i32 %1, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %8, ptr %9, align 1
-  %10 = trunc i32 %1 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %10, ptr %11, align 1
+  %2 = tail call i32 @llvm.bswap.i32(i32 %1)
+  store i32 %2, ptr %i.a, align 4
   call void @vnc_write(ptr noundef %0, ptr noundef nonnull %i.a, i64 noundef 4)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
   ret void
@@ -1065,7 +1017,7 @@ bb.a:
 ; Function Attrs: nounwind sspstrong uwtable
 define internal noundef i32 @protocol_client_init(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i64 %2) #0 {
 bb.a:
-  %i.a = alloca [4 x i8], align 1                 ; 7 uses
+  %i.a = alloca [4 x i8], align 4                 ; 4 uses
   %i.b = alloca [2 x i8], align 1                 ; 5 uses
   %i.c = alloca [2 x i8], align 1                 ; 5 uses
   %i.d = alloca [1024 x i8], align 16             ; 6 uses
@@ -1233,22 +1185,10 @@ bb.r:                                             ; preds = %bb.p
   br label %bb.s
 
 bb.s:                                             ; preds = %bb.r, %bb.q
-  %.043 = phi i32 [ %spec.store.select, %bb.q ], [ %i.bp, %bb.r ] ; 5 uses
+  %.043 = phi i32 [ %spec.store.select, %bb.q ], [ %i.bp, %bb.r ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
-  %3 = lshr i32 %.043, 24
-  %4 = trunc nuw i32 %3 to i8
-  store i8 %4, ptr %i.a, align 1
-  %5 = lshr i32 %.043, 16
-  %6 = trunc i32 %5 to i8
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %6, ptr %7, align 1
-  %8 = lshr i32 %.043, 8
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %9, ptr %10, align 1
-  %11 = trunc i32 %.043 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %11, ptr %12, align 1
+  %3 = call i32 @llvm.bswap.i32(i32 %.043)
+  store i32 %3, ptr %i.a, align 4
   call void @vnc_write(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i64 noundef 4)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
   %i.bq = sext i32 %.043 to i64
@@ -1651,7 +1591,7 @@ bb.a:
   %i.a = alloca i8, align 1                       ; 4 uses
   %i.b = alloca i8, align 1                       ; 4 uses
   %i.c = alloca [4 x i8], align 4                 ; 4 uses
-  %i.d = alloca [4 x i8], align 1                 ; 7 uses
+  %i.d = alloca [4 x i8], align 4                 ; 4 uses
   %i.e = alloca [4 x i8], align 4                 ; 4 uses
   %i.f = alloca [4 x i8], align 4                 ; 4 uses
   %i.g = alloca [13 x i8], align 1                ; 6 uses
@@ -1967,25 +1907,14 @@ bb.ap:                                            ; preds = %bb.ao
 bb.aq:                                            ; preds = %bb.ap
   call void (ptr, ...) @qemu_log(ptr noundef nonnull @.str.118, ptr noundef nonnull %0, i32 noundef 2) #25
   %.pre = load i32, ptr %i.aw, align 8
+  %3 = call i32 @llvm.bswap.i32(i32 %.pre)
+  %4 = bitcast i32 %3 to <4 x i8>
   br label %trace_vnc_client_auth_method.exit
 
 trace_vnc_client_auth_method.exit:                ; preds = %bb.an, %bb.ao, %bb.ap, %bb.aq
-  %3 = phi i32 [ 2, %bb.an ], [ 2, %bb.ao ], [ 2, %bb.ap ], [ %.pre, %bb.aq ] ; 4 uses
+  %5 = phi <4 x i8> [ <i8 0, i8 0, i8 0, i8 2>, %bb.an ], [ <i8 0, i8 0, i8 0, i8 2>, %bb.ao ], [ <i8 0, i8 0, i8 0, i8 2>, %bb.ap ], [ %4, %bb.aq ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #25
-  %4 = lshr i32 %3, 24
-  %5 = trunc nuw i32 %4 to i8
-  store i8 %5, ptr %i.d, align 1
-  %6 = lshr i32 %3, 16
-  %7 = trunc i32 %6 to i8
-  %8 = getelementptr inbounds nuw i8, ptr %i.d, i64 1
-  store i8 %7, ptr %8, align 1
-  %9 = lshr i32 %3, 8
-  %10 = trunc i32 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.d, i64 2
-  store i8 %10, ptr %11, align 1
-  %12 = trunc i32 %3 to i8
-  %13 = getelementptr inbounds nuw i8, ptr %i.d, i64 3
-  store i8 %12, ptr %13, align 1
+  store <4 x i8> %5, ptr %i.d, align 4
   call void @vnc_write(ptr noundef nonnull %0, ptr noundef nonnull %i.d, i64 noundef 4)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #25
   %i.bz = load atomic ptr, ptr @qemu_mutex_lock_func monotonic, align 8
@@ -2388,7 +2317,7 @@ declare i32 @qemu_pixman_get_format(ptr noundef, i32 noundef) local_unnamed_addr
 ; Function Attrs: nounwind sspstrong uwtable
 define internal void @vnc_write_pixels_generic(ptr noundef %0, ptr nofree noundef readonly captures(none) %1, i32 noundef %2) #0 {
 bb.a:
-  %i.a = alloca [4 x i8], align 4                 ; 12 uses
+  %i.a = alloca [4 x i8], align 4                 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
   %i.b = ashr i32 %2, 2                           ; 2 uses
   %i.c = icmp sgt i32 %i.b, 0
@@ -2404,9 +2333,7 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 86678
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 86657
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 86692 ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
+  %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 1
   %wide.trip.count = zext nneg i32 %i.b to i64
   br label %bb.b
 
@@ -2444,7 +2371,7 @@ bb.b:                                             ; preds = %.lr.ph, %vnc_conver
   %i.ap = load i8, ptr %i.i, align 2
   %i.aq = zext nneg i8 %i.ap to i32
   %i.ar = shl i32 %i.ao, %i.aq
-  %i.as = or i32 %i.an, %i.ar                     ; 9 uses
+  %i.as = or i32 %i.an, %i.ar                     ; 6 uses
   %i.at = load i8, ptr %i.j, align 1              ; 2 uses
   switch i8 %i.at, label %bb.g [
     i8 1, label %bb.c
@@ -2480,17 +2407,8 @@ bb.g:                                             ; preds = %bb.b
   br i1 %i.bc, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %5 = lshr i32 %i.as, 24
-  %6 = trunc nuw i32 %5 to i8
-  store i8 %6, ptr %i.a, align 4
-  %7 = lshr i32 %i.as, 16
-  %8 = trunc i32 %7 to i8
-  store i8 %8, ptr %i.l, align 1
-  %9 = lshr i32 %i.as, 8
-  %10 = trunc i32 %9 to i8
-  store i8 %10, ptr %3, align 2
-  %11 = trunc i32 %i.as to i8
-  store i8 %11, ptr %4, align 1
+  %3 = call i32 @llvm.bswap.i32(i32 %i.as)
+  store i32 %3, ptr %i.a, align 4
   br label %vnc_convert_pixel.exit
 
 bb.i:                                             ; preds = %bb.g
@@ -2893,7 +2811,7 @@ bb.a:
 ; Function Attrs: nounwind sspstrong uwtable
 define internal void @audio_capture(ptr noundef %0, ptr noundef %1, i32 noundef %2) #0 {
 bb.a:
-  %i.a = alloca [4 x i8], align 1                 ; 7 uses
+  %i.a = alloca [4 x i8], align 4                 ; 4 uses
   %i.b = alloca [2 x i8], align 1                 ; 5 uses
   %i.c = alloca i8, align 1                       ; 4 uses
   %i.d = alloca i8, align 1                       ; 4 uses
@@ -2955,20 +2873,8 @@ bb.g:                                             ; preds = %trace_vnc_msg_serve
   call void @vnc_write(ptr noundef nonnull %0, ptr noundef nonnull %i.b, i64 noundef 2)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #25
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #25
-  %3 = lshr i32 %2, 24
-  %4 = trunc nuw i32 %3 to i8
-  store i8 %4, ptr %i.a, align 1
-  %5 = lshr i32 %2, 16
-  %6 = trunc i32 %5 to i8
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %6, ptr %7, align 1
-  %8 = lshr i32 %2, 8
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %9, ptr %10, align 1
-  %11 = trunc i32 %2 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %11, ptr %12, align 1
+  %3 = call i32 @llvm.bswap.i32(i32 %2)
+  store i32 %3, ptr %i.a, align 4
   call void @vnc_write(ptr noundef nonnull %0, ptr noundef nonnull %i.a, i64 noundef 4)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
   call void @vnc_write(ptr noundef nonnull %0, ptr noundef %1, i64 noundef %i.i)

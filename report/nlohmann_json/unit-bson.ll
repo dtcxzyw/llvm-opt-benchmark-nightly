@@ -205,7 +205,7 @@ _ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE2EED2Ev.exit: ; preds = %bb.a, 
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE17write_bson_objectERKS4_ISB_SF_St4lessISB_ESaISt4pairIKSB_SF_EEE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(48) %1) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"struct.std::array", align 4       ; 8 uses
+  %2 = alloca %"struct.std::array", align 4       ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !183  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
@@ -229,7 +229,7 @@ _ZSt10accumulateISt23_Rb_tree_const_iteratorISt4pairIKNSt7__cxx1112basic_stringI
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE21calc_bson_object_sizeERKS4_ISB_SF_St4lessISB_ESaISt4pairIKSB_SF_EEE.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE21calc_bson_object_sizeERKS4_ISB_SF_St4lessISB_ESaISt4pairIKSB_SF_EEE.exit: ; preds = %bb.a, %_ZSt10accumulateISt23_Rb_tree_const_iteratorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorS7_blmdSaNSA_14adl_serializerESD_IhSaIhEEvEEEEmZNSA_6detail13binary_writerISH_hE21calc_bson_object_sizeERKSC_IS7_SH_St4lessIS7_ESaISI_EEEUlmRKSI_E_ET0_T_SX_SW_T1_.exit.loopexit.i
-  %.0.i.lcssa.i = phi i32 [ 5, %bb.a ], [ %i.j, %_ZSt10accumulateISt23_Rb_tree_const_iteratorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorS7_blmdSaNSA_14adl_serializerESD_IhSaIhEEvEEEEmZNSA_6detail13binary_writerISH_hE21calc_bson_object_sizeERKSC_IS7_SH_St4lessIS7_ESaISI_EEEUlmRKSI_E_ET0_T_SX_SW_T1_.exit.loopexit.i ] ; 5 uses
+  %.0.i.lcssa.i = phi i32 [ 5, %bb.a ], [ %i.j, %_ZSt10accumulateISt23_Rb_tree_const_iteratorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorS7_blmdSaNSA_14adl_serializerESD_IhSaIhEEvEEEEmZNSA_6detail13binary_writerISH_hE21calc_bson_object_sizeERKSC_IS7_SH_St4lessIS7_ESaISI_EEEUlmRKSI_E_ET0_T_SX_SW_T1_.exit.loopexit.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #29
   store i32 %.0.i.lcssa.i, ptr %2, align 4
   %i.k = load i8, ptr %0, align 8, !tbaa !206, !range !84, !noundef !85
@@ -237,20 +237,8 @@ _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6v
   br i1 %.not.i7.not, label %.lr.ph.i.i.i, label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIiEEvT_b.exit
 
 .lr.ph.i.i.i:                                     ; preds = %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE21calc_bson_object_sizeERKS4_ISB_SF_St4lessISB_ESaISt4pairIKSB_SF_EEE.exit
-  %3 = lshr i32 %.0.i.lcssa.i, 16
-  %4 = trunc i32 %3 to i8
-  %5 = lshr i32 %.0.i.lcssa.i, 8
-  %6 = trunc i32 %5 to i8
-  %7 = lshr i32 %.0.i.lcssa.i, 24
-  %8 = trunc nuw i32 %7 to i8
-  %9 = trunc i32 %.0.i.lcssa.i to i8
-  %.012.i.i.i = getelementptr inbounds nuw i8, ptr %2, i64 3
-  store i8 %8, ptr %2, align 4, !tbaa !90
-  store i8 %9, ptr %.012.i.i.i, align 1, !tbaa !90
-  %10 = getelementptr inbounds nuw i8, ptr %2, i64 1
-  %.0.i.i.i = getelementptr inbounds nuw i8, ptr %2, i64 2
-  store i8 %4, ptr %10, align 1, !tbaa !90
-  store i8 %6, ptr %.0.i.i.i, align 2, !tbaa !90
+  %3 = tail call i32 @llvm.bswap.i32(i32 %.0.i.lcssa.i)
+  store i32 %3, ptr %2, align 4, !tbaa !90
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIiEEvT_b.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIiEEvT_b.exit: ; preds = %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE21calc_bson_object_sizeERKS4_ISB_SF_St4lessISB_ESaISt4pairIKSB_SF_EEE.exit, %.lr.ph.i.i.i
@@ -573,7 +561,7 @@ bb.b:                                             ; preds = %bb.a, %switch.looku
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE18write_bson_elementERKSB_RKSF_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #3 comdat align 2 {
 bb.a:
-  %3 = alloca %"struct.std::array", align 4       ; 8 uses
+  %3 = alloca %"struct.std::array", align 4       ; 5 uses
   %4 = alloca %"struct.std::array.81", align 8    ; 5 uses
   %i.a = load i8, ptr %2, align 8, !tbaa !107
   switch i8 %i.a, label %bb.k [
@@ -667,9 +655,9 @@ bb.f:                                             ; preds = %bb.a
   br i1 %.not.i.not.i, label %.lr.ph.i.i.i.i, label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE17write_bson_doubleERKSB_d.exit
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.f
-  %5 = bitcast double %i.al to <8 x i8>
-  %6 = shufflevector <8 x i8> %5, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %6, ptr %4, align 8, !tbaa !90
+  %5 = bitcast double %i.al to i64
+  %6 = tail call i64 @llvm.bswap.i64(i64 %5)
+  store i64 %6, ptr %4, align 8, !tbaa !90
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE17write_bson_doubleERKSB_d.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE17write_bson_doubleERKSB_d.exit: ; preds = %bb.f, %.lr.ph.i.i.i.i
@@ -711,7 +699,7 @@ bb.i:                                             ; preds = %bb.a
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bg, i64 8 ; 2 uses
   %i.bu = load i64, ptr %i.bt, align 8, !tbaa !113
   %i.bv = trunc i64 %i.bu to i32
-  %i.bw = add i32 %i.bv, 1                        ; 5 uses
+  %i.bw = add i32 %i.bv, 1                        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #29
   store i32 %i.bw, ptr %3, align 4
   %i.bx = load i8, ptr %0, align 8, !tbaa !206, !range !84, !noundef !85
@@ -719,20 +707,8 @@ bb.i:                                             ; preds = %bb.a
   br i1 %.not.i.not.i19, label %.lr.ph.i.i.i.i20, label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE17write_bson_stringERKSB_SI_.exit
 
 .lr.ph.i.i.i.i20:                                 ; preds = %bb.i
-  %7 = lshr i32 %i.bw, 16
-  %8 = trunc i32 %7 to i8
-  %9 = lshr i32 %i.bw, 8
-  %10 = trunc i32 %9 to i8
-  %11 = lshr i32 %i.bw, 24
-  %12 = trunc nuw i32 %11 to i8
-  %13 = trunc i32 %i.bw to i8
-  %.012.i.i.i.i21 = getelementptr inbounds nuw i8, ptr %3, i64 3
-  store i8 %12, ptr %3, align 4, !tbaa !90
-  store i8 %13, ptr %.012.i.i.i.i21, align 1, !tbaa !90
-  %14 = getelementptr inbounds nuw i8, ptr %3, i64 1
-  %.0.i.i.i.i22 = getelementptr inbounds nuw i8, ptr %3, i64 2
-  store i8 %8, ptr %14, align 1, !tbaa !90
-  store i8 %10, ptr %.0.i.i.i.i22, align 2, !tbaa !90
+  %7 = tail call i32 @llvm.bswap.i32(i32 %i.bw)
+  store i32 %7, ptr %3, align 4, !tbaa !90
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE17write_bson_stringERKSB_SI_.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE17write_bson_stringERKSB_SI_.exit: ; preds = %bb.i, %.lr.ph.i.i.i.i20
@@ -1135,7 +1111,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit4: ; preds = %_ZZN
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE16write_bson_arrayERKSB_RKS5_ISF_SaISF_EE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(24) %2) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"struct.std::array", align 4       ; 8 uses
+  %3 = alloca %"struct.std::array", align 4       ; 5 uses
   %i.a = alloca i64, align 8                      ; 4 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
@@ -1160,7 +1136,7 @@ bb.a:
   %i.q = call noundef i64 @_ZSt10accumulateIN9__gnu_cxx17__normal_iteratorIPKN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS3_14adl_serializerES6_IhSaIhEEvEES6_ISG_SaISG_EEEEmZNS3_6detail13binary_writerISG_hE20calc_bson_array_sizeERKSK_EUlmRSH_E_ET0_T_SU_ST_T1_(ptr %i.n, ptr %i.p, i64 noundef 0, ptr nonnull %i.a), !inline_history !800
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #29
   %i.r = trunc i64 %i.q to i32
-  %i.s = add i32 %i.r, 5                          ; 5 uses
+  %i.s = add i32 %i.r, 5                          ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #29
   store i32 %i.s, ptr %3, align 4
   %i.t = load i8, ptr %0, align 8, !tbaa !206, !range !84, !noundef !85
@@ -1168,20 +1144,8 @@ bb.a:
   br i1 %.not.i.not, label %.lr.ph.i.i.i, label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIiEEvT_b.exit
 
 .lr.ph.i.i.i:                                     ; preds = %bb.a
-  %5 = lshr i32 %i.s, 16
-  %6 = trunc i32 %5 to i8
-  %7 = lshr i32 %i.s, 8
-  %8 = trunc i32 %7 to i8
-  %9 = lshr i32 %i.s, 24
-  %10 = trunc nuw i32 %9 to i8
-  %11 = trunc i32 %i.s to i8
-  %.012.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 3
-  store i8 %10, ptr %3, align 4, !tbaa !90
-  store i8 %11, ptr %.012.i.i.i, align 1, !tbaa !90
-  %12 = getelementptr inbounds nuw i8, ptr %3, i64 1
-  %.0.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 2
-  store i8 %6, ptr %12, align 1, !tbaa !90
-  store i8 %8, ptr %.0.i.i.i, align 2, !tbaa !90
+  %5 = call i32 @llvm.bswap.i32(i32 %i.s)
+  store i32 %5, ptr %3, align 4, !tbaa !90
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIiEEvT_b.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIiEEvT_b.exit: ; preds = %bb.a, %.lr.ph.i.i.i
@@ -1506,9 +1470,8 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not.i7.not, label %.lr.ph.i.i.i8, label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIlEEvT_b.exit
 
 .lr.ph.i.i.i8:                                    ; preds = %bb.c
-  %5 = bitcast i64 %2 to <8 x i8>
-  %6 = shufflevector <8 x i8> %5, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %6, ptr %3, align 8, !tbaa !90
+  %5 = tail call i64 @llvm.bswap.i64(i64 %2)
+  store i64 %5, ptr %3, align 8, !tbaa !90
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIlEEvT_b.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIlEEvT_b.exit: ; preds = %bb.c, %.lr.ph.i.i.i8
@@ -1611,9 +1574,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i10.not, label %.lr.ph.i.i.i11, label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIlEEvT_b.exit
 
 .lr.ph.i.i.i11:                                   ; preds = %bb.d
-  %6 = bitcast i64 %i.ap to <8 x i8>
-  %7 = shufflevector <8 x i8> %6, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %7, ptr %4, align 8, !tbaa !90
+  %6 = tail call i64 @llvm.bswap.i64(i64 %i.ap)
+  store i64 %6, ptr %4, align 8, !tbaa !90
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIlEEvT_b.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIlEEvT_b.exit: ; preds = %bb.d, %.lr.ph.i.i.i11
@@ -1643,9 +1605,8 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not.i14.not, label %.lr.ph.i.i.i15, label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberImEEvT_b.exit
 
 .lr.ph.i.i.i15:                                   ; preds = %bb.e
-  %8 = bitcast i64 %i.bc to <8 x i8>
-  %9 = shufflevector <8 x i8> %8, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %9, ptr %3, align 8, !tbaa !90
+  %7 = tail call i64 @llvm.bswap.i64(i64 %i.bc)
+  store i64 %7, ptr %3, align 8, !tbaa !90
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberImEEvT_b.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberImEEvT_b.exit: ; preds = %bb.e, %.lr.ph.i.i.i15
@@ -2048,7 +2009,7 @@ _ZNSt12__shared_ptrIN8nlohmann16json_abi_v3_12_06detail23output_adapter_protocol
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE17write_bson_objectERKS4_ISB_SF_St4lessISB_ESaISt4pairIKSB_SF_EEE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(48) %1) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"struct.std::array.207", align 4   ; 8 uses
+  %2 = alloca %"struct.std::array.207", align 4   ; 5 uses
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !183  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 4 uses
@@ -2072,7 +2033,7 @@ _ZSt10accumulateISt23_Rb_tree_const_iteratorISt4pairIKNSt7__cxx1112basic_stringI
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE21calc_bson_object_sizeERKS4_ISB_SF_St4lessISB_ESaISt4pairIKSB_SF_EEE.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE21calc_bson_object_sizeERKS4_ISB_SF_St4lessISB_ESaISt4pairIKSB_SF_EEE.exit: ; preds = %bb.a, %_ZSt10accumulateISt23_Rb_tree_const_iteratorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorS7_blmdSaNSA_14adl_serializerESD_IhSaIhEEvEEEEmZNSA_6detail13binary_writerISH_cE21calc_bson_object_sizeERKSC_IS7_SH_St4lessIS7_ESaISI_EEEUlmRKSI_E_ET0_T_SX_SW_T1_.exit.loopexit.i
-  %.0.i.lcssa.i = phi i32 [ 5, %bb.a ], [ %i.j, %_ZSt10accumulateISt23_Rb_tree_const_iteratorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorS7_blmdSaNSA_14adl_serializerESD_IhSaIhEEvEEEEmZNSA_6detail13binary_writerISH_cE21calc_bson_object_sizeERKSC_IS7_SH_St4lessIS7_ESaISI_EEEUlmRKSI_E_ET0_T_SX_SW_T1_.exit.loopexit.i ] ; 5 uses
+  %.0.i.lcssa.i = phi i32 [ 5, %bb.a ], [ %i.j, %_ZSt10accumulateISt23_Rb_tree_const_iteratorISt4pairIKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorS7_blmdSaNSA_14adl_serializerESD_IhSaIhEEvEEEEmZNSA_6detail13binary_writerISH_cE21calc_bson_object_sizeERKSC_IS7_SH_St4lessIS7_ESaISI_EEEUlmRKSI_E_ET0_T_SX_SW_T1_.exit.loopexit.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #29
   store i32 %.0.i.lcssa.i, ptr %2, align 4
   %i.k = load i8, ptr %0, align 8, !tbaa !334, !range !84, !noundef !85
@@ -2080,20 +2041,8 @@ _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6v
   br i1 %.not.i7.not, label %.lr.ph.i.i.i, label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE12write_numberIiEEvT_b.exit
 
 .lr.ph.i.i.i:                                     ; preds = %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE21calc_bson_object_sizeERKS4_ISB_SF_St4lessISB_ESaISt4pairIKSB_SF_EEE.exit
-  %3 = lshr i32 %.0.i.lcssa.i, 16
-  %4 = trunc i32 %3 to i8
-  %5 = lshr i32 %.0.i.lcssa.i, 8
-  %6 = trunc i32 %5 to i8
-  %7 = lshr i32 %.0.i.lcssa.i, 24
-  %8 = trunc nuw i32 %7 to i8
-  %9 = trunc i32 %.0.i.lcssa.i to i8
-  %.012.i.i.i = getelementptr inbounds nuw i8, ptr %2, i64 3
-  store i8 %8, ptr %2, align 4, !tbaa !90
-  store i8 %9, ptr %.012.i.i.i, align 1, !tbaa !90
-  %10 = getelementptr inbounds nuw i8, ptr %2, i64 1
-  %.0.i.i.i = getelementptr inbounds nuw i8, ptr %2, i64 2
-  store i8 %4, ptr %10, align 1, !tbaa !90
-  store i8 %6, ptr %.0.i.i.i, align 2, !tbaa !90
+  %3 = tail call i32 @llvm.bswap.i32(i32 %.0.i.lcssa.i)
+  store i32 %3, ptr %2, align 4, !tbaa !90
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE12write_numberIiEEvT_b.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE12write_numberIiEEvT_b.exit: ; preds = %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE21calc_bson_object_sizeERKS4_ISB_SF_St4lessISB_ESaISt4pairIKSB_SF_EEE.exit, %.lr.ph.i.i.i
@@ -2128,7 +2077,7 @@ _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6v
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE18write_bson_elementERKSB_RKSF_(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(16) %2) local_unnamed_addr #3 comdat align 2 {
 bb.a:
-  %3 = alloca %"struct.std::array.207", align 4   ; 8 uses
+  %3 = alloca %"struct.std::array.207", align 4   ; 5 uses
   %4 = alloca %"struct.std::array.277", align 8   ; 5 uses
   %i.a = load i8, ptr %2, align 8, !tbaa !107
   switch i8 %i.a, label %bb.k [
@@ -2222,9 +2171,9 @@ bb.f:                                             ; preds = %bb.a
   br i1 %.not.i.not.i, label %.lr.ph.i.i.i.i, label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE17write_bson_doubleERKSB_d.exit
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.f
-  %5 = bitcast double %i.al to <8 x i8>
-  %6 = shufflevector <8 x i8> %5, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %6, ptr %4, align 8, !tbaa !90
+  %5 = bitcast double %i.al to i64
+  %6 = tail call i64 @llvm.bswap.i64(i64 %5)
+  store i64 %6, ptr %4, align 8, !tbaa !90
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE17write_bson_doubleERKSB_d.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE17write_bson_doubleERKSB_d.exit: ; preds = %bb.f, %.lr.ph.i.i.i.i
@@ -2266,7 +2215,7 @@ bb.i:                                             ; preds = %bb.a
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bg, i64 8 ; 2 uses
   %i.bu = load i64, ptr %i.bt, align 8, !tbaa !113
   %i.bv = trunc i64 %i.bu to i32
-  %i.bw = add i32 %i.bv, 1                        ; 5 uses
+  %i.bw = add i32 %i.bv, 1                        ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #29
   store i32 %i.bw, ptr %3, align 4
   %i.bx = load i8, ptr %0, align 8, !tbaa !334, !range !84, !noundef !85
@@ -2274,20 +2223,8 @@ bb.i:                                             ; preds = %bb.a
   br i1 %.not.i.not.i19, label %.lr.ph.i.i.i.i20, label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE17write_bson_stringERKSB_SI_.exit
 
 .lr.ph.i.i.i.i20:                                 ; preds = %bb.i
-  %7 = lshr i32 %i.bw, 16
-  %8 = trunc i32 %7 to i8
-  %9 = lshr i32 %i.bw, 8
-  %10 = trunc i32 %9 to i8
-  %11 = lshr i32 %i.bw, 24
-  %12 = trunc nuw i32 %11 to i8
-  %13 = trunc i32 %i.bw to i8
-  %.012.i.i.i.i21 = getelementptr inbounds nuw i8, ptr %3, i64 3
-  store i8 %12, ptr %3, align 4, !tbaa !90
-  store i8 %13, ptr %.012.i.i.i.i21, align 1, !tbaa !90
-  %14 = getelementptr inbounds nuw i8, ptr %3, i64 1
-  %.0.i.i.i.i22 = getelementptr inbounds nuw i8, ptr %3, i64 2
-  store i8 %8, ptr %14, align 1, !tbaa !90
-  store i8 %10, ptr %.0.i.i.i.i22, align 2, !tbaa !90
+  %7 = tail call i32 @llvm.bswap.i32(i32 %i.bw)
+  store i32 %7, ptr %3, align 4, !tbaa !90
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE17write_bson_stringERKSB_SI_.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE17write_bson_stringERKSB_SI_.exit: ; preds = %bb.i, %.lr.ph.i.i.i.i20
@@ -2690,7 +2627,7 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit4: ; preds = %_ZZN
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE16write_bson_arrayERKSB_RKS5_ISF_SaISF_EE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(32) %1, ptr noundef nonnull align 8 dereferenceable(24) %2) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %3 = alloca %"struct.std::array.207", align 4   ; 8 uses
+  %3 = alloca %"struct.std::array.207", align 4   ; 5 uses
   %i.a = alloca i64, align 8                      ; 4 uses
   %4 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 4 uses
@@ -2715,7 +2652,7 @@ bb.a:
   %i.q = call noundef i64 @_ZSt10accumulateIN9__gnu_cxx17__normal_iteratorIPKN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS3_14adl_serializerES6_IhSaIhEEvEES6_ISG_SaISG_EEEEmZNS3_6detail13binary_writerISG_cE20calc_bson_array_sizeERKSK_EUlmRSH_E_ET0_T_SU_ST_T1_(ptr %i.n, ptr %i.p, i64 noundef 0, ptr nonnull %i.a), !inline_history !1104
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #29
   %i.r = trunc i64 %i.q to i32
-  %i.s = add i32 %i.r, 5                          ; 5 uses
+  %i.s = add i32 %i.r, 5                          ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #29
   store i32 %i.s, ptr %3, align 4
   %i.t = load i8, ptr %0, align 8, !tbaa !334, !range !84, !noundef !85
@@ -2723,20 +2660,8 @@ bb.a:
   br i1 %.not.i.not, label %.lr.ph.i.i.i, label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE12write_numberIiEEvT_b.exit
 
 .lr.ph.i.i.i:                                     ; preds = %bb.a
-  %5 = lshr i32 %i.s, 16
-  %6 = trunc i32 %5 to i8
-  %7 = lshr i32 %i.s, 8
-  %8 = trunc i32 %7 to i8
-  %9 = lshr i32 %i.s, 24
-  %10 = trunc nuw i32 %9 to i8
-  %11 = trunc i32 %i.s to i8
-  %.012.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 3
-  store i8 %10, ptr %3, align 4, !tbaa !90
-  store i8 %11, ptr %.012.i.i.i, align 1, !tbaa !90
-  %12 = getelementptr inbounds nuw i8, ptr %3, i64 1
-  %.0.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 2
-  store i8 %6, ptr %12, align 1, !tbaa !90
-  store i8 %8, ptr %.0.i.i.i, align 2, !tbaa !90
+  %5 = call i32 @llvm.bswap.i32(i32 %i.s)
+  store i32 %5, ptr %3, align 4, !tbaa !90
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE12write_numberIiEEvT_b.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE12write_numberIiEEvT_b.exit: ; preds = %bb.a, %.lr.ph.i.i.i
@@ -3061,9 +2986,8 @@ bb.c:                                             ; preds = %bb.a
   br i1 %.not.i7.not, label %.lr.ph.i.i.i8, label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE12write_numberIlEEvT_b.exit
 
 .lr.ph.i.i.i8:                                    ; preds = %bb.c
-  %5 = bitcast i64 %2 to <8 x i8>
-  %6 = shufflevector <8 x i8> %5, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %6, ptr %3, align 8, !tbaa !90
+  %5 = tail call i64 @llvm.bswap.i64(i64 %2)
+  store i64 %5, ptr %3, align 8, !tbaa !90
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE12write_numberIlEEvT_b.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE12write_numberIlEEvT_b.exit: ; preds = %bb.c, %.lr.ph.i.i.i8
@@ -3166,9 +3090,8 @@ bb.d:                                             ; preds = %bb.c
   br i1 %.not.i10.not, label %.lr.ph.i.i.i11, label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE12write_numberIlEEvT_b.exit
 
 .lr.ph.i.i.i11:                                   ; preds = %bb.d
-  %6 = bitcast i64 %i.ap to <8 x i8>
-  %7 = shufflevector <8 x i8> %6, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %7, ptr %4, align 8, !tbaa !90
+  %6 = tail call i64 @llvm.bswap.i64(i64 %i.ap)
+  store i64 %6, ptr %4, align 8, !tbaa !90
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE12write_numberIlEEvT_b.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE12write_numberIlEEvT_b.exit: ; preds = %bb.d, %.lr.ph.i.i.i11
@@ -3198,9 +3121,8 @@ bb.e:                                             ; preds = %bb.c
   br i1 %.not.i14.not, label %.lr.ph.i.i.i15, label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE12write_numberImEEvT_b.exit
 
 .lr.ph.i.i.i15:                                   ; preds = %bb.e
-  %8 = bitcast i64 %i.bc to <8 x i8>
-  %9 = shufflevector <8 x i8> %8, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %9, ptr %3, align 8, !tbaa !90
+  %7 = tail call i64 @llvm.bswap.i64(i64 %i.bc)
+  store i64 %7, ptr %3, align 8, !tbaa !90
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE12write_numberImEEvT_b.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEcE12write_numberImEEvT_b.exit: ; preds = %bb.e, %.lr.ph.i.i.i15
@@ -3602,6 +3524,12 @@ declare i64 @llvm.smin.i64(i64, i64) #26
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #28
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #26
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #26
 
 attributes #0 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

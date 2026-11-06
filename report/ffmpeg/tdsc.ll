@@ -204,7 +204,7 @@ bb.ck:                                            ; preds = %bb.bx, %bb.bx
   br i1 %i.vz, label %.lr.ph.i.i110, label %._crit_edge.i.i
 
 .lr.ph.i.i110:                                    ; preds = %.preheader172.i.i, %bytestream2_get_be32.exit160.i.i
-  %.7177.i.i = phi ptr [ %i.wh, %bytestream2_get_be32.exit160.i.i ], [ %.6180.i.i, %.preheader172.i.i ] ; 5 uses
+  %.7177.i.i = phi ptr [ %i.wh, %bytestream2_get_be32.exit160.i.i ], [ %.6180.i.i, %.preheader172.i.i ] ; 2 uses
   %.2137176.i.i = phi i32 [ %i.wi, %bytestream2_get_be32.exit160.i.i ], [ 0, %.preheader172.i.i ]
   %i.wa = load ptr, ptr %i.lp, align 8, !tbaa !73 ; 2 uses
   %i.wb = load ptr, ptr %i.lo, align 8, !tbaa !71 ; 3 uses
@@ -221,27 +221,13 @@ bb.cl:                                            ; preds = %.lr.ph.i.i110
 bb.cm:                                            ; preds = %.lr.ph.i.i110
   %i.wg = getelementptr inbounds nuw i8, ptr %i.wb, i64 4
   store ptr %i.wg, ptr %i.lo, align 8, !tbaa !74
-  %4 = load i32, ptr %i.wb, align 1, !tbaa !75
-  %5 = call i32 @llvm.bswap.i32(i32 %4)
+  %4 = load <4 x i8>, ptr %i.wb, align 1, !tbaa !75
   br label %bytestream2_get_be32.exit160.i.i
 
 bytestream2_get_be32.exit160.i.i:                 ; preds = %bb.cm, %bb.cl
-  %.0.i159.i.i = phi i32 [ 0, %bb.cl ], [ %5, %bb.cm ] ; 4 uses
-  %6 = lshr i32 %.0.i159.i.i, 24
-  %7 = trunc nuw i32 %6 to i8
-  %8 = getelementptr inbounds nuw i8, ptr %.7177.i.i, i64 1
-  store i8 %7, ptr %.7177.i.i, align 1, !tbaa !75
-  %9 = lshr i32 %.0.i159.i.i, 16
-  %10 = trunc i32 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %.7177.i.i, i64 2
-  store i8 %10, ptr %8, align 1, !tbaa !75
-  %12 = lshr i32 %.0.i159.i.i, 8
-  %13 = trunc i32 %12 to i8
-  %14 = getelementptr inbounds nuw i8, ptr %.7177.i.i, i64 3
-  store i8 %13, ptr %11, align 1, !tbaa !75
-  %15 = trunc i32 %.0.i159.i.i to i8
+  %.0.i159.i.i = phi <4 x i8> [ zeroinitializer, %bb.cl ], [ %4, %bb.cm ]
   %i.wh = getelementptr inbounds nuw i8, ptr %.7177.i.i, i64 4 ; 2 uses
-  store i8 %15, ptr %14, align 1, !tbaa !75
+  store <4 x i8> %.0.i159.i.i, ptr %.7177.i.i, align 1, !tbaa !75
   %i.wi = add nuw nsw i32 %.2137176.i.i, 1        ; 2 uses
   %i.wj = load i32, ptr %i.nk, align 4, !tbaa !85 ; 2 uses
   %i.wk = icmp slt i32 %i.wi, %i.wj

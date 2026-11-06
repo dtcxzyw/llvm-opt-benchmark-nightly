@@ -202,7 +202,7 @@ _ZN6icu_7816BytesTrieBuilder5writeEPKci.exit:     ; preds = %_ZNK6icu_7816BytesT
 ; Function Attrs: mustprogress uwtable
 define noundef i32 @_ZN6icu_7816BytesTrieBuilder18writeValueAndFinalEia(ptr noundef nonnull align 8 dereferenceable(56) %0, i32 noundef %1, i8 noundef signext %2) unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca [5 x i8], align 1                 ; 11 uses
+  %i.a = alloca [5 x i8], align 1                 ; 8 uses
   %or.cond = icmp ult i32 %1, 65
   br i1 %or.cond, label %bb.b, label %bb.c
 
@@ -223,21 +223,9 @@ bb.c:                                             ; preds = %bb.a
   br i1 %or.cond3, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %bb.c
-  %3 = lshr i32 %1, 24
-  %4 = trunc nuw i32 %3 to i8
   %i.j = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %4, ptr %i.j, align 1, !tbaa !20
-  %5 = lshr i32 %1, 16
-  %6 = trunc i32 %5 to i8
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %6, ptr %7, align 1, !tbaa !20
-  %8 = lshr i32 %1, 8
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %9, ptr %10, align 1, !tbaa !20
-  %11 = trunc i32 %1 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %11, ptr %12, align 1, !tbaa !20
+  %3 = tail call i32 @llvm.bswap.i32(i32 %1)
+  store i32 %3, ptr %i.j, align 1, !tbaa !20
   br label %bb.l
 
 bb.e:                                             ; preds = %bb.c
@@ -639,6 +627,9 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #16
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #13
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

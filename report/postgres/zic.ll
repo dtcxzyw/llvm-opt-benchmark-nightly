@@ -205,47 +205,20 @@ bb.oi:                                            ; preds = %._crit_edge664.i.i
 ._crit_edge664._crit_edge.i.i:                    ; preds = %bb.oi, %._crit_edge664.i.i
   %.2390.i.i = phi i64 [ %.neg426.i.i, %bb.oi ], [ %.1389.i.i, %._crit_edge664.i.i ]
   %.0387.i.i = phi i64 [ %.1392.i.i, %bb.oi ], [ %i.azr, %._crit_edge664.i.i ] ; 6 uses
-  %.1385.i.i = phi i32 [ 0, %bb.oi ], [ %.0384556.i.i, %._crit_edge664.i.i ] ; 4 uses
-  %.2375.i.i = phi i32 [ 1, %bb.oi ], [ %.0373.lcssa828.i.i, %._crit_edge664.i.i ] ; 4 uses
-  %.3372.i.i = phi i32 [ 0, %bb.oi ], [ %.0369.lcssa.i.i, %._crit_edge664.i.i ] ; 5 uses
-  %.3368.i.i = phi i32 [ 0, %bb.oi ], [ %.0365.lcssa.i.i, %._crit_edge664.i.i ] ; 5 uses
-  %.3364.i.i = phi i32 [ 1, %bb.oi ], [ %.0361.lcssa.i.i, %._crit_edge664.i.i ] ; 6 uses
+  %.1385.i.i = phi i32 [ 0, %bb.oi ], [ %.0384556.i.i, %._crit_edge664.i.i ]
+  %.2375.i.i = phi i32 [ 1, %bb.oi ], [ %.0373.lcssa828.i.i, %._crit_edge664.i.i ]
+  %.3372.i.i = phi i32 [ 0, %bb.oi ], [ %.0369.lcssa.i.i, %._crit_edge664.i.i ] ; 2 uses
+  %.3368.i.i = phi i32 [ 0, %bb.oi ], [ %.0365.lcssa.i.i, %._crit_edge664.i.i ] ; 2 uses
+  %.3364.i.i = phi i32 [ 1, %bb.oi ], [ %.0361.lcssa.i.i, %._crit_edge664.i.i ] ; 3 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(15) getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 5), i8 0, i64 15, i1 false)
   store i32 1718180436, ptr @writezone.tzh, align 4
   store i8 %i.apl, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 4), align 4
-  %5 = lshr i32 %.3368.i.i, 24
-  %6 = trunc nuw i32 %5 to i8
-  store i8 %6, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 20), align 4
-  %7 = lshr i32 %.3368.i.i, 16
-  %8 = trunc i32 %7 to i8
-  store i8 %8, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 21), align 1
-  %9 = lshr i32 %.3368.i.i, 8
-  %10 = trunc i32 %9 to i8
-  store i8 %10, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 22), align 2
-  %11 = trunc i32 %.3368.i.i to i8
-  store i8 %11, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 23), align 1
-  %12 = lshr i32 %.3372.i.i, 24
-  %13 = trunc nuw i32 %12 to i8
-  store i8 %13, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 24), align 4
-  %14 = lshr i32 %.3372.i.i, 16
-  %15 = trunc i32 %14 to i8
-  store i8 %15, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 25), align 1
-  %16 = lshr i32 %.3372.i.i, 8
-  %17 = trunc i32 %16 to i8
-  store i8 %17, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 26), align 2
-  %18 = trunc i32 %.3372.i.i to i8
-  store i8 %18, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 27), align 1
-  %19 = lshr i32 %.1385.i.i, 24
-  %20 = trunc nuw i32 %19 to i8
-  store i8 %20, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 28), align 4
-  %21 = lshr i32 %.1385.i.i, 16
-  %22 = trunc i32 %21 to i8
-  store i8 %22, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 29), align 1
-  %23 = lshr i32 %.1385.i.i, 8
-  %24 = trunc i32 %23 to i8
-  store i8 %24, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 30), align 2
-  %25 = trunc i32 %.1385.i.i to i8
-  store i8 %25, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 31), align 1
+  %5 = call i32 @llvm.bswap.i32(i32 %.3368.i.i)
+  store i32 %5, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 20), align 4
+  %6 = call i32 @llvm.bswap.i32(i32 %.3372.i.i)
+  store i32 %6, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 24), align 4
+  %7 = call i32 @llvm.bswap.i32(i32 %.1385.i.i)
+  store i32 %7, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 28), align 4
   %i.biw = trunc nuw i8 %.3381.i.i to i1          ; 4 uses
   %i.bix = zext i1 %.1377.shrunk.i.i to i64
   %i.biy = add nuw nsw i64 %i.bix, %.pre753.i.i
@@ -257,33 +230,15 @@ bb.oi:                                            ; preds = %._crit_edge664.i.i
   %i.bjd = trunc i64 %i.bjc to i8
   store i8 %i.bjd, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 33), align 1
   %i.bje = lshr i64 %i.biz, 8
-  %26 = trunc i64 %i.bje to i8
-  store i8 %26, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 34), align 2
-  %27 = trunc i64 %i.biz to i8
-  store i8 %27, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 35), align 1
-  %28 = lshr i32 %.2375.i.i, 24
-  %29 = trunc nuw i32 %28 to i8
-  store i8 %29, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 36), align 4
-  %30 = lshr i32 %.2375.i.i, 16
-  %i.bjf = trunc i32 %30 to i8
-  store i8 %i.bjf, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 37), align 1
-  %31 = lshr i32 %.2375.i.i, 8
-  %i.bjg = trunc i32 %31 to i8
-  store i8 %i.bjg, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 38), align 2
-  %32 = trunc i32 %.2375.i.i to i8
-  store i8 %32, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 39), align 1
+  %i.bjf = trunc i64 %i.bje to i8
+  store i8 %i.bjf, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 34), align 2
+  %i.bjg = trunc i64 %i.biz to i8
+  store i8 %i.bjg, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 35), align 1
+  %8 = call i32 @llvm.bswap.i32(i32 %.2375.i.i)
+  store i32 %8, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 36), align 4
   %i.bjh = sext i32 %.3364.i.i to i64
-  %33 = lshr i32 %.3364.i.i, 24
-  %34 = trunc nuw i32 %33 to i8
-  store i8 %34, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 40), align 4
-  %35 = lshr i32 %.3364.i.i, 16
-  %36 = trunc i32 %35 to i8
-  store i8 %36, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 41), align 1
-  %37 = lshr i32 %.3364.i.i, 8
-  %38 = trunc i32 %37 to i8
-  store i8 %38, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 42), align 2
-  %39 = trunc i32 %.3364.i.i to i8
-  store i8 %39, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 43), align 1
+  %9 = call i32 @llvm.bswap.i32(i32 %.3364.i.i)
+  store i32 %9, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 40), align 4
   %i.bji = call i64 @fwrite(ptr noundef nonnull @writezone.tzh, i64 noundef 4, i64 noundef 1, ptr noundef nonnull %.1.i403.i) ; 0 uses
   %char.i.i = load i8, ptr getelementptr inbounds nuw (i8, ptr @writezone.tzh, i64 4), align 4
   %chari.i.i = sext i8 %char.i.i to i32
@@ -411,9 +366,8 @@ bb.op:                                            ; preds = %bb.oo, %bb.on
 .thread568.i.i:                                   ; preds = %.thread567.i.i, %._crit_edge670.i.i
   %i.blt = phi i64 [ %i.blk, %.thread567.i.i ], [ %i.blh, %._crit_edge670.i.i ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j) #25
-  %40 = bitcast i64 %i.blt to <8 x i8>
-  %41 = shufflevector <8 x i8> %40, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %41, ptr %i.j, align 8
+  %10 = call i64 @llvm.bswap.i64(i64 %i.blt)
+  store i64 %10, ptr %i.j, align 8
   %i.blu = call i64 @fwrite(ptr noundef nonnull %i.j, i64 noundef 8, i64 noundef 1, ptr noundef nonnull %.1.i403.i) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j) #25
   br label %puttzcodepass.exit.i.i
@@ -449,9 +403,8 @@ bb.oq:                                            ; preds = %.lr.ph672.i.i
 
 bb.or:                                            ; preds = %.lr.ph672.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #25
-  %42 = bitcast i64 %..i.i to <8 x i8>
-  %43 = shufflevector <8 x i8> %42, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %43, ptr %i.h, align 8
+  %11 = call i64 @llvm.bswap.i64(i64 %..i.i)
+  store i64 %11, ptr %i.h, align 8
   %i.bmh = call i64 @fwrite(ptr noundef nonnull %i.h, i64 noundef 8, i64 noundef 1, ptr noundef nonnull %.1.i403.i) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h) #25
   br label %puttzcodepass.exit480.i.i
@@ -488,9 +441,8 @@ bb.ot:                                            ; preds = %bb.os
 
 bb.ou:                                            ; preds = %bb.os
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f) #25
-  %44 = bitcast i64 %i.bmk to <8 x i8>
-  %45 = shufflevector <8 x i8> %44, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %45, ptr %i.f, align 8
+  %12 = call i64 @llvm.bswap.i64(i64 %i.bmk)
+  store i64 %12, ptr %i.f, align 8
   %i.bmt = call i64 @fwrite(ptr noundef nonnull %i.f, i64 noundef 8, i64 noundef 1, ptr noundef nonnull %.1.i403.i) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f) #25
   br label %puttzcodepass.exit481.i.i
@@ -774,9 +726,8 @@ bb.pt:                                            ; preds = %tadd.exit485.i.i
 
 bb.pu:                                            ; preds = %tadd.exit485.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c) #25
-  %46 = bitcast i64 %.0.i406.i to <8 x i8>
-  %47 = shufflevector <8 x i8> %46, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %47, ptr %i.c, align 8
+  %13 = call i64 @llvm.bswap.i64(i64 %.0.i406.i)
+  store i64 %13, ptr %i.c, align 8
   %i.brc = call i64 @fwrite(ptr noundef nonnull %i.c, i64 noundef 8, i64 noundef 1, ptr noundef nonnull %.1.i403.i) ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #25
   br label %puttzcodepass.exit486.i.i
@@ -1178,6 +1129,12 @@ declare i32 @llvm.umax.i32(i32, i32) #20
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.sadd.sat.i64(i64, i64) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #20
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #24

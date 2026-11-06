@@ -205,8 +205,8 @@ bb.e:                                             ; preds = %bb.e, %.epil.prehea
 ._crit_edge.loopexit.i.i:                         ; preds = %.epilog-lcssa
   %i.bn = shl nuw i32 %i.bm, 16
   %i.bo = or disjoint i32 %i.bn, %i.bl
-  %5 = bitcast i32 %i.bo to <4 x i8>
-  %6 = shufflevector <4 x i8> %5, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %5 = call i32 @llvm.bswap.i32(i32 %i.bo)
+  %6 = bitcast i32 %5 to <4 x i8>
   br label %_ZL7adler32PKhj.exit
 
 _ZL7adler32PKhj.exit:                             ; preds = %bb.c, %._crit_edge.loopexit.i.i
@@ -609,8 +609,8 @@ bb.a:
 ._crit_edge.loopexit.i:                           ; preds = %.lr.ph.i.epil, %._crit_edge.loopexit.i.unr-lcssa
   %.lcssa = phi i32 [ %i.ak, %._crit_edge.loopexit.i.unr-lcssa ], [ %i.as, %.lr.ph.i.epil ]
   %i.au = xor i32 %.lcssa, -1
-  %1 = bitcast i32 %i.au to <4 x i8>
-  %2 = shufflevector <4 x i8> %1, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %1 = tail call i32 @llvm.bswap.i32(i32 %i.au)
+  %2 = bitcast i32 %1 to <4 x i8>
   br label %_Z13lodepng_crc32PKhm.exit
 
 _Z13lodepng_crc32PKhm.exit:                       ; preds = %bb.a, %._crit_edge.loopexit.i
@@ -1013,9 +1013,8 @@ bb.c:                                             ; preds = %bb.b
   %i.k = sub nsw i64 0, %i.c
   %i.l = getelementptr inbounds i8, ptr %i.j, i64 %i.k ; 3 uses
   %i.m = getelementptr inbounds i8, ptr %i.l, i64 -12
-  %5 = bitcast i32 %2 to <4 x i8>
-  %6 = shufflevector <4 x i8> %5, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i8> %6, ptr %i.m, align 1, !tbaa !29
+  %5 = tail call i32 @llvm.bswap.i32(i32 %2)
+  store i32 %5, ptr %i.m, align 1, !tbaa !29
   %i.n = getelementptr inbounds i8, ptr %i.l, i64 -8 ; 6 uses
   %i.o = load i32, ptr %3, align 1, !tbaa !29, !alias.scope !324
   store i32 %i.o, ptr %i.n, align 1, !tbaa !29, !alias.scope !324
@@ -1121,12 +1120,12 @@ _ZL14lodepng_memcpyPvPKvm.exit.i:                 ; preds = %.thread.i.i.i
 ._crit_edge.loopexit.i.i.i:                       ; preds = %.lr.ph.i.i.i.epil, %._crit_edge.loopexit.i.i.i.unr-lcssa
   %.lcssa = phi i32 [ %i.az, %._crit_edge.loopexit.i.i.i.unr-lcssa ], [ %i.bh, %.lr.ph.i.i.i.epil ]
   %i.bj = xor i32 %.lcssa, -1
-  %7 = bitcast i32 %i.bj to <4 x i8>
-  %8 = shufflevector <4 x i8> %7, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %6 = tail call i32 @llvm.bswap.i32(i32 %i.bj)
+  %7 = bitcast i32 %6 to <4 x i8>
   br label %_Z26lodepng_chunk_generate_crcPh.exit.i
 
 _Z26lodepng_chunk_generate_crcPh.exit.i:          ; preds = %._crit_edge.loopexit.i.i.i, %_ZL14lodepng_memcpyPvPKvm.exit.i
-  %.07.lcssa.i.i.i = phi <4 x i8> [ zeroinitializer, %_ZL14lodepng_memcpyPvPKvm.exit.i ], [ %8, %._crit_edge.loopexit.i.i.i ]
+  %.07.lcssa.i.i.i = phi <4 x i8> [ zeroinitializer, %_ZL14lodepng_memcpyPvPKvm.exit.i ], [ %7, %._crit_edge.loopexit.i.i.i ]
   %i.bk = getelementptr inbounds nuw i8, ptr %i.p, i64 %i.c
   store <4 x i8> %.07.lcssa.i.i.i, ptr %i.bk, align 1, !tbaa !29
   br label %_ZL21lodepng_chunk_createvP8ucvectorjPKcPKh.exit
@@ -1529,9 +1528,8 @@ bb.d:                                             ; preds = %bb.c
   %i.en = xor i32 %i.el, %i.em
   %i.eo = xor i32 %i.en, -1
   %i.ep = getelementptr inbounds nuw i8, ptr %i.l, i64 21
-  %6 = bitcast i32 %i.eo to <4 x i8>
-  %7 = shufflevector <4 x i8> %6, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i8> %7, ptr %i.ep, align 1, !tbaa !29
+  %6 = tail call i32 @llvm.bswap.i32(i32 %i.eo)
+  store i32 %6, ptr %i.ep, align 1, !tbaa !29
   br label %_ZL18lodepng_chunk_initPPhP8ucvectorjPKc.exit.thread
 
 _ZL18lodepng_chunk_initPPhP8ucvectorjPKc.exit.thread: ; preds = %bb.d, %bb.a, %bb.b, %.lr.ph.i.i.preheader
@@ -1934,8 +1932,8 @@ _ZL14lodepng_memcpyPvPKvm.exit27:                 ; preds = %_ZL14lodepng_memcpy
 ._crit_edge.loopexit.i.i:                         ; preds = %.lr.ph.i.i.epil, %._crit_edge.loopexit.i.i.unr-lcssa
   %.lcssa = phi i32 [ %i.cf, %._crit_edge.loopexit.i.i.unr-lcssa ], [ %i.cn, %.lr.ph.i.i.epil ]
   %i.cp = xor i32 %.lcssa, -1
-  %3 = bitcast i32 %i.cp to <4 x i8>
-  %4 = shufflevector <4 x i8> %3, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %3 = call i32 @llvm.bswap.i32(i32 %i.cp)
+  %4 = bitcast i32 %3 to <4 x i8>
   br label %_Z26lodepng_chunk_generate_crcPh.exit
 
 _Z26lodepng_chunk_generate_crcPh.exit:            ; preds = %_ZL14lodepng_memcpyPvPKvm.exit27, %._crit_edge.loopexit.i.i
@@ -2007,9 +2005,8 @@ bb.d:                                             ; preds = %bb.c
   %i.s = load i32, ptr %i.r, align 4, !tbaa !30
   %i.t = xor i32 %i.s, -15721261
   %i.u = getelementptr inbounds i8, ptr %i.m, i64 -4
-  %1 = bitcast i32 %i.t to <4 x i8>
-  %2 = shufflevector <4 x i8> %1, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i8> %2, ptr %i.u, align 1, !tbaa !29
+  %1 = tail call i32 @llvm.bswap.i32(i32 %i.t)
+  store i32 %1, ptr %i.u, align 1, !tbaa !29
   br label %_ZL21lodepng_chunk_createvP8ucvectorjPKcPKh.exit
 
 _ZL21lodepng_chunk_createvP8ucvectorjPKcPKh.exit: ; preds = %bb.a, %bb.b, %bb.d, %.lr.ph.i.i.i
@@ -2058,9 +2055,9 @@ bb.d:                                             ; preds = %bb.c
   store i32 1095582055, ptr %i.m, align 1, !tbaa !29, !alias.scope !698
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 184
-  %2 = load <4 x i8>, ptr %i.o, align 8, !tbaa !150
-  %3 = shufflevector <4 x i8> %2, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i8> %3, ptr %i.n, align 1, !tbaa !29
+  %2 = load i32, ptr %i.o, align 8, !tbaa !150
+  %3 = tail call i32 @llvm.bswap.i32(i32 %2)
+  store i32 %3, ptr %i.n, align 1, !tbaa !29
   %i.p = load i8, ptr %i.m, align 1, !tbaa !29
   %.narrow.i.i = xor i8 %i.p, -1
   %i.q = zext i8 %.narrow.i.i to i64
@@ -2132,9 +2129,8 @@ bb.d:                                             ; preds = %bb.c
   %i.bq = xor i32 %i.bo, %i.bp
   %i.br = xor i32 %i.bq, -1
   %i.bs = getelementptr inbounds nuw i8, ptr %i.l, i64 12
-  %4 = bitcast i32 %i.br to <4 x i8>
-  %5 = shufflevector <4 x i8> %4, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i8> %5, ptr %i.bs, align 1, !tbaa !29
+  %4 = tail call i32 @llvm.bswap.i32(i32 %i.br)
+  store i32 %4, ptr %i.bs, align 1, !tbaa !29
   br label %_ZL18lodepng_chunk_initPPhP8ucvectorjPKc.exit.thread
 
 _ZL18lodepng_chunk_initPPhP8ucvectorjPKc.exit.thread: ; preds = %bb.d, %bb.a, %bb.b, %.lr.ph.i.i.preheader
@@ -2183,44 +2179,44 @@ bb.e:                                             ; preds = %.thread.i.i, %bb.c
   store i32 1297238115, ptr %i.m, align 1, !tbaa !29, !alias.scope !703
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 8 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 192
-  %2 = load <4 x i8>, ptr %i.o, align 8, !tbaa !167
-  %3 = shufflevector <4 x i8> %2, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i8> %3, ptr %i.n, align 1, !tbaa !29
+  %2 = load i32, ptr %i.o, align 8, !tbaa !167
+  %3 = tail call i32 @llvm.bswap.i32(i32 %2)
+  store i32 %3, ptr %i.n, align 1, !tbaa !29
   %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 12
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 196
-  %4 = load <4 x i8>, ptr %i.q, align 4, !tbaa !168
-  %5 = shufflevector <4 x i8> %4, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i8> %5, ptr %i.p, align 1, !tbaa !29
+  %4 = load i32, ptr %i.q, align 4, !tbaa !168
+  %5 = tail call i32 @llvm.bswap.i32(i32 %4)
+  store i32 %5, ptr %i.p, align 1, !tbaa !29
   %i.r = getelementptr inbounds nuw i8, ptr %i.l, i64 16
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 200
-  %6 = load <4 x i8>, ptr %i.s, align 8, !tbaa !169
-  %7 = shufflevector <4 x i8> %6, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i8> %7, ptr %i.r, align 1, !tbaa !29
+  %6 = load i32, ptr %i.s, align 8, !tbaa !169
+  %7 = tail call i32 @llvm.bswap.i32(i32 %6)
+  store i32 %7, ptr %i.r, align 1, !tbaa !29
   %i.t = getelementptr inbounds nuw i8, ptr %i.l, i64 20
   %i.u = getelementptr inbounds nuw i8, ptr %1, i64 204
-  %8 = load <4 x i8>, ptr %i.u, align 4, !tbaa !170
-  %9 = shufflevector <4 x i8> %8, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i8> %9, ptr %i.t, align 1, !tbaa !29
+  %8 = load i32, ptr %i.u, align 4, !tbaa !170
+  %9 = tail call i32 @llvm.bswap.i32(i32 %8)
+  store i32 %9, ptr %i.t, align 1, !tbaa !29
   %i.v = getelementptr inbounds nuw i8, ptr %i.l, i64 24
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 208
-  %10 = load <4 x i8>, ptr %i.w, align 8, !tbaa !171
-  %11 = shufflevector <4 x i8> %10, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i8> %11, ptr %i.v, align 1, !tbaa !29
+  %10 = load i32, ptr %i.w, align 8, !tbaa !171
+  %11 = tail call i32 @llvm.bswap.i32(i32 %10)
+  store i32 %11, ptr %i.v, align 1, !tbaa !29
   %i.x = getelementptr inbounds nuw i8, ptr %i.l, i64 28
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 212
-  %12 = load <4 x i8>, ptr %i.y, align 4, !tbaa !172
-  %13 = shufflevector <4 x i8> %12, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i8> %13, ptr %i.x, align 1, !tbaa !29
+  %12 = load i32, ptr %i.y, align 4, !tbaa !172
+  %13 = tail call i32 @llvm.bswap.i32(i32 %12)
+  store i32 %13, ptr %i.x, align 1, !tbaa !29
   %i.z = getelementptr inbounds nuw i8, ptr %i.l, i64 32
   %i.aa = getelementptr inbounds nuw i8, ptr %1, i64 216
-  %14 = load <4 x i8>, ptr %i.aa, align 8, !tbaa !173
-  %15 = shufflevector <4 x i8> %14, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i8> %15, ptr %i.z, align 1, !tbaa !29
+  %14 = load i32, ptr %i.aa, align 8, !tbaa !173
+  %15 = tail call i32 @llvm.bswap.i32(i32 %14)
+  store i32 %15, ptr %i.z, align 1, !tbaa !29
   %i.ab = getelementptr inbounds nuw i8, ptr %i.l, i64 36
   %i.ac = getelementptr inbounds nuw i8, ptr %1, i64 220
-  %16 = load <4 x i8>, ptr %i.ac, align 4, !tbaa !166
-  %17 = shufflevector <4 x i8> %16, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i8> %17, ptr %i.ab, align 1, !tbaa !29
+  %16 = load i32, ptr %i.ac, align 4, !tbaa !166
+  %17 = tail call i32 @llvm.bswap.i32(i32 %16)
+  store i32 %17, ptr %i.ab, align 1, !tbaa !29
   %i.ad = load i32, ptr %i.l, align 1
   %i.ae = tail call i32 @llvm.bswap.i32(i32 %i.ad) ; 3 uses
   %i.af = add i32 %i.ae, 4                        ; 2 uses
@@ -2317,8 +2313,8 @@ bb.e:                                             ; preds = %.thread.i.i, %bb.c
 ._crit_edge.loopexit.i.i:                         ; preds = %.lr.ph.i.i.epil, %._crit_edge.loopexit.i.i.unr-lcssa
   %.lcssa = phi i32 [ %i.bm, %._crit_edge.loopexit.i.i.unr-lcssa ], [ %i.bu, %.lr.ph.i.i.epil ]
   %i.bw = xor i32 %.lcssa, -1
-  %18 = bitcast i32 %i.bw to <4 x i8>
-  %19 = shufflevector <4 x i8> %18, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %18 = tail call i32 @llvm.bswap.i32(i32 %i.bw)
+  %19 = bitcast i32 %18 to <4 x i8>
   br label %_Z26lodepng_chunk_generate_crcPh.exit
 
 _Z26lodepng_chunk_generate_crcPh.exit:            ; preds = %bb.e, %._crit_edge.loopexit.i.i
@@ -2387,9 +2383,8 @@ _ZL18lodepng_chunk_initPPhP8ucvectorjPKc.exit:    ; preds = %bb.c, %.thread.i.i
   %i.ab = getelementptr inbounds i8, ptr %i.t, i64 -10
   %i.ac = trunc i32 %i.d to i8
   %i.ad = getelementptr inbounds i8, ptr %i.t, i64 -9
-  %2 = bitcast i32 %i.d to <4 x i8>
-  %3 = shufflevector <4 x i8> %2, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i8> %3, ptr %i.u, align 1, !tbaa !29
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.d)
+  store i32 %2, ptr %i.u, align 1, !tbaa !29
   %i.ae = getelementptr inbounds i8, ptr %i.t, i64 -8 ; 6 uses
   store i32 1163152464, ptr %i.ae, align 1, !tbaa !29, !alias.scope !709
   %i.af = load i64, ptr %i.a, align 8, !tbaa !99
@@ -2543,12 +2538,12 @@ bb.e:                                             ; preds = %.lr.ph, %bb.e
 ._crit_edge.loopexit.i.i:                         ; preds = %.lr.ph.i.i.epil, %._crit_edge.loopexit.i.i.unr-lcssa
   %.lcssa = phi i32 [ %i.cu, %._crit_edge.loopexit.i.i.unr-lcssa ], [ %i.dc, %.lr.ph.i.i.epil ]
   %i.de = xor i32 %.lcssa, -1
-  %4 = bitcast i32 %i.de to <4 x i8>
-  %5 = shufflevector <4 x i8> %4, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.de)
+  %4 = bitcast i32 %3 to <4 x i8>
   br label %_Z26lodepng_chunk_generate_crcPh.exit
 
 _Z26lodepng_chunk_generate_crcPh.exit:            ; preds = %._crit_edge, %._crit_edge.loopexit.i.i
-  %.07.lcssa.i.i = phi <4 x i8> [ zeroinitializer, %._crit_edge ], [ %5, %._crit_edge.loopexit.i.i ]
+  %.07.lcssa.i.i = phi <4 x i8> [ zeroinitializer, %._crit_edge ], [ %4, %._crit_edge.loopexit.i.i ]
   %i.df = getelementptr inbounds i8, ptr %i.t, i64 -4
   %i.dg = zext i32 %i.bm to i64
   %i.dh = getelementptr inbounds nuw i8, ptr %i.df, i64 %i.dg
@@ -2951,8 +2946,8 @@ bb.u:                                             ; preds = %bb.u, %.epil.prehea
 ._crit_edge.loopexit.i.i:                         ; preds = %.lr.ph.i.i.epil, %._crit_edge.loopexit.i.i.unr-lcssa
   %.lcssa = phi i32 [ %i.hk, %._crit_edge.loopexit.i.i.unr-lcssa ], [ %i.hs, %.lr.ph.i.i.epil ]
   %i.hu = xor i32 %.lcssa, -1
-  %2 = bitcast i32 %i.hu to <4 x i8>
-  %3 = shufflevector <4 x i8> %2, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.hu)
+  %3 = bitcast i32 %2 to <4 x i8>
   br label %_Z26lodepng_chunk_generate_crcPh.exit
 
 _Z26lodepng_chunk_generate_crcPh.exit:            ; preds = %.thread100, %._crit_edge.loopexit.i.i
@@ -3246,9 +3241,8 @@ _Z26lodepng_chunk_generate_crcPh.exit:            ; preds = %.lr.ph.i.i.epil, %_
   %i.ee = getelementptr inbounds nuw i8, ptr %.0.ph, i64 8
   %i.ef = zext nneg i32 %i.cl to i64
   %i.eg = getelementptr inbounds nuw i8, ptr %i.ee, i64 %i.ef
-  %2 = bitcast i32 %i.ed to <4 x i8>
-  %3 = shufflevector <4 x i8> %2, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i8> %3, ptr %i.eg, align 1, !tbaa !29
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.ed)
+  store i32 %2, ptr %i.eg, align 1, !tbaa !29
   br label %_ZL18lodepng_chunk_initPPhP8ucvectorjPKc.exit.thread
 
 _ZL18lodepng_chunk_initPPhP8ucvectorjPKc.exit.thread: ; preds = %bb.o, %bb.l, %bb.m, %bb.j, %bb.g, %bb.h, %bb.e, %bb.b, %bb.c, %bb.a, %_Z26lodepng_chunk_generate_crcPh.exit
@@ -3297,14 +3291,14 @@ bb.d:                                             ; preds = %bb.c
   store i32 1935231088, ptr %i.m, align 1, !tbaa !29, !alias.scope !742
   %i.n = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.o = getelementptr inbounds nuw i8, ptr %1, i64 168
-  %2 = load <4 x i8>, ptr %i.o, align 8, !tbaa !163
-  %3 = shufflevector <4 x i8> %2, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i8> %3, ptr %i.n, align 1, !tbaa !29
+  %2 = load i32, ptr %i.o, align 8, !tbaa !163
+  %3 = tail call i32 @llvm.bswap.i32(i32 %2)
+  store i32 %3, ptr %i.n, align 1, !tbaa !29
   %i.p = getelementptr inbounds nuw i8, ptr %i.l, i64 12
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 172
-  %4 = load <4 x i8>, ptr %i.q, align 4, !tbaa !164
-  %5 = shufflevector <4 x i8> %4, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i8> %5, ptr %i.p, align 1, !tbaa !29
+  %4 = load i32, ptr %i.q, align 4, !tbaa !164
+  %5 = tail call i32 @llvm.bswap.i32(i32 %4)
+  store i32 %5, ptr %i.p, align 1, !tbaa !29
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 176
   %i.s = load i32, ptr %i.r, align 8, !tbaa !165
   %i.t = trunc i32 %i.s to i8
@@ -3426,9 +3420,8 @@ bb.d:                                             ; preds = %bb.c
   %i.df = xor i32 %i.dd, %i.de
   %i.dg = xor i32 %i.df, -1
   %i.dh = getelementptr inbounds nuw i8, ptr %i.l, i64 17
-  %6 = bitcast i32 %i.dg to <4 x i8>
-  %7 = shufflevector <4 x i8> %6, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i8> %7, ptr %i.dh, align 1, !tbaa !29
+  %6 = tail call i32 @llvm.bswap.i32(i32 %i.dg)
+  store i32 %6, ptr %i.dh, align 1, !tbaa !29
   br label %_ZL18lodepng_chunk_initPPhP8ucvectorjPKc.exit.thread
 
 _ZL18lodepng_chunk_initPPhP8ucvectorjPKc.exit.thread: ; preds = %bb.d, %bb.a, %bb.b, %.lr.ph.i.i.preheader
@@ -3609,8 +3602,8 @@ _ZL14lodepng_memcpyPvPKvm.exit.i:                 ; preds = %bb.f
 ._crit_edge.loopexit.i.i.i:                       ; preds = %.lr.ph.i.i.i.epil, %._crit_edge.loopexit.i.i.i.unr-lcssa
   %.lcssa = phi i32 [ %i.bn, %._crit_edge.loopexit.i.i.i.unr-lcssa ], [ %i.bv, %.lr.ph.i.i.i.epil ]
   %i.bx = xor i32 %.lcssa, -1
-  %4 = bitcast i32 %i.bx to <4 x i8>
-  %5 = shufflevector <4 x i8> %4, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %4 = call i32 @llvm.bswap.i32(i32 %i.bx)
+  %5 = bitcast i32 %4 to <4 x i8>
   br label %_Z26lodepng_chunk_generate_crcPh.exit.i
 
 _Z26lodepng_chunk_generate_crcPh.exit.i:          ; preds = %._crit_edge.loopexit.i.i.i, %_ZL14lodepng_memcpyPvPKvm.exit.i
@@ -3799,9 +3792,8 @@ bb.d:                                             ; preds = %bb.c
   %i.dk = xor i32 %i.di, %i.dj
   %i.dl = xor i32 %i.dk, -1
   %i.dm = getelementptr inbounds nuw i8, ptr %i.l, i64 15
-  %2 = bitcast i32 %i.dl to <4 x i8>
-  %3 = shufflevector <4 x i8> %2, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
-  store <4 x i8> %3, ptr %i.dm, align 1, !tbaa !29
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.dl)
+  store i32 %2, ptr %i.dm, align 1, !tbaa !29
   br label %_ZL18lodepng_chunk_initPPhP8ucvectorjPKc.exit.thread
 
 _ZL18lodepng_chunk_initPPhP8ucvectorjPKc.exit.thread: ; preds = %bb.d, %bb.a, %bb.b, %.lr.ph.i.i.preheader
@@ -4004,8 +3996,8 @@ _ZL14lodepng_memcpyPvPKvm.exit29:                 ; preds = %_ZL14lodepng_memcpy
 ._crit_edge.loopexit.i.i:                         ; preds = %.lr.ph.i.i.epil, %._crit_edge.loopexit.i.i.unr-lcssa
   %.lcssa = phi i32 [ %i.bx, %._crit_edge.loopexit.i.i.unr-lcssa ], [ %i.cf, %.lr.ph.i.i.epil ]
   %i.ch = xor i32 %.lcssa, -1
-  %4 = bitcast i32 %i.ch to <4 x i8>
-  %5 = shufflevector <4 x i8> %4, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %4 = call i32 @llvm.bswap.i32(i32 %i.ch)
+  %5 = bitcast i32 %4 to <4 x i8>
   br label %_Z26lodepng_chunk_generate_crcPh.exit
 
 _Z26lodepng_chunk_generate_crcPh.exit:            ; preds = %_ZL14lodepng_memcpyPvPKvm.exit29, %._crit_edge.loopexit.i.i
@@ -4196,8 +4188,8 @@ _ZL14lodepng_memcpyPvPKvm.exit24:                 ; preds = %_ZL14lodepng_memcpy
 ._crit_edge.loopexit.i.i:                         ; preds = %.lr.ph.i.i.epil, %._crit_edge.loopexit.i.i.unr-lcssa
   %.lcssa = phi i32 [ %i.bn, %._crit_edge.loopexit.i.i.unr-lcssa ], [ %i.bv, %.lr.ph.i.i.epil ]
   %i.bx = xor i32 %.lcssa, -1
-  %3 = bitcast i32 %i.bx to <4 x i8>
-  %4 = shufflevector <4 x i8> %3, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.bx)
+  %4 = bitcast i32 %3 to <4 x i8>
   br label %_Z26lodepng_chunk_generate_crcPh.exit
 
 _Z26lodepng_chunk_generate_crcPh.exit:            ; preds = %_ZL14lodepng_memcpyPvPKvm.exit24, %._crit_edge.loopexit.i.i
@@ -4455,8 +4447,8 @@ _ZL14lodepng_memcpyPvPKvm.exit65:                 ; preds = %.lr.ph.preheader.i6
 ._crit_edge.loopexit.i.i:                         ; preds = %.lr.ph.i.i.epil, %._crit_edge.loopexit.i.i.unr-lcssa
   %.lcssa = phi i32 [ %i.cj, %._crit_edge.loopexit.i.i.unr-lcssa ], [ %i.cr, %.lr.ph.i.i.epil ]
   %i.ct = xor i32 %.lcssa, -1
-  %7 = bitcast i32 %i.ct to <4 x i8>
-  %8 = shufflevector <4 x i8> %7, <4 x i8> poison, <4 x i32> <i32 3, i32 2, i32 1, i32 0>
+  %7 = call i32 @llvm.bswap.i32(i32 %i.ct)
+  %8 = bitcast i32 %7 to <4 x i8>
   br label %_Z26lodepng_chunk_generate_crcPh.exit
 
 _Z26lodepng_chunk_generate_crcPh.exit:            ; preds = %_ZL14lodepng_memcpyPvPKvm.exit65, %._crit_edge.loopexit.i.i

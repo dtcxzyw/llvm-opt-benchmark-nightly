@@ -202,7 +202,7 @@ ttl_skip_bytes.exit:                              ; preds = %bb.m, %bb.o, %bb.q,
 define internal fastcc range(i32 -1, 3) i32 @ttl_read_can_data_entry(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree noundef captures(none) %3, i16 noundef zeroext range(i16 0, 4080) %4, i16 noundef zeroext range(i16 0, 8192) %5, ptr nofree noundef readonly captures(address_is_null) %6, i16 noundef zeroext %7, i64 noundef %8) unnamed_addr #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 16 uses
-  %i.b = alloca [8 x i8], align 1                 ; 11 uses
+  %i.b = alloca [8 x i8], align 4                 ; 8 uses
   %i.c = alloca [8 x i8], align 8                 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #11
   store i32 0, ptr %i.a, align 4
@@ -362,29 +362,17 @@ default.unreachable78:                            ; preds = %bb.h
   unreachable
 
 bb.x:                                             ; preds = %bb.w, %bb.i, %bb.j, %bb.k, %bb.l, %bb.m, %bb.n, %bb.o
-  %i.at = phi i32 [ %.pre, %bb.w ], [ %i.r, %bb.i ], [ %i.t, %bb.j ], [ %i.v, %bb.k ], [ %i.w, %bb.l ], [ %i.y, %bb.m ], [ %i.aa, %bb.n ], [ %i.ac, %bb.o ] ; 4 uses
+  %i.at = phi i32 [ %.pre, %bb.w ], [ %i.r, %bb.i ], [ %i.t, %bb.j ], [ %i.v, %bb.k ], [ %i.w, %bb.l ], [ %i.y, %bb.m ], [ %i.aa, %bb.n ], [ %i.ac, %bb.o ]
   %.155 = phi i8 [ %.054, %bb.w ], [ 8, %bb.i ], [ 8, %bb.j ], [ 8, %bb.k ], [ 8, %bb.l ], [ 8, %bb.m ], [ 8, %bb.n ], [ 8, %bb.o ] ; 2 uses
   %.2 = phi i8 [ %spec.select71, %bb.w ], [ 0, %bb.i ], [ 0, %bb.j ], [ 0, %bb.k ], [ 0, %bb.l ], [ 0, %bb.m ], [ 0, %bb.n ], [ 0, %bb.o ]
-  %9 = lshr i32 %i.at, 24
-  %10 = trunc nuw i32 %9 to i8
-  store i8 %10, ptr %i.b, align 1
-  %11 = lshr i32 %i.at, 16
-  %12 = trunc i32 %11 to i8
-  %13 = getelementptr inbounds nuw i8, ptr %i.b, i64 1
-  store i8 %12, ptr %13, align 1
-  %14 = lshr i32 %i.at, 8
-  %15 = trunc i32 %14 to i8
-  %16 = getelementptr inbounds nuw i8, ptr %i.b, i64 2
-  store i8 %15, ptr %16, align 1
-  %17 = trunc i32 %i.at to i8
-  %18 = getelementptr inbounds nuw i8, ptr %i.b, i64 3
-  store i8 %17, ptr %18, align 1
+  %9 = call i32 @llvm.bswap.i32(i32 %i.at)
+  store i32 %9, ptr %i.b, align 4
   %i.au = getelementptr inbounds nuw i8, ptr %i.b, i64 4
-  store i8 %.155, ptr %i.au, align 1
+  store i8 %.155, ptr %i.au, align 4
   %i.av = getelementptr inbounds nuw i8, ptr %i.b, i64 5
   store i8 %.2, ptr %i.av, align 1
   %i.aw = getelementptr inbounds nuw i8, ptr %i.b, i64 6
-  store i8 0, ptr %i.aw, align 1
+  store i8 0, ptr %i.aw, align 2
   %i.ax = getelementptr inbounds nuw i8, ptr %i.b, i64 7
   store i8 0, ptr %i.ax, align 1
   %i.ay = getelementptr i8, ptr %0, i64 264       ; 4 uses
@@ -786,6 +774,9 @@ declare i16 @llvm.umin.i16(i16, i16) #9
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #9
 
 attributes #0 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

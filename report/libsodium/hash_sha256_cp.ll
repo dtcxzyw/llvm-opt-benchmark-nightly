@@ -205,145 +205,49 @@ bb.a:
 SHA256_Pad.exit:                                  ; preds = %.preheader28.i, %.lr.ph.i
   %i.q = getelementptr i8, ptr %0, i64 40
   %i.r = getelementptr i8, ptr %0, i64 96
-  %2 = load <8 x i8>, ptr %i.b, align 8
-  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %3, ptr %i.r, align 8
+  %2 = load i64, ptr %i.b, align 8
+  %3 = call i64 @llvm.bswap.i64(i64 %2)
+  store i64 %3, ptr %i.r, align 8
   %i.s = getelementptr inbounds nuw i8, ptr %i.a, i64 256
   call fastcc void @SHA256_Transform(ptr noundef nonnull %0, ptr noundef %i.q, ptr noundef nonnull %i.a, ptr noundef nonnull %i.s)
-  %i.t = load i32, ptr %0, align 8                ; 4 uses
-  %4 = trunc i32 %i.t to i8
-  %5 = getelementptr i8, ptr %1, i64 3
-  store i8 %4, ptr %5, align 1
-  %6 = lshr i32 %i.t, 8
-  %7 = trunc i32 %6 to i8
-  %8 = getelementptr i8, ptr %1, i64 2
-  store i8 %7, ptr %8, align 1
-  %9 = lshr i32 %i.t, 16
-  %10 = trunc i32 %9 to i8
-  %11 = getelementptr i8, ptr %1, i64 1
-  store i8 %10, ptr %11, align 1
-  %12 = lshr i32 %i.t, 24
-  %13 = trunc nuw i32 %12 to i8
-  store i8 %13, ptr %1, align 1
+  %i.t = load i32, ptr %0, align 8
+  %4 = call i32 @llvm.bswap.i32(i32 %i.t)
+  store i32 %4, ptr %1, align 1
   %i.u = getelementptr i8, ptr %1, i64 4
   %i.v = getelementptr i8, ptr %0, i64 4
-  %i.w = load i32, ptr %i.v, align 4              ; 4 uses
-  %14 = trunc i32 %i.w to i8
-  %15 = getelementptr i8, ptr %1, i64 7
-  store i8 %14, ptr %15, align 1
-  %16 = lshr i32 %i.w, 8
-  %17 = trunc i32 %16 to i8
-  %18 = getelementptr i8, ptr %1, i64 6
-  store i8 %17, ptr %18, align 1
-  %19 = lshr i32 %i.w, 16
-  %20 = trunc i32 %19 to i8
-  %21 = getelementptr i8, ptr %1, i64 5
-  store i8 %20, ptr %21, align 1
-  %22 = lshr i32 %i.w, 24
-  %23 = trunc nuw i32 %22 to i8
-  store i8 %23, ptr %i.u, align 1
+  %i.w = load i32, ptr %i.v, align 4
+  %5 = call i32 @llvm.bswap.i32(i32 %i.w)
+  store i32 %5, ptr %i.u, align 1
   %i.x = getelementptr i8, ptr %1, i64 8
   %i.y = getelementptr i8, ptr %0, i64 8
-  %i.z = load i32, ptr %i.y, align 8              ; 4 uses
-  %24 = trunc i32 %i.z to i8
-  %25 = getelementptr i8, ptr %1, i64 11
-  store i8 %24, ptr %25, align 1
-  %26 = lshr i32 %i.z, 8
-  %27 = trunc i32 %26 to i8
-  %28 = getelementptr i8, ptr %1, i64 10
-  store i8 %27, ptr %28, align 1
-  %29 = lshr i32 %i.z, 16
-  %30 = trunc i32 %29 to i8
-  %31 = getelementptr i8, ptr %1, i64 9
-  store i8 %30, ptr %31, align 1
-  %32 = lshr i32 %i.z, 24
-  %33 = trunc nuw i32 %32 to i8
-  store i8 %33, ptr %i.x, align 1
+  %i.z = load i32, ptr %i.y, align 8
+  %6 = call i32 @llvm.bswap.i32(i32 %i.z)
+  store i32 %6, ptr %i.x, align 1
   %i.aa = getelementptr i8, ptr %1, i64 12
   %i.ab = getelementptr i8, ptr %0, i64 12
-  %i.ac = load i32, ptr %i.ab, align 4            ; 4 uses
-  %34 = trunc i32 %i.ac to i8
-  %35 = getelementptr i8, ptr %1, i64 15
-  store i8 %34, ptr %35, align 1
-  %36 = lshr i32 %i.ac, 8
-  %37 = trunc i32 %36 to i8
-  %38 = getelementptr i8, ptr %1, i64 14
-  store i8 %37, ptr %38, align 1
-  %39 = lshr i32 %i.ac, 16
-  %40 = trunc i32 %39 to i8
-  %41 = getelementptr i8, ptr %1, i64 13
-  store i8 %40, ptr %41, align 1
-  %42 = lshr i32 %i.ac, 24
-  %43 = trunc nuw i32 %42 to i8
-  store i8 %43, ptr %i.aa, align 1
+  %i.ac = load i32, ptr %i.ab, align 4
+  %7 = call i32 @llvm.bswap.i32(i32 %i.ac)
+  store i32 %7, ptr %i.aa, align 1
   %i.ad = getelementptr i8, ptr %1, i64 16
   %i.ae = getelementptr i8, ptr %0, i64 16
-  %i.af = load i32, ptr %i.ae, align 8            ; 4 uses
-  %44 = trunc i32 %i.af to i8
-  %45 = getelementptr i8, ptr %1, i64 19
-  store i8 %44, ptr %45, align 1
-  %46 = lshr i32 %i.af, 8
-  %47 = trunc i32 %46 to i8
-  %48 = getelementptr i8, ptr %1, i64 18
-  store i8 %47, ptr %48, align 1
-  %49 = lshr i32 %i.af, 16
-  %50 = trunc i32 %49 to i8
-  %51 = getelementptr i8, ptr %1, i64 17
-  store i8 %50, ptr %51, align 1
-  %52 = lshr i32 %i.af, 24
-  %53 = trunc nuw i32 %52 to i8
-  store i8 %53, ptr %i.ad, align 1
+  %i.af = load i32, ptr %i.ae, align 8
+  %8 = call i32 @llvm.bswap.i32(i32 %i.af)
+  store i32 %8, ptr %i.ad, align 1
   %i.ag = getelementptr i8, ptr %1, i64 20
   %i.ah = getelementptr i8, ptr %0, i64 20
-  %i.ai = load i32, ptr %i.ah, align 4            ; 4 uses
-  %54 = trunc i32 %i.ai to i8
-  %55 = getelementptr i8, ptr %1, i64 23
-  store i8 %54, ptr %55, align 1
-  %56 = lshr i32 %i.ai, 8
-  %57 = trunc i32 %56 to i8
-  %58 = getelementptr i8, ptr %1, i64 22
-  store i8 %57, ptr %58, align 1
-  %59 = lshr i32 %i.ai, 16
-  %60 = trunc i32 %59 to i8
-  %61 = getelementptr i8, ptr %1, i64 21
-  store i8 %60, ptr %61, align 1
-  %62 = lshr i32 %i.ai, 24
-  %63 = trunc nuw i32 %62 to i8
-  store i8 %63, ptr %i.ag, align 1
+  %i.ai = load i32, ptr %i.ah, align 4
+  %9 = call i32 @llvm.bswap.i32(i32 %i.ai)
+  store i32 %9, ptr %i.ag, align 1
   %i.aj = getelementptr i8, ptr %1, i64 24
   %i.ak = getelementptr i8, ptr %0, i64 24
-  %i.al = load i32, ptr %i.ak, align 8            ; 4 uses
-  %64 = trunc i32 %i.al to i8
-  %65 = getelementptr i8, ptr %1, i64 27
-  store i8 %64, ptr %65, align 1
-  %66 = lshr i32 %i.al, 8
-  %67 = trunc i32 %66 to i8
-  %68 = getelementptr i8, ptr %1, i64 26
-  store i8 %67, ptr %68, align 1
-  %69 = lshr i32 %i.al, 16
-  %70 = trunc i32 %69 to i8
-  %71 = getelementptr i8, ptr %1, i64 25
-  store i8 %70, ptr %71, align 1
-  %72 = lshr i32 %i.al, 24
-  %73 = trunc nuw i32 %72 to i8
-  store i8 %73, ptr %i.aj, align 1
+  %i.al = load i32, ptr %i.ak, align 8
+  %10 = call i32 @llvm.bswap.i32(i32 %i.al)
+  store i32 %10, ptr %i.aj, align 1
   %i.am = getelementptr i8, ptr %1, i64 28
   %i.an = getelementptr i8, ptr %0, i64 28
-  %i.ao = load i32, ptr %i.an, align 4            ; 4 uses
-  %74 = trunc i32 %i.ao to i8
-  %75 = getelementptr i8, ptr %1, i64 31
-  store i8 %74, ptr %75, align 1
-  %76 = lshr i32 %i.ao, 8
-  %77 = trunc i32 %76 to i8
-  %78 = getelementptr i8, ptr %1, i64 30
-  store i8 %77, ptr %78, align 1
-  %79 = lshr i32 %i.ao, 16
-  %80 = trunc i32 %79 to i8
-  %81 = getelementptr i8, ptr %1, i64 29
-  store i8 %80, ptr %81, align 1
-  %82 = lshr i32 %i.ao, 24
-  %83 = trunc nuw i32 %82 to i8
-  store i8 %83, ptr %i.am, align 1
+  %i.ao = load i32, ptr %i.an, align 4
+  %11 = call i32 @llvm.bswap.i32(i32 %i.ao)
+  store i32 %11, ptr %i.am, align 1
   call void @sodium_memzero(ptr noundef nonnull %i.a, i64 noundef 288) #6
   call void @sodium_memzero(ptr noundef nonnull %0, i64 noundef 104) #6
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
@@ -372,6 +276,12 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #4
 
 attributes #0 = { nofree norecurse nosync nounwind ssp memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind ssp uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

@@ -205,10 +205,10 @@ bb.e:                                             ; preds = %.preheader.preheade
   br i1 %.not109, label %bb.g, label %bb.f
 
 bb.f:                                             ; preds = %._crit_edge
-  %i.di = load i32, ptr %i.a, align 4, !tbaa !24  ; 9 uses
+  %i.di = load i32, ptr %i.a, align 4, !tbaa !24  ; 6 uses
   %i.dj = add nsw i32 %i.di, 57                   ; 2 uses
   %i.dk = sext i32 %i.dj to i64
-  %i.dl = tail call noalias ptr @malloc(i64 noundef %i.dk) #34 ; 28 uses
+  %i.dl = tail call noalias ptr @malloc(i64 noundef %i.dk) #34 ; 16 uses
   %.not110 = icmp eq ptr %i.dl, null
   br i1 %.not110, label %bb.g, label %.lr.ph.i.i
 
@@ -218,35 +218,17 @@ bb.f:                                             ; preds = %._crit_edge
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dl, i64 8
   store <8 x i8> <i8 0, i8 0, i8 0, i8 13, i8 73, i8 72, i8 68, i8 82>, ptr %i.dm, align 1, !tbaa !34
   %i.dn = getelementptr inbounds nuw i8, ptr %i.dl, i64 16
-  %i.do = lshr i32 %2, 24                         ; 2 uses
-  %6 = trunc nuw i32 %i.do to i8
-  store i8 %6, ptr %i.dn, align 1, !tbaa !34
-  %i.dp = lshr i32 %2, 16                         ; 2 uses
-  %7 = trunc i32 %i.dp to i8
-  %8 = getelementptr inbounds nuw i8, ptr %i.dl, i64 17
-  store i8 %7, ptr %8, align 1, !tbaa !34
-  %i.dq = lshr i32 %2, 8                          ; 2 uses
-  %9 = trunc i32 %i.dq to i8
-  %10 = getelementptr inbounds nuw i8, ptr %i.dl, i64 18
-  store i8 %9, ptr %10, align 1, !tbaa !34
-  %11 = trunc i32 %2 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.dl, i64 19
-  store i8 %11, ptr %12, align 1, !tbaa !34
+  %i.do = lshr i32 %2, 24
+  %i.dp = lshr i32 %2, 16
+  %i.dq = lshr i32 %2, 8
+  %6 = tail call i32 @llvm.bswap.i32(i32 %2)
+  store i32 %6, ptr %i.dn, align 1, !tbaa !34
   %i.dr = getelementptr inbounds nuw i8, ptr %i.dl, i64 20
-  %i.ds = lshr i32 %3, 24                         ; 2 uses
-  %13 = trunc nuw i32 %i.ds to i8
-  store i8 %13, ptr %i.dr, align 1, !tbaa !34
-  %i.dt = lshr i32 %3, 16                         ; 2 uses
-  %14 = trunc i32 %i.dt to i8
-  %15 = getelementptr inbounds nuw i8, ptr %i.dl, i64 21
-  store i8 %14, ptr %15, align 1, !tbaa !34
-  %i.du = lshr i32 %3, 8                          ; 2 uses
-  %16 = trunc i32 %i.du to i8
-  %17 = getelementptr inbounds nuw i8, ptr %i.dl, i64 22
-  store i8 %16, ptr %17, align 1, !tbaa !34
-  %18 = trunc i32 %3 to i8
-  %19 = getelementptr inbounds nuw i8, ptr %i.dl, i64 23
-  store i8 %18, ptr %19, align 1, !tbaa !34
+  %i.ds = lshr i32 %3, 24
+  %i.dt = lshr i32 %3, 16
+  %i.du = lshr i32 %3, 8
+  %7 = tail call i32 @llvm.bswap.i32(i32 %3)
+  store i32 %7, ptr %i.dr, align 1, !tbaa !34
   %i.dv = getelementptr inbounds nuw i8, ptr %i.dl, i64 24
   %i.dw = getelementptr inbounds nuw i8, ptr %i.dl, i64 25
   store i8 8, ptr %i.dv, align 1, !tbaa !34
@@ -352,42 +334,18 @@ bb.f:                                             ; preds = %._crit_edge
   %i.ho = load i32, ptr %i.hn, align 4, !tbaa !24
   %i.hp = xor i32 %i.ho, %i.hg
   %i.hq = getelementptr inbounds nuw i8, ptr %i.dl, i64 29
-  %i.hr = xor i32 %i.hp, -1                       ; 4 uses
-  %20 = lshr i32 %i.hr, 24
-  %21 = trunc nuw i32 %20 to i8
-  store i8 %21, ptr %i.hq, align 1, !tbaa !34
-  %22 = lshr i32 %i.hr, 16
-  %23 = trunc i32 %22 to i8
-  %24 = getelementptr inbounds nuw i8, ptr %i.dl, i64 30
-  store i8 %23, ptr %24, align 1, !tbaa !34
-  %25 = lshr i32 %i.hr, 8
-  %26 = trunc i32 %25 to i8
-  %27 = getelementptr inbounds nuw i8, ptr %i.dl, i64 31
-  store i8 %26, ptr %27, align 1, !tbaa !34
-  %28 = trunc i32 %i.hr to i8
-  %29 = getelementptr inbounds nuw i8, ptr %i.dl, i64 32
-  store i8 %28, ptr %29, align 1, !tbaa !34
+  %i.hr = xor i32 %i.hp, -1
+  %8 = tail call i32 @llvm.bswap.i32(i32 %i.hr)
+  store i32 %8, ptr %i.hq, align 1, !tbaa !34
   %i.hs = getelementptr inbounds nuw i8, ptr %i.dl, i64 33
-  %30 = lshr i32 %i.di, 24
-  %31 = trunc nuw i32 %30 to i8
-  store i8 %31, ptr %i.hs, align 1, !tbaa !34
-  %32 = lshr i32 %i.di, 16
-  %33 = trunc i32 %32 to i8
-  %34 = getelementptr inbounds nuw i8, ptr %i.dl, i64 34
-  store i8 %33, ptr %34, align 1, !tbaa !34
-  %35 = lshr i32 %i.di, 8
-  %36 = trunc i32 %35 to i8
-  %37 = getelementptr inbounds nuw i8, ptr %i.dl, i64 35
-  store i8 %36, ptr %37, align 1, !tbaa !34
-  %38 = trunc i32 %i.di to i8
-  %39 = getelementptr inbounds nuw i8, ptr %i.dl, i64 36
-  store i8 %38, ptr %39, align 1, !tbaa !34
+  %9 = tail call i32 @llvm.bswap.i32(i32 %i.di)
+  store i32 %9, ptr %i.hs, align 1, !tbaa !34
   %i.ht = getelementptr inbounds nuw i8, ptr %i.dl, i64 37 ; 4 uses
   store <4 x i8> <i8 73, i8 68, i8 65, i8 84>, ptr %i.ht, align 1, !tbaa !34
   %i.hu = getelementptr inbounds nuw i8, ptr %i.dl, i64 41 ; 2 uses
   %i.hv = sext i32 %i.di to i64                   ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %i.hu, ptr nonnull align 1 %i.dh, i64 %i.hv, i1 false)
-  %i.hw = getelementptr inbounds i8, ptr %i.hu, i64 %i.hv ; 6 uses
+  %i.hw = getelementptr inbounds i8, ptr %i.hu, i64 %i.hv ; 3 uses
   tail call void @free(ptr noundef nonnull %i.dh) #33
   %i.hx = icmp sgt i32 %i.di, -4
   br i1 %i.hx, label %.lr.ph.preheader.i.i, label %_ZL12stbiw__wpcrcPPhi.exit119
@@ -457,24 +415,13 @@ bb.f:                                             ; preds = %._crit_edge
 ._crit_edge.loopexit.i.i:                         ; preds = %._crit_edge.loopexit.i.i.unr-lcssa, %.lr.ph.i.i114.epil.preheader
   %.lcssa = phi i32 [ %i.iu, %._crit_edge.loopexit.i.i.unr-lcssa ], [ %i.je, %.lr.ph.i.i114.epil.preheader ]
   %i.jf = xor i32 %.lcssa, -1
+  %10 = tail call i32 @llvm.bswap.i32(i32 %i.jf)
+  %11 = bitcast i32 %10 to <4 x i8>
   br label %_ZL12stbiw__wpcrcPPhi.exit119
 
 _ZL12stbiw__wpcrcPPhi.exit119:                    ; preds = %.lr.ph.i.i, %._crit_edge.loopexit.i.i
-  %.07.lcssa.i.i = phi i32 [ 0, %.lr.ph.i.i ], [ %i.jf, %._crit_edge.loopexit.i.i ] ; 4 uses
-  %40 = lshr i32 %.07.lcssa.i.i, 24
-  %41 = trunc nuw i32 %40 to i8
-  store i8 %41, ptr %i.hw, align 1, !tbaa !34
-  %42 = lshr i32 %.07.lcssa.i.i, 16
-  %43 = trunc i32 %42 to i8
-  %44 = getelementptr inbounds nuw i8, ptr %i.hw, i64 1
-  store i8 %43, ptr %44, align 1, !tbaa !34
-  %45 = lshr i32 %.07.lcssa.i.i, 8
-  %46 = trunc i32 %45 to i8
-  %47 = getelementptr inbounds nuw i8, ptr %i.hw, i64 2
-  store i8 %46, ptr %47, align 1, !tbaa !34
-  %48 = trunc i32 %.07.lcssa.i.i to i8
-  %49 = getelementptr inbounds nuw i8, ptr %i.hw, i64 3
-  store i8 %48, ptr %49, align 1, !tbaa !34
+  %.07.lcssa.i.i = phi <4 x i8> [ zeroinitializer, %.lr.ph.i.i ], [ %11, %._crit_edge.loopexit.i.i ]
+  store <4 x i8> %.07.lcssa.i.i, ptr %i.hw, align 1, !tbaa !34
   %i.jg = getelementptr inbounds nuw i8, ptr %i.hw, i64 4
   %i.jh = getelementptr inbounds nuw i8, ptr %i.hw, i64 8
   store i32 0, ptr %i.jg, align 1
@@ -877,7 +824,7 @@ bb.c:                                             ; preds = %.preheader417, %.lo
   %.0203 = phi i32 [ %.2205, %.loopexit ], [ 0, %.preheader417 ] ; 18 uses
   %.0200 = phi i32 [ %.1201, %.loopexit ], [ 0, %.preheader417 ] ; 16 uses
   %i.w = tail call fastcc noundef i32 @_ZL13stbi__get32beP13stbi__context(ptr noundef %i.d) ; 22 uses
-  %i.x = tail call fastcc noundef i32 @_ZL13stbi__get32beP13stbi__context(ptr noundef %i.d) ; 6 uses
+  %i.x = tail call fastcc noundef i32 @_ZL13stbi__get32beP13stbi__context(ptr noundef %i.d) ; 3 uses
   switch i32 %i.x, label %bb.ew [
     i32 1130840649, label %bb.d
     i32 1229472850, label %bb.i
@@ -1280,17 +1227,8 @@ bb.ey:                                            ; preds = %bb.ew
   br i1 %i.tj, label %bb.ez, label %bb.fa
 
 bb.ez:                                            ; preds = %bb.ey
-  %4 = lshr i32 %i.x, 24
-  %5 = trunc nuw i32 %4 to i8
-  store i8 %5, ptr @_ZZL20stbi__parse_png_fileP9stbi__pngiiE13invalid_chunk, align 16, !tbaa !34
-  %6 = lshr i32 %i.x, 16
-  %7 = trunc i32 %6 to i8
-  store i8 %7, ptr getelementptr inbounds nuw (i8, ptr @_ZZL20stbi__parse_png_fileP9stbi__pngiiE13invalid_chunk, i64 1), align 1, !tbaa !34
-  %8 = lshr i32 %i.x, 8
-  %9 = trunc i32 %8 to i8
-  store i8 %9, ptr getelementptr inbounds nuw (i8, ptr @_ZZL20stbi__parse_png_fileP9stbi__pngiiE13invalid_chunk, i64 2), align 2, !tbaa !34
-  %10 = trunc i32 %i.x to i8
-  store i8 %10, ptr getelementptr inbounds nuw (i8, ptr @_ZZL20stbi__parse_png_fileP9stbi__pngiiE13invalid_chunk, i64 3), align 1, !tbaa !34
+  %4 = tail call i32 @llvm.bswap.i32(i32 %i.x)
+  store i32 %4, ptr @_ZZL20stbi__parse_png_fileP9stbi__pngiiE13invalid_chunk, align 16, !tbaa !34
   store ptr @_ZZL20stbi__parse_png_fileP9stbi__pngiiE13invalid_chunk, ptr @_ZL22stbi__g_failure_reason, align 8, !tbaa !23
   br label %.thread397
 
@@ -1692,6 +1630,9 @@ declare <4 x i8> @llvm.abs.v4i8(<4 x i8>, i1 immarg) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #26
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #26
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare <16 x i32> @llvm.abs.v16i32(<16 x i32>, i1 immarg) #10

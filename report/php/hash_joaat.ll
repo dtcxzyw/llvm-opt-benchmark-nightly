@@ -115,21 +115,9 @@ bb.a:
   %i.b = mul i32 %i.a, 9                          ; 2 uses
   %i.c = lshr i32 %i.b, 11
   %i.d = xor i32 %i.c, %i.b
-  %i.e = mul i32 %i.d, 32769                      ; 4 uses
-  %.sroa.0.0.extract.trunc = trunc i32 %i.e to i8
-  %.sroa.4.0.extract.shift = lshr i32 %i.e, 8
-  %.sroa.4.0.extract.trunc = trunc i32 %.sroa.4.0.extract.shift to i8
-  %.sroa.5.0.extract.shift = lshr i32 %i.e, 16
-  %.sroa.5.0.extract.trunc = trunc i32 %.sroa.5.0.extract.shift to i8
-  %.sroa.6.0.extract.shift = lshr i32 %i.e, 24
-  %.sroa.6.0.extract.trunc = trunc nuw i32 %.sroa.6.0.extract.shift to i8
-  store i8 %.sroa.6.0.extract.trunc, ptr %0, align 1, !tbaa !14
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %.sroa.5.0.extract.trunc, ptr %2, align 1, !tbaa !14
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i8 %.sroa.4.0.extract.trunc, ptr %3, align 1, !tbaa !14
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  store i8 %.sroa.0.0.extract.trunc, ptr %4, align 1, !tbaa !14
+  %i.e = mul i32 %i.d, 32769
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.e)
+  store i32 %2, ptr %0, align 1, !tbaa !14
   store i32 0, ptr %1, align 4, !tbaa !13
   ret void
 }
@@ -143,11 +131,15 @@ declare i32 @php_hash_unserialize(ptr noundef, i64 noundef, ptr noundef) #3
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #4
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #5
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}

@@ -202,7 +202,7 @@ _ZNSt3__16vectorIhNS_9allocatorIhEEEC2Em.exit:
   %i.g = select i1 %or.cond, i64 12, i64 8        ; 3 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.j = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.g) #24 ; 16 uses
+  %i.j = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.g) #24 ; 13 uses
   store ptr %i.j, ptr %0, align 8, !tbaa !35
   %i.k = getelementptr i8, ptr %i.j, i64 %i.g     ; 2 uses
   store ptr %i.k, ptr %i.i, align 8, !tbaa !49
@@ -235,22 +235,10 @@ bb.a:                                             ; preds = %_ZNSt3__16vectorIhN
   %i.aa = trunc i32 %i.z to i8
   %i.ab = getelementptr inbounds nuw i8, ptr %i.j, i64 5
   store i8 %i.aa, ptr %i.ab, align 1, !tbaa !36
-  %i.ac = load i32, ptr %i.d, align 4, !tbaa !57  ; 4 uses
-  %2 = lshr i32 %i.ac, 24
-  %3 = trunc nuw i32 %2 to i8
+  %i.ac = load i32, ptr %i.d, align 4, !tbaa !57
   %i.ad = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  store i8 %3, ptr %i.ad, align 1, !tbaa !36
-  %4 = lshr i32 %i.ac, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.j, i64 9
-  store i8 %5, ptr %6, align 1, !tbaa !36
-  %7 = lshr i32 %i.ac, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.j, i64 10
-  store i8 %8, ptr %9, align 1, !tbaa !36
-  %10 = trunc i32 %i.ac to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.j, i64 11
-  store i8 %10, ptr %11, align 1, !tbaa !36
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.ac)
+  store i32 %2, ptr %i.ad, align 1, !tbaa !36
   br label %bb.c
 
 bb.b:                                             ; preds = %_ZNSt3__16vectorIhNS_9allocatorIhEEEC2Em.exit
@@ -653,7 +641,7 @@ bb.m:                                             ; preds = %bb.a
   %i.aq = getelementptr inbounds nuw i8, ptr %12, i64 8 ; 3 uses
   %i.ar = getelementptr inbounds nuw i8, ptr %12, i64 16 ; 3 uses
   %i.as = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.ap) #24
-          to label %.noexc36 unwind label %bb.v   ; 15 uses
+          to label %.noexc36 unwind label %bb.v   ; 12 uses
 
 .noexc36:                                         ; preds = %bb.m
   store ptr %i.as, ptr %12, align 8, !tbaa !35, !alias.scope !627
@@ -679,21 +667,9 @@ bb.m:                                             ; preds = %bb.a
 bb.n:                                             ; preds = %.noexc36
   %i.bc = lshr i32 %2, 24
   %i.bd = lshr i32 %2, 16
-  %18 = lshr i32 %3, 24
-  %19 = trunc nuw i32 %18 to i8
   %i.be = getelementptr inbounds nuw i8, ptr %i.as, i64 8
-  store i8 %19, ptr %i.be, align 1, !tbaa !36, !noalias !627
-  %20 = lshr i32 %3, 16
-  %21 = trunc i32 %20 to i8
-  %22 = getelementptr inbounds nuw i8, ptr %i.as, i64 9
-  store i8 %21, ptr %22, align 1, !tbaa !36, !noalias !627
-  %23 = lshr i32 %3, 8
-  %24 = trunc i32 %23 to i8
-  %25 = getelementptr inbounds nuw i8, ptr %i.as, i64 10
-  store i8 %24, ptr %25, align 1, !tbaa !36, !noalias !627
-  %26 = trunc i32 %3 to i8
-  %27 = getelementptr inbounds nuw i8, ptr %i.as, i64 11
-  store i8 %26, ptr %27, align 1, !tbaa !36, !noalias !627
+  %18 = tail call i32 @llvm.bswap.i32(i32 %3)
+  store i32 %18, ptr %i.be, align 1, !tbaa !36, !noalias !627
   br label %bb.p
 
 bb.o:                                             ; preds = %.noexc36
@@ -1096,7 +1072,7 @@ bb.a:
   %i.i = zext i16 %4 to i32                       ; 2 uses
   %i.j = mul i32 %i.f, %i.i                       ; 7 uses
   %i.k = zext i16 %3 to i32                       ; 2 uses
-  %i.l = mul i32 %i.h, %i.k                       ; 7 uses
+  %i.l = mul i32 %i.h, %i.k                       ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #23
   tail call void @llvm.experimental.noalias.scope.decl(metadata !693)
   %i.m = icmp ugt i32 %i.j, 65535
@@ -1112,7 +1088,7 @@ bb.a:
   %.0.i63.sroa.gep127 = getelementptr inbounds nuw i8, ptr %16, i64 24
   %.0.i63.sroa.gep129 = getelementptr inbounds nuw i8, ptr %16, i64 16
   %i.r = invoke noalias noundef nonnull ptr @_Znwm(i64 noundef %i.o) #24
-          to label %.noexc unwind label %bb.g     ; 15 uses
+          to label %.noexc unwind label %bb.g     ; 12 uses
 
 .noexc:                                           ; preds = %bb.a
   store ptr %i.r, ptr %11, align 8, !tbaa !35, !alias.scope !693
@@ -1138,21 +1114,9 @@ bb.a:
 bb.b:                                             ; preds = %.noexc
   %i.ab = lshr i32 %i.j, 24
   %i.ac = lshr i32 %i.j, 16
-  %26 = lshr i32 %i.l, 24
-  %27 = trunc nuw i32 %26 to i8
   %i.ad = getelementptr inbounds nuw i8, ptr %i.r, i64 8
-  store i8 %27, ptr %i.ad, align 1, !tbaa !36, !noalias !693
-  %28 = lshr i32 %i.l, 16
-  %29 = trunc i32 %28 to i8
-  %30 = getelementptr inbounds nuw i8, ptr %i.r, i64 9
-  store i8 %29, ptr %30, align 1, !tbaa !36, !noalias !693
-  %31 = lshr i32 %i.l, 8
-  %32 = trunc i32 %31 to i8
-  %33 = getelementptr inbounds nuw i8, ptr %i.r, i64 10
-  store i8 %32, ptr %33, align 1, !tbaa !36, !noalias !693
-  %34 = trunc i32 %i.l to i8
-  %35 = getelementptr inbounds nuw i8, ptr %i.r, i64 11
-  store i8 %34, ptr %35, align 1, !tbaa !36, !noalias !693
+  %26 = tail call i32 @llvm.bswap.i32(i32 %i.l)
+  store i32 %26, ptr %i.ad, align 1, !tbaa !36, !noalias !693
   br label %bb.d
 
 bb.c:                                             ; preds = %.noexc

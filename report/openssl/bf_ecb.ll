@@ -15,7 +15,7 @@ bb.a:
 define void @BF_ecb_encrypt(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) initializes((0, 8)) %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #1 {
 bb.a:
   %i.a = alloca [2 x i32], align 4                ; 7 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 1
   %i.c = load i8, ptr %0, align 1, !tbaa !8
   %i.d = zext i8 %i.c to i32
@@ -58,46 +58,22 @@ bb.a:
   br i1 %.not, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  call void @BF_encrypt(ptr noundef nonnull %i.a, ptr noundef %2) #4
+  call void @BF_encrypt(ptr noundef nonnull %i.a, ptr noundef %2) #5
   br label %bb.d
 
 bb.c:                                             ; preds = %bb.a
-  call void @BF_decrypt(ptr noundef nonnull %i.a, ptr noundef %2) #4
+  call void @BF_decrypt(ptr noundef nonnull %i.a, ptr noundef %2) #5
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %i.al = load i32, ptr %i.a, align 4, !tbaa !9   ; 4 uses
-  %4 = lshr i32 %i.al, 24
-  %5 = trunc nuw i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 1
-  store i8 %5, ptr %1, align 1, !tbaa !8
-  %7 = lshr i32 %i.al, 16
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 2
-  store i8 %8, ptr %6, align 1, !tbaa !8
-  %10 = lshr i32 %i.al, 8
-  %11 = trunc i32 %10 to i8
-  %i.am = getelementptr inbounds nuw i8, ptr %1, i64 3
-  store i8 %11, ptr %9, align 1, !tbaa !8
-  %12 = trunc i32 %i.al to i8
-  %13 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  store i8 %12, ptr %i.am, align 1, !tbaa !8
-  %i.an = load i32, ptr %i.ak, align 4, !tbaa !9  ; 4 uses
-  %14 = lshr i32 %i.an, 24
-  %15 = trunc nuw i32 %14 to i8
-  %16 = getelementptr inbounds nuw i8, ptr %1, i64 5
-  store i8 %15, ptr %13, align 1, !tbaa !8
-  %17 = lshr i32 %i.an, 16
-  %18 = trunc i32 %17 to i8
-  %19 = getelementptr inbounds nuw i8, ptr %1, i64 6
-  store i8 %18, ptr %16, align 1, !tbaa !8
-  %20 = lshr i32 %i.an, 8
-  %21 = trunc i32 %20 to i8
-  %22 = getelementptr inbounds nuw i8, ptr %1, i64 7
-  store i8 %21, ptr %19, align 1, !tbaa !8
-  %23 = trunc i32 %i.an to i8
-  store i8 %23, ptr %22, align 1, !tbaa !8
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
+  %i.al = load i32, ptr %i.a, align 4, !tbaa !9
+  %i.am = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %4 = call i32 @llvm.bswap.i32(i32 %i.al)
+  store i32 %4, ptr %1, align 1, !tbaa !8
+  %i.an = load i32, ptr %i.ak, align 4, !tbaa !9
+  %5 = call i32 @llvm.bswap.i32(i32 %i.an)
+  store i32 %5, ptr %i.am, align 1, !tbaa !8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
   ret void
 }
 
@@ -111,11 +87,15 @@ declare void @BF_decrypt(ptr noundef, ptr noundef) local_unnamed_addr #3
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.lifetime.end.p0(ptr captures(none)) #2
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #4
+
 attributes #0 = { mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #3 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #4 = { nounwind }
+attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #5 = { nounwind }
 
 !llvm.module.flags = !{!0, !1}
 !llvm.ident = !{!2}

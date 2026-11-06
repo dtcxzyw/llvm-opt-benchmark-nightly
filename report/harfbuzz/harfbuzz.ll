@@ -205,20 +205,8 @@ declare noundef i32 @vsnprintf(ptr noundef captures(none), i64 noundef, ptr noun
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define void @hb_tag_to_string(i32 noundef %0, ptr nofree noundef writeonly captures(none) initializes((0, 4)) %1) local_unnamed_addr #3 {
 bb.a:
-  %2 = lshr i32 %0, 24
-  %3 = trunc nuw i32 %2 to i8
-  store i8 %3, ptr %1, align 1, !tbaa !280
-  %4 = lshr i32 %0, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 1
-  store i8 %5, ptr %6, align 1, !tbaa !280
-  %7 = lshr i32 %0, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 2
-  store i8 %8, ptr %9, align 1, !tbaa !280
-  %10 = trunc i32 %0 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 3
-  store i8 %10, ptr %11, align 1, !tbaa !280
+  %2 = tail call i32 @llvm.bswap.i32(i32 %0)
+  store i32 %2, ptr %1, align 1, !tbaa !280
   ret void
 }
 
@@ -621,23 +609,11 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %.0.sroa.phi = phi ptr [ %.0.sroa.gep, %bb.c ], [ %i.a, %bb.b ] ; 4 uses
+  %.0.sroa.phi = phi ptr [ %.0.sroa.gep, %bb.c ], [ %i.a, %bb.b ]
   %.0 = phi i64 [ 5, %bb.c ], [ 4, %bb.b ]        ; 6 uses
-  %i.e = load i32, ptr %0, align 4, !tbaa !558    ; 4 uses
-  %3 = lshr i32 %i.e, 24
-  %4 = trunc nuw i32 %3 to i8
-  store i8 %4, ptr %.0.sroa.phi, align 1, !tbaa !280
-  %5 = lshr i32 %i.e, 16
-  %6 = trunc i32 %5 to i8
-  %7 = getelementptr inbounds nuw i8, ptr %.0.sroa.phi, i64 1
-  store i8 %6, ptr %7, align 1, !tbaa !280
-  %8 = lshr i32 %i.e, 8
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %.0.sroa.phi, i64 2
-  store i8 %9, ptr %10, align 1, !tbaa !280
-  %11 = trunc i32 %i.e to i8
-  %12 = getelementptr inbounds nuw i8, ptr %.0.sroa.phi, i64 3
-  store i8 %11, ptr %12, align 1, !tbaa !280
+  %i.e = load i32, ptr %0, align 4, !tbaa !558
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.e)
+  store i32 %3, ptr %.0.sroa.phi, align 1, !tbaa !280
   %i.f = add nsw i64 %.0, -1                      ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.f
   %i.h = load i8, ptr %i.g, align 1, !tbaa !280
@@ -946,40 +922,32 @@ bb.l:                                             ; preds = %_ZL19parse_one_vari
 ; Function Attrs: mustprogress nofree nounwind uwtable
 define void @hb_variation_to_string(ptr nofree noundef readonly captures(none) %0, ptr nofree noundef writeonly captures(none) %1, i32 noundef %2) local_unnamed_addr #13 {
 bb.a:
-  %i.a = alloca [128 x i8], align 16              ; 9 uses
+  %i.a = alloca [128 x i8], align 16              ; 6 uses
   %.not = icmp eq i32 %2, 0
   br i1 %.not, label %bb.g, label %bb.b, !prof !267
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #59
-  %i.b = load i32, ptr %0, align 4, !tbaa !715    ; 4 uses
-  %3 = lshr i32 %i.b, 24                          ; 2 uses
-  %4 = trunc nuw i32 %3 to i8
-  store i8 %4, ptr %i.a, align 16, !tbaa !280
-  %5 = lshr i32 %i.b, 16
-  %6 = trunc i32 %5 to i8                         ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %6, ptr %7, align 1, !tbaa !280
-  %8 = lshr i32 %i.b, 8
-  %9 = trunc i32 %8 to i8                         ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %9, ptr %10, align 2, !tbaa !280
-  %11 = trunc i32 %i.b to i8                      ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %11, ptr %12, align 1, !tbaa !280
-  %i.c = icmp eq i8 %11, 32
+  %i.b = load i32, ptr %0, align 4, !tbaa !715    ; 5 uses
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.b)
+  store i32 %3, ptr %i.a, align 16, !tbaa !280
+  %4 = and i32 %i.b, 255
+  %i.c = icmp eq i32 %4, 32
   br i1 %i.c, label %bb.c, label %.critedge
 
 bb.c:                                             ; preds = %bb.b
-  %i.d = icmp eq i8 %9, 32
+  %5 = and i32 %i.b, 65280
+  %i.d = icmp eq i32 %5, 8192
   br i1 %i.d, label %bb.d, label %.critedge
 
 bb.d:                                             ; preds = %bb.c
-  %i.e = icmp eq i8 %6, 32
+  %6 = and i32 %i.b, 16711680
+  %i.e = icmp eq i32 %6, 2097152
   br i1 %i.e, label %bb.e, label %.critedge
 
 bb.e:                                             ; preds = %bb.d
-  %i.f = icmp ne i32 %3, 32
+  %.mask = and i32 %i.b, -16777216
+  %i.f = icmp ne i32 %.mask, 536870912
   %spec.select = zext i1 %i.f to i32
   br label %.critedge
 
@@ -1382,7 +1350,7 @@ _ZNK2OT30FeatureParamsCharacterVariants14get_charactersEjPjS1_.exit: ; preds = %
 define hidden void @_ZNK11hb_ot_map_t10substituteEPK18hb_ot_shape_plan_tP9hb_font_tP11hb_buffer_t(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 align 2 {
 bb.a:
   %4 = alloca %struct.GSUBProxy, align 8          ; 4 uses
-  %i.a = alloca [5 x i8], align 1                 ; 9 uses
+  %i.a = alloca [5 x i8], align 4                 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #59
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !264  ; 2 uses
@@ -1422,22 +1390,10 @@ _ZN9GSUBProxyC2EP9hb_face_t.exit:                 ; preds = %.lr.ph.i.i.i.i, %bb
   store ptr %.19.ph.i.i.i.i, ptr %4, align 8, !tbaa !2674
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #59
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 0, ptr %i.l, align 1
-  %i.m = load i32, ptr %0, align 8, !tbaa !324    ; 4 uses
-  %5 = lshr i32 %i.m, 24
-  %6 = trunc nuw i32 %5 to i8
-  store i8 %6, ptr %i.a, align 1, !tbaa !280
-  %7 = lshr i32 %i.m, 16
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %8, ptr %9, align 1, !tbaa !280
-  %10 = lshr i32 %i.m, 8
-  %11 = trunc i32 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %11, ptr %12, align 1, !tbaa !280
-  %13 = trunc i32 %i.m to i8
-  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %13, ptr %14, align 1, !tbaa !280
+  store i8 0, ptr %i.l, align 4
+  %i.m = load i32, ptr %0, align 8, !tbaa !324
+  %5 = tail call i32 @llvm.bswap.i32(i32 %i.m)
+  store i32 %5, ptr %i.a, align 4, !tbaa !280
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 232 ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !585
   %.not = icmp eq ptr %i.o, null
@@ -1840,7 +1796,7 @@ _ZN11hb_buffer_t13update_digestEv.exit:           ; preds = %._crit_edge.i.i.i, 
 define hidden void @_ZNK11hb_ot_map_t8positionEPK18hb_ot_shape_plan_tP9hb_font_tP11hb_buffer_t(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef %1, ptr noundef %2, ptr noundef %3) local_unnamed_addr #0 align 2 {
 bb.a:
   %4 = alloca %struct.GPOSProxy, align 8          ; 4 uses
-  %i.a = alloca [5 x i8], align 1                 ; 9 uses
+  %i.a = alloca [5 x i8], align 4                 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #59
   %i.b = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !264  ; 2 uses
@@ -1880,22 +1836,10 @@ _ZN9GPOSProxyC2EP9hb_face_t.exit:                 ; preds = %.lr.ph.i.i.i.i, %bb
   store ptr %.19.ph.i.i.i.i, ptr %4, align 8, !tbaa !2679
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #59
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 0, ptr %i.l, align 1
-  %i.m = load i32, ptr %0, align 8, !tbaa !324    ; 4 uses
-  %5 = lshr i32 %i.m, 24
-  %6 = trunc nuw i32 %5 to i8
-  store i8 %6, ptr %i.a, align 1, !tbaa !280
-  %7 = lshr i32 %i.m, 16
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %8, ptr %9, align 1, !tbaa !280
-  %10 = lshr i32 %i.m, 8
-  %11 = trunc i32 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %11, ptr %12, align 1, !tbaa !280
-  %13 = trunc i32 %i.m to i8
-  %14 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %13, ptr %14, align 1, !tbaa !280
+  store i8 0, ptr %i.l, align 4
+  %i.m = load i32, ptr %0, align 8, !tbaa !324
+  %5 = tail call i32 @llvm.bswap.i32(i32 %i.m)
+  store i32 %5, ptr %i.a, align 4, !tbaa !280
   %i.n = getelementptr inbounds nuw i8, ptr %3, i64 232 ; 2 uses
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !585
   %.not = icmp eq ptr %i.o, null

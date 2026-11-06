@@ -73,7 +73,7 @@ bb.a:
   %4 = alloca %class.CStringBase, align 8         ; 6 uses
   %5 = alloca %class.CStringBase, align 8         ; 6 uses
   %6 = alloca %class.CStringBase, align 8         ; 6 uses
-  %i.a = alloca [512 x i8], align 16              ; 26 uses
+  %i.a = alloca [512 x i8], align 16              ; 23 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #12
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(512) %i.a, i8 0, i64 512, i1 false), !tbaa !13
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -279,9 +279,8 @@ bb.o:                                             ; preds = %_ZN8NArchive4NTarL1
 thread-pre-split.i:                               ; preds = %bb.o
   store <4 x i8> <i8 -128, i8 0, i8 0, i8 0>, ptr %i.bh, align 4, !tbaa !13
   %i.bn = getelementptr inbounds nuw i8, ptr %i.a, i64 128
-  %7 = bitcast i64 %i.bj to <8 x i8>
-  %8 = shufflevector <8 x i8> %7, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %8, ptr %i.bn, align 16, !tbaa !13
+  %7 = call i64 @llvm.bswap.i64(i64 %i.bj)
+  store i64 %7, ptr %i.bn, align 16, !tbaa !13
   %.pr.i = load ptr, ptr %3, align 8, !tbaa !17
   br label %bb.q
 
@@ -317,7 +316,7 @@ _ZN8NArchive4NTarL17MakeOctalString12EPcy.exit:   ; preds = %bb.q, %bb.r
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #12
   %i.bw = getelementptr inbounds nuw i8, ptr %i.a, i64 136 ; 3 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %1, i64 36
-  %i.by = load i32, ptr %i.bx, align 4, !tbaa !41 ; 5 uses
+  %i.by = load i32, ptr %i.bx, align 4, !tbaa !41 ; 2 uses
   %i.bz = zext i32 %i.by to i64
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #12
   call fastcc void @_ZN8NArchive4NTarL15MakeOctalStringEy(ptr dead_on_unwind noalias writable align 8 %2, i64 noundef %i.bz)
@@ -329,22 +328,10 @@ _ZN8NArchive4NTarL17MakeOctalString12EPcy.exit:   ; preds = %bb.q, %bb.r
 thread-pre-split.i91:                             ; preds = %_ZN8NArchive4NTarL17MakeOctalString12EPcy.exit
   store i8 -128, ptr %i.bw, align 8, !tbaa !13
   %i.cd = getelementptr inbounds nuw i8, ptr %i.a, i64 137
-  %9 = lshr i32 %i.by, 24
-  %10 = trunc nuw i32 %9 to i8
   %i.ce = getelementptr inbounds nuw i8, ptr %i.a, i64 144
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(7) %i.cd, i8 0, i64 7, i1 false)
-  store i8 %10, ptr %i.ce, align 16, !tbaa !13
-  %11 = lshr i32 %i.by, 16
-  %12 = trunc i32 %11 to i8
-  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 145
-  store i8 %12, ptr %13, align 1, !tbaa !13
-  %14 = lshr i32 %i.by, 8
-  %15 = trunc i32 %14 to i8
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 146
-  store i8 %15, ptr %16, align 2, !tbaa !13
-  %17 = trunc i32 %i.by to i8
-  %18 = getelementptr inbounds nuw i8, ptr %i.a, i64 147
-  store i8 %17, ptr %18, align 1, !tbaa !13
+  %8 = call i32 @llvm.bswap.i32(i32 %i.by)
+  store i32 %8, ptr %i.ce, align 16, !tbaa !13
   %.pr.i92 = load ptr, ptr %2, align 8, !tbaa !17
   br label %bb.t
 
@@ -746,6 +733,12 @@ declare i32 @llvm.smax.i32(i32, i32) #10
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.vector.reduce.add.v4i32(<4 x i32>) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #10
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #11

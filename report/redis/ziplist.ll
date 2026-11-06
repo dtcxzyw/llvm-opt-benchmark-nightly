@@ -80,7 +80,7 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable
 define dso_local range(i32 1, 6) i32 @zipStoreEntryEncoding(ptr nofree noundef writeonly captures(address_is_null) %0, i8 noundef zeroext %1, i32 noundef %2) local_unnamed_addr #2 !guid !72 {
 bb.a:
-  %i.a = alloca [5 x i8], align 1                 ; 12 uses
+  %i.a = alloca [5 x i8], align 1                 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   %.not = icmp ugt i8 %1, -65
   br i1 %.not, label %bb.j, label %bb.b
@@ -121,21 +121,9 @@ bb.h:                                             ; preds = %bb.e
 
 bb.i:                                             ; preds = %bb.h
   store i8 -128, ptr %i.a, align 1, !tbaa !46
-  %3 = lshr i32 %2, 24
-  %4 = trunc nuw i32 %3 to i8
+  %3 = tail call i32 @llvm.bswap.i32(i32 %2)
   %.1..1..1..1..sroa_idx35 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %4, ptr %.1..1..1..1..sroa_idx35, align 1, !tbaa !46
-  %5 = lshr i32 %2, 16
-  %6 = trunc i32 %5 to i8
-  %.2..2..2..2..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %6, ptr %.2..2..2..2..sroa_idx, align 1, !tbaa !46
-  %7 = lshr i32 %2, 8
-  %8 = trunc i32 %7 to i8
-  %.3..3..3..3..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %8, ptr %.3..3..3..3..sroa_idx, align 1, !tbaa !46
-  %9 = trunc i32 %2 to i8
-  %.4..4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %9, ptr %.4..4..4..4..sroa_idx, align 1, !tbaa !46
+  store i32 %3, ptr %.1..1..1..1..sroa_idx35, align 1, !tbaa !46
   br label %bb.l
 
 bb.j:                                             ; preds = %bb.a
@@ -538,7 +526,7 @@ bb.u:                                             ; preds = %bb.s, %bb.t, %bb.e
 ; Function Attrs: nounwind uwtable
 define dso_local noundef ptr @__ziplistInsert(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #4 !guid !88 {
 bb.a:
-  %i.a = alloca [5 x i8], align 1                 ; 12 uses
+  %i.a = alloca [5 x i8], align 1                 ; 9 uses
   %i.b = alloca i64, align 8                      ; 6 uses
   %4 = alloca %struct.zlentry, align 8            ; 5 uses
   %5 = alloca %struct.zlentry, align 8            ; 5 uses
@@ -878,21 +866,9 @@ bb.al:                                            ; preds = %bb.ak
 
 bb.am:                                            ; preds = %bb.ak
   store i8 -128, ptr %i.a, align 1, !tbaa !46
-  %6 = lshr i32 %3, 24
-  %7 = trunc nuw i32 %6 to i8
+  %6 = call i32 @llvm.bswap.i32(i32 %3)
   %.1..1..1..1..1..1..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %7, ptr %.1..1..1..1..1..1..sroa_idx, align 1, !tbaa !46
-  %8 = lshr i32 %3, 16
-  %9 = trunc i32 %8 to i8
-  %.2..2..2..2..2..2..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %9, ptr %.2..2..2..2..2..2..sroa_idx, align 1, !tbaa !46
-  %10 = lshr i32 %3, 8
-  %11 = trunc i32 %10 to i8
-  %.3..3..3..3..3..3..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %11, ptr %.3..3..3..3..3..3..sroa_idx, align 1, !tbaa !46
-  %12 = trunc i32 %3 to i8
-  %.4..4..4..4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %12, ptr %.4..4..4..4..4..4..sroa_idx, align 1, !tbaa !46
+  store i32 %6, ptr %.1..1..1..1..1..1..sroa_idx, align 1, !tbaa !46
   br label %bb.an
 
 bb.an:                                            ; preds = %bb.aj, %bb.al, %bb.am
@@ -1295,7 +1271,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 ; Function Attrs: nounwind uwtable
 define dso_local noundef ptr @ziplistReplace(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3) local_unnamed_addr #4 !guid !100 {
 bb.a:
-  %i.a = alloca [5 x i8], align 1                 ; 12 uses
+  %i.a = alloca [5 x i8], align 1                 ; 9 uses
   %i.b = alloca i64, align 8                      ; 6 uses
   %4 = alloca %struct.zlentry, align 8            ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #18
@@ -1449,21 +1425,9 @@ bb.y:                                             ; preds = %bb.v
 
 bb.z:                                             ; preds = %bb.y
   store i8 -128, ptr %i.a, align 1, !tbaa !46
-  %5 = lshr i32 %3, 24
-  %6 = trunc nuw i32 %5 to i8
+  %5 = call i32 @llvm.bswap.i32(i32 %3)
   %.1..1..1..1..1..1..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %6, ptr %.1..1..1..1..1..1..sroa_idx, align 1, !tbaa !46
-  %7 = lshr i32 %3, 16
-  %8 = trunc i32 %7 to i8
-  %.2..2..2..2..2..2..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %8, ptr %.2..2..2..2..2..2..sroa_idx, align 1, !tbaa !46
-  %9 = lshr i32 %3, 8
-  %10 = trunc i32 %9 to i8
-  %.3..3..3..3..3..3..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %10, ptr %.3..3..3..3..3..3..sroa_idx, align 1, !tbaa !46
-  %11 = trunc i32 %3 to i8
-  %.4..4..4..4..4..4..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %11, ptr %.4..4..4..4..4..4..sroa_idx, align 1, !tbaa !46
+  store i32 %5, ptr %.1..1..1..1..1..1..sroa_idx, align 1, !tbaa !46
   br label %zipStoreEntryEncoding.exit21.thread65
 
 bb.aa:                                            ; preds = %bb.r

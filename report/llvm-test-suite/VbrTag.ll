@@ -75,20 +75,8 @@ declare noalias noundef ptr @realloc(ptr allocptr noundef captures(none), i64 no
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable
 define dso_local void @CreateI4(ptr nofree noundef writeonly captures(none) initializes((0, 4)) %0, i32 noundef %1) local_unnamed_addr #3 !guid !28 {
 bb.a:
-  %2 = lshr i32 %1, 24
-  %3 = trunc nuw i32 %2 to i8
-  store i8 %3, ptr %0, align 1, !tbaa !24
-  %4 = lshr i32 %1, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %5, ptr %6, align 1, !tbaa !24
-  %7 = lshr i32 %1, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i8 %8, ptr %9, align 1, !tbaa !24
-  %10 = trunc i32 %1 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  store i8 %10, ptr %11, align 1, !tbaa !24
+  %2 = tail call i32 @llvm.bswap.i32(i32 %1)
+  store i32 %2, ptr %0, align 1, !tbaa !24
   ret void
 }
 
@@ -483,7 +471,7 @@ vector.ph:                                        ; preds = %bb.c
   store i8 %i.s, ptr getelementptr inbounds nuw (i8, ptr @pbtStreamBuffer, i64 2), align 2, !tbaa !24
   %i.t = tail call i32 @fseek(ptr noundef nonnull %i.g, i64 noundef 0, i32 noundef 0) ; 0 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(100) %i.a, i8 0, i64 100, i1 false)
-  %i.u = load i32, ptr @nVbrNumFrames, align 4, !tbaa !7 ; 5 uses
+  %i.u = load i32, ptr @nVbrNumFrames, align 4, !tbaa !7 ; 2 uses
   %i.v = sitofp i32 %i.u to double                ; 7 uses
   %i.w = load ptr, ptr @pVbrFrames, align 8, !tbaa !23 ; 7 uses
   %i.x = sitofp i64 %i.j to float                 ; 4 uses
@@ -591,57 +579,33 @@ scalar.ph:                                        ; preds = %vector.body
   store i8 %i.dd, ptr %i.de, align 1, !tbaa !24
   %i.df = load i32, ptr @nZeroStreamSize, align 4, !tbaa !7 ; 3 uses
   %i.dg = sext i32 %i.df to i64
-  %3 = getelementptr i8, ptr @pbtStreamBuffer, i64 %i.dg ; 10 uses
-  store <8 x i8> <i8 88, i8 105, i8 110, i8 103, i8 0, i8 0, i8 0, i8 15>, ptr %3, align 1, !tbaa !24
-  %4 = getelementptr i8, ptr %3, i64 8
-  %5 = lshr i32 %i.u, 24
-  %6 = trunc nuw i32 %5 to i8
-  store i8 %6, ptr %4, align 1, !tbaa !24
-  %7 = lshr i32 %i.u, 16
-  %8 = trunc i32 %7 to i8
-  %i.dh = getelementptr i8, ptr %3, i64 9
-  store i8 %8, ptr %i.dh, align 1, !tbaa !24
-  %9 = lshr i32 %i.u, 8
-  %10 = trunc i32 %9 to i8
-  %i.di = getelementptr i8, ptr %3, i64 10
-  store i8 %10, ptr %i.di, align 1, !tbaa !24
-  %11 = trunc i32 %i.u to i8
-  %12 = getelementptr i8, ptr %3, i64 11
-  store i8 %11, ptr %12, align 1, !tbaa !24
-  %i.dj = getelementptr i8, ptr %3, i64 12
+  %i.dh = getelementptr i8, ptr @pbtStreamBuffer, i64 %i.dg ; 7 uses
+  store <8 x i8> <i8 88, i8 105, i8 110, i8 103, i8 0, i8 0, i8 0, i8 15>, ptr %i.dh, align 1, !tbaa !24
+  %i.di = getelementptr i8, ptr %i.dh, i64 8
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.u)
+  store i32 %3, ptr %i.di, align 1, !tbaa !24
+  %i.dj = getelementptr i8, ptr %i.dh, i64 12
   %i.dk = lshr i64 %i.j, 24
   %i.dl = trunc i64 %i.dk to i8
   store i8 %i.dl, ptr %i.dj, align 1, !tbaa !24
   %i.dm = lshr i64 %i.j, 16
   %i.dn = trunc i64 %i.dm to i8
-  %i.do = getelementptr i8, ptr %3, i64 13
+  %i.do = getelementptr i8, ptr %i.dh, i64 13
   store i8 %i.dn, ptr %i.do, align 1, !tbaa !24
   %i.dp = lshr i64 %i.j, 8
   %i.dq = trunc i64 %i.dp to i8
-  %i.dr = getelementptr i8, ptr %3, i64 14
+  %i.dr = getelementptr i8, ptr %i.dh, i64 14
   store i8 %i.dq, ptr %i.dr, align 1, !tbaa !24
   %i.ds = trunc i64 %i.j to i8
-  %i.dt = getelementptr i8, ptr %3, i64 15
+  %i.dt = getelementptr i8, ptr %i.dh, i64 15
   store i8 %i.ds, ptr %i.dt, align 1, !tbaa !24
-  %i.du = getelementptr i8, ptr %3, i64 16
+  %i.du = getelementptr i8, ptr %i.dh, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(100) %i.du, ptr noundef nonnull align 16 dereferenceable(100) %i.a, i64 100, i1 false)
   %i.dv = add i32 %i.df, 116
   %i.dw = sext i32 %i.dv to i64
-  %13 = getelementptr inbounds i8, ptr @pbtStreamBuffer, i64 %i.dw ; 4 uses
-  %14 = lshr i32 %1, 24
-  %15 = trunc nuw i32 %14 to i8
-  store i8 %15, ptr %13, align 1, !tbaa !24
-  %16 = lshr i32 %1, 16
-  %17 = trunc i32 %16 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %13, i64 1
-  store i8 %17, ptr %18, align 1, !tbaa !24
-  %19 = lshr i32 %1, 8
-  %20 = trunc i32 %19 to i8
-  %i.dx = getelementptr inbounds nuw i8, ptr %13, i64 2
-  store i8 %20, ptr %i.dx, align 1, !tbaa !24
-  %21 = trunc i32 %1 to i8
-  %22 = getelementptr inbounds nuw i8, ptr %13, i64 3
-  store i8 %21, ptr %22, align 1, !tbaa !24
+  %i.dx = getelementptr inbounds i8, ptr @pbtStreamBuffer, i64 %i.dw
+  %4 = tail call i32 @llvm.bswap.i32(i32 %1)
+  store i32 %4, ptr %i.dx, align 1, !tbaa !24
   %i.dy = add i32 %i.df, 120
   %i.dz = tail call ptr @get_lame_version() #19
   %i.ea = call i32 (ptr, ptr, ...) @sprintf(ptr noundef nonnull dereferenceable(1) %i.b, ptr noundef nonnull dereferenceable(1) @.str.3, ptr noundef %i.dz) #19 ; 0 uses
@@ -743,6 +707,9 @@ declare float @llvm.fmuladd.f32(float, float, float) #12
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umin.i32(i32, i32) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #12
 
 attributes #0 = { mustprogress nounwind willreturn memory(readwrite, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree nounwind willreturn allockind("alloc,uninitialized") allocsize(0) memory(inaccessiblemem: readwrite, errnomem: write) "alloc-family"="malloc" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

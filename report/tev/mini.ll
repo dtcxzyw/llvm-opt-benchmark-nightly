@@ -205,7 +205,7 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEED2Ev.exit39: ; pr
   br label %common.resume
 
 _ZNSt3__16vectorIhNS_9allocatorIhEEEC2Em.exit:    ; preds = %bb.f
-  %i.an = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.w) #27 ; 13 uses
+  %i.an = tail call noalias noundef nonnull ptr @_Znwm(i64 noundef %i.w) #27 ; 10 uses
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.an, i8 0, i64 %i.w, i1 false), !tbaa !44
   %i.ao = lshr i64 %i.w, 24
   %i.ap = trunc nuw nsw i64 %i.ao to i8
@@ -219,23 +219,11 @@ _ZNSt3__16vectorIhNS_9allocatorIhEEEC2Em.exit:    ; preds = %bb.f
   %i.av = getelementptr inbounds nuw i8, ptr %i.an, i64 2
   store i8 %i.au, ptr %i.av, align 1, !tbaa !44
   %i.aw = trunc i64 %i.w to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.an, i64 3
-  store i8 %i.aw, ptr %9, align 1, !tbaa !44
-  %10 = lshr i32 %2, 24
-  %11 = trunc nuw i32 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.an, i64 4
-  store i8 %11, ptr %12, align 1, !tbaa !44
-  %13 = lshr i32 %2, 16
-  %14 = trunc i32 %13 to i8
-  %i.ax = getelementptr inbounds nuw i8, ptr %i.an, i64 5
-  store i8 %14, ptr %i.ax, align 1, !tbaa !44
-  %15 = lshr i32 %2, 8
-  %16 = trunc i32 %15 to i8
-  %i.ay = getelementptr inbounds nuw i8, ptr %i.an, i64 6
-  store i8 %16, ptr %i.ay, align 1, !tbaa !44
-  %17 = trunc i32 %2 to i8
-  %18 = getelementptr inbounds nuw i8, ptr %i.an, i64 7
-  store i8 %17, ptr %18, align 1, !tbaa !44
+  %i.ax = getelementptr inbounds nuw i8, ptr %i.an, i64 3
+  store i8 %i.aw, ptr %i.ax, align 1, !tbaa !44
+  %i.ay = getelementptr inbounds nuw i8, ptr %i.an, i64 4
+  %9 = tail call i32 @llvm.bswap.i32(i32 %2)
+  store i32 %9, ptr %i.ay, align 1, !tbaa !44
   %i.az = load ptr, ptr %1, align 8, !tbaa !49    ; 3 uses
   %i.ba = load ptr, ptr %i.a, align 8, !tbaa !51  ; 2 uses
   %.not.i.i.i.i.i.i.i = icmp eq ptr %i.ba, %i.az
@@ -637,6 +625,9 @@ declare i64 @llvm.umax.i64(i64, i64) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #19
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #19
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

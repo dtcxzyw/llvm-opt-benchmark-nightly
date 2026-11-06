@@ -205,7 +205,7 @@ bb.ak:                                            ; preds = %_ZN12_GLOBAL__N_120
 ; Function Attrs: mustprogress nounwind uwtable
 define internal void @_ZN12_GLOBAL__N_120ARMTargetELFStreamer8emitInstEjc(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(64) %0, i32 noundef %1, i8 noundef signext %2) unnamed_addr #0 align 2 {
 bb.a:
-  %i.a = alloca [4 x i8], align 4                 ; 20 uses
+  %i.a = alloca [4 x i8], align 4                 ; 17 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
   %.val = load ptr, ptr %i.b, align 8, !tbaa !225 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #22
@@ -224,20 +224,8 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %.split41.us.preheader.i, label %.split41.preheader.i
 
 .split41.preheader.i:                             ; preds = %bb.b
-  %3 = trunc i32 %1 to i8
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %3, ptr %4, align 1, !tbaa !207
-  %5 = lshr i32 %1, 8
-  %6 = trunc i32 %5 to i8
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %6, ptr %7, align 2, !tbaa !207
-  %8 = lshr i32 %1, 16
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %9, ptr %10, align 1, !tbaa !207
-  %11 = lshr i32 %1, 24
-  %12 = trunc nuw i32 %11 to i8
-  store i8 %12, ptr %i.a, align 4, !tbaa !207
+  %3 = tail call i32 @llvm.bswap.i32(i32 %1)
+  store i32 %3, ptr %i.a, align 4, !tbaa !207
   br label %_ZN12_GLOBAL__N_114ARMELFStreamer8emitInstEjc.exit
 
 .split41.us.preheader.i:                          ; preds = %bb.b
@@ -639,6 +627,9 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #20
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #20
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nobuiltin allocsize(0) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

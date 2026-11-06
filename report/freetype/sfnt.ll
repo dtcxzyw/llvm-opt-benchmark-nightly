@@ -205,7 +205,7 @@ bb.g:                                             ; preds = %.lr.ph, %bb.f
   %i.bf = getelementptr inbounds nuw [8 x i8], ptr %2, i64 %indvars.iv
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !153 ; 6 uses
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bg, i64 4
-  %.sroa.3.0.copyload = load i32, ptr %.sroa.3.0..sroa_idx, align 4, !tbaa !30 ; 8 uses
+  %.sroa.3.0.copyload = load i32, ptr %.sroa.3.0..sroa_idx, align 4, !tbaa !30 ; 5 uses
   %.sroa.12.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bg, i64 8
   %.sroa.12.0.copyload = load i64, ptr %.sroa.12.0..sroa_idx, align 8, !tbaa !121 ; 6 uses
   %.sroa.1713.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bg, i64 24
@@ -608,13 +608,6 @@ bb.dz:                                            ; preds = %reconstruct_glyf.ex
   %.1 = phi i8 [ %.0124433, %write_buf.exit ], [ 1, %reconstruct_glyf.exit ], [ %.0124433, %bb.cr ], [ %.0124433, %reconstruct_hmtx.exit ]
   %.sroa.27.0 = phi i64 [ %.0257428, %write_buf.exit ], [ %.0257428, %reconstruct_glyf.exit ], [ %.sroa.27.0.copyload, %bb.cr ], [ %.0257428, %reconstruct_hmtx.exit ] ; 6 uses
   %i.yy = add i64 %.0253, %.0125432
-  %8 = lshr i32 %.sroa.3.0.copyload, 24
-  %9 = trunc nuw i32 %8 to i8
-  %10 = lshr i32 %.sroa.3.0.copyload, 16
-  %11 = trunc i32 %10 to i8
-  %12 = lshr i32 %.sroa.3.0.copyload, 8
-  %13 = trunc i32 %12 to i8
-  %14 = trunc i32 %.sroa.3.0.copyload to i8
   %i.yz = lshr i64 %.0253, 24
   %i.za = trunc i64 %i.yz to i8
   %i.zb = lshr i64 %.0253, 16
@@ -659,37 +652,32 @@ bb.ec:                                            ; preds = %bb.eb
 
 bb.ed:                                            ; preds = %bb.ec, %bb.ea
   %.0.i183 = phi ptr [ %i.zy, %bb.ec ], [ %.1265, %bb.ea ] ; 2 uses
-  %15 = getelementptr inbounds nuw i8, ptr %.0.i183, i64 %.0247430 ; 16 uses
-  store i8 %9, ptr %15, align 1
-  %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 1
-  store i8 %11, ptr %.sroa.5.0..sroa_idx, align 1
-  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 2
-  store i8 %13, ptr %.sroa.7.0..sroa_idx, align 1
-  %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 3
-  store i8 %14, ptr %.sroa.9.0..sroa_idx, align 1
-  %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 4
+  %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.0.i183, i64 %.0247430 ; 13 uses
+  %8 = call i32 @llvm.bswap.i32(i32 %.sroa.3.0.copyload)
+  store i32 %8, ptr %.sroa.7.0..sroa_idx, align 1
+  %.sroa.11.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.7.0..sroa_idx, i64 4
   store i8 %i.za, ptr %.sroa.11.0..sroa_idx, align 1
-  %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 5
+  %.sroa.13.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.7.0..sroa_idx, i64 5
   store i8 %i.zc, ptr %.sroa.13.0..sroa_idx, align 1
-  %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 6
+  %.sroa.15.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.7.0..sroa_idx, i64 6
   store i8 %i.ze, ptr %.sroa.15.0..sroa_idx, align 1
-  %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 7
+  %.sroa.17.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.7.0..sroa_idx, i64 7
   store i8 %i.zf, ptr %.sroa.17.0..sroa_idx, align 1
-  %.sroa.19.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 8
+  %.sroa.19.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.7.0..sroa_idx, i64 8
   store i8 %i.zh, ptr %.sroa.19.0..sroa_idx, align 1
-  %.sroa.21.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 9
+  %.sroa.21.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.7.0..sroa_idx, i64 9
   store i8 %i.zj, ptr %.sroa.21.0..sroa_idx, align 1
-  %.sroa.23.0..sroa_idx515 = getelementptr inbounds nuw i8, ptr %15, i64 10
+  %.sroa.23.0..sroa_idx515 = getelementptr inbounds nuw i8, ptr %.sroa.7.0..sroa_idx, i64 10
   store i8 %i.zl, ptr %.sroa.23.0..sroa_idx515, align 1
-  %.sroa.25.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 11
+  %.sroa.25.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.7.0..sroa_idx, i64 11
   store i8 %i.zm, ptr %.sroa.25.0..sroa_idx, align 1
-  %.sroa.27.0..sroa_idx517 = getelementptr inbounds nuw i8, ptr %15, i64 12
+  %.sroa.27.0..sroa_idx517 = getelementptr inbounds nuw i8, ptr %.sroa.7.0..sroa_idx, i64 12
   store i8 %i.zo, ptr %.sroa.27.0..sroa_idx517, align 1
-  %.sroa.29.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 13
+  %.sroa.29.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.7.0..sroa_idx, i64 13
   store i8 %i.zq, ptr %.sroa.29.0..sroa_idx, align 1
-  %.sroa.31.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 14
+  %.sroa.31.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.7.0..sroa_idx, i64 14
   store i8 %i.zs, ptr %.sroa.31.0..sroa_idx, align 1
-  %.sroa.33.0..sroa_idx = getelementptr inbounds nuw i8, ptr %15, i64 15
+  %.sroa.33.0..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.7.0..sroa_idx, i64 15
   store i8 %i.zt, ptr %.sroa.33.0..sroa_idx, align 1
   br label %write_buf.exit188
 

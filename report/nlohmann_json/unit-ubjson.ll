@@ -205,7 +205,7 @@ bb.hl:                                            ; preds = %bb.hk
   call void @llvm.lifetime.end.p0(ptr nonnull %78) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %77) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %80) #31
-  %2159 = load <8 x i8>, ptr %i.e, align 8, !tbaa !105
+  %2159 = load i64, ptr %i.e, align 8, !tbaa !105
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %80, i8 0, i64 24, i1 false)
   %i.ma = invoke noalias noundef nonnull dereferenceable(9) ptr @_Znwm(i64 noundef 9) #34
           to label %bb.hm unwind label %_ZNSt12_Vector_baseIhSaIhEED2Ev.exit.i6484 ; 4 uses
@@ -221,8 +221,8 @@ bb.hm:                                            ; preds = %bb.hl
   store ptr %i.mc, ptr %i.kv, align 8, !tbaa !96
   store i8 76, ptr %i.ma, align 1
   %.sroa.512090.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ma, i64 1
-  %2160 = shufflevector <8 x i8> %2159, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %2160, ptr %.sroa.512090.0..sroa_idx, align 1
+  %2160 = call i64 @llvm.bswap.i64(i64 %2159)
+  store i64 %2160, ptr %.sroa.512090.0..sroa_idx, align 1
   store ptr %i.mc, ptr %i.kw, align 8, !tbaa !97
   call void @llvm.lifetime.start.p0(ptr nonnull %81) #31
   invoke void @_ZN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvE9to_ubjsonERKSD_bb(ptr dead_on_unwind nonnull writable sret(%"class.std::vector") align 8 %81, ptr noundef nonnull align 8 dereferenceable(16) %76, i1 noundef zeroext false, i1 noundef zeroext false)
@@ -625,10 +625,10 @@ bb.ku:                                            ; preds = %bb.kt
   call void @llvm.lifetime.end.p0(ptr nonnull %107) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %106) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %109) #31
-  %i.rt = load i32, ptr %i.i, align 4, !tbaa !108 ; 4 uses
+  %i.rt = load i32, ptr %i.i, align 4, !tbaa !108
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %109, i8 0, i64 24, i1 false)
   %i.ru = invoke noalias noundef nonnull dereferenceable(5) ptr @_Znwm(i64 noundef 5) #34
-          to label %bb.kv unwind label %_ZNSt12_Vector_baseIhSaIhEED2Ev.exit.i6584 ; 7 uses
+          to label %bb.kv unwind label %_ZNSt12_Vector_baseIhSaIhEED2Ev.exit.i6584 ; 4 uses
 
 _ZNSt12_Vector_baseIhSaIhEED2Ev.exit.i6584:       ; preds = %bb.ku
   %i.rv = landingpad { ptr, i32 }
@@ -636,25 +636,13 @@ _ZNSt12_Vector_baseIhSaIhEED2Ev.exit.i6584:       ; preds = %bb.ku
   br label %.body6585
 
 bb.kv:                                            ; preds = %bb.ku
-  %2161 = trunc i32 %i.rt to i8
-  %2162 = lshr i32 %i.rt, 8
-  %2163 = trunc i32 %2162 to i8
-  %2164 = lshr i32 %i.rt, 16
-  %2165 = trunc i32 %2164 to i8
-  %2166 = lshr i32 %i.rt, 24
-  %2167 = trunc nuw i32 %2166 to i8
   store ptr %i.ru, ptr %109, align 8, !tbaa !94
   %i.rw = getelementptr inbounds nuw i8, ptr %i.ru, i64 5 ; 2 uses
   store ptr %i.rw, ptr %i.qq, align 8, !tbaa !96
   store i8 108, ptr %i.ru, align 1
   %.sroa.512040.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ru, i64 1
-  store i8 %2167, ptr %.sroa.512040.0..sroa_idx, align 1
-  %.sroa.612041.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ru, i64 2
-  store i8 %2165, ptr %.sroa.612041.0..sroa_idx, align 1
-  %.sroa.712042.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ru, i64 3
-  store i8 %2163, ptr %.sroa.712042.0..sroa_idx, align 1
-  %.sroa.812043.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ru, i64 4
-  store i8 %2161, ptr %.sroa.812043.0..sroa_idx, align 1
+  %2161 = call i32 @llvm.bswap.i32(i32 %i.rt)
+  store i32 %2161, ptr %.sroa.512040.0..sroa_idx, align 1
   store ptr %i.rw, ptr %i.qr, align 8, !tbaa !97
   call void @llvm.lifetime.start.p0(ptr nonnull %110) #31
   invoke void @_ZN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvE9to_ubjsonERKSD_bb(ptr dead_on_unwind nonnull writable sret(%"class.std::vector") align 8 %110, ptr noundef nonnull align 8 dereferenceable(16) %105, i1 noundef zeroext false, i1 noundef zeroext false)
@@ -1057,10 +1045,10 @@ bb.ahy:                                           ; preds = %bb.ahx
   call void @llvm.lifetime.end.p0(ptr nonnull %306) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %305) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %308) #31
-  %i.auc = load i32, ptr %i.ai, align 4, !tbaa !108 ; 4 uses
+  %i.auc = load i32, ptr %i.ai, align 4, !tbaa !108
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %308, i8 0, i64 24, i1 false)
   %i.aud = invoke noalias noundef nonnull dereferenceable(5) ptr @_Znwm(i64 noundef 5) #34
-          to label %bb.ahz unwind label %_ZNSt12_Vector_baseIhSaIhEED2Ev.exit.i6841 ; 7 uses
+          to label %bb.ahz unwind label %_ZNSt12_Vector_baseIhSaIhEED2Ev.exit.i6841 ; 4 uses
 
 _ZNSt12_Vector_baseIhSaIhEED2Ev.exit.i6841:       ; preds = %bb.ahy
   %i.aue = landingpad { ptr, i32 }
@@ -1068,25 +1056,13 @@ _ZNSt12_Vector_baseIhSaIhEED2Ev.exit.i6841:       ; preds = %bb.ahy
   br label %.body6842
 
 bb.ahz:                                           ; preds = %bb.ahy
-  %2168 = trunc i32 %i.auc to i8
-  %2169 = lshr i32 %i.auc, 8
-  %2170 = trunc i32 %2169 to i8
-  %2171 = lshr i32 %i.auc, 16
-  %2172 = trunc i32 %2171 to i8
-  %2173 = lshr i32 %i.auc, 24
-  %2174 = trunc nuw i32 %2173 to i8
   store ptr %i.aud, ptr %308, align 8, !tbaa !94
   %i.auf = getelementptr inbounds nuw i8, ptr %i.aud, i64 5 ; 2 uses
   store ptr %i.auf, ptr %i.atb, align 8, !tbaa !96
   store i8 108, ptr %i.aud, align 1
   %.sroa.511985.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aud, i64 1
-  store i8 %2174, ptr %.sroa.511985.0..sroa_idx, align 1
-  %.sroa.611986.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aud, i64 2
-  store i8 %2172, ptr %.sroa.611986.0..sroa_idx, align 1
-  %.sroa.711987.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aud, i64 3
-  store i8 %2170, ptr %.sroa.711987.0..sroa_idx, align 1
-  %.sroa.811988.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aud, i64 4
-  store i8 %2168, ptr %.sroa.811988.0..sroa_idx, align 1
+  %2162 = call i32 @llvm.bswap.i32(i32 %i.auc)
+  store i32 %2162, ptr %.sroa.511985.0..sroa_idx, align 1
   store ptr %i.auf, ptr %i.atc, align 8, !tbaa !97
   call void @llvm.lifetime.start.p0(ptr nonnull %309) #31
   invoke void @_ZN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvE9to_ubjsonERKSD_bb(ptr dead_on_unwind nonnull writable sret(%"class.std::vector") align 8 %309, ptr noundef nonnull align 8 dereferenceable(16) %304, i1 noundef zeroext false, i1 noundef zeroext false)
@@ -1489,7 +1465,7 @@ bb.alj:                                           ; preds = %bb.ali
   call void @llvm.lifetime.end.p0(ptr nonnull %335) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %334) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %337) #31
-  %2175 = load <8 x i8>, ptr %i.am, align 8, !tbaa !105
+  %2163 = load i64, ptr %i.am, align 8, !tbaa !105
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %337, i8 0, i64 24, i1 false)
   %i.ayc = invoke noalias noundef nonnull dereferenceable(9) ptr @_Znwm(i64 noundef 9) #34
           to label %bb.alk unwind label %_ZNSt12_Vector_baseIhSaIhEED2Ev.exit.i6881 ; 4 uses
@@ -1505,8 +1481,8 @@ bb.alk:                                           ; preds = %bb.alj
   store ptr %i.aye, ptr %i.axc, align 8, !tbaa !96
   store i8 76, ptr %i.ayc, align 1
   %.sroa.511959.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ayc, i64 1
-  %2176 = shufflevector <8 x i8> %2175, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %2176, ptr %.sroa.511959.0..sroa_idx, align 1
+  %2164 = call i64 @llvm.bswap.i64(i64 %2163)
+  store i64 %2164, ptr %.sroa.511959.0..sroa_idx, align 1
   store ptr %i.aye, ptr %i.axd, align 8, !tbaa !97
   call void @llvm.lifetime.start.p0(ptr nonnull %338) #31
   invoke void @_ZN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvE9to_ubjsonERKSD_bb(ptr dead_on_unwind nonnull writable sret(%"class.std::vector") align 8 %338, ptr noundef nonnull align 8 dereferenceable(16) %333, i1 noundef zeroext false, i1 noundef zeroext false)
@@ -1909,10 +1885,10 @@ bb.azh:                                           ; preds = %bb.azg
   call void @llvm.lifetime.end.p0(ptr nonnull %453) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %452) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %455) #31
-  %i.bpu = load i32, ptr %i.bd, align 4, !tbaa !108 ; 4 uses
+  %i.bpu = load i32, ptr %i.bd, align 4, !tbaa !108
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %455, i8 0, i64 24, i1 false)
   %i.bpv = invoke noalias noundef nonnull dereferenceable(5) ptr @_Znwm(i64 noundef 5) #34
-          to label %bb.azi unwind label %_ZNSt12_Vector_baseIhSaIhEED2Ev.exit.i7023 ; 7 uses
+          to label %bb.azi unwind label %_ZNSt12_Vector_baseIhSaIhEED2Ev.exit.i7023 ; 4 uses
 
 _ZNSt12_Vector_baseIhSaIhEED2Ev.exit.i7023:       ; preds = %bb.azh
   %i.bpw = landingpad { ptr, i32 }
@@ -1920,25 +1896,13 @@ _ZNSt12_Vector_baseIhSaIhEED2Ev.exit.i7023:       ; preds = %bb.azh
   br label %.body7024
 
 bb.azi:                                           ; preds = %bb.azh
-  %2177 = trunc i32 %i.bpu to i8
-  %2178 = lshr i32 %i.bpu, 8
-  %2179 = trunc i32 %2178 to i8
-  %2180 = lshr i32 %i.bpu, 16
-  %2181 = trunc i32 %2180 to i8
-  %2182 = lshr i32 %i.bpu, 24
-  %2183 = trunc nuw i32 %2182 to i8
   store ptr %i.bpv, ptr %455, align 8, !tbaa !94
   %i.bpx = getelementptr inbounds nuw i8, ptr %i.bpv, i64 5 ; 2 uses
   store ptr %i.bpx, ptr %i.bou, align 8, !tbaa !96
   store i8 108, ptr %i.bpv, align 1
   %.sroa.511928.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bpv, i64 1
-  store i8 %2183, ptr %.sroa.511928.0..sroa_idx, align 1
-  %.sroa.611929.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bpv, i64 2
-  store i8 %2181, ptr %.sroa.611929.0..sroa_idx, align 1
-  %.sroa.711930.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bpv, i64 3
-  store i8 %2179, ptr %.sroa.711930.0..sroa_idx, align 1
-  %.sroa.811931.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bpv, i64 4
-  store i8 %2177, ptr %.sroa.811931.0..sroa_idx, align 1
+  %2165 = call i32 @llvm.bswap.i32(i32 %i.bpu)
+  store i32 %2165, ptr %.sroa.511928.0..sroa_idx, align 1
   store ptr %i.bpx, ptr %i.bov, align 8, !tbaa !97
   call void @llvm.lifetime.start.p0(ptr nonnull %456) #31
   invoke void @_ZN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvE9to_ubjsonERKSD_bb(ptr dead_on_unwind nonnull writable sret(%"class.std::vector") align 8 %456, ptr noundef nonnull align 8 dereferenceable(16) %451, i1 noundef zeroext false, i1 noundef zeroext false)
@@ -2341,7 +2305,7 @@ bb.bcr:                                           ; preds = %bb.bcq
   call void @llvm.lifetime.end.p0(ptr nonnull %482) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %481) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %484) #31
-  %2184 = load <8 x i8>, ptr %i.bh, align 8, !tbaa !105
+  %2166 = load i64, ptr %i.bh, align 8, !tbaa !105
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %484, i8 0, i64 24, i1 false)
   %i.bts = invoke noalias noundef nonnull dereferenceable(9) ptr @_Znwm(i64 noundef 9) #34
           to label %bb.bcs unwind label %_ZNSt12_Vector_baseIhSaIhEED2Ev.exit.i7062 ; 4 uses
@@ -2357,8 +2321,8 @@ bb.bcs:                                           ; preds = %bb.bcr
   store ptr %i.btu, ptr %i.bst, align 8, !tbaa !96
   store i8 76, ptr %i.bts, align 1
   %.sroa.511903.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.bts, i64 1
-  %2185 = shufflevector <8 x i8> %2184, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %2185, ptr %.sroa.511903.0..sroa_idx, align 1
+  %2167 = call i64 @llvm.bswap.i64(i64 %2166)
+  store i64 %2167, ptr %.sroa.511903.0..sroa_idx, align 1
   store ptr %i.btu, ptr %i.bsu, align 8, !tbaa !97
   call void @llvm.lifetime.start.p0(ptr nonnull %485) #31
   invoke void @_ZN8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvE9to_ubjsonERKSD_bb(ptr dead_on_unwind nonnull writable sret(%"class.std::vector") align 8 %485, ptr noundef nonnull align 8 dereferenceable(16) %480, i1 noundef zeroext false, i1 noundef zeroext false)
@@ -2761,9 +2725,9 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %.not.i.i, label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE31write_number_with_ubjson_prefixIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEEvSJ_bb.exit, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.j
-  %20 = bitcast double %i.x to <8 x i8>
-  %21 = shufflevector <8 x i8> %20, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %21, ptr %8, align 8, !tbaa !89
+  %20 = bitcast double %i.x to i64
+  %21 = tail call i64 @llvm.bswap.i64(i64 %20)
+  store i64 %21, ptr %8, align 8, !tbaa !89
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE31write_number_with_ubjson_prefixIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEEvSJ_bb.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE31write_number_with_ubjson_prefixIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEEvSJ_bb.exit: ; preds = %bb.j, %.lr.ph.i.i.i.i
@@ -3166,9 +3130,8 @@ bb.z:                                             ; preds = %bb.y, %.thread106.t
   br i1 %.not.i60, label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIlEEvT_b.exit, label %.lr.ph.i.i.i61
 
 .lr.ph.i.i.i61:                                   ; preds = %bb.z
-  %11 = bitcast i64 %1 to <8 x i8>
-  %12 = shufflevector <8 x i8> %11, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %12, ptr %4, align 8, !tbaa !89
+  %11 = tail call i64 @llvm.bswap.i64(i64 %1)
+  store i64 %11, ptr %4, align 8, !tbaa !89
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIlEEvT_b.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIlEEvT_b.exit: ; preds = %bb.z, %.lr.ph.i.i.i61
@@ -3571,7 +3534,7 @@ _ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N
 define linkonce_odr dso_local noundef zeroext i1 @_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE20write_bjdata_ndarrayERKS4_ISB_SF_St4lessISB_ESaISt4pairIKSB_SF_EEEbbNS1_16bjdata_version_tE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(48) %1, i1 noundef zeroext %2, i1 noundef zeroext %3, i32 noundef %4) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 ._crit_edge.i.i.i:
   %5 = alloca %"struct.std::array.173", align 8   ; 5 uses
-  %6 = alloca %"struct.std::array.172", align 4   ; 8 uses
+  %6 = alloca %"struct.std::array.172", align 4   ; 5 uses
   %7 = alloca %"struct.std::array.173", align 8   ; 5 uses
   %8 = alloca %"struct.std::array.173", align 8   ; 5 uses
   %9 = alloca %"struct.std::array.172", align 4   ; 8 uses
@@ -3974,9 +3937,8 @@ bb.de:                                            ; preds = %bb.dd
   br i1 %.not.i328.not, label %.lr.ph.i.i.i329, label %_ZSt7reverseIPhEvT_S1_.exit.i332
 
 .lr.ph.i.i.i329:                                  ; preds = %bb.de
-  %42 = bitcast i64 %i.wt to <8 x i8>
-  %43 = shufflevector <8 x i8> %42, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %43, ptr %8, align 8, !tbaa !89
+  %42 = call i64 @llvm.bswap.i64(i64 %i.wt)
+  store i64 %42, ptr %8, align 8, !tbaa !89
   br label %_ZSt7reverseIPhEvT_S1_.exit.i332
 
 _ZSt7reverseIPhEvT_S1_.exit.i332:                 ; preds = %.lr.ph.i.i.i329, %bb.de
@@ -4133,9 +4095,8 @@ bb.dp:                                            ; preds = %bb.do
   br i1 %.not.i341.not, label %.lr.ph.i.i.i342, label %_ZSt7reverseIPhEvT_S1_.exit.i347
 
 .lr.ph.i.i.i342:                                  ; preds = %bb.dp
-  %44 = bitcast i64 %i.ym to <8 x i8>
-  %45 = shufflevector <8 x i8> %44, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %45, ptr %7, align 8, !tbaa !89
+  %43 = call i64 @llvm.bswap.i64(i64 %i.ym)
+  store i64 %43, ptr %7, align 8, !tbaa !89
   br label %_ZSt7reverseIPhEvT_S1_.exit.i347
 
 _ZSt7reverseIPhEvT_S1_.exit.i347:                 ; preds = %.lr.ph.i.i.i342, %bb.dp
@@ -4263,9 +4224,6 @@ bb.dw:                                            ; preds = %_ZNK8nlohmann16json
   br label %_ZNK8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvE3endEv.exit353
 
 _ZNK8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvE3endEv.exit353: ; preds = %_ZNK8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvE5beginEv.exit352.thread463, %_ZNK8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvE5beginEv.exit352.thread464, %bb.dw
-  %.012.i.i.i358 = getelementptr inbounds nuw i8, ptr %6, i64 3
-  %46 = getelementptr inbounds nuw i8, ptr %6, i64 1
-  %.0.i.i.i359 = getelementptr inbounds nuw i8, ptr %6, i64 2
   %i.aab = getelementptr inbounds nuw i8, ptr %38, i64 16 ; 2 uses
   br label %_ZN8nlohmann16json_abi_v3_12_06detail9iter_implIKNS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEEppEv.exit364
 
@@ -4296,18 +4254,9 @@ bb.ea:                                            ; preds = %bb.dz
   br i1 %.not.i356.not, label %.lr.ph.i.i.i357, label %_ZSt7reverseIPhEvT_S1_.exit.i360
 
 .lr.ph.i.i.i357:                                  ; preds = %bb.ea
-  %i.aai = bitcast float %i.aag to i32            ; 4 uses
-  %47 = lshr i32 %i.aai, 16
-  %48 = trunc i32 %47 to i8
-  %49 = lshr i32 %i.aai, 8
-  %50 = trunc i32 %49 to i8
-  %51 = lshr i32 %i.aai, 24
-  %52 = trunc nuw i32 %51 to i8
-  %53 = trunc i32 %i.aai to i8
-  store i8 %52, ptr %6, align 4, !tbaa !89
-  store i8 %53, ptr %.012.i.i.i358, align 1, !tbaa !89
-  store i8 %48, ptr %46, align 1, !tbaa !89
-  store i8 %50, ptr %.0.i.i.i359, align 2, !tbaa !89
+  %i.aai = bitcast float %i.aag to i32
+  %44 = call i32 @llvm.bswap.i32(i32 %i.aai)
+  store i32 %44, ptr %6, align 4, !tbaa !89
   br label %_ZSt7reverseIPhEvT_S1_.exit.i360
 
 _ZSt7reverseIPhEvT_S1_.exit.i360:                 ; preds = %.lr.ph.i.i.i357, %bb.ea
@@ -4469,9 +4418,9 @@ bb.em:                                            ; preds = %bb.el
   br i1 %.not.i369.not, label %.lr.ph.i.i.i370, label %_ZSt7reverseIPhEvT_S1_.exit.i375
 
 .lr.ph.i.i.i370:                                  ; preds = %bb.em
-  %54 = bitcast double %i.acb to <8 x i8>
-  %55 = shufflevector <8 x i8> %54, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %55, ptr %5, align 8, !tbaa !89
+  %45 = bitcast double %i.acb to i64
+  %46 = call i64 @llvm.bswap.i64(i64 %45)
+  store i64 %46, ptr %5, align 8, !tbaa !89
   br label %_ZSt7reverseIPhEvT_S1_.exit.i375
 
 _ZSt7reverseIPhEvT_S1_.exit.i375:                 ; preds = %.lr.ph.i.i.i370, %bb.em
@@ -4652,7 +4601,7 @@ _ZSt11find_if_notIN8nlohmann16json_abi_v3_12_06detail9iter_implIKNS1_10basic_jso
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIjEEvT_b(ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef %1, i1 noundef zeroext %2) local_unnamed_addr #3 comdat align 2 {
 bb.a:
-  %3 = alloca %"struct.std::array.172", align 4   ; 8 uses
+  %3 = alloca %"struct.std::array.172", align 4   ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #31
   store i32 %1, ptr %3, align 4
   %i.a = load i8, ptr %0, align 8, !tbaa !297, !range !83, !noundef !84
@@ -4661,20 +4610,8 @@ bb.a:
   br i1 %.not, label %_ZSt7reverseIPhEvT_S1_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
-  %4 = lshr i32 %1, 16
-  %5 = trunc i32 %4 to i8
-  %6 = lshr i32 %1, 8
-  %7 = trunc i32 %6 to i8
-  %8 = lshr i32 %1, 24
-  %9 = trunc nuw i32 %8 to i8
-  %10 = trunc i32 %1 to i8
-  %.012.i.i = getelementptr inbounds nuw i8, ptr %3, i64 3
-  store i8 %9, ptr %3, align 4, !tbaa !89
-  store i8 %10, ptr %.012.i.i, align 1, !tbaa !89
-  %11 = getelementptr inbounds nuw i8, ptr %3, i64 1
-  %.0.i.i = getelementptr inbounds nuw i8, ptr %3, i64 2
-  store i8 %5, ptr %11, align 1, !tbaa !89
-  store i8 %7, ptr %.0.i.i, align 2, !tbaa !89
+  %4 = tail call i32 @llvm.bswap.i32(i32 %1)
+  store i32 %4, ptr %3, align 4, !tbaa !89
   br label %_ZSt7reverseIPhEvT_S1_.exit
 
 _ZSt7reverseIPhEvT_S1_.exit:                      ; preds = %.lr.ph.i.i, %bb.a
@@ -4700,9 +4637,8 @@ bb.a:
   br i1 %.not, label %_ZSt7reverseIPhEvT_S1_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
-  %4 = bitcast i64 %1 to <8 x i8>
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %5, ptr %3, align 8, !tbaa !89
+  %4 = tail call i64 @llvm.bswap.i64(i64 %1)
+  store i64 %4, ptr %3, align 8, !tbaa !89
   br label %_ZSt7reverseIPhEvT_S1_.exit
 
 _ZSt7reverseIPhEvT_S1_.exit:                      ; preds = %.lr.ph.i.i, %bb.a
@@ -5105,9 +5041,8 @@ bb.a:
   br i1 %.not, label %_ZSt7reverseIPhEvT_S1_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
-  %4 = bitcast i64 %1 to <8 x i8>
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %5, ptr %3, align 8, !tbaa !89
+  %4 = tail call i64 @llvm.bswap.i64(i64 %1)
+  store i64 %4, ptr %3, align 8, !tbaa !89
   br label %_ZSt7reverseIPhEvT_S1_.exit
 
 _ZSt7reverseIPhEvT_S1_.exit:                      ; preds = %.lr.ph.i.i, %bb.a
@@ -5508,6 +5443,9 @@ declare i64 @llvm.smin.i64(i64, i64) #28
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #30
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #28
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #28

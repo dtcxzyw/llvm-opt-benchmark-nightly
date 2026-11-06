@@ -204,7 +204,7 @@ define internal fastcc void @write_pack_object(ptr noundef %0, ptr noundef nonnu
 bb.a:
   %i.a = alloca [2 x i8], align 2                 ; 5 uses
   %i.b = alloca [5 x i8], align 1                 ; 11 uses
-  %i.c = alloca [4 x i8], align 1                 ; 8 uses
+  %i.c = alloca [4 x i8], align 4                 ; 5 uses
   %i.d = alloca [10 x i8], align 1                ; 5 uses
   %i.e = alloca [32 x i8], align 16               ; 4 uses
   %7 = alloca %struct.git_hash_ctx, align 8       ; 8 uses
@@ -309,21 +309,9 @@ bb.e:                                             ; preds = %bb.d, %.split.i
   br i1 %.not43.i, label %write_uncompressed_zlib.exit, label %.split.i, !llvm.loop !76
 
 write_uncompressed_zlib.exit:                     ; preds = %bb.e, %bb.c
-  %.us-phi.i = phi i32 [ %.1.us.i, %bb.c ], [ %.1.i, %bb.e ] ; 4 uses
-  %8 = lshr i32 %.us-phi.i, 24
-  %9 = trunc nuw i32 %8 to i8
-  store i8 %9, ptr %i.c, align 1, !tbaa !26
-  %10 = lshr i32 %.us-phi.i, 16
-  %11 = trunc i32 %10 to i8
-  %12 = getelementptr inbounds nuw i8, ptr %i.c, i64 1
-  store i8 %11, ptr %12, align 1, !tbaa !26
-  %13 = lshr i32 %.us-phi.i, 8
-  %14 = trunc i32 %13 to i8
-  %15 = getelementptr inbounds nuw i8, ptr %i.c, i64 2
-  store i8 %14, ptr %15, align 1, !tbaa !26
-  %16 = trunc i32 %.us-phi.i to i8
-  %17 = getelementptr inbounds nuw i8, ptr %i.c, i64 3
-  store i8 %16, ptr %17, align 1, !tbaa !26
+  %.us-phi.i = phi i32 [ %.1.us.i, %bb.c ], [ %.1.i, %bb.e ]
+  %8 = call i32 @llvm.bswap.i32(i32 %.us-phi.i)
+  store i32 %8, ptr %i.c, align 4, !tbaa !26
   call void @fwrite_or_die(ptr noundef %0, ptr noundef nonnull %i.c, i64 noundef 4) #11
   %i.at = load ptr, ptr %i.h, align 8, !tbaa !25
   call void %i.at(ptr noundef nonnull %1, ptr noundef nonnull %i.c, i64 noundef 4) #11, !inline_history !75
@@ -404,6 +392,9 @@ declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #10
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

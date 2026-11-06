@@ -205,7 +205,7 @@ declare ptr @register_dissector(ptr noundef, ptr noundef, i32 noundef) local_unn
 define internal i32 @dissect_ubx(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree readnone captures(none) %3) #0 {
 .new:
   %i.a = alloca i32, align 4                      ; 4 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   %i.b = getelementptr i8, ptr %1, i64 8          ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8
   tail call void @col_set_str(ptr noundef %i.c, i32 noundef 35, ptr noundef @.str.625)
@@ -308,7 +308,7 @@ bb.c:                                             ; preds = %chksum_fletcher_8.e
 
 bb.d:                                             ; preds = %bb.c, %chksum_fletcher_8.exit
   %i.bf = call i32 @tvb_captured_length(ptr noundef %0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   ret i32 %i.bf
 }
 
@@ -711,7 +711,7 @@ bb.a:
 define internal i32 @dissect_ubx_rxm_sfrbx(ptr noundef %0, ptr noundef %1, ptr noundef %2, ptr nofree readnone captures(none) %3) #0 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 5 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #8
   %i.b = getelementptr i8, ptr %1, i64 8          ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8
   tail call void @col_set_str(ptr noundef %i.c, i32 noundef 35, ptr noundef @.str.603)
@@ -777,7 +777,7 @@ bb.d:                                             ; preds = %bb.b
   %i.ai = getelementptr i8, ptr %1, i64 416
   %i.aj = load ptr, ptr %i.ai, align 8
   %i.ak = zext nneg i32 %i.i to i64
-  %i.al = call noalias ptr @wmem_alloc(ptr noundef %i.aj, i64 noundef %i.ak) #8 ; 2 uses
+  %i.al = call noalias ptr @wmem_alloc(ptr noundef %i.aj, i64 noundef %i.ak) #9 ; 2 uses
   %.not65 = icmp eq i8 %i.e, 0
   br i1 %.not65, label %._crit_edge, label %.lr.ph.preheader
 
@@ -793,24 +793,12 @@ bb.d:                                             ; preds = %bb.b
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %.lr.ph ] ; 2 uses
   %i.ao = shl nuw nsw i64 %indvars.iv, 2          ; 2 uses
-  %i.ap = getelementptr i8, ptr %i.al, i64 %i.ao  ; 4 uses
+  %i.ap = getelementptr i8, ptr %i.al, i64 %i.ao
   %i.aq = trunc i64 %i.ao to i32
   %i.ar = add i32 %i.aq, 8
-  %i.as = call i32 @tvb_get_uint32(ptr noundef %0, i32 noundef %i.ar, i32 noundef -2147483648) ; 4 uses
-  %4 = lshr i32 %i.as, 24
-  %5 = trunc nuw i32 %4 to i8
-  store i8 %5, ptr %i.ap, align 1
-  %6 = lshr i32 %i.as, 16
-  %7 = trunc i32 %6 to i8
-  %8 = getelementptr i8, ptr %i.ap, i64 1
-  store i8 %7, ptr %8, align 1
-  %9 = lshr i32 %i.as, 8
-  %10 = trunc i32 %9 to i8
-  %11 = getelementptr i8, ptr %i.ap, i64 2
-  store i8 %10, ptr %11, align 1
-  %12 = trunc i32 %i.as to i8
-  %13 = getelementptr i8, ptr %i.ap, i64 3
-  store i8 %12, ptr %13, align 1
+  %i.as = call i32 @tvb_get_uint32(ptr noundef %0, i32 noundef %i.ar, i32 noundef -2147483648)
+  %4 = call i32 @llvm.bswap.i32(i32 %i.as)
+  store i32 %4, ptr %i.ap, align 1
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !24
@@ -830,7 +818,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ay = call i32 @tvb_captured_length(ptr noundef %0)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #7
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #8
   ret i32 %i.ay
 }
 
@@ -924,6 +912,9 @@ declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr no
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #6
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #7
+
 attributes #0 = { null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nofree null_pointer_is_valid sspstrong uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
@@ -931,8 +922,9 @@ attributes #3 = { null_pointer_is_valid "no-trapping-math"="true" "stack-protect
 attributes #4 = { nofree null_pointer_is_valid "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #5 = { null_pointer_is_valid allocsize(1) "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #6 = { nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write) }
-attributes #7 = { nounwind }
-attributes #8 = { allocsize(1) }
+attributes #7 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #8 = { nounwind }
+attributes #9 = { allocsize(1) }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4}
 !llvm.ident = !{!5}

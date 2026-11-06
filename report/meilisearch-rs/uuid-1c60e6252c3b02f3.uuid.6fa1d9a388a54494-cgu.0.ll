@@ -204,32 +204,20 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define void @"_ZN4uuid7builder28_$LT$impl$u20$uuid..Uuid$GT$11from_fields17h8b1c81f1d7f50eabE"(ptr nofree writeonly sret([16 x i8]) align 1 captures(none) initializes((0, 16)) %0, i32 %1, i16 %2, i16 %3, ptr nofree readonly align 1 captures(none) %4) unnamed_addr #9 !guid !114 {
 bb.a:
-  %5 = lshr i32 %1, 24
-  %6 = trunc nuw i32 %5 to i8
-  %7 = lshr i32 %1, 16
-  %8 = trunc i32 %7 to i8
-  %9 = lshr i32 %1, 8
-  %10 = trunc i32 %9 to i8
-  %11 = trunc i32 %1 to i8
   %i.a = lshr i16 %2, 8
   %i.b = trunc nuw i16 %i.a to i8
   %i.c = trunc i16 %2 to i8
   %i.d = lshr i16 %3, 8
   %i.e = trunc nuw i16 %i.d to i8
   %i.f = trunc i16 %3 to i8
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 3
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 5
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 6
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 7
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load <8 x i8>, ptr %4, align 1
-  store i8 %6, ptr %0, align 1
-  store i8 %8, ptr %.sroa.2.0..sroa_idx, align 1
-  store i8 %10, ptr %.sroa.3.0..sroa_idx, align 1
-  store i8 %11, ptr %.sroa.4.0..sroa_idx, align 1
+  %5 = tail call i32 @llvm.bswap.i32(i32 %1)
+  store i32 %5, ptr %0, align 1
   store i8 %i.b, ptr %.sroa.5.0..sroa_idx, align 1
   store i8 %i.c, ptr %.sroa.6.0..sroa_idx, align 1
   store i8 %i.e, ptr %.sroa.7.0..sroa_idx, align 1
@@ -376,32 +364,20 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define void @_ZN4uuid7builder7Builder11from_fields17h3d12a1b7d4e38df5E(ptr nofree writeonly sret([16 x i8]) align 1 captures(none) initializes((0, 16)) %0, i32 %1, i16 %2, i16 %3, ptr nofree readonly align 1 captures(none) %4) unnamed_addr #9 !guid !125 {
 bb.a:
-  %5 = lshr i32 %1, 24
-  %6 = trunc nuw i32 %5 to i8
-  %7 = lshr i32 %1, 16
-  %8 = trunc i32 %7 to i8
-  %9 = lshr i32 %1, 8
-  %10 = trunc i32 %9 to i8
-  %11 = trunc i32 %1 to i8
   %i.a = lshr i16 %2, 8
   %i.b = trunc nuw i16 %i.a to i8
   %i.c = trunc i16 %2 to i8
   %i.d = lshr i16 %3, 8
   %i.e = trunc nuw i16 %i.d to i8
   %i.f = trunc i16 %3 to i8
-  %.sroa.2.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 1
-  %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 2
-  %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 3
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 4
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 5
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 6
   %.sroa.8.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 7
   %.sroa.9.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = load <8 x i8>, ptr %4, align 1
-  store i8 %6, ptr %0, align 1
-  store i8 %8, ptr %.sroa.2.0..sroa_idx, align 1
-  store i8 %10, ptr %.sroa.3.0..sroa_idx, align 1
-  store i8 %11, ptr %.sroa.4.0..sroa_idx, align 1
+  %5 = tail call i32 @llvm.bswap.i32(i32 %1)
+  store i32 %5, ptr %0, align 1
   store i8 %i.b, ptr %.sroa.5.0..sroa_idx, align 1
   store i8 %i.c, ptr %.sroa.6.0..sroa_idx, align 1
   store i8 %i.e, ptr %.sroa.7.0..sroa_idx, align 1

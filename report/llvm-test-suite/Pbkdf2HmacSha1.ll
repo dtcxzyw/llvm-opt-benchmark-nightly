@@ -19,21 +19,18 @@ define dso_local void @_ZN7NCrypto5NSha110Pbkdf2HmacEPKhmS2_mjPhm(ptr noundef %0
 bb.a:
   %7 = alloca %"class.NCrypto::NSha1::CHmac", align 8 ; 6 uses
   %8 = alloca %"class.NCrypto::NSha1::CHmac", align 8 ; 15 uses
-  %i.a = alloca [20 x i8], align 16               ; 22 uses
+  %i.a = alloca [20 x i8], align 16               ; 19 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #5
   call void @_ZN7NCrypto5NSha15CHmac6SetKeyEPKhm(ptr noundef nonnull align 8 dereferenceable(208) %7, ptr noundef %0, i64 noundef %1)
   %.not38 = icmp eq i64 %6, 0
   br i1 %.not38, label %._crit_edge44, label %.lr.ph43
 
 .lr.ph43:                                         ; preds = %bb.a
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.a, i64 2 ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 3 ; 2 uses
   %i.b = icmp ugt i32 %4, 1
   br i1 %i.b, label %.lr.ph43.split.us, label %.lr.ph43.split
 
 .lr.ph43.split.us:                                ; preds = %.lr.ph43, %._crit_edge.us
-  %.03141.us = phi i32 [ %i.s, %._crit_edge.us ], [ 1, %.lr.ph43 ] ; 5 uses
+  %.03141.us = phi i32 [ %i.s, %._crit_edge.us ], [ 1, %.lr.ph43 ] ; 2 uses
   %.03240.us = phi i64 [ %i.r, %._crit_edge.us ], [ %6, %.lr.ph43 ] ; 5 uses
   %.03339.us = phi ptr [ %i.q, %._crit_edge.us ], [ %5, %.lr.ph43 ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #5
@@ -41,17 +38,8 @@ bb.a:
   call void @_ZN7NCrypto5NSha18CContext6UpdateEPKhm(ptr noundef nonnull align 8 dereferenceable(208) %8, ptr noundef %2, i64 noundef %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) %i.a, i8 0, i64 20, i1 false)
-  %12 = lshr i32 %.03141.us, 24
-  %13 = trunc nuw i32 %12 to i8
-  store i8 %13, ptr %i.a, align 16, !tbaa !14
-  %14 = lshr i32 %.03141.us, 16
-  %15 = trunc i32 %14 to i8
-  store i8 %15, ptr %9, align 1, !tbaa !14
-  %16 = lshr i32 %.03141.us, 8
-  %17 = trunc i32 %16 to i8
-  store i8 %17, ptr %10, align 2, !tbaa !14
-  %18 = trunc i32 %.03141.us to i8
-  store i8 %18, ptr %11, align 1, !tbaa !14
+  %9 = call i32 @llvm.bswap.i32(i32 %.03141.us)
+  store i32 %9, ptr %i.a, align 16, !tbaa !14
   %i.c = call i64 @llvm.umin.i64(i64 %.03240.us, i64 20) ; 8 uses
   call void @_ZN7NCrypto5NSha18CContext6UpdateEPKhm(ptr noundef nonnull align 8 dereferenceable(208) %8, ptr noundef nonnull %i.a, i64 noundef 4)
   call void @_ZN7NCrypto5NSha15CHmac5FinalEPhm(ptr noundef nonnull align 8 dereferenceable(208) %8, ptr noundef nonnull %i.a, i64 noundef 20)
@@ -140,7 +128,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   ret void
 
 .lr.ph43.split:                                   ; preds = %.lr.ph43, %.lr.ph43.split
-  %.03141 = phi i32 [ %i.w, %.lr.ph43.split ], [ 1, %.lr.ph43 ] ; 5 uses
+  %.03141 = phi i32 [ %i.w, %.lr.ph43.split ], [ 1, %.lr.ph43 ] ; 2 uses
   %.03240 = phi i64 [ %i.v, %.lr.ph43.split ], [ %6, %.lr.ph43 ] ; 2 uses
   %.03339 = phi ptr [ %i.u, %.lr.ph43.split ], [ %5, %.lr.ph43 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #5
@@ -148,17 +136,8 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   call void @_ZN7NCrypto5NSha18CContext6UpdateEPKhm(ptr noundef nonnull align 8 dereferenceable(208) %8, ptr noundef %2, i64 noundef %3)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(20) %i.a, i8 0, i64 20, i1 false)
-  %19 = lshr i32 %.03141, 24
-  %20 = trunc nuw i32 %19 to i8
-  store i8 %20, ptr %i.a, align 16, !tbaa !14
-  %21 = lshr i32 %.03141, 16
-  %22 = trunc i32 %21 to i8
-  store i8 %22, ptr %9, align 1, !tbaa !14
-  %23 = lshr i32 %.03141, 8
-  %24 = trunc i32 %23 to i8
-  store i8 %24, ptr %10, align 2, !tbaa !14
-  %25 = trunc i32 %.03141 to i8
-  store i8 %25, ptr %11, align 1, !tbaa !14
+  %10 = call i32 @llvm.bswap.i32(i32 %.03141)
+  store i32 %10, ptr %i.a, align 16, !tbaa !14
   %i.t = call i64 @llvm.umin.i64(i64 %.03240, i64 20) ; 3 uses
   call void @_ZN7NCrypto5NSha18CContext6UpdateEPKhm(ptr noundef nonnull align 8 dereferenceable(208) %8, ptr noundef nonnull %i.a, i64 noundef 4)
   call void @_ZN7NCrypto5NSha15CHmac5FinalEPhm(ptr noundef nonnull align 8 dereferenceable(208) %8, ptr noundef nonnull %i.a, i64 noundef 20)
@@ -245,6 +224,9 @@ declare void @_ZN7NCrypto5NSha110CContext326UpdateEPKjm(ptr noundef nonnull alig
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #4
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #4
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

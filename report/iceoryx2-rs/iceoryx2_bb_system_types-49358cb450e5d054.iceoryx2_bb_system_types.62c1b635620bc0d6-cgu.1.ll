@@ -202,23 +202,14 @@ bb.a:
 define noundef zeroext i1 @_RNvXs1_NtCs8tG85QUCESg_24iceoryx2_bb_system_types12ipv4_addressNtB5_11Ipv4AddressNtNtCs8Chj7Szqq0n_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 4 captures(none) dereferenceable(4) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [64 x i8], align 8                ; 11 uses
-  %i.b = alloca [4 x i8], align 1                 ; 7 uses
+  %i.b = alloca [4 x i8], align 4                 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %i.c = load i32, ptr %0, align 4, !noundef !5   ; 4 uses
-  %2 = lshr i32 %i.c, 24
-  %3 = trunc nuw i32 %2 to i8
-  %4 = lshr i32 %i.c, 16
-  %5 = trunc i32 %4 to i8
-  %6 = lshr i32 %i.c, 8
-  %7 = trunc i32 %6 to i8
-  %8 = trunc i32 %i.c to i8
-  store i8 %3, ptr %i.b, align 1
-  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 1 ; 2 uses
-  store i8 %5, ptr %i.d, align 1
-  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 2 ; 2 uses
-  store i8 %7, ptr %i.e, align 1
-  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 3 ; 2 uses
-  store i8 %8, ptr %9, align 1
+  %i.c = load i32, ptr %0, align 4, !noundef !5
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 1
+  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 2
+  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 3
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.c)
+  store i32 %3, ptr %i.b, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.b, ptr %i.a, align 8
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -232,7 +223,7 @@ bb.a:
   %.sroa.411.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   store ptr @_RNvXNtNtNtCs8Chj7Szqq0n_4core3fmt3num3imphNtB6_7Display3fmt, ptr %.sroa.411.0..sroa_idx, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  store ptr %9, ptr %i.h, align 8
+  store ptr %2, ptr %i.h, align 8
   %.sroa.415.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   store ptr @_RNvXNtNtNtCs8Chj7Szqq0n_4core3fmt3num3imphNtB6_7Display3fmt, ptr %.sroa.415.0..sroa_idx, align 8
   %i.i = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5
@@ -260,23 +251,14 @@ bb.a:
 define noundef zeroext i1 @_RNvXs2_NtCs8tG85QUCESg_24iceoryx2_bb_system_types12ipv4_addressNtB5_11Ipv4AddressNtNtCs8Chj7Szqq0n_4core3fmt7Display3fmt(ptr noalias nofree noundef readonly align 4 captures(none) dereferenceable(4) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #0 {
 bb.a:
   %i.a = alloca [64 x i8], align 8                ; 11 uses
-  %i.b = alloca [4 x i8], align 1                 ; 7 uses
+  %i.b = alloca [4 x i8], align 4                 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
-  %i.c = load i32, ptr %0, align 4, !noundef !5   ; 4 uses
-  %2 = lshr i32 %i.c, 24
-  %3 = trunc nuw i32 %2 to i8
-  %4 = lshr i32 %i.c, 16
-  %5 = trunc i32 %4 to i8
-  %6 = lshr i32 %i.c, 8
-  %7 = trunc i32 %6 to i8
-  %8 = trunc i32 %i.c to i8
-  store i8 %3, ptr %i.b, align 1
-  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 1 ; 2 uses
-  store i8 %5, ptr %i.d, align 1
-  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 2 ; 2 uses
-  store i8 %7, ptr %i.e, align 1
-  %9 = getelementptr inbounds nuw i8, ptr %i.b, i64 3 ; 2 uses
-  store i8 %8, ptr %9, align 1
+  %i.c = load i32, ptr %0, align 4, !noundef !5
+  %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 1
+  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 2
+  %2 = getelementptr inbounds nuw i8, ptr %i.b, i64 3
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.c)
+  store i32 %3, ptr %i.b, align 4
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr %i.b, ptr %i.a, align 8
   %.sroa.43.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 8
@@ -290,7 +272,7 @@ bb.a:
   %.sroa.411.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 40
   store ptr @_RNvXNtNtNtCs8Chj7Szqq0n_4core3fmt3num3imphNtB6_7Display3fmt, ptr %.sroa.411.0..sroa_idx, align 8
   %i.h = getelementptr inbounds nuw i8, ptr %i.a, i64 48
-  store ptr %9, ptr %i.h, align 8
+  store ptr %2, ptr %i.h, align 8
   %.sroa.415.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 56
   store ptr @_RNvXNtNtNtCs8Chj7Szqq0n_4core3fmt3num3imphNtB6_7Display3fmt, ptr %.sroa.415.0..sroa_idx, align 8
   %i.i = load ptr, ptr %1, align 8, !nonnull !5, !noundef !5

@@ -205,8 +205,8 @@ bb.m:                                             ; preds = %bb.f
   %.079 = phi ptr [ null, %.thread ], [ null, %bb.m ], [ %i.q, %bb.l ], [ %i.q, %.loopexit.loopexit.unr-lcssa ], [ %i.q, %.lr.ph.epil.preheader ] ; 5 uses
   %.077 = phi ptr [ null, %.thread ], [ null, %bb.m ], [ %i.s, %bb.l ], [ %i.s, %.loopexit.loopexit.unr-lcssa ], [ %i.s, %.lr.ph.epil.preheader ] ; 5 uses
   %.175 = phi i1 [ true, %.thread ], [ false, %bb.m ], [ %.not99, %bb.l ], [ %.not99, %.loopexit.loopexit.unr-lcssa ], [ %.not99, %.lr.ph.epil.preheader ] ; 2 uses
-  %.073 = phi i32 [ 0, %.thread ], [ 0, %bb.m ], [ %i.o, %bb.l ], [ %i.o, %.loopexit.loopexit.unr-lcssa ], [ %i.o, %.lr.ph.epil.preheader ] ; 9 uses
-  %.072 = phi i32 [ 0, %.thread ], [ 0, %bb.m ], [ %i.n, %bb.l ], [ %i.n, %.loopexit.loopexit.unr-lcssa ], [ %i.n, %.lr.ph.epil.preheader ] ; 8 uses
+  %.073 = phi i32 [ 0, %.thread ], [ 0, %bb.m ], [ %i.o, %bb.l ], [ %i.o, %.loopexit.loopexit.unr-lcssa ], [ %i.o, %.lr.ph.epil.preheader ] ; 6 uses
+  %.072 = phi i32 [ 0, %.thread ], [ 0, %bb.m ], [ %i.n, %bb.l ], [ %i.n, %.loopexit.loopexit.unr-lcssa ], [ %i.n, %.lr.ph.epil.preheader ] ; 5 uses
   %.1 = phi ptr [ %i.bd, %.thread ], [ %0, %bb.m ], [ %.0, %bb.l ], [ %.0, %.loopexit.loopexit.unr-lcssa ], [ %.0, %.lr.ph.epil.preheader ] ; 7 uses
   %i.br = getelementptr inbounds nuw i8, ptr %.1, i64 24
   %i.bs = load ptr, ptr %i.br, align 8
@@ -447,14 +447,7 @@ bb.t:                                             ; preds = %bb.s
   %i.it = getelementptr inbounds nuw [4 x i8], ptr @mz_crc32.s_crc32, i64 %i.is
   %i.iu = load i32, ptr %i.it, align 4
   %i.iv = xor i32 %i.iu, %i.iq
-  %i.iw = xor i32 %i.iv, -1                       ; 4 uses
-  %4 = lshr i32 %i.iw, 24
-  %5 = trunc nuw i32 %4 to i8
-  %6 = lshr i32 %i.iw, 16
-  %7 = trunc i32 %6 to i8
-  %8 = lshr i32 %i.iw, 8
-  %9 = trunc i32 %8 to i8
-  %10 = trunc i32 %i.iw to i8
+  %i.iw = xor i32 %i.iv, -1
   %i.ix = load i64, ptr %3, align 8               ; 3 uses
   %i.iy = add i64 %i.ix, 33                       ; 4 uses
   %i.iz = load i64, ptr %i.ck, align 8            ; 3 uses
@@ -492,54 +485,42 @@ bb.w:                                             ; preds = %bb.v, %bb.u
 .critedge.i:                                      ; preds = %.critedge.i.i, %.lr.ph.i.i
   %i.jh = phi i64 [ %i.jd, %.critedge.i.i ], [ %i.iz, %.lr.ph.i.i ] ; 4 uses
   %i.ji = phi ptr [ %i.jf, %.critedge.i.i ], [ %i.cr, %.lr.ph.i.i ]
-  %i.jj = getelementptr inbounds nuw i8, ptr %i.ji, i64 %i.ix ; 19 uses
+  %i.jj = getelementptr inbounds nuw i8, ptr %i.ji, i64 %i.ix ; 16 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(12) %i.jj, ptr noundef nonnull align 16 dereferenceable(12) @__const.tdefl_write_image_to_png_file_in_memory_ex.pnghdr, i64 12, i1 false)
-  %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.jj, i64 12
-  store <4 x i8> <i8 73, i8 72, i8 68, i8 82>, ptr %.sroa.5.0..sroa_idx.i, align 1
-  %.sroa.9.0..sroa_idx313.i = getelementptr inbounds nuw i8, ptr %i.jj, i64 16
-  store i8 0, ptr %.sroa.9.0..sroa_idx313.i, align 1
-  %.sroa.10.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 17
-  store i8 0, ptr %.sroa.10.0..sroa_idx.i.a, align 1
-  %.sroa.11.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 18
-  store i8 %i.cv, ptr %.sroa.11.0..sroa_idx.i.a, align 1
-  %.sroa.13.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 19
-  store i8 %i.cw, ptr %.sroa.13.0..sroa_idx.i.a, align 1
-  %.sroa.15.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 20
-  store i8 0, ptr %.sroa.15.0..sroa_idx.i.a, align 1
-  %.sroa.16.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 21
-  store i8 0, ptr %.sroa.16.0..sroa_idx.i.a, align 1
-  %.sroa.17.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 22
-  store i8 %i.cy, ptr %.sroa.17.0..sroa_idx.i.a, align 1
-  %.sroa.19.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 23
-  store i8 %i.cz, ptr %.sroa.19.0..sroa_idx.i.a, align 1
-  %.sroa.21.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 24
-  store i8 8, ptr %.sroa.21.0..sroa_idx.i.a, align 1
-  %.sroa.22.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 25
-  store i8 %.sroa.22.0.i, ptr %.sroa.22.0..sroa_idx.i.a, align 1
-  %.sroa.25.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 26
-  store i8 0, ptr %.sroa.25.0..sroa_idx.i.a, align 1
-  %.sroa.26.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 27
-  store i8 0, ptr %.sroa.26.0..sroa_idx.i.a, align 1
-  %.sroa.27.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 28
+  %.sroa.10.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 12
+  store <4 x i8> <i8 73, i8 72, i8 68, i8 82>, ptr %.sroa.10.0..sroa_idx.i.a, align 1
+  %.sroa.11.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 16
+  store i8 0, ptr %.sroa.11.0..sroa_idx.i.a, align 1
+  %.sroa.13.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 17
+  store i8 0, ptr %.sroa.13.0..sroa_idx.i.a, align 1
+  %.sroa.15.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 18
+  store i8 %i.cv, ptr %.sroa.15.0..sroa_idx.i.a, align 1
+  %.sroa.16.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 19
+  store i8 %i.cw, ptr %.sroa.16.0..sroa_idx.i.a, align 1
+  %.sroa.17.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 20
+  store i8 0, ptr %.sroa.17.0..sroa_idx.i.a, align 1
+  %.sroa.19.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 21
+  store i8 0, ptr %.sroa.19.0..sroa_idx.i.a, align 1
+  %.sroa.21.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 22
+  store i8 %i.cy, ptr %.sroa.21.0..sroa_idx.i.a, align 1
+  %.sroa.22.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 23
+  store i8 %i.cz, ptr %.sroa.22.0..sroa_idx.i.a, align 1
+  %.sroa.25.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 24
+  store i8 8, ptr %.sroa.25.0..sroa_idx.i.a, align 1
+  %.sroa.26.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 25
+  store i8 %.sroa.22.0.i, ptr %.sroa.26.0..sroa_idx.i.a, align 1
+  %.sroa.27.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 26
   store i8 0, ptr %.sroa.27.0..sroa_idx.i.a, align 1
-  %.sroa.28.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 29
-  store i8 %5, ptr %.sroa.28.0..sroa_idx.i.a, align 1
-  %.sroa.29.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.jj, i64 30
-  store i8 %7, ptr %.sroa.29.0..sroa_idx.i, align 1
-  %.sroa.30.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.jj, i64 31
-  store i8 %9, ptr %.sroa.30.0..sroa_idx.i, align 1
-  %.sroa.31.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.jj, i64 32
-  store i8 %10, ptr %.sroa.31.0..sroa_idx.i, align 1
+  %.sroa.28.0..sroa_idx.i.a = getelementptr inbounds nuw i8, ptr %i.jj, i64 27
+  store i8 0, ptr %.sroa.28.0..sroa_idx.i.a, align 1
+  %.sroa.29.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.jj, i64 28
+  store i8 0, ptr %.sroa.29.0..sroa_idx.i, align 1
+  %.sroa.30.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.jj, i64 29
+  %4 = tail call i32 @llvm.bswap.i32(i32 %i.iw)
+  store i32 %4, ptr %.sroa.30.0..sroa_idx.i, align 1
   br i1 %i.cl, label %bb.x, label %.loopexit267.i
 
 bb.x:                                             ; preds = %.critedge.i
-  %11 = lshr i32 %.073, 24
-  %12 = trunc nuw nsw i32 %11 to i8
-  %13 = lshr i32 %.073, 16
-  %14 = trunc i32 %13 to i8
-  %15 = lshr i32 %.073, 8
-  %16 = trunc i32 %15 to i8
-  %17 = trunc i32 %.073 to i8
   %i.jk = add i64 %i.ix, 41                       ; 5 uses
   %i.jl = icmp ugt i64 %i.jk, %i.jh
   br i1 %i.jl, label %bb.y, label %._crit_edge.i146.i
@@ -584,15 +565,10 @@ bb.aa:                                            ; preds = %bb.z, %._crit_edge3
 bb.ab:                                            ; preds = %.critedge.i154.i, %._crit_edge.i146.i
   %i.jt = phi i64 [ %i.jh, %._crit_edge.i146.i ], [ %i.jo, %.critedge.i154.i ] ; 3 uses
   %i.ju = phi ptr [ %.pre.i148.i, %._crit_edge.i146.i ], [ %i.jr, %.critedge.i154.i ] ; 4 uses
-  %18 = getelementptr inbounds nuw i8, ptr %i.ju, i64 %i.iy ; 5 uses
-  store i8 %12, ptr %18, align 1
-  %.sroa.6243.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %18, i64 1
-  store i8 %14, ptr %.sroa.6243.0..sroa_idx.i, align 1
-  %.sroa.7244.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %18, i64 2
-  store i8 %16, ptr %.sroa.7244.0..sroa_idx.i, align 1
-  %.sroa.8245.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %18, i64 3
-  store i8 %17, ptr %.sroa.8245.0..sroa_idx.i, align 1
-  %.sroa.9246.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %18, i64 4
+  %.sroa.7244.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ju, i64 %i.iy ; 2 uses
+  %5 = tail call i32 @llvm.bswap.i32(i32 %.073)
+  store i32 %5, ptr %.sroa.7244.0..sroa_idx.i, align 1
+  %.sroa.9246.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.7244.0..sroa_idx.i, i64 4
   store i32 1163152464, ptr %.sroa.9246.0..sroa_idx.i, align 1
   %i.jv = zext nneg i32 %.073 to i64              ; 2 uses
   %i.jw = add i64 %i.jk, %i.jv                    ; 6 uses
@@ -748,22 +724,10 @@ mz_crc32.exit186.i.unr-lcssa:                     ; preds = %.lr.ph.i180.i
 
 mz_crc32.exit186.i:                               ; preds = %mz_crc32.exit186.i.unr-lcssa, %.lr.ph.i180.i.epil.preheader
   %.lcssa223 = phi i32 [ %i.md, %mz_crc32.exit186.i.unr-lcssa ], [ %i.mu, %.lr.ph.i180.i.epil.preheader ]
-  %i.mv = xor i32 %.lcssa223, -1                  ; 4 uses
-  %19 = lshr i32 %i.mv, 24
-  %20 = trunc nuw i32 %19 to i8
-  %i.mw = getelementptr inbounds i8, ptr %i.kp, i64 %i.jw ; 4 uses
-  store i8 %20, ptr %i.mw, align 1
-  %21 = lshr i32 %i.mv, 16
-  %22 = trunc i32 %21 to i8
-  %23 = getelementptr inbounds nuw i8, ptr %i.mw, i64 1
-  store i8 %22, ptr %23, align 1
-  %24 = lshr i32 %i.mv, 8
-  %25 = trunc i32 %24 to i8
-  %26 = getelementptr inbounds nuw i8, ptr %i.mw, i64 2
-  store i8 %25, ptr %26, align 1
-  %27 = trunc i32 %i.mv to i8
-  %28 = getelementptr inbounds nuw i8, ptr %i.mw, i64 3
-  store i8 %27, ptr %28, align 1
+  %i.mv = xor i32 %.lcssa223, -1
+  %i.mw = getelementptr inbounds i8, ptr %i.kp, i64 %i.jw
+  %6 = tail call i32 @llvm.bswap.i32(i32 %i.mv)
+  store i32 %6, ptr %i.mw, align 1
   %.pre331.pre.i = load i64, ptr %i.ck, align 8
   br label %.loopexit267.i
 
@@ -773,13 +737,6 @@ mz_crc32.exit186.i:                               ; preds = %mz_crc32.exit186.i.
   br i1 %i.co, label %bb.ai, label %.loopexit.i
 
 bb.ai:                                            ; preds = %.loopexit267.i
-  %29 = lshr i32 %.072, 24
-  %30 = trunc nuw nsw i32 %29 to i8
-  %31 = lshr i32 %.072, 16
-  %32 = trunc i32 %31 to i8
-  %33 = lshr i32 %.072, 8
-  %34 = trunc i32 %33 to i8
-  %35 = trunc i32 %.072 to i8
   %i.mx = add i64 %.pre32.i196.i, 8               ; 5 uses
   %i.my = icmp ugt i64 %i.mx, %.pre331.i
   br i1 %i.my, label %bb.aj, label %._crit_edge.i187.i
@@ -824,15 +781,10 @@ bb.al:                                            ; preds = %bb.ak, %._crit_edge
 bb.am:                                            ; preds = %.critedge.i195.i, %._crit_edge.i187.i
   %i.ng = phi i64 [ %.pre331.i, %._crit_edge.i187.i ], [ %i.nb, %.critedge.i195.i ] ; 3 uses
   %i.nh = phi ptr [ %.pre.i189.i, %._crit_edge.i187.i ], [ %i.ne, %.critedge.i195.i ] ; 4 uses
-  %36 = getelementptr inbounds nuw i8, ptr %i.nh, i64 %.pre32.i196.i ; 5 uses
-  store i8 %30, ptr %36, align 1
-  %.sroa.6.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %36, i64 1
-  store i8 %32, ptr %.sroa.6.0..sroa_idx.i, align 1
-  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %36, i64 2
-  store i8 %34, ptr %.sroa.7.0..sroa_idx.i, align 1
-  %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %36, i64 3
-  store i8 %35, ptr %.sroa.8.0..sroa_idx.i, align 1
-  %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %36, i64 4
+  %.sroa.7.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.nh, i64 %.pre32.i196.i ; 2 uses
+  %7 = tail call i32 @llvm.bswap.i32(i32 %.072)
+  store i32 %7, ptr %.sroa.7.0..sroa_idx.i, align 1
+  %.sroa.9.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.7.0..sroa_idx.i, i64 4
   store i32 1397641844, ptr %.sroa.9.0..sroa_idx.i, align 1
   %i.ni = zext nneg i32 %.072 to i64              ; 2 uses
   %i.nj = add i64 %i.mx, %i.ni                    ; 6 uses
@@ -1233,6 +1185,9 @@ declare i64 @llvm.umin.i64(i64, i64) #11
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #12
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #11
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare <16 x i32> @llvm.umin.v16i32(<16 x i32>, <16 x i32>) #11

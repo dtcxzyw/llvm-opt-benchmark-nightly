@@ -205,9 +205,9 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   br i1 %.not.i.i, label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE31write_number_with_ubjson_prefixIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEEvSJ_bb.exit, label %.lr.ph.i.i.i.i
 
 .lr.ph.i.i.i.i:                                   ; preds = %bb.j
-  %20 = bitcast double %i.x to <8 x i8>
-  %21 = shufflevector <8 x i8> %20, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %21, ptr %8, align 8, !tbaa !81
+  %20 = bitcast double %i.x to i64
+  %21 = tail call i64 @llvm.bswap.i64(i64 %20)
+  store i64 %21, ptr %8, align 8, !tbaa !81
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE31write_number_with_ubjson_prefixIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEEvSJ_bb.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE31write_number_with_ubjson_prefixIdTnNSt9enable_ifIXsr3std17is_floating_pointIT_EE5valueEiE4typeELi0EEEvSJ_bb.exit: ; preds = %bb.j, %.lr.ph.i.i.i.i
@@ -610,9 +610,8 @@ bb.z:                                             ; preds = %bb.y, %.thread106.t
   br i1 %.not.i60, label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIlEEvT_b.exit, label %.lr.ph.i.i.i61
 
 .lr.ph.i.i.i61:                                   ; preds = %bb.z
-  %11 = bitcast i64 %1 to <8 x i8>
-  %12 = shufflevector <8 x i8> %11, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %12, ptr %4, align 8, !tbaa !81
+  %11 = tail call i64 @llvm.bswap.i64(i64 %1)
+  store i64 %11, ptr %4, align 8, !tbaa !81
   br label %_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIlEEvT_b.exit
 
 _ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIlEEvT_b.exit: ; preds = %bb.z, %.lr.ph.i.i.i61
@@ -1015,7 +1014,7 @@ _ZNSt8_Rb_treeINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt4pairIKS5_N
 define linkonce_odr dso_local noundef zeroext i1 @_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE20write_bjdata_ndarrayERKS4_ISB_SF_St4lessISB_ESaISt4pairIKSB_SF_EEEbbNS1_16bjdata_version_tE(ptr noundef nonnull align 8 dereferenceable(24) %0, ptr noundef nonnull align 8 dereferenceable(48) %1, i1 noundef zeroext %2, i1 noundef zeroext %3, i32 noundef %4) local_unnamed_addr #3 comdat align 2 personality ptr @__gxx_personality_v0 {
 ._crit_edge.i.i.i:
   %5 = alloca %"struct.std::array.193", align 8   ; 5 uses
-  %6 = alloca %"struct.std::array.192", align 4   ; 8 uses
+  %6 = alloca %"struct.std::array.192", align 4   ; 5 uses
   %7 = alloca %"struct.std::array.193", align 8   ; 5 uses
   %8 = alloca %"struct.std::array.193", align 8   ; 5 uses
   %9 = alloca %"struct.std::array.192", align 4   ; 8 uses
@@ -1418,9 +1417,8 @@ bb.de:                                            ; preds = %bb.dd
   br i1 %.not.i328.not, label %.lr.ph.i.i.i329, label %_ZSt7reverseIPhEvT_S1_.exit.i332
 
 .lr.ph.i.i.i329:                                  ; preds = %bb.de
-  %42 = bitcast i64 %i.wt to <8 x i8>
-  %43 = shufflevector <8 x i8> %42, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %43, ptr %8, align 8, !tbaa !81
+  %42 = call i64 @llvm.bswap.i64(i64 %i.wt)
+  store i64 %42, ptr %8, align 8, !tbaa !81
   br label %_ZSt7reverseIPhEvT_S1_.exit.i332
 
 _ZSt7reverseIPhEvT_S1_.exit.i332:                 ; preds = %.lr.ph.i.i.i329, %bb.de
@@ -1577,9 +1575,8 @@ bb.dp:                                            ; preds = %bb.do
   br i1 %.not.i341.not, label %.lr.ph.i.i.i342, label %_ZSt7reverseIPhEvT_S1_.exit.i347
 
 .lr.ph.i.i.i342:                                  ; preds = %bb.dp
-  %44 = bitcast i64 %i.ym to <8 x i8>
-  %45 = shufflevector <8 x i8> %44, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %45, ptr %7, align 8, !tbaa !81
+  %43 = call i64 @llvm.bswap.i64(i64 %i.ym)
+  store i64 %43, ptr %7, align 8, !tbaa !81
   br label %_ZSt7reverseIPhEvT_S1_.exit.i347
 
 _ZSt7reverseIPhEvT_S1_.exit.i347:                 ; preds = %.lr.ph.i.i.i342, %bb.dp
@@ -1707,9 +1704,6 @@ bb.dw:                                            ; preds = %_ZNK8nlohmann16json
   br label %_ZNK8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvE3endEv.exit353
 
 _ZNK8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvE3endEv.exit353: ; preds = %_ZNK8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvE5beginEv.exit352.thread463, %_ZNK8nlohmann16json_abi_v3_12_010basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES3_IhSaIhEEvE5beginEv.exit352.thread464, %bb.dw
-  %.012.i.i.i358 = getelementptr inbounds nuw i8, ptr %6, i64 3
-  %46 = getelementptr inbounds nuw i8, ptr %6, i64 1
-  %.0.i.i.i359 = getelementptr inbounds nuw i8, ptr %6, i64 2
   %i.aab = getelementptr inbounds nuw i8, ptr %38, i64 16 ; 2 uses
   br label %_ZN8nlohmann16json_abi_v3_12_06detail9iter_implIKNS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEEppEv.exit364
 
@@ -1740,18 +1734,9 @@ bb.ea:                                            ; preds = %bb.dz
   br i1 %.not.i356.not, label %.lr.ph.i.i.i357, label %_ZSt7reverseIPhEvT_S1_.exit.i360
 
 .lr.ph.i.i.i357:                                  ; preds = %bb.ea
-  %i.aai = bitcast float %i.aag to i32            ; 4 uses
-  %47 = lshr i32 %i.aai, 16
-  %48 = trunc i32 %47 to i8
-  %49 = lshr i32 %i.aai, 8
-  %50 = trunc i32 %49 to i8
-  %51 = lshr i32 %i.aai, 24
-  %52 = trunc nuw i32 %51 to i8
-  %53 = trunc i32 %i.aai to i8
-  store i8 %52, ptr %6, align 4, !tbaa !81
-  store i8 %53, ptr %.012.i.i.i358, align 1, !tbaa !81
-  store i8 %48, ptr %46, align 1, !tbaa !81
-  store i8 %50, ptr %.0.i.i.i359, align 2, !tbaa !81
+  %i.aai = bitcast float %i.aag to i32
+  %44 = call i32 @llvm.bswap.i32(i32 %i.aai)
+  store i32 %44, ptr %6, align 4, !tbaa !81
   br label %_ZSt7reverseIPhEvT_S1_.exit.i360
 
 _ZSt7reverseIPhEvT_S1_.exit.i360:                 ; preds = %.lr.ph.i.i.i357, %bb.ea
@@ -1913,9 +1898,9 @@ bb.em:                                            ; preds = %bb.el
   br i1 %.not.i369.not, label %.lr.ph.i.i.i370, label %_ZSt7reverseIPhEvT_S1_.exit.i375
 
 .lr.ph.i.i.i370:                                  ; preds = %bb.em
-  %54 = bitcast double %i.acb to <8 x i8>
-  %55 = shufflevector <8 x i8> %54, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %55, ptr %5, align 8, !tbaa !81
+  %45 = bitcast double %i.acb to i64
+  %46 = call i64 @llvm.bswap.i64(i64 %45)
+  store i64 %46, ptr %5, align 8, !tbaa !81
   br label %_ZSt7reverseIPhEvT_S1_.exit.i375
 
 _ZSt7reverseIPhEvT_S1_.exit.i375:                 ; preds = %.lr.ph.i.i.i370, %bb.em
@@ -2096,7 +2081,7 @@ _ZSt11find_if_notIN8nlohmann16json_abi_v3_12_06detail9iter_implIKNS1_10basic_jso
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN8nlohmann16json_abi_v3_12_06detail13binary_writerINS0_10basic_jsonISt3mapSt6vectorNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEblmdSaNS0_14adl_serializerES5_IhSaIhEEvEEhE12write_numberIjEEvT_b(ptr noundef nonnull align 8 dereferenceable(24) %0, i32 noundef %1, i1 noundef zeroext %2) local_unnamed_addr #3 comdat align 2 {
 bb.a:
-  %3 = alloca %"struct.std::array.192", align 4   ; 8 uses
+  %3 = alloca %"struct.std::array.192", align 4   ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #29
   store i32 %1, ptr %3, align 4
   %i.a = load i8, ptr %0, align 8, !tbaa !294, !range !64, !noundef !65
@@ -2105,20 +2090,8 @@ bb.a:
   br i1 %.not, label %_ZSt7reverseIPhEvT_S1_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
-  %4 = lshr i32 %1, 16
-  %5 = trunc i32 %4 to i8
-  %6 = lshr i32 %1, 8
-  %7 = trunc i32 %6 to i8
-  %8 = lshr i32 %1, 24
-  %9 = trunc nuw i32 %8 to i8
-  %10 = trunc i32 %1 to i8
-  %.012.i.i = getelementptr inbounds nuw i8, ptr %3, i64 3
-  store i8 %9, ptr %3, align 4, !tbaa !81
-  store i8 %10, ptr %.012.i.i, align 1, !tbaa !81
-  %11 = getelementptr inbounds nuw i8, ptr %3, i64 1
-  %.0.i.i = getelementptr inbounds nuw i8, ptr %3, i64 2
-  store i8 %5, ptr %11, align 1, !tbaa !81
-  store i8 %7, ptr %.0.i.i, align 2, !tbaa !81
+  %4 = tail call i32 @llvm.bswap.i32(i32 %1)
+  store i32 %4, ptr %3, align 4, !tbaa !81
   br label %_ZSt7reverseIPhEvT_S1_.exit
 
 _ZSt7reverseIPhEvT_S1_.exit:                      ; preds = %.lr.ph.i.i, %bb.a
@@ -2144,9 +2117,8 @@ bb.a:
   br i1 %.not, label %_ZSt7reverseIPhEvT_S1_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
-  %4 = bitcast i64 %1 to <8 x i8>
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %5, ptr %3, align 8, !tbaa !81
+  %4 = tail call i64 @llvm.bswap.i64(i64 %1)
+  store i64 %4, ptr %3, align 8, !tbaa !81
   br label %_ZSt7reverseIPhEvT_S1_.exit
 
 _ZSt7reverseIPhEvT_S1_.exit:                      ; preds = %.lr.ph.i.i, %bb.a
@@ -2172,9 +2144,8 @@ bb.a:
   br i1 %.not, label %_ZSt7reverseIPhEvT_S1_.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
-  %4 = bitcast i64 %1 to <8 x i8>
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %5, ptr %3, align 8, !tbaa !81
+  %4 = tail call i64 @llvm.bswap.i64(i64 %1)
+  store i64 %4, ptr %3, align 8, !tbaa !81
   br label %_ZSt7reverseIPhEvT_S1_.exit
 
 _ZSt7reverseIPhEvT_S1_.exit:                      ; preds = %.lr.ph.i.i, %bb.a
@@ -2576,6 +2547,12 @@ declare i64 @llvm.umax.i64(i64, i64) #25
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #28
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #25
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #25
 
 attributes #0 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

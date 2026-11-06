@@ -204,40 +204,16 @@ bb.e:                                             ; preds = %bb.d
   %i.h = load ptr, ptr %0, align 8, !tbaa !51
   %.not31 = icmp eq ptr %i.h, null
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 9
-  %i.j = select i1 %.not31, ptr %i.i, ptr %i.g    ; 10 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.j, i64 4
+  %i.j = select i1 %.not31, ptr %i.i, ptr %i.g    ; 4 uses
+  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 4
   store <4 x i8> <i8 0, i8 0, i8 4, i8 8>, ptr %i.j, align 1, !tbaa !52
-  %7 = getelementptr inbounds nuw i8, ptr %i.j, i64 5
-  store i8 0, ptr %6, align 1, !tbaa !52
-  %8 = lshr i32 %1, 24
-  %9 = trunc nuw i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %i.j, i64 6
-  store i8 %9, ptr %7, align 1, !tbaa !52
-  %11 = lshr i32 %1, 16
-  %12 = trunc i32 %11 to i8
-  %13 = getelementptr inbounds nuw i8, ptr %i.j, i64 7
-  store i8 %12, ptr %10, align 1, !tbaa !52
-  %14 = lshr i32 %1, 8
-  %15 = trunc i32 %14 to i8
-  %16 = getelementptr inbounds nuw i8, ptr %i.j, i64 8
-  store i8 %15, ptr %13, align 1, !tbaa !52
-  %17 = trunc i32 %1 to i8
-  %i.k = getelementptr inbounds nuw i8, ptr %i.j, i64 9
-  store i8 %17, ptr %16, align 1, !tbaa !52
-  %18 = lshr i32 %2, 24
-  %19 = trunc nuw i32 %18 to i8
-  %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 10
-  store i8 %19, ptr %i.k, align 1, !tbaa !52
-  %20 = lshr i32 %2, 16
-  %21 = trunc i32 %20 to i8
-  %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 11
-  store i8 %21, ptr %i.l, align 1, !tbaa !52
-  %22 = lshr i32 %2, 8
-  %23 = trunc i32 %22 to i8
-  %24 = getelementptr inbounds nuw i8, ptr %i.j, i64 12
-  store i8 %23, ptr %i.m, align 1, !tbaa !52
-  %25 = trunc i32 %2 to i8
-  store i8 %25, ptr %24, align 1, !tbaa !52
+  %i.l = getelementptr inbounds nuw i8, ptr %i.j, i64 5
+  store i8 0, ptr %i.k, align 1, !tbaa !52
+  %i.m = getelementptr inbounds nuw i8, ptr %i.j, i64 9
+  %6 = call i32 @llvm.bswap.i32(i32 %1)
+  store i32 %6, ptr %i.l, align 1, !tbaa !52
+  %7 = call i32 @llvm.bswap.i32(i32 %2)
+  store i32 %7, ptr %i.m, align 1, !tbaa !52
   ret void
 }
 
@@ -639,6 +615,9 @@ declare i64 @llvm.umax.i64(i64, i64) #17
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #17
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #17
 
 attributes #0 = { mustprogress uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

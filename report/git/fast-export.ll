@@ -204,25 +204,13 @@ generate_fake_oid.exit.i:                         ; preds = %bb.ce, %bb.cd, %bb.
   %.2.i.i.i.i = phi i32 [ %spec.select.i.i.i.i, %bb.ce ], [ 0, %bb.cc ], [ 1, %bb.cd ]
   store i32 %.2.i.i.i.i, ptr %i.lb, align 4, !tbaa !96
   %i.rw = and i64 %i.rr, 4294967295
-  %i.rx = getelementptr inbounds nuw i8, ptr %4, i64 %i.rw ; 4 uses
+  %i.rx = getelementptr inbounds nuw i8, ptr %4, i64 %i.rw
   %i.ry = getelementptr inbounds i8, ptr %i.rx, i64 -4
-  %i.rz = load i32, ptr @generate_fake_oid.counter, align 4, !tbaa !39 ; 5 uses
+  %i.rz = load i32, ptr @generate_fake_oid.counter, align 4, !tbaa !39 ; 2 uses
   %i.sa = add i32 %i.rz, 1
   store i32 %i.sa, ptr @generate_fake_oid.counter, align 4, !tbaa !39
-  %12 = lshr i32 %i.rz, 24
-  %13 = trunc nuw i32 %12 to i8
-  store i8 %13, ptr %i.ry, align 1, !tbaa !46
-  %14 = lshr i32 %i.rz, 16
-  %15 = trunc i32 %14 to i8
-  %16 = getelementptr inbounds i8, ptr %i.rx, i64 -3
-  store i8 %15, ptr %16, align 1, !tbaa !46
-  %17 = lshr i32 %i.rz, 8
-  %18 = trunc i32 %17 to i8
-  %19 = getelementptr inbounds i8, ptr %i.rx, i64 -2
-  store i8 %18, ptr %19, align 1, !tbaa !46
-  %20 = trunc i32 %i.rz to i8
-  %21 = getelementptr inbounds i8, ptr %i.rx, i64 -1
-  store i8 %20, ptr %21, align 1, !tbaa !46
+  %12 = call i32 @llvm.bswap.i32(i32 %i.rz)
+  store i32 %12, ptr %i.ry, align 1, !tbaa !46
   %i.sb = call ptr @oid_to_hex_r(ptr noundef %i.rs, ptr noundef nonnull %4) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #18
   %i.sc = call fastcc ptr @add_anonymized_entry(ptr noundef nonnull @anonymize_oid.objs, i32 noundef %i.rm, ptr noundef nonnull %i.rh, i64 noundef %i.ri, ptr noundef %i.sb)
@@ -625,25 +613,13 @@ generate_fake_oid.exit:                           ; preds = %bb.c, %bb.d, %bb.e
   %i.r = getelementptr inbounds nuw i8, ptr %1, i64 32
   store i32 %.2.i.i.i, ptr %i.r, align 4, !tbaa !96
   %i.s = and i64 %i.m, 4294967295
-  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 %i.s ; 4 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %1, i64 %i.s
   %i.u = getelementptr inbounds i8, ptr %i.t, i64 -4
-  %i.v = load i32, ptr @generate_fake_oid.counter, align 4, !tbaa !39 ; 5 uses
+  %i.v = load i32, ptr @generate_fake_oid.counter, align 4, !tbaa !39 ; 2 uses
   %i.w = add i32 %i.v, 1
   store i32 %i.w, ptr @generate_fake_oid.counter, align 4, !tbaa !39
-  %3 = lshr i32 %i.v, 24
-  %4 = trunc nuw i32 %3 to i8
-  store i8 %4, ptr %i.u, align 1, !tbaa !46
-  %5 = lshr i32 %i.v, 16
-  %6 = trunc i32 %5 to i8
-  %7 = getelementptr inbounds i8, ptr %i.t, i64 -3
-  store i8 %6, ptr %7, align 1, !tbaa !46
-  %8 = lshr i32 %i.v, 8
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds i8, ptr %i.t, i64 -2
-  store i8 %9, ptr %10, align 1, !tbaa !46
-  %11 = trunc i32 %i.v to i8
-  %12 = getelementptr inbounds i8, ptr %i.t, i64 -1
-  store i8 %11, ptr %12, align 1, !tbaa !46
+  %3 = call i32 @llvm.bswap.i32(i32 %i.v)
+  store i32 %3, ptr %i.u, align 1, !tbaa !46
   %i.x = call ptr @oid_to_hex_r(ptr noundef %i.n, ptr noundef nonnull %1) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #18
   %i.y = call fastcc ptr @add_anonymized_entry(ptr noundef nonnull @anonymize_oid.objs, i32 noundef %i.h, ptr noundef nonnull %0, i64 noundef %i.a, ptr noundef %i.x)
@@ -1045,6 +1021,9 @@ declare noundef i32 @puts(ptr noundef readonly captures(none)) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smin.i32(i32, i32) #10
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #10
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

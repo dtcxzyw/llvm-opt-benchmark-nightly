@@ -205,7 +205,7 @@ _ZL14OPENSSL_memcpyPvPKvm.exit:                   ; preds = %bb.f, %bb.e, %bb.d,
 define hidden range(i32 0, 2) i32 @PKCS1_MGF1(ptr noundef %0, i64 noundef %1, ptr noundef %2, i64 noundef %3, ptr noundef %4) local_unnamed_addr #5 {
 bb.a:
   %5 = alloca %struct.env_md_ctx_st, align 8      ; 20 uses
-  %i.a = alloca [4 x i8], align 1                 ; 8 uses
+  %i.a = alloca [4 x i8], align 4                 ; 5 uses
   %i.b = alloca [64 x i8], align 16               ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #36
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %5, i8 0, i64 32, i1 false)
@@ -216,29 +216,17 @@ bb.a:
   br i1 %.not49, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %7 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %8 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
   %i.f = getelementptr inbounds nuw i8, ptr %4, i64 44
   %i.g = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.e
-  %.02452 = phi i32 [ 0, %.lr.ph ], [ %i.am, %bb.e ] ; 5 uses
+  %.02452 = phi i32 [ 0, %.lr.ph ], [ %i.am, %bb.e ] ; 2 uses
   %.02751 = phi ptr [ %0, %.lr.ph ], [ %i.ak, %bb.e ] ; 3 uses
   %.03050 = phi i64 [ %1, %.lr.ph ], [ %i.al, %bb.e ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #36
-  %9 = lshr i32 %.02452, 24
-  %10 = trunc nuw i32 %9 to i8
-  store i8 %10, ptr %i.a, align 1, !tbaa !80
-  %11 = lshr i32 %.02452, 16
-  %12 = trunc i32 %11 to i8
-  store i8 %12, ptr %6, align 1, !tbaa !80
-  %13 = lshr i32 %.02452, 8
-  %14 = trunc i32 %13 to i8
-  store i8 %14, ptr %7, align 1, !tbaa !80
-  %15 = trunc i32 %.02452 to i8
-  store i8 %15, ptr %8, align 1, !tbaa !80
+  %6 = call i32 @llvm.bswap.i32(i32 %.02452)
+  store i32 %6, ptr %i.a, align 4, !tbaa !80
   %i.h = load ptr, ptr %5, align 8, !tbaa !206    ; 2 uses
   %.not.i = icmp eq ptr %i.h, %4
   br i1 %.not.i, label %bb.d, label %bb.c

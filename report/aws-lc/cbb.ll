@@ -204,21 +204,9 @@ bb.a:
   br i1 %.not.i, label %cbb_add_u.exit, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a
-  %i.c = load ptr, ptr %i.a, align 8, !tbaa !16   ; 4 uses
-  %2 = trunc i32 %1 to i8
-  %3 = getelementptr inbounds nuw i8, ptr %i.c, i64 3
-  store i8 %2, ptr %3, align 1, !tbaa !14
-  %4 = lshr i32 %1, 8
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.c, i64 2
-  store i8 %5, ptr %6, align 1, !tbaa !14
-  %7 = lshr i32 %1, 16
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.c, i64 1
-  store i8 %8, ptr %9, align 1, !tbaa !14
-  %10 = lshr i32 %1, 24
-  %11 = trunc nuw i32 %10 to i8
-  store i8 %11, ptr %i.c, align 1, !tbaa !14
+  %i.c = load ptr, ptr %i.a, align 8, !tbaa !16
+  %2 = call i32 @llvm.bswap.i32(i32 %1)
+  store i32 %2, ptr %i.c, align 1, !tbaa !14
   br label %cbb_add_u.exit
 
 cbb_add_u.exit:                                   ; preds = %.lr.ph.i, %bb.a
@@ -237,22 +225,8 @@ bb.a:
   br i1 %.not.i.i, label %CBB_add_u32.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
-  %2 = call noundef i32 @llvm.bswap.i32(i32 %1)   ; 4 uses
-  %i.c = load ptr, ptr %i.a, align 8, !tbaa !16   ; 4 uses
-  %3 = trunc i32 %2 to i8
-  %4 = getelementptr inbounds nuw i8, ptr %i.c, i64 3
-  store i8 %3, ptr %4, align 1, !tbaa !14
-  %5 = lshr i32 %2, 8
-  %6 = trunc i32 %5 to i8
-  %7 = getelementptr inbounds nuw i8, ptr %i.c, i64 2
-  store i8 %6, ptr %7, align 1, !tbaa !14
-  %8 = lshr i32 %2, 16
-  %9 = trunc i32 %8 to i8
-  %10 = getelementptr inbounds nuw i8, ptr %i.c, i64 1
-  store i8 %9, ptr %10, align 1, !tbaa !14
-  %11 = lshr i32 %2, 24
-  %12 = trunc nuw i32 %11 to i8
-  store i8 %12, ptr %i.c, align 1, !tbaa !14
+  %i.c = load ptr, ptr %i.a, align 8, !tbaa !16
+  store i32 %1, ptr %i.c, align 1, !tbaa !14
   br label %CBB_add_u32.exit
 
 CBB_add_u32.exit:                                 ; preds = %bb.a, %.lr.ph.i.i
@@ -272,9 +246,8 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %bb.a
   %i.c = load ptr, ptr %i.a, align 8, !tbaa !16
-  %2 = bitcast i64 %1 to <8 x i8>
-  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %3, ptr %i.c, align 1, !tbaa !14
+  %2 = call i64 @llvm.bswap.i64(i64 %1)
+  store i64 %2, ptr %i.c, align 1, !tbaa !14
   br label %cbb_add_u.exit
 
 cbb_add_u.exit:                                   ; preds = %.lr.ph.i, %bb.a
@@ -293,11 +266,8 @@ bb.a:
   br i1 %.not.i.i, label %CBB_add_u64.exit, label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.a
-  %2 = call noundef i64 @llvm.bswap.i64(i64 %1)
   %i.c = load ptr, ptr %i.a, align 8, !tbaa !16
-  %3 = bitcast i64 %2 to <8 x i8>
-  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %4, ptr %i.c, align 1, !tbaa !14
+  store i64 %1, ptr %i.c, align 1, !tbaa !14
   br label %CBB_add_u64.exit
 
 CBB_add_u64.exit:                                 ; preds = %bb.a, %.lr.ph.i.i

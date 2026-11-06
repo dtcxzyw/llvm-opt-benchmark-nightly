@@ -205,22 +205,10 @@ bb.f:                                             ; preds = %bb.d
 ; Function Attrs: nofree norecurse nosync nounwind memory(read, inaccessiblemem: readwrite, target_mem: none) uwtable
 define range(i32 0, 256) i32 @png_chunk_unknown_handling(ptr noalias nofree noundef readonly captures(address_is_null) %0, i32 noundef %1) local_unnamed_addr #14 {
 bb.a:
-  %i.a = alloca [5 x i8], align 1                 ; 7 uses
+  %i.a = alloca [5 x i8], align 4                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #28
-  %2 = lshr i32 %1, 24
-  %3 = trunc nuw i32 %2 to i8
-  store i8 %3, ptr %i.a, align 1, !tbaa !28
-  %4 = lshr i32 %1, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %5, ptr %6, align 1, !tbaa !28
-  %7 = lshr i32 %1, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %8, ptr %9, align 1, !tbaa !28
-  %10 = trunc i32 %1 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %10, ptr %11, align 1, !tbaa !28
+  %2 = tail call i32 @llvm.bswap.i32(i32 %1)
+  store i32 %2, ptr %i.a, align 4, !tbaa !28
   tail call void @llvm.experimental.noalias.scope.decl(metadata !129)
   %i.b = icmp eq ptr %0, null
   br i1 %i.b, label %png_handle_as_unknown.exit, label %bb.b
@@ -242,7 +230,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %bb.f, %bb.c
   %.0.i = phi ptr [ %i.j, %bb.c ], [ %i.k, %bb.f ] ; 2 uses
   %i.k = getelementptr inbounds i8, ptr %.0.i, i64 -5 ; 3 uses
-  %i.l = load i32, ptr %i.a, align 1
+  %i.l = load i32, ptr %i.a, align 4
   %i.m = load i32, ptr %i.k, align 1
   %i.n = icmp ne i32 %i.l, %i.m
   %i.o = zext i1 %i.n to i32
@@ -645,10 +633,10 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #24
 declare void @llvm.assume(i1 noundef) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare <2 x double> @llvm.floor.v2f64(<2 x double>) #19
+declare i32 @llvm.bswap.i32(i32) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.bswap.i32(i32) #19
+declare <2 x double> @llvm.floor.v2f64(<2 x double>) #19
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.usub.sat.i32(i32, i32) #19

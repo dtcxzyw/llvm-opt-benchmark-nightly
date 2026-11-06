@@ -22,7 +22,7 @@ bb.a:
   br i1 %.not, label %zend_hash_str_find_deref.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call ptr @zend_hash_str_find(ptr noundef nonnull %1, ptr noundef nonnull @.str.2, i64 noundef 4) #5 ; 4 uses
+  %i.a = tail call ptr @zend_hash_str_find(ptr noundef nonnull %1, ptr noundef nonnull @.str.2, i64 noundef 4) #6 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %zend_hash_str_find_deref.exit, label %bb.c
 
@@ -51,7 +51,7 @@ bb.f:                                             ; preds = %bb.e
   br label %zend_hash_str_find_deref.exit
 
 bb.g:                                             ; preds = %bb.e
-  tail call void (ptr, i32, ptr, ...) @php_error_docref(ptr noundef null, i32 noundef 8192, ptr noundef nonnull @.str.3) #5
+  tail call void (ptr, i32, ptr, ...) @php_error_docref(ptr noundef null, i32 noundef 8192, ptr noundef nonnull @.str.3) #6
   br label %zend_hash_str_find_deref.exit
 
 zend_hash_str_find_deref.exit:                    ; preds = %bb.a, %bb.b, %bb.g, %bb.f
@@ -73,7 +73,7 @@ bb.a:
   %i.d = add i32 %i.b, %i.c
   store i32 %i.d, ptr %i.a, align 4, !tbaa !17
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 4
-  tail call void @PMurHash32_Process(ptr noundef %0, ptr noundef nonnull %i.e, ptr noundef %1, i32 noundef %i.c) #5
+  tail call void @PMurHash32_Process(ptr noundef %0, ptr noundef nonnull %i.e, ptr noundef %1, i32 noundef %i.c) #6
   ret void
 }
 
@@ -85,7 +85,7 @@ bb.a:
   %i.c = load i32, ptr %i.b, align 4, !tbaa !16
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.e = load i32, ptr %i.d, align 4, !tbaa !17
-  %i.f = tail call i32 @PMurHash32_Result(i32 noundef %i.a, i32 noundef %i.c, i32 noundef %i.e) #5 ; 2 uses
+  %i.f = tail call i32 @PMurHash32_Result(i32 noundef %i.a, i32 noundef %i.c, i32 noundef %i.e) #6 ; 2 uses
   store i32 %i.f, ptr %1, align 4, !tbaa !15
   %i.g = lshr i32 %i.f, 24
   %i.h = trunc nuw i32 %i.g to i8
@@ -142,7 +142,7 @@ bb.a:
   br i1 %.not, label %bb.h, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call ptr @zend_hash_str_find(ptr noundef nonnull %1, ptr noundef nonnull @.str.2, i64 noundef 4) #5 ; 4 uses
+  %i.a = tail call ptr @zend_hash_str_find(ptr noundef nonnull %1, ptr noundef nonnull @.str.2, i64 noundef 4) #6 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %zend_hash_str_find_deref.exit, label %bb.c
 
@@ -174,7 +174,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.e
-  tail call void (ptr, i32, ptr, ...) @php_error_docref(ptr noundef null, i32 noundef 8192, ptr noundef nonnull @.str.3) #5
+  tail call void (ptr, i32, ptr, ...) @php_error_docref(ptr noundef null, i32 noundef 8192, ptr noundef nonnull @.str.3) #6
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %0, i8 0, i64 16, i1 false)
   br label %bb.i
 
@@ -201,7 +201,7 @@ bb.a:
   %i.d = add i32 %i.b, %i.c
   store i32 %i.d, ptr %i.a, align 4, !tbaa !20
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
-  tail call void @PMurHash128x86_Process(ptr noundef %0, ptr noundef nonnull %i.e, ptr noundef %1, i32 noundef %i.c) #5
+  tail call void @PMurHash128x86_Process(ptr noundef %0, ptr noundef nonnull %i.e, ptr noundef %1, i32 noundef %i.c) #6
   ret void
 }
 
@@ -209,79 +209,31 @@ bb.a:
 define dso_local void @PHP_MURMUR3CFinal(ptr nofree noundef writeonly captures(none) initializes((0, 16)) %0, ptr noundef %1) #0 {
 bb.a:
   %i.a = alloca [4 x i32], align 16               ; 8 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.d = load i32, ptr %i.c, align 4, !tbaa !20
-  call void @PMurHash128x86_Result(ptr noundef %1, ptr noundef nonnull %i.b, i32 noundef %i.d, ptr noundef nonnull %i.a) #5
-  %i.e = load i32, ptr %i.a, align 16, !tbaa !18  ; 4 uses
-  %2 = lshr i32 %i.e, 24
-  %3 = trunc nuw i32 %2 to i8
-  store i8 %3, ptr %0, align 1, !tbaa !12
-  %4 = lshr i32 %i.e, 16
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 1
-  store i8 %5, ptr %6, align 1, !tbaa !12
-  %7 = lshr i32 %i.e, 8
-  %8 = trunc i32 %7 to i8
-  %9 = getelementptr inbounds nuw i8, ptr %0, i64 2
-  store i8 %8, ptr %9, align 1, !tbaa !12
-  %10 = trunc i32 %i.e to i8
-  %11 = getelementptr inbounds nuw i8, ptr %0, i64 3
-  store i8 %10, ptr %11, align 1, !tbaa !12
+  call void @PMurHash128x86_Result(ptr noundef %1, ptr noundef nonnull %i.b, i32 noundef %i.d, ptr noundef nonnull %i.a) #6
+  %i.e = load i32, ptr %i.a, align 16, !tbaa !18
+  %2 = call i32 @llvm.bswap.i32(i32 %i.e)
+  store i32 %2, ptr %0, align 1, !tbaa !12
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %i.g = load i32, ptr %i.f, align 4, !tbaa !18   ; 4 uses
-  %12 = lshr i32 %i.g, 24
-  %13 = trunc nuw i32 %12 to i8
+  %i.g = load i32, ptr %i.f, align 4, !tbaa !18
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 4
-  store i8 %13, ptr %i.h, align 1, !tbaa !12
-  %14 = lshr i32 %i.g, 16
-  %15 = trunc i32 %14 to i8
-  %16 = getelementptr inbounds nuw i8, ptr %0, i64 5
-  store i8 %15, ptr %16, align 1, !tbaa !12
-  %17 = lshr i32 %i.g, 8
-  %18 = trunc i32 %17 to i8
-  %19 = getelementptr inbounds nuw i8, ptr %0, i64 6
-  store i8 %18, ptr %19, align 1, !tbaa !12
-  %20 = trunc i32 %i.g to i8
-  %21 = getelementptr inbounds nuw i8, ptr %0, i64 7
-  store i8 %20, ptr %21, align 1, !tbaa !12
+  %3 = call i32 @llvm.bswap.i32(i32 %i.g)
+  store i32 %3, ptr %i.h, align 1, !tbaa !12
   %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %i.j = load i32, ptr %i.i, align 8, !tbaa !18   ; 4 uses
-  %22 = lshr i32 %i.j, 24
-  %23 = trunc nuw i32 %22 to i8
+  %i.j = load i32, ptr %i.i, align 8, !tbaa !18
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store i8 %23, ptr %i.k, align 1, !tbaa !12
-  %24 = lshr i32 %i.j, 16
-  %25 = trunc i32 %24 to i8
-  %26 = getelementptr inbounds nuw i8, ptr %0, i64 9
-  store i8 %25, ptr %26, align 1, !tbaa !12
-  %27 = lshr i32 %i.j, 8
-  %28 = trunc i32 %27 to i8
-  %29 = getelementptr inbounds nuw i8, ptr %0, i64 10
-  store i8 %28, ptr %29, align 1, !tbaa !12
-  %30 = trunc i32 %i.j to i8
-  %31 = getelementptr inbounds nuw i8, ptr %0, i64 11
-  store i8 %30, ptr %31, align 1, !tbaa !12
+  %4 = call i32 @llvm.bswap.i32(i32 %i.j)
+  store i32 %4, ptr %i.k, align 1, !tbaa !12
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 12
-  %i.m = load i32, ptr %i.l, align 4, !tbaa !18   ; 4 uses
-  %32 = lshr i32 %i.m, 24
-  %33 = trunc nuw i32 %32 to i8
+  %i.m = load i32, ptr %i.l, align 4, !tbaa !18
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 12
-  store i8 %33, ptr %i.n, align 1, !tbaa !12
-  %34 = lshr i32 %i.m, 16
-  %35 = trunc i32 %34 to i8
-  %36 = getelementptr inbounds nuw i8, ptr %0, i64 13
-  store i8 %35, ptr %36, align 1, !tbaa !12
-  %37 = lshr i32 %i.m, 8
-  %38 = trunc i32 %37 to i8
-  %39 = getelementptr inbounds nuw i8, ptr %0, i64 14
-  store i8 %38, ptr %39, align 1, !tbaa !12
-  %40 = trunc i32 %i.m to i8
-  %41 = getelementptr inbounds nuw i8, ptr %0, i64 15
-  store i8 %40, ptr %41, align 1, !tbaa !12
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  %5 = call i32 @llvm.bswap.i32(i32 %i.m)
+  store i32 %5, ptr %i.n, align 1, !tbaa !12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret void
 }
 
@@ -316,7 +268,7 @@ bb.a:
   br i1 %.not, label %bb.h, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.a = tail call ptr @zend_hash_str_find(ptr noundef nonnull %1, ptr noundef nonnull @.str.2, i64 noundef 4) #5 ; 4 uses
+  %i.a = tail call ptr @zend_hash_str_find(ptr noundef nonnull %1, ptr noundef nonnull @.str.2, i64 noundef 4) #6 ; 4 uses
   %.not.i = icmp eq ptr %i.a, null
   br i1 %.not.i, label %zend_hash_str_find_deref.exit, label %bb.c
 
@@ -347,7 +299,7 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.i
 
 bb.g:                                             ; preds = %bb.e
-  tail call void (ptr, i32, ptr, ...) @php_error_docref(ptr noundef null, i32 noundef 8192, ptr noundef nonnull @.str.3) #5
+  tail call void (ptr, i32, ptr, ...) @php_error_docref(ptr noundef null, i32 noundef 8192, ptr noundef nonnull @.str.3) #6
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, i8 0, i64 16, i1 false)
   br label %bb.i
 
@@ -374,7 +326,7 @@ bb.a:
   %i.d = add i32 %i.b, %i.c
   store i32 %i.d, ptr %i.a, align 8, !tbaa !20
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 16
-  tail call void @PMurHash128x64_Process(ptr noundef %0, ptr noundef nonnull %i.e, ptr noundef %1, i32 noundef %i.c) #5
+  tail call void @PMurHash128x64_Process(ptr noundef %0, ptr noundef nonnull %i.e, ptr noundef %1, i32 noundef %i.c) #6
   ret void
 }
 
@@ -382,21 +334,21 @@ bb.a:
 define dso_local void @PHP_MURMUR3FFinal(ptr nofree noundef writeonly captures(none) initializes((0, 16)) %0, ptr noundef %1) #0 {
 bb.a:
   %i.a = alloca [2 x i64], align 16               ; 6 uses
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #5
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #6
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %i.a, i8 0, i64 16, i1 false)
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.d = load i32, ptr %i.c, align 8, !tbaa !20
-  call void @PMurHash128x64_Result(ptr noundef %1, ptr noundef nonnull %i.b, i32 noundef %i.d, ptr noundef nonnull %i.a) #5
-  %2 = load <8 x i8>, ptr %i.a, align 16, !tbaa !22
-  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %3, ptr %0, align 1, !tbaa !12
+  call void @PMurHash128x64_Result(ptr noundef %1, ptr noundef nonnull %i.b, i32 noundef %i.d, ptr noundef nonnull %i.a) #6
+  %2 = load i64, ptr %i.a, align 16, !tbaa !22
+  %3 = call i64 @llvm.bswap.i64(i64 %2)
+  store i64 %3, ptr %0, align 1, !tbaa !12
   %i.e = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %4 = load <8 x i8>, ptr %i.e, align 8, !tbaa !22
+  %4 = load i64, ptr %i.e, align 8, !tbaa !22
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %5, ptr %i.f, align 1, !tbaa !12
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #5
+  %5 = call i64 @llvm.bswap.i64(i64 %4)
+  store i64 %5, ptr %i.f, align 1, !tbaa !12
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #6
   ret void
 }
 
@@ -420,12 +372,19 @@ declare void @PMurHash128x64_Result(ptr noundef, ptr noundef, i32 noundef, ptr n
 
 declare ptr @zend_hash_str_find(ptr noundef, ptr noundef, i64 noundef) local_unnamed_addr #2
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #5
+
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #2 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #5 = { nounwind }
+attributes #5 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #6 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3, !4, !5}
 !llvm.ident = !{!6}

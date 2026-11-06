@@ -162,41 +162,17 @@ bb.i:                                             ; preds = %._crit_edge
 ; Function Attrs: nounwind uwtable
 define dso_local void @PHP_SHA256Final(ptr nofree noundef writeonly captures(none) initializes((0, 32)) %0, ptr noundef %1) #2 {
 SHAEncode32.exit:
-  %i.a = alloca [8 x i8], align 1                 ; 11 uses
+  %i.a = alloca [8 x i8], align 4                 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.c = load i32, ptr %i.b, align 4, !tbaa !14   ; 5 uses
-  %2 = trunc i32 %i.c to i8
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  store i8 %2, ptr %3, align 1, !tbaa !16
-  %4 = lshr i32 %i.c, 8
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %5, ptr %6, align 1, !tbaa !16
-  %7 = lshr i32 %i.c, 16
-  %8 = trunc i32 %7 to i8
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %8, ptr %i.d, align 1, !tbaa !16
-  %9 = lshr i32 %i.c, 24
-  %10 = trunc nuw i32 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %10, ptr %11, align 1, !tbaa !16
+  %i.c = load i32, ptr %i.b, align 4, !tbaa !14   ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.c)
+  store i32 %2, ptr %i.d, align 4, !tbaa !16
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 36
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !14   ; 4 uses
-  %12 = trunc i32 %i.f to i8
-  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %12, ptr %13, align 1, !tbaa !16
-  %14 = lshr i32 %i.f, 8
-  %15 = trunc i32 %14 to i8
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %15, ptr %16, align 1, !tbaa !16
-  %17 = lshr i32 %i.f, 16
-  %18 = trunc i32 %17 to i8
-  %19 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %18, ptr %19, align 1, !tbaa !16
-  %20 = lshr i32 %i.f, 24
-  %21 = trunc nuw i32 %20 to i8
-  store i8 %21, ptr %i.a, align 1, !tbaa !16
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !14
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.f)
+  store i32 %3, ptr %i.a, align 4, !tbaa !16
   %i.g = lshr i32 %i.c, 3
   %i.h = and i32 %i.g, 63                         ; 2 uses
   %i.i = icmp samesign ult i32 %i.h, 56
@@ -491,41 +467,17 @@ bb.i:                                             ; preds = %._crit_edge
 ; Function Attrs: nounwind uwtable
 define dso_local void @PHP_SHA224Final(ptr nofree noundef writeonly captures(none) initializes((0, 28)) %0, ptr noundef %1) #2 {
 SHAEncode32.exit:
-  %i.a = alloca [8 x i8], align 1                 ; 11 uses
+  %i.a = alloca [8 x i8], align 4                 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #7
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.c = load i32, ptr %i.b, align 4, !tbaa !14   ; 5 uses
-  %2 = trunc i32 %i.c to i8
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 7
-  store i8 %2, ptr %3, align 1, !tbaa !16
-  %4 = lshr i32 %i.c, 8
-  %5 = trunc i32 %4 to i8
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 6
-  store i8 %5, ptr %6, align 1, !tbaa !16
-  %7 = lshr i32 %i.c, 16
-  %8 = trunc i32 %7 to i8
-  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 5
-  store i8 %8, ptr %i.d, align 1, !tbaa !16
-  %9 = lshr i32 %i.c, 24
-  %10 = trunc nuw i32 %9 to i8
-  %11 = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  store i8 %10, ptr %11, align 1, !tbaa !16
+  %i.c = load i32, ptr %i.b, align 4, !tbaa !14   ; 2 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 4
+  %2 = tail call i32 @llvm.bswap.i32(i32 %i.c)
+  store i32 %2, ptr %i.d, align 4, !tbaa !16
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 36
-  %i.f = load i32, ptr %i.e, align 4, !tbaa !14   ; 4 uses
-  %12 = trunc i32 %i.f to i8
-  %13 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  store i8 %12, ptr %13, align 1, !tbaa !16
-  %14 = lshr i32 %i.f, 8
-  %15 = trunc i32 %14 to i8
-  %16 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 %15, ptr %16, align 1, !tbaa !16
-  %17 = lshr i32 %i.f, 16
-  %18 = trunc i32 %17 to i8
-  %19 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  store i8 %18, ptr %19, align 1, !tbaa !16
-  %20 = lshr i32 %i.f, 24
-  %21 = trunc nuw i32 %20 to i8
-  store i8 %21, ptr %i.a, align 1, !tbaa !16
+  %i.f = load i32, ptr %i.e, align 4, !tbaa !14
+  %3 = tail call i32 @llvm.bswap.i32(i32 %i.f)
+  store i32 %3, ptr %i.a, align 4, !tbaa !16
   %i.g = lshr i32 %i.c, 3
   %i.h = and i32 %i.g, 63                         ; 2 uses
   %i.i = icmp samesign ult i32 %i.h, 56
@@ -928,14 +880,12 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 4 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !18   ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %2 = bitcast i64 %i.c to <8 x i8>
-  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %3, ptr %i.d, align 8, !tbaa !16
+  %2 = tail call i64 @llvm.bswap.i64(i64 %i.c)
+  store i64 %2, ptr %i.d, align 8, !tbaa !16
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 4 uses
   %i.f = load i64, ptr %i.e, align 8, !tbaa !18   ; 2 uses
-  %4 = bitcast i64 %i.f to <8 x i8>
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %5, ptr %i.a, align 16, !tbaa !16
+  %3 = tail call i64 @llvm.bswap.i64(i64 %i.f)
+  store i64 %3, ptr %i.a, align 16, !tbaa !16
   %i.g = trunc i64 %i.c to i32
   %i.h = lshr i32 %i.g, 3
   %i.i = and i32 %i.h, 127                        ; 5 uses
@@ -1338,14 +1288,12 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 4 uses
   %i.c = load i64, ptr %i.b, align 8, !tbaa !18   ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.a, i64 8
-  %2 = bitcast i64 %i.c to <8 x i8>
-  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %3, ptr %i.d, align 8, !tbaa !16
+  %2 = tail call i64 @llvm.bswap.i64(i64 %i.c)
+  store i64 %2, ptr %i.d, align 8, !tbaa !16
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 4 uses
   %i.f = load i64, ptr %i.e, align 8, !tbaa !18   ; 2 uses
-  %4 = bitcast i64 %i.f to <8 x i8>
-  %5 = shufflevector <8 x i8> %4, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %5, ptr %i.a, align 16, !tbaa !16
+  %3 = tail call i64 @llvm.bswap.i64(i64 %i.f)
+  store i64 %3, ptr %i.a, align 16, !tbaa !16
   %i.g = trunc i64 %i.c to i32
   %i.h = lshr i32 %i.g, 3
   %i.i = and i32 %i.h, 127                        ; 5 uses
@@ -1747,6 +1695,12 @@ declare i64 @llvm.fshl.i64(i64, i64, i64) #5
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
 declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #6
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.bswap.i32(i32) #5
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #5
 
 attributes #0 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: write) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }

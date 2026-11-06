@@ -205,23 +205,11 @@ bb.i:                                             ; preds = %bb.h, %_ZN6Assimp12
 ; Function Attrs: mustprogress uwtable
 define internal fastcc void @_ZN6AssimpL12UnknownChunkEPNS_12StreamReaderILb0ELb0EEERKNS_8SIBChunkE(i32 %.0.val) unnamed_addr #0 personality ptr @__gxx_personality_v0 !guid !138 {
 bb.a:
-  %i.a = alloca [4 x i8], align 1                 ; 8 uses
+  %i.a = alloca [4 x i8], align 4                 ; 5 uses
   %0 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #23
-  %1 = lshr i32 %.0.val, 24
-  %2 = trunc nuw i32 %1 to i8
-  store i8 %2, ptr %i.a, align 1
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 1
-  %4 = lshr i32 %.0.val, 16
-  %5 = trunc i32 %4 to i8
-  store i8 %5, ptr %3, align 1
-  %6 = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  %7 = lshr i32 %.0.val, 8
-  %8 = trunc i32 %7 to i8
-  store i8 %8, ptr %6, align 1
-  %9 = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  %10 = trunc i32 %.0.val to i8
-  store i8 %10, ptr %9, align 1
+  %1 = tail call i32 @llvm.bswap.i32(i32 %.0.val)
+  store i32 %1, ptr %i.a, align 4
   %i.b = tail call noundef ptr @_ZN6Assimp13DefaultLogger3getEv()
   call void @llvm.lifetime.start.p0(ptr nonnull %0) #23
   call void @_Z18ai_str_toprintableB5cxx11PKcic(ptr dead_on_unwind nonnull writable sret(%"class.std::__cxx11::basic_string") align 8 %0, ptr noundef nonnull %i.a, i32 noundef 4, i8 noundef signext 63)

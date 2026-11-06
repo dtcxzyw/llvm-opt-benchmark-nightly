@@ -206,9 +206,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr i8, ptr %i.g, i64 16       ; 3 uses
-  %2 = bitcast i64 %1 to <8 x i8>
-  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %3, ptr %i.g, align 1, !tbaa !354
+  %2 = tail call i64 @llvm.bswap.i64(i64 %1)
+  store i64 %2, ptr %i.g, align 1, !tbaa !354
   %i.j = load i8, ptr %0, align 8, !tbaa !703
   %i.k = getelementptr i8, ptr %i.g, i64 8
   store i8 %i.j, ptr %i.k, align 1, !tbaa !354
@@ -250,9 +249,8 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b
   %i.j = getelementptr i8, ptr %i.h, i64 16       ; 2 uses
-  %3 = bitcast i64 %i.a to <8 x i8>
-  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %4, ptr %i.h, align 1, !tbaa !354
+  %3 = tail call i64 @llvm.bswap.i64(i64 %i.a)
+  store i64 %3, ptr %i.h, align 1, !tbaa !354
   %i.k = load i8, ptr %0, align 8, !tbaa !703
   %i.l = getelementptr i8, ptr %i.h, i64 8
   store i8 %i.k, ptr %i.l, align 1, !tbaa !354
@@ -480,9 +478,8 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.k = getelementptr i8, ptr %i.i, i64 16       ; 3 uses
-  %3 = bitcast i64 %2 to <8 x i8>
-  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %4, ptr %i.i, align 1, !tbaa !354
+  %3 = tail call i64 @llvm.bswap.i64(i64 %2)
+  store i64 %3, ptr %i.i, align 1, !tbaa !354
   %i.l = load i8, ptr %0, align 8, !tbaa !703
   %i.m = getelementptr i8, ptr %i.i, i64 8
   store i8 %i.l, ptr %i.m, align 1, !tbaa !354
@@ -576,9 +573,8 @@ bb.k:                                             ; preds = %bb.j, %bb.i
   %. = select i1 %i.bi, i64 %i.av, i64 %2         ; 6 uses
   %.73 = select i1 %i.bi, ptr %i.r, ptr %i.bh     ; 4 uses
   %i.bj = getelementptr i8, ptr %.73, i64 16      ; 7 uses
-  %5 = bitcast i64 %. to <8 x i8>
-  %6 = shufflevector <8 x i8> %5, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %6, ptr %.73, align 1, !tbaa !354
+  %4 = tail call i64 @llvm.bswap.i64(i64 %.)
+  store i64 %4, ptr %.73, align 1, !tbaa !354
   %i.bk = load i8, ptr %0, align 8, !tbaa !703
   %i.bl = getelementptr i8, ptr %.73, i64 8
   store i8 %i.bk, ptr %i.bl, align 1, !tbaa !354
@@ -659,9 +655,8 @@ bb.c:                                             ; preds = %_PyMem_DebugCheckGI
 
 bb.d:                                             ; preds = %bb.c
   %i.l = getelementptr i8, ptr %i.j, i64 16       ; 3 uses
-  %2 = bitcast i64 %1 to <8 x i8>
-  %3 = shufflevector <8 x i8> %2, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %3, ptr %i.j, align 1, !tbaa !354
+  %2 = tail call i64 @llvm.bswap.i64(i64 %1)
+  store i64 %2, ptr %i.j, align 1, !tbaa !354
   %i.m = load i8, ptr %0, align 8, !tbaa !703
   %i.n = getelementptr i8, ptr %i.j, i64 8
   store i8 %i.m, ptr %i.n, align 1, !tbaa !354
@@ -713,9 +708,8 @@ bb.c:                                             ; preds = %_PyMem_DebugCheckGI
 
 bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr i8, ptr %i.k, i64 16       ; 2 uses
-  %3 = bitcast i64 %i.d to <8 x i8>
-  %4 = shufflevector <8 x i8> %3, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
-  store <8 x i8> %4, ptr %i.k, align 1, !tbaa !354
+  %3 = tail call i64 @llvm.bswap.i64(i64 %i.d)
+  store i64 %3, ptr %i.k, align 1, !tbaa !354
   %i.n = load i8, ptr %0, align 8, !tbaa !703
   %i.o = getelementptr i8, ptr %i.k, i64 8
   store i8 %i.n, ptr %i.o, align 1, !tbaa !354
@@ -1116,6 +1110,9 @@ declare i16 @llvm.umax.i16(i16, i16) #48
 
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.experimental.cttz.elts.i64.v16i1(<16 x i1>, i1 immarg) #26
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i64 @llvm.bswap.i64(i64) #48
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.bswap.i32(i32) #48
