@@ -68,9 +68,9 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define void @_RINvNtNtNtCs4NRVxsYgnAr_4core9core_arch3x864avx220__mm256_shuffle_epi32Kl4e_ECsbvBq90rv2US_11rand_chacha(ptr nofree writeonly sret([32 x i8]) align 32 captures(none) initializes((0, 32)) %0, ptr nofree readonly align 32 captures(none) %1) unnamed_addr #1 !guid !12 {
 bb.a:
-  %2 = load <8 x i32>, ptr %1, align 32
-  %3 = shufflevector <8 x i32> %2, <8 x i32> poison, <8 x i32> <i32 2, i32 3, i32 0, i32 1, i32 6, i32 7, i32 4, i32 5>
-  store <8 x i32> %3, ptr %0, align 32
+  %2 = load <4 x i64>, ptr %1, align 32
+  %3 = shufflevector <4 x i64> %2, <4 x i64> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2>
+  store <4 x i64> %3, ptr %0, align 32
   ret void
 }
 
@@ -185,9 +185,9 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define void @_RINvNtNtNtCs4NRVxsYgnAr_4core9core_arch3x864sse217__mm_shuffle_epi32Kl4e_ECsbvBq90rv2US_11rand_chacha(ptr nofree writeonly sret([16 x i8]) align 16 captures(none) initializes((0, 16)) %0, ptr nofree readonly align 16 captures(none) %1) unnamed_addr #2 !guid !25 {
 bb.a:
-  %2 = load <4 x i32>, ptr %1, align 16
-  %3 = shufflevector <4 x i32> %2, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 0, i32 1>
-  store <4 x i32> %3, ptr %0, align 16
+  %2 = load <2 x i64>, ptr %1, align 16
+  %3 = shufflevector <2 x i64> %2, <2 x i64> poison, <2 x i32> <i32 1, i32 0>
+  store <2 x i64> %3, ptr %0, align 16
   ret void
 }
 
@@ -239,9 +239,9 @@ bb.a:
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
 define void @_RINvNtNtNtCs4NRVxsYgnAr_4core9core_arch3x864sse217__mm_shuffle_epi32Klee_ECsbvBq90rv2US_11rand_chacha(ptr nofree writeonly sret([16 x i8]) align 16 captures(none) initializes((0, 16)) %0, ptr nofree readonly align 16 captures(none) %1) unnamed_addr #2 !guid !31 {
 bb.a:
-  %2 = load <4 x i32>, ptr %1, align 16
-  %3 = shufflevector <4 x i32> %2, <4 x i32> poison, <4 x i32> <i32 2, i32 3, i32 2, i32 3>
-  store <4 x i32> %3, ptr %0, align 16
+  %2 = load <2 x i64>, ptr %1, align 16
+  %3 = shufflevector <2 x i64> %2, <2 x i64> poison, <2 x i32> <i32 1, i32 1>
+  store <2 x i64> %3, ptr %0, align 16
   ret void
 }
 

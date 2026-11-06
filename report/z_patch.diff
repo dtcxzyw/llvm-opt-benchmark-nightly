@@ -1,0 +1,605 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineInternal.h b/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
+index ae0a77bd5be86c..a8fac50fb3a597 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
++++ b/llvm/lib/Transforms/InstCombine/InstCombineInternal.h
+@@ -188,6 +188,7 @@ class LLVM_LIBRARY_VISIBILITY InstCombinerImpl final
+   foldAggregateConstructionIntoAggregateReuse(InsertValueInst &OrigIVI);
+   Instruction *visitInsertValueInst(InsertValueInst &IV);
+   Instruction *visitInsertElementInst(InsertElementInst &IE);
++  Value *foldShuffleOfBitcast(ShuffleVectorInst &SVI);
+   Instruction *visitExtractElementInst(ExtractElementInst &EI);
+   Instruction *simplifyBinOpSplats(ShuffleVectorInst &SVI);
+   Instruction *visitShuffleVectorInst(ShuffleVectorInst &SVI);
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineLoadStoreAlloca.cpp b/llvm/lib/Transforms/InstCombine/InstCombineLoadStoreAlloca.cpp
+index 420c507353293f..31a873f1129b8f 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineLoadStoreAlloca.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineLoadStoreAlloca.cpp
+@@ -713,6 +713,15 @@ static Instruction *combineLoadToOperationType(InstCombinerImpl &IC,
+       assert(!LoadTy->isX86_AMXTy() && "Load from x86_amx* should not happen!");
+       if (BC->getType()->isX86_AMXTy())
+         return nullptr;
++
++      // Try fold shuffle (bitcast X) -> bitcast (shuffle X).
++      if (BC->hasOneUse())
++        if (auto *SVI = dyn_cast<ShuffleVectorInst>(BC->user_back()))
++          if (Value *V = IC.foldShuffleOfBitcast(*SVI)) {
++            IC.replaceInstUsesWith(*SVI, V);
++            IC.eraseInstFromFunction(*SVI);
++            return &Load;
++          }
+     }
+ 
+     if (auto *CastUser = dyn_cast<CastInst>(Load.user_back())) {
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineVectorOps.cpp b/llvm/lib/Transforms/InstCombine/InstCombineVectorOps.cpp
+index 7a132cdbef3104..d3a5cf6a47946a 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineVectorOps.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineVectorOps.cpp
+@@ -2755,7 +2755,7 @@ static Instruction *foldCastShuffle(ShuffleVectorInst &Shuf,
+ /// Try to fold an extract subvector operation.
+ static Instruction *foldIdentityExtractShuffle(ShuffleVectorInst &Shuf) {
+   Value *Op0 = Shuf.getOperand(0), *Op1 = Shuf.getOperand(1);
+-  if (!Shuf.isIdentityWithExtract() || !match(Op1, m_Poison()))
++  if (!Shuf.isIdentityWithExtract() || !match(Op1, m_Undef()))
+     return nullptr;
+ 
+   // Check if we are extracting all bits of an inserted scalar:
+@@ -2987,6 +2987,68 @@ Instruction *InstCombinerImpl::simplifyBinOpSplats(ShuffleVectorInst &SVI) {
+   return new ShuffleVectorInst(NewBO, SVI.getShuffleMask());
+ }
+ 
++/// Try fold shuffle (bitcast X) -> bitcast (shuffle X). This can always be done
++/// if the original type of X has larger lanes than the bitcast type. It can be
++/// done sometimes if the original type of X has smaller lanes, if the shuffle
++/// selects adjacent lanes together that sum to the width of the bitcast type
++/// lanes. This is profitable if:
++/// - The shuffle on the non-bitcast type can be simplified further. Ex. if the
++///   shuffle reverses an earlier shuffle on the same type, they cancel out and
++///   can be removed.
++/// - X has a wider lane type than the bitcast type.
++Value *InstCombinerImpl::foldShuffleOfBitcast(ShuffleVectorInst &SVI) {
++  Value *X;
++  Value *LHS = SVI.getOperand(0);
++  Value *RHS = SVI.getOperand(1);
++  if (!match(LHS, m_BitCast(m_Value(X))) || !match(RHS, m_Undef()))
++    return nullptr;
++
++  auto *SrcTy = dyn_cast<FixedVectorType>(X->getType());
++  auto *CastTy = dyn_cast<FixedVectorType>(LHS->getType());
++  if (!SrcTy || !CastTy)
++    return nullptr;
++
++  unsigned SrcNumElts = SrcTy->getNumElements();
++  unsigned CastNumElts = CastTy->getNumElements();
++  SmallVector<int, 16> ScaledMask;
++  // See if we can perform the shuffle on the SrcTy instead of CastTy. If we
++  // can, ScaledMask will hold the new shuffle mask.
++  if (CastNumElts >= SrcNumElts) {
++    if (CastNumElts % SrcNumElts ||
++        !widenShuffleMaskElts(CastNumElts / SrcNumElts, SVI.getShuffleMask(),
++                              ScaledMask))
++      return nullptr;
++  } else {
++    if (SrcNumElts % CastNumElts)
++      return nullptr;
++    narrowShuffleMaskElts(SrcNumElts / CastNumElts, SVI.getShuffleMask(),
++                          ScaledMask);
++  }
++
++  auto *ShufTy =
++      FixedVectorType::get(SrcTy->getElementType(), ScaledMask.size());
++  Value *Y = ConstantExpr::getBitCast(cast<Constant>(RHS), SrcTy);
++  IRBuilderBase::InsertPointGuard Guard(Builder);
++  Builder.SetInsertPoint(&SVI);
++
++  // First see if computing the shuffle on SrcTy can help us simplify it. For
++  // example,
++  if (Value *V = simplifyShuffleVectorInst(X, Y, ScaledMask, ShufTy,
++                                           SQ.getWithInstruction(&SVI)))
++    return Builder.CreateBitCast(V, SVI.getType());
++
++  // Prefer extracting an inserted scalar over forming a new vector shuffle.
++  if (Instruction *I = foldIdentityExtractShuffle(SVI))
++    return Builder.Insert(I);
++
++  // Otheriwse, prefer a shuffle on the wider lane type.
++  if (SrcNumElts >= CastNumElts || !LHS->hasOneUse())
++    return nullptr;
++
++  Value *Shuf = Builder.CreateShuffleVector(X, Y, ScaledMask);
++  return Builder.CreateBitCast(Shuf, SVI.getType());
++}
++
+ Instruction *InstCombinerImpl::visitShuffleVectorInst(ShuffleVectorInst &SVI) {
+   Value *LHS = SVI.getOperand(0);
+   Value *RHS = SVI.getOperand(1);
+@@ -3029,26 +3091,8 @@ Instruction *InstCombinerImpl::visitShuffleVectorInst(ShuffleVectorInst &SVI) {
+ 
+   ArrayRef<int> Mask = SVI.getShuffleMask();
+ 
+-  // Peek through a bitcasted shuffle operand by scaling the mask. If the
+-  // simulated shuffle can simplify, then this shuffle is unnecessary:
+-  // shuf (bitcast X), undef, Mask --> bitcast X'
+-  // TODO: This could be extended to allow length-changing shuffles.
+-  //       The transform might also be obsoleted if we allowed canonicalization
+-  //       of bitcasted shuffles.
+-  if (match(LHS, m_BitCast(m_Value(X))) && match(RHS, m_Undef()) &&
+-      X->getType()->isVectorTy() && VWidth == LHSWidth) {
+-    // Try to create a scaled mask constant.
+-    auto *XType = cast<FixedVectorType>(X->getType());
+-    unsigned XNumElts = XType->getNumElements();
+-    SmallVector<int, 16> ScaledMask;
+-    if (scaleShuffleMaskElts(XNumElts, Mask, ScaledMask)) {
+-      // If the shuffled source vector simplifies, cast that value to this
+-      // shuffle's type.
+-      if (auto *V = simplifyShuffleVectorInst(X, UndefValue::get(XType),
+-                                              ScaledMask, XType, ShufQuery))
+-        return BitCastInst::Create(Instruction::BitCast, V, SVI.getType());
+-    }
+-  }
++  if (Value *V = foldShuffleOfBitcast(SVI))
++    return replaceInstUsesWith(SVI, V);
+ 
+   // shuffle x, x, mask --> shuffle x, undef, mask'
+   if (LHS == RHS) {
+diff --git a/llvm/test/CodeGen/NVPTX/shuffle-packed.ll b/llvm/test/CodeGen/NVPTX/shuffle-packed.ll
+new file mode 100644
+index 00000000000000..b309579d0af21c
+--- /dev/null
++++ b/llvm/test/CodeGen/NVPTX/shuffle-packed.ll
+@@ -0,0 +1,70 @@
++; NOTE: Assertions have been autogenerated by utils/update_llc_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -O3 -mtriple=nvptx64 -mcpu=sm_90 < %s | llc -mcpu=sm_90 -mattr=+ptx87 -verify-machineinstrs | FileCheck %s --check-prefix=SM90
++; RUN: opt -O3 -mtriple=nvptx64 -mcpu=sm_100 < %s | llc -mcpu=sm_100 -mattr=+ptx88 -verify-machineinstrs | FileCheck %s --check-prefix=SM100
++
++target datalayout = "e-p:64:64:64-p3:32:32:32-i1:8:8-i8:8:8-i16:16:16-i32:32:32-i64:64:64-i128:128:128-f32:32:32-f64:64:64-v16:16:16-v32:32:32-v64:64:64-v128:128:128-n16:32:64"
++target triple = "nvptx64-nvidia-cuda"
++
++
++define ptx_kernel void @k(ptr addrspace(1) %src, ptr addrspace(1) %dst, i32 %c) {
++; SM90-LABEL: k(
++; SM90:       {
++; SM90-NEXT:    .reg .pred %p<2>;
++; SM90-NEXT:    .reg .b32 %r<6>;
++; SM90-NEXT:    .reg .b64 %rd<6>;
++; SM90-EMPTY:
++; SM90-NEXT:  // %bb.0: // %entry
++; SM90-NEXT:    ld.param::entry.b64 %rd1, [k_param_1];
++; SM90-NEXT:    ld.param::entry.b64 %rd2, [k_param_0];
++; SM90-NEXT:    ld.global.b32 %r4, [%rd2+24];
++; SM90-NEXT:    ld.global.b64 %rd3, [%rd2+16];
++; SM90-NEXT:    cvt.u32.u64 %r3, %rd3;
++; SM90-NEXT:    ld.global.b64 %rd4, [%rd2+8];
++; SM90-NEXT:    cvt.u32.u64 %r2, %rd4;
++; SM90-NEXT:    ld.global.b64 %rd5, [%rd2];
++; SM90-NEXT:    cvt.u32.u64 %r1, %rd5;
++; SM90-NEXT:    ld.param::entry.b32 %r5, [k_param_2];
++; SM90-NEXT:    setp.ne.b32 %p1, %r5, 0;
++; SM90-NEXT:    @%p1 bra $L__BB0_2;
++; SM90-NEXT:  // %bb.1: // %side
++; SM90-NEXT:    st.volatile.global.b32 [%rd1+256], 0;
++; SM90-NEXT:  $L__BB0_2: // %next
++; SM90-NEXT:    st.global.v4.b32 [%rd1], {%r1, %r2, %r3, %r4};
++; SM90-NEXT:    ret;
++;
++; SM100-LABEL: k(
++; SM100:       {
++; SM100-NEXT:    .reg .pred %p<2>;
++; SM100-NEXT:    .reg .b32 %r<9>;
++; SM100-NEXT:    .reg .b64 %rd<3>;
++; SM100-EMPTY:
++; SM100-NEXT:  // %bb.0: // %entry
++; SM100-NEXT:    ld.param::entry.b64 %rd1, [k_param_1];
++; SM100-NEXT:    ld.param::entry.b64 %rd2, [k_param_0];
++; SM100-NEXT:    ld.global.b32 %r7, [%rd2+24];
++; SM100-NEXT:    ld.global.v2.b32 {%r5, %r6}, [%rd2+16];
++; SM100-NEXT:    ld.global.v2.b32 {%r3, %r4}, [%rd2+8];
++; SM100-NEXT:    ld.global.v2.b32 {%r1, %r2}, [%rd2];
++; SM100-NEXT:    ld.param::entry.b32 %r8, [k_param_2];
++; SM100-NEXT:    setp.ne.b32 %p1, %r8, 0;
++; SM100-NEXT:    @%p1 bra $L__BB0_2;
++; SM100-NEXT:  // %bb.1: // %side
++; SM100-NEXT:    st.volatile.global.b32 [%rd1+256], 0;
++; SM100-NEXT:  $L__BB0_2: // %next
++; SM100-NEXT:    st.global.v4.b32 [%rd1], {%r1, %r3, %r5, %r7};
++; SM100-NEXT:    ret;
++entry:
++  %w = load <8 x i32>, ptr addrspace(1) %src, align 32
++  %a = bitcast <8 x i32> %w to <64 x i4>
++  %v = shufflevector <64 x i4> %a, <64 x i4> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 32, i32 33, i32 34, i32 35, i32 36, i32 37, i32 38, i32 39, i32 48, i32 49, i32 50, i32 51, i32 52, i32 53, i32 54, i32 55>
++  %t = icmp eq i32 %c, 0
++  br i1 %t, label %side, label %next
++side:
++  %ps = getelementptr i8, ptr addrspace(1) %dst, i64 256
++  store volatile i32 0, ptr addrspace(1) %ps, align 4
++  br label %next
++next:
++  %b = bitcast <32 x i4> %v to <16 x i8>
++  store <16 x i8> %b, ptr addrspace(1) %dst, align 16
++  ret void
++}
+diff --git a/llvm/test/Transforms/InstCombine/X86/x86-sse4a-inseltpoison.ll b/llvm/test/Transforms/InstCombine/X86/x86-sse4a-inseltpoison.ll
+index cb3e11626a9938..29c078acc38cf4 100644
+--- a/llvm/test/Transforms/InstCombine/X86/x86-sse4a-inseltpoison.ll
++++ b/llvm/test/Transforms/InstCombine/X86/x86-sse4a-inseltpoison.ll
+@@ -24,9 +24,7 @@ define <2 x i64> @test_extrq_zero_arg0(<2 x i64> %x, <16 x i8> %y) {
+ 
+ define <2 x i64> @test_extrq_zero_arg1(<2 x i64> %x, <16 x i8> %y) {
+ ; CHECK-LABEL: @test_extrq_zero_arg1(
+-; CHECK-NEXT:    [[TMP1:%.*]] = bitcast <2 x i64> [[X:%.*]] to <16 x i8>
+-; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <16 x i8> [[TMP1]], <16 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[TMP3:%.*]] = bitcast <16 x i8> [[TMP2]] to <2 x i64>
++; CHECK-NEXT:    [[TMP3:%.*]] = shufflevector <2 x i64> [[X:%.*]], <2 x i64> poison, <2 x i32> <i32 0, i32 poison>
+ ; CHECK-NEXT:    ret <2 x i64> [[TMP3]]
+ ;
+   %1 = tail call <2 x i64> @llvm.x86.sse4a.extrq(<2 x i64> %x, <16 x i8> zeroinitializer) nounwind
+@@ -60,9 +58,7 @@ define <2 x i64> @test_extrq_constant_poison(<2 x i64> %x, <16 x i8> %y) {
+ 
+ define <2 x i64> @test_extrq_call_constexpr(<2 x i64> %x) {
+ ; CHECK-LABEL: @test_extrq_call_constexpr(
+-; CHECK-NEXT:    [[TMP1:%.*]] = bitcast <2 x i64> [[X:%.*]] to <16 x i8>
+-; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <16 x i8> [[TMP1]], <16 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[TMP3:%.*]] = bitcast <16 x i8> [[TMP2]] to <2 x i64>
++; CHECK-NEXT:    [[TMP3:%.*]] = shufflevector <2 x i64> [[X:%.*]], <2 x i64> poison, <2 x i32> <i32 0, i32 poison>
+ ; CHECK-NEXT:    ret <2 x i64> [[TMP3]]
+ ;
+   %1 = call <2 x i64> @llvm.x86.sse4a.extrq(<2 x i64> %x, <16 x i8> bitcast (<2 x i64> <i64 0, i64 poison> to <16 x i8>))
+@@ -241,9 +237,7 @@ define <2 x i64> @test_insertqi_call_constexpr(<2 x i64> %x) {
+ ; second arg
+ define <2 x i64> @testInsert64Bits(<2 x i64> %v, <2 x i64> %i) {
+ ; CHECK-LABEL: @testInsert64Bits(
+-; CHECK-NEXT:    [[TMP1:%.*]] = bitcast <2 x i64> [[I:%.*]] to <16 x i8>
+-; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <16 x i8> [[TMP1]], <16 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[TMP3:%.*]] = bitcast <16 x i8> [[TMP2]] to <2 x i64>
++; CHECK-NEXT:    [[TMP3:%.*]] = shufflevector <2 x i64> [[I:%.*]], <2 x i64> poison, <2 x i32> <i32 0, i32 poison>
+ ; CHECK-NEXT:    ret <2 x i64> [[TMP3]]
+ ;
+   %1 = tail call <2 x i64> @llvm.x86.sse4a.insertqi(<2 x i64> %v, <2 x i64> %i, i8 64, i8 0)
+@@ -252,9 +246,7 @@ define <2 x i64> @testInsert64Bits(<2 x i64> %v, <2 x i64> %i) {
+ 
+ define <2 x i64> @testZeroLength(<2 x i64> %v, <2 x i64> %i) {
+ ; CHECK-LABEL: @testZeroLength(
+-; CHECK-NEXT:    [[TMP1:%.*]] = bitcast <2 x i64> [[I:%.*]] to <16 x i8>
+-; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <16 x i8> [[TMP1]], <16 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[TMP3:%.*]] = bitcast <16 x i8> [[TMP2]] to <2 x i64>
++; CHECK-NEXT:    [[TMP3:%.*]] = shufflevector <2 x i64> [[I:%.*]], <2 x i64> poison, <2 x i32> <i32 0, i32 poison>
+ ; CHECK-NEXT:    ret <2 x i64> [[TMP3]]
+ ;
+   %1 = tail call <2 x i64> @llvm.x86.sse4a.insertqi(<2 x i64> %v, <2 x i64> %i, i8 0, i8 0)
+diff --git a/llvm/test/Transforms/InstCombine/X86/x86-sse4a.ll b/llvm/test/Transforms/InstCombine/X86/x86-sse4a.ll
+index f3bdcc4d8af4d4..d31956113bf684 100644
+--- a/llvm/test/Transforms/InstCombine/X86/x86-sse4a.ll
++++ b/llvm/test/Transforms/InstCombine/X86/x86-sse4a.ll
+@@ -24,9 +24,7 @@ define <2 x i64> @test_extrq_zero_arg0(<2 x i64> %x, <16 x i8> %y) {
+ 
+ define <2 x i64> @test_extrq_zero_arg1(<2 x i64> %x, <16 x i8> %y) {
+ ; CHECK-LABEL: @test_extrq_zero_arg1(
+-; CHECK-NEXT:    [[TMP1:%.*]] = bitcast <2 x i64> [[X:%.*]] to <16 x i8>
+-; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <16 x i8> [[TMP1]], <16 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[TMP3:%.*]] = bitcast <16 x i8> [[TMP2]] to <2 x i64>
++; CHECK-NEXT:    [[TMP3:%.*]] = shufflevector <2 x i64> [[X:%.*]], <2 x i64> poison, <2 x i32> <i32 0, i32 poison>
+ ; CHECK-NEXT:    ret <2 x i64> [[TMP3]]
+ ;
+   %1 = tail call <2 x i64> @llvm.x86.sse4a.extrq(<2 x i64> %x, <16 x i8> zeroinitializer) nounwind
+@@ -60,9 +58,7 @@ define <2 x i64> @test_extrq_constant_undef(<2 x i64> %x, <16 x i8> %y) {
+ 
+ define <2 x i64> @test_extrq_call_constexpr(<2 x i64> %x) {
+ ; CHECK-LABEL: @test_extrq_call_constexpr(
+-; CHECK-NEXT:    [[TMP1:%.*]] = bitcast <2 x i64> [[X:%.*]] to <16 x i8>
+-; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <16 x i8> [[TMP1]], <16 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[TMP3:%.*]] = bitcast <16 x i8> [[TMP2]] to <2 x i64>
++; CHECK-NEXT:    [[TMP3:%.*]] = shufflevector <2 x i64> [[X:%.*]], <2 x i64> poison, <2 x i32> <i32 0, i32 poison>
+ ; CHECK-NEXT:    ret <2 x i64> [[TMP3]]
+ ;
+   %1 = call <2 x i64> @llvm.x86.sse4a.extrq(<2 x i64> %x, <16 x i8> bitcast (<2 x i64> <i64 0, i64 undef> to <16 x i8>))
+@@ -241,9 +237,7 @@ define <2 x i64> @test_insertqi_call_constexpr(<2 x i64> %x) {
+ ; second arg
+ define <2 x i64> @testInsert64Bits(<2 x i64> %v, <2 x i64> %i) {
+ ; CHECK-LABEL: @testInsert64Bits(
+-; CHECK-NEXT:    [[TMP1:%.*]] = bitcast <2 x i64> [[I:%.*]] to <16 x i8>
+-; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <16 x i8> [[TMP1]], <16 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[TMP3:%.*]] = bitcast <16 x i8> [[TMP2]] to <2 x i64>
++; CHECK-NEXT:    [[TMP3:%.*]] = shufflevector <2 x i64> [[I:%.*]], <2 x i64> poison, <2 x i32> <i32 0, i32 poison>
+ ; CHECK-NEXT:    ret <2 x i64> [[TMP3]]
+ ;
+   %1 = tail call <2 x i64> @llvm.x86.sse4a.insertqi(<2 x i64> %v, <2 x i64> %i, i8 64, i8 0)
+@@ -252,9 +246,7 @@ define <2 x i64> @testInsert64Bits(<2 x i64> %v, <2 x i64> %i) {
+ 
+ define <2 x i64> @testZeroLength(<2 x i64> %v, <2 x i64> %i) {
+ ; CHECK-LABEL: @testZeroLength(
+-; CHECK-NEXT:    [[TMP1:%.*]] = bitcast <2 x i64> [[I:%.*]] to <16 x i8>
+-; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <16 x i8> [[TMP1]], <16 x i8> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[TMP3:%.*]] = bitcast <16 x i8> [[TMP2]] to <2 x i64>
++; CHECK-NEXT:    [[TMP3:%.*]] = shufflevector <2 x i64> [[I:%.*]], <2 x i64> poison, <2 x i32> <i32 0, i32 poison>
+ ; CHECK-NEXT:    ret <2 x i64> [[TMP3]]
+ ;
+   %1 = tail call <2 x i64> @llvm.x86.sse4a.insertqi(<2 x i64> %v, <2 x i64> %i, i8 0, i8 0)
+diff --git a/llvm/test/Transforms/InstCombine/X86/x86-vector-shifts.ll b/llvm/test/Transforms/InstCombine/X86/x86-vector-shifts.ll
+index cc252ae53803b3..28f3bce32ced68 100644
+--- a/llvm/test/Transforms/InstCombine/X86/x86-vector-shifts.ll
++++ b/llvm/test/Transforms/InstCombine/X86/x86-vector-shifts.ll
+@@ -3737,10 +3737,7 @@ define <2 x i64> @PR125228(<2 x i64> %v, <2 x i64> %s) {
+ ; CHECK-NEXT:    [[MASK:%.*]] = and <2 x i64> [[S:%.*]], splat (i64 63)
+ ; CHECK-NEXT:    [[TMP1:%.*]] = shufflevector <2 x i64> [[MASK]], <2 x i64> poison, <2 x i32> zeroinitializer
+ ; CHECK-NEXT:    [[SLL0:%.*]] = shl <2 x i64> [[V:%.*]], [[TMP1]]
+-; CHECK-NEXT:    [[CAST:%.*]] = bitcast <2 x i64> [[MASK]] to <16 x i8>
+-; CHECK-NEXT:    [[PSRLDQ:%.*]] = shufflevector <16 x i8> [[CAST]], <16 x i8> poison, <16 x i32> <i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
+-; CHECK-NEXT:    [[CAST3:%.*]] = bitcast <16 x i8> [[PSRLDQ]] to <2 x i64>
+-; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <2 x i64> [[CAST3]], <2 x i64> poison, <2 x i32> zeroinitializer
++; CHECK-NEXT:    [[TMP2:%.*]] = shufflevector <2 x i64> [[MASK]], <2 x i64> poison, <2 x i32> <i32 1, i32 1>
+ ; CHECK-NEXT:    [[SLL1:%.*]] = shl <2 x i64> [[V]], [[TMP2]]
+ ; CHECK-NEXT:    [[SHUFP_UNCASTED:%.*]] = shufflevector <2 x i64> [[SLL0]], <2 x i64> [[SLL1]], <2 x i32> <i32 0, i32 3>
+ ; CHECK-NEXT:    ret <2 x i64> [[SHUFP_UNCASTED]]
+diff --git a/llvm/test/Transforms/InstCombine/shuffle-bitcast-widen.ll b/llvm/test/Transforms/InstCombine/shuffle-bitcast-widen.ll
+new file mode 100644
+index 00000000000000..180201737aa7e3
+--- /dev/null
++++ b/llvm/test/Transforms/InstCombine/shuffle-bitcast-widen.ll
+@@ -0,0 +1,253 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -passes=instcombine -S -data-layout=e < %s | FileCheck %s --check-prefixes=CHECK,LE
++; RUN: opt -passes=instcombine -S -data-layout=E < %s | FileCheck %s --check-prefixes=CHECK,BE
++
++; Select complete i16 elements through their i8 representation.
++define <4 x i8> @whole_elements(<4 x i16> %x) {
++; CHECK-LABEL: define <4 x i8> @whole_elements(
++; CHECK-SAME: <4 x i16> [[X:%.*]]) {
++; CHECK-NEXT:    [[TMP1:%.*]] = shufflevector <4 x i16> [[X]], <4 x i16> poison, <2 x i32> <i32 0, i32 2>
++; CHECK-NEXT:    [[S:%.*]] = bitcast <2 x i16> [[TMP1]] to <4 x i8>
++; CHECK-NEXT:    ret <4 x i8> [[S]]
++;
++  %bc = bitcast <4 x i16> %x to <8 x i8>
++  %s = shufflevector <8 x i8> %bc, <8 x i8> poison,
++  <4 x i32> <i32 0, i32 1, i32 4, i32 5>
++  ret <4 x i8> %s
++}
++
++; The source elements need not be legal integers or whole bytes.
++define <6 x i4> @odd_element_width(<4 x i12> %x) {
++; CHECK-LABEL: define <6 x i4> @odd_element_width(
++; CHECK-SAME: <4 x i12> [[X:%.*]]) {
++; CHECK-NEXT:    [[TMP1:%.*]] = shufflevector <4 x i12> [[X]], <4 x i12> poison, <2 x i32> <i32 0, i32 2>
++; CHECK-NEXT:    [[S:%.*]] = bitcast <2 x i12> [[TMP1]] to <6 x i4>
++; CHECK-NEXT:    ret <6 x i4> [[S]]
++;
++  %bc = bitcast <4 x i12> %x to <12 x i4>
++  %s = shufflevector <12 x i4> %bc, <12 x i4> poison,
++  <6 x i32> <i32 0, i32 1, i32 2, i32 6, i32 7, i32 8>
++  ret <6 x i4> %s
++}
++
++; The shuffle may also keep or increase the number of elements.
++define <8 x i8> @same_length(<4 x i16> %x) {
++; CHECK-LABEL: define <8 x i8> @same_length(
++; CHECK-SAME: <4 x i16> [[X:%.*]]) {
++; CHECK-NEXT:    [[TMP1:%.*]] = shufflevector <4 x i16> [[X]], <4 x i16> poison, <4 x i32> <i32 1, i32 0, i32 3, i32 2>
++; CHECK-NEXT:    [[BC:%.*]] = bitcast <4 x i16> [[TMP1]] to <8 x i8>
++; CHECK-NEXT:    ret <8 x i8> [[BC]]
++;
++  %bc = bitcast <4 x i16> %x to <8 x i8>
++  %s = shufflevector <8 x i8> %bc, <8 x i8> poison,
++  <8 x i32> <i32 2, i32 3, i32 0, i32 1,
++  i32 6, i32 7, i32 4, i32 5>
++  ret <8 x i8> %s
++}
++
++define <8 x i8> @longer_result(<2 x i16> %x) {
++; CHECK-LABEL: define <8 x i8> @longer_result(
++; CHECK-SAME: <2 x i16> [[X:%.*]]) {
++; CHECK-NEXT:    [[TMP1:%.*]] = shufflevector <2 x i16> [[X]], <2 x i16> poison, <4 x i32> <i32 1, i32 0, i32 1, i32 0>
++; CHECK-NEXT:    [[S:%.*]] = bitcast <4 x i16> [[TMP1]] to <8 x i8>
++; CHECK-NEXT:    ret <8 x i8> [[S]]
++;
++  %bc = bitcast <2 x i16> %x to <4 x i8>
++  %s = shufflevector <4 x i8> %bc, <4 x i8> poison,
++  <8 x i32> <i32 2, i32 3, i32 0, i32 1,
++  i32 2, i32 3, i32 0, i32 1>
++  ret <8 x i8> %s
++}
++
++define <8 x i8> @floating_source(<4 x float> %x) {
++; CHECK-LABEL: define <8 x i8> @floating_source(
++; CHECK-SAME: <4 x float> [[X:%.*]]) {
++; CHECK-NEXT:    [[TMP1:%.*]] = shufflevector <4 x float> [[X]], <4 x float> poison, <2 x i32> <i32 0, i32 2>
++; CHECK-NEXT:    [[S:%.*]] = bitcast <2 x float> [[TMP1]] to <8 x i8>
++; CHECK-NEXT:    ret <8 x i8> [[S]]
++;
++  %bc = bitcast <4 x float> %x to <16 x i8>
++  %s = shufflevector <16 x i8> %bc, <16 x i8> poison,
++  <8 x i32> <i32 0, i32 1, i32 2, i32 3,
++  i32 8, i32 9, i32 10, i32 11>
++  ret <8 x i8> %s
++}
++
++; Entire poison groups can become poison elements of the wider shuffle.
++define <4 x i8> @poison_group(<4 x i16> %x) {
++; CHECK-LABEL: define <4 x i8> @poison_group(
++; CHECK-SAME: <4 x i16> [[X:%.*]]) {
++; CHECK-NEXT:    [[TMP1:%.*]] = shufflevector <4 x i16> [[X]], <4 x i16> poison, <2 x i32> <i32 2, i32 poison>
++; CHECK-NEXT:    [[S:%.*]] = bitcast <2 x i16> [[TMP1]] to <4 x i8>
++; CHECK-NEXT:    ret <4 x i8> [[S]]
++;
++  %bc = bitcast <4 x i16> %x to <8 x i8>
++  %s = shufflevector <8 x i8> %bc, <8 x i8> poison,
++  <4 x i32> <i32 4, i32 5, i32 poison, i32 poison>
++  ret <4 x i8> %s
++}
++
++; Keep the wider shuffle when the source elements are narrower.
++define <2 x i8> @narrow_source(<8 x i4> %x) {
++; CHECK-LABEL: define <2 x i8> @narrow_source(
++; CHECK-SAME: <8 x i4> [[X:%.*]]) {
++; CHECK-NEXT:    [[BC:%.*]] = bitcast <8 x i4> [[X]] to <4 x i8>
++; CHECK-NEXT:    [[S:%.*]] = shufflevector <4 x i8> [[BC]], <4 x i8> poison, <2 x i32> <i32 1, i32 3>
++; CHECK-NEXT:    ret <2 x i8> [[S]]
++;
++  %bc = bitcast <8 x i4> %x to <4 x i8>
++  %s = shufflevector <4 x i8> %bc, <4 x i8> poison,
++  <2 x i32> <i32 1, i32 3>
++  ret <2 x i8> %s
++}
++
++; A shared bitcast would remain live, increasing the instruction count.
++declare void @use_bytes(<8 x i8>)
++define <4 x i8> @shared_bitcast(<4 x i16> %x) {
++; CHECK-LABEL: define <4 x i8> @shared_bitcast(
++; CHECK-SAME: <4 x i16> [[X:%.*]]) {
++; CHECK-NEXT:    [[BC:%.*]] = bitcast <4 x i16> [[X]] to <8 x i8>
++; CHECK-NEXT:    call void @use_bytes(<8 x i8> [[BC]])
++; CHECK-NEXT:    [[S:%.*]] = shufflevector <8 x i8> [[BC]], <8 x i8> poison, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
++; CHECK-NEXT:    ret <4 x i8> [[S]]
++;
++  %bc = bitcast <4 x i16> %x to <8 x i8>
++  call void @use_bytes(<8 x i8> %bc)
++  %s = shufflevector <8 x i8> %bc, <8 x i8> poison,
++  <4 x i32> <i32 0, i32 1, i32 4, i32 5>
++  ret <4 x i8> %s
++}
++
++; Consecutive elements must start at a source-element boundary.
++define <4 x i8> @unaligned_group(<4 x i16> %x) {
++; CHECK-LABEL: define <4 x i8> @unaligned_group(
++; CHECK-SAME: <4 x i16> [[X:%.*]]) {
++; CHECK-NEXT:    [[BC:%.*]] = bitcast <4 x i16> [[X]] to <8 x i8>
++; CHECK-NEXT:    [[S:%.*]] = shufflevector <8 x i8> [[BC]], <8 x i8> poison, <4 x i32> <i32 1, i32 2, i32 4, i32 5>
++; CHECK-NEXT:    ret <4 x i8> [[S]]
++;
++  %bc = bitcast <4 x i16> %x to <8 x i8>
++  %s = shufflevector <8 x i8> %bc, <8 x i8> poison,
++  <4 x i32> <i32 1, i32 2, i32 4, i32 5>
++  ret <4 x i8> %s
++}
++
++; Do not reorder the pieces inside a source element.
++define <4 x i8> @reversed_group(<4 x i16> %x) {
++; CHECK-LABEL: define <4 x i8> @reversed_group(
++; CHECK-SAME: <4 x i16> [[X:%.*]]) {
++; CHECK-NEXT:    [[BC:%.*]] = bitcast <4 x i16> [[X]] to <8 x i8>
++; CHECK-NEXT:    [[S:%.*]] = shufflevector <8 x i8> [[BC]], <8 x i8> poison, <4 x i32> <i32 1, i32 0, i32 4, i32 5>
++; CHECK-NEXT:    ret <4 x i8> [[S]]
++;
++  %bc = bitcast <4 x i16> %x to <8 x i8>
++  %s = shufflevector <8 x i8> %bc, <8 x i8> poison,
++  <4 x i32> <i32 1, i32 0, i32 4, i32 5>
++  ret <4 x i8> %s
++}
++
++; Partial poison groups cannot be represented by the wider mask.
++define <4 x i8> @partial_poison_group(<4 x i16> %x) {
++; CHECK-LABEL: define <4 x i8> @partial_poison_group(
++; CHECK-SAME: <4 x i16> [[X:%.*]]) {
++; CHECK-NEXT:    [[BC:%.*]] = bitcast <4 x i16> [[X]] to <8 x i8>
++; CHECK-NEXT:    [[S:%.*]] = shufflevector <8 x i8> [[BC]], <8 x i8> poison, <4 x i32> <i32 0, i32 poison, i32 4, i32 5>
++; CHECK-NEXT:    ret <4 x i8> [[S]]
++;
++  %bc = bitcast <4 x i16> %x to <8 x i8>
++  %s = shufflevector <8 x i8> %bc, <8 x i8> poison,
++  <4 x i32> <i32 0, i32 poison, i32 4, i32 5>
++  ret <4 x i8> %s
++}
++
++define <3 x i8> @partial_element_result(<4 x i16> %x) {
++; CHECK-LABEL: define <3 x i8> @partial_element_result(
++; CHECK-SAME: <4 x i16> [[X:%.*]]) {
++; CHECK-NEXT:    [[BC:%.*]] = bitcast <4 x i16> [[X]] to <8 x i8>
++; CHECK-NEXT:    [[S:%.*]] = shufflevector <8 x i8> [[BC]], <8 x i8> poison, <3 x i32> <i32 0, i32 1, i32 4>
++; CHECK-NEXT:    ret <3 x i8> [[S]]
++;
++  %bc = bitcast <4 x i16> %x to <8 x i8>
++  %s = shufflevector <8 x i8> %bc, <8 x i8> poison,
++  <3 x i32> <i32 0, i32 1, i32 4>
++  ret <3 x i8> %s
++}
++
++; This unary fold cannot reinterpret another independently computed input.
++define <4 x i8> @other_input(<4 x i16> %x, <8 x i8> %y) {
++; CHECK-LABEL: define <4 x i8> @other_input(
++; CHECK-SAME: <4 x i16> [[X:%.*]], <8 x i8> [[Y:%.*]]) {
++; CHECK-NEXT:    [[BC:%.*]] = bitcast <4 x i16> [[X]] to <8 x i8>
++; CHECK-NEXT:    [[S:%.*]] = shufflevector <8 x i8> [[BC]], <8 x i8> [[Y]], <4 x i32> <i32 0, i32 1, i32 8, i32 9>
++; CHECK-NEXT:    ret <4 x i8> [[S]]
++;
++  %bc = bitcast <4 x i16> %x to <8 x i8>
++  %s = shufflevector <8 x i8> %bc, <8 x i8> %y,
++  <4 x i32> <i32 0, i32 1, i32 8, i32 9>
++  ret <4 x i8> %s
++}
++
++; Preserve the wider load before its bitcast is folded into it.
++define void @load_shuffle_store(ptr %src, ptr %dst) {
++; CHECK-LABEL: define void @load_shuffle_store(
++; CHECK-SAME: ptr [[SRC:%.*]], ptr [[DST:%.*]]) {
++; CHECK-NEXT:    [[V:%.*]] = load <4 x i16>, ptr [[SRC]], align 8
++; CHECK-NEXT:    [[TMP1:%.*]] = shufflevector <4 x i16> [[V]], <4 x i16> poison, <2 x i32> <i32 0, i32 2>
++; CHECK-NEXT:    store <2 x i16> [[TMP1]], ptr [[DST]], align 4
++; CHECK-NEXT:    ret void
++;
++  %v = load <4 x i16>, ptr %src, align 8
++  %bc = bitcast <4 x i16> %v to <8 x i8>
++  %s = shufflevector <8 x i8> %bc, <8 x i8> poison,
++  <4 x i32> <i32 0, i32 1, i32 4, i32 5>
++  store <4 x i8> %s, ptr %dst, align 4
++  ret void
++}
++
++; The shuffle may be in a different block from the load visitor's insertion point.
++define void @load_shuffle_store_cross_block(ptr %src, ptr %dst, i1 %cond) {
++; CHECK-LABEL: define void @load_shuffle_store_cross_block(
++; CHECK-SAME: ptr [[SRC:%.*]], ptr [[DST:%.*]], i1 [[COND:%.*]]) {
++; CHECK-NEXT:    br i1 [[COND]], label %[[COPY:.*]], label %[[EXIT:.*]]
++; CHECK:       [[COPY]]:
++; CHECK-NEXT:    [[V:%.*]] = load <4 x i16>, ptr [[SRC]], align 8
++; CHECK-NEXT:    [[TMP1:%.*]] = shufflevector <4 x i16> [[V]], <4 x i16> poison, <2 x i32> <i32 0, i32 2>
++; CHECK-NEXT:    store <2 x i16> [[TMP1]], ptr [[DST]], align 4
++; CHECK-NEXT:    br label %[[EXIT]]
++; CHECK:       [[EXIT]]:
++; CHECK-NEXT:    ret void
++;
++  %v = load <4 x i16>, ptr %src, align 8
++  %bc = bitcast <4 x i16> %v to <8 x i8>
++  br i1 %cond, label %copy, label %exit
++
++copy:
++  %s = shufflevector <8 x i8> %bc, <8 x i8> poison,
++  <4 x i32> <i32 0, i32 1, i32 4, i32 5>
++  store <4 x i8> %s, ptr %dst, align 4
++  br label %exit
++
++exit:
++  ret void
++}
++
++; A volatile load keeps its original type too.
++define void @volatile_load_shuffle_store(ptr %src, ptr %dst) {
++; CHECK-LABEL: define void @volatile_load_shuffle_store(
++; CHECK-SAME: ptr [[SRC:%.*]], ptr [[DST:%.*]]) {
++; CHECK-NEXT:    [[V:%.*]] = load volatile <4 x i16>, ptr [[SRC]], align 8
++; CHECK-NEXT:    [[TMP1:%.*]] = shufflevector <4 x i16> [[V]], <4 x i16> poison, <2 x i32> <i32 0, i32 2>
++; CHECK-NEXT:    store <2 x i16> [[TMP1]], ptr [[DST]], align 4
++; CHECK-NEXT:    ret void
++;
++  %v = load volatile <4 x i16>, ptr %src, align 8
++  %bc = bitcast <4 x i16> %v to <8 x i8>
++  %s = shufflevector <8 x i8> %bc, <8 x i8> poison,
++  <4 x i32> <i32 0, i32 1, i32 4, i32 5>
++  store <4 x i8> %s, ptr %dst, align 4
++  ret void
++}
++
++;; NOTE: These prefixes are unused and the list is autogenerated. Do not add tests below this line:
++; BE: {{.*}}
++; LE: {{.*}}
+diff --git a/llvm/test/Transforms/InstCombine/shufflevec-bitcast.ll b/llvm/test/Transforms/InstCombine/shufflevec-bitcast.ll
+index 877dd1eefbae4a..b6ae0d7cce2307 100644
+--- a/llvm/test/Transforms/InstCombine/shufflevec-bitcast.ll
++++ b/llvm/test/Transforms/InstCombine/shufflevec-bitcast.ll
+@@ -211,8 +211,8 @@ define <2 x i4> @shuf_bitcast_insert_use2(<2 x i8> %v, i8 %x, ptr %p) {
+ 
+ define <2 x i4> @shuf_bitcast_insert_wrong_index(<2 x i8> %v, i8 %x) {
+ ; CHECK-LABEL: @shuf_bitcast_insert_wrong_index(
+-; CHECK-NEXT:    [[B:%.*]] = bitcast <2 x i8> [[V:%.*]] to <4 x i4>
+-; CHECK-NEXT:    [[R:%.*]] = shufflevector <4 x i4> [[B]], <4 x i4> poison, <2 x i32> <i32 0, i32 1>
++; CHECK-NEXT:    [[TMP1:%.*]] = shufflevector <2 x i8> [[V:%.*]], <2 x i8> poison, <1 x i32> zeroinitializer
++; CHECK-NEXT:    [[R:%.*]] = bitcast <1 x i8> [[TMP1]] to <2 x i4>
+ ; CHECK-NEXT:    ret <2 x i4> [[R]]
+ ;
+   %i = insertelement <2 x i8> %v, i8 %x, i32 1

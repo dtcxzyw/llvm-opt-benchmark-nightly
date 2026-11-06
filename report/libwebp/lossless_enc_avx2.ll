@@ -132,8 +132,8 @@ bb.a:
   %i.t = insertelement <8 x i32> poison, i32 %i.s, i64 0
   %i.u = shufflevector <8 x i32> %i.t, <8 x i32> poison, <8 x i32> zeroinitializer
   %i.v = bitcast <8 x i32> %i.u to <16 x i16>
-  %3 = bitcast <2 x i32> %i.k to <4 x i16>
-  %4 = shufflevector <4 x i16> %3, <4 x i16> poison, <16 x i32> <i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1>
+  %3 = shufflevector <2 x i32> %i.k, <2 x i32> poison, <8 x i32> zeroinitializer
+  %4 = bitcast <8 x i32> %3 to <16 x i16>
   %i.w = zext nneg i32 %2 to i64
   br label %bb.b
 
@@ -536,43 +536,39 @@ bb.a:
   %i.f = load <32 x i8>, ptr %i.e, align 1, !tbaa !10 ; 2 uses
   %i.g = shufflevector <32 x i8> <i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison>, <32 x i8> %i.f, <32 x i32> <i32 0, i32 32, i32 1, i32 33, i32 2, i32 34, i32 3, i32 35, i32 4, i32 36, i32 5, i32 37, i32 6, i32 38, i32 7, i32 39, i32 16, i32 48, i32 17, i32 49, i32 18, i32 50, i32 19, i32 51, i32 20, i32 52, i32 21, i32 53, i32 22, i32 54, i32 23, i32 55>
   %i.h = bitcast <32 x i8> %i.g to <16 x i16>     ; 2 uses
-  %i.i = shufflevector <16 x i16> %i.h, <16 x i16> <i16 -256, i16 -256, i16 -256, i16 -256, i16 poison, i16 poison, i16 poison, i16 poison, i16 -256, i16 -256, i16 -256, i16 -256, i16 poison, i16 poison, i16 poison, i16 poison>, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27> ; 2 uses
-  %i.j = bitcast <16 x i16> %i.i to <4 x i64>
-  %i.k = shufflevector <16 x i16> %i.h, <16 x i16> <i16 poison, i16 poison, i16 poison, i16 poison, i16 -256, i16 -256, i16 -256, i16 -256, i16 poison, i16 poison, i16 poison, i16 poison, i16 -256, i16 -256, i16 -256, i16 -256>, <16 x i32> <i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
-  %i.l = bitcast <16 x i16> %i.k to <4 x i64>
+  %i.i = shufflevector <16 x i16> %i.h, <16 x i16> <i16 -256, i16 -256, i16 -256, i16 -256, i16 poison, i16 poison, i16 poison, i16 poison, i16 -256, i16 -256, i16 -256, i16 -256, i16 poison, i16 poison, i16 poison, i16 poison>, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27>
+  %i.j = bitcast <16 x i16> %i.i to <4 x i64>     ; 2 uses
+  %i.k = shufflevector <16 x i16> %i.h, <16 x i16> <i16 poison, i16 poison, i16 poison, i16 poison, i16 -256, i16 -256, i16 -256, i16 -256, i16 poison, i16 poison, i16 poison, i16 poison, i16 -256, i16 -256, i16 -256, i16 -256>, <16 x i32> <i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
+  %i.l = bitcast <16 x i16> %i.k to <4 x i64>     ; 2 uses
   %i.m = shufflevector <32 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>, <32 x i8> %i.f, <32 x i32> <i32 8, i32 40, i32 9, i32 41, i32 10, i32 42, i32 11, i32 43, i32 12, i32 44, i32 13, i32 45, i32 14, i32 46, i32 15, i32 47, i32 24, i32 56, i32 25, i32 57, i32 26, i32 58, i32 27, i32 59, i32 28, i32 60, i32 29, i32 61, i32 30, i32 62, i32 31, i32 63>
   %i.n = bitcast <32 x i8> %i.m to <16 x i16>     ; 2 uses
-  %i.o = shufflevector <16 x i16> %i.n, <16 x i16> <i16 -256, i16 -256, i16 -256, i16 -256, i16 poison, i16 poison, i16 poison, i16 poison, i16 -256, i16 -256, i16 -256, i16 -256, i16 poison, i16 poison, i16 poison, i16 poison>, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27> ; 2 uses
-  %i.p = bitcast <16 x i16> %i.o to <4 x i64>
-  %i.q = shufflevector <16 x i16> %i.n, <16 x i16> <i16 poison, i16 poison, i16 poison, i16 poison, i16 -256, i16 -256, i16 -256, i16 -256, i16 poison, i16 poison, i16 poison, i16 poison, i16 -256, i16 -256, i16 -256, i16 -256>, <16 x i32> <i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
-  %i.r = bitcast <16 x i16> %i.q to <4 x i64>
+  %i.o = shufflevector <16 x i16> %i.n, <16 x i16> <i16 -256, i16 -256, i16 -256, i16 -256, i16 poison, i16 poison, i16 poison, i16 poison, i16 -256, i16 -256, i16 -256, i16 -256, i16 poison, i16 poison, i16 poison, i16 poison>, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27>
+  %i.p = bitcast <16 x i16> %i.o to <4 x i64>     ; 2 uses
+  %i.q = shufflevector <16 x i16> %i.n, <16 x i16> <i16 poison, i16 poison, i16 poison, i16 poison, i16 -256, i16 -256, i16 -256, i16 -256, i16 poison, i16 poison, i16 poison, i16 poison, i16 -256, i16 -256, i16 -256, i16 -256>, <16 x i32> <i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
+  %i.r = bitcast <16 x i16> %i.q to <4 x i64>     ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %.0123, i64 64
   %i.t = shufflevector <4 x i64> %i.j, <4 x i64> poison, <2 x i32> <i32 0, i32 1>
   store <2 x i64> %i.t, ptr %.0123, align 1, !tbaa !10
-  %4 = bitcast <16 x i16> %i.i to <8 x i32>
-  %5 = shufflevector <8 x i32> %4, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  store <4 x i32> %5, ptr %i.s, align 1, !tbaa !10
+  %4 = shufflevector <4 x i64> %i.j, <4 x i64> poison, <2 x i32> <i32 2, i32 3>
+  store <2 x i64> %4, ptr %i.s, align 1, !tbaa !10
   %i.u = getelementptr inbounds nuw i8, ptr %.0123, i64 80
   %i.v = getelementptr inbounds nuw i8, ptr %.0123, i64 16
   %i.w = shufflevector <4 x i64> %i.l, <4 x i64> poison, <2 x i32> <i32 0, i32 1>
   store <2 x i64> %i.w, ptr %i.v, align 1, !tbaa !10
-  %6 = bitcast <16 x i16> %i.k to <8 x i32>
-  %7 = shufflevector <8 x i32> %6, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  store <4 x i32> %7, ptr %i.u, align 1, !tbaa !10
+  %5 = shufflevector <4 x i64> %i.l, <4 x i64> poison, <2 x i32> <i32 2, i32 3>
+  store <2 x i64> %5, ptr %i.u, align 1, !tbaa !10
   %i.x = getelementptr inbounds nuw i8, ptr %.0123, i64 96
   %i.y = getelementptr inbounds nuw i8, ptr %.0123, i64 32
   %i.z = shufflevector <4 x i64> %i.p, <4 x i64> poison, <2 x i32> <i32 0, i32 1>
   store <2 x i64> %i.z, ptr %i.y, align 1, !tbaa !10
-  %8 = bitcast <16 x i16> %i.o to <8 x i32>
-  %9 = shufflevector <8 x i32> %8, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  store <4 x i32> %9, ptr %i.x, align 1, !tbaa !10
+  %6 = shufflevector <4 x i64> %i.p, <4 x i64> poison, <2 x i32> <i32 2, i32 3>
+  store <2 x i64> %6, ptr %i.x, align 1, !tbaa !10
   %i.aa = getelementptr inbounds nuw i8, ptr %.0123, i64 112
   %i.ab = getelementptr inbounds nuw i8, ptr %.0123, i64 48
   %i.ac = shufflevector <4 x i64> %i.r, <4 x i64> poison, <2 x i32> <i32 0, i32 1>
   store <2 x i64> %i.ac, ptr %i.ab, align 1, !tbaa !10
-  %10 = bitcast <16 x i16> %i.q to <8 x i32>
-  %11 = shufflevector <8 x i32> %10, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  store <4 x i32> %11, ptr %i.aa, align 1, !tbaa !10
+  %7 = shufflevector <4 x i64> %i.r, <4 x i64> poison, <2 x i32> <i32 2, i32 3>
+  store <2 x i64> %7, ptr %i.aa, align 1, !tbaa !10
   %i.ad = getelementptr inbounds nuw i8, ptr %.0123, i64 128 ; 2 uses
   %indvars.iv.next156 = add nuw nsw i64 %indvars.iv155, 32 ; 2 uses
   %.not102 = icmp samesign ugt i64 %indvars.iv.next156, %i.c
@@ -587,23 +583,21 @@ bb.a:
   %i.af = load <16 x i16>, ptr %i.ae, align 1, !tbaa !10
   %i.ag = mul <16 x i16> %i.af, splat (i16 272)
   %i.ah = and <16 x i16> %i.ag, splat (i16 -256)  ; 2 uses
-  %i.ai = shufflevector <16 x i16> %i.ah, <16 x i16> <i16 -256, i16 -256, i16 -256, i16 -256, i16 poison, i16 poison, i16 poison, i16 poison, i16 -256, i16 -256, i16 -256, i16 -256, i16 poison, i16 poison, i16 poison, i16 poison>, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27> ; 2 uses
-  %i.aj = bitcast <16 x i16> %i.ai to <4 x i64>
-  %i.ak = shufflevector <16 x i16> %i.ah, <16 x i16> <i16 poison, i16 poison, i16 poison, i16 poison, i16 -256, i16 -256, i16 -256, i16 -256, i16 poison, i16 poison, i16 poison, i16 poison, i16 -256, i16 -256, i16 -256, i16 -256>, <16 x i32> <i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31> ; 2 uses
-  %i.al = bitcast <16 x i16> %i.ak to <4 x i64>
+  %i.ai = shufflevector <16 x i16> %i.ah, <16 x i16> <i16 -256, i16 -256, i16 -256, i16 -256, i16 poison, i16 poison, i16 poison, i16 poison, i16 -256, i16 -256, i16 -256, i16 -256, i16 poison, i16 poison, i16 poison, i16 poison>, <16 x i32> <i32 0, i32 16, i32 1, i32 17, i32 2, i32 18, i32 3, i32 19, i32 8, i32 24, i32 9, i32 25, i32 10, i32 26, i32 11, i32 27>
+  %i.aj = bitcast <16 x i16> %i.ai to <4 x i64>   ; 2 uses
+  %i.ak = shufflevector <16 x i16> %i.ah, <16 x i16> <i16 poison, i16 poison, i16 poison, i16 poison, i16 -256, i16 -256, i16 -256, i16 -256, i16 poison, i16 poison, i16 poison, i16 poison, i16 -256, i16 -256, i16 -256, i16 -256>, <16 x i32> <i32 4, i32 20, i32 5, i32 21, i32 6, i32 22, i32 7, i32 23, i32 12, i32 28, i32 13, i32 29, i32 14, i32 30, i32 15, i32 31>
+  %i.al = bitcast <16 x i16> %i.ak to <4 x i64>   ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %.1117, i64 32
   %i.an = shufflevector <4 x i64> %i.aj, <4 x i64> poison, <2 x i32> <i32 0, i32 1>
   store <2 x i64> %i.an, ptr %.1117, align 1, !tbaa !10
-  %12 = bitcast <16 x i16> %i.ai to <8 x i32>
-  %13 = shufflevector <8 x i32> %12, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  store <4 x i32> %13, ptr %i.am, align 1, !tbaa !10
+  %8 = shufflevector <4 x i64> %i.aj, <4 x i64> poison, <2 x i32> <i32 2, i32 3>
+  store <2 x i64> %8, ptr %i.am, align 1, !tbaa !10
   %i.ao = getelementptr inbounds nuw i8, ptr %.1117, i64 48
   %i.ap = getelementptr inbounds nuw i8, ptr %.1117, i64 16
   %i.aq = shufflevector <4 x i64> %i.al, <4 x i64> poison, <2 x i32> <i32 0, i32 1>
   store <2 x i64> %i.aq, ptr %i.ap, align 1, !tbaa !10
-  %14 = bitcast <16 x i16> %i.ak to <8 x i32>
-  %15 = shufflevector <8 x i32> %14, <8 x i32> poison, <4 x i32> <i32 4, i32 5, i32 6, i32 7>
-  store <4 x i32> %15, ptr %i.ao, align 1, !tbaa !10
+  %9 = shufflevector <4 x i64> %i.al, <4 x i64> poison, <2 x i32> <i32 2, i32 3>
+  store <2 x i64> %9, ptr %i.ao, align 1, !tbaa !10
   %i.ar = getelementptr inbounds nuw i8, ptr %.1117, i64 64 ; 2 uses
   %indvars.iv.next149 = add nuw nsw i64 %indvars.iv148, 32 ; 2 uses
   %.not101 = icmp samesign ugt i64 %indvars.iv.next149, %i.b
@@ -1006,12 +1000,12 @@ bb.a:
   %i.j = load <32 x i8>, ptr %i.i, align 1, !tbaa !10
   %i.k = shufflevector <8 x i32> %i.h, <8 x i32> %i.f, <8 x i32> <i32 0, i32 8, i32 1, i32 9, i32 4, i32 12, i32 5, i32 13>
   %i.l = shufflevector <8 x i32> %i.h, <8 x i32> %i.f, <8 x i32> <i32 2, i32 10, i32 3, i32 11, i32 6, i32 14, i32 7, i32 15>
-  %4 = bitcast <8 x i32> %i.f to <32 x i8>
-  %5 = shufflevector <32 x i8> %4, <32 x i8> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 4, i32 5, i32 6, i32 7, i32 16, i32 17, i32 18, i32 19, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 20, i32 21, i32 22, i32 23>
+  %4 = shufflevector <8 x i32> %i.f, <8 x i32> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 4, i32 4, i32 5, i32 5>
+  %5 = bitcast <8 x i32> %4 to <32 x i8>
   %i.m = bitcast <8 x i32> %i.k to <32 x i8>
   %i.n = tail call <4 x i64> @llvm.x86.avx2.psad.bw(<32 x i8> %5, <32 x i8> %i.m)
-  %6 = bitcast <8 x i32> %i.f to <32 x i8>
-  %7 = shufflevector <32 x i8> %6, <32 x i8> poison, <32 x i32> <i32 8, i32 9, i32 10, i32 11, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 12, i32 13, i32 14, i32 15, i32 24, i32 25, i32 26, i32 27, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 28, i32 29, i32 30, i32 31>
+  %6 = shufflevector <8 x i32> %i.f, <8 x i32> poison, <8 x i32> <i32 2, i32 2, i32 3, i32 3, i32 6, i32 6, i32 7, i32 7>
+  %7 = bitcast <8 x i32> %6 to <32 x i8>
   %i.o = bitcast <8 x i32> %i.l to <32 x i8>
   %i.p = tail call <4 x i64> @llvm.x86.avx2.psad.bw(<32 x i8> %7, <32 x i8> %i.o)
   %i.q = bitcast <4 x i64> %i.n to <8 x i32>
@@ -1019,12 +1013,12 @@ bb.a:
   %i.s = tail call <16 x i16> @llvm.x86.avx2.packssdw(<8 x i32> %i.q, <8 x i32> %i.r)
   %i.t = shufflevector <8 x i32> %i.h, <8 x i32> %i.d, <8 x i32> <i32 0, i32 8, i32 1, i32 9, i32 4, i32 12, i32 5, i32 13>
   %i.u = shufflevector <8 x i32> %i.h, <8 x i32> %i.d, <8 x i32> <i32 2, i32 10, i32 3, i32 11, i32 6, i32 14, i32 7, i32 15>
-  %8 = bitcast <8 x i32> %i.d to <32 x i8>
-  %9 = shufflevector <32 x i8> %8, <32 x i8> poison, <32 x i32> <i32 0, i32 1, i32 2, i32 3, i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 4, i32 5, i32 6, i32 7, i32 16, i32 17, i32 18, i32 19, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 20, i32 21, i32 22, i32 23>
+  %8 = shufflevector <8 x i32> %i.d, <8 x i32> poison, <8 x i32> <i32 0, i32 0, i32 1, i32 1, i32 4, i32 4, i32 5, i32 5>
+  %9 = bitcast <8 x i32> %8 to <32 x i8>
   %i.v = bitcast <8 x i32> %i.t to <32 x i8>
   %i.w = tail call <4 x i64> @llvm.x86.avx2.psad.bw(<32 x i8> %9, <32 x i8> %i.v)
-  %10 = bitcast <8 x i32> %i.d to <32 x i8>
-  %11 = shufflevector <32 x i8> %10, <32 x i8> poison, <32 x i32> <i32 8, i32 9, i32 10, i32 11, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 15, i32 12, i32 13, i32 14, i32 15, i32 24, i32 25, i32 26, i32 27, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31, i32 28, i32 29, i32 30, i32 31>
+  %10 = shufflevector <8 x i32> %i.d, <8 x i32> poison, <8 x i32> <i32 2, i32 2, i32 3, i32 3, i32 6, i32 6, i32 7, i32 7>
+  %11 = bitcast <8 x i32> %10 to <32 x i8>
   %i.x = bitcast <8 x i32> %i.u to <32 x i8>
   %i.y = tail call <4 x i64> @llvm.x86.avx2.psad.bw(<32 x i8> %11, <32 x i8> %i.x)
   %i.z = bitcast <4 x i64> %i.w to <8 x i32>

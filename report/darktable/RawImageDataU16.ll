@@ -205,8 +205,8 @@ _ZNK8rawspeed10Array2DRefIiE15getAsArray1DRefEv.exit:
   %i.cg = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ch = getelementptr inbounds nuw i8, ptr %0, i64 604 ; 2 uses
   %i.ci = bitcast <2 x i64> %spec.select to <8 x i16> ; 2 uses
-  %3 = bitcast <4 x i32> %i.cf to <8 x i16>
-  %4 = shufflevector <8 x i16> %3, <8 x i16> poison, <8 x i32> <i32 0, i32 1, i32 0, i32 1, i32 0, i32 1, i32 0, i32 1>
+  %3 = shufflevector <4 x i32> %i.cf, <4 x i32> poison, <4 x i32> zeroinitializer
+  %4 = bitcast <4 x i32> %3 to <8 x i16>
   %.scalar = add nsw i32 %i.cc, 512
   %i.cj = insertelement <4 x i32> poison, i32 %.scalar, i64 0
   %i.ck = shufflevector <4 x i32> %i.cj, <4 x i32> poison, <4 x i32> zeroinitializer ; 2 uses

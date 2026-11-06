@@ -12,7 +12,7 @@ define hidden noundef i32 @_ZN4ojph5local19sse2_find_max_val32EPj(ptr nofree nou
 bb.a:
   %i.a = load <2 x i64>, ptr %0, align 1, !tbaa !8 ; 2 uses
   %i.b = shufflevector <2 x i64> %i.a, <2 x i64> poison, <2 x i32> <i32 1, i32 1>
-  %i.c = or <2 x i64> %i.a, %i.b                  ; 2 uses
+  %i.c = or <2 x i64> %i.b, %i.a                  ; 2 uses
   %i.d = bitcast <2 x i64> %i.c to <4 x i32>
   %i.e = shufflevector <4 x i32> %i.d, <4 x i32> poison, <4 x i32> <i32 1, i32 1, i32 1, i32 1>
   %i.f = bitcast <4 x i32> %i.e to <2 x i64>
@@ -28,7 +28,7 @@ define hidden noundef i64 @_ZN4ojph5local19sse2_find_max_val64EPm(ptr nofree nou
 bb.a:
   %i.a = load <2 x i64>, ptr %0, align 1, !tbaa !8 ; 2 uses
   %i.b = shufflevector <2 x i64> %i.a, <2 x i64> poison, <2 x i32> <i32 1, i32 1>
-  %i.c = or <2 x i64> %i.a, %i.b                  ; 2 uses
+  %i.c = or <2 x i64> %i.b, %i.a                  ; 2 uses
   store <2 x i64> %i.c, ptr %0, align 1, !tbaa !8
   %i.d = extractelement <2 x i64> %i.c, i64 0
   ret i64 %i.d
