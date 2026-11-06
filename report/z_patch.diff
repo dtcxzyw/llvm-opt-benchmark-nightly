@@ -1,0 +1,227 @@
+diff --git a/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp b/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp
+index 815059762bfe3..193a68926ceea 100644
+--- a/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp
++++ b/llvm/lib/Transforms/InstCombine/InstCombineAndOrXor.cpp
+@@ -353,8 +353,8 @@ getMaskedTypeForICmpPair(Value *&A, Value *&B, Value *&C, Value *&D, Value *&E,
+ /// (icmp (A & 12) != 0) & (icmp (A & 15) == 8) -> (icmp (A & 15) == 8).
+ /// Also used for logical and/or, must be poison safe.
+ static Value *foldLogOpOfMaskedICmps_NotAllZeros_BMask_Mixed(
+-    Value *LHS, Value *RHS, bool IsAnd, Value *A, Value *B, Value *D, Value *E,
+-    ICmpInst::Predicate PredL, ICmpInst::Predicate PredR,
++    Value *LHS, Value *RHS, bool IsAnd, bool IsLogical, Value *A, Value *B,
++    Value *D, Value *E, ICmpInst::Predicate PredL, ICmpInst::Predicate PredR,
+     InstCombiner::BuilderTy &Builder) {
+   // We are given the canonical form:
+   //   (icmp ne (A & B), 0) & (icmp eq (A & D), E).
+@@ -469,28 +469,34 @@ static Value *foldLogOpOfMaskedICmps_NotAllZeros_BMask_Mixed(
+     return nullptr;
+   }
+ 
++  auto GetRHS = [&]() {
++    if (!IsLogical)
++      return RHS;
++
++    // Make sure that the RHS is not more poisonous, e.g. as a result of
++    // poison flags on icmp or trunc, or via poison elements in vector
++    // constants. Using freeze is insufficient here, because we need the
++    // constants to match those the analysis was performed on.
++    Value *And = Builder.CreateAnd(A, ConstantInt::get(A->getType(), *DCst));
++    return Builder.CreateICmp(NewCC, And, ConstantInt::get(A->getType(), ECst));
++  };
++
+   // At this point, B, D, E aren't zero and (B & D) == B, (B & D) == D or B ==
+   // D. If B is a superset of (or equal to) D, since E is not zero, LHS is
+   // subsumed by RHS (RHS implies LHS.) So the whole expression becomes
+   // RHS. For example,
+   // (icmp ne (A & 255), 0) & (icmp eq (A & 15), 8) -> (icmp eq (A & 15), 8).
+   // (icmp ne (A & 15), 0) & (icmp eq (A & 15), 8) -> (icmp eq (A & 15), 8).
+-  if (IsSuperSetOrEqual(BCst, DCst)) {
+-    // We can't guarantee that samesign hold after this fold.
+-    if (auto *ICmp = dyn_cast<ICmpInst>(RHS))
+-      ICmp->setSameSign(false);
+-    return RHS;
+-  }
++  if (IsSuperSetOrEqual(BCst, DCst))
++    return GetRHS();
++
+   // Otherwise, B is a subset of D. If B and E have a common bit set,
+   // ie. (B & E) != 0, then LHS is subsumed by RHS. For example.
+   // (icmp ne (A & 12), 0) & (icmp eq (A & 15), 8) -> (icmp eq (A & 15), 8).
+   assert(IsSubSetOrEqual(BCst, DCst) && "Precondition due to above code");
+-  if ((*BCst & ECst) != 0) {
+-    // We can't guarantee that samesign hold after this fold.
+-    if (auto *ICmp = dyn_cast<ICmpInst>(RHS))
+-      ICmp->setSameSign(false);
+-    return RHS;
+-  }
++  if ((*BCst & ECst) != 0)
++    return GetRHS();
++
+   // Otherwise, LHS and RHS contradict and the whole expression becomes false
+   // (or true if negated.) For example,
+   // (icmp ne (A & 7), 0) & (icmp eq (A & 15), 8) -> false.
+@@ -503,9 +509,10 @@ static Value *foldLogOpOfMaskedICmps_NotAllZeros_BMask_Mixed(
+ /// aren't of the common mask pattern type.
+ /// Also used for logical and/or, must be poison safe.
+ static Value *foldLogOpOfMaskedICmpsAsymmetric(
+-    Value *LHS, Value *RHS, bool IsAnd, Value *A, Value *B, Value *C, Value *D,
+-    Value *E, ICmpInst::Predicate PredL, ICmpInst::Predicate PredR,
+-    unsigned LHSMask, unsigned RHSMask, InstCombiner::BuilderTy &Builder) {
++    Value *LHS, Value *RHS, bool IsAnd, bool IsLogical, Value *A, Value *B,
++    Value *C, Value *D, Value *E, ICmpInst::Predicate PredL,
++    ICmpInst::Predicate PredR, unsigned LHSMask, unsigned RHSMask,
++    InstCombiner::BuilderTy &Builder) {
+   assert(ICmpInst::isEquality(PredL) && ICmpInst::isEquality(PredR) &&
+          "Expected equality predicates for masked type of icmps.");
+   // Handle Mask_NotAllZeros-BMask_Mixed cases.
+@@ -519,12 +526,13 @@ static Value *foldLogOpOfMaskedICmpsAsymmetric(
+   }
+   if ((LHSMask & Mask_NotAllZeros) && (RHSMask & BMask_Mixed)) {
+     if (Value *V = foldLogOpOfMaskedICmps_NotAllZeros_BMask_Mixed(
+-            LHS, RHS, IsAnd, A, B, D, E, PredL, PredR, Builder)) {
++            LHS, RHS, IsAnd, IsLogical, A, B, D, E, PredL, PredR, Builder)) {
+       return V;
+     }
+   } else if ((LHSMask & BMask_Mixed) && (RHSMask & Mask_NotAllZeros)) {
+     if (Value *V = foldLogOpOfMaskedICmps_NotAllZeros_BMask_Mixed(
+-            RHS, LHS, IsAnd, A, D, B, C, PredR, PredL, Builder)) {
++            RHS, LHS, IsAnd, /*IsLogical=*/false, A, D, B, C, PredR, PredL,
++            Builder)) {
+       return V;
+     }
+   }
+@@ -551,9 +559,9 @@ static Value *foldLogOpOfMaskedICmps(Value *LHS, Value *RHS, bool IsAnd,
+   if (Mask == 0) {
+     // Even if the two sides don't share a common pattern, check if folding can
+     // still happen.
+-    if (Value *V = foldLogOpOfMaskedICmpsAsymmetric(
+-            LHS, RHS, IsAnd, A, B, C, D, E, PredL, PredR, LHSMask, RHSMask,
+-            Builder))
++    if (Value *V = foldLogOpOfMaskedICmpsAsymmetric(LHS, RHS, IsAnd, IsLogical,
++                                                    A, B, C, D, E, PredL, PredR,
++                                                    LHSMask, RHSMask, Builder))
+       return V;
+     return nullptr;
+   }
+diff --git a/llvm/test/Transforms/InstCombine/and-or-icmps.ll b/llvm/test/Transforms/InstCombine/and-or-icmps.ll
+index 420b963110364..e5606083318cf 100644
+--- a/llvm/test/Transforms/InstCombine/and-or-icmps.ll
++++ b/llvm/test/Transforms/InstCombine/and-or-icmps.ll
+@@ -3,6 +3,7 @@
+ 
+ declare void @use(i1)
+ declare void @use32(i32)
++declare void @use.v2i1(<2 x i1>)
+ 
+ define i1 @PR1817_1(i32 %X) {
+ ; CHECK-LABEL: @PR1817_1(
+@@ -2178,6 +2179,109 @@ define i1 @bitwise_and_logical_and_masked_icmp_allones_poison2(i1 %c, i32 %x, i3
+   ret i1 %and2
+ }
+ 
++define <2 x i1> @logical_and_icmp_and_partial_poison(<2 x i8> %x) {
++; CHECK-LABEL: @logical_and_icmp_and_partial_poison(
++; CHECK-NEXT:    [[AND2:%.*]] = and <2 x i8> [[X:%.*]], splat (i8 15)
++; CHECK-NEXT:    [[OR:%.*]] = icmp eq <2 x i8> [[AND2]], splat (i8 8)
++; CHECK-NEXT:    ret <2 x i1> [[OR]]
++;
++  %and1 = and <2 x i8> %x, splat (i8 12)
++  %cmp1 = icmp ne <2 x i8> %and1, zeroinitializer
++  %and2 = and <2 x i8> %x, splat (i8 15)
++  %cmp2 = icmp eq <2 x i8> %and2, <i8 8, i8 poison>
++  %or = select <2 x i1> %cmp1, <2 x i1> %cmp2, <2 x i1> zeroinitializer
++  ret <2 x i1> %or
++}
++
++define <2 x i1> @logical_or_trunc_partial_poison(<2 x i8> %x) {
++; CHECK-LABEL: @logical_or_trunc_partial_poison(
++; CHECK-NEXT:    [[TMP1:%.*]] = and <2 x i8> [[X:%.*]], splat (i8 7)
++; CHECK-NEXT:    [[R:%.*]] = icmp ne <2 x i8> [[TMP1]], splat (i8 6)
++; CHECK-NEXT:    ret <2 x i1> [[R]]
++;
++  %c1 = icmp eq <2 x i8> %x, zeroinitializer
++  %t = trunc <2 x i8> %x to <2 x i3>
++  %c2 = icmp ne <2 x i3> %t, <i3 poison, i3 -2>
++  %r = select <2 x i1> %c1, <2 x i1> splat (i1 true), <2 x i1> %c2
++  ret <2 x i1> %r
++}
++
++define i1 @logical_or_trunc_nuw(i8 %x) {
++; CHECK-LABEL: @logical_or_trunc_nuw(
++; CHECK-NEXT:    [[TMP1:%.*]] = and i8 [[X:%.*]], 7
++; CHECK-NEXT:    [[C2:%.*]] = icmp ne i8 [[TMP1]], 6
++; CHECK-NEXT:    ret i1 [[C2]]
++;
++  %and = and i8 %x, 3
++  %c1 = icmp eq i8 %and, 0
++  %t = trunc nuw i8 %x to i3
++  %c2 = icmp ne i3 %t, -2
++  %r = select i1 %c1, i1 true, i1 %c2
++  ret i1 %r
++}
++
++define i1 @logical_and_samesign(i8 %x) {
++; CHECK-LABEL: @logical_and_samesign(
++; CHECK-NEXT:    [[TMP1:%.*]] = and i8 [[X:%.*]], 15
++; CHECK-NEXT:    [[CMP2:%.*]] = icmp eq i8 [[TMP1]], 8
++; CHECK-NEXT:    ret i1 [[CMP2]]
++;
++  %and1 = and i8 %x, 12
++  %cmp1 = icmp ne i8 %and1, 0
++  %and2 = and i8 %x, 15
++  %cmp2 = icmp samesign eq i8 %and2, 8
++  %r = select i1 %cmp1, i1 %cmp2, i1 false
++  ret i1 %r
++}
++
++define <2 x i1> @logical_and_icmp_and_partial_poison_multiuse(<2 x i8> %x) {
++; CHECK-LABEL: @logical_and_icmp_and_partial_poison_multiuse(
++; CHECK-NEXT:    [[TMP1:%.*]] = and <2 x i8> [[X:%.*]], splat (i8 15)
++; CHECK-NEXT:    [[CMP2:%.*]] = icmp eq <2 x i8> [[TMP1]], <i8 8, i8 poison>
++; CHECK-NEXT:    call void @use.v2i1(<2 x i1> [[CMP2]])
++; CHECK-NEXT:    [[TMP2:%.*]] = and <2 x i8> [[X]], splat (i8 15)
++; CHECK-NEXT:    [[R:%.*]] = icmp eq <2 x i8> [[TMP2]], splat (i8 8)
++; CHECK-NEXT:    ret <2 x i1> [[R]]
++;
++  %and1 = and <2 x i8> %x, splat (i8 12)
++  %cmp1 = icmp ne <2 x i8> %and1, zeroinitializer
++  %and2 = and <2 x i8> %x, splat (i8 15)
++  %cmp2 = icmp eq <2 x i8> %and2, <i8 8, i8 poison>
++  call void @use.v2i1(<2 x i1> %cmp2)
++  %r = select <2 x i1> %cmp1, <2 x i1> %cmp2, <2 x i1> zeroinitializer
++  ret <2 x i1> %r
++}
++
++; The subsuming icmp is the select condition, so it can be returned as-is.
++define <2 x i1> @logical_and_icmp_and_partial_poison_commuted(<2 x i8> %x) {
++; CHECK-LABEL: @logical_and_icmp_and_partial_poison_commuted(
++; CHECK-NEXT:    [[AND2:%.*]] = and <2 x i8> [[X:%.*]], splat (i8 15)
++; CHECK-NEXT:    [[CMP2:%.*]] = icmp samesign eq <2 x i8> [[AND2]], <i8 8, i8 poison>
++; CHECK-NEXT:    ret <2 x i1> [[CMP2]]
++;
++  %and1 = and <2 x i8> %x, splat (i8 12)
++  %cmp1 = icmp ne <2 x i8> %and1, zeroinitializer
++  %and2 = and <2 x i8> %x, splat (i8 15)
++  %cmp2 = icmp samesign eq <2 x i8> %and2, <i8 8, i8 poison>
++  %r = select <2 x i1> %cmp2, <2 x i1> %cmp1, <2 x i1> zeroinitializer
++  ret <2 x i1> %r
++}
++
++; Poison propagates through bitwise and, so the icmp can be returned as-is.
++define <2 x i1> @bitwise_and_icmp_and_partial_poison(<2 x i8> %x) {
++; CHECK-LABEL: @bitwise_and_icmp_and_partial_poison(
++; CHECK-NEXT:    [[AND2:%.*]] = and <2 x i8> [[X:%.*]], splat (i8 15)
++; CHECK-NEXT:    [[CMP2:%.*]] = icmp samesign eq <2 x i8> [[AND2]], <i8 8, i8 poison>
++; CHECK-NEXT:    ret <2 x i1> [[CMP2]]
++;
++  %and1 = and <2 x i8> %x, splat (i8 12)
++  %cmp1 = icmp ne <2 x i8> %and1, zeroinitializer
++  %and2 = and <2 x i8> %x, splat (i8 15)
++  %cmp2 = icmp samesign eq <2 x i8> %and2, <i8 8, i8 poison>
++  %r = and <2 x i1> %cmp1, %cmp2
++  ret <2 x i1> %r
++}
++
+ define i1 @samesign(i32 %x, i32 %y) {
+ ; CHECK-LABEL: @samesign(
+ ; CHECK-NEXT:    [[TMP1:%.*]] = xor i32 [[X:%.*]], [[Y:%.*]]
