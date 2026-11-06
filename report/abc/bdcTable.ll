@@ -126,11 +126,10 @@ bb.e:                                             ; preds = %bb.a
   %.050 = load ptr, ptr %i.aa, align 8, !tbaa !28 ; 3 uses
   %.not51 = icmp eq ptr %.050, null
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !13 ; 4 uses
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !13 ; 3 uses
   br i1 %.not51, label %._crit_edge.thread, label %.lr.ph
 
 ._crit_edge.thread:                               ; preds = %bb.e
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ab = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !26
   br label %._crit_edge58
@@ -198,7 +197,6 @@ select.unfold.i7.i:                               ; preds = %.lr.ph76
   br i1 %.not, label %._crit_edge, label %bb.f, !llvm.loop !35
 
 ._crit_edge:                                      ; preds = %.loopexit46
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
   %i.bi = load ptr, ptr %i.bh, align 8, !tbaa !26 ; 2 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -255,7 +253,6 @@ select.unfold.i7.i36:                             ; preds = %.lr.ph82
   br i1 %.not.i10.i38, label %select.unfold.i7.i36, label %.loopexit, !llvm.loop !1
 
 Bdc_TableCheckContainment.exit40:                 ; preds = %select.unfold.i7.i36.preheader, %select.unfold.i7.i36
-  store ptr %.pre, ptr %3, align 8, !tbaa !13
   %i.ck = ptrtoint ptr %.155 to i64
   %i.cl = xor i64 %i.ck, 1
   %i.cm = inttoptr i64 %i.cl to ptr
@@ -270,8 +267,8 @@ Bdc_TableCheckContainment.exit40:                 ; preds = %select.unfold.i7.i3
 ._crit_edge58:                                    ; preds = %.loopexit, %._crit_edge.thread
   %i.co = phi ptr [ %i.ac, %._crit_edge.thread ], [ %i.bi, %.loopexit ]
   %i.cp = phi ptr [ %i.ab, %._crit_edge.thread ], [ %i.bh, %.loopexit ]
-  %4 = phi ptr [ %2, %._crit_edge.thread ], [ %3, %.loopexit ]
-  store ptr %.pre, ptr %4, align 8, !tbaa !13
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 8
+  store ptr %.pre, ptr %2, align 8, !tbaa !13
   store ptr %i.co, ptr %i.cp, align 8, !tbaa !26
   br label %Bdc_TableCheckContainment.exit
 
