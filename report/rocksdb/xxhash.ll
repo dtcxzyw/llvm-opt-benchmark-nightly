@@ -205,10 +205,9 @@ _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5:       ; preds = %.epil.preheader112,
   br i1 %.not133.i38, label %.preheader, label %.preheader17.lr.ph
 
 .preheader17.lr.ph:                               ; preds = %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5
-  %.not47 = icmp eq i64 %i.gm, 0
   call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
   %xtraiter122 = and i64 %i.gm, 1
-  %i.jr = icmp eq i64 %i.gm, 1
+  %i.jr = icmp eq i64 %i.gm, 1                    ; 0 uses
   %unroll_iter128 = and i64 %i.gm, -2
   %lcmp.mod125.not = icmp eq i64 %xtraiter122, 0
   %lcmp.mod127 = trunc i64 %i.gm to i1
@@ -218,11 +217,14 @@ _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5:       ; preds = %.epil.preheader112,
   %.promoted37 = phi <8 x i64> [ %i.jn, %.preheader17.lr.ph ], [ %i.ly, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3 ] ; 3 uses
   %.0124.i40 = phi i64 [ %i.jq, %.preheader17.lr.ph ], [ %i.ma, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3 ]
   %.1126.i39 = phi ptr [ %i.jp, %.preheader17.lr.ph ], [ %i.lz, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3 ] ; 4 uses
-  br i1 %.not47, label %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3, label %.lr.ph36
+  switch i64 %i.gm, label %.lr.ph36 [
+    i64 0, label %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3
+    i64 1, label %.epil.preheader121
+  ]
 
 .lr.ph36:                                         ; preds = %.preheader17
   call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
-  br i1 %i.jr, label %.epil.preheader121, label %.lr.ph36.new
+  br label %.lr.ph36.new
 
 .preheader:                                       ; preds = %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5
   %.promoted44 = phi <8 x i64> [ %i.jn, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5 ], [ %i.ly, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3 ] ; 2 uses
@@ -241,10 +243,10 @@ _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5:       ; preds = %.epil.preheader112,
   %unroll_iter136 = and i64 %.0124.i.lcssa, -2
   br label %bb.k
 
-.lr.ph36.new:                                     ; preds = %.lr.ph36, %.lr.ph36.new
-  %i.jt = phi <8 x i64> [ %i.kw, %.lr.ph36.new ], [ %.promoted37, %.lr.ph36 ]
-  %.0.i235 = phi i64 [ %i.kx, %.lr.ph36.new ], [ 0, %.lr.ph36 ] ; 4 uses
-  %niter129 = phi i64 [ %niter129.next.1, %.lr.ph36.new ], [ 0, %.lr.ph36 ]
+.lr.ph36.new:                                     ; preds = %.lr.ph36.new, %.lr.ph36
+  %i.jt = phi <8 x i64> [ %.promoted37, %.lr.ph36 ], [ %i.kw, %.lr.ph36.new ]
+  %.0.i235 = phi i64 [ 0, %.lr.ph36 ], [ %i.kx, %.lr.ph36.new ] ; 4 uses
+  %niter129 = phi i64 [ 0, %.lr.ph36 ], [ %niter129.next.1, %.lr.ph36.new ]
   %i.ju = shl i64 %.0.i235, 6
   %i.jv = getelementptr inbounds nuw i8, ptr %.1126.i39, i64 %i.ju ; 2 uses
   %i.jw = getelementptr inbounds nuw i8, ptr %i.jv, i64 320
@@ -286,9 +288,9 @@ _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5:       ; preds = %.epil.preheader112,
 _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3.loopexit.unr-lcssa: ; preds = %.lr.ph36.new
   br i1 %lcmp.mod125.not, label %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3, label %.epil.preheader121
 
-.epil.preheader121:                               ; preds = %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3.loopexit.unr-lcssa, %.lr.ph36
-  %.epil.init124 = phi <8 x i64> [ %.promoted37, %.lr.ph36 ], [ %i.kw, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3.loopexit.unr-lcssa ]
-  %.0.i235.epil.init = phi i64 [ 0, %.lr.ph36 ], [ %i.kx, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3.loopexit.unr-lcssa ] ; 2 uses
+.epil.preheader121:                               ; preds = %.preheader17, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3.loopexit.unr-lcssa
+  %.epil.init124 = phi <8 x i64> [ %.promoted37, %.preheader17 ], [ %i.kw, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3.loopexit.unr-lcssa ]
+  %.0.i235.epil.init = phi i64 [ 0, %.preheader17 ], [ %i.kx, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3.loopexit.unr-lcssa ] ; 2 uses
   tail call void @llvm.assume(i1 %lcmp.mod127)
   %i.ky = shl i64 %.0.i235.epil.init, 6
   %i.kz = getelementptr inbounds nuw i8, ptr %.1126.i39, i64 %i.ky ; 2 uses
@@ -691,10 +693,9 @@ _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5:       ; preds = %.epil.preheader112,
   br i1 %.not133.i38, label %.preheader, label %.preheader17.lr.ph
 
 .preheader17.lr.ph:                               ; preds = %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5
-  %.not47 = icmp eq i64 %i.gm, 0
   call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
   %xtraiter122 = and i64 %i.gm, 1
-  %i.jr = icmp eq i64 %i.gm, 1
+  %i.jr = icmp eq i64 %i.gm, 1                    ; 0 uses
   %unroll_iter128 = and i64 %i.gm, -2
   %lcmp.mod125.not = icmp eq i64 %xtraiter122, 0
   %lcmp.mod127 = trunc i64 %i.gm to i1
@@ -704,11 +705,14 @@ _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5:       ; preds = %.epil.preheader112,
   %.promoted37 = phi <8 x i64> [ %i.jn, %.preheader17.lr.ph ], [ %i.ly, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3 ] ; 3 uses
   %.0124.i40 = phi i64 [ %i.jq, %.preheader17.lr.ph ], [ %i.ma, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3 ]
   %.1126.i39 = phi ptr [ %i.jp, %.preheader17.lr.ph ], [ %i.lz, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3 ] ; 4 uses
-  br i1 %.not47, label %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3, label %.lr.ph36
+  switch i64 %i.gm, label %.lr.ph36 [
+    i64 0, label %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3
+    i64 1, label %.epil.preheader121
+  ]
 
 .lr.ph36:                                         ; preds = %.preheader17
   call void @llvm.assume(i1 true) [ "align"(ptr %0, i64 64) ]
-  br i1 %i.jr, label %.epil.preheader121, label %.lr.ph36.new
+  br label %.lr.ph36.new
 
 .preheader:                                       ; preds = %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5
   %.promoted44 = phi <8 x i64> [ %i.jn, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5 ], [ %i.ly, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3 ] ; 2 uses
@@ -727,10 +731,10 @@ _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5:       ; preds = %.epil.preheader112,
   %unroll_iter136 = and i64 %.0124.i.lcssa, -2
   br label %bb.k
 
-.lr.ph36.new:                                     ; preds = %.lr.ph36, %.lr.ph36.new
-  %i.jt = phi <8 x i64> [ %i.kw, %.lr.ph36.new ], [ %.promoted37, %.lr.ph36 ]
-  %.0.i235 = phi i64 [ %i.kx, %.lr.ph36.new ], [ 0, %.lr.ph36 ] ; 4 uses
-  %niter129 = phi i64 [ %niter129.next.1, %.lr.ph36.new ], [ 0, %.lr.ph36 ]
+.lr.ph36.new:                                     ; preds = %.lr.ph36.new, %.lr.ph36
+  %i.jt = phi <8 x i64> [ %.promoted37, %.lr.ph36 ], [ %i.kw, %.lr.ph36.new ]
+  %.0.i235 = phi i64 [ 0, %.lr.ph36 ], [ %i.kx, %.lr.ph36.new ] ; 4 uses
+  %niter129 = phi i64 [ 0, %.lr.ph36 ], [ %niter129.next.1, %.lr.ph36.new ]
   %i.ju = shl i64 %.0.i235, 6
   %i.jv = getelementptr inbounds nuw i8, ptr %.1126.i39, i64 %i.ju ; 2 uses
   %i.jw = getelementptr inbounds nuw i8, ptr %i.jv, i64 320
@@ -772,9 +776,9 @@ _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit5:       ; preds = %.epil.preheader112,
 _ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3.loopexit.unr-lcssa: ; preds = %.lr.ph36.new
   br i1 %lcmp.mod125.not, label %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3, label %.epil.preheader121
 
-.epil.preheader121:                               ; preds = %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3.loopexit.unr-lcssa, %.lr.ph36
-  %.epil.init124 = phi <8 x i64> [ %.promoted37, %.lr.ph36 ], [ %i.kw, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3.loopexit.unr-lcssa ]
-  %.0.i235.epil.init = phi i64 [ 0, %.lr.ph36 ], [ %i.kx, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3.loopexit.unr-lcssa ] ; 2 uses
+.epil.preheader121:                               ; preds = %.preheader17, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3.loopexit.unr-lcssa
+  %.epil.init124 = phi <8 x i64> [ %.promoted37, %.preheader17 ], [ %i.kw, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3.loopexit.unr-lcssa ]
+  %.0.i235.epil.init = phi i64 [ 0, %.preheader17 ], [ %i.kx, %_ZL22XXH3_accumulate_avx512PmPKhS1_m.exit3.loopexit.unr-lcssa ] ; 2 uses
   tail call void @llvm.assume(i1 %lcmp.mod127)
   %i.ky = shl i64 %.0.i235.epil.init, 6
   %i.kz = getelementptr inbounds nuw i8, ptr %.1126.i39, i64 %i.ky ; 2 uses

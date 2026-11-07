@@ -204,7 +204,7 @@ bb.x:                                             ; preds = %_RNvXsl_NtNtCskKLDk
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !1893
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !1893
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !1893
-  %.sroa.0145.0.copyload148.i.i = load ptr, ptr %i.i, align 8, !noalias !1891 ; 4 uses
+  %.sroa.0145.0.copyload148.i.i = load ptr, ptr %i.i, align 8, !noalias !1891 ; 3 uses
   %.sroa.8.0..sroa_idx151.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   %.sroa.8.0.copyload152.i.i = load ptr, ptr %.sroa.8.0..sroa_idx151.i.i, align 8, !noalias !1891 ; 4 uses
   %.sroa.10.0..sroa_idx153.i.i = getelementptr inbounds nuw i8, ptr %i.i, i64 16
@@ -229,9 +229,10 @@ bb.x:                                             ; preds = %_RNvXsl_NtNtCskKLDk
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.10.sroa.7.i.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ah), !noalias !1891
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ag), !noalias !1891
-  switch i64 %i.da, label %1 [
+  switch i64 %i.da, label %bb.ad [
     i64 -2, label %bb.y
     i64 -1, label %bb.z
+    i64 -9223372036854775798, label %bb.aj
   ]
 
 bb.y:                                             ; preds = %bb.x, %.thread232.i.i.a
@@ -244,12 +245,6 @@ bb.y:                                             ; preds = %bb.x, %.thread232.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y), !noalias !1891
   %i.df = invoke { ptr, i64 } @_RNvNtCslmvYCXbQjWR_6common5panic12downcast_str(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.z)
           to label %bb.av unwind label %bb.au, !noalias !1876 ; 2 uses
-
-1:                                                ; preds = %bb.x
-  %2 = icmp ne ptr %.sroa.0145.0.copyload148.i.i, inttoptr (i64 -9223372036854775791 to ptr)
-  call void @llvm.assume(i1 %2)
-  %3 = icmp eq ptr %.sroa.0145.0.copyload148.i.i, inttoptr (i64 -9223372036854775798 to ptr)
-  br i1 %3, label %bb.aj, label %bb.ad
 
 bb.z:                                             ; preds = %bb.x
   %i.dg = ptrtoint ptr %.sroa.8.0.copyload152.i.i to i64
@@ -297,7 +292,9 @@ bb.ac:                                            ; preds = %_RINvNtCskKLDkoKarT
   invoke void @_RNvMs1_NtCs5QaNqjAn6vc_5shard7trackerNtB5_13TrackerHandle6update(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.dr, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.o)
           to label %bb.bh unwind label %bb.ab, !noalias !1876
 
-bb.ad:                                            ; preds = %1
+bb.ad:                                            ; preds = %bb.x
+  %1 = icmp ne ptr %.sroa.0145.0.copyload148.i.i, inttoptr (i64 -9223372036854775791 to ptr)
+  call void @llvm.assume(i1 %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ac), !noalias !1891
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %i.ac, ptr noundef nonnull align 8 dereferenceable(96) %i.ai, i64 96, i1 false), !noalias !1891
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !1897
@@ -343,7 +340,7 @@ bb.ai:                                            ; preds = %bb.ak
   invoke void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECsPYQCUnoTxQ_10collection(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.af) #26
           to label %.thread181.thread.i.i unwind label %bb.an, !noalias !1876
 
-bb.aj:                                            ; preds = %1
+bb.aj:                                            ; preds = %bb.x
   call void @llvm.lifetime.start.p0(ptr nonnull %i.af), !noalias !1891
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.af, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.4158.0..sroa_idx.i.i, i64 24, i1 false), !noalias !1891
   %i.dy = load atomic i64, ptr @_RNvCs7A8gjpeJ2x1_3log20MAX_LOG_LEVEL_FILTER monotonic, align 8, !noalias !1891 ; 2 uses

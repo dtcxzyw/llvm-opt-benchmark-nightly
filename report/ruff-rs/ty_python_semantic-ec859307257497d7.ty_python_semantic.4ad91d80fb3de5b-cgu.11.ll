@@ -205,13 +205,15 @@ bb.a:                                             ; preds = %_RNvMs3_NtCsoTR8nlG
 
 _RNvMs3_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB5_5Place25ignore_possibly_undefined.exit20: ; preds = %bb.a
   %i.bb = getelementptr inbounds nuw i8, ptr %i.s, i64 12
-  %.sroa.030.0.copyload32 = load i32, ptr %i.bb, align 4, !alias.scope !14557 ; 4 uses
+  %.sroa.030.0.copyload32 = load i32, ptr %i.bb, align 4, !alias.scope !14557 ; 2 uses
   %.sroa.8.0..sroa_idx34 = getelementptr inbounds nuw i8, ptr %i.s, i64 16
   %.sroa.8.sroa.0.0.copyload37 = load i32, ptr %.sroa.8.0..sroa_idx34, align 4, !alias.scope !14557 ; 2 uses
   %.sroa.8.sroa.6.0..sroa.8.0..sroa_idx34.sroa_idx = getelementptr inbounds nuw i8, ptr %i.s, i64 20
   %.sroa.8.sroa.6.0.copyload38 = load i64, ptr %.sroa.8.sroa.6.0..sroa.8.0..sroa_idx34.sroa_idx, align 4, !alias.scope !14557
-  %.not3 = icmp eq i32 %.sroa.030.0.copyload32, -1
-  br i1 %.not3, label %_RNvMs39_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_4Type10is_unknown.exit, label %3
+  switch i32 %.sroa.030.0.copyload32, label %.thread [
+    i32 -1, label %_RNvMs39_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_4Type10is_unknown.exit
+    i32 4, label %bb.c
+  ]
 
 bb.b:                                             ; preds = %_RNvMs39_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_4Type10is_unknown.exit, %_RNvMs3_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB5_5Place25ignore_possibly_undefined.exit
   %i.bc = getelementptr inbounds nuw i8, ptr %1, i64 48
@@ -221,25 +223,19 @@ bb.b:                                             ; preds = %_RNvMs39_NtCsoTR8nl
   %.not4 = icmp eq i32 %i.bf, -1
   br i1 %.not4, label %.thread116, label %bb.g
 
-3:                                                ; preds = %_RNvMs3_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB5_5Place25ignore_possibly_undefined.exit20
-  %4 = icmp ne i32 %.sroa.030.0.copyload32, 17
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i32 %.sroa.030.0.copyload32, 4
-  br i1 %5, label %bb.c, label %.thread
-
-bb.c:                                             ; preds = %3
+bb.c:                                             ; preds = %_RNvMs3_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB5_5Place25ignore_possibly_undefined.exit20
   switch i32 %.sroa.8.sroa.0.0.copyload37, label %.thread [
     i32 1, label %_RNvMs39_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_4Type10is_unknown.exit
     i32 2, label %_RNvMs39_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_4Type10is_unknown.exit
     i32 5, label %_RNvMs39_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_4Type10is_unknown.exit
   ]
 
-_RNvMs39_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_4Type10is_unknown.exit: ; preds = %bb.a, %bb.c, %bb.c, %bb.c, %_RNvMs3_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB5_5Place25ignore_possibly_undefined.exit20
+_RNvMs39_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB6_4Type10is_unknown.exit: ; preds = %_RNvMs3_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB5_5Place25ignore_possibly_undefined.exit20, %bb.a, %bb.c, %bb.c, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t)
   br label %bb.b
 
-.thread:                                          ; preds = %3, %bb.c
+.thread:                                          ; preds = %_RNvMs3_NtCsoTR8nlGN3X_18ty_python_semantic5placeNtB5_5Place25ignore_possibly_undefined.exit20, %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t)
   br label %bb.d
@@ -642,17 +638,11 @@ bb.c:                                             ; preds = %bb.b
   %i.bn = load i32, ptr %i.bm, align 4, !noundef !119
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ba)
   call void @_RINvMs9_NvNtCsoTR8nlGN3X_18ty_python_semantic5typess6_1__NtB8_20PropertyInstanceType6getterDNtNtBa_2db2DbEL_EBa_(ptr noalias noundef nonnull sret([16 x i8]) align 4 captures(none) dereferenceable(16) %i.ba, i32 noundef %i.bl, i32 noundef %i.bn, ptr noundef nonnull %.val111, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(272) %.val112)
-  %i.bo = load i32, ptr %i.ba, align 4, !range !128, !noundef !119 ; 3 uses
-  %.not = icmp eq i32 %i.bo, -1
-  br i1 %.not, label %.sink.split, label %10
+  %i.bo = load i32, ptr %i.ba, align 4, !range !128, !noundef !119
+  %.not = icmp eq i32 %i.bo, 7
+  br i1 %.not, label %bb.d, label %.sink.split
 
-10:                                               ; preds = %bb.c
-  %11 = icmp ne i32 %i.bo, 17
-  tail call void @llvm.assume(i1 %11)
-  %12 = icmp eq i32 %i.bo, 7
-  br i1 %12, label %bb.d, label %.sink.split
-
-bb.d:                                             ; preds = %10
+bb.d:                                             ; preds = %bb.c
   %i.bp = getelementptr inbounds nuw i8, ptr %i.ba, i64 4
   %i.bq = load i32, ptr %i.bp, align 4, !range !142, !noundef !119
   %i.br = getelementptr inbounds nuw i8, ptr %i.ba, i64 8
@@ -679,9 +669,9 @@ bb.e:                                             ; preds = %bb.d
   %spec.select226 = select i1 %i.cf, i32 %i.bu, i32 %3
   br label %.sink.split
 
-.sink.split:                                      ; preds = %bb.e, %bb.d, %bb.c, %10
-  %.sroa.6.0.ph = phi i32 [ %spec.select, %bb.e ], [ %4, %bb.c ], [ %4, %10 ], [ %4, %bb.d ]
-  %.sroa.0.0.ph = phi i32 [ %spec.select226, %bb.e ], [ %3, %bb.c ], [ %3, %10 ], [ %3, %bb.d ]
+.sink.split:                                      ; preds = %bb.e, %bb.d, %bb.c
+  %.sroa.6.0.ph = phi i32 [ %spec.select, %bb.e ], [ %4, %bb.c ], [ %4, %bb.d ]
+  %.sroa.0.0.ph = phi i32 [ %spec.select226, %bb.e ], [ %3, %bb.c ], [ %3, %bb.d ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ba)
   br label %bb.f
 

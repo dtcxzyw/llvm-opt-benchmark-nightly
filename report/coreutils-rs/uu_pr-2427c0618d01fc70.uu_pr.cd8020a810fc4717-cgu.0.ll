@@ -205,13 +205,13 @@ _RINvYINtNtNtNtCs6JMX4GRUq9U_4core4iter8adapters10take_while9TakeWhileINtNtNtBc_
   br i1 %.sroa.0.0, label %_RNCNvCshDScVpnq8df_5uu_pr18recreate_argumentss2_0B3_.exit.thread.i.i.i.i.i, label %bb.x
 
 bb.x:                                             ; preds = %.lr.ph.i.i.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.413.0.copyload.i.i.i.i) ]
   switch i64 %.sroa.5.0.copyload.i.i.i.i, label %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCshDScVpnq8df_5uu_pr.exit.i.i.i.i.i.i.i [
     i64 2, label %bb.y
     i64 0, label %_RNCNvCshDScVpnq8df_5uu_pr18recreate_argumentss2_0B3_.exit.i.i.i.i.i
   ]
 
 bb.y:                                             ; preds = %bb.x
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.413.0.copyload.i.i.i.i) ]
   %i.el = load i16, ptr %.sroa.413.0.copyload.i.i.i.i, align 1
   %i.em = icmp ne i16 %i.el, 11565
   %i.en = zext i1 %i.em to i32

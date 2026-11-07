@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
   %i.o = select i1 %i.k, i1 %i.n, i1 false
   br label %_ZNK11ast_manager8is_labelEPK4expr.exit
 
-_ZNK11ast_manager8is_labelEPK4expr.exit:          ; preds = %bb.a, %_Z9is_lambdaPK3ast.exit, %bb.c, %bb.b
+_ZNK11ast_manager8is_labelEPK4expr.exit:          ; preds = %_Z9is_lambdaPK3ast.exit, %bb.a, %bb.c, %bb.b
   %i.p = phi i1 [ %i.e, %_Z9is_lambdaPK3ast.exit ], [ false, %bb.a ], [ false, %bb.b ], [ %i.o, %bb.c ]
   ret i1 %i.p
 }

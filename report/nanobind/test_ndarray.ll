@@ -204,14 +204,15 @@ bb.b:                                             ; preds = %bb.a
   %i.w = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.117, i32 noundef %i.v) #27 ; 0 uses
   %i.x = getelementptr inbounds nuw i8, ptr %4, i64 28
   %.sroa.0.0.copyload.i.i = load i32, ptr %i.x, align 4 ; 3 uses
-  %.sroa.019.0.extract.trunc.i = trunc i32 %.sroa.0.0.copyload.i.i to i8 ; 2 uses
+  %.sroa.019.0.extract.trunc.i = trunc i32 %.sroa.0.0.copyload.i.i to i8
   %.sroa.420.0.extract.shift.i = lshr i32 %.sroa.0.0.copyload.i.i, 8
   %.sroa.420.0.extract.trunc.i = trunc i32 %.sroa.420.0.extract.shift.i to i8 ; 4 uses
   %.sroa.521.0.extract.shift.i = lshr i32 %.sroa.0.0.copyload.i.i, 16 ; 4 uses
-  switch i8 %.sroa.019.0.extract.trunc.i, label %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit19.i [
+  switch i8 %.sroa.019.0.extract.trunc.i, label %bb.f [
     i8 0, label %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit.thread.i
     i8 1, label %bb.c
     i8 2, label %bb.d
+    i8 5, label %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit19.i
   ]
 
 _ZNK8nanobind6dlpack5dtypeeqERKS1_.exit.thread.i: ; preds = %._crit_edge.i
@@ -236,11 +237,9 @@ bb.d:                                             ; preds = %._crit_edge.i
   br label %bb.f
 
 _ZNK8nanobind6dlpack5dtypeeqERKS1_.exit19.i:      ; preds = %._crit_edge.i
-  %5 = icmp eq i8 %.sroa.019.0.extract.trunc.i, 5
   %i.ah = icmp eq i8 %.sroa.420.0.extract.trunc.i, 64
-  %or.cond.i = and i1 %5, %i.ah
   %i.ai = icmp eq i32 %.sroa.521.0.extract.shift.i, 1
-  %spec.select29.i = and i1 %i.ai, %or.cond.i
+  %spec.select29.i = and i1 %i.ai, %i.ah
   %i.aj = zext i1 %spec.select29.i to i32
   br label %bb.f
 
@@ -260,12 +259,12 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.i
   %i.av = icmp ult i64 %i.as, %i.au
   br i1 %i.av, label %bb.e, label %._crit_edge.i, !llvm.loop !344
 
-bb.f:                                             ; preds = %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit19.i, %bb.d, %bb.c, %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit.thread.i
-  %6 = phi i32 [ 0, %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit19.i ], [ %i.ag, %bb.d ], [ 0, %bb.c ], [ 0, %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit.thread.i ]
-  %7 = phi i32 [ 0, %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit19.i ], [ 0, %bb.d ], [ 0, %bb.c ], [ %i.aa, %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit.thread.i ]
-  %8 = phi i32 [ 0, %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit19.i ], [ 0, %bb.d ], [ %i.ad, %bb.c ], [ 0, %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit.thread.i ]
-  %9 = phi i32 [ %i.aj, %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit19.i ], [ 0, %bb.d ], [ 0, %bb.c ], [ 0, %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit.thread.i ]
-  %i.aw = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.118, i32 noundef %7, i32 noundef %8, i32 noundef %6, i32 noundef %9) #27 ; 0 uses
+bb.f:                                             ; preds = %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit19.i, %bb.d, %bb.c, %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit.thread.i, %._crit_edge.i
+  %5 = phi i32 [ 0, %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit19.i ], [ 0, %._crit_edge.i ], [ %i.ag, %bb.d ], [ 0, %bb.c ], [ 0, %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit.thread.i ]
+  %6 = phi i32 [ 0, %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit19.i ], [ 0, %._crit_edge.i ], [ 0, %bb.d ], [ 0, %bb.c ], [ %i.aa, %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit.thread.i ]
+  %7 = phi i32 [ 0, %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit19.i ], [ 0, %._crit_edge.i ], [ 0, %bb.d ], [ %i.ad, %bb.c ], [ 0, %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit.thread.i ]
+  %8 = phi i32 [ %i.aj, %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit19.i ], [ 0, %._crit_edge.i ], [ 0, %bb.d ], [ 0, %bb.c ], [ 0, %_ZNK8nanobind6dlpack5dtypeeqERKS1_.exit.thread.i ]
+  %i.aw = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.118, i32 noundef %6, i32 noundef %7, i32 noundef %5, i32 noundef %8) #27 ; 0 uses
   br label %"_ZZN8nanobind6detail11func_createILb0ELb1EZL35nanobind_test_ndarray_ext_exec_implNS_7module_EE4$_45vJRKNS_7ndarrayIJEEEEJLm0EEJNS_5scopeENS_4nameEEEEP7_objectOT1_PFT2_DpT3_ESt16integer_sequenceImJXspT4_EEEDpRKT5_ENKUlPvPSB_jPNS0_12cleanup_listEE_clESP_SQ_jSS_.exit"
 
 "_ZZN8nanobind6detail11func_createILb0ELb1EZL35nanobind_test_ndarray_ext_exec_implNS_7module_EE4$_45vJRKNS_7ndarrayIJEEEEJLm0EEJNS_5scopeENS_4nameEEEEP7_objectOT1_PFT2_DpT3_ESt16integer_sequenceImJXspT4_EEEDpRKT5_ENKUlPvPSB_jPNS0_12cleanup_listEE_clESP_SQ_jSS_.exit": ; preds = %bb.a, %bb.f

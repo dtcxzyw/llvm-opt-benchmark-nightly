@@ -202,7 +202,7 @@ bb.at:                                            ; preds = %bb.as
 
 bb.au:                                            ; preds = %.sink.split.i, %bb.ar, %bb.an, %edit_deep_directories.exit
   %i.em = call fastcc i32 @create_filesystem_object(ptr noundef nonnull %0) ; 3 uses
-  switch i32 %i.em, label %.thread.i [
+  switch i32 %i.em, label %bb.ay [
     i32 20, label %bb.av
     i32 2, label %bb.av
   ]
@@ -229,10 +229,13 @@ create_parent_dir.exit.i:                         ; preds = %bb.ax, %bb.aw
   %i.et = call fastcc i32 @create_filesystem_object(ptr noundef nonnull %0)
   br label %bb.ay
 
-bb.ay:                                            ; preds = %create_parent_dir.exit.i, %bb.av
-  %.089.i = phi i32 [ %i.em, %bb.av ], [ %i.et, %create_parent_dir.exit.i ] ; 2 uses
-  %4 = icmp eq i32 %.089.i, 2
-  br i1 %4, label %bb.az, label %.thread.i
+bb.ay:                                            ; preds = %create_parent_dir.exit.i, %bb.av, %bb.au
+  %.089.i = phi i32 [ %i.em, %bb.av ], [ %i.et, %create_parent_dir.exit.i ], [ %i.em, %bb.au ] ; 4 uses
+  switch i32 %.089.i, label %.thread118.i.a [
+    i32 2, label %bb.az
+    i32 21, label %bb.bb
+    i32 17, label %bb.bb
+  ]
 
 bb.az:                                            ; preds = %bb.ay
   %i.eu = load ptr, ptr %i.m, align 8, !tbaa !62
@@ -246,14 +249,7 @@ bb.ba:                                            ; preds = %bb.az
   call void (ptr, i32, ptr, ...) @archive_set_error(ptr noundef nonnull %0, i32 noundef 2, ptr noundef nonnull @.str.33, ptr noundef %i.ex) #18
   br label %restore_entry.exit
 
-.thread.i:                                        ; preds = %bb.ay, %bb.au
-  %.089115.i = phi i32 [ %.089.i, %bb.ay ], [ %i.em, %bb.au ] ; 4 uses
-  switch i32 %.089115.i, label %.thread118.i.a [
-    i32 21, label %bb.bb
-    i32 17, label %bb.bb
-  ]
-
-bb.bb:                                            ; preds = %.thread.i, %.thread.i
+bb.bb:                                            ; preds = %bb.ay, %bb.ay
   %i.ey = load i32, ptr %i.ar, align 8, !tbaa !25
   %i.ez = and i32 %i.ey, 8
   %.not97.i = icmp eq i32 %i.ez, 0
@@ -275,7 +271,7 @@ bb.be:                                            ; preds = %bb.bd, %bb.bc
   br label %restore_entry.exit
 
 bb.bf:                                            ; preds = %bb.bb
-  switch i32 %.089115.i, label %.thread123.i [
+  switch i32 %.089.i, label %.thread123.i [
     i32 21, label %bb.bg
     i32 17, label %bb.bi
   ]
@@ -482,13 +478,13 @@ bb.ci:                                            ; preds = %bb.ch
   %i.hz = call fastcc i32 @create_filesystem_object(ptr noundef nonnull %0)
   br label %.thread118.i.a
 
-.thread118.i.a:                                   ; preds = %.thread118.sink.split.i, %.thread.i
-  %.3.i = phi i32 [ %.089115.i, %.thread.i ], [ %i.hz, %.thread118.sink.split.i ] ; 2 uses
+.thread118.i.a:                                   ; preds = %.thread118.sink.split.i, %bb.ay
+  %.3.i = phi i32 [ %.089.i, %bb.ay ], [ %i.hz, %.thread118.sink.split.i ] ; 2 uses
   %.not111.i = icmp eq i32 %.3.i, 0
   br i1 %.not111.i, label %.thread118.thread.i, label %.thread123.i
 
 .thread123.i:                                     ; preds = %.thread118.i.a, %bb.bf, %bb.az
-  %.3126.i = phi i32 [ %.3.i, %.thread118.i.a ], [ %.089115.i, %bb.bf ], [ 2, %bb.az ]
+  %.3126.i = phi i32 [ %.3.i, %.thread118.i.a ], [ %.089.i, %bb.bf ], [ 2, %bb.az ]
   %i.ia = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.ib = load ptr, ptr %i.ia, align 8, !tbaa !96
   %i.ic = icmp eq ptr %i.ib, null

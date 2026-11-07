@@ -111,9 +111,14 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.ab
 
 bb.d:                                             ; preds = %bb.b
-  %i.ai = load i32, ptr %i.a, align 4, !tbaa !9   ; 3 uses
-  %6 = icmp eq i32 %i.ai, 16
-  br i1 %6, label %bb.e, label %7
+  %i.ai = load i32, ptr %i.a, align 4, !tbaa !9   ; 2 uses
+  switch i32 %i.ai, label %bb.q [
+    i32 16, label %bb.e
+    i32 81, label %bb.j
+    i32 41, label %bb.j
+    i32 21, label %bb.j
+    i32 11, label %bb.j
+  ]
 
 bb.e:                                             ; preds = %bb.d
   %i.aj = load i8, ptr %i.t, align 16, !tbaa !10
@@ -148,17 +153,7 @@ bb.i:                                             ; preds = %bb.g
   %i.at = call ptr @strncpy(ptr noundef nonnull %i.an, ptr noundef nonnull %i.t, i64 noundef %i.as) #10 ; 0 uses
   br label %bb.q
 
-7:                                                ; preds = %bb.d
-  %8 = add i32 %i.ai, -11                         ; 2 uses
-  %9 = call i32 @llvm.fshl.i32(i32 %8, i32 %8, i32 31)
-  switch i32 %9, label %bb.q [
-    i32 35, label %bb.j
-    i32 15, label %bb.j
-    i32 5, label %bb.j
-    i32 0, label %bb.j
-  ]
-
-bb.j:                                             ; preds = %7, %7, %7, %7
+bb.j:                                             ; preds = %bb.d, %bb.d, %bb.d, %bb.d
   %i.au = load i64, ptr %i.h, align 8, !tbaa !14  ; 5 uses
   %i.av = icmp eq i64 %i.au, 1234554321
   br i1 %i.av, label %bb.k, label %bb.l
@@ -197,8 +192,8 @@ bb.p:                                             ; preds = %bb.l
   call void @ffswap8(ptr noundef nonnull %i.i, i64 noundef 1) #10
   br label %bb.q
 
-bb.q:                                             ; preds = %7, %bb.n, %bb.p, %bb.o, %bb.m, %bb.i
-  %.0 = phi ptr [ %i.an, %bb.i ], [ null, %bb.m ], [ null, %bb.n ], [ null, %bb.o ], [ null, %bb.p ], [ null, %7 ] ; 5 uses
+bb.q:                                             ; preds = %bb.d, %bb.n, %bb.p, %bb.o, %bb.m, %bb.i
+  %.0 = phi ptr [ %i.an, %bb.i ], [ null, %bb.m ], [ null, %bb.n ], [ null, %bb.o ], [ null, %bb.p ], [ null, %bb.d ] ; 5 uses
   %.not115148 = icmp eq i64 %4, 0
   br i1 %.not115148, label %._crit_edge, label %.lr.ph152.outer
 
@@ -525,9 +520,14 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.ab
 
 bb.d:                                             ; preds = %bb.b
-  %i.ad = load i32, ptr %i.a, align 4, !tbaa !9   ; 3 uses
-  %6 = icmp eq i32 %i.ad, 16
-  br i1 %6, label %bb.e, label %7
+  %i.ad = load i32, ptr %i.a, align 4, !tbaa !9   ; 2 uses
+  switch i32 %i.ad, label %bb.q [
+    i32 16, label %bb.e
+    i32 81, label %bb.j
+    i32 41, label %bb.j
+    i32 21, label %bb.j
+    i32 11, label %bb.j
+  ]
 
 bb.e:                                             ; preds = %bb.d
   %i.ae = load i8, ptr %i.t, align 16, !tbaa !10
@@ -562,17 +562,7 @@ bb.i:                                             ; preds = %bb.g
   %i.ao = call ptr @strncpy(ptr noundef nonnull %i.ai, ptr noundef nonnull %i.t, i64 noundef %i.an) #10 ; 0 uses
   br label %bb.q
 
-7:                                                ; preds = %bb.d
-  %8 = add i32 %i.ad, -11                         ; 2 uses
-  %9 = call i32 @llvm.fshl.i32(i32 %8, i32 %8, i32 31)
-  switch i32 %9, label %bb.q [
-    i32 35, label %bb.j
-    i32 15, label %bb.j
-    i32 5, label %bb.j
-    i32 0, label %bb.j
-  ]
-
-bb.j:                                             ; preds = %7, %7, %7, %7
+bb.j:                                             ; preds = %bb.d, %bb.d, %bb.d, %bb.d
   %i.ap = load i64, ptr %i.h, align 8, !tbaa !14  ; 5 uses
   %i.aq = icmp eq i64 %i.ap, 1234554321
   br i1 %i.aq, label %bb.k, label %bb.l
@@ -611,8 +601,8 @@ bb.p:                                             ; preds = %bb.l
   call void @ffswap8(ptr noundef nonnull %i.i, i64 noundef 1) #10
   br label %bb.q
 
-bb.q:                                             ; preds = %7, %bb.n, %bb.p, %bb.o, %bb.m, %bb.i
-  %.0 = phi ptr [ %i.ai, %bb.i ], [ null, %bb.m ], [ null, %bb.n ], [ null, %bb.o ], [ null, %bb.p ], [ null, %7 ] ; 5 uses
+bb.q:                                             ; preds = %bb.d, %bb.n, %bb.p, %bb.o, %bb.m, %bb.i
+  %.0 = phi ptr [ %i.ai, %bb.i ], [ null, %bb.m ], [ null, %bb.n ], [ null, %bb.o ], [ null, %bb.p ], [ null, %bb.d ] ; 5 uses
   %.not109142 = icmp eq i64 %4, 0
   br i1 %.not109142, label %._crit_edge, label %.lr.ph146.outer
 
@@ -938,9 +928,6 @@ declare i64 @llvm.smax.i64(i64, i64) #9
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.smin.i64(i64, i64) #9
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.fshl.i32(i32, i32, i32) #9
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

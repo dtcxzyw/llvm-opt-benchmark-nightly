@@ -204,7 +204,7 @@ bb.a:
   store i16 12288, ptr %5, align 8, !tbaa !113
   %i.e = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 2 uses
   tail call void @strbuf_init(ptr noundef nonnull %i.e, i64 noundef 0) #18
-  %i.f = tail call fastcc i32 @get_oid_1(ptr noundef %0, ptr noundef nonnull %1, i32 noundef %i.c, ptr noundef %4, i32 noundef %2) ; 4 uses
+  %i.f = tail call fastcc i32 @get_oid_1(ptr noundef %0, ptr noundef nonnull %1, i32 noundef %i.c, ptr noundef %4, i32 noundef %2) ; 3 uses
   %.not = icmp ne i32 %i.f, 0                     ; 2 uses
   %i.g = and i32 %2, 4096
   %.not165 = icmp eq i32 %i.g, 0
@@ -221,10 +221,8 @@ bb.c:                                             ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.c
   %i.i = load i8, ptr %1, align 1, !tbaa !44      ; 2 uses
-  switch i8 %i.i, label %.lr.ph [
-    i8 58, label %bb.e
-    i8 0, label %reject_tree_in_index.exit.thread
-  ]
+  %8 = icmp eq i8 %i.i, 58
+  br i1 %8, label %bb.e, label %.lr.ph
 
 bb.e:                                             ; preds = %bb.d
   %i.j = icmp eq i32 %i.d, 0                      ; 3 uses
@@ -422,16 +420,17 @@ bb.ac:                                            ; preds = %bb.aa, %bb.aa, %bb.
   br label %reject_tree_in_index.exit.thread
 
 .lr.ph:                                           ; preds = %bb.d, %bb.af
-  %.2200 = phi ptr [ %i.cb, %bb.af ], [ %1, %bb.d ] ; 5 uses
+  %9 = phi i8 [ %.pr, %bb.af ], [ %i.i, %bb.d ]   ; 3 uses
   %.0146199 = phi i32 [ %.1147, %bb.af ], [ 0, %bb.d ] ; 3 uses
-  %8 = phi i8 [ %.pr, %bb.af ], [ %i.i, %bb.d ]   ; 3 uses
-  switch i8 %8, label %.split.thread [
+  %.2 = phi ptr [ %i.cb, %bb.af ], [ %1, %bb.d ]  ; 5 uses
+  switch i8 %9, label %.split.thread [
+    i8 0, label %reject_tree_in_index.exit.thread
     i8 64, label %.split
     i8 94, label %.split
   ]
 
 .split:                                           ; preds = %.lr.ph, %.lr.ph
-  %i.bu = getelementptr inbounds nuw i8, ptr %.2200, i64 1 ; 2 uses
+  %i.bu = getelementptr inbounds nuw i8, ptr %.2, i64 1 ; 2 uses
   %i.bv = load i8, ptr %i.bu, align 1, !tbaa !44
   %i.bw = icmp eq i8 %i.bv, 123
   br i1 %i.bw, label %bb.ad, label %.split.thread
@@ -445,26 +444,25 @@ bb.ad:                                            ; preds = %.split
   br i1 %.not168, label %.critedge, label %bb.ae
 
 bb.ae:                                            ; preds = %.split.thread
-  %i.by = icmp eq i8 %8, 125
+  %i.by = icmp eq i8 %9, 125
   %i.bz = sext i1 %i.by to i32
   %spec.select192 = add nsw i32 %.0146199, %i.bz
   br label %bb.af
 
 .critedge:                                        ; preds = %.split.thread
-  %i.ca = icmp eq i8 %8, 58
+  %i.ca = icmp eq i8 %9, 58
   br i1 %i.ca, label %bb.ag, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad, %.critedge
   %.1147 = phi i32 [ %i.bx, %bb.ad ], [ %spec.select192, %bb.ae ], [ 0, %.critedge ]
-  %.3 = phi ptr [ %i.bu, %bb.ad ], [ %.2200, %bb.ae ], [ %.2200, %.critedge ]
+  %.3 = phi ptr [ %i.bu, %bb.ad ], [ %.2, %bb.ae ], [ %.2, %.critedge ]
   %i.cb = getelementptr inbounds nuw i8, ptr %.3, i64 1 ; 2 uses
-  %.pr = load i8, ptr %i.cb, align 1, !tbaa !44   ; 2 uses
-  %.not166 = icmp eq i8 %.pr, 0
-  br i1 %.not166, label %reject_tree_in_index.exit.thread, label %.lr.ph, !llvm.loop !112
+  %.pr = load i8, ptr %i.cb, align 1, !tbaa !44
+  br label %.lr.ph, !llvm.loop !112
 
 bb.ag:                                            ; preds = %.critedge
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #18
-  %i.cc = ptrtoint ptr %.2200 to i64
+  %i.cc = ptrtoint ptr %.2 to i64
   %i.cd = ptrtoint ptr %1 to i64
   %i.ce = sub i64 %i.cc, %i.cd
   %i.cf = trunc i64 %i.ce to i32                  ; 3 uses
@@ -475,7 +473,7 @@ bb.ag:                                            ; preds = %.critedge
   br i1 %.not169.not, label %bb.ah, label %bb.ao
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.cj = getelementptr inbounds nuw i8, ptr %.2200, i64 1 ; 2 uses
+  %i.cj = getelementptr inbounds nuw i8, ptr %.2, i64 1 ; 2 uses
   %i.ck = call fastcc ptr @resolve_relative_path(ptr noundef %0, ptr noundef nonnull %i.cj) ; 3 uses
   %.not170 = icmp eq ptr %i.ck, null
   %spec.select187 = select i1 %.not170, ptr %i.cj, ptr %i.ck ; 4 uses
@@ -528,8 +526,8 @@ bb.aq:                                            ; preds = %bb.ao, %bb.an
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #18
   br label %reject_tree_in_index.exit.thread
 
-reject_tree_in_index.exit.thread:                 ; preds = %bb.af, %bb.d, %bb.y, %bb.z, %bb.aq, %bb.g, %reject_tree_in_index.exit, %bb.ac, %bb.c
-  %.2153 = phi i32 [ 0, %bb.c ], [ -1, %bb.y ], [ %spec.select188, %bb.aq ], [ %i.v, %bb.g ], [ -1, %bb.ac ], [ 0, %reject_tree_in_index.exit ], [ -1, %bb.z ], [ %i.f, %bb.d ], [ %i.f, %bb.af ]
+reject_tree_in_index.exit.thread:                 ; preds = %.lr.ph, %bb.y, %bb.z, %bb.aq, %bb.g, %reject_tree_in_index.exit, %bb.ac, %bb.c
+  %.2153 = phi i32 [ 0, %bb.c ], [ -1, %bb.y ], [ %spec.select188, %bb.aq ], [ %i.v, %bb.g ], [ -1, %bb.ac ], [ 0, %reject_tree_in_index.exit ], [ -1, %bb.z ], [ %i.f, %.lr.ph ]
   ret i32 %.2153
 }
 

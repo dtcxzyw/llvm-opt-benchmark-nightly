@@ -202,9 +202,11 @@ _RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultuINtNtCsfCaL8mGBm0
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   %i.x = getelementptr inbounds nuw i8, ptr %1, i64 16
   call void @_RNvMsa_NtCsfCaL8mGBm0d_17crossbeam_channel7channelINtB5_8ReceiverNtNtCshzDG46PUpLf_10lsp_server3msg7MessageE12recv_timeoutB15_(ptr noalias noundef nonnull sret([88 x i8]) align 8 captures(address) dereferenceable(88) %i.g, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.x, i64 noundef 30, i32 noundef 0)
-  %i.y = load i64, ptr %i.g, align 8, !range !15, !noundef !5 ; 3 uses
-  %3 = icmp eq i64 %i.y, -2
-  br i1 %3, label %bb.j, label %bb.k
+  %i.y = load i64, ptr %i.g, align 8, !range !15, !noundef !5
+  switch i64 %i.y, label %bb.l [
+    i64 -2, label %bb.j
+    i64 -9223372036854775806, label %bb.k
+  ]
 
 bb.j:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultuINtNtCsfCaL8mGBm0d_17crossbeam_channel3err9SendErrorNtNtCshzDG46PUpLf_10lsp_server3msg7MessageEEEB1S_.exit
   %i.z = getelementptr inbounds nuw i8, ptr %i.g, i64 8
@@ -213,16 +215,12 @@ bb.j:                                             ; preds = %_RINvNtCs4NRVxsYgnA
   br i1 %i.ab, label %bb.r, label %bb.s
 
 bb.k:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultuINtNtCsfCaL8mGBm0d_17crossbeam_channel3err9SendErrorNtNtCshzDG46PUpLf_10lsp_server3msg7MessageEEEB1S_.exit
-  %4 = icmp ne i64 %i.y, -9223372036854775807
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i64 %i.y, -9223372036854775806
   %i.ac = getelementptr inbounds nuw i8, ptr %i.g, i64 24
-  %i.ad = load i64, ptr %i.ac, align 8
+  %i.ad = load i64, ptr %i.ac, align 8, !noundef !5
   %i.ae = icmp eq i64 %i.ad, 4
-  %or.cond = select i1 %5, i1 %i.ae, i1 false
-  br i1 %or.cond, label %bb.m, label %bb.l
+  br i1 %i.ae, label %bb.m, label %bb.l
 
-bb.l:                                             ; preds = %bb.m, %bb.k
+bb.l:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultuINtNtCsfCaL8mGBm0d_17crossbeam_channel3err9SendErrorNtNtCshzDG46PUpLf_10lsp_server3msg7MessageEEEB1S_.exit, %bb.m, %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   store ptr %i.g, ptr %i.f, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
@@ -625,9 +623,11 @@ _RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultuINtNtCsfCaL8mGBm0d_17crossbeam_ch
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 16
   call void @_RNvMsa_NtCsfCaL8mGBm0d_17crossbeam_channel7channelINtB5_8ReceiverNtNtCshzDG46PUpLf_10lsp_server3msg7MessageE4recvB15_(ptr noalias noundef nonnull sret([88 x i8]) align 8 captures(none) dereferenceable(88) %i.f, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.l)
-  %i.m = load i64, ptr %i.f, align 8, !range !15, !noundef !5 ; 3 uses
-  %4 = icmp eq i64 %i.m, -2
-  br i1 %4, label %bb.f, label %bb.g
+  %i.m = load i64, ptr %i.f, align 8, !range !15, !noundef !5
+  switch i64 %i.m, label %bb.h [
+    i64 -2, label %bb.f
+    i64 -9223372036854775806, label %bb.g
+  ]
 
 bb.f:                                             ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultuINtNtCsfCaL8mGBm0d_17crossbeam_channel3err9SendErrorNtNtCshzDG46PUpLf_10lsp_server3msg7MessageEE6unwrapB1C_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
@@ -635,16 +635,12 @@ bb.f:                                             ; preds = %_RNvMNtCs4NRVxsYgnA
           to label %bb.o unwind label %bb.m
 
 bb.g:                                             ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultuINtNtCsfCaL8mGBm0d_17crossbeam_channel3err9SendErrorNtNtCshzDG46PUpLf_10lsp_server3msg7MessageEE6unwrapB1C_.exit
-  %5 = icmp ne i64 %i.m, -9223372036854775807
-  call void @llvm.assume(i1 %5)
-  %6 = icmp eq i64 %i.m, -9223372036854775806
   %i.n = getelementptr inbounds nuw i8, ptr %i.f, i64 24
-  %i.o = load i64, ptr %i.n, align 8
+  %i.o = load i64, ptr %i.n, align 8, !noundef !5
   %i.p = icmp eq i64 %i.o, 11
-  %or.cond = select i1 %6, i1 %i.p, i1 false
-  br i1 %or.cond, label %bb.i, label %bb.h
+  br i1 %i.p, label %bb.i, label %bb.h
 
-bb.h:                                             ; preds = %bb.i, %bb.g
+bb.h:                                             ; preds = %_RNvMNtCs4NRVxsYgnAr_4core6resultINtB2_6ResultuINtNtCsfCaL8mGBm0d_17crossbeam_channel3err9SendErrorNtNtCshzDG46PUpLf_10lsp_server3msg7MessageEE6unwrapB1C_.exit, %bb.i, %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   store ptr %i.f, ptr %i.e, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)

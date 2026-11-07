@@ -204,27 +204,30 @@ _ZNSt6vectorIS_ISt4pairIijESaIS1_EESaIS3_EE8pop_backEv.exit: ; preds = %_ZNSt6ve
 _ZNSt6vectorIS_ISt4pairIijESaIS1_EESaIS3_EE8pop_backEv.exit.split: ; preds = %_ZNSt6vectorIS_ISt4pairIijESaIS1_EESaIS3_EE8pop_backEv.exit, %_ZNK4llvm13R600InstrInfo24FindSwizzleForVectorSlotERKSt6vectorIS1_ISt4pairIijESaIS3_EESaIS5_EERS1_INS0_11BankSwizzleESaISA_EERKS5_SA_.exit47
   %.0.idx77 = phi i64 [ %.0.add, %_ZNK4llvm13R600InstrInfo24FindSwizzleForVectorSlotERKSt6vectorIS1_ISt4pairIijESaIS3_EESaIS5_EERS1_INS0_11BankSwizzleESaISA_EERKS5_SA_.exit47 ], [ 0, %_ZNSt6vectorIS_ISt4pairIijESaIS1_EESaIS3_EE8pop_backEv.exit ] ; 2 uses
   %.0.ptr = getelementptr inbounds nuw i8, ptr @_ZZNK4llvm13R600InstrInfo23fitsReadPortLimitationsERKSt6vectorIPNS_12MachineInstrESaIS3_EERKNS_8DenseMapIjjNS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjjEEEERS1_INS0_11BankSwizzleESaISH_EEbE8TransSwz, i64 %.0.idx77
-  %i.du = load i32, ptr %.0.ptr, align 4, !tbaa !369 ; 7 uses
-  br i1 %i.dr, label %.loopexit.preheader, label %.lr.ph.i.a
+  %i.du = load i32, ptr %.0.ptr, align 4, !tbaa !369 ; 8 uses
+  br i1 %i.dr, label %.loopexit.preheader, label %.lr.ph.i
 
-.lr.ph.i.a:                                       ; preds = %_ZNSt6vectorIS_ISt4pairIijESaIS1_EESaIS3_EE8pop_backEv.exit.split
-  %switch.i.a = icmp ult i32 %i.du, 4
-  call void @llvm.assume(i1 %switch.i.a)
-  switch i32 %i.dk, label %.lr.ph.split.split.split.us.i.preheader [
-    i32 0, label %.loopexit.preheader
+.lr.ph.i:                                         ; preds = %_ZNSt6vectorIS_ISt4pairIijESaIS1_EESaIS3_EE8pop_backEv.exit.split
+  switch i32 %i.dk, label %.lr.ph.i.a [
+    i32 0, label %.lr.ph.split.split.split.us.i.preheader
     i32 2, label %.lr.ph.split.split.split.i
   ]
 
-.lr.ph.split.split.split.us.i.preheader:          ; preds = %.lr.ph.i.a
-  %.not = icmp eq i32 %i.du, 3
+.lr.ph.i.a:                                       ; preds = %.lr.ph.i
+  %switch.i.a = icmp ult i32 %i.du, 3
   %8 = zext nneg i32 %i.du to i64
   %switch.gep = getelementptr inbounds nuw [8 x i8], ptr @switch.table._ZNK4llvm13R600InstrInfo23fitsReadPortLimitationsERKSt6vectorIPNS_12MachineInstrESaIS3_EERKNS_8DenseMapIjjNS_12DenseMapInfoIjvEENS_6detail12DenseMapPairIjjEEEERS1_INS0_11BankSwizzleESaISH_EEb, i64 %8
   br label %.lr.ph.split.split.split.us.i
 
-.lr.ph.split.split.split.us.i:                    ; preds = %.lr.ph.split.split.split.us.i.preheader, %bb.m
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.m ], [ 0, %.lr.ph.split.split.split.us.i.preheader ] ; 3 uses
+.lr.ph.split.split.split.us.i.preheader:          ; preds = %.lr.ph.i
+  %switch.i = icmp ult i32 %i.du, 4
+  call void @llvm.assume(i1 %switch.i)
+  br label %.loopexit.preheader
+
+.lr.ph.split.split.split.us.i:                    ; preds = %.lr.ph.i.a, %bb.m
+  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %bb.m ], [ 0, %.lr.ph.i.a ] ; 3 uses
   %i.dv = getelementptr inbounds nuw [8 x i8], ptr %i.cv, i64 %indvars.iv.i
-  br i1 %.not, label %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.us9.i, label %switch.lookup
+  br i1 %switch.i.a, label %switch.lookup, label %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.us9.i
 
 switch.lookup:                                    ; preds = %.lr.ph.split.split.split.us.i
   %switch.load = load ptr, ptr %switch.gep, align 8
@@ -245,7 +248,9 @@ bb.m:                                             ; preds = %_ZL15getTransSwizzl
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count114.i
   br i1 %exitcond.not.i, label %.loopexit.preheader, label %.lr.ph.split.split.split.us.i, !llvm.loop !617
 
-.lr.ph.split.split.split.i:                       ; preds = %.lr.ph.i.a
+.lr.ph.split.split.split.i:                       ; preds = %.lr.ph.i
+  %switch4959.i = icmp ult i32 %i.du, 4
+  call void @llvm.assume(i1 %switch4959.i)
   switch i32 %i.du, label %default.unreachable [
     i32 0, label %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.us17.i
     i32 1, label %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.us28.preheader.i
@@ -256,9 +261,6 @@ bb.m:                                             ; preds = %_ZL15getTransSwizzl
 bb.n:                                             ; preds = %.lr.ph.split.split.split.i
   br i1 %switch125.i, label %.loopexit.preheader, label %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.peel.next80.i
 
-.loopexit.preheader:                              ; preds = %bb.p, %bb.m, %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.us28.preheader.i, %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.us39.peel.next.i, %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.peel.next80.i, %.lr.ph.i.a, %_ZNSt6vectorIS_ISt4pairIijESaIS1_EESaIS3_EE8pop_backEv.exit.split, %bb.o, %bb.n
-  br label %.loopexit
-
 _ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.peel.next80.i: ; preds = %bb.n
   %i.ea = load i32, ptr %i.ds, align 4, !tbaa !355
   %i.eb = icmp sgt i32 %i.ea, -1
@@ -266,6 +268,9 @@ _ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.peel.next80.i: ; p
 
 bb.o:                                             ; preds = %.lr.ph.split.split.split.i
   br i1 %exitcond97.peel.not.i, label %.loopexit.preheader, label %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.us39.peel.next.i
+
+.loopexit.preheader:                              ; preds = %bb.p, %bb.m, %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.us28.preheader.i, %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.us39.peel.next.i, %_ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.peel.next80.i, %.lr.ph.split.split.split.us.i.preheader, %_ZNSt6vectorIS_ISt4pairIijESaIS1_EESaIS3_EE8pop_backEv.exit.split, %bb.n, %bb.o
+  br label %.loopexit
 
 _ZL15getTransSwizzleN4llvm13R600InstrInfo11BankSwizzleEj.exit.us39.peel.next.i: ; preds = %bb.o
   %i.ec = load i32, ptr %i.dt, align 4, !tbaa !355

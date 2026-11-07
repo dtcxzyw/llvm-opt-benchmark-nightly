@@ -204,23 +204,27 @@ define weak_odr hidden void @_ZN5boost9container8flat_mapI5emptyS2_St4lessIS2_Ev
 bb.a:
   %i.a = load ptr, ptr %1, align 8, !tbaa !224    ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 3 uses
-  %i.c = load i64, ptr %i.b, align 8, !tbaa !223  ; 5 uses
+  %i.c = load i64, ptr %i.b, align 8, !tbaa !223  ; 4 uses
   %.idx.i.i = shl i64 %i.c, 1
   %i.d = getelementptr i8, ptr %i.a, i64 %.idx.i.i ; 3 uses
-  %2 = icmp eq i64 %i.c, 0
-  br i1 %2, label %_ZN5boost7movelib6uniqueINS_9container12vec_iteratorIPSt4pairI5emptyS5_ELb0EEENS0_6negateINS2_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NSA_9select1stIS5_EEEEEEEET_SI_SI_T0_.exit.i.i, label %.preheader.i.i.i
+  switch i64 %i.c, label %.preheader.i.i.i [
+    i64 0, label %_ZN5boost7movelib6uniqueINS_9container12vec_iteratorIPSt4pairI5emptyS5_ELb0EEENS0_6negateINS2_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NSA_9select1stIS5_EEEEEEEET_SI_SI_T0_.exit.i.i
+    i64 1, label %._crit_edge.i.i.i
+  ]
 
 .preheader.i.i.i:                                 ; preds = %bb.a
   %i.e = icmp ult i64 %i.c, 24
   tail call void @llvm.assume(i1 %i.e)
-  %.not810.i.i.i = icmp eq i64 %i.c, 1
   %scevgep.i.i = getelementptr i8, ptr %i.d, i64 -2
-  %3 = select i1 %.not810.i.i.i, ptr %i.a, ptr %scevgep.i.i
-  %4 = getelementptr inbounds nuw i8, ptr %3, i64 2
+  br label %._crit_edge.i.i.i
+
+._crit_edge.i.i.i:                                ; preds = %.preheader.i.i.i, %bb.a
+  %2 = phi ptr [ %i.a, %bb.a ], [ %scevgep.i.i, %.preheader.i.i.i ]
+  %3 = getelementptr inbounds nuw i8, ptr %2, i64 2
   br label %_ZN5boost7movelib6uniqueINS_9container12vec_iteratorIPSt4pairI5emptyS5_ELb0EEENS0_6negateINS2_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NSA_9select1stIS5_EEEEEEEET_SI_SI_T0_.exit.i.i
 
-_ZN5boost7movelib6uniqueINS_9container12vec_iteratorIPSt4pairI5emptyS5_ELb0EEENS0_6negateINS2_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NSA_9select1stIS5_EEEEEEEET_SI_SI_T0_.exit.i.i: ; preds = %.preheader.i.i.i, %bb.a
-  %i.f = phi ptr [ %4, %.preheader.i.i.i ], [ %i.a, %bb.a ] ; 2 uses
+_ZN5boost7movelib6uniqueINS_9container12vec_iteratorIPSt4pairI5emptyS5_ELb0EEENS0_6negateINS2_3dtl23flat_tree_value_compareISt4lessIS5_ES6_NSA_9select1stIS5_EEEEEEEET_SI_SI_T0_.exit.i.i: ; preds = %._crit_edge.i.i.i, %bb.a
+  %i.f = phi ptr [ %3, %._crit_edge.i.i.i ], [ %i.a, %bb.a ] ; 2 uses
   %.not.i10.i.i = icmp eq ptr %i.f, %i.d
   br i1 %.not.i10.i.i, label %_ZN5boost9container6vectorISt4pairI5emptyS3_EvvE5eraseENS0_12vec_iteratorIPS4_Lb1EEES8_.exit.i.i, label %_ZN5boost9container4moveIPSt4pairI5emptyS3_ES5_EENS0_3dtl37enable_if_memtransfer_copy_assignableIT_T0_S9_E4typeES8_S8_S9_.exit.i.i.i
 

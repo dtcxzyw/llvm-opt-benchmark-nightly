@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s)
-  %i.ae = load i128, ptr %i.t, align 16, !range !98, !noundef !54 ; 5 uses
+  %i.ae = load i128, ptr %i.t, align 16, !range !98, !noundef !54 ; 3 uses
   %i.af = icmp eq i128 %i.ae, 51
   %i.ag = getelementptr inbounds nuw i8, ptr %i.t, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(40) %.sroa.7, ptr noundef nonnull align 16 dereferenceable(40) %i.ag, i64 40, i1 false)
@@ -230,16 +230,10 @@ bb.f:                                             ; preds = %bb.d
   store i128 %i.ae, ptr %i.u, align 16
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.u, i64 56
   store i64 %.sroa.632.0.copyload, ptr %.sroa.5.0..sroa_idx, align 8
-  %.not = icmp eq i128 %i.ae, 50
-  br i1 %.not, label %bb.as, label %3
+  %.not = icmp eq i128 %i.ae, 27
+  br i1 %.not, label %bb.g, label %bb.as
 
-3:                                                ; preds = %bb.f
-  %4 = icmp ne i128 %i.ae, 10
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i128 %i.ae, 27
-  br i1 %5, label %bb.g, label %bb.as
-
-bb.g:                                             ; preds = %3
+bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)
   %i.ai = load ptr, ptr %.sroa.4.0..sroa_idx, align 16, !nonnull !54, !noundef !54
   store ptr %i.ai, ptr %i.r, align 8
@@ -464,9 +458,12 @@ bb.ae:                                            ; preds = %bb.ak, %bb.ab
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcINtNtNtCs1N9T06jgEdt_11arrow_array5array10list_array16GenericListArraylEEECs14kWLkQVSKO_14deltalake_core.exit74: ; preds = %bb.aa, %bb.ab
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r)
-  %i.cb = load i128, ptr %i.u, align 16, !range !119, !noundef !54 ; 3 uses
-  %.not59 = icmp eq i128 %i.cb, 50
-  br i1 %.not59, label %bb.af, label %bb.ah
+  %i.cb = load i128, ptr %i.u, align 16, !range !119, !noundef !54 ; 2 uses
+  %trunc = trunc nuw i128 %i.cb to i6
+  switch i6 %trunc, label %bb.ah [
+    i6 -14, label %bb.af
+    i6 27, label %.critedge
+  ]
 
 bb.af:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcINtNtNtCs1N9T06jgEdt_11arrow_array5array10list_array16GenericListArraylEEECs14kWLkQVSKO_14deltalake_core.exit74
   call void @llvm.experimental.noalias.scope.decl(metadata !36563)
@@ -485,14 +482,10 @@ bb.ag:                                            ; preds = %bb.af
 bb.ah:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcINtNtNtCs1N9T06jgEdt_11arrow_array5array10list_array16GenericListArraylEEECs14kWLkQVSKO_14deltalake_core.exit74
   %i.cf = icmp ne i128 %i.cb, 10
   call void @llvm.assume(i1 %i.cf)
-  %6 = icmp eq i128 %i.cb, 27
-  br i1 %6, label %.critedge, label %7
-
-7:                                                ; preds = %bb.ah
   call void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjhHCjzi9uUI_17datafusion_common6scalar11ScalarValueECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 16 dereferenceable(64) %i.u)
   br label %.critedge
 
-bb.ai:                                            ; preds = %bb.aq, %bb.ap, %bb.h, %bb.bb, %.split, %12, %bb.az, %bb.ar, %bb.y
+bb.ai:                                            ; preds = %bb.aq, %bb.ap, %bb.h, %bb.bb, %.split, %bb.ba, %bb.az, %bb.ar, %bb.y
   %i.cg = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #51
@@ -519,15 +512,12 @@ bb.ak:                                            ; preds = %bb.aj
 
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcINtNtNtCs1N9T06jgEdt_11arrow_array5array10list_array16GenericListArraylEEECs14kWLkQVSKO_14deltalake_core.exit78: ; preds = %bb.aj, %bb.ak
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r)
-  %i.cl = load i128, ptr %i.u, align 16, !range !119, !noundef !54 ; 3 uses
-  %.not64 = icmp eq i128 %i.cl, 50
-  br i1 %.not64, label %bb.al, label %8
-
-8:                                                ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcINtNtNtCs1N9T06jgEdt_11arrow_array5array10list_array16GenericListArraylEEECs14kWLkQVSKO_14deltalake_core.exit78
-  %9 = icmp ne i128 %i.cl, 10
-  call void @llvm.assume(i1 %9)
-  %10 = icmp eq i128 %i.cl, 27
-  br i1 %10, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs90oH6M0AZ2B_22datafusion_expr_common14columnar_value13ColumnarValueECs14kWLkQVSKO_14deltalake_core.exit81, label %bb.an
+  %i.cl = load i128, ptr %i.u, align 16, !range !119, !noundef !54 ; 2 uses
+  %trunc121 = trunc nuw i128 %i.cl to i6
+  switch i6 %trunc121, label %bb.an [
+    i6 -14, label %bb.al
+    i6 27, label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs90oH6M0AZ2B_22datafusion_expr_common14columnar_value13ColumnarValueECs14kWLkQVSKO_14deltalake_core.exit81
+  ]
 
 bb.al:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcINtNtNtCs1N9T06jgEdt_11arrow_array5array10list_array16GenericListArraylEEECs14kWLkQVSKO_14deltalake_core.exit78
   call void @llvm.experimental.noalias.scope.decl(metadata !36570)
@@ -543,12 +533,14 @@ bb.am:                                            ; preds = %bb.al
   call void @_RNvMsn_NtCs6Po7BT7Nknu_5alloc4syncINtB5_3ArcDNtNtCs1N9T06jgEdt_11arrow_array5array5ArrayEL_E9drop_slowBL_(ptr noalias noundef nonnull align 8 dereferenceable(16) %.sroa.4.0..sroa_idx) #52
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs90oH6M0AZ2B_22datafusion_expr_common14columnar_value13ColumnarValueECs14kWLkQVSKO_14deltalake_core.exit81
 
-_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs90oH6M0AZ2B_22datafusion_expr_common14columnar_value13ColumnarValueECs14kWLkQVSKO_14deltalake_core.exit81: ; preds = %bb.an, %bb.am, %bb.al, %8
+_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs90oH6M0AZ2B_22datafusion_expr_common14columnar_value13ColumnarValueECs14kWLkQVSKO_14deltalake_core.exit81: ; preds = %bb.an, %bb.am, %bb.al, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcINtNtNtCs1N9T06jgEdt_11arrow_array5array10list_array16GenericListArraylEEECs14kWLkQVSKO_14deltalake_core.exit78
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u)
   br label %bb.ax
 
-bb.an:                                            ; preds = %8
+bb.an:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcINtNtNtCs1N9T06jgEdt_11arrow_array5array10list_array16GenericListArraylEEECs14kWLkQVSKO_14deltalake_core.exit78
+  %3 = icmp ne i128 %i.cl, 10
+  call void @llvm.assume(i1 %3)
   call void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjhHCjzi9uUI_17datafusion_common6scalar11ScalarValueECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 16 dereferenceable(64) %i.u)
   br label %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs90oH6M0AZ2B_22datafusion_expr_common14columnar_value13ColumnarValueECs14kWLkQVSKO_14deltalake_core.exit81
 
@@ -583,7 +575,7 @@ bb.ar:                                            ; preds = %bb.au
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs90oH6M0AZ2B_22datafusion_expr_common14columnar_value13ColumnarValueECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 16 dereferenceable(64) %i.h) #50
           to label %.split unwind label %bb.ai
 
-bb.as:                                            ; preds = %bb.f, %3
+bb.as:                                            ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(64) %i.h, ptr noundef nonnull align 16 dereferenceable(64) %i.u, i64 64, i1 false)
   %i.cv = load atomic i64, ptr @_RNvCsaljjC7ZTCQu_3log20MAX_LOG_LEVEL_FILTER monotonic, align 8 ; 2 uses
@@ -623,7 +615,7 @@ bb.av:                                            ; preds = %bb.au
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   br label %bb.at
 
-.critedge:                                        ; preds = %7, %bb.ag, %bb.af, %bb.ah
+.critedge:                                        ; preds = %bb.ah, %bb.ag, %bb.af, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc4sync3ArcINtNtNtCs1N9T06jgEdt_11arrow_array5array10list_array16GenericListArraylEEECs14kWLkQVSKO_14deltalake_core.exit74
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.7)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u)
   br label %bb.ax
@@ -637,9 +629,12 @@ bb.ax:                                            ; preds = %.critedge, %bb.at, 
 
 bb.ay:                                            ; preds = %bb.ae, %bb.h, %.critedge66
   %.pn61.ph = phi { ptr, i32 } [ %.pn, %.critedge66 ], [ %.pn, %bb.h ], [ %i.ca, %bb.ae ] ; 3 uses
-  %i.db = load i128, ptr %i.u, align 16, !range !119, !noundef !54 ; 3 uses
-  %.not63 = icmp eq i128 %i.db, 50
-  br i1 %.not63, label %bb.az, label %bb.ba
+  %i.db = load i128, ptr %i.u, align 16, !range !119, !noundef !54 ; 2 uses
+  %trunc122 = trunc nuw i128 %i.db to i6
+  switch i6 %trunc122, label %bb.ba [
+    i6 -14, label %bb.az
+    i6 27, label %.thread109
+  ]
 
 bb.az:                                            ; preds = %bb.ay
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCs90oH6M0AZ2B_22datafusion_expr_common14columnar_value13ColumnarValueECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 16 dereferenceable(64) %i.u) #50
@@ -648,10 +643,6 @@ bb.az:                                            ; preds = %bb.ay
 bb.ba:                                            ; preds = %bb.ay
   %i.dc = icmp ne i128 %i.db, 10
   call void @llvm.assume(i1 %i.dc)
-  %11 = icmp eq i128 %i.db, 27
-  br i1 %11, label %.thread109, label %12
-
-12:                                               ; preds = %bb.ba
   invoke void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsjhHCjzi9uUI_17datafusion_common6scalar11ScalarValueECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef nonnull align 16 dereferenceable(64) %i.u) #50
           to label %.thread109 unwind label %bb.ai
 
@@ -661,8 +652,8 @@ bb.ba:                                            ; preds = %bb.ay
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtNtCsfYVtenZkBsn_12arrow_schema8datatype8DataTypeECs14kWLkQVSKO_14deltalake_core(ptr noalias noundef align 8 dereferenceable(24) %i.w) #50
           to label %bb.aw unwind label %bb.ai
 
-.thread109:                                       ; preds = %12, %bb.ba, %bb.az, %bb.bb, %bb.aw
-  %.pn122.pn = phi { ptr, i32 } [ %.pn122, %bb.aw ], [ %.pn122, %bb.bb ], [ %.pn61.ph, %12 ], [ %.pn61.ph, %bb.ba ], [ %.pn61.ph, %bb.az ]
+.thread109:                                       ; preds = %bb.ba, %bb.ay, %bb.az, %bb.bb, %bb.aw
+  %.pn122.pn = phi { ptr, i32 } [ %.pn122, %bb.aw ], [ %.pn122, %bb.bb ], [ %.pn61.ph, %bb.ba ], [ %.pn61.ph, %bb.ay ], [ %.pn61.ph, %bb.az ]
   resume { ptr, i32 } %.pn122.pn
 
 bb.bb:                                            ; preds = %bb.aw

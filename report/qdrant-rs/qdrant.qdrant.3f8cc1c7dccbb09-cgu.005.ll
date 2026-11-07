@@ -204,17 +204,11 @@ bb.ac:                                            ; preds = %_RINvNtCskKLDkoKarT
   store ptr %i.bk, ptr %i.h, align 8
   %i.bm = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   store ptr %i.bl, ptr %i.bm, align 8
-  %i.bn = load i64, ptr %i.bl, align 8, !range !35, !noundef !20 ; 3 uses
-  %.not.i = icmp eq i64 %i.bn, -1
-  br i1 %.not.i, label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardE8and_thenINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs5QaNqjAn6vc_5shard14locked_segment13LockedSegmentENCNCNvMNtBN_11replica_setNtB3f_15ShardReplicaSet27calculate_local_shard_stats00ECsl8OoimOLbh_6qdrant.exit.thread, label %3
+  %i.bn = load i64, ptr %i.bl, align 8, !range !35, !noundef !20
+  %.not.i = icmp eq i64 %i.bn, 2
+  br i1 %.not.i, label %bb.ad, label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardE8and_thenINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs5QaNqjAn6vc_5shard14locked_segment13LockedSegmentENCNCNvMNtBN_11replica_setNtB3f_15ShardReplicaSet27calculate_local_shard_stats00ECsl8OoimOLbh_6qdrant.exit.thread
 
-3:                                                ; preds = %bb.ac
-  %4 = icmp ne i64 %i.bn, 4
-  tail call void @llvm.assume(i1 %4)
-  %5 = icmp eq i64 %i.bn, 2
-  br i1 %5, label %bb.ad, label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardE8and_thenINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs5QaNqjAn6vc_5shard14locked_segment13LockedSegmentENCNCNvMNtBN_11replica_setNtB3f_15ShardReplicaSet27calculate_local_shard_stats00ECsl8OoimOLbh_6qdrant.exit.thread
-
-bb.ad:                                            ; preds = %3
+bb.ad:                                            ; preds = %bb.ac
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !12967
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !12967
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !12967
@@ -284,7 +278,7 @@ bb.aj:                                            ; preds = %_RINvMNtCskKLDkoKar
   invoke void @_RNvXs2_NtNtNtCsjZG7hsAZr3B_5tokio4sync6rwlock10read_guardINtB5_15RwLockReadGuardINtNtCskKLDkoKarTP_4core6option6OptionNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardEENtNtNtB1l_3ops4drop4Drop4dropCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.h)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsjZG7hsAZr3B_5tokio4sync6rwlock10read_guard15RwLockReadGuardINtNtB4_6option6OptionNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardEEECsl8OoimOLbh_6qdrant.exit41 unwind label %bb.ak
 
-_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardE8and_thenINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs5QaNqjAn6vc_5shard14locked_segment13LockedSegmentENCNCNvMNtBN_11replica_setNtB3f_15ShardReplicaSet27calculate_local_shard_stats00ECsl8OoimOLbh_6qdrant.exit.thread: ; preds = %bb.ac, %3, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardE8and_thenINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs5QaNqjAn6vc_5shard14locked_segment13LockedSegmentENCNCNvMNtBN_11replica_setNtB3f_15ShardReplicaSet27calculate_local_shard_stats00ECsl8OoimOLbh_6qdrant.exit
+_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardE8and_thenINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs5QaNqjAn6vc_5shard14locked_segment13LockedSegmentENCNCNvMNtBN_11replica_setNtB3f_15ShardReplicaSet27calculate_local_shard_stats00ECsl8OoimOLbh_6qdrant.exit.thread: ; preds = %bb.ac, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardE8and_thenINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs5QaNqjAn6vc_5shard14locked_segment13LockedSegmentENCNCNvMNtBN_11replica_setNtB3f_15ShardReplicaSet27calculate_local_shard_stats00ECsl8OoimOLbh_6qdrant.exit
   invoke void @_RNvXs2_NtNtNtCsjZG7hsAZr3B_5tokio4sync6rwlock10read_guardINtB5_15RwLockReadGuardINtNtCskKLDkoKarTP_4core6option6OptionNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardEENtNtNtB1l_3ops4drop4Drop4dropCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.h)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsjZG7hsAZr3B_5tokio4sync6rwlock10read_guard15RwLockReadGuardINtNtB4_6option6OptionNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardEEECsl8OoimOLbh_6qdrant.exit43 unwind label %bb.an
 

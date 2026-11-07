@@ -204,7 +204,7 @@ bb.de:                                            ; preds = %bb.dc, %bb.dd, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #21
   br label %bb.dn
 
-.thread:                                          ; preds = %bb.a, %bb.j, %bb.k, %bb.ab
+.thread:                                          ; preds = %bb.k, %bb.a, %bb.j, %bb.ab
   %i.jm = getelementptr inbounds nuw i8, ptr %1, i64 2312
   %i.jn = load ptr, ptr %i.jm, align 8, !tbaa !214
   %i.jo = load ptr, ptr %2, align 8, !tbaa !275   ; 5 uses

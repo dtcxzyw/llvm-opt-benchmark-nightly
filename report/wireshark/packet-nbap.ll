@@ -205,7 +205,7 @@ bb.i:                                             ; preds = %bb.h, %bb.g
   call void @dissect_nsap(ptr noundef %.0, ptr noundef %i.bi, i32 noundef 0, i32 noundef 20, ptr noundef %i.bc)
   br label %.thread
 
-.thread:                                          ; preds = %bb.b, %bb.d, %bb.c, %bb.i, %nbap_get_private_data.exit
+.thread:                                          ; preds = %bb.d, %bb.c, %bb.b, %bb.i, %nbap_get_private_data.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
   ret i32 %i.z
 }

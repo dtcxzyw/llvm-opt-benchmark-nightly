@@ -205,19 +205,13 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !1588
   store i8 1, ptr %i.c, align 1, !alias.scope !1588
   call fastcc void @_RINvNtCs75Nu06PSjCb_3png7encoder11write_chunkQQINtNtCs1xwejQucwHj_5alloc3vec3VechEECsl4q486LaARA_9typst_svg(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull readonly align 8 dereferenceable(80) %0, i32 noundef 1145980233, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) inttoptr (i64 1 to ptr), i64 noundef 0)
-  %.val.i = load i64, ptr %i.b, align 8, !range !31, !noalias !1588, !noundef !12 ; 3 uses
+  %.val.i = load i64, ptr %i.b, align 8, !range !31, !noalias !1588, !noundef !12
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.val1.i = load ptr, ptr %i.f, align 8, !noalias !1588 ; 4 uses
-  %i.g = icmp eq i64 %.val.i, -1
-  br i1 %i.g, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCs75Nu06PSjCb_3png7encoder13EncodingErrorEECsl4q486LaARA_9typst_svg.exit.i, label %1
+  %i.g = icmp eq i64 %.val.i, 3
+  br i1 %i.g, label %bb.c, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCs75Nu06PSjCb_3png7encoder13EncodingErrorEECsl4q486LaARA_9typst_svg.exit.i
 
-1:                                                ; preds = %bb.b
-  %2 = icmp ne i64 %.val.i, 5
-  tail call void @llvm.assume(i1 %2)
-  %3 = icmp eq i64 %.val.i, 3
-  br i1 %3, label %bb.c, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCs75Nu06PSjCb_3png7encoder13EncodingErrorEECsl4q486LaARA_9typst_svg.exit.i
-
-bb.c:                                             ; preds = %1
+bb.c:                                             ; preds = %bb.b
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1588
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1.i) ]
   %i.h = ptrtoint ptr %.val1.i to i64             ; 2 uses
@@ -253,7 +247,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsl4q486LaARA_9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !1588
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCs75Nu06PSjCb_3png7encoder13EncodingErrorEECsl4q486LaARA_9typst_svg.exit.i
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCs75Nu06PSjCb_3png7encoder13EncodingErrorEECsl4q486LaARA_9typst_svg.exit.i: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsl4q486LaARA_9typst_svg.exit.i.i.i, %1, %bb.b
+_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCs75Nu06PSjCb_3png7encoder13EncodingErrorEECsl4q486LaARA_9typst_svg.exit.i: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsl4q486LaARA_9typst_svg.exit.i.i.i, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !1588
   br label %_RNvXs8_NtCs75Nu06PSjCb_3png7encoderINtB5_6WriterQINtNtCs1xwejQucwHj_5alloc3vec3VechEENtNtNtCs3oUPovFnLWP_4core3ops4drop4Drop4dropCsl4q486LaARA_9typst_svg.exit
 
@@ -656,19 +650,13 @@ bb.p:                                             ; preds = %bb.o
           to label %.noexc.i unwind label %bb.di, !noalias !6714
 
 .noexc.i:                                         ; preds = %.thread.i
-  %.val.i.i.i.i = load i64, ptr %i.aw, align 8, !range !31, !noalias !6721, !noundef !12 ; 3 uses
+  %.val.i.i.i.i = load i64, ptr %i.aw, align 8, !range !31, !noalias !6721, !noundef !12
   %i.cs = getelementptr inbounds nuw i8, ptr %i.aw, i64 8
   %.val1.i.i.i.i = load ptr, ptr %i.cs, align 8, !noalias !6721 ; 4 uses
-  %i.ct = icmp eq i64 %.val.i.i.i.i, -1
-  br i1 %i.ct, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCs75Nu06PSjCb_3png7encoder13EncodingErrorEECsl4q486LaARA_9typst_svg.exit.i.i.i.i, label %8
+  %i.ct = icmp eq i64 %.val.i.i.i.i, 3
+  br i1 %i.ct, label %bb.q, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCs75Nu06PSjCb_3png7encoder13EncodingErrorEECsl4q486LaARA_9typst_svg.exit.i.i.i.i
 
-8:                                                ; preds = %.noexc.i
-  %9 = icmp ne i64 %.val.i.i.i.i, 5
-  call void @llvm.assume(i1 %9)
-  %10 = icmp eq i64 %.val.i.i.i.i, 3
-  br i1 %10, label %bb.q, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCs75Nu06PSjCb_3png7encoder13EncodingErrorEECsl4q486LaARA_9typst_svg.exit.i.i.i.i
-
-bb.q:                                             ; preds = %8
+bb.q:                                             ; preds = %.noexc.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.av), !noalias !6721
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1.i.i.i.i) ]
   %i.cu = ptrtoint ptr %.val1.i.i.i.i to i64      ; 2 uses
@@ -701,7 +689,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsl4q486LaARA_9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.av), !noalias !6721
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCs75Nu06PSjCb_3png7encoder13EncodingErrorEECsl4q486LaARA_9typst_svg.exit.i.i.i.i
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCs75Nu06PSjCb_3png7encoder13EncodingErrorEECsl4q486LaARA_9typst_svg.exit.i.i.i.i: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsl4q486LaARA_9typst_svg.exit.i.i.i.i.i.i, %8, %.noexc.i
+_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCs75Nu06PSjCb_3png7encoder13EncodingErrorEECsl4q486LaARA_9typst_svg.exit.i.i.i.i: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsl4q486LaARA_9typst_svg.exit.i.i.i.i.i.i, %.noexc.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aw), !noalias !6721
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.21.i.i.sroa.23)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ax), !noalias !6714
@@ -1104,19 +1092,13 @@ bb.kr:                                            ; preds = %bb.kq
           to label %.noexc262 unwind label %bb.h
 
 .noexc262:                                        ; preds = %bb.kr
-  %.val.i.i = load i64, ptr %i.b, align 8, !range !31, !noalias !6989, !noundef !12 ; 3 uses
+  %.val.i.i = load i64, ptr %i.b, align 8, !range !31, !noalias !6989, !noundef !12
   %i.akd = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.val1.i.i = load ptr, ptr %i.akd, align 8, !noalias !6989 ; 4 uses
-  %i.ake = icmp eq i64 %.val.i.i, -1
-  br i1 %i.ake, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCs75Nu06PSjCb_3png7encoder13EncodingErrorEECsl4q486LaARA_9typst_svg.exit.i.i, label %11
+  %i.ake = icmp eq i64 %.val.i.i, 3
+  br i1 %i.ake, label %bb.ks, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCs75Nu06PSjCb_3png7encoder13EncodingErrorEECsl4q486LaARA_9typst_svg.exit.i.i
 
-11:                                               ; preds = %.noexc262
-  %12 = icmp ne i64 %.val.i.i, 5
-  call void @llvm.assume(i1 %12)
-  %13 = icmp eq i64 %.val.i.i, 3
-  br i1 %13, label %bb.ks, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCs75Nu06PSjCb_3png7encoder13EncodingErrorEECsl4q486LaARA_9typst_svg.exit.i.i
-
-bb.ks:                                            ; preds = %11
+bb.ks:                                            ; preds = %.noexc262
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !6989
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val1.i.i) ]
   %i.akf = ptrtoint ptr %.val1.i.i to i64         ; 2 uses
@@ -1149,7 +1131,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsl4q486LaARA_9
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !6989
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCs75Nu06PSjCb_3png7encoder13EncodingErrorEECsl4q486LaARA_9typst_svg.exit.i.i
 
-_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCs75Nu06PSjCb_3png7encoder13EncodingErrorEECsl4q486LaARA_9typst_svg.exit.i.i: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsl4q486LaARA_9typst_svg.exit.i.i.i.i, %11, %.noexc262
+_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultuNtNtCs75Nu06PSjCb_3png7encoder13EncodingErrorEECsl4q486LaARA_9typst_svg.exit.i.i: ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtB4_2io5error5ErrorECsl4q486LaARA_9typst_svg.exit.i.i.i.i, %.noexc262
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !6989
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtCs75Nu06PSjCb_3png7encoder6WriterQINtNtCs1xwejQucwHj_5alloc3vec3VechEEECsl4q486LaARA_9typst_svg.exit
 

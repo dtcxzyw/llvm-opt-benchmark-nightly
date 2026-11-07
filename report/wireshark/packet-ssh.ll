@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %bb.f
 bb.p:                                             ; preds = %bb.n, %bb.o, %bb.h
   br label %ssh_kex_make_bignum.exit.thread
 
-ssh_kex_make_bignum.exit.thread:                  ; preds = %bb.f, %bb.e, %bb.o, %bb.g, %ssh_kex_make_bignum.exit, %bb.p
+ssh_kex_make_bignum.exit.thread:                  ; preds = %bb.e, %bb.f, %bb.o, %bb.g, %ssh_kex_make_bignum.exit, %bb.p
   %.0 = phi ptr [ null, %ssh_kex_make_bignum.exit ], [ %i.m, %bb.p ], [ null, %bb.g ], [ null, %bb.o ], [ null, %bb.f ], [ null, %bb.e ]
   ret ptr %.0
 }

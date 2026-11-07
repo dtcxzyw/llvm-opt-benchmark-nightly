@@ -204,7 +204,7 @@ bb.a:
   %i.q = alloca [56 x i8], align 8                ; 10 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.t = load i64, ptr %i.s, align 8, !noundef !5 ; 9 uses
+  %i.t = load i64, ptr %i.s, align 8, !noundef !5 ; 10 uses
   %.not = icmp eq i64 %i.t, 0
   %.pre = load ptr, ptr %i.r, align 8             ; 4 uses
   br i1 %.not, label %bb.aj, label %bb.b
@@ -607,7 +607,7 @@ bb.aj:                                            ; preds = %bb.a, %_RNvMs0_NtCs
   %.idx = mul nuw nsw i64 %i.t, 56
   %i.km = getelementptr inbounds nuw i8, ptr %.pre, i64 %.idx
   %.not.not.not.i.not51 = icmp eq i64 %i.t, 0
-  br i1 %.not.not.not.i.not51, label %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterNtNtCsbXLDOPgjE5X_10test_utils13assert_linear5RoundENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvMBS_NtBS_12AssertLinear10next_round0EBU_.exit, label %.lr.ph
+  br i1 %.not.not.not.i.not51, label %bb.al, label %.lr.ph
 
 bb.ak:                                            ; preds = %.lr.ph
   %i.kn = getelementptr inbounds nuw i8, ptr %i.ko, i64 56 ; 2 uses
@@ -621,13 +621,15 @@ bb.ak:                                            ; preds = %.lr.ph
   %i.kq = trunc nuw i8 %.val.i to i1
   br i1 %i.kq, label %.loopexit, label %bb.ak
 
-_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterNtNtCsbXLDOPgjE5X_10test_utils13assert_linear5RoundENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvMBS_NtBS_12AssertLinear10next_round0EBU_.exit: ; preds = %bb.ak, %bb.aj
+_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterNtNtCsbXLDOPgjE5X_10test_utils13assert_linear5RoundENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvMBS_NtBS_12AssertLinear10next_round0EBU_.exit: ; preds = %bb.ak
   %i.kr = icmp ult i64 %i.t, 164703072086692426
   call void @llvm.assume(i1 %i.kr)
   %i.ks = icmp eq i64 %i.t, 4
   br i1 %i.ks, label %.loopexit, label %bb.al
 
-bb.al:                                            ; preds = %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterNtNtCsbXLDOPgjE5X_10test_utils13assert_linear5RoundENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvMBS_NtBS_12AssertLinear10next_round0EBU_.exit
+bb.al:                                            ; preds = %bb.aj, %_RINvXs2J_NtNtCshzWfHUSfYae_4core5slice4iterINtB7_4IterNtNtCsbXLDOPgjE5X_10test_utils13assert_linear5RoundENtNtNtNtBb_4iter6traits8iterator8Iterator3anyNCNvMBS_NtBS_12AssertLinear10next_round0EBU_.exit
+  %1 = icmp ult i64 %i.t, 164703072086692426
+  call void @llvm.assume(i1 %1)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
   store i64 0, ptr %i.q, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.q, i64 8

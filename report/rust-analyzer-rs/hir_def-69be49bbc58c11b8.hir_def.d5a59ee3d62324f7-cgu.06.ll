@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %.lr.ph, %_RNvMs0_Nt
     i32 1, label %bb.e
   ]
 
-_RNvMs0_NtCsileJQcQObtj_7hir_def8resolverNtB5_8Resolver29resolve_path_in_type_ns_fully.exit.thread: ; preds = %bb.n, %bb.o, %bb.p, %5, %bb.j, %bb.h, %bb.e, %bb.b
+_RNvMs0_NtCsileJQcQObtj_7hir_def8resolverNtB5_8Resolver29resolve_path_in_type_ns_fully.exit.thread: ; preds = %bb.n, %bb.o, %bb.p, %bb.j, %bb.h, %bb.e, %bb.b
   %i.w = icmp eq ptr %.val, %i.u
   br i1 %i.w, label %._crit_edge, label %bb.b
 
@@ -306,26 +306,20 @@ _RNvXsb_NtCsileJQcQObtj_7hir_def10expr_storeNtB5_15ExpressionStoreINtNtNtCshzWfH
   br i1 %.not.i.i, label %bb.o, label %bb.n
 
 bb.n:                                             ; preds = %.noexc15
-  %.sroa.029.0.copyload = load i32, ptr %.sroa.68.0..sroa_idx.i.i, align 8, !noalias !5344 ; 3 uses
+  %.sroa.029.0.copyload = load i32, ptr %.sroa.68.0..sroa_idx.i.i, align 8, !noalias !5344
   %.sroa.4.0.copyload = load i32, ptr %.sroa.4.0..sroa.68.0..sroa_idx.i.i.sroa_idx, align 4, !noalias !5344
   %.sroa.530.0.copyload = load i32, ptr %.sroa.530.0..sroa.68.0..sroa_idx.i.i.sroa_idx, align 8, !noalias !5344
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !5343
-  %4 = icmp eq i64 %i.az, 1
-  %.not = icmp eq i32 %.sroa.029.0.copyload, -1
-  %or.cond = select i1 %4, i1 true, i1 %.not
-  br i1 %or.cond, label %_RNvMs0_NtCsileJQcQObtj_7hir_def8resolverNtB5_8Resolver29resolve_path_in_type_ns_fully.exit.thread, label %5
+  %4 = icmp ne i64 %i.az, 1
+  %.not = icmp eq i32 %.sroa.029.0.copyload, 16
+  %or.cond = select i1 %4, i1 %.not, i1 false
+  br i1 %or.cond, label %bb.p, label %_RNvMs0_NtCsileJQcQObtj_7hir_def8resolverNtB5_8Resolver29resolve_path_in_type_ns_fully.exit.thread
 
 bb.o:                                             ; preds = %.noexc15
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !5343
   br label %_RNvMs0_NtCsileJQcQObtj_7hir_def8resolverNtB5_8Resolver29resolve_path_in_type_ns_fully.exit.thread
 
-5:                                                ; preds = %bb.n
-  %6 = icmp ne i32 %.sroa.029.0.copyload, 10
-  call void @llvm.assume(i1 %6)
-  %7 = icmp eq i32 %.sroa.029.0.copyload, 16
-  br i1 %7, label %bb.p, label %_RNvMs0_NtCsileJQcQObtj_7hir_def8resolverNtB5_8Resolver29resolve_path_in_type_ns_fully.exit.thread
-
-bb.p:                                             ; preds = %5
+bb.p:                                             ; preds = %bb.n
   %i.ba = invoke noundef zeroext i1 @_RNvMs1_NtCsfjX3T6UU9IB_9hashbrown3mapINtB5_7HashMapNtCsileJQcQObtj_7hir_def7TraitIduNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherE6insertBP_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.n, i32 noundef %.sroa.4.0.copyload, i32 noundef %.sroa.530.0.copyload)
           to label %_RNvMs0_NtCsileJQcQObtj_7hir_def8resolverNtB5_8Resolver29resolve_path_in_type_ns_fully.exit.thread unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 0 uses
 

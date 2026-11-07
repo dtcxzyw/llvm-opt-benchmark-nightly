@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/qemu/original/tcg-op?download=true
-inline.NumInlined: 724
+inline.NumInlined: 726
 inline.NumDeleted: 64
 begin_hunk_0_@tcg_gen_and_i64:bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 %i.c
@@ -202,11 +202,8 @@ tcg_gen_addi_i64.exit:                            ; preds = %bb.b, %bb.c, %bb.d
 
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local void @tcg_gen_andi_i64(ptr noundef %0, ptr noundef %1, i64 noundef %2) local_unnamed_addr #2 {
-  br label %tailrecurse
-
-tailrecurse:                                      ; preds = %5, %3
-  %.tr28 = phi i64 [ %2, %3 ], [ %6, %5 ]         ; 5 uses
-  switch i64 %.tr28, label %bb.e [
+tailrecurse:
+  switch i64 %2, label %bb.e [
     i64 0, label %bb.a
     i64 -1, label %bb.c
   ]
@@ -245,19 +242,19 @@ bb.d:                                             ; preds = %bb.c
   br label %tcg_gen_movi_i64.exit
 
 bb.e:                                             ; preds = %tailrecurse
-  %i.t = add nuw i64 %.tr28, 1
-  %i.u = and i64 %i.t, %.tr28
+  %i.t = add nuw i64 %2, 1
+  %i.u = and i64 %i.t, %2
   %.not = icmp eq i64 %i.u, 0
   br i1 %.not, label %bb.f, label %tcg_gen_extract_i64.exit
 
 bb.f:                                             ; preds = %bb.e
-  %i.v = xor i64 %.tr28, -1
-  %i.w = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.v, i1 false) ; 5 uses
-  %i.x = trunc nuw nsw i64 %i.w to i32            ; 2 uses
+  %i.v = xor i64 %2, -1
+  %i.w = tail call range(i64 0, 65) i64 @llvm.cttz.i64(i64 %i.v, i1 false) ; 3 uses
+  %i.x = trunc nuw nsw i64 %i.w to i32
   switch i32 %i.x, label %tcg_gen_extract_i64.exit [
     i32 32, label %tcg_target_extract_valid.exit15.thread
-    i32 16, label %tcg_target_extract_valid.exit15
-    i32 8, label %tcg_target_extract_valid.exit15
+    i32 16, label %.loopexit
+    i32 8, label %.loopexit
   ]
 
 tcg_target_extract_valid.exit15.thread:           ; preds = %bb.f
@@ -265,15 +262,7 @@ tcg_target_extract_valid.exit15.thread:           ; preds = %bb.f
   tail call void @llvm.assume(i1 %i.y)
   br label %.loopexit
 
-tcg_target_extract_valid.exit15:                  ; preds = %bb.f, %bb.f
-  %4 = icmp ne i64 %i.w, 0
-  tail call void @llvm.assume(i1 %4)
-  switch i32 %i.x, label %5 [
-    i32 16, label %.loopexit
-    i32 8, label %.loopexit
-  ]
-
-.loopexit:                                        ; preds = %tcg_target_extract_valid.exit15, %tcg_target_extract_valid.exit15, %tcg_target_extract_valid.exit15.thread
+.loopexit:                                        ; preds = %bb.f, %bb.f, %tcg_target_extract_valid.exit15.thread
   %i.z = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
   %i.aa = load ptr, ptr %i.z, align 8             ; 2 uses
   %i.ab = ptrtoint ptr %0 to i64
@@ -285,13 +274,8 @@ tcg_target_extract_valid.exit15:                  ; preds = %bb.f, %bb.f
   %i.ah = tail call noundef ptr @tcg_gen_op4(i32 noundef 22, i32 noundef 1, i64 noundef %i.ad, i64 noundef %i.ag, i64 noundef 0, i64 noundef %i.w) ; 0 uses
   br label %tcg_gen_movi_i64.exit
 
-5:                                                ; preds = %tcg_target_extract_valid.exit15
-  %notmask.i = shl nsw i64 -1, %i.w
-  %6 = xor i64 %notmask.i, -1
-  br label %tailrecurse
-
 tcg_gen_extract_i64.exit:                         ; preds = %bb.f, %bb.e
-  %i.ai = tail call ptr @tcg_constant_i64(i64 noundef %.tr28) #6
+  %i.ai = tail call ptr @tcg_constant_i64(i64 noundef %2) #6
   %i.aj = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx)
   %i.ak = load ptr, ptr %i.aj, align 8            ; 3 uses
   %i.al = ptrtoint ptr %0 to i64
@@ -694,10 +678,10 @@ bb.f:                                             ; preds = %tcg_gen_movi_i64.ex
 ; Function Attrs: nounwind sspstrong uwtable
 define dso_local void @tcg_gen_hswap_i64(ptr noundef %0, ptr noundef %1) local_unnamed_addr #2 {
 bb.a:
-  %i.a = tail call ptr @tcg_temp_ebb_new_i64() #6 ; 3 uses
-  %i.b = tail call ptr @tcg_temp_ebb_new_i64() #6 ; 7 uses
+  %i.a = tail call ptr @tcg_temp_ebb_new_i64() #6 ; 2 uses
+  %i.b = tail call ptr @tcg_temp_ebb_new_i64() #6 ; 4 uses
   %i.c = tail call zeroext i1 @tcg_op_supported(i32 noundef 46, i32 noundef 1, i32 noundef 0) #6
-  %i.d = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 4 uses
+  %i.d = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @tcg_ctx) ; 6 uses
   br i1 %i.c, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %bb.a
@@ -721,15 +705,24 @@ bb.c:                                             ; preds = %bb.a
   br label %tcg_gen_rotli_i64.exit
 
 tcg_gen_rotli_i64.exit:                           ; preds = %bb.b, %bb.c
-  %.pre-phi17 = phi i64 [ %i.g, %bb.b ], [ %.pre16, %bb.c ] ; 2 uses
-  tail call void @tcg_gen_andi_i64(ptr noundef %i.a, ptr noundef %i.b, i64 noundef 281470681808895)
-  %i.q = tail call ptr @tcg_constant_i64(i64 noundef 16) #6
-  %i.r = load ptr, ptr %i.d, align 8              ; 2 uses
-  %i.s = ptrtoint ptr %i.a to i64                 ; 2 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.s
+  %.pre-phi17 = phi i64 [ %i.g, %bb.b ], [ %.pre16, %bb.c ] ; 4 uses
+  %i.q = tail call ptr @tcg_constant_i64(i64 noundef 281470681808895) #6, !inline_history !10
+  %i.r = load ptr, ptr %i.d, align 8              ; 3 uses
+  %i.s = ptrtoint ptr %i.a to i64                 ; 3 uses
+  %2 = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.s
+  %3 = ptrtoint ptr %2 to i64
+  %4 = getelementptr inbounds nuw i8, ptr %i.r, i64 %.pre-phi17
+  %5 = ptrtoint ptr %4 to i64
+  %6 = ptrtoint ptr %i.q to i64
+  %7 = getelementptr inbounds nuw i8, ptr %i.r, i64 %6
+  %8 = ptrtoint ptr %7 to i64
+  %9 = tail call ptr @tcg_gen_op3(i32 noundef 8, i32 noundef 1, i64 noundef %3, i64 noundef %5, i64 noundef %8), !inline_history !10 ; 0 uses
+  %10 = tail call ptr @tcg_constant_i64(i64 noundef 16) #6
+  %11 = load ptr, ptr %i.d, align 8               ; 2 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %11, i64 %i.s
   %i.u = ptrtoint ptr %i.t to i64                 ; 2 uses
-  %i.v = ptrtoint ptr %i.q to i64
-  %i.w = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.v
+  %i.v = ptrtoint ptr %10 to i64
+  %i.w = getelementptr inbounds nuw i8, ptr %11, i64 %i.v
   %i.x = ptrtoint ptr %i.w to i64
   %i.y = tail call ptr @tcg_gen_op3(i32 noundef 51, i32 noundef 1, i64 noundef %i.u, i64 noundef %i.u, i64 noundef %i.x) ; 0 uses
   %i.z = tail call ptr @tcg_constant_i64(i64 noundef 16) #6
@@ -740,7 +733,14 @@ tcg_gen_rotli_i64.exit:                           ; preds = %bb.b, %bb.c
   %i.ae = getelementptr inbounds nuw i8, ptr %i.aa, i64 %i.ad
   %i.af = ptrtoint ptr %i.ae to i64
   %i.ag = tail call ptr @tcg_gen_op3(i32 noundef 52, i32 noundef 1, i64 noundef %i.ac, i64 noundef %i.ac, i64 noundef %i.af) ; 0 uses
-  tail call void @tcg_gen_andi_i64(ptr noundef %i.b, ptr noundef %i.b, i64 noundef 281470681808895)
+  %12 = tail call ptr @tcg_constant_i64(i64 noundef 281470681808895) #6, !inline_history !10
+  %13 = load ptr, ptr %i.d, align 8               ; 2 uses
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 %.pre-phi17
+  %15 = ptrtoint ptr %14 to i64                   ; 2 uses
+  %16 = ptrtoint ptr %12 to i64
+  %17 = getelementptr inbounds nuw i8, ptr %13, i64 %16
+  %18 = ptrtoint ptr %17 to i64
+  %19 = tail call ptr @tcg_gen_op3(i32 noundef 8, i32 noundef 1, i64 noundef %15, i64 noundef %15, i64 noundef %18), !inline_history !10 ; 0 uses
   %i.ah = load ptr, ptr %i.d, align 8             ; 3 uses
   %i.ai = ptrtoint ptr %0 to i64
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ah, i64 %i.ai
@@ -1143,7 +1143,7 @@ define dso_local void @tcg_gen_addN_i64(i32 noundef %0, ptr nofree noundef reado
   %i.at = tail call ptr @tcg_gen_op3(i32 noundef 62, i32 noundef 1, i64 noundef %i.am, i64 noundef %i.ap, i64 noundef %i.as) ; 0 uses
   %indvars.iv.next98 = add nuw nsw i64 %indvars.iv97, 1 ; 2 uses
   %exitcond101.not = icmp eq i64 %indvars.iv.next98, %wide.trip.count100
-  br i1 %exitcond101.not, label %._crit_edge89, label %.lr.ph88, !llvm.loop !10
+  br i1 %exitcond101.not, label %._crit_edge89, label %.lr.ph88, !llvm.loop !11
 
 bb.a:                                             ; preds = %._crit_edge
   %i.au = tail call ptr @tcg_temp_ebb_new_i64() #6 ; 3 uses
@@ -1271,7 +1271,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ep = tail call ptr @tcg_gen_op3(i32 noundef 42, i32 noundef 1, i64 noundef %i.em, i64 noundef %i.em, i64 noundef %i.eo) ; 0 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  br i1 %exitcond.not, label %._crit_edge85, label %.lr.ph84, !llvm.loop !11
+  br i1 %exitcond.not, label %._crit_edge85, label %.lr.ph84, !llvm.loop !12
 
 bb.c:                                             ; preds = %._crit_edge85, %._crit_edge89
   ret void
@@ -1674,7 +1674,8 @@ attributes #6 = { nounwind }
 !7 = !{!"branch_weights", !"expected", i32 1, i32 2000}
 !8 = !{ptr @tcg_gen_extract_i32}
 !9 = !{ptr @tcg_gen_extract_i64}
-!10 = distinct !{!10, !12}
-!11 = distinct !{!11, !12}
-!12 = !{!"llvm.loop.mustprogress"}
+!10 = !{ptr @tcg_gen_andi_i64}
+!11 = distinct !{!11, !13}
+!12 = distinct !{!12, !13}
+!13 = !{!"llvm.loop.mustprogress"}
 end_hunk_3

@@ -204,13 +204,28 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   %i.d = load ptr, ptr %i.c, align 8, !alias.scope !16716, !noundef !73
   %i.e = icmp eq ptr %i.d, null
-  br i1 %i.e, label %bb.c, label %bb.d
+  br i1 %i.e, label %1, label %bb.d
 
-bb.c:                                             ; preds = %bb.b
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %.promoted.i.i.i = load i32, ptr %1, align 8, !alias.scope !16717
-  %2 = icmp eq i32 %.promoted.i.i.i, 16
-  store i32 -1, ptr %1, align 8, !alias.scope !16717
+1:                                                ; preds = %bb.b
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %.promoted.i.i.i = load i32, ptr %2, align 8, !alias.scope !16717 ; 2 uses
+  switch i32 %.promoted.i.i.i, label %bb.c [
+    i32 -1, label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources4once4OnceNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeENtNtNtBa_6traits8iterator8Iterator3anyNCNCNvMNtNtNtBU_5infer7builder9subscriptNtB2q_20TypeInferenceBuilder43infer_explicit_callable_specialization_impls7_00EBW_.exit.i
+    i32 16, label %.fold.split.i.i.i
+  ]
+
+.fold.split.i.i.i:                                ; preds = %1
+  br label %bb.c
+
+bb.c:                                             ; preds = %.fold.split.i.i.i, %1
+  %.not.not.lcssa.ph.i.i.i = phi i1 [ true, %.fold.split.i.i.i ], [ false, %1 ]
+  %3 = icmp ne i32 %.promoted.i.i.i, 17
+  tail call void @llvm.assume(i1 %3)
+  br label %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources4once4OnceNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeENtNtNtBa_6traits8iterator8Iterator3anyNCNCNvMNtNtNtBU_5infer7builder9subscriptNtB2q_20TypeInferenceBuilder43infer_explicit_callable_specialization_impls7_00EBW_.exit.i
+
+_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources4once4OnceNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeENtNtNtBa_6traits8iterator8Iterator3anyNCNCNvMNtNtNtBU_5infer7builder9subscriptNtB2q_20TypeInferenceBuilder43infer_explicit_callable_specialization_impls7_00EBW_.exit.i: ; preds = %bb.c, %1
+  %.not.not.lcssa.i.i.i = phi i1 [ false, %1 ], [ %.not.not.lcssa.ph.i.i.i, %bb.c ]
+  store i32 -1, ptr %2, align 8, !alias.scope !16717
   br label %_RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtBU_6copied6CopiedINtNtNtBY_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEENCNvMs9_NtB2r_14known_instanceNtB3l_17UnionTypeInstance22value_expression_types0EINtNtNtBW_7sources4once4OnceB2p_EENtNtNtBW_6traits8iterator8Iterator3anyNCNCNvMNtNtNtB2r_5infer7builder9subscriptNtB5P_20TypeInferenceBuilder43infer_explicit_callable_specialization_impls7_00EB2t_.exit
 
 bb.d:                                             ; preds = %bb.b
@@ -221,8 +236,8 @@ bb.e:                                             ; preds = %bb.a
   %i.g = tail call noundef zeroext i1 @_RINvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters6copiedINtB5_6CopiedINtNtNtBb_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEENtNtNtB9_6traits8iterator8Iterator8try_folduNCINvNvB2g_3any5checkB1s_NCNCNvMNtNtNtB1u_5infer7builder9subscriptNtB3w_20TypeInferenceBuilder43infer_explicit_callable_specialization_impls7_00E0INtNtNtBb_3ops12control_flow11ControlFlowuEEB1w_(ptr noalias noundef nonnull align 8 dereferenceable(16) %i.c)
   br label %_RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtBU_6copied6CopiedINtNtNtBY_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEENCNvMs9_NtB2r_14known_instanceNtB3l_17UnionTypeInstance22value_expression_types0EINtNtNtBW_7sources4once4OnceB2p_EENtNtNtBW_6traits8iterator8Iterator3anyNCNCNvMNtNtNtB2r_5infer7builder9subscriptNtB5P_20TypeInferenceBuilder43infer_explicit_callable_specialization_impls7_00EB2t_.exit
 
-_RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtBU_6copied6CopiedINtNtNtBY_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEENCNvMs9_NtB2r_14known_instanceNtB3l_17UnionTypeInstance22value_expression_types0EINtNtNtBW_7sources4once4OnceB2p_EENtNtNtBW_6traits8iterator8Iterator3anyNCNCNvMNtNtNtB2r_5infer7builder9subscriptNtB5P_20TypeInferenceBuilder43infer_explicit_callable_specialization_impls7_00EB2t_.exit: ; preds = %bb.d, %bb.c, %bb.e
-  %.sroa.0.0.in = phi i1 [ %i.g, %bb.e ], [ %2, %bb.c ], [ %i.f, %bb.d ]
+_RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters3map3MapINtNtBU_6copied6CopiedINtNtNtBY_5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEENCNvMs9_NtB2r_14known_instanceNtB3l_17UnionTypeInstance22value_expression_types0EINtNtNtBW_7sources4once4OnceB2p_EENtNtNtBW_6traits8iterator8Iterator3anyNCNCNvMNtNtNtB2r_5infer7builder9subscriptNtB5P_20TypeInferenceBuilder43infer_explicit_callable_specialization_impls7_00EB2t_.exit: ; preds = %bb.d, %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources4once4OnceNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeENtNtNtBa_6traits8iterator8Iterator3anyNCNCNvMNtNtNtBU_5infer7builder9subscriptNtB2q_20TypeInferenceBuilder43infer_explicit_callable_specialization_impls7_00EBW_.exit.i, %bb.e
+  %.sroa.0.0.in = phi i1 [ %i.g, %bb.e ], [ %.not.not.lcssa.i.i.i, %_RINvYINtNtNtNtCs4NRVxsYgnAr_4core4iter7sources4once4OnceNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeENtNtNtBa_6traits8iterator8Iterator3anyNCNCNvMNtNtNtBU_5infer7builder9subscriptNtB2q_20TypeInferenceBuilder43infer_explicit_callable_specialization_impls7_00EBW_.exit.i ], [ %i.f, %bb.d ]
   ret i1 %.sroa.0.0.in
 }
 
@@ -625,7 +640,7 @@ bb.a:
   %i.c = alloca [48 x i8], align 8                ; 4 uses
   %i.d = alloca [32 x i8], align 8                ; 7 uses
   %i.e = alloca [48 x i8], align 8                ; 8 uses
-  %i.f = load i32, ptr %3, align 8, !range !93, !alias.scope !25355, !noundef !73 ; 5 uses
+  %i.f = load i32, ptr %3, align 8, !range !93, !alias.scope !25355, !noundef !73 ; 3 uses
   %.not.i = icmp eq i32 %i.f, -2
   br i1 %.not.i, label %bb.c, label %bb.b
 
@@ -703,14 +718,14 @@ _RNvYNvMs39_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB9_4Type8is_neverINtNtNtC
   br i1 %.not10.i13.i, label %_RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEBP_ENtNtNtNtBW_4iter6traits8iterator8Iterator3anyNvMs39_B1x_B1v_8is_neverEB1z_.exit, label %.lr.ph.i3.i
 
 _RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEBP_ENtNtNtNtBW_4iter6traits8iterator8Iterator3anyNvMs39_B1x_B1v_8is_neverEB1z_.exit: ; preds = %_RNvYNvMs39_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB9_4Type8is_neverINtNtNtCs4NRVxsYgnAr_4core3ops8function5FnMutTRBO_EE8call_mutBb_.exit.backedge.i.i, %_RNvYNvMs39_NtCsoTR8nlGN3X_18ty_python_semantic5typesNtB9_4Type8is_neverINtNtNtCs4NRVxsYgnAr_4core3ops8function5FnMutTRBO_EE8call_mutBb_.exit.backedge.i12.i
-  %4 = icmp ugt i32 %i.f, -3
-  br i1 %4, label %_RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEBP_ENtNtNtNtBW_4iter6traits8iterator8Iterator3anyNvMs39_B1x_B1v_8is_neverEB1z_.exit.thread28, label %5
+  %cond = icmp eq i32 %i.f, 6
+  br i1 %cond, label %bb.i, label %_RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEBP_ENtNtNtNtBW_4iter6traits8iterator8Iterator3anyNvMs39_B1x_B1v_8is_neverEB1z_.exit.thread28
 
 _RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEBP_ENtNtNtNtBW_4iter6traits8iterator8Iterator3anyNvMs39_B1x_B1v_8is_neverEB1z_.exit.thread29: ; preds = %bb.b
-  %.old = icmp eq i32 %i.f, -1
-  br i1 %.old, label %_RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEBP_ENtNtNtNtBW_4iter6traits8iterator8Iterator3anyNvMs39_B1x_B1v_8is_neverEB1z_.exit.thread28, label %5
+  %.old = icmp eq i32 %i.f, 6
+  br i1 %.old, label %bb.i, label %_RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEBP_ENtNtNtNtBW_4iter6traits8iterator8Iterator3anyNvMs39_B1x_B1v_8is_neverEB1z_.exit.thread28
 
-_RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEBP_ENtNtNtNtBW_4iter6traits8iterator8Iterator3anyNvMs39_B1x_B1v_8is_neverEB1z_.exit.thread28: ; preds = %_RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEBP_ENtNtNtNtBW_4iter6traits8iterator8Iterator3anyNvMs39_B1x_B1v_8is_neverEB1z_.exit, %bb.c, %5, %_RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEBP_ENtNtNtNtBW_4iter6traits8iterator8Iterator3anyNvMs39_B1x_B1v_8is_neverEB1z_.exit.thread29
+_RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEBP_ENtNtNtNtBW_4iter6traits8iterator8Iterator3anyNvMs39_B1x_B1v_8is_neverEB1z_.exit.thread28: ; preds = %bb.c, %_RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEBP_ENtNtNtNtBW_4iter6traits8iterator8Iterator3anyNvMs39_B1x_B1v_8is_neverEB1z_.exit.thread29, %_RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEBP_ENtNtNtNtBW_4iter6traits8iterator8Iterator3anyNvMs39_B1x_B1v_8is_neverEB1z_.exit
   %.sroa.03.0.copyload.i = load i32, ptr %2, align 4, !noalias !25359
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %2, i64 4 ; 2 uses
   %.sroa.5.0.copyload.i = load i32, ptr %.sroa.5.0..sroa_idx.i, align 4, !noalias !25359 ; 4 uses
@@ -768,13 +783,7 @@ _RNvMNtNtCsoTR8nlGN3X_18ty_python_semantic5types7contextNtB2_18ProgramEnvironmen
   %i.ar = extractvalue { i32, i32 } %i.ap, 1
   br label %.loopexit
 
-5:                                                ; preds = %_RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEBP_ENtNtNtNtBW_4iter6traits8iterator8Iterator3anyNvMs39_B1x_B1v_8is_neverEB1z_.exit, %_RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEBP_ENtNtNtNtBW_4iter6traits8iterator8Iterator3anyNvMs39_B1x_B1v_8is_neverEB1z_.exit.thread29
-  %6 = icmp ne i32 %i.f, 17
-  tail call void @llvm.assume(i1 %6)
-  %7 = icmp eq i32 %i.f, 6
-  br i1 %7, label %bb.i, label %_RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEBP_ENtNtNtNtBW_4iter6traits8iterator8Iterator3anyNvMs39_B1x_B1v_8is_neverEB1z_.exit.thread28
-
-bb.i:                                             ; preds = %5
+bb.i:                                             ; preds = %_RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEBP_ENtNtNtNtBW_4iter6traits8iterator8Iterator3anyNvMs39_B1x_B1v_8is_neverEB1z_.exit, %_RINvXs0_NtCsddXFpJ32JCa_6either8iteratorINtB8_6EitherINtNtNtCs4NRVxsYgnAr_4core5slice4iter4IterNtNtCsoTR8nlGN3X_18ty_python_semantic5types4TypeEBP_ENtNtNtNtBW_4iter6traits8iterator8Iterator3anyNvMs39_B1x_B1v_8is_neverEB1z_.exit.thread29
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   %i.as = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 2 uses

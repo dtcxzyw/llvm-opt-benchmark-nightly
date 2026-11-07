@@ -202,9 +202,9 @@ bb.b:                                             ; preds = %bb.a
   %i.l = load ptr, ptr %0, align 8, !dbg !6247, !nonnull !464, !noundef !464
     #dbg_value(ptr %i.l, !6115, !DIExpression(), !6122)
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 152, !dbg !6248
-  %i.n = load i32, ptr %i.m, align 8, !dbg !6248, !range !1144, !noundef !464 ; 3 uses
-  %i.o = icmp eq i32 %i.n, -1, !dbg !6248
-  br i1 %i.o, label %bb.g, label %4, !dbg !6249
+  %i.n = load i32, ptr %i.m, align 8, !dbg !6248, !range !1144, !noundef !464
+  %i.o = icmp eq i32 %i.n, 1114112, !dbg !6249
+  br i1 %i.o, label %bb.i, label %bb.g, !dbg !6249
 
 bb.c:                                             ; preds = %bb.a
     #dbg_value(ptr %0, !5941, !DIExpression(), !6123)
@@ -227,7 +227,7 @@ bb.c:                                             ; preds = %bb.a
 .loopexit:                                        ; preds = %bb.r, %bb.c
   unreachable, !dbg !6252
 
-bb.d:                                             ; preds = %7, %bb.f, %1, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs3roNzt6HBWW_12regex_syntax3ast8ClassSetEEB1c_.exit, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c
+bb.d:                                             ; preds = %bb.i, %bb.e, %bb.f, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc3vec3VecNtNtCs3roNzt6HBWW_12regex_syntax3ast8ClassSetEEB1c_.exit, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c, %bb.c
   ret void, !dbg !6253
 
 bb.e:                                             ; preds = %bb.c
@@ -235,9 +235,9 @@ bb.e:                                             ; preds = %bb.c
   %i.s = load ptr, ptr %0, align 8, !dbg !6254, !nonnull !464, !noundef !464
     #dbg_value(ptr %i.s, !6115, !DIExpression(DW_OP_plus_uconst, 48, DW_OP_stack_value), !6127)
   %i.t = getelementptr inbounds nuw i8, ptr %i.s, i64 200, !dbg !6255
-  %i.u = load i32, ptr %i.t, align 8, !dbg !6255, !range !1144, !noundef !464 ; 3 uses
-  %i.v = icmp eq i32 %i.u, -1, !dbg !6255
-  br i1 %i.v, label %bb.g, label %1, !dbg !6256
+  %i.u = load i32, ptr %i.t, align 8, !dbg !6255, !range !1144, !noundef !464
+  %i.v = icmp eq i32 %i.u, 1114112, !dbg !6256
+  br i1 %i.v, label %bb.d, label %bb.g, !dbg !6256
 
 bb.f:                                             ; preds = %bb.c
     #dbg_value(ptr %0, !5943, !DIExpression(), !6128)
@@ -250,13 +250,7 @@ bb.f:                                             ; preds = %bb.c
   %i.z = icmp eq i64 %i.x, 0, !dbg !6260
   br i1 %i.z, label %bb.d, label %bb.g, !dbg !6261
 
-1:                                                ; preds = %bb.e
-  %2 = icmp ne i32 %i.u, 1114114, !dbg !6255
-  tail call void @llvm.assume(i1 %2), !dbg !6255
-  %3 = icmp eq i32 %i.u, 1114112, !dbg !6256
-  br i1 %3, label %bb.d, label %bb.g, !dbg !6254
-
-bb.g:                                             ; preds = %bb.i, %4, %7, %bb.b, %bb.f, %1, %bb.e
+bb.g:                                             ; preds = %bb.i, %bb.e, %bb.b, %bb.f
     #dbg_value(ptr poison, !5947, !DIExpression(), !6137)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !dbg !6262
     #dbg_value(i64 8, !1146, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !5839)
@@ -333,26 +327,14 @@ _RNvNtCs4wP2HXfJTCR_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.g
   %i.af = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   br label %bb.m, !dbg !6272
 
-4:                                                ; preds = %bb.b
-  %5 = icmp ne i32 %i.n, 1114114, !dbg !6248
-  tail call void @llvm.assume(i1 %5), !dbg !6248
-  %6 = icmp eq i32 %i.n, 1114112, !dbg !6249
-  br i1 %6, label %bb.i, label %bb.g, !dbg !6247
-
-bb.i:                                             ; preds = %4
+bb.i:                                             ; preds = %bb.b
   %i.ag = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !6273
   %i.ah = load ptr, ptr %i.ag, align 8, !dbg !6273, !nonnull !464, !noundef !464
     #dbg_value(ptr %i.ah, !6115, !DIExpression(), !6153)
   %i.ai = getelementptr inbounds nuw i8, ptr %i.ah, i64 152, !dbg !6274
-  %i.aj = load i32, ptr %i.ai, align 8, !dbg !6274, !range !1144, !noundef !464 ; 3 uses
-  %i.ak = icmp eq i32 %i.aj, -1, !dbg !6274
-  br i1 %i.ak, label %bb.g, label %7, !dbg !6275
-
-7:                                                ; preds = %bb.i
-  %8 = icmp ne i32 %i.aj, 1114114, !dbg !6274
-  tail call void @llvm.assume(i1 %8), !dbg !6274
-  %9 = icmp eq i32 %i.aj, 1114112, !dbg !6275
-  br i1 %9, label %bb.d, label %bb.g, !dbg !6273
+  %i.aj = load i32, ptr %i.ai, align 8, !dbg !6274, !range !1144, !noundef !464
+  %i.ak = icmp eq i32 %i.aj, 1114112, !dbg !6275
+  br i1 %i.ak, label %bb.d, label %bb.g, !dbg !6275
 
 bb.j:                                             ; preds = %bb.af
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !dbg !6276

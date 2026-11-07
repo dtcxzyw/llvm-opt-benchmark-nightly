@@ -205,9 +205,11 @@ _ZNK4llvm5Value9hasOneUseEv.exit33:               ; preds = %bb.b
   br i1 %i.af, label %bb.c, label %_ZNK4llvm5Value9hasOneUseEv.exit.thread
 
 bb.c:                                             ; preds = %_ZNK4llvm5Value9hasOneUseEv.exit33
-  %i.ag = load i8, ptr %i.h, align 8, !tbaa !31   ; 2 uses
-  %10 = icmp eq i8 %i.ag, 49                      ; 2 uses
-  br i1 %10, label %bb.d, label %11
+  %i.ag = load i8, ptr %i.h, align 8, !tbaa !31
+  switch i8 %i.ag, label %_ZNK4llvm5Value9hasOneUseEv.exit.thread [
+    i8 49, label %bb.d
+    i8 52, label %bb.k
+  ]
 
 bb.d:                                             ; preds = %bb.c
   %i.ah = getelementptr inbounds i8, ptr %i.h, i64 -64
@@ -269,11 +271,7 @@ _ZNK4llvm19PatternMatchHelpers10match_bindINS_5ValueEE5matchIS2_EEbPT_.exit.i.i.
   %or.cond155 = and i1 %.not.i8.not.i.i.i50, %i.ay
   br i1 %or.cond155, label %_ZN4llvm12PatternMatch5matchINS_5ValueENS0_14BinaryOp_matchINS_19PatternMatchHelpers10match_bindIS2_EENS0_14specificval_tyELj22ELb0EEEEEbPT_RKT0_.exit, label %_ZNK4llvm5Value9hasOneUseEv.exit.thread
 
-11:                                               ; preds = %bb.c
-  %12 = icmp eq i8 %i.ag, 52
-  br i1 %12, label %bb.k, label %_ZNK4llvm5Value9hasOneUseEv.exit.thread
-
-bb.k:                                             ; preds = %11
+bb.k:                                             ; preds = %bb.c
   %i.az = getelementptr inbounds i8, ptr %i.h, i64 -64
   %i.ba = load ptr, ptr %i.az, align 8, !tbaa !26 ; 2 uses
   %.not.i.not.i.i.i58 = icmp eq ptr %i.ba, null
@@ -306,6 +304,7 @@ _ZN4llvm12PatternMatch5matchINS_5ValueENS0_14BinaryOp_matchINS_19PatternMatchHel
   %.0135 = phi ptr [ %i.as, %_ZNK4llvm19PatternMatchHelpers10match_bindINS_5ValueEE5matchIS2_EEbPT_.exit.i.i.i49 ], [ %i.as, %bb.j ], [ %i.ai, %_ZNK4llvm19PatternMatchHelpers10match_bindINS_5ValueEE5matchIS2_EEbPT_.exit.i.i.i ], [ %i.ai, %bb.g ], [ %i.ba, %bb.o ] ; 2 uses
   %.0134 = phi ptr [ %.pre.i.i.i53, %_ZNK4llvm19PatternMatchHelpers10match_bindINS_5ValueEE5matchIS2_EEbPT_.exit.i.i.i49 ], [ %i.aw, %bb.j ], [ %.pre.i.i.i, %_ZNK4llvm19PatternMatchHelpers10match_bindINS_5ValueEE5matchIS2_EEbPT_.exit.i.i.i ], [ %i.ao, %bb.g ], [ %i.bg, %bb.o ] ; 2 uses
   %.0 = phi ptr [ %i.ai, %_ZNK4llvm19PatternMatchHelpers10match_bindINS_5ValueEE5matchIS2_EEbPT_.exit.i.i.i49 ], [ %i.ai, %bb.j ], [ %i.ak, %_ZNK4llvm19PatternMatchHelpers10match_bindINS_5ValueEE5matchIS2_EEbPT_.exit.i.i.i ], [ %i.ak, %bb.g ], [ %i.bc, %bb.o ] ; 2 uses
+  %10 = phi i1 [ true, %_ZNK4llvm19PatternMatchHelpers10match_bindINS_5ValueEE5matchIS2_EEbPT_.exit.i.i.i49 ], [ true, %bb.j ], [ true, %_ZNK4llvm19PatternMatchHelpers10match_bindINS_5ValueEE5matchIS2_EEbPT_.exit.i.i.i ], [ true, %bb.g ], [ false, %bb.o ]
   %i.bk = load i8, ptr %0, align 8, !tbaa !31
   %i.bl = icmp eq i8 %i.bk, 45
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #16
@@ -410,8 +409,8 @@ bb.y:                                             ; preds = %bb.x, %bb.w
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #16
   br label %_ZNK4llvm5Value9hasOneUseEv.exit.thread
 
-_ZNK4llvm5Value9hasOneUseEv.exit.thread:          ; preds = %11, %bb.l, %bb.k, %_ZNK4llvm19PatternMatchHelpers10match_bindINS_5ValueEE5matchIS2_EEbPT_.exit.i.i.i49, %bb.i, %bb.h, %bb.m, %bb.o, %bb.n, %.split.i, %_ZNK4llvm7APFloat10isDenormalEv.exit.i, %_ZNK4llvm7APFloat8isNormalEv.exit, %bb.y, %bb.d, %_ZL13factorizeLerpRN4llvm14BinaryOperatorERNS_9IRBuilderINS_12TargetFolderENS_12InstCombiner28IRBuilderInstCombineInserterEEE.exit, %bb.b, %_ZL13factorizeLerpRN4llvm14BinaryOperatorERNS_9IRBuilderINS_12TargetFolderENS_12InstCombiner28IRBuilderInstCombineInserterEEE.exit.thread, %_ZNK4llvm5Value9hasOneUseEv.exit33, %_ZNK4llvm5Value9hasOneUseEv.exit
-  %.4 = phi ptr [ %i.x, %_ZL13factorizeLerpRN4llvm14BinaryOperatorERNS_9IRBuilderINS_12TargetFolderENS_12InstCombiner28IRBuilderInstCombineInserterEEE.exit ], [ null, %bb.b ], [ null, %_ZNK4llvm5Value9hasOneUseEv.exit33 ], [ null, %_ZNK4llvm5Value9hasOneUseEv.exit ], [ null, %_ZL13factorizeLerpRN4llvm14BinaryOperatorERNS_9IRBuilderINS_12TargetFolderENS_12InstCombiner28IRBuilderInstCombineInserterEEE.exit.thread ], [ null, %bb.n ], [ null, %.split.i ], [ null, %11 ], [ null, %bb.l ], [ null, %bb.k ], [ null, %bb.i ], [ null, %bb.d ], [ null, %_ZNK4llvm19PatternMatchHelpers10match_bindINS_5ValueEE5matchIS2_EEbPT_.exit.i.i.i49 ], [ null, %bb.h ], [ null, %bb.m ], [ null, %bb.o ], [ %.sink, %bb.y ], [ null, %_ZNK4llvm7APFloat8isNormalEv.exit ], [ null, %_ZNK4llvm7APFloat10isDenormalEv.exit.i ]
+_ZNK4llvm5Value9hasOneUseEv.exit.thread:          ; preds = %bb.l, %bb.k, %_ZNK4llvm19PatternMatchHelpers10match_bindINS_5ValueEE5matchIS2_EEbPT_.exit.i.i.i49, %bb.i, %bb.h, %bb.m, %bb.o, %bb.n, %bb.c, %.split.i, %_ZNK4llvm7APFloat10isDenormalEv.exit.i, %_ZNK4llvm7APFloat8isNormalEv.exit, %bb.y, %bb.d, %_ZL13factorizeLerpRN4llvm14BinaryOperatorERNS_9IRBuilderINS_12TargetFolderENS_12InstCombiner28IRBuilderInstCombineInserterEEE.exit, %bb.b, %_ZL13factorizeLerpRN4llvm14BinaryOperatorERNS_9IRBuilderINS_12TargetFolderENS_12InstCombiner28IRBuilderInstCombineInserterEEE.exit.thread, %_ZNK4llvm5Value9hasOneUseEv.exit33, %_ZNK4llvm5Value9hasOneUseEv.exit
+  %.4 = phi ptr [ %i.x, %_ZL13factorizeLerpRN4llvm14BinaryOperatorERNS_9IRBuilderINS_12TargetFolderENS_12InstCombiner28IRBuilderInstCombineInserterEEE.exit ], [ null, %bb.b ], [ null, %_ZNK4llvm5Value9hasOneUseEv.exit33 ], [ null, %_ZNK4llvm5Value9hasOneUseEv.exit ], [ null, %_ZL13factorizeLerpRN4llvm14BinaryOperatorERNS_9IRBuilderINS_12TargetFolderENS_12InstCombiner28IRBuilderInstCombineInserterEEE.exit.thread ], [ null, %bb.n ], [ null, %.split.i ], [ null, %bb.c ], [ null, %bb.l ], [ null, %bb.k ], [ null, %bb.i ], [ null, %bb.d ], [ null, %_ZNK4llvm19PatternMatchHelpers10match_bindINS_5ValueEE5matchIS2_EEbPT_.exit.i.i.i49 ], [ null, %bb.h ], [ null, %bb.m ], [ null, %bb.o ], [ %.sink, %bb.y ], [ null, %_ZNK4llvm7APFloat8isNormalEv.exit ], [ null, %_ZNK4llvm7APFloat10isDenormalEv.exit.i ]
   ret ptr %.4
 }
 

@@ -204,16 +204,16 @@ _RNvXs1_NtNtNtCsj6eKBz9Db1c_4core3ops8function5implsQNCNvNtCshVVPy9isBpn_6webpki
   %i.al = icmp eq ptr %i.aa, %i.l
   br i1 %i.al, label %.loopexit45, label %.lr.ph.i.backedge
 
-.lr.ph.i.backedge:                                ; preds = %_RNvXs1_NtNtNtCsj6eKBz9Db1c_4core3ops8function5implsQNCNvNtCshVVPy9isBpn_6webpki11signed_data18verify_signed_data0INtB7_5FnMutTRRRDNtCseO5Jl7W60Eg_16rustls_pki_types30SignatureVerificationAlgorithmEL_EE8call_mutBU_.exit.thread.i, %bb.v
+.lr.ph.i.backedge:                                ; preds = %_RNvXs1_NtNtNtCsj6eKBz9Db1c_4core3ops8function5implsQNCNvNtCshVVPy9isBpn_6webpki11signed_data18verify_signed_data0INtB7_5FnMutTRRRDNtCseO5Jl7W60Eg_16rustls_pki_types30SignatureVerificationAlgorithmEL_EE8call_mutBU_.exit.thread.i, %bb.u
   br label %.lr.ph.i
 
-.loopexit.split-lp.loopexit.split-lp:             ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %14, %bb.w, %bb.t, %bb.k
-  %.pn = phi { ptr, i32 } [ %i.bb, %bb.k ], [ %i.bi, %bb.w ], [ %i.bi, %14 ], [ %i.bi, %bb.t ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
+.loopexit.split-lp.loopexit.split-lp:             ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.t, %bb.t, %bb.w, %bb.k
+  %.pn = phi { ptr, i32 } [ %i.bb, %bb.k ], [ %i.bi, %bb.t ], [ %i.bi, %bb.w ], [ %i.bi, %bb.t ], [ %lpad.loopexit.split-lp, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]
   %i.am = load i64, ptr %i.h, align 8, !range !7, !noundef !6
   %.not21 = icmp eq i64 %i.am, -1
   br i1 %.not21, label %bb.y, label %bb.z
 
-.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.lr.ph.i, %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterRDNtCseO5Jl7W60Eg_16rustls_pki_types30SignatureVerificationAlgorithmEL_ENtNtNtNtBb_4iter6traits8iterator8Iterator4findQNCNvNtCshVVPy9isBpn_6webpki11signed_data18verify_signed_data0EB2R_.exit, %12, %.loopexit45.thread, %bb.g
+.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.lr.ph.i, %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterRDNtCseO5Jl7W60Eg_16rustls_pki_types30SignatureVerificationAlgorithmEL_ENtNtNtNtBb_4iter6traits8iterator8Iterator4findQNCNvNtCshVVPy9isBpn_6webpki11signed_data18verify_signed_data0EB2R_.exit, %bb.v, %.loopexit45.thread, %bb.g
   %lpad.loopexit.split-lp = landingpad { ptr, i32 }
           cleanup
   br label %.loopexit.split-lp.loopexit.split-lp
@@ -223,7 +223,7 @@ _RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterRDNtCseO5Jl7W60Eg_16rustl
   invoke void @_RNvNtCshVVPy9isBpn_6webpki11signed_data16verify_signature(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.g, ptr noundef nonnull %i.ab, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(72) %i.ad, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef %4, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.r, i64 noundef %i.t, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.v, i64 noundef %i.x)
           to label %bb.p unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.loopexit45:                                      ; preds = %bb.v, %_RNvXs1_NtNtNtCsj6eKBz9Db1c_4core3ops8function5implsQNCNvNtCshVVPy9isBpn_6webpki11signed_data18verify_signed_data0INtB7_5FnMutTRRRDNtCseO5Jl7W60Eg_16rustls_pki_types30SignatureVerificationAlgorithmEL_EE8call_mutBU_.exit.thread.i
+.loopexit45:                                      ; preds = %bb.u, %_RNvXs1_NtNtNtCsj6eKBz9Db1c_4core3ops8function5implsQNCNvNtCshVVPy9isBpn_6webpki11signed_data18verify_signed_data0INtB7_5FnMutTRRRDNtCseO5Jl7W60Eg_16rustls_pki_types30SignatureVerificationAlgorithmEL_EE8call_mutBU_.exit.thread.i
   %.pr = load i64, ptr %i.h, align 8
   %.not14 = icmp eq i64 %.pr, -1
   br i1 %.not14, label %.loopexit45.thread, label %bb.d
@@ -305,7 +305,7 @@ bb.l:                                             ; preds = %bb.i
 bb.m:                                             ; preds = %bb.l, %bb.e, %bb.b
   ret void
 
-bb.n:                                             ; preds = %bb.z, %14, %bb.k
+bb.n:                                             ; preds = %bb.z, %bb.w, %bb.k
   %i.bd = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCsj6eKBz9Db1c_4core9panicking16panic_in_cleanup() #15
@@ -315,24 +315,18 @@ bb.o:                                             ; preds = %bb.g
   unreachable
 
 bb.p:                                             ; preds = %_RINvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB7_4IterRDNtCseO5Jl7W60Eg_16rustls_pki_types30SignatureVerificationAlgorithmEL_ENtNtNtNtBb_4iter6traits8iterator8Iterator4findQNCNvNtCshVVPy9isBpn_6webpki11signed_data18verify_signed_data0EB2R_.exit
-  %i.be = load i64, ptr %i.g, align 8, !range !9, !noundef !6 ; 3 uses
-  %.not16 = icmp eq i64 %i.be, -1
-  br i1 %.not16, label %bb.q, label %7
+  %i.be = load i64, ptr %i.g, align 8, !range !9, !noundef !6
+  %.not16 = icmp eq i64 %i.be, -9223372036854775759
+  br i1 %.not16, label %bb.r, label %bb.q
 
-7:                                                ; preds = %bb.p
-  %8 = icmp ne i64 %i.be, -9223372036854775804
-  call void @llvm.assume(i1 %8)
-  %9 = icmp eq i64 %i.be, -9223372036854775759
-  br i1 %9, label %bb.r, label %bb.q
-
-bb.q:                                             ; preds = %7, %bb.p
+bb.q:                                             ; preds = %bb.p
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr noundef nonnull align 8 dereferenceable(56) %i.g, i64 56, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   %i.bf = load i64, ptr %i.h, align 8, !range !7, !noundef !6
   %.not17 = icmp eq i64 %i.bf, -1
   br i1 %.not17, label %bb.e, label %bb.x
 
-bb.r:                                             ; preds = %7
+bb.r:                                             ; preds = %bb.p
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.f, ptr noundef nonnull align 8 dereferenceable(48) %i.y, i64 48, i1 false)
   %i.bg = load i64, ptr %i.h, align 8, !range !7, !alias.scope !184, !noundef !6
@@ -342,7 +336,7 @@ bb.r:                                             ; preds = %7
 .thread:                                          ; preds = %bb.r
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.h, ptr noundef nonnull align 8 dereferenceable(48) %i.y, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
-  br label %bb.v
+  br label %bb.u
 
 bb.s:                                             ; preds = %bb.r
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCshVVPy9isBpn_6webpki5error48UnsupportedSignatureAlgorithmForPublicKeyContextEBF_(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.h)
@@ -352,39 +346,35 @@ bb.t:                                             ; preds = %bb.s
   %i.bi = landingpad { ptr, i32 }
           cleanup                                 ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.h, ptr noundef nonnull align 8 dereferenceable(48) %i.f, i64 48, i1 false)
-  %i.bj = load i64, ptr %i.g, align 8, !range !9, !noundef !6 ; 3 uses
-  %.not18 = icmp eq i64 %i.bj, -1
-  br i1 %.not18, label %.loopexit.split-lp.loopexit.split-lp, label %bb.w
+  %i.bj = load i64, ptr %i.g, align 8, !range !9, !noundef !6 ; 2 uses
+  switch i64 %i.bj, label %bb.w [
+    i64 -1, label %.loopexit.split-lp.loopexit.split-lp
+    i64 -9223372036854775759, label %.loopexit.split-lp.loopexit.split-lp
+  ]
 
 _RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCshVVPy9isBpn_6webpki5error48UnsupportedSignatureAlgorithmForPublicKeyContextEEB11_.exit: ; preds = %bb.s
-  %.pre = load i64, ptr %i.g, align 8, !range !9  ; 3 uses
+  %.pre = load i64, ptr %i.g, align 8, !range !9  ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.h, ptr noundef nonnull align 8 dereferenceable(48) %i.f, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
-  %.not19 = icmp eq i64 %.pre, -1
-  br i1 %.not19, label %bb.v, label %bb.u
+  switch i64 %.pre, label %bb.v [
+    i64 -1, label %bb.u
+    i64 -9223372036854775759, label %bb.u
+  ]
 
-bb.u:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCshVVPy9isBpn_6webpki5error48UnsupportedSignatureAlgorithmForPublicKeyContextEEB11_.exit
-  %10 = icmp ne i64 %.pre, -9223372036854775804
-  call void @llvm.assume(i1 %10)
-  %i.bk = icmp eq i64 %.pre, -9223372036854775759
-  br i1 %i.bk, label %bb.v, label %12
-
-bb.v:                                             ; preds = %.thread, %12, %bb.u, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCshVVPy9isBpn_6webpki5error48UnsupportedSignatureAlgorithmForPublicKeyContextEEB11_.exit
+bb.u:                                             ; preds = %.thread, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCshVVPy9isBpn_6webpki5error48UnsupportedSignatureAlgorithmForPublicKeyContextEEB11_.exit, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCshVVPy9isBpn_6webpki5error48UnsupportedSignatureAlgorithmForPublicKeyContextEEB11_.exit, %bb.v
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
-  %11 = icmp eq ptr %i.aa, %i.l
-  br i1 %11, label %.loopexit45, label %.lr.ph.i.backedge
+  %i.bk = icmp eq ptr %i.aa, %i.l
+  br i1 %i.bk, label %.loopexit45, label %.lr.ph.i.backedge
 
-12:                                               ; preds = %bb.u
+bb.v:                                             ; preds = %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCshVVPy9isBpn_6webpki5error48UnsupportedSignatureAlgorithmForPublicKeyContextEEB11_.exit
+  %7 = icmp ne i64 %.pre, -9223372036854775804
+  call void @llvm.assume(i1 %7)
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCshVVPy9isBpn_6webpki5error5ErrorEBF_(ptr noalias nofree noundef align 8 dereferenceable(56) %i.g)
-          to label %bb.v unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %bb.u unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.w:                                             ; preds = %bb.t
   %i.bl = icmp ne i64 %i.bj, -9223372036854775804
   call void @llvm.assume(i1 %i.bl)
-  %13 = icmp eq i64 %i.bj, -9223372036854775759
-  br i1 %13, label %.loopexit.split-lp.loopexit.split-lp, label %14
-
-14:                                               ; preds = %bb.w
   invoke fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCshVVPy9isBpn_6webpki5error5ErrorEBF_(ptr noalias nofree noundef align 8 dereferenceable(56) %i.g) #16
           to label %.loopexit.split-lp.loopexit.split-lp unwind label %bb.n
 

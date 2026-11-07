@@ -204,17 +204,11 @@ bb.da:                                            ; preds = %bb.cz
   store i8 1, ptr %i.pk, align 2, !noalias !13101
   %i.pl = getelementptr i8, ptr %1, i64 1368      ; 2 uses
   %.val220.i = load ptr, ptr %i.pl, align 8, !noalias !13101, !noundef !17 ; 2 uses
-  %i.pm = load i64, ptr %.val220.i, align 8, !range !43, !noalias !13102, !noundef !17 ; 3 uses
-  %.not73.i = icmp eq i64 %i.pm, -1
-  br i1 %.not73.i, label %bb.dd, label %3
+  %i.pm = load i64, ptr %.val220.i, align 8, !range !43, !noalias !13102, !noundef !17
+  %.not73.i = icmp eq i64 %i.pm, 2
+  br i1 %.not73.i, label %bb.db, label %bb.dd
 
-3:                                                ; preds = %bb.da
-  %4 = icmp ne i64 %i.pm, 4
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i64 %i.pm, 2
-  br i1 %5, label %bb.db, label %bb.dd
-
-bb.db:                                            ; preds = %3
+bb.db:                                            ; preds = %bb.da
   %i.pn = getelementptr inbounds nuw i8, ptr %1, i64 1800
   %i.po = getelementptr inbounds nuw i8, ptr %.val220.i, i64 8 ; 2 uses
   store ptr %i.po, ptr %i.pn, align 8, !noalias !13101
@@ -246,7 +240,7 @@ bb.dc:                                            ; preds = %bb.db
   store i8 0, ptr %.sroa.11574.0..sroa_idx.i, align 1, !noalias !13101
   br label %bb.dp
 
-bb.dd:                                            ; preds = %bb.db, %3, %bb.da
+bb.dd:                                            ; preds = %bb.db, %bb.da
   %i.px = getelementptr i8, ptr %1, i64 1768      ; 2 uses
   %.val243.i = load i64, ptr %i.px, align 8, !noalias !13101, !noundef !17 ; 3 uses
   %i.py = icmp ult i64 %.val243.i, 18300341342965826
@@ -649,7 +643,7 @@ bb.oa:                                            ; preds = %bb.ab, %bb.aa
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMNtNtNtCsPYQCUnoTxQ_10collection6shards11replica_set6updateNtBI_15ShardReplicaSet11update_impl0ECsl8OoimOLbh_6qdrant(ptr noundef nonnull align 8 %i.apo) #24
           to label %bb.us unwind label %bb.t
 
-.thread275:                                       ; preds = %bb.af, %bb.cr, %bb.hd, %bb.hu, %bb.km, %bb.ds, %bb.fq, %bb.ax
+.thread275:                                       ; preds = %bb.af, %bb.cr, %bb.ds, %bb.fq, %bb.hu, %bb.km, %bb.hd, %bb.ax
   %i.app = phi ptr [ %i.is, %bb.ax ], [ %i.gy, %bb.af ], [ %i.oa, %bb.cr ], [ %i.rw, %bb.ds ], [ %i.wg, %bb.fq ], [ %i.yq, %bb.hd ], [ %i.aal, %bb.hu ], [ %i.aiy, %bb.km ]
   %.sink843.i.ph = phi i8 [ 4, %bb.ax ], [ 3, %bb.af ], [ 5, %bb.cr ], [ 6, %bb.ds ], [ 7, %bb.fq ], [ 8, %bb.hd ], [ 9, %bb.hu ], [ 10, %bb.km ]
   store i8 %.sink843.i.ph, ptr %i.app, align 2, !noalias !13101

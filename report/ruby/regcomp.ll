@@ -205,7 +205,7 @@ bb.t:                                             ; preds = %bb.s
   store i32 %i.ar, ptr %i.g, align 8, !tbaa !104
   br label %add_length.exit38
 
-.thread:                                          ; preds = %bb.l, %bb.n, %bb.o, %add_opcode.exit, %add_opcode.exit, %add_opcode.exit
+.thread:                                          ; preds = %bb.o, %bb.n, %bb.l, %add_opcode.exit, %add_opcode.exit, %add_opcode.exit
   %i.bg = udiv i64 %2, %i.a
   %i.bh = trunc i64 %i.bg to i32
   %i.bi = load i32, ptr %i.g, align 8, !tbaa !104 ; 2 uses

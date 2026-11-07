@@ -204,18 +204,24 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.n, label %.lr.ph.split.us.i.i, label %.lr.ph.split.i.i, !prof !34
 
 .lr.ph.split.us.i.i:                              ; preds = %.lr.ph.i.i, %.thread.us.i.i
-  %i.p = phi ptr [ %i.w, %.thread.us.i.i ], [ %i.l, %.lr.ph.i.i ] ; 2 uses
+  %i.p = phi ptr [ %i.w, %.thread.us.i.i ], [ %i.l, %.lr.ph.i.i ]
   %i.q = phi ptr [ %i.v, %.thread.us.i.i ], [ %i.k, %.lr.ph.i.i ] ; 2 uses
   %.02967.us.i.i = phi i32 [ %.029.us.i.i, %.thread.us.i.i ], [ %.02964.i.i, %.lr.ph.i.i ]
   %.066.us.i.i = phi i32 [ %i.s, %.thread.us.i.i ], [ 1, %.lr.ph.i.i ] ; 2 uses
   %.03465.us.i.i = phi ptr [ %spec.select.us.i.i, %.thread.us.i.i ], [ null, %.lr.ph.i.i ] ; 3 uses
-  %4 = icmp eq ptr %i.p, null
-  br i1 %4, label %.split.us.i.i, label %.thread.us.i.i
+  %magicptr.us.i.i = ptrtoint ptr %i.p to i64
+  switch i64 %magicptr.us.i.i, label %4 [
+    i64 0, label %.split.us.i.i
+    i64 1, label %.thread.us.i.i
+  ]
 
-.thread.us.i.i:                                   ; preds = %.lr.ph.split.us.i.i
-  %5 = icmp eq ptr %i.p, inttoptr (i64 1 to ptr)
+4:                                                ; preds = %.lr.ph.split.us.i.i
+  br label %.thread.us.i.i
+
+.thread.us.i.i:                                   ; preds = %4, %.lr.ph.split.us.i.i
+  %.0.i.i45.us.i.i = phi i1 [ false, %4 ], [ true, %.lr.ph.split.us.i.i ]
   %i.r = icmp eq ptr %.03465.us.i.i, null
-  %or.cond.not.us.i.i = select i1 %5, i1 %i.r, i1 false
+  %or.cond.not.us.i.i = select i1 %.0.i.i45.us.i.i, i1 %i.r, i1 false
   %spec.select.us.i.i = select i1 %or.cond.not.us.i.i, ptr %i.q, ptr %.03465.us.i.i
   %i.s = add i32 %.066.us.i.i, 1
   %i.t = add i32 %.066.us.i.i, %.02967.us.i.i
@@ -227,7 +233,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.x, label %.loopexit, label %.lr.ph.split.us.i.i, !llvm.loop !3
 
 .lr.ph.split.i.i:                                 ; preds = %.lr.ph.i.i, %.thread.i.i.a
-  %i.y = phi ptr [ %i.al, %.thread.i.i.a ], [ %i.l, %.lr.ph.i.i ] ; 4 uses
+  %i.y = phi ptr [ %i.al, %.thread.i.i.a ], [ %i.l, %.lr.ph.i.i ] ; 3 uses
   %i.z = phi ptr [ %i.ak, %.thread.i.i.a ], [ %i.k, %.lr.ph.i.i ] ; 3 uses
   %.02967.i.i = phi i32 [ %.029.i.i, %.thread.i.i.a ], [ %.02964.i.i, %.lr.ph.i.i ]
   %.066.i.i = phi i32 [ %i.ah, %.thread.i.i.a ], [ 1, %.lr.ph.i.i ] ; 2 uses
@@ -244,11 +250,14 @@ _ZN6hermes2vm6detail11WeakRefInfo7isEqualERKNS1_10WeakRefKeyES5_.exit.i.i: ; pre
   %i.ac = getelementptr inbounds nuw i8, ptr %i.y, i64 8
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !39
   %i.ae = icmp eq i32 %i.ab, %i.ad
-  br i1 %i.ae, label %.loopexit, label %.thread.i.i.a, !prof !35
+  br i1 %i.ae, label %.loopexit, label %.thread.i.i, !prof !35
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph.split.i.i
-  %6 = icmp eq ptr %i.y, null
-  br i1 %6, label %.split.us.i.i, label %.thread.i.i.a
+  %magicptr.i.i = ptrtoint ptr %i.y to i64
+  switch i64 %magicptr.i.i, label %.thread.i.i [
+    i64 0, label %.split.us.i.i
+    i64 1, label %.thread.i.i.a
+  ]
 
 .split.us.i.i:                                    ; preds = %bb.d, %.lr.ph.split.us.i.i
   %.us-phi.i.i = phi ptr [ %.03465.us.i.i, %.lr.ph.split.us.i.i ], [ %.03465.i.i, %bb.d ] ; 2 uses
@@ -257,10 +266,13 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.split
   %i.af = select i1 %.not.i.i, ptr %.us-phi69.i.i, ptr %.us-phi.i.i
   br label %_ZN4llvh12DenseMapBaseINS_8DenseMapIN6hermes2vm6detail10WeakRefKeyENS_6detail13DenseSetEmptyENS4_11WeakRefInfoENS6_12DenseSetPairIS5_EEEES5_S7_S8_SA_E15LookupBucketForIS5_EEbRKT_RPSA_.exit
 
-.thread.i.i.a:                                    ; preds = %bb.d, %_ZN6hermes2vm6detail11WeakRefInfo7isEqualERKNS1_10WeakRefKeyES5_.exit.i.i
-  %7 = icmp eq ptr %i.y, inttoptr (i64 1 to ptr)
+.thread.i.i:                                      ; preds = %bb.d, %_ZN6hermes2vm6detail11WeakRefInfo7isEqualERKNS1_10WeakRefKeyES5_.exit.i.i
+  br label %.thread.i.i.a
+
+.thread.i.i.a:                                    ; preds = %.thread.i.i, %bb.d
+  %.0.i.i45.i.i = phi i1 [ false, %.thread.i.i ], [ true, %bb.d ]
   %i.ag = icmp eq ptr %.03465.i.i, null
-  %or.cond.not.i.i = select i1 %7, i1 %i.ag, i1 false
+  %or.cond.not.i.i = select i1 %.0.i.i45.i.i, i1 %i.ag, i1 false
   %spec.select.i.i = select i1 %or.cond.not.i.i, ptr %i.z, ptr %.03465.i.i
   %i.ah = add i32 %.066.i.i, 1
   %i.ai = add i32 %.066.i.i, %.02967.i.i
@@ -371,18 +383,24 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %.lr.ph.split.us.i, label %.lr.ph.split.i, !prof !34
 
 .lr.ph.split.us.i:                                ; preds = %.lr.ph.i, %.thread.us.i
-  %i.o = phi ptr [ %i.v, %.thread.us.i ], [ %i.k, %.lr.ph.i ] ; 2 uses
+  %i.o = phi ptr [ %i.v, %.thread.us.i ], [ %i.k, %.lr.ph.i ]
   %i.p = phi ptr [ %i.u, %.thread.us.i ], [ %i.j, %.lr.ph.i ] ; 2 uses
   %.02967.us.i = phi i32 [ %.029.us.i, %.thread.us.i ], [ %.02964.i, %.lr.ph.i ]
   %.066.us.i = phi i32 [ %i.r, %.thread.us.i ], [ 1, %.lr.ph.i ] ; 2 uses
   %.03465.us.i = phi ptr [ %spec.select.us.i, %.thread.us.i ], [ null, %.lr.ph.i ] ; 3 uses
-  %3 = icmp eq ptr %i.o, null
-  br i1 %3, label %.split.us.i, label %.thread.us.i
+  %magicptr.us.i = ptrtoint ptr %i.o to i64
+  switch i64 %magicptr.us.i, label %3 [
+    i64 0, label %.split.us.i
+    i64 1, label %.thread.us.i
+  ]
 
-.thread.us.i:                                     ; preds = %.lr.ph.split.us.i
-  %4 = icmp eq ptr %i.o, inttoptr (i64 1 to ptr)
+3:                                                ; preds = %.lr.ph.split.us.i
+  br label %.thread.us.i
+
+.thread.us.i:                                     ; preds = %3, %.lr.ph.split.us.i
+  %.0.i.i45.us.i = phi i1 [ false, %3 ], [ true, %.lr.ph.split.us.i ]
   %i.q = icmp eq ptr %.03465.us.i, null
-  %or.cond.not.us.i = select i1 %4, i1 %i.q, i1 false
+  %or.cond.not.us.i = select i1 %.0.i.i45.us.i, i1 %i.q, i1 false
   %spec.select.us.i = select i1 %or.cond.not.us.i, ptr %i.p, ptr %.03465.us.i
   %i.r = add i32 %.066.us.i, 1
   %i.s = add i32 %.066.us.i, %.02967.us.i
@@ -394,7 +412,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.w, label %_ZNK4llvh12DenseMapBaseINS_8DenseMapIN6hermes2vm6detail10WeakRefKeyENS_6detail13DenseSetEmptyENS4_11WeakRefInfoENS6_12DenseSetPairIS5_EEEES5_S7_S8_SA_E15LookupBucketForIS5_EEbRKT_RPKSA_.exit, label %.lr.ph.split.us.i, !llvm.loop !3
 
 .lr.ph.split.i:                                   ; preds = %.lr.ph.i, %.thread.i.a
-  %i.x = phi ptr [ %i.ak, %.thread.i.a ], [ %i.k, %.lr.ph.i ] ; 4 uses
+  %i.x = phi ptr [ %i.ak, %.thread.i.a ], [ %i.k, %.lr.ph.i ] ; 3 uses
   %i.y = phi ptr [ %i.aj, %.thread.i.a ], [ %i.j, %.lr.ph.i ] ; 3 uses
   %.02967.i = phi i32 [ %.029.i, %.thread.i.a ], [ %.02964.i, %.lr.ph.i ]
   %.066.i = phi i32 [ %i.ag, %.thread.i.a ], [ 1, %.lr.ph.i ] ; 2 uses
@@ -411,11 +429,14 @@ _ZN6hermes2vm6detail11WeakRefInfo7isEqualERKNS1_10WeakRefKeyES5_.exit.i: ; preds
   %i.ab = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   %i.ac = load i32, ptr %i.ab, align 4, !tbaa !39
   %i.ad = icmp eq i32 %i.aa, %i.ac
-  br i1 %i.ad, label %_ZNK4llvh12DenseMapBaseINS_8DenseMapIN6hermes2vm6detail10WeakRefKeyENS_6detail13DenseSetEmptyENS4_11WeakRefInfoENS6_12DenseSetPairIS5_EEEES5_S7_S8_SA_E15LookupBucketForIS5_EEbRKT_RPKSA_.exit, label %.thread.i.a, !prof !35
+  br i1 %i.ad, label %_ZNK4llvh12DenseMapBaseINS_8DenseMapIN6hermes2vm6detail10WeakRefKeyENS_6detail13DenseSetEmptyENS4_11WeakRefInfoENS6_12DenseSetPairIS5_EEEES5_S7_S8_SA_E15LookupBucketForIS5_EEbRKT_RPKSA_.exit, label %.thread.i, !prof !35
 
 bb.d:                                             ; preds = %bb.c, %.lr.ph.split.i
-  %5 = icmp eq ptr %i.x, null
-  br i1 %5, label %.split.us.i, label %.thread.i.a
+  %magicptr.i = ptrtoint ptr %i.x to i64
+  switch i64 %magicptr.i, label %.thread.i [
+    i64 0, label %.split.us.i
+    i64 1, label %.thread.i.a
+  ]
 
 .split.us.i:                                      ; preds = %bb.d, %.lr.ph.split.us.i
   %.us-phi.i = phi ptr [ %.03465.us.i, %.lr.ph.split.us.i ], [ %.03465.i, %bb.d ] ; 2 uses
@@ -424,10 +445,13 @@ bb.d:                                             ; preds = %bb.c, %.lr.ph.split
   %i.ae = select i1 %.not.i, ptr %.us-phi69.i, ptr %.us-phi.i
   br label %_ZNK4llvh12DenseMapBaseINS_8DenseMapIN6hermes2vm6detail10WeakRefKeyENS_6detail13DenseSetEmptyENS4_11WeakRefInfoENS6_12DenseSetPairIS5_EEEES5_S7_S8_SA_E15LookupBucketForIS5_EEbRKT_RPKSA_.exit
 
-.thread.i.a:                                      ; preds = %bb.d, %_ZN6hermes2vm6detail11WeakRefInfo7isEqualERKNS1_10WeakRefKeyES5_.exit.i
-  %6 = icmp eq ptr %i.x, inttoptr (i64 1 to ptr)
+.thread.i:                                        ; preds = %bb.d, %_ZN6hermes2vm6detail11WeakRefInfo7isEqualERKNS1_10WeakRefKeyES5_.exit.i
+  br label %.thread.i.a
+
+.thread.i.a:                                      ; preds = %.thread.i, %bb.d
+  %.0.i.i45.i = phi i1 [ false, %.thread.i ], [ true, %bb.d ]
   %i.af = icmp eq ptr %.03465.i, null
-  %or.cond.not.i = select i1 %6, i1 %i.af, i1 false
+  %or.cond.not.i = select i1 %.0.i.i45.i, i1 %i.af, i1 false
   %spec.select.i = select i1 %or.cond.not.i, ptr %i.y, ptr %.03465.i
   %i.ag = add i32 %.066.i, 1
   %i.ah = add i32 %.066.i, %.02967.i
@@ -654,7 +678,7 @@ bb.c:                                             ; preds = %.lr.ph.i6
   br label %.lr.ph.split.i.i.i
 
 .lr.ph.split.i.i.i:                               ; preds = %.thread.i.i.i.a, %.lr.ph.i.i.i
-  %i.bt = phi ptr [ %i.cg, %.thread.i.i.i.a ], [ %i.bq, %.lr.ph.i.i.i ] ; 4 uses
+  %i.bt = phi ptr [ %i.cg, %.thread.i.i.i.a ], [ %i.bq, %.lr.ph.i.i.i ] ; 3 uses
   %i.bu = phi ptr [ %i.cf, %.thread.i.i.i.a ], [ %i.bp, %.lr.ph.i.i.i ] ; 3 uses
   %.02967.i.i.i = phi i32 [ %.029.i.i.i, %.thread.i.i.i.a ], [ %.02964.i.i.i, %.lr.ph.i.i.i ]
   %.066.i.i.i = phi i32 [ %i.cc, %.thread.i.i.i.a ], [ 1, %.lr.ph.i.i.i ] ; 2 uses
@@ -671,21 +695,27 @@ _ZN6hermes2vm6detail11WeakRefInfo7isEqualERKNS1_10WeakRefKeyES5_.exit.i.i.i: ; p
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bt, i64 8
   %i.by = load i32, ptr %i.bx, align 4, !tbaa !39
   %i.bz = icmp eq i32 %i.bw, %i.by
-  br i1 %i.bz, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIN6hermes2vm6detail10WeakRefKeyENS_6detail13DenseSetEmptyENS4_11WeakRefInfoENS6_12DenseSetPairIS5_EEEES5_S7_S8_SA_E15LookupBucketForIS5_EEbRKT_RPSA_.exit.i, label %.thread.i.i.i.a, !prof !35
+  br i1 %i.bz, label %_ZN4llvh12DenseMapBaseINS_8DenseMapIN6hermes2vm6detail10WeakRefKeyENS_6detail13DenseSetEmptyENS4_11WeakRefInfoENS6_12DenseSetPairIS5_EEEES5_S7_S8_SA_E15LookupBucketForIS5_EEbRKT_RPSA_.exit.i, label %.thread.i.i.i, !prof !35
 
 bb.e:                                             ; preds = %bb.d, %.lr.ph.split.i.i.i
-  %2 = icmp eq ptr %i.bt, null
-  br i1 %2, label %.split.us.i.i.loopexit30.i, label %.thread.i.i.i.a
+  %magicptr.i.i.i = ptrtoint ptr %i.bt to i64
+  switch i64 %magicptr.i.i.i, label %.thread.i.i.i [
+    i64 0, label %.split.us.i.i.loopexit30.i
+    i64 1, label %.thread.i.i.i.a
+  ]
 
 .split.us.i.i.loopexit30.i:                       ; preds = %bb.e
   %.not.i.i21.i = icmp eq ptr %.03465.i.i.i, null
   %i.ca = select i1 %.not.i.i21.i, ptr %i.bu, ptr %.03465.i.i.i
   br label %_ZN4llvh12DenseMapBaseINS_8DenseMapIN6hermes2vm6detail10WeakRefKeyENS_6detail13DenseSetEmptyENS4_11WeakRefInfoENS6_12DenseSetPairIS5_EEEES5_S7_S8_SA_E15LookupBucketForIS5_EEbRKT_RPSA_.exit.i
 
-.thread.i.i.i.a:                                  ; preds = %bb.e, %_ZN6hermes2vm6detail11WeakRefInfo7isEqualERKNS1_10WeakRefKeyES5_.exit.i.i.i
-  %3 = icmp eq ptr %i.bt, inttoptr (i64 1 to ptr)
+.thread.i.i.i:                                    ; preds = %bb.e, %_ZN6hermes2vm6detail11WeakRefInfo7isEqualERKNS1_10WeakRefKeyES5_.exit.i.i.i
+  br label %.thread.i.i.i.a
+
+.thread.i.i.i.a:                                  ; preds = %.thread.i.i.i, %bb.e
+  %.0.i.i45.i.i.i = phi i1 [ false, %.thread.i.i.i ], [ true, %bb.e ]
   %i.cb = icmp eq ptr %.03465.i.i.i, null
-  %or.cond.not.i.i.i = select i1 %3, i1 %i.cb, i1 false
+  %or.cond.not.i.i.i = select i1 %.0.i.i45.i.i.i, i1 %i.cb, i1 false
   %spec.select.i.i.i = select i1 %or.cond.not.i.i.i, ptr %i.bu, ptr %.03465.i.i.i
   %i.cc = add i32 %.066.i.i.i, 1
   %i.cd = add i32 %.066.i.i.i, %.02967.i.i.i

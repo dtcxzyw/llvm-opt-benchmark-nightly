@@ -206,15 +206,11 @@ bb.bl:                                            ; preds = %"_ZN4core3ptr42drop
   br label %.body178.i
 
 bb.bm:                                            ; preds = %bb.bk
-  %i.gi = load i64, ptr %i.m, align 8, !range !71, !noalias !5436, !noundef !33 ; 4 uses
-  %.not101.i = icmp eq i64 %i.gi, -9223372036854775802
-  br i1 %.not101.i, label %bb.bn, label %3
-
-3:                                                ; preds = %bb.bm
-  %4 = icmp ne i64 %i.gi, -9223372036854775806
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i64 %i.gi, -9223372036854775807
-  br i1 %5, label %.thread399.i, label %bb.bs
+  %i.gi = load i64, ptr %i.m, align 8, !range !71, !noalias !5436, !noundef !33 ; 3 uses
+  switch i64 %i.gi, label %bb.bs [
+    i64 -9223372036854775802, label %bb.bn
+    i64 -9223372036854775807, label %.thread399.i
+  ]
 
 bb.bn:                                            ; preds = %bb.bm
   %i.gj = getelementptr inbounds nuw i8, ptr %i.m, i64 8
@@ -242,12 +238,14 @@ bb.bq:                                            ; preds = %bb.bp
 
 bb.br:                                            ; preds = %bb.bp, %bb.bo, %bb.bn
   store ptr %i.gk, ptr %i.fv, align 8, !noalias !5436
-  %.pre.i = load i64, ptr %i.m, align 8, !range !71, !noalias !5436
+  %.pre.i = load i64, ptr %i.m, align 8, !noalias !5436
   %.pre.fr.i = freeze i64 %.pre.i                 ; 5 uses
   %.not102.i = icmp eq i64 %.pre.fr.i, -9223372036854775802
   br i1 %.not102.i, label %"_ZN4core3ptr42drop_in_place$LT$zip..result..ZipError$GT$17h7a0e26c38a29824cE.exit.i", label %bb.bt
 
-bb.bs:                                            ; preds = %3
+bb.bs:                                            ; preds = %bb.bm
+  %3 = icmp ne i64 %i.gi, -9223372036854775806
+  call void @llvm.assume(i1 %3)
   %.sroa.19.8..sroa_idx79 = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %.sroa.19.8.copyload80 = load i64, ptr %.sroa.19.8..sroa_idx79, align 8, !noalias !5459
   %.sroa.24.8..sroa_idx82 = getelementptr inbounds nuw i8, ptr %i.m, i64 16
@@ -267,7 +265,7 @@ bb.bu:                                            ; preds = %bb.bt
     i64 -9223372036854775806, label %.thread400.i.thread
   ]
 
-.thread399.i:                                     ; preds = %bb.bu, %3
+.thread399.i:                                     ; preds = %bb.bu, %bb.bm
   %i.gs = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %.val.i.i = load ptr, ptr %i.gs, align 8, !alias.scope !5460, !noalias !5436, !nonnull !33, !noundef !33
   invoke fastcc void @"_ZN4core3ptr42drop_in_place$LT$std..io..error..Error$GT$17h4aee05bfb97e0e2dE"(ptr nonnull %.val.i.i)
@@ -670,15 +668,11 @@ bb.bn:                                            ; preds = %"_ZN4core3ptr42drop
   br label %.body178.i
 
 bb.bo:                                            ; preds = %bb.bm
-  %i.gn = load i64, ptr %i.m, align 8, !range !71, !noalias !5498, !noundef !33 ; 4 uses
-  %.not101.i = icmp eq i64 %i.gn, -9223372036854775802
-  br i1 %.not101.i, label %bb.bp, label %3
-
-3:                                                ; preds = %bb.bo
-  %4 = icmp ne i64 %i.gn, -9223372036854775806
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i64 %i.gn, -9223372036854775807
-  br i1 %5, label %.thread399.i, label %bb.bu
+  %i.gn = load i64, ptr %i.m, align 8, !range !71, !noalias !5498, !noundef !33 ; 3 uses
+  switch i64 %i.gn, label %bb.bu [
+    i64 -9223372036854775802, label %bb.bp
+    i64 -9223372036854775807, label %.thread399.i
+  ]
 
 bb.bp:                                            ; preds = %bb.bo
   %i.go = getelementptr inbounds nuw i8, ptr %i.m, i64 8
@@ -706,12 +700,14 @@ bb.bs:                                            ; preds = %bb.br
 
 bb.bt:                                            ; preds = %bb.br, %bb.bq, %bb.bp
   store ptr %i.gp, ptr %i.ga, align 8, !noalias !5498
-  %.pre.i = load i64, ptr %i.m, align 8, !range !71, !noalias !5498
+  %.pre.i = load i64, ptr %i.m, align 8, !noalias !5498
   %.pre.fr.i = freeze i64 %.pre.i                 ; 5 uses
   %.not102.i = icmp eq i64 %.pre.fr.i, -9223372036854775802
   br i1 %.not102.i, label %"_ZN4core3ptr42drop_in_place$LT$zip..result..ZipError$GT$17h7a0e26c38a29824cE.exit.i", label %bb.bv
 
-bb.bu:                                            ; preds = %3
+bb.bu:                                            ; preds = %bb.bo
+  %3 = icmp ne i64 %i.gn, -9223372036854775806
+  call void @llvm.assume(i1 %3)
   %.sroa.19.8..sroa_idx78 = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %.sroa.19.8.copyload79 = load i64, ptr %.sroa.19.8..sroa_idx78, align 8, !noalias !5521
   %.sroa.24.8..sroa_idx81 = getelementptr inbounds nuw i8, ptr %i.m, i64 16
@@ -731,7 +727,7 @@ bb.bw:                                            ; preds = %bb.bv
     i64 -9223372036854775806, label %.thread400.i.thread
   ]
 
-.thread399.i:                                     ; preds = %bb.bw, %3
+.thread399.i:                                     ; preds = %bb.bw, %bb.bo
   %i.gx = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %.val.i.i = load ptr, ptr %i.gx, align 8, !alias.scope !5522, !noalias !5498, !nonnull !33, !noundef !33
   invoke fastcc void @"_ZN4core3ptr42drop_in_place$LT$std..io..error..Error$GT$17h4aee05bfb97e0e2dE"(ptr nonnull %.val.i.i)
@@ -1134,15 +1130,11 @@ bb.bl:                                            ; preds = %"_ZN4core3ptr42drop
   br label %.body178.i
 
 bb.bm:                                            ; preds = %bb.bk
-  %i.gi = load i64, ptr %i.m, align 8, !range !71, !noalias !5560, !noundef !33 ; 4 uses
-  %.not101.i = icmp eq i64 %i.gi, -9223372036854775802
-  br i1 %.not101.i, label %bb.bn, label %3
-
-3:                                                ; preds = %bb.bm
-  %4 = icmp ne i64 %i.gi, -9223372036854775806
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i64 %i.gi, -9223372036854775807
-  br i1 %5, label %.thread399.i, label %bb.bs
+  %i.gi = load i64, ptr %i.m, align 8, !range !71, !noalias !5560, !noundef !33 ; 3 uses
+  switch i64 %i.gi, label %bb.bs [
+    i64 -9223372036854775802, label %bb.bn
+    i64 -9223372036854775807, label %.thread399.i
+  ]
 
 bb.bn:                                            ; preds = %bb.bm
   %i.gj = getelementptr inbounds nuw i8, ptr %i.m, i64 8
@@ -1170,12 +1162,14 @@ bb.bq:                                            ; preds = %bb.bp
 
 bb.br:                                            ; preds = %bb.bp, %bb.bo, %bb.bn
   store ptr %i.gk, ptr %i.fv, align 8, !noalias !5560
-  %.pre.i = load i64, ptr %i.m, align 8, !range !71, !noalias !5560
+  %.pre.i = load i64, ptr %i.m, align 8, !noalias !5560
   %.pre.fr.i = freeze i64 %.pre.i                 ; 5 uses
   %.not102.i = icmp eq i64 %.pre.fr.i, -9223372036854775802
   br i1 %.not102.i, label %"_ZN4core3ptr42drop_in_place$LT$zip..result..ZipError$GT$17h7a0e26c38a29824cE.exit.i", label %bb.bt
 
-bb.bs:                                            ; preds = %3
+bb.bs:                                            ; preds = %bb.bm
+  %3 = icmp ne i64 %i.gi, -9223372036854775806
+  call void @llvm.assume(i1 %3)
   %.sroa.19.8..sroa_idx79 = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %.sroa.19.8.copyload80 = load i64, ptr %.sroa.19.8..sroa_idx79, align 8, !noalias !5583
   %.sroa.24.8..sroa_idx82 = getelementptr inbounds nuw i8, ptr %i.m, i64 16
@@ -1195,7 +1189,7 @@ bb.bu:                                            ; preds = %bb.bt
     i64 -9223372036854775806, label %.thread400.i.thread
   ]
 
-.thread399.i:                                     ; preds = %bb.bu, %3
+.thread399.i:                                     ; preds = %bb.bu, %bb.bm
   %i.gs = getelementptr inbounds nuw i8, ptr %i.m, i64 8
   %.val.i.i = load ptr, ptr %i.gs, align 8, !alias.scope !5584, !noalias !5560, !nonnull !33, !noundef !33
   invoke fastcc void @"_ZN4core3ptr42drop_in_place$LT$std..io..error..Error$GT$17h4aee05bfb97e0e2dE"(ptr nonnull %.val.i.i)

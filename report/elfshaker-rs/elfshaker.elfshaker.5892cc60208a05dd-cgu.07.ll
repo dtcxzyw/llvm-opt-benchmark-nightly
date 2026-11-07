@@ -1,5 +1,5 @@
 Download link: https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/elfshaker-rs/original/elfshaker.elfshaker.5892cc60208a05dd-cgu.07?download=true
-inline.NumInlined: 429
+inline.NumInlined: 430
 inline.NumDeleted: 173
 loop-unroll.NumCompletelyUnrolled: 1
 loop-unroll.NumUnrolled: 1
@@ -204,11 +204,12 @@ bb.a:
   %i.v = alloca [64 x i8], align 8                ; 5 uses
   %.sroa.640 = alloca [56 x i8], align 8          ; 7 uses
   %i.w = alloca [64 x i8], align 8                ; 10 uses
+  %.sroa.630 = alloca [48 x i8], align 8          ; 7 uses
   %i.x = alloca [56 x i8], align 8                ; 5 uses
   %.sroa.624 = alloca [48 x i8], align 8          ; 6 uses
   %i.y = alloca [56 x i8], align 8                ; 6 uses
   %i.z = alloca [40 x i8], align 8                ; 8 uses
-  %i.aa = alloca [56 x i8], align 8               ; 12 uses
+  %i.aa = alloca [56 x i8], align 8               ; 11 uses
   %i.ab = alloca [48 x i8], align 8               ; 15 uses
   %i.ac = alloca [80 x i8], align 8               ; 7 uses
   %.sroa.617 = alloca [56 x i8], align 8          ; 7 uses
@@ -583,23 +584,29 @@ bb.af:                                            ; preds = %bb.be, %bb.bd, %bb.
   br label %.body132
 
 bb.ag:                                            ; preds = %bb.ae
-  %i.ep = load i64, ptr %i.aa, align 8, !range !16, !noundef !5 ; 4 uses
-  %.not117 = icmp eq i64 %i.ep, -2
-  br i1 %.not117, label %bb.bj, label %bb.ah
+  %i.ep = load i64, ptr %i.aa, align 8, !range !16, !noundef !5 ; 3 uses
+  %.not117 = icmp eq i64 %i.ep, -9223372036854775805
+  br i1 %.not117, label %bb.ai, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  %1 = icmp ne i64 %i.ep, -9223372036854775807
-  call void @llvm.assume(i1 %1)
-  %i.eq = icmp eq i64 %i.ep, -9223372036854775805
-  br i1 %i.eq, label %bb.ai, label %bb.bf
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.630)
+  %.sroa.630.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 2 uses
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.630, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.630.0..sroa_idx, i64 48, i1 false)
+  %i.eq = icmp eq i64 %i.ep, -2
+  br i1 %i.eq, label %bb.bj, label %bb.bf
 
-bb.ai:                                            ; preds = %bb.ah
-  %i.er = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 2 uses
+bb.ai:                                            ; preds = %bb.ag
+  %i.er = getelementptr inbounds nuw i8, ptr %i.aa, i64 8 ; 3 uses
   %i.es = load i64, ptr %i.er, align 8, !range !17, !noundef !5 ; 2 uses
   %i.et = icmp ne i64 %i.es, -9223372036854775804
   call void @llvm.assume(i1 %i.et)
   %i.eu = icmp eq i64 %i.es, -9223372036854775805
-  br i1 %i.eu, label %bb.ak, label %bb.bf
+  br i1 %i.eu, label %bb.ak, label %.thread
+
+.thread:                                          ; preds = %bb.ai
+  call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.630)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.630, ptr noundef nonnull align 8 dereferenceable(48) %i.er, i64 48, i1 false)
+  br label %bb.bf
 
 bb.aj:                                            ; preds = %bb.as, %bb.am, %bb.al
   %i.ev = landingpad { ptr, i32 }
@@ -645,10 +652,19 @@ bb.ap:                                            ; preds = %bb.ao
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.g, ptr noundef nonnull align 8 dereferenceable(56) %i.y, i64 56, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.y)
-  %2 = invoke fastcc noundef ptr @_RNvNtCs1xwejQucwHj_5alloc5boxed14box_new_uninit(i64 noundef 8, i64 noundef 56)
-          to label %bb.bb unwind label %bb.aq, !noalias !419 ; 2 uses
+  call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #28, !noalias !419
+  %1 = call noundef align 8 dereferenceable_or_null(56) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef range(i64 1, 57) 56, i64 noundef range(i64 1, 9) 8) #28, !noalias !419 ; 3 uses
+  %2 = icmp eq ptr %1, null
+  br i1 %2, label %3, label %bb.bb, !prof !8
 
-bb.aq:                                            ; preds = %bb.ap
+3:                                                ; preds = %bb.ap
+  invoke void @_RNvNtCs1xwejQucwHj_5alloc5alloc18handle_alloc_error(i64 noundef 8, i64 noundef 56) #27
+          to label %.noexc143 unwind label %bb.aq
+
+.noexc143:                                        ; preds = %3
+  unreachable
+
+bb.aq:                                            ; preds = %3
   %i.fe = landingpad { ptr, i32 }
           cleanup
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCskuiImRAV2ip_9elfshaker4repo5error5ErrorECs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.g) #25
@@ -728,7 +744,7 @@ bb.ba:                                            ; preds = %bb.au
   br label %bb.bc
 
 bb.bb:                                            ; preds = %bb.ap
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %2, ptr noundef nonnull align 8 dereferenceable(56) %i.g, i64 56, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %1, ptr noundef nonnull align 8 dereferenceable(56) %i.g, i64 56, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
   br label %bb.bc
 
@@ -738,7 +754,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCskuiImRAV2i
   br label %bb.cu
 
 bb.bc:                                            ; preds = %bb.ba, %bb.bb
-  %.sroa.0.0 = phi ptr [ %2, %bb.bb ], [ %i.fk, %bb.ba ] ; 2 uses
+  %.sroa.0.0 = phi ptr [ %1, %bb.bb ], [ %i.fk, %bb.ba ] ; 2 uses
   %i.fo = load i64, ptr %i.aa, align 8, !range !16, !alias.scope !421, !noundef !5
   %i.fp = icmp eq i64 %i.fo, -2
   br i1 %i.fp, label %bb.bd, label %bb.be
@@ -751,11 +767,10 @@ bb.be:                                            ; preds = %bb.bc
   invoke void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCskuiImRAV2ip_9elfshaker4repo5error5ErrorECs7BtpbLEd5q3_9elfshaker(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.aa)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack10SnapshotIdNtNtB11_5error5ErrorEECs7BtpbLEd5q3_9elfshaker.exit unwind label %bb.af
 
-bb.bf:                                            ; preds = %bb.ai, %bb.ah
-  %.sroa.630.0..sroa_idx157 = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
+bb.bf:                                            ; preds = %.thread, %bb.ah
   %.sroa.437.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.437.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.630.0..sroa_idx157, i64 48, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.437.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.630, i64 48, i1 false)
   store i64 %i.ep, ptr %i.e, align 8
   call void @_RNvCsjHpjAFo4bi0_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #28, !noalias !422
   %i.fq = call noundef align 8 dereferenceable_or_null(56) ptr @_RNvCsjHpjAFo4bi0_7___rustc12___rust_alloc(i64 noundef range(i64 1, 57) 56, i64 noundef range(i64 1, 9) 8) #28, !noalias !422 ; 3 uses
@@ -781,9 +796,9 @@ bb.bi:                                            ; preds = %bb.bh
   call void @_RNvNtCs3oUPovFnLWP_4core9panicking16panic_in_cleanup() #26
   unreachable
 
-bb.bj:                                            ; preds = %bb.ag
-  %.sroa.630.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
+bb.bj:                                            ; preds = %bb.ah
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.ab, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.630.0..sroa_idx, i64 48, i1 false)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.630)
   br label %bb.ay
 
 bb.bk:                                            ; preds = %bb.ay
@@ -1100,6 +1115,7 @@ bb.cu:                                            ; preds = %bb.cs, %_RINvNtCs3o
 bb.cv:                                            ; preds = %bb.bf
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %i.fq, ptr noundef nonnull align 8 dereferenceable(56) %i.e, i64 56, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.630)
   br label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCskuiImRAV2ip_9elfshaker4repo4pack10SnapshotIdNtNtB11_5error5ErrorEECs7BtpbLEd5q3_9elfshaker.exit
 
 bb.cw:                                            ; preds = %bb.cu, %_RNvMNtCs1xwejQucwHj_5alloc5boxedINtB2_3BoxNtNtNtCskuiImRAV2ip_9elfshaker4repo5error5ErrorE3newCs7BtpbLEd5q3_9elfshaker.exit141

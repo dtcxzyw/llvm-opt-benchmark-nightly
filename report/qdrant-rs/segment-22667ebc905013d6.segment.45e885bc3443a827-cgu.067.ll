@@ -204,8 +204,8 @@ bb.a:
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 32
   br label %bb.d
 
-bb.b:                                             ; preds = %9, %bb.t, %.body.i, %bb.c
-  %.pn16.i = phi { ptr, i32 } [ %i.t, %bb.c ], [ %.pn.i, %bb.t ], [ %.pn.i, %9 ], [ %.pn.i, %.body.i ]
+bb.b:                                             ; preds = %bb.t, %.body.i, %.body.i, %bb.c
+  %.pn16.i = phi { ptr, i32 } [ %i.t, %bb.c ], [ %.pn.i, %.body.i ], [ %.pn.i, %bb.t ], [ %.pn.i, %.body.i ]
   invoke void @_RNvXse_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterINtNtB9_5boxed3BoxDINtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceuEp6OutputINtNtB1m_6result6ResultuNtNtNtCs607s0NAIaWN_7segment6common15operation_error14OperationErrorENtNtB1m_6marker4SendEL_EENtNtB1k_4drop4Drop4dropB2D_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.f)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterINtNtBI_5boxed3BoxDINtNtNtB4_3ops8function6FnOnceuEp6OutputINtNtB4_6result6ResultuNtNtNtCs607s0NAIaWN_7segment6common15operation_error14OperationErrorENtNtB4_6marker4SendEL_EEEB2P_.exit.thread.i unwind label %bb.s, !noalias !2014
 
@@ -258,23 +258,21 @@ bb.f:                                             ; preds = %_RINvNtCskKLDkoKarT
   br label %_RNCNvXNtNtNtCs607s0NAIaWN_7segment5index20struct_payload_index13payload_indexNtB6_18StructPayloadIndexNtNtB8_18payload_index_base12PayloadIndex7flusher0Ba_.exit
 
 bb.g:                                             ; preds = %bb.d
-  %i.ae = load i64, ptr %i.e, align 8, !range !11, !noalias !2014, !noundef !4 ; 3 uses
-  %.not12.i = icmp eq i64 %i.ae, -1
-  br i1 %.not12.i, label %.thread34.i, label %2
-
-2:                                                ; preds = %bb.g
-  %3 = icmp ne i64 %i.ae, -9223372036854775791
-  call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.ae, -9223372036854775798
-  br i1 %4, label %bb.k, label %bb.i
+  %i.ae = load i64, ptr %i.e, align 8, !range !11, !noalias !2014, !noundef !4
+  switch i64 %i.ae, label %bb.i [
+    i64 -1, label %.thread34.i
+    i64 -9223372036854775798, label %bb.k
+  ]
 
 bb.h:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs607s0NAIaWN_7segment.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !2014
-  %.pr.i = load i64, ptr %i.e, align 8, !noalias !2014 ; 3 uses
-  %.not15.i = icmp eq i64 %.pr.i, -1
-  br i1 %.not15.i, label %.thread34.i, label %5
+  %.pr.i = load i64, ptr %i.e, align 8, !noalias !2014 ; 2 uses
+  switch i64 %.pr.i, label %bb.r [
+    i64 -1, label %.thread34.i
+    i64 -9223372036854775798, label %.thread34.i
+  ]
 
-bb.i:                                             ; preds = %2
+bb.i:                                             ; preds = %bb.g
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(96) %0, ptr noundef nonnull align 8 dereferenceable(96) %i.e, i64 96, i1 false), !noalias !2013
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !2014
   invoke void @_RNvXse_NtNtCsexYYUdYSQU6_5alloc3vec9into_iterINtB5_8IntoIterINtNtB9_5boxed3BoxDINtNtNtCskKLDkoKarTP_4core3ops8function6FnOnceuEp6OutputINtNtB1m_6result6ResultuNtNtNtCs607s0NAIaWN_7segment6common15operation_error14OperationErrorENtNtB1m_6marker4SendEL_EENtNtB1k_4drop4Drop4dropB2D_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.f)
@@ -286,7 +284,7 @@ bb.j:                                             ; preds = %bb.l
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsexYYUdYSQU6_5alloc6string6StringECs607s0NAIaWN_7segment(ptr noalias nofree noundef align 8 dereferenceable(24) %i.d) #18
           to label %.body.i unwind label %bb.s, !noalias !2014
 
-bb.k:                                             ; preds = %2
+bb.k:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !2014
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.d, ptr noundef nonnull align 8 dereferenceable(24) %i.o, i64 24, i1 false), !noalias !2014
   %i.ag = load atomic i64, ptr @_RNvCs7A8gjpeJ2x1_3log20MAX_LOG_LEVEL_FILTER monotonic, align 8, !noalias !2014 ; 2 uses
@@ -335,33 +333,31 @@ bb.p:                                             ; preds = %bb.l
 
 .body.i:                                          ; preds = %bb.q, %bb.n, %bb.j
   %.pn.i = phi { ptr, i32 } [ %i.af, %bb.j ], [ %i.am, %bb.q ], [ %i.aj, %bb.n ] ; 3 uses
-  %i.al = load i64, ptr %i.e, align 8, !range !11, !noalias !2014, !noundef !4 ; 3 uses
-  %.not14.i = icmp eq i64 %i.al, -1
-  br i1 %.not14.i, label %bb.b, label %bb.t
+  %i.al = load i64, ptr %i.e, align 8, !range !11, !noalias !2014, !noundef !4 ; 2 uses
+  switch i64 %i.al, label %bb.t [
+    i64 -1, label %bb.b
+    i64 -9223372036854775798, label %bb.b
+  ]
 
 bb.q:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VechEECs607s0NAIaWN_7segment.exit.i.i
   %i.am = landingpad { ptr, i32 }
           cleanup
   br label %.body.i
 
-5:                                                ; preds = %bb.h
-  %6 = icmp ne i64 %.pr.i, -9223372036854775791
-  call void @llvm.assume(i1 %6)
-  %7 = icmp eq i64 %.pr.i, -9223372036854775798
-  br i1 %7, label %.thread34.i, label %bb.r
-
-.thread34.i:                                      ; preds = %bb.r, %5, %bb.h, %bb.g
+.thread34.i:                                      ; preds = %bb.r, %bb.h, %bb.h, %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !2014
   %i.an = load ptr, ptr %.sroa.7.0..sroa_idx.i, align 8, !alias.scope !2017, !noalias !2014, !nonnull !4, !noundef !4
   %i.ao = load ptr, ptr %.sroa.5.0..sroa_idx.i, align 8, !alias.scope !2017, !noalias !2014, !nonnull !4, !noundef !4 ; 2 uses
   %i.ap = icmp eq ptr %i.ao, %i.an
   br i1 %i.ap, label %._crit_edge.i, label %bb.d
 
-bb.r:                                             ; preds = %5
+bb.r:                                             ; preds = %bb.h
+  %2 = icmp ne i64 %.pr.i, -9223372036854775791
+  call void @llvm.assume(i1 %2)
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs607s0NAIaWN_7segment6common15operation_error14OperationErrorEBH_(ptr noalias nofree noundef align 8 dereferenceable(96) %i.e)
           to label %.thread34.i unwind label %bb.c, !noalias !2014
 
-bb.s:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterINtNtBI_5boxed3BoxDINtNtNtB4_3ops8function6FnOnceuEp6OutputINtNtB4_6result6ResultuNtNtNtCs607s0NAIaWN_7segment6common15operation_error14OperationErrorENtNtB4_6marker4SendEL_EEEB2P_.exit.thread.i, %9, %bb.j, %bb.b
+bb.s:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCsexYYUdYSQU6_5alloc3vec9into_iter8IntoIterINtNtBI_5boxed3BoxDINtNtNtB4_3ops8function6FnOnceuEp6OutputINtNtB4_6result6ResultuNtNtNtCs607s0NAIaWN_7segment6common15operation_error14OperationErrorENtNtB4_6marker4SendEL_EEEB2P_.exit.thread.i, %bb.t, %bb.j, %bb.b
   %i.aq = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCskKLDkoKarTP_4core9panicking16panic_in_cleanup() #19, !noalias !2014
@@ -370,10 +366,6 @@ bb.s:                                             ; preds = %_RINvNtCskKLDkoKarT
 bb.t:                                             ; preds = %.body.i
   %i.ar = icmp ne i64 %i.al, -9223372036854775791
   call void @llvm.assume(i1 %i.ar)
-  %8 = icmp eq i64 %i.al, -9223372036854775798
-  br i1 %8, label %bb.b, label %9
-
-9:                                                ; preds = %bb.t
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCs607s0NAIaWN_7segment6common15operation_error14OperationErrorEBH_(ptr noalias nofree noundef align 8 dereferenceable(96) %i.e) #18
           to label %bb.b unwind label %bb.s, !noalias !2014
 

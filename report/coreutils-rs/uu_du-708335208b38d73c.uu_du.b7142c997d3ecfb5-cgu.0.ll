@@ -205,12 +205,13 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringEC
   br label %bb.p
 
 bb.p:                                             ; preds = %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringECsfIwuYbgPzJV_5uu_du.exit95, %bb.b
-  %.sroa.7.sroa.5.0 = phi i64 [ %.sroa.7.sroa.5.0.copyload, %bb.b ], [ %.sroa.6145.0.ph213, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringECsfIwuYbgPzJV_5uu_du.exit95 ] ; 4 uses
-  %.sroa.7.sroa.0.0 = phi ptr [ %.sroa.7.sroa.0.0.copyload, %bb.b ], [ %i.bh, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringECsfIwuYbgPzJV_5uu_du.exit95 ] ; 11 uses
+  %.sroa.7.sroa.5.0 = phi i64 [ %.sroa.7.sroa.5.0.copyload, %bb.b ], [ %.sroa.6145.0.ph213, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringECsfIwuYbgPzJV_5uu_du.exit95 ] ; 3 uses
+  %.sroa.7.sroa.0.0 = phi ptr [ %.sroa.7.sroa.0.0.copyload, %bb.b ], [ %i.bh, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringECsfIwuYbgPzJV_5uu_du.exit95 ] ; 10 uses
   %.sroa.02.0 = phi i64 [ %.sroa.02.0.copyload, %bb.b ], [ %.sroa.6145.0.ph213, %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringECsfIwuYbgPzJV_5uu_du.exit95 ] ; 3 uses
-  switch i64 %.sroa.7.sroa.5.0, label %2 [
+  switch i64 %.sroa.7.sroa.5.0, label %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCsfIwuYbgPzJV_5uu_du.exit119 [
     i64 8, label %bb.t
     i64 3, label %bb.z
+    i64 0, label %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCsfIwuYbgPzJV_5uu_du.exit119.thread
   ]
 
 _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCs7tKScEop1B6_5alloc6string6StringECsfIwuYbgPzJV_5uu_du.exit.thread: ; preds = %bb.c
@@ -327,12 +328,7 @@ bb.z:                                             ; preds = %bb.p
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.sroa.0.0) ]
   br label %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCsfIwuYbgPzJV_5uu_du.exit119
 
-2:                                                ; preds = %bb.p
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.7.sroa.0.0) ]
-  %.not.i116 = icmp eq i64 %.sroa.7.sroa.5.0, 0
-  br i1 %.not.i116, label %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCsfIwuYbgPzJV_5uu_du.exit119.thread, label %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCsfIwuYbgPzJV_5uu_du.exit119
-
-_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCsfIwuYbgPzJV_5uu_du.exit119: ; preds = %2, %.thread236
+_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCsfIwuYbgPzJV_5uu_du.exit119: ; preds = %bb.p, %.thread236
   %rhsc275 = load i8, ptr %.sroa.7.sroa.0.0, align 1
   %i.cu = icmp eq i8 %rhsc275, 43
   br i1 %i.cu, label %bb.ad, label %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCsfIwuYbgPzJV_5uu_du.exit119.thread
@@ -353,7 +349,7 @@ _RNvXs_NtCs7tKScEop1B6_5alloc5allocNtB4_6GlobalNtNtCs6JMX4GRUq9U_4core5alloc9All
   %i.cz = icmp eq ptr %i.cy, null
   br i1 %i.cz, label %bb.ai, label %bb.aj
 
-_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCsfIwuYbgPzJV_5uu_du.exit119.thread: ; preds = %2, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCsfIwuYbgPzJV_5uu_du.exit119
+_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCsfIwuYbgPzJV_5uu_du.exit119.thread: ; preds = %bb.p, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCsfIwuYbgPzJV_5uu_du.exit119
   tail call void @_RNvCsjSVV5GABoor_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #25, !noalias !1354
   %i.da = tail call noundef align 8 dereferenceable_or_null(32) ptr @_RNvCsjSVV5GABoor_7___rustc12___rust_alloc(i64 noundef 32, i64 noundef range(i64 1, -9223372036854775807) 8) #25, !noalias !1354 ; 6 uses
   %i.db = icmp eq ptr %i.da, null

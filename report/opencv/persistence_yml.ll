@@ -202,13 +202,17 @@ bb.au:                                            ; preds = %.thread
     i8 45, label %bb.av
     i8 43, label %bb.av
     i8 46, label %bb.aw
-    i8 39, label %.preheader562
-    i8 34, label %.preheader563
+    i8 39, label %.preheader563
+    i8 34, label %.preheader562
   ]
 
-.preheader563:                                    ; preds = %bb.au
-  %i.fo = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 7 uses
+.preheader562:                                    ; preds = %bb.au
+  %45 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 7 uses
   br label %bb.bz
+
+.preheader563:                                    ; preds = %bb.au
+  %i.fo = getelementptr inbounds nuw i8, ptr %0, i64 16
+  br label %bb.bp
 
 bb.av:                                            ; preds = %bb.au, %bb.au
   %i.fp = add i8 %.1339531, -48
@@ -381,13 +385,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit474: ; preds = %bb
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #13
   br label %bb.gd
 
-.preheader562:                                    ; preds = %bb.au
-  %45 = getelementptr inbounds nuw i8, ptr %0, i64 16
-  br label %bb.bp
-
-bb.bp:                                            ; preds = %.preheader562, %bb.by
-  %indvars.iv = phi i64 [ 0, %.preheader562 ], [ %indvars.iv.next, %bb.by ] ; 3 uses
-  %.7606 = phi ptr [ %.3533, %.preheader562 ], [ %.8, %bb.by ] ; 2 uses
+bb.bp:                                            ; preds = %.preheader563, %bb.by
+  %indvars.iv = phi i64 [ 0, %.preheader563 ], [ %indvars.iv.next, %bb.by ] ; 3 uses
+  %.7606 = phi ptr [ %.3533, %.preheader563 ], [ %.8, %bb.by ] ; 2 uses
   %i.hw = getelementptr inbounds nuw i8, ptr %.7606, i64 1 ; 3 uses
   %i.hx = load i8, ptr %i.hw, align 1, !tbaa !27  ; 6 uses
   %i.hy = add i8 %i.hx, -48
@@ -459,15 +459,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit478: ; preds = %bb
 bb.by:                                            ; preds = %bb.bs, %bb.bp, %bb.bq
   %.sink = phi i8 [ %i.hx, %bb.bp ], [ %i.hx, %bb.bq ], [ 39, %bb.bs ]
   %.8 = phi ptr [ %i.hw, %bb.bp ], [ %i.hw, %bb.bq ], [ %i.if, %bb.bs ]
-  %i.it = getelementptr inbounds nuw i8, ptr %45, i64 %indvars.iv
+  %i.it = getelementptr inbounds nuw i8, ptr %i.fo, i64 %indvars.iv
   store i8 %.sink, ptr %i.it, align 1, !tbaa !27
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, 4096
   br i1 %exitcond.not, label %.thread540, label %bb.bp, !llvm.loop !69
 
-bb.bz:                                            ; preds = %.preheader563, %bb.cr
-  %.9604 = phi ptr [ %.3533, %.preheader563 ], [ %.11, %bb.cr ] ; 4 uses
-  %.2331603 = phi i32 [ 0, %.preheader563 ], [ %.4333, %bb.cr ] ; 16 uses
+bb.bz:                                            ; preds = %.preheader562, %bb.cr
+  %.9604 = phi ptr [ %.3533, %.preheader562 ], [ %.11, %bb.cr ] ; 4 uses
+  %.2331603 = phi i32 [ 0, %.preheader562 ], [ %.4333, %bb.cr ] ; 16 uses
   %i.iu = getelementptr inbounds nuw i8, ptr %.9604, i64 1 ; 2 uses
   %i.iv = load i8, ptr %i.iu, align 1, !tbaa !27  ; 5 uses
   %i.iw = add i8 %i.iv, -48
@@ -491,7 +491,7 @@ switch.early.test462:                             ; preds = %bb.ca
 bb.cb:                                            ; preds = %switch.early.test462, %bb.bz
   %i.jc = add nsw i32 %.2331603, 1
   %i.jd = sext i32 %.2331603 to i64
-  %i.je = getelementptr inbounds i8, ptr %i.fo, i64 %i.jd
+  %i.je = getelementptr inbounds i8, ptr %45, i64 %i.jd
   store i8 %i.iv, ptr %i.je, align 1, !tbaa !27
   br label %bb.cr
 
@@ -514,35 +514,35 @@ bb.cd:                                            ; preds = %switch.early.test46
 bb.ce:                                            ; preds = %bb.cd
   %i.ji = add nsw i32 %.2331603, 1
   %i.jj = sext i32 %.2331603 to i64
-  %i.jk = getelementptr inbounds i8, ptr %i.fo, i64 %i.jj
+  %i.jk = getelementptr inbounds i8, ptr %45, i64 %i.jj
   store i8 39, ptr %i.jk, align 1, !tbaa !27
   br label %bb.cr
 
 bb.cf:                                            ; preds = %bb.cd, %bb.cd
   %i.jl = add nsw i32 %.2331603, 1
   %i.jm = sext i32 %.2331603 to i64
-  %i.jn = getelementptr inbounds i8, ptr %i.fo, i64 %i.jm
+  %i.jn = getelementptr inbounds i8, ptr %45, i64 %i.jm
   store i8 %i.jh, ptr %i.jn, align 1, !tbaa !27
   br label %bb.cr
 
 bb.cg:                                            ; preds = %bb.cd
   %i.jo = add nsw i32 %.2331603, 1
   %i.jp = sext i32 %.2331603 to i64
-  %i.jq = getelementptr inbounds i8, ptr %i.fo, i64 %i.jp
+  %i.jq = getelementptr inbounds i8, ptr %45, i64 %i.jp
   store i8 10, ptr %i.jq, align 1, !tbaa !27
   br label %bb.cr
 
 bb.ch:                                            ; preds = %bb.cd
   %i.jr = add nsw i32 %.2331603, 1
   %i.js = sext i32 %.2331603 to i64
-  %i.jt = getelementptr inbounds i8, ptr %i.fo, i64 %i.js
+  %i.jt = getelementptr inbounds i8, ptr %45, i64 %i.js
   store i8 13, ptr %i.jt, align 1, !tbaa !27
   br label %bb.cr
 
 bb.ci:                                            ; preds = %bb.cd
   %i.ju = add nsw i32 %.2331603, 1
   %i.jv = sext i32 %.2331603 to i64
-  %i.jw = getelementptr inbounds i8, ptr %i.fo, i64 %i.jv
+  %i.jw = getelementptr inbounds i8, ptr %45, i64 %i.jv
   store i8 9, ptr %i.jw, align 1, !tbaa !27
   br label %bb.cr
 
@@ -570,7 +570,7 @@ bb.cl:                                            ; preds = %bb.ck, %bb.cj
   %.sink819 = select i1 %i.kg, i8 120, i8 %i.kh
   %.10 = select i1 %i.kg, ptr %i.jg, ptr %i.kf
   %i.ki = sext i32 %.2331603 to i64
-  %i.kj = getelementptr inbounds i8, ptr %i.fo, i64 %i.ki
+  %i.kj = getelementptr inbounds i8, ptr %45, i64 %i.ki
   store i8 %.sink819, ptr %i.kj, align 1, !tbaa !27
   %.3332 = add nsw i32 %.2331603, 1
   br label %bb.cr

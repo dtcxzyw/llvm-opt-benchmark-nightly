@@ -202,6 +202,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCslghKHtsL3a4_5tokio7runtime6signa
   ret void
 
 bb.b:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.0.val) ]
   %i.a = getelementptr inbounds nuw i8, ptr %.0.val, i64 8
   %i.b = atomicrmw add ptr %i.a, i64 -1 release, align 8, !noalias !79
   %i.c = icmp eq i64 %i.b, 1
@@ -604,13 +605,14 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.a
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 72
-  %.val = load ptr, ptr %i.e, align 8, !noundef !8 ; 3 uses
+  %.val = load ptr, ptr %i.e, align 8, !noundef !8 ; 4 uses
   %magicptr.i = ptrtoint ptr %.val to i64
   %magicptr.off.i = add i64 %magicptr.i, -1
   %switch.i = icmp ult i64 %magicptr.off.i, -2
   br i1 %switch.i, label %bb.d, label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCslghKHtsL3a4_5tokio7runtime6signal6HandleEEB13_.exit
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val) ]
   %i.f = getelementptr inbounds nuw i8, ptr %.val, i64 8
   %i.g = atomicrmw add ptr %i.f, i64 -1 release, align 8, !noalias !222
   %i.h = icmp eq i64 %i.g, 1

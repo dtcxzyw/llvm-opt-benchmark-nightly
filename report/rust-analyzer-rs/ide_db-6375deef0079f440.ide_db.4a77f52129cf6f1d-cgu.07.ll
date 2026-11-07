@@ -204,21 +204,17 @@ bb.bg:                                            ; preds = %.body97
           to label %.thread unwind label %bb.cq
 
 bb.bh:                                            ; preds = %bb.bc
-  %i.dm = load i32, ptr %i.m, align 4, !range !62, !noundef !34 ; 3 uses
-  %.not68 = icmp eq i32 %i.dm, -1
-  br i1 %.not68, label %bb.bi, label %6
+  %i.dm = load i32, ptr %i.m, align 4, !range !62, !noundef !34
+  switch i32 %i.dm, label %bb.bk [
+    i32 -1, label %bb.bi
+    i32 3, label %bb.bj
+  ]
 
-6:                                                ; preds = %bb.bh
-  %7 = icmp ne i32 %i.dm, 4
-  call void @llvm.assume(i1 %7)
-  %8 = icmp eq i32 %i.dm, 3
-  br i1 %8, label %bb.bj, label %bb.bk
-
-bb.bi:                                            ; preds = %bb.bj, %bb.bh
+bb.bi:                                            ; preds = %bb.bh, %bb.bj
   %i.dn = invoke noundef ptr @_RNvMsf_NtNtCsjJXvCMGntp8_6syntax3ast8node_extNtNtNtB7_9generated5nodes4Path15first_qualifier(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.q)
           to label %bb.bx unwind label %bb.bf     ; 6 uses
 
-bb.bj:                                            ; preds = %6
+bb.bj:                                            ; preds = %bb.bh
   %i.do = getelementptr inbounds nuw i8, ptr %i.m, i64 4
   %i.dp = load i8, ptr %i.do, align 4, !range !64, !noundef !34
   switch i8 %i.dp, label %bb.bk [
@@ -227,7 +223,7 @@ bb.bj:                                            ; preds = %6
     i8 8, label %bb.bi
   ]
 
-bb.bk:                                            ; preds = %bb.bj, %6
+bb.bk:                                            ; preds = %bb.bh, %bb.bj
   store i64 -1, ptr %0, align 8
   br label %bb.br
 

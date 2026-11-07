@@ -205,19 +205,18 @@ _ZN4llvm11SmallVectorIlLj6EED2Ev.exit:            ; preds = %bb.e, %bb.f
 
 bb.g:                                             ; preds = %_ZN4llvm11SmallVectorIlLj6EED2Ev.exit
   %i.cp = call i64 @_ZNK4mlir13sparse_tensor24SparseTensorEncodingAttr10getLvlTypeEm(ptr noundef nonnull align 8 dereferenceable(8) %.sroa.2132.0..sroa_idx, i64 noundef %.0135) #18
-  %27 = trunc i64 %i.cp to i32
-  %trunc = and i32 %27, -65536                    ; 2 uses
-  %28 = call range(i32 0, 17) i32 @llvm.ctpop.i32(i32 %trunc)
-  %i.cq = icmp eq i32 %28, 1
+  %27 = and i64 %i.cp, 4294901760                 ; 2 uses
+  %28 = call range(i64 0, 17) i64 @llvm.ctpop.i64(i64 %27)
+  %i.cq = icmp eq i64 %28, 1
   br i1 %i.cq, label %.split, label %bb.o
 
 .split:                                           ; preds = %bb.g
-  %29 = call range(i32 16, 33) i32 @llvm.cttz.i32(i32 %trunc, i1 true)
-  switch i32 %29, label %bb.o [
-    i32 16, label %bb.h
-    i32 17, label %bb.r
-    i32 20, label %bb.i
-    i32 18, label %bb.j
+  %29 = call range(i64 16, 65) i64 @llvm.cttz.i64(i64 %27, i1 true)
+  switch i64 %29, label %bb.o [
+    i64 16, label %bb.h
+    i64 17, label %bb.r
+    i64 20, label %bb.i
+    i64 18, label %bb.j
   ]
 
 bb.h:                                             ; preds = %.split
@@ -620,17 +619,11 @@ declare void @llvm.experimental.noalias.scope.decl(metadata) #15
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umin.i64(i64, i64) #12
 
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.ctpop.i32(i32) #12
-
 ; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i32 @llvm.cttz.i32(i32, i1 immarg) #16
+declare i64 @llvm.cttz.i64(i64, i1 immarg) #16
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i64 @llvm.umax.i64(i64, i64) #12
-
-; Function Attrs: nocallback nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.cttz.i64(i64, i1 immarg) #16
 
 attributes #0 = { mustprogress nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }

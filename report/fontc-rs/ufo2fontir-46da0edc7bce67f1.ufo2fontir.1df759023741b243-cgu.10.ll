@@ -202,10 +202,11 @@ thread-pre-split.i.i:                             ; preds = %bb.v
   br label %bb.z
 
 bb.z:                                             ; preds = %thread-pre-split.i.i, %bb.u
-  %i.bk = phi i64 [ %.pr367.i.i, %thread-pre-split.i.i ], [ %.sroa.0261.0.copyload.i.i, %bb.u ] ; 3 uses
-  switch i64 %i.bk, label %2 [
+  %i.bk = phi i64 [ %.pr367.i.i, %thread-pre-split.i.i ], [ %.sroa.0261.0.copyload.i.i, %bb.u ] ; 2 uses
+  switch i64 %i.bk, label %bb.ag [
     i64 -3, label %bb.aa
     i64 -2, label %bb.ae
+    i64 -9223372036854775806, label %bb.af
   ]
 
 bb.aa:                                            ; preds = %bb.z
@@ -241,13 +242,7 @@ bb.ae:                                            ; preds = %bb.z
   %i.bt = load ptr, ptr %i.bs, align 8, !noalias !857, !nonnull !5, !align !13, !noundef !5
   br label %bb.ad
 
-2:                                                ; preds = %bb.z
-  %3 = icmp ne i64 %i.bk, -9223372036854775800
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.bk, -9223372036854775806
-  br i1 %4, label %bb.af, label %bb.ag
-
-bb.af:                                            ; preds = %2
+bb.af:                                            ; preds = %bb.z
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.q, ptr noundef nonnull align 16 dereferenceable(32) %i.p, i64 32, i1 false), !noalias !857
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaGmGRvprAGn_5plist6stream5EventECs2zvA5OmMqFb_10ufo2fontir(ptr noalias nofree noundef align 16 dereferenceable(32) %i.q)
           to label %bb.ah unwind label %.thread.i.i, !noalias !859
@@ -257,7 +252,9 @@ bb.af:                                            ; preds = %2
           cleanup
   br label %bb.w
 
-bb.ag:                                            ; preds = %2
+bb.ag:                                            ; preds = %bb.z
+  %2 = icmp ne i64 %i.bk, -9223372036854775800
+  tail call void @llvm.assume(i1 %2)
   %i.bv = invoke noundef nonnull align 8 ptr @_RNvNtCsaGmGRvprAGn_5plist5error21unexpected_event_type(i8 noundef 2, ptr noalias nofree noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(32) %i.p)
           to label %bb.ad unwind label %bb.ab, !noalias !859
 
@@ -373,10 +370,11 @@ thread-pre-split371.i.i:                          ; preds = %bb.ar
   br label %bb.av
 
 bb.av:                                            ; preds = %thread-pre-split371.i.i, %bb.aq
-  %i.ci = phi i64 [ %.pr372.i.i, %thread-pre-split371.i.i ], [ %.sroa.0269.0.copyload.i.i, %bb.aq ] ; 3 uses
-  switch i64 %i.ci, label %5 [
+  %i.ci = phi i64 [ %.pr372.i.i, %thread-pre-split371.i.i ], [ %.sroa.0269.0.copyload.i.i, %bb.aq ] ; 2 uses
+  switch i64 %i.ci, label %bb.bc [
     i64 -3, label %bb.aw
     i64 -2, label %bb.ba
+    i64 -9223372036854775806, label %bb.bb
   ]
 
 bb.aw:                                            ; preds = %bb.av
@@ -412,13 +410,7 @@ bb.ba:                                            ; preds = %bb.av
   %i.cr = load ptr, ptr %i.cq, align 8, !noalias !857, !nonnull !5, !align !13, !noundef !5
   br label %bb.az
 
-5:                                                ; preds = %bb.av
-  %6 = icmp ne i64 %i.ci, -9223372036854775800
-  tail call void @llvm.assume(i1 %6)
-  %7 = icmp eq i64 %i.ci, -9223372036854775806
-  br i1 %7, label %bb.bb, label %bb.bc
-
-bb.bb:                                            ; preds = %5
+bb.bb:                                            ; preds = %bb.av
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.k, ptr noundef nonnull align 16 dereferenceable(32) %i.j, i64 32, i1 false), !noalias !857
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaGmGRvprAGn_5plist6stream5EventECs2zvA5OmMqFb_10ufo2fontir(ptr noalias nofree noundef align 16 dereferenceable(32) %i.k)
           to label %bb.bd unwind label %.thread373.i.i, !noalias !859
@@ -428,7 +420,9 @@ bb.bb:                                            ; preds = %5
           cleanup
   br label %bb.as
 
-bb.bc:                                            ; preds = %5
+bb.bc:                                            ; preds = %bb.av
+  %3 = icmp ne i64 %i.ci, -9223372036854775800
+  tail call void @llvm.assume(i1 %3)
   %i.ct = invoke noundef nonnull align 8 ptr @_RNvNtCsaGmGRvprAGn_5plist5error21unexpected_event_type(i8 noundef 2, ptr noalias nofree noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(32) %i.j)
           to label %bb.az unwind label %bb.ax, !noalias !859
 
@@ -811,23 +805,16 @@ bb.m:                                             ; preds = %bb.l
   br label %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit.i.i.i.i
 
 _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit.i.i.i.i: ; preds = %.noexc.i, %bb.l
-  %i.bb = phi i64 [ %i.ay, %bb.l ], [ %i.az, %.noexc.i ] ; 3 uses
-  %.off.i.i.i.i = add i64 %i.bb, 3
-  %switch.i.i.i.i = icmp ult i64 %.off.i.i.i.i, 2
-  br i1 %switch.i.i.i.i, label %bb.n, label %2
+  %i.bb = phi i64 [ %i.ay, %bb.l ], [ %i.az, %.noexc.i ]
+  %cond.i.i.i.i = icmp eq i64 %i.bb, -9223372036854775806
+  br i1 %cond.i.i.i.i, label %split, label %bb.n
 
-bb.n:                                             ; preds = %2, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit.i.i.i.i
+bb.n:                                             ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit.i.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !910
   %i.bc = load i8, ptr %i.aw, align 1, !range !20, !noalias !910, !noundef !5 ; 2 uses
   store i8 2, ptr %i.aw, align 1, !noalias !910
   invoke void @_RINvXs6_NtNtCs7N5MyPZKytm_10serde_core2de5implsNtNtCsgCecv3eZDcN_5alloc6string6StringNtB8_11Deserialize11deserializeQINtNtCsaGmGRvprAGn_5plist2de12DeserializerINtNtB1W_6stream6ReaderINtNtNtNtBN_2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEEECs2zvA5OmMqFb_10ufo2fontir(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull align 16 dereferenceable(256) %1)
           to label %.noexc4.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !909
-
-2:                                                ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit.i.i.i.i
-  %3 = icmp ne i64 %i.bb, -9223372036854775800
-  call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.bb, -9223372036854775806
-  br i1 %4, label %split, label %bb.n
 
 .noexc4.i:                                        ; preds = %bb.n
   store i8 %i.bc, ptr %i.aw, align 1, !noalias !910
@@ -1069,10 +1056,11 @@ thread-pre-split:                                 ; preds = %bb.ao
   br label %bb.aq
 
 bb.aq:                                            ; preds = %thread-pre-split, %bb.an
-  %i.ch = phi i64 [ %.pr346, %thread-pre-split ], [ %.sroa.0241.0.copyload, %bb.an ] ; 3 uses
-  switch i64 %i.ch, label %5 [
+  %i.ch = phi i64 [ %.pr346, %thread-pre-split ], [ %.sroa.0241.0.copyload, %bb.an ] ; 2 uses
+  switch i64 %i.ch, label %bb.ax [
     i64 -3, label %bb.ar
     i64 -2, label %bb.av
+    i64 -9223372036854775806, label %bb.aw
   ]
 
 bb.ar:                                            ; preds = %bb.aq
@@ -1108,13 +1096,7 @@ bb.av:                                            ; preds = %bb.aq
   %i.cq = load ptr, ptr %i.cp, align 8, !nonnull !5, !align !13, !noundef !5
   br label %bb.au
 
-5:                                                ; preds = %bb.aq
-  %6 = icmp ne i64 %i.ch, -9223372036854775800
-  tail call void @llvm.assume(i1 %6)
-  %7 = icmp eq i64 %i.ch, -9223372036854775806
-  br i1 %7, label %bb.aw, label %bb.ax
-
-bb.aw:                                            ; preds = %5
+bb.aw:                                            ; preds = %bb.aq
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.w, ptr noundef nonnull align 16 dereferenceable(32) %i.v, i64 32, i1 false)
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaGmGRvprAGn_5plist6stream5EventECs2zvA5OmMqFb_10ufo2fontir(ptr noalias nofree noundef align 16 dereferenceable(32) %i.w)
           to label %bb.ay unwind label %.thread
@@ -1124,7 +1106,9 @@ bb.aw:                                            ; preds = %5
           cleanup
   br label %bb.ap
 
-bb.ax:                                            ; preds = %5
+bb.ax:                                            ; preds = %bb.aq
+  %2 = icmp ne i64 %i.ch, -9223372036854775800
+  tail call void @llvm.assume(i1 %2)
   %i.cs = invoke noundef nonnull align 8 ptr @_RNvNtCsaGmGRvprAGn_5plist5error21unexpected_event_type(i8 noundef 2, ptr noalias nofree noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(32) %i.v)
           to label %bb.au unwind label %bb.as
 
@@ -1170,8 +1154,8 @@ bb.bc:                                            ; preds = %bb.au
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t)
   br label %bb.bs
 
-split:                                            ; preds = %2, %._crit_edge
-  %.sroa.0247.0.copyload = phi i64 [ %.sroa.0247.0.copyload.pre, %._crit_edge ], [ -9223372036854775806, %2 ] ; 3 uses
+split:                                            ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit.i.i.i.i, %._crit_edge
+  %.sroa.0247.0.copyload = phi i64 [ %.sroa.0247.0.copyload.pre, %._crit_edge ], [ -9223372036854775806, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit.i.i.i.i ] ; 3 uses
   %.sroa.6.8.copyload = load ptr, ptr %i.h, align 8, !noalias !916
   %.sroa.10.8..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %.sroa.4203.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.t, i64 8
@@ -1205,10 +1189,11 @@ thread-pre-split350:                              ; preds = %bb.be
   br label %bb.bg
 
 bb.bg:                                            ; preds = %thread-pre-split350, %bb.bd
-  %i.cw = phi i64 [ %.pr351, %thread-pre-split350 ], [ %.sroa.0247.0.copyload, %bb.bd ] ; 3 uses
-  switch i64 %i.cw, label %8 [
+  %i.cw = phi i64 [ %.pr351, %thread-pre-split350 ], [ %.sroa.0247.0.copyload, %bb.bd ] ; 2 uses
+  switch i64 %i.cw, label %bb.bn [
     i64 -3, label %bb.bh
     i64 -2, label %bb.bl
+    i64 -9223372036854775806, label %bb.bm
   ]
 
 bb.bh:                                            ; preds = %bb.bg
@@ -1244,13 +1229,7 @@ bb.bl:                                            ; preds = %bb.bg
   %i.df = load ptr, ptr %i.de, align 8, !nonnull !5, !align !13, !noundef !5
   br label %bb.bk
 
-8:                                                ; preds = %bb.bg
-  %9 = icmp ne i64 %i.cw, -9223372036854775800
-  call void @llvm.assume(i1 %9)
-  %10 = icmp eq i64 %i.cw, -9223372036854775806
-  br i1 %10, label %bb.bm, label %bb.bn
-
-bb.bm:                                            ; preds = %8
+bb.bm:                                            ; preds = %bb.bg
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.s, ptr noundef nonnull align 16 dereferenceable(32) %i.r, i64 32, i1 false)
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaGmGRvprAGn_5plist6stream5EventECs2zvA5OmMqFb_10ufo2fontir(ptr noalias nofree noundef align 16 dereferenceable(32) %i.s)
           to label %bb.bo unwind label %.thread352
@@ -1260,7 +1239,9 @@ bb.bm:                                            ; preds = %8
           cleanup
   br label %bb.bf
 
-bb.bn:                                            ; preds = %8
+bb.bn:                                            ; preds = %bb.bg
+  %3 = icmp ne i64 %i.cw, -9223372036854775800
+  call void @llvm.assume(i1 %3)
   %i.dh = invoke noundef nonnull align 8 ptr @_RNvNtCsaGmGRvprAGn_5plist5error21unexpected_event_type(i8 noundef 2, ptr noalias nofree noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(32) %i.r)
           to label %bb.bk unwind label %bb.bi
 
@@ -1663,10 +1644,11 @@ thread-pre-split:                                 ; preds = %bb.w
   br label %bb.y
 
 bb.y:                                             ; preds = %thread-pre-split, %bb.v
-  %i.bj = phi i64 [ %.pr348, %thread-pre-split ], [ %.sroa.0250.0.copyload, %bb.v ] ; 3 uses
-  switch i64 %i.bj, label %2 [
+  %i.bj = phi i64 [ %.pr348, %thread-pre-split ], [ %.sroa.0250.0.copyload, %bb.v ] ; 2 uses
+  switch i64 %i.bj, label %bb.af [
     i64 -3, label %bb.z
     i64 -2, label %bb.ad
+    i64 -9223372036854775806, label %bb.ae
   ]
 
 bb.z:                                             ; preds = %bb.y
@@ -1702,13 +1684,7 @@ bb.ad:                                            ; preds = %bb.y
   %i.bs = load ptr, ptr %i.br, align 8, !nonnull !5, !align !13, !noundef !5
   br label %bb.ac
 
-2:                                                ; preds = %bb.y
-  %3 = icmp ne i64 %i.bj, -9223372036854775800
-  call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.bj, -9223372036854775806
-  br i1 %4, label %bb.ae, label %bb.af
-
-bb.ae:                                            ; preds = %2
+bb.ae:                                            ; preds = %bb.y
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.q, ptr noundef nonnull align 16 dereferenceable(32) %i.p, i64 32, i1 false)
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaGmGRvprAGn_5plist6stream5EventECs2zvA5OmMqFb_10ufo2fontir(ptr noalias nofree noundef align 16 dereferenceable(32) %i.q)
           to label %bb.ag unwind label %.thread
@@ -1718,7 +1694,9 @@ bb.ae:                                            ; preds = %2
           cleanup
   br label %bb.x
 
-bb.af:                                            ; preds = %2
+bb.af:                                            ; preds = %bb.y
+  %2 = icmp ne i64 %i.bj, -9223372036854775800
+  call void @llvm.assume(i1 %2)
   %i.bu = invoke noundef nonnull align 8 ptr @_RNvNtCsaGmGRvprAGn_5plist5error21unexpected_event_type(i8 noundef 2, ptr noalias nofree noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(32) %i.p)
           to label %bb.ac unwind label %bb.aa
 
@@ -1795,10 +1773,11 @@ thread-pre-split352:                              ; preds = %bb.ao
   br label %bb.aq
 
 bb.aq:                                            ; preds = %thread-pre-split352, %bb.an
-  %i.by = phi i64 [ %.pr353, %thread-pre-split352 ], [ %.sroa.0257.0.copyload, %bb.an ] ; 3 uses
-  switch i64 %i.by, label %5 [
+  %i.by = phi i64 [ %.pr353, %thread-pre-split352 ], [ %.sroa.0257.0.copyload, %bb.an ] ; 2 uses
+  switch i64 %i.by, label %bb.ax [
     i64 -3, label %bb.ar
     i64 -2, label %bb.av
+    i64 -9223372036854775806, label %bb.aw
   ]
 
 bb.ar:                                            ; preds = %bb.aq
@@ -1834,13 +1813,7 @@ bb.av:                                            ; preds = %bb.aq
   %i.ch = load ptr, ptr %i.cg, align 8, !nonnull !5, !align !13, !noundef !5
   br label %bb.au
 
-5:                                                ; preds = %bb.aq
-  %6 = icmp ne i64 %i.by, -9223372036854775800
-  tail call void @llvm.assume(i1 %6)
-  %7 = icmp eq i64 %i.by, -9223372036854775806
-  br i1 %7, label %bb.aw, label %bb.ax
-
-bb.aw:                                            ; preds = %5
+bb.aw:                                            ; preds = %bb.aq
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.k, ptr noundef nonnull align 16 dereferenceable(32) %i.j, i64 32, i1 false)
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaGmGRvprAGn_5plist6stream5EventECs2zvA5OmMqFb_10ufo2fontir(ptr noalias nofree noundef align 16 dereferenceable(32) %i.k)
           to label %bb.ay unwind label %.thread354
@@ -1850,7 +1823,9 @@ bb.aw:                                            ; preds = %5
           cleanup
   br label %bb.ap
 
-bb.ax:                                            ; preds = %5
+bb.ax:                                            ; preds = %bb.aq
+  %3 = icmp ne i64 %i.by, -9223372036854775800
+  tail call void @llvm.assume(i1 %3)
   %i.cj = invoke noundef nonnull align 8 ptr @_RNvNtCsaGmGRvprAGn_5plist5error21unexpected_event_type(i8 noundef 2, ptr noalias nofree noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(32) %i.j)
           to label %bb.au unwind label %bb.as
 
@@ -2253,10 +2228,11 @@ thread-pre-split:                                 ; preds = %bb.w
   br label %bb.y
 
 bb.y:                                             ; preds = %thread-pre-split, %bb.v
-  %i.bh = phi i64 [ %.pr351, %thread-pre-split ], [ %.sroa.0250.0.copyload, %bb.v ] ; 3 uses
-  switch i64 %i.bh, label %2 [
+  %i.bh = phi i64 [ %.pr351, %thread-pre-split ], [ %.sroa.0250.0.copyload, %bb.v ] ; 2 uses
+  switch i64 %i.bh, label %bb.af [
     i64 -3, label %bb.z
     i64 -2, label %bb.ad
+    i64 -9223372036854775806, label %bb.ae
   ]
 
 bb.z:                                             ; preds = %bb.y
@@ -2292,13 +2268,7 @@ bb.ad:                                            ; preds = %bb.y
   %i.bq = load ptr, ptr %i.bp, align 8, !nonnull !5, !align !13, !noundef !5
   br label %bb.ac
 
-2:                                                ; preds = %bb.y
-  %3 = icmp ne i64 %i.bh, -9223372036854775800
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.bh, -9223372036854775806
-  br i1 %4, label %bb.ae, label %bb.af
-
-bb.ae:                                            ; preds = %2
+bb.ae:                                            ; preds = %bb.y
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.o, ptr noundef nonnull align 16 dereferenceable(32) %i.n, i64 32, i1 false)
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaGmGRvprAGn_5plist6stream5EventECs2zvA5OmMqFb_10ufo2fontir(ptr noalias nofree noundef align 16 dereferenceable(32) %i.o)
           to label %bb.ag unwind label %.thread
@@ -2308,7 +2278,9 @@ bb.ae:                                            ; preds = %2
           cleanup
   br label %bb.x
 
-bb.af:                                            ; preds = %2
+bb.af:                                            ; preds = %bb.y
+  %2 = icmp ne i64 %i.bh, -9223372036854775800
+  tail call void @llvm.assume(i1 %2)
   %i.bs = invoke noundef nonnull align 8 ptr @_RNvNtCsaGmGRvprAGn_5plist5error21unexpected_event_type(i8 noundef 2, ptr noalias nofree noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(32) %i.n)
           to label %bb.ac unwind label %bb.aa
 
@@ -2385,10 +2357,11 @@ thread-pre-split355:                              ; preds = %bb.ao
   br label %bb.aq
 
 bb.aq:                                            ; preds = %thread-pre-split355, %bb.an
-  %i.bw = phi i64 [ %.pr356, %thread-pre-split355 ], [ %.sroa.0257.0.copyload, %bb.an ] ; 3 uses
-  switch i64 %i.bw, label %5 [
+  %i.bw = phi i64 [ %.pr356, %thread-pre-split355 ], [ %.sroa.0257.0.copyload, %bb.an ] ; 2 uses
+  switch i64 %i.bw, label %bb.ax [
     i64 -3, label %bb.ar
     i64 -2, label %bb.av
+    i64 -9223372036854775806, label %bb.aw
   ]
 
 bb.ar:                                            ; preds = %bb.aq
@@ -2424,13 +2397,7 @@ bb.av:                                            ; preds = %bb.aq
   %i.cf = load ptr, ptr %i.ce, align 8, !nonnull !5, !align !13, !noundef !5
   br label %bb.au
 
-5:                                                ; preds = %bb.aq
-  %6 = icmp ne i64 %i.bw, -9223372036854775800
-  tail call void @llvm.assume(i1 %6)
-  %7 = icmp eq i64 %i.bw, -9223372036854775806
-  br i1 %7, label %bb.aw, label %bb.ax
-
-bb.aw:                                            ; preds = %5
+bb.aw:                                            ; preds = %bb.aq
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.i, ptr noundef nonnull align 16 dereferenceable(32) %i.h, i64 32, i1 false)
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaGmGRvprAGn_5plist6stream5EventECs2zvA5OmMqFb_10ufo2fontir(ptr noalias nofree noundef align 16 dereferenceable(32) %i.i)
           to label %bb.ay unwind label %.thread357
@@ -2440,7 +2407,9 @@ bb.aw:                                            ; preds = %5
           cleanup
   br label %bb.ap
 
-bb.ax:                                            ; preds = %5
+bb.ax:                                            ; preds = %bb.aq
+  %3 = icmp ne i64 %i.bw, -9223372036854775800
+  tail call void @llvm.assume(i1 %3)
   %i.ch = invoke noundef nonnull align 8 ptr @_RNvNtCsaGmGRvprAGn_5plist5error21unexpected_event_type(i8 noundef 2, ptr noalias nofree noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(32) %i.h)
           to label %bb.au unwind label %bb.as
 
@@ -2843,10 +2812,11 @@ thread-pre-split.i.i.i:                           ; preds = %bb.w
   br label %bb.y
 
 bb.y:                                             ; preds = %thread-pre-split.i.i.i, %bb.v
-  %i.bh = phi i64 [ %.pr351.i.i.i, %thread-pre-split.i.i.i ], [ %.sroa.0250.0.copyload.i.i.i, %bb.v ] ; 3 uses
-  switch i64 %i.bh, label %2 [
+  %i.bh = phi i64 [ %.pr351.i.i.i, %thread-pre-split.i.i.i ], [ %.sroa.0250.0.copyload.i.i.i, %bb.v ] ; 2 uses
+  switch i64 %i.bh, label %bb.af [
     i64 -3, label %bb.z
     i64 -2, label %bb.ad
+    i64 -9223372036854775806, label %bb.ae
   ]
 
 bb.z:                                             ; preds = %bb.y
@@ -2882,13 +2852,7 @@ bb.ad:                                            ; preds = %bb.y
   %i.bq = load ptr, ptr %i.bp, align 8, !noalias !947, !nonnull !5, !align !13, !noundef !5
   br label %bb.ac
 
-2:                                                ; preds = %bb.y
-  %3 = icmp ne i64 %i.bh, -9223372036854775800
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.bh, -9223372036854775806
-  br i1 %4, label %bb.ae, label %bb.af
-
-bb.ae:                                            ; preds = %2
+bb.ae:                                            ; preds = %bb.y
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.o, ptr noundef nonnull align 16 dereferenceable(32) %i.n, i64 32, i1 false), !noalias !947
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaGmGRvprAGn_5plist6stream5EventECs2zvA5OmMqFb_10ufo2fontir(ptr noalias nofree noundef align 16 dereferenceable(32) %i.o)
           to label %bb.ag unwind label %.thread.i.i.i, !noalias !949
@@ -2898,7 +2862,9 @@ bb.ae:                                            ; preds = %2
           cleanup
   br label %bb.x
 
-bb.af:                                            ; preds = %2
+bb.af:                                            ; preds = %bb.y
+  %2 = icmp ne i64 %i.bh, -9223372036854775800
+  tail call void @llvm.assume(i1 %2)
   %i.bs = invoke noundef nonnull align 8 ptr @_RNvNtCsaGmGRvprAGn_5plist5error21unexpected_event_type(i8 noundef 2, ptr noalias nofree noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(32) %i.n)
           to label %bb.ac unwind label %bb.aa, !noalias !949
 
@@ -2975,10 +2941,11 @@ thread-pre-split355.i.i.i:                        ; preds = %bb.ao
   br label %bb.aq
 
 bb.aq:                                            ; preds = %thread-pre-split355.i.i.i, %bb.an
-  %i.bw = phi i64 [ %.pr356.i.i.i, %thread-pre-split355.i.i.i ], [ %.sroa.0257.0.copyload.i.i.i, %bb.an ] ; 3 uses
-  switch i64 %i.bw, label %5 [
+  %i.bw = phi i64 [ %.pr356.i.i.i, %thread-pre-split355.i.i.i ], [ %.sroa.0257.0.copyload.i.i.i, %bb.an ] ; 2 uses
+  switch i64 %i.bw, label %bb.ax [
     i64 -3, label %bb.ar
     i64 -2, label %bb.av
+    i64 -9223372036854775806, label %bb.aw
   ]
 
 bb.ar:                                            ; preds = %bb.aq
@@ -3014,13 +2981,7 @@ bb.av:                                            ; preds = %bb.aq
   %i.cf = load ptr, ptr %i.ce, align 8, !noalias !947, !nonnull !5, !align !13, !noundef !5
   br label %bb.au
 
-5:                                                ; preds = %bb.aq
-  %6 = icmp ne i64 %i.bw, -9223372036854775800
-  tail call void @llvm.assume(i1 %6)
-  %7 = icmp eq i64 %i.bw, -9223372036854775806
-  br i1 %7, label %bb.aw, label %bb.ax
-
-bb.aw:                                            ; preds = %5
+bb.aw:                                            ; preds = %bb.aq
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.i, ptr noundef nonnull align 16 dereferenceable(32) %i.h, i64 32, i1 false), !noalias !947
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaGmGRvprAGn_5plist6stream5EventECs2zvA5OmMqFb_10ufo2fontir(ptr noalias nofree noundef align 16 dereferenceable(32) %i.i)
           to label %bb.ay unwind label %.thread357.i.i.i, !noalias !949
@@ -3030,7 +2991,9 @@ bb.aw:                                            ; preds = %5
           cleanup
   br label %bb.ap
 
-bb.ax:                                            ; preds = %5
+bb.ax:                                            ; preds = %bb.aq
+  %3 = icmp ne i64 %i.bw, -9223372036854775800
+  tail call void @llvm.assume(i1 %3)
   %i.ch = invoke noundef nonnull align 8 ptr @_RNvNtCsaGmGRvprAGn_5plist5error21unexpected_event_type(i8 noundef 2, ptr noalias nofree noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(32) %i.h)
           to label %bb.au unwind label %bb.as, !noalias !949
 
@@ -3236,24 +3199,17 @@ bb.b:                                             ; preds = %bb.a
   br label %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit
 
 _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit: ; preds = %bb.a, %bb.b
-  %i.ah = phi i64 [ %i.ae, %bb.a ], [ %i.af, %bb.b ] ; 9 uses
-  %.off = add i64 %i.ah, 3
-  %switch = icmp ult i64 %.off, 2
-  br i1 %switch, label %bb.c, label %2
+  %i.ah = phi i64 [ %i.ae, %bb.a ], [ %i.af, %bb.b ] ; 7 uses
+  %cond = icmp eq i64 %i.ah, -9223372036854775806
+  br i1 %cond, label %bb.d, label %bb.c
 
-bb.c:                                             ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit, %2
+bb.c:                                             ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit
   %i.ai = load i64, ptr %1, align 8, !range !10, !noundef !5
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   %i.ak = trunc nuw i64 %i.ai to i1
   br i1 %i.ak, label %bb.f, label %bb.g
 
-2:                                                ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit
-  %3 = icmp ne i64 %i.ah, -9223372036854775800
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.ah, -9223372036854775806
-  br i1 %4, label %bb.d, label %bb.c
-
-bb.d:                                             ; preds = %2
+bb.d:                                             ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 24
   store i64 -1, ptr %.sroa.3.0..sroa_idx, align 8
   br label %bb.e
@@ -3344,14 +3300,13 @@ _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsa
   call fastcc void @_RNvXs3_NtCsaGmGRvprAGn_5plist6streamINtB5_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEENtNtNtNtCsf3Ta7LF998c_4core4iter6traits8iterator8Iterator4nextCs2zvA5OmMqFb_10ufo2fontir(ptr noalias nofree noundef nonnull align 16 captures(address) dereferenceable(32) %i.d, ptr noalias nofree noundef nonnull align 8 dereferenceable(200) %i.ad), !noalias !1022
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(256) %i.ac, ptr noundef nonnull align 16 dereferenceable(32) %i.d, i64 32, i1 false), !noalias !1023
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !1021
-  %i.aw = load i64, ptr %i.ac, align 16, !range !15, !alias.scope !1017, !noalias !1024, !noundef !5 ; 4 uses
+  %i.aw = load i64, ptr %i.ac, align 16, !range !15, !alias.scope !1017, !noalias !1024, !noundef !5 ; 2 uses
   %i.ax = icmp ne i64 %i.aw, -4
   tail call void @llvm.assume(i1 %i.ax)
-  %.off.i.i.i.i.i.i.i = add i64 %i.aw, 3
-  %switch.i.i.i.i.i.i.i = icmp ult i64 %.off.i.i.i.i.i.i.i, 2
-  br i1 %switch.i.i.i.i.i.i.i, label %bb.m, label %5
+  %cond.i.i.i.i.i.i.i = icmp eq i64 %i.aw, -9223372036854775806
+  br i1 %cond.i.i.i.i.i.i.i, label %bb.r, label %bb.m
 
-bb.m:                                             ; preds = %5, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit.i.i.i.i.i.i.i
+bb.m:                                             ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit.i.i.i.i.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !1025
   %i.ay = load i8, ptr %i.an, align 1, !range !20, !alias.scope !1017, !noalias !1024, !noundef !5
   store i8 2, ptr %i.an, align 1, !alias.scope !1017, !noalias !1024
@@ -3360,12 +3315,6 @@ bb.m:                                             ; preds = %5, %_RINvMNtCsf3Ta7
   %i.az = load i8, ptr %i.e, align 8, !range !25, !noalias !1025, !noundef !5 ; 2 uses
   %i.ba = icmp eq i8 %i.az, -1
   br i1 %i.ba, label %bb.n, label %bb.o
-
-5:                                                ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit.i.i.i.i.i.i.i
-  %6 = icmp ne i64 %i.aw, -9223372036854775800
-  tail call void @llvm.assume(i1 %6)
-  %7 = icmp eq i64 %i.aw, -9223372036854775806
-  br i1 %7, label %bb.r, label %bb.m
 
 bb.n:                                             ; preds = %bb.m
   %i.bb = getelementptr inbounds nuw i8, ptr %i.e, i64 8
@@ -3405,23 +3354,16 @@ bb.p:                                             ; preds = %bb.o
   br label %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit.i.i15.i.i.i.i.i
 
 _RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit.i.i15.i.i.i.i.i: ; preds = %.noexc.i.i.i.i.i, %bb.o
-  %i.bg = phi i64 [ %i.bd, %bb.o ], [ %i.be, %.noexc.i.i.i.i.i ] ; 3 uses
-  %.off.i.i16.i.i.i.i.i = add i64 %i.bg, 3
-  %switch.i.i17.i.i.i.i.i = icmp ult i64 %.off.i.i16.i.i.i.i.i, 2
-  br i1 %switch.i.i17.i.i.i.i.i, label %bb.q, label %8
+  %i.bg = phi i64 [ %i.bd, %bb.o ], [ %i.be, %.noexc.i.i.i.i.i ]
+  %cond.i.i16.i.i.i.i.i = icmp eq i64 %i.bg, -9223372036854775806
+  br i1 %cond.i.i16.i.i.i.i.i, label %bb.w, label %bb.q
 
-bb.q:                                             ; preds = %8, %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit.i.i15.i.i.i.i.i
+bb.q:                                             ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit.i.i15.i.i.i.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !1031
   %i.bh = load i8, ptr %i.an, align 1, !range !20, !alias.scope !1017, !noalias !1027, !noundef !5
   store i8 2, ptr %i.an, align 1, !alias.scope !1017, !noalias !1027
   invoke fastcc void @_RINvXs3_NtCs7N5MyPZKytm_10serde_core2deINtNtCsf3Ta7LF998c_4core6marker11PhantomDataNtNtCs5Xr050g3D4S_3std4path7PathBufENtB6_15DeserializeSeed11deserializeQINtNtCsaGmGRvprAGn_5plist2de12DeserializerINtNtB2y_6stream6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtB1n_2fs4FileEEEECs2zvA5OmMqFb_10ufo2fontir(ptr noalias nofree noundef align 8 captures(address) dereferenceable(24) %i.c, ptr noalias nofree noundef nonnull align 16 dereferenceable(256) %i.ac) #31
           to label %.noexc20.i.i.i.i.i unwind label %bb.s, !noalias !1029
-
-8:                                                ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit.i.i15.i.i.i.i.i
-  %9 = icmp ne i64 %i.bg, -9223372036854775800
-  call void @llvm.assume(i1 %9)
-  %10 = icmp eq i64 %i.bg, -9223372036854775806
-  br i1 %10, label %bb.w, label %bb.q
 
 .noexc20.i.i.i.i.i:                               ; preds = %bb.q
   store i8 %i.bh, ptr %i.an, align 1, !alias.scope !1017, !noalias !1027
@@ -3431,7 +3373,7 @@ bb.q:                                             ; preds = %8, %_RINvMNtCsf3Ta7
   %i.bl = load ptr, ptr %i.bk, align 8, !noalias !1032 ; 2 uses
   br i1 %i.bj, label %bb.v, label %bb.al
 
-bb.r:                                             ; preds = %5
+bb.r:                                             ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit.i.i.i.i.i.i.i
   %i.bm = call noundef nonnull align 8 ptr @_RNvYNtNtCsaGmGRvprAGn_5plist5error5ErrorNtNtCs7N5MyPZKytm_10serde_core2de5Error14invalid_lengthCs2zvA5OmMqFb_10ufo2fontir(i64 noundef 0, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @1), !noalias !1029
   br label %bb.ak
 
@@ -3462,7 +3404,7 @@ bb.v:                                             ; preds = %.noexc20.i.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !1031
   br label %bb.x
 
-bb.w:                                             ; preds = %8
+bb.w:                                             ; preds = %_RINvMNtCsf3Ta7LF998c_4core6optionINtB3_6OptionIBw_INtNtB5_6result6ResultNtNtCsaGmGRvprAGn_5plist6stream5EventNtNtB1c_5error5ErrorEEE18get_or_insert_withNCNvMs3_NtNtNtB5_4iter8adapters8peekableINtB2y_8PeekableINtB1a_6ReaderINtNtNtNtCsgCecv3eZDcN_5alloc2io8buffered9bufreader9BufReaderNtNtCs5Xr050g3D4S_3std2fs4FileEEE4peek0ECs2zvA5OmMqFb_10ufo2fontir.exit.i.i15.i.i.i.i.i
   %i.bs = invoke noundef nonnull align 8 ptr @_RNvYNtNtCsaGmGRvprAGn_5plist5error5ErrorNtNtCs7N5MyPZKytm_10serde_core2de5Error14invalid_lengthCs2zvA5OmMqFb_10ufo2fontir(i64 noundef 1, ptr noundef nonnull %i.a, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @1)
           to label %bb.x unwind label %bb.s, !noalias !1029
 
@@ -3623,10 +3565,11 @@ thread-pre-split.i.i.i.i:                         ; preds = %bb.an
   br label %bb.ap
 
 bb.ap:                                            ; preds = %thread-pre-split.i.i.i.i, %bb.am
-  %i.cs = phi i64 [ %.pr367.i.i.i.i, %thread-pre-split.i.i.i.i ], [ %.sroa.0258.0.copyload.i.i.i.i, %bb.am ] ; 3 uses
-  switch i64 %i.cs, label %11 [
+  %i.cs = phi i64 [ %.pr367.i.i.i.i, %thread-pre-split.i.i.i.i ], [ %.sroa.0258.0.copyload.i.i.i.i, %bb.am ] ; 2 uses
+  switch i64 %i.cs, label %bb.aw [
     i64 -3, label %bb.aq
     i64 -2, label %bb.au
+    i64 -9223372036854775806, label %bb.av
   ]
 
 bb.aq:                                            ; preds = %bb.ap
@@ -3662,13 +3605,7 @@ bb.au:                                            ; preds = %bb.ap
   %i.db = load ptr, ptr %i.da, align 8, !noalias !1019, !nonnull !5, !align !13, !noundef !5
   br label %bb.at
 
-11:                                               ; preds = %bb.ap
-  %12 = icmp ne i64 %i.cs, -9223372036854775800
-  call void @llvm.assume(i1 %12)
-  %13 = icmp eq i64 %i.cs, -9223372036854775806
-  br i1 %13, label %bb.av, label %bb.aw
-
-bb.av:                                            ; preds = %11
+bb.av:                                            ; preds = %bb.ap
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.w, ptr noundef nonnull align 16 dereferenceable(32) %i.v, i64 32, i1 false), !noalias !1019
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaGmGRvprAGn_5plist6stream5EventECs2zvA5OmMqFb_10ufo2fontir(ptr noalias nofree noundef align 16 dereferenceable(32) %i.w)
           to label %bb.ax unwind label %.thread.i.i.i.i, !noalias !1018
@@ -3678,7 +3615,9 @@ bb.av:                                            ; preds = %11
           cleanup
   br label %bb.ao
 
-bb.aw:                                            ; preds = %11
+bb.aw:                                            ; preds = %bb.ap
+  %2 = icmp ne i64 %i.cs, -9223372036854775800
+  call void @llvm.assume(i1 %2)
   %i.dd = invoke noundef nonnull align 8 ptr @_RNvNtCsaGmGRvprAGn_5plist5error21unexpected_event_type(i8 noundef 2, ptr noalias nofree noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(32) %i.v)
           to label %bb.at unwind label %bb.ar, !noalias !1018
 
@@ -3756,10 +3695,11 @@ thread-pre-split371.i.i.i.i:                      ; preds = %bb.bf
   br label %bb.bh
 
 bb.bh:                                            ; preds = %thread-pre-split371.i.i.i.i, %bb.be
-  %i.dg = phi i64 [ %.pr372.i.i.i.i, %thread-pre-split371.i.i.i.i ], [ %.sroa.0266.0.copyload.i.i.i.i, %bb.be ] ; 3 uses
-  switch i64 %i.dg, label %14 [
+  %i.dg = phi i64 [ %.pr372.i.i.i.i, %thread-pre-split371.i.i.i.i ], [ %.sroa.0266.0.copyload.i.i.i.i, %bb.be ] ; 2 uses
+  switch i64 %i.dg, label %bb.bo [
     i64 -3, label %bb.bi
     i64 -2, label %bb.bm
+    i64 -9223372036854775806, label %bb.bn
   ]
 
 bb.bi:                                            ; preds = %bb.bh
@@ -3795,13 +3735,7 @@ bb.bm:                                            ; preds = %bb.bh
   %i.dp = load ptr, ptr %i.do, align 8, !noalias !1019, !nonnull !5, !align !13, !noundef !5
   br label %bb.bl
 
-14:                                               ; preds = %bb.bh
-  %15 = icmp ne i64 %i.dg, -9223372036854775800
-  tail call void @llvm.assume(i1 %15)
-  %16 = icmp eq i64 %i.dg, -9223372036854775806
-  br i1 %16, label %bb.bn, label %bb.bo
-
-bb.bn:                                            ; preds = %14
+bb.bn:                                            ; preds = %bb.bh
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(32) %i.q, ptr noundef nonnull align 16 dereferenceable(32) %i.p, i64 32, i1 false), !noalias !1019
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaGmGRvprAGn_5plist6stream5EventECs2zvA5OmMqFb_10ufo2fontir(ptr noalias nofree noundef align 16 dereferenceable(32) %i.q)
           to label %bb.bp unwind label %.thread373.i.i.i.i, !noalias !1018
@@ -3811,7 +3745,9 @@ bb.bn:                                            ; preds = %14
           cleanup
   br label %bb.bg
 
-bb.bo:                                            ; preds = %14
+bb.bo:                                            ; preds = %bb.bh
+  %3 = icmp ne i64 %i.dg, -9223372036854775800
+  tail call void @llvm.assume(i1 %3)
   %i.dr = invoke noundef nonnull align 8 ptr @_RNvNtCsaGmGRvprAGn_5plist5error21unexpected_event_type(i8 noundef 2, ptr noalias nofree noundef nonnull readonly align 16 captures(address, read_provenance) dereferenceable(32) %i.p)
           to label %bb.bl unwind label %bb.bj, !noalias !1018
 

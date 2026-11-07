@@ -205,7 +205,7 @@ bb.ai:                                            ; preds = %bb.ag
 
 .lr.ph.i.i:                                       ; preds = %"_ZN4core3ptr68drop_in_place$LT$alloc..vec..Vec$LT$anki..notetype..Notetype$GT$$GT$17h45753bd07fd3d3c5E.exit"
   %i.bg = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %.val.i.i.i = load ptr, ptr %i.bg, align 8, !alias.scope !2088 ; 5 uses
+  %.val.i.i.i = load ptr, ptr %i.bg, align 8, !alias.scope !2088 ; 6 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.val1.i.i.i = load i64, ptr %i.bh, align 8, !alias.scope !2088 ; 3 uses
   %.idx = mul nuw nsw i64 %.val1.i.i.i, 192
@@ -228,7 +228,7 @@ bb.aj:                                            ; preds = %"_ZN4anki13import_e
 
 bb.ak:                                            ; preds = %bb.aj
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
-  br i1 %i.bj, label %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i, label %.lr.ph
+  br i1 %i.bj, label %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i._ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit.loopexit_crit_edge, label %.lr.ph
 
 bb.al:                                            ; preds = %.lr.ph
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bq, i64 192 ; 2 uses
@@ -248,9 +248,9 @@ _ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df
   %.not.i.i.i = icmp eq i64 %i.bv, -9223372036854775808
   br i1 %.not.i.i.i, label %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i, label %"_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks28_$u7b$$u7b$closure$u7d$$u7d$17h2a5276434dbcdd22E.exit.i.i"
 
-_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i: ; preds = %bb.al, %bb.ak, %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.i.i.i, %bb.aj
+_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i: ; preds = %bb.al, %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.i.i.i, %bb.aj
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
-  br i1 %.not.not.not.i.not.not.i.not.i.i.i225, label %_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit, label %.lr.ph226
+  br i1 %.not.not.not.i.not.not.i.not.i.i.i225, label %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i._ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit.loopexit_crit_edge, label %.lr.ph226
 
 bb.am:                                            ; preds = %.lr.ph226
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bx, i64 192 ; 2 uses
@@ -268,8 +268,12 @@ bb.am:                                            ; preds = %.lr.ph226
   %i.ca = icmp eq ptr %i.bl, %i.be
   br i1 %i.ca, label %_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit, label %bb.aj
 
-_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit: ; preds = %"_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks28_$u7b$$u7b$closure$u7d$$u7d$17h2a5276434dbcdd22E.exit.i.i", %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i, %bb.am, %"_ZN4core3ptr68drop_in_place$LT$alloc..vec..Vec$LT$anki..notetype..Notetype$GT$$GT$17h45753bd07fd3d3c5E.exit"
-  %i.cb = phi i1 [ true, %"_ZN4core3ptr68drop_in_place$LT$alloc..vec..Vec$LT$anki..notetype..Notetype$GT$$GT$17h45753bd07fd3d3c5E.exit" ], [ false, %bb.am ], [ true, %"_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks28_$u7b$$u7b$closure$u7d$$u7d$17h2a5276434dbcdd22E.exit.i.i" ], [ false, %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i ] ; 2 uses
+_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i._ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit.loopexit_crit_edge: ; preds = %bb.ak, %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i) ]
+  br label %_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit
+
+_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit: ; preds = %"_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks28_$u7b$$u7b$closure$u7d$$u7d$17h2a5276434dbcdd22E.exit.i.i", %bb.am, %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i._ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit.loopexit_crit_edge, %"_ZN4core3ptr68drop_in_place$LT$alloc..vec..Vec$LT$anki..notetype..Notetype$GT$$GT$17h45753bd07fd3d3c5E.exit"
+  %i.cb = phi i1 [ true, %"_ZN4core3ptr68drop_in_place$LT$alloc..vec..Vec$LT$anki..notetype..Notetype$GT$$GT$17h45753bd07fd3d3c5E.exit" ], [ false, %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i._ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit.loopexit_crit_edge ], [ false, %bb.am ], [ true, %"_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks28_$u7b$$u7b$closure$u7d$$u7d$17h2a5276434dbcdd22E.exit.i.i" ] ; 2 uses
   br i1 %4, label %bb.ao, label %bb.an
 
 bb.an:                                            ; preds = %_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit
@@ -672,7 +676,7 @@ bb.a:
 
 .lr.ph.i:                                         ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %.val.i.i = load ptr, ptr %i.g, align 8, !alias.scope !2166 ; 5 uses
+  %.val.i.i = load ptr, ptr %i.g, align 8, !alias.scope !2166 ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.val1.i.i = load i64, ptr %i.h, align 8, !alias.scope !2166 ; 3 uses
   %.idx13 = mul nuw nsw i64 %.val1.i.i, 192
@@ -695,7 +699,7 @@ bb.b:                                             ; preds = %"_ZN4anki13import_e
 
 bb.c:                                             ; preds = %bb.b
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
-  br i1 %i.j, label %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i, label %.lr.ph
+  br i1 %i.j, label %"_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i._ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$3all17hb7dad75961a52eb1E.exit.loopexit_crit_edge", label %.lr.ph
 
 bb.d:                                             ; preds = %.lr.ph
   %i.o = getelementptr inbounds nuw i8, ptr %i.q, i64 192 ; 2 uses
@@ -715,9 +719,9 @@ _ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df
   %.not.i.i = icmp eq i64 %i.v, -9223372036854775808
   br i1 %.not.i.i, label %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i, label %"_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks28_$u7b$$u7b$closure$u7d$$u7d$17h2a5276434dbcdd22E.exit.i"
 
-_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i: ; preds = %bb.d, %bb.c, %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.i.i, %bb.b
+_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i: ; preds = %bb.d, %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.i.i, %bb.b
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
-  br i1 %.not.not.not.i.not.not.i.not.i.i11, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$3all17hb7dad75961a52eb1E.exit", label %.lr.ph12
+  br i1 %.not.not.not.i.not.not.i.not.i.i11, label %"_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i._ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$3all17hb7dad75961a52eb1E.exit.loopexit_crit_edge", label %.lr.ph12
 
 bb.e:                                             ; preds = %.lr.ph12
   %i.w = getelementptr inbounds nuw i8, ptr %i.x, i64 192 ; 2 uses
@@ -735,8 +739,12 @@ bb.e:                                             ; preds = %.lr.ph12
   %i.aa = icmp eq ptr %i.l, %i.e
   br i1 %i.aa, label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$3all17hb7dad75961a52eb1E.exit", label %bb.b
 
-"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$3all17hb7dad75961a52eb1E.exit": ; preds = %"_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks28_$u7b$$u7b$closure$u7d$$u7d$17h2a5276434dbcdd22E.exit.i", %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i, %bb.e, %bb.a
-  %i.ab = phi i1 [ true, %bb.a ], [ false, %bb.e ], [ true, %"_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks28_$u7b$$u7b$closure$u7d$$u7d$17h2a5276434dbcdd22E.exit.i" ], [ false, %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i ]
+"_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i._ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$3all17hb7dad75961a52eb1E.exit.loopexit_crit_edge": ; preds = %bb.c, %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i) ]
+  br label %"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$3all17hb7dad75961a52eb1E.exit"
+
+"_ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$3all17hb7dad75961a52eb1E.exit": ; preds = %"_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks28_$u7b$$u7b$closure$u7d$$u7d$17h2a5276434dbcdd22E.exit.i", %bb.e, %"_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i._ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$3all17hb7dad75961a52eb1E.exit.loopexit_crit_edge", %bb.a
+  %i.ab = phi i1 [ true, %bb.a ], [ false, %"_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i._ZN91_$LT$core..slice..iter..Iter$LT$T$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$3all17hb7dad75961a52eb1E.exit.loopexit_crit_edge" ], [ false, %bb.e ], [ true, %"_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks28_$u7b$$u7b$closure$u7d$$u7d$17h2a5276434dbcdd22E.exit.i" ]
   ret i1 %i.ab
 }
 
@@ -1139,7 +1147,7 @@ bb.bm:                                            ; preds = %bb.bk
 
 .lr.ph.i.i.i:                                     ; preds = %"_ZN4core3ptr68drop_in_place$LT$alloc..vec..Vec$LT$anki..notetype..Notetype$GT$$GT$17h45753bd07fd3d3c5E.exit.i"
   %i.dk = getelementptr inbounds nuw i8, ptr %i.v, i64 8
-  %.val.i.i.i.i = load ptr, ptr %i.dk, align 8, !alias.scope !2217 ; 5 uses
+  %.val.i.i.i.i = load ptr, ptr %i.dk, align 8, !alias.scope !2217 ; 6 uses
   %i.dl = getelementptr inbounds nuw i8, ptr %i.v, i64 16
   %.val1.i.i.i.i = load i64, ptr %i.dl, align 8, !alias.scope !2217 ; 3 uses
   %.idx = mul nuw nsw i64 %.val1.i.i.i.i, 192
@@ -1162,7 +1170,7 @@ bb.bn:                                            ; preds = %"_ZN4anki13import_e
 
 bb.bo:                                            ; preds = %bb.bn
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
-  br i1 %i.dn, label %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i.i, label %.lr.ph
+  br i1 %i.dn, label %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i.i._ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit.i.loopexit_crit_edge, label %.lr.ph
 
 bb.bp:                                            ; preds = %.lr.ph
   %i.ds = getelementptr inbounds nuw i8, ptr %i.du, i64 192 ; 2 uses
@@ -1182,9 +1190,9 @@ _ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df
   %.not.i.i.i.i = icmp eq i64 %i.dz, -9223372036854775808
   br i1 %.not.i.i.i.i, label %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i.i, label %"_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks28_$u7b$$u7b$closure$u7d$$u7d$17h2a5276434dbcdd22E.exit.i.i.i"
 
-_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i.i: ; preds = %bb.bp, %bb.bo, %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.i.i.i.i, %bb.bn
+_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i.i: ; preds = %bb.bp, %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.i.i.i.i, %bb.bn
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
-  br i1 %.not.not.not.i.not.not.i.not.i.i.i.i83, label %_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit.i, label %.lr.ph84
+  br i1 %.not.not.not.i.not.not.i.not.i.i.i.i83, label %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i.i._ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit.i.loopexit_crit_edge, label %.lr.ph84
 
 bb.bq:                                            ; preds = %.lr.ph84
   %i.ea = getelementptr inbounds nuw i8, ptr %i.eb, i64 192 ; 2 uses
@@ -1202,8 +1210,12 @@ bb.bq:                                            ; preds = %.lr.ph84
   %i.ee = icmp eq ptr %i.dp, %i.di
   br i1 %i.ee, label %_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit.i, label %bb.bn
 
-_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit.i: ; preds = %"_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks28_$u7b$$u7b$closure$u7d$$u7d$17h2a5276434dbcdd22E.exit.i.i.i", %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i.i, %bb.bq, %"_ZN4core3ptr68drop_in_place$LT$alloc..vec..Vec$LT$anki..notetype..Notetype$GT$$GT$17h45753bd07fd3d3c5E.exit.i"
-  %i.ef = phi i1 [ true, %"_ZN4core3ptr68drop_in_place$LT$alloc..vec..Vec$LT$anki..notetype..Notetype$GT$$GT$17h45753bd07fd3d3c5E.exit.i" ], [ false, %bb.bq ], [ true, %"_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks28_$u7b$$u7b$closure$u7d$$u7d$17h2a5276434dbcdd22E.exit.i.i.i" ], [ false, %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i.i ] ; 2 uses
+_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i.i._ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit.i.loopexit_crit_edge: ; preds = %bb.bo, %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i.i.i.i) ]
+  br label %_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit.i
+
+_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit.i: ; preds = %"_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks28_$u7b$$u7b$closure$u7d$$u7d$17h2a5276434dbcdd22E.exit.i.i.i", %bb.bq, %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i.i._ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit.i.loopexit_crit_edge, %"_ZN4core3ptr68drop_in_place$LT$alloc..vec..Vec$LT$anki..notetype..Notetype$GT$$GT$17h45753bd07fd3d3c5E.exit.i"
+  %i.ef = phi i1 [ true, %"_ZN4core3ptr68drop_in_place$LT$alloc..vec..Vec$LT$anki..notetype..Notetype$GT$$GT$17h45753bd07fd3d3c5E.exit.i" ], [ false, %_ZN4anki13import_export6gather12ExchangeData28card_and_its_deck_are_normal17h3df2acf79e38c30cE.exit.thread.i.i.i.i._ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit.i.loopexit_crit_edge ], [ false, %bb.bq ], [ true, %"_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks28_$u7b$$u7b$closure$u7d$$u7d$17h2a5276434dbcdd22E.exit.i.i.i" ] ; 2 uses
   br i1 %5, label %bb.bs, label %bb.br
 
 bb.br:                                            ; preds = %_ZN4anki13import_export6gather12ExchangeData22enables_filtered_decks17he65a27556f0b3f73E.exit.i

@@ -1,0 +1,743 @@
+diff --git a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+index 89295cec23498b..198af7d34b262d 100644
+--- a/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
++++ b/llvm/lib/Transforms/Utils/SimplifyCFG.cpp
+@@ -288,8 +288,9 @@ class SimplifyCFGOpt {
+   bool performValueComparisonIntoPredecessorFolding(Instruction *TI, Value *&CV,
+                                                     Instruction *PTI,
+                                                     IRBuilder<> &Builder);
+-  bool foldValueComparisonIntoPredecessors(Instruction *TI,
+-                                           IRBuilder<> &Builder);
++  bool foldValueComparisonIntoPredecessors(
++      Instruction *TI, IRBuilder<> &Builder,
++      ArrayRef<Instruction *> EphInsts = {});
+ 
+   bool simplifyResume(ResumeInst *RI, IRBuilder<> &Builder);
+   bool simplifySingleResume(ResumeInst *RI);
+@@ -1475,12 +1476,42 @@ bool SimplifyCFGOpt::performValueComparisonIntoPredecessorFolding(
+   return true;
+ }
+ 
++/// Clone the ephemeral instructions \p EphInsts of \p BB into the successors
++/// of \p BB that are only reachable through \p BB, so that the assumptions are
++/// not lost when predecessors of \p BB are folded to bypass it.
++static void cloneEphemeralInstsIntoSuccessors(BasicBlock *BB,
++                                              ArrayRef<Instruction *> EphInsts,
++                                              AssumptionCache *AC) {
++  SmallPtrSet<BasicBlock *, 8> Visited;
++  for (BasicBlock *Succ : successors(BB)) {
++    if (!Visited.insert(Succ).second || Succ->getUniquePredecessor() != BB)
++      continue;
++    ValueToValueMapTy VMap;
++    BasicBlock::iterator InsertPt = Succ->getFirstInsertionPt();
++    for (Instruction *I : EphInsts) {
++      Instruction *NewI = I->clone();
++      NewI->insertInto(Succ, InsertPt);
++      NewI->setName(I->getName());
++      if (const DebugLoc &DL = I->getDebugLoc())
++        mapAtomInstance(DL, VMap);
++      RemapInstruction(NewI, VMap,
++                       RF_NoModuleLevelChanges | RF_IgnoreMissingLocals);
++      VMap[I] = NewI;
++      if (auto *Assume = dyn_cast<AssumeInst>(NewI))
++        if (AC)
++          AC->registerAssumption(Assume);
++    }
++  }
++}
++
+ /// The specified terminator is a value equality comparison instruction
+ /// (either a switch or a branch on "X == c").
+ /// See if any of the predecessors of the terminator block are value comparisons
+ /// on the same value.  If so, and if safe to do so, fold them together.
+-bool SimplifyCFGOpt::foldValueComparisonIntoPredecessors(Instruction *TI,
+-                                                         IRBuilder<> &Builder) {
++/// \p EphInsts are the ephemeral instructions in the terminator block, which
++/// are the only instructions that may be bypassed apart from the condition.
++bool SimplifyCFGOpt::foldValueComparisonIntoPredecessors(
++    Instruction *TI, IRBuilder<> &Builder, ArrayRef<Instruction *> EphInsts) {
+   BasicBlock *BB = TI->getParent();
+   Value *CV = isValueEqualityComparison(TI); // CondVal
+   assert(CV && "Not a comparison?");
+@@ -1509,6 +1540,12 @@ bool SimplifyCFGOpt::foldValueComparisonIntoPredecessors(Instruction *TI,
+       }
+     }
+ 
++    // Do this once, while BB's successors still only have BB as predecessor.
++    if (!EphInsts.empty()) {
++      cloneEphemeralInstsIntoSuccessors(BB, EphInsts, Options.AC);
++      EphInsts = {};
++    }
++
+     performValueComparisonIntoPredecessorFolding(TI, CV, PTI, Builder);
+     Changed = true;
+   }
+@@ -3065,6 +3102,31 @@ class EphemeralValueTracker {
+ };
+ } // namespace
+ 
++/// Return true if all instructions in \p BB other than the terminator, \p Cond
++/// and pseudo probes are ephemeral (assumes and values only used by them),
++/// which makes it legal to bypass \p BB. The ephemeral instructions are
++/// collected in \p EphInsts in program order.
++static bool onlyEphemeralInstsBeforeTerminator(
++    BasicBlock *BB, const Instruction *Cond,
++    SmallVectorImpl<Instruction *> &EphInsts) {
++  EphemeralValueTracker EphTracker;
++  for (Instruction &I : reverse(drop_end(*BB))) {
++    if (isa<PseudoProbeInst>(I) || &I == Cond)
++      continue;
++    if (isa<PHINode>(I) || !EphTracker.track(&I))
++      return false;
++    EphInsts.push_back(&I);
++  }
++  // The ephemeral instructions get cloned into successors where Cond may not
++  // be available.
++  if (Cond && any_of(Cond->users(), [&](const User *U) {
++        return EphTracker.contains(cast<Instruction>(U));
++      }))
++    return false;
++  std::reverse(EphInsts.begin(), EphInsts.end());
++  return true;
++}
++
+ /// Determine if we can hoist sink a sole store instruction out of a
+ /// conditional block.
+ ///
+@@ -8684,11 +8746,12 @@ bool SimplifyCFGOpt::simplifySwitch(SwitchInst *SI, IRBuilder<> &Builder) {
+       if (simplifySwitchOnSelect(SI, Select))
+         return requestResimplify();
+ 
+-    // If the block only contains the switch, see if we can fold the block
+-    // away into any preds.
+-    if (SI == &*BB->begin())
+-      if (foldValueComparisonIntoPredecessors(SI, Builder))
+-        return requestResimplify();
++    // If the block only contains the switch (ignoring pseudo probes and
++    // ephemeral values), see if we can fold the block away into any preds.
++    SmallVector<Instruction *, 4> EphInsts;
++    if (onlyEphemeralInstsBeforeTerminator(BB, /*Cond=*/nullptr, EphInsts) &&
++        foldValueComparisonIntoPredecessors(SI, Builder, EphInsts))
++      return requestResimplify();
+   }
+ 
+   // Try to transform the switch into an icmp and a branch.
+@@ -9063,16 +9126,12 @@ bool SimplifyCFGOpt::simplifyCondBranch(CondBrInst *BI, IRBuilder<> &Builder) {
+         return requestResimplify();
+ 
+     // This block must be empty, except for the setcond inst, if it exists.
+-    // Ignore pseudo intrinsics.
+-    for (auto &I : *BB) {
+-      if (isa<PseudoProbeInst>(I) ||
+-          &I == cast<Instruction>(BI->getCondition()))
+-        continue;
+-      if (&I == BI)
+-        if (foldValueComparisonIntoPredecessors(BI, Builder))
+-          return requestResimplify();
+-      break;
+-    }
++    // Ignore pseudo intrinsics and ephemeral values.
++    SmallVector<Instruction *, 4> EphInsts;
++    if (onlyEphemeralInstsBeforeTerminator(
++            BB, cast<Instruction>(BI->getCondition()), EphInsts) &&
++        foldValueComparisonIntoPredecessors(BI, Builder, EphInsts))
++      return requestResimplify();
+   }
+ 
+   // Try to turn "br (X == 0 | X == 1), T, F" into a switch instruction.
+diff --git a/llvm/test/Transforms/SimplifyCFG/FoldValueComparisonIntoPredecessors-ephemeral.ll b/llvm/test/Transforms/SimplifyCFG/FoldValueComparisonIntoPredecessors-ephemeral.ll
+new file mode 100644
+index 00000000000000..f99337c604acbc
+--- /dev/null
++++ b/llvm/test/Transforms/SimplifyCFG/FoldValueComparisonIntoPredecessors-ephemeral.ll
+@@ -0,0 +1,590 @@
++; NOTE: Assertions have been autogenerated by utils/update_test_checks.py UTC_ARGS: --version 6
++; RUN: opt -S -passes=simplifycfg -simplifycfg-require-and-preserve-domtree=1 < %s | FileCheck %s
++
++; Ephemeral instructions (assumes and values only used by them) should not
++; prevent folding a value comparison into its predecessors. They get cloned into
++; the successors that are only reachable through the folded block.
++
++declare void @fun0(ptr, i32)
++declare void @fun1(ptr, i32)
++declare void @fun2(ptr, i32)
++declare void @side_effect()
++
++define void @branch(ptr %storage, i32 %idx) {
++; CHECK-LABEL: define void @branch(
++; CHECK-SAME: ptr [[STORAGE:%.*]], i32 [[IDX:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    switch i32 [[IDX]], label %[[CALL1:.*]] [
++; CHECK-NEXT:      i32 -1, label %[[DONE:.*]]
++; CHECK-NEXT:      i32 0, label %[[CALL0:.*]]
++; CHECK-NEXT:    ]
++; CHECK:       [[CALL0]]:
++; CHECK-NEXT:    [[INRANGE1:%.*]] = icmp ult i32 [[IDX]], 2
++; CHECK-NEXT:    call void @llvm.assume(i1 [[INRANGE1]])
++; CHECK-NEXT:    call void @fun0(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[CALL1]]:
++; CHECK-NEXT:    [[INRANGE2:%.*]] = icmp ult i32 [[IDX]], 2
++; CHECK-NEXT:    call void @llvm.assume(i1 [[INRANGE2]])
++; CHECK-NEXT:    call void @fun1(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[DONE]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %valueless = icmp eq i32 %idx, -1
++  br i1 %valueless, label %done, label %dispatch
++
++dispatch:
++  %is0 = icmp eq i32 %idx, 0
++  %inrange = icmp ult i32 %idx, 2
++  call void @llvm.assume(i1 %inrange)
++  br i1 %is0, label %call0, label %call1
++
++call0:
++  call void @fun0(ptr %storage, i32 %idx)
++  br label %done
++
++call1:
++  call void @fun1(ptr %storage, i32 %idx)
++  br label %done
++
++done:
++  ret void
++}
++
++define void @switch(ptr %storage, i32 %idx) {
++; CHECK-LABEL: define void @switch(
++; CHECK-SAME: ptr [[STORAGE:%.*]], i32 [[IDX:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    switch i32 [[IDX]], label %[[CALL2:.*]] [
++; CHECK-NEXT:      i32 -1, label %[[DONE:.*]]
++; CHECK-NEXT:      i32 0, label %[[CALL0:.*]]
++; CHECK-NEXT:      i32 1, label %[[CALL1:.*]]
++; CHECK-NEXT:    ]
++; CHECK:       [[CALL0]]:
++; CHECK-NEXT:    [[INRANGE2:%.*]] = icmp ult i32 [[IDX]], 3
++; CHECK-NEXT:    call void @llvm.assume(i1 [[INRANGE2]])
++; CHECK-NEXT:    call void @fun0(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[CALL1]]:
++; CHECK-NEXT:    [[INRANGE3:%.*]] = icmp ult i32 [[IDX]], 3
++; CHECK-NEXT:    call void @llvm.assume(i1 [[INRANGE3]])
++; CHECK-NEXT:    call void @fun1(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[CALL2]]:
++; CHECK-NEXT:    [[INRANGE1:%.*]] = icmp ult i32 [[IDX]], 3
++; CHECK-NEXT:    call void @llvm.assume(i1 [[INRANGE1]])
++; CHECK-NEXT:    call void @fun2(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[DONE]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %valueless = icmp eq i32 %idx, -1
++  br i1 %valueless, label %done, label %dispatch
++
++dispatch:
++  %inrange = icmp ult i32 %idx, 3
++  call void @llvm.assume(i1 %inrange)
++  switch i32 %idx, label %call2 [
++  i32 0, label %call0
++  i32 1, label %call1
++  ]
++
++call0:
++  call void @fun0(ptr %storage, i32 %idx)
++  br label %done
++
++call1:
++  call void @fun1(ptr %storage, i32 %idx)
++  br label %done
++
++call2:
++  call void @fun2(ptr %storage, i32 %idx)
++  br label %done
++
++done:
++  ret void
++}
++
++; Multiple switch cases going to the same successor, which gets a single copy.
++define void @switch_same_succ(ptr %storage, i32 %idx) {
++; CHECK-LABEL: define void @switch_same_succ(
++; CHECK-SAME: ptr [[STORAGE:%.*]], i32 [[IDX:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    switch i32 [[IDX]], label %[[CALL1:.*]] [
++; CHECK-NEXT:      i32 -1, label %[[DONE:.*]]
++; CHECK-NEXT:      i32 0, label %[[CALL0:.*]]
++; CHECK-NEXT:      i32 1, label %[[CALL0]]
++; CHECK-NEXT:    ]
++; CHECK:       [[CALL0]]:
++; CHECK-NEXT:    [[INRANGE2:%.*]] = icmp ult i32 [[IDX]], 3
++; CHECK-NEXT:    call void @llvm.assume(i1 [[INRANGE2]])
++; CHECK-NEXT:    call void @fun0(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[CALL1]]:
++; CHECK-NEXT:    [[INRANGE1:%.*]] = icmp ult i32 [[IDX]], 3
++; CHECK-NEXT:    call void @llvm.assume(i1 [[INRANGE1]])
++; CHECK-NEXT:    call void @fun1(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[DONE]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %valueless = icmp eq i32 %idx, -1
++  br i1 %valueless, label %done, label %dispatch
++
++dispatch:
++  %inrange = icmp ult i32 %idx, 3
++  call void @llvm.assume(i1 %inrange)
++  switch i32 %idx, label %call1 [
++  i32 0, label %call0
++  i32 1, label %call0
++  ]
++
++call0:
++  call void @fun0(ptr %storage, i32 %idx)
++  br label %done
++
++call1:
++  call void @fun1(ptr %storage, i32 %idx)
++  br label %done
++
++done:
++  ret void
++}
++
++define void @assume_chain(ptr %storage, i32 %idx) {
++; CHECK-LABEL: define void @assume_chain(
++; CHECK-SAME: ptr [[STORAGE:%.*]], i32 [[IDX:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    switch i32 [[IDX]], label %[[CALL1:.*]] [
++; CHECK-NEXT:      i32 -1, label %[[DONE:.*]]
++; CHECK-NEXT:      i32 0, label %[[CALL0:.*]]
++; CHECK-NEXT:    ]
++; CHECK:       [[CALL0]]:
++; CHECK-NEXT:    [[ADD1:%.*]] = add i32 [[IDX]], 1
++; CHECK-NEXT:    [[INRANGE2:%.*]] = icmp ult i32 [[ADD1]], 3
++; CHECK-NEXT:    call void @llvm.assume(i1 [[INRANGE2]])
++; CHECK-NEXT:    call void @fun0(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[CALL1]]:
++; CHECK-NEXT:    [[ADD3:%.*]] = add i32 [[IDX]], 1
++; CHECK-NEXT:    [[INRANGE4:%.*]] = icmp ult i32 [[ADD3]], 3
++; CHECK-NEXT:    call void @llvm.assume(i1 [[INRANGE4]])
++; CHECK-NEXT:    call void @fun1(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[DONE]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %valueless = icmp eq i32 %idx, -1
++  br i1 %valueless, label %done, label %dispatch
++
++dispatch:
++  %is0 = icmp eq i32 %idx, 0
++  %add = add i32 %idx, 1
++  %inrange = icmp ult i32 %add, 3
++  call void @llvm.assume(i1 %inrange)
++  br i1 %is0, label %call0, label %call1
++
++call0:
++  call void @fun0(ptr %storage, i32 %idx)
++  br label %done
++
++call1:
++  call void @fun1(ptr %storage, i32 %idx)
++  br label %done
++
++done:
++  ret void
++}
++
++define void @assume_bundle(ptr %storage, i32 %idx) {
++; CHECK-LABEL: define void @assume_bundle(
++; CHECK-SAME: ptr [[STORAGE:%.*]], i32 [[IDX:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    switch i32 [[IDX]], label %[[CALL1:.*]] [
++; CHECK-NEXT:      i32 -1, label %[[DONE:.*]]
++; CHECK-NEXT:      i32 0, label %[[CALL0:.*]]
++; CHECK-NEXT:    ]
++; CHECK:       [[CALL0]]:
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[STORAGE]]) ]
++; CHECK-NEXT:    call void @fun0(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[CALL1]]:
++; CHECK-NEXT:    call void @llvm.assume(i1 true) [ "nonnull"(ptr [[STORAGE]]) ]
++; CHECK-NEXT:    call void @fun1(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[DONE]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %valueless = icmp eq i32 %idx, -1
++  br i1 %valueless, label %done, label %dispatch
++
++dispatch:
++  %is0 = icmp eq i32 %idx, 0
++  call void @llvm.assume(i1 true) [ "nonnull"(ptr %storage) ]
++  br i1 %is0, label %call0, label %call1
++
++call0:
++  call void @fun0(ptr %storage, i32 %idx)
++  br label %done
++
++call1:
++  call void @fun1(ptr %storage, i32 %idx)
++  br label %done
++
++done:
++  ret void
++}
++
++; call1 is also reachable without going through dispatch, so it can't get a
++; copy of the assume.
++define void @succ_with_other_pred(ptr %storage, i32 %idx, i1 %c) {
++; CHECK-LABEL: define void @succ_with_other_pred(
++; CHECK-SAME: ptr [[STORAGE:%.*]], i32 [[IDX:%.*]], i1 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    br i1 [[C]], label %[[HEAD:.*]], label %[[CALL1:.*]]
++; CHECK:       [[HEAD]]:
++; CHECK-NEXT:    switch i32 [[IDX]], label %[[CALL1]] [
++; CHECK-NEXT:      i32 -1, label %[[DONE:.*]]
++; CHECK-NEXT:      i32 0, label %[[CALL0:.*]]
++; CHECK-NEXT:    ]
++; CHECK:       [[CALL0]]:
++; CHECK-NEXT:    [[INRANGE1:%.*]] = icmp ult i32 [[IDX]], 2
++; CHECK-NEXT:    call void @llvm.assume(i1 [[INRANGE1]])
++; CHECK-NEXT:    call void @fun0(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[CALL1]]:
++; CHECK-NEXT:    call void @fun1(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[DONE]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br i1 %c, label %head, label %other
++
++other:
++  br label %call1
++
++head:
++  %valueless = icmp eq i32 %idx, -1
++  br i1 %valueless, label %done, label %dispatch
++
++dispatch:
++  %is0 = icmp eq i32 %idx, 0
++  %inrange = icmp ult i32 %idx, 2
++  call void @llvm.assume(i1 %inrange)
++  br i1 %is0, label %call0, label %call1
++
++call0:
++  call void @fun0(ptr %storage, i32 %idx)
++  br label %done
++
++call1:
++  call void @fun1(ptr %storage, i32 %idx)
++  br label %done
++
++done:
++  ret void
++}
++
++define void @two_preds(ptr %storage, i32 %idx, i1 %c) {
++; CHECK-LABEL: define void @two_preds(
++; CHECK-SAME: ptr [[STORAGE:%.*]], i32 [[IDX:%.*]], i1 [[C:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    br i1 [[C]], label %[[PRED1:.*]], label %[[PRED2:.*]]
++; CHECK:       [[PRED1]]:
++; CHECK-NEXT:    switch i32 [[IDX]], label %[[CALL1:.*]] [
++; CHECK-NEXT:      i32 -1, label %[[DONE:.*]]
++; CHECK-NEXT:      i32 0, label %[[CALL0:.*]]
++; CHECK-NEXT:    ]
++; CHECK:       [[PRED2]]:
++; CHECK-NEXT:    switch i32 [[IDX]], label %[[CALL1]] [
++; CHECK-NEXT:      i32 5, label %[[DONE]]
++; CHECK-NEXT:      i32 0, label %[[CALL0]]
++; CHECK-NEXT:    ]
++; CHECK:       [[CALL0]]:
++; CHECK-NEXT:    [[INRANGE1:%.*]] = icmp ult i32 [[IDX]], 2
++; CHECK-NEXT:    call void @llvm.assume(i1 [[INRANGE1]])
++; CHECK-NEXT:    call void @fun0(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[CALL1]]:
++; CHECK-NEXT:    [[INRANGE2:%.*]] = icmp ult i32 [[IDX]], 2
++; CHECK-NEXT:    call void @llvm.assume(i1 [[INRANGE2]])
++; CHECK-NEXT:    call void @fun1(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[DONE]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br i1 %c, label %pred1, label %pred2
++
++pred1:
++  %valueless1 = icmp eq i32 %idx, -1
++  br i1 %valueless1, label %done, label %dispatch
++
++pred2:
++  %valueless2 = icmp eq i32 %idx, 5
++  br i1 %valueless2, label %done, label %dispatch
++
++dispatch:
++  %is0 = icmp eq i32 %idx, 0
++  %inrange = icmp ult i32 %idx, 2
++  call void @llvm.assume(i1 %inrange)
++  br i1 %is0, label %call0, label %call1
++
++call0:
++  call void @fun0(ptr %storage, i32 %idx)
++  br label %done
++
++call1:
++  call void @fun1(ptr %storage, i32 %idx)
++  br label %done
++
++done:
++  ret void
++}
++
++define void @switch_pseudoprobe(ptr %storage, i32 %idx) {
++; CHECK-LABEL: define void @switch_pseudoprobe(
++; CHECK-SAME: ptr [[STORAGE:%.*]], i32 [[IDX:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    switch i32 [[IDX]], label %[[CALL2:.*]] [
++; CHECK-NEXT:      i32 -1, label %[[DONE:.*]]
++; CHECK-NEXT:      i32 0, label %[[CALL0:.*]]
++; CHECK-NEXT:      i32 1, label %[[CALL1:.*]]
++; CHECK-NEXT:    ]
++; CHECK:       [[CALL0]]:
++; CHECK-NEXT:    call void @fun0(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[CALL1]]:
++; CHECK-NEXT:    call void @fun1(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[CALL2]]:
++; CHECK-NEXT:    call void @fun2(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[DONE]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %valueless = icmp eq i32 %idx, -1
++  br i1 %valueless, label %done, label %dispatch
++
++dispatch:
++  call void @llvm.pseudoprobe(i64 0, i64 1, i32 0, i64 -1)
++  switch i32 %idx, label %call2 [
++  i32 0, label %call0
++  i32 1, label %call1
++  ]
++
++call0:
++  call void @fun0(ptr %storage, i32 %idx)
++  br label %done
++
++call1:
++  call void @fun1(ptr %storage, i32 %idx)
++  br label %done
++
++call2:
++  call void @fun2(ptr %storage, i32 %idx)
++  br label %done
++
++done:
++  ret void
++}
++
++; Negative test: the assume uses the branch condition, which is not available
++; in the successors after folding.
++define void @assume_uses_cond(ptr %storage, i32 %idx, i1 %x) {
++; CHECK-LABEL: define void @assume_uses_cond(
++; CHECK-SAME: ptr [[STORAGE:%.*]], i32 [[IDX:%.*]], i1 [[X:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[VALUELESS:%.*]] = icmp eq i32 [[IDX]], -1
++; CHECK-NEXT:    br i1 [[VALUELESS]], label %[[DONE:.*]], label %[[DISPATCH:.*]]
++; CHECK:       [[DISPATCH]]:
++; CHECK-NEXT:    [[IS0:%.*]] = icmp eq i32 [[IDX]], 0
++; CHECK-NEXT:    [[OR:%.*]] = or i1 [[IS0]], [[X]]
++; CHECK-NEXT:    call void @llvm.assume(i1 [[OR]])
++; CHECK-NEXT:    br i1 [[IS0]], label %[[CALL0:.*]], label %[[CALL1:.*]]
++; CHECK:       [[CALL0]]:
++; CHECK-NEXT:    call void @fun0(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[CALL1]]:
++; CHECK-NEXT:    call void @fun1(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[DONE]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %valueless = icmp eq i32 %idx, -1
++  br i1 %valueless, label %done, label %dispatch
++
++dispatch:
++  %is0 = icmp eq i32 %idx, 0
++  %or = or i1 %is0, %x
++  call void @llvm.assume(i1 %or)
++  br i1 %is0, label %call0, label %call1
++
++call0:
++  call void @fun0(ptr %storage, i32 %idx)
++  br label %done
++
++call1:
++  call void @fun1(ptr %storage, i32 %idx)
++  br label %done
++
++done:
++  ret void
++}
++
++; Negative test: the block has a side effect.
++define void @side_effect_in_block(ptr %storage, i32 %idx) {
++; CHECK-LABEL: define void @side_effect_in_block(
++; CHECK-SAME: ptr [[STORAGE:%.*]], i32 [[IDX:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[VALUELESS:%.*]] = icmp eq i32 [[IDX]], -1
++; CHECK-NEXT:    br i1 [[VALUELESS]], label %[[DONE:.*]], label %[[DISPATCH:.*]]
++; CHECK:       [[DISPATCH]]:
++; CHECK-NEXT:    [[IS0:%.*]] = icmp eq i32 [[IDX]], 0
++; CHECK-NEXT:    call void @side_effect()
++; CHECK-NEXT:    [[INRANGE:%.*]] = icmp ult i32 [[IDX]], 2
++; CHECK-NEXT:    call void @llvm.assume(i1 [[INRANGE]])
++; CHECK-NEXT:    br i1 [[IS0]], label %[[CALL0:.*]], label %[[CALL1:.*]]
++; CHECK:       [[CALL0]]:
++; CHECK-NEXT:    call void @fun0(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[CALL1]]:
++; CHECK-NEXT:    call void @fun1(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[DONE]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %valueless = icmp eq i32 %idx, -1
++  br i1 %valueless, label %done, label %dispatch
++
++dispatch:
++  %is0 = icmp eq i32 %idx, 0
++  call void @side_effect()
++  %inrange = icmp ult i32 %idx, 2
++  call void @llvm.assume(i1 %inrange)
++  br i1 %is0, label %call0, label %call1
++
++call0:
++  call void @fun0(ptr %storage, i32 %idx)
++  br label %done
++
++call1:
++  call void @fun1(ptr %storage, i32 %idx)
++  br label %done
++
++done:
++  ret void
++}
++
++; Negative test: %inrange is also used outside of the block, so it's not
++; ephemeral.
++define void @not_ephemeral(ptr %storage, i32 %idx, ptr %out) {
++; CHECK-LABEL: define void @not_ephemeral(
++; CHECK-SAME: ptr [[STORAGE:%.*]], i32 [[IDX:%.*]], ptr [[OUT:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    [[VALUELESS:%.*]] = icmp eq i32 [[IDX]], -1
++; CHECK-NEXT:    br i1 [[VALUELESS]], label %[[DONE:.*]], label %[[DISPATCH:.*]]
++; CHECK:       [[DISPATCH]]:
++; CHECK-NEXT:    [[IS0:%.*]] = icmp eq i32 [[IDX]], 0
++; CHECK-NEXT:    [[INRANGE:%.*]] = icmp ult i32 [[IDX]], 2
++; CHECK-NEXT:    call void @llvm.assume(i1 [[INRANGE]])
++; CHECK-NEXT:    br i1 [[IS0]], label %[[CALL0:.*]], label %[[CALL1:.*]]
++; CHECK:       [[CALL0]]:
++; CHECK-NEXT:    store i1 [[INRANGE]], ptr [[OUT]], align 1
++; CHECK-NEXT:    call void @fun0(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[CALL1]]:
++; CHECK-NEXT:    call void @fun1(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[DONE]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  %valueless = icmp eq i32 %idx, -1
++  br i1 %valueless, label %done, label %dispatch
++
++dispatch:
++  %is0 = icmp eq i32 %idx, 0
++  %inrange = icmp ult i32 %idx, 2
++  call void @llvm.assume(i1 %inrange)
++  br i1 %is0, label %call0, label %call1
++
++call0:
++  store i1 %inrange, ptr %out
++  call void @fun0(ptr %storage, i32 %idx)
++  br label %done
++
++call1:
++  call void @fun1(ptr %storage, i32 %idx)
++  br label %done
++
++done:
++  ret void
++}
++
++; Negative test: the assume is fed by a phi, which can't be cloned.
++define void @phi_feeding_assume(ptr %storage, i32 %idx, i1 %c, i32 %a, i32 %b) {
++; CHECK-LABEL: define void @phi_feeding_assume(
++; CHECK-SAME: ptr [[STORAGE:%.*]], i32 [[IDX:%.*]], i1 [[C:%.*]], i32 [[A:%.*]], i32 [[B:%.*]]) {
++; CHECK-NEXT:  [[ENTRY:.*:]]
++; CHECK-NEXT:    br i1 [[C]], label %[[PRED1:.*]], label %[[PRED2:.*]]
++; CHECK:       [[PRED1]]:
++; CHECK-NEXT:    [[VALUELESS1:%.*]] = icmp eq i32 [[IDX]], -1
++; CHECK-NEXT:    br i1 [[VALUELESS1]], label %[[DONE:.*]], label %[[DISPATCH:.*]]
++; CHECK:       [[PRED2]]:
++; CHECK-NEXT:    [[VALUELESS2:%.*]] = icmp eq i32 [[IDX]], 5
++; CHECK-NEXT:    br i1 [[VALUELESS2]], label %[[DONE]], label %[[DISPATCH]]
++; CHECK:       [[DISPATCH]]:
++; CHECK-NEXT:    [[PHI:%.*]] = phi i32 [ [[A]], %[[PRED1]] ], [ [[B]], %[[PRED2]] ]
++; CHECK-NEXT:    [[IS0:%.*]] = icmp eq i32 [[IDX]], 0
++; CHECK-NEXT:    [[INRANGE:%.*]] = icmp ult i32 [[PHI]], 2
++; CHECK-NEXT:    call void @llvm.assume(i1 [[INRANGE]])
++; CHECK-NEXT:    br i1 [[IS0]], label %[[CALL0:.*]], label %[[CALL1:.*]]
++; CHECK:       [[CALL0]]:
++; CHECK-NEXT:    call void @fun0(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[CALL1]]:
++; CHECK-NEXT:    call void @fun1(ptr [[STORAGE]], i32 [[IDX]])
++; CHECK-NEXT:    br label %[[DONE]]
++; CHECK:       [[DONE]]:
++; CHECK-NEXT:    ret void
++;
++entry:
++  br i1 %c, label %pred1, label %pred2
++
++pred1:
++  %valueless1 = icmp eq i32 %idx, -1
++  br i1 %valueless1, label %done, label %dispatch
++
++pred2:
++  %valueless2 = icmp eq i32 %idx, 5
++  br i1 %valueless2, label %done, label %dispatch
++
++dispatch:
++  %phi = phi i32 [ %a, %pred1 ], [ %b, %pred2 ]
++  %is0 = icmp eq i32 %idx, 0
++  %inrange = icmp ult i32 %phi, 2
++  call void @llvm.assume(i1 %inrange)
++  br i1 %is0, label %call0, label %call1
++
++call0:
++  call void @fun0(ptr %storage, i32 %idx)
++  br label %done
++
++call1:
++  call void @fun1(ptr %storage, i32 %idx)
++  br label %done
++
++done:
++  ret void
++}

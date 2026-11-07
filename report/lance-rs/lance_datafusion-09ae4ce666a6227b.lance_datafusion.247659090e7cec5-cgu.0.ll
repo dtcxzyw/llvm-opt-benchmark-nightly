@@ -205,8 +205,7 @@ bb.e:                                             ; preds = %bb.d
 _RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtNtB8_5query15TableSampleSeedENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2B_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3G_.exit.i: ; preds = %bb.e, %bb.d
   %i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 664 ; 2 uses
   %i.j = load i64, ptr %i.i, align 8, !range !351, !alias.scope !41674, !noalias !41671, !noundef !321
-  %.off = add nsw i64 %i.j, 5
-  %switch = icmp ult i64 %.off, 2
+  %switch = icmp slt i64 %i.j, -3
   br i1 %switch, label %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtNtB8_5query17TableSampleBucketENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2D_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3I_.exit.i.thread, label %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtNtB8_5query17TableSampleBucketENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2D_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3I_.exit.i
 
 _RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtNtB8_5query17TableSampleBucketENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2D_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3I_.exit.i: ; preds = %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtNtB8_5query15TableSampleSeedENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2B_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3G_.exit.i
@@ -248,9 +247,8 @@ bb.i:                                             ; preds = %bb.h
 _RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtNtB8_5query15TableSampleSeedENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2B_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3G_.exit.i12: ; preds = %bb.i, %bb.h
   %i.t = getelementptr inbounds nuw i8, ptr %i.o, i64 664 ; 2 uses
   %i.u = load i64, ptr %i.t, align 8, !range !351, !alias.scope !41679, !noalias !41676, !noundef !321
-  %.off47 = add nsw i64 %i.u, 5
-  %switch48 = icmp ult i64 %.off47, 2
-  br i1 %switch48, label %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtNtB8_5query17TableSampleBucketENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2D_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3I_.exit.i14.thread, label %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtNtB8_5query17TableSampleBucketENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2D_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3I_.exit.i14
+  %switch51 = icmp slt i64 %i.u, -3
+  br i1 %switch51, label %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtNtB8_5query17TableSampleBucketENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2D_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3I_.exit.i14.thread, label %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtNtB8_5query17TableSampleBucketENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2D_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3I_.exit.i14
 
 _RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtNtB8_5query17TableSampleBucketENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2D_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3I_.exit.i14: ; preds = %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtNtB8_5query15TableSampleSeedENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2B_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3G_.exit.i12
   %i.v = tail call fastcc noundef zeroext i1 @_RINvXs7T_NtCs40MM8ukkVQd_9sqlparser3astNtB7_4ExprNtNtB7_7visitor8VisitMut5visitINtBN_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB1F_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB2K_(ptr noalias noundef nonnull align 8 dereferenceable(488) %i.t, ptr noalias noundef nonnull align 8 dereferenceable(24) %1), !noalias !41676, !inline_history !41656
@@ -653,8 +651,7 @@ bb.d:                                             ; preds = %bb.c
 _RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtNtB8_5query15TableSampleSeedENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2B_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3G_.exit: ; preds = %bb.c, %bb.d
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 664 ; 2 uses
   %i.f = load i64, ptr %i.e, align 8, !range !351, !alias.scope !42421, !noundef !321
-  %.off = add nsw i64 %i.f, 5
-  %switch = icmp ult i64 %.off, 2
+  %switch = icmp slt i64 %i.f, -3
   br i1 %switch, label %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtNtB8_5query17TableSampleBucketENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2D_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3I_.exit.thread, label %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtNtB8_5query17TableSampleBucketENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2D_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3I_.exit
 
 _RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtNtB8_5query17TableSampleBucketENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2D_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3I_.exit: ; preds = %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtNtB8_5query15TableSampleSeedENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2B_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3G_.exit
@@ -1057,7 +1054,7 @@ bb.d:                                             ; preds = %_RINvXs1_NtNtCs40MM
   %or.cond104 = select i1 %i.ar, i1 true, i1 %.not57
   br i1 %or.cond104, label %_RINvXs9_NtNtNtCs40MM8ukkVQd_9sqlparser3ast7helpers14attached_tokenNtB6_13AttachedTokenNtNtBa_7visitor8VisitMut5visitINtB1o_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit16, label %.lr.ph75
 
-_RINvXs9_NtNtNtCs40MM8ukkVQd_9sqlparser3ast7helpers14attached_tokenNtB6_13AttachedTokenNtNtBa_7visitor8VisitMut5visitINtB1o_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit16: ; preds = %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtB8_4ExprENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit.i, %.lr.ph, %.lr.ph66, %.lr.ph72, %.lr.ph75, %_RINvXs2_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCs40k4W9msRzi_5alloc3vec3VecNtB8_25ConditionalStatementBlockENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2y_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3D_.exit.thread, %bb.d, %_RINvXs9_NtNtNtCs40MM8ukkVQd_9sqlparser3ast7helpers14attached_tokenNtB6_13AttachedTokenNtNtBa_7visitor8VisitMut5visitINtB1o_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit.i41, %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtB8_4ExprENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit.i22, %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtB8_4ExprENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit
+_RINvXs9_NtNtNtCs40MM8ukkVQd_9sqlparser3ast7helpers14attached_tokenNtB6_13AttachedTokenNtNtBa_7visitor8VisitMut5visitINtB1o_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit16: ; preds = %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtB8_4ExprENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit.i, %.lr.ph, %.lr.ph66, %.lr.ph72, %.lr.ph75, %bb.d, %_RINvXs2_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCs40k4W9msRzi_5alloc3vec3VecNtB8_25ConditionalStatementBlockENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2y_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3D_.exit.thread, %_RINvXs9_NtNtNtCs40MM8ukkVQd_9sqlparser3ast7helpers14attached_tokenNtB6_13AttachedTokenNtNtBa_7visitor8VisitMut5visitINtB1o_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit.i41, %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtB8_4ExprENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit.i22, %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtB8_4ExprENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit
   %.sroa.0.0 = phi i1 [ %i.ak, %.lr.ph72 ], [ true, %.lr.ph66 ], [ true, %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtB8_4ExprENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit ], [ false, %bb.d ], [ %i.ar, %.lr.ph75 ], [ true, %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtB8_4ExprENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit.i22 ], [ false, %_RINvXs2_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCs40k4W9msRzi_5alloc3vec3VecNtB8_25ConditionalStatementBlockENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2y_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3D_.exit.thread ], [ false, %_RINvXs9_NtNtNtCs40MM8ukkVQd_9sqlparser3ast7helpers14attached_tokenNtB6_13AttachedTokenNtNtBa_7visitor8VisitMut5visitINtB1o_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit.i41 ], [ true, %.lr.ph ], [ true, %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtB8_4ExprENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit.i ]
   ret i1 %.sroa.0.0
 }
@@ -1460,7 +1457,7 @@ bb.g:                                             ; preds = %_RINvXs1_NtNtCs40MM
   %or.cond139 = select i1 %i.bh, i1 true, i1 %.not71
   br i1 %or.cond139, label %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtNtNtB8_7helpers14attached_token13AttachedTokenENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2T_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3Y_.exit, label %.lr.ph97
 
-_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtNtNtB8_7helpers14attached_token13AttachedTokenENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2T_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3Y_.exit: ; preds = %.lr.ph, %.lr.ph82, %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtB8_4ExprENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit.i, %.lr.ph85, %.lr.ph88, %.lr.ph94, %.lr.ph97, %_RINvXs2_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCs40k4W9msRzi_5alloc3vec3VecNtB8_25ConditionalStatementBlockENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2y_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3D_.exit.thread, %bb.g, %_RINvXs9_NtNtNtCs40MM8ukkVQd_9sqlparser3ast7helpers14attached_tokenNtB6_13AttachedTokenNtNtBa_7visitor8VisitMut5visitINtB1o_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit.i52, %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtB8_4ExprENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit.i27, %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtB8_4ExprENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit
+_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtNtNtB8_7helpers14attached_token13AttachedTokenENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2T_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3Y_.exit: ; preds = %.lr.ph, %.lr.ph82, %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtB8_4ExprENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit.i, %.lr.ph85, %.lr.ph88, %.lr.ph94, %.lr.ph97, %bb.g, %_RINvXs2_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCs40k4W9msRzi_5alloc3vec3VecNtB8_25ConditionalStatementBlockENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2y_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3D_.exit.thread, %_RINvXs9_NtNtNtCs40MM8ukkVQd_9sqlparser3ast7helpers14attached_tokenNtB6_13AttachedTokenNtNtBa_7visitor8VisitMut5visitINtB1o_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit.i52, %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtB8_4ExprENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit.i27, %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtB8_4ExprENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit
   %.sroa.0.0 = phi i1 [ %i.ba, %.lr.ph94 ], [ true, %.lr.ph85 ], [ false, %_RINvXs2_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCs40k4W9msRzi_5alloc3vec3VecNtB8_25ConditionalStatementBlockENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2y_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3D_.exit.thread ], [ %i.bh, %.lr.ph97 ], [ true, %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtB8_4ExprENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit.i ], [ true, %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtB8_4ExprENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit ], [ true, %.lr.ph88 ], [ true, %_RINvXs1_NtNtCs40MM8ukkVQd_9sqlparser3ast7visitorINtNtCscI6d9CVNmLh_4core6option6OptionNtB8_4ExprENtB6_8VisitMut5visitINtB6_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit.i27 ], [ false, %bb.g ], [ false, %_RINvXs9_NtNtNtCs40MM8ukkVQd_9sqlparser3ast7helpers14attached_tokenNtB6_13AttachedTokenNtNtBa_7visitor8VisitMut5visitINtB1o_11ExprVisitorNCNvMNtCsf6gb3FOA7sv_14datafusion_sql6selectINtNtB2h_7planner8SqlToRelNtNtCsc85D0lJ81Z_16lance_datafusion7planner20LanceContextProviderE24match_window_definitionss_0EEB3m_.exit.i52 ], [ true, %.lr.ph82 ], [ true, %.lr.ph ]
   ret i1 %.sroa.0.0
 }
@@ -1863,14 +1860,9 @@ bb.i:                                             ; preds = %bb.f
   store i64 %i.v, ptr %i.o, align 16
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.6)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9)
-  %.sroa.08.0.copyload = load i64, ptr %5, align 8 ; 4 uses
+  %.sroa.08.0.copyload = load i64, ptr %5, align 8 ; 3 uses
   %.not = icmp eq i64 %.sroa.08.0.copyload, -1
   br i1 %.not, label %.thread197, label %bb.j
-
-10:                                               ; preds = %.thread197
-  %11 = landingpad { ptr, i32 }
-          cleanup
-  br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECsc85D0lJ81Z_16lance_datafusion.exit.thread
 
 bb.j:                                             ; preds = %bb.i
   %.sroa.510.0..sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 8
@@ -1881,10 +1873,13 @@ bb.j:                                             ; preds = %bb.i
   %.sroa.8.8.copyload = load i64, ptr %.sroa.8.8..sroa.510.0..sroa_idx.sroa_idx, align 8 ; 3 uses
   %.sroa.9.8..sroa.510.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.9, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.9.8..sroa.510.0..sroa_idx.sroa_idx, i64 16, i1 false)
-  %12 = icmp ne i64 %.sroa.08.0.copyload, -9223372036854775806
-  call void @llvm.assume(i1 %12)
   %i.ab = icmp eq i64 %.sroa.08.0.copyload, -9223372036854775807
   br i1 %i.ab, label %bb.k, label %bb.l
+
+10:                                               ; preds = %.thread197
+  %11 = landingpad { ptr, i32 }
+          cleanup
+  br label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtCs40k4W9msRzi_5alloc6string6StringECsc85D0lJ81Z_16lance_datafusion.exit.thread
 
 bb.k:                                             ; preds = %bb.j
   %i.ac = icmp sgt i64 %.sroa.8.8.copyload, -1
@@ -1892,7 +1887,7 @@ bb.k:                                             ; preds = %bb.j
   %i.ad = icmp eq i64 %.sroa.8.8.copyload, 1
   br i1 %i.ad, label %bb.m, label %bb.l
 
-bb.l:                                             ; preds = %bb.k, %bb.j
+bb.l:                                             ; preds = %bb.j, %bb.k
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   store i64 %.sroa.08.0.copyload, ptr %i.l, align 8
   %.sroa.5.0..sroa_idx231 = getelementptr inbounds nuw i8, ptr %i.l, i64 8
@@ -2295,7 +2290,7 @@ bb.n:                                             ; preds = %bb.m
 
 bb.o:                                             ; preds = %bb.p, %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.9)
-  %.sroa.018.0.copyload = load i64, ptr %5, align 8 ; 4 uses
+  %.sroa.018.0.copyload = load i64, ptr %5, align 8 ; 3 uses
   %.not101 = icmp eq i64 %.sroa.018.0.copyload, -1
   br i1 %.not101, label %.thread198, label %bb.s
 
@@ -2325,8 +2320,6 @@ bb.s:                                             ; preds = %bb.o
   %.sroa.8.8.copyload = load i64, ptr %.sroa.8.8..sroa.520.0..sroa_idx.sroa_idx, align 8 ; 3 uses
   %.sroa.9.8..sroa.520.0..sroa_idx.sroa_idx = getelementptr inbounds nuw i8, ptr %5, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.9, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.9.8..sroa.520.0..sroa_idx.sroa_idx, i64 16, i1 false)
-  %8 = icmp ne i64 %.sroa.018.0.copyload, -9223372036854775806
-  call void @llvm.assume(i1 %8)
   %i.am = icmp eq i64 %.sroa.018.0.copyload, -9223372036854775807
   br i1 %i.am, label %bb.t, label %bb.u
 
@@ -2336,7 +2329,7 @@ bb.t:                                             ; preds = %bb.s
   %i.ao = icmp eq i64 %.sroa.8.8.copyload, 1
   br i1 %i.ao, label %bb.v, label %bb.u
 
-bb.u:                                             ; preds = %bb.t, %bb.s
+bb.u:                                             ; preds = %bb.s, %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %i.l)
   store i64 %.sroa.018.0.copyload, ptr %i.l, align 8
   %.sroa.5.0..sroa_idx227 = getelementptr inbounds nuw i8, ptr %i.l, i64 8
@@ -2739,7 +2732,7 @@ bb.n:                                             ; preds = %bb.l
 
 _RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query10SelectItemENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.thread.i: ; preds = %bb.n
   store i64 -2, ptr %i.d, align 8, !alias.scope !83713, !noalias !83709
-  br label %.thread.i
+  br label %bb.cu
 
 bb.o:                                             ; preds = %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs40MM8ukkVQd_9sqlparser3ast4ExprEECsc85D0lJ81Z_16lance_datafusion.exit225.i, %bb.l
   %i.bb = getelementptr inbounds nuw i8, ptr %i.ai, i64 1136 ; 2 uses
@@ -2753,7 +2746,7 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query
   invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc3vec3VecNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query3CteEECsc85D0lJ81Z_16lance_datafusion(ptr noalias noundef nonnull readonly align 8 dereferenceable(120) %i.bb)
           to label %_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query4WithEECsc85D0lJ81Z_16lance_datafusion.exit.i unwind label %bb.fs, !noalias !83710, !inline_history !534
 
-bb.p:                                             ; preds = %bb.cu
+bb.p:                                             ; preds = %.thread.i
   %i.bf = landingpad { ptr, i32 }
           cleanup
   invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCs40k4W9msRzi_5alloc3vec9into_iter8IntoIterNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query10SelectItemEECsc85D0lJ81Z_16lance_datafusion(ptr noalias noundef align 8 dereferenceable(32) %i.c) #73
@@ -2763,17 +2756,13 @@ _RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs40MM8ukkVQd
   %i.bg = getelementptr inbounds nuw i8, ptr %i.ar, i64 776
   store ptr %i.bg, ptr %i.ay, align 8, !alias.scope !83714, !noalias !83709
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(776) %i.d, ptr noundef nonnull align 8 dereferenceable(776) %i.ar, i64 776, i1 false), !noalias !83716
-  %.pr.i = load i64, ptr %i.d, align 8, !noalias !83709 ; 3 uses
-  %.not.i = icmp eq i64 %.pr.i, -2
-  br i1 %.not.i, label %.thread.i, label %4
+  %.pr.i = load i64, ptr %i.d, align 8, !noalias !83709 ; 2 uses
+  switch i64 %.pr.i, label %.thread.i [
+    i64 2, label %bb.q
+    i64 -2, label %bb.cu
+  ]
 
-4:                                                ; preds = %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query10SelectItemENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.i
-  %5 = icmp ne i64 %.pr.i, 5
-  call void @llvm.assume(i1 %5)
-  %6 = icmp eq i64 %.pr.i, 2
-  br i1 %6, label %bb.q, label %bb.cu
-
-bb.q:                                             ; preds = %4
+bb.q:                                             ; preds = %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query10SelectItemENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.i
   %i.bh = getelementptr inbounds nuw i8, ptr %i.ar, i64 8
   %.sroa.083.0.copyload = load i64, ptr %i.bh, align 8
   %.sroa.884.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ar, i64 16
@@ -2791,7 +2780,7 @@ bb.q:                                             ; preds = %4
   invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCs40k4W9msRzi_5alloc3vec9into_iter8IntoIterNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query10SelectItemEECsc85D0lJ81Z_16lance_datafusion(ptr noalias noundef align 8 dereferenceable(32) %i.c)
           to label %bb.s unwind label %bb.r, !noalias !83710
 
-bb.r:                                             ; preds = %.thread.i, %bb.q
+bb.r:                                             ; preds = %bb.cu, %bb.q
   %i.bi = landingpad { ptr, i32 }
           cleanup
   br label %bb.er
@@ -3194,15 +3183,17 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCs40MM8ukkVQd_
   invoke void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query4WithEECsc85D0lJ81Z_16lance_datafusion(ptr noalias noundef nonnull align 8 dereferenceable(120) %i.he) #73
           to label %bb.fi unwind label %bb.cq, !noalias !83710
 
-bb.cu:                                            ; preds = %4
-  invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query10SelectItemECsc85D0lJ81Z_16lance_datafusion(ptr noalias noundef align 8 dereferenceable(776) %i.d)
-          to label %.thread.i unwind label %bb.p, !noalias !83710
-
-.thread.i:                                        ; preds = %bb.cu, %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query10SelectItemENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.i, %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query10SelectItemENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.thread.i
+bb.cu:                                            ; preds = %.thread.i, %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query10SelectItemENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.i, %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query10SelectItemENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.thread.i
   invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtCs40k4W9msRzi_5alloc3vec9into_iter8IntoIterNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query10SelectItemEECsc85D0lJ81Z_16lance_datafusion(ptr noalias noundef align 8 dereferenceable(32) %i.c)
           to label %bb.cv unwind label %bb.r, !noalias !83710
 
-bb.cv:                                            ; preds = %.thread.i
+.thread.i:                                        ; preds = %_RNvXs4_NtNtCs40k4W9msRzi_5alloc3vec9into_iterINtB5_8IntoIterNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query10SelectItemENtNtNtNtCscI6d9CVNmLh_4core4iter6traits8iterator8Iterator4nextCsc85D0lJ81Z_16lance_datafusion.exit.i
+  %4 = icmp ne i64 %.pr.i, 5
+  call void @llvm.assume(i1 %4)
+  invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueNtNtNtCs40MM8ukkVQd_9sqlparser3ast5query10SelectItemECsc85D0lJ81Z_16lance_datafusion(ptr noalias noundef align 8 dereferenceable(776) %i.d)
+          to label %bb.cu unwind label %bb.p, !noalias !83710
+
+bb.cv:                                            ; preds = %bb.cu
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !83709
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !83709
   %i.hf = getelementptr inbounds nuw i8, ptr %i.ao, i64 2000

@@ -204,10 +204,14 @@ bb.r:                                             ; preds = %bb.o
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ce, i64 16
   %i.cj = load ptr, ptr %i.ci, align 8, !tbaa !43 ; 2 uses
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 16 ; 8 uses
-  %i.cl = load i64, ptr %i.cj, align 8, !tbaa !35 ; 2 uses
-  %14 = and i64 %i.cl, 4294967295
-  %.not.i.i.i.i = icmp eq i64 %14, 7
-  br i1 %.not.i.i.i.i, label %bb.s, label %15
+  %i.cl = load i64, ptr %i.cj, align 8, !tbaa !35
+  %trunc292 = trunc i64 %i.cl to i32
+  switch i32 %trunc292, label %.thread260 [
+    i32 7, label %bb.s
+    i32 5, label %bb.u
+    i32 4, label %bb.v
+    i32 8, label %bb.w
+  ]
 
 bb.s:                                             ; preds = %bb.r
   %i.cm = load i32, ptr %i.ck, align 1
@@ -233,15 +237,7 @@ bb.t:                                             ; preds = %bb.s
   %.not.i.i149 = icmp eq i32 %i.db, 0
   br i1 %.not.i.i149, label %_ZN4llvm12StringSwitchIiiE4CaseENS_13StringLiteralEi.exit175, label %.thread260
 
-15:                                               ; preds = %bb.r
-  %trunc277 = trunc i64 %i.cl to i32
-  switch i32 %trunc277, label %.thread260 [
-    i32 5, label %bb.u
-    i32 4, label %bb.v
-    i32 8, label %bb.w
-  ]
-
-bb.u:                                             ; preds = %15
+bb.u:                                             ; preds = %bb.r
   %i.dc = load i32, ptr %i.ck, align 1
   %i.dd = xor i32 %i.dc, 1869771365
   %i.de = getelementptr i8, ptr %i.ck, i64 4
@@ -254,14 +250,14 @@ bb.u:                                             ; preds = %15
   %.not.i.i157 = icmp eq i32 %i.dk, 0
   br i1 %.not.i.i157, label %_ZN4llvm12StringSwitchIiiE4CaseENS_13StringLiteralEi.exit175, label %.thread260
 
-bb.v:                                             ; preds = %15
+bb.v:                                             ; preds = %bb.r
   %i.dl = load i32, ptr %i.ck, align 1
   %i.dm = icmp ne i32 %i.dl, 1701015151
   %i.dn = zext i1 %i.dm to i32
   %.not.i.i165 = icmp eq i32 %i.dn, 0
   br i1 %.not.i.i165, label %_ZN4llvm12StringSwitchIiiE4CaseENS_13StringLiteralEi.exit175, label %.thread260
 
-bb.w:                                             ; preds = %15
+bb.w:                                             ; preds = %bb.r
   %i.do = load i64, ptr %i.ck, align 1
   %i.dp = icmp ne i64 %i.do, 8319104478870533491
   %i.dq = zext i1 %i.dp to i32
@@ -294,7 +290,7 @@ bb.z:                                             ; preds = %bb.y
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #23
   br label %bb.aa
 
-.thread260:                                       ; preds = %15, %bb.t, %bb.u, %bb.v, %bb.w, %.thread268
+.thread260:                                       ; preds = %bb.r, %bb.t, %bb.u, %bb.v, %bb.w, %.thread268
   %i.dx = load ptr, ptr %i.bz, align 8, !tbaa !282, !noalias !1092
   %i.dy = load i32, ptr %3, align 8, !tbaa !283, !noalias !1092
   call void @_ZN5clang17DiagnosticBuilderC1EPNS_17DiagnosticsEngineENS_14SourceLocationEj(ptr noundef nonnull align 8 dereferenceable(66) %8, ptr noundef nonnull align 8 dereferenceable(15256) %i.dx, i32 %i.dy, i32 noundef 1437) #23

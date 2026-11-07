@@ -202,15 +202,13 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8              ; 7 uses
   store i64 2, ptr %0, align 8
-  %.not = icmp eq i64 %i.a, 2
-  br i1 %.not, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs9GitHPCrz2Q_5rowan13utility_types9WalkEventNtNtB12_6cursor10SyntaxNodeEEEB12_.exit, label %1
+  switch i64 %i.a, label %_RNCNvMsm_NtCs9GitHPCrz2Q_5rowan6cursorNtB7_8Preorder7do_skip0B9_.exit [
+    i64 2, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs9GitHPCrz2Q_5rowan13utility_types9WalkEventNtNtB12_6cursor10SyntaxNodeEEEB12_.exit
+    i64 0, label %bb.b
+  ]
 
-1:                                                ; preds = %bb.a
-  %2 = trunc nuw i64 %i.a to i1
+bb.b:                                             ; preds = %bb.a
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.c) ]
-  br i1 %2, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs9GitHPCrz2Q_5rowan13utility_types9WalkEventNtNtB12_6cursor10SyntaxNodeEEEB12_.exit, label %bb.b
-
-bb.b:                                             ; preds = %1
   %i.d = getelementptr i8, ptr %i.c, i64 16
   %.val11.i = load ptr, ptr %i.d, align 8, !noundef !6 ; 4 uses
   %.not.i.i = icmp eq ptr %.val11.i, null
@@ -273,9 +271,12 @@ bb.k:                                             ; preds = %bb.f
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtCs9GitHPCrz2Q_5rowan6cursor10SyntaxNodeEBF_.exit.i: ; preds = %bb.f, %bb.e
   resume { ptr, i32 } %i.h
 
-_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs9GitHPCrz2Q_5rowan13utility_types9WalkEventNtNtB12_6cursor10SyntaxNodeEEEB12_.exit: ; preds = %bb.h, %bb.g, %1, %bb.a
-  %.sroa.6.0 = phi ptr [ undef, %bb.a ], [ %.val11.i, %bb.h ], [ %.val11.i, %bb.g ], [ %i.c, %1 ]
-  %.sroa.0.0 = phi i64 [ 2, %bb.a ], [ 1, %bb.h ], [ 1, %bb.g ], [ 1, %1 ]
+_RNCNvMsm_NtCs9GitHPCrz2Q_5rowan6cursorNtB7_8Preorder7do_skip0B9_.exit: ; preds = %bb.a
+  br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs9GitHPCrz2Q_5rowan13utility_types9WalkEventNtNtB12_6cursor10SyntaxNodeEEEB12_.exit
+
+_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCs9GitHPCrz2Q_5rowan13utility_types9WalkEventNtNtB12_6cursor10SyntaxNodeEEEB12_.exit: ; preds = %bb.h, %bb.g, %bb.a, %_RNCNvMsm_NtCs9GitHPCrz2Q_5rowan6cursorNtB7_8Preorder7do_skip0B9_.exit
+  %.sroa.6.0 = phi ptr [ undef, %bb.a ], [ %.val11.i, %bb.h ], [ %.val11.i, %bb.g ], [ %i.c, %_RNCNvMsm_NtCs9GitHPCrz2Q_5rowan6cursorNtB7_8Preorder7do_skip0B9_.exit ]
+  %.sroa.0.0 = phi i64 [ %i.a, %bb.a ], [ 1, %bb.h ], [ 1, %bb.g ], [ 1, %_RNCNvMsm_NtCs9GitHPCrz2Q_5rowan6cursorNtB7_8Preorder7do_skip0B9_.exit ]
   store i64 %.sroa.0.0, ptr %0, align 8
   store ptr %.sroa.6.0, ptr %i.b, align 8
   ret void

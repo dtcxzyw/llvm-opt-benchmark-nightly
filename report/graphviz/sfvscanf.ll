@@ -202,11 +202,11 @@ gv_isspace.exit777:                               ; preds = %bb.cf, %bb.cf, %bb.
   %i.hx = icmp sgt i32 %i.hs, 1
   br i1 %i.hx, label %.lr.ph1012, label %gv_isspace.exit777.thread, !llvm.loop !17
 
-gv_isspace.exit777.thread:                        ; preds = %gv_isspace.exit777, %bb.cf, %bb.ce, %bb.bz, %bb.cc
-  %.7637.ph = phi i32 [ %.2632, %bb.cc ], [ %.2632, %bb.bz ], [ %.2632, %bb.ce ], [ %i.ht, %bb.cf ], [ %i.ht, %gv_isspace.exit777 ] ; 15 uses
-  %.7606.ph = phi i32 [ %.2601, %bb.cc ], [ %.2601, %bb.bz ], [ %i.hq, %bb.ce ], [ 0, %gv_isspace.exit777 ], [ %i.hs, %bb.cf ] ; 10 uses
-  %.5592.ph = phi i32 [ %i.fp, %bb.cc ], [ %i.fp, %bb.bz ], [ %.4591, %bb.ce ], [ %.4591, %bb.cf ], [ %.4591, %gv_isspace.exit777 ] ; 2 uses
-  %.15572.ph = phi i32 [ %.7564, %bb.cc ], [ %.7564, %bb.bz ], [ %.7564, %bb.ce ], [ %.14571, %bb.cf ], [ %.14571, %gv_isspace.exit777 ] ; 8 uses
+gv_isspace.exit777.thread:                        ; preds = %gv_isspace.exit777, %bb.cf, %bb.ce, %bb.cc, %bb.bz
+  %.7637.ph = phi i32 [ %.2632, %bb.bz ], [ %.2632, %bb.cc ], [ %.2632, %bb.ce ], [ %i.ht, %bb.cf ], [ %i.ht, %gv_isspace.exit777 ] ; 15 uses
+  %.7606.ph = phi i32 [ %.2601, %bb.bz ], [ %.2601, %bb.cc ], [ %i.hq, %bb.ce ], [ 0, %gv_isspace.exit777 ], [ %i.hs, %bb.cf ] ; 10 uses
+  %.5592.ph = phi i32 [ %i.fp, %bb.bz ], [ %i.fp, %bb.cc ], [ %.4591, %bb.ce ], [ %.4591, %bb.cf ], [ %.4591, %gv_isspace.exit777 ] ; 2 uses
+  %.15572.ph = phi i32 [ %.7564, %bb.bz ], [ %.7564, %bb.cc ], [ %.7564, %bb.ce ], [ %.14571, %bb.cf ], [ %.14571, %gv_isspace.exit777 ] ; 8 uses
   switch i32 %i.ew, label %bb.cg [
     i32 111, label %.thread827
     i32 120, label %.thread801

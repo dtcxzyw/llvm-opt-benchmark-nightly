@@ -204,7 +204,7 @@ _RNvXs7D_NtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodesNtB6_7BinExprNtBa_7AstNo
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !740
   store ptr %.sroa.4.0.i.i.i, ptr %i.i, align 8, !noalias !740
   %i.id = invoke i16 @_RNvMs5_NtNtCsjJXvCMGntp8_6syntax3ast8expr_extNtNtNtB7_9generated5nodes7BinExpr7op_kind(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.i)
-          to label %3 unwind label %bb.ci, !noalias !738
+          to label %bb.ck unwind label %bb.ci, !noalias !738
 
 bb.ci:                                            ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9YieldExprECscA5P7HRgTCP_15ide_diagnostics.exit.sink.split.i19.i.i.i, %bb.cl, %_RNvXs7D_NtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodesNtB6_7BinExprNtBa_7AstNode4cast.exit.i.i
   %i.ie = landingpad { ptr, i32 }
@@ -223,15 +223,9 @@ bb.cj:                                            ; preds = %.body120.i.i
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.sroa.4.0.i.i.i) #30
           to label %.body63.i.i unwind label %bb.dl, !noalias !738
 
-3:                                                ; preds = %_RNvXs7D_NtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodesNtB6_7BinExprNtBa_7AstNode4cast.exit.i.i
-  %.sroa.016.0.extract.trunc.i.i = trunc i16 %i.id to i8 ; 3 uses
-  %.not21.i.i = icmp eq i8 %.sroa.016.0.extract.trunc.i.i, -1
-  br i1 %.not21.i.i, label %bb.de, label %bb.ck
-
-bb.ck:                                            ; preds = %3
-  %4 = icmp ne i8 %.sroa.016.0.extract.trunc.i.i, 5
-  call void @llvm.assume(i1 %4)
-  %i.ii = icmp eq i8 %.sroa.016.0.extract.trunc.i.i, 6
+bb.ck:                                            ; preds = %_RNvXs7D_NtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodesNtB6_7BinExprNtBa_7AstNode4cast.exit.i.i
+  %3 = and i16 %i.id, 255
+  %i.ii = icmp eq i16 %3, 6
   br i1 %i.ii, label %bb.cl, label %bb.de
 
 bb.cl:                                            ; preds = %bb.ck
@@ -401,7 +395,7 @@ bb.dd:                                            ; preds = %_RINvNtCshzWfHUSfYa
   %.sroa.0.0.i118.i.i = and i1 %.not.i.i98.i, %i.kd
   br i1 %.sroa.0.0.i118.i.i, label %bb.dg, label %bb.de
 
-bb.de:                                            ; preds = %bb.dd, %bb.cm, %bb.ck, %3
+bb.de:                                            ; preds = %bb.dd, %bb.cm, %bb.ck
   %i.ke = load i32, ptr %i.eo, align 4, !noalias !738, !noundef !5
   %i.kf = add i32 %i.ke, -1                       ; 2 uses
   store i32 %i.kf, ptr %i.eo, align 4, !noalias !738

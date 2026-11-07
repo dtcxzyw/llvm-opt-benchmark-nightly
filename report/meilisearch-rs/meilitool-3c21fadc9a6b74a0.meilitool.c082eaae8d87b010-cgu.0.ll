@@ -206,7 +206,7 @@ bb.bj:                                            ; preds = %bb.bh
   %.sroa.0.0.copyload2.i23.i.i = load i64, ptr %.sroa_idx.i.i, align 8, !noalias !73653 ; 3 uses
   %.sroa.7.0.copyload6.i.i.i = load i32, ptr %.sroa.7.0..sroa_idx3.i.i.i, align 16, !noalias !73650 ; 7 uses
   %.sroa.8.0.copyload10.i.i.i = load i32, ptr %.sroa.8.0..sroa_idx7.i.i.i, align 4, !noalias !73650 ; 7 uses
-  %.sroa.9.0.copyload14.i.i.i = load i32, ptr %.sroa.9.0..sroa_idx11.i.i.i, align 8, !noalias !73650 ; 7 uses
+  %.sroa.9.0.copyload14.i.i.i = load i32, ptr %.sroa.9.0..sroa_idx11.i.i.i, align 8, !noalias !73650 ; 5 uses
   %.sroa.10.0.copyload18.i.i.i = load i16, ptr %.sroa.10.0..sroa_idx15.i.i.i, align 4, !noalias !73650 ; 3 uses
   %.sroa.11.0.copyload22.i.i.i = load i16, ptr %.sroa.11.0..sroa_idx19.i.i.i, align 2, !noalias !73650 ; 3 uses
   %.sroa.12.0.copyload26.i.i.i = load i16, ptr %.sroa.12.0..sroa_idx23.i.i.i, align 16, !noalias !73650 ; 4 uses
@@ -219,7 +219,7 @@ bb.bj:                                            ; preds = %bb.bh
   %.sroa.19.0.copyload54.i.i.i = load i8, ptr %.sroa.19.0..sroa_idx51.i.i.i, align 8, !noalias !73650 ; 5 uses
   %.sroa.20.0.copyload58.i.i.i = load i8, ptr %.sroa.20.0..sroa_idx55.i.i.i, align 1, !noalias !73650 ; 6 uses
   %.sroa.21.0.copyload62.i.i.i = load i8, ptr %.sroa.21.0..sroa_idx59.i.i.i, align 2, !noalias !73650 ; 4 uses
-  %.sroa.22.0.copyload66.i.i.i = load i8, ptr %.sroa.22.0..sroa_idx63.i.i.i, align 1, !noalias !73650 ; 5 uses
+  %.sroa.22.0.copyload66.i.i.i = load i8, ptr %.sroa.22.0..sroa_idx63.i.i.i, align 1, !noalias !73650 ; 2 uses
   %.sroa.23.0.copyload70.i.i.i = load i8, ptr %.sroa.23.0..sroa_idx67.i.i.i, align 4, !noalias !73650 ; 9 uses
   %.sroa.24.0.copyload74.i.i.i = load i8, ptr %.sroa.24.0..sroa_idx71.i.i.i, align 1, !noalias !73650 ; 5 uses
   %.sroa.25.0.copyload78.i.i.i = load i8, ptr %.sroa.25.0..sroa_idx75.i.i.i, align 2, !noalias !73650 ; 5 uses
@@ -265,7 +265,12 @@ bb.bl:                                            ; preds = %bb.bk
 
 bb.bm:                                            ; preds = %bb.bk
   %i.gr = trunc nuw i8 %.sroa.32.0.copyload106.i.i.i to i1
-  br i1 %i.gr, label %2, label %6
+  %cond.i.i.i = icmp eq i8 %.sroa.22.0.copyload66.i.i.i, 60
+  %or.cond.i.i = select i1 %i.gr, i1 %cond.i.i.i, i1 false ; 3 uses
+  %.sroa.1957.0.i.i = select i1 %or.cond.i.i, i8 59, i8 %.sroa.22.0.copyload66.i.i.i ; 6 uses
+  %.sroa.4.0.i.i = select i1 %or.cond.i.i, i32 999999999, i32 %.sroa.9.0.copyload14.i.i.i ; 4 uses
+  %.not294.i.i.i.i = icmp ne i32 %.sroa.7.0.copyload6.i.i.i, -2147483648 ; 2 uses
+  br i1 %.not294.i.i.i.i, label %bb.bp, label %.thread.i.i.i.i
 
 bb.bn:                                            ; preds = %bb.bl
   %.sroa.01.sroa.12.0.extract.shift12.i.i = lshr i64 ptrtoint (ptr @1148 to i64), 32
@@ -342,31 +347,14 @@ bb.bo:                                            ; preds = %bb.bl
   %i.iu = zext nneg i32 %.sroa.2.0.insert.insert.i.i.i156.i.i to i64
   br label %_ZN4time7parsing8parsable6sealed6Sealed22parse_offset_date_time17h5b8e09ac50354e9bE.exit.thread.i
 
-2:                                                ; preds = %bb.bm
-  %cond.i.i.i = icmp eq i8 %.sroa.22.0.copyload66.i.i.i, -1
-  br i1 %cond.i.i.i, label %6, label %3
-
-3:                                                ; preds = %2
-  %4 = icmp ult i8 %.sroa.22.0.copyload66.i.i.i, 61
-  call void @llvm.assume(i1 %4), !noalias !73592
-  %5 = icmp eq i8 %.sroa.22.0.copyload66.i.i.i, 60
-  br i1 %5, label %7, label %6
-
-6:                                                ; preds = %7, %3, %2, %bb.bm
-  %.sroa.1957.0.i.i = phi i8 [ -1, %2 ], [ 59, %7 ], [ %.sroa.22.0.copyload66.i.i.i, %3 ], [ %.sroa.22.0.copyload66.i.i.i, %bb.bm ] ; 6 uses
-  %.sroa.4.0.i.i = phi i32 [ %.sroa.9.0.copyload14.i.i.i, %2 ], [ 999999999, %7 ], [ %.sroa.9.0.copyload14.i.i.i, %3 ], [ %.sroa.9.0.copyload14.i.i.i, %bb.bm ] ; 4 uses
-  %.sroa.023.0.i.i.i = phi i1 [ false, %2 ], [ true, %7 ], [ false, %3 ], [ false, %bb.bm ]
-  %.not294.i.i.i.i = icmp ne i32 %.sroa.7.0.copyload6.i.i.i, -2147483648 ; 2 uses
-  br i1 %.not294.i.i.i.i, label %bb.bp, label %.thread.i.i.i.i
-
-bb.bp:                                            ; preds = %6
+bb.bp:                                            ; preds = %bb.bm
   %i.iv = icmp sgt i32 %.sroa.7.0.copyload6.i.i.i, -10000
   call void @llvm.assume(i1 %i.iv), !noalias !73592
   %i.iw = icmp slt i32 %.sroa.7.0.copyload6.i.i.i, 10000
   call void @llvm.assume(i1 %i.iw), !noalias !73592
   br label %.thread.i.i.i.i
 
-.thread.i.i.i.i:                                  ; preds = %bb.bp, %6
+.thread.i.i.i.i:                                  ; preds = %bb.bp, %bb.bm
   %.not295.i.i.i.i = icmp eq i16 %.sroa.10.0.copyload18.i.i.i, -32768
   %spec.select.i.i.i = select i1 %.not295.i.i.i.i, i8 2, i8 %.sroa.30.0.copyload98.i.i.i ; 2 uses
   %.not.i.i.i.i = icmp eq i8 %.sroa.13.0.copyload30.i.i.i, -1
@@ -745,9 +733,6 @@ bb.cz:                                            ; preds = %bb.cx, %bb.cw
   call void @llvm.assume(i1 %i.nw), !noalias !73592
   br label %bb.da
 
-7:                                                ; preds = %3
-  br label %6
-
 bb.da:                                            ; preds = %bb.cz, %bb.cs, %bb.cl, %bb.ce, %bb.by
   %.sroa.0191.sroa.0.0.i.i.i = phi i32 [ %i.le, %bb.cl ], [ %i.kw, %bb.ce ], [ %i.nv, %bb.cz ], [ %i.ka, %bb.by ], [ %i.mn, %bb.cs ] ; 5 uses
   %.not.not.i.i.i.i = icmp eq i8 %.sroa.19.0.copyload54.i.i.i, -1 ; 2 uses
@@ -843,7 +828,7 @@ bb.dm:                                            ; preds = %bb.dl
   br i1 %.not239.i.i.i.i, label %bb.dp, label %bb.dq
 
 bb.dn:                                            ; preds = %bb.dl
-  %brmerge.i.i.i.i = or i1 %.not239.i.i.i.i, %.not244.i.i.i.i
+  %brmerge.i.i.i.i = or i1 %.not244.i.i.i.i, %.not239.i.i.i.i
   br i1 %brmerge.i.i.i.i, label %bb.dw, label %bb.do
 
 bb.do:                                            ; preds = %bb.dn
@@ -979,7 +964,7 @@ bb.eg:                                            ; preds = %.thread51.i.i.i.i, 
   %.sroa.2.0.insert.ext.i.i.i.i.i.i = zext i8 %.sroa.0.1.i.i58.i.i.i.i to i64
   %.sroa.012.0.insert.ext.i.i.i.i.i.i = zext i8 %.sroa.06.0.i.i.i.i.i.i to i64
   %.sroa.0332.0.extract.trunc.i.i.i = trunc i64 %.sroa.0214.0.ph.i.i.i to i32 ; 3 uses
-  br i1 %.sroa.023.0.i.i.i, label %bb.eh, label %._crit_edge.i.i
+  br i1 %or.cond.i.i, label %bb.eh, label %._crit_edge.i.i
 
 ._crit_edge.i.i:                                  ; preds = %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.i.i.i, %bb.eg
   %.sroa.01.sroa.0.0.extract.trunc6.pre-phi.i.i = phi i32 [ 999999999, %_ZN4time16offset_date_time14OffsetDateTime29is_valid_leap_second_stand_in17h06e25827798c37cbE.exit.i.i.i ], [ %.sroa.0332.0.extract.trunc.i.i.i, %bb.eg ]

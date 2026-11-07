@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %.split35
   %i.n = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %.sroa.061.0.copyload = load i64, ptr %i.n, align 8 ; 7 uses
   %.sroa.562.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 16
-  %.sroa.562.0.copyload = load ptr, ptr %.sroa.562.0..sroa_idx, align 8 ; 15 uses
+  %.sroa.562.0.copyload = load ptr, ptr %.sroa.562.0..sroa_idx, align 8 ; 17 uses
   %.sroa.663.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.f, i64 24
   %.sroa.663.0.copyload = load i64, ptr %.sroa.663.0..sroa_idx, align 8 ; 7 uses
   br i1 %.not36, label %bb.e, label %bb.d
@@ -232,7 +232,6 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.562.0.copyload) ]
   switch i64 %.sroa.663.0.copyload, label %bb.k [
     i64 6, label %"_ZN77_$LT$alloc..string..String$u20$as$u20$core..cmp..PartialEq$LT$$RF$str$GT$$GT$2ne17h8684ca7ecac9e543E.exit"
     i64 0, label %.loopexit
@@ -250,6 +249,7 @@ bb.g:                                             ; preds = %bb.f
   br label %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit"
 
 "_ZN77_$LT$alloc..string..String$u20$as$u20$core..cmp..PartialEq$LT$$RF$str$GT$$GT$2ne17h8684ca7ecac9e543E.exit": ; preds = %bb.e
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.562.0.copyload) ]
   %i.r = load i32, ptr %.sroa.562.0.copyload, align 1
   %i.s = xor i32 %i.r, 1852796476
   %i.t = getelementptr i8, ptr %.sroa.562.0.copyload, i64 4
@@ -271,6 +271,7 @@ bb.i:                                             ; preds = %bb.h
   br label %"_ZN4core3ptr42drop_in_place$LT$alloc..string..String$GT$17h584a56b883fe66d7E.exit42"
 
 bb.j:                                             ; preds = %bb.e
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.562.0.copyload) ]
   %i.ab = load i8, ptr %.sroa.562.0.copyload, align 1, !alias.scope !1447, !noundef !6
   switch i8 %i.ab, label %.lr.ph.i.preheader [
     i8 43, label %.loopexit
@@ -283,6 +284,7 @@ bb.j:                                             ; preds = %bb.e
   br label %.lr.ph.i
 
 bb.k:                                             ; preds = %bb.e
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.562.0.copyload) ]
   %.pr.i = load i8, ptr %.sroa.562.0.copyload, align 1, !alias.scope !1447
   %cond.i = icmp eq i8 %.pr.i, 43
   br i1 %cond.i, label %bb.l, label %bb.n

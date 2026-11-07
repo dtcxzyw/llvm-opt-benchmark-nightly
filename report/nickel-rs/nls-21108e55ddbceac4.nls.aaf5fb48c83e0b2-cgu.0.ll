@@ -205,7 +205,7 @@ bb.cu:                                            ; preds = %.outer, %"_ZN5alloc
   br i1 %or.cond, label %._crit_edge.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i265
 
 .lr.ph.i.i.i.i.i.i.i.i.i265:                      ; preds = %bb.cu, %bb.cw
-  %i.se = phi ptr [ %i.sg, %bb.cw ], [ %.promoted.i.i47.i, %bb.cu ] ; 4 uses
+  %i.se = phi ptr [ %i.sg, %bb.cw ], [ %.promoted.i.i47.i, %bb.cu ] ; 5 uses
   %i.sf = phi i64 [ %i.sk, %bb.cw ], [ %i.sc, %bb.cu ] ; 3 uses
   %i.sg = getelementptr inbounds nuw i8, ptr %i.se, i64 48 ; 3 uses
   %i.sh = load i32, ptr %i.se, align 8, !range !74, !alias.scope !62646, !noalias !62647, !noundef !46
@@ -214,16 +214,12 @@ bb.cu:                                            ; preds = %.outer, %"_ZN5alloc
 
 bb.cv:                                            ; preds = %.lr.ph.i.i.i.i.i.i.i.i.i265
   %i.si = getelementptr inbounds nuw i8, ptr %i.se, i64 4
-  %.sroa.016.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i.i.i.i = load i32, ptr %i.si, align 4, !alias.scope !62646, !noalias !62647 ; 3 uses
-  %i.sj = icmp eq i32 %.sroa.016.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i.i.i.i, 2
-  br i1 %i.sj, label %bb.cw, label %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17hd5f61ab519fecce0E.exit.i.i.i.i.i.i.i.i.i.i.i"
+  %.sroa.016.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i.i.i.i = load i32, ptr %i.si, align 4, !alias.scope !62646, !noalias !62647
+  %3 = and i32 %.sroa.016.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i.i.i.i, -2
+  %i.sj = icmp eq i32 %3, 2
+  br i1 %i.sj, label %bb.cw, label %"_ZN114_$LT$core..iter..adapters..flatten..FlatMap$LT$I$C$U$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17haa10868b4c48aa0bE.exit.i"
 
-"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17hd5f61ab519fecce0E.exit.i.i.i.i.i.i.i.i.i.i.i": ; preds = %bb.cv
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.ph1012) ]
-  %.not.i.i.i.i.i.i.i.i.i.i.i = icmp eq i32 %.sroa.016.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i.i.i.i, 3
-  br i1 %.not.i.i.i.i.i.i.i.i.i.i.i, label %bb.cw, label %"_ZN114_$LT$core..iter..adapters..flatten..FlatMap$LT$I$C$U$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17haa10868b4c48aa0bE.exit.i"
-
-bb.cw:                                            ; preds = %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17hd5f61ab519fecce0E.exit.i.i.i.i.i.i.i.i.i.i.i", %bb.cv, %.lr.ph.i.i.i.i.i.i.i.i.i265
+bb.cw:                                            ; preds = %bb.cv, %.lr.ph.i.i.i.i.i.i.i.i.i265
   %i.sk = add i64 %i.sf, 1
   %i.sl = icmp eq ptr %i.sg, %.ph1011
   br i1 %i.sl, label %._crit_edge.i.i.i.i.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i.i.i.i265
@@ -241,10 +237,13 @@ bb.cx:                                            ; preds = %._crit_edge.i.i.i.i
   %i.ss = getelementptr inbounds nuw [48 x i8], ptr %i.sp, i64 %i.sr
   br label %.outer
 
-"_ZN114_$LT$core..iter..adapters..flatten..FlatMap$LT$I$C$U$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17haa10868b4c48aa0bE.exit.i": ; preds = %"_ZN4core3ops8function5impls79_$LT$impl$u20$core..ops..function..FnMut$LT$A$GT$$u20$for$u20$$RF$mut$u20$F$GT$8call_mut17hd5f61ab519fecce0E.exit.i.i.i.i.i.i.i.i.i.i.i"
+"_ZN114_$LT$core..iter..adapters..flatten..FlatMap$LT$I$C$U$C$F$GT$$u20$as$u20$core..iter..traits..iterator..Iterator$GT$4next17haa10868b4c48aa0bE.exit.i": ; preds = %bb.cv
+  %4 = getelementptr inbounds nuw i8, ptr %i.se, i64 4
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.ph1012) ]
   %i.st = add i64 %i.sf, 1
-  %.sroa.12.0.in.i = getelementptr inbounds nuw i8, ptr %i.se, i64 8
-  %i.su = load <4 x i32>, ptr %.sroa.12.0.in.i, align 8, !noalias !62650 ; 2 uses
+  %.sroa.12.0.in.i = getelementptr inbounds nuw i8, ptr %i.se, i64 20
+  %.sroa.18.0.i = load i32, ptr %.sroa.12.0.in.i, align 4, !noalias !62650
+  %i.su = load <4 x i32>, ptr %4, align 4, !noalias !62650 ; 2 uses
   %i.sv = load i64, ptr %i.sa, align 8, !alias.scope !62645, !noundef !46 ; 5 uses
   %i.sw = icmp ult i64 %i.sv, 192153584101141163
   tail call void @llvm.assume(i1 %i.sw)
@@ -263,12 +262,12 @@ bb.cx:                                            ; preds = %._crit_edge.i.i.i.i
   %.sroa.410.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ta, i64 8
   store i64 %i.sf, ptr %.sroa.410.0..sroa_idx.i, align 8, !noalias !62652
   %.sroa.511.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ta, i64 16
-  store i32 %.sroa.016.sroa.0.0.copyload.i.i.i.i.i.i.i.i.i.i.i.i.i, ptr %.sroa.511.0..sroa_idx.i, align 8, !noalias !62652
-  %.sroa.612.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ta, i64 20
-  store <4 x i32> %i.su, ptr %.sroa.612.0..sroa_idx.i, align 4, !noalias !62652
+  store <4 x i32> %i.su, ptr %.sroa.511.0..sroa_idx.i, align 8, !noalias !62652
+  %.sroa.612.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ta, i64 32
+  store i32 %.sroa.18.0.i, ptr %.sroa.612.0..sroa_idx.i, align 8, !noalias !62652
   %.sroa.1117.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.ta, i64 40
-  %3 = shufflevector <4 x i32> %i.su, <4 x i32> poison, <2 x i32> <i32 1, i32 2>
-  store <2 x i32> %3, ptr %.sroa.1117.0..sroa_idx.i, align 8, !noalias !62652
+  %5 = shufflevector <4 x i32> %i.su, <4 x i32> poison, <2 x i32> <i32 2, i32 3>
+  store <2 x i32> %5, ptr %.sroa.1117.0..sroa_idx.i, align 8, !noalias !62652
   %i.tb = add nuw nsw i64 %i.sv, 1
   store i64 %i.tb, ptr %i.sa, align 8, !alias.scope !62645
   br label %bb.cu

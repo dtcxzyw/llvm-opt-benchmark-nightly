@@ -205,7 +205,7 @@ _RNvXs7_NtNtCs7tKScEop1B6_5alloc2io4utilINtB5_5SplitINtNtNtB7_8buffered9bufreade
   %.promoted46.i.i.i.i1204 = phi i8 [ %.promoted46.i.i.i.i1205, %.loopexit.i493 ], [ %.promoted46.i.i.i.i1205, %bb.fe ], [ %.promoted46.i.i.i.i1206.a, %bb.ff ]
   %.promoted.i.i.i.i1200 = phi i64 [ %.promoted.i.i.i.i1201, %.loopexit.i493 ], [ %.promoted.i.i.i.i1201, %bb.fe ], [ %.promoted.i.i.i.i1202.a, %bb.ff ]
   %.promoted45.i.i.i.i1197 = phi i64 [ %.promoted45.i.i.i.i1198, %.loopexit.i493 ], [ %.promoted45.i.i.i.i1198, %bb.fe ], [ %..i.i.i.i.i.i, %bb.ff ]
-  %.sroa.9.0.i = phi i64 [ undef, %.loopexit.i493 ], [ undef, %bb.fe ], [ %spec.select.i, %bb.ff ] ; 4 uses
+  %.sroa.9.0.i = phi i64 [ undef, %.loopexit.i493 ], [ undef, %bb.fe ], [ %spec.select.i, %bb.ff ] ; 2 uses
   %.sroa.8.1.i = phi ptr [ %.sroa.8.0.i, %.loopexit.i493 ], [ %.sroa.8.0.i, %bb.fe ], [ %i.acm, %bb.ff ] ; 7 uses
   %.sroa.0.1.i = phi i64 [ %.sroa.0.0.i494, %.loopexit.i493 ], [ %.sroa.0.0.i494, %bb.fe ], [ %.sroa.0.0.copyload1.pre.i, %bb.ff ] ; 5 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ah), !noalias !28754
@@ -608,8 +608,10 @@ bb.mq:                                            ; preds = %bb.fh
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6buffer6BufferECsl8pJiQOn4hA_9coreutils.exit.i.i.i
 
 bb.mr:                                            ; preds = %bb.fh
-  %1 = icmp eq i64 %.sroa.9.0.i, 1                ; 3 uses
-  br i1 %1, label %bb.ms, label %2
+  switch i64 %.sroa.9.0.i, label %.thread964 [
+    i64 1, label %bb.ms
+    i64 0, label %bb.mv
+  ]
 
 bb.ms:                                            ; preds = %bb.mr
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.8.1.i) ]
@@ -617,18 +619,12 @@ bb.ms:                                            ; preds = %bb.mr
   %i.azn = icmp eq i8 %lhsc, 45
   br i1 %i.azn, label %bb.mt, label %.thread964
 
-2:                                                ; preds = %bb.mr
-  %3 = icmp sgt i64 %.sroa.9.0.i, -1
-  call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %.sroa.9.0.i, 0
-  br i1 %4, label %bb.mv, label %.thread964
-
 bb.mt:                                            ; preds = %bb.ms
   %i.azo = call fastcc noundef nonnull align 8 ptr @_RNvNtCs7tKScEop1B6_5alloc5boxed14box_new_uninit(i64 noundef 8, i64 noundef 64) #51, !noalias !28881 ; 2 uses
   store i64 -9223372036854775799, ptr %i.azo, align 8
   br label %bb.mw
 
-.thread964:                                       ; preds = %bb.ms, %2
+.thread964:                                       ; preds = %bb.ms, %bb.mr
   %i.azp = load i64, ptr %i.yo, align 8, !alias.scope !28882, !noundef !12 ; 3 uses
   %i.azq = load i64, ptr %i.fd, align 8, !range !19, !alias.scope !28882, !noundef !12
   %i.azr = icmp eq i64 %i.azp, %i.azq
@@ -650,7 +646,7 @@ _RNvMsG_NtCs7tKScEop1B6_5alloc3vecINtB5_3VecNtNtNtCs2vKOLqTMYjT_3std3ffi6os_str8
   store i64 %i.azu, ptr %i.yo, align 8, !alias.scope !28882
   br label %bb.ep
 
-bb.mv:                                            ; preds = %2
+bb.mv:                                            ; preds = %bb.mr
   %i.azv = call fastcc noundef nonnull align 8 ptr @_RNvNtCs7tKScEop1B6_5alloc5boxed14box_new_uninit(i64 noundef 8, i64 noundef 64) #51, !noalias !28884 ; 6 uses
   store i64 -9223372036854775797, ptr %i.azv, align 8
   %.sroa.4698.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.azv, i64 8
@@ -664,6 +660,7 @@ bb.mv:                                            ; preds = %2
   br label %bb.mw
 
 bb.mw:                                            ; preds = %bb.mv, %bb.mt
+  %.sroa.0191.0 = phi i1 [ true, %bb.mt ], [ false, %bb.mv ] ; 2 uses
   %.sroa.0.8 = phi ptr [ %i.azo, %bb.mt ], [ %i.azv, %bb.mv ] ; 2 uses
   %i.azw = icmp eq i64 %.sroa.0.1.i, 0
   br i1 %i.azw, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6buffer6BufferECsl8pJiQOn4hA_9coreutils.exit.i.i.i, label %bb.mx
@@ -674,7 +671,7 @@ bb.mx:                                            ; preds = %bb.mw
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6buffer6BufferECsl8pJiQOn4hA_9coreutils.exit.i.i.i
 
 _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtNtNtNtCs7tKScEop1B6_5alloc2io8buffered9bufreader6buffer6BufferECsl8pJiQOn4hA_9coreutils.exit.i.i.i: ; preds = %bb.mx, %bb.mw, %bb.mq
-  %.sroa.0191.1 = phi i1 [ true, %bb.mq ], [ %1, %bb.mw ], [ %1, %bb.mx ]
+  %.sroa.0191.1 = phi i1 [ true, %bb.mq ], [ %.sroa.0191.0, %bb.mw ], [ %.sroa.0191.0, %bb.mx ]
   %.sroa.0.9 = phi ptr [ %i.azl, %bb.mq ], [ %.sroa.0.8, %bb.mw ], [ %.sroa.0.8, %bb.mx ] ; 2 uses
   call void @_RNvCsjSVV5GABoor_7___rustc14___rust_dealloc(ptr noundef nonnull %i.zq, i64 noundef 8192, i64 noundef 1) #45, !noalias !28886
   %i.azx = load ptr, ptr %.sroa.10677.0896, align 8, !invariant.load !12, !noalias !28886 ; 2 uses

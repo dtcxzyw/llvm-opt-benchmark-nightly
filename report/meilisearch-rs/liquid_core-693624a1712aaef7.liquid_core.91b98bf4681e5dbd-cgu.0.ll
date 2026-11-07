@@ -205,18 +205,12 @@ bb.f:                                             ; preds = %bb.j, %bb.ag, %bb.a
 
 bb.g:                                             ; preds = %bb.c
   %i.bp = getelementptr inbounds nuw i8, ptr %1, i64 43 ; 2 uses
-  %i.bq = load i8, ptr %i.bp, align 1, !noundef !8 ; 3 uses
-  %cond = icmp eq i8 %i.bq, -1
-  br i1 %cond, label %bb.h, label %2
+  %i.bq = load i8, ptr %i.bp, align 1, !noundef !8
+  %cond = icmp eq i8 %i.bq, 60
+  br i1 %cond, label %bb.i, label %bb.h
 
-2:                                                ; preds = %bb.g
-  %3 = icmp ult i8 %i.bq, 61
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp eq i8 %i.bq, 60
-  br i1 %4, label %bb.i, label %bb.h
-
-bb.h:                                             ; preds = %bb.i, %bb.g, %2, %bb.c
-  %.sroa.023.0 = phi i1 [ false, %2 ], [ false, %bb.c ], [ false, %bb.g ], [ true, %bb.i ]
+bb.h:                                             ; preds = %bb.g, %bb.i, %bb.c
+  %.sroa.023.0 = phi i1 [ true, %bb.i ], [ false, %bb.c ], [ false, %bb.g ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   call fastcc void @"_ZN4time7parsing6parsed106_$LT$impl$u20$core..convert..TryFrom$LT$time..parsing..parsed..Parsed$GT$$u20$for$u20$time..date..Date$GT$8try_from17h4f9089a24f77f352E"(ptr noalias noundef align 8 captures(address) dereferenceable(24) %i.a, ptr noalias noundef align 16 captures(address) dereferenceable(64) %1)
   %i.br = getelementptr inbounds nuw i8, ptr %i.a, i64 16
@@ -225,7 +219,7 @@ bb.h:                                             ; preds = %bb.i, %bb.g, %2, %b
   %i.bt = load i32, ptr %i.a, align 8             ; 6 uses
   br i1 %.not159, label %bb.k, label %bb.j
 
-bb.i:                                             ; preds = %2
+bb.i:                                             ; preds = %bb.g
   store i8 59, ptr %i.bp, align 1
   %.sroa.4275.0..sroa_idx = getelementptr inbounds nuw i8, ptr %1, i64 24
   store i32 999999999, ptr %.sroa.4275.0..sroa_idx, align 8

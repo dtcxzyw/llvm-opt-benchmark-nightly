@@ -202,7 +202,7 @@ bb.a:
   %.not.i.i = icmp ult i32 %.sroa.012.0.extract.trunc, 256
   %.not.i.i16 = icmp ult i32 %.sroa.012.0.extract.trunc, 65536
   %spec.select = select i1 %.not.i.i16, i32 2, i32 %3
-  %.0 = select i1 %.not.i.i, i32 1, i32 %spec.select ; 3 uses
+  %.0 = select i1 %.not.i.i, i32 1, i32 %spec.select ; 2 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 232 ; 2 uses
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 13 uses
@@ -232,8 +232,10 @@ _ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit: ; preds = %bb.a, %bb.b
   br label %bb.f
 
 bb.c:                                             ; preds = %_ZN2v88internal11EnsureSpaceC2EPNS0_9AssemblerE.exit
-  %5 = icmp eq i32 %.0, 1
-  br i1 %5, label %bb.d, label %6
+  switch i32 %.0, label %bb.f [
+    i32 1, label %bb.d
+    i32 8, label %bb.e
+  ]
 
 bb.d:                                             ; preds = %bb.c
   %i.n = icmp samesign ult i8 %1, 16
@@ -255,18 +257,14 @@ _ZN2v88internal9Assembler8emit_rexINS0_8RegisterEEEvT_i.exit.thread: ; preds = %
   %i.w = getelementptr inbounds nuw i8, ptr %i.r, i64 3
   br label %bb.h
 
-6:                                                ; preds = %bb.c
-  %7 = icmp eq i32 %.0, 8
-  %8 = icmp samesign ult i8 %1, 16
-  tail call void @llvm.assume(i1 %8)
-  br i1 %7, label %bb.e, label %bb.f
-
-bb.e:                                             ; preds = %6
+bb.e:                                             ; preds = %bb.c
+  %5 = icmp samesign ult i8 %1, 16
+  tail call void @llvm.assume(i1 %5)
   %i.x = lshr i8 %1, 3
   %i.y = or disjoint i8 %i.x, 72
   br label %_ZN2v88internal9Assembler20emit_optional_rex_32ENS0_8RegisterE.exit.sink.split.i
 
-bb.f:                                             ; preds = %.thread25, %6
+bb.f:                                             ; preds = %bb.c, %.thread25
   %.not.i.i17 = icmp samesign ult i8 %1, 8
   br i1 %.not.i.i17, label %_ZN2v88internal9Assembler8emit_rexINS0_8RegisterEEEvT_i.exit, label %_ZN2v88internal9Assembler20emit_optional_rex_32ENS0_8RegisterE.exit.sink.split.i
 

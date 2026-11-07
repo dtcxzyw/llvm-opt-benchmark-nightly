@@ -202,24 +202,21 @@ define internal fastcc noundef range(i8 -1, 7) i8 @_RNvMs1_NtNtNtNtCsefoF4u9kbII
 bb.a:
   %i.a = icmp ult i64 %.40.val, 1152921504606846976
   tail call void @llvm.assume(i1 %i.a)
-  %1 = icmp eq i64 %.40.val, 0
-  br i1 %1, label %bb.e, label %2
+  switch i64 %.40.val, label %.lr.ph.i.i [
+    i64 0, label %bb.e
+    i64 1, label %._crit_edge.i.i
+  ]
 
-2:                                                ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.32.val) ]
-  %.not = icmp eq i64 %.40.val, 1
-  br i1 %.not, label %._crit_edge.i.i, label %.lr.ph.i.i
-
-._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i, %2
-  %.sroa.05.0.lcssa.i.i = phi i64 [ 0, %2 ], [ %i.i, %.lr.ph.i.i ] ; 3 uses
+._crit_edge.i.i:                                  ; preds = %.lr.ph.i.i, %bb.a
+  %.sroa.05.0.lcssa.i.i = phi i64 [ 0, %bb.a ], [ %i.i, %.lr.ph.i.i ] ; 3 uses
   %i.b = getelementptr inbounds nuw [8 x i8], ptr %.32.val, i64 %.sroa.05.0.lcssa.i.i
   %.val14.i.i = load i32, ptr %i.b, align 4, !alias.scope !1097, !noundef !5 ; 2 uses
   %i.c = icmp eq i32 %.val14.i.i, %0
   br i1 %i.c, label %_RINvMNtCskKLDkoKarTP_4core5sliceSNtNtNtNtNtCsefoF4u9kbII_5wasmi6engine10translator4func6locals10LocalGroup20binary_search_by_keymNvMs2_Bx_Bv_9max_indexEBF_.exit, label %bb.b
 
-.lr.ph.i.i:                                       ; preds = %2, %.lr.ph.i.i
-  %.sroa.01.017.i.i = phi i64 [ %i.j, %.lr.ph.i.i ], [ %.40.val, %2 ] ; 2 uses
-  %.sroa.05.016.i.i = phi i64 [ %i.i, %.lr.ph.i.i ], [ 0, %2 ] ; 2 uses
+.lr.ph.i.i:                                       ; preds = %bb.a, %.lr.ph.i.i
+  %.sroa.01.017.i.i = phi i64 [ %i.j, %.lr.ph.i.i ], [ %.40.val, %bb.a ] ; 2 uses
+  %.sroa.05.016.i.i = phi i64 [ %i.i, %.lr.ph.i.i ], [ 0, %bb.a ] ; 2 uses
   %i.d = lshr i64 %.sroa.01.017.i.i, 1            ; 2 uses
   %i.e = add nuw nsw i64 %i.d, %.sroa.05.016.i.i  ; 3 uses
   %i.f = icmp ult i64 %i.e, %.40.val
@@ -256,7 +253,7 @@ bb.d:                                             ; preds = %_RINvMNtCskKLDkoKar
   tail call void @_RNvNtCskKLDkoKarTP_4core9panicking18panic_bounds_check(i64 noundef %.sroa.4.1.i.i3, i64 noundef %.40.val, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #19
   unreachable
 
-bb.e:                                             ; preds = %bb.c, %bb.b, %bb.a
+bb.e:                                             ; preds = %bb.a, %bb.c, %bb.b
   %.sroa.0.1 = phi i8 [ -1, %bb.a ], [ %i.t, %bb.c ], [ -1, %bb.b ]
   ret i8 %.sroa.0.1
 }
