@@ -202,12 +202,11 @@ bb.ag:                                            ; preds = %bb.ae, %bb.af
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !1564
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %.sroa.5.i, ptr noundef nonnull align 8 dereferenceable(88) %.sroa.51.i, i64 88, i1 false), !noalias !1574
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.51.i)
-  %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.cq, ptr noundef nonnull align 8 dereferenceable(88) %.sroa.5.i, i64 88, i1 false), !noalias !1561
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.5.i)
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.n, ptr noundef nonnull align 8 dereferenceable(88) %4, i64 88, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.n, ptr noundef nonnull align 8 dereferenceable(88) %i.cq, i64 88, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   call void @_RNvMNtNtCs7PFeJTloU4p_4toml2de5errorNtB2_5Error4span(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.m, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(88) %i.n) #8
   %i.cr = load i64, ptr %i.m, align 8, !range !16, !noundef !10
@@ -229,7 +228,7 @@ bb.ai:                                            ; preds = %bb.ag
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ag, %bb.ai
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %4, ptr noundef nonnull align 8 dereferenceable(88) %i.n, i64 88, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(88) %i.cq, ptr noundef nonnull align 8 dereferenceable(88) %i.n, i64 88, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.n)
   br label %bb.ah
 }
