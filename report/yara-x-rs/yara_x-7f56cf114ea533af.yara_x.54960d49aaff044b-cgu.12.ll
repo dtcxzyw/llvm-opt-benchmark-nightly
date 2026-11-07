@@ -205,9 +205,9 @@ bb.h:                                             ; preds = %bb.f
   unreachable
 
 bb.i:                                             ; preds = %bb.l
-  %.pre105.i.a = load i64, ptr %i.t, align 8, !range !7, !alias.scope !167
-  %3 = trunc nuw i64 %.pre105.i.a to i1
+  %.pre105.i.a = load i64, ptr %i.t, align 8, !alias.scope !167
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !168
+  %3 = trunc nuw i64 %.pre105.i.a to i1
   br i1 %3, label %bb.x, label %bb.y
 
 bb.j:                                             ; preds = %bb.g
@@ -610,8 +610,9 @@ _RNCINvNtNtCsexYYUdYSQU6_5alloc2io4read19default_read_to_endINtNtNtCskKLDkoKarTP
   %i.k = icmp eq i64 %i.j, 0
   %i.l = sub i64 %3, %i.j
   %i.m = add i64 %i.l, 9216                       ; 2 uses
-  %.not85 = icmp ult i64 %i.m, %i.i
-  %.sroa.5.1.i = select i1 %.not85, i64 8192, i64 %i.m
+  %4 = icmp uge i64 %i.m, %i.i
+  %cond.fr = freeze i1 %4
+  %.sroa.5.1.i = select i1 %cond.fr, i64 %i.m, i64 8192
   %.sroa.053.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtNtCsexYYUdYSQU6_5alloc2io4read19default_read_to_endINtNtNtCskKLDkoKarTP_4core2io4util4TakeRNtNtCsG258MDvU3F_3std2fs4FileEE0Cs7gfv9tzbXmh_6yara_x.exit.thread

@@ -205,7 +205,7 @@ bb.a:
   br i1 %i.a, label %_ZNSt6vectorISt10unique_ptrIN8rawspeed15VC5Decompressor7Wavelet12AbstractBandESt14default_deleteIS4_EESaIS7_EE5clearEv.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !315, !nonnull !306, !align !316 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !317  ; 3 uses
@@ -234,13 +234,12 @@ _ZSt8_DestroyISt10unique_ptrIN8rawspeed15VC5Decompressor7Wavelet12AbstractBandES
 
 _ZNSt6vectorISt10unique_ptrIN8rawspeed15VC5Decompressor7Wavelet12AbstractBandESt14default_deleteIS4_EESaIS7_EE5clearEv.exit: ; preds = %_ZSt8_DestroyISt10unique_ptrIN8rawspeed15VC5Decompressor7Wavelet12AbstractBandESt14default_deleteIS4_EEEvPT_.exit.i.i.i.i
   store ptr %i.e, ptr %i.f, align 8, !tbaa !322
-  %.val.pre = load i8, ptr %1, align 1, !tbaa !304, !range !305
+  %.val.pre = load i8, ptr %1, align 1, !tbaa !304
   %i.m = trunc nuw i8 %.val.pre to i1
   br i1 %i.m, label %_ZNSt6vectorISt10unique_ptrIN8rawspeed15VC5Decompressor7Wavelet12AbstractBandESt14default_deleteIS4_EESaIS7_EE5clearEv.exit.thread, label %_ZNSt6vectorISt10unique_ptrIN8rawspeed15VC5Decompressor7Wavelet12AbstractBandESt14default_deleteIS4_EESaIS7_EE5clearEv.exit.thread38
 
 _ZNSt6vectorISt10unique_ptrIN8rawspeed15VC5Decompressor7Wavelet12AbstractBandESt14default_deleteIS4_EESaIS7_EE5clearEv.exit.thread38: ; preds = %bb.b, %_ZNSt6vectorISt10unique_ptrIN8rawspeed15VC5Decompressor7Wavelet12AbstractBandESt14default_deleteIS4_EESaIS7_EE5clearEv.exit
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.n = load ptr, ptr %5, align 8, !tbaa !315, !nonnull !306, !align !316
+  %i.n = load ptr, ptr %i.b, align 8, !tbaa !315, !nonnull !306, !align !316
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   %i.p = load i16, ptr %i.o, align 8, !tbaa !6680
   %i.q = icmp eq i16 %i.p, 2

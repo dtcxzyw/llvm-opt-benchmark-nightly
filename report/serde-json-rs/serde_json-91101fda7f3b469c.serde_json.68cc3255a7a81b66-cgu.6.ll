@@ -202,7 +202,7 @@ _RNvMNtCsbqH9stoieM8_5alloc5boxedINtB2_3BoxNtNtCs8ZPNfZ0ciAA_10serde_json5error9
 ; Function Attrs: nonlazybind uwtable
 define noalias noundef nonnull align 8 ptr @_RNvNtCs8ZPNfZ0ciAA_10serde_json5error10make_error(ptr noalias nofree noundef align 8 captures(address) dead_on_return dereferenceable(24) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = alloca [104 x i8], align 8               ; 29 uses
+  %i.a = alloca [104 x i8], align 8               ; 28 uses
   %i.b = alloca [24 x i8], align 8                ; 4 uses
   %i.c = alloca [40 x i8], align 8                ; 9 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !96)
@@ -240,7 +240,7 @@ bb.a:
   %.promoted104.i.i.i = load i64, ptr %i.q, align 8, !alias.scope !98, !noalias !97 ; 12 uses
   %i.r = trunc i8 %.promoted152.i.i.i to i1       ; 2 uses
   %i.s = icmp eq i64 %.promoted104.i.i.i, 0
-  br i1 %i.s, label %.split.us.i.i.i, label %.lr.ph41.i.i
+  br i1 %i.s, label %.noexc11, label %.lr.ph41.i.i
 
 .lr.ph41.i.i:                                     ; preds = %.lr.ph.preheader.i.i.i
   %.not.i.i.us.i.peel.i.i = icmp ult i64 %.promoted104.i.i.i, %i.o
@@ -383,10 +383,6 @@ _RNvXs2K_NtNtCs8Chj7Szqq0n_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits1
   tail call void @llvm.assume(i1 %i.cb)
   br label %_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.thread85.i
 
-.split.us.i.i.i:                                  ; preds = %.lr.ph.preheader.i.i.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !97
-  br i1 %i.r, label %bb.ae, label %_RNvNtCs8ZPNfZ0ciAA_10serde_json5error14parse_line_col.exit
-
 .split114.us.i.i.i.invoke:                        ; preds = %.split.i.i, %bb.ah, %.split.i45.i, %bb.as, %_RNvMsv_NtCs8Chj7Szqq0n_4core3numj27from_ascii_bytes_radix_impl.exit.i, %bb.bh, %bb.ax, %bb.bb, %_RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit37.i, %.split.i40.i, %bb.am, %.split.i.i.us.i.peel.i.i, %bb.b, %.split.i.i.us.i.i.i, %bb.k
   %i.cc = phi ptr [ %i.e, %bb.ax ], [ %i.m, %.split.i.i.us.i.peel.i.i ], [ %i.e, %bb.bb ], [ %i.e, %.split.i40.i ], [ %i.e, %bb.bh ], [ %i.m, %bb.k ], [ %i.m, %.split.i.i.us.i.i.i ], [ %i.m, %bb.b ], [ %i.e, %.split.i45.i ], [ %i.e, %bb.am ], [ %i.e, %_RNvMsv_NtCs8Chj7Szqq0n_4core3numj27from_ascii_bytes_radix_impl.exit.i ], [ %i.e, %_RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit37.i ], [ %i.e, %bb.as ], [ %i.e, %bb.ah ], [ %i.e, %.split.i.i ]
   %i.cd = phi i64 [ %i.g, %bb.ax ], [ %i.o, %.split.i.i.us.i.peel.i.i ], [ %i.g, %bb.bb ], [ %i.g, %.split.i40.i ], [ %i.g, %bb.bh ], [ %i.o, %bb.k ], [ %i.o, %.split.i.i.us.i.i.i ], [ %i.o, %bb.b ], [ %i.g, %.split.i45.i ], [ %i.g, %bb.am ], [ %i.g, %_RNvMsv_NtCs8Chj7Szqq0n_4core3numj27from_ascii_bytes_radix_impl.exit.i ], [ %i.g, %_RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit37.i ], [ %i.g, %bb.as ], [ %i.g, %bb.ah ], [ %i.g, %.split.i.i ]
@@ -427,7 +423,20 @@ bb.o:                                             ; preds = %bb.m
   %i.cw = getelementptr inbounds nuw i8, ptr %i.a, i64 80
   %i.cx = load i64, ptr %i.cw, align 8, !alias.scope !98, !noalias !97, !noundef !4 ; 2 uses
   %.not.i.i.i = icmp ugt i64 %i.ci, %i.cx
-  br i1 %.not.i.i.i, label %bb.p, label %_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.i, !prof !106
+  br i1 %.not.i.i.i, label %bb.p, label %1, !prof !106
+
+1:                                                ; preds = %bb.o
+  %2 = getelementptr inbounds nuw i8, ptr %i.a, i64 24
+  %3 = load i8, ptr %2, align 8, !alias.scope !98, !noalias !97, !noundef !4
+  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 72
+  %5 = load ptr, ptr %4, align 8, !alias.scope !98, !noalias !97, !nonnull !4, !noundef !4
+  %6 = invoke { i64, i64 } @_RNvNtNtCs8Chj7Szqq0n_4core5slice6memchr15memrchr_aligned(i8 noundef %3, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %5, i64 noundef %i.ci)
+          to label %.noexc7 unwind label %bb.bt   ; 2 uses
+
+.noexc7:                                          ; preds = %1
+  %7 = extractvalue { i64, i64 } %6, 0
+  %8 = trunc nuw i64 %7 to i1
+  br i1 %8, label %_RNvXsw_NtNtCs8Chj7Szqq0n_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher15next_match_back.exit.thread11.i.i, label %_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.thread.i
 
 bb.p:                                             ; preds = %bb.o
   invoke void @_RNvNtNtCs8Chj7Szqq0n_4core5slice5index16slice_index_fail(i64 noundef 0, i64 noundef %i.ci, i64 noundef %i.cx, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @48) #19
@@ -435,6 +444,10 @@ bb.p:                                             ; preds = %bb.o
 
 .noexc7.a:                                        ; preds = %bb.p
   unreachable
+
+_RNvXsw_NtNtCs8Chj7Szqq0n_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher15next_match_back.exit.thread11.i.i: ; preds = %.noexc7
+  %9 = extractvalue { i64, i64 } %6, 1
+  br label %_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.thread85.i
 
 bb.q:                                             ; preds = %bb.n
   tail call void @llvm.experimental.noalias.scope.decl(metadata !107)
@@ -717,33 +730,22 @@ bb.ad:                                            ; preds = %bb.ac, %.lr.ph.spli
   %i.gz = icmp ult i64 %i.gy, %i.cq
   br i1 %i.gz, label %.lr.ph.split.us.i.i.i.i, label %_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.thread.i
 
-_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.thread.i: ; preds = %bb.s, %.lr.ph.i.i, %bb.ad, %bb.ab, %bb.z, %bb.q, %bb.m, %.preheader.i.i.i
+_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.thread.i: ; preds = %bb.s, %.lr.ph.i.i, %bb.ad, %bb.ab, %bb.z, %bb.q, %.noexc7, %bb.m, %.preheader.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !97
   br label %_RNvNtCs8ZPNfZ0ciAA_10serde_json5error14parse_line_col.exit
 
-_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.thread85.i: ; preds = %.preheader46.i.i.i.i, %bb.u, %.preheader.i.us95.i.i.i.preheader, %.preheader.i.us95.i.i.i, %.preheader.i.us.i.i.i.preheader, %.preheader.i.us.i.i.i, %bb.l, %_RNvXs2K_NtNtCs8Chj7Szqq0n_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs8ZPNfZ0ciAA_10serde_json.exit17.i.i.us.i.i.i, %_RNvXs2K_NtNtCs8Chj7Szqq0n_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs8ZPNfZ0ciAA_10serde_json.exit19.i.i.us.i.i.i, %_RNvXs2K_NtNtCs8Chj7Szqq0n_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs8ZPNfZ0ciAA_10serde_json.exit21.i.i.us.i.i.i, %_RNvXsw_NtNtCs8Chj7Szqq0n_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit.us.i.peel.i.i, %bb.g
-  %.sroa.4.1.i.ph.i = phi i64 [ %i.bj, %bb.l ], [ 0, %_RNvXsw_NtNtCs8Chj7Szqq0n_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit.us.i.peel.i.i ], [ %i.di, %bb.u ], [ %.promoted104.i.i.i, %bb.g ], [ %i.eu, %.preheader.i.us.i.i.i.preheader ], [ %i.bj, %_RNvXs2K_NtNtCs8Chj7Szqq0n_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs8ZPNfZ0ciAA_10serde_json.exit21.i.i.us.i.i.i ], [ %i.bj, %_RNvXs2K_NtNtCs8Chj7Szqq0n_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs8ZPNfZ0ciAA_10serde_json.exit19.i.i.us.i.i.i ], [ %i.bj, %_RNvXs2K_NtNtCs8Chj7Szqq0n_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs8ZPNfZ0ciAA_10serde_json.exit17.i.i.us.i.i.i ], [ %i.fz, %.preheader.i.us95.i.i.i.preheader ], [ %i.eu, %.preheader.i.us.i.i.i ], [ %i.fz, %.preheader.i.us95.i.i.i ], [ %i.di, %.preheader46.i.i.i.i ]
+_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.thread85.i: ; preds = %.preheader46.i.i.i.i, %bb.u, %.preheader.i.us95.i.i.i.preheader, %.preheader.i.us95.i.i.i, %.preheader.i.us.i.i.i.preheader, %.preheader.i.us.i.i.i, %bb.l, %_RNvXs2K_NtNtCs8Chj7Szqq0n_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs8ZPNfZ0ciAA_10serde_json.exit17.i.i.us.i.i.i, %_RNvXs2K_NtNtCs8Chj7Szqq0n_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs8ZPNfZ0ciAA_10serde_json.exit19.i.i.us.i.i.i, %_RNvXs2K_NtNtCs8Chj7Szqq0n_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs8ZPNfZ0ciAA_10serde_json.exit21.i.i.us.i.i.i, %_RNvXsw_NtNtCs8Chj7Szqq0n_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher15next_match_back.exit.thread11.i.i, %_RNvXsw_NtNtCs8Chj7Szqq0n_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit.us.i.peel.i.i, %bb.g
+  %.sroa.4.14.i.ph.i = phi i64 [ %.promoted104.i.i.i, %bb.g ], [ %i.di, %bb.u ], [ %i.eu, %.preheader.i.us.i.i.i.preheader ], [ 0, %_RNvXsw_NtNtCs8Chj7Szqq0n_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher9next_back.exit.us.i.peel.i.i ], [ %i.bj, %bb.l ], [ %9, %_RNvXsw_NtNtCs8Chj7Szqq0n_4core3str7patternNtB5_11StrSearcherNtB5_15ReverseSearcher15next_match_back.exit.thread11.i.i ], [ %i.bj, %_RNvXs2K_NtNtCs8Chj7Szqq0n_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs8ZPNfZ0ciAA_10serde_json.exit19.i.i.us.i.i.i ], [ %i.bj, %_RNvXs2K_NtNtCs8Chj7Szqq0n_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs8ZPNfZ0ciAA_10serde_json.exit17.i.i.us.i.i.i ], [ %i.bj, %_RNvXs2K_NtNtCs8Chj7Szqq0n_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits12double_ended19DoubleEndedIterator9next_backCs8ZPNfZ0ciAA_10serde_json.exit21.i.i.us.i.i.i ], [ %i.fz, %.preheader.i.us95.i.i.i.preheader ], [ %i.eu, %.preheader.i.us.i.i.i ], [ %i.fz, %.preheader.i.us95.i.i.i ], [ %i.di, %.preheader46.i.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !97
   br label %bb.ae
 
-_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.i: ; preds = %bb.o
-  %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 24
-  %2 = load i8, ptr %1, align 8, !alias.scope !98, !noalias !97, !noundef !4
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 72
-  %4 = load ptr, ptr %3, align 8, !alias.scope !98, !noalias !97, !nonnull !4, !noundef !4
-  %5 = invoke { i64, i64 } @_RNvNtNtCs8Chj7Szqq0n_4core5slice6memchr15memrchr_aligned(i8 noundef %2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %4, i64 noundef %i.ci)
-          to label %.noexc11 unwind label %bb.bt  ; 2 uses
-
-.noexc11:                                         ; preds = %_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.i
-  %6 = extractvalue { i64, i64 } %5, 0
-  %7 = trunc nuw i64 %6 to i1
-  %8 = extractvalue { i64, i64 } %5, 1
+.noexc11:                                         ; preds = %.lr.ph.preheader.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !97
-  br i1 %7, label %bb.ae, label %_RNvNtCs8ZPNfZ0ciAA_10serde_json5error14parse_line_col.exit
+  br i1 %i.r, label %bb.ae, label %_RNvNtCs8ZPNfZ0ciAA_10serde_json5error14parse_line_col.exit
 
-bb.ae:                                            ; preds = %.noexc11, %_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.thread85.i, %.split.us.i.i.i
-  %.sroa.4.1.i88.i = phi i64 [ %.sroa.4.1.i.ph.i, %_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.thread85.i ], [ %8, %.noexc11 ], [ 0, %.split.us.i.i.i ] ; 6 uses
-  %i.ha = add i64 %.sroa.4.1.i88.i, 9             ; 10 uses
+bb.ae:                                            ; preds = %.noexc11, %_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.thread85.i
+  %.sroa.4.14.i86.i = phi i64 [ %.sroa.4.14.i.ph.i, %_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.thread85.i ], [ 0, %.noexc11 ] ; 6 uses
+  %i.ha = add i64 %.sroa.4.14.i86.i, 9            ; 10 uses
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.an, %bb.ae
@@ -1063,21 +1065,21 @@ bb.bl:                                            ; preds = %.lr.ph.i66.i
 
 _RNvMsv_NtCs8Chj7Szqq0n_4core3numj27from_ascii_bytes_radix_impl.exit73.i: ; preds = %.preheader56.i56.i, %bb.bl, %.preheader.i64.i
   %.sroa.1181.0.i = phi i64 [ %i.kw, %bb.bl ], [ 0, %.preheader.i64.i ], [ %i.km, %.preheader56.i56.i ] ; 2 uses
-  %.not.i74.i = icmp ugt i64 %.sroa.4.1.i88.i, %i.g
+  %.not.i74.i = icmp ugt i64 %.sroa.4.14.i86.i, %i.g
   br i1 %.not.i74.i, label %_RNvNtCs8ZPNfZ0ciAA_10serde_json5error14parse_line_col.exit, label %bb.bm
 
 bb.bm:                                            ; preds = %_RNvMsv_NtCs8Chj7Szqq0n_4core3numj27from_ascii_bytes_radix_impl.exit73.i
-  %i.kx = icmp ne i64 %.sroa.4.1.i88.i, 0
-  %.not2.i.i = icmp samesign ult i64 %.sroa.4.1.i88.i, %i.g
+  %i.kx = icmp ne i64 %.sroa.4.14.i86.i, 0
+  %.not2.i.i = icmp samesign ult i64 %.sroa.4.14.i86.i, %i.g
   %or.cond.i75.i = select i1 %i.kx, i1 %.not2.i.i, i1 false
   br i1 %or.cond.i75.i, label %bb.bn, label %.split.i76.i
 
 .split.i76.i:                                     ; preds = %bb.bn, %bb.bm
-  invoke void @_RNvMs_NtCsbqH9stoieM8_5alloc3vecINtB4_3VechE8truncateCs8ZPNfZ0ciAA_10serde_json(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %.sroa.4.1.i88.i)
+  invoke void @_RNvMs_NtCsbqH9stoieM8_5alloc3vecINtB4_3VechE8truncateCs8ZPNfZ0ciAA_10serde_json(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0, i64 noundef %.sroa.4.14.i86.i)
           to label %_RNvNtCs8ZPNfZ0ciAA_10serde_json5error14parse_line_col.exit unwind label %bb.bt
 
 bb.bn:                                            ; preds = %bb.bm
-  %i.ky = getelementptr inbounds nuw i8, ptr %i.e, i64 %.sroa.4.1.i88.i
+  %i.ky = getelementptr inbounds nuw i8, ptr %i.e, i64 %.sroa.4.14.i86.i
   %i.kz = load i8, ptr %i.ky, align 1, !noalias !128, !noundef !4
   %i.la = icmp sgt i8 %i.kz, -65
   br i1 %i.la, label %.split.i76.i, label %bb.bo, !prof !129
@@ -1089,9 +1091,9 @@ bb.bo:                                            ; preds = %bb.bn
 .noexc19:                                         ; preds = %bb.bo
   unreachable
 
-_RNvNtCs8ZPNfZ0ciAA_10serde_json5error14parse_line_col.exit: ; preds = %bb.be, %.preheader56.i.i.preheader, %.lr.ph.i50.i, %.preheader56.i56.i.preheader, %bb.bk, %.lr.ph.i66.i, %.split.i76.i, %_RNvMsv_NtCs8Chj7Szqq0n_4core3numj27from_ascii_bytes_radix_impl.exit73.i, %.noexc13, %bb.av, %bb.bc, %bb.bc, %_RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit37.thread.i, %.split.us.i.i.i, %bb.bi, %bb.bi, %_RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit.thread.i, %.noexc11, %_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.thread.i
-  %9 = phi i64 [ 0, %.lr.ph.i66.i ], [ 0, %_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.thread.i ], [ 0, %.noexc11 ], [ %.sroa.1181.0.i, %.split.i76.i ], [ %i.jw, %_RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit.thread.i ], [ 0, %bb.bi ], [ 0, %bb.bi ], [ 0, %.lr.ph.i50.i ], [ 0, %.split.us.i.i.i ], [ %.sroa.1181.0.i, %_RNvMsv_NtCs8Chj7Szqq0n_4core3numj27from_ascii_bytes_radix_impl.exit73.i ], [ %i.io, %_RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit37.thread.i ], [ 0, %bb.bc ], [ 0, %bb.bc ], [ 0, %bb.av ], [ 0, %.noexc13 ], [ 0, %.preheader56.i56.i.preheader ], [ 0, %bb.bk ], [ 0, %.preheader56.i.i.preheader ], [ 0, %bb.be ]
-  %10 = phi i64 [ 0, %.lr.ph.i66.i ], [ 0, %_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.thread.i ], [ 0, %.noexc11 ], [ %.sroa.1177.0.i, %.split.i76.i ], [ %i.jw, %_RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit.thread.i ], [ 0, %bb.bi ], [ 0, %bb.bi ], [ 0, %.lr.ph.i50.i ], [ 0, %.split.us.i.i.i ], [ %.sroa.1177.0.i, %_RNvMsv_NtCs8Chj7Szqq0n_4core3numj27from_ascii_bytes_radix_impl.exit73.i ], [ %i.io, %_RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit37.thread.i ], [ 0, %bb.bc ], [ 0, %bb.bc ], [ 0, %bb.av ], [ 0, %.noexc13 ], [ 0, %.preheader56.i56.i.preheader ], [ 0, %bb.bk ], [ 0, %.preheader56.i.i.preheader ], [ 0, %bb.be ]
+_RNvNtCs8ZPNfZ0ciAA_10serde_json5error14parse_line_col.exit: ; preds = %bb.be, %.preheader56.i.i.preheader, %.lr.ph.i50.i, %.preheader56.i56.i.preheader, %bb.bk, %.lr.ph.i66.i, %.split.i76.i, %_RNvMsv_NtCs8Chj7Szqq0n_4core3numj27from_ascii_bytes_radix_impl.exit73.i, %bb.av, %bb.bc, %bb.bc, %_RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit37.thread.i, %.noexc13, %bb.bi, %bb.bi, %_RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit.thread.i, %.noexc11, %_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.thread.i
+  %10 = phi i64 [ 0, %.lr.ph.i66.i ], [ 0, %_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.thread.i ], [ 0, %.noexc11 ], [ %.sroa.1181.0.i, %.split.i76.i ], [ %i.jw, %_RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit.thread.i ], [ 0, %bb.bi ], [ 0, %bb.bi ], [ 0, %.lr.ph.i50.i ], [ 0, %.noexc13 ], [ %.sroa.1181.0.i, %_RNvMsv_NtCs8Chj7Szqq0n_4core3numj27from_ascii_bytes_radix_impl.exit73.i ], [ %i.io, %_RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit37.thread.i ], [ 0, %bb.bc ], [ 0, %bb.bc ], [ 0, %bb.av ], [ 0, %.preheader56.i56.i.preheader ], [ 0, %bb.bk ], [ 0, %.preheader56.i.i.preheader ], [ 0, %bb.be ]
+  %11 = phi i64 [ 0, %.lr.ph.i66.i ], [ 0, %_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.thread.i ], [ 0, %.noexc11 ], [ %.sroa.1177.0.i, %.split.i76.i ], [ %i.jw, %_RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit.thread.i ], [ 0, %bb.bi ], [ 0, %bb.bi ], [ 0, %.lr.ph.i50.i ], [ 0, %.noexc13 ], [ %.sroa.1177.0.i, %_RNvMsv_NtCs8Chj7Szqq0n_4core3numj27from_ascii_bytes_radix_impl.exit73.i ], [ %i.io, %_RNvNtNtCs8Chj7Szqq0n_4core3str6traits11check_range.exit37.thread.i ], [ 0, %bb.bc ], [ 0, %bb.bc ], [ 0, %bb.av ], [ 0, %.preheader56.i56.i.preheader ], [ 0, %bb.bk ], [ 0, %.preheader56.i.i.preheader ], [ 0, %bb.be ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull align 8 dereferenceable(24) %0, i64 24, i1 false)
@@ -1106,9 +1108,9 @@ _RNvNtCs8ZPNfZ0ciAA_10serde_json5error14parse_line_col.exit: ; preds = %bb.be, %
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.c, i64 16
   store i64 %i.ld, ptr %.sroa.5.0..sroa_idx, align 8
   %i.le = getelementptr inbounds nuw i8, ptr %i.c, i64 24
-  store i64 %10, ptr %i.le, align 8
+  store i64 %11, ptr %i.le, align 8
   %i.lf = getelementptr inbounds nuw i8, ptr %i.c, i64 32
-  store i64 %9, ptr %i.lf, align 8
+  store i64 %10, ptr %i.lf, align 8
   call void @_RNvCsicpYtSlSgpD_7___rustc35___rust_no_alloc_shim_is_unstable_v2() #15, !noalias !130
   %i.lg = call noundef align 8 dereferenceable_or_null(40) ptr @_RNvCsicpYtSlSgpD_7___rustc12___rust_alloc(i64 noundef 40, i64 noundef 8) #15, !noalias !130 ; 3 uses
   %i.lh = icmp eq ptr %i.lg, null
@@ -1142,7 +1144,7 @@ bb.bs:                                            ; preds = %_RNvNtCs8ZPNfZ0ciAA
   %eh.lpad-body23 = phi { ptr, i32 } [ %i.li, %bb.bq ], [ %lpad.thr_comm, %bb.bt ]
   resume { ptr, i32 } %eh.lpad-body23
 
-bb.bt:                                            ; preds = %.split43.i.i.i.i.invoke, %.split114.us.i.i.i.invoke, %bb.bo, %bb.a, %bb.p, %_RINvMNtCs8Chj7Szqq0n_4core3stre5rfindReECs8ZPNfZ0ciAA_10serde_json.exit.i, %bb.ao, %.split.i76.i
+bb.bt:                                            ; preds = %.split43.i.i.i.i.invoke, %.split114.us.i.i.i.invoke, %bb.bo, %bb.a, %1, %bb.p, %bb.ao, %.split.i76.i
   %lpad.thr_comm = landingpad { ptr, i32 }
           cleanup
   invoke void @_RINvNtCs8Chj7Szqq0n_4core3ptr9drop_glueNtNtCsbqH9stoieM8_5alloc6string6StringECs8ZPNfZ0ciAA_10serde_json(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %0) #18

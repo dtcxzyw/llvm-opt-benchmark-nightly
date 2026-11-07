@@ -205,9 +205,9 @@ _ZN5folly8OptionalImEaSEOS1_.exit.thread57:       ; preds = %bb.h
 
 _ZN5folly8OptionalImEaSEOS1_.exit:                ; preds = %_ZNK5folly11compression5Codec21getUncompressedLengthEPKNS_5IOBufENS_8OptionalImEE.exit
   %.sroa.2.0.copyload.pre = load i8, ptr %.sroa.336.0..sroa_idx, align 8
+  %.sroa.033.0.copyload.pre = load i64, ptr %3, align 8
   %9 = trunc nuw i8 %.sroa.2.0.copyload.pre to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #31
-  %.sroa.033.0.copyload = load i64, ptr %3, align 8
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 12
   store i32 0, ptr %i.v, align 4, !tbaa !2453
   %i.w = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
@@ -215,7 +215,7 @@ _ZN5folly8OptionalImEaSEOS1_.exit:                ; preds = %_ZNK5folly11compres
 
 _ZNKR5folly8OptionalImE5valueEv.exit.i.i.i:       ; preds = %_ZN5folly8OptionalImEaSEOS1_.exit.thread.a, %_ZN5folly8OptionalImEaSEOS1_.exit
   %i.x = phi ptr [ %i.s, %_ZN5folly8OptionalImEaSEOS1_.exit.thread.a ], [ %i.w, %_ZN5folly8OptionalImEaSEOS1_.exit ] ; 2 uses
-  %.sroa.033.0.copyload56 = phi i64 [ %i.q, %_ZN5folly8OptionalImEaSEOS1_.exit.thread.a ], [ %.sroa.033.0.copyload, %_ZN5folly8OptionalImEaSEOS1_.exit ]
+  %.sroa.033.0.copyload56 = phi i64 [ %i.q, %_ZN5folly8OptionalImEaSEOS1_.exit.thread.a ], [ %.sroa.033.0.copyload.pre, %_ZN5folly8OptionalImEaSEOS1_.exit ]
   %i.y = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.z = load i8, ptr %i.x, align 8, !tbaa !2443, !range !2444, !noundef !209
   %i.aa = trunc nuw i8 %i.z to i1
@@ -618,7 +618,7 @@ bb.z:                                             ; preds = %bb.y
 _ZN5folly8OptionalI11lzma_streamEptEv.exit24:     ; preds = %bb.y
   %i.cm = load i64, ptr %i.bt, align 8, !tbaa !2986
   %i.cn = icmp eq i64 %i.cm, 0
-  br i1 %i.cn, label %_ZN5folly8OptionalI11lzma_streamEptEv.exit26, label %bb.ab
+  br i1 %i.cn, label %_ZN5folly8OptionalI11lzma_streamEptEv.exit26, label %"_ZN5folly6detail14ScopeGuardImplIZNS_11compression12_GLOBAL__N_116LZMA2StreamCodec16doCompressStreamERNS_5RangeIPKhEERNS5_IPhEENS2_11StreamCodec7FlushOpEE3$_0Lb1EED2Ev.exit"
 
 _ZN5folly8OptionalI11lzma_streamEptEv.exit26:     ; preds = %_ZN5folly8OptionalI11lzma_streamEptEv.exit24
   %i.co = load i64, ptr %i.cb, align 8, !tbaa !2988
@@ -632,9 +632,9 @@ bb.aa:                                            ; preds = %bb.w
 default.unreachable:                              ; preds = %bb.w
   unreachable
 
-bb.ab:                                            ; preds = %bb.aa, %bb.w, %_ZN5folly8OptionalI11lzma_streamEptEv.exit26, %_ZN5folly8OptionalI11lzma_streamEptEv.exit24
-  %.015 = phi i1 [ %i.cq, %bb.aa ], [ false, %bb.w ], [ false, %_ZN5folly8OptionalI11lzma_streamEptEv.exit24 ], [ %i.cp, %_ZN5folly8OptionalI11lzma_streamEptEv.exit26 ]
-  %i.cr = load i8, ptr %i.bk, align 8, !tbaa !2967, !range !2444, !noundef !209
+bb.ab:                                            ; preds = %bb.aa, %bb.w, %_ZN5folly8OptionalI11lzma_streamEptEv.exit26
+  %.015.ph = phi i1 [ %i.cp, %_ZN5folly8OptionalI11lzma_streamEptEv.exit26 ], [ false, %bb.w ], [ %i.cq, %bb.aa ]
+  %i.cr = load i8, ptr %i.bk, align 8, !tbaa !2967
   %i.cs = trunc nuw i8 %i.cr to i1
   br i1 %i.cs, label %"_ZN5folly6detail14ScopeGuardImplIZNS_11compression12_GLOBAL__N_116LZMA2StreamCodec16doCompressStreamERNS_5RangeIPKhEERNS5_IPhEENS2_11StreamCodec7FlushOpEE3$_0Lb1EED2Ev.exit", label %bb.ac
 
@@ -652,7 +652,8 @@ bb.ad:                                            ; preds = %bb.ac
   tail call void @__clang_call_terminate(ptr %i.cu) #30
   unreachable
 
-"_ZN5folly6detail14ScopeGuardImplIZNS_11compression12_GLOBAL__N_116LZMA2StreamCodec16doCompressStreamERNS_5RangeIPKhEERNS5_IPhEENS2_11StreamCodec7FlushOpEE3$_0Lb1EED2Ev.exit": ; preds = %bb.ab
+"_ZN5folly6detail14ScopeGuardImplIZNS_11compression12_GLOBAL__N_116LZMA2StreamCodec16doCompressStreamERNS_5RangeIPKhEERNS5_IPhEENS2_11StreamCodec7FlushOpEE3$_0Lb1EED2Ev.exit": ; preds = %_ZN5folly8OptionalI11lzma_streamEptEv.exit24, %bb.ab
+  %.01554 = phi i1 [ %.015.ph, %bb.ab ], [ false, %_ZN5folly8OptionalI11lzma_streamEptEv.exit24 ]
   %i.cv = load ptr, ptr %i.bo, align 8, !tbaa !2918
   %i.cw = ptrtoint ptr %i.cv to i64
   %i.cx = load ptr, ptr %1, align 8, !tbaa !2917  ; 2 uses
@@ -681,7 +682,7 @@ bb.ad:                                            ; preds = %bb.ac
   br label %common.resume
 
 bb.ae:                                            ; preds = %_ZN5folly11compression12_GLOBAL__N_116LZMA2StreamCodec17flushVarintBufferERNS_5RangeIPhEE.exit, %"_ZN5folly6detail14ScopeGuardImplIZNS_11compression12_GLOBAL__N_116LZMA2StreamCodec16doCompressStreamERNS_5RangeIPKhEERNS5_IPhEENS2_11StreamCodec7FlushOpEE3$_0Lb1EED2Ev.exit"
-  %.1 = phi i1 [ %.015, %"_ZN5folly6detail14ScopeGuardImplIZNS_11compression12_GLOBAL__N_116LZMA2StreamCodec16doCompressStreamERNS_5RangeIPKhEERNS5_IPhEENS2_11StreamCodec7FlushOpEE3$_0Lb1EED2Ev.exit" ], [ false, %_ZN5folly11compression12_GLOBAL__N_116LZMA2StreamCodec17flushVarintBufferERNS_5RangeIPhEE.exit ]
+  %.1 = phi i1 [ %.01554, %"_ZN5folly6detail14ScopeGuardImplIZNS_11compression12_GLOBAL__N_116LZMA2StreamCodec16doCompressStreamERNS_5RangeIPKhEERNS5_IPhEENS2_11StreamCodec7FlushOpEE3$_0Lb1EED2Ev.exit" ], [ false, %_ZN5folly11compression12_GLOBAL__N_116LZMA2StreamCodec17flushVarintBufferERNS_5RangeIPhEE.exit ]
   ret i1 %.1
 }
 
@@ -1084,8 +1085,9 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.c
   %i.ac = call i32 @BZ2_bzCompressEnd(ptr noundef nonnull %i.f) ; 0 uses
-  %.pre.i.i.i = load i8, ptr %i.g, align 8, !tbaa !2996, !range !2444
-  %i.ad = trunc nuw i8 %.pre.i.i.i to i1
+  %.pre.i.i.i = load i8, ptr %i.g, align 8, !tbaa !2996
+  %.pr.fr.i.i.i = freeze i8 %.pre.i.i.i
+  %i.ad = trunc i8 %.pr.fr.i.i.i to i1
   store ptr null, ptr %i.f, align 8
   store i32 0, ptr %.sroa.4.0..sroa_idx.i4.i.i, align 8
   store ptr null, ptr %.sroa.51.0..sroa_idx.i5.i.i, align 8
@@ -1428,8 +1430,9 @@ bb.g:                                             ; preds = %bb.f
 
 bb.h:                                             ; preds = %bb.g
   %i.ad = call i32 @BZ2_bzDecompressEnd(ptr noundef nonnull %i.g) ; 0 uses
-  %.pre.i.i.i = load i8, ptr %i.h, align 8, !tbaa !2996, !range !2444
-  %i.ae = trunc nuw i8 %.pre.i.i.i to i1
+  %.pre.i.i.i = load i8, ptr %i.h, align 8, !tbaa !2996
+  %.pr.fr.i.i.i = freeze i8 %.pre.i.i.i
+  %i.ae = trunc i8 %.pr.fr.i.i.i to i1
   store ptr null, ptr %i.g, align 8
   store i32 0, ptr %.sroa.4.0..sroa_idx.i4.i.i, align 8
   store ptr null, ptr %.sroa.51.0..sroa_idx.i5.i.i, align 8

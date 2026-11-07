@@ -202,9 +202,9 @@ bb.a:
   %i.j = alloca [96 x i8], align 16               ; 7 uses
   %i.k = alloca [144 x i8], align 16              ; 8 uses
   %.sroa.0.i.i.i = alloca [112 x i8], align 16    ; 7 uses
-  %i.l = alloca [144 x i8], align 16              ; 12 uses
+  %i.l = alloca [144 x i8], align 16              ; 13 uses
   %i.m = alloca [80 x i8], align 16               ; 8 uses
-  %.sroa.7.i.i = alloca [47 x i8], align 1        ; 8 uses
+  %.sroa.7.i.i = alloca [47 x i8], align 1        ; 9 uses
   %.sroa.10.i.i = alloca [16 x i8], align 16      ; 8 uses
   %.sroa.5.i = alloca [47 x i8], align 1          ; 5 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !11002), !dbg !11037
@@ -222,12 +222,12 @@ bb.a:
   %.sroa.5.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 120
   %.sroa.4.0..sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %i.l, i64 112 ; 6 uses
   %i.s = getelementptr inbounds nuw i8, ptr %i.i, i64 16 ; 2 uses
-  %i.t = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 4 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %i.m, i64 16 ; 5 uses
   %.sroa.42.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %.sroa.4.0..sroa_idx.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   %i.u = getelementptr inbounds nuw i8, ptr %i.i, i64 8 ; 2 uses
   %i.v = getelementptr inbounds nuw i8, ptr %i.m, i64 8 ; 4 uses
-  %.sroa.7.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 17 ; 3 uses
+  %.sroa.7.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 17 ; 4 uses
   %.sroa.10.0..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %i.m, i64 64 ; 2 uses
   %.val.i.i = load ptr, ptr %i.q, align 8, !noalias !11005, !nonnull !532, !align !639, !noundef !532
   br label %bb.b, !dbg !11039
@@ -399,7 +399,10 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.r
   call fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsfcROwRM8ZtH_11polars_plan3dsl4expr4ExprECshquuC4dCYVj_10polars_sql(ptr noalias noundef align 16 dereferenceable(144) %i.l), !dbg !11080, !noalias !11008
-  br label %_RNCNCINvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtBa_10SQLContext14process_valuesINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1q_5slice4iter4IterINtNtCsaRr8xKSRVhT_9sqlparser3ast6ParensINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtB2z_4ExprEEENCNvB6_13process_query0EE00Bc_.exit.thread.i.i, !dbg !11080
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !dbg !11080, !noalias !11006
+  %.sroa.5.0.copyload17.i.i = load i8, ptr %i.t, align 16, !dbg !11044, !noalias !11005
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(47) %.sroa.7.i.i, ptr noundef nonnull align 1 dereferenceable(47) %.sroa.7.0..sroa_idx.i.i, i64 47, i1 false), !dbg !11044, !noalias !11005
+  br label %.loopexit16.i, !dbg !11087
 
 bb.t:                                             ; preds = %.thread15.i.i.i, %.thread.i, %bb.l
   %.pn19.i.i.i = phi { ptr, i32 } [ %i.ab, %.thread15.i.i.i ], [ %lpad.loopexit.i, %bb.l ], [ %lpad.loopexit.split-lp.i, %.thread.i ]
@@ -408,19 +411,19 @@ bb.t:                                             ; preds = %.thread15.i.i.i, %.
 
 common.resume.i.i:                                ; preds = %bb.l, %bb.w, %.thread45.i, %bb.t, %.thread15.i.i.i
   %common.resume.op.i.i = phi { ptr, i32 } [ %i.av, %bb.w ], [ %lpad.loopexit.split-lp.i, %.thread45.i ], [ %.pn19.i.i.i, %bb.t ], [ %i.ab, %.thread15.i.i.i ], [ %lpad.loopexit.i, %bb.l ]
-  resume { ptr, i32 } %common.resume.op.i.i, !dbg !11087
+  resume { ptr, i32 } %common.resume.op.i.i, !dbg !11088
 
 .thread45.i:                                      ; preds = %.thread.i
   invoke fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsfcROwRM8ZtH_11polars_plan5plans3lit12LiteralValueECshquuC4dCYVj_10polars_sql(ptr noalias noundef align 16 dereferenceable(96) %i.l) #43
           to label %common.resume.i.i unwind label %bb.o, !dbg !11080, !noalias !11008
 
-_RNCNCINvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtBa_10SQLContext14process_valuesINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1q_5slice4iter4IterINtNtCsaRr8xKSRVhT_9sqlparser3ast6ParensINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtB2z_4ExprEEENCNvB6_13process_query0EE00Bc_.exit.thread.i.i: ; preds = %bb.s, %bb.r, %bb.c
-  %.sroa.4.0.copyload4.i.i = phi i64 [ 11, %bb.s ], [ 11, %bb.r ], [ %.sroa.4.0.copyload4.i.pre.i, %bb.c ], !dbg !11044
+_RNCNCINvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtBa_10SQLContext14process_valuesINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1q_5slice4iter4IterINtNtCsaRr8xKSRVhT_9sqlparser3ast6ParensINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtB2z_4ExprEEENCNvB6_13process_query0EE00Bc_.exit.thread.i.i: ; preds = %bb.r, %bb.c
+  %.sroa.4.0.copyload3.i.i = phi i64 [ %.sroa.4.0.copyload4.i.pre.i, %bb.c ], [ 11, %bb.r ], !dbg !11044
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !dbg !11080, !noalias !11006
   %.sroa.5.0.copyload6.i.i = load i8, ptr %i.t, align 16, !dbg !11044, !noalias !11005
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(47) %.sroa.7.i.i, ptr noundef nonnull align 1 dereferenceable(47) %.sroa.7.0..sroa_idx.i.i, i64 47, i1 false), !dbg !11044, !noalias !11005
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.10.i.i, ptr noundef nonnull align 16 dereferenceable(16) %.sroa.10.0..sroa_idx.i.i, i64 16, i1 false), !dbg !11044, !noalias !11005
-  br label %.loopexit16.i, !dbg !11088
+  br label %.loopexit16.i, !dbg !11087
 
 _RNCNCINvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtBa_10SQLContext14process_valuesINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1q_5slice4iter4IterINtNtCsaRr8xKSRVhT_9sqlparser3ast6ParensINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtB2z_4ExprEEENCNvB6_13process_query0EE00Bc_.exit.i.i: ; preds = %bb.n, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !dbg !11080, !noalias !11006
@@ -428,11 +431,11 @@ _RNCNCINvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtBa_10SQLContext14process_valu
   %.sroa.5.0.copyload.i.i = load i8, ptr %i.t, align 16, !dbg !11044, !noalias !11005 ; 4 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(47) %.sroa.7.i.i, ptr noundef nonnull align 1 dereferenceable(47) %.sroa.7.0..sroa_idx.i.i, i64 47, i1 false), !dbg !11044, !noalias !11005
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(16) %.sroa.10.i.i, ptr noundef nonnull align 16 dereferenceable(16) %.sroa.10.0..sroa_idx.i.i, i64 16, i1 false), !dbg !11044, !noalias !11005
-  br i1 %.not.i.i.i.i, label %.loopexit16.i, label %bb.v, !dbg !11088
+  br i1 %.not.i.i.i.i, label %.loopexit16.i, label %bb.v, !dbg !11087
 
-.loopexit16.i:                                    ; preds = %_RNCNCINvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtBa_10SQLContext14process_valuesINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1q_5slice4iter4IterINtNtCsaRr8xKSRVhT_9sqlparser3ast6ParensINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtB2z_4ExprEEENCNvB6_13process_query0EE00Bc_.exit.i.i, %_RNCNCINvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtBa_10SQLContext14process_valuesINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1q_5slice4iter4IterINtNtCsaRr8xKSRVhT_9sqlparser3ast6ParensINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtB2z_4ExprEEENCNvB6_13process_query0EE00Bc_.exit.thread.i.i
-  %.sroa.5.0.copyload10.i.i = phi i8 [ %.sroa.5.0.copyload6.i.i, %_RNCNCINvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtBa_10SQLContext14process_valuesINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1q_5slice4iter4IterINtNtCsaRr8xKSRVhT_9sqlparser3ast6ParensINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtB2z_4ExprEEENCNvB6_13process_query0EE00Bc_.exit.thread.i.i ], [ %.sroa.5.0.copyload.i.i, %_RNCNCINvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtBa_10SQLContext14process_valuesINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1q_5slice4iter4IterINtNtCsaRr8xKSRVhT_9sqlparser3ast6ParensINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtB2z_4ExprEEENCNvB6_13process_query0EE00Bc_.exit.i.i ] ; 2 uses
-  %.sroa.4.0.copyload9.i.i = phi i64 [ %.sroa.4.0.copyload4.i.i, %_RNCNCINvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtBa_10SQLContext14process_valuesINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1q_5slice4iter4IterINtNtCsaRr8xKSRVhT_9sqlparser3ast6ParensINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtB2z_4ExprEEENCNvB6_13process_query0EE00Bc_.exit.thread.i.i ], [ %.sroa.4.0.copyload.i.i, %_RNCNCINvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtBa_10SQLContext14process_valuesINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1q_5slice4iter4IterINtNtCsaRr8xKSRVhT_9sqlparser3ast6ParensINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtB2z_4ExprEEENCNvB6_13process_query0EE00Bc_.exit.i.i ] ; 2 uses
+.loopexit16.i:                                    ; preds = %_RNCNCINvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtBa_10SQLContext14process_valuesINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1q_5slice4iter4IterINtNtCsaRr8xKSRVhT_9sqlparser3ast6ParensINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtB2z_4ExprEEENCNvB6_13process_query0EE00Bc_.exit.i.i, %_RNCNCINvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtBa_10SQLContext14process_valuesINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1q_5slice4iter4IterINtNtCsaRr8xKSRVhT_9sqlparser3ast6ParensINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtB2z_4ExprEEENCNvB6_13process_query0EE00Bc_.exit.thread.i.i, %bb.s
+  %.sroa.5.0.copyload9.i.i = phi i8 [ %.sroa.5.0.copyload6.i.i, %_RNCNCINvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtBa_10SQLContext14process_valuesINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1q_5slice4iter4IterINtNtCsaRr8xKSRVhT_9sqlparser3ast6ParensINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtB2z_4ExprEEENCNvB6_13process_query0EE00Bc_.exit.thread.i.i ], [ %.sroa.5.0.copyload17.i.i, %bb.s ], [ %.sroa.5.0.copyload.i.i, %_RNCNCINvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtBa_10SQLContext14process_valuesINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1q_5slice4iter4IterINtNtCsaRr8xKSRVhT_9sqlparser3ast6ParensINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtB2z_4ExprEEENCNvB6_13process_query0EE00Bc_.exit.i.i ] ; 2 uses
+  %.sroa.4.0.copyload8.i.i = phi i64 [ %.sroa.4.0.copyload3.i.i, %_RNCNCINvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtBa_10SQLContext14process_valuesINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1q_5slice4iter4IterINtNtCsaRr8xKSRVhT_9sqlparser3ast6ParensINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtB2z_4ExprEEENCNvB6_13process_query0EE00Bc_.exit.thread.i.i ], [ 11, %bb.s ], [ %.sroa.4.0.copyload.i.i, %_RNCNCINvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtBa_10SQLContext14process_valuesINtNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map3MapINtNtNtB1q_5slice4iter4IterINtNtCsaRr8xKSRVhT_9sqlparser3ast6ParensINtNtCsgZ49sUHp3tW_5alloc3vec3VecNtB2z_4ExprEEENCNvB6_13process_query0EE00Bc_.exit.i.i ] ; 2 uses
   %i.at = load i64, ptr %3, align 8, !dbg !11089, !range !847, !alias.scope !11032, !noalias !11033, !noundef !532
   %i.au = icmp eq i64 %i.at, 18, !dbg !11089
   br i1 %i.au, label %_RNCINvNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map12map_try_foldRNtNtCsaRr8xKSRVhT_9sqlparser3ast4ExprINtNtBa_6result6ResultNtNtNtCs1LHh8CLbVkQ_11polars_core9datatypes9any_value8AnyValueNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB3H_B1X_EENCNCINvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtB4H_10SQLContext14process_valuesINtB4_3MapINtNtNtBa_5slice4iter4IterINtB12_6ParensINtNtCsgZ49sUHp3tW_5alloc3vec3VecB10_EEENCNvB4D_13process_query0EE00NCINvXB6_INtB6_12GenericShuntIB5Q_IB60_B10_EB4w_EIB1C_NtNtBa_7convert10InfallibleB2X_EENtNtNtB8_6traits8iterator8Iterator8try_folduNCINvNvB98_12try_for_each4callB1X_B4l_NcNtB4l_5Break0E0B4l_E0E0B4J_.exit.thread10.i, label %bb.u, !dbg !11089
@@ -454,9 +457,9 @@ _RNCINvNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map12map_try_foldRNtNtCsaRr8xKSRV
 bb.w:                                             ; preds = %bb.u
   %i.av = landingpad { ptr, i32 }
           cleanup
-  store i64 %.sroa.4.0.copyload9.i.i, ptr %3, align 8, !dbg !11095, !noalias !11033
+  store i64 %.sroa.4.0.copyload8.i.i, ptr %3, align 8, !dbg !11095, !noalias !11033
   %.sroa.517.0..8.val.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 8, !dbg !11095
-  store i8 %.sroa.5.0.copyload10.i.i, ptr %.sroa.517.0..8.val.sroa_idx.i.i.i, align 8, !dbg !11095, !noalias !11033
+  store i8 %.sroa.5.0.copyload9.i.i, ptr %.sroa.517.0..8.val.sroa_idx.i.i.i, align 8, !dbg !11095, !noalias !11033
   %.sroa.6.0..8.val.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 9, !dbg !11095
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(47) %.sroa.6.0..8.val.sroa_idx.i.i.i, ptr noundef nonnull align 1 dereferenceable(47) %.sroa.7.i.i, i64 47, i1 false), !dbg !11095, !noalias !11035
   %.sroa.7.0..8.val.sroa_idx.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 56, !dbg !11095
@@ -464,9 +467,9 @@ bb.w:                                             ; preds = %bb.u
   br label %common.resume.i.i, !dbg !11096
 
 _RNCINvNtNtNtCscgRAwXFJnXP_4core4iter8adapters3map12map_try_foldRNtNtCsaRr8xKSRVhT_9sqlparser3ast4ExprINtNtBa_6result6ResultNtNtNtCs1LHh8CLbVkQ_11polars_core9datatypes9any_value8AnyValueNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEuINtNtNtBa_3ops12control_flow11ControlFlowIB3H_B1X_EENCNCINvMs1_NtCshquuC4dCYVj_10polars_sql7contextNtB4H_10SQLContext14process_valuesINtB4_3MapINtNtNtBa_5slice4iter4IterINtB12_6ParensINtNtCsgZ49sUHp3tW_5alloc3vec3VecB10_EEENCNvB4D_13process_query0EE00NCINvXB6_INtB6_12GenericShuntIB5Q_IB60_B10_EB4w_EIB1C_NtNtBa_7convert10InfallibleB2X_EENtNtNtB8_6traits8iterator8Iterator8try_folduNCINvNvB98_12try_for_each4callB1X_B4l_NcNtB4l_5Break0E0B4l_E0E0B4J_.exit.thread10.i: ; preds = %bb.u, %.loopexit16.i
-  store i64 %.sroa.4.0.copyload9.i.i, ptr %3, align 8, !dbg !11095, !noalias !11033
+  store i64 %.sroa.4.0.copyload8.i.i, ptr %3, align 8, !dbg !11095, !noalias !11033
   %.sroa.517.0..8.val.sroa_idx18.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 8, !dbg !11095
-  store i8 %.sroa.5.0.copyload10.i.i, ptr %.sroa.517.0..8.val.sroa_idx18.i.i.i, align 8, !dbg !11095, !noalias !11033
+  store i8 %.sroa.5.0.copyload9.i.i, ptr %.sroa.517.0..8.val.sroa_idx18.i.i.i, align 8, !dbg !11095, !noalias !11033
   %.sroa.6.0..8.val.sroa_idx20.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 9, !dbg !11095
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(47) %.sroa.6.0..8.val.sroa_idx20.i.i.i, ptr noundef nonnull align 1 dereferenceable(47) %.sroa.7.i.i, i64 47, i1 false), !dbg !11095, !noalias !11035
   %.sroa.7.0..8.val.sroa_idx21.i.i.i = getelementptr inbounds nuw i8, ptr %3, i64 56, !dbg !11095
@@ -869,8 +872,8 @@ begin_hunk_1_@memcmp
 !11084 = !DILocation(line: 659, column: 34, scope: !241, inlinedAt: !10969)
 !11085 = !DILocation(line: 614, column: 5, scope: !244, inlinedAt: !10973)
 !11086 = !DILocation(line: 778, column: 9, scope: !10950, inlinedAt: !10974)
-!11087 = !DILocation(line: 95, scope: !10919, inlinedAt: !10920)
-!11088 = !DILocation(line: 2173, column: 9, scope: !10975, inlinedAt: !10978)
+!11087 = !DILocation(line: 2173, column: 9, scope: !10975, inlinedAt: !10978)
+!11088 = !DILocation(line: 95, scope: !10919, inlinedAt: !10920)
 !11089 = !DILocation(line: 810, column: 1, scope: !213, inlinedAt: !10985)
 !11090 = !DILocation(line: 810, column: 1, scope: !214, inlinedAt: !10986)
 !11091 = !DILocation(line: 116, column: 15, scope: !10987, inlinedAt: !10991)

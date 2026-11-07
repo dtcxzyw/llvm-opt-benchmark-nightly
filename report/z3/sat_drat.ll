@@ -205,12 +205,16 @@ _ZNK6vectorISt4pairIN3sat7literalEPNS1_6clauseEELb0EjE4sizeEv.exit19.thread.prol
   %i.ad = icmp ugt i64 %i.ac, -4
   br i1 %i.ad, label %.split, label %_ZNK6vectorISt4pairIN3sat7literalEPNS1_6clauseEELb0EjE4sizeEv.exit19.thread
 
-.lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %_ZN3sat4drat16assign_propagateENS_7literalEPNS_6clauseE.exit
-  %indvars.iv = phi i64 [ 0, %.lr.ph.split.preheader ], [ %indvars.iv.next, %_ZN3sat4drat16assign_propagateENS_7literalEPNS_6clauseE.exit ] ; 2 uses
+.lr.ph.splitthread-pre-split:                     ; preds = %_ZN3sat4drat16assign_propagateENS_7literalEPNS_6clauseE.exit
+  %.pr = load i8, ptr %i.j, align 1, !tbaa !88
+  br label %.lr.ph.split
+
+.lr.ph.split:                                     ; preds = %.lr.ph.splitthread-pre-split, %.lr.ph.split.preheader
+  %3 = phi i8 [ %.pr, %.lr.ph.splitthread-pre-split ], [ 1, %.lr.ph.split.preheader ]
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph.splitthread-pre-split ], [ 0, %.lr.ph.split.preheader ] ; 2 uses
   %i.ae = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv
   %.sroa.0.0.copyload = load i32, ptr %i.ae, align 4, !tbaa !70
   %i.af = xor i32 %.sroa.0.0.copyload, 1
-  %3 = load i8, ptr %i.j, align 1, !tbaa !88, !range !33, !noundef !34
   %i.ag = trunc nuw i8 %3 to i1
   br i1 %i.ag, label %bb.e, label %_ZN3sat4drat16assign_propagateENS_7literalEPNS_6clauseE.exit
 
@@ -257,7 +261,7 @@ bb.g:                                             ; preds = %_ZNK6vectorISt4pair
 _ZN3sat4drat16assign_propagateENS_7literalEPNS_6clauseE.exit: ; preds = %.lr.ph.i, %_ZNK6vectorISt4pairIN3sat7literalEPNS1_6clauseEELb0EjE4sizeEv.exit8.i, %.lr.ph.split
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %.not = icmp samesign ult i64 %indvars.iv.next, %i.m
-  br i1 %.not, label %.lr.ph.split, label %.preheader.loopexit, !llvm.loop !253
+  br i1 %.not, label %.lr.ph.splitthread-pre-split, label %.preheader.loopexit, !llvm.loop !253
 
 .split:                                           ; preds = %_ZNK6vectorISt4pairIN3sat7literalEPNS1_6clauseEELb0EjE4sizeEv.exit19.thread.prol.loopexit, %_ZNK6vectorISt4pairIN3sat7literalEPNS1_6clauseEELb0EjE4sizeEv.exit19.thread, %_ZNK6vectorISt4pairIN3sat7literalEPNS1_6clauseEELb0EjE4sizeEv.exit19.thread.lr.ph
   store i32 %.0.i, ptr %i.q, align 4, !tbaa !70

@@ -205,7 +205,7 @@ _ZN5boost4asio16buffers_iteratorINS0_12const_bufferEcE7advanceEl.exit: ; preds =
   %.sroa.18.5 = phi ptr [ %.sroa.18.4, %._crit_edge63.i ], [ %spec.select.i.idx.sroa.sel, %bb.c ], [ %.sroa.18.3, %._crit_edge.i ], [ %scevgep, %.lr.ph62.i ], [ %.sroa.18.2, %bb.d ]
   %.sroa.10.0 = phi i64 [ %.024.lcssa.i, %._crit_edge63.i ], [ 0, %bb.c ], [ %i.aa, %._crit_edge.i ], [ 0, %.lr.ph62.i ], [ 0, %bb.d ]
   %.not6088.i = icmp eq i64 %.sroa.23.1, %i.j
-  br i1 %.not6088.i, label %_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit.thread.a, label %.preheader.lr.ph.i
+  br i1 %.not6088.i, label %_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit.thread, label %.preheader.lr.ph.i
 
 .preheader.lr.ph.i:                               ; preds = %_ZN5boost4asio16buffers_iteratorINS0_12const_bufferEcE7advanceEl.exit
   br i1 %i.e, label %_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit, label %.preheader.preheader.i
@@ -217,7 +217,7 @@ _ZN5boost4asio16buffers_iteratorINS0_12const_bufferEcE7advanceEl.exit: ; preds =
 
 .preheader.i:                                     ; preds = %_ZN5boost4asio16buffers_iteratorINS0_12const_bufferEcEppEv.exit15.i, %.preheader.preheader.i
   %indvars.iv.i = phi ptr [ %scevgep.i, %.preheader.preheader.i ], [ %scevgep106.i, %_ZN5boost4asio16buffers_iteratorINS0_12const_bufferEcEppEv.exit15.i ] ; 2 uses
-  %.sroa.21.093.i = phi i64 [ %.sroa.23.1, %.preheader.preheader.i ], [ %i.av, %_ZN5boost4asio16buffers_iteratorINS0_12const_bufferEcEppEv.exit15.i ] ; 4 uses
+  %.sroa.21.093.i = phi i64 [ %.sroa.23.1, %.preheader.preheader.i ], [ %i.av, %_ZN5boost4asio16buffers_iteratorINS0_12const_bufferEcEppEv.exit15.i ] ; 5 uses
   %.sroa.1544.092.i = phi ptr [ %.sroa.18.5, %.preheader.preheader.i ], [ %.sroa.1544.2.i, %_ZN5boost4asio16buffers_iteratorINS0_12const_bufferEcEppEv.exit15.i ] ; 4 uses
   %.sroa.025.091.i = phi ptr [ %.sroa.077.5, %.preheader.preheader.i ], [ %.sroa.025.1.i, %_ZN5boost4asio16buffers_iteratorINS0_12const_bufferEcEppEv.exit15.i ] ; 3 uses
   %.sroa.7.090.i = phi i64 [ %.sroa.780.5, %.preheader.preheader.i ], [ %.sroa.7.1.i, %_ZN5boost4asio16buffers_iteratorINS0_12const_bufferEcEppEv.exit15.i ] ; 4 uses
@@ -236,7 +236,7 @@ bb.f:                                             ; preds = %_ZN5boost4asio16buf
 
 bb.g:                                             ; preds = %bb.f
   %.not9.i = icmp eq ptr %indvars.iv.i, %3
-  br i1 %.not9.i, label %.loopexit.i, label %_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit.thread.a
+  br i1 %.not9.i, label %.loopexit.i, label %_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit.thread138
 
 bb.h:                                             ; preds = %bb.f
   %i.am = getelementptr inbounds nuw i8, ptr %.sroa.0.077.i, i64 %.sroa.8.075.i
@@ -317,20 +317,27 @@ _ZN5boost4asio16buffers_iteratorINS0_12const_bufferEcEppEv.exit15.i: ; preds = %
   %.sroa.1544.2.i = phi ptr [ %i.ax, %bb.l ], [ %.sroa.1544.092.i, %.loopexit.i ], [ %.sroa.1544.2.ph.i, %_ZN5boost4asio16buffers_iteratorINS0_12const_bufferEcEppEv.exit15.loopexit.i ]
   %.not60.i = icmp eq i64 %i.av, %i.j
   %scevgep106.i = getelementptr i8, ptr %indvars.iv.i, i64 -1
-  br i1 %.not60.i, label %_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit.thread.a, label %.preheader.i, !llvm.loop !2757
+  br i1 %.not60.i, label %_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit.thread, label %.preheader.i, !llvm.loop !2757
 
 _ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit: ; preds = %_ZN5boost4asio16buffers_iteratorINS0_12const_bufferEcEppEv.exit.i, %.preheader.lr.ph.i
-  %.sroa.15.0 = phi i64 [ %.sroa.23.1, %.preheader.lr.ph.i ], [ %.sroa.21.093.i, %_ZN5boost4asio16buffers_iteratorINS0_12const_bufferEcEppEv.exit.i ] ; 3 uses
+  %.sroa.15.0 = phi i64 [ %.sroa.23.1, %.preheader.lr.ph.i ], [ %.sroa.21.093.i, %_ZN5boost4asio16buffers_iteratorINS0_12const_bufferEcEppEv.exit.i ] ; 2 uses
   %.not.a = icmp eq i64 %.sroa.15.0, %i.j
-  br i1 %.not.a, label %_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit.thread.a, label %bb.n
+  br i1 %.not.a, label %_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit.thread, label %bb.n
+
+_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit.thread138: ; preds = %bb.g
+  %.not = icmp eq i64 %.sroa.21.093.i, %i.j
+  br i1 %.not, label %_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit.thread, label %_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit.thread.a
 
 bb.n:                                             ; preds = %_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   %i.az = add i64 %.sroa.15.0, %2
   br label %.loopexit.sink.split
 
-_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit.thread.a: ; preds = %bb.g, %_ZN5boost4asio16buffers_iteratorINS0_12const_bufferEcEppEv.exit15.i, %_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit, %_ZN5boost4asio16buffers_iteratorINS0_12const_bufferEcE7advanceEl.exit
-  %.125 = phi i64 [ %i.j, %_ZN5boost4asio16buffers_iteratorINS0_12const_bufferEcE7advanceEl.exit ], [ %.sroa.15.0, %_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit ], [ %.sroa.21.093.i, %bb.g ], [ %i.j, %_ZN5boost4asio16buffers_iteratorINS0_12const_bufferEcEppEv.exit15.i ]
+_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit.thread: ; preds = %_ZN5boost4asio16buffers_iteratorINS0_12const_bufferEcEppEv.exit15.i, %_ZN5boost4asio16buffers_iteratorINS0_12const_bufferEcE7advanceEl.exit, %_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit.thread138, %_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit
+  br label %_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit.thread.a
+
+_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit.thread.a: ; preds = %_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit.thread138, %_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit.thread
+  %.125 = phi i64 [ %i.j, %_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit.thread ], [ %.sroa.21.093.i, %_ZN5boost4asio6detail14partial_searchINS0_16buffers_iteratorINS0_12const_bufferEcEEPKcEESt4pairIT_bES9_S9_T0_SB_.exit.thread138 ]
   %i.ba = icmp eq i64 %spec.select, %.pre199
   br i1 %i.ba, label %bb.o, label %bb.r
 

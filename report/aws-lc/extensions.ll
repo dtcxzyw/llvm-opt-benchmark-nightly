@@ -204,21 +204,24 @@ bb.a:
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !274  ; 2 uses
   %i.g = load i64, ptr %i.d, align 8, !tbaa !275  ; 2 uses
   %.idx = mul nuw nsw i64 %i.g, 24
-  %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 %.idx
+  %i.h = getelementptr inbounds nuw i8, ptr %i.f, i64 %.idx ; 2 uses
   %.not32 = icmp eq i64 %i.g, 0
-  br i1 %.not32, label %select.unfold, label %.lr.ph
+  br i1 %.not32, label %select.unfold, label %.lr.ph.outer
 
-.lr.ph:                                           ; preds = %bb.a, %bb.g
-  %.01634 = phi ptr [ %i.r, %bb.g ], [ %i.f, %bb.a ] ; 3 uses
-  %.01733 = phi i8 [ %.118, %bb.g ], [ 1, %bb.a ] ; 2 uses
+.lr.ph.outer:                                     ; preds = %bb.a, %._crit_edge.a
+  %.01634.ph = phi ptr [ %6, %._crit_edge.a ], [ %i.f, %bb.a ]
+  %.01733.ph = phi i1 [ false, %._crit_edge.a ], [ true, %bb.a ] ; 2 uses
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.outer, %bb.g
+  %.01634 = phi ptr [ %i.r, %bb.g ], [ %.01634.ph, %.lr.ph.outer ] ; 4 uses
   %i.i = getelementptr inbounds nuw i8, ptr %.01634, i64 8
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !367
   %i.k = icmp eq ptr %i.j, null
   br i1 %i.k, label %bb.g, label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph
-  %6 = trunc nuw i8 %.01733 to i1
-  br i1 %6, label %bb.c, label %bb.f
+  br i1 %.01733.ph, label %bb.c, label %bb.f
 
 bb.c:                                             ; preds = %bb.b
   %i.l = call i32 @CBB_add_u16(ptr noundef %2, i16 noundef zeroext 27) #13
@@ -240,25 +243,28 @@ bb.f:                                             ; preds = %bb.e, %bb.b
   %i.p = load i16, ptr %i.o, align 8, !tbaa !277
   %i.q = call i32 @CBB_add_u16(ptr noundef nonnull %5, i16 noundef zeroext %i.p) #13
   %.not25 = icmp eq i32 %i.q, 0
-  br i1 %.not25, label %select.unfold, label %bb.g
+  br i1 %.not25, label %select.unfold, label %._crit_edge.a
 
-bb.g:                                             ; preds = %.lr.ph, %bb.f
-  %.118 = phi i8 [ %.01733, %.lr.ph ], [ 0, %bb.f ] ; 2 uses
+bb.g:                                             ; preds = %.lr.ph
   %i.r = getelementptr inbounds nuw i8, ptr %.01634, i64 24 ; 2 uses
   %.not = icmp eq ptr %i.r, %i.h
-  br i1 %.not, label %._crit_edge.a, label %.lr.ph
+  br i1 %.not, label %._crit_edge, label %.lr.ph
 
-._crit_edge.a:                                    ; preds = %bb.g
-  %7 = trunc nuw i8 %.118 to i1
-  br i1 %7, label %select.unfold, label %bb.h
+._crit_edge.a:                                    ; preds = %bb.f
+  %6 = getelementptr inbounds nuw i8, ptr %.01634, i64 24 ; 2 uses
+  %.not37 = icmp eq ptr %6, %i.h
+  br i1 %.not37, label %bb.h, label %.lr.ph.outer
 
-bb.h:                                             ; preds = %._crit_edge.a
+._crit_edge:                                      ; preds = %bb.g
+  br i1 %.01733.ph, label %select.unfold, label %bb.h
+
+bb.h:                                             ; preds = %._crit_edge.a, %._crit_edge
   %i.s = call i32 @CBB_flush(ptr noundef %2) #13
   %i.t = icmp ne i32 %i.s, 0
   br label %select.unfold
 
-select.unfold:                                    ; preds = %bb.f, %bb.d, %bb.e, %bb.c, %bb.a, %._crit_edge.a, %bb.h
-  %.3 = phi i1 [ %i.t, %bb.h ], [ true, %._crit_edge.a ], [ true, %bb.a ], [ false, %bb.c ], [ false, %bb.e ], [ false, %bb.d ], [ false, %bb.f ]
+select.unfold:                                    ; preds = %bb.f, %bb.d, %bb.e, %bb.c, %bb.a, %._crit_edge, %bb.h
+  %.3 = phi i1 [ %i.t, %bb.h ], [ true, %._crit_edge ], [ true, %bb.a ], [ false, %bb.c ], [ false, %bb.e ], [ false, %bb.d ], [ false, %bb.f ]
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #13
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #13
   ret i1 %.3

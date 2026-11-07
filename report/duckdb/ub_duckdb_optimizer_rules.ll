@@ -205,7 +205,7 @@ _ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEE
   store ptr %i.mb, ptr %i.kp, align 8, !tbaa !402
   br label %_ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit155
 
-_ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit155: ; preds = %bb.ba, %.lr.ph.i.i.i.i113, %bb.ay, %..loopexit_crit_edge21.i.i.i.i, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i149, %bb.bn
+_ZNSt10unique_ptrIN6duckdb10ExpressionESt14default_deleteIS1_EED2Ev.exit155: ; preds = %bb.ba, %.lr.ph.i.i.i.i113, %bb.ay, %_ZNSt6vectorIN6duckdb10unique_ptrINS0_10ExpressionESt14default_deleteIS2_ELb1EEESaIS5_EE17_M_realloc_insertIJS5_EEEvN9__gnu_cxx17__normal_iteratorIPS5_S7_EEDpOT_.exit.i.i149, %bb.bn, %..loopexit_crit_edge21.i.i.i.i
   %i.mc = load ptr, ptr %11, align 8, !tbaa !411  ; 3 uses
   %.not.i156 = icmp eq ptr %i.mc, null
   br i1 %.not.i156, label %_ZNSt10unique_ptrIN6duckdb26BoundConjunctionExpressionESt14default_deleteIS1_EED2Ev.exit, label %_ZNKSt14default_deleteIN6duckdb26BoundConjunctionExpressionEEclEPS1_.exit.i
@@ -608,7 +608,7 @@ bb.ah:                                            ; preds = %.noexc157
 .loopexit:                                        ; preds = %_ZN6duckdbL12AddCharacterEcRNS_10LikeStringEb.exit.us.i150, %bb.ah, %.preheader.i144
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #25
-  %i.cx = load i8, ptr %17, align 8, !tbaa !602, !range !343, !alias.scope !1781, !noundef !344 ; 2 uses
+  %i.cx = load i8, ptr %17, align 8, !tbaa !602, !range !343, !noundef !344 ; 2 uses
   %i.cy = trunc nuw i8 %i.cx to i1
   %i.cz = add nuw i64 %.025.i, 1                  ; 2 uses
   %exitcond.not.i = icmp ne i64 %i.cz, %i.bv
@@ -698,7 +698,7 @@ bb.am:                                            ; preds = %.noexc142
 _ZN6duckdbL12AddCodepointEiRNS_10LikeStringEb.exit: ; preds = %_ZN6duckdbL12AddCharacterEcRNS_10LikeStringEb.exit.us.i, %.preheader.i, %bb.am
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #25
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c) #25
-  %.pre.a = load i8, ptr %17, align 8, !tbaa !602, !range !343
+  %.pre.a = load i8, ptr %17, align 8, !tbaa !602
   br label %_ZN6duckdbL20GetLikeStringEscapedEPN10duckdb_re26RegexpEb.exit
 
 .loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.lr.ph.i, %bb.ag, %bb.al, %bb.ai
@@ -1050,7 +1050,7 @@ bb.bn:                                            ; preds = %bb.bl
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i92: ; preds = %bb.bm, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i91
   call void @llvm.lifetime.end.p0(ptr nonnull %22) #25
-  %.pre187 = load i8, ptr %16, align 8, !tbaa !602, !range !343
+  %.pre187 = load i8, ptr %16, align 8, !tbaa !602
   %i.hi = trunc nuw i8 %.pre187 to i1
   br i1 %i.hi, label %bb.bp, label %bb.bo
 
@@ -1453,10 +1453,10 @@ bb.a:
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %1, i8 0, i64 40, i1 false)
   store i8 1, ptr %1, align 8, !tbaa !602
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 1
-  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 12 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 13 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 15 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 19 uses
   store ptr %i.c, ptr %i.b, align 8, !tbaa !293
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 14 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 16 uses
   store i8 0, ptr %i.c, align 8, !tbaa !294
   %i.e = getelementptr inbounds nuw i8, ptr %.32.val, i64 6
   %i.f = load i16, ptr %i.e, align 2, !tbaa !1793 ; 3 uses
@@ -1588,7 +1588,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i: 
 _ZN6duckdb10LikeStringC2EOS0_.exit:               ; preds = %bb.j, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i
   %i.av = phi i64 [ %i.ar, %bb.j ], [ %.pre32, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ]
   store i64 %i.av, ptr %i.p, align 8, !tbaa !297
-  br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i61.sink.split
+  store ptr %i.c, ptr %i.b, align 8, !tbaa !319
+  store i64 0, ptr %i.d, align 8, !tbaa !297
+  store i8 0, ptr %i.c, align 8, !tbaa !294
+  br label %.critedge28
 
 bb.k:                                             ; preds = %bb.b, %bb.b
   %i.aw = icmp eq i64 %indvars.iv, 0
@@ -1654,7 +1657,7 @@ bb.n:                                             ; preds = %bb.m
           to label %bb.o unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.o:                                             ; preds = %.lr.ph.i
-  %i.bn = load i8, ptr %0, align 8, !tbaa !602, !range !343, !alias.scope !1795, !noundef !344 ; 2 uses
+  %i.bn = load i8, ptr %0, align 8, !tbaa !602, !range !343, !noundef !344 ; 2 uses
   %i.bo = trunc nuw i8 %i.bn to i1
   %i.bp = add nuw i64 %.025.i, 1                  ; 2 uses
   %exitcond.not.i = icmp ne i64 %i.bp, %i.bi
@@ -1666,7 +1669,7 @@ bb.p:                                             ; preds = %bb.m
           to label %._ZN6duckdbL20GetLikeStringEscapedEPN10duckdb_re26RegexpEb.exit_crit_edge unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 ._ZN6duckdbL20GetLikeStringEscapedEPN10duckdb_re26RegexpEb.exit_crit_edge: ; preds = %bb.p
-  %.pre31 = load i8, ptr %0, align 8, !tbaa !602, !range !343
+  %.pre31 = load i8, ptr %0, align 8, !tbaa !602
   br label %_ZN6duckdbL20GetLikeStringEscapedEPN10duckdb_re26RegexpEb.exit
 
 .loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.lr.ph.i, %bb.p
@@ -1767,7 +1770,10 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i56
 _ZN6duckdb10LikeStringC2EOS0_.exit57:             ; preds = %bb.s, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i56
   %i.cr = phi i64 [ %i.cn, %bb.s ], [ %.pre35, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i56 ]
   store i64 %i.cr, ptr %i.p, align 8, !tbaa !297
-  br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i61.sink.split
+  store ptr %i.c, ptr %i.b, align 8, !tbaa !319
+  store i64 0, ptr %i.d, align 8, !tbaa !297
+  store i8 0, ptr %i.c, align 8, !tbaa !294
+  br label %.critedge28
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit37: ; preds = %.critedge, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE6appendEPKc.exit.i34.invoke, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i53, %bb.b, %bb.b, %bb.b, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc.exit33
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -1804,22 +1810,21 @@ _ZN6duckdb10LikeStringC2EOS0_.exit59:             ; preds = %bb.t, %_ZNKSt7__cxx
   %i.db = phi i64 [ %i.cx, %bb.t ], [ %.pre37, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i58 ]
   %i.dc = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.db, ptr %i.dc, align 8, !tbaa !297
-  br label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i61.sink.split
+  store ptr %i.c, ptr %i.b, align 8, !tbaa !319
+  store i64 0, ptr %i.d, align 8, !tbaa !297
+  store i8 0, ptr %i.c, align 8, !tbaa !294
+  br label %.critedge28
 
-.critedge28:                                      ; preds = %_ZN6duckdbL20GetLikeStringEscapedEPN10duckdb_re26RegexpEb.exit, %_ZN6duckdbL20GetLikeStringEscapedEPN10duckdb_re26RegexpEb.exit.thread49
+.critedge28:                                      ; preds = %_ZN6duckdbL20GetLikeStringEscapedEPN10duckdb_re26RegexpEb.exit, %_ZN6duckdbL20GetLikeStringEscapedEPN10duckdb_re26RegexpEb.exit.thread49, %_ZN6duckdb10LikeStringC2EOS0_.exit59, %_ZN6duckdb10LikeStringC2EOS0_.exit57, %_ZN6duckdb10LikeStringC2EOS0_.exit
   %.pre38 = load ptr, ptr %i.b, align 8, !tbaa !319 ; 2 uses
   %i.dd = icmp eq ptr %.pre38, %i.c
   br i1 %i.dd, label %_ZN6duckdb10LikeStringD2Ev.exit62, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i60
-
-_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i61.sink.split: ; preds = %_ZN6duckdb10LikeStringC2EOS0_.exit59, %_ZN6duckdb10LikeStringC2EOS0_.exit57, %_ZN6duckdb10LikeStringC2EOS0_.exit
-  store i64 0, ptr %i.d, align 8, !tbaa !297
-  br label %_ZN6duckdb10LikeStringD2Ev.exit62
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i60: ; preds = %.critedge28
   call void @_ZdlPv(ptr noundef %.pre38) #28
   br label %_ZN6duckdb10LikeStringD2Ev.exit62
 
-_ZN6duckdb10LikeStringD2Ev.exit62:                ; preds = %.critedge28, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i61.sink.split, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i60
+_ZN6duckdb10LikeStringD2Ev.exit62:                ; preds = %.critedge28, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i60
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #25
   ret void
 

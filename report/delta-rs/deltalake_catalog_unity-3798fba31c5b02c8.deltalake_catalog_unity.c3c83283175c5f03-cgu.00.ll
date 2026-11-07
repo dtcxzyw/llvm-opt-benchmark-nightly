@@ -204,8 +204,12 @@ bb.su:                                            ; preds = %bb.sh, %bb.rh
   %i.bam = getelementptr inbounds nuw i8, ptr %i.bal, i64 16
   %i.ban = getelementptr i8, ptr %i.bae, i64 72
   %.val67.i.i = load i64, ptr %i.ban, align 8, !range !21, !noalias !2835, !noundef !13
-  %.not.i92.not.i.i = icmp eq i64 %.val67.i.i, -9223372036854775808 ; 2 uses
-  br i1 %.not.i92.not.i.i, label %bb.sw, label %bb.sv
+  %.not.i92.not.i.i = icmp eq i64 %.val67.i.i, -9223372036854775808
+  br i1 %.not.i92.not.i.i, label %3, label %bb.sv
+
+3:                                                ; preds = %bb.su
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 1352
+  br label %bb.sw
 
 bb.sv:                                            ; preds = %bb.su
   %i.bao = getelementptr i8, ptr %i.bae, i64 96
@@ -213,17 +217,14 @@ bb.sv:                                            ; preds = %bb.su
   %i.bap = getelementptr inbounds nuw i8, ptr %.val68.i.i, i64 88
   %i.baq = load ptr, ptr %i.bap, align 8, !noalias !2835, !nonnull !13, !noundef !13
   %i.bar = getelementptr inbounds nuw i8, ptr %i.baq, i64 1224
-  %3 = load i64, ptr %i.bar, align 8, !noalias !2835, !noundef !13
   br label %bb.sw
 
-bb.sw:                                            ; preds = %bb.sv, %bb.su
-  %.sroa.3.0.i.i.i = phi i64 [ %3, %bb.sv ], [ undef, %bb.su ]
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 1352
-  %i.bas = load i64, ptr %4, align 8, !noalias !2834, !noundef !13
-  %..i.i.i = select i1 %.not.i92.not.i.i, i64 %i.bas, i64 %.sroa.3.0.i.i.i
+bb.sw:                                            ; preds = %bb.sv, %3
+  %.in.i.i = phi ptr [ %i.bar, %bb.sv ], [ %4, %3 ]
+  %i.bas = load i64, ptr %.in.i.i, align 8, !noalias !2835, !noundef !13
   %i.bat = getelementptr inbounds nuw i8, ptr %.val60.i.i, i64 104
   %i.bau = load ptr, ptr %i.bat, align 8, !invariant.load !13, !noalias !2835, !nonnull !13
-  %i.bav = invoke { ptr, ptr } %i.bau(ptr noundef nonnull %i.bam, i64 noundef %..i.i.i)
+  %i.bav = invoke { ptr, ptr } %i.bau(ptr noundef nonnull %i.bam, i64 noundef %i.bas)
           to label %bb.sx unwind label %bb.ti, !noalias !2835 ; 2 uses
 
 bb.sx:                                            ; preds = %bb.sw

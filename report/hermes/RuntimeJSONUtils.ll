@@ -202,8 +202,8 @@ bb.a:
   %i.e = load ptr, ptr %i.d, align 8, !tbaa !49   ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.c, i64 208 ; 4 uses
   %i.g = load i32, ptr %i.f, align 8, !tbaa !81   ; 5 uses
-  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 10 uses
-  %i.i = load i32, ptr %i.h, align 8, !tbaa !95   ; 3 uses
+  %i.h = getelementptr inbounds nuw i8, ptr %0, i64 88 ; 11 uses
+  %i.i = load i32, ptr %i.h, align 8, !tbaa !95   ; 4 uses
   %i.j = add i32 %i.i, 1                          ; 2 uses
   %i.k = icmp ugt i32 %i.j, 511
   br i1 %i.k, label %bb.b, label %bb.c
@@ -361,7 +361,7 @@ bb.l:                                             ; preds = %_ZN6hermes2vm12_GLO
   %i.cj = and i64 %.sink167, 281474976710655
   %i.ck = inttoptr i64 %i.cj to ptr
   %i.cl = getelementptr inbounds nuw i8, ptr %i.ck, i64 24
-  %i.cm = load i32, ptr %i.cl, align 4, !tbaa !123 ; 2 uses
+  %i.cm = load i32, ptr %i.cl, align 4, !tbaa !123 ; 3 uses
   %.not39137.not = icmp eq i32 %i.cm, 0
   br i1 %.not39137.not, label %._crit_edge.thread, label %.lr.ph
 
@@ -376,15 +376,18 @@ bb.l:                                             ; preds = %_ZN6hermes2vm12_GLO
   %i.cq = getelementptr inbounds nuw i8, ptr %0, i64 80
   %i.cr = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.cs = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 2 uses
+  br label %.outer
+
+.outer:                                           ; preds = %bb.az, %.lr.ph
+  %.033141.ph = phi i1 [ true, %bb.az ], [ false, %.lr.ph ] ; 2 uses
+  %.038138.ph = phi i32 [ %i.ki, %bb.az ], [ 0, %.lr.ph ]
   br label %bb.m
 
-bb.m:                                             ; preds = %.lr.ph, %bb.az
-  %.033141 = phi i8 [ 0, %.lr.ph ], [ %.235.ph, %bb.az ] ; 2 uses
-  %.038138 = phi i32 [ 0, %.lr.ph ], [ %i.ki, %bb.az ] ; 4 uses
+bb.m:                                             ; preds = %.outer, %bb.ay
+  %.038138 = phi i32 [ %1, %bb.ay ], [ %.038138.ph, %.outer ] ; 5 uses
   %i.ct = load i32, ptr %i.n, align 8, !tbaa !21  ; 2 uses
   %i.cu = zext i32 %i.ct to i64                   ; 2 uses
-  %1 = trunc nuw i8 %.033141 to i1
-  br i1 %1, label %bb.n, label %_ZN6hermes2vm12_GLOBAL__N_115JSONStringifyer6indentEv.exit62
+  br i1 %.033141.ph, label %bb.n, label %_ZN6hermes2vm12_GLOBAL__N_115JSONStringifyer6indentEv.exit62
 
 bb.n:                                             ; preds = %bb.m
   %i.cv = load i32, ptr %i.p, align 4, !tbaa !22
@@ -787,20 +790,24 @@ bb.ax:                                            ; preds = %_ZN6hermes2vm16Arra
 
 bb.ay:                                            ; preds = %bb.ax
   tail call void @_ZN4llvh15SmallVectorImplIDsE6resizeEm(ptr noundef nonnull align 8 dereferenceable(16) %i.m, i64 noundef %i.cu)
-  br label %bb.az
+  %1 = add nuw i32 %.038138, 1                    ; 2 uses
+  %exitcond.not = icmp eq i32 %1, %i.cm
+  br i1 %exitcond.not, label %._crit_edge, label %bb.m, !llvm.loop !212
 
-bb.az:                                            ; preds = %bb.ax, %bb.ay
-  %.235.ph = phi i8 [ 1, %bb.ax ], [ %.033141, %bb.ay ] ; 2 uses
+bb.az:                                            ; preds = %bb.ax
   %i.ki = add nuw i32 %.038138, 1                 ; 2 uses
   %exitcond.not.a = icmp eq i32 %i.ki, %i.cm
-  br i1 %exitcond.not.a, label %._crit_edge, label %bb.m, !llvm.loop !212
+  br i1 %exitcond.not.a, label %._crit_edge.thread168, label %.outer, !llvm.loop !212
 
-._crit_edge:                                      ; preds = %bb.az
-  %2 = trunc nuw i8 %.235.ph to i1
+._crit_edge.thread168:                            ; preds = %bb.az
   store i32 %i.i, ptr %i.h, align 8, !tbaa !95
-  br i1 %2, label %bb.ba, label %bb.bd
+  br label %bb.ba
 
-bb.ba:                                            ; preds = %._crit_edge
+._crit_edge:                                      ; preds = %bb.ay
+  store i32 %i.i, ptr %i.h, align 8, !tbaa !95
+  br i1 %.033141.ph, label %bb.ba, label %bb.bd
+
+bb.ba:                                            ; preds = %._crit_edge.thread168, %._crit_edge
   %i.kj = load ptr, ptr %i.z, align 8, !tbaa !52
   %.sroa.0.0.copyload.i.i.i85 = load i64, ptr %i.kj, align 8, !tbaa !24
   %i.kk = and i64 %.sroa.0.0.copyload.i.i.i85, 281474976710655

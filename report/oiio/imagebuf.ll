@@ -205,27 +205,34 @@ bb.a:
   %i.f = alloca i64, align 8                      ; 4 uses
   %i.g = alloca i64, align 8                      ; 4 uses
   store i32 %1, ptr %0, align 8, !tbaa !730
-  %i.h = icmp ne i32 %1, 1
+  %i.h = icmp ne i32 %1, 1                        ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 176 ; 2 uses
-  %i.j = load i8, ptr %i.i, align 8, !range !792
+  %i.j = load i8, ptr %i.i, align 8, !range !792  ; 2 uses
   %i.k = trunc nuw i8 %i.j to i1
   %or.cond24 = select i1 %i.h, i1 true, i1 %i.k
-  br i1 %or.cond24, label %bb.e, label %bb.b
+  br i1 %or.cond24, label %4, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 48
   %i.m = tail call noundef i64 @_ZNK11OpenImageIO4v3_19ImageSpec11image_bytesEb(ptr noundef nonnull align 8 dereferenceable(160) %i.l, i1 noundef zeroext false) #41
   %i.n = icmp eq i64 %2, %i.m
-  br i1 %i.n, label %.thread.a, label %bb.c, !prof !795
+  br i1 %i.n, label %.thread, label %bb.c, !prof !795
 
 bb.c:                                             ; preds = %bb.b
   %i.o = load ptr, ptr @stderr, align 8, !tbaa !803
   %i.p = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.o, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.4, i32 noundef 720, ptr noundef nonnull @__FUNCTION__._ZN11OpenImageIO4v3_112ImageBufImpl10new_pixelsENS0_8ImageBuf9IBStorageEmPKv, ptr noundef nonnull @.str.5) #45 ; 0 uses
+  br label %.thread
+
+.thread:                                          ; preds = %bb.c, %bb.b
+  %.pr = load i8, ptr %i.i, align 8, !tbaa !800
   br label %.thread.a
 
-.thread.a:                                        ; preds = %bb.b, %bb.c
-  %.old = load i8, ptr %i.i, align 8, !tbaa !800, !range !792, !noundef !793
-  %.old38 = trunc nuw i8 %.old to i1
+4:                                                ; preds = %bb.a
+  br i1 %i.h, label %bb.e, label %.thread.a
+
+.thread.a:                                        ; preds = %.thread, %4
+  %5 = phi i8 [ %.pr, %.thread ], [ %i.j, %4 ]
+  %.old38 = trunc nuw i8 %5 to i1
   br i1 %.old38, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %.thread.a
@@ -233,8 +240,8 @@ bb.d:                                             ; preds = %.thread.a
   %i.r = tail call noundef i64 @_ZNK11OpenImageIO4v3_19ImageSpec11image_bytesEb(ptr noundef nonnull align 8 dereferenceable(160) %i.q, i1 noundef zeroext false) #41
   br label %bb.e
 
-bb.e:                                             ; preds = %bb.a, %.thread.a, %bb.d
-  %i.s = phi i64 [ %i.r, %bb.d ], [ 0, %.thread.a ], [ 0, %bb.a ] ; 3 uses
+bb.e:                                             ; preds = %4, %.thread.a, %bb.d
+  %i.s = phi i64 [ %i.r, %bb.d ], [ 0, %.thread.a ], [ 0, %4 ] ; 3 uses
   store i64 %i.s, ptr %i.c, align 8, !tbaa !773
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 544 ; 4 uses
   %i.u = load i64, ptr %i.t, align 8, !tbaa !794  ; 4 uses

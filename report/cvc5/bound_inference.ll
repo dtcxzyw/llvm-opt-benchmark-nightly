@@ -202,7 +202,7 @@ _ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit: ; preds = %bb.g, %bb.k, %bb.
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !29 ; 4 uses
   %i.ar = load ptr, ptr %1, align 8, !tbaa !29
   %.not.i75 = icmp eq ptr %i.aq, %i.ar
-  br i1 %.not.i75, label %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit78.a, label %bb.n, !prof !43
+  br i1 %.not.i75, label %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit78, label %bb.n, !prof !43
 
 bb.n:                                             ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit
   %i.as = load i64, ptr %i.aq, align 8            ; 3 uses
@@ -252,12 +252,15 @@ bb.s:                                             ; preds = %bb.r
   tail call void @_ZN4cvc58internal4expr9NodeValue20markRefCountMaxedOutEv(ptr noundef nonnull align 8 dereferenceable(24) %i.az)
   br label %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit78.a
 
-_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit78.a: ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit, %bb.q, %bb.r, %bb.s
-  %i.bm = load i8, ptr %i.ao, align 8, !tbaa !14, !range !15, !noundef !16
+_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit78.a: ; preds = %bb.s, %bb.r, %bb.q
+  %i.bm = load i8, ptr %i.ao, align 8, !tbaa !14
   %i.bn = trunc nuw i8 %i.bm to i1
   br i1 %i.bn, label %bb.as, label %bb.t
 
-bb.t:                                             ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit78.a
+_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit78: ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit
+  br i1 %4, label %bb.as, label %bb.t
+
+bb.t:                                             ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit78.a, %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit78
   %i.bo = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %i.bp = load i8, ptr %i.bo, align 8, !tbaa !30, !range !15, !noundef !16
   %i.bq = trunc nuw i8 %i.bp to i1
@@ -466,7 +469,7 @@ bb.ar:                                            ; preds = %bb.aq, %bb.ap
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #22
   br label %common.resume
 
-bb.as:                                            ; preds = %bb.u, %bb.t, %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit78.a
+bb.as:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit78.a, %bb.u, %bb.t, %_ZN4cvc58internal12NodeTemplateILb1EEaSERKS2_.exit78
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #22
   %i.em = select i1 %4, i32 78, i32 79

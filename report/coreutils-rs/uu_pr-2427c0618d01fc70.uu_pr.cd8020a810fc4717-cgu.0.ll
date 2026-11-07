@@ -205,10 +205,10 @@ bb.a:
   %i.ak = alloca [24 x i8], align 8               ; 13 uses
   %i.al = alloca [19 x i8], align 1               ; 3 uses
   %i.am = alloca [8 x i8], align 8                ; 4 uses
-  %i.an = alloca [24 x i8], align 8               ; 7 uses
-  %i.ao = alloca [24 x i8], align 8               ; 7 uses
-  %i.ap = alloca [16 x i8], align 8               ; 6 uses
-  %i.aq = alloca [24 x i8], align 8               ; 7 uses
+  %i.an = alloca [24 x i8], align 8               ; 8 uses
+  %i.ao = alloca [24 x i8], align 8               ; 8 uses
+  %i.ap = alloca [16 x i8], align 8               ; 7 uses
+  %i.aq = alloca [24 x i8], align 8               ; 8 uses
   %i.ar = alloca [40 x i8], align 8               ; 5 uses
   %i.as = alloca [48 x i8], align 8               ; 13 uses
   %i.at = alloca [32 x i8], align 8               ; 6 uses
@@ -611,18 +611,22 @@ bb.es:                                            ; preds = %_RNvCshDScVpnq8df_5
 
 bb.et:                                            ; preds = %_RNvCshDScVpnq8df_5uu_pr15get_date_format.exit.i
   call void @_RNvXs5_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDurationINtNtCs6JMX4GRUq9U_4core7convert7TryFromNtNtB17_4time8DurationE8try_from(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.aq, i64 noundef %i.wi, i32 noundef %i.wk) #30, !noalias !1918
-  %i.wo = load i64, ptr %i.aq, align 8, !range !7, !alias.scope !1914, !noalias !1913, !noundef !4
+  %i.wo = load i64, ptr %i.aq, align 8, !range !7, !noalias !1913, !noundef !4
   %i.wp = trunc nuw i64 %i.wo to i1
-  %5 = getelementptr inbounds nuw i8, ptr %i.aq, i64 8 ; 2 uses
   br i1 %i.wp, label %bb.eu, label %._RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread4.i_crit_edge.i.i.i, !prof !8
 
 ._RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread4.i_crit_edge.i.i.i: ; preds = %bb.et
-  %.pre.i.i.i.a = load i64, ptr %5, align 8, !noalias !1913
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.ao), !noalias !1915
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.an), !noalias !1913
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.ap), !noalias !1913
+  %.phi.trans.insert.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
+  %.pre.i.i.i.a = load i64, ptr %.phi.trans.insert.i.i.i.i, align 8, !noalias !1913
   %.phi.trans.insert12.i.i.i = getelementptr inbounds nuw i8, ptr %i.aq, i64 16
   %.pre13.i.i.i = load i32, ptr %.phi.trans.insert12.i.i.i, align 8, !noalias !1913
   br label %_RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread4.i.i.i.i
 
 bb.eu:                                            ; preds = %bb.et
+  %5 = getelementptr inbounds nuw i8, ptr %i.aq, i64 8
   %i.wq = load ptr, ptr %5, align 8, !alias.scope !1914, !noalias !1913, !noundef !4
   br label %_RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread.i.i.i.i
 
@@ -644,10 +648,13 @@ _RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_unti
   %i.ww = load i32, ptr %i.wv, align 8, !noalias !1915, !noundef !4
   %i.wx = sub nsw i64 0, %i.ws
   %i.wy = sub i32 0, %i.ww
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.ao), !noalias !1915
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.an), !noalias !1913
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.ap), !noalias !1913
   br label %_RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread4.i.i.i.i
 
 _RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread.i.i.i.i: ; preds = %_RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread5.i.i.i.i, %bb.ev, %bb.eu
-  %.sink.i.i.i = phi ptr [ %i.wu, %_RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread5.i.i.i.i ], [ %i.wr, %bb.ev ], [ %i.wq, %bb.eu ]
+  %.sink.i.i.i = phi ptr [ %i.wu, %_RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread5.i.i.i.i ], [ %i.wq, %bb.eu ], [ %i.wr, %bb.ev ]
   %i.wz = call noundef ptr @_RNvXs_NtNtCs3JjgEOiFeOI_4jiff5error15signed_durationNtB4_5ErrorNtB6_9IntoError10into_error(i8 noundef 11) #30, !noalias !1917
   %i.xa = call noundef ptr @_RNvMs_NtCs3JjgEOiFeOI_4jiff5errorNtB4_5Error12context_impl(ptr noundef %.sink.i.i.i, ptr noundef %i.wz) #33, !noalias !1917
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ao), !noalias !1915
@@ -659,9 +666,6 @@ _RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_unti
 _RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread4.i.i.i.i: ; preds = %_RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.i.i.i.i, %._RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread4.i_crit_edge.i.i.i
   %i.xb = phi i32 [ %.pre13.i.i.i, %._RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread4.i_crit_edge.i.i.i ], [ %i.wy, %_RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.i.i.i.i ] ; 7 uses
   %i.xc = phi i64 [ %.pre.i.i.i.a, %._RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread4.i_crit_edge.i.i.i ], [ %i.wx, %_RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.i.i.i.i ] ; 8 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.ao), !noalias !1915
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.an), !noalias !1913
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.ap), !noalias !1913
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aq), !noalias !1913
   %i.xd = add i64 %i.xc, 377705023201
   %or.cond.i.i.i.i.i.i = icmp ult i64 %i.xd, 631107230402

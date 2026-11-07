@@ -204,7 +204,7 @@ bb.f:                                             ; preds = %bb.e
 _ZN2v88internal6torque6Symbol9RunActionEPKNS1_4ItemERKNS1_11LexerResultE.exit: ; preds = %bb.f
   %i.ag = load i8, ptr %i.e, align 8, !range !47, !noundef !48
   %i.ah = trunc nuw i8 %i.ag to i1
-  br i1 %i.ah, label %bb.g, label %_ZNSt6vectorIN2v88internal6torque11ParseResultESaIS3_EE9push_backEOS3_.exit
+  br i1 %i.ah, label %bb.g, label %_ZNSt14_Optional_baseIN2v88internal6torque11ParseResultELb0ELb0EED2Ev.exit28
 
 bb.g:                                             ; preds = %_ZN2v88internal6torque6Symbol9RunActionEPKNS1_4ItemERKNS1_11LexerResultE.exit
   %i.ai = load ptr, ptr %i.g, align 8
@@ -365,9 +365,9 @@ _ZNKSt14default_deleteIN2v88internal6torque21ParseResultHolderBaseEEclEPS3_.exit
   call void %i.cb(ptr noundef nonnull align 8 dereferenceable(12) %i.by) #24, !inline_history !43
   br label %_ZNSt14_Optional_baseIN2v88internal6torque11ParseResultELb0ELb0EED2Ev.exit
 
-_ZNSt6vectorIN2v88internal6torque11ParseResultESaIS3_EE9push_backEOS3_.exit: ; preds = %.noexc25, %bb.h, %_ZN2v88internal6torque6Symbol9RunActionEPKNS1_4ItemERKNS1_11LexerResultE.exit
-  %9 = phi ptr [ %i.bt, %.noexc25 ], [ %i.al, %bb.h ], [ %i.ad, %_ZN2v88internal6torque6Symbol9RunActionEPKNS1_4ItemERKNS1_11LexerResultE.exit ]
-  %i.cc = load i8, ptr %i.e, align 8, !range !47, !noundef !48
+_ZNSt6vectorIN2v88internal6torque11ParseResultESaIS3_EE9push_backEOS3_.exit: ; preds = %.noexc25, %bb.h
+  %9 = phi ptr [ %i.bt, %.noexc25 ], [ %i.al, %bb.h ] ; 3 uses
+  %i.cc = load i8, ptr %i.e, align 8
   %i.cd = trunc nuw i8 %i.cc to i1
   br i1 %i.cd, label %bb.n, label %_ZNSt14_Optional_baseIN2v88internal6torque11ParseResultELb0ELb0EED2Ev.exit28
 
@@ -384,12 +384,13 @@ _ZNKSt14default_deleteIN2v88internal6torque21ParseResultHolderBaseEEclEPS3_.exit
   call void %i.ch(ptr noundef nonnull align 8 dereferenceable(12) %i.ce) #24, !inline_history !43
   br label %_ZNSt14_Optional_baseIN2v88internal6torque11ParseResultELb0ELb0EED2Ev.exit28
 
-_ZNSt14_Optional_baseIN2v88internal6torque11ParseResultELb0ELb0EED2Ev.exit28: ; preds = %_ZNSt6vectorIN2v88internal6torque11ParseResultESaIS3_EE9push_backEOS3_.exit, %bb.n, %_ZNKSt14default_deleteIN2v88internal6torque21ParseResultHolderBaseEEclEPS3_.exit.i.i.i.i.i.i27
+_ZNSt14_Optional_baseIN2v88internal6torque11ParseResultELb0ELb0EED2Ev.exit28: ; preds = %_ZN2v88internal6torque6Symbol9RunActionEPKNS1_4ItemERKNS1_11LexerResultE.exit, %_ZNSt6vectorIN2v88internal6torque11ParseResultESaIS3_EE9push_backEOS3_.exit, %bb.n, %_ZNKSt14default_deleteIN2v88internal6torque21ParseResultHolderBaseEEclEPS3_.exit.i.i.i.i.i.i27
+  %10 = phi ptr [ %i.ad, %_ZN2v88internal6torque6Symbol9RunActionEPKNS1_4ItemERKNS1_11LexerResultE.exit ], [ %9, %_ZNSt6vectorIN2v88internal6torque11ParseResultESaIS3_EE9push_backEOS3_.exit ], [ %9, %bb.n ], [ %9, %_ZNKSt14default_deleteIN2v88internal6torque21ParseResultHolderBaseEEclEPS3_.exit.i.i.i.i.i.i27 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #24
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.e, %_ZNSt14_Optional_baseIN2v88internal6torque11ParseResultELb0ELb0EED2Ev.exit28
-  %i.ci = phi ptr [ %i.ad, %bb.e ], [ %9, %_ZNSt14_Optional_baseIN2v88internal6torque11ParseResultELb0ELb0EED2Ev.exit28 ] ; 2 uses
+  %i.ci = phi ptr [ %i.ad, %bb.e ], [ %10, %_ZNSt14_Optional_baseIN2v88internal6torque11ParseResultELb0ELb0EED2Ev.exit28 ] ; 2 uses
   %i.cj = getelementptr inbounds nuw i8, ptr %.sroa.062.072, i64 8 ; 2 uses
   %i.ck = icmp eq ptr %i.cj, %i.c
   br i1 %i.ck, label %._crit_edge, label %bb.e

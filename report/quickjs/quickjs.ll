@@ -205,19 +205,25 @@ bb.au:                                            ; preds = %bb.at
   %i.hw = getelementptr inbounds nuw i8, ptr %1, i64 80 ; 9 uses
   %i.hx = load ptr, ptr %i.hw, align 8, !tbaa !664
   %i.hy = call fastcc i32 @string_buffer_putc8(ptr noundef %i.hx, i32 noundef 123) ; 0 uses
-  %i.hz = load i64, ptr %i.a, align 8, !tbaa !240 ; 2 uses
+  %i.hz = load i64, ptr %i.a, align 8, !tbaa !240 ; 3 uses
   %i.ia = icmp sgt i64 %i.hz, 0
   br i1 %i.ia, label %.lr.ph24.preheader, label %._crit_edge25.thread
 
 .lr.ph24.preheader:                               ; preds = %bb.au
   %.promoted = load i64, ptr %5, align 8
+  br label %.lr.ph24.outer
+
+.lr.ph24.outer:                                   ; preds = %._crit_edge25.a, %.lr.ph24.preheader
+  %.ph71 = phi i64 [ %i.jh, %._crit_edge25.a ], [ 3, %.lr.ph24.preheader ]
+  %.122.ph = phi i64 [ %7, %._crit_edge25.a ], [ 0, %.lr.ph24.preheader ]
+  %.023921.ph = phi i1 [ true, %._crit_edge25.a ], [ false, %.lr.ph24.preheader ] ; 2 uses
+  %.ph72 = phi i64 [ %i.jg, %._crit_edge25.a ], [ %.promoted, %.lr.ph24.preheader ]
   br label %.lr.ph24
 
-.lr.ph24:                                         ; preds = %.lr.ph24.preheader, %bb.bh
-  %i.ib = phi i64 [ %9, %bb.bh ], [ 3, %.lr.ph24.preheader ] ; 2 uses
-  %.122 = phi i64 [ %i.ka, %bb.bh ], [ 0, %.lr.ph24.preheader ] ; 2 uses
-  %.023921 = phi i8 [ %.1240, %bb.bh ], [ 0, %.lr.ph24.preheader ] ; 2 uses
-  %i.ic = phi i64 [ %8, %bb.bh ], [ %.promoted, %.lr.ph24.preheader ] ; 2 uses
+.lr.ph24:                                         ; preds = %.lr.ph24.outer, %bb.bh
+  %i.ib = phi i64 [ %i.in, %bb.bh ], [ %.ph71, %.lr.ph24.outer ] ; 2 uses
+  %.122 = phi i64 [ %i.ka, %bb.bh ], [ %.122.ph, %.lr.ph24.outer ] ; 3 uses
+  %i.ic = phi i64 [ %i.im, %bb.bh ], [ %.ph72, %.lr.ph24.outer ] ; 2 uses
   %i.id = load ptr, ptr %i.c, align 8, !tbaa !232
   %i.ie = trunc i64 %i.ib to i32
   %i.if = icmp ugt i32 %i.ie, -10
@@ -239,7 +245,7 @@ bb.aw:                                            ; preds = %bb.av
 JS_FreeValue.exit278:                             ; preds = %.lr.ph24, %bb.av, %bb.aw
   %i.il = call { i64, i64 } @JS_GetPropertyInt64(ptr noundef nonnull %0, i64 %.sroa.0130.0, i64 %.sroa.11.0, i64 noundef %.122) ; 2 uses
   %i.im = extractvalue { i64, i64 } %i.il, 0      ; 5 uses
-  %i.in = extractvalue { i64, i64 } %i.il, 1      ; 9 uses
+  %i.in = extractvalue { i64, i64 } %i.il, 1      ; 11 uses
   store i64 %i.im, ptr %5, align 8, !tbaa !218
   store i64 %i.in, ptr %.sroa.372.0..sroa_idx, align 8, !tbaa !240
   %i.io = and i64 %i.in, 4294967295
@@ -269,7 +275,6 @@ js_dup.exit281:                                   ; preds = %bb.ax, %bb.ay
 bb.az:                                            ; preds = %js_dup.exit281
   %i.ja = extractvalue { i64, i64 } %i.iw, 0
   %i.jb = call fastcc { i64, i64 } @js_json_check(ptr noundef nonnull %0, ptr noundef %1, i64 %2, i64 %3, i64 %i.ja, i64 %i.ix, ptr noundef nonnull byval(%struct.JSValue) align 8 %5) ; 2 uses
-  %6 = extractvalue { i64, i64 } %i.jb, 0         ; 3 uses
   %i.jc = extractvalue { i64, i64 } %i.jb, 1      ; 3 uses
   %trunc = trunc i64 %i.jc to i32                 ; 2 uses
   switch i32 %trunc, label %bb.ba [
@@ -278,8 +283,8 @@ bb.az:                                            ; preds = %js_dup.exit281
   ]
 
 bb.ba:                                            ; preds = %bb.az
-  %7 = trunc nuw i8 %.023921 to i1
-  br i1 %7, label %bb.bb, label %bb.bc
+  %6 = extractvalue { i64, i64 } %i.jb, 0         ; 3 uses
+  br i1 %.023921.ph, label %bb.bb, label %bb.bc
 
 bb.bb:                                            ; preds = %bb.ba
   %i.jd = load ptr, ptr %i.hw, align 8, !tbaa !664
@@ -289,7 +294,7 @@ bb.bb:                                            ; preds = %bb.ba
 bb.bc:                                            ; preds = %bb.bb, %bb.ba
   %i.jf = call fastcc { i64, i64 } @JS_ToQuotedStringFree(ptr noundef nonnull %0, i64 %i.im, i64 %i.in) ; 2 uses
   %i.jg = extractvalue { i64, i64 } %i.jf, 0      ; 3 uses
-  %i.jh = extractvalue { i64, i64 } %i.jf, 1      ; 8 uses
+  %i.jh = extractvalue { i64, i64 } %i.jf, 1      ; 9 uses
   store i64 %i.jg, ptr %5, align 8, !tbaa !218
   store i64 %i.jh, ptr %.sroa.372.0..sroa_idx, align 8, !tbaa !240
   %i.ji = and i64 %i.jh, 4294967295
@@ -325,21 +330,23 @@ bb.bg:                                            ; preds = %bb.bc
   %i.jy = call fastcc i32 @string_buffer_concat_value(ptr noundef %i.jx, i64 %.sroa.0139.0, i64 %.sroa.10.0) ; 0 uses
   %i.jz = call fastcc i32 @js_json_to_str(ptr noundef nonnull %0, ptr noundef %1, i64 %6, i64 %i.jc, i64 %i.cd, i64 %i.ce)
   %.not250 = icmp eq i32 %i.jz, 0
-  br i1 %.not250, label %bb.bh, label %JS_FreeValue.exit282
+  br i1 %.not250, label %._crit_edge25.a, label %JS_FreeValue.exit282
 
-bb.bh:                                            ; preds = %bb.az, %bb.bg
-  %8 = phi i64 [ %i.im, %bb.az ], [ %i.jg, %bb.bg ]
-  %.1240 = phi i8 [ %.023921, %bb.az ], [ 1, %bb.bg ] ; 2 uses
-  %9 = phi i64 [ %i.in, %bb.az ], [ %i.jh, %bb.bg ] ; 4 uses
+bb.bh:                                            ; preds = %bb.az
   %i.ka = add nuw nsw i64 %.122, 1                ; 2 uses
   %exitcond36.not = icmp eq i64 %i.ka, %i.hz
-  br i1 %exitcond36.not, label %._crit_edge25.a, label %.lr.ph24, !llvm.loop !1493
+  br i1 %exitcond36.not, label %._crit_edge25, label %.lr.ph24, !llvm.loop !1493
 
-._crit_edge25.a:                                  ; preds = %bb.bh
-  %10 = trunc nuw i8 %.1240 to i1
-  br i1 %10, label %bb.bi, label %._crit_edge25.thread
+._crit_edge25.a:                                  ; preds = %bb.bg
+  %7 = add nuw nsw i64 %.122, 1                   ; 2 uses
+  %exitcond36.not67 = icmp eq i64 %7, %i.hz
+  br i1 %exitcond36.not67, label %bb.bi, label %.lr.ph24.outer, !llvm.loop !1493
 
-bb.bi:                                            ; preds = %._crit_edge25.a
+._crit_edge25:                                    ; preds = %bb.bh
+  br i1 %.023921.ph, label %bb.bi, label %._crit_edge25.thread
+
+bb.bi:                                            ; preds = %._crit_edge25.a, %._crit_edge25
+  %8 = phi i64 [ %i.in, %._crit_edge25 ], [ %i.jh, %._crit_edge25.a ] ; 2 uses
   %i.kb = load ptr, ptr %i.bs, align 8, !tbaa !218
   %i.kc = load i64, ptr %i.kb, align 8
   %i.kd = and i64 %i.kc, 2147483647
@@ -353,8 +360,8 @@ bb.bj:                                            ; preds = %bb.bi
   %i.kh = call fastcc i32 @string_buffer_concat_value(ptr noundef %i.kg, i64 %.0.val, i64 %.8.val) ; 0 uses
   br label %._crit_edge25.thread
 
-._crit_edge25.thread:                             ; preds = %bb.au, %bb.bj, %bb.bi, %._crit_edge25.a
-  %.lcssa1364 = phi i64 [ %9, %._crit_edge25.a ], [ %9, %bb.bj ], [ %9, %bb.bi ], [ 3, %bb.au ]
+._crit_edge25.thread:                             ; preds = %bb.au, %bb.bj, %bb.bi, %._crit_edge25
+  %.lcssa1364 = phi i64 [ %i.in, %._crit_edge25 ], [ %8, %bb.bj ], [ %8, %bb.bi ], [ 3, %bb.au ]
   %i.ki = load ptr, ptr %i.hw, align 8, !tbaa !664
   %i.kj = call fastcc i32 @string_buffer_putc8(ptr noundef %i.ki, i32 noundef 125) ; 0 uses
   br label %bb.bk
@@ -555,18 +562,18 @@ bb.cd:                                            ; preds = %bb.cc
   call fastcc void @js_free_value_rt(ptr noundef %i.nc, i64 %i.ml, i64 %i.mm), !inline_history !291
   br label %JS_FreeValue.exit288
 
-JS_FreeValue.exit282:                             ; preds = %bb.an, %JS_FreeValue.exit273, %bb.aj, %.lr.ph.peel.next, %bb.az, %bb.bg, %js_dup.exit281, %JS_FreeValue.exit278, %.lr.ph.preheader, %bb.ac, %JS_FreeValue.exit273.peel, %bb.ag, %bb.bf, %bb.be, %bb.bd, %bb.k, %bb.bx, %bb.bk, %bb.at, %bb.as, %bb.aa, %js_is_array.exit, %js_dup.exit272, %bb.v, %js_dup.exit266, %js_dup.exit263, %bb.n, %bb.g, %JS_ToStringFree.exit, %bb.ca, %bb.p, %bb.b
-  %i.nj = phi i64 [ %2, %bb.b ], [ %2, %bb.n ], [ %2, %js_dup.exit263 ], [ %2, %js_is_array.exit ], [ %2, %bb.as ], [ %i.z, %bb.g ], [ %2, %bb.bd ], [ %2, %bb.be ], [ %2, %bb.k ], [ %2, %bb.bf ], [ %2, %bb.bk ], [ %2, %bb.at ], [ %i.u, %JS_ToStringFree.exit ], [ %i.mp, %bb.bx ], [ %i.ml, %bb.ca ], [ %2, %bb.ag ], [ %2, %bb.aa ], [ %2, %js_dup.exit272 ], [ %2, %js_dup.exit266 ], [ %2, %bb.v ], [ %2, %bb.p ], [ %2, %JS_FreeValue.exit273.peel ], [ %2, %bb.ac ], [ %2, %.lr.ph.preheader ], [ %2, %bb.az ], [ %2, %JS_FreeValue.exit278 ], [ %2, %js_dup.exit281 ], [ %2, %bb.bg ], [ %2, %.lr.ph.peel.next ], [ %2, %bb.aj ], [ %2, %JS_FreeValue.exit273 ], [ %2, %bb.an ] ; 2 uses
-  %.sroa.0.0 = phi i64 [ 0, %bb.b ], [ 0, %bb.n ], [ %i.cd, %js_dup.exit263 ], [ %i.cd, %js_is_array.exit ], [ %i.cd, %bb.as ], [ 0, %bb.g ], [ %i.cd, %bb.bd ], [ %i.cd, %bb.be ], [ 0, %bb.k ], [ %i.cd, %bb.bf ], [ %i.cd, %bb.bk ], [ %i.cd, %bb.at ], [ 0, %JS_ToStringFree.exit ], [ 0, %bb.bx ], [ 0, %bb.ca ], [ %i.cd, %bb.ag ], [ %i.cd, %bb.aa ], [ %i.cd, %js_dup.exit272 ], [ %i.cd, %js_dup.exit266 ], [ %i.cd, %bb.v ], [ 0, %bb.p ], [ %i.cd, %JS_FreeValue.exit273.peel ], [ %i.cd, %bb.ac ], [ %i.cd, %.lr.ph.preheader ], [ %i.cd, %bb.az ], [ %i.cd, %JS_FreeValue.exit278 ], [ %i.cd, %js_dup.exit281 ], [ %i.cd, %bb.bg ], [ %i.cd, %.lr.ph.peel.next ], [ %i.cd, %bb.aj ], [ %i.cd, %JS_FreeValue.exit273 ], [ %i.cd, %bb.an ] ; 2 uses
-  %i.nk = phi i64 [ %3, %bb.b ], [ %3, %bb.n ], [ %3, %js_dup.exit263 ], [ %3, %js_is_array.exit ], [ %3, %bb.as ], [ %i.aa, %bb.g ], [ %3, %bb.bd ], [ %3, %bb.be ], [ %3, %bb.k ], [ %3, %bb.bf ], [ %3, %bb.bk ], [ %3, %bb.at ], [ %i.v, %JS_ToStringFree.exit ], [ %i.mq, %bb.bx ], [ %i.mm, %bb.ca ], [ %3, %bb.ag ], [ %3, %bb.aa ], [ %3, %js_dup.exit272 ], [ %3, %js_dup.exit266 ], [ %3, %bb.v ], [ %3, %bb.p ], [ %3, %JS_FreeValue.exit273.peel ], [ %3, %bb.ac ], [ %3, %.lr.ph.preheader ], [ %3, %bb.az ], [ %3, %JS_FreeValue.exit278 ], [ %3, %js_dup.exit281 ], [ %3, %bb.bg ], [ %3, %.lr.ph.peel.next ], [ %3, %bb.aj ], [ %3, %JS_FreeValue.exit273 ], [ %3, %bb.an ] ; 2 uses
-  %.sroa.0130.2 = phi i64 [ 0, %bb.b ], [ 0, %bb.n ], [ 0, %js_dup.exit263 ], [ 0, %js_is_array.exit ], [ %.sroa.0130.0, %bb.as ], [ 0, %bb.g ], [ %.sroa.0130.0, %bb.bd ], [ %.sroa.0130.0, %bb.be ], [ 0, %bb.k ], [ %.sroa.0130.0, %bb.bf ], [ %.sroa.0130.1, %bb.bk ], [ %.sroa.0130.0, %bb.at ], [ 0, %JS_ToStringFree.exit ], [ 0, %bb.bx ], [ 0, %bb.ca ], [ 0, %bb.ag ], [ 0, %bb.aa ], [ 0, %js_dup.exit272 ], [ 0, %js_dup.exit266 ], [ 0, %bb.v ], [ 0, %bb.p ], [ 0, %JS_FreeValue.exit273.peel ], [ 0, %bb.ac ], [ 0, %.lr.ph.preheader ], [ %.sroa.0130.0, %bb.az ], [ %.sroa.0130.0, %JS_FreeValue.exit278 ], [ %.sroa.0130.0, %js_dup.exit281 ], [ %.sroa.0130.0, %bb.bg ], [ 0, %.lr.ph.peel.next ], [ 0, %bb.aj ], [ 0, %JS_FreeValue.exit273 ], [ 0, %bb.an ] ; 2 uses
-  %.sroa.11.2 = phi i64 [ 3, %bb.b ], [ 3, %bb.n ], [ 3, %js_dup.exit263 ], [ 3, %js_is_array.exit ], [ %.sroa.11.0, %bb.as ], [ 3, %bb.g ], [ %.sroa.11.0, %bb.bd ], [ %.sroa.11.0, %bb.be ], [ 3, %bb.k ], [ %.sroa.11.0, %bb.bf ], [ %.sroa.11.1, %bb.bk ], [ %.sroa.11.0, %bb.at ], [ 3, %JS_ToStringFree.exit ], [ 3, %bb.bx ], [ 3, %bb.ca ], [ 3, %bb.ag ], [ 3, %bb.aa ], [ 3, %js_dup.exit272 ], [ 3, %js_dup.exit266 ], [ 3, %bb.v ], [ 3, %bb.p ], [ 3, %JS_FreeValue.exit273.peel ], [ 3, %bb.ac ], [ 3, %.lr.ph.preheader ], [ %.sroa.11.0, %bb.az ], [ %.sroa.11.0, %JS_FreeValue.exit278 ], [ %.sroa.11.0, %js_dup.exit281 ], [ %.sroa.11.0, %bb.bg ], [ 3, %.lr.ph.peel.next ], [ 3, %bb.aj ], [ 3, %JS_FreeValue.exit273 ], [ 3, %bb.an ] ; 2 uses
-  %.sroa.0139.1 = phi i64 [ 0, %bb.b ], [ 0, %bb.n ], [ 0, %js_dup.exit263 ], [ %.sroa.0139.0, %js_is_array.exit ], [ %.sroa.0139.0, %bb.as ], [ 0, %bb.g ], [ %.sroa.0139.0, %bb.bd ], [ %.sroa.0139.0, %bb.be ], [ 0, %bb.k ], [ %.sroa.0139.0, %bb.bf ], [ %.sroa.0139.0, %bb.bk ], [ %.sroa.0139.0, %bb.at ], [ 0, %JS_ToStringFree.exit ], [ 0, %bb.bx ], [ 0, %bb.ca ], [ %.sroa.0139.0, %bb.ag ], [ %.sroa.0139.0, %bb.aa ], [ %.sroa.0139.0, %js_dup.exit272 ], [ 0, %js_dup.exit266 ], [ %i.db, %bb.v ], [ 0, %bb.p ], [ %.sroa.0139.0, %JS_FreeValue.exit273.peel ], [ %.sroa.0139.0, %bb.ac ], [ %.sroa.0139.0, %.lr.ph.preheader ], [ %.sroa.0139.0, %bb.az ], [ %.sroa.0139.0, %JS_FreeValue.exit278 ], [ %.sroa.0139.0, %js_dup.exit281 ], [ %.sroa.0139.0, %bb.bg ], [ %.sroa.0139.0, %.lr.ph.peel.next ], [ %.sroa.0139.0, %bb.aj ], [ %.sroa.0139.0, %JS_FreeValue.exit273 ], [ %.sroa.0139.0, %bb.an ] ; 2 uses
-  %.sroa.10.1 = phi i64 [ 3, %bb.b ], [ 3, %bb.n ], [ 3, %js_dup.exit263 ], [ %.sroa.10.0, %js_is_array.exit ], [ %.sroa.10.0, %bb.as ], [ 3, %bb.g ], [ %.sroa.10.0, %bb.bd ], [ %.sroa.10.0, %bb.be ], [ 3, %bb.k ], [ %.sroa.10.0, %bb.bf ], [ %.sroa.10.0, %bb.bk ], [ %.sroa.10.0, %bb.at ], [ 3, %JS_ToStringFree.exit ], [ 3, %bb.bx ], [ 3, %bb.ca ], [ %.sroa.10.0, %bb.ag ], [ %.sroa.10.0, %bb.aa ], [ %.sroa.10.0, %js_dup.exit272 ], [ 3, %js_dup.exit266 ], [ %i.dc, %bb.v ], [ 3, %bb.p ], [ %.sroa.10.0, %JS_FreeValue.exit273.peel ], [ %.sroa.10.0, %bb.ac ], [ %.sroa.10.0, %.lr.ph.preheader ], [ %.sroa.10.0, %bb.az ], [ %.sroa.10.0, %JS_FreeValue.exit278 ], [ %.sroa.10.0, %js_dup.exit281 ], [ %.sroa.10.0, %bb.bg ], [ %.sroa.10.0, %.lr.ph.peel.next ], [ %.sroa.10.0, %bb.aj ], [ %.sroa.10.0, %JS_FreeValue.exit273 ], [ %.sroa.10.0, %bb.an ] ; 2 uses
-  %.sroa.0146.1 = phi i64 [ 0, %bb.b ], [ 0, %bb.n ], [ 0, %js_dup.exit263 ], [ %.sroa.0146.0, %js_is_array.exit ], [ %.sroa.0146.0, %bb.as ], [ 0, %bb.g ], [ %.sroa.0146.0, %bb.bd ], [ %.sroa.0146.0, %bb.be ], [ 0, %bb.k ], [ %.sroa.0146.0, %bb.bf ], [ %.sroa.0146.0, %bb.bk ], [ %.sroa.0146.0, %bb.at ], [ 0, %JS_ToStringFree.exit ], [ 0, %bb.bx ], [ 0, %bb.ca ], [ %.sroa.0146.0, %bb.ag ], [ %.sroa.0146.0, %bb.aa ], [ %.sroa.0146.0, %js_dup.exit272 ], [ %i.cw, %js_dup.exit266 ], [ %i.cw, %bb.v ], [ 0, %bb.p ], [ %.sroa.0146.0, %JS_FreeValue.exit273.peel ], [ %.sroa.0146.0, %bb.ac ], [ %.sroa.0146.0, %.lr.ph.preheader ], [ %.sroa.0146.0, %bb.az ], [ %.sroa.0146.0, %JS_FreeValue.exit278 ], [ %.sroa.0146.0, %js_dup.exit281 ], [ %.sroa.0146.0, %bb.bg ], [ %.sroa.0146.0, %.lr.ph.peel.next ], [ %.sroa.0146.0, %bb.aj ], [ %.sroa.0146.0, %JS_FreeValue.exit273 ], [ %.sroa.0146.0, %bb.an ] ; 2 uses
-  %.sroa.11151.1 = phi i64 [ 3, %bb.b ], [ 3, %bb.n ], [ 3, %js_dup.exit263 ], [ %.sroa.11151.0, %js_is_array.exit ], [ %.sroa.11151.0, %bb.as ], [ 3, %bb.g ], [ %.sroa.11151.0, %bb.bd ], [ %.sroa.11151.0, %bb.be ], [ 3, %bb.k ], [ %.sroa.11151.0, %bb.bf ], [ %.sroa.11151.0, %bb.bk ], [ %.sroa.11151.0, %bb.at ], [ 3, %JS_ToStringFree.exit ], [ 3, %bb.bx ], [ 3, %bb.ca ], [ %.sroa.11151.0, %bb.ag ], [ %.sroa.11151.0, %bb.aa ], [ %.sroa.11151.0, %js_dup.exit272 ], [ %i.cx, %js_dup.exit266 ], [ %i.cx, %bb.v ], [ 3, %bb.p ], [ %.sroa.11151.0, %JS_FreeValue.exit273.peel ], [ %.sroa.11151.0, %bb.ac ], [ %.sroa.11151.0, %.lr.ph.preheader ], [ %.sroa.11151.0, %bb.az ], [ %.sroa.11151.0, %JS_FreeValue.exit278 ], [ %.sroa.11151.0, %js_dup.exit281 ], [ %.sroa.11151.0, %bb.bg ], [ %.sroa.11151.0, %.lr.ph.peel.next ], [ %.sroa.11151.0, %bb.aj ], [ %.sroa.11151.0, %JS_FreeValue.exit273 ], [ %.sroa.11151.0, %bb.an ] ; 2 uses
-  %i.nl = phi i64 [ 3, %bb.b ], [ 3, %bb.n ], [ %i.ce, %js_dup.exit263 ], [ %i.ce, %js_is_array.exit ], [ %i.ce, %bb.as ], [ 3, %bb.g ], [ %i.ce, %bb.bd ], [ %i.ce, %bb.be ], [ 3, %bb.k ], [ %i.ce, %bb.bf ], [ %i.ce, %bb.bk ], [ %i.ce, %bb.at ], [ 3, %JS_ToStringFree.exit ], [ 3, %bb.bx ], [ 3, %bb.ca ], [ %i.ce, %bb.ag ], [ %i.ce, %bb.aa ], [ %i.ce, %js_dup.exit272 ], [ %i.ce, %js_dup.exit266 ], [ %i.ce, %bb.v ], [ 3, %bb.p ], [ %i.ce, %JS_FreeValue.exit273.peel ], [ %i.ce, %bb.ac ], [ %i.ce, %.lr.ph.preheader ], [ %i.ce, %bb.az ], [ %i.ce, %JS_FreeValue.exit278 ], [ %i.ce, %js_dup.exit281 ], [ %i.ce, %bb.bg ], [ %i.ce, %.lr.ph.peel.next ], [ %i.ce, %bb.aj ], [ %i.ce, %JS_FreeValue.exit273 ], [ %i.ce, %bb.an ] ; 2 uses
-  %i.nm = phi i64 [ 3, %bb.b ], [ 3, %bb.n ], [ 3, %js_dup.exit263 ], [ 3, %js_is_array.exit ], [ 3, %bb.as ], [ 3, %bb.g ], [ %i.jh, %bb.bd ], [ %i.jh, %bb.be ], [ 3, %bb.k ], [ %i.jh, %bb.bf ], [ %i.kk, %bb.bk ], [ 3, %bb.at ], [ 3, %JS_ToStringFree.exit ], [ 3, %bb.bx ], [ 3, %bb.ca ], [ 3, %bb.ag ], [ 3, %bb.aa ], [ 3, %js_dup.exit272 ], [ 3, %js_dup.exit266 ], [ 3, %bb.v ], [ 3, %bb.p ], [ 3, %JS_FreeValue.exit273.peel ], [ %i.eu, %bb.ac ], [ 3, %.lr.ph.preheader ], [ %i.in, %bb.az ], [ %i.jh, %bb.bg ], [ %i.in, %js_dup.exit281 ], [ %i.in, %JS_FreeValue.exit278 ], [ 3, %bb.an ], [ 3, %JS_FreeValue.exit273 ], [ %i.ga, %bb.aj ], [ 3, %.lr.ph.peel.next ] ; 2 uses
+JS_FreeValue.exit282:                             ; preds = %bb.an, %JS_FreeValue.exit273, %bb.aj, %.lr.ph.peel.next, %bb.bg, %bb.az, %js_dup.exit281, %JS_FreeValue.exit278, %.lr.ph.preheader, %bb.ac, %JS_FreeValue.exit273.peel, %bb.ag, %bb.bf, %bb.be, %bb.bd, %bb.k, %bb.bx, %bb.bk, %bb.at, %bb.as, %bb.aa, %js_is_array.exit, %js_dup.exit272, %bb.v, %js_dup.exit266, %js_dup.exit263, %bb.n, %bb.g, %JS_ToStringFree.exit, %bb.ca, %bb.p, %bb.b
+  %i.nj = phi i64 [ %2, %bb.b ], [ %2, %bb.n ], [ %2, %js_dup.exit263 ], [ %2, %js_is_array.exit ], [ %2, %bb.as ], [ %i.z, %bb.g ], [ %2, %bb.bd ], [ %2, %bb.be ], [ %2, %bb.k ], [ %2, %bb.bf ], [ %2, %bb.bk ], [ %2, %bb.at ], [ %i.u, %JS_ToStringFree.exit ], [ %i.mp, %bb.bx ], [ %i.ml, %bb.ca ], [ %2, %bb.ag ], [ %2, %bb.aa ], [ %2, %js_dup.exit272 ], [ %2, %js_dup.exit266 ], [ %2, %bb.v ], [ %2, %bb.p ], [ %2, %JS_FreeValue.exit273.peel ], [ %2, %bb.ac ], [ %2, %.lr.ph.preheader ], [ %2, %bb.az ], [ %2, %bb.bg ], [ %2, %JS_FreeValue.exit278 ], [ %2, %js_dup.exit281 ], [ %2, %.lr.ph.peel.next ], [ %2, %bb.aj ], [ %2, %JS_FreeValue.exit273 ], [ %2, %bb.an ] ; 2 uses
+  %.sroa.0.0 = phi i64 [ 0, %bb.b ], [ 0, %bb.n ], [ %i.cd, %js_dup.exit263 ], [ %i.cd, %js_is_array.exit ], [ %i.cd, %bb.as ], [ 0, %bb.g ], [ %i.cd, %bb.bd ], [ %i.cd, %bb.be ], [ 0, %bb.k ], [ %i.cd, %bb.bf ], [ %i.cd, %bb.bk ], [ %i.cd, %bb.at ], [ 0, %JS_ToStringFree.exit ], [ 0, %bb.bx ], [ 0, %bb.ca ], [ %i.cd, %bb.ag ], [ %i.cd, %bb.aa ], [ %i.cd, %js_dup.exit272 ], [ %i.cd, %js_dup.exit266 ], [ %i.cd, %bb.v ], [ 0, %bb.p ], [ %i.cd, %JS_FreeValue.exit273.peel ], [ %i.cd, %bb.ac ], [ %i.cd, %.lr.ph.preheader ], [ %i.cd, %bb.az ], [ %i.cd, %bb.bg ], [ %i.cd, %JS_FreeValue.exit278 ], [ %i.cd, %js_dup.exit281 ], [ %i.cd, %.lr.ph.peel.next ], [ %i.cd, %bb.aj ], [ %i.cd, %JS_FreeValue.exit273 ], [ %i.cd, %bb.an ] ; 2 uses
+  %i.nk = phi i64 [ %3, %bb.b ], [ %3, %bb.n ], [ %3, %js_dup.exit263 ], [ %3, %js_is_array.exit ], [ %3, %bb.as ], [ %i.aa, %bb.g ], [ %3, %bb.bd ], [ %3, %bb.be ], [ %3, %bb.k ], [ %3, %bb.bf ], [ %3, %bb.bk ], [ %3, %bb.at ], [ %i.v, %JS_ToStringFree.exit ], [ %i.mq, %bb.bx ], [ %i.mm, %bb.ca ], [ %3, %bb.ag ], [ %3, %bb.aa ], [ %3, %js_dup.exit272 ], [ %3, %js_dup.exit266 ], [ %3, %bb.v ], [ %3, %bb.p ], [ %3, %JS_FreeValue.exit273.peel ], [ %3, %bb.ac ], [ %3, %.lr.ph.preheader ], [ %3, %bb.az ], [ %3, %bb.bg ], [ %3, %JS_FreeValue.exit278 ], [ %3, %js_dup.exit281 ], [ %3, %.lr.ph.peel.next ], [ %3, %bb.aj ], [ %3, %JS_FreeValue.exit273 ], [ %3, %bb.an ] ; 2 uses
+  %.sroa.0130.2 = phi i64 [ 0, %bb.b ], [ 0, %bb.n ], [ 0, %js_dup.exit263 ], [ 0, %js_is_array.exit ], [ %.sroa.0130.0, %bb.as ], [ 0, %bb.g ], [ %.sroa.0130.0, %bb.bd ], [ %.sroa.0130.0, %bb.be ], [ 0, %bb.k ], [ %.sroa.0130.0, %bb.bf ], [ %.sroa.0130.1, %bb.bk ], [ %.sroa.0130.0, %bb.at ], [ 0, %JS_ToStringFree.exit ], [ 0, %bb.bx ], [ 0, %bb.ca ], [ 0, %bb.ag ], [ 0, %bb.aa ], [ 0, %js_dup.exit272 ], [ 0, %js_dup.exit266 ], [ 0, %bb.v ], [ 0, %bb.p ], [ 0, %JS_FreeValue.exit273.peel ], [ 0, %bb.ac ], [ 0, %.lr.ph.preheader ], [ %.sroa.0130.0, %bb.az ], [ %.sroa.0130.0, %bb.bg ], [ %.sroa.0130.0, %JS_FreeValue.exit278 ], [ %.sroa.0130.0, %js_dup.exit281 ], [ 0, %.lr.ph.peel.next ], [ 0, %bb.aj ], [ 0, %JS_FreeValue.exit273 ], [ 0, %bb.an ] ; 2 uses
+  %.sroa.11.2 = phi i64 [ 3, %bb.b ], [ 3, %bb.n ], [ 3, %js_dup.exit263 ], [ 3, %js_is_array.exit ], [ %.sroa.11.0, %bb.as ], [ 3, %bb.g ], [ %.sroa.11.0, %bb.bd ], [ %.sroa.11.0, %bb.be ], [ 3, %bb.k ], [ %.sroa.11.0, %bb.bf ], [ %.sroa.11.1, %bb.bk ], [ %.sroa.11.0, %bb.at ], [ 3, %JS_ToStringFree.exit ], [ 3, %bb.bx ], [ 3, %bb.ca ], [ 3, %bb.ag ], [ 3, %bb.aa ], [ 3, %js_dup.exit272 ], [ 3, %js_dup.exit266 ], [ 3, %bb.v ], [ 3, %bb.p ], [ 3, %JS_FreeValue.exit273.peel ], [ 3, %bb.ac ], [ 3, %.lr.ph.preheader ], [ %.sroa.11.0, %bb.az ], [ %.sroa.11.0, %bb.bg ], [ %.sroa.11.0, %JS_FreeValue.exit278 ], [ %.sroa.11.0, %js_dup.exit281 ], [ 3, %.lr.ph.peel.next ], [ 3, %bb.aj ], [ 3, %JS_FreeValue.exit273 ], [ 3, %bb.an ] ; 2 uses
+  %.sroa.0139.1 = phi i64 [ 0, %bb.b ], [ 0, %bb.n ], [ 0, %js_dup.exit263 ], [ %.sroa.0139.0, %js_is_array.exit ], [ %.sroa.0139.0, %bb.as ], [ 0, %bb.g ], [ %.sroa.0139.0, %bb.bd ], [ %.sroa.0139.0, %bb.be ], [ 0, %bb.k ], [ %.sroa.0139.0, %bb.bf ], [ %.sroa.0139.0, %bb.bk ], [ %.sroa.0139.0, %bb.at ], [ 0, %JS_ToStringFree.exit ], [ 0, %bb.bx ], [ 0, %bb.ca ], [ %.sroa.0139.0, %bb.ag ], [ %.sroa.0139.0, %bb.aa ], [ %.sroa.0139.0, %js_dup.exit272 ], [ 0, %js_dup.exit266 ], [ %i.db, %bb.v ], [ 0, %bb.p ], [ %.sroa.0139.0, %JS_FreeValue.exit273.peel ], [ %.sroa.0139.0, %bb.ac ], [ %.sroa.0139.0, %.lr.ph.preheader ], [ %.sroa.0139.0, %bb.az ], [ %.sroa.0139.0, %bb.bg ], [ %.sroa.0139.0, %JS_FreeValue.exit278 ], [ %.sroa.0139.0, %js_dup.exit281 ], [ %.sroa.0139.0, %.lr.ph.peel.next ], [ %.sroa.0139.0, %bb.aj ], [ %.sroa.0139.0, %JS_FreeValue.exit273 ], [ %.sroa.0139.0, %bb.an ] ; 2 uses
+  %.sroa.10.1 = phi i64 [ 3, %bb.b ], [ 3, %bb.n ], [ 3, %js_dup.exit263 ], [ %.sroa.10.0, %js_is_array.exit ], [ %.sroa.10.0, %bb.as ], [ 3, %bb.g ], [ %.sroa.10.0, %bb.bd ], [ %.sroa.10.0, %bb.be ], [ 3, %bb.k ], [ %.sroa.10.0, %bb.bf ], [ %.sroa.10.0, %bb.bk ], [ %.sroa.10.0, %bb.at ], [ 3, %JS_ToStringFree.exit ], [ 3, %bb.bx ], [ 3, %bb.ca ], [ %.sroa.10.0, %bb.ag ], [ %.sroa.10.0, %bb.aa ], [ %.sroa.10.0, %js_dup.exit272 ], [ 3, %js_dup.exit266 ], [ %i.dc, %bb.v ], [ 3, %bb.p ], [ %.sroa.10.0, %JS_FreeValue.exit273.peel ], [ %.sroa.10.0, %bb.ac ], [ %.sroa.10.0, %.lr.ph.preheader ], [ %.sroa.10.0, %bb.az ], [ %.sroa.10.0, %bb.bg ], [ %.sroa.10.0, %JS_FreeValue.exit278 ], [ %.sroa.10.0, %js_dup.exit281 ], [ %.sroa.10.0, %.lr.ph.peel.next ], [ %.sroa.10.0, %bb.aj ], [ %.sroa.10.0, %JS_FreeValue.exit273 ], [ %.sroa.10.0, %bb.an ] ; 2 uses
+  %.sroa.0146.1 = phi i64 [ 0, %bb.b ], [ 0, %bb.n ], [ 0, %js_dup.exit263 ], [ %.sroa.0146.0, %js_is_array.exit ], [ %.sroa.0146.0, %bb.as ], [ 0, %bb.g ], [ %.sroa.0146.0, %bb.bd ], [ %.sroa.0146.0, %bb.be ], [ 0, %bb.k ], [ %.sroa.0146.0, %bb.bf ], [ %.sroa.0146.0, %bb.bk ], [ %.sroa.0146.0, %bb.at ], [ 0, %JS_ToStringFree.exit ], [ 0, %bb.bx ], [ 0, %bb.ca ], [ %.sroa.0146.0, %bb.ag ], [ %.sroa.0146.0, %bb.aa ], [ %.sroa.0146.0, %js_dup.exit272 ], [ %i.cw, %js_dup.exit266 ], [ %i.cw, %bb.v ], [ 0, %bb.p ], [ %.sroa.0146.0, %JS_FreeValue.exit273.peel ], [ %.sroa.0146.0, %bb.ac ], [ %.sroa.0146.0, %.lr.ph.preheader ], [ %.sroa.0146.0, %bb.az ], [ %.sroa.0146.0, %bb.bg ], [ %.sroa.0146.0, %JS_FreeValue.exit278 ], [ %.sroa.0146.0, %js_dup.exit281 ], [ %.sroa.0146.0, %.lr.ph.peel.next ], [ %.sroa.0146.0, %bb.aj ], [ %.sroa.0146.0, %JS_FreeValue.exit273 ], [ %.sroa.0146.0, %bb.an ] ; 2 uses
+  %.sroa.11151.1 = phi i64 [ 3, %bb.b ], [ 3, %bb.n ], [ 3, %js_dup.exit263 ], [ %.sroa.11151.0, %js_is_array.exit ], [ %.sroa.11151.0, %bb.as ], [ 3, %bb.g ], [ %.sroa.11151.0, %bb.bd ], [ %.sroa.11151.0, %bb.be ], [ 3, %bb.k ], [ %.sroa.11151.0, %bb.bf ], [ %.sroa.11151.0, %bb.bk ], [ %.sroa.11151.0, %bb.at ], [ 3, %JS_ToStringFree.exit ], [ 3, %bb.bx ], [ 3, %bb.ca ], [ %.sroa.11151.0, %bb.ag ], [ %.sroa.11151.0, %bb.aa ], [ %.sroa.11151.0, %js_dup.exit272 ], [ %i.cx, %js_dup.exit266 ], [ %i.cx, %bb.v ], [ 3, %bb.p ], [ %.sroa.11151.0, %JS_FreeValue.exit273.peel ], [ %.sroa.11151.0, %bb.ac ], [ %.sroa.11151.0, %.lr.ph.preheader ], [ %.sroa.11151.0, %bb.az ], [ %.sroa.11151.0, %bb.bg ], [ %.sroa.11151.0, %JS_FreeValue.exit278 ], [ %.sroa.11151.0, %js_dup.exit281 ], [ %.sroa.11151.0, %.lr.ph.peel.next ], [ %.sroa.11151.0, %bb.aj ], [ %.sroa.11151.0, %JS_FreeValue.exit273 ], [ %.sroa.11151.0, %bb.an ] ; 2 uses
+  %i.nl = phi i64 [ 3, %bb.b ], [ 3, %bb.n ], [ %i.ce, %js_dup.exit263 ], [ %i.ce, %js_is_array.exit ], [ %i.ce, %bb.as ], [ 3, %bb.g ], [ %i.ce, %bb.bd ], [ %i.ce, %bb.be ], [ 3, %bb.k ], [ %i.ce, %bb.bf ], [ %i.ce, %bb.bk ], [ %i.ce, %bb.at ], [ 3, %JS_ToStringFree.exit ], [ 3, %bb.bx ], [ 3, %bb.ca ], [ %i.ce, %bb.ag ], [ %i.ce, %bb.aa ], [ %i.ce, %js_dup.exit272 ], [ %i.ce, %js_dup.exit266 ], [ %i.ce, %bb.v ], [ 3, %bb.p ], [ %i.ce, %JS_FreeValue.exit273.peel ], [ %i.ce, %bb.ac ], [ %i.ce, %.lr.ph.preheader ], [ %i.ce, %bb.az ], [ %i.ce, %bb.bg ], [ %i.ce, %JS_FreeValue.exit278 ], [ %i.ce, %js_dup.exit281 ], [ %i.ce, %.lr.ph.peel.next ], [ %i.ce, %bb.aj ], [ %i.ce, %JS_FreeValue.exit273 ], [ %i.ce, %bb.an ] ; 2 uses
+  %i.nm = phi i64 [ 3, %bb.b ], [ 3, %bb.n ], [ 3, %js_dup.exit263 ], [ 3, %js_is_array.exit ], [ 3, %bb.as ], [ 3, %bb.g ], [ %i.jh, %bb.bd ], [ %i.jh, %bb.be ], [ 3, %bb.k ], [ %i.jh, %bb.bf ], [ %i.kk, %bb.bk ], [ 3, %bb.at ], [ 3, %JS_ToStringFree.exit ], [ 3, %bb.bx ], [ 3, %bb.ca ], [ 3, %bb.ag ], [ 3, %bb.aa ], [ 3, %js_dup.exit272 ], [ 3, %js_dup.exit266 ], [ 3, %bb.v ], [ 3, %bb.p ], [ 3, %JS_FreeValue.exit273.peel ], [ %i.eu, %bb.ac ], [ 3, %.lr.ph.preheader ], [ %i.in, %bb.az ], [ %i.jh, %bb.bg ], [ %i.in, %JS_FreeValue.exit278 ], [ %i.in, %js_dup.exit281 ], [ 3, %.lr.ph.peel.next ], [ 3, %bb.an ], [ 3, %JS_FreeValue.exit273 ], [ %i.ga, %bb.aj ] ; 2 uses
   %i.nn = load ptr, ptr %i.c, align 8, !tbaa !232 ; 3 uses
   %i.no = trunc i64 %i.nk to i32
   %i.np = icmp ugt i32 %i.no, -10
@@ -969,18 +976,23 @@ bb.cb:                                            ; preds = %js_date_parse_other
   br i1 %i.agv, label %.split, label %bb.cc
 
 .split:                                           ; preds = %bb.cb
-  %5 = load i32, ptr %i.oi, align 8, !tbaa !191
   %i.agw = extractelement <2 x i32> %i.agk, i64 1
-  %i.agx = or i32 %i.agw, %5
-  %i.agy = or i32 %i.agx, %i.agp
+  %i.agx = or i32 %i.agp, %i.agw
+  %5 = load i32, ptr %i.oi, align 8, !tbaa !191   ; 2 uses
+  %i.agy = or i32 %i.agx, %5
   %.not = icmp eq i32 %i.agy, 0
   %spec.select39 = select i1 %.not, i1 %spec.select.4, i1 false
   br i1 %spec.select39, label %.preheader.preheader, label %bb.cd
 
 bb.cc:                                            ; preds = %bb.cb
-  br i1 %spec.select.4, label %.preheader.preheader, label %bb.cd
+  br i1 %spec.select.4, label %select.unfold..preheader_crit_edge, label %bb.cd
 
-.preheader.preheader:                             ; preds = %.split, %bb.cc
+select.unfold..preheader_crit_edge:               ; preds = %bb.cc
+  %.pre = load i32, ptr %i.oi, align 8, !tbaa !191
+  br label %.preheader.preheader
+
+.preheader.preheader:                             ; preds = %select.unfold..preheader_crit_edge, %.split
+  %6 = phi i32 [ %.pre, %select.unfold..preheader_crit_edge ], [ %5, %.split ]
   %i.agz = load i32, ptr %i.d, align 16, !tbaa !191
   %i.aha = sitofp i32 %i.agz to double
   store double %i.aha, ptr %i.e, align 16, !tbaa !505
@@ -993,7 +1005,6 @@ bb.cc:                                            ; preds = %bb.cb
   %i.ahf = sitofp i32 %i.agp to double
   %i.ahg = getelementptr inbounds nuw i8, ptr %i.e, i64 40
   store double %i.ahf, ptr %i.ahg, align 8, !tbaa !505
-  %6 = load i32, ptr %i.oi, align 8, !tbaa !191
   %i.ahh = sitofp i32 %6 to double
   %i.ahi = getelementptr inbounds nuw i8, ptr %i.e, i64 48
   store double %i.ahh, ptr %i.ahi, align 16, !tbaa !505

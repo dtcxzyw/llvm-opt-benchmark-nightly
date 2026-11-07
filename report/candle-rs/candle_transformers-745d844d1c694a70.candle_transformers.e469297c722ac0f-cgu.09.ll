@@ -205,9 +205,9 @@ bb.bc:                                            ; preds = %bb.ay
           to label %bb.bd unwind label %.body.thread
 
 .body:                                            ; preds = %bb.bq, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit420, %.thread499.thread558
-  %.sroa.0196.0 = phi i8 [ %.sroa.0196.5, %bb.bq ], [ %.sroa.0196.4.ph.ph, %.thread499.thread558 ], [ %.sroa.0196.5, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit420 ]
-  %.sroa.0198.2 = phi i8 [ %.sroa.0198.7, %bb.bq ], [ %.sroa.0198.6.ph.ph, %.thread499.thread558 ], [ %.sroa.0198.7, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit420 ] ; 2 uses
-  %.pn378.pn.pn = phi { ptr, i32 } [ %.pn, %bb.bq ], [ %lpad.thr_comm556, %.thread499.thread558 ], [ %.pn, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit420 ] ; 2 uses
+  %.sroa.0196.0 = phi i8 [ %.sroa.0196.4.ph.ph, %.thread499.thread558 ], [ %.sroa.0196.5, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit420 ], [ %.sroa.0196.5, %bb.bq ]
+  %.sroa.0198.2 = phi i8 [ %.sroa.0198.6.ph.ph, %.thread499.thread558 ], [ %.sroa.0198.7, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit420 ], [ %.sroa.0198.7, %bb.bq ] ; 2 uses
+  %.pn378.pn.pn = phi { ptr, i32 } [ %lpad.thr_comm556, %.thread499.thread558 ], [ %.pn, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit420 ], [ %.pn, %bb.bq ] ; 2 uses
   %i.dl = trunc nuw i8 %.sroa.0196.0 to i1
   br i1 %i.dl, label %.body.thread594, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit426
 
@@ -610,7 +610,7 @@ bb.o:                                             ; preds = %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ao)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.an)
-  %i.bt = getelementptr inbounds nuw i8, ptr %i.an, i64 80 ; 12 uses
+  %i.bt = getelementptr inbounds nuw i8, ptr %i.an, i64 80 ; 13 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.bt, ptr noundef nonnull align 8 dereferenceable(80) %i.ar, i64 80, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.an, ptr noundef nonnull align 8 dereferenceable(80) %i.ap, i64 80, i1 false)
   %i.bu = load i64, ptr %i.an, align 8, !range !10, !noundef !5
@@ -764,18 +764,23 @@ bb.ae:                                            ; preds = %bb.ac
   call void @llvm.lifetime.end.p0(ptr nonnull %i.am)
   %i.cv = load i64, ptr %i.an, align 8, !range !10, !noundef !5
   %.not368 = icmp eq i64 %i.cv, -1
-  br i1 %.not368, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn4conv6Conv2dECs1dZk1kIfPhr_19candle_transformers.exit431, label %bb.af
+  br i1 %.not368, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn4conv6Conv2dECs1dZk1kIfPhr_19candle_transformers.exit431.thread, label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %bb.p
   %.sroa.0194.0 = phi i8 [ 1, %bb.p ], [ 0, %bb.ae ] ; 2 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs3NyA1pFSltE_9candle_nn4conv6Conv2dNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEECs1dZk1kIfPhr_19candle_transformers(ptr noalias nofree noundef align 8 dereferenceable(80) %i.an)
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn4conv6Conv2dECs1dZk1kIfPhr_19candle_transformers.exit431 unwind label %bb.bi
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn4conv6Conv2dECs1dZk1kIfPhr_19candle_transformers.exit431: ; preds = %bb.bf, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i426, %bb.bg, %bb.af, %bb.ae
-  %.sroa.0194.1 = phi i8 [ %.sroa.0194.0, %bb.af ], [ 0, %bb.ae ], [ 1, %bb.bg ], [ 1, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i426 ], [ 1, %bb.bf ]
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn4conv6Conv2dECs1dZk1kIfPhr_19candle_transformers.exit431: ; preds = %bb.bf, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i426, %bb.bg, %bb.af
+  %.sroa.0194.1 = phi i8 [ %.sroa.0194.0, %bb.af ], [ 1, %bb.bf ], [ 1, %bb.bg ], [ 1, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit.i426 ]
   %i.cw = load i64, ptr %i.bt, align 8, !range !10, !noundef !5
   %.not375 = icmp eq i64 %i.cw, -1
   br i1 %.not375, label %bb.bk, label %bb.bj
+
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn4conv6Conv2dECs1dZk1kIfPhr_19candle_transformers.exit431.thread: ; preds = %bb.ae
+  %8 = load i64, ptr %i.bt, align 8, !range !10, !noundef !5
+  %.not375507 = icmp eq i64 %8, -1
+  br i1 %.not375507, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs3NyA1pFSltE_9candle_nn10batch_norm9BatchNormNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEECs1dZk1kIfPhr_19candle_transformers.exit434, label %bb.bj
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit: ; preds = %bb.x, %bb.y, %bb.ab
   %.sroa.0203.9 = phi i8 [ 0, %bb.ab ], [ 1, %bb.y ], [ 1, %bb.x ]
@@ -989,7 +994,7 @@ bb.bi:                                            ; preds = %bb.bg, %bb.af
   %i.ep = icmp eq i64 %i.eo, -1
   br i1 %i.ep, label %bb.fx, label %bb.fy
 
-bb.bj:                                            ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn4conv6Conv2dECs1dZk1kIfPhr_19candle_transformers.exit431
+bb.bj:                                            ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn4conv6Conv2dECs1dZk1kIfPhr_19candle_transformers.exit431.thread, %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn4conv6Conv2dECs1dZk1kIfPhr_19candle_transformers.exit431
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorECs1dZk1kIfPhr_19candle_transformers(ptr noalias nofree noundef nonnull align 8 dereferenceable(80) %i.bt)
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs3NyA1pFSltE_9candle_nn10batch_norm9BatchNormNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEECs1dZk1kIfPhr_19candle_transformers.exit434 unwind label %.thread496
 
@@ -997,7 +1002,7 @@ bb.bk:                                            ; preds = %_RINvNtCsf3Ta7LF998
   %i.eq = trunc nuw i8 %.sroa.0194.1 to i1
   br i1 %i.eq, label %bb.bl, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs3NyA1pFSltE_9candle_nn10batch_norm9BatchNormNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEECs1dZk1kIfPhr_19candle_transformers.exit434
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs3NyA1pFSltE_9candle_nn10batch_norm9BatchNormNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEECs1dZk1kIfPhr_19candle_transformers.exit434: ; preds = %bb.bj, %bb.bl, %bb.bk
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs3NyA1pFSltE_9candle_nn10batch_norm9BatchNormNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEECs1dZk1kIfPhr_19candle_transformers.exit434: ; preds = %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn4conv6Conv2dECs1dZk1kIfPhr_19candle_transformers.exit431.thread, %bb.bj, %bb.bl, %bb.bk
   call void @llvm.lifetime.end.p0(ptr nonnull %i.an)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ag)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.af)
@@ -1045,7 +1050,7 @@ bb.bp:                                            ; preds = %bb.bo
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ad)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ac)
-  %i.es = getelementptr inbounds nuw i8, ptr %i.ac, i64 80 ; 12 uses
+  %i.es = getelementptr inbounds nuw i8, ptr %i.ac, i64 80 ; 14 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.es, ptr noundef nonnull align 8 dereferenceable(80) %i.ag, i64 80, i1 false)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.ac, ptr noundef nonnull align 8 dereferenceable(80) %i.ae, i64 80, i1 false)
   %i.et = load i64, ptr %i.ac, align 8, !range !10, !noundef !5
@@ -1317,13 +1322,22 @@ bb.cp:                                            ; preds = %_RINvNtCsf3Ta7LF998
 bb.cq:                                            ; preds = %bb.cp, %bb.bq
   %.sroa.0196.0 = phi i8 [ 1, %bb.bq ], [ 0, %bb.cp ] ; 2 uses
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs3NyA1pFSltE_9candle_nn4conv6Conv2dNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEECs1dZk1kIfPhr_19candle_transformers(ptr noalias nofree noundef align 8 dereferenceable(80) %i.ac)
-          to label %bb.cr unwind label %bb.ds
+          to label %9 unwind label %bb.ds
 
-bb.cr:                                            ; preds = %bb.dr, %bb.cq, %bb.cp
-  %.sroa.0196.1 = phi i8 [ %.sroa.0196.0, %bb.cq ], [ 1, %bb.dr ], [ 0, %bb.cp ]
+9:                                                ; preds = %bb.cq
+  %10 = load i64, ptr %i.es, align 8, !range !10, !noundef !5
+  %.not395 = icmp eq i64 %10, -1
+  br i1 %.not395, label %bb.du, label %bb.dt
+
+.thread650:                                       ; preds = %bb.dr
+  %11 = load i64, ptr %i.es, align 8, !range !10, !noundef !5
+  %.not395652 = icmp eq i64 %11, -1
+  br i1 %.not395652, label %bb.dv, label %bb.dt
+
+bb.cr:                                            ; preds = %bb.cp
   %i.gm = load i64, ptr %i.es, align 8, !range !10, !noundef !5
   %.not395.a = icmp eq i64 %i.gm, -1
-  br i1 %.not395.a, label %bb.du, label %bb.dt
+  br i1 %.not395.a, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs3NyA1pFSltE_9candle_nn10batch_norm9BatchNormNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEECs1dZk1kIfPhr_19candle_transformers.exit464, label %bb.dt
 
 _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core6tensor6TensorECs1dZk1kIfPhr_19candle_transformers.exit446: ; preds = %bb.ct, %bb.cu, %bb.cl
   %.sroa.0203.23 = phi i8 [ 0, %bb.cl ], [ 1, %bb.cu ], [ 1, %bb.ct ] ; 2 uses
@@ -1535,7 +1549,7 @@ bb.dq:                                            ; preds = %bb.do
 bb.dr:                                            ; preds = %bb.bq
   %i.hx = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn4conv6Conv2dECs1dZk1kIfPhr_19candle_transformers(ptr noalias nofree noundef align 8 dereferenceable(56) %i.hx)
-          to label %bb.cr unwind label %bb.ds
+          to label %.thread650 unwind label %bb.ds
 
 bb.ds:                                            ; preds = %bb.dr, %bb.cq
   %.sroa.0196.2 = phi i8 [ %.sroa.0196.0, %bb.cq ], [ 1, %bb.dr ]
@@ -1545,22 +1559,22 @@ bb.ds:                                            ; preds = %bb.dr, %bb.cq
   %i.ia = icmp eq i64 %i.hz, -1
   br i1 %i.ia, label %bb.ft, label %bb.fu
 
-bb.dt:                                            ; preds = %bb.cr
+bb.dt:                                            ; preds = %.thread650, %bb.cr, %9
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorECs1dZk1kIfPhr_19candle_transformers(ptr noalias nofree noundef nonnull align 8 dereferenceable(80) %i.es)
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs3NyA1pFSltE_9candle_nn10batch_norm9BatchNormNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEECs1dZk1kIfPhr_19candle_transformers.exit464 unwind label %.thread516
 
-bb.du:                                            ; preds = %bb.cr
-  %i.ib = trunc nuw i8 %.sroa.0196.1 to i1
+bb.du:                                            ; preds = %9
+  %i.ib = trunc nuw i8 %.sroa.0196.0 to i1
   br i1 %i.ib, label %bb.dv, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs3NyA1pFSltE_9candle_nn10batch_norm9BatchNormNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEECs1dZk1kIfPhr_19candle_transformers.exit464
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs3NyA1pFSltE_9candle_nn10batch_norm9BatchNormNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEECs1dZk1kIfPhr_19candle_transformers.exit464: ; preds = %bb.dt, %bb.dv, %bb.du
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs3NyA1pFSltE_9candle_nn10batch_norm9BatchNormNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEECs1dZk1kIfPhr_19candle_transformers.exit464: ; preds = %bb.cr, %bb.dt, %bb.dv, %bb.du
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.p)
   invoke void @_RINvMs0_NtCs3NyA1pFSltE_9candle_nn11var_builderINtB6_14VarBuilderArgsINtNtCsgCecv3eZDcN_5alloc5boxed3BoxDNtB6_13SimpleBackendEL_EE11push_prefixReECs1dZk1kIfPhr_19candle_transformers(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.p, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(40) %7, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @357, i64 noundef 2)
           to label %bb.dw unwind label %.thread516
 
-bb.dv:                                            ; preds = %bb.du
+bb.dv:                                            ; preds = %.thread650, %bb.du
   %i.ic = getelementptr inbounds nuw i8, ptr %i.ac, i64 88
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs3NyA1pFSltE_9candle_nn10batch_norm9BatchNormECs1dZk1kIfPhr_19candle_transformers(ptr noalias nofree noundef align 8 dereferenceable(56) %i.ic)
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCs3NyA1pFSltE_9candle_nn10batch_norm9BatchNormNtNtCsltEA4u8Pgfu_11candle_core5error5ErrorEECs1dZk1kIfPhr_19candle_transformers.exit464 unwind label %.thread516

@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %_RNvMsc_NtNtCsefoF4
   %.sroa.518.0.copyload = load i64, ptr %.sroa.518.0..sroa_idx, align 8 ; 3 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b)
   %.sroa.7.18.extract.shift = lshr i64 %.sroa.518.0.copyload, 16
-  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 56 ; 3 uses
   %.val23 = load ptr, ptr %i.p, align 8, !nonnull !7, !noundef !7 ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !854)
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
@@ -257,7 +257,7 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %.sroa.015.0.i = phi i64 [ %i.ak, %bb.g ], [ 0, %bb.f ] ; 6 uses
+  %.sroa.015.0.i = phi i64 [ %i.ak, %bb.g ], [ 0, %bb.f ] ; 7 uses
   %i.al = load i64, ptr %i.q, align 8, !range !16, !alias.scope !857, !noalias !858, !noundef !7
   %i.am = icmp eq i64 %i.s, %i.al
   br i1 %i.am, label %bb.i, label %bb.j
@@ -294,7 +294,7 @@ bb.k:                                             ; preds = %bb.j
 bb.l:                                             ; preds = %bb.k
   %i.ay = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.az = load i64, ptr %i.ay, align 8, !alias.scope !860, !noundef !7
-  %i.ba = icmp ugt i64 %i.aw, %i.az               ; 2 uses
+  %i.ba = icmp ugt i64 %i.aw, %i.az
   br i1 %i.ba, label %_RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i, label %bb.m, !prof !8
 
 bb.m:                                             ; preds = %bb.l
@@ -303,27 +303,37 @@ bb.m:                                             ; preds = %bb.l
   %i.bd = icmp ult i64 %i.bc, 1152921504606846976
   tail call void @llvm.assume(i1 %i.bd)
   %i.be = icmp ugt i64 %i.aw, %i.bc
-  br i1 %i.be, label %bb.n, label %_RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i.thread
+  br i1 %i.be, label %bb.n, label %4
 
 bb.n:                                             ; preds = %bb.m
   store i64 %i.aw, ptr %i.bb, align 8, !alias.scope !860
-  br label %_RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i.thread
+  br label %4
 
 _RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i: ; preds = %bb.l
   %i.bf = tail call noundef i8 @_RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack9grow_cold(ptr noalias nofree noundef nonnull align 8 dereferenceable(40) %i.ar, i64 noundef %i.aw) #21, !noalias !861 ; 2 uses
   %.not.i.i.not = icmp eq i8 %i.bf, 0
   br i1 %.not.i.i.not, label %_RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i._RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i.thread_crit_edge, label %bb.q
 
+4:                                                ; preds = %bb.n, %bb.m
+  %5 = phi i64 [ %i.aw, %bb.n ], [ %i.bc, %bb.m ]
+  %6 = load ptr, ptr %i.p, align 8, !alias.scope !862, !nonnull !7
+  %7 = getelementptr inbounds nuw [8 x i8], ptr %6, i64 %.sroa.015.0.i
+  br label %_RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i.thread
+
 _RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i._RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i.thread_crit_edge: ; preds = %_RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i
+  %8 = load ptr, ptr %i.p, align 8, !alias.scope !862, !nonnull !7
+  %9 = getelementptr inbounds nuw [8 x i8], ptr %8, i64 %.sroa.015.0.i ; 2 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 64
   %.pre51 = load i64, ptr %.phi.trans.insert, align 8, !alias.scope !862
   br label %_RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i.thread
 
-_RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i.thread: ; preds = %_RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i._RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i.thread_crit_edge, %bb.m, %bb.n
-  %4 = phi i64 [ %.pre51, %_RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i._RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i.thread_crit_edge ], [ %i.aw, %bb.n ], [ %i.bc, %bb.m ]
+_RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i.thread: ; preds = %4, %_RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i._RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i.thread_crit_edge
+  %10 = phi i64 [ %.pre51, %_RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i._RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i.thread_crit_edge ], [ %5, %4 ]
+  %11 = phi ptr [ %9, %_RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i._RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i.thread_crit_edge ], [ %7, %4 ]
+  %12 = phi ptr [ %9, %_RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i._RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i.thread_crit_edge ], [ %.val23, %4 ]
   %i.bg = add i64 %.sroa.015.0.i, %i.as           ; 2 uses
   %i.bh = icmp ult i64 %i.bg, %.sroa.015.0.i
-  %.not.i = icmp ugt i64 %i.bg, %4
+  %.not.i = icmp ugt i64 %i.bg, %10
   %or.cond.i = select i1 %i.bh, i1 true, i1 %.not.i, !prof !863
   br i1 %or.cond.i, label %bb.o, label %bb.p, !prof !863
 
@@ -332,10 +342,7 @@ bb.o:                                             ; preds = %_RNvMsp_NtNtNtNtCse
   unreachable
 
 bb.p:                                             ; preds = %_RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i.thread
-  %5 = load ptr, ptr %i.p, align 8, !alias.scope !862, !nonnull !7
-  %6 = getelementptr inbounds nuw [8 x i8], ptr %5, i64 %.sroa.015.0.i ; 2 uses
-  %.sroa.0.0.i = select i1 %i.ba, ptr %6, ptr %.val23
-  tail call void @_RINvMNtCskKLDkoKarTP_4core5sliceSNtNtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler4cell4Cell9fill_withNvYBv_NtNtB5_7default7Default7defaultECs3WYoaQ2jqaU_5wasmi(ptr noalias nofree noundef nonnull align 8 %6, i64 noundef %i.as), !noalias !861
+  tail call void @_RINvMNtCskKLDkoKarTP_4core5sliceSNtNtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler4cell4Cell9fill_withNvYBv_NtNtB5_7default7Default7defaultECs3WYoaQ2jqaU_5wasmi(ptr noalias nofree noundef nonnull align 8 %11, i64 noundef %i.as), !noalias !861
   br label %_RNvMso_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_5Stack10push_frame.exit
 
 bb.q:                                             ; preds = %bb.c, %bb.k, %_RNvMsp_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_10ValueStack14grow_if_needed.exit.i
@@ -349,7 +356,7 @@ bb.q:                                             ; preds = %bb.c, %bb.k, %_RNvM
   br label %bb.s
 
 _RNvMso_NtNtNtNtCsefoF4u9kbII_5wasmi6engine8executor7handler5stateNtB5_5Stack10push_frame.exit: ; preds = %bb.j, %bb.p
-  %.sroa.1326.0 = phi ptr [ %.val23, %bb.j ], [ %.sroa.0.0.i, %bb.p ]
+  %.sroa.1326.0 = phi ptr [ %.val23, %bb.j ], [ %12, %bb.p ]
   %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.bl = load i64, ptr %i.bk, align 8, !alias.scope !864, !noundef !7
   %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 104

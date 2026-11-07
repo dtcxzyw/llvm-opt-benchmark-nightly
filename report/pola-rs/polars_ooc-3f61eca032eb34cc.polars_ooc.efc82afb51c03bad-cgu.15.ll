@@ -205,7 +205,7 @@ bb.a:
 bb.b:                                             ; preds = %bb.c, %bb.a
   %.sroa.06.0.i = phi i64 [ %i.c, %bb.a ], [ %i.h, %bb.c ], !dbg !10379 ; 3 uses
   %i.d = and i64 %.sroa.06.0.i, 7, !dbg !10380
-  %.not = icmp eq i64 %i.d, 0, !dbg !10380        ; 2 uses
+  %.not = icmp eq i64 %i.d, 0, !dbg !10380
   br i1 %.not, label %bb.c, label %_RINvMs1c_NtNtCscgRAwXFJnXP_4core4sync6atomicINtB7_6AtomicyE10try_updateNCNvMs0_NtCskAlUH1kY1DR_10polars_ooc11spill_tokenINtB1f_15SpillTokenInnerNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameE7try_pin0EB1h_.exit.a, !dbg !10381
 
 bb.c:                                             ; preds = %bb.b
@@ -213,12 +213,15 @@ bb.c:                                             ; preds = %bb.b
   %i.f = cmpxchg weak ptr %i.b, i64 %.sroa.06.0.i, i64 %i.e acquire monotonic, align 8, !dbg !10382 ; 2 uses
   %i.g = extractvalue { i64, i1 } %i.f, 1, !dbg !10382
   %i.h = extractvalue { i64, i1 } %i.f, 0, !dbg !10382
-  br i1 %i.g, label %_RINvMs1c_NtNtCscgRAwXFJnXP_4core4sync6atomicINtB7_6AtomicyE10try_updateNCNvMs0_NtCskAlUH1kY1DR_10polars_ooc11spill_tokenINtB1f_15SpillTokenInnerNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameE7try_pin0EB1h_.exit.a, label %bb.b, !dbg !10383
+  br i1 %i.g, label %_RINvMs1c_NtNtCscgRAwXFJnXP_4core4sync6atomicINtB7_6AtomicyE10try_updateNCNvMs0_NtCskAlUH1kY1DR_10polars_ooc11spill_tokenINtB1f_15SpillTokenInnerNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameE7try_pin0EB1h_.exit, label %bb.b, !dbg !10383
 
-_RINvMs1c_NtNtCscgRAwXFJnXP_4core4sync6atomicINtB7_6AtomicyE10try_updateNCNvMs0_NtCskAlUH1kY1DR_10polars_ooc11spill_tokenINtB1f_15SpillTokenInnerNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameE7try_pin0EB1h_.exit.a: ; preds = %bb.b, %bb.c
+_RINvMs1c_NtNtCscgRAwXFJnXP_4core4sync6atomicINtB7_6AtomicyE10try_updateNCNvMs0_NtCskAlUH1kY1DR_10polars_ooc11spill_tokenINtB1f_15SpillTokenInnerNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameE7try_pin0EB1h_.exit: ; preds = %bb.c
   %1 = getelementptr inbounds nuw i8, ptr %i.a, i64 16, !dbg !10384
-  %.sroa.0.0 = select i1 %.not, ptr %1, ptr null, !dbg !10384
-  ret ptr %.sroa.0.0, !dbg !10385
+  br label %_RINvMs1c_NtNtCscgRAwXFJnXP_4core4sync6atomicINtB7_6AtomicyE10try_updateNCNvMs0_NtCskAlUH1kY1DR_10polars_ooc11spill_tokenINtB1f_15SpillTokenInnerNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameE7try_pin0EB1h_.exit.a, !dbg !10384
+
+_RINvMs1c_NtNtCscgRAwXFJnXP_4core4sync6atomicINtB7_6AtomicyE10try_updateNCNvMs0_NtCskAlUH1kY1DR_10polars_ooc11spill_tokenINtB1f_15SpillTokenInnerNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameE7try_pin0EB1h_.exit.a: ; preds = %bb.b, %_RINvMs1c_NtNtCscgRAwXFJnXP_4core4sync6atomicINtB7_6AtomicyE10try_updateNCNvMs0_NtCskAlUH1kY1DR_10polars_ooc11spill_tokenINtB1f_15SpillTokenInnerNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameE7try_pin0EB1h_.exit
+  %2 = phi ptr [ %1, %_RINvMs1c_NtNtCscgRAwXFJnXP_4core4sync6atomicINtB7_6AtomicyE10try_updateNCNvMs0_NtCskAlUH1kY1DR_10polars_ooc11spill_tokenINtB1f_15SpillTokenInnerNtNtNtCs1LHh8CLbVkQ_11polars_core5frame9dataframe9DataFrameE7try_pin0EB1h_.exit ], [ null, %bb.b ], !dbg !10384
+  ret ptr %2, !dbg !10385
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(read, argmem: readwrite, inaccessiblemem: write, target_mem: none) uwtable

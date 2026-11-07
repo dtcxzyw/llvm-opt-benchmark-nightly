@@ -205,7 +205,7 @@ bb.a:
   %5 = alloca %"class.std::variant", align 8      ; 4 uses
   %6 = alloca %"class.std::vector.172", align 8   ; 10 uses
   %7 = alloca %"class.std::set", align 8          ; 8 uses
-  %8 = alloca %"class.std::optional", align 8     ; 9 uses
+  %8 = alloca %"class.std::optional", align 8     ; 10 uses
   %9 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %10 = alloca %"class.std::__cxx11::basic_string", align 8 ; 9 uses
   %11 = alloca %"class.std::__cxx11::basic_string", align 8 ; 10 uses
@@ -511,14 +511,20 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit17: ; preds = %_ZN
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %10) #28
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #28
-  %i.dh = load i8, ptr %i.m, align 8, !tbaa !175, !range !176, !noundef !177 ; 2 uses
+  %i.dh = load i8, ptr %i.m, align 8, !tbaa !175, !range !176, !noundef !177
   %i.di = trunc nuw i8 %i.dh to i1
-  %15 = load i64, ptr %i.n, align 8
-  %16 = icmp ne i64 %15, 0
-  %or.cond.not = select i1 %i.di, i1 %16, i1 false ; 2 uses
-  br i1 %or.cond.not, label %bb.o, label %17
+  br i1 %i.di, label %15, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.thread
 
-bb.o:                                             ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit17
+_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.thread: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit17
+  call void @llvm.lifetime.end.p0(ptr nonnull %8) #28
+  br label %bb.ae
+
+15:                                               ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit17
+  %16 = load i64, ptr %i.n, align 8, !tbaa !183
+  %.not100 = icmp eq i64 %16, 0                   ; 2 uses
+  br i1 %.not100, label %bb.ad, label %bb.o
+
+bb.o:                                             ; preds = %15
   call void @llvm.lifetime.start.p0(ptr nonnull %12) #28
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %12, i8 0, i64 32, i1 false)
   store ptr %i.o, ptr %i.p, align 8, !tbaa !168
@@ -805,19 +811,15 @@ bb.ac:                                            ; preds = %bb.y
   call void @_ZNSt6vectorIN9Stockfish8L3DomainESaIS1_EE17_M_realloc_insertIJS1_EEEvN9__gnu_cxx17__normal_iteratorIPS1_S3_EEDpOT_(ptr noundef nonnull align 8 dereferenceable(24) %6, ptr %i.fw, ptr noundef nonnull align 8 dereferenceable(56) %12)
   br label %_ZNSt6vectorIN9Stockfish8L3DomainESaIS1_EE12emplace_backIJS1_EEERS1_DpOT_.exit
 
-_ZNSt6vectorIN9Stockfish8L3DomainESaIS1_EE12emplace_backIJS1_EEERS1_DpOT_.exit: ; preds = %bb.ac, %_ZN9Stockfish8L3DomainC2EOS0_.exit.i, %_ZNSt6vectorImSaImEED2Ev.exit
+_ZNSt6vectorIN9Stockfish8L3DomainESaIS1_EE12emplace_backIJS1_EEERS1_DpOT_.exit: ; preds = %_ZNSt6vectorImSaImEED2Ev.exit, %_ZN9Stockfish8L3DomainC2EOS0_.exit.i, %bb.ac
   %i.gm = load ptr, ptr %i.w, align 8, !tbaa !167
   call void @_ZNSt8_Rb_treeImmSt9_IdentityImESt4lessImESaImEE8_M_eraseEPSt13_Rb_tree_nodeImE(ptr noundef nonnull align 8 dereferenceable(48) %i.y, ptr noundef %i.gm)
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #28
-  %.pre129 = load i8, ptr %i.m, align 8, !tbaa !175, !range !176
-  br label %17
+  %.pre129 = load i8, ptr %i.m, align 8, !tbaa !175
+  %17 = trunc nuw i8 %.pre129 to i1
+  br i1 %17, label %bb.ad, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
-17:                                               ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit17, %_ZNSt6vectorIN9Stockfish8L3DomainESaIS1_EE12emplace_backIJS1_EEERS1_DpOT_.exit
-  %18 = phi i8 [ %i.dh, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit17 ], [ %.pre129, %_ZNSt6vectorIN9Stockfish8L3DomainESaIS1_EE12emplace_backIJS1_EEERS1_DpOT_.exit ]
-  %19 = trunc nuw i8 %18 to i1
-  br i1 %19, label %bb.ad, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
-
-bb.ad:                                            ; preds = %17
+bb.ad:                                            ; preds = %15, %_ZNSt6vectorIN9Stockfish8L3DomainESaIS1_EE12emplace_backIJS1_EEERS1_DpOT_.exit
   store i8 0, ptr %i.m, align 8, !tbaa !175
   %i.gn = load ptr, ptr %8, align 8, !tbaa !182   ; 2 uses
   %i.go = icmp eq ptr %i.gn, %i.ab
@@ -829,11 +831,11 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @_ZdlPvm(ptr noundef %i.gn, i64 noundef %i.gq) #33
   br label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
 
-_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit: ; preds = %bb.ad, %17, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i
+_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit: ; preds = %bb.ad, %_ZNSt6vectorIN9Stockfish8L3DomainESaIS1_EE12emplace_backIJS1_EEERS1_DpOT_.exit, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #28
-  br i1 %or.cond.not, label %bb.b, label %bb.ae
+  br i1 %.not100, label %bb.ae, label %bb.b
 
-bb.ae:                                            ; preds = %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit
+bb.ae:                                            ; preds = %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit, %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.thread
   %i.gr = load ptr, ptr %6, align 8, !tbaa !357
   %i.gs = load ptr, ptr %i.z, align 8, !tbaa !357
   %i.gt = icmp eq ptr %i.gr, %i.gs

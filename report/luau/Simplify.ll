@@ -204,7 +204,7 @@ bb.dd:                                            ; preds = %_ZNKSt3mapINSt7__cx
   %i.qp = getelementptr inbounds nuw i8, ptr %14, i64 176 ; 3 uses
   %i.qq = load i8, ptr %i.qp, align 8, !tbaa !207, !range !54, !noundef !55
   %i.qr = trunc nuw i8 %i.qq to i1
-  br i1 %i.qr, label %bb.de, label %bb.ds
+  br i1 %i.qr, label %bb.de, label %_ZNSt14_Optional_baseIN4Luau8PropertyELb0ELb0EED2Ev.exit
 
 bb.de:                                            ; preds = %bb.dd
   %i.qs = getelementptr inbounds nuw i8, ptr %14, i64 144 ; 2 uses
@@ -356,10 +356,9 @@ bb.dr:                                            ; preds = %bb.do, %bb.dn, %bb.
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #22
   br label %bb.du
 
-bb.ds:                                            ; preds = %bb.dm, %bb.dd, %bb.dq, %bb.dk, %bb.dh
-  %.sroa.0367.12 = phi ptr [ %i.rb, %bb.dh ], [ %i.rl, %bb.dk ], [ undef, %bb.dd ], [ %i.sx, %bb.dq ], [ %i.v, %bb.dm ]
-  %.sroa.23.12 = phi i8 [ 1, %bb.dh ], [ 1, %bb.dk ], [ 0, %bb.dd ], [ 1, %bb.dq ], [ 1, %bb.dm ]
-  %i.tg = load i8, ptr %i.qp, align 8, !tbaa !207, !range !54, !noundef !55
+bb.ds:                                            ; preds = %bb.dm, %bb.dq, %bb.dk, %bb.dh
+  %.sroa.0367.12.ph = phi ptr [ %i.v, %bb.dm ], [ %i.sx, %bb.dq ], [ %i.rl, %bb.dk ], [ %i.rb, %bb.dh ] ; 2 uses
+  %i.tg = load i8, ptr %i.qp, align 8, !tbaa !207
   %i.th = trunc nuw i8 %i.tg to i1
   br i1 %i.th, label %bb.dt, label %_ZNSt14_Optional_baseIN4Luau8PropertyELb0ELb0EED2Ev.exit
 
@@ -367,7 +366,9 @@ bb.dt:                                            ; preds = %bb.ds
   call void @_ZNSt22_Optional_payload_baseIN4Luau8PropertyEE10_M_destroyEv(ptr noundef nonnull align 8 dereferenceable(184) %14) #22
   br label %_ZNSt14_Optional_baseIN4Luau8PropertyELb0ELb0EED2Ev.exit
 
-_ZNSt14_Optional_baseIN4Luau8PropertyELb0ELb0EED2Ev.exit: ; preds = %bb.ds, %bb.dt
+_ZNSt14_Optional_baseIN4Luau8PropertyELb0ELb0EED2Ev.exit: ; preds = %bb.dd, %bb.ds, %bb.dt
+  %.sroa.23.12437 = phi i8 [ 1, %bb.dt ], [ 1, %bb.ds ], [ 0, %bb.dd ]
+  %.sroa.0367.12436 = phi ptr [ %.sroa.0367.12.ph, %bb.dt ], [ %.sroa.0367.12.ph, %bb.ds ], [ undef, %bb.dd ]
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #22
   br label %_ZNK4Luau12DenseHashSetIPKNS_4TypeENS_16DenseHashPointerESt8equal_toIS3_EE8containsERKS3_.exit
 
@@ -644,8 +645,8 @@ bb.et:                                            ; preds = %bb.er, %_ZN4Luau2is
   br label %_ZNK4Luau12DenseHashSetIPKNS_4TypeENS_16DenseHashPointerESt8equal_toIS3_EE8containsERKS3_.exit
 
 _ZNK4Luau12DenseHashSetIPKNS_4TypeENS_16DenseHashPointerESt8equal_toIS3_EE8containsERKS3_.exit: ; preds = %bb.d, %bb.g, %bb.g, %bb.g, %bb.g, %bb.g, %bb.es, %_ZNSt14_Optional_baseIN4Luau8PropertyELb0ELb0EED2Ev.exit, %_ZN4Luau10CloneStateD2Ev.exit, %bb.cz, %bb.aw, %bb.et, %bb.eq, %_ZN4Luau9UnionTypeD2Ev.exit309, %bb.eh, %bb.ef, %bb.ed, %bb.eb
-  %.sroa.0367.17 = phi ptr [ %.sroa.0367.1, %bb.aw ], [ %.sroa.0367.12, %_ZNSt14_Optional_baseIN4Luau8PropertyELb0ELb0EED2Ev.exit ], [ %i.vd, %bb.eb ], [ %i.vh, %bb.ed ], [ %i.vl, %bb.ef ], [ %i.vp, %bb.eh ], [ %i.vy, %_ZN4Luau9UnionTypeD2Ev.exit309 ], [ %i.wp, %bb.eq ], [ %i.wy, %bb.et ], [ %i.wv, %bb.es ], [ undef, %bb.g ], [ %.sroa.0367.10, %bb.cz ], [ %i.ua, %_ZN4Luau10CloneStateD2Ev.exit ], [ undef, %bb.g ], [ undef, %bb.g ], [ undef, %bb.g ], [ undef, %bb.g ], [ undef, %bb.d ]
-  %.sroa.23.17 = phi i8 [ %.sroa.23.1, %bb.aw ], [ %.sroa.23.12, %_ZNSt14_Optional_baseIN4Luau8PropertyELb0ELb0EED2Ev.exit ], [ %i.ve, %bb.eb ], [ %i.vi, %bb.ed ], [ %i.vm, %bb.ef ], [ %i.vq, %bb.eh ], [ 1, %_ZN4Luau9UnionTypeD2Ev.exit309 ], [ 1, %bb.eq ], [ %i.wz, %bb.et ], [ %i.ww, %bb.es ], [ 0, %bb.g ], [ %.sroa.23.10, %bb.cz ], [ 1, %_ZN4Luau10CloneStateD2Ev.exit ], [ 0, %bb.g ], [ 0, %bb.g ], [ 0, %bb.g ], [ 0, %bb.g ], [ 0, %bb.d ]
+  %.sroa.0367.17 = phi ptr [ %.sroa.0367.1, %bb.aw ], [ %.sroa.0367.12436, %_ZNSt14_Optional_baseIN4Luau8PropertyELb0ELb0EED2Ev.exit ], [ %i.vd, %bb.eb ], [ %i.vh, %bb.ed ], [ %i.vl, %bb.ef ], [ %i.vp, %bb.eh ], [ %i.vy, %_ZN4Luau9UnionTypeD2Ev.exit309 ], [ %i.wp, %bb.eq ], [ %i.wy, %bb.et ], [ %i.wv, %bb.es ], [ undef, %bb.g ], [ %.sroa.0367.10, %bb.cz ], [ %i.ua, %_ZN4Luau10CloneStateD2Ev.exit ], [ undef, %bb.g ], [ undef, %bb.g ], [ undef, %bb.g ], [ undef, %bb.g ], [ undef, %bb.d ]
+  %.sroa.23.17 = phi i8 [ %.sroa.23.1, %bb.aw ], [ %.sroa.23.12437, %_ZNSt14_Optional_baseIN4Luau8PropertyELb0ELb0EED2Ev.exit ], [ %i.ve, %bb.eb ], [ %i.vi, %bb.ed ], [ %i.vm, %bb.ef ], [ %i.vq, %bb.eh ], [ 1, %_ZN4Luau9UnionTypeD2Ev.exit309 ], [ 1, %bb.eq ], [ %i.wz, %bb.et ], [ %i.ww, %bb.es ], [ 0, %bb.g ], [ %.sroa.23.10, %bb.cz ], [ 1, %_ZN4Luau10CloneStateD2Ev.exit ], [ 0, %bb.g ], [ 0, %bb.g ], [ 0, %bb.g ], [ 0, %bb.g ], [ 0, %bb.d ]
   %.fca.0.insert = insertvalue { ptr, i8 } poison, ptr %.sroa.0367.17, 0
   %.fca.1.insert = insertvalue { ptr, i8 } %.fca.0.insert, i8 %.sroa.23.17, 1
   ret { ptr, i8 } %.fca.1.insert

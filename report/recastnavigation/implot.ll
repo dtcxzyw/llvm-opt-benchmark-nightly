@@ -205,7 +205,7 @@ _ZN6ImPlot21BeginDisabledControlsEb.exit:         ; preds = %bb.l
   %i.z = load float, ptr %i.y, align 4, !tbaa !298
   %i.aa = fmul float %i.z, 2.500000e-01
   tail call void @_ZN5ImGui12PushStyleVarEif(i32 noundef 0, float noundef %i.aa) #32
-  %.pre34.a = load i8, ptr %i.u, align 1, !tbaa !323, !range !263
+  %.pre34.a = load i8, ptr %i.u, align 1, !tbaa !323
   %i.ab = trunc nuw i8 %.pre34.a to i1
   br i1 %i.ab, label %_ZN6ImPlot21BeginDisabledControlsEb.exit.thread, label %bb.m
 
@@ -608,10 +608,10 @@ _ZN10ImPlotAxis6SetMinEdb.exit:                   ; preds = %bb.dc
   %i.si = load double, ptr %i.qu, align 8, !tbaa !302
   %i.sj = load ptr, ptr %i.sd, align 8, !tbaa !310
   %i.sk = tail call noundef double %i.sh(double noundef %i.si, ptr noundef %i.sj) #32, !inline_history !8
-  %.pre767.pre = load i32, ptr %i.nd, align 4, !tbaa !300 ; 2 uses
-  %.pre768.pre = load i8, ptr %i.mt, align 4, !tbaa !299, !range !263
-  %.pre819 = and i32 %.pre767.pre, 1024
-  %i.sl = trunc nuw i8 %.pre768.pre to i1
+  %.pr.pre.pre = load i8, ptr %i.mt, align 4, !tbaa !299
+  %.pre773.pre = load i32, ptr %i.nd, align 4, !tbaa !300 ; 2 uses
+  %.pre819 = and i32 %.pre773.pre, 1024
+  %i.sl = trunc nuw i8 %.pr.pre.pre to i1
   %i.sm = getelementptr inbounds nuw i8, ptr %i.mp, i64 288
   store double %i.sk, ptr %i.sm, align 8, !tbaa !312
   %.not706.a = icmp eq i32 %.pre819, 0
@@ -620,7 +620,7 @@ _ZN10ImPlotAxis6SetMinEdb.exit:                   ; preds = %bb.dc
 
 bb.dd:                                            ; preds = %_ZN10ImPlotAxis6SetMinEdb.exit.thread872, %_ZN10ImPlotAxis6SetMinEdb.exit.thread, %_ZN10ImPlotAxis6SetMinEdb.exit
   %i.so = phi double [ %i.sc, %_ZN10ImPlotAxis6SetMinEdb.exit.thread ], [ %i.sn, %_ZN10ImPlotAxis6SetMinEdb.exit ], [ %i.sb, %_ZN10ImPlotAxis6SetMinEdb.exit.thread872 ] ; 3 uses
-  %i.sp = phi i32 [ %i.qb, %_ZN10ImPlotAxis6SetMinEdb.exit.thread ], [ %.pre767.pre, %_ZN10ImPlotAxis6SetMinEdb.exit ], [ %i.qb, %_ZN10ImPlotAxis6SetMinEdb.exit.thread872 ]
+  %i.sp = phi i32 [ %i.qb, %_ZN10ImPlotAxis6SetMinEdb.exit.thread ], [ %.pre773.pre, %_ZN10ImPlotAxis6SetMinEdb.exit ], [ %i.qb, %_ZN10ImPlotAxis6SetMinEdb.exit.thread872 ]
   %i.sq = load i8, ptr %i.mw, align 1, !tbaa !295, !range !263, !noundef !264
   %i.sr = trunc nuw i8 %i.sq to i1
   %i.ss = load i32, ptr %i.mz, align 8
@@ -1023,10 +1023,10 @@ _ZN10ImPlotAxis6SetMinEdb.exit461:                ; preds = %bb.dx
   %i.acj = load double, ptr %i.aav, align 8, !tbaa !302
   %i.ack = load ptr, ptr %i.ace, align 8, !tbaa !310
   %i.acl = tail call noundef double %i.aci(double noundef %i.acj, ptr noundef %i.ack) #32, !inline_history !8
-  %.pre774.pre = load i32, ptr %i.xe, align 4, !tbaa !300 ; 2 uses
-  %.pre775.pre = load i8, ptr %i.wu, align 4, !tbaa !299, !range !263
-  %.pre818 = and i32 %.pre774.pre, 1024
-  %i.acm = trunc nuw i8 %.pre775.pre to i1
+  %.pr664.pre.pre = load i8, ptr %i.wu, align 4, !tbaa !299
+  %.pre780.pre = load i32, ptr %i.xe, align 4, !tbaa !300 ; 2 uses
+  %.pre818 = and i32 %.pre780.pre, 1024
+  %i.acm = trunc nuw i8 %.pr664.pre.pre to i1
   %i.acn = getelementptr i8, ptr %i.wq, i64 1440
   store double %i.acl, ptr %i.acn, align 8, !tbaa !312
   %.not701 = icmp eq i32 %.pre818, 0
@@ -1035,7 +1035,7 @@ _ZN10ImPlotAxis6SetMinEdb.exit461:                ; preds = %bb.dx
 
 bb.dy:                                            ; preds = %_ZN10ImPlotAxis6SetMinEdb.exit461.thread883, %_ZN10ImPlotAxis6SetMinEdb.exit461.thread, %_ZN10ImPlotAxis6SetMinEdb.exit461
   %i.acp = phi double [ %i.acd, %_ZN10ImPlotAxis6SetMinEdb.exit461.thread ], [ %i.aco, %_ZN10ImPlotAxis6SetMinEdb.exit461 ], [ %i.acc, %_ZN10ImPlotAxis6SetMinEdb.exit461.thread883 ] ; 3 uses
-  %i.acq = phi i32 [ %i.aac, %_ZN10ImPlotAxis6SetMinEdb.exit461.thread ], [ %.pre774.pre, %_ZN10ImPlotAxis6SetMinEdb.exit461 ], [ %i.aac, %_ZN10ImPlotAxis6SetMinEdb.exit461.thread883 ]
+  %i.acq = phi i32 [ %i.aac, %_ZN10ImPlotAxis6SetMinEdb.exit461.thread ], [ %.pre780.pre, %_ZN10ImPlotAxis6SetMinEdb.exit461 ], [ %i.aac, %_ZN10ImPlotAxis6SetMinEdb.exit461.thread883 ]
   %i.acr = load i8, ptr %i.wx, align 1, !tbaa !295, !range !263, !noundef !264
   %i.acs = trunc nuw i8 %i.acr to i1
   %i.act = load i32, ptr %i.xa, align 8
@@ -1438,10 +1438,10 @@ _ZN10ImPlotAxis6SetMinEdb.exit508:                ; preds = %bb.ez
   %i.aoc = load double, ptr %i.amo, align 8, !tbaa !302
   %i.aod = load ptr, ptr %i.anx, align 8, !tbaa !310
   %i.aoe = tail call noundef double %i.aob(double noundef %i.aoc, ptr noundef %i.aod) #32, !inline_history !8
-  %.pre780.pre = load i32, ptr %i.ajl, align 4, !tbaa !300 ; 2 uses
-  %.pre781.pre = load i8, ptr %i.ajb, align 4, !tbaa !299, !range !263
-  %.pre817 = and i32 %.pre780.pre, 1024
-  %i.aof = trunc nuw i8 %.pre781.pre to i1
+  %.pr666.pre.pre = load i8, ptr %i.ajb, align 4, !tbaa !299
+  %.pre786.pre = load i32, ptr %i.ajl, align 4, !tbaa !300 ; 2 uses
+  %.pre817 = and i32 %.pre786.pre, 1024
+  %i.aof = trunc nuw i8 %.pr666.pre.pre to i1
   %i.aog = getelementptr inbounds nuw i8, ptr %i.aid, i64 288
   store double %i.aoe, ptr %i.aog, align 8, !tbaa !312
   %.not714.a = icmp eq i32 %.pre817, 0
@@ -1450,7 +1450,7 @@ _ZN10ImPlotAxis6SetMinEdb.exit508:                ; preds = %bb.ez
 
 bb.fa:                                            ; preds = %_ZN10ImPlotAxis6SetMinEdb.exit508.thread894, %_ZN10ImPlotAxis6SetMinEdb.exit508.thread, %_ZN10ImPlotAxis6SetMinEdb.exit508
   %i.aoi = phi double [ %i.anw, %_ZN10ImPlotAxis6SetMinEdb.exit508.thread ], [ %i.aoh, %_ZN10ImPlotAxis6SetMinEdb.exit508 ], [ %i.anv, %_ZN10ImPlotAxis6SetMinEdb.exit508.thread894 ] ; 3 uses
-  %i.aoj = phi i32 [ %i.alv, %_ZN10ImPlotAxis6SetMinEdb.exit508.thread ], [ %.pre780.pre, %_ZN10ImPlotAxis6SetMinEdb.exit508 ], [ %i.alv, %_ZN10ImPlotAxis6SetMinEdb.exit508.thread894 ]
+  %i.aoj = phi i32 [ %i.alv, %_ZN10ImPlotAxis6SetMinEdb.exit508.thread ], [ %.pre786.pre, %_ZN10ImPlotAxis6SetMinEdb.exit508 ], [ %i.alv, %_ZN10ImPlotAxis6SetMinEdb.exit508.thread894 ]
   %i.aok = load i8, ptr %i.aje, align 1, !tbaa !295, !range !263, !noundef !264
   %i.aol = trunc nuw i8 %i.aok to i1
   %i.aom = load i32, ptr %i.ajh, align 8
@@ -1853,10 +1853,10 @@ _ZN10ImPlotAxis6SetMinEdb.exit555:                ; preds = %bb.fu
   %i.ayc = load double, ptr %i.awo, align 8, !tbaa !302
   %i.ayd = load ptr, ptr %i.axx, align 8, !tbaa !310
   %i.aye = tail call noundef double %i.ayb(double noundef %i.ayc, ptr noundef %i.ayd) #32, !inline_history !8
-  %.pre786.pre = load i32, ptr %i.atl, align 4, !tbaa !300 ; 2 uses
-  %.pre787.pre = load i8, ptr %i.atb, align 4, !tbaa !299, !range !263
-  %.pre816 = and i32 %.pre786.pre, 1024
-  %i.ayf = trunc nuw i8 %.pre787.pre to i1
+  %.pr668.pre.pre = load i8, ptr %i.atb, align 4, !tbaa !299
+  %.pre792.pre = load i32, ptr %i.atl, align 4, !tbaa !300 ; 2 uses
+  %.pre816 = and i32 %.pre792.pre, 1024
+  %i.ayf = trunc nuw i8 %.pr668.pre.pre to i1
   %i.ayg = getelementptr i8, ptr %i.asd, i64 1440
   store double %i.aye, ptr %i.ayg, align 8, !tbaa !312
   %.not710 = icmp eq i32 %.pre816, 0
@@ -1865,7 +1865,7 @@ _ZN10ImPlotAxis6SetMinEdb.exit555:                ; preds = %bb.fu
 
 bb.fv:                                            ; preds = %_ZN10ImPlotAxis6SetMinEdb.exit555.thread905, %_ZN10ImPlotAxis6SetMinEdb.exit555.thread, %_ZN10ImPlotAxis6SetMinEdb.exit555
   %i.ayi = phi double [ %i.axw, %_ZN10ImPlotAxis6SetMinEdb.exit555.thread ], [ %i.ayh, %_ZN10ImPlotAxis6SetMinEdb.exit555 ], [ %i.axv, %_ZN10ImPlotAxis6SetMinEdb.exit555.thread905 ] ; 3 uses
-  %i.ayj = phi i32 [ %i.avv, %_ZN10ImPlotAxis6SetMinEdb.exit555.thread ], [ %.pre786.pre, %_ZN10ImPlotAxis6SetMinEdb.exit555 ], [ %i.avv, %_ZN10ImPlotAxis6SetMinEdb.exit555.thread905 ]
+  %i.ayj = phi i32 [ %i.avv, %_ZN10ImPlotAxis6SetMinEdb.exit555.thread ], [ %.pre792.pre, %_ZN10ImPlotAxis6SetMinEdb.exit555 ], [ %i.avv, %_ZN10ImPlotAxis6SetMinEdb.exit555.thread905 ]
   %i.ayk = load i8, ptr %i.ate, align 1, !tbaa !295, !range !263, !noundef !264
   %i.ayl = trunc nuw i8 %i.ayk to i1
   %i.aym = load i32, ptr %i.ath, align 8
@@ -2268,7 +2268,7 @@ _ZN10ImPlotAxis6SetMinEdb.exit600:                ; preds = %bb.gk
   %i.bid = load double, ptr %i.bgn, align 8, !tbaa !302
   %i.bie = load ptr, ptr %i.bhy, align 8, !tbaa !310
   %i.bif = tail call noundef double %i.bic(double noundef %i.bid, ptr noundef %i.bie) #32, !inline_history !8
-  %.pre793.pre = load i8, ptr %i.bdh, align 4, !tbaa !299, !range !263
+  %.pre793.pre = load i8, ptr %i.bdh, align 4, !tbaa !299
   %i.big = trunc nuw i8 %.pre793.pre to i1
   %i.bih = getelementptr inbounds nuw i8, ptr %i.bdg, i64 288
   store double %i.bif, ptr %i.bih, align 8, !tbaa !312
@@ -2370,7 +2370,7 @@ _ZN10ImPlotAxis20UpdateTransformCacheEv.exit.i610: ; preds = %bb.gp, %bb.go
   br label %_ZN10ImPlotAxis6SetMaxEdb.exit612
 
 _ZN10ImPlotAxis6SetMaxEdb.exit612:                ; preds = %_ZNK10ImPlotAxis12PixelsToPlotEf.exit588, %bb.gf, %.preheader716, %_ZNK10ImPlotAxis11IsLockedMinEv.exit.i.i579, %_ZN10ImPlotAxis20UpdateTransformCacheEv.exit.i610, %bb.gm, %_ZNK10ImPlotAxis11IsLockedMaxEv.exit.i602, %bb.gl, %_ZN10ImPlotAxis6SetMinEdb.exit600, %_ZNK10ImPlotAxis13IsInputLockedEv.exit582
-  %.13 = phi i1 [ true, %_ZN10ImPlotAxis20UpdateTransformCacheEv.exit.i610 ], [ %.12742, %_ZNK10ImPlotAxis13IsInputLockedEv.exit582 ], [ true, %_ZN10ImPlotAxis6SetMinEdb.exit600 ], [ true, %bb.gl ], [ true, %_ZNK10ImPlotAxis11IsLockedMaxEv.exit.i602 ], [ true, %bb.gm ], [ %.12742, %_ZNK10ImPlotAxis11IsLockedMinEv.exit.i.i579 ], [ %.12742, %.preheader716 ], [ %.12742, %bb.gf ], [ true, %_ZNK10ImPlotAxis12PixelsToPlotEf.exit588 ] ; 2 uses
+  %.13 = phi i1 [ true, %_ZN10ImPlotAxis20UpdateTransformCacheEv.exit.i610 ], [ %.12742, %_ZNK10ImPlotAxis13IsInputLockedEv.exit582 ], [ %.12742, %bb.gf ], [ true, %_ZN10ImPlotAxis6SetMinEdb.exit600 ], [ true, %bb.gl ], [ true, %_ZNK10ImPlotAxis11IsLockedMaxEv.exit.i602 ], [ true, %bb.gm ], [ %.12742, %_ZNK10ImPlotAxis11IsLockedMinEv.exit.i.i579 ], [ %.12742, %.preheader716 ], [ true, %_ZNK10ImPlotAxis12PixelsToPlotEf.exit588 ] ; 2 uses
   %indvars.iv.next758 = add nuw nsw i64 %indvars.iv757, 1 ; 2 uses
   %exitcond759.not = icmp eq i64 %indvars.iv.next758, 3
   br i1 %exitcond759.not, label %.preheader, label %.preheader716, !llvm.loop !564
@@ -2582,7 +2582,7 @@ _ZN10ImPlotAxis6SetMinEdb.exit634:                ; preds = %bb.gw
   %i.bpm = load double, ptr %i.bnw, align 8, !tbaa !302
   %i.bpn = load ptr, ptr %i.bph, align 8, !tbaa !310
   %i.bpo = tail call noundef double %i.bpl(double noundef %i.bpm, ptr noundef %i.bpn) #32, !inline_history !8
-  %.pre798.pre = load i8, ptr %i.bkq, align 4, !tbaa !299, !range !263
+  %.pre798.pre = load i8, ptr %i.bkq, align 4, !tbaa !299
   %i.bpp = trunc nuw i8 %.pre798.pre to i1
   %i.bpq = getelementptr i8, ptr %i.bkp, i64 1440
   store double %i.bpo, ptr %i.bpq, align 8, !tbaa !312
@@ -2684,7 +2684,7 @@ _ZN10ImPlotAxis20UpdateTransformCacheEv.exit.i644: ; preds = %bb.hb, %bb.ha
   br label %_ZN10ImPlotAxis6SetMaxEdb.exit646
 
 _ZN10ImPlotAxis6SetMaxEdb.exit646:                ; preds = %_ZNK10ImPlotAxis12PixelsToPlotEf.exit622, %bb.gr, %.preheader, %_ZNK10ImPlotAxis11IsLockedMinEv.exit.i.i613, %_ZN10ImPlotAxis20UpdateTransformCacheEv.exit.i644, %bb.gy, %_ZNK10ImPlotAxis11IsLockedMaxEv.exit.i636, %bb.gx, %_ZN10ImPlotAxis6SetMinEdb.exit634, %_ZNK10ImPlotAxis13IsInputLockedEv.exit616
-  %.15 = phi i1 [ true, %_ZN10ImPlotAxis20UpdateTransformCacheEv.exit.i644 ], [ %.14744, %_ZNK10ImPlotAxis13IsInputLockedEv.exit616 ], [ true, %_ZN10ImPlotAxis6SetMinEdb.exit634 ], [ true, %bb.gx ], [ true, %_ZNK10ImPlotAxis11IsLockedMaxEv.exit.i636 ], [ true, %bb.gy ], [ %.14744, %_ZNK10ImPlotAxis11IsLockedMinEv.exit.i.i613 ], [ %.14744, %.preheader ], [ %.14744, %bb.gr ], [ true, %_ZNK10ImPlotAxis12PixelsToPlotEf.exit622 ] ; 2 uses
+  %.15 = phi i1 [ true, %_ZN10ImPlotAxis20UpdateTransformCacheEv.exit.i644 ], [ %.14744, %_ZNK10ImPlotAxis13IsInputLockedEv.exit616 ], [ %.14744, %bb.gr ], [ true, %_ZN10ImPlotAxis6SetMinEdb.exit634 ], [ true, %bb.gx ], [ true, %_ZNK10ImPlotAxis11IsLockedMaxEv.exit.i636 ], [ true, %bb.gy ], [ %.14744, %_ZNK10ImPlotAxis11IsLockedMinEv.exit.i.i613 ], [ %.14744, %.preheader ], [ true, %_ZNK10ImPlotAxis12PixelsToPlotEf.exit622 ] ; 2 uses
   %indvars.iv.next761 = add nuw nsw i64 %indvars.iv760, 1 ; 2 uses
   %exitcond762.not = icmp eq i64 %indvars.iv.next761, 3
   br i1 %exitcond762.not, label %bb.gq, label %.preheader, !llvm.loop !565
@@ -3087,7 +3087,7 @@ bb.t:                                             ; preds = %bb.s
 
 bb.u:                                             ; preds = %bb.t, %bb.s
   %.not48 = icmp eq ptr %8, null
-  %.pre70 = load i8, ptr %i.b, align 1, !tbaa !262, !range !263 ; 2 uses
+  %.pre70 = load i8, ptr %i.b, align 1, !tbaa !262 ; 2 uses
   br i1 %.not48, label %bb.w, label %bb.v
 
 bb.v:                                             ; preds = %bb.u
@@ -3490,7 +3490,7 @@ bb.ah:                                            ; preds = %._crit_edge, %bb.af
 
 bb.ai:                                            ; preds = %bb.ah
   call void @_ZN5ImGui14SetMouseCursorEi(i32 noundef 2) #32
-  %.pre382 = load i8, ptr %i.e, align 1, !tbaa !262, !range !263
+  %.pre382 = load i8, ptr %i.e, align 1, !tbaa !262
   br label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ah, %bb.ai
@@ -3648,7 +3648,7 @@ bb.av:                                            ; preds = %bb.au
   %i.jx = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv
   %i.jy = load i32, ptr %i.jx, align 4, !tbaa !29
   call void @_ZN5ImGui14SetMouseCursorEi(i32 noundef %i.jy) #32
-  %.pre386 = load i8, ptr %i.e, align 1, !tbaa !262, !range !263
+  %.pre386 = load i8, ptr %i.e, align 1, !tbaa !262
   br label %bb.aw
 
 bb.aw:                                            ; preds = %bb.au, %bb.av
@@ -3801,7 +3801,7 @@ bb.bl:                                            ; preds = %bb.bk
   br label %bb.bm
 
 bb.bm:                                            ; preds = %._crit_edge387, %bb.bk, %bb.bl
-  %i.mk = phi i8 [ %.pre388, %._crit_edge387 ], [ %.pre389, %bb.bk ], [ %.pre389, %bb.bl ]
+  %i.mk = phi i8 [ %.pre388, %._crit_edge387 ], [ %.pre389, %bb.bk ], [ %.pre389, %bb.bl ] ; 2 uses
   %i.ml = load i8, ptr %i.d, align 1, !tbaa !262, !range !263, !noundef !264
   %i.mm = trunc nuw i8 %i.ml to i1
   %i.mn = trunc nuw i8 %i.mk to i1
@@ -3812,10 +3812,11 @@ bb.bm:                                            ; preds = %._crit_edge387, %bb
 .sink.split.a:                                    ; preds = %bb.bm
   %.454 = add nuw nsw i32 %i.lm, 3
   call void @_ZN5ImGui14SetMouseCursorEi(i32 noundef %.454) #32
+  %.pr355 = load i8, ptr %i.e, align 1, !tbaa !262
   br label %bb.bn
 
 bb.bn:                                            ; preds = %.sink.split.a, %bb.bm
-  %16 = load i8, ptr %i.e, align 1, !tbaa !262, !range !263, !noundef !264
+  %16 = phi i8 [ %.pr355, %.sink.split.a ], [ %i.mk, %bb.bm ]
   %i.mo = trunc nuw i8 %16 to i1
   br i1 %i.mo, label %bb.bo, label %bb.by
 

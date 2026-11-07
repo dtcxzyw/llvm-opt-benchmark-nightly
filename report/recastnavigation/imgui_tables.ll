@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.d, %bb.e
 define dso_local void @_ZN5ImGui18TableUpdateBordersEP10ImGuiTable(ptr nofree noundef captures(none) %0) local_unnamed_addr #0 {
 bb.a:
   %1 = alloca %struct.ImRect, align 4             ; 8 uses
-  %i.a = alloca i8, align 1                       ; 5 uses
+  %i.a = alloca i8, align 1                       ; 7 uses
   %i.b = alloca i8, align 1                       ; 6 uses
   %i.c = load ptr, ptr @GImGui, align 8, !tbaa !20 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 3 uses
@@ -266,14 +266,14 @@ _ZN5ImGui20TableGetInstanceDataEP10ImGuiTablei.exit: ; preds = %bb.b, %bb.c
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 532 ; 2 uses
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 456
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 424
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 4
-  %i.au = getelementptr inbounds nuw i8, ptr %1, i64 8
-  %i.av = getelementptr inbounds nuw i8, ptr %1, i64 12
-  %i.aw = getelementptr inbounds nuw i8, ptr %0, i64 528
+  %i.au = getelementptr inbounds nuw i8, ptr %1, i64 4
+  %i.av = getelementptr inbounds nuw i8, ptr %1, i64 8
+  %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 12
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 542
   %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 224
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 530
   %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 122
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 528
   %i.bb = getelementptr inbounds nuw i8, ptr %i.c, i64 5288
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 524
   br label %bb.d
@@ -355,9 +355,9 @@ _ZN5ImGui22TableGetColumnResizeIDEP10ImGuiTableii.exit: ; preds = %bb.j, %bb.k
   %i.cq = fsub float %i.cp, %i.q
   %i.cr = fadd float %i.cp, %i.q
   store float %i.cq, ptr %1, align 4, !tbaa !221
-  store float %i.x, ptr %2, align 4, !tbaa !222
-  store float %i.cr, ptr %i.au, align 4, !tbaa !221
-  store float %i.by, ptr %i.av, align 4, !tbaa !222
+  store float %i.x, ptr %i.au, align 4, !tbaa !222
+  store float %i.cr, ptr %i.av, align 4, !tbaa !221
+  store float %i.by, ptr %i.aw, align 4, !tbaa !222
   %i.cs = call noundef zeroext i1 @_ZN5ImGui7ItemAddERK6ImRectjPS1_i(ptr noundef nonnull align 4 dereferenceable(16) %1, i32 noundef %i.cn, ptr noundef null, i32 noundef 2) #4 ; 0 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #4
   store i8 0, ptr %i.a, align 1, !tbaa !288
@@ -376,23 +376,18 @@ bb.m:                                             ; preds = %bb.l
   %i.cx = getelementptr inbounds nuw i8, ptr %i.cw, i64 102
   %i.cy = load i8, ptr %i.cx, align 2, !tbaa !295, !range !174, !noundef !175
   %i.cz = trunc nuw i8 %i.cy to i1
-  br i1 %i.cz, label %bb.n, label %_ZN5ImGui29TableSetColumnWidthAutoSingleEP10ImGuiTablei.exit
+  br i1 %i.cz, label %bb.n, label %.thread.a
 
 bb.n:                                             ; preds = %bb.m
   %i.da = getelementptr inbounds nuw i8, ptr %i.cw, i64 112
   store i8 1, ptr %i.da, align 4, !tbaa !337
-  store i16 %i.bp, ptr %i.aw, align 8, !tbaa !283
-  br label %_ZN5ImGui29TableSetColumnWidthAutoSingleEP10ImGuiTablei.exit
+  store i16 %i.bp, ptr %2, align 8, !tbaa !283
+  br label %.thread.a
 
-_ZN5ImGui29TableSetColumnWidthAutoSingleEP10ImGuiTablei.exit: ; preds = %bb.m, %bb.n
-  call void @_ZN5ImGui13ClearActiveIDEv() #4
-  store i8 0, ptr %i.b, align 1, !tbaa !288
-  br label %bb.o
-
-bb.o:                                             ; preds = %_ZN5ImGui29TableSetColumnWidthAutoSingleEP10ImGuiTablei.exit, %bb.l, %_ZN5ImGui22TableGetColumnResizeIDEP10ImGuiTableii.exit
-  %i.db = load i8, ptr %i.b, align 1, !tbaa !288, !range !174, !noundef !175
+bb.o:                                             ; preds = %bb.l, %_ZN5ImGui22TableGetColumnResizeIDEP10ImGuiTableii.exit
+  %i.db = load i8, ptr %i.b, align 1, !tbaa !288
   %i.dc = trunc nuw i8 %i.db to i1
-  br i1 %i.dc, label %bb.p, label %.thread.a
+  br i1 %i.dc, label %bb.p, label %.thread
 
 bb.p:                                             ; preds = %bb.o
   %i.dd = load i16, ptr %i.ar, align 4, !tbaa !280
@@ -421,24 +416,35 @@ bb.t:                                             ; preds = %bb.p, %bb.s
   store i16 %i.bp, ptr %i.az, align 2, !tbaa !281
   %i.dm = load i16, ptr %i.d, align 8, !tbaa !209
   store i16 %i.dm, ptr %i.ba, align 2, !tbaa !278
-  br label %.thread69
+  %3 = load i8, ptr %i.a, align 1, !tbaa !288, !range !174, !noundef !175
+  %4 = trunc nuw i8 %3 to i1
+  br i1 %4, label %bb.u, label %.thread69
 
-.thread.a:                                        ; preds = %bb.o
+.thread:                                          ; preds = %bb.o
+  %5 = load i8, ptr %i.a, align 1, !tbaa !288, !range !174, !noundef !175
+  %6 = trunc nuw i8 %5 to i1
+  br i1 %6, label %bb.u, label %.thread63
+
+.thread.a:                                        ; preds = %bb.m, %bb.n
+  call void @_ZN5ImGui13ClearActiveIDEv() #4
+  store i8 0, ptr %i.b, align 1, !tbaa !288
   %i.dn = load i8, ptr %i.a, align 1, !tbaa !288, !range !174, !noundef !175
   %i.do = trunc nuw i8 %i.dn to i1
   br i1 %i.do, label %bb.u, label %.thread63
 
-bb.u:                                             ; preds = %.thread.a
+bb.u:                                             ; preds = %.thread, %.thread.a, %bb.t
+  %7 = phi i1 [ false, %.thread.a ], [ true, %bb.t ], [ false, %.thread ]
   %i.dp = load float, ptr %i.bb, align 8, !tbaa !535
   %i.dq = fcmp ogt float %i.dp, 6.000000e-02
-  br i1 %i.dq, label %.thread69, label %.thread63
+  %or.cond = or i1 %7, %i.dq
+  br i1 %or.cond, label %.thread69, label %.thread63
 
 .thread69:                                        ; preds = %bb.t, %bb.u
   store i16 %i.bp, ptr %i.bc, align 4, !tbaa !284
   call void @_ZN5ImGui14SetMouseCursorEi(i32 noundef 4) #4
   br label %.thread63
 
-.thread63:                                        ; preds = %.thread.a, %bb.u, %.thread69
+.thread63:                                        ; preds = %.thread, %.thread.a, %bb.u, %.thread69
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #4
@@ -841,7 +847,7 @@ bb.k:                                             ; preds = %bb.j
 
 bb.l:                                             ; preds = %bb.k
   call void @_ZN5ImGui14SetMouseCursorEi(i32 noundef 4) #4
-  %.pre = load i8, ptr %i.b, align 1, !tbaa !288, !range !174
+  %.pre = load i8, ptr %i.b, align 1, !tbaa !288
   %i.ci = trunc nuw i8 %.pre to i1
   br i1 %i.ci, label %bb.m, label %.thread108
 

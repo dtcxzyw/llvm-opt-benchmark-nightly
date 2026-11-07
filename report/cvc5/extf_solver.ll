@@ -205,7 +205,7 @@ bb.cz:                                            ; preds = %bb.cy
   %spec.select.i.i408 = select i1 %i.nd, i64 2, i64 1
   %i.ne = getelementptr inbounds nuw i8, ptr %i.mv, i64 24
   %i.nf = getelementptr inbounds nuw [8 x i8], ptr %i.ne, i64 %spec.select.i.i408
-  %i.ng = load ptr, ptr %i.nf, align 8, !tbaa !30, !noalias !584 ; 6 uses
+  %i.ng = load ptr, ptr %i.nf, align 8, !tbaa !30, !noalias !584 ; 8 uses
   store ptr %i.ng, ptr %69, align 8, !tbaa !32, !alias.scope !584
   %i.nh = load i64, ptr %i.ng, align 8, !noalias !584 ; 3 uses
   %i.ni = lshr i64 %i.nh, 40
@@ -241,7 +241,7 @@ _ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit:  ; preds = %bb.da, %bb.db, %bb.
   br i1 %i.nw, label %.thread1088.thread, label %bb.dd
 
 bb.dd:                                            ; preds = %_ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit
-  %.pre1152.a = load i8, ptr %i.b, align 1, !tbaa !102, !range !120
+  %.pre1152.a = load i8, ptr %i.b, align 1, !tbaa !102
   %i.nx = trunc nuw i8 %.pre1152.a to i1
   br i1 %i.nx, label %.thread1088.thread, label %.thread.a
 
@@ -323,12 +323,16 @@ bb.dk:                                            ; preds = %bb.dj
   unreachable
 
 .critedge:                                        ; preds = %bb.dj, %bb.di, %bb.dh
-  br i1 %i.mu, label %.thread1088.thread, label %.critedge272
+  br i1 %i.mu, label %.critedge..critedge.thread_crit_edge, label %.critedge272
 
-.thread1088.thread:                               ; preds = %bb.dd, %_ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit, %.critedge
-  %126 = phi i1 [ true, %_ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit ], [ %i.pb, %.critedge ], [ false, %bb.dd ]
-  %127 = load ptr, ptr %69, align 8, !tbaa !32    ; 3 uses
-  %i.pk = load i64, ptr %127, align 8             ; 3 uses
+.critedge..critedge.thread_crit_edge:             ; preds = %.critedge
+  %.pre1155 = load ptr, ptr %69, align 8, !tbaa !32
+  br label %.thread1088.thread
+
+.thread1088.thread:                               ; preds = %.critedge..critedge.thread_crit_edge, %_ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit, %bb.dd
+  %126 = phi ptr [ %.pre1155, %.critedge..critedge.thread_crit_edge ], [ %i.ng, %bb.dd ], [ %i.ng, %_ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit ] ; 3 uses
+  %127 = phi i1 [ %i.pb, %.critedge..critedge.thread_crit_edge ], [ false, %bb.dd ], [ true, %_ZNK4cvc58internal12NodeTemplateILb1EEixEi.exit ]
+  %i.pk = load i64, ptr %126, align 8             ; 3 uses
   %i.pl = and i64 %i.pk, 1152920405095219200
   %.not.i.i416 = icmp eq i64 %i.pl, 1152920405095219200
   br i1 %.not.i.i416, label %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit418, label %bb.dl, !prof !103
@@ -338,12 +342,12 @@ bb.dl:                                            ; preds = %.thread1088.thread
   %i.pn = and i64 %i.pm, 1152920405095219200      ; 2 uses
   %i.po = and i64 %i.pk, -1152920405095219201
   %i.pp = or disjoint i64 %i.pn, %i.po
-  store i64 %i.pp, ptr %127, align 8
+  store i64 %i.pp, ptr %126, align 8
   %i.pq = icmp eq i64 %i.pn, 0
   br i1 %i.pq, label %bb.dm, label %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit418, !prof !103
 
 bb.dm:                                            ; preds = %bb.dl
-  invoke void @_ZN4cvc58internal4expr9NodeValue15markForDeletionEv(ptr noundef nonnull align 8 dereferenceable(24) %127)
+  invoke void @_ZN4cvc58internal4expr9NodeValue15markForDeletionEv(ptr noundef nonnull align 8 dereferenceable(24) %126)
           to label %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit418 unwind label %bb.dn
 
 bb.dn:                                            ; preds = %bb.dm
@@ -355,7 +359,7 @@ bb.dn:                                            ; preds = %bb.dm
 
 _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit418: ; preds = %.thread1088.thread, %bb.dl, %bb.dm
   call void @llvm.lifetime.end.p0(ptr nonnull %69) #26
-  br i1 %126, label %bb.do, label %.critedge272.thread
+  br i1 %127, label %bb.do, label %.critedge272.thread
 
 .critedge272:                                     ; preds = %.critedge
   br i1 %i.pb, label %bb.do, label %.critedge272.thread

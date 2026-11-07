@@ -205,7 +205,7 @@ bb.ep:                                            ; preds = %bb.eo
   br i1 %i.re, label %bb.er, label %bb.eq
 
 bb.eq:                                            ; preds = %.noexc119.i
-  %.pre.i.i = load i8, ptr %i.eg, align 4, !range !9, !alias.scope !693
+  %.pre.i.i = load i8, ptr %i.eg, align 4, !alias.scope !693
   %i.rf = trunc nuw i8 %.pre.i.i to i1
   br i1 %i.rf, label %.thread.i.i, label %bb.eu
 
@@ -608,7 +608,7 @@ bb.a:
   %i.f = tail call noundef i32 @_RNvMs0_NtCsksn9slvsHfS_10image_webp22vp8_arithmetic_decoderNtB5_17ArithmeticDecoder26read_optional_signed_value(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.a, i8 noundef 4) #30
   %i.g = tail call noundef i32 @_RNvMs0_NtCsksn9slvsHfS_10image_webp22vp8_arithmetic_decoderNtB5_17ArithmeticDecoder26read_optional_signed_value(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.a, i8 noundef 4) #30
   %i.h = getelementptr inbounds nuw i8, ptr %1, i64 888 ; 2 uses
-  %i.i = load i8, ptr %i.h, align 8, !range !9, !noundef !5
+  %i.i = load i8, ptr %i.h, align 8, !range !9, !noundef !5 ; 2 uses
   %i.j = trunc nuw i8 %i.i to i1
   %i.k = zext i8 %i.b to i32                      ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %1, i64 280 ; 2 uses
@@ -622,11 +622,15 @@ bb.b:                                             ; preds = %bb.h
   store i8 %.7, ptr %0, align 8
   ret void
 
-bb.c:                                             ; preds = %bb.a, %bb.h
-  %.sroa.03.08 = phi i64 [ 0, %bb.a ], [ %2, %bb.h ] ; 4 uses
-  %2 = add nuw nsw i64 %.sroa.03.08, 1
-  %3 = load i8, ptr %i.h, align 8, !range !9, !noundef !5
-  %i.p = trunc nuw i8 %3 to i1
+thread-pre-split:                                 ; preds = %bb.h
+  %.pr = load i8, ptr %i.h, align 8
+  br label %bb.c
+
+bb.c:                                             ; preds = %thread-pre-split, %bb.a
+  %2 = phi i8 [ %.pr, %thread-pre-split ], [ %i.i, %bb.a ]
+  %.sroa.03.08 = phi i64 [ %3, %thread-pre-split ], [ 0, %bb.a ] ; 4 uses
+  %3 = add nuw nsw i64 %.sroa.03.08, 1
+  %i.p = trunc nuw i8 %2 to i1
   br i1 %i.p, label %bb.e, label %bb.d
 
 bb.d:                                             ; preds = %bb.e, %bb.c
@@ -687,7 +691,7 @@ bb.g:                                             ; preds = %bb.f, %bb.d
 bb.h:                                             ; preds = %bb.g, %bb.i
   %i.ay = icmp samesign ult i64 %.sroa.03.08, 3
   %i.az = select i1 %i.j, i1 %i.ay, i1 false
-  br i1 %i.az, label %bb.c, label %bb.b
+  br i1 %i.az, label %thread-pre-split, label %bb.b
 
 bb.i:                                             ; preds = %bb.g
   store i16 132, ptr %i.ai, align 8

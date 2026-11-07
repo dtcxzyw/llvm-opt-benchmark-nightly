@@ -205,7 +205,7 @@ bb.ab:                                            ; preds = %bb.aa, %bb.x
   br i1 %.not51.i74, label %_ZNK5Darts15DoubleArrayImplIvvivE18commonPrefixSearchINS1_16result_pair_typeEEEmPKcPT_mmm.exit75, label %.lr.ph.i67, !llvm.loop !8
 
 _ZNK5Darts15DoubleArrayImplIvvivE18commonPrefixSearchINS1_16result_pair_typeEEEmPKcPT_mmm.exit75: ; preds = %bb.w, %.preheader63.i56, %bb.ab, %.lr.ph.i67, %_ZNK5Darts15DoubleArrayImplIvvivE18commonPrefixSearchINS1_16result_pair_typeEEEmPKcPT_mmm.exit
-  %.038 = phi i64 [ %.148.i, %_ZNK5Darts15DoubleArrayImplIvvivE18commonPrefixSearchINS1_16result_pair_typeEEEmPKcPT_mmm.exit ], [ %.3.i73, %bb.ab ], [ %.272.i68, %.lr.ph.i67 ], [ %.04366.i58, %.preheader63.i56 ], [ %.1.i63, %bb.w ] ; 2 uses
+  %.038 = phi i64 [ %.148.i, %_ZNK5Darts15DoubleArrayImplIvvivE18commonPrefixSearchINS1_16result_pair_typeEEEmPKcPT_mmm.exit ], [ %.3.i73, %bb.ab ], [ %.272.i68, %.lr.ph.i67 ], [ %.04366.i58, %.preheader63.i56 ], [ %.1.i63, %bb.w ] ; 3 uses
   %.not98 = icmp eq i64 %.038, 0
   br i1 %.not98, label %._crit_edge.thread, label %.lr.ph
 
@@ -213,9 +213,9 @@ _ZNK5Darts15DoubleArrayImplIvvivE18commonPrefixSearchINS1_16result_pair_typeEEEm
   %i.go = trunc nuw i8 %.2 to i1
   br i1 %i.go, label %bb.an, label %._crit_edge.thread
 
-.lr.ph:                                           ; preds = %_ZNK5Darts15DoubleArrayImplIvvivE18commonPrefixSearchINS1_16result_pair_typeEEEmPKcPT_mmm.exit75, %bb.al
-  %.093 = phi i64 [ %i.io, %bb.al ], [ 0, %_ZNK5Darts15DoubleArrayImplIvvivE18commonPrefixSearchINS1_16result_pair_typeEEEmPKcPT_mmm.exit75 ] ; 2 uses
-  %.03792 = phi i8 [ %.2, %bb.al ], [ 0, %_ZNK5Darts15DoubleArrayImplIvvivE18commonPrefixSearchINS1_16result_pair_typeEEEmPKcPT_mmm.exit75 ] ; 2 uses
+.lr.ph:                                           ; preds = %_ZNK5Darts15DoubleArrayImplIvvivE18commonPrefixSearchINS1_16result_pair_typeEEEmPKcPT_mmm.exit75, %.lr.ph.backedge
+  %.093 = phi i64 [ %.093.be, %.lr.ph.backedge ], [ 0, %_ZNK5Darts15DoubleArrayImplIvvivE18commonPrefixSearchINS1_16result_pair_typeEEEmPKcPT_mmm.exit75 ] ; 3 uses
+  %.03792 = phi i8 [ %.03792.be, %.lr.ph.backedge ], [ 0, %_ZNK5Darts15DoubleArrayImplIvvivE18commonPrefixSearchINS1_16result_pair_typeEEEmPKcPT_mmm.exit75 ] ; 2 uses
   %i.gp = load ptr, ptr %2, align 8, !tbaa !169
   %i.gq = getelementptr inbounds nuw [16 x i8], ptr %i.gp, i64 %.093 ; 2 uses
   %i.gr = getelementptr inbounds nuw i8, ptr %i.gq, i64 8
@@ -283,7 +283,7 @@ bb.ai:                                            ; preds = %bb.ah, %bb.ag
   %i.id = getelementptr inbounds nuw i8, ptr %i.hl, i64 32
   store float %i.ic, ptr %i.id, align 8, !tbaa !86
   %i.ie = trunc nuw i8 %.03792 to i1
-  br i1 %i.ie, label %bb.al, label %bb.aj
+  br i1 %i.ie, label %.thread, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai
   %i.if = getelementptr inbounds nuw i8, ptr %i.hl, i64 20
@@ -308,11 +308,21 @@ bb.ak:                                            ; preds = %.loopexit.split-lp.
   call void @_ZdlPvm(ptr noundef nonnull %i.ii, i64 noundef %i.in) #30
   br label %_ZNSt6vectorIN5Darts15DoubleArrayImplIvvivE16result_pair_typeESaIS3_EED2Ev.exit77
 
-bb.al:                                            ; preds = %bb.aj, %bb.ai, %bb.ad
-  %.2 = phi i8 [ %.03792, %bb.ad ], [ 1, %bb.ai ], [ %spec.select, %bb.aj ] ; 2 uses
+bb.al:                                            ; preds = %bb.aj, %bb.ad
+  %.2 = phi i8 [ %.03792, %bb.ad ], [ %spec.select, %bb.aj ] ; 2 uses
   %i.io = add nuw i64 %.093, 1                    ; 2 uses
   %exitcond.not = icmp eq i64 %i.io, %.038
-  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph, !llvm.loop !407
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.backedge
+
+.lr.ph.backedge:                                  ; preds = %bb.al, %.thread
+  %.093.be = phi i64 [ %3, %.thread ], [ %i.io, %bb.al ]
+  %.03792.be = phi i8 [ 1, %.thread ], [ %.2, %bb.al ]
+  br label %.lr.ph, !llvm.loop !407
+
+.thread:                                          ; preds = %bb.ai
+  %3 = add nuw i64 %.093, 1                       ; 2 uses
+  %exitcond.not129 = icmp eq i64 %3, %.038
+  br i1 %exitcond.not129, label %bb.an, label %.lr.ph.backedge
 
 ._crit_edge.thread:                               ; preds = %.preheader.i65, %.preheader.i, %_ZNK5Darts15DoubleArrayImplIvvivE18commonPrefixSearchINS1_16result_pair_typeEEEmPKcPT_mmm.exit75, %._crit_edge
   %i.ip = invoke noundef ptr @_ZN13sentencepiece7unigram7Lattice6InsertEii(ptr noundef nonnull align 8 dereferenceable(152) %1, i32 noundef %i.bd, i32 noundef 1)
@@ -326,7 +336,7 @@ bb.am:                                            ; preds = %._crit_edge.thread
   store float %i.c, ptr %i.is, align 8, !tbaa !86
   br label %bb.an
 
-bb.an:                                            ; preds = %bb.am, %._crit_edge
+bb.an:                                            ; preds = %.thread, %bb.am, %._crit_edge
   %i.it = add nuw nsw i64 %.03994, 1              ; 2 uses
   %exitcond104.not = icmp eq i64 %i.it, %i.n
   br i1 %exitcond104.not, label %._crit_edge97.loopexit, label %bb.d, !llvm.loop !408

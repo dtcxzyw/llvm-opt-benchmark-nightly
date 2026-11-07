@@ -205,7 +205,7 @@ bb.ae:                                            ; preds = %.outer.split
 
 .outer:                                           ; preds = %.outer.backedge, %.preheader
   %.0175.ph = phi ptr [ %i.at, %.preheader ], [ %.0175.ph.be, %.outer.backedge ] ; 9 uses
-  %.0169.ph = phi ptr [ %i.at, %.preheader ], [ %.0169.ph.be, %.outer.backedge ] ; 11 uses
+  %.0169.ph = phi ptr [ %i.at, %.preheader ], [ %.0169.ph.be, %.outer.backedge ] ; 12 uses
   br i1 %3, label %.outer.split.us.preheader, label %.outer.split.preheader
 
 .outer.split.preheader:                           ; preds = %.outer
@@ -358,14 +358,14 @@ bb.an:                                            ; preds = %.critedge203, %.cri
   %i.hk = getelementptr inbounds nuw i8, ptr %.0169.ph, i64 24
   br label %bb.ao
 
-bb.ao:                                            ; preds = %bb.au, %bb.an
-  %.2174 = phi ptr [ %.0169.ph, %bb.an ], [ %i.hp, %bb.au ] ; 13 uses
-  %.0166 = phi i8 [ 1, %bb.an ], [ %.1167, %bb.au ]
+bb.ao:                                            ; preds = %.backedge.backedge, %bb.an
+  %.2174 = phi ptr [ %.0169.ph, %bb.an ], [ %i.hp, %.backedge.backedge ] ; 13 uses
+  %.0166 = phi i1 [ true, %bb.an ], [ %.0166.be, %.backedge.backedge ]
   %i.hl = getelementptr inbounds nuw i8, ptr %.2174, i64 16 ; 2 uses
   %i.hm = getelementptr inbounds nuw i8, ptr %.2174, i64 24
   %i.hn = load i64, ptr %i.hm, align 8
   %i.ho = getelementptr inbounds nuw i8, ptr %.2174, i64 80
-  %i.hp = load ptr, ptr %i.ho, align 8            ; 15 uses
+  %i.hp = load ptr, ptr %i.ho, align 8            ; 16 uses
   %i.hq = getelementptr inbounds nuw i8, ptr %i.hp, i64 24 ; 2 uses
   %i.hr = load i64, ptr %i.hq, align 8
   %.not.i = icmp slt i64 %i.hn, %i.hr
@@ -410,24 +410,25 @@ _ZN10ClipperLib9InitEdge2ERNS_5TEdgeENS_8PolyTypeE.exit: ; preds = %bb.ar, %bb.a
   store double %.sink.i.i, ptr %i.ij, align 8
   %i.ik = getelementptr inbounds nuw i8, ptr %.2174, i64 56
   store i32 %2, ptr %i.ik, align 8
-  %4 = trunc nuw i8 %.0166 to i1
-  br i1 %4, label %bb.at, label %bb.au
+  br i1 %.0166, label %bb.at, label %bb.au
 
 bb.at:                                            ; preds = %_ZN10ClipperLib9InitEdge2ERNS_5TEdgeENS_8PolyTypeE.exit
   %i.il = load i64, ptr %i.hq, align 8
   %i.im = load i64, ptr %i.hk, align 8
-  %.not194 = icmp eq i64 %i.il, %i.im
-  %spec.select206 = zext i1 %.not194 to i8
-  br label %bb.au
+  %.not194 = icmp eq i64 %i.il, %i.im             ; 2 uses
+  %.not195 = icmp eq ptr %i.hp, %.0169.ph
+  br i1 %.not195, label %bb.av, label %.backedge.backedge
 
-bb.au:                                            ; preds = %bb.at, %_ZN10ClipperLib9InitEdge2ERNS_5TEdgeENS_8PolyTypeE.exit
-  %.1167 = phi i8 [ 0, %_ZN10ClipperLib9InitEdge2ERNS_5TEdgeENS_8PolyTypeE.exit ], [ %spec.select206, %bb.at ] ; 2 uses
+.backedge.backedge:                               ; preds = %bb.at, %bb.au
+  %.0166.be = phi i1 [ %.not194, %bb.at ], [ false, %bb.au ]
+  br label %bb.ao, !llvm.loop !146
+
+bb.au:                                            ; preds = %_ZN10ClipperLib9InitEdge2ERNS_5TEdgeENS_8PolyTypeE.exit
   %.not195.a = icmp eq ptr %i.hp, %.0169.ph
-  br i1 %.not195.a, label %bb.av, label %bb.ao, !llvm.loop !146
+  br i1 %.not195.a, label %bb.bo, label %.backedge.backedge
 
-bb.av:                                            ; preds = %bb.au
-  %5 = trunc nuw i8 %.1167 to i1
-  br i1 %5, label %bb.aw, label %bb.bo
+bb.av:                                            ; preds = %bb.at
+  br i1 %.not194, label %bb.aw, label %bb.bo
 
 bb.aw:                                            ; preds = %bb.av
   br i1 %3, label %bb.ax, label %bb.ay
@@ -621,7 +622,7 @@ _ZNSt6vectorIPN10ClipperLib5TEdgeESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_
   store ptr %i.lg, ptr %i.kk, align 8
   br label %_ZNSt6vectorIPN10ClipperLib5TEdgeESaIS2_EE9push_backERKS2_.exit
 
-bb.bo:                                            ; preds = %bb.av
+bb.bo:                                            ; preds = %bb.au, %bb.av
   %i.lh = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.li = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   %i.lj = load ptr, ptr %i.li, align 8            ; 3 uses

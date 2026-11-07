@@ -202,9 +202,9 @@ bb.i:                                             ; preds = %bb.h
   br label %._crit_edge
 
 ._crit_edge.loopexit:                             ; preds = %_ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit, %bb.aq
-  %.0152.ph658 = phi ptr [ %.2154, %_ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit ], [ %.1124363, %bb.aq ]
-  %.0146.ph659 = phi ptr [ %.2148, %_ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit ], [ %.1121365, %bb.aq ]
-  %.0140.ph660 = phi i64 [ %.2142, %_ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit ], [ 32, %bb.aq ]
+  %.0152.ph658 = phi ptr [ %.2154268, %_ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit ], [ %.1124363, %bb.aq ]
+  %.0146.ph659 = phi ptr [ %.2148269, %_ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit ], [ %.1121365, %bb.aq ]
+  %.0140.ph660 = phi i64 [ %.2142270, %_ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit ], [ 32, %bb.aq ]
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.outer
@@ -453,10 +453,10 @@ bb.an:                                            ; preds = %bb.ai
 
 .lr.ph:                                           ; preds = %bb.av, %.lr.ph.preheader
   %.1121365 = phi ptr [ %.2122, %bb.av ], [ %.0144, %.lr.ph.preheader ] ; 2 uses
-  %.1124363 = phi ptr [ %i.ed, %bb.av ], [ %.0123, %.lr.ph.preheader ] ; 8 uses
-  %.1141362 = phi i64 [ %.2142, %bb.av ], [ %.0140, %.lr.ph.preheader ] ; 3 uses
-  %.1147361 = phi ptr [ %.2148, %bb.av ], [ %.0146, %.lr.ph.preheader ] ; 3 uses
-  %.1153360 = phi ptr [ %.2154, %bb.av ], [ %.0152, %.lr.ph.preheader ] ; 4 uses
+  %.1124363 = phi ptr [ %i.ed, %bb.av ], [ %.0123, %.lr.ph.preheader ] ; 10 uses
+  %.1141362 = phi i64 [ %.2142270, %bb.av ], [ %.0140, %.lr.ph.preheader ] ; 3 uses
+  %.1147361 = phi ptr [ %.2148269, %bb.av ], [ %.0146, %.lr.ph.preheader ] ; 4 uses
+  %.1153360 = phi ptr [ %.2154268, %bb.av ], [ %.0152, %.lr.ph.preheader ] ; 5 uses
   %i.dd = getelementptr inbounds nuw i8, ptr %.1124363, i64 17 ; 4 uses
   store i8 0, ptr %i.dd, align 1, !tbaa !84
   %i.de = getelementptr inbounds nuw i8, ptr %.1124363, i64 32 ; 3 uses
@@ -484,7 +484,7 @@ bb.aq:                                            ; preds = %bb.ap
   %i.dn = load ptr, ptr %i.de, align 8, !tbaa !52
   %i.do = load ptr, ptr %i.dn, align 8, !tbaa !59
   %i.dp = icmp eq ptr %i.do, @_ZN4absl12lts_20260526L11kExclusiveSE
-  br i1 %i.dp, label %._crit_edge.loopexit, label %bb.at
+  br i1 %i.dp, label %._crit_edge.loopexit, label %_ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit
 
 bb.ar:                                            ; preds = %bb.ap
   %i.dq = load ptr, ptr %i.de, align 8, !tbaa !52
@@ -494,13 +494,11 @@ bb.ar:                                            ; preds = %bb.ap
 
 bb.as:                                            ; preds = %bb.ar
   store i8 1, ptr %i.dd, align 1, !tbaa !84
-  br label %bb.at
+  br label %_ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit
 
-bb.at:                                            ; preds = %bb.ar, %bb.aq, %bb.as, %_ZN4absl12lts_20260526L20EvalConditionIgnoredEPNS0_5MutexEPKNS0_9ConditionE.exit
-  %.2154 = phi ptr [ %.1124363, %bb.aq ], [ %.1153360, %bb.as ], [ %.1153360, %_ZN4absl12lts_20260526L20EvalConditionIgnoredEPNS0_5MutexEPKNS0_9ConditionE.exit ], [ %.1153360, %bb.ar ] ; 2 uses
-  %.2148 = phi ptr [ %.1121365, %bb.aq ], [ %.1147361, %bb.as ], [ %.1147361, %_ZN4absl12lts_20260526L20EvalConditionIgnoredEPNS0_5MutexEPKNS0_9ConditionE.exit ], [ %.1147361, %bb.ar ] ; 2 uses
-  %.2142 = phi i64 [ %.1141362, %bb.aq ], [ %.1141362, %bb.as ], [ %.1141362, %_ZN4absl12lts_20260526L20EvalConditionIgnoredEPNS0_5MutexEPKNS0_9ConditionE.exit ], [ 32, %bb.ar ] ; 2 uses
-  %i.dt = load i8, ptr %i.dd, align 1, !tbaa !84, !range !47, !noundef !48
+bb.at:                                            ; preds = %bb.ar, %_ZN4absl12lts_20260526L20EvalConditionIgnoredEPNS0_5MutexEPKNS0_9ConditionE.exit
+  %.2142.ph = phi i64 [ 32, %bb.ar ], [ %.1141362, %_ZN4absl12lts_20260526L20EvalConditionIgnoredEPNS0_5MutexEPKNS0_9ConditionE.exit ] ; 3 uses
+  %i.dt = load i8, ptr %i.dd, align 1, !tbaa !84
   %i.du = trunc nuw i8 %i.dt to i1
   br i1 %i.du, label %_ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit, label %bb.au
 
@@ -532,8 +530,11 @@ bb.au:                                            ; preds = %bb.at
   store ptr %.0.lcssa.i, ptr %i.dv, align 8, !tbaa !65
   br label %_ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit
 
-_ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit: ; preds = %._crit_edge.i, %bb.au, %bb.at
-  %.2122 = phi ptr [ %.1124363, %bb.at ], [ %.0.lcssa.i, %._crit_edge.i ], [ %.1124363, %bb.au ] ; 3 uses
+_ZN4absl12lts_20260526L4SkipEPNS0_13base_internal14PerThreadSynchE.exit: ; preds = %bb.as, %bb.aq, %._crit_edge.i, %bb.au, %bb.at
+  %.2142270 = phi i64 [ %.2142.ph, %._crit_edge.i ], [ %.2142.ph, %bb.at ], [ %.2142.ph, %bb.au ], [ %.1141362, %bb.aq ], [ %.1141362, %bb.as ] ; 2 uses
+  %.2148269 = phi ptr [ %.1147361, %._crit_edge.i ], [ %.1147361, %bb.at ], [ %.1147361, %bb.au ], [ %.1121365, %bb.aq ], [ %.1147361, %bb.as ] ; 2 uses
+  %.2154268 = phi ptr [ %.1153360, %._crit_edge.i ], [ %.1153360, %bb.at ], [ %.1153360, %bb.au ], [ %.1124363, %bb.aq ], [ %.1153360, %bb.as ] ; 2 uses
+  %.2122 = phi ptr [ %.0.lcssa.i, %._crit_edge.i ], [ %.1124363, %bb.at ], [ %.1124363, %bb.au ], [ %.1124363, %bb.aq ], [ %.1124363, %bb.as ] ; 3 uses
   %.not190 = icmp eq ptr %.2122, %i.bh
   br i1 %.not190, label %._crit_edge.loopexit, label %bb.av
 
@@ -936,7 +937,7 @@ bb.a:
   %1 = alloca %"struct.absl::lts_20260526::base_internal::SchedulingGuard::ScopedDisable", align 1 ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #23
   %i.a = tail call noundef ptr @_ZN4absl12lts_2026052613base_internal30CurrentThreadIdentityIfPresentEv() ; 2 uses
-  %.not.i.i = icmp ne ptr %i.a, null              ; 2 uses
+  %.not.i.i = icmp ne ptr %i.a, null              ; 3 uses
   br i1 %.not.i.i, label %bb.b, label %_ZN4absl12lts_2026052613base_internal15SchedulingGuard13ScopedDisableC2Ev.exit
 
 bb.b:                                             ; preds = %bb.a
@@ -951,7 +952,7 @@ _ZN4absl12lts_2026052613base_internal15SchedulingGuard13ScopedDisableC2Ev.exit: 
   store i8 %i.e, ptr %1, align 1, !tbaa !69
   %i.f = load atomic i64, ptr %0 monotonic, align 8 ; 2 uses
   %.not44 = icmp eq i64 %i.f, 0
-  br i1 %.not44, label %.loopexit.a, label %.lr.ph
+  br i1 %.not44, label %.loopexit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZN4absl12lts_2026052613base_internal15SchedulingGuard13ScopedDisableC2Ev.exit, %bb.j
   %.01746 = phi i32 [ %i.y, %bb.j ], [ 0, %_ZN4absl12lts_2026052613base_internal15SchedulingGuard13ScopedDisableC2Ev.exit ]
@@ -1031,12 +1032,16 @@ bb.j:                                             ; preds = %_ZNSt13__atomic_bas
   %.not = icmp eq i64 %i.z, 0
   br i1 %.not, label %.loopexit.a, label %.lr.ph, !llvm.loop !156
 
-.loopexit.a:                                      ; preds = %bb.j, %_ZN4absl12lts_2026052613base_internal15SchedulingGuard13ScopedDisableC2Ev.exit, %_ZNK4absl12lts_2026052613base_internal10AtomicHookIPFvPKcPKvEEclIJRA14_S3_PNS0_7CondVarEEEEvDpOT_.exit, %bb.i
-  %i.aa = load i8, ptr %1, align 1, !tbaa !69, !range !47, !noundef !48
+.loopexit.a:                                      ; preds = %bb.j, %bb.i, %_ZNK4absl12lts_2026052613base_internal10AtomicHookIPFvPKcPKvEEclIJRA14_S3_PNS0_7CondVarEEEEvDpOT_.exit
+  %i.aa = load i8, ptr %1, align 1, !tbaa !69
   %i.ab = trunc nuw i8 %i.aa to i1
-  br i1 %i.ab, label %bb.k, label %_ZN4absl12lts_2026052613base_internal15SchedulingGuard13ScopedDisableD2Ev.exit
+  br label %.loopexit
 
-bb.k:                                             ; preds = %.loopexit.a
+.loopexit:                                        ; preds = %.loopexit.a, %_ZN4absl12lts_2026052613base_internal15SchedulingGuard13ScopedDisableC2Ev.exit
+  %2 = phi i1 [ %i.ab, %.loopexit.a ], [ %.not.i.i, %_ZN4absl12lts_2026052613base_internal15SchedulingGuard13ScopedDisableC2Ev.exit ]
+  br i1 %2, label %bb.k, label %_ZN4absl12lts_2026052613base_internal15SchedulingGuard13ScopedDisableD2Ev.exit
+
+bb.k:                                             ; preds = %.loopexit
   %i.ac = invoke noundef ptr @_ZN4absl12lts_2026052613base_internal30CurrentThreadIdentityIfPresentEv()
           to label %.noexc.i unwind label %bb.l
 
@@ -1054,7 +1059,7 @@ bb.l:                                             ; preds = %bb.k
   tail call void @__clang_call_terminate(ptr %i.ah) #24
   unreachable
 
-_ZN4absl12lts_2026052613base_internal15SchedulingGuard13ScopedDisableD2Ev.exit: ; preds = %.loopexit.a, %.noexc.i
+_ZN4absl12lts_2026052613base_internal15SchedulingGuard13ScopedDisableD2Ev.exit: ; preds = %.loopexit, %.noexc.i
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #23
   ret void
 }

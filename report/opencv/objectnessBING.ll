@@ -205,8 +205,8 @@ bb.a:
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 3 uses
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   %i.o = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %5, i64 48 ; 3 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
+  %i.p = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 2 uses
+  %i.q = getelementptr inbounds nuw i8, ptr %5, i64 48 ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %6, i64 23
   %i.s = getelementptr inbounds nuw i8, ptr %5, i64 23
   br label %bb.c
@@ -531,11 +531,11 @@ _ZN2cv8saliency7CmTimer4StopEv.exit.thread:       ; preds = %_ZN2cv8saliency14Ob
   %i.eg = call i64 @clock() #25
   %i.eh = load i64, ptr %i.g, align 8, !tbaa !349
   %i.ei = sub i64 %i.eg, %i.eh
-  %i.ej = load i64, ptr %i.p, align 8, !tbaa !352
-  %i.ek = add nsw i64 %i.ei, %i.ej
-  store i64 %i.ek, ptr %i.p, align 8, !tbaa !352
+  %i.ej = load i64, ptr %i.q, align 8, !tbaa !352
+  %i.ek = add nsw i64 %i.ei, %i.ej                ; 2 uses
+  store i64 %i.ek, ptr %i.q, align 8, !tbaa !352
   store i8 0, ptr %i.f, align 8, !tbaa !109
-  %i.el = load i32, ptr %i.q, align 4, !tbaa !48
+  %i.el = load i32, ptr %i.p, align 4, !tbaa !48
   %i.em = sext i32 %i.el to i64
   %i.en = getelementptr inbounds [8 x i8], ptr @_ZN2cv8saliency14ObjectnessBING8_clrNameE, i64 %i.em
   %i.eo = load ptr, ptr %i.en, align 8, !tbaa !56
@@ -544,29 +544,33 @@ _ZN2cv8saliency7CmTimer4StopEv.exit.thread:       ; preds = %_ZN2cv8saliency14Ob
 _ZN2cv8saliency7CmTimer4StopEv.exit:              ; preds = %_ZN2cv8saliency14ObjectnessBING12ValStructVecIfNS_3VecIiLi4EEEE6appendERKS5_i.exit
   %i.ep = load ptr, ptr %5, align 8, !tbaa !53
   %i.eq = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.24, ptr noundef %i.ep) ; 0 uses
-  %.pre196.a = load i8, ptr %i.f, align 8, !tbaa !109, !range !110
-  %14 = trunc nuw i8 %.pre196.a to i1
-  %i.er = load i32, ptr %i.q, align 4, !tbaa !48
+  %.pre196.a = load i8, ptr %i.f, align 8, !tbaa !109
+  %i.er = load i32, ptr %i.p, align 4, !tbaa !48
   %i.es = sext i32 %i.er to i64
   %i.et = getelementptr inbounds [8 x i8], ptr @_ZN2cv8saliency14ObjectnessBING8_clrNameE, i64 %i.es
   %i.eu = load ptr, ptr %i.et, align 8, !tbaa !56 ; 2 uses
-  br i1 %14, label %bb.n, label %bb.o
+  %14 = trunc nuw i8 %.pre196.a to i1
+  br i1 %14, label %bb.n, label %_ZN2cv8saliency7CmTimer4StopEv.exit._crit_edge
+
+_ZN2cv8saliency7CmTimer4StopEv.exit._crit_edge:   ; preds = %_ZN2cv8saliency7CmTimer4StopEv.exit
+  %.pre196 = load i64, ptr %i.q, align 8, !tbaa !352
+  br label %bb.o
 
 bb.n:                                             ; preds = %_ZN2cv8saliency7CmTimer4StopEv.exit
   %i.ev = load ptr, ptr %5, align 8, !tbaa !53
   %i.ew = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.24, ptr noundef %i.ev) ; 0 uses
   br label %_ZN2cv8saliency7CmTimer13TimeInSecondsEv.exit
 
-bb.o:                                             ; preds = %_ZN2cv8saliency7CmTimer4StopEv.exit.thread, %_ZN2cv8saliency7CmTimer4StopEv.exit
-  %15 = phi ptr [ %i.eo, %_ZN2cv8saliency7CmTimer4StopEv.exit.thread ], [ %i.eu, %_ZN2cv8saliency7CmTimer4StopEv.exit ]
-  %16 = load i64, ptr %i.p, align 8, !tbaa !352
-  %i.ex = sitofp i64 %16 to float
+bb.o:                                             ; preds = %_ZN2cv8saliency7CmTimer4StopEv.exit._crit_edge, %_ZN2cv8saliency7CmTimer4StopEv.exit.thread
+  %15 = phi i64 [ %i.ek, %_ZN2cv8saliency7CmTimer4StopEv.exit.thread ], [ %.pre196, %_ZN2cv8saliency7CmTimer4StopEv.exit._crit_edge ]
+  %16 = phi ptr [ %i.eo, %_ZN2cv8saliency7CmTimer4StopEv.exit.thread ], [ %i.eu, %_ZN2cv8saliency7CmTimer4StopEv.exit._crit_edge ]
+  %i.ex = sitofp i64 %15 to float
   %i.ey = fdiv float %i.ex, 1.000000e+06
   %i.ez = fpext float %i.ey to double
   br label %_ZN2cv8saliency7CmTimer13TimeInSecondsEv.exit
 
 _ZN2cv8saliency7CmTimer13TimeInSecondsEv.exit:    ; preds = %bb.o, %bb.n
-  %i.fa = phi ptr [ %i.eu, %bb.n ], [ %15, %bb.o ]
+  %i.fa = phi ptr [ %i.eu, %bb.n ], [ %16, %bb.o ]
   %.0.i = phi double [ 0.000000e+00, %bb.n ], [ %i.ez, %bb.o ]
   %i.fb = call i32 (ptr, ...) @printf(ptr noundef nonnull dereferenceable(1) @.str.15, ptr noundef %i.fa, double noundef %.0.i) ; 0 uses
   %i.fc = load i8, ptr %i.f, align 8, !tbaa !109, !range !110, !noundef !111

@@ -205,7 +205,7 @@ bb.ax:                                            ; preds = %_ZNSt3setIN5vcpkg11
 bb.ay:                                            ; preds = %bb.ax
   %i.hj = load i8, ptr %19, align 8, !tbaa !176, !range !48, !noundef !49
   %i.hk = trunc nuw i8 %i.hj to i1
-  br i1 %i.hk, label %bb.az, label %bb.br
+  br i1 %i.hk, label %bb.az, label %_ZN5vcpkg7details19OptionalStorageDtorINS_20InstalledPackageViewELb0EED2Ev.exit
 
 bb.az:                                            ; preds = %bb.ay
   call void @llvm.lifetime.start.p0(ptr nonnull %21) #21
@@ -366,8 +366,8 @@ bb.bq:                                            ; preds = %bb.bp, %bb.bo
   call void @llvm.lifetime.end.p0(ptr nonnull %23) #21
   br label %bb.bv
 
-bb.br:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit152, %_ZNSt6vectorIN5vcpkg11PackageSpecESaIS1_EED2Ev.exit, %bb.ay
-  %i.iz = load i8, ptr %19, align 8, !tbaa !176, !range !48, !noundef !49
+bb.br:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit152, %_ZNSt6vectorIN5vcpkg11PackageSpecESaIS1_EED2Ev.exit
+  %i.iz = load i8, ptr %19, align 8, !tbaa !176
   %i.ja = trunc nuw i8 %i.iz to i1
   br i1 %i.ja, label %bb.bs, label %_ZN5vcpkg7details19OptionalStorageDtorINS_20InstalledPackageViewELb0EED2Ev.exit
 
@@ -384,7 +384,7 @@ bb.bt:                                            ; preds = %bb.bs
   call void @_ZdlPvm(ptr noundef nonnull %i.jb, i64 noundef %i.jf) #25
   br label %_ZN5vcpkg7details19OptionalStorageDtorINS_20InstalledPackageViewELb0EED2Ev.exit
 
-_ZN5vcpkg7details19OptionalStorageDtorINS_20InstalledPackageViewELb0EED2Ev.exit: ; preds = %bb.br, %bb.bs, %bb.bt
+_ZN5vcpkg7details19OptionalStorageDtorINS_20InstalledPackageViewELb0EED2Ev.exit: ; preds = %bb.ay, %bb.br, %bb.bs, %bb.bt
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #21
   br label %bb.bu
 
@@ -787,7 +787,7 @@ bb.dj:                                            ; preds = %bb.di
 bb.dk:                                            ; preds = %bb.dj
   call void @llvm.lifetime.start.p0(ptr nonnull %38) #21
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %38, i8 0, i64 24, i1 false)
-  %i.pc = load i8, ptr %i.np, align 8, !tbaa !192, !range !48, !noundef !49
+  %i.pc = load i8, ptr %i.np, align 8, !tbaa !192, !range !48 ; 2 uses
   %i.pd = trunc nuw i8 %i.pc to i1
   %i.pe = load ptr, ptr %37, align 8              ; 2 uses
   %.not87318 = icmp eq ptr %i.pe, null
@@ -852,6 +852,7 @@ bb.do:                                            ; preds = %_ZSt8_DestroyIPSt4p
 
 _ZN5vcpkg4Json6ObjectD2Ev.exit222:                ; preds = %_ZSt8_DestroyIPSt4pairINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN5vcpkg4Json5ValueEESA_EvT_SC_RSaIT0_E.exit.i.i219, %bb.do
   call void @llvm.lifetime.end.p0(ptr nonnull %40) #21
+  %.pre.pr = load i8, ptr %i.np, align 8, !tbaa !192
   br label %_ZN5vcpkg4Json6ObjectD2Ev.exit236
 
 bb.dp:                                            ; preds = %bb.dj
@@ -891,7 +892,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   br label %_ZN5vcpkg9ExpectedTIRKNS_28SourceControlFileAndLocationENS_15LocalizedStringEED2Ev.exit
 
 _ZN5vcpkg4Json6ObjectD2Ev.exit236:                ; preds = %bb.dk, %_ZN5vcpkg4Json6ObjectD2Ev.exit222
-  %.pre = load i8, ptr %i.np, align 8, !tbaa !192, !range !48
+  %.pre = phi i8 [ %i.pc, %bb.dk ], [ %.pre.pr, %_ZN5vcpkg4Json6ObjectD2Ev.exit222 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %38) #21
   %i.qg = trunc nuw i8 %.pre to i1
   br i1 %i.qg, label %bb.du, label %_ZN5vcpkg9ExpectedTIRKNS_28SourceControlFileAndLocationENS_15LocalizedStringEED2Ev.exit239

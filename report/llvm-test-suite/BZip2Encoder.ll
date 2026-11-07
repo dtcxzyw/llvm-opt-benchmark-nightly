@@ -205,14 +205,18 @@ bb.g:                                             ; preds = %bb.d, %bb.c
   tail call void @__cxa_end_catch()
   br label %.loopexit
 
-.lr.ph.split:                                     ; preds = %.lr.ph, %bb.k
-  %i.bb = phi i32 [ %i.bo, %bb.k ], [ %i.af, %.lr.ph ]
-  %indvars.iv70 = phi i64 [ %indvars.iv.next71, %bb.k ], [ 0, %.lr.ph ] ; 3 uses
+.lr.ph.splitthread-pre-split:                     ; preds = %bb.k
+  %.pr = load i8, ptr %i.q, align 4, !tbaa !94
+  br label %.lr.ph.split
+
+.lr.ph.split:                                     ; preds = %.lr.ph, %.lr.ph.splitthread-pre-split
+  %1 = phi i8 [ %.pr, %.lr.ph.splitthread-pre-split ], [ 1, %.lr.ph ]
+  %i.bb = phi i32 [ %i.bo, %.lr.ph.splitthread-pre-split ], [ %i.af, %.lr.ph ]
+  %indvars.iv70 = phi i64 [ %indvars.iv.next71, %.lr.ph.splitthread-pre-split ], [ 0, %.lr.ph ] ; 3 uses
   %i.bc = load ptr, ptr %i.g, align 8, !tbaa !95
   %i.bd = getelementptr inbounds nuw [36688 x i8], ptr %i.bc, i64 %indvars.iv70 ; 6 uses
   %i.be = getelementptr inbounds nuw i8, ptr %i.bd, i64 36088
   store ptr %0, ptr %i.be, align 8, !tbaa !49
-  %1 = load i8, ptr %i.q, align 4, !tbaa !94, !range !71, !noundef !72
   %i.bf = trunc nuw i8 %1 to i1
   br i1 %i.bf, label %bb.h, label %bb.k
 
@@ -249,7 +253,7 @@ bb.k:                                             ; preds = %_ZN9NCompress6NBZip
   %indvars.iv.next71 = add nuw nsw i64 %indvars.iv70, 1 ; 2 uses
   %i.bp = zext i32 %i.bo to i64
   %i.bq = icmp samesign ult i64 %indvars.iv.next71, %i.bp
-  br i1 %i.bq, label %.lr.ph.split, label %.loopexit, !llvm.loop !149
+  br i1 %i.bq, label %.lr.ph.splitthread-pre-split, label %.loopexit, !llvm.loop !149
 
 _ZN9NCompress6NBZip211CThreadInfo6CreateEv.exit.thread: ; preds = %bb.i, %bb.j, %bb.h, %_ZN9NCompress6NBZip211CThreadInfo6CreateEv.exit
   %.4.i55 = phi i32 [ %i.bn, %_ZN9NCompress6NBZip211CThreadInfo6CreateEv.exit ], [ %i.bj, %bb.i ], [ %i.bl, %bb.j ], [ %i.bh, %bb.h ]

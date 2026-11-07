@@ -205,10 +205,10 @@ _ZN4YAML13BadConversionC2ERKNS_4MarkE.exit:       ; preds = %bb.b, %_ZNKSt7__cxx
 define linkonce_odr hidden noundef zeroext i1 @_ZN4YAML7convertISt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS7_EEE6decodeERKNS_4NodeERS9_(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(24) %1) local_unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %2 = alloca %"struct.YAML::as_if", align 8      ; 4 uses
-  %3 = alloca %"class.YAML::detail::node_iterator_base", align 8 ; 6 uses
-  %4 = alloca %"class.YAML::detail::node_iterator_base", align 8 ; 7 uses
+  %3 = alloca %"class.YAML::detail::node_iterator_base", align 8 ; 7 uses
+  %4 = alloca %"class.YAML::detail::node_iterator_base", align 8 ; 8 uses
   %5 = alloca %"class.YAML::detail::iterator_base", align 8 ; 20 uses
-  %6 = alloca %"class.YAML::detail::iterator_base", align 8 ; 16 uses
+  %6 = alloca %"class.YAML::detail::iterator_base", align 8 ; 17 uses
   %7 = alloca %"struct.YAML::detail::iterator_value", align 8 ; 11 uses
   %8 = alloca %"class.std::__cxx11::basic_string", align 8 ; 11 uses
   %i.a = load i8, ptr %0, align 8, !tbaa !57, !range !58, !noundef !59
@@ -288,7 +288,7 @@ _ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i
 
 _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5clearEv.exit: ; preds = %_ZSt8_DestroyINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEvPT_.exit.i.i.i.i
   store ptr %i.p, ptr %i.q, align 8, !tbaa !94
-  %.pre = load i8, ptr %0, align 8, !tbaa !57, !range !58, !noalias !986
+  %.pre = load i8, ptr %0, align 8, !tbaa !57, !range !58, !noalias !59
   %i.y = trunc nuw i8 %.pre to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #26
   tail call void @llvm.experimental.noalias.scope.decl(metadata !986)
@@ -298,7 +298,10 @@ _ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5clearE
 bb.g:                                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5clearEv.exit
   store i32 0, ptr %5, align 8, !tbaa !113, !alias.scope !986
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sink10.i.i.i.sroa.gep52, i8 0, i64 40, i1 false), !alias.scope !986
-  br label %_ZNK4YAML4Node5beginEv.exit
+  call void @llvm.lifetime.end.p0(ptr nonnull %4)
+  call void @llvm.lifetime.start.p0(ptr nonnull %6) #26
+  call void @llvm.lifetime.start.p0(ptr nonnull %3)
+  br label %bb.u
 
 bb.h:                                             ; preds = %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5clearEv.exit.thread, %_ZNSt6vectorINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESaIS5_EE5clearEv.exit
   %i.z = load ptr, ptr %i.f, align 8, !tbaa !60, !noalias !986 ; 2 uses
@@ -407,16 +410,16 @@ bb.t:                                             ; preds = %_ZN9__gnu_cxx27__ex
   call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.af) #26, !noalias !986
   br label %_ZNK4YAML4Node5beginEv.exit
 
-_ZNK4YAML4Node5beginEv.exit:                      ; preds = %bb.g, %.thread.i, %bb.n, %bb.p, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i, %bb.t
+_ZNK4YAML4Node5beginEv.exit:                      ; preds = %.thread.i, %bb.n, %bb.p, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i.i, %bb.t
+  %.pr = load i8, ptr %0, align 8, !tbaa !57, !noalias !989
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #26
   call void @llvm.experimental.noalias.scope.decl(metadata !989)
   call void @llvm.lifetime.start.p0(ptr nonnull %3)
-  %9 = load i8, ptr %0, align 8, !tbaa !57, !range !58, !noalias !989, !noundef !59
-  %i.bg = trunc nuw i8 %9 to i1
+  %i.bg = trunc nuw i8 %.pr to i1
   br i1 %i.bg, label %bb.v, label %bb.u
 
-bb.u:                                             ; preds = %_ZNK4YAML4Node5beginEv.exit
+bb.u:                                             ; preds = %bb.g, %_ZNK4YAML4Node5beginEv.exit
   store i32 0, ptr %6, align 8, !tbaa !113, !alias.scope !989
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %.sink10.i.i.i.sroa.gep49, i8 0, i64 40, i1 false), !alias.scope !989
   br label %_ZNK4YAML4Node3endEv.exit

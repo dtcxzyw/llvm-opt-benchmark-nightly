@@ -202,7 +202,7 @@ bb.n:                                             ; preds = %bb.l, %bb.m
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !178, !range !98, !noundef !99 ; 2 uses
   %i.as = zext i1 %.not226 to i8
   %.not227 = icmp eq i8 %i.ar, %i.as
-  br i1 %.not227, label %bb.p, label %bb.o
+  br i1 %.not227, label %bb.p, label %4
 
 .thread:                                          ; preds = %bb.m
   %i.at = getelementptr inbounds nuw i8, ptr %i.k, i64 49
@@ -210,11 +210,14 @@ bb.n:                                             ; preds = %bb.l, %bb.m
   %.not227503 = icmp eq i8 %i.au, 0
   br i1 %.not227503, label %.critedge.thread, label %bb.o
 
-bb.o:                                             ; preds = %.thread, %bb.n
-  %4 = phi i8 [ 1, %.thread ], [ %i.ar, %bb.n ]
-  %5 = trunc nuw i8 %4 to i1
+4:                                                ; preds = %bb.n
+  %5 = trunc nuw i8 %i.ar to i1
+  %spec.select = select i1 %5, ptr @.str.42, ptr @.str.43
+  br label %bb.o
+
+bb.o:                                             ; preds = %.thread, %4
+  %6 = phi ptr [ %spec.select, %4 ], [ @.str.42, %.thread ]
   %i.av = load ptr, ptr @stderr, align 8, !tbaa !97
-  %6 = select i1 %5, ptr @.str.42, ptr @.str.43
   %i.aw = tail call i32 (ptr, ptr, ...) @fprintf(ptr noundef %i.av, ptr noundef nonnull @.str.70, ptr noundef nonnull %6) #25 ; 0 uses
   br label %bb.hg
 

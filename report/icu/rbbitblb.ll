@@ -204,7 +204,7 @@ bb.o:                                             ; preds = %bb.n
   %.not52 = icmp eq i32 %i.ca, %i.cc
   br i1 %.not52, label %.thread, label %.thread.thread
 
-.thread.thread:                                   ; preds = %bb.o, %bb.n, %bb.m
+.thread.thread:                                   ; preds = %bb.m, %bb.o, %bb.n
   %storemerge.in = load i32, ptr %i.l, align 4, !tbaa !64
   %storemerge = add nsw i32 %storemerge.in, 1     ; 3 uses
   store i32 %storemerge, ptr %i.l, align 4, !tbaa !74
@@ -244,21 +244,24 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph.a, %.critedge
-  %i.i = phi i32 [ %i.f, %.lr.ph.a ], [ %6, %.critedge ]
+  %i.i = phi i32 [ %i.f, %.lr.ph.a ], [ %.lcssa104, %.critedge ]
   %i.j = load ptr, ptr %i.a, align 8, !tbaa !28
   %i.k = tail call noundef ptr @_ZNK6icu_787UVector9elementAtEi(ptr noundef nonnull align 8 dereferenceable(40) %i.j, i32 noundef %i.i) ; 4 uses
+  %storemerge.in.pre = load i32, ptr %1, align 4, !tbaa !64
+  %storemerge108 = add nsw i32 %storemerge.in.pre, 1 ; 4 uses
+  store i32 %storemerge108, ptr %i.h, align 4, !tbaa !74
+  %.not109 = icmp slt i32 %storemerge108, %i.d
+  br i1 %.not109, label %.lr.ph, label %.critedge
+
+.lr.ph:                                           ; preds = %bb.b
   %2 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %3 = getelementptr inbounds nuw i8, ptr %i.k, i64 12
   %4 = getelementptr inbounds nuw i8, ptr %i.k, i64 10
   %5 = getelementptr inbounds nuw i8, ptr %i.k, i64 24
-  %storemerge.in.pre = load i32, ptr %1, align 4, !tbaa !64 ; 2 uses
-  %storemerge108 = add nsw i32 %storemerge.in.pre, 1 ; 3 uses
-  store i32 %storemerge108, ptr %i.h, align 4, !tbaa !74
-  %.not109 = icmp slt i32 %storemerge108, %i.d
-  br i1 %.not109, label %.lr.ph111, label %.critedge
+  br label %.lr.ph111
 
-.lr.ph111:                                        ; preds = %bb.b, %.thread
-  %storemerge110 = phi i32 [ %storemerge, %.thread ], [ %storemerge108, %bb.b ]
+.lr.ph111:                                        ; preds = %.lr.ph, %.thread
+  %storemerge110 = phi i32 [ %storemerge108, %.lr.ph ], [ %storemerge, %.thread ]
   %i.l = load ptr, ptr %i.a, align 8, !tbaa !28
   %i.m = tail call noundef ptr @_ZNK6icu_787UVector9elementAtEi(ptr noundef nonnull align 8 dereferenceable(40) %i.l, i32 noundef %storemerge110) ; 4 uses
   %i.n = load i16, ptr %2, align 8, !tbaa !75     ; 3 uses
@@ -379,19 +382,22 @@ bb.n:                                             ; preds = %bb.m, %bb.l, %_ZNK6
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count71
   br i1 %exitcond.not, label %.critedge52, label %_ZNK6icu_7813UnicodeString6charAtEi.exit, !llvm.loop !135
 
-.thread:                                          ; preds = %bb.m, %bb.k, %bb.e, %bb.g
-  %i.bn = phi i32 [ %i.ar, %bb.e ], [ %i.ar, %bb.g ], [ %i.bg, %bb.k ], [ %i.bg, %bb.m ]
-  %storemerge.in74 = phi i32 [ %i.at, %bb.e ], [ %i.aw, %bb.g ], [ %i.bl, %bb.m ], [ %i.bi, %bb.k ]
+.thread:                                          ; preds = %bb.k, %bb.m, %bb.e, %bb.g
+  %i.bn = phi i32 [ %i.ar, %bb.e ], [ %i.ar, %bb.g ], [ %i.bg, %bb.m ], [ %i.bg, %bb.k ]
+  %storemerge.in74 = phi i32 [ %i.at, %bb.e ], [ %i.aw, %bb.g ], [ %i.bi, %bb.k ], [ %i.bl, %bb.m ]
   %storemerge = add nsw i32 %storemerge.in74, 1   ; 3 uses
   store i32 %storemerge, ptr %i.h, align 4, !tbaa !74
   %.not = icmp slt i32 %storemerge, %i.d
-  br i1 %.not, label %.lr.ph111, label %.critedge, !llvm.loop !136
+  br i1 %.not, label %.lr.ph111, label %.critedge.loopexit, !llvm.loop !136
 
-.critedge:                                        ; preds = %.thread, %bb.b
-  %.lcssa104 = phi i32 [ %storemerge.in.pre, %bb.b ], [ %i.bn, %.thread ]
-  %6 = add nsw i32 %.lcssa104, 1                  ; 3 uses
-  store i32 %6, ptr %1, align 4, !tbaa !73
-  %i.bo = icmp slt i32 %6, %i.e
+.critedge.loopexit:                               ; preds = %.thread
+  %.pre = add nsw i32 %i.bn, 1
+  br label %.critedge
+
+.critedge:                                        ; preds = %.critedge.loopexit, %bb.b
+  %.lcssa104 = phi i32 [ %.pre, %.critedge.loopexit ], [ %storemerge108, %bb.b ] ; 3 uses
+  store i32 %.lcssa104, ptr %1, align 4, !tbaa !73
+  %i.bo = icmp slt i32 %.lcssa104, %i.e
   br i1 %i.bo, label %bb.b, label %.critedge52, !llvm.loop !137
 
 .critedge52:                                      ; preds = %.critedge, %.lr.ph111, %bb.n, %bb.h, %bb.a

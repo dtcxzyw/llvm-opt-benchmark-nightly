@@ -202,11 +202,11 @@ bb.ae:                                            ; preds = %_ZNKSt7__cxx1112bas
 _ZN5Ipopt8SmartPtrINS_11OptionsListEED2Ev.exit122: ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i119, %bb.ae
   %i.fp = load i8, ptr %i.ei, align 2, !tbaa !62, !range !59, !noundef !60
   %i.fq = trunc nuw i8 %i.fp to i1
-  %.pre243 = load i8, ptr %i.bd, align 8, !tbaa !58, !range !59 ; 2 uses
   br i1 %i.fq, label %bb.af, label %bb.ba
 
 bb.af:                                            ; preds = %_ZN5Ipopt8SmartPtrINS_11OptionsListEED2Ev.exit122
-  %i.fr = trunc nuw i8 %.pre243 to i1
+  %14 = load i8, ptr %i.bd, align 8, !tbaa !58, !range !59, !noundef !60
+  %i.fr = trunc nuw i8 %14 to i1
   br i1 %i.fr, label %.thread, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
@@ -220,7 +220,6 @@ bb.ag:                                            ; preds = %bb.af
 
 bb.ah:                                            ; preds = %bb.ag
   store i8 0, ptr %i.ei, align 2, !tbaa !62
-  %.pre = load i8, ptr %i.bd, align 8, !tbaa !58, !range !59
   br label %bb.ba
 
 bb.ai:                                            ; preds = %.noexc.i59
@@ -435,8 +434,8 @@ bb.az:                                            ; preds = %bb.ag
   br label %_ZN5Ipopt8SmartPtrINS_11OptionsListEED2Ev.exit130
 
 bb.ba:                                            ; preds = %bb.ah, %_ZN5Ipopt8SmartPtrINS_11OptionsListEED2Ev.exit122
-  %14 = phi i8 [ %.pre, %bb.ah ], [ %.pre243, %_ZN5Ipopt8SmartPtrINS_11OptionsListEED2Ev.exit122 ]
-  %i.ip = trunc nuw i8 %14 to i1
+  %.pr = load i8, ptr %i.bd, align 8, !tbaa !58
+  %i.ip = trunc nuw i8 %.pr to i1
   br i1 %i.ip, label %.thread, label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba

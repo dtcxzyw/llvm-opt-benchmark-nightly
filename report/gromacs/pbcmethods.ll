@@ -205,11 +205,15 @@ bb.l:                                             ; preds = %.lr.ph.split.us
   %i.fc = icmp slt i64 %indvars.iv.next277, %i.ey
   br i1 %i.fc, label %.lr.ph.split.us, label %._crit_edge, !llvm.loop !36
 
-.lr.ph.split:                                     ; preds = %.lr.ph, %bb.w
-  %.pre318319 = phi i32 [ %.pre318320, %bb.w ], [ %i.eq, %.lr.ph ] ; 2 uses
-  %i.fd = phi i32 [ %i.gj, %bb.w ], [ %i.eq, %.lr.ph ]
-  %indvars.iv279 = phi i64 [ %indvars.iv.next280, %bb.w ], [ %i.ex, %.lr.ph ] ; 6 uses
-  %10 = load i8, ptr %i.es, align 1, !tbaa !66, !range !67, !noundef !68
+.lr.ph.splitthread-pre-split:                     ; preds = %bb.w
+  %.pr = load i8, ptr %i.es, align 1, !tbaa !66
+  br label %.lr.ph.split
+
+.lr.ph.split:                                     ; preds = %.lr.ph, %.lr.ph.splitthread-pre-split
+  %10 = phi i8 [ %.pr, %.lr.ph.splitthread-pre-split ], [ 1, %.lr.ph ]
+  %i.fd = phi i32 [ %.pre318320, %.lr.ph.splitthread-pre-split ], [ %i.eq, %.lr.ph ] ; 2 uses
+  %11 = phi i32 [ %i.gj, %.lr.ph.splitthread-pre-split ], [ %i.eq, %.lr.ph ]
+  %indvars.iv279 = phi i64 [ %indvars.iv.next280, %.lr.ph.splitthread-pre-split ], [ %i.ex, %.lr.ph ] ; 6 uses
   %i.fe = trunc nuw i8 %10 to i1
   %i.ff = getelementptr inbounds i8, ptr %i.p, i64 %indvars.iv279
   %i.fg = load i8, ptr %i.ff, align 1, !tbaa !66, !range !67, !noundef !68
@@ -291,7 +295,7 @@ bb.u:                                             ; preds = %bb.t
   br label %bb.v
 
 bb.v:                                             ; preds = %._crit_edge311, %bb.u
-  %.pre318 = phi i32 [ %.pre318319, %._crit_edge311 ], [ %.pre318.pre, %bb.u ] ; 2 uses
+  %.pre318 = phi i32 [ %i.fd, %._crit_edge311 ], [ %.pre318.pre, %bb.u ] ; 2 uses
   %i.gd = phi float [ %.pre317, %._crit_edge311 ], [ %i.gb, %bb.u ]
   %i.ge = phi <2 x float> [ %i.ft, %._crit_edge311 ], [ %i.fx, %bb.u ]
   %i.gf = load float, ptr %i.eu, align 4, !tbaa !16
@@ -303,12 +307,12 @@ bb.v:                                             ; preds = %._crit_edge311, %bb
   br label %bb.w
 
 bb.w:                                             ; preds = %bb.q, %bb.v
-  %.pre318320 = phi i32 [ %.pre318319, %bb.q ], [ %.pre318, %bb.v ]
-  %i.gj = phi i32 [ %i.fd, %bb.q ], [ %.pre318, %bb.v ] ; 3 uses
+  %.pre318320 = phi i32 [ %i.fd, %bb.q ], [ %.pre318, %bb.v ]
+  %i.gj = phi i32 [ %11, %bb.q ], [ %.pre318, %bb.v ] ; 3 uses
   %indvars.iv.next280 = add nsw i64 %indvars.iv279, 1 ; 2 uses
   %i.gk = sext i32 %i.gj to i64
   %i.gl = icmp slt i64 %indvars.iv.next280, %i.gk
-  br i1 %i.gl, label %.lr.ph.split, label %._crit_edge, !llvm.loop !37
+  br i1 %i.gl, label %.lr.ph.splitthread-pre-split, label %._crit_edge, !llvm.loop !37
 
 ._crit_edge:                                      ; preds = %bb.l, %bb.w, %bb.k
   %.lcssa = phi i32 [ %i.eq, %bb.k ], [ %i.gj, %bb.w ], [ %i.eq, %bb.l ]

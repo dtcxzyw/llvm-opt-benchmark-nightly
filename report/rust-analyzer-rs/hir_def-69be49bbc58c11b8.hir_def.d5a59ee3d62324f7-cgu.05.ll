@@ -206,8 +206,12 @@ bb.ap:                                            ; preds = %bb.ah
   %.sroa.5.0.i = select i1 %.not31.i, i64 undef, i64 %.sroa.7.0.i
   br label %.peel.begin.i
 
-.peel.begin.i:                                    ; preds = %_RNvXsi_NtNtNtCshzWfHUSfYae_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_3map3MapINtNtBb_6option4IterNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes13TypeBoundListENCNCNvMNtNtNtCsileJQcQObtj_7hir_def10expr_store5lower8genericsNtB2V_22GenericParamsCollector22lower_where_predicates0s0_0EINtB1R_11AstChildrenNtB1N_9TypeBoundEENtNtNtB9_6traits8iterator8Iterator4nextB31_.exit.i, %bb.ap
-  %.pre.i.i = load i64, ptr %.sroa.3.0..sroa_idx.i, align 8, !range !24, !alias.scope !884, !noalias !883
+.peel.beginthread-pre-split.i:                    ; preds = %_RNvXsi_NtNtNtCshzWfHUSfYae_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_3map3MapINtNtBb_6option4IterNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes13TypeBoundListENCNCNvMNtNtNtCsileJQcQObtj_7hir_def10expr_store5lower8genericsNtB2V_22GenericParamsCollector22lower_where_predicates0s0_0EINtB1R_11AstChildrenNtB1N_9TypeBoundEENtNtNtB9_6traits8iterator8Iterator4nextB31_.exit.i
+  %.pre.i.pr.i = load i64, ptr %.sroa.3.0..sroa_idx.i, align 8, !alias.scope !884, !noalias !883
+  br label %.peel.begin.i
+
+.peel.begin.i:                                    ; preds = %.peel.beginthread-pre-split.i, %bb.ap
+  %.pre.i.i = phi i64 [ %.pre.i.pr.i, %.peel.beginthread-pre-split.i ], [ 0, %bb.ap ]
   %i.bx = trunc nuw i64 %.pre.i.i to i1
   br i1 %i.bx, label %bb.aq, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes9TypeBoundEECsileJQcQObtj_7hir_def.exit.i.peel.i
 
@@ -459,7 +463,7 @@ bb.bm:                                            ; preds = %.loopexit.split-lp1
 _RNvXsi_NtNtNtCshzWfHUSfYae_4core4iter8adapters7flattenINtB5_13FlattenCompatINtNtB7_3map3MapINtNtBb_6option4IterNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes13TypeBoundListENCNCNvMNtNtNtCsileJQcQObtj_7hir_def10expr_store5lower8genericsNtB2V_22GenericParamsCollector22lower_where_predicates0s0_0EINtB1R_11AstChildrenNtB1N_9TypeBoundEENtNtNtB9_6traits8iterator8Iterator4nextB31_.exit.i: ; preds = %.noexc59.i, %.noexc64.i, %.noexc59.peel.i
   %.sroa.0.0.i.i = phi ptr [ %i.dq, %.noexc64.i ], [ %i.by, %.noexc59.peel.i ], [ %i.ct, %.noexc59.i ]
   invoke void @_RNvMNtNtNtCsileJQcQObtj_7hir_def10expr_store5lower8genericsNtB2_22GenericParamsCollector29lower_type_bound_as_predicate(ptr noalias nofree noundef nonnull align 8 dereferenceable(88) %3, ptr noalias nofree noundef nonnull align 8 dereferenceable(1120) %0, ptr noundef nonnull %.sroa.0.0.i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) %.sroa.01.0.i, i64 %.sroa.5.0.i, i32 noundef %.sroa.02.0.i, i32 noundef %.sroa.6.0.i)
-          to label %.peel.begin.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
+          to label %.peel.beginthread-pre-split.i unwind label %.loopexit.split-lp.loopexit.split-lp.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .loopexit6.i:                                     ; preds = %.loopexit145.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsjJXvCMGntp8_6syntax3ast11AstChildrenNtNtNtB10_9generated5nodes9TypeBoundEEECsileJQcQObtj_7hir_def.exit.i12.i.i
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters7flatten7FlatMapINtNtB4_6option4IterNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes13TypeBoundListEINtB1H_11AstChildrenNtB1D_9TypeBoundENCNCNvMNtNtNtCsileJQcQObtj_7hir_def10expr_store5lower8genericsNtB3m_22GenericParamsCollector22lower_where_predicates0s0_0EEB3s_(ptr noalias nofree noundef align 8 dereferenceable(48) %i.c)

@@ -205,7 +205,7 @@ define void @_RNvXs5_NtNtCsamqgnMfIDNU_5tower4load9peak_ewmaNtB5_6HandleNtNtNtCs
 bb.a:
   %i.a = tail call { i64, i32 } @_RNvMNtNtCseXbohGRa9jr_5tokio4time7instantNtB2_7Instant3now() ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.c = load ptr, ptr %i.b, align 8, !nonnull !58, !noundef !58 ; 3 uses
+  %i.c = load ptr, ptr %i.b, align 8, !nonnull !58, !noundef !58 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.c, i64 16 ; 6 uses
   %i.e = cmpxchg ptr %i.d, i32 0, i32 1 acquire monotonic, align 4, !noalias !226
   %i.f = extractvalue { i32, i1 } %i.e, 1
@@ -222,19 +222,23 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   br i1 %i.i, label %_RNvMs5_NtNtNtCsgczF5crJ4sT_3std4sync6poison5mutexINtB5_5MutexNtNtNtCsamqgnMfIDNU_5tower4load9peak_ewma11RttEstimateE4lockB13_.exit, label %bb.d, !prof !63
 
 bb.d:                                             ; preds = %bb.c
-  %i.j = tail call noundef zeroext i1 @_RNvNtNtCsgczF5crJ4sT_3std9panicking11panic_count17is_zero_slow_path(), !noalias !226
+  %i.j = tail call noundef zeroext i1 @_RNvNtNtCsgczF5crJ4sT_3std9panicking11panic_count17is_zero_slow_path(), !noalias !226 ; 2 uses
   %i.k = xor i1 %i.j, true
   %i.l = zext i1 %i.k to i8
-  br label %_RNvMs5_NtNtNtCsgczF5crJ4sT_3std4sync6poison5mutexINtB5_5MutexNtNtNtCsamqgnMfIDNU_5tower4load9peak_ewma11RttEstimateE4lockB13_.exit
+  %1 = getelementptr inbounds nuw i8, ptr %i.c, i64 20 ; 3 uses
+  %2 = load atomic i8, ptr %1 monotonic, align 1, !noalias !226
+  %.not = icmp eq i8 %2, 0
+  br i1 %.not, label %bb.e, label %bb.l
 
-_RNvMs5_NtNtNtCsgczF5crJ4sT_3std4sync6poison5mutexINtB5_5MutexNtNtNtCsamqgnMfIDNU_5tower4load9peak_ewma11RttEstimateE4lockB13_.exit: ; preds = %bb.c, %bb.d
-  %.sroa.01.0.i.i = phi i8 [ %i.l, %bb.d ], [ 0, %bb.c ] ; 3 uses
+_RNvMs5_NtNtNtCsgczF5crJ4sT_3std4sync6poison5mutexINtB5_5MutexNtNtNtCsamqgnMfIDNU_5tower4load9peak_ewma11RttEstimateE4lockB13_.exit: ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 20 ; 3 uses
   %i.n = load atomic i8, ptr %i.m monotonic, align 1, !noalias !226
   %.not.a = icmp eq i8 %i.n, 0
-  br i1 %.not.a, label %bb.e, label %bb.l
+  br i1 %.not.a, label %bb.e, label %bb.m
 
-bb.e:                                             ; preds = %_RNvMs5_NtNtNtCsgczF5crJ4sT_3std4sync6poison5mutexINtB5_5MutexNtNtNtCsamqgnMfIDNU_5tower4load9peak_ewma11RttEstimateE4lockB13_.exit
+bb.e:                                             ; preds = %_RNvMs5_NtNtNtCsgczF5crJ4sT_3std4sync6poison5mutexINtB5_5MutexNtNtNtCsamqgnMfIDNU_5tower4load9peak_ewma11RttEstimateE4lockB13_.exit, %bb.d
+  %3 = phi ptr [ %i.m, %_RNvMs5_NtNtNtCsgczF5crJ4sT_3std4sync6poison5mutexINtB5_5MutexNtNtNtCsamqgnMfIDNU_5tower4load9peak_ewma11RttEstimateE4lockB13_.exit ], [ %1, %bb.d ]
+  %.sroa.01.0.i.i10 = phi i8 [ 0, %_RNvMs5_NtNtNtCsgczF5crJ4sT_3std4sync6poison5mutexINtB5_5MutexNtNtNtCsamqgnMfIDNU_5tower4load9peak_ewma11RttEstimateE4lockB13_.exit ], [ %i.l, %bb.d ] ; 2 uses
   %i.o = extractvalue { i64, i32 } %i.a, 1
   %i.p = extractvalue { i64, i32 } %i.a, 0
   %i.q = getelementptr inbounds nuw i8, ptr %i.c, i64 24
@@ -249,11 +253,11 @@ bb.e:                                             ; preds = %_RNvMs5_NtNtNtCsgcz
 bb.f:                                             ; preds = %bb.e
   %i.x = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuardNtNtNtCsamqgnMfIDNU_5tower4load9peak_ewma11RttEstimateEEB1C_(ptr nonnull %i.d, i8 %.sroa.01.0.i.i) #31
+  invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtCsgczF5crJ4sT_3std4sync6poison5mutex10MutexGuardNtNtNtCsamqgnMfIDNU_5tower4load9peak_ewma11RttEstimateEEB1C_(ptr nonnull %i.d, i8 %.sroa.01.0.i.i10) #31
           to label %bb.k unwind label %bb.j
 
 bb.g:                                             ; preds = %bb.e
-  %i.y = trunc nuw i8 %.sroa.01.0.i.i to i1
+  %i.y = trunc nuw i8 %.sroa.01.0.i.i10 to i1
   br i1 %i.y, label %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i, label %bb.h
 
 bb.h:                                             ; preds = %bb.g
@@ -267,7 +271,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.ac, label %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i, label %bb.i
 
 bb.i:                                             ; preds = %.noexc
-  store atomic i8 1, ptr %i.m monotonic, align 1
+  store atomic i8 1, ptr %3 monotonic, align 1
   br label %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i
 
 _RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i: ; preds = %bb.i, %.noexc, %bb.h, %bb.g
@@ -284,11 +288,11 @@ bb.j:                                             ; preds = %bb.f
 bb.k:                                             ; preds = %bb.f
   resume { ptr, i32 } %i.x
 
-bb.l:                                             ; preds = %_RNvMs5_NtNtNtCsgczF5crJ4sT_3std4sync6poison5mutexINtB5_5MutexNtNtNtCsamqgnMfIDNU_5tower4load9peak_ewma11RttEstimateE4lockB13_.exit
-  %1 = trunc nuw i8 %.sroa.01.0.i.i to i1
-  br i1 %1, label %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i.i, label %bb.m
+bb.l:                                             ; preds = %bb.d
+  br i1 %i.j, label %bb.m, label %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i.i
 
-bb.m:                                             ; preds = %bb.l
+bb.m:                                             ; preds = %_RNvMs5_NtNtNtCsgczF5crJ4sT_3std4sync6poison5mutexINtB5_5MutexNtNtNtCsamqgnMfIDNU_5tower4load9peak_ewma11RttEstimateE4lockB13_.exit, %bb.l
+  %4 = phi ptr [ %1, %bb.l ], [ %i.m, %_RNvMs5_NtNtNtCsgczF5crJ4sT_3std4sync6poison5mutexINtB5_5MutexNtNtNtCsamqgnMfIDNU_5tower4load9peak_ewma11RttEstimateE4lockB13_.exit ]
   %i.ag = load atomic i64, ptr @_RNvNtNtCsgczF5crJ4sT_3std9panicking11panic_count18GLOBAL_PANIC_COUNT monotonic, align 8, !noalias !227
   %i.ah = and i64 %i.ag, 9223372036854775807
   %i.ai = icmp eq i64 %i.ah, 0
@@ -299,7 +303,7 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.aj, label %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i.i, label %bb.o
 
 bb.o:                                             ; preds = %bb.n
-  store atomic i8 1, ptr %i.m monotonic, align 1, !noalias !227
+  store atomic i8 1, ptr %4 monotonic, align 1, !noalias !227
   br label %_RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i.i
 
 _RNvMNtNtCsgczF5crJ4sT_3std4sync6poisonNtB2_4Flag4done.exit.i.i.i.i: ; preds = %bb.o, %bb.n, %bb.m, %bb.l

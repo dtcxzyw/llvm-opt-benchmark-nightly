@@ -202,7 +202,12 @@ bb.as:                                            ; preds = %bb.ar, %bb.aq
   %.5 = phi i8 [ 1, %bb.ar ], [ %.4, %bb.aq ]     ; 2 uses
   %i.ij = and i8 %i.ii, 64
   %.not359 = icmp eq i8 %i.ij, 0
-  br i1 %.not359, label %bb.au, label %bb.at
+  br i1 %.not359, label %10, label %bb.at
+
+10:                                               ; preds = %bb.as
+  %.not360 = icmp sgt i8 %i.ii, -1
+  %11 = trunc i8 %.5 to i1                        ; 2 uses
+  br i1 %.not360, label %bb.av, label %bb.au
 
 bb.at:                                            ; preds = %bb.as
   %i.ik = trunc nuw i8 %.5 to i1
@@ -212,28 +217,28 @@ bb.at:                                            ; preds = %bb.as
   %.phi.trans.insert442 = getelementptr inbounds nuw [48 x i8], ptr %.pre441, i64 %i.fn
   %.phi.trans.insert443 = getelementptr inbounds nuw i8, ptr %.phi.trans.insert442, i64 9
   %.pre444 = load i8, ptr %.phi.trans.insert443, align 1, !tbaa !61
-  br label %bb.au
+  %.not360462 = icmp sgt i8 %.pre444, -1
+  br i1 %.not360462, label %bb.ax, label %.thread.thread
 
-bb.au:                                            ; preds = %bb.at, %bb.as
-  %10 = phi i8 [ %.pre444, %bb.at ], [ %i.ii, %bb.as ]
-  %.6 = phi i8 [ 1, %bb.at ], [ %.5, %bb.as ]
-  %.not360 = icmp sgt i8 %10, -1
-  %11 = trunc nuw i8 %.6 to i1                    ; 2 uses
-  br i1 %.not360, label %bb.av, label %.thread
+bb.au:                                            ; preds = %10
+  br i1 %11, label %.thread.thread, label %.thread
 
-.thread:                                          ; preds = %bb.au
-  %12 = select i1 %11, ptr @.str.48, ptr @.str.49
+.thread.thread:                                   ; preds = %bb.at, %bb.au
+  br label %.thread
+
+.thread:                                          ; preds = %bb.au, %.thread.thread
+  %12 = phi ptr [ @.str.48, %.thread.thread ], [ @.str.49, %bb.au ]
   %i.in = call i32 (ptr, ptr, ...) @fprintf(ptr noundef %3, ptr noundef nonnull @.str.56, ptr noundef nonnull %12) #8 ; 0 uses
   br label %bb.ax
 
-bb.av:                                            ; preds = %bb.au
+bb.av:                                            ; preds = %10
   br i1 %11, label %bb.ax, label %bb.aw
 
 bb.aw:                                            ; preds = %bb.av
   %fputc = call i32 @fputc(i32 45, ptr %3)        ; 0 uses
   br label %bb.ax
 
-bb.ax:                                            ; preds = %.thread, %bb.aw, %bb.av
+bb.ax:                                            ; preds = %bb.at, %.thread, %bb.aw, %bb.av
   %fwrite362 = call i64 @fwrite(ptr nonnull @.str.58, i64 2, i64 1, ptr %3) ; 0 uses
   br label %bb.az
 

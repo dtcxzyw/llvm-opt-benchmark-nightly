@@ -205,7 +205,7 @@ state_do.exit:                                    ; preds = %bb.dp, %bb.dq, %bb.
   br label %mstate.exit192thread-pre-split
 
 bb.fi:                                            ; preds = %._crit_edge
-  %i.nb = load ptr, ptr %i.au, align 8, !tbaa !104 ; 2 uses
+  %i.nb = load ptr, ptr %i.au, align 8, !tbaa !104 ; 3 uses
   %.not.i229 = icmp eq ptr %i.nb, null
   br i1 %.not.i229, label %.thread414, label %bb.fj
 
@@ -232,12 +232,16 @@ protocol_doing.exit:                              ; preds = %bb.fj
   br i1 %.not156, label %bb.fk, label %bb.fm
 
 bb.fk:                                            ; preds = %protocol_doing.exit
-  %.pre330.a = load i8, ptr %i.g, align 1, !tbaa !156, !range !227
+  %.pre330.a = load i8, ptr %i.g, align 1, !tbaa !156
   %i.nj = trunc nuw i8 %.pre330.a to i1
-  br i1 %i.nj, label %bb.fl, label %mstate.exit192thread-pre-split
+  br i1 %i.nj, label %._crit_edge332, label %mstate.exit192thread-pre-split
 
-bb.fl:                                            ; preds = %.thread414, %bb.fk
-  %4 = load ptr, ptr %i.au, align 8, !tbaa !104
+._crit_edge332:                                   ; preds = %bb.fk
+  %.pre333 = load ptr, ptr %i.au, align 8, !tbaa !104
+  br label %bb.fl
+
+bb.fl:                                            ; preds = %._crit_edge332, %.thread414
+  %4 = phi ptr [ %.pre333, %._crit_edge332 ], [ %i.nb, %.thread414 ]
   %i.nk = getelementptr inbounds nuw i8, ptr %4, i64 728
   %i.nl = load i64, ptr %i.nk, align 8
   %i.nm = and i64 %i.nl, 4096

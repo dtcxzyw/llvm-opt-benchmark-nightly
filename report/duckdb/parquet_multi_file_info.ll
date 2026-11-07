@@ -204,7 +204,7 @@ bb.p:                                             ; preds = %bb.o
   %i.cw = getelementptr i8, ptr %i.n, i64 9       ; 2 uses
   %.val.i = load i8, ptr %i.cw, align 1, !tbaa !270, !range !231, !noundef !232
   %i.cx = trunc nuw i8 %.val.i to i1
-  br i1 %i.cx, label %._crit_edge.i.i.i.i, label %_ZN6duckdbL24ParseFileRowNumberOptionERNS_23MultiFileReaderBindDataERNS_14ParquetOptionsERNS_6vectorINS_11LogicalTypeELb1ESaIS5_EEERNS4_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb1ESaISE_EEE.exit.i
+  br i1 %i.cx, label %._crit_edge.i.i.i.i, label %bb.bs
 
 ._crit_edge.i.i.i.i:                              ; preds = %._crit_edge.i
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #24
@@ -588,8 +588,8 @@ bb.ax:                                            ; preds = %.body91.i, %bb.av
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #24
   br label %.body.i
 
-_ZN6duckdbL24ParseFileRowNumberOptionERNS_23MultiFileReaderBindDataERNS_14ParquetOptionsERNS_6vectorINS_11LogicalTypeELb1ESaIS5_EEERNS4_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb1ESaISE_EEE.exit.i: ; preds = %bb.aa, %._crit_edge.i.i.i.i.i, %._crit_edge.i
-  %i.gj = load i8, ptr %i.cw, align 1, !tbaa !270, !range !231, !noundef !232
+_ZN6duckdbL24ParseFileRowNumberOptionERNS_23MultiFileReaderBindDataERNS_14ParquetOptionsERNS_6vectorINS_11LogicalTypeELb1ESaIS5_EEERNS4_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb1ESaISE_EEE.exit.i: ; preds = %bb.aa, %._crit_edge.i.i.i.i.i
+  %i.gj = load i8, ptr %i.cw, align 1, !tbaa !270
   %i.gk = trunc nuw i8 %i.gj to i1
   br i1 %i.gk, label %._crit_edge.i.i.i, label %bb.bs
 
@@ -838,7 +838,7 @@ bb.br:                                            ; preds = %bb.bq, %_ZNSt7__cxx
   call void @llvm.lifetime.end.p0(ptr nonnull %14) #24
   br label %.body.i
 
-bb.bs:                                            ; preds = %_ZN6duckdb25MultiFileColumnDefinitionD2Ev.exit131.i, %_ZN6duckdbL24ParseFileRowNumberOptionERNS_23MultiFileReaderBindDataERNS_14ParquetOptionsERNS_6vectorINS_11LogicalTypeELb1ESaIS5_EEERNS4_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb1ESaISE_EEE.exit.i
+bb.bs:                                            ; preds = %_ZN6duckdb25MultiFileColumnDefinitionD2Ev.exit131.i, %_ZN6duckdbL24ParseFileRowNumberOptionERNS_23MultiFileReaderBindDataERNS_14ParquetOptionsERNS_6vectorINS_11LogicalTypeELb1ESaIS5_EEERNS4_INSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb1ESaISE_EEE.exit.i, %._crit_edge.i
   %spec.select.i = zext i1 %.186.i to i8
   %i.is = getelementptr inbounds nuw i8, ptr %4, i64 152
   store i8 %spec.select.i, ptr %i.is, align 8, !tbaa !789
@@ -1241,7 +1241,7 @@ bb.d:                                             ; preds = %.lr.ph
 bb.e:                                             ; preds = %bb.d
   store i64 %i.s, ptr %4, align 8
   %.not54.a = icmp eq i64 %i.s, -1
-  br i1 %.not54.a, label %.thread47, label %bb.g
+  br i1 %.not54.a, label %.critedge, label %bb.g
 
 bb.f:                                             ; preds = %bb.g, %bb.d, %.lr.ph
   %i.t = landingpad { ptr, i32 }
@@ -1252,10 +1252,6 @@ bb.f:                                             ; preds = %bb.g, %bb.d, %.lr.p
 bb.g:                                             ; preds = %bb.e
   %i.u = invoke noundef i64 @_ZNK6duckdb12optional_idx8GetIndexEv(ptr noundef nonnull align 8 dereferenceable(8) %4)
           to label %bb.h unwind label %bb.f
-
-.thread47:                                        ; preds = %bb.e
-  call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
-  br label %.critedge.a
 
 bb.h:                                             ; preds = %bb.g
   %i.v = add i64 %i.u, %.058                      ; 2 uses
@@ -1279,7 +1275,11 @@ bb.i:                                             ; preds = %._crit_edge
   store ptr %i.x, ptr %0, align 8, !tbaa !499, !alias.scope !1428
   br label %bb.n
 
-.critedge.a:                                      ; preds = %.thread47, %bb.b
+.critedge:                                        ; preds = %bb.e
+  call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
+  br label %.critedge.a
+
+.critedge.a:                                      ; preds = %.critedge, %bb.b
   %i.aa = invoke noundef ptr @_ZNK6duckdb10shared_ptrINS_13MultiFileListELb1EEptEv(ptr noundef nonnull align 8 dereferenceable(16) %i.a)
           to label %bb.j unwind label %bb.m       ; 2 uses
 
@@ -1682,7 +1682,7 @@ _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %3, i64 88 ; 2 uses
   %i.e = load i8, ptr %i.d, align 8, !tbaa !720, !range !231, !noundef !232
   %i.f = trunc nuw i8 %i.e to i1
-  br i1 %i.f, label %_ZN6duckdb10shared_ptrINS_14BaseFileReaderELb1EED2Ev.exit.thread, label %.lr.ph
+  br i1 %i.f, label %bb.bm, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit
   %i.g = getelementptr inbounds nuw i8, ptr %3, i64 96 ; 6 uses
@@ -2085,13 +2085,14 @@ _ZN6duckdb10shared_ptrINS_14BaseFileReaderELb1EED2Ev.exit: ; preds = %_ZN6duckdb
   %i.ek = trunc nuw i8 %i.ej to i1
   br i1 %i.ek, label %_ZN6duckdb10shared_ptrINS_14BaseFileReaderELb1EED2Ev.exit.thread, label %bb.c
 
-_ZN6duckdb10shared_ptrINS_14BaseFileReaderELb1EED2Ev.exit.thread: ; preds = %_ZN6duckdb10shared_ptrINS_14BaseFileReaderELb1EED2Ev.exit, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit, %bb.ap, %bb.ao, %bb.i
-  %.262 = phi i1 [ true, %bb.ap ], [ false, %bb.i ], [ true, %bb.ao ], [ false, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit ], [ false, %_ZN6duckdb10shared_ptrINS_14BaseFileReaderELb1EED2Ev.exit ]
-  %i.el = load i8, ptr %i.b, align 8, !tbaa !719, !range !231, !noundef !232
+_ZN6duckdb10shared_ptrINS_14BaseFileReaderELb1EED2Ev.exit.thread: ; preds = %_ZN6duckdb10shared_ptrINS_14BaseFileReaderELb1EED2Ev.exit, %bb.ap, %bb.ao, %bb.i
+  %.262.ph = phi i1 [ true, %bb.ap ], [ true, %bb.ao ], [ false, %bb.i ], [ false, %_ZN6duckdb10shared_ptrINS_14BaseFileReaderELb1EED2Ev.exit ] ; 2 uses
+  %i.el = load i8, ptr %i.b, align 8, !tbaa !719
   %i.em = trunc nuw i8 %i.el to i1
   br i1 %i.em, label %bb.bm, label %_ZNSt11unique_lockISt5mutexED2Ev.exit
 
-bb.bm:                                            ; preds = %_ZN6duckdb10shared_ptrINS_14BaseFileReaderELb1EED2Ev.exit.thread
+bb.bm:                                            ; preds = %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit, %_ZN6duckdb10shared_ptrINS_14BaseFileReaderELb1EED2Ev.exit.thread
+  %.262108 = phi i1 [ %.262.ph, %_ZN6duckdb10shared_ptrINS_14BaseFileReaderELb1EED2Ev.exit.thread ], [ false, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit ] ; 2 uses
   %i.en = load ptr, ptr %4, align 8, !tbaa !718   ; 2 uses
   %.not.i.i = icmp eq ptr %i.en, null
   br i1 %.not.i.i, label %_ZNSt11unique_lockISt5mutexED2Ev.exit, label %bb.bn
@@ -2101,8 +2102,9 @@ bb.bn:                                            ; preds = %bb.bm
   br label %_ZNSt11unique_lockISt5mutexED2Ev.exit
 
 _ZNSt11unique_lockISt5mutexED2Ev.exit:            ; preds = %_ZN6duckdb10shared_ptrINS_14BaseFileReaderELb1EED2Ev.exit.thread, %bb.bm, %bb.bn
+  %.262107 = phi i1 [ %.262.ph, %_ZN6duckdb10shared_ptrINS_14BaseFileReaderELb1EED2Ev.exit.thread ], [ %.262108, %bb.bm ], [ %.262108, %bb.bn ]
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #24
-  ret i1 %.262
+  ret i1 %.262107
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i, %bb.ag, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
   %.pn65.pn = phi { ptr, i32 } [ %i.br, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ], [ %i.br, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i ], [ %.pn83, %bb.ag ], [ %lpad.loopexit.split-lp107, %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ]

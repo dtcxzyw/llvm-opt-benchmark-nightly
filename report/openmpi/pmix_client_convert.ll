@@ -133,12 +133,12 @@ pmix_obj_run_constructors.exit:                   ; preds = %.lr.ph.i, %bb.c
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 256 ; 3 uses
   br label %bb.d
 
-bb.d:                                             ; preds = %.lr.ph339, %.loopexit
-  %.0150337 = phi ptr [ %.0150334, %.lr.ph339 ], [ %.0150, %.loopexit ] ; 5 uses
-  %.0140336 = phi i8 [ 0, %.lr.ph339 ], [ %.2142, %.loopexit ]
+bb.d:                                             ; preds = %.backedge.backedge, %.lr.ph339
+  %.0150337 = phi ptr [ %.0150334, %.lr.ph339 ], [ %.0150337.be, %.backedge.backedge ] ; 6 uses
+  %.0140336 = phi i1 [ false, %.lr.ph339 ], [ %i.ad, %.backedge.backedge ]
   %i.ab = getelementptr inbounds nuw i8, ptr %.0150337, i64 144
   %i.ac = load ptr, ptr %i.ab, align 8, !tbaa !43
-  %i.ad = call zeroext i1 @PMIx_Check_nspace(ptr noundef %i.ac, ptr noundef %i.z) #10
+  %i.ad = call zeroext i1 @PMIx_Check_nspace(ptr noundef %i.ac, ptr noundef %i.z) #10 ; 2 uses
   br i1 %i.ad, label %bb.e, label %bb.bt
 
 bb.e:                                             ; preds = %bb.d
@@ -541,21 +541,25 @@ bb.bs:                                            ; preds = %._crit_edge396, %bb
   br i1 %i.nb, label %bb.j, label %.thread277, !llvm.loop !18
 
 bb.bt:                                            ; preds = %bb.d
-  %6 = trunc nuw i8 %.0140336 to i1
-  br i1 %6, label %.thread277, label %.loopexit
+  br i1 %.0140336, label %.thread277, label %._crit_edge
 
-.loopexit:                                        ; preds = %pmix_obj_new_tma.exit, %.preheader288, %bb.bt
-  %.2142 = phi i8 [ 0, %bb.bt ], [ 1, %.preheader288 ], [ 1, %pmix_obj_new_tma.exit ] ; 2 uses
+.loopexit:                                        ; preds = %pmix_obj_new_tma.exit, %.preheader288
   %i.nc = getelementptr inbounds nuw i8, ptr %.0150337, i64 120
   %.0150 = load ptr, ptr %i.nc, align 8, !tbaa !40 ; 2 uses
   %.not165 = icmp eq ptr %.0150, getelementptr inbounds nuw (i8, ptr @pmix_client_globals, i64 568)
-  br i1 %.not165, label %._crit_edge, label %bb.d, !llvm.loop !19
+  br i1 %.not165, label %.thread277, label %.backedge.backedge
 
-._crit_edge:                                      ; preds = %.loopexit
-  %7 = trunc nuw i8 %.2142 to i1
-  br i1 %7, label %.thread277, label %._crit_edge.thread
+.backedge.backedge:                               ; preds = %.loopexit, %._crit_edge
+  %.0150337.be = phi ptr [ %.0150, %.loopexit ], [ %.0150436, %._crit_edge ]
+  br label %bb.d, !llvm.loop !19
 
-._crit_edge.thread:                               ; preds = %.preheader290, %._crit_edge
+._crit_edge:                                      ; preds = %bb.bt
+  %6 = getelementptr inbounds nuw i8, ptr %.0150337, i64 120
+  %.0150436 = load ptr, ptr %6, align 8, !tbaa !40 ; 2 uses
+  %.not165437 = icmp eq ptr %.0150436, getelementptr inbounds nuw (i8, ptr @pmix_client_globals, i64 568)
+  br i1 %.not165437, label %._crit_edge.thread, label %.backedge.backedge
+
+._crit_edge.thread:                               ; preds = %._crit_edge, %.preheader290
   %i.nd = load i64, ptr getelementptr inbounds nuw (i8, ptr @pmix_proclist_t_class, i64 56), align 8, !tbaa !47
   %i.ne = call noalias noundef ptr @malloc(i64 noundef %i.nd) #11 ; 12 uses
   %i.nf = load i32, ptr @pmix_class_init_epoch, align 4, !tbaa !23
@@ -612,8 +616,8 @@ pmix_obj_new_tma.exit255:                         ; preds = %.lr.ph.i.i252, %bb.
   store volatile i64 %i.ny, ptr %i.m, align 8, !tbaa !51
   br label %.thread277
 
-.thread277:                                       ; preds = %bb.bt, %bb.bs, %.preheader289, %pmix_obj_new_tma.exit248, %pmix_obj_new_tma.exit241, %._crit_edge, %pmix_obj_new_tma.exit255
-  %.7280 = phi i32 [ %.0139347, %pmix_obj_new_tma.exit255 ], [ %.0139347, %._crit_edge ], [ %.4, %bb.bs ], [ %.3, %pmix_obj_new_tma.exit241 ], [ %.2342, %pmix_obj_new_tma.exit248 ], [ %.0139347, %.preheader289 ], [ %.0139347, %bb.bt ]
+.thread277:                                       ; preds = %bb.bt, %.loopexit, %bb.bs, %.preheader289, %pmix_obj_new_tma.exit248, %pmix_obj_new_tma.exit241, %pmix_obj_new_tma.exit255
+  %.7280 = phi i32 [ %.0139347, %pmix_obj_new_tma.exit255 ], [ %.0139347, %.preheader289 ], [ %.4, %bb.bs ], [ %.3, %pmix_obj_new_tma.exit241 ], [ %.2342, %pmix_obj_new_tma.exit248 ], [ %.0139347, %.loopexit ], [ %.0139347, %bb.bt ]
   %i.nz = add nuw i64 %.0148345, 1                ; 2 uses
   %exitcond.not = icmp eq i64 %i.nz, %1
   br i1 %exitcond.not, label %._crit_edge348, label %.preheader290, !llvm.loop !20

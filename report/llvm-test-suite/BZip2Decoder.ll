@@ -205,14 +205,18 @@ bb.f:                                             ; preds = %bb.c
   tail call void @__cxa_end_catch()
   br label %.loopexit
 
-.lr.ph.split:                                     ; preds = %.lr.ph, %bb.h
-  %i.ba = phi i32 [ %i.bq, %bb.h ], [ %i.ae, %.lr.ph ]
-  %indvars.iv70 = phi i64 [ %indvars.iv.next71, %bb.h ], [ 0, %.lr.ph ] ; 3 uses
+.lr.ph.splitthread-pre-split:                     ; preds = %bb.h
+  %.pr = load i8, ptr %i.q, align 4, !tbaa !92
+  br label %.lr.ph.split
+
+.lr.ph.split:                                     ; preds = %.lr.ph, %.lr.ph.splitthread-pre-split
+  %1 = phi i8 [ %.pr, %.lr.ph.splitthread-pre-split ], [ 1, %.lr.ph ]
+  %i.ba = phi i32 [ %i.bq, %.lr.ph.splitthread-pre-split ], [ %i.ae, %.lr.ph ]
+  %indvars.iv70 = phi i64 [ %indvars.iv.next71, %.lr.ph.splitthread-pre-split ], [ 0, %.lr.ph ] ; 3 uses
   %i.bb = load ptr, ptr %i.g, align 8, !tbaa !86
   %i.bc = getelementptr inbounds nuw [608 x i8], ptr %i.bb, i64 %indvars.iv70 ; 6 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %i.bc, i64 8
   store ptr %0, ptr %i.bd, align 8, !tbaa !95
-  %1 = load i8, ptr %i.q, align 4, !tbaa !92, !range !93, !noundef !94
   %i.be = trunc nuw i8 %1 to i1
   br i1 %i.be, label %bb.g, label %bb.h
 
@@ -264,7 +268,7 @@ bb.h:                                             ; preds = %_ZN9NCompress6NBZip
   %indvars.iv.next71 = add nuw nsw i64 %indvars.iv70, 1 ; 2 uses
   %i.br = zext i32 %i.bq to i64
   %i.bs = icmp samesign ult i64 %indvars.iv.next71, %i.br
-  br i1 %i.bs, label %.lr.ph.split, label %.loopexit, !llvm.loop !144
+  br i1 %i.bs, label %.lr.ph.splitthread-pre-split, label %.loopexit, !llvm.loop !144
 
 _ZN9NCompress6NBZip26CState6CreateEv.exit.thread: ; preds = %_ZN8NWindows16NSynchronization15CAutoResetEvent18CreateIfNotCreatedEv.exit25.i, %_ZN8NWindows16NSynchronization15CAutoResetEvent18CreateIfNotCreatedEv.exit28.i, %_ZN8NWindows16NSynchronization15CAutoResetEvent18CreateIfNotCreatedEv.exit.i, %_ZN9NCompress6NBZip26CState6CreateEv.exit
   %.4.i55 = phi i32 [ %i.bp, %_ZN9NCompress6NBZip26CState6CreateEv.exit ], [ %i.bk, %_ZN8NWindows16NSynchronization15CAutoResetEvent18CreateIfNotCreatedEv.exit25.i ], [ %i.bn, %_ZN8NWindows16NSynchronization15CAutoResetEvent18CreateIfNotCreatedEv.exit28.i ], [ %i.bh, %_ZN8NWindows16NSynchronization15CAutoResetEvent18CreateIfNotCreatedEv.exit.i ]

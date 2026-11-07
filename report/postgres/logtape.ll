@@ -202,13 +202,18 @@ bb.j:                                             ; preds = %bb.i
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.ad, i8 0, i64 16, i1 false)
   br label %bb.p
 
-.lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %ltsReleaseBlock.exit
-  %indvars.iv = phi i64 [ %i.ao, %.lr.ph.split.preheader ], [ %indvars.iv.next, %ltsReleaseBlock.exit ] ; 3 uses
+.lr.ph.splitthread-pre-split:                     ; preds = %ltsReleaseBlock.exit
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %.pr = load i8, ptr %i.ai, align 8
+  br label %.lr.ph.split
+
+.lr.ph.split:                                     ; preds = %.lr.ph.splitthread-pre-split, %.lr.ph.split.preheader
+  %2 = phi i8 [ %.pr, %.lr.ph.splitthread-pre-split ], [ 0, %.lr.ph.split.preheader ]
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph.splitthread-pre-split ], [ %i.ao, %.lr.ph.split.preheader ] ; 3 uses
   %i.aq = load ptr, ptr %i.ad, align 8
   %i.ar = getelementptr [8 x i8], ptr %i.aq, i64 %indvars.iv
   %i.as = getelementptr i8, ptr %i.ar, i64 -8
   %i.at = load i64, ptr %i.as, align 8            ; 2 uses
-  %2 = load i8, ptr %i.ai, align 8, !range !4, !noundef !5
   %i.au = trunc nuw i8 %2 to i1
   br i1 %i.au, label %ltsReleaseBlock.exit, label %bb.k
 
@@ -266,9 +271,8 @@ bb.o:                                             ; preds = %.lr.ph.i
   br label %ltsReleaseBlock.exit
 
 ltsReleaseBlock.exit:                             ; preds = %.lr.ph.split, %bb.l, %.thread.i
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1
   %i.bm = icmp sgt i64 %indvars.iv, 1
-  br i1 %i.bm, label %.lr.ph.split, label %._crit_edge.loopexit36, !llvm.loop !10
+  br i1 %i.bm, label %.lr.ph.splitthread-pre-split, label %._crit_edge.loopexit36, !llvm.loop !10
 
 bb.p:                                             ; preds = %._crit_edge, %bb.i
   ret void

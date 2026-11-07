@@ -61,7 +61,7 @@ target triple = "x86_64-pc-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define dso_local void @rpc_queue_init() local_unnamed_addr #0 {
 bb.a:
-  %i.a = alloca i64, align 8                      ; 12 uses
+  %i.a = alloca i64, align 8                      ; 13 uses
   %i.b = alloca i8, align 1                       ; 5 uses
   %i.c = alloca ptr, align 8                      ; 6 uses
   %i.d = alloca ptr, align 8                      ; 6 uses
@@ -185,7 +185,8 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.o
   store i8 0, ptr %i.z, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
-  br label %_apply_config.exit
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
+  br label %bb.aj
 
 .critedge.i:                                      ; preds = %bb.o
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #9
@@ -296,13 +297,13 @@ bb.ai:                                            ; preds = %bb.ah
   store i32 %i.bm, ptr %i.bn, align 4
   br label %_apply_config.exit
 
-_apply_config.exit:                               ; preds = %bb.k, %bb.l, %bb.m, %bb.p, %bb.ag, %bb.ah, %bb.ai
+_apply_config.exit:                               ; preds = %bb.k, %bb.l, %bb.m, %bb.ag, %bb.ah, %bb.ai
+  %.pr = load i8, ptr %i.z, align 1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #9
-  %0 = load i8, ptr %i.z, align 1, !range !8, !noundef !9
-  %i.bo = trunc nuw i8 %0 to i1
+  %i.bo = trunc nuw i8 %.pr to i1
   br i1 %i.bo, label %bb.an, label %bb.aj
 
-bb.aj:                                            ; preds = %_apply_config.exit
+bb.aj:                                            ; preds = %bb.p, %_apply_config.exit
   %i.bp = trunc nuw i8 %i.aa to i1
   br i1 %i.bp, label %bb.ak, label %bb.al
 

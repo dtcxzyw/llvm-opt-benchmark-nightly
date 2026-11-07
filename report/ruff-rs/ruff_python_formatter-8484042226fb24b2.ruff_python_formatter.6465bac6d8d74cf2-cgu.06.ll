@@ -204,7 +204,7 @@ _RNCNvMs4_NtNtCs8CpBcHC8tKo_21ruff_python_formatter6string9docstringNtB7_14CodeE
 
 bb.d:                                             ; preds = %.loopexit.thread, %.loopexit
   %.sroa.0.0.i22 = phi i64 [ 0, %.loopexit.thread ], [ %.sroa.03.013.i, %.loopexit ] ; 3 uses
-  %i.be = sub nuw nsw i64 %i.h, %.sroa.0.0.i22    ; 5 uses
+  %i.be = sub nuw nsw i64 %i.h, %.sroa.0.0.i22    ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !1008
   invoke void @_RNvMs4_NtCscdodAO9FK5_5alloc7raw_vecNtB5_11RawVecInner15try_allocate_inCs8CpBcHC8tKo_21ruff_python_formatter(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.a, i64 noundef range(i64 -164703072086692425, 164703072086692426) %i.be, i1 noundef zeroext false, i64 noundef 8, i64 noundef 56)
           to label %.noexc unwind label %bb.k
@@ -254,6 +254,8 @@ bb.g:                                             ; preds = %.noexc
 bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
+  %2 = icmp samesign ult i64 %i.be, 164703072086692426
+  call void @llvm.assume(i1 %2)
   %i.bs = getelementptr inbounds nuw [56 x i8], ptr %i.bl, i64 %i.be
   store ptr %i.bl, ptr %i.b, align 8
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8

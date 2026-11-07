@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.u, %bb.w, %bb.v, %bb.t, %bb.s, %bb.r, %bb.q
   %i.cr = getelementptr i8, ptr %0, i64 692
   %i.cs = load i8, ptr %i.cr, align 4, !tbaa !381
-  %i.ct = lshr i8 %i.cs, 5                        ; 6 uses
+  %i.ct = lshr i8 %i.cs, 5                        ; 2 uses
   %i.cu = load ptr, ptr %.sroa.13.0..sroa_idx, align 8, !tbaa !398 ; 4 uses
   %i.cv = load ptr, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !400 ; 2 uses
   %i.cw = ptrtoint ptr %i.cv to i64               ; 2 uses
@@ -239,7 +239,7 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.di, label %bb.ab, label %bb.ao
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.dj = load ptr, ptr %.sroa.677.0..sroa_idx, align 8, !tbaa !397 ; 5 uses
+  %i.dj = load ptr, ptr %.sroa.677.0..sroa_idx, align 8, !tbaa !397 ; 6 uses
   %i.dk = getelementptr i8, ptr %i.dj, i64 %i.dc  ; 2 uses
   %i.dl = getelementptr i8, ptr %i.dk, i64 -4     ; 2 uses
   %.not16.i227 = icmp ugt ptr %i.dj, %i.dl
@@ -334,18 +334,23 @@ bb.am:                                            ; preds = %.loopexit262
 bb.an:                                            ; preds = %bb.am
   %i.eq = getelementptr i8, ptr %0, i64 694
   %i.er = load i8, ptr %i.eq, align 2, !tbaa !384, !range !375, !noundef !376
-  %i.es = trunc nuw i8 %i.er to i1
-  %spec.select = select i1 %i.es, i8 %i.ct, i8 1
-  br label %bb.ao
+  %4 = trunc nuw i8 %i.er to i1
+  %.not260 = xor i1 %4, true
+  %i.es = trunc i8 %i.ct to i1
+  %or.cond = select i1 %.not260, i1 true, i1 %i.es
+  br i1 %or.cond, label %bb.ap, label %.thread
 
-bb.ao:                                            ; preds = %bb.an, %bb.am, %.loopexit262, %bb.aa, %bb.z, %next_newline.exit
-  %.1195 = phi i8 [ %i.ct, %next_newline.exit ], [ %i.ct, %bb.aa ], [ %i.ct, %bb.z ], [ %i.ct, %.loopexit262 ], [ %spec.select, %bb.an ], [ %i.ct, %bb.am ]
-  %i.et = trunc i8 %.1195 to i1
-  br i1 %i.et, label %bb.ap, label %.thread
+bb.ao:                                            ; preds = %bb.am, %.loopexit262, %bb.aa, %bb.z, %next_newline.exit
+  %i.et = trunc i8 %i.ct to i1
+  br i1 %i.et, label %select.unfold..thread242_crit_edge, label %.thread
 
-bb.ap:                                            ; preds = %bb.ao
-  %4 = load ptr, ptr %.sroa.677.0..sroa_idx, align 8, !tbaa !397 ; 3 uses
-  %i.eu = ptrtoint ptr %4 to i64
+select.unfold..thread242_crit_edge:               ; preds = %bb.ao
+  %.pre295 = load ptr, ptr %.sroa.677.0..sroa_idx, align 8, !tbaa !397
+  br label %bb.ap
+
+bb.ap:                                            ; preds = %select.unfold..thread242_crit_edge, %bb.an
+  %5 = phi ptr [ %.pre295, %select.unfold..thread242_crit_edge ], [ %i.dj, %bb.an ] ; 3 uses
+  %i.eu = ptrtoint ptr %5 to i64
   %i.ev = sub i64 %i.cw, %i.eu                    ; 2 uses
   %i.ew = icmp sgt i64 %i.ev, -1
   br i1 %i.ew, label %next_newline.exit229, label %bb.aq
@@ -355,7 +360,7 @@ bb.aq:                                            ; preds = %bb.ap
   unreachable
 
 next_newline.exit229:                             ; preds = %bb.ap
-  %i.ex = tail call ptr @memchr(ptr noundef readonly %4, i32 noundef 10, i64 noundef %i.ev) #29 ; 2 uses
+  %i.ex = tail call ptr @memchr(ptr noundef readonly %5, i32 noundef 10, i64 noundef %i.ev) #29 ; 2 uses
   %.not220274 = icmp eq ptr %i.ex, null
   br i1 %.not220274, label %._crit_edge277, label %.lr.ph276
 
@@ -481,13 +486,13 @@ bb.bd:                                            ; preds = %bb.bc
   br label %._crit_edge277
 
 ._crit_edge277:                                   ; preds = %._crit_edge277.loopexit, %next_newline.exit229
-  %i.gl = phi ptr [ %.pre293, %._crit_edge277.loopexit ], [ %4, %next_newline.exit229 ] ; 2 uses
+  %i.gl = phi ptr [ %.pre293, %._crit_edge277.loopexit ], [ %5, %next_newline.exit229 ] ; 2 uses
   %i.gm = getelementptr i8, ptr %0, i64 472
   %i.gn = tail call zeroext i1 @pm_diagnostic_list_append(ptr noundef %i.gm, ptr noundef %i.gl, ptr noundef %i.gl, i32 noundef 260) #27 ; 0 uses
   tail call void @pm_newline_list_clear(ptr noundef %i.j) #27
   br label %.thread
 
-.thread:                                          ; preds = %bb.af, %pm_parser_warn_shebang_carriage_return.exit.thread, %bb.ak, %bb.al, %pm_parser_warn_shebang_carriage_return.exit, %.thread254, %._crit_edge277, %bb.ao
+.thread:                                          ; preds = %bb.af, %bb.an, %pm_parser_warn_shebang_carriage_return.exit.thread, %bb.ak, %bb.al, %pm_parser_warn_shebang_carriage_return.exit, %.thread254, %._crit_edge277, %bb.ao
   %i.go = load ptr, ptr %.sroa.1581.0..sroa_idx, align 8, !tbaa !399 ; 2 uses
   %i.gp = load ptr, ptr %.sroa.7.0..sroa_idx, align 8, !tbaa !400
   %i.gq = ptrtoint ptr %i.gp to i64

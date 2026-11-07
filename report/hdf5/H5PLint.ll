@@ -201,7 +201,7 @@ bb.q:                                             ; preds = %bb.p
   br label %bb.t
 
 bb.r:                                             ; preds = %bb.p
-  %.pre13 = load i8, ptr %i.a, align 1, !tbaa !9, !range !10
+  %.pre13 = load i8, ptr %i.a, align 1, !tbaa !9
   %i.aw = trunc nuw i8 %.pre13 to i1
   br i1 %i.aw, label %.thread, label %bb.s
 
@@ -314,7 +314,7 @@ bb.m:                                             ; preds = %bb.l
   store i32 0, ptr %4, align 4, !tbaa !13
   br label %bb.n
 
-bb.n:                                             ; preds = %bb.m, %bb.l
+bb.n:                                             ; preds = %bb.l, %bb.m
   store ptr %i.r, ptr %5, align 8, !tbaa !17
   store i8 1, ptr %3, align 1, !tbaa !9
   br label %.thread.thread.a
@@ -363,7 +363,7 @@ bb.u:                                             ; preds = %bb.t
 bb.v:                                             ; preds = %bb.t
   %i.am = load i8, ptr %3, align 1, !tbaa !9, !range !10, !noundef !11
   %i.an = trunc nuw i8 %i.am to i1
-  br i1 %i.an, label %bb.w, label %.thread.thread134
+  br i1 %i.an, label %bb.w, label %bb.al
 
 bb.w:                                             ; preds = %bb.v
   br i1 %.not90, label %bb.y, label %bb.x
@@ -414,7 +414,7 @@ bb.ae:                                            ; preds = %bb.ad
 bb.af:                                            ; preds = %bb.ad
   %i.bb = load i8, ptr %3, align 1, !tbaa !9, !range !10, !noundef !11
   %i.bc = trunc nuw i8 %i.bb to i1
-  br i1 %i.bc, label %bb.ag, label %.thread.thread134
+  br i1 %i.bc, label %bb.ag, label %bb.al
 
 bb.ag:                                            ; preds = %bb.af
   br i1 %.not90, label %bb.ai, label %bb.ah
@@ -434,12 +434,12 @@ bb.aj:                                            ; preds = %bb.h
   br label %.thread.thread134
 
 .thread:                                          ; preds = %bb.k
-  %.pre117 = load i8, ptr %3, align 1, !tbaa !9, !range !10
+  %.pre117 = load i8, ptr %3, align 1, !tbaa !9
   %i.bg = trunc nuw i8 %.pre117 to i1
-  br i1 %i.bg, label %.thread.thread.a, label %.thread.thread134
+  br i1 %i.bg, label %.thread.thread.a, label %bb.al
 
-.thread.thread.a:                                 ; preds = %bb.ai, %bb.y, %bb.n, %.thread
-  %.6131 = phi ptr [ %2, %.thread ], [ %.473, %bb.ai ], [ %.271, %bb.y ], [ %.069129, %bb.n ]
+.thread.thread.a:                                 ; preds = %bb.y, %bb.ai, %bb.n, %.thread
+  %.6131 = phi ptr [ %.069129, %bb.n ], [ %2, %.thread ], [ %.271, %bb.y ], [ %.473, %bb.ai ]
   %i.bh = call i32 @H5PL__add_plugin(i32 noundef %i.q, ptr noundef nonnull %.6131, ptr noundef nonnull %i.g) #7
   %.not96 = icmp eq i32 %i.bh, 0
   br i1 %.not96, label %.thread.thread134, label %bb.ak
@@ -450,13 +450,14 @@ bb.ak:                                            ; preds = %.thread.thread.a
   %i.bk = call i32 (ptr, ptr, i32, i64, i64, ptr, ...) @H5E_printf_stack(ptr noundef nonnull @.str.2, ptr noundef nonnull @__func__.H5PL__open, i32 noundef 481, i64 noundef %i.bi, i64 noundef %i.bj, ptr noundef nonnull @.str.23) #7 ; 0 uses
   br label %.thread.thread134
 
-.thread.thread134:                                ; preds = %bb.af, %bb.v, %bb.aa, %bb.ae, %bb.q, %bb.u, %bb.o, %bb.g, %bb.f, %bb.e, %.thread, %.thread.thread.a, %bb.ak, %bb.aj
-  %.4 = phi i32 [ -1, %bb.ae ], [ -1, %bb.u ], [ 0, %bb.e ], [ 0, %bb.f ], [ -1, %bb.aj ], [ -1, %bb.ak ], [ 0, %.thread.thread.a ], [ 0, %.thread ], [ -1, %bb.o ], [ 0, %bb.g ], [ -1, %bb.q ], [ -1, %bb.aa ], [ 0, %bb.v ], [ 0, %bb.af ] ; 3 uses
-  %i.bl = load i8, ptr %3, align 1, !tbaa !9, !range !10, !noundef !11
+.thread.thread134:                                ; preds = %bb.aa, %bb.ae, %bb.q, %bb.u, %bb.o, %bb.g, %bb.f, %bb.e, %.thread.thread.a, %bb.ak, %bb.aj
+  %.4.ph = phi i32 [ -1, %bb.aa ], [ -1, %bb.q ], [ 0, %bb.g ], [ -1, %bb.o ], [ 0, %.thread.thread.a ], [ -1, %bb.ak ], [ -1, %bb.aj ], [ 0, %bb.f ], [ 0, %bb.e ], [ -1, %bb.u ], [ -1, %bb.ae ] ; 2 uses
+  %i.bl = load i8, ptr %3, align 1, !tbaa !9
   %i.bm = trunc nuw i8 %i.bl to i1
   br i1 %i.bm, label %H5PL__close.exit, label %bb.al
 
-bb.al:                                            ; preds = %.thread.thread134
+bb.al:                                            ; preds = %.thread, %bb.af, %bb.v, %.thread.thread134
+  %.4139 = phi i32 [ %.4.ph, %.thread.thread134 ], [ 0, %bb.v ], [ 0, %bb.af ], [ 0, %.thread ] ; 2 uses
   %i.bn = load i8, ptr @H5PL_init_g, align 1, !tbaa !9, !range !10, !noundef !11
   %i.bo = trunc nuw i8 %i.bn to i1
   %i.bp = load i8, ptr @H5_libterm_g, align 1, !range !10
@@ -470,7 +471,7 @@ bb.am:                                            ; preds = %bb.al
   br label %H5PL__close.exit
 
 H5PL__close.exit:                                 ; preds = %bb.am, %bb.al, %.thread113, %bb.a, %.thread.thread134
-  %.5 = phi i32 [ 0, %bb.a ], [ 0, %.thread113 ], [ %.4, %.thread.thread134 ], [ %.4, %bb.al ], [ %.4, %bb.am ]
+  %.5 = phi i32 [ 0, %bb.a ], [ 0, %.thread113 ], [ %.4.ph, %.thread.thread134 ], [ %.4139, %bb.al ], [ %.4139, %bb.am ]
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #7
   ret i32 %.5
 }

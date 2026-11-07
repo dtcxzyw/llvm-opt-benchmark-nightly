@@ -202,7 +202,7 @@ bb.a:
   %i.e = alloca [40 x i8], align 8                ; 29 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   %i.f = load atomic i64, ptr @_RNvNtCs6CpVowoi7NE_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
-  %i.g = icmp ugt i64 %i.f, 2                     ; 5 uses
+  %i.g = icmp ugt i64 %i.f, 2                     ; 4 uses
   br i1 %i.g, label %bb.c, label %bb.d
 
 bb.b:                                             ; preds = %bb.l
@@ -210,10 +210,15 @@ bb.b:                                             ; preds = %bb.l
           cleanup                                 ; 3 uses
   br i1 %i.g, label %common.resume, label %bb.au
 
-bb.c:                                             ; preds = %bb.j, %bb.k, %bb.a
+3:                                                ; preds = %bb.j, %bb.k
+  %4 = load i64, ptr %1, align 8, !range !4, !noundef !5
+  %.not32 = icmp eq i64 %4, -1
+  br i1 %.not32, label %bb.m, label %bb.l
+
+bb.c:                                             ; preds = %bb.a
   %i.h = load i64, ptr %1, align 8, !range !4, !noundef !5
   %.not32.a = icmp eq i64 %i.h, -1
-  br i1 %.not32.a, label %bb.m, label %bb.l
+  br i1 %.not32.a, label %5, label %bb.l
 
 bb.d:                                             ; preds = %bb.a
   %i.i = load atomic i64, ptr @_RNvNtCs6CpVowoi7NE_12tracing_core8metadata9MAX_LEVEL monotonic, align 8
@@ -264,25 +269,28 @@ bb.j:                                             ; preds = %bb.i, %bb.e
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.e, ptr noundef nonnull align 8 dereferenceable(40) %i.c, i64 40, i1 false)
   %i.s = load i64, ptr %i.e, align 8, !range !6, !noundef !5
   %.not31 = icmp eq i64 %i.s, 2
-  br i1 %.not31, label %bb.c, label %bb.k
+  br i1 %.not31, label %3, label %bb.k
 
 bb.k:                                             ; preds = %bb.j
   %i.t = getelementptr inbounds nuw i8, ptr %i.e, i64 24
   invoke void @_RNvMs2_NtCs6CpVowoi7NE_12tracing_core10dispatcherNtB5_8Dispatch5enter(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.e, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.t)
-          to label %bb.c unwind label %bb.o
+          to label %3 unwind label %bb.o
 
-bb.l:                                             ; preds = %bb.c
+bb.l:                                             ; preds = %bb.c, %3
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.u = getelementptr inbounds nuw i8, ptr %2, i64 1792
   %i.v = invoke noundef nonnull ptr @_RNvMs_NtCs3v5ql5U6hxj_6fontir13orchestrationINtB4_11ContextItemNtNtCshxhuDJfZv4T_6fontbe13orchestration9AnyWorkIdINtNtCsgCecv3eZDcN_5alloc3vec3VechEE3getCskL3QWxtyvYA_5fontc(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.u)
           to label %bb.w unwind label %bb.b       ; 2 uses
 
-bb.m:                                             ; preds = %bb.c
+5:                                                ; preds = %bb.c
   store i64 -1, ptr %0, align 8
-  %i.w = load i64, ptr %i.e, align 8, !range !6
+  br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCseSYDGaa5U8h_7tracing4span4SpanECskL3QWxtyvYA_5fontc.exit
+
+bb.m:                                             ; preds = %3
+  store i64 -1, ptr %0, align 8
+  %i.w = load i64, ptr %i.e, align 8, !range !6, !noundef !5
   %.not.i.i = icmp eq i64 %i.w, 2
-  %or.cond = select i1 %i.g, i1 true, i1 %.not.i.i
-  br i1 %or.cond, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCseSYDGaa5U8h_7tracing4span4SpanECskL3QWxtyvYA_5fontc.exit, label %bb.n
+  br i1 %.not.i.i, label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCseSYDGaa5U8h_7tracing4span4SpanECskL3QWxtyvYA_5fontc.exit, label %bb.n
 
 bb.n:                                             ; preds = %bb.m
   %i.x = getelementptr inbounds nuw i8, ptr %i.e, i64 24 ; 2 uses
@@ -294,7 +302,7 @@ bb.o:                                             ; preds = %bb.k, %bb.n
           cleanup
   br label %.thread68
 
-_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCseSYDGaa5U8h_7tracing4span4SpanECskL3QWxtyvYA_5fontc.exit: ; preds = %bb.t, %bb.s, %bb.r, %.thread66, %bb.m
+_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCseSYDGaa5U8h_7tracing4span4SpanECskL3QWxtyvYA_5fontc.exit: ; preds = %bb.m, %bb.t, %bb.s, %bb.r, %.thread66, %5
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   br label %bb.v
 

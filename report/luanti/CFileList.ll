@@ -204,7 +204,7 @@ _ZN2io14SFileListEntryaSEOS0_.exit10:             ; preds = %.critedge, %bb.i
 define linkonce_odr void @_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS3_SaIS3_EEEENS0_5__ops15_Iter_less_iterEEvT_SB_SB_SB_T0_(ptr %0, ptr %1, ptr %2, ptr %3) local_unnamed_addr #2 comdat personality ptr @__gxx_personality_v0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %1, i64 76
-  %i.b = load i8, ptr %i.a, align 4, !tbaa !51, !range !44, !noundef !45 ; 6 uses
+  %i.b = load i8, ptr %i.a, align 4, !tbaa !51, !range !44, !noundef !45 ; 8 uses
   %i.c = getelementptr inbounds nuw i8, ptr %2, i64 76
   %i.d = load i8, ptr %i.c, align 4, !tbaa !51, !range !44, !noundef !45 ; 5 uses
   %.not.i.i = icmp eq i8 %i.b, %i.d
@@ -212,12 +212,12 @@ bb.a:
 
 .split:                                           ; preds = %bb.a
   %i.e = trunc nuw i8 %i.b to i1
-  br i1 %i.e, label %bb.f, label %bb.q
+  br i1 %i.e, label %bb.f, label %.split80.a
 
 bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.g = load ptr, ptr %i.f, align 8, !tbaa !17   ; 2 uses
-  %i.h = load i8, ptr %i.g, align 1, !tbaa !18    ; 2 uses
+  %i.g = load ptr, ptr %i.f, align 8, !tbaa !17   ; 3 uses
+  %i.h = load i8, ptr %i.g, align 1, !tbaa !18    ; 3 uses
   %.not27.i.i.i = icmp eq i8 %i.h, 0
   br i1 %.not27.i.i.i, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit, label %.lr.ph.i.i.i
 
@@ -406,24 +406,35 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListE
 bb.p:                                             ; preds = %.critedge.loopexit.i.i.i48, %.split79, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit51
   br label %bb.ab
 
-bb.q:                                             ; preds = %.critedge.loopexit.i.i.i, %.split, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit
+bb.q:                                             ; preds = %.critedge.loopexit.i.i.i, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit
   %i.cs = getelementptr inbounds nuw i8, ptr %3, i64 76
   %i.ct = load i8, ptr %i.cs, align 4, !tbaa !51, !range !44, !noundef !45 ; 2 uses
   %.not.i.i52 = icmp eq i8 %i.b, %i.ct
-  br i1 %.not.i.i52, label %bb.r, label %.split80.a
+  br i1 %.not.i.i52, label %7, label %.split80
 
-.split80.a:                                       ; preds = %bb.q
-  %4 = trunc nuw i8 %i.b to i1
-  br i1 %4, label %bb.ab, label %bb.v
+.split80.a:                                       ; preds = %.split
+  %4 = getelementptr inbounds nuw i8, ptr %3, i64 76
+  %5 = load i8, ptr %4, align 4, !tbaa !51, !range !44, !noundef !45
+  %.not.i.i5282 = icmp eq i8 %5, 0
+  br i1 %.not.i.i5282, label %bb.r, label %bb.v
 
-bb.r:                                             ; preds = %bb.q
+bb.r:                                             ; preds = %.split80.a
   %i.cu = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.cv = load ptr, ptr %i.cu, align 8, !tbaa !17 ; 2 uses
-  %i.cw = load i8, ptr %i.cv, align 1, !tbaa !18  ; 2 uses
-  %.not27.i.i.i54 = icmp eq i8 %i.cw, 0
+  %i.cw = load i8, ptr %i.cv, align 1, !tbaa !18
+  br label %7
+
+.split80:                                         ; preds = %bb.q
+  %6 = trunc nuw i8 %i.b to i1
+  br i1 %6, label %bb.ab, label %bb.v
+
+7:                                                ; preds = %bb.r, %bb.q
+  %8 = phi i8 [ %i.cw, %bb.r ], [ %i.h, %bb.q ]   ; 2 uses
+  %9 = phi ptr [ %i.cv, %bb.r ], [ %i.g, %bb.q ]
+  %.not27.i.i.i54 = icmp eq i8 %8, 0
   br i1 %.not27.i.i.i54, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit64, label %.lr.ph.i.i.i55
 
-.lr.ph.i.i.i55:                                   ; preds = %bb.r
+.lr.ph.i.i.i55:                                   ; preds = %7
   %i.cx = getelementptr inbounds nuw i8, ptr %3, i64 32
   %i.cy = load ptr, ptr %i.cx, align 8, !tbaa !17
   br label %bb.t
@@ -431,13 +442,13 @@ bb.r:                                             ; preds = %bb.q
 bb.s:                                             ; preds = %bb.u
   %i.cz = add i32 %.01628.i.i.i56, 1              ; 2 uses
   %i.da = zext i32 %i.cz to i64                   ; 2 uses
-  %i.db = getelementptr inbounds nuw i8, ptr %i.cv, i64 %i.da
+  %i.db = getelementptr inbounds nuw i8, ptr %9, i64 %i.da
   %i.dc = load i8, ptr %i.db, align 1, !tbaa !18  ; 2 uses
   %.not.i.i.i62 = icmp eq i8 %i.dc, 0
   br i1 %.not.i.i.i62, label %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit64, label %bb.t, !llvm.loop !3
 
 bb.t:                                             ; preds = %bb.s, %.lr.ph.i.i.i55
-  %i.dd = phi i8 [ %i.cw, %.lr.ph.i.i.i55 ], [ %i.dc, %bb.s ]
+  %i.dd = phi i8 [ %8, %.lr.ph.i.i.i55 ], [ %i.dc, %bb.s ]
   %i.de = phi i64 [ 0, %.lr.ph.i.i.i55 ], [ %i.da, %bb.s ]
   %.01628.i.i.i56 = phi i32 [ 0, %.lr.ph.i.i.i55 ], [ %i.cz, %bb.s ]
   %i.df = getelementptr inbounds nuw i8, ptr %i.cy, i64 %i.de
@@ -463,7 +474,7 @@ bb.u:                                             ; preds = %bb.t
   %i.dp = icmp slt i32 %i.dk, %i.do
   br i1 %i.dp, label %bb.ab, label %bb.v
 
-_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit64: ; preds = %bb.s, %bb.t, %bb.r
+_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit64: ; preds = %bb.s, %bb.t, %7
   %i.dq = getelementptr inbounds nuw i8, ptr %1, i64 40
   %i.dr = load i64, ptr %i.dq, align 8, !tbaa !34
   %i.ds = trunc i64 %i.dr to i32
@@ -473,8 +484,9 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListE
   %i.dw = icmp ult i32 %i.ds, %i.dv
   br i1 %i.dw, label %bb.ab, label %bb.v
 
-bb.v:                                             ; preds = %.critedge.loopexit.i.i.i61, %.split80.a, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit64
-  %.not.i.i65 = icmp eq i8 %i.d, %i.ct
+bb.v:                                             ; preds = %.split80.a, %.critedge.loopexit.i.i.i61, %.split80, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit64
+  %10 = phi i8 [ %i.b, %.critedge.loopexit.i.i.i61 ], [ %i.ct, %.split80 ], [ %i.b, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit64 ], [ 1, %.split80.a ]
+  %.not.i.i65 = icmp eq i8 %i.d, %10
   br i1 %.not.i.i65, label %bb.w, label %.split81
 
 .split81:                                         ; preds = %bb.v
@@ -541,8 +553,8 @@ _ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListE
 bb.aa:                                            ; preds = %.critedge.loopexit.i.i.i74, %.split81, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit77
   br label %bb.ab
 
-bb.ab:                                            ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit77, %.split81, %.critedge.loopexit.i.i.i74, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit64, %.split80.a, %.critedge.loopexit.i.i.i61, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit51, %.split79, %.critedge.loopexit.i.i.i48, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit38, %.split78, %.critedge.loopexit.i.i.i35, %bb.aa, %bb.p
-  %.sink = phi ptr [ %3, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit51 ], [ %2, %bb.aa ], [ %1, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit64 ], [ %2, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit38 ], [ %1, %bb.p ], [ %2, %.critedge.loopexit.i.i.i35 ], [ %2, %.split78 ], [ %3, %.critedge.loopexit.i.i.i48 ], [ %3, %.split79 ], [ %1, %.critedge.loopexit.i.i.i61 ], [ %1, %.split80.a ], [ %3, %.critedge.loopexit.i.i.i74 ], [ %3, %.split81 ], [ %3, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit77 ]
+bb.ab:                                            ; preds = %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit77, %.split81, %.critedge.loopexit.i.i.i74, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit64, %.split80, %.critedge.loopexit.i.i.i61, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit51, %.split79, %.critedge.loopexit.i.i.i48, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit38, %.split78, %.critedge.loopexit.i.i.i35, %bb.aa, %bb.p
+  %.sink = phi ptr [ %3, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit51 ], [ %2, %bb.aa ], [ %1, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit64 ], [ %2, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit38 ], [ %1, %bb.p ], [ %2, %.critedge.loopexit.i.i.i35 ], [ %2, %.split78 ], [ %3, %.critedge.loopexit.i.i.i48 ], [ %3, %.split79 ], [ %1, %.critedge.loopexit.i.i.i61 ], [ %1, %.split80 ], [ %3, %.critedge.loopexit.i.i.i74 ], [ %3, %.split81 ], [ %3, %_ZNK9__gnu_cxx5__ops15_Iter_less_iterclINS_17__normal_iteratorIPN2io14SFileListEntryESt6vectorIS5_SaIS5_EEEESA_EEbT_T0_.exit77 ]
   tail call void @_ZSt4swapIN2io14SFileListEntryEENSt9enable_ifIXsr6__and_ISt6__not_ISt15__is_tuple_likeIT_EESt21is_move_constructibleIS5_ESt18is_move_assignableIS5_EEE5valueEvE4typeERS5_SE_(ptr noundef nonnull align 8 dereferenceable(77) %0, ptr noundef nonnull align 8 dereferenceable(77) %.sink)
   ret void
 }

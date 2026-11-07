@@ -205,7 +205,7 @@ bb.v:                                             ; preds = %bb.u, %bb.t
 
 bb.w:                                             ; preds = %.thread.i.i, %bb.v
   %i.fd = phi ptr [ %i.fc, %.thread.i.i ], [ %i.ey, %bb.v ] ; 2 uses
-  %i.fe = load i8, ptr %5, align 8, !range !6, !noundef !7
+  %i.fe = load i8, ptr %5, align 8, !range !6, !noundef !7 ; 2 uses
   store i8 %i.fe, ptr %i.fd, align 8
   br label %bb.ad
 
@@ -253,7 +253,7 @@ bb.ab:                                            ; preds = %bb.aa
   %i.ft = getelementptr i8, ptr %i.fs, i64 24     ; 2 uses
   %i.fu = load i32, ptr %i.ft, align 8
   %.not209.i.i = icmp eq i32 %i.fu, 0
-  br i1 %.not209.i.i, label %bb.ac, label %bb.ad
+  br i1 %.not209.i.i, label %bb.ac, label %thread-pre-split.i.i
 
 bb.ac:                                            ; preds = %bb.ab
   %i.fv = load ptr, ptr %.0.i, align 8
@@ -263,11 +263,15 @@ bb.ac:                                            ; preds = %bb.ab
   store i8 0, ptr %i.fs, align 8
   %i.fy = load ptr, ptr %i.ew, align 8
   %i.fz = call ptr @wmem_map_insert(ptr noundef %i.fy, ptr noundef nonnull %i.fs, ptr noundef nonnull %i.fs) ; 0 uses
+  br label %thread-pre-split.i.i
+
+thread-pre-split.i.i:                             ; preds = %bb.ac, %bb.ab
+  %.pr.i.i = load i8, ptr %i.fs, align 8
   br label %bb.ad
 
-bb.ad:                                            ; preds = %bb.ac, %bb.ab, %bb.w
-  %.1.ph.i.i = phi ptr [ %i.fs, %bb.ac ], [ %i.fs, %bb.ab ], [ %i.fd, %bb.w ] ; 5 uses
-  %7 = load i8, ptr %.1.ph.i.i, align 8, !range !6, !noundef !7
+bb.ad:                                            ; preds = %thread-pre-split.i.i, %bb.w
+  %7 = phi i8 [ %.pr.i.i, %thread-pre-split.i.i ], [ %i.fe, %bb.w ]
+  %.1.ph.i.i = phi ptr [ %i.fs, %thread-pre-split.i.i ], [ %i.fd, %bb.w ] ; 4 uses
   %i.ga = trunc nuw i8 %7 to i1
   br i1 %i.ga, label %bb.ae, label %bb.ah
 

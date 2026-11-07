@@ -205,8 +205,14 @@ bb.a:
   %i.cf = getelementptr inbounds [96 x i8], ptr %7, i64 %i.ce ; 3 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.cf, i64 72
   %i.ch = load i32, ptr %i.cg, align 8, !tbaa !42 ; 2 uses
-  %14 = icmp slt i32 %i.ch, 1
-  br i1 %14, label %._crit_edge.thread, label %.lr.ph
+  %14 = icmp sgt i32 %i.ch, 0
+  br i1 %14, label %.lr.ph, label %._crit_edge.thread
+
+._crit_edge.thread:                               ; preds = %bb.a
+  %15 = load i32, ptr @_ZZ26computeContactSphereConvexiiiiiPK15b3RigidBodyDataPK12b3CollidablePK22b3ConvexPolyhedronDataPK9b3Vector3PKiPK9b3GpuFaceP10b3Contact4RiiE9numChecks, align 4, !tbaa !38
+  %16 = add nsw i32 %15, 1
+  store i32 %16, ptr @_ZZ26computeContactSphereConvexiiiiiPK15b3RigidBodyDataPK12b3CollidablePK22b3ConvexPolyhedronDataPK9b3Vector3PKiPK9b3GpuFaceP10b3Contact4RiiE9numChecks, align 4, !tbaa !38
+  br label %bb.r
 
 .lr.ph:                                           ; preds = %bb.a
   %i.ci = getelementptr inbounds nuw i8, ptr %i.cf, i64 68
@@ -382,7 +388,7 @@ bb.k:                                             ; preds = %bb.d, %bb.f, %bb.i,
   %i.gd = tail call float @llvm.fmuladd.f32(float %i.gc, float %i.gc, float %i.gb)
   %i.ge = tail call noundef float @llvm.fmuladd.f32(float %i.ga, float %i.ga, float %i.gd) ; 2 uses
   %i.gf = fcmp olt float %i.ge, %i.cl
-  br i1 %i.gf, label %bb.l, label %._crit_edge.thread
+  br i1 %i.gf, label %bb.l, label %.thread268
 
 bb.l:                                             ; preds = %bb.k
   %sqrt = tail call float @llvm.sqrt.f32(float %i.ge) ; 3 uses
@@ -402,6 +408,12 @@ bb.n:                                             ; preds = %bb.c
   %i.gm = fcmp ogt float %i.cx, %.081298
   br i1 %i.gm, label %bb.j, label %.thread
 
+.thread268:                                       ; preds = %bb.k
+  %17 = load i32, ptr @_ZZ26computeContactSphereConvexiiiiiPK15b3RigidBodyDataPK12b3CollidablePK22b3ConvexPolyhedronDataPK9b3Vector3PKiPK9b3GpuFaceP10b3Contact4RiiE9numChecks, align 4, !tbaa !38
+  %18 = add nsw i32 %17, 1
+  store i32 %18, ptr @_ZZ26computeContactSphereConvexiiiiiPK15b3RigidBodyDataPK12b3CollidablePK22b3ConvexPolyhedronDataPK9b3Vector3PKiPK9b3GpuFaceP10b3Contact4RiiE9numChecks, align 4, !tbaa !38
+  br label %bb.r
+
 .thread:                                          ; preds = %bb.l, %bb.m, %bb.j, %_Z16IsPointInPolygonRK9b3Vector3PK9b3GpuFacePS0_PKiPS_.exit, %bb.n
   %.687225 = phi float [ %sqrt, %bb.m ], [ %.081298, %bb.n ], [ %i.cx, %bb.j ], [ %.081298, %_Z16IsPointInPolygonRK9b3Vector3PK9b3GpuFacePS0_PKiPS_.exit ], [ %.081298, %bb.l ] ; 3 uses
   %.sroa.0141.3224 = phi <2 x float> [ %i.gk, %bb.m ], [ %.sroa.0141.0297, %bb.n ], [ %i.cq, %bb.j ], [ %.sroa.0141.0297, %_Z16IsPointInPolygonRK9b3Vector3PK9b3GpuFacePS0_PKiPS_.exit ], [ %.sroa.0141.0297, %bb.l ] ; 5 uses
@@ -411,12 +423,6 @@ bb.n:                                             ; preds = %bb.c
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !338
-
-._crit_edge.thread:                               ; preds = %bb.k, %bb.a
-  %15 = load i32, ptr @_ZZ26computeContactSphereConvexiiiiiPK15b3RigidBodyDataPK12b3CollidablePK22b3ConvexPolyhedronDataPK9b3Vector3PKiPK9b3GpuFaceP10b3Contact4RiiE9numChecks, align 4, !tbaa !38
-  %16 = add nsw i32 %15, 1
-  store i32 %16, ptr @_ZZ26computeContactSphereConvexiiiiiPK15b3RigidBodyDataPK12b3CollidablePK22b3ConvexPolyhedronDataPK9b3Vector3PKiPK9b3GpuFaceP10b3Contact4RiiE9numChecks, align 4, !tbaa !38
-  br label %bb.r
 
 ._crit_edge:                                      ; preds = %.thread
   %i.gn = load i32, ptr @_ZZ26computeContactSphereConvexiiiiiPK15b3RigidBodyDataPK12b3CollidablePK22b3ConvexPolyhedronDataPK9b3Vector3PKiPK9b3GpuFaceP10b3Contact4RiiE9numChecks, align 4, !tbaa !38
@@ -505,7 +511,7 @@ bb.q:                                             ; preds = %bb.p
   store float 1.000000e+00, ptr %i.im, align 4, !tbaa !37
   br label %bb.r
 
-bb.r:                                             ; preds = %._crit_edge.thread, %bb.o, %bb.q, %bb.p, %.thread245, %._crit_edge
+bb.r:                                             ; preds = %._crit_edge.thread, %.thread268, %bb.o, %bb.q, %bb.p, %.thread245, %._crit_edge
   ret void
 }
 

@@ -204,21 +204,16 @@ upb_isalphanum.exit.thread.us:                    ; preds = %bb.c
   %exitcond.not = icmp eq i64 %i.r, %2
   br i1 %exitcond.not, label %._crit_edge.thread, label %.lr.ph.split.us, !llvm.loop !68
 
-._crit_edge:                                      ; preds = %upb_isalphanum.exit.thread.a
-  %4 = trunc nuw i8 %.1 to i1
-  br i1 %4, label %._crit_edge.thread51, label %._crit_edge.thread
-
-.lr.ph.split:                                     ; preds = %.lr.ph, %upb_isalphanum.exit.thread.a
-  %.033 = phi i64 [ %i.af, %upb_isalphanum.exit.thread.a ], [ 0, %.lr.ph ] ; 2 uses
-  %.02432 = phi i8 [ %.1, %upb_isalphanum.exit.thread.a ], [ 1, %.lr.ph ]
+.lr.ph.split:                                     ; preds = %.lr.ph, %.lr.ph.split.backedge
+  %.033 = phi i64 [ %.033.be, %.lr.ph.split.backedge ], [ 0, %.lr.ph ] ; 3 uses
+  %.02432 = phi i1 [ %i.u, %.lr.ph.split.backedge ], [ true, %.lr.ph ] ; 2 uses
   %i.s = getelementptr inbounds nuw i8, ptr %1, i64 %.033
   %i.t = load i8, ptr %i.s, align 1, !tbaa !34    ; 4 uses
-  %i.u = icmp eq i8 %i.t, 46
-  %5 = trunc nuw i8 %.02432 to i1                 ; 2 uses
+  %i.u = icmp eq i8 %i.t, 46                      ; 2 uses
   br i1 %i.u, label %bb.d, label %bb.e
 
 bb.d:                                             ; preds = %.lr.ph.split
-  br i1 %5, label %.split37.us, label %upb_isalphanum.exit.thread.a
+  br i1 %.02432, label %.split37.us, label %upb_isalphanum.exit.thread.a
 
 .split37.us:                                      ; preds = %.lr.ph.split.us, %bb.d, %.lr.ph.split.us.preheader
   %i.v = trunc i64 %2 to i32
@@ -231,10 +226,10 @@ bb.e:                                             ; preds = %.lr.ph.split
   %i.y = icmp ult i8 %i.x, 26
   %i.z = icmp eq i8 %i.t, 95
   %i.aa = or i1 %i.z, %i.y                        ; 2 uses
-  br i1 %5, label %bb.f, label %bb.g
+  br i1 %.02432, label %bb.f, label %bb.g
 
 bb.f:                                             ; preds = %bb.e
-  br i1 %i.aa, label %upb_isalphanum.exit.thread.a, label %.split35.us
+  br i1 %i.aa, label %upb_isalphanum.exit.thread, label %.split35.us
 
 .split35.us:                                      ; preds = %bb.f, %bb.b
   %i.ab = trunc i64 %2 to i32
@@ -245,25 +240,33 @@ bb.g:                                             ; preds = %bb.e
   %i.ac = add i8 %i.t, -48
   %i.ad = icmp ult i8 %i.ac, 10
   %or.cond28 = or i1 %i.ad, %i.aa
-  br i1 %or.cond28, label %upb_isalphanum.exit.thread.a, label %.split.us
+  br i1 %or.cond28, label %upb_isalphanum.exit.thread, label %.split.us
 
 .split.us:                                        ; preds = %bb.c, %bb.g
   %i.ae = trunc i64 %2 to i32
   tail call void (ptr, ptr, ...) @_upb_DefBuilder_Errf(ptr noundef %0, ptr noundef nonnull @.str.7, i32 noundef %i.ae, ptr noundef nonnull %1) #15
   unreachable
 
-upb_isalphanum.exit.thread.a:                     ; preds = %bb.g, %bb.f, %bb.d
-  %.1 = phi i8 [ 0, %bb.g ], [ 1, %bb.d ], [ 0, %bb.f ] ; 2 uses
+upb_isalphanum.exit.thread:                       ; preds = %bb.g, %bb.f
+  %4 = add nuw i64 %.033, 1                       ; 2 uses
+  %exitcond44.not = icmp eq i64 %4, %2
+  br i1 %exitcond44.not, label %._crit_edge.thread, label %.lr.ph.split.backedge
+
+.lr.ph.split.backedge:                            ; preds = %upb_isalphanum.exit.thread, %upb_isalphanum.exit.thread.a
+  %.033.be = phi i64 [ %i.af, %upb_isalphanum.exit.thread.a ], [ %4, %upb_isalphanum.exit.thread ]
+  br label %.lr.ph.split, !llvm.loop !69
+
+upb_isalphanum.exit.thread.a:                     ; preds = %bb.d
   %i.af = add nuw i64 %.033, 1                    ; 2 uses
   %exitcond44.not.a = icmp eq i64 %i.af, %2
-  br i1 %exitcond44.not.a, label %._crit_edge, label %.lr.ph.split, !llvm.loop !69
+  br i1 %exitcond44.not.a, label %._crit_edge.thread51, label %.lr.ph.split.backedge
 
-._crit_edge.thread51:                             ; preds = %bb.a, %._crit_edge
+._crit_edge.thread51:                             ; preds = %upb_isalphanum.exit.thread.a, %bb.a
   %i.ag = trunc i64 %2 to i32
   tail call void (ptr, ptr, ...) @_upb_DefBuilder_Errf(ptr noundef %0, ptr noundef nonnull @.str.8, i32 noundef %i.ag, ptr noundef %1) #15
   unreachable
 
-._crit_edge.thread:                               ; preds = %upb_isalphanum.exit.thread.us, %upb_isalphanum.exit.thread.us.peel, %._crit_edge
+._crit_edge.thread:                               ; preds = %upb_isalphanum.exit.thread.us, %upb_isalphanum.exit.thread, %upb_isalphanum.exit.thread.us.peel
   ret void
 }
 

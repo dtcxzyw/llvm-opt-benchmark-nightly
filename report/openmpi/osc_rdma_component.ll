@@ -204,7 +204,7 @@ bb.bt:                                            ; preds = %._crit_edge142.thre
 bb.bu:                                            ; preds = %._crit_edge142.i, %._crit_edge134.i
   %.7.i = phi ptr [ %.5.ph.i, %._crit_edge142.i ], [ %.274.i, %._crit_edge134.i ] ; 5 uses
   store i8 1, ptr %i.ey, align 16, !tbaa !187
-  %i.lh = getelementptr inbounds nuw i8, ptr %i.ab, i64 1080
+  %i.lh = getelementptr inbounds nuw i8, ptr %i.ab, i64 1080 ; 2 uses
   store ptr %.7.i, ptr %i.lh, align 8, !tbaa !115
   %i.li = getelementptr inbounds nuw i8, ptr %.7.i, i64 256
   %i.lj = load ptr, ptr %i.li, align 8, !tbaa !210
@@ -336,7 +336,9 @@ ompi_osc_rdma_query_alternate_btls.exit:          ; preds = %ompi_osc_rdma_query
   store i8 0, ptr %i.fc, align 8, !tbaa !112
   %i.nz = getelementptr inbounds nuw i8, ptr %i.ab, i64 1136
   store i32 825298433, ptr %i.nz, align 16, !tbaa !211
-  br label %ompi_osc_rdma_query_accelerated_btls.exit
+  %8 = getelementptr inbounds nuw i8, ptr %i.ab, i64 440 ; 2 uses
+  store i64 16, ptr %8, align 8, !tbaa !119
+  br label %bb.cg
 
 .loopexit:                                        ; preds = %bb.cb, %bb.bx, %bb.by
   %.040.i.ph = phi i32 [ -1, %bb.bx ], [ -3, %bb.by ], [ %i.mz, %bb.cb ]
@@ -353,31 +355,31 @@ bb.ce:                                            ; preds = %bb.cd, %.loopexit
   %i.od = call i32 @ompi_osc_rdma_free(ptr noundef %0) #16 ; 0 uses
   br label %bb.im
 
-ompi_osc_rdma_query_accelerated_btls.exit:        ; preds = %ompi_osc_rdma_query_alternate_btls.exit, %bb.bv, %bb.bu
-  %i.oe = getelementptr inbounds nuw i8, ptr %i.ab, i64 440 ; 5 uses
+ompi_osc_rdma_query_accelerated_btls.exit:        ; preds = %bb.bv, %bb.bu
+  %.pr = load i8, ptr %i.fc, align 8, !tbaa !112
+  %i.oe = getelementptr inbounds nuw i8, ptr %i.ab, i64 440 ; 4 uses
   store i64 16, ptr %i.oe, align 8, !tbaa !119
-  %8 = load i8, ptr %i.fc, align 8, !tbaa !112, !range !42, !noundef !43
-  %i.of = trunc nuw i8 %8 to i1
+  %i.of = trunc nuw i8 %.pr to i1
   br i1 %i.of, label %bb.cf, label %bb.cg
 
 bb.cf:                                            ; preds = %ompi_osc_rdma_query_accelerated_btls.exit
-  %9 = getelementptr inbounds nuw i8, ptr %i.ab, i64 1080
-  %i.og = load ptr, ptr %9, align 8, !tbaa !115
+  %i.og = load ptr, ptr %i.lh, align 8, !tbaa !115
   %i.oh = getelementptr inbounds nuw i8, ptr %i.og, i64 80
   %i.oi = load i64, ptr %i.oh, align 8, !tbaa !120
   %i.oj = add i64 %i.oi, 16                       ; 2 uses
   store i64 %i.oj, ptr %i.oe, align 8, !tbaa !119
   br label %bb.cg
 
-bb.cg:                                            ; preds = %bb.cf, %ompi_osc_rdma_query_accelerated_btls.exit
-  %10 = phi i64 [ %i.oj, %bb.cf ], [ 16, %ompi_osc_rdma_query_accelerated_btls.exit ]
+bb.cg:                                            ; preds = %ompi_osc_rdma_query_alternate_btls.exit, %bb.cf, %ompi_osc_rdma_query_accelerated_btls.exit
+  %9 = phi i64 [ 16, %ompi_osc_rdma_query_alternate_btls.exit ], [ %i.oj, %bb.cf ], [ 16, %ompi_osc_rdma_query_accelerated_btls.exit ]
+  %10 = phi ptr [ %8, %ompi_osc_rdma_query_alternate_btls.exit ], [ %i.oe, %bb.cf ], [ %i.oe, %ompi_osc_rdma_query_accelerated_btls.exit ] ; 3 uses
   %i.ok = getelementptr inbounds nuw i8, ptr %i.ab, i64 448 ; 7 uses
   %i.ol = load i32, ptr %i.dj, align 4, !tbaa !181
   %.not167 = icmp eq i32 %i.ol, 3
   %i.om = load i32, ptr getelementptr inbounds nuw (i8, ptr @mca_osc_rdma_component, i64 1272), align 8
   %narrow = select i1 %.not167, i32 %i.om, i32 1
   %i.on = zext i32 %narrow to i64
-  %storemerge.in = mul i64 %10, %i.on
+  %storemerge.in = mul i64 %9, %i.on
   %storemerge = add i64 %storemerge.in, 328
   store i64 %storemerge, ptr %i.ok, align 64, !tbaa !221
   %i.oo = call i32 @opal_infosubscribe_subscribe(ptr noundef %0, ptr noundef nonnull @.str.3, ptr noundef nonnull @.str.2, ptr noundef nonnull @ompi_osc_rdma_set_no_lock_info) #16 ; 0 uses
@@ -626,7 +628,7 @@ bb.di:                                            ; preds = %bb.dh, %bb.dg
   %i.sp = sdiv i32 %i.so, %i.sm
   %i.sq = sext i32 %i.sp to i64
   %i.sr = shl nsw i64 %i.sq, 3                    ; 2 uses
-  %i.ss = load i64, ptr %i.oe, align 8, !tbaa !119 ; 2 uses
+  %i.ss = load i64, ptr %10, align 8, !tbaa !119  ; 2 uses
   %i.st = sext i32 %i.sm to i64
   %i.su = mul i64 %i.ss, %i.st
   %i.sv = add i64 %i.sr, %i.ss
@@ -659,7 +661,7 @@ bb.dk:                                            ; preds = %bb.dj, %bb.di
 
 bb.dl:                                            ; preds = %bb.dk
   call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.tj, i8 0, i64 %.075.i.i, i1 false)
-  %i.tm = load i64, ptr %i.oe, align 8, !tbaa !119
+  %i.tm = load i64, ptr %10, align 8, !tbaa !119
   %i.tn = add i64 %i.tm, %i.sr                    ; 2 uses
   %i.to = getelementptr inbounds nuw i8, ptr %i.ab, i64 456
   store i64 %i.tn, ptr %i.to, align 8, !tbaa !229
@@ -929,7 +931,7 @@ bb.en:                                            ; preds = %bb.em, %bb.el
   %i.xx = sdiv i32 %i.xw, %i.xu
   %i.xy = sext i32 %i.xx to i64
   %i.xz = shl nsw i64 %i.xy, 3                    ; 2 uses
-  %i.ya = load i64, ptr %i.oe, align 8, !tbaa !119 ; 2 uses
+  %i.ya = load i64, ptr %10, align 8, !tbaa !119  ; 2 uses
   %i.yb = sext i32 %i.xu to i64
   %i.yc = mul i64 %i.ya, %i.yb
   %i.yd = add i64 %i.xz, %i.ya                    ; 7 uses

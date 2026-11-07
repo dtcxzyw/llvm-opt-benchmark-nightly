@@ -202,7 +202,7 @@ bb.a:
   %i.b = alloca i8, align 1                       ; 4 uses
   %i.c = alloca i32, align 4                      ; 4 uses
   %i.d = alloca i32, align 4                      ; 4 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.f = load i64, ptr %i.e, align 8, !tbaa !22   ; 2 uses
   %i.g = trunc i64 %i.f to i32                    ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #13
@@ -255,7 +255,13 @@ bb.a:
 
 .preheader.i.i.i:                                 ; preds = %._crit_edge
   %.not.i.i.i = icmp eq i64 %.0.lcssa, 0
-  br i1 %.not.i.i.i, label %_ZN3ozz2io8OArchivelsINS0_8internal5ArrayIcEEEEvRKT_.exit, label %.lr.ph.i.i.i
+  br i1 %.not.i.i.i, label %_ZN3ozz2io8OArchivelsINS0_8internal5ArrayIcEEEEvRKT_.exit.thread, label %.lr.ph.i.i.i
+
+_ZN3ozz2io8OArchivelsINS0_8internal5ArrayIcEEEEvRKT_.exit.thread: ; preds = %.preheader.i.i.i
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %.sroa.01.0.copyload41 = load ptr, ptr %2, align 8, !tbaa !18
+  %.sroa.22.0.copyload42 = load i64, ptr %i.e, align 8, !tbaa !19
+  br label %.preheader.i.i.i24
 
 .lr.ph.i.i.i:                                     ; preds = %.preheader.i.i.i, %.lr.ph.i.i.i
   %.06.i.i.i = phi i64 [ %i.am, %.lr.ph.i.i.i ], [ 0, %.preheader.i.i.i ] ; 2 uses
@@ -281,21 +287,23 @@ bb.b:                                             ; preds = %._crit_edge
   %i.ar = call noundef i64 %i.aq(ptr noundef nonnull align 8 dereferenceable(8) %i.an, ptr noundef %i.ac, i64 noundef %.0.lcssa), !inline_history !45 ; 0 uses
   br label %_ZN3ozz2io8OArchivelsINS0_8internal5ArrayIcEEEEvRKT_.exit
 
-_ZN3ozz2io8OArchivelsINS0_8internal5ArrayIcEEEEvRKT_.exit: ; preds = %.lr.ph.i.i.i, %.preheader.i.i.i, %bb.b
+_ZN3ozz2io8OArchivelsINS0_8internal5ArrayIcEEEEvRKT_.exit: ; preds = %.lr.ph.i.i.i, %bb.b
+  %.pr = load i8, ptr %i.h, align 8, !tbaa !51
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.sroa.01.0.copyload = load ptr, ptr %i.as, align 8, !tbaa !18 ; 2 uses
-  %.sroa.22.0.copyload = load i64, ptr %i.e, align 8, !tbaa !19 ; 3 uses
-  %2 = load i8, ptr %i.h, align 8, !tbaa !51, !range !36, !noundef !37
-  %i.at = trunc nuw i8 %2 to i1
+  %.sroa.22.0.copyload = load i64, ptr %i.e, align 8, !tbaa !19 ; 2 uses
+  %i.at = trunc nuw i8 %.pr to i1
   br i1 %i.at, label %.preheader.i.i.i24, label %bb.c
 
-.preheader.i.i.i24:                               ; preds = %_ZN3ozz2io8OArchivelsINS0_8internal5ArrayIcEEEEvRKT_.exit
-  %.not.i.i.i25 = icmp eq i64 %.sroa.22.0.copyload, 0
+.preheader.i.i.i24:                               ; preds = %_ZN3ozz2io8OArchivelsINS0_8internal5ArrayIcEEEEvRKT_.exit.thread, %_ZN3ozz2io8OArchivelsINS0_8internal5ArrayIcEEEEvRKT_.exit
+  %.sroa.22.0.copyload46 = phi i64 [ %.sroa.22.0.copyload42, %_ZN3ozz2io8OArchivelsINS0_8internal5ArrayIcEEEEvRKT_.exit.thread ], [ %.sroa.22.0.copyload, %_ZN3ozz2io8OArchivelsINS0_8internal5ArrayIcEEEEvRKT_.exit ] ; 2 uses
+  %.sroa.01.0.copyload45 = phi ptr [ %.sroa.01.0.copyload41, %_ZN3ozz2io8OArchivelsINS0_8internal5ArrayIcEEEEvRKT_.exit.thread ], [ %.sroa.01.0.copyload, %_ZN3ozz2io8OArchivelsINS0_8internal5ArrayIcEEEEvRKT_.exit ]
+  %.not.i.i.i25 = icmp eq i64 %.sroa.22.0.copyload46, 0
   br i1 %.not.i.i.i25, label %_ZN3ozz2io8OArchivelsINS0_8internal5ArrayIsEEEEvRKT_.exit, label %.lr.ph.i.i.i26
 
 .lr.ph.i.i.i26:                                   ; preds = %.preheader.i.i.i24, %.lr.ph.i.i.i26
   %.06.i.i.i27 = phi i64 [ %i.bd, %.lr.ph.i.i.i26 ], [ 0, %.preheader.i.i.i24 ] ; 2 uses
-  %i.au = getelementptr inbounds nuw [2 x i8], ptr %.sroa.01.0.copyload, i64 %.06.i.i.i27
+  %i.au = getelementptr inbounds nuw [2 x i8], ptr %.sroa.01.0.copyload45, i64 %.06.i.i.i27
   %i.av = load i16, ptr %i.au, align 2, !tbaa !55 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
   %i.aw = load i8, ptr %i.h, align 8, !tbaa !51, !range !36, !noundef !37
@@ -310,7 +318,7 @@ _ZN3ozz2io8OArchivelsINS0_8internal5ArrayIcEEEEvRKT_.exit: ; preds = %.lr.ph.i.i
   %i.bc = call noundef i64 %i.bb(ptr noundef nonnull align 8 dereferenceable(8) %i.ay, ptr noundef nonnull %i.a, i64 noundef 2), !inline_history !46 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
   %i.bd = add nuw i64 %.06.i.i.i27, 1             ; 2 uses
-  %exitcond45.not = icmp eq i64 %i.bd, %.sroa.22.0.copyload
+  %exitcond45.not = icmp eq i64 %i.bd, %.sroa.22.0.copyload46
   br i1 %exitcond45.not, label %_ZN3ozz2io8OArchivelsINS0_8internal5ArrayIsEEEEvRKT_.exit, label %.lr.ph.i.i.i26, !llvm.loop !47
 
 bb.c:                                             ; preds = %_ZN3ozz2io8OArchivelsINS0_8internal5ArrayIcEEEEvRKT_.exit

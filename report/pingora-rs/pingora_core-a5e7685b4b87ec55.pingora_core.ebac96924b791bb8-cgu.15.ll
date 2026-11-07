@@ -205,7 +205,7 @@ bb.a:
   %i.b = alloca [120 x i8], align 8               ; 9 uses
   %i.c = alloca [116 x i8], align 4               ; 12 uses
   %.sroa.6 = alloca [104 x i8], align 8           ; 4 uses
-  %i.d = alloca [120 x i8], align 8               ; 10 uses
+  %i.d = alloca [120 x i8], align 8               ; 9 uses
   %i.e = tail call noundef zeroext i1 @_RNvMNtCskKLDkoKarTP_4core5sliceSh11starts_withCskeugdADtBsi_12pingora_core(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %1, i64 noundef %2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @0, i64 noundef 1)
   br i1 %i.e, label %bb.c, label %bb.b
 
@@ -253,46 +253,47 @@ bb.f:                                             ; preds = %bb.j, %bb.i, %bb.e,
 
 bb.g:                                             ; preds = %bb.c
   %i.o = add i64 %2, -1                           ; 3 uses
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !51)
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.64.i)
-  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(107) %.sroa.64.i, i8 0, i64 107, i1 false), !noalias !52
+  call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(107) %.sroa.64.i, i8 0, i64 107, i1 false), !noalias !51
   %i.p = icmp samesign ugt i64 %i.o, 107
   br i1 %i.p, label %_RINvXs_NtNtNtNtCsG258MDvU3F_3std2os4unix3net4addrNtB5_10SocketAddrNtNtNtNtBb_3net9linux_ext4addr13SocketAddrExt18from_abstract_nameRShECskeugdADtBsi_12pingora_core.exit.thread, label %_RINvXs_NtNtNtNtCsG258MDvU3F_3std2os4unix3net4addrNtB5_10SocketAddrNtNtNtNtBb_3net9linux_ext4addr13SocketAddrExt18from_abstract_nameRShECskeugdADtBsi_12pingora_core.exit
 
 _RINvXs_NtNtNtNtCsG258MDvU3F_3std2os4unix3net4addrNtB5_10SocketAddrNtNtNtNtBb_3net9linux_ext4addr13SocketAddrExt18from_abstract_nameRShECskeugdADtBsi_12pingora_core.exit.thread: ; preds = %bb.g
-  %4 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  store ptr @175, ptr %4, align 8, !alias.scope !51
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.64.i)
   br label %bb.i
 
 _RINvXs_NtNtNtNtCsG258MDvU3F_3std2os4unix3net4addrNtB5_10SocketAddrNtNtNtNtBb_3net9linux_ext4addr13SocketAddrExt18from_abstract_nameRShECskeugdADtBsi_12pingora_core.exit: ; preds = %bb.g
   %i.q = getelementptr inbounds nuw i8, ptr %1, i64 1
-  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.64.i, ptr nonnull readonly align 1 %i.q, i64 range(i64 0, -9223372036854775808) %i.o, i1 false), !noalias !51
+  call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 1 %.sroa.64.i, ptr nonnull readonly align 1 %i.q, i64 range(i64 0, -9223372036854775808) %i.o, i1 false), !noalias !52
   %i.r = trunc nuw nsw i64 %i.o to i32
   %i.s = add nuw nsw i32 %i.r, 3
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !52
-  store i16 1, ptr %i.a, align 2, !noalias !52
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !51
+  store i16 1, ptr %i.a, align 2, !noalias !51
   %.sroa.6.0..sroa_idx2.i = getelementptr inbounds nuw i8, ptr %i.a, i64 2
-  store i8 0, ptr %.sroa.6.0..sroa_idx2.i, align 2, !noalias !52
+  store i8 0, ptr %.sroa.6.0..sroa_idx2.i, align 2, !noalias !51
   %.sroa.64.0..sroa_idx5.i = getelementptr inbounds nuw i8, ptr %i.a, i64 3
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(107) %.sroa.64.0..sroa_idx5.i, ptr noundef nonnull align 1 dereferenceable(107) %.sroa.64.i, i64 107, i1 false), !noalias !52
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(107) %.sroa.64.0..sroa_idx5.i, ptr noundef nonnull align 1 dereferenceable(107) %.sroa.64.i, i64 107, i1 false), !noalias !51
   call void @_RNvMNtNtNtNtCsG258MDvU3F_3std2os4unix3net4addrNtB2_10SocketAddr10from_parts(ptr noalias nofree noundef nonnull sret([120 x i8]) align 8 captures(none) dereferenceable(120) %i.d, ptr noalias nofree noundef nonnull readonly align 2 captures(none) dereferenceable(110) %i.a, i32 noundef %i.s), !noalias !53
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !52
-  %.pre.a = load i32, ptr %i.d, align 8, !range !5
-  %5 = trunc nuw i32 %.pre.a to i1
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !51
+  %.pre.a = load i32, ptr %i.d, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.64.i)
-  br i1 %5, label %bb.i, label %bb.j
+  %4 = trunc nuw i32 %.pre.a to i1
+  br i1 %4, label %_RINvXs_NtNtNtNtCsG258MDvU3F_3std2os4unix3net4addrNtB5_10SocketAddrNtNtNtNtBb_3net9linux_ext4addr13SocketAddrExt18from_abstract_nameRShECskeugdADtBsi_12pingora_core.exit._crit_edge, label %bb.j
+
+_RINvXs_NtNtNtNtCsG258MDvU3F_3std2os4unix3net4addrNtB5_10SocketAddrNtNtNtNtBb_3net9linux_ext4addr13SocketAddrExt18from_abstract_nameRShECskeugdADtBsi_12pingora_core.exit._crit_edge: ; preds = %_RINvXs_NtNtNtNtCsG258MDvU3F_3std2os4unix3net4addrNtB5_10SocketAddrNtNtNtNtBb_3net9linux_ext4addr13SocketAddrExt18from_abstract_nameRShECskeugdADtBsi_12pingora_core.exit
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.d, i64 8
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8
+  br label %bb.i
 
 bb.h:                                             ; preds = %bb.c
   tail call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef 1, i64 noundef 0, i64 noundef 0, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %3) #29
   unreachable
 
-bb.i:                                             ; preds = %_RINvXs_NtNtNtNtCsG258MDvU3F_3std2os4unix3net4addrNtB5_10SocketAddrNtNtNtNtBb_3net9linux_ext4addr13SocketAddrExt18from_abstract_nameRShECskeugdADtBsi_12pingora_core.exit.thread, %_RINvXs_NtNtNtNtCsG258MDvU3F_3std2os4unix3net4addrNtB5_10SocketAddrNtNtNtNtBb_3net9linux_ext4addr13SocketAddrExt18from_abstract_nameRShECskeugdADtBsi_12pingora_core.exit
-  %6 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %7 = load ptr, ptr %6, align 8, !nonnull !4, !noundef !4
+bb.i:                                             ; preds = %_RINvXs_NtNtNtNtCsG258MDvU3F_3std2os4unix3net4addrNtB5_10SocketAddrNtNtNtNtBb_3net9linux_ext4addr13SocketAddrExt18from_abstract_nameRShECskeugdADtBsi_12pingora_core.exit._crit_edge, %_RINvXs_NtNtNtNtCsG258MDvU3F_3std2os4unix3net4addrNtB5_10SocketAddrNtNtNtNtBb_3net9linux_ext4addr13SocketAddrExt18from_abstract_nameRShECskeugdADtBsi_12pingora_core.exit.thread
+  %5 = phi ptr [ %.pre, %_RINvXs_NtNtNtNtCsG258MDvU3F_3std2os4unix3net4addrNtB5_10SocketAddrNtNtNtNtBb_3net9linux_ext4addr13SocketAddrExt18from_abstract_nameRShECskeugdADtBsi_12pingora_core.exit._crit_edge ], [ @175, %_RINvXs_NtNtNtNtCsG258MDvU3F_3std2os4unix3net4addrNtB5_10SocketAddrNtNtNtNtBb_3net9linux_ext4addr13SocketAddrExt18from_abstract_nameRShECskeugdADtBsi_12pingora_core.exit.thread ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
-  store ptr %7, ptr %i.t, align 8
+  store ptr %5, ptr %i.t, align 8
   store i64 2, ptr %0, align 8
   br label %bb.f
 
@@ -695,14 +696,14 @@ attributes #34 = { inlinehint }
 !43 = distinct !{!43, !42, !"_RINvMNtNtNtNtCsG258MDvU3F_3std2os4unix3net4addrNtB3_10SocketAddr13from_pathnameReECskeugdADtBsi_12pingora_core: argument 1"}
 !44 = distinct !{!44, !42, !"_RINvMNtNtNtNtCsG258MDvU3F_3std2os4unix3net4addrNtB3_10SocketAddr13from_pathnameReECskeugdADtBsi_12pingora_core: argument 0"}
 !45 = distinct !{!45, i1 true, !"_RINvXs_NtNtNtNtCsG258MDvU3F_3std2os4unix3net4addrNtB5_10SocketAddrNtNtNtNtBb_3net9linux_ext4addr13SocketAddrExt18from_abstract_nameRShECskeugdADtBsi_12pingora_core"}
-!46 = distinct !{!46, !45, !"_RINvXs_NtNtNtNtCsG258MDvU3F_3std2os4unix3net4addrNtB5_10SocketAddrNtNtNtNtBb_3net9linux_ext4addr13SocketAddrExt18from_abstract_nameRShECskeugdADtBsi_12pingora_core: argument 0"}
-!47 = distinct !{!47, !45, !"_RINvXs_NtNtNtNtCsG258MDvU3F_3std2os4unix3net4addrNtB5_10SocketAddrNtNtNtNtBb_3net9linux_ext4addr13SocketAddrExt18from_abstract_nameRShECskeugdADtBsi_12pingora_core: argument 1"}
+!46 = distinct !{!46, !45, !"_RINvXs_NtNtNtNtCsG258MDvU3F_3std2os4unix3net4addrNtB5_10SocketAddrNtNtNtNtBb_3net9linux_ext4addr13SocketAddrExt18from_abstract_nameRShECskeugdADtBsi_12pingora_core: argument 1"}
+!47 = distinct !{!47, !45, !"_RINvXs_NtNtNtNtCsG258MDvU3F_3std2os4unix3net4addrNtB5_10SocketAddrNtNtNtNtBb_3net9linux_ext4addr13SocketAddrExt18from_abstract_nameRShECskeugdADtBsi_12pingora_core: argument 0"}
 !48 = !{!44, !43}
 !49 = !{!44}
 !50 = !{!43}
-!51 = !{!46}
-!52 = !{!46, !47}
-!53 = !{!47}
+!51 = !{!47, !46}
+!52 = !{!47}
+!53 = !{!46}
 !54 = distinct !{!54, i1 true, !"_RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNCNvNtNtCskeugdADtBsi_12pingora_core6server6daemon9daemonize0E3newBM_"}
 !55 = distinct !{!55, !54, !"_RNvMNtCsexYYUdYSQU6_5alloc5boxedINtB2_3BoxNCNvNtNtCskeugdADtBsi_12pingora_core6server6daemon9daemonize0E3newBM_: argument 0"}
 !56 = distinct !{!56, i1 true, !"_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvNtNtCskeugdADtBsi_12pingora_core6server6daemon9daemonize0EBJ_"}

@@ -204,7 +204,7 @@ bb.aq:                                            ; preds = %bb.ao
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.bf, %bb.aq
-  %.sroa.036.0 = phi i64 [ %.sroa.036.0.copyload37, %bb.bf ], [ 0, %bb.aq ] ; 2 uses
+  %.sroa.036.0 = phi i64 [ %3, %bb.bf ], [ 0, %bb.aq ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.v)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.v, ptr noundef nonnull align 8 dereferenceable(48) %i.m, i64 48, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u)
@@ -216,7 +216,7 @@ bb.ar:                                            ; preds = %bb.bf, %bb.aq
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k)
   %i.di = load ptr, ptr %i.cv, align 8, !nonnull !6, !noundef !6
   %i.dj = load i64, ptr %i.cx, align 8, !noundef !6
-  %i.dk = trunc nuw i64 %.sroa.036.0 to i1
+  %i.dk = trunc i64 %.sroa.036.0 to i1
   %.sroa.3.0..sroa_idx. = select i1 %i.dk, ptr %.sroa.3.0..sroa_idx, ptr null
   invoke fastcc void @_RNvNtNtCs1hTjP0dFAwJ_12fontc_crater2ci4html9make_html(ptr noalias nofree noundef align 8 captures(address) dereferenceable(48) %i.k, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.di, i64 noundef %i.dj, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.aa, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.v, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable_or_null(48) %.sroa.3.0..sroa_idx., ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.y, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.w)
           to label %bb.bi unwind label %bb.bh
@@ -317,6 +317,7 @@ bb.bf:                                            ; preds = %bb.bd
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.3, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.3.0..sroa_idx38, i64 48, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.533)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t)
+  %3 = freeze i64 %.sroa.036.0.copyload37
   br label %bb.ar
 
 bb.bg:                                            ; preds = %bb.bl, %bb.bh

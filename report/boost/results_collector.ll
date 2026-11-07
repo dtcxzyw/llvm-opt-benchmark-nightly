@@ -202,7 +202,7 @@ bb.e:                                             ; preds = %_ZNSt3mapImN5boost9
   br label %_ZNSt3mapImN5boost9unit_test12test_resultsESt4lessImESaISt4pairIKmS2_EEEixERS6_.exit
 
 _ZNSt3mapImN5boost9unit_test12test_resultsESt4lessImESaISt4pairIKmS2_EEEixERS6_.exit: ; preds = %bb.e, %.critedge.i
-  %.sroa.06.0.i = phi ptr [ %i.o, %.critedge.i ], [ %.19.i.i.i.i, %bb.e ] ; 7 uses
+  %.sroa.06.0.i = phi ptr [ %i.o, %.critedge.i ], [ %.19.i.i.i.i, %bb.e ] ; 6 uses
   %i.p = load i32, ptr %1, align 8, !tbaa !91
   %i.q = icmp eq i32 %i.p, 16
   br i1 %i.q, label %_ZN5boost9unit_test18traverse_test_treeERKNS0_9test_unitERNS0_17test_tree_visitorEb.exit, label %bb.f
@@ -227,8 +227,8 @@ bb.f:                                             ; preds = %_ZNSt3mapImN5boost9
   br i1 %i.x, label %.critedge41, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.y = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i, i64 56
-  %i.z = load i64, ptr %i.y, align 8, !tbaa !16
+  %i.y = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i, i64 56 ; 2 uses
+  %i.z = load i64, ptr %i.y, align 8, !tbaa !16   ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i, i64 72
   %i.ab = load i64, ptr %i.aa, align 8, !tbaa !16
   %.not55 = icmp ult i64 %i.z, %i.ab
@@ -327,14 +327,17 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit45: ; preds = %bb.
   call void @_ZN5boost9unit_test9ut_detail21entry_value_collectorD1Ev(ptr noundef nonnull align 1 dead_on_return(1) dereferenceable(1) %6) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #18
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
-  %.pre = load i8, ptr %i.v, align 8, !tbaa !17, !range !13
+  %.pre = load i8, ptr %i.v, align 8, !tbaa !17
   %i.bc = trunc nuw i8 %.pre to i1
-  br i1 %i.bc, label %.critedge41, label %.critedge.thread65
+  br i1 %i.bc, label %.critedge41, label %thread-pre-split
 
-.critedge.thread65:                               ; preds = %bb.g, %.critedge
-  %18 = getelementptr inbounds nuw i8, ptr %.sroa.06.0.i, i64 56
-  %19 = load i64, ptr %18, align 8, !tbaa !16
-  %.not = icmp eq i64 %19, 0
+thread-pre-split:                                 ; preds = %.critedge
+  %.pr = load i64, ptr %i.y, align 8, !tbaa !16
+  br label %.critedge.thread65
+
+.critedge.thread65:                               ; preds = %bb.g, %thread-pre-split
+  %18 = phi i64 [ %.pr, %thread-pre-split ], [ %i.z, %bb.g ]
+  %.not = icmp eq i64 %18, 0
   br i1 %.not, label %bb.m, label %.critedge41
 
 bb.m:                                             ; preds = %.critedge.thread65

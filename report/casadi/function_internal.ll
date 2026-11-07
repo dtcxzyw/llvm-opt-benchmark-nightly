@@ -205,12 +205,12 @@ bb.ed:                                            ; preds = %bb.ec, %bb.bv
 bb.ee:                                            ; preds = %.critedge375
   %i.rq = load i8, ptr %i.dk, align 8, !tbaa !209, !range !175, !noundef !176
   %i.rr = trunc nuw i8 %i.rq to i1
-  %.pre.a = load i8, ptr %i.dl, align 1, !tbaa !212, !range !175
-  %.pre1142 = trunc nuw i8 %.pre.a to i1          ; 2 uses
+  %.pre.a = load i8, ptr %i.dl, align 1, !tbaa !212 ; 2 uses
   br i1 %i.rr, label %bb.ew, label %bb.ef
 
 bb.ef:                                            ; preds = %bb.ee
-  br i1 %.pre1142, label %.thread, label %bb.eg
+  %103 = trunc nuw i8 %.pre.a to i1
+  br i1 %103, label %.thread, label %bb.eg
 
 .thread:                                          ; preds = %bb.ef
   %i.rs = getelementptr inbounds nuw i8, ptr %0, i64 848
@@ -442,7 +442,8 @@ bb.ev:                                            ; preds = %.sink.split1460, %_
 bb.ew:                                            ; preds = %bb.ee
   %i.tr = getelementptr inbounds nuw i8, ptr %0, i64 848
   %i.ts = load i64, ptr %i.tr, align 8, !tbaa !130 ; 4 uses
-  br i1 %.pre1142, label %.loopexit890, label %.preheader889
+  %104 = trunc nuw i8 %.pre.a to i1
+  br i1 %104, label %.loopexit890, label %.preheader889
 
 .preheader889:                                    ; preds = %bb.ew
   %i.tt = load ptr, ptr %0, align 8, !tbaa !53
@@ -460,8 +461,8 @@ bb.ew:                                            ; preds = %bb.ee
   %i.ub = call noundef zeroext i1 %i.ua(ptr noundef nonnull align 8 dereferenceable(1312) %0, i64 noundef %i.tx)
   br i1 %i.ub, label %.loopexit890, label %.lr.ph, !llvm.loop !1924
 
-.loopexit890:                                     ; preds = %.lr.ph, %.thread, %.preheader889, %bb.ew
-  %.1746 = phi i64 [ %i.ts, %bb.ew ], [ %i.ts, %.preheader889 ], [ %i.rt, %.thread ], [ %i.tx, %.lr.ph ]
+.loopexit890:                                     ; preds = %.lr.ph, %.preheader889, %.thread, %bb.ew
+  %.1746 = phi i64 [ %i.ts, %bb.ew ], [ %i.rt, %.thread ], [ %i.ts, %.preheader889 ], [ %i.tx, %.lr.ph ]
   %i.uc = icmp sgt i64 %i.fs, 0
   br i1 %i.uc, label %.lr.ph990, label %.loopexit883
 

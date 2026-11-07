@@ -205,7 +205,7 @@ _ZNSt10shared_ptrIKN4bssl17ParsedCertificateEEC2ERKS3_.exit15: ; preds = %_ZNSt1
   %.val = phi ptr [ %i.ab, %_ZNSt12__shared_ptrIKN4bssl17ParsedCertificateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit ], [ %i.ab, %bb.m ], [ %.val.pre, %bb.n ]
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %4, i8 0, i64 24, i1 false)
   %i.ak = invoke fastcc noundef zeroext i1 @_ZN4bssl24CertIssuerSourceSyncTestINS_12_GLOBAL__N_134CertIssuerSourceStaticTestDelegateEE12IssuersMatchESt10shared_ptrIKNS_17ParsedCertificateEESt6vectorIS7_SaIS7_EE(ptr noundef nonnull align 8 dereferenceable(256) %0, ptr %.val, ptr noundef align 8 %4)
-          to label %_ZNSt6vectorISt10shared_ptrIKN4bssl17ParsedCertificateEESaIS4_EED2Ev.exit unwind label %bb.v
+          to label %_ZNSt6vectorISt10shared_ptrIKN4bssl17ParsedCertificateEESaIS4_EED2Ev.exit unwind label %bb.v ; 2 uses
 
 _ZNSt6vectorISt10shared_ptrIKN4bssl17ParsedCertificateEESaIS4_EED2Ev.exit: ; preds = %_ZNSt10shared_ptrIKN4bssl17ParsedCertificateEEC2ERKS3_.exit15
   %i.al = zext i1 %i.ak to i8
@@ -214,7 +214,7 @@ _ZNSt6vectorISt10shared_ptrIKN4bssl17ParsedCertificateEESaIS4_EED2Ev.exit: ; pre
   store ptr null, ptr %i.am, align 8, !tbaa !189
   %i.an = load ptr, ptr %i.ac, align 8, !tbaa !193 ; 8 uses
   %.not.i.i17 = icmp eq ptr %i.an, null
-  br i1 %.not.i.i17, label %_ZNSt12__shared_ptrIKN4bssl17ParsedCertificateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit21.a, label %bb.o
+  br i1 %.not.i.i17, label %_ZNSt12__shared_ptrIKN4bssl17ParsedCertificateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit21, label %bb.o
 
 bb.o:                                             ; preds = %_ZNSt6vectorISt10shared_ptrIKN4bssl17ParsedCertificateEESaIS4_EED2Ev.exit
   %i.ao = getelementptr inbounds nuw i8, ptr %i.an, i64 8 ; 4 uses
@@ -260,10 +260,14 @@ bb.t:                                             ; preds = %_ZN9__gnu_cxx27__ex
   tail call void @_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE2EE24_M_release_last_use_coldEv(ptr noundef nonnull align 8 dereferenceable(16) %i.an) #30
   br label %_ZNSt12__shared_ptrIKN4bssl17ParsedCertificateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit21.a
 
-_ZNSt12__shared_ptrIKN4bssl17ParsedCertificateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit21.a: ; preds = %_ZNSt6vectorISt10shared_ptrIKN4bssl17ParsedCertificateEESaIS4_EED2Ev.exit, %bb.p, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i19, %bb.t
-  %i.bd = load i8, ptr %2, align 8, !tbaa !188, !range !128, !noundef !129
+_ZNSt12__shared_ptrIKN4bssl17ParsedCertificateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit21.a: ; preds = %bb.t, %_ZN9__gnu_cxx27__exchange_and_add_dispatchEPii.exit.i.i.i19, %bb.p
+  %i.bd = load i8, ptr %2, align 8, !tbaa !188
   %i.be = trunc nuw i8 %i.bd to i1
-  br i1 %i.be, label %bb.ag, label %bb.w
+  br label %_ZNSt12__shared_ptrIKN4bssl17ParsedCertificateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit21
+
+_ZNSt12__shared_ptrIKN4bssl17ParsedCertificateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit21: ; preds = %_ZNSt12__shared_ptrIKN4bssl17ParsedCertificateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit21.a, %_ZNSt6vectorISt10shared_ptrIKN4bssl17ParsedCertificateEESaIS4_EED2Ev.exit
+  %8 = phi i1 [ %i.be, %_ZNSt12__shared_ptrIKN4bssl17ParsedCertificateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit21.a ], [ %i.ak, %_ZNSt6vectorISt10shared_ptrIKN4bssl17ParsedCertificateEESaIS4_EED2Ev.exit ]
+  br i1 %8, label %bb.ag, label %bb.w
 
 bb.u:                                             ; preds = %_ZNSt10shared_ptrIKN4bssl17ParsedCertificateEEC2ERKS3_.exit
   %i.bf = landingpad { ptr, i32 }
@@ -278,7 +282,7 @@ bb.v:                                             ; preds = %_ZNSt10shared_ptrIK
   call void @_ZNSt12__shared_ptrIKN4bssl17ParsedCertificateELN9__gnu_cxx12_Lock_policyE2EED2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %3) #30
   br label %bb.ai
 
-bb.w:                                             ; preds = %_ZNSt12__shared_ptrIKN4bssl17ParsedCertificateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit21.a
+bb.w:                                             ; preds = %_ZNSt12__shared_ptrIKN4bssl17ParsedCertificateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit21
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #30
   invoke void @_ZN7testing7MessageC1Ev(ptr noundef nonnull align 8 dereferenceable(8) %5)
           to label %bb.x unwind label %bb.ab
@@ -384,7 +388,7 @@ _ZN7testing7MessageD2Ev.exit28:                   ; preds = %_ZNKSt14default_del
   call void @_ZN7testing15AssertionResultD2Ev(ptr noundef nonnull align 8 dead_on_return(16) dereferenceable(16) %2) #30
   br label %bb.ai
 
-bb.ag:                                            ; preds = %_ZNSt12__shared_ptrIKN4bssl17ParsedCertificateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit21.a, %_ZN7testing7MessageD2Ev.exit
+bb.ag:                                            ; preds = %_ZNSt12__shared_ptrIKN4bssl17ParsedCertificateELN9__gnu_cxx12_Lock_policyE2EED2Ev.exit21, %_ZN7testing7MessageD2Ev.exit
   %i.ce = load ptr, ptr %i.am, align 8, !tbaa !190 ; 4 uses
   %.not.i.i29 = icmp eq ptr %i.ce, null
   br i1 %.not.i.i29, label %_ZN7testing15AssertionResultD2Ev.exit, label %bb.ah

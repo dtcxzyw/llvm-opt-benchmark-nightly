@@ -205,7 +205,7 @@ bb.a:
   %i.dc = alloca [40 x i8], align 8               ; 8 uses
   %i.dd = alloca [16 x i8], align 8               ; 5 uses
   %i.de = alloca [40 x i8], align 8               ; 8 uses
-  %i.df = alloca [72 x i8], align 8               ; 10 uses
+  %i.df = alloca [72 x i8], align 8               ; 11 uses
   %i.dg = alloca [40 x i8], align 8               ; 16 uses
   %i.dh = alloca [16 x i8], align 8               ; 13 uses
   %i.di = alloca [16 x i8], align 8               ; 13 uses
@@ -267,7 +267,11 @@ bb.b:                                             ; preds = %_RNvMs8_NtNtNtCskKL
   call void @llvm.experimental.noalias.scope.decl(metadata !688)
   call void @llvm.experimental.noalias.scope.decl(metadata !689)
   %brmerge.not = select i1 %.not127, i1 %.not130, i1 false
-  br i1 %brmerge.not, label %_RINvYINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB8_7flatten7FlattenINtNtNtBc_5array4iter8IntoIterINtNtBc_6option6OptionRNtNtCsexYYUdYSQU6_5alloc6string6StringEKj2_EENCNvMs1_NtCsl8OoimOLbh_6qdrant8settingsNtB2X_8Settings17validate_and_warn0ENtNtNtBa_6traits8iterator8Iterator6reduceNvYjNtNtBc_3cmp3Ord3minEB2Z_.exit, label %bb.c
+  br i1 %brmerge.not, label %.split.i.i.i.i.1, label %bb.c
+
+.split.i.i.i.i.1:                                 ; preds = %.split.preheader.i.i.i.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.df)
+  br label %_RINvYINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB8_7flatten7FlattenINtNtNtBc_5array4iter8IntoIterINtNtBc_6option6OptionRNtNtCsexYYUdYSQU6_5alloc6string6StringEKj2_EENCNvMs1_NtCsl8OoimOLbh_6qdrant8settingsNtB2X_8Settings17validate_and_warn0ENtNtNtBa_6traits8iterator8Iterator6reduceNvYjNtNtBc_3cmp3Ord3minEB2Z_.exit
 
 bb.c:                                             ; preds = %.split.preheader.i.i.i.i
   %.mux158 = select i1 %.not127, ptr %i.dk, ptr %i.dj
@@ -279,12 +283,12 @@ bb.c:                                             ; preds = %.split.preheader.i.
   %i.ec = icmp sgt i64 %.val.i.i, -1
   call void @llvm.assume(i1 %i.ec)
   %i.ed = call noundef i64 @_RINvXs0_NtNtNtCskKLDkoKarTP_4core4iter8adapters3mapINtB6_3MapINtNtB8_7flatten7FlattenINtNtNtBc_5array4iter8IntoIterINtNtBc_6option6OptionRNtNtCsexYYUdYSQU6_5alloc6string6StringEKj2_EENCNvMs1_NtCsl8OoimOLbh_6qdrant8settingsNtB33_8Settings17validate_and_warn0ENtNtNtBa_6traits8iterator8Iterator4foldjNvYjNtNtBc_3cmp3Ord3minEB35_(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(72) %i.df, i64 noundef %.val.i.i)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.df)
   %i.ee = icmp ult i64 %i.ed, 32
   br label %_RINvYINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB8_7flatten7FlattenINtNtNtBc_5array4iter8IntoIterINtNtBc_6option6OptionRNtNtCsexYYUdYSQU6_5alloc6string6StringEKj2_EENCNvMs1_NtCsl8OoimOLbh_6qdrant8settingsNtB2X_8Settings17validate_and_warn0ENtNtNtBa_6traits8iterator8Iterator6reduceNvYjNtNtBc_3cmp3Ord3minEB2Z_.exit
 
-_RINvYINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB8_7flatten7FlattenINtNtNtBc_5array4iter8IntoIterINtNtBc_6option6OptionRNtNtCsexYYUdYSQU6_5alloc6string6StringEKj2_EENCNvMs1_NtCsl8OoimOLbh_6qdrant8settingsNtB2X_8Settings17validate_and_warn0ENtNtNtBa_6traits8iterator8Iterator6reduceNvYjNtNtBc_3cmp3Ord3minEB2Z_.exit: ; preds = %.split.preheader.i.i.i.i, %bb.c
-  %.sroa.3.0.i = phi i1 [ %i.ee, %bb.c ], [ true, %.split.preheader.i.i.i.i ]
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.df)
+_RINvYINtNtNtNtCskKLDkoKarTP_4core4iter8adapters3map3MapINtNtB8_7flatten7FlattenINtNtNtBc_5array4iter8IntoIterINtNtBc_6option6OptionRNtNtCsexYYUdYSQU6_5alloc6string6StringEKj2_EENCNvMs1_NtCsl8OoimOLbh_6qdrant8settingsNtB2X_8Settings17validate_and_warn0ENtNtNtBa_6traits8iterator8Iterator6reduceNvYjNtNtBc_3cmp3Ord3minEB2Z_.exit: ; preds = %.split.i.i.i.i.1, %bb.c
+  %.sroa.3.0.i = phi i1 [ %i.ee, %bb.c ], [ true, %.split.i.i.i.i.1 ]
   %i.ef = getelementptr inbounds nuw i8, ptr %0, i64 1494
   %i.eg = load i8, ptr %i.ef, align 2, !range !692, !noundef !6
   %i.eh = and i8 %i.eg, 1

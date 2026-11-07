@@ -205,14 +205,14 @@ bb.m:                                             ; preds = %bb.l, %bb.k
   store i64 %i.an, ptr %i.ao, align 8, !tbaa !253
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 1040 ; 2 uses
   store i64 %i.an, ptr %i.ap, align 8, !tbaa !254
-  %i.aq = tail call noundef i32 @_ZN7CaDiCaL8Internal22most_occurring_literalEv(ptr noundef nonnull align 8 dereferenceable(7296) %0) ; 2 uses
+  %i.aq = tail call noundef i32 @_ZN7CaDiCaL8Internal22most_occurring_literalEv(ptr noundef nonnull align 8 dereferenceable(7296) %0)
   %i.ar = load i32, ptr %0, align 8, !tbaa !255
   %i.as = or i32 %i.ar, 512
   store i32 %i.as, ptr %0, align 8, !tbaa !255
   tail call void @_ZN7CaDiCaL8Internal18init_probehbr_lratEv(ptr noundef nonnull align 8 dereferenceable(7296) %0) #16
   %i.at = load i8, ptr %i.e, align 4, !tbaa !194, !range !195, !noundef !196
   %i.au = trunc nuw i8 %i.at to i1
-  br i1 %i.au, label %.critedge, label %.lr.ph52
+  br i1 %i.au, label %.critedge.thread, label %.lr.ph52
 
 .lr.ph52:                                         ; preds = %._crit_edge
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 760
@@ -239,9 +239,15 @@ bb.n:                                             ; preds = %.lr.ph, %bb.n
   %.not26.not = icmp slt i64 %indvars.iv, %i.bg
   br i1 %.not26.not, label %bb.n, label %._crit_edge, !llvm.loop !249
 
+.critedge.thread:                                 ; preds = %bb.af, %._crit_edge
+  %1 = load i32, ptr %0, align 8, !tbaa !255
+  %2 = and i32 %1, -513
+  store i32 %2, ptr %0, align 8, !tbaa !255
+  br label %bb.ak
+
 bb.o:                                             ; preds = %.lr.ph52, %bb.af
   %.01950 = phi i32 [ -1, %.lr.ph52 ], [ %.120, %bb.af ] ; 4 uses
-  %.02149 = phi i32 [ %i.aq, %.lr.ph52 ], [ %.122, %bb.af ] ; 7 uses
+  %.02149 = phi i32 [ %i.aq, %.lr.ph52 ], [ %.122, %bb.af ] ; 5 uses
   %i.bh = load ptr, ptr %i.k, align 8, !tbaa !202
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 400
   %i.bj = load ptr, ptr %i.bi, align 8, !tbaa !221 ; 3 uses
@@ -401,19 +407,18 @@ bb.ae:                                            ; preds = %bb.ad, %bb.ab
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ae, %bb.ad, %bb.ac
-  %.122 = phi i32 [ %i.by, %bb.ae ], [ %.02149, %bb.ad ], [ %.02149, %bb.ac ] ; 2 uses
+  %.122 = phi i32 [ %i.by, %bb.ae ], [ %.02149, %bb.ad ], [ %.02149, %bb.ac ]
   %.120 = phi i32 [ %.018, %bb.ae ], [ %.01950, %bb.ad ], [ %.01950, %bb.ac ]
   %i.dp = load i8, ptr %i.e, align 4, !tbaa !194, !range !195, !noundef !196
   %i.dq = trunc nuw i8 %i.dp to i1
-  br i1 %i.dq, label %.critedge, label %bb.o, !llvm.loop !250
+  br i1 %i.dq, label %.critedge.thread, label %bb.o, !llvm.loop !250
 
-.critedge:                                        ; preds = %_ZN7CaDiCaL8Internal20lookahead_next_probeEv.exit, %bb.af, %_ZN7CaDiCaL8Internal17terminating_askedEv.exit30, %bb.p, %bb.r, %._crit_edge
-  %.02146 = phi i32 [ %.02149, %bb.r ], [ %i.aq, %._crit_edge ], [ %.02149, %_ZN7CaDiCaL8Internal20lookahead_next_probeEv.exit ], [ %.122, %bb.af ], [ %.02149, %_ZN7CaDiCaL8Internal17terminating_askedEv.exit30 ], [ %.02149, %bb.p ] ; 2 uses
+.critedge:                                        ; preds = %bb.p, %_ZN7CaDiCaL8Internal17terminating_askedEv.exit30, %_ZN7CaDiCaL8Internal20lookahead_next_probeEv.exit, %bb.r
+  %.pr = load i8, ptr %i.e, align 4, !tbaa !194
   %i.dr = load i32, ptr %0, align 8, !tbaa !255
   %i.ds = and i32 %i.dr, -513
   store i32 %i.ds, ptr %0, align 8, !tbaa !255
-  %1 = load i8, ptr %i.e, align 4, !tbaa !194, !range !195, !noundef !196
-  %i.dt = trunc nuw i8 %1 to i1
+  %i.dt = trunc nuw i8 %.pr to i1
   br i1 %i.dt, label %bb.ak, label %bb.ag
 
 bb.ag:                                            ; preds = %.critedge
@@ -439,8 +444,8 @@ bb.aj:                                            ; preds = %bb.ah
   tail call void @_ZN7CaDiCaL8Internal12sort_watchesEv(ptr noundef nonnull align 8 dereferenceable(7296) %0) #16
   br label %bb.ak
 
-bb.ak:                                            ; preds = %bb.f, %_ZN7CaDiCaL8Internal17terminating_askedEv.exit.thread, %bb.b, %.critedge, %bb.ag, %bb.aj, %bb.ai, %bb.a
-  %.1 = phi i32 [ 0, %bb.a ], [ -2147483648, %bb.f ], [ %i.u, %_ZN7CaDiCaL8Internal17terminating_askedEv.exit.thread ], [ -2147483648, %bb.b ], [ %.02146, %bb.ag ], [ %.02146, %bb.aj ], [ -2147483648, %bb.ai ], [ -2147483648, %.critedge ]
+bb.ak:                                            ; preds = %.critedge.thread, %bb.f, %_ZN7CaDiCaL8Internal17terminating_askedEv.exit.thread, %bb.b, %.critedge, %bb.ag, %bb.aj, %bb.ai, %bb.a
+  %.1 = phi i32 [ 0, %bb.a ], [ -2147483648, %bb.f ], [ %i.u, %_ZN7CaDiCaL8Internal17terminating_askedEv.exit.thread ], [ -2147483648, %bb.b ], [ %.02149, %bb.ag ], [ %.02149, %bb.aj ], [ -2147483648, %bb.ai ], [ -2147483648, %.critedge ], [ -2147483648, %.critedge.thread ]
   ret i32 %.1
 }
 

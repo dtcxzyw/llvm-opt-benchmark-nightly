@@ -205,7 +205,7 @@ _ZN6vectorIPN3euf5enodeELb0EjE5resetEv.exit:      ; preds = %bb.a, %bb.b
   %exitcond.not = icmp eq i32 %i.af, %i.i
   br i1 %exitcond.not, label %.lr.ph11, label %.lr.ph, !llvm.loop !626
 
-bb.c:                                             ; preds = %.lr.ph11, %_ZN3euf10completion11should_stopEv.exit8.thread
+bb.c:                                             ; preds = %.critedge14.backedge, %.lr.ph11
   %i.ag = load ptr, ptr %i.o, align 8, !tbaa !351, !nonnull !238, !align !239
   %i.ah = tail call noundef zeroext i1 @_ZN8reslimit3incEv(ptr noundef nonnull align 8 dereferenceable(952) %i.ag)
   br i1 %i.ah, label %bb.d, label %.critedge
@@ -428,9 +428,9 @@ bb.q:                                             ; preds = %_ZN3euf10completion
   br label %_ZN3euf10completion11should_stopEv.exit7.thread
 
 _ZN3euf10completion11should_stopEv.exit7.thread:  ; preds = %bb.n, %bb.o, %bb.p, %bb.q, %_ZN3euf10completion11should_stopEv.exit7
-  %i.el = load i8, ptr %i.n, align 1, !tbaa !394, !range !353, !noundef !238
+  %i.el = load i8, ptr %i.n, align 1, !tbaa !394
   %i.em = trunc nuw i8 %i.el to i1
-  br i1 %i.em, label %_ZN3euf10completion11should_stopEv.exit8.thread, label %bb.r
+  br i1 %i.em, label %.critedge14.backedge, label %bb.r
 
 bb.r:                                             ; preds = %_ZN3euf10completion11should_stopEv.exit7.thread
   %i.en = load ptr, ptr %i.o, align 8, !tbaa !351, !nonnull !238, !align !239
@@ -461,12 +461,15 @@ bb.u:                                             ; preds = %_ZN3euf10completion
   tail call void @_ZN3euf10completion19propagate_all_rulesEv(ptr noundef nonnull align 8 dereferenceable(2144) %0)
   br label %_ZN3euf10completion11should_stopEv.exit8.thread
 
-_ZN3euf10completion11should_stopEv.exit8.thread:  ; preds = %bb.r, %bb.s, %bb.t, %bb.u, %_ZN3euf10completion11should_stopEv.exit8, %_ZN3euf10completion11should_stopEv.exit7.thread
-  %i.fa = load i8, ptr %i.n, align 1, !tbaa !394, !range !353, !noundef !238
+_ZN3euf10completion11should_stopEv.exit8.thread:  ; preds = %_ZN3euf10completion11should_stopEv.exit8, %bb.u, %bb.t, %bb.s, %bb.r
+  %i.fa = load i8, ptr %i.n, align 1, !tbaa !394
   %i.fb = trunc nuw i8 %i.fa to i1
-  br i1 %i.fb, label %bb.c, label %.critedge, !llvm.loop !628
+  br i1 %i.fb, label %.critedge14.backedge, label %.critedge
 
-.critedge:                                        ; preds = %_ZN3euf10completion11should_stopEv.exit, %_ZN3euf10completion11should_stopEv.exit8.thread, %bb.e, %bb.d, %bb.c
+.critedge14.backedge:                             ; preds = %_ZN3euf10completion11should_stopEv.exit8.thread, %_ZN3euf10completion11should_stopEv.exit7.thread
+  br label %bb.c, !llvm.loop !628
+
+.critedge:                                        ; preds = %bb.c, %bb.d, %bb.e, %_ZN3euf10completion11should_stopEv.exit8.thread, %_ZN3euf10completion11should_stopEv.exit
   ret void
 }
 

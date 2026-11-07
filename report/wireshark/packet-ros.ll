@@ -202,7 +202,7 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.thread, %bb.d
   %i.t = phi ptr [ %i.s, %.thread ], [ %i.n, %bb.d ] ; 2 uses
-  %i.u = load i8, ptr %5, align 8, !range !11, !noundef !12
+  %i.u = load i8, ptr %5, align 8, !range !11, !noundef !12 ; 2 uses
   store i8 %i.u, ptr %i.t, align 8
   br label %bb.k
 
@@ -251,7 +251,7 @@ bb.i:                                             ; preds = %.thread77
   %i.al = getelementptr i8, ptr %i.ak, i64 24     ; 2 uses
   %i.am = load i32, ptr %i.al, align 8
   %.not67 = icmp eq i32 %i.am, 0
-  br i1 %.not67, label %bb.j, label %bb.k
+  br i1 %.not67, label %bb.j, label %thread-pre-split
 
 bb.j:                                             ; preds = %bb.i
   %i.an = load ptr, ptr %i.e, align 8
@@ -261,11 +261,15 @@ bb.j:                                             ; preds = %bb.i
   store i8 0, ptr %i.ak, align 8
   %i.aq = load ptr, ptr %i.i, align 8
   %i.ar = call ptr @wmem_map_insert(ptr noundef %i.aq, ptr noundef nonnull %i.ak, ptr noundef nonnull %i.ak) ; 0 uses
+  br label %thread-pre-split
+
+thread-pre-split:                                 ; preds = %bb.j, %bb.i
+  %.pr = load i8, ptr %i.ak, align 8
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.e, %bb.i, %bb.j
-  %.1.ph = phi ptr [ %i.ak, %bb.j ], [ %i.ak, %bb.i ], [ %i.t, %bb.e ] ; 4 uses
-  %7 = load i8, ptr %.1.ph, align 8, !range !11, !noundef !12
+bb.k:                                             ; preds = %thread-pre-split, %bb.e
+  %7 = phi i8 [ %.pr, %thread-pre-split ], [ %i.u, %bb.e ]
+  %.1.ph = phi ptr [ %i.ak, %thread-pre-split ], [ %i.t, %bb.e ] ; 3 uses
   %i.as = trunc nuw i8 %7 to i1
   br i1 %i.as, label %bb.l, label %bb.o
 

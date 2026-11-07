@@ -205,11 +205,14 @@ _ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit.thread: ; preds = 
   br i1 %i.ak, label %.lr.ph.i, label %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit, !llvm.loop !4
 
 _ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit: ; preds = %.lr.ph.i
-  %.pre.a = load i8, ptr %i.a, align 8, !tbaa !23, !range !25
-  %.pre13 = load i32, ptr %i.x, align 8
-  %i.al = trunc nuw i8 %.pre.a to i1
+  %.pre.a = load i8, ptr %i.a, align 8, !tbaa !23
   %3 = add nuw nsw i32 %1, 1                      ; 3 uses
-  br i1 %i.al, label %bb.h, label %bb.g
+  %i.al = trunc nuw i8 %.pre.a to i1
+  br i1 %i.al, label %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit._crit_edge, label %bb.g
+
+_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit._crit_edge: ; preds = %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit
+  %.pre = load i32, ptr %i.x, align 8
+  br label %bb.h
 
 bb.g:                                             ; preds = %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit
   %i.am = zext nneg i32 %3 to i64                 ; 2 uses
@@ -219,25 +222,25 @@ bb.g:                                             ; preds = %_ZN6icu_786number4i
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(1) %i.an, i8 0, i64 %i.am, i1 false)
   br label %_ZN6icu_786number4impl15DecimalQuantity14ensureCapacityEi.exit11
 
-bb.h:                                             ; preds = %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit.thread, %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit
-  %i.ao = phi i32 [ %i.ac, %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit.thread ], [ %3, %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit ] ; 2 uses
-  %i.ap = phi i32 [ 40, %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit.thread ], [ %.pre13, %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit ] ; 3 uses
-  %.not = icmp sgt i32 %i.ap, %1
-  br i1 %.not, label %._ZN6icu_786number4impl15DecimalQuantity14ensureCapacityEi.exit11_crit_edge, label %bb.i
+bb.h:                                             ; preds = %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit._crit_edge, %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit.thread
+  %i.ao = phi i32 [ 40, %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit.thread ], [ %.pre, %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit._crit_edge ] ; 3 uses
+  %i.ap = phi i32 [ %i.ac, %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit.thread ], [ %3, %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit._crit_edge ] ; 3 uses
+  %4 = icmp slt i32 %i.ao, %i.ap
+  br i1 %4, label %bb.i, label %._ZN6icu_786number4impl15DecimalQuantity14ensureCapacityEi.exit11_crit_edge
 
 ._ZN6icu_786number4impl15DecimalQuantity14ensureCapacityEi.exit11_crit_edge: ; preds = %bb.h
   %.pre14 = load ptr, ptr %i.v, align 8, !tbaa !27
   br label %_ZN6icu_786number4impl15DecimalQuantity14ensureCapacityEi.exit11
 
 bb.i:                                             ; preds = %bb.h
-  %i.aq = shl nuw nsw i32 %i.ao, 1                ; 2 uses
+  %i.aq = shl nuw nsw i32 %i.ap, 1                ; 2 uses
   %i.ar = zext nneg i32 %i.aq to i64
   %i.as = tail call noalias ptr @uprv_malloc_78(i64 noundef %i.ar) #26 ; 4 uses
   %i.at = load ptr, ptr %i.v, align 8, !tbaa !27  ; 2 uses
-  %i.au = sext i32 %i.ap to i64                   ; 2 uses
+  %i.au = sext i32 %i.ao to i64                   ; 2 uses
   tail call void @llvm.memcpy.p0.p0.i64(ptr align 1 %i.as, ptr align 1 %i.at, i64 %i.au, i1 false)
   %i.av = getelementptr inbounds i8, ptr %i.as, i64 %i.au
-  %i.aw = sub nsw i32 %i.ao, %i.ap
+  %i.aw = sub nsw i32 %i.ap, %i.ao
   %i.ax = zext nneg i32 %i.aw to i64
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.av, i8 0, i64 %i.ax, i1 false)
   tail call void @uprv_free_78(ptr noundef %i.at)
@@ -488,12 +491,12 @@ bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
   %i.b = load i8, ptr %i.a, align 8, !tbaa !23, !range !25, !noundef !26
   %i.c = trunc nuw i8 %i.b to i1
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
+  %.pre = load i32, ptr %.phi.trans.insert, align 8, !tbaa !29 ; 3 uses
   br i1 %i.c, label %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 3 uses
-  %3 = load i32, ptr %2, align 8, !tbaa !29
-  %i.d = add nsw i32 %3, %1
+  %i.d = add nsw i32 %.pre, %1
   %i.e = icmp sgt i32 %i.d, 15
   br i1 %i.e, label %_ZN6icu_786number4impl15DecimalQuantity14ensureCapacityEv.exit.i, label %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit.thread10
 
@@ -506,7 +509,7 @@ _ZN6icu_786number4impl15DecimalQuantity14ensureCapacityEv.exit.i: ; preds = %bb.
   store i32 40, ptr %i.h, align 8, !tbaa !27
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 1 dereferenceable(40) %i.i, i8 0, i64 40, i1 false)
   store i8 1, ptr %i.a, align 8, !tbaa !23
-  %i.j = load i32, ptr %2, align 8, !tbaa !29
+  %i.j = load i32, ptr %.phi.trans.insert, align 8, !tbaa !29 ; 2 uses
   %i.k = icmp sgt i32 %i.j, 0
   br i1 %i.k, label %.lr.ph.i, label %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit.thread
 
@@ -520,20 +523,20 @@ _ZN6icu_786number4impl15DecimalQuantity14ensureCapacityEv.exit.i: ; preds = %bb.
   store i8 %i.m, ptr %i.o, align 1, !tbaa !27
   %i.p = lshr i64 %.01114.i, 4
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
-  %i.q = load i32, ptr %2, align 8, !tbaa !29
+  %i.q = load i32, ptr %.phi.trans.insert, align 8, !tbaa !29 ; 3 uses
   %i.r = sext i32 %i.q to i64
   %i.s = icmp slt i64 %indvars.iv.next.i, %i.r
   br i1 %i.s, label %.lr.ph.i, label %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit, !llvm.loop !4
 
 _ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit: ; preds = %.lr.ph.i
-  %.pre.a = load i8, ptr %i.a, align 8, !tbaa !23, !range !25
+  %.pre.a = load i8, ptr %i.a, align 8, !tbaa !23
   %i.t = trunc nuw i8 %.pre.a to i1
   br i1 %i.t, label %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit.thread, label %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit.thread10
 
 _ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit.thread: ; preds = %bb.a, %_ZN6icu_786number4impl15DecimalQuantity14ensureCapacityEv.exit.i, %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %5 = load i32, ptr %4, align 8, !tbaa !29       ; 3 uses
-  %i.u = add nsw i32 %5, %1                       ; 4 uses
+  %2 = phi i32 [ %i.q, %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit ], [ %i.j, %_ZN6icu_786number4impl15DecimalQuantity14ensureCapacityEv.exit.i ], [ %.pre, %bb.a ] ; 3 uses
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  %i.u = add nsw i32 %2, %1                       ; 4 uses
   %i.v = icmp eq i32 %i.u, 0
   br i1 %i.v, label %_ZN6icu_786number4impl15DecimalQuantity14ensureCapacityEi.exit, label %bb.c
 
@@ -558,16 +561,16 @@ bb.d:                                             ; preds = %bb.c
   tail call void @uprv_free_78(ptr noundef %i.ad)
   store ptr %i.ab, ptr %i.ac, align 8, !tbaa !27
   store i32 %i.z, ptr %i.w, align 8, !tbaa !27
-  %.pre7.pre = load i32, ptr %4, align 8, !tbaa !29
+  %.pre7.pre = load i32, ptr %3, align 8, !tbaa !29
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.d, %bb.c
-  %.pre7 = phi i32 [ %.pre7.pre, %bb.d ], [ %5, %bb.c ]
+  %.pre7 = phi i32 [ %.pre7.pre, %bb.d ], [ %2, %bb.c ]
   store i8 1, ptr %i.a, align 8, !tbaa !23
   br label %_ZN6icu_786number4impl15DecimalQuantity14ensureCapacityEi.exit
 
 _ZN6icu_786number4impl15DecimalQuantity14ensureCapacityEi.exit: ; preds = %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit.thread, %bb.e
-  %i.ai = phi i32 [ %5, %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit.thread ], [ %.pre7, %bb.e ]
+  %i.ai = phi i32 [ %2, %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit.thread ], [ %.pre7, %bb.e ]
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !27 ; 2 uses
   %i.al = sext i32 %1 to i64                      ; 2 uses
@@ -576,9 +579,11 @@ _ZN6icu_786number4impl15DecimalQuantity14ensureCapacityEi.exit: ; preds = %_ZN6i
   tail call void @llvm.memmove.p0.p0.i64(ptr align 1 %i.am, ptr align 1 %i.ak, i64 %i.an, i1 false)
   %i.ao = load ptr, ptr %i.aj, align 8, !tbaa !27
   tail call void @llvm.memset.p0.i64(ptr align 1 %i.ao, i8 0, i64 %i.al, i1 false)
+  %.pre11 = load i32, ptr %3, align 8, !tbaa !29
   br label %bb.f
 
 _ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit.thread10: ; preds = %bb.b, %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit
+  %4 = phi i32 [ %i.q, %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit ], [ %.pre, %bb.b ]
   %i.ap = shl nsw i32 %1, 2
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 2 uses
   %i.ar = load i64, ptr %i.aq, align 8, !tbaa !27
@@ -588,13 +593,13 @@ _ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit.thread10: ; preds 
   br label %bb.f
 
 bb.f:                                             ; preds = %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit.thread10, %_ZN6icu_786number4impl15DecimalQuantity14ensureCapacityEi.exit
+  %5 = phi i32 [ %4, %_ZN6icu_786number4impl15DecimalQuantity13switchStorageEv.exit.thread10 ], [ %.pre11, %_ZN6icu_786number4impl15DecimalQuantity14ensureCapacityEi.exit ]
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.av = load i32, ptr %i.au, align 4, !tbaa !28
   %i.aw = sub nsw i32 %i.av, %1
   store i32 %i.aw, ptr %i.au, align 4, !tbaa !28
-  %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %6 = load i32, ptr %i.ax, align 8, !tbaa !29
-  %i.ay = add nsw i32 %6, %1
+  %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %i.ay = add nsw i32 %5, %1
   store i32 %i.ay, ptr %i.ax, align 8, !tbaa !29
   ret void
 }

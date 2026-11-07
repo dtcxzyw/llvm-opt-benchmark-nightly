@@ -204,16 +204,20 @@ bb.a:
 .lr.ph:                                           ; preds = %.preheader38
   %i.n = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.o = load ptr, ptr %i.n, align 8, !tbaa !43
-  %i.p = zext nneg i32 %i.l to i64                ; 5 uses
+  %i.p = zext nneg i32 %i.l to i64                ; 6 uses
   %i.q = mul nuw nsw i64 %i.p, %i.p
   %i.r = add nuw nsw i64 %i.q, 7
   %i.s = lshr i64 %i.r, 3                         ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.k, i64 80
+  br label %.outer
+
+.outer:                                           ; preds = %new_matrix.exit, %.lr.ph
+  %indvars.iv.ph = phi i64 [ %indvars.iv.next64, %new_matrix.exit ], [ 0, %.lr.ph ]
+  %.045.ph = phi i1 [ true, %new_matrix.exit ], [ false, %.lr.ph ] ; 2 uses
   br label %bb.b
 
-bb.b:                                             ; preds = %.lr.ph, %bb.f
-  %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.f ] ; 3 uses
-  %.045 = phi i8 [ 0, %.lr.ph ], [ %.1, %bb.f ]   ; 2 uses
+bb.b:                                             ; preds = %.outer, %1
+  %indvars.iv = phi i64 [ %indvars.iv.next, %1 ], [ %indvars.iv.ph, %.outer ] ; 4 uses
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.o, i64 %indvars.iv
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !44
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 16
@@ -228,9 +232,8 @@ bb.b:                                             ; preds = %.lr.ph, %bb.f
   %i.ac = getelementptr inbounds nuw i8, ptr %i.x, i64 296
   %i.ad = load i64, ptr %i.ac, align 8, !tbaa !101
   %i.ae = icmp eq i64 %i.ad, 0
-  %1 = trunc nuw i8 %.045 to i1
-  %or.cond = select i1 %i.ae, i1 true, i1 %1
-  br i1 %or.cond, label %bb.f, label %bb.c
+  %or.cond = or i1 %i.ae, %.045.ph
+  br i1 %or.cond, label %1, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.af = tail call noalias dereferenceable_or_null(24) ptr @calloc(i64 noundef 1, i64 noundef range(i64 0, 2305843009213693953) 24) #21 ; 5 uses
@@ -254,6 +257,11 @@ bb.e:                                             ; preds = %gv_alloc.exit.i
   tail call fastcc void @graphviz_exit() #23
   unreachable
 
+1:                                                ; preds = %bb.b
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.p
+  br i1 %exitcond.not, label %bb.f, label %bb.b, !llvm.loop !238
+
 new_matrix.exit:                                  ; preds = %gv_alloc.exit.i
   store i64 %i.p, ptr %i.af, align 8, !tbaa !118
   %.sroa.2.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.af, i64 8
@@ -261,17 +269,15 @@ new_matrix.exit:                                  ; preds = %gv_alloc.exit.i
   %.sroa.3.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.af, i64 16
   store ptr %i.aj, ptr %.sroa.3.0..sroa_idx.i, align 8, !tbaa !119
   store ptr %i.af, ptr %i.t, align 8, !tbaa !90
-  br label %bb.f
+  %indvars.iv.next64 = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %exitcond.not65 = icmp eq i64 %indvars.iv.next64, %i.p
+  br i1 %exitcond.not65, label %._crit_edge, label %.outer, !llvm.loop !238
 
-bb.f:                                             ; preds = %bb.b, %new_matrix.exit
-  %.1 = phi i8 [ %.045, %bb.b ], [ 1, %new_matrix.exit ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.p
-  br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !238
+bb.f:                                             ; preds = %1
+  br i1 %.045.ph, label %._crit_edge, label %.loopexit
 
-._crit_edge:                                      ; preds = %bb.f
-  %2 = trunc nuw i8 %.1 to i1
-  br i1 %2, label %.lr.ph48, label %.loopexit
+._crit_edge:                                      ; preds = %new_matrix.exit, %bb.f
+  br label %.lr.ph48
 
 .lr.ph48:                                         ; preds = %._crit_edge, %bb.h
   %i.an = phi ptr [ %i.az, %bb.h ], [ %i.h, %._crit_edge ]
@@ -307,8 +313,8 @@ bb.h:                                             ; preds = %.lr.ph48, %bb.g
   %i.bg = icmp slt i64 %indvars.iv.next54, %i.bf
   br i1 %i.bg, label %.lr.ph48, label %.loopexit, !llvm.loop !239
 
-.loopexit:                                        ; preds = %bb.h, %._crit_edge, %.preheader38
-  %i.bh = phi ptr [ %i.h, %.preheader38 ], [ %i.h, %._crit_edge ], [ %i.az, %bb.h ] ; 2 uses
+.loopexit:                                        ; preds = %bb.h, %bb.f, %.preheader38
+  %i.bh = phi ptr [ %i.h, %.preheader38 ], [ %i.h, %bb.f ], [ %i.az, %bb.h ] ; 2 uses
   %indvars.iv.next57 = add nsw i64 %indvars.iv56, 1
   %i.bi = getelementptr inbounds nuw i8, ptr %i.bh, i64 340
   %i.bj = load i32, ptr %i.bi, align 4, !tbaa !38

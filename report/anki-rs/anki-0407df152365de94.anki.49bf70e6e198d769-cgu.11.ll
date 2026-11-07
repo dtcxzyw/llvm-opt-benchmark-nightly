@@ -205,11 +205,13 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
 define void @"_ZN119_$LT$anki_proto..import_export..CsvMetadata$u20$as$u20$anki..import_export..text..csv..metadata..CsvMetadataHelpers$GT$11from_config17h614e087e770097dbE"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([176 x i8]) align 8 captures(none) dereferenceable(176) initializes((0, 104), (128, 136), (152, 175)) %0, ptr noundef nonnull align 8 %1) unnamed_addr #0 personality ptr @rust_eh_personality !guid !623 {
 bb.a:
   %i.a = tail call noundef i32 @"_ZN4anki6config6number46_$LT$impl$u20$anki..collection..Collection$GT$14get_config_i3217h6d58e00932eeee9cE"(ptr noundef nonnull align 8 %1, i8 noundef 0) ; 2 uses
-  %switch.i = icmp ugt i32 %i.a, 2
-  %spec.select.i.i = select i1 %switch.i, i32 0, i32 %i.a
-  %i.b = tail call noundef i32 @"_ZN4anki6config6number46_$LT$impl$u20$anki..collection..Collection$GT$14get_config_i3217h6d58e00932eeee9cE"(ptr noundef nonnull align 8 %1, i8 noundef 1) ; 2 uses
-  %switch.selectcmp.i = icmp ugt i32 %i.b, 1
-  %spec.select.i.i14 = select i1 %switch.selectcmp.i, i32 0, i32 %i.b
+  %switch.selectcmp.i = icmp eq i32 %i.a, 1
+  %switch.select.i = zext i1 %switch.selectcmp.i to i32
+  %switch.selectcmp4.i = icmp eq i32 %i.a, 2
+  %spec.select.i.i = select i1 %switch.selectcmp4.i, i32 2, i32 %switch.select.i
+  %i.b = tail call noundef i32 @"_ZN4anki6config6number46_$LT$impl$u20$anki..collection..Collection$GT$14get_config_i3217h6d58e00932eeee9cE"(ptr noundef nonnull align 8 %1, i8 noundef 1)
+  %cond.i = icmp eq i32 %i.b, 1
+  %spec.select.i = zext i1 %cond.i to i32
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 152
   store i32 0, ptr %i.c, align 8
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 172
@@ -242,7 +244,7 @@ bb.a:
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 164
   store i32 %spec.select.i.i, ptr %i.i, align 4
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 168
-  store i32 %spec.select.i.i14, ptr %i.j, align 8
+  store i32 %spec.select.i, ptr %i.j, align 8
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 128
   store i64 -9223372036854775806, ptr %i.k, align 8
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 96
@@ -457,10 +459,10 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 ; Function Attrs: nonlazybind uwtable
 define noundef range(i32 0, 2) i32 @"_ZN127_$LT$anki_proto..import_export..csv_metadata..MatchScope$u20$as$u20$anki..import_export..text..csv..metadata..MatchScopeExt$GT$11from_config17h9cc73c144687c377E"(ptr noundef nonnull align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality !guid !634 {
 bb.a:
-  %i.a = tail call noundef i32 @"_ZN4anki6config6number46_$LT$impl$u20$anki..collection..Collection$GT$14get_config_i3217h6d58e00932eeee9cE"(ptr noundef nonnull align 8 %0, i8 noundef 1) ; 2 uses
-  %switch.selectcmp = icmp ugt i32 %i.a, 1
-  %spec.select.i = select i1 %switch.selectcmp, i32 0, i32 %i.a
-  ret i32 %spec.select.i
+  %i.a = tail call noundef i32 @"_ZN4anki6config6number46_$LT$impl$u20$anki..collection..Collection$GT$14get_config_i3217h6d58e00932eeee9cE"(ptr noundef nonnull align 8 %0, i8 noundef 1)
+  %cond = icmp eq i32 %i.a, 1
+  %spec.select = zext i1 %cond to i32
+  ret i32 %spec.select
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -768,8 +770,10 @@ bb.a:
 define noundef range(i32 0, 3) i32 @"_ZN135_$LT$anki_proto..import_export..csv_metadata..DupeResolution$u20$as$u20$anki..import_export..text..csv..metadata..DupeResolutionExt$GT$11from_config17hba48b3dce948f50cE"(ptr noundef nonnull align 8 %0) unnamed_addr #0 personality ptr @rust_eh_personality !guid !667 {
 bb.a:
   %i.a = tail call noundef i32 @"_ZN4anki6config6number46_$LT$impl$u20$anki..collection..Collection$GT$14get_config_i3217h6d58e00932eeee9cE"(ptr noundef nonnull align 8 %0, i8 noundef 0) ; 2 uses
-  %switch = icmp ugt i32 %i.a, 2
-  %spec.select.i = select i1 %switch, i32 0, i32 %i.a
+  %switch.selectcmp = icmp eq i32 %i.a, 1
+  %switch.select = zext i1 %switch.selectcmp to i32
+  %switch.selectcmp4 = icmp eq i32 %i.a, 2
+  %spec.select.i = select i1 %switch.selectcmp4, i32 2, i32 %switch.select
   ret i32 %spec.select.i
 }
 

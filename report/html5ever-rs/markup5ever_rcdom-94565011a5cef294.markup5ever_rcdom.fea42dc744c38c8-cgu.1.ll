@@ -202,7 +202,7 @@ bb.a:
   br i1 %i.c, label %bb.b, label %.thread
 
 bb.b:                                             ; preds = %bb.a
-  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 5 uses
   %i.e = load ptr, ptr %1, align 8, !nonnull !4, !noundef !4 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 104 ; 7 uses
   %i.g = load i64, ptr %i.f, align 8, !noalias !519, !noundef !4 ; 2 uses
@@ -216,11 +216,11 @@ bb.c:                                             ; preds = %bb.b
 .noexc:                                           ; preds = %bb.c
   unreachable
 
-bb.d:                                             ; preds = %bb.k, %bb.e
+bb.d:                                             ; preds = %bb.e, %bb.k
   %i.i = phi i64 [ %i.v, %bb.e ], [ %.pre, %bb.k ]
   %i.j = add i64 %i.i, -1
   store i64 %i.j, ptr %i.f, align 8
-  %.pre29 = load i64, ptr %2, align 8, !range !7
+  %.pre29 = load i64, ptr %2, align 8
   %i.k = trunc nuw i64 %.pre29 to i1
   br i1 %i.k, label %bb.q, label %.thread
 
@@ -337,10 +337,9 @@ bb.p:                                             ; preds = %bb.y, %.thread44
   unreachable
 
 bb.q:                                             ; preds = %bb.d
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
   %.sroa.5.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.a, i64 32
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !524
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %3, i64 16, i1 false)
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.5.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %i.d, i64 16, i1 false)
   store i64 1, ptr %i.a, align 8, !noalias !524
   %i.bc = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 1, ptr %i.bc, align 8, !noalias !524

@@ -202,20 +202,21 @@ bb.q:                                             ; preds = %bb.f
 
 bb.r:                                             ; preds = %bb.q
   store i8 1, ptr %i.a, align 1
-  br label %heap_getattr.exit
+  br label %bb.t
 
 bb.s:                                             ; preds = %bb.q
   %i.bw = trunc nuw nsw i64 %i.y to i32
   %i.bx = call i64 @nocachegetattr(ptr noundef nonnull %3, i32 noundef range(i32 1, 2048) %i.bw, ptr noundef nonnull %i.j) #10
   br label %heap_getattr.exit
 
-heap_getattr.exit:                                ; preds = %bb.e, %bb.j, %bb.k, %bb.l, %bb.m, %bb.o, %bb.p, %bb.r, %bb.s
-  %.0.i = phi i64 [ %i.af, %bb.e ], [ %i.bk, %bb.o ], [ %i.bx, %bb.s ], [ 0, %bb.r ], [ %i.bm, %bb.p ], [ %i.bc, %bb.j ], [ %i.be, %bb.k ], [ %i.bg, %bb.l ], [ %i.bh, %bb.m ]
-  %i.by = load i8, ptr %i.a, align 1, !range !4, !noundef !5
+heap_getattr.exit:                                ; preds = %bb.e, %bb.j, %bb.k, %bb.l, %bb.m, %bb.o, %bb.p, %bb.s
+  %.0.i.ph = phi i64 [ %i.bk, %bb.o ], [ %i.bh, %bb.m ], [ %i.bg, %bb.l ], [ %i.be, %bb.k ], [ %i.bc, %bb.j ], [ %i.bm, %bb.p ], [ %i.bx, %bb.s ], [ %i.af, %bb.e ] ; 2 uses
+  %i.by = load i8, ptr %i.a, align 1
   %i.bz = trunc nuw i8 %i.by to i1
   br i1 %i.bz, label %bb.t, label %bb.u
 
-bb.t:                                             ; preds = %heap_getattr.exit
+bb.t:                                             ; preds = %bb.r, %heap_getattr.exit
+  %.0.i37 = phi i64 [ 0, %bb.r ], [ %.0.i.ph, %heap_getattr.exit ]
   store i32 0, ptr %i.b, align 4
   store i32 0, ptr %i.c, align 4
   br label %bb.v
@@ -234,7 +235,8 @@ bb.v:                                             ; preds = %bb.u, %bb.t
   %i.cd = phi i32 [ %.pre39, %bb.u ], [ 0, %bb.t ]
   %i.ce = phi i32 [ %.pre38, %bb.u ], [ 0, %bb.t ]
   %i.cf = phi i1 [ %i.cc, %bb.u ], [ true, %bb.t ]
-  call fastcc void @datum_to_json_internal(i64 noundef %.0.i, i1 noundef zeroext %i.cf, ptr noundef %1, i32 noundef %i.ce, i32 noundef %i.cd, i1 noundef zeroext false)
+  %.0.i36 = phi i64 [ %.0.i.ph, %bb.u ], [ %.0.i37, %bb.t ]
+  call fastcc void @datum_to_json_internal(i64 noundef %.0.i36, i1 noundef zeroext %i.cf, ptr noundef %1, i32 noundef %i.ce, i32 noundef %i.cd, i1 noundef zeroext false)
   %.pre40 = load i32, ptr %i.j, align 8           ; 2 uses
   %.pre41 = sext i32 %.pre40 to i64
   br label %bb.w

@@ -142,8 +142,12 @@ bb.e:                                             ; preds = %bb.c, %bb.d
   %i.ac = icmp slt i64 %indvars.iv.next, %i.ab
   br i1 %i.ac, label %bb.c, label %._crit_edge, !llvm.loop !52
 
-.split:                                           ; preds = %._crit_edge, %bb.j
-  %1 = load i8, ptr %i.i, align 4, !tbaa !31, !range !32, !noundef !33
+.splitthread-pre-split:                           ; preds = %bb.j
+  %.pr = load i8, ptr %i.i, align 4, !tbaa !31
+  br label %.split
+
+.split:                                           ; preds = %._crit_edge, %.splitthread-pre-split
+  %1 = phi i8 [ %.pr, %.splitthread-pre-split ], [ 0, %._crit_edge ]
   %i.ad = trunc nuw i8 %1 to i1
   br i1 %i.ad, label %bb.f, label %bb.g
 
@@ -179,7 +183,7 @@ bb.j:                                             ; preds = %waitpid_cached.exit
   %i.an = tail call ptr @__errno_location() #12
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !12
   %i.ap = icmp eq i32 %i.ao, 4
-  br i1 %i.ap, label %.split, label %.critedge.thread, !llvm.loop !53
+  br i1 %i.ap, label %.splitthread-pre-split, label %.critedge.thread, !llvm.loop !53
 
 .critedge:                                        ; preds = %waitpid_cached.exit, %waitpid_cached.exit.us
   %.us-phi = phi i32 [ %.pre39, %waitpid_cached.exit.us ], [ %.0.i, %waitpid_cached.exit ]

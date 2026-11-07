@@ -204,8 +204,9 @@ _RNCINvNtCs2pqxYH9ZEk8_3std2io19default_read_to_endINtB4_4TakeNtNtB6_2fs4FileEE0
   %i.k = icmp eq i64 %i.j, 0
   %i.l = sub i64 %3, %i.j
   %i.m = add i64 %i.l, 9216                       ; 2 uses
-  %.not97 = icmp ult i64 %i.m, %i.i
-  %.sroa.5.1.i = select i1 %.not97, i64 8192, i64 %i.m
+  %4 = icmp uge i64 %i.m, %i.i
+  %cond.fr = freeze i1 %4
+  %.sroa.5.1.i = select i1 %cond.fr, i64 %i.m, i64 8192
   %.sroa.050.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtCs2pqxYH9ZEk8_3std2io19default_read_to_endINtB4_4TakeNtNtB6_2fs4FileEE0Cs7p2uQeJxui2_9deltalake.exit.thread

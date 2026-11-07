@@ -205,7 +205,7 @@ bb.a:
   %i.s = alloca [40 x i8], align 8                ; 5 uses
   %i.t = alloca [40 x i8], align 8                ; 8 uses
   %i.u = alloca [32 x i8], align 8                ; 4 uses
-  %i.v = alloca [40 x i8], align 8                ; 7 uses
+  %i.v = alloca [40 x i8], align 8                ; 8 uses
   %i.w = alloca [32 x i8], align 8                ; 12 uses
   %.sroa.4.i.i = alloca [80 x i8], align 8        ; 5 uses
   %i.x = alloca [40 x i8], align 8                ; 9 uses
@@ -292,7 +292,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.ba
           to label %bb.d unwind label %bb.c, !noalias !5282
 
 .body67.i.i:                                      ; preds = %bb.ay, %bb.av, %.thread6.i, %bb.ar, %bb.al, %bb.j, %bb.f, %bb.c
-  %.pn57.i.i = phi { ptr, i32 } [ %i.em, %bb.av ], [ %.pn.pn88.i.i, %.thread6.i ], [ %i.bu, %bb.f ], [ %.pn.i.i, %bb.j ], [ %i.bo, %bb.c ], [ %i.eo, %bb.ay ], [ %i.eb, %bb.al ], [ %.pn.i.i, %bb.ar ]
+  %.pn57.i.i = phi { ptr, i32 } [ %i.em, %bb.av ], [ %.pn.pn88.i.i, %.thread6.i ], [ %i.bu, %bb.f ], [ %.pn135.i.i, %bb.j ], [ %i.bo, %bb.c ], [ %i.eo, %bb.ay ], [ %i.eb, %bb.al ], [ %.pn.i.i, %bb.ar ]
   call void @llvm.experimental.noalias.scope.decl(metadata !5283)
   call void @llvm.experimental.noalias.scope.decl(metadata !5284)
   call void @llvm.experimental.noalias.scope.decl(metadata !5285)
@@ -402,7 +402,7 @@ bb.i:                                             ; preds = %_RINvMNtCskKLDkoKar
           to label %bb.k unwind label %.thread.i.i, !noalias !5282
 
 bb.j:                                             ; preds = %bb.as
-  %i.ck = trunc nuw i8 %.sroa.021.0.i.i to i1
+  %i.ck = trunc nuw i8 %.sroa.021.0134.i.i to i1
   br i1 %i.ck, label %.thread6.i, label %.body67.i.i
 
 .thread.i.i:                                      ; preds = %bb.k, %bb.i
@@ -428,12 +428,17 @@ bb.k:                                             ; preds = %bb.i
   invoke void %i.cx(ptr noalias nofree noundef nonnull sret([40 x i8]) align 8 captures(address) dereferenceable(40) %i.v, ptr noundef nonnull %i.ct, ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(32) %i.u, i1 noundef zeroext %i.cp, i1 noundef zeroext %i.cs)
           to label %bb.m unwind label %.thread.i.i, !noalias !5282
 
-.body.i.i:                                        ; preds = %bb.aq, %bb.u, %bb.l
-  %.sroa.021.0.i.i = phi i8 [ %.sroa.022.2.i.i, %bb.l ], [ %.sroa.021.2.lpad-body.ph.i.i, %bb.aq ], [ 1, %bb.u ] ; 2 uses
-  %.pn.i.i = phi { ptr, i32 } [ %i.da, %bb.l ], [ %eh.lpad-body.ph.i.i, %bb.aq ], [ %i.dk, %bb.u ] ; 4 uses
+.body.i.i:                                        ; preds = %bb.aq, %bb.l
+  %.sroa.021.0.i.i = phi i8 [ %.sroa.022.2.i.i, %bb.l ], [ %.sroa.021.2.lpad-body.ph.i.i, %bb.aq ] ; 2 uses
+  %.pn.i.i = phi { ptr, i32 } [ %i.da, %bb.l ], [ %eh.lpad-body.ph.i.i, %bb.aq ] ; 3 uses
   %i.cy = load i64, ptr %i.v, align 8, !range !25, !noalias !5281, !noundef !17
   %i.cz = icmp eq i64 %i.cy, 0
   br i1 %i.cz, label %bb.as, label %bb.ar
+
+.body.thread.i.i:                                 ; preds = %bb.u
+  %2 = load i64, ptr %i.v, align 8, !range !25, !noalias !5281, !noundef !17
+  %3 = icmp eq i64 %2, 0
+  br i1 %3, label %bb.as, label %.thread119.i.i
 
 bb.l:                                             ; preds = %bb.ap, %bb.aa, %bb.s, %bb.p, %bb.o
   %.sroa.022.2.i.i = phi i8 [ 0, %bb.ap ], [ 1, %bb.aa ], [ 1, %bb.s ], [ 1, %bb.p ], [ 1, %bb.o ]
@@ -499,9 +504,9 @@ bb.t:                                             ; preds = %bb.x, %bb.v
 
 bb.u:                                             ; preds = %bb.w
   %i.dk = landingpad { ptr, i32 }
-          cleanup
+          cleanup                                 ; 2 uses
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCs1SQIzZDXHNl_7tracing4span4SpanECs2Bxje7pdMIr_13libp2p_server(ptr noalias nofree noundef align 8 dereferenceable(40) %i.o) #38
-          to label %.body.i.i unwind label %bb.z, !noalias !5282
+          to label %.body.thread.i.i unwind label %bb.z, !noalias !5282
 
 bb.v:                                             ; preds = %bb.r, %bb.q, %bb.n, %bb.m
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !5281
@@ -664,18 +669,21 @@ bb.ar:                                            ; preds = %.body.i.i
   %i.ed = trunc nuw i8 %.sroa.021.0.i.i to i1
   br i1 %i.ed, label %.thread119.i.i, label %.body67.i.i
 
-bb.as:                                            ; preds = %.body.i.i
+bb.as:                                            ; preds = %.body.thread.i.i, %.body.i.i
+  %.pn135.i.i = phi { ptr, i32 } [ %i.dk, %.body.thread.i.i ], [ %.pn.i.i, %.body.i.i ] ; 2 uses
+  %.sroa.021.0134.i.i = phi i8 [ 1, %.body.thread.i.i ], [ %.sroa.021.0.i.i, %.body.i.i ]
   %.val.i.i = load ptr, ptr %i.au, align 8, !noalias !5281
   %.val66.i.i = load ptr, ptr %i.av, align 8, !noalias !5281, !nonnull !17, !align !22, !noundef !17
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB4_6future6future6Futurep6OutputINtNtB4_6result6ResultTNtNtCs2iisHxfqoT7_15libp2p_identity7peer_id6PeerIdNtNtNtCsdTHTBGblh3Z_11libp2p_core6muxing5boxed14StreamMuxerBoxENtNtNtB4_2io5error5ErrorENtNtB4_6marker4SendEL_EEECs2Bxje7pdMIr_13libp2p_server(ptr %.val.i.i, ptr nonnull %.val66.i.i) #38
           to label %bb.j unwind label %bb.z, !noalias !5282
 
-.thread119.i.i:                                   ; preds = %bb.ar
+.thread119.i.i:                                   ; preds = %bb.ar, %.body.thread.i.i
+  %.pn136140.i.i = phi { ptr, i32 } [ %.pn.i.i, %bb.ar ], [ %i.dk, %.body.thread.i.i ]
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsdTHTBGblh3Z_11libp2p_core9transport14TransportErrorNtNtNtB4_2io5error5ErrorEECs2Bxje7pdMIr_13libp2p_server(ptr noalias nofree noundef align 8 dereferenceable(32) %i.au) #38
           to label %.thread6.i unwind label %bb.z, !noalias !5282
 
 .thread6.i:                                       ; preds = %.thread119.i.i, %.thread.i.i, %bb.j
-  %.pn.pn88.i.i = phi { ptr, i32 } [ %i.cl, %.thread.i.i ], [ %.pn.i.i, %bb.j ], [ %.pn.i.i, %.thread119.i.i ]
+  %.pn.pn88.i.i = phi { ptr, i32 } [ %i.cl, %.thread.i.i ], [ %.pn135.i.i, %bb.j ], [ %.pn136140.i.i, %.thread119.i.i ]
   call void @llvm.experimental.noalias.scope.decl(metadata !5302)
   call void @llvm.experimental.noalias.scope.decl(metadata !5303)
   call void @llvm.experimental.noalias.scope.decl(metadata !5304)

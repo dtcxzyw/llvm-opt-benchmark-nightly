@@ -204,9 +204,9 @@ bb.j:                                             ; preds = %.thread
 bb.k:                                             ; preds = %bb.j
   store i8 1, ptr %i.x, align 1, !tbaa !401
   store i8 0, ptr %i.f, align 2, !tbaa !518
-  br label %._crit_edge
+  br label %bb.m
 
-._crit_edge:                                      ; preds = %bb.k, %bb.c
+._crit_edge:                                      ; preds = %bb.c
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 1
   %.pre = load i8, ptr %.phi.trans.insert, align 1, !tbaa !401, !range !390
   %i.aa = trunc nuw i8 %.pre to i1
@@ -219,7 +219,7 @@ bb.l:                                             ; preds = %bb.j, %.thread
   store i8 %i.ad, ptr %i.ac, align 1, !tbaa !401
   br i1 %i.ab, label %bb.m, label %bb.o
 
-bb.m:                                             ; preds = %._crit_edge, %bb.l
+bb.m:                                             ; preds = %._crit_edge, %bb.k, %bb.l
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.af = load i8, ptr %i.ae, align 4, !tbaa !519, !range !390, !noundef !391
   %i.ag = trunc nuw i8 %i.af to i1
@@ -622,9 +622,13 @@ bb.f:                                             ; preds = %tailrecurse
   %i.x = trunc nuw i8 %i.w to i1
   br i1 %i.x, label %.critedge122, label %.lr.ph247.split
 
-.lr.ph247.split:                                  ; preds = %.lr.ph247, %.critedge
-  %.sroa.0154.0246 = phi ptr [ %i.aa, %.critedge ], [ %i.s, %.lr.ph247 ] ; 2 uses
-  %12 = load i8, ptr %i.v, align 8, !tbaa !547, !range !390, !noundef !391
+.lr.ph247.splitthread-pre-split:                  ; preds = %.critedge
+  %.pr = load i8, ptr %i.v, align 8, !tbaa !547
+  br label %.lr.ph247.split
+
+.lr.ph247.split:                                  ; preds = %.lr.ph247, %.lr.ph247.splitthread-pre-split
+  %12 = phi i8 [ %.pr, %.lr.ph247.splitthread-pre-split ], [ 0, %.lr.ph247 ]
+  %.sroa.0154.0246 = phi ptr [ %i.aa, %.lr.ph247.splitthread-pre-split ], [ %i.s, %.lr.ph247 ] ; 2 uses
   %i.y = trunc nuw i8 %12 to i1
   br i1 %i.y, label %.critedge, label %bb.g
 
@@ -635,7 +639,7 @@ bb.g:                                             ; preds = %.lr.ph247.split
 .critedge:                                        ; preds = %bb.g, %.lr.ph247.split
   %i.aa = getelementptr inbounds nuw i8, ptr %.sroa.0154.0246, i64 64 ; 2 uses
   %.not185 = icmp eq ptr %i.aa, %i.u
-  br i1 %.not185, label %.critedge122, label %.lr.ph247.split, !llvm.loop !1818
+  br i1 %.not185, label %.critedge122, label %.lr.ph247.splitthread-pre-split, !llvm.loop !1818
 
 bb.h:                                             ; preds = %tailrecurse
   %i.ab = tail call noundef nonnull align 8 dereferenceable(40) ptr @_ZN6duckdb11TableFilter4CastINS_19ConjunctionOrFilterEEERT_v(ptr noundef nonnull align 8 dereferenceable(9) %.tr186) ; 2 uses

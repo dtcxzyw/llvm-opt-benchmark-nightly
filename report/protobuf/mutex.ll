@@ -202,9 +202,9 @@ bb.f:                                             ; preds = %bb.e
   br label %._crit_edge
 
 ._crit_edge.loopexit:                             ; preds = %_ZN4absl12lts_20250512L4SkipEPNS0_13base_internal14PerThreadSynchE.exit, %bb.ao
-  %.0145.ph581 = phi ptr [ %.2147, %_ZN4absl12lts_20250512L4SkipEPNS0_13base_internal14PerThreadSynchE.exit ], [ %.1121333, %bb.ao ]
-  %.0139.ph582 = phi ptr [ %.2141, %_ZN4absl12lts_20250512L4SkipEPNS0_13base_internal14PerThreadSynchE.exit ], [ %.1118335, %bb.ao ]
-  %.0134.ph583 = phi i64 [ %.2136, %_ZN4absl12lts_20250512L4SkipEPNS0_13base_internal14PerThreadSynchE.exit ], [ 32, %bb.ao ]
+  %.0145.ph581 = phi ptr [ %.2147256, %_ZN4absl12lts_20250512L4SkipEPNS0_13base_internal14PerThreadSynchE.exit ], [ %.1121333, %bb.ao ]
+  %.0139.ph582 = phi ptr [ %.2141257, %_ZN4absl12lts_20250512L4SkipEPNS0_13base_internal14PerThreadSynchE.exit ], [ %.1118335, %bb.ao ]
+  %.0134.ph583 = phi i64 [ %.2136258, %_ZN4absl12lts_20250512L4SkipEPNS0_13base_internal14PerThreadSynchE.exit ], [ 32, %bb.ao ]
   br label %._crit_edge
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %.outer
@@ -464,10 +464,10 @@ bb.am:                                            ; preds = %bb.al
 
 .lr.ph:                                           ; preds = %bb.at, %.lr.ph.preheader
   %.1118335 = phi ptr [ %.2119, %bb.at ], [ %.0137, %.lr.ph.preheader ] ; 2 uses
-  %.1121333 = phi ptr [ %i.dx, %bb.at ], [ %.0120, %.lr.ph.preheader ] ; 8 uses
-  %.1135332 = phi i64 [ %.2136, %bb.at ], [ %.0134, %.lr.ph.preheader ] ; 3 uses
-  %.1140331 = phi ptr [ %.2141, %bb.at ], [ %.0139, %.lr.ph.preheader ] ; 3 uses
-  %.1146330 = phi ptr [ %.2147, %bb.at ], [ %.0145, %.lr.ph.preheader ] ; 4 uses
+  %.1121333 = phi ptr [ %i.dx, %bb.at ], [ %.0120, %.lr.ph.preheader ] ; 10 uses
+  %.1135332 = phi i64 [ %.2136258, %bb.at ], [ %.0134, %.lr.ph.preheader ] ; 3 uses
+  %.1140331 = phi ptr [ %.2141257, %bb.at ], [ %.0139, %.lr.ph.preheader ] ; 4 uses
+  %.1146330 = phi ptr [ %.2147256, %bb.at ], [ %.0145, %.lr.ph.preheader ] ; 5 uses
   %i.cx = getelementptr inbounds nuw i8, ptr %.1121333, i64 17 ; 4 uses
   store i8 0, ptr %i.cx, align 1, !tbaa !157
   %i.cy = getelementptr inbounds nuw i8, ptr %.1121333, i64 32 ; 3 uses
@@ -492,7 +492,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.dh = load ptr, ptr %i.cy, align 8, !tbaa !127
   %i.di = load ptr, ptr %i.dh, align 8, !tbaa !134
   %i.dj = icmp eq ptr %i.di, @_ZN4absl12lts_20250512L11kExclusiveSE
-  br i1 %i.dj, label %._crit_edge.loopexit, label %bb.ar
+  br i1 %i.dj, label %._crit_edge.loopexit, label %_ZN4absl12lts_20250512L4SkipEPNS0_13base_internal14PerThreadSynchE.exit
 
 bb.ap:                                            ; preds = %bb.an
   %i.dk = load ptr, ptr %i.cy, align 8, !tbaa !127
@@ -502,13 +502,11 @@ bb.ap:                                            ; preds = %bb.an
 
 bb.aq:                                            ; preds = %bb.ap
   store i8 1, ptr %i.cx, align 1, !tbaa !157
-  br label %bb.ar
+  br label %_ZN4absl12lts_20250512L4SkipEPNS0_13base_internal14PerThreadSynchE.exit
 
-bb.ar:                                            ; preds = %bb.ap, %bb.ao, %bb.aq, %_ZN4absl12lts_20250512L20EvalConditionIgnoredEPNS0_5MutexEPKNS0_9ConditionE.exit
-  %.2147 = phi ptr [ %.1121333, %bb.ao ], [ %.1146330, %bb.aq ], [ %.1146330, %_ZN4absl12lts_20250512L20EvalConditionIgnoredEPNS0_5MutexEPKNS0_9ConditionE.exit ], [ %.1146330, %bb.ap ] ; 2 uses
-  %.2141 = phi ptr [ %.1118335, %bb.ao ], [ %.1140331, %bb.aq ], [ %.1140331, %_ZN4absl12lts_20250512L20EvalConditionIgnoredEPNS0_5MutexEPKNS0_9ConditionE.exit ], [ %.1140331, %bb.ap ] ; 2 uses
-  %.2136 = phi i64 [ %.1135332, %bb.ao ], [ %.1135332, %bb.aq ], [ %.1135332, %_ZN4absl12lts_20250512L20EvalConditionIgnoredEPNS0_5MutexEPKNS0_9ConditionE.exit ], [ 32, %bb.ap ] ; 2 uses
-  %i.dn = load i8, ptr %i.cx, align 1, !tbaa !157, !range !122, !noundef !123
+bb.ar:                                            ; preds = %bb.ap, %_ZN4absl12lts_20250512L20EvalConditionIgnoredEPNS0_5MutexEPKNS0_9ConditionE.exit
+  %.2136.ph = phi i64 [ 32, %bb.ap ], [ %.1135332, %_ZN4absl12lts_20250512L20EvalConditionIgnoredEPNS0_5MutexEPKNS0_9ConditionE.exit ] ; 3 uses
+  %i.dn = load i8, ptr %i.cx, align 1, !tbaa !157
   %i.do = trunc nuw i8 %i.dn to i1
   br i1 %i.do, label %_ZN4absl12lts_20250512L4SkipEPNS0_13base_internal14PerThreadSynchE.exit, label %bb.as
 
@@ -540,8 +538,11 @@ bb.as:                                            ; preds = %bb.ar
   store ptr %.0.lcssa.i, ptr %i.dp, align 8, !tbaa !140
   br label %_ZN4absl12lts_20250512L4SkipEPNS0_13base_internal14PerThreadSynchE.exit
 
-_ZN4absl12lts_20250512L4SkipEPNS0_13base_internal14PerThreadSynchE.exit: ; preds = %._crit_edge.i, %bb.as, %bb.ar
-  %.2119 = phi ptr [ %.1121333, %bb.ar ], [ %.0.lcssa.i, %._crit_edge.i ], [ %.1121333, %bb.as ] ; 3 uses
+_ZN4absl12lts_20250512L4SkipEPNS0_13base_internal14PerThreadSynchE.exit: ; preds = %bb.aq, %bb.ao, %._crit_edge.i, %bb.as, %bb.ar
+  %.2136258 = phi i64 [ %.2136.ph, %._crit_edge.i ], [ %.2136.ph, %bb.ar ], [ %.2136.ph, %bb.as ], [ %.1135332, %bb.ao ], [ %.1135332, %bb.aq ] ; 2 uses
+  %.2141257 = phi ptr [ %.1140331, %._crit_edge.i ], [ %.1140331, %bb.ar ], [ %.1140331, %bb.as ], [ %.1118335, %bb.ao ], [ %.1140331, %bb.aq ] ; 2 uses
+  %.2147256 = phi ptr [ %.1146330, %._crit_edge.i ], [ %.1146330, %bb.ar ], [ %.1146330, %bb.as ], [ %.1121333, %bb.ao ], [ %.1146330, %bb.aq ] ; 2 uses
+  %.2119 = phi ptr [ %.0.lcssa.i, %._crit_edge.i ], [ %.1121333, %bb.ar ], [ %.1121333, %bb.as ], [ %.1121333, %bb.ao ], [ %.1121333, %bb.aq ] ; 3 uses
   %.not183 = icmp eq ptr %.2119, %i.bb
   br i1 %.not183, label %._crit_edge.loopexit, label %bb.at
 

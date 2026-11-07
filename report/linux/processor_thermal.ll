@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr i8, ptr %.val, i64 16      ; 4 uses
   %i.e = load i8, ptr @acpi_processor_cpufreq_init, align 1, !range !14, !noundef !15
   %i.f = trunc nuw i8 %i.e to i1
-  br i1 %i.f, label %bb.d, label %cpufreq_get_max_state.exit
+  br i1 %i.f, label %bb.d, label %cpufreq_get_max_state.exit.i
 
 bb.d:                                             ; preds = %bb.c
   %i.g = load i32, ptr %i.d, align 8
@@ -214,9 +214,9 @@ bb.e:                                             ; preds = %bb.d
   tail call void @cpufreq_cpu_put(ptr noundef nonnull %i.h) #4
   br label %cpufreq_get_max_state.exit
 
-cpufreq_get_max_state.exit:                       ; preds = %bb.c, %bb.d, %bb.e
-  %2 = phi i32 [ 3, %bb.e ], [ 0, %bb.c ], [ 0, %bb.d ] ; 3 uses
-  %i.i = load i8, ptr @acpi_processor_cpufreq_init, align 1, !range !14, !noundef !15
+cpufreq_get_max_state.exit:                       ; preds = %bb.d, %bb.e
+  %.ph = phi i32 [ 0, %bb.d ], [ 3, %bb.e ]       ; 3 uses
+  %i.i = load i8, ptr @acpi_processor_cpufreq_init, align 1
   %i.j = trunc nuw i8 %i.i to i1
   br i1 %i.j, label %bb.f, label %cpufreq_get_max_state.exit.i
 
@@ -230,8 +230,9 @@ bb.g:                                             ; preds = %bb.f
   tail call void @cpufreq_cpu_put(ptr noundef nonnull %i.l) #4
   br label %cpufreq_get_max_state.exit.i
 
-cpufreq_get_max_state.exit.i:                     ; preds = %bb.g, %bb.f, %cpufreq_get_max_state.exit
-  %3 = phi i32 [ 3, %bb.g ], [ 0, %cpufreq_get_max_state.exit ], [ 0, %bb.f ] ; 2 uses
+cpufreq_get_max_state.exit.i:                     ; preds = %bb.c, %bb.g, %bb.f, %cpufreq_get_max_state.exit
+  %2 = phi i32 [ %.ph, %bb.g ], [ %.ph, %cpufreq_get_max_state.exit ], [ %.ph, %bb.f ], [ 0, %bb.c ] ; 3 uses
+  %3 = phi i32 [ 3, %bb.g ], [ 0, %cpufreq_get_max_state.exit ], [ 0, %bb.f ], [ 0, %bb.c ] ; 2 uses
   %i.m = getelementptr i8, ptr %.val, i64 32
   %i.n = load i16, ptr %i.m, align 8
   %i.o = and i16 %i.n, 4
