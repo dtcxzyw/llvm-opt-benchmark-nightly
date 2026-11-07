@@ -204,9 +204,9 @@ bb.eo:                                            ; preds = %bb.w
     i32 354, label %bb.fb
     i32 352, label %bb.fd
     i32 295, label %bb.fg
+    i32 339, label %bb.fm
     i32 299, label %bb.fi
     i32 351, label %bb.fk
-    i32 339, label %bb.fm
     i32 375, label %bb.fp
     i32 368, label %bb.fr
     i32 362, label %bb.ft
@@ -609,8 +609,8 @@ bb.d:                                             ; preds = %bb.b
     i32 294, label %bb.p
     i32 298, label %bb.r
     i32 303, label %bb.u
-    i32 374, label %bb.w
     i32 367, label %bb.y
+    i32 374, label %bb.w
   ]
 
 bb.e:                                             ; preds = %bb.d

@@ -205,12 +205,6 @@ bb.ap:                                            ; preds = %bb.ai, %bb.ah
           cleanup
   br label %.body.i.i.i.i
 
-2:                                                ; preds = %bb.al
-  store i8 1, ptr %i.dl, align 8, !noalias !1265
-  store i8 1, ptr %i.ck, align 8, !noalias !1263
-  store i8 1, ptr %i.cj, align 8, !noalias !1263
-  br label %bb.ik
-
 .critedge.i.i.i:                                  ; preds = %bb.n
   store i8 1, ptr %i.bz, align 8, !noalias !1263
   %.phi.trans.insert169.i.i.i = getelementptr inbounds nuw i8, ptr %i.ae, i64 240
@@ -295,6 +289,12 @@ bb.aw:                                            ; preds = %bb.ie, %bb.aq, %bb.
   %i.ep = landingpad { ptr, i32 }
           cleanup
   br label %.body.i.i.i
+
+2:                                                ; preds = %bb.al
+  store i8 1, ptr %i.dl, align 8, !noalias !1265
+  store i8 1, ptr %i.ck, align 8, !noalias !1263
+  store i8 1, ptr %i.cj, align 8, !noalias !1263
+  br label %bb.ik
 
 bb.ax:                                            ; preds = %.body81.i.i.i, %bb.ba, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCNvMsd_NtNtCsiOkGTpNE17y_8wasmtime7runtime5storeNtBJ_11StoreOpaque17allocate_instance0ECs7gfv9tzbXmh_6yara_x.exit.i.i.i
   %i.eq = landingpad { ptr, i32 }

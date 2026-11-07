@@ -205,7 +205,7 @@ _ZN5folly5RangeIPKcE7advanceEm.exit.i.i191.i:     ; preds = %bb.gn, %.lr.ph.i.i1
     i8 69, label %.thread258.thread.i
   ]
 
-.thread258.thread.i:                              ; preds = %_ZN5follyeqINS_5RangeIPKcEEA3_cEENSt9enable_ifIXsr6detail23ComparableAsStringPieceIT_T0_EE5valueEbE4typeERKS7_RKS8_.exit144.thread.i, %_ZN5follyeqINS_5RangeIPKcEEA3_cEENSt9enable_ifIXsr6detail23ComparableAsStringPieceIT_T0_EE5valueEbE4typeERKS7_RKS8_.exit144.thread.i, %.thread258.i, %.thread258.i
+.thread258.thread.i:                              ; preds = %_ZN5follyeqINS_5RangeIPKcEEA3_cEENSt9enable_ifIXsr6detail23ComparableAsStringPieceIT_T0_EE5valueEbE4typeERKS7_RKS8_.exit144.thread.i, %.thread258.i, %.thread258.i, %_ZN5follyeqINS_5RangeIPKcEEA3_cEENSt9enable_ifIXsr6detail23ComparableAsStringPieceIT_T0_EE5valueEbE4typeERKS7_RKS8_.exit144.thread.i
   %i.yp = phi ptr [ %i.yl, %.thread258.i ], [ %i.yl, %.thread258.i ], [ %i.xf, %_ZN5follyeqINS_5RangeIPKcEEA3_cEENSt9enable_ifIXsr6detail23ComparableAsStringPieceIT_T0_EE5valueEbE4typeERKS7_RKS8_.exit144.thread.i ], [ %i.xf, %_ZN5follyeqINS_5RangeIPKcEEA3_cEENSt9enable_ifIXsr6detail23ComparableAsStringPieceIT_T0_EE5valueEbE4typeERKS7_RKS8_.exit144.thread.i ] ; 2 uses
   %i.yq = getelementptr inbounds nuw i8, ptr %i.yp, i64 1 ; 5 uses
   store ptr %i.yq, ptr %1, align 8, !tbaa !400, !noalias !1203

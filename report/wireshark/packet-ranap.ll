@@ -202,7 +202,7 @@ bb.k:                                             ; preds = %private_data_set_tr
   call void @dissect_nsap(ptr noundef %.0, ptr noundef %i.bg, i32 noundef 0, i32 noundef 20, ptr noundef %i.ap)
   br label %.thread
 
-.thread:                                          ; preds = %bb.b, %bb.e, %private_data_set_transportLayerAddress_ipv4.exit, %bb.k, %bb.a
+.thread:                                          ; preds = %bb.e, %private_data_set_transportLayerAddress_ipv4.exit, %bb.b, %bb.k, %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #4
   ret i32 %i.b
 }

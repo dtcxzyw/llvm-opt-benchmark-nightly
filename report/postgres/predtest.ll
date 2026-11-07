@@ -202,7 +202,7 @@ list_length.exit.thread:                          ; preds = %bb.k, %list_length.
   %i.az = select i1 %i.ay, i32 2, i32 1
   br label %.critedge
 
-.critedge:                                        ; preds = %is_andclause.exit, %bb.a, %bb.f, %bb.h, %bb.g, %bb.j, %list_length.exit, %bb.e, %bb.i, %list_length.exit.thread, %bb.d, %bb.c, %bb.b
+.critedge:                                        ; preds = %is_andclause.exit, %bb.f, %bb.a, %bb.h, %bb.g, %bb.j, %list_length.exit, %bb.e, %bb.i, %list_length.exit.thread, %bb.d, %bb.c, %bb.b
   %.3 = phi i32 [ 1, %bb.b ], [ 1, %bb.c ], [ 2, %bb.d ], [ %i.az, %list_length.exit.thread ], [ %i.ak, %bb.i ], [ 0, %is_andclause.exit ], [ 0, %bb.a ], [ 0, %bb.e ], [ 0, %list_length.exit ], [ 0, %bb.f ], [ 0, %bb.j ], [ 0, %bb.g ], [ 0, %bb.h ]
   ret i32 %.3
 }

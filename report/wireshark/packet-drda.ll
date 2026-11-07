@@ -204,7 +204,7 @@ bb.am:                                            ; preds = %bb.al, %bb.ak, %bb.
   call void @wmem_tree_insert32(ptr noundef %i.jn, i32 noundef %i.jo, ptr noundef %i.je)
   br label %drda_update_flow_encoding.exit
 
-drda_update_flow_encoding.exit:                   ; preds = %.loopexit, %bb.am, %bb.al, %bb.af, %bb.ag
+drda_update_flow_encoding.exit:                   ; preds = %bb.am, %bb.al, %.loopexit, %bb.af, %bb.ag
   %i.jp = call i32 @tvb_captured_length(ptr noundef %0)
   br label %bb.an
 
