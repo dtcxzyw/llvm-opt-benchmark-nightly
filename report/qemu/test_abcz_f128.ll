@@ -82,7 +82,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 bb.e:                                             ; preds = %bb.d
   %i.u = load i8, ptr @verCases_checkNaNs, align 1, !tbaa !13, !range !14, !noundef !15
   %i.v = trunc nuw i8 %i.u to i1
-  br i1 %i.v, label %bb.j, label %bb.f
+  br i1 %i.v, label %bb.l, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.w = call zeroext i1 @f128M_isSignalingNaN(ptr noundef nonnull @genCases_f128_a) #3
@@ -100,9 +100,9 @@ bb.i:                                             ; preds = %bb.h, %bb.g, %bb.f
   %i.z = or i8 %i.m, 16
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.i, %bb.h, %bb.e
-  %.0 = phi i8 [ %i.m, %bb.e ], [ %i.z, %bb.i ], [ %i.m, %bb.h ] ; 2 uses
-  %i.aa = load i8, ptr @verCases_checkNaNs, align 1, !tbaa !13, !range !14, !noundef !15
+bb.j:                                             ; preds = %bb.i, %bb.h
+  %.0.ph = phi i8 [ %i.m, %bb.h ], [ %i.z, %bb.i ] ; 5 uses
+  %i.aa = load i8, ptr @verCases_checkNaNs, align 1, !tbaa !13
   %i.ab = trunc nuw i8 %i.aa to i1
   br i1 %i.ab, label %bb.l, label %bb.k
 
@@ -134,18 +134,19 @@ f128M_isNaN.exit27:                               ; preds = %f128M_isNaN.exit.th
 
 f128M_isNaN.exit27.thread:                        ; preds = %f128M_isNaN.exit.thread, %f128M_isNaN.exit27
   %i.ak = call zeroext i1 @f128M_isSignalingNaN(ptr noundef nonnull %3) #3
-  %.not15 = icmp ne i8 %.0, %i.q
+  %.not15 = icmp ne i8 %.0.ph, %i.q
   %or.cond17.not = select i1 %i.ak, i1 true, i1 %.not15
   br i1 %or.cond17.not, label %bb.l, label %bb.m
 
-bb.l:                                             ; preds = %f128M_isNaN.exit27.thread, %f128M_isNaN.exit27, %f128M_isNaN.exit, %bb.j
+bb.l:                                             ; preds = %bb.e, %f128M_isNaN.exit27.thread, %f128M_isNaN.exit27, %f128M_isNaN.exit, %bb.j
+  %.029 = phi i8 [ %.0.ph, %bb.j ], [ %.0.ph, %f128M_isNaN.exit27.thread ], [ %.0.ph, %f128M_isNaN.exit27 ], [ %.0.ph, %f128M_isNaN.exit ], [ %i.m, %bb.e ]
   %i.al = load i64, ptr @verCases_errorCount, align 8, !tbaa !17
   %i.am = add i64 %i.al, 1
   store i64 %i.am, ptr @verCases_errorCount, align 8, !tbaa !17
   %i.an = sub nsw i32 10000, %.1
   call void @verCases_writeErrorFound(i32 noundef %i.an) #3
   call void @writeCase_abc_f128M(ptr noundef nonnull @genCases_f128_a, ptr noundef nonnull @genCases_f128_b, ptr noundef nonnull @genCases_f128_c) #3
-  call void @writeCase_z_f128M(ptr noundef nonnull %2, i8 noundef zeroext %.0, ptr noundef nonnull %3, i8 noundef zeroext %i.q) #3
+  call void @writeCase_z_f128M(ptr noundef nonnull %2, i8 noundef zeroext %.029, ptr noundef nonnull %3, i8 noundef zeroext %i.q) #3
   %i.ao = load i64, ptr @verCases_errorCount, align 8, !tbaa !17
   %i.ap = load i64, ptr @verCases_maxErrorCount, align 8, !tbaa !17
   %i.aq = icmp eq i64 %i.ao, %i.ap

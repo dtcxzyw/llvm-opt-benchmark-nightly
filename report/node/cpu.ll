@@ -202,7 +202,7 @@ bb.p:                                             ; preds = %bb.o
   %i.ek = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid \0A\09", "={ax},={bx},={cx},={dx},{ax},{cx},~{dirflag},~{fpsr},~{flags}"(i32 -2147483648, i32 0) #2, !srcloc !6
   %i.el = extractvalue { i32, i32, i32, i32 } %i.ek, 0 ; 3 uses
   %i.em = icmp ugt i32 %i.el, -2147483648
-  br i1 %i.em, label %bb.q, label %.thread43
+  br i1 %i.em, label %bb.q, label %thread-pre-split
 
 bb.q:                                             ; preds = %.thread
   %i.en = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid \0A\09", "={ax},={bx},={cx},={dx},{ax},{cx},~{dirflag},~{fpsr},~{flags}"(i32 -2147483647, i32 0) #2, !srcloc !6
@@ -214,14 +214,14 @@ bb.q:                                             ; preds = %.thread
   %i.es = and i8 %i.ep, 1
   store i8 %i.es, ptr %i.l, align 2
   %i.et = icmp samesign ugt i32 %i.el, -2147483642
-  br i1 %i.et, label %bb.r, label %.thread43
+  br i1 %i.et, label %bb.r, label %thread-pre-split
 
 bb.r:                                             ; preds = %bb.q
   %i.eu = tail call { i32, i32, i32, i32 } asm sideeffect "cpuid \0A\09", "={ax},={bx},={cx},={dx},{ax},{cx},~{dirflag},~{fpsr},~{flags}"(i32 -2147483641, i32 0) #2, !srcloc !6
   %i.ev = extractvalue { i32, i32, i32, i32 } %i.eu, 3
   %i.ew = lshr i32 %i.ev, 8
   %i.ex = trunc i32 %i.ew to i8
-  %i.ey = and i8 %i.ex, 1
+  %i.ey = and i8 %i.ex, 1                         ; 2 uses
   store i8 %i.ey, ptr %i.ag, align 1
   %.not47 = icmp eq i32 %i.el, -2147483641
   br i1 %.not47, label %.thread43, label %bb.s
@@ -232,10 +232,14 @@ bb.s:                                             ; preds = %bb.r
   %i.fb = lshr i32 %i.fa, 8
   %i.fc = and i32 %i.fb, 255
   store i32 %i.fc, ptr %i.i, align 4
+  br label %thread-pre-split
+
+thread-pre-split:                                 ; preds = %.thread, %bb.q, %bb.s
+  %.pr = load i8, ptr %i.ag, align 1
   br label %.thread43
 
-.thread43:                                        ; preds = %.thread, %bb.q, %bb.s, %bb.r
-  %1 = load i8, ptr %i.ag, align 1, !range !8, !noundef !9
+.thread43:                                        ; preds = %thread-pre-split, %bb.r
+  %1 = phi i8 [ %.pr, %thread-pre-split ], [ %i.ey, %bb.r ]
   %i.fd = trunc nuw i8 %1 to i1
   br i1 %i.fd, label %bb.w, label %bb.t
 

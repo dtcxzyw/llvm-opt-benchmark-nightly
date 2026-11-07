@@ -205,7 +205,7 @@ bb.a:
   %i.t = alloca [40 x i8], align 8                ; 17 uses
   %i.u = alloca [8 x i8], align 8                 ; 3 uses
   %i.v = alloca [1 x i8], align 1                 ; 3 uses
-  %i.w = zext i1 %2 to i8
+  %i.w = zext i1 %2 to i8                         ; 2 uses
   store i8 %i.w, ptr %i.v, align 1
   store ptr %3, ptr %i.u, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.t)
@@ -230,13 +230,17 @@ bb.b:                                             ; preds = %.invoke, %bb.u, %bb
           cleanup
   br label %.body
 
-bb.c:                                             ; preds = %bb.ae, %bb.ag, %bb.a
-  %.sroa.021.2 = phi i8 [ 0, %bb.a ], [ 1, %bb.ag ], [ 1, %bb.ae ] ; 23 uses
+thread-pre-split:                                 ; preds = %bb.ag, %bb.ae
+  %.pr75 = load i8, ptr %i.v, align 1
+  br label %bb.c
+
+bb.c:                                             ; preds = %thread-pre-split, %bb.a
+  %4 = phi i8 [ %.pr75, %thread-pre-split ], [ %i.w, %bb.a ] ; 3 uses
+  %.sroa.021.2 = phi i8 [ 1, %thread-pre-split ], [ 0, %bb.a ] ; 23 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.n)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.m)
   %i.ac = load ptr, ptr %i.u, align 8, !nonnull !37, !noundef !37 ; 6 uses
   store ptr %i.ac, ptr %i.m, align 8
-  %4 = load i8, ptr %i.v, align 1, !range !63, !noundef !37 ; 3 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.m, i64 16
   store i8 %4, ptr %i.ad, align 8
   %i.ae = getelementptr inbounds nuw i8, ptr %i.m, i64 8
@@ -551,7 +555,7 @@ bb.ae:                                            ; preds = %bb.af, %bb.x
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %i.t, ptr noundef nonnull align 8 dereferenceable(40) %i.o, i64 40, i1 false)
   %i.bu = load i64, ptr %i.t, align 8, !range !72, !noundef !37
   %.not39 = icmp eq i64 %i.bu, 2
-  br i1 %.not39, label %bb.c, label %bb.ag
+  br i1 %.not39, label %thread-pre-split, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ad
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
@@ -563,7 +567,7 @@ bb.af:                                            ; preds = %bb.ad
 bb.ag:                                            ; preds = %bb.ae
   %i.bv = getelementptr inbounds nuw i8, ptr %i.t, i64 24
   invoke void @_RNvMs2_NtCsaMQbKjKCVRW_12tracing_core10dispatcherNtB5_8Dispatch5enter(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.t, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.bv)
-          to label %bb.c unwind label %bb.b
+          to label %thread-pre-split unwind label %bb.b
 
 bb.ah:                                            ; preds = %bb.ap, %bb.al, %bb.ak
   %i.bw = landingpad { ptr, i32 }

@@ -204,13 +204,14 @@ bb.r:                                             ; preds = %_ZNK5clang12Functio
 
 _ZNK5clang10CXXNewExpr12getArraySizeEv.exit:      ; preds = %bb.r
   %i.dx = getelementptr inbounds nuw i8, ptr %i.e, i64 56
-  %i.dy = load ptr, ptr %i.dx, align 8, !tbaa !402 ; 2 uses
-  %.not149 = icmp eq ptr %i.dy, null
+  %i.dy = load ptr, ptr %i.dx, align 8, !tbaa !402
+  %.fr = freeze ptr %i.dy                         ; 2 uses
+  %.not149 = icmp eq ptr %.fr, null
   br i1 %.not149, label %_ZNK5clang10CXXNewExpr12getArraySizeEv.exit.thread, label %bb.s
 
 bb.s:                                             ; preds = %_ZNK5clang10CXXNewExpr12getArraySizeEv.exit
   %i.dz = load ptr, ptr %4, align 8, !tbaa !53
-  %i.ea = call { ptr, i8 } @_ZNK5clang4ento12ProgramState7getSValEPKNS_4ExprEPKNS_10StackFrameE(ptr noundef nonnull align 8 dereferenceable(48) %i.dz, ptr noundef nonnull %i.dy, ptr noundef %3) ; 2 uses
+  %i.ea = call { ptr, i8 } @_ZNK5clang4ento12ProgramState7getSValEPKNS_4ExprEPKNS_10StackFrameE(ptr noundef nonnull align 8 dereferenceable(48) %i.dz, ptr noundef nonnull %.fr, ptr noundef %3) ; 2 uses
   %.fca.0.extract40 = extractvalue { ptr, i8 } %i.ea, 0
   %.fca.1.extract41 = extractvalue { ptr, i8 } %i.ea, 1
   br label %bb.t

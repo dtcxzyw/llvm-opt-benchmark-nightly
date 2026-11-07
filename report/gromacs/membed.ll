@@ -205,7 +205,7 @@ bb.ow:                                            ; preds = %.critedge.i367.a, %
   %i.ccp = icmp sgt i32 %i.cco, 0
   %i.ccq = getelementptr inbounds i8, ptr %i.cbt, i64 %i.cci ; 2 uses
   %.pre.i366 = load i8, ptr %i.ccq, align 1, !tbaa !306, !range !423 ; 2 uses
-  br i1 %i.ccp, label %.lr.ph83.i, label %.critedge.i367.a
+  br i1 %i.ccp, label %.lr.ph83.i, label %.critedge.i367
 
 .lr.ph83.i:                                       ; preds = %bb.ow, %._crit_edge.i374
   %i.ccr = phi i8 [ %.053.lcssa.i, %._crit_edge.i374 ], [ %.pre.i366, %bb.ow ]
@@ -243,13 +243,18 @@ bb.oy:                                            ; preds = %bb.oy, %.lr.ph79.i
   store i8 %.053.lcssa.i, ptr %i.ccq, align 1, !tbaa !306
   %i.cdc = add nuw nsw i32 %.05881.i, 1           ; 2 uses
   %exitcond.not.i375 = icmp eq i32 %i.cdc, %i.cco
-  br i1 %exitcond.not.i375, label %.critedge.i367.a, label %.lr.ph83.i, !llvm.loop !173
+  br i1 %exitcond.not.i375, label %.critedge.i367, label %.lr.ph83.i, !llvm.loop !173
 
-.critedge.i367.a:                                 ; preds = %._crit_edge.i374, %.lr.ph83.i, %bb.ow
-  %52 = phi i8 [ %.pre.i366, %bb.ow ], [ %.053.lcssa.i, %._crit_edge.i374 ], [ 0, %.lr.ph83.i ]
+.critedge.i367:                                   ; preds = %._crit_edge.i374, %bb.ow
+  %52 = phi i8 [ %.pre.i366, %bb.ow ], [ %.053.lcssa.i, %._crit_edge.i374 ]
+  %.fr.i = freeze i8 %52
+  %53 = trunc i8 %.fr.i to i1
+  %spec.select179.i = select i1 %53, i32 %i.cco, i32 0
+  br label %.critedge.i367.a
+
+.critedge.i367.a:                                 ; preds = %.lr.ph83.i, %.critedge.i367
+  %54 = phi i32 [ %spec.select179.i, %.critedge.i367 ], [ 0, %.lr.ph83.i ]
   %i.cdd = add nsw i32 %i.cco, %.05687.i
-  %53 = trunc nuw i8 %52 to i1
-  %54 = select i1 %53, i32 %i.cco, i32 0
   %spec.select61.i = add nsw i32 %54, %.05488.i   ; 2 uses
   %i.cde = add nuw i64 %.05189.i, 1               ; 2 uses
   %exitcond100.not.i = icmp eq i64 %i.cde, %i.ccf

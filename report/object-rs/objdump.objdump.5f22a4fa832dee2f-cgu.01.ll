@@ -202,7 +202,7 @@ bb.a:
   %i.e = alloca [24 x i8], align 8                ; 6 uses
   %i.f = alloca [24 x i8], align 8                ; 6 uses
   %i.g = alloca [1 x i8], align 1                 ; 4 uses
-  %i.h = alloca [24 x i8], align 8                ; 16 uses
+  %i.h = alloca [24 x i8], align 8                ; 14 uses
   %i.i = alloca [16 x i8], align 8                ; 8 uses
   %i.j = alloca [8 x i8], align 8                 ; 10 uses
   %i.k = alloca [16 x i8], align 8                ; 7 uses
@@ -300,7 +300,6 @@ _RNvXs2_NtNtNtCseHTIzroA4w0_6object4read4coff6comdatNtB5_10CoffComdatNtNtB9_6tra
   store ptr %.sink2.i.i, ptr %i.ae, align 8, !alias.scope !117
   %i.af = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   store i64 %.sink.i.i, ptr %i.af, align 8, !alias.scope !117
-  store i64 %storemerge4.i.i, ptr %i.h, align 8, !alias.scope !117
   br label %_RNvXsc_NtNtCseHTIzroA4w0_6object4read3anyNtB5_6ComdatNtNtB7_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exit
 
 bb.i:                                             ; preds = %bb.a
@@ -352,7 +351,6 @@ _RNvXs2_NtNtNtCseHTIzroA4w0_6object4read4coff6comdatINtB5_10CoffComdatRShNtNtBb_
   store ptr %.sink2.i7.i, ptr %i.ay, align 8, !alias.scope !120
   %i.az = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   store i64 %.sink.i8.i, ptr %i.az, align 8, !alias.scope !120
-  store i64 %storemerge4.i9.i, ptr %i.h, align 8, !alias.scope !120
   br label %_RNvXsc_NtNtCseHTIzroA4w0_6object4read3anyNtB5_6ComdatNtNtB7_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exit
 
 bb.j:                                             ; preds = %bb.a
@@ -373,7 +371,7 @@ bb.j:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.i)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   call void @_RNvXs2_NtNtNtCseHTIzroA4w0_6object4read3elf6comdatINtB5_9ElfComdatINtNtBb_3elf12FileHeader32NtNtBb_6endian10EndiannessEENtNtB9_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.h, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.ba)
-  br label %_RNvXsc_NtNtCseHTIzroA4w0_6object4read3anyNtB5_6ComdatNtNtB7_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exit
+  br label %_RNvXsc_NtNtCseHTIzroA4w0_6object4read3anyNtB5_6ComdatNtNtB7_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exitthread-pre-split
 
 bb.k:                                             ; preds = %bb.a
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
@@ -395,12 +393,17 @@ bb.k:                                             ; preds = %bb.a
   call void @llvm.experimental.noalias.scope.decl(metadata !121)
   call void @llvm.experimental.noalias.scope.decl(metadata !114)
   call void @_RNvXs2_NtNtNtCseHTIzroA4w0_6object4read3elf6comdatINtB5_9ElfComdatINtNtBb_3elf12FileHeader64NtNtBb_6endian10EndiannessEENtNtB9_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.h, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.bk)
+  br label %_RNvXsc_NtNtCseHTIzroA4w0_6object4read3anyNtB5_6ComdatNtNtB7_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exitthread-pre-split
+
+_RNvXsc_NtNtCseHTIzroA4w0_6object4read3anyNtB5_6ComdatNtNtB7_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exitthread-pre-split: ; preds = %bb.k, %bb.j
+  %.ph = phi ptr [ %i.bt, %bb.k ], [ %i.bj, %bb.j ]
+  %.pr = load i64, ptr %i.h, align 8
   br label %_RNvXsc_NtNtCseHTIzroA4w0_6object4read3anyNtB5_6ComdatNtNtB7_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exit
 
-_RNvXsc_NtNtCseHTIzroA4w0_6object4read3anyNtB5_6ComdatNtNtB7_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exit: ; preds = %_RNvXs2_NtNtNtCseHTIzroA4w0_6object4read4coff6comdatNtB5_10CoffComdatNtNtB9_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exit.i, %_RNvXs2_NtNtNtCseHTIzroA4w0_6object4read4coff6comdatINtB5_10CoffComdatRShNtNtBb_2pe22AnonObjectHeaderBigobjENtNtB9_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exit.i, %bb.j, %bb.k
-  %2 = phi ptr [ %i.o, %_RNvXs2_NtNtNtCseHTIzroA4w0_6object4read4coff6comdatNtB5_10CoffComdatNtNtB9_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exit.i ], [ %i.ai, %_RNvXs2_NtNtNtCseHTIzroA4w0_6object4read4coff6comdatINtB5_10CoffComdatRShNtNtBb_2pe22AnonObjectHeaderBigobjENtNtB9_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exit.i ], [ %i.bj, %bb.j ], [ %i.bt, %bb.k ]
-  %3 = load i64, ptr %i.h, align 8, !range !12, !noundef !5
-  %i.bu = trunc nuw i64 %3 to i1                  ; 2 uses
+_RNvXsc_NtNtCseHTIzroA4w0_6object4read3anyNtB5_6ComdatNtNtB7_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exit: ; preds = %_RNvXsc_NtNtCseHTIzroA4w0_6object4read3anyNtB5_6ComdatNtNtB7_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exitthread-pre-split, %_RNvXs2_NtNtNtCseHTIzroA4w0_6object4read4coff6comdatNtB5_10CoffComdatNtNtB9_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exit.i, %_RNvXs2_NtNtNtCseHTIzroA4w0_6object4read4coff6comdatINtB5_10CoffComdatRShNtNtBb_2pe22AnonObjectHeaderBigobjENtNtB9_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exit.i
+  %2 = phi i64 [ %.pr, %_RNvXsc_NtNtCseHTIzroA4w0_6object4read3anyNtB5_6ComdatNtNtB7_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exitthread-pre-split ], [ %storemerge4.i.i, %_RNvXs2_NtNtNtCseHTIzroA4w0_6object4read4coff6comdatNtB5_10CoffComdatNtNtB9_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exit.i ], [ %storemerge4.i9.i, %_RNvXs2_NtNtNtCseHTIzroA4w0_6object4read4coff6comdatINtB5_10CoffComdatRShNtNtBb_2pe22AnonObjectHeaderBigobjENtNtB9_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exit.i ]
+  %3 = phi ptr [ %.ph, %_RNvXsc_NtNtCseHTIzroA4w0_6object4read3anyNtB5_6ComdatNtNtB7_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exitthread-pre-split ], [ %i.o, %_RNvXs2_NtNtNtCseHTIzroA4w0_6object4read4coff6comdatNtB5_10CoffComdatNtNtB9_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exit.i ], [ %i.ai, %_RNvXs2_NtNtNtCseHTIzroA4w0_6object4read4coff6comdatINtB5_10CoffComdatRShNtNtBb_2pe22AnonObjectHeaderBigobjENtNtB9_6traits12ObjectComdat4nameCs8aoZCP6pRcV_7objdump.exit.i ]
+  %i.bu = trunc nuw i64 %2 to i1                  ; 2 uses
   %i.bv = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.bw = load ptr, ptr %i.bv, align 8, !nonnull !5
   %i.bx = getelementptr inbounds nuw i8, ptr %i.h, i64 16
@@ -411,7 +414,7 @@ _RNvXsc_NtNtCseHTIzroA4w0_6object4read3anyNtB5_6ComdatNtNtB7_6traits12ObjectComd
   %i.bz = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   store i64 %.sink, ptr %i.bz, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
-  %i.ca = call noundef nonnull align 8 ptr @_RNvMs2_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %2, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @58, i64 noundef 4, ptr noundef nonnull %i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @57)
+  %i.ca = call noundef nonnull align 8 ptr @_RNvMs2_NtNtCskKLDkoKarTP_4core3fmt8buildersNtB5_11DebugStruct5field(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %3, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @58, i64 noundef 4, ptr noundef nonnull %i.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) @57)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   %i.cb = getelementptr inbounds nuw i8, ptr %0, i64 36
   %.val1 = load i8, ptr %i.cb, align 4            ; 4 uses

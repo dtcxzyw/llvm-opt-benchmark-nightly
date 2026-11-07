@@ -205,10 +205,10 @@ bb.e:                                             ; preds = %bb.d
   %i.as = icmp ne i32 %1, 519
   br label %bb.f
 
-bb.f:                                             ; preds = %.thread468.a, %bb.e
-  %.0336 = phi i32 [ 0, %bb.e ], [ %.9471, %.thread468.a ] ; 50 uses
-  %.0335.in = phi ptr [ %i.a, %bb.e ], [ %.0335, %.thread468.a ]
-  %.0332 = phi i64 [ 0, %bb.e ], [ %.6472, %.thread468.a ] ; 2 uses
+bb.f:                                             ; preds = %.thread468, %bb.e
+  %.0336 = phi i32 [ 0, %bb.e ], [ %.9471, %.thread468 ] ; 50 uses
+  %.0335.in = phi ptr [ %i.a, %bb.e ], [ %.0335, %.thread468 ]
+  %.0332 = phi i64 [ 0, %bb.e ], [ %.6472, %.thread468 ] ; 2 uses
   %.0335 = load ptr, ptr %.0335.in, align 8, !tbaa !149 ; 4 uses
   %.not377 = icmp eq ptr %.0335, null
   br i1 %.not377, label %.thread478, label %bb.g
@@ -576,12 +576,12 @@ bb.bb:                                            ; preds = %bb.ax, %bb.ba, %bb.
 .thread443:                                       ; preds = %bb.bb
   %i.gt = load i8, ptr %i.ai, align 1, !tbaa !93, !range !94, !noundef !95
   %i.gu = trunc nuw i8 %i.gt to i1
-  br i1 %i.gu, label %.thread481, label %.thread468.a
+  br i1 %i.gu, label %.thread481, label %.thread468
 
 .thread450:                                       ; preds = %bb.av, %bb.ay, %bb.al, %bb.am, %bb.ah, %bb.ai, %bb.ac, %bb.ad, %bb.ae, %bb.x, %bb.y, %bb.z, %bb.aq, %bb.s, %bb.t, %bb.u, %bb.ap, %bb.n, %bb.o, %bb.p, %bb.i, %bb.j, %bb.k, %bb.at, %bb.au
   %i.gv = load i8, ptr %i.ai, align 1, !tbaa !93, !range !94, !noundef !95
   %i.gw = trunc nuw i8 %i.gv to i1
-  br i1 %i.gw, label %.thread481, label %.thread468.a
+  br i1 %i.gw, label %.thread481, label %.thread468
 
 .sink.split:                                      ; preds = %bb.az, %bb.aw, %bb.ar, %bb.an, %bb.aj, %bb.af, %bb.aa, %bb.v, %bb.q, %bb.l
   %.sink511 = phi i32 [ %i.gg, %bb.aw ], [ %i.bn, %bb.l ], [ %i.ff, %bb.an ], [ %i.cf, %bb.q ], [ %i.cx, %bb.v ], [ %i.dp, %bb.aa ], [ %i.eh, %bb.af ], [ %i.et, %bb.aj ], [ %i.fs, %bb.ar ], [ %i.go, %bb.az ]
@@ -984,12 +984,18 @@ bb.dd:                                            ; preds = %bb.db, %bb.cc, %bb.
   %i.ol = icmp eq i32 %.8.ph, 20
   br i1 %i.ol, label %.thread481, label %.thread468.a
 
-.thread468.a:                                     ; preds = %bb.dc, %bb.bg, %bb.bf, %bb.be, %bb.bj, %bb.bi, %bb.bl, %bb.bs, %bb.br, %bb.by, %bb.bx, %bb.ce, %bb.cd, %bb.ci, %bb.ch, %bb.cg, %bb.cl, %bb.ck, %bb.co, %bb.cn, %bb.cr, %bb.cq, %bb.cv, %bb.cu, %bb.ct, %bb.bm, %switch.early.test435, %switch.early.test435, %switch.early.test435, %switch.early.test435, %switch.early.test435, %.thread443, %.thread450, %bb.g, %bb.dd
-  %.6472 = phi i64 [ %i.au, %bb.dc ], [ %.5.ph, %bb.dd ], [ %.0332, %bb.g ], [ %i.au, %.thread450 ], [ %i.au, %.thread443 ], [ %i.au, %switch.early.test435 ], [ %i.au, %switch.early.test435 ], [ %i.au, %switch.early.test435 ], [ %i.au, %switch.early.test435 ], [ %i.au, %switch.early.test435 ], [ %i.au, %bb.bm ], [ %i.au, %bb.ct ], [ %i.au, %bb.cu ], [ %i.au, %bb.cv ], [ %i.au, %bb.cq ], [ %i.au, %bb.cr ], [ %i.au, %bb.cn ], [ %i.au, %bb.co ], [ %i.au, %bb.ck ], [ %i.au, %bb.cl ], [ %i.au, %bb.cg ], [ %i.au, %bb.ch ], [ %i.au, %bb.ci ], [ %i.au, %bb.cd ], [ %i.au, %bb.ce ], [ %i.au, %bb.bx ], [ %i.au, %bb.by ], [ %i.au, %bb.br ], [ %i.au, %bb.bs ], [ %i.au, %bb.bl ], [ %i.au, %bb.bi ], [ %i.au, %bb.bj ], [ %i.au, %bb.be ], [ %i.au, %bb.bf ], [ %i.au, %bb.bg ]
-  %.9471 = phi i32 [ %.0336, %bb.dc ], [ %.8.ph, %bb.dd ], [ %.0336, %bb.g ], [ %.0336, %.thread450 ], [ %.2338, %.thread443 ], [ %.0336, %switch.early.test435 ], [ %.0336, %switch.early.test435 ], [ %.0336, %switch.early.test435 ], [ %.0336, %switch.early.test435 ], [ %.0336, %switch.early.test435 ], [ %.0336, %bb.bm ], [ %.0336, %bb.ct ], [ %.0336, %bb.cu ], [ %.0336, %bb.cv ], [ %.0336, %bb.cq ], [ %.0336, %bb.cr ], [ %.0336, %bb.cn ], [ %.0336, %bb.co ], [ %.0336, %bb.ck ], [ %.0336, %bb.cl ], [ %.0336, %bb.cg ], [ %.0336, %bb.ch ], [ %.0336, %bb.ci ], [ %.0336, %bb.cd ], [ %.0336, %bb.ce ], [ %.0336, %bb.bx ], [ %.0336, %bb.by ], [ %.0336, %bb.br ], [ %.0336, %bb.bs ], [ %.0336, %bb.bl ], [ %.0336, %bb.bi ], [ %.0336, %bb.bj ], [ %.0336, %bb.be ], [ %.0336, %bb.bf ], [ %.0336, %bb.bg ] ; 2 uses
-  %i.om = load i8, ptr %i.ai, align 1, !tbaa !93, !range !94, !noundef !95
+.thread468.a:                                     ; preds = %bb.dd, %bb.g, %switch.early.test435, %switch.early.test435, %switch.early.test435, %switch.early.test435, %switch.early.test435, %bb.bm, %bb.ct, %bb.cu, %bb.cv, %bb.cq, %bb.cr, %bb.cn, %bb.co, %bb.ck, %bb.cl, %bb.cg, %bb.ch, %bb.ci, %bb.cd, %bb.ce, %bb.bx, %bb.by, %bb.br, %bb.bs, %bb.bl, %bb.bi, %bb.bj, %bb.be, %bb.bf, %bb.bg, %bb.dc
+  %.6472.ph = phi i64 [ %i.au, %bb.bg ], [ %i.au, %bb.bf ], [ %i.au, %bb.be ], [ %i.au, %bb.bj ], [ %i.au, %bb.bi ], [ %i.au, %bb.bl ], [ %i.au, %bb.bs ], [ %i.au, %bb.br ], [ %i.au, %bb.by ], [ %i.au, %bb.bx ], [ %i.au, %bb.ce ], [ %i.au, %bb.cd ], [ %i.au, %bb.ci ], [ %i.au, %bb.ch ], [ %i.au, %bb.cg ], [ %i.au, %bb.cl ], [ %i.au, %bb.ck ], [ %i.au, %bb.co ], [ %i.au, %bb.cn ], [ %i.au, %bb.cr ], [ %i.au, %bb.cq ], [ %i.au, %bb.cv ], [ %i.au, %bb.cu ], [ %i.au, %bb.ct ], [ %i.au, %bb.bm ], [ %i.au, %switch.early.test435 ], [ %i.au, %switch.early.test435 ], [ %i.au, %switch.early.test435 ], [ %i.au, %switch.early.test435 ], [ %i.au, %switch.early.test435 ], [ %.0332, %bb.g ], [ %.5.ph, %bb.dd ], [ %i.au, %bb.dc ]
+  %.9471.ph = phi i32 [ %.0336, %bb.bg ], [ %.0336, %bb.bf ], [ %.0336, %bb.be ], [ %.0336, %bb.bj ], [ %.0336, %bb.bi ], [ %.0336, %bb.bl ], [ %.0336, %bb.bs ], [ %.0336, %bb.br ], [ %.0336, %bb.by ], [ %.0336, %bb.bx ], [ %.0336, %bb.ce ], [ %.0336, %bb.cd ], [ %.0336, %bb.ci ], [ %.0336, %bb.ch ], [ %.0336, %bb.cg ], [ %.0336, %bb.cl ], [ %.0336, %bb.ck ], [ %.0336, %bb.co ], [ %.0336, %bb.cn ], [ %.0336, %bb.cr ], [ %.0336, %bb.cq ], [ %.0336, %bb.cv ], [ %.0336, %bb.cu ], [ %.0336, %bb.ct ], [ %.0336, %bb.bm ], [ %.0336, %switch.early.test435 ], [ %.0336, %switch.early.test435 ], [ %.0336, %switch.early.test435 ], [ %.0336, %switch.early.test435 ], [ %.0336, %switch.early.test435 ], [ %.0336, %bb.g ], [ %.8.ph, %bb.dd ], [ %.0336, %bb.dc ]
+  %i.om = load i8, ptr %i.ai, align 1, !tbaa !93
   %i.on = trunc nuw i8 %i.om to i1
-  br i1 %i.on, label %.thread481, label %bb.f
+  br label %.thread468
+
+.thread468:                                       ; preds = %.thread468.a, %.thread443, %.thread450
+  %5 = phi i1 [ %i.on, %.thread468.a ], [ false, %.thread443 ], [ false, %.thread450 ]
+  %.6472 = phi i64 [ %.6472.ph, %.thread468.a ], [ %i.au, %.thread443 ], [ %i.au, %.thread450 ]
+  %.9471 = phi i32 [ %.9471.ph, %.thread468.a ], [ %.2338, %.thread443 ], [ %.0336, %.thread450 ] ; 2 uses
+  br i1 %5, label %.thread481, label %bb.f
 
 .thread478:                                       ; preds = %bb.f
   %.pre = load i8, ptr %i.ai, align 1, !tbaa !93, !range !94
@@ -1076,8 +1082,8 @@ bb.dq:                                            ; preds = %bb.do
   %i.pn = call fastcc i32 @cli_scanmail(ptr noundef nonnull %0)
   br label %.thread481
 
-.thread481:                                       ; preds = %bb.bc, %.thread450, %.thread443, %.thread468.a, %bb.dd, %bb.bb, %bb.dh, %bb.df, %bb.dg, %bb.di, %bb.dl, %bb.dk, %bb.dp, %bb.dq, %bb.dn, %bb.dm, %bb.de, %.thread478
-  %.11 = phi i32 [ %.0336, %bb.df ], [ %.0336, %.thread478 ], [ %.0336, %bb.de ], [ %.0336, %bb.dm ], [ %.0336, %bb.dk ], [ %i.pb, %bb.dl ], [ %.0336, %bb.di ], [ %.0336, %bb.dh ], [ %.0336, %bb.dg ], [ %.0336, %bb.dp ], [ %i.pn, %bb.dq ], [ %.0336, %bb.dn ], [ %.0336, %bb.bc ], [ %.2338, %.thread443 ], [ %.0336, %.thread450 ], [ %.9471, %.thread468.a ], [ 20, %bb.bb ], [ 20, %bb.dd ]
+.thread481:                                       ; preds = %bb.bc, %.thread450, %.thread443, %.thread468, %bb.dd, %bb.bb, %bb.dh, %bb.df, %bb.dg, %bb.di, %bb.dl, %bb.dk, %bb.dp, %bb.dq, %bb.dn, %bb.dm, %bb.de, %.thread478
+  %.11 = phi i32 [ %.0336, %bb.df ], [ %.0336, %.thread478 ], [ %.0336, %bb.de ], [ %.0336, %bb.dm ], [ %.0336, %bb.dk ], [ %i.pb, %bb.dl ], [ %.0336, %bb.di ], [ %.0336, %bb.dh ], [ %.0336, %bb.dg ], [ %.0336, %bb.dp ], [ %i.pn, %bb.dq ], [ %.0336, %bb.dn ], [ %.0336, %bb.bc ], [ %.2338, %.thread443 ], [ %.0336, %.thread450 ], [ %.9471, %.thread468 ], [ 20, %bb.bb ], [ 20, %bb.dd ]
   %.val438 = load ptr, ptr %i.z, align 8, !tbaa !67
   call void @cli_event_time_nested_stop(ptr noundef %.val438, i32 noundef 10, i32 noundef 0) #18
   br label %bb.dr

@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %"_ZNKSt3__16ranges6
   %i.y = sdiv exact i64 %i.x, 48
   br label %_ZNK3tev11ImageViewer7groupIdENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEE.exit
 
-_ZNK3tev11ImageViewer7groupIdENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEE.exit: ; preds = %bb.a, %"_ZNKSt3__16ranges6__find4__fnclB8ne180100ITkNS0_11input_rangeERKNS_4spanIKN3tev12ChannelGroupELm18446744073709551615EEENS_17basic_string_viewIcNS_11char_traitsIcEEEEZNKS5_11ImageViewer7groupIdESE_E3$_0Q25indirect_binary_predicateINS0_8equal_toENS_16__projected_implIDTclL_ZNS0_5__cpo5beginEEclsr3stdE7declvalIRT_EEEET1_E6__typeEPKT0_EEENS_7_IfImplIX14borrowed_rangeISK_EEE7_SelectISM_NS0_8danglingEEEOSK_RSR_SN_.exit.i", %bb.c
+_ZNK3tev11ImageViewer7groupIdENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEE.exit: ; preds = %"_ZNKSt3__16ranges6__find4__fnclB8ne180100ITkNS0_11input_rangeERKNS_4spanIKN3tev12ChannelGroupELm18446744073709551615EEENS_17basic_string_viewIcNS_11char_traitsIcEEEEZNKS5_11ImageViewer7groupIdESE_E3$_0Q25indirect_binary_predicateINS0_8equal_toENS_16__projected_implIDTclL_ZNS0_5__cpo5beginEEclsr3stdE7declvalIRT_EEEET1_E6__typeEPKT0_EEENS_7_IfImplIX14borrowed_rangeISK_EEE7_SelectISM_NS0_8danglingEEEOSK_RSR_SN_.exit.i", %bb.c, %bb.a
   %.sroa.4.sroa.3.1.i = phi i64 [ 0, %bb.a ], [ %i.y, %bb.c ], [ 0, %"_ZNKSt3__16ranges6__find4__fnclB8ne180100ITkNS0_11input_rangeERKNS_4spanIKN3tev12ChannelGroupELm18446744073709551615EEENS_17basic_string_viewIcNS_11char_traitsIcEEEEZNKS5_11ImageViewer7groupIdESE_E3$_0Q25indirect_binary_predicateINS0_8equal_toENS_16__projected_implIDTclL_ZNS0_5__cpo5beginEEclsr3stdE7declvalIRT_EEEET1_E6__typeEPKT0_EEENS_7_IfImplIX14borrowed_rangeISK_EEE7_SelectISM_NS0_8danglingEEEOSK_RSR_SN_.exit.i" ] ; 6 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 1112 ; 2 uses
   %i.aa = load ptr, ptr %i.z, align 8, !tbaa !418 ; 2 uses
@@ -608,7 +608,7 @@ bb.e:                                             ; preds = %"_ZNKSt3__16ranges6
   %i.az = trunc i64 %i.ay to i32
   br label %_ZNK3tev11ImageViewer7groupIdENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEE.exit
 
-_ZNK3tev11ImageViewer7groupIdENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEE.exit: ; preds = %bb.c, %"_ZNKSt3__16ranges6__find4__fnclB8ne180100ITkNS0_11input_rangeERKNS_4spanIKN3tev12ChannelGroupELm18446744073709551615EEENS_17basic_string_viewIcNS_11char_traitsIcEEEEZNKS5_11ImageViewer7groupIdESE_E3$_0Q25indirect_binary_predicateINS0_8equal_toENS_16__projected_implIDTclL_ZNS0_5__cpo5beginEEclsr3stdE7declvalIRT_EEEET1_E6__typeEPKT0_EEENS_7_IfImplIX14borrowed_rangeISK_EEE7_SelectISM_NS0_8danglingEEEOSK_RSR_SN_.exit.i", %bb.e
+_ZNK3tev11ImageViewer7groupIdENSt3__117basic_string_viewIcNS1_11char_traitsIcEEEE.exit: ; preds = %"_ZNKSt3__16ranges6__find4__fnclB8ne180100ITkNS0_11input_rangeERKNS_4spanIKN3tev12ChannelGroupELm18446744073709551615EEENS_17basic_string_viewIcNS_11char_traitsIcEEEEZNKS5_11ImageViewer7groupIdESE_E3$_0Q25indirect_binary_predicateINS0_8equal_toENS_16__projected_implIDTclL_ZNS0_5__cpo5beginEEclsr3stdE7declvalIRT_EEEET1_E6__typeEPKT0_EEENS_7_IfImplIX14borrowed_rangeISK_EEE7_SelectISM_NS0_8danglingEEEOSK_RSR_SN_.exit.i", %bb.e, %bb.c
   %.sroa.4.sroa.3.1.i = phi i32 [ 0, %bb.c ], [ %i.az, %bb.e ], [ 0, %"_ZNKSt3__16ranges6__find4__fnclB8ne180100ITkNS0_11input_rangeERKNS_4spanIKN3tev12ChannelGroupELm18446744073709551615EEENS_17basic_string_viewIcNS_11char_traitsIcEEEEZNKS5_11ImageViewer7groupIdESE_E3$_0Q25indirect_binary_predicateINS0_8equal_toENS_16__projected_implIDTclL_ZNS0_5__cpo5beginEEclsr3stdE7declvalIRT_EEEET1_E6__typeEPKT0_EEENS_7_IfImplIX14borrowed_rangeISK_EEE7_SelectISM_NS0_8danglingEEEOSK_RSR_SN_.exit.i" ] ; 2 uses
   %i.ba = add i32 %i.z, %i.k
   br label %bb.f
@@ -1011,15 +1011,18 @@ bb.el:                                            ; preds = %.split, %bb.ek
 
 bb.em:                                            ; preds = %.split, %.thread, %bb.el, %bb.ek
   %i.aah = getelementptr inbounds nuw i8, ptr %0, i64 520 ; 2 uses
-  %37 = getelementptr inbounds nuw i8, ptr %32, i64 48 ; 4 uses
-  %38 = getelementptr inbounds nuw i8, ptr %32, i64 32 ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %32) #46
   call void @_ZN3tev11SharedQueueINSt3__18functionIFvvEEEE6tryPopEv(ptr dead_on_unwind nonnull writable sret(%"class.std::__1::optional.454") align 16 %32, ptr noundef nonnull align 8 dereferenceable(136) %i.aah)
+  %37 = getelementptr inbounds nuw i8, ptr %32, i64 48 ; 4 uses
   %i.aai = load i8, ptr %37, align 16, !tbaa !574, !range !330, !noundef !384
   %i.aaj = trunc nuw i8 %i.aai to i1
-  br i1 %i.aaj, label %.lr.ph495, label %._crit_edge496
+  br i1 %i.aaj, label %.lr.ph342, label %._crit_edge496
 
-.lr.ph495:                                        ; preds = %bb.em, %_ZNSt3__124__optional_destruct_baseINS_8functionIFvvEEELb0EED2B8ne180100Ev.exit
+.lr.ph342:                                        ; preds = %bb.em
+  %38 = getelementptr inbounds nuw i8, ptr %32, i64 32 ; 3 uses
+  br label %.lr.ph495
+
+.lr.ph495:                                        ; preds = %.lr.ph342, %_ZNSt3__124__optional_destruct_baseINS_8functionIFvvEEELb0EED2B8ne180100Ev.exit
   %i.aak = load ptr, ptr %38, align 16, !tbaa !323 ; 3 uses
   %i.aal = icmp eq ptr %i.aak, null
   br i1 %i.aal, label %bb.en, label %_ZNKSt3__110__function12__value_funcIFvvEEclB8ne180100Ev.exit.i
@@ -1039,7 +1042,7 @@ _ZNKSt3__110__function12__value_funcIFvvEEclB8ne180100Ev.exit.i: ; preds = %.lr.
           to label %_ZNKSt3__18functionIFvvEEclEv.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !1357
 
 _ZNKSt3__18functionIFvvEEclEv.exit:               ; preds = %_ZNKSt3__110__function12__value_funcIFvvEEclB8ne180100Ev.exit.i
-  %.pre369 = load i8, ptr %37, align 16, !tbaa !574, !range !330
+  %.pre369 = load i8, ptr %37, align 16, !tbaa !574
   %i.aap = trunc nuw i8 %.pre369 to i1
   br i1 %i.aap, label %bb.eo, label %_ZNSt3__124__optional_destruct_baseINS_8functionIFvvEEELb0EED2B8ne180100Ev.exit
 

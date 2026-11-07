@@ -205,8 +205,13 @@ _ZNSt6vectorIiSaIiEED2Ev.exit347thread-pre-split: ; preds = %bb.ch, %_ZNSt6vecto
 _ZNSt6vectorIiSaIiEED2Ev.exit347:                 ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit347thread-pre-split, %bb.cg
   %i.aae = phi i32 [ %.pr550, %_ZNSt6vectorIiSaIiEED2Ev.exit347thread-pre-split ], [ %i.lz, %bb.cg ]
   %i.aaf = icmp slt i32 %i.aae, 2
-  %i.aag = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 2 uses
-  br i1 %i.aaf, label %.thread998, label %bb.ep
+  %i.aag = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
+  br i1 %i.aaf, label %_ZN8LightGBM10NeedFilterERKSt6vectorIiSaIiEEiiNS_7BinTypeE.exit.thread1004, label %bb.ep
+
+_ZN8LightGBM10NeedFilterERKSt6vectorIiSaIiEEiiNS_7BinTypeE.exit.thread1004: ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit347
+  store i8 1, ptr %i.aag, align 8, !tbaa !295
+  %.pre900.pre = load ptr, ptr %12, align 8, !tbaa !76
+  br label %.thread998
 
 bb.ep:                                            ; preds = %_ZNSt6vectorIiSaIiEED2Ev.exit347
   store i8 0, ptr %i.aag, align 8, !tbaa !295
@@ -218,7 +223,7 @@ bb.eq:                                            ; preds = %bb.ep
   %i.aaj = icmp eq i32 %i.aai, 0
   %i.aak = getelementptr inbounds nuw i8, ptr %12, i64 8
   %i.aal = load ptr, ptr %i.aak, align 8, !tbaa !166
-  %i.aam = load ptr, ptr %12, align 8, !tbaa !76  ; 3 uses
+  %i.aam = load ptr, ptr %12, align 8, !tbaa !76  ; 4 uses
   %i.aan = ptrtoint ptr %i.aal to i64
   %i.aao = ptrtoint ptr %i.aam to i64
   %i.aap = sub i64 %i.aan, %i.aao
@@ -228,12 +233,12 @@ bb.eq:                                            ; preds = %bb.ep
 .preheader.i:                                     ; preds = %bb.eq
   %i.aar = add nsw i64 %i.aaq, -1                 ; 2 uses
   %.not4151.not.i = icmp eq i64 %i.aar, 0
-  br i1 %.not4151.not.i, label %.thread998, label %.lr.ph54.i
+  br i1 %.not4151.not.i, label %_ZN8LightGBM10NeedFilterERKSt6vectorIiSaIiEEiiNS_7BinTypeE.exit.thread553, label %.lr.ph54.i
 
 bb.er:                                            ; preds = %.lr.ph54.i
   %i.aas = add nuw i64 %.02953.i, 1               ; 2 uses
   %exitcond61.not.i = icmp eq i64 %i.aas, %i.aar
-  br i1 %exitcond61.not.i, label %.thread998, label %.lr.ph54.i, !llvm.loop !18
+  br i1 %exitcond61.not.i, label %_ZN8LightGBM10NeedFilterERKSt6vectorIiSaIiEEiiNS_7BinTypeE.exit.thread553, label %.lr.ph54.i, !llvm.loop !18
 
 .lr.ph54.i:                                       ; preds = %.preheader.i, %bb.er
   %.02953.i = phi i64 [ %i.aas, %bb.er ], [ 0, %.preheader.i ] ; 2 uses
@@ -254,12 +259,12 @@ bb.es:                                            ; preds = %bb.eq
 .preheader45.i:                                   ; preds = %bb.es
   %i.aay = add nsw i64 %i.aaq, -1                 ; 2 uses
   %.not58.i = icmp eq i64 %i.aay, 0
-  br i1 %.not58.i, label %.thread998, label %.lr.ph.i352
+  br i1 %.not58.i, label %_ZN8LightGBM10NeedFilterERKSt6vectorIiSaIiEEiiNS_7BinTypeE.exit.thread553, label %.lr.ph.i352
 
 bb.et:                                            ; preds = %.lr.ph.i352
   %i.aaz = add nuw i64 %.048.i, 1                 ; 2 uses
   %exitcond.not.i354 = icmp eq i64 %i.aaz, %i.aay
-  br i1 %exitcond.not.i354, label %.thread998, label %.lr.ph.i352, !llvm.loop !19
+  br i1 %exitcond.not.i354, label %_ZN8LightGBM10NeedFilterERKSt6vectorIiSaIiEEiiNS_7BinTypeE.exit.thread553, label %.lr.ph.i352, !llvm.loop !19
 
 .lr.ph.i352:                                      ; preds = %.preheader45.i, %bb.et
   %.048.i = phi i64 [ %i.aaz, %bb.et ], [ 0, %.preheader45.i ] ; 2 uses
@@ -270,6 +275,10 @@ bb.et:                                            ; preds = %.lr.ph.i352
   %.not38.i = icmp slt i32 %i.abc, %6
   %or.cond42.i = select i1 %.not.i353, i1 true, i1 %.not38.i
   br i1 %or.cond42.i, label %bb.et, label %.loopexit1004
+
+_ZN8LightGBM10NeedFilterERKSt6vectorIiSaIiEEiiNS_7BinTypeE.exit.thread553: ; preds = %bb.et, %bb.er, %.preheader.i, %.preheader45.i
+  store i8 1, ptr %i.aag, align 8, !tbaa !295
+  br label %.thread998
 
 .loopexit1004:                                    ; preds = %.lr.ph.i352, %.lr.ph54.i, %bb.es, %bb.ep
   %i.abd = invoke noundef i32 @_ZNK8LightGBM9BinMapper10ValueToBinEd(ptr noundef nonnull align 8 dereferenceable(160) %0, double noundef 0.000000e+00)
@@ -410,16 +419,15 @@ bb.ex:                                            ; preds = %_ZN8LightGBM9ArrayA
   store double %i.adh, ptr %i.adi, align 8, !tbaa !306
   br label %bb.ey
 
-.thread998:                                       ; preds = %bb.et, %bb.er, %.preheader.i, %.preheader45.i, %_ZNSt6vectorIiSaIiEED2Ev.exit347
-  store i8 1, ptr %i.aag, align 8, !tbaa !295
+.thread998:                                       ; preds = %_ZN8LightGBM10NeedFilterERKSt6vectorIiSaIiEEiiNS_7BinTypeE.exit.thread553, %_ZN8LightGBM10NeedFilterERKSt6vectorIiSaIiEEiiNS_7BinTypeE.exit.thread1004
+  %.pre900 = phi ptr [ %.pre900.pre, %_ZN8LightGBM10NeedFilterERKSt6vectorIiSaIiEEiiNS_7BinTypeE.exit.thread1004 ], [ %i.aam, %_ZN8LightGBM10NeedFilterERKSt6vectorIiSaIiEEiiNS_7BinTypeE.exit.thread553 ] ; 2 uses
   %i.adj = getelementptr inbounds nuw i8, ptr %0, i64 40
   store double 1.000000e+00, ptr %i.adj, align 8, !tbaa !306
-  %.pre899 = load ptr, ptr %12, align 8, !tbaa !76 ; 2 uses
-  %.not.i.i.i361 = icmp eq ptr %.pre899, null
+  %.not.i.i.i361 = icmp eq ptr %.pre900, null
   br i1 %.not.i.i.i361, label %_ZNSt6vectorIiSaIiEED2Ev.exit362, label %bb.ey
 
 bb.ey:                                            ; preds = %.thread1002, %.thread998
-  %i.adk = phi ptr [ %i.acr, %.thread1002 ], [ %.pre899, %.thread998 ] ; 2 uses
+  %i.adk = phi ptr [ %i.acr, %.thread1002 ], [ %.pre900, %.thread998 ] ; 2 uses
   %i.adl = getelementptr inbounds nuw i8, ptr %12, i64 16
   %i.adm = load ptr, ptr %i.adl, align 8, !tbaa !235
   %i.adn = ptrtoint ptr %i.adm to i64

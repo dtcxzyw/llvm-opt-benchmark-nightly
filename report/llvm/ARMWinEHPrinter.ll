@@ -204,10 +204,10 @@ bb.az:                                            ; preds = %.lr.ph, %_ZNK4llvm3
   call void %i.ge(ptr noundef nonnull align 8 dereferenceable(44) %i.ga, ptr nonnull @.str.104, i64 11, i32 noundef %i.gb) #13
   %i.gf = load i8, ptr %i.v, align 8, !tbaa !303, !range !243, !noundef !40
   %i.gg = trunc nuw i8 %i.gf to i1
+  %15 = load ptr, ptr %0, align 8, !tbaa !39, !nonnull !40, !align !41 ; 3 uses
   br i1 %i.gg, label %bb.bb, label %bb.ba
 
 bb.ba:                                            ; preds = %bb.az
-  %15 = load ptr, ptr %0, align 8, !tbaa !39, !nonnull !40, !align !41 ; 2 uses
   %i.gh = lshr i32 %.sroa.07.0.copyload, 20
   %i.gi = trunc i32 %i.gh to i8
   %i.gj = and i8 %i.gi, 15
@@ -215,19 +215,20 @@ bb.ba:                                            ; preds = %bb.az
   %i.gl = getelementptr inbounds nuw i8, ptr %i.gk, i64 32
   %i.gm = load ptr, ptr %i.gl, align 8
   call void %i.gm(ptr noundef nonnull align 8 dereferenceable(44) %15, ptr nonnull @.str.105, i64 9, i8 noundef zeroext %i.gj) #13
-  %.pre = load i8, ptr %i.v, align 8, !tbaa !303, !range !243
+  %.pre = load i8, ptr %i.v, align 8, !tbaa !303
+  %16 = load ptr, ptr %0, align 8, !tbaa !39, !nonnull !40, !align !41
   %i.gn = trunc nuw i8 %.pre to i1
   %i.go = select i1 %i.gn, i32 22, i32 24
   br label %bb.bb
 
 bb.bb:                                            ; preds = %bb.ba, %bb.az
   %.v.a = phi i32 [ %i.go, %bb.ba ], [ 22, %bb.az ]
-  %16 = load ptr, ptr %0, align 8, !tbaa !39, !nonnull !40, !align !41 ; 2 uses
+  %17 = phi ptr [ %16, %bb.ba ], [ %15, %bb.az ]  ; 2 uses
   %i.gp = lshr i32 %.sroa.07.0.copyload, %.v.a
-  %i.gq = load ptr, ptr %16, align 8, !tbaa !43
+  %i.gq = load ptr, ptr %17, align 8, !tbaa !43
   %i.gr = getelementptr inbounds nuw i8, ptr %i.gq, i64 56
   %i.gs = load ptr, ptr %i.gr, align 8
-  call void %i.gs(ptr noundef nonnull align 8 dereferenceable(44) %16, ptr nonnull @.str.106, i64 18, i32 noundef %i.gp) #13
+  call void %i.gs(ptr noundef nonnull align 8 dereferenceable(44) %17, ptr nonnull @.str.106, i64 18, i32 noundef %i.gp) #13
   %i.gt = load i8, ptr %i.v, align 8, !tbaa !303, !range !243, !noundef !40
   %i.gu = trunc nuw i8 %i.gt to i1
   %i.gv = select i1 %i.gu, i32 15, i32 3

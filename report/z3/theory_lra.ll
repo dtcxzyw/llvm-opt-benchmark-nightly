@@ -205,7 +205,7 @@ _ZN3smt10theory_lra3imp8next_supEPN6lp_api5boundIN3sat7literalEEENS2_10bound_kin
   br label %bb.bc
 
 bb.bc:                                            ; preds = %bb.bi, %.lr.ph.i181
-  %.0284 = phi i1 [ false, %.lr.ph.i181 ], [ %.1285, %bb.bi ] ; 2 uses
+  %.0284 = phi i8 [ 0, %.lr.ph.i181 ], [ %.1285, %bb.bi ] ; 2 uses
   %.01930.i182 = phi ptr [ %.069360, %.lr.ph.i181 ], [ %i.ml, %bb.bi ] ; 5 uses
   %i.le = load ptr, ptr %.01930.i182, align 8, !tbaa !760 ; 6 uses
   %i.lf = icmp eq ptr %i.gs, %i.le
@@ -274,19 +274,20 @@ _ZltRK8rationalS1_.exit.i188:                     ; preds = %bb.bh
   br i1 %i.mk, label %_ZN3smt10theory_lra3imp8next_supEPN6lp_api5boundIN3sat7literalEEENS2_10bound_kindEPS7_S9_Rb.exit191.loopexit, label %bb.bi
 
 bb.bi:                                            ; preds = %_ZltRK8rationalS1_.exit.i188, %.noexc190, %.noexc189, %bb.bd, %bb.bc
-  %.1285 = phi i1 [ %.0284, %bb.bc ], [ true, %_ZltRK8rationalS1_.exit.i188 ], [ true, %.noexc189 ], [ true, %.noexc190 ], [ %.0284, %bb.bd ] ; 2 uses
+  %.1285 = phi i8 [ %.0284, %bb.bc ], [ 1, %_ZltRK8rationalS1_.exit.i188 ], [ 1, %.noexc189 ], [ 1, %.noexc190 ], [ %.0284, %bb.bd ] ; 2 uses
   %i.ml = getelementptr inbounds nuw i8, ptr %.01930.i182, i64 8 ; 2 uses
   %.not.i184 = icmp eq ptr %i.ml, %i.ew
   br i1 %.not.i184, label %_ZN3smt10theory_lra3imp8next_supEPN6lp_api5boundIN3sat7literalEEENS2_10bound_kindEPS7_S9_Rb.exit191.loopexit, label %bb.bc, !llvm.loop !1370
 
 _ZN3smt10theory_lra3imp8next_supEPN6lp_api5boundIN3sat7literalEEENS2_10bound_kindEPS7_S9_Rb.exit191.loopexit: ; preds = %.noexc189, %.noexc190, %_ZltRK8rationalS1_.exit.i188, %bb.bi
-  %.2286.ph = phi i1 [ %.1285, %bb.bi ], [ true, %_ZltRK8rationalS1_.exit.i188 ], [ true, %.noexc189 ], [ true, %.noexc190 ]
+  %.2286.ph = phi i8 [ %.1285, %bb.bi ], [ 1, %_ZltRK8rationalS1_.exit.i188 ], [ 1, %.noexc189 ], [ 1, %.noexc190 ]
   %.3.i185.ph = phi ptr [ %i.ew, %bb.bi ], [ %.01930.i182, %_ZltRK8rationalS1_.exit.i188 ], [ %.01930.i182, %.noexc189 ], [ %.01930.i182, %.noexc190 ]
-  %6 = freeze i1 %.2286.ph
+  %6 = freeze i8 %.2286.ph
+  %7 = trunc i8 %6 to i1
   br label %_ZN3smt10theory_lra3imp8next_supEPN6lp_api5boundIN3sat7literalEEENS2_10bound_kindEPS7_S9_Rb.exit191
 
 _ZN3smt10theory_lra3imp8next_supEPN6lp_api5boundIN3sat7literalEEENS2_10bound_kindEPS7_S9_Rb.exit191: ; preds = %_ZN3smt10theory_lra3imp8next_supEPN6lp_api5boundIN3sat7literalEEENS2_10bound_kindEPS7_S9_Rb.exit191.loopexit, %_ZN3smt10theory_lra3imp8next_supEPN6lp_api5boundIN3sat7literalEEENS2_10bound_kindEPS7_S9_Rb.exit
-  %.2286 = phi i1 [ false, %_ZN3smt10theory_lra3imp8next_supEPN6lp_api5boundIN3sat7literalEEENS2_10bound_kindEPS7_S9_Rb.exit ], [ %6, %_ZN3smt10theory_lra3imp8next_supEPN6lp_api5boundIN3sat7literalEEENS2_10bound_kindEPS7_S9_Rb.exit191.loopexit ]
+  %.2286 = phi i1 [ false, %_ZN3smt10theory_lra3imp8next_supEPN6lp_api5boundIN3sat7literalEEENS2_10bound_kindEPS7_S9_Rb.exit ], [ %7, %_ZN3smt10theory_lra3imp8next_supEPN6lp_api5boundIN3sat7literalEEENS2_10bound_kindEPS7_S9_Rb.exit191.loopexit ]
   %.3.i185 = phi ptr [ %i.ew, %_ZN3smt10theory_lra3imp8next_supEPN6lp_api5boundIN3sat7literalEEENS2_10bound_kindEPS7_S9_Rb.exit ], [ %.3.i185.ph, %_ZN3smt10theory_lra3imp8next_supEPN6lp_api5boundIN3sat7literalEEENS2_10bound_kindEPS7_S9_Rb.exit191.loopexit ] ; 2 uses
   %.not = icmp eq ptr %.017.lcssa.i, %i.ew        ; 2 uses
   %spec.select = select i1 %.not, ptr %.076357, ptr %.017.lcssa.i

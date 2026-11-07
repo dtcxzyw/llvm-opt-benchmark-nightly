@@ -205,7 +205,7 @@ bb.a:
   %i.cv = alloca [32 x i8], align 8               ; 8 uses
   %i.cw = alloca [24 x i8], align 8               ; 2 uses
   %i.cx = alloca [56 x i8], align 8               ; 10 uses
-  %i.cy = alloca [16 x i8], align 8               ; 7 uses
+  %i.cy = alloca [16 x i8], align 8               ; 8 uses
   %i.cz = alloca [24 x i8], align 8               ; 11 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cz)
   store i64 -1, ptr %i.cz, align 8
@@ -274,7 +274,6 @@ bb.a:
   %.sroa.5.0..sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.cs, i64 16 ; 2 uses
   %.sroa.5.sroa.4.0..sroa.5.0..sroa_idx.sroa_idx.i.i.i.i.i.i.i.i.i.i.i.i = getelementptr inbounds nuw i8, ptr %i.cs, i64 24 ; 2 uses
   %i.ec = getelementptr inbounds nuw i8, ptr %i.cr, i64 8 ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.cy, i64 8 ; 2 uses
   %i.ed = getelementptr inbounds nuw i8, ptr %i.cy, i64 4
   %.sroa.10.i.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.8.i.i.i.i.i.i.8.i.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.8.i.i.i.i.8.i.i.i.8.i.i.i.8.i.i.8.i.i.8.i.8.i.8..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.10.i.i.i.i.i.i.i.i.i.i.i, i64 8
   %.sroa.10.i.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.8.i.i.i.i.i.i.i.8.i.i.i.i.i.i.8.i.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.i.8.i.i.i.i.8.i.i.i.i.8.i.i.i.8.i.i.i.8.i.i.8.i.i.8.i.8.i.8..sroa_idx5709 = getelementptr inbounds nuw i8, ptr %.sroa.10.i.i.i.i.i.i.i.i.i.i.i, i64 8
@@ -590,9 +589,14 @@ bb.ad:                                            ; preds = %.thread139
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cy)
   call void @llvm.experimental.noalias.scope.decl(metadata !4653)
   call void @llvm.experimental.noalias.scope.decl(metadata !4654)
-  %i.ij = call noundef align 8 ptr @_RNvMs_NtCseuwcdgGPBeX_5json52deNtB4_12Deserializer15skip_whitespace(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %1) #30, !noalias !4655 ; 2 uses
+  %i.ij = call noundef align 8 ptr @_RNvMs_NtCseuwcdgGPBeX_5json52deNtB4_12Deserializer15skip_whitespace(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %1) #30, !noalias !4655 ; 3 uses
   %.not.i.i82 = icmp eq ptr %i.ij, null
-  br i1 %.not.i.i82, label %bb.ae, label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.sink.split
+  br i1 %.not.i.i82, label %bb.ae, label %2
+
+2:                                                ; preds = %bb.ad
+  %3 = getelementptr inbounds nuw i8, ptr %i.cy, i64 8
+  store ptr %i.ij, ptr %3, align 8, !alias.scope !4655
+  br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit.thread
 
 bb.ae:                                            ; preds = %bb.ad
   %i.ik = call { i64, ptr } @_RNvMs_NtCseuwcdgGPBeX_5json52deNtB4_12Deserializer11expect_char(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %1, i32 noundef 58, i8 noundef 7, i8 noundef 13) #30, !noalias !4655 ; 2 uses
@@ -602,13 +606,13 @@ bb.ae:                                            ; preds = %bb.ad
 
 bb.af:                                            ; preds = %bb.ae
   %i.in = extractvalue { i64, ptr } %i.ik, 1
-  br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.sink.split
+  br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit.thread
 
 _RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit: ; preds = %bb.ae
   call fastcc void @_RINvXs16_NtNtCs2d6kDCn68sB_10serde_core2de5implsmNtB9_11Deserialize11deserializeQNtNtCseuwcdgGPBeX_5json52de12DeserializerECsat9HgdBb3qc_16shadowsocks_rust(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(16) %i.cy, ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %1) #35
-  %.pre.a = load i32, ptr %i.cy, align 8, !range !13
+  %.pre.a = load i32, ptr %i.cy, align 8
   %i.io = trunc nuw i32 %.pre.a to i1
-  br i1 %i.io, label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit.thread, label %bb.ah
+  br i1 %i.io, label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.sink.split, label %bb.ah
 
 bb.ag:                                            ; preds = %.thread139
   call void @llvm.lifetime.start.p0(ptr nonnull %i.cu)
@@ -624,13 +628,13 @@ bb.ag:                                            ; preds = %.thread139
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cu)
   br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit.thread
 
-_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.sink.split: ; preds = %bb.ad, %bb.af
-  %.sink = phi ptr [ %i.in, %bb.af ], [ %i.ij, %bb.ad ]
-  store ptr %.sink, ptr %2, align 8, !alias.scope !4655
+_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.sink.split: ; preds = %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.cy, i64 8
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8
   br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit.thread
 
-_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit.thread: ; preds = %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit, %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.sink.split
-  %3 = load ptr, ptr %2, align 8, !nonnull !14, !align !27, !noundef !14
+_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit.thread: ; preds = %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.sink.split, %bb.af, %2
+  %4 = phi ptr [ %.pre, %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit.thread.sink.split ], [ %i.in, %bb.af ], [ %i.ij, %2 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.cy)
   br label %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit.thread
 
@@ -1033,7 +1037,7 @@ bb.no:                                            ; preds = %.thread152
   br label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionIBC_NtNtCs5Xr050g3D4S_3std4path7PathBufEEECsat9HgdBb3qc_16shadowsocks_rust.exit99
 
 _RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit.thread: ; preds = %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit, %.thread156, %bb.ag, %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit.thread, %bb.by, %.loopexit190, %bb.mu, %.loopexit, %bb.no, %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess8next_keyNtNvXNvNtCsat9HgdBb3qc_16shadowsocks_rust6configs_1__NtB1B_9LogConfigNtBG_11Deserialize11deserialize7___FieldEB1D_.exit
-  %.sink9314 = phi ptr [ %i.iq, %bb.ag ], [ %3, %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit.thread ], [ %i.mt, %bb.by ], [ %.sroa.7111.0.ph, %.loopexit190 ], [ %i.asm, %bb.mu ], [ %.sroa.11.1.ph, %.loopexit ], [ %i.atn, %bb.no ], [ %.sroa.9107.0, %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess8next_keyNtNvXNvNtCsat9HgdBb3qc_16shadowsocks_rust6configs_1__NtB1B_9LogConfigNtBG_11Deserialize11deserialize7___FieldEB1D_.exit ], [ %.sroa.0.0.i.i, %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit ], [ %i.id, %.thread156 ]
+  %.sink9314 = phi ptr [ %i.iq, %bb.ag ], [ %4, %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit.thread ], [ %i.mt, %bb.by ], [ %.sroa.7111.0.ph, %.loopexit190 ], [ %i.asm, %bb.mu ], [ %.sroa.11.1.ph, %.loopexit ], [ %i.atn, %bb.no ], [ %.sroa.9107.0, %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess8next_keyNtNvXNvNtCsat9HgdBb3qc_16shadowsocks_rust6configs_1__NtB1B_9LogConfigNtBG_11Deserialize11deserialize7___FieldEB1D_.exit ], [ %.sroa.0.0.i.i, %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit ], [ %i.id, %.thread156 ]
   %.sroa.10.03257 = phi ptr [ %.sroa.10.03648, %bb.ag ], [ %.sroa.10.03648, %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit.thread ], [ %.sroa.10.03648, %bb.by ], [ %.sroa.10.03648, %.loopexit190 ], [ %.sroa.10.03648, %bb.mu ], [ %.sroa.10.03648, %.loopexit ], [ %.sroa.10.03648, %bb.no ], [ %.sroa.10.03258, %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess8next_keyNtNvXNvNtCsat9HgdBb3qc_16shadowsocks_rust6configs_1__NtB1B_9LogConfigNtBG_11Deserialize11deserialize7___FieldEB1D_.exit ], [ %.sroa.10.03648, %.thread156 ], [ %.sroa.10.03648, %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit ] ; 2 uses
   %.sroa.0103.03094 = phi i64 [ %.sroa.0103.03649, %bb.ag ], [ %.sroa.0103.03649, %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valuemECsat9HgdBb3qc_16shadowsocks_rust.exit.thread ], [ %.sroa.0103.03649, %bb.by ], [ %.sroa.0103.03649, %.loopexit190 ], [ %.sroa.0103.03649, %bb.mu ], [ %.sroa.0103.03649, %.loopexit ], [ %.sroa.0103.03649, %bb.no ], [ %.sroa.0103.03095, %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess8next_keyNtNvXNvNtCsat9HgdBb3qc_16shadowsocks_rust6configs_1__NtB1B_9LogConfigNtBG_11Deserialize11deserialize7___FieldEB1D_.exit ], [ %.sroa.0103.03649, %.thread156 ], [ %.sroa.0103.03649, %_RINvYNtNtCseuwcdgGPBeX_5json52de9MapAccessNtNtCs2d6kDCn68sB_10serde_core2de9MapAccess10next_valueNtNtBG_11ignored_any10IgnoredAnyECsat9HgdBb3qc_16shadowsocks_rust.exit ] ; 2 uses
   %i.atp = getelementptr inbounds nuw i8, ptr %0, i64 8

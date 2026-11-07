@@ -204,16 +204,16 @@ tuple_alloc.exit:                                 ; preds = %.critedge.i
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph.preheader.sink.split, %tuple_alloc.exit
   %.2.i26 = phi ptr [ %i.o, %tuple_alloc.exit ], [ %.sink34, %.lr.ph.preheader.sink.split ] ; 6 uses
-  %i.r = getelementptr i8, ptr %.2.i26, i64 32
+  %i.r = getelementptr i8, ptr %.2.i26, i64 32    ; 2 uses
   br label %.lr.ph
 
-._crit_edge:                                      ; preds = %bb.k
-  %i.s = trunc nuw i8 %.1 to i1
+._crit_edge:                                      ; preds = %bb.j
+  %i.s = trunc i64 %i.ae to i1
   br i1 %i.s, label %bb.l, label %_PyObject_GC_TRACK.exit
 
-.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.k
-  %.028 = phi i64 [ %i.ag, %bb.k ], [ 0, %.lr.ph.preheader ] ; 3 uses
-  %.01727 = phi i8 [ %.1, %bb.k ], [ 0, %.lr.ph.preheader ]
+.lr.ph:                                           ; preds = %.lr.ph.backedge, %.lr.ph.preheader
+  %.028 = phi i64 [ 0, %.lr.ph.preheader ], [ %.028.be, %.lr.ph.backedge ] ; 5 uses
+  %.01727 = phi i1 [ false, %.lr.ph.preheader ], [ %.01727.be, %.lr.ph.backedge ]
   %i.t = getelementptr [8 x i8], ptr %0, i64 %.028
   %i.u = load i64, ptr %i.t, align 8              ; 3 uses
   %i.v = and i64 %i.u, 1
@@ -237,29 +237,35 @@ bb.i:                                             ; preds = %bb.h
   br label %PyStackRef_AsPyObjectSteal.exit
 
 PyStackRef_AsPyObjectSteal.exit:                  ; preds = %bb.g, %bb.h, %bb.i
-  %.0.i = phi ptr [ %i.w, %bb.g ], [ %i.y, %bb.h ], [ %i.y, %bb.i ] ; 2 uses
-  %2 = trunc nuw i8 %.01727 to i1
-  br i1 %2, label %bb.k, label %bb.j
+  %.0.i = phi ptr [ %i.w, %bb.g ], [ %i.y, %bb.h ], [ %i.y, %bb.i ] ; 3 uses
+  br i1 %.01727, label %bb.k, label %bb.j
 
 bb.j:                                             ; preds = %PyStackRef_AsPyObjectSteal.exit
   %i.ac = getelementptr i8, ptr %.0.i, i64 8
   %.val = load ptr, ptr %i.ac, align 8, !tbaa !72
   %i.ad = getelementptr i8, ptr %.val, i64 168
   %.val.val = load i64, ptr %i.ad, align 8, !tbaa !79
-  %i.ae = lshr i64 %.val.val, 14
-  %3 = trunc i64 %i.ae to i8
-  %spec.select = and i8 %3, 1
-  br label %bb.k
+  %i.ae = lshr i64 %.val.val, 14                  ; 2 uses
+  %2 = trunc i64 %i.ae to i1
+  %3 = getelementptr [8 x i8], ptr %i.r, i64 %.028
+  store ptr %.0.i, ptr %3, align 8, !tbaa !61
+  %4 = add nuw nsw i64 %.028, 1                   ; 2 uses
+  %exitcond.not = icmp eq i64 %4, %1
+  br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.backedge
 
-bb.k:                                             ; preds = %bb.j, %PyStackRef_AsPyObjectSteal.exit
-  %.1 = phi i8 [ 1, %PyStackRef_AsPyObjectSteal.exit ], [ %spec.select, %bb.j ] ; 2 uses
+.lr.ph.backedge:                                  ; preds = %bb.j, %bb.k
+  %.028.be = phi i64 [ %4, %bb.j ], [ %i.ag, %bb.k ]
+  %.01727.be = phi i1 [ %2, %bb.j ], [ true, %bb.k ]
+  br label %.lr.ph, !llvm.loop !100
+
+bb.k:                                             ; preds = %PyStackRef_AsPyObjectSteal.exit
   %i.af = getelementptr [8 x i8], ptr %i.r, i64 %.028
   store ptr %.0.i, ptr %i.af, align 8, !tbaa !61
   %i.ag = add nuw nsw i64 %.028, 1                ; 2 uses
   %exitcond.not.a = icmp eq i64 %i.ag, %1
-  br i1 %exitcond.not.a, label %._crit_edge, label %.lr.ph, !llvm.loop !100
+  br i1 %exitcond.not.a, label %bb.l, label %.lr.ph.backedge
 
-bb.l:                                             ; preds = %._crit_edge
+bb.l:                                             ; preds = %bb.k, %._crit_edge
   %i.ah = getelementptr i8, ptr %.2.i26, i64 -16  ; 2 uses
   %i.ai = tail call align 8 ptr @llvm.threadlocal.address.p0(ptr align 8 @_Py_tss_interp)
   %i.aj = load ptr, ptr %i.ai, align 8, !tbaa !49 ; 7 uses

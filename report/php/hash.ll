@@ -204,7 +204,7 @@ bb.a:
   %i.e = alloca i64, align 8                      ; 11 uses
   %i.f = alloca i64, align 8                      ; 4 uses
   %i.g = alloca i64, align 8                      ; 9 uses
-  %i.h = alloca i8, align 1                       ; 6 uses
+  %i.h = alloca i8, align 1                       ; 7 uses
   %i.i = alloca ptr, align 8                      ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #16
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b) #16
@@ -526,13 +526,13 @@ vec.epilog.middle.block303:                       ; preds = %vec.epilog.vector.b
 php_hash_string_xor_char.exit:                    ; preds = %.lr.ph.i, %middle.block290, %vec.epilog.middle.block303, %bb.u, %php_hash_hmac_prep_key.exit
   %i.cy = load i64, ptr %i.e, align 8, !tbaa !26  ; 3 uses
   %i.cz = icmp eq i64 %i.cy, 0
-  %.pre = load i8, ptr %i.h, align 1, !tbaa !46, !range !55 ; 2 uses
   br i1 %i.cz, label %bb.v, label %bb.w
 
 bb.v:                                             ; preds = %php_hash_string_xor_char.exit
   %i.da = load i64, ptr %i.be, align 8, !tbaa !65 ; 3 uses
   store i64 %i.da, ptr %i.e, align 8, !tbaa !26
-  %i.db = trunc nuw i8 %.pre to i1
+  %2 = load i8, ptr %i.h, align 1, !tbaa !46, !range !55, !noundef !16
+  %i.db = trunc nuw i8 %2 to i1
   br i1 %i.db, label %.thread, label %.thread271
 
 .thread271:                                       ; preds = %bb.v
@@ -541,7 +541,8 @@ bb.v:                                             ; preds = %php_hash_string_xor
   br label %bb.x
 
 bb.w:                                             ; preds = %php_hash_string_xor_char.exit
-  %.pre254 = trunc nuw i8 %.pre to i1
+  %.pr248 = load i8, ptr %i.h, align 1, !tbaa !46
+  %.pre254 = trunc nuw i8 %.pr248 to i1
   br i1 %.pre254, label %.thread, label %bb.x
 
 bb.x:                                             ; preds = %.thread271, %bb.w

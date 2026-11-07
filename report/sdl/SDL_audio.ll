@@ -205,12 +205,7 @@ bb.e:                                             ; preds = %._crit_edge156.a, %
 
 bb.f:                                             ; preds = %bb.e
   %.not119 = icmp eq ptr %i.r, null
-  br i1 %.not119, label %.thread139, label %bb.g
-
-.thread139:                                       ; preds = %bb.f
-  %2 = load ptr, ptr %0, align 8
-  call void @SDL_UnlockMutex_REAL(ptr noundef %2) #11
-  br label %SDL_AudioDeviceDisconnected.exit
+  br i1 %.not119, label %.thread140, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
   %i.v = getelementptr inbounds nuw i8, ptr %0, i64 149
@@ -478,19 +473,25 @@ bb.ag:                                            ; preds = %bb.af, %._crit_edge
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #11
   br label %SDL_AudioChannelMapsEqual.exit.thread
 
-SDL_AudioChannelMapsEqual.exit.thread:            ; preds = %bb.n, %bb.o, %bb.l, %bb.ag, %SDL_AudioChannelMapsEqual.exit, %bb.k, %.thread132
+SDL_AudioChannelMapsEqual.exit.thread:            ; preds = %bb.n, %bb.o, %bb.l, %.thread132, %bb.k, %SDL_AudioChannelMapsEqual.exit, %bb.ag
   %.6 = phi i1 [ %.1.lcssa, %bb.ag ], [ false, %SDL_AudioChannelMapsEqual.exit ], [ true, %.thread132 ], [ false, %bb.k ], [ false, %bb.l ], [ false, %bb.o ], [ false, %bb.n ]
   %i.eb = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.ec = load ptr, ptr %i.eb, align 8
   %i.ed = load i32, ptr %i.a, align 4
   %i.ee = call zeroext i1 %i.ec(ptr noundef %0, ptr noundef nonnull %i.r, i32 noundef %i.ed) #11
-  %3 = load ptr, ptr %0, align 8
-  call void @SDL_UnlockMutex_REAL(ptr noundef %3) #11
-  %not. = xor i1 %i.ee, true
-  %4 = select i1 %not., i1 true, i1 %.6
-  br i1 %4, label %SDL_AudioDeviceDisconnected.exit, label %bb.ah
+  br i1 %i.ee, label %3, label %.thread140
 
-SDL_AudioDeviceDisconnected.exit:                 ; preds = %.thread139, %SDL_AudioChannelMapsEqual.exit.thread
+.thread140:                                       ; preds = %SDL_AudioChannelMapsEqual.exit.thread, %bb.f
+  %2 = load ptr, ptr %0, align 8
+  call void @SDL_UnlockMutex_REAL(ptr noundef %2) #11
+  br label %SDL_AudioDeviceDisconnected.exit
+
+3:                                                ; preds = %SDL_AudioChannelMapsEqual.exit.thread
+  %4 = load ptr, ptr %0, align 8
+  call void @SDL_UnlockMutex_REAL(ptr noundef %4) #11
+  br i1 %.6, label %SDL_AudioDeviceDisconnected.exit, label %bb.ah
+
+SDL_AudioDeviceDisconnected.exit:                 ; preds = %.thread140, %3
   %i.ef = getelementptr inbounds nuw i8, ptr %0, i64 16
   %i.eg = call i32 @SDL_AddAtomicInt_REAL(ptr noundef nonnull %i.ef, i32 noundef 1) #11 ; 0 uses
   %i.eh = call zeroext i1 @SDL_CompareAndSwapAtomicInt_REAL(ptr noundef nonnull %i.f, i32 noundef 0, i32 noundef 1) #11 ; 0 uses
@@ -501,7 +502,7 @@ SDL_AudioDeviceDisconnected.exit:                 ; preds = %.thread139, %SDL_Au
   %i.em = call zeroext i1 @SDL_RunOnMainThread_REAL(ptr noundef nonnull @SDL_AudioDeviceDisconnected_OnMainThread, ptr noundef %i.el, i1 noundef zeroext false) #11 ; 0 uses
   br label %bb.ah
 
-bb.ah:                                            ; preds = %.thread141, %SDL_AudioDeviceDisconnected.exit, %SDL_AudioChannelMapsEqual.exit.thread
+bb.ah:                                            ; preds = %.thread141, %SDL_AudioDeviceDisconnected.exit, %3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #11
   br label %bb.ai
 
@@ -904,8 +905,8 @@ bb.af:                                            ; preds = %._crit_edge148
   call fastcc void @ClosePhysicalAudioDevice(ptr noundef nonnull %i.s)
   br label %.thread
 
-.thread:                                          ; preds = %bb.f, %._crit_edge, %._crit_edge148, %bb.af, %bb.i
-  %.3 = phi ptr [ %1, %bb.i ], [ %.085.lcssa, %bb.af ], [ %.085.lcssa, %._crit_edge148 ], [ %1, %._crit_edge ], [ %1, %bb.f ] ; 2 uses
+.thread:                                          ; preds = %bb.f, %._crit_edge, %bb.i, %._crit_edge148, %bb.af
+  %.3 = phi ptr [ %.085.lcssa, %._crit_edge148 ], [ %.085.lcssa, %bb.af ], [ %1, %bb.i ], [ %1, %._crit_edge ], [ %1, %bb.f ] ; 2 uses
   call fastcc void @ReleaseAudioDevice(ptr noundef nonnull %i.s)
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #11
   call fastcc void @ReleaseAudioDevice(ptr noundef nonnull %0)

@@ -202,7 +202,7 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = tail call ptr @sctp_stat_get_info()
   %i.d = getelementptr i8, ptr %i.c, i64 16
-  %i.e = load i8, ptr %i.d, align 8, !range !21, !noundef !7
+  %i.e = load i8, ptr %i.d, align 8, !range !22, !noundef !7
   %i.f = icmp eq i8 %i.e, 0
   br i1 %i.f, label %bb.b, label %bb.c
 
@@ -250,7 +250,7 @@ bb.e:                                             ; preds = %bb.d
   %i.w = getelementptr i8, ptr %.02647, i64 8
   %i.x = load ptr, ptr %i.w, align 8              ; 2 uses
   %.not = icmp eq ptr %i.x, null
-  br i1 %.not, label %._crit_edge50, label %.lr.ph49
+  br i1 %.not, label %._crit_edge50, label %.lr.ph49, !llvm.loop !21
 
 ._crit_edge50:                                    ; preds = %._crit_edge, %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %1) #12
@@ -653,7 +653,7 @@ bb.f:                                             ; preds = %bb.d
 
 _ZN9QtPrivate15FunctionPointerIM7QWidgetFbvEE4callINS_4ListIJEEEvEEvS3_PS1_PPv.exit: ; preds = %bb.e, %bb.f
   %i.j = phi ptr [ %i.h, %bb.e ], [ %i.i, %bb.f ]
-  %i.k = tail call noundef zeroext i1 %i.j(ptr noundef align 8 dereferenceable_or_null(40) %i.c), !inline_history !22 ; 0 uses
+  %i.k = tail call noundef zeroext i1 %i.j(ptr noundef align 8 dereferenceable_or_null(40) %i.c), !inline_history !23 ; 0 uses
   br label %bb.h
 
 bb.g:                                             ; preds = %bb.a
@@ -737,6 +737,7 @@ attributes #13 = { builtin nounwind }
 !18 = distinct !{!18, !6}
 !19 = !{ptr @_ZN22SCTPAssocAnalyseDialogD0Ev}
 !20 = distinct !{!20, !6}
-!21 = !{i8 0, i8 2}
-!22 = distinct !{null, null}
+!21 = distinct !{!21, !6}
+!22 = !{i8 0, i8 2}
+!23 = distinct !{null, null}
 end_hunk_1

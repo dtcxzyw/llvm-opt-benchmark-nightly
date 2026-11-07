@@ -204,20 +204,21 @@ bb.x:                                             ; preds = %bb.m
 
 bb.y:                                             ; preds = %bb.x
   store i8 1, ptr %i.a, align 1
-  br label %heap_getattr.exit
+  br label %bb.aa
 
 bb.z:                                             ; preds = %bb.x
   %i.dg = trunc nuw nsw i64 %i.bi to i32
   %i.dh = call i64 @nocachegetattr(ptr noundef nonnull %6, i32 noundef range(i32 1, 2048) %i.dg, ptr noundef nonnull %i.ap) #10
   br label %heap_getattr.exit
 
-heap_getattr.exit:                                ; preds = %bb.l, %bb.q, %bb.r, %bb.s, %bb.t, %bb.v, %bb.w, %bb.y, %bb.z
-  %.0.i111 = phi i64 [ %i.bp, %bb.l ], [ %i.cu, %bb.v ], [ %i.dh, %bb.z ], [ 0, %bb.y ], [ %i.cw, %bb.w ], [ %i.cm, %bb.q ], [ %i.co, %bb.r ], [ %i.cq, %bb.s ], [ %i.cr, %bb.t ]
-  %i.di = load i8, ptr %i.a, align 1, !range !6, !noundef !7
+heap_getattr.exit:                                ; preds = %bb.l, %bb.q, %bb.r, %bb.s, %bb.t, %bb.v, %bb.w, %bb.z
+  %.0.i111.ph = phi i64 [ %i.cu, %bb.v ], [ %i.cr, %bb.t ], [ %i.cq, %bb.s ], [ %i.co, %bb.r ], [ %i.cm, %bb.q ], [ %i.cw, %bb.w ], [ %i.dh, %bb.z ], [ %i.bp, %bb.l ] ; 2 uses
+  %i.di = load i8, ptr %i.a, align 1
   %i.dj = trunc nuw i8 %i.di to i1
   br i1 %i.dj, label %bb.aa, label %bb.ab
 
-bb.aa:                                            ; preds = %heap_getattr.exit
+bb.aa:                                            ; preds = %bb.y, %heap_getattr.exit
+  %.0.i111114 = phi i64 [ 0, %bb.y ], [ %.0.i111.ph, %heap_getattr.exit ]
   store i32 0, ptr %i.b, align 4
   store i32 0, ptr %i.c, align 4
   br label %bb.ac
@@ -236,7 +237,8 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   %i.dn = phi i32 [ %.pre122, %bb.ab ], [ 0, %bb.aa ]
   %i.do = phi i32 [ %.pre121, %bb.ab ], [ 0, %bb.aa ]
   %i.dp = phi i1 [ %i.dm, %bb.ab ], [ true, %bb.aa ]
-  call fastcc void @datum_to_jsonb_internal(i64 noundef %.0.i111, i1 noundef zeroext %i.dp, ptr noundef %2, i32 noundef %i.do, i32 noundef %i.dn, i1 noundef zeroext false), !inline_history !14
+  %.0.i111113 = phi i64 [ %.0.i111.ph, %bb.ab ], [ %.0.i111114, %bb.aa ]
+  call fastcc void @datum_to_jsonb_internal(i64 noundef %.0.i111113, i1 noundef zeroext %i.dp, ptr noundef %2, i32 noundef %i.do, i32 noundef %i.dn, i1 noundef zeroext false), !inline_history !14
   br label %bb.ad
 
 bb.ad:                                            ; preds = %._crit_edge123, %bb.ac

@@ -204,7 +204,7 @@ bb.h:                                             ; preds = %bb.g, %.lr.ph150
   br i1 %i.ba, label %._crit_edge.i, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.h, %bb.s
-  %.sroa.012.086.i = phi i8 [ %.sroa.012.1.i, %bb.s ], [ %i.ac, %bb.h ] ; 4 uses
+  %.sroa.012.086.i = phi i8 [ %.sroa.012.1.i, %bb.s ], [ %i.ac, %bb.h ] ; 6 uses
   %.sroa.015.085.i = phi ptr [ %i.bb, %bb.s ], [ %i.aw, %bb.h ] ; 19 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %.sroa.015.085.i, i64 72 ; 2 uses
   %i.bc = load i64, ptr %.sroa.015.085.i, align 8, !range !135, !noalias !129, !noundef !5 ; 6 uses
@@ -249,7 +249,7 @@ bb.k:                                             ; preds = %.lr.ph.i
 
 bb.l:                                             ; preds = %.lr.ph.i
   %.sroa.63.0..sroa.015.0.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.015.085.i, i64 8
-  %.sroa.63.0.copyload.i = load i64, ptr %.sroa.63.0..sroa.015.0.sroa_idx.i, align 8, !noalias !129 ; 4 uses
+  %.sroa.63.0.copyload.i = load i64, ptr %.sroa.63.0..sroa.015.0.sroa_idx.i, align 8, !noalias !129 ; 5 uses
   %.sroa.9.0..sroa.015.0.sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.015.085.i, i64 16
   %.sroa.9.0.copyload.i = load i64, ptr %.sroa.9.0..sroa.015.0.sroa_idx.i, align 8, !noalias !129 ; 2 uses
   %i.bp = getelementptr inbounds nuw i8, ptr %.sroa.015.085.i, i64 24
@@ -260,7 +260,7 @@ bb.l:                                             ; preds = %.lr.ph.i
   %.sroa.912.0.copyload.i = load i64, ptr %.sroa.912.0..sroa_idx.i, align 8, !noalias !129 ; 2 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %.sroa.015.085.i, i64 48
   %i.br = icmp eq i64 %i.bc, %.sroa.07.0.copyload.i
-  br i1 %i.br, label %bb.ag, label %bb.aj
+  br i1 %i.br, label %bb.ag, label %6
 
 bb.m:                                             ; preds = %.lr.ph.i
   %i.bs = getelementptr inbounds nuw i8, ptr %.sroa.015.085.i, i64 8
@@ -332,7 +332,7 @@ _RNvXNtNtCsi68uqYEhoRA_5gimli5write8relocateNtCs4VV2qO6j7hb_12simple_write7Secti
   br i1 %.not241.i, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %bb.bj, %bb.av, %bb.ae, %_RNvXNtNtCsi68uqYEhoRA_5gimli5write8relocateNtCs4VV2qO6j7hb_12simple_write7SectionNtNtB4_6writer6Writer13write_addressBH_.exit.i
-  %.sroa.012.1.i = phi i8 [ 0, %bb.av ], [ 1, %bb.ae ], [ 1, %_RNvXNtNtCsi68uqYEhoRA_5gimli5write8relocateNtCs4VV2qO6j7hb_12simple_write7SectionNtNtB4_6writer6Writer13write_addressBH_.exit.i ], [ 0, %bb.bj ]
+  %.sroa.012.1.i = phi i8 [ 1, %bb.ae ], [ 0, %bb.av ], [ 1, %_RNvXNtNtCsi68uqYEhoRA_5gimli5write8relocateNtCs4VV2qO6j7hb_12simple_write7SectionNtNtB4_6writer6Writer13write_addressBH_.exit.i ], [ 0, %bb.bj ]
   %i.cl = icmp eq ptr %i.bb, %i.az
   br i1 %i.cl, label %._crit_edge.i, label %.lr.ph.i
 
@@ -406,26 +406,34 @@ bb.ah:                                            ; preds = %bb.ag
   %i.da = icmp eq i64 %.sroa.9.0.copyload.i, %.sroa.912.0.copyload.i
   %i.db = icmp eq i64 %.sroa.63.0.copyload.i, %.sroa.69.0.copyload.i
   %or.cond.i = select i1 %i.da, i1 %i.db, i1 false
-  br i1 %or.cond.i, label %bb.ak, label %bb.aj
+  br i1 %or.cond.i, label %bb.ak, label %.thread102.i
 
 bb.ai:                                            ; preds = %bb.ag
   %i.dc = icmp eq i64 %.sroa.63.0.copyload.i, %.sroa.69.0.copyload.i
   br i1 %i.dc, label %bb.ak, label %bb.aj
 
-bb.aj:                                            ; preds = %bb.ai, %bb.ah, %bb.l
+6:                                                ; preds = %bb.l
+  %7 = trunc nuw i8 %.sroa.012.086.i to i1
+  br i1 %7, label %bb.ao, label %bb.al
+
+.thread102.i:                                     ; preds = %bb.ah
+  %8 = trunc nuw i8 %.sroa.012.086.i to i1
+  br i1 %8, label %bb.ao, label %bb.am
+
+bb.aj:                                            ; preds = %bb.ai
   %i.dd = trunc nuw i8 %.sroa.012.086.i to i1
-  br i1 %i.dd, label %bb.ao, label %bb.al
+  br i1 %i.dd, label %bb.ao, label %_RNvXs_Cs4VV2qO6j7hb_12simple_writeNtB4_7SectionNtNtNtCsi68uqYEhoRA_5gimli5write8relocate14RelocateWriter8relocate.exit.i250.invoke.i
 
 bb.ak:                                            ; preds = %bb.ai, %bb.ah
   %i.de = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 11, ptr %i.de, align 8, !alias.scope !129
   br label %bb.bl
 
-bb.al:                                            ; preds = %bb.aj
+bb.al:                                            ; preds = %6
   %i.df = trunc nuw i64 %i.bc to i1
   br i1 %i.df, label %bb.am, label %_RNvXs_Cs4VV2qO6j7hb_12simple_writeNtB4_7SectionNtNtNtCsi68uqYEhoRA_5gimli5write8relocate14RelocateWriter8relocate.exit.i250.invoke.i
 
-bb.am:                                            ; preds = %bb.al
+bb.am:                                            ; preds = %bb.al, %.thread102.i
   %.val.i249.i = load i64, ptr %i.ad, align 8, !alias.scope !139, !noundef !5 ; 2 uses
   %i.dg = icmp sgt i64 %.val.i249.i, -1
   call void @llvm.assume(i1 %i.dg)
@@ -456,12 +464,12 @@ _RNvXs_Cs4VV2qO6j7hb_12simple_writeNtB4_7SectionNtNtNtCsi68uqYEhoRA_5gimli5write
   store i64 %i.dm, ptr %i.ag, align 8, !alias.scope !140
   br label %_RNvXs_Cs4VV2qO6j7hb_12simple_writeNtB4_7SectionNtNtNtCsi68uqYEhoRA_5gimli5write8relocate14RelocateWriter8relocate.exit.i250.invoke.i
 
-_RNvXs_Cs4VV2qO6j7hb_12simple_writeNtB4_7SectionNtNtNtCsi68uqYEhoRA_5gimli5write8relocate14RelocateWriter8relocate.exit.i250.invoke.i: ; preds = %_RNvXs_Cs4VV2qO6j7hb_12simple_writeNtB4_7SectionNtNtNtCsi68uqYEhoRA_5gimli5write8relocate14RelocateWriter8relocate.exit.i250.i, %bb.al
-  %6 = phi i64 [ 0, %_RNvXs_Cs4VV2qO6j7hb_12simple_writeNtB4_7SectionNtNtNtCsi68uqYEhoRA_5gimli5write8relocate14RelocateWriter8relocate.exit.i250.i ], [ %.sroa.63.0.copyload.i, %bb.al ]
-  %i.dn = invoke i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity12LittleEndianENtNtB7_6writer6Writer11write_udataCs4VV2qO6j7hb_12simple_write(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ae, i64 noundef %6, i8 noundef %.sroa.07.0.extract.trunc.i)
+_RNvXs_Cs4VV2qO6j7hb_12simple_writeNtB4_7SectionNtNtNtCsi68uqYEhoRA_5gimli5write8relocate14RelocateWriter8relocate.exit.i250.invoke.i: ; preds = %_RNvXs_Cs4VV2qO6j7hb_12simple_writeNtB4_7SectionNtNtNtCsi68uqYEhoRA_5gimli5write8relocate14RelocateWriter8relocate.exit.i250.i, %bb.al, %bb.aj
+  %9 = phi i64 [ 0, %_RNvXs_Cs4VV2qO6j7hb_12simple_writeNtB4_7SectionNtNtNtCsi68uqYEhoRA_5gimli5write8relocate14RelocateWriter8relocate.exit.i250.i ], [ %.sroa.63.0.copyload.i, %bb.aj ], [ %.sroa.63.0.copyload.i, %bb.al ]
+  %i.dn = invoke i64 @_RNvYINtNtNtCsi68uqYEhoRA_5gimli5write10endian_vec9EndianVecNtNtB9_9endianity12LittleEndianENtNtB7_6writer6Writer11write_udataCs4VV2qO6j7hb_12simple_write(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ae, i64 noundef %9, i8 noundef %.sroa.07.0.extract.trunc.i)
           to label %_RNvXNtNtCsi68uqYEhoRA_5gimli5write8relocateNtCs4VV2qO6j7hb_12simple_write7SectionNtNtB4_6writer6Writer13write_addressBH_.exit259.i unwind label %.loopexit.split-lp.loopexit.i.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !noalias !129 ; 2 uses
 
-bb.ao:                                            ; preds = %bb.aj
+bb.ao:                                            ; preds = %bb.aj, %.thread102.i, %6
   %i.do = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 18, ptr %i.do, align 8, !alias.scope !129
   br label %bb.bl

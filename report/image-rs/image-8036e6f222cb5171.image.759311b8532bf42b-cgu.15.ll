@@ -205,8 +205,9 @@ _RNCINvNtNtCs4wP2HXfJTCR_5alloc2io4read19default_read_to_endINtNtNtCsj6eKBz9Db1c
   %i.o = icmp eq i64 %i.n, 0
   %i.p = sub i64 %.val8, %i.n
   %i.q = add i64 %i.p, 9216                       ; 2 uses
-  %.not85.i.i = icmp ult i64 %i.q, %i.m
-  %.sroa.5.1.i.i.i = select i1 %.not85.i.i, i64 8192, i64 %i.q
+  %3 = icmp uge i64 %i.q, %i.m
+  %cond.fr.i.i = freeze i1 %3
+  %.sroa.5.1.i.i.i = select i1 %cond.fr.i.i, i64 %i.q, i64 8192
   %.sroa.053.1.i.i = select i1 %i.o, i64 %i.m, i64 %.sroa.5.1.i.i.i ; 2 uses
   %i.r = icmp eq i64 %.val8, 0
   br i1 %i.r, label %bb.c, label %_RNCINvNtNtCs4wP2HXfJTCR_5alloc2io4read19default_read_to_endINtNtNtCsj6eKBz9Db1c_4core2io4util5ChainINtNtB10_6cursor6CursorRShEINtBY_4TakeIB21_QB1z_EEEE0Csa5QsYiPB8Gl_5image.exit.thread.i.i
@@ -609,8 +610,9 @@ _RNCINvNtNtCs4wP2HXfJTCR_5alloc2io4read19default_read_to_endINtNtNtCs53gkmrwjETj
   %i.k = icmp eq i64 %i.j, 0
   %i.l = sub i64 %3, %i.j
   %i.m = add i64 %i.l, 9216                       ; 2 uses
-  %.not85 = icmp ult i64 %i.m, %i.i
-  %.sroa.5.1.i = select i1 %.not85, i64 8192, i64 %i.m
+  %4 = icmp uge i64 %i.m, %i.i
+  %cond.fr = freeze i1 %4
+  %.sroa.5.1.i = select i1 %cond.fr, i64 %i.m, i64 8192
   %.sroa.053.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtNtCs4wP2HXfJTCR_5alloc2io4read19default_read_to_endINtNtNtCs53gkmrwjETj_4tiff7decoder6stream12Group4ReaderQINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEEE0Csa5QsYiPB8Gl_5image.exit.thread
@@ -934,8 +936,9 @@ _RNCINvNtNtCs4wP2HXfJTCR_5alloc2io4read19default_read_to_endINtNtNtCs53gkmrwjETj
   %i.k = icmp eq i64 %i.j, 0
   %i.l = sub i64 %3, %i.j
   %i.m = add i64 %i.l, 9216                       ; 2 uses
-  %.not85 = icmp ult i64 %i.m, %i.i
-  %.sroa.5.1.i = select i1 %.not85, i64 8192, i64 %i.m
+  %4 = icmp uge i64 %i.m, %i.i
+  %cond.fr = freeze i1 %4
+  %.sroa.5.1.i = select i1 %cond.fr, i64 %i.m, i64 8192
   %.sroa.053.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtNtCs4wP2HXfJTCR_5alloc2io4read19default_read_to_endINtNtNtCs53gkmrwjETj_4tiff7decoder6stream14PackBitsReaderQINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEEE0Csa5QsYiPB8Gl_5image.exit.thread
@@ -1259,8 +1262,9 @@ _RNCINvNtNtCs4wP2HXfJTCR_5alloc2io4read19default_read_to_endINtNtNtCs53gkmrwjETj
   %i.k = icmp eq i64 %i.j, 0
   %i.l = sub i64 %3, %i.j
   %i.m = add i64 %i.l, 9216                       ; 2 uses
-  %.not85 = icmp ult i64 %i.m, %i.i
-  %.sroa.5.1.i = select i1 %.not85, i64 8192, i64 %i.m
+  %4 = icmp uge i64 %i.m, %i.i
+  %cond.fr = freeze i1 %4
+  %.sroa.5.1.i = select i1 %cond.fr, i64 %i.m, i64 8192
   %.sroa.053.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtNtCs4wP2HXfJTCR_5alloc2io4read19default_read_to_endINtNtNtCs53gkmrwjETj_4tiff7decoder6stream9LZWReaderQINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEEE0Csa5QsYiPB8Gl_5image.exit.thread
@@ -1584,8 +1588,9 @@ _RNCINvNtNtCs4wP2HXfJTCR_5alloc2io4read19default_read_to_endINtNtNtCsgidZRN39rux
   %i.k = icmp eq i64 %i.j, 0
   %i.l = sub i64 %3, %i.j
   %i.m = add i64 %i.l, 9216                       ; 2 uses
-  %.not85 = icmp ult i64 %i.m, %i.i
-  %.sroa.5.1.i = select i1 %.not85, i64 8192, i64 %i.m
+  %4 = icmp uge i64 %i.m, %i.i
+  %cond.fr = freeze i1 %4
+  %.sroa.5.1.i = select i1 %cond.fr, i64 %i.m, i64 8192
   %.sroa.053.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtNtCs4wP2HXfJTCR_5alloc2io4read19default_read_to_endINtNtNtCsgidZRN39rux_6flate24zlib4read11ZlibDecoderQINtNtNtCsj6eKBz9Db1c_4core2io6cursor6CursorRShEEE0Csa5QsYiPB8Gl_5image.exit.thread
@@ -1909,8 +1914,9 @@ _RNCINvNtNtCs4wP2HXfJTCR_5alloc2io4read19default_read_to_endINtNtNtCsj6eKBz9Db1c
   %i.k = icmp eq i64 %i.j, 0
   %i.l = sub i64 %3, %i.j
   %i.m = add i64 %i.l, 9216                       ; 2 uses
-  %.not85 = icmp ult i64 %i.m, %i.i
-  %.sroa.5.1.i = select i1 %.not85, i64 8192, i64 %i.m
+  %4 = icmp uge i64 %i.m, %i.i
+  %cond.fr = freeze i1 %4
+  %.sroa.5.1.i = select i1 %cond.fr, i64 %i.m, i64 8192
   %.sroa.053.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtNtCs4wP2HXfJTCR_5alloc2io4read19default_read_to_endINtNtNtCsj6eKBz9Db1c_4core2io4util4TakeIBW_QINtNtB10_6cursor6CursorRShEEEE0Csa5QsYiPB8Gl_5image.exit.thread
@@ -2234,8 +2240,9 @@ _RNCINvNtNtCs4wP2HXfJTCR_5alloc2io4read19default_read_to_endINtNtNtCsj6eKBz9Db1c
   %i.k = icmp eq i64 %i.j, 0
   %i.l = sub i64 %3, %i.j
   %i.m = add i64 %i.l, 9216                       ; 2 uses
-  %.not85 = icmp ult i64 %i.m, %i.i
-  %.sroa.5.1.i = select i1 %.not85, i64 8192, i64 %i.m
+  %4 = icmp uge i64 %i.m, %i.i
+  %cond.fr = freeze i1 %4
+  %.sroa.5.1.i = select i1 %cond.fr, i64 %i.m, i64 8192
   %.sroa.053.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtNtCs4wP2HXfJTCR_5alloc2io4read19default_read_to_endINtNtNtCsj6eKBz9Db1c_4core2io4util4TakeQINtNtB10_6cursor6CursorRShEEE0Csa5QsYiPB8Gl_5image.exit.thread
@@ -2638,8 +2645,8 @@ _RINvMNtCsj6eKBz9Db1c_4core3stre4findReECsa5QsYiPB8Gl_5image.exit.thread.i: ; pr
   br label %.thread
 
 _RINvMNtCsj6eKBz9Db1c_4core3stre4findReECsa5QsYiPB8Gl_5image.exit.i: ; preds = %.preheader36.i.i.i.i.preheader, %.preheader36.i.i.i.i, %.preheader.i10.us.us.i.i.i.preheader, %.preheader.i10.us.us.i.i.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit12.i.i.i.i.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit14.i.i.i.i.i, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit16.i.i.i.i.i, %bb.p, %.preheader.i10.i.i.i, %bb.o, %bb.g, %bb.d
-  %.sroa.4.0.i.i = phi i64 [ %.promoted.i.i.i, %bb.d ], [ %i.cm, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit12.i.i.i.i.i ], [ %.sink71.i.i26.i.i, %.preheader36.i.i.i.i ], [ %.promoted.i.i.i, %bb.g ], [ %.sink.i9.i32.i.i, %.preheader.i10.i.i.i ], [ %i.ac, %bb.o ], [ %i.cm, %bb.p ], [ %i.cm, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit16.i.i.i.i.i ], [ %i.cm, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit14.i.i.i.i.i ], [ %.sink.i9.us.i34.i.i, %.preheader.i10.us.us.i.i.i.preheader ], [ %.sink.i9.us.i34.i.i, %.preheader.i10.us.us.i.i.i ], [ %.sink71.i.i26.i.i, %.preheader36.i.i.i.i.preheader ] ; 8 uses
-  %storemerge.i.sink.i.i.i = phi i1 [ %i.ad, %bb.d ], [ true, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit12.i.i.i.i.i ], [ true, %.preheader36.i.i.i.i ], [ true, %bb.g ], [ true, %.preheader.i10.i.i.i ], [ true, %bb.o ], [ true, %bb.p ], [ true, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit16.i.i.i.i.i ], [ true, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit14.i.i.i.i.i ], [ true, %.preheader.i10.us.us.i.i.i.preheader ], [ true, %.preheader.i10.us.us.i.i.i ], [ true, %.preheader36.i.i.i.i.preheader ]
+  %.sroa.4.0.i.i = phi i64 [ %i.ac, %bb.o ], [ %.promoted.i.i.i, %bb.d ], [ %.sink.i9.i32.i.i, %.preheader.i10.i.i.i ], [ %.sink71.i.i26.i.i, %.preheader36.i.i.i.i ], [ %.promoted.i.i.i, %bb.g ], [ %i.cm, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit12.i.i.i.i.i ], [ %i.cm, %bb.p ], [ %i.cm, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit16.i.i.i.i.i ], [ %i.cm, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit14.i.i.i.i.i ], [ %.sink.i9.us.i34.i.i, %.preheader.i10.us.us.i.i.i.preheader ], [ %.sink.i9.us.i34.i.i, %.preheader.i10.us.us.i.i.i ], [ %.sink71.i.i26.i.i, %.preheader36.i.i.i.i.preheader ] ; 8 uses
+  %storemerge.i.sink.i.i.i = phi i1 [ true, %bb.o ], [ %i.ad, %bb.d ], [ true, %.preheader.i10.i.i.i ], [ true, %.preheader36.i.i.i.i ], [ true, %bb.g ], [ true, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit12.i.i.i.i.i ], [ true, %bb.p ], [ true, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit16.i.i.i.i.i ], [ true, %_RNvXs2J_NtNtCsj6eKBz9Db1c_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCsa5QsYiPB8Gl_5image.exit14.i.i.i.i.i ], [ true, %.preheader.i10.us.us.i.i.i.preheader ], [ true, %.preheader.i10.us.us.i.i.i ], [ true, %.preheader36.i.i.i.i.preheader ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !823
   %i.gu = icmp ne i64 %.sroa.4.0.i.i, 0
   %or.cond.not.i = and i1 %storemerge.i.sink.i.i.i, %i.gu
@@ -3042,8 +3049,8 @@ bb.a:
   store i64 %i.b, ptr %i.a, align 8, !alias.scope !1598
   br label %_RNvXs4_NtNtCsj6eKBz9Db1c_4core2io6cursorINtB5_6CursorRShENtNtB7_4seek4Seek4seekCsa5QsYiPB8Gl_5image.exit
 
-_RNvXs4_NtNtCsj6eKBz9Db1c_4core2io6cursorINtB5_6CursorRShENtNtB7_4seek4Seek4seekCsa5QsYiPB8Gl_5image.exit: ; preds = %.sink.split.i, %bb.a
-  %.sroa.0.0 = phi ptr [ @114, %bb.a ], [ null, %.sink.split.i ]
+_RNvXs4_NtNtCsj6eKBz9Db1c_4core2io6cursorINtB5_6CursorRShENtNtB7_4seek4Seek4seekCsa5QsYiPB8Gl_5image.exit: ; preds = %bb.a, %.sink.split.i
+  %.sroa.0.0 = phi ptr [ null, %.sink.split.i ], [ @114, %bb.a ]
   ret ptr %.sroa.0.0
 }
 
@@ -3446,8 +3453,8 @@ bb.bj:                                            ; preds = %_RNvXs3_NtNtCsj6eKB
   %i.iz = icmp eq ptr %i.ie, %i.ef
   br i1 %i.iz, label %bb.bk, label %.lr.ph.i.i.i182
 
-bb.bk:                                            ; preds = %bb.bj, %_RNvXs3_NtNtCsj6eKBz9Db1c_4core3str7patternNvMNtNtB9_4char7methodsc13is_whitespaceNtB5_11MultiCharEq7matchesCsa5QsYiPB8Gl_5image.exit.i.i.i.i185, %bb.bc, %bb.bc, %bb.bc, %bb.bc, %bb.bc, %bb.bc
-  %storemerge.i.i8.i = phi i64 [ %.sroa.6.sroa.6.0.i, %bb.bj ], [ %i.gt, %_RNvXs3_NtNtCsj6eKBz9Db1c_4core3str7patternNvMNtNtB9_4char7methodsc13is_whitespaceNtB5_11MultiCharEq7matchesCsa5QsYiPB8Gl_5image.exit.i.i.i.i185 ], [ %i.gt, %bb.bc ], [ %i.gt, %bb.bc ], [ %i.gt, %bb.bc ], [ %i.gt, %bb.bc ], [ %i.gt, %bb.bc ], [ %i.gt, %bb.bc ] ; 12 uses
+bb.bk:                                            ; preds = %bb.bj, %bb.bc, %bb.bc, %bb.bc, %bb.bc, %bb.bc, %bb.bc, %_RNvXs3_NtNtCsj6eKBz9Db1c_4core3str7patternNvMNtNtB9_4char7methodsc13is_whitespaceNtB5_11MultiCharEq7matchesCsa5QsYiPB8Gl_5image.exit.i.i.i.i185
+  %storemerge.i.i8.i = phi i64 [ %i.gt, %bb.bc ], [ %i.gt, %_RNvXs3_NtNtCsj6eKBz9Db1c_4core3str7patternNvMNtNtB9_4char7methodsc13is_whitespaceNtB5_11MultiCharEq7matchesCsa5QsYiPB8Gl_5image.exit.i.i.i.i185 ], [ %i.gt, %bb.bc ], [ %i.gt, %bb.bc ], [ %i.gt, %bb.bc ], [ %i.gt, %bb.bc ], [ %i.gt, %bb.bc ], [ %.sroa.6.sroa.6.0.i, %bb.bj ] ; 12 uses
   %i.ja = icmp eq i64 %storemerge.i.i8.i, 0       ; 2 uses
   br i1 %i.ja, label %_RNvMNtCsj6eKBz9Db1c_4core3stre16split_at_checked.exit.thread241, label %bb.bl
 

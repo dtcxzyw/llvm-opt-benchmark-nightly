@@ -204,7 +204,7 @@ declare void @lean_internal_panic_out_of_memory() local_unnamed_addr #12
 ; Function Attrs: mustprogress uwtable
 define internal noundef zeroext i1 @"_ZNSt17_Function_handlerIFbRKN4lean4exprEEZNS0_L14get_max_heightERKNS0_11environmentES3_E3$_0E9_M_invokeERKSt9_Any_dataS3_"(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(16) %0, ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(8) %1) #0 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %2 = alloca %"class.lean::optional", align 8    ; 9 uses
+  %2 = alloca %"class.lean::optional", align 8    ; 8 uses
   %.val = load ptr, ptr %1, align 8, !tbaa !10    ; 2 uses
   %i.a = getelementptr i8, ptr %.val, i64 4
   %.val.i.i.i.i.i.i.i.i = load i32, ptr %i.a, align 4
@@ -219,10 +219,10 @@ bb.b:                                             ; preds = %bb.a
   call void @_ZNK4lean11environment4findERKNS_4nameE(ptr dead_on_unwind nonnull writable sret(%"class.lean::optional") align 8 %2, ptr noundef nonnull align 8 dereferenceable(8) %i.c, ptr noundef nonnull align 8 dereferenceable(8) %i.d)
   %i.e = load i8, ptr %2, align 8, !tbaa !45, !range !34, !noundef !35
   %i.f = trunc nuw i8 %i.e to i1
-  br i1 %i.f, label %bb.c, label %bb.r
+  br i1 %i.f, label %bb.c, label %_ZN4lean8optionalINS_13constant_infoEED2Ev.exit.i.i.i
 
 bb.c:                                             ; preds = %bb.b
-  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 3 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !10   ; 2 uses
   %i.i = getelementptr i8, ptr %i.h, i64 4
   %.val.i.i.i.i.i.i.i = load i32, ptr %i.i, align 4
@@ -341,14 +341,13 @@ bb.q:                                             ; preds = %_ZNK4lean10object_r
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #16
   resume { ptr, i32 } %i.aq
 
-bb.r:                                             ; preds = %_ZNK4lean18reducibility_hints10get_heightEv.exit15.i.i.i, %_ZNK4lean18reducibility_hints10get_heightEv.exit.i.i.i, %bb.b
-  %i.ar = load i8, ptr %2, align 8, !tbaa !45, !range !34, !noundef !35
+bb.r:                                             ; preds = %_ZNK4lean18reducibility_hints10get_heightEv.exit15.i.i.i, %_ZNK4lean18reducibility_hints10get_heightEv.exit.i.i.i
+  %i.ar = load i8, ptr %2, align 8, !tbaa !45
   %i.as = trunc nuw i8 %i.ar to i1
   br i1 %i.as, label %bb.s, label %_ZN4lean8optionalINS_13constant_infoEED2Ev.exit.i.i.i
 
 bb.s:                                             ; preds = %bb.r
-  %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.at = load ptr, ptr %3, align 8, !tbaa !10    ; 4 uses
+  %i.at = load ptr, ptr %i.g, align 8, !tbaa !10  ; 4 uses
   %i.au = ptrtoint ptr %i.at to i64
   %i.av = and i64 %i.au, 1
   %.not.i.i.i.i16.i.i.i = icmp eq i64 %i.av, 0
@@ -379,7 +378,7 @@ bb.x:                                             ; preds = %bb.w
   call void @__clang_call_terminate(ptr %i.ba) #18
   unreachable
 
-_ZN4lean8optionalINS_13constant_infoEED2Ev.exit.i.i.i: ; preds = %bb.w, %bb.v, %bb.u, %bb.s, %bb.r
+_ZN4lean8optionalINS_13constant_infoEED2Ev.exit.i.i.i: ; preds = %bb.w, %bb.v, %bb.u, %bb.s, %bb.r, %bb.b
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #16
   br label %"_ZSt10__invoke_rIbRZN4leanL14get_max_heightERKNS0_11environmentERKNS0_4exprEE3$_0JS6_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESA_E4typeEOSB_DpOSC_.exit"
 
@@ -490,12 +489,16 @@ bb.c:                                             ; preds = %bb.b
   call void @_ZNK4lean11environment4findERKNS_4nameE(ptr dead_on_unwind nonnull writable sret(%"class.lean::optional") align 8 %2, ptr noundef nonnull align 8 dereferenceable(8) %i.g, ptr noundef nonnull align 8 dereferenceable(8) %i.h)
   %i.i = load i8, ptr %2, align 8, !tbaa !45, !range !34, !noundef !35
   %i.j = trunc nuw i8 %i.i to i1
-  br i1 %i.j, label %bb.d, label %bb.h
+  br i1 %i.j, label %bb.d, label %_ZN4lean8optionalINS_13constant_infoEED2Ev.exit.thread.i.i.i
+
+_ZN4lean8optionalINS_13constant_infoEED2Ev.exit.thread.i.i.i: ; preds = %bb.c
+  call void @llvm.lifetime.end.p0(ptr nonnull %2) #16
+  br label %bb.o
 
 bb.d:                                             ; preds = %bb.c
-  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 8
+  %i.k = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 2 uses
   %i.l = invoke noundef zeroext i1 @_ZNK4lean13constant_info9is_unsafeEv(ptr noundef nonnull align 8 dereferenceable(8) %i.k)
-          to label %bb.e unwind label %bb.g
+          to label %bb.e unwind label %bb.g       ; 2 uses
 
 bb.e:                                             ; preds = %bb.d
   br i1 %i.l, label %bb.f, label %bb.h
@@ -512,15 +515,13 @@ bb.g:                                             ; preds = %bb.d
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #16
   resume { ptr, i32 } %i.n
 
-bb.h:                                             ; preds = %bb.f, %bb.e, %bb.c
-  %3 = phi i1 [ false, %bb.f ], [ true, %bb.e ], [ true, %bb.c ]
-  %i.o = load i8, ptr %2, align 8, !tbaa !45, !range !34, !noundef !35
+bb.h:                                             ; preds = %bb.f, %bb.e
+  %i.o = load i8, ptr %2, align 8, !tbaa !45
   %i.p = trunc nuw i8 %i.o to i1
   br i1 %i.p, label %bb.i, label %_ZN4lean8optionalINS_13constant_infoEED2Ev.exit.i.i.i
 
 bb.i:                                             ; preds = %bb.h
-  %4 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  %i.q = load ptr, ptr %4, align 8, !tbaa !10     ; 4 uses
+  %i.q = load ptr, ptr %i.k, align 8, !tbaa !10   ; 4 uses
   %i.r = ptrtoint ptr %i.q to i64
   %i.s = and i64 %i.r, 1
   %.not.i.i.i.i.i.i.i = icmp eq i64 %i.s, 0
@@ -553,9 +554,9 @@ bb.n:                                             ; preds = %bb.m
 
 _ZN4lean8optionalINS_13constant_infoEED2Ev.exit.i.i.i: ; preds = %bb.m, %bb.l, %bb.k, %bb.i, %bb.h
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #16
-  br i1 %3, label %bb.o, label %"_ZSt10__invoke_rIbRZN4lean10use_unsafeERKNS0_11environmentERKNS0_4exprEE3$_0JS6_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESA_E4typeEOSB_DpOSC_.exit"
+  br i1 %i.l, label %"_ZSt10__invoke_rIbRZN4lean10use_unsafeERKNS0_11environmentERKNS0_4exprEE3$_0JS6_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESA_E4typeEOSB_DpOSC_.exit", label %bb.o
 
-bb.o:                                             ; preds = %_ZN4lean8optionalINS_13constant_infoEED2Ev.exit.i.i.i, %bb.b
+bb.o:                                             ; preds = %_ZN4lean8optionalINS_13constant_infoEED2Ev.exit.i.i.i, %_ZN4lean8optionalINS_13constant_infoEED2Ev.exit.thread.i.i.i, %bb.b
   br label %"_ZSt10__invoke_rIbRZN4lean10use_unsafeERKNS0_11environmentERKNS0_4exprEE3$_0JS6_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESA_E4typeEOSB_DpOSC_.exit"
 
 "_ZSt10__invoke_rIbRZN4lean10use_unsafeERKNS0_11environmentERKNS0_4exprEE3$_0JS6_EENSt9enable_ifIX16is_invocable_r_vIT_T0_DpT1_EESA_E4typeEOSB_DpOSC_.exit": ; preds = %bb.a, %_ZN4lean8optionalINS_13constant_infoEED2Ev.exit.i.i.i, %bb.o

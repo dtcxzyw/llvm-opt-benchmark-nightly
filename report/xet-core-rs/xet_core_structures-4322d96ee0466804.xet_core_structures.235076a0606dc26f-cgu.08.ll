@@ -204,8 +204,9 @@ _RNCINvNtNtCsexYYUdYSQU6_5alloc2io4read19default_read_to_endINtNtNtCskKLDkoKarTP
   %i.l = icmp eq i64 %i.k, 0
   %i.m = sub i64 %3, %i.k
   %i.n = add i64 %i.m, 9216                       ; 2 uses
-  %.not = icmp ult i64 %i.n, %i.j
-  %.sroa.5.1.i = select i1 %.not, i64 8192, i64 %i.n
+  %4 = icmp uge i64 %i.n, %i.j
+  %cond.fr = freeze i1 %4
+  %.sroa.5.1.i = select i1 %cond.fr, i64 %i.n, i64 8192
   %.sroa.053.1 = select i1 %i.l, i64 %i.j, i64 %.sroa.5.1.i ; 2 uses
   %i.o = icmp eq i64 %3, 0
   br i1 %i.o, label %bb.c, label %_RNCINvNtNtCsexYYUdYSQU6_5alloc2io4read19default_read_to_endINtNtNtCskKLDkoKarTP_4core2io4util4TakeQINtNtB10_6cursor6CursorRINtNtB8_3vec3VechEEEE0Cs31YAwBA1AlL_19xet_core_structures.exit.thread
@@ -555,8 +556,9 @@ _RNCINvNtNtCsexYYUdYSQU6_5alloc2io4read19default_read_to_endINtNtNtCskKLDkoKarTP
   %i.l = icmp eq i64 %i.k, 0
   %i.m = sub i64 %3, %i.k
   %i.n = add i64 %i.m, 9216                       ; 2 uses
-  %.not = icmp ult i64 %i.n, %i.j
-  %.sroa.5.1.i = select i1 %.not, i64 8192, i64 %i.n
+  %4 = icmp uge i64 %i.n, %i.j
+  %cond.fr = freeze i1 %4
+  %.sroa.5.1.i = select i1 %cond.fr, i64 %i.n, i64 8192
   %.sroa.053.1 = select i1 %i.l, i64 %i.j, i64 %.sroa.5.1.i ; 2 uses
   %i.o = icmp eq i64 %3, 0
   br i1 %i.o, label %bb.c, label %_RNCINvNtNtCsexYYUdYSQU6_5alloc2io4read19default_read_to_endINtNtNtCskKLDkoKarTP_4core2io4util4TakeQINtNtB10_6cursor6CursorRShEEE0Cs31YAwBA1AlL_19xet_core_structures.exit.thread

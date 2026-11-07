@@ -202,7 +202,7 @@ _ZN12LifeVarEntry4initEb.exit:                    ; preds = %_ZNSt13unordered_ma
   store i8 0, ptr %i.x, align 8, !tbaa !166
   %i.aa = getelementptr inbounds nuw i8, ptr %.pn.i.i, i64 33
   store i8 0, ptr %i.aa, align 1, !tbaa !167
-  br label %bb.bh
+  br label %_ZN12LifeVarEntry8consumedEv.exit
 
 bb.e:                                             ; preds = %_ZNSt13unordered_mapIP11AstVarScope12LifeVarEntrySt4hashIS1_ESt8equal_toIS1_ESaISt4pairIKS1_S2_EEEixERS8_.exit
   %i.ab = getelementptr inbounds nuw i8, ptr %.pn.i.i, i64 24
@@ -605,10 +605,10 @@ bb.bg:                                            ; preds = %_ZNSt7__cxx1112basi
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #20
   br label %common.resume
 
-bb.bh:                                            ; preds = %bb.aq, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit123, %_ZN12LifeVarEntry4initEb.exit
-  %i.if = load i8, ptr %i.x, align 8, !tbaa !166, !range !92, !noundef !93
+bb.bh:                                            ; preds = %bb.aq, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit123
+  %i.if = load i8, ptr %i.x, align 8, !tbaa !166
   %i.ig = trunc nuw i8 %i.if to i1
-  br i1 %i.ig, label %bb.bi, label %_ZN12LifeVarEntry8consumedEv.exit, !prof !15
+  br i1 %i.ig, label %bb.bi, label %_ZN12LifeVarEntry8consumedEv.exit, !prof !286
 
 bb.bi:                                            ; preds = %bb.bh
   %i.ih = call noundef nonnull align 8 dereferenceable(112) ptr @_ZN7V3Error19v3errorPrepFileLineB5cxx11E11V3ErrorCodePKci(i8 4, ptr noundef nonnull @.str.1, i32 noundef 111) ; 0 uses
@@ -617,7 +617,7 @@ bb.bi:                                            ; preds = %bb.bh
   call void @_Z15v3errorEndFatalRNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEE(ptr noundef nonnull align 8 dereferenceable(112) %i.ij) #24
   unreachable
 
-_ZN12LifeVarEntry8consumedEv.exit:                ; preds = %bb.bh
+_ZN12LifeVarEntry8consumedEv.exit:                ; preds = %_ZN12LifeVarEntry4initEb.exit, %bb.bh
   store ptr null, ptr %.1.i.i, align 8, !tbaa !168
   br label %bb.bj
 
@@ -899,7 +899,7 @@ _ZN14V3LockGuardImpI10V3MutexImpISt5mutexEED2Ev.exit25: ; preds = %_ZNSt7__cxx11
 ; Function Attrs: mustprogress uwtable
 define linkonce_odr dso_local void @_ZN14V3LockGuardImpI10V3MutexImpISt5mutexEEC2ERS2_(ptr noundef nonnull align 8 dereferenceable(8) %0, ptr noundef nonnull align 8 dereferenceable(40) %1) unnamed_addr #0 comdat align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
-  store ptr %1, ptr %0, align 8, !tbaa !286
+  store ptr %1, ptr %0, align 8, !tbaa !287
   %i.a = load i8, ptr @_ZZN13V3MutexConfig1sEvE1s, align 1, !tbaa !200, !range !92, !noundef !93
   %i.b = trunc nuw i8 %i.a to i1
   br i1 %i.b, label %_ZN10V3MutexImpISt5mutexE8try_lockEv.exit.i, label %_ZN10V3MutexImpISt5mutexE4lockEv.exit
@@ -985,9 +985,9 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2ERKS4_.exit: ; preds = %.
   store i8 0, ptr %i.p, align 1, !tbaa !23
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #20
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 40
-  store double %3, ptr %i.q, align 8, !tbaa !288
+  store double %3, ptr %i.q, align 8, !tbaa !289
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 48
-  store i32 %4, ptr %i.r, align 8, !tbaa !289
+  store i32 %4, ptr %i.r, align 8, !tbaa !290
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
   store ptr %i.t, ptr %i.s, align 8, !tbaa !45
@@ -1036,11 +1036,11 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %._cri
   %i.ag = zext i1 %6 to i8
   %i.ah = zext i1 %5 to i8
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 88
-  store i8 %i.ah, ptr %i.ai, align 8, !tbaa !290
+  store i8 %i.ah, ptr %i.ai, align 8, !tbaa !291
   %i.aj = getelementptr inbounds nuw i8, ptr %0, i64 89
-  store i8 %i.ag, ptr %i.aj, align 1, !tbaa !291
+  store i8 %i.ag, ptr %i.aj, align 1, !tbaa !292
   %i.ak = getelementptr inbounds nuw i8, ptr %0, i64 90
-  store i8 1, ptr %i.ak, align 2, !tbaa !292
+  store i8 1, ptr %i.ak, align 2, !tbaa !293
   ret void
 
 bb.g:                                             ; preds = %.noexc.i9
@@ -1100,7 +1100,7 @@ bb.a:
   br i1 %i.b, label %bb.b, label %_ZN10V3MutexImpISt5mutexE6unlockEv.exit
 
 bb.b:                                             ; preds = %bb.a
-  %i.c = load ptr, ptr %0, align 8, !tbaa !294, !nonnull !93, !align !295
+  %i.c = load ptr, ptr %0, align 8, !tbaa !295, !nonnull !93, !align !296
   %i.d = tail call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %i.c) #20 ; 0 uses
   br label %_ZN10V3MutexImpISt5mutexE6unlockEv.exit
 
@@ -1503,14 +1503,15 @@ begin_hunk_2_@llvm.umax.i64
 !283 = !{!"p1 _ZTS10AstModport", !16, i64 0}
 !284 = !{!"_ZTS16AstIfaceRefDType", !281, i64 0, !134, i64 168, !20, i64 176, !20, i64 208, !20, i64 240, !83, i64 272, !83, i64 273, !194, i64 280, !282, i64 288, !283, i64 296}
 !285 = !{!284, !83, i64 273}
-!286 = !{!203, !203, i64 0}
-!287 = !{!"_ZTS11V3Statistic", !20, i64 8, !41, i64 40, !12, i64 48, !20, i64 56, !83, i64 88, !83, i64 89, !83, i64 90}
-!288 = !{!287, !41, i64 40}
-!289 = !{!287, !12, i64 48}
-!290 = !{!287, !83, i64 88}
-!291 = !{!287, !83, i64 89}
-!292 = !{!287, !83, i64 90}
-!293 = !{!"_ZTS14V3LockGuardImpI10V3MutexImpISt5mutexEE", !203, i64 0}
-!294 = !{!293, !203, i64 0}
-!295 = !{i64 8}
+!286 = !{!"branch_weights", !"expected", i32 2309382, i32 2145174266}
+!287 = !{!203, !203, i64 0}
+!288 = !{!"_ZTS11V3Statistic", !20, i64 8, !41, i64 40, !12, i64 48, !20, i64 56, !83, i64 88, !83, i64 89, !83, i64 90}
+!289 = !{!288, !41, i64 40}
+!290 = !{!288, !12, i64 48}
+!291 = !{!288, !83, i64 88}
+!292 = !{!288, !83, i64 89}
+!293 = !{!288, !83, i64 90}
+!294 = !{!"_ZTS14V3LockGuardImpI10V3MutexImpISt5mutexEE", !203, i64 0}
+!295 = !{!294, !203, i64 0}
+!296 = !{i64 8}
 end_hunk_2

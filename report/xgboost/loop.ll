@@ -204,7 +204,7 @@ bb.d:                                             ; preds = %bb.b
 "_ZZN7xgboost10collective4Loop7ProcessEvENK3$_1clEv.exit.i": ; preds = %bb.d, %.noexc41
   %i.ae = load i8, ptr %i.f, align 8, !tbaa !75, !range !76, !noundef !77
   %i.af = trunc nuw i8 %i.ae to i1
-  br i1 %i.af, label %"_ZNSt18condition_variable4waitIZN7xgboost10collective4Loop7ProcessEvE3$_1EEvRSt11unique_lockISt5mutexET_.exit", label %bb.e
+  br i1 %i.af, label %bb.bq, label %bb.e
 
 bb.e:                                             ; preds = %"_ZZN7xgboost10collective4Loop7ProcessEvENK3$_1clEv.exit.i"
   invoke void @_ZNSt18condition_variable4waitERSt11unique_lockISt5mutexE(ptr noundef nonnull align 8 dereferenceable(48) %i.c, ptr noundef nonnull align 8 dereferenceable(9) %3)
@@ -216,9 +216,9 @@ bb.e:                                             ; preds = %"_ZZN7xgboost10coll
   %i.ai = icmp eq ptr %i.ag, %i.ah
   br i1 %i.ai, label %"_ZZN7xgboost10collective4Loop7ProcessEvENK3$_1clEv.exit.i", label %"_ZNSt18condition_variable4waitIZN7xgboost10collective4Loop7ProcessEvE3$_1EEvRSt11unique_lockISt5mutexET_.exit", !llvm.loop !290
 
-"_ZNSt18condition_variable4waitIZN7xgboost10collective4Loop7ProcessEvE3$_1EEvRSt11unique_lockISt5mutexET_.exit": ; preds = %.noexc41, %"_ZZN7xgboost10collective4Loop7ProcessEvENK3$_1clEv.exit.i", %bb.d
-  %i.aj = load i8, ptr %i.f, align 8, !tbaa !75, !range !76, !noundef !77
-  %i.ak = trunc nuw i8 %i.aj to i1                ; 2 uses
+"_ZNSt18condition_variable4waitIZN7xgboost10collective4Loop7ProcessEvE3$_1EEvRSt11unique_lockISt5mutexET_.exit": ; preds = %.noexc41, %bb.d
+  %i.aj = load i8, ptr %i.f, align 8, !tbaa !75
+  %i.ak = trunc nuw i8 %i.aj to i1
   br i1 %i.ak, label %bb.bq, label %bb.h
 
 bb.f:                                             ; preds = %bb.c
@@ -621,7 +621,8 @@ _ZN7xgboost10collective6ResultD2Ev.exit:          ; preds = %"_ZZN7xgboost10coll
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #17
   br label %bb.bq
 
-bb.bq:                                            ; preds = %"_ZNSt18condition_variable4waitIZN7xgboost10collective4Loop7ProcessEvE3$_1EEvRSt11unique_lockISt5mutexET_.exit", %_ZN7xgboost10collective6ResultD2Ev.exit
+bb.bq:                                            ; preds = %"_ZZN7xgboost10collective4Loop7ProcessEvENK3$_1clEv.exit.i", %"_ZNSt18condition_variable4waitIZN7xgboost10collective4Loop7ProcessEvE3$_1EEvRSt11unique_lockISt5mutexET_.exit", %_ZN7xgboost10collective6ResultD2Ev.exit
+  %17 = phi i1 [ false, %_ZN7xgboost10collective6ResultD2Ev.exit ], [ true, %"_ZNSt18condition_variable4waitIZN7xgboost10collective4Loop7ProcessEvE3$_1EEvRSt11unique_lockISt5mutexET_.exit" ], [ true, %"_ZZN7xgboost10collective4Loop7ProcessEvENK3$_1clEv.exit.i" ]
   %i.ij = load i8, ptr %i.b, align 8, !tbaa !296, !range !76, !noundef !77
   %i.ik = trunc nuw i8 %i.ij to i1
   br i1 %i.ik, label %bb.br, label %_ZNSt11unique_lockISt5mutexED2Ev.exit64
@@ -637,7 +638,7 @@ bb.bs:                                            ; preds = %bb.br
 
 _ZNSt11unique_lockISt5mutexED2Ev.exit64:          ; preds = %bb.bq, %bb.br, %bb.bs
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #17
-  br i1 %i.ak, label %bb.cu, label %.backedge
+  br i1 %17, label %bb.cu, label %.backedge
 
 bb.bt:                                            ; preds = %bb.bn, %_ZNSt11unique_lockISt5mutexED2Ev.exit
   %.pn.pn.pn = phi { ptr, i32 } [ %i.id, %bb.bn ], [ %.pn, %_ZNSt11unique_lockISt5mutexED2Ev.exit ]

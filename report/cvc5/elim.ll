@@ -204,7 +204,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   store i8 0, ptr %i.a, align 1, !tbaa !190
   %i.v = load i8, ptr %i.c, align 4, !tbaa !182, !range !159, !noundef !160
   %i.w = trunc nuw i8 %i.v to i1
-  br i1 %i.w, label %.critedge.thread, label %.lr.ph
+  br i1 %i.w, label %bb.y, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.j
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 5680 ; 2 uses
@@ -309,9 +309,9 @@ bb.w:                                             ; preds = %.critedge
   store i64 %i.bf, ptr %i.bd, align 8, !tbaa !286
   br label %.critedge.thread
 
-.critedge.thread:                                 ; preds = %bb.k, %bb.j, %.sink.split.i, %.thread, %.critedge, %bb.w
-  %2 = phi i1 [ true, %bb.w ], [ false, %.critedge ], [ false, %.thread ], [ false, %.sink.split.i ], [ false, %bb.j ], [ false, %bb.k ]
-  %i.bg = load i8, ptr %i.a, align 1, !tbaa !190, !range !159, !noundef !160
+.critedge.thread:                                 ; preds = %bb.k, %.sink.split.i, %.thread, %.critedge, %bb.w
+  %.ph = phi i1 [ true, %bb.w ], [ false, %.sink.split.i ], [ false, %.thread ], [ false, %.critedge ], [ false, %bb.k ] ; 2 uses
+  %i.bg = load i8, ptr %i.a, align 1, !tbaa !190
   %i.bh = trunc nuw i8 %i.bg to i1
   br i1 %i.bh, label %bb.x, label %bb.y
 
@@ -319,7 +319,8 @@ bb.x:                                             ; preds = %.critedge.thread
   tail call void @_ZN7CaDiCaL8Internal22delete_garbage_clausesEv(ptr noundef nonnull align 8 dereferenceable(5704) %0)
   br label %bb.y
 
-bb.y:                                             ; preds = %bb.x, %.critedge.thread
+bb.y:                                             ; preds = %bb.j, %bb.x, %.critedge.thread
+  %2 = phi i1 [ %.ph, %.critedge.thread ], [ %.ph, %bb.x ], [ false, %bb.j ]
   tail call void @_ZN7CaDiCaL8Internal12init_watchesEv(ptr noundef nonnull align 8 dereferenceable(5704) %0)
   tail call void @_ZN7CaDiCaL8Internal15connect_watchesEb(ptr noundef nonnull align 8 dereferenceable(5704) %0, i1 noundef zeroext false)
   %i.bi = load i8, ptr %i.c, align 4, !tbaa !182, !range !159, !noundef !160

@@ -205,33 +205,31 @@ bb.k:                                             ; preds = %_Z9opt_givenP7OPTAR
   %i.bh = getelementptr inbounds nuw i8, ptr %i.i, i64 92
   %i.bi = icmp ugt ptr %i.be, %i.bh
   %narrow.i.not.i310 = select i1 %i.bg, i1 true, i1 %i.bi
-  br i1 %narrow.i.not.i310, label %bb.l, label %_Z9opt_givenP7OPTARGSPKc.exit312.a
+  br i1 %narrow.i.not.i310, label %_Z9opt_givenP7OPTARGSPKc.exit312.a, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %12 = getelementptr inbounds nuw i8, ptr %i.i, i64 16
-  %13 = load ptr, ptr %12, align 8, !tbaa !26
-  %14 = load ptr, ptr %13, align 8, !tbaa !20
-  %15 = icmp ne ptr %14, %i.be
-  %16 = zext i1 %15 to i32
+  %12 = ptrtoint ptr %i.be to i64
+  %13 = ptrtoint ptr %i.bf to i64
+  %14 = sub i64 %12, %13
+  %15 = trunc i64 %14 to i32
+  %16 = call i32 @llvm.smin.i32(i32 %15, i32 3)
   br label %_Z9opt_givenP7OPTARGSPKc.exit312.thread.a
 
 _Z9opt_givenP7OPTARGSPKc.exit312.a:               ; preds = %bb.k
-  %17 = ptrtoint ptr %i.be to i64
-  %18 = ptrtoint ptr %i.bf to i64
-  %19 = sub i64 %17, %18
-  %.fr409 = freeze i64 %19
-  %20 = trunc i64 %.fr409 to i32                  ; 2 uses
-  %21 = icmp sgt i32 %20, 3
-  br i1 %21, label %.thread.a, label %_Z9opt_givenP7OPTARGSPKc.exit312.thread.a
+  %17 = getelementptr inbounds nuw i8, ptr %i.i, i64 16
+  %18 = load ptr, ptr %17, align 8, !tbaa !26
+  %19 = load ptr, ptr %18, align 8, !tbaa !20
+  %20 = icmp ne ptr %19, %i.be
+  %21 = zext i1 %20 to i32
+  br label %_Z9opt_givenP7OPTARGSPKc.exit312.thread.a
 
 _Z9opt_givenP7OPTARGSPKc.exit312.thread.a:        ; preds = %bb.l, %_Z9opt_givenP7OPTARGSPKc.exit312.a
-  %i.bj = phi i32 [ %20, %_Z9opt_givenP7OPTARGSPKc.exit312.a ], [ %16, %bb.l ] ; 2 uses
+  %i.bj = phi i32 [ %21, %_Z9opt_givenP7OPTARGSPKc.exit312.a ], [ %16, %bb.l ] ; 2 uses
   %i.bk = icmp sgt i32 %i.bj, 0
   br i1 %i.bk, label %.thread.a, label %_Z9opt_givenP7OPTARGSPKc.exit312.thread.thread
 
-.thread.a:                                        ; preds = %_Z9opt_givenP7OPTARGSPKc.exit312.a, %_Z9opt_givenP7OPTARGSPKc.exit312.thread.a
-  %22 = phi i32 [ %i.bj, %_Z9opt_givenP7OPTARGSPKc.exit312.thread.a ], [ 3, %_Z9opt_givenP7OPTARGSPKc.exit312.a ]
-  %i.bl = call i32 @proj_log_level(ptr noundef null, i32 noundef %22) ; 0 uses
+.thread.a:                                        ; preds = %_Z9opt_givenP7OPTARGSPKc.exit312.thread.a
+  %i.bl = call i32 @proj_log_level(ptr noundef null, i32 noundef %i.bj) ; 0 uses
   br label %_Z9opt_givenP7OPTARGSPKc.exit312.thread.thread
 
 _Z9opt_givenP7OPTARGSPKc.exit312.thread.thread:   ; preds = %_Z9opt_givenP7OPTARGSPKc.exit309, %.thread.a, %_Z9opt_givenP7OPTARGSPKc.exit312.thread.a
@@ -632,6 +630,9 @@ declare noundef i32 @fputs(ptr noundef readonly captures(none), ptr noundef capt
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: read)
 declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_addr #24
+
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.smin.i32(i32, i32) #25
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.smax.i32(i32, i32) #25

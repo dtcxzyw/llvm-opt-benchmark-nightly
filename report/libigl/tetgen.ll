@@ -205,12 +205,12 @@ bb.ab:                                            ; preds = %bb.aa
 bb.ac:                                            ; preds = %bb.ab
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #40
   %i.iw = call noundef zeroext i1 @_ZN10tetgenmesh13split_segmentEPNS_4faceEPdS2_iiPi(ptr noundef nonnull align 8 dereferenceable(69984) %0, ptr noundef nonnull %i.ic, ptr noundef null, ptr noundef nonnull %2, i32 noundef %3, i32 noundef %i.hk, ptr noundef nonnull %i.a)
-  br i1 %i.iw, label %bb.ad, label %.thread273
+  br i1 %i.iw, label %bb.ad, label %.thread291
 
 bb.ad:                                            ; preds = %bb.ac
   %i.ix = load ptr, ptr %1, align 8, !tbaa !229   ; 5 uses
   %i.iy = icmp eq ptr %i.ix, null
-  br i1 %i.iy, label %.thread291, label %bb.ae
+  br i1 %i.iy, label %.thread273, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
   %i.iz = getelementptr inbounds nuw i8, ptr %i.ix, i64 32
@@ -218,45 +218,45 @@ bb.ae:                                            ; preds = %bb.ad
   %i.jb = icmp ne ptr %i.ja, null
   %.not240 = icmp eq ptr %i.ja, %.sroa.0.0.copyload344
   %or.cond306 = select i1 %i.jb, i1 %.not240, i1 false
-  br i1 %or.cond306, label %bb.af, label %.thread291
+  br i1 %or.cond306, label %bb.af, label %.thread273
 
 bb.af:                                            ; preds = %bb.ae
   %i.jc = getelementptr inbounds nuw i8, ptr %i.ix, i64 40
   %i.jd = load ptr, ptr %i.jc, align 8, !tbaa !110
   %.not241 = icmp eq ptr %i.jd, %.sroa.9.0.copyload346
-  br i1 %.not241, label %bb.ag, label %.thread291
+  br i1 %.not241, label %bb.ag, label %.thread273
 
 bb.ag:                                            ; preds = %bb.af
   %i.je = getelementptr inbounds nuw i8, ptr %i.ix, i64 48
   %i.jf = load ptr, ptr %i.je, align 8, !tbaa !110
   %.not242 = icmp eq ptr %i.jf, %.sroa.14.0.copyload352
-  br i1 %.not242, label %bb.ah, label %.thread291
+  br i1 %.not242, label %bb.ah, label %.thread273
 
 bb.ah:                                            ; preds = %bb.ag
   %i.jg = getelementptr inbounds nuw i8, ptr %i.ix, i64 56
   %i.jh = load ptr, ptr %i.jg, align 8, !tbaa !110
   %.not243.not = icmp eq ptr %i.jh, %.sroa.19.0.copyload358
-  br i1 %.not243.not, label %.thread273, label %.thread291
+  br i1 %.not243.not, label %.thread291, label %.thread273
 
-.thread273:                                       ; preds = %bb.ah, %bb.ac
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #40
-  %.pre363 = load ptr, ptr %i.hf, align 8, !tbaa !328
-  br label %.thread
-
-.thread291:                                       ; preds = %bb.af, %bb.ag, %bb.ah, %bb.ad, %bb.ae
+.thread273:                                       ; preds = %bb.ae, %bb.ad, %bb.ah, %bb.ag, %bb.af
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #40
   br label %.loopexit
 
-.thread:                                          ; preds = %bb.z, %bb.aa, %bb.ab, %.thread273
-  %i.ji = phi ptr [ %i.hl, %bb.z ], [ %i.hl, %bb.aa ], [ %i.hl, %bb.ab ], [ %.pre363, %.thread273 ] ; 2 uses
+.thread291:                                       ; preds = %bb.ah, %bb.ac
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #40
+  %.pre366 = load ptr, ptr %i.hf, align 8, !tbaa !328
+  br label %.thread
+
+.thread:                                          ; preds = %bb.z, %bb.aa, %bb.ab, %.thread291
+  %i.ji = phi ptr [ %i.hl, %bb.z ], [ %i.hl, %bb.aa ], [ %i.hl, %bb.ab ], [ %.pre366, %.thread291 ] ; 2 uses
   %indvars.iv.next338 = add nuw nsw i64 %indvars.iv337, 1 ; 2 uses
   %i.jj = getelementptr inbounds nuw i8, ptr %i.ji, i64 32
   %i.jk = load i64, ptr %i.jj, align 8, !tbaa !98
   %i.jl = icmp sgt i64 %i.jk, %indvars.iv.next338
   br i1 %i.jl, label %bb.z, label %.loopexit, !llvm.loop !1338
 
-.loopexit:                                        ; preds = %.thread, %.preheader, %.thread291, %bb.y
-  %.5196 = phi i8 [ 1, %.thread291 ], [ 0, %bb.y ], [ 0, %.preheader ], [ 0, %.thread ]
+.loopexit:                                        ; preds = %.thread, %.preheader, %.thread273, %bb.y
+  %.5196 = phi i8 [ 1, %.thread273 ], [ 0, %bb.y ], [ 0, %.preheader ], [ 0, %.thread ]
   %i.jm = getelementptr inbounds nuw i8, ptr %0, i64 68472
   %i.jn = load ptr, ptr %i.jm, align 8, !tbaa !328
   %i.jo = getelementptr inbounds nuw i8, ptr %i.jn, i64 32
@@ -577,7 +577,7 @@ bb.bl:                                            ; preds = %bb.bk
   br i1 %i.qa, label %.preheader310, label %.loopexit311
 
 .preheader310:                                    ; preds = %bb.av, %.loopexit312
-  %.11381 = phi i8 [ %.11, %.loopexit312 ], [ 0, %bb.av ] ; 2 uses
+  %.11381 = phi i8 [ %.11, %.loopexit312 ], [ 0, %bb.av ] ; 4 uses
   %i.qb = load ptr, ptr %i.le, align 8, !tbaa !329 ; 2 uses
   %i.qc = getelementptr inbounds nuw i8, ptr %i.qb, i64 32
   %i.qd = load i64, ptr %i.qc, align 8, !tbaa !98
@@ -586,12 +586,12 @@ bb.bl:                                            ; preds = %bb.bk
 
 .lr.ph322:                                        ; preds = %.preheader310
   %i.qf = or i32 %4, 2
+  %8 = trunc nuw i8 %.11381 to i1
   br label %bb.bm
 
 bb.bm:                                            ; preds = %.lr.ph322, %bb.bw
   %i.qg = phi ptr [ %i.qb, %.lr.ph322 ], [ %i.sl, %bb.bw ] ; 8 uses
   %indvars.iv332 = phi i64 [ 0, %.lr.ph322 ], [ %indvars.iv.next333, %bb.bw ] ; 2 uses
-  %.12320 = phi i8 [ %.11381, %.lr.ph322 ], [ %.14.ph, %bb.bw ] ; 5 uses
   %i.qh = getelementptr inbounds nuw i8, ptr %i.qg, i64 24
   %i.qi = load ptr, ptr %i.qh, align 8, !tbaa !102
   %i.qj = getelementptr inbounds nuw i8, ptr %i.qg, i64 8
@@ -655,7 +655,7 @@ bb.bq:                                            ; preds = %bb.bp
   %i.rz = call noundef zeroext i1 @_ZN10tetgenmesh13split_subfaceEPNS_4faceEPdS2_S2_iiPi(ptr noundef nonnull align 8 dereferenceable(69984) %0, ptr noundef nonnull %i.qx, ptr noundef null, ptr noundef nonnull %i.ry, ptr noundef nonnull %2, i32 noundef %3, i32 noundef %i.qf, ptr noundef nonnull %i.d) ; 0 uses
   %i.sa = load ptr, ptr %1, align 8, !tbaa !229   ; 5 uses
   %i.sb = icmp eq ptr %i.sa, null
-  br i1 %i.sb, label %.thread304, label %bb.br
+  br i1 %i.sb, label %bb.bv, label %bb.br
 
 bb.br:                                            ; preds = %bb.bq
   %i.sc = getelementptr inbounds nuw i8, ptr %i.sa, i64 32
@@ -663,50 +663,51 @@ bb.br:                                            ; preds = %bb.bq
   %i.se = icmp ne ptr %i.sd, null
   %.not229 = icmp eq ptr %i.sd, %.sroa.0.0.copyload
   %or.cond309 = select i1 %i.se, i1 %.not229, i1 false
-  br i1 %or.cond309, label %bb.bs, label %.thread304
+  br i1 %or.cond309, label %bb.bs, label %bb.bv
 
 bb.bs:                                            ; preds = %bb.br
   %i.sf = getelementptr inbounds nuw i8, ptr %i.sa, i64 40
   %i.sg = load ptr, ptr %i.sf, align 8, !tbaa !110
   %.not230 = icmp eq ptr %i.sg, %.sroa.9.0.copyload
-  br i1 %.not230, label %bb.bt, label %.thread304
+  br i1 %.not230, label %bb.bt, label %bb.bv
 
 bb.bt:                                            ; preds = %bb.bs
   %i.sh = getelementptr inbounds nuw i8, ptr %i.sa, i64 48
   %i.si = load ptr, ptr %i.sh, align 8, !tbaa !110
   %.not231 = icmp eq ptr %i.si, %.sroa.14.0.copyload
-  br i1 %.not231, label %bb.bu, label %.thread304
+  br i1 %.not231, label %bb.bu, label %bb.bv
 
 bb.bu:                                            ; preds = %bb.bt
   %i.sj = getelementptr inbounds nuw i8, ptr %i.sa, i64 56
   %i.sk = load ptr, ptr %i.sj, align 8, !tbaa !110
-  %.not232 = icmp eq ptr %i.sk, %.sroa.19.0.copyload
-  br i1 %.not232, label %bb.bv, label %.thread304
+  %.not232 = icmp ne ptr %i.sk, %.sroa.19.0.copyload ; 2 uses
+  %brmerge = or i1 %.not232, %8
+  br i1 %brmerge, label %.thread304, label %._crit_edge
 
-.thread304:                                       ; preds = %bb.br, %bb.bq, %bb.bu, %bb.bt, %bb.bs
+.thread304:                                       ; preds = %bb.bu
+  %.mux.le = select i1 %.not232, i8 1, i8 %.11381
+  br label %bb.bv
+
+bb.bv:                                            ; preds = %bb.bs, %bb.bt, %bb.bq, %bb.br, %.thread304
+  %.13294.ph = phi i8 [ %.mux.le, %.thread304 ], [ 1, %bb.br ], [ 1, %bb.bq ], [ 1, %bb.bt ], [ 1, %bb.bs ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #40
   br label %.loopexit311
 
-bb.bv:                                            ; preds = %bb.bu
-  %8 = trunc nuw i8 %.12320 to i1
+._crit_edge:                                      ; preds = %bb.bu
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #40
-  br i1 %8, label %.loopexit311, label %._crit_edge
-
-._crit_edge:                                      ; preds = %bb.bv
   %.pre = load ptr, ptr %i.le, align 8, !tbaa !329
   br label %bb.bw
 
-bb.bw:                                            ; preds = %._crit_edge, %bb.bp, %bb.bo, %bb.bn, %bb.bm
+bb.bw:                                            ; preds = %bb.bm, %bb.bn, %bb.bo, %bb.bp, %._crit_edge
   %i.sl = phi ptr [ %i.qg, %bb.bm ], [ %i.qg, %bb.bn ], [ %i.qg, %bb.bo ], [ %i.qg, %bb.bp ], [ %.pre, %._crit_edge ] ; 2 uses
-  %.14.ph = phi i8 [ %.12320, %bb.bm ], [ %.12320, %bb.bn ], [ %.12320, %bb.bo ], [ %.12320, %bb.bp ], [ 0, %._crit_edge ] ; 2 uses
   %indvars.iv.next333 = add nuw nsw i64 %indvars.iv332, 1 ; 2 uses
   %i.sm = getelementptr inbounds nuw i8, ptr %i.sl, i64 32
   %i.sn = load i64, ptr %i.sm, align 8, !tbaa !98
   %i.so = icmp sgt i64 %i.sn, %indvars.iv.next333
   br i1 %i.so, label %bb.bm, label %.loopexit311, !llvm.loop !1340
 
-.loopexit311:                                     ; preds = %bb.bw, %bb.bv, %.preheader310, %.thread304, %.loopexit312
-  %.15 = phi i8 [ %.11, %.loopexit312 ], [ 1, %.thread304 ], [ %.11381, %.preheader310 ], [ %.14.ph, %bb.bw ], [ 1, %bb.bv ]
+.loopexit311:                                     ; preds = %bb.bw, %.preheader310, %bb.bv, %.loopexit312
+  %.15 = phi i8 [ %.13294.ph, %bb.bv ], [ %.11, %.loopexit312 ], [ %.11381, %.preheader310 ], [ %.11381, %bb.bw ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b) #40
   br label %bb.bx
 

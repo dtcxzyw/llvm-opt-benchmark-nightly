@@ -202,7 +202,7 @@ bb.ah:                                            ; preds = %.split296, %.thread
   %i.cp = load i8, ptr %.0.i125153, align 1
   %i.cq = add i32 %.1294, %.284
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #7
-  br label %bb.i
+  br label %bb.i, !llvm.loop !12
 
 .thread222:                                       ; preds = %bb.ae, %bb.af, %.split, %.split295, %.thread166, %.split296, %ipv6_ext_hdr.exit.thread, %bb.ag
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #7
@@ -247,4 +247,6 @@ attributes #8 = { noredzone nounwind "no-builtin-wcslen" }
 !9 = !{!"Ubuntu clang version 24.0.0 (++20260807082003+f3bd40ce6ba5-1~exp1~20260807082012.1771)"}
 !10 = !{!"auto-init"}
 !11 = !{!"branch_weights", !"expected", i32 1, i32 2000}
+!12 = distinct !{!12, !13}
+!13 = !{!"llvm.loop.mustprogress"}
 end_hunk_0

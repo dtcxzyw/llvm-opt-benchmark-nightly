@@ -204,15 +204,19 @@ bb.gd:                                            ; preds = %bb.gd, %.epil.prehe
   %i.sn = icmp slt i64 %indvars.iv.next724, %i.sm
   br i1 %i.sn, label %bb.fx, label %.loopexit, !llvm.loop !175
 
-.lr.ph675.split.split:                            ; preds = %.lr.ph675.split, %_ZN2cv3Mat3ptrIaEEPT_ii.exit
-  %74 = phi i32 [ %i.st, %_ZN2cv3Mat3ptrIaEEPT_ii.exit ], [ %i.qa, %.lr.ph675.split ]
-  %.0232673.a = phi i32 [ %i.su, %_ZN2cv3Mat3ptrIaEEPT_ii.exit ], [ 0, %.lr.ph675.split ] ; 2 uses
-  %75 = load i8, ptr %i.nq, align 1, !tbaa !65, !range !83, !noundef !84
-  %i.so = trunc nuw i8 %75 to i1
+.lr.ph675.split.splitthread-pre-split:            ; preds = %_ZN2cv3Mat3ptrIaEEPT_ii.exit
+  %.pr = load i8, ptr %i.nq, align 1, !tbaa !65
+  br label %.lr.ph675.split.split
+
+.lr.ph675.split.split:                            ; preds = %.lr.ph675.split, %.lr.ph675.split.splitthread-pre-split
+  %74 = phi i8 [ %.pr, %.lr.ph675.split.splitthread-pre-split ], [ 0, %.lr.ph675.split ]
+  %.0232673.a = phi i32 [ %i.st, %.lr.ph675.split.splitthread-pre-split ], [ %i.qa, %.lr.ph675.split ]
+  %.0232673 = phi i32 [ %i.su, %.lr.ph675.split.splitthread-pre-split ], [ 0, %.lr.ph675.split ] ; 2 uses
+  %i.so = trunc nuw i8 %74 to i1
   br i1 %i.so, label %_ZN2cv3Mat3ptrIaEEPT_ii.exit, label %bb.ge
 
 bb.ge:                                            ; preds = %.lr.ph675.split.split
-  %i.sp = uitofp nneg i32 %.0232673.a to float
+  %i.sp = uitofp nneg i32 %.0232673 to float
   %i.sq = load float, ptr %i.ox, align 8, !tbaa !131
   %i.sr = call float @llvm.fmuladd.f32(float %i.sp, float %i.sq, float %i.ph)
   %i.ss = call i64 @lroundf(float noundef %i.sr) #22 ; 0 uses
@@ -220,10 +224,10 @@ bb.ge:                                            ; preds = %.lr.ph675.split.spl
   br label %_ZN2cv3Mat3ptrIaEEPT_ii.exit
 
 _ZN2cv3Mat3ptrIaEEPT_ii.exit:                     ; preds = %bb.ge, %.lr.ph675.split.split
-  %i.st = phi i32 [ %.pre729, %bb.ge ], [ %74, %.lr.ph675.split.split ] ; 2 uses
-  %i.su = add nuw nsw i32 %.0232673.a, 1          ; 2 uses
+  %i.st = phi i32 [ %.pre729, %bb.ge ], [ %.0232673.a, %.lr.ph675.split.split ] ; 2 uses
+  %i.su = add nuw nsw i32 %.0232673, 1            ; 2 uses
   %i.sv = icmp slt i32 %i.su, %i.st
-  br i1 %i.sv, label %.lr.ph675.split.split, label %._crit_edge676, !llvm.loop !176
+  br i1 %i.sv, label %.lr.ph675.split.splitthread-pre-split, label %._crit_edge676, !llvm.loop !176
 
 bb.gf:                                            ; preds = %.lr.ph668, %._crit_edge663
   %indvars.iv716 = phi i64 [ 0, %.lr.ph668 ], [ %indvars.iv.next717, %._crit_edge663 ] ; 3 uses
@@ -386,15 +390,19 @@ bb.gl:                                            ; preds = %bb.gl, %.epil.prehe
   %i.vz = icmp slt i64 %indvars.iv.next717, %i.vy
   br i1 %i.vz, label %bb.gf, label %.loopexit, !llvm.loop !180
 
-.lr.ph662.split.split:                            ; preds = %.lr.ph662.split, %_ZN2cv3Mat3ptrIfEEPT_ii.exit
-  %76 = phi i32 [ %i.wf, %_ZN2cv3Mat3ptrIfEEPT_ii.exit ], [ %i.tm, %.lr.ph662.split ]
-  %.0227660.a = phi i32 [ %i.wg, %_ZN2cv3Mat3ptrIfEEPT_ii.exit ], [ 0, %.lr.ph662.split ] ; 2 uses
-  %77 = load i8, ptr %i.nq, align 1, !tbaa !65, !range !83, !noundef !84
-  %i.wa = trunc nuw i8 %77 to i1
+.lr.ph662.split.splitthread-pre-split:            ; preds = %_ZN2cv3Mat3ptrIfEEPT_ii.exit
+  %.pr813 = load i8, ptr %i.nq, align 1, !tbaa !65
+  br label %.lr.ph662.split.split
+
+.lr.ph662.split.split:                            ; preds = %.lr.ph662.split, %.lr.ph662.split.splitthread-pre-split
+  %75 = phi i8 [ %.pr813, %.lr.ph662.split.splitthread-pre-split ], [ 0, %.lr.ph662.split ]
+  %.0227660.a = phi i32 [ %i.wf, %.lr.ph662.split.splitthread-pre-split ], [ %i.tm, %.lr.ph662.split ]
+  %.0227660 = phi i32 [ %i.wg, %.lr.ph662.split.splitthread-pre-split ], [ 0, %.lr.ph662.split ] ; 2 uses
+  %i.wa = trunc nuw i8 %75 to i1
   br i1 %i.wa, label %_ZN2cv3Mat3ptrIfEEPT_ii.exit, label %bb.gm
 
 bb.gm:                                            ; preds = %.lr.ph662.split.split
-  %i.wb = uitofp nneg i32 %.0227660.a to float
+  %i.wb = uitofp nneg i32 %.0227660 to float
   %i.wc = load float, ptr %i.og, align 8, !tbaa !131
   %i.wd = call float @llvm.fmuladd.f32(float %i.wb, float %i.wc, float %i.oq)
   %i.we = call i64 @lroundf(float noundef %i.wd) #22 ; 0 uses
@@ -402,10 +410,10 @@ bb.gm:                                            ; preds = %.lr.ph662.split.spl
   br label %_ZN2cv3Mat3ptrIfEEPT_ii.exit
 
 _ZN2cv3Mat3ptrIfEEPT_ii.exit:                     ; preds = %bb.gm, %.lr.ph662.split.split
-  %i.wf = phi i32 [ %.pre728, %bb.gm ], [ %76, %.lr.ph662.split.split ] ; 2 uses
-  %i.wg = add nuw nsw i32 %.0227660.a, 1          ; 2 uses
+  %i.wf = phi i32 [ %.pre728, %bb.gm ], [ %.0227660.a, %.lr.ph662.split.split ] ; 2 uses
+  %i.wg = add nuw nsw i32 %.0227660, 1            ; 2 uses
   %i.wh = icmp slt i32 %i.wg, %i.wf
-  br i1 %i.wh, label %.lr.ph662.split.split, label %._crit_edge663, !llvm.loop !181
+  br i1 %i.wh, label %.lr.ph662.split.splitthread-pre-split, label %._crit_edge663, !llvm.loop !181
 
 .loopexit:                                        ; preds = %._crit_edge663, %._crit_edge676, %.preheader623, %.preheader
   call void @_ZN2cv3MatD1Ev(ptr noundef nonnull align 8 dead_on_return(208) dereferenceable(208) %63) #22

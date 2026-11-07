@@ -205,7 +205,7 @@ bb.e:                                             ; preds = %bb.d
           to label %bb.f unwind label %bb.m
 
 bb.f:                                             ; preds = %bb.e
-  %i.ag = load i8, ptr %i.e, align 8, !tbaa !129, !range !45, !noundef !46
+  %i.ag = load i8, ptr %i.e, align 8, !tbaa !129, !range !45, !noundef !46 ; 2 uses
   %i.ah = trunc nuw i8 %i.ag to i1
   %i.ai = load ptr, ptr %4, align 8               ; 2 uses
   %.not30 = icmp eq ptr %i.ai, null
@@ -219,7 +219,7 @@ bb.g:                                             ; preds = %bb.f
   %i.am = load ptr, ptr %.sroa.026.039, align 8, !tbaa !41
   %i.an = getelementptr inbounds nuw i8, ptr %i.am, i64 40
   %i.ao = call noundef zeroext i1 @_ZN5vcpkgneERKNS_7VersionES2_(ptr noundef nonnull align 8 dereferenceable(36) %i.al, ptr noundef nonnull align 8 dereferenceable(36) %i.an) #21
-  br i1 %i.ao, label %bb.h, label %bb.r
+  br i1 %i.ao, label %bb.h, label %thread-pre-split
 
 bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #21
@@ -313,7 +313,7 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
 
 _ZN5vcpkg15OutdatedPackageD2Ev.exit:              ; preds = %_ZN5vcpkg11VersionDiffD2Ev.exit.i, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #21
-  br label %bb.r
+  br label %thread-pre-split
 
 bb.m:                                             ; preds = %bb.e, %bb.d
   %i.bs = landingpad { ptr, i32 }
@@ -362,8 +362,12 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @_ZdlPvm(ptr noundef %i.cc, i64 noundef %i.cf) #22
   br label %_ZN5vcpkg9ExpectedTIRKNS_28SourceControlFileAndLocationENS_15LocalizedStringEED2Ev.exit
 
-bb.r:                                             ; preds = %bb.g, %_ZN5vcpkg15OutdatedPackageD2Ev.exit, %bb.f
-  %6 = load i8, ptr %i.e, align 8, !tbaa !129, !range !45, !noundef !46
+thread-pre-split:                                 ; preds = %_ZN5vcpkg15OutdatedPackageD2Ev.exit, %bb.g
+  %.pr = load i8, ptr %i.e, align 8, !tbaa !129
+  br label %bb.r
+
+bb.r:                                             ; preds = %thread-pre-split, %bb.f
+  %6 = phi i8 [ %.pr, %thread-pre-split ], [ %i.ag, %bb.f ]
   %i.cg = trunc nuw i8 %6 to i1
   br i1 %i.cg, label %bb.s, label %_ZN5vcpkg9ExpectedTIRKNS_28SourceControlFileAndLocationENS_15LocalizedStringEED2Ev.exit25
 

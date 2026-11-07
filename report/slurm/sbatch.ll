@@ -202,20 +202,22 @@ bb.cy:                                            ; preds = %bb.cx
   store ptr %i.if, ptr %i.hk, align 8
   %i.ig = load ptr, ptr @environ, align 8
   call void @env_array_merge_slurm_spank(ptr noundef nonnull %i.hk, ptr noundef %i.ig) #14
-  store i8 1, ptr getelementptr inbounds nuw (i8, ptr @opt, i64 616), align 8
-  br label %bb.da
+  br label %.thread.sink.split.i
 
 bb.cz:                                            ; preds = %bb.cx
   call void @env_merge_filter(ptr noundef nonnull @opt, ptr noundef nonnull %i.gr) #14
-  store i8 1, ptr getelementptr inbounds nuw (i8, ptr @opt, i64 616), align 8
-  br label %bb.da
+  br label %.thread.sink.split.i
 
-bb.da:                                            ; preds = %bb.cz, %bb.cy, %bb.cw, %bb.cu, %bb.cs
-  %i.ih = load i8, ptr getelementptr inbounds nuw (i8, ptr @opt, i64 616), align 8, !range !21, !noundef !22
+bb.da:                                            ; preds = %bb.cw, %bb.cu, %bb.cs
+  %i.ih = load i8, ptr getelementptr inbounds nuw (i8, ptr @opt, i64 616), align 8
   %i.ii = trunc nuw i8 %i.ih to i1
   br i1 %i.ii, label %bb.db, label %bb.dc
 
-bb.db:                                            ; preds = %bb.da
+.thread.sink.split.i:                             ; preds = %bb.cz, %bb.cy
+  store i8 1, ptr getelementptr inbounds nuw (i8, ptr @opt, i64 616), align 8
+  br label %bb.db
+
+bb.db:                                            ; preds = %.thread.sink.split.i, %bb.da
   %i.ij = call i32 @env_array_overwrite(ptr noundef nonnull %i.hk, ptr noundef nonnull @.str.29, ptr noundef nonnull @.str.30) #14 ; 0 uses
   br label %bb.dc
 

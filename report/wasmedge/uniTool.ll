@@ -204,7 +204,7 @@ begin_hunk_0_@_ZN8WasmEdge6Driver7UniToolEiPPKcNS0_8ToolTypeE:bb.a
   %i.dw = getelementptr inbounds nuw i8, ptr %10, i64 1256
   store i64 0, ptr %i.dw, align 8, !tbaa !28
   store i8 0, ptr %i.dv, align 8, !tbaa !29
-  %i.dx = getelementptr inbounds nuw i8, ptr %10, i64 1312 ; 3 uses
+  %i.dx = getelementptr inbounds nuw i8, ptr %10, i64 1312 ; 4 uses
   %i.dy = getelementptr inbounds nuw i8, ptr %10, i64 1320
   %i.dz = getelementptr inbounds nuw i8, ptr %10, i64 1336
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(17) %i.dz, i8 0, i64 17, i1 false)
@@ -218,11 +218,15 @@ begin_hunk_0_@_ZN8WasmEdge6Driver7UniToolEiPPKcNS0_8ToolTypeE:bb.a
   store i64 44, ptr %i.dy, align 8, !tbaa !22
   %.sroa.5.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %10, i64 1328
   store ptr @.str.87, ptr %.sroa.5.0..sroa_idx.i, align 8, !tbaa !24
-  switch i8 %2, label %.loopexit [
+  switch i8 %2, label %.thread.thread [
     i8 0, label %bb.e
     i8 2, label %bb.f
     i8 1, label %bb.g
   ]
+
+.thread.thread:                                   ; preds = %bb.d
+  store i8 0, ptr %i.dx, align 8, !tbaa !32
+  br label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.i.i
 
 bb.e:                                             ; preds = %bb.d
   call void @_ZN8WasmEdge6Driver17DriverToolOptions10add_optionERNS_2PO14ArgumentParserE(ptr noundef nonnull align 8 dereferenceable(2336) %9, ptr noundef nonnull align 8 dereferenceable(88) %6) #18
@@ -521,25 +525,26 @@ bb.z:                                             ; preds = %bb.x
   %i.hn = call noundef i32 @_ZN8WasmEdge6Driver4ToolERNS0_17DriverToolOptionsE(ptr noundef nonnull align 8 dereferenceable(2336) %9) #18
   br label %.loopexit
 
-.loopexit:                                        ; preds = %_ZNSt10filesystem7__cxx114pathD2Ev.exit, %bb.j, %bb.w, %bb.y, %bb.z, %_ZNK8WasmEdge2PO14ArgumentParser6isHelpEv.exit, %bb.h, %bb.d
-  %.1 = phi i32 [ %i.hn, %bb.z ], [ 1, %bb.h ], [ 0, %_ZNK8WasmEdge2PO14ArgumentParser6isHelpEv.exit ], [ 1, %bb.d ], [ %i.hh, %bb.w ], [ %i.hm, %bb.y ], [ 0, %bb.j ], [ 0, %_ZNSt10filesystem7__cxx114pathD2Ev.exit ]
-  %i.ho = load i8, ptr %i.dx, align 8, !tbaa !32, !range !49, !noundef !50
+.loopexit:                                        ; preds = %_ZNSt10filesystem7__cxx114pathD2Ev.exit, %bb.j, %bb.w, %bb.y, %bb.z, %_ZNK8WasmEdge2PO14ArgumentParser6isHelpEv.exit, %bb.h
+  %.1.ph = phi i32 [ %i.hn, %bb.z ], [ %i.hm, %bb.y ], [ %i.hh, %bb.w ], [ 0, %_ZNK8WasmEdge2PO14ArgumentParser6isHelpEv.exit ], [ 1, %bb.h ], [ 0, %bb.j ], [ 0, %_ZNSt10filesystem7__cxx114pathD2Ev.exit ] ; 3 uses
+  %i.ho = load i8, ptr %i.dx, align 8, !tbaa !32
   %i.hp = trunc nuw i8 %i.ho to i1
   br i1 %i.hp, label %bb.aa, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.i.i
 
 bb.aa:                                            ; preds = %.loopexit
+  %.pre = load ptr, ptr %i.ea, align 8, !tbaa !60 ; 2 uses
   store i8 0, ptr %i.dx, align 8, !tbaa !32
-  %15 = load ptr, ptr %i.ea, align 8, !tbaa !60   ; 2 uses
-  %i.hq = icmp eq ptr %15, %i.eb
+  %i.hq = icmp eq ptr %.pre, %i.eb
   br i1 %i.hq, label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.i.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i
 
 _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i: ; preds = %bb.aa
   %i.hr = load i64, ptr %i.eb, align 8, !tbaa !29
   %i.hs = add i64 %i.hr, 1
-  call void @_ZdlPvm(ptr noundef %15, i64 noundef %i.hs) #22
+  call void @_ZdlPvm(ptr noundef %.pre, i64 noundef %i.hs) #22
   br label %_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.i.i
 
-_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.i.i: ; preds = %bb.aa, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i, %.loopexit
+_ZNSt14_Optional_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEELb0ELb0EED2Ev.exit.i.i: ; preds = %bb.aa, %.thread.thread, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i, %.loopexit
+  %.1101 = phi i32 [ %.1.ph, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i.i.i.i.i ], [ %.1.ph, %.loopexit ], [ 1, %.thread.thread ], [ %.1.ph, %bb.aa ]
   %i.ht = load ptr, ptr %i.du, align 8, !tbaa !60 ; 2 uses
   %i.hu = icmp eq ptr %i.ht, %i.dv
   br i1 %i.hu, label %_ZN8WasmEdge2PO6OptionINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEENS0_6ParserIS7_EEED2Ev.exit.i, label %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
@@ -662,7 +667,7 @@ bb.ae:                                            ; preds = %_ZSt8_DestroyIPN8Wa
 
 _ZN8WasmEdge2PO14ArgumentParserD2Ev.exit:         ; preds = %_ZSt8_DestroyIPN8WasmEdge2PO14ArgumentParser20SubCommandDescriptorES3_EvT_S5_RSaIT0_E.exit.i.i, %bb.ae
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #18
-  ret i32 %.1
+  ret i32 %.1101
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.noexc.i.i.i, %.noexc31, %.noexc68, %bb.t, %.noexc.i, %.noexc, %bb.u, %bb.r, %bb.a
   %lpad.loopexit.split-lp130 = landingpad { ptr, i32 }

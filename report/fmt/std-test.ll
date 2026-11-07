@@ -4,6 +4,7 @@ inline.NumDeleted: 2198
 loop-unroll.NumCompletelyUnrolled: 13
 loop-unroll.NumRuntimeUnrolled: 57
 loop-unroll.NumUnrolled: 70
+loop-unroll.NumUnrolledNotLatch: 2
 begin_hunk_0_@_ZN34std_test_format_bit_reference_Test8TestBodyEv:.noexc26
   %15 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #33
@@ -205,7 +206,7 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   call void @_ZdlPvm(ptr noundef nonnull %i.ax, i64 noundef 32) #34
   br label %_ZNSt14_Bit_referenceaSEb.exit.i.i.i.i.i.i.i.1
 
-_ZNSt14_Bit_referenceaSEb.exit.i.i.i.i.i.i.i.1:   ; preds = %bb.m, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i
+_ZNSt14_Bit_referenceaSEb.exit.i.i.i.i.i.i.i.1:   ; preds = %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i, %bb.m
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #33
   %i.bd = call noalias noundef nonnull dereferenceable(8) ptr @_Znwm(i64 noundef 8) #35 ; 5 uses
   store i64 -3, ptr %i.bd, align 8, !tbaa !53
@@ -608,7 +609,7 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   call void @_ZdlPvm(ptr noundef nonnull %i.as, i64 noundef 32) #34
   br label %_ZNSt14_Bit_referenceaSEb.exit.i.i.i.i.i.i.i.1
 
-_ZNSt14_Bit_referenceaSEb.exit.i.i.i.i.i.i.i.1:   ; preds = %bb.l, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i
+_ZNSt14_Bit_referenceaSEb.exit.i.i.i.i.i.i.i.1:   ; preds = %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i.i, %bb.l
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #33
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #33
   call void @llvm.lifetime.start.p0(ptr nonnull %8) #33

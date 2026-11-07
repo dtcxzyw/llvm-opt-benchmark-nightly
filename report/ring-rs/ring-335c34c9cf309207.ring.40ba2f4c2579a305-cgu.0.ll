@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %bb.h
   %i.ab = and i32 %i.z, 1536
   %brmerge.i.not.i.i = icmp eq i32 %i.ab, 1536
   call fastcc void @_RINvNtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic5limbs6x86_644mont12mul_mont5_4xTINtNtNtBa_8polyfill15aliasing_slices5InOutQSyERB1T_EEBa_(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.p, i64 noundef %i.y, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %.0.val, i1 noundef zeroext %brmerge.i.not.i.i) #40
-  %.pre.i.i = load i64, ptr %i.b, align 8, !range !22, !noalias !198
+  %.pre.i.i = load i64, ptr %i.b, align 8, !noalias !198
   br label %_RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic10montgomery14limbs_mul_montTINtNtNtB6_8polyfill15aliasing_slices5InOutQSyERB1L_EEB6_.exit.i.i
 
 _RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic10montgomery14limbs_mul_montTINtNtNtB6_8polyfill15aliasing_slices5InOutQSyERB1L_EEB6_.exit.i.i: ; preds = %bb.m, %_RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic3ffi15bn_mul_mont_ffiuKj4_Kj1_TINtNtNtB6_8polyfill15aliasing_slices5InOutQSyERB1N_EEB6_.exit.i.i
@@ -341,7 +341,7 @@ bb.m:                                             ; preds = %bb.h
   %i.ab = and i32 %i.z, 1536
   %brmerge.i.not.i = icmp eq i32 %i.ab, 1536
   call fastcc void @_RINvNtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic5limbs6x86_644mont12mul_mont5_4xTINtNtNtBa_8polyfill15aliasing_slices5InOutQSyERB1T_EEBa_(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.p, i64 noundef %i.y, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %.0.val, i1 noundef zeroext %brmerge.i.not.i) #40
-  %.pre.i = load i64, ptr %i.b, align 8, !range !22, !noalias !230
+  %.pre.i = load i64, ptr %i.b, align 8, !noalias !230
   br label %_RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic10montgomery14limbs_mul_montTINtNtNtB6_8polyfill15aliasing_slices5InOutQSyERB1L_EEB6_.exit.i
 
 _RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic10montgomery14limbs_mul_montTINtNtNtB6_8polyfill15aliasing_slices5InOutQSyERB1L_EEB6_.exit.i: ; preds = %bb.m, %_RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic3ffi15bn_mul_mont_ffiuKj4_Kj1_TINtNtNtB6_8polyfill15aliasing_slices5InOutQSyERB1N_EEB6_.exit.i
@@ -460,7 +460,7 @@ bb.m:                                             ; preds = %bb.h
   %i.ab = and i32 %i.z, 1536
   %brmerge.i.not.i = icmp eq i32 %i.ab, 1536
   call fastcc void @_RINvNtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic5limbs6x86_644mont12mul_mont5_4xTINtNtNtBa_8polyfill15aliasing_slices5InOutQSyERB1T_EEBa_(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.p, i64 noundef %i.y, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %.0.val, i1 noundef zeroext %brmerge.i.not.i) #40
-  %.pre.i = load i64, ptr %i.b, align 8, !range !22, !noalias !262
+  %.pre.i = load i64, ptr %i.b, align 8, !noalias !262
   br label %_RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic10montgomery14limbs_mul_montTINtNtNtB6_8polyfill15aliasing_slices5InOutQSyERB1L_EEB6_.exit.i
 
 _RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic10montgomery14limbs_mul_montTINtNtNtB6_8polyfill15aliasing_slices5InOutQSyERB1L_EEB6_.exit.i: ; preds = %bb.m, %_RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic3ffi15bn_mul_mont_ffiuKj4_Kj1_TINtNtNtB6_8polyfill15aliasing_slices5InOutQSyERB1N_EEB6_.exit.i
@@ -575,7 +575,7 @@ bb.l:                                             ; preds = %bb.d
   %i.ab = and i32 %i.z, 1536
   %brmerge.i.not = icmp eq i32 %i.ab, 1536
   call fastcc void @_RINvNtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic5limbs6x86_644mont12mul_mont5_4xTINtNtNtBa_8polyfill15aliasing_slices5InOutQSyERB1T_EEBa_(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.h, i64 noundef %i.y, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %.0.val, i1 noundef zeroext %brmerge.i.not) #40
-  %.pre = load i64, ptr %i.b, align 8, !range !22
+  %.pre = load i64, ptr %i.b, align 8
   br label %_RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic10montgomery14limbs_mul_montTINtNtNtB6_8polyfill15aliasing_slices5InOutQSyERB1L_EEB6_.exit
 
 _RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic10montgomery14limbs_mul_montTINtNtNtB6_8polyfill15aliasing_slices5InOutQSyERB1L_EEB6_.exit: ; preds = %_RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic3ffi15bn_mul_mont_ffiuKj4_Kj1_TINtNtNtB6_8polyfill15aliasing_slices5InOutQSyERB1N_EEB6_.exit, %bb.l
@@ -690,7 +690,7 @@ bb.l:                                             ; preds = %bb.d
   %i.ab = and i32 %i.z, 1536
   %brmerge.i.not = icmp eq i32 %i.ab, 1536
   call fastcc void @_RINvNtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic5limbs6x86_644mont12mul_mont5_4xTINtNtNtBa_8polyfill15aliasing_slices5InOutQSyERB1T_EEBa_(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.h, i64 noundef %i.y, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %.0.val, i1 noundef zeroext %brmerge.i.not) #40
-  %.pre = load i64, ptr %i.b, align 8, !range !22
+  %.pre = load i64, ptr %i.b, align 8
   br label %_RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic10montgomery14limbs_mul_montTINtNtNtB6_8polyfill15aliasing_slices5InOutQSyERB1L_EEB6_.exit
 
 _RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic10montgomery14limbs_mul_montTINtNtNtB6_8polyfill15aliasing_slices5InOutQSyERB1L_EEB6_.exit: ; preds = %_RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic3ffi15bn_mul_mont_ffiuKj4_Kj1_TINtNtNtB6_8polyfill15aliasing_slices5InOutQSyERB1N_EEB6_.exit, %bb.l
@@ -1093,7 +1093,7 @@ bb.a:
   %i.t = alloca [16 x i8], align 1                ; 5 uses
   %i.u = alloca [16 x i8], align 1                ; 6 uses
   %i.v = alloca [16 x i8], align 1                ; 9 uses
-  %i.w = alloca [24 x i8], align 8                ; 14 uses
+  %i.w = alloca [24 x i8], align 8                ; 13 uses
   %i.x = alloca [16 x i8], align 8                ; 7 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1851)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1852)
@@ -1341,7 +1341,6 @@ _RINvNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcm23open_whole_partial_tailNtNtNtB4_3aes2
 
 _RINvNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcm18open_whole_partialNtNtNtB4_3aes2hw3KeyNtNtNtB4_3gcm10vclmulavx23KeyNvNtB2_13vaesclmulavx226open_whole_vaes_clmul_avx2EB6_.exit.i.i.i.i: ; preds = %_RINvNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcm23open_whole_partial_tailNtNtNtB4_3aes2hw3KeyNtNtNtB4_3gcm10vclmulavx23KeyNvNtB2_13vaesclmulavx226open_whole_vaes_clmul_avx2EB6_.exit.i.i.i.i.i, %_RNvMNtNtCs5yxAJGbRKSL_4ring4aead3gcmINtB2_7ContextNtNtB2_10vclmulavx23KeyE3newB6_.exit.thread.i.i.i.i.i
   %storemerge.i.i.i.i.i = phi i8 [ 0, %_RINvNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcm23open_whole_partial_tailNtNtNtB4_3aes2hw3KeyNtNtNtB4_3gcm10vclmulavx23KeyNvNtB2_13vaesclmulavx226open_whole_vaes_clmul_avx2EB6_.exit.i.i.i.i.i ], [ 1, %_RNvMNtNtCs5yxAJGbRKSL_4ring4aead3gcmINtB2_7ContextNtNtB2_10vclmulavx23KeyE3newB6_.exit.thread.i.i.i.i.i ]
-  store i8 %storemerge.i.i.i.i.i, ptr %i.w, align 8, !alias.scope !1872, !noalias !1858
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p), !noalias !1862
   call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !noalias !1862
   br label %_RNCNvMNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcmNtB4_3Key11open_within0B8_.exit.i.i
@@ -1354,7 +1353,7 @@ bb.i:                                             ; preds = %_RNvMs0_NtNtNtCs5yx
   store i32 33554432, ptr %.sroa.9.0..sroa_idx1.i.i.i.i, align 1, !noalias !1862
   call fastcc void @_RNvNtNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcm15aeshwclmulmovbe4open(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(24) %i.w, ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(244) %i.bz, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(192) %i.ag, ptr noalias nofree noundef align 1 captures(address) dereferenceable(16) %i.t, ptr noalias nofree noundef align 1 captures(address) dereferenceable(16) %i.v, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef %4, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %5) #39, !noalias !1901
   call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !1862
-  br label %_RNCNvMNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcmNtB4_3Key11open_within0B8_.exit.i.i
+  br label %_RNCNvMNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcmNtB4_3Key11open_within0B8_.exitthread-pre-split.i.i
 
 bb.j:                                             ; preds = %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.s), !noalias !1862
@@ -1363,7 +1362,7 @@ bb.j:                                             ; preds = %_RNvMs0_NtNtNtCs5yx
   store i32 33554432, ptr %.sroa.9.0..sroa_idx3.i.i.i.i, align 1, !noalias !1862
   call fastcc void @_RINvNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcm12open_stridedNtNtNtB4_3aes2hw3KeyNtNtNtB4_3gcm12clmul_x86_643KeyEB6_(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(24) %i.w, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(344) %i.ag, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef %4, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %5, ptr noalias nofree noundef align 1 captures(address) dereferenceable(16) %i.s, ptr noalias nofree noundef align 1 captures(address) dereferenceable(16) %i.v) #39, !noalias !1901
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !1862
-  br label %_RNCNvMNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcmNtB4_3Key11open_within0B8_.exit.i.i
+  br label %_RNCNvMNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcmNtB4_3Key11open_within0B8_.exitthread-pre-split.i.i
 
 bb.k:                                             ; preds = %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r), !noalias !1862
@@ -1372,7 +1371,7 @@ bb.k:                                             ; preds = %_RNvMs0_NtNtNtCs5yx
   store i32 33554432, ptr %.sroa.9.0..sroa_idx5.i.i.i.i, align 1, !noalias !1862
   call fastcc void @_RINvNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcm12open_stridedNtNtNtB4_3aes2vp3KeyNtNtNtB4_3gcm8fallback3KeyEB6_(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(24) %i.w, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(264) %i.ag, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef %4, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %5, ptr noalias nofree noundef align 1 captures(address) dereferenceable(16) %i.r, ptr noalias nofree noundef align 1 captures(address) dereferenceable(16) %i.v) #39, !noalias !1901
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r), !noalias !1862
-  br label %_RNCNvMNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcmNtB4_3Key11open_within0B8_.exit.i.i
+  br label %_RNCNvMNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcmNtB4_3Key11open_within0B8_.exitthread-pre-split.i.i
 
 bb.l:                                             ; preds = %_RNvMs0_NtNtNtCs5yxAJGbRKSL_4ring4aead11overlapping4baseINtB5_11OverlappinghE5inputBb_.exit.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !1862
@@ -1381,11 +1380,15 @@ bb.l:                                             ; preds = %_RNvMs0_NtNtNtCs5yx
   store i32 33554432, ptr %.sroa.9.0..sroa_idx7.i.i.i.i, align 1, !noalias !1862
   call fastcc void @_RINvNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcm12open_stridedNtNtNtB4_3aes8fallback3KeyNtNtNtB4_3gcm8fallback3KeyEB6_(ptr noalias nofree noundef nonnull align 8 captures(none) dereferenceable(24) %i.w, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(264) %i.ag, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %3, i64 noundef %4, ptr noalias nofree noundef nonnull readonly align 8 captures(address) dereferenceable(24) %5, ptr noalias nofree noundef align 1 captures(address) dereferenceable(16) %i.q, ptr noalias nofree noundef align 1 captures(address) dereferenceable(16) %i.v) #39, !noalias !1901
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !1862
+  br label %_RNCNvMNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcmNtB4_3Key11open_within0B8_.exitthread-pre-split.i.i
+
+_RNCNvMNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcmNtB4_3Key11open_within0B8_.exitthread-pre-split.i.i: ; preds = %bb.l, %bb.k, %bb.j, %bb.i
+  %.pr.i.i = load i8, ptr %i.w, align 8, !noalias !1858
   br label %_RNCNvMNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcmNtB4_3Key11open_within0B8_.exit.i.i
 
-_RNCNvMNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcmNtB4_3Key11open_within0B8_.exit.i.i: ; preds = %bb.l, %bb.k, %bb.j, %bb.i, %_RINvNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcm18open_whole_partialNtNtNtB4_3aes2hw3KeyNtNtNtB4_3gcm10vclmulavx23KeyNvNtB2_13vaesclmulavx226open_whole_vaes_clmul_avx2EB6_.exit.i.i.i.i
+_RNCNvMNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcmNtB4_3Key11open_within0B8_.exit.i.i: ; preds = %_RNCNvMNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcmNtB4_3Key11open_within0B8_.exitthread-pre-split.i.i, %_RINvNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcm18open_whole_partialNtNtNtB4_3aes2hw3KeyNtNtNtB4_3gcm10vclmulavx23KeyNvNtB2_13vaesclmulavx226open_whole_vaes_clmul_avx2EB6_.exit.i.i.i.i
+  %6 = phi i8 [ %.pr.i.i, %_RNCNvMNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcmNtB4_3Key11open_within0B8_.exitthread-pre-split.i.i ], [ %storemerge.i.i.i.i.i, %_RINvNtNtCs5yxAJGbRKSL_4ring4aead7aes_gcm18open_whole_partialNtNtNtB4_3aes2hw3KeyNtNtNtB4_3gcm10vclmulavx23KeyNvNtB2_13vaesclmulavx226open_whole_vaes_clmul_avx2EB6_.exit.i.i.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !1862
-  %6 = load i8, ptr %i.w, align 8, !range !34, !noalias !1858, !noundef !15
   %i.ca = trunc nuw i8 %6 to i1
   br i1 %i.ca, label %bb.m, label %.lr.ph.i.i.i.i
 
@@ -1788,7 +1791,7 @@ _RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic10montgomery14limbs_mul_montTINtNtNtB6_8
   %i.au = and i32 %i.as, 1536
   %brmerge.i.not.i.us.us.us.i = icmp eq i32 %i.au, 1536
   call fastcc void @_RINvNtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic5limbs6x86_644mont12mul_mont5_4xTINtNtNtBa_8polyfill15aliasing_slices5InOutQSyERB1T_EEBa_(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.y, i64 noundef %i.ad, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %.val, i1 noundef zeroext %brmerge.i.not.i.us.us.us.i) #40
-  %.pre.i.us.us.us.i = load i64, ptr %i.b, align 8, !range !22, !noalias !2333
+  %.pre.i.us.us.us.i = load i64, ptr %i.b, align 8, !noalias !2333
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !2333
   %i.av = trunc nuw i64 %.pre.i.us.us.us.i to i1
   br i1 %i.av, label %.split3.us.loopexit.i, label %_RINvMs8_NtNtNtCs5yxAJGbRKSL_4ring10arithmetic6bigint4elemINtB6_3MutNtNtBc_3rsa1NNtNtBa_10montgomery1RE3mulB1g_EBc_.exit.us.us.us.i, !prof !16
@@ -2191,7 +2194,7 @@ _RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic10montgomery14limbs_mul_montTINtNtNtB6_8
   %i.hp = and i32 %i.hn, 1536
   %brmerge.i.not.i.i.i.i = icmp eq i32 %i.hp, 1536
   call fastcc void @_RINvNtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic5limbs6x86_644mont12mul_mont5_4xTINtNtNtBa_8polyfill15aliasing_slices5InOutQSyERB1T_EEBa_(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.m, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.l, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.dn, i64 noundef %i.ei, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %.val64.i, i1 noundef zeroext %brmerge.i.not.i.i.i.i) #40, !noalias !3268
-  %.pre.i.i.i.i = load i64, ptr %i.m, align 8, !range !22, !noalias !3264
+  %.pre.i.i.i.i = load i64, ptr %i.m, align 8, !noalias !3264
   %i.hq = trunc nuw i64 %.pre.i.i.i.i to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !3264
   br i1 %i.hq, label %bb.at, label %bb.au, !prof !16
@@ -2594,7 +2597,7 @@ _RINvNtNtCs5yxAJGbRKSL_4ring10arithmetic10montgomery14limbs_mul_montTINtNtNtB6_8
   %i.mm = and i32 %i.mk, 1536
   %brmerge.i.not.i.i.i140.i = icmp eq i32 %i.mm, 1536
   call fastcc void @_RINvNtNtNtNtCs5yxAJGbRKSL_4ring10arithmetic5limbs6x86_644mont12mul_mont5_4xTINtNtNtBa_8polyfill15aliasing_slices5InOutQSyERB1T_EEBa_(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(24) %i.g, ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(32) %i.f, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.ik, i64 noundef %i.jg, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %.val66.i, i1 noundef zeroext %brmerge.i.not.i.i.i140.i) #40, !noalias !3321
-  %.pre.i.i.i141.i = load i64, ptr %i.g, align 8, !range !22, !noalias !3317
+  %.pre.i.i.i141.i = load i64, ptr %i.g, align 8, !noalias !3317
   %i.mn = trunc nuw i64 %.pre.i.i.i141.i to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !3317
   br i1 %i.mn, label %bb.bu, label %bb.bv, !prof !16

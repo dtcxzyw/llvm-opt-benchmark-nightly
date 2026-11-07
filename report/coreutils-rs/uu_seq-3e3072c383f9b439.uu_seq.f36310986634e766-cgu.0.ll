@@ -204,7 +204,8 @@ _RNvMNtCsioiJd4mgmsb_10num_bigint9big_digitNtB2_9BigDigits10from_slice.exit.i: ;
   %.sroa.5.0..sroa_idx77.i = getelementptr inbounds nuw i8, ptr %i.r, i64 8
   %.sroa.5.0.copyload.i = load i64, ptr %.sroa.5.0..sroa_idx77.i, align 8, !noalias !434 ; 3 uses
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.r, i64 16
-  %.sroa.8.0.copyload.i = load i64, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !434 ; 3 uses
+  %.sroa.8.0.copyload.i = load i64, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !434
+  %.sroa.8.0.copyload.fr.i = freeze i64 %.sroa.8.0.copyload.i ; 3 uses
   %i.df = getelementptr inbounds nuw i8, ptr %i.r, i64 24
   %.val42.i = load i64, ptr %i.df, align 8, !range !11, !noalias !434, !noundef !4 ; 2 uses
   %i.dg = icmp sgt i64 %.val42.i, 0
@@ -225,22 +226,22 @@ _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCsioiJd4mgmsb_10num_bigint7biguint7B
 
 bb.t:                                             ; preds = %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCsioiJd4mgmsb_10num_bigint7biguint7BigUintECskTxFPE6q5z6_6uu_seq.exit.i
   %i.dj = trunc nuw i64 %.sroa.5.0.copyload.i to i1
-  %spec.select.i = select i1 %i.dj, i64 %.sroa.8.0.copyload.i, i64 0
+  %spec.select.i = select i1 %i.dj, i64 %.sroa.8.0.copyload.fr.i, i64 0
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCsioiJd4mgmsb_10num_bigint7biguint7BigUintECskTxFPE6q5z6_6uu_seq.exit47.i
 
 bb.u:                                             ; preds = %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCsioiJd4mgmsb_10num_bigint7biguint7BigUintECskTxFPE6q5z6_6uu_seq.exit.i
-  %i.dk = icmp eq i64 %.sroa.8.0.copyload.i, 0
+  %i.dk = icmp eq i64 %.sroa.8.0.copyload.fr.i, 0
   br i1 %i.dk, label %_RNvXs0_NtNtCsioiJd4mgmsb_10num_bigint7biguint7convertNtB7_7BigUintNtNtCs2PbPfIYQJQA_10num_traits4cast11ToPrimitive6to_u64.exit.i, label %..lr.ph.preheader.i_crit_edge.i
 
 ..lr.ph.preheader.i_crit_edge.i:                  ; preds = %bb.u
   %i.dl = inttoptr i64 %.sroa.5.0.copyload.i to ptr
-  %.pre.i.a = load i64, ptr %i.dl, align 8, !noalias !436
-  %i.dm = icmp eq i64 %.sroa.8.0.copyload.i, 1
+  %.pre.i.a = load i64, ptr %i.dl, align 8, !noalias !436, !noundef !4
+  %i.dm = icmp eq i64 %.sroa.8.0.copyload.fr.i, 1
   %i.dn = select i1 %i.dm, i64 %.pre.i.a, i64 -1
   br label %_RNvXs0_NtNtCsioiJd4mgmsb_10num_bigint7biguint7convertNtB7_7BigUintNtNtCs2PbPfIYQJQA_10num_traits4cast11ToPrimitive6to_u64.exit.i
 
 _RNvXs0_NtNtCsioiJd4mgmsb_10num_bigint7biguint7convertNtB7_7BigUintNtNtCs2PbPfIYQJQA_10num_traits4cast11ToPrimitive6to_u64.exit.i: ; preds = %..lr.ph.preheader.i_crit_edge.i, %bb.u
-  %.lcssa.i.i = phi i64 [ 0, %bb.u ], [ %i.dn, %..lr.ph.preheader.i_crit_edge.i ] ; 2 uses
+  %.lcssa.i.i = phi i64 [ %i.dn, %..lr.ph.preheader.i_crit_edge.i ], [ 0, %bb.u ] ; 2 uses
   %.not244 = icmp eq i64 %.sroa.0.0.copyload.i, 0
   br i1 %.not244, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCsioiJd4mgmsb_10num_bigint7biguint7BigUintECskTxFPE6q5z6_6uu_seq.exit47.i, label %bb.v
 
@@ -252,7 +253,7 @@ bb.v:                                             ; preds = %_RNvXs0_NtNtCsioiJd
   br label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCsioiJd4mgmsb_10num_bigint7biguint7BigUintECskTxFPE6q5z6_6uu_seq.exit47.i
 
 _RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueNtNtCsioiJd4mgmsb_10num_bigint7biguint7BigUintECskTxFPE6q5z6_6uu_seq.exit47.i: ; preds = %bb.v, %_RNvXs0_NtNtCsioiJd4mgmsb_10num_bigint7biguint7convertNtB7_7BigUintNtNtCs2PbPfIYQJQA_10num_traits4cast11ToPrimitive6to_u64.exit.i, %bb.t
-  %.sroa.01.0112.i = phi i64 [ %.lcssa.i.i, %bb.v ], [ %.lcssa.i.i, %_RNvXs0_NtNtCsioiJd4mgmsb_10num_bigint7biguint7convertNtB7_7BigUintNtNtCs2PbPfIYQJQA_10num_traits4cast11ToPrimitive6to_u64.exit.i ], [ %spec.select.i, %bb.t ] ; 4 uses
+  %.sroa.01.0112.i = phi i64 [ %spec.select.i, %bb.t ], [ %.lcssa.i.i, %_RNvXs0_NtNtCsioiJd4mgmsb_10num_bigint7biguint7convertNtB7_7BigUintNtNtCs2PbPfIYQJQA_10num_traits4cast11ToPrimitive6to_u64.exit.i ], [ %.lcssa.i.i, %bb.v ] ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !440
   store i64 0, ptr %i.o, align 8, !noalias !440
   %.sroa.4.0..sroa_idx.i48.i = getelementptr inbounds nuw i8, ptr %i.o, i64 8 ; 2 uses
@@ -655,7 +656,7 @@ _RINvMNtCs6JMX4GRUq9U_4core3stre4findcECskTxFPE6q5z6_6uu_seq.exit.thread.i: ; pr
 
 bb.aj:                                            ; preds = %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCskTxFPE6q5z6_6uu_seq.exit64.thread.i, %_RINvMNtCs6JMX4GRUq9U_4core3stre4findcECskTxFPE6q5z6_6uu_seq.exit.thread.i
   %.sroa.024.0.i = phi i64 [ %i.fy, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCskTxFPE6q5z6_6uu_seq.exit64.thread.i ], [ 0, %_RINvMNtCs6JMX4GRUq9U_4core3stre4findcECskTxFPE6q5z6_6uu_seq.exit.thread.i ] ; 3 uses
-  %.sroa.022.0.i = phi i64 [ %.sroa.022.1.i, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCskTxFPE6q5z6_6uu_seq.exit64.thread.i ], [ %i.fq, %_RINvMNtCs6JMX4GRUq9U_4core3stre4findcECskTxFPE6q5z6_6uu_seq.exit.thread.i ] ; 2 uses
+  %.sroa.022.0.i = phi i64 [ %.sroa.022.1.i, %_RNvMNtCs6JMX4GRUq9U_4core5sliceSh11starts_withCskTxFPE6q5z6_6uu_seq.exit64.thread.i ], [ %i.fq, %_RINvMNtCs6JMX4GRUq9U_4core3stre4findcECskTxFPE6q5z6_6uu_seq.exit.thread.i ] ; 15 uses
   %i.fr = icmp ult i64 %.sroa.12.0.copyload99.i, 576460752303423488
   call void @llvm.assume(i1 %i.fr)
   %i.fs = icmp eq i64 %.sroa.12.0.copyload99.i, 2
@@ -754,7 +755,7 @@ bb.as:                                            ; preds = %bb.ar
 bb.at:                                            ; preds = %bb.as
   %i.gw = extractvalue { i64, i1 } %i.gu, 0       ; 2 uses
   %.not102.i.i = icmp eq i64 %i.gl, 0
-  br i1 %.not102.i.i, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i.a, label %.lr.ph.i.i
+  br i1 %.not102.i.i, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i, label %.lr.ph.i.i
 
 .lr.ph141.i.i:                                    ; preds = %.preheader114.i.i, %bb.au
   %.sroa.0.2140.i.i = phi ptr [ %i.hd, %bb.au ], [ %i.gh, %.preheader114.i.i ] ; 2 uses
@@ -773,7 +774,7 @@ bb.au:                                            ; preds = %.lr.ph141.i.i
   %i.he = zext nneg i32 %i.gz to i64
   %i.hf = sub i64 %i.hb, %i.he                    ; 2 uses
   %.not103.i.i = icmp eq i64 %i.hc, 0
-  br i1 %.not103.i.i, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i.a, label %.lr.ph141.i.i
+  br i1 %.not103.i.i, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i, label %.lr.ph141.i.i
 
 bb.av:                                            ; preds = %bb.ap, %bb.ao
   %.sroa.26.0.i.i = phi i64 [ %i.gg, %bb.ap ], [ %i.gc, %bb.ao ] ; 4 uses
@@ -812,7 +813,7 @@ bb.ax:                                            ; preds = %bb.aw
 bb.ay:                                            ; preds = %bb.ax
   %i.ht = extractvalue { i64, i1 } %i.hr, 0       ; 2 uses
   %.not104.i.i = icmp eq i64 %i.hi, 0
-  br i1 %.not104.i.i, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i.a, label %.preheader111.i.i
+  br i1 %.not104.i.i, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i, label %.preheader111.i.i
 
 .lr.ph150.i.i:                                    ; preds = %.preheader.i.i, %bb.az
   %.sroa.0.4149.i.i = phi ptr [ %i.ia, %bb.az ], [ %.sroa.0.0.i65.i, %.preheader.i.i ] ; 2 uses
@@ -831,18 +832,24 @@ bb.az:                                            ; preds = %.lr.ph150.i.i
   %i.ib = zext nneg i32 %i.hw to i64
   %i.ic = add i64 %i.hy, %i.ib                    ; 2 uses
   %.not105.i.i = icmp eq i64 %i.hz, 0
-  br i1 %.not105.i.i, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i.a, label %.lr.ph150.i.i
+  br i1 %.not105.i.i, label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i, label %.lr.ph150.i.i
 
-_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i.a: ; preds = %bb.at, %bb.as, %bb.ar, %.lr.ph.i.i, %bb.au, %.lr.ph141.i.i, %bb.ay, %bb.ax, %bb.aw, %.preheader111.i.i, %bb.az, %.lr.ph150.i.i, %.preheader.i.i, %.preheader114.i.i, %bb.an, %bb.an, %bb.am
-  %.sink.i.i = phi i64 [ 0, %bb.an ], [ %i.hf, %bb.au ], [ 0, %.lr.ph150.i.i ], [ 0, %.preheader.i.i ], [ 0, %bb.ax ], [ 0, %.preheader114.i.i ], [ %i.gc, %bb.am ], [ 0, %bb.an ], [ %i.ic, %bb.az ], [ 0, %bb.aw ], [ 0, %.preheader111.i.i ], [ %i.ht, %bb.ay ], [ 0, %.lr.ph141.i.i ], [ %i.gw, %bb.at ], [ 0, %bb.ar ], [ 0, %.lr.ph.i.i ], [ 0, %bb.as ] ; 3 uses
-  %3 = call i64 @llvm.smax.i64(i64 %.sink.i.i, i64 0)
-  %.sroa.022.2.i = add i64 %3, %.sroa.022.0.i     ; 2 uses
-  %i.id = icmp slt i64 %.sink.i.i, %.sroa.024.0.i
+_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i: ; preds = %bb.at, %bb.au, %bb.ay, %bb.az
+  %3 = phi i64 [ %i.ht, %bb.ay ], [ %i.ic, %bb.az ], [ %i.hf, %bb.au ], [ %i.gw, %bb.at ]
+  %.fr.i = freeze i64 %3                          ; 2 uses
+  %4 = call i64 @llvm.smax.i64(i64 %.fr.i, i64 0)
+  %spec.select124.i = add i64 %4, %.sroa.022.0.i
+  br label %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i.a
+
+_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i.a: ; preds = %bb.as, %bb.ar, %.lr.ph.i.i, %.lr.ph141.i.i, %bb.ax, %bb.aw, %.preheader111.i.i, %.lr.ph150.i.i, %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i, %.preheader.i.i, %.preheader114.i.i, %bb.an, %bb.an, %bb.am
+  %5 = phi i64 [ 0, %bb.an ], [ %.fr.i, %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i ], [ 0, %.preheader.i.i ], [ 0, %.preheader114.i.i ], [ 0, %bb.ax ], [ 0, %.lr.ph141.i.i ], [ 0, %.lr.ph150.i.i ], [ %i.gc, %bb.am ], [ 0, %bb.an ], [ 0, %.preheader111.i.i ], [ 0, %bb.aw ], [ 0, %.lr.ph.i.i ], [ 0, %bb.ar ], [ 0, %bb.as ] ; 2 uses
+  %6 = phi i64 [ %.sroa.022.0.i, %bb.an ], [ %spec.select124.i, %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i ], [ %.sroa.022.0.i, %.preheader.i.i ], [ %.sroa.022.0.i, %.preheader114.i.i ], [ %.sroa.022.0.i, %bb.ax ], [ %.sroa.022.0.i, %.lr.ph141.i.i ], [ %.sroa.022.0.i, %.lr.ph150.i.i ], [ %.sroa.022.0.i, %bb.am ], [ %.sroa.022.0.i, %bb.an ], [ %.sroa.022.0.i, %.preheader111.i.i ], [ %.sroa.022.0.i, %bb.aw ], [ %.sroa.022.0.i, %.lr.ph.i.i ], [ %.sroa.022.0.i, %bb.ar ], [ %.sroa.022.0.i, %bb.as ] ; 2 uses
+  %i.id = icmp slt i64 %5, %.sroa.024.0.i
   br i1 %i.id, label %bb.ba, label %bb.bb
 
 bb.ba:                                            ; preds = %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i.a
   %i.ie = zext i64 %.sroa.024.0.i to i128
-  %i.if = sext i64 %.sink.i.i to i128
+  %i.if = sext i64 %5 to i128
   %i.ig = sub nsw i128 %i.ie, %i.if               ; 2 uses
   %or.cond.i = icmp ugt i128 %i.ig, 18446744073709551615
   %i.ih = trunc nuw i128 %i.ig to i64
@@ -851,7 +858,7 @@ bb.ba:                                            ; preds = %_RNvMsr_NtCs6JMX4GR
 
 bb.bb:                                            ; preds = %bb.ba, %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i.a, %bb.aj
   %.sroa.024.2.i = phi i64 [ %.sroa.024.1.i, %bb.ba ], [ %.sroa.024.0.i, %bb.aj ], [ 0, %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i.a ] ; 2 uses
-  %.sroa.022.3.i = phi i64 [ %.sroa.022.2.i, %bb.ba ], [ %.sroa.022.0.i, %bb.aj ], [ %.sroa.022.2.i, %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i.a ] ; 2 uses
+  %.sroa.022.3.i = phi i64 [ %6, %bb.ba ], [ %.sroa.022.0.i, %bb.aj ], [ %6, %_RNvMsr_NtCs6JMX4GRUq9U_4core3numx27from_ascii_bytes_radix_impl.exit.i.a ] ; 2 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.11, ptr noundef nonnull align 8 dereferenceable(24) %.sroa.5, i64 24, i1 false), !alias.scope !602
   %i.ii = icmp eq i64 %.sroa.0.0.copyload100.i, 0
   br i1 %i.ii, label %_RINvNtCs6JMX4GRUq9U_4core3ptr9drop_glueINtNtCs7tKScEop1B6_5alloc3vec3VecReEECskTxFPE6q5z6_6uu_seq.exit.i, label %bb.bc

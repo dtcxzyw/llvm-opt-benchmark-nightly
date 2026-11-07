@@ -202,7 +202,7 @@ bb.c:                                             ; preds = %bb.b
 
 bb.d:                                             ; preds = %bb.e, %bb.b
   %i.n = invoke zeroext i1 @_RNvMNtCskKLDkoKarTP_4core6optionINtB2_6OptionReE7is_noneCsbi23obv45GP_19pyo3_macros_backend(ptr nonnull align 8 %i.l)
-          to label %bb.f unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
+          to label %bb.f unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 3 uses
 
 bb.e:                                             ; preds = %bb.c
   invoke void @_RNvMNtCsexYYUdYSQU6_5alloc6stringNtB2_6String8push_strCsbi23obv45GP_19pyo3_macros_backend(ptr nonnull align 8 %i.k, ptr nonnull %2, i64 %3)
@@ -346,7 +346,7 @@ bb.x:                                             ; preds = %bb.w, %bb.r
 bb.y:                                             ; preds = %.backedge34.peel
   %i.ay = load ptr, ptr %i.aj, align 8            ; 2 uses
   %.not6 = icmp eq ptr %i.ay, null
-  br i1 %.not6, label %.loopexit, label %bb.z
+  br i1 %.not6, label %bb.aa, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
   %i.az = load i64, ptr %i.e, align 8
@@ -354,32 +354,39 @@ bb.z:                                             ; preds = %bb.y
   invoke void @_RNvMNtCsexYYUdYSQU6_5alloc6stringNtB2_6String8push_strCsbi23obv45GP_19pyo3_macros_backend(ptr nonnull align 8 %i.k, ptr nonnull @4, i64 2) #20
           to label %_RNCNvMsi_NtNtCsbi23obv45GP_19pyo3_macros_backend10pyfunction9signatureNtB7_17FunctionSignature14text_signature0Bb_.exit unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-.loopexit:                                        ; preds = %bb.y, %bb.n
-  %.sroa.0.0.lcssa44 = phi i8 [ %i.o, %bb.n ], [ 0, %bb.y ] ; 3 uses
-  %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
+.loopexit:                                        ; preds = %bb.n
+  %i.bb = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 3 uses
   %i.bc = load i64, ptr %i.bb, align 8
   %.not7 = icmp eq i64 %i.bc, -1
-  br i1 %.not7, label %bb.ac, label %bb.aa
+  br i1 %.not7, label %bb.ac, label %6
 
-bb.aa:                                            ; preds = %.loopexit
-  %4 = trunc nuw i8 %.sroa.0.0.lcssa44 to i1
-  br i1 %4, label %_RNCNvMsi_NtNtCsbi23obv45GP_19pyo3_macros_backend10pyfunction9signatureNtB7_17FunctionSignature14text_signature0Bb_.exit20, label %bb.ab
+bb.aa:                                            ; preds = %bb.y
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
+  %5 = load i64, ptr %4, align 8
+  %.not772 = icmp eq i64 %5, -1
+  br i1 %.not772, label %bb.ac, label %bb.ab
 
-bb.ab:                                            ; preds = %bb.aa
+6:                                                ; preds = %.loopexit
+  br i1 %i.n, label %_RNCNvMsi_NtNtCsbi23obv45GP_19pyo3_macros_backend10pyfunction9signatureNtB7_17FunctionSignature14text_signature0Bb_.exit20, label %bb.ab
+
+bb.ab:                                            ; preds = %bb.aa, %6
+  %7 = phi ptr [ %i.bb, %6 ], [ %4, %bb.aa ]
   invoke void @_RNvMNtCsexYYUdYSQU6_5alloc6stringNtB2_6String8push_strCsbi23obv45GP_19pyo3_macros_backend(ptr nonnull align 8 %i.k, ptr nonnull @4, i64 2) #20
           to label %_RNCNvMsi_NtNtCsbi23obv45GP_19pyo3_macros_backend10pyfunction9signatureNtB7_17FunctionSignature14text_signature0Bb_.exit20 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-bb.ac:                                            ; preds = %.loopexit
+bb.ac:                                            ; preds = %bb.aa, %.loopexit
+  %.sroa.0.0.lcssa4474 = phi i8 [ 0, %bb.aa ], [ %i.o, %.loopexit ] ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.be = invoke zeroext i1 @_RNvMs_NtCsexYYUdYSQU6_5alloc3vecINtB4_3VecTNtNtB6_6string6StringINtNtCskKLDkoKarTP_4core6option6OptionNtNtCs1QQTzni0HOp_3syn4expr4ExprEEE8is_emptyCsbi23obv45GP_19pyo3_macros_backend(ptr nonnull align 8 %i.bd)
           to label %bb.ag unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
-_RNCNvMsi_NtNtCsbi23obv45GP_19pyo3_macros_backend10pyfunction9signatureNtB7_17FunctionSignature14text_signature0Bb_.exit20: ; preds = %bb.ab, %bb.aa
+_RNCNvMsi_NtNtCsbi23obv45GP_19pyo3_macros_backend10pyfunction9signatureNtB7_17FunctionSignature14text_signature0Bb_.exit20: ; preds = %bb.ab, %6
+  %8 = phi ptr [ %7, %bb.ab ], [ %i.bb, %6 ]
   invoke void @_RNvMNtCsexYYUdYSQU6_5alloc6stringNtB2_6String4pushCsbi23obv45GP_19pyo3_macros_backend(ptr nonnull align 8 %i.k, i32 42)
           to label %bb.ad unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.ad:                                            ; preds = %_RNCNvMsi_NtNtCsbi23obv45GP_19pyo3_macros_backend10pyfunction9signatureNtB7_17FunctionSignature14text_signature0Bb_.exit20
-  %i.bf = invoke { ptr, i64 } @_RNvXsx_NtCsexYYUdYSQU6_5alloc6stringNtB5_6StringNtNtNtCskKLDkoKarTP_4core3ops5deref5Deref5derefCsbi23obv45GP_19pyo3_macros_backend(ptr nonnull align 8 %i.bb)
+  %i.bf = invoke { ptr, i64 } @_RNvXsx_NtCsexYYUdYSQU6_5alloc6stringNtB5_6StringNtNtNtCskKLDkoKarTP_4core3ops5deref5Deref5derefCsbi23obv45GP_19pyo3_macros_backend(ptr nonnull align 8 %8)
           to label %bb.ae unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 bb.ae:                                            ; preds = %bb.ad
@@ -389,7 +396,7 @@ bb.ae:                                            ; preds = %bb.ad
           to label %bb.af unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.af:                                            ; preds = %_RNCNvMsi_NtNtCsbi23obv45GP_19pyo3_macros_backend10pyfunction9signatureNtB7_17FunctionSignature14text_signature0Bb_.exit22, %bb.ae, %bb.ag
-  %.sroa.0.1 = phi i8 [ %.sroa.0.0.lcssa44, %bb.ag ], [ 0, %_RNCNvMsi_NtNtCsbi23obv45GP_19pyo3_macros_backend10pyfunction9signatureNtB7_17FunctionSignature14text_signature0Bb_.exit22 ], [ 0, %bb.ae ]
+  %.sroa.0.1 = phi i8 [ %.sroa.0.0.lcssa4474, %bb.ag ], [ 0, %_RNCNvMsi_NtNtCsbi23obv45GP_19pyo3_macros_backend10pyfunction9signatureNtB7_17FunctionSignature14text_signature0Bb_.exit22 ], [ 0, %bb.ae ]
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.bj = invoke { ptr, ptr } @_RNvXsh_NtCsexYYUdYSQU6_5alloc3vecRINtB5_3VecTNtNtB7_6string6StringINtNtCskKLDkoKarTP_4core6option6OptionNtNtCs1QQTzni0HOp_3syn4expr4ExprEEENtNtNtNtB17_4iter6traits7collect12IntoIterator9into_iterCsbi23obv45GP_19pyo3_macros_backend(ptr nonnull align 8 %i.bi)
           to label %.peel.begin53 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
@@ -398,7 +405,7 @@ bb.ag:                                            ; preds = %bb.ac
   br i1 %i.be, label %bb.af, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
-  %i.bk = trunc nuw i8 %.sroa.0.0.lcssa44 to i1
+  %i.bk = trunc nuw i8 %.sroa.0.0.lcssa4474 to i1
   br i1 %i.bk, label %_RNCNvMsi_NtNtCsbi23obv45GP_19pyo3_macros_backend10pyfunction9signatureNtB7_17FunctionSignature14text_signature0Bb_.exit22, label %bb.ai
 
 bb.ai:                                            ; preds = %bb.ah

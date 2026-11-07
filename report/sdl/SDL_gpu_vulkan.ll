@@ -205,14 +205,18 @@ bb.c:                                             ; preds = %bb.b
   %i.w = trunc nuw i8 %i.v to i1
   br i1 %i.w, label %.lr.ph.split, label %.loopexit
 
-.lr.ph.split:                                     ; preds = %.lr.ph, %VULKAN_INTERNAL_SetBufferName.exit
-  %i.x = phi i32 [ %i.ak, %VULKAN_INTERNAL_SetBufferName.exit ], [ %i.n, %.lr.ph ] ; 2 uses
-  %indvars.iv = phi i64 [ %indvars.iv.next, %VULKAN_INTERNAL_SetBufferName.exit ], [ 0, %.lr.ph ] ; 2 uses
+.lr.ph.splitthread-pre-split:                     ; preds = %VULKAN_INTERNAL_SetBufferName.exit
+  %.pr = load i8, ptr %i.c, align 4
+  br label %.lr.ph.split
+
+.lr.ph.split:                                     ; preds = %.lr.ph, %.lr.ph.splitthread-pre-split
+  %4 = phi i8 [ %.pr, %.lr.ph.splitthread-pre-split ], [ 1, %.lr.ph ]
+  %i.x = phi i32 [ %i.ak, %.lr.ph.splitthread-pre-split ], [ %i.n, %.lr.ph ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph.splitthread-pre-split ], [ 0, %.lr.ph ] ; 2 uses
   %i.y = load ptr, ptr %i.o, align 8
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %indvars.iv
   %i.aa = load ptr, ptr %i.z, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
-  %4 = load i8, ptr %i.c, align 4, !range !23, !noundef !24
   %i.ab = trunc nuw i8 %4 to i1
   br i1 %i.ab, label %bb.d, label %VULKAN_INTERNAL_SetBufferName.exit
 
@@ -242,7 +246,7 @@ VULKAN_INTERNAL_SetBufferName.exit:               ; preds = %.lr.ph.split, %bb.d
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.al = zext i32 %i.ak to i64
   %i.am = icmp samesign ult i64 %indvars.iv.next, %i.al
-  br i1 %i.am, label %.lr.ph.split, label %.loopexit, !llvm.loop !85
+  br i1 %i.am, label %.lr.ph.splitthread-pre-split, label %.loopexit, !llvm.loop !85
 
 .loopexit:                                        ; preds = %VULKAN_INTERNAL_SetBufferName.exit, %.lr.ph, %bb.c, %bb.b, %bb.a
   ret void
@@ -288,14 +292,18 @@ bb.c:                                             ; preds = %bb.b
   %i.w = trunc nuw i8 %i.v to i1
   br i1 %i.w, label %.lr.ph.split, label %.loopexit
 
-.lr.ph.split:                                     ; preds = %.lr.ph, %VULKAN_INTERNAL_SetTextureName.exit
-  %i.x = phi i32 [ %i.ak, %VULKAN_INTERNAL_SetTextureName.exit ], [ %i.n, %.lr.ph ] ; 2 uses
-  %indvars.iv = phi i64 [ %indvars.iv.next, %VULKAN_INTERNAL_SetTextureName.exit ], [ 0, %.lr.ph ] ; 2 uses
+.lr.ph.splitthread-pre-split:                     ; preds = %VULKAN_INTERNAL_SetTextureName.exit
+  %.pr = load i8, ptr %i.c, align 4
+  br label %.lr.ph.split
+
+.lr.ph.split:                                     ; preds = %.lr.ph, %.lr.ph.splitthread-pre-split
+  %4 = phi i8 [ %.pr, %.lr.ph.splitthread-pre-split ], [ 1, %.lr.ph ]
+  %i.x = phi i32 [ %i.ak, %.lr.ph.splitthread-pre-split ], [ %i.n, %.lr.ph ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %.lr.ph.splitthread-pre-split ], [ 0, %.lr.ph ] ; 2 uses
   %i.y = load ptr, ptr %i.o, align 8
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.y, i64 %indvars.iv
   %i.aa = load ptr, ptr %i.z, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #13
-  %4 = load i8, ptr %i.c, align 4, !range !23, !noundef !24
   %i.ab = trunc nuw i8 %4 to i1
   br i1 %i.ab, label %bb.d, label %VULKAN_INTERNAL_SetTextureName.exit
 
@@ -325,7 +333,7 @@ VULKAN_INTERNAL_SetTextureName.exit:              ; preds = %.lr.ph.split, %bb.d
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %i.al = zext i32 %i.ak to i64
   %i.am = icmp samesign ult i64 %indvars.iv.next, %i.al
-  br i1 %i.am, label %.lr.ph.split, label %.loopexit, !llvm.loop !87
+  br i1 %i.am, label %.lr.ph.splitthread-pre-split, label %.loopexit, !llvm.loop !87
 
 .loopexit:                                        ; preds = %VULKAN_INTERNAL_SetTextureName.exit, %.lr.ph, %bb.c, %bb.b, %bb.a
   ret void

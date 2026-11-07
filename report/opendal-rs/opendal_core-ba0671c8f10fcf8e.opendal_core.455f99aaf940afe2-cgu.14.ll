@@ -204,13 +204,14 @@ bb.a:
           to label %common.resume unwind label %bb.bg, !noalias !1630
 
 .split.i.i:                                       ; preds = %.split.i.i.backedge, %bb.a
-  %.promoted.i472.i = phi i1 [ false, %bb.a ], [ %.promoted.i471.i, %.split.i.i.backedge ]
+  %3 = phi i8 [ 0, %bb.a ], [ %6, %.split.i.i.backedge ]
   %.lcssa322394.i = phi i64 [ 0, %bb.a ], [ %.lcssa322393.i, %.split.i.i.backedge ] ; 3 uses
   %.lcssa383387.i = phi i64 [ 0, %bb.a ], [ %.lcssa383385.i, %.split.i.i.backedge ]
   %i.az = phi i64 [ 0, %bb.a ], [ %.be, %.split.i.i.backedge ] ; 3 uses
   %.lcssa1519.i.i = phi i64 [ 0, %bb.a ], [ %.lcssa1519.i.i.be, %.split.i.i.backedge ] ; 5 uses
-  %3 = phi i1 [ false, %bb.a ], [ %.be333, %.split.i.i.backedge ]
-  br i1 %3, label %_RNvMs4_NtNtCs5XgW7KoffLW_12opendal_core6layers19capability_overrideNtB5_19CapabilityOverrides5parse.exit.thread, label %bb.b
+  %4 = phi i8 [ 0, %bb.a ], [ %.be334, %.split.i.i.backedge ]
+  %5 = trunc nuw i8 %4 to i1
+  br i1 %5, label %_RNvMs4_NtNtCs5XgW7KoffLW_12opendal_core6layers19capability_overrideNtB5_19CapabilityOverrides5parse.exit.thread, label %bb.b
 
 bb.b:                                             ; preds = %.split.i.i
   %i.ba = icmp ult i64 %2, %i.az
@@ -275,12 +276,12 @@ bb.g:                                             ; preds = %bb.e
   br i1 %i.bt, label %select.unfold.i.i, label %bb.f
 
 select.unfold.i.i:                                ; preds = %bb.g, %_RNvNtNtCsgxBkk5gSRhY_4core5slice6memchr6memchr.exit.i.i.i.i.i, %bb.f, %bb.b
-  %.promoted.i471.i = phi i1 [ true, %bb.b ], [ true, %bb.f ], [ true, %_RNvNtNtCsgxBkk5gSRhY_4core5slice6memchr6memchr.exit.i.i.i.i.i ], [ %.promoted.i472.i, %bb.g ] ; 2 uses
+  %6 = phi i8 [ 1, %bb.b ], [ 1, %bb.f ], [ 1, %_RNvNtNtCsgxBkk5gSRhY_4core5slice6memchr6memchr.exit.i.i.i.i.i ], [ %3, %bb.g ] ; 2 uses
   %.lcssa322393.i = phi i64 [ %.lcssa322394.i, %bb.b ], [ %.lcssa322394.i, %bb.f ], [ %.lcssa322394.i, %_RNvNtNtCsgxBkk5gSRhY_4core5slice6memchr6memchr.exit.i.i.i.i.i ], [ %i.bq, %bb.g ] ; 2 uses
   %.lcssa383385.i = phi i64 [ %.lcssa383387.i, %bb.b ], [ %i.bq, %bb.f ], [ %2, %_RNvNtNtCsgxBkk5gSRhY_4core5slice6memchr6memchr.exit.i.i.i.i.i ], [ %i.bq, %bb.g ] ; 2 uses
   %i.bu = phi i64 [ %i.az, %bb.b ], [ %i.bq, %bb.f ], [ %2, %_RNvNtNtCsgxBkk5gSRhY_4core5slice6memchr6memchr.exit.i.i.i.i.i ], [ %i.bq, %bb.g ]
   %.lcssa1518.i.i = phi i64 [ %.lcssa1519.i.i, %bb.b ], [ %.lcssa1519.i.i, %bb.f ], [ %.lcssa1519.i.i, %_RNvNtNtCsgxBkk5gSRhY_4core5slice6memchr6memchr.exit.i.i.i.i.i ], [ %i.bq, %bb.g ]
-  %4 = phi i1 [ true, %bb.b ], [ true, %bb.f ], [ true, %_RNvNtNtCsgxBkk5gSRhY_4core5slice6memchr6memchr.exit.i.i.i.i.i ], [ false, %bb.g ]
+  %7 = phi i8 [ 1, %bb.b ], [ 1, %bb.f ], [ 1, %_RNvNtNtCsgxBkk5gSRhY_4core5slice6memchr6memchr.exit.i.i.i.i.i ], [ 0, %bb.g ]
   %.pn.i.i = phi i64 [ %2, %bb.b ], [ %2, %bb.f ], [ %2, %_RNvNtNtCsgxBkk5gSRhY_4core5slice6memchr6memchr.exit.i.i.i.i.i ], [ %i.br, %bb.g ]
   %.sroa.4.1.i.i.i.i = sub nuw i64 %.pn.i.i, %.lcssa1519.i.i
   %.sroa.0.1.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 %.lcssa1519.i.i
@@ -298,7 +299,7 @@ select.unfold.i.i:                                ; preds = %bb.g, %_RNvNtNtCsgx
 .split.i.i.backedge:                              ; preds = %.noexc240.i, %bb.be
   %.be = phi i64 [ %i.bu, %.noexc240.i ], [ %.lcssa383385.i, %bb.be ]
   %.lcssa1519.i.i.be = phi i64 [ %.lcssa1518.i.i, %.noexc240.i ], [ %.lcssa322393.i, %bb.be ]
-  %.be333 = phi i1 [ %4, %.noexc240.i ], [ %.promoted.i471.i, %bb.be ]
+  %.be334 = phi i8 [ %7, %.noexc240.i ], [ %6, %bb.be ]
   br label %.split.i.i
 
 bb.h:                                             ; preds = %.noexc240.i

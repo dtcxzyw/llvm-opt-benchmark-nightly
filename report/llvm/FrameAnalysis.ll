@@ -202,7 +202,7 @@ bb.z:                                             ; preds = %bb.q, %_ZNSt3mapIPK
   br i1 %.not86, label %.loopexit231, label %bb.h
 
 .loopexit231:                                     ; preds = %._crit_edge, %bb.g, %.thread219
-  %.478 = phi i1 [ true, %.thread219 ], [ false, %bb.g ], [ false, %._crit_edge ]
+  %.478 = phi i1 [ false, %.thread219 ], [ true, %bb.g ], [ true, %._crit_edge ]
   %.673 = phi i8 [ %.168241, %.thread219 ], [ 0, %bb.g ], [ %.168.lcssa, %._crit_edge ] ; 2 uses
   %i.gu = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
   %i.gv = load ptr, ptr %i.gu, align 8, !tbaa !289, !noalias !665
@@ -255,7 +255,7 @@ _ZNK4llvm6detail12DenseSetImplIPKNS_4bolt14BinaryFunctionENS_8DenseMapIS5_NS0_13
   br label %bb.ag
 
 .loopexit230:                                     ; preds = %bb.ab, %.loopexit231, %bb.aa
-  br i1 %.478, label %bb.ac, label %bb.ad
+  br i1 %.478, label %bb.ad, label %bb.ac
 
 bb.ac:                                            ; preds = %.loopexit230
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g) #26
@@ -658,11 +658,11 @@ bb.ae:                                            ; preds = %bb.ad
 bb.af:                                            ; preds = %bb.ae
   %i.gh = load i8, ptr %i.fz, align 8, !tbaa !698
   %.not.i = icmp eq i8 %i.gh, 0
-  %.pre.i = load i8, ptr %i.fv, align 8, !tbaa !699, !range !52
-  %6 = trunc nuw i8 %.pre.i to i1                 ; 2 uses
+  %.pre.i = load i8, ptr %i.fv, align 8, !tbaa !699 ; 2 uses
   br i1 %.not.i, label %bb.ag, label %bb.ai
 
 bb.ag:                                            ; preds = %bb.af
+  %6 = trunc nuw i8 %.pre.i to i1
   br i1 %6, label %_ZN4llvm4bolt12_GLOBAL__N_119FrameAccessAnalysis17decodeFrameAccessERKNS_6MCInstE.exit, label %bb.ah
 
 bb.ah:                                            ; preds = %bb.ag
@@ -680,7 +680,8 @@ bb.ai:                                            ; preds = %bb.af
   %i.gm = load i32, ptr %i.a, align 4, !tbaa !223
   %i.gn = getelementptr inbounds nuw i8, ptr %0, i64 148 ; 3 uses
   store i32 %i.gm, ptr %i.gn, align 4, !tbaa !701
-  br i1 %6, label %bb.ak, label %bb.aj
+  %7 = trunc nuw i8 %.pre.i to i1
+  br i1 %7, label %bb.ak, label %bb.aj
 
 bb.aj:                                            ; preds = %bb.ai, %.thread.i
   %i.go = phi ptr [ %i.gl, %.thread.i ], [ %i.gn, %bb.ai ]

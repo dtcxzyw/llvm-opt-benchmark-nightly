@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 752
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 2200
   %i.z = tail call noundef nonnull align 8 dereferenceable(127) ptr @_ZN5video9SMaterialaSERKS0_(ptr noundef nonnull align 8 dereferenceable(127) %i.y, ptr noundef nonnull align 8 dereferenceable(127) %i.x) ; 0 uses
-  %.pre.i = load i8, ptr %i.u, align 8, !tbaa !313, !range !144
+  %.pre.i = load i8, ptr %i.u, align 8, !tbaa !313
   %i.aa = trunc nuw i8 %.pre.i to i1
   br i1 %i.aa, label %.thread.i, label %_ZN5video18COpenGL3DriverBase16chooseMaterial2DEv.exit
 
@@ -471,7 +471,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 752
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 2200
   %i.f = tail call noundef nonnull align 8 dereferenceable(127) ptr @_ZN5video9SMaterialaSERKS0_(ptr noundef nonnull align 8 dereferenceable(127) %i.e, ptr noundef nonnull align 8 dereferenceable(127) %i.d) ; 0 uses
-  %.pre = load i8, ptr %i.a, align 8, !tbaa !313, !range !144
+  %.pre = load i8, ptr %i.a, align 8, !tbaa !313
   %i.g = trunc nuw i8 %.pre to i1
   br i1 %i.g, label %.thread, label %bb.c
 
@@ -538,7 +538,7 @@ bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 752
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 2200
   %i.f = tail call noundef nonnull align 8 dereferenceable(127) ptr @_ZN5video9SMaterialaSERKS0_(ptr noundef nonnull align 8 dereferenceable(127) %i.e, ptr noundef nonnull align 8 dereferenceable(127) %i.d) ; 0 uses
-  %.pre.i = load i8, ptr %i.a, align 8, !tbaa !313, !range !144
+  %.pre.i = load i8, ptr %i.a, align 8, !tbaa !313
   %i.g = trunc nuw i8 %.pre.i to i1
   br i1 %i.g, label %.thread.i, label %_ZN5video18COpenGL3DriverBase16chooseMaterial2DEv.exit
 
@@ -658,7 +658,7 @@ bb.c:                                             ; preds = %bb.b
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 752
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 2200
   %i.f = tail call noundef nonnull align 8 dereferenceable(127) ptr @_ZN5video9SMaterialaSERKS0_(ptr noundef nonnull align 8 dereferenceable(127) %i.e, ptr noundef nonnull align 8 dereferenceable(127) %i.d) ; 0 uses
-  %.pre.i = load i8, ptr %i.a, align 8, !tbaa !313, !range !144
+  %.pre.i = load i8, ptr %i.a, align 8, !tbaa !313
   %i.g = trunc nuw i8 %.pre.i to i1
   br i1 %i.g, label %.thread.i, label %_ZN5video18COpenGL3DriverBase16chooseMaterial2DEv.exit
 
@@ -1061,7 +1061,7 @@ bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 752
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 2200
   %i.o = tail call noundef nonnull align 8 dereferenceable(127) ptr @_ZN5video9SMaterialaSERKS0_(ptr noundef nonnull align 8 dereferenceable(127) %i.n, ptr noundef nonnull align 8 dereferenceable(127) %i.m) ; 0 uses
-  %.pre.i = load i8, ptr %i.j, align 8, !tbaa !313, !range !144
+  %.pre.i = load i8, ptr %i.j, align 8, !tbaa !313
   %i.p = trunc nuw i8 %.pre.i to i1
   br i1 %i.p, label %.thread.i, label %_ZN5video18COpenGL3DriverBase16chooseMaterial2DEv.exit
 
@@ -1242,7 +1242,7 @@ bb.b:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 752
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 2200
   %i.f = tail call noundef nonnull align 8 dereferenceable(127) ptr @_ZN5video9SMaterialaSERKS0_(ptr noundef nonnull align 8 dereferenceable(127) %i.e, ptr noundef nonnull align 8 dereferenceable(127) %i.d) ; 0 uses
-  %.pre.i = load i8, ptr %i.a, align 8, !tbaa !313, !range !144
+  %.pre.i = load i8, ptr %i.a, align 8, !tbaa !313
   %i.g = trunc nuw i8 %.pre.i to i1
   br i1 %i.g, label %.thread.i, label %_ZN5video18COpenGL3DriverBase16chooseMaterial2DEv.exit
 
@@ -1645,7 +1645,7 @@ bb.a:
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 126
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 1022
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 992
-  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 1023
+  %i.g = getelementptr inbounds nuw i8, ptr %0, i64 1023 ; 2 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 976 ; 2 uses
   %i.i = zext i8 %i.b to i64
   br label %bb.b
@@ -1685,7 +1685,7 @@ bb.d:                                             ; preds = %bb.c
   br label %_ZN5video23COpenGLCoreCacheHandlerINS_18COpenGL3DriverBaseENS_18COpenGLCoreTextureIS1_EEE16setActiveTextureEj.exit
 
 _ZN5video23COpenGLCoreCacheHandlerINS_18COpenGL3DriverBaseENS_18COpenGLCoreTextureIS1_EEE16setActiveTextureEj.exit: ; preds = %bb.c, %bb.d
-  %i.x = getelementptr inbounds nuw [24 x i8], ptr %1, i64 %i.j ; 14 uses
+  %i.x = getelementptr inbounds nuw [24 x i8], ptr %1, i64 %i.j ; 15 uses
   %i.y = getelementptr inbounds nuw i8, ptr %i.o, i64 201 ; 2 uses
   %i.z = getelementptr inbounds nuw i8, ptr %i.o, i64 209 ; 2 uses
   br i1 %2, label %.thread, label %bb.e
@@ -1852,7 +1852,7 @@ bb.w:                                             ; preds = %bb.v
   %i.bw = getelementptr inbounds nuw i8, ptr %i.o, i64 204
   %i.bx = load i8, ptr %i.bw, align 4, !tbaa !562
   %.not90 = icmp eq i8 %i.bv, %i.bx
-  br i1 %.not90, label %bb.z, label %._crit_edge124
+  br i1 %.not90, label %.thread152, label %._crit_edge124
 
 ._crit_edge124:                                   ; preds = %bb.v, %bb.w
   %i.by = getelementptr inbounds nuw i8, ptr %i.x, i64 13
@@ -1880,33 +1880,44 @@ bb.y:                                             ; preds = %._crit_edge124, %bb
   %.pre131.pre = load i8, ptr %i.an, align 1, !tbaa !557, !range !144
   br label %bb.z
 
-bb.z:                                             ; preds = %bb.y, %bb.w, %bb.u
-  %.pre131 = phi i8 [ %.pre131.pre, %bb.y ], [ 1, %bb.w ], [ %.pre131.pre139, %bb.u ] ; 2 uses
+bb.z:                                             ; preds = %bb.y, %bb.u
+  %.pre131 = phi i8 [ %.pre131.pre, %bb.y ], [ %.pre131.pre139, %bb.u ] ; 2 uses
   %i.ck = load i8, ptr %i.g, align 1, !tbaa !565, !range !144, !noundef !145
   %i.cl = trunc nuw i8 %i.ck to i1
-  br i1 %i.cl, label %bb.aa, label %bb.ae
+  br i1 %i.cl, label %5, label %bb.ae
 
-bb.aa:                                            ; preds = %bb.z
-  %3 = trunc nuw i8 %.pre131 to i1
+.thread152:                                       ; preds = %bb.w
+  %3 = load i8, ptr %i.g, align 1, !tbaa !565, !range !144, !noundef !145
+  %4 = trunc nuw i8 %3 to i1
+  br i1 %4, label %bb.ab, label %.thread152.a
+
+5:                                                ; preds = %bb.z
+  %6 = trunc nuw i8 %.pre131 to i1
+  br i1 %6, label %bb.ab, label %bb.aa
+
+bb.aa:                                            ; preds = %5
   %i.cm = getelementptr inbounds nuw i8, ptr %i.x, i64 12
-  %i.cn = load i8, ptr %i.cm, align 4, !tbaa !370 ; 3 uses
-  br i1 %3, label %bb.ab, label %._crit_edge127
+  %i.cn = load i8, ptr %i.cm, align 4, !tbaa !370
+  br label %._crit_edge127
 
-bb.ab:                                            ; preds = %bb.aa
+bb.ab:                                            ; preds = %.thread152, %5
+  %7 = getelementptr inbounds nuw i8, ptr %i.x, i64 12
+  %8 = load i8, ptr %7, align 4, !tbaa !370       ; 2 uses
   %i.co = getelementptr inbounds nuw i8, ptr %i.o, i64 205
   %i.cp = load i8, ptr %i.co, align 1, !tbaa !566
-  %.not92 = icmp eq i8 %i.cn, %i.cp
+  %.not92 = icmp eq i8 %8, %i.cp
   br i1 %.not92, label %.thread152.a, label %._crit_edge127
 
 ._crit_edge127:                                   ; preds = %bb.aa, %bb.ab
+  %9 = phi i8 [ %i.cn, %bb.aa ], [ %8, %bb.ab ]   ; 2 uses
   %i.cq = load ptr, ptr getelementptr inbounds nuw (i8, ptr @GL, i64 128), align 8, !tbaa !361
   %i.cr = getelementptr inbounds nuw i8, ptr %i.x, i64 12 ; 2 uses
-  %i.cs = icmp ugt i8 %i.cn, 1
+  %i.cs = icmp ugt i8 %9, 1
   br i1 %i.cs, label %bb.ac, label %bb.ad
 
 bb.ac:                                            ; preds = %._crit_edge127
   %i.ct = load i8, ptr %i.h, align 8, !tbaa !142
-  %i.cu = icmp ult i8 %i.ct, %i.cn
+  %i.cu = icmp ult i8 %i.ct, %9
   %i.cv = select i1 %i.cu, ptr %i.h, ptr %i.cr
   %i.cw = load i8, ptr %i.cv, align 4, !tbaa !142
   %i.cx = zext i8 %i.cw to i32
@@ -1931,7 +1942,7 @@ bb.ae:                                            ; preds = %bb.ad, %bb.z
   %.pre134 = load i16, ptr %.phi.trans.insert133, align 8
   br label %bb.af
 
-.thread152.a:                                     ; preds = %bb.ab, %bb.ae
+.thread152.a:                                     ; preds = %.thread152, %bb.ab, %bb.ae
   %i.dd = getelementptr inbounds nuw i8, ptr %i.x, i64 8
   %i.de = load i16, ptr %i.dd, align 8            ; 2 uses
   %i.df = and i16 %i.de, 15
@@ -2334,7 +2345,7 @@ bb.p:                                             ; preds = %_ZN4core5arrayIjEix
 
 ._crit_edge:                                      ; preds = %bb.s, %.preheader
   store i8 0, ptr %i.e, align 2, !tbaa !386
-  %.pre81 = load i8, ptr %i.h, align 1, !tbaa !392, !range !144
+  %.pre81 = load i8, ptr %i.h, align 1, !tbaa !392
   br label %bb.t
 
 .lr.ph71:                                         ; preds = %.lr.ph71.preheader, %bb.s

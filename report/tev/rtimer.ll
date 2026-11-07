@@ -201,7 +201,7 @@ bb.a:
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 144
   br label %bb.b
 
-bb.b:                                             ; preds = %.lr.ph, %.loopexit
+bb.b:                                             ; preds = %.critedge.backedge, %.lr.ph
   %i.k = load i8, ptr %i.f, align 1, !tbaa !36, !range !40, !noundef !41
   %i.l = trunc nuw i8 %i.k to i1
   br i1 %i.l, label %.preheader.preheader, label %bb.c
@@ -272,12 +272,12 @@ _ZNSt3__118condition_variable15__do_timed_waitB8ne180100ERNS_11unique_lockINS_5m
 _ZNSt3__118condition_variable10wait_untilINS_6chrono12steady_clockENS2_8durationIxNS_5ratioILl1ELl1000000000EEEEEEENS_9cv_statusERNS_11unique_lockINS_5mutexEEERKNS2_10time_pointIT_T0_EE.exit: ; preds = %_ZNSt3__118condition_variable15__do_timed_waitB8ne180100ERNS_11unique_lockINS_5mutexEEENS_6chrono10time_pointINS5_12steady_clockENS5_8durationIxNS_5ratioILl1ELl1000000000EEEEEEE.exit.i, %bb.d
   %i.aa = load i8, ptr %i.c, align 16, !tbaa !35, !range !40, !noundef !41
   %i.ab = trunc nuw i8 %i.aa to i1
-  br i1 %i.ab, label %.loopexit, label %bb.h
+  br i1 %i.ab, label %._crit_edge, label %bb.h
 
 bb.h:                                             ; preds = %_ZNSt3__118condition_variable10wait_untilINS_6chrono12steady_clockENS2_8durationIxNS_5ratioILl1ELl1000000000EEEEEEENS_9cv_statusERNS_11unique_lockINS_5mutexEEERKNS2_10time_pointIT_T0_EE.exit
   %i.ac = load i8, ptr %i.f, align 1, !tbaa !36, !range !40, !noundef !41
   %i.ad = trunc nuw i8 %i.ac to i1
-  br i1 %i.ad, label %bb.i, label %.loopexit
+  br i1 %i.ad, label %bb.i, label %.critedge.backedge
 
 .loopexit.split-lp13.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %bb.n, %_ZNKSt3__110__function12__value_funcIFvvEEclB8ne180100Ev.exit.i, %.invoke, %bb.l
   %lpad.loopexit.split-lp28 = landingpad { ptr, i32 }
@@ -347,12 +347,15 @@ _ZNSt3__111unique_lockINS_5mutexEE4lockEv.exit:   ; preds = %bb.n
   store i8 1, ptr %i.b, align 8, !tbaa !56
   br label %.loopexit
 
-.loopexit:                                        ; preds = %_ZNSt3__118condition_variable10wait_untilINS_6chrono12steady_clockENS2_8durationIxNS_5ratioILl1ELl1000000000EEEEEEENS_9cv_statusERNS_11unique_lockINS_5mutexEEERKNS2_10time_pointIT_T0_EE.exit, %bb.h, %.preheader, %_ZNSt3__111unique_lockINS_5mutexEE4lockEv.exit
-  %i.av = load i8, ptr %i.c, align 16, !tbaa !35, !range !40, !noundef !41
+.loopexit:                                        ; preds = %.preheader, %_ZNSt3__111unique_lockINS_5mutexEE4lockEv.exit
+  %i.av = load i8, ptr %i.c, align 16, !tbaa !35
   %i.aw = trunc nuw i8 %i.av to i1
-  br i1 %i.aw, label %._crit_edge, label %bb.b, !llvm.loop !52
+  br i1 %i.aw, label %._crit_edge, label %.critedge.backedge
 
-._crit_edge:                                      ; preds = %.loopexit, %bb.c
+.critedge.backedge:                               ; preds = %bb.h, %.loopexit
+  br label %bb.b, !llvm.loop !52
+
+._crit_edge:                                      ; preds = %.loopexit, %bb.c, %_ZNSt3__118condition_variable10wait_untilINS_6chrono12steady_clockENS2_8durationIxNS_5ratioILl1ELl1000000000EEEEEEENS_9cv_statusERNS_11unique_lockINS_5mutexEEERKNS2_10time_pointIT_T0_EE.exit
   %.pre21 = load i8, ptr %i.b, align 8, !tbaa !56, !range !40
   %i.ax = trunc nuw i8 %.pre21 to i1
   br i1 %i.ax, label %._crit_edge.thread, label %_ZNSt3__111unique_lockINS_5mutexEED2B8ne180100Ev.exit

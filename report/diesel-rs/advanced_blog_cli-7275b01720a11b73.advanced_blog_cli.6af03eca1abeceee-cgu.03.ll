@@ -204,12 +204,12 @@ _RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters3map3MapINtNtN
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal fastcc void @_RINvXs2_NtCsjRvGck33osM_6diesel11deserializeINtNtCscI6d9CVNmLh_4core6option6OptionNtNtNtCslCQnfik72jt_6chrono5naive8datetime13NaiveDateTimeEINtB6_16FromStaticSqlRowINtNtB8_9sql_types8NullableNtB2F_9TimestampENtNtNtB8_2pg7backend2PgE14build_from_rowINtNtNtB8_3row7private10PartialRowNtNtNtB3o_10connection3row5PgRowEECs9bejAFUsR8E_17advanced_blog_cli(ptr dead_on_unwind noalias nofree noundef nonnull writable align 8 captures(none) dereferenceable(24) initializes((0, 4)) %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1) unnamed_addr #0 personality ptr @rust_eh_personality !guid !142 {
+define internal fastcc void @_RINvXs2_NtCsjRvGck33osM_6diesel11deserializeINtNtCscI6d9CVNmLh_4core6option6OptionNtNtNtCslCQnfik72jt_6chrono5naive8datetime13NaiveDateTimeEINtB6_16FromStaticSqlRowINtNtB8_9sql_types8NullableNtB2F_9TimestampENtNtNtB8_2pg7backend2PgE14build_from_rowINtNtNtB8_3row7private10PartialRowNtNtNtB3o_10connection3row5PgRowEECs9bejAFUsR8E_17advanced_blog_cli(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(24) initializes((0, 4)) %0, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %1) unnamed_addr #0 personality ptr @rust_eh_personality !guid !142 {
 bb.a:
   %i.a = alloca [16 x i8], align 16               ; 4 uses
   %i.b = alloca [24 x i8], align 8                ; 4 uses
   %i.c = alloca [40 x i8], align 8                ; 5 uses
-  %i.d = alloca [24 x i8], align 8                ; 7 uses
+  %i.d = alloca [24 x i8], align 8                ; 8 uses
   %i.e = alloca [32 x i8], align 8                ; 5 uses
   %i.f = alloca [24 x i8], align 8                ; 4 uses
   %i.g = alloca [32 x i8], align 8                ; 7 uses
@@ -274,24 +274,24 @@ bb.e:                                             ; preds = %_RNCINvXs2_NtCsjRvG
 
 bb.f:                                             ; preds = %bb.c
   %i.s = getelementptr inbounds nuw i8, ptr %i.d, i64 8
-  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %2 = load <2 x ptr>, ptr %i.s, align 8, !noalias !145
-  store <2 x ptr> %2, ptr %i.t, align 8, !alias.scope !143
+  %2 = load ptr, ptr %i.s, align 8, !noalias !145, !nonnull !5, !noundef !5 ; 5 uses
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 16
+  %4 = load ptr, ptr %3, align 8, !noalias !145, !nonnull !5, !align !6, !noundef !5 ; 5 uses
+  %i.t = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  store ptr %2, ptr %i.t, align 8, !alias.scope !143
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
+  store ptr %4, ptr %5, align 8, !alias.scope !143
   store i32 1, ptr %0, align 8, !alias.scope !143
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !145
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !145
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %4 = load ptr, ptr %3, align 8, !nonnull !5, !noundef !5 ; 4 uses
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %6 = load ptr, ptr %5, align 8, !nonnull !5, !align !6, !noundef !5 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.f, ptr noundef nonnull align 8 dereferenceable(24) %i.i, i64 24, i1 false)
   call void @llvm.experimental.noalias.scope.decl(metadata !146)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !147
-  %i.u = getelementptr inbounds nuw i8, ptr %6, i64 56
+  %i.u = getelementptr inbounds nuw i8, ptr %4, i64 56
   %i.v = load ptr, ptr %i.u, align 8, !invariant.load !5, !alias.scope !146, !nonnull !5
-  invoke void %i.v(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noundef nonnull %4)
+  invoke void %i.v(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noundef nonnull %2)
           to label %bb.g unwind label %bb.l, !noalias !147
 
 bb.g:                                             ; preds = %bb.f
@@ -304,7 +304,7 @@ bb.h:                                             ; preds = %bb.g
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !147
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !147
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull readonly align 8 dereferenceable(24) %i.f, i64 24, i1 false), !noalias !146
-  call void @_RINvMsh_NtCsjRvGck33osM_6diesel6resultNtB6_21DeserializeFieldError3newNtNtNtNtB8_2pg10connection3row7PgFieldNtNtB1c_7backend2PgECs9bejAFUsR8E_17advanced_blog_cli(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.c, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.b, ptr noundef nonnull %4, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %6), !noalias !148
+  call void @_RINvMsh_NtCsjRvGck33osM_6diesel6resultNtB6_21DeserializeFieldError3newNtNtNtNtB8_2pg10connection3row7PgFieldNtNtB1c_7backend2PgECs9bejAFUsR8E_17advanced_blog_cli(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.c, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.b, ptr noundef nonnull %2, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %4), !noalias !148
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !147
   %i.y = invoke fastcc noundef ptr @_RNvNtCs40k4W9msRzi_5alloc5boxed14box_new_uninit(i64 noundef 8, i64 noundef 40)
           to label %bb.k unwind label %bb.i, !noalias !149 ; 2 uses
@@ -329,7 +329,7 @@ bb.k:                                             ; preds = %bb.h
 bb.l:                                             ; preds = %bb.f
   %i.ab = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB1w_4SendEL_EECs9bejAFUsR8E_17advanced_blog_cli(ptr nonnull %4, ptr nonnull readonly align 8 dereferenceable(80) %6) #21
+  invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB1w_4SendEL_EECs9bejAFUsR8E_17advanced_blog_cli(ptr nonnull %2, ptr nonnull readonly align 8 dereferenceable(80) %4) #21
           to label %.body.thread.i unwind label %bb.m, !noalias !148
 
 bb.m:                                             ; preds = %bb.l
@@ -343,10 +343,10 @@ bb.m:                                             ; preds = %bb.l
   resume { ptr, i32 } %eh.lpad-body9.i
 
 _RNCINvXs2_NtCsjRvGck33osM_6diesel11deserializeINtNtCscI6d9CVNmLh_4core6option6OptionNtNtNtCslCQnfik72jt_6chrono5naive8datetime13NaiveDateTimeEINtB8_16FromStaticSqlRowINtNtBa_9sql_types8NullableNtB2H_9TimestampENtNtNtBa_2pg7backend2PgE14build_from_rowINtNtNtBa_3row7private10PartialRowNtNtNtB3q_10connection3row5PgRowEE0Cs9bejAFUsR8E_17advanced_blog_cli.exit: ; preds = %bb.g, %bb.k
-  %.sroa.3.0.i = phi ptr [ @4, %bb.k ], [ %6, %bb.g ]
-  %.sroa.0.0.i = phi ptr [ %i.y, %bb.k ], [ %4, %bb.g ]
+  %.sroa.3.0.i = phi ptr [ @4, %bb.k ], [ %4, %bb.g ]
+  %.sroa.0.0.i = phi ptr [ %i.y, %bb.k ], [ %2, %bb.g ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
-  store ptr %.sroa.0.0.i, ptr %3, align 8
+  store ptr %.sroa.0.0.i, ptr %i.t, align 8
   store ptr %.sroa.3.0.i, ptr %5, align 8
   store i32 1, ptr %0, align 8
   br label %bb.e
@@ -582,11 +582,18 @@ _RNvYNtNtNtCslCQnfik72jt_6chrono5naive8datetime13NaiveDateTimeINtNtCsjRvGck33osM
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.d, ptr noundef nonnull readonly align 8 dereferenceable(32) %i.f, i64 32, i1 false), !noalias !189
   call void @_RNvXNtNtNtNtCsjRvGck33osM_6diesel2pg5types13date_and_time6chronoNtNtNtCslCQnfik72jt_6chrono5naive8datetime13NaiveDateTimeINtNtBa_11deserialize7FromSqlNtNtBa_9sql_types9TimestampNtNtB8_7backend2PgE8from_sql(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(32) %i.d), !noalias !190
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !191
-  %.pre.a = load i32, ptr %0, align 8, !range !12
-  %2 = trunc nuw i32 %.pre.a to i1
+  %.pre.a = load i32, ptr %0, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.e, ptr noundef nonnull align 8 dereferenceable(24) %i.h, i64 24, i1 false)
-  br i1 %2, label %bb.e, label %bb.d
+  %2 = trunc nuw i32 %.pre.a to i1
+  br i1 %2, label %_RNvYNtNtNtCslCQnfik72jt_6chrono5naive8datetime13NaiveDateTimeINtNtCsjRvGck33osM_6diesel11deserialize7FromSqlNtNtB12_9sql_types9TimestampNtNtNtB12_2pg7backend2PgE17from_nullable_sqlCs9bejAFUsR8E_17advanced_blog_cli.exit._crit_edge, label %bb.d
+
+_RNvYNtNtNtCslCQnfik72jt_6chrono5naive8datetime13NaiveDateTimeINtNtCsjRvGck33osM_6diesel11deserialize7FromSqlNtNtB12_9sql_types9TimestampNtNtNtB12_2pg7backend2PgE17from_nullable_sqlCs9bejAFUsR8E_17advanced_blog_cli.exit._crit_edge: ; preds = %_RNvYNtNtNtCslCQnfik72jt_6chrono5naive8datetime13NaiveDateTimeINtNtCsjRvGck33osM_6diesel11deserialize7FromSqlNtNtB12_9sql_types9TimestampNtNtNtB12_2pg7backend2PgE17from_nullable_sqlCs9bejAFUsR8E_17advanced_blog_cli.exit
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %.pre = load ptr, ptr %.phi.trans.insert, align 8
+  %.phi.trans.insert2 = getelementptr inbounds nuw i8, ptr %0, i64 16
+  %.pre3 = load ptr, ptr %.phi.trans.insert2, align 8
+  br label %bb.e
 
 bb.c:                                             ; preds = %bb.a
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g)
@@ -604,14 +611,14 @@ bb.d:                                             ; preds = %.sink.split, %_RNvY
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h)
   ret void
 
-bb.e:                                             ; preds = %_RNvYNtNtNtCslCQnfik72jt_6chrono5naive8datetime13NaiveDateTimeINtNtCsjRvGck33osM_6diesel11deserialize7FromSqlNtNtB12_9sql_types9TimestampNtNtNtB12_2pg7backend2PgE17from_nullable_sqlCs9bejAFUsR8E_17advanced_blog_cli.exit.thread, %_RNvYNtNtNtCslCQnfik72jt_6chrono5naive8datetime13NaiveDateTimeINtNtCsjRvGck33osM_6diesel11deserialize7FromSqlNtNtB12_9sql_types9TimestampNtNtNtB12_2pg7backend2PgE17from_nullable_sqlCs9bejAFUsR8E_17advanced_blog_cli.exit
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %4 = load ptr, ptr %3, align 8, !nonnull !5, !noundef !5 ; 4 uses
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %5 = load ptr, ptr %i.o, align 8, !nonnull !5, !align !6, !noundef !5 ; 4 uses
+bb.e:                                             ; preds = %_RNvYNtNtNtCslCQnfik72jt_6chrono5naive8datetime13NaiveDateTimeINtNtCsjRvGck33osM_6diesel11deserialize7FromSqlNtNtB12_9sql_types9TimestampNtNtNtB12_2pg7backend2PgE17from_nullable_sqlCs9bejAFUsR8E_17advanced_blog_cli.exit._crit_edge, %_RNvYNtNtNtCslCQnfik72jt_6chrono5naive8datetime13NaiveDateTimeINtNtCsjRvGck33osM_6diesel11deserialize7FromSqlNtNtB12_9sql_types9TimestampNtNtNtB12_2pg7backend2PgE17from_nullable_sqlCs9bejAFUsR8E_17advanced_blog_cli.exit.thread
+  %3 = phi ptr [ %.pre3, %_RNvYNtNtNtCslCQnfik72jt_6chrono5naive8datetime13NaiveDateTimeINtNtCsjRvGck33osM_6diesel11deserialize7FromSqlNtNtB12_9sql_types9TimestampNtNtNtB12_2pg7backend2PgE17from_nullable_sqlCs9bejAFUsR8E_17advanced_blog_cli.exit._crit_edge ], [ @19, %_RNvYNtNtNtCslCQnfik72jt_6chrono5naive8datetime13NaiveDateTimeINtNtCsjRvGck33osM_6diesel11deserialize7FromSqlNtNtB12_9sql_types9TimestampNtNtNtB12_2pg7backend2PgE17from_nullable_sqlCs9bejAFUsR8E_17advanced_blog_cli.exit.thread ] ; 4 uses
+  %4 = phi ptr [ %.pre, %_RNvYNtNtNtCslCQnfik72jt_6chrono5naive8datetime13NaiveDateTimeINtNtCsjRvGck33osM_6diesel11deserialize7FromSqlNtNtB12_9sql_types9TimestampNtNtNtB12_2pg7backend2PgE17from_nullable_sqlCs9bejAFUsR8E_17advanced_blog_cli.exit._crit_edge ], [ inttoptr (i64 1 to ptr), %_RNvYNtNtNtCslCQnfik72jt_6chrono5naive8datetime13NaiveDateTimeINtNtCsjRvGck33osM_6diesel11deserialize7FromSqlNtNtB12_9sql_types9TimestampNtNtNtB12_2pg7backend2PgE17from_nullable_sqlCs9bejAFUsR8E_17advanced_blog_cli.exit.thread ] ; 4 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 8
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16
   call void @llvm.experimental.noalias.scope.decl(metadata !192)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !193
-  %i.p = getelementptr inbounds nuw i8, ptr %5, i64 56
+  %i.p = getelementptr inbounds nuw i8, ptr %3, i64 56
   %i.q = load ptr, ptr %i.p, align 8, !invariant.load !5, !alias.scope !192, !nonnull !5
   invoke void %i.q(ptr noalias noundef nonnull sret([16 x i8]) align 8 captures(address) dereferenceable(16) %i.a, ptr noundef nonnull %4)
           to label %bb.f unwind label %bb.k, !noalias !193
@@ -626,7 +633,7 @@ bb.g:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !193
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !193
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.b, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false)
-  call void @_RINvMsh_NtCsjRvGck33osM_6diesel6resultNtB6_21DeserializeFieldError3newNtNtNtNtB8_2pg10connection3row7PgFieldNtNtB1c_7backend2PgECs9bejAFUsR8E_17advanced_blog_cli(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.c, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.b, ptr noundef nonnull %4, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %5), !noalias !194
+  call void @_RINvMsh_NtCsjRvGck33osM_6diesel6resultNtB6_21DeserializeFieldError3newNtNtNtNtB8_2pg10connection3row7PgFieldNtNtB1c_7backend2PgECs9bejAFUsR8E_17advanced_blog_cli(ptr noalias noundef nonnull sret([40 x i8]) align 8 captures(none) dereferenceable(40) %i.c, ptr noalias noundef nonnull readonly align 8 captures(address) dereferenceable(24) %i.b, ptr noundef nonnull %4, ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %3), !noalias !194
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !193
   %i.t = invoke fastcc noundef ptr @_RNvNtCs40k4W9msRzi_5alloc5boxed14box_new_uninit(i64 noundef 8, i64 noundef 40)
           to label %bb.j unwind label %bb.h, !noalias !195 ; 2 uses
@@ -651,7 +658,7 @@ bb.j:                                             ; preds = %bb.g
 bb.k:                                             ; preds = %bb.e
   %i.w = landingpad { ptr, i32 }
           cleanup
-  invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB1w_4SendEL_EECs9bejAFUsR8E_17advanced_blog_cli(ptr nonnull %4, ptr nonnull readonly align 8 dereferenceable(80) %5) #21
+  invoke fastcc void @_RINvNtCscI6d9CVNmLh_4core3ptr9drop_glueINtNtCs40k4W9msRzi_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB1w_4SendEL_EECs9bejAFUsR8E_17advanced_blog_cli(ptr nonnull %4, ptr nonnull readonly align 8 dereferenceable(80) %3) #21
           to label %.body.thread.i unwind label %bb.l, !noalias !194
 
 bb.l:                                             ; preds = %bb.k
@@ -665,10 +672,10 @@ bb.l:                                             ; preds = %bb.k
   resume { ptr, i32 } %eh.lpad-body9.i
 
 _RNCINvXs2_NtCsjRvGck33osM_6diesel11deserializeNtNtNtCslCQnfik72jt_6chrono5naive8datetime13NaiveDateTimeINtB8_16FromStaticSqlRowNtNtBa_9sql_types9TimestampNtNtNtBa_2pg7backend2PgE14build_from_rowINtNtNtBa_3row7private10PartialRowNtNtNtB2w_10connection3row5PgRowEE0Cs9bejAFUsR8E_17advanced_blog_cli.exit: ; preds = %bb.f, %bb.j
-  %.sroa.3.0.i = phi ptr [ @4, %bb.j ], [ %5, %bb.f ]
+  %.sroa.3.0.i = phi ptr [ @4, %bb.j ], [ %3, %bb.f ]
   %.sroa.0.0.i = phi ptr [ %i.t, %bb.j ], [ %4, %bb.f ]
-  store ptr %.sroa.0.0.i, ptr %3, align 8
-  store ptr %.sroa.3.0.i, ptr %i.o, align 8
+  store ptr %.sroa.0.0.i, ptr %i.o, align 8
+  store ptr %.sroa.3.0.i, ptr %5, align 8
   br label %.sink.split
 }
 

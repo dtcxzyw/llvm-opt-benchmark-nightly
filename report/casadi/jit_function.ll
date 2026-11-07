@@ -204,11 +204,15 @@ bb.w:                                             ; preds = %_ZNK6casadi16Functi
 ._crit_edge236:                                   ; preds = %bb.ae, %.lr.ph, %._crit_edge
   ret void
 
-.lr.ph.split:                                     ; preds = %.lr.ph.split.preheader, %bb.ae
-  %11 = phi i64 [ %i.go, %bb.ae ], [ %i.dl, %.lr.ph.split.preheader ]
-  %.0234.a = phi i64 [ %i.gp, %bb.ae ], [ 0, %.lr.ph.split.preheader ] ; 5 uses
-  %12 = load i8, ptr %i.dm, align 8, !tbaa !83, !range !104, !noundef !105
-  %i.fj = trunc nuw i8 %12 to i1
+.lr.ph.splitthread-pre-split:                     ; preds = %bb.ae
+  %.pr = load i8, ptr %i.dm, align 8, !tbaa !83
+  br label %.lr.ph.split
+
+.lr.ph.split:                                     ; preds = %.lr.ph.splitthread-pre-split, %.lr.ph.split.preheader
+  %11 = phi i8 [ %.pr, %.lr.ph.splitthread-pre-split ], [ 1, %.lr.ph.split.preheader ]
+  %.0234.a = phi i64 [ %i.go, %.lr.ph.splitthread-pre-split ], [ %i.dl, %.lr.ph.split.preheader ]
+  %.0234 = phi i64 [ %i.gp, %.lr.ph.splitthread-pre-split ], [ 0, %.lr.ph.split.preheader ] ; 5 uses
+  %i.fj = trunc nuw i8 %11 to i1
   br i1 %i.fj, label %bb.x, label %bb.ae
 
 bb.x:                                             ; preds = %.lr.ph.split
@@ -219,17 +223,17 @@ bb.x:                                             ; preds = %.lr.ph.split
   %i.fn = ptrtoint ptr %i.fl to i64
   %i.fo = sub i64 %i.fm, %i.fn
   %i.fp = ashr exact i64 %i.fo, 3                 ; 2 uses
-  %.not.i.i.i.i126 = icmp ult i64 %.0234.a, %i.fp
+  %.not.i.i.i.i126 = icmp ult i64 %.0234, %i.fp
   br i1 %.not.i.i.i.i126, label %_ZNK6casadi16FunctionInternal7nnz_outEx.exit127, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
-  call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.17, i64 noundef %.0234.a, i64 noundef %i.fp) #25
+  call void (ptr, ...) @_ZSt24__throw_out_of_range_fmtPKcz(ptr noundef nonnull @.str.17, i64 noundef %.0234, i64 noundef %i.fp) #25
   unreachable
 
 _ZNK6casadi16FunctionInternal7nnz_outEx.exit127:  ; preds = %bb.x
   %i.fq = load ptr, ptr %i.dn, align 8, !tbaa !89
-  %i.fr = getelementptr inbounds nuw [32 x i8], ptr %i.fq, i64 %.0234.a
-  %i.fs = getelementptr inbounds nuw [8 x i8], ptr %i.fl, i64 %.0234.a
+  %i.fr = getelementptr inbounds nuw [32 x i8], ptr %i.fq, i64 %.0234
+  %i.fs = getelementptr inbounds nuw [8 x i8], ptr %i.fl, i64 %.0234
   %i.ft = call noundef i64 @_ZNK6casadi8Sparsity3nnzEv(ptr noundef nonnull align 8 dereferenceable(8) %i.fs)
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #22
   store ptr %i.dq, ptr %10, align 8, !tbaa !15
@@ -311,10 +315,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit143: ; preds = %_Z
   br label %bb.af
 
 bb.ae:                                            ; preds = %.lr.ph.split, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit137
-  %i.go = phi i64 [ %11, %.lr.ph.split ], [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit137 ] ; 2 uses
-  %i.gp = add nuw nsw i64 %.0234.a, 1             ; 2 uses
+  %i.go = phi i64 [ %.0234.a, %.lr.ph.split ], [ %.pre, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit137 ] ; 2 uses
+  %i.gp = add nuw nsw i64 %.0234, 1               ; 2 uses
   %i.gq = icmp ult i64 %i.gp, %i.go
-  br i1 %i.gq, label %.lr.ph.split, label %._crit_edge236, !llvm.loop !145
+  br i1 %i.gq, label %.lr.ph.splitthread-pre-split, label %._crit_edge236, !llvm.loop !145
 
 bb.af:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit95, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit104, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit143, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit125
   %.pn52.pn.pn.pn.pn.pn = phi { ptr, i32 } [ %.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit143 ], [ %i.ew, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit125 ], [ %.pn52.pn.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit104 ], [ %.pn49.pn, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit95 ]

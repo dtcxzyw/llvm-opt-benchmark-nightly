@@ -205,7 +205,7 @@ jar_xm_post_pattern_change.exit.i:                ; preds = %jar_xm_post_pattern
   %i.av = load i8, ptr %i.au, align 1
   %i.aw = zext i8 %i.av to i64
   %i.ax = getelementptr inbounds nuw [16 x i8], ptr %i.aq, i64 %i.aw ; 2 uses
-  %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 54 ; 2 uses
+  %i.ay = getelementptr inbounds nuw i8, ptr %0, i64 54 ; 3 uses
   %i.az = load i16, ptr %i.ay, align 2            ; 2 uses
   %.not67.i = icmp eq i16 %i.az, 0
   br i1 %.not67.i, label %._crit_edge.thread.i, label %.lr.ph.i
@@ -216,19 +216,18 @@ jar_xm_post_pattern_change.exit.i:                ; preds = %jar_xm_post_pattern
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 416
   br label %bb.h
 
-._crit_edge.i:                                    ; preds = %bb.n
-  %1 = trunc nuw i8 %.1.i to i1
-  br i1 %1, label %bb.o, label %._crit_edge.i.._crit_edge.thread.i_crit_edge
+._crit_edge.i:                                    ; preds = %bb.m
+  br i1 %.not60.i, label %bb.o, label %._crit_edge.i.._crit_edge.thread.i_crit_edge
 
 ._crit_edge.i.._crit_edge.thread.i_crit_edge:     ; preds = %._crit_edge.i
   %.pre = load i8, ptr %i.as, align 4
   %.pre303 = zext i8 %.pre to i64
   br label %._crit_edge.thread.i
 
-bb.h:                                             ; preds = %bb.n, %.lr.ph.i
-  %i.bd = phi i16 [ %i.az, %.lr.ph.i ], [ %i.bz, %bb.n ]
-  %.066.i = phi i8 [ 0, %.lr.ph.i ], [ %i.by, %bb.n ] ; 2 uses
-  %.05465.i = phi i8 [ 0, %.lr.ph.i ], [ %.1.i, %bb.n ]
+bb.h:                                             ; preds = %.backedge.i.backedge, %.lr.ph.i
+  %i.bd = phi i16 [ %i.az, %.lr.ph.i ], [ %.be, %.backedge.i.backedge ]
+  %.066.i = phi i8 [ 0, %.lr.ph.i ], [ %.066.i.be, %.backedge.i.backedge ] ; 3 uses
+  %.05465.i = phi i1 [ false, %.lr.ph.i ], [ %.05465.i.be, %.backedge.i.backedge ]
   %i.be = zext i16 %i.bd to i64
   %i.bf = load ptr, ptr %i.ba, align 8
   %i.bg = load i8, ptr %i.bb, align 1
@@ -264,23 +263,30 @@ bb.k:                                             ; preds = %bb.i
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
-  %2 = trunc nuw i8 %.05465.i to i1
-  br i1 %2, label %bb.n, label %bb.m
+  br i1 %.05465.i, label %bb.n, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bn, i64 107
   %i.bx = load i8, ptr %i.bw, align 1
-  %.not60.i = icmp ne i8 %i.bx, 0
-  %spec.select.i = zext i1 %.not60.i to i8
-  br label %bb.n
+  %.not60.i = icmp ne i8 %i.bx, 0                 ; 2 uses
+  %1 = add i8 %.066.i, 1                          ; 2 uses
+  %2 = load i16, ptr %i.ay, align 2               ; 2 uses
+  %3 = zext i8 %1 to i16
+  %4 = icmp ugt i16 %2, %3
+  br i1 %4, label %.backedge.i.backedge, label %._crit_edge.i
 
-bb.n:                                             ; preds = %bb.m, %bb.l
-  %.1.i = phi i8 [ 1, %bb.l ], [ %spec.select.i, %bb.m ] ; 2 uses
+bb.n:                                             ; preds = %bb.l
   %i.by = add i8 %.066.i, 1                       ; 2 uses
   %i.bz = load i16, ptr %i.ay, align 2            ; 2 uses
   %i.ca = zext i8 %i.by to i16
   %i.cb = icmp ugt i16 %i.bz, %i.ca
-  br i1 %i.cb, label %bb.h, label %._crit_edge.i
+  br i1 %i.cb, label %.backedge.i.backedge, label %bb.o
+
+.backedge.i.backedge:                             ; preds = %bb.n, %bb.m
+  %.be = phi i16 [ %2, %bb.m ], [ %i.bz, %bb.n ]
+  %.066.i.be = phi i8 [ %1, %bb.m ], [ %i.by, %bb.n ]
+  %.05465.i.be = phi i1 [ %.not60.i, %bb.m ], [ true, %bb.n ]
+  br label %bb.h
 
 ._crit_edge.thread.i:                             ; preds = %._crit_edge.i.._crit_edge.thread.i_crit_edge, %jar_xm_post_pattern_change.exit.i
   %.pre-phi = phi i64 [ %.pre303, %._crit_edge.i.._crit_edge.thread.i_crit_edge ], [ %i.at, %jar_xm_post_pattern_change.exit.i ]
@@ -299,7 +305,7 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   store i8 %i.ck, ptr %i.cm, align 8
   br label %bb.o
 
-bb.o:                                             ; preds = %._crit_edge.thread.i, %._crit_edge.i
+bb.o:                                             ; preds = %bb.n, %._crit_edge.thread.i, %._crit_edge.i
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 373 ; 3 uses
   %i.co = load i8, ptr %i.cn, align 1
   %i.cp = add i8 %i.co, 1                         ; 3 uses

@@ -205,7 +205,7 @@ _ZNSt6vectorI9aiQuatKeySaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__norm
 _ZNSt6vectorI9aiQuatKeySaIS0_EE9push_backERKS0_.exit: ; preds = %bb.f, %_ZNSt6vectorI9aiQuatKeySaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i
   %i.bs = load i8, ptr %i.g, align 8, !range !137, !noundef !138
   %i.bt = trunc nuw i8 %i.bs to i1
-  br i1 %i.bt, label %_ZN6Assimp11XFileParser17CheckForSemicolonEv.exit.jt0, label %bb.j
+  br i1 %i.bt, label %_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit.jt0, label %bb.j
 
 bb.j:                                             ; preds = %_ZNSt6vectorI9aiQuatKeySaIS0_EE9push_backERKS0_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #28
@@ -584,7 +584,7 @@ _ZNSt6vectorIN6Assimp5XFile9MatrixKeyESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__
 _ZNSt6vectorIN6Assimp5XFile9MatrixKeyESaIS2_EE9push_backERKS2_.exit: ; preds = %bb.z, %_ZNSt6vectorIN6Assimp5XFile9MatrixKeyESaIS2_EE17_M_realloc_insertIJRKS2_EEEvN9__gnu_cxx17__normal_iteratorIPS2_S4_EEDpOT_.exit.i
   %i.fr = load i8, ptr %i.g, align 8, !range !137, !noundef !138
   %i.fs = trunc nuw i8 %i.fr to i1
-  br i1 %i.fs, label %_ZN6Assimp11XFileParser17CheckForSemicolonEv.exit, label %bb.ad
+  br i1 %i.fs, label %_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit, label %bb.ad
 
 bb.ad:                                            ; preds = %_ZNSt6vectorIN6Assimp5XFile9MatrixKeyESaIS2_EE9push_backERKS2_.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #28
@@ -627,14 +627,14 @@ bb.ag:                                            ; preds = %bb.d
   call void @_ZN6Assimp11XFileParser14ThrowExceptionIJRA18_KcRjRA15_S2_EEEvDpOT_(ptr noundef nonnull align 8 dereferenceable(56) %0, ptr noundef nonnull align 1 dereferenceable(18) @.str.65, ptr noundef nonnull align 4 dereferenceable(4) %i.a, ptr noundef nonnull align 1 dereferenceable(15) @.str.66) #29
   unreachable
 
-_ZN6Assimp11XFileParser17CheckForSemicolonEv.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i56, %_ZNSt6vectorIN6Assimp5XFile9MatrixKeyESaIS2_EE9push_backERKS2_.exit, %bb.s, %_ZNSt6vectorI11aiVectorKeySaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i41
-  %.0145179 = phi i32 [ %.0145, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i56 ], [ %.0145, %_ZNSt6vectorIN6Assimp5XFile9MatrixKeyESaIS2_EE9push_backERKS2_.exit ], [ %.0145177270, %bb.s ], [ %.0145177270, %_ZNSt6vectorI11aiVectorKeySaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i41 ]
-  %i.gb = load i8, ptr %i.g, align 8, !range !137, !noundef !138
+_ZN6Assimp11XFileParser17CheckForSemicolonEv.exit: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i56, %bb.s, %_ZNSt6vectorI11aiVectorKeySaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i41
+  %.0145179.ph = phi i32 [ %.0145177270, %_ZNSt6vectorI11aiVectorKeySaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i41 ], [ %.0145177270, %bb.s ], [ %.0145, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i56 ] ; 2 uses
+  %i.gb = load i8, ptr %i.g, align 8
   %i.gc = trunc nuw i8 %i.gb to i1
   br i1 %i.gc, label %_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit, label %bb.ah
 
-_ZN6Assimp11XFileParser17CheckForSemicolonEv.exit.jt0: ; preds = %_ZNSt6vectorI9aiQuatKeySaIS0_EE9push_backERKS0_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i16
-  %i.gd = load i8, ptr %i.g, align 8, !range !137, !noundef !138
+_ZN6Assimp11XFileParser17CheckForSemicolonEv.exit.jt0: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i16
+  %i.gd = load i8, ptr %i.g, align 8
   %i.ge = trunc nuw i8 %i.gd to i1
   br i1 %i.ge, label %_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit.jt0, label %bb.ai
 
@@ -754,12 +754,13 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit6.i.jt2: ; preds =
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #28
   br label %_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit.jt2
 
-_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit: ; preds = %_ZN6Assimp11XFileParser17CheckForSemicolonEv.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit6.i
-  %i.hb = add nuw i32 %.0145179, 1                ; 2 uses
+_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit: ; preds = %_ZNSt6vectorIN6Assimp5XFile9MatrixKeyESaIS2_EE9push_backERKS2_.exit, %_ZN6Assimp11XFileParser17CheckForSemicolonEv.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit6.i
+  %.0145179181 = phi i32 [ %.0145179.ph, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit6.i ], [ %.0145179.ph, %_ZN6Assimp11XFileParser17CheckForSemicolonEv.exit ], [ %.0145, %_ZNSt6vectorIN6Assimp5XFile9MatrixKeyESaIS2_EE9push_backERKS2_.exit ]
+  %i.hb = add nuw i32 %.0145179181, 1             ; 2 uses
   %exitcond.not = icmp eq i32 %i.hb, %i.c
   br i1 %exitcond.not, label %._crit_edge, label %bb.d, !llvm.loop !236
 
-_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit.jt0: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit6.i.jt0, %_ZN6Assimp11XFileParser17CheckForSemicolonEv.exit.jt0
+_ZN6Assimp11XFileParser17CheckForSeparatorEv.exit.jt0: ; preds = %_ZNSt6vectorI9aiQuatKeySaIS0_EE9push_backERKS0_.exit, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit6.i.jt0, %_ZN6Assimp11XFileParser17CheckForSemicolonEv.exit.jt0
   %i.hc = add nuw i32 %.0145178274, 1             ; 2 uses
   %exitcond.not.jt0 = icmp eq i32 %i.hc, %i.c
   br i1 %exitcond.not.jt0, label %._crit_edge, label %.preheader, !llvm.loop !236

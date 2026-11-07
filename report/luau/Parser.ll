@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.f
 ._crit_edge:                                      ; preds = %bb.j, %.critedge.thread
   %i.ac = load i8, ptr %i.b, align 8, !tbaa !63, !range !64, !noundef !65
   %i.ad = trunc nuw i8 %i.ac to i1
-  br i1 %i.ad, label %bb.k, label %bb.t
+  br i1 %i.ad, label %bb.k, label %_ZNSt14_Optional_baseISt8functionIFSt6vectorISt4pairIN4Luau8LocationENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESaISB_EES4_RKNS3_8AstArrayIPNS3_7AstExprEEEEELb0ELb0EED2Ev.exit
 
 .lr.ph88:                                         ; preds = %.critedge.thread, %bb.j
   %.sroa.050.087 = phi ptr [ %i.ai, %bb.j ], [ %i.y, %.critedge.thread ] ; 2 uses
@@ -335,10 +335,10 @@ bb.s:                                             ; preds = %bb.r, %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #34
   br label %.loopexit.split-lp
 
-bb.t:                                             ; preds = %._crit_edge, %_ZNSt6vectorISt4pairIN4Luau8LocationENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESaIS9_EED2Ev.exit, %bb.g, %bb.h
-  %.sroa.464.174 = phi i64 [ 4294967296, %._crit_edge ], [ 4294967296, %_ZNSt6vectorISt4pairIN4Luau8LocationENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESaIS9_EED2Ev.exit ], [ 0, %bb.g ], [ 0, %bb.h ]
-  %.sroa.061.173 = phi i32 [ %.sroa.061.172, %._crit_edge ], [ %.sroa.061.172, %_ZNSt6vectorISt4pairIN4Luau8LocationENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESaIS9_EED2Ev.exit ], [ %.sroa.061.0, %bb.g ], [ %.sroa.061.0, %bb.h ]
-  %i.bj = load i8, ptr %i.b, align 8, !tbaa !63, !range !64, !noundef !65
+bb.t:                                             ; preds = %_ZNSt6vectorISt4pairIN4Luau8LocationENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESaIS9_EED2Ev.exit, %bb.g, %bb.h
+  %.sroa.464.174.ph = phi i64 [ 0, %bb.h ], [ 0, %bb.g ], [ 1, %_ZNSt6vectorISt4pairIN4Luau8LocationENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESaIS9_EED2Ev.exit ] ; 3 uses
+  %.sroa.061.173.ph = phi i32 [ %.sroa.061.0, %bb.h ], [ %.sroa.061.0, %bb.g ], [ %.sroa.061.172, %_ZNSt6vectorISt4pairIN4Luau8LocationENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESaIS9_EED2Ev.exit ] ; 3 uses
+  %i.bj = load i8, ptr %i.b, align 8, !tbaa !63
   %i.bk = trunc nuw i8 %i.bj to i1
   br i1 %i.bk, label %bb.u, label %_ZNSt14_Optional_baseISt8functionIFSt6vectorISt4pairIN4Luau8LocationENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESaISB_EES4_RKNS3_8AstArrayIPNS3_7AstExprEEEEELb0ELb0EED2Ev.exit
 
@@ -360,10 +360,13 @@ bb.w:                                             ; preds = %bb.v
   call void @__clang_call_terminate(ptr %i.bp) #38
   unreachable
 
-_ZNSt14_Optional_baseISt8functionIFSt6vectorISt4pairIN4Luau8LocationENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESaISB_EES4_RKNS3_8AstArrayIPNS3_7AstExprEEEEELb0ELb0EED2Ev.exit: ; preds = %bb.t, %bb.u, %bb.v
+_ZNSt14_Optional_baseISt8functionIFSt6vectorISt4pairIN4Luau8LocationENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEESaISB_EES4_RKNS3_8AstArrayIPNS3_7AstExprEEEEELb0ELb0EED2Ev.exit: ; preds = %._crit_edge, %bb.t, %bb.u, %bb.v
+  %.sroa.061.17383 = phi i32 [ %.sroa.061.173.ph, %bb.v ], [ %.sroa.061.173.ph, %bb.t ], [ %.sroa.061.173.ph, %bb.u ], [ %.sroa.061.172, %._crit_edge ]
+  %.sroa.464.17482 = phi i64 [ %.sroa.464.174.ph, %bb.v ], [ %.sroa.464.174.ph, %bb.t ], [ %.sroa.464.174.ph, %bb.u ], [ 1, %._crit_edge ]
   call void @llvm.lifetime.end.p0(ptr nonnull %8) #34
-  %.sroa.061.0.insert.ext = zext i32 %.sroa.061.173 to i64
-  %.sroa.061.0.insert.insert = or disjoint i64 %.sroa.464.174, %.sroa.061.0.insert.ext
+  %.sroa.464.0.insert.shift = shl nuw nsw i64 %.sroa.464.17482, 32
+  %.sroa.061.0.insert.ext = zext i32 %.sroa.061.17383 to i64
+  %.sroa.061.0.insert.insert = or disjoint i64 %.sroa.464.0.insert.shift, %.sroa.061.0.insert.ext
   ret i64 %.sroa.061.0.insert.insert
 
 .loopexit.split-lp:                               ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %bb.s

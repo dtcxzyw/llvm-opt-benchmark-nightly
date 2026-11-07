@@ -202,14 +202,15 @@ bb.a:
   %or.cond31 = and i1 %i.a, %i.b
   br i1 %or.cond31, label %.lr.ph, label %._crit_edge
 
-._crit_edge:                                      ; preds = %bb.f, %bb.a
-  %.sroa.04.0.lcssa = phi i8 [ 0, %bb.a ], [ %.sroa.04.1, %bb.f ] ; 2 uses
-  %.sroa.02.0.lcssa = phi float [ 0.000000e+00, %bb.a ], [ %.sroa.02.1, %bb.f ]
-  %8 = trunc nuw i8 %.sroa.04.0.lcssa to i1
-  %.sroa.02.0. = select i1 %8, float %.sroa.02.0.lcssa, float undef
-  %. = zext nneg i8 %.sroa.04.0.lcssa to i32
-  %i.c = insertvalue { i32, float } poison, i32 %., 0
-  %i.d = insertvalue { i32, float } %i.c, float %.sroa.02.0., 1
+._crit_edge.thread.loopexit:                      ; preds = %bb.f
+  %8 = zext nneg i8 %.sroa.04.1 to i32
+  br label %._crit_edge
+
+._crit_edge:                                      ; preds = %._crit_edge.thread.loopexit, %bb.a
+  %.sroa.04.0.lcssa49 = phi i32 [ 0, %bb.a ], [ %8, %._crit_edge.thread.loopexit ]
+  %.sroa.02.0.lcssa = phi float [ undef, %bb.a ], [ %.sroa.02.1, %._crit_edge.thread.loopexit ]
+  %i.c = insertvalue { i32, float } poison, i32 %.sroa.04.0.lcssa49, 0
+  %i.d = insertvalue { i32, float } %i.c, float %.sroa.02.0.lcssa, 1
   ret { i32, float } %i.d
 
 .lr.ph:                                           ; preds = %bb.a, %bb.f
@@ -251,7 +252,7 @@ bb.f:                                             ; preds = %bb.i, %bb.e, %bb.c
   %i.k = icmp ult i64 %.sroa.05.1, %1
   %i.l = icmp ult i64 %.sroa.010.1, %5
   %or.cond = select i1 %i.k, i1 %i.l, i1 false
-  br i1 %or.cond, label %.lr.ph, label %._crit_edge
+  br i1 %or.cond, label %.lr.ph, label %._crit_edge.thread.loopexit
 
 bb.g:                                             ; preds = %bb.d
   %i.m = icmp ult i64 %.sroa.010.032, %7

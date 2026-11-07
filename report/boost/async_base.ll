@@ -204,7 +204,7 @@ bb.a:
   %2 = alloca %"struct.boost::beast::test::basic_stream<>::run_read_op", align 8 ; 4 uses
   %3 = alloca %"class.std::allocator.20", align 1 ; 4 uses
   %4 = alloca %"struct.boost::asio::detail::executor_function::impl<boost::asio::detail::binder0<boost::asio::detail::append_handler<op, boost::system::error_code, unsigned long>>, std::allocator<void>>::ptr", align 8 ; 7 uses
-  %5 = alloca %"class.boost::asio::detail::binder0.117", align 8 ; 23 uses
+  %5 = alloca %"class.boost::asio::detail::binder0.117", align 8 ; 24 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #31
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #31
   store ptr %3, ptr %4, align 8, !tbaa !801
@@ -340,13 +340,13 @@ _ZNK5boost6system10error_codecvbEv.exit.thread.i.i.i.i: ; preds = %_ZNK5boost6sy
 .noexc7:                                          ; preds = %_ZNK5boost6system10error_codecvbEv.exit.thread.i.i.i.i
   %i.av = load i8, ptr %i.e, align 8, !tbaa !196, !range !73, !noundef !74
   %i.aw = trunc nuw i8 %i.av to i1
-  br i1 %i.aw, label %bb.h, label %_ZN5boost4asio6detail7binder0INS1_14append_handlerIZNS_5beast15async_base_test10async_readINS4_4test12basic_streamINS0_15any_io_executorEEEZNS5_12testJavadocsEvE7handlerEENS0_12async_resultIT0_JFvNS_6system10error_codeEmEEE11return_typeERT_NS0_14mutable_bufferEOSD_E2opJSF_mEEEEclEv.exit
+  br i1 %i.aw, label %bb.h, label %_ZN5boost4asio6detail7binder0INS1_14append_handlerIZNS_5beast15async_base_test10async_readINS4_4test12basic_streamINS0_15any_io_executorEEEZNS5_12testJavadocsEvE7handlerEENS0_12async_resultIT0_JFvNS_6system10error_codeEmEEE11return_typeERT_NS0_14mutable_bufferEOSD_E2opJSF_mEEEEclEv.exit.thread
 
 bb.h:                                             ; preds = %.noexc7
   %i.ax = getelementptr inbounds nuw i8, ptr %5, i64 72
   call void @_ZN5boost4asio15any_io_executorD1Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %i.ax) #31, !inline_history !16
   store i8 0, ptr %i.e, align 8, !tbaa !196
-  br label %_ZN5boost4asio6detail7binder0INS1_14append_handlerIZNS_5beast15async_base_test10async_readINS4_4test12basic_streamINS0_15any_io_executorEEEZNS5_12testJavadocsEvE7handlerEENS0_12async_resultIT0_JFvNS_6system10error_codeEmEEE11return_typeERT_NS0_14mutable_bufferEOSD_E2opJSF_mEEEEclEv.exit
+  br label %_ZN5boost4asio6detail7binder0INS1_14append_handlerIZNS_5beast15async_base_test10async_readINS4_4test12basic_streamINS0_15any_io_executorEEEZNS5_12testJavadocsEvE7handlerEENS0_12async_resultIT0_JFvNS_6system10error_codeEmEEE11return_typeERT_NS0_14mutable_bufferEOSD_E2opJSF_mEEEEclEv.exit.thread
 
 bb.i:                                             ; preds = %_ZNK5boost6system10error_codecvbEv.exit.thread.i.i.i.i, %bb.g, %bb.c
   %i.ay = landingpad { ptr, i32 }
@@ -358,10 +358,14 @@ bb.i:                                             ; preds = %_ZNK5boost6system10
   call void @llvm.lifetime.end.p0(ptr nonnull %3) #31
   resume { ptr, i32 } %i.ay
 
-_ZN5boost4asio6detail7binder0INS1_14append_handlerIZNS_5beast15async_base_test10async_readINS4_4test12basic_streamINS0_15any_io_executorEEEZNS5_12testJavadocsEvE7handlerEENS0_12async_resultIT0_JFvNS_6system10error_codeEmEEE11return_typeERT_NS0_14mutable_bufferEOSD_E2opJSF_mEEEEclEv.exit: ; preds = %bb.h, %.noexc7, %.noexc6, %_ZN5boost4asio6detail17executor_function4implINS1_7binder0INS1_14append_handlerIZNS_5beast15async_base_test10async_readINS6_4test12basic_streamINS0_15any_io_executorEEEZNS7_12testJavadocsEvE7handlerEENS0_12async_resultIT0_JFvNS_6system10error_codeEmEEE11return_typeERT_NS0_14mutable_bufferEOSF_E2opJSH_mEEEEESaIvEE3ptr5resetEv.exit
+_ZN5boost4asio6detail7binder0INS1_14append_handlerIZNS_5beast15async_base_test10async_readINS4_4test12basic_streamINS0_15any_io_executorEEEZNS5_12testJavadocsEvE7handlerEENS0_12async_resultIT0_JFvNS_6system10error_codeEmEEE11return_typeERT_NS0_14mutable_bufferEOSD_E2opJSF_mEEEEclEv.exit.thread: ; preds = %bb.h, %.noexc7
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5boost5beast10async_baseIZNS0_15async_base_test12testJavadocsEvE7handlerNS_4asio15any_io_executorESaIvEEE, i64 16), ptr %5, align 8, !tbaa !47
-  %6 = load i8, ptr %i.e, align 8, !tbaa !196, !range !73, !noundef !74
-  %i.az = trunc nuw i8 %6 to i1
+  br label %_ZN5boost4asio6detail17executor_function4implINS1_7binder0INS1_14append_handlerIZNS_5beast15async_base_test10async_readINS6_4test12basic_streamINS0_15any_io_executorEEEZNS7_12testJavadocsEvE7handlerEENS0_12async_resultIT0_JFvNS_6system10error_codeEmEEE11return_typeERT_NS0_14mutable_bufferEOSF_E2opJSH_mEEEEESaIvEE3ptrD2Ev.exit
+
+_ZN5boost4asio6detail7binder0INS1_14append_handlerIZNS_5beast15async_base_test10async_readINS4_4test12basic_streamINS0_15any_io_executorEEEZNS5_12testJavadocsEvE7handlerEENS0_12async_resultIT0_JFvNS_6system10error_codeEmEEE11return_typeERT_NS0_14mutable_bufferEOSD_E2opJSF_mEEEEclEv.exit: ; preds = %.noexc6, %_ZN5boost4asio6detail17executor_function4implINS1_7binder0INS1_14append_handlerIZNS_5beast15async_base_test10async_readINS6_4test12basic_streamINS0_15any_io_executorEEEZNS7_12testJavadocsEvE7handlerEENS0_12async_resultIT0_JFvNS_6system10error_codeEmEEE11return_typeERT_NS0_14mutable_bufferEOSF_E2opJSH_mEEEEESaIvEE3ptr5resetEv.exit
+  %.pr = load i8, ptr %i.e, align 8, !tbaa !196
+  store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN5boost5beast10async_baseIZNS0_15async_base_test12testJavadocsEvE7handlerNS_4asio15any_io_executorESaIvEEE, i64 16), ptr %5, align 8, !tbaa !47
+  %i.az = trunc nuw i8 %.pr to i1
   br i1 %i.az, label %bb.j, label %_ZN5boost4asio6detail17executor_function4implINS1_7binder0INS1_14append_handlerIZNS_5beast15async_base_test10async_readINS6_4test12basic_streamINS0_15any_io_executorEEEZNS7_12testJavadocsEvE7handlerEENS0_12async_resultIT0_JFvNS_6system10error_codeEmEEE11return_typeERT_NS0_14mutable_bufferEOSF_E2opJSH_mEEEEESaIvEE3ptrD2Ev.exit
 
 bb.j:                                             ; preds = %_ZN5boost4asio6detail7binder0INS1_14append_handlerIZNS_5beast15async_base_test10async_readINS4_4test12basic_streamINS0_15any_io_executorEEEZNS5_12testJavadocsEvE7handlerEENS0_12async_resultIT0_JFvNS_6system10error_codeEmEEE11return_typeERT_NS0_14mutable_bufferEOSD_E2opJSF_mEEEEclEv.exit
@@ -369,7 +373,7 @@ bb.j:                                             ; preds = %_ZN5boost4asio6deta
   call void @_ZN5boost4asio15any_io_executorD1Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(56) %i.ba) #31, !inline_history !197
   br label %_ZN5boost4asio6detail17executor_function4implINS1_7binder0INS1_14append_handlerIZNS_5beast15async_base_test10async_readINS6_4test12basic_streamINS0_15any_io_executorEEEZNS7_12testJavadocsEvE7handlerEENS0_12async_resultIT0_JFvNS_6system10error_codeEmEEE11return_typeERT_NS0_14mutable_bufferEOSF_E2opJSH_mEEEEESaIvEE3ptrD2Ev.exit
 
-_ZN5boost4asio6detail17executor_function4implINS1_7binder0INS1_14append_handlerIZNS_5beast15async_base_test10async_readINS6_4test12basic_streamINS0_15any_io_executorEEEZNS7_12testJavadocsEvE7handlerEENS0_12async_resultIT0_JFvNS_6system10error_codeEmEEE11return_typeERT_NS0_14mutable_bufferEOSF_E2opJSH_mEEEEESaIvEE3ptrD2Ev.exit: ; preds = %_ZN5boost4asio6detail7binder0INS1_14append_handlerIZNS_5beast15async_base_test10async_readINS4_4test12basic_streamINS0_15any_io_executorEEEZNS5_12testJavadocsEvE7handlerEENS0_12async_resultIT0_JFvNS_6system10error_codeEmEEE11return_typeERT_NS0_14mutable_bufferEOSD_E2opJSF_mEEEEclEv.exit, %bb.j
+_ZN5boost4asio6detail17executor_function4implINS1_7binder0INS1_14append_handlerIZNS_5beast15async_base_test10async_readINS6_4test12basic_streamINS0_15any_io_executorEEEZNS7_12testJavadocsEvE7handlerEENS0_12async_resultIT0_JFvNS_6system10error_codeEmEEE11return_typeERT_NS0_14mutable_bufferEOSF_E2opJSH_mEEEEESaIvEE3ptrD2Ev.exit: ; preds = %_ZN5boost4asio6detail7binder0INS1_14append_handlerIZNS_5beast15async_base_test10async_readINS4_4test12basic_streamINS0_15any_io_executorEEEZNS5_12testJavadocsEvE7handlerEENS0_12async_resultIT0_JFvNS_6system10error_codeEmEEE11return_typeERT_NS0_14mutable_bufferEOSD_E2opJSF_mEEEEclEv.exit.thread, %_ZN5boost4asio6detail7binder0INS1_14append_handlerIZNS_5beast15async_base_test10async_readINS4_4test12basic_streamINS0_15any_io_executorEEEZNS5_12testJavadocsEvE7handlerEENS0_12async_resultIT0_JFvNS_6system10error_codeEmEEE11return_typeERT_NS0_14mutable_bufferEOSD_E2opJSF_mEEEEclEv.exit, %bb.j
   call void @_ZN5boost4asio15any_io_executorD1Ev(ptr noundef nonnull align 8 dead_on_return(56) dereferenceable(113) %i.c) #31, !inline_history !197
   call void @llvm.lifetime.end.p0(ptr nonnull %5) #31
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #31

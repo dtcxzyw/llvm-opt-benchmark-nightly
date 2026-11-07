@@ -202,7 +202,7 @@ bb.a:
   %7 = alloca %"class.std::unique_lock", align 8  ; 10 uses
   %8 = alloca %"class.arrow::Status", align 8     ; 9 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #25
-  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
+  %i.a = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 5 uses
   store ptr %i.a, ptr %7, align 8, !tbaa !182
   %i.b = getelementptr inbounds nuw i8, ptr %7, i64 8 ; 5 uses
   %i.c = tail call noundef i32 @pthread_mutex_lock(ptr noundef nonnull align 8 dereferenceable(40) %i.a) #25 ; 2 uses
@@ -253,7 +253,7 @@ _ZN5arrow6StatusD2Ev.exit:                        ; preds = %bb.f, %bb.g, %bb.h
 bb.i:                                             ; preds = %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit
   %i.j = landingpad { ptr, i32 }
           cleanup
-  br label %_ZNSt10unique_ptrIN5arrow4util18AsyncTaskScheduler4TaskESt14default_deleteIS3_EED2Ev.exit16
+  br label %bb.bj
 
 bb.j:                                             ; preds = %bb.d
   %i.k = landingpad { ptr, i32 }
@@ -656,24 +656,25 @@ _ZNSt11unique_lockISt5mutexED2Ev.exit:            ; preds = %_ZNSt10unique_ptrIN
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
   ret i1 %.not
 
-_ZNSt10unique_ptrIN5arrow4util18AsyncTaskScheduler4TaskESt14default_deleteIS3_EED2Ev.exit16: ; preds = %_ZNKSt14default_deleteIN5arrow4util18AsyncTaskScheduler4TaskEEclEPS3_.exit.i11.i, %.body.thread21.i, %_ZNKSt14default_deleteIN5arrow4util18AsyncTaskScheduler4TaskEEclEPS3_.exit.i15, %.body, %_ZN5arrow6StatusD2Ev.exit10, %bb.i
-  %.pn7 = phi { ptr, i32 } [ %i.j, %bb.i ], [ %.pn, %_ZN5arrow6StatusD2Ev.exit10 ], [ %eh.lpad-body, %_ZNKSt14default_deleteIN5arrow4util18AsyncTaskScheduler4TaskEEclEPS3_.exit.i15 ], [ %eh.lpad-body, %.body ], [ %eh.lpad-body19.i, %_ZNKSt14default_deleteIN5arrow4util18AsyncTaskScheduler4TaskEEclEPS3_.exit.i11.i ], [ %.pn5.i.ph.i, %.body.thread21.i ]
-  %i.ds = load i8, ptr %i.b, align 8, !tbaa !183, !range !177, !noundef !178
+_ZNSt10unique_ptrIN5arrow4util18AsyncTaskScheduler4TaskESt14default_deleteIS3_EED2Ev.exit16: ; preds = %_ZNKSt14default_deleteIN5arrow4util18AsyncTaskScheduler4TaskEEclEPS3_.exit.i11.i, %.body.thread21.i, %_ZNKSt14default_deleteIN5arrow4util18AsyncTaskScheduler4TaskEEclEPS3_.exit.i15, %.body, %_ZN5arrow6StatusD2Ev.exit10
+  %.pn7.ph = phi { ptr, i32 } [ %eh.lpad-body, %_ZNKSt14default_deleteIN5arrow4util18AsyncTaskScheduler4TaskEEclEPS3_.exit.i15 ], [ %eh.lpad-body, %.body ], [ %.pn, %_ZN5arrow6StatusD2Ev.exit10 ], [ %eh.lpad-body19.i, %_ZNKSt14default_deleteIN5arrow4util18AsyncTaskScheduler4TaskEEclEPS3_.exit.i11.i ], [ %.pn5.i.ph.i, %.body.thread21.i ] ; 2 uses
+  %i.ds = load i8, ptr %i.b, align 8, !tbaa !183
   %i.dt = trunc nuw i8 %i.ds to i1
-  br i1 %i.dt, label %9, label %_ZNSt11unique_lockISt5mutexED2Ev.exit21
+  %.pre = load ptr, ptr %7, align 8               ; 2 uses
+  %.not.i.i20 = icmp ne ptr %.pre, null
+  %or.cond.not = select i1 %i.dt, i1 %.not.i.i20, i1 false
+  br i1 %or.cond.not, label %bb.bj, label %_ZNSt11unique_lockISt5mutexED2Ev.exit21
 
-9:                                                ; preds = %_ZNSt10unique_ptrIN5arrow4util18AsyncTaskScheduler4TaskESt14default_deleteIS3_EED2Ev.exit16
-  %10 = load ptr, ptr %7, align 8, !tbaa !182     ; 2 uses
-  %.not.i.i20 = icmp eq ptr %10, null
-  br i1 %.not.i.i20, label %_ZNSt11unique_lockISt5mutexED2Ev.exit21, label %bb.bj
-
-bb.bj:                                            ; preds = %9
-  %i.du = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %10) #25 ; 0 uses
+bb.bj:                                            ; preds = %_ZNSt10unique_ptrIN5arrow4util18AsyncTaskScheduler4TaskESt14default_deleteIS3_EED2Ev.exit16, %bb.i
+  %.pn73148 = phi { ptr, i32 } [ %i.j, %bb.i ], [ %.pn7.ph, %_ZNSt10unique_ptrIN5arrow4util18AsyncTaskScheduler4TaskESt14default_deleteIS3_EED2Ev.exit16 ]
+  %9 = phi ptr [ %i.a, %bb.i ], [ %.pre, %_ZNSt10unique_ptrIN5arrow4util18AsyncTaskScheduler4TaskESt14default_deleteIS3_EED2Ev.exit16 ]
+  %i.du = call noundef i32 @pthread_mutex_unlock(ptr noundef nonnull align 8 dereferenceable(40) %9) #25 ; 0 uses
   br label %_ZNSt11unique_lockISt5mutexED2Ev.exit21
 
-_ZNSt11unique_lockISt5mutexED2Ev.exit21:          ; preds = %_ZNSt10unique_ptrIN5arrow4util18AsyncTaskScheduler4TaskESt14default_deleteIS3_EED2Ev.exit16, %9, %bb.bj
+_ZNSt11unique_lockISt5mutexED2Ev.exit21:          ; preds = %_ZNSt10unique_ptrIN5arrow4util18AsyncTaskScheduler4TaskESt14default_deleteIS3_EED2Ev.exit16, %bb.bj
+  %.pn730 = phi { ptr, i32 } [ %.pn7.ph, %_ZNSt10unique_ptrIN5arrow4util18AsyncTaskScheduler4TaskESt14default_deleteIS3_EED2Ev.exit16 ], [ %.pn73148, %bb.bj ]
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #25
-  resume { ptr, i32 } %.pn7
+  resume { ptr, i32 } %.pn730
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable

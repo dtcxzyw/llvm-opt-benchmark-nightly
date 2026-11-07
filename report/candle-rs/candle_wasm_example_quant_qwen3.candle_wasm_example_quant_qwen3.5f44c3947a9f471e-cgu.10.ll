@@ -204,7 +204,7 @@ bb.a:
   %i.w = alloca [32 x i8], align 8                ; 9 uses
   %i.x = alloca [24 x i8], align 8                ; 11 uses
   %i.y = alloca [32 x i8], align 8                ; 6 uses
-  %i.z = alloca [32 x i8], align 8                ; 9 uses
+  %i.z = alloca [32 x i8], align 8                ; 10 uses
   %i.aa = alloca [32 x i8], align 8               ; 9 uses
   %i.ab = alloca [24 x i8], align 8               ; 9 uses
   %.sroa.24.sroa.22.sroa.12 = alloca [24 x i8], align 8 ; 7 uses
@@ -435,14 +435,13 @@ bb.v:                                             ; preds = %bb.u, %bb.t
 bb.w:                                             ; preds = %bb.u
   %i.bj = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   store ptr %i.bf, ptr %i.bj, align 8, !alias.scope !237
-  store i64 1, ptr %i.aa, align 8, !alias.scope !237
   %.pre = load i8, ptr %i.z, align 8, !range !13, !alias.scope !238
   %i.bk = icmp eq i8 %.pre, 5
-  br i1 %i.bk, label %_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit, label %bb.x
+  br i1 %i.bk, label %_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit.thread, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
   call fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaPlfBUY5LAj_10serde_json5value5ValueECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3(ptr noalias nofree noundef align 8 dereferenceable(32) %i.z), !noalias !237
-  br label %_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit
+  br label %_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit.thread
 
 bb.y:                                             ; preds = %bb.v
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaPlfBUY5LAj_10serde_json5value5ValueECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3(ptr noalias nofree noundef align 8 dereferenceable(32) %i.z) #20
@@ -454,15 +453,19 @@ bb.z:                                             ; preds = %bb.y
   call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #21, !noalias !237
   unreachable
 
-_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit: ; preds = %bb.t, %bb.w, %bb.x
+_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit.thread: ; preds = %bb.w, %bb.x
   call void @llvm.lifetime.end.p0(ptr nonnull %i.z)
-  %i.bm = load i64, ptr %i.aa, align 8, !range !7, !noundef !6
+  br label %bb.aa
+
+_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit: ; preds = %bb.t
+  %i.bm = load i64, ptr %i.aa, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.z)
   %2 = trunc nuw i64 %i.bm to i1
-  %3 = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
-  %4 = load ptr, ptr %3, align 8                  ; 2 uses
   br i1 %2, label %bb.aa, label %bb.ab
 
-bb.aa:                                            ; preds = %_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit
+bb.aa:                                            ; preds = %_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit.thread, %_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit
+  %3 = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
+  %4 = load ptr, ptr %3, align 8, !nonnull !6, !align !16, !noundef !6
   %i.bn = call noundef nonnull align 8 ptr @_RINvXs6_NtCsaPlfBUY5LAj_10serde_json5errorNtB6_5ErrorNtNtCseZbltJ5Yqe_10serde_core2de5Error6customBE_ECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3(ptr noalias noundef nonnull align 8 %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa)
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -471,11 +474,13 @@ bb.aa:                                            ; preds = %_RINvXs2_NtNtCsaPlf
   br label %bb.bs
 
 bb.ab:                                            ; preds = %_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit
+  %5 = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
+  %.sroa.0329.0.copyload = load ptr, ptr %5, align 8
   %.sroa.4330.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4330.0..sroa_idx, i64 16, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa)
-  store ptr %4, ptr %i.ab, align 8
+  store ptr %.sroa.0329.0.copyload, ptr %i.ab, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)
@@ -878,7 +883,7 @@ bb.a:
   %i.w = alloca [32 x i8], align 8                ; 9 uses
   %i.x = alloca [24 x i8], align 8                ; 11 uses
   %i.y = alloca [32 x i8], align 8                ; 6 uses
-  %i.z = alloca [32 x i8], align 8                ; 9 uses
+  %i.z = alloca [32 x i8], align 8                ; 10 uses
   %i.aa = alloca [32 x i8], align 8               ; 9 uses
   %i.ab = alloca [24 x i8], align 8               ; 9 uses
   %.sroa.24.sroa.22.sroa.12 = alloca [24 x i8], align 8 ; 7 uses
@@ -1109,14 +1114,13 @@ bb.v:                                             ; preds = %bb.u, %bb.t
 bb.w:                                             ; preds = %bb.u
   %i.bj = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   store ptr %i.bf, ptr %i.bj, align 8, !alias.scope !257
-  store i64 1, ptr %i.aa, align 8, !alias.scope !257
   %.pre = load i8, ptr %i.z, align 8, !range !13, !alias.scope !258
   %i.bk = icmp eq i8 %.pre, 5
-  br i1 %i.bk, label %_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit, label %bb.x
+  br i1 %i.bk, label %_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit.thread, label %bb.x
 
 bb.x:                                             ; preds = %bb.w
   call fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaPlfBUY5LAj_10serde_json5value5ValueECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3(ptr noalias nofree noundef align 8 dereferenceable(32) %i.z), !noalias !257
-  br label %_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit
+  br label %_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit.thread
 
 bb.y:                                             ; preds = %bb.v
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsaPlfBUY5LAj_10serde_json5value5ValueECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3(ptr noalias nofree noundef align 8 dereferenceable(32) %i.z) #20
@@ -1128,15 +1132,19 @@ bb.z:                                             ; preds = %bb.y
   call void @_RNvNtCsf3Ta7LF998c_4core9panicking16panic_in_cleanup() #21, !noalias !257
   unreachable
 
-_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit: ; preds = %bb.t, %bb.w, %bb.x
+_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit.thread: ; preds = %bb.w, %bb.x
   call void @llvm.lifetime.end.p0(ptr nonnull %i.z)
-  %i.bm = load i64, ptr %i.aa, align 8, !range !7, !noundef !6
+  br label %bb.aa
+
+_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit: ; preds = %bb.t
+  %i.bm = load i64, ptr %i.aa, align 8
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.z)
   %2 = trunc nuw i64 %i.bm to i1
-  %3 = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
-  %4 = load ptr, ptr %3, align 8                  ; 2 uses
   br i1 %2, label %bb.aa, label %bb.ab
 
-bb.aa:                                            ; preds = %_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit
+bb.aa:                                            ; preds = %_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit.thread, %_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit
+  %3 = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
+  %4 = load ptr, ptr %3, align 8, !nonnull !6, !align !16, !noundef !6
   %i.bn = call noundef nonnull align 8 ptr @_RINvXs6_NtCsaPlfBUY5LAj_10serde_json5errorNtB6_5ErrorNtNtCseZbltJ5Yqe_10serde_core2de5Error6customBE_ECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3(ptr noalias noundef nonnull align 8 %4)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa)
   %i.bo = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1145,11 +1153,13 @@ bb.aa:                                            ; preds = %_RINvXs2_NtNtCsaPlf
   br label %bb.bs
 
 bb.ab:                                            ; preds = %_RINvXs2_NtNtCsaPlfBUY5LAj_10serde_json5value2deNtB8_5ValueNtNtCseZbltJ5Yqe_10serde_core2de12Deserializer15deserialize_mapNtNvXs8_NtBa_3mapINtB23_3MapNtNtCsgCecv3eZDcN_5alloc6string6StringBJ_ENtBW_11Deserialize11deserialize7VisitorECs8b6YJ2cVbcg_31candle_wasm_example_quant_qwen3.exit
+  %5 = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
+  %.sroa.0329.0.copyload = load ptr, ptr %5, align 8
   %.sroa.4330.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.aa, i64 16
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ab, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(16) %.sroa.4330.0..sroa_idx, i64 16, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa)
-  store ptr %4, ptr %i.ab, align 8
+  store ptr %.sroa.0329.0.copyload, ptr %i.ab, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.y)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.x)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.j)

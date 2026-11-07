@@ -204,8 +204,8 @@ bb.a:
   %i.e = alloca [48 x i8], align 8                ; 7 uses
   %i.f = alloca [16 x i8], align 8                ; 5 uses
   %i.g = alloca [48 x i8], align 8                ; 7 uses
-  %i.h = alloca [24 x i8], align 8                ; 7 uses
-  %.sroa.417.i.i = alloca [16 x i8], align 8      ; 5 uses
+  %i.h = alloca [24 x i8], align 8                ; 8 uses
+  %.sroa.417.i.i = alloca [16 x i8], align 8      ; 6 uses
   %i.i = alloca [24 x i8], align 8                ; 6 uses
   %i.j = alloca [32 x i8], align 8                ; 7 uses
   %i.k = alloca [16 x i8], align 8                ; 4 uses
@@ -357,7 +357,12 @@ _ZN14regex_automata4meta5regex5Regex20search_captures_with17hc66112234acf864dE.e
   store i32 %i.cn, ptr %i.co, align 4, !alias.scope !1018, !noalias !1024
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1025)
   %i.cp = trunc nuw i32 %i.cm to i1
-  br i1 %i.cp, label %bb.n, label %_ZN14regex_automata4util4iter8Searcher7advance17h99e7c3c1cfabd555E.exit
+  br i1 %i.cp, label %bb.n, label %_ZN14regex_automata4util4iter8Searcher7advance17h99e7c3c1cfabd555E.exit.thread
+
+_ZN14regex_automata4util4iter8Searcher7advance17h99e7c3c1cfabd555E.exit.thread: ; preds = %_ZN14regex_automata4meta5regex5Regex20search_captures_with17hc66112234acf864dE.exit.i.i.i
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !1014
+  call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.417.i.i)
+  br label %bb.al
 
 bb.n:                                             ; preds = %_ZN14regex_automata4meta5regex5Regex20search_captures_with17hc66112234acf864dE.exit.i.i.i
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1026)
@@ -555,11 +560,11 @@ bb.ae:                                            ; preds = %bb.ac
   call void @_RNvCsiGVaDesi5rv_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i, i64 noundef 16, i64 noundef 8) #21, !noalias !1040
   br label %common.resume
 
-_ZN14regex_automata4util4iter8Searcher7advance17h99e7c3c1cfabd555E.exit: ; preds = %bb.g, %bb.h, %bb.i, %_ZN14regex_automata4meta5regex9RegexInfo13is_impossible17ha2f4ccf190b89dc0E.exit.i.i.i.i, %_ZN14regex_automata4meta5regex5Regex20search_captures_with17hc66112234acf864dE.exit.i.i.i, %bb.o, %bb.p, %bb.q, %bb.r, %_ZN14regex_automata4util6search5Input8set_span17he7dd886ea82fcb50E.exit.i.i, %bb.aa
+_ZN14regex_automata4util4iter8Searcher7advance17h99e7c3c1cfabd555E.exit: ; preds = %bb.g, %bb.h, %bb.i, %_ZN14regex_automata4meta5regex9RegexInfo13is_impossible17ha2f4ccf190b89dc0E.exit.i.i.i.i, %bb.o, %bb.p, %bb.q, %bb.r, %_ZN14regex_automata4util6search5Input8set_span17he7dd886ea82fcb50E.exit.i.i, %bb.aa
+  %.pr = load i32, ptr %i.ak, align 8
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !1014
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.417.i.i)
-  %2 = load i32, ptr %i.ak, align 8, !range !17, !noundef !10
-  %i.em = trunc nuw i32 %2 to i1
+  %i.em = trunc nuw i32 %.pr to i1
   br i1 %i.em, label %bb.af, label %bb.al
 
 bb.af:                                            ; preds = %_ZN14regex_automata4util4iter8Searcher7advance17h99e7c3c1cfabd555E.exit
@@ -628,7 +633,7 @@ bb.ak:                                            ; preds = %bb.aj
   store i64 %i.fc, ptr %.sroa.7.0..sroa_idx, align 8
   br label %bb.am
 
-bb.al:                                            ; preds = %_ZN14regex_automata4util4iter8Searcher7advance17h99e7c3c1cfabd555E.exit
+bb.al:                                            ; preds = %_ZN14regex_automata4util4iter8Searcher7advance17h99e7c3c1cfabd555E.exit.thread, %_ZN14regex_automata4util4iter8Searcher7advance17h99e7c3c1cfabd555E.exit
   store i64 2, ptr %0, align 8
   br label %bb.am
 

@@ -202,28 +202,33 @@ bb.a:
   br i1 %i.t, label %.lr.ph.peel.next.i, label %_ZN6Assimp3FBX4Node19DumpPropertiesAsciiERSoi.exit, !llvm.loop !5
 
 _ZN6Assimp3FBX4Node19DumpPropertiesAsciiERSoi.exit: ; preds = %.lr.ph.peel.next.i, %bb.a, %.lr.ph.preheader.i
-  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
+  %i.u = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
   %i.v = load i8, ptr %i.u, align 8, !range !55, !noundef !56
   %i.w = trunc nuw i8 %i.v to i1
   br i1 %i.w, label %bb.c, label %bb.b
 
 bb.b:                                             ; preds = %_ZN6Assimp3FBX4Node19DumpPropertiesAsciiERSoi.exit
   %i.x = getelementptr inbounds nuw i8, ptr %0, i64 56
-  %i.y = load ptr, ptr %i.x, align 8
+  %i.y = load ptr, ptr %i.x, align 8              ; 3 uses
   %i.z = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.aa = load ptr, ptr %i.z, align 8
   %i.ab = icmp eq ptr %i.y, %i.aa
-  br i1 %i.ab, label %_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit.a, label %bb.c
+  br i1 %i.ab, label %_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit, label %bb.c
 
 bb.c:                                             ; preds = %bb.b, %_ZN6Assimp3FBX4Node19DumpPropertiesAsciiERSoi.exit
   %i.ac = add nsw i32 %2, 1
   %i.ad = tail call noundef nonnull align 8 dereferenceable(8) ptr @_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l(ptr noundef nonnull align 8 dereferenceable(8) %1, ptr noundef nonnull @.str.21, i64 noundef 2) ; 0 uses
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 2 uses
-  %i.ag = load ptr, ptr %i.af, align 8            ; 2 uses
+  %i.ag = load ptr, ptr %i.af, align 8            ; 4 uses
   %i.ah = load ptr, ptr %i.ae, align 8            ; 2 uses
   %.not.i = icmp eq ptr %i.ag, %i.ah
-  br i1 %.not.i, label %_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit.a, label %.lr.ph
+  br i1 %.not.i, label %3, label %.lr.ph
+
+3:                                                ; preds = %bb.c
+  %4 = load i8, ptr %i.u, align 8
+  %5 = trunc nuw i8 %4 to i1
+  br i1 %5, label %_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit.a, label %_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit.loopexit
 
 .lr.ph:                                           ; preds = %bb.c, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
   %i.ai = phi ptr [ %i.ay, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ], [ %i.ah, %bb.c ] ; 2 uses
@@ -263,18 +268,24 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
   %i.bd = sub i64 %i.bb, %i.bc
   %i.be = sdiv exact i64 %i.bd, 112
   %i.bf = icmp ult i64 %i.ba, %i.be
-  br i1 %i.bf, label %.lr.ph, label %_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit.loopexit, !llvm.loop !6
+  br i1 %i.bf, label %.lr.ph, label %_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit, !llvm.loop !6
 
-_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit.loopexit: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
-  %i.bg = icmp ne ptr %i.ay, %i.az
+_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, %bb.b
+  %.ph = phi ptr [ %i.y, %bb.b ], [ %i.az, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ]
+  %.ph17 = phi ptr [ %i.y, %bb.b ], [ %i.ay, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ]
+  %.pr.pr = load i8, ptr %i.u, align 8
+  %6 = trunc nuw i8 %.pr.pr to i1
+  br i1 %6, label %_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit.a, label %_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit.loopexit
+
+_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit.loopexit: ; preds = %3, %_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit
+  %7 = phi ptr [ %i.ag, %3 ], [ %.ph, %_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit ]
+  %8 = phi ptr [ %i.ag, %3 ], [ %.ph17, %_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit ]
+  %i.bg = icmp ne ptr %8, %7
   br label %_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit.a
 
-_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit.a: ; preds = %bb.c, %_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit.loopexit, %bb.b
-  %i.bh = phi i1 [ %i.bg, %_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit.loopexit ], [ false, %bb.b ], [ false, %bb.c ]
-  %3 = load i8, ptr %i.u, align 8, !range !55, !noundef !56
-  %4 = trunc nuw i8 %3 to i1
-  %spec.select = or i1 %i.bh, %4
-  tail call void @_ZN6Assimp3FBX4Node8EndAsciiERSoib(ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(8) %1, i32 noundef %2, i1 noundef zeroext %spec.select)
+_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit.a: ; preds = %3, %_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit.loopexit, %_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit
+  %i.bh = phi i1 [ true, %_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit ], [ %i.bg, %_ZN6Assimp3FBX4Node17DumpChildrenAsciiERSoi.exit.loopexit ], [ true, %3 ]
+  tail call void @_ZN6Assimp3FBX4Node8EndAsciiERSoib(ptr nonnull align 8 poison, ptr noundef nonnull align 8 dereferenceable(8) %1, i32 noundef %2, i1 noundef zeroext %i.bh)
   ret void
 }
 

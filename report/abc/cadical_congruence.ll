@@ -205,6 +205,7 @@ bb.ao:                                            ; preds = %bb.an
   %.not121 = icmp eq i32 %.3106, 0
   %i.dz = sub nsw i32 0, %i.dw
   %i.ea = sub nsw i32 0, %.3106
+  %6 = icmp eq i32 %2, %3
   br label %bb.as
 
 ._crit_edge:                                      ; preds = %bb.bf
@@ -242,7 +243,7 @@ bb.ar:                                            ; preds = %bb.aq
 bb.as:                                            ; preds = %.lr.ph200, %bb.bf
   %i.eh = phi ptr [ %i.dk, %.lr.ph200 ], [ %i.ek, %bb.bf ] ; 2 uses
   %.0199 = phi i64 [ 0, %.lr.ph200 ], [ %i.fl, %bb.bf ] ; 2 uses
-  %.086198 = phi i8 [ 0, %.lr.ph200 ], [ %.3, %bb.bf ] ; 4 uses
+  %.086198 = phi i8 [ 0, %.lr.ph200 ], [ %.3, %bb.bf ] ; 5 uses
   %.087197 = phi i64 [ 0, %.lr.ph200 ], [ %.188, %bb.bf ] ; 7 uses
   %i.ei = getelementptr inbounds nuw [16 x i8], ptr %i.eh, i64 %.0199
   %i.ej = getelementptr inbounds nuw [16 x i8], ptr %i.eh, i64 %.087197
@@ -323,23 +324,23 @@ bb.az:                                            ; preds = %bb.ay, %bb.ax
 
 bb.ba:                                            ; preds = %bb.az
   %i.fh = trunc nuw i8 %.086198 to i1
-  br i1 %i.fh, label %bb.bf, label %bb.bb
+  %or.cond170 = or i1 %6, %i.fh
+  br i1 %or.cond170, label %bb.bf, label %bb.be
 
-bb.bb:                                            ; preds = %bb.ba, %bb.az
-  %.1 = phi i8 [ %.086198, %bb.az ], [ 1, %bb.ba ] ; 2 uses
+bb.bb:                                            ; preds = %bb.az
   %i.fi = icmp eq i32 %.pre212, %3
   br i1 %i.fi, label %bb.bc, label %bb.be
 
 bb.bc:                                            ; preds = %bb.bb
-  %i.fj = trunc nuw i8 %.1 to i1
+  %i.fj = trunc nuw i8 %.086198 to i1
   br i1 %i.fj, label %bb.bf, label %bb.bd
 
 bb.bd:                                            ; preds = %bb.bc
   store i32 %2, ptr %i.el, align 8, !tbaa !339
   br label %bb.be
 
-bb.be:                                            ; preds = %bb.bb, %bb.bd
-  %.2 = phi i8 [ 1, %bb.bd ], [ %.1, %bb.bb ]
+bb.be:                                            ; preds = %bb.ba, %bb.bb, %bb.bd
+  %.2 = phi i8 [ 1, %bb.bd ], [ %.086198, %bb.bb ], [ 1, %bb.ba ]
   %i.fk = add i64 %.087197, 1
   br label %bb.bf
 

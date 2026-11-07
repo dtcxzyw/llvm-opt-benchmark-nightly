@@ -205,33 +205,44 @@ bb.d:                                             ; preds = %_ZNK12hb_hashmap_tI
 bb.e:                                             ; preds = %bb.d
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 220
   %i.ar = load i32, ptr %i.aq, align 4, !tbaa !116
-  %i.as = icmp ne i32 %i.ar, -1
-  %i.at = zext i1 %i.as to i8
-  br label %bb.f
+  %i.as = icmp ne i32 %i.ar, -1                   ; 2 uses
+  %i.at = zext i1 %i.as to i8                     ; 2 uses
+  %5 = getelementptr inbounds nuw i8, ptr %0, i64 509
+  store i8 %i.at, ptr %5, align 1, !tbaa !201
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 512
+  store i32 0, ptr %6, align 8, !tbaa !63
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 244
+  %8 = load i32, ptr %7, align 4, !tbaa !255
+  %9 = icmp slt i32 %8, 3
+  br i1 %9, label %bb.g, label %.thread
 
-bb.f:                                             ; preds = %bb.e, %bb.d
-  %5 = phi i8 [ 0, %bb.d ], [ %i.at, %bb.e ]      ; 3 uses
+bb.f:                                             ; preds = %bb.d
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 509
-  store i8 %5, ptr %i.au, align 1, !tbaa !201
+  store i8 0, ptr %i.au, align 1, !tbaa !201
   %i.av = getelementptr inbounds nuw i8, ptr %0, i64 512
   store i32 0, ptr %i.av, align 8, !tbaa !63
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 244
   %i.ax = load i32, ptr %i.aw, align 4, !tbaa !255
   %i.ay = icmp slt i32 %i.ax, 3
-  br i1 %i.ay, label %bb.g, label %.thread
+  br i1 %i.ay, label %.thread158, label %.thread
 
-.thread:                                          ; preds = %bb.f
+.thread158:                                       ; preds = %bb.f
+  %10 = getelementptr inbounds nuw i8, ptr %0, i64 384 ; 2 uses
+  store i8 0, ptr %10, align 8, !tbaa !144
+  br label %bb.h
+
+.thread:                                          ; preds = %bb.f, %bb.e
   %i.az = getelementptr inbounds nuw i8, ptr %0, i64 384 ; 2 uses
   store i8 1, ptr %i.az, align 8, !tbaa !144
   br label %.loopexit
 
-bb.g:                                             ; preds = %bb.f
-  %6 = trunc nuw i8 %5 to i1
-  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 384 ; 6 uses
-  store i8 %5, ptr %i.ba, align 8, !tbaa !144
-  br i1 %6, label %.loopexit, label %bb.h
+bb.g:                                             ; preds = %bb.e
+  %i.ba = getelementptr inbounds nuw i8, ptr %0, i64 384 ; 3 uses
+  store i8 %i.at, ptr %i.ba, align 8, !tbaa !144
+  br i1 %i.as, label %.loopexit, label %bb.h
 
-bb.h:                                             ; preds = %bb.g
+bb.h:                                             ; preds = %.thread158, %bb.g
+  %11 = phi ptr [ %10, %.thread158 ], [ %i.ba, %bb.g ] ; 4 uses
   %i.bb = getelementptr inbounds nuw i8, ptr %2, i64 200
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !256 ; 2 uses
   %i.bd = getelementptr inbounds nuw i8, ptr %2, i64 196
@@ -256,12 +267,11 @@ bb.i:                                             ; preds = %.critedge
   br i1 %.not68, label %bb.i, label %bb.j
 
 bb.j:                                             ; preds = %.critedge
-  store i8 1, ptr %i.ba, align 8, !tbaa !144
+  store i8 1, ptr %11, align 8, !tbaa !144
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.i, %bb.h, %.thread, %bb.j, %bb.g
-  %7 = phi i1 [ true, %.thread ], [ true, %bb.j ], [ true, %bb.g ], [ false, %bb.h ], [ false, %bb.i ]
-  %i.bl = phi ptr [ %i.az, %.thread ], [ %i.ba, %bb.j ], [ %i.ba, %bb.g ], [ %i.ba, %bb.h ], [ %i.ba, %bb.i ]
+  %i.bl = phi ptr [ %i.az, %.thread ], [ %11, %bb.j ], [ %i.ba, %bb.g ], [ %11, %bb.h ], [ %11, %bb.i ] ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 220 ; 2 uses
   %i.bn = load i32, ptr %i.bm, align 4, !tbaa !116
   %.not158 = icmp eq i32 %i.bn, -1
@@ -318,7 +328,9 @@ bb.m:                                             ; preds = %bb.l
 
 _ZNK3CFF15parsed_values_tINS_19cff1_top_dict_val_tEE6has_opEj.exit: ; preds = %.lr.ph.i, %bb.m, %bb.l
   %i.cl = phi i1 [ false, %bb.l ], [ true, %bb.m ], [ %.not14.i.not, %.lr.ph.i ] ; 2 uses
-  br i1 %7, label %bb.n, label %_ZNK3CFF15parsed_values_tINS_19cff1_top_dict_val_tEE6has_opEj.exit90
+  %12 = load i8, ptr %i.bl, align 8, !tbaa !144, !range !126, !noundef !127
+  %13 = trunc nuw i8 %12 to i1
+  br i1 %13, label %bb.n, label %_ZNK3CFF15parsed_values_tINS_19cff1_top_dict_val_tEE6has_opEj.exit90
 
 bb.n:                                             ; preds = %_ZNK3CFF15parsed_values_tINS_19cff1_top_dict_val_tEE6has_opEj.exit
   %i.cm = getelementptr inbounds nuw i8, ptr %1, i64 168

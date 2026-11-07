@@ -205,7 +205,7 @@ bb.am:                                            ; preds = %bb.ak
 
 bb.an:                                            ; preds = %.critedge355
   %i.en = invoke noundef zeroext i1 @_ZNK7rocksdb27ExternalSstFileIngestionJob19ComputeFilesOverlapERKNS_10autovectorINS_16IngestedFileInfoELm8EEE(ptr noundef nonnull align 8 dereferenceable(17528) %1, ptr noundef nonnull align 8 dereferenceable(9704) %i.dx)
-          to label %bb.ao unwind label %bb.al
+          to label %bb.ao unwind label %bb.al     ; 2 uses
 
 bb.ao:                                            ; preds = %bb.an
   %i.eo = getelementptr inbounds nuw i8, ptr %1, i64 17448 ; 2 uses
@@ -214,7 +214,7 @@ bb.ao:                                            ; preds = %bb.an
   %i.eq = getelementptr inbounds nuw i8, ptr %6, i64 32
   %i.er = load i8, ptr %i.eq, align 8, !tbaa !795, !range !174, !noundef !175
   %i.es = trunc nuw i8 %i.er to i1
-  br i1 %i.es, label %bb.ap, label %bb.bc
+  br i1 %i.es, label %bb.ap, label %123
 
 bb.ap:                                            ; preds = %bb.ao
   %i.et = getelementptr inbounds nuw i8, ptr %1, i64 9888 ; 5 uses
@@ -517,12 +517,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit417: ; preds = %_Z
   call void @llvm.lifetime.end.p0(ptr nonnull %37) #27
   br label %bb.bc
 
-bb.bc:                                            ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit417, %bb.ar, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i2.i.i.i.i.i, %bb.ao
-  %i.iu = load i8, ptr %i.eo, align 8, !tbaa !398, !range !174, !noundef !175
+bb.bc:                                            ; preds = %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.thread.i.i.i2.i.i.i.i.i, %bb.ar, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit417
+  %i.iu = load i8, ptr %i.eo, align 8, !tbaa !398
   %i.iv = trunc nuw i8 %i.iu to i1
   br i1 %i.iv, label %bb.bd, label %bb.bn
 
-bb.bd:                                            ; preds = %bb.bc
+123:                                              ; preds = %bb.ao
+  br i1 %i.en, label %bb.bd, label %bb.bn
+
+bb.bd:                                            ; preds = %bb.bc, %123
   %i.iw = getelementptr inbounds nuw i8, ptr %1, i64 9854
   %i.ix = load i8, ptr %i.iw, align 2, !tbaa !414, !range !174, !noundef !175
   %i.iy = trunc nuw i8 %i.ix to i1
@@ -620,7 +623,7 @@ bb.bm:                                            ; preds = %bb.bl
   call void @llvm.lifetime.end.p0(ptr nonnull %46) #27
   br label %bb.le
 
-bb.bn:                                            ; preds = %bb.bc, %bb.bk
+bb.bn:                                            ; preds = %bb.bc, %123, %bb.bk
   call void @llvm.lifetime.start.p0(ptr nonnull %48) #27
   %i.js = getelementptr inbounds nuw i8, ptr %48, i64 48 ; 2 uses
   store ptr %i.js, ptr %48, align 8, !tbaa !422
@@ -1023,14 +1026,14 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit483: ; preds = %bb
 
 bb.eh:                                            ; preds = %bb.bv
   store i8 1, ptr %i.nw, align 4, !tbaa !425
-  br label %_ZN7rocksdb6StatusD2Ev.exit468
+  br label %bb.ei
 
-_ZN7rocksdb6StatusD2Ev.exit468:                   ; preds = %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i467, %bb.dv, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit480, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit474, %bb.eh
-  %i.xd = load i8, ptr %i.nw, align 4, !tbaa !425, !range !174, !noundef !175
+_ZN7rocksdb6StatusD2Ev.exit468:                   ; preds = %_ZNKSt14default_deleteIA_KcEclIS0_EENSt9enable_ifIXsr14is_convertibleIPA_T_PS1_EE5valueEvE4typeEPS5_.exit.i.i467, %bb.dv, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit480, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit474
+  %i.xd = load i8, ptr %i.nw, align 4, !tbaa !425
   %i.xe = trunc nuw i8 %i.xd to i1
   br i1 %i.xe, label %bb.ei, label %bb.fb
 
-bb.ei:                                            ; preds = %_ZN7rocksdb6StatusD2Ev.exit468
+bb.ei:                                            ; preds = %bb.eh, %_ZN7rocksdb6StatusD2Ev.exit468
   %i.xf = load i8, ptr %i.mw, align 2, !tbaa !414, !range !174, !noundef !175
   %i.xg = trunc nuw i8 %i.xf to i1
   br i1 %i.xg, label %bb.ek, label %bb.ej

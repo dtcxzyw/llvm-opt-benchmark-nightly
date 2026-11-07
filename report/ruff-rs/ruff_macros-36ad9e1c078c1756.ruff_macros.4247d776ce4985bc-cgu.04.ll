@@ -202,10 +202,14 @@ bb.b:                                             ; preds = %bb.a
   %i.aa = load i64, ptr %i.z, align 8             ; 2 uses
   br i1 %i.s, label %bb.y, label %bb.z
 
-bb.c:                                             ; preds = %.preheader, %_RNvXsv_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCs5GOeAjNCyUy_11ruff_macros.exit
+thread-pre-split:                                 ; preds = %_RNvXsv_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4nextCs5GOeAjNCyUy_11ruff_macros.exit
+  %.pr = load i64, ptr %1, align 8, !noalias !120
+  br label %bb.c
+
+bb.c:                                             ; preds = %.preheader, %thread-pre-split
+  %2 = phi i64 [ %.pr, %thread-pre-split ], [ 0, %.preheader ]
   call void @llvm.experimental.noalias.scope.decl(metadata !120)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
-  %2 = load i64, ptr %1, align 8, !noalias !120
   %i.ab = trunc nuw i64 %2 to i1
   br i1 %i.ab, label %bb.d, label %bb.e
 
@@ -344,7 +348,7 @@ _RNvXsv_NtNtCs4NRVxsYgnAr_4core3str7patternNtB5_11StrSearcherNtB5_8Searcher4next
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
   switch i64 %i.bv, label %bb.u [
     i64 0, label %bb.v
-    i64 1, label %bb.c
+    i64 1, label %thread-pre-split
     i64 2, label %bb.w
   ]
 

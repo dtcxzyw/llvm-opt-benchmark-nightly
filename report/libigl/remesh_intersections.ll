@@ -205,6 +205,7 @@ bb.j:                                             ; preds = %_ZNK4CGAL23Cartesia
   %.sroa.022.73..sroa.022.73..sroa.022.73..sroa.022.73..pre = load i8, ptr %.sroa.022.73..sroa_idx135, align 1, !tbaa !635, !noalias !8872
   %.sroa.022.74..sroa_idx137 = getelementptr inbounds nuw i8, ptr %.sroa.022, i64 74
   %.sroa.022.74..sroa.022.74..sroa.022.74..sroa.022.74..pre = load i8, ptr %.sroa.022.74..sroa_idx137, align 2, !tbaa !906, !noalias !8872
+  %7 = freeze i8 %.sroa.022.73..sroa.022.73..sroa.022.73..sroa.022.73..pre
   br label %bb.l
 
 bb.k:                                             ; preds = %_ZNK4CGAL23CartesianKernelFunctors18Construct_vector_3INS_16Simple_cartesianINS_9cpp_floatEEEEclENS_15Return_base_tagEOS3_S7_S7_.exit.i
@@ -213,7 +214,7 @@ bb.k:                                             ; preds = %_ZNK4CGAL23Cartesia
 
 bb.l:                                             ; preds = %bb.j, %bb.k
   %.sroa.022.74..sroa.022.74..sroa.022.74. = phi i8 [ %.sroa.022.74..sroa.022.74..sroa.022.74..sroa.022.74..pre, %bb.j ], [ %.sroa.05.i.74..sroa.05.i.74..sroa.05.i.74..sroa.05.74..sroa.05.74..sroa.05.74..i, %bb.k ]
-  %.sroa.022.73..sroa.022.73..sroa.022.73. = phi i8 [ %.sroa.022.73..sroa.022.73..sroa.022.73..sroa.022.73..pre, %bb.j ], [ 0, %bb.k ] ; 2 uses
+  %.sroa.022.73..sroa.022.73..sroa.022.73. = phi i8 [ %7, %bb.j ], [ 0, %bb.k ] ; 2 uses
   %.sroa.022.72..sroa.022.72..sroa.022.72. = phi i8 [ %.sroa.022.72..sroa.022.72..sroa.022.72..sroa.022.72..pre, %bb.j ], [ %.sroa.05.i.72..sroa.05.i.72..sroa.05.i.72..sroa.05.72..sroa.05.72..sroa.05.72..i, %bb.k ]
   %.sroa.022.64..sroa.022.64..sroa.022.64. = phi i64 [ %.sroa.022.64..sroa.022.64..sroa.022.64..sroa.022.64..pre, %bb.j ], [ %.sroa.05.i.64..sroa.05.i.64..sroa.05.i.64..sroa.05.64..sroa.05.64..sroa.05.64..i, %bb.k ] ; 2 uses
   %.sroa.022.80..sroa_idx138 = getelementptr inbounds nuw i8, ptr %.sroa.022, i64 80
@@ -280,7 +281,7 @@ bb.l:                                             ; preds = %bb.j, %bb.k
   store i8 %.sroa.022.73..sroa.022.73..sroa.022.73., ptr %i.aw, align 1, !tbaa !635, !alias.scope !8872
   %i.ax = getelementptr inbounds nuw i8, ptr %0, i64 74
   store i8 %.sroa.022.74..sroa.022.74..sroa.022.74., ptr %i.ax, align 2, !tbaa !906, !alias.scope !8872
-  %i.ay = trunc nuw i8 %.sroa.022.73..sroa.022.73..sroa.022.73. to i1
+  %i.ay = trunc i8 %.sroa.022.73..sroa.022.73..sroa.022.73. to i1
   %i.az = shl i64 %.sroa.022.64..sroa.022.64..sroa.022.64., 3
   %.sink.i = select i1 %i.ay, i64 %i.az, i64 16
   call void @llvm.memcpy.p0.p0.i64(ptr nonnull align 16 dereferenceable(288) %0, ptr nonnull align 16 dereferenceable(288) %.sroa.022, i64 %.sink.i, i1 false)

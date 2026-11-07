@@ -204,12 +204,16 @@ _ZNSt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEC2ERKS6_.exi
   %niter.ncmp.7 = icmp eq i64 %niter.next.7, %unroll_iter
   br i1 %niter.ncmp.7, label %_ZN4Luau6detail16ItemInterfaceSetISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE4fillEPS9_mRKS9_.exit.loopexit14.unr-lcssa, label %_ZNSt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEC2ERKS6_.exit.i.us, !llvm.loop !215
 
-.lr.ph.i.split:                                   ; preds = %.lr.ph.i, %_ZNSt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEC2ERKS6_.exit.i
-  %.05.i = phi i64 [ %i.bh, %_ZNSt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEC2ERKS6_.exit.i ], [ 0, %.lr.ph.i ] ; 2 uses
+.lr.ph.i.splitthread-pre-split:                   ; preds = %_ZNSt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEC2ERKS6_.exit.i
+  %.pr = load i8, ptr %i.e, align 8, !tbaa !57
+  br label %.lr.ph.i.split
+
+.lr.ph.i.split:                                   ; preds = %.lr.ph.i, %.lr.ph.i.splitthread-pre-split
+  %3 = phi i8 [ %.pr, %.lr.ph.i.splitthread-pre-split ], [ 1, %.lr.ph.i ]
+  %.05.i = phi i64 [ %i.bh, %.lr.ph.i.splitthread-pre-split ], [ 0, %.lr.ph.i ] ; 2 uses
   %i.as = getelementptr inbounds nuw [40 x i8], ptr %i.w, i64 %.05.i ; 7 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 32 ; 2 uses
   store i8 0, ptr %i.at, align 8, !tbaa !57
-  %3 = load i8, ptr %i.e, align 8, !tbaa !57, !range !24, !noundef !25
   %i.au = trunc nuw i8 %3 to i1
   br i1 %i.au, label %bb.f, label %_ZNSt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEC2ERKS6_.exit.i
 
@@ -263,7 +267,7 @@ _ZNSt22_Optional_payload_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcE
 _ZNSt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEC2ERKS6_.exit.i: ; preds = %_ZNSt22_Optional_payload_baseINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEE12_M_constructIJRKS5_EEEvDpOT_.exit.i.i.i.i.i.i, %.lr.ph.i.split
   %i.bh = add nuw i64 %.05.i, 1                   ; 2 uses
   %exitcond.not.i = icmp eq i64 %i.bh, %2
-  br i1 %exitcond.not.i, label %_ZN4Luau6detail16ItemInterfaceSetISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE4fillEPS9_mRKS9_.exit, label %.lr.ph.i.split, !llvm.loop !216
+  br i1 %exitcond.not.i, label %_ZN4Luau6detail16ItemInterfaceSetISt8optionalINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEE4fillEPS9_mRKS9_.exit, label %.lr.ph.i.splitthread-pre-split, !llvm.loop !216
 
 .loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.noexc.i.i.i.i.i.i.i.i.i, %bb.e
   %lpad.loopexit.split-lp13 = landingpad { ptr, i32 }

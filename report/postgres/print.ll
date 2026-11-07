@@ -204,11 +204,11 @@ bb.ae:                                            ; preds = %.thread
   br i1 %i.w, label %.lr.ph686.preheader, label %._crit_edge687
 
 bb.af:                                            ; preds = %bb.ae, %.thread
+  %.pre758 = load ptr, ptr @stdout, align 8       ; 2 uses
   br i1 %2, label %IsPagerNeeded.exit, label %bb.ag
 
 bb.ag:                                            ; preds = %bb.af
-  %4 = load ptr, ptr @stdout, align 8
-  %i.hg = icmp eq ptr %1, %4                      ; 2 uses
+  %i.hg = icmp eq ptr %1, %.pre758
   %or.cond10 = select i1 %i.hg, i1 %i.ga, i1 false
   %i.hh = icmp ult i32 %.1450, %.4
   %or.cond528 = select i1 %.not504, i1 true, i1 %i.hh
@@ -220,7 +220,8 @@ bb.ah:                                            ; preds = %bb.ag
   br label %IsPagerNeeded.exit
 
 bb.ai:                                            ; preds = %bb.ag
-  br i1 %i.hg, label %bb.aj, label %IsPagerNeeded.exit
+  %.not864 = icmp eq ptr %1, %.pre758
+  br i1 %.not864, label %bb.aj, label %IsPagerNeeded.exit
 
 bb.aj:                                            ; preds = %bb.ai
   %i.hj = call fastcc ptr @PageOutputInternal(i32 noundef 0, ptr noundef nonnull %i.gz, ptr noundef nonnull readonly %0, ptr noundef readonly %.0466802, i1 noundef zeroext false) ; 2 uses
@@ -228,9 +229,9 @@ bb.aj:                                            ; preds = %bb.ai
   %i.hl = icmp ne ptr %i.hj, %i.hk
   br label %IsPagerNeeded.exit
 
-IsPagerNeeded.exit:                               ; preds = %bb.ah, %bb.af, %bb.aj, %bb.ai
-  %.1591 = phi ptr [ %1, %bb.ai ], [ %i.hj, %bb.aj ], [ %i.hi, %bb.ah ], [ %1, %bb.af ] ; 41 uses
-  %.1447 = phi i1 [ false, %bb.ai ], [ %i.hl, %bb.aj ], [ true, %bb.ah ], [ false, %bb.af ] ; 4 uses
+IsPagerNeeded.exit:                               ; preds = %bb.af, %bb.aj, %bb.ah, %bb.ai
+  %.1591 = phi ptr [ %1, %bb.ai ], [ %i.hi, %bb.ah ], [ %i.hj, %bb.aj ], [ %1, %bb.af ] ; 41 uses
+  %.1447 = phi i1 [ false, %bb.ai ], [ true, %bb.ah ], [ %i.hl, %bb.aj ], [ false, %bb.af ] ; 4 uses
   %i.hm = load ptr, ptr %0, align 8
   %i.hn = getelementptr inbounds nuw i8, ptr %i.hm, i64 25
   %i.ho = load i8, ptr %i.hn, align 1, !range !7, !noundef !8

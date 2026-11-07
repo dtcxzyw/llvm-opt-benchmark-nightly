@@ -205,7 +205,7 @@ bb.a:
   %i.el = alloca [24 x i8], align 8               ; 11 uses
   %i.em = alloca [24 x i8], align 8               ; 13 uses
   %i.en = alloca [24 x i8], align 8               ; 4 uses
-  %i.eo = alloca [32 x i8], align 8               ; 13 uses
+  %i.eo = alloca [32 x i8], align 8               ; 14 uses
   %i.ep = alloca [24 x i8], align 8               ; 4 uses
   %i.eq = alloca [24 x i8], align 8               ; 4 uses
   %i.er = alloca [32 x i8], align 8               ; 6 uses
@@ -454,19 +454,23 @@ _RNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson8compilerNtB5_8Compiler12emit_lit
 
 bb.ac:                                            ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6050)
-  %2 = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
-  br i1 %.inv, label %bb.ad, label %3
+  br i1 %.inv, label %bb.ad, label %bb.kk
 
 bb.ad:                                            ; preds = %bb.ac
   %i.ha = trunc nuw i64 %i.ex to i1
   %i.hb = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %i.hc = load ptr, ptr %i.hb, align 8, !alias.scope !6050, !nonnull !9, !noundef !9 ; 7 uses
+  %i.hc = load ptr, ptr %i.hb, align 8, !alias.scope !6050, !nonnull !9, !noundef !9 ; 9 uses
+  %2 = getelementptr inbounds nuw i8, ptr %1, i64 24
   %i.hd = load i64, ptr %2, align 8, !alias.scope !6050, !noundef !9 ; 4 uses
   %.not3.i = icmp eq i64 %i.hd, 0                 ; 3 uses
   br i1 %i.ha, label %bb.ae, label %bb.af
 
 bb.ae:                                            ; preds = %bb.ad
-  br i1 %.not3.i, label %.thread337, label %bb.ah
+  br i1 %.not3.i, label %.thread862, label %bb.ah
+
+.thread862:                                       ; preds = %bb.ae
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.eo)
+  br label %.critedge
 
 bb.af:                                            ; preds = %bb.ad
   br i1 %.not3.i, label %.thread336, label %bb.ag
@@ -483,9 +487,13 @@ bb.ag:                                            ; preds = %bb.af
   br i1 %i.hi, label %bb.ls, label %.thread336
 
 bb.ah:                                            ; preds = %bb.ae
-  %i.hj = load i8, ptr %i.hc, align 1, !noalias !6050, !noundef !9
+  %i.hj = load i8, ptr %i.hc, align 1, !noalias !6050, !noundef !9 ; 2 uses
   %i.hk = icmp eq i8 %i.hj, 0
-  br i1 %i.hk, label %_RNvNtNtCs7gfv9tzbXmh_6yara_x2re3hir8any_byte.exit, label %.thread337
+  br i1 %i.hk, label %_RNvNtNtCs7gfv9tzbXmh_6yara_x2re3hir8any_byte.exit, label %.thread865
+
+.thread865:                                       ; preds = %bb.ah
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.eo)
+  br label %bb.kl
 
 _RNvNtNtCs7gfv9tzbXmh_6yara_x2re3hir8any_byte.exit: ; preds = %bb.ah
   %i.hl = getelementptr inbounds nuw i8, ptr %i.hc, i64 1
@@ -888,19 +896,12 @@ _RNvNtCsexYYUdYSQU6_5alloc5boxed14box_new_uninit.exit116: ; preds = %.loopexit38
 bb.kj:                                            ; preds = %bb.qj, %bb.pt, %bb.pe, %bb.kh
   unreachable
 
-.thread337:                                       ; preds = %bb.ae, %bb.ah
+bb.kk:                                            ; preds = %bb.ac
+  %.phi.trans.insert.phi.trans.insert = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %.pre751.pre = load i64, ptr %.phi.trans.insert.phi.trans.insert, align 8, !alias.scope !6248, !noalias !6249 ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.eo)
-  br label %bb.kk
-
-3:                                                ; preds = %bb.ac
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.eo)
-  %.pre751 = load i64, ptr %2, align 8, !alias.scope !6248, !noalias !6249
-  br label %bb.kk
-
-bb.kk:                                            ; preds = %3, %.thread337
-  %4 = phi i64 [ %.pre751, %3 ], [ %i.hd, %.thread337 ] ; 2 uses
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6248)
-  %i.aou = icmp eq i64 %4, 0
+  %i.aou = icmp eq i64 %.pre751.pre, 0
   %.phi.trans.insert752 = getelementptr inbounds nuw i8, ptr %1, i64 16
   %.val.i.pre = load ptr, ptr %.phi.trans.insert752, align 8 ; 3 uses
   br i1 %i.aou, label %.critedge, label %._crit_edge1172
@@ -909,21 +910,21 @@ bb.kk:                                            ; preds = %3, %.thread337
   %.pre1175 = load i8, ptr %.val.i.pre, align 1, !noalias !6250
   br label %bb.kl
 
-bb.kl:                                            ; preds = %._crit_edge1172, %.thread861
-  %5 = phi i8 [ 0, %.thread861 ], [ %.pre1175, %._crit_edge1172 ] ; 4 uses
-  %6 = phi ptr [ %i.hc, %.thread861 ], [ %.val.i.pre, %._crit_edge1172 ] ; 5 uses
-  %7 = phi i64 [ %i.hd, %.thread861 ], [ %4, %._crit_edge1172 ] ; 4 uses
-  %.idx.i208 = shl i64 %7, 1                      ; 2 uses
-  %i.aov = getelementptr i8, ptr %6, i64 %.idx.i208 ; 2 uses
+bb.kl:                                            ; preds = %._crit_edge1172, %.thread865, %.thread861
+  %3 = phi i8 [ 0, %.thread861 ], [ %.pre1175, %._crit_edge1172 ], [ %i.hj, %.thread865 ] ; 4 uses
+  %4 = phi ptr [ %i.hc, %.thread861 ], [ %.val.i.pre, %._crit_edge1172 ], [ %i.hc, %.thread865 ] ; 5 uses
+  %5 = phi i64 [ %i.hd, %.thread861 ], [ %.pre751.pre, %._crit_edge1172 ], [ %i.hd, %.thread865 ] ; 4 uses
+  %.idx.i208 = shl i64 %5, 1                      ; 2 uses
+  %i.aov = getelementptr i8, ptr %4, i64 %.idx.i208 ; 2 uses
   %i.aow = getelementptr i8, ptr %i.aov, i64 -1
   %i.aox = load i8, ptr %i.aow, align 1, !noalias !6250, !noundef !9
-  %i.aoy = xor i8 %i.aox, %5                      ; 2 uses
+  %i.aoy = xor i8 %i.aox, %3                      ; 2 uses
   %i.aoz = icmp eq i64 %.idx.i208, 0
   br i1 %i.aoz, label %.critedge, label %.lr.ph.i209
 
 .lr.ph.i209:                                      ; preds = %bb.kl, %bb.ko
   %.sroa.03.021.i = phi i32 [ %i.apm, %bb.ko ], [ 0, %bb.kl ]
-  %.sroa.05.020.i = phi ptr [ %i.apa, %bb.ko ], [ %6, %bb.kl ] ; 4 uses
+  %.sroa.05.020.i = phi ptr [ %i.apa, %bb.ko ], [ %4, %bb.kl ] ; 4 uses
   %i.apa = getelementptr inbounds nuw i8, ptr %.sroa.05.020.i, i64 2 ; 2 uses
   %i.apb = load i8, ptr %.sroa.05.020.i, align 1, !noalias !6250, !noundef !9
   %i.apc = getelementptr inbounds nuw i8, ptr %.sroa.05.020.i, i64 1
@@ -947,8 +948,8 @@ bb.km:                                            ; preds = %bb.kn, %.lr.ph.i209
 bb.kn:                                            ; preds = %bb.km
   %i.aph = icmp eq i8 %.sroa.6.014.i, -1
   %i.api = add i8 %.sroa.6.014.i, 1
-  %i.apj = and i8 %.sroa.6.014.i, %5
-  %.not.i212 = icmp eq i8 %i.apj, %5
+  %i.apj = and i8 %.sroa.6.014.i, %3
+  %.not.i212 = icmp eq i8 %i.apj, %3
   br i1 %.not.i212, label %bb.km, label %.critedge
 
 bb.ko:                                            ; preds = %bb.km
@@ -961,7 +962,7 @@ bb.ko:                                            ; preds = %bb.km
 _RNvNtNtCs7gfv9tzbXmh_6yara_x2re3hir20class_to_masked_byte.exit: ; preds = %._crit_edge.i215
   %i.apo = xor i8 %i.aoy, -1
   %i.app = getelementptr inbounds nuw i8, ptr %i.eo, i64 8
-  call fastcc void @_RNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson8compilerNtB5_8Compiler16emit_masked_byte(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.app, ptr noalias nofree noundef nonnull align 8 dereferenceable(240) %0, i8 noundef %5, i8 noundef %i.apo), !noalias !9
+  call fastcc void @_RNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson8compilerNtB5_8Compiler16emit_masked_byte(ptr noalias nofree noundef align 8 captures(none) dereferenceable(24) %i.app, ptr noalias nofree noundef nonnull align 8 dereferenceable(240) %0, i8 noundef %3, i8 noundef %i.apo), !noalias !9
   br label %_RNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson8compilerNtB5_8Compiler16visit_post_class.exit.thread
 
 .thread336:                                       ; preds = %bb.af, %bb.ag, %.split
@@ -1255,13 +1256,13 @@ _RNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson8compilerNtB5_8Compiler16visit_po
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !6251
   br label %bb.mc
 
-.critedge:                                        ; preds = %bb.kn, %bb.kk, %._crit_edge.i215, %bb.kl
-  %8 = phi i64 [ 0, %bb.kk ], [ %7, %bb.kl ], [ %7, %._crit_edge.i215 ], [ %7, %bb.kn ] ; 2 uses
-  %.val.i = phi ptr [ %.val.i.pre, %bb.kk ], [ %6, %bb.kl ], [ %6, %._crit_edge.i215 ], [ %6, %bb.kn ] ; 2 uses
+.critedge:                                        ; preds = %bb.kn, %bb.kk, %.thread862, %._crit_edge.i215, %bb.kl
+  %6 = phi i64 [ 0, %.thread862 ], [ %5, %bb.kl ], [ %5, %._crit_edge.i215 ], [ 0, %bb.kk ], [ %5, %bb.kn ] ; 2 uses
+  %.val.i = phi ptr [ %i.hc, %.thread862 ], [ %4, %bb.kl ], [ %4, %._crit_edge.i215 ], [ %.val.i.pre, %bb.kk ], [ %4, %bb.kn ] ; 2 uses
   %i.asi = getelementptr inbounds nuw i8, ptr %i.eo, i64 8
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6261)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !6262)
-  %i.asj = tail call fastcc noundef i64 @_RNvMs3_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson8compilerNtB5_8InstrSeq10emit_class(ptr noalias nofree noundef nonnull align 8 dereferenceable(240) %0, ptr readonly %.val.i, i64 %8), !noalias !6261
+  %i.asj = tail call fastcc noundef i64 @_RNvMs3_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson8compilerNtB5_8InstrSeq10emit_class(ptr noalias nofree noundef nonnull align 8 dereferenceable(240) %0, ptr readonly %.val.i, i64 %6), !noalias !6261
   %i.ask = getelementptr inbounds nuw i8, ptr %0, i64 152
   %i.asl = getelementptr inbounds nuw i8, ptr %0, i64 160
   %i.asm = load i64, ptr %i.asl, align 8, !alias.scope !6262, !noalias !9, !noundef !9 ; 2 uses
@@ -1271,14 +1272,14 @@ _RNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson8compilerNtB5_8Compiler16visit_po
   %i.asp = getelementptr i8, ptr %i.aso, i64 -48
   %i.asq = getelementptr inbounds nuw i8, ptr %0, i64 48
   %.sroa.0.0.i956 = select i1 %.not.i955, ptr %i.asq, ptr %i.asp
-  %i.asr = tail call fastcc noundef i64 @_RNvMs3_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson8compilerNtB5_8InstrSeq10emit_class(ptr noalias nofree noundef align 8 dereferenceable(48) %.sroa.0.0.i956, ptr readonly %.val.i, i64 %8), !noalias !6261 ; 0 uses
+  %i.asr = tail call fastcc noundef i64 @_RNvMs3_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson8compilerNtB5_8InstrSeq10emit_class(ptr noalias nofree noundef align 8 dereferenceable(48) %.sroa.0.0.i956, ptr readonly %.val.i, i64 %6), !noalias !6261 ; 0 uses
   store i64 %i.asj, ptr %i.asi, align 8, !alias.scope !6261, !noalias !9
   br label %_RNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson8compilerNtB5_8Compiler16visit_post_class.exit.thread
 
 _RNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson8compilerNtB5_8Compiler16visit_post_class.exit: ; preds = %._crit_edge626
   call fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs2r1H4NiMXj9_12regex_syntax3hir3HirEECs7gfv9tzbXmh_6yara_x(ptr noalias nofree noundef align 8 dereferenceable(24) %i.v), !noalias !6252, !inline_history !5910
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !6251
-  %.pre754 = load i8, ptr %i.eo, align 8, !range !46
+  %.pre754 = load i8, ptr %i.eo, align 8
   %i.ass = trunc nuw i8 %.pre754 to i1
   br i1 %i.ass, label %_RNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson8compilerNtB5_8Compiler16visit_post_class.exit._crit_edge, label %_RNvMs0_NtNtNtCs7gfv9tzbXmh_6yara_x2re8thompson8compilerNtB5_8Compiler16visit_post_class.exit.thread
 

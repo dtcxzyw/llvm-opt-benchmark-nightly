@@ -202,8 +202,9 @@ bb.b:                                             ; preds = %bb.a
   %i.l = icmp eq i64 %i.k, 0
   %i.m = sub i64 %3, %i.k
   %i.n = add i64 %i.m, 9216                       ; 2 uses
-  %.not89 = icmp ult i64 %i.n, %i.j
-  %.sroa.5.0.i = select i1 %.not89, i64 8192, i64 %i.n
+  %4 = icmp uge i64 %i.n, %i.j
+  %cond.fr = freeze i1 %4
+  %.sroa.5.0.i = select i1 %cond.fr, i64 %i.n, i64 8192
   %.sroa.010.1 = select i1 %i.l, i64 %i.j, i64 %.sroa.5.0.i ; 2 uses
   %i.o = icmp eq i64 %3, 0
   br i1 %i.o, label %bb.c, label %"_ZN3std2io19default_read_to_end28_$u7b$$u7b$closure$u7d$$u7d$17hda9208a43340f0ecE.exit.thread"
@@ -466,8 +467,9 @@ bb.b:                                             ; preds = %bb.a
   %i.l = icmp eq i64 %i.k, 0
   %i.m = sub i64 %3, %i.k
   %i.n = add i64 %i.m, 9216                       ; 2 uses
-  %.not89 = icmp ult i64 %i.n, %i.j
-  %.sroa.5.0.i = select i1 %.not89, i64 8192, i64 %i.n
+  %4 = icmp uge i64 %i.n, %i.j
+  %cond.fr = freeze i1 %4
+  %.sroa.5.0.i = select i1 %cond.fr, i64 %i.n, i64 8192
   %.sroa.010.1 = select i1 %i.l, i64 %i.j, i64 %.sroa.5.0.i ; 2 uses
   %i.o = icmp eq i64 %3, 0
   br i1 %i.o, label %bb.c, label %"_ZN3std2io19default_read_to_end28_$u7b$$u7b$closure$u7d$$u7d$17h96e7e47424771f54E.exit.thread"
@@ -730,8 +732,9 @@ bb.b:                                             ; preds = %bb.a
   %i.l = icmp eq i64 %i.k, 0
   %i.m = sub i64 %3, %i.k
   %i.n = add i64 %i.m, 9216                       ; 2 uses
-  %.not89 = icmp ult i64 %i.n, %i.j
-  %.sroa.5.0.i = select i1 %.not89, i64 8192, i64 %i.n
+  %4 = icmp uge i64 %i.n, %i.j
+  %cond.fr = freeze i1 %4
+  %.sroa.5.0.i = select i1 %cond.fr, i64 %i.n, i64 8192
   %.sroa.010.1 = select i1 %i.l, i64 %i.j, i64 %.sroa.5.0.i ; 2 uses
   %i.o = icmp eq i64 %3, 0
   br i1 %i.o, label %bb.c, label %"_ZN3std2io19default_read_to_end28_$u7b$$u7b$closure$u7d$$u7d$17h281828f8b85a91e6E.exit.thread"

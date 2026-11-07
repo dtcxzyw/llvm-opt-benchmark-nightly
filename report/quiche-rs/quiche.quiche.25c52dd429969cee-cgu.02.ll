@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %bb.r, %bb.s, %bb.j,
   %i.w = trunc nuw i8 %i.v to i1, !dbg !16478
   %brmerge = or i1 %i.m, %i.w, !dbg !16478
     #dbg_value(ptr %1, !16320, !DIExpression(), !16372)
-  %i.x = load i8, ptr %i.c, align 2, !range !4909
+  %i.x = load i8, ptr %i.c, align 2               ; 2 uses
   %i.y = trunc nuw i8 %i.x to i1
     #dbg_value(i1 %i.y, !16262, !DIExpression(DW_OP_constu, 18446744073709551615, DW_OP_xor, DW_OP_LLVM_convert, 1, DW_ATE_unsigned, DW_OP_LLVM_convert, 8, DW_ATE_unsigned, DW_OP_stack_value), !16374)
   %or.cond = select i1 %brmerge, i1 true, i1 %i.y, !dbg !16478
@@ -253,9 +253,13 @@ bb.s:                                             ; preds = %bb.r
   store i8 2, ptr %.sroa.622.0..sroa_idx, align 8, !dbg !16486
   br label %bb.n, !dbg !16487
 
-_RNvMs_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr27startupNtB4_7Startup22check_excessive_losses.exit.thread: ; preds = %bb.t, %bb.u, %_RNvMs1_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr213network_modelNtB5_17BBRv2NetworkModel20is_inflight_too_high.exit.i, %bb.x, %bb.y, %bb.n
+thread-pre-split:                                 ; preds = %bb.y, %bb.x
+  %.pr = load i8, ptr %i.c, align 2, !dbg !16488
+  br label %_RNvMs_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr27startupNtB4_7Startup22check_excessive_losses.exit.thread, !dbg !16488
+
+_RNvMs_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr27startupNtB4_7Startup22check_excessive_losses.exit.thread: ; preds = %thread-pre-split, %bb.n
+  %14 = phi i8 [ %.pr, %thread-pre-split ], [ %i.x, %bb.n ], !dbg !16488
     #dbg_value(ptr %1, !16320, !DIExpression(), !16391)
-  %14 = load i8, ptr %i.c, align 2, !dbg !16488, !range !4909, !noundef !1224
   %i.ae = trunc nuw i8 %14 to i1, !dbg !16488
   br i1 %i.ae, label %bb.aa, label %bb.z, !dbg !16489
 
@@ -285,7 +289,7 @@ bb.t:                                             ; preds = %bb.n
   %i.am = trunc nuw i8 %.val67 to i1, !dbg !16493
   %i.an = icmp uge i64 %.val5.i, %i.ai
   %or.cond11.not.i.i = select i1 %i.am, i1 %i.an, i1 false, !dbg !16493
-  br i1 %or.cond11.not.i.i, label %bb.u, label %_RNvMs_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr27startupNtB4_7Startup22check_excessive_losses.exit.thread, !dbg !16493
+  br i1 %or.cond11.not.i.i, label %bb.u, label %bb.z, !dbg !16493
 
 bb.u:                                             ; preds = %bb.t
     #dbg_value(i64 %.val, !16413, !DIExpression(), !16220)
@@ -293,7 +297,7 @@ bb.u:                                             ; preds = %bb.t
   %i.ao = icmp ne i64 %.val, 0, !dbg !16494
   %i.ap = icmp ne i64 %.val.i, 0
   %or.cond.i.i = and i1 %i.ao, %i.ap, !dbg !16494
-  br i1 %or.cond.i.i, label %_RNvMs1_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr213network_modelNtB5_17BBRv2NetworkModel20is_inflight_too_high.exit.i, label %_RNvMs_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr27startupNtB4_7Startup22check_excessive_losses.exit.thread, !dbg !16494
+  br i1 %or.cond.i.i, label %_RNvMs1_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr213network_modelNtB5_17BBRv2NetworkModel20is_inflight_too_high.exit.i, label %bb.z, !dbg !16494
 
 _RNvMs1_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr213network_modelNtB5_17BBRv2NetworkModel20is_inflight_too_high.exit.i: ; preds = %bb.u
   %i.aq = uitofp i64 %.val to float, !dbg !16495
@@ -301,7 +305,7 @@ _RNvMs1_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr213network_modelN
   %i.as = tail call i64 @llvm.fptoui.sat.i64.f32(float %i.ar), !dbg !16496
     #dbg_value(i64 %i.as, !16415, !DIExpression(), !16222)
   %i.at = icmp ugt i64 %.val.i, %i.as, !dbg !16497
-  br i1 %i.at, label %bb.v, label %_RNvMs_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr27startupNtB4_7Startup22check_excessive_losses.exit.thread, !dbg !16498
+  br i1 %i.at, label %bb.v, label %bb.z, !dbg !16498
 
 bb.v:                                             ; preds = %_RNvMs1_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr213network_modelNtB5_17BBRv2NetworkModel20is_inflight_too_high.exit.i
   %i.au = invoke noundef i64 @_RNvMs1_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr213network_modelNtB5_17BBRv2NetworkModel4bdp0(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(688) %1)
@@ -343,7 +347,7 @@ bb.x:                                             ; preds = %bb.w
     #dbg_value(ptr %12, !16366, !DIExpression(), !16440)
   %i.bc = load i64, ptr %12, align 8, !dbg !16504, !range !4321, !noundef !1224
   %.not64 = icmp eq i64 %i.bc, 2, !dbg !16504
-  br i1 %.not64, label %bb.y, label %_RNvMs_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr27startupNtB4_7Startup22check_excessive_losses.exit.thread, !dbg !16505
+  br i1 %.not64, label %bb.y, label %thread-pre-split, !dbg !16505
 
 bb.y:                                             ; preds = %bb.x
   %i.bd = lshr i64 %i.bb, 3, !dbg !16506
@@ -355,9 +359,9 @@ bb.y:                                             ; preds = %bb.x
   store i64 %13, ptr %.sroa.526.0..sroa_idx, align 8, !dbg !16507
   %.sroa.627.0..sroa_idx = getelementptr inbounds nuw i8, ptr %12, i64 24, !dbg !16507
   store i8 0, ptr %.sroa.627.0..sroa_idx, align 8, !dbg !16507
-  br label %_RNvMs_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr27startupNtB4_7Startup22check_excessive_losses.exit.thread, !dbg !16508
+  br label %thread-pre-split, !dbg !16508
 
-bb.z:                                             ; preds = %_RNvMs_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr27startupNtB4_7Startup22check_excessive_losses.exit.thread
+bb.z:                                             ; preds = %bb.t, %bb.u, %_RNvMs1_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr213network_modelNtB5_17BBRv2NetworkModel20is_inflight_too_high.exit.i, %_RNvMs_NtNtNtNtCs3f36owOmepS_6quiche8recovery11gcongestion4bbr27startupNtB4_7Startup22check_excessive_losses.exit.thread
   %i.be = getelementptr inbounds nuw i8, ptr %0, i64 8, !dbg !16509
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(688) %i.be, ptr noundef nonnull align 8 dereferenceable(688) %1, i64 688, i1 false), !dbg !16510
   store i64 2, ptr %0, align 8, !dbg !16509

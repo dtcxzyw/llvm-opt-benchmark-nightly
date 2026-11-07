@@ -202,26 +202,30 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 .thread.i:                                        ; preds = %bb.c
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 688
-  %i.l = load volatile ptr, ptr %i.k, align 8, !tbaa !35
+  %i.l = load volatile ptr, ptr %i.k, align 8, !tbaa !35 ; 2 uses
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 672
+  %2 = icmp eq ptr %1, %i.l
+  %..i4.i = select i1 %2, ptr null, ptr %i.l
   br label %get_send_range.exit
 
 bb.d:                                             ; preds = %bb.c
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 608 ; 2 uses
   %i.n = tail call i32 @pthread_mutex_lock(ptr noundef nonnull %i.m) #11 ; 0 uses
-  %.pre.i.a = load i8, ptr @opal_uses_threads, align 1, !tbaa !31, !range !32
-  %1 = trunc nuw i8 %.pre.i.a to i1
-  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 688
-  %2 = load volatile ptr, ptr %i.o, align 8, !tbaa !35 ; 2 uses
-  br i1 %1, label %bb.e, label %get_send_range.exit, !prof !191
+  %.pre.i.a = load i8, ptr @opal_uses_threads, align 1, !tbaa !31
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 688
+  %4 = load volatile ptr, ptr %3, align 8, !tbaa !35 ; 2 uses
+  %i.o = getelementptr inbounds nuw i8, ptr %0, i64 672
+  %5 = icmp eq ptr %i.o, %4
+  %..i.i = select i1 %5, ptr null, ptr %4         ; 2 uses
+  %6 = trunc nuw i8 %.pre.i.a to i1
+  br i1 %6, label %bb.e, label %get_send_range.exit, !prof !191
 
 bb.e:                                             ; preds = %bb.d
   %i.p = tail call i32 @pthread_mutex_unlock(ptr noundef nonnull %i.m) #11 ; 0 uses
   br label %get_send_range.exit
 
 get_send_range.exit:                              ; preds = %.thread.i, %bb.d, %bb.e
-  %i.q = phi ptr [ %i.l, %.thread.i ], [ %2, %bb.e ], [ %2, %bb.d ] ; 3 uses
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 672 ; 3 uses
-  %4 = icmp eq ptr %3, %i.q
+  %i.q = phi ptr [ %..i4.i, %.thread.i ], [ %..i.i, %bb.e ], [ %..i.i, %bb.d ] ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %0, i64 720 ; 3 uses
   %i.s = load ptr, ptr %i.r, align 8, !tbaa !88   ; 4 uses
   %.not93 = icmp eq ptr %i.s, null
@@ -318,8 +322,7 @@ opal_free_list_return.exit:                       ; preds = %opal_lifo_push_atom
 
 bb.m:                                             ; preds = %opal_free_list_return.exit, %get_send_range.exit
   %.not95155204 = icmp eq ptr %i.q, null
-  %.not95155 = or i1 %4, %.not95155204
-  br i1 %.not95155, label %.critedge, label %.lr.ph
+  br i1 %.not95155204, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.m
   %i.bc = getelementptr inbounds nuw i8, ptr %0, i64 572 ; 9 uses
@@ -331,6 +334,7 @@ bb.m:                                             ; preds = %opal_free_list_retu
   %i.bi = getelementptr inbounds nuw i8, ptr %0, i64 608 ; 4 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 712 ; 4 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 688 ; 2 uses
+  %7 = getelementptr inbounds nuw i8, ptr %0, i64 672 ; 2 uses
   br label %bb.n
 
 bb.n:                                             ; preds = %.lr.ph, %.thread
@@ -650,7 +654,7 @@ bb.al:                                            ; preds = %opal_free_list_retu
   br label %get_next_send_range.exit
 
 get_next_send_range.exit:                         ; preds = %opal_free_list_return.exit.i, %bb.al
-  %i.gn = icmp eq ptr %3, %i.gj
+  %i.gn = icmp eq ptr %7, %i.gj
   br i1 %i.gn, label %.critedge.sink.split, label %.thread, !llvm.loop !243
 
 bb.am:                                            ; preds = %bb.ae
@@ -788,7 +792,7 @@ bb.at:                                            ; preds = %opal_free_list_retu
   br label %get_next_send_range.exit127
 
 get_next_send_range.exit127:                      ; preds = %opal_free_list_return.exit.i117, %bb.at
-  %i.ja = icmp eq ptr %3, %i.iw
+  %i.ja = icmp eq ptr %7, %i.iw
   br i1 %i.ja, label %.critedge.sink.split, label %.thread
 
 bb.au:                                            ; preds = %bb.am

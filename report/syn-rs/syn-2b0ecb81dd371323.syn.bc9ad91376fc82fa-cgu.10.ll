@@ -204,28 +204,30 @@ bb.ag:                                            ; preds = %bb.af
   br i1 %i.bq, label %.lr.ph461.preheader, label %.split420.us.invoke
 
 .lr.ph461.preheader:                              ; preds = %bb.ag
-  %i.br = getelementptr i8, ptr %.sroa.0.2330, i64 %.sroa.34.2348
+  %i.br = getelementptr i8, ptr %.sroa.0.2330, i64 %.sroa.34.2348 ; 2 uses
   %.sroa.0.0204456 = getelementptr inbounds nuw i8, ptr %.sroa.0.2330, i64 1
   br label %.lr.ph461
 
-.lr.ph461thread-pre-split:                        ; preds = %bb.ai
-  %.pr = load i8, ptr %.sroa.0.0204.a, align 1, !noalias !62
+.lr.ph461thread-pre-split:                        ; preds = %bb.ai, %3
+  %.sroa.0.0204614 = phi ptr [ %.sroa.0.0204.a, %bb.ai ], [ %.sroa.0.0204, %3 ] ; 2 uses
+  %.sroa.093.1613 = phi i8 [ 1, %bb.ai ], [ %.sroa.093.0459, %3 ]
+  %.pr = load i8, ptr %.sroa.0.0204614, align 1, !noalias !62
   br label %.lr.ph461
 
 .lr.ph461:                                        ; preds = %.lr.ph461thread-pre-split, %.lr.ph461.preheader
   %i.bs = phi i8 [ %.pr, %.lr.ph461thread-pre-split ], [ %i.bp, %.lr.ph461.preheader ] ; 2 uses
-  %.sroa.0.0204460 = phi ptr [ %.sroa.0.0204.a, %.lr.ph461thread-pre-split ], [ %.sroa.0.0204456, %.lr.ph461.preheader ]
-  %.sroa.093.0459 = phi i8 [ %.sroa.093.1, %.lr.ph461thread-pre-split ], [ 0, %.lr.ph461.preheader ] ; 2 uses
+  %.sroa.0.0204460 = phi ptr [ %.sroa.0.0204614, %.lr.ph461thread-pre-split ], [ %.sroa.0.0204456, %.lr.ph461.preheader ] ; 2 uses
+  %.sroa.093.0459 = phi i8 [ %.sroa.093.1613, %.lr.ph461thread-pre-split ], [ 0, %.lr.ph461.preheader ] ; 3 uses
   %.sroa.9.0458 = phi i64 [ %i.bt, %.lr.ph461thread-pre-split ], [ 0, %.lr.ph461.preheader ]
   %i.bt = add i64 %.sroa.9.0458, 1                ; 9 uses
   switch i8 %i.bs, label %bb.ah [
-    i8 95, label %bb.ai
+    i8 95, label %3
     i8 45, label %.split435.us
     i8 43, label %.split435.us
   ]
 
-_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateNtNtNtBa_3str4iter5BytesENtNtNtB8_6traits8iterator8Iterator4nextCsgbWeKYPjk8w_3syn.exit: ; preds = %bb.ai
-  %i.bu = trunc nuw i8 %.sroa.093.1 to i1
+_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateNtNtNtBa_3str4iter5BytesENtNtNtB8_6traits8iterator8Iterator4nextCsgbWeKYPjk8w_3syn.exit: ; preds = %3
+  %i.bu = trunc nuw i8 %.sroa.093.0459 to i1
   br i1 %i.bu, label %.split435.us, label %.thread261
 
 bb.ah:                                            ; preds = %.lr.ph461
@@ -233,11 +235,15 @@ bb.ah:                                            ; preds = %.lr.ph461
   %or.cond8 = icmp ult i8 %i.bv, 10
   br i1 %or.cond8, label %bb.ai, label %bb.aj
 
-bb.ai:                                            ; preds = %bb.ah, %.lr.ph461
-  %.sroa.093.1 = phi i8 [ %.sroa.093.0459, %.lr.ph461 ], [ 1, %bb.ah ] ; 2 uses
-  %.sroa.0.0204.a = getelementptr inbounds nuw i8, ptr %.sroa.0.0204460, i64 1 ; 3 uses
+3:                                                ; preds = %.lr.ph461
+  %.sroa.0.0204 = getelementptr inbounds nuw i8, ptr %.sroa.0.0204460, i64 1 ; 2 uses
+  %.not.i186 = icmp eq ptr %.sroa.0.0204, %i.br
+  br i1 %.not.i186, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateNtNtNtBa_3str4iter5BytesENtNtNtB8_6traits8iterator8Iterator4nextCsgbWeKYPjk8w_3syn.exit, label %.lr.ph461thread-pre-split
+
+bb.ai:                                            ; preds = %bb.ah
+  %.sroa.0.0204.a = getelementptr inbounds nuw i8, ptr %.sroa.0.0204460, i64 1 ; 2 uses
   %.not.i186.a = icmp eq ptr %.sroa.0.0204.a, %i.br
-  br i1 %.not.i186.a, label %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateNtNtNtBa_3str4iter5BytesENtNtNtB8_6traits8iterator8Iterator4nextCsgbWeKYPjk8w_3syn.exit, label %.lr.ph461thread-pre-split
+  br i1 %.not.i186.a, label %.split435.us, label %.lr.ph461thread-pre-split
 
 bb.aj:                                            ; preds = %bb.ah
   %i.bw = icmp eq i64 %i.bt, 0
@@ -270,7 +276,7 @@ bb.an:                                            ; preds = %bb.am
 bb.ao:                                            ; preds = %bb.an
   br i1 %i.ce, label %.split435.us, label %.thread261
 
-.split435.us:                                     ; preds = %.loopexit303.us, %.loopexit303, %.lr.ph461, %.lr.ph461, %.thread261, %.thread261.thread, %.thread231, %bb.ao, %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateNtNtNtBa_3str4iter5BytesENtNtNtB8_6traits8iterator8Iterator4nextCsgbWeKYPjk8w_3syn.exit, %.split.us
+.split435.us:                                     ; preds = %.loopexit303.us, %.loopexit303, %.lr.ph461, %.lr.ph461, %bb.ai, %.thread261, %.thread261.thread, %.thread231, %bb.ao, %_RNvXs_NtNtNtCsj6eKBz9Db1c_4core4iter8adapters9enumerateINtB4_9EnumerateNtNtNtBa_3str4iter5BytesENtNtNtB8_6traits8iterator8Iterator4nextCsgbWeKYPjk8w_3syn.exit, %.split.us
   store ptr null, ptr %0, align 8
   invoke void @_RNvXsp_NtCs4wP2HXfJTCR_5alloc3vecINtB5_3VechENtNtNtCsj6eKBz9Db1c_4core3ops4drop4Drop4dropCsgbWeKYPjk8w_3syn(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.e)
           to label %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtCsgbWeKYPjk8w_3syn6bigint6BigIntEBF_.exit unwind label %bb.ap

@@ -206,8 +206,9 @@ _RNCINvNtNtCs1xwejQucwHj_5alloc2io4read19default_read_to_endINtNtNtCs3oUPovFnLWP
   %i.k = icmp eq i64 %i.j, 0
   %i.l = sub i64 %3, %i.j
   %i.m = add i64 %i.l, 9216                       ; 2 uses
-  %.not85 = icmp ult i64 %i.m, %i.i
-  %.sroa.5.1.i = select i1 %.not85, i64 8192, i64 %i.m
+  %4 = icmp uge i64 %i.m, %i.i
+  %cond.fr = freeze i1 %4
+  %.sroa.5.1.i = select i1 %cond.fr, i64 %i.m, i64 8192
   %.sroa.053.1 = select i1 %i.k, i64 %i.i, i64 %.sroa.5.1.i ; 2 uses
   %i.n = icmp eq i64 %3, 0
   br i1 %i.n, label %bb.c, label %_RNCINvNtNtCs1xwejQucwHj_5alloc2io4read19default_read_to_endINtNtNtCs3oUPovFnLWP_4core2io4util4TakeRNtNtCsaL1QbXo9JQH_3std2fs4FileEE0Cs8frGy5WneL6_4fish.exit.thread
@@ -610,9 +611,9 @@ bb.a:
   %i.a = alloca [1 x i8], align 1                 ; 3 uses
   %i.b = alloca [4 x i8], align 4                 ; 3 uses
   %i.c = alloca [4 x i8], align 4                 ; 3 uses
-  %i.d = alloca [20 x i8], align 4                ; 5 uses
-  %i.e = alloca [20 x i8], align 4                ; 9 uses
-  %i.f = alloca [64 x i8], align 8                ; 14 uses
+  %i.d = alloca [20 x i8], align 4                ; 6 uses
+  %i.e = alloca [20 x i8], align 4                ; 13 uses
+  %i.f = alloca [64 x i8], align 8                ; 15 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 144
   %i.h = load ptr, ptr %i.g, align 8, !nonnull !10, !align !28, !noundef !10 ; 2 uses
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 152
@@ -840,7 +841,7 @@ bb.w:                                             ; preds = %_RNvMs1_NtNtCs8frGy
   store ptr null, ptr %i.f, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @_RNvXs5_NtCs8frGy5WneL6_4fish9tokenizerNtB5_9TokenizerNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4next(ptr noalias nofree noundef nonnull sret([20 x i8]) align 4 captures(none) dereferenceable(20) %i.e, ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %i.f)
-  %i.ch = getelementptr inbounds nuw i8, ptr %i.e, i64 18 ; 2 uses
+  %i.ch = getelementptr inbounds nuw i8, ptr %i.e, i64 18 ; 3 uses
   %i.ci = load i8, ptr %i.ch, align 2, !range !25, !noundef !10
   %.not1457 = icmp eq i8 %i.ci, 2
   br i1 %.not1457, label %._crit_edge.thread, label %.lr.ph
@@ -857,8 +858,8 @@ bb.w:                                             ; preds = %_RNvMs1_NtNtCs8frGy
   %i.cn = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 4 uses
   br label %bb.x
 
-bb.x:                                             ; preds = %.lr.ph, %.backedge
-  %.sroa.0.158 = phi i8 [ 0, %.lr.ph ], [ %.sroa.0.1.be, %.backedge ]
+bb.x:                                             ; preds = %.backedge75.backedge, %.lr.ph
+  %.sroa.0.158 = phi i8 [ 0, %.lr.ph ], [ %.sroa.0.158.be, %.backedge75.backedge ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(20) %i.d, ptr noundef nonnull align 4 dereferenceable(20) %i.e, i64 20, i1 false)
   %i.co = call { ptr, i64 } @_RNvMs6_NtCs8frGy5WneL6_4fish9tokenizerNtB5_9Tokenizer7text_of(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(64) %i.f, ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) dereferenceable(20) %i.d) ; 2 uses
@@ -868,7 +869,7 @@ bb.x:                                             ; preds = %.lr.ph, %.backedge
   br i1 %i.cr, label %bb.z, label %bb.y
 
 ._crit_edge:                                      ; preds = %.backedge
-  %i.cs = trunc nuw i8 %.sroa.0.1.be to i1
+  %i.cs = trunc nuw i8 %.sroa.0.4 to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   br i1 %i.cs, label %bb.am, label %bb.al
 
@@ -897,7 +898,7 @@ _RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState12
   store i8 0, ptr %i.cj, align 8
   %i.db = getelementptr inbounds nuw [4 x i8], ptr %i.cp, i64 %i.cq
   %i.dc = call noundef zeroext i1 @_RINvYNtNtNtCslLGyqsphxMB_10widestring6utfstr4iter10CharsUtf32NtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator5eq_byNtNtNtB15_3str4iter5CharsNCINvYB3_BX_2eqB1Y_E0ECs8frGy5WneL6_4fish(ptr noundef nonnull readonly align 4 %i.cp, ptr noundef nonnull readonly %i.db, ptr noundef nonnull @150, ptr noundef nonnull readonly getelementptr inbounds nuw (i8, ptr @150, i64 1))
-  br i1 %i.dc, label %.backedge, label %_RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState12emit_newline.exit._crit_edge
+  br i1 %i.dc, label %.backedge.thread, label %_RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState12emit_newline.exit._crit_edge
 
 _RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState12emit_newline.exit._crit_edge: ; preds = %_RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState12emit_newline.exit
   %.pre = load i8, ptr %i.ck, align 1, !range !2933
@@ -905,7 +906,7 @@ _RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState12
 
 bb.ab:                                            ; preds = %bb.y
   %i.dd = icmp eq i8 %.pre60, 5
-  br i1 %i.dd, label %.backedge, label %bb.ac
+  br i1 %i.dd, label %.backedge.thread, label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab
   store i8 0, ptr %i.cj, align 8
@@ -918,15 +919,32 @@ bb.ad:                                            ; preds = %_RNvMs1_NtNtCs8frGy
     i8 5, label %bb.ag
   ]
 
-.backedge:                                        ; preds = %bb.ab, %_RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState12emit_newline.exit, %_RINvMs1G_NtCslLGyqsphxMB_10widestring9utfstringNtB7_11Utf32String11push_utfstrNtNtB9_6utfstr8Utf32StrECs8frGy5WneL6_4fish.exit, %bb.ag, %_RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState12emit_newline.exit38, %_RINvMs1G_NtCslLGyqsphxMB_10widestring9utfstringNtB7_11Utf32String11push_utfstrNtNtB9_6utfstr8Utf32StrECs8frGy5WneL6_4fish.exit37
-  %.sroa.0.1.be = phi i8 [ 0, %bb.ag ], [ 0, %_RINvMs1G_NtCslLGyqsphxMB_10widestring9utfstringNtB7_11Utf32String11push_utfstrNtNtB9_6utfstr8Utf32StrECs8frGy5WneL6_4fish.exit37 ], [ 1, %_RINvMs1G_NtCslLGyqsphxMB_10widestring9utfstringNtB7_11Utf32String11push_utfstrNtNtB9_6utfstr8Utf32StrECs8frGy5WneL6_4fish.exit ], [ 0, %_RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState12emit_newline.exit38 ], [ 0, %_RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState12emit_newline.exit ], [ 0, %bb.ab ] ; 2 uses
+.backedge:                                        ; preds = %_RINvMs1G_NtCslLGyqsphxMB_10widestring9utfstringNtB7_11Utf32String11push_utfstrNtNtB9_6utfstr8Utf32StrECs8frGy5WneL6_4fish.exit, %bb.ag, %_RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState12emit_newline.exit38, %_RINvMs1G_NtCslLGyqsphxMB_10widestring9utfstringNtB7_11Utf32String11push_utfstrNtNtB9_6utfstr8Utf32StrECs8frGy5WneL6_4fish.exit37
+  %.sroa.0.4 = phi i8 [ 0, %_RINvMs1G_NtCslLGyqsphxMB_10widestring9utfstringNtB7_11Utf32String11push_utfstrNtNtB9_6utfstr8Utf32StrECs8frGy5WneL6_4fish.exit37 ], [ 1, %_RINvMs1G_NtCslLGyqsphxMB_10widestring9utfstringNtB7_11Utf32String11push_utfstrNtNtB9_6utfstr8Utf32StrECs8frGy5WneL6_4fish.exit ], [ 0, %_RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState12emit_newline.exit38 ], [ 0, %bb.ag ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   call void @_RNvXs5_NtCs8frGy5WneL6_4fish9tokenizerNtB5_9TokenizerNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4next(ptr noalias nofree noundef nonnull sret([20 x i8]) align 4 captures(none) dereferenceable(20) %i.e, ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %i.f)
   %i.df = load i8, ptr %i.ch, align 2, !range !25, !noundef !10
   %.not14 = icmp eq i8 %i.df, 2
-  br i1 %.not14, label %._crit_edge, label %bb.x
+  br i1 %.not14, label %._crit_edge, label %.backedge75.backedge
+
+.backedge75.backedge:                             ; preds = %.backedge, %.backedge.thread
+  %.sroa.0.158.be = phi i8 [ %.sroa.0.4, %.backedge ], [ 0, %.backedge.thread ]
+  br label %bb.x
+
+.backedge.thread:                                 ; preds = %bb.ab, %_RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState12emit_newline.exit
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d)
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
+  call void @_RNvXs5_NtCs8frGy5WneL6_4fish9tokenizerNtB5_9TokenizerNtNtNtNtCs3oUPovFnLWP_4core4iter6traits8iterator8Iterator4next(ptr noalias nofree noundef nonnull sret([20 x i8]) align 4 captures(none) dereferenceable(20) %i.e, ptr noalias nofree noundef nonnull align 8 dereferenceable(64) %i.f)
+  %4 = load i8, ptr %i.ch, align 2, !range !25, !noundef !10
+  %.not1471 = icmp eq i8 %4, 2
+  br i1 %.not1471, label %._crit_edge.thread73, label %.backedge75.backedge
+
+._crit_edge.thread73:                             ; preds = %.backedge.thread
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
+  br label %bb.al
 
 bb.ae:                                            ; preds = %bb.ad
   call fastcc void @_RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState20emit_space_or_indent(ptr noalias nofree noundef align 8 dereferenceable(184) %0, i1 noundef zeroext false)
@@ -998,8 +1016,8 @@ _RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState12
   store i8 1, ptr %i.cj, align 8
   br label %.backedge
 
-bb.al:                                            ; preds = %._crit_edge.thread, %_RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState12emit_newline.exit39, %._crit_edge
-  %.sroa.0.1.lcssa69 = phi i1 [ false, %._crit_edge.thread ], [ true, %_RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState12emit_newline.exit39 ], [ false, %._crit_edge ]
+bb.al:                                            ; preds = %._crit_edge.thread73, %._crit_edge.thread, %_RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState12emit_newline.exit39, %._crit_edge
+  %.sroa.0.1.lcssa69 = phi i1 [ false, %._crit_edge.thread ], [ true, %_RNvMs1_NtNtCs8frGy5WneL6_4fish8builtins11fish_indentNtB5_18PrettyPrinterState12emit_newline.exit39 ], [ false, %._crit_edge ], [ false, %._crit_edge.thread73 ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f)
   br label %.loopexit
 

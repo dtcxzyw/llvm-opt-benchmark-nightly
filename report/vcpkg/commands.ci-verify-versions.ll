@@ -205,7 +205,7 @@ bb.p:                                             ; preds = %bb.o
   %i.bm = load i8, ptr %19, align 8, !tbaa !382, !range !43, !noundef !36
   %i.bn = trunc nuw i8 %i.bm to i1
   %i.bo = getelementptr inbounds nuw i8, ptr %19, i64 8 ; 10 uses
-  br i1 %i.bn, label %bb.q, label %bb.ao
+  br i1 %i.bn, label %bb.q, label %_ZN5vcpkg7details19OptionalStorageDtorINS_7VersionELb0EED2Ev.exit
 
 bb.q:                                             ; preds = %bb.p
   %.val = load ptr, ptr %.sroa.gep, align 8, !tbaa !99 ; 3 uses
@@ -518,9 +518,9 @@ _ZN5vcpkg15LocalizedStringD2Ev.exit110:           ; preds = %bb.al, %_ZNKSt7__cx
   %i.ey = trunc nuw i8 %i.ex to i1
   br i1 %i.ey, label %bb.aq, label %_ZN5vcpkg7details19OptionalStorageDtorINS_7VersionELb0EED2Ev.exit116
 
-bb.ao:                                            ; preds = %bb.p, %.loopexit, %_ZN5vcpkg15LocalizedStringD2Ev.exit113
-  %.0 = phi i1 [ false, %_ZN5vcpkg15LocalizedStringD2Ev.exit113 ], [ true, %.loopexit ], [ true, %bb.p ]
-  %i.ez = load i8, ptr %19, align 8, !tbaa !382, !range !43, !noundef !36
+bb.ao:                                            ; preds = %.loopexit, %_ZN5vcpkg15LocalizedStringD2Ev.exit113
+  %.0.ph = phi i1 [ true, %.loopexit ], [ false, %_ZN5vcpkg15LocalizedStringD2Ev.exit113 ] ; 3 uses
+  %i.ez = load i8, ptr %19, align 8, !tbaa !382
   %i.fa = trunc nuw i8 %i.ez to i1
   br i1 %i.fa, label %bb.ap, label %_ZN5vcpkg7details19OptionalStorageDtorINS_7VersionELb0EED2Ev.exit
 
@@ -536,7 +536,8 @@ _ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i
   call void @_ZdlPvm(ptr noundef %i.fb, i64 noundef %i.ff) #24
   br label %_ZN5vcpkg7details19OptionalStorageDtorINS_7VersionELb0EED2Ev.exit
 
-_ZN5vcpkg7details19OptionalStorageDtorINS_7VersionELb0EED2Ev.exit: ; preds = %bb.ap, %bb.ao, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
+_ZN5vcpkg7details19OptionalStorageDtorINS_7VersionELb0EED2Ev.exit: ; preds = %bb.ap, %bb.p, %bb.ao, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i
+  %.0177 = phi i1 [ %.0.ph, %_ZNKSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE11_M_is_localEv.exit.i.i.i.i ], [ %.0.ph, %bb.ao ], [ true, %bb.p ], [ %.0.ph, %bb.ap ]
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #21
   br label %bb.as
 
@@ -564,7 +565,7 @@ bb.ar:                                            ; preds = %_ZN5vcpkg7details19
   resume { ptr, i32 } %.pn65.pn.pn.pn
 
 bb.as:                                            ; preds = %_ZN5vcpkg15LocalizedStringD2Ev.exit84, %_ZN5vcpkg7details19OptionalStorageDtorINS_7VersionELb0EED2Ev.exit, %bb.a
-  %.2 = phi i1 [ false, %bb.a ], [ %.0, %_ZN5vcpkg7details19OptionalStorageDtorINS_7VersionELb0EED2Ev.exit ], [ false, %_ZN5vcpkg15LocalizedStringD2Ev.exit84 ]
+  %.2 = phi i1 [ false, %bb.a ], [ %.0177, %_ZN5vcpkg7details19OptionalStorageDtorINS_7VersionELb0EED2Ev.exit ], [ false, %_ZN5vcpkg15LocalizedStringD2Ev.exit84 ]
   %i.fl = getelementptr inbounds nuw i8, ptr %15, i64 40
   %i.fm = load ptr, ptr %i.fl, align 8, !tbaa !52 ; 2 uses
   %i.fn = getelementptr inbounds nuw i8, ptr %15, i64 56 ; 2 uses

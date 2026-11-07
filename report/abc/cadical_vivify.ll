@@ -205,7 +205,7 @@ bb.h:                                             ; preds = %bb.f, %bb.e, %bb.g
   %i.ag = ptrtoint ptr %i.ae to i64
   %i.ah = sub i64 %i.af, %i.ag                    ; 4 uses
   %i.ai = ashr exact i64 %i.ah, 3                 ; 5 uses
-  %i.aj = add nsw i64 %i.ai, 1
+  %i.aj = add nsw i64 %i.ai, 1                    ; 2 uses
   %.not = icmp eq i32 %i.z, 3
   br i1 %.not, label %bb.i, label %bb.j
 
@@ -608,7 +608,12 @@ _ZNSt6vectorIN7CaDiCaL10vivify_refESaIS1_EE5clearEv.exit: ; preds = %"_ZSt16stab
   tail call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.jg, i8 0, i64 16, i1 false)
   %i.jh = load i8, ptr %i.b, align 4, !tbaa !258, !range !210, !noundef !211
   %i.ji = trunc nuw i8 %i.jh to i1
-  br i1 %i.ji, label %bb.ax, label %bb.av
+  br i1 %i.ji, label %.thread, label %bb.av
+
+.thread:                                          ; preds = %_ZNSt6vectorIN7CaDiCaL10vivify_refESaIS1_EE5clearEv.exit
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 192 ; 2 uses
+  store i64 %i.aj, ptr %4, align 8, !tbaa !380
+  br label %.critedge
 
 bb.av:                                            ; preds = %_ZNSt6vectorIN7CaDiCaL10vivify_refESaIS1_EE5clearEv.exit
   %i.jj = tail call noundef zeroext i1 @_ZN7CaDiCaL8Internal9propagateEv(ptr noundef nonnull align 8 dereferenceable(7296) %0) #21
@@ -618,11 +623,11 @@ bb.aw:                                            ; preds = %bb.av
   tail call void @_ZN7CaDiCaL8Internal18learn_empty_clauseEv(ptr noundef nonnull align 8 dereferenceable(7296) %0) #21
   br label %bb.ax
 
-bb.ax:                                            ; preds = %bb.aw, %bb.av, %_ZNSt6vectorIN7CaDiCaL10vivify_refESaIS1_EE5clearEv.exit
-  %i.jk = getelementptr inbounds nuw i8, ptr %1, i64 192 ; 3 uses
+bb.ax:                                            ; preds = %bb.aw, %bb.av
+  %.pr237 = load i8, ptr %i.b, align 4, !tbaa !258
+  %i.jk = getelementptr inbounds nuw i8, ptr %1, i64 192 ; 8 uses
   store i64 %i.aj, ptr %i.jk, align 8, !tbaa !380
-  %4 = load i8, ptr %i.b, align 4, !tbaa !258, !range !210, !noundef !211
-  %i.jl = trunc nuw i8 %4 to i1
+  %i.jl = trunc nuw i8 %.pr237 to i1
   br i1 %i.jl, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.ax
@@ -781,7 +786,8 @@ _ZNSt6vectorIPN7CaDiCaL6ClauseESaIS2_EE9push_backERKS2_.exit: ; preds = %_ZNSt6v
   %i.ls = trunc nuw i8 %i.lr to i1
   br i1 %i.ls, label %.critedge, label %bb.ay, !llvm.loop !374
 
-.critedge:                                        ; preds = %bb.bf, %_ZNSt6vectorIPN7CaDiCaL6ClauseESaIS2_EE9push_backERKS2_.exit, %bb.be, %bb.ay, %bb.ax, %.sink.split.i134
+.critedge:                                        ; preds = %bb.bf, %_ZNSt6vectorIPN7CaDiCaL6ClauseESaIS2_EE9push_backERKS2_.exit, %bb.be, %bb.ay, %.thread, %bb.ax, %.sink.split.i134
+  %5 = phi ptr [ %4, %.thread ], [ %i.jk, %.sink.split.i134 ], [ %i.jk, %bb.ax ], [ %i.jk, %bb.ay ], [ %i.jk, %bb.be ], [ %i.jk, %_ZNSt6vectorIPN7CaDiCaL6ClauseESaIS2_EE9push_backERKS2_.exit ], [ %i.jk, %bb.bf ]
   %i.lt = getelementptr inbounds nuw i8, ptr %0, i64 348
   %i.lu = load i32, ptr %i.lt, align 4, !tbaa !179
   %.not100 = icmp eq i32 %i.lu, 0
@@ -794,7 +800,7 @@ bb.bq:                                            ; preds = %.critedge
 bb.br:                                            ; preds = %bb.bq, %.critedge
   %i.lv = load i8, ptr %i.b, align 4, !tbaa !258, !range !210, !noundef !211
   %i.lw = trunc nuw i8 %i.lv to i1
-  br i1 %i.lw, label %_ZN7CaDiCaL12erase_vectorIPNS_6ClauseEEEvRSt6vectorIT_SaIS4_EE.exit, label %bb.bs
+  br i1 %i.lw, label %bb.by, label %bb.bs
 
 bb.bs:                                            ; preds = %bb.br
   %i.lx = load ptr, ptr %i.ac, align 8, !tbaa !213 ; 3 uses
@@ -845,8 +851,8 @@ bb.bv:                                            ; preds = %bb.bu
   tail call void @_ZdlPvm(ptr noundef nonnull %i.mk, i64 noundef %i.mp) #20
   br label %_ZN7CaDiCaL12erase_vectorIPNS_6ClauseEEEvRSt6vectorIT_SaIS4_EE.exit
 
-_ZN7CaDiCaL12erase_vectorIPNS_6ClauseEEEvRSt6vectorIT_SaIS4_EE.exit: ; preds = %bb.bv, %bb.bu, %thread-pre-split, %bb.br
-  %i.mq = load i8, ptr %i.b, align 4, !tbaa !258, !range !210, !noundef !211
+_ZN7CaDiCaL12erase_vectorIPNS_6ClauseEEEvRSt6vectorIT_SaIS4_EE.exit: ; preds = %bb.bv, %bb.bu, %thread-pre-split
+  %i.mq = load i8, ptr %i.b, align 4, !tbaa !258
   %i.mr = trunc nuw i8 %i.mq to i1
   br i1 %i.mr, label %bb.by, label %bb.bw
 
@@ -859,7 +865,7 @@ bb.bx:                                            ; preds = %bb.bw
   tail call void @_ZN7CaDiCaL8Internal18learn_empty_clauseEv(ptr noundef nonnull align 8 dereferenceable(7296) %0) #21
   br label %bb.by
 
-bb.by:                                            ; preds = %bb.bw, %bb.bx, %_ZN7CaDiCaL12erase_vectorIPNS_6ClauseEEEvRSt6vectorIT_SaIS4_EE.exit
+bb.by:                                            ; preds = %bb.br, %bb.bw, %bb.bx, %_ZN7CaDiCaL12erase_vectorIPNS_6ClauseEEEvRSt6vectorIT_SaIS4_EE.exit
   %i.mt = load i64, ptr %i.io, align 8, !tbaa !216
   %i.mu = sub nsw i64 %i.mt, %i.ip                ; 2 uses
   %i.mv = load i64, ptr %i.iq, align 8, !tbaa !222
@@ -874,7 +880,7 @@ bb.by:                                            ; preds = %bb.bw, %bb.bx, %_ZN
   %i.nc = load i64, ptr %i.nb, align 8, !tbaa !382
   %i.nd = add nsw i64 %i.nc, %i.mw
   store i64 %i.nd, ptr %i.nb, align 8, !tbaa !382
-  %i.ne = load i64, ptr %i.jk, align 8, !tbaa !380
+  %i.ne = load i64, ptr %5, align 8, !tbaa !380
   %i.nf = load i64, ptr %i.jd, align 8, !tbaa !291
   %i.ng = add nsw i64 %i.nf, %i.ne
   store i64 %i.ng, ptr %i.jd, align 8, !tbaa !291

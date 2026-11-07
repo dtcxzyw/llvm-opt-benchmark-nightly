@@ -204,9 +204,9 @@ bb.a:
   %i.b = alloca [16 x i8], align 8                ; 4 uses
   %i.c = alloca [8 x i8], align 8                 ; 4 uses
   %i.d = alloca [8 x i8], align 8                 ; 4 uses
-  %i.e = alloca [24 x i8], align 8                ; 7 uses
-  %i.f = alloca [24 x i8], align 8                ; 7 uses
-  %i.g = alloca [16 x i8], align 8                ; 6 uses
+  %i.e = alloca [24 x i8], align 8                ; 8 uses
+  %i.f = alloca [24 x i8], align 8                ; 8 uses
+  %i.g = alloca [16 x i8], align 8                ; 7 uses
   %i.h = alloca [24 x i8], align 8                ; 8 uses
   %i.i = alloca [40 x i8], align 8                ; 8 uses
   %i.j = alloca [48 x i8], align 8                ; 9 uses
@@ -274,18 +274,22 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %bb.c
   call void @_RNvXs5_NtCsa9sSWSfjDbm_4jiff15signed_durationNtB5_14SignedDurationINtNtCs3oUPovFnLWP_4core7convert7TryFromNtNtB17_4time8DurationE8try_from(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.h, i64 noundef %i.aj, i32 noundef %i.al), !noalias !352
-  %i.ap = load i64, ptr %i.h, align 8, !range !10, !alias.scope !353, !noalias !352, !noundef !5
+  %i.ap = load i64, ptr %i.h, align 8, !range !10, !noalias !352, !noundef !5
   %i.aq = trunc nuw i64 %i.ap to i1
-  %4 = getelementptr inbounds nuw i8, ptr %i.h, i64 8 ; 2 uses
   br i1 %i.aq, label %bb.f, label %._RNvMs0_NtCsa9sSWSfjDbm_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread6.i_crit_edge
 
 ._RNvMs0_NtCsa9sSWSfjDbm_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread6.i_crit_edge: ; preds = %bb.e
-  %.pre.a = load i64, ptr %4, align 8, !noalias !352
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !354
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !352
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !352
+  %.phi.trans.insert.i = getelementptr inbounds nuw i8, ptr %i.h, i64 8
+  %.pre.a = load i64, ptr %.phi.trans.insert.i, align 8, !noalias !352
   %.phi.trans.insert40 = getelementptr inbounds nuw i8, ptr %i.h, i64 16
   %.pre41 = load i32, ptr %.phi.trans.insert40, align 8, !noalias !352
   br label %_RNvMs0_NtCsa9sSWSfjDbm_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread6.i
 
 bb.f:                                             ; preds = %bb.e
+  %4 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.ar = load ptr, ptr %4, align 8, !alias.scope !353, !noalias !352, !noundef !5 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !354
   store ptr %i.ar, ptr %i.d, align 8, !noalias !354
@@ -370,25 +374,23 @@ _RNvMs0_NtCsa9sSWSfjDbm_4jiff15signed_durationNtB5_14SignedDuration12system_unti
   %i.bk = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.bl = load i32, ptr %i.bk, align 8, !noalias !354, !noundef !5
   %i.bm = sub nsw i64 0, %i.bh
-  %i.bn = sub i32 0, %i.bl                        ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.h, i64 16
-  store i32 %i.bn, ptr %5, align 8, !alias.scope !353, !noalias !352
+  %i.bn = sub i32 0, %i.bl
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !354
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !352
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !352
   br label %_RNvMs0_NtCsa9sSWSfjDbm_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread6.i
 
 _RNvMs0_NtCsa9sSWSfjDbm_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread.i: ; preds = %_RNvMs0_NtCsa9sSWSfjDbm_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread7.i, %_RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtBa_15signed_duration14SignedDurationNtB8_5ErrorEINtB8_12ErrorContextB1b_B1P_E7contextNtNtB8_15signed_duration5ErrorE0Ba_.exit8.i.i, %_RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtBa_15signed_duration14SignedDurationNtB8_5ErrorEINtB8_12ErrorContextB1b_B1P_E7contextNtNtB8_15signed_duration5ErrorE0Ba_.exit.i.i
-  %i.bo = phi ptr [ %i.bj, %_RNvMs0_NtCsa9sSWSfjDbm_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread7.i ], [ %i.bg, %_RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtBa_15signed_duration14SignedDurationNtB8_5ErrorEINtB8_12ErrorContextB1b_B1P_E7contextNtNtB8_15signed_duration5ErrorE0Ba_.exit8.i.i ], [ %i.ay, %_RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtBa_15signed_duration14SignedDurationNtB8_5ErrorEINtB8_12ErrorContextB1b_B1P_E7contextNtNtB8_15signed_duration5ErrorE0Ba_.exit.i.i ]
+  %i.bo = phi ptr [ %i.bg, %_RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtBa_15signed_duration14SignedDurationNtB8_5ErrorEINtB8_12ErrorContextB1b_B1P_E7contextNtNtB8_15signed_duration5ErrorE0Ba_.exit8.i.i ], [ %i.bj, %_RNvMs0_NtCsa9sSWSfjDbm_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread7.i ], [ %i.ay, %_RNCINvXsk_NtCsa9sSWSfjDbm_4jiff5errorINtNtCs3oUPovFnLWP_4core6result6ResultNtNtBa_15signed_duration14SignedDurationNtB8_5ErrorEINtB8_12ErrorContextB1b_B1P_E7contextNtNtB8_15signed_duration5ErrorE0Ba_.exit.i.i ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !354
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !352
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !352
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !352
   br label %bb.ab
 
-_RNvMs0_NtCsa9sSWSfjDbm_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread6.i: ; preds = %._RNvMs0_NtCsa9sSWSfjDbm_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread6.i_crit_edge, %_RNvMs0_NtCsa9sSWSfjDbm_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.i
+_RNvMs0_NtCsa9sSWSfjDbm_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread6.i: ; preds = %_RNvMs0_NtCsa9sSWSfjDbm_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.i, %._RNvMs0_NtCsa9sSWSfjDbm_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread6.i_crit_edge
   %i.bp = phi i32 [ %.pre41, %._RNvMs0_NtCsa9sSWSfjDbm_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread6.i_crit_edge ], [ %i.bn, %_RNvMs0_NtCsa9sSWSfjDbm_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.i ] ; 7 uses
   %i.bq = phi i64 [ %.pre.a, %._RNvMs0_NtCsa9sSWSfjDbm_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread6.i_crit_edge ], [ %i.bm, %_RNvMs0_NtCsa9sSWSfjDbm_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.i ] ; 8 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !354
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !352
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !352
   call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !352
   %i.br = add i64 %i.bq, 377705023201
   %or.cond.i.i.i = icmp ult i64 %i.br, 631107230402
@@ -791,7 +793,7 @@ _RNCNvNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8friendly6parserNtB6_10SpanParser14parse_d
 
 _RNCNvNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8friendly6parserNtB6_10SpanParser14parse_duration3imp0Bc_.exit.i: ; preds = %bb.hl, %bb.hk, %bb.hj, %bb.hi, %bb.hh, %bb.hg, %bb.hf
   call void @_RNvMNtNtCsa9sSWSfjDbm_4jiff3fmt4utilNtB2_13DurationUnits26to_signed_duration_general(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(96) %i.i) #18, !noalias !575
-  %.pre.i.a = load i64, ptr %i.b, align 8, !range !10, !noalias !571
+  %.pre.i.a = load i64, ptr %i.b, align 8, !noalias !571
   %i.yk = trunc nuw i64 %.pre.i.a to i1
   %i.yl = getelementptr inbounds nuw i8, ptr %i.b, i64 8 ; 2 uses
   br i1 %i.yk, label %_RINvMNtCsa9sSWSfjDbm_4jiff3fmtINtB3_6ParseduE8and_thenNtNtB5_15signed_duration14SignedDurationNCNvNvMNtNtB3_8friendly6parserNtB1B_10SpanParser14parse_duration3imp0EB5_.exit.thread, label %_RNCNvNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8friendly6parserNtB6_10SpanParser14parse_duration3imp0Bc_.exit.i._RINvMNtCsa9sSWSfjDbm_4jiff3fmtINtB3_6ParseduE8and_thenNtNtB5_15signed_duration14SignedDurationNCNvNvMNtNtB3_8friendly6parserNtB1B_10SpanParser14parse_duration3imp0EB5_.exit_crit_edge
@@ -807,7 +809,7 @@ _RINvMNtCsa9sSWSfjDbm_4jiff3fmtINtB3_6ParseduE8and_thenNtNtB5_15signed_duration1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !571
   br label %_RNvMs_NtCsa9sSWSfjDbm_4jiff3fmtINtB4_6ParsedNtNtB6_15signed_duration14SignedDurationE9into_fullB6_.exit
 
-_RINvMNtCsa9sSWSfjDbm_4jiff3fmtINtB3_6ParseduE8and_thenNtNtB5_15signed_duration14SignedDurationNCNvNvMNtNtB3_8friendly6parserNtB1B_10SpanParser14parse_duration3imp0EB5_.exit: ; preds = %_RNCNvNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8friendly6parserNtB6_10SpanParser14parse_duration3imp0Bc_.exit.i._RINvMNtCsa9sSWSfjDbm_4jiff3fmtINtB3_6ParseduE8and_thenNtNtB5_15signed_duration14SignedDurationNCNvNvMNtNtB3_8friendly6parserNtB1B_10SpanParser14parse_duration3imp0EB5_.exit_crit_edge, %_RNCNvNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8friendly6parserNtB6_10SpanParser14parse_duration3imp0Bc_.exit.thread.i
+_RINvMNtCsa9sSWSfjDbm_4jiff3fmtINtB3_6ParseduE8and_thenNtNtB5_15signed_duration14SignedDurationNCNvNvMNtNtB3_8friendly6parserNtB1B_10SpanParser14parse_duration3imp0EB5_.exit: ; preds = %_RNCNvNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8friendly6parserNtB6_10SpanParser14parse_duration3imp0Bc_.exit.thread.i, %_RNCNvNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8friendly6parserNtB6_10SpanParser14parse_duration3imp0Bc_.exit.i._RINvMNtCsa9sSWSfjDbm_4jiff3fmtINtB3_6ParseduE8and_thenNtNtB5_15signed_duration14SignedDurationNCNvNvMNtNtB3_8friendly6parserNtB1B_10SpanParser14parse_duration3imp0EB5_.exit_crit_edge
   %i.yn = phi i32 [ %.pre483, %_RNCNvNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8friendly6parserNtB6_10SpanParser14parse_duration3imp0Bc_.exit.i._RINvMNtCsa9sSWSfjDbm_4jiff3fmtINtB3_6ParseduE8and_thenNtNtB5_15signed_duration14SignedDurationNCNvNvMNtNtB3_8friendly6parserNtB1B_10SpanParser14parse_duration3imp0EB5_.exit_crit_edge ], [ %.sroa.4.0.i.i.i, %_RNCNvNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8friendly6parserNtB6_10SpanParser14parse_duration3imp0Bc_.exit.thread.i ] ; 2 uses
   %i.yo = phi i64 [ %.pre481, %_RNCNvNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8friendly6parserNtB6_10SpanParser14parse_duration3imp0Bc_.exit.i._RINvMNtCsa9sSWSfjDbm_4jiff3fmtINtB3_6ParseduE8and_thenNtNtB5_15signed_duration14SignedDurationNCNvNvMNtNtB3_8friendly6parserNtB1B_10SpanParser14parse_duration3imp0EB5_.exit_crit_edge ], [ %.sroa.0.0.i.i.i42, %_RNCNvNvMNtNtNtCsa9sSWSfjDbm_4jiff3fmt8friendly6parserNtB6_10SpanParser14parse_duration3imp0Bc_.exit.thread.i ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !571

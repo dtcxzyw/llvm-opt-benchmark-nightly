@@ -204,10 +204,10 @@ bb.a:
   %.not165 = phi i1 [ true, %bb.a ], [ %i.bm, %._crit_edge.loopexit ]
   %.071.lcssa = phi i1 [ true, %bb.a ], [ %.2, %._crit_edge.loopexit ]
   %i.bn = getelementptr inbounds nuw i8, ptr %0, i64 536 ; 3 uses
-  %i.bo = load i8, ptr %i.bn, align 8, !tbaa !61, !range !62, !noundef !63 ; 2 uses
-  %i.bp = trunc nuw i8 %i.bo to i1
+  %i.bo = load i8, ptr %i.bn, align 8, !tbaa !61, !range !62, !noundef !63
+  %i.bp = trunc nuw i8 %i.bo to i1                ; 2 uses
   %or.cond = select i1 %i.bp, i1 %.071.lcssa, i1 false
-  br i1 %or.cond, label %.thread, label %bb.ai
+  br i1 %or.cond, label %.thread, label %5
 
 bb.b:                                             ; preds = %.lr.ph, %bb.ah
   %i.bq = phi ptr [ %i.t, %.lr.ph ], [ %i.iy, %bb.ah ]
@@ -610,12 +610,15 @@ bb.ah:                                            ; preds = %bb.x, %bb.y, %_ZNSt
   store i32 0, ptr %i.n, align 8, !tbaa !58
   br label %bb.aj
 
-bb.ai:                                            ; preds = %._crit_edge
-  %5 = trunc nuw i8 %i.bo to i1
-  br i1 %5, label %bb.ap, label %bb.aj
+5:                                                ; preds = %._crit_edge
+  br i1 %i.bp, label %bb.ap, label %bb.ai
 
-bb.aj:                                            ; preds = %.thread, %bb.ai
-  %6 = load i32, ptr %i.n, align 8, !tbaa !58
+bb.ai:                                            ; preds = %5
+  %.pre = load i32, ptr %i.n, align 8, !tbaa !58
+  br label %bb.aj
+
+bb.aj:                                            ; preds = %bb.ai, %.thread
+  %6 = phi i32 [ %.pre, %bb.ai ], [ 0, %.thread ]
   %i.je = getelementptr inbounds nuw i8, ptr %0, i64 388 ; 2 uses
   %i.jf = load i32, ptr %i.je, align 4, !tbaa !97
   %i.jg = icmp eq i32 %6, %i.jf
@@ -750,7 +753,7 @@ bb.ao:                                            ; preds = %bb.am, %bb.an
   %i.ms = icmp ult i64 %i.mq, %i.mr
   br i1 %i.ms, label %bb.ak, label %._crit_edge164, !llvm.loop !131
 
-bb.ap:                                            ; preds = %._crit_edge164, %bb.aj, %bb.ai
+bb.ap:                                            ; preds = %._crit_edge164, %bb.aj, %5
   ret i32 0
 
 bb.aq:                                            ; preds = %bb.t, %bb.ag

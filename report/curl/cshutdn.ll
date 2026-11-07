@@ -202,9 +202,9 @@ Curl_cshutdn_run_once.exit.us:                    ; preds = %bb.b, %bb.n
   %i.ak = tail call ptr @Curl_node_elem(ptr noundef nonnull %.02842.us) #7 ; 4 uses
   tail call void @Curl_attach_connection(ptr noundef %1, ptr noundef %i.ak) #7
   call fastcc void @cshutdn_run_once(ptr noundef %1, ptr noundef %i.ak, ptr noundef nonnull %i.a)
+  %.pr.us = load i8, ptr %i.a, align 1, !tbaa !76
   tail call void @Curl_detach_connection(ptr noundef %1) #7
-  %4 = load i8, ptr %i.a, align 1, !tbaa !76, !range !77, !noundef !78
-  %i.al = trunc nuw i8 %4 to i1
+  %i.al = trunc nuw i8 %.pr.us to i1
   br i1 %i.al, label %bb.m, label %bb.l
 
 bb.l:                                             ; preds = %Curl_cshutdn_run_once.exit.us
@@ -234,7 +234,7 @@ sigpipe_apply.exit.split:                         ; preds = %sigpipe_apply.exit.
   %i.aq = load i64, ptr %i.c, align 1
   %i.ar = and i64 %i.aq, 536870912
   %.not14.i = icmp eq i64 %i.ar, 0
-  br i1 %.not14.i, label %Curl_cshutdn_run_once.exit, label %bb.o
+  br i1 %.not14.i, label %Curl_cshutdn_run_once.exitthread-pre-split, label %bb.o
 
 bb.o:                                             ; preds = %sigpipe_apply.exit.split
   %i.as = load ptr, ptr %i.ai, align 8, !tbaa !72 ; 2 uses
@@ -248,23 +248,27 @@ bb.p:                                             ; preds = %bb.o
   %i.aw = load i32, ptr getelementptr inbounds nuw (i8, ptr @Curl_trc_feat_multi, i64 8), align 8
   %i.ax = icmp sgt i32 %i.aw, 0
   %or.cond.i = select i1 %i.av, i1 %i.ax, i1 false
-  br i1 %or.cond.i, label %bb.r, label %Curl_cshutdn_run_once.exit
+  br i1 %or.cond.i, label %bb.r, label %Curl_cshutdn_run_once.exitthread-pre-split
 
 bb.q:                                             ; preds = %bb.o
   %.old.i = load i32, ptr getelementptr inbounds nuw (i8, ptr @Curl_trc_feat_multi, i64 8), align 8, !tbaa !74
   %.old1.i = icmp sgt i32 %.old.i, 0
-  br i1 %.old1.i, label %bb.r, label %Curl_cshutdn_run_once.exit
+  br i1 %.old1.i, label %bb.r, label %Curl_cshutdn_run_once.exitthread-pre-split
 
 bb.r:                                             ; preds = %bb.q, %bb.p
-  %i.ay = load i8, ptr %i.a, align 1, !tbaa !76, !range !77, !noundef !78
+  %i.ay = load i8, ptr %i.a, align 1, !tbaa !76, !range !77, !noundef !78 ; 2 uses
   %i.az = zext nneg i8 %i.ay to i32
   call void (ptr, ptr, ...) @Curl_trc_multi(ptr noundef nonnull %1, ptr noundef nonnull @.str, i32 noundef %i.az) #7
   br label %Curl_cshutdn_run_once.exit
 
-Curl_cshutdn_run_once.exit:                       ; preds = %sigpipe_apply.exit.split, %bb.p, %bb.q, %bb.r
+Curl_cshutdn_run_once.exitthread-pre-split:       ; preds = %bb.q, %bb.p, %sigpipe_apply.exit.split
+  %.pr = load i8, ptr %i.a, align 1, !tbaa !76
+  br label %Curl_cshutdn_run_once.exit
+
+Curl_cshutdn_run_once.exit:                       ; preds = %Curl_cshutdn_run_once.exitthread-pre-split, %bb.r
+  %4 = phi i8 [ %.pr, %Curl_cshutdn_run_once.exitthread-pre-split ], [ %i.ay, %bb.r ]
   call void @Curl_detach_connection(ptr noundef nonnull %1) #7
-  %5 = load i8, ptr %i.a, align 1, !tbaa !76, !range !77, !noundef !78
-  %i.ba = trunc nuw i8 %5 to i1
+  %i.ba = trunc nuw i8 %4 to i1
   br i1 %i.ba, label %bb.s, label %bb.t
 
 bb.s:                                             ; preds = %Curl_cshutdn_run_once.exit

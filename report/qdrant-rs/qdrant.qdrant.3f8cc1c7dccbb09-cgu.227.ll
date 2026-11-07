@@ -205,7 +205,7 @@ bb.a:
   %i.o = alloca [96 x i8], align 8                ; 4 uses
   %i.p = alloca [72 x i8], align 8                ; 4 uses
   %i.q = alloca [96 x i8], align 8                ; 21 uses
-  %i.r = alloca [40 x i8], align 8                ; 18 uses
+  %i.r = alloca [40 x i8], align 8                ; 19 uses
   %i.s = alloca [48 x i8], align 8                ; 8 uses
   %i.t = load i64, ptr %1, align 8, !range !15, !noundef !13
   switch i64 %i.t, label %bb.b [
@@ -381,7 +381,6 @@ bb.o:                                             ; preds = %bb.n
   %.sroa.10.0.copyload = load ptr, ptr %.sroa.10.0..sroa_idx, align 8 ; 22 uses
   %.sroa.12.0.copyload = load i64, ptr %.sroa.12.0..sroa_idx, align 8 ; 3 uses
   %i.bl = trunc nuw i64 %i.bk to i1
-  %.pre = load i64, ptr %i.r, align 8, !range !18 ; 2 uses
   br i1 %i.bl, label %bb.al, label %bb.ao
 
 bb.p:                                             ; preds = %bb.n
@@ -567,7 +566,8 @@ bb.ak:                                            ; preds = %bb.ct, %_RINvNtCskK
 
 bb.al:                                            ; preds = %bb.o
   call void @llvm.experimental.noalias.scope.decl(metadata !281)
-  %i.cn = icmp eq i64 %.pre, 0
+  %4 = load i64, ptr %i.r, align 8, !range !18, !alias.scope !281, !noundef !13
+  %i.cn = icmp eq i64 %4, 0
   br i1 %i.cn, label %.thread392, label %bb.am
 
 bb.am:                                            ; preds = %bb.al
@@ -591,7 +591,8 @@ bb.an:                                            ; preds = %bb.am
           to label %.thread392 unwind label %.thread105.a, !inline_history !69
 
 bb.ao:                                            ; preds = %bb.o
-  %i.cv = trunc nuw i64 %.pre to i1
+  %.pr = load i64, ptr %i.r, align 8
+  %i.cv = trunc nuw i64 %.pr to i1
   br i1 %i.cv, label %bb.ap, label %bb.aq, !prof !290
 
 .thread105.a:                                     ; preds = %bb.an

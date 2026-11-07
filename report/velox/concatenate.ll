@@ -204,9 +204,13 @@ _ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIiEENS_6ResultINS0_21OffsetBufferOpO
   %i.aeq = icmp slt i64 %.3.i.i.us.i, %i.adg
   br i1 %i.aeq, label %.lr.ph67.i.i.us.i, label %._crit_edge.i.i.i, !llvm.loop !380
 
-.lr.ph67.i.i.i:                                   ; preds = %.lr.ph67.i.i.preheader.i, %.loopexit.i.i.i
-  %.02966.i.i.i = phi i64 [ %.3.i.i.i, %.loopexit.i.i.i ], [ 0, %.lr.ph67.i.i.preheader.i ] ; 7 uses
-  %118 = load i8, ptr %82, align 8, !tbaa !227, !range !203, !noalias !641, !noundef !151
+.lr.ph67.i.ithread-pre-split.i:                   ; preds = %.loopexit.i.i.i
+  %.pr345.i = load i8, ptr %82, align 8, !tbaa !227, !noalias !641
+  br label %.lr.ph67.i.i.i
+
+.lr.ph67.i.i.i:                                   ; preds = %.lr.ph67.i.i.preheader.i, %.lr.ph67.i.ithread-pre-split.i
+  %118 = phi i8 [ %.pr345.i, %.lr.ph67.i.ithread-pre-split.i ], [ 1, %.lr.ph67.i.i.preheader.i ]
+  %.02966.i.i.i = phi i64 [ %.3.i.i.i, %.lr.ph67.i.ithread-pre-split.i ], [ 0, %.lr.ph67.i.i.preheader.i ] ; 7 uses
   %i.aer = trunc nuw i8 %118 to i1
   br i1 %i.aer, label %bb.jd, label %.noexc84.thread.i.i
 
@@ -436,7 +440,7 @@ _ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIiEENS_6ResultINS0_21OffsetBufferOpO
   %.3.i.i.i = phi i64 [ %i.ahv, %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIiEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit.i.i.i.epil ], [ %i.agv, %bb.jq ], [ %.02966.i.i.i, %.preheader.i.i.i ], [ %.02966.i.i.i, %.preheader58.i.i.i ], [ %i.agn, %.loopexit.i.i.i.loopexit.unr-lcssa ], [ %i.ahm, %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIiEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit36.i.i.i ] ; 2 uses
   %i.ahw = load i64, ptr %i.ade, align 8, !tbaa !170, !noalias !646
   %i.ahx = icmp slt i64 %.3.i.i.i, %i.ahw
-  br i1 %i.ahx, label %.lr.ph67.i.i.i, label %._crit_edge.i.i.i, !llvm.loop !382
+  br i1 %i.ahx, label %.lr.ph67.i.ithread-pre-split.i, label %._crit_edge.i.i.i, !llvm.loop !382
 
 ._crit_edge.i.i.i:                                ; preds = %.loopexit.i.i.us.i, %.loopexit.i.i.i, %.noexc83.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %82) #20, !noalias !647
@@ -839,9 +843,13 @@ _ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpO
   %i.bhy = icmp slt i64 %.3.i.i.us.i210, %i.bhx
   br i1 %i.bhy, label %.lr.ph67.i.i.us.i205, label %._crit_edge.i.i.i200, !llvm.loop !439
 
-.lr.ph67.i.i.i215:                                ; preds = %.lr.ph67.i.i.preheader.i204, %.loopexit.i.i.i221
-  %.02966.i.i.i216 = phi i64 [ %.3.i.i.i222, %.loopexit.i.i.i221 ], [ 0, %.lr.ph67.i.i.preheader.i204 ] ; 7 uses
-  %119 = load i8, ptr %58, align 8, !tbaa !227, !range !203, !noalias !674, !noundef !151
+.lr.ph67.i.ithread-pre-split.i223:                ; preds = %.loopexit.i.i.i221
+  %.pr318.i = load i8, ptr %58, align 8, !tbaa !227, !noalias !674
+  br label %.lr.ph67.i.i.i215
+
+.lr.ph67.i.i.i215:                                ; preds = %.lr.ph67.i.i.preheader.i204, %.lr.ph67.i.ithread-pre-split.i223
+  %119 = phi i8 [ %.pr318.i, %.lr.ph67.i.ithread-pre-split.i223 ], [ 1, %.lr.ph67.i.i.preheader.i204 ]
+  %.02966.i.i.i216 = phi i64 [ %.3.i.i.i222, %.lr.ph67.i.ithread-pre-split.i223 ], [ 0, %.lr.ph67.i.i.preheader.i204 ] ; 7 uses
   %i.bhz = trunc nuw i8 %119 to i1
   br i1 %i.bhz, label %bb.sc, label %.noexc84.thread.i.i217
 
@@ -1068,7 +1076,7 @@ _ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpO
   %.3.i.i.i222 = phi i64 [ %i.bld, %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit.i.i.i.epil ], [ %i.bkc, %bb.sp ], [ %.02966.i.i.i216, %.preheader.i.i.i220 ], [ %.02966.i.i.i216, %.preheader58.i.i.i240 ], [ %i.bjv, %.loopexit.i.i.i221.loopexit.unr-lcssa ], [ %i.bku, %_ZZN5arrow12_GLOBAL__N_118PutListViewOffsetsIlEENS_6ResultINS0_21OffsetBufferOpOutcomeEEERKNS_9ArrayDataEPT_RKNS_6BufferES8_S9_ENKUllE_clEl.exit36.i.i.i ] ; 2 uses
   %i.ble = load i64, ptr %i.bgk, align 8, !tbaa !170, !noalias !679
   %i.blf = icmp slt i64 %.3.i.i.i222, %i.ble
-  br i1 %i.blf, label %.lr.ph67.i.i.i215, label %._crit_edge.i.i.i200, !llvm.loop !441
+  br i1 %i.blf, label %.lr.ph67.i.ithread-pre-split.i223, label %._crit_edge.i.i.i200, !llvm.loop !441
 
 ._crit_edge.i.i.i200:                             ; preds = %.loopexit.i.i.us.i209, %.loopexit.i.i.i221, %.noexc83.i.i199
   call void @llvm.lifetime.end.p0(ptr nonnull %58) #20, !noalias !680

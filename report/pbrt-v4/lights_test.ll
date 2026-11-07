@@ -205,11 +205,11 @@ bb.a:
   %6 = alloca %"struct.pbrt::MediumInterface", align 8 ; 4 uses
   %7 = alloca %"class.pbrt::Spectrum", align 8    ; 2 uses
   %8 = alloca %"class.pstd::optional", align 8    ; 11 uses
-  %9 = alloca %"class.testing::AssertionResult", align 8 ; 7 uses
+  %9 = alloca %"class.testing::AssertionResult", align 8 ; 8 uses
   %10 = alloca %"class.testing::Message", align 8 ; 8 uses
   %11 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %12 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
-  %13 = alloca %"class.testing::AssertionResult", align 8 ; 8 uses
+  %13 = alloca %"class.testing::AssertionResult", align 8 ; 9 uses
   %14 = alloca %"class.testing::Message", align 8 ; 8 uses
   %15 = alloca %"class.testing::internal::AssertHelper", align 8 ; 7 uses
   %16 = alloca %"class.std::__cxx11::basic_string", align 8 ; 8 uses
@@ -352,7 +352,12 @@ bb.h:                                             ; preds = %bb.f, %_ZN7testing1
   store i8 %i.bt, ptr %9, align 8, !tbaa !30
   store ptr null, ptr %i.u, align 8, !tbaa !37
   %i.bu = trunc nuw i8 %i.bt to i1
-  br i1 %i.bu, label %_ZN7testing15AssertionResultD2Ev.exit, label %bb.i
+  br i1 %i.bu, label %_ZN7testing15AssertionResultD2Ev.exit.thread, label %bb.i
+
+_ZN7testing15AssertionResultD2Ev.exit.thread:     ; preds = %bb.h
+  call void @llvm.lifetime.end.p0(ptr nonnull %9) #24
+  call void @llvm.lifetime.start.p0(ptr nonnull %13) #24
+  br label %_ZN4pstd8optionalIN4pbrt13LightLeSampleEEptEv.exit
 
 bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #24
@@ -507,11 +512,11 @@ bb.ab:                                            ; preds = %bb.y
   call void @__clang_call_terminate(ptr %i.da) #25
   unreachable
 
-_ZN7testing15AssertionResultD2Ev.exit:            ; preds = %bb.h, %bb.x, %.noexc.i.i61, %bb.z, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i
+_ZN7testing15AssertionResultD2Ev.exit:            ; preds = %bb.x, %.noexc.i.i61, %bb.z, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit.i.i.i
+  %.pr126 = load i8, ptr %i.t, align 8, !tbaa !47
   call void @llvm.lifetime.end.p0(ptr nonnull %9) #24
   call void @llvm.lifetime.start.p0(ptr nonnull %13) #24
-  %23 = load i8, ptr %i.t, align 8, !tbaa !47, !range !31, !noundef !32
-  %i.db = trunc nuw i8 %23 to i1
+  %i.db = trunc nuw i8 %.pr126 to i1
   br i1 %i.db, label %_ZN4pstd8optionalIN4pbrt13LightLeSampleEEptEv.exit, label %bb.ac
 
 bb.ac:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit
@@ -521,7 +526,7 @@ bb.ac:                                            ; preds = %_ZN7testing15Assert
 .noexc:                                           ; preds = %bb.ac
   unreachable
 
-_ZN4pstd8optionalIN4pbrt13LightLeSampleEEptEv.exit: ; preds = %_ZN7testing15AssertionResultD2Ev.exit
+_ZN4pstd8optionalIN4pbrt13LightLeSampleEEptEv.exit: ; preds = %_ZN7testing15AssertionResultD2Ev.exit.thread, %_ZN7testing15AssertionResultD2Ev.exit
   %i.dc = load float, ptr %i.w, align 8, !tbaa !49
   %i.dd = fcmp oeq float %i.dc, 0.000000e+00
   %i.de = load float, ptr %i.x, align 4

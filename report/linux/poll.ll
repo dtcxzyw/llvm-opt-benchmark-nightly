@@ -202,23 +202,23 @@ bb.a:
   %i.a = getelementptr i8, ptr %0, i64 192        ; 7 uses
   %i.b = load volatile i32, ptr %i.a, align 4     ; 3 uses
   %i.c = or i32 %i.b, 1073741824
-  %i.d = tail call { i8, i32 } asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock cmpxchgl $3, $1", "={@ccz},=*m,={ax},r,*m,2,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.a, i32 range(i32 1073741824, 0) %i.c, ptr elementtype(i32) %i.a, i32 %i.b) #8, !srcloc !60 ; 2 uses
+  %i.d = tail call { i8, i32 } asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock cmpxchgl $3, $1", "={@ccz},=*m,={ax},r,*m,2,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.a, i32 range(i32 1073741824, 0) %i.c, ptr elementtype(i32) %i.a, i32 %i.b) #8, !srcloc !61 ; 2 uses
   %i.e = extractvalue { i8, i32 } %i.d, 0         ; 2 uses
   %i.f = icmp ult i8 %i.e, 2
   tail call void @llvm.assume(i1 %i.f)
   %i.g = trunc nuw i8 %i.e to i1
-  br i1 %i.g, label %arch_atomic_fetch_or.exit, label %arch_atomic_try_cmpxchg.exit, !prof !61
+  br i1 %i.g, label %arch_atomic_fetch_or.exit, label %arch_atomic_try_cmpxchg.exit, !prof !62
 
 arch_atomic_try_cmpxchg.exit:                     ; preds = %bb.a, %arch_atomic_try_cmpxchg.exit
   %i.h = phi { i8, i32 } [ %i.k, %arch_atomic_try_cmpxchg.exit ], [ %i.d, %bb.a ]
   %i.i = extractvalue { i8, i32 } %i.h, 1         ; 3 uses
   %i.j = or i32 %i.i, 1073741824
-  %i.k = tail call { i8, i32 } asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock cmpxchgl $3, $1", "={@ccz},=*m,={ax},r,*m,2,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.a, i32 range(i32 1073741824, 0) %i.j, ptr elementtype(i32) %i.a, i32 %i.i) #8, !srcloc !60 ; 2 uses
+  %i.k = tail call { i8, i32 } asm sideeffect ".pushsection .smp_locks,\22a\22\0A.balign 4\0A.long 671f - .\0A.popsection\0A671:\0A\09lock cmpxchgl $3, $1", "={@ccz},=*m,={ax},r,*m,2,~{memory},~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i32) %i.a, i32 range(i32 1073741824, 0) %i.j, ptr elementtype(i32) %i.a, i32 %i.i) #8, !srcloc !61 ; 2 uses
   %i.l = extractvalue { i8, i32 } %i.k, 0         ; 2 uses
   %i.m = icmp ult i8 %i.l, 2
   tail call void @llvm.assume(i1 %i.m)
   %i.n = trunc nuw i8 %i.l to i1
-  br i1 %i.n, label %arch_atomic_fetch_or.exit, label %arch_atomic_try_cmpxchg.exit, !prof !62
+  br i1 %i.n, label %arch_atomic_fetch_or.exit, label %arch_atomic_try_cmpxchg.exit, !prof !63, !llvm.loop !60
 
 arch_atomic_fetch_or.exit:                        ; preds = %arch_atomic_try_cmpxchg.exit, %bb.a
   %.06.lcssa = phi i32 [ %i.b, %bb.a ], [ %i.i, %arch_atomic_try_cmpxchg.exit ]
@@ -353,7 +353,8 @@ attributes #12 = { cold noredzone "no-builtin-wcslen" }
 !57 = !{i64 13901}
 !58 = !{i64 2163364737}
 !59 = !{i64 12085}
-!60 = !{i64 2149027960, i64 2149027999, i64 2149028020, i64 2149028057, i64 2149028080, i64 2149028089}
-!61 = !{!"branch_weights", i32 1999, i32 1}
-!62 = !{!"branch_weights", i32 1, i32 0}
+!60 = distinct !{!60, !12}
+!61 = !{i64 2149027960, i64 2149027999, i64 2149028020, i64 2149028057, i64 2149028080, i64 2149028089}
+!62 = !{!"branch_weights", i32 1999, i32 1}
+!63 = !{!"branch_weights", i32 1, i32 0}
 end_hunk_0

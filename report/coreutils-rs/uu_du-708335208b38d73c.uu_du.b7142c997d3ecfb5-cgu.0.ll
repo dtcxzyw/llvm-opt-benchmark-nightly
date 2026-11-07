@@ -205,9 +205,9 @@ bb.a:
   %i.w = alloca [24 x i8], align 8                ; 8 uses
   %i.x = alloca [19 x i8], align 1                ; 3 uses
   %i.y = alloca [8 x i8], align 8                 ; 4 uses
-  %i.z = alloca [24 x i8], align 8                ; 7 uses
-  %i.aa = alloca [24 x i8], align 8               ; 7 uses
-  %i.ab = alloca [16 x i8], align 8               ; 6 uses
+  %i.z = alloca [24 x i8], align 8                ; 8 uses
+  %i.aa = alloca [24 x i8], align 8               ; 8 uses
+  %i.ab = alloca [16 x i8], align 8               ; 7 uses
   %i.ac = alloca [24 x i8], align 8               ; 7 uses
   %i.ad = alloca [16 x i8], align 8               ; 5 uses
   %i.ae = alloca [16 x i8], align 8               ; 5 uses
@@ -610,11 +610,14 @@ bb.dw:                                            ; preds = %bb.dv
 
 bb.dx:                                            ; preds = %bb.dv
   call void @_RNvXs5_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDurationINtNtCs6JMX4GRUq9U_4core7convert7TryFromNtNtB17_4time8DurationE8try_from(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.ac, i64 noundef %i.sd, i32 noundef %i.se) #25, !noalias !3364
-  %i.sh = load i64, ptr %i.ac, align 8, !range !11, !alias.scope !3360, !noalias !3359, !noundef !8
+  %i.sh = load i64, ptr %i.ac, align 8, !range !11, !noalias !3359, !noundef !8
   %i.si = trunc nuw i64 %i.sh to i1
   br i1 %i.si, label %bb.dy, label %._RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread4.i_crit_edge.i.i.i, !prof !12
 
 ._RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread4.i_crit_edge.i.i.i: ; preds = %bb.dx
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.aa), !noalias !3361
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.z), !noalias !3359
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.ab), !noalias !3359
   %.pre.i.i.i.a = load i64, ptr %i.ek, align 8, !noalias !3359
   %.pre13.i.i.i = load i32, ptr %.phi.trans.insert12.i.i.i, align 8, !noalias !3359
   br label %_RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread4.i.i.i.i
@@ -640,10 +643,13 @@ _RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_unti
   %i.so = load i32, ptr %i.em, align 8, !noalias !3361, !noundef !8
   %i.sp = sub nsw i64 0, %i.sl
   %i.sq = sub i32 0, %i.so
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.aa), !noalias !3361
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.z), !noalias !3359
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.ab), !noalias !3359
   br label %_RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread4.i.i.i.i
 
 _RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread.i.i.i.i: ; preds = %_RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread5.i.i.i.i, %bb.dz, %bb.dy
-  %.sink.i.i.i = phi ptr [ %i.sn, %_RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread5.i.i.i.i ], [ %i.sk, %bb.dz ], [ %i.sj, %bb.dy ]
+  %.sink.i.i.i = phi ptr [ %i.sn, %_RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread5.i.i.i.i ], [ %i.sj, %bb.dy ], [ %i.sk, %bb.dz ]
   %i.sr = call noundef ptr @_RNvXs_NtNtCs3JjgEOiFeOI_4jiff5error15signed_durationNtB4_5ErrorNtB6_9IntoError10into_error(i8 noundef 11) #25, !noalias !3363
   %i.ss = call noundef ptr @_RNvMs_NtCs3JjgEOiFeOI_4jiff5errorNtB4_5Error12context_impl(ptr noundef %.sink.i.i.i, ptr noundef %i.sr) #28, !noalias !3363
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa), !noalias !3361
@@ -655,9 +661,6 @@ _RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_unti
 _RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread4.i.i.i.i: ; preds = %_RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.i.i.i.i, %._RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread4.i_crit_edge.i.i.i
   %i.st = phi i32 [ %.pre13.i.i.i, %._RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread4.i_crit_edge.i.i.i ], [ %i.sq, %_RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.i.i.i.i ] ; 7 uses
   %i.su = phi i64 [ %.pre.i.i.i.a, %._RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.thread4.i_crit_edge.i.i.i ], [ %i.sp, %_RNvMs0_NtCs3JjgEOiFeOI_4jiff15signed_durationNtB5_14SignedDuration12system_until.exit.i.i.i.i ] ; 8 uses
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.aa), !noalias !3361
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.z), !noalias !3359
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.ab), !noalias !3359
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ac), !noalias !3359
   %i.sv = add i64 %i.su, 377705023201
   %or.cond.i.i.i.i.i.i67 = icmp ult i64 %i.sv, 631107230402

@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load ptr, ptr %i.e, align 8, !tbaa !16291 ; 4 uses
   store ptr %i.g, ptr %i.e, align 8, !tbaa !16291
   %.not.i.i.i.i = icmp eq ptr %i.h, null
-  br i1 %.not.i.i.i.i, label %_ZNSt10unique_ptrIN5folly11AsyncSocket15ByteEventHelperESt14default_deleteIS2_EED2Ev.exit, label %bb.c
+  br i1 %.not.i.i.i.i, label %bb.e, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 40 ; 2 uses
@@ -224,13 +224,14 @@ _ZNKSt14default_deleteIN5folly11AsyncSocket15ByteEventHelperEEclEPS2_.exit.i.i.i
   %.pre = load ptr, ptr %i.e, align 8, !tbaa !16291
   br label %_ZNSt10unique_ptrIN5folly11AsyncSocket15ByteEventHelperESt14default_deleteIS2_EED2Ev.exit
 
-_ZNSt10unique_ptrIN5folly11AsyncSocket15ByteEventHelperESt14default_deleteIS2_EED2Ev.exit: ; preds = %bb.b, %_ZNKSt14default_deleteIN5folly11AsyncSocket15ByteEventHelperEEclEPS2_.exit.i.i.i.i, %bb.a
-  %24 = phi ptr [ %i.g, %bb.b ], [ %.pre, %_ZNKSt14default_deleteIN5folly11AsyncSocket15ByteEventHelperEEclEPS2_.exit.i.i.i.i ], [ %i.f, %bb.a ] ; 2 uses
-  %i.m = load i8, ptr %24, align 8, !tbaa !16307, !range !15896, !noundef !1501
+_ZNSt10unique_ptrIN5folly11AsyncSocket15ByteEventHelperESt14default_deleteIS2_EED2Ev.exit: ; preds = %_ZNKSt14default_deleteIN5folly11AsyncSocket15ByteEventHelperEEclEPS2_.exit.i.i.i.i, %bb.a
+  %.ph = phi ptr [ %i.f, %bb.a ], [ %.pre, %_ZNKSt14default_deleteIN5folly11AsyncSocket15ByteEventHelperEEclEPS2_.exit.i.i.i.i ] ; 2 uses
+  %i.m = load i8, ptr %.ph, align 8, !tbaa !16307
   %i.n = trunc nuw i8 %i.m to i1
   br i1 %i.n, label %bb.fa, label %bb.e
 
-bb.e:                                             ; preds = %_ZNSt10unique_ptrIN5folly11AsyncSocket15ByteEventHelperESt14default_deleteIS2_EED2Ev.exit
+bb.e:                                             ; preds = %bb.b, %_ZNSt10unique_ptrIN5folly11AsyncSocket15ByteEventHelperESt14default_deleteIS2_EED2Ev.exit
+  %24 = phi ptr [ %.ph, %_ZNSt10unique_ptrIN5folly11AsyncSocket15ByteEventHelperESt14default_deleteIS2_EED2Ev.exit ], [ %i.g, %bb.b ]
   %i.o = getelementptr inbounds nuw i8, ptr %24, i64 40
   %i.p = load i8, ptr %i.o, align 8, !tbaa !16294, !range !15896, !noundef !1501
   %i.q = trunc nuw i8 %i.p to i1

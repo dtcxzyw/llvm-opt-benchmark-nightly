@@ -205,9 +205,9 @@ _ZNK12hb_hashmap_tIjjLb1EE6valuesEv.exit.i:       ; preds = %_ZNR9hb_iter_tI10hb
   br label %"_ZNK9hb_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEEMS4_KFbvERK4$_20LPv0EERS4_EdeEv.exit.i.i.i.i.i.us.us.i.i.i.i.i"
 
 "_ZNK9hb_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEEMS4_KFbvERK4$_20LPv0EERS4_EdeEv.exit.i.i.i.i.i.us.us.i.i.i.i.i": ; preds = %"_ZNR9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEEMS5_KFbvERK4$_20LPv0EEMS5_FRjvEL24hb_function_sortedness_t0ELSC_0EERK4$_28LSH_0ELSC_0EEjEppEv.exit.i.loopexit.us.us.i.i.i.i.i", %"_ZNK9hb_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEEMS4_KFbvERK4$_20LPv0EERS4_EdeEv.exit.i.i.i.i.i.preheader.split.us.i.i.i.i.i"
-  %i.chr = phi i8 [ %.pre138.i, %"_ZNR9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEEMS5_KFbvERK4$_20LPv0EEMS5_FRjvEL24hb_function_sortedness_t0ELSC_0EERK4$_28LSH_0ELSC_0EEjEppEv.exit.i.loopexit.us.us.i.i.i.i.i" ], [ 0, %"_ZNK9hb_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEEMS4_KFbvERK4$_20LPv0EERS4_EdeEv.exit.i.i.i.i.i.preheader.split.us.i.i.i.i.i" ]
-  %.us-phi5711.i.us.us.i.i.i.i.i = phi i32 [ %i.chw, %"_ZNR9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEEMS5_KFbvERK4$_20LPv0EEMS5_FRjvEL24hb_function_sortedness_t0ELSC_0EERK4$_28LSH_0ELSC_0EEjEppEv.exit.i.loopexit.us.us.i.i.i.i.i" ], [ %.sroa.5.sroa.0.0.insert.insert.i.i.i, %"_ZNK9hb_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEEMS4_KFbvERK4$_20LPv0EERS4_EdeEv.exit.i.i.i.i.i.preheader.split.us.i.i.i.i.i" ]
-  %.us-phi810.i.us.us.i.i.i.i.i = phi ptr [ %i.chy, %"_ZNR9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEEMS5_KFbvERK4$_20LPv0EEMS5_FRjvEL24hb_function_sortedness_t0ELSC_0EERK4$_28LSH_0ELSC_0EEjEppEv.exit.i.loopexit.us.us.i.i.i.i.i" ], [ %.sroa.02.1.i.i.i, %"_ZNK9hb_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEEMS4_KFbvERK4$_20LPv0EERS4_EdeEv.exit.i.i.i.i.i.preheader.split.us.i.i.i.i.i" ] ; 2 uses
+  %i.chr = phi i8 [ 0, %"_ZNK9hb_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEEMS4_KFbvERK4$_20LPv0EERS4_EdeEv.exit.i.i.i.i.i.preheader.split.us.i.i.i.i.i" ], [ %.pre138.i, %"_ZNR9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEEMS5_KFbvERK4$_20LPv0EEMS5_FRjvEL24hb_function_sortedness_t0ELSC_0EERK4$_28LSH_0ELSC_0EEjEppEv.exit.i.loopexit.us.us.i.i.i.i.i" ]
+  %.us-phi5711.i.us.us.i.i.i.i.i = phi i32 [ %.sroa.5.sroa.0.0.insert.insert.i.i.i, %"_ZNK9hb_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEEMS4_KFbvERK4$_20LPv0EERS4_EdeEv.exit.i.i.i.i.i.preheader.split.us.i.i.i.i.i" ], [ %i.chw, %"_ZNR9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEEMS5_KFbvERK4$_20LPv0EEMS5_FRjvEL24hb_function_sortedness_t0ELSC_0EERK4$_28LSH_0ELSC_0EEjEppEv.exit.i.loopexit.us.us.i.i.i.i.i" ]
+  %.us-phi810.i.us.us.i.i.i.i.i = phi ptr [ %.sroa.02.1.i.i.i, %"_ZNK9hb_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEEMS4_KFbvERK4$_20LPv0EERS4_EdeEv.exit.i.i.i.i.i.preheader.split.us.i.i.i.i.i" ], [ %i.chy, %"_ZNR9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEEMS5_KFbvERK4$_20LPv0EEMS5_FRjvEL24hb_function_sortedness_t0ELSC_0EERK4$_28LSH_0ELSC_0EEjEppEv.exit.i.loopexit.us.us.i.i.i.i.i" ] ; 2 uses
   %i.chs = getelementptr inbounds nuw i8, ptr %.us-phi810.i.us.us.i.i.i.i.i, i64 8
   %.val1.i.i.i.us.us.i.i.i.i.i = load i32, ptr %i.chs, align 4, !tbaa !157 ; 2 uses
   %i.cht = trunc nuw i8 %i.chr to i1
@@ -241,7 +241,7 @@ _ZN9hb_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEERS3_EdeEv.exit.i.i.i.
   br i1 %i.cib, label %"_ZNR9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEEMS5_KFbvERK4$_20LPv0EEMS5_FRjvEL24hb_function_sortedness_t0ELSC_0EERK4$_28LSH_0ELSC_0EEjEppEv.exit.i.loopexit.us.us.i.i.i.i.i", label %_ZNR9hb_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEERS3_EppEv.exit.i.i.i.i.i.i.us.i.us.us.i.i.i.i.i, !llvm.loop !10
 
 "_ZNR9hb_iter_tI13hb_map_iter_tIS0_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEEMS5_KFbvERK4$_20LPv0EEMS5_FRjvEL24hb_function_sortedness_t0ELSC_0EERK4$_28LSH_0ELSC_0EEjEppEv.exit.i.loopexit.us.us.i.i.i.i.i": ; preds = %_ZN9hb_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEERS3_EdeEv.exit.i.i.i.i.i.i.us.i.us.us.i.i.i.i.i
-  %.pre138.i = load i8, ptr %i.chq, align 8, !tbaa !63, !range !64
+  %.pre138.i = load i8, ptr %i.chq, align 8, !tbaa !63
   br label %"_ZNK9hb_iter_tI16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEEMS4_KFbvERK4$_20LPv0EERS4_EdeEv.exit.i.i.i.i.i.us.us.i.i.i.i.i", !llvm.loop !534
 
 "_ZN8hb_set_tC2I13hb_map_iter_tIS1_I16hb_filter_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEEMS6_KFbvERK4$_20LPv0EEMS6_FRjvEL24hb_function_sortedness_t0ELSD_0EERK4$_28LSI_0ELSD_0EETnPN12hb_enable_ifIXsr14hb_is_iterableIT_EE5valueEvE4typeELSD_0EEERKSP_.exit.i": ; preds = %_ZN14hb_sparseset_tI23hb_bit_set_invertible_tElsEj.exit.i.us.us.i.i.i.i.i, %_ZNR9hb_iter_tI10hb_array_tIN12hb_hashmap_tIjjLb1EE6item_tEERS3_EppEv.exit.i.i.i.i.i.i.us.i.us.us.i.i.i.i.i, %_ZNK12hb_hashmap_tIjjLb1EE6valuesEv.exit.i
@@ -644,11 +644,16 @@ _ZN14hb_sparseset_tI23hb_bit_set_invertible_tE9add_rangeEjj.exit: ; preds = %bb.
   %i.am = trunc nuw i8 %i.al to i1
   br i1 %i.am, label %.lr.ph.split, label %.loopexit, !prof !68
 
-.lr.ph.split:                                     ; preds = %.lr.ph, %_ZN12hb_hashmap_tIjjLb1EE13set_with_hashIRKjRjEEbOT_jOT0_b.exit
-  %storemerge3856 = phi i32 [ %6, %_ZN12hb_hashmap_tIjjLb1EE13set_with_hashIRKjRjEEbOT_jOT0_b.exit ], [ %spec.select40, %.lr.ph ] ; 4 uses
-  %.05255.a = phi i32 [ %i.do, %_ZN12hb_hashmap_tIjjLb1EE13set_with_hashIRKjRjEEbOT_jOT0_b.exit ], [ %spec.select, %.lr.ph ] ; 2 uses
-  %4 = mul i32 %storemerge3856, 506952113
-  %5 = load i8, ptr %i.h, align 8, !tbaa !195, !range !64, !noundef !65
+.lr.ph.splitthread-pre-split:                     ; preds = %_ZN12hb_hashmap_tIjjLb1EE13set_with_hashIRKjRjEEbOT_jOT0_b.exit
+  %4 = add i32 %.05255, 1
+  %.pr = load i8, ptr %i.h, align 8, !tbaa !195
+  br label %.lr.ph.split
+
+.lr.ph.split:                                     ; preds = %.lr.ph, %.lr.ph.splitthread-pre-split
+  %5 = phi i8 [ %.pr, %.lr.ph.splitthread-pre-split ], [ 1, %.lr.ph ]
+  %.05255.a = phi i32 [ %i.do, %.lr.ph.splitthread-pre-split ], [ %spec.select40, %.lr.ph ] ; 4 uses
+  %.05255 = phi i32 [ %4, %.lr.ph.splitthread-pre-split ], [ %spec.select, %.lr.ph ] ; 2 uses
+  %6 = mul i32 %.05255.a, 506952113
   %i.an = trunc nuw i8 %5 to i1
   br i1 %i.an, label %bb.i, label %_ZN12hb_hashmap_tIjjLb1EE13set_with_hashIRKjRjEEbOT_jOT0_b.exit, !prof !68
 
@@ -742,7 +747,7 @@ _ZN12hb_hashmap_tIjjLb1EE5allocEj.exit:           ; preds = %bb.j
   br label %_ZN12hb_hashmap_tIjjLb1EE13set_with_hashIRKjRjEEbOT_jOT0_b.exit
 
 .critedge.i:                                      ; preds = %_ZN12hb_hashmap_tIjjLb1EE5allocEj.exit.thread, %bb.i
-  %i.bo = and i32 %4, 1073741823                  ; 2 uses
+  %i.bo = and i32 %6, 1073741823                  ; 2 uses
   %i.bp = load i32, ptr %i.l, align 8, !tbaa !234
   %i.bq = urem i32 %i.bo, %i.bp                   ; 2 uses
   %i.br = load ptr, ptr %i.k, align 8, !tbaa !147 ; 5 uses
@@ -766,7 +771,7 @@ _ZN12hb_hashmap_tIjjLb1EE5allocEj.exit:           ; preds = %bb.j
   %.02946.i = phi i32 [ %i.ci, %bb.p ], [ %i.bq, %.critedge.i ] ; 3 uses
   %.03045.i = phi i32 [ %spec.select.i, %bb.p ], [ -1, %.critedge.i ] ; 3 uses
   %i.cb = load i32, ptr %i.ca, align 4, !tbaa !157
-  %i.cc = icmp eq i32 %i.cb, %storemerge3856
+  %i.cc = icmp eq i32 %i.cb, %.05255.a
   br i1 %i.cc, label %.loopexit.thread.i, label %bb.p
 
 bb.p:                                             ; preds = %.lr.ph.i
@@ -818,9 +823,9 @@ bb.r:                                             ; preds = %.loopexit.thread.i.
   %i.cy = phi ptr [ %i.by, %.loopexit.thread.i.thread ], [ %i.cr, %bb.q ], [ %i.cr, %.loopexit.thread.i ]
   %i.cz = phi ptr [ %i.bx, %.loopexit.thread.i.thread ], [ %i.cq, %bb.q ], [ %i.cq, %.loopexit.thread.i ] ; 2 uses
   %.0283961.i79 = phi i32 [ 0, %.loopexit.thread.i.thread ], [ %.02839.i, %bb.q ], [ %.02839.i, %.loopexit.thread.i ]
-  store i32 %storemerge3856, ptr %i.cz, align 4, !tbaa !247
+  store i32 %.05255.a, ptr %i.cz, align 4, !tbaa !247
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 8
-  store i32 %.05255.a, ptr %i.da, align 4, !tbaa !248
+  store i32 %.05255, ptr %i.da, align 4, !tbaa !248
   %i.db = shl nuw i32 %i.bo, 2
   %i.dc = or disjoint i32 %i.db, 3
   store i32 %i.dc, ptr %i.cy, align 4
@@ -845,10 +850,9 @@ bb.t:                                             ; preds = %bb.s
   br label %_ZN12hb_hashmap_tIjjLb1EE13set_with_hashIRKjRjEEbOT_jOT0_b.exit
 
 _ZN12hb_hashmap_tIjjLb1EE13set_with_hashIRKjRjEEbOT_jOT0_b.exit: ; preds = %_ZN12hb_hashmap_tIjjLb1EE5allocEj.exit, %.lr.ph.split, %bb.r, %bb.s, %bb.t
-  %i.do = add i32 %.05255.a, 1
-  %6 = add i32 %storemerge3856, 1                 ; 2 uses
-  %.not39 = icmp ugt i32 %6, %.0
-  br i1 %.not39, label %.loopexit, label %.lr.ph.split, !llvm.loop !654
+  %i.do = add i32 %.05255.a, 1                    ; 2 uses
+  %.not39 = icmp ugt i32 %i.do, %.0
+  br i1 %.not39, label %.loopexit, label %.lr.ph.splitthread-pre-split, !llvm.loop !654
 
 .loopexit:                                        ; preds = %_ZN12hb_hashmap_tIjjLb1EE13set_with_hashIRKjRjEEbOT_jOT0_b.exit, %.lr.ph, %_ZN14hb_sparseset_tI23hb_bit_set_invertible_tE9add_rangeEjj.exit, %bb.c, %bb.b
   %.1 = phi i32 [ %.03059, %bb.b ], [ %.sroa.speculated, %bb.c ], [ %.sroa.speculated, %.lr.ph ], [ %.sroa.speculated, %_ZN14hb_sparseset_tI23hb_bit_set_invertible_tE9add_rangeEjj.exit ], [ %.sroa.speculated, %_ZN12hb_hashmap_tIjjLb1EE13set_with_hashIRKjRjEEbOT_jOT0_b.exit ]
@@ -947,11 +951,15 @@ _ZN14hb_sparseset_tI23hb_bit_set_invertible_tE9add_rangeEjj.exit: ; preds = %bb.
   %i.al = trunc nuw i8 %i.ak to i1
   br i1 %i.al, label %.lr.ph.split, label %.loopexit, !prof !68
 
-.lr.ph.split:                                     ; preds = %.lr.ph, %_ZN12hb_hashmap_tIjjLb1EE13set_with_hashIRKjRjEEbOT_jOT0_b.exit
-  %storemerge49 = phi i32 [ %i.dn, %_ZN12hb_hashmap_tIjjLb1EE13set_with_hashIRKjRjEEbOT_jOT0_b.exit ], [ %i.p, %.lr.ph ] ; 4 uses
-  %4 = mul i32 %storemerge49, 506952113
-  %5 = load i8, ptr %i.h, align 8, !tbaa !195, !range !64, !noundef !65
-  %i.am = trunc nuw i8 %5 to i1
+.lr.ph.splitthread-pre-split:                     ; preds = %_ZN12hb_hashmap_tIjjLb1EE13set_with_hashIRKjRjEEbOT_jOT0_b.exit
+  %.pr = load i8, ptr %i.h, align 8, !tbaa !195
+  br label %.lr.ph.split
+
+.lr.ph.split:                                     ; preds = %.lr.ph, %.lr.ph.splitthread-pre-split
+  %4 = phi i8 [ %.pr, %.lr.ph.splitthread-pre-split ], [ 1, %.lr.ph ]
+  %storemerge49 = phi i32 [ %i.dn, %.lr.ph.splitthread-pre-split ], [ %i.p, %.lr.ph ] ; 4 uses
+  %5 = mul i32 %storemerge49, 506952113
+  %i.am = trunc nuw i8 %4 to i1
   br i1 %i.am, label %bb.i, label %_ZN12hb_hashmap_tIjjLb1EE13set_with_hashIRKjRjEEbOT_jOT0_b.exit, !prof !68
 
 bb.i:                                             ; preds = %.lr.ph.split
@@ -1044,7 +1052,7 @@ _ZN12hb_hashmap_tIjjLb1EE5allocEj.exit:           ; preds = %bb.j
   br label %_ZN12hb_hashmap_tIjjLb1EE13set_with_hashIRKjRjEEbOT_jOT0_b.exit
 
 .critedge.i:                                      ; preds = %_ZN12hb_hashmap_tIjjLb1EE5allocEj.exit.thread, %bb.i
-  %i.bn = and i32 %4, 1073741823                  ; 2 uses
+  %i.bn = and i32 %5, 1073741823                  ; 2 uses
   %i.bo = load i32, ptr %i.l, align 8, !tbaa !234
   %i.bp = urem i32 %i.bn, %i.bo                   ; 2 uses
   %i.bq = load ptr, ptr %i.k, align 8, !tbaa !147 ; 5 uses
@@ -1149,7 +1157,7 @@ bb.t:                                             ; preds = %bb.s
 _ZN12hb_hashmap_tIjjLb1EE13set_with_hashIRKjRjEEbOT_jOT0_b.exit: ; preds = %_ZN12hb_hashmap_tIjjLb1EE5allocEj.exit, %.lr.ph.split, %bb.r, %bb.s, %bb.t
   %i.dn = add i32 %storemerge49, 1                ; 2 uses
   %.not35 = icmp ugt i32 %i.dn, %.0
-  br i1 %.not35, label %.loopexit, label %.lr.ph.split, !llvm.loop !656
+  br i1 %.not35, label %.loopexit, label %.lr.ph.splitthread-pre-split, !llvm.loop !656
 
 .loopexit:                                        ; preds = %_ZN12hb_hashmap_tIjjLb1EE13set_with_hashIRKjRjEEbOT_jOT0_b.exit, %.lr.ph, %_ZN14hb_sparseset_tI23hb_bit_set_invertible_tE9add_rangeEjj.exit, %bb.c, %bb.b
   %.1 = phi i32 [ %.02852, %bb.b ], [ %.sroa.speculated, %bb.c ], [ %.sroa.speculated, %.lr.ph ], [ %.sroa.speculated, %_ZN14hb_sparseset_tI23hb_bit_set_invertible_tE9add_rangeEjj.exit ], [ %.sroa.speculated, %_ZN12hb_hashmap_tIjjLb1EE13set_with_hashIRKjRjEEbOT_jOT0_b.exit ]

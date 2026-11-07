@@ -205,27 +205,28 @@ _ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit: ; 
 
 _ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.thread141: ; preds = %bb.a
   %or.cond4144 = select i1 %3, i1 true, i1 %i.b
-  br i1 %or.cond4144, label %.thread103, label %_ZNSt13__atomic_baseIjE21compare_exchange_weakERjjSt12memory_order.exit
+  br i1 %or.cond4144, label %bb.q, label %_ZNSt13__atomic_baseIjE21compare_exchange_weakERjjSt12memory_order.exit
 
 bb.o:                                             ; preds = %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit
   %i.at = icmp eq i32 %.049.lcssa, 0
-  br i1 %i.at, label %.thread103, label %bb.p
+  br i1 %i.at, label %bb.q, label %bb.p
 
 bb.p:                                             ; preds = %bb.o
   %i.au = call noundef i64 @llvm.x86.rdtsc()
-  %i.av = icmp ugt i32 %.049.lcssa, 19999
-  br i1 %i.av, label %.thread103, label %bb.q
-
-bb.q:                                             ; preds = %bb.p
   %6 = sub i64 %i.au, %.050.lcssa
   %7 = trunc i64 %6 to i32
   %8 = shl i32 %7, 1
-  %i.aw = call i32 @llvm.umax.i32(i32 %8, i32 200)
+  %i.av = icmp ugt i32 %.049.lcssa, 19999
+  br i1 %i.av, label %.thread103, label %bb.q
+
+bb.q:                                             ; preds = %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.thread141, %bb.o, %bb.p
+  %9 = phi i32 [ %8, %bb.p ], [ 0, %bb.o ], [ 0, %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.thread141 ]
+  %i.aw = call i32 @llvm.umax.i32(i32 %9, i32 200)
   %i.ax = call i32 @llvm.umin.i32(i32 %i.aw, i32 20000)
   br label %.thread103
 
-.thread103:                                       ; preds = %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.thread141, %bb.q, %bb.o, %bb.p
-  %.0 = phi i32 [ 200, %bb.p ], [ %i.ax, %bb.q ], [ 200, %bb.o ], [ 200, %_ZNSt13__atomic_baseIjE23compare_exchange_strongERjjSt12memory_orderS2_.exit.thread141 ] ; 2 uses
+.thread103:                                       ; preds = %bb.p, %bb.q
+  %.0 = phi i32 [ %i.ax, %bb.q ], [ 200, %bb.p ]  ; 2 uses
   br i1 %i.b, label %bb.r, label %bb.s
 
 bb.r:                                             ; preds = %.thread103

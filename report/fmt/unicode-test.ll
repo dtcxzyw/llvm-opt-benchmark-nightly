@@ -205,7 +205,7 @@ define linkonce_odr hidden ptr @_ZNK3fmt3v129formatterINS0_7weekdayEcvE6formatIN
 bb.a:
   %3 = alloca %struct.tm, align 8                 ; 7 uses
   %4 = alloca %"class.fmt::v12::detail::get_locale", align 8 ; 9 uses
-  %5 = alloca %"class.fmt::v12::detail::tm_writer", align 8 ; 9 uses
+  %5 = alloca %"class.fmt::v12::detail::tm_writer", align 8 ; 10 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %3) #34
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(56) %3, i8 0, i64 56, i1 false)
   %i.a = zext i8 %1 to i32
@@ -231,7 +231,7 @@ bb.c:                                             ; preds = %bb.a
   %i.j = trunc nuw nsw i32 %.lobit to i8
   %i.k = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 4 uses
   store i8 %i.j, ptr %i.k, align 8, !tbaa !264
-  br i1 %.not, label %_ZN3fmt3v126detail10get_localeC2EbNS0_10locale_refE.exit, label %bb.d
+  br i1 %.not, label %.critedge, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %.not.i.i = icmp eq ptr %.sroa.0.0.copyload.i, null
@@ -245,13 +245,17 @@ bb.f:                                             ; preds = %bb.d
   call void @_ZNSt6localeC1Ev(ptr noundef nonnull align 8 dereferenceable(9) %4) #34
   br label %_ZN3fmt3v126detail10get_localeC2EbNS0_10locale_refE.exit
 
-_ZN3fmt3v126detail10get_localeC2EbNS0_10locale_refE.exit: ; preds = %bb.c, %bb.e, %bb.f
-  call void @llvm.lifetime.start.p0(ptr nonnull %5) #34
-  %i.l = load i8, ptr %i.k, align 8, !tbaa !264, !range !82, !noundef !83
+_ZN3fmt3v126detail10get_localeC2EbNS0_10locale_refE.exit: ; preds = %bb.f, %bb.e
+  %i.l = load i8, ptr %i.k, align 8, !tbaa !264
   %i.m = trunc nuw i8 %i.l to i1
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #34
   br i1 %i.m, label %_ZNK3fmt3v126detail10get_localecvRKSt6localeEv.exit, label %bb.g
 
-bb.g:                                             ; preds = %_ZN3fmt3v126detail10get_localeC2EbNS0_10locale_refE.exit
+.critedge:                                        ; preds = %bb.c
+  call void @llvm.lifetime.start.p0(ptr nonnull %5) #34
+  br label %bb.g
+
+bb.g:                                             ; preds = %.critedge, %_ZN3fmt3v126detail10get_localeC2EbNS0_10locale_refE.exit
   %i.n = load atomic i8, ptr @_ZGVZN3fmt3v126detail18get_classic_localeEvE6locale acquire, align 8
   %i.o = icmp eq i8 %i.n, 0
   br i1 %i.o, label %bb.h, label %_ZN3fmt3v126detail18get_classic_localeEv.exit.i, !prof !265
@@ -654,7 +658,7 @@ bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %6) #34
   %i.l = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 2 uses
   store i8 0, ptr %i.l, align 8, !tbaa !264
-  br label %_ZN3fmt3v126detail10get_localeC2EbNS0_10locale_refE.exit.thread
+  br label %.sink.split
 
 bb.c:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -664,22 +668,22 @@ bb.c:                                             ; preds = %bb.b
   %i.o = zext i1 %i.n to i8
   %i.p = getelementptr inbounds nuw i8, ptr %6, i64 8 ; 5 uses
   store i8 %i.o, ptr %i.p, align 8, !tbaa !264
-  br i1 %i.n, label %_ZN3fmt3v126detail10get_localeC2EbNS0_10locale_refE.exit, label %_ZN3fmt3v126detail10get_localeC2EbNS0_10locale_refE.exit.thread
-
-_ZN3fmt3v126detail10get_localeC2EbNS0_10locale_refE.exit.thread: ; preds = %.thread, %bb.c
-  %.ph29 = phi ptr [ %i.p, %bb.c ], [ %i.l, %.thread ]
-  call void @llvm.lifetime.start.p0(ptr nonnull %7) #34
-  br label %bb.d
+  br i1 %i.n, label %_ZN3fmt3v126detail10get_localeC2EbNS0_10locale_refE.exit, label %.sink.split
 
 _ZN3fmt3v126detail10get_localeC2EbNS0_10locale_refE.exit: ; preds = %bb.c
   call void @_ZNSt6localeC1ERKS_(ptr noundef nonnull align 8 dereferenceable(9) %6, ptr noundef nonnull align 8 dereferenceable(8) %.sroa.0.0.copyload.i) #34
-  %.pre = load i8, ptr %i.p, align 8, !tbaa !264, !range !82
+  %.pre = load i8, ptr %i.p, align 8, !tbaa !264
   %i.q = trunc nuw i8 %.pre to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #34
   br i1 %i.q, label %_ZNK3fmt3v126detail10get_localecvRKSt6localeEv.exit, label %bb.d
 
-bb.d:                                             ; preds = %_ZN3fmt3v126detail10get_localeC2EbNS0_10locale_refE.exit.thread, %_ZN3fmt3v126detail10get_localeC2EbNS0_10locale_refE.exit
-  %i.r = phi ptr [ %.ph29, %_ZN3fmt3v126detail10get_localeC2EbNS0_10locale_refE.exit.thread ], [ %i.p, %_ZN3fmt3v126detail10get_localeC2EbNS0_10locale_refE.exit ] ; 2 uses
+.sink.split:                                      ; preds = %bb.c, %.thread
+  %.ph = phi ptr [ %i.l, %.thread ], [ %i.p, %bb.c ]
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #34
+  br label %bb.d
+
+bb.d:                                             ; preds = %.sink.split, %_ZN3fmt3v126detail10get_localeC2EbNS0_10locale_refE.exit
+  %i.r = phi ptr [ %i.p, %_ZN3fmt3v126detail10get_localeC2EbNS0_10locale_refE.exit ], [ %.ph, %.sink.split ] ; 2 uses
   %i.s = load atomic i8, ptr @_ZGVZN3fmt3v126detail18get_classic_localeEvE6locale acquire, align 8
   %i.t = icmp eq i8 %i.s, 0
   br i1 %i.t, label %bb.e, label %_ZN3fmt3v126detail18get_classic_localeEv.exit.i, !prof !265

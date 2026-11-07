@@ -202,7 +202,7 @@ bb.ds:                                            ; preds = %bb.dr, %bb.dq
 
 .lr.ph:                                           ; preds = %bb.ds
   %i.pv = getelementptr inbounds nuw i8, ptr %i.h, i64 152
-  %i.pw = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 2 uses
+  %i.pw = getelementptr inbounds nuw i8, ptr %0, i64 288 ; 3 uses
   %i.px = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 3 uses
   %i.py = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 3 uses
   %i.pz = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 4 uses
@@ -561,7 +561,11 @@ bb.fr:                                            ; preds = %_free_built_launch_
   store i32 %i.uh, ptr %i.pz, align 8
   %i.ui = load i8, ptr %i.dm, align 8, !range !8, !noundef !9
   %i.uj = trunc nuw i8 %i.ui to i1
-  br i1 %i.uj, label %bb.fs, label %bb.fz
+  br i1 %i.uj, label %bb.fs, label %..thread197_crit_edge
+
+..thread197_crit_edge:                            ; preds = %bb.fr
+  %.pre = load ptr, ptr %i.pw, align 8
+  br label %bb.gc
 
 .thread193:                                       ; preds = %bb.fn
   %i.uk = load i32, ptr %i.qa, align 8
@@ -608,25 +612,27 @@ bb.fy:                                            ; preds = %bb.fx
   call void (i32, ptr, ...) @log_var(i32 noundef 3, ptr noundef nonnull @.str.22, ptr noundef nonnull %i.jm) #17
   br label %bb.fz
 
-bb.fz:                                            ; preds = %bb.fr, %bb.fy, %bb.fx, %bb.fw
-  %i.uy = load i8, ptr %i.dm, align 8, !range !8, !noundef !9
+bb.fz:                                            ; preds = %bb.fy, %bb.fx, %bb.fw
+  %i.uy = load i8, ptr %i.dm, align 8
   %i.uz = trunc nuw i8 %i.uy to i1
   %i.va = load ptr, ptr %i.pw, align 8            ; 2 uses
-  %.not176 = icmp eq ptr %i.va, null              ; 2 uses
   br i1 %i.uz, label %bb.ga, label %bb.gc
 
 bb.ga:                                            ; preds = %bb.fz
+  %.not176 = icmp eq ptr %i.va, null
   br i1 %.not176, label %bb.gb, label %bb.gm
 
 bb.gb:                                            ; preds = %bb.ga
   call void @slurm_free_job_step_create_request_msg(ptr noundef nonnull %i.t) #17
   br label %bb.gm
 
-bb.gc:                                            ; preds = %bb.fz
-  br i1 %.not176, label %launch_get_slurm_step_layout.exit.thread, label %launch_get_slurm_step_layout.exit
+bb.gc:                                            ; preds = %..thread197_crit_edge, %bb.fz
+  %3 = phi ptr [ %.pre, %..thread197_crit_edge ], [ %i.va, %bb.fz ] ; 2 uses
+  %.not4.i = icmp eq ptr %3, null
+  br i1 %.not4.i, label %launch_get_slurm_step_layout.exit.thread, label %launch_get_slurm_step_layout.exit
 
 launch_get_slurm_step_layout.exit:                ; preds = %bb.gc
-  %i.vb = getelementptr inbounds nuw i8, ptr %i.va, i64 16
+  %i.vb = getelementptr inbounds nuw i8, ptr %3, i64 16
   %i.vc = load ptr, ptr %i.vb, align 8
   %i.vd = getelementptr inbounds nuw i8, ptr %i.vc, i64 40
   %i.ve = load ptr, ptr %i.vd, align 8            ; 5 uses

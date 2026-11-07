@@ -204,13 +204,13 @@ bb.h:                                             ; preds = %bb.g
 bb.i:                                             ; preds = %bb.h
   %i.z = getelementptr inbounds nuw i8, ptr %i.l, i64 6768
   tail call void @_ZN7CaDiCaL8Internal14stop_profilingERNS_7ProfileEd(ptr noundef nonnull align 8 dereferenceable(7288) %i.l, ptr noundef nonnull align 8 dereferenceable(36) %i.z, double noundef %i.j)
-  %.pre.a = load i8, ptr %i.u, align 4, !tbaa !256, !range !160
+  %.pre.a = load i8, ptr %i.u, align 4, !tbaa !256
   %.pre51.pre = load ptr, ptr %i.k, align 8, !tbaa !169 ; 2 uses
   %i.aa = trunc nuw i8 %.pre.a to i1
   br i1 %i.aa, label %.thread, label %.thread61
 
-.thread61:                                        ; preds = %bb.g, %bb.i
-  %.pre5163 = phi ptr [ %.pre51.pre, %bb.i ], [ %i.l, %bb.g ] ; 4 uses
+.thread61:                                        ; preds = %bb.i, %bb.g
+  %.pre5163 = phi ptr [ %i.l, %bb.g ], [ %.pre51.pre, %bb.i ] ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %.pre5163, i64 7040
   %i.ac = load i32, ptr %i.ab, align 8, !tbaa !258
   %.not28 = icmp sgt i32 %i.ac, %i.n
@@ -372,7 +372,7 @@ bb.z:                                             ; preds = %bb.y
   br i1 %i.cu, label %bb.ag, label %bb.aa
 
 bb.aa:                                            ; preds = %bb.z
-  %i.cv = load ptr, ptr %i.k, align 8, !tbaa !169 ; 3 uses
+  %i.cv = load ptr, ptr %i.k, align 8, !tbaa !169 ; 4 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 6720
   %i.cx = load i32, ptr %i.cw, align 8, !tbaa !259
   %.not35 = icmp sgt i32 %i.cx, %i.cg
@@ -381,38 +381,43 @@ bb.aa:                                            ; preds = %bb.z
 bb.ab:                                            ; preds = %bb.aa
   %i.cy = getelementptr inbounds nuw i8, ptr %i.cv, i64 6688
   tail call void @_ZN7CaDiCaL8Internal15start_profilingERNS_7ProfileEd(ptr noundef nonnull align 8 dereferenceable(7288) %i.cv, ptr noundef nonnull align 8 dereferenceable(36) %i.cy, double noundef %i.cd)
+  %.pre61.pre = load ptr, ptr %i.k, align 8, !tbaa !169
   br label %bb.ac
 
 bb.ac:                                            ; preds = %bb.ab, %bb.aa
+  %.pre61 = phi ptr [ %.pre61.pre, %bb.ab ], [ %i.cv, %bb.aa ] ; 4 uses
   %i.cz = getelementptr inbounds nuw i8, ptr %0, i64 12 ; 2 uses
   %i.da = load i8, ptr %i.cz, align 4, !tbaa !256, !range !160, !noundef !161
   %i.db = trunc nuw i8 %i.da to i1
   br i1 %i.db, label %bb.ad, label %.thread65
 
 bb.ad:                                            ; preds = %bb.ac
-  %2 = load ptr, ptr %i.k, align 8, !tbaa !169    ; 3 uses
-  %i.dc = getelementptr inbounds nuw i8, ptr %2, i64 6800
+  %i.dc = getelementptr inbounds nuw i8, ptr %.pre61, i64 6800
   %i.dd = load i32, ptr %i.dc, align 8, !tbaa !257
   %.not36 = icmp sgt i32 %i.dd, %i.cg
   br i1 %.not36, label %.thread64, label %bb.ae
 
 bb.ae:                                            ; preds = %bb.ad
-  %i.de = getelementptr inbounds nuw i8, ptr %2, i64 6768
-  tail call void @_ZN7CaDiCaL8Internal15start_profilingERNS_7ProfileEd(ptr noundef nonnull align 8 dereferenceable(7288) %2, ptr noundef nonnull align 8 dereferenceable(36) %i.de, double noundef %i.cd)
-  %.pre56 = load i8, ptr %i.cz, align 4, !tbaa !256, !range !160
+  %i.de = getelementptr inbounds nuw i8, ptr %.pre61, i64 6768
+  tail call void @_ZN7CaDiCaL8Internal15start_profilingERNS_7ProfileEd(ptr noundef nonnull align 8 dereferenceable(7288) %.pre61, ptr noundef nonnull align 8 dereferenceable(36) %i.de, double noundef %i.cd)
+  %.pre56 = load i8, ptr %i.cz, align 4, !tbaa !256
   %i.df = trunc nuw i8 %.pre56 to i1
-  br i1 %i.df, label %.thread64, label %.thread65
+  br i1 %i.df, label %.thread64, label %..thread52_crit_edge
 
-.thread65:                                        ; preds = %bb.ac, %bb.ae
-  %3 = load ptr, ptr %i.k, align 8, !tbaa !169    ; 3 uses
-  %i.dg = getelementptr inbounds nuw i8, ptr %3, i64 7040
+..thread52_crit_edge:                             ; preds = %bb.ae
+  %.pre60 = load ptr, ptr %i.k, align 8, !tbaa !169
+  br label %.thread65
+
+.thread65:                                        ; preds = %..thread52_crit_edge, %bb.ac
+  %2 = phi ptr [ %.pre60, %..thread52_crit_edge ], [ %.pre61, %bb.ac ] ; 3 uses
+  %i.dg = getelementptr inbounds nuw i8, ptr %2, i64 7040
   %i.dh = load i32, ptr %i.dg, align 8, !tbaa !258
   %.not37 = icmp sgt i32 %i.dh, %i.cg
   br i1 %.not37, label %.thread64, label %bb.af
 
 bb.af:                                            ; preds = %.thread65
-  %i.di = getelementptr inbounds nuw i8, ptr %3, i64 7008
-  tail call void @_ZN7CaDiCaL8Internal15start_profilingERNS_7ProfileEd(ptr noundef nonnull align 8 dereferenceable(7288) %3, ptr noundef nonnull align 8 dereferenceable(36) %i.di, double noundef %i.cd)
+  %i.di = getelementptr inbounds nuw i8, ptr %2, i64 7008
+  tail call void @_ZN7CaDiCaL8Internal15start_profilingERNS_7ProfileEd(ptr noundef nonnull align 8 dereferenceable(7288) %2, ptr noundef nonnull align 8 dereferenceable(36) %i.di, double noundef %i.cd)
   br label %.thread64
 
 .thread64:                                        ; preds = %bb.ad, %bb.af, %.thread65, %bb.ae

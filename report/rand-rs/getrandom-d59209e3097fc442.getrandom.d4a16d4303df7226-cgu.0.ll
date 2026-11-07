@@ -202,7 +202,7 @@ _RNvNtNtNtCsifPj74NEIss_9getrandom8backends8use_file4sync20wait_until_rng_ready.
   br i1 %.not.i, label %.preheader.i, label %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file7open_fd.exit
 
 .preheader.i:                                     ; preds = %_RNvNtNtNtCsifPj74NEIss_9getrandom8backends8use_file4sync20wait_until_rng_ready.exit.i, %bb.j
-  %i.w = call noundef i32 (ptr, i32, ...) @open(ptr noundef nonnull @1, i32 noundef 524288) #18 ; 3 uses
+  %i.w = call noundef i32 (ptr, i32, ...) @open(ptr noundef nonnull @1, i32 noundef 524288) #18 ; 4 uses
   %i.x = icmp slt i32 %i.w, 0
   br i1 %i.x, label %bb.j, label %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file13open_readonly.exit.i
 
@@ -219,23 +219,24 @@ bb.k:                                             ; preds = %bb.j
   br label %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file13open_readonly.exit.i
 
 _RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file13open_readonly.exit.i: ; preds = %.preheader.i, %bb.k
-  %.sroa.3.0.i.i = phi i32 [ %spec.select.i.i10.i, %bb.k ], [ %i.w, %.preheader.i ]
+  %.sroa.3.0.i.i = phi i32 [ %spec.select.i.i10.i, %bb.k ], [ %i.w, %.preheader.i ] ; 2 uses
   %.lobit.i = lshr i32 %i.w, 31
+  %0 = insertvalue { i32, i32 } poison, i32 %.lobit.i, 0
+  %.inv = icmp sgt i32 %i.w, -1
+  %spec.select = select i1 %.inv, i32 %.sroa.3.0.i.i, i32 -1
   br label %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file7open_fd.exit
 
-_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file7open_fd.exit: ; preds = %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file13open_readonly.exit.thread.i.i, %_RNvNtNtNtCsifPj74NEIss_9getrandom8backends8use_file4sync20wait_until_rng_ready.exit.i, %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file13open_readonly.exit.i
-  %.sroa.4.0.i = phi i32 [ %.sroa.0.1.i.i, %_RNvNtNtNtCsifPj74NEIss_9getrandom8backends8use_file4sync20wait_until_rng_ready.exit.i ], [ %.sroa.3.0.i.i, %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file13open_readonly.exit.i ], [ 65537, %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file13open_readonly.exit.thread.i.i ] ; 2 uses
-  %.sroa.0.0.i5 = phi i32 [ 1, %_RNvNtNtNtCsifPj74NEIss_9getrandom8backends8use_file4sync20wait_until_rng_ready.exit.i ], [ %.lobit.i, %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file13open_readonly.exit.i ], [ 1, %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file13open_readonly.exit.thread.i.i ] ; 2 uses
-  %0 = insertvalue { i32, i32 } poison, i32 %.sroa.0.0.i5, 0
-  %1 = trunc nuw i32 %.sroa.0.0.i5 to i1
-  %.sroa.04.0 = select i1 %1, i32 -1, i32 %.sroa.4.0.i
-  store atomic i32 %.sroa.04.0, ptr @_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file2FD release, align 4
+_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file7open_fd.exit: ; preds = %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file13open_readonly.exit.i, %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file13open_readonly.exit.thread.i.i, %_RNvNtNtNtCsifPj74NEIss_9getrandom8backends8use_file4sync20wait_until_rng_ready.exit.i
+  %1 = phi { i32, i32 } [ %0, %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file13open_readonly.exit.i ], [ { i32 1, i32 poison }, %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file13open_readonly.exit.thread.i.i ], [ { i32 1, i32 poison }, %_RNvNtNtNtCsifPj74NEIss_9getrandom8backends8use_file4sync20wait_until_rng_ready.exit.i ]
+  %.sroa.0.0.i5 = phi i32 [ %.sroa.3.0.i.i, %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file13open_readonly.exit.i ], [ 65537, %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file13open_readonly.exit.thread.i.i ], [ %.sroa.0.1.i.i, %_RNvNtNtNtCsifPj74NEIss_9getrandom8backends8use_file4sync20wait_until_rng_ready.exit.i ]
+  %2 = phi i32 [ %spec.select, %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file13open_readonly.exit.i ], [ -1, %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file13open_readonly.exit.thread.i.i ], [ -1, %_RNvNtNtNtCsifPj74NEIss_9getrandom8backends8use_file4sync20wait_until_rng_ready.exit.i ]
+  store atomic i32 %2, ptr @_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file2FD release, align 4
   %i.ad = call noundef i64 (i64, ...) @syscall(i64 noundef 202, ptr noundef nonnull align 4 @_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file2FD, i32 noundef 129, i32 noundef 2147483647) #18 ; 0 uses
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.b, %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file7open_fd.exit
-  %.pn = phi { i32, i32 } [ %0, %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file7open_fd.exit ], [ { i32 0, i32 poison }, %bb.b ]
-  %.pn6 = phi i32 [ %.sroa.4.0.i, %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file7open_fd.exit ], [ %i.b, %bb.b ]
+  %.pn = phi { i32, i32 } [ %1, %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file7open_fd.exit ], [ { i32 0, i32 poison }, %bb.b ]
+  %.pn6 = phi i32 [ %.sroa.0.0.i5, %_RNvNtNtCsifPj74NEIss_9getrandom8backends8use_file7open_fd.exit ], [ %i.b, %bb.b ]
   %.merged = insertvalue { i32, i32 } %.pn, i32 %.pn6, 1
   ret { i32, i32 } %.merged
 }

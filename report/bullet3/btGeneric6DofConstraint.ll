@@ -204,7 +204,7 @@ bb.b:                                             ; preds = %bb.a
   %.in190 = select i1 %.not189, ptr %i.n, ptr %i.m
   %i.o = load ptr, ptr %.in190, align 8, !tbaa !130 ; 3 uses
   %i.p = load float, ptr %10, align 4, !tbaa !14
-  %i.q = sext i32 %i.i to i64                     ; 19 uses
+  %i.q = sext i32 %i.i to i64                     ; 22 uses
   %i.r = getelementptr inbounds [4 x i8], ptr %i.l, i64 %i.q
   store float %i.p, ptr %i.r, align 4, !tbaa !14
   %i.s = getelementptr inbounds nuw i8, ptr %10, i64 4 ; 6 uses
@@ -446,8 +446,8 @@ bb.h:                                             ; preds = %bb.g
   %i.gz = load float, ptr %i.gy, align 4, !tbaa !43
   %i.ha = fcmp une float %i.gx, %i.gz
   %i.hb = getelementptr inbounds nuw i8, ptr %8, i64 48
-  %i.hc = load ptr, ptr %i.hb, align 8, !tbaa !133
-  %i.hd = getelementptr inbounds [4 x i8], ptr %i.hc, i64 %i.q ; 7 uses
+  %i.hc = load ptr, ptr %i.hb, align 8, !tbaa !133 ; 4 uses
+  %i.hd = getelementptr inbounds [4 x i8], ptr %i.hc, i64 %i.q
   store float 0.000000e+00, ptr %i.hd, align 4, !tbaa !14
   %i.he = and i1 %i.ha, %i.c
   br i1 %i.he, label %bb.i, label %.critedge
@@ -523,9 +523,10 @@ bb.j:                                             ; preds = %.thread
   %.sink = select i1 %.not189, float %i.jd, float %i.je
   %i.jf = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.jg = load float, ptr %i.jf, align 4, !tbaa !23
-  %i.jh = load float, ptr %i.hd, align 4, !tbaa !14
+  %13 = getelementptr inbounds [4 x i8], ptr %i.hc, i64 %i.q ; 2 uses
+  %i.jh = load float, ptr %13, align 4, !tbaa !14
   %i.ji = tail call float @llvm.fmuladd.f32(float %.sink, float %i.jg, float %i.jh)
-  store float %i.ji, ptr %i.hd, align 4, !tbaa !14
+  store float %i.ji, ptr %13, align 4, !tbaa !14
   %i.jj = getelementptr inbounds nuw i8, ptr %1, i64 36
   %i.jk = load float, ptr %i.jj, align 4, !tbaa !72
   %i.jl = getelementptr inbounds nuw i8, ptr %8, i64 56
@@ -596,12 +597,13 @@ bb.n:                                             ; preds = %bb.m
 bb.o:                                             ; preds = %bb.n
   %i.lb = fneg float %i.ke
   %i.lc = fmul nnan float %i.kz, %i.lb            ; 2 uses
-  %i.ld = load float, ptr %i.hd, align 4, !tbaa !14
+  %14 = getelementptr inbounds [4 x i8], ptr %i.hc, i64 %i.q ; 2 uses
+  %i.ld = load float, ptr %14, align 4, !tbaa !14
   %i.le = fcmp ogt float %i.lc, %i.ld
   br i1 %i.le, label %bb.p, label %.thread368
 
 bb.p:                                             ; preds = %bb.o
-  store float %i.lc, ptr %i.hd, align 4, !tbaa !14
+  store float %i.lc, ptr %14, align 4, !tbaa !14
   br label %.thread368
 
 bb.q:                                             ; preds = %bb.m
@@ -611,16 +613,17 @@ bb.q:                                             ; preds = %bb.m
 bb.r:                                             ; preds = %bb.q
   %i.lg = fneg float %i.ke
   %i.lh = fmul nnan float %i.kz, %i.lg            ; 2 uses
-  %i.li = load float, ptr %i.hd, align 4, !tbaa !14
+  %15 = getelementptr inbounds [4 x i8], ptr %i.hc, i64 %i.q ; 2 uses
+  %i.li = load float, ptr %15, align 4, !tbaa !14
   %i.lj = fcmp olt float %i.lh, %i.li
   br i1 %i.lj, label %bb.s, label %.thread368
 
 bb.s:                                             ; preds = %bb.r
-  store float %i.lh, ptr %i.hd, align 4, !tbaa !14
+  store float %i.lh, ptr %15, align 4, !tbaa !14
   br label %.thread368
 
 .thread368:                                       ; preds = %bb.j, %.thread, %bb.a, %bb.n, %bb.q, %bb.p, %bb.o, %bb.s, %bb.r, %bb.l, %bb.k
-  %.0183 = phi i32 [ 1, %bb.j ], [ 1, %bb.k ], [ 1, %bb.l ], [ 1, %bb.r ], [ 1, %bb.s ], [ 1, %bb.o ], [ 1, %bb.p ], [ 1, %bb.q ], [ 1, %bb.n ], [ 0, %bb.a ], [ 1, %.thread ]
+  %.0183 = phi i32 [ 0, %bb.a ], [ 1, %bb.k ], [ 1, %bb.l ], [ 1, %bb.r ], [ 1, %bb.s ], [ 1, %bb.o ], [ 1, %bb.p ], [ 1, %bb.q ], [ 1, %bb.n ], [ 1, %.thread ], [ 1, %bb.j ]
   ret i32 %.0183
 }
 

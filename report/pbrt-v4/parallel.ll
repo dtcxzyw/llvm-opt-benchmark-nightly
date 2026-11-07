@@ -202,7 +202,7 @@ _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 72
   %.01124 = load ptr, ptr %i.d, align 8, !tbaa !59 ; 2 uses
   %.not25.not = icmp eq ptr %.01124, null
-  br i1 %.not25.not, label %.critedge12, label %.lr.ph
+  br i1 %.not25.not, label %bb.l, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit, %bb.d
   %.01126 = phi ptr [ %.011, %bb.d ], [ %.01124, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit ] ; 8 uses
@@ -210,7 +210,7 @@ _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   %i.g = load ptr, ptr %i.f, align 8
   %i.h = invoke noundef zeroext i1 %i.g(ptr noundef nonnull align 8 dereferenceable(33) %.01126)
-          to label %bb.c unwind label %.loopexit.split-lp.thread
+          to label %bb.c unwind label %.loopexit.split-lp.thread ; 3 uses
 
 bb.c:                                             ; preds = %.lr.ph
   br i1 %i.h, label %.critedge, label %bb.d
@@ -306,13 +306,13 @@ bb.k:                                             ; preds = %_ZNK4pbrt11Parallel
   call void @_ZNSt18condition_variable10notify_allEv(ptr noundef nonnull align 8 dereferenceable(48) %i.af) #23
   br label %.critedge12
 
-.critedge12:                                      ; preds = %bb.d, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit, %.noexc16, %_ZNK4pbrt11ParallelJob8FinishedEv.exit, %bb.k
-  %.not21 = phi i1 [ true, %bb.k ], [ true, %.noexc16 ], [ true, %_ZNK4pbrt11ParallelJob8FinishedEv.exit ], [ false, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit ], [ false, %bb.d ]
-  %i.ag = load i8, ptr %i.b, align 8, !tbaa !31, !range !41, !noundef !58
+.critedge12:                                      ; preds = %bb.d, %.noexc16, %_ZNK4pbrt11ParallelJob8FinishedEv.exit, %bb.k
+  %i.ag = load i8, ptr %i.b, align 8, !tbaa !31
   %i.ah = trunc nuw i8 %i.ag to i1
   br i1 %i.ah, label %bb.l, label %_ZNSt11unique_lockISt5mutexED2Ev.exit18
 
-bb.l:                                             ; preds = %.critedge12
+bb.l:                                             ; preds = %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit, %.critedge12
+  %.not2140 = phi i1 [ %i.h, %.critedge12 ], [ false, %_ZNSt11unique_lockISt5mutexEC2ERS0_.exit ] ; 2 uses
   %i.ai = load ptr, ptr %1, align 8, !tbaa !30    ; 2 uses
   %.not.i.i17 = icmp eq ptr %i.ai, null
   br i1 %.not.i.i17, label %_ZNSt11unique_lockISt5mutexED2Ev.exit18, label %bb.m
@@ -322,8 +322,9 @@ bb.m:                                             ; preds = %bb.l
   br label %_ZNSt11unique_lockISt5mutexED2Ev.exit18
 
 _ZNSt11unique_lockISt5mutexED2Ev.exit18:          ; preds = %.critedge12, %bb.l, %bb.m
+  %.not2139 = phi i1 [ %i.h, %.critedge12 ], [ %.not2140, %bb.l ], [ %.not2140, %bb.m ]
   call void @llvm.lifetime.end.p0(ptr nonnull %1) #23
-  ret i1 %.not21
+  ret i1 %.not2139
 }
 
 ; Function Attrs: mustprogress uwtable

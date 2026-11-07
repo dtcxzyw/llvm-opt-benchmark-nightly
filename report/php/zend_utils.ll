@@ -29,8 +29,12 @@ bb.b:                                             ; preds = %bb.a
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 24 ; 2 uses
   br label %bb.c
 
-bb.c:                                             ; preds = %bb.f, %bb.b
-  %5 = load i8, ptr %3, align 1, !tbaa !22, !range !18, !noundef !19
+thread-pre-split:                                 ; preds = %bb.f
+  %.pr = load i8, ptr %3, align 1, !tbaa !22
+  br label %bb.c
+
+bb.c:                                             ; preds = %thread-pre-split, %bb.b
+  %5 = phi i8 [ %.pr, %thread-pre-split ], [ 0, %bb.b ]
   %i.h = trunc nuw i8 %5 to i1
   br i1 %i.h, label %bb.e, label %bb.d
 
@@ -68,7 +72,7 @@ bb.f:                                             ; preds = %._crit_edge31, %bb.
   %or.cond5 = select i1 %or.cond, i1 %i.u, i1 false
   %i.v = icmp eq i64 %i.o, 0
   %or.cond21 = select i1 %or.cond5, i1 %i.v, i1 false, !prof !25
-  br i1 %or.cond21, label %bb.c, label %.critedge, !prof !25, !llvm.loop !12
+  br i1 %or.cond21, label %thread-pre-split, label %.critedge, !prof !25, !llvm.loop !12
 
 .critedge:                                        ; preds = %bb.f
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 8

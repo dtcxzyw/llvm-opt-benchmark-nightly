@@ -205,9 +205,9 @@ define internal fastcc void @reset_terminal(ptr noundef initializes((448, 456), 
 bb.a:
   %i.a = getelementptr i8, ptr %0, i64 448        ; 2 uses
   store i32 0, ptr %i.a, align 8
-  %i.b = getelementptr i8, ptr %0, i64 408        ; 2 uses
+  %i.b = getelementptr i8, ptr %0, i64 408
   %i.c = load i32, ptr %i.b, align 8
-  %i.d = getelementptr i8, ptr %0, i64 452        ; 2 uses
+  %i.d = getelementptr i8, ptr %0, i64 452
   store i32 %i.c, ptr %i.d, align 4
   %i.e = getelementptr i8, ptr %0, i64 540
   store i32 0, ptr %i.e, align 4
@@ -332,7 +332,8 @@ arch_set_bit.exit:                                ; preds = %bb.b, %bb.a
   br i1 %.not31.i, label %gotoxy.exit.thread, label %gotoxy.exit
 
 gotoxy.exit.thread:                               ; preds = %arch_set_bit.exit
-  %.0.i50 = load i32, ptr %i.b, align 8
+  %2 = getelementptr i8, ptr %0, i64 408
+  %.0.i50 = load i32, ptr %2, align 8
   %i.be = tail call i32 @llvm.smin.i32(i32 %.0.i50, i32 1)
   %spec.select40.i52 = add i32 %i.be, -1
   br label %bb.c
@@ -340,7 +341,8 @@ gotoxy.exit.thread:                               ; preds = %arch_set_bit.exit
 gotoxy.exit:                                      ; preds = %arch_set_bit.exit
   %i.bf = load i32, ptr %i.a, align 8
   %.fr = freeze i32 %i.bf                         ; 2 uses
-  %.0.i = load i32, ptr %i.d, align 4
+  %3 = getelementptr i8, ptr %0, i64 452
+  %.0.i = load i32, ptr %3, align 4
   %i.bg = icmp sgt i32 %.fr, 0
   %i.bh = tail call i32 @llvm.smin.i32(i32 %.0.i, i32 1)
   %spec.select40.i = add i32 %i.bh, -1

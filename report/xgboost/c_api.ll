@@ -205,14 +205,14 @@ bb.a:
   %i.c = alloca ptr, align 8                      ; 2 uses
   %i.d = alloca i8, align 1                       ; 6 uses
   %i.e = alloca i8, align 1                       ; 5 uses
-  %11 = alloca %"class.std::unique_ptr", align 8  ; 8 uses
+  %11 = alloca %"class.std::unique_ptr", align 8  ; 9 uses
   %12 = alloca %"class.dmlc::LogMessageFatal", align 1 ; 7 uses
   %13 = alloca %"class.xgboost::linalg::TensorView.189", align 8 ; 13 uses
   store ptr %0, ptr %i.c, align 8, !tbaa !346
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #19
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !347
-  %i.h = tail call noundef zeroext i1 @_ZN7xgboost21ArrayInterfaceHandler9IsCudaPtrEPKv(ptr noundef %i.g) ; 2 uses
+  %i.h = tail call noundef zeroext i1 @_ZN7xgboost21ArrayInterfaceHandler9IsCudaPtrEPKv(ptr noundef %i.g) ; 3 uses
   %i.i = zext i1 %i.h to i8
   store i8 %i.i, ptr %i.d, align 1, !tbaa !102
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #19
@@ -223,7 +223,7 @@ bb.a:
   store i8 %i.m, ptr %i.e, align 1, !tbaa !102
   call void @llvm.lifetime.start.p0(ptr nonnull %11) #19
   %i.n = xor i1 %i.h, %i.l
-  br i1 %i.n, label %_ZN4dmlc11LogCheck_EQIbbEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit, label %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit.a
+  br i1 %i.n, label %_ZN4dmlc11LogCheck_EQIbbEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit, label %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit
 
 _ZN4dmlc11LogCheck_EQIbbEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit: ; preds = %bb.a
   call void @_ZN4dmlc14LogCheckFormatIbbEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_(ptr dead_on_unwind nonnull writable sret(%"class.std::unique_ptr") align 8 %11, ptr noundef nonnull align 1 dereferenceable(1) %i.d, ptr noundef nonnull align 1 dereferenceable(1) %i.e)
@@ -318,13 +318,17 @@ _ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEP
   call void @_ZdlPvm(ptr noundef nonnull %.pr26, i64 noundef 32) #36
   br label %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit.a
 
-_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit.a: ; preds = %bb.a, %_ZN4dmlc11LogCheck_EQIbbEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit, %bb.f, %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i
-  call void @llvm.lifetime.end.p0(ptr nonnull %11) #19
-  %i.ag = load i8, ptr %i.d, align 1, !tbaa !102, !range !77, !noundef !78
+_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit.a: ; preds = %_ZNKSt14default_deleteINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEEclEPS5_.exit.i, %bb.f, %_ZN4dmlc11LogCheck_EQIbbEESt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS7_EERKT_RKT0_.exit
+  %i.ag = load i8, ptr %i.d, align 1, !tbaa !102
   %i.ah = trunc nuw i8 %i.ag to i1
+  call void @llvm.lifetime.end.p0(ptr nonnull %11) #19
   br i1 %i.ah, label %bb.s, label %bb.h
 
-bb.h:                                             ; preds = %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit.a
+_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit: ; preds = %bb.a
+  call void @llvm.lifetime.end.p0(ptr nonnull %11) #19
+  br i1 %i.h, label %bb.s, label %bb.h
+
+bb.h:                                             ; preds = %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit.a, %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 32
   %i.aj = load i64, ptr %i.ai, align 8, !tbaa !76 ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %1, i64 40
@@ -524,7 +528,7 @@ bb.r:                                             ; preds = %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %13) #19
   br label %bb.w
 
-bb.s:                                             ; preds = %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit.a
+bb.s:                                             ; preds = %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit.a, %_ZNSt10unique_ptrINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEESt14default_deleteIS5_EED2Ev.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #19
   %i.ch = call noundef nonnull align 8 dereferenceable(376) ptr @_ZN4dmlc15LogMessageFatal8GetEntryEv(ptr noundef nonnull align 1 dereferenceable(1) %4)
   call void @_ZN4dmlc15LogMessageFatal5Entry4InitEPKci(ptr noundef nonnull align 8 dereferenceable(376) %i.ch, ptr noundef nonnull @.str.170, i32 noundef 187)

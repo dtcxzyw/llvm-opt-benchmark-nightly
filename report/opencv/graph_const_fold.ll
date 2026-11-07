@@ -202,7 +202,7 @@ bb.k:                                             ; preds = %bb.c
   %i.bm = ptrtoint ptr %i.bk to i64
   %i.bn = ptrtoint ptr %i.bl to i64
   %i.bo = sub i64 %i.bm, %i.bn                    ; 2 uses
-  %i.bp = ashr exact i64 %i.bo, 2                 ; 10 uses
+  %i.bp = ashr exact i64 %i.bo, 2                 ; 11 uses
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bg, i64 64
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !75 ; 2 uses
   %i.bs = load ptr, ptr %i.bi, align 8, !tbaa !76 ; 2 uses
@@ -363,9 +363,9 @@ _ZNSt6vectorIN2cv8MatShapeESaIS1_EE6resizeEm.exit: ; preds = %bb.t, %bb.u, %bb.v
   %.not276 = icmp eq ptr %i.bk, %i.bl             ; 2 uses
   br i1 %.not276, label %._crit_edge263.thread, label %.lr.ph262
 
-.lr.ph262:                                        ; preds = %_ZNSt6vectorIN2cv8MatShapeESaIS1_EE6resizeEm.exit, %bb.ac
-  %.072261 = phi i8 [ %spec.select114, %bb.ac ], [ 1, %_ZNSt6vectorIN2cv8MatShapeESaIS1_EE6resizeEm.exit ]
-  %.074260 = phi i64 [ %i.el, %bb.ac ], [ 0, %_ZNSt6vectorIN2cv8MatShapeESaIS1_EE6resizeEm.exit ] ; 5 uses
+.lr.ph262:                                        ; preds = %_ZNSt6vectorIN2cv8MatShapeESaIS1_EE6resizeEm.exit, %.lr.ph262.backedge
+  %.072261 = phi i8 [ %.072261.be, %.lr.ph262.backedge ], [ 1, %_ZNSt6vectorIN2cv8MatShapeESaIS1_EE6resizeEm.exit ]
+  %.074260 = phi i64 [ %.074260.be, %.lr.ph262.backedge ], [ 0, %_ZNSt6vectorIN2cv8MatShapeESaIS1_EE6resizeEm.exit ] ; 6 uses
   %i.dr = load ptr, ptr %i.bh, align 8, !tbaa !76
   %i.ds = getelementptr inbounds nuw [4 x i8], ptr %i.dr, i64 %.074260
   %.sroa.016.0.copyload = load i32, ptr %i.ds, align 4, !tbaa !47 ; 2 uses
@@ -374,9 +374,9 @@ _ZNSt6vectorIN2cv8MatShapeESaIS1_EE6resizeEm.exit: ; preds = %bb.t, %bb.u, %bb.v
           to label %bb.w unwind label %.loopexit.split-lp210.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 bb.w:                                             ; preds = %.lr.ph262
-  %spec.select114 = select i1 %i.du, i8 %.072261, i8 0 ; 3 uses
+  %spec.select114 = select i1 %i.du, i8 %.072261, i8 0 ; 2 uses
   %i.dv = trunc nuw i8 %spec.select114 to i1
-  br i1 %i.dv, label %bb.y, label %bb.ac
+  br i1 %i.dv, label %bb.y, label %._crit_edge263
 
 bb.x:                                             ; preds = %bb.k
   %i.dw = landingpad { ptr, i32 }
@@ -411,11 +411,7 @@ _ZNK2cv3Mat5shapeEv.exit:                         ; preds = %bb.aa
   %i.eh = load ptr, ptr %11, align 8, !tbaa !51
   %i.ei = getelementptr inbounds nuw [52 x i8], ptr %i.eh, i64 %.074260
   %i.ej = invoke noundef nonnull align 4 dereferenceable(52) ptr @_ZN2cv8MatShapeaSERKS0_(ptr noundef nonnull align 4 dereferenceable(52) %i.ei, ptr noundef nonnull align 4 dereferenceable(52) %15)
-          to label %24 unwind label %bb.ab        ; 0 uses
-
-24:                                               ; preds = %_ZNK2cv3Mat5shapeEv.exit
-  call void @llvm.lifetime.end.p0(ptr nonnull %15) #16
-  br label %bb.ac
+          to label %bb.ac unwind label %bb.ab     ; 0 uses
 
 .loopexit.split-lp210.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp: ; preds = %.lr.ph, %bb.y, %bb.z, %.lr.ph262, %_ZNKSt6vectorIiSaIiEE12_M_check_lenEmPKc.exit.i, %bb.bm, %bb.t, %bb.i, %bb.b, %bb.o, %bb.bn
   %lpad.loopexit.split-lp436 = landingpad { ptr, i32 }
@@ -428,16 +424,23 @@ bb.ab:                                            ; preds = %bb.aa, %_ZNK2cv3Mat
   call void @llvm.lifetime.end.p0(ptr nonnull %15) #16
   br label %.loopexit.split-lp210
 
-bb.ac:                                            ; preds = %24, %bb.w
+bb.ac:                                            ; preds = %_ZNK2cv3Mat5shapeEv.exit
+  call void @llvm.lifetime.end.p0(ptr nonnull %15) #16
   %i.el = add nuw i64 %.074260, 1                 ; 2 uses
   %exitcond.not = icmp eq i64 %i.el, %i.bp
-  br i1 %exitcond.not, label %._crit_edge263, label %.lr.ph262, !llvm.loop !63
+  br i1 %exitcond.not, label %._crit_edge263.thread, label %.lr.ph262.backedge
 
-._crit_edge263:                                   ; preds = %bb.ac
-  %25 = trunc nuw i8 %spec.select114 to i1
-  br i1 %25, label %._crit_edge263.thread, label %bb.bh
+.lr.ph262.backedge:                               ; preds = %bb.ac, %._crit_edge263
+  %.072261.be = phi i8 [ 0, %._crit_edge263 ], [ %spec.select114, %bb.ac ]
+  %.074260.be = phi i64 [ %24, %._crit_edge263 ], [ %i.el, %bb.ac ]
+  br label %.lr.ph262, !llvm.loop !63
 
-._crit_edge263.thread:                            ; preds = %_ZNSt6vectorIN2cv8MatShapeESaIS1_EE6resizeEm.exit, %._crit_edge263
+._crit_edge263:                                   ; preds = %bb.w
+  %24 = add nuw i64 %.074260, 1                   ; 2 uses
+  %exitcond.not387 = icmp eq i64 %24, %i.bp
+  br i1 %exitcond.not387, label %bb.bh, label %.lr.ph262.backedge
+
+._crit_edge263.thread:                            ; preds = %bb.ac, %_ZNSt6vectorIN2cv8MatShapeESaIS1_EE6resizeEm.exit
   call void @llvm.lifetime.start.p0(ptr nonnull %16) #16
   %i.em = icmp ugt i64 %i.bw, 44343134792571037
   br i1 %i.em, label %bb.ad, label %_ZNSt6vectorIN2cv3MatESaIS1_EE17_S_check_init_lenEmRKS2_.exit.i

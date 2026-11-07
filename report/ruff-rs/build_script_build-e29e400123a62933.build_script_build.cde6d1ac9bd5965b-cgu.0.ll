@@ -202,7 +202,9 @@ bb.g:                                             ; preds = %bb.e
 
 .body.thread:                                     ; preds = %bb.w, %.body, %bb.af
   %.pn5 = phi { ptr, i32 } [ %i.be, %bb.af ], [ %i.ay, %.body ], [ %i.ar, %bb.w ] ; 2 uses
-  br i1 %i.z, label %bb.ac, label %.thread
+  %.sroa.0.0 = phi i8 [ %.sroa.0.120, %bb.af ], [ %.sroa.0.119, %.body ], [ %.sroa.0.119, %bb.w ]
+  %7 = trunc nuw i8 %.sroa.0.0 to i1
+  br i1 %7, label %.thread, label %bb.ac
 
 bb.h:                                             ; preds = %bb.g
   %i.x = landingpad { ptr, i32 }
@@ -211,7 +213,7 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.g
   %i.y = load i64, ptr %i.j, align 8
-  %i.z = trunc nuw i64 %i.y to i1                 ; 3 uses
+  %i.z = trunc nuw i64 %i.y to i1
   br i1 %i.z, label %.thread21, label %bb.j
 
 .thread21:                                        ; preds = %bb.i
@@ -289,10 +291,12 @@ bb.t:                                             ; preds = %bb.p
           to label %.thread unwind label %bb.s
 
 bb.u:                                             ; preds = %.thread21, %bb.r
+  %.sroa.0.120 = phi i8 [ 0, %.thread21 ], [ 1, %bb.r ] ; 2 uses
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtCscdodAO9FK5_5alloc6string6StringNtNtCs2AWtUsOyxgP_3std3env8VarErrorEECs70aAUIZqZWH_15find_msvc_tools(ptr nonnull align 8 %i.j)
           to label %bb.v unwind label %bb.af
 
 bb.v:                                             ; preds = %bb.u, %bb.r
+  %.sroa.0.119 = phi i8 [ %.sroa.0.120, %bb.u ], [ 1, %bb.r ] ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.d, ptr noundef nonnull align 8 dereferenceable(24) %i.k, i64 24, i1 false)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
   store ptr @33, ptr %i.a, align 8
@@ -335,7 +339,8 @@ bb.z:                                             ; preds = %bb.w
 
 bb.aa:                                            ; preds = %bb.y
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a)
-  br i1 %i.z, label %bb.ae, label %bb.ab
+  %8 = trunc nuw i8 %.sroa.0.119 to i1
+  br i1 %8, label %bb.ab, label %bb.ae
 
 bb.ab:                                            ; preds = %bb.aa
   invoke void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtCscdodAO9FK5_5alloc6string6StringECs56awJiKzoFA_9jobserver(ptr nonnull align 8 %i.l)

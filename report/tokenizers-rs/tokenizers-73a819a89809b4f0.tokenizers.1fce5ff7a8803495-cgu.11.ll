@@ -205,7 +205,8 @@ _RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepEN
   %i.cz = getelementptr i8, ptr %i.cu, i64 8
   %.val8.i = load ptr, ptr %i.cz, align 8, !noalias !1892, !nonnull !6, !noundef !6
   %bcmp.i.i.i.i = call i32 @bcmp(ptr nonnull readonly %.val8.i, ptr nonnull %i.ct, i64 %i.cr), !noalias !1892
-  %i.da = icmp eq i32 %bcmp.i.i.i.i, 0
+  %bcmp.i.fr.i.i.i = freeze i32 %bcmp.i.i.i.i
+  %i.da = icmp eq i32 %bcmp.i.fr.i.i.i, 0
   br i1 %i.da, label %.loopexit93, label %.backedge.i
 
 .backedge.i:                                      ; preds = %bb.t, %_RNCINvNvXs_NtNtNtCs4NRVxsYgnAr_4core4iter8adapters9enumerateINtB9_9EnumeratepENtNtNtBd_6traits8iterator8Iterator8try_fold9enumerateRNtNtNtCs2JiOgHzbbc7_10tokenizers9tokenizer16added_vocabulary10AddedTokenuINtNtNtBf_3ops12control_flow11ControlFlowjENCINvNvB1e_8find_map5checkTjB25_EjNCNvMs_NtNtNtB2c_6models7unigram7trainerNtB4D_14UnigramTrainer8finalize0E0E0B2c_.exit.i

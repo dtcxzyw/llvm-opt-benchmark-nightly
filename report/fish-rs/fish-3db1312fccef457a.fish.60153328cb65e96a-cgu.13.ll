@@ -206,7 +206,7 @@ bb.a:
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.d = load ptr, ptr %i.c, align 8, !alias.scope !1661, !nonnull !11, !align !30, !noundef !11 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.f = load i64, ptr %i.e, align 8, !alias.scope !1661, !noundef !11 ; 4 uses
+  %i.f = load i64, ptr %i.e, align 8, !alias.scope !1661, !noundef !11 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %.promoted = load i64, ptr %i.g, align 8
   %.promoted33 = load i64, ptr %0, align 8
@@ -223,16 +223,16 @@ bb.a:
 bb.b:                                             ; preds = %bb.av, %bb.a
   %i.l = phi i8 [ %i.ee, %bb.av ], [ %.sroa.5118.0..sroa_idx.i.promoted, %bb.a ] ; 17 uses
   %i.m = phi i64 [ %i.ef, %bb.av ], [ %.promoted33, %bb.a ] ; 17 uses
-  %i.n = phi i64 [ %i.eg, %bb.av ], [ %.promoted, %bb.a ] ; 12 uses
+  %i.n = phi i64 [ %i.eg, %bb.av ], [ %.promoted, %bb.a ] ; 11 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !1661)
   %i.o = icmp ult i64 %i.f, %i.n
   br i1 %i.o, label %_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit.thread15, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.p = sub nuw i64 %i.f, %i.n                   ; 4 uses
+  %i.p = sub nuw i64 %i.f, %i.n                   ; 5 uses
   %.idx150.i = shl nuw nsw i64 %i.n, 2
   %i.q = getelementptr inbounds nuw i8, ptr %i.d, i64 %.idx150.i ; 13 uses
-  %.not.i = icmp eq i64 %i.f, %i.n
+  %.not.i = icmp eq i64 %i.p, 0
   br i1 %.not.i, label %_RNvMs2_NtCs8frGy5WneL6_4fish8tinyexprNtB5_5State9get_token.exit.thread15, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
@@ -635,13 +635,15 @@ bb.c:                                             ; preds = %bb.b
   %.sroa.01.0.i.lcssa = phi i64 [ %i.c, %bb.c ], [ %i.d, %.preheader.i ]
   %i.i = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.01.0.i.lcssa, i64 %i.c) ; 2 uses
   %i.j = extractvalue { i64, i1 } %i.i, 1
-  %1 = extractvalue { i64, i1 } %i.i, 0
-  %2 = uitofp i64 %1 to double
-  %3 = select i1 %i.j, double +inf, double %2
+  br i1 %i.j, label %_RINvXsc_NtNtCs3oUPovFnLWP_4core4iter5rangeINtNtNtBa_3ops5range14RangeInclusiveyENtB6_26RangeInclusiveIteratorImpl13spec_try_foldyNCNvNtCs8frGy5WneL6_4fish8tinyexpr3fac0INtNtBa_6option6OptionyEEB29_.exit, label %1
+
+1:                                                ; preds = %.preheader.i._crit_edge
+  %2 = extractvalue { i64, i1 } %i.i, 0
+  %3 = uitofp i64 %2 to double
   br label %_RINvXsc_NtNtCs3oUPovFnLWP_4core4iter5rangeINtNtNtBa_3ops5range14RangeInclusiveyENtB6_26RangeInclusiveIteratorImpl13spec_try_foldyNCNvNtCs8frGy5WneL6_4fish8tinyexpr3fac0INtNtBa_6option6OptionyEEB29_.exit
 
-_RINvXsc_NtNtCs3oUPovFnLWP_4core4iter5rangeINtNtNtBa_3ops5range14RangeInclusiveyENtB6_26RangeInclusiveIteratorImpl13spec_try_foldyNCNvNtCs8frGy5WneL6_4fish8tinyexpr3fac0INtNtBa_6option6OptionyEEB29_.exit: ; preds = %.lr.ph, %bb.c, %.preheader.i._crit_edge, %bb.b, %bb.a
-  %.sroa.0.0 = phi double [ +inf, %bb.b ], [ +qnan, %bb.a ], [ 1.000000e+00, %bb.c ], [ %3, %.preheader.i._crit_edge ], [ +inf, %.lr.ph ]
+_RINvXsc_NtNtCs3oUPovFnLWP_4core4iter5rangeINtNtNtBa_3ops5range14RangeInclusiveyENtB6_26RangeInclusiveIteratorImpl13spec_try_foldyNCNvNtCs8frGy5WneL6_4fish8tinyexpr3fac0INtNtBa_6option6OptionyEEB29_.exit: ; preds = %.lr.ph, %bb.c, %1, %.preheader.i._crit_edge, %bb.b, %bb.a
+  %.sroa.0.0 = phi double [ +inf, %bb.b ], [ +qnan, %bb.a ], [ 1.000000e+00, %bb.c ], [ +inf, %.preheader.i._crit_edge ], [ %3, %1 ], [ +inf, %.lr.ph ]
   ret double %.sroa.0.0
 }
 
@@ -843,13 +845,15 @@ bb.n:                                             ; preds = %bb.m
   %.sroa.01.0.i.i.lcssa = phi i64 [ %i.y, %bb.n ], [ %i.z, %.preheader.i.i ]
   %i.ae = tail call { i64, i1 } @llvm.umul.with.overflow.i64(i64 %.sroa.01.0.i.i.lcssa, i64 %i.y) ; 2 uses
   %i.af = extractvalue { i64, i1 } %i.ae, 1
-  %2 = extractvalue { i64, i1 } %i.ae, 0
-  %3 = uitofp i64 %2 to double
-  %4 = select i1 %i.af, double +inf, double %3
+  br i1 %i.af, label %_RNvNtCs8frGy5WneL6_4fish8tinyexpr3fac.exit, label %2
+
+2:                                                ; preds = %.preheader.i.i._crit_edge
+  %3 = extractvalue { i64, i1 } %i.ae, 0
+  %4 = uitofp i64 %3 to double
   br label %_RNvNtCs8frGy5WneL6_4fish8tinyexpr3fac.exit
 
-_RNvNtCs8frGy5WneL6_4fish8tinyexpr3fac.exit:      ; preds = %.lr.ph, %bb.n, %_RNvNtCs8frGy5WneL6_4fish8tinyexpr3ncr.exit, %bb.m, %.preheader.i.i._crit_edge
-  %.sroa.0.0.i1 = phi double [ +inf, %bb.m ], [ +qnan, %_RNvNtCs8frGy5WneL6_4fish8tinyexpr3ncr.exit ], [ 1.000000e+00, %bb.n ], [ %4, %.preheader.i.i._crit_edge ], [ +inf, %.lr.ph ]
+_RNvNtCs8frGy5WneL6_4fish8tinyexpr3fac.exit:      ; preds = %.lr.ph, %bb.n, %_RNvNtCs8frGy5WneL6_4fish8tinyexpr3ncr.exit, %bb.m, %.preheader.i.i._crit_edge, %2
+  %.sroa.0.0.i1 = phi double [ +inf, %bb.m ], [ +qnan, %_RNvNtCs8frGy5WneL6_4fish8tinyexpr3ncr.exit ], [ 1.000000e+00, %bb.n ], [ +inf, %.preheader.i.i._crit_edge ], [ %4, %2 ], [ +inf, %.lr.ph ]
   %i.ag = fmul double %.sroa.0.0.i, %.sroa.0.0.i1
   ret double %i.ag
 }

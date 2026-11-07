@@ -204,9 +204,10 @@ bb.i:                                             ; preds = %bb.h
   br i1 %i.aj, label %bb.j, label %_ZN4llvm5dwarf10toUnsignedERKSt8optionalINS_14DWARFFormValueEEm.exit.thread
 
 bb.j:                                             ; preds = %.preheader
-  %i.ak = call { i64, i8 } @_ZNK4llvm14DWARFFormValue21getAsUnsignedConstantEv(ptr noundef nonnull align 8 dereferenceable(56) %4) #21 ; 2 uses
-  %i.al = extractvalue { i64, i8 } %i.ak, 1
-  %i.am = trunc nuw i8 %i.al to i1
+  %i.ak = call { i64, i8 } @_ZNK4llvm14DWARFFormValue21getAsUnsignedConstantEv(ptr noundef nonnull align 8 dereferenceable(56) %4) #21
+  %.fr6.i = freeze { i64, i8 } %i.ak              ; 2 uses
+  %i.al = extractvalue { i64, i8 } %.fr6.i, 1
+  %i.am = trunc i8 %i.al to i1
   br i1 %i.am, label %_ZN4llvm5dwarf10toUnsignedERKSt8optionalINS_14DWARFFormValueEEm.exit, label %_ZN4llvm5dwarf10toUnsignedERKSt8optionalINS_14DWARFFormValueEEm.exit.thread
 
 _ZN4llvm5dwarf10toUnsignedERKSt8optionalINS_14DWARFFormValueEEm.exit.thread: ; preds = %.preheader, %bb.i, %bb.h, %bb.j
@@ -214,7 +215,7 @@ _ZN4llvm5dwarf10toUnsignedERKSt8optionalINS_14DWARFFormValueEEm.exit.thread: ; p
   br label %_ZN4llvm5ErrorD2Ev.exit
 
 _ZN4llvm5dwarf10toUnsignedERKSt8optionalINS_14DWARFFormValueEEm.exit: ; preds = %bb.j
-  %i.an = extractvalue { i64, i8 } %i.ak, 0
+  %i.an = extractvalue { i64, i8 } %.fr6.i, 0
   %.not19 = icmp eq i64 %i.an, 0
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #21
   br i1 %.not19, label %_ZN4llvm5ErrorD2Ev.exit, label %bb.k

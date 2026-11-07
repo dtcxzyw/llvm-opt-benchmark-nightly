@@ -205,7 +205,6 @@ bb.b:                                             ; preds = %bb.a
   store i64 -9223372036854775807, ptr %i.c, align 8, !noalias !92
   %i.g = call noundef nonnull align 8 ptr @_RNvXs1_NtCs43OB2dM8s8d_5prost5errorNtB5_11DecodeErrorINtNtCsgxBkk5gSRhY_4core7convert4FromNtB5_15DecodeErrorKindE4from(ptr noalias nofree noundef nonnull readonly align 8 captures(none) dereferenceable(48) %i.c), !noalias !92
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !92
-  %2 = ptrtoint ptr %i.g to i64
   br label %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintRShECs4tP8yUXWbFU_18libsignal_protocol.exit.a
 
 bb.c:                                             ; preds = %bb.a
@@ -219,7 +218,7 @@ bb.d:                                             ; preds = %bb.c
 
 _RNvXs0_NtNtCs17cqnTMcAHA_5bytes3buf8buf_implRShNtB5_3Buf7advance.exit.i: ; preds = %bb.c
   %i.k = zext nneg i8 %i.h to i64
-  br label %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintRShECs4tP8yUXWbFU_18libsignal_protocol.exit.a
+  br label %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintRShECs4tP8yUXWbFU_18libsignal_protocol.exit.thread12
 
 bb.e:                                             ; preds = %bb.f, %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !92
@@ -234,18 +233,10 @@ bb.f:                                             ; preds = %bb.d
   %i.p = getelementptr i8, ptr %i.o, i64 -1
   %i.q = load i8, ptr %i.p, align 1, !noalias !92, !noundef !6
   %i.r = icmp sgt i8 %i.q, -1
-  br i1 %i.r, label %bb.e, label %3, !prof !9
-
-3:                                                ; preds = %bb.f
-  %4 = call { i64, ptr } @_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint18decode_varint_slowRShECs4tP8yUXWbFU_18libsignal_protocol(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.d) #29 ; 2 uses
-  %5 = extractvalue { i64, ptr } %4, 0
-  %6 = extractvalue { i64, ptr } %4, 1
-  %7 = ptrtoint ptr %6 to i64
-  br label %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintRShECs4tP8yUXWbFU_18libsignal_protocol.exit.a
+  br i1 %i.r, label %bb.e, label %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintRShECs4tP8yUXWbFU_18libsignal_protocol.exit, !prof !9
 
 bb.g:                                             ; preds = %bb.e
   %i.s = load ptr, ptr %i.n, align 8, !noalias !92, !nonnull !6, !align !11, !noundef !6
-  %8 = ptrtoint ptr %i.s to i64
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !92
   br label %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintRShECs4tP8yUXWbFU_18libsignal_protocol.exit.a
 
@@ -255,22 +246,34 @@ bb.h:                                             ; preds = %bb.e
   %i.v = load i64, ptr %i.u, align 8, !noalias !92, !noundef !6 ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !92
   %i.w = icmp ult i64 %1, %i.v
-  br i1 %i.w, label %bb.i, label %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintRShECs4tP8yUXWbFU_18libsignal_protocol.exit.a, !prof !12
+  br i1 %i.w, label %bb.i, label %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintRShECs4tP8yUXWbFU_18libsignal_protocol.exit.thread12, !prof !12
 
 bb.i:                                             ; preds = %bb.h
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !93
   store i64 %i.v, ptr %i.a, align 8, !noalias !93
   %i.x = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %1, ptr %i.x, align 8, !noalias !93
-  call void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a) #30, !noalias !93
+  call void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a) #29, !noalias !93
   unreachable
 
-_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintRShECs4tP8yUXWbFU_18libsignal_protocol.exit.a: ; preds = %bb.h, %bb.b, %_RNvXs0_NtNtCs17cqnTMcAHA_5bytes3buf8buf_implRShNtB5_3Buf7advance.exit.i, %3, %bb.g
-  %.sroa.6.0.i = phi i64 [ %2, %bb.b ], [ %i.k, %_RNvXs0_NtNtCs17cqnTMcAHA_5bytes3buf8buf_implRShNtB5_3Buf7advance.exit.i ], [ %8, %bb.g ], [ %7, %3 ], [ %i.t, %bb.h ]
-  %.sroa.0.0.i = phi i64 [ 1, %bb.b ], [ 0, %_RNvXs0_NtNtCs17cqnTMcAHA_5bytes3buf8buf_implRShNtB5_3Buf7advance.exit.i ], [ 1, %bb.g ], [ %5, %3 ], [ 0, %bb.h ]
-  %9 = inttoptr i64 %.sroa.6.0.i to ptr
-  %i.y = insertvalue { i64, ptr } poison, i64 %.sroa.0.0.i, 0
-  %i.z = insertvalue { i64, ptr } %i.y, ptr %9, 1
+_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintRShECs4tP8yUXWbFU_18libsignal_protocol.exit.thread12: ; preds = %bb.h, %_RNvXs0_NtNtCs17cqnTMcAHA_5bytes3buf8buf_implRShNtB5_3Buf7advance.exit.i
+  %.sroa.6.0.i.ph11 = phi i64 [ %i.k, %_RNvXs0_NtNtCs17cqnTMcAHA_5bytes3buf8buf_implRShNtB5_3Buf7advance.exit.i ], [ %i.t, %bb.h ]
+  %2 = inttoptr i64 %.sroa.6.0.i.ph11 to ptr
+  br label %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintRShECs4tP8yUXWbFU_18libsignal_protocol.exit.a
+
+_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintRShECs4tP8yUXWbFU_18libsignal_protocol.exit: ; preds = %bb.f
+  %3 = call { i64, ptr } @_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint18decode_varint_slowRShECs4tP8yUXWbFU_18libsignal_protocol(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.d) #30
+  %.fr16 = freeze { i64, ptr } %3                 ; 2 uses
+  %4 = extractvalue { i64, ptr } %.fr16, 0
+  %5 = extractvalue { i64, ptr } %.fr16, 1
+  %spec.select = and i64 %4, 1
+  br label %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintRShECs4tP8yUXWbFU_18libsignal_protocol.exit.a
+
+_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintRShECs4tP8yUXWbFU_18libsignal_protocol.exit.a: ; preds = %bb.g, %bb.b, %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintRShECs4tP8yUXWbFU_18libsignal_protocol.exit, %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintRShECs4tP8yUXWbFU_18libsignal_protocol.exit.thread12
+  %6 = phi ptr [ %2, %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintRShECs4tP8yUXWbFU_18libsignal_protocol.exit.thread12 ], [ %5, %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintRShECs4tP8yUXWbFU_18libsignal_protocol.exit ], [ %i.s, %bb.g ], [ %i.g, %bb.b ]
+  %7 = phi i64 [ 0, %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintRShECs4tP8yUXWbFU_18libsignal_protocol.exit.thread12 ], [ %spec.select, %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintRShECs4tP8yUXWbFU_18libsignal_protocol.exit ], [ 1, %bb.g ], [ 1, %bb.b ]
+  %i.y = insertvalue { i64, ptr } poison, i64 %7, 0
+  %i.z = insertvalue { i64, ptr } %i.y, ptr %6, 1
   ret { i64, ptr } %i.z
 }
 
@@ -352,7 +355,7 @@ bb.j:                                             ; preds = %bb.i
   store i64 %i.x, ptr %i.a, align 8, !noalias !104
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %i.y, ptr %i.aa, align 8, !noalias !104
-  call void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a) #30, !noalias !104
+  call void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a) #29, !noalias !104
   unreachable
 
 _RNvXNtNtCs17cqnTMcAHA_5bytes3buf8buf_implQRShNtB2_3Buf7advanceCs4tP8yUXWbFU_18libsignal_protocol.exit6.i: ; preds = %bb.i
@@ -364,7 +367,7 @@ _RNvXNtNtCs17cqnTMcAHA_5bytes3buf8buf_implQRShNtB2_3Buf7advanceCs4tP8yUXWbFU_18l
   br label %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintQRShECs4tP8yUXWbFU_18libsignal_protocol.exit.thread11
 
 _RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintQRShECs4tP8yUXWbFU_18libsignal_protocol.exit: ; preds = %bb.g
-  %i.ae = tail call { i64, ptr } @_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint18decode_varint_slowQRShECs1YsMTEqGlh_4spqr(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %2) #29 ; 2 uses
+  %i.ae = tail call { i64, ptr } @_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint18decode_varint_slowQRShECs1YsMTEqGlh_4spqr(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %2) #30 ; 2 uses
   %i.af = extractvalue { i64, ptr } %i.ae, 0
   %i.ag = extractvalue { i64, ptr } %i.ae, 1      ; 2 uses
   %i.ah = ptrtoint ptr %i.ag to i64
@@ -483,7 +486,7 @@ bb.j:                                             ; preds = %bb.i
   store i64 %i.x, ptr %i.a, align 8, !noalias !116
   %i.aa = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %i.y, ptr %i.aa, align 8, !noalias !116
-  call void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a) #30, !noalias !116
+  call void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a) #29, !noalias !116
   unreachable
 
 _RNvXNtNtCs17cqnTMcAHA_5bytes3buf8buf_implQRShNtB2_3Buf7advanceCs4tP8yUXWbFU_18libsignal_protocol.exit6.i: ; preds = %bb.i
@@ -495,7 +498,7 @@ _RNvXNtNtCs17cqnTMcAHA_5bytes3buf8buf_implQRShNtB2_3Buf7advanceCs4tP8yUXWbFU_18l
   br label %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintQRShECs4tP8yUXWbFU_18libsignal_protocol.exit.thread11
 
 _RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintQRShECs4tP8yUXWbFU_18libsignal_protocol.exit: ; preds = %bb.g
-  %i.ae = tail call { i64, ptr } @_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint18decode_varint_slowQRShECs1YsMTEqGlh_4spqr(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %2) #29 ; 2 uses
+  %i.ae = tail call { i64, ptr } @_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint18decode_varint_slowQRShECs1YsMTEqGlh_4spqr(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %2) #30 ; 2 uses
   %i.af = extractvalue { i64, ptr } %i.ae, 0
   %i.ag = extractvalue { i64, ptr } %i.ae, 1      ; 2 uses
   %i.ah = ptrtoint ptr %i.ag to i64
@@ -886,7 +889,7 @@ bb.i:                                             ; preds = %bb.g
   store i64 %.sroa.846.0.copyload, ptr %i.c, align 8, !noalias !178
   %i.ah = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i64 %i.ac, ptr %i.ah, align 8, !noalias !178
-  invoke void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.c) #30
+  invoke void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.c) #29
           to label %.noexc20 unwind label %bb.n
 
 .noexc20:                                         ; preds = %bb.i
@@ -954,7 +957,7 @@ bb.q:                                             ; preds = %bb.c
   br i1 %.not, label %bb.s, label %.lr.ph.preheader
 
 bb.r:                                             ; preds = %bb.c
-  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_sub_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #30
+  tail call void @_RNvNtNtCsgxBkk5gSRhY_4core9panicking11panic_const24panic_const_sub_overflow(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @5) #29
   unreachable
 
 bb.s:                                             ; preds = %bb.q
@@ -1024,7 +1027,7 @@ bb.z:                                             ; preds = %bb.w
   store i64 %.sroa.0.0.i.i.i2666, ptr %i.b, align 8, !noalias !187
   %i.bk = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   store i64 %i.bg, ptr %i.bk, align 8, !noalias !187
-  call void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.b) #30, !noalias !186
+  call void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.b) #29, !noalias !186
   unreachable
 
 bb.aa:                                            ; preds = %bb.y
@@ -1046,7 +1049,7 @@ bb.ad:                                            ; preds = %bb.ac
   store i64 %.sroa.0.0.i.i.i2666, ptr %i.a, align 8, !noalias !189
   %i.bm = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %i.as, ptr %i.bm, align 8, !noalias !189
-  call void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a) #30, !noalias !189
+  call void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a) #29, !noalias !189
   unreachable
 
 _RNvXs_NtNtCs17cqnTMcAHA_5bytes3buf4takeINtB4_4TakeQRShENtNtB6_8buf_impl3Buf7advanceCs4tP8yUXWbFU_18libsignal_protocol.exit: ; preds = %bb.ac
@@ -1449,7 +1452,7 @@ bb.k:                                             ; preds = %bb.j
   store i64 %i.al, ptr %i.d, align 8, !noalias !281
   %i.ao = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store i64 %i.am, ptr %i.ao, align 8, !noalias !281
-  invoke void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.d) #30
+  invoke void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.d) #29
           to label %.noexc7 unwind label %.body.thread22.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc7:                                          ; preds = %bb.k
@@ -1469,7 +1472,7 @@ _RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintQRShECs4tP8yUXWbFU_1
   br label %bb.l
 
 _RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintQRShECs4tP8yUXWbFU_18libsignal_protocol.exit.i: ; preds = %bb.h
-  %i.at = invoke { i64, ptr } @_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint18decode_varint_slowQRShECs1YsMTEqGlh_4spqr(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.j) #29
+  %i.at = invoke { i64, ptr } @_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint18decode_varint_slowQRShECs1YsMTEqGlh_4spqr(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.j) #30
           to label %.noexc8 unwind label %.body.thread22.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc8:                                          ; preds = %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintQRShECs4tP8yUXWbFU_18libsignal_protocol.exit.i
@@ -1835,7 +1838,7 @@ bb.k:                                             ; preds = %bb.j
   store i64 %i.am, ptr %i.d, align 8, !noalias !337
   %i.ap = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store i64 %i.an, ptr %i.ap, align 8, !noalias !337
-  invoke void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.d) #30
+  invoke void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.d) #29
           to label %.noexc7 unwind label %.body.thread28.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc7:                                          ; preds = %bb.k
@@ -1855,7 +1858,7 @@ _RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintQRShECs4tP8yUXWbFU_1
   br label %bb.l
 
 _RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintQRShECs4tP8yUXWbFU_18libsignal_protocol.exit.i: ; preds = %bb.h
-  %i.au = invoke { i64, ptr } @_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint18decode_varint_slowQRShECs1YsMTEqGlh_4spqr(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.j) #29
+  %i.au = invoke { i64, ptr } @_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint18decode_varint_slowQRShECs1YsMTEqGlh_4spqr(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.j) #30
           to label %.noexc8 unwind label %.body.thread28.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc8:                                          ; preds = %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintQRShECs4tP8yUXWbFU_18libsignal_protocol.exit.i
@@ -2258,7 +2261,7 @@ bb.k:                                             ; preds = %bb.j
   store i64 %i.au, ptr %i.i, align 8, !noalias !408
   %i.ax = getelementptr inbounds nuw i8, ptr %i.i, i64 8
   store i64 %i.av, ptr %i.ax, align 8, !noalias !408
-  invoke void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.i) #30
+  invoke void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.i) #29
           to label %.noexc7 unwind label %.body.thread27.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc7:                                          ; preds = %bb.k
@@ -2278,7 +2281,7 @@ _RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintQRShECs4tP8yUXWbFU_1
   br label %bb.l
 
 _RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintQRShECs4tP8yUXWbFU_18libsignal_protocol.exit.i: ; preds = %bb.h
-  %i.bc = invoke { i64, ptr } @_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint18decode_varint_slowQRShECs1YsMTEqGlh_4spqr(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.o) #29
+  %i.bc = invoke { i64, ptr } @_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint18decode_varint_slowQRShECs1YsMTEqGlh_4spqr(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.o) #30
           to label %.noexc8 unwind label %.body.thread27.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc8:                                          ; preds = %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintQRShECs4tP8yUXWbFU_18libsignal_protocol.exit.i
@@ -2681,7 +2684,7 @@ bb.k:                                             ; preds = %bb.j
   store i64 %i.bj, ptr %i.p, align 8, !noalias !691
   %i.bm = getelementptr inbounds nuw i8, ptr %i.p, i64 8
   store i64 %i.bk, ptr %i.bm, align 8, !noalias !691
-  invoke void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.p) #30
+  invoke void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.p) #29
           to label %.noexc7 unwind label %.body.thread32.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc7:                                          ; preds = %bb.k
@@ -2701,7 +2704,7 @@ _RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintQRShECs4tP8yUXWbFU_1
   br label %bb.l
 
 _RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintQRShECs4tP8yUXWbFU_18libsignal_protocol.exit.i: ; preds = %bb.h
-  %i.br = invoke { i64, ptr } @_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint18decode_varint_slowQRShECs1YsMTEqGlh_4spqr(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.v) #29
+  %i.br = invoke { i64, ptr } @_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint18decode_varint_slowQRShECs1YsMTEqGlh_4spqr(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.v) #30
           to label %.noexc8 unwind label %.body.thread32.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc8:                                          ; preds = %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintQRShECs4tP8yUXWbFU_18libsignal_protocol.exit.i
@@ -3104,7 +3107,7 @@ bb.k:                                             ; preds = %bb.j
   store i64 %i.aj, ptr %i.c, align 8, !noalias !760
   %i.am = getelementptr inbounds nuw i8, ptr %i.c, i64 8
   store i64 %i.ak, ptr %i.am, align 8, !noalias !760
-  invoke void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.c) #30
+  invoke void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.c) #29
           to label %.noexc7 unwind label %.body.thread27.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc7:                                          ; preds = %bb.k
@@ -3124,7 +3127,7 @@ _RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintQRShECs4tP8yUXWbFU_1
   br label %bb.l
 
 _RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintQRShECs4tP8yUXWbFU_18libsignal_protocol.exit.i: ; preds = %bb.h
-  %i.ar = invoke { i64, ptr } @_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint18decode_varint_slowQRShECs1YsMTEqGlh_4spqr(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.i) #29
+  %i.ar = invoke { i64, ptr } @_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint18decode_varint_slowQRShECs1YsMTEqGlh_4spqr(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.i) #30
           to label %.noexc8 unwind label %.body.thread27.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
 .noexc8:                                          ; preds = %_RINvNtNtCs43OB2dM8s8d_5prost8encoding6varint13decode_varintQRShECs4tP8yUXWbFU_18libsignal_protocol.exit.i
@@ -3527,7 +3530,7 @@ bb.d:                                             ; preds = %bb.c
   store i64 %1, ptr %i.a, align 8, !noalias !867
   %i.g = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   store i64 %i.e, ptr %i.g, align 8, !noalias !867
-  call void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a) #30, !noalias !867
+  call void @_RNvCs17cqnTMcAHA_5bytes13panic_advance(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(16) %i.a) #29, !noalias !867
   unreachable
 
 bb.e:                                             ; preds = %bb.c
@@ -3930,7 +3933,7 @@ _RNvXsc_NtNtCs4tP8yUXWbFU_18libsignal_protocol5proto11fingerprintNtB5_20Combined
 
 bb.f:                                             ; preds = %_RNvXsc_NtNtCs4tP8yUXWbFU_18libsignal_protocol5proto11fingerprintNtB5_20CombinedFingerprintsNtNtCs43OB2dM8s8d_5prost7message7Message11encoded_len.exit
   %i.bk = load i64, ptr %i.bj, align 8
-  tail call void @_RNvNtCs6i54tJFfzR_5alloc7raw_vec12handle_error(i64 noundef %i.bi, i64 %i.bk) #30
+  tail call void @_RNvNtCs6i54tJFfzR_5alloc7raw_vec12handle_error(i64 noundef %i.bi, i64 %i.bk) #29
   unreachable
 
 bb.g:                                             ; preds = %_RNvXsc_NtNtCs4tP8yUXWbFU_18libsignal_protocol5proto11fingerprintNtB5_20CombinedFingerprintsNtNtCs43OB2dM8s8d_5prost7message7Message11encoded_len.exit
@@ -4078,7 +4081,7 @@ _RNvXsc_NtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7serviceNtB5_22DecryptionErr
 
 bb.e:                                             ; preds = %_RNvXsc_NtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7serviceNtB5_22DecryptionErrorMessageNtNtCs43OB2dM8s8d_5prost7message7Message11encoded_len.exit
   %i.as = load i64, ptr %i.ar, align 8
-  tail call void @_RNvNtCs6i54tJFfzR_5alloc7raw_vec12handle_error(i64 noundef %i.aq, i64 %i.as) #30
+  tail call void @_RNvNtCs6i54tJFfzR_5alloc7raw_vec12handle_error(i64 noundef %i.aq, i64 %i.as) #29
   unreachable
 
 bb.f:                                             ; preds = %_RNvXsc_NtNtCs4tP8yUXWbFU_18libsignal_protocol5proto7serviceNtB5_22DecryptionErrorMessageNtNtCs43OB2dM8s8d_5prost7message7Message11encoded_len.exit
@@ -4381,8 +4384,8 @@ attributes #25 = { cold }
 attributes #26 = { nounwind }
 attributes #27 = { noinline noreturn }
 attributes #28 = { inlinehint }
-attributes #29 = { noinline }
-attributes #30 = { noreturn }
+attributes #29 = { noreturn }
+attributes #30 = { noinline }
 
 !llvm.module.flags = !{!0, !1, !2}
 !llvm.ident = !{!3}

@@ -205,12 +205,17 @@ bb.ao:                                            ; preds = %DCTX_validateNodeOu
   call void @ALLOC_Arena_freeAll(ptr noundef %i.pt) #16
   br label %bb.aq
 
-.preheader.split.i:                               ; preds = %.preheader.i, %DCTX_freeDecoderInputStreams.exit.i
-  %.0340.i = phi i64 [ %17, %DCTX_freeDecoderInputStreams.exit.i ], [ 0, %.preheader.i ] ; 3 uses
+.preheader.splitthread-pre-split.i:               ; preds = %DCTX_freeDecoderInputStreams.exit.i
+  %16 = add nuw nsw i64 %.0340.i, 1
+  %.pr.i = load i8, ptr %i.pm, align 8, !tbaa !46
+  br label %.preheader.split.i
+
+.preheader.split.i:                               ; preds = %.preheader.i, %.preheader.splitthread-pre-split.i
+  %17 = phi i8 [ %.pr.i, %.preheader.splitthread-pre-split.i ], [ 0, %.preheader.i ]
+  %.0340.i = phi i64 [ %16, %.preheader.splitthread-pre-split.i ], [ 0, %.preheader.i ] ; 3 uses
   %i.pu = getelementptr inbounds nuw [8 x i8], ptr %i.ai, i64 %.0340.i
   %i.pv = load ptr, ptr %i.pu, align 8, !tbaa !79 ; 2 uses
-  %16 = load i8, ptr %i.pm, align 8, !tbaa !46, !range !60, !noundef !61
-  %i.pw = trunc nuw i8 %16 to i1
+  %i.pw = trunc nuw i8 %17 to i1
   br i1 %i.pw, label %DCTX_freeDecoderInputStreams.exit.i, label %.preheader.i302.i
 
 .preheader.i302.i:                                ; preds = %.preheader.split.i
@@ -239,9 +244,8 @@ bb.ap:                                            ; preds = %bb.ap, %.lr.ph.i304
   br i1 %i.qi, label %bb.ap, label %DCTX_freeDecoderInputStreams.exit.i, !llvm.loop !129
 
 DCTX_freeDecoderInputStreams.exit.i:              ; preds = %bb.ap, %.preheader.i302.i, %.preheader.split.i
-  %17 = add nuw nsw i64 %.0340.i, 1
   %exitcond354.not.i = icmp eq i64 %.0340.i, %i.ad
-  br i1 %exitcond354.not.i, label %.split.us.i, label %.preheader.split.i, !llvm.loop !130
+  br i1 %exitcond354.not.i, label %.split.us.i, label %.preheader.splitthread-pre-split.i, !llvm.loop !130
 
 bb.aq:                                            ; preds = %.split.us.i, %bb.ao, %bb.af
   %.fca.1.load359.i = phi ptr [ null, %.split.us.i ], [ %i.ps, %bb.ao ], [ %i.ny, %bb.af ]

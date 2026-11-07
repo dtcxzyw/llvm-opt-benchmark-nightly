@@ -205,9 +205,9 @@ bb.am:                                            ; preds = %bb.ai
 
 .thread538:                                       ; preds = %.noexc222
   %i.ff = getelementptr inbounds nuw i8, ptr %i.x, i64 8
-  %i.fg = load ptr, ptr %i.ff, align 8, !noalias !506, !noundef !6
+  %i.fg = load ptr, ptr %i.ff, align 8, !noalias !506, !noundef !6 ; 2 uses
   %i.fh = getelementptr inbounds nuw i8, ptr %i.x, i64 16
-  %i.fi = load i64, ptr %i.fh, align 8, !noalias !506, !noundef !6
+  %i.fi = load i64, ptr %i.fh, align 8, !noalias !506, !noundef !6 ; 2 uses
   %i.fj = getelementptr inbounds nuw i8, ptr %i.ay, i64 8
   store ptr %i.fg, ptr %i.fj, align 8, !alias.scope !505
   %i.fk = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
@@ -257,18 +257,25 @@ bb.ap:                                            ; preds = %bb.an
   store i64 0, ptr %i.ay, align 8
   br label %.sink.split
 
-.thread540:                                       ; preds = %bb.ao, %bb.an, %bb.an
+.thread540:                                       ; preds = %bb.an, %bb.an, %bb.ao
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !510
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !506
   br label %.sink.split
 
 bb.aq:                                            ; preds = %bb.ap
-  %.pre.pre.pre = load i64, ptr %i.ay, align 8, !range !9
+  %.pre.pre.pre = load i64, ptr %i.ay, align 8
   %i.ft = trunc nuw i64 %.pre.pre.pre to i1
   call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !510
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !506
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ax)
-  br i1 %i.ft, label %bb.at, label %bb.av
+  br i1 %i.ft, label %._crit_edge517, label %bb.av
+
+._crit_edge517:                                   ; preds = %bb.aq
+  %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %i.ay, i64 8
+  %.val207.pre = load ptr, ptr %.phi.trans.insert, align 8
+  %.phi.trans.insert519 = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
+  %.val208.pre = load i64, ptr %.phi.trans.insert519, align 8
+  br label %bb.at
 
 _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCsgQ7e0lqRvgo_7memmap24MmapEECs8GyQQEoxZtT_7convert.exit: ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs9Jn0q30Ea0B_6object4read3any4FileEECs8GyQQEoxZtT_7convert.exit, %bb.ax, %bb.as
   %.sroa.055.10 = phi i8 [ %.sroa.055.11, %bb.as ], [ %.sroa.055.12, %bb.ax ], [ %.sroa.055.12, %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs9Jn0q30Ea0B_6object4read3any4FileEECs8GyQQEoxZtT_7convert.exit ] ; 2 uses
@@ -285,11 +292,9 @@ bb.as:                                            ; preds = %bb.hg, %bb.gh, %bb.
           cleanup
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtCsgQ7e0lqRvgo_7memmap24MmapEECs8GyQQEoxZtT_7convert.exit
 
-bb.at:                                            ; preds = %.thread538, %bb.aq
-  %0 = getelementptr inbounds nuw i8, ptr %i.ay, i64 8
-  %.val207 = load ptr, ptr %0, align 8, !noundef !6
-  %1 = getelementptr inbounds nuw i8, ptr %i.ay, i64 16
-  %.val208 = load i64, ptr %1, align 8, !noundef !6
+bb.at:                                            ; preds = %._crit_edge517, %.thread538
+  %.val208 = phi i64 [ %.val208.pre, %._crit_edge517 ], [ %i.fi, %.thread538 ]
+  %.val207 = phi ptr [ %.val207.pre, %._crit_edge517 ], [ %i.fg, %.thread538 ]
   call void @llvm.experimental.noalias.scope.decl(metadata !512)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !512
   invoke void @_RNvMNtNtCs9Jn0q30Ea0B_6object4read3anyNtB2_4File5parseCs8GyQQEoxZtT_7convert(ptr noalias nofree noundef nonnull sret([304 x i8]) align 8 captures(none) dereferenceable(304) %i.u, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %.val207, i64 noundef %.val208)

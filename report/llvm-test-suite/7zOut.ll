@@ -205,12 +205,17 @@ bb.a:
 .split8:                                          ; preds = %_ZN8NArchive3N7z11COutArchive9WriteByteEh.exit, %.split.us
   ret void
 
-.split:                                           ; preds = %bb.a, %_ZN8NArchive3N7z11COutArchive9WriteByteEh.exit
-  %.06 = phi i32 [ %i.ao, %_ZN8NArchive3N7z11COutArchive9WriteByteEh.exit ], [ 0, %bb.a ]
-  %.045 = phi i64 [ %3, %_ZN8NArchive3N7z11COutArchive9WriteByteEh.exit ], [ %1, %bb.a ] ; 3 uses
+.splitthread-pre-split:                           ; preds = %_ZN8NArchive3N7z11COutArchive9WriteByteEh.exit
+  %2 = lshr i64 %.045, 8
+  %.pr = load i8, ptr %i.a, align 8, !tbaa !61
+  br label %.split
+
+.split:                                           ; preds = %bb.a, %.splitthread-pre-split
+  %3 = phi i8 [ %.pr, %.splitthread-pre-split ], [ 0, %bb.a ]
+  %.06 = phi i32 [ %i.ao, %.splitthread-pre-split ], [ 0, %bb.a ]
+  %.045 = phi i64 [ %2, %.splitthread-pre-split ], [ %1, %bb.a ] ; 3 uses
   %i.n = trunc i64 %.045 to i8                    ; 2 uses
-  %2 = load i8, ptr %i.a, align 8, !tbaa !61, !range !62, !noundef !63
-  %i.o = trunc nuw i8 %2 to i1
+  %i.o = trunc nuw i8 %3 to i1
   br i1 %i.o, label %bb.b, label %bb.c
 
 bb.b:                                             ; preds = %.split
@@ -274,10 +279,9 @@ _ZN8NArchive3N7z15CWriteBufferLoc9WriteByteEh.exit.i: ; preds = %bb.f
   br label %_ZN8NArchive3N7z11COutArchive9WriteByteEh.exit
 
 _ZN8NArchive3N7z11COutArchive9WriteByteEh.exit:   ; preds = %bb.b, %_ZN10COutBuffer9WriteByteEh.exit.i, %_ZN8NArchive3N7z15CWriteBufferLoc9WriteByteEh.exit.i
-  %3 = lshr i64 %.045, 8
   %i.ao = add nuw nsw i32 %.06, 1                 ; 2 uses
   %exitcond.not = icmp eq i32 %i.ao, 8
-  br i1 %exitcond.not, label %.split8, label %.split, !llvm.loop !140
+  br i1 %exitcond.not, label %.split8, label %.splitthread-pre-split, !llvm.loop !140
 }
 
 ; Function Attrs: mustprogress uwtable
@@ -428,12 +432,18 @@ _ZN8NArchive3N7z11COutArchive9WriteByteEh.exit:   ; preds = %bb.j, %_ZN10COutBuf
   store i64 %i.bm, ptr %i.bg, align 8, !tbaa !64
   br label %._crit_edge
 
-.lr.ph.split:                                     ; preds = %.lr.ph, %_ZN8NArchive3N7z11COutArchive9WriteByteEh.exit24
-  %.132 = phi i32 [ %4, %_ZN8NArchive3N7z11COutArchive9WriteByteEh.exit24 ], [ %.026, %.lr.ph ] ; 2 uses
-  %.01831 = phi i64 [ %3, %_ZN8NArchive3N7z11COutArchive9WriteByteEh.exit24 ], [ %1, %.lr.ph ] ; 3 uses
+.lr.ph.splitthread-pre-split:                     ; preds = %_ZN8NArchive3N7z11COutArchive9WriteByteEh.exit24
+  %2 = add nsw i32 %.132, -1
+  %3 = lshr i64 %.01831, 8
+  %.pr = load i8, ptr %i.n, align 8, !tbaa !61
+  br label %.lr.ph.split
+
+.lr.ph.split:                                     ; preds = %.lr.ph, %.lr.ph.splitthread-pre-split
+  %4 = phi i8 [ %.pr, %.lr.ph.splitthread-pre-split ], [ 0, %.lr.ph ]
+  %.132 = phi i32 [ %2, %.lr.ph.splitthread-pre-split ], [ %.026, %.lr.ph ] ; 2 uses
+  %.01831 = phi i64 [ %3, %.lr.ph.splitthread-pre-split ], [ %1, %.lr.ph ] ; 3 uses
   %i.bn = trunc i64 %.01831 to i8                 ; 2 uses
-  %2 = load i8, ptr %i.n, align 8, !tbaa !61, !range !62, !noundef !63
-  %i.bo = trunc nuw i8 %2 to i1
+  %i.bo = trunc nuw i8 %4 to i1
   br i1 %i.bo, label %bb.p, label %bb.q
 
 bb.p:                                             ; preds = %.lr.ph.split
@@ -497,10 +507,8 @@ _ZN8NArchive3N7z15CWriteBufferLoc9WriteByteEh.exit.i20: ; preds = %bb.t
   br label %_ZN8NArchive3N7z11COutArchive9WriteByteEh.exit24
 
 _ZN8NArchive3N7z11COutArchive9WriteByteEh.exit24: ; preds = %bb.p, %_ZN10COutBuffer9WriteByteEh.exit.i21, %_ZN8NArchive3N7z15CWriteBufferLoc9WriteByteEh.exit.i20
-  %3 = lshr i64 %.01831, 8
-  %4 = add nsw i32 %.132, -1
   %i.co = icmp sgt i32 %.132, 1
-  br i1 %i.co, label %.lr.ph.split, label %._crit_edge, !llvm.loop !142
+  br i1 %i.co, label %.lr.ph.splitthread-pre-split, label %._crit_edge, !llvm.loop !142
 
 ._crit_edge:                                      ; preds = %_ZN8NArchive3N7z11COutArchive9WriteByteEh.exit24, %.lr.ph.split.us, %_ZN8NArchive3N7z11COutArchive9WriteByteEh.exit
   ret void

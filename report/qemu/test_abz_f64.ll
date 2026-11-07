@@ -71,7 +71,7 @@ bb.c:                                             ; preds = %bb.b, %.lr.ph
 bb.d:                                             ; preds = %bb.c
   %i.x = load i8, ptr @verCases_checkNaNs, align 1, !tbaa !13, !range !14, !noundef !15
   %i.y = trunc nuw i8 %i.x to i1
-  br i1 %i.y, label %bb.h, label %bb.e
+  br i1 %i.y, label %bb.j, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.z = load i64, ptr @genCases_f64_a, align 8
@@ -87,9 +87,9 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   %i.ad = or i8 %i.n, 16
   br label %bb.h
 
-bb.h:                                             ; preds = %bb.g, %bb.f, %bb.d
-  %.020 = phi i8 [ %i.n, %bb.d ], [ %i.ad, %bb.g ], [ %i.n, %bb.f ] ; 2 uses
-  %i.ae = load i8, ptr @verCases_checkNaNs, align 1, !tbaa !13, !range !14, !noundef !15
+bb.h:                                             ; preds = %bb.g, %bb.f
+  %.020.ph = phi i8 [ %i.n, %bb.f ], [ %i.ad, %bb.g ] ; 3 uses
+  %i.ae = load i8, ptr @verCases_checkNaNs, align 1, !tbaa !13
   %i.af = trunc nuw i8 %i.ae to i1
   %.not26 = xor i1 %i.af, true
   %i.ag = and i64 %i.l, 9223372036854775807
@@ -102,11 +102,12 @@ bb.h:                                             ; preds = %bb.g, %bb.f, %bb.d
 
 bb.i:                                             ; preds = %bb.h
   %i.ak = tail call zeroext i1 @f64_isSignalingNaN(i64 %i.s) #2
-  %.not23 = icmp ne i8 %.020, %i.u
+  %.not23 = icmp ne i8 %.020.ph, %i.u
   %or.cond25.not = select i1 %i.ak, i1 true, i1 %.not23
   br i1 %or.cond25.not, label %bb.j, label %bb.k
 
-bb.j:                                             ; preds = %bb.i, %bb.h
+bb.j:                                             ; preds = %bb.d, %bb.i, %bb.h
+  %.02027 = phi i8 [ %.020.ph, %bb.h ], [ %.020.ph, %bb.i ], [ %i.n, %bb.d ]
   %i.al = load i64, ptr @verCases_errorCount, align 8, !tbaa !17
   %i.am = add i64 %i.al, 1
   store i64 %i.am, ptr @verCases_errorCount, align 8, !tbaa !17
@@ -115,7 +116,7 @@ bb.j:                                             ; preds = %bb.i, %bb.h
   %i.ao = load i64, ptr @genCases_f64_a, align 8
   %i.ap = load i64, ptr @genCases_f64_b, align 8
   tail call void @writeCase_ab_f64(i64 %i.ao, i64 %i.ap, ptr noundef nonnull @.str) #2
-  tail call void @writeCase_z_f64(i64 %i.l, i8 noundef zeroext %.020, i64 %i.s, i8 noundef zeroext %i.u) #2
+  tail call void @writeCase_z_f64(i64 %i.l, i8 noundef zeroext %.02027, i64 %i.s, i8 noundef zeroext %i.u) #2
   %i.aq = load i64, ptr @verCases_errorCount, align 8, !tbaa !17
   %i.ar = load i64, ptr @verCases_maxErrorCount, align 8, !tbaa !17
   %i.as = icmp eq i64 %i.aq, %i.ar

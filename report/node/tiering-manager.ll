@@ -204,7 +204,7 @@ bb.a:
   %4 = alloca %"class.v8::internal::detail::TaggedOperatorArrowRef.15", align 8 ; 5 uses
   %5 = alloca %"class.v8::internal::detail::TaggedOperatorArrowRef.15", align 8 ; 4 uses
   %6 = alloca %"class.v8::internal::detail::TaggedOperatorArrowRef.15", align 8 ; 4 uses
-  %7 = alloca %"class.v8::internal::detail::TaggedOperatorArrowRef.15", align 8 ; 6 uses
+  %7 = alloca %"class.v8::internal::detail::TaggedOperatorArrowRef.15", align 8 ; 7 uses
   %8 = alloca %"class.std::unique_ptr.470", align 8 ; 5 uses
   %9 = alloca %"class.v8::internal::detail::TaggedOperatorArrowRef.15", align 8 ; 4 uses
   %i.a = add i64 %1, 23
@@ -455,10 +455,11 @@ bb.o:                                             ; preds = %bb.h
 
 .critedge2:                                       ; preds = %_ZNK2v88internal18SharedFunctionInfo16GetBytecodeArrayINS0_7IsolateEEENS0_6TaggedINS0_13BytecodeArrayEEEPT_.exit
   call void @llvm.lifetime.end.p0(ptr nonnull %4) #11
-  br label %bb.p
+  call void @llvm.lifetime.start.p0(ptr nonnull %7) #11
+  br label %.critedge4
 
-bb.p:                                             ; preds = %bb.m, %bb.n, %bb.o, %.critedge2, %bb.g
-  %i.dn = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 691), align 1, !range !29, !noundef !30
+bb.p:                                             ; preds = %bb.m, %bb.n, %bb.o, %bb.g
+  %i.dn = load i8, ptr getelementptr inbounds nuw (i8, ptr @_ZN2v88internal8v8_flagsE, i64 691), align 1
   %i.do = trunc nuw i8 %i.dn to i1
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #11
   br i1 %i.do, label %bb.q, label %.critedge4
@@ -488,7 +489,7 @@ _ZN2v88internal12_GLOBAL__N_136ShouldResetInterruptBudgetByICChangeENS0_21Cached
   %i.dq = icmp sgt i32 %i.cc, %i.cf
   br i1 %i.dq, label %bb.s, label %bb.v
 
-.critedge4:                                       ; preds = %bb.p
+.critedge4:                                       ; preds = %.critedge2, %bb.p
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #11
   %.old = icmp sgt i32 %i.cc, %i.cf
   br i1 %.old, label %bb.s, label %bb.v

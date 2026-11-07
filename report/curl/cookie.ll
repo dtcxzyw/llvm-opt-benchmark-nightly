@@ -202,7 +202,7 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph, %.thread156
   %.083170 = phi ptr [ %i.e, %.lr.ph ], [ %i.cl, %.thread156 ] ; 4 uses
   %.084169 = phi ptr [ null, %.lr.ph ], [ %.286, %.thread156 ] ; 2 uses
-  %.087168 = phi i8 [ 0, %.lr.ph ], [ %.491, %.thread156 ] ; 6 uses
+  %.087168 = phi i8 [ 0, %.lr.ph ], [ %.491, %.thread156 ] ; 5 uses
   %i.i = tail call ptr @Curl_node_elem(ptr noundef nonnull %.083170) #11 ; 8 uses
   %i.j = getelementptr inbounds nuw i8, ptr %i.i, i64 64 ; 2 uses
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !88
@@ -390,19 +390,20 @@ bb.aa:                                            ; preds = %bb.z
   %i.bz = xor i8 %i.by, %i.bx
   %i.ca = and i8 %i.bz, 1
   %i.cb = icmp eq i8 %i.ca, 0
-  %spec.select137 = select i1 %i.cb, i8 1, i8 %.087168
-  br label %bb.ac
+  %5 = trunc nuw i8 %.087168 to i1
+  %or.cond171 = select i1 %i.cb, i1 true, i1 %5
+  br i1 %or.cond171, label %bb.ad, label %.thread156
 
 bb.ab:                                            ; preds = %bb.x
-  %spec.select138 = select i1 %.not121, i8 1, i8 %.087168
-  br label %bb.ac
+  %.old = trunc nuw i8 %.087168 to i1
+  %or.cond172 = select i1 %.not121, i1 true, i1 %.old
+  br i1 %or.cond172, label %bb.ad, label %.thread156
 
-bb.ac:                                            ; preds = %bb.y, %bb.ab, %bb.aa, %bb.z
-  %.188 = phi i8 [ %spec.select138, %bb.ab ], [ %spec.select137, %bb.aa ], [ %.087168, %bb.z ], [ %.087168, %bb.y ]
-  %i.cc = trunc nuw i8 %.188 to i1
+bb.ac:                                            ; preds = %bb.y, %bb.z
+  %i.cc = trunc nuw i8 %.087168 to i1
   br i1 %i.cc, label %bb.ad, label %.thread156
 
-bb.ad:                                            ; preds = %bb.ac
+bb.ad:                                            ; preds = %bb.aa, %bb.ab, %bb.ac
   %i.cd = getelementptr inbounds nuw i8, ptr %i.i, i64 80
   %i.ce = load ptr, ptr %i.cd, align 8, !tbaa !86 ; 2 uses
   %.not123 = icmp eq ptr %i.ce, null              ; 3 uses
@@ -435,9 +436,9 @@ bb.ah:                                            ; preds = %bb.ag
   %.not130 = icmp eq i8 %i.ck, 0
   br i1 %.not130, label %.thread156, label %.critedge142
 
-.thread156:                                       ; preds = %bb.af, %bb.ag, %bb.ah, %bb.ac, %bb.ae, %bb.w, %.critedge132
-  %.491 = phi i8 [ %.087168, %bb.w ], [ %.087168, %.critedge132 ], [ 0, %bb.af ], [ 1, %bb.ah ], [ 1, %bb.ag ], [ 0, %bb.ac ], [ 0, %bb.ae ] ; 3 uses
-  %.286 = phi ptr [ null, %bb.w ], [ %.084169, %.critedge132 ], [ null, %bb.af ], [ %.083170, %bb.ah ], [ %.083170, %bb.ag ], [ null, %bb.ac ], [ null, %bb.ae ] ; 4 uses
+.thread156:                                       ; preds = %bb.ab, %bb.aa, %bb.ac, %bb.ae, %bb.af, %bb.ah, %bb.ag, %bb.w, %.critedge132
+  %.491 = phi i8 [ %.087168, %bb.w ], [ %.087168, %.critedge132 ], [ 0, %bb.ac ], [ 0, %bb.af ], [ 0, %bb.ae ], [ 1, %bb.ah ], [ 1, %bb.ag ], [ 0, %bb.aa ], [ 0, %bb.ab ] ; 3 uses
+  %.286 = phi ptr [ null, %bb.w ], [ %.084169, %.critedge132 ], [ null, %bb.ac ], [ null, %bb.af ], [ null, %bb.ae ], [ %.083170, %bb.ah ], [ %.083170, %bb.ag ], [ null, %bb.aa ], [ null, %bb.ab ] ; 4 uses
   %i.cl = tail call ptr @Curl_node_next(ptr noundef nonnull %.083170) #11 ; 2 uses
   %.not = icmp eq ptr %i.cl, null
   br i1 %.not, label %._crit_edge, label %bb.b, !llvm.loop !115
