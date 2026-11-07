@@ -204,8 +204,8 @@ bb.t:                                             ; preds = %bb.s
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val126.i, i64 noundef range(i64 1, 0) %i.cg, i64 noundef range(i64 1, 536870913) %i.cj) #23, !noalias !2882
   br label %.body.i
 
-.body.i:                                          ; preds = %9, %bb.ea, %bb.dz, %bb.da, %bb.cc, %bb.as, %bb.t, %bb.s, %bb.k
-  %.pn74.i = phi { ptr, i32 } [ %i.ce, %bb.s ], [ %.pn70.pn.pn.i, %bb.ea ], [ %.pn70.pn.pn.i, %9 ], [ %.pn70.pn.pn.i, %bb.as ], [ %i.bs, %bb.k ], [ %i.ij, %bb.cc ], [ %i.ce, %bb.t ], [ %.pn60.pn.pn.i, %bb.dz ], [ %.pn31.pn.pn.i, %bb.da ]
+.body.i:                                          ; preds = %bb.ea, %bb.dz, %bb.da, %bb.cc, %bb.as, %bb.as, %bb.t, %bb.s, %bb.k
+  %.pn74.i = phi { ptr, i32 } [ %i.ce, %bb.s ], [ %.pn70.pn.pn.i, %bb.as ], [ %.pn70.pn.pn.i, %bb.ea ], [ %.pn70.pn.pn.i, %bb.as ], [ %i.bs, %bb.k ], [ %i.ij, %bb.cc ], [ %i.ce, %bb.t ], [ %.pn60.pn.pn.i, %bb.dz ], [ %.pn31.pn.pn.i, %bb.da ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.at), !noalias !2883
   br label %bb.cb
 
@@ -426,15 +426,19 @@ bb.aq:                                            ; preds = %bb.ao, %.noexc137.i
   br label %bb.ar
 
 bb.ar:                                            ; preds = %bb.aq, %bb.ak, %bb.ah, %bb.ad, %bb.ac
-  %i.ey = load i64, ptr %i.at, align 8, !range !2884, !noalias !2883, !noundef !6 ; 3 uses
-  %.not250.i = icmp eq i64 %i.ey, -9223372036854775790
-  br i1 %.not250.i, label %.thread.i, label %bb.dx
+  %i.ey = load i64, ptr %i.at, align 8, !range !2884, !noalias !2883, !noundef !6 ; 2 uses
+  switch i64 %i.ey, label %bb.dx [
+    i64 -9223372036854775790, label %.thread.i
+    i64 -9223372036854775802, label %.thread.i
+  ]
 
 bb.as:                                            ; preds = %.body150.i, %bb.ap, %bb.aj, %bb.ag
   %.pn70.pn.pn.i = phi { ptr, i32 } [ %i.ex, %bb.ap ], [ %.pn50.i, %.body150.i ], [ %i.dq, %bb.ag ], [ %i.dz, %bb.aj ] ; 3 uses
-  %i.ez = load i64, ptr %i.at, align 8, !range !2884, !noalias !2883, !noundef !6 ; 3 uses
-  %.not249.i = icmp eq i64 %i.ez, -9223372036854775790
-  br i1 %.not249.i, label %.body.i, label %bb.ea
+  %i.ez = load i64, ptr %i.at, align 8, !range !2884, !noalias !2883, !noundef !6 ; 2 uses
+  switch i64 %i.ez, label %bb.ea [
+    i64 -9223372036854775790, label %.body.i
+    i64 -9223372036854775802, label %.body.i
+  ]
 
 bb.at:                                            ; preds = %bb.v
   %i.fa = icmp eq i64 %i.co, 0
@@ -719,23 +723,21 @@ bb.bu:                                            ; preds = %bb.bs, %.noexc161.i
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB1B_4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit.i: ; preds = %bb.bm, %bb.bl
   call void @llvm.lifetime.end.p0(ptr nonnull %i.z), !noalias !2883
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aa), !noalias !2883
-  %i.hy = load i64, ptr %i.at, align 8, !range !2884, !noalias !2883, !noundef !6 ; 3 uses
-  %.not52.i = icmp eq i64 %i.hy, -9223372036854775790
-  br i1 %.not52.i, label %bb.bv, label %3
+  %i.hy = load i64, ptr %i.at, align 8, !range !2884, !noalias !2883, !noundef !6 ; 2 uses
+  switch i64 %i.hy, label %bb.bw [
+    i64 -9223372036854775790, label %bb.bv
+    i64 -9223372036854775802, label %bb.bv
+  ]
 
-3:                                                ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB1B_4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit.i
-  %4 = icmp ne i64 %i.hy, -9223372036854775800
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i64 %i.hy, -9223372036854775802
-  br i1 %5, label %bb.bv, label %bb.bw
-
-bb.bv:                                            ; preds = %bb.bw, %3, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB1B_4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit.i
+bb.bv:                                            ; preds = %bb.bw, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB1B_4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB1B_4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.at), !noalias !2883
   %.pre.i = load i64, ptr %i.cq, align 8, !noalias !2883
   %.pre252.i = load i64, ptr %i.cs, align 8, !noalias !2883
   br label %bb.h
 
-bb.bw:                                            ; preds = %3
+bb.bw:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB1B_4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit.i
+  %3 = icmp ne i64 %i.hy, -9223372036854775800
+  call void @llvm.assume(i1 %3)
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsjyY8HP3IvQ6_12object_store5ErrorECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef align 8 dereferenceable(72) %i.at)
           to label %bb.bv unwind label %bb.cc, !noalias !2882
 
@@ -769,7 +771,7 @@ bb.cb:                                            ; preds = %bb.by, %.body.i
   store i8 2, ptr %i.bi, align 8, !noalias !2883
   br label %.body
 
-bb.cc:                                            ; preds = %7, %bb.bx, %bb.bw
+bb.cc:                                            ; preds = %bb.dx, %bb.bx, %bb.bw
   %i.ij = landingpad { ptr, i32 }
           cleanup
   br label %.body.i
@@ -790,7 +792,7 @@ bb.ce:                                            ; preds = %bb.bt, %bb.bh, %bb.
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB1B_4SendEL_EECs9rVkZwOUgsI_13deltalake_aws(ptr %.val122.i, ptr nonnull %.val123.i) #24
           to label %.body150.i unwind label %bb.cf, !noalias !2882
 
-bb.cf:                                            ; preds = %9, %bb.dy, %bb.cz, %bb.ce, %bb.k
+bb.cf:                                            ; preds = %bb.ea, %bb.dy, %bb.cz, %bb.ce, %bb.k
   %i.io = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #25, !noalias !2882
@@ -1193,8 +1195,8 @@ bb.dw:                                            ; preds = %.noexc8, %bb.ds, %.
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ai), !noalias !2883
   br label %bb.dq
 
-.thread.i:                                        ; preds = %7, %bb.dx, %bb.dq, %bb.cv, %bb.ar
-  %.sroa.013.0238.i = phi i64 [ -9223372036854775790, %bb.ar ], [ -9223372036854775790, %7 ], [ -9223372036854775790, %bb.dx ], [ %.sroa.019.0.copyload.i, %bb.dq ], [ %.sroa.021.0.copyload.i, %bb.cv ]
+.thread.i:                                        ; preds = %bb.dx, %bb.dq, %bb.cv, %bb.ar, %bb.ar
+  %.sroa.013.0238.i = phi i64 [ -9223372036854775790, %bb.ar ], [ -9223372036854775790, %bb.dx ], [ -9223372036854775790, %bb.ar ], [ %.sroa.019.0.copyload.i, %bb.dq ], [ %.sroa.021.0.copyload.i, %bb.cv ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.at), !noalias !2883
   store i64 %.sroa.013.0238.i, ptr %0, align 8, !alias.scope !2882
   %.sroa.416.0..sroa_idx18.i = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1204,10 +1206,6 @@ bb.dw:                                            ; preds = %.noexc8, %bb.ds, %.
 bb.dx:                                            ; preds = %bb.ar
   %i.mi = icmp ne i64 %i.ey, -9223372036854775800
   call void @llvm.assume(i1 %i.mi)
-  %6 = icmp eq i64 %i.ey, -9223372036854775802
-  br i1 %6, label %.thread.i, label %7
-
-7:                                                ; preds = %bb.dx
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsjyY8HP3IvQ6_12object_store5ErrorECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef align 8 dereferenceable(72) %i.at)
           to label %.thread.i unwind label %bb.cc, !noalias !2882
 
@@ -1223,10 +1221,6 @@ bb.dz:                                            ; preds = %bb.dy
 bb.ea:                                            ; preds = %bb.as
   %i.mj = icmp ne i64 %i.ez, -9223372036854775800
   call void @llvm.assume(i1 %i.mj)
-  %8 = icmp eq i64 %i.ez, -9223372036854775802
-  br i1 %8, label %.body.i, label %9
-
-9:                                                ; preds = %bb.ea
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsjyY8HP3IvQ6_12object_store5ErrorECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef align 8 dereferenceable(72) %i.at) #24
           to label %.body.i unwind label %bb.cf, !noalias !2882
 

@@ -176,9 +176,9 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.j = load i64, ptr %0, align 8, !range !11, !noundef !5 ; 3 uses
-  %.not45 = icmp eq i64 %i.j, -1
-  br i1 %.not45, label %bb.f, label %4
+  %i.j = load i64, ptr %0, align 8, !range !11, !noundef !5
+  %.not45 = icmp eq i64 %i.j, -9223372036854775808
+  br i1 %.not45, label %bb.g, label %bb.f
 
 bb.d:                                             ; preds = %bb.a
   %i.k = load i64, ptr %0, align 8, !range !11, !noundef !5 ; 3 uses
@@ -186,17 +186,11 @@ bb.d:                                             ; preds = %bb.a
   br i1 %.not41, label %bb.r, label %bb.q
 
 bb.e:                                             ; preds = %bb.a
-  %i.l = load i64, ptr %0, align 8, !range !11, !noundef !5 ; 3 uses
-  %.not = icmp eq i64 %i.l, -1
-  br i1 %.not, label %bb.y, label %7
+  %i.l = load i64, ptr %0, align 8, !range !11, !noundef !5
+  %.not = icmp eq i64 %i.l, -9223372036854775806
+  br i1 %.not, label %bb.z, label %bb.y
 
-4:                                                ; preds = %bb.c
-  %5 = icmp ne i64 %i.j, -9223372036854775807
-  tail call void @llvm.assume(i1 %5)
-  %6 = icmp eq i64 %i.j, -9223372036854775808
-  br i1 %6, label %bb.g, label %bb.f
-
-bb.f:                                             ; preds = %4, %bb.c
+bb.f:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h)
   store i64 0, ptr %i.h, align 8
   %.sroa.411.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.h, i64 8
@@ -206,7 +200,7 @@ bb.f:                                             ; preds = %4, %bb.c
   %i.m = invoke noundef align 8 ptr @_RINvNtNtCs4J2qyOfMFpM_5prost8encoding7message5mergeNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant11DenseVectorQQNtNtNtCsgOCJwUSa4vG_5tonic5codec6buffer9DecodeBufECsPYQCUnoTxQ_10collection(i8 noundef %2, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.h, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %3)
           to label %bb.i unwind label %bb.o       ; 2 uses
 
-bb.g:                                             ; preds = %4
+bb.g:                                             ; preds = %bb.c
   %i.n = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.o = tail call noundef align 8 ptr @_RINvNtNtCs4J2qyOfMFpM_5prost8encoding7message5mergeNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant11DenseVectorQQNtNtNtCsgOCJwUSa4vG_5tonic5codec6buffer9DecodeBufECsPYQCUnoTxQ_10collection(i8 noundef %2, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.n, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %3)
   br label %bb.h
@@ -349,13 +343,7 @@ bb.x:                                             ; preds = %bb.r
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant12SparseVectorECsPYQCUnoTxQ_10collection(ptr noalias nofree noundef align 8 dereferenceable(48) %i.f) #17
           to label %.thread54 unwind label %bb.p
 
-7:                                                ; preds = %bb.e
-  %8 = icmp ne i64 %i.l, -9223372036854775807
-  tail call void @llvm.assume(i1 %8)
-  %9 = icmp eq i64 %i.l, -9223372036854775806
-  br i1 %9, label %bb.z, label %bb.y
-
-bb.y:                                             ; preds = %7, %bb.e
+bb.y:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   store i64 0, ptr %i.d, align 8
   %.sroa.427.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.d, i64 8
@@ -365,7 +353,7 @@ bb.y:                                             ; preds = %7, %bb.e
   %i.ac = invoke noundef align 8 ptr @_RINvNtNtCs4J2qyOfMFpM_5prost8encoding7message5mergeNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant16MultiDenseVectorQQNtNtNtCsgOCJwUSa4vG_5tonic5codec6buffer9DecodeBufECsPYQCUnoTxQ_10collection(i8 noundef %2, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.d, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %3)
           to label %bb.aa unwind label %bb.ag     ; 2 uses
 
-bb.z:                                             ; preds = %7
+bb.z:                                             ; preds = %bb.e
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ae = tail call noundef align 8 ptr @_RINvNtNtCs4J2qyOfMFpM_5prost8encoding7message5mergeNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant16MultiDenseVectorQQNtNtNtCsgOCJwUSa4vG_5tonic5codec6buffer9DecodeBufECsPYQCUnoTxQ_10collection(i8 noundef %2, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.ad, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %3)
   br label %bb.h

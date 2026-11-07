@@ -205,39 +205,35 @@ bb.d:                                             ; preds = %bb.b
 bb.e:                                             ; preds = %bb.d
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 16 dereferenceable(11) %i.a, ptr noundef nonnull align 1 dereferenceable(11) @.str.227, i64 11, i1 false) #27
   %i.h = call i64 @strlen(ptr noundef nonnull dereferenceable(1) %i.a) #30
-  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.h ; 2 uses
-  %1 = load i8, ptr %0, align 1, !tbaa !254       ; 2 uses
-  %.not1520 = icmp eq i8 %1, 0
-  br i1 %.not1520, label %._crit_edge, label %.lr.ph
+  %i.i = getelementptr inbounds nuw i8, ptr %i.a, i64 %i.h
+  br label %.lr.ph
 
-.lr.ph:                                           ; preds = %bb.e, %.split.thread
-  %2 = phi i8 [ %3, %.split.thread ], [ %1, %bb.e ] ; 2 uses
-  %.022 = phi ptr [ %i.m, %.split.thread ], [ %0, %bb.e ] ; 2 uses
-  %.01221 = phi ptr [ %i.l, %.split.thread ], [ %i.i, %bb.e ] ; 3 uses
-  switch i8 %2, label %.split.thread [
+.lr.ph:                                           ; preds = %.split.thread, %bb.e
+  %.012 = phi ptr [ %i.i, %bb.e ], [ %i.l, %.split.thread ] ; 4 uses
+  %.022 = phi ptr [ %0, %bb.e ], [ %i.m, %.split.thread ] ; 3 uses
+  %1 = load i8, ptr %.022, align 1, !tbaa !254    ; 2 uses
+  switch i8 %1, label %.split.thread [
+    i8 0, label %._crit_edge
     i8 92, label %.split
     i8 34, label %.split
   ]
 
 .split:                                           ; preds = %.lr.ph, %.lr.ph
-  %i.j = getelementptr inbounds nuw i8, ptr %.01221, i64 1
-  store i8 92, ptr %.01221, align 1, !tbaa !254
+  %i.j = getelementptr inbounds nuw i8, ptr %.012, i64 1
+  store i8 92, ptr %.012, align 1, !tbaa !254
   %.pre = load i8, ptr %.022, align 1, !tbaa !254
   br label %.split.thread
 
 .split.thread:                                    ; preds = %.lr.ph, %.split
-  %i.k = phi i8 [ %.pre, %.split ], [ %2, %.lr.ph ]
-  %.1 = phi ptr [ %i.j, %.split ], [ %.01221, %.lr.ph ] ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %.1, i64 1 ; 2 uses
+  %i.k = phi i8 [ %.pre, %.split ], [ %1, %.lr.ph ]
+  %.1 = phi ptr [ %i.j, %.split ], [ %.012, %.lr.ph ] ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %.1, i64 1
   store i8 %i.k, ptr %.1, align 1, !tbaa !254
-  %i.m = getelementptr inbounds nuw i8, ptr %.022, i64 1 ; 2 uses
-  %3 = load i8, ptr %i.m, align 1, !tbaa !254     ; 2 uses
-  %.not15 = icmp eq i8 %3, 0
-  br i1 %.not15, label %._crit_edge, label %.lr.ph, !llvm.loop !445
+  %i.m = getelementptr inbounds nuw i8, ptr %.022, i64 1
+  br label %.lr.ph, !llvm.loop !445
 
-._crit_edge:                                      ; preds = %.split.thread, %bb.e
-  %.012.lcssa = phi ptr [ %i.i, %bb.e ], [ %i.l, %.split.thread ]
-  store i8 0, ptr %.012.lcssa, align 1, !tbaa !254
+._crit_edge:                                      ; preds = %.lr.ph
+  store i8 0, ptr %.012, align 1, !tbaa !254
   %strlen = call i64 @strlen(ptr nonnull dereferenceable(1) %i.a)
   %endptr = getelementptr inbounds i8, ptr %i.a, i64 %strlen
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(3) %endptr, ptr noundef nonnull align 1 dereferenceable(3) @.str.229, i64 3, i1 false)

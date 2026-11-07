@@ -204,9 +204,11 @@ bb.mr:                                            ; preds = %bb.lg
   br label %.thread228
 
 bb.ms:                                            ; preds = %bb.lg
-  %i.aeu = load i8, ptr %i.cs, align 8, !range !30, !noundef !8 ; 5 uses
-  %3 = icmp eq i8 %i.aeu, -1
-  br i1 %3, label %bb.mt, label %4
+  %i.aeu = load i8, ptr %i.cs, align 8, !range !30, !noundef !8 ; 4 uses
+  switch i8 %i.aeu, label %bb.nb [
+    i8 -1, label %bb.mt
+    i8 6, label %bb.mx
+  ]
 
 bb.mt:                                            ; preds = %bb.ms
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.552)
@@ -231,13 +233,7 @@ bb.mw:                                            ; preds = %bb.mt
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsjouRnuJWSBB_5yamux10connection7cleanup7CleanupECs4w110Okq5IC_16ipfs_kad_example(ptr noalias nofree noundef align 8 dereferenceable(48) %.sroa.6.0..sroa_idx)
           to label %bb.nh unwind label %bb.mq
 
-4:                                                ; preds = %bb.ms
-  %5 = icmp ne i8 %i.aeu, 4
-  call void @llvm.assume(i1 %5)
-  %6 = icmp eq i8 %i.aeu, 6
-  br i1 %6, label %bb.mx, label %bb.nb
-
-bb.mx:                                            ; preds = %4
+bb.mx:                                            ; preds = %bb.ms
   %i.aex = load i64, ptr %1, align 8, !range !16, !alias.scope !1742, !noundef !8
   %i.aey = call i64 @llvm.usub.sat.i64(i64 %i.aex, i64 5)
   switch i64 %i.aey, label %bb.ni [
@@ -258,7 +254,9 @@ bb.na:                                            ; preds = %bb.mx
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsjouRnuJWSBB_5yamux10connection7cleanup7CleanupECs4w110Okq5IC_16ipfs_kad_example(ptr noalias nofree noundef align 8 dereferenceable(48) %.sroa.6.0..sroa_idx)
           to label %bb.ni unwind label %bb.nf
 
-bb.nb:                                            ; preds = %4
+bb.nb:                                            ; preds = %bb.ms
+  %3 = icmp ne i8 %i.aeu, 4
+  call void @llvm.assume(i1 %3)
   %.sroa.5170.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cs, i64 1
   %.sroa.5172.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.cs, i64 8
   %.sroa.5172.0.copyload = load ptr, ptr %.sroa.5172.0..sroa_idx, align 8 ; 2 uses

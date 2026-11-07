@@ -204,27 +204,24 @@ bb.cn:                                            ; preds = %bb.cl
 
 bb.co:                                            ; preds = %bb.cj, %bb.cm, %.noexc.i21.i, %"_ZN9grpc_core3MapINS_10ObservableINS_13RefCountedPtrINS_19LoadBalancingPolicy16SubchannelPickerEEEE12ObserverWhenIZNS6_4NextES5_EUlRKS5_E_EEZZZNS_27LoadBalancedCallDestination9StartCallENS_20UnstartedCallHandlerEEN3$_0clEvENUlvE_clEvEUlS5_E_EclEv.exit.i"
   call void @llvm.lifetime.end.p0(ptr nonnull %19) #39, !noalias !335
-  %.not = icmp eq i8 %i.ll, 1
-  br i1 %.not, label %bb.cp, label %_ZNSt7variantIJN9grpc_core8ContinueEN4absl12lts_202505128StatusOrINS0_13RefCountedPtrINS0_24UnstartedCallDestinationEEEEEEEC2EOS9_.exit24.i
+  switch i8 %i.ll, label %_ZSt26__throw_bad_variant_accessb.exit.i.i.invoke.i [
+    i8 1, label %bb.cp
+    i8 0, label %bb.cq
+    i8 -1, label %_ZSt26__throw_bad_variant_accessb.exit.i.i.invoke.i.loopexit341
+  ], !prof !353
 
 bb.cp:                                            ; preds = %bb.co
   %i.mx = icmp eq i64 %.sroa.1071.4, 1
   %i.my = load i8, ptr %i.fq, align 8, !tbaa !27, !range !28, !noalias !326, !noundef !29
-  store i8 1, ptr %27, align 8, !tbaa !354, !alias.scope !326
+  store i8 1, ptr %27, align 8, !tbaa !355, !alias.scope !326
   %i.mz = getelementptr inbounds nuw i8, ptr %27, i64 8
   store i8 %i.my, ptr %i.mz, align 8, !tbaa !27, !alias.scope !326
   %i.na = getelementptr inbounds nuw i8, ptr %27, i64 16
   br i1 %i.mx, label %_ZN4absl12lts_202505126StatusD2Ev.exit.i.i, label %bb.di
 
-_ZNSt7variantIJN9grpc_core8ContinueEN4absl12lts_202505128StatusOrINS0_13RefCountedPtrINS0_24UnstartedCallDestinationEEEEEEEC2EOS9_.exit24.i: ; preds = %bb.co
-  %.off.i25.i = add i8 %i.ll, -1
-  %switch.i26.i = icmp ult i8 %.off.i25.i, -2     ; 0 uses
-  switch i8 %i.ll, label %_ZSt26__throw_bad_variant_accessb.exit.i.i.invoke.i [
-    i8 0, label %bb.cq
-    i8 -1, label %_ZSt26__throw_bad_variant_accessb.exit.i.i.invoke.i.loopexit341
-  ], !prof !355
-
-bb.cq:                                            ; preds = %_ZNSt7variantIJN9grpc_core8ContinueEN4absl12lts_202505128StatusOrINS0_13RefCountedPtrINS0_24UnstartedCallDestinationEEEEEEEC2EOS9_.exit24.i
+bb.cq:                                            ; preds = %bb.co
+  %.off.i25.i364 = add i8 %i.ll, -1
+  %switch.i26.i365 = icmp ult i8 %.off.i25.i364, -2 ; 0 uses
   %.val.i.i32.i = load ptr, ptr %i.gz, align 8, !tbaa !21, !noalias !326 ; 3 uses
   %.not.i.i.i.i.i.i33.i = icmp eq ptr %.val.i.i32.i, null
   br i1 %.not.i.i.i.i.i.i33.i, label %"_ZN9grpc_core14promise_detail9WrappedFnIZZZNS_27LoadBalancedCallDestination9StartCallENS_20UnstartedCallHandlerEEN3$_0clEvENUlvE_clEvEUlNS_13RefCountedPtrINS_19LoadBalancingPolicy16SubchannelPickerEEEE_S9_vED2Ev.exit.i.i34.i", label %bb.cr
@@ -333,12 +330,14 @@ bb.db:                                            ; preds = %bb.da
   %.pre.i.i.i45.i = load ptr, ptr %i.ht, align 8, !tbaa !21, !noalias !357
   br label %.backedge.i
 
-_ZSt26__throw_bad_variant_accessb.exit.i.i.invoke.i.loopexit341: ; preds = %_ZNSt7variantIJN9grpc_core8ContinueEN4absl12lts_202505128StatusOrINS0_13RefCountedPtrINS0_24UnstartedCallDestinationEEEEEEEC2EOS9_.exit24.i
+_ZSt26__throw_bad_variant_accessb.exit.i.i.invoke.i.loopexit341: ; preds = %bb.co
+  %.off.i25.i366 = add i8 %i.ll, -1
+  %switch.i26.i367 = icmp ult i8 %.off.i25.i366, -2 ; 0 uses
   br label %_ZSt26__throw_bad_variant_accessb.exit.i.i.invoke.i
 
-_ZSt26__throw_bad_variant_accessb.exit.i.i.invoke.i: ; preds = %_ZNSt7variantIJN9grpc_core8ContinueEN4absl12lts_202505128StatusOrINS0_13RefCountedPtrINS0_24UnstartedCallDestinationEEEEEEEC2EOS9_.exit24.i, %_ZSt26__throw_bad_variant_accessb.exit.i.i.invoke.i.loopexit341
-  %.sroa.20.1185 = phi i1 [ false, %_ZSt26__throw_bad_variant_accessb.exit.i.i.invoke.i.loopexit341 ], [ true, %_ZNSt7variantIJN9grpc_core8ContinueEN4absl12lts_202505128StatusOrINS0_13RefCountedPtrINS0_24UnstartedCallDestinationEEEEEEEC2EOS9_.exit24.i ]
-  %.str.33.sink.i = phi ptr [ @.str.32, %_ZSt26__throw_bad_variant_accessb.exit.i.i.invoke.i.loopexit341 ], [ @.str.33, %_ZNSt7variantIJN9grpc_core8ContinueEN4absl12lts_202505128StatusOrINS0_13RefCountedPtrINS0_24UnstartedCallDestinationEEEEEEEC2EOS9_.exit24.i ]
+_ZSt26__throw_bad_variant_accessb.exit.i.i.invoke.i: ; preds = %bb.co, %_ZSt26__throw_bad_variant_accessb.exit.i.i.invoke.i.loopexit341
+  %.sroa.20.1185 = phi i1 [ false, %_ZSt26__throw_bad_variant_accessb.exit.i.i.invoke.i.loopexit341 ], [ true, %bb.co ]
+  %.str.33.sink.i = phi ptr [ @.str.32, %_ZSt26__throw_bad_variant_accessb.exit.i.i.invoke.i.loopexit341 ], [ @.str.33, %bb.co ]
   %i.og = call ptr @__cxa_allocate_exception(i64 16) #39, !noalias !326 ; 3 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVSt18bad_variant_access, i64 16), ptr %i.og, align 8, !tbaa !36, !noalias !326
   %i.oh = getelementptr inbounds nuw i8, ptr %i.og, i64 8
@@ -641,7 +640,7 @@ _ZN9grpc_core4PollISt5tupleIJN4absl12lts_202505128StatusOrINS_13RefCountedPtrINS
   store i8 1, ptr %30, align 8, !tbaa !324, !alias.scope !325
   %i.rm = getelementptr inbounds nuw i8, ptr %30, i64 8
   store i64 %i.pb, ptr %i.rm, align 8, !tbaa !112
-  %.pre = load i8, ptr %27, align 8, !tbaa !354, !range !28
+  %.pre = load i8, ptr %27, align 8, !tbaa !355, !range !28
   %i.rn = trunc nuw i8 %.pre to i1
   br i1 %i.rn, label %bb.ef, label %bb.ep
 
@@ -1044,9 +1043,9 @@ begin_hunk_1_@llvm.umax.i64
 !350 = !{!283, !278, !275, !271, !267, !257}
 !351 = !{!285, !278, !275, !271, !267, !257}
 !352 = !{!"branch_weights", i32 0, i32 -2147483648}
-!353 = !{!"_ZTSN9grpc_core4PollISt5tupleIJN4absl12lts_202505128StatusOrINS_13RefCountedPtrINS_24UnstartedCallDestinationEEEEEbEEEE", !26, i64 0, !14, i64 8}
-!354 = !{!353, !26, i64 0}
-!355 = !{!"branch_weights", i32 715470148, i32 1431655765, i32 357735}
+!353 = !{!"branch_weights", i32 715470148, i32 -2147483648, i32 1431655765, i32 357735}
+!354 = !{!"_ZTSN9grpc_core4PollISt5tupleIJN4absl12lts_202505128StatusOrINS_13RefCountedPtrINS_24UnstartedCallDestinationEEEEEbEEEE", !26, i64 0, !14, i64 8}
+!355 = !{!354, !26, i64 0}
 !356 = !{!290}
 !357 = !{!290, !257}
 !358 = !{!292}

@@ -205,16 +205,13 @@ _RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterTRINtNtNtNtCsdaEETE
   %.sroa.532.0.copyload.i.i = load i64, ptr %.sroa.532.0..sroa.529.8..sroa_idx.i.i, align 8, !noalias !18259
   %.sroa.532.0.copyload.fr.i.i = freeze i64 %.sroa.532.0.copyload.i.i ; 6 uses
   %.sroa.633.0..sroa.529.8..sroa_idx.i.i = getelementptr inbounds nuw i8, ptr %.sroa.529.070.i.i, i64 16
-  %.sroa.633.0.copyload.i.i = load i8, ptr %.sroa.633.0..sroa.529.8..sroa_idx.i.i, align 8, !noalias !18259 ; 2 uses
-  %.not.i.i207 = icmp eq i8 %.sroa.633.0.copyload.i.i, 2
-  br i1 %.not.i.i207, label %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterTRINtNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content6packed6PackedNtNtNtB17_5model7heading11HeadingElemEINtNtNtCs3oUPovFnLWP_4core3num7nonzero7NonZerojEbEENtNtNtNtB2S_4iter6traits8iterator8Iterator4nextCs8jFhWeO2DFb_9typst_pdf.exit.thread.i.i, label %6
+  %.sroa.633.0.copyload.i.i = load i8, ptr %.sroa.633.0..sroa.529.8..sroa_idx.i.i, align 8, !noalias !18259
+  switch i8 %.sroa.633.0.copyload.i.i, label %.preheader.i.i [
+    i8 2, label %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterTRINtNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content6packed6PackedNtNtNtB17_5model7heading11HeadingElemEINtNtNtCs3oUPovFnLWP_4core3num7nonzero7NonZerojEbEENtNtNtNtB2S_4iter6traits8iterator8Iterator4nextCs8jFhWeO2DFb_9typst_pdf.exit.thread.i.i
+    i8 0, label %bb.qh
+  ]
 
-6:                                                ; preds = %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterTRINtNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content6packed6PackedNtNtNtB17_5model7heading11HeadingElemEINtNtNtCs3oUPovFnLWP_4core3num7nonzero7NonZerojEbEENtNtNtNtB2S_4iter6traits8iterator8Iterator4nextCs8jFhWeO2DFb_9typst_pdf.exit.i.i
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.031.0.copyload.i.i) ]
-  %7 = trunc nuw i8 %.sroa.633.0.copyload.i.i to i1
-  br i1 %7, label %.preheader.i.i, label %bb.qh
-
-.preheader.i.i:                                   ; preds = %6
+.preheader.i.i:                                   ; preds = %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterTRINtNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content6packed6PackedNtNtNtB17_5model7heading11HeadingElemEINtNtNtCs3oUPovFnLWP_4core3num7nonzero7NonZerojEbEENtNtNtNtB2S_4iter6traits8iterator8Iterator4nextCs8jFhWeO2DFb_9typst_pdf.exit.i.i
   %i.bnn = load i64, ptr %i.bnh, align 8, !noalias !18257, !noundef !10 ; 5 uses
   %.not1743.i.i = icmp eq i64 %i.bnn, 0
   br i1 %.not1743.i.i, label %._crit_edge.i.i, label %.lr.ph.i.i215
@@ -260,7 +257,8 @@ _RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterTRINtNtNtNtCsdaEETE
   call void @_RNvCsjHpjAFo4bi0_7___rustc14___rust_dealloc(ptr noundef nonnull %i.bld, i64 noundef %.idx.i202, i64 noundef range(i64 1, -9223372036854775807) 8) #41, !noalias !18260
   br label %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterTRINtNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content6packed6PackedNtNtNtB17_5model7heading11HeadingElemEINtNtNtCs3oUPovFnLWP_4core3num7nonzero7NonZerojEbEENtNtNtNtB2S_4iter6traits8iterator8Iterator4nextCs8jFhWeO2DFb_9typst_pdf.exit.thread.i.thread.i
 
-bb.qh:                                            ; preds = %6
+bb.qh:                                            ; preds = %_RNvXs4_NtNtCs1xwejQucwHj_5alloc3vec9into_iterINtB5_8IntoIterTRINtNtNtNtCsdaEETE4DqmE_13typst_library11foundations7content6packed6PackedNtNtNtB17_5model7heading11HeadingElemEINtNtNtCs3oUPovFnLWP_4core3num7nonzero7NonZerojEbEENtNtNtNtB2S_4iter6traits8iterator8Iterator4nextCs8jFhWeO2DFb_9typst_pdf.exit.i.i
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.031.0.copyload.i.i) ]
   %i.bof = add i64 %.sroa.0.071.i.i, -1
   %or.cond.not.i.i = icmp ult i64 %i.bof, %.sroa.532.0.copyload.fr.i.i
   %spec.select.i.i208 = select i1 %or.cond.not.i.i, i64 %.sroa.0.071.i.i, i64 %.sroa.532.0.copyload.fr.i.i

@@ -204,18 +204,16 @@ bb.aw:                                            ; preds = %bb.av
 bb.ax:                                            ; preds = %bb.at
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(328) %i.dj, ptr noundef nonnull align 8 dereferenceable(328) %i.s, i64 328, i1 false), !noalias !755
   call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !755
-  %.val108.i.i = load i64, ptr %i.cr, align 8, !range !34, !noalias !755, !noundef !14 ; 2 uses
+  %.val108.i.i = load i64, ptr %i.cr, align 8, !range !34, !noalias !755, !noundef !14
   %i.dn = getelementptr i8, ptr %i.cl, i64 16     ; 3 uses
-  %.val109.i.i = load ptr, ptr %i.dn, align 8, !noalias !755 ; 5 uses
-  %2 = icmp eq i64 %.val108.i.i, 2
-  br i1 %2, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression15NameOrAttributeEECsEhZmuQNqkz_11ruff_linter.exit.i.i, label %bb.ay
+  %.val109.i.i = load ptr, ptr %i.dn, align 8, !noalias !755 ; 6 uses
+  switch i64 %.val108.i.i, label %bb.ba [
+    i64 2, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression15NameOrAttributeEECsEhZmuQNqkz_11ruff_linter.exit.i.i
+    i64 0, label %bb.ay
+  ]
 
 bb.ay:                                            ; preds = %bb.ax
-  %3 = icmp eq i64 %.val108.i.i, 0
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val109.i.i) ]
-  br i1 %3, label %4, label %bb.ba
-
-4:                                                ; preds = %bb.ay
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression4NameECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(64) %.val109.i.i)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression15NameOrAttributeECsEhZmuQNqkz_11ruff_linter.exit.i.i.i unwind label %bb.az, !noalias !755
 
@@ -227,12 +225,13 @@ common.resume.i.i.i.i:                            ; preds = %bb.bb, %bb.az
   store ptr %i.dj, ptr %i.dn, align 8, !noalias !755
   br label %.body92.i.i
 
-bb.az:                                            ; preds = %4
+bb.az:                                            ; preds = %bb.ay
   %i.do = landingpad { ptr, i32 }
           cleanup
   br label %common.resume.i.i.i.i
 
-bb.ba:                                            ; preds = %bb.ay
+bb.ba:                                            ; preds = %bb.ax
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val109.i.i) ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression9AttributeECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(328) %.val109.i.i)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression15NameOrAttributeECsEhZmuQNqkz_11ruff_linter.exit.i.i.i unwind label %bb.bb, !noalias !755, !inline_history !1
 
@@ -241,8 +240,8 @@ bb.bb:                                            ; preds = %bb.ba
           cleanup
   br label %common.resume.i.i.i.i
 
-_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression15NameOrAttributeECsEhZmuQNqkz_11ruff_linter.exit.i.i.i: ; preds = %bb.ba, %4
-  %.sink1.i.i.i.i = phi i64 [ 64, %4 ], [ 328, %bb.ba ]
+_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression15NameOrAttributeECsEhZmuQNqkz_11ruff_linter.exit.i.i.i: ; preds = %bb.ba, %bb.ay
+  %.sink1.i.i.i.i = phi i64 [ 64, %bb.ay ], [ 328, %bb.ba ]
   tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val109.i.i, i64 noundef %.sink1.i.i.i.i, i64 noundef 8) #41, !noalias !755
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression15NameOrAttributeEECsEhZmuQNqkz_11ruff_linter.exit.i.i
 
@@ -508,18 +507,16 @@ bb.cb:                                            ; preds = %bb.ca
 bb.cc:                                            ; preds = %bb.by
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(328) %i.eq, ptr noundef nonnull align 8 dereferenceable(328) %i.j, i64 328, i1 false), !noalias !755
   call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !755
-  %.val106.i.i = load i64, ptr %i.cr, align 8, !range !34, !noalias !755, !noundef !14 ; 2 uses
+  %.val106.i.i = load i64, ptr %i.cr, align 8, !range !34, !noalias !755, !noundef !14
   %i.eu = getelementptr i8, ptr %i.cl, i64 16     ; 3 uses
-  %.val107.i.i = load ptr, ptr %i.eu, align 8, !noalias !755 ; 5 uses
-  %5 = icmp eq i64 %.val106.i.i, 2
-  br i1 %5, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression15NameOrAttributeEECsEhZmuQNqkz_11ruff_linter.exit137.i.i, label %bb.cd
+  %.val107.i.i = load ptr, ptr %i.eu, align 8, !noalias !755 ; 6 uses
+  switch i64 %.val106.i.i, label %bb.cf [
+    i64 2, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression15NameOrAttributeEECsEhZmuQNqkz_11ruff_linter.exit137.i.i
+    i64 0, label %bb.cd
+  ]
 
 bb.cd:                                            ; preds = %bb.cc
-  %6 = icmp eq i64 %.val106.i.i, 0
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val107.i.i) ]
-  br i1 %6, label %7, label %bb.cf
-
-7:                                                ; preds = %bb.cd
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression4NameECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(64) %.val107.i.i)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression15NameOrAttributeECsEhZmuQNqkz_11ruff_linter.exit.i133.i.i unwind label %bb.ce, !noalias !755
 
@@ -531,12 +528,13 @@ common.resume.i.i130.i.i:                         ; preds = %bb.cg, %bb.ce
   store ptr %i.eq, ptr %i.eu, align 8, !noalias !755
   br label %.thread16.i.i
 
-bb.ce:                                            ; preds = %7
+bb.ce:                                            ; preds = %bb.cd
   %i.ev = landingpad { ptr, i32 }
           cleanup
   br label %common.resume.i.i130.i.i
 
-bb.cf:                                            ; preds = %bb.cd
+bb.cf:                                            ; preds = %bb.cc
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val107.i.i) ]
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression9AttributeECsEhZmuQNqkz_11ruff_linter(ptr noalias noundef nonnull align 8 dereferenceable(328) %.val107.i.i)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression15NameOrAttributeECsEhZmuQNqkz_11ruff_linter.exit.i133.i.i unwind label %bb.cg, !noalias !755, !inline_history !1
 
@@ -545,8 +543,8 @@ bb.cg:                                            ; preds = %bb.cf
           cleanup
   br label %common.resume.i.i130.i.i
 
-_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression15NameOrAttributeECsEhZmuQNqkz_11ruff_linter.exit.i133.i.i: ; preds = %bb.cf, %7
-  %.sink1.i.i134.i.i = phi i64 [ 64, %7 ], [ 328, %bb.cf ]
+_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression15NameOrAttributeECsEhZmuQNqkz_11ruff_linter.exit.i133.i.i: ; preds = %bb.cf, %bb.cd
+  %.sink1.i.i134.i.i = phi i64 [ 64, %bb.cd ], [ 328, %bb.cf ]
   call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val107.i.i, i64 noundef %.sink1.i.i134.i.i, i64 noundef 8) #41, !noalias !755
   br label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCsarohYtwVpE2_13libcst_native5nodes10expression15NameOrAttributeEECsEhZmuQNqkz_11ruff_linter.exit137.i.i
 
@@ -949,9 +947,9 @@ bb.g:                                             ; preds = %.lr.ph43
   invoke void @_RNvXNtNtCscdodAO9FK5_5alloc3vec21spec_from_iter_nestedINtB4_3VecRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEINtB2_18SpecFromIterNestedB10_INtNtNtNtCs4NRVxsYgnAr_4core4iter8adapters7flatten7FlatMapINtNtNtB2x_5slice4iter4IterNtB13_4ExprEBQ_NCNvNtNtNtNtCsEhZmuQNqkz_11ruff_linter5rules11tryceratops5rules19verbose_log_message19verbose_log_message0EE9from_iterB4c_(ptr noalias noundef nonnull sret([24 x i8]) align 8 captures(none) dereferenceable(24) %i.d, ptr noalias noundef nonnull align 8 captures(address) dereferenceable(80) %i.c)
           to label %bb.i unwind label %bb.f
 
-bb.h:                                             ; preds = %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEECsEhZmuQNqkz_11ruff_linter.exit31, %.lr.ph43
-  %i.ba = phi ptr [ %.pre57, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEECsEhZmuQNqkz_11ruff_linter.exit31 ], [ %i.ap, %.lr.ph43 ] ; 2 uses
-  %i.bb = phi ptr [ %.pre, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEECsEhZmuQNqkz_11ruff_linter.exit31 ], [ %i.an, %.lr.ph43 ] ; 2 uses
+bb.h:                                             ; preds = %.lr.ph43, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEECsEhZmuQNqkz_11ruff_linter.exit31
+  %i.ba = phi ptr [ %i.ap, %.lr.ph43 ], [ %.pre57, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEECsEhZmuQNqkz_11ruff_linter.exit31 ] ; 2 uses
+  %i.bb = phi ptr [ %i.an, %.lr.ph43 ], [ %.pre, %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtNtCscdodAO9FK5_5alloc3vec9into_iter8IntoIterRNtNtCskLngH8kgpZI_15ruff_python_ast9generated8ExprNameEECsEhZmuQNqkz_11ruff_linter.exit31 ] ; 2 uses
   %i.bc = icmp eq ptr %i.ba, %i.bb
   br i1 %i.bc, label %._crit_edge44, label %.lr.ph43
 

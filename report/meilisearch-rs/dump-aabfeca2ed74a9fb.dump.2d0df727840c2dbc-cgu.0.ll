@@ -206,7 +206,7 @@ bb.l:                                             ; preds = %bb.g
   %.sroa.6.0259328 = phi ptr [ %.sroa.10.0.i.i, %bb.h ], [ %.sroa.10.0.i.i, %bb.i ], [ %.sroa.10.0.i.i, %bb.g ], [ %.sroa.10.0.i.i, %bb.j ], [ undef, %.thread ], [ %.sroa.10.0.i.i, %bb.k ], [ %.sroa.10.0.i.i, %bb.l ], [ %.sroa.10.0.i.i, %bb.o ], [ %.sroa.10.0.i.i, %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17heb3c90190989cda2E.exit.i" ] ; 3 uses
   %.sroa.6.0263326 = phi i64 [ %i.t, %bb.h ], [ %i.t, %bb.i ], [ %i.t, %bb.g ], [ %i.t, %bb.j ], [ undef, %.thread ], [ %i.t, %bb.k ], [ %i.t, %bb.l ], [ %i.t, %bb.o ], [ %i.t, %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17heb3c90190989cda2E.exit.i" ]
   %.sroa.084.0 = phi i8 [ 3, %bb.h ], [ 4, %bb.i ], [ 2, %bb.g ], [ 5, %bb.j ], [ 6, %.thread ], [ 0, %bb.k ], [ 1, %bb.l ], [ 4, %bb.o ], [ 4, %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17heb3c90190989cda2E.exit.i" ]
-  %.sroa.085.0 = phi i64 [ 3, %bb.h ], [ 7, %bb.i ], [ 7, %bb.g ], [ %i.f, %bb.j ], [ 8, %.thread ], [ 5, %bb.k ], [ 5, %bb.l ], [ 6, %bb.o ], [ 6, %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17heb3c90190989cda2E.exit.i" ] ; 14 uses
+  %.sroa.085.0 = phi i64 [ 3, %bb.h ], [ 7, %bb.i ], [ 7, %bb.g ], [ %i.f, %bb.j ], [ 8, %.thread ], [ 5, %bb.k ], [ 5, %bb.l ], [ 6, %bb.o ], [ 6, %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17heb3c90190989cda2E.exit.i" ] ; 8 uses
   %.sroa.22.0 = phi i64 [ %i.ac, %bb.h ], [ undef, %bb.i ], [ undef, %bb.g ], [ %.sroa.4123.0.copyload, %bb.j ], [ %.sroa.3103.0.copyload, %.thread ], [ %.sroa.3109.0.copyload, %bb.k ], [ %.sroa.3106.0.copyload, %bb.l ], [ %.sroa.5.0.copyload, %bb.o ], [ %.sroa.5.0.copyload, %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17heb3c90190989cda2E.exit.i" ]
   %i.al = phi <2 x i64> [ <i64 0, i64 undef>, %bb.h ], [ <i64 0, i64 undef>, %bb.i ], [ <i64 0, i64 undef>, %bb.g ], [ %i.af, %bb.j ], [ %i.o, %.thread ], [ %i.ah, %bb.k ], [ %i.aj, %bb.l ], [ <i64 0, i64 undef>, %bb.o ], [ <i64 0, i64 undef>, %"_ZN70_$LT$alloc..vec..Vec$LT$T$C$A$GT$$u20$as$u20$core..ops..drop..Drop$GT$4drop17heb3c90190989cda2E.exit.i" ]
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
@@ -320,9 +320,9 @@ bb.w:                                             ; preds = %bb.q
   %i.bh = load i64, ptr %i.bg, align 8, !range !71, !noundef !63
   %i.bi = getelementptr i8, ptr %i.aq, i64 -104
   switch i64 %i.bh, label %default.unreachable321 [
-    i64 0, label %2
-    i64 1, label %3
-    i64 2, label %4
+    i64 0, label %bb.aa
+    i64 1, label %bb.ab
+    i64 2, label %bb.ac
     i64 3, label %bb.z
   ]
 
@@ -354,7 +354,7 @@ default.unreachable321:                           ; preds = %bb.w
   store i64 %i.bl, ptr %.sroa.18.0..sroa_idx91, align 8
   br label %bb.z
 
-bb.z:                                             ; preds = %.sink.split, %bb.w, %bb.ac, %bb.ab, %bb.aa, %4, %3, %2
+bb.z:                                             ; preds = %.sink.split, %bb.ac, %bb.ab, %bb.aa, %bb.w
   %i.bm = getelementptr i8, ptr %i.aq, i64 -96
   %.sroa.0151.sroa.0.0.copyload = load i56, ptr %i.bm, align 8
   %.sroa.4152.0..sroa_idx = getelementptr i8, ptr %i.aq, i64 -89
@@ -363,33 +363,15 @@ bb.z:                                             ; preds = %.sink.split, %bb.w,
   %.sroa.5153.0.copyload = load i64, ptr %.sroa.5153.0..sroa_idx, align 8
   br label %bb.y
 
-2:                                                ; preds = %bb.w
-  %.not168 = icmp eq i64 %.sroa.085.0, 9
-  br i1 %.not168, label %bb.z, label %bb.aa
-
-3:                                                ; preds = %bb.w
-  %.not167 = icmp eq i64 %.sroa.085.0, 9
-  br i1 %.not167, label %bb.z, label %bb.ab
-
-4:                                                ; preds = %bb.w
-  %.not166 = icmp eq i64 %.sroa.085.0, 9
-  br i1 %.not166, label %bb.z, label %bb.ac
-
-bb.aa:                                            ; preds = %2
-  %5 = icmp ne i64 %.sroa.085.0, 4
-  tail call void @llvm.assume(i1 %5)
+bb.aa:                                            ; preds = %bb.w
   %i.bn = icmp eq i64 %.sroa.085.0, 3
   br i1 %i.bn, label %.sink.split, label %bb.z
 
-bb.ab:                                            ; preds = %3
-  %6 = icmp ne i64 %.sroa.085.0, 4
-  tail call void @llvm.assume(i1 %6)
+bb.ab:                                            ; preds = %bb.w
   %i.bo = icmp eq i64 %.sroa.085.0, 6
   br i1 %i.bo, label %.sink.split, label %bb.z
 
-bb.ac:                                            ; preds = %4
-  %7 = icmp ne i64 %.sroa.085.0, 4
-  tail call void @llvm.assume(i1 %7)
+bb.ac:                                            ; preds = %bb.w
   %i.bp = icmp eq i64 %.sroa.085.0, 7
   br i1 %i.bp, label %.sink.split, label %bb.z
 

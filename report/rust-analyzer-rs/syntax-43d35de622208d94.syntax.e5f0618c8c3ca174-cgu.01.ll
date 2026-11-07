@@ -204,21 +204,15 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjJXvCMGn
 
 bb.z:                                             ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7LetElseEEB15_.exit55
   %i.bx = invoke i16 @_RNvMs5_NtNtCsjJXvCMGntp8_6syntax3ast8expr_extNtNtNtB7_9generated5nodes7BinExpr7op_kind(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.f)
-          to label %2 unwind label %.loopexit.split-lp.loopexit.split-lp
+          to label %bb.ab unwind label %.loopexit.split-lp.loopexit.split-lp
 
-bb.aa:                                            ; preds = %bb.ab, %2, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7LetElseEEB15_.exit55
+bb.aa:                                            ; preds = %bb.ab, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7LetElseEEB15_.exit55
   %i.by = invoke fastcc { i64, ptr } @_RNvXsvy_NtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodesNtB6_4ExprNtNtCshzWfHUSfYae_4core5clone5Clone5clone(i64 %.val38, ptr %.val39)
           to label %bb.ac unwind label %.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
-2:                                                ; preds = %bb.z
-  %.sroa.014.0.extract.trunc = trunc i16 %i.bx to i8 ; 3 uses
-  %.not19 = icmp eq i8 %.sroa.014.0.extract.trunc, -1
-  br i1 %.not19, label %bb.aa, label %bb.ab
-
-bb.ab:                                            ; preds = %2
-  %3 = icmp ne i8 %.sroa.014.0.extract.trunc, 5
-  call void @llvm.assume(i1 %3)
-  %i.bz = icmp eq i8 %.sroa.014.0.extract.trunc, 3
+bb.ab:                                            ; preds = %bb.z
+  %2 = and i16 %i.bx, 255
+  %i.bz = icmp eq i16 %2, 3
   br i1 %i.bz, label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes4ExprEEB15_.exit62, label %bb.aa
 
 bb.ac:                                            ; preds = %bb.aa

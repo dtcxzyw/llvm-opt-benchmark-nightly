@@ -202,14 +202,14 @@ bb.b:                                             ; preds = %bb.a
   unreachable
 
 bb.c:                                             ; preds = %bb.a
-  %i.g = load i32, ptr %0, align 4, !range !291, !noundef !10 ; 3 uses
-  %.not29 = icmp eq i32 %i.g, -1
-  br i1 %.not29, label %bb.g, label %4
+  %i.g = load i32, ptr %0, align 4, !range !291, !noundef !10
+  %.not29 = icmp eq i32 %i.g, 2
+  br i1 %.not29, label %bb.h, label %bb.g
 
 bb.d:                                             ; preds = %bb.a
-  %i.h = load i32, ptr %0, align 4, !range !291, !noundef !10 ; 3 uses
-  %.not26 = icmp eq i32 %i.h, -1
-  br i1 %.not26, label %bb.l, label %7
+  %i.h = load i32, ptr %0, align 4, !range !291, !noundef !10
+  %.not26 = icmp eq i32 %i.h, 3
+  br i1 %.not26, label %bb.m, label %bb.l
 
 bb.e:                                             ; preds = %bb.a
   %i.i = load i32, ptr %0, align 4, !range !291, !noundef !10 ; 3 uses
@@ -217,17 +217,11 @@ bb.e:                                             ; preds = %bb.a
   br i1 %.not24, label %bb.q, label %bb.p
 
 bb.f:                                             ; preds = %bb.a
-  %i.j = load i32, ptr %0, align 4, !range !291, !noundef !10 ; 3 uses
-  %.not = icmp eq i32 %i.j, -1
-  br i1 %.not, label %bb.u, label %10
+  %i.j = load i32, ptr %0, align 4, !range !291, !noundef !10
+  %.not = icmp eq i32 %i.j, 5
+  br i1 %.not, label %bb.v, label %bb.u
 
-4:                                                ; preds = %bb.c
-  %5 = icmp ne i32 %i.g, 4
-  tail call void @llvm.assume(i1 %5)
-  %6 = icmp eq i32 %i.g, 2
-  br i1 %6, label %bb.h, label %bb.g
-
-bb.g:                                             ; preds = %4, %bb.c
+bb.g:                                             ; preds = %bb.c
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e)
   %i.k = getelementptr inbounds nuw i8, ptr %i.e, i64 16
   store i32 0, ptr %i.k, align 4
@@ -240,7 +234,7 @@ bb.g:                                             ; preds = %4, %bb.c
   %.not31 = icmp eq ptr %i.n, null
   br i1 %.not31, label %bb.j, label %bb.k
 
-bb.h:                                             ; preds = %4
+bb.h:                                             ; preds = %bb.c
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.p = tail call noundef align 8 ptr @_RINvNtNtCs4J2qyOfMFpM_5prost8encoding7message5mergeNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant18ScalarQuantizationQQNtNtNtCsgOCJwUSa4vG_5tonic5codec6buffer9DecodeBufECsl8OoimOLbh_6qdrant(i8 noundef %2, ptr noalias nofree noundef nonnull align 4 dereferenceable(24) %i.o, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %3)
   br label %bb.i
@@ -259,13 +253,7 @@ bb.k:                                             ; preds = %bb.g, %bb.j
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
   br label %bb.i
 
-7:                                                ; preds = %bb.d
-  %8 = icmp ne i32 %i.h, 4
-  tail call void @llvm.assume(i1 %8)
-  %9 = icmp eq i32 %i.h, 3
-  br i1 %9, label %bb.m, label %bb.l
-
-bb.l:                                             ; preds = %7, %bb.d
+bb.l:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d)
   %i.q = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   store i32 0, ptr %i.q, align 4
@@ -276,7 +264,7 @@ bb.l:                                             ; preds = %7, %bb.d
   %.not28 = icmp eq ptr %i.s, null
   br i1 %.not28, label %bb.n, label %bb.o
 
-bb.m:                                             ; preds = %7
+bb.m:                                             ; preds = %bb.d
   %i.t = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.u = tail call noundef align 8 ptr @_RINvNtNtCs4J2qyOfMFpM_5prost8encoding7message5mergeNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant19ProductQuantizationQQNtNtNtCsgOCJwUSa4vG_5tonic5codec6buffer9DecodeBufECsl8OoimOLbh_6qdrant(i8 noundef %2, ptr noalias nofree noundef nonnull align 4 dereferenceable(16) %i.t, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %3)
   br label %bb.i
@@ -322,13 +310,7 @@ bb.t:                                             ; preds = %bb.q, %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %i.c)
   br label %bb.i
 
-10:                                               ; preds = %bb.f
-  %11 = icmp ne i32 %i.j, 4
-  tail call void @llvm.assume(i1 %11)
-  %12 = icmp eq i32 %i.j, 5
-  br i1 %12, label %bb.v, label %bb.u
-
-bb.u:                                             ; preds = %10, %bb.f
+bb.u:                                             ; preds = %bb.f
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b)
   %i.ab = getelementptr inbounds nuw i8, ptr %i.b, i64 16
   store i8 2, ptr %i.ab, align 4
@@ -339,7 +321,7 @@ bb.u:                                             ; preds = %10, %bb.f
   %.not23 = icmp eq ptr %i.ad, null
   br i1 %.not23, label %bb.w, label %bb.x
 
-bb.v:                                             ; preds = %10
+bb.v:                                             ; preds = %bb.f
   %i.ae = getelementptr inbounds nuw i8, ptr %0, i64 4
   %i.af = tail call noundef align 8 ptr @_RINvNtNtCs4J2qyOfMFpM_5prost8encoding7message5mergeNtNtNtCshMzyYDJGtjv_3api4grpc6qdrant17TurboQuantizationQQNtNtNtCsgOCJwUSa4vG_5tonic5codec6buffer9DecodeBufECsl8OoimOLbh_6qdrant(i8 noundef %2, ptr noalias nofree noundef nonnull align 4 dereferenceable(20) %i.ae, ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %3)
   br label %bb.i

@@ -204,25 +204,22 @@ define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtCs6E
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %.val = load i64, ptr %i.b, align 8, !range !48, !noundef !24 ; 2 uses
+  %.val = load i64, ptr %i.b, align 8, !range !48, !noundef !24
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %.val2 = load ptr, ptr %i.c, align 8            ; 54 uses
-  %1 = icmp eq i64 %.val, -1
-  br i1 %1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs6EFb6a2W5dE_10actix_http8encoding7decoder14ContentDecoderEECsl8OoimOLbh_6qdrant.exit, label %2
-
-2:                                                ; preds = %bb.a
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
+  %.val2 = load ptr, ptr %i.c, align 8            ; 57 uses
   switch i64 %.val, label %default.unreachable [
+    i64 -1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs6EFb6a2W5dE_10actix_http8encoding7decoder14ContentDecoderEECsl8OoimOLbh_6qdrant.exit
     i64 0, label %bb.k
     i64 1, label %bb.w
     i64 2, label %bb.at
     i64 3, label %bb.b
   ]
 
-default.unreachable:                              ; preds = %bb.bb, %2
+default.unreachable:                              ; preds = %bb.bb, %bb.a
   unreachable
 
-bb.b:                                             ; preds = %2
+bb.b:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   %i.d = load i64, ptr %.val2, align 8, !range !28, !alias.scope !1311, !noundef !24
   %i.e = icmp eq i64 %i.d, 0
   br i1 %i.e, label %bb.c, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtCsef1ZxLeSXfJ_4zstd6stream3raw7DecoderECsl8OoimOLbh_6qdrant.exit.i.i.i.i.i
@@ -296,7 +293,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxINtNt
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val2, i64 noundef 88, i64 noundef 8) #24
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs6EFb6a2W5dE_10actix_http8encoding7decoder14ContentDecoderEECsl8OoimOLbh_6qdrant.exit
 
-bb.k:                                             ; preds = %2
+bb.k:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   invoke void @_RNvXs4_NtCsl0S4h5MD44r_6flate23zioINtB5_6WriterNtNtCs6EFb6a2W5dE_10actix_http8encoding6WriterNtNtB7_3mem10DecompressENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(80) %.val2)
           to label %bb.n unwind label %bb.l
 
@@ -378,7 +376,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxINtNt
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val2, i64 noundef 80, i64 noundef 8) #24
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs6EFb6a2W5dE_10actix_http8encoding7decoder14ContentDecoderEECsl8OoimOLbh_6qdrant.exit
 
-bb.w:                                             ; preds = %2
+bb.w:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   invoke void @_RNvXs4_NtCsl0S4h5MD44r_6flate23zioINtB5_6WriterINtNtB7_3crc9CrcWriterNtNtCs6EFb6a2W5dE_10actix_http8encoding6WriterENtNtB7_3mem10DecompressENtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4dropCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(232) %.val2)
           to label %bb.z unwind label %bb.x
 
@@ -554,7 +553,8 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxINtNt
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val2, i64 noundef 232, i64 noundef 8) #24
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtCs6EFb6a2W5dE_10actix_http8encoding7decoder14ContentDecoderEECsl8OoimOLbh_6qdrant.exit
 
-bb.at:                                            ; preds = %2
+bb.at:                                            ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val2) ]
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1320)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1321)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !1322)
@@ -957,7 +957,7 @@ bb.by:                                            ; preds = %_RNvXNtCs27TyLBeV75
 
 bb.bz:                                            ; preds = %_RNvXNtCs27TyLBeV75a_11parking_lot9raw_mutexNtB2_8RawMutexNtNtCsbO4BqjCww8C_8lock_api5mutex8RawMutex4lock.exit.i.i.i.i.i.i.i
   %i.fo = getelementptr inbounds nuw i8, ptr %i.eb, i64 760
-  %.val36.i.i.i.i.i.i = load ptr, ptr %i.fo, align 8, !noalias !28598, !noundef !24 ; 4 uses
+  %.val36.i.i.i.i.i.i = load ptr, ptr %i.fo, align 8, !noalias !28598, !noundef !24 ; 5 uses
   %i.fp = getelementptr i8, ptr %i.eb, i64 768
   %.val37.i.i.i.i.i.i = load ptr, ptr %i.fp, align 8, !noalias !28598 ; 3 uses
   %magicptr.i.i.i.i.i.i.i = ptrtoint ptr %.val36.i.i.i.i.i.i to i64
@@ -967,6 +967,7 @@ bb.bz:                                            ; preds = %_RNvXNtCs27TyLBeV75
   ]
 
 bb.ca:                                            ; preds = %bb.bz
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val36.i.i.i.i.i.i) ]
   %i.fq = getelementptr inbounds nuw i8, ptr %.val36.i.i.i.i.i.i, i64 8
   %i.fr = atomicrmw add ptr %i.fq, i64 1 monotonic, align 8, !noalias !28598
   %i.fs = icmp slt i64 %i.fr, 0
@@ -1369,17 +1370,11 @@ bb.s:                                             ; preds = %bb.y, %.noexc27, %b
 
 bb.t:                                             ; preds = %bb.p, %bb.l, %bb.k, %bb.q
   %.val = load ptr, ptr %i.v, align 8, !noundef !24 ; 2 uses
-  %i.ao = load i64, ptr %.val, align 8, !range !43, !noundef !24 ; 3 uses
-  %.not.i = icmp eq i64 %i.ao, -1
-  br i1 %.not.i, label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardE8and_thenINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs5QaNqjAn6vc_5shard14locked_segment13LockedSegmentENCNCNvMNtBN_11replica_setNtB3f_15ShardReplicaSet27calculate_local_shard_stats00ECsl8OoimOLbh_6qdrant.exit.thread, label %3
+  %i.ao = load i64, ptr %.val, align 8, !range !43, !noundef !24
+  %.not.i = icmp eq i64 %i.ao, 2
+  br i1 %.not.i, label %bb.u, label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardE8and_thenINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs5QaNqjAn6vc_5shard14locked_segment13LockedSegmentENCNCNvMNtBN_11replica_setNtB3f_15ShardReplicaSet27calculate_local_shard_stats00ECsl8OoimOLbh_6qdrant.exit.thread
 
-3:                                                ; preds = %bb.t
-  %4 = icmp ne i64 %i.ao, 4
-  tail call void @llvm.assume(i1 %4)
-  %5 = icmp eq i64 %i.ao, 2
-  br i1 %5, label %bb.u, label %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardE8and_thenINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs5QaNqjAn6vc_5shard14locked_segment13LockedSegmentENCNCNvMNtBN_11replica_setNtB3f_15ShardReplicaSet27calculate_local_shard_stats00ECsl8OoimOLbh_6qdrant.exit.thread
-
-bb.u:                                             ; preds = %3
+bb.u:                                             ; preds = %bb.t
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !38644
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !38644
   call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !38644
@@ -1449,7 +1444,7 @@ bb.aa:                                            ; preds = %_RINvMNtCskKLDkoKar
   invoke void @_RNvXs2_NtNtNtCsjZG7hsAZr3B_5tokio4sync6rwlock10read_guardINtB5_15RwLockReadGuardINtNtCskKLDkoKarTP_4core6option6OptionNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardEENtNtNtB1l_3ops4drop4Drop4dropCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.h)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsjZG7hsAZr3B_5tokio4sync6rwlock10read_guard15RwLockReadGuardINtNtB4_6option6OptionNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardEEECsl8OoimOLbh_6qdrant.exit33 unwind label %bb.ab
 
-_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardE8and_thenINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs5QaNqjAn6vc_5shard14locked_segment13LockedSegmentENCNCNvMNtBN_11replica_setNtB3f_15ShardReplicaSet27calculate_local_shard_stats00ECsl8OoimOLbh_6qdrant.exit.thread: ; preds = %bb.t, %3, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardE8and_thenINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs5QaNqjAn6vc_5shard14locked_segment13LockedSegmentENCNCNvMNtBN_11replica_setNtB3f_15ShardReplicaSet27calculate_local_shard_stats00ECsl8OoimOLbh_6qdrant.exit
+_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardE8and_thenINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs5QaNqjAn6vc_5shard14locked_segment13LockedSegmentENCNCNvMNtBN_11replica_setNtB3f_15ShardReplicaSet27calculate_local_shard_stats00ECsl8OoimOLbh_6qdrant.exit.thread: ; preds = %bb.t, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionRNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardE8and_thenINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs5QaNqjAn6vc_5shard14locked_segment13LockedSegmentENCNCNvMNtBN_11replica_setNtB3f_15ShardReplicaSet27calculate_local_shard_stats00ECsl8OoimOLbh_6qdrant.exit
   invoke void @_RNvXs2_NtNtNtCsjZG7hsAZr3B_5tokio4sync6rwlock10read_guardINtB5_15RwLockReadGuardINtNtCskKLDkoKarTP_4core6option6OptionNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardEENtNtNtB1l_3ops4drop4Drop4dropCsl8OoimOLbh_6qdrant(ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.h)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtNtNtCsjZG7hsAZr3B_5tokio4sync6rwlock10read_guard15RwLockReadGuardINtNtB4_6option6OptionNtNtNtCsPYQCUnoTxQ_10collection6shards5shard5ShardEEECsl8OoimOLbh_6qdrant.exit35 unwind label %bb.ae
 
@@ -1852,7 +1847,7 @@ bb.q:                                             ; preds = %_RNvXNtCs27TyLBeV75
 
 bb.r:                                             ; preds = %_RNvXNtCs27TyLBeV75a_11parking_lot9raw_mutexNtB2_8RawMutexNtNtCsbO4BqjCww8C_8lock_api5mutex8RawMutex4lock.exit.i
   %i.ar = getelementptr inbounds nuw i8, ptr %i.o, i64 760
-  %.val25 = load ptr, ptr %i.ar, align 8, !noundef !24 ; 4 uses
+  %.val25 = load ptr, ptr %i.ar, align 8, !noundef !24 ; 5 uses
   %i.as = getelementptr i8, ptr %i.o, i64 768
   %.val26 = load ptr, ptr %i.as, align 8          ; 3 uses
   %magicptr.i = ptrtoint ptr %.val25 to i64
@@ -1862,6 +1857,7 @@ bb.r:                                             ; preds = %_RNvXNtCs27TyLBeV75
   ]
 
 bb.s:                                             ; preds = %bb.r
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val25) ]
   %i.at = getelementptr inbounds nuw i8, ptr %.val25, i64 8
   %i.au = atomicrmw add ptr %i.at, i64 1 monotonic, align 8
   %i.av = icmp slt i64 %i.au, 0

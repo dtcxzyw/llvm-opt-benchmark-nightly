@@ -205,17 +205,11 @@ _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9genera
           to label %common.resume.i unwind label %bb.n, !noalias !2793
 
 bb.i:                                             ; preds = %bb.f
-  %i.ap = load i32, ptr %i.v, align 8, !range !44, !noalias !2793, !noundef !10 ; 3 uses
-  %.not7.i.i = icmp eq i32 %i.ap, -1
-  br i1 %.not7.i.i, label %bb.k, label %3
+  %i.ap = load i32, ptr %i.v, align 8, !range !44, !noalias !2793, !noundef !10
+  %.not7.i.i = icmp eq i32 %i.ap, 3
+  br i1 %.not7.i.i, label %bb.j, label %bb.k
 
-3:                                                ; preds = %bb.i
-  %4 = icmp ne i32 %i.ap, 4
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i32 %i.ap, 3
-  br i1 %5, label %bb.j, label %bb.k
-
-bb.j:                                             ; preds = %3
+bb.j:                                             ; preds = %bb.i
   %i.aq = getelementptr inbounds nuw i8, ptr %i.v, i64 40
   %.sroa.0.0.copyload2.i = load i8, ptr %i.aq, align 8, !noalias !2792
   %.sroa.11.0..sroa_idx4.i = getelementptr inbounds nuw i8, ptr %i.v, i64 41
@@ -227,8 +221,8 @@ bb.j:                                             ; preds = %3
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 1 dereferenceable(39) %.sroa.11.i, ptr noundef nonnull align 1 dereferenceable(39) %.sroa.413.0..sroa_idx.i.sink, i64 39, i1 false), !noalias !2792
   br label %bb.k
 
-bb.k:                                             ; preds = %.sink.split, %bb.l, %3, %bb.i, %bb.e
-  %.sroa.0.0.i = phi i8 [ -1, %bb.e ], [ -1, %bb.l ], [ -1, %bb.i ], [ -1, %3 ], [ %.sroa.0.0.i.ph, %.sink.split ] ; 3 uses
+bb.k:                                             ; preds = %.sink.split, %bb.l, %bb.i, %bb.e
+  %.sroa.0.0.i = phi i8 [ -1, %bb.e ], [ -1, %bb.i ], [ -1, %bb.l ], [ %.sroa.0.0.i.ph, %.sink.split ] ; 3 uses
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.ai) ]
   %i.ar = getelementptr inbounds nuw i8, ptr %i.ai, i64 48 ; 2 uses
   %i.as = load i32, ptr %i.ar, align 4, !noalias !2793, !noundef !10

@@ -205,7 +205,7 @@ bb.m:                                             ; preds = %_RNvMs1_NvNtNtCsdaE
 
 bb.n:                                             ; preds = %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles10StyleChainNtNtB13_4diag12HintedStringEECs5cbCQMMIObr_10typst_eval.exit.thread, %bb.w
   %.sroa.5.0 = phi i64 [ %i.br, %bb.w ], [ undef, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles10StyleChainNtNtB13_4diag12HintedStringEECs5cbCQMMIObr_10typst_eval.exit.thread ] ; 5 uses
-  %.sroa.0.0 = phi ptr [ %i.bq, %bb.w ], [ null, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles10StyleChainNtNtB13_4diag12HintedStringEECs5cbCQMMIObr_10typst_eval.exit.thread ] ; 8 uses
+  %.sroa.0.0 = phi ptr [ %i.bq, %bb.w ], [ null, %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCsdaEETE4DqmE_13typst_library11foundations6styles10StyleChainNtNtB13_4diag12HintedStringEECs5cbCQMMIObr_10typst_eval.exit.thread ] ; 9 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !13957)
   call void @llvm.lifetime.start.p0(ptr nonnull %i.g)
   store ptr %.sroa.0.0, ptr %i.g, align 8, !noalias !13958
@@ -241,6 +241,7 @@ bb.p:                                             ; preds = %bb.o
   ]
 
 bb.q:                                             ; preds = %bb.p
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0) ]
   %i.av = getelementptr inbounds i8, ptr %.sroa.0.0, i64 -16
   %i.aw = atomicrmw add ptr %i.av, i64 1 monotonic, align 8, !noalias !13958
   %i.ax = icmp slt i64 %i.aw, 0
@@ -643,17 +644,13 @@ bb.am:                                            ; preds = %.noexc128
           to label %.noexc135 unwind label %.thread170.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !18403
 
 .noexc135:                                        ; preds = %.noexc134
-  %i.dz = load i64, ptr %i.b, align 8, !range !39, !noalias !18424, !noundef !35 ; 3 uses
-  %3 = icmp eq i64 %i.dz, -1
-  br i1 %3, label %bb.ao, label %4
+  %i.dz = load i64, ptr %i.b, align 8, !range !39, !noalias !18424, !noundef !35
+  switch i64 %i.dz, label %bb.an [
+    i64 26, label %bb.ap
+    i64 -1, label %bb.ao
+  ]
 
-4:                                                ; preds = %.noexc135
-  %5 = icmp ne i64 %i.dz, 30
-  call void @llvm.assume(i1 %5)
-  %6 = icmp eq i64 %i.dz, 26
-  br i1 %6, label %bb.ap, label %bb.an
-
-bb.an:                                            ; preds = %4
+bb.an:                                            ; preds = %.noexc135
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueECs5cbCQMMIObr_10typst_eval(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.b)
           to label %_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueINtNtCsakL8LGkl72C_4ecow3vec6EcoVecNtNtB13_4diag16SourceDiagnosticEEECs5cbCQMMIObr_10typst_eval.exit.i unwind label %.thread170.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !18403
 
@@ -669,7 +666,7 @@ _RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueINtNtB4_6result6ResultNtNtNtCsdaEETE4Dqm
   call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !18424
   br label %.loopexit
 
-bb.ap:                                            ; preds = %4
+bb.ap:                                            ; preds = %.noexc135
   invoke fastcc void @_RINvNtCs3oUPovFnLWP_4core3ptr9drop_glueNtNtNtCsdaEETE4DqmE_13typst_library11foundations5value5ValueECs5cbCQMMIObr_10typst_eval(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.b)
           to label %.noexc129 unwind label %.thread170.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, !inline_history !18403
 

@@ -204,13 +204,11 @@ bb.v:                                             ; preds = %"_ZZN8rawspeed12_GL
   br i1 %i.ql, label %bb.w, label %bb.z
 
 bb.w:                                             ; preds = %bb.v
-  switch i32 %.017.i97.i.i.i.i, label %unreachable.i.i.i.i.i.i [
+  switch i32 %.017.i97.i.i.i.i, label %_ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block36fuji_decode_interpolation_even_innerENS0_8xt_linesEi.exit.i.i.i.i.i.i [
     i32 0, label %_ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block36fuji_decode_interpolation_even_innerENS0_8xt_linesEi.exit69.i.i.i.i.i.i
     i32 2, label %bb.x
     i32 4, label %bb.y
     i32 5, label %_ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block36fuji_decode_interpolation_even_innerENS0_8xt_linesEi.exit69.i.i.i.i.i.i
-    i32 1, label %_ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block36fuji_decode_interpolation_even_innerENS0_8xt_linesEi.exit.i.i.i.i.i.i
-    i32 3, label %_ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block36fuji_decode_interpolation_even_innerENS0_8xt_linesEi.exit.i.i.i.i.i.i
   ]
 
 bb.x:                                             ; preds = %bb.w
@@ -280,9 +278,6 @@ _ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block36fuji_decode_interpolation_ev
   %i.sf = lshr i32 %i.se, 2
   br label %"_ZZN8rawspeed12_GLOBAL__N_121fuji_compressed_block19xtrans_decode_blockEiENK3$_0clENS0_8xt_linesEiRSt5arrayINS0_8int_pairELm41EEiii.exit.i.i.i.i.i"
 
-unreachable.i.i.i.i.i.i:                          ; preds = %bb.w
-  unreachable
-
 bb.aa:                                            ; preds = %bb.z
   switch i32 %.017.i97.i.i.i.i, label %.unreachabledefault.i.i.i.i.i.i [
     i32 0, label %_ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block36fuji_decode_interpolation_even_innerENS0_8xt_linesEi.exit.i.i.i.i.i.i
@@ -301,7 +296,7 @@ bb.ac:                                            ; preds = %bb.ab, %bb.aa
   call void @llvm.assume(i1 %i.po)
   br label %_ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block36fuji_decode_interpolation_even_innerENS0_8xt_linesEi.exit.i.i.i.i.i.i
 
-_ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block36fuji_decode_interpolation_even_innerENS0_8xt_linesEi.exit.i.i.i.i.i.i: ; preds = %bb.ac, %bb.ab, %bb.aa, %bb.aa, %bb.y, %bb.x, %bb.w, %bb.w
+_ZNK8rawspeed12_GLOBAL__N_121fuji_compressed_block36fuji_decode_interpolation_even_innerENS0_8xt_linesEi.exit.i.i.i.i.i.i: ; preds = %bb.ac, %bb.ab, %bb.aa, %bb.aa, %bb.y, %bb.x, %bb.w
   %i.sg = and i32 %indvars.iv.i.sroa.phi78.sroa.speculated.in.i.i.i.i, 255 ; 4 uses
   %i.sh = add nsw i32 %i.sg, -1                   ; 2 uses
   %i.si = shl nsw i32 %i.qm, 1                    ; 4 uses

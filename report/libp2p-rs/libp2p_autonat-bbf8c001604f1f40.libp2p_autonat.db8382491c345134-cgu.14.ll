@@ -202,7 +202,7 @@ bb.b:                                             ; preds = %.loopexit, %bb.ax, 
   %.pn39 = phi { ptr, i32 } [ %.pn, %bb.ap ], [ %.pn, %bb.aw ], [ %.pn, %bb.ax ], [ %lpad.loopexit, %.loopexit ] ; 2 uses
   br i1 %.sroa.018.2, label %bb.bh, label %.thread
 
-.loopexit:                                        ; preds = %.backedge, %bb.y, %bb.ab, %5, %bb.ba
+.loopexit:                                        ; preds = %.backedge, %bb.y, %bb.ab, %bb.as, %bb.ba
   %lpad.loopexit = landingpad { ptr, i32 }
           cleanup
   br label %bb.b
@@ -543,9 +543,11 @@ bb.am:                                            ; preds = %bb.ak
 
 bb.an:                                            ; preds = %bb.ao, %bb.am
   call void @llvm.lifetime.end.p0(ptr nonnull %i.p)
-  %i.dj = load i64, ptr %i.q, align 8, !range !654, !noundef !6 ; 3 uses
-  %3 = icmp eq i64 %i.dj, -1
-  br i1 %3, label %bb.ar, label %bb.as
+  %i.dj = load i64, ptr %i.q, align 8, !range !654, !noundef !6 ; 2 uses
+  switch i64 %i.dj, label %bb.as [
+    i64 -1, label %bb.ar
+    i64 2, label %bb.ar
+  ]
 
 bb.ao:                                            ; preds = %bb.ai
   call void @llvm.lifetime.end.p0(ptr nonnull %i.e)
@@ -565,7 +567,7 @@ bb.aq:                                            ; preds = %bb.ah, %bb.ag, %bb.
           cleanup
   br label %bb.ap
 
-bb.ar:                                            ; preds = %bb.av, %5, %bb.as, %bb.an
+bb.ar:                                            ; preds = %bb.an, %bb.an, %bb.av, %bb.as
   call void @llvm.lifetime.end.p0(ptr nonnull %i.q)
   br label %.backedge.backedge
 
@@ -575,10 +577,6 @@ bb.ar:                                            ; preds = %bb.av, %5, %bb.as, 
 bb.as:                                            ; preds = %bb.an
   %i.do = icmp ne i64 %i.dj, 6
   call void @llvm.assume(i1 %i.do)
-  %4 = icmp eq i64 %i.dj, 2
-  br i1 %4, label %bb.ar, label %5
-
-5:                                                ; preds = %bb.as
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCs6b9j1MKPRPC_12libp2p_swarm9behaviour7ToSwarmINtCsfoiTdJnOWBy_23libp2p_request_response5EventNtNtNtCsiQsUuLk7hWW_14libp2p_autonat2v18protocol11DialRequestNtB2e_12DialResponseEINtNtB1t_7handler15OutboundMessageNtB2e_12AutoNatCodecEEEB2i_(ptr noalias nofree noundef align 8 dereferenceable(272) %i.q)
           to label %bb.ar unwind label %.loopexit
 

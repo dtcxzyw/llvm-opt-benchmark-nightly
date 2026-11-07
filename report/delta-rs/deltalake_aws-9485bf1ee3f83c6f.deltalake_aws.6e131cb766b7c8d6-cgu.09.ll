@@ -202,8 +202,8 @@ bb.aw:                                            ; preds = %bb.av
   call void @_RNvCs8mYq7K4qqSA_7___rustc14___rust_dealloc(ptr noundef nonnull %.val98.i, i64 noundef range(i64 1, 0) %i.er, i64 noundef range(i64 1, 536870913) %i.eu) #22, !noalias !4127
   br label %.body.i
 
-.body.i:                                          ; preds = %9, %bb.fa, %bb.ez, %bb.ed, %bb.df, %bb.bv, %bb.aw, %bb.av, %bb.ao
-  %.pn74.i = phi { ptr, i32 } [ %i.ep, %bb.av ], [ %.pn70.pn.pn.i, %bb.fa ], [ %.pn70.pn.pn.i, %9 ], [ %.pn70.pn.pn.i, %bb.bv ], [ %i.ed, %bb.ao ], [ %i.ku, %bb.df ], [ %i.ep, %bb.aw ], [ %.pn60.pn.pn.i, %bb.ez ], [ %.pn31.pn.pn.i, %bb.ed ]
+.body.i:                                          ; preds = %bb.fa, %bb.ez, %bb.ed, %bb.df, %bb.bv, %bb.bv, %bb.aw, %bb.av, %bb.ao
+  %.pn74.i = phi { ptr, i32 } [ %i.ep, %bb.av ], [ %.pn70.pn.pn.i, %bb.bv ], [ %.pn70.pn.pn.i, %bb.fa ], [ %.pn70.pn.pn.i, %bb.bv ], [ %i.ed, %bb.ao ], [ %i.ku, %bb.df ], [ %i.ep, %bb.aw ], [ %.pn60.pn.pn.i, %bb.ez ], [ %.pn31.pn.pn.i, %bb.ed ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aq), !noalias !4126
   br label %bb.de
 
@@ -424,15 +424,19 @@ bb.bt:                                            ; preds = %bb.br, %.noexc138.i
   br label %bb.bu
 
 bb.bu:                                            ; preds = %bb.bt, %bb.bn, %bb.bk, %bb.bg, %bb.bf
-  %i.hj = load i64, ptr %i.aq, align 8, !range !24, !noalias !4126, !noundef !6 ; 3 uses
-  %.not257.i = icmp eq i64 %i.hj, -9223372036854775790
-  br i1 %.not257.i, label %.thread49, label %bb.ex
+  %i.hj = load i64, ptr %i.aq, align 8, !range !24, !noalias !4126, !noundef !6 ; 2 uses
+  switch i64 %i.hj, label %bb.ex [
+    i64 -9223372036854775790, label %.thread49
+    i64 -9223372036854775802, label %.thread49
+  ]
 
 bb.bv:                                            ; preds = %.body153.i, %bb.bs, %bb.bm, %bb.bj
   %.pn70.pn.pn.i = phi { ptr, i32 } [ %i.hi, %bb.bs ], [ %.pn50.i, %.body153.i ], [ %i.gb, %bb.bj ], [ %i.gk, %bb.bm ] ; 3 uses
-  %i.hk = load i64, ptr %i.aq, align 8, !range !24, !noalias !4126, !noundef !6 ; 3 uses
-  %.not256.i = icmp eq i64 %i.hk, -9223372036854775790
-  br i1 %.not256.i, label %.body.i, label %bb.fa
+  %i.hk = load i64, ptr %i.aq, align 8, !range !24, !noalias !4126, !noundef !6 ; 2 uses
+  switch i64 %i.hk, label %bb.fa [
+    i64 -9223372036854775790, label %.body.i
+    i64 -9223372036854775802, label %.body.i
+  ]
 
 bb.bw:                                            ; preds = %bb.ay
   %i.hl = icmp eq i64 %i.ez, 0
@@ -717,23 +721,21 @@ bb.cx:                                            ; preds = %bb.cv, %.noexc164.i
 _RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB1B_4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit.i: ; preds = %bb.cp, %bb.co
   call void @llvm.lifetime.end.p0(ptr nonnull %i.w), !noalias !4126
   call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !4126
-  %i.kj = load i64, ptr %i.aq, align 8, !range !24, !noalias !4126, !noundef !6 ; 3 uses
-  %.not52.i = icmp eq i64 %i.kj, -9223372036854775790
-  br i1 %.not52.i, label %bb.cy, label %3
+  %i.kj = load i64, ptr %i.aq, align 8, !range !24, !noalias !4126, !noundef !6 ; 2 uses
+  switch i64 %i.kj, label %bb.cz [
+    i64 -9223372036854775790, label %bb.cy
+    i64 -9223372036854775802, label %bb.cy
+  ]
 
-3:                                                ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB1B_4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit.i
-  %4 = icmp ne i64 %i.kj, -9223372036854775800
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i64 %i.kj, -9223372036854775802
-  br i1 %5, label %bb.cy, label %bb.cz
-
-bb.cy:                                            ; preds = %bb.cz, %3, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB1B_4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit.i
+bb.cy:                                            ; preds = %bb.cz, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB1B_4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit.i, %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB1B_4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit.i
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aq), !noalias !4126
   %.pre.i = load i64, ptr %i.fb, align 8, !noalias !4126
   %.pre259.i = load i64, ptr %i.fd, align 8, !noalias !4126
   br label %bb.al
 
-bb.cz:                                            ; preds = %3
+bb.cz:                                            ; preds = %_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB1B_4SendEL_EECs9rVkZwOUgsI_13deltalake_aws.exit.i
+  %3 = icmp ne i64 %i.kj, -9223372036854775800
+  call void @llvm.assume(i1 %3)
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsjyY8HP3IvQ6_12object_store5ErrorECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef align 8 dereferenceable(72) %i.aq)
           to label %bb.cy unwind label %bb.df, !noalias !4127
 
@@ -767,7 +769,7 @@ bb.de:                                            ; preds = %bb.db, %.body.i
   store i8 2, ptr %i.dt, align 8, !noalias !4126
   br label %.body35
 
-bb.df:                                            ; preds = %7, %bb.da, %bb.cz
+bb.df:                                            ; preds = %bb.ex, %bb.da, %bb.cz
   %i.ku = landingpad { ptr, i32 }
           cleanup
   br label %.body.i
@@ -788,7 +790,7 @@ bb.dh:                                            ; preds = %bb.cw, %bb.ck, %bb.
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeINtNtCs6Po7BT7Nknu_5alloc5boxed3BoxDNtNtB4_5error5ErrorNtNtB4_6marker4SyncNtB1B_4SendEL_EECs9rVkZwOUgsI_13deltalake_aws(ptr %.val.i, ptr nonnull %.val95.i) #30
           to label %.body153.i unwind label %bb.di, !noalias !4127
 
-bb.di:                                            ; preds = %9, %bb.ey, %bb.ec, %bb.dh, %bb.ao
+bb.di:                                            ; preds = %bb.fa, %bb.ey, %bb.ec, %bb.dh, %bb.ao
   %i.kz = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
   call void @_RNvNtCsbvkFyIu7lgC_4core9panicking16panic_in_cleanup() #32, !noalias !4127
@@ -1154,10 +1156,6 @@ bb.ew:                                            ; preds = %bb.eu
 bb.ex:                                            ; preds = %bb.bu
   %i.od = icmp ne i64 %i.hj, -9223372036854775800
   call void @llvm.assume(i1 %i.od)
-  %6 = icmp eq i64 %i.hj, -9223372036854775802
-  br i1 %6, label %.thread49, label %7
-
-7:                                                ; preds = %bb.ex
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsjyY8HP3IvQ6_12object_store5ErrorECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef align 8 dereferenceable(72) %i.aq)
           to label %.thread49 unwind label %bb.df, !noalias !4127
 
@@ -1173,10 +1171,6 @@ bb.ez:                                            ; preds = %bb.ey
 bb.fa:                                            ; preds = %bb.bv
   %i.oe = icmp ne i64 %i.hk, -9223372036854775800
   call void @llvm.assume(i1 %i.oe)
-  %8 = icmp eq i64 %i.hk, -9223372036854775802
-  br i1 %8, label %.body.i, label %9
-
-9:                                                ; preds = %bb.fa
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNtCsjyY8HP3IvQ6_12object_store5ErrorECs9rVkZwOUgsI_13deltalake_aws(ptr noalias noundef align 8 dereferenceable(72) %i.aq) #30
           to label %.body.i unwind label %bb.di, !noalias !4127
 
@@ -1191,7 +1185,7 @@ bb.fb:                                            ; preds = %bb.an, %bb.am
   invoke fastcc void @_RINvNtCsbvkFyIu7lgC_4core3ptr13drop_in_placeNCNCNvYDNtCsjyY8HP3IvQ6_12object_store11ObjectStoreEL_NtNtNtNtCs14kWLkQVSKO_14deltalake_core8logstore7storage9retry_ext19ObjectStoreRetryExt19delete_with_retries00ECs9rVkZwOUgsI_13deltalake_aws(ptr noundef nonnull align 8 %i.ds) #30
           to label %.body unwind label %bb.p
 
-.thread49:                                        ; preds = %bb.bu, %7, %bb.ex
+.thread49:                                        ; preds = %bb.bu, %bb.bu, %bb.ex
   call void @llvm.lifetime.end.p0(ptr nonnull %i.aq), !noalias !4126
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.8, ptr noundef nonnull align 8 dereferenceable(64) %.sroa.416.i, i64 64, i1 false), !noalias !4138
   store i8 1, ptr %i.dt, align 8, !noalias !4126

@@ -205,66 +205,65 @@ bb.f:                                             ; preds = %bb.b
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6result6ResultINtNtNtCs2mZqlW55729_12polars_utils15python_function10serde_wrap15PySerializeWrapNtB1t_12PythonObjectENtNtCsk1caaszg7Cl_10serde_json5error5ErrorEEECseeLknQCOKOd_13polars_python(i64 %.0.val, ptr %.8.val) unnamed_addr #1 personality ptr @rust_eh_personality !dbg !32903 !guid !32942 {
 bb.a:
-  %0 = icmp eq i64 %.0.val, 2, !dbg !32946
-  br i1 %0, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtNtCs2mZqlW55729_12polars_utils15python_function10serde_wrap15PySerializeWrapNtB17_12PythonObjectENtNtCsk1caaszg7Cl_10serde_json5error5ErrorEECseeLknQCOKOd_13polars_python.exit, label %1, !dbg !32946
+  switch i64 %.0.val, label %bb.e [
+    i64 2, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtNtCs2mZqlW55729_12polars_utils15python_function10serde_wrap15PySerializeWrapNtB17_12PythonObjectENtNtCsk1caaszg7Cl_10serde_json5error5ErrorEECseeLknQCOKOd_13polars_python.exit
+    i64 0, label %bb.b
+  ], !dbg !32946
 
-_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtNtCs2mZqlW55729_12polars_utils15python_function10serde_wrap15PySerializeWrapNtB17_12PythonObjectENtNtCsk1caaszg7Cl_10serde_json5error5ErrorEECseeLknQCOKOd_13polars_python.exit: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsk1caaszg7Cl_10serde_json5error5ErrorECseeLknQCOKOd_13polars_python.exit.i, %bb.d, %bb.c, %bb.a
+_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtNtCs2mZqlW55729_12polars_utils15python_function10serde_wrap15PySerializeWrapNtB17_12PythonObjectENtNtCsk1caaszg7Cl_10serde_json5error5ErrorEECseeLknQCOKOd_13polars_python.exit: ; preds = %bb.a, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsk1caaszg7Cl_10serde_json5error5ErrorECseeLknQCOKOd_13polars_python.exit.i, %bb.d, %bb.c
   ret void, !dbg !32946
 
-1:                                                ; preds = %bb.a
-  %2 = icmp eq i64 %.0.val, 0, !dbg !32947
+bb.b:                                             ; preds = %bb.a
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  br i1 %2, label %bb.b, label %bb.e, !dbg !32947
-
-bb.b:                                             ; preds = %1
-  %i.a = tail call noundef nonnull align 8 ptr @llvm.threadlocal.address.p0(ptr @_RNvNCNKNvNtNtCsbm5zPlkZccl_4pyo38internal5state12ATTACH_COUNT0s_023___RUST_STD_INTERNAL_VAL), !dbg !32948
-  %.val.i.i.i.i.i.i.i = load i64, ptr %i.a, align 8, !dbg !32949, !noundef !3778
-  %i.b = icmp sgt i64 %.val.i.i.i.i.i.i.i, 0, !dbg !32950
-  br i1 %i.b, label %bb.d, label %bb.c, !dbg !32951, !prof !4123
+  %i.a = tail call noundef nonnull align 8 ptr @llvm.threadlocal.address.p0(ptr @_RNvNCNKNvNtNtCsbm5zPlkZccl_4pyo38internal5state12ATTACH_COUNT0s_023___RUST_STD_INTERNAL_VAL), !dbg !32947
+  %.val.i.i.i.i.i.i.i = load i64, ptr %i.a, align 8, !dbg !32948, !noundef !3778
+  %i.b = icmp sgt i64 %.val.i.i.i.i.i.i.i, 0, !dbg !32949
+  br i1 %i.b, label %bb.d, label %bb.c, !dbg !32950, !prof !4123
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @_RNvNvXsA_NtCsbm5zPlkZccl_4pyo38instanceINtB7_2PypENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4drop9drop_slow(ptr noundef nonnull %.8.val), !dbg !32952
-  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtNtCs2mZqlW55729_12polars_utils15python_function10serde_wrap15PySerializeWrapNtB17_12PythonObjectENtNtCsk1caaszg7Cl_10serde_json5error5ErrorEECseeLknQCOKOd_13polars_python.exit, !dbg !32952
+  tail call void @_RNvNvXsA_NtCsbm5zPlkZccl_4pyo38instanceINtB7_2PypENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4drop9drop_slow(ptr noundef nonnull %.8.val), !dbg !32951
+  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtNtCs2mZqlW55729_12polars_utils15python_function10serde_wrap15PySerializeWrapNtB17_12PythonObjectENtNtCsk1caaszg7Cl_10serde_json5error5ErrorEECseeLknQCOKOd_13polars_python.exit, !dbg !32951
 
 bb.d:                                             ; preds = %bb.b
-  tail call void @_Py_DecRef(ptr noundef nonnull %.8.val) #33, !dbg !32953
-  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtNtCs2mZqlW55729_12polars_utils15python_function10serde_wrap15PySerializeWrapNtB17_12PythonObjectENtNtCsk1caaszg7Cl_10serde_json5error5ErrorEECseeLknQCOKOd_13polars_python.exit, !dbg !32954
+  tail call void @_Py_DecRef(ptr noundef nonnull %.8.val) #33, !dbg !32952
+  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtNtCs2mZqlW55729_12polars_utils15python_function10serde_wrap15PySerializeWrapNtB17_12PythonObjectENtNtCsk1caaszg7Cl_10serde_json5error5ErrorEECseeLknQCOKOd_13polars_python.exit, !dbg !32953
 
-bb.e:                                             ; preds = %1
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !32943), !dbg !32955
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !32944), !dbg !32956
-  %i.c = load i64, ptr %.8.val, align 8, !dbg !32957, !range !3810, !alias.scope !32945, !noundef !3778
+bb.e:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !32943), !dbg !32954
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !32944), !dbg !32955
+  %i.c = load i64, ptr %.8.val, align 8, !dbg !32956, !range !3810, !alias.scope !32945, !noundef !3778
   switch i64 %i.c, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsk1caaszg7Cl_10serde_json5error5ErrorECseeLknQCOKOd_13polars_python.exit.i [
     i64 0, label %bb.f
     i64 1, label %bb.h
-  ], !dbg !32957
+  ], !dbg !32956
 
 bb.f:                                             ; preds = %bb.e
-  %i.d = getelementptr inbounds nuw i8, ptr %.8.val, i64 16, !dbg !32957
-  %.val1.i.i.i.i.i = load i64, ptr %i.d, align 8, !dbg !32957, !alias.scope !32945, !noundef !3778 ; 2 uses
-  %i.e = icmp eq i64 %.val1.i.i.i.i.i, 0, !dbg !32958
-  br i1 %i.e, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsk1caaszg7Cl_10serde_json5error5ErrorECseeLknQCOKOd_13polars_python.exit.i, label %bb.g, !dbg !32958
+  %i.d = getelementptr inbounds nuw i8, ptr %.8.val, i64 16, !dbg !32956
+  %.val1.i.i.i.i.i = load i64, ptr %i.d, align 8, !dbg !32956, !alias.scope !32945, !noundef !3778 ; 2 uses
+  %i.e = icmp eq i64 %.val1.i.i.i.i.i, 0, !dbg !32957
+  br i1 %i.e, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsk1caaszg7Cl_10serde_json5error5ErrorECseeLknQCOKOd_13polars_python.exit.i, label %bb.g, !dbg !32957
 
 bb.g:                                             ; preds = %bb.f
-  %i.f = getelementptr inbounds nuw i8, ptr %.8.val, i64 8, !dbg !32957
-  %.val.i.i.i.i.i = load ptr, ptr %i.f, align 8, !dbg !32957, !alias.scope !32945, !nonnull !3778, !noundef !3778
-  tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i.i.i, i64 noundef range(i64 1, 0) %.val1.i.i.i.i.i, i64 noundef 1) #33, !dbg !32959, !noalias !32945
-  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsk1caaszg7Cl_10serde_json5error5ErrorECseeLknQCOKOd_13polars_python.exit.i, !dbg !32960
+  %i.f = getelementptr inbounds nuw i8, ptr %.8.val, i64 8, !dbg !32956
+  %.val.i.i.i.i.i = load ptr, ptr %i.f, align 8, !dbg !32956, !alias.scope !32945, !nonnull !3778, !noundef !3778
+  tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i.i.i, i64 noundef range(i64 1, 0) %.val1.i.i.i.i.i, i64 noundef 1) #33, !dbg !32958, !noalias !32945
+  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsk1caaszg7Cl_10serde_json5error5ErrorECseeLknQCOKOd_13polars_python.exit.i, !dbg !32959
 
 bb.h:                                             ; preds = %bb.e
-  %i.g = getelementptr inbounds nuw i8, ptr %.8.val, i64 8, !dbg !32957
+  %i.g = getelementptr inbounds nuw i8, ptr %.8.val, i64 8, !dbg !32956
   invoke void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorECseeLknQCOKOd_13polars_python(ptr noalias noundef nonnull readonly align 8 dereferenceable(8) %i.g)
-          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsk1caaszg7Cl_10serde_json5error5ErrorECseeLknQCOKOd_13polars_python.exit.i unwind label %bb.i, !dbg !32957
+          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsk1caaszg7Cl_10serde_json5error5ErrorECseeLknQCOKOd_13polars_python.exit.i unwind label %bb.i, !dbg !32956
 
 bb.i:                                             ; preds = %bb.h
   %i.h = landingpad { ptr, i32 }
           cleanup
-  tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.8.val, i64 noundef 40, i64 noundef 8) #33, !dbg !32961
-  resume { ptr, i32 } %i.h, !dbg !32955
+  tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.8.val, i64 noundef 40, i64 noundef 8) #33, !dbg !32960
+  resume { ptr, i32 } %i.h, !dbg !32954
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsk1caaszg7Cl_10serde_json5error5ErrorECseeLknQCOKOd_13polars_python.exit.i: ; preds = %bb.h, %bb.g, %bb.f, %bb.e
-  tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.8.val, i64 noundef 40, i64 noundef 8) #33, !dbg !32962
-  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtNtCs2mZqlW55729_12polars_utils15python_function10serde_wrap15PySerializeWrapNtB17_12PythonObjectENtNtCsk1caaszg7Cl_10serde_json5error5ErrorEECseeLknQCOKOd_13polars_python.exit, !dbg !32947
+  tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.8.val, i64 noundef 40, i64 noundef 8) #33, !dbg !32961
+  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultINtNtNtCs2mZqlW55729_12polars_utils15python_function10serde_wrap15PySerializeWrapNtB17_12PythonObjectENtNtCsk1caaszg7Cl_10serde_json5error5ErrorEECseeLknQCOKOd_13polars_python.exit, !dbg !32962
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -405,66 +404,65 @@ bb.f:                                             ; preds = %bb.b
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6option6OptionINtNtB4_6result6ResultNtNtCs2mZqlW55729_12polars_utils15python_function12PythonObjectNtNtCsk1caaszg7Cl_10serde_json5error5ErrorEEECseeLknQCOKOd_13polars_python(i64 %.0.val, ptr %.8.val) unnamed_addr #1 personality ptr @rust_eh_personality !dbg !33056 !guid !33094 {
 bb.a:
-  %0 = icmp eq i64 %.0.val, 2, !dbg !33098
-  br i1 %0, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCs2mZqlW55729_12polars_utils15python_function12PythonObjectNtNtCsk1caaszg7Cl_10serde_json5error5ErrorEECseeLknQCOKOd_13polars_python.exit, label %1, !dbg !33098
+  switch i64 %.0.val, label %bb.e [
+    i64 2, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCs2mZqlW55729_12polars_utils15python_function12PythonObjectNtNtCsk1caaszg7Cl_10serde_json5error5ErrorEECseeLknQCOKOd_13polars_python.exit
+    i64 0, label %bb.b
+  ], !dbg !33098
 
-_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCs2mZqlW55729_12polars_utils15python_function12PythonObjectNtNtCsk1caaszg7Cl_10serde_json5error5ErrorEECseeLknQCOKOd_13polars_python.exit: ; preds = %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsk1caaszg7Cl_10serde_json5error5ErrorECseeLknQCOKOd_13polars_python.exit.i, %bb.d, %bb.c, %bb.a
+_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCs2mZqlW55729_12polars_utils15python_function12PythonObjectNtNtCsk1caaszg7Cl_10serde_json5error5ErrorEECseeLknQCOKOd_13polars_python.exit: ; preds = %bb.a, %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsk1caaszg7Cl_10serde_json5error5ErrorECseeLknQCOKOd_13polars_python.exit.i, %bb.d, %bb.c
   ret void, !dbg !33098
 
-1:                                                ; preds = %bb.a
-  %2 = icmp eq i64 %.0.val, 0, !dbg !33099
+bb.b:                                             ; preds = %bb.a
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
-  br i1 %2, label %bb.b, label %bb.e, !dbg !33099
-
-bb.b:                                             ; preds = %1
-  %i.a = tail call noundef nonnull align 8 ptr @llvm.threadlocal.address.p0(ptr @_RNvNCNKNvNtNtCsbm5zPlkZccl_4pyo38internal5state12ATTACH_COUNT0s_023___RUST_STD_INTERNAL_VAL), !dbg !33100
-  %.val.i.i.i.i.i.i = load i64, ptr %i.a, align 8, !dbg !33101, !noundef !3778
-  %i.b = icmp sgt i64 %.val.i.i.i.i.i.i, 0, !dbg !33102
-  br i1 %i.b, label %bb.d, label %bb.c, !dbg !33103, !prof !4123
+  %i.a = tail call noundef nonnull align 8 ptr @llvm.threadlocal.address.p0(ptr @_RNvNCNKNvNtNtCsbm5zPlkZccl_4pyo38internal5state12ATTACH_COUNT0s_023___RUST_STD_INTERNAL_VAL), !dbg !33099
+  %.val.i.i.i.i.i.i = load i64, ptr %i.a, align 8, !dbg !33100, !noundef !3778
+  %i.b = icmp sgt i64 %.val.i.i.i.i.i.i, 0, !dbg !33101
+  br i1 %i.b, label %bb.d, label %bb.c, !dbg !33102, !prof !4123
 
 bb.c:                                             ; preds = %bb.b
-  tail call void @_RNvNvXsA_NtCsbm5zPlkZccl_4pyo38instanceINtB7_2PypENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4drop9drop_slow(ptr noundef nonnull %.8.val), !dbg !33104
-  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCs2mZqlW55729_12polars_utils15python_function12PythonObjectNtNtCsk1caaszg7Cl_10serde_json5error5ErrorEECseeLknQCOKOd_13polars_python.exit, !dbg !33104
+  tail call void @_RNvNvXsA_NtCsbm5zPlkZccl_4pyo38instanceINtB7_2PypENtNtNtCscgRAwXFJnXP_4core3ops4drop4Drop4drop9drop_slow(ptr noundef nonnull %.8.val), !dbg !33103
+  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCs2mZqlW55729_12polars_utils15python_function12PythonObjectNtNtCsk1caaszg7Cl_10serde_json5error5ErrorEECseeLknQCOKOd_13polars_python.exit, !dbg !33103
 
 bb.d:                                             ; preds = %bb.b
-  tail call void @_Py_DecRef(ptr noundef nonnull %.8.val) #33, !dbg !33105
-  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCs2mZqlW55729_12polars_utils15python_function12PythonObjectNtNtCsk1caaszg7Cl_10serde_json5error5ErrorEECseeLknQCOKOd_13polars_python.exit, !dbg !33106
+  tail call void @_Py_DecRef(ptr noundef nonnull %.8.val) #33, !dbg !33104
+  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCs2mZqlW55729_12polars_utils15python_function12PythonObjectNtNtCsk1caaszg7Cl_10serde_json5error5ErrorEECseeLknQCOKOd_13polars_python.exit, !dbg !33105
 
-bb.e:                                             ; preds = %1
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !33095), !dbg !33107
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !33096), !dbg !33108
-  %i.c = load i64, ptr %.8.val, align 8, !dbg !33109, !range !3810, !alias.scope !33097, !noundef !3778
+bb.e:                                             ; preds = %bb.a
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.8.val) ]
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !33095), !dbg !33106
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !33096), !dbg !33107
+  %i.c = load i64, ptr %.8.val, align 8, !dbg !33108, !range !3810, !alias.scope !33097, !noundef !3778
   switch i64 %i.c, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsk1caaszg7Cl_10serde_json5error5ErrorECseeLknQCOKOd_13polars_python.exit.i [
     i64 0, label %bb.f
     i64 1, label %bb.h
-  ], !dbg !33109
+  ], !dbg !33108
 
 bb.f:                                             ; preds = %bb.e
-  %i.d = getelementptr inbounds nuw i8, ptr %.8.val, i64 16, !dbg !33109
-  %.val1.i.i.i.i.i = load i64, ptr %i.d, align 8, !dbg !33109, !alias.scope !33097, !noundef !3778 ; 2 uses
-  %i.e = icmp eq i64 %.val1.i.i.i.i.i, 0, !dbg !33110
-  br i1 %i.e, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsk1caaszg7Cl_10serde_json5error5ErrorECseeLknQCOKOd_13polars_python.exit.i, label %bb.g, !dbg !33110
+  %i.d = getelementptr inbounds nuw i8, ptr %.8.val, i64 16, !dbg !33108
+  %.val1.i.i.i.i.i = load i64, ptr %i.d, align 8, !dbg !33108, !alias.scope !33097, !noundef !3778 ; 2 uses
+  %i.e = icmp eq i64 %.val1.i.i.i.i.i, 0, !dbg !33109
+  br i1 %i.e, label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsk1caaszg7Cl_10serde_json5error5ErrorECseeLknQCOKOd_13polars_python.exit.i, label %bb.g, !dbg !33109
 
 bb.g:                                             ; preds = %bb.f
-  %i.f = getelementptr inbounds nuw i8, ptr %.8.val, i64 8, !dbg !33109
-  %.val.i.i.i.i.i = load ptr, ptr %i.f, align 8, !dbg !33109, !alias.scope !33097, !nonnull !3778, !noundef !3778
-  tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i.i.i, i64 noundef range(i64 1, 0) %.val1.i.i.i.i.i, i64 noundef 1) #33, !dbg !33111, !noalias !33097
-  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsk1caaszg7Cl_10serde_json5error5ErrorECseeLknQCOKOd_13polars_python.exit.i, !dbg !33112
+  %i.f = getelementptr inbounds nuw i8, ptr %.8.val, i64 8, !dbg !33108
+  %.val.i.i.i.i.i = load ptr, ptr %i.f, align 8, !dbg !33108, !alias.scope !33097, !nonnull !3778, !noundef !3778
+  tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i.i.i, i64 noundef range(i64 1, 0) %.val1.i.i.i.i.i, i64 noundef 1) #33, !dbg !33110, !noalias !33097
+  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsk1caaszg7Cl_10serde_json5error5ErrorECseeLknQCOKOd_13polars_python.exit.i, !dbg !33111
 
 bb.h:                                             ; preds = %bb.e
-  %i.g = getelementptr inbounds nuw i8, ptr %.8.val, i64 8, !dbg !33109
+  %i.g = getelementptr inbounds nuw i8, ptr %.8.val, i64 8, !dbg !33108
   invoke void @_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtNtCsh8eZTKRCwoO_3std2io5error5ErrorECseeLknQCOKOd_13polars_python(ptr noalias noundef nonnull readonly align 8 dereferenceable(8) %i.g)
-          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsk1caaszg7Cl_10serde_json5error5ErrorECseeLknQCOKOd_13polars_python.exit.i unwind label %bb.i, !dbg !33109
+          to label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsk1caaszg7Cl_10serde_json5error5ErrorECseeLknQCOKOd_13polars_python.exit.i unwind label %bb.i, !dbg !33108
 
 bb.i:                                             ; preds = %bb.h
   %i.h = landingpad { ptr, i32 }
           cleanup
-  tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.8.val, i64 noundef 40, i64 noundef 8) #33, !dbg !33113
-  resume { ptr, i32 } %i.h, !dbg !33107
+  tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.8.val, i64 noundef 40, i64 noundef 8) #33, !dbg !33112
+  resume { ptr, i32 } %i.h, !dbg !33106
 
 _RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeNtNtCsk1caaszg7Cl_10serde_json5error5ErrorECseeLknQCOKOd_13polars_python.exit.i: ; preds = %bb.h, %bb.g, %bb.f, %bb.e
-  tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.8.val, i64 noundef 40, i64 noundef 8) #33, !dbg !33114
-  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCs2mZqlW55729_12polars_utils15python_function12PythonObjectNtNtCsk1caaszg7Cl_10serde_json5error5ErrorEECseeLknQCOKOd_13polars_python.exit, !dbg !33099
+  tail call void @_RNvCs9MrPpZx4smZ_7___rustc14___rust_dealloc(ptr noundef nonnull %.8.val, i64 noundef 40, i64 noundef 8) #33, !dbg !33113
+  br label %_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCs2mZqlW55729_12polars_utils15python_function12PythonObjectNtNtCsk1caaszg7Cl_10serde_json5error5ErrorEECseeLknQCOKOd_13polars_python.exit, !dbg !33114
 }
 
 ; Function Attrs: nonlazybind uwtable
@@ -867,22 +865,22 @@ begin_hunk_1_@llvm.umax.i64
 !32944 = !{!32923}
 !32945 = !{!32923, !32919}
 !32946 = !DILocation(line: 810, column: 1, scope: !32903)
-!32947 = !DILocation(line: 810, column: 1, scope: !32904, inlinedAt: !32905)
-!32948 = !DILocation(line: 75, column: 26, scope: !235, inlinedAt: !32914)
-!32949 = !DILocation(line: 462, column: 12, scope: !244, inlinedAt: !32912)
-!32950 = !DILocation(line: 39, column: 31, scope: !245, inlinedAt: !32915)
-!32951 = !DILocation(line: 1595, column: 9, scope: !246, inlinedAt: !32916)
-!32952 = !DILocation(line: 2294, column: 17, scope: !239, inlinedAt: !32910)
-!32953 = !DILocation(line: 269, column: 13, scope: !247, inlinedAt: !32917)
-!32954 = !DILocation(line: 2290, column: 13, scope: !239, inlinedAt: !32910)
-!32955 = !DILocation(line: 810, column: 1, scope: !23, inlinedAt: !32921)
-!32956 = !DILocation(line: 810, column: 1, scope: !25, inlinedAt: !32924)
-!32957 = !DILocation(line: 810, column: 1, scope: !26, inlinedAt: !32925)
-!32958 = !DILocation(line: 1920, column: 16, scope: !29, inlinedAt: !32927)
-!32959 = !DILocation(line: 128, column: 14, scope: !8, inlinedAt: !32931)
-!32960 = !DILocation(line: 1920, column: 13, scope: !29, inlinedAt: !32927)
-!32961 = !DILocation(line: 128, column: 14, scope: !8, inlinedAt: !32936)
-!32962 = !DILocation(line: 128, column: 14, scope: !8, inlinedAt: !32941)
+!32947 = !DILocation(line: 75, column: 26, scope: !235, inlinedAt: !32914)
+!32948 = !DILocation(line: 462, column: 12, scope: !244, inlinedAt: !32912)
+!32949 = !DILocation(line: 39, column: 31, scope: !245, inlinedAt: !32915)
+!32950 = !DILocation(line: 1595, column: 9, scope: !246, inlinedAt: !32916)
+!32951 = !DILocation(line: 2294, column: 17, scope: !239, inlinedAt: !32910)
+!32952 = !DILocation(line: 269, column: 13, scope: !247, inlinedAt: !32917)
+!32953 = !DILocation(line: 2290, column: 13, scope: !239, inlinedAt: !32910)
+!32954 = !DILocation(line: 810, column: 1, scope: !23, inlinedAt: !32921)
+!32955 = !DILocation(line: 810, column: 1, scope: !25, inlinedAt: !32924)
+!32956 = !DILocation(line: 810, column: 1, scope: !26, inlinedAt: !32925)
+!32957 = !DILocation(line: 1920, column: 16, scope: !29, inlinedAt: !32927)
+!32958 = !DILocation(line: 128, column: 14, scope: !8, inlinedAt: !32931)
+!32959 = !DILocation(line: 1920, column: 13, scope: !29, inlinedAt: !32927)
+!32960 = !DILocation(line: 128, column: 14, scope: !8, inlinedAt: !32936)
+!32961 = !DILocation(line: 128, column: 14, scope: !8, inlinedAt: !32941)
+!32962 = !DILocation(line: 810, column: 1, scope: !32904, inlinedAt: !32905)
 !32963 = distinct !{!32963, i1 true, !"_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEECseeLknQCOKOd_13polars_python"}
 !32964 = distinct !{!32964, !32963, !"_RINvNtCscgRAwXFJnXP_4core3ptr13drop_in_placeINtNtB4_6result6ResultNtNtCs1LHh8CLbVkQ_11polars_core6series6SeriesNtCsgjwxzEoLG5s_12polars_error11PolarsErrorEECseeLknQCOKOd_13polars_python: argument 0"}
 !32965 = distinct !DILocation(line: 810, column: 1, scope: !250)
@@ -1019,22 +1017,22 @@ begin_hunk_1_@llvm.umax.i64
 !33096 = !{!33075}
 !33097 = !{!33075, !33071}
 !33098 = !DILocation(line: 810, column: 1, scope: !33056)
-!33099 = !DILocation(line: 810, column: 1, scope: !33057, inlinedAt: !33058)
-!33100 = !DILocation(line: 75, column: 26, scope: !235, inlinedAt: !33066)
-!33101 = !DILocation(line: 462, column: 12, scope: !244, inlinedAt: !33064)
-!33102 = !DILocation(line: 39, column: 31, scope: !245, inlinedAt: !33067)
-!33103 = !DILocation(line: 1595, column: 9, scope: !246, inlinedAt: !33068)
-!33104 = !DILocation(line: 2294, column: 17, scope: !239, inlinedAt: !33062)
-!33105 = !DILocation(line: 269, column: 13, scope: !247, inlinedAt: !33069)
-!33106 = !DILocation(line: 2290, column: 13, scope: !239, inlinedAt: !33062)
-!33107 = !DILocation(line: 810, column: 1, scope: !23, inlinedAt: !33073)
-!33108 = !DILocation(line: 810, column: 1, scope: !25, inlinedAt: !33076)
-!33109 = !DILocation(line: 810, column: 1, scope: !26, inlinedAt: !33077)
-!33110 = !DILocation(line: 1920, column: 16, scope: !29, inlinedAt: !33079)
-!33111 = !DILocation(line: 128, column: 14, scope: !8, inlinedAt: !33083)
-!33112 = !DILocation(line: 1920, column: 13, scope: !29, inlinedAt: !33079)
-!33113 = !DILocation(line: 128, column: 14, scope: !8, inlinedAt: !33088)
-!33114 = !DILocation(line: 128, column: 14, scope: !8, inlinedAt: !33093)
+!33099 = !DILocation(line: 75, column: 26, scope: !235, inlinedAt: !33066)
+!33100 = !DILocation(line: 462, column: 12, scope: !244, inlinedAt: !33064)
+!33101 = !DILocation(line: 39, column: 31, scope: !245, inlinedAt: !33067)
+!33102 = !DILocation(line: 1595, column: 9, scope: !246, inlinedAt: !33068)
+!33103 = !DILocation(line: 2294, column: 17, scope: !239, inlinedAt: !33062)
+!33104 = !DILocation(line: 269, column: 13, scope: !247, inlinedAt: !33069)
+!33105 = !DILocation(line: 2290, column: 13, scope: !239, inlinedAt: !33062)
+!33106 = !DILocation(line: 810, column: 1, scope: !23, inlinedAt: !33073)
+!33107 = !DILocation(line: 810, column: 1, scope: !25, inlinedAt: !33076)
+!33108 = !DILocation(line: 810, column: 1, scope: !26, inlinedAt: !33077)
+!33109 = !DILocation(line: 1920, column: 16, scope: !29, inlinedAt: !33079)
+!33110 = !DILocation(line: 128, column: 14, scope: !8, inlinedAt: !33083)
+!33111 = !DILocation(line: 1920, column: 13, scope: !29, inlinedAt: !33079)
+!33112 = !DILocation(line: 128, column: 14, scope: !8, inlinedAt: !33088)
+!33113 = !DILocation(line: 128, column: 14, scope: !8, inlinedAt: !33093)
+!33114 = !DILocation(line: 810, column: 1, scope: !33057, inlinedAt: !33058)
 !33115 = distinct !DILocation(line: 810, column: 1, scope: !248)
 !33116 = !{i64 3547632055919318411}
 !33117 = !DILocation(line: 810, column: 1, scope: !248)

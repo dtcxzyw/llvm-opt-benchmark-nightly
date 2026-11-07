@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.e = and i16 %i.d, 511
   %i.f = icmp eq i16 %i.e, 24
   %.1.v.i.i.i.i = select i1 %i.f, i64 64, i64 80
-  %.1.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 %.1.v.i.i.i.i ; 6 uses
+  %.1.i.i.i.i = getelementptr inbounds nuw i8, ptr %1, i64 %.1.v.i.i.i.i ; 5 uses
   call void @llvm.assume(i1 true) [ "align"(ptr %.1.i.i.i.i, i64 8) ]
   %.0.copyload.i.i.i.i.i.i = load i64, ptr %.1.i.i.i.i, align 8
   %i.g = and i64 %.0.copyload.i.i.i.i.i.i, -8     ; 2 uses
@@ -213,7 +213,7 @@ bb.b:                                             ; preds = %bb.a
   %.not.i.i.i.i = icmp ne i64 %i.g, 0
   %.phi.trans.insert.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 28
   %.pre.i.i = load i32, ptr %.phi.trans.insert.i.i, align 4
-  %.pre14.i.i = and i32 %.pre.i.i, 127            ; 3 uses
+  %.pre14.i.i = and i32 %.pre.i.i, 127            ; 2 uses
   %i.i = icmp eq i32 %.pre14.i.i, 69
   %or.cond.i.i = select i1 %.not.i.i.i.i, i1 %i.i, i1 false
   br i1 %or.cond.i.i, label %.split, label %_ZNK5clang12OverloadExpr18isConceptReferenceEv.exit
@@ -226,8 +226,10 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.m, label %_ZNK5clang12OverloadExpr23getTemplateTemplateDeclEv.exit, label %.split32
 
 _ZNK5clang12OverloadExpr18isConceptReferenceEv.exit: ; preds = %bb.b
-  %2 = icmp eq i32 %.pre14.i.i, 74
-  br i1 %2, label %bb.c, label %_ZNK5clang12OverloadExpr18isVarDeclReferenceEv.exit
+  switch i32 %.pre14.i.i, label %_ZNK5clang12OverloadExpr18isVarDeclReferenceEv.exit.thread [
+    i32 74, label %bb.c
+    i32 70, label %bb.c
+  ]
 
 .split32:                                         ; preds = %.split
   call void @llvm.assume(i1 true) [ "align"(ptr %.1.i.i.i.i, i64 8) ]
@@ -237,12 +239,7 @@ _ZNK5clang12OverloadExpr18isConceptReferenceEv.exit: ; preds = %bb.b
   %i.q = icmp eq i8 %i.p, 3
   br i1 %i.q, label %_ZNK5clang12OverloadExpr23getTemplateTemplateDeclEv.exit, label %_ZNK5clang12OverloadExpr18isVarDeclReferenceEv.exit.thread
 
-_ZNK5clang12OverloadExpr18isVarDeclReferenceEv.exit: ; preds = %_ZNK5clang12OverloadExpr18isConceptReferenceEv.exit
-  call void @llvm.assume(i1 true) [ "align"(ptr %.1.i.i.i.i, i64 8) ]
-  %3 = icmp eq i32 %.pre14.i.i, 70
-  br i1 %3, label %bb.c, label %_ZNK5clang12OverloadExpr18isVarDeclReferenceEv.exit.thread
-
-bb.c:                                             ; preds = %_ZNK5clang12OverloadExpr18isVarDeclReferenceEv.exit, %_ZNK5clang12OverloadExpr18isConceptReferenceEv.exit
+bb.c:                                             ; preds = %_ZNK5clang12OverloadExpr18isConceptReferenceEv.exit, %_ZNK5clang12OverloadExpr18isConceptReferenceEv.exit
   call void @llvm.assume(i1 true) [ "align"(ptr %.1.i.i.i.i, i64 8) ]
   br label %_ZN4llvm14SmallBitVector9referenceaSEb.exit
 
@@ -330,7 +327,7 @@ _ZNK5clang12OverloadExpr18template_argumentsEv.exit: ; preds = %_ZNK5clang12Over
   %.not16 = icmp eq ptr %i.bl, %i.bj
   br i1 %.not16, label %_ZNK5clang12OverloadExpr18isVarDeclReferenceEv.exit.thread, label %.lr.ph
 
-_ZNK5clang12OverloadExpr18isVarDeclReferenceEv.exit.thread: ; preds = %.lr.ph, %_ZNK5clang12OverloadExpr12getLAngleLocEv.exit.i.i.i, %_ZN4llvm14SmallBitVector9referenceaSEb.exit, %_ZNK5clang12OverloadExpr18template_argumentsEv.exit, %bb.a, %.split32, %_ZNK5clang12OverloadExpr18isVarDeclReferenceEv.exit
+_ZNK5clang12OverloadExpr18isVarDeclReferenceEv.exit.thread: ; preds = %.lr.ph, %_ZNK5clang12OverloadExpr18isConceptReferenceEv.exit, %_ZNK5clang12OverloadExpr12getLAngleLocEv.exit.i.i.i, %_ZN4llvm14SmallBitVector9referenceaSEb.exit, %_ZNK5clang12OverloadExpr18template_argumentsEv.exit, %bb.a, %.split32
   ret i1 true
 }
 

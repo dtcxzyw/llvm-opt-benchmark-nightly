@@ -205,17 +205,11 @@ bb.qm:                                            ; preds = %bb.pu
           to label %.noexc711.a unwind label %bb.qx
 
 .noexc711.a:                                      ; preds = %bb.qm
-  %i.all = load i32, ptr %i.d, align 8, !range !51, !noalias !1866, !noundef !29 ; 3 uses
-  %.not.i705 = icmp eq i32 %i.all, -1
-  br i1 %.not.i705, label %bb.qz, label %3
+  %i.all = load i32, ptr %i.d, align 8, !range !51, !noalias !1866, !noundef !29
+  %.not.i705 = icmp eq i32 %i.all, 3
+  br i1 %.not.i705, label %bb.qn, label %bb.qz
 
-3:                                                ; preds = %.noexc711.a
-  %4 = icmp ne i32 %i.all, 4
-  call void @llvm.assume(i1 %4)
-  %5 = icmp eq i32 %i.all, 3
-  br i1 %5, label %bb.qn, label %bb.qz
-
-bb.qn:                                            ; preds = %3
+bb.qn:                                            ; preds = %.noexc711.a
   %i.alm = call fastcc noundef zeroext i1 @_RNvXsi_NtCs6oosyzwIepl_6ide_db4defsNtB5_10DefinitionNtNtCshzWfHUSfYae_4core3cmp9PartialEq2eq(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) %i.qj, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) %i.ee) #38
   br i1 %i.alm, label %bb.qo, label %bb.qz
 
@@ -326,8 +320,8 @@ bb.qy:                                            ; preds = %bb.qx
   invoke void @_RNvNtCs9GitHPCrz2Q_5rowan6cursor4free(ptr noundef nonnull %.sroa.5.0.i.ph) #35
           to label %.body682 unwind label %bb.ib
 
-bb.qz:                                            ; preds = %.noexc714, %bb.qn, %3, %.noexc711.a
-  %.sroa.0.0.i706 = phi i1 [ %i.alr, %.noexc714 ], [ false, %bb.qn ], [ false, %3 ], [ false, %.noexc711.a ]
+bb.qz:                                            ; preds = %.noexc714, %bb.qn, %.noexc711.a
+  %.sroa.0.0.i705 = phi i1 [ %i.alr, %.noexc714 ], [ false, %bb.qn ], [ false, %.noexc711.a ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !1866
   %i.amp = getelementptr inbounds nuw i8, ptr %.sroa.5.0.i.ph, i64 48 ; 2 uses
   %i.amq = load i32, ptr %i.amp, align 4, !noundef !29
@@ -342,7 +336,7 @@ bb.ra:                                            ; preds = %bb.qz
 
 .split:                                           ; preds = %bb.qz, %bb.ra
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ct)
-  br i1 %.sroa.0.0.i706, label %bb.rb, label %.backedge.backedge
+  br i1 %.sroa.0.0.i705, label %bb.rb, label %.backedge.backedge
 
 bb.rb:                                            ; preds = %.split, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCsjJXvCMGntp8_6syntax3ast9generated5nodes7NameRefECs6oosyzwIepl_6ide_db.exit718, %.noexc720
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtB4_4iter8adapters7flatten7FlatMapINtNtB4_6option8IntoIterINtNtCs9GitHPCrz2Q_5rowan3api11SyntaxTokenNtNtCsjJXvCMGntp8_6syntax11syntax_node12RustLanguageEEINtNtBG_10filter_map9FilterMapINtCsjpcu9PwIgok_8smallvec8IntoIterAB1F_j1_ENCNCNvMs4_NtCs6oosyzwIepl_6ide_db6searchNtB4z_10FindUsages10find_nodess_00ENCB4t_s_0EEB4B_(ptr noalias nofree noundef nonnull align 8 dereferenceable(120) %i.cw)

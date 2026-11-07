@@ -205,15 +205,11 @@ bb.k:                                             ; preds = %bb.j, %bb.i
 ; Function Attrs: nonlazybind uwtable
 define hidden void @"_ZN111_$LT$core..result..Result$LT$T$C$rusqlite..error..Error$GT$$u20$as$u20$rusqlite..OptionalExtension$LT$T$GT$$GT$8optional17h289dc04301bcf60cE"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 16)) %0, ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(64) %1) unnamed_addr #0 !guid !133 {
 bb.a:
-  %i.a = load i64, ptr %1, align 8, !range !23, !noundef !13 ; 3 uses
-  %.not = icmp eq i64 %i.a, -9223372036854775783
-  br i1 %.not, label %bb.b, label %2
-
-2:                                                ; preds = %bb.a
-  %3 = icmp ne i64 %i.a, -9223372036854775785
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.a, -9223372036854775799
-  br i1 %4, label %bb.c, label %bb.e
+  %i.a = load i64, ptr %1, align 8, !range !23, !noundef !13 ; 2 uses
+  switch i64 %i.a, label %bb.e [
+    i64 -9223372036854775783, label %bb.b
+    i64 -9223372036854775799, label %bb.c
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -225,7 +221,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 -9223372036854775783, ptr %0, align 8
   br label %bb.d
 
-bb.c:                                             ; preds = %2
+bb.c:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 0, ptr %i.f, align 8
   store i64 -9223372036854775783, ptr %0, align 8
@@ -235,7 +231,9 @@ bb.c:                                             ; preds = %2
 bb.d:                                             ; preds = %bb.b, %bb.e, %bb.c
   ret void
 
-bb.e:                                             ; preds = %2
+bb.e:                                             ; preds = %bb.a
+  %2 = icmp ne i64 %i.a, -9223372036854775785
+  tail call void @llvm.assume(i1 %2)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(64) %1, i64 64, i1 false)
   br label %bb.d
 }
@@ -277,15 +275,11 @@ bb.f:                                             ; preds = %bb.b
 ; Function Attrs: nonlazybind uwtable
 define hidden void @"_ZN111_$LT$core..result..Result$LT$T$C$rusqlite..error..Error$GT$$u20$as$u20$rusqlite..OptionalExtension$LT$T$GT$$GT$8optional17h9bad21fc57505d06E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 16)) %0, ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(64) %1) unnamed_addr #0 !guid !135 {
 bb.a:
-  %i.a = load i64, ptr %1, align 8, !range !23, !noundef !13 ; 3 uses
-  %.not = icmp eq i64 %i.a, -9223372036854775783
-  br i1 %.not, label %bb.b, label %2
-
-2:                                                ; preds = %bb.a
-  %3 = icmp ne i64 %i.a, -9223372036854775785
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.a, -9223372036854775799
-  br i1 %4, label %bb.c, label %bb.e
+  %i.a = load i64, ptr %1, align 8, !range !23, !noundef !13 ; 2 uses
+  switch i64 %i.a, label %bb.e [
+    i64 -9223372036854775783, label %bb.b
+    i64 -9223372036854775799, label %bb.c
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -294,7 +288,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 -9223372036854775783, ptr %0, align 8
   br label %bb.d
 
-bb.c:                                             ; preds = %2
+bb.c:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 -9223372036854775808, ptr %i.d, align 8
   store i64 -9223372036854775783, ptr %0, align 8
@@ -304,7 +298,9 @@ bb.c:                                             ; preds = %2
 bb.d:                                             ; preds = %bb.b, %bb.e, %bb.c
   ret void
 
-bb.e:                                             ; preds = %2
+bb.e:                                             ; preds = %bb.a
+  %2 = icmp ne i64 %i.a, -9223372036854775785
+  tail call void @llvm.assume(i1 %2)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(64) %1, i64 64, i1 false)
   br label %bb.d
 }
@@ -312,15 +308,11 @@ bb.e:                                             ; preds = %2
 ; Function Attrs: nonlazybind uwtable
 define hidden void @"_ZN111_$LT$core..result..Result$LT$T$C$rusqlite..error..Error$GT$$u20$as$u20$rusqlite..OptionalExtension$LT$T$GT$$GT$8optional17haeb2f294bb37ecf5E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 9)) %0, ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(64) %1) unnamed_addr #0 !guid !136 {
 bb.a:
-  %i.a = load i64, ptr %1, align 8, !range !23, !noundef !13 ; 3 uses
-  %.not = icmp eq i64 %i.a, -9223372036854775783
-  br i1 %.not, label %bb.b, label %2
-
-2:                                                ; preds = %bb.a
-  %3 = icmp ne i64 %i.a, -9223372036854775785
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.a, -9223372036854775799
-  br i1 %4, label %bb.c, label %bb.e
+  %i.a = load i64, ptr %1, align 8, !range !23, !noundef !13 ; 2 uses
+  switch i64 %i.a, label %bb.e [
+    i64 -9223372036854775783, label %bb.b
+    i64 -9223372036854775799, label %bb.c
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -328,7 +320,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 -9223372036854775783, ptr %0, align 8
   br label %bb.d
 
-bb.c:                                             ; preds = %2
+bb.c:                                             ; preds = %bb.a
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i8 0, ptr %i.c, align 8
   store i64 -9223372036854775783, ptr %0, align 8
@@ -338,7 +330,9 @@ bb.c:                                             ; preds = %2
 bb.d:                                             ; preds = %bb.b, %bb.e, %bb.c
   ret void
 
-bb.e:                                             ; preds = %2
+bb.e:                                             ; preds = %bb.a
+  %2 = icmp ne i64 %i.a, -9223372036854775785
+  tail call void @llvm.assume(i1 %2)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(64) %1, i64 64, i1 false)
   br label %bb.d
 }
@@ -380,15 +374,11 @@ bb.f:                                             ; preds = %bb.b
 ; Function Attrs: nonlazybind uwtable
 define hidden void @"_ZN111_$LT$core..result..Result$LT$T$C$rusqlite..error..Error$GT$$u20$as$u20$rusqlite..OptionalExtension$LT$T$GT$$GT$8optional17hce51bb6476c3a287E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 16)) %0, ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(64) %1) unnamed_addr #0 !guid !138 {
 bb.a:
-  %i.a = load i64, ptr %1, align 8, !range !23, !noundef !13 ; 3 uses
-  %.not = icmp eq i64 %i.a, -9223372036854775783
-  br i1 %.not, label %bb.b, label %2
-
-2:                                                ; preds = %bb.a
-  %3 = icmp ne i64 %i.a, -9223372036854775785
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.a, -9223372036854775799
-  br i1 %4, label %bb.c, label %bb.e
+  %i.a = load i64, ptr %1, align 8, !range !23, !noundef !13 ; 2 uses
+  switch i64 %i.a, label %bb.e [
+    i64 -9223372036854775783, label %bb.b
+    i64 -9223372036854775799, label %bb.c
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -400,7 +390,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 -9223372036854775783, ptr %0, align 8
   br label %bb.d
 
-bb.c:                                             ; preds = %2
+bb.c:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 0, ptr %i.f, align 8
   store i64 -9223372036854775783, ptr %0, align 8
@@ -410,7 +400,9 @@ bb.c:                                             ; preds = %2
 bb.d:                                             ; preds = %bb.b, %bb.e, %bb.c
   ret void
 
-bb.e:                                             ; preds = %2
+bb.e:                                             ; preds = %bb.a
+  %2 = icmp ne i64 %i.a, -9223372036854775785
+  tail call void @llvm.assume(i1 %2)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(64) %1, i64 64, i1 false)
   br label %bb.d
 }
@@ -418,15 +410,11 @@ bb.e:                                             ; preds = %2
 ; Function Attrs: nonlazybind uwtable
 define hidden void @"_ZN111_$LT$core..result..Result$LT$T$C$rusqlite..error..Error$GT$$u20$as$u20$rusqlite..OptionalExtension$LT$T$GT$$GT$8optional17he572b487388c8be0E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 16)) %0, ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(64) %1) unnamed_addr #0 !guid !139 {
 bb.a:
-  %i.a = load i64, ptr %1, align 8, !range !23, !noundef !13 ; 3 uses
-  %.not = icmp eq i64 %i.a, -9223372036854775783
-  br i1 %.not, label %bb.b, label %2
-
-2:                                                ; preds = %bb.a
-  %3 = icmp ne i64 %i.a, -9223372036854775785
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.a, -9223372036854775799
-  br i1 %4, label %bb.c, label %bb.e
+  %i.a = load i64, ptr %1, align 8, !range !23, !noundef !13 ; 2 uses
+  switch i64 %i.a, label %bb.e [
+    i64 -9223372036854775783, label %bb.b
+    i64 -9223372036854775799, label %bb.c
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -438,7 +426,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 -9223372036854775783, ptr %0, align 8
   br label %bb.d
 
-bb.c:                                             ; preds = %2
+bb.c:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 0, ptr %i.f, align 8
   store i64 -9223372036854775783, ptr %0, align 8
@@ -448,7 +436,9 @@ bb.c:                                             ; preds = %2
 bb.d:                                             ; preds = %bb.b, %bb.e, %bb.c
   ret void
 
-bb.e:                                             ; preds = %2
+bb.e:                                             ; preds = %bb.a
+  %2 = icmp ne i64 %i.a, -9223372036854775785
+  tail call void @llvm.assume(i1 %2)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(64) %1, i64 64, i1 false)
   br label %bb.d
 }
@@ -456,15 +446,11 @@ bb.e:                                             ; preds = %2
 ; Function Attrs: nonlazybind uwtable
 define hidden void @"_ZN111_$LT$core..result..Result$LT$T$C$rusqlite..error..Error$GT$$u20$as$u20$rusqlite..OptionalExtension$LT$T$GT$$GT$8optional17hedf1ccc8551463e2E"(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([64 x i8]) align 8 captures(none) dereferenceable(64) initializes((0, 16)) %0, ptr noalias noundef align 8 captures(address) dead_on_return dereferenceable(64) %1) unnamed_addr #0 !guid !140 {
 bb.a:
-  %i.a = load i64, ptr %1, align 8, !range !23, !noundef !13 ; 3 uses
-  %.not = icmp eq i64 %i.a, -9223372036854775783
-  br i1 %.not, label %bb.b, label %2
-
-2:                                                ; preds = %bb.a
-  %3 = icmp ne i64 %i.a, -9223372036854775785
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.a, -9223372036854775799
-  br i1 %4, label %bb.c, label %bb.e
+  %i.a = load i64, ptr %1, align 8, !range !23, !noundef !13 ; 2 uses
+  switch i64 %i.a, label %bb.e [
+    i64 -9223372036854775783, label %bb.b
+    i64 -9223372036854775799, label %bb.c
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %1, i64 8
@@ -473,7 +459,7 @@ bb.b:                                             ; preds = %bb.a
   store i64 -9223372036854775783, ptr %0, align 8
   br label %bb.d
 
-bb.c:                                             ; preds = %2
+bb.c:                                             ; preds = %bb.a
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
   store i64 -9223372036854775808, ptr %i.d, align 8
   store i64 -9223372036854775783, ptr %0, align 8
@@ -483,7 +469,9 @@ bb.c:                                             ; preds = %2
 bb.d:                                             ; preds = %bb.b, %bb.e, %bb.c
   ret void
 
-bb.e:                                             ; preds = %2
+bb.e:                                             ; preds = %bb.a
+  %2 = icmp ne i64 %i.a, -9223372036854775785
+  tail call void @llvm.assume(i1 %2)
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(64) %0, ptr noundef nonnull align 8 dereferenceable(64) %1, i64 64, i1 false)
   br label %bb.d
 }

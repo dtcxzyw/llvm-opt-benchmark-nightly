@@ -205,14 +205,16 @@ define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_4ce
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2644)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2645)
-  %i.a = load i64, ptr %0, align 8, !range !2646, !alias.scope !2647, !noundef !10 ; 4 uses
+  %i.a = load i64, ptr %0, align 8, !range !2646, !alias.scope !2647, !noundef !10 ; 2 uses
   %.not.i.i = icmp eq i64 %i.a, -2
   br i1 %.not.i.i, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_4cell10UnsafeCellNtNtNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm12traphandlers17call_thread_state11UnwindStateEECs7gfv9tzbXmh_6yara_x.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2648)
-  %1 = icmp eq i64 %i.a, -1
-  br i1 %1, label %bb.c, label %2
+  switch i64 %i.a, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm12traphandlers12UnwindReasonECs7gfv9tzbXmh_6yara_x.exit.i.i [
+    i64 -1, label %bb.c
+    i64 2, label %bb.i
+  ]
 
 bb.c:                                             ; preds = %bb.b
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -255,13 +257,7 @@ bb.h:                                             ; preds = %bb.g
   tail call void @_RNvCsbkii2mvYdKU_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i, i64 noundef range(i64 1, 0) %i.l, i64 noundef range(i64 1, 536870913) %i.o) #44, !noalias !2649
   br label %.body.i.i
 
-2:                                                ; preds = %bb.b
-  %3 = icmp ne i64 %i.a, 3
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.a, 2
-  br i1 %4, label %bb.i, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm12traphandlers12UnwindReasonECs7gfv9tzbXmh_6yara_x.exit.i.i
-
-bb.i:                                             ; preds = %2
+bb.i:                                             ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   invoke void @_RNvXsk_NtNtCsgIATGCnso3Z_22wasmtime_internal_core5error5errorNtB5_13OomOrDynErrorNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.p)
           to label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm12traphandlers12UnwindReasonECs7gfv9tzbXmh_6yara_x.exit.i.i unwind label %bb.j
@@ -277,7 +273,7 @@ bb.j:                                             ; preds = %bb.i
   invoke fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm12traphandlers9backtrace9BacktraceEECs7gfv9tzbXmh_6yara_x(ptr noalias nofree noundef align 8 dereferenceable(24) %i.r) #43
           to label %common.resume.i.i unwind label %bb.n
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm12traphandlers12UnwindReasonECs7gfv9tzbXmh_6yara_x.exit.i.i: ; preds = %bb.i, %2, %bb.f, %bb.e
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm12traphandlers12UnwindReasonECs7gfv9tzbXmh_6yara_x.exit.i.i: ; preds = %bb.i, %bb.f, %bb.e, %bb.b
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   %i.t = load i64, ptr %i.s, align 8, !range !31, !alias.scope !2650, !noundef !10
   %i.u = icmp eq i64 %i.t, -1
@@ -680,9 +676,11 @@ _RNvXsc_NtNtNtCsG258MDvU3F_3std4sync6poison5mutexINtB5_10MutexGuardINtNtCsexYYUd
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNCINvNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm12traphandlers28catch_unwind_and_record_trapINtNtB4_6result6ResultuNtNtNtCsgIATGCnso3Z_22wasmtime_internal_core5error5error5ErrorENCINvMNtBI_8instanceNtB3w_8Instance20enter_host_from_wasmB22_NCINvMs9_NtBK_4funcNtB4y_8HostFunc21array_call_trampolineNtNtNtCs7gfv9tzbXmh_6yara_x7scanner7context11ScanContextNCNvMs_NtNtNtB5q_4wasm7runtime6nativeINtB6l_6LinkerB5k_E18func_new_unchecked0E0E0Es_0EB5q_(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !2739)
-  %i.a = load i64, ptr %0, align 8, !range !37, !alias.scope !2739, !noundef !10 ; 3 uses
-  %1 = icmp eq i64 %i.a, -1
-  br i1 %1, label %bb.b, label %2
+  %i.a = load i64, ptr %0, align 8, !range !37, !alias.scope !2739, !noundef !10
+  switch i64 %i.a, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm12traphandlers12UnwindReasonECs7gfv9tzbXmh_6yara_x.exit [
+    i64 -1, label %bb.b
+    i64 2, label %bb.h
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -728,18 +726,12 @@ bb.g:                                             ; preds = %bb.f
 _RNvXs8_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxDNtNtCskKLDkoKarTP_4core3any3AnyNtNtBM_6marker4SendEL_ENtNtNtBM_3ops4drop4Drop4dropCs7gfv9tzbXmh_6yara_x.exit4.i.i: ; preds = %bb.g, %bb.f
   resume { ptr, i32 } %i.j
 
-2:                                                ; preds = %bb.a
-  %3 = icmp ne i64 %i.a, 3
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.a, 2
-  br i1 %4, label %bb.h, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm12traphandlers12UnwindReasonECs7gfv9tzbXmh_6yara_x.exit
-
-bb.h:                                             ; preds = %2
+bb.h:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @_RNvXsk_NtNtCsgIATGCnso3Z_22wasmtime_internal_core5error5errorNtB5_13OomOrDynErrorNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.p)
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm12traphandlers12UnwindReasonECs7gfv9tzbXmh_6yara_x.exit
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm12traphandlers12UnwindReasonECs7gfv9tzbXmh_6yara_x.exit: ; preds = %bb.d, %bb.e, %2, %bb.h
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm12traphandlers12UnwindReasonECs7gfv9tzbXmh_6yara_x.exit: ; preds = %bb.a, %bb.d, %bb.e, %bb.h
   ret void
 }
 
@@ -1142,9 +1134,11 @@ bb.v:                                             ; preds = %bb.u
 ; Function Attrs: nonlazybind uwtable
 define internal fastcc void @_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtNtNtCsiOkGTpNE17y_8wasmtime7runtime2vm12traphandlers12UnwindReasonECs7gfv9tzbXmh_6yara_x(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %0) unnamed_addr #1 personality ptr @rust_eh_personality {
 bb.a:
-  %i.a = load i64, ptr %0, align 8, !range !37, !noundef !10 ; 3 uses
-  %1 = icmp eq i64 %i.a, -1
-  br i1 %1, label %bb.b, label %2
+  %i.a = load i64, ptr %0, align 8, !range !37, !noundef !10
+  switch i64 %i.a, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EECs7gfv9tzbXmh_6yara_x.exit [
+    i64 -1, label %bb.b
+    i64 2, label %bb.h
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -1190,18 +1184,12 @@ bb.g:                                             ; preds = %bb.f
 _RNvXs8_NtCsexYYUdYSQU6_5alloc5boxedINtB5_3BoxDNtNtCskKLDkoKarTP_4core3any3AnyNtNtBM_6marker4SendEL_ENtNtNtBM_3ops4drop4Drop4dropCs7gfv9tzbXmh_6yara_x.exit4.i: ; preds = %bb.g, %bb.f
   resume { ptr, i32 } %i.j
 
-2:                                                ; preds = %bb.a
-  %3 = icmp ne i64 %i.a, 3
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.a, 2
-  br i1 %4, label %bb.h, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EECs7gfv9tzbXmh_6yara_x.exit
-
-bb.h:                                             ; preds = %2
+bb.h:                                             ; preds = %bb.a
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   tail call void @_RNvXsk_NtNtCsgIATGCnso3Z_22wasmtime_internal_core5error5errorNtB5_13OomOrDynErrorNtNtNtCskKLDkoKarTP_4core3ops4drop4Drop4drop(ptr noalias nofree noundef nonnull align 8 dereferenceable(8) %i.p)
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EECs7gfv9tzbXmh_6yara_x.exit
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EECs7gfv9tzbXmh_6yara_x.exit: ; preds = %bb.h, %2, %bb.e, %bb.d
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtB4_3any3AnyNtNtB4_6marker4SendEL_EECs7gfv9tzbXmh_6yara_x.exit: ; preds = %bb.a, %bb.h, %bb.e, %bb.d
   ret void
 }
 

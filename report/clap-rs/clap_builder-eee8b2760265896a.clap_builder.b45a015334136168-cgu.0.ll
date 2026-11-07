@@ -205,23 +205,17 @@ bb.gl:                                            ; preds = %bb.gk, %bb.gj, %bb.
   %.sroa.027.0.i = phi ptr [ %i.avo, %bb.gk ], [ null, %bb.gf ], [ %i.avj, %bb.gj ]
   %.sroa.077.0.i = phi i1 [ true, %bb.gk ], [ false, %bb.gf ], [ false, %bb.gj ]
   call fastcc void @_RNvMs_NtNtCsfu0rQaTkGUu_12clap_builder6parser6parserNtB4_6Parser15parse_opt_value(ptr noalias nofree noundef nonnull align 8 captures(address) dereferenceable(72) %i.fm, ptr noundef nonnull align 8 dereferenceable(40) %0, i8 noundef 0, ptr noalias nofree noundef readonly captures(address, read_provenance) %.sroa.027.0.i, i64 %.sroa.530.0.i, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(600) %i.aud, ptr noalias nofree noundef nonnull align 8 dereferenceable(120) %1, i1 noundef zeroext %.sroa.077.0.i) #43, !noalias !10326
-  %i.avq = load i64, ptr %i.fm, align 8, !range !56, !alias.scope !10293, !noundef !10 ; 4 uses
-  %i.avr = icmp eq i64 %i.avq, -1
-  br i1 %i.avr, label %.loopexit194.i, label %4
+  %i.avq = load i64, ptr %i.fm, align 8, !range !56, !alias.scope !10293, !noundef !10 ; 2 uses
+  %i.avr = icmp eq i64 %i.avq, -9223372036854775805
+  br i1 %i.avr, label %bb.gm, label %.loopexit194.i
 
-4:                                                ; preds = %bb.gl
-  %5 = icmp ne i64 %i.avq, -9223372036854775804
-  call void @llvm.assume(i1 %5)
-  %6 = icmp eq i64 %i.avq, -9223372036854775805
-  br i1 %6, label %bb.gm, label %.loopexit194.i
-
-bb.gm:                                            ; preds = %4
+bb.gm:                                            ; preds = %bb.gl
   call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsfu0rQaTkGUu_12clap_builder6parser6parser11ParseResultEBH_(ptr noalias nofree noundef nonnull align 8 dereferenceable(72) %i.fm) #43, !noalias !10327
   br label %bb.gi
 
-.loopexit194.i:                                   ; preds = %bb.gl, %4, %bb.gu, %bb.gn, %.split.i401, %bb.gg, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc6borrow3CoweEECsfu0rQaTkGUu_12clap_builder.exit.i
-  %.pr8202605 = phi i64 [ -9223372036854775801, %.split.i401 ], [ -9223372036854775808, %bb.gu ], [ -1, %bb.gn ], [ -1, %bb.gg ], [ -9223372036854775801, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc6borrow3CoweEECsfu0rQaTkGUu_12clap_builder.exit.i ], [ -1, %bb.gl ], [ %i.avq, %4 ]
-  %.sroa.0686.8 = phi i8 [ %.sroa.0686.7, %.split.i401 ], [ %.sroa.0686.7, %bb.gu ], [ %.sroa.0686.7, %bb.gn ], [ 1, %bb.gg ], [ %.sroa.0686.7, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc6borrow3CoweEECsfu0rQaTkGUu_12clap_builder.exit.i ], [ 1, %4 ], [ 1, %bb.gl ]
+.loopexit194.i:                                   ; preds = %bb.gl, %bb.gu, %bb.gn, %.split.i401, %bb.gg, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc6borrow3CoweEECsfu0rQaTkGUu_12clap_builder.exit.i
+  %.pr8202605 = phi i64 [ -9223372036854775801, %.split.i401 ], [ -9223372036854775808, %bb.gu ], [ -1, %bb.gn ], [ -1, %bb.gg ], [ -9223372036854775801, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc6borrow3CoweEECsfu0rQaTkGUu_12clap_builder.exit.i ], [ %i.avq, %bb.gl ]
+  %.sroa.0686.8 = phi i8 [ %.sroa.0686.7, %.split.i401 ], [ %.sroa.0686.7, %bb.gu ], [ %.sroa.0686.7, %bb.gn ], [ 1, %bb.gg ], [ %.sroa.0686.7, %_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueINtNtCs4wP2HXfJTCR_5alloc6borrow3CoweEECsfu0rQaTkGUu_12clap_builder.exit.i ], [ 1, %bb.gl ]
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ba), !noalias !10313
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bb), !noalias !10313
   call fastcc void @_RINvNtCsj6eKBz9Db1c_4core3ptr9drop_glueNtNtNtCsfu0rQaTkGUu_12clap_builder6parser6parser11ParseResultEBH_(ptr noalias nofree noundef align 8 dereferenceable(72) %i.bc) #43, !noalias !10297

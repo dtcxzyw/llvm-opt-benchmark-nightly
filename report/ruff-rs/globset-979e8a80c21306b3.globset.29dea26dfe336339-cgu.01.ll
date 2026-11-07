@@ -204,7 +204,7 @@ _RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit: ; preds = %bb.a
 
 bb.d:                                             ; preds = %bb.dn, %_RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit
   %i.cs = phi i32 [ %.pre250, %bb.dn ], [ -2, %_RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit ] ; 2 uses
-  %i.ct = phi i32 [ %.pre, %bb.dn ], [ -1, %_RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit ] ; 4 uses
+  %i.ct = phi i32 [ %.pre, %bb.dn ], [ -1, %_RNvNtCscdodAO9FK5_5alloc5boxed14box_new_uninit.exit ] ; 5 uses
   call void @llvm.experimental.noalias.scope.decl(metadata !496)
   store i32 %i.ct, ptr %i.bx, align 8, !alias.scope !497
   store i32 -2, ptr %.sroa.53.0..sroa_idx, align 8, !alias.scope !497
@@ -607,6 +607,8 @@ _RNvMsc_NtCs3AS159VDs7t_7globset4globNtB5_6Parser4bump.exit94.i.i: ; preds = %.n
   br label %bb.dp
 
 bb.aj:                                            ; preds = %bb.ab
+  %2 = icmp samesign ult i32 %i.ct, 1114112
+  call void @llvm.assume(i1 %2)
   %i.ic = icmp ult i64 %i.fs, 384307168202282326
   call void @llvm.assume(i1 %i.ic)
   %.not157.i.i = icmp eq i64 %i.fs, 1
@@ -699,11 +701,12 @@ _RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8
   br label %_RNvMsc_NtCs3AS159VDs7t_7globset4globNtB5_6Parser4peek.exit104.i.i
 
 _RNvMsc_NtCs3AS159VDs7t_7globset4globNtB5_6Parser4peek.exit104.i.i: ; preds = %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3AS159VDs7t_7globset.exit16.i.i.i.i.i103.i.i, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3AS159VDs7t_7globset.exit14.i.i.i.i.i102.i.i, %bb.ao, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3AS159VDs7t_7globset.exit12.i.i.i.i.i99.i.i
-  %spec.select.i.i.i.i101.i.i = phi i32 [ %i.ir, %bb.ao ], [ %i.ip, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3AS159VDs7t_7globset.exit12.i.i.i.i.i99.i.i ], [ %i.jl, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3AS159VDs7t_7globset.exit16.i.i.i.i.i103.i.i ], [ %i.ja, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3AS159VDs7t_7globset.exit14.i.i.i.i.i102.i.i ] ; 5 uses
+  %spec.select.i.i.i.i101.i.i = phi i32 [ %i.ir, %bb.ao ], [ %i.ip, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3AS159VDs7t_7globset.exit12.i.i.i.i.i99.i.i ], [ %i.jl, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3AS159VDs7t_7globset.exit16.i.i.i.i.i103.i.i ], [ %i.ja, %_RNvXs2J_NtNtCs4NRVxsYgnAr_4core5slice4iterINtB6_4IterhENtNtNtNtBa_4iter6traits8iterator8Iterator4nextCs3AS159VDs7t_7globset.exit14.i.i.i.i.i102.i.i ] ; 4 uses
   store i32 %spec.select.i.i.i.i101.i.i, ptr %.sroa.53.0..sroa_idx, align 8, !alias.scope !552
-  switch i32 %spec.select.i.i.i.i101.i.i, label %2 [
+  switch i32 %spec.select.i.i.i.i101.i.i, label %bb.ax [
     i32 125, label %bb.aw
     i32 44, label %bb.av
+    i32 47, label %.sink.split.i
   ]
 
 bb.ap:                                            ; preds = %.noexc44
@@ -741,8 +744,8 @@ bb.as:                                            ; preds = %.noexc45
   call void @llvm.lifetime.end.p0(ptr nonnull %i.al), !noalias !518
   br label %bb.dp
 
-.sink.split.i:                                    ; preds = %2, %bb.am
-  %.sink.i = phi i32 [ 47, %2 ], [ -1, %bb.am ]
+.sink.split.i:                                    ; preds = %_RNvMsc_NtCs3AS159VDs7t_7globset4globNtB5_6Parser4peek.exit104.i.i, %bb.am
+  %.sink.i = phi i32 [ %spec.select.i.i.i.i101.i.i, %_RNvMsc_NtCs3AS159VDs7t_7globset4globNtB5_6Parser4peek.exit104.i.i ], [ -1, %bb.am ]
   store i32 42, ptr %i.bx, align 8, !alias.scope !495, !noalias !553
   store i32 -2, ptr %.sroa.53.0..sroa_idx, align 8, !alias.scope !495, !noalias !553
   store i32 %.sink.i, ptr %i.by, align 4, !alias.scope !495, !noalias !553
@@ -767,12 +770,6 @@ bb.au:                                            ; preds = %bb.at
   call void @llvm.assume(i1 %i.jr)
   br label %bb.ax
 
-2:                                                ; preds = %_RNvMsc_NtCs3AS159VDs7t_7globset4globNtB5_6Parser4peek.exit104.i.i
-  %3 = icmp samesign ult i32 %spec.select.i.i.i.i101.i.i, 1114112
-  call void @llvm.assume(i1 %3)
-  %4 = icmp eq i32 %spec.select.i.i.i.i101.i.i, 47
-  br i1 %4, label %.sink.split.i, label %bb.ax
-
 bb.av:                                            ; preds = %_RNvMsc_NtCs3AS159VDs7t_7globset4globNtB5_6Parser4peek.exit104.i.i
   %i.js = icmp ult i64 %i.fs, 384307168202282326
   call void @llvm.assume(i1 %i.js)
@@ -785,7 +782,7 @@ bb.aw:                                            ; preds = %_RNvMsc_NtCs3AS159V
   %.not159.i.i = icmp eq i64 %i.fs, 1
   br i1 %.not159.i.i, label %.thread155.i.i, label %bb.at
 
-bb.ax:                                            ; preds = %2, %.thread155.i.i
+bb.ax:                                            ; preds = %.thread155.i.i, %_RNvMsc_NtCs3AS159VDs7t_7globset4globNtB5_6Parser4peek.exit104.i.i
   call void @llvm.lifetime.start.p0(ptr nonnull %i.ak), !noalias !518
   store i64 -9223372036854775806, ptr %i.aj, align 8, !noalias !518
   call void @llvm.lifetime.start.p0(ptr nonnull %i.w), !noalias !518

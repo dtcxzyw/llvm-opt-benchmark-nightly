@@ -204,9 +204,9 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCs5Xr050g3D4S_3std4path7PathBufECsbN
 
 bb.ih:                                            ; preds = %bb.gs
   call void @llvm.lifetime.end.p0(ptr nonnull %i.bm)
-  %i.aba = load i64, ptr %i.jn, align 8, !range !19, !noundef !5 ; 3 uses
-  %.not77 = icmp eq i64 %i.aba, -1
-  br i1 %.not77, label %bb.ik, label %0
+  %i.aba = load i64, ptr %i.jn, align 8, !range !19, !noundef !5
+  %.not77 = icmp eq i64 %i.aba, 4
+  br i1 %.not77, label %bb.io, label %bb.ik
 
 bb.ii:                                            ; preds = %bb.ij, %.thread382
   %i.abb = landingpad { ptr, i32 }
@@ -219,13 +219,7 @@ bb.ij:                                            ; preds = %.thread382
   invoke void @_RNvNtCs5Xr050g3D4S_3std7process4exit(i32 noundef 2) #26
           to label %bb.cr unwind label %bb.ii
 
-0:                                                ; preds = %bb.ih
-  %1 = icmp ne i64 %i.aba, 3
-  call void @llvm.assume(i1 %1)
-  %2 = icmp eq i64 %i.aba, 4
-  br i1 %2, label %bb.io, label %bb.ik
-
-bb.ik:                                            ; preds = %0, %bb.io, %bb.ih
+bb.ik:                                            ; preds = %bb.ih, %bb.io
   %i.abc = getelementptr inbounds nuw i8, ptr %i.bs, i64 504 ; 4 uses
   %i.abd = load i64, ptr %i.abc, align 8, !range !10, !alias.scope !372, !noundef !5
   %i.abe = icmp eq i64 %i.abd, -1
@@ -251,7 +245,7 @@ _RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtNtCsgCecv3eZDcN_5alloc6string6StringEC
   invoke void @_RNvXs1_NtCsgCecv3eZDcN_5alloc7raw_vecINtB5_6RawVechENtNtNtCsf3Ta7LF998c_4core3ops4drop4Drop4dropCsbNLsQi0JuJ4_5tgrep(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.abc)
           to label %_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtCsgCecv3eZDcN_5alloc6string6StringEECsbNLsQi0JuJ4_5tgrep.exit unwind label %bb.iq
 
-bb.io:                                            ; preds = %0
+bb.io:                                            ; preds = %bb.ih
   invoke fastcc void @_RINvNtCsf3Ta7LF998c_4core3ptr9drop_glueNtCsbNLsQi0JuJ4_5tgrep7CommandEBD_(ptr noalias nofree noundef align 8 dereferenceable(104) %i.jn)
           to label %bb.ik unwind label %bb.ip
 

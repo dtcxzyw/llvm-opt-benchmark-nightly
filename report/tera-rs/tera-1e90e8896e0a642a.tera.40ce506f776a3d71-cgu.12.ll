@@ -204,21 +204,15 @@ bb.b:                                             ; preds = %bb.a
   %i.l = getelementptr inbounds nuw [24 x i8], ptr %i.j, i64 %i.f, !dbg !12322
     #dbg_value(ptr %i.l, !12267, !DIExpression(), !12270)
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.a, ptr noundef nonnull align 8 dereferenceable(24) %i.l, i64 24, i1 false), !dbg !12323
-  %.pr = load i64, ptr %i.a, align 8, !dbg !12311 ; 3 uses
-  %.not = icmp eq i64 %.pr, -1, !dbg !12311
-  br i1 %.not, label %bb.c, label %2, !dbg !12314, !prof !4106
+  %.pr = load i64, ptr %i.a, align 8, !dbg !12311
+  %.not = icmp eq i64 %.pr, -9223372036854775808, !dbg !12314
+  br i1 %.not, label %bb.d, label %bb.c, !dbg !12314, !prof !4106
 
-2:                                                ; preds = %bb.b
-  %3 = icmp ne i64 %.pr, -9223372036854775807, !dbg !12311
-  tail call void @llvm.assume(i1 %3), !dbg !12311
-  %4 = icmp eq i64 %.pr, -9223372036854775808, !dbg !12314
-  br i1 %4, label %bb.d, label %bb.c, !dbg !12314, !prof !3672
-
-bb.c:                                             ; preds = %.thread, %2, %bb.b
+bb.c:                                             ; preds = %.thread, %bb.b
   invoke void @_RNvNtCsf3Ta7LF998c_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @12, i64 noundef 40, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @14) #32
           to label %bb.n unwind label %bb.m, !dbg !12324
 
-bb.d:                                             ; preds = %2
+bb.d:                                             ; preds = %bb.b
   %i.m = getelementptr inbounds nuw i8, ptr %i.a, i64 8, !dbg !12325 ; 3 uses
   %i.n = load i64, ptr %i.m, align 8, !dbg !12325, !noundef !1394 ; 2 uses
     #dbg_value(i64 %i.n, !12227, !DIExpression(), !12271)
@@ -621,17 +615,11 @@ bb.eb:                                            ; preds = %_RINvNtCsf3Ta7LF998
   %i.mm = getelementptr inbounds nuw [24 x i8], ptr %i.mk, i64 %i.mh, !dbg !18455
     #dbg_value(ptr %i.mm, !17799, !DIExpression(), !17802)
   call void @llvm.memmove.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bk, ptr noundef nonnull align 8 dereferenceable(24) %i.mm, i64 24, i1 false), !dbg !18456
-  %.pr = load i64, ptr %i.bk, align 8, !dbg !18444 ; 3 uses
-  %.not352 = icmp eq i64 %.pr, -1, !dbg !18444
-  br i1 %.not352, label %.invoke, label %2, !dbg !18447, !prof !4106
+  %.pr = load i64, ptr %i.bk, align 8, !dbg !18444
+  %.not352 = icmp eq i64 %.pr, -9223372036854775806, !dbg !18447
+  br i1 %.not352, label %bb.ec, label %.invoke, !dbg !18447, !prof !4106
 
-2:                                                ; preds = %bb.eb
-  %3 = icmp ne i64 %.pr, -9223372036854775807, !dbg !18444
-  call void @llvm.assume(i1 %3), !dbg !18444
-  %4 = icmp eq i64 %.pr, -9223372036854775806, !dbg !18447
-  br i1 %4, label %bb.ec, label %.invoke, !dbg !18447, !prof !3672
-
-bb.ec:                                            ; preds = %2
+bb.ec:                                            ; preds = %bb.eb
   %i.mn = getelementptr inbounds nuw i8, ptr %i.bk, i64 8, !dbg !18457 ; 3 uses
   %i.mo = load i64, ptr %i.mn, align 8, !dbg !18457, !noundef !1394 ; 3 uses
     #dbg_value(i64 %i.mo, !16717, !DIExpression(), !17803)
@@ -702,9 +690,9 @@ bb.ej:                                            ; preds = %bb.ei
   %i.nd = icmp eq i8 %i.nc, 33, !dbg !18478
   br i1 %i.nd, label %bb.ek, label %.invoke, !dbg !18478, !prof !3672
 
-.invoke:                                          ; preds = %bb.eb, %2, %.thread796, %bb.ej, %bb.ei
-  %5 = phi ptr [ @26, %bb.ej ], [ @26, %bb.ei ], [ @27, %.thread796 ], [ @27, %2 ], [ @27, %bb.eb ]
-  invoke void @_RNvNtCsf3Ta7LF998c_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @12, i64 noundef 40, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %5) #32
+.invoke:                                          ; preds = %bb.eb, %.thread796, %bb.ej, %bb.ei
+  %2 = phi ptr [ @26, %bb.ej ], [ @26, %bb.ei ], [ @27, %.thread796 ], [ @27, %bb.eb ]
+  invoke void @_RNvNtCsf3Ta7LF998c_4core9panicking5panic(ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @12, i64 noundef 40, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %2) #32
           to label %.cont unwind label %bb.ed, !dbg !17770
 
 .cont:                                            ; preds = %.invoke
@@ -1107,7 +1095,7 @@ begin_hunk_2_@llvm.memmove.p0.p0.i64
 !4103 = !DISubroutineType(types: !4102)
 !4104 = !{!384, !4084, !2382}
 !4105 = !DISubroutineType(types: !4104)
-!4106 = !{!"branch_weights", !"expected", i32 0, i32 -2147483648}
+!4106 = !{!"branch_weights", i32 -2147483648, i32 0}
 !4107 = !DIFile(filename: "tera/src/parsing/instructions.rs", directory: "/opt-bench/work/tera-rs/tera", checksumkind: CSK_MD5, checksum: "7597fbdf43f6532ca3a3b5c05f588b29")
 !4108 = !{!758, !3236, !1384}
 !4109 = !DISubroutineType(types: !4108)

@@ -202,8 +202,8 @@ define void @_RNvXs3_NtCsiGRwBGCeC5s_11quiche_apps6commonNtB5_9Http3ConnNtB5_8Ht
     #dbg_value(ptr poison, !20739, !DIExpression(), !20745)
   %i.d = alloca [40 x i8], align 8                ; 8 uses
   %i.e = alloca [16 x i8], align 8                ; 5 uses
-  %i.f = alloca [16 x i8], align 8                ; 5 uses
-  %i.g = alloca [16 x i8], align 8                ; 6 uses
+  %i.f = alloca [16 x i8], align 16               ; 4 uses
+  %i.g = alloca [16 x i8], align 16               ; 7 uses
   %i.h = alloca [40 x i8], align 8                ; 5 uses
   %i.i = alloca [32 x i8], align 8                ; 9 uses
   %i.j = alloca [40 x i8], align 8                ; 12 uses
@@ -606,8 +606,7 @@ bb.y:                                             ; preds = %.loopexit173
 .lr.ph:                                           ; preds = %bb.y
   %i.dg = getelementptr inbounds nuw i8, ptr %0, i64 560
   %i.dh = getelementptr inbounds nuw i8, ptr %0, i64 552
-  %i.di = getelementptr inbounds nuw i8, ptr %i.g, i64 8 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
+  %i.di = getelementptr inbounds nuw i8, ptr %i.g, i64 8
   %.sroa.428.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.dj = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.dk = getelementptr inbounds nuw i8, ptr %i.d, i64 16
@@ -671,27 +670,23 @@ bb.ac:                                            ; preds = %bb.ab
     #dbg_value(ptr %i.dz, !20775, !DIExpression(DW_OP_LLVM_fragment, 0, 64), !20779)
     #dbg_value(i64 %i.dy, !20775, !DIExpression(DW_OP_LLVM_fragment, 64, 64), !20779)
   call void @_RINvMsd_NtCs3f36owOmepS_6quiche2h3NtB6_10Connection12do_send_bodyNtNtB8_7buffers17DefaultBufFactoryRShjNCINvB2_9send_bodyB11_E0ECsiGRwBGCeC5s_11quiche_apps(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.g, ptr noalias nofree noundef nonnull align 8 dereferenceable(520) %0, ptr noalias nofree noundef nonnull align 16 dereferenceable(15552) %1, i64 noundef %i.dx, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.dz, i64 noundef %i.dy, i1 noundef zeroext true), !dbg !21268
-  %i.ea = load i64, ptr %i.g, align 8, !dbg !21262, !range !7219, !noundef !1793 ; 4 uses
-  %.not167 = icmp eq i64 %i.ea, -1, !dbg !21262
-  br i1 %.not167, label %bb.ae, label %4, !dbg !21269
+  %i.ea = load i64, ptr %i.g, align 16, !dbg !21262, !range !7219, !noundef !1793 ; 2 uses
+  switch i64 %i.ea, label %bb.ag [
+    i64 -1, label %bb.ae
+    i64 23, label %bb.af
+  ], !dbg !21269
 
 bb.ad:                                            ; preds = %bb.ab
   call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef %i.dr, i64 noundef %i.ds, i64 noundef %i.ds, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @162) #23, !dbg !21270
   unreachable, !dbg !21270
-
-4:                                                ; preds = %bb.ac
-  %5 = icmp ne i64 %i.ea, 34, !dbg !21262
-  call void @llvm.assume(i1 %5), !dbg !21262
-  %6 = icmp eq i64 %i.ea, 23, !dbg !21269
-  br i1 %6, label %bb.af, label %bb.ag, !dbg !21269
 
 bb.ae:                                            ; preds = %bb.ac
   %i.eb = load i64, ptr %i.di, align 8, !dbg !21271, !noundef !1793
     #dbg_value(i64 %i.eb, !20680, !DIExpression(), !21155)
   br label %bb.af, !dbg !21272
 
-bb.af:                                            ; preds = %4, %bb.ae
-  %.sroa.08.0 = phi i64 [ %i.eb, %bb.ae ], [ 0, %4 ], !dbg !21129
+bb.af:                                            ; preds = %bb.ac, %bb.ae
+  %.sroa.08.0 = phi i64 [ %i.eb, %bb.ae ], [ 0, %bb.ac ], !dbg !21129
     #dbg_value(i64 %.sroa.08.0, !20680, !DIExpression(), !21155)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !dbg !21273
   %i.ec = load i64, ptr %i.dq, align 8, !dbg !21274, !noundef !1793
@@ -706,11 +701,12 @@ bb.af:                                            ; preds = %4, %bb.ae
   %.not163 = icmp eq ptr %i.ef, null, !dbg !20781
   br i1 %.not163, label %._crit_edge, label %bb.aa, !dbg !20781
 
-bb.ag:                                            ; preds = %4
+bb.ag:                                            ; preds = %bb.ac
+  %3 = icmp ne i64 %i.ea, 34, !dbg !21262
+  call void @llvm.assume(i1 %3), !dbg !21262
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !21276
-  %7 = load i64, ptr %i.di, align 8, !dbg !21276
-  store i64 %i.ea, ptr %i.f, align 8, !dbg !21276
-  store i64 %7, ptr %3, align 8, !dbg !21276
+  %4 = load <2 x i64>, ptr %i.g, align 16, !dbg !21276
+  store <2 x i64> %4, ptr %i.f, align 16, !dbg !21276
     #dbg_value(i64 1, !20684, !DIExpression(), !21156)
     #dbg_value(ptr poison, !20790, !DIExpression(), !21157)
     #dbg_value(ptr poison, !20790, !DIExpression(), !21158)
@@ -1113,15 +1109,11 @@ bb.lf:                                            ; preds = %bb.ld
   br label %bb.le, !dbg !24262
 
 bb.lg:                                            ; preds = %bb.le
-  %i.aej = extractvalue { i64, i64 } %i.aei, 0, !dbg !26300 ; 4 uses
-  %.not314 = icmp eq i64 %i.aej, -1, !dbg !26300
-  br i1 %.not314, label %bb.lh, label %10, !dbg !26302
-
-10:                                               ; preds = %bb.lg
-  %11 = icmp ne i64 %i.aej, 34, !dbg !26300
-  call void @llvm.assume(i1 %11), !dbg !26300
-  %12 = icmp eq i64 %i.aej, 35, !dbg !26302
-  br i1 %12, label %bb.lt, label %bb.mc, !dbg !26302
+  %i.aej = extractvalue { i64, i64 } %i.aei, 0, !dbg !26300 ; 3 uses
+  switch i64 %i.aej, label %bb.mc [
+    i64 -1, label %bb.lh
+    i64 35, label %bb.lt
+  ], !dbg !26302
 
 bb.lh:                                            ; preds = %bb.lg
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dd), !dbg !26303
@@ -1244,7 +1236,7 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs3
   %i.aes = icmp eq i64 %i.aer, -1, !dbg !25629
   br i1 %i.aes, label %._crit_edge, label %bb.b, !dbg !25631
 
-bb.lt:                                            ; preds = %10
+bb.lt:                                            ; preds = %bb.lg
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dj), !dbg !26322
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.js, ptr noundef nonnull align 8 dereferenceable(24) %i.dy, i64 24, i1 false), !dbg !26323
   %i.aet = load i8, ptr %i.do, align 1, !dbg !26324, !noundef !1793
@@ -1323,8 +1315,10 @@ _RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs3
   call void @llvm.lifetime.end.p0(ptr nonnull %i.ee), !dbg !25645
   br label %.backedge, !dbg !25632
 
-bb.mc:                                            ; preds = %10
-  %i.afa = extractvalue { i64, i64 } %i.aei, 1
+bb.mc:                                            ; preds = %bb.lg
+  %i.afa = extractvalue { i64, i64 } %i.aei, 1, !dbg !26300
+  %10 = icmp ne i64 %i.aej, 34, !dbg !26300
+  call void @llvm.assume(i1 %10), !dbg !26300
   call void @llvm.lifetime.start.p0(ptr nonnull %i.dh), !dbg !26339
   store i64 %i.aej, ptr %i.dh, align 8, !dbg !26339
   %i.afb = getelementptr inbounds nuw i8, ptr %i.dh, i64 8, !dbg !26339
@@ -1727,8 +1721,8 @@ bb.a:
   %i.c = alloca [32 x i8], align 8                ; 7 uses
   %i.d = alloca [16 x i8], align 8                ; 5 uses
   %i.e = alloca [64 x i8], align 8                ; 4 uses
-  %i.f = alloca [16 x i8], align 8                ; 5 uses
-  %i.g = alloca [16 x i8], align 8                ; 7 uses
+  %i.f = alloca [16 x i8], align 16               ; 4 uses
+  %i.g = alloca [16 x i8], align 16               ; 7 uses
   %i.h = alloca [40 x i8], align 8                ; 8 uses
   %i.i = alloca [32 x i8], align 8                ; 7 uses
   %i.j = alloca [16 x i8], align 8                ; 5 uses
@@ -1911,18 +1905,16 @@ bb.k:                                             ; preds = %bb.g
     #dbg_value(i64 %i.as, !26591, !DIExpression(), !26598)
     #dbg_value(i64 %i.as, !26561, !DIExpression(), !26590)
   %i.at = call { i64, i64 } @_RINvMsd_NtCs3f36owOmepS_6quiche2h3NtB6_10Connection27send_response_with_priorityNtB6_6HeaderNtNtB8_7buffers17DefaultBufFactoryECsiGRwBGCeC5s_11quiche_apps(ptr noalias nofree noundef nonnull align 8 dereferenceable(520) %0, ptr noalias nofree noundef nonnull align 16 dereferenceable(15552) %1, i64 noundef %i.as, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %i.ap, i64 noundef %i.ar, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) dereferenceable(2) %i.ah, i1 noundef zeroext false), !dbg !26897 ; 2 uses
-  %i.au = extractvalue { i64, i64 } %i.at, 0, !dbg !26897 ; 4 uses
+  %i.au = extractvalue { i64, i64 } %i.at, 0, !dbg !26897 ; 3 uses
+  switch i64 %i.au, label %bb.l [
+    i64 -1, label %bb.h
+    i64 35, label %bb.v
+  ], !dbg !26898
+
+bb.l:                                             ; preds = %bb.k
   %4 = extractvalue { i64, i64 } %i.at, 1, !dbg !26897
-  %.not103 = icmp eq i64 %i.au, -1, !dbg !26896
-  br i1 %.not103, label %bb.h, label %5, !dbg !26898
-
-5:                                                ; preds = %bb.k
-  %6 = icmp ne i64 %i.au, 34, !dbg !26896
-  call void @llvm.assume(i1 %6), !dbg !26896
-  %7 = icmp eq i64 %i.au, 35, !dbg !26898
-  br i1 %7, label %bb.v, label %bb.l, !dbg !26898
-
-bb.l:                                             ; preds = %5
+  %5 = icmp ne i64 %i.au, 34, !dbg !26896
+  call void @llvm.assume(i1 %5), !dbg !26896
   call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !dbg !26899
   store i64 %i.au, ptr %i.k, align 8, !dbg !26899
   %i.av = getelementptr inbounds nuw i8, ptr %i.k, i64 8, !dbg !26899
@@ -2039,19 +2031,15 @@ bb.p:                                             ; preds = %_RINvNtCskKLDkoKarT
     #dbg_value(i64 %i.bt, !26591, !DIExpression(), !26598)
     #dbg_value(i64 %i.bt, !26561, !DIExpression(), !26590)
   call void @_RINvMsd_NtCs3f36owOmepS_6quiche2h3NtB6_10Connection12do_send_bodyNtNtB8_7buffers17DefaultBufFactoryRShjNCINvB2_9send_bodyB11_E0ECsiGRwBGCeC5s_11quiche_apps(ptr noalias nofree noundef nonnull sret([16 x i8]) align 8 captures(none) dereferenceable(16) %i.g, ptr noalias nofree noundef nonnull align 8 dereferenceable(520) %0, ptr noalias nofree noundef nonnull align 16 dereferenceable(15552) %1, i64 noundef %i.bt, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) %i.bs, i64 noundef %i.br, i1 noundef zeroext true), !dbg !26921
-  %i.bu = load i64, ptr %i.g, align 8, !dbg !26919, !range !7219, !noundef !1793 ; 4 uses
-  %.not104 = icmp eq i64 %i.bu, -1, !dbg !26919
-  br i1 %.not104, label %bb.r, label %8, !dbg !26922
+  %i.bu = load i64, ptr %i.g, align 16, !dbg !26919, !range !7219, !noundef !1793 ; 2 uses
+  switch i64 %i.bu, label %bb.t [
+    i64 -1, label %bb.r
+    i64 23, label %bb.s
+  ], !dbg !26922
 
 bb.q:                                             ; preds = %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueINtNtB4_6option6OptionINtNtCsexYYUdYSQU6_5alloc3vec3VecNtNtCs3f36owOmepS_6quiche2h36HeaderEEECsiGRwBGCeC5s_11quiche_apps.exit
   call void @_RNvNtNtCskKLDkoKarTP_4core5slice5index16slice_index_fail(i64 noundef %i.bl, i64 noundef %i.bn, i64 noundef %i.bn, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) @190) #23, !dbg !26923
   unreachable, !dbg !26923
-
-8:                                                ; preds = %bb.p
-  %9 = icmp ne i64 %i.bu, 34, !dbg !26919
-  call void @llvm.assume(i1 %9), !dbg !26919
-  %10 = icmp eq i64 %i.bu, 23, !dbg !26922
-  br i1 %10, label %bb.s, label %bb.t, !dbg !26922
 
 bb.r:                                             ; preds = %bb.p
   %i.bv = getelementptr inbounds nuw i8, ptr %i.g, i64 8, !dbg !26924
@@ -2059,8 +2047,8 @@ bb.r:                                             ; preds = %bb.p
     #dbg_value(i64 %i.bw, !26580, !DIExpression(), !26835)
   br label %bb.s, !dbg !26925
 
-bb.s:                                             ; preds = %8, %bb.r
-  %.sroa.010.0 = phi i64 [ %i.bw, %bb.r ], [ 0, %8 ], !dbg !26834
+bb.s:                                             ; preds = %bb.p, %bb.r
+  %.sroa.010.0 = phi i64 [ %i.bw, %bb.r ], [ 0, %bb.p ], !dbg !26834
     #dbg_value(i64 %.sroa.010.0, !26580, !DIExpression(), !26835)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !dbg !26926
   %i.bx = load i64, ptr %i.bk, align 8, !dbg !26927, !noundef !1793
@@ -2073,13 +2061,12 @@ bb.s:                                             ; preds = %8, %bb.r
   %i.cb = icmp eq i64 %i.by, %i.bz, !dbg !26931
   br i1 %i.cb, label %bb.u, label %bb.v, !dbg !26931
 
-bb.t:                                             ; preds = %8
-  %11 = getelementptr inbounds nuw i8, ptr %i.g, i64 8, !dbg !26919
+bb.t:                                             ; preds = %bb.p
+  %6 = icmp ne i64 %i.bu, 34, !dbg !26919
+  call void @llvm.assume(i1 %6), !dbg !26919
   call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !dbg !26932
-  %12 = load i64, ptr %11, align 8, !dbg !26932
-  store i64 %i.bu, ptr %i.f, align 8, !dbg !26932
-  %13 = getelementptr inbounds nuw i8, ptr %i.f, i64 8, !dbg !26932
-  store i64 %12, ptr %13, align 8, !dbg !26932
+  %7 = load <2 x i64>, ptr %i.g, align 16, !dbg !26932
+  store <2 x i64> %7, ptr %i.f, align 16, !dbg !26932
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !dbg !26933
     #dbg_value(ptr %i.p, !26618, !DIExpression(), !26621)
     #dbg_value(ptr %i.p, !26561, !DIExpression(DW_OP_deref), !26590)
@@ -2113,7 +2100,7 @@ bb.u:                                             ; preds = %bb.s
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !dbg !26941
   br label %bb.v, !dbg !26942
 
-bb.v:                                             ; preds = %bb.u, %bb.s, %bb.x, %bb.c, %bb.n, %5
+bb.v:                                             ; preds = %bb.u, %bb.s, %bb.x, %bb.c, %bb.k, %bb.n
   call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !dbg !26943
   ret void, !dbg !26944
 

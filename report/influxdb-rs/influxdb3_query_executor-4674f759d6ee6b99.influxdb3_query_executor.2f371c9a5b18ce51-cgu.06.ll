@@ -205,14 +205,16 @@ define internal fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_4ce
 bb.a:
   tail call void @llvm.experimental.noalias.scope.decl(metadata !199)
   tail call void @llvm.experimental.noalias.scope.decl(metadata !200)
-  %i.a = load i64, ptr %0, align 8, !range !201, !alias.scope !202, !noundef !21 ; 4 uses
+  %i.a = load i64, ptr %0, align 8, !range !201, !alias.scope !202, !noundef !21 ; 2 uses
   %.not.i.i = icmp eq i64 %i.a, -2
   br i1 %.not.i.i, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_4cell10UnsafeCellNtNtNtNtNtCs8dy3IO6wsj9_8wasmtime7runtime2vm12traphandlers17call_thread_state11UnwindStateEECs43kcu4yvms7_24influxdb3_query_executor.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
   tail call void @llvm.experimental.noalias.scope.decl(metadata !203)
-  %1 = icmp eq i64 %i.a, -1
-  br i1 %1, label %bb.c, label %2
+  switch i64 %i.a, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtCs8dy3IO6wsj9_8wasmtime7runtime2vm12traphandlers12UnwindReasonECs43kcu4yvms7_24influxdb3_query_executor.exit.i.i [
+    i64 -1, label %bb.c
+    i64 2, label %bb.i
+  ]
 
 bb.c:                                             ; preds = %bb.b
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -255,13 +257,7 @@ bb.h:                                             ; preds = %bb.g
   tail call void @_RNvCs9wFQrvczXsK_7___rustc14___rust_dealloc(ptr noundef nonnull %.val.i.i.i, i64 noundef range(i64 1, 0) %i.l, i64 noundef range(i64 1, 536870913) %i.o) #34, !noalias !204
   br label %.body.i.i
 
-2:                                                ; preds = %bb.b
-  %3 = icmp ne i64 %i.a, 3
-  tail call void @llvm.assume(i1 %3)
-  %4 = icmp eq i64 %i.a, 2
-  br i1 %4, label %bb.i, label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtCs8dy3IO6wsj9_8wasmtime7runtime2vm12traphandlers12UnwindReasonECs43kcu4yvms7_24influxdb3_query_executor.exit.i.i
-
-bb.i:                                             ; preds = %2
+bb.i:                                             ; preds = %bb.b
   %i.p = getelementptr inbounds nuw i8, ptr %0, i64 8
   invoke void @_RNvXs4_NtCsaIKnL9StOw_6anyhow5errorNtB7_5ErrorNtNtNtCs4NRVxsYgnAr_4core3ops4drop4Drop4drop(ptr noalias noundef nonnull align 8 dereferenceable(8) %i.p)
           to label %_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtCs8dy3IO6wsj9_8wasmtime7runtime2vm12traphandlers12UnwindReasonECs43kcu4yvms7_24influxdb3_query_executor.exit.i.i unwind label %bb.j
@@ -277,7 +273,7 @@ bb.j:                                             ; preds = %bb.i
   invoke fastcc void @_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtNtCs8dy3IO6wsj9_8wasmtime7runtime2vm12traphandlers9backtrace9BacktraceEECs43kcu4yvms7_24influxdb3_query_executor(ptr noalias noundef align 8 dereferenceable(24) %i.r) #31
           to label %common.resume.i.i unwind label %bb.n
 
-_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtCs8dy3IO6wsj9_8wasmtime7runtime2vm12traphandlers12UnwindReasonECs43kcu4yvms7_24influxdb3_query_executor.exit.i.i: ; preds = %bb.i, %2, %bb.f, %bb.e
+_RINvNtCs4NRVxsYgnAr_4core3ptr9drop_glueNtNtNtNtCs8dy3IO6wsj9_8wasmtime7runtime2vm12traphandlers12UnwindReasonECs43kcu4yvms7_24influxdb3_query_executor.exit.i.i: ; preds = %bb.i, %bb.f, %bb.e, %bb.b
   %i.s = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 4 uses
   %i.t = load i64, ptr %i.s, align 8, !range !28, !alias.scope !205, !noundef !21
   %i.u = icmp eq i64 %i.t, -1
