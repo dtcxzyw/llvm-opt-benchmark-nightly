@@ -204,7 +204,7 @@ _ZNSt12__shared_ptrIN4llvm3sys2fs6detail12DirIterStateELN9__gnu_cxx12_Lock_polic
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: read) uwtable
-define dso_local noundef range(i32 0, 12) i32 @_ZNK4llvm6object15MachOObjectFile35mapReflectionSectionNameToEnumValueENS_9StringRefE(ptr nofree nonnull readnone align 8 captures(none) %0, ptr nofree readonly captures(none) %1, i64 %2) unnamed_addr #10 align 2 {
+define dso_local noundef i32 @_ZNK4llvm6object15MachOObjectFile35mapReflectionSectionNameToEnumValueENS_9StringRefE(ptr nofree nonnull readnone align 8 captures(none) %0, ptr nofree readonly captures(none) %1, i64 %2) unnamed_addr #10 align 2 {
 bb.a:
   switch i64 %2, label %bb.j [
     i64 16, label %bb.b
@@ -218,42 +218,42 @@ bb.b:                                             ; preds = %bb.a
   %i.b = icmp ne i128 %i.a, 133490796765059206850170528851031187295
   %i.c = zext i1 %i.b to i32
   %.not.i.i = icmp eq i32 %i.c, 0
-  br i1 %.not.i.i, label %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit82.thread, label %bb.c
+  br i1 %.not.i.i, label %bb.j, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
   %i.d = load i128, ptr %1, align 1
   %i.e = icmp ne i128 %i.d, 161440910714171923649535342330271457119
   %i.f = zext i1 %i.e to i32
   %.not.i.i8 = icmp eq i32 %i.f, 0
-  br i1 %.not.i.i8, label %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit82.thread, label %bb.d
+  br i1 %.not.i.i8, label %bb.j, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
   %i.g = load i128, ptr %1, align 1
   %i.h = icmp ne i128 %i.g, 146762632055280312955076084970953072479
   %i.i = zext i1 %i.h to i32
   %.not.i.i16 = icmp eq i32 %i.i, 0
-  br i1 %.not.i.i16, label %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit82.thread, label %bb.e
+  br i1 %.not.i.i16, label %bb.j, label %bb.e
 
 bb.e:                                             ; preds = %bb.d
   %i.j = load i128, ptr %1, align 1
   %i.k = icmp ne i128 %i.j, 134846331683320008588107326358220398431
   %i.l = zext i1 %i.k to i32
   %.not.i.i24 = icmp eq i32 %i.l, 0
-  br i1 %.not.i.i24, label %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit82.thread, label %bb.f
+  br i1 %.not.i.i24, label %bb.j, label %bb.f
 
 bb.f:                                             ; preds = %bb.e
   %i.m = load i128, ptr %1, align 1
   %i.n = icmp ne i128 %i.m, 136107997784321817532764861105469349727
   %i.o = zext i1 %i.n to i32
   %.not.i.i32 = icmp eq i32 %i.o, 0
-  br i1 %.not.i.i32, label %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit82.thread, label %.thread199
+  br i1 %.not.i.i32, label %bb.j, label %.thread199
 
 .thread199:                                       ; preds = %bb.f
   %i.p = load i128, ptr %1, align 1
   %i.q = icmp ne i128 %i.p, 152136639020506533614220581365798362975
   %i.r = zext i1 %i.q to i32
   %.not.i.i40 = icmp eq i32 %i.r, 0
-  br i1 %.not.i.i40, label %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit82.thread, label %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit58.thread278
+  br i1 %.not.i.i40, label %bb.j, label %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit58.thread278
 
 bb.g:                                             ; preds = %bb.a
   %i.s = load i64, ptr %1, align 1
@@ -265,7 +265,8 @@ bb.g:                                             ; preds = %bb.a
   %i.y = icmp ne i64 %i.x, 0
   %i.z = zext i1 %i.y to i32
   %.not.i.i48 = icmp eq i32 %i.z, 0
-  br i1 %.not.i.i48, label %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit82.thread, label %bb.j
+  %spec.select = select i1 %.not.i.i48, i64 4294967302, i64 0
+  br label %bb.j
 
 bb.h:                                             ; preds = %bb.a
   %i.aa = load i64, ptr %1, align 1
@@ -277,14 +278,15 @@ bb.h:                                             ; preds = %bb.a
   %i.ag = icmp ne i64 %i.af, 0
   %i.ah = zext i1 %i.ag to i32
   %.not.i.i56 = icmp eq i32 %i.ah, 0
-  br i1 %.not.i.i56, label %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit82.thread, label %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit66.thread.thread290
+  br i1 %.not.i.i56, label %bb.j, label %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit66.thread.thread290
 
 _ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit58.thread278: ; preds = %.thread199
   %i.ai = load i128, ptr %1, align 1
   %i.aj = icmp ne i128 %i.ai, 153377497270699303655596850551803043679
   %i.ak = zext i1 %i.aj to i32
   %.not.i.i64 = icmp eq i32 %i.ak, 0
-  br i1 %.not.i.i64, label %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit82.thread, label %bb.j
+  %spec.select361 = select i1 %.not.i.i64, i64 4294967304, i64 0
+  br label %bb.j
 
 _ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit66.thread.thread290: ; preds = %bb.h
   %i.al = load i64, ptr %1, align 1
@@ -296,7 +298,8 @@ _ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseE
   %i.ar = icmp ne i64 %i.aq, 0
   %i.as = zext i1 %i.ar to i32
   %.not.i.i72 = icmp eq i32 %i.as, 0
-  br i1 %.not.i.i72, label %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit82.thread, label %bb.j
+  %spec.select356 = select i1 %.not.i.i72, i64 4294967305, i64 0
+  br label %bb.j
 
 bb.i:                                             ; preds = %bb.a
   %i.at = load i64, ptr %1, align 1
@@ -308,15 +311,15 @@ bb.i:                                             ; preds = %bb.a
   %i.az = icmp ne i64 %i.ay, 0
   %i.ba = zext i1 %i.az to i32
   %.not.i.i80 = icmp eq i32 %i.ba, 0
-  br i1 %.not.i.i80, label %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit82.thread, label %bb.j
-
-_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit82.thread: ; preds = %bb.d, %.thread199, %bb.f, %bb.e, %bb.h, %bb.c, %bb.b, %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit66.thread.thread290, %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit58.thread278, %bb.i, %bb.g
-  %.sroa.26.10.ph = phi i32 [ 10, %bb.i ], [ 8, %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit58.thread278 ], [ 9, %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit66.thread.thread290 ], [ 2, %bb.d ], [ 0, %bb.b ], [ 1, %bb.c ], [ 7, %bb.h ], [ 3, %bb.e ], [ 4, %bb.f ], [ 5, %.thread199 ], [ 6, %bb.g ]
+  %spec.select359 = select i1 %.not.i.i80, i64 4294967306, i64 0
   br label %bb.j
 
-bb.j:                                             ; preds = %bb.g, %bb.i, %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit58.thread278, %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit66.thread.thread290, %bb.a, %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit82.thread
-  %3 = phi i32 [ %.sroa.26.10.ph, %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit82.thread ], [ 11, %bb.a ], [ 11, %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit66.thread.thread290 ], [ 11, %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit58.thread278 ], [ 11, %bb.i ], [ 11, %bb.g ]
-  ret i32 %3
+bb.j:                                             ; preds = %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit58.thread278, %bb.b, %bb.c, %bb.i, %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit66.thread.thread290, %bb.g, %bb.a, %bb.d, %bb.e, %.thread199, %bb.f, %bb.h
+  %.sroa.26.10 = phi i64 [ 4294967298, %bb.d ], [ 4294967301, %.thread199 ], [ 4294967300, %bb.f ], [ 0, %bb.a ], [ %spec.select356, %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit66.thread.thread290 ], [ 4294967299, %bb.e ], [ %spec.select361, %_ZN4llvm12StringSwitchINS_12binaryformat27Swift5ReflectionSectionKindES2_E4CaseENS_13StringLiteralES2_.exit58.thread278 ], [ 4294967303, %bb.h ], [ %spec.select359, %bb.i ], [ %spec.select, %bb.g ], [ 4294967297, %bb.c ], [ 4294967296, %bb.b ] ; 2 uses
+  %.not = icmp samesign ult i64 %.sroa.26.10, 4294967296
+  %.sroa.26.16.extract.trunc = trunc i64 %.sroa.26.10 to i32
+  %spec.select.i = select i1 %.not, i32 11, i32 %.sroa.26.16.extract.trunc
+  ret i32 %spec.select.i
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(none) uwtable

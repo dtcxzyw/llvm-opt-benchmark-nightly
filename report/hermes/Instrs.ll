@@ -144,9 +144,19 @@ declare void @llvm.lifetime.end.p0(ptr captures(none)) #1
 define hidden noundef ptr @_ZNK6hermes14TerminatorInst12getSuccessorEj(ptr noundef nonnull align 8 dereferenceable(132) %0, i32 noundef %1) local_unnamed_addr #0 align 2 !guid !111 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.b = load i8, ptr %i.a, align 8, !tbaa !71    ; 5 uses
-  %2 = icmp eq i8 %i.b, 77
-  br i1 %2, label %bb.b, label %.thread102
+  %i.b = load i8, ptr %i.a, align 8, !tbaa !71    ; 18 uses
+  switch i8 %i.b, label %.thread102.unreachabledefault [
+    i8 77, label %bb.b
+    i8 80, label %.thread102
+    i8 81, label %bb.e
+    i8 82, label %bb.f
+    i8 83, label %bb.g
+    i8 84, label %bb.h
+    i8 85, label %bb.i
+    i8 86, label %bb.j
+    i8 87, label %bb.k
+    i8 88, label %bb.l
+  ]
 
 bb.b:                                             ; preds = %bb.a
   %i.c = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %0, i32 noundef 0) #15 ; 2 uses
@@ -160,37 +170,28 @@ bb.b:                                             ; preds = %bb.a
   tail call void @llvm.assume(i1 %i.g)
   %i.h = icmp ne i8 %i.b, 79
   tail call void @llvm.assume(i1 %i.h)
-  switch i8 %i.b, label %.thread102.unreachabledefault [
-    i8 80, label %3
-    i8 81, label %bb.e
-    i8 82, label %bb.f
-    i8 83, label %bb.g
-    i8 84, label %bb.h
-    i8 85, label %bb.i
-    i8 86, label %bb.j
-    i8 87, label %bb.k
-    i8 88, label %bb.l
-  ]
+  %2 = icmp eq i32 %1, 0
+  br i1 %2, label %bb.d, label %bb.c
 
-3:                                                ; preds = %.thread102
-  %4 = icmp eq i32 %1, 0
-  br i1 %4, label %bb.d, label %bb.c
-
-bb.c:                                             ; preds = %3
+bb.c:                                             ; preds = %.thread102
   %i.i = shl i32 %1, 1                            ; 2 uses
   %i.j = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %0, i32 noundef %i.i) #15 ; 0 uses
   %i.k = or disjoint i32 %i.i, 1
   br label %bb.d
 
-bb.d:                                             ; preds = %bb.c, %3
-  %.sink.i = phi i32 [ %i.k, %bb.c ], [ 1, %3 ]
+bb.d:                                             ; preds = %bb.c, %.thread102
+  %.sink.i = phi i32 [ %i.k, %bb.c ], [ 1, %.thread102 ]
   %i.l = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %0, i32 noundef %.sink.i) #15 ; 2 uses
   %i.m = icmp eq ptr %i.l, null
   %i.n = getelementptr inbounds i8, ptr %i.l, i64 -16
   %i.o = select i1 %i.m, ptr null, ptr %i.n
   br label %bb.m
 
-bb.e:                                             ; preds = %.thread102
+bb.e:                                             ; preds = %bb.a
+  %3 = icmp ne i8 %i.b, 78
+  tail call void @llvm.assume(i1 %3)
+  %4 = icmp ne i8 %i.b, 79
+  tail call void @llvm.assume(i1 %4)
   %i.p = icmp eq i32 %1, 0
   %spec.select.i86 = select i1 %i.p, i32 1, i32 2
   %i.q = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %0, i32 noundef %spec.select.i86) #15 ; 2 uses
@@ -199,7 +200,11 @@ bb.e:                                             ; preds = %.thread102
   %i.t = select i1 %i.r, ptr null, ptr %i.s
   br label %bb.m
 
-bb.f:                                             ; preds = %.thread102
+bb.f:                                             ; preds = %bb.a
+  %5 = icmp ne i8 %i.b, 78
+  tail call void @llvm.assume(i1 %5)
+  %6 = icmp ne i8 %i.b, 79
+  tail call void @llvm.assume(i1 %6)
   %i.u = icmp eq i32 %1, 0
   %spec.select.i88 = select i1 %i.u, i32 4, i32 5
   %i.v = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %0, i32 noundef %spec.select.i88) #15 ; 2 uses
@@ -208,7 +213,11 @@ bb.f:                                             ; preds = %.thread102
   %i.y = select i1 %i.w, ptr null, ptr %i.x
   br label %bb.m
 
-bb.g:                                             ; preds = %.thread102
+bb.g:                                             ; preds = %bb.a
+  %7 = icmp ne i8 %i.b, 78
+  tail call void @llvm.assume(i1 %7)
+  %8 = icmp ne i8 %i.b, 79
+  tail call void @llvm.assume(i1 %8)
   %i.z = icmp eq i32 %1, 0
   %spec.select.i90 = select i1 %i.z, i32 5, i32 6
   %i.aa = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %0, i32 noundef %spec.select.i90) #15 ; 2 uses
@@ -217,7 +226,11 @@ bb.g:                                             ; preds = %.thread102
   %i.ad = select i1 %i.ab, ptr null, ptr %i.ac
   br label %bb.m
 
-bb.h:                                             ; preds = %.thread102
+bb.h:                                             ; preds = %bb.a
+  %9 = icmp ne i8 %i.b, 78
+  tail call void @llvm.assume(i1 %9)
+  %10 = icmp ne i8 %i.b, 79
+  tail call void @llvm.assume(i1 %10)
   %i.ae = icmp eq i32 %1, 0
   %spec.select.i92 = select i1 %i.ae, i32 3, i32 4
   %i.af = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %0, i32 noundef %spec.select.i92) #15 ; 2 uses
@@ -226,14 +239,22 @@ bb.h:                                             ; preds = %.thread102
   %i.ai = select i1 %i.ag, ptr null, ptr %i.ah
   br label %bb.m
 
-bb.i:                                             ; preds = %.thread102
+bb.i:                                             ; preds = %bb.a
+  %11 = icmp ne i8 %i.b, 78
+  tail call void @llvm.assume(i1 %11)
+  %12 = icmp ne i8 %i.b, 79
+  tail call void @llvm.assume(i1 %12)
   %i.aj = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %0, i32 noundef %1) #15 ; 2 uses
   %i.ak = icmp eq ptr %i.aj, null
   %i.al = getelementptr inbounds i8, ptr %i.aj, i64 -16
   %i.am = select i1 %i.ak, ptr null, ptr %i.al
   br label %bb.m
 
-bb.j:                                             ; preds = %.thread102
+bb.j:                                             ; preds = %bb.a
+  %13 = icmp ne i8 %i.b, 78
+  tail call void @llvm.assume(i1 %13)
+  %14 = icmp ne i8 %i.b, 79
+  tail call void @llvm.assume(i1 %14)
   %i.an = icmp eq i32 %1, 0
   %spec.select.i95 = select i1 %i.an, i32 2, i32 3
   %i.ao = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(136) %0, i32 noundef %spec.select.i95) #15 ; 2 uses
@@ -242,14 +263,18 @@ bb.j:                                             ; preds = %.thread102
   %i.ar = select i1 %i.ap, ptr null, ptr %i.aq
   br label %bb.m
 
-bb.k:                                             ; preds = %.thread102
+bb.k:                                             ; preds = %bb.a
+  %15 = icmp ne i8 %i.b, 78
+  tail call void @llvm.assume(i1 %15)
+  %16 = icmp ne i8 %i.b, 79
+  tail call void @llvm.assume(i1 %16)
   %i.as = tail call noundef ptr @_ZNK6hermes13SwitchImmInst12getSuccessorEj(ptr noundef nonnull align 8 dereferenceable(132) %0, i32 noundef %1)
   br label %bb.m
 
-.thread102.unreachabledefault:                    ; preds = %.thread102
+.thread102.unreachabledefault:                    ; preds = %bb.a
   unreachable
 
-bb.l:                                             ; preds = %.thread102
+bb.l:                                             ; preds = %bb.a
   %.not = icmp eq i8 %i.b, 88
   tail call void @llvm.assume(i1 %.not)
   %i.at = tail call noundef ptr @_ZNK6hermes11Instruction10getOperandEj(ptr noundef nonnull align 8 dereferenceable(132) %0, i32 noundef 1) #15 ; 2 uses

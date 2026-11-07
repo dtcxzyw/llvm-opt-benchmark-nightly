@@ -202,17 +202,17 @@ bb.f:                                             ; preds = %bb.e
   br label %bb.g
 
 bb.g:                                             ; preds = %bb.e, %bb.f
-  %.sroa.012.0 = phi ptr [ %i.n, %bb.f ], [ %.sroa.57.0, %bb.e ] ; 4 uses
+  %.sroa.012.0 = phi ptr [ %i.n, %bb.f ], [ %.sroa.57.0, %bb.e ] ; 5 uses
   %.sroa.010.0 = phi i64 [ %i.m, %bb.f ], [ 0, %bb.e ]
   %i.o = getelementptr inbounds nuw i8, ptr %0, i64 168 ; 2 uses
   %i.p = load i64, ptr %i.o, align 8, !range !45, !noundef !38
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.012.0) ]
   switch i64 %i.p, label %bb.h [
-    i64 -2, label %bb.k
+    i64 -2, label %2
     i64 -1, label %bb.i
   ]
 
 bb.h:                                             ; preds = %bb.g
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.012.0) ]
   %i.q = tail call { i64, ptr } @_RINvXs6_NtNtCs33Yq3JqQgDT_9get_size25impls11collectionsINtNtCscdodAO9FK5_5alloc3vec3VecINtCs2Qp84xiUxLo_17ruff_ranged_value11RangedValueNtNtBW_6string6StringEENtBa_7GetSize26get_heap_size_with_trackerQNtNtBa_7tracker15StandardTrackerECs4o81Y09oZk1_10ty_project(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.o, ptr noalias noundef nonnull align 8 dereferenceable(48) %.sroa.012.0) ; 2 uses
   %i.r = extractvalue { i64, ptr } %i.q, 0
   %i.s = extractvalue { i64, ptr } %i.q, 1
@@ -240,9 +240,13 @@ _RINvXs1z_NtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB7_15AnalysisOptionsN
   %i.y = add i64 %.sroa.07.0.i, %.sroa.06.0.i
   br label %bb.k
 
-bb.k:                                             ; preds = %bb.g, %_RINvXs1z_NtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB7_15AnalysisOptionsNtCs33Yq3JqQgDT_9get_size27GetSize26get_heap_size_with_trackerQNtNtB1g_7tracker15StandardTrackerEBb_.exit
-  %.sroa.59.0 = phi ptr [ %.sroa.58.0.i, %_RINvXs1z_NtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB7_15AnalysisOptionsNtCs33Yq3JqQgDT_9get_size27GetSize26get_heap_size_with_trackerQNtNtB1g_7tracker15StandardTrackerEBb_.exit ], [ %.sroa.012.0, %bb.g ]
-  %.sroa.08.0 = phi i64 [ %i.y, %_RINvXs1z_NtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB7_15AnalysisOptionsNtCs33Yq3JqQgDT_9get_size27GetSize26get_heap_size_with_trackerQNtNtB1g_7tracker15StandardTrackerEBb_.exit ], [ 0, %bb.g ]
+2:                                                ; preds = %bb.g
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.012.0) ]
+  br label %bb.k
+
+bb.k:                                             ; preds = %2, %_RINvXs1z_NtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB7_15AnalysisOptionsNtCs33Yq3JqQgDT_9get_size27GetSize26get_heap_size_with_trackerQNtNtB1g_7tracker15StandardTrackerEBb_.exit
+  %.sroa.59.0 = phi ptr [ %.sroa.58.0.i, %_RINvXs1z_NtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB7_15AnalysisOptionsNtCs33Yq3JqQgDT_9get_size27GetSize26get_heap_size_with_trackerQNtNtB1g_7tracker15StandardTrackerEBb_.exit ], [ %.sroa.012.0, %2 ]
+  %.sroa.08.0 = phi i64 [ %i.y, %_RINvXs1z_NtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB7_15AnalysisOptionsNtCs33Yq3JqQgDT_9get_size27GetSize26get_heap_size_with_trackerQNtNtB1g_7tracker15StandardTrackerEBb_.exit ], [ 0, %2 ]
   %i.z = add i64 %.sroa.06.0, %.sroa.05.0
   %i.aa = add i64 %i.z, %.sroa.010.0
   %i.ab = add i64 %i.aa, %.sroa.08.0
@@ -645,16 +649,16 @@ bb.b:                                             ; preds = %bb.a
 
 bb.c:                                             ; preds = %bb.b, %bb.a
   %.sroa.07.0.i = phi i64 [ %i.e, %bb.b ], [ 112, %bb.a ]
-  %.sroa.0.0.i = phi ptr [ %i.d, %bb.b ], [ %1, %bb.a ] ; 4 uses
+  %.sroa.0.0.i = phi ptr [ %i.d, %bb.b ], [ %1, %bb.a ] ; 5 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 2 uses
   %i.g = load i64, ptr %i.f, align 8, !range !45, !alias.scope !1781, !noundef !38
-  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i) ]
   switch i64 %i.g, label %bb.d [
-    i64 -2, label %_RINvXs1Z_NtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB7_20InnerOverrideOptionsNtCs33Yq3JqQgDT_9get_size27GetSize26get_heap_size_with_trackerQNtNtB1l_7tracker15StandardTrackerEBb_.exit
+    i64 -2, label %2
     i64 -1, label %bb.e
   ]
 
 bb.d:                                             ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i) ]
   %i.h = tail call { i64, ptr } @_RINvXs6_NtNtCs33Yq3JqQgDT_9get_size25impls11collectionsINtNtCscdodAO9FK5_5alloc3vec3VecINtCs2Qp84xiUxLo_17ruff_ranged_value11RangedValueNtNtBW_6string6StringEENtBa_7GetSize26get_heap_size_with_trackerQNtNtBa_7tracker15StandardTrackerECs4o81Y09oZk1_10ty_project(ptr noalias noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(56) %i.f, ptr noalias noundef nonnull align 8 dereferenceable(48) %.sroa.0.0.i) ; 2 uses
   %i.i = extractvalue { i64, ptr } %i.h, 0
   %i.j = extractvalue { i64, ptr } %i.h, 1
@@ -682,9 +686,13 @@ _RINvXs1z_NtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB7_15AnalysisOptionsN
   %i.p = add i64 %.sroa.07.0.i.i, %.sroa.06.0.i.i
   br label %_RINvXs1Z_NtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB7_20InnerOverrideOptionsNtCs33Yq3JqQgDT_9get_size27GetSize26get_heap_size_with_trackerQNtNtB1l_7tracker15StandardTrackerEBb_.exit
 
-_RINvXs1Z_NtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB7_20InnerOverrideOptionsNtCs33Yq3JqQgDT_9get_size27GetSize26get_heap_size_with_trackerQNtNtB1l_7tracker15StandardTrackerEBb_.exit: ; preds = %bb.c, %_RINvXs1z_NtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB7_15AnalysisOptionsNtCs33Yq3JqQgDT_9get_size27GetSize26get_heap_size_with_trackerQNtNtB1g_7tracker15StandardTrackerEBb_.exit.i
-  %.sroa.5.0.i = phi ptr [ %.sroa.58.0.i.i, %_RINvXs1z_NtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB7_15AnalysisOptionsNtCs33Yq3JqQgDT_9get_size27GetSize26get_heap_size_with_trackerQNtNtB1g_7tracker15StandardTrackerEBb_.exit.i ], [ %.sroa.0.0.i, %bb.c ]
-  %.sroa.06.0.i = phi i64 [ %i.p, %_RINvXs1z_NtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB7_15AnalysisOptionsNtCs33Yq3JqQgDT_9get_size27GetSize26get_heap_size_with_trackerQNtNtB1g_7tracker15StandardTrackerEBb_.exit.i ], [ 0, %bb.c ]
+2:                                                ; preds = %bb.c
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.sroa.0.0.i) ]
+  br label %_RINvXs1Z_NtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB7_20InnerOverrideOptionsNtCs33Yq3JqQgDT_9get_size27GetSize26get_heap_size_with_trackerQNtNtB1l_7tracker15StandardTrackerEBb_.exit
+
+_RINvXs1Z_NtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB7_20InnerOverrideOptionsNtCs33Yq3JqQgDT_9get_size27GetSize26get_heap_size_with_trackerQNtNtB1l_7tracker15StandardTrackerEBb_.exit: ; preds = %_RINvXs1z_NtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB7_15AnalysisOptionsNtCs33Yq3JqQgDT_9get_size27GetSize26get_heap_size_with_trackerQNtNtB1g_7tracker15StandardTrackerEBb_.exit.i, %2
+  %.sroa.5.0.i = phi ptr [ %.sroa.58.0.i.i, %_RINvXs1z_NtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB7_15AnalysisOptionsNtCs33Yq3JqQgDT_9get_size27GetSize26get_heap_size_with_trackerQNtNtB1g_7tracker15StandardTrackerEBb_.exit.i ], [ %.sroa.0.0.i, %2 ]
+  %.sroa.06.0.i = phi i64 [ %i.p, %_RINvXs1z_NtNtCs4o81Y09oZk1_10ty_project8metadata7optionsNtB7_15AnalysisOptionsNtCs33Yq3JqQgDT_9get_size27GetSize26get_heap_size_with_trackerQNtNtB1g_7tracker15StandardTrackerEBb_.exit.i ], [ 0, %2 ]
   %i.q = add i64 %.sroa.07.0.i, %.sroa.06.0.i
   %i.r = insertvalue { i64, ptr } poison, i64 %i.q, 0
   %i.s = insertvalue { i64, ptr } %i.r, ptr %.sroa.5.0.i, 1

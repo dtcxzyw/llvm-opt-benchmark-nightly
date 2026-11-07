@@ -202,23 +202,26 @@ _RNCNvXs_NtCs5xzCmWPONXx_11libp2p_quic10connectionNtB6_10ConnectionNtNtCsdTHTBGb
 _RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionINtNtB5_3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB5_6future6future6Futurep6OutputNtNtCsdAHj8hiIvQh_11quinn_proto10connection15ConnectionErrorNtNtB5_6marker4SendEL_EEE18get_or_insert_withNCNvXs_NtCs5xzCmWPONXx_11libp2p_quic10connectionNtB3Y_10ConnectionNtNtCsdTHTBGblh3Z_11libp2p_core6muxing11StreamMuxer10poll_close0EB40_.exit: ; preds = %bb.a, %_RNCNvXs_NtCs5xzCmWPONXx_11libp2p_quic10connectionNtB6_10ConnectionNtNtCsdTHTBGblh3Z_11libp2p_core6muxing11StreamMuxer10poll_close0B8_.exit.i
   call void @_RNvXs_NtNtCskKLDkoKarTP_4core6future6futureINtNtB8_3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtB4_6Futurep6OutputNtNtCsdAHj8hiIvQh_11quinn_proto10connection15ConnectionErrorNtNtB8_6marker4SendEL_EEB1v_4pollCs5xzCmWPONXx_11libp2p_quic(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(address) dereferenceable(56) %i.b, ptr noalias nofree noundef nonnull align 8 dereferenceable(16) %i.c, ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %2)
   %i.p = load i64, ptr %i.b, align 8, !range !17, !noundef !6 ; 4 uses
-  %3 = icmp eq i64 %i.p, -1
-  br i1 %3, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsdAHj8hiIvQh_11quinn_proto10connection15ConnectionErrorECs5xzCmWPONXx_11libp2p_quic.exit, label %bb.i
+  switch i64 %i.p, label %bb.j [
+    i64 -1, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsdAHj8hiIvQh_11quinn_proto10connection15ConnectionErrorECs5xzCmWPONXx_11libp2p_quic.exit
+    i64 8, label %bb.i
+  ]
 
 bb.i:                                             ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionINtNtB5_3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB5_6future6future6Futurep6OutputNtNtCsdAHj8hiIvQh_11quinn_proto10connection15ConnectionErrorNtNtB5_6marker4SendEL_EEE18get_or_insert_withNCNvXs_NtCs5xzCmWPONXx_11libp2p_quic10connectionNtB3Y_10ConnectionNtNtCsdTHTBGblh3Z_11libp2p_core6muxing11StreamMuxer10poll_close0EB40_.exit
   %i.q = icmp ne i64 %i.p, 4
   call void @llvm.assume(i1 %i.q)
-  %4 = icmp eq i64 %i.p, 8
-  br i1 %4, label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsdAHj8hiIvQh_11quinn_proto10connection15ConnectionErrorECs5xzCmWPONXx_11libp2p_quic.exit, label %bb.j
+  br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsdAHj8hiIvQh_11quinn_proto10connection15ConnectionErrorECs5xzCmWPONXx_11libp2p_quic.exit
 
-bb.j:                                             ; preds = %bb.i
+bb.j:                                             ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionINtNtB5_3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB5_6future6future6Futurep6OutputNtNtCsdAHj8hiIvQh_11quinn_proto10connection15ConnectionErrorNtNtB5_6marker4SendEL_EEE18get_or_insert_withNCNvXs_NtCs5xzCmWPONXx_11libp2p_quic10connectionNtB3Y_10ConnectionNtNtCsdTHTBGblh3Z_11libp2p_core6muxing11StreamMuxer10poll_close0EB40_.exit
+  %3 = icmp ne i64 %i.p, 4
+  call void @llvm.assume(i1 %3)
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %.sroa.411.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %.sroa.411.0..sroa_idx, ptr noundef nonnull align 8 dereferenceable(48) %.sroa.4.0..sroa_idx, i64 48, i1 false)
   br label %_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsdAHj8hiIvQh_11quinn_proto10connection15ConnectionErrorECs5xzCmWPONXx_11libp2p_quic.exit
 
-_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsdAHj8hiIvQh_11quinn_proto10connection15ConnectionErrorECs5xzCmWPONXx_11libp2p_quic.exit: ; preds = %bb.i, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionINtNtB5_3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB5_6future6future6Futurep6OutputNtNtCsdAHj8hiIvQh_11quinn_proto10connection15ConnectionErrorNtNtB5_6marker4SendEL_EEE18get_or_insert_withNCNvXs_NtCs5xzCmWPONXx_11libp2p_quic10connectionNtB3Y_10ConnectionNtNtCsdTHTBGblh3Z_11libp2p_core6muxing11StreamMuxer10poll_close0EB40_.exit, %bb.j
-  %.sink = phi i64 [ -2, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionINtNtB5_3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB5_6future6future6Futurep6OutputNtNtCsdAHj8hiIvQh_11quinn_proto10connection15ConnectionErrorNtNtB5_6marker4SendEL_EEE18get_or_insert_withNCNvXs_NtCs5xzCmWPONXx_11libp2p_quic10connectionNtB3Y_10ConnectionNtNtCsdTHTBGblh3Z_11libp2p_core6muxing11StreamMuxer10poll_close0EB40_.exit ], [ %i.p, %bb.j ], [ -1, %bb.i ]
+_RINvNtCskKLDkoKarTP_4core3ptr9drop_glueNtNtCsdAHj8hiIvQh_11quinn_proto10connection15ConnectionErrorECs5xzCmWPONXx_11libp2p_quic.exit: ; preds = %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionINtNtB5_3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB5_6future6future6Futurep6OutputNtNtCsdAHj8hiIvQh_11quinn_proto10connection15ConnectionErrorNtNtB5_6marker4SendEL_EEE18get_or_insert_withNCNvXs_NtCs5xzCmWPONXx_11libp2p_quic10connectionNtB3Y_10ConnectionNtNtCsdTHTBGblh3Z_11libp2p_core6muxing11StreamMuxer10poll_close0EB40_.exit, %bb.j, %bb.i
+  %.sink = phi i64 [ -1, %bb.i ], [ %i.p, %bb.j ], [ -2, %_RINvMNtCskKLDkoKarTP_4core6optionINtB3_6OptionINtNtB5_3pin3PinINtNtCsexYYUdYSQU6_5alloc5boxed3BoxDNtNtNtB5_6future6future6Futurep6OutputNtNtCsdAHj8hiIvQh_11quinn_proto10connection15ConnectionErrorNtNtB5_6marker4SendEL_EEE18get_or_insert_withNCNvXs_NtCs5xzCmWPONXx_11libp2p_quic10connectionNtB3Y_10ConnectionNtNtCsdTHTBGblh3Z_11libp2p_core6muxing11StreamMuxer10poll_close0EB40_.exit ]
   store i64 %.sink, ptr %0, align 8
   ret void
 }

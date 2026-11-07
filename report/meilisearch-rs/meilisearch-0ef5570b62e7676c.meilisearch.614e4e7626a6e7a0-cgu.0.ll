@@ -205,13 +205,14 @@ bb.ab:                                            ; preds = %bb.aa
   store i64 1, ptr %i.cb, align 8
   store ptr %i.fq, ptr %.sroa.7.0..sroa_idx3, align 8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fp) ]
-  %.val328 = load ptr, ptr %i.ck, align 8, !noundef !52 ; 3 uses
+  %.val328 = load ptr, ptr %i.ck, align 8, !noundef !52 ; 4 uses
   %magicptr.i = ptrtoint ptr %.val328 to i64
   %magicptr.off.i = add i64 %magicptr.i, -1
   %switch.i = icmp ult i64 %magicptr.off.i, -2
   br i1 %switch.i, label %bb.ac, label %"_ZN4core3ptr87drop_in_place$LT$core..option..Option$LT$actix_http..h1..payload..PayloadSender$GT$$GT$17h0737d1c1e9972929E.exit"
 
 bb.ac:                                            ; preds = %bb.ab
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val328) ]
   %i.fr = getelementptr inbounds nuw i8, ptr %.val328, i64 8 ; 2 uses
   %i.fs = load i64, ptr %i.fr, align 8, !noundef !52
   %i.ft = add i64 %i.fs, -1                       ; 2 uses
@@ -614,13 +615,14 @@ bb.ab:                                            ; preds = %bb.aa
   store i64 1, ptr %i.cb, align 8
   store ptr %i.fq, ptr %.sroa.7.0..sroa_idx3, align 8
   call void @llvm.assume(i1 true) [ "nonnull"(ptr %i.fp) ]
-  %.val328 = load ptr, ptr %i.ck, align 8, !noundef !52 ; 3 uses
+  %.val328 = load ptr, ptr %i.ck, align 8, !noundef !52 ; 4 uses
   %magicptr.i = ptrtoint ptr %.val328 to i64
   %magicptr.off.i = add i64 %magicptr.i, -1
   %switch.i = icmp ult i64 %magicptr.off.i, -2
   br i1 %switch.i, label %bb.ac, label %"_ZN4core3ptr87drop_in_place$LT$core..option..Option$LT$actix_http..h1..payload..PayloadSender$GT$$GT$17h0737d1c1e9972929E.exit"
 
 bb.ac:                                            ; preds = %bb.ab
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val328) ]
   %i.fr = getelementptr inbounds nuw i8, ptr %.val328, i64 8 ; 2 uses
   %i.fs = load i64, ptr %i.fr, align 8, !noundef !52
   %i.ft = add i64 %i.fs, -1                       ; 2 uses
@@ -1023,13 +1025,14 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.s, %"_ZN4core3ptr81drop_in_place$LT$core..option..Option$LT$actix_http..error..DispatchError$GT$$GT$17h7bb8a08964c9584bE.exit.i"
   %.pn6.i = phi { ptr, i32 } [ %i.at, %bb.s ], [ %.pn4.i, %"_ZN4core3ptr81drop_in_place$LT$core..option..Option$LT$actix_http..error..DispatchError$GT$$GT$17h7bb8a08964c9584bE.exit.i" ]
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 696
-  %.val24.i = load ptr, ptr %i.ao, align 8, !alias.scope !24171, !noundef !52 ; 3 uses
+  %.val24.i = load ptr, ptr %i.ao, align 8, !alias.scope !24171, !noundef !52 ; 4 uses
   %magicptr.i.i = ptrtoint ptr %.val24.i to i64
   %magicptr.off.i.i = add i64 %magicptr.i.i, -1
   %switch.i.i = icmp ult i64 %magicptr.off.i.i, -2
   br i1 %switch.i.i, label %bb.q, label %"_ZN4core3ptr87drop_in_place$LT$core..option..Option$LT$actix_http..h1..payload..PayloadSender$GT$$GT$17h0737d1c1e9972929E.exit.i"
 
 bb.q:                                             ; preds = %bb.p
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val24.i) ]
   %i.ap = getelementptr inbounds nuw i8, ptr %.val24.i, i64 8 ; 2 uses
   %i.aq = load i64, ptr %i.ap, align 8, !noundef !52
   %i.ar = add i64 %i.aq, -1                       ; 2 uses
@@ -1048,13 +1051,14 @@ bb.s:                                             ; preds = %"_ZN4core3ptr81drop
 
 bb.t:                                             ; preds = %"_ZN4core3ptr81drop_in_place$LT$core..option..Option$LT$actix_http..error..DispatchError$GT$$GT$17h7bb8a08964c9584bE.exit45.i"
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 696
-  %.val.i = load ptr, ptr %i.au, align 8, !alias.scope !24171, !noundef !52 ; 3 uses
+  %.val.i = load ptr, ptr %i.au, align 8, !alias.scope !24171, !noundef !52 ; 4 uses
   %magicptr.i46.i = ptrtoint ptr %.val.i to i64
   %magicptr.off.i47.i = add i64 %magicptr.i46.i, -1
   %switch.i48.i = icmp ult i64 %magicptr.off.i47.i, -2
   br i1 %switch.i48.i, label %bb.u, label %"_ZN4core3ptr87drop_in_place$LT$core..option..Option$LT$actix_http..h1..payload..PayloadSender$GT$$GT$17h0737d1c1e9972929E.exit49.i"
 
 bb.u:                                             ; preds = %bb.t
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
   %i.av = getelementptr inbounds nuw i8, ptr %.val.i, i64 8 ; 2 uses
   %i.aw = load i64, ptr %i.av, align 8, !noundef !52
   %i.ax = add i64 %i.aw, -1                       ; 2 uses
@@ -1457,13 +1461,14 @@ bb.o:                                             ; preds = %bb.n
 bb.p:                                             ; preds = %bb.s, %"_ZN4core3ptr81drop_in_place$LT$core..option..Option$LT$actix_http..error..DispatchError$GT$$GT$17h7bb8a08964c9584bE.exit.i"
   %.pn6.i = phi { ptr, i32 } [ %i.at, %bb.s ], [ %.pn4.i, %"_ZN4core3ptr81drop_in_place$LT$core..option..Option$LT$actix_http..error..DispatchError$GT$$GT$17h7bb8a08964c9584bE.exit.i" ]
   %i.ao = getelementptr inbounds nuw i8, ptr %0, i64 1872
-  %.val24.i = load ptr, ptr %i.ao, align 8, !alias.scope !24432, !noundef !52 ; 3 uses
+  %.val24.i = load ptr, ptr %i.ao, align 8, !alias.scope !24432, !noundef !52 ; 4 uses
   %magicptr.i.i = ptrtoint ptr %.val24.i to i64
   %magicptr.off.i.i = add i64 %magicptr.i.i, -1
   %switch.i.i = icmp ult i64 %magicptr.off.i.i, -2
   br i1 %switch.i.i, label %bb.q, label %"_ZN4core3ptr87drop_in_place$LT$core..option..Option$LT$actix_http..h1..payload..PayloadSender$GT$$GT$17h0737d1c1e9972929E.exit.i"
 
 bb.q:                                             ; preds = %bb.p
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val24.i) ]
   %i.ap = getelementptr inbounds nuw i8, ptr %.val24.i, i64 8 ; 2 uses
   %i.aq = load i64, ptr %i.ap, align 8, !noundef !52
   %i.ar = add i64 %i.aq, -1                       ; 2 uses
@@ -1482,13 +1487,14 @@ bb.s:                                             ; preds = %"_ZN4core3ptr81drop
 
 bb.t:                                             ; preds = %"_ZN4core3ptr81drop_in_place$LT$core..option..Option$LT$actix_http..error..DispatchError$GT$$GT$17h7bb8a08964c9584bE.exit45.i"
   %i.au = getelementptr inbounds nuw i8, ptr %0, i64 1872
-  %.val.i = load ptr, ptr %i.au, align 8, !alias.scope !24432, !noundef !52 ; 3 uses
+  %.val.i = load ptr, ptr %i.au, align 8, !alias.scope !24432, !noundef !52 ; 4 uses
   %magicptr.i46.i = ptrtoint ptr %.val.i to i64
   %magicptr.off.i47.i = add i64 %magicptr.i46.i, -1
   %switch.i48.i = icmp ult i64 %magicptr.off.i47.i, -2
   br i1 %switch.i48.i, label %bb.u, label %"_ZN4core3ptr87drop_in_place$LT$core..option..Option$LT$actix_http..h1..payload..PayloadSender$GT$$GT$17h0737d1c1e9972929E.exit49.i"
 
 bb.u:                                             ; preds = %bb.t
+  call void @llvm.assume(i1 true) [ "nonnull"(ptr %.val.i) ]
   %i.av = getelementptr inbounds nuw i8, ptr %.val.i, i64 8 ; 2 uses
   %i.aw = load i64, ptr %i.av, align 8, !noundef !52
   %i.ax = add i64 %i.aw, -1                       ; 2 uses
