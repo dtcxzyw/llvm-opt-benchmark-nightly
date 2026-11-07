@@ -202,7 +202,7 @@ bb.y:                                             ; preds = %bb.x
   br i1 %i.bz, label %._crit_edge, label %bb.z
 
 bb.z:                                             ; preds = %bb.y
-  %i.ca = add nuw nsw i32 %.098128, 1             ; 2 uses
+  %i.ca = add nsw i32 %.098128, 1                 ; 2 uses
   %exitcond.not = icmp eq i32 %i.ca, %i.bg
   br i1 %exitcond.not, label %.sink.split, label %.lr.ph, !llvm.loop !92
 
