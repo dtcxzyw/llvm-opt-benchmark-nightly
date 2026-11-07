@@ -205,58 +205,53 @@ bb.bg:                                            ; preds = %bb.bg, %bb.bf
   %i.zn = getelementptr inbounds nuw i8, ptr %i.zj, i64 20
   %i.zo = getelementptr inbounds nuw i8, ptr %i.zj, i64 28
   %i.zp = load float, ptr %i.zo, align 4, !tbaa !56
-  %i.zq = load <2 x float>, ptr %i.zl, align 4, !tbaa !56 ; 4 uses
+  %i.zq = load <2 x float>, ptr %i.zl, align 4, !tbaa !56 ; 5 uses
   %i.zr = load <2 x float>, ptr %i.zm, align 4, !tbaa !56 ; 4 uses
   %i.zs = load <2 x float>, ptr %i.zn, align 4, !tbaa !56 ; 5 uses
   %i.zt = fmul fast <2 x float> %i.zr, splat (float 4.250000e+00)
   %i.zu = fsub fast <2 x float> %i.zq, %i.zt
   %i.zv = fadd fast <2 x float> %i.zu, %i.zs      ; 2 uses
-  %7 = extractelement <2 x float> %i.zq, i64 1    ; 2 uses
-  %8 = extractelement <2 x float> %i.zr, i64 1    ; 2 uses
-  %9 = extractelement <2 x float> %i.zq, i64 0    ; 2 uses
-  %10 = extractelement <2 x float> %i.zs, i64 0
   %i.zw = fmul fast <2 x float> %i.zq, <float 5.000000e-01, float 2.500000e-01>
   %i.zx = fmul fast <2 x float> %i.zr, <float 2.500000e+00, float 1.250000e+00> ; 2 uses
-  %11 = extractelement <2 x float> %i.zs, i64 1   ; 2 uses
   %i.zy = fmul reassoc arcp contract afn <2 x float> %i.zs, <float 2.000000e+00, float 1.000000e+00>
   %i.zz = fadd reassoc nsz arcp contract afn <2 x float> %i.zw, %i.zy
   %i.aaa = fsub reassoc nsz arcp contract afn <2 x float> %i.zz, %i.zx ; 2 uses
-  %12 = fmul fast float %7, 4.000000e+00
-  %13 = fmul fast float %8, 5.000000e+00
-  %14 = fsub fast float %12, %13
-  %15 = fadd fast float %14, %11                  ; 2 uses
-  %16 = fmul fast float %9, 2.000000e+00
-  %17 = extractelement <2 x float> %i.zx, i64 0
-  %18 = fsub fast float %16, %17
-  %19 = fmul fast float %10, 5.000000e-01
-  %i.aab = fadd fast float %19, %18               ; 2 uses
-  %20 = fsub fast float %i.zk, %11
-  %i.aac = fsub fast float %8, %7
-  %21 = fmul fast float %i.aac, 5.250000e+00
-  %22 = fadd fast float %20, %21
-  store float %22, ptr %.0622943.us, align 4, !tbaa !56
-  %i.aad = extractelement <2 x float> %i.zv, i64 0 ; 2 uses
-  %i.aae = extractelement <2 x float> %i.zv, i64 1 ; 2 uses
+  %7 = fmul fast <2 x float> %i.zq, <float 2.000000e+00, float 4.000000e+00>
+  %8 = shufflevector <2 x float> %i.zx, <2 x float> %i.zr, <2 x i32> <i32 0, i32 3>
+  %9 = fmul reassoc arcp contract afn <2 x float> %8, <float 1.000000e+00, float 5.000000e+00>
+  %10 = fmul reassoc arcp contract afn <2 x float> %i.zs, <float 5.000000e-01, float 1.000000e+00>
+  %11 = fadd reassoc nsz arcp contract afn <2 x float> %7, %10
+  %12 = fsub reassoc nsz arcp contract afn <2 x float> %11, %9 ; 2 uses
+  %13 = extractelement <2 x float> %i.zv, i64 0   ; 2 uses
+  %14 = extractelement <2 x float> %i.zv, i64 1   ; 2 uses
+  %i.aab = fadd fast float %14, %13
+  store float %i.aab, ptr %.0621944.us, align 4, !tbaa !56
+  %i.aac = fsub fast float %14, %13
+  store float %i.aac, ptr %.0620945.us, align 4, !tbaa !56
+  %i.aad = extractelement <2 x float> %i.aaa, i64 0 ; 2 uses
+  %i.aae = extractelement <2 x float> %i.aaa, i64 1 ; 2 uses
   %i.aaf = fadd fast float %i.aae, %i.aad
-  store float %i.aaf, ptr %.0621944.us, align 4, !tbaa !56
+  store float %i.aaf, ptr %.0619946.us, align 4, !tbaa !56
   %i.aag = fsub fast float %i.aae, %i.aad
-  store float %i.aag, ptr %.0620945.us, align 4, !tbaa !56
-  %i.aah = extractelement <2 x float> %i.aaa, i64 0 ; 2 uses
-  %i.aai = extractelement <2 x float> %i.aaa, i64 1 ; 2 uses
+  store float %i.aag, ptr %.0618947.us, align 4, !tbaa !56
+  %i.aah = extractelement <2 x float> %12, i64 0  ; 2 uses
+  %i.aai = extractelement <2 x float> %12, i64 1  ; 2 uses
   %i.aaj = fadd fast float %i.aai, %i.aah
-  store float %i.aaj, ptr %.0619946.us, align 4, !tbaa !56
+  store float %i.aaj, ptr %.0617948.us, align 4, !tbaa !56
   %i.aak = fsub fast float %i.aai, %i.aah
-  store float %i.aak, ptr %.0618947.us, align 4, !tbaa !56
-  %23 = fadd fast float %15, %i.aab
-  store float %23, ptr %.0617948.us, align 4, !tbaa !56
-  %24 = fsub fast float %15, %i.aab
-  store float %24, ptr %.0616949.us, align 4, !tbaa !56
-  %25 = fsub fast float %i.zp, %9
-  %foldExtExtBinop = fsub fast <2 x float> %i.zr, %i.zs
-  %i.aal = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %26 = fmul fast float %i.aal, 5.250000e+00
-  %27 = fadd fast float %25, %26
-  store float %27, ptr %.0615950.us, align 4, !tbaa !56
+  store float %i.aak, ptr %.0616949.us, align 4, !tbaa !56
+  %15 = insertelement <2 x float> poison, float %i.zp, i64 0
+  %16 = insertelement <2 x float> %15, float %i.zk, i64 1
+  %17 = shufflevector <2 x float> %i.zq, <2 x float> %i.zs, <2 x i32> <i32 0, i32 3>
+  %18 = fsub fast <2 x float> %16, %17
+  %19 = shufflevector <2 x float> %i.zs, <2 x float> %i.zq, <2 x i32> <i32 0, i32 3>
+  %foldExtExtBinop = fsub fast <2 x float> %i.zr, %19
+  %20 = fmul fast <2 x float> %foldExtExtBinop, splat (float 5.250000e+00)
+  %21 = fadd fast <2 x float> %18, %20            ; 2 uses
+  %i.aal = extractelement <2 x float> %21, i64 1
+  store float %i.aal, ptr %.0622943.us, align 4, !tbaa !56
+  %22 = extractelement <2 x float> %21, i64 0
+  store float %22, ptr %.0615950.us, align 4, !tbaa !56
   %i.aam = getelementptr inbounds nuw [4 x i8], ptr %.0622943.us, i64 %i.uz
   %i.aan = getelementptr inbounds nuw [4 x i8], ptr %.0621944.us, i64 %i.uz
   %i.aao = getelementptr inbounds nuw [4 x i8], ptr %.0620945.us, i64 %i.uz
@@ -659,58 +654,53 @@ bb.ft:                                            ; preds = %bb.ft, %bb.fs
   %i.btl = getelementptr inbounds nuw i8, ptr %i.bth, i64 20
   %i.btm = getelementptr inbounds nuw i8, ptr %i.bth, i64 28
   %i.btn = load float, ptr %i.btm, align 4, !tbaa !56
-  %i.bto = load <2 x float>, ptr %i.btj, align 4, !tbaa !56 ; 4 uses
+  %i.bto = load <2 x float>, ptr %i.btj, align 4, !tbaa !56 ; 5 uses
   %i.btp = load <2 x float>, ptr %i.btk, align 4, !tbaa !56 ; 4 uses
   %i.btq = load <2 x float>, ptr %i.btl, align 4, !tbaa !56 ; 5 uses
   %i.btr = fmul fast <2 x float> %i.btp, splat (float 4.250000e+00)
   %i.bts = fsub fast <2 x float> %i.bto, %i.btr
   %i.btt = fadd fast <2 x float> %i.bts, %i.btq   ; 2 uses
-  %7 = extractelement <2 x float> %i.bto, i64 1   ; 2 uses
-  %8 = extractelement <2 x float> %i.btp, i64 1   ; 2 uses
-  %9 = extractelement <2 x float> %i.bto, i64 0   ; 2 uses
-  %10 = extractelement <2 x float> %i.btq, i64 0
   %i.btu = fmul fast <2 x float> %i.bto, <float 5.000000e-01, float 2.500000e-01>
   %i.btv = fmul fast <2 x float> %i.btp, <float 2.500000e+00, float 1.250000e+00> ; 2 uses
-  %11 = extractelement <2 x float> %i.btq, i64 1  ; 2 uses
   %i.btw = fmul reassoc arcp contract afn <2 x float> %i.btq, <float 2.000000e+00, float 1.000000e+00>
   %i.btx = fadd reassoc nsz arcp contract afn <2 x float> %i.btu, %i.btw
   %i.bty = fsub reassoc nsz arcp contract afn <2 x float> %i.btx, %i.btv ; 2 uses
-  %12 = fmul fast float %7, 4.000000e+00
-  %13 = fmul fast float %8, 5.000000e+00
-  %14 = fsub fast float %12, %13
-  %15 = fadd fast float %14, %11                  ; 2 uses
-  %16 = fmul fast float %9, 2.000000e+00
-  %17 = extractelement <2 x float> %i.btv, i64 0
-  %18 = fsub fast float %16, %17
-  %19 = fmul fast float %10, 5.000000e-01
-  %i.btz = fadd fast float %19, %18               ; 2 uses
-  %20 = fsub fast float %i.bti, %11
-  %i.bua = fsub fast float %8, %7
-  %21 = fmul fast float %i.bua, 5.250000e+00
-  %22 = fadd fast float %20, %21
-  store float %22, ptr %.0622959.us, align 4, !tbaa !56
-  %i.bub = extractelement <2 x float> %i.btt, i64 0 ; 2 uses
-  %i.buc = extractelement <2 x float> %i.btt, i64 1 ; 2 uses
+  %7 = fmul fast <2 x float> %i.bto, <float 2.000000e+00, float 4.000000e+00>
+  %8 = shufflevector <2 x float> %i.btv, <2 x float> %i.btp, <2 x i32> <i32 0, i32 3>
+  %9 = fmul reassoc arcp contract afn <2 x float> %8, <float 1.000000e+00, float 5.000000e+00>
+  %10 = fmul reassoc arcp contract afn <2 x float> %i.btq, <float 5.000000e-01, float 1.000000e+00>
+  %11 = fadd reassoc nsz arcp contract afn <2 x float> %7, %10
+  %12 = fsub reassoc nsz arcp contract afn <2 x float> %11, %9 ; 2 uses
+  %13 = extractelement <2 x float> %i.btt, i64 0  ; 2 uses
+  %14 = extractelement <2 x float> %i.btt, i64 1  ; 2 uses
+  %i.btz = fadd fast float %14, %13
+  store float %i.btz, ptr %.0621960.us, align 4, !tbaa !56
+  %i.bua = fsub fast float %14, %13
+  store float %i.bua, ptr %.0620961.us, align 4, !tbaa !56
+  %i.bub = extractelement <2 x float> %i.bty, i64 0 ; 2 uses
+  %i.buc = extractelement <2 x float> %i.bty, i64 1 ; 2 uses
   %i.bud = fadd fast float %i.buc, %i.bub
-  store float %i.bud, ptr %.0621960.us, align 4, !tbaa !56
+  store float %i.bud, ptr %.0619962.us, align 4, !tbaa !56
   %i.bue = fsub fast float %i.buc, %i.bub
-  store float %i.bue, ptr %.0620961.us, align 4, !tbaa !56
-  %i.buf = extractelement <2 x float> %i.bty, i64 0 ; 2 uses
-  %i.bug = extractelement <2 x float> %i.bty, i64 1 ; 2 uses
+  store float %i.bue, ptr %.0618963.us, align 4, !tbaa !56
+  %i.buf = extractelement <2 x float> %12, i64 0  ; 2 uses
+  %i.bug = extractelement <2 x float> %12, i64 1  ; 2 uses
   %i.buh = fadd fast float %i.bug, %i.buf
-  store float %i.buh, ptr %.0619962.us, align 4, !tbaa !56
+  store float %i.buh, ptr %.0617964.us, align 4, !tbaa !56
   %i.bui = fsub fast float %i.bug, %i.buf
-  store float %i.bui, ptr %.0618963.us, align 4, !tbaa !56
-  %23 = fadd fast float %15, %i.btz
-  store float %23, ptr %.0617964.us, align 4, !tbaa !56
-  %24 = fsub fast float %15, %i.btz
-  store float %24, ptr %.0616965.us, align 4, !tbaa !56
-  %25 = fsub fast float %i.btn, %9
-  %foldExtExtBinop = fsub fast <2 x float> %i.btp, %i.btq
-  %i.buj = extractelement <2 x float> %foldExtExtBinop, i64 0
-  %26 = fmul fast float %i.buj, 5.250000e+00
-  %27 = fadd fast float %25, %26
-  store float %27, ptr %.0615966.us, align 4, !tbaa !56
+  store float %i.bui, ptr %.0616965.us, align 4, !tbaa !56
+  %15 = insertelement <2 x float> poison, float %i.btn, i64 0
+  %16 = insertelement <2 x float> %15, float %i.bti, i64 1
+  %17 = shufflevector <2 x float> %i.bto, <2 x float> %i.btq, <2 x i32> <i32 0, i32 3>
+  %18 = fsub fast <2 x float> %16, %17
+  %19 = shufflevector <2 x float> %i.btq, <2 x float> %i.bto, <2 x i32> <i32 0, i32 3>
+  %foldExtExtBinop = fsub fast <2 x float> %i.btp, %19
+  %20 = fmul fast <2 x float> %foldExtExtBinop, splat (float 5.250000e+00)
+  %21 = fadd fast <2 x float> %18, %20            ; 2 uses
+  %i.buj = extractelement <2 x float> %21, i64 1
+  store float %i.buj, ptr %.0622959.us, align 4, !tbaa !56
+  %22 = extractelement <2 x float> %21, i64 0
+  store float %22, ptr %.0615966.us, align 4, !tbaa !56
   %i.buk = getelementptr inbounds nuw [4 x i8], ptr %.0622959.us, i64 %i.bnz
   %i.bul = getelementptr inbounds nuw [4 x i8], ptr %.0621960.us, i64 %i.bnz
   %i.bum = getelementptr inbounds nuw [4 x i8], ptr %.0620961.us, i64 %i.bnz
