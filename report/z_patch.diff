@@ -1,0 +1,17 @@
+diff --git a/llvm/lib/Transforms/Utils/LoopSimplify.cpp b/llvm/lib/Transforms/Utils/LoopSimplify.cpp
+index 1a73dba362554e..a4d9ec45e11b08 100644
+--- a/llvm/lib/Transforms/Utils/LoopSimplify.cpp
++++ b/llvm/lib/Transforms/Utils/LoopSimplify.cpp
+@@ -628,8 +628,10 @@ static bool simplifyOneLoop(Loop *L, SmallVectorImpl<Loop *> &Worklist,
+       CondBrInst *BI = dyn_cast<CondBrInst>(ExitingBlock->getTerminator());
+       if (!BI)
+         continue;
+-      CmpInst *CI = dyn_cast<CmpInst>(BI->getCondition());
+-      if (!CI || CI->getParent() != ExitingBlock) continue;
++      auto *CI = dyn_cast<Instruction>(BI->getCondition());
++      if (!CI || !isa<CmpInst, TruncInst>(CI) ||
++          CI->getParent() != ExitingBlock)
++        continue;
+ 
+       // Attempt to hoist out all instructions except for the
+       // comparison and the branch.
