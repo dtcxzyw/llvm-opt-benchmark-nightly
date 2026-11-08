@@ -205,7 +205,7 @@ _ZN4absl12lts_2025051223inlined_vector_internal20IteratorValueAdapterISaIN9grpc_
   store i64 0, ptr %i.ah, align 8, !tbaa !139
   store i8 0, ptr %i.aa, align 8, !tbaa !138
   %i.ak = getelementptr inbounds nuw i8, ptr %.sroa.010.0.i.i.i, i64 40
-  %i.al = add nuw i64 %.06.i.i.i.i, 1             ; 2 uses
+  %i.al = add nuw nsw i64 %.06.i.i.i.i, 1         ; 2 uses
   %exitcond.not.i.i.i.i = icmp eq i64 %i.al, %i.s
   br i1 %exitcond.not.i.i.i.i, label %.loopexit.loopexit.i.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !39
 
@@ -338,7 +338,7 @@ _ZN4absl12lts_2025051223inlined_vector_internal20IteratorValueAdapterISaINSt7__c
   store i64 0, ptr %i.ag, align 8, !tbaa !139
   store i8 0, ptr %i.z, align 8, !tbaa !138
   %i.aj = getelementptr inbounds nuw i8, ptr %.sroa.010.0.i.i.i, i64 32
-  %i.ak = add nuw i64 %.06.i.i.i.i, 1             ; 2 uses
+  %i.ak = add nuw nsw i64 %.06.i.i.i.i, 1         ; 2 uses
   %exitcond.not.i.i.i.i = icmp eq i64 %i.ak, %i.u
   br i1 %exitcond.not.i.i.i.i, label %.loopexit.loopexit.i.i.i, label %.lr.ph.i.i.i.i, !llvm.loop !40
 
