@@ -205,11 +205,11 @@ define noundef zeroext i1 @_ZN5folly21CPUThreadPoolExecutor16shouldStopThreadEb(
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 2576 ; 3 uses
   %i.b = load atomic i64, ptr %i.a monotonic, align 16 ; 3 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 384
   %i.c = icmp eq i64 %i.b, 0
   br i1 %i.c, label %_ZNSt13__atomic_baseImE21compare_exchange_weakERmmSt12memory_order.exit.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 384
   br i1 %1, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %.lr.ph.split.us

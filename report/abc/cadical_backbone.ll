@@ -204,8 +204,8 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %i.af = fmul double %i.ad, %i.ae
   %i.ag = fptosi double %i.af to i64              ; 2 uses
   store i64 %i.r, ptr %i.s, align 8, !tbaa !267
-  %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
-  %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 20
+  %i.ah = getelementptr inbounds nuw i8, ptr %0, i64 20
+  %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 2 uses
   br label %bb.e
 
 bb.e:                                             ; preds = %bb.g, %bb.d
@@ -220,19 +220,19 @@ bb.e:                                             ; preds = %bb.g, %bb.d
 
 ..thread_crit_edge:                               ; preds = %bb.e
   %.pre = load ptr, ptr %1, align 8, !tbaa !186
-  %.pre44 = load ptr, ptr %i.ah, align 8, !tbaa !186
+  %.pre44 = load ptr, ptr %i.ai, align 8, !tbaa !186
   br label %.thread
 
 bb.f:                                             ; preds = %bb.e
   %i.al = call noundef i32 @_ZN7CaDiCaL8Internal22compute_backbone_roundERSt6vectorIiSaIiEES4_lRlj(ptr noundef nonnull align 8 dereferenceable(7296) %0, ptr noundef nonnull align 8 dereferenceable(24) %1, ptr noundef nonnull align 8 dereferenceable(24) %2, i64 noundef %i.ag, ptr noundef nonnull align 8 dereferenceable(8) %i.a, i32 noundef 0)
   %i.am = add i32 %i.al, %.027                    ; 3 uses
   %i.an = load ptr, ptr %1, align 8, !tbaa !186   ; 3 uses
-  %i.ao = load ptr, ptr %i.ah, align 8, !tbaa !186 ; 3 uses
+  %i.ao = load ptr, ptr %i.ai, align 8, !tbaa !186 ; 3 uses
   %i.ap = icmp eq ptr %i.an, %i.ao
   br i1 %i.ap, label %.thread, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.aq = load i8, ptr %i.ai, align 4, !tbaa !211, !range !181, !noundef !12
+  %i.aq = load i8, ptr %i.ah, align 4, !tbaa !211, !range !181, !noundef !12
   %i.ar = trunc nuw i8 %i.aq to i1
   br i1 %i.ar, label %.thread, label %bb.e
 

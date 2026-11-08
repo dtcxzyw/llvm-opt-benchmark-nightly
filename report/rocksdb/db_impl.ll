@@ -205,21 +205,21 @@ bb.a:
   store atomic i8 1, ptr %i.b seq_cst, align 4
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 2144
   tail call void @_ZN7rocksdb12ErrorHandler30CancelErrorRecoveryForShutDownEv(ptr noundef nonnull align 8 dereferenceable(288) %i.c)
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 2288
-  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 2297 ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 2299
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 2299
+  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 2288
+  %i.f = getelementptr inbounds nuw i8, ptr %1, i64 2297 ; 2 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 3112 ; 3 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZN7rocksdb12ErrorHandler16ReadyForShutdownEv.exit.thread, %bb.a
-  %i.h = load ptr, ptr %i.d, align 16, !tbaa !741
+  %i.h = load ptr, ptr %i.e, align 16, !tbaa !741
   tail call void @_ZNK7rocksdb4port5Mutex10AssertHeldEv(ptr noundef nonnull align 8 dereferenceable(60) %i.h)
-  %i.i = load i8, ptr %i.e, align 1, !tbaa !826, !range !638, !noundef !639
+  %i.i = load i8, ptr %i.f, align 1, !tbaa !826, !range !638, !noundef !639
   %i.j = trunc nuw i8 %i.i to i1
   br i1 %i.j, label %_ZN7rocksdb12ErrorHandler16ReadyForShutdownEv.exit.thread, label %_ZN7rocksdb12ErrorHandler16ReadyForShutdownEv.exit
 
 _ZN7rocksdb12ErrorHandler16ReadyForShutdownEv.exit: ; preds = %bb.b
-  %i.k = load i8, ptr %i.f, align 1, !tbaa !2462, !range !638, !noundef !639
+  %i.k = load i8, ptr %i.d, align 1, !tbaa !2462, !range !638, !noundef !639
   %i.l = trunc nuw i8 %i.k to i1
   br i1 %i.l, label %bb.c, label %_ZN7rocksdb12ErrorHandler16ReadyForShutdownEv.exit.thread
 
@@ -351,7 +351,7 @@ bb.m:                                             ; preds = %bb.l
   br i1 %.not59, label %bb.n, label %.critedge
 
 bb.n:                                             ; preds = %bb.m
-  %i.br = load i8, ptr %i.e, align 1, !tbaa !826, !range !638, !noundef !639
+  %i.br = load i8, ptr %i.f, align 1, !tbaa !826, !range !638, !noundef !639
   %i.bs = trunc nuw i8 %i.br to i1
   br i1 %i.bs, label %.critedge, label %_ZN7rocksdb6DBImpl14UnpublishedWALC2EOS1_.exit
 

@@ -204,8 +204,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -230,7 +230,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.aj = load i64, ptr %3, align 8, !tbaa !280
   %i.ak = mul nsw i64 %i.aj, 1000000
-  %i.al = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.al = load i64, ptr %i.z, align 8, !tbaa !281
   %i.am = sdiv i64 %i.al, 1000
   %i.an = add nsw i64 %i.am, %i.ak
   br label %_ZL9Abc_Clockv.exit29
@@ -244,7 +244,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.ao = load i8, ptr %i.z, align 8, !tbaa !278, !range !152, !noundef !66
+  %i.ao = load i8, ptr %i.y, align 8, !tbaa !278, !range !152, !noundef !66
   %i.ap = trunc nuw i8 %i.ao to i1
   br i1 %i.ap, label %.critedge, label %bb.f
 
@@ -647,8 +647,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -673,7 +673,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.aj = load i64, ptr %3, align 8, !tbaa !280
   %i.ak = mul nsw i64 %i.aj, 1000000
-  %i.al = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.al = load i64, ptr %i.z, align 8, !tbaa !281
   %i.am = sdiv i64 %i.al, 1000
   %i.an = add nsw i64 %i.am, %i.ak
   br label %_ZL9Abc_Clockv.exit29
@@ -687,7 +687,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.ao = load i8, ptr %i.z, align 8, !tbaa !361, !range !152, !noundef !66
+  %i.ao = load i8, ptr %i.y, align 8, !tbaa !361, !range !152, !noundef !66
   %i.ap = trunc nuw i8 %i.ao to i1
   br i1 %i.ap, label %.critedge, label %bb.f
 
@@ -1090,8 +1090,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5120
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5120
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -1114,7 +1114,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.ah = load i64, ptr %3, align 8, !tbaa !280
   %i.ai = mul nsw i64 %i.ah, 1000000
-  %i.aj = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.aj = load i64, ptr %i.z, align 8, !tbaa !281
   %i.ak = sdiv i64 %i.aj, 1000
   %i.al = add nsw i64 %i.ak, %i.ai
   br label %_ZL9Abc_Clockv.exit29
@@ -1128,7 +1128,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.am = load i8, ptr %i.z, align 8, !tbaa !392, !range !152, !noundef !66
+  %i.am = load i8, ptr %i.y, align 8, !tbaa !392, !range !152, !noundef !66
   %i.an = trunc nuw i8 %i.am to i1
   br i1 %i.an, label %.critedge, label %bb.f
 
@@ -1531,8 +1531,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -1557,7 +1557,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.aj = load i64, ptr %3, align 8, !tbaa !280
   %i.ak = mul nsw i64 %i.aj, 1000000
-  %i.al = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.al = load i64, ptr %i.z, align 8, !tbaa !281
   %i.am = sdiv i64 %i.al, 1000
   %i.an = add nsw i64 %i.am, %i.ak
   br label %_ZL9Abc_Clockv.exit29
@@ -1571,7 +1571,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.ao = load i8, ptr %i.z, align 8, !tbaa !423, !range !152, !noundef !66
+  %i.ao = load i8, ptr %i.y, align 8, !tbaa !423, !range !152, !noundef !66
   %i.ap = trunc nuw i8 %i.ao to i1
   br i1 %i.ap, label %.critedge, label %bb.f
 
@@ -1974,8 +1974,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -2000,7 +2000,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.aj = load i64, ptr %3, align 8, !tbaa !280
   %i.ak = mul nsw i64 %i.aj, 1000000
-  %i.al = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.al = load i64, ptr %i.z, align 8, !tbaa !281
   %i.am = sdiv i64 %i.al, 1000
   %i.an = add nsw i64 %i.am, %i.ak
   br label %_ZL9Abc_Clockv.exit29
@@ -2014,7 +2014,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.ao = load i8, ptr %i.z, align 8, !tbaa !454, !range !152, !noundef !66
+  %i.ao = load i8, ptr %i.y, align 8, !tbaa !454, !range !152, !noundef !66
   %i.ap = trunc nuw i8 %i.ao to i1
   br i1 %i.ap, label %.critedge, label %bb.f
 
@@ -2417,8 +2417,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5120
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5120
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -2441,7 +2441,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.ah = load i64, ptr %3, align 8, !tbaa !280
   %i.ai = mul nsw i64 %i.ah, 1000000
-  %i.aj = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.aj = load i64, ptr %i.z, align 8, !tbaa !281
   %i.ak = sdiv i64 %i.aj, 1000
   %i.al = add nsw i64 %i.ak, %i.ai
   br label %_ZL9Abc_Clockv.exit29
@@ -2455,7 +2455,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.am = load i8, ptr %i.z, align 8, !tbaa !483, !range !152, !noundef !66
+  %i.am = load i8, ptr %i.y, align 8, !tbaa !483, !range !152, !noundef !66
   %i.an = trunc nuw i8 %i.am to i1
   br i1 %i.an, label %.critedge, label %bb.f
 
@@ -2858,8 +2858,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -2884,7 +2884,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.aj = load i64, ptr %3, align 8, !tbaa !280
   %i.ak = mul nsw i64 %i.aj, 1000000
-  %i.al = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.al = load i64, ptr %i.z, align 8, !tbaa !281
   %i.am = sdiv i64 %i.al, 1000
   %i.an = add nsw i64 %i.am, %i.ak
   br label %_ZL9Abc_Clockv.exit29
@@ -2898,7 +2898,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.ao = load i8, ptr %i.z, align 8, !tbaa !574, !range !152, !noundef !66
+  %i.ao = load i8, ptr %i.y, align 8, !tbaa !574, !range !152, !noundef !66
   %i.ap = trunc nuw i8 %i.ao to i1
   br i1 %i.ap, label %.critedge, label %bb.f
 
@@ -3301,8 +3301,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -3327,7 +3327,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.aj = load i64, ptr %3, align 8, !tbaa !280
   %i.ak = mul nsw i64 %i.aj, 1000000
-  %i.al = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.al = load i64, ptr %i.z, align 8, !tbaa !281
   %i.am = sdiv i64 %i.al, 1000
   %i.an = add nsw i64 %i.am, %i.ak
   br label %_ZL9Abc_Clockv.exit29
@@ -3341,7 +3341,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.ao = load i8, ptr %i.z, align 8, !tbaa !601, !range !152, !noundef !66
+  %i.ao = load i8, ptr %i.y, align 8, !tbaa !601, !range !152, !noundef !66
   %i.ap = trunc nuw i8 %i.ao to i1
   br i1 %i.ap, label %.critedge, label %bb.f
 
@@ -3744,8 +3744,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5120
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5120
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -3768,7 +3768,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.ah = load i64, ptr %3, align 8, !tbaa !280
   %i.ai = mul nsw i64 %i.ah, 1000000
-  %i.aj = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.aj = load i64, ptr %i.z, align 8, !tbaa !281
   %i.ak = sdiv i64 %i.aj, 1000
   %i.al = add nsw i64 %i.ak, %i.ai
   br label %_ZL9Abc_Clockv.exit29
@@ -3782,7 +3782,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.am = load i8, ptr %i.z, align 8, !tbaa !628, !range !152, !noundef !66
+  %i.am = load i8, ptr %i.y, align 8, !tbaa !628, !range !152, !noundef !66
   %i.an = trunc nuw i8 %i.am to i1
   br i1 %i.an, label %.critedge, label %bb.f
 
@@ -4185,8 +4185,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -4211,7 +4211,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.aj = load i64, ptr %3, align 8, !tbaa !280
   %i.ak = mul nsw i64 %i.aj, 1000000
-  %i.al = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.al = load i64, ptr %i.z, align 8, !tbaa !281
   %i.am = sdiv i64 %i.al, 1000
   %i.an = add nsw i64 %i.am, %i.ak
   br label %_ZL9Abc_Clockv.exit29
@@ -4225,7 +4225,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.ao = load i8, ptr %i.z, align 8, !tbaa !655, !range !152, !noundef !66
+  %i.ao = load i8, ptr %i.y, align 8, !tbaa !655, !range !152, !noundef !66
   %i.ap = trunc nuw i8 %i.ao to i1
   br i1 %i.ap, label %.critedge, label %bb.f
 
@@ -4628,8 +4628,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -4654,7 +4654,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.aj = load i64, ptr %3, align 8, !tbaa !280
   %i.ak = mul nsw i64 %i.aj, 1000000
-  %i.al = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.al = load i64, ptr %i.z, align 8, !tbaa !281
   %i.am = sdiv i64 %i.al, 1000
   %i.an = add nsw i64 %i.am, %i.ak
   br label %_ZL9Abc_Clockv.exit29
@@ -4668,7 +4668,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.ao = load i8, ptr %i.z, align 8, !tbaa !682, !range !152, !noundef !66
+  %i.ao = load i8, ptr %i.y, align 8, !tbaa !682, !range !152, !noundef !66
   %i.ap = trunc nuw i8 %i.ao to i1
   br i1 %i.ap, label %.critedge, label %bb.f
 
@@ -5071,8 +5071,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5120
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5120
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -5095,7 +5095,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.ah = load i64, ptr %3, align 8, !tbaa !280
   %i.ai = mul nsw i64 %i.ah, 1000000
-  %i.aj = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.aj = load i64, ptr %i.z, align 8, !tbaa !281
   %i.ak = sdiv i64 %i.aj, 1000
   %i.al = add nsw i64 %i.ak, %i.ai
   br label %_ZL9Abc_Clockv.exit29
@@ -5109,7 +5109,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.am = load i8, ptr %i.z, align 8, !tbaa !709, !range !152, !noundef !66
+  %i.am = load i8, ptr %i.y, align 8, !tbaa !709, !range !152, !noundef !66
   %i.an = trunc nuw i8 %i.am to i1
   br i1 %i.an, label %.critedge, label %bb.f
 
@@ -5512,8 +5512,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -5538,7 +5538,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.aj = load i64, ptr %3, align 8, !tbaa !280
   %i.ak = mul nsw i64 %i.aj, 1000000
-  %i.al = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.al = load i64, ptr %i.z, align 8, !tbaa !281
   %i.am = sdiv i64 %i.al, 1000
   %i.an = add nsw i64 %i.am, %i.ak
   br label %_ZL9Abc_Clockv.exit29
@@ -5552,7 +5552,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.ao = load i8, ptr %i.z, align 8, !tbaa !798, !range !152, !noundef !66
+  %i.ao = load i8, ptr %i.y, align 8, !tbaa !798, !range !152, !noundef !66
   %i.ap = trunc nuw i8 %i.ao to i1
   br i1 %i.ap, label %.critedge, label %bb.f
 
@@ -5955,8 +5955,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -5981,7 +5981,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.aj = load i64, ptr %3, align 8, !tbaa !280
   %i.ak = mul nsw i64 %i.aj, 1000000
-  %i.al = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.al = load i64, ptr %i.z, align 8, !tbaa !281
   %i.am = sdiv i64 %i.al, 1000
   %i.an = add nsw i64 %i.am, %i.ak
   br label %_ZL9Abc_Clockv.exit29
@@ -5995,7 +5995,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.ao = load i8, ptr %i.z, align 8, !tbaa !824, !range !152, !noundef !66
+  %i.ao = load i8, ptr %i.y, align 8, !tbaa !824, !range !152, !noundef !66
   %i.ap = trunc nuw i8 %i.ao to i1
   br i1 %i.ap, label %.critedge, label %bb.f
 
@@ -6398,8 +6398,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5120
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5120
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -6422,7 +6422,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.ah = load i64, ptr %3, align 8, !tbaa !280
   %i.ai = mul nsw i64 %i.ah, 1000000
-  %i.aj = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.aj = load i64, ptr %i.z, align 8, !tbaa !281
   %i.ak = sdiv i64 %i.aj, 1000
   %i.al = add nsw i64 %i.ak, %i.ai
   br label %_ZL9Abc_Clockv.exit29
@@ -6436,7 +6436,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.am = load i8, ptr %i.z, align 8, !tbaa !850, !range !152, !noundef !66
+  %i.am = load i8, ptr %i.y, align 8, !tbaa !850, !range !152, !noundef !66
   %i.an = trunc nuw i8 %i.am to i1
   br i1 %i.an, label %.critedge, label %bb.f
 
@@ -6839,8 +6839,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -6865,7 +6865,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.aj = load i64, ptr %3, align 8, !tbaa !280
   %i.ak = mul nsw i64 %i.aj, 1000000
-  %i.al = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.al = load i64, ptr %i.z, align 8, !tbaa !281
   %i.am = sdiv i64 %i.al, 1000
   %i.an = add nsw i64 %i.am, %i.ak
   br label %_ZL9Abc_Clockv.exit29
@@ -6879,7 +6879,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.ao = load i8, ptr %i.z, align 8, !tbaa !876, !range !152, !noundef !66
+  %i.ao = load i8, ptr %i.y, align 8, !tbaa !876, !range !152, !noundef !66
   %i.ap = trunc nuw i8 %i.ao to i1
   br i1 %i.ap, label %.critedge, label %bb.f
 
@@ -7282,8 +7282,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -7308,7 +7308,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.aj = load i64, ptr %3, align 8, !tbaa !280
   %i.ak = mul nsw i64 %i.aj, 1000000
-  %i.al = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.al = load i64, ptr %i.z, align 8, !tbaa !281
   %i.am = sdiv i64 %i.al, 1000
   %i.an = add nsw i64 %i.am, %i.ak
   br label %_ZL9Abc_Clockv.exit29
@@ -7322,7 +7322,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.ao = load i8, ptr %i.z, align 8, !tbaa !902, !range !152, !noundef !66
+  %i.ao = load i8, ptr %i.y, align 8, !tbaa !902, !range !152, !noundef !66
   %i.ap = trunc nuw i8 %i.ao to i1
   br i1 %i.ap, label %.critedge, label %bb.f
 
@@ -7725,8 +7725,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5120
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5120
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -7749,7 +7749,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.ah = load i64, ptr %3, align 8, !tbaa !280
   %i.ai = mul nsw i64 %i.ah, 1000000
-  %i.aj = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.aj = load i64, ptr %i.z, align 8, !tbaa !281
   %i.ak = sdiv i64 %i.aj, 1000
   %i.al = add nsw i64 %i.ak, %i.ai
   br label %_ZL9Abc_Clockv.exit29
@@ -7763,7 +7763,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.am = load i8, ptr %i.z, align 8, !tbaa !928, !range !152, !noundef !66
+  %i.am = load i8, ptr %i.y, align 8, !tbaa !928, !range !152, !noundef !66
   %i.an = trunc nuw i8 %i.am to i1
   br i1 %i.an, label %.critedge, label %bb.f
 
@@ -8166,8 +8166,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -8192,7 +8192,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.aj = load i64, ptr %3, align 8, !tbaa !280
   %i.ak = mul nsw i64 %i.aj, 1000000
-  %i.al = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.al = load i64, ptr %i.z, align 8, !tbaa !281
   %i.am = sdiv i64 %i.al, 1000
   %i.an = add nsw i64 %i.am, %i.ak
   br label %_ZL9Abc_Clockv.exit29
@@ -8206,7 +8206,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.ao = load i8, ptr %i.z, align 8, !tbaa !1014, !range !152, !noundef !66
+  %i.ao = load i8, ptr %i.y, align 8, !tbaa !1014, !range !152, !noundef !66
   %i.ap = trunc nuw i8 %i.ao to i1
   br i1 %i.ap, label %.critedge, label %bb.f
 
@@ -8609,8 +8609,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -8635,7 +8635,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.aj = load i64, ptr %3, align 8, !tbaa !280
   %i.ak = mul nsw i64 %i.aj, 1000000
-  %i.al = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.al = load i64, ptr %i.z, align 8, !tbaa !281
   %i.am = sdiv i64 %i.al, 1000
   %i.an = add nsw i64 %i.am, %i.ak
   br label %_ZL9Abc_Clockv.exit29
@@ -8649,7 +8649,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.ao = load i8, ptr %i.z, align 8, !tbaa !1041, !range !152, !noundef !66
+  %i.ao = load i8, ptr %i.y, align 8, !tbaa !1041, !range !152, !noundef !66
   %i.ap = trunc nuw i8 %i.ao to i1
   br i1 %i.ap, label %.critedge, label %bb.f
 
@@ -9052,8 +9052,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5120
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5120
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -9076,7 +9076,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.ah = load i64, ptr %3, align 8, !tbaa !280
   %i.ai = mul nsw i64 %i.ah, 1000000
-  %i.aj = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.aj = load i64, ptr %i.z, align 8, !tbaa !281
   %i.ak = sdiv i64 %i.aj, 1000
   %i.al = add nsw i64 %i.ak, %i.ai
   br label %_ZL9Abc_Clockv.exit29
@@ -9090,7 +9090,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.am = load i8, ptr %i.z, align 8, !tbaa !1067, !range !152, !noundef !66
+  %i.am = load i8, ptr %i.y, align 8, !tbaa !1067, !range !152, !noundef !66
   %i.an = trunc nuw i8 %i.am to i1
   br i1 %i.an, label %.critedge, label %bb.f
 
@@ -9493,8 +9493,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -9519,7 +9519,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.aj = load i64, ptr %3, align 8, !tbaa !280
   %i.ak = mul nsw i64 %i.aj, 1000000
-  %i.al = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.al = load i64, ptr %i.z, align 8, !tbaa !281
   %i.am = sdiv i64 %i.al, 1000
   %i.an = add nsw i64 %i.am, %i.ak
   br label %_ZL9Abc_Clockv.exit29
@@ -9533,7 +9533,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.ao = load i8, ptr %i.z, align 8, !tbaa !1093, !range !152, !noundef !66
+  %i.ao = load i8, ptr %i.y, align 8, !tbaa !1093, !range !152, !noundef !66
   %i.ap = trunc nuw i8 %i.ao to i1
   br i1 %i.ap, label %.critedge, label %bb.f
 
@@ -9936,8 +9936,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5216
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -9962,7 +9962,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.aj = load i64, ptr %3, align 8, !tbaa !280
   %i.ak = mul nsw i64 %i.aj, 1000000
-  %i.al = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.al = load i64, ptr %i.z, align 8, !tbaa !281
   %i.am = sdiv i64 %i.al, 1000
   %i.an = add nsw i64 %i.am, %i.ak
   br label %_ZL9Abc_Clockv.exit29
@@ -9976,7 +9976,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.ao = load i8, ptr %i.z, align 8, !tbaa !1119, !range !152, !noundef !66
+  %i.ao = load i8, ptr %i.y, align 8, !tbaa !1119, !range !152, !noundef !66
   %i.ap = trunc nuw i8 %i.ao to i1
   br i1 %i.ap, label %.critedge, label %bb.f
 
@@ -10379,8 +10379,8 @@ _ZL9Abc_Clockv.exit:                              ; preds = %bb.a, %bb.b
   %i.v = load i8, ptr %i.u, align 8, !tbaa !56, !range !152, !noundef !66
   %i.w = trunc nuw i8 %i.v to i1
   %i.x = select i1 %i.w, ptr @.str.24, ptr @.str.25 ; 2 uses
-  %i.y = getelementptr inbounds nuw i8, ptr %3, i64 8
-  %i.z = getelementptr inbounds nuw i8, ptr %0, i64 5120
+  %i.y = getelementptr inbounds nuw i8, ptr %0, i64 5120
+  %i.z = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.aa = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %5, i64 16
   %i.ac = getelementptr inbounds nuw i8, ptr %5, i64 24 ; 2 uses
@@ -10403,7 +10403,7 @@ bb.c:                                             ; preds = %.backedge, %.outer
 bb.d:                                             ; preds = %bb.c
   %i.ah = load i64, ptr %3, align 8, !tbaa !280
   %i.ai = mul nsw i64 %i.ah, 1000000
-  %i.aj = load i64, ptr %i.y, align 8, !tbaa !281
+  %i.aj = load i64, ptr %i.z, align 8, !tbaa !281
   %i.ak = sdiv i64 %i.aj, 1000
   %i.al = add nsw i64 %i.ak, %i.ai
   br label %_ZL9Abc_Clockv.exit29
@@ -10417,7 +10417,7 @@ _ZL9Abc_Clockv.exit29:                            ; preds = %bb.c, %bb.d
   br i1 %or.cond, label %.critedge, label %bb.e
 
 bb.e:                                             ; preds = %_ZL9Abc_Clockv.exit29
-  %i.am = load i8, ptr %i.z, align 8, !tbaa !1145, !range !152, !noundef !66
+  %i.am = load i8, ptr %i.y, align 8, !tbaa !1145, !range !152, !noundef !66
   %i.an = trunc nuw i8 %i.am to i1
   br i1 %i.an, label %.critedge, label %bb.f
 

@@ -202,6 +202,7 @@ _ZN4llvm11raw_ostreamlsEPKc.exit123:              ; preds = %bb.ac, %bb.ad
   br label %bb.ao
 
 _ZN4llvm12DebugCounter13shouldExecuteERNS0_11CounterInfoE.exit.thread: ; preds = %._crit_edge, %_ZN4llvm12DebugCounter13shouldExecuteERNS0_11CounterInfoE.exit
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 318 ; 2 uses
   %.sroa.0138.0203 = load ptr, ptr %i.aq, align 8, !tbaa !467 ; 2 uses
   %.not171204 = icmp eq ptr %.sroa.0138.0203, %i.el
   br i1 %.not171204, label %._crit_edge207, label %.lr.ph206
@@ -209,18 +210,17 @@ _ZN4llvm12DebugCounter13shouldExecuteERNS0_11CounterInfoE.exit.thread: ; preds =
 .lr.ph206:                                        ; preds = %_ZN4llvm12DebugCounter13shouldExecuteERNS0_11CounterInfoE.exit.thread
   %i.js = getelementptr inbounds nuw i8, ptr %1, i64 48
   %i.jt = load ptr, ptr %i.js, align 8, !tbaa !479
-  %9 = getelementptr inbounds nuw i8, ptr %i.jt, i64 66 ; 2 uses
-  %i.ju = getelementptr inbounds nuw i8, ptr %1, i64 318 ; 2 uses
+  %i.ju = getelementptr inbounds nuw i8, ptr %i.jt, i64 66 ; 2 uses
   br label %bb.ae
 
 bb.ae:                                            ; preds = %.lr.ph206, %.critedge79
   %.sroa.0138.0205 = phi ptr [ %.sroa.0138.0203, %.lr.ph206 ], [ %.sroa.0138.0, %.critedge79 ] ; 3 uses
-  %i.jv = load i8, ptr %9, align 2, !tbaa !499, !range !268, !noundef !156
+  %i.jv = load i8, ptr %i.ju, align 2, !tbaa !499, !range !268, !noundef !156
   %i.jw = trunc nuw i8 %i.jv to i1
   br i1 %i.jw, label %bb.af, label %bb.ag
 
 bb.af:                                            ; preds = %bb.ae
-  %i.jx = load i8, ptr %i.ju, align 2, !tbaa !500, !range !268, !noundef !156
+  %i.jx = load i8, ptr %9, align 2, !tbaa !500, !range !268, !noundef !156
   %i.jy = trunc nuw i8 %i.jx to i1
   br i1 %i.jy, label %._crit_edge207, label %bb.ag
 
@@ -293,7 +293,7 @@ bb.ai:                                            ; preds = %.split168, %.split1
   br i1 %i.ky, label %bb.aj, label %bb.ak
 
 bb.aj:                                            ; preds = %.split168, %bb.ai, %_ZNK4llvm12MachineInstr8isReturnENS0_9QueryTypeE.exit
-  store i8 1, ptr %9, align 2, !tbaa !499
+  store i8 1, ptr %i.ju, align 2, !tbaa !499
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.aj, %bb.ai
@@ -304,7 +304,7 @@ bb.ak:                                            ; preds = %bb.aj, %bb.ai
   br i1 %spec.select.i, label %bb.al, label %bb.am
 
 bb.al:                                            ; preds = %bb.ak
-  store i8 1, ptr %i.ju, align 2, !tbaa !500
+  store i8 1, ptr %9, align 2, !tbaa !500
   br label %bb.am
 
 bb.am:                                            ; preds = %bb.al, %bb.ak

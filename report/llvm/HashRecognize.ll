@@ -180,9 +180,9 @@ _ZN4llvm23SmallVectorTemplateBaseIPNS_11InstructionELb1EE9push_backES2_.exit:
   %i.c = getelementptr inbounds nuw i8, ptr %3, i64 12 ; 2 uses
   store i32 6, ptr %i.c, align 4, !tbaa !24
   store ptr %1, ptr %i.a, align 8
-  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 8
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
+  %i.d = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 4 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 3 uses
   br label %bb.a
 
@@ -213,7 +213,7 @@ bb.a:                                             ; preds = %_ZN4llvm23SmallVect
   br i1 %i.p, label %thread-pre-split, label %bb.b, !llvm.loop !103
 
 bb.b:                                             ; preds = %bb.a
-  %i.q = load ptr, ptr %i.d, align 8, !tbaa !21   ; 2 uses
+  %i.q = load ptr, ptr %i.f, align 8, !tbaa !21   ; 2 uses
   %i.r = add i8 %i.o, -44
   %i.s = icmp ult i8 %i.r, 18                     ; 2 uses
   br i1 %i.s, label %bb.c, label %_ZN4llvm12PatternMatch5matchINS_11InstructionENS0_17AnyBinaryOp_matchINS_19PatternMatchHelpers9match_isaIJNS_5ValueEEEENS0_14specificval_tyELb1EEEEEbPT_RKT0_.exit.thread39
@@ -237,7 +237,7 @@ _ZN4llvm12PatternMatch5matchINS_11InstructionENS0_17AnyBinaryOp_matchINS_19Patte
   br i1 %i.ab, label %bb.d, label %_ZNSt8optionalIN4llvm5APIntEEaSIRKS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES7_ISt6__and_IJSt9is_scalarIS1_ES8_IS1_NSt5decayISB_E4typeEEEEESt16is_constructibleIS1_JSB_EESt13is_assignableIRS1_SB_EEERS2_E4typeEOSB_.exit
 
 bb.d:                                             ; preds = %_ZN4llvm12PatternMatch5matchINS_11InstructionENS0_17AnyBinaryOp_matchINS_19PatternMatchHelpers9match_isaIJNS_5ValueEEEENS0_14specificval_tyELb1EEEEEbPT_RKT0_.exit.thread39
-  %i.ac = load i8, ptr %i.f, align 8, !tbaa !39, !range !40, !noundef !41
+  %i.ac = load i8, ptr %i.e, align 8, !tbaa !39, !range !40, !noundef !41
   %i.ad = trunc nuw i8 %i.ac to i1
   br i1 %i.ad, label %.thread, label %bb.e
 
@@ -303,7 +303,7 @@ bb.m:                                             ; preds = %bb.l
 bb.n:                                             ; preds = %bb.m, %bb.j, %bb.i, %bb.f
   %.sink28.i.sink.i.i = phi ptr [ %i.ao, %bb.i ], [ %i.af, %bb.f ], [ %i.as, %bb.j ], [ %i.bb, %bb.m ] ; 3 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.sink28.i.sink.i.i, i64 24 ; 4 uses
-  %i.bf = load i8, ptr %i.f, align 8, !tbaa !39, !range !40, !noundef !41
+  %i.bf = load i8, ptr %i.e, align 8, !tbaa !39, !range !40, !noundef !41
   %i.bg = trunc nuw i8 %i.bf to i1
   br i1 %i.bg, label %bb.o, label %bb.s
 
@@ -320,13 +320,13 @@ bb.p:                                             ; preds = %bb.o
 
 bb.q:                                             ; preds = %bb.p
   %i.bm = load i64, ptr %i.be, align 8, !tbaa !45
-  store i64 %i.bm, ptr %i.e, align 8, !tbaa !45
+  store i64 %i.bm, ptr %i.d, align 8, !tbaa !45
   %i.bn = load i32, ptr %i.bj, align 8, !tbaa !44
   store i32 %i.bn, ptr %i.g, align 8, !tbaa !44
   br label %_ZNSt8optionalIN4llvm5APIntEEaSIRKS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES7_ISt6__and_IJSt9is_scalarIS1_ES8_IS1_NSt5decayISB_E4typeEEEEESt16is_constructibleIS1_JSB_EESt13is_assignableIRS1_SB_EEERS2_E4typeEOSB_.exit
 
 bb.r:                                             ; preds = %bb.p, %bb.o
-  call void @_ZN4llvm5APInt14assignSlowCaseERKS0_(ptr noundef nonnull align 8 dereferenceable(24) %i.e, ptr noundef nonnull align 8 dereferenceable(12) %i.be) #12
+  call void @_ZN4llvm5APInt14assignSlowCaseERKS0_(ptr noundef nonnull align 8 dereferenceable(24) %i.d, ptr noundef nonnull align 8 dereferenceable(12) %i.be) #12
   br label %_ZNSt8optionalIN4llvm5APIntEEaSIRKS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES7_ISt6__and_IJSt9is_scalarIS1_ES8_IS1_NSt5decayISB_E4typeEEEEESt16is_constructibleIS1_JSB_EESt13is_assignableIRS1_SB_EEERS2_E4typeEOSB_.exit
 
 bb.s:                                             ; preds = %bb.n
@@ -338,15 +338,15 @@ bb.s:                                             ; preds = %bb.n
 
 bb.t:                                             ; preds = %bb.s
   %i.br = load i64, ptr %i.be, align 8, !tbaa !45
-  store i64 %i.br, ptr %i.e, align 8, !tbaa !45
+  store i64 %i.br, ptr %i.d, align 8, !tbaa !45
   br label %_ZNSt19_Optional_base_implIN4llvm5APIntESt14_Optional_baseIS1_Lb0ELb0EEE12_M_constructIJRKS1_EEEvDpOT_.exit.i
 
 bb.u:                                             ; preds = %bb.s
-  call void @_ZN4llvm5APInt12initSlowCaseERKS0_(ptr noundef nonnull align 8 dereferenceable(24) %i.e, ptr noundef nonnull align 8 dereferenceable(12) %i.be) #12
+  call void @_ZN4llvm5APInt12initSlowCaseERKS0_(ptr noundef nonnull align 8 dereferenceable(24) %i.d, ptr noundef nonnull align 8 dereferenceable(12) %i.be) #12
   br label %_ZNSt19_Optional_base_implIN4llvm5APIntESt14_Optional_baseIS1_Lb0ELb0EEE12_M_constructIJRKS1_EEEvDpOT_.exit.i
 
 _ZNSt19_Optional_base_implIN4llvm5APIntESt14_Optional_baseIS1_Lb0ELb0EEE12_M_constructIJRKS1_EEEvDpOT_.exit.i: ; preds = %bb.u, %bb.t
-  store i8 1, ptr %i.f, align 8, !tbaa !39
+  store i8 1, ptr %i.e, align 8, !tbaa !39
   br label %_ZNSt8optionalIN4llvm5APIntEEaSIRKS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES7_ISt6__and_IJSt9is_scalarIS1_ES8_IS1_NSt5decayISB_E4typeEEEEESt16is_constructibleIS1_JSB_EESt13is_assignableIRS1_SB_EEERS2_E4typeEOSB_.exit
 
 _ZNSt8optionalIN4llvm5APIntEEaSIRKS1_EENSt9enable_ifIX7__and_vISt6__not_ISt7is_sameIS2_NSt9remove_cvINSt16remove_referenceIT_E4typeEE4typeEEES7_ISt6__and_IJSt9is_scalarIS1_ES8_IS1_NSt5decayISB_E4typeEEEEESt16is_constructibleIS1_JSB_EESt13is_assignableIRS1_SB_EEERS2_E4typeEOSB_.exit: ; preds = %bb.q, %bb.r, %_ZNSt19_Optional_base_implIN4llvm5APIntESt14_Optional_baseIS1_Lb0ELb0EEE12_M_constructIJRKS1_EEEvDpOT_.exit.i, %bb.m, %bb.k, %bb.e, %bb.l, %_ZN4llvm12PatternMatch5matchINS_11InstructionENS0_17AnyBinaryOp_matchINS_19PatternMatchHelpers9match_isaIJNS_5ValueEEEENS0_14specificval_tyELb1EEEEEbPT_RKT0_.exit.thread39

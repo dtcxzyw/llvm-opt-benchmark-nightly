@@ -204,23 +204,23 @@ bb.a:
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #7
   call void @_ZN6icu_788message210data_model10ExpressionC1Ev(ptr noundef nonnull align 8 dereferenceable(256) %4) #7
-  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
-  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %5, i64 256 ; 2 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %7, i64 8
-  %.sroa.gep.a = getelementptr inbounds nuw i8, ptr %5, i64 8
-  %i.g = getelementptr inbounds nuw i8, ptr %7, i64 16
-  %.sroa.gep14.a = getelementptr inbounds nuw i8, ptr %5, i64 16
-  %i.h = getelementptr inbounds nuw i8, ptr %7, i64 80
-  %.sroa.gep16.a = getelementptr inbounds nuw i8, ptr %5, i64 80
-  %i.i = getelementptr inbounds nuw i8, ptr %7, i64 112
-  %.sroa.gep18.a = getelementptr inbounds nuw i8, ptr %5, i64 112
-  %i.j = getelementptr inbounds nuw i8, ptr %1, i64 176
+  %i.c = getelementptr inbounds nuw i8, ptr %1, i64 176
+  %i.d = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 2 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 2 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %5, i64 256 ; 2 uses
+  %.sroa.gep.a = getelementptr inbounds nuw i8, ptr %7, i64 8
+  %i.g = getelementptr inbounds nuw i8, ptr %5, i64 8
+  %.sroa.gep14.a = getelementptr inbounds nuw i8, ptr %7, i64 16
+  %i.h = getelementptr inbounds nuw i8, ptr %5, i64 16
+  %.sroa.gep16.a = getelementptr inbounds nuw i8, ptr %7, i64 80
+  %i.i = getelementptr inbounds nuw i8, ptr %5, i64 80
+  %.sroa.gep18.a = getelementptr inbounds nuw i8, ptr %7, i64 112
+  %i.j = getelementptr inbounds nuw i8, ptr %5, i64 112
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.n, %bb.b
-  %i.k = load i32, ptr %i.c, align 8              ; 2 uses
-  %i.l = load ptr, ptr %i.d, align 8, !nonnull !34, !align !35 ; 3 uses
+  %i.k = load i32, ptr %i.d, align 8              ; 2 uses
+  %i.l = load ptr, ptr %i.e, align 8, !nonnull !34, !align !35 ; 3 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.l, i64 8
   %i.n = load i16, ptr %i.m, align 8              ; 2 uses
   %i.o = icmp slt i16 %i.n, 0
@@ -243,7 +243,7 @@ bb.d:                                             ; preds = %bb.c
 bb.e:                                             ; preds = %bb.d
   call void @llvm.lifetime.start.p0(ptr nonnull %5) #7
   call void @_ZN6icu_788message26Parser16parsePlaceholderER10UErrorCode(ptr dead_on_unwind nonnull writable sret(%"class.std::variant.35") align 8 %5, ptr noundef nonnull align 8 dereferenceable(200) %1, ptr noundef nonnull align 4 dereferenceable(4) %2)
-  %i.w = load i8, ptr %i.e, align 8               ; 2 uses
+  %i.w = load i8, ptr %i.f, align 8               ; 2 uses
   %i.x = icmp eq i8 %i.w, 0
   br i1 %i.x, label %bb.f, label %bb.g
 
@@ -259,22 +259,22 @@ bb.g:                                             ; preds = %bb.e
   call void @llvm.lifetime.start.p0(ptr nonnull %7) #7
   %i.z = icmp eq i8 %i.w, 1                       ; 4 uses
   store ptr getelementptr inbounds nuw inrange(-16, 24) (i8, ptr @_ZTVN6icu_788message210data_model6MarkupE, i64 16), ptr %7, align 8
-  %spec.select.i.i13.sroa.sel = select i1 %i.z, ptr %.sroa.gep.a, ptr inttoptr (i64 8 to ptr)
+  %spec.select.i.i13.sroa.sel = select i1 %i.z, ptr %i.g, ptr inttoptr (i64 8 to ptr)
   %i.aa = load i32, ptr %spec.select.i.i13.sroa.sel, align 8
-  store i32 %i.aa, ptr %i.f, align 8
-  %spec.select.i.i13.sroa.sel15 = select i1 %i.z, ptr %.sroa.gep14.a, ptr inttoptr (i64 16 to ptr)
-  call void @_ZN6icu_7813UnicodeStringC1ERKS0_(ptr noundef nonnull align 8 dereferenceable(64) %i.g, ptr noundef nonnull align 8 dereferenceable(64) %spec.select.i.i13.sroa.sel15) #7
-  %spec.select.i.i13.sroa.sel17 = select i1 %i.z, ptr %.sroa.gep16.a, ptr inttoptr (i64 80 to ptr)
-  call void @_ZN6icu_788message210data_model9OptionMapC1ERKS2_(ptr noundef nonnull align 8 dereferenceable(28) %i.h, ptr noundef nonnull align 8 dereferenceable(28) %spec.select.i.i13.sroa.sel17) #7
-  %spec.select.i.i13.sroa.sel19 = select i1 %i.z, ptr %.sroa.gep18.a, ptr inttoptr (i64 112 to ptr)
-  call void @_ZN6icu_788message210data_model9OptionMapC1ERKS2_(ptr noundef nonnull align 8 dereferenceable(28) %i.i, ptr noundef nonnull align 8 dereferenceable(28) %spec.select.i.i13.sroa.sel19) #7
+  store i32 %i.aa, ptr %.sroa.gep.a, align 8
+  %spec.select.i.i13.sroa.sel15 = select i1 %i.z, ptr %i.h, ptr inttoptr (i64 16 to ptr)
+  call void @_ZN6icu_7813UnicodeStringC1ERKS0_(ptr noundef nonnull align 8 dereferenceable(64) %.sroa.gep14.a, ptr noundef nonnull align 8 dereferenceable(64) %spec.select.i.i13.sroa.sel15) #7
+  %spec.select.i.i13.sroa.sel17 = select i1 %i.z, ptr %i.i, ptr inttoptr (i64 80 to ptr)
+  call void @_ZN6icu_788message210data_model9OptionMapC1ERKS2_(ptr noundef nonnull align 8 dereferenceable(28) %.sroa.gep16.a, ptr noundef nonnull align 8 dereferenceable(28) %spec.select.i.i13.sroa.sel17) #7
+  %spec.select.i.i13.sroa.sel19 = select i1 %i.z, ptr %i.j, ptr inttoptr (i64 112 to ptr)
+  call void @_ZN6icu_788message210data_model9OptionMapC1ERKS2_(ptr noundef nonnull align 8 dereferenceable(28) %.sroa.gep18.a, ptr noundef nonnull align 8 dereferenceable(28) %spec.select.i.i13.sroa.sel19) #7
   %i.ab = call noundef nonnull align 8 dereferenceable(16) ptr @_ZN6icu_788message210data_model7Pattern7Builder3addEONS1_6MarkupER10UErrorCode(ptr noundef nonnull align 8 dereferenceable(16) %3, ptr noundef nonnull align 8 dereferenceable(144) %7, ptr noundef nonnull align 4 dereferenceable(4) %2) #7 ; 0 uses
   call void @_ZN6icu_788message210data_model6MarkupD1Ev(ptr noundef nonnull align 8 dead_on_return(144) dereferenceable(144) %7) #7
   call void @llvm.lifetime.end.p0(ptr nonnull %7) #7
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
-  %i.ac = load i8, ptr %i.e, align 8
+  %i.ac = load i8, ptr %i.f, align 8
   %.not.i.i = icmp eq i8 %i.ac, -1
   br i1 %.not.i.i, label %_ZNSt8__detail9__variant16_Variant_storageILb0EJN6icu_788message210data_model10ExpressionENS4_6MarkupEEED2Ev.exit, label %bb.i, !prof !112
 
@@ -305,14 +305,14 @@ bb.k:                                             ; preds = %bb.d
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.d, %bb.k, %bb.j, %_ZNSt8__detail9__variant16_Variant_storageILb0EJN6icu_788message210data_model10ExpressionENS4_6MarkupEEED2Ev.exit
-  %i.ah = load ptr, ptr %i.d, align 8, !nonnull !34, !align !35
-  %i.ai = load i32, ptr %i.c, align 8
+  %i.ah = load ptr, ptr %i.e, align 8, !nonnull !34, !align !35
+  %i.ai = load i32, ptr %i.d, align 8
   %i.aj = call noundef i32 @_ZNK6icu_7813UnicodeString8char32AtEi(ptr noundef nonnull align 8 dereferenceable(64) %i.ah, i32 noundef %i.ai) #7
   %i.ak = icmp eq i32 %i.aj, 125
   br i1 %i.ak, label %bb.o, label %bb.m
 
 bb.m:                                             ; preds = %bb.l
-  %i.al = load ptr, ptr %i.j, align 8, !nonnull !34, !align !35
+  %i.al = load ptr, ptr %i.c, align 8, !nonnull !34, !align !35
   %i.am = getelementptr inbounds nuw i8, ptr %i.al, i64 18
   %i.an = load i8, ptr %i.am, align 2, !range !36, !noundef !34
   %i.ao = trunc nuw i8 %i.an to i1
@@ -715,9 +715,9 @@ bb.o:                                             ; preds = %.loopexit.thread75
 
 .preheader:                                       ; preds = %bb.o
   %i.dk = getelementptr inbounds nuw i8, ptr %0, i64 40
-  %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.dm = getelementptr inbounds nuw i8, ptr %0, i64 48
-  %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 176
+  %i.dl = getelementptr inbounds nuw i8, ptr %0, i64 176
+  %i.dm = getelementptr inbounds nuw i8, ptr %0, i64 24
+  %i.dn = getelementptr inbounds nuw i8, ptr %0, i64 48
   br label %bb.p
 
 bb.p:                                             ; preds = %.preheader, %bb.v
@@ -733,7 +733,7 @@ bb.q:                                             ; preds = %bb.p
   %i.dt = load ptr, ptr %i.c, align 8, !nonnull !34, !align !35
   %i.du = load i32, ptr %i.d, align 8
   %i.dv = call noundef i32 @_ZNK6icu_7813UnicodeString8char32AtEi(ptr noundef nonnull align 8 dereferenceable(64) %i.dt, i32 noundef %i.du) #7
-  %i.dw = load ptr, ptr %i.dl, align 8
+  %i.dw = load ptr, ptr %i.dm, align 8
   %i.dx = call noundef signext i8 @_ZNK6icu_7810UnicodeSet8containsEi(ptr noundef nonnull align 8 dereferenceable(200) %i.dw, i32 noundef %i.dv) #7
   %.not30 = icmp eq i8 %i.dx, 0
   br i1 %.not30, label %bb.r, label %.critedge2
@@ -748,7 +748,7 @@ bb.r:                                             ; preds = %bb.q
   ]
 
 bb.s:                                             ; preds = %bb.r
-  %i.eb = load ptr, ptr %i.dm, align 8
+  %i.eb = load ptr, ptr %i.dn, align 8
   %i.ec = call noundef signext i8 @_ZNK6icu_7810UnicodeSet8containsEi(ptr noundef nonnull align 8 dereferenceable(200) %i.eb, i32 noundef %i.ea) #7
   %i.ed = icmp ne i8 %i.ec, 0
   %i.ee = icmp eq i32 %i.ea, 45
@@ -792,7 +792,7 @@ bb.t:                                             ; preds = %.critedge2
   br i1 %i.fc, label %bb.u, label %.thread
 
 bb.u:                                             ; preds = %bb.t
-  %i.fd = load ptr, ptr %i.dn, align 8, !nonnull !34, !align !35
+  %i.fd = load ptr, ptr %i.dl, align 8, !nonnull !34, !align !35
   %i.fe = getelementptr inbounds nuw i8, ptr %i.fd, i64 18
   %i.ff = load i8, ptr %i.fe, align 2, !range !36, !noundef !34
   %i.fg = trunc nuw i8 %i.ff to i1

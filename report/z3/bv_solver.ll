@@ -205,18 +205,18 @@ bb.e:                                             ; preds = %.noexc13, %bb.d
   store ptr %i.u, ptr %i.ah, align 8, !tbaa !226
   %i.ai = add i32 %i.ad, 1
   store i32 %i.ai, ptr %i.af, align 4, !tbaa !65
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24
   %i.aj = load ptr, ptr %i.c, align 8, !tbaa !145 ; 2 uses
   %i.ak = icmp eq ptr %i.aj, null
   br i1 %i.ak, label %.critedge, label %_ZNK6vectorIN2bv6solver16propagation_itemELb0EjE4sizeEv.exit15.lr.ph
 
 _ZNK6vectorIN2bv6solver16propagation_itemELb0EjE4sizeEv.exit15.lr.ph: ; preds = %bb.e
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 24
   %.pre37 = load i32, ptr %i.a, align 8, !tbaa !739
   br label %_ZNK6vectorIN2bv6solver16propagation_itemELb0EjE4sizeEv.exit15
 
 _ZNK6vectorIN2bv6solver16propagation_itemELb0EjE4sizeEv.exit15: ; preds = %_ZNK6vectorIN2bv6solver16propagation_itemELb0EjE4sizeEv.exit15.lr.ph, %.loopexit
-  %i.al = phi i32 [ %.pre37, %_ZNK6vectorIN2bv6solver16propagation_itemELb0EjE4sizeEv.exit15.lr.ph ], [ %i.be, %.loopexit ] ; 2 uses
-  %i.am = phi ptr [ %i.aj, %_ZNK6vectorIN2bv6solver16propagation_itemELb0EjE4sizeEv.exit15.lr.ph ], [ %i.bf, %.loopexit ] ; 2 uses
+  %i.al = phi i32 [ %i.be, %.loopexit ], [ %.pre37, %_ZNK6vectorIN2bv6solver16propagation_itemELb0EjE4sizeEv.exit15.lr.ph ] ; 2 uses
+  %i.am = phi ptr [ %i.bf, %.loopexit ], [ %i.aj, %_ZNK6vectorIN2bv6solver16propagation_itemELb0EjE4sizeEv.exit15.lr.ph ] ; 2 uses
   %i.an = getelementptr inbounds i8, ptr %i.am, i64 -4
   %i.ao = load i32, ptr %i.an, align 4, !tbaa !65
   %i.ap = icmp ult i32 %i.al, %i.ao
