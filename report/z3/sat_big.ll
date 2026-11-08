@@ -205,12 +205,12 @@ _ZN6vectorIS_IN3sat7watchedELb1EjELb1EjE3endEv.exit: ; preds = %_ZN6vectorI7svec
   %i.an = load i32, ptr %i.am, align 4, !tbaa !31 ; 2 uses
   %i.ao = zext i32 %i.an to i64
   %i.ap = shl nuw nsw i64 %i.ao, 3
-  %i.aq = getelementptr inbounds nuw i8, ptr %.pr, i64 %i.ap
+  %4 = getelementptr inbounds nuw i8, ptr %.pr, i64 %i.ap
+  %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 3168
   %.not123 = icmp eq i32 %i.an, 0
   br i1 %.not123, label %_ZN6vectorIN3sat7watchedELb1EjE6shrinkEj.exit.thread, label %.lr.ph127
 
 .lr.ph127:                                        ; preds = %_ZN6vectorIS_IN3sat7watchedELb1EjELb1EjE3endEv.exit
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 3168
   %i.ar = getelementptr inbounds nuw i8, ptr %0, i64 64
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 56
   %i.at = getelementptr inbounds nuw i8, ptr %1, i64 344
@@ -230,7 +230,7 @@ bb.e:                                             ; preds = %.lr.ph127, %_ZN6vec
   %.0126 = phi i32 [ 0, %.lr.ph127 ], [ %i.bd, %_ZN6vectorIN3sat7watchedELb1EjE6shrinkEj.exit ] ; 6 uses
   %.072125 = phi i32 [ 0, %.lr.ph127 ], [ %.173.lcssa158, %_ZN6vectorIN3sat7watchedELb1EjE6shrinkEj.exit ] ; 4 uses
   %.074124 = phi ptr [ %.pr, %.lr.ph127 ], [ %i.fb, %_ZN6vectorIN3sat7watchedELb1EjE6shrinkEj.exit ] ; 5 uses
-  %i.bb = load i8, ptr %4, align 8, !tbaa !246, !range !53, !noundef !46
+  %i.bb = load i8, ptr %i.aq, align 8, !tbaa !246, !range !53, !noundef !46
   %i.bc = trunc nuw i8 %i.bb to i1
   br i1 %i.bc, label %_ZN6vectorIN3sat7watchedELb1EjE6shrinkEj.exit.thread, label %bb.f
 
@@ -529,7 +529,7 @@ bb.ab:                                            ; preds = %.critedge, %.crited
 _ZN6vectorIN3sat7watchedELb1EjE6shrinkEj.exit:    ; preds = %bb.f, %._crit_edge, %_ZN6vectorIN3sat7watchedELb1EjE3endEv.exit.i
   %.173.lcssa158 = phi i32 [ %.173.lcssa164, %_ZN6vectorIN3sat7watchedELb1EjE3endEv.exit.i ], [ %.4, %._crit_edge ], [ %.072125, %bb.f ] ; 2 uses
   %i.fb = getelementptr inbounds nuw i8, ptr %.074124, i64 8 ; 2 uses
-  %.not = icmp eq ptr %i.fb, %i.aq
+  %.not = icmp eq ptr %i.fb, %4
   br i1 %.not, label %_ZN6vectorIN3sat7watchedELb1EjE6shrinkEj.exit.thread, label %bb.e
 
 _ZN6vectorIN3sat7watchedELb1EjE6shrinkEj.exit.thread: ; preds = %_ZN6vectorIN3sat7watchedELb1EjE6shrinkEj.exit, %bb.e, %_ZN6vectorI7svectorIN3sat7literalEjELb1EjE5resetEv.exit.thread, %_ZN6vectorI7svectorIN3sat7literalEjELb1EjE5resetEv.exit, %_ZN6vectorI7svectorIN3sat7literalEjELb1EjE7reserveEj.exit, %_ZN6vectorIS_IN3sat7watchedELb1EjELb1EjE3endEv.exit

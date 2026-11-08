@@ -204,10 +204,10 @@ bb.a:
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 6 uses
   %i.h = getelementptr inbounds nuw i8, ptr %0, i64 44 ; 3 uses
-  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 32
-  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
-  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
+  %i.i = getelementptr inbounds nuw i8, ptr %0, i64 4 ; 2 uses
+  %i.j = getelementptr inbounds nuw i8, ptr %0, i64 32
+  %i.k = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
+  %i.l = getelementptr inbounds nuw i8, ptr %0, i64 16 ; 2 uses
   %i.m = icmp eq i64 %2, 0
   br i1 %i.m, label %._crit_edge, label %.lr.ph58
 
@@ -520,7 +520,7 @@ bb.w:                                             ; preds = %bb.v
 "_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN4geos6noding11SegmentNodeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNKS3_15SegmentNodeList7prepareEvE3$_0EEEvT_SF_SF_SF_T0_.exit.i": ; preds = %"_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN4geos6noding11SegmentNodeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNKS3_15SegmentNodeList7prepareEvE3$_0EEEvT_SF_SF_SF_T0_.exit.i.preheader", %bb.bi
   %.sroa.013.0.i.i = phi ptr [ %i.fx, %bb.bi ], [ %i.e, %"_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN4geos6noding11SegmentNodeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNKS3_15SegmentNodeList7prepareEvE3$_0EEEvT_SF_SF_SF_T0_.exit.i.preheader" ]
   %.sroa.0.0.i.i = phi ptr [ %.sroa.0.1.i.i, %bb.bi ], [ %storemerge2256, %"_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN4geos6noding11SegmentNodeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNKS3_15SegmentNodeList7prepareEvE3$_0EEEvT_SF_SF_SF_T0_.exit.i.preheader" ]
-  %i.dw = load i64, ptr %i.i, align 8, !tbaa !57  ; 4 uses
+  %i.dw = load i64, ptr %i.j, align 8, !tbaa !57  ; 4 uses
   br label %bb.x
 
 bb.x:                                             ; preds = %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK4geos6noding15SegmentNodeList7prepareEvE3$_0EclINS_17__normal_iteratorIPNS3_11SegmentNodeESt6vectorIS9_SaIS9_EEEESE_EEbT_T0_.exit.thread18.i.i", %"_ZSt22__move_median_to_firstIN9__gnu_cxx17__normal_iteratorIPN4geos6noding11SegmentNodeESt6vectorIS4_SaIS4_EEEENS0_5__ops15_Iter_comp_iterIZNKS3_15SegmentNodeList7prepareEvE3$_0EEEvT_SF_SF_SF_T0_.exit.i"
@@ -540,11 +540,11 @@ bb.y:                                             ; preds = %bb.x
 bb.z:                                             ; preds = %bb.y
   %i.eb = getelementptr inbounds nuw i8, ptr %.sroa.013.1.i.i, i64 8
   %i.ec = load double, ptr %i.eb, align 8, !tbaa !58 ; 5 uses
-  %i.ed = load double, ptr %i.j, align 8, !tbaa !58 ; 5 uses
+  %i.ed = load double, ptr %i.k, align 8, !tbaa !58 ; 5 uses
   %i.ee = fcmp oeq double %i.ec, %i.ed
   %i.ef = getelementptr inbounds nuw i8, ptr %.sroa.013.1.i.i, i64 16
   %i.eg = load double, ptr %i.ef, align 8         ; 5 uses
-  %i.eh = load double, ptr %i.k, align 8          ; 5 uses
+  %i.eh = load double, ptr %i.l, align 8          ; 5 uses
   %i.ei = fcmp oeq double %i.eg, %i.eh
   %.0.i.i.i.i.i13.i = select i1 %i.ee, i1 %i.ei, i1 false
   br i1 %.0.i.i.i.i.i13.i, label %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK4geos6noding15SegmentNodeList7prepareEvE3$_0EclINS_17__normal_iteratorIPNS3_11SegmentNodeESt6vectorIS9_SaIS9_EEEESE_EEbT_T0_.exit.thread.i14.i.preheader", label %bb.aa
@@ -556,7 +556,7 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %i.el, label %bb.ab, label %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK4geos6noding15SegmentNodeList7prepareEvE3$_0EclINS_17__normal_iteratorIPNS3_11SegmentNodeESt6vectorIS9_SaIS9_EEEESE_EEbT_T0_.exit.thread18.i.i"
 
 bb.ab:                                            ; preds = %bb.aa
-  %i.em = load i8, ptr %i.l, align 4, !tbaa !59, !range !50, !noundef !42
+  %i.em = load i8, ptr %i.i, align 4, !tbaa !59, !range !50, !noundef !42
   %i.en = trunc nuw i8 %i.em to i1
   br i1 %i.en, label %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK4geos6noding15SegmentNodeList7prepareEvE3$_0EclINS_17__normal_iteratorIPNS3_11SegmentNodeESt6vectorIS9_SaIS9_EEEESE_EEbT_T0_.exit.i15.i", label %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK4geos6noding15SegmentNodeList7prepareEvE3$_0EclINS_17__normal_iteratorIPNS3_11SegmentNodeESt6vectorIS9_SaIS9_EEEESE_EEbT_T0_.exit.thread.i14.i.preheader"
 
@@ -664,10 +664,10 @@ bb.aq:                                            ; preds = %"_ZN9__gnu_cxx5__op
 
 bb.ar:                                            ; preds = %bb.aq
   %i.fb = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i.i, i64 -32
-  %i.fc = load double, ptr %i.j, align 8, !tbaa !58 ; 5 uses
+  %i.fc = load double, ptr %i.k, align 8, !tbaa !58 ; 5 uses
   %i.fd = load double, ptr %i.fb, align 8, !tbaa !58 ; 5 uses
   %i.fe = fcmp oeq double %i.fc, %i.fd
-  %i.ff = load double, ptr %i.k, align 8          ; 5 uses
+  %i.ff = load double, ptr %i.l, align 8          ; 5 uses
   %i.fg = getelementptr inbounds i8, ptr %.sroa.0.0.pn.i.i, i64 -24
   %i.fh = load double, ptr %i.fg, align 8         ; 5 uses
   %i.fi = fcmp oeq double %i.ff, %i.fh
@@ -675,7 +675,7 @@ bb.ar:                                            ; preds = %bb.aq
   br i1 %.0.i.i.i.i8.i.i, label %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK4geos6noding15SegmentNodeList7prepareEvE3$_0EclINS_17__normal_iteratorIPNS3_11SegmentNodeESt6vectorIS9_SaIS9_EEEESE_EEbT_T0_.exit10.thread.i.i", label %bb.as
 
 bb.as:                                            ; preds = %bb.ar
-  %i.fj = load i8, ptr %i.l, align 4, !tbaa !59, !range !50, !noundef !42
+  %i.fj = load i8, ptr %i.i, align 4, !tbaa !59, !range !50, !noundef !42
   %i.fk = trunc nuw i8 %i.fj to i1
   br i1 %i.fk, label %bb.at, label %"_ZN9__gnu_cxx5__ops15_Iter_comp_iterIZNK4geos6noding15SegmentNodeList7prepareEvE3$_0EclINS_17__normal_iteratorIPNS3_11SegmentNodeESt6vectorIS9_SaIS9_EEEESE_EEbT_T0_.exit.thread.i14.i.backedge"
 
@@ -888,13 +888,13 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g, %bb.f, %._crit_edge
   %.1 = phi i64 [ %i.ao, %bb.g ], [ %.0.lcssa, %bb.f ], [ %.0.lcssa, %._crit_edge ] ; 3 uses
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(40) %4, ptr noundef nonnull align 8 dereferenceable(40) %3, i64 40, i1 false), !tbaa.struct !60
+  %5 = getelementptr inbounds nuw i8, ptr %4, i64 4
   %i.ar = icmp sgt i64 %.1, %1
   br i1 %i.ar, label %.lr.ph.i, label %.loopexit
 
 .lr.ph.i:                                         ; preds = %bb.h
-  %5 = getelementptr inbounds nuw i8, ptr %4, i64 32
-  %i.as = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %4, i64 4
+  %i.as = getelementptr inbounds nuw i8, ptr %4, i64 32
+  %i.at = getelementptr inbounds nuw i8, ptr %4, i64 8 ; 2 uses
   br label %bb.i
 
 bb.i:                                             ; preds = %"_ZN9__gnu_cxx5__ops14_Iter_comp_valIZNK4geos6noding15SegmentNodeList7prepareEvE3$_0EclINS_17__normal_iteratorIPNS3_11SegmentNodeESt6vectorIS9_SaIS9_EEEES9_EEbT_RT0_.exit.thread9.i", %.lr.ph.i
@@ -904,7 +904,7 @@ bb.i:                                             ; preds = %"_ZN9__gnu_cxx5__op
   %i.au = getelementptr inbounds [40 x i8], ptr %0, i64 %.0914.i ; 5 uses
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 32
   %i.aw = load i64, ptr %i.av, align 8, !tbaa !57 ; 2 uses
-  %i.ax = load i64, ptr %5, align 8, !tbaa !57    ; 2 uses
+  %i.ax = load i64, ptr %i.as, align 8, !tbaa !57 ; 2 uses
   %i.ay = icmp ult i64 %i.aw, %i.ax
   br i1 %i.ay, label %"_ZN9__gnu_cxx5__ops14_Iter_comp_valIZNK4geos6noding15SegmentNodeList7prepareEvE3$_0EclINS_17__normal_iteratorIPNS3_11SegmentNodeESt6vectorIS9_SaIS9_EEEES9_EEbT_RT0_.exit.thread9.i", label %bb.j
 
@@ -915,7 +915,7 @@ bb.j:                                             ; preds = %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.ba = getelementptr inbounds nuw i8, ptr %i.au, i64 8 ; 2 uses
   %i.bb = load <2 x double>, ptr %i.ba, align 8
-  %i.bc = load <2 x double>, ptr %i.as, align 8
+  %i.bc = load <2 x double>, ptr %i.at, align 8
   %i.bd = fcmp oeq <2 x double> %i.bb, %i.bc      ; 2 uses
   %i.be = extractelement <2 x i1> %i.bd, i64 0
   %i.bf = extractelement <2 x i1> %i.bd, i64 1
@@ -929,13 +929,13 @@ bb.l:                                             ; preds = %bb.k
   br i1 %i.bi, label %bb.m, label %"_ZN9__gnu_cxx5__ops14_Iter_comp_valIZNK4geos6noding15SegmentNodeList7prepareEvE3$_0EclINS_17__normal_iteratorIPNS3_11SegmentNodeESt6vectorIS9_SaIS9_EEEES9_EEbT_RT0_.exit.thread9.i"
 
 bb.m:                                             ; preds = %bb.l
-  %i.bj = load i8, ptr %i.at, align 4, !tbaa !59, !range !50, !noundef !42
+  %i.bj = load i8, ptr %5, align 4, !tbaa !59, !range !50, !noundef !42
   %i.bk = trunc nuw i8 %i.bj to i1
   br i1 %i.bk, label %"_ZN9__gnu_cxx5__ops14_Iter_comp_valIZNK4geos6noding15SegmentNodeList7prepareEvE3$_0EclINS_17__normal_iteratorIPNS3_11SegmentNodeESt6vectorIS9_SaIS9_EEEES9_EEbT_RT0_.exit.i", label %.loopexit
 
 "_ZN9__gnu_cxx5__ops14_Iter_comp_valIZNK4geos6noding15SegmentNodeList7prepareEvE3$_0EclINS_17__normal_iteratorIPNS3_11SegmentNodeESt6vectorIS9_SaIS9_EEEES9_EEbT_RT0_.exit.i": ; preds = %bb.m
   %i.bl = load i32, ptr %i.au, align 8, !tbaa !62
-  %i.bm = call noundef i32 @_ZN4geos6noding22SegmentPointComparator7compareEiRKNS_4geom10CoordinateES5_(i32 noundef %i.bl, ptr noundef nonnull align 8 dereferenceable(24) %i.ba, ptr noundef nonnull align 8 dereferenceable(24) %i.as)
+  %i.bm = call noundef i32 @_ZN4geos6noding22SegmentPointComparator7compareEiRKNS_4geom10CoordinateES5_(i32 noundef %i.bl, ptr noundef nonnull align 8 dereferenceable(24) %i.ba, ptr noundef nonnull align 8 dereferenceable(24) %i.at)
   %i.bn = icmp slt i32 %i.bm, 0
   br i1 %i.bn, label %"_ZN9__gnu_cxx5__ops14_Iter_comp_valIZNK4geos6noding15SegmentNodeList7prepareEvE3$_0EclINS_17__normal_iteratorIPNS3_11SegmentNodeESt6vectorIS9_SaIS9_EEEES9_EEbT_RT0_.exit.thread9.i", label %.loopexit
 

@@ -205,6 +205,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.k, label %.loopexit, label %.lr.ph, !dbg !11895
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
@@ -216,7 +217,6 @@ bb.c:                                             ; preds = %bb.a
   %i.x = load ptr, ptr %i.w, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.z = load ptr, ptr %i.y, align 8, !nonnull !3818, !align !3994
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.aa = load ptr, ptr %2, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   br label %bb.f, !dbg !11895
@@ -458,6 +458,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.k, label %.loopexit, label %.lr.ph, !dbg !12154
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
@@ -469,7 +470,6 @@ bb.c:                                             ; preds = %bb.a
   %i.z = load ptr, ptr %i.y, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.ab = load ptr, ptr %i.aa, align 8, !nonnull !3818, !align !3994
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.ac = load ptr, ptr %2, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -717,6 +717,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.k, label %.loopexit, label %.lr.ph, !dbg !12394
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
@@ -724,7 +725,6 @@ bb.c:                                             ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.x = load ptr, ptr %i.w, align 8, !nonnull !3818, !align !4086
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.z = load ptr, ptr %i.y, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8
@@ -923,12 +923,12 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.k, label %.loopexit, label %.lr.ph, !dbg !12589
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   br label %bb.e, !dbg !12589
 
 bb.d:                                             ; preds = %.lr.ph51, %._crit_edge
@@ -1105,6 +1105,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.m, label %.loopexit, label %.lr.ph, !dbg !12824
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.d, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 2 uses
@@ -1116,7 +1117,6 @@ bb.c:                                             ; preds = %bb.a
   %i.al = load i64, ptr %i.ak, align 8            ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.an = load ptr, ptr %i.am, align 8, !nonnull !3818, !align !3994
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ao = load ptr, ptr %2, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -1413,6 +1413,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.m, label %.loopexit, label %.lr.ph, !dbg !13140
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ai = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.d, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 2 uses
@@ -1424,7 +1425,6 @@ bb.c:                                             ; preds = %bb.a
   %i.ap = load i64, ptr %i.ao, align 8            ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.ar = load ptr, ptr %i.aq, align 8, !nonnull !3818, !align !3994
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.as = load ptr, ptr %2, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   %i.au = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -1753,6 +1753,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.k, label %.loopexit, label %.lr.ph, !dbg !13450
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
@@ -1764,7 +1765,6 @@ bb.c:                                             ; preds = %bb.a
   %i.x = load ptr, ptr %i.w, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.z = load ptr, ptr %i.y, align 8, !nonnull !3818, !align !3994
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.aa = load ptr, ptr %2, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   br label %bb.f, !dbg !13450
@@ -2006,6 +2006,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.k, label %.loopexit, label %.lr.ph, !dbg !13709
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
@@ -2017,7 +2018,6 @@ bb.c:                                             ; preds = %bb.a
   %i.z = load ptr, ptr %i.y, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.ab = load ptr, ptr %i.aa, align 8, !nonnull !3818, !align !3994
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.ac = load ptr, ptr %2, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -2265,6 +2265,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.k, label %.loopexit, label %.lr.ph, !dbg !13949
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
@@ -2272,7 +2273,6 @@ bb.c:                                             ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.x = load ptr, ptr %i.w, align 8, !nonnull !3818, !align !4086
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.z = load ptr, ptr %i.y, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8
@@ -2471,12 +2471,12 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.k, label %.loopexit, label %.lr.ph, !dbg !14144
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   br label %bb.e, !dbg !14144
 
 bb.d:                                             ; preds = %.lr.ph51, %._crit_edge
@@ -2653,6 +2653,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.m, label %.loopexit, label %.lr.ph, !dbg !14379
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.d, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 2 uses
@@ -2664,7 +2665,6 @@ bb.c:                                             ; preds = %bb.a
   %i.al = load i64, ptr %i.ak, align 8            ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.an = load ptr, ptr %i.am, align 8, !nonnull !3818, !align !3994
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ao = load ptr, ptr %2, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -2961,6 +2961,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.m, label %.loopexit, label %.lr.ph, !dbg !14695
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ai = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.d, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 2 uses
@@ -2972,7 +2973,6 @@ bb.c:                                             ; preds = %bb.a
   %i.ap = load i64, ptr %i.ao, align 8            ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.ar = load ptr, ptr %i.aq, align 8, !nonnull !3818, !align !3994
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.as = load ptr, ptr %2, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   %i.au = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -3375,6 +3375,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.m, label %.loopexit, label %.lr.ph, !dbg !15667
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.d, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 2 uses
@@ -3386,7 +3387,6 @@ bb.c:                                             ; preds = %bb.a
   %i.al = load i64, ptr %i.ak, align 8            ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.an = load ptr, ptr %i.am, align 8, !nonnull !3818, !align !3994
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ao = load ptr, ptr %2, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -3683,6 +3683,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.m, label %.loopexit, label %.lr.ph, !dbg !15983
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ai = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.d, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 2 uses
@@ -3694,7 +3695,6 @@ bb.c:                                             ; preds = %bb.a
   %i.ap = load i64, ptr %i.ao, align 8            ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.ar = load ptr, ptr %i.aq, align 8, !nonnull !3818, !align !3994
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.as = load ptr, ptr %2, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   %i.au = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -4037,6 +4037,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.m, label %.loopexit, label %.lr.ph, !dbg !16314
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.d, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 2 uses
@@ -4048,7 +4049,6 @@ bb.c:                                             ; preds = %bb.a
   %i.al = load i64, ptr %i.ak, align 8            ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.an = load ptr, ptr %i.am, align 8, !nonnull !3818, !align !3994
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ao = load ptr, ptr %2, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -4345,6 +4345,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.m, label %.loopexit, label %.lr.ph, !dbg !16630
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ai = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.d, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 2 uses
@@ -4356,7 +4357,6 @@ bb.c:                                             ; preds = %bb.a
   %i.ap = load i64, ptr %i.ao, align 8            ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.ar = load ptr, ptr %i.aq, align 8, !nonnull !3818, !align !3994
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.as = load ptr, ptr %2, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   %i.au = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -4759,6 +4759,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.m, label %.loopexit, label %.lr.ph, !dbg !18922
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.d, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 2 uses
@@ -4770,7 +4771,6 @@ bb.c:                                             ; preds = %bb.a
   %i.al = load i64, ptr %i.ak, align 8            ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.an = load ptr, ptr %i.am, align 8, !nonnull !3818, !align !3994
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ao = load ptr, ptr %2, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -5067,6 +5067,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.m, label %.loopexit, label %.lr.ph, !dbg !19238
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ai = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.d, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 2 uses
@@ -5078,7 +5079,6 @@ bb.c:                                             ; preds = %bb.a
   %i.ap = load i64, ptr %i.ao, align 8            ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.ar = load ptr, ptr %i.aq, align 8, !nonnull !3818, !align !3994
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.as = load ptr, ptr %2, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   %i.au = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -5407,6 +5407,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.k, label %.loopexit, label %.lr.ph, !dbg !19548
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.q = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
@@ -5418,7 +5419,6 @@ bb.c:                                             ; preds = %bb.a
   %i.x = load ptr, ptr %i.w, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.z = load ptr, ptr %i.y, align 8, !nonnull !3818, !align !3994
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.aa = load ptr, ptr %2, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %i.aa, i64 8
   br label %bb.f, !dbg !19548
@@ -5660,6 +5660,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.k, label %.loopexit, label %.lr.ph, !dbg !19807
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
@@ -5671,7 +5672,6 @@ bb.c:                                             ; preds = %bb.a
   %i.z = load ptr, ptr %i.y, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %2, i64 48
   %i.ab = load ptr, ptr %i.aa, align 8, !nonnull !3818, !align !3994
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.ac = load ptr, ptr %2, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.ad = getelementptr inbounds nuw i8, ptr %i.ac, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -5919,6 +5919,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.k, label %.loopexit, label %.lr.ph, !dbg !20047
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.s = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
@@ -5926,7 +5927,6 @@ bb.c:                                             ; preds = %bb.a
   %i.v = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %2, i64 16
   %i.x = load ptr, ptr %i.w, align 8, !nonnull !3818, !align !4086
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.y = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.z = load ptr, ptr %i.y, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 8
@@ -6125,12 +6125,12 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.k, label %.loopexit, label %.lr.ph, !dbg !20242
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   %i.m = getelementptr inbounds nuw i8, ptr %i.b, i64 16 ; 2 uses
   %i.n = getelementptr inbounds nuw i8, ptr %i.b, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.b, i64 32 ; 2 uses
   %i.o = getelementptr inbounds nuw i8, ptr %i.b, i64 48 ; 2 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.b, i64 24 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.b, i64 8
   br label %bb.e, !dbg !20242
 
 bb.d:                                             ; preds = %.lr.ph51, %._crit_edge
@@ -6307,6 +6307,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.m, label %.loopexit, label %.lr.ph, !dbg !20477
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ae = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %i.d, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 2 uses
@@ -6318,7 +6319,6 @@ bb.c:                                             ; preds = %bb.a
   %i.al = load i64, ptr %i.ak, align 8            ; 2 uses
   %i.am = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.an = load ptr, ptr %i.am, align 8, !nonnull !3818, !align !3994
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ao = load ptr, ptr %2, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 8
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -6615,6 +6615,7 @@ bb.c:                                             ; preds = %bb.a
   br i1 %i.m, label %.loopexit, label %.lr.ph, !dbg !20793
 
 .lr.ph:                                           ; preds = %bb.c
+  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.ai = getelementptr inbounds nuw i8, ptr %i.d, i64 16 ; 2 uses
   %i.aj = getelementptr inbounds nuw i8, ptr %i.d, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.d, i64 32 ; 2 uses
@@ -6626,7 +6627,6 @@ bb.c:                                             ; preds = %bb.a
   %i.ap = load i64, ptr %i.ao, align 8            ; 2 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %2, i64 32
   %i.ar = load ptr, ptr %i.aq, align 8, !nonnull !3818, !align !3994
-  %3 = getelementptr inbounds nuw i8, ptr %i.d, i64 8
   %i.as = load ptr, ptr %2, align 8, !nonnull !3818, !align !3994 ; 2 uses
   %i.at = getelementptr inbounds nuw i8, ptr %i.as, i64 8
   %i.au = getelementptr inbounds nuw i8, ptr %2, i64 24
@@ -7029,12 +7029,12 @@ bb.cb:                                            ; preds = %_RNvMNtCscgRAwXFJnX
   br i1 %i.qd, label %_RINvNtCskY9G75ZWc4U_11polars_expr9hash_keys20for_each_hash_singleNtNtCs1LHh8CLbVkQ_11polars_core9datatypes9Int16TypeNCNvMB2_NtB2_8HashKeys14gen_partitions0EB4_.exit.i.i, label %.lr.ph.i56.i.i, !dbg !129865
 
 .lr.ph.i56.i.i:                                   ; preds = %bb.cb
+  %4 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.qk = getelementptr inbounds nuw i8, ptr %i.k, i64 16 ; 2 uses
   %i.ql = getelementptr inbounds nuw i8, ptr %i.k, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i.i57.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 32 ; 2 uses
   %i.qm = getelementptr inbounds nuw i8, ptr %i.k, i64 48 ; 2 uses
   %i.qn = getelementptr inbounds nuw i8, ptr %i.k, i64 24 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.qo = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.qp = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.qq = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
@@ -7373,12 +7373,12 @@ bb.dh:                                            ; preds = %_RNvMNtCscgRAwXFJnX
   br i1 %i.um, label %_RINvNtCskY9G75ZWc4U_11polars_expr9hash_keys20for_each_hash_singleNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float16TypeNCNvMB2_NtB2_8HashKeys14gen_partitions0EB4_.exit.i.i, label %.lr.ph.i74.i.i, !dbg !130006
 
 .lr.ph.i74.i.i:                                   ; preds = %bb.dh
+  %5 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.ut = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
   %i.uu = getelementptr inbounds nuw i8, ptr %i.h, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i.i75.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 32 ; 2 uses
   %i.uv = getelementptr inbounds nuw i8, ptr %i.h, i64 48 ; 2 uses
   %i.uw = getelementptr inbounds nuw i8, ptr %i.h, i64 24 ; 2 uses
-  %5 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.ux = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.uy = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.uz = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
@@ -7606,12 +7606,12 @@ bb.dy:                                            ; preds = %_RNvMNtCscgRAwXFJnX
   br i1 %i.yd, label %_RINvNtCskY9G75ZWc4U_11polars_expr9hash_keys20for_each_hash_singleNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float32TypeNCNvMB2_NtB2_8HashKeys14gen_partitions0EB4_.exit.i.i, label %.lr.ph.i97.i.i, !dbg !130105
 
 .lr.ph.i97.i.i:                                   ; preds = %bb.dy
+  %6 = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.yk = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 2 uses
   %i.yl = getelementptr inbounds nuw i8, ptr %i.e, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i.i98.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 32 ; 2 uses
   %i.ym = getelementptr inbounds nuw i8, ptr %i.e, i64 48 ; 2 uses
   %i.yn = getelementptr inbounds nuw i8, ptr %i.e, i64 24 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.yo = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.yp = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.yq = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 3 uses
@@ -8014,12 +8014,12 @@ bb.bw:                                            ; preds = %_RNvMNtCscgRAwXFJnX
   br i1 %i.lj, label %_RINvNtCskY9G75ZWc4U_11polars_expr9hash_keys20for_each_hash_singleNtNtCs1LHh8CLbVkQ_11polars_core9datatypes9Int16TypeNCNvMB2_NtB2_8HashKeys18sketch_cardinality0EB4_.exit.i.i, label %.lr.ph.i53.i.i, !dbg !131750
 
 .lr.ph.i53.i.i:                                   ; preds = %bb.bw
+  %2 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.ll = getelementptr inbounds nuw i8, ptr %i.k, i64 16 ; 2 uses
   %i.lm = getelementptr inbounds nuw i8, ptr %i.k, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i.i54.i.i = getelementptr inbounds nuw i8, ptr %i.k, i64 32 ; 2 uses
   %i.ln = getelementptr inbounds nuw i8, ptr %i.k, i64 48 ; 2 uses
   %i.lo = getelementptr inbounds nuw i8, ptr %i.k, i64 24 ; 2 uses
-  %2 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   br label %bb.by, !dbg !131750
 
 bb.bx:                                            ; preds = %._crit_edge.i67.i.i, %.lr.ph51.i.i.i
@@ -8318,12 +8318,12 @@ bb.dc:                                            ; preds = %_RNvMNtCscgRAwXFJnX
   br i1 %i.on, label %_RINvNtCskY9G75ZWc4U_11polars_expr9hash_keys20for_each_hash_singleNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float16TypeNCNvMB2_NtB2_8HashKeys18sketch_cardinality0EB4_.exit.i.i, label %.lr.ph.i70.i.i, !dbg !131860
 
 .lr.ph.i70.i.i:                                   ; preds = %bb.dc
+  %3 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.op = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
   %i.oq = getelementptr inbounds nuw i8, ptr %i.h, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i.i71.i.i = getelementptr inbounds nuw i8, ptr %i.h, i64 32 ; 2 uses
   %i.or = getelementptr inbounds nuw i8, ptr %i.h, i64 48 ; 2 uses
   %i.os = getelementptr inbounds nuw i8, ptr %i.h, i64 24 ; 2 uses
-  %3 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   br label %bb.de, !dbg !131860
 
 bb.dd:                                            ; preds = %._crit_edge.i88.i.i, %.lr.ph51.i84.i.i
@@ -8511,12 +8511,12 @@ bb.dt:                                            ; preds = %_RNvMNtCscgRAwXFJnX
   br i1 %i.qz, label %_RINvNtCskY9G75ZWc4U_11polars_expr9hash_keys20for_each_hash_singleNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float32TypeNCNvMB2_NtB2_8HashKeys18sketch_cardinality0EB4_.exit.i.i, label %.lr.ph.i92.i.i, !dbg !131931
 
 .lr.ph.i92.i.i:                                   ; preds = %bb.dt
+  %4 = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.rb = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 2 uses
   %i.rc = getelementptr inbounds nuw i8, ptr %i.e, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i.i93.i.i = getelementptr inbounds nuw i8, ptr %i.e, i64 32 ; 2 uses
   %i.rd = getelementptr inbounds nuw i8, ptr %i.e, i64 48 ; 2 uses
   %i.re = getelementptr inbounds nuw i8, ptr %i.e, i64 24 ; 2 uses
-  %4 = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   br label %bb.dv, !dbg !131931
 
 bb.du:                                            ; preds = %._crit_edge.i110.i.i, %.lr.ph51.i106.i.i
@@ -8919,12 +8919,12 @@ bb.cp:                                            ; preds = %_RNvMNtCscgRAwXFJnX
   br i1 %i.tj, label %_RINvNtCskY9G75ZWc4U_11polars_expr9hash_keys20for_each_hash_singleNtNtCs1LHh8CLbVkQ_11polars_core9datatypes9Int16TypeNCINvMB2_NtB2_8HashKeys27gen_idxs_per_partition_implKb0_E0EB4_.exit.i.i.i, label %.lr.ph.i63.i.i.i, !dbg !135454
 
 .lr.ph.i63.i.i.i:                                 ; preds = %bb.cp
+  %7 = getelementptr inbounds nuw i8, ptr %i.ce, i64 8
   %i.tn = getelementptr inbounds nuw i8, ptr %i.ce, i64 16 ; 2 uses
   %i.to = getelementptr inbounds nuw i8, ptr %i.ce, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i.i64.i.i.i = getelementptr inbounds nuw i8, ptr %i.ce, i64 32 ; 2 uses
   %i.tp = getelementptr inbounds nuw i8, ptr %i.ce, i64 48 ; 2 uses
   %i.tq = getelementptr inbounds nuw i8, ptr %i.ce, i64 24 ; 2 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.ce, i64 8
   %i.tr = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ts = load i64, ptr %i.tr, align 8, !alias.scope !134591
   br label %bb.cs, !dbg !135454
@@ -9298,12 +9298,12 @@ bb.dz:                                            ; preds = %_RNvMNtCscgRAwXFJnX
   br i1 %i.yb, label %_RINvNtCskY9G75ZWc4U_11polars_expr9hash_keys20for_each_hash_singleNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float16TypeNCINvMB2_NtB2_8HashKeys27gen_idxs_per_partition_implKb0_E0EB4_.exit.i.i.i, label %.lr.ph.i85.i.i.i, !dbg !135601
 
 .lr.ph.i85.i.i.i:                                 ; preds = %bb.dz
+  %8 = getelementptr inbounds nuw i8, ptr %i.cb, i64 8
   %i.yf = getelementptr inbounds nuw i8, ptr %i.cb, i64 16 ; 2 uses
   %i.yg = getelementptr inbounds nuw i8, ptr %i.cb, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i.i86.i.i.i = getelementptr inbounds nuw i8, ptr %i.cb, i64 32 ; 2 uses
   %i.yh = getelementptr inbounds nuw i8, ptr %i.cb, i64 48 ; 2 uses
   %i.yi = getelementptr inbounds nuw i8, ptr %i.cb, i64 24 ; 2 uses
-  %8 = getelementptr inbounds nuw i8, ptr %i.cb, i64 8
   %i.yj = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.yk = load i64, ptr %i.yj, align 8, !alias.scope !134591
   br label %bb.ec, !dbg !135601
@@ -9566,12 +9566,12 @@ bb.eu:                                            ; preds = %_RNvMNtCscgRAwXFJnX
   br i1 %i.acb, label %_RINvNtCskY9G75ZWc4U_11polars_expr9hash_keys20for_each_hash_singleNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float32TypeNCINvMB2_NtB2_8HashKeys27gen_idxs_per_partition_implKb0_E0EB4_.exit.i.i.i, label %.lr.ph.i115.i.i.i, !dbg !135706
 
 .lr.ph.i115.i.i.i:                                ; preds = %bb.eu
+  %9 = getelementptr inbounds nuw i8, ptr %i.by, i64 8
   %i.acf = getelementptr inbounds nuw i8, ptr %i.by, i64 16 ; 2 uses
   %i.acg = getelementptr inbounds nuw i8, ptr %i.by, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i.i116.i.i.i = getelementptr inbounds nuw i8, ptr %i.by, i64 32 ; 2 uses
   %i.ach = getelementptr inbounds nuw i8, ptr %i.by, i64 48 ; 2 uses
   %i.aci = getelementptr inbounds nuw i8, ptr %i.by, i64 24 ; 2 uses
-  %9 = getelementptr inbounds nuw i8, ptr %i.by, i64 8
   %i.acj = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.ack = load i64, ptr %i.acj, align 8, !alias.scope !134591
   br label %bb.ex, !dbg !135706
@@ -9974,12 +9974,12 @@ bb.lk:                                            ; preds = %_RNvMNtCscgRAwXFJnX
   br i1 %i.bau, label %_RINvNtCskY9G75ZWc4U_11polars_expr9hash_keys20for_each_hash_singleNtNtCs1LHh8CLbVkQ_11polars_core9datatypes9Int16TypeNCINvMB2_NtB2_8HashKeys27gen_idxs_per_partition_implKb1_E0EB4_.exit.i.i.i, label %.lr.ph.i63.i.i.i130, !dbg !136460
 
 .lr.ph.i63.i.i.i130:                              ; preds = %bb.lk
+  %10 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.bay = getelementptr inbounds nuw i8, ptr %i.k, i64 16 ; 2 uses
   %i.baz = getelementptr inbounds nuw i8, ptr %i.k, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i.i64.i.i.i131 = getelementptr inbounds nuw i8, ptr %i.k, i64 32 ; 2 uses
   %i.bba = getelementptr inbounds nuw i8, ptr %i.k, i64 48 ; 2 uses
   %i.bbb = getelementptr inbounds nuw i8, ptr %i.k, i64 24 ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.bbc = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.bbd = load i64, ptr %i.bbc, align 8, !alias.scope !134813
   br label %bb.ln, !dbg !136460
@@ -10357,12 +10357,12 @@ bb.mu:                                            ; preds = %_RNvMNtCscgRAwXFJnX
   br i1 %i.bfo, label %_RINvNtCskY9G75ZWc4U_11polars_expr9hash_keys20for_each_hash_singleNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float16TypeNCINvMB2_NtB2_8HashKeys27gen_idxs_per_partition_implKb1_E0EB4_.exit.i.i.i, label %.lr.ph.i85.i.i.i94, !dbg !136610
 
 .lr.ph.i85.i.i.i94:                               ; preds = %bb.mu
+  %11 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.bfs = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
   %i.bft = getelementptr inbounds nuw i8, ptr %i.h, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i.i86.i.i.i95 = getelementptr inbounds nuw i8, ptr %i.h, i64 32 ; 2 uses
   %i.bfu = getelementptr inbounds nuw i8, ptr %i.h, i64 48 ; 2 uses
   %i.bfv = getelementptr inbounds nuw i8, ptr %i.h, i64 24 ; 2 uses
-  %11 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.bfw = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.bfx = load i64, ptr %i.bfw, align 8, !alias.scope !134813
   br label %bb.mx, !dbg !136610
@@ -10629,12 +10629,12 @@ bb.np:                                            ; preds = %_RNvMNtCscgRAwXFJnX
   br i1 %i.bjq, label %_RINvNtCskY9G75ZWc4U_11polars_expr9hash_keys20for_each_hash_singleNtNtCs1LHh8CLbVkQ_11polars_core9datatypes11Float32TypeNCINvMB2_NtB2_8HashKeys27gen_idxs_per_partition_implKb1_E0EB4_.exit.i.i.i, label %.lr.ph.i115.i.i.i64, !dbg !136718
 
 .lr.ph.i115.i.i.i64:                              ; preds = %bb.np
+  %12 = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.bju = getelementptr inbounds nuw i8, ptr %i.e, i64 16 ; 2 uses
   %i.bjv = getelementptr inbounds nuw i8, ptr %i.e, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i.i116.i.i.i65 = getelementptr inbounds nuw i8, ptr %i.e, i64 32 ; 2 uses
   %i.bjw = getelementptr inbounds nuw i8, ptr %i.e, i64 48 ; 2 uses
   %i.bjx = getelementptr inbounds nuw i8, ptr %i.e, i64 24 ; 2 uses
-  %12 = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   %i.bjy = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.bjz = load i64, ptr %i.bjy, align 8, !alias.scope !134813
   br label %bb.ns, !dbg !136718
@@ -11037,17 +11037,18 @@ bb.g:                                             ; preds = %bb.e
 
 .lr.ph102:                                        ; preds = %bb.g
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %6 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.be = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.f, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.f, i64 48 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.f, i64 24 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 12 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.bn = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.h, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i47 = getelementptr inbounds nuw i8, ptr %i.h, i64 32 ; 2 uses
@@ -11059,7 +11060,6 @@ bb.g:                                             ; preds = %bb.e
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.bv = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.bw = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.bx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   br label %bb.h, !dbg !164191
 
@@ -11462,17 +11462,18 @@ bb.g:                                             ; preds = %bb.e
 
 .lr.ph102:                                        ; preds = %bb.g
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %6 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.be = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.f, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.f, i64 48 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.f, i64 24 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 12 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.bn = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.h, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i47 = getelementptr inbounds nuw i8, ptr %i.h, i64 32 ; 2 uses
@@ -11484,7 +11485,6 @@ bb.g:                                             ; preds = %bb.e
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.bv = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.bw = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.bx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   br label %bb.h, !dbg !164807
 
@@ -11887,17 +11887,18 @@ bb.g:                                             ; preds = %bb.e
 
 .lr.ph102:                                        ; preds = %bb.g
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %6 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.be = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.f, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.f, i64 48 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.f, i64 24 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 12 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.bn = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.h, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i47 = getelementptr inbounds nuw i8, ptr %i.h, i64 32 ; 2 uses
@@ -11909,7 +11910,6 @@ bb.g:                                             ; preds = %bb.e
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.bv = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.bw = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.bx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   br label %bb.h, !dbg !166044
 
@@ -12312,17 +12312,18 @@ bb.g:                                             ; preds = %bb.e
 
 .lr.ph102:                                        ; preds = %bb.g
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %6 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.be = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.f, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.f, i64 48 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.f, i64 24 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 12 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.bn = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.h, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i47 = getelementptr inbounds nuw i8, ptr %i.h, i64 32 ; 2 uses
@@ -12334,7 +12335,6 @@ bb.g:                                             ; preds = %bb.e
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.bv = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.bw = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.bx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   br label %bb.h, !dbg !166671
 
@@ -12737,17 +12737,18 @@ bb.g:                                             ; preds = %bb.e
 
 .lr.ph102:                                        ; preds = %bb.g
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %6 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.be = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.f, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.f, i64 48 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.f, i64 24 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 12 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.bn = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.h, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i47 = getelementptr inbounds nuw i8, ptr %i.h, i64 32 ; 2 uses
@@ -12759,7 +12760,6 @@ bb.g:                                             ; preds = %bb.e
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.bv = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.bw = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.bx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   br label %bb.h, !dbg !169197
 
@@ -13162,17 +13162,18 @@ bb.g:                                             ; preds = %bb.e
 
 .lr.ph102:                                        ; preds = %bb.g
   %i.bd = getelementptr inbounds nuw i8, ptr %1, i64 24
+  %6 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.be = getelementptr inbounds nuw i8, ptr %i.f, i64 16 ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %i.f, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i = getelementptr inbounds nuw i8, ptr %i.f, i64 32 ; 2 uses
   %i.bg = getelementptr inbounds nuw i8, ptr %i.f, i64 48 ; 2 uses
   %i.bh = getelementptr inbounds nuw i8, ptr %i.f, i64 24 ; 2 uses
-  %6 = getelementptr inbounds nuw i8, ptr %i.f, i64 8
   %i.bi = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 3 uses
   %i.bj = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 3 uses
   %i.bk = getelementptr inbounds nuw i8, ptr %0, i64 128 ; 3 uses
   %i.bl = getelementptr inbounds nuw i8, ptr %2, i64 8 ; 4 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %2, i64 16 ; 12 uses
+  %7 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.bn = getelementptr inbounds nuw i8, ptr %i.h, i64 16 ; 2 uses
   %i.bo = getelementptr inbounds nuw i8, ptr %i.h, i64 40 ; 2 uses
   %.phi.trans.insert.i.i.i47 = getelementptr inbounds nuw i8, ptr %i.h, i64 32 ; 2 uses
@@ -13184,7 +13185,6 @@ bb.g:                                             ; preds = %bb.e
   %i.bu = getelementptr inbounds nuw i8, ptr %0, i64 88
   %i.bv = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.bw = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
-  %7 = getelementptr inbounds nuw i8, ptr %i.h, i64 8
   %i.bx = getelementptr inbounds nuw i8, ptr %i.e, i64 8
   br label %bb.h, !dbg !169813
 

@@ -205,17 +205,14 @@ default.unreachable:                              ; preds = %.preheader.i.i.i
 
 _ZNK4goal4sizeEv.exit:                            ; preds = %bb.c, %bb.d, %bb.e
   %.07.i.i.i = phi i32 [ %i.p, %bb.e ], [ %i.k, %bb.c ], [ %i.n, %bb.d ] ; 2 uses
-  %.not51.not = icmp eq i32 %.07.i.i.i, 0
-  br i1 %.not51.not, label %._crit_edge, label %.lr.ph
-
-.lr.ph:                                           ; preds = %_ZNK4goal4sizeEv.exit
   %3 = getelementptr inbounds nuw i8, ptr %0, i64 12
-  br label %bb.f
+  %.not51.not = icmp eq i32 %.07.i.i.i, 0
+  br i1 %.not51.not, label %._crit_edge, label %bb.f
 
-bb.f:                                             ; preds = %.lr.ph, %_ZNK11ast_manager5is_orEPK4expr.exit.thread
-  %.02254 = phi i32 [ 0, %.lr.ph ], [ %i.au, %_ZNK11ast_manager5is_orEPK4expr.exit.thread ] ; 4 uses
-  %.02353 = phi i32 [ 0, %.lr.ph ], [ %.4.ph, %_ZNK11ast_manager5is_orEPK4expr.exit.thread ] ; 6 uses
-  %.02652 = phi i32 [ -1, %.lr.ph ], [ %.430.ph, %_ZNK11ast_manager5is_orEPK4expr.exit.thread ] ; 5 uses
+bb.f:                                             ; preds = %_ZNK4goal4sizeEv.exit, %_ZNK11ast_manager5is_orEPK4expr.exit.thread
+  %.02254 = phi i32 [ %i.au, %_ZNK11ast_manager5is_orEPK4expr.exit.thread ], [ 0, %_ZNK4goal4sizeEv.exit ] ; 4 uses
+  %.02353 = phi i32 [ %.4.ph, %_ZNK11ast_manager5is_orEPK4expr.exit.thread ], [ 0, %_ZNK4goal4sizeEv.exit ] ; 6 uses
+  %.02652 = phi i32 [ %.430.ph, %_ZNK11ast_manager5is_orEPK4expr.exit.thread ], [ -1, %_ZNK4goal4sizeEv.exit ] ; 5 uses
   %i.q = load ptr, ptr %2, align 8, !tbaa !34     ; 3 uses
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 120
   %i.s = load i32, ptr %i.r, align 8

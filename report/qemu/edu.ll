@@ -202,8 +202,8 @@ declare void @qemu_thread_create(ptr noundef, ptr noundef, ptr noundef, ptr noun
 define internal noalias noundef ptr @edu_fact_thread(ptr noundef %0) #0 {
 bb.a:
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 3048 ; 6 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 3164 ; 4 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 3152 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 3152 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 3164 ; 4 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 3096
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 3160 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 3168 ; 2 uses
@@ -212,26 +212,26 @@ bb.a:
 bb.b:                                             ; preds = %.backedge, %bb.a
   %i.g = load atomic ptr, ptr @qemu_mutex_lock_func monotonic, align 8
   tail call void %i.g(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.5, i32 noundef 332) #3
-  %i.h = load atomic i32, ptr %i.b monotonic, align 4
+  %i.h = load atomic i32, ptr %i.c monotonic, align 4
   %i.i = and i32 %i.h, 1
   %i.j = icmp eq i32 %i.i, 0
   br i1 %i.j, label %.lr.ph, label %.critedge
 
 .lr.ph:                                           ; preds = %bb.b, %bb.c
-  %i.k = load i8, ptr %i.c, align 16, !range !12, !noundef !13
+  %i.k = load i8, ptr %i.b, align 16, !range !12, !noundef !13
   %i.l = trunc nuw i8 %i.k to i1
   br i1 %i.l, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph
   %i.m = load atomic ptr, ptr @qemu_cond_wait_func monotonic, align 8
   tail call void %i.m(ptr noundef nonnull %i.d, ptr noundef nonnull %i.a, ptr noundef nonnull @.str.5, i32 noundef 335) #3
-  %i.n = load atomic i32, ptr %i.b monotonic, align 4
+  %i.n = load atomic i32, ptr %i.c monotonic, align 4
   %i.o = and i32 %i.n, 1
   %i.p = icmp eq i32 %i.o, 0
   br i1 %i.p, label %.lr.ph, label %.critedge, !llvm.loop !9
 
 .critedge:                                        ; preds = %.lr.ph, %bb.c, %bb.b
-  %i.q = load i8, ptr %i.c, align 16, !range !12, !noundef !13
+  %i.q = load i8, ptr %i.b, align 16, !range !12, !noundef !13
   %i.r = trunc nuw i8 %i.q to i1
   br i1 %i.r, label %bb.h, label %bb.d
 
@@ -291,9 +291,9 @@ middle.block:                                     ; preds = %vector.body
   tail call void %i.ab(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.5, i32 noundef 355) #3
   store i32 %.034.lcssa, ptr %i.e, align 8
   tail call void @qemu_mutex_unlock_impl(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.5, i32 noundef 357) #3
-  %i.ac = atomicrmw and ptr %i.b, i32 -2 seq_cst, align 4 ; 0 uses
+  %i.ac = atomicrmw and ptr %i.c, i32 -2 seq_cst, align 4 ; 0 uses
   fence syncscope("singlethread") seq_cst
-  %i.ad = load atomic i32, ptr %i.b monotonic, align 4
+  %i.ad = load atomic i32, ptr %i.c monotonic, align 4
   %i.ae = and i32 %i.ad, 128
   %.not36 = icmp eq i32 %i.ae, 0
   br i1 %.not36, label %.backedge, label %bb.e

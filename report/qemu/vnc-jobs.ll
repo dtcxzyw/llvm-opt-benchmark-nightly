@@ -202,8 +202,8 @@ define internal noalias noundef ptr @vnc_worker_thread(ptr noundef %0) #0 {
 bb.a:
   %1 = alloca %struct.VncState, align 8           ; 26 uses
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 5 uses
-  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
-  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
+  %i.b = getelementptr inbounds nuw i8, ptr %0, i64 112 ; 2 uses
+  %i.c = getelementptr inbounds nuw i8, ptr %0, i64 120 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 86568 ; 6 uses
   %i.e = getelementptr inbounds nuw i8, ptr %1, i64 8
   %i.f = getelementptr inbounds nuw i8, ptr %1, i64 86492
@@ -225,25 +225,25 @@ bb.b:                                             ; preds = %vnc_worker_thread_l
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(103328) %1, i8 0, i64 103328, i1 false)
   %i.r = load atomic ptr, ptr @qemu_mutex_lock_func monotonic, align 8
   call void %i.r(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.1, i32 noundef 63) #9, !inline_history !14
-  %i.s = load ptr, ptr %i.b, align 8              ; 2 uses
+  %i.s = load ptr, ptr %i.c, align 8              ; 2 uses
   %i.t = icmp eq ptr %i.s, null
   br i1 %i.t, label %.lr.ph.i, label %.critedge.i
 
 .lr.ph.i:                                         ; preds = %bb.b, %bb.c
-  %i.u = load i8, ptr %i.c, align 8, !range !9, !noundef !10
+  %i.u = load i8, ptr %i.b, align 8, !range !9, !noundef !10
   %i.v = trunc nuw i8 %i.u to i1
   br i1 %i.v, label %.critedge.i, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph.i
   %i.w = load atomic ptr, ptr @qemu_cond_wait_func monotonic, align 8
   call void %i.w(ptr noundef nonnull %0, ptr noundef nonnull %i.a, ptr noundef nonnull @.str.1, i32 noundef 253) #9, !inline_history !15
-  %i.x = load ptr, ptr %i.b, align 8              ; 2 uses
+  %i.x = load ptr, ptr %i.c, align 8              ; 2 uses
   %i.y = icmp eq ptr %i.x, null
   br i1 %i.y, label %.lr.ph.i, label %.critedge.i, !llvm.loop !16
 
 .critedge.i:                                      ; preds = %bb.c, %.lr.ph.i, %bb.b
   %.lcssa98.i = phi ptr [ %i.s, %bb.b ], [ null, %.lr.ph.i ], [ %i.x, %bb.c ] ; 23 uses
-  %i.z = load i8, ptr %i.c, align 8, !range !9, !noundef !10
+  %i.z = load i8, ptr %i.b, align 8, !range !9, !noundef !10
   %i.aa = trunc nuw i8 %i.z to i1
   call void @qemu_mutex_unlock_impl(ptr noundef nonnull %i.a, ptr noundef nonnull @.str.1, i32 noundef 68) #9
   br i1 %i.aa, label %bb.an, label %bb.d

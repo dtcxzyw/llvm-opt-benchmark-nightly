@@ -52,17 +52,15 @@ _ZNK4decl13get_family_idEv.exit.thread.i.i:       ; preds = %bb.a
 .split:                                           ; preds = %_ZNK4decl13get_family_idEv.exit.thread.i.i
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.h = load i32, ptr %i.g, align 4, !tbaa !21
-  %4 = icmp eq i32 %i.h, 4
-  %.not16.a = icmp eq i32 %2, 0
-  %or.cond = or i1 %4, %.not16.a
-  br i1 %or.cond, label %._crit_edge, label %.lr.ph.a
+  %.not16.a = icmp eq i32 %i.h, 4
+  br i1 %.not16.a, label %._crit_edge, label %.preheader
 
-.preheader:                                       ; preds = %_ZNK4decl13get_family_idEv.exit.thread.i.i, %bb.a
+.preheader:                                       ; preds = %_ZNK4decl13get_family_idEv.exit.thread.i.i, %bb.a, %.split
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.not16.old = icmp eq i32 %2, 0
   br i1 %.not16.old, label %._crit_edge, label %.lr.ph.a
 
-.lr.ph.a:                                         ; preds = %.split, %.preheader
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16
+.lr.ph.a:                                         ; preds = %.preheader
   %wide.trip.count = zext i32 %2 to i64
   br label %bb.b
 
@@ -104,7 +102,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.aa, label %bb.f, label %_ZNK11ast_manager6is_iteEPK4expr.exit.thread
 
 bb.f:                                             ; preds = %bb.e
-  %i.ab = load i8, ptr %5, align 8, !tbaa !34, !range !35, !noundef !32
+  %i.ab = load i8, ptr %4, align 8, !tbaa !34, !range !35, !noundef !32
   %i.ac = trunc nuw i8 %i.ab to i1
   br i1 %i.ac, label %._crit_edge.loopexit, label %_ZNK11ast_manager6is_iteEPK4expr.exit.thread
 
@@ -450,17 +448,15 @@ _ZNK4decl13get_family_idEv.exit.thread.i.i.i:     ; preds = %bb.a
 .split.i:                                         ; preds = %_ZNK4decl13get_family_idEv.exit.thread.i.i.i
   %i.g = getelementptr inbounds nuw i8, ptr %i.c, i64 4
   %i.h = load i32, ptr %i.g, align 4, !tbaa !21
-  %4 = icmp eq i32 %i.h, 4
-  %.not16.i.a = icmp eq i32 %2, 0
-  %or.cond.i = or i1 %.not16.i.a, %4
-  br i1 %or.cond.i, label %_ZN16push_app_ite_cfg9is_targetEP9func_decljPKP4expr.exit.thread14, label %.lr.ph.i.a
+  %.not16.i.a = icmp eq i32 %i.h, 4
+  br i1 %.not16.i.a, label %_ZN16push_app_ite_cfg9is_targetEP9func_decljPKP4expr.exit.thread14, label %.preheader.i
 
-.preheader.i:                                     ; preds = %_ZNK4decl13get_family_idEv.exit.thread.i.i.i, %bb.a
+.preheader.i:                                     ; preds = %.split.i, %_ZNK4decl13get_family_idEv.exit.thread.i.i.i, %bb.a
+  %4 = getelementptr inbounds nuw i8, ptr %0, i64 16
   %.not16.old.i = icmp eq i32 %2, 0
   br i1 %.not16.old.i, label %_ZN16push_app_ite_cfg9is_targetEP9func_decljPKP4expr.exit.thread14, label %.lr.ph.i.a
 
-.lr.ph.i.a:                                       ; preds = %.preheader.i, %.split.i
-  %5 = getelementptr inbounds nuw i8, ptr %0, i64 16
+.lr.ph.i.a:                                       ; preds = %.preheader.i
   %wide.trip.count.i = zext i32 %2 to i64         ; 2 uses
   br label %bb.b
 
@@ -502,7 +498,7 @@ bb.e:                                             ; preds = %bb.d
   br i1 %i.aa, label %bb.f, label %_ZNK11ast_manager6is_iteEPK4expr.exit.thread.i
 
 bb.f:                                             ; preds = %bb.e
-  %i.ab = load i8, ptr %5, align 8, !tbaa !34, !range !35, !noundef !32
+  %i.ab = load i8, ptr %4, align 8, !tbaa !34, !range !35, !noundef !32
   %i.ac = trunc nuw i8 %i.ab to i1
   br i1 %i.ac, label %_ZN16push_app_ite_cfg9is_targetEP9func_decljPKP4expr.exit.thread14, label %_ZNK11ast_manager6is_iteEPK4expr.exit.thread.i
 
@@ -514,9 +510,7 @@ _ZNK11ast_manager6is_iteEPK4expr.exit.thread.i:   ; preds = %bb.f, %bb.e, %bb.d,
 
 _ZN16push_app_ite_cfg9is_targetEP9func_decljPKP4expr.exit: ; preds = %_ZNK11ast_manager6is_iteEPK4expr.exit.thread.i
   %i.ad = trunc nuw i8 %.1.i to i1
-  %.not18 = icmp ne i32 %2, 0
-  %or.cond = and i1 %.not18, %i.ad
-  br i1 %or.cond, label %.lr.ph, label %_ZN16push_app_ite_cfg9is_targetEP9func_decljPKP4expr.exit.thread14
+  br i1 %i.ad, label %.lr.ph, label %_ZN16push_app_ite_cfg9is_targetEP9func_decljPKP4expr.exit.thread14
 
 bb.g:                                             ; preds = %_Z9is_groundPK4expr.exit
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
@@ -539,8 +533,8 @@ _Z9is_groundPK4expr.exit:                         ; preds = %.lr.ph
   %i.am = trunc i8 %i.al to i1
   br i1 %i.am, label %bb.g, label %_ZN16push_app_ite_cfg9is_targetEP9func_decljPKP4expr.exit.thread14
 
-_ZN16push_app_ite_cfg9is_targetEP9func_decljPKP4expr.exit.thread14: ; preds = %bb.f, %_Z9is_groundPK4expr.exit, %bb.g, %.lr.ph, %.preheader.i, %.split.i, %_ZN16push_app_ite_cfg9is_targetEP9func_decljPKP4expr.exit
-  %.1 = phi i1 [ false, %_ZN16push_app_ite_cfg9is_targetEP9func_decljPKP4expr.exit ], [ false, %.split.i ], [ true, %.lr.ph ], [ false, %.preheader.i ], [ false, %bb.g ], [ true, %_Z9is_groundPK4expr.exit ], [ false, %bb.f ]
+_ZN16push_app_ite_cfg9is_targetEP9func_decljPKP4expr.exit.thread14: ; preds = %bb.f, %.lr.ph, %bb.g, %_Z9is_groundPK4expr.exit, %.preheader.i, %.split.i, %_ZN16push_app_ite_cfg9is_targetEP9func_decljPKP4expr.exit
+  %.1 = phi i1 [ false, %_ZN16push_app_ite_cfg9is_targetEP9func_decljPKP4expr.exit ], [ false, %.split.i ], [ false, %bb.g ], [ false, %.preheader.i ], [ true, %.lr.ph ], [ true, %_Z9is_groundPK4expr.exit ], [ false, %bb.f ]
   ret i1 %.1
 }
 

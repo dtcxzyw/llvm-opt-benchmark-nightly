@@ -204,19 +204,16 @@ b3RecReserveScratch.exit:                         ; preds = %bb.b, %bb.c, %bb.f
 ; Function Attrs: nounwind uwtable
 define noundef zeroext i1 @b3ValidateReplay(ptr nofree noundef readonly captures(address_is_null) %0, i32 noundef %1, i32 noundef %2) local_unnamed_addr #3 {
 bb.a:
-  %i.a = tail call ptr @b3CreatePlayer(ptr noundef %0, i32 noundef %1, i32 noundef %2) ; 7 uses
+  %i.a = tail call ptr @b3CreatePlayer(ptr noundef %0, i32 noundef %1, i32 noundef %2) ; 6 uses
   %i.b = icmp eq ptr %i.a, null
   br i1 %i.b, label %bb.e, label %.split
 
 .split:                                           ; preds = %bb.a
   %i.c = tail call zeroext i1 @b3RecPlayer_StepFrame(ptr noundef nonnull %i.a)
-  br i1 %i.c, label %.lr.ph, label %._crit_edge12
+  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 189 ; 2 uses
+  br i1 %i.c, label %bb.b, label %._crit_edge12
 
-.lr.ph:                                           ; preds = %.split
-  %3 = getelementptr inbounds nuw i8, ptr %i.a, i64 189
-  br label %bb.b
-
-bb.b:                                             ; preds = %.lr.ph, %.split10
+bb.b:                                             ; preds = %.split, %.split10
   %i.d = load i8, ptr %3, align 1, !tbaa !65, !range !26, !noundef !66
   %i.e = trunc nuw i8 %i.d to i1
   br i1 %i.e, label %._crit_edge, label %.split10, !llvm.loop !347
@@ -235,8 +232,7 @@ bb.b:                                             ; preds = %.lr.ph, %.split10
   br i1 %i.i, label %bb.c, label %bb.d
 
 bb.c:                                             ; preds = %._crit_edge12
-  %4 = getelementptr inbounds nuw i8, ptr %i.a, i64 189
-  %i.j = load i8, ptr %4, align 1, !tbaa !65, !range !26, !noundef !66
+  %i.j = load i8, ptr %3, align 1, !tbaa !65, !range !26, !noundef !66
   %i.k = icmp eq i8 %i.j, 0
   br label %bb.d
 

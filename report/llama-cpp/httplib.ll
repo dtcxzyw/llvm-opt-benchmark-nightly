@@ -205,8 +205,8 @@ bb.a:
   %i.b = getelementptr inbounds nuw i8, ptr %5, i64 8 ; 4 uses
   %i.c = getelementptr inbounds nuw i8, ptr %0, i64 40 ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 152 ; 2 uses
-  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 10 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 5 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %0, i64 48 ; 5 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %0, i64 56 ; 10 uses
   %i.g = getelementptr inbounds nuw i8, ptr %0, i64 32
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 8
   %i.i = getelementptr inbounds nuw i8, ptr %0, i64 104 ; 2 uses
@@ -255,12 +255,12 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %.noexc22, %bb.e
-  %i.aa = load ptr, ptr %i.e, align 8, !tbaa !581 ; 3 uses
-  %i.ab = icmp eq ptr %i.aa, %i.e
+  %i.aa = load ptr, ptr %i.f, align 8, !tbaa !581 ; 3 uses
+  %i.ab = icmp eq ptr %i.aa, %i.f
   br i1 %i.ab, label %"_ZZN7httplib10ThreadPool6workerEbENK3$_0clEv.exit.i.i", label %"_ZNSt18condition_variable4waitIZN7httplib10ThreadPool6workerEbE3$_1EEvRSt11unique_lockISt5mutexET_.exit"
 
 "_ZZN7httplib10ThreadPool6workerEbENK3$_0clEv.exit.i.i": ; preds = %bb.f
-  %i.ac = load i8, ptr %i.f, align 8, !tbaa !579, !range !197, !noundef !198
+  %i.ac = load i8, ptr %i.e, align 8, !tbaa !579, !range !197, !noundef !198
   %i.ad = trunc nuw i8 %i.ac to i1
   br i1 %i.ad, label %"_ZNSt18condition_variable4waitIZN7httplib10ThreadPool6workerEbE3$_1EEvRSt11unique_lockISt5mutexET_.exit", label %bb.g
 
@@ -279,12 +279,12 @@ bb.g:                                             ; preds = %"_ZZN7httplib10Thre
   br i1 %.not.i.i, label %bb.f, label %bb.h, !llvm.loop !2011
 
 bb.h:                                             ; preds = %.noexc22
-  %i.ah = load ptr, ptr %i.e, align 8, !tbaa !581 ; 3 uses
-  %i.ai = icmp eq ptr %i.ah, %i.e
+  %i.ah = load ptr, ptr %i.f, align 8, !tbaa !581 ; 3 uses
+  %i.ai = icmp eq ptr %i.ah, %i.f
   br i1 %i.ai, label %"_ZNSt18condition_variable8wait_forIlSt5ratioILl1ELl1EEZN7httplib10ThreadPool6workerEbE3$_0EEbRSt11unique_lockISt5mutexERKNSt6chrono8durationIT_T0_EET1_.exit", label %"_ZNSt18condition_variable4waitIZN7httplib10ThreadPool6workerEbE3$_1EEvRSt11unique_lockISt5mutexET_.exit"
 
 "_ZNSt18condition_variable8wait_forIlSt5ratioILl1ELl1EEZN7httplib10ThreadPool6workerEbE3$_0EEbRSt11unique_lockISt5mutexERKNSt6chrono8durationIT_T0_EET1_.exit": ; preds = %bb.h
-  %i.aj = load i8, ptr %i.f, align 8, !tbaa !579, !range !197, !noundef !198
+  %i.aj = load i8, ptr %i.e, align 8, !tbaa !579, !range !197, !noundef !198
   %i.ak = trunc nuw i8 %i.aj to i1
   br i1 %i.ak, label %"_ZNSt18condition_variable4waitIZN7httplib10ThreadPool6workerEbE3$_1EEvRSt11unique_lockISt5mutexET_.exit", label %bb.i
 
@@ -357,17 +357,17 @@ bb.p:                                             ; preds = %bb.c
   br i1 %i.az, label %bb.ae, label %_ZNSt11unique_lockISt5mutexED2Ev.exit34
 
 bb.q:                                             ; preds = %bb.d
-  %i.ba = load ptr, ptr %i.e, align 8, !tbaa !581 ; 3 uses
-  %i.bb = icmp eq ptr %i.ba, %i.e
+  %i.ba = load ptr, ptr %i.f, align 8, !tbaa !581 ; 3 uses
+  %i.bb = icmp eq ptr %i.ba, %i.f
   br i1 %i.bb, label %"_ZZN7httplib10ThreadPool6workerEbENK3$_1clEv.exit.i.preheader", label %"_ZNSt18condition_variable4waitIZN7httplib10ThreadPool6workerEbE3$_1EEvRSt11unique_lockISt5mutexET_.exit"
 
 "_ZZN7httplib10ThreadPool6workerEbENK3$_1clEv.exit.i.preheader": ; preds = %bb.q
-  %i.bc = load i8, ptr %i.f, align 8, !tbaa !579, !range !197, !noundef !198
+  %i.bc = load i8, ptr %i.e, align 8, !tbaa !579, !range !197, !noundef !198
   %i.bd = trunc nuw i8 %i.bc to i1
   br i1 %i.bd, label %"_ZNSt18condition_variable4waitIZN7httplib10ThreadPool6workerEbE3$_1EEvRSt11unique_lockISt5mutexET_.exit", label %.lr.ph
 
 "_ZZN7httplib10ThreadPool6workerEbENK3$_1clEv.exit.i": ; preds = %.noexc25
-  %i.be = load i8, ptr %i.f, align 8, !tbaa !579, !range !197, !noundef !198
+  %i.be = load i8, ptr %i.e, align 8, !tbaa !579, !range !197, !noundef !198
   %i.bf = trunc nuw i8 %i.be to i1
   br i1 %i.bf, label %"_ZNSt18condition_variable4waitIZN7httplib10ThreadPool6workerEbE3$_1EEvRSt11unique_lockISt5mutexET_.exit", label %.lr.ph, !llvm.loop !2012
 
@@ -376,8 +376,8 @@ bb.q:                                             ; preds = %bb.d
           to label %.noexc25 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp
 
 .noexc25:                                         ; preds = %.lr.ph
-  %i.bg = load ptr, ptr %i.e, align 8, !tbaa !581 ; 3 uses
-  %i.bh = icmp eq ptr %i.bg, %i.e
+  %i.bg = load ptr, ptr %i.f, align 8, !tbaa !581 ; 3 uses
+  %i.bh = icmp eq ptr %i.bg, %i.f
   br i1 %i.bh, label %"_ZZN7httplib10ThreadPool6workerEbENK3$_1clEv.exit.i", label %".noexc25._ZNSt18condition_variable4waitIZN7httplib10ThreadPool6workerEbE3$_1EEvRSt11unique_lockISt5mutexET_.exit.loopexit118_crit_edge", !llvm.loop !2012
 
 ".noexc25._ZNSt18condition_variable4waitIZN7httplib10ThreadPool6workerEbE3$_1EEvRSt11unique_lockISt5mutexET_.exit.loopexit118_crit_edge": ; preds = %.noexc25
@@ -388,9 +388,9 @@ bb.q:                                             ; preds = %bb.d
   %i.bj = load i64, ptr %i.c, align 8, !tbaa !578
   %i.bk = add i64 %i.bj, -1
   store i64 %i.bk, ptr %i.c, align 8, !tbaa !578
-  %i.bl = load i8, ptr %i.f, align 8, !tbaa !579, !range !197, !noundef !198
+  %i.bl = load i8, ptr %i.e, align 8, !tbaa !579, !range !197, !noundef !198
   %i.bm = trunc nuw i8 %i.bl to i1
-  %i.bn = icmp eq ptr %i.bi, %i.e
+  %i.bn = icmp eq ptr %i.bi, %i.f
   %or.cond = select i1 %i.bm, i1 %i.bn, i1 false
   br i1 %or.cond, label %_ZN7httplib10ThreadPool16move_to_finishedENSt6thread2idE.exit, label %bb.r
 
@@ -433,7 +433,7 @@ bb.u:                                             ; preds = %bb.t
 
 _ZNSt8functionIFvvEEaSEOS1_.exit:                 ; preds = %_ZNSt8functionIFvvEEC2EOS1_.exit.i, %bb.t
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #23
-  %i.bx = load ptr, ptr %i.e, align 8, !tbaa !581 ; 4 uses
+  %i.bx = load ptr, ptr %i.f, align 8, !tbaa !581 ; 4 uses
   %i.by = load i64, ptr %i.q, align 8, !tbaa !589
   %i.bz = add i64 %i.by, -1
   store i64 %i.bz, ptr %i.q, align 8, !tbaa !589
@@ -836,13 +836,13 @@ bb.a:
 define void @_ZNK7httplib6Server16wait_until_readyEv(ptr nofree noundef nonnull align 8 captures(none) dereferenceable(1088) %0) local_unnamed_addr #7 align 2 personality ptr @__gxx_personality_v0 {
 bb.a:
   %1 = alloca %struct.timespec, align 8           ; 6 uses
+  %2 = getelementptr inbounds nuw i8, ptr %0, i64 181
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 180 ; 2 uses
   %i.b = load atomic i8, ptr %i.a seq_cst, align 4, !range !197, !noundef !198
   %i.c = trunc nuw i8 %i.b to i1
   br i1 %i.c, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %2 = getelementptr inbounds nuw i8, ptr %0, i64 181
   %i.d = getelementptr inbounds nuw i8, ptr %1, i64 8
   br label %bb.b
 

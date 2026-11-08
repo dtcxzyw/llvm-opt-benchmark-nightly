@@ -204,12 +204,12 @@ trace_hrtimer_start_expired.exit:                 ; preds = %bb.k, %_test_bit.ex
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local range(i32 -1, 2) i32 @hrtimer_try_to_cancel(ptr noundef %0) #0 align 16 prefalign(16) {
 bb.a:
-  %i.a = getelementptr i8, ptr %0, i64 48         ; 5 uses
-  %i.b = getelementptr i8, ptr %0, i64 56         ; 3 uses
+  %i.a = getelementptr i8, ptr %0, i64 56         ; 3 uses
+  %i.b = getelementptr i8, ptr %0, i64 48         ; 5 uses
   br label %.critedge.i
 
 .critedge.i:                                      ; preds = %.critedge.i.backedge, %bb.a
-  %i.c = load volatile ptr, ptr %i.a, align 8     ; 3 uses
+  %i.c = load volatile ptr, ptr %i.b, align 8     ; 3 uses
   %i.d = getelementptr i8, ptr %i.c, i64 16       ; 3 uses
   %i.e = load volatile i32, ptr %i.d, align 4     ; 2 uses
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #19, !srcloc !35
@@ -227,7 +227,7 @@ bb.a:
 
 ._crit_edge.i:                                    ; preds = %.lr.ph.i, %.critedge.i
   %.lcssa.i = phi i32 [ %i.e, %.critedge.i ], [ %i.g, %.lr.ph.i ]
-  %i.i = load i8, ptr %i.b, align 8, !range !15, !noundef !16
+  %i.i = load i8, ptr %i.a, align 8, !range !15, !noundef !16
   %i.j = trunc nuw i8 %i.i to i1
   br i1 %i.j, label %.preheader, label %bb.b
 
@@ -247,7 +247,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not15.i, label %bb.d, label %.critedge.i.backedge
 
 bb.d:                                             ; preds = %bb.c
-  %i.o = load volatile ptr, ptr %i.a, align 8
+  %i.o = load volatile ptr, ptr %i.b, align 8
   %.not14.i = icmp eq ptr %i.c, %i.o
   br i1 %.not14.i, label %hrtimer_active.exit, label %.critedge.i.backedge
 
@@ -255,14 +255,14 @@ bb.d:                                             ; preds = %bb.c
   br label %.critedge.i, !llvm.loop !1
 
 bb.e:                                             ; preds = %.preheader, %bb.h
-  %i.p = load volatile ptr, ptr %i.a, align 8     ; 9 uses
+  %i.p = load volatile ptr, ptr %i.b, align 8     ; 9 uses
   %.not.i11 = icmp eq ptr %i.p, getelementptr inbounds nuw (i8, ptr @migration_cpu_base, i64 128)
   br i1 %.not.i11, label %bb.h, label %bb.f, !prof !29
 
 bb.f:                                             ; preds = %bb.e
   %i.q = load ptr, ptr %i.p, align 64
   %i.r = tail call i64 @_raw_spin_lock_irqsave(ptr noundef %i.q) #17 ; 2 uses
-  %i.s = load ptr, ptr %i.a, align 8              ; 2 uses
+  %i.s = load ptr, ptr %i.b, align 8              ; 2 uses
   %i.t = icmp eq ptr %i.p, %i.s
   br i1 %i.t, label %lock_hrtimer_base.exit, label %bb.g, !prof !30
 
@@ -282,7 +282,7 @@ lock_hrtimer_base.exit:                           ; preds = %bb.f
   br i1 %.not, label %trace_hrtimer_cancel.exit, label %bb.i
 
 bb.i:                                             ; preds = %lock_hrtimer_base.exit
-  %i.x = load i8, ptr %i.b, align 8, !range !15, !noundef !16
+  %i.x = load i8, ptr %i.a, align 8, !range !15, !noundef !16
   %i.y = trunc nuw i8 %i.x to i1
   br i1 %i.y, label %bb.j, label %trace_hrtimer_cancel.exit
 
@@ -291,7 +291,7 @@ bb.j:                                             ; preds = %bb.i
   %i.aa = tail call i64 asm "movq %gs:$1, $0", "=r,*m,~{dirflag},~{fpsr},~{flags}"(ptr elementtype(i64) @this_cpu_off) #16, !srcloc !39
   %i.ab = getelementptr i8, ptr @hrtimer_bases, i64 %i.aa
   %i.ac = icmp eq ptr %i.z, %i.ab
-  store volatile i8 0, ptr %i.b, align 8
+  store volatile i8 0, ptr %i.a, align 8
   %i.ad = getelementptr i8, ptr %0, i64 24
   %i.ae = load ptr, ptr %i.ad, align 8
   %.not.i.i = icmp eq ptr %i.ae, null
@@ -392,7 +392,7 @@ bb.w:                                             ; preds = %bb.v, %bb.u
 
 trace_hrtimer_cancel.exit:                        ; preds = %bb.i, %bb.w, %_test_bit.exit.i.i, %bb.t, %lock_hrtimer_base.exit
   %.0 = phi i32 [ -1, %lock_hrtimer_base.exit ], [ 1, %bb.w ], [ 1, %bb.t ], [ 0, %bb.i ], [ 1, %_test_bit.exit.i.i ]
-  %.val = load ptr, ptr %i.a, align 8
+  %.val = load ptr, ptr %i.b, align 8
   %.val.val = load ptr, ptr %.val, align 64
   tail call void @_raw_spin_unlock_irqrestore(ptr noundef %.val.val, i64 noundef %i.r) #17
   br label %hrtimer_active.exit
@@ -405,12 +405,12 @@ hrtimer_active.exit:                              ; preds = %bb.d, %trace_hrtime
 ; Function Attrs: fn_ret_thunk_extern noredzone nounwind null_pointer_is_valid sspstrong
 define dso_local noundef zeroext i1 @hrtimer_active(ptr nofree noundef captures(address) %0) #0 align 16 prefalign(16) {
 bb.a:
-  %i.a = getelementptr i8, ptr %0, i64 48         ; 2 uses
-  %i.b = getelementptr i8, ptr %0, i64 56
+  %i.a = getelementptr i8, ptr %0, i64 56
+  %i.b = getelementptr i8, ptr %0, i64 48         ; 2 uses
   br label %.critedge
 
 .critedge:                                        ; preds = %.critedge.backedge, %bb.a
-  %i.c = load volatile ptr, ptr %i.a, align 8     ; 3 uses
+  %i.c = load volatile ptr, ptr %i.b, align 8     ; 3 uses
   %i.d = getelementptr i8, ptr %i.c, i64 16       ; 3 uses
   %i.e = load volatile i32, ptr %i.d, align 4     ; 2 uses
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #19, !srcloc !35
@@ -428,7 +428,7 @@ bb.a:
 
 ._crit_edge:                                      ; preds = %.lr.ph, %.critedge
   %.lcssa = phi i32 [ %i.e, %.critedge ], [ %i.g, %.lr.ph ]
-  %i.i = load i8, ptr %i.b, align 8, !range !15, !noundef !16
+  %i.i = load i8, ptr %i.a, align 8, !range !15, !noundef !16
   %i.j = trunc nuw i8 %i.i to i1
   br i1 %i.j, label %bb.e, label %bb.b
 
@@ -445,7 +445,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not15, label %bb.d, label %.critedge.backedge
 
 bb.d:                                             ; preds = %bb.c
-  %i.o = load volatile ptr, ptr %i.a, align 8
+  %i.o = load volatile ptr, ptr %i.b, align 8
   %.not14 = icmp eq ptr %i.c, %i.o
   br i1 %.not14, label %bb.e, label %.critedge.backedge
 

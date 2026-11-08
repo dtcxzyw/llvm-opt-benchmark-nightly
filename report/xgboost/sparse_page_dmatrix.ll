@@ -204,9 +204,9 @@ bb.a:
   tail call void @_ZNK7xgboost13InitNewThreadclEv(ptr noundef nonnull align 4 dereferenceable(20) %0)
   %i.c = getelementptr inbounds nuw i8, ptr %1, i64 8 ; 6 uses
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 120
-  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 88 ; 3 uses
-  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 9 uses
-  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 192 ; 3 uses
+  %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 192 ; 3 uses
+  %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 88 ; 3 uses
+  %i.g = getelementptr inbounds nuw i8, ptr %i.b, i64 56 ; 9 uses
   %i.h = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 5 uses
   %i.i = getelementptr inbounds nuw i8, ptr %3, i64 24
   %i.j = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 4 uses
@@ -230,10 +230,10 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNSt11unique_lockISt5mutexEC2ERS0_.exit:         ; preds = %bb.b
   store i8 1, ptr %i.c, align 8, !tbaa !1144
-  %i.p = load ptr, ptr %i.e, align 8, !tbaa !458
-  %i.q = load ptr, ptr %i.f, align 8, !tbaa !458  ; 4 uses
+  %i.p = load ptr, ptr %i.f, align 8, !tbaa !458
+  %i.q = load ptr, ptr %i.g, align 8, !tbaa !458  ; 4 uses
   %i.r = icmp eq ptr %i.p, %i.q
-  %i.s = load i8, ptr %i.g, align 8, !tbaa !442, !range !153, !noundef !154
+  %i.s = load i8, ptr %i.e, align 8, !tbaa !442, !range !153, !noundef !154
   %i.t = trunc nuw i8 %i.s to i1                  ; 2 uses
   br i1 %i.r, label %_ZZZN7xgboost6common10ThreadPoolC1INS_13InitNewThreadEEENS_10StringViewEiOT_ENKUlvE_clEvENKUlvE_clEv.exit.i.preheader, label %_ZNSt18condition_variable4waitIZZN7xgboost6common10ThreadPoolC1INS1_13InitNewThreadEEENS1_10StringViewEiOT_ENKUlvE_clEvEUlvE_EEvRSt11unique_lockISt5mutexES7_.exit.thread
 
@@ -241,7 +241,7 @@ _ZZZN7xgboost6common10ThreadPoolC1INS_13InitNewThreadEEENS_10StringViewEiOT_ENKU
   br i1 %i.t, label %_ZNSt18condition_variable4waitIZZN7xgboost6common10ThreadPoolC1INS1_13InitNewThreadEEENS1_10StringViewEiOT_ENKUlvE_clEvEUlvE_EEvRSt11unique_lockISt5mutexES7_.exit, label %.lr.ph174
 
 _ZZZN7xgboost6common10ThreadPoolC1INS_13InitNewThreadEEENS_10StringViewEiOT_ENKUlvE_clEvENKUlvE_clEv.exit.i: ; preds = %.noexc
-  %i.u = load i8, ptr %i.g, align 8, !tbaa !442, !range !153, !noundef !154
+  %i.u = load i8, ptr %i.e, align 8, !tbaa !442, !range !153, !noundef !154
   %i.v = trunc nuw i8 %i.u to i1
   br i1 %i.v, label %_ZZZN7xgboost6common10ThreadPoolC1INS_13InitNewThreadEEENS_10StringViewEiOT_ENKUlvE_clEvENKUlvE_clEv.exit.i._ZNSt18condition_variable4waitIZZN7xgboost6common10ThreadPoolC1INS1_13InitNewThreadEEENS1_10StringViewEiOT_ENKUlvE_clEvEUlvE_EEvRSt11unique_lockISt5mutexES7_.exit_crit_edge, label %.lr.ph174, !llvm.loop !1139
 
@@ -250,8 +250,8 @@ _ZZZN7xgboost6common10ThreadPoolC1INS_13InitNewThreadEEENS_10StringViewEiOT_ENKU
           to label %.noexc unwind label %bb.s
 
 .noexc:                                           ; preds = %.lr.ph174
-  %i.w = load ptr, ptr %i.e, align 8, !tbaa !458  ; 2 uses
-  %i.x = load ptr, ptr %i.f, align 8, !tbaa !458  ; 4 uses
+  %i.w = load ptr, ptr %i.f, align 8, !tbaa !458  ; 2 uses
+  %i.x = load ptr, ptr %i.g, align 8, !tbaa !458  ; 4 uses
   %i.y = icmp eq ptr %i.w, %i.x
   br i1 %i.y, label %_ZZZN7xgboost6common10ThreadPoolC1INS_13InitNewThreadEEENS_10StringViewEiOT_ENKUlvE_clEvENKUlvE_clEv.exit.i, label %.noexc._ZNSt18condition_variable4waitIZZN7xgboost6common10ThreadPoolC1INS1_13InitNewThreadEEENS1_10StringViewEiOT_ENKUlvE_clEvEUlvE_EEvRSt11unique_lockISt5mutexES7_.exit_crit_edge, !llvm.loop !1139
 
@@ -265,7 +265,7 @@ _ZZZN7xgboost6common10ThreadPoolC1INS_13InitNewThreadEEENS_10StringViewEiOT_ENKU
 _ZNSt18condition_variable4waitIZZN7xgboost6common10ThreadPoolC1INS1_13InitNewThreadEEENS1_10StringViewEiOT_ENKUlvE_clEvEUlvE_EEvRSt11unique_lockISt5mutexES7_.exit: ; preds = %_ZZZN7xgboost6common10ThreadPoolC1INS_13InitNewThreadEEENS_10StringViewEiOT_ENKUlvE_clEvENKUlvE_clEv.exit.i._ZNSt18condition_variable4waitIZZN7xgboost6common10ThreadPoolC1INS1_13InitNewThreadEEENS1_10StringViewEiOT_ENKUlvE_clEvEUlvE_EEvRSt11unique_lockISt5mutexES7_.exit_crit_edge, %.noexc._ZNSt18condition_variable4waitIZZN7xgboost6common10ThreadPoolC1INS1_13InitNewThreadEEENS1_10StringViewEiOT_ENKUlvE_clEvEUlvE_EEvRSt11unique_lockISt5mutexES7_.exit_crit_edge, %_ZZZN7xgboost6common10ThreadPoolC1INS_13InitNewThreadEEENS_10StringViewEiOT_ENKUlvE_clEvENKUlvE_clEv.exit.i.preheader
   %i.aa = phi i1 [ %i.z, %_ZZZN7xgboost6common10ThreadPoolC1INS_13InitNewThreadEEENS_10StringViewEiOT_ENKUlvE_clEvENKUlvE_clEv.exit.i._ZNSt18condition_variable4waitIZZN7xgboost6common10ThreadPoolC1INS1_13InitNewThreadEEENS1_10StringViewEiOT_ENKUlvE_clEvEUlvE_EEvRSt11unique_lockISt5mutexES7_.exit_crit_edge ], [ false, %.noexc._ZNSt18condition_variable4waitIZZN7xgboost6common10ThreadPoolC1INS1_13InitNewThreadEEENS1_10StringViewEiOT_ENKUlvE_clEvEUlvE_EEvRSt11unique_lockISt5mutexES7_.exit_crit_edge ], [ true, %_ZZZN7xgboost6common10ThreadPoolC1INS_13InitNewThreadEEENS_10StringViewEiOT_ENKUlvE_clEvENKUlvE_clEv.exit.i.preheader ]
   %i.ab = phi ptr [ %i.x, %_ZZZN7xgboost6common10ThreadPoolC1INS_13InitNewThreadEEENS_10StringViewEiOT_ENKUlvE_clEvENKUlvE_clEv.exit.i._ZNSt18condition_variable4waitIZZN7xgboost6common10ThreadPoolC1INS1_13InitNewThreadEEENS1_10StringViewEiOT_ENKUlvE_clEvEUlvE_EEvRSt11unique_lockISt5mutexES7_.exit_crit_edge ], [ %i.x, %.noexc._ZNSt18condition_variable4waitIZZN7xgboost6common10ThreadPoolC1INS1_13InitNewThreadEEENS1_10StringViewEiOT_ENKUlvE_clEvEUlvE_EEvRSt11unique_lockISt5mutexES7_.exit_crit_edge ], [ %i.q, %_ZZZN7xgboost6common10ThreadPoolC1INS_13InitNewThreadEEENS_10StringViewEiOT_ENKUlvE_clEvENKUlvE_clEv.exit.i.preheader ] ; 2 uses
-  %i.ac = load i8, ptr %i.g, align 8, !tbaa !442, !range !153, !noundef !154
+  %i.ac = load i8, ptr %i.e, align 8, !tbaa !442, !range !153, !noundef !154
   %i.ad = trunc nuw i8 %i.ac to i1
   br i1 %i.ad, label %.preheader, label %bb.v
 
@@ -295,7 +295,7 @@ bb.d:                                             ; preds = %.lr.ph
 bb.e:                                             ; preds = %bb.d
   %i.ai = load <2 x ptr>, ptr %i.af, align 8, !tbaa !175
   store <2 x ptr> %i.ai, ptr %i.m, align 8, !tbaa !175
-  %.pre110 = load ptr, ptr %i.f, align 8, !tbaa !456 ; 2 uses
+  %.pre110 = load ptr, ptr %i.g, align 8, !tbaa !456 ; 2 uses
   %.phi.trans.insert111 = getelementptr inbounds nuw i8, ptr %.pre110, i64 16
   %.pre112 = load ptr, ptr %.phi.trans.insert111, align 8, !tbaa !460
   br label %_ZNSt8functionIFvvEEC2ERKS1_.exit
@@ -335,7 +335,7 @@ bb.j:                                             ; preds = %bb.i
           to label %._ZNSt14_Function_baseD2Ev.exit_crit_edge.i.i unwind label %bb.k ; 0 uses
 
 ._ZNSt14_Function_baseD2Ev.exit_crit_edge.i.i:    ; preds = %bb.j
-  %.pre.i.i = load ptr, ptr %i.f, align 8, !tbaa !456
+  %.pre.i.i = load ptr, ptr %i.g, align 8, !tbaa !456
   br label %_ZNSt14_Function_baseD2Ev.exit.i.i
 
 bb.k:                                             ; preds = %bb.j
@@ -378,7 +378,7 @@ _ZNSt5dequeISt8functionIFvvEESaIS2_EE16_M_pop_front_auxEv.exit.i.i: ; preds = %b
 
 _ZNSt5queueISt8functionIFvvEESt5dequeIS2_SaIS2_EEE3popEv.exit: ; preds = %_ZNSt14_Function_baseD2Ev.exit.i.i, %_ZNSt5dequeISt8functionIFvvEESaIS2_EE16_M_pop_front_auxEv.exit.i.i
   %storemerge.i.i = phi ptr [ %i.aw, %_ZNSt14_Function_baseD2Ev.exit.i.i ], [ %i.bd, %_ZNSt5dequeISt8functionIFvvEESaIS2_EE16_M_pop_front_auxEv.exit.i.i ]
-  store ptr %storemerge.i.i, ptr %i.f, align 8, !tbaa !456
+  store ptr %storemerge.i.i, ptr %i.g, align 8, !tbaa !456
   %i.bf = load ptr, ptr %i.m, align 8, !tbaa !460
   %.not.i.i12 = icmp eq ptr %i.bf, null
   br i1 %.not.i.i12, label %bb.o, label %bb.p
@@ -413,8 +413,8 @@ bb.r:                                             ; preds = %bb.q
 
 _ZNSt14_Function_baseD2Ev.exit:                   ; preds = %_ZNKSt8functionIFvvEEclEv.exit, %bb.q
   call void @llvm.lifetime.end.p0(ptr nonnull %2) #15
-  %i.bl = load ptr, ptr %i.e, align 8, !tbaa !458
-  %i.bm = load ptr, ptr %i.f, align 8, !tbaa !458 ; 2 uses
+  %i.bl = load ptr, ptr %i.f, align 8, !tbaa !458
+  %i.bm = load ptr, ptr %i.g, align 8, !tbaa !458 ; 2 uses
   %i.bn = icmp eq ptr %i.bl, %i.bm
   br i1 %i.bn, label %.loopexit, label %.lr.ph, !llvm.loop !1141
 
@@ -462,7 +462,7 @@ bb.w:                                             ; preds = %bb.v
 bb.x:                                             ; preds = %bb.w
   %i.bx = load <2 x ptr>, ptr %i.bu, align 8, !tbaa !175
   store <2 x ptr> %i.bx, ptr %i.h, align 8, !tbaa !175
-  %.pre = load ptr, ptr %i.f, align 8, !tbaa !456 ; 2 uses
+  %.pre = load ptr, ptr %i.g, align 8, !tbaa !456 ; 2 uses
   %.phi.trans.insert = getelementptr inbounds nuw i8, ptr %.pre, i64 16
   %.pre109 = load ptr, ptr %.phi.trans.insert, align 8, !tbaa !460
   br label %_ZNSt8functionIFvvEEC2ERKS1_.exit22
@@ -502,7 +502,7 @@ bb.ac:                                            ; preds = %bb.ab
           to label %._ZNSt14_Function_baseD2Ev.exit_crit_edge.i.i25 unwind label %bb.ad ; 0 uses
 
 ._ZNSt14_Function_baseD2Ev.exit_crit_edge.i.i25:  ; preds = %bb.ac
-  %.pre.i.i26 = load ptr, ptr %i.f, align 8, !tbaa !456
+  %.pre.i.i26 = load ptr, ptr %i.g, align 8, !tbaa !456
   br label %_ZNSt14_Function_baseD2Ev.exit.i.i27
 
 bb.ad:                                            ; preds = %bb.ac
@@ -545,7 +545,7 @@ _ZNSt5dequeISt8functionIFvvEESaIS2_EE16_M_pop_front_auxEv.exit.i.i29: ; preds = 
 
 _ZNSt5queueISt8functionIFvvEESt5dequeIS2_SaIS2_EEE3popEv.exit30: ; preds = %_ZNSt14_Function_baseD2Ev.exit.i.i27, %_ZNSt5dequeISt8functionIFvvEESaIS2_EE16_M_pop_front_auxEv.exit.i.i29
   %storemerge.i.i28 = phi ptr [ %i.cl, %_ZNSt14_Function_baseD2Ev.exit.i.i27 ], [ %i.cs, %_ZNSt5dequeISt8functionIFvvEESaIS2_EE16_M_pop_front_auxEv.exit.i.i29 ]
-  store ptr %storemerge.i.i28, ptr %i.f, align 8, !tbaa !456
+  store ptr %storemerge.i.i28, ptr %i.g, align 8, !tbaa !456
   %i.cu = load i8, ptr %i.c, align 8, !tbaa !1144, !range !153, !noundef !154
   %i.cv = trunc nuw i8 %i.cu to i1
   br i1 %i.cv, label %bb.ai, label %bb.ah

@@ -205,12 +205,12 @@ bb.a:
   %7 = alloca %"struct.std::pair.237", align 8    ; 8 uses
   %i.b = tail call noundef nonnull align 8 dereferenceable(120) ptr @_ZN4mlir8bytecode6detail16IRNumberingState13numberDialectEPNS_7DialectE(ptr noundef nonnull align 8 dereferenceable(848) %0, ptr noundef %1) ; 9 uses
   %.idx = mul nuw nsw i64 %3, 24
-  %i.c = getelementptr inbounds nuw i8, ptr %2, i64 %.idx
+  %8 = getelementptr inbounds nuw i8, ptr %2, i64 %.idx
+  %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %.not22 = icmp eq i64 %3, 0
   br i1 %.not22, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %8 = getelementptr inbounds nuw i8, ptr %i.b, i64 40
   %i.d = getelementptr inbounds nuw i8, ptr %i.b, i64 64 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.b, i64 72 ; 3 uses
   %i.f = getelementptr inbounds nuw i8, ptr %i.b, i64 76
@@ -230,7 +230,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph, %_ZN4llvm9MapVectorINS_9StringRefEPN4mlir8bytecode6detail24DialectResourceNumberingENS_8DenseMapIS1_jNS_12DenseMapInfoIS1_vEENS_6detail12DenseMapPairIS1_jEEEENS_11SmallVectorISt4pairIS1_S6_ELj0EEELj0EE6insertEOSG_.exit
   %.01623 = phi ptr [ %2, %.lr.ph ], [ %i.bn, %_ZN4llvm9MapVectorINS_9StringRefEPN4mlir8bytecode6detail24DialectResourceNumberingENS_8DenseMapIS1_jNS_12DenseMapInfoIS1_vEENS_6detail12DenseMapPairIS1_jEEEENS_11SmallVectorISt4pairIS1_S6_ELj0EEELj0EE6insertEOSG_.exit ] ; 6 uses
-  %i.s = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_8DenseMapIN4mlir24AsmDialectResourceHandleENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS4_12DenseSetPairIS3_EEEES3_S5_S7_S9_E24lookupOrInsertIntoBucketIRKS3_JEEESt4pairIPS9_bEOT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(40) %8, ptr noundef nonnull align 8 dereferenceable(24) %.01623), !noalias !523
+  %i.s = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_8DenseMapIN4mlir24AsmDialectResourceHandleENS_6detail13DenseSetEmptyENS_12DenseMapInfoIS3_vEENS4_12DenseSetPairIS3_EEEES3_S5_S7_S9_E24lookupOrInsertIntoBucketIRKS3_JEEESt4pairIPS9_bEOT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(40) %i.c, ptr noundef nonnull align 8 dereferenceable(24) %.01623), !noalias !523
   %.fca.1.extract.i.i.i.i = extractvalue { ptr, i8 } %i.s, 1
   %i.t = trunc nuw i8 %.fca.1.extract.i.i.i.i to i1
   br i1 %i.t, label %bb.c, label %.critedge
@@ -364,7 +364,7 @@ _ZN4llvm9MapVectorINS_9StringRefEPN4mlir8bytecode6detail24DialectResourceNumberi
   %i.bm = call { ptr, i8 } @_ZN4llvm12DenseMapBaseINS_8DenseMapIN4mlir24AsmDialectResourceHandleEPNS2_8bytecode6detail24DialectResourceNumberingENS_12DenseMapInfoIS3_vEENS_6detail12DenseMapPairIS3_S7_EEEES3_S7_S9_SC_E24lookupOrInsertIntoBucketIRKS3_JRS7_EEESt4pairIPSC_bEOT_DpOT0_(ptr noundef nonnull align 1 dereferenceable(1) %i.r, ptr noundef nonnull align 8 dereferenceable(24) %.01623, ptr noundef nonnull align 8 dereferenceable(8) %i.a), !noalias !533 ; 0 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #19
   %i.bn = getelementptr inbounds nuw i8, ptr %.01623, i64 24 ; 2 uses
-  %.not = icmp eq ptr %i.bn, %i.c
+  %.not = icmp eq ptr %i.bn, %8
   br i1 %.not, label %.critedge, label %bb.b
 
 .critedge:                                        ; preds = %_ZN4llvm9MapVectorINS_9StringRefEPN4mlir8bytecode6detail24DialectResourceNumberingENS_8DenseMapIS1_jNS_12DenseMapInfoIS1_vEENS_6detail12DenseMapPairIS1_jEEEENS_11SmallVectorISt4pairIS1_S6_ELj0EEELj0EE6insertEOSG_.exit, %bb.b, %bb.a

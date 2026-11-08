@@ -204,18 +204,15 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit30: ; preds = %.lo
 ; Function Attrs: mustprogress uwtable
 define hidden void @_ZN6embree11TokenStream14skipSeparatorsEv(ptr nofree noundef nonnull readonly align 8 captures(none) dereferenceable(864) %0) local_unnamed_addr #3 align 2 {
 bb.a:
+  %1 = getelementptr inbounds nuw i8, ptr %0, i64 72
   %i.a = getelementptr inbounds nuw i8, ptr %0, i64 64 ; 4 uses
   %i.b = load ptr, ptr %i.a, align 8
   %i.c = tail call noundef nonnull align 4 dereferenceable(4) ptr @_ZN6embree6StreamIiE4peekEv(ptr noundef nonnull align 8 dereferenceable(64) %i.b)
   %i.d = load i32, ptr %i.c, align 4
   %.not1 = icmp eq i32 %i.d, -1
-  br i1 %.not1, label %.critedge, label %.lr.ph
+  br i1 %.not1, label %.critedge, label %bb.b
 
-.lr.ph:                                           ; preds = %bb.a
-  %1 = getelementptr inbounds nuw i8, ptr %0, i64 72
-  br label %bb.b
-
-bb.b:                                             ; preds = %.lr.ph, %bb.c
+bb.b:                                             ; preds = %bb.a, %bb.c
   %i.e = load ptr, ptr %i.a, align 8
   %i.f = tail call noundef nonnull align 4 dereferenceable(4) ptr @_ZN6embree6StreamIiE4peekEv(ptr noundef nonnull align 8 dereferenceable(64) %i.e)
   %i.g = load i32, ptr %i.f, align 4              ; 2 uses
@@ -260,6 +257,7 @@ _ZN6embree13ParseLocationD2Ev.exit:
   %i.e = getelementptr inbounds nuw i8, ptr %2, i64 40 ; 11 uses
   %i.f = getelementptr inbounds nuw i8, ptr %2, i64 48 ; 6 uses
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %i.e, i8 0, i64 16, i1 false)
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 72
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 64 ; 7 uses
   %i.h = load ptr, ptr %i.g, align 8
   %i.i = invoke noundef nonnull align 4 dereferenceable(4) ptr @_ZN6embree6StreamIiE4peekEv(ptr noundef nonnull align 8 dereferenceable(64) %i.h)
@@ -268,13 +266,9 @@ _ZN6embree13ParseLocationD2Ev.exit:
 .noexc:                                           ; preds = %_ZN6embree13ParseLocationD2Ev.exit
   %i.j = load i32, ptr %i.i, align 4
   %.not1.i = icmp eq i32 %i.j, -1
-  br i1 %.not1.i, label %_ZN6embree11TokenStream14skipSeparatorsEv.exit, label %.lr.ph.i
+  br i1 %.not1.i, label %_ZN6embree11TokenStream14skipSeparatorsEv.exit, label %bb.a
 
-.lr.ph.i:                                         ; preds = %.noexc
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 72
-  br label %bb.a
-
-bb.a:                                             ; preds = %.noexc8, %.lr.ph.i
+bb.a:                                             ; preds = %.noexc, %.noexc8
   %i.k = load ptr, ptr %i.g, align 8
   %i.l = invoke noundef nonnull align 4 dereferenceable(4) ptr @_ZN6embree6StreamIiE4peekEv(ptr noundef nonnull align 8 dereferenceable(64) %i.k)
           to label %.noexc6 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp

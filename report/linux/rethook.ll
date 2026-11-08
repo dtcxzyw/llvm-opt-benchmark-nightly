@@ -202,18 +202,15 @@ bb.e:                                             ; preds = %__for_each_wrap.exi
   %i.v = load ptr, ptr %i.u, align 8              ; 7 uses
   %i.w = load volatile i32, ptr %i.v, align 1     ; 2 uses
   tail call void asm sideeffect "", "~{memory},~{dirflag},~{fpsr},~{flags}"() #10, !srcloc !37
+  %1 = getelementptr i8, ptr %i.v, i64 16
+  %2 = getelementptr i8, ptr %i.v, i64 12
   %i.x = getelementptr i8, ptr %i.v, i64 8        ; 3 uses
   %i.y = load volatile i32, ptr %i.x, align 1
   %.not47.i.i = icmp eq i32 %i.w, %i.y
-  br i1 %.not47.i.i, label %__objpool_try_get_slot.exit.thread.i, label %.lr.ph.i.i
+  br i1 %.not47.i.i, label %__objpool_try_get_slot.exit.thread.i, label %bb.f
 
-.lr.ph.i.i:                                       ; preds = %bb.e
-  %1 = getelementptr i8, ptr %i.v, i64 16
-  %2 = getelementptr i8, ptr %i.v, i64 12
-  br label %bb.f
-
-bb.f:                                             ; preds = %bb.j, %.lr.ph.i.i
-  %.03748.i.i = phi i32 [ %i.w, %.lr.ph.i.i ], [ %.239.i.i, %bb.j ] ; 4 uses
+bb.f:                                             ; preds = %bb.e, %bb.j
+  %.03748.i.i = phi i32 [ %.239.i.i, %bb.j ], [ %i.w, %bb.e ] ; 4 uses
   %i.z = load volatile i32, ptr %i.x, align 1
   %i.aa = xor i32 %.03748.i.i, -1
   %i.ab = add i32 %i.z, %i.aa

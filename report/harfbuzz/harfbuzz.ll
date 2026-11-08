@@ -205,10 +205,10 @@ bb.c:                                             ; preds = %bb.b
   store ptr %i.ad, ptr %i.ae, align 8, !tbaa !636
   %i.af = load i32, ptr %i.c, align 8, !tbaa !607 ; 8 uses
   store i32 0, ptr %i.aa, align 4, !tbaa !653
-  %i.ag = getelementptr inbounds nuw i8, ptr %2, i64 144
-  %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 152
-  %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
-  %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 5 uses
+  %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 5 uses
+  %i.ah = getelementptr inbounds nuw i8, ptr %2, i64 144
+  %i.ai = getelementptr inbounds nuw i8, ptr %2, i64 152
+  %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.o, %bb.c
@@ -256,10 +256,10 @@ bb.f:                                             ; preds = %._crit_edge414
   %i.ay = zext i32 %i.ak to i64
   %i.az = getelementptr inbounds nuw [20 x i8], ptr %i.ax, i64 %i.ay ; 2 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 12
-  %i.bb = load ptr, ptr %i.ag, align 8, !tbaa !638 ; 2 uses
+  %i.bb = load ptr, ptr %i.ah, align 8, !tbaa !638 ; 2 uses
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 56
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !280
-  %i.be = load ptr, ptr %i.ah, align 8, !tbaa !639
+  %i.be = load ptr, ptr %i.ai, align 8, !tbaa !639
   %i.bf = getelementptr inbounds nuw i8, ptr %i.bb, i64 16
   %i.bg = load ptr, ptr %i.bf, align 8, !tbaa !641 ; 2 uses
   %.not.i192 = icmp eq ptr %i.bg, null
@@ -290,7 +290,7 @@ bb.h:                                             ; preds = %_ZN9hb_font_t18get_
 ._crit_edge.i:                                    ; preds = %bb.h
   %i.bq = add i32 %i.bp, %i.bk                    ; 3 uses
   %.not.i.i = icmp eq i32 %i.bq, 0
-  %i.br = load i32, ptr %i.ai, align 8
+  %i.br = load i32, ptr %i.aj, align 8
   %i.bs = icmp ult i32 %i.bq, %i.br
   %i.bt = select i1 %.not.i.i, i1 true, i1 %i.bs
   br i1 %i.bt, label %_ZN11hb_buffer_t6ensureEj.exit.thread.i, label %_ZN11hb_buffer_t6ensureEj.exit.i, !prof !268
@@ -300,7 +300,7 @@ _ZN11hb_buffer_t6ensureEj.exit.i:                 ; preds = %._crit_edge.i
   br i1 %i.bu, label %_ZN11hb_buffer_t6ensureEj.exit._ZN11hb_buffer_t6ensureEj.exit.thread_crit_edge.i, label %_ZN11hb_buffer_t6ensureEj.exit.i..critedge2_crit_edge, !prof !318
 
 _ZN11hb_buffer_t6ensureEj.exit.i..critedge2_crit_edge: ; preds = %_ZN11hb_buffer_t6ensureEj.exit.i
-  %.pre320 = load i8, ptr %i.aj, align 8, !tbaa !586, !range !380
+  %.pre320 = load i8, ptr %i.ag, align 8, !tbaa !586, !range !380
   br label %.critedge2
 
 _ZN11hb_buffer_t6ensureEj.exit._ZN11hb_buffer_t6ensureEj.exit.thread_crit_edge.i: ; preds = %_ZN11hb_buffer_t6ensureEj.exit.i
@@ -345,12 +345,12 @@ bb.j:                                             ; preds = %_ZN11hb_buffer_t11n
   br i1 %i.ck, label %.lr.ph.preheader, label %.critedge
 
 .lr.ph.preheader:                                 ; preds = %bb.j
-  %i.cl = load i8, ptr %i.aj, align 8, !tbaa !586, !range !380, !noundef !293
+  %i.cl = load i8, ptr %i.ag, align 8, !tbaa !586, !range !380, !noundef !293
   %i.cm = trunc nuw i8 %i.cl to i1
   br i1 %i.cm, label %.lr.ph416, label %.critedge
 
 .lr.ph:                                           ; preds = %.lr.ph416
-  %i.cn = load i8, ptr %i.aj, align 8, !tbaa !586, !range !380, !noundef !293
+  %i.cn = load i8, ptr %i.ag, align 8, !tbaa !586, !range !380, !noundef !293
   %i.co = trunc nuw i8 %i.cn to i1
   br i1 %i.co, label %.lr.ph416, label %.critedge, !llvm.loop !2761
 
@@ -366,7 +366,7 @@ bb.j:                                             ; preds = %_ZN11hb_buffer_t11n
 .critedge:                                        ; preds = %.lr.ph, %.lr.ph.preheader, %..critedge.loopexit_crit_edge, %bb.j
   %.lcssa = phi i32 [ %i.cj, %bb.j ], [ %i.cj, %.lr.ph.preheader ], [ %i.cp, %..critedge.loopexit_crit_edge ], [ %i.cp, %.lr.ph ] ; 3 uses
   %i.cr = icmp eq i32 %.lcssa, %i.af
-  %.pre321 = load i8, ptr %i.aj, align 8, !tbaa !586, !range !380 ; 2 uses
+  %.pre321 = load i8, ptr %i.ag, align 8, !tbaa !586, !range !380 ; 2 uses
   br i1 %i.cr, label %.critedge2, label %bb.k
 
 bb.k:                                             ; preds = %.critedge
@@ -498,7 +498,7 @@ bb.n:                                             ; preds = %.lr.ph27.i
 .loopexit294:                                     ; preds = %.lr.ph27.i, %bb.n, %.preheader295._crit_edge, %.critedge20.i
   %i.eo = load i32, ptr %i.aa, align 4, !tbaa !653 ; 2 uses
   %i.ep = icmp ult i32 %i.eo, %i.af
-  %.pre322 = load i8, ptr %i.aj, align 8, !tbaa !586, !range !380 ; 2 uses
+  %.pre322 = load i8, ptr %i.ag, align 8, !tbaa !586, !range !380 ; 2 uses
   br i1 %i.ep, label %bb.o, label %.critedge2
 
 bb.o:                                             ; preds = %.loopexit294
@@ -536,7 +536,7 @@ bb.q:                                             ; preds = %bb.p
 ._crit_edge.i.i:                                  ; preds = %bb.q
   %i.ez = add i32 %i.ey, %i.ev                    ; 3 uses
   %.not.i.i.i = icmp eq i32 %i.ez, 0
-  %i.fa = load i32, ptr %i.ai, align 8
+  %i.fa = load i32, ptr %i.aj, align 8
   %i.fb = icmp ult i32 %i.ez, %i.fa
   %i.fc = select i1 %.not.i.i.i, i1 true, i1 %i.fb
   br i1 %i.fc, label %_ZN11hb_buffer_t6ensureEj.exit.thread.i.i, label %_ZN11hb_buffer_t6ensureEj.exit.i.i, !prof !268
@@ -939,13 +939,13 @@ bb.i:                                             ; preds = %_ZN9hb_font_t17get_
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 120
   store ptr %i.af, ptr %i.ag, align 8, !tbaa !636
   store i32 0, ptr %i.ac, align 4, !tbaa !653
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 3 uses
   %i.ah = getelementptr inbounds nuw i8, ptr %1, i64 96 ; 4 uses
   %i.ai = load i32, ptr %i.ah, align 8, !tbaa !607
   %.not61 = icmp eq i32 %i.ai, 0
   br i1 %.not61, label %.critedge, label %.lr.ph59
 
 .lr.ph59:                                         ; preds = %bb.i
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 88 ; 3 uses
   %.sroa.6.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 4 ; 4 uses
   %.sroa.67.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 18 ; 2 uses
   %.sroa.7.0..sroa_idx = getelementptr inbounds nuw i8, ptr %6, i64 19 ; 2 uses
@@ -1348,11 +1348,11 @@ bb.b:                                             ; preds = %bb.a
   ]
 
 bb.c:                                             ; preds = %bb.b
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.o = icmp ugt i32 %i.l, 1
   br i1 %i.o, label %.lr.ph834, label %.critedge
 
 .lr.ph834:                                        ; preds = %bb.c
-  %3 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.p = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 3 uses
   br label %bb.d
 
@@ -1640,11 +1640,11 @@ _ZN11hb_buffer_t10next_glyphEv.exit310:           ; preds = %bb.w, %_ZN11hb_buff
   br i1 %i.dg, label %bb.d, label %.critedge, !llvm.loop !3041
 
 bb.x:                                             ; preds = %bb.b
+  %4 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.dh = icmp ugt i32 %i.l, 1
   br i1 %i.dh, label %.lr.ph832, label %.critedge
 
 .lr.ph832:                                        ; preds = %bb.x
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.di = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
   br label %bb.y
 
@@ -1809,11 +1809,11 @@ _ZN11hb_buffer_t10next_glyphEv.exit338:           ; preds = %bb.aj, %_ZN11hb_buf
   br i1 %i.fj, label %bb.y, label %.critedge, !llvm.loop !3042
 
 bb.ak:                                            ; preds = %bb.b
+  %5 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.fk = icmp ugt i32 %i.l, 1
   br i1 %i.fk, label %.lr.ph830, label %.critedge
 
 .lr.ph830:                                        ; preds = %bb.ak
-  %5 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.fl = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
   br label %bb.al
 
@@ -1995,11 +1995,11 @@ _ZN11hb_buffer_t10next_glyphEv.exit366:           ; preds = %bb.aw, %_ZN11hb_buf
   br i1 %i.hr, label %bb.al, label %.critedge, !llvm.loop !3043
 
 bb.ax:                                            ; preds = %bb.b
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.hs = icmp ugt i32 %i.l, 1
   br i1 %i.hs, label %.lr.ph828, label %.critedge
 
 .lr.ph828:                                        ; preds = %bb.ax
-  %6 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.ht = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 3 uses
   br label %bb.ay
 
@@ -2229,11 +2229,11 @@ _ZN11hb_buffer_t10next_glyphEv.exit408:           ; preds = %bb.bk, %_ZN11hb_buf
   br i1 %i.kq, label %bb.ay, label %.critedge, !llvm.loop !3044
 
 bb.bl:                                            ; preds = %bb.b
+  %7 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.kr = icmp ugt i32 %i.l, 1
   br i1 %i.kr, label %.lr.ph826, label %.critedge
 
 .lr.ph826:                                        ; preds = %bb.bl
-  %7 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.ks = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
   br label %bb.bm
 
@@ -2395,11 +2395,11 @@ _ZN11hb_buffer_t10next_glyphEv.exit436:           ; preds = %bb.bw, %_ZN11hb_buf
   br i1 %i.mt, label %bb.bm, label %.critedge, !llvm.loop !3045
 
 bb.bx:                                            ; preds = %bb.b
+  %8 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.mu = icmp ugt i32 %i.l, 1
   br i1 %i.mu, label %.lr.ph824, label %.critedge
 
 .lr.ph824:                                        ; preds = %bb.bx
-  %8 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.mv = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
   br label %bb.by
 
@@ -2554,11 +2554,11 @@ _ZN11hb_buffer_t10next_glyphEv.exit464:           ; preds = %bb.ch, %_ZN11hb_buf
   br i1 %i.ox, label %bb.by, label %.critedge, !llvm.loop !3046
 
 bb.ci:                                            ; preds = %bb.b
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.oy = icmp ugt i32 %i.l, 1
   br i1 %i.oy, label %.lr.ph822, label %.critedge
 
 .lr.ph822:                                        ; preds = %bb.ci
-  %9 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.oz = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
   br label %bb.cj
 
@@ -2730,11 +2730,11 @@ _ZN11hb_buffer_t10next_glyphEv.exit492:           ; preds = %bb.cu, %_ZN11hb_buf
   br i1 %i.rd, label %bb.cj, label %.critedge, !llvm.loop !3047
 
 bb.cv:                                            ; preds = %bb.b
+  %10 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.re = icmp ugt i32 %i.l, 1
   br i1 %i.re, label %.lr.ph820, label %.critedge
 
 .lr.ph820:                                        ; preds = %bb.cv
-  %10 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.rf = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
   br label %bb.cw
 
@@ -2896,11 +2896,11 @@ _ZN11hb_buffer_t10next_glyphEv.exit520:           ; preds = %bb.dg, %_ZN11hb_buf
   br i1 %i.tg, label %bb.cw, label %.critedge, !llvm.loop !3048
 
 bb.dh:                                            ; preds = %bb.b
+  %11 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.th = icmp ugt i32 %i.l, 1
   br i1 %i.th, label %.lr.ph818, label %.critedge
 
 .lr.ph818:                                        ; preds = %bb.dh
-  %11 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.ti = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
   br label %bb.di
 
@@ -3079,11 +3079,11 @@ _ZN11hb_buffer_t10next_glyphEv.exit548:           ; preds = %bb.du, %_ZN11hb_buf
   br i1 %i.vq, label %bb.di, label %.critedge, !llvm.loop !3049
 
 bb.dv:                                            ; preds = %bb.b
+  %12 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.vr = icmp ugt i32 %i.l, 1
   br i1 %i.vr, label %.lr.ph816, label %.critedge
 
 .lr.ph816:                                        ; preds = %bb.dv
-  %12 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.vs = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 3 uses
   br label %bb.dw
 
@@ -3335,11 +3335,11 @@ _ZN11hb_buffer_t10next_glyphEv.exit590:           ; preds = %bb.el, %_ZN11hb_buf
   br i1 %i.yw, label %bb.dw, label %.critedge, !llvm.loop !3050
 
 bb.em:                                            ; preds = %bb.b
+  %13 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.yx = icmp ugt i32 %i.l, 1
   br i1 %i.yx, label %.lr.ph814, label %.critedge
 
 .lr.ph814:                                        ; preds = %bb.em
-  %13 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.yy = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
   br label %bb.en
 
@@ -3504,11 +3504,11 @@ _ZN11hb_buffer_t10next_glyphEv.exit618:           ; preds = %bb.ey, %_ZN11hb_buf
   br i1 %i.aaz, label %bb.en, label %.critedge, !llvm.loop !3051
 
 bb.ez:                                            ; preds = %bb.b
+  %14 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.aba = icmp ugt i32 %i.l, 1
   br i1 %i.aba, label %.lr.ph812, label %.critedge
 
 .lr.ph812:                                        ; preds = %bb.ez
-  %14 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.abb = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 3 uses
   br label %bb.fa
 
@@ -3757,11 +3757,11 @@ _ZN11hb_buffer_t10next_glyphEv.exit660:           ; preds = %bb.fp, %_ZN11hb_buf
   br i1 %i.aei, label %bb.fa, label %.critedge, !llvm.loop !3052
 
 bb.fq:                                            ; preds = %bb.b
+  %15 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.aej = icmp ugt i32 %i.l, 1
   br i1 %i.aej, label %.lr.ph810, label %.critedge
 
 .lr.ph810:                                        ; preds = %bb.fq
-  %15 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.aek = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
   br label %bb.fr
 
@@ -3922,11 +3922,11 @@ _ZN11hb_buffer_t10next_glyphEv.exit688:           ; preds = %bb.ga, %_ZN11hb_buf
   br i1 %i.agk, label %bb.fr, label %.critedge, !llvm.loop !3053
 
 bb.gb:                                            ; preds = %bb.b
+  %16 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.agl = icmp ugt i32 %i.l, 1
   br i1 %i.agl, label %.lr.ph808, label %.critedge
 
 .lr.ph808:                                        ; preds = %bb.gb
-  %16 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.agm = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
   br label %bb.gc
 
@@ -4104,11 +4104,11 @@ _ZN11hb_buffer_t10next_glyphEv.exit716:           ; preds = %bb.go, %_ZN11hb_buf
   br i1 %i.aiu, label %bb.gc, label %.critedge, !llvm.loop !3054
 
 bb.gp:                                            ; preds = %bb.b
+  %17 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.aiv = icmp ugt i32 %i.l, 1
   br i1 %i.aiv, label %.lr.ph806, label %.critedge
 
 .lr.ph806:                                        ; preds = %bb.gp
-  %17 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.aiw = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 2 uses
   br label %bb.gq
 
@@ -4265,11 +4265,11 @@ _ZN11hb_buffer_t10next_glyphEv.exit744:           ; preds = %bb.gz, %_ZN11hb_buf
   br i1 %i.akx, label %bb.gq, label %.critedge, !llvm.loop !3055
 
 bb.ha:                                            ; preds = %bb.b
+  %18 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.aky = icmp ugt i32 %i.l, 1
   br i1 %i.aky, label %.lr.ph, label %.critedge
 
 .lr.ph:                                           ; preds = %bb.ha
-  %18 = getelementptr inbounds nuw i8, ptr %1, i64 88
   %i.akz = getelementptr inbounds nuw i8, ptr %1, i64 104 ; 3 uses
   br label %bb.hb
 
@@ -4672,6 +4672,7 @@ _ZN11hb_buffer_t13make_room_forEjj.exit:          ; preds = %_ZN11hb_buffer_t6en
 define internal fastcc void @_ZL33handle_variation_selector_clusterPK31hb_ot_shape_normalize_context_tjb(ptr %.8.val, ptr %.16.val, i32 noundef %0) unnamed_addr #15 {
 bb.a:
   %i.a = alloca i32, align 4                      ; 4 uses
+  %1 = getelementptr inbounds nuw i8, ptr %.8.val, i64 88 ; 2 uses
   %i.b = getelementptr inbounds nuw i8, ptr %.8.val, i64 92 ; 19 uses
   %i.c = add i32 %0, -1                           ; 2 uses
   %i.d = load i32, ptr %i.b, align 4, !tbaa !653  ; 3 uses
@@ -4679,7 +4680,6 @@ bb.a:
   br i1 %i.e, label %.lr.ph9, label %.critedge
 
 .lr.ph9:                                          ; preds = %bb.a
-  %1 = getelementptr inbounds nuw i8, ptr %.8.val, i64 88 ; 2 uses
   %i.f = getelementptr inbounds nuw i8, ptr %.8.val, i64 112 ; 11 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.16.val, i64 144 ; 4 uses
   %i.h = getelementptr inbounds nuw i8, ptr %.16.val, i64 152 ; 4 uses

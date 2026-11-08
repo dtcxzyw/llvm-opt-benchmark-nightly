@@ -205,7 +205,7 @@ _ZNK4llvm14SmallBitVector4sizeEv.exit:            ; preds = %bb.b, %bb.g
   br i1 %i.ag, label %bb.h, label %bb.i
 
 bb.h:                                             ; preds = %_ZNK4llvm14SmallBitVector4sizeEv.exit
-  %i.ah = lshr i64 %i.c, 58
+  %i.ah = lshr i64 %i.c, 58                       ; 2 uses
   %.pre = inttoptr i64 %i.c to ptr
   br label %_ZNK4llvm14SmallBitVector4sizeEv.exit15
 
@@ -214,27 +214,28 @@ bb.i:                                             ; preds = %_ZNK4llvm14SmallBit
   %i.aj = getelementptr inbounds nuw i8, ptr %i.ai, i64 64
   %i.ak = load i32, ptr %i.aj, align 8, !tbaa !278
   %i.al = zext i32 %i.ak to i64
+  %.pre64 = lshr i64 %i.c, 58
   br label %_ZNK4llvm14SmallBitVector4sizeEv.exit15
 
 _ZNK4llvm14SmallBitVector4sizeEv.exit15:          ; preds = %bb.h, %bb.i
+  %.pre-phi65 = phi i64 [ %i.ah, %bb.h ], [ %.pre64, %bb.i ]
   %.pre-phi = phi ptr [ %.pre, %bb.h ], [ %i.ai, %bb.i ] ; 2 uses
   %i.am = phi i64 [ %i.ah, %bb.h ], [ %i.al, %bb.i ]
   %.sroa.speculated = tail call i64 @llvm.umin.i64(i64 %i.am, i64 %i.af) ; 5 uses
   %i.an = trunc nuw i64 %.sroa.speculated to i32
+  %2 = lshr i64 %i.c, 1
+  %3 = shl nsw i64 -1, %.pre-phi65
+  %4 = xor i64 %3, -1
+  %5 = and i64 %2, %4                             ; 2 uses
   %.not29 = icmp eq i64 %.sroa.speculated, 0
   br i1 %.not29, label %_ZNK4llvm9BitVector9anyCommonERKS0_.exit, label %.lr.ph
 
 .lr.ph:                                           ; preds = %_ZNK4llvm14SmallBitVector4sizeEv.exit15
   %i.ao = lshr i64 %i.a, 1
   %i.ap = lshr i64 %i.a, 58
-  %2 = shl nsw i64 -1, %i.ap
-  %3 = xor i64 %2, -1
-  %4 = and i64 %i.ao, %3                          ; 2 uses
-  %5 = lshr i64 %i.c, 1
-  %6 = lshr i64 %i.c, 58
-  %i.aq = shl nsw i64 -1, %6
+  %i.aq = shl nsw i64 -1, %i.ap
   %i.ar = xor i64 %i.aq, -1
-  %i.as = and i64 %5, %i.ar                       ; 2 uses
+  %i.as = and i64 %i.ao, %i.ar                    ; 2 uses
   br i1 %i.b, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph
@@ -242,9 +243,9 @@ _ZNK4llvm14SmallBitVector4sizeEv.exit15:          ; preds = %bb.h, %bb.i
 
 .split.us.us:                                     ; preds = %.lr.ph.split.us, %.split.us.us
   %indvars.iv61 = phi i64 [ %indvars.iv.next62, %.split.us.us ], [ 0, %.lr.ph.split.us ] ; 3 uses
-  %i.at = lshr i64 %4, %indvars.iv61
+  %i.at = lshr i64 %i.as, %indvars.iv61
   %i.au = trunc i64 %i.at to i1
-  %i.av = lshr i64 %i.as, %indvars.iv61
+  %i.av = lshr i64 %5, %indvars.iv61
   %i.aw = trunc i64 %i.av to i1
   %or.cond = select i1 %i.au, i1 %i.aw, i1 false  ; 2 uses
   %indvars.iv.next62 = add nuw nsw i64 %indvars.iv61, 1 ; 2 uses
@@ -254,7 +255,7 @@ _ZNK4llvm14SmallBitVector4sizeEv.exit15:          ; preds = %bb.h, %bb.i
 
 .split.us:                                        ; preds = %.lr.ph.split.us, %bb.j
   %indvars.iv58 = phi i64 [ %indvars.iv.next59, %bb.j ], [ 0, %.lr.ph.split.us ] ; 4 uses
-  %i.ax = lshr i64 %4, %indvars.iv58
+  %i.ax = lshr i64 %i.as, %indvars.iv58
   %i.ay = trunc i64 %i.ax to i1
   br i1 %i.ay, label %_ZNK4llvm14SmallBitVector4testEj.exit17.us, label %bb.j
 
@@ -290,7 +291,7 @@ _ZNK4llvm14SmallBitVector4testEj.exit.us:         ; preds = %.lr.ph.split, %_ZNK
   %i.bo = shl nuw i64 1, %i.bm
   %i.bp = and i64 %i.bn, %i.bo
   %.not25.us = icmp ne i64 %i.bp, 0
-  %i.bq = lshr i64 %i.as, %indvars.iv
+  %i.bq = lshr i64 %5, %indvars.iv
   %i.br = trunc i64 %i.bq to i1
   %or.cond48 = select i1 %.not25.us, i1 %i.br, i1 false ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses

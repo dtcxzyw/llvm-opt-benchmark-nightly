@@ -204,12 +204,12 @@ bb.e:                                             ; preds = %bb.d
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 324 ; 2 uses
   %i.n = load i32, ptr %i.m, align 4
   store i32 %i.n, ptr %i.a, align 4
-  %i.o = getelementptr inbounds nuw i8, ptr %1, i64 340 ; 2 uses
-  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 328 ; 2 uses
-  %i.q = getelementptr inbounds nuw i8, ptr %1, i64 336
-  %3 = add i32 %i.f, -2
-  %i.r = getelementptr inbounds nuw i8, ptr %1, i64 41
-  %4 = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %i.o = getelementptr inbounds nuw i8, ptr %1, i64 41
+  %i.p = getelementptr inbounds nuw i8, ptr %1, i64 40
+  %i.q = getelementptr inbounds nuw i8, ptr %1, i64 340 ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %1, i64 328 ; 2 uses
+  %i.r = getelementptr inbounds nuw i8, ptr %1, i64 336
+  %4 = add i32 %i.f, -2
   br label %.outer
 
 .outer:                                           ; preds = %bb.l, %bb.e
@@ -222,27 +222,27 @@ bb.f:                                             ; preds = %.outer, %bb.j
   %.026.i = add i32 %.026.in.i, 1                 ; 8 uses
   %i.s = load ptr, ptr %1, align 8
   %i.t = call zeroext i8 @visibilitymap_get_status(ptr noundef %i.s, i32 noundef %.026.i, ptr noundef nonnull %i.a) #6
-  %i.u = load i32, ptr %i.p, align 8              ; 2 uses
+  %i.u = load i32, ptr %3, align 8                ; 2 uses
   %.not.i = icmp ult i32 %.026.i, %i.u
   br i1 %.not.i, label %bb.h, label %bb.g
 
 bb.g:                                             ; preds = %bb.f
-  %i.v = load i32, ptr %i.q, align 8
-  store i32 %i.v, ptr %i.o, align 4
+  %i.v = load i32, ptr %i.r, align 8
+  store i32 %i.v, ptr %i.q, align 4
   %i.w = add i32 %i.u, 4096
-  store i32 %i.w, ptr %i.p, align 8
+  store i32 %i.w, ptr %3, align 8
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.g, %bb.f
   %i.x = zext i8 %i.t to i32                      ; 2 uses
   %i.y = and i32 %i.x, 1
   %i.z = icmp eq i32 %i.y, 0
-  %i.aa = icmp eq i32 %.026.in.i, %3
+  %i.aa = icmp eq i32 %.026.in.i, %4
   %or.cond.i = or i1 %i.aa, %i.z
   br i1 %or.cond.i, label %find_next_unskippable_block.exit, label %bb.i
 
 bb.i:                                             ; preds = %bb.h
-  %i.ab = load i8, ptr %i.r, align 1, !range !4, !noundef !5
+  %i.ab = load i8, ptr %i.o, align 1, !range !4, !noundef !5
   %i.ac = trunc nuw i8 %i.ab to i1
   br i1 %i.ac, label %bb.j, label %find_next_unskippable_block.exit
 
@@ -252,12 +252,12 @@ bb.j:                                             ; preds = %bb.i
   br i1 %.not27.i, label %bb.k, label %bb.f
 
 bb.k:                                             ; preds = %bb.j
-  %i.ae = load i8, ptr %4, align 8, !range !4, !noundef !5
+  %i.ae = load i8, ptr %i.p, align 8, !range !4, !noundef !5
   %i.af = trunc nuw i8 %i.ae to i1
   br i1 %i.af, label %find_next_unskippable_block.exit, label %bb.l
 
 bb.l:                                             ; preds = %bb.k
-  %i.ag = load i32, ptr %i.o, align 4
+  %i.ag = load i32, ptr %i.q, align 4
   %.not28.i = icmp eq i32 %i.ag, 0
   br i1 %.not28.i, label %.outer, label %find_next_unskippable_block.exit
 

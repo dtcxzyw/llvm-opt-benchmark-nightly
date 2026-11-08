@@ -205,11 +205,11 @@ bb.a:
   %i.b = load ptr, ptr %i.a, align 8, !tbaa !436  ; 2 uses
   %i.c = getelementptr inbounds nuw i8, ptr %i.b, i64 706
   store i8 0, ptr %i.c, align 2, !tbaa !817
+  %6 = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 5 uses
   %.not1618 = icmp eq ptr %1, %3
   br i1 %.not1618, label %.critedge, label %.lr.ph
 
 .lr.ph:                                           ; preds = %bb.a
-  %6 = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 2 uses
   %i.d = getelementptr inbounds nuw i8, ptr %0, i64 832 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %0, i64 848
   %i.f = getelementptr inbounds nuw i8, ptr %0, i64 844
@@ -229,8 +229,7 @@ bb.b:                                             ; preds = %.lr.ph, %bb.g
 
 .critedge:                                        ; preds = %.critedge.loopexit, %bb.a
   %i.k = phi ptr [ %.pre, %.critedge.loopexit ], [ %i.b, %bb.a ] ; 6 uses
-  %7 = getelementptr inbounds nuw i8, ptr %0, i64 80 ; 3 uses
-  %i.l = load ptr, ptr %7, align 8, !tbaa !661
+  %i.l = load ptr, ptr %6, align 8, !tbaa !661
   %i.m = tail call { ptr, i32 } @_ZN4llvm19SelectionDAGBuilder14getControlRootEv(ptr noundef nonnull align 8 dereferenceable(992) %i.l) #29 ; 2 uses
   %.fca.0.extract = extractvalue { ptr, i32 } %i.m, 0 ; 3 uses
   %.fca.1.extract = extractvalue { ptr, i32 } %i.m, 1 ; 2 uses
@@ -254,12 +253,12 @@ bb.c:                                             ; preds = %.critedge
   br label %_ZN4llvm12SelectionDAG7setRootENS_7SDValueE.exit
 
 _ZN4llvm12SelectionDAG7setRootENS_7SDValueE.exit: ; preds = %.thread.i, %bb.c
-  %i.p = load ptr, ptr %7, align 8, !tbaa !661    ; 2 uses
+  %i.p = load ptr, ptr %6, align 8, !tbaa !661    ; 2 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 976
   %i.r = load i8, ptr %i.q, align 8, !tbaa !1352, !range !36, !noundef !37
   store i8 %i.r, ptr %5, align 1, !tbaa !787
   tail call void @_ZN4llvm19SelectionDAGBuilder21resolveOrClearDbgInfoEv(ptr noundef nonnull align 8 dereferenceable(992) %i.p) #29
-  %i.s = load ptr, ptr %7, align 8, !tbaa !661
+  %i.s = load ptr, ptr %6, align 8, !tbaa !661
   tail call void @_ZN4llvm19SelectionDAGBuilder5clearEv(ptr noundef nonnull align 8 dereferenceable(992) %i.s) #29
   tail call void @_ZN4llvm16SelectionDAGISel17CodeGenAndEmitDAGEv(ptr noundef nonnull align 8 dereferenceable(952) %0)
   ret void

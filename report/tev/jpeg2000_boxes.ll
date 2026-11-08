@@ -204,27 +204,24 @@ bb.as:                                            ; preds = %bb.w
 bb.at:                                            ; preds = %bb.as
   %i.fc = sub nuw nsw i64 %i.bw, %i.fa
   tail call void @_ZNSt3__16vectorIN8Box_cdef7ChannelENS_9allocatorIS2_EEE8__appendEm(ptr noundef nonnull align 8 dereferenceable(24) %i.et, i64 noundef %i.fc)
-  br label %_ZNSt3__16vectorIN8Box_cdef7ChannelENS_9allocatorIS2_EEE6resizeEm.exit
+  br label %.lr.ph.a
 
 bb.au:                                            ; preds = %bb.as
   %i.fd = icmp ugt i64 %i.fa, %i.bw
-  br i1 %i.fd, label %bb.av, label %_ZNSt3__16vectorIN8Box_cdef7ChannelENS_9allocatorIS2_EEE6resizeEm.exit
+  br i1 %i.fd, label %bb.av, label %.lr.ph.a
 
 bb.av:                                            ; preds = %bb.au
   %i.fe = getelementptr inbounds nuw [6 x i8], ptr %i.ew, i64 %i.bw
   store ptr %i.fe, ptr %i.eu, align 8, !tbaa !39
-  br label %_ZNSt3__16vectorIN8Box_cdef7ChannelENS_9allocatorIS2_EEE6resizeEm.exit
+  br label %.lr.ph.a
 
-_ZNSt3__16vectorIN8Box_cdef7ChannelENS_9allocatorIS2_EEE6resizeEm.exit: ; preds = %bb.at, %bb.au, %bb.av
-  %.not69 = icmp eq i16 %i.a, 0
-  br i1 %.not69, label %.critedge, label %.lr.ph.a
-
-.lr.ph.a:                                         ; preds = %_ZNSt3__16vectorIN8Box_cdef7ChannelENS_9allocatorIS2_EEE6resizeEm.exit
+.lr.ph.a:                                         ; preds = %bb.at, %bb.au, %bb.av
   %i.ff = getelementptr inbounds nuw i8, ptr %2, i64 40
-  br label %bb.aw
+  %.not69 = icmp eq i16 %i.a, 0
+  br i1 %.not69, label %.critedge, label %bb.aw
 
 bb.aw:                                            ; preds = %.lr.ph.a, %bb.ay
-  %indvars.iv = phi i64 [ 0, %.lr.ph.a ], [ %indvars.iv.next, %bb.ay ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ay ], [ 0, %.lr.ph.a ] ; 2 uses
   %i.fg = load i8, ptr %i.ff, align 8, !tbaa !41, !range !42, !noundef !43
   %i.fh = trunc nuw i8 %i.fg to i1
   br i1 %i.fh, label %.critedge, label %bb.ax
@@ -234,7 +231,7 @@ bb.ax:                                            ; preds = %bb.aw
   %i.fj = icmp eq i64 %i.fi, 0
   br i1 %i.fj, label %.critedge, label %bb.ay
 
-.critedge:                                        ; preds = %bb.ax, %bb.ay, %bb.aw, %_ZNSt3__16vectorIN8Box_cdef7ChannelENS_9allocatorIS2_EEE6resizeEm.exit
+.critedge:                                        ; preds = %bb.ax, %bb.ay, %bb.aw, %.lr.ph.a
   tail call void @_ZNK14BitstreamRange9get_errorEv(ptr dead_on_unwind writable sret(%class.Error) align 8 %0, ptr noundef nonnull align 8 dereferenceable(41) %2)
   br label %bb.az
 
@@ -637,11 +634,11 @@ bb.z:                                             ; preds = %bb.y
   br label %_ZNSt3__16vectorIN8Box_j2kL5LayerENS_9allocatorIS2_EEE6resizeEm.exit
 
 _ZNSt3__16vectorIN8Box_j2kL5LayerENS_9allocatorIS2_EEE6resizeEm.exit: ; preds = %bb.x, %bb.y, %bb.z
+  %7 = getelementptr inbounds nuw i8, ptr %2, i64 40
   %.not33 = icmp eq i16 %i.a, 0
   br i1 %.not33, label %.critedge, label %.lr.ph.a
 
 .lr.ph.a:                                         ; preds = %_ZNSt3__16vectorIN8Box_j2kL5LayerENS_9allocatorIS2_EEE6resizeEm.exit
-  %7 = getelementptr inbounds nuw i8, ptr %2, i64 40
   %wide.trip.count = zext i16 %i.a to i64
   br label %bb.aa
 
