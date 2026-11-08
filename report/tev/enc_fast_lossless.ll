@@ -205,24 +205,22 @@ vector.body234:                                   ; preds = %vector.ph232, %vect
   %i.ka = getelementptr i8, ptr %i.jz, i64 32
   %wide.vec236 = load <32 x i8>, ptr %i.jy, align 1, !tbaa !85, !alias.scope !423
   %i.kb = freeze <32 x i8> %wide.vec236           ; 2 uses
-  %8 = bitcast <32 x i8> %i.kb to <16 x i16>
   %i.kc = bitcast <32 x i8> %i.kb to <16 x i16>
-  %9 = and <16 x i16> %i.kc, splat (i16 255)
-  %i.kd = lshr <16 x i16> %8, splat (i16 8)
+  %i.kd = lshr <16 x i16> %i.kc, splat (i16 8)
   %wide.vec239 = load <32 x i8>, ptr %i.ka, align 1, !tbaa !85, !alias.scope !423
   %i.ke = freeze <32 x i8> %wide.vec239           ; 2 uses
   %i.kf = bitcast <32 x i8> %i.ke to <16 x i16>
-  %10 = bitcast <32 x i8> %i.ke to <16 x i16>
-  %11 = and <16 x i16> %10, splat (i16 255)
-  %12 = lshr <16 x i16> %i.kf, splat (i16 8)
-  %13 = getelementptr inbounds nuw [2 x i8], ptr %.pre.i, i64 %i.jv ; 2 uses
-  %14 = getelementptr inbounds nuw i8, ptr %13, i64 32
-  store <16 x i16> %9, ptr %13, align 2, !tbaa !104, !alias.scope !424, !noalias !425
-  store <16 x i16> %11, ptr %14, align 2, !tbaa !104, !alias.scope !424, !noalias !425
+  %8 = lshr <16 x i16> %i.kf, splat (i16 8)
+  %9 = getelementptr inbounds nuw [2 x i8], ptr %.pre.i, i64 %i.jv ; 2 uses
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 32
+  %11 = and <32 x i8> %i.kb, <i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0>
+  store <32 x i8> %11, ptr %9, align 2, !tbaa !104, !alias.scope !424, !noalias !425
+  %12 = and <32 x i8> %i.ke, <i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0>
+  store <32 x i8> %12, ptr %10, align 2, !tbaa !104, !alias.scope !424, !noalias !425
   %i.kg = getelementptr inbounds nuw [2 x i8], ptr %i.ja, i64 %i.jv ; 2 uses
   %i.kh = getelementptr inbounds nuw i8, ptr %i.kg, i64 32
   store <16 x i16> %i.kd, ptr %i.kg, align 2, !tbaa !104, !alias.scope !426, !noalias !423
-  store <16 x i16> %12, ptr %i.kh, align 2, !tbaa !104, !alias.scope !426, !noalias !423
+  store <16 x i16> %8, ptr %i.kh, align 2, !tbaa !104, !alias.scope !426, !noalias !423
   %index.next242 = add nuw i64 %index235, 32      ; 2 uses
   %i.ki = icmp eq i64 %index.next242, %n.vec233
   br i1 %i.ki, label %middle.block243, label %vector.body234, !llvm.loop !385
@@ -273,14 +271,13 @@ vec.epilog.vector.body252:                        ; preds = %vec.epilog.vector.b
   %i.kw = getelementptr inbounds nuw i8, ptr %i.dp, i64 %i.kv
   %wide.vec254 = load <16 x i8>, ptr %i.kw, align 1, !tbaa !85, !alias.scope !423
   %i.kx = freeze <16 x i8> %wide.vec254           ; 2 uses
-  %15 = bitcast <16 x i8> %i.kx to <8 x i16>
   %i.ky = bitcast <16 x i8> %i.kx to <8 x i16>
-  %16 = and <8 x i16> %i.ky, splat (i16 255)
-  %17 = lshr <8 x i16> %15, splat (i16 8)
-  %18 = getelementptr inbounds nuw [2 x i8], ptr %.pre.i, i64 %i.ku
-  store <8 x i16> %16, ptr %18, align 2, !tbaa !104, !alias.scope !424, !noalias !425
+  %13 = lshr <8 x i16> %i.ky, splat (i16 8)
+  %14 = getelementptr inbounds nuw [2 x i8], ptr %.pre.i, i64 %i.ku
+  %15 = and <16 x i8> %i.kx, <i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0>
+  store <16 x i8> %15, ptr %14, align 2, !tbaa !104, !alias.scope !424, !noalias !425
   %i.kz = getelementptr inbounds nuw [2 x i8], ptr %i.ja, i64 %i.ku
-  store <8 x i16> %17, ptr %i.kz, align 2, !tbaa !104, !alias.scope !426, !noalias !423
+  store <8 x i16> %13, ptr %i.kz, align 2, !tbaa !104, !alias.scope !426, !noalias !423
   %index.next257 = add nuw i64 %index253, 8       ; 2 uses
   %i.la = icmp eq i64 %index.next257, %i.jj
   br i1 %i.la, label %.lr.ph96.i.i, label %vec.epilog.vector.body252, !llvm.loop !386
@@ -683,11 +680,7 @@ vector.body393:                                   ; preds = %vector.main.loop.it
   %wide.vec398 = load <16 x i16>, ptr %i.mi, align 1, !alias.scope !894
   %wide.vec398.fr = freeze <16 x i16> %wide.vec398 ; 2 uses
   %i.mj = call <16 x i16> @llvm.bswap.v16i16(<16 x i16> %wide.vec395.fr)
-  %8 = bitcast <16 x i16> %i.mj to <8 x i32>
-  %9 = and <8 x i32> %8, splat (i32 65535)
   %i.mk = call <16 x i16> @llvm.bswap.v16i16(<16 x i16> %wide.vec398.fr)
-  %10 = bitcast <16 x i16> %i.mk to <8 x i32>
-  %11 = and <8 x i32> %10, splat (i32 65535)
   %i.ml = call <16 x i16> @llvm.bswap.v16i16(<16 x i16> %wide.vec395.fr)
   %i.mm = bitcast <16 x i16> %i.ml to <8 x i32>
   %i.mn = lshr <8 x i32> %i.mm, splat (i32 16)
@@ -696,8 +689,10 @@ vector.body393:                                   ; preds = %vector.main.loop.it
   %i.mq = lshr <8 x i32> %i.mp, splat (i32 16)
   %i.mr = getelementptr inbounds nuw [4 x i8], ptr %.pre.i, i64 %i.md ; 2 uses
   %i.ms = getelementptr inbounds nuw i8, ptr %i.mr, i64 32
-  store <8 x i32> %9, ptr %i.mr, align 4, !tbaa !94, !alias.scope !895, !noalias !896
-  store <8 x i32> %11, ptr %i.ms, align 4, !tbaa !94, !alias.scope !895, !noalias !896
+  %8 = and <16 x i16> %i.mj, <i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0>
+  store <16 x i16> %8, ptr %i.mr, align 4, !tbaa !94, !alias.scope !895, !noalias !896
+  %9 = and <16 x i16> %i.mk, <i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0>
+  store <16 x i16> %9, ptr %i.ms, align 4, !tbaa !94, !alias.scope !895, !noalias !896
   %i.mt = getelementptr inbounds nuw [4 x i8], ptr %i.lr, i64 %i.md ; 2 uses
   %i.mu = getelementptr inbounds nuw i8, ptr %i.mt, i64 32
   store <8 x i32> %i.mn, ptr %i.mt, align 4, !tbaa !94, !alias.scope !897, !noalias !894
@@ -714,13 +709,12 @@ vec.epilog.vector.body411:                        ; preds = %vector.main.loop.it
   %wide.vec413 = load <8 x i16>, ptr %i.my, align 1, !alias.scope !894
   %wide.vec413.fr = freeze <8 x i16> %wide.vec413 ; 2 uses
   %i.mz = call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %wide.vec413.fr)
-  %12 = bitcast <8 x i16> %i.mz to <4 x i32>
-  %13 = and <4 x i32> %12, splat (i32 65535)
   %i.na = call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %wide.vec413.fr)
   %i.nb = bitcast <8 x i16> %i.na to <4 x i32>
   %i.nc = lshr <4 x i32> %i.nb, splat (i32 16)
   %i.nd = getelementptr inbounds nuw [4 x i8], ptr %.pre.i, i64 %i.mw
-  store <4 x i32> %13, ptr %i.nd, align 4, !tbaa !94, !alias.scope !895, !noalias !896
+  %10 = and <8 x i16> %i.mz, <i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0>
+  store <8 x i16> %10, ptr %i.nd, align 4, !tbaa !94, !alias.scope !895, !noalias !896
   %i.ne = getelementptr inbounds nuw [4 x i8], ptr %i.lr, i64 %i.mw
   store <4 x i32> %i.nc, ptr %i.ne, align 4, !tbaa !94, !alias.scope !897, !noalias !894
   %index.next416 = add nuw i64 %index412, 4       ; 2 uses
@@ -854,24 +848,22 @@ vector.body455:                                   ; preds = %vector.main.loop.it
   %i.qb = getelementptr inbounds nuw i8, ptr %i.qa, i64 32
   %wide.vec457 = load <16 x i16>, ptr %i.pz, align 1, !alias.scope !898
   %i.qc = freeze <16 x i16> %wide.vec457          ; 2 uses
-  %14 = bitcast <16 x i16> %i.qc to <8 x i32>
   %i.qd = bitcast <16 x i16> %i.qc to <8 x i32>
-  %15 = and <8 x i32> %i.qd, splat (i32 65535)
-  %i.qe = lshr <8 x i32> %14, splat (i32 16)
+  %i.qe = lshr <8 x i32> %i.qd, splat (i32 16)
   %wide.vec460 = load <16 x i16>, ptr %i.qb, align 1, !alias.scope !898
   %i.qf = freeze <16 x i16> %wide.vec460          ; 2 uses
   %i.qg = bitcast <16 x i16> %i.qf to <8 x i32>
-  %16 = bitcast <16 x i16> %i.qf to <8 x i32>
-  %17 = and <8 x i32> %16, splat (i32 65535)
-  %18 = lshr <8 x i32> %i.qg, splat (i32 16)
-  %19 = getelementptr inbounds nuw [4 x i8], ptr %.pre.i, i64 %i.pw ; 2 uses
-  %20 = getelementptr inbounds nuw i8, ptr %19, i64 32
-  store <8 x i32> %15, ptr %19, align 4, !tbaa !94, !alias.scope !899, !noalias !900
-  store <8 x i32> %17, ptr %20, align 4, !tbaa !94, !alias.scope !899, !noalias !900
+  %11 = lshr <8 x i32> %i.qg, splat (i32 16)
+  %12 = getelementptr inbounds nuw [4 x i8], ptr %.pre.i, i64 %i.pw ; 2 uses
+  %13 = getelementptr inbounds nuw i8, ptr %12, i64 32
+  %14 = and <16 x i16> %i.qc, <i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0>
+  store <16 x i16> %14, ptr %12, align 4, !tbaa !94, !alias.scope !899, !noalias !900
+  %15 = and <16 x i16> %i.qf, <i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0>
+  store <16 x i16> %15, ptr %13, align 4, !tbaa !94, !alias.scope !899, !noalias !900
   %i.qh = getelementptr inbounds nuw [4 x i8], ptr %i.lr, i64 %i.pw ; 2 uses
   %i.qi = getelementptr inbounds nuw i8, ptr %i.qh, i64 32
   store <8 x i32> %i.qe, ptr %i.qh, align 4, !tbaa !94, !alias.scope !901, !noalias !898
-  store <8 x i32> %18, ptr %i.qi, align 4, !tbaa !94, !alias.scope !901, !noalias !898
+  store <8 x i32> %11, ptr %i.qi, align 4, !tbaa !94, !alias.scope !901, !noalias !898
   %index.next463 = add nuw i64 %index456, 16      ; 2 uses
   %i.qj = icmp eq i64 %index.next463, %i.pm
   br i1 %i.qj, label %.lr.ph146.i.i, label %vector.body455, !llvm.loop !825
@@ -883,14 +875,13 @@ vec.epilog.vector.body473:                        ; preds = %vector.main.loop.it
   %i.qm = getelementptr inbounds nuw i8, ptr %i.du, i64 %i.ql
   %wide.vec475 = load <8 x i16>, ptr %i.qm, align 1, !alias.scope !898
   %i.qn = freeze <8 x i16> %wide.vec475           ; 2 uses
-  %21 = bitcast <8 x i16> %i.qn to <4 x i32>
   %i.qo = bitcast <8 x i16> %i.qn to <4 x i32>
-  %22 = and <4 x i32> %i.qo, splat (i32 65535)
-  %23 = lshr <4 x i32> %21, splat (i32 16)
-  %24 = getelementptr inbounds nuw [4 x i8], ptr %.pre.i, i64 %i.qk
-  store <4 x i32> %22, ptr %24, align 4, !tbaa !94, !alias.scope !899, !noalias !900
+  %16 = lshr <4 x i32> %i.qo, splat (i32 16)
+  %17 = getelementptr inbounds nuw [4 x i8], ptr %.pre.i, i64 %i.qk
+  %18 = and <8 x i16> %i.qn, <i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0>
+  store <8 x i16> %18, ptr %17, align 4, !tbaa !94, !alias.scope !899, !noalias !900
   %i.qp = getelementptr inbounds nuw [4 x i8], ptr %i.lr, i64 %i.qk
-  store <4 x i32> %23, ptr %i.qp, align 4, !tbaa !94, !alias.scope !901, !noalias !898
+  store <4 x i32> %16, ptr %i.qp, align 4, !tbaa !94, !alias.scope !901, !noalias !898
   %index.next478 = add nuw i64 %index474, 4       ; 2 uses
   %i.qq = icmp eq i64 %index.next478, %i.pm
   br i1 %i.qq, label %.lr.ph146.i.i, label %vec.epilog.vector.body473, !llvm.loop !826
@@ -1293,13 +1284,12 @@ vector.body328:                                   ; preds = %vector.memcheck314,
   %wide.vec = load <8 x i16>, ptr %i.ik, align 1, !alias.scope !1330
   %wide.vec.fr = freeze <8 x i16> %wide.vec       ; 2 uses
   %i.il = call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %wide.vec.fr)
-  %8 = bitcast <8 x i16> %i.il to <4 x i32>
-  %9 = and <4 x i32> %8, splat (i32 65535)
   %i.im = call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %wide.vec.fr)
   %i.in = bitcast <8 x i16> %i.im to <4 x i32>
   %i.io = lshr <4 x i32> %i.in, splat (i32 16)
   %i.ip = getelementptr inbounds nuw [4 x i8], ptr %.pre.i, i64 %index329
-  store <4 x i32> %9, ptr %i.ip, align 4, !tbaa !94, !alias.scope !1331, !noalias !1332
+  %8 = and <8 x i16> %i.il, <i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0>
+  store <8 x i16> %8, ptr %i.ip, align 4, !tbaa !94, !alias.scope !1331, !noalias !1332
   %i.iq = getelementptr inbounds nuw [4 x i8], ptr %i.if, i64 %index329
   store <4 x i32> %i.io, ptr %i.iq, align 4, !tbaa !94, !alias.scope !1333, !noalias !1330
   %index.next331 = add nuw i64 %index329, 4       ; 2 uses
@@ -1371,14 +1361,13 @@ vector.body368:                                   ; preds = %vector.memcheck354,
   %i.jq = getelementptr inbounds nuw i8, ptr %i.et, i64 %i.jp
   %wide.vec370 = load <8 x i16>, ptr %i.jq, align 1, !alias.scope !1334
   %i.jr = freeze <8 x i16> %wide.vec370           ; 2 uses
-  %10 = bitcast <8 x i16> %i.jr to <4 x i32>
   %i.js = bitcast <8 x i16> %i.jr to <4 x i32>
-  %11 = and <4 x i32> %i.js, splat (i32 65535)
-  %12 = lshr <4 x i32> %10, splat (i32 16)
-  %13 = getelementptr inbounds nuw [4 x i8], ptr %.pre.i, i64 %index369
-  store <4 x i32> %11, ptr %13, align 4, !tbaa !94, !alias.scope !1335, !noalias !1336
+  %9 = lshr <4 x i32> %i.js, splat (i32 16)
+  %10 = getelementptr inbounds nuw [4 x i8], ptr %.pre.i, i64 %index369
+  %11 = and <8 x i16> %i.jr, <i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0>
+  store <8 x i16> %11, ptr %10, align 4, !tbaa !94, !alias.scope !1335, !noalias !1336
   %i.jt = getelementptr inbounds nuw [4 x i8], ptr %i.if, i64 %index369
-  store <4 x i32> %12, ptr %i.jt, align 4, !tbaa !94, !alias.scope !1337, !noalias !1334
+  store <4 x i32> %9, ptr %i.jt, align 4, !tbaa !94, !alias.scope !1337, !noalias !1334
   %index.next373 = add nuw i64 %index369, 4       ; 2 uses
   %i.ju = icmp eq i64 %index.next373, %i.aa
   br i1 %i.ju, label %.lr.ph125.i.i, label %vector.body368, !llvm.loop !1270
@@ -1781,24 +1770,22 @@ vector.body208:                                   ; preds = %vector.ph206, %vect
   %i.kb = getelementptr i8, ptr %i.ka, i64 32
   %wide.vec210 = load <32 x i8>, ptr %i.jz, align 1, !tbaa !85, !alias.scope !1425
   %i.kc = freeze <32 x i8> %wide.vec210           ; 2 uses
-  %4 = bitcast <32 x i8> %i.kc to <16 x i16>
   %i.kd = bitcast <32 x i8> %i.kc to <16 x i16>
-  %5 = and <16 x i16> %i.kd, splat (i16 255)
-  %i.ke = lshr <16 x i16> %4, splat (i16 8)
+  %i.ke = lshr <16 x i16> %i.kd, splat (i16 8)
   %wide.vec213 = load <32 x i8>, ptr %i.kb, align 1, !tbaa !85, !alias.scope !1425
   %i.kf = freeze <32 x i8> %wide.vec213           ; 2 uses
   %i.kg = bitcast <32 x i8> %i.kf to <16 x i16>
-  %6 = bitcast <32 x i8> %i.kf to <16 x i16>
-  %7 = and <16 x i16> %6, splat (i16 255)
-  %8 = lshr <16 x i16> %i.kg, splat (i16 8)
-  %9 = getelementptr inbounds nuw [2 x i8], ptr %.pre.i.i, i64 %i.jw ; 2 uses
-  %10 = getelementptr inbounds nuw i8, ptr %9, i64 32
-  store <16 x i16> %5, ptr %9, align 2, !tbaa !104, !alias.scope !1426, !noalias !1427
-  store <16 x i16> %7, ptr %10, align 2, !tbaa !104, !alias.scope !1426, !noalias !1427
+  %4 = lshr <16 x i16> %i.kg, splat (i16 8)
+  %5 = getelementptr inbounds nuw [2 x i8], ptr %.pre.i.i, i64 %i.jw ; 2 uses
+  %6 = getelementptr inbounds nuw i8, ptr %5, i64 32
+  %7 = and <32 x i8> %i.kc, <i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0>
+  store <32 x i8> %7, ptr %5, align 2, !tbaa !104, !alias.scope !1426, !noalias !1427
+  %8 = and <32 x i8> %i.kf, <i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0>
+  store <32 x i8> %8, ptr %6, align 2, !tbaa !104, !alias.scope !1426, !noalias !1427
   %i.kh = getelementptr inbounds nuw [2 x i8], ptr %i.jj, i64 %i.jw ; 2 uses
   %i.ki = getelementptr inbounds nuw i8, ptr %i.kh, i64 32
   store <16 x i16> %i.ke, ptr %i.kh, align 2, !tbaa !104, !alias.scope !1428, !noalias !1425
-  store <16 x i16> %8, ptr %i.ki, align 2, !tbaa !104, !alias.scope !1428, !noalias !1425
+  store <16 x i16> %4, ptr %i.ki, align 2, !tbaa !104, !alias.scope !1428, !noalias !1425
   %index.next216 = add nuw i64 %index209, 32      ; 2 uses
   %i.kj = icmp eq i64 %index.next216, %n.vec207
   br i1 %i.kj, label %middle.block217, label %vector.body208, !llvm.loop !1390
@@ -1824,14 +1811,13 @@ vec.epilog.vector.body226:                        ; preds = %vec.epilog.vector.b
   %i.kn = getelementptr inbounds nuw i8, ptr %i.ep, i64 %i.km
   %wide.vec228 = load <16 x i8>, ptr %i.kn, align 1, !tbaa !85, !alias.scope !1425
   %i.ko = freeze <16 x i8> %wide.vec228           ; 2 uses
-  %11 = bitcast <16 x i8> %i.ko to <8 x i16>
   %i.kp = bitcast <16 x i8> %i.ko to <8 x i16>
-  %12 = and <8 x i16> %i.kp, splat (i16 255)
-  %13 = lshr <8 x i16> %11, splat (i16 8)
-  %14 = getelementptr inbounds nuw [2 x i8], ptr %.pre.i.i, i64 %i.kl
-  store <8 x i16> %12, ptr %14, align 2, !tbaa !104, !alias.scope !1426, !noalias !1427
+  %9 = lshr <8 x i16> %i.kp, splat (i16 8)
+  %10 = getelementptr inbounds nuw [2 x i8], ptr %.pre.i.i, i64 %i.kl
+  %11 = and <16 x i8> %i.ko, <i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0, i8 -1, i8 0>
+  store <16 x i8> %11, ptr %10, align 2, !tbaa !104, !alias.scope !1426, !noalias !1427
   %i.kq = getelementptr inbounds nuw [2 x i8], ptr %i.jj, i64 %i.kl
-  store <8 x i16> %13, ptr %i.kq, align 2, !tbaa !104, !alias.scope !1428, !noalias !1425
+  store <8 x i16> %9, ptr %i.kq, align 2, !tbaa !104, !alias.scope !1428, !noalias !1425
   %index.next231 = add nuw i64 %index227, 8       ; 2 uses
   %i.kr = icmp eq i64 %index.next231, %n.vec225
   br i1 %i.kr, label %vec.epilog.middle.block232, label %vec.epilog.vector.body226, !llvm.loop !1391
@@ -2234,11 +2220,7 @@ vector.body418:                                   ; preds = %vector.ph416, %vect
   %wide.vec423 = load <16 x i16>, ptr %i.nz, align 1, !alias.scope !1804
   %wide.vec423.fr = freeze <16 x i16> %wide.vec423 ; 2 uses
   %i.oa = call <16 x i16> @llvm.bswap.v16i16(<16 x i16> %wide.vec420.fr)
-  %4 = bitcast <16 x i16> %i.oa to <8 x i32>
-  %5 = and <8 x i32> %4, splat (i32 65535)
   %i.ob = call <16 x i16> @llvm.bswap.v16i16(<16 x i16> %wide.vec423.fr)
-  %6 = bitcast <16 x i16> %i.ob to <8 x i32>
-  %7 = and <8 x i32> %6, splat (i32 65535)
   %i.oc = call <16 x i16> @llvm.bswap.v16i16(<16 x i16> %wide.vec420.fr)
   %i.od = bitcast <16 x i16> %i.oc to <8 x i32>
   %i.oe = lshr <8 x i32> %i.od, splat (i32 16)
@@ -2247,8 +2229,10 @@ vector.body418:                                   ; preds = %vector.ph416, %vect
   %i.oh = lshr <8 x i32> %i.og, splat (i32 16)
   %i.oi = getelementptr inbounds nuw [4 x i8], ptr %.pre.i.i, i64 %i.nu ; 2 uses
   %i.oj = getelementptr inbounds nuw i8, ptr %i.oi, i64 32
-  store <8 x i32> %5, ptr %i.oi, align 4, !tbaa !94, !alias.scope !1805, !noalias !1806
-  store <8 x i32> %7, ptr %i.oj, align 4, !tbaa !94, !alias.scope !1805, !noalias !1806
+  %4 = and <16 x i16> %i.oa, <i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0>
+  store <16 x i16> %4, ptr %i.oi, align 4, !tbaa !94, !alias.scope !1805, !noalias !1806
+  %5 = and <16 x i16> %i.ob, <i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0>
+  store <16 x i16> %5, ptr %i.oj, align 4, !tbaa !94, !alias.scope !1805, !noalias !1806
   %i.ok = getelementptr inbounds nuw [4 x i8], ptr %i.ni, i64 %i.nu ; 2 uses
   %i.ol = getelementptr inbounds nuw i8, ptr %i.ok, i64 32
   store <8 x i32> %i.oe, ptr %i.ok, align 4, !tbaa !94, !alias.scope !1807, !noalias !1804
@@ -2277,13 +2261,12 @@ vec.epilog.vector.body436:                        ; preds = %vec.epilog.vector.b
   %wide.vec438 = load <8 x i16>, ptr %i.oq, align 1, !alias.scope !1804
   %wide.vec438.fr = freeze <8 x i16> %wide.vec438 ; 2 uses
   %i.or = call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %wide.vec438.fr)
-  %8 = bitcast <8 x i16> %i.or to <4 x i32>
-  %9 = and <4 x i32> %8, splat (i32 65535)
   %i.os = call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %wide.vec438.fr)
   %i.ot = bitcast <8 x i16> %i.os to <4 x i32>
   %i.ou = lshr <4 x i32> %i.ot, splat (i32 16)
   %i.ov = getelementptr inbounds nuw [4 x i8], ptr %.pre.i.i, i64 %i.oo
-  store <4 x i32> %9, ptr %i.ov, align 4, !tbaa !94, !alias.scope !1805, !noalias !1806
+  %6 = and <8 x i16> %i.or, <i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0>
+  store <8 x i16> %6, ptr %i.ov, align 4, !tbaa !94, !alias.scope !1805, !noalias !1806
   %i.ow = getelementptr inbounds nuw [4 x i8], ptr %i.ni, i64 %i.oo
   store <4 x i32> %i.ou, ptr %i.ow, align 4, !tbaa !94, !alias.scope !1807, !noalias !1804
   %index.next441 = add nuw i64 %index437, 4       ; 2 uses
@@ -2458,24 +2441,22 @@ vector.body356:                                   ; preds = %vector.ph354, %vect
   %i.sf = getelementptr inbounds nuw i8, ptr %i.se, i64 32
   %wide.vec358 = load <16 x i16>, ptr %i.sd, align 1, !alias.scope !1808
   %i.sg = freeze <16 x i16> %wide.vec358          ; 2 uses
-  %10 = bitcast <16 x i16> %i.sg to <8 x i32>
   %i.sh = bitcast <16 x i16> %i.sg to <8 x i32>
-  %11 = and <8 x i32> %i.sh, splat (i32 65535)
-  %i.si = lshr <8 x i32> %10, splat (i32 16)
+  %i.si = lshr <8 x i32> %i.sh, splat (i32 16)
   %wide.vec361 = load <16 x i16>, ptr %i.sf, align 1, !alias.scope !1808
   %i.sj = freeze <16 x i16> %wide.vec361          ; 2 uses
   %i.sk = bitcast <16 x i16> %i.sj to <8 x i32>
-  %12 = bitcast <16 x i16> %i.sj to <8 x i32>
-  %13 = and <8 x i32> %12, splat (i32 65535)
-  %14 = lshr <8 x i32> %i.sk, splat (i32 16)
-  %15 = getelementptr inbounds nuw [4 x i8], ptr %.pre.i.i, i64 %i.sa ; 2 uses
-  %16 = getelementptr inbounds nuw i8, ptr %15, i64 32
-  store <8 x i32> %11, ptr %15, align 4, !tbaa !94, !alias.scope !1809, !noalias !1810
-  store <8 x i32> %13, ptr %16, align 4, !tbaa !94, !alias.scope !1809, !noalias !1810
+  %7 = lshr <8 x i32> %i.sk, splat (i32 16)
+  %8 = getelementptr inbounds nuw [4 x i8], ptr %.pre.i.i, i64 %i.sa ; 2 uses
+  %9 = getelementptr inbounds nuw i8, ptr %8, i64 32
+  %10 = and <16 x i16> %i.sg, <i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0>
+  store <16 x i16> %10, ptr %8, align 4, !tbaa !94, !alias.scope !1809, !noalias !1810
+  %11 = and <16 x i16> %i.sj, <i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0>
+  store <16 x i16> %11, ptr %9, align 4, !tbaa !94, !alias.scope !1809, !noalias !1810
   %i.sl = getelementptr inbounds nuw [4 x i8], ptr %i.ni, i64 %i.sa ; 2 uses
   %i.sm = getelementptr inbounds nuw i8, ptr %i.sl, i64 32
   store <8 x i32> %i.si, ptr %i.sl, align 4, !tbaa !94, !alias.scope !1811, !noalias !1808
-  store <8 x i32> %14, ptr %i.sm, align 4, !tbaa !94, !alias.scope !1811, !noalias !1808
+  store <8 x i32> %7, ptr %i.sm, align 4, !tbaa !94, !alias.scope !1811, !noalias !1808
   %index.next364 = add nuw i64 %index357, 16      ; 2 uses
   %i.sn = icmp eq i64 %index.next364, %n.vec355
   br i1 %i.sn, label %middle.block365, label %vector.body356, !llvm.loop !1744
@@ -2499,14 +2480,13 @@ vec.epilog.vector.body374:                        ; preds = %vec.epilog.vector.b
   %i.sr = getelementptr inbounds nuw i8, ptr %i.fk, i64 %i.sq
   %wide.vec376 = load <8 x i16>, ptr %i.sr, align 1, !alias.scope !1808
   %i.ss = freeze <8 x i16> %wide.vec376           ; 2 uses
-  %17 = bitcast <8 x i16> %i.ss to <4 x i32>
   %i.st = bitcast <8 x i16> %i.ss to <4 x i32>
-  %18 = and <4 x i32> %i.st, splat (i32 65535)
-  %19 = lshr <4 x i32> %17, splat (i32 16)
-  %20 = getelementptr inbounds nuw [4 x i8], ptr %.pre.i.i, i64 %i.sp
-  store <4 x i32> %18, ptr %20, align 4, !tbaa !94, !alias.scope !1809, !noalias !1810
+  %12 = lshr <4 x i32> %i.st, splat (i32 16)
+  %13 = getelementptr inbounds nuw [4 x i8], ptr %.pre.i.i, i64 %i.sp
+  %14 = and <8 x i16> %i.ss, <i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0>
+  store <8 x i16> %14, ptr %13, align 4, !tbaa !94, !alias.scope !1809, !noalias !1810
   %i.su = getelementptr inbounds nuw [4 x i8], ptr %i.ni, i64 %i.sp
-  store <4 x i32> %19, ptr %i.su, align 4, !tbaa !94, !alias.scope !1811, !noalias !1808
+  store <4 x i32> %12, ptr %i.su, align 4, !tbaa !94, !alias.scope !1811, !noalias !1808
   %index.next379 = add nuw i64 %index375, 4       ; 2 uses
   %i.sv = icmp eq i64 %index.next379, %n.vec373
   br i1 %i.sv, label %vec.epilog.middle.block380, label %vec.epilog.vector.body374, !llvm.loop !1745
@@ -2909,13 +2889,12 @@ vector.body328:                                   ; preds = %vector.memcheck313,
   %wide.vec330 = load <8 x i16>, ptr %i.kc, align 1, !alias.scope !2203
   %wide.vec330.fr = freeze <8 x i16> %wide.vec330 ; 2 uses
   %i.kd = call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %wide.vec330.fr)
-  %4 = bitcast <8 x i16> %i.kd to <4 x i32>
-  %5 = and <4 x i32> %4, splat (i32 65535)
   %i.ke = call <8 x i16> @llvm.bswap.v8i16(<8 x i16> %wide.vec330.fr)
   %i.kf = bitcast <8 x i16> %i.ke to <4 x i32>
   %i.kg = lshr <4 x i32> %i.kf, splat (i32 16)
   %i.kh = getelementptr inbounds nuw [4 x i8], ptr %.pre.i.i.i, i64 %index329
-  store <4 x i32> %5, ptr %i.kh, align 4, !tbaa !94, !alias.scope !2204, !noalias !2205
+  %4 = and <8 x i16> %i.kd, <i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0>
+  store <8 x i16> %4, ptr %i.kh, align 4, !tbaa !94, !alias.scope !2204, !noalias !2205
   %i.ki = getelementptr inbounds nuw [4 x i8], ptr %i.jx, i64 %index329
   store <4 x i32> %i.kg, ptr %i.ki, align 4, !tbaa !94, !alias.scope !2206, !noalias !2203
   %index.next333 = add nuw i64 %index329, 4       ; 2 uses
@@ -3014,14 +2993,13 @@ vector.body289:                                   ; preds = %vector.memcheck274,
   %i.lt = getelementptr inbounds nuw i8, ptr %i.fx, i64 %i.ls
   %wide.vec = load <8 x i16>, ptr %i.lt, align 1, !alias.scope !2207
   %i.lu = freeze <8 x i16> %wide.vec              ; 2 uses
-  %6 = bitcast <8 x i16> %i.lu to <4 x i32>
   %i.lv = bitcast <8 x i16> %i.lu to <4 x i32>
-  %7 = and <4 x i32> %i.lv, splat (i32 65535)
-  %8 = lshr <4 x i32> %6, splat (i32 16)
-  %9 = getelementptr inbounds nuw [4 x i8], ptr %.pre.i.i.i, i64 %index290
-  store <4 x i32> %7, ptr %9, align 4, !tbaa !94, !alias.scope !2208, !noalias !2209
+  %5 = lshr <4 x i32> %i.lv, splat (i32 16)
+  %6 = getelementptr inbounds nuw [4 x i8], ptr %.pre.i.i.i, i64 %index290
+  %7 = and <8 x i16> %i.lu, <i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0, i16 -1, i16 0>
+  store <8 x i16> %7, ptr %6, align 4, !tbaa !94, !alias.scope !2208, !noalias !2209
   %i.lw = getelementptr inbounds nuw [4 x i8], ptr %i.jx, i64 %index290
-  store <4 x i32> %8, ptr %i.lw, align 4, !tbaa !94, !alias.scope !2210, !noalias !2207
+  store <4 x i32> %5, ptr %i.lw, align 4, !tbaa !94, !alias.scope !2210, !noalias !2207
   %index.next292 = add nuw i64 %index290, 4       ; 2 uses
   %i.lx = icmp eq i64 %index.next292, %n.vec288
   br i1 %i.lx, label %middle.block293, label %vector.body289, !llvm.loop !2151

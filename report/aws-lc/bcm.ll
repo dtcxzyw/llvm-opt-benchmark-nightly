@@ -205,9 +205,8 @@ bb.c:                                             ; preds = %bb.a
   %i.cu = xor <16 x i8> %i.ct, %i.cs              ; 2 uses
   %i.cv = shufflevector <16 x i8> <i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 poison, i8 0, i8 0, i8 0, i8 0>, <16 x i8> %i.cu, <16 x i32> <i32 12, i32 13, i32 14, i32 15, i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27>
   %i.cw = xor <16 x i8> %i.cv, %i.cu
-  %3 = bitcast <16 x i8> %i.cw to <2 x i64>
-  %4 = and <2 x i64> %3, <i64 -1, i64 0>
-  store <2 x i64> %4, ptr %.0149.i, align 16, !tbaa !76
+  %3 = and <16 x i8> %i.cw, <i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 -1, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0, i8 0>
+  store <16 x i8> %3, ptr %.0149.i, align 16, !tbaa !76
   %i.cx = getelementptr inbounds nuw i8, ptr %i.bp, i64 48
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(16) %i.cx, ptr noundef nonnull align 16 dereferenceable(16) %.0138148.i, i64 16, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.d) #46
