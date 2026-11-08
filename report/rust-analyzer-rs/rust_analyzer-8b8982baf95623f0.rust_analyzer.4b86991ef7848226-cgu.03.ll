@@ -205,7 +205,7 @@ bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 40
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 64
   %.sroa.3.0.copyload = load i32, ptr %.sroa.3.0..sroa_idx, align 8, !noalias !4780
-  %i.m = load <2 x i64>, ptr %i.j, align 8, !noalias !4780
+  %i.m = load <2 x i64>, ptr %i.j, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !4779
   store ptr %i.d, ptr %i.c, align 8, !noalias !4781
   %.not.i.i = icmp eq i64 %i.k, -2
@@ -305,7 +305,7 @@ bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 40
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 64
   %.sroa.3.0.copyload = load i32, ptr %.sroa.3.0..sroa_idx, align 8, !noalias !4796
-  %i.m = load <2 x i64>, ptr %i.j, align 8, !noalias !4796
+  %i.m = load <2 x i64>, ptr %i.j, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !4795
   store ptr %i.d, ptr %i.c, align 8, !noalias !4797
   %.not.i.i = icmp eq i64 %i.k, -2
@@ -405,7 +405,7 @@ bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 40
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 64
   %.sroa.3.0.copyload = load i32, ptr %.sroa.3.0..sroa_idx, align 8, !noalias !4812
-  %i.m = load <2 x i64>, ptr %i.j, align 8, !noalias !4812
+  %i.m = load <2 x i64>, ptr %i.j, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !4811
   store ptr %i.d, ptr %i.c, align 8, !noalias !4813
   %.not.i.i = icmp eq i64 %i.k, -2
@@ -505,7 +505,7 @@ bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 40
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 64
   %.sroa.3.0.copyload = load i32, ptr %.sroa.3.0..sroa_idx, align 8, !noalias !4828
-  %i.m = load <2 x i64>, ptr %i.j, align 8, !noalias !4828
+  %i.m = load <2 x i64>, ptr %i.j, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !4827
   store ptr %i.d, ptr %i.c, align 8, !noalias !4829
   %.not.i.i = icmp eq i64 %i.k, -2
@@ -605,7 +605,7 @@ bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 40
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 64
   %.sroa.3.0.copyload = load i32, ptr %.sroa.3.0..sroa_idx, align 8, !noalias !4844
-  %i.m = load <2 x i64>, ptr %i.j, align 8, !noalias !4844
+  %i.m = load <2 x i64>, ptr %i.j, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !4843
   store ptr %i.d, ptr %i.c, align 8, !noalias !4845
   %.not.i.i = icmp eq i64 %i.k, -2
@@ -705,7 +705,7 @@ bb.c:                                             ; preds = %bb.b
   %i.l = getelementptr inbounds nuw i8, ptr %i.e, i64 40
   %.sroa.3.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.e, i64 64
   %.sroa.3.0.copyload = load i32, ptr %.sroa.3.0..sroa_idx, align 8, !noalias !4860
-  %i.m = load <2 x i64>, ptr %i.j, align 8, !noalias !4860
+  %i.m = load <2 x i64>, ptr %i.j, align 8
   call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !4859
   store ptr %i.d, ptr %i.c, align 8, !noalias !4861
   %.not.i.i = icmp eq i64 %i.k, -2

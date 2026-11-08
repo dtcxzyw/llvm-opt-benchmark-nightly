@@ -205,7 +205,7 @@ bb.ab:                                            ; preds = %_ZN7testing15Assert
   br label %bb.ad
 
 bb.ac:                                            ; preds = %_ZN7testing15AssertionResultD2Ev.exit
-  %i.bz = load <2 x i64>, ptr %3, align 16, !tbaa !166
+  %i.bz = load <2 x i64>, ptr %3, align 16
   store <2 x i64> %i.bz, ptr %13, align 16, !tbaa !161
   br label %bb.ad
 
@@ -608,7 +608,7 @@ bb.ad:                                            ; preds = %bb.ac
   br label %bb.af
 
 bb.ae:                                            ; preds = %bb.ac
-  %i.cw = load <2 x i64>, ptr %2, align 16, !tbaa !166
+  %i.cw = load <2 x i64>, ptr %2, align 16
   store <2 x i64> %i.cw, ptr %12, align 16, !tbaa !161
   br label %bb.af
 
@@ -1011,7 +1011,7 @@ bb.af:                                            ; preds = %_ZN4absl12lts_20260
   br label %bb.aq
 
 bb.ag:                                            ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb0ELb1EEEJEE15destructor_implEv.exit.i.i.i
-  %i.hd = load <2 x i64>, ptr %26, align 16, !tbaa !166
+  %i.hd = load <2 x i64>, ptr %26, align 16
   store <2 x i64> %i.hd, ptr %35, align 16, !tbaa !161
   br label %bb.aq
 
@@ -1414,7 +1414,7 @@ bb.ai:                                            ; preds = %_ZN4absl12lts_20260
   br label %bb.au
 
 bb.aj:                                            ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_12_GLOBAL__N_111ValuePolicyIlLb0ELb1EEEJNS0_13hash_internal4HashIlEESt8equal_toIlENS3_32ChangingSizeAndTrackingTypeAllocIlEEEE15destructor_implEv.exit.i.i.i
-  %i.ia = load <2 x i64>, ptr %31, align 16, !tbaa !166
+  %i.ia = load <2 x i64>, ptr %31, align 16
   store <2 x i64> %i.ia, ptr %41, align 16, !tbaa !161
   br label %bb.au
 

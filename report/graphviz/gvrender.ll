@@ -205,15 +205,15 @@ bb.f:                                             ; preds = %bb.e
   br i1 %i.t, label %.lr.ph, label %._crit_edge132
 
 ._crit_edge132:                                   ; preds = %bb.f
-  %i.u = load <2 x double>, ptr %i.q, align 16, !tbaa !157
-  %i.v = load <2 x double>, ptr %7, align 16, !tbaa !158
+  %i.u = load <2 x double>, ptr %i.q, align 16
+  %i.v = load <2 x double>, ptr %7, align 16
   br label %bb.g
 
 .lr.ph:                                           ; preds = %bb.f
   %i.w = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.x = getelementptr inbounds nuw i8, ptr %7, i64 24
-  %i.y = load <2 x double>, ptr %7, align 16, !tbaa !158 ; 2 uses
-  %i.z = load <2 x double>, ptr %i.q, align 16, !tbaa !157 ; 2 uses
+  %i.y = load <2 x double>, ptr %7, align 16      ; 2 uses
+  %i.z = load <2 x double>, ptr %i.q, align 16    ; 2 uses
   %i.aa = add i64 %3, -1                          ; 2 uses
   %min.iters.check = icmp ult i64 %3, 5
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
@@ -305,9 +305,9 @@ scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.blo
   %i.bq = phi <2 x double> [ %i.bn, %middle.block ], [ %i.cp, %scalar.ph ] ; 2 uses
   %i.br = phi <2 x double> [ %i.bp, %middle.block ], [ %i.co, %scalar.ph ] ; 2 uses
   %i.bs = extractelement <2 x double> %i.br, i64 1
-  store double %i.bs, ptr %i.w, align 8, !tbaa !158
+  store double %i.bs, ptr %i.w, align 8, !tbaa !157
   %i.bt = extractelement <2 x double> %i.bq, i64 1
-  store double %i.bt, ptr %i.x, align 8, !tbaa !157
+  store double %i.bt, ptr %i.x, align 8, !tbaa !158
   br label %bb.g
 
 bb.g:                                             ; preds = %._crit_edge132, %._crit_edge
@@ -508,23 +508,23 @@ bb.ab:                                            ; preds = %bb.aa
 
 bb.ac:                                            ; preds = %bb.ab, %bb.ab, %bb.ab
   %i.ee = fsub double %i.ec, %i.dz                ; 2 uses
-  store double %i.ee, ptr %i.ca, align 8, !tbaa !158
+  store double %i.ee, ptr %i.ca, align 8, !tbaa !157
   br label %bb.af
 
 bb.ad:                                            ; preds = %bb.ab, %bb.ab, %bb.ab
   %i.ef = fadd double %i.ed, %i.dz                ; 3 uses
-  store double %i.ef, ptr %i.ca, align 8, !tbaa !158
+  store double %i.ef, ptr %i.ca, align 8, !tbaa !157
   %i.eg = fsub double %i.ef, %i.dz                ; 2 uses
-  store double %i.eg, ptr %i.bz, align 8, !tbaa !157
+  store double %i.eg, ptr %i.bz, align 8, !tbaa !158
   br label %bb.af
 
 bb.ae:                                            ; preds = %bb.ab
   %i.eh = fsub double %i.ea, %i.dz
   %i.ei = fmul double %i.eh, 5.000000e-01         ; 2 uses
   %i.ej = fadd double %i.ed, %i.ei                ; 2 uses
-  store double %i.ej, ptr %i.ca, align 8, !tbaa !158
+  store double %i.ej, ptr %i.ca, align 8, !tbaa !157
   %i.ek = fsub double %i.ec, %i.ei                ; 2 uses
-  store double %i.ek, ptr %i.bz, align 8, !tbaa !157
+  store double %i.ek, ptr %i.bz, align 8, !tbaa !158
   br label %bb.af
 
 bb.af:                                            ; preds = %bb.ac, %bb.ad, %bb.ae, %bb.aa
@@ -608,8 +608,8 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
   br i1 %i.ft, label %bb.am, label %bb.an
 
 bb.am:                                            ; preds = %bb.al
-  store double %i.fo, ptr %i.ca, align 8, !tbaa !158
-  store double %i.fp, ptr %i.bz, align 8, !tbaa !157
+  store double %i.fo, ptr %i.ca, align 8, !tbaa !157
+  store double %i.fp, ptr %i.bz, align 8, !tbaa !158
   br label %bb.an
 
 bb.an:                                            ; preds = %bb.am, %bb.al
@@ -1012,8 +1012,8 @@ attributes #27 = { cold noreturn nounwind }
 !154 = distinct !{!154, !59, !60, !61}
 !155 = distinct !{!155, !59, !61, !60}
 !156 = !{!41, !8, i64 232}
-!157 = !{!27, !23, i64 24}
-!158 = !{!27, !23, i64 8}
+!157 = !{!27, !23, i64 8}
+!158 = !{!27, !23, i64 24}
 !159 = !{!27, !23, i64 0}
 !160 = !{!27, !23, i64 16}
 end_hunk_1

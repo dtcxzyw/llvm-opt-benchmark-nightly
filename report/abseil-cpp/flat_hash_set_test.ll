@@ -205,7 +205,7 @@ bb.d:                                             ; preds = %_ZN4absl12lts_20260
   br label %bb.g
 
 bb.e:                                             ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_12_GLOBAL__N_19PoisonSooEEEJEE15destructor_implEv.exit.i.i.i.i
-  %i.w = load <2 x i64>, ptr %5, align 16, !tbaa !347
+  %i.w = load <2 x i64>, ptr %5, align 16
   store <2 x i64> %i.w, ptr %6, align 16, !tbaa !107
   br label %bb.g
 
@@ -608,7 +608,7 @@ bb.e:                                             ; preds = %_ZN4absl12lts_20260
   br label %bb.h
 
 bb.f:                                             ; preds = %_ZN4absl12lts_2026052618container_internal12raw_hash_setINS1_17FlatHashSetPolicyINS1_12_GLOBAL__N_19PoisonSooEEEJEE15destructor_implEv.exit.i.i.i.i
-  %i.z = load <2 x i64>, ptr %6, align 16, !tbaa !347
+  %i.z = load <2 x i64>, ptr %6, align 16
   store <2 x i64> %i.z, ptr %7, align 16, !tbaa !107
   br label %bb.h
 
