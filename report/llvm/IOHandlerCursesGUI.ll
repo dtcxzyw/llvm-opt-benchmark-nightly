@@ -204,11 +204,7 @@ bb.g:                                             ; preds = %bb.f
 bb.h:                                             ; preds = %bb.g, %bb.f
   %.015.i = phi i32 [ %i.an, %bb.g ], [ %i.aj, %bb.f ] ; 4 uses
   %i.ao = icmp slt i32 %.015.i, 0
-  br i1 %i.ao, label %.critedge.preheader.i9, label %.lr.ph.preheader.i5
-
-.lr.ph.preheader.i5:                              ; preds = %bb.h
-  %3 = zext nneg i32 %.015.i to i64
-  br label %.lr.ph.i6
+  br i1 %i.ao, label %.critedge.preheader.i9, label %.lr.ph.i6
 
 .critedge.preheader.i9:                           ; preds = %bb.i, %bb.h
   %i.ap = icmp sgt i32 %i.aj, %.015.i
@@ -219,9 +215,10 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.ar = sext i32 %.015.i to i64
   br label %.lr.ph21.i
 
-.lr.ph.i6:                                        ; preds = %bb.i, %.lr.ph.preheader.i5
-  %indvars.iv.i7 = phi i64 [ %3, %.lr.ph.preheader.i5 ], [ %indvars.iv.next.i8, %bb.i ] ; 4 uses
-  %i.as = getelementptr inbounds nuw [16 x i8], ptr %i.ad, i64 %indvars.iv.i7
+.lr.ph.i6:                                        ; preds = %bb.h, %bb.i
+  %.01419.i = phi i32 [ %4, %bb.i ], [ %.015.i, %bb.h ] ; 4 uses
+  %3 = zext nneg i32 %.01419.i to i64
+  %i.as = getelementptr inbounds nuw [16 x i8], ptr %i.ad, i64 %3
   %i.at = load ptr, ptr %i.as, align 8, !tbaa !136
   %i.au = getelementptr inbounds nuw i8, ptr %i.at, i64 122
   %i.av = load i8, ptr %i.au, align 2, !tbaa !210, !range !305, !noundef !199
@@ -229,8 +226,8 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   br i1 %i.aw, label %.loopexit.sink.split.i11, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph.i6
-  %indvars.iv.next.i8 = add nsw i64 %indvars.iv.i7, -1
-  %i.ax = icmp slt i64 %indvars.iv.i7, 1
+  %4 = add nsw i32 %.01419.i, -1
+  %i.ax = icmp slt i32 %.01419.i, 1
   br i1 %i.ax, label %.critedge.preheader.i9, label %.lr.ph.i6, !llvm.loop !966
 
 .lr.ph21.i:                                       ; preds = %.critedge.i10, %.lr.ph21.preheader.i
@@ -240,17 +237,20 @@ bb.i:                                             ; preds = %.lr.ph.i6
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 122
   %i.bb = load i8, ptr %i.ba, align 2, !tbaa !210, !range !305, !noundef !199
   %i.bc = trunc nuw i8 %i.bb to i1
-  br i1 %i.bc, label %.loopexit.sink.split.i11, label %.critedge.i10
+  br i1 %i.bc, label %5, label %.critedge.i10
+
+5:                                                ; preds = %.lr.ph21.i
+  %6 = trunc nsw i64 %indvars.iv25.i to i32
+  br label %.loopexit.sink.split.i11
 
 .critedge.i10:                                    ; preds = %.lr.ph21.i
   %indvars.iv.next26.i = add nsw i64 %indvars.iv25.i, -1 ; 2 uses
   %i.bd = icmp sgt i64 %indvars.iv.next26.i, %i.ar
   br i1 %i.bd, label %.lr.ph21.i, label %_ZN12lldb_private6curses6Window24SelectNextWindowAsActiveEv.exit, !llvm.loop !967
 
-.loopexit.sink.split.i11:                         ; preds = %.lr.ph.i6, %.lr.ph21.i
-  %indvars.iv.lcssa.sink.i12 = phi i64 [ %indvars.iv25.i, %.lr.ph21.i ], [ %indvars.iv.i7, %.lr.ph.i6 ]
-  %4 = trunc nsw i64 %indvars.iv.lcssa.sink.i12 to i32
-  store i32 %4, ptr %i.ak, align 8, !tbaa !153
+.loopexit.sink.split.i11:                         ; preds = %.lr.ph.i6, %5
+  %.01419.lcssa.sink.i = phi i32 [ %6, %5 ], [ %.01419.i, %.lr.ph.i6 ]
+  store i32 %.01419.lcssa.sink.i, ptr %i.ak, align 8, !tbaa !153
   br label %_ZN12lldb_private6curses6Window24SelectNextWindowAsActiveEv.exit
 
 bb.j:                                             ; preds = %bb.a
