@@ -1,0 +1,21 @@
+diff --git a/llvm/lib/Analysis/ScalarEvolution.cpp b/llvm/lib/Analysis/ScalarEvolution.cpp
+index e64b2411ee775b..3417075a8637e8 100644
+--- a/llvm/lib/Analysis/ScalarEvolution.cpp
++++ b/llvm/lib/Analysis/ScalarEvolution.cpp
+@@ -9151,6 +9151,16 @@ ScalarEvolution::ExitLimit ScalarEvolution::computeExitLimitFromCondImpl(
+                                     /*AllowPredicates=*/true);
+   }
+ 
++  if (auto *Trunc = dyn_cast<TruncInst>(ExitCond)) {
++    Type *Ty = Trunc->getOperand(0)->getType();
++    auto *LHS = getZeroExtendExpr(getSCEV(Trunc), Ty);
++    auto EL =
++        computeExitLimitFromICmp(L, CmpInst::ICMP_NE, LHS, getConstant(Ty, 0),
++                                 ControlsOnlyExit, AllowPredicates);
++    if (EL.hasAnyInfo())
++      return EL;
++  }
++
+   // Check for a constant condition. These are normally stripped out by
+   // SimplifyCFG, but ScalarEvolution may be used by a pass which wishes to
+   // preserve the CFG and is temporarily leaving constant conditions
