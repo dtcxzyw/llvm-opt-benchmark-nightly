@@ -205,10 +205,9 @@ bb.gd:                                            ; preds = %._crit_edge1154.thr
 
 bb.ge:                                            ; preds = %.lr.ph1163, %bb.gq
   %i.and = phi i32 [ %i.ana, %.lr.ph1163 ], [ %i.aph, %bb.gq ] ; 4 uses
-  %indvars.iv1281 = phi i64 [ 0, %.lr.ph1163 ], [ %indvars.iv.next1282, %bb.gq ] ; 4 uses
-  %indvars.iv1276.a = phi i64 [ 1, %.lr.ph1163 ], [ %indvars.iv.next1277, %bb.gq ] ; 2 uses
+  %indvars.iv1276.a = phi i64 [ 0, %.lr.ph1163 ], [ %indvars.iv.next1282, %bb.gq ] ; 4 uses
   %i.ane = load ptr, ptr %i.anc, align 8
-  %i.anf = getelementptr [8 x i8], ptr %i.ane, i64 %indvars.iv1281
+  %i.anf = getelementptr [8 x i8], ptr %i.ane, i64 %indvars.iv1276.a
   %i.ang = load ptr, ptr %i.anf, align 8          ; 7 uses
   %i.anh = icmp eq ptr %i.ang, null
   br i1 %i.anh, label %bb.gq, label %bb.gf
@@ -239,7 +238,7 @@ bb.gi:                                            ; preds = %bb.gh
   %i.anv = load i32, ptr %i.b, align 4
   %i.anw = add i32 %i.anv, 1
   store i32 %i.anw, ptr %i.b, align 4
-  %i.anx = add nuw nsw i64 %indvars.iv1281, 1
+  %i.anx = add nuw nsw i64 %indvars.iv1276.a, 1   ; 2 uses
   %i.any = load i32, ptr %i.go, align 8           ; 2 uses
   %i.anz = sext i32 %i.any to i64
   %i.aoa = icmp slt i64 %i.anx, %i.anz
@@ -251,7 +250,7 @@ bb.gi:                                            ; preds = %bb.gh
 
 bb.gj:                                            ; preds = %.lr.ph1159, %bb.gp
   %i.aoc = phi i32 [ %i.any, %.lr.ph1159 ], [ %i.aoy, %bb.gp ] ; 5 uses
-  %indvars.iv1278 = phi i64 [ %indvars.iv1276.a, %.lr.ph1159 ], [ %indvars.iv.next1279, %bb.gp ] ; 2 uses
+  %indvars.iv1278 = phi i64 [ %i.anx, %.lr.ph1159 ], [ %indvars.iv.next1279, %bb.gp ] ; 2 uses
   %i.aod = load ptr, ptr %i.anc, align 8
   %i.aoe = getelementptr [8 x i8], ptr %i.aod, i64 %indvars.iv1278
   %i.aof = load ptr, ptr %i.aoe, align 8          ; 7 uses
@@ -305,7 +304,7 @@ bb.gp:                                            ; preds = %bb.go, %bb.gn, %bb.
 
 ._crit_edge1160:                                  ; preds = %bb.gp, %bb.gi
   %i.apb = load ptr, ptr %i.anc, align 8
-  %i.apc = getelementptr [8 x i8], ptr %i.apb, i64 %indvars.iv1281
+  %i.apc = getelementptr [8 x i8], ptr %i.apb, i64 %indvars.iv1276.a
   %i.apd = load ptr, ptr %i.apc, align 8
   call void @emit_destructor_code(ptr noundef %i.w, ptr noundef %i.apd, ptr noundef %0, ptr noundef nonnull %i.b)
   %i.ape = call i32 (ptr, i32, ptr, ...) @__fprintf_chk(ptr noundef %i.w, i32 noundef 2, ptr noundef @.str.246) ; 0 uses
@@ -317,10 +316,9 @@ bb.gp:                                            ; preds = %bb.go, %bb.gn, %bb.
 
 bb.gq:                                            ; preds = %bb.gh, %bb.ge, %bb.gf, %bb.gg, %._crit_edge1160
   %i.aph = phi i32 [ %i.and, %bb.gh ], [ %i.and, %bb.ge ], [ %i.and, %bb.gf ], [ %i.and, %bb.gg ], [ %.pre1294, %._crit_edge1160 ] ; 2 uses
-  %indvars.iv.next1282 = add nuw nsw i64 %indvars.iv1281, 1 ; 2 uses
+  %indvars.iv.next1282 = add nuw nsw i64 %indvars.iv1276.a, 1 ; 2 uses
   %i.api = sext i32 %i.aph to i64
   %i.apj = icmp slt i64 %indvars.iv.next1282, %i.api
-  %indvars.iv.next1277 = add nuw nsw i64 %indvars.iv1276.a, 1
   br i1 %i.apj, label %bb.ge, label %._crit_edge1164, !llvm.loop !217
 
 ._crit_edge1164:                                  ; preds = %bb.gq, %bb.gd

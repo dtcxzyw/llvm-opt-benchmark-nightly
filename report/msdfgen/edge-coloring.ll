@@ -205,7 +205,6 @@ bb.dm:                                            ; preds = %_ZNSt6vectorIPdSaIS
   br i1 %niter.ncmp.3, label %.lr.ph1350.preheader.unr-lcssa, label %.lr.ph1345, !llvm.loop !85
 
 .loopexit715:                                     ; preds = %_ZN7msdfgenL22splineToSplineDistanceEPKPNS_11EdgeSegmentEiiiii.exit, %.lr.ph1350
-  %indvars.iv.next1743 = add nuw nsw i64 %indvars.iv1742.a, 1
   %exitcond1753.not = icmp eq i64 %indvars.iv.next1750, %wide.trip.count1752
   br i1 %exitcond1753.not, label %._crit_edge1351, label %.lr.ph1350, !llvm.loop !86
 
@@ -244,24 +243,23 @@ _ZNSt12_Vector_baseIPKdSaIS1_EE13_M_deallocateEPS1_m.exit.i: ; preds = %_ZNSt12_
   br label %.lr.ph1365
 
 .lr.ph1350:                                       ; preds = %.lr.ph1350.preheader, %.loopexit715
-  %indvars.iv1749 = phi i64 [ 0, %.lr.ph1350.preheader ], [ %indvars.iv.next1750, %.loopexit715 ] ; 5 uses
-  %indvars.iv1742.a = phi i64 [ 1, %.lr.ph1350.preheader ], [ %indvars.iv.next1743, %.loopexit715 ] ; 2 uses
-  %i.rw = getelementptr inbounds nuw [8 x i8], ptr %i.qq, i64 %indvars.iv1749 ; 2 uses
+  %indvars.iv1742.a = phi i64 [ 0, %.lr.ph1350.preheader ], [ %indvars.iv.next1750, %.loopexit715 ] ; 5 uses
+  %i.rw = getelementptr inbounds nuw [8 x i8], ptr %i.qq, i64 %indvars.iv1742.a ; 2 uses
   %i.rx = load ptr, ptr %i.rw, align 8, !tbaa !34 ; 2 uses
-  %i.ry = getelementptr inbounds nuw [8 x i8], ptr %i.rx, i64 %indvars.iv1749
+  %i.ry = getelementptr inbounds nuw [8 x i8], ptr %i.rx, i64 %indvars.iv1742.a
   store double -1.000000e+00, ptr %i.ry, align 8, !tbaa !32
-  %indvars.iv.next1750 = add nuw nsw i64 %indvars.iv1749, 1 ; 4 uses
+  %indvars.iv.next1750 = add nuw nsw i64 %indvars.iv1742.a, 1 ; 5 uses
   %i.rz = icmp slt i64 %indvars.iv.next1750, %i.qn
   br i1 %i.rz, label %.lr.ph1348, label %.loopexit715
 
 .lr.ph1348:                                       ; preds = %.lr.ph1350
-  %i.sa = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0569.13, i64 %indvars.iv1749
+  %i.sa = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0569.13, i64 %indvars.iv1742.a
   %i.sb = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0569.13, i64 %indvars.iv.next1750
   br label %bb.dp
 
 bb.dp:                                            ; preds = %.lr.ph1348, %_ZN7msdfgenL22splineToSplineDistanceEPKPNS_11EdgeSegmentEiiiii.exit
   %i.sc = phi ptr [ %i.rx, %.lr.ph1348 ], [ %i.xe, %_ZN7msdfgenL22splineToSplineDistanceEPKPNS_11EdgeSegmentEiiiii.exit ]
-  %indvars.iv1744 = phi i64 [ %indvars.iv1742.a, %.lr.ph1348 ], [ %indvars.iv.next1745, %_ZN7msdfgenL22splineToSplineDistanceEPKPNS_11EdgeSegmentEiiiii.exit ] ; 4 uses
+  %indvars.iv1744 = phi i64 [ %indvars.iv.next1750, %.lr.ph1348 ], [ %indvars.iv.next1745, %_ZN7msdfgenL22splineToSplineDistanceEPKPNS_11EdgeSegmentEiiiii.exit ] ; 4 uses
   %i.sd = load i32, ptr %i.sa, align 4, !tbaa !19 ; 2 uses
   %i.se = load i32, ptr %i.sb, align 4, !tbaa !19 ; 2 uses
   %i.sf = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0569.13, i64 %indvars.iv1744
@@ -509,7 +507,7 @@ _ZN7msdfgenL22splineToSplineDistanceEPKPNS_11EdgeSegmentEiiiii.exit: ; preds = %
   store double %.0.lcssa.i, ptr %i.xf, align 8, !tbaa !32
   %i.xg = getelementptr inbounds nuw [8 x i8], ptr %i.qq, i64 %indvars.iv1744
   %i.xh = load ptr, ptr %i.xg, align 8, !tbaa !34
-  %i.xi = getelementptr inbounds nuw [8 x i8], ptr %i.xh, i64 %indvars.iv1749
+  %i.xi = getelementptr inbounds nuw [8 x i8], ptr %i.xh, i64 %indvars.iv1742.a
   store double %.0.lcssa.i, ptr %i.xi, align 8, !tbaa !32
   %exitcond1748.not = icmp eq i64 %indvars.iv.next1745, %wide.trip.count1752
   br i1 %exitcond1748.not, label %.loopexit715, label %bb.dp, !llvm.loop !92
@@ -523,7 +521,6 @@ _ZN7msdfgenL22splineToSplineDistanceEPKPNS_11EdgeSegmentEiiiii.exit: ; preds = %
   %.sroa.0455.1.lcssa = phi ptr [ %.sroa.0455.01361, %.lr.ph1365 ], [ %.sroa.0455.5, %_ZNSt6vectorIPKdSaIS1_EE9push_backEOS1_.exit ] ; 11 uses
   %.sroa.18.1.lcssa = phi ptr [ %.sroa.18.01362, %.lr.ph1365 ], [ %.sroa.18.3, %_ZNSt6vectorIPKdSaIS1_EE9push_backEOS1_.exit ] ; 3 uses
   %.sroa.27.1.lcssa = phi ptr [ %.sroa.27.01363, %.lr.ph1365 ], [ %.sroa.27.5, %_ZNSt6vectorIPKdSaIS1_EE9push_backEOS1_.exit ] ; 5 uses
-  %indvars.iv.next1755 = add nuw nsw i64 %indvars.iv1754, 1
   %exitcond1765.not = icmp eq i64 %indvars.iv.next1762, %wide.trip.count1764
   br i1 %exitcond1765.not, label %._crit_edge1366, label %.lr.ph1365, !llvm.loop !93
 
@@ -537,21 +534,20 @@ _ZN7msdfgenL22splineToSplineDistanceEPKPNS_11EdgeSegmentEiiiii.exit: ; preds = %
   br i1 %i.xo, label %bb.ee, label %bb.ec
 
 .lr.ph1365:                                       ; preds = %.lr.ph1365.preheader, %.loopexit
-  %indvars.iv1761 = phi i64 [ 0, %.lr.ph1365.preheader ], [ %indvars.iv.next1762, %.loopexit ] ; 2 uses
-  %indvars.iv1754 = phi i64 [ 1, %.lr.ph1365.preheader ], [ %indvars.iv.next1755, %.loopexit ] ; 2 uses
+  %indvars.iv1754 = phi i64 [ 0, %.lr.ph1365.preheader ], [ %indvars.iv.next1762, %.loopexit ] ; 2 uses
   %.sroa.27.01363 = phi ptr [ %.sroa.27.4, %.lr.ph1365.preheader ], [ %.sroa.27.1.lcssa, %.loopexit ] ; 2 uses
   %.sroa.18.01362 = phi ptr [ %.sroa.0455.4, %.lr.ph1365.preheader ], [ %.sroa.18.1.lcssa, %.loopexit ] ; 2 uses
   %.sroa.0455.01361 = phi ptr [ %.sroa.0455.4, %.lr.ph1365.preheader ], [ %.sroa.0455.1.lcssa, %.loopexit ] ; 2 uses
-  %indvars.iv.next1762 = add nuw nsw i64 %indvars.iv1761, 1 ; 3 uses
+  %indvars.iv.next1762 = add nuw nsw i64 %indvars.iv1754, 1 ; 4 uses
   %i.xp = icmp slt i64 %indvars.iv.next1762, %i.qn
   br i1 %i.xp, label %.lr.ph1357, label %.loopexit
 
 .lr.ph1357:                                       ; preds = %.lr.ph1365
-  %i.xq = getelementptr inbounds nuw [8 x i8], ptr %i.qq, i64 %indvars.iv1761
+  %i.xq = getelementptr inbounds nuw [8 x i8], ptr %i.qq, i64 %indvars.iv1754
   br label %bb.dw
 
 bb.dw:                                            ; preds = %.lr.ph1357, %_ZNSt6vectorIPKdSaIS1_EE9push_backEOS1_.exit
-  %indvars.iv1756 = phi i64 [ %indvars.iv1754, %.lr.ph1357 ], [ %indvars.iv.next1757, %_ZNSt6vectorIPKdSaIS1_EE9push_backEOS1_.exit ] ; 2 uses
+  %indvars.iv1756 = phi i64 [ %indvars.iv.next1762, %.lr.ph1357 ], [ %indvars.iv.next1757, %_ZNSt6vectorIPKdSaIS1_EE9push_backEOS1_.exit ] ; 2 uses
   %.sroa.27.11354 = phi ptr [ %.sroa.27.01363, %.lr.ph1357 ], [ %.sroa.27.5, %_ZNSt6vectorIPKdSaIS1_EE9push_backEOS1_.exit ] ; 4 uses
   %.sroa.18.11353 = phi ptr [ %.sroa.18.01362, %.lr.ph1357 ], [ %.sroa.18.3, %_ZNSt6vectorIPKdSaIS1_EE9push_backEOS1_.exit ] ; 3 uses
   %.sroa.0455.11352 = phi ptr [ %.sroa.0455.01361, %.lr.ph1357 ], [ %.sroa.0455.5, %_ZNSt6vectorIPKdSaIS1_EE9push_backEOS1_.exit ] ; 6 uses

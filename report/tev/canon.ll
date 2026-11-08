@@ -204,26 +204,28 @@ bb.ba:                                            ; preds = %.critedge
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.preheader, %.preheader
-  %indvars.iv452 = phi i64 [ 4, %.preheader.preheader ], [ %indvars.iv.next453.a, %.preheader ] ; 2 uses
-  %indvars.iv = phi i64 [ 2, %.preheader.preheader ], [ %indvars.iv.next, %.preheader ] ; 4 uses
+  %indvars.iv = phi i64 [ 2, %.preheader.preheader ], [ %indvars.iv.next453.a, %.preheader ] ; 4 uses
   %i.cr = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv
   %i.cs = tail call noundef zeroext i16 @_ZN6LibRaw5sget2EPh(ptr noundef nonnull align 8 dereferenceable(768512) %0, ptr noundef nonnull %i.cr)
   %i.ct = icmp ne i16 %i.cs, -17477
   %i.cu = icmp slt i64 %indvars.iv, %i.cq
   %i.cv = and i1 %i.cu, %i.ct
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %indvars.iv.next453.a = add nuw nsw i64 %indvars.iv452, 1
+  %indvars.iv.next453.a = add nuw nsw i64 %indvars.iv, 1
   br i1 %i.cv, label %.preheader, label %bb.bb, !llvm.loop !94
 
 bb.bb:                                            ; preds = %.preheader
   %i.cw = trunc nuw nsw i64 %indvars.iv to i32
-  %i.cx = add nuw nsw i32 %i.cw, 2
+  %i.cx = add nuw nsw i32 %i.cw, 2                ; 2 uses
   %i.cy = add i32 %3, -5                          ; 2 uses
   %i.cz = icmp slt i32 %i.cx, %i.cy
-  br i1 %i.cz, label %.lr.ph, label %.loopexit
+  br i1 %i.cz, label %.lr.ph.preheader, label %.loopexit
 
-.lr.ph:                                           ; preds = %bb.bb, %bb.bd
-  %indvars.iv454 = phi i64 [ %indvars.iv.next455, %bb.bd ], [ %indvars.iv452, %bb.bb ] ; 2 uses
+.lr.ph.preheader:                                 ; preds = %bb.bb
+  %6 = zext nneg i32 %i.cx to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.bd
+  %indvars.iv454 = phi i64 [ %6, %.lr.ph.preheader ], [ %indvars.iv.next455, %bb.bd ] ; 2 uses
   %i.da = getelementptr inbounds nuw i8, ptr %2, i64 %indvars.iv454 ; 2 uses
   %i.db = tail call noundef i32 @_ZN6LibRaw5sget4EPh(ptr noundef nonnull align 8 dereferenceable(768512) %0, ptr noundef nonnull %i.da)
   %i.dc = icmp eq i32 %i.db, 257

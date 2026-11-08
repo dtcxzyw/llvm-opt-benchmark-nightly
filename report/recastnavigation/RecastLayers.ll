@@ -205,15 +205,13 @@ bb.at:                                            ; preds = %.lr.ph.i.i.3
   br i1 %i.jk, label %.lr.ph978, label %.critedge716.preheader
 
 .critedge716.loopexit:                            ; preds = %_ZL9addUniquePhRhih.exit752.thread
-  %indvars.iv.next1093 = add nuw nsw i64 %indvars.iv1092.a, 1
   %exitcond1103.not = icmp eq i64 %indvars.iv.next1100, %wide.trip.count1102
   br i1 %exitcond1103.not, label %.critedge716._crit_edge, label %.lr.ph983
 
 .lr.ph983:                                        ; preds = %.critedge716.loopexit, %.lr.ph986.preheader
-  %indvars.iv1099 = phi i64 [ 0, %.lr.ph986.preheader ], [ %indvars.iv.next1100, %.critedge716.loopexit ] ; 2 uses
-  %indvars.iv1092.a = phi i64 [ 1, %.lr.ph986.preheader ], [ %indvars.iv.next1093, %.critedge716.loopexit ] ; 2 uses
-  %indvars.iv.next1100 = add nuw nsw i64 %indvars.iv1099, 1 ; 2 uses
-  %i.jl = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv1099
+  %indvars.iv1092.a = phi i64 [ 0, %.lr.ph986.preheader ], [ %indvars.iv.next1100, %.critedge716.loopexit ] ; 2 uses
+  %indvars.iv.next1100 = add nuw nsw i64 %indvars.iv1092.a, 1 ; 3 uses
+  %i.jl = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv1092.a
   %i.jm = load i8, ptr %i.jl, align 1, !tbaa !75  ; 4 uses
   %i.jn = zext i8 %i.jm to i64
   %i.jo = getelementptr inbounds nuw [88 x i8], ptr %i.ea, i64 %i.jn ; 3 uses
@@ -221,7 +219,7 @@ bb.at:                                            ; preds = %.lr.ph.i.i.3
   br label %bb.au
 
 bb.au:                                            ; preds = %.lr.ph983, %_ZL9addUniquePhRhih.exit752.thread
-  %indvars.iv1094 = phi i64 [ %indvars.iv1092.a, %.lr.ph983 ], [ %indvars.iv.next1095, %_ZL9addUniquePhRhih.exit752.thread ] ; 2 uses
+  %indvars.iv1094 = phi i64 [ %indvars.iv.next1100, %.lr.ph983 ], [ %indvars.iv.next1095, %_ZL9addUniquePhRhih.exit752.thread ] ; 2 uses
   %i.jq = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv1094
   %i.jr = load i8, ptr %i.jq, align 1, !tbaa !75  ; 4 uses
   %.not675 = icmp eq i8 %i.jm, %i.jr

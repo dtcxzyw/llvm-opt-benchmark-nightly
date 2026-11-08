@@ -204,16 +204,17 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %.not15.not, label %scalar.ph, label %.loopexit, !llvm.loop !628
 
 .loopexit:                                        ; preds = %scalar.ph, %middle.block
-  %indvars.iv.next = add i64 %indvars.iv.a, %i.q  ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv.a, %i.q ; 3 uses
   %i.ax = add nsw i32 %i.o, %i.x
   %i.ay = call i32 @llvm.smin.i32(i32 %i.ax, i32 %i.g) ; 3 uses
-  %.not = icmp slt i32 %i.ay, %indvars
+  %5 = sext i32 %i.ay to i64
+  %.not = icmp sgt i64 %indvars.iv.next, %5
   %indvar.next = add i64 %indvar, 1
   br i1 %.not, label %._crit_edge, label %.preheader
 
 ._crit_edge:                                      ; preds = %.loopexit
-  store i32 %indvars, ptr %i.a, align 4, !tbaa !190
+  %6 = trunc nsw i64 %indvars.iv.next to i32
+  store i32 %6, ptr %i.a, align 4, !tbaa !190
   br label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge, %bb.b
@@ -350,16 +351,17 @@ scalar.ph:                                        ; preds = %scalar.ph.preheader
   br i1 %.not15.not, label %scalar.ph, label %.loopexit, !llvm.loop !635
 
 .loopexit:                                        ; preds = %scalar.ph, %middle.block
-  %indvars.iv.next = add i64 %indvars.iv.a, %i.q  ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv.a, %i.q ; 3 uses
   %i.ax = add nsw i32 %i.o, %i.x
   %i.ay = call i32 @llvm.smin.i32(i32 %i.ax, i32 %i.g) ; 3 uses
-  %.not = icmp slt i32 %i.ay, %indvars
+  %5 = sext i32 %i.ay to i64
+  %.not = icmp sgt i64 %indvars.iv.next, %5
   %indvar.next = add i64 %indvar, 1
   br i1 %.not, label %._crit_edge, label %.preheader
 
 ._crit_edge:                                      ; preds = %.loopexit
-  store i32 %indvars, ptr %i.a, align 4, !tbaa !190
+  %6 = trunc nsw i64 %indvars.iv.next to i32
+  store i32 %6, ptr %i.a, align 4, !tbaa !190
   br label %bb.c
 
 bb.c:                                             ; preds = %._crit_edge, %bb.b

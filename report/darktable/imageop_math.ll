@@ -205,8 +205,10 @@ bb.a:
 
 .preheader.lr.ph.preheader:                       ; preds = %.lr.ph
   %i.ai = uitofp nsz nneg i32 %i.h to float
-  %14 = mul i32 %12, %i.j
-  %15 = add i32 %i.i, %14
+  %14 = zext nneg i32 %i.j to i64
+  %15 = sext i32 %12 to i64
+  %16 = zext nneg i32 %i.i to i64
+  %wide.trip.count = zext nneg i32 %i.s to i64
   %i.aj = insertelement <2 x i32> poison, i32 %5, i64 0
   %i.ak = shufflevector <2 x i32> %i.aj, <2 x i32> poison, <4 x i32> zeroinitializer
   br label %.preheader.lr.ph
@@ -215,10 +217,11 @@ bb.a:
   ret void
 
 .preheader.lr.ph:                                 ; preds = %.preheader.lr.ph.preheader, %._crit_edge
-  %indvars.iv = phi i32 [ %15, %.preheader.lr.ph.preheader ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
-  %.0148169 = phi i32 [ 0, %.preheader.lr.ph.preheader ], [ %17, %._crit_edge ]
+  %indvars.iv174 = phi i64 [ 0, %.preheader.lr.ph.preheader ], [ %indvars.iv.next175, %._crit_edge ] ; 2 uses
   %.0149168 = phi float [ %i.ai, %.preheader.lr.ph.preheader ], [ %i.dv, %._crit_edge ] ; 3 uses
-  %16 = sext i32 %indvars.iv to i64
+  %17 = add nuw nsw i64 %indvars.iv174, %14
+  %18 = mul nsw i64 %17, %15
+  %19 = add nsw i64 %18, %16
   %i.al = fadd reassoc nsz arcp contract afn float %.0149168, %i.ah
   %i.am = insertelement <2 x float> poison, float %.0149168, i64 0
   %i.an = insertelement <2 x float> %i.am, float %i.al, i64 1
@@ -228,7 +231,7 @@ bb.a:
   br label %.preheader
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.preheader
-  %indvars.iv173 = phi i64 [ %16, %.preheader.lr.ph ], [ %indvars.iv.next174, %.preheader ] ; 2 uses
+  %indvars.iv173 = phi i64 [ %19, %.preheader.lr.ph ], [ %indvars.iv.next174, %.preheader ] ; 2 uses
   %.0146167 = phi i32 [ 0, %.preheader.lr.ph ], [ %i.du, %.preheader ]
   %.1165 = phi float [ %i.ad, %.preheader.lr.ph ], [ %i.dt, %.preheader ] ; 3 uses
   %i.ar = fadd reassoc nsz arcp contract afn float %.1165, %i.ag
@@ -322,9 +325,8 @@ bb.a:
 
 ._crit_edge:                                      ; preds = %.preheader
   %i.dv = fadd reassoc nsz arcp contract afn float %.0149168, %i.f
-  %17 = add nuw nsw i32 %.0148169, 1              ; 2 uses
-  %indvars.iv.next = add i32 %indvars.iv, %12
-  %exitcond176.not = icmp eq i32 %17, %i.s
+  %indvars.iv.next175 = add nuw nsw i64 %indvars.iv174, 1 ; 2 uses
+  %exitcond176.not = icmp eq i64 %indvars.iv.next175, %wide.trip.count
   br i1 %exitcond176.not, label %._crit_edge171.split, label %.preheader.lr.ph
 }
 

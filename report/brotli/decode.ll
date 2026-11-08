@@ -205,17 +205,17 @@ BrotliCopyPreloadedSymbolsToU8.exit16:            ; preds = %BrotliCopyPreloaded
 
 bb.x:                                             ; preds = %bb.am, %BrotliCopyPreloadedSymbolsToU8.exit16
   %i.jo = phi i64 [ %i.ob, %bb.am ], [ %i.jl, %BrotliCopyPreloadedSymbolsToU8.exit16 ]
-  %indvars.iv346.a = phi i64 [ %indvars.iv.next347, %bb.am ], [ %i.jn, %BrotliCopyPreloadedSymbolsToU8.exit16 ] ; 4 uses
+  %indvars.iv346.a = phi i64 [ %indvars.iv.next347, %bb.am ], [ %i.jn, %BrotliCopyPreloadedSymbolsToU8.exit16 ] ; 6 uses
   %.5 = phi i32 [ %i.oe, %bb.am ], [ %i.jm, %BrotliCopyPreloadedSymbolsToU8.exit16 ] ; 4 uses
   %.0104 = phi i64 [ %.2106.lcssa, %bb.am ], [ %.4108.lcssa, %BrotliCopyPreloadedSymbolsToU8.exit16 ] ; 2 uses
   %.0 = phi i64 [ %.2.lcssa, %bb.am ], [ %.4.lcssa, %BrotliCopyPreloadedSymbolsToU8.exit16 ] ; 2 uses
-  %indvars351 = trunc i64 %indvars.iv346.a to i32 ; 3 uses
   %i.jp = load ptr, ptr %i.j, align 8, !tbaa !49  ; 3 uses
   %i.jq = load ptr, ptr %i.l, align 8, !tbaa !51  ; 3 uses
   %.not226 = icmp ult ptr %i.jp, %i.jq
   br i1 %.not226, label %bb.z, label %bb.y
 
 bb.y:                                             ; preds = %bb.x
+  %1 = trunc nsw i64 %indvars.iv346.a to i32
   store i32 8, ptr %0, align 8, !tbaa !27
   br label %.thread131
 
@@ -236,13 +236,10 @@ bb.aa:                                            ; preds = %bb.z
   %i.ka = add i32 %i.jz, -4
   %i.kb = tail call i32 @llvm.smax.i32(i32 %i.ka, i32 0)
   %spec.store.select.i7 = select i1 %.not.i5, i32 1, i32 %i.kb ; 2 uses
+  %2 = zext nneg i32 %spec.store.select.i7 to i64
+  %3 = add nsw i64 %indvars.iv346.a, %2
   %.not302 = icmp eq i32 %spec.store.select.i7, 0 ; 2 uses
-  br i1 %.not302, label %.preheader, label %.lr.ph289.preheader
-
-.lr.ph289.preheader:                              ; preds = %bb.aa
-  %1 = add nsw i32 %spec.store.select.i7, %indvars351
-  %2 = sext i32 %1 to i64
-  br label %.lr.ph289
+  br i1 %.not302, label %.preheader, label %.lr.ph289
 
 .preheader.loopexit:                              ; preds = %ReadPreloadedSymbol.exit32
   %.pre369.a = load ptr, ptr %i.j, align 8, !tbaa !49
@@ -259,10 +256,10 @@ bb.aa:                                            ; preds = %bb.z
   %i.kf = and i1 %i.ke, %.not302
   br i1 %i.kf, label %.lr.ph296, label %BrotliCopyPreloadedSymbolsToU8.exit
 
-.lr.ph289:                                        ; preds = %.lr.ph289.preheader, %ReadPreloadedSymbol.exit32
-  %indvars.iv348 = phi i64 [ %indvars.iv346.a, %.lr.ph289.preheader ], [ %indvars.iv.next349, %ReadPreloadedSymbol.exit32 ] ; 2 uses
-  %.1286 = phi i64 [ %.0, %.lr.ph289.preheader ], [ %i.lz, %ReadPreloadedSymbol.exit32 ] ; 2 uses
-  %.1105285 = phi i64 [ %.0104, %.lr.ph289.preheader ], [ %i.lw, %ReadPreloadedSymbol.exit32 ] ; 4 uses
+.lr.ph289:                                        ; preds = %bb.aa, %ReadPreloadedSymbol.exit32
+  %indvars.iv348 = phi i64 [ %indvars.iv.next349, %ReadPreloadedSymbol.exit32 ], [ %indvars.iv346.a, %bb.aa ] ; 2 uses
+  %.1286 = phi i64 [ %i.lz, %ReadPreloadedSymbol.exit32 ], [ %.0, %bb.aa ] ; 2 uses
+  %.1105285 = phi i64 [ %i.lw, %ReadPreloadedSymbol.exit32 ], [ %.0104, %bb.aa ] ; 4 uses
   %i.kg = icmp ugt i64 %.1105285, 8
   %i.kh = load i64, ptr %i.do, align 8, !tbaa !54 ; 5 uses
   br i1 %i.kg, label %bb.ab, label %bb.ad, !prof !105
@@ -346,7 +343,7 @@ ReadPreloadedSymbol.exit32:                       ; preds = %bb.ae, %bb.af
   %i.mb = getelementptr inbounds i8, ptr %i.jt, i64 %indvars.iv348
   store i8 %i.ma, ptr %i.mb, align 1, !tbaa !53
   %indvars.iv.next349 = add nsw i64 %indvars.iv348, 1 ; 3 uses
-  %i.mc = icmp slt i64 %indvars.iv.next349, %2
+  %i.mc = icmp slt i64 %indvars.iv.next349, %3
   br i1 %i.mc, label %.lr.ph289, label %.preheader.loopexit, !llvm.loop !166
 
 .lr.ph296:                                        ; preds = %.preheader
@@ -443,9 +440,9 @@ BrotliCopyPreloadedSymbolsToU8.exit:              ; preds = %ReadPreloadedSymbol
   %i.ob = add i64 %i.oa, -1                       ; 2 uses
   store i64 %i.ob, ptr %i.dp, align 8, !tbaa !36
   %indvars.iv.next347 = add nsw i64 %indvars.iv346.a, 1 ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next347 to i32 ; 3 uses
-  %3 = load i32, ptr %i.dq, align 4, !tbaa !90
-  %i.oc = icmp eq i32 %3, %indvars
+  %4 = load i32, ptr %i.dq, align 4, !tbaa !90    ; 2 uses
+  %5 = trunc nsw i64 %indvars.iv.next347 to i32   ; 2 uses
+  %i.oc = icmp eq i32 %4, %5
   br i1 %i.oc, label %bb.al, label %bb.am, !prof !105
 
 bb.al:                                            ; preds = %BrotliCopyPreloadedSymbolsToU8.exit
@@ -492,7 +489,7 @@ bb.ap:                                            ; preds = %bb.ao
 bb.aq:                                            ; preds = %bb.ao
   %i.ov = load i64, ptr %i.dp, align 8, !tbaa !36
   %i.ow = icmp eq i64 %i.ov, 0
-  br i1 %i.ow, label %.loopexit231.loopexit, label %bb.ar, !prof !105
+  br i1 %i.ow, label %.loopexit231, label %bb.ar, !prof !105
 
 bb.ar:                                            ; preds = %bb.aq
   %i.ox = load ptr, ptr %i.dt, align 8, !tbaa !84 ; 2 uses
@@ -587,7 +584,7 @@ bb.au:                                            ; preds = %ReadSymbol.exit
   br i1 %.not442.i, label %.thread126, label %bb.ao, !llvm.loop !2
 
 .thread126:                                       ; preds = %bb.am, %bb.au
-  %.10385.i = phi i32 [ %i.ra, %bb.au ], [ %indvars, %bb.am ] ; 2 uses
+  %.10385.i = phi i32 [ %i.ra, %bb.au ], [ %5, %bb.am ] ; 2 uses
   %i.re = getelementptr inbounds nuw i8, ptr %0, i64 132
   %i.rf = load i32, ptr %i.re, align 4, !tbaa !62
   %i.rg = icmp slt i32 %i.rf, 1
@@ -990,19 +987,16 @@ bb.da:                                            ; preds = %bb.cz
   store i32 14, ptr %0, align 8, !tbaa !27
   br label %.thread131
 
-.loopexit231.loopexit:                            ; preds = %bb.aq
-  %4 = trunc nsw i64 %indvars.iv352 to i32
-  br label %.loopexit231
-
-.loopexit231:                                     ; preds = %bb.z, %.loopexit231.loopexit
-  %.7 = phi i32 [ %.9, %.loopexit231.loopexit ], [ %.5, %bb.z ]
-  %.20.i = phi i32 [ %4, %.loopexit231.loopexit ], [ %indvars351, %bb.z ]
+.loopexit231:                                     ; preds = %bb.z, %bb.aq
+  %.7 = phi i32 [ %.9, %bb.aq ], [ %.5, %bb.z ]
+  %.20.i.in = phi i64 [ %indvars.iv352, %bb.aq ], [ %indvars.iv346.a, %bb.z ]
+  %.20.i = trunc i64 %.20.i.in to i32
   tail call fastcc void @DecodeLiteralBlockSwitch(ptr noundef nonnull %0)
   br label %bb.i
 
 .thread131:                                       ; preds = %bb.ap, %bb.at, %bb.y, %bb.al, %bb.cy, %bb.cn, %CopyFromCompoundDictionary.exit.thread, %bb.da, %bb.cu, %bb.av, %._crit_edge, %GetCompoundDictionarySize.exit
   %.2111 = phi i32 [ %i.d, %GetCompoundDictionarySize.exit ], [ %.3112.ph, %._crit_edge ], [ %i.vz, %bb.cu ], [ %i.vz, %bb.cn ], [ %i.vz, %CopyFromCompoundDictionary.exit.thread ], [ %i.agf, %bb.da ], [ %i.agf, %bb.cy ], [ 0, %bb.av ], [ %i.od, %bb.al ], [ %.5, %bb.y ], [ %.9, %bb.ap ], [ %i.rc, %bb.at ]
-  %.21.i = phi i32 [ %i.b, %GetCompoundDictionarySize.exit ], [ %.0375.i.ph, %._crit_edge ], [ %.16.i, %bb.cu ], [ %i.aek, %bb.cn ], [ %.143.i468, %CopyFromCompoundDictionary.exit.thread ], [ %i.agu, %bb.da ], [ %i.agt, %bb.cy ], [ %.10385.i, %bb.av ], [ %indvars, %bb.al ], [ %indvars351, %bb.y ], [ %i.ou, %bb.ap ], [ %i.qz, %bb.at ]
+  %.21.i = phi i32 [ %i.b, %GetCompoundDictionarySize.exit ], [ %.0375.i.ph, %._crit_edge ], [ %.16.i, %bb.cu ], [ %i.aek, %bb.cn ], [ %.143.i468, %CopyFromCompoundDictionary.exit.thread ], [ %i.agu, %bb.da ], [ %i.agt, %bb.cy ], [ %.10385.i, %bb.av ], [ %4, %bb.al ], [ %1, %bb.y ], [ %i.ou, %bb.ap ], [ %i.qz, %bb.at ]
   %.15.i = phi i32 [ 2, %GetCompoundDictionarySize.exit ], [ 2, %._crit_edge ], [ 1, %bb.cu ], [ 1, %bb.cn ], [ 1, %CopyFromCompoundDictionary.exit.thread ], [ 1, %bb.da ], [ 1, %bb.cy ], [ 1, %bb.av ], [ 1, %bb.al ], [ 2, %bb.y ], [ 2, %bb.ap ], [ 1, %bb.at ]
   store i32 %.21.i, ptr %i.a, align 8, !tbaa !92
   store i32 %.2111, ptr %i.c, align 4, !tbaa !56

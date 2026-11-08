@@ -205,18 +205,16 @@ bb.jo:                                            ; preds = %bb.jn
   br label %bb.jp
 
 bb.jp:                                            ; preds = %._crit_edge.i369.i.i, %.thread.i.i30.i, %bb.jg
-  %.1.ph.i.i = phi i32 [ %storemerge473.i.i, %bb.jg ], [ %i.aqq, %._crit_edge.i369.i.i ], [ %storemerge473.i.i, %.thread.i.i30.i ] ; 21 uses
+  %.1.ph.i.i = phi i32 [ %storemerge473.i.i, %bb.jg ], [ %i.aqq, %._crit_edge.i369.i.i ], [ %storemerge473.i.i, %.thread.i.i30.i ] ; 20 uses
   %i.aqr = icmp sgt i32 %.1.ph.i.i, -1
   br i1 %i.aqr, label %.lr.ph118.i.i.i, label %.critedge.i.i
 
 .lr.ph118.i.i.i:                                  ; preds = %bb.jp
-  %17 = add nuw i32 %.1.ph.i.i, 2
   %i.aqs = zext nneg i32 %.1.ph.i.i to i64
   br label %bb.jq
 
 bb.jq:                                            ; preds = %bb.kb, %.lr.ph118.i.i.i
   %indvars.iv143.i.i.i = phi i64 [ %i.aqs, %.lr.ph118.i.i.i ], [ %indvars.iv.next144.i.i.i, %bb.kb ] ; 4 uses
-  %indvars.iv.i374.i.i = phi i32 [ %17, %.lr.ph118.i.i.i ], [ %indvars.iv.next.i375.i.i, %bb.kb ] ; 2 uses
   %i.aqt = load ptr, ptr %i.kq, align 8, !tbaa !41 ; 7 uses
   %i.aqu = getelementptr [40 x i8], ptr %i.aqt, i64 %indvars.iv143.i.i.i ; 3 uses
   %i.aqv = load i32, ptr %i.aqu, align 8, !tbaa !47
@@ -236,15 +234,13 @@ bb.jr:                                            ; preds = %bb.jq
   br i1 %i.aqz, label %.lr.ph, label %.critedge.i.i
 
 .split.i.i.i.i:                                   ; preds = %.lr.ph
-  %indvars.iv.next138.i.i.i = add i32 %indvars.iv137.i.i.i563, 1
   %i.ara = add i32 %i.arc, 1                      ; 2 uses
   %i.arb = icmp slt i32 %i.ara, %i.aqw
   br i1 %i.arb, label %.lr.ph, label %.critedge.i.i
 
 .lr.ph:                                           ; preds = %bb.jr, %.split.i.i.i.i
   %i.arc = phi i32 [ %i.ara, %.split.i.i.i.i ], [ %i.aqy, %bb.jr ] ; 9 uses
-  %.014.i.i.i.i564 = phi i32 [ %i.arc, %.split.i.i.i.i ], [ %i.aqx, %bb.jr ]
-  %indvars.iv137.i.i.i563 = phi i32 [ %indvars.iv.next138.i.i.i, %.split.i.i.i.i ], [ %indvars.iv.i374.i.i, %bb.jr ] ; 2 uses
+  %indvars.iv137.i.i.i563 = phi i32 [ %i.arc, %.split.i.i.i.i ], [ %i.aqx, %bb.jr ]
   %i.ard = sext i32 %i.arc to i64
   %i.are = getelementptr [40 x i8], ptr %i.aqt, i64 %i.ard
   %i.arf = load i32, ptr %i.are, align 8, !tbaa !47 ; 2 uses
@@ -389,12 +385,12 @@ bb.jy:                                            ; preds = %bb.jx
   br i1 %i.asw, label %.critedge.i.i, label %.preheader.i380.i.i
 
 .preheader.i380.i.i:                              ; preds = %bb.jy
-  %.070114.i.i.i = add i32 %.014.i.i.i.i564, 2
+  %.070114.i.i.i = add i32 %indvars.iv137.i.i.i563, 2 ; 2 uses
   %.not85115.i.i.i = icmp slt i32 %.070114.i.i.i, %.us-phi.i.i.i
   br i1 %.not85115.i.i.i, label %.lr.ph.preheader.i381.i.i, label %.loopexit.i379.i.i
 
 .lr.ph.preheader.i381.i.i:                        ; preds = %.preheader.i380.i.i
-  %i.asx = sext i32 %indvars.iv137.i.i.i563 to i64
+  %i.asx = sext i32 %.070114.i.i.i to i64
   br label %.lr.ph.i382.i.i
 
 .lr.ph.i382.i.i:                                  ; preds = %.critedge.i383.i.i, %.lr.ph.preheader.i381.i.i
@@ -438,7 +434,6 @@ bb.ka:                                            ; preds = %bb.jz
 bb.kb:                                            ; preds = %.loopexit.i379.i.i, %bb.jq, %bb.jq, %bb.jq, %bb.jq
   %indvars.iv.next144.i.i.i = add nsw i64 %indvars.iv143.i.i.i, -1
   %i.ath = icmp sgt i64 %indvars.iv143.i.i.i, 0
-  %indvars.iv.next.i375.i.i = add i32 %indvars.iv.i374.i.i, -1
   br i1 %i.ath, label %bb.jq, label %.critedge.i.i, !llvm.loop !129
 
 .critedge.i.i:                                    ; preds = %bb.kb, %bb.jy, %next_swappable_instruction.exit.i.i.i, %bb.jq, %bb.jr, %.split.i.i.i.i, %.lr.ph, %next_swappable_instruction.exit91.loopexit103.i.i.i, %.split.i87.i.i.i.preheader, %next_swappable_instruction.exit91.loopexit.us.i.i.i, %.split.us.i.us.i.i.i.preheader, %bb.ka, %.split.i87.i.i.i, %.lr.ph566, %.split.us.i.us.i.i.i, %.lr.ph570, %bb.jt, %bb.jp, %.lr.ph474.i.i

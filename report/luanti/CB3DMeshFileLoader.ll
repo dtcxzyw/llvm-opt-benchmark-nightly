@@ -205,22 +205,24 @@ _ZN4core5arrayIN5scene9SB3dChunkEE7getLastEv.exit96.lr.ph: ; preds = %bb.a
   %i.as = getelementptr inbounds nuw i8, ptr %0, i64 80
   %.not157.not = icmp ugt i32 %i.j, 4
   %i.at = getelementptr inbounds nuw i8, ptr %0, i64 246 ; 2 uses
-  %i.au = add nsw i32 %i.k, -1                    ; 8 uses
-  %3 = zext i32 %i.au to i64                      ; 6 uses
+  %i.au = add nsw i32 %i.k, -1                    ; 7 uses
   %wide.trip.count = zext nneg i32 %i.k to i64
-  %i.av = add nsw i32 %i.k, -1                    ; 2 uses
+  %i.av = add nsw i32 %i.k, -1                    ; 3 uses
   %i.aw = icmp ult i32 %i.av, %i.au
+  %3 = zext i32 %i.av to i64
   %.not84 = icmp eq i32 %i.av, 0
-  %i.ax = add nsw i32 %i.k, -2                    ; 2 uses
+  %i.ax = add nsw i32 %i.k, -2                    ; 3 uses
   %i.ay = icmp ult i32 %i.ax, %i.au
+  %4 = zext i32 %i.ax to i64                      ; 2 uses
   %.not84.1 = icmp eq i32 %i.ax, 0
-  %indvars.iv.next161.1 = add nsw i64 %3, -2
-  %i.az = add nsw i32 %i.k, -3                    ; 2 uses
+  %i.az = add nsw i32 %i.k, -3                    ; 3 uses
   %i.ba = icmp ult i32 %i.az, %i.au
+  %5 = zext i32 %i.az to i64
   %.not84.2 = icmp eq i32 %i.az, 0
-  %i.bb = add nsw i32 %i.k, -4
+  %i.bb = add nsw i32 %i.k, -4                    ; 2 uses
   %i.bc = icmp ult i32 %i.bb, %i.au
-  %indvars.iv.next163.prol.3 = add nsw i64 %3, -2 ; 2 uses
+  %6 = zext i32 %i.bb to i64                      ; 2 uses
+  %indvars.iv.next163.prol.3 = add nuw nsw i64 %6, 1 ; 2 uses
   br label %_ZN4core5arrayIN5scene9SB3dChunkEE7getLastEv.exit96
 
 ._crit_edge155:                                   ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit, %bb.a
@@ -623,21 +625,21 @@ bb.aj:                                            ; preds = %bb.ah, %bb.ai, %._c
   br i1 %i.ay, label %.lr.ph149.prol.1, label %.loopexit.1
 
 .lr.ph149.prol.1:                                 ; preds = %.lr.ph153.1
-  %i.gl = getelementptr inbounds nuw [8 x i8], ptr %i.ge, i64 %3 ; 2 uses
-  %i.gm = load ptr, ptr %i.gl, align 8, !tbaa !107 ; 2 uses
+  %i.gl = getelementptr inbounds nuw [8 x i8], ptr %i.ge, i64 %4
+  %7 = getelementptr inbounds nuw i8, ptr %i.gl, i64 8 ; 2 uses
+  %i.gm = load ptr, ptr %7, align 8, !tbaa !107   ; 2 uses
   %.not91.prol.1 = icmp eq ptr %i.gm, null
   br i1 %.not91.prol.1, label %.loopexit.1, label %bb.ak
 
 bb.ak:                                            ; preds = %.lr.ph149.prol.1
-  %i.gn = getelementptr [8 x i8], ptr %i.ge, i64 %3
-  %4 = getelementptr i8, ptr %i.gn, i64 -8        ; 2 uses
-  %i.go = load ptr, ptr %4, align 8, !tbaa !107
+  %i.gn = getelementptr inbounds nuw [8 x i8], ptr %i.ge, i64 %4 ; 2 uses
+  %i.go = load ptr, ptr %i.gn, align 8, !tbaa !107
   %i.gp = icmp eq ptr %i.go, null
   br i1 %i.gp, label %bb.al, label %.loopexit.1
 
 bb.al:                                            ; preds = %bb.ak
-  store ptr %i.gm, ptr %4, align 8, !tbaa !107
-  store ptr null, ptr %i.gl, align 8, !tbaa !107
+  store ptr %i.gm, ptr %i.gn, align 8, !tbaa !107
+  store ptr null, ptr %7, align 8, !tbaa !107
   br label %.loopexit.1
 
 .loopexit.1:                                      ; preds = %.lr.ph149.prol.1, %bb.ak, %bb.al, %.lr.ph153.1
@@ -647,7 +649,7 @@ bb.al:                                            ; preds = %bb.ak
   br i1 %i.ba, label %.lr.ph149.2, label %.loopexit.2
 
 .lr.ph149.2:                                      ; preds = %.lr.ph153.2, %bb.aq
-  %indvars.iv162.2 = phi i64 [ %indvars.iv.next163.1.2, %bb.aq ], [ %indvars.iv.next161.1, %.lr.ph153.2 ] ; 3 uses
+  %indvars.iv162.2 = phi i64 [ %indvars.iv.next163.1.2, %bb.aq ], [ %5, %.lr.ph153.2 ] ; 3 uses
   %indvars.iv.next163.2 = add nuw nsw i64 %indvars.iv162.2, 1 ; 2 uses
   %i.gq = getelementptr inbounds nuw [8 x i8], ptr %i.ge, i64 %indvars.iv.next163.2 ; 2 uses
   %i.gr = load ptr, ptr %i.gq, align 8, !tbaa !107 ; 2 uses
@@ -700,14 +702,13 @@ bb.aq:                                            ; preds = %bb.ap, %bb.ao, %.lr
   br i1 %.not91.prol.3, label %.lr.ph149.preheader.new.3, label %bb.ar
 
 bb.ar:                                            ; preds = %.lr.ph149.prol.3
-  %i.hc = getelementptr [8 x i8], ptr %i.ge, i64 %3
-  %5 = getelementptr i8, ptr %i.hc, i64 -24       ; 2 uses
-  %i.hd = load ptr, ptr %5, align 8, !tbaa !107
+  %i.hc = getelementptr inbounds nuw [8 x i8], ptr %i.ge, i64 %6 ; 2 uses
+  %i.hd = load ptr, ptr %i.hc, align 8, !tbaa !107
   %i.he = icmp eq ptr %i.hd, null
   br i1 %i.he, label %bb.as, label %.lr.ph149.preheader.new.3
 
 bb.as:                                            ; preds = %bb.ar
-  store ptr %i.hb, ptr %5, align 8, !tbaa !107
+  store ptr %i.hb, ptr %i.hc, align 8, !tbaa !107
   store ptr null, ptr %i.ha, align 8, !tbaa !107
   br label %.lr.ph149.preheader.new.3
 

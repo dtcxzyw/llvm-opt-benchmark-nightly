@@ -204,8 +204,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not, label %bb.e, label %.preheader44
 
 .preheader44:                                     ; preds = %bb.b, %bb.c
-  %indvars.iv52 = phi i32 [ %indvars.iv.next53, %bb.c ], [ -1, %bb.b ] ; 2 uses
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.c ], [ 0, %bb.b ] ; 4 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.c ], [ 0, %bb.b ] ; 5 uses
   %.03747 = phi i64 [ %i.v, %bb.c ], [ %i.c, %bb.b ]
   %i.e = getelementptr inbounds nuw [40 x i8], ptr %0, i64 %indvars.iv ; 3 uses
   %i.f = load ptr, ptr %i.e, align 8
@@ -232,11 +231,12 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not49, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.preheader
-  %3 = zext i32 %indvars.iv52 to i64
+  %3 = add nuw i64 %indvars.iv, 4294967295
+  %4 = and i64 %3, 4294967295
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
-  %indvars.iv55 = phi i64 [ %3, %.lr.ph.preheader ], [ %indvars.iv.next56, %.lr.ph ] ; 3 uses
+  %indvars.iv55 = phi i64 [ %4, %.lr.ph.preheader ], [ %indvars.iv.next56, %.lr.ph ] ; 3 uses
   %i.q = getelementptr inbounds nuw [40 x i8], ptr %i.d, i64 %indvars.iv55
   %i.r = getelementptr inbounds nuw i8, ptr %i.q, i64 8
   %i.s = load ptr, ptr %i.r, align 8
@@ -255,7 +255,6 @@ bb.c:                                             ; preds = %.preheader44
   %i.v = add i64 %i.u, %i.t                       ; 2 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %i.b
-  %indvars.iv.next53 = add nsw i32 %indvars.iv52, 1
   br i1 %exitcond.not, label %bb.d, label %.preheader44, !llvm.loop !13
 
 bb.d:                                             ; preds = %bb.c

@@ -205,7 +205,7 @@ bb.ba:                                            ; preds = %bb.az, %bb.ay
   br label %bb.bb
 
 bb.bb:                                            ; preds = %skl_wm_latency.exit.thread.i.i.i, %.lr.ph.i.i42.i
-  %indvars.iv.i.i43.i = phi i64 [ %i.hk, %.lr.ph.i.i42.i ], [ %indvars.iv.next.i.i44.i, %skl_wm_latency.exit.thread.i.i.i ] ; 4 uses
+  %indvars.iv.i.i43.i = phi i64 [ %i.hk, %.lr.ph.i.i42.i ], [ %indvars.iv.next.i.i44.i, %skl_wm_latency.exit.thread.i.i.i ] ; 3 uses
   %indvars.iv.next.i.i44.i = add nsw i64 %indvars.iv.i.i43.i, -1 ; 4 uses
   %i.hl = getelementptr [2 x i8], ptr %i.hh, i64 %indvars.iv.next.i.i44.i
   %i.hm = load i16, ptr %i.hl, align 2            ; 2 uses
@@ -271,7 +271,7 @@ bb.bg:                                            ; preds = %skl_max_wm_level_fo
   %i.im = getelementptr i8, ptr %i.w, i64 1297
   %i.in = zext i1 %i.il to i8
   store i8 %i.in, ptr %i.im, align 1
-  %.04054.i.i = add i32 %i.if, 1
+  %.04054.i.i = add i32 %i.if, 1                  ; 2 uses
   %i.io = load i8, ptr %i.ih, align 8
   %i.ip = zext i8 %i.io to i32
   %i.iq = icmp slt i32 %.04054.i.i, %i.ip
@@ -279,10 +279,11 @@ bb.bg:                                            ; preds = %skl_max_wm_level_fo
 
 .preheader49.lr.ph.i.i:                           ; preds = %bb.bg
   %i.ir = getelementptr i8, ptr %i.gv, i64 1669   ; 8 uses
+  %6 = sext i32 %.04054.i.i to i64
   br label %.preheader49.i.i
 
 .preheader49.i.i:                                 ; preds = %.loopexit50.i.i, %.preheader49.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ %indvars.iv.i.i43.i, %.preheader49.lr.ph.i.i ], [ %indvars.iv.next.i.i, %.loopexit50.i.i ] ; 2 uses
+  %indvars.iv.i.i = phi i64 [ %6, %.preheader49.lr.ph.i.i ], [ %indvars.iv.next.i.i, %.loopexit50.i.i ] ; 2 uses
   %invariant.gep.i.i = getelementptr [12 x i8], ptr %i.w, i64 %indvars.iv.i.i ; 8 uses
   %i.is = load i8, ptr %i.ir, align 1
   %i.it = zext i8 %i.is to i64                    ; 2 uses

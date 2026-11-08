@@ -205,7 +205,6 @@ _ZN13b3ProfileZoneD2Ev.exit:                      ; preds = %._crit_edge
 
 .loopexit257:                                     ; preds = %bb.i, %bb.b
   %i.o = phi i32 [ %i.w, %bb.b ], [ %i.bx, %bb.i ] ; 4 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1
   %exitcond292.not = icmp eq i64 %indvars.iv.next289, %wide.trip.count291
   br i1 %exitcond292.not, label %._crit_edge271, label %bb.b, !llvm.loop !201
 
@@ -229,10 +228,9 @@ _ZN13b3ProfileZoneD2Ev.exit:                      ; preds = %._crit_edge
 
 bb.b:                                             ; preds = %.lr.ph270, %.loopexit257
   %i.w = phi i32 [ 0, %.lr.ph270 ], [ %i.o, %.loopexit257 ] ; 2 uses
-  %indvars.iv288 = phi i64 [ 0, %.lr.ph270 ], [ %indvars.iv.next289, %.loopexit257 ] ; 2 uses
-  %indvars.iv.a = phi i64 [ 1, %.lr.ph270 ], [ %indvars.iv.next, %.loopexit257 ] ; 2 uses
+  %indvars.iv.a = phi i64 [ 0, %.lr.ph270 ], [ %indvars.iv.next289, %.loopexit257 ] ; 2 uses
   %i.x = load ptr, ptr %i.l, align 8, !tbaa !87
-  %i.y = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %indvars.iv288
+  %i.y = getelementptr inbounds nuw [4 x i8], ptr %i.x, i64 %indvars.iv.a
   %i.z = load i32, ptr %i.y, align 4, !tbaa !90
   %i.aa = load ptr, ptr %i.m, align 8, !tbaa !80
   %i.ab = sext i32 %i.z to i64
@@ -250,13 +248,13 @@ bb.b:                                             ; preds = %.lr.ph270, %.loopex
   %.sroa.9191.0.copyload = load float, ptr %.sroa.9191.0..sroa_idx, align 4
   %.sroa.10192.0..sroa_idx = getelementptr inbounds nuw i8, ptr %i.ac, i64 24
   %.sroa.10192.0.copyload = load float, ptr %.sroa.10192.0..sroa_idx, align 8
-  %indvars.iv.next289 = add nuw nsw i64 %indvars.iv288, 1 ; 3 uses
+  %indvars.iv.next289 = add nuw nsw i64 %indvars.iv.a, 1 ; 4 uses
   %i.ad = icmp samesign ult i64 %indvars.iv.next289, %i.n
   br i1 %i.ad, label %.lr.ph268, label %.loopexit257
 
 .lr.ph268:                                        ; preds = %bb.b, %bb.i
   %i.ae = phi i32 [ %i.bx, %bb.i ], [ %i.w, %bb.b ] ; 7 uses
-  %indvars.iv285 = phi i64 [ %indvars.iv.next286, %bb.i ], [ %indvars.iv.a, %bb.b ] ; 2 uses
+  %indvars.iv285 = phi i64 [ %indvars.iv.next286, %bb.i ], [ %indvars.iv.next289, %bb.b ] ; 2 uses
   %i.af = load ptr, ptr %i.l, align 8, !tbaa !87
   %i.ag = getelementptr inbounds nuw [4 x i8], ptr %i.af, i64 %indvars.iv285
   %i.ah = load i32, ptr %i.ag, align 4, !tbaa !90

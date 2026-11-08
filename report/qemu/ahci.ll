@@ -205,7 +205,6 @@ bb.s:                                             ; preds = %bb.n
   br label %bb.t
 
 bb.t:                                             ; preds = %bb.s, %bb.u
-  %indvars.iv141 = phi i64 [ 1, %bb.s ], [ %indvars.iv.next142, %bb.u ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %bb.s ], [ %indvars.iv.next, %bb.u ] ; 3 uses
   %.097132 = phi i64 [ 0, %bb.s ], [ %i.ay, %bb.u ] ; 2 uses
   %i.at = getelementptr inbounds nuw [16 x i8], ptr %i.ad, i64 %indvars.iv ; 3 uses
@@ -221,7 +220,6 @@ bb.t:                                             ; preds = %bb.s, %bb.u
 bb.u:                                             ; preds = %bb.t
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  %indvars.iv.next142 = add nuw nsw i64 %indvars.iv141, 1
   br i1 %exitcond.not, label %.thread, label %bb.t, !llvm.loop !30
 
 bb.v:                                             ; preds = %bb.t
@@ -273,12 +271,16 @@ bb.z:                                             ; preds = %bb.v
   %i.bv = call i64 @llvm.smin.i64(i64 %i.bu, i64 %3)
   call void @qemu_sglist_add(ptr noundef %1, i64 noundef %i.bq, i64 noundef %i.bv) #12
   %i.bw = getelementptr inbounds nuw i8, ptr %1, i64 16
-  %.194134 = add nuw nsw i32 %i.ba, 1
+  %.194134 = add nuw nsw i32 %i.ba, 1             ; 2 uses
   %i.bx = icmp samesign ult i32 %.194134, %i.as
-  br i1 %i.bx, label %.lr.ph, label %.critedge
+  br i1 %i.bx, label %.lr.ph.preheader, label %.critedge
 
-.lr.ph:                                           ; preds = %bb.z, %bb.aa
-  %indvars.iv144 = phi i64 [ %indvars.iv.next145, %bb.aa ], [ %indvars.iv141, %bb.z ] ; 2 uses
+.lr.ph.preheader:                                 ; preds = %bb.z
+  %5 = zext nneg i32 %.194134 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.aa
+  %indvars.iv144 = phi i64 [ %5, %.lr.ph.preheader ], [ %indvars.iv.next145, %bb.aa ] ; 2 uses
   %i.by = load i64, ptr %i.bw, align 8            ; 2 uses
   %i.bz = icmp ult i64 %i.by, %3
   br i1 %i.bz, label %bb.aa, label %.critedge

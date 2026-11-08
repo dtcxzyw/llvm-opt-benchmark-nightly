@@ -202,10 +202,9 @@ bb.a:
 
 .lr.ph44:                                         ; preds = %bb.a, %bb.q
   %i.c = phi i32 [ %i.bk, %bb.q ], [ %i.a, %bb.a ] ; 2 uses
-  %indvars.iv53 = phi i64 [ %indvars.iv.next54, %bb.q ], [ 0, %bb.a ] ; 3 uses
-  %indvars.iv.a = phi i64 [ %indvars.iv.next, %bb.q ], [ 1, %bb.a ] ; 2 uses
+  %indvars.iv.a = phi i64 [ %indvars.iv.next54, %bb.q ], [ 0, %bb.a ] ; 3 uses
   %i.d = load ptr, ptr @diff_queued_diff, align 8, !tbaa !17 ; 2 uses
-  %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv53
+  %i.e = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv.a
   %i.f = load ptr, ptr %i.e, align 8, !tbaa !19   ; 9 uses
   %.not = icmp eq ptr %i.f, null
   br i1 %.not, label %bb.q, label %bb.b
@@ -230,7 +229,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %.not32, label %.preheader, label %bb.p
 
 .preheader:                                       ; preds = %bb.c
-  %i.r = add nuw nsw i64 %indvars.iv53, 1
+  %i.r = add nuw nsw i64 %indvars.iv.a, 1         ; 2 uses
   %i.s = sext i32 %i.c to i64
   %i.t = icmp slt i64 %i.r, %i.s
   br i1 %i.t, label %.lr.ph, label %._crit_edge
@@ -240,7 +239,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %.lr.ph, %bb.o
-  %indvars.iv50 = phi i64 [ %indvars.iv.a, %.lr.ph ], [ %indvars.iv.next51, %bb.o ] ; 3 uses
+  %indvars.iv50 = phi i64 [ %i.r, %.lr.ph ], [ %indvars.iv.next51, %bb.o ] ; 3 uses
   %i.u = getelementptr inbounds nuw [8 x i8], ptr %i.d, i64 %indvars.iv50
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !19   ; 5 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 27
@@ -353,11 +352,10 @@ bb.p:                                             ; preds = %bb.c, %bb.b
   br label %bb.q
 
 bb.q:                                             ; preds = %.thread, %._crit_edge, %bb.p, %.lr.ph44
-  %indvars.iv.next54 = add nuw nsw i64 %indvars.iv53, 1 ; 2 uses
+  %indvars.iv.next54 = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
   %i.bk = load i32, ptr getelementptr inbounds nuw (i8, ptr @diff_queued_diff, i64 12), align 4, !tbaa !16 ; 2 uses
   %i.bl = sext i32 %i.bk to i64
   %i.bm = icmp slt i64 %indvars.iv.next54, %i.bl
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1
   br i1 %i.bm, label %.lr.ph44, label %._crit_edge45, !llvm.loop !45
 
 ._crit_edge45:                                    ; preds = %bb.q, %bb.a

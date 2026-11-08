@@ -205,11 +205,11 @@ bb.eh:                                            ; preds = %bb.ed
   %i.afk = phi i32 [ %.pre.i199, %.preheader.lr.ph.i ], [ %i.afq, %._crit_edge68.i ] ; 2 uses
   %i.afl = phi i32 [ %.pre.i199, %.preheader.lr.ph.i ], [ %i.afr, %._crit_edge68.i ] ; 2 uses
   %i.afm = phi i32 [ %.pre.i199, %.preheader.lr.ph.i ], [ %i.afs, %._crit_edge68.i ] ; 2 uses
-  %indvars.iv81.i = phi i64 [ 0, %.preheader.lr.ph.i ], [ %indvars.iv.next82.i, %._crit_edge68.i ] ; 3 uses
+  %indvars.iv81.i = phi i64 [ 0, %.preheader.lr.ph.i ], [ %indvars.iv.next82.i, %._crit_edge68.i ] ; 4 uses
   %.04270.i = phi i32 [ 0, %.preheader.lr.ph.i ], [ %.us-phi.i, %._crit_edge68.i ] ; 2 uses
-  %indvars91.i = trunc i64 %indvars.iv81.i to i32 ; 2 uses
-  %47 = icmp sgt i32 %i.afm, %indvars91.i
-  br i1 %47, label %.lr.ph67.split.preheader.i, label %.lr.ph67.split.us.preheader.i
+  %47 = sext i32 %i.afm to i64
+  %48 = icmp slt i64 %indvars.iv81.i, %47
+  br i1 %48, label %.lr.ph67.split.preheader.i, label %.lr.ph67.split.us.preheader.i
 
 .lr.ph67.split.us.preheader.i:                    ; preds = %.preheader.i200
   %i.afn = add i32 %.04270.i, %i.ix
@@ -220,7 +220,7 @@ bb.eh:                                            ; preds = %bb.ed
   br label %.lr.ph67.split.i
 
 ._crit_edge68.loopexit.i:                         ; preds = %._crit_edge63.i
-  %i.afp = trunc nsw i64 %indvars.iv.next87.i to i32
+  %i.afp = trunc nsw i64 %indvars.iv.next85.i to i32
   br label %._crit_edge68.i
 
 ._crit_edge68.i:                                  ; preds = %._crit_edge68.loopexit.i, %.lr.ph67.split.us.preheader.i
@@ -235,17 +235,18 @@ bb.eh:                                            ; preds = %bb.ed
 .lr.ph67.split.i:                                 ; preds = %._crit_edge63.i, %.lr.ph67.split.preheader.i
   %i.aft = phi i32 [ %i.afk, %.lr.ph67.split.preheader.i ], [ %i.aga, %._crit_edge63.i ] ; 3 uses
   %i.afu = phi i32 [ %i.afl, %.lr.ph67.split.preheader.i ], [ %i.agb, %._crit_edge63.i ] ; 3 uses
-  %indvars.iv86.i = phi i64 [ %i.afo, %.lr.ph67.split.preheader.i ], [ %indvars.iv.next87.i, %._crit_edge63.i ] ; 2 uses
-  %indvars.iv.i201 = phi i64 [ 0, %.lr.ph67.split.preheader.i ], [ %indvars.iv.next.i202, %._crit_edge63.i ] ; 3 uses
-  %indvars88.i = trunc i64 %indvars.iv.i201 to i32 ; 2 uses
-  %indvars.iv.next87.i = add nsw i64 %indvars.iv86.i, 1 ; 2 uses
-  %48 = icmp sgt i32 %i.afu, %indvars91.i
-  br i1 %48, label %.lr.ph62.i, label %._crit_edge63.i
+  %indvars.iv86.i = phi i64 [ %i.afo, %.lr.ph67.split.preheader.i ], [ %indvars.iv.next85.i, %._crit_edge63.i ] ; 2 uses
+  %indvars.iv.i201 = phi i64 [ 0, %.lr.ph67.split.preheader.i ], [ %indvars.iv.next.i202, %._crit_edge63.i ] ; 4 uses
+  %indvars.iv.next85.i = add nsw i64 %indvars.iv86.i, 1 ; 2 uses
+  %49 = sext i32 %i.afu to i64
+  %50 = icmp slt i64 %indvars.iv81.i, %49
+  br i1 %50, label %.lr.ph62.i, label %._crit_edge63.i
 
 .lr.ph62.i:                                       ; preds = %.lr.ph67.split.i
   %i.afv = load i32, ptr %i.ael, align 4, !tbaa !101 ; 2 uses
-  %49 = icmp sgt i32 %i.afv, %indvars88.i
-  br i1 %49, label %.lr.ph62.split.preheader.i, label %._crit_edge63.i
+  %51 = sext i32 %i.afv to i64
+  %52 = icmp slt i64 %indvars.iv.i201, %51
+  br i1 %52, label %.lr.ph62.split.preheader.i, label %._crit_edge63.i
 
 .lr.ph62.split.preheader.i:                       ; preds = %.lr.ph62.i
   %i.afw = load ptr, ptr %i.afg, align 8, !tbaa !102
@@ -270,8 +271,9 @@ bb.eh:                                            ; preds = %bb.ed
   %i.agf = load i64, ptr %i.afj, align 8, !tbaa !57
   %i.agg = mul i64 %i.agf, %indvars.iv83.i
   %i.agh = getelementptr inbounds nuw i8, ptr %i.age, i64 %i.agg
-  %50 = icmp sgt i32 %i.agd, %indvars88.i
-  br i1 %50, label %.lr.ph.i205, label %._crit_edge.i204
+  %53 = sext i32 %i.agd to i64
+  %54 = icmp slt i64 %indvars.iv.i201, %53
+  br i1 %54, label %.lr.ph.i205, label %._crit_edge.i204
 
 ._crit_edge.loopexit.i206:                        ; preds = %.lr.ph.i205
   %.pre94.i = load i32, ptr %i.adv, align 8, !tbaa !100

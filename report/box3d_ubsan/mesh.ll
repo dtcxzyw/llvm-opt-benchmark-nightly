@@ -204,11 +204,11 @@ bb.bm:                                            ; preds = %bb.bl
   %.sroa.4180.1 = phi float [ %.sroa.4180.0, %.preheader.preheader.i ], [ %.sroa.4180.2, %bb.cy ] ; 2 uses
   %.sroa.0179.1 = phi <2 x float> [ %.sroa.0179.0, %.preheader.preheader.i ], [ %.sroa.0179.2, %bb.cy ] ; 2 uses
   %i.oo = phi i32 [ %i.ji, %.preheader.preheader.i ], [ %i.uh, %bb.cy ] ; 2 uses
-  %indvars.iv2015.i = phi i64 [ 1, %.preheader.preheader.i ], [ %indvars.iv.next2016.i, %bb.cy ] ; 15 uses
+  %indvars.iv2015.i = phi i64 [ 0, %.preheader.preheader.i ], [ %indvars.iv.next2022.i, %bb.cy ] ; 8 uses
+  %indvars.iv2019.i = phi i64 [ 1, %.preheader.preheader.i ], [ %indvars.iv.next2016.i, %bb.cy ] ; 7 uses
   %.11533.i = phi i32 [ %.01001536.i, %.preheader.preheader.i ], [ %.3.i, %bb.cy ] ; 2 uses
   %.11021532.i = phi float [ %.01011535.i, %.preheader.preheader.i ], [ %.3104.i, %bb.cy ] ; 3 uses
-  %.01151531.i = phi i32 [ 0, %.preheader.preheader.i ], [ %11, %bb.cy ] ; 2 uses
-  %exitcond2014.not.i = icmp eq i64 %indvars.iv2015.i, 1
+  %exitcond2014.not.i = icmp eq i64 %indvars.iv2019.i, 1
   br i1 %exitcond2014.not.i, label %.lr.ph.preheader.i90, label %bb.bq
 
 bb.bn:                                            ; preds = %bb.cy
@@ -221,9 +221,9 @@ bb.bn:                                            ; preds = %bb.cy
   %.lcssa2430 = phi <2 x float> [ %i.ll, %.preheader.i89 ], [ %i.lx, %bb.bs ], [ %i.mj, %bb.bv ], [ %i.mv, %bb.by ], [ %i.nh, %bb.cb ], [ %i.nt, %bb.ce ], [ %i.of, %bb.cg ] ; 2 uses
   %.lcssa2429 = phi <2 x float> [ %i.ln, %.preheader.i89 ], [ %i.lz, %bb.bs ], [ %i.ml, %bb.bv ], [ %i.mx, %bb.by ], [ %i.nj, %bb.cb ], [ %i.nv, %bb.ce ], [ %i.oh, %bb.cg ] ; 2 uses
   %.lcssa2428 = phi float [ %i.lp, %.preheader.i89 ], [ %i.mb, %bb.bs ], [ %i.mn, %bb.bv ], [ %i.mz, %bb.by ], [ %i.nl, %bb.cb ], [ %i.nx, %bb.ce ], [ %i.oj, %bb.cg ] ; 2 uses
-  %11 = add nuw nsw i32 %.01151531.i, 1           ; 2 uses
-  %i.op = getelementptr inbounds nuw [28 x i8], ptr %6, i64 %indvars.iv2015.i ; 5 uses
-  %i.oq = mul nuw nsw i64 %indvars.iv2015.i, 28
+  %indvars.iv.next2022.i = add nuw nsw i64 %indvars.iv2015.i, 1 ; 4 uses
+  %i.op = getelementptr inbounds nuw [28 x i8], ptr %6, i64 %indvars.iv.next2022.i ; 5 uses
+  %i.oq = mul nuw nsw i64 %indvars.iv.next2022.i, 28
   %i.or = add i64 %i.oq, %i.gw, !nosanitize !9    ; 2 uses
   %.not138.i = icmp ult i64 %i.or, %i.gw, !nosanitize !9
   br i1 %.not138.i, label %bb.ch, label %bb.cj, !prof !17, !nosanitize !9
@@ -272,7 +272,7 @@ bb.br:                                            ; preds = %bb.bq
   br i1 %i.ls, label %bb.bp, label %bb.bs, !prof !17, !nosanitize !9
 
 bb.bs:                                            ; preds = %bb.br
-  %exitcond2014.not.i.1 = icmp eq i64 %indvars.iv2015.i, 2
+  %exitcond2014.not.i.1 = icmp eq i64 %indvars.iv2019.i, 2
   br i1 %exitcond2014.not.i.1, label %.lr.ph.preheader.i90, label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs
@@ -282,7 +282,7 @@ bb.bu:                                            ; preds = %bb.bt
   br i1 %i.me, label %bb.bp, label %bb.bv, !prof !17, !nosanitize !9
 
 bb.bv:                                            ; preds = %bb.bu
-  %exitcond2014.not.i.2 = icmp eq i64 %indvars.iv2015.i, 3
+  %exitcond2014.not.i.2 = icmp eq i64 %indvars.iv2019.i, 3
   br i1 %exitcond2014.not.i.2, label %.lr.ph.preheader.i90, label %bb.bw
 
 bb.bw:                                            ; preds = %bb.bv
@@ -292,7 +292,7 @@ bb.bx:                                            ; preds = %bb.bw
   br i1 %i.mq, label %bb.bp, label %bb.by, !prof !17, !nosanitize !9
 
 bb.by:                                            ; preds = %bb.bx
-  %exitcond2014.not.i.3 = icmp eq i64 %indvars.iv2015.i, 4
+  %exitcond2014.not.i.3 = icmp eq i64 %indvars.iv2019.i, 4
   br i1 %exitcond2014.not.i.3, label %.lr.ph.preheader.i90, label %bb.bz
 
 bb.bz:                                            ; preds = %bb.by
@@ -302,7 +302,7 @@ bb.ca:                                            ; preds = %bb.bz
   br i1 %i.nc, label %bb.bp, label %bb.cb, !prof !17, !nosanitize !9
 
 bb.cb:                                            ; preds = %bb.ca
-  %exitcond2014.not.i.4 = icmp eq i64 %indvars.iv2015.i, 5
+  %exitcond2014.not.i.4 = icmp eq i64 %indvars.iv2019.i, 5
   br i1 %exitcond2014.not.i.4, label %.lr.ph.preheader.i90, label %bb.cc
 
 bb.cc:                                            ; preds = %bb.cb
@@ -312,7 +312,7 @@ bb.cd:                                            ; preds = %bb.cc
   br i1 %i.no, label %bb.bp, label %bb.ce, !prof !17, !nosanitize !9
 
 bb.ce:                                            ; preds = %bb.cd
-  %exitcond2014.not.i.5 = icmp eq i64 %indvars.iv2015.i, 6
+  %exitcond2014.not.i.5 = icmp eq i64 %indvars.iv2019.i, 6
   br i1 %exitcond2014.not.i.5, label %.lr.ph.preheader.i90, label %bb.cf
 
 bb.cf:                                            ; preds = %bb.ce
@@ -363,7 +363,7 @@ bb.cj:                                            ; preds = %.lr.ph.preheader.i9
   %i.pl = select <2 x i1> %i.pk, <2 x float> splat (float f0xFF7FFFFF), <2 x float> %.sroa.5355.0.copyload.i ; 3 uses
   %i.pm = fcmp olt float %.sroa.6356.0.copyload.i, f0xFF7FFFFF
   %i.pn = select i1 %i.pm, float f0xFF7FFFFF, float %.sroa.6356.0.copyload.i ; 3 uses
-  %indvars.iv.next2018.i = add nuw nsw i64 %indvars.iv2015.i, 1 ; 3 uses
+  %indvars.iv.next2018.i = add nuw nsw i64 %indvars.iv2015.i, 2 ; 3 uses
   %exitcond2020.not.i = icmp eq i64 %indvars.iv.next2018.i, 8
   br i1 %exitcond2020.not.i, label %._crit_edge.i, label %.lr.ph.i91.1
 
@@ -398,7 +398,7 @@ bb.cl:                                            ; preds = %bb.ck
   %i.qb = select <2 x i1> %i.qa, <2 x float> %i.pl, <2 x float> %.sroa.5355.0.copyload.i.1 ; 3 uses
   %i.qc = fcmp ogt float %i.pn, %.sroa.6356.0.copyload.i.1
   %i.qd = select i1 %i.qc, float %i.pn, float %.sroa.6356.0.copyload.i.1 ; 3 uses
-  %indvars.iv.next2018.i.1 = add nuw nsw i64 %indvars.iv2015.i, 2 ; 3 uses
+  %indvars.iv.next2018.i.1 = add nuw nsw i64 %indvars.iv2015.i, 3 ; 3 uses
   %exitcond2020.not.i.1 = icmp eq i64 %indvars.iv.next2018.i.1, 8
   br i1 %exitcond2020.not.i.1, label %._crit_edge.i, label %.lr.ph.i91.2
 
@@ -433,7 +433,7 @@ bb.cn:                                            ; preds = %bb.cm
   %i.qr = select <2 x i1> %i.qq, <2 x float> %i.qb, <2 x float> %.sroa.5355.0.copyload.i.2 ; 3 uses
   %i.qs = fcmp ogt float %i.qd, %.sroa.6356.0.copyload.i.2
   %i.qt = select i1 %i.qs, float %i.qd, float %.sroa.6356.0.copyload.i.2 ; 3 uses
-  %indvars.iv.next2018.i.2 = add nuw nsw i64 %indvars.iv2015.i, 3 ; 3 uses
+  %indvars.iv.next2018.i.2 = add nuw nsw i64 %indvars.iv2015.i, 4 ; 3 uses
   %exitcond2020.not.i.2 = icmp eq i64 %indvars.iv.next2018.i.2, 8
   br i1 %exitcond2020.not.i.2, label %._crit_edge.i, label %.lr.ph.i91.3
 
@@ -468,7 +468,7 @@ bb.cp:                                            ; preds = %bb.co
   %i.rh = select <2 x i1> %i.rg, <2 x float> %i.qr, <2 x float> %.sroa.5355.0.copyload.i.3 ; 3 uses
   %i.ri = fcmp ogt float %i.qt, %.sroa.6356.0.copyload.i.3
   %i.rj = select i1 %i.ri, float %i.qt, float %.sroa.6356.0.copyload.i.3 ; 3 uses
-  %indvars.iv.next2018.i.3 = add nuw nsw i64 %indvars.iv2015.i, 4 ; 3 uses
+  %indvars.iv.next2018.i.3 = add nuw nsw i64 %indvars.iv2015.i, 5 ; 3 uses
   %exitcond2020.not.i.3 = icmp eq i64 %indvars.iv.next2018.i.3, 8
   br i1 %exitcond2020.not.i.3, label %._crit_edge.i, label %.lr.ph.i91.4
 
@@ -503,7 +503,7 @@ bb.cr:                                            ; preds = %bb.cq
   %i.rx = select <2 x i1> %i.rw, <2 x float> %i.rh, <2 x float> %.sroa.5355.0.copyload.i.4 ; 3 uses
   %i.ry = fcmp ogt float %i.rj, %.sroa.6356.0.copyload.i.4
   %i.rz = select i1 %i.ry, float %i.rj, float %.sroa.6356.0.copyload.i.4 ; 3 uses
-  %indvars.iv.next2018.i.4 = add nuw nsw i64 %indvars.iv2015.i, 5 ; 3 uses
+  %indvars.iv.next2018.i.4 = add nuw nsw i64 %indvars.iv2015.i, 6 ; 3 uses
   %exitcond2020.not.i.4 = icmp eq i64 %indvars.iv.next2018.i.4, 8
   br i1 %exitcond2020.not.i.4, label %._crit_edge.i, label %.lr.ph.i91.5
 
@@ -538,7 +538,7 @@ bb.ct:                                            ; preds = %bb.cs
   %i.sn = select <2 x i1> %i.sm, <2 x float> %i.rx, <2 x float> %.sroa.5355.0.copyload.i.5 ; 3 uses
   %i.so = fcmp ogt float %i.rz, %.sroa.6356.0.copyload.i.5
   %i.sp = select i1 %i.so, float %i.rz, float %.sroa.6356.0.copyload.i.5 ; 3 uses
-  %indvars.iv.next2018.i.5 = add nuw nsw i64 %indvars.iv2015.i, 6 ; 3 uses
+  %indvars.iv.next2018.i.5 = add nuw nsw i64 %indvars.iv2015.i, 7 ; 3 uses
   %exitcond2020.not.i.5 = icmp eq i64 %indvars.iv.next2018.i.5, 8
   br i1 %exitcond2020.not.i.5, label %._crit_edge.i, label %.lr.ph.i91.6
 
@@ -605,6 +605,7 @@ bb.cw:                                            ; preds = %._crit_edge.i
   br i1 %i.uf, label %bb.cx, label %bb.cy
 
 bb.cx:                                            ; preds = %bb.cw
+  %11 = trunc nuw nsw i64 %indvars.iv2015.i to i32
   br label %bb.cy
 
 bb.cy:                                            ; preds = %bb.cx, %bb.cw, %._crit_edge.i
@@ -620,10 +621,10 @@ bb.cy:                                            ; preds = %bb.cx, %bb.cw, %._c
   %.sroa.0179.2 = phi <2 x float> [ %.lcssa2430, %bb.cx ], [ %.sroa.0179.1, %bb.cw ], [ %.sroa.0179.1, %._crit_edge.i ] ; 2 uses
   %i.ug = phi i32 [ %i.lg, %bb.cx ], [ %i.oo, %bb.cw ], [ %i.oo, %._crit_edge.i ]
   %.3104.i = phi float [ %i.ue, %bb.cx ], [ %.11021532.i, %bb.cw ], [ %.11021532.i, %._crit_edge.i ] ; 2 uses
-  %.3.i = phi i32 [ %.01151531.i, %bb.cx ], [ %.11533.i, %bb.cw ], [ %.11533.i, %._crit_edge.i ] ; 2 uses
+  %.3.i = phi i32 [ %11, %bb.cx ], [ %.11533.i, %bb.cw ], [ %.11533.i, %._crit_edge.i ] ; 2 uses
   %i.uh = freeze i32 %i.ug                        ; 2 uses
-  %indvars.iv.next2016.i = add nuw nsw i64 %indvars.iv2015.i, 1
-  %exitcond2022.not.i = icmp eq i32 %11, 7
+  %indvars.iv.next2016.i = add nuw nsw i64 %indvars.iv2019.i, 1
+  %exitcond2022.not.i = icmp eq i64 %indvars.iv.next2022.i, 7
   br i1 %exitcond2022.not.i, label %bb.bn, label %.preheader.i89, !llvm.loop !190
 
 bb.cz:                                            ; preds = %bb.bn, %b3GetByIndex.exit.i

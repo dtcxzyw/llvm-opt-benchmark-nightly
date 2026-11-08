@@ -135,14 +135,12 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not83.i.3, label %.split.loop.exit, label %.preheader45.3, !llvm.loop !36
 
 .preheader45.3:                                   ; preds = %.preheader45.2
-  %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv87, 4
   %indvars.iv.next64.3 = add nuw nsw i32 %indvars.iv6386, 4
   br label %.preheader45.preheader
 
 .preheader45.preheader:                           ; preds = %bb.b, %.preheader45.3
   %.069.i4889 = phi ptr [ %i.k, %.preheader45.3 ], [ %i.d, %bb.b ]
   %.068.i4988 = phi i32 [ %i.i, %.preheader45.3 ], [ 0, %bb.b ] ; 5 uses
-  %indvars.iv87 = phi i64 [ %indvars.iv.next.3, %.preheader45.3 ], [ 1, %bb.b ] ; 5 uses
   %indvars.iv6386 = phi i32 [ %indvars.iv.next64.3, %.preheader45.3 ], [ 1, %bb.b ] ; 5 uses
   %i.l = getelementptr inbounds nuw i8, ptr %.069.i4889, i64 16
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !15   ; 2 uses
@@ -150,19 +148,16 @@ bb.b:                                             ; preds = %bb.a
   br i1 %.not83.i, label %.split.loop.exit104, label %.preheader45, !llvm.loop !36
 
 .split.loop.exit:                                 ; preds = %.preheader45.2
-  %indvars.iv.next.2.le = add nuw nsw i64 %indvars.iv87, 3
   %indvars.iv.next64.2.le = add nuw nsw i32 %indvars.iv6386, 3
   br label %bb.c
 
 .split.loop.exit96:                               ; preds = %.preheader45.1
-  %indvars.iv.next.1.le = add nuw nsw i64 %indvars.iv87, 2
   %indvars.iv.next64.1.le = add nuw nsw i32 %indvars.iv6386, 2
   %i.n = or disjoint i32 %.068.i4988, 3
   br label %bb.c
 
 .split.loop.exit100:                              ; preds = %.preheader45.preheader.1
   %indvars.iv.next64.le = add nuw nsw i32 %indvars.iv6386, 1
-  %indvars.iv.next.le = add nuw nsw i64 %indvars.iv87, 1
   %i.o = or disjoint i32 %.068.i4988, 2
   br label %bb.c
 
@@ -171,25 +166,28 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.split.loop.exit104, %.split.loop.exit100, %.split.loop.exit96, %.split.loop.exit
-  %indvars.iv87.lcssa = phi i64 [ %indvars.iv.next.le, %.split.loop.exit100 ], [ %indvars.iv.next.1.le, %.split.loop.exit96 ], [ %indvars.iv.next.2.le, %.split.loop.exit ], [ %indvars.iv87, %.split.loop.exit104 ]
   %indvars.iv6386.lcssa = phi i32 [ %indvars.iv.next64.le, %.split.loop.exit100 ], [ %indvars.iv.next64.1.le, %.split.loop.exit96 ], [ %indvars.iv.next64.2.le, %.split.loop.exit ], [ %indvars.iv6386, %.split.loop.exit104 ]
-  %.lcssa91 = phi i32 [ %i.o, %.split.loop.exit100 ], [ %i.n, %.split.loop.exit96 ], [ %i.i, %.split.loop.exit ], [ %i.p, %.split.loop.exit104 ]
+  %.lcssa91 = phi i32 [ %i.o, %.split.loop.exit100 ], [ %i.n, %.split.loop.exit96 ], [ %i.i, %.split.loop.exit ], [ %i.p, %.split.loop.exit104 ] ; 2 uses
   %i.q = shl nuw nsw i32 %.lcssa91, 3
   %i.r = zext nneg i32 %i.q to i64
   %i.s = tail call noalias ptr @malloc(i64 noundef %i.r) #13, !inline_history !37 ; 5 uses
   %.not84.i = icmp eq ptr %i.s, null
-  br i1 %.not84.i, label %tool2curlparts.exit.thread, label %.preheader44
+  br i1 %.not84.i, label %tool2curlparts.exit.thread, label %.preheader44.preheader
 
-.preheader44:                                     ; preds = %bb.c, %.preheader44
-  %indvars.iv57.a = phi i64 [ %indvars.iv.next58.a, %.preheader44 ], [ %indvars.iv87.lcssa, %bb.c ] ; 2 uses
-  %.170.i50 = phi ptr [ %i.v, %.preheader44 ], [ %i.d, %bb.c ] ; 2 uses
+.preheader44.preheader:                           ; preds = %bb.c
+  %3 = zext nneg i32 %.lcssa91 to i64
+  br label %.preheader44
+
+.preheader44:                                     ; preds = %.preheader44.preheader, %.preheader44
+  %indvars.iv57.a = phi i64 [ %3, %.preheader44.preheader ], [ %indvars.iv.next58.a, %.preheader44 ] ; 2 uses
+  %.170.i50 = phi ptr [ %i.d, %.preheader44.preheader ], [ %i.v, %.preheader44 ] ; 2 uses
   %indvars.iv.next58.a = add nsw i64 %indvars.iv57.a, -1 ; 2 uses
   %i.t = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %indvars.iv.next58.a
   store ptr %.170.i50, ptr %i.t, align 8, !tbaa !23
   %i.u = getelementptr inbounds nuw i8, ptr %.170.i50, i64 16
   %i.v = load ptr, ptr %i.u, align 8, !tbaa !15
-  %3 = icmp sgt i64 %indvars.iv57.a, 1
-  br i1 %3, label %.preheader44, label %.preheader.preheader, !llvm.loop !38
+  %4 = icmp samesign ugt i64 %indvars.iv57.a, 1
+  br i1 %4, label %.preheader44, label %.preheader.preheader, !llvm.loop !38
 
 .preheader.preheader:                             ; preds = %.preheader44
   %wide.trip.count = zext nneg i32 %indvars.iv6386.lcssa to i64

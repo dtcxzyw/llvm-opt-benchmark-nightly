@@ -205,12 +205,10 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %exitcond.not, label %.preheader79, label %.lr.ph, !llvm.loop !87
 
 .loopexit:                                        ; preds = %._crit_edge.us, %bb.d
-  %indvars.iv.next102 = add nuw nsw i64 %indvars.iv101, 1
   %exitcond115.not = icmp eq i64 %indvars.iv.next95, %i.k
   br i1 %exitcond115.not, label %._crit_edge, label %.preheader, !llvm.loop !88
 
 .preheader:                                       ; preds = %.preheader.lr.ph, %.loopexit
-  %indvars.iv101 = phi i64 [ 1, %.preheader.lr.ph ], [ %indvars.iv.next102, %.loopexit ] ; 8 uses
   %indvars.iv94.a = phi i64 [ 0, %.preheader.lr.ph ], [ %indvars.iv.next95, %.loopexit ] ; 19 uses
   %i.q = sub nsw i64 %i.k, %indvars.iv94.a
   %i.r = shl nuw nsw i64 %indvars.iv94.a, 3
@@ -329,7 +327,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.d
 
 bb.d:                                             ; preds = %bb.c, %bb.b
-  %indvars.iv.next95 = add nuw nsw i64 %indvars.iv94.a, 1 ; 3 uses
+  %indvars.iv.next95 = add nuw nsw i64 %indvars.iv94.a, 1 ; 10 uses
   %i.bu = icmp samesign ult i64 %indvars.iv.next95, %i.m
   br i1 %i.bu, label %.lr.ph89, label %.loopexit
 
@@ -343,16 +341,16 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   %min.iters.check130 = icmp ult i64 %i.u, 16
   %i.by = and i64 %i.u, 12
   %n.vec132 = and i64 %i.u, -16                   ; 4 uses
-  %i.bz = add i64 %indvars.iv101, %n.vec132
+  %i.bz = add i64 %indvars.iv.next95, %n.vec132
   %cmp.n146 = icmp eq i64 %i.u, %n.vec132
   %min.epilog.iters.check150 = icmp eq i64 %i.by, 0
   %n.vec153 = and i64 %i.u, -4                    ; 3 uses
-  %i.ca = add i64 %indvars.iv101, %n.vec153
+  %i.ca = add i64 %indvars.iv.next95, %n.vec153
   %cmp.n162 = icmp eq i64 %i.u, %n.vec153
   br label %iter.check147
 
 iter.check147:                                    ; preds = %._crit_edge.us, %.lr.ph89
-  %indvars.iv108 = phi i64 [ %indvars.iv.next109, %._crit_edge.us ], [ %indvars.iv101, %.lr.ph89 ] ; 2 uses
+  %indvars.iv108 = phi i64 [ %indvars.iv.next109, %._crit_edge.us ], [ %indvars.iv.next95, %.lr.ph89 ] ; 2 uses
   %i.cb = load double, ptr %i.bx, align 8, !tbaa !13
   %i.cc = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv108
   %i.cd = load ptr, ptr %i.cc, align 8, !tbaa !20 ; 10 uses
@@ -375,7 +373,7 @@ vector.main.loop.iter.check129:                   ; preds = %vector.memcheck
 
 vector.body133:                                   ; preds = %vector.main.loop.iter.check129, %vector.body133
   %index134 = phi i64 [ %index.next144, %vector.body133 ], [ 0, %vector.main.loop.iter.check129 ] ; 2 uses
-  %i.cj = add nuw i64 %indvars.iv101, %index134   ; 2 uses
+  %i.cj = add nuw i64 %indvars.iv.next95, %index134 ; 2 uses
   %i.ck = load double, ptr %i.ce, align 8, !tbaa !13, !alias.scope !101
   %broadcast.splatinsert138 = insertelement <4 x double> poison, double %i.ck, i64 0
   %broadcast.splat139 = shufflevector <4 x double> %broadcast.splatinsert138, <4 x double> poison, <4 x i32> zeroinitializer ; 4 uses
@@ -423,7 +421,7 @@ vec.epilog.ph151:                                 ; preds = %vector.main.loop.it
 
 vec.epilog.vector.body154:                        ; preds = %vec.epilog.vector.body154, %vec.epilog.ph151
   %index155 = phi i64 [ %vec.epilog.resume.val152, %vec.epilog.ph151 ], [ %index.next160, %vec.epilog.vector.body154 ] ; 2 uses
-  %i.dc = add nuw i64 %indvars.iv101, %index155   ; 2 uses
+  %i.dc = add nuw i64 %indvars.iv.next95, %index155 ; 2 uses
   %i.dd = load double, ptr %i.ce, align 8, !tbaa !13, !alias.scope !101
   %broadcast.splatinsert157 = insertelement <4 x double> poison, double %i.dd, i64 0
   %broadcast.splat158 = shufflevector <4 x double> %broadcast.splatinsert157, <4 x double> poison, <4 x i32> zeroinitializer
@@ -442,7 +440,7 @@ vec.epilog.middle.block161:                       ; preds = %vec.epilog.vector.b
   br i1 %cmp.n162, label %._crit_edge.us, label %vec.epilog.scalar.ph149.preheader
 
 vec.epilog.scalar.ph149.preheader:                ; preds = %iter.check147, %vector.memcheck, %vec.epilog.iter.check148, %vec.epilog.middle.block161
-  %indvars.iv103.ph = phi i64 [ %indvars.iv101, %iter.check147 ], [ %indvars.iv101, %vector.memcheck ], [ %i.bz, %vec.epilog.iter.check148 ], [ %i.ca, %vec.epilog.middle.block161 ] ; 4 uses
+  %indvars.iv103.ph = phi i64 [ %indvars.iv.next95, %iter.check147 ], [ %indvars.iv.next95, %vector.memcheck ], [ %i.bz, %vec.epilog.iter.check148 ], [ %i.ca, %vec.epilog.middle.block161 ] ; 4 uses
   %i.dj = sub i64 %i.k, %indvars.iv103.ph
   %xtraiter164 = and i64 %i.dj, 3                 ; 2 uses
   %lcmp.mod165.not = icmp eq i64 %xtraiter164, 0

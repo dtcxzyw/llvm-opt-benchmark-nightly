@@ -204,7 +204,6 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %spec.select, label %bb.e, label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
 
 .lr.ph131:                                        ; preds = %.loopexit
-  %indvars.iv.next = add nuw i64 %indvars.iv188, 1
   %indvars.iv.next141.a = add nuw nsw i64 %indvars.iv.next141190, 1 ; 2 uses
   %i.ao = ptrtoint ptr %i.dp to i64
   %i.ap = ptrtoint ptr %i.dq to i64
@@ -214,9 +213,8 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %i.as, label %.lr.ph.preheader, label %.loopexit.thread, !llvm.loop !46
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph131.preheader, %.lr.ph131
-  %indvars.iv.next141190 = phi i64 [ %indvars.iv.next141.a, %.lr.ph131 ], [ 1, %.lr.ph131.preheader ] ; 3 uses
+  %indvars.iv.next141190 = phi i64 [ %indvars.iv.next141.a, %.lr.ph131 ], [ 1, %.lr.ph131.preheader ] ; 4 uses
   %.055129189 = phi i1 [ %spec.select, %.lr.ph131 ], [ false, %.lr.ph131.preheader ]
-  %indvars.iv188 = phi i64 [ %indvars.iv.next, %.lr.ph131 ], [ 1, %.lr.ph131.preheader ] ; 2 uses
   %indvars.iv140187 = phi i64 [ %indvars.iv.next141190, %.lr.ph131 ], [ 0, %.lr.ph131.preheader ]
   %i.at = phi ptr [ %i.dq, %.lr.ph131 ], [ %i.s, %.lr.ph131.preheader ]
   br label %.lr.ph
@@ -227,7 +225,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.055129.lcssa, label %bb.e, label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
-  %indvars.iv138 = phi i64 [ %indvars.iv.next139, %bb.c ], [ %indvars.iv188, %.lr.ph.preheader ] ; 2 uses
+  %indvars.iv138 = phi i64 [ %indvars.iv.next139, %bb.c ], [ %indvars.iv.next141190, %.lr.ph.preheader ] ; 2 uses
   %i.au = phi ptr [ %i.dq, %bb.c ], [ %i.at, %.lr.ph.preheader ] ; 2 uses
   %.1127 = phi i1 [ %spec.select, %bb.c ], [ %.055129189, %.lr.ph.preheader ]
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %indvars.iv140187
@@ -630,7 +628,6 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %spec.select, label %bb.e, label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
 
 .lr.ph131:                                        ; preds = %.loopexit
-  %indvars.iv.next = add nuw i64 %indvars.iv188, 1
   %indvars.iv.next141.a = add nuw nsw i64 %indvars.iv.next141190, 1 ; 2 uses
   %i.ao = ptrtoint ptr %i.dp to i64
   %i.ap = ptrtoint ptr %i.dq to i64
@@ -640,9 +637,8 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %i.as, label %.lr.ph.preheader, label %.loopexit.thread, !llvm.loop !57
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph131.preheader, %.lr.ph131
-  %indvars.iv.next141190 = phi i64 [ %indvars.iv.next141.a, %.lr.ph131 ], [ 1, %.lr.ph131.preheader ] ; 3 uses
+  %indvars.iv.next141190 = phi i64 [ %indvars.iv.next141.a, %.lr.ph131 ], [ 1, %.lr.ph131.preheader ] ; 4 uses
   %.055129189 = phi i1 [ %spec.select, %.lr.ph131 ], [ false, %.lr.ph131.preheader ]
-  %indvars.iv188 = phi i64 [ %indvars.iv.next, %.lr.ph131 ], [ 1, %.lr.ph131.preheader ] ; 2 uses
   %indvars.iv140187 = phi i64 [ %indvars.iv.next141190, %.lr.ph131 ], [ 0, %.lr.ph131.preheader ]
   %i.at = phi ptr [ %i.dq, %.lr.ph131 ], [ %i.s, %.lr.ph131.preheader ]
   br label %.lr.ph
@@ -653,7 +649,7 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE6resizeEll.exi
   br i1 %.055129.lcssa, label %bb.e, label %_ZNSt6vectorIiSaIiEE9push_backERKi.exit
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
-  %indvars.iv138 = phi i64 [ %indvars.iv.next139, %bb.c ], [ %indvars.iv188, %.lr.ph.preheader ] ; 2 uses
+  %indvars.iv138 = phi i64 [ %indvars.iv.next139, %bb.c ], [ %indvars.iv.next141190, %.lr.ph.preheader ] ; 2 uses
   %i.au = phi ptr [ %i.dq, %bb.c ], [ %i.at, %.lr.ph.preheader ] ; 2 uses
   %.1127 = phi i1 [ %spec.select, %bb.c ], [ %.055129189, %.lr.ph.preheader ]
   %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.au, i64 %indvars.iv140187

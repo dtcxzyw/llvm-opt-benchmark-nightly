@@ -204,8 +204,7 @@ _kzalloc_noprof.exit.lr.ph:                       ; preds = %bb.a
   br label %_kzalloc_noprof.exit
 
 _kzalloc_noprof.exit:                             ; preds = %_kzalloc_noprof.exit.lr.ph, %bb.b
-  %indvars.iv = phi i64 [ 0, %_kzalloc_noprof.exit.lr.ph ], [ %indvars.iv.next, %bb.b ] ; 2 uses
-  %.02327 = phi i32 [ 0, %_kzalloc_noprof.exit.lr.ph ], [ %i.p, %bb.b ] ; 3 uses
+  %.02327 = phi i32 [ 0, %_kzalloc_noprof.exit.lr.ph ], [ %i.p, %bb.b ] ; 4 uses
   %i.d = load ptr, ptr getelementptr inbounds nuw (i8, ptr @kmalloc_caches, i64 56), align 8
   %i.e = tail call noalias align 8 dereferenceable_or_null(128) ptr @__kmalloc_cache_noprof(ptr noundef %i.d, i32 noundef 3520, i64 noundef range(i64 -17179869184, 17179869505) 128) #19 ; 8 uses
   %.not = icmp eq ptr %i.e, null
@@ -213,7 +212,11 @@ _kzalloc_noprof.exit:                             ; preds = %_kzalloc_noprof.exi
 
 .preheader:                                       ; preds = %_kzalloc_noprof.exit
   %i.f = icmp sgt i32 %.02327, 0
-  br i1 %i.f, label %.lr.ph, label %.loopexit
+  br i1 %i.f, label %.lr.ph.preheader, label %.loopexit
+
+.lr.ph.preheader:                                 ; preds = %.preheader
+  %1 = zext nneg i32 %.02327 to i64
+  br label %.lr.ph
 
 bb.b:                                             ; preds = %_kzalloc_noprof.exit
   store i32 0, ptr %i.e, align 8
@@ -235,18 +238,17 @@ bb.b:                                             ; preds = %_kzalloc_noprof.exi
   %i.p = add nuw i32 %.02327, 1                   ; 2 uses
   %i.q = load i32, ptr %i.a, align 8
   %i.r = icmp ult i32 %i.p, %i.q
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   br i1 %i.r, label %_kzalloc_noprof.exit, label %.loopexit, !llvm.loop !43
 
-.lr.ph:                                           ; preds = %.preheader, %.lr.ph
-  %indvars.iv33 = phi i64 [ %indvars.iv.next34, %.lr.ph ], [ %indvars.iv, %.preheader ] ; 3 uses
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %.lr.ph
+  %indvars.iv33 = phi i64 [ %1, %.lr.ph.preheader ], [ %indvars.iv.next34, %.lr.ph ] ; 3 uses
   %i.s = getelementptr [8 x i8], ptr %0, i64 %indvars.iv33
   %i.t = getelementptr i8, ptr %i.s, i64 320
   %i.u = load ptr, ptr %i.t, align 8
   tail call void @kfree(ptr noundef %i.u) #12
   %indvars.iv.next34 = add nsw i64 %indvars.iv33, -1
-  %1 = icmp sgt i64 %indvars.iv33, 1
-  br i1 %1, label %.lr.ph, label %.loopexit, !llvm.loop !44
+  %2 = icmp samesign ugt i64 %indvars.iv33, 1
+  br i1 %2, label %.lr.ph, label %.loopexit, !llvm.loop !44
 
 .loopexit:                                        ; preds = %bb.b, %.lr.ph, %bb.a, %.preheader
   %.0 = phi i32 [ -12, %.preheader ], [ 0, %bb.a ], [ -12, %.lr.ph ], [ 0, %bb.b ]

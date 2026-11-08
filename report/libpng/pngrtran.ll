@@ -205,22 +205,20 @@ bb.w:                                             ; preds = %bb.g
   br i1 %exitcond605.not704, label %._crit_edge708, label %.lr.ph510
 
 bb.x:                                             ; preds = %._crit_edge511
-  %indvars.iv.next595 = add nuw nsw i64 %indvars.iv594706, 1
   %exitcond605.not = icmp eq i64 %indvars.iv.next602, %wide.trip.count604
   br i1 %exitcond605.not, label %._crit_edge708, label %.lr.ph510
 
 .lr.ph510:                                        ; preds = %.preheader466, %bb.x
   %.1707 = phi ptr [ %.4.ph, %bb.x ], [ %.0368529, %.preheader466 ]
-  %indvars.iv594706 = phi i64 [ %indvars.iv.next595, %bb.x ], [ 1, %.preheader466 ] ; 2 uses
   %indvars.iv601705 = phi i64 [ %indvars.iv.next602, %bb.x ], [ 0, %.preheader466 ] ; 3 uses
-  %indvars.iv.next602 = add nuw nsw i64 %indvars.iv601705, 1 ; 2 uses
+  %indvars.iv.next602 = add nuw nsw i64 %indvars.iv601705, 1 ; 3 uses
   %i.fx = getelementptr inbounds nuw [3 x i8], ptr %1, i64 %indvars.iv601705 ; 3 uses
   %i.fy = getelementptr inbounds nuw i8, ptr %i.fx, i64 1
   %i.fz = getelementptr inbounds nuw i8, ptr %i.fx, i64 2
   br label %bb.y
 
 bb.y:                                             ; preds = %.lr.ph510, %bb.ab
-  %indvars.iv596 = phi i64 [ %indvars.iv594706, %.lr.ph510 ], [ %indvars.iv.next597, %bb.ab ] ; 3 uses
+  %indvars.iv596 = phi i64 [ %indvars.iv.next602, %.lr.ph510 ], [ %indvars.iv.next597, %bb.ab ] ; 3 uses
   %.2507 = phi ptr [ %.1707, %.lr.ph510 ], [ %.4.ph, %bb.ab ]
   %i.ga = load i8, ptr %i.fx, align 1, !tbaa !40
   %i.gb = zext i8 %i.ga to i32

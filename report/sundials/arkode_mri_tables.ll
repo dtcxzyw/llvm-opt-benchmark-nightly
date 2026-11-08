@@ -202,31 +202,29 @@ bb.h:                                             ; preds = %.lr.ph180
 
 .loopexit170:                                     ; preds = %.prol.loopexit, %.lr.ph184.new, %bb.i
   %.2131.lcssa = phi double [ %.1130187, %bb.i ], [ %.lcssa415.unr, %.prol.loopexit ], [ %i.ci, %.lr.ph184.new ] ; 2 uses
-  %indvars.iv.next233 = add nuw nsw i64 %indvars.iv232.a, 1
   %exitcond243.not = icmp eq i64 %indvars.iv.next240, %wide.trip.count242
   br i1 %exitcond243.not, label %._crit_edge189, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph188, %.loopexit170
-  %indvars.iv239 = phi i64 [ 0, %.lr.ph188 ], [ %indvars.iv.next240, %.loopexit170 ] ; 4 uses
-  %indvars.iv232.a = phi i64 [ 1, %.lr.ph188 ], [ %indvars.iv.next233, %.loopexit170 ] ; 3 uses
+  %indvars.iv232.a = phi i64 [ 0, %.lr.ph188 ], [ %indvars.iv.next240, %.loopexit170 ] ; 4 uses
   %.1130187 = phi double [ 0.000000e+00, %.lr.ph188 ], [ %.2131.lcssa, %.loopexit170 ] ; 3 uses
-  %i.be = sub i64 %i.ax, %indvars.iv239
-  %indvars.iv.next240 = add nuw nsw i64 %indvars.iv239, 1 ; 3 uses
+  %i.be = sub i64 %i.ax, %indvars.iv232.a
+  %indvars.iv.next240 = add nuw nsw i64 %indvars.iv232.a, 1 ; 5 uses
   %i.bf = icmp slt i64 %indvars.iv.next240, %i.an
   br i1 %i.bf, label %.lr.ph184, label %.loopexit170
 
 .lr.ph184:                                        ; preds = %bb.i
-  %i.bg = xor i64 %indvars.iv239, -1
+  %i.bg = xor i64 %indvars.iv232.a, -1
   %i.bh = add nsw i64 %i.bg, %wide.trip.count242
   %i.bi = load ptr, ptr %i.aw, align 8, !tbaa !29
-  %i.bj = getelementptr inbounds nuw [8 x i8], ptr %i.bi, i64 %indvars.iv239
+  %i.bj = getelementptr inbounds nuw [8 x i8], ptr %i.bi, i64 %indvars.iv232.a
   %i.bk = load ptr, ptr %i.bj, align 8, !tbaa !26 ; 5 uses
   %xtraiter420.a = and i64 %i.bh, 3               ; 2 uses
   %lcmp.mod421.not.a = icmp eq i64 %xtraiter420.a, 0
   br i1 %lcmp.mod421.not.a, label %.prol.loopexit, label %.prol.preheader
 
 .prol.preheader:                                  ; preds = %.lr.ph184, %.prol.preheader
-  %indvars.iv234.prol = phi i64 [ %indvars.iv.next235.prol, %.prol.preheader ], [ %indvars.iv232.a, %.lr.ph184 ] ; 2 uses
+  %indvars.iv234.prol = phi i64 [ %indvars.iv.next235.prol, %.prol.preheader ], [ %indvars.iv.next240, %.lr.ph184 ] ; 2 uses
   %.2131182.prol = phi double [ %i.bo, %.prol.preheader ], [ %.1130187, %.lr.ph184 ]
   %prol.iter = phi i64 [ %prol.iter.next, %.prol.preheader ], [ 0, %.lr.ph184 ]
   %i.bl = getelementptr inbounds nuw [8 x i8], ptr %i.bk, i64 %indvars.iv234.prol
@@ -240,7 +238,7 @@ bb.i:                                             ; preds = %.lr.ph188, %.loopex
 
 .prol.loopexit:                                   ; preds = %.prol.preheader, %.lr.ph184
   %.lcssa415.unr = phi double [ poison, %.lr.ph184 ], [ %i.bo, %.prol.preheader ]
-  %indvars.iv234.unr = phi i64 [ %indvars.iv232.a, %.lr.ph184 ], [ %indvars.iv.next235.prol, %.prol.preheader ]
+  %indvars.iv234.unr = phi i64 [ %indvars.iv.next240, %.lr.ph184 ], [ %indvars.iv.next235.prol, %.prol.preheader ]
   %.2131182.unr = phi double [ %.1130187, %.lr.ph184 ], [ %i.bo, %.prol.preheader ]
   %i.bp = icmp ult i64 %i.be, 3
   br i1 %i.bp, label %.loopexit170, label %.lr.ph184.new

@@ -205,22 +205,20 @@ bb.h:                                             ; preds = %bb.g
   br label %tg3json__itoa.exit
 
 .preheader28.i:                                   ; preds = %.preheader28.i, %.preheader28.preheader.i
-  %indvars.iv35.i = phi i64 [ 1, %.preheader28.preheader.i ], [ %indvars.iv.next36.i, %.preheader28.i ] ; 7 uses
-  %indvars.iv.i = phi i64 [ 0, %.preheader28.preheader.i ], [ %indvars.iv.next.i, %.preheader28.i ] ; 2 uses
+  %indvars.iv.i = phi i64 [ 0, %.preheader28.preheader.i ], [ %indvars.iv.next.i, %.preheader28.i ] ; 4 uses
   %.12229.i = phi i64 [ %.02143.i, %.preheader28.preheader.i ], [ %i.x, %.preheader28.i ] ; 3 uses
   %i.t = urem i64 %.12229.i, 10
   %i.u = trunc nuw nsw i64 %i.t to i8
   %i.v = or disjoint i8 %i.u, 48
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
+  %indvars.iv.next.i = add nuw i64 %indvars.iv.i, 1 ; 5 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.e, i64 %indvars.iv.i
   store i8 %i.v, ptr %i.w, align 1, !tbaa !34
   %i.x = udiv i64 %.12229.i, 10
   %.not.i = icmp ult i64 %.12229.i, 10
-  %indvars.iv.next36.i = add nuw i64 %indvars.iv35.i, 1
   br i1 %.not.i, label %iter.check, label %.preheader28.i, !llvm.loop !325
 
 iter.check:                                       ; preds = %.preheader28.i
-  %i.y = trunc i64 %indvars.iv35.i to i32         ; 2 uses
+  %i.y = trunc i64 %indvars.iv.next.i to i32      ; 2 uses
   %smin = tail call i32 @llvm.smin.i32(i32 %i.y, i32 1)
   %i.z = sub i32 %i.y, %smin                      ; 3 uses
   %i.aa = zext i32 %i.z to i64
@@ -235,16 +233,15 @@ vector.main.loop.iter.check:                      ; preds = %iter.check
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.ac = and i64 %i.ab, 24
   %n.vec = and i64 %i.ab, 8589934560              ; 5 uses
-  %i.ad = sub i64 %indvars.iv35.i, %n.vec
-  %5 = getelementptr i8, ptr %.02342.i, i64 %n.vec ; 2 uses
-  %i.ae = getelementptr i8, ptr %i.e, i64 %indvars.iv35.i
+  %i.ad = sub i64 %indvars.iv.next.i, %n.vec
+  %i.ae = getelementptr i8, ptr %.02342.i, i64 %n.vec ; 2 uses
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 3 uses
   %next.gep = getelementptr i8, ptr %.02342.i, i64 %index ; 2 uses
-  %6 = xor i64 %index, -1
-  %i.af = getelementptr i8, ptr %i.ae, i64 %6     ; 2 uses
+  %5 = sub i64 %indvars.iv.i, %index
+  %i.af = getelementptr inbounds nuw i8, ptr %i.e, i64 %5 ; 2 uses
   %i.ag = getelementptr inbounds i8, ptr %i.af, i64 -15
   %i.ah = getelementptr inbounds i8, ptr %i.af, i64 -31
   %wide.load = load <16 x i8>, ptr %i.ag, align 1, !tbaa !34
@@ -269,16 +266,15 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec338 = and i64 %i.ab, 8589934584           ; 4 uses
-  %i.ak = sub i64 %indvars.iv35.i, %n.vec338
-  %7 = getelementptr i8, ptr %.02342.i, i64 %n.vec338 ; 2 uses
-  %i.al = getelementptr i8, ptr %i.e, i64 %indvars.iv35.i
+  %i.ak = sub i64 %indvars.iv.next.i, %n.vec338
+  %i.al = getelementptr i8, ptr %.02342.i, i64 %n.vec338 ; 2 uses
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index339 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next343, %vec.epilog.vector.body ] ; 3 uses
   %next.gep340 = getelementptr i8, ptr %.02342.i, i64 %index339
-  %8 = xor i64 %index339, -1
-  %i.am = getelementptr i8, ptr %i.al, i64 %8
+  %6 = sub i64 %indvars.iv.i, %index339
+  %i.am = getelementptr inbounds nuw i8, ptr %i.e, i64 %6
   %i.an = getelementptr inbounds i8, ptr %i.am, i64 -7
   %wide.load341 = load <8 x i8>, ptr %i.an, align 1, !tbaa !34
   %reverse342 = shufflevector <8 x i8> %wide.load341, <8 x i8> poison, <8 x i32> <i32 7, i32 6, i32 5, i32 4, i32 3, i32 2, i32 1, i32 0>
@@ -292,8 +288,8 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %cmp.n344, label %.loopexit, label %.preheader.i.preheader
 
 .preheader.i.preheader:                           ; preds = %iter.check, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv37.i.ph = phi i64 [ %indvars.iv35.i, %iter.check ], [ %i.ad, %vec.epilog.iter.check ], [ %i.ak, %vec.epilog.middle.block ]
-  %.12431.i.ph = phi ptr [ %.02342.i, %iter.check ], [ %5, %vec.epilog.iter.check ], [ %7, %vec.epilog.middle.block ]
+  %indvars.iv37.i.ph = phi i64 [ %indvars.iv.next.i, %iter.check ], [ %i.ad, %vec.epilog.iter.check ], [ %i.ak, %vec.epilog.middle.block ]
+  %.12431.i.ph = phi ptr [ %.02342.i, %iter.check ], [ %i.ae, %vec.epilog.iter.check ], [ %i.al, %vec.epilog.middle.block ]
   br label %.preheader.i
 
 .preheader.i:                                     ; preds = %.preheader.i.preheader, %.preheader.i
@@ -309,7 +305,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.at, label %.preheader.i, label %.loopexit, !llvm.loop !328
 
 .loopexit:                                        ; preds = %.preheader.i, %vec.epilog.middle.block, %middle.block
-  %.lcssa = phi ptr [ %7, %vec.epilog.middle.block ], [ %5, %middle.block ], [ %i.ar, %.preheader.i ]
+  %.lcssa = phi ptr [ %i.al, %vec.epilog.middle.block ], [ %i.ae, %middle.block ], [ %i.ar, %.preheader.i ]
   store i8 0, ptr %.lcssa, align 1, !tbaa !34
   br label %tg3json__itoa.exit
 
@@ -712,7 +708,7 @@ bb.h:                                             ; preds = %bb.g
   br i1 %i.es, label %iter.check190, label %bb.i
 
 iter.check190:                                    ; preds = %bb.h
-  %wide.trip.count122 = zext nneg i32 %i.d to i64 ; 8 uses
+  %wide.trip.count122 = zext nneg i32 %i.d to i64 ; 15 uses
   %min.iters.check174 = icmp ult i32 %i.d, 4
   %i.et = sub i64 %i.a, %.064173
   %diff.check176 = icmp ugt i64 %i.et, -32
@@ -725,8 +721,7 @@ vector.main.loop.iter.check177:                   ; preds = %iter.check190
 
 vector.ph179:                                     ; preds = %vector.main.loop.iter.check177
   %i.eu = and i64 %wide.trip.count122, 28
-  %n.vec180 = and i64 %wide.trip.count122, 2147483616 ; 7 uses
-  %5 = or disjoint i64 %n.vec180, 1
+  %n.vec180 = and i64 %wide.trip.count122, 2147483616 ; 5 uses
   %i.ev = getelementptr i8, ptr %.064, i64 %n.vec180 ; 3 uses
   br label %vector.body181
 
@@ -755,8 +750,7 @@ vec.epilog.iter.check191:                         ; preds = %middle.block187
 
 vec.epilog.ph194:                                 ; preds = %vector.main.loop.iter.check177, %vec.epilog.iter.check191
   %vec.epilog.resume.val195 = phi i64 [ %n.vec180, %vec.epilog.iter.check191 ], [ 0, %vector.main.loop.iter.check177 ]
-  %n.vec196 = and i64 %wide.trip.count122, 2147483644 ; 6 uses
-  %6 = or disjoint i64 %n.vec196, 1
+  %n.vec196 = and i64 %wide.trip.count122, 2147483644 ; 4 uses
   %i.fa = getelementptr i8, ptr %.064, i64 %n.vec196 ; 3 uses
   br label %vec.epilog.vector.body197
 
@@ -776,76 +770,88 @@ vec.epilog.middle.block202:                       ; preds = %vec.epilog.vector.b
   br i1 %cmp.n205, label %.loopexit339, label %.preheader79.preheader
 
 .preheader79.preheader:                           ; preds = %iter.check190, %vec.epilog.iter.check191, %vec.epilog.middle.block202
-  %indvars.iv125.ph = phi i64 [ 1, %iter.check190 ], [ %5, %vec.epilog.iter.check191 ], [ %6, %vec.epilog.middle.block202 ] ; 2 uses
-  %indvars.iv119.ph = phi i64 [ 0, %iter.check190 ], [ %n.vec180, %vec.epilog.iter.check191 ], [ %n.vec196, %vec.epilog.middle.block202 ] ; 3 uses
+  %indvars.iv119.ph = phi i64 [ 0, %iter.check190 ], [ %n.vec180, %vec.epilog.iter.check191 ], [ %n.vec196, %vec.epilog.middle.block202 ] ; 4 uses
   %.56989.ph = phi ptr [ %.064, %iter.check190 ], [ %i.ev, %vec.epilog.iter.check191 ], [ %i.fa, %vec.epilog.middle.block202 ] ; 2 uses
-  %xtraiter352 = and i64 %wide.trip.count122, 3   ; 2 uses
+  %5 = sub nsw i64 %wide.trip.count122, %indvars.iv119.ph
+  %xtraiter352 = and i64 %5, 7                    ; 2 uses
   %lcmp.mod353.not = icmp eq i64 %xtraiter352, 0
   br i1 %lcmp.mod353.not, label %.preheader79.prol.loopexit, label %.preheader79.prol
 
 .preheader79.prol:                                ; preds = %.preheader79.preheader, %.preheader79.prol
-  %indvars.iv125.prol = phi i64 [ %indvars.iv.next126.prol, %.preheader79.prol ], [ %indvars.iv125.ph, %.preheader79.preheader ] ; 2 uses
-  %indvars.iv119.prol = phi i64 [ %indvars.iv.next120.prol, %.preheader79.prol ], [ %indvars.iv119.ph, %.preheader79.preheader ] ; 2 uses
+  %indvars.iv119.prol = phi i64 [ %indvars.iv.next126.prol, %.preheader79.prol ], [ %indvars.iv119.ph, %.preheader79.preheader ] ; 2 uses
   %.56989.prol = phi ptr [ %i.ff, %.preheader79.prol ], [ %.56989.ph, %.preheader79.preheader ] ; 3 uses
   %prol.iter354 = phi i64 [ %prol.iter354.next, %.preheader79.prol ], [ 0, %.preheader79.preheader ]
   %i.fd = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv119.prol
   %i.fe = load i8, ptr %i.fd, align 1, !tbaa !34
   %i.ff = getelementptr inbounds nuw i8, ptr %.56989.prol, i64 1 ; 3 uses
   store i8 %i.fe, ptr %.56989.prol, align 1, !tbaa !34
-  %indvars.iv.next120.prol = add nuw nsw i64 %indvars.iv119.prol, 1 ; 2 uses
-  %indvars.iv.next126.prol = add nuw nsw i64 %indvars.iv125.prol, 1 ; 2 uses
+  %indvars.iv.next126.prol = add nuw nsw i64 %indvars.iv119.prol, 1 ; 2 uses
   %prol.iter354.next = add i64 %prol.iter354, 1   ; 2 uses
   %prol.iter354.cmp.not = icmp eq i64 %prol.iter354.next, %xtraiter352
   br i1 %prol.iter354.cmp.not, label %.preheader79.prol.loopexit, label %.preheader79.prol, !llvm.loop !566
 
 .preheader79.prol.loopexit:                       ; preds = %.preheader79.prol, %.preheader79.preheader
-  %indvars.iv125.lcssa349.unr = phi i64 [ poison, %.preheader79.preheader ], [ %indvars.iv125.prol, %.preheader79.prol ]
   %.56989.lcssa348.unr = phi ptr [ poison, %.preheader79.preheader ], [ %.56989.prol, %.preheader79.prol ]
   %.lcssa347.unr = phi ptr [ poison, %.preheader79.preheader ], [ %i.ff, %.preheader79.prol ]
-  %indvars.iv125.unr = phi i64 [ %indvars.iv125.ph, %.preheader79.preheader ], [ %indvars.iv.next126.prol, %.preheader79.prol ]
-  %indvars.iv119.unr = phi i64 [ %indvars.iv119.ph, %.preheader79.preheader ], [ %indvars.iv.next120.prol, %.preheader79.prol ]
+  %indvars.iv119.unr = phi i64 [ %indvars.iv119.ph, %.preheader79.preheader ], [ %indvars.iv.next126.prol, %.preheader79.prol ]
   %.56989.unr = phi ptr [ %.56989.ph, %.preheader79.preheader ], [ %i.ff, %.preheader79.prol ]
   %i.fg = sub nsw i64 %indvars.iv119.ph, %wide.trip.count122
-  %i.fh = icmp ugt i64 %i.fg, -4
+  %i.fh = icmp ugt i64 %i.fg, -8
   br i1 %i.fh, label %.loopexit339, label %.preheader79
 
 .preheader79:                                     ; preds = %.preheader79.prol.loopexit, %.preheader79
-  %indvars.iv125.a = phi i64 [ %indvars.iv.next126.3, %.preheader79 ], [ %indvars.iv125.unr, %.preheader79.prol.loopexit ] ; 2 uses
-  %indvars.iv119 = phi i64 [ %indvars.iv.next120.3, %.preheader79 ], [ %indvars.iv119.unr, %.preheader79.prol.loopexit ] ; 5 uses
-  %.56989 = phi ptr [ %i.fw, %.preheader79 ], [ %.56989.unr, %.preheader79.prol.loopexit ] ; 6 uses
-  %i.fi = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv119
+  %indvars.iv125.a = phi i64 [ %indvars.iv.next126.3, %.preheader79 ], [ %indvars.iv119.unr, %.preheader79.prol.loopexit ] ; 9 uses
+  %.56989 = phi ptr [ %21, %.preheader79 ], [ %.56989.unr, %.preheader79.prol.loopexit ] ; 10 uses
+  %6 = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv125.a
+  %7 = load i8, ptr %6, align 1, !tbaa !34
+  %8 = getelementptr inbounds nuw i8, ptr %.56989, i64 1
+  store i8 %7, ptr %.56989, align 1, !tbaa !34
+  %9 = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv125.a
+  %10 = getelementptr inbounds nuw i8, ptr %9, i64 1
+  %11 = load i8, ptr %10, align 1, !tbaa !34
+  %12 = getelementptr inbounds nuw i8, ptr %.56989, i64 2
+  store i8 %11, ptr %8, align 1, !tbaa !34
+  %13 = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv125.a
+  %14 = getelementptr inbounds nuw i8, ptr %13, i64 2
+  %15 = load i8, ptr %14, align 1, !tbaa !34
+  %16 = getelementptr inbounds nuw i8, ptr %.56989, i64 3
+  store i8 %15, ptr %12, align 1, !tbaa !34
+  %17 = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv125.a
+  %i.fi = getelementptr inbounds nuw i8, ptr %17, i64 3
   %i.fj = load i8, ptr %i.fi, align 1, !tbaa !34
-  %i.fk = getelementptr inbounds nuw i8, ptr %.56989, i64 1
-  store i8 %i.fj, ptr %.56989, align 1, !tbaa !34
-  %i.fl = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv119
-  %i.fm = getelementptr inbounds nuw i8, ptr %i.fl, i64 1
+  %i.fk = getelementptr inbounds nuw i8, ptr %.56989, i64 4
+  store i8 %i.fj, ptr %16, align 1, !tbaa !34
+  %i.fl = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv125.a
+  %i.fm = getelementptr inbounds nuw i8, ptr %i.fl, i64 4
   %i.fn = load i8, ptr %i.fm, align 1, !tbaa !34
-  %i.fo = getelementptr inbounds nuw i8, ptr %.56989, i64 2
+  %i.fo = getelementptr inbounds nuw i8, ptr %.56989, i64 5
   store i8 %i.fn, ptr %i.fk, align 1, !tbaa !34
-  %i.fp = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv119
-  %i.fq = getelementptr inbounds nuw i8, ptr %i.fp, i64 2
+  %i.fp = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv125.a
+  %i.fq = getelementptr inbounds nuw i8, ptr %i.fp, i64 5
   %i.fr = load i8, ptr %i.fq, align 1, !tbaa !34
-  %i.fs = getelementptr inbounds nuw i8, ptr %.56989, i64 3
+  %i.fs = getelementptr inbounds nuw i8, ptr %.56989, i64 6
   store i8 %i.fr, ptr %i.fo, align 1, !tbaa !34
-  %i.ft = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv119
-  %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 3
+  %i.ft = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv125.a
+  %i.fu = getelementptr inbounds nuw i8, ptr %i.ft, i64 6
   %i.fv = load i8, ptr %i.fu, align 1, !tbaa !34
-  %i.fw = getelementptr inbounds nuw i8, ptr %.56989, i64 4 ; 2 uses
+  %i.fw = getelementptr inbounds nuw i8, ptr %.56989, i64 7
   store i8 %i.fv, ptr %i.fs, align 1, !tbaa !34
-  %indvars.iv.next120.3 = add nuw nsw i64 %indvars.iv119, 4 ; 2 uses
-  %exitcond123.not.3 = icmp eq i64 %indvars.iv.next120.3, %wide.trip.count122
-  %indvars.iv.next126.3 = add nuw nsw i64 %indvars.iv125.a, 4
-  br i1 %exitcond123.not.3, label %.loopexit339.loopexit.unr-lcssa, label %.preheader79, !llvm.loop !567
+  %18 = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv125.a
+  %19 = getelementptr inbounds nuw i8, ptr %18, i64 7
+  %20 = load i8, ptr %19, align 1, !tbaa !34
+  %21 = getelementptr inbounds nuw i8, ptr %.56989, i64 8 ; 2 uses
+  store i8 %20, ptr %i.fw, align 1, !tbaa !34
+  %indvars.iv.next126.3 = add nuw nsw i64 %indvars.iv125.a, 8 ; 2 uses
+  %exitcond123.not.7 = icmp eq i64 %indvars.iv.next126.3, %wide.trip.count122
+  br i1 %exitcond123.not.7, label %.loopexit339.loopexit.unr-lcssa, label %.preheader79, !llvm.loop !567
 
 .loopexit339.loopexit.unr-lcssa:                  ; preds = %.preheader79
-  %i.fx = getelementptr inbounds nuw i8, ptr %.56989, i64 3
-  %indvars.iv.next126.2 = add nuw nsw i64 %indvars.iv125.a, 3
+  %i.fx = getelementptr inbounds nuw i8, ptr %.56989, i64 7
   br label %.loopexit339
 
 .loopexit339:                                     ; preds = %.loopexit339.loopexit.unr-lcssa, %.preheader79.prol.loopexit, %vec.epilog.middle.block202, %middle.block187
-  %indvars.iv125.lcssa = phi i64 [ %n.vec196, %vec.epilog.middle.block202 ], [ %n.vec180, %middle.block187 ], [ %indvars.iv125.lcssa349.unr, %.preheader79.prol.loopexit ], [ %indvars.iv.next126.2, %.loopexit339.loopexit.unr-lcssa ] ; 7 uses
   %.56989.lcssa = phi ptr [ %ind.escape204, %vec.epilog.middle.block202 ], [ %ind.escape188, %middle.block187 ], [ %.56989.lcssa348.unr, %.preheader79.prol.loopexit ], [ %i.fx, %.loopexit339.loopexit.unr-lcssa ] ; 2 uses
-  %.lcssa157 = phi ptr [ %i.fa, %vec.epilog.middle.block202 ], [ %i.ev, %middle.block187 ], [ %.lcssa347.unr, %.preheader79.prol.loopexit ], [ %i.fw, %.loopexit339.loopexit.unr-lcssa ]
+  %.lcssa157 = phi ptr [ %i.fa, %vec.epilog.middle.block202 ], [ %i.ev, %middle.block187 ], [ %.lcssa347.unr, %.preheader79.prol.loopexit ], [ %21, %.loopexit339.loopexit.unr-lcssa ]
   %.56989.lcssa212 = ptrtoaddr ptr %.56989.lcssa to i64
   store i8 46, ptr %.lcssa157, align 1, !tbaa !34
   %.67091 = getelementptr inbounds nuw i8, ptr %.56989.lcssa, i64 2 ; 7 uses
@@ -859,7 +865,7 @@ iter.check228:                                    ; preds = %.loopexit339
   br i1 %min.iters.check213, label %.lr.ph94.preheader, label %vector.memcheck214
 
 vector.memcheck214:                               ; preds = %iter.check228
-  %i.ga = add i64 %indvars.iv125.lcssa, %i.a
+  %i.ga = add i64 %i.a, %wide.trip.count122
   %i.gb = sub i64 %.56989.lcssa212, %i.ga
   %i.gc = add i64 %i.gb, 1
   %diff.check215 = icmp ult i64 %i.gc, 31
@@ -872,15 +878,15 @@ vector.main.loop.iter.check216:                   ; preds = %vector.memcheck214
 vector.ph218:                                     ; preds = %vector.main.loop.iter.check216
   %i.gd = and i64 %i.fz, 24
   %n.vec219 = and i64 %i.fz, 2147483616           ; 5 uses
-  %i.ge = add i64 %indvars.iv125.lcssa, %n.vec219
+  %i.ge = add nuw nsw i64 %n.vec219, %wide.trip.count122
   %i.gf = getelementptr i8, ptr %.67091, i64 %n.vec219 ; 2 uses
-  %i.gg = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv125.lcssa
+  %i.gg = getelementptr i8, ptr %1, i64 %wide.trip.count122
   br label %vector.body220
 
 vector.body220:                                   ; preds = %vector.ph218, %vector.body220
   %index221 = phi i64 [ 0, %vector.ph218 ], [ %index.next225, %vector.body220 ] ; 3 uses
   %next.gep222 = getelementptr i8, ptr %.67091, i64 %index221 ; 2 uses
-  %i.gh = getelementptr inbounds nuw i8, ptr %i.gg, i64 %index221 ; 2 uses
+  %i.gh = getelementptr i8, ptr %i.gg, i64 %index221 ; 2 uses
   %i.gi = getelementptr inbounds nuw i8, ptr %i.gh, i64 16
   %wide.load223 = load <16 x i8>, ptr %i.gh, align 1, !tbaa !34
   %wide.load224 = load <16 x i8>, ptr %i.gi, align 1, !tbaa !34
@@ -902,15 +908,15 @@ vec.epilog.iter.check229:                         ; preds = %middle.block226
 vec.epilog.ph232:                                 ; preds = %vector.main.loop.iter.check216, %vec.epilog.iter.check229
   %vec.epilog.resume.val233 = phi i64 [ %n.vec219, %vec.epilog.iter.check229 ], [ 0, %vector.main.loop.iter.check216 ]
   %n.vec234 = and i64 %i.fz, 2147483640           ; 4 uses
-  %i.gl = add i64 %indvars.iv125.lcssa, %n.vec234
+  %i.gl = add nuw nsw i64 %n.vec234, %wide.trip.count122
   %i.gm = getelementptr i8, ptr %.67091, i64 %n.vec234 ; 2 uses
-  %i.gn = getelementptr inbounds nuw i8, ptr %1, i64 %indvars.iv125.lcssa
+  %i.gn = getelementptr i8, ptr %1, i64 %wide.trip.count122
   br label %vec.epilog.vector.body235
 
 vec.epilog.vector.body235:                        ; preds = %vec.epilog.vector.body235, %vec.epilog.ph232
   %index236 = phi i64 [ %vec.epilog.resume.val233, %vec.epilog.ph232 ], [ %index.next239, %vec.epilog.vector.body235 ] ; 3 uses
   %next.gep237 = getelementptr i8, ptr %.67091, i64 %index236
-  %i.go = getelementptr inbounds nuw i8, ptr %i.gn, i64 %index236
+  %i.go = getelementptr i8, ptr %i.gn, i64 %index236
   %wide.load238 = load <8 x i8>, ptr %i.go, align 1, !tbaa !34
   store <8 x i8> %wide.load238, ptr %next.gep237, align 1, !tbaa !34
   %index.next239 = add nuw i64 %index236, 8       ; 2 uses
@@ -922,7 +928,7 @@ vec.epilog.middle.block240:                       ; preds = %vec.epilog.vector.b
   br i1 %cmp.n241, label %.loopexit76, label %.lr.ph94.preheader
 
 .lr.ph94.preheader:                               ; preds = %iter.check228, %vector.memcheck214, %vec.epilog.iter.check229, %vec.epilog.middle.block240
-  %indvars.iv127.ph = phi i64 [ %indvars.iv125.lcssa, %iter.check228 ], [ %indvars.iv125.lcssa, %vector.memcheck214 ], [ %i.ge, %vec.epilog.iter.check229 ], [ %i.gl, %vec.epilog.middle.block240 ]
+  %indvars.iv127.ph = phi i64 [ %wide.trip.count122, %iter.check228 ], [ %wide.trip.count122, %vector.memcheck214 ], [ %i.ge, %vec.epilog.iter.check229 ], [ %i.gl, %vec.epilog.middle.block240 ]
   %.67093.ph = phi ptr [ %.67091, %iter.check228 ], [ %.67091, %vector.memcheck214 ], [ %i.gf, %vec.epilog.iter.check229 ], [ %i.gm, %vec.epilog.middle.block240 ]
   br label %.lr.ph94
 

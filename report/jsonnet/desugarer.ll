@@ -204,8 +204,8 @@ define linkonce_odr dso_local noundef ptr @_ZN7jsonnet8internal9Desugarer22makeA
   %i.h = ptrtoint ptr %i.f to i64
   %i.i = ptrtoint ptr %i.g to i64
   %i.j = sub i64 %i.h, %i.i
-  %i.k = sdiv exact i64 %i.j, 96                  ; 4 uses
-  %i.l = trunc i64 %i.k to i32                    ; 2 uses
+  %i.k = sdiv exact i64 %i.j, 96                  ; 5 uses
+  %i.l = trunc i64 %i.k to i32
   %i.m = load ptr, ptr %0, align 8, !tbaa !64
   %i.n = tail call noundef ptr @_ZN7jsonnet8internal9Allocator4makeINS0_13LiteralNumberEJRKNS0_13LocationRangeERKSt6vectorINS0_13FodderElementESaIS8_EERA4_KcEEEPT_DpOT0_(ptr noundef nonnull align 8 dereferenceable(120) %i.m, ptr noundef nonnull align 8 dereferenceable(64) @_ZN7jsonnet8internalL1EE, ptr noundef nonnull align 8 dereferenceable(24) @_ZN7jsonnet8internalL2EFE, ptr noundef nonnull align 1 dereferenceable(4) @.str.100)
   %i.o = load ptr, ptr %0, align 8, !tbaa !64
@@ -521,9 +521,10 @@ _ZNKSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEE8capacityEv.exit.i.i.i2
   br label %_ZNKSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEE8capacityEv.exit.i.i.i280
 
 ._crit_edge:                                      ; preds = %_ZN7jsonnet8internal13UStringStreamD2Ev.exit303, %_ZNSt6vectorIPKN7jsonnet8internal10IdentifierESaIS4_EEC2EmRKS5_.exit255
-  %27 = add i32 %i.l, -1                          ; 2 uses
-  %28 = load ptr, ptr %i.d, align 8, !tbaa !194
-  %29 = sext i32 %27 to i64
+  %27 = load ptr, ptr %i.d, align 8, !tbaa !194
+  %28 = shl i64 %i.k, 32
+  %sext2138 = add i64 %28, -4294967296
+  %29 = ashr exact i64 %sext2138, 32
   br label %bb.u
 
 bb.l:                                             ; preds = %bb.a
@@ -687,7 +688,7 @@ _ZN7jsonnet8internal13UStringStreamD2Ev.exit309:  ; preds = %bb.t, %_ZNKSt7__cxx
 
 bb.u:                                             ; preds = %bb.u, %._crit_edge
   %indvars.iv2036 = phi i64 [ %indvars.iv.next2037, %bb.u ], [ %29, %._crit_edge ] ; 4 uses
-  %i.ep = getelementptr inbounds nuw [96 x i8], ptr %28, i64 %indvars.iv2036
+  %i.ep = getelementptr inbounds nuw [96 x i8], ptr %27, i64 %indvars.iv2036
   %i.eq = load i32, ptr %i.ep, align 8, !tbaa !197
   %.not177 = icmp eq i32 %i.eq, 0
   %indvars.iv.next2037 = add nsw i64 %indvars.iv2036, -1
@@ -1036,7 +1037,6 @@ _ZNSt6vectorIN7jsonnet8internal8ArgParamESaIS2_EED2Ev.exit: ; preds = %_ZSt8_Des
   %i.jk = getelementptr inbounds nuw i8, ptr %26, i64 8
   %i.jl = getelementptr inbounds nuw i8, ptr %21, i64 8
   %i.jm = getelementptr inbounds nuw i8, ptr %21, i64 16
-  %30 = zext nneg i32 %27 to i64
   %i.jn = getelementptr inbounds nuw i8, ptr %16, i64 88
   %i.jo = getelementptr inbounds nuw i8, ptr %24, i64 88
   %i.jp = getelementptr inbounds nuw i8, ptr %18, i64 176
@@ -1111,12 +1111,11 @@ bb.au:                                            ; preds = %_ZN7jsonnet8interna
   br label %.body
 
 bb.av:                                            ; preds = %.lr.ph, %bb.er
-  %indvars.iv2044 = phi i64 [ %30, %.lr.ph ], [ %indvars.iv.next2045, %bb.er ] ; 6 uses
-  %indvars.iv2039.in = phi i64 [ %i.ak, %.lr.ph ], [ %indvars.iv2039.a, %bb.er ]
-  %indvars.iv2039.a = add nsw i64 %indvars.iv2039.in, -1 ; 2 uses
+  %indvars.iv2039.in = phi i64 [ %i.ak, %.lr.ph ], [ %indvars.iv2039.a, %bb.er ] ; 2 uses
+  %indvars.iv2039.a = add nsw i64 %indvars.iv2039.in, -1 ; 6 uses
   %i.kd = load ptr, ptr %i.d, align 8, !tbaa !194 ; 2 uses
-  %i.ke = getelementptr inbounds nuw [96 x i8], ptr %i.kd, i64 %indvars.iv2044 ; 4 uses
-  %.not = icmp eq i64 %indvars.iv2044, 0          ; 5 uses
+  %i.ke = getelementptr inbounds nuw [96 x i8], ptr %i.kd, i64 %indvars.iv2039.a ; 4 uses
+  %.not = icmp eq i64 %indvars.iv2039.a, 0        ; 5 uses
   br i1 %.not, label %bb.bo, label %.preheader778
 
 .preheader778:                                    ; preds = %bb.av, %.preheader778
@@ -1519,11 +1518,11 @@ bb.by:                                            ; preds = %bb.bv
 
 bb.bz:                                            ; preds = %bb.bx, %_ZSt8_DestroyIPN7jsonnet8internal8ArgParamES2_EvT_S4_RSaIT0_E.exit.i.i
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #28, !noalias !367
-  %i.or = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0706.0, i64 %indvars.iv2044 ; 2 uses
+  %i.or = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0706.0, i64 %indvars.iv2039.a ; 2 uses
   %i.os = load ptr, ptr %i.or, align 8, !tbaa !101
   call void @llvm.lifetime.start.p0(ptr nonnull %19) #28
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #28
-  %i.ot = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0715.0, i64 %indvars.iv2044 ; 3 uses
+  %i.ot = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0715.0, i64 %indvars.iv2039.a ; 3 uses
   %i.ou = load ptr, ptr %i.ot, align 8, !tbaa !101
   invoke void @_ZN7jsonnet8internal8ArgParamC2ERKSt6vectorINS0_13FodderElementESaIS3_EEPKNS0_10IdentifierES7_(ptr noundef nonnull align 8 dereferenceable(88) %20, ptr noundef nonnull align 8 dereferenceable(24) @_ZN7jsonnet8internalL2EFE, ptr noundef %i.ou, ptr noundef nonnull align 8 dereferenceable(24) @_ZN7jsonnet8internalL2EFE)
           to label %bb.ca unwind label %.thread
@@ -1926,8 +1925,7 @@ _ZNSt7__cxx1112basic_stringIDiSt11char_traitsIDiESaIDiEED2Ev.exit588: ; preds = 
   br label %.body
 
 bb.er:                                            ; preds = %_ZNSt6vectorIN7jsonnet8internal8ArgParamESaIS2_EED2Ev.exit582, %bb.bu, %bb.br
-  %indvars.iv.next2045 = add nsw i64 %indvars.iv2044, -1
-  %i.aaz = icmp sgt i64 %indvars.iv2044, 0
+  %i.aaz = icmp sgt i64 %indvars.iv2039.in, 1
   br i1 %i.aaz, label %bb.av, label %._crit_edge1587, !llvm.loop !364
 
 .body:                                            ; preds = %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp, %.body399.thread, %bb.ax, %.body352.thread, %bb.bt, %bb.bp, %.body314.thread, %bb.w

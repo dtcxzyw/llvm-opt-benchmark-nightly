@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %.lr.ph.i120.prehead
 
 bb.o:                                             ; preds = %.sink.split, %bb.i
   %.0102 = phi i32 [ %i.bq, %bb.i ], [ %.0100166, %.sink.split ]
-  %.3 = phi i32 [ %.2169, %bb.i ], [ %i.do, %.sink.split ] ; 3 uses
+  %.3 = phi i32 [ %.2169, %bb.i ], [ %i.do, %.sink.split ] ; 2 uses
   %i.dv = icmp slt i32 %.3, 4095
   br i1 %i.dv, label %.lr.ph157.preheader, label %.critedge.thread
 
@@ -214,10 +214,8 @@ bb.o:                                             ; preds = %.sink.split, %bb.i
   br label %.lr.ph157
 
 .lr.ph157:                                        ; preds = %.lr.ph157.preheader, %bb.p
-  %indvars.iv188.in = phi i32 [ %.3, %.lr.ph157.preheader ], [ %indvars.iv188, %bb.p ]
   %indvars.iv184 = phi i64 [ %i.dw, %.lr.ph157.preheader ], [ %indvars.iv.next185, %bb.p ] ; 4 uses
   %.1103155 = phi i32 [ %.0102, %.lr.ph157.preheader ], [ %i.ee, %bb.p ] ; 5 uses
-  %indvars.iv188 = add i32 %indvars.iv188.in, 1   ; 2 uses
   %i.dx = icmp sgt i32 %.1103155, %i.l
   %i.dy = icmp slt i32 %.1103155, 4096
   %or.cond3 = and i1 %i.dx, %i.dy
@@ -248,7 +246,7 @@ bb.p:                                             ; preds = %.lr.ph157
 bb.q:                                             ; preds = %.critedge
   %i.ei = trunc nsw i64 %indvars.iv184 to i32
   %i.ej = trunc i32 %.1103155 to i8
-  %i.ek = add nsw i32 %i.ei, 1                    ; 2 uses
+  %i.ek = add nsw i32 %i.ei, 1                    ; 3 uses
   %i.el = getelementptr inbounds i8, ptr %i.h, i64 %indvars.iv184
   store i8 %i.ej, ptr %i.el, align 1, !tbaa !30
   %i.em = icmp ne i32 %i.ek, 0
@@ -257,7 +255,7 @@ bb.q:                                             ; preds = %.critedge
   br i1 %i.eo, label %iter.check280, label %.loopexit
 
 iter.check280:                                    ; preds = %bb.q
-  %i.ep = sext i32 %indvars.iv188 to i64          ; 10 uses
+  %i.ep = sext i32 %i.ek to i64                   ; 10 uses
   %i.eq = sext i32 %.2107165 to i64               ; 10 uses
   %i.er = xor i64 %i.eq, -1
   %i.es = add nsw i64 %i.er, %i.bn

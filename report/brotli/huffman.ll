@@ -203,13 +203,12 @@ ReplicateValue.exit127:                           ; preds = %bb.f
 
 .lr.ph178:                                        ; preds = %._crit_edge136
   %i.am = ptrtoint ptr %0 to i64                  ; 2 uses
-  %i.an = sext i32 %1 to i64                      ; 2 uses
+  %i.an = sext i32 %1 to i64
   %wide.trip.count = sext i32 %indvars.iv198 to i64
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph178, %._crit_edge154
-  %indvars.iv195 = phi i64 [ %i.an, %.lr.ph178 ], [ %indvars.iv.next196, %._crit_edge154 ] ; 3 uses
-  %indvars.iv190.in = phi i64 [ %i.an, %.lr.ph178 ], [ %indvars.iv190, %._crit_edge154 ]
+  %indvars.iv190.in = phi i64 [ %i.an, %.lr.ph178 ], [ %indvars.iv.next196, %._crit_edge154 ] ; 3 uses
   %.0175 = phi ptr [ %0, %.lr.ph178 ], [ %.1.lcssa, %._crit_edge154 ] ; 3 uses
   %.088173 = phi i32 [ %i.f, %.lr.ph178 ], [ %.189.lcssa, %._crit_edge154 ] ; 3 uses
   %.293172 = phi i32 [ %i.f, %.lr.ph178 ], [ %.3.lcssa, %._crit_edge154 ] ; 3 uses
@@ -217,9 +216,8 @@ bb.g:                                             ; preds = %.lr.ph178, %._crit_
   %.097168 = phi i64 [ 128, %.lr.ph178 ], [ %i.dp, %._crit_edge154 ] ; 3 uses
   %.098167 = phi i64 [ 256, %.lr.ph178 ], [ %.199.lcssa, %._crit_edge154 ] ; 3 uses
   %.2104166 = phi i64 [ %.1103.lcssa, %.lr.ph178 ], [ %.3105.lcssa, %._crit_edge154 ] ; 3 uses
-  %indvars.iv190 = add nsw i64 %indvars.iv190.in, 1 ; 2 uses
-  %indvars.iv.next196 = add nsw i64 %indvars.iv195, 1 ; 5 uses
-  %i.ao = add nsw i64 %indvars.iv195, -15         ; 2 uses
+  %indvars.iv.next196 = add nsw i64 %indvars.iv190.in, 1 ; 6 uses
+  %i.ao = add nsw i64 %indvars.iv190.in, -15      ; 2 uses
   %i.ap = getelementptr inbounds [2 x i8], ptr %3, i64 %indvars.iv.next196 ; 5 uses
   %i.aq = load i16, ptr %i.ap, align 2, !tbaa !9
   %.not116145 = icmp eq i16 %i.aq, 0
@@ -229,7 +227,7 @@ bb.g:                                             ; preds = %.lr.ph178, %._crit_
   %i.ar = trunc i64 %indvars.iv.next196 to i32
   %i.as = sub i32 %i.ar, %1                       ; 2 uses
   %i.at = shl nuw i32 1, %i.as                    ; 3 uses
-  %i.au = icmp slt i64 %indvars.iv195, 14
+  %i.au = icmp slt i64 %indvars.iv190.in, 14
   %.sroa.0.0.insert.ext.i = and i32 %i.as, 255    ; 2 uses
   br i1 %i.au, label %.lr.ph153.split.us.preheader, label %.lr.ph153.split
 
@@ -253,7 +251,7 @@ bb.g:                                             ; preds = %.lr.ph178, %._crit_
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph141.us, %bb.i
-  %indvars.iv192 = phi i64 [ %indvars.iv190, %.lr.ph141.us ], [ %indvars.iv.next193, %bb.i ] ; 3 uses
+  %indvars.iv192 = phi i64 [ %indvars.iv.next196, %.lr.ph141.us ], [ %indvars.iv.next193, %bb.i ] ; 3 uses
   %.0.i128139.us = phi i32 [ %i.at, %.lr.ph141.us ], [ %i.be, %bb.i ]
   %i.az = getelementptr inbounds [2 x i8], ptr %3, i64 %indvars.iv192
   %i.ba = load i16, ptr %i.az, align 2, !tbaa !9

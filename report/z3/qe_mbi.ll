@@ -205,13 +205,11 @@ _ZNK6vectorIP3appLb0EjE4sizeEv.exit88..critedge132.loopexit_crit_edge: ; preds =
 .critedge132.loopexit:                            ; preds = %bb.bi, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit88..critedge132.loopexit_crit_edge
   %i.ey = phi ptr [ %i.gd, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit88..critedge132.loopexit_crit_edge ], [ %i.gq, %bb.bi ] ; 2 uses
   %i.ez = icmp eq ptr %i.ey, null
-  %indvars.iv.next = add i32 %indvars.iv, 1
   br i1 %i.ez, label %.critedge, label %_ZNK6vectorIP3appLb0EjE4sizeEv.exit
 
 _ZNK6vectorIP3appLb0EjE4sizeEv.exit:              ; preds = %_ZNK6vectorIP3appLb0EjE4sizeEv.exit.preheader, %.critedge132.loopexit
   %i.fa = phi ptr [ %i.dc, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit.preheader ], [ %i.ey, %.critedge132.loopexit ] ; 3 uses
   %indvars.iv171 = phi i64 [ 0, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit.preheader ], [ %indvars.iv.next172, %.critedge132.loopexit ] ; 4 uses
-  %indvars.iv = phi i32 [ 1, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit.preheader ], [ %indvars.iv.next, %.critedge132.loopexit ] ; 2 uses
   %i.fb = getelementptr inbounds i8, ptr %i.fa, i64 -4
   %i.fc = load i32, ptr %i.fb, align 4, !tbaa !87
   %i.fd = zext i32 %i.fc to i64
@@ -296,16 +294,15 @@ _ZN14core_hashtableIN7obj_mapI9func_decl10ptr_vectorI3appEE13obj_map_entryE8obj_
   br i1 %.not131, label %._crit_edge.loopexit, label %.lr.ph153
 
 _ZNK6vectorIP3appLb0EjE4sizeEv.exit88.preheader:  ; preds = %_ZNK6vectorIP3appLb0EjE4sizeEv.exit
-  %13 = zext i32 %indvars.iv to i64
   %i.gb = getelementptr inbounds nuw [8 x i8], ptr %.sroa.6.0.lcssa224, i64 %indvars.iv171
   %i.gc = load ptr, ptr %i.gb, align 8, !tbaa !60
-  %indvars.iv.next172 = add nuw nsw i64 %indvars.iv171, 1
+  %indvars.iv.next172 = add nuw nsw i64 %indvars.iv171, 1 ; 2 uses
   br label %_ZNK6vectorIP3appLb0EjE4sizeEv.exit88
 
 _ZNK6vectorIP3appLb0EjE4sizeEv.exit88:            ; preds = %_ZNK6vectorIP3appLb0EjE4sizeEv.exit88.preheader, %bb.bi
   %i.gd = phi ptr [ %i.fa, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit88.preheader ], [ %i.gq, %bb.bi ] ; 2 uses
   %i.ge = phi ptr [ %i.fa, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit88.preheader ], [ %i.gr, %bb.bi ] ; 4 uses
-  %indvars.iv168 = phi i64 [ %13, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit88.preheader ], [ %indvars.iv.next169, %bb.bi ] ; 4 uses
+  %indvars.iv168 = phi i64 [ %indvars.iv.next172, %_ZNK6vectorIP3appLb0EjE4sizeEv.exit88.preheader ], [ %indvars.iv.next169, %bb.bi ] ; 4 uses
   %i.gf = getelementptr inbounds i8, ptr %i.ge, i64 -4
   %i.gg = load i32, ptr %i.gf, align 4, !tbaa !87
   %i.gh = zext i32 %i.gg to i64

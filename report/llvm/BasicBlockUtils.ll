@@ -202,7 +202,6 @@ _ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE20isReachableFromEntryEPKS1_.e
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph73, %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE20isReachableFromEntryEPKS1_.exit34.thread
-  %indvars.iv86 = phi i64 [ 1, %.lr.ph73 ], [ %indvars.iv.next87, %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE20isReachableFromEntryEPKS1_.exit34.thread ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph73 ], [ %indvars.iv.next, %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE20isReachableFromEntryEPKS1_.exit34.thread ] ; 3 uses
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %indvars.iv
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !57 ; 2 uses
@@ -222,19 +221,22 @@ _ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE20isReachableFromEntryEPKS1_.e
 
 .preheader:                                       ; preds = %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE20isReachableFromEntryEPKS1_.exit34
   %i.bi = trunc nuw i64 %indvars.iv to i32
-  %.12274 = add nuw i32 %i.bi, 1
+  %.12274 = add nuw i32 %i.bi, 1                  ; 2 uses
   %i.bj = icmp ugt i32 %i.at, %.12274
-  br i1 %i.bj, label %.lr.ph77.a, label %._crit_edge78
+  br i1 %i.bj, label %.lr.ph77, label %._crit_edge78
+
+.lr.ph77:                                         ; preds = %.preheader
+  %3 = zext i32 %.12274 to i64
+  br label %.lr.ph77.a
 
 _ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE20isReachableFromEntryEPKS1_.exit34.thread: ; preds = %bb.f, %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE20isReachableFromEntryEPKS1_.exit34
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  %indvars.iv.next87 = add nuw nsw i64 %indvars.iv86, 1
   br i1 %exitcond.not, label %_ZN4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE24changeImmediateDominatorEPNS_15DomTreeNodeBaseIS1_EES5_.exit, label %bb.f, !llvm.loop !650
 
-.lr.ph77.a:                                       ; preds = %.preheader, %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE26findNearestCommonDominatorEPS1_S3_.exit
-  %indvars.iv89 = phi i64 [ %indvars.iv.next90, %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE26findNearestCommonDominatorEPS1_S3_.exit ], [ %indvars.iv86, %.preheader ] ; 2 uses
-  %.12475 = phi ptr [ %.225, %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE26findNearestCommonDominatorEPS1_S3_.exit ], [ %i.az, %.preheader ] ; 5 uses
+.lr.ph77.a:                                       ; preds = %.lr.ph77, %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE26findNearestCommonDominatorEPS1_S3_.exit
+  %indvars.iv89 = phi i64 [ %3, %.lr.ph77 ], [ %indvars.iv.next90, %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE26findNearestCommonDominatorEPS1_S3_.exit ] ; 2 uses
+  %.12475 = phi ptr [ %i.az, %.lr.ph77 ], [ %.225, %_ZNK4llvm17DominatorTreeBaseINS_10BasicBlockELb0EE26findNearestCommonDominatorEPS1_S3_.exit ] ; 5 uses
   %i.bk = getelementptr inbounds nuw [8 x i8], ptr %i.au, i64 %indvars.iv89
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !57 ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %i.bl, i64 40

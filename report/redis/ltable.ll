@@ -192,14 +192,12 @@ bb.o:                                             ; preds = %bb.n
   br label %findindex.exit
 
 findindex.exit:                                   ; preds = %bb.a, %bb.d, %bb.m, %bb.o
-  %.1.i = phi i32 [ -1, %bb.a ], [ %i.j, %bb.d ], [ %i.co, %bb.m ], [ 0, %bb.o ] ; 2 uses
+  %.1.i = phi i32 [ -1, %bb.a ], [ %i.j, %bb.d ], [ %i.co, %bb.m ], [ 0, %bb.o ]
   %i.cr = getelementptr inbounds nuw i8, ptr %1, i64 64
-  %i.cs = load i32, ptr %i.cr, align 8, !tbaa !25 ; 3 uses
+  %i.cs = load i32, ptr %i.cr, align 8, !tbaa !25 ; 2 uses
   %i.ct = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.cu = sext i32 %.1.i to i64                   ; 2 uses
   %i.cv = sext i32 %i.cs to i64                   ; 2 uses
-  %3 = add i32 %.1.i, 1
-  %4 = sub i32 %3, %i.cs                          ; 2 uses
   %indvars.iv.next85 = add nsw i64 %i.cu, 1       ; 3 uses
   %i.cw = icmp slt i64 %indvars.iv.next85, %i.cv
   br i1 %i.cw, label %.lr.ph89.preheader, label %._crit_edge
@@ -209,7 +207,6 @@ findindex.exit:                                   ; preds = %bb.a, %bb.d, %bb.m,
   br label %.lr.ph89
 
 bb.p:                                             ; preds = %.lr.ph89
-  %indvars.iv.next62 = add i32 %indvars.iv6186, 1 ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv.next88, 1 ; 3 uses
   %i.cy = icmp slt i64 %indvars.iv.next, %i.cv
   br i1 %i.cy, label %.lr.ph89, label %._crit_edge, !llvm.loop !37
@@ -217,7 +214,6 @@ bb.p:                                             ; preds = %.lr.ph89
 .lr.ph89:                                         ; preds = %.lr.ph89.preheader, %bb.p
   %indvars.iv.next88 = phi i64 [ %indvars.iv.next, %bb.p ], [ %indvars.iv.next85, %.lr.ph89.preheader ] ; 4 uses
   %indvars.iv87 = phi i64 [ %indvars.iv.next88, %bb.p ], [ %i.cu, %.lr.ph89.preheader ]
-  %indvars.iv6186 = phi i32 [ %indvars.iv.next62, %bb.p ], [ %4, %.lr.ph89.preheader ]
   %i.cz = getelementptr inbounds [16 x i8], ptr %i.cx, i64 %indvars.iv.next88
   %i.da = getelementptr inbounds nuw i8, ptr %i.cz, i64 8
   %i.db = load i32, ptr %i.da, align 8, !tbaa !17
@@ -238,10 +234,9 @@ bb.q:                                             ; preds = %.lr.ph89
   br label %.loopexit.sink.split
 
 ._crit_edge:                                      ; preds = %bb.p, %findindex.exit
-  %indvars.iv61.lcssa = phi i32 [ %4, %findindex.exit ], [ %indvars.iv.next62, %bb.p ]
   %indvars.iv.next.lcssa = phi i64 [ %indvars.iv.next85, %findindex.exit ], [ %indvars.iv.next, %bb.p ]
   %i.dk = trunc nsw i64 %indvars.iv.next.lcssa to i32
-  %i.dl = sub nsw i32 %i.dk, %i.cs
+  %i.dl = sub nsw i32 %i.dk, %i.cs                ; 2 uses
   %i.dm = getelementptr inbounds nuw i8, ptr %1, i64 16
   %i.dn = load i8, ptr %i.dm, align 8, !tbaa !27
   %i.do = zext nneg i8 %i.dn to i32
@@ -252,7 +247,7 @@ bb.q:                                             ; preds = %.lr.ph89
 .lr.ph:                                           ; preds = %._crit_edge
   %i.dr = getelementptr inbounds nuw i8, ptr %1, i64 40 ; 2 uses
   %i.ds = load ptr, ptr %i.dr, align 8, !tbaa !26
-  %i.dt = zext i32 %indvars.iv61.lcssa to i64
+  %i.dt = zext i32 %i.dl to i64
   br label %bb.s
 
 bb.r:                                             ; preds = %bb.s

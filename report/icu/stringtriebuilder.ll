@@ -202,12 +202,11 @@ bb.a:
   call void @llvm.lifetime.start.p0(ptr nonnull %i.d) #16
   %i.ad = add nsw i32 %3, 1                       ; 3 uses
   %i.ae = add i32 %.068.lcssa, -1
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.ae, i32 1)
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.ae, i32 1) ; 2 uses
   %wide.trip.count = zext nneg i32 %smax to i64   ; 2 uses
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.d, %._crit_edge
-  %indvars.iv100 = phi i64 [ %indvars.iv.next101, %bb.d ], [ 1, %._crit_edge ] ; 2 uses
   %indvars.iv97 = phi i64 [ %indvars.iv.next98, %bb.d ], [ 0, %._crit_edge ] ; 3 uses
   %.165 = phi i32 [ %i.ao, %bb.d ], [ %.064.lcssa, %._crit_edge ] ; 5 uses
   %i.af = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv97
@@ -240,17 +239,17 @@ bb.d:                                             ; preds = %bb.c, %bb.b
   store i8 %i.ax, ptr %i.ay, align 1, !tbaa !22
   %indvars.iv.next98 = add nuw nsw i64 %indvars.iv97, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next98, %wide.trip.count
-  %indvars.iv.next101 = add nuw nsw i64 %indvars.iv100, 1
   br i1 %exitcond.not, label %bb.e, label %bb.b, !llvm.loop !56
 
 bb.e:                                             ; preds = %bb.d
   %i.az = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %wide.trip.count
   store i32 %i.ao, ptr %i.az, align 4, !tbaa !35
   call void @llvm.lifetime.start.p0(ptr nonnull %i.e) #16
+  %5 = zext nneg i32 %smax to i64
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.h, %bb.e
-  %indvars.iv102 = phi i64 [ %indvars.iv.next103, %bb.h ], [ %indvars.iv100, %bb.e ] ; 3 uses
+  %indvars.iv102 = phi i64 [ %indvars.iv.next103, %bb.h ], [ %5, %bb.e ] ; 3 uses
   %indvars.iv.next103 = add nsw i64 %indvars.iv102, -1 ; 4 uses
   %i.ba = getelementptr inbounds i8, ptr %i.d, i64 %indvars.iv.next103
   %i.bb = load i8, ptr %i.ba, align 1, !tbaa !22
@@ -268,8 +267,8 @@ bb.g:                                             ; preds = %bb.f
   br label %bb.h
 
 bb.h:                                             ; preds = %bb.f, %bb.g
-  %5 = icmp sgt i64 %indvars.iv102, 1
-  br i1 %5, label %bb.f, label %bb.i, !llvm.loop !57
+  %6 = icmp samesign ugt i64 %indvars.iv102, 1
+  br i1 %6, label %bb.f, label %bb.i, !llvm.loop !57
 
 bb.i:                                             ; preds = %bb.h
   %i.bi = tail call noundef i32 @_ZN6icu_7817StringTrieBuilder9writeNodeEiii(ptr noundef nonnull align 8 dereferenceable(16) %0, i32 noundef %i.ao, i32 noundef %2, i32 noundef %i.ad) ; 0 uses

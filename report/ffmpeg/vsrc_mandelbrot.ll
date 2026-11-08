@@ -205,11 +205,12 @@ bb.at:                                            ; preds = %bb.as, %bb.ar
   br i1 %i.rb, label %.lr.ph533.preheader.i, label %.thread474.thread.i
 
 .lr.ph533.preheader.i:                            ; preds = %.preheader489.i
+  %1 = and i64 %indvars.iv583.i, 4294967288
   %wide.trip.count598.i = zext nneg i32 %i.lj to i64
   br label %.lr.ph533.i
 
 .lr.ph533.i:                                      ; preds = %bb.ay, %.lr.ph533.preheader.i
-  %indvars.iv588.i = phi i64 [ %indvars.iv583.i, %.lr.ph533.preheader.i ], [ %indvars.iv.next589.i, %bb.ay ] ; 3 uses
+  %indvars.iv588.i = phi i64 [ %1, %.lr.ph533.preheader.i ], [ %indvars.iv.next589.i, %bb.ay ] ; 3 uses
   %i.rc = getelementptr inbounds nuw [16 x i8], ptr %i.lm, i64 %indvars.iv588.i
   %i.rd = load <2 x double>, ptr %i.rc, align 8, !tbaa !28 ; 5 uses
   %i.re = extractelement <2 x double> %i.rd, i64 1 ; 4 uses

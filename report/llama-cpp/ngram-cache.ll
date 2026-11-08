@@ -204,7 +204,7 @@ bb.c:                                             ; preds = %bb.a
   %i.l = ptrtoint ptr %i.j to i64
   %i.m = sub i64 %i.k, %i.l
   %i.n = ashr exact i64 %i.m, 2                   ; 2 uses
-  %i.o = trunc i64 %i.n to i32                    ; 3 uses
+  %i.o = trunc i64 %i.n to i32                    ; 2 uses
   %i.p = icmp slt i32 %i.o, 2
   br i1 %i.p, label %.loopexit96, label %.preheader
 
@@ -227,8 +227,6 @@ bb.c:                                             ; preds = %bb.a
   %i.ae = getelementptr inbounds nuw i8, ptr %9, i64 32
   %i.af = getelementptr inbounds nuw i8, ptr %9, i64 48 ; 2 uses
   %i.ag = getelementptr inbounds nuw i8, ptr %1, i64 16 ; 2 uses
-  %13 = xor i32 %3, -1
-  %14 = add i32 %13, %i.o
   br label %bb.d
 
 bb.d:                                             ; preds = %.preheader, %_ZNSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEED2Ev.exit
@@ -411,7 +409,6 @@ _ZNSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEEaSERKS8_.exit: ;
 
 .lr.ph118:                                        ; preds = %_ZNSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEEaSERKS8_.exit, %_ZNSt6vectorI12common_ngramSaIS0_EE9push_backERKS0_.exit
   %i.cw = phi ptr [ %i.eq, %_ZNSt6vectorI12common_ngramSaIS0_EE9push_backERKS0_.exit ], [ null, %_ZNSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEEaSERKS8_.exit ] ; 6 uses
-  %indvars.iv = phi i32 [ %indvars.iv.next137, %_ZNSt6vectorI12common_ngramSaIS0_EE9push_backERKS0_.exit ], [ %14, %_ZNSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEEaSERKS8_.exit ] ; 2 uses
   %.042117 = phi i32 [ %i.es, %_ZNSt6vectorI12common_ngramSaIS0_EE9push_backERKS0_.exit ], [ %3, %_ZNSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEEaSERKS8_.exit ] ; 5 uses
   %i.cx = phi ptr [ %i.er, %_ZNSt6vectorI12common_ngramSaIS0_EE9push_backERKS0_.exit ], [ null, %_ZNSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEEaSERKS8_.exit ] ; 9 uses
   %i.cy = load ptr, ptr %i.a, align 8, !tbaa !17
@@ -427,8 +424,8 @@ _ZNSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEEaSERKS8_.exit: ;
   %i.dd = ptrtoint ptr %i.cy to i64
   %i.de = ptrtoint ptr %i.cz to i64
   %i.df = sub i64 %i.dd, %i.de
-  %i.dg = lshr i64 %i.df, 2
-  %i.dh = trunc i64 %i.dg to i32                  ; 2 uses
+  %i.dg = lshr exact i64 %i.df, 2
+  %i.dh = trunc i64 %i.dg to i32
   %i.di = add i32 %i.dc, %i.dh                    ; 2 uses
   %i.dj = add nsw i32 %i.di, %.042117
   %.val = load ptr, ptr %0, align 8, !tbaa !18    ; 2 uses
@@ -437,9 +434,7 @@ _ZNSt13unordered_mapIiiSt4hashIiESt8equal_toIiESaISt4pairIKiiEEEaSERKS8_.exit: ;
   %i.dl = ptrtoint ptr %.val to i64
   %i.dm = sub i64 %i.dk, %i.dl
   %i.dn = ashr exact i64 %i.dm, 2                 ; 2 uses
-  %15 = add i32 %indvars.iv, %i.dh
-  %16 = sext i32 %15 to i64
-  %i.do = sext i32 %i.di to i64
+  %i.do = sext i32 %i.di to i64                   ; 2 uses
   %i.dp = sext i32 %i.dj to i64
   br label %bb.x
 
@@ -530,7 +525,7 @@ bb.w:                                             ; preds = %.loopexit.split-lp,
   br label %bb.ay
 
 bb.x:                                             ; preds = %.lr.ph109, %bb.x
-  %indvars.iv138 = phi i64 [ %16, %.lr.ph109 ], [ %indvars.iv.next139, %bb.x ] ; 5 uses
+  %indvars.iv138 = phi i64 [ %i.do, %.lr.ph109 ], [ %indvars.iv.next139, %bb.x ] ; 5 uses
   %i.ei = icmp ugt i64 %i.dn, %indvars.iv138
   %i.ej = getelementptr inbounds nuw [4 x i8], ptr %.val, i64 %indvars.iv138
   %reass.sub120 = sub nsw i64 %indvars.iv138, %i.dn
@@ -550,7 +545,6 @@ _ZNSt6vectorI12common_ngramSaIS0_EE9push_backERKS0_.exit: ; preds = %_ZNSt6vecto
   %i.er = phi ptr [ %i.ec, %_ZNSt6vectorI12common_ngramSaIS0_EE17_M_realloc_insertIJRKS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_.exit.i ], [ %i.cx, %bb.s ] ; 2 uses
   call void @llvm.lifetime.end.p0(ptr nonnull %12) #18
   %i.es = add i32 %.042117, 1
-  %indvars.iv.next137 = add i32 %indvars.iv, -1
   %exitcond.not = icmp eq i32 %.042117, %4
   br i1 %exitcond.not, label %._crit_edge119, label %.lr.ph118, !llvm.loop !82
 

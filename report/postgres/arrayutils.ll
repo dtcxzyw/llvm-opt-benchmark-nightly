@@ -204,7 +204,7 @@ middle.block:                                     ; preds = %vector.body
 ; Function Attrs: nofree norecurse nosync nounwind memory(argmem: readwrite) uwtable
 define dso_local void @mda_get_offset_values(i32 noundef %0, ptr nofree noundef writeonly captures(none) %1, ptr nofree noundef readonly captures(none) %2, ptr nofree noundef readonly captures(none) %3) local_unnamed_addr #4 {
 bb.a:
-  %i.a = add i32 %0, -1                           ; 2 uses
+  %i.a = add i32 %0, -1
   %i.b = sext i32 %i.a to i64
   %i.c = getelementptr inbounds [4 x i8], ptr %1, i64 %i.b
   store i32 0, ptr %i.c, align 4
@@ -219,19 +219,18 @@ bb.a:
 .lr.ph24:                                         ; preds = %.lr.ph24.preheader, %._crit_edge
   %indvar = phi i32 [ 0, %.lr.ph24.preheader ], [ %indvar.next, %._crit_edge ] ; 3 uses
   %indvars.iv29 = phi i64 [ %i.f, %.lr.ph24.preheader ], [ %indvars.iv.next30, %._crit_edge ] ; 5 uses
-  %indvars.iv = phi i32 [ %i.a, %.lr.ph24.preheader ], [ %indvars.iv.next, %._crit_edge ] ; 2 uses
   %i.g = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv29
   %i.h = load i32, ptr %i.g, align 4
   %i.i = add i32 %i.h, -1                         ; 3 uses
   %i.j = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %indvars.iv29 ; 4 uses
   store i32 %i.i, ptr %i.j, align 4
   %i.k = trunc i64 %indvars.iv29 to i32
-  %i.l = add i32 %i.k, 1
+  %i.l = add i32 %i.k, 1                          ; 2 uses
   %i.m = icmp slt i32 %i.l, %0
   br i1 %i.m, label %.lr.ph.preheader, label %._crit_edge
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph24
-  %i.n = sext i32 %indvars.iv to i64              ; 4 uses
+  %i.n = sext i32 %i.l to i64                     ; 4 uses
   %i.o = and i32 %indvar, 1
   %lcmp.mod.not.not = icmp eq i32 %i.o, 0
   br i1 %lcmp.mod.not.not, label %.lr.ph.prol, label %.lr.ph.prol.loopexit
@@ -282,7 +281,6 @@ bb.a:
 ._crit_edge:                                      ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %.lr.ph24
   %indvars.iv.next30 = add nsw i64 %indvars.iv29, -1
   %i.al = icmp sgt i64 %indvars.iv29, 0
-  %indvars.iv.next = add i32 %indvars.iv, -1
   %indvar.next = add i32 %indvar, 1
   br i1 %i.al, label %.lr.ph24, label %._crit_edge25, !llvm.loop !15
 

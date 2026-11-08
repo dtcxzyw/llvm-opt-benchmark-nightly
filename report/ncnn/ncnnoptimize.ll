@@ -204,9 +204,7 @@ bb.a:
   ret i32 0
 
 bb.b:                                             ; preds = %.lr.ph36, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
-  %indvars.iv = phi i32 [ -1, %.lr.ph36 ], [ %indvars.iv.next, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ] ; 2 uses
   %.034 = phi i64 [ 0, %.lr.ph36 ], [ %i.cf, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ] ; 3 uses
-  %1 = zext i32 %indvars.iv to i64
   %i.k = load ptr, ptr %i.a, align 8, !tbaa !40, !nonnull !39, !align !41
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !46   ; 3 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %.034
@@ -241,12 +239,16 @@ bb.c:                                             ; preds = %_ZStneIcSt11char_tr
   %i.af = load ptr, ptr %i.ae, align 8, !tbaa !80
   %i.ag = load i32, ptr %i.af, align 4, !tbaa !81
   %i.ah = trunc i64 %.034 to i32                  ; 2 uses
-  %.02431 = add i32 %i.ah, -1                     ; 3 uses
+  %.02431 = add i32 %i.ah, -1                     ; 4 uses
   %i.ai = icmp sgt i32 %.02431, -1
-  br i1 %i.ai, label %.lr.ph, label %._crit_edge
+  br i1 %i.ai, label %.lr.ph.preheader, label %._crit_edge
 
-.lr.ph:                                           ; preds = %bb.c, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
-  %indvars.iv41 = phi i64 [ %indvars.iv.next42, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ], [ %1, %bb.c ] ; 4 uses
+.lr.ph.preheader:                                 ; preds = %bb.c
+  %1 = zext nneg i32 %.02431 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
+  %indvars.iv41 = phi i64 [ %1, %.lr.ph.preheader ], [ %indvars.iv.next42, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ] ; 4 uses
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv41
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !53 ; 5 uses
   %i.al = getelementptr inbounds nuw i8, ptr %i.ak, i64 56
@@ -331,7 +333,6 @@ _ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 
 _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, %bb.b, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread25, %._crit_edge, %.thread, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
   %i.cf = add nuw i64 %.034, 1                    ; 2 uses
-  %indvars.iv.next = add i32 %indvars.iv, 1
   %exitcond.not = icmp eq i64 %i.cf, %i.i
   br i1 %exitcond.not, label %._crit_edge37, label %bb.b, !llvm.loop !1019
 }
@@ -359,9 +360,7 @@ bb.a:
   ret i32 0
 
 bb.b:                                             ; preds = %.lr.ph68, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
-  %indvars.iv = phi i32 [ -1, %.lr.ph68 ], [ %indvars.iv.next, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ] ; 2 uses
   %.066 = phi i64 [ 0, %.lr.ph68 ], [ %i.dd, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ] ; 3 uses
-  %1 = zext i32 %indvars.iv to i64
   %i.k = load ptr, ptr %i.a, align 8, !tbaa !40, !nonnull !39, !align !41
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !46   ; 3 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %.066
@@ -444,13 +443,17 @@ bb.k:                                             ; preds = %bb.j
   %i.au = load ptr, ptr %i.at, align 8, !tbaa !80
   %i.av = load i32, ptr %i.au, align 4, !tbaa !81
   %i.aw = trunc i64 %.066 to i32                  ; 3 uses
-  %.03956 = add i32 %i.aw, -1                     ; 2 uses
+  %.03956 = add i32 %i.aw, -1                     ; 3 uses
   %i.ax = icmp sgt i32 %.03956, -1
-  br i1 %i.ax, label %.lr.ph59, label %._crit_edge
+  br i1 %i.ax, label %.lr.ph59.preheader, label %._crit_edge
 
-.lr.ph59:                                         ; preds = %bb.k, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
-  %indvars.iv73 = phi i64 [ %indvars.iv.next74, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ], [ %1, %bb.k ] ; 5 uses
-  %.039.in57 = phi i32 [ %i.cd, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ], [ %i.aw, %bb.k ]
+.lr.ph59.preheader:                               ; preds = %bb.k
+  %1 = zext nneg i32 %.03956 to i64
+  br label %.lr.ph59
+
+.lr.ph59:                                         ; preds = %.lr.ph59.preheader, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
+  %indvars.iv73 = phi i64 [ %1, %.lr.ph59.preheader ], [ %indvars.iv.next74, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ] ; 5 uses
+  %.039.in57 = phi i32 [ %i.aw, %.lr.ph59.preheader ], [ %i.cd, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ]
   %i.ay = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv73
   %i.az = load ptr, ptr %i.ay, align 8, !tbaa !53 ; 4 uses
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 56
@@ -552,7 +555,6 @@ bb.m:                                             ; preds = %._crit_edge
 
 _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread: ; preds = %bb.b, %bb.e, %bb.d, %bb.c, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread50, %bb.i, %bb.h, %bb.g, %bb.f, %bb.j, %._crit_edge, %bb.m, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
   %i.dd = add nuw i64 %.066, 1                    ; 2 uses
-  %indvars.iv.next = add i32 %indvars.iv, 1
   %exitcond77.not = icmp eq i64 %i.dd, %i.i
   br i1 %exitcond77.not, label %._crit_edge69, label %bb.b, !llvm.loop !1022
 }
@@ -580,9 +582,7 @@ bb.a:
   ret i32 0
 
 bb.b:                                             ; preds = %.lr.ph67, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
-  %indvars.iv = phi i32 [ -1, %.lr.ph67 ], [ %indvars.iv.next, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ] ; 2 uses
   %.065 = phi i64 [ 0, %.lr.ph67 ], [ %i.ec, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ] ; 3 uses
-  %1 = zext i32 %indvars.iv to i64
   %i.k = load ptr, ptr %i.a, align 8, !tbaa !40, !nonnull !39, !align !41
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !46   ; 3 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %.065
@@ -674,13 +674,17 @@ bb.d:                                             ; preds = %bb.d, %.lr.ph64.new
 bb.e:                                             ; preds = %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread49
   %i.bo = load i32, ptr %i.x, align 4, !tbaa !81
   %i.bp = trunc i64 %.065 to i32                  ; 2 uses
-  %.04658 = add i32 %i.bp, -1
+  %.04658 = add i32 %i.bp, -1                     ; 2 uses
   %i.bq = icmp sgt i32 %.04658, -1
-  br i1 %i.bq, label %.lr.ph61, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
+  br i1 %i.bq, label %.lr.ph61.preheader, label %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
 
-.lr.ph61:                                         ; preds = %bb.e, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
-  %indvars.iv75 = phi i64 [ %indvars.iv.next76, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ], [ %1, %bb.e ] ; 6 uses
-  %.046.in59 = phi i32 [ %i.cv, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ], [ %i.bp, %bb.e ]
+.lr.ph61.preheader:                               ; preds = %bb.e
+  %1 = zext nneg i32 %.04658 to i64
+  br label %.lr.ph61
+
+.lr.ph61:                                         ; preds = %.lr.ph61.preheader, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
+  %indvars.iv75 = phi i64 [ %1, %.lr.ph61.preheader ], [ %indvars.iv.next76, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ] ; 6 uses
+  %.046.in59 = phi i32 [ %i.bp, %.lr.ph61.preheader ], [ %i.cv, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ]
   %i.br = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv75
   %i.bs = load ptr, ptr %i.br, align 8, !tbaa !53 ; 4 uses
   %i.bt = getelementptr inbounds nuw i8, ptr %i.bs, i64 56
@@ -801,7 +805,6 @@ _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exi
 
 _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread: ; preds = %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread.sink.split, %bb.e, %bb.b, %.loopexit, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
   %i.ec = add nuw i64 %.065, 1                    ; 2 uses
-  %indvars.iv.next = add i32 %indvars.iv, 1
   %exitcond81.not = icmp eq i64 %i.ec, %i.i
   br i1 %exitcond81.not, label %._crit_edge68, label %bb.b, !llvm.loop !1027
 }
@@ -829,9 +832,7 @@ bb.a:
   ret i32 0
 
 bb.b:                                             ; preds = %.lr.ph75, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
-  %indvars.iv = phi i32 [ -1, %.lr.ph75 ], [ %indvars.iv.next, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ] ; 2 uses
   %.073 = phi i64 [ 0, %.lr.ph75 ], [ %i.eb, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ] ; 3 uses
-  %1 = zext i32 %indvars.iv to i64
   %i.k = load ptr, ptr %i.a, align 8, !tbaa !40, !nonnull !39, !align !41
   %i.l = load ptr, ptr %i.k, align 8, !tbaa !46   ; 3 uses
   %i.m = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %.073
@@ -948,13 +949,17 @@ bb.c:                                             ; preds = %bb.c, %.lr.ph.new
   %i.br = load ptr, ptr %i.bq, align 8, !tbaa !80
   %i.bs = load i32, ptr %i.br, align 4, !tbaa !81
   %i.bt = trunc i64 %.073 to i32                  ; 3 uses
-  %.04160 = add i32 %i.bt, -1                     ; 2 uses
+  %.04160 = add i32 %i.bt, -1                     ; 3 uses
   %i.bu = icmp sgt i32 %.04160, -1
-  br i1 %i.bu, label %.lr.ph64, label %._crit_edge65
+  br i1 %i.bu, label %.lr.ph64.preheader, label %._crit_edge65
 
-.lr.ph64:                                         ; preds = %._crit_edge.thread, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
-  %indvars.iv83 = phi i64 [ %indvars.iv.next84, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ], [ %1, %._crit_edge.thread ] ; 5 uses
-  %.041.in61 = phi i32 [ %i.da, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ], [ %i.bt, %._crit_edge.thread ]
+.lr.ph64.preheader:                               ; preds = %._crit_edge.thread
+  %1 = zext nneg i32 %.04160 to i64
+  br label %.lr.ph64
+
+.lr.ph64:                                         ; preds = %.lr.ph64.preheader, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread
+  %indvars.iv83 = phi i64 [ %1, %.lr.ph64.preheader ], [ %indvars.iv.next84, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ] ; 5 uses
+  %.041.in61 = phi i32 [ %i.bt, %.lr.ph64.preheader ], [ %i.da, %_ZSteqIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread ]
   %i.bv = getelementptr inbounds nuw [8 x i8], ptr %i.l, i64 %indvars.iv83
   %i.bw = load ptr, ptr %i.bv, align 8, !tbaa !53 ; 4 uses
   %i.bx = getelementptr inbounds nuw i8, ptr %i.bw, i64 56
@@ -1057,7 +1062,6 @@ bb.e:                                             ; preds = %._crit_edge65
 
 _ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit.thread: ; preds = %bb.b, %._crit_edge, %._crit_edge65, %bb.e, %_ZStneIcSt11char_traitsIcESaIcEEbRKNSt7__cxx1112basic_stringIT_T0_T1_EEPKS5_.exit
   %i.eb = add nuw i64 %.073, 1                    ; 2 uses
-  %indvars.iv.next = add i32 %indvars.iv, 1
   %exitcond87.not = icmp eq i64 %i.eb, %i.i
   br i1 %exitcond87.not, label %._crit_edge76, label %bb.b, !llvm.loop !1031
 }

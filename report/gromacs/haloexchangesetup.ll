@@ -205,7 +205,7 @@ bb.n:                                             ; preds = %bb.m
   %i.dk = getelementptr inbounds nuw i8, ptr %i.di, i64 8
   %i.dl = load i32, ptr %i.dj, align 4, !tbaa !120, !noalias !311
   %i.dm = load i32, ptr %i.dk, align 8, !tbaa !120, !noalias !311
-  %i.dn = tail call i32 @llvm.smax.i32(i32 %i.dl, i32 %i.dm) ; 4 uses
+  %i.dn = tail call i32 @llvm.smax.i32(i32 %i.dl, i32 %i.dm) ; 3 uses
   %i.do = invoke { ptr, ptr } @_ZNK3gmx18nonbonded_verlet_t17getLocalAtomOrderEv(ptr noundef nonnull align 8 dereferenceable(65) %i.cv)
           to label %.noexc156 unwind label %.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp.loopexit.split-lp ; 2 uses
 
@@ -216,9 +216,9 @@ bb.n:                                             ; preds = %bb.m
   %i.ds = ptrtoint ptr %i.dp to i64
   %i.dt = sub i64 %i.dr, %i.ds
   %i.du = ashr exact i64 %i.dt, 2
-  %i.dv = sext i32 %i.dn to i64
-  %i.dw = sdiv i64 %i.du, %i.dv                   ; 2 uses
-  %i.dx = trunc i64 %i.dw to i32                  ; 4 uses
+  %i.dv = sext i32 %i.dn to i64                   ; 2 uses
+  %i.dw = sdiv i64 %i.du, %i.dv                   ; 3 uses
+  %i.dx = trunc i64 %i.dw to i32                  ; 3 uses
   %sext.i = shl i64 %i.dw, 32                     ; 2 uses
   %.not.i.i.i.i = icmp eq i64 %sext.i, 0
   br i1 %.not.i.i.i.i, label %_ZNSt6vectorIbSaIbEEC2EmRKS0_.exit.i, label %bb.o
@@ -258,33 +258,33 @@ _ZNSt6vectorIbSaIbEEC2EmRKS0_.exit.i:             ; preds = %.noexc157, %.noexc1
   %i.el = getelementptr inbounds nuw i8, ptr %i.as, i64 896
   %i.em = getelementptr inbounds nuw i8, ptr %i.dg, i64 24
   %i.en = getelementptr inbounds nuw i8, ptr %i.as, i64 920
+  %wide.trip.count.i150 = and i64 %i.dw, 2147483647
   %.not112.i = icmp sgt i32 %i.dn, 0
   br i1 %.not112.i, label %.lr.ph.i153, label %_ZN3gmx12_GLOBAL__N_123flagClustersForBondcommERK12gmx_domdec_tNS_8ArrayRefIKiEERKNS_18nonbonded_verlet_tE.exit
 
 ..loopexit58_crit_edge.i:                         ; preds = %bb.bb
-  store i64 %i.lq, ptr %19, align 8, !tbaa !167, !noalias !311
-  %indvars.iv.next.i151 = add i32 %indvars.iv.i150, %i.dn
-  %exitcond.not.i152 = icmp eq i32 %15, %i.dx
+  store i64 %i.lq, ptr %17, align 8, !tbaa !167, !noalias !311
+  %exitcond.not.i152 = icmp eq i64 %indvars.iv.next145.i, %wide.trip.count.i150
   br i1 %exitcond.not.i152, label %_ZN3gmx12_GLOBAL__N_123flagClustersForBondcommERK12gmx_domdec_tNS_8ArrayRefIKiEERKNS_18nonbonded_verlet_tE.exit, label %.lr.ph.i153, !llvm.loop !291
 
 .lr.ph.i153:                                      ; preds = %.lr.ph111.i, %..loopexit58_crit_edge.i
-  %indvars.iv.i150 = phi i32 [ %indvars.iv.next.i151, %..loopexit58_crit_edge.i ], [ 0, %.lr.ph111.i ] ; 2 uses
-  %.028110.i = phi i32 [ %15, %..loopexit58_crit_edge.i ], [ 0, %.lr.ph111.i ] ; 3 uses
-  %15 = add nuw nsw i32 %.028110.i, 1             ; 3 uses
-  %16 = mul nuw nsw i32 %15, %i.dn
-  %17 = zext i32 %indvars.iv.i150 to i64
-  %18 = lshr i32 %.028110.i, 6
-  %.zext.i = zext nneg i32 %18 to i64
-  %19 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0224.0, i64 %.zext.i ; 2 uses
-  %20 = and i32 %.028110.i, 63
-  %21 = zext nneg i32 %20 to i64
-  %22 = shl nuw i64 1, %21                        ; 2 uses
-  %23 = xor i64 %22, -1                           ; 3 uses
-  %.promoted.i = load i64, ptr %19, align 8, !noalias !311
+  %indvars.iv144.i = phi i64 [ %indvars.iv.next145.i, %..loopexit58_crit_edge.i ], [ 0, %.lr.ph111.i ] ; 4 uses
+  %indvars.iv.next145.i = add nuw nsw i64 %indvars.iv144.i, 1 ; 3 uses
+  %15 = mul nuw nsw i64 %indvars.iv.next145.i, %i.dv
+  %16 = lshr i64 %indvars.iv144.i, 6
+  %.zext.i = and i64 %16, 67108863
+  %17 = getelementptr inbounds nuw [8 x i8], ptr %.sroa.0224.0, i64 %.zext.i ; 2 uses
+  %18 = and i64 %indvars.iv144.i, 63
+  %19 = shl nuw i64 1, %18                        ; 2 uses
+  %20 = xor i64 %19, -1                           ; 3 uses
+  %.promoted.i = load i64, ptr %17, align 8, !noalias !311
+  %21 = trunc i64 %indvars.iv144.i to i32
+  %22 = mul i32 %i.dn, %21
+  %23 = zext i32 %22 to i64
   br label %bb.p
 
 bb.p:                                             ; preds = %bb.bb, %.lr.ph.i153
-  %indvars.iv144.i.a = phi i64 [ %17, %.lr.ph.i153 ], [ %indvars.iv.next145.i.a, %bb.bb ] ; 2 uses
+  %indvars.iv144.i.a = phi i64 [ %23, %.lr.ph.i153 ], [ %indvars.iv.next145.i.a, %bb.bb ] ; 2 uses
   %storemerge109.i = phi i64 [ %.promoted.i, %.lr.ph.i153 ], [ %i.lq, %bb.bb ] ; 4 uses
   %i.eo = getelementptr inbounds nuw [4 x i8], ptr %i.dp, i64 %indvars.iv144.i.a
   %i.ep = load i32, ptr %i.eo, align 4, !tbaa !120, !noalias !311 ; 2 uses
@@ -513,7 +513,7 @@ bb.ag:                                            ; preds = %_ZN9__gnu_cxx5__ops
   ]
 
 _ZNSt14_Bit_referenceaSEb.exit.thread162.i:       ; preds = %._crit_edge.i.i.i.i.i.i.i
-  %i.ip = and i64 %storemerge109.i, %23
+  %i.ip = and i64 %storemerge109.i, %20
   br label %bb.bb
 
 ._crit_edge._crit_edge168.i.i.i.i.i.i.i:          ; preds = %._crit_edge.i.i.i.i.i.i.i
@@ -677,7 +677,7 @@ _ZN9__gnu_cxx5__ops10_Iter_predIZN3gmx12_GLOBAL__N_114isMissingALinkERKNS2_8Arra
   br label %_ZNSt14_Bit_referenceaSEb.exit.i
 
 _ZNSt14_Bit_referenceaSEb.exit.thread.i:          ; preds = %bb.q, %bb.p
-  %i.le = and i64 %storemerge109.i, %23
+  %i.le = and i64 %storemerge109.i, %20
   br label %bb.bb
 
 _ZNSt14_Bit_referenceaSEb.exit.i.loopexit:        ; preds = %bb.af
@@ -720,8 +720,8 @@ _ZNSt14_Bit_referenceaSEb.exit.i:                 ; preds = %_ZN9__gnu_cxx5__ops
   %.sroa.010.0.in.sroa.speculated.i.i.i.i.i.i.i = phi ptr [ %.sroa.057.1.i.i.i.i.i.i.i, %_ZN9__gnu_cxx5__ops10_Iter_predIZN3gmx12_GLOBAL__N_114isMissingALinkERKNS2_8ArrayRefIKiEERK11gmx_ga2la_tEUliE_EclINS2_12ArrayRefIterIS5_EEEEbT_.exit48.i.i.i.i.i.i.i ], [ %.sroa.057.1.i.i.i.i.i.i.i, %bb.ap ], [ %.sroa.057.1.i.i.i.i.i.i.i, %bb.at ], [ %i.lh, %_ZNSt14_Bit_referenceaSEb.exit.i.loopexit421 ], [ %.sroa.057.0.lcssa.i.i.i.i.i.i.i, %bb.ai ], [ %i.lf, %_ZNSt14_Bit_referenceaSEb.exit.i.loopexit ], [ %.sroa.057.0.lcssa.i.i.i.i.i.i.i, %_ZN9__gnu_cxx5__ops10_Iter_predIZN3gmx12_GLOBAL__N_114isMissingALinkERKNS2_8ArrayRefIKiEERK11gmx_ga2la_tEUliE_EclINS2_12ArrayRefIterIS5_EEEEbT_.exit43.i.i.i.i.i.i.i ], [ %.sroa.057.0128.i.i.i.i.i.i.i, %bb.w ], [ %i.lg, %_ZNSt14_Bit_referenceaSEb.exit.i.loopexit420.a ], [ %.sroa.057.0.lcssa.i.i.i.i.i.i.i, %bb.am ], [ %spec.select.i.i.i.i.i.i.i, %_ZN9__gnu_cxx5__ops10_Iter_predIZN3gmx12_GLOBAL__N_114isMissingALinkERKNS2_8ArrayRefIKiEERK11gmx_ga2la_tEUliE_EclINS2_12ArrayRefIterIS5_EEEEbT_.exit53.i.i.i.i.i.i.i ], [ %.sroa.057.0128.us.i.i.i.i.i.i.i, %bb.s ], [ %.sroa.057.2.i.i.i.i.i.i.i, %bb.aw ], [ %.sroa.057.2.i.i.i.i.i.i.i, %bb.ba ], [ %i.lj, %_ZNSt14_Bit_referenceaSEb.exit.i.loopexit426.split.loop.exit472 ], [ %i.li, %_ZNSt14_Bit_referenceaSEb.exit.i.loopexit426.split.loop.exit.a ], [ %i.lk, %_ZNSt14_Bit_referenceaSEb.exit.i.loopexit426.split.loop.exit474 ], [ %i.lm, %_ZNSt14_Bit_referenceaSEb.exit.i.loopexit427.split.loop.exit460 ], [ %i.ll, %_ZNSt14_Bit_referenceaSEb.exit.i.loopexit427.split.loop.exit ], [ %i.ln, %_ZNSt14_Bit_referenceaSEb.exit.i.loopexit427.split.loop.exit462 ], [ %.sroa.057.0128.i.i.i.i.i.i.i, %_ZN9__gnu_cxx5__ops10_Iter_predIZN3gmx12_GLOBAL__N_114isMissingALinkERKNS2_8ArrayRefIKiEERK11gmx_ga2la_tEUliE_EclINS2_12ArrayRefIterIS5_EEEEbT_.exit.i.i.i.i.i.i.i ]
   %.not47.i = icmp ne ptr %i.fi, %.sroa.010.0.in.sroa.speculated.i.i.i.i.i.i.i
   %cond.fr.i = freeze i1 %.not47.i                ; 2 uses
-  %i.lo = and i64 %storemerge109.i, %23
-  %i.lp = or i64 %storemerge109.i, %22
+  %i.lo = and i64 %storemerge109.i, %20
+  %i.lp = or i64 %storemerge109.i, %19
   %spec.select.i154 = select i1 %cond.fr.i, i64 %i.lp, i64 %i.lo
   br label %bb.bb
 
@@ -729,9 +729,10 @@ bb.bb:                                            ; preds = %_ZNSt14_Bit_referen
   %.1161.i = phi i1 [ false, %_ZNSt14_Bit_referenceaSEb.exit.thread162.i ], [ %cond.fr.i, %_ZNSt14_Bit_referenceaSEb.exit.i ], [ false, %_ZNSt14_Bit_referenceaSEb.exit.thread.i ]
   %i.lq = phi i64 [ %i.ip, %_ZNSt14_Bit_referenceaSEb.exit.thread162.i ], [ %spec.select.i154, %_ZNSt14_Bit_referenceaSEb.exit.i ], [ %i.le, %_ZNSt14_Bit_referenceaSEb.exit.thread.i ] ; 2 uses
   %indvars.iv.next145.i.a = add nuw nsw i64 %indvars.iv144.i.a, 1 ; 2 uses
-  %24 = trunc nuw i64 %indvars.iv.next145.i.a to i32
-  %25 = icmp sle i32 %16, %24
-  %.not34.i = or i1 %25, %.1161.i
+  %24 = shl i64 %indvars.iv.next145.i.a, 32
+  %25 = ashr exact i64 %24, 32
+  %26 = icmp sge i64 %25, %15
+  %.not34.i = or i1 %26, %.1161.i
   br i1 %.not34.i, label %..loopexit58_crit_edge.i, label %bb.p, !llvm.loop !294
 
 _ZN3gmx12_GLOBAL__N_123flagClustersForBondcommERK12gmx_domdec_tNS_8ArrayRefIKiEERKNS_18nonbonded_verlet_tE.exit: ; preds = %..loopexit58_crit_edge.i, %.lr.ph111.i, %_ZNSt6vectorIbSaIbEEC2EmRKS0_.exit.i

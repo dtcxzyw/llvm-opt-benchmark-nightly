@@ -205,9 +205,7 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph73, %.critedge67
   %indvars.iv82.a = phi i64 [ 0, %.lr.ph73 ], [ %indvars.iv.next83.a, %.critedge67 ] ; 6 uses
-  %indvars.iv = phi i32 [ -1, %.lr.ph73 ], [ %indvars.iv.next, %.critedge67 ] ; 2 uses
   %.06171 = phi i1 [ false, %.lr.ph73 ], [ %.162, %.critedge67 ] ; 6 uses
-  %4 = zext i32 %indvars.iv to i64
   %i.k = getelementptr inbounds nuw [16 x i8], ptr %i.d, i64 %indvars.iv82.a ; 6 uses
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 8
   %i.m = load i32, ptr %i.l, align 8, !tbaa !235
@@ -286,12 +284,16 @@ bb.h:                                             ; preds = %bb.b
 
 .critedge65:                                      ; preds = %.split, %_ZNK3CFF15parsed_cs_str_t6at_endEj.exit, %_ZNK3CFF15parsed_cs_str_t6at_endEj.exit.thread, %bb.h
   %i.am = trunc nuw i64 %indvars.iv82.a to i32
-  %.05768 = add i32 %i.am, -1
+  %.05768 = add i32 %i.am, -1                     ; 2 uses
   %i.an = icmp sgt i32 %.05768, -1
-  br i1 %i.an, label %.lr.ph, label %.critedge67
+  br i1 %i.an, label %.lr.ph.preheader, label %.critedge67
 
-.lr.ph:                                           ; preds = %.critedge65, %bb.k
-  %indvars.iv79 = phi i64 [ %indvars.iv.next80, %bb.k ], [ %4, %.critedge65 ] ; 3 uses
+.lr.ph.preheader:                                 ; preds = %.critedge65
+  %4 = zext nneg i32 %.05768 to i64
+  br label %.lr.ph
+
+.lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.k
+  %indvars.iv79 = phi i64 [ %4, %.lr.ph.preheader ], [ %indvars.iv.next80, %bb.k ] ; 3 uses
   %i.ao = getelementptr inbounds nuw [16 x i8], ptr %i.d, i64 %indvars.iv79 ; 2 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.ao, i64 13 ; 2 uses
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !623, !range !121, !noundef !122
@@ -317,7 +319,6 @@ bb.k:                                             ; preds = %bb.i, %bb.j
 .critedge67:                                      ; preds = %.lr.ph, %bb.k, %.critedge65, %.split, %bb.b, %bb.c, %bb.e, %bb.g, %bb.h
   %.162 = phi i1 [ %.06171, %.split ], [ %.06171, %bb.h ], [ %.06171, %bb.c ], [ %.06171, %bb.b ], [ %.06171, %bb.g ], [ %.06171, %bb.e ], [ true, %.critedge65 ], [ true, %bb.k ], [ true, %.lr.ph ] ; 4 uses
   %indvars.iv.next83.a = add nuw nsw i64 %indvars.iv82.a, 1 ; 2 uses
-  %indvars.iv.next = add i32 %indvars.iv, 1
   %exitcond.not = icmp eq i64 %indvars.iv.next83.a, %wide.trip.count
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !1433
 

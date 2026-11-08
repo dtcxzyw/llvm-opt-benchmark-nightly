@@ -204,7 +204,7 @@ bb.a:
   br i1 %i.a, label %_ZNSt6vectorISt4pairIiiESaIS1_EED2Ev.exit, label %bb.b
 
 bb.b:                                             ; preds = %bb.a
-  %i.b = sext i32 %5 to i64                       ; 3 uses
+  %i.b = sext i32 %5 to i64                       ; 4 uses
   %i.c = getelementptr [4 x i8], ptr %1, i64 %i.b
   %i.d = getelementptr i8, ptr %i.c, i64 -4
   %i.e = load i32, ptr %i.d, align 4, !tbaa !94
@@ -308,25 +308,23 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph197
 
 .lr.ph195:                                        ; preds = %.lr.ph195.preheader, %.critedge
-  %indvars.iv233 = phi i32 [ %5, %.lr.ph195.preheader ], [ %indvars.iv.next234, %.critedge ] ; 2 uses
-  %indvars.iv227 = phi i64 [ 0, %.lr.ph195.preheader ], [ %indvars.iv.next228, %.critedge ] ; 6 uses
-  %.049193 = phi i32 [ 0, %.lr.ph195.preheader ], [ %spec.select, %.critedge ] ; 3 uses
-  %indvars238 = trunc i64 %indvars.iv227 to i32
-  %6 = add nsw i32 %.049193, %indvars238
-  %i.au = icmp slt i32 %6, %5
+  %indvars.iv236 = phi i64 [ 0, %.lr.ph195.preheader ], [ %indvars.iv.next228, %.critedge ] ; 5 uses
+  %indvars.iv231 = phi i32 [ %5, %.lr.ph195.preheader ], [ %indvars.iv.next234, %.critedge ] ; 2 uses
+  %.049193 = phi i32 [ 0, %.lr.ph195.preheader ], [ %spec.select, %.critedge ] ; 2 uses
+  %6 = sext i32 %.049193 to i64                   ; 2 uses
+  %7 = add nsw i64 %indvars.iv236, %6             ; 2 uses
+  %i.au = icmp slt i64 %7, %i.b
   br i1 %i.au, label %.lr.ph188.preheader, label %.critedge
 
 .lr.ph188.preheader:                              ; preds = %.lr.ph195
-  %i.av = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv227
+  %i.av = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv236
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !94
-  %7 = sext i32 %.049193 to i64                   ; 2 uses
-  %8 = add nsw i64 %indvars.iv227, %7
   %i.ax = sext i32 %i.aw to i64
   br label %.lr.ph188
 
 .lr.ph188:                                        ; preds = %.lr.ph188.preheader, %bb.d
-  %indvars.iv231.a = phi i64 [ %7, %.lr.ph188.preheader ], [ %indvars.iv.next232.a, %bb.d ] ; 4 uses
-  %indvars.iv229 = phi i64 [ %8, %.lr.ph188.preheader ], [ %indvars.iv.next230, %bb.d ] ; 2 uses
+  %indvars.iv231.a = phi i64 [ %6, %.lr.ph188.preheader ], [ %indvars.iv.next232.a, %bb.d ] ; 4 uses
+  %indvars.iv229 = phi i64 [ %7, %.lr.ph188.preheader ], [ %indvars.iv.next230, %bb.d ] ; 2 uses
   %i.ay = add nsw i64 %indvars.iv231.a, %i.ax     ; 2 uses
   %i.az = icmp slt i64 %i.ay, %i.b
   br i1 %i.az, label %bb.c, label %.critedge.loopexit.split.loop.exit
@@ -341,7 +339,7 @@ bb.c:                                             ; preds = %.lr.ph188
 
 bb.d:                                             ; preds = %bb.c
   %indvars.iv.next232.a = add nsw i64 %indvars.iv231.a, 1 ; 2 uses
-  %i.bf = add nsw i64 %indvars.iv.next232.a, %indvars.iv227
+  %i.bf = add nsw i64 %indvars.iv.next232.a, %indvars.iv236
   %i.bg = icmp slt i64 %i.bf, %i.b
   %indvars.iv.next230 = add nsw i64 %indvars.iv229, 1
   br i1 %i.bg, label %.lr.ph188, label %.critedge, !llvm.loop !841
@@ -355,14 +353,14 @@ bb.d:                                             ; preds = %bb.c
   br label %.critedge
 
 .critedge:                                        ; preds = %bb.d, %.critedge.loopexit.split.loop.exit, %.critedge.loopexit.split.loop.exit280, %.lr.ph195
-  %.150.lcssa = phi i32 [ %.049193, %.lr.ph195 ], [ %i.bi, %.critedge.loopexit.split.loop.exit280 ], [ %i.bh, %.critedge.loopexit.split.loop.exit ], [ %indvars.iv233, %bb.d ] ; 3 uses
-  %i.bj = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv227
+  %.150.lcssa = phi i32 [ %.049193, %.lr.ph195 ], [ %i.bi, %.critedge.loopexit.split.loop.exit280 ], [ %i.bh, %.critedge.loopexit.split.loop.exit ], [ %indvars.iv231, %bb.d ] ; 3 uses
+  %i.bj = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv236
   store i32 %.150.lcssa, ptr %i.bj, align 4, !tbaa !94
   %i.bk = icmp sgt i32 %.150.lcssa, 0
   %i.bl = sext i1 %i.bk to i32
   %spec.select = add nsw i32 %.150.lcssa, %i.bl
-  %indvars.iv.next228 = add nuw nsw i64 %indvars.iv227, 1 ; 2 uses
-  %indvars.iv.next234 = add i32 %indvars.iv233, -1
+  %indvars.iv.next228 = add nuw nsw i64 %indvars.iv236, 1 ; 2 uses
+  %indvars.iv.next234 = add i32 %indvars.iv231, -1
   %exitcond240.not = icmp eq i64 %indvars.iv.next228, %wide.trip.count239
   br i1 %exitcond240.not, label %.lr.ph197.preheader, label %.lr.ph195, !llvm.loop !842
 

@@ -205,8 +205,7 @@ bb.bo:                                            ; preds = %bb.bk
   br label %bb.bp
 
 bb.bp:                                            ; preds = %bb.bp, %bb.bo
-  %indvars.iv47.i = phi i64 [ 1, %bb.bo ], [ %indvars.iv.next48.i, %bb.bp ] ; 5 uses
-  %indvars.iv.i = phi i64 [ 0, %bb.bo ], [ %indvars.iv.next.i, %bb.bp ] ; 4 uses
+  %indvars.iv.i = phi i64 [ 0, %bb.bo ], [ %indvars.iv.next.i, %bb.bp ] ; 5 uses
   %.03042.i = phi i64 [ %.0210, %bb.bo ], [ %i.fe, %bb.bp ] ; 3 uses
   %i.ex = urem i64 %.03042.i, %i.et               ; 2 uses
   %i.ey = trunc nuw nsw i64 %i.ex to i8           ; 2 uses
@@ -214,14 +213,13 @@ bb.bp:                                            ; preds = %bb.bp, %bb.bo
   %i.fa = or disjoint i8 %i.ey, 48
   %i.fb = add nuw nsw i8 %i.ey, 55
   %i.fc = select i1 %i.ez, i8 %i.fa, i8 %i.fb
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 4 uses
   %i.fd = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv.i
   store i8 %i.fc, ptr %i.fd, align 1, !tbaa !10
   %i.fe = udiv i64 %.03042.i, %i.et
   %i.ff = icmp ule i64 %i.et, %.03042.i
   %i.fg = icmp samesign ult i64 %indvars.iv.i, 159
   %i.fh = select i1 %i.ff, i1 %i.fg, i1 false
-  %indvars.iv.next48.i = add nuw nsw i64 %indvars.iv47.i, 1
   br i1 %i.fh, label %bb.bp, label %bb.bq, !llvm.loop !26
 
 bb.bq:                                            ; preds = %bb.bp
@@ -245,14 +243,14 @@ mi_outc.exit39.i:                                 ; preds = %bb.bs, %bb.br
   br i1 %i.fk, label %mi_outc.exit39.split.i.preheader, label %.loopexit.i
 
 mi_outc.exit39.split.i.preheader:                 ; preds = %mi_outc.exit39.i
-  %xtraiter466 = and i64 %indvars.iv47.i, 3       ; 2 uses
+  %xtraiter466 = and i64 %indvars.iv.next.i, 3    ; 2 uses
   %lcmp.mod467.not = icmp eq i64 %xtraiter466, 0
   br i1 %lcmp.mod467.not, label %mi_outc.exit39.split.i.prol.loopexit, label %mi_outc.exit39.split.i.prol
 
 mi_outc.exit39.split.i.prol:                      ; preds = %mi_outc.exit39.split.i.preheader, %mi_outc.exit41.i.prol
   %.16.prol = phi ptr [ %.17.prol, %mi_outc.exit41.i.prol ], [ %.14, %mi_outc.exit39.split.i.preheader ]
   %i.fl = phi ptr [ %i.fp, %mi_outc.exit41.i.prol ], [ %.14, %mi_outc.exit39.split.i.preheader ] ; 4 uses
-  %indvars.iv49.i.prol = phi i64 [ %indvars.iv.next50.i.prol, %mi_outc.exit41.i.prol ], [ %indvars.iv47.i, %mi_outc.exit39.split.i.preheader ]
+  %indvars.iv49.i.prol = phi i64 [ %indvars.iv.next50.i.prol, %mi_outc.exit41.i.prol ], [ %indvars.iv.next.i, %mi_outc.exit39.split.i.preheader ]
   %prol.iter468 = phi i64 [ %prol.iter468.next, %mi_outc.exit41.i.prol ], [ 0, %mi_outc.exit39.split.i.preheader ]
   %indvars.iv.next50.i.prol = add nsw i64 %indvars.iv49.i.prol, -1 ; 3 uses
   %.not.i40.i.prol = icmp ult ptr %i.fl, %i.g
@@ -275,9 +273,9 @@ mi_outc.exit41.i.prol:                            ; preds = %bb.bt, %mi_outc.exi
 mi_outc.exit39.split.i.prol.loopexit:             ; preds = %mi_outc.exit41.i.prol, %mi_outc.exit39.split.i.preheader
   %.16.unr = phi ptr [ %.14, %mi_outc.exit39.split.i.preheader ], [ %.17.prol, %mi_outc.exit41.i.prol ]
   %.unr469 = phi ptr [ %.14, %mi_outc.exit39.split.i.preheader ], [ %i.fp, %mi_outc.exit41.i.prol ]
-  %indvars.iv49.i.unr = phi i64 [ %indvars.iv47.i, %mi_outc.exit39.split.i.preheader ], [ %indvars.iv.next50.i.prol, %mi_outc.exit41.i.prol ]
+  %indvars.iv49.i.unr = phi i64 [ %indvars.iv.next.i, %mi_outc.exit39.split.i.preheader ], [ %indvars.iv.next50.i.prol, %mi_outc.exit41.i.prol ]
   %.17.lcssa.unr = phi ptr [ poison, %mi_outc.exit39.split.i.preheader ], [ %.17.prol, %mi_outc.exit41.i.prol ]
-  %i.fq = icmp samesign ult i64 %indvars.iv47.i, 4
+  %i.fq = icmp samesign ult i64 %indvars.iv.i, 3
   br i1 %i.fq, label %.loopexit.i, label %mi_outc.exit39.split.i
 
 mi_outc.exit39.split.i:                           ; preds = %mi_outc.exit39.split.i.prol.loopexit, %mi_outc.exit41.i.3
@@ -510,20 +508,18 @@ bb.cy:                                            ; preds = %.thread353, %bb.cu
   br label %bb.cz
 
 bb.cz:                                            ; preds = %bb.cz, %bb.cy
-  %indvars.iv47.i294 = phi i64 [ 1, %bb.cy ], [ %indvars.iv.next48.i298, %bb.cz ] ; 5 uses
-  %indvars.iv.i295 = phi i64 [ 0, %bb.cy ], [ %indvars.iv.next.i297, %bb.cz ] ; 4 uses
+  %indvars.iv.i295 = phi i64 [ 0, %bb.cy ], [ %indvars.iv.next.i297, %bb.cz ] ; 5 uses
   %.03042.i296 = phi i64 [ %.1356, %bb.cy ], [ %i.io, %bb.cz ] ; 3 uses
   %i.ik = urem i64 %.03042.i296, 10
   %i.il = trunc nuw nsw i64 %i.ik to i8
   %i.im = or disjoint i8 %i.il, 48
-  %indvars.iv.next.i297 = add nuw nsw i64 %indvars.iv.i295, 1
+  %indvars.iv.next.i297 = add nuw nsw i64 %indvars.iv.i295, 1 ; 4 uses
   %i.in = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.i295
   store i8 %i.im, ptr %i.in, align 1, !tbaa !10
   %i.io = udiv i64 %.03042.i296, 10
   %i.ip = icmp ugt i64 %.03042.i296, 9
   %i.iq = icmp samesign ult i64 %indvars.iv.i295, 159
   %i.ir = select i1 %i.ip, i1 %i.iq, i1 false
-  %indvars.iv.next48.i298 = add nuw nsw i64 %indvars.iv47.i294, 1
   br i1 %i.ir, label %bb.cz, label %bb.da, !llvm.loop !26
 
 bb.da:                                            ; preds = %bb.cz
@@ -545,14 +541,14 @@ mi_outc.exit39.i303:                              ; preds = %bb.dc, %bb.db
   br i1 %i.iu, label %mi_outc.exit39.split.i305.preheader, label %.loopexit.i304
 
 mi_outc.exit39.split.i305.preheader:              ; preds = %mi_outc.exit39.i303
-  %xtraiter = and i64 %indvars.iv47.i294, 3       ; 2 uses
+  %xtraiter = and i64 %indvars.iv.next.i297, 3    ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %mi_outc.exit39.split.i305.prol.loopexit, label %mi_outc.exit39.split.i305.prol
 
 mi_outc.exit39.split.i305.prol:                   ; preds = %mi_outc.exit39.split.i305.preheader, %mi_outc.exit41.i309.prol
   %.22.prol = phi ptr [ %.23.prol, %mi_outc.exit41.i309.prol ], [ %.20, %mi_outc.exit39.split.i305.preheader ]
   %i.iv = phi ptr [ %i.iz, %mi_outc.exit41.i309.prol ], [ %.20, %mi_outc.exit39.split.i305.preheader ] ; 4 uses
-  %indvars.iv49.i306.prol = phi i64 [ %indvars.iv.next50.i307.prol, %mi_outc.exit41.i309.prol ], [ %indvars.iv47.i294, %mi_outc.exit39.split.i305.preheader ]
+  %indvars.iv49.i306.prol = phi i64 [ %indvars.iv.next50.i307.prol, %mi_outc.exit41.i309.prol ], [ %indvars.iv.next.i297, %mi_outc.exit39.split.i305.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %mi_outc.exit41.i309.prol ], [ 0, %mi_outc.exit39.split.i305.preheader ]
   %indvars.iv.next50.i307.prol = add nsw i64 %indvars.iv49.i306.prol, -1 ; 3 uses
   %.not.i40.i308.prol = icmp ult ptr %i.iv, %i.g
@@ -575,9 +571,9 @@ mi_outc.exit41.i309.prol:                         ; preds = %bb.dd, %mi_outc.exi
 mi_outc.exit39.split.i305.prol.loopexit:          ; preds = %mi_outc.exit41.i309.prol, %mi_outc.exit39.split.i305.preheader
   %.22.unr = phi ptr [ %.20, %mi_outc.exit39.split.i305.preheader ], [ %.23.prol, %mi_outc.exit41.i309.prol ]
   %.unr = phi ptr [ %.20, %mi_outc.exit39.split.i305.preheader ], [ %i.iz, %mi_outc.exit41.i309.prol ]
-  %indvars.iv49.i306.unr = phi i64 [ %indvars.iv47.i294, %mi_outc.exit39.split.i305.preheader ], [ %indvars.iv.next50.i307.prol, %mi_outc.exit41.i309.prol ]
+  %indvars.iv49.i306.unr = phi i64 [ %indvars.iv.next.i297, %mi_outc.exit39.split.i305.preheader ], [ %indvars.iv.next50.i307.prol, %mi_outc.exit41.i309.prol ]
   %.23.lcssa.unr = phi ptr [ poison, %mi_outc.exit39.split.i305.preheader ], [ %.23.prol, %mi_outc.exit41.i309.prol ]
-  %i.ja = icmp samesign ult i64 %indvars.iv47.i294, 4
+  %i.ja = icmp samesign ult i64 %indvars.iv.i295, 3
   br i1 %i.ja, label %.loopexit.i304, label %mi_outc.exit39.split.i305
 
 mi_outc.exit39.split.i305:                        ; preds = %mi_outc.exit39.split.i305.prol.loopexit, %mi_outc.exit41.i309.3

@@ -205,7 +205,6 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.h
 
 .loopexit383:                                     ; preds = %hnsw_distance.exit, %bb.h
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1
   %exitcond465.not = icmp eq i64 %indvars.iv.next462, %i.c
   br i1 %exitcond465.not, label %._crit_edge, label %bb.h, !llvm.loop !253
 
@@ -298,31 +297,30 @@ bb.g:                                             ; preds = %.epil.preheader
   br i1 %exitcond475.not, label %._crit_edge406, label %.preheader381.us, !llvm.loop !255
 
 bb.h:                                             ; preds = %.lr.ph398, %.loopexit383
-  %indvars.iv461 = phi i64 [ 0, %.lr.ph398 ], [ %indvars.iv.next462, %.loopexit383 ] ; 6 uses
-  %indvars.iv.a = phi i64 [ 1, %.lr.ph398 ], [ %indvars.iv.next, %.loopexit383 ] ; 2 uses
-  %indvars463 = trunc i64 %indvars.iv461 to i32
+  %indvars.iv.a = phi i64 [ 0, %.lr.ph398 ], [ %indvars.iv.next462, %.loopexit383 ] ; 6 uses
+  %indvars463 = trunc i64 %indvars.iv.a to i32
   %i.aa = mul nuw nsw i32 %2, %indvars463
   %i.ab = zext i32 %i.aa to i64
-  %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv461
+  %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv.a
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %i.ac, i64 %i.ab
   store float 0.000000e+00, ptr %i.ad, align 4, !tbaa !77
-  %indvars.iv.next462 = add nuw nsw i64 %indvars.iv461, 1 ; 3 uses
+  %indvars.iv.next462 = add nuw nsw i64 %indvars.iv.a, 1 ; 4 uses
   %i.ae = icmp samesign ult i64 %indvars.iv.next462, %i.i
   br i1 %i.ae, label %.lr.ph, label %.loopexit383
 
 .lr.ph:                                           ; preds = %bb.h
-  %i.af = mul nuw nsw i64 %indvars.iv461, %i.c
-  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv461 ; 2 uses
+  %i.af = mul nuw nsw i64 %indvars.iv.a, %i.c
+  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv.a ; 2 uses
   %.pre526.a = load ptr, ptr %i.ag, align 8, !tbaa !76
   %.pre528.a = load i32, ptr %i.g, align 8, !tbaa !88
   %invariant.gep = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %i.af
-  %invariant.gep581 = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv461
+  %invariant.gep581 = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv.a
   br label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph, %hnsw_distance.exit
   %i.ah = phi i32 [ %.pre528.a, %.lr.ph ], [ %i.im, %hnsw_distance.exit ]
   %i.ai = phi ptr [ %.pre526.a, %.lr.ph ], [ %i.in, %hnsw_distance.exit ] ; 11 uses
-  %indvars.iv458 = phi i64 [ %indvars.iv.a, %.lr.ph ], [ %indvars.iv.next459, %hnsw_distance.exit ] ; 4 uses
+  %indvars.iv458 = phi i64 [ %indvars.iv.next462, %.lr.ph ], [ %indvars.iv.next459, %hnsw_distance.exit ] ; 4 uses
   %i.aj = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv458
   %i.ak = load ptr, ptr %i.aj, align 8, !tbaa !76 ; 4 uses
   switch i32 %i.ah, label %bb.x [
@@ -725,14 +723,12 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %bb.b
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.c ], [ 0, %bb.b ] ; 2 uses
-  %.0.i = phi i32 [ %i.j, %bb.c ], [ 0, %bb.b ]   ; 5 uses
+  %.0.i = phi i32 [ 0, %bb.b ], [ %i.j, %bb.c ]   ; 6 uses
   %i.f = tail call i32 @rand() #34
   %i.g = icmp slt i32 %i.f, 536870911
   %i.h = icmp samesign ult i32 %.0.i, 16
   %i.i = select i1 %i.g, i1 %i.h, i1 false
   %i.j = add nuw nsw i32 %.0.i, 1
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   br i1 %i.i, label %bb.c, label %random_level.exit, !llvm.loop !9
 
 random_level.exit:                                ; preds = %bb.c
@@ -765,8 +761,8 @@ bb.f:                                             ; preds = %bb.e
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit, %bb.f
   %i.s = phi i32 [ %i.q, %bb.f ], [ %.pre75, %._crit_edge.loopexit ]
   %.052.lcssa = phi ptr [ %i.n, %bb.f ], [ %.2, %._crit_edge.loopexit ]
-  %7 = zext i32 %i.s to i64
-  %umin = tail call i64 @llvm.umin.i64(i64 %indvars.iv, i64 %7)
+  %. = tail call i32 @llvm.umin.i32(i32 %.0.i, i32 %i.s)
+  %7 = zext nneg i32 %. to i64
   br label %bb.j
 
 .lr.ph:                                           ; preds = %bb.f, %bb.i
@@ -806,7 +802,7 @@ bb.i:                                             ; preds = %pq_free.exit, %.lr.
   br i1 %i.ae, label %.lr.ph, label %._crit_edge.loopexit, !llvm.loop !283
 
 bb.j:                                             ; preds = %._crit_edge, %bb.n
-  %indvars.iv73 = phi i64 [ %umin, %._crit_edge ], [ %indvars.iv.next74, %bb.n ] ; 4 uses
+  %indvars.iv73 = phi i64 [ %7, %._crit_edge ], [ %indvars.iv.next74, %bb.n ] ; 4 uses
   %.371 = phi ptr [ %.052.lcssa, %._crit_edge ], [ %.4, %bb.n ] ; 3 uses
   %i.af = load ptr, ptr %i.l, align 8, !tbaa !115
   %i.ag = trunc nuw nsw i64 %indvars.iv73 to i32

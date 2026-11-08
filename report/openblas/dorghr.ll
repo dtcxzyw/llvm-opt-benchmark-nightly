@@ -101,7 +101,7 @@ bb.i:                                             ; preds = %bb.h
 bb.j:                                             ; preds = %bb.h
   %i.ag = load i32, ptr %1, align 4, !tbaa !27    ; 8 uses
   %i.ah = add i32 %i.ag, 1                        ; 4 uses
-  %i.ai = load i32, ptr %2, align 4, !tbaa !27    ; 23 uses
+  %i.ai = load i32, ptr %2, align 4, !tbaa !27    ; 24 uses
   %.not129.not158 = icmp sgt i32 %i.ai, %i.ag
   br i1 %.not129.not158, label %.lr.ph160, label %._crit_edge
 
@@ -111,10 +111,10 @@ bb.j:                                             ; preds = %bb.h
   %scevgep190 = getelementptr i8, ptr %3, i64 %i.aj ; 3 uses
   %i.ak = mul i32 %i.d, %i.ai
   %i.al = add i32 %i.ak, 1                        ; 2 uses
-  %9 = sext i32 %i.ai to i64                      ; 4 uses
   br i1 %.not136.not155, label %.lr.ph160.split.us.preheader, label %.lr.ph160.split.preheader
 
 .lr.ph160.split.preheader:                        ; preds = %.lr.ph160
+  %9 = sext i32 %i.ai to i64                      ; 2 uses
   %i.am = sext i32 %i.d to i64                    ; 3 uses
   %i.an = sub i32 %i.ai, %i.ag
   %i.ao = shl nsw i64 %i.am, 3
@@ -131,6 +131,7 @@ bb.j:                                             ; preds = %bb.h
   %i.av = zext i32 %i.au to i64
   %i.aw = shl nuw nsw i64 %i.av, 3
   %i.ax = add nuw nsw i64 %i.aw, 8
+  %10 = sext i32 %i.ai to i64                     ; 2 uses
   %i.ay = sext i32 %i.d to i64                    ; 3 uses
   %i.az = sub i32 %i.ai, %i.ag
   %i.ba = shl nsw i64 %i.ay, 3
@@ -139,7 +140,7 @@ bb.j:                                             ; preds = %bb.h
   br label %.lr.ph160.split.us
 
 .lr.ph160.split.us:                               ; preds = %.lr.ph160.split.us.preheader, %.preheader148.us
-  %indvars.iv201.a = phi i64 [ %9, %.lr.ph160.split.us.preheader ], [ %indvars.iv.next202.a, %.preheader148.us ] ; 9 uses
+  %indvars.iv201.a = phi i64 [ %10, %.lr.ph160.split.us.preheader ], [ %indvars.iv.next202.a, %.preheader148.us ] ; 9 uses
   %indvar191 = phi i32 [ 0, %.lr.ph160.split.us.preheader ], [ %indvar.next192, %.preheader148.us ] ; 4 uses
   %i.bc = add i32 %indvar191, -1                  ; 3 uses
   %i.bd = zext i32 %i.bc to i64
@@ -206,7 +207,7 @@ vec.epilog.scalar.ph291:                          ; preds = %vec.epilog.scalar.p
   br i1 %exitcond214.not, label %._crit_edge, label %.lr.ph160.split.us, !llvm.loop !9
 
 .preheader149.us:                                 ; preds = %.lr.ph.us, %.lr.ph160.split.us
-  %.not135.not152.us = icmp slt i64 %indvars.iv201.a, %9
+  %.not135.not152.us = icmp slt i64 %indvars.iv201.a, %10
   br i1 %.not135.not152.us, label %iter.check289, label %.preheader148.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph160.split.us

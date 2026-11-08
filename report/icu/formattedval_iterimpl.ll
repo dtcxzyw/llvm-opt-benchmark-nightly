@@ -202,13 +202,12 @@ bb.a:
   br i1 %.not, label %_ZN6icu_789UVector3210addElementEiR10UErrorCode.exit114, label %bb.k
 
 bb.b:                                             ; preds = %.lr.ph126, %.loopexit
-  %indvars.iv134 = phi i64 [ 0, %.lr.ph126 ], [ %indvars.iv.next135, %.loopexit ] ; 2 uses
-  %indvars.iv.a = phi i64 [ 1, %.lr.ph126 ], [ %indvars.iv.next, %.loopexit ] ; 2 uses
+  %indvars.iv.a = phi i64 [ 0, %.lr.ph126 ], [ %indvars.iv.next135, %.loopexit ] ; 2 uses
   %.039124 = phi i32 [ 0, %.lr.ph126 ], [ %.3, %.loopexit ] ; 3 uses
   %.040123 = phi i32 [ 2147483647, %.lr.ph126 ], [ %.343, %.loopexit ] ; 3 uses
   %.044122 = phi i32 [ 0, %.lr.ph126 ], [ %.347, %.loopexit ] ; 3 uses
   %.048121 = phi i32 [ 2147483647, %.lr.ph126 ], [ %.351, %.loopexit ] ; 3 uses
-  %i.h = shl nuw nsw i64 %indvars.iv134, 2        ; 3 uses
+  %i.h = shl nuw nsw i64 %indvars.iv.a, 2         ; 3 uses
   %i.i = or disjoint i64 %i.h, 1                  ; 2 uses
   %i.j = load i32, ptr %i.b, align 8
   %i.k = sext i32 %i.j to i64                     ; 3 uses
@@ -223,7 +222,7 @@ bb.c:                                             ; preds = %bb.b
 
 _ZNK6icu_789UVector3210elementAtiEi.exit:         ; preds = %bb.b, %bb.c
   %i.p = phi i32 [ %i.o, %bb.c ], [ 0, %bb.b ]
-  %indvars.iv.next135 = add nuw nsw i64 %indvars.iv134, 1 ; 3 uses
+  %indvars.iv.next135 = add nuw nsw i64 %indvars.iv.a, 1 ; 4 uses
   %i.q = icmp samesign ult i64 %indvars.iv.next135, %i.g
   br i1 %i.q, label %.lr.ph, label %.loopexit
 
@@ -233,7 +232,7 @@ bb.d:                                             ; preds = %_ZNK6icu_789UVector
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !29
 
 .lr.ph:                                           ; preds = %_ZNK6icu_789UVector3210elementAtiEi.exit, %bb.d
-  %indvars.iv131 = phi i64 [ %indvars.iv.next132, %bb.d ], [ %indvars.iv.a, %_ZNK6icu_789UVector3210elementAtiEi.exit ] ; 2 uses
+  %indvars.iv131 = phi i64 [ %indvars.iv.next132, %bb.d ], [ %indvars.iv.next135, %_ZNK6icu_789UVector3210elementAtiEi.exit ] ; 2 uses
   %i.r = shl nuw nsw i64 %indvars.iv131, 2        ; 2 uses
   %i.s = or disjoint i64 %i.r, 1                  ; 2 uses
   %i.t = icmp slt i64 %i.s, %i.k
@@ -317,7 +316,6 @@ bb.j:                                             ; preds = %_ZNK6icu_789UVector
   %.347 = phi i32 [ %i.ao, %.thread ], [ %.044122, %_ZNK6icu_789UVector3210elementAtiEi.exit ], [ %.044122, %bb.d ] ; 2 uses
   %.343 = phi i32 [ %i.ax, %.thread ], [ %.040123, %_ZNK6icu_789UVector3210elementAtiEi.exit ], [ %.040123, %bb.d ] ; 2 uses
   %.3 = phi i32 [ %i.bg, %.thread ], [ %.039124, %_ZNK6icu_789UVector3210elementAtiEi.exit ], [ %.039124, %bb.d ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1
   %exitcond138.not = icmp eq i64 %indvars.iv.next135, %wide.trip.count137
   br i1 %exitcond138.not, label %._crit_edge, label %bb.b, !llvm.loop !30
 

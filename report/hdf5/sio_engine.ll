@@ -205,17 +205,16 @@ bb.d:                                             ; preds = %bb.a
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph9, %._crit_edge
-  %indvars.iv17 = phi i64 [ 0, %.lr.ph9 ], [ %indvars.iv.next18, %._crit_edge ] ; 5 uses
-  %indvars.iv.a = phi i64 [ 1, %.lr.ph9 ], [ %indvars.iv.next, %._crit_edge ] ; 3 uses
-  %.0386 = phi i64 [ 0, %.lr.ph9 ], [ %3, %._crit_edge ]
-  %i.u = xor i64 %indvars.iv17, -1
+  %indvars.iv.a = phi i64 [ 0, %.lr.ph9 ], [ %indvars.iv.next18, %._crit_edge ] ; 5 uses
+  %.0386 = phi i64 [ 0, %.lr.ph9 ], [ %indvars.iv.next, %._crit_edge ]
+  %i.u = xor i64 %indvars.iv.a, -1
   %i.v = add nsw i64 %i.u, %wide.trip.count20     ; 2 uses
-  %indvars.iv.next18 = add nuw nsw i64 %indvars.iv17, 1 ; 3 uses
+  %indvars.iv.next18 = add nuw nsw i64 %indvars.iv.a, 1 ; 5 uses
   %i.w = icmp samesign ult i64 %indvars.iv.next18, %i.s
   br i1 %i.w, label %.lr.ph5.preheader, label %._crit_edge
 
 .lr.ph5.preheader:                                ; preds = %bb.e
-  %i.x = sub i64 %i.t, %indvars.iv17
+  %i.x = sub i64 %i.t, %indvars.iv.a
   %xtraiter = and i64 %i.v, 7                     ; 3 uses
   %i.y = icmp ult i64 %i.x, 7
   br i1 %i.y, label %.lr.ph5.epil.preheader, label %.lr.ph5.preheader.new
@@ -225,7 +224,7 @@ bb.e:                                             ; preds = %.lr.ph9, %._crit_ed
   br label %.lr.ph5
 
 .lr.ph5:                                          ; preds = %.lr.ph5, %.lr.ph5.preheader.new
-  %indvars.iv14 = phi i64 [ %indvars.iv.a, %.lr.ph5.preheader.new ], [ %indvars.iv.next15.7, %.lr.ph5 ] ; 9 uses
+  %indvars.iv14 = phi i64 [ %indvars.iv.next18, %.lr.ph5.preheader.new ], [ %indvars.iv.next15.7, %.lr.ph5 ] ; 9 uses
   %.0393 = phi i64 [ 1, %.lr.ph5.preheader.new ], [ %i.bd, %.lr.ph5 ]
   %niter = phi i64 [ 0, %.lr.ph5.preheader.new ], [ %niter.next.7, %.lr.ph5 ]
   %i.z = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv14
@@ -269,7 +268,7 @@ bb.e:                                             ; preds = %.lr.ph9, %._crit_ed
   br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph5.epil.preheader
 
 .lr.ph5.epil.preheader:                           ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph5.preheader
-  %indvars.iv14.epil.init = phi i64 [ %indvars.iv.a, %.lr.ph5.preheader ], [ %indvars.iv.next15.7, %._crit_edge.loopexit.unr-lcssa ]
+  %indvars.iv14.epil.init = phi i64 [ %indvars.iv.next18, %.lr.ph5.preheader ], [ %indvars.iv.next15.7, %._crit_edge.loopexit.unr-lcssa ]
   %.0393.epil.init = phi i64 [ 1, %.lr.ph5.preheader ], [ %i.bd, %._crit_edge.loopexit.unr-lcssa ]
   %lcmp.mod4 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod4)
@@ -289,19 +288,18 @@ bb.e:                                             ; preds = %.lr.ph9, %._crit_ed
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph5.epil, %bb.e
   %.039.lcssa = phi i64 [ 1, %bb.e ], [ %i.bd, %._crit_edge.loopexit.unr-lcssa ], [ %i.bg, %.lr.ph5.epil ]
-  %i.bh = getelementptr inbounds nuw [8 x i8], ptr @offset, i64 %indvars.iv17
+  %i.bh = getelementptr inbounds nuw [8 x i8], ptr @offset, i64 %indvars.iv.a
   %i.bi = load i64, ptr %i.bh, align 8, !tbaa !16
-  %i.bj = getelementptr inbounds nuw [8 x i8], ptr @buf_offset, i64 %indvars.iv17
+  %i.bj = getelementptr inbounds nuw [8 x i8], ptr @buf_offset, i64 %indvars.iv.a
   %i.bk = load i64, ptr %i.bj, align 8, !tbaa !16
   %i.bl = add nsw i64 %i.bk, %i.bi
   %i.bm = mul nsw i64 %i.bl, %.039.lcssa
-  %3 = add nsw i64 %i.bm, %.0386                  ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1
+  %indvars.iv.next = add nsw i64 %i.bm, %.0386    ; 2 uses
   %exitcond21.not = icmp eq i64 %indvars.iv.next18, %wide.trip.count20
   br i1 %exitcond21.not, label %._crit_edge10, label %bb.e, !llvm.loop !64
 
 ._crit_edge10:                                    ; preds = %._crit_edge, %bb.d
-  %.038.lcssa = phi i64 [ 0, %bb.d ], [ %3, %._crit_edge ]
+  %.038.lcssa = phi i64 [ 0, %bb.d ], [ %indvars.iv.next, %._crit_edge ]
   %i.bn = load i32, ptr %1, align 8, !tbaa !12
   %i.bo = tail call i64 @lseek64(i32 noundef %i.bn, i64 noundef %.038.lcssa, i32 noundef 0) #17
   %i.bp = icmp sgt i64 %i.bo, -1
@@ -522,17 +520,16 @@ bb.d:                                             ; preds = %bb.a
   br label %bb.e
 
 bb.e:                                             ; preds = %.lr.ph11, %._crit_edge
-  %indvars.iv20 = phi i64 [ 0, %.lr.ph11 ], [ %indvars.iv.next21, %._crit_edge ] ; 5 uses
-  %indvars.iv.a = phi i64 [ 1, %.lr.ph11 ], [ %indvars.iv.next, %._crit_edge ] ; 3 uses
-  %.0388 = phi i64 [ 0, %.lr.ph11 ], [ %3, %._crit_edge ]
-  %i.v = xor i64 %indvars.iv20, -1
+  %indvars.iv.a = phi i64 [ 0, %.lr.ph11 ], [ %indvars.iv.next21, %._crit_edge ] ; 5 uses
+  %.0388 = phi i64 [ 0, %.lr.ph11 ], [ %indvars.iv.next, %._crit_edge ]
+  %i.v = xor i64 %indvars.iv.a, -1
   %i.w = add nsw i64 %i.v, %wide.trip.count23     ; 2 uses
-  %indvars.iv.next21 = add nuw nsw i64 %indvars.iv20, 1 ; 3 uses
+  %indvars.iv.next21 = add nuw nsw i64 %indvars.iv.a, 1 ; 5 uses
   %i.x = icmp samesign ult i64 %indvars.iv.next21, %i.t
   br i1 %i.x, label %.lr.ph6.preheader, label %._crit_edge
 
 .lr.ph6.preheader:                                ; preds = %bb.e
-  %i.y = sub i64 %i.u, %indvars.iv20
+  %i.y = sub i64 %i.u, %indvars.iv.a
   %xtraiter = and i64 %i.w, 7                     ; 3 uses
   %i.z = icmp ult i64 %i.y, 7
   br i1 %i.z, label %.lr.ph6.epil.preheader, label %.lr.ph6.preheader.new
@@ -542,7 +539,7 @@ bb.e:                                             ; preds = %.lr.ph11, %._crit_e
   br label %.lr.ph6
 
 .lr.ph6:                                          ; preds = %.lr.ph6, %.lr.ph6.preheader.new
-  %indvars.iv17 = phi i64 [ %indvars.iv.a, %.lr.ph6.preheader.new ], [ %indvars.iv.next18.7, %.lr.ph6 ] ; 9 uses
+  %indvars.iv17 = phi i64 [ %indvars.iv.next21, %.lr.ph6.preheader.new ], [ %indvars.iv.next18.7, %.lr.ph6 ] ; 9 uses
   %.0394 = phi i64 [ 1, %.lr.ph6.preheader.new ], [ %i.be, %.lr.ph6 ]
   %niter = phi i64 [ 0, %.lr.ph6.preheader.new ], [ %niter.next.7, %.lr.ph6 ]
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.s, i64 %indvars.iv17
@@ -586,7 +583,7 @@ bb.e:                                             ; preds = %.lr.ph11, %._crit_e
   br i1 %lcmp.mod.not, label %._crit_edge, label %.lr.ph6.epil.preheader
 
 .lr.ph6.epil.preheader:                           ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph6.preheader
-  %indvars.iv17.epil.init = phi i64 [ %indvars.iv.a, %.lr.ph6.preheader ], [ %indvars.iv.next18.7, %._crit_edge.loopexit.unr-lcssa ]
+  %indvars.iv17.epil.init = phi i64 [ %indvars.iv.next21, %.lr.ph6.preheader ], [ %indvars.iv.next18.7, %._crit_edge.loopexit.unr-lcssa ]
   %.0394.epil.init = phi i64 [ 1, %.lr.ph6.preheader ], [ %i.be, %._crit_edge.loopexit.unr-lcssa ]
   %lcmp.mod34 = icmp ne i64 %xtraiter, 0
   tail call void @llvm.assume(i1 %lcmp.mod34)
@@ -606,19 +603,18 @@ bb.e:                                             ; preds = %.lr.ph11, %._crit_e
 
 ._crit_edge:                                      ; preds = %._crit_edge.loopexit.unr-lcssa, %.lr.ph6.epil, %bb.e
   %.039.lcssa = phi i64 [ 1, %bb.e ], [ %i.be, %._crit_edge.loopexit.unr-lcssa ], [ %i.bh, %.lr.ph6.epil ]
-  %i.bi = getelementptr inbounds nuw [8 x i8], ptr @offset, i64 %indvars.iv20
+  %i.bi = getelementptr inbounds nuw [8 x i8], ptr @offset, i64 %indvars.iv.a
   %i.bj = load i64, ptr %i.bi, align 8, !tbaa !16
-  %i.bk = getelementptr inbounds nuw [8 x i8], ptr @buf_offset, i64 %indvars.iv20
+  %i.bk = getelementptr inbounds nuw [8 x i8], ptr @buf_offset, i64 %indvars.iv.a
   %i.bl = load i64, ptr %i.bk, align 8, !tbaa !16
   %i.bm = add nsw i64 %i.bl, %i.bj
   %i.bn = mul nsw i64 %i.bm, %.039.lcssa
-  %3 = add nsw i64 %i.bn, %.0388                  ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1
+  %indvars.iv.next = add nsw i64 %i.bn, %.0388    ; 2 uses
   %exitcond24.not = icmp eq i64 %indvars.iv.next21, %wide.trip.count23
   br i1 %exitcond24.not, label %._crit_edge12, label %bb.e, !llvm.loop !69
 
 ._crit_edge12:                                    ; preds = %._crit_edge, %bb.d
-  %.038.lcssa = phi i64 [ 0, %bb.d ], [ %3, %._crit_edge ]
+  %.038.lcssa = phi i64 [ 0, %bb.d ], [ %indvars.iv.next, %._crit_edge ]
   %i.bo = load i32, ptr %1, align 8, !tbaa !12
   %i.bp = tail call i64 @lseek64(i32 noundef %i.bo, i64 noundef %.038.lcssa, i32 noundef 0) #17
   %i.bq = icmp sgt i64 %i.bp, -1

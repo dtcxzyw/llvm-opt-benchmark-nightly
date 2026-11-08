@@ -205,14 +205,14 @@ bb.l:                                             ; preds = %bb.k, %.lr.ph129
   br i1 %exitcond158.not, label %.preheader106.loopexit, label %.lr.ph129, !llvm.loop !82
 
 .preheader104:                                    ; preds = %.preheader106, %._crit_edge135
-  %indvars.iv168 = phi i64 [ 32, %.preheader106 ], [ %indvars.iv.next169, %._crit_edge135 ] ; 3 uses
-  %indvars.iv163.a = phi i64 [ 30, %.preheader106 ], [ %indvars.iv.next164, %._crit_edge135 ] ; 2 uses
-  %i.hb = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv168 ; 4 uses
+  %indvars.iv163.a = phi i64 [ 32, %.preheader106 ], [ %indvars.iv.next169, %._crit_edge135 ] ; 4 uses
+  %i.hb = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv163.a ; 4 uses
   %i.hc = load i8, ptr %i.hb, align 1, !tbaa !33  ; 2 uses
   %.not133 = icmp eq i8 %i.hc, 0
   br i1 %.not133, label %._crit_edge135, label %.lr.ph134
 
 .lr.ph134:                                        ; preds = %.preheader104
+  %3 = add nsw i64 %indvars.iv163.a, -2
   %i.hd = getelementptr i8, ptr %i.hb, i64 -1     ; 2 uses
   br label %bb.m
 
@@ -221,7 +221,7 @@ bb.m:                                             ; preds = %.lr.ph134, %bb.o
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.n, %bb.m
-  %indvars.iv165 = phi i64 [ %indvars.iv.next166, %bb.n ], [ %indvars.iv163.a, %bb.m ] ; 3 uses
+  %indvars.iv165 = phi i64 [ %indvars.iv.next166, %bb.n ], [ %3, %bb.m ] ; 3 uses
   %i.hf = getelementptr inbounds i8, ptr %i.a, i64 %indvars.iv165
   %i.hg = load i8, ptr %i.hf, align 1, !tbaa !33
   %i.hh = icmp eq i8 %i.hg, 0
@@ -247,9 +247,8 @@ bb.o:                                             ; preds = %bb.n
   br i1 %.not, label %._crit_edge135, label %bb.m, !llvm.loop !84
 
 ._crit_edge135:                                   ; preds = %bb.o, %.preheader104
-  %indvars.iv.next169 = add nsw i64 %indvars.iv168, -1
-  %i.hs = icmp samesign ugt i64 %indvars.iv168, 17
-  %indvars.iv.next164 = add nsw i64 %indvars.iv163.a, -1
+  %indvars.iv.next169 = add nsw i64 %indvars.iv163.a, -1
+  %i.hs = icmp samesign ugt i64 %indvars.iv163.a, 17
   br i1 %i.hs, label %.preheader104, label %.preheader, !llvm.loop !85
 
 .preheader:                                       ; preds = %._crit_edge135, %.preheader

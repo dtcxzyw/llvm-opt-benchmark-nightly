@@ -205,7 +205,6 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph63.new
   br i1 %niter.ncmp.3, label %.preheader56.unr-lcssa, label %bb.e
 
 .loopexit55:                                      ; preds = %bb.j, %.prol.loopexit111
-  %indvars.iv.next77 = add nuw nsw i64 %indvars.iv76.a, 1
   %exitcond87.not = icmp eq i64 %indvars.iv.next84, %wide.trip.count86
   br i1 %exitcond87.not, label %.preheader, label %.lr.ph65
 
@@ -243,19 +242,18 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph63.new
   br i1 %i.cg, label %.loopexit, label %.lr.ph70.new
 
 .lr.ph65:                                         ; preds = %.loopexit55, %.lr.ph67
-  %indvars.iv83 = phi i64 [ 0, %.lr.ph67 ], [ %indvars.iv.next84, %.loopexit55 ] ; 4 uses
-  %indvars.iv76.a = phi i64 [ 1, %.lr.ph67 ], [ %indvars.iv.next77, %.loopexit55 ] ; 4 uses
-  %indvars.iv.next84 = add nuw nsw i64 %indvars.iv83, 1 ; 2 uses
-  %i.ch = getelementptr inbounds nuw [4 x i8], ptr %i.aq, i64 %indvars.iv83 ; 7 uses
+  %indvars.iv76.a = phi i64 [ 0, %.lr.ph67 ], [ %indvars.iv.next84, %.loopexit55 ] ; 5 uses
+  %indvars.iv.next84 = add nuw nsw i64 %indvars.iv76.a, 1 ; 4 uses
+  %i.ch = getelementptr inbounds nuw [4 x i8], ptr %i.aq, i64 %indvars.iv76.a ; 7 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.ch, i64 2 ; 4 uses
   %.pre95 = load i16, ptr %i.ci, align 2, !tbaa !42 ; 3 uses
-  %i.cj = sub nsw i64 %indvars.iv83, %wide.trip.count
+  %i.cj = sub nsw i64 %indvars.iv76.a, %wide.trip.count
   %i.ck = and i64 %i.cj, 1
   %lcmp.mod113.not.not = icmp eq i64 %i.ck, 0
   br i1 %lcmp.mod113.not.not, label %.prol.preheader110, label %.prol.loopexit111
 
 .prol.preheader110:                               ; preds = %.lr.ph65
-  %i.cl = getelementptr inbounds nuw [4 x i8], ptr %i.aq, i64 %indvars.iv76.a ; 3 uses
+  %i.cl = getelementptr inbounds nuw [4 x i8], ptr %i.aq, i64 %indvars.iv.next84 ; 3 uses
   %i.cm = getelementptr inbounds nuw i8, ptr %i.cl, i64 2
   %i.cn = load i16, ptr %i.cm, align 2, !tbaa !42
   %i.co = icmp ult i16 %.pre95, %i.cn
@@ -271,13 +269,13 @@ bb.f:                                             ; preds = %.prol.preheader110
 
 .prol.loopexit111.unr-lcssa:                      ; preds = %bb.f, %.prol.preheader110
   %i.cr = phi i16 [ %.pre95, %.prol.preheader110 ], [ %.pre94.prol, %bb.f ]
-  %indvars.iv.next79.prol = add nuw nsw i64 %indvars.iv76.a, 1
+  %indvars.iv.next79.prol = add nuw nsw i64 %indvars.iv76.a, 2
   br label %.prol.loopexit111
 
 .prol.loopexit111:                                ; preds = %.prol.loopexit111.unr-lcssa, %.lr.ph65
   %.unr114 = phi i16 [ %.pre95, %.lr.ph65 ], [ %i.cr, %.prol.loopexit111.unr-lcssa ]
-  %indvars.iv78.unr = phi i64 [ %indvars.iv76.a, %.lr.ph65 ], [ %indvars.iv.next79.prol, %.prol.loopexit111.unr-lcssa ]
-  %i.cs = icmp eq i64 %i.ar, %indvars.iv83
+  %indvars.iv78.unr = phi i64 [ %indvars.iv.next84, %.lr.ph65 ], [ %indvars.iv.next79.prol, %.prol.loopexit111.unr-lcssa ]
+  %i.cs = icmp eq i64 %i.ar, %indvars.iv76.a
   br i1 %i.cs, label %.loopexit55, label %.lr.ph65.new
 
 .lr.ph65.new:                                     ; preds = %.prol.loopexit111, %bb.j

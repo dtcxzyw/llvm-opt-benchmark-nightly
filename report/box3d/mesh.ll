@@ -205,11 +205,11 @@ bb.q:                                             ; preds = %bb.q, %bb.p
   %.sroa.4212.1 = phi float [ %.sroa.4212.0, %.preheader.preheader.i ], [ %.sroa.4212.2, %bb.u ] ; 2 uses
   %.sroa.0211.1 = phi <2 x float> [ %.sroa.0211.0, %.preheader.preheader.i ], [ %.sroa.0211.2, %bb.u ] ; 2 uses
   %i.js = phi i32 [ %i.fs, %.preheader.preheader.i ], [ %i.ny, %bb.u ] ; 2 uses
-  %indvars.iv384.i87 = phi i64 [ 1, %.preheader.preheader.i ], [ %indvars.iv.next385.i92, %bb.u ] ; 9 uses
+  %indvars.iv384.i87 = phi i64 [ 0, %.preheader.preheader.i ], [ %indvars.iv.next391.i, %bb.u ] ; 8 uses
+  %indvars.iv388.i = phi i64 [ 1, %.preheader.preheader.i ], [ %indvars.iv.next385.i92, %bb.u ] ; 2 uses
   %.1346.i = phi i32 [ %.0100349.i, %.preheader.preheader.i ], [ %.3.i, %bb.u ] ; 2 uses
   %.1102345.i = phi float [ %.0101348.i, %.preheader.preheader.i ], [ %.3104.i, %bb.u ] ; 3 uses
-  %.0115344.i = phi i32 [ 0, %.preheader.preheader.i ], [ %12, %bb.u ] ; 2 uses
-  switch i64 %indvars.iv384.i87, label %11 [
+  switch i64 %indvars.iv388.i, label %11 [
     i64 1, label %.lr.ph.i90
     i64 2, label %.lr.ph.i90.preheader.fold.split
     i64 3, label %.lr.ph.i90.preheader.fold.split644
@@ -221,9 +221,6 @@ bb.q:                                             ; preds = %bb.q, %bb.p
 bb.r:                                             ; preds = %bb.u
   call void @llvm.lifetime.end.p0(ptr nonnull %6) #17, !noalias !201
   br label %bb.v
-
-11:                                               ; preds = %.preheader.i86
-  br label %.lr.ph.i90
 
 .lr.ph.i90.preheader.fold.split:                  ; preds = %.preheader.i86
   br label %.lr.ph.i90
@@ -240,25 +237,14 @@ bb.r:                                             ; preds = %bb.u
 .lr.ph.i90.preheader.fold.split647:               ; preds = %.preheader.i86
   br label %.lr.ph.i90
 
-._crit_edge.i:                                    ; preds = %.lr.ph.i90.6, %.lr.ph.i90.5, %.lr.ph.i90.4, %.lr.ph.i90.3, %.lr.ph.i90.2, %.lr.ph.i90.1, %.lr.ph.i90
-  %.lcssa596 = phi i32 [ %i.ju, %.lr.ph.i90 ], [ %i.kg, %.lr.ph.i90.1 ], [ %i.ks, %.lr.ph.i90.2 ], [ %i.le, %.lr.ph.i90.3 ], [ %i.lq, %.lr.ph.i90.4 ], [ %i.mc, %.lr.ph.i90.5 ], [ %i.mo, %.lr.ph.i90.6 ] ; 2 uses
-  %.lcssa595 = phi float [ %i.jx, %.lr.ph.i90 ], [ %i.kj, %.lr.ph.i90.1 ], [ %i.kv, %.lr.ph.i90.2 ], [ %i.lh, %.lr.ph.i90.3 ], [ %i.lt, %.lr.ph.i90.4 ], [ %i.mf, %.lr.ph.i90.5 ], [ %i.mr, %.lr.ph.i90.6 ] ; 2 uses
-  %.lcssa594 = phi <2 x float> [ %i.jz, %.lr.ph.i90 ], [ %i.kl, %.lr.ph.i90.1 ], [ %i.kx, %.lr.ph.i90.2 ], [ %i.lj, %.lr.ph.i90.3 ], [ %i.lv, %.lr.ph.i90.4 ], [ %i.mh, %.lr.ph.i90.5 ], [ %i.mt, %.lr.ph.i90.6 ] ; 2 uses
-  %.lcssa593 = phi <2 x float> [ %i.kb, %.lr.ph.i90 ], [ %i.kn, %.lr.ph.i90.1 ], [ %i.kz, %.lr.ph.i90.2 ], [ %i.ll, %.lr.ph.i90.3 ], [ %i.lx, %.lr.ph.i90.4 ], [ %i.mj, %.lr.ph.i90.5 ], [ %i.mv, %.lr.ph.i90.6 ] ; 2 uses
-  %.lcssa592 = phi float [ %i.kd, %.lr.ph.i90 ], [ %i.kp, %.lr.ph.i90.1 ], [ %i.lb, %.lr.ph.i90.2 ], [ %i.ln, %.lr.ph.i90.3 ], [ %i.lz, %.lr.ph.i90.4 ], [ %i.ml, %.lr.ph.i90.5 ], [ %i.mx, %.lr.ph.i90.6 ] ; 2 uses
-  %12 = add nuw nsw i32 %.0115344.i, 1            ; 2 uses
-  %13 = icmp sgt i32 %.lcssa591.a, 0
-  %14 = icmp sgt i32 %.lcssa596, 0
-  %or.cond.i91 = select i1 %13, i1 %14, i1 false
-  br i1 %or.cond.i91, label %bb.s, label %bb.u
-
-.lr.ph.i90:                                       ; preds = %11, %.lr.ph.i90.preheader.fold.split, %.lr.ph.i90.preheader.fold.split644, %.lr.ph.i90.preheader.fold.split645, %.lr.ph.i90.preheader.fold.split646, %.lr.ph.i90.preheader.fold.split647, %.preheader.i86
+.lr.ph.i90:                                       ; preds = %.preheader.i86, %.lr.ph.i90.preheader.fold.split647, %.lr.ph.i90.preheader.fold.split646, %.lr.ph.i90.preheader.fold.split645, %.lr.ph.i90.preheader.fold.split644, %.lr.ph.i90.preheader.fold.split, %11
   %.lcssa591.a = phi i32 [ %i.hb, %.preheader.i86 ], [ %i.jj, %11 ], [ %i.hl, %.lr.ph.i90.preheader.fold.split ], [ %i.hv, %.lr.ph.i90.preheader.fold.split644 ], [ %i.if, %.lr.ph.i90.preheader.fold.split645 ], [ %i.ip, %.lr.ph.i90.preheader.fold.split646 ], [ %i.iz, %.lr.ph.i90.preheader.fold.split647 ] ; 3 uses
   %.lcssa590 = phi float [ %i.hd, %.preheader.i86 ], [ %i.jl, %11 ], [ %i.hn, %.lr.ph.i90.preheader.fold.split ], [ %i.hx, %.lr.ph.i90.preheader.fold.split644 ], [ %i.ih, %.lr.ph.i90.preheader.fold.split645 ], [ %i.ir, %.lr.ph.i90.preheader.fold.split646 ], [ %i.jb, %.lr.ph.i90.preheader.fold.split647 ] ; 2 uses
   %.lcssa589 = phi <2 x float> [ %i.hf, %.preheader.i86 ], [ %i.jn, %11 ], [ %i.hp, %.lr.ph.i90.preheader.fold.split ], [ %i.hz, %.lr.ph.i90.preheader.fold.split644 ], [ %i.ij, %.lr.ph.i90.preheader.fold.split645 ], [ %i.it, %.lr.ph.i90.preheader.fold.split646 ], [ %i.jd, %.lr.ph.i90.preheader.fold.split647 ] ; 2 uses
   %.lcssa588 = phi <2 x float> [ %i.hh, %.preheader.i86 ], [ %i.jp, %11 ], [ %i.hr, %.lr.ph.i90.preheader.fold.split ], [ %i.ib, %.lr.ph.i90.preheader.fold.split644 ], [ %i.il, %.lr.ph.i90.preheader.fold.split645 ], [ %i.iv, %.lr.ph.i90.preheader.fold.split646 ], [ %i.jf, %.lr.ph.i90.preheader.fold.split647 ] ; 2 uses
   %.lcssa587 = phi float [ %i.hj, %.preheader.i86 ], [ %i.jr, %11 ], [ %i.ht, %.lr.ph.i90.preheader.fold.split ], [ %i.id, %.lr.ph.i90.preheader.fold.split644 ], [ %i.in, %.lr.ph.i90.preheader.fold.split645 ], [ %i.ix, %.lr.ph.i90.preheader.fold.split646 ], [ %i.jh, %.lr.ph.i90.preheader.fold.split647 ] ; 2 uses
-  %i.jt = getelementptr inbounds nuw [28 x i8], ptr %6, i64 %indvars.iv384.i87 ; 5 uses
+  %indvars.iv.next391.i = add nuw nsw i64 %indvars.iv384.i87, 1 ; 3 uses
+  %i.jt = getelementptr inbounds nuw [28 x i8], ptr %6, i64 %indvars.iv.next391.i ; 5 uses
   %i.ju = load i32, ptr %i.jt, align 4, !tbaa !203, !noalias !201 ; 2 uses
   %i.jv = getelementptr inbounds nuw i8, ptr %i.jt, i64 4
   %.sroa.0315.0.copyload.i = load <2 x float>, ptr %i.jv, align 4, !tbaa !16, !noalias !201 ; 2 uses
@@ -276,9 +262,23 @@ bb.r:                                             ; preds = %bb.u
   %i.kb = select <2 x i1> %i.ka, <2 x float> splat (float f0xFF7FFFFF), <2 x float> %.sroa.5317.0.copyload.i ; 3 uses
   %i.kc = fcmp olt float %.sroa.6318.0.copyload.i, f0xFF7FFFFF
   %i.kd = select i1 %i.kc, float f0xFF7FFFFF, float %.sroa.6318.0.copyload.i ; 3 uses
-  %indvars.iv.next387.i = add nuw nsw i64 %indvars.iv384.i87, 1 ; 2 uses
+  %indvars.iv.next387.i = add nuw nsw i64 %indvars.iv384.i87, 2 ; 2 uses
   %exitcond389.not.i = icmp eq i64 %indvars.iv.next387.i, 8
   br i1 %exitcond389.not.i, label %._crit_edge.i, label %.lr.ph.i90.1
+
+11:                                               ; preds = %.preheader.i86
+  br label %.lr.ph.i90
+
+._crit_edge.i:                                    ; preds = %.lr.ph.i90.6, %.lr.ph.i90.5, %.lr.ph.i90.4, %.lr.ph.i90.3, %.lr.ph.i90.2, %.lr.ph.i90.1, %.lr.ph.i90
+  %.lcssa595 = phi i32 [ %i.ju, %.lr.ph.i90 ], [ %i.kg, %.lr.ph.i90.1 ], [ %i.ks, %.lr.ph.i90.2 ], [ %i.le, %.lr.ph.i90.3 ], [ %i.lq, %.lr.ph.i90.4 ], [ %i.mc, %.lr.ph.i90.5 ], [ %i.mo, %.lr.ph.i90.6 ] ; 2 uses
+  %.lcssa594 = phi float [ %i.jx, %.lr.ph.i90 ], [ %i.kj, %.lr.ph.i90.1 ], [ %i.kv, %.lr.ph.i90.2 ], [ %i.lh, %.lr.ph.i90.3 ], [ %i.lt, %.lr.ph.i90.4 ], [ %i.mf, %.lr.ph.i90.5 ], [ %i.mr, %.lr.ph.i90.6 ] ; 2 uses
+  %.lcssa593 = phi <2 x float> [ %i.jz, %.lr.ph.i90 ], [ %i.kl, %.lr.ph.i90.1 ], [ %i.kx, %.lr.ph.i90.2 ], [ %i.lj, %.lr.ph.i90.3 ], [ %i.lv, %.lr.ph.i90.4 ], [ %i.mh, %.lr.ph.i90.5 ], [ %i.mt, %.lr.ph.i90.6 ] ; 2 uses
+  %.lcssa592 = phi <2 x float> [ %i.kb, %.lr.ph.i90 ], [ %i.kn, %.lr.ph.i90.1 ], [ %i.kz, %.lr.ph.i90.2 ], [ %i.ll, %.lr.ph.i90.3 ], [ %i.lx, %.lr.ph.i90.4 ], [ %i.mj, %.lr.ph.i90.5 ], [ %i.mv, %.lr.ph.i90.6 ] ; 2 uses
+  %.lcssa591 = phi float [ %i.kd, %.lr.ph.i90 ], [ %i.kp, %.lr.ph.i90.1 ], [ %i.lb, %.lr.ph.i90.2 ], [ %i.ln, %.lr.ph.i90.3 ], [ %i.lz, %.lr.ph.i90.4 ], [ %i.ml, %.lr.ph.i90.5 ], [ %i.mx, %.lr.ph.i90.6 ] ; 2 uses
+  %12 = icmp sgt i32 %.lcssa591.a, 0
+  %13 = icmp sgt i32 %.lcssa595, 0
+  %or.cond.i92 = select i1 %12, i1 %13, i1 false
+  br i1 %or.cond.i92, label %bb.s, label %bb.u
 
 .lr.ph.i90.1:                                     ; preds = %.lr.ph.i90
   %i.ke = getelementptr inbounds nuw [28 x i8], ptr %6, i64 %indvars.iv.next387.i ; 5 uses
@@ -300,7 +300,7 @@ bb.r:                                             ; preds = %bb.u
   %i.kn = select <2 x i1> %i.km, <2 x float> %i.kb, <2 x float> %.sroa.5317.0.copyload.i.1 ; 3 uses
   %i.ko = fcmp ogt float %i.kd, %.sroa.6318.0.copyload.i.1
   %i.kp = select i1 %i.ko, float %i.kd, float %.sroa.6318.0.copyload.i.1 ; 3 uses
-  %indvars.iv.next387.i.1 = add nuw nsw i64 %indvars.iv384.i87, 2 ; 2 uses
+  %indvars.iv.next387.i.1 = add nuw nsw i64 %indvars.iv384.i87, 3 ; 2 uses
   %exitcond389.not.i.1 = icmp eq i64 %indvars.iv.next387.i.1, 8
   br i1 %exitcond389.not.i.1, label %._crit_edge.i, label %.lr.ph.i90.2
 
@@ -324,7 +324,7 @@ bb.r:                                             ; preds = %bb.u
   %i.kz = select <2 x i1> %i.ky, <2 x float> %i.kn, <2 x float> %.sroa.5317.0.copyload.i.2 ; 3 uses
   %i.la = fcmp ogt float %i.kp, %.sroa.6318.0.copyload.i.2
   %i.lb = select i1 %i.la, float %i.kp, float %.sroa.6318.0.copyload.i.2 ; 3 uses
-  %indvars.iv.next387.i.2 = add nuw nsw i64 %indvars.iv384.i87, 3 ; 2 uses
+  %indvars.iv.next387.i.2 = add nuw nsw i64 %indvars.iv384.i87, 4 ; 2 uses
   %exitcond389.not.i.2 = icmp eq i64 %indvars.iv.next387.i.2, 8
   br i1 %exitcond389.not.i.2, label %._crit_edge.i, label %.lr.ph.i90.3
 
@@ -348,7 +348,7 @@ bb.r:                                             ; preds = %bb.u
   %i.ll = select <2 x i1> %i.lk, <2 x float> %i.kz, <2 x float> %.sroa.5317.0.copyload.i.3 ; 3 uses
   %i.lm = fcmp ogt float %i.lb, %.sroa.6318.0.copyload.i.3
   %i.ln = select i1 %i.lm, float %i.lb, float %.sroa.6318.0.copyload.i.3 ; 3 uses
-  %indvars.iv.next387.i.3 = add nuw nsw i64 %indvars.iv384.i87, 4 ; 2 uses
+  %indvars.iv.next387.i.3 = add nuw nsw i64 %indvars.iv384.i87, 5 ; 2 uses
   %exitcond389.not.i.3 = icmp eq i64 %indvars.iv.next387.i.3, 8
   br i1 %exitcond389.not.i.3, label %._crit_edge.i, label %.lr.ph.i90.4
 
@@ -372,7 +372,7 @@ bb.r:                                             ; preds = %bb.u
   %i.lx = select <2 x i1> %i.lw, <2 x float> %i.ll, <2 x float> %.sroa.5317.0.copyload.i.4 ; 3 uses
   %i.ly = fcmp ogt float %i.ln, %.sroa.6318.0.copyload.i.4
   %i.lz = select i1 %i.ly, float %i.ln, float %.sroa.6318.0.copyload.i.4 ; 3 uses
-  %indvars.iv.next387.i.4 = add nuw nsw i64 %indvars.iv384.i87, 5 ; 2 uses
+  %indvars.iv.next387.i.4 = add nuw nsw i64 %indvars.iv384.i87, 6 ; 2 uses
   %exitcond389.not.i.4 = icmp eq i64 %indvars.iv.next387.i.4, 8
   br i1 %exitcond389.not.i.4, label %._crit_edge.i, label %.lr.ph.i90.5
 
@@ -396,7 +396,7 @@ bb.r:                                             ; preds = %bb.u
   %i.mj = select <2 x i1> %i.mi, <2 x float> %i.lx, <2 x float> %.sroa.5317.0.copyload.i.5 ; 3 uses
   %i.mk = fcmp ogt float %i.lz, %.sroa.6318.0.copyload.i.5
   %i.ml = select i1 %i.mk, float %i.lz, float %.sroa.6318.0.copyload.i.5 ; 3 uses
-  %indvars.iv.next387.i.5 = add nuw nsw i64 %indvars.iv384.i87, 6 ; 2 uses
+  %indvars.iv.next387.i.5 = add nuw nsw i64 %indvars.iv384.i87, 7 ; 2 uses
   %exitcond389.not.i.5 = icmp eq i64 %indvars.iv.next387.i.5, 8
   br i1 %exitcond389.not.i.5, label %._crit_edge.i, label %.lr.ph.i90.6
 
@@ -435,9 +435,9 @@ bb.s:                                             ; preds = %._crit_edge.i
   %i.nh = fadd float %i.ng, %i.nf
   %i.ni = fmul float %i.nh, 2.000000e+00
   %i.nj = fmul float %i.ni, %i.my
-  %i.nk = uitofp nneg i32 %.lcssa596 to float
-  %i.nl = fsub <2 x float> %.lcssa593, %.lcssa594 ; 2 uses
-  %i.nm = fsub float %.lcssa592, %.lcssa595       ; 2 uses
+  %i.nk = uitofp nneg i32 %.lcssa595 to float
+  %i.nl = fsub <2 x float> %.lcssa592, %.lcssa593 ; 2 uses
+  %i.nm = fsub float %.lcssa591, %.lcssa594       ; 2 uses
   %i.nn = extractelement <2 x float> %i.nl, i64 0 ; 2 uses
   %i.no = extractelement <2 x float> %i.nl, i64 1 ; 2 uses
   %i.np = fmul float %i.nn, %i.no
@@ -452,24 +452,25 @@ bb.s:                                             ; preds = %._crit_edge.i
   br i1 %i.nx, label %bb.t, label %bb.u
 
 bb.t:                                             ; preds = %bb.s
+  %14 = trunc nuw nsw i64 %indvars.iv384.i87 to i32
   br label %bb.u
 
 bb.u:                                             ; preds = %bb.t, %bb.s, %._crit_edge.i
   %.sroa.13.2 = phi i32 [ %.lcssa591.a, %bb.t ], [ %.sroa.13.1, %bb.s ], [ %.sroa.13.1, %._crit_edge.i ] ; 2 uses
   %.sroa.11219.2 = phi i32 [ %i.ha, %bb.t ], [ %.sroa.11219.1, %bb.s ], [ %.sroa.11219.1, %._crit_edge.i ] ; 2 uses
-  %.sroa.10218.2 = phi float [ %.lcssa592, %bb.t ], [ %.sroa.10218.1, %bb.s ], [ %.sroa.10218.1, %._crit_edge.i ] ; 2 uses
-  %.sroa.9217.2 = phi <2 x float> [ %.lcssa593, %bb.t ], [ %.sroa.9217.1, %bb.s ], [ %.sroa.9217.1, %._crit_edge.i ] ; 2 uses
-  %.sroa.8216.2 = phi float [ %.lcssa595, %bb.t ], [ %.sroa.8216.1, %bb.s ], [ %.sroa.8216.1, %._crit_edge.i ] ; 2 uses
-  %.sroa.7215.2 = phi <2 x float> [ %.lcssa594, %bb.t ], [ %.sroa.7215.1, %bb.s ], [ %.sroa.7215.1, %._crit_edge.i ] ; 2 uses
+  %.sroa.10218.2 = phi float [ %.lcssa591, %bb.t ], [ %.sroa.10218.1, %bb.s ], [ %.sroa.10218.1, %._crit_edge.i ] ; 2 uses
+  %.sroa.9217.2 = phi <2 x float> [ %.lcssa592, %bb.t ], [ %.sroa.9217.1, %bb.s ], [ %.sroa.9217.1, %._crit_edge.i ] ; 2 uses
+  %.sroa.8216.2 = phi float [ %.lcssa594, %bb.t ], [ %.sroa.8216.1, %bb.s ], [ %.sroa.8216.1, %._crit_edge.i ] ; 2 uses
+  %.sroa.7215.2 = phi <2 x float> [ %.lcssa593, %bb.t ], [ %.sroa.7215.1, %bb.s ], [ %.sroa.7215.1, %._crit_edge.i ] ; 2 uses
   %.sroa.6214.2 = phi float [ %.lcssa587, %bb.t ], [ %.sroa.6214.1, %bb.s ], [ %.sroa.6214.1, %._crit_edge.i ] ; 2 uses
   %.sroa.5213.2 = phi <2 x float> [ %.lcssa588, %bb.t ], [ %.sroa.5213.1, %bb.s ], [ %.sroa.5213.1, %._crit_edge.i ] ; 2 uses
   %.sroa.4212.2 = phi float [ %.lcssa590, %bb.t ], [ %.sroa.4212.1, %bb.s ], [ %.sroa.4212.1, %._crit_edge.i ] ; 2 uses
   %.sroa.0211.2 = phi <2 x float> [ %.lcssa589, %bb.t ], [ %.sroa.0211.1, %bb.s ], [ %.sroa.0211.1, %._crit_edge.i ] ; 2 uses
   %i.ny = phi i32 [ %i.ha, %bb.t ], [ %i.js, %bb.s ], [ %i.js, %._crit_edge.i ] ; 2 uses
   %.3104.i = phi float [ %i.nw, %bb.t ], [ %.1102345.i, %bb.s ], [ %.1102345.i, %._crit_edge.i ] ; 2 uses
-  %.3.i = phi i32 [ %.0115344.i, %bb.t ], [ %.1346.i, %bb.s ], [ %.1346.i, %._crit_edge.i ] ; 2 uses
-  %indvars.iv.next385.i92 = add nuw nsw i64 %indvars.iv384.i87, 1
-  %exitcond391.not.i = icmp eq i32 %12, 7
+  %.3.i = phi i32 [ %14, %bb.t ], [ %.1346.i, %bb.s ], [ %.1346.i, %._crit_edge.i ] ; 2 uses
+  %indvars.iv.next385.i92 = add nuw nsw i64 %indvars.iv388.i, 1
+  %exitcond391.not.i = icmp eq i64 %indvars.iv.next391.i, 7
   br i1 %exitcond391.not.i, label %bb.r, label %.preheader.i86, !llvm.loop !188
 
 bb.v:                                             ; preds = %bb.r, %bb.o

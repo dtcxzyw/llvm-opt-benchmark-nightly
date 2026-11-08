@@ -205,7 +205,6 @@ bb.a:
   br i1 %.not64, label %.thread, label %.lr.ph
 
 .lr.ph:                                           ; preds = %.preheader57, %bb.b
-  %indvars.iv92 = phi i64 [ %indvars.iv.next93, %bb.b ], [ 1, %.preheader57 ] ; 2 uses
   %indvars.iv89 = phi i32 [ %indvars.iv.next90, %bb.b ], [ 0, %.preheader57 ] ; 3 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ 0, %.preheader57 ] ; 5 uses
   %i.c = phi ptr [ %i.h, %bb.b ], [ %i.b, %.preheader57 ]
@@ -221,7 +220,6 @@ bb.b:                                             ; preds = %.lr.ph
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !19   ; 2 uses
   %.not = icmp eq ptr %i.h, null
   %indvars.iv.next90 = add i32 %indvars.iv89, 1
-  %indvars.iv.next93 = add nuw i64 %indvars.iv92, 1
   br i1 %.not, label %.thread, label %.lr.ph, !llvm.loop !38
 
 bb.c:                                             ; preds = %.lr.ph
@@ -330,14 +328,14 @@ middle.block:                                     ; preds = %vector.body
   %i.an = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %indvars.iv
   store ptr %i.e, ptr %i.an, align 8, !tbaa !19
   %.14368 = add nuw i64 %indvars.iv, 1
-  %i.ao = and i64 %.14368, 4294967295
+  %i.ao = and i64 %.14368, 4294967295             ; 2 uses
   %i.ap = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %i.ao ; 2 uses
   %i.aq = load ptr, ptr %i.ap, align 8, !tbaa !19 ; 2 uses
   %.not5369 = icmp eq ptr %i.aq, null
   br i1 %.not5369, label %.thread, label %.lr.ph72
 
 .lr.ph72:                                         ; preds = %._crit_edge, %bb.f
-  %indvars.iv95 = phi i64 [ %indvars.iv.next96, %bb.f ], [ %indvars.iv92, %._crit_edge ] ; 2 uses
+  %indvars.iv95 = phi i64 [ %indvars.iv.next96, %bb.f ], [ %i.ao, %._crit_edge ] ; 2 uses
   %i.ar = phi ptr [ %i.ay, %bb.f ], [ %i.aq, %._crit_edge ]
   %i.as = phi ptr [ %i.ax, %bb.f ], [ %i.ap, %._crit_edge ]
   %i.at = tail call fastcc ptr @redact_arg(ptr noundef %i.ar) ; 2 uses

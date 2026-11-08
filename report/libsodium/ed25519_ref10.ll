@@ -204,12 +204,12 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.k, label %.preheader57.i, label %vector.body, !llvm.loop !22
 
 .preheader57.i:                                   ; preds = %vector.body, %.loopexit56.i
-  %indvars.iv84.i = phi i64 [ %indvars.iv.next85.i, %.loopexit56.i ], [ 0, %vector.body ] ; 3 uses
+  %indvars.iv84.i = phi i64 [ %indvars.iv.next83.i, %.loopexit56.i ], [ 0, %vector.body ] ; 8 uses
   %indvars.iv81.i = phi i32 [ %indvars.iv.next82.i, %.loopexit56.i ], [ 254, %vector.body ] ; 3 uses
-  %indvars.iv68.i = phi i64 [ %indvars.iv.next69.i, %.loopexit56.i ], [ 1, %vector.body ] ; 8 uses
   %i.l = getelementptr i8, ptr %i.a, i64 %indvars.iv84.i ; 19 uses
   %i.m = load i8, ptr %i.l, align 1
   %.not.i = icmp ne i8 %i.m, 0
+  %indvars.iv.next83.i = add nuw nsw i64 %indvars.iv84.i, 1 ; 4 uses
   %i.n = icmp samesign ult i64 %indvars.iv84.i, 255
   %or.cond.i = select i1 %.not.i, i1 %i.n, i1 false
   br i1 %or.cond.i, label %.lr.ph61.preheader.i, label %.loopexit56.i
@@ -217,7 +217,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
 .lr.ph61.preheader.i:                             ; preds = %.preheader57.i
   %umin.i = tail call i32 @llvm.umin.i32(i32 %indvars.iv81.i, i32 5)
   %i.o = add nuw nsw i32 %umin.i, 2               ; 4 uses
-  %i.p = getelementptr i8, ptr %i.a, i64 %indvars.iv68.i ; 2 uses
+  %i.p = getelementptr i8, ptr %i.a, i64 %indvars.iv.next83.i ; 2 uses
   %i.q = load i8, ptr %i.p, align 1               ; 2 uses
   %.not54.i = icmp eq i8 %i.q, 0
   br i1 %.not54.i, label %.loopexit.i, label %bb.a
@@ -248,7 +248,7 @@ bb.c:                                             ; preds = %bb.a
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.e, %.lr.ph.preheader.i
-  %indvars.iv72.i = phi i64 [ %indvars.iv68.i, %.lr.ph.preheader.i ], [ %indvars.iv.next73.i.a, %bb.e ] ; 2 uses
+  %indvars.iv72.i = phi i64 [ %indvars.iv.next83.i, %.lr.ph.preheader.i ], [ %indvars.iv.next73.i.a, %bb.e ] ; 2 uses
   %i.ab = getelementptr i8, ptr %i.a, i64 %indvars.iv72.i ; 3 uses
   %i.ac = load i8, ptr %i.ab, align 1
   %.not55.i = icmp eq i8 %i.ac, 0
@@ -265,7 +265,7 @@ bb.e:                                             ; preds = %.lr.ph.i
   br i1 %exitcond75.not.i, label %.loopexit.i, label %.lr.ph.i, !llvm.loop !23
 
 .loopexit.i:                                      ; preds = %bb.e, %bb.d, %bb.b, %.lr.ph61.preheader.i
-  %indvars.iv.next71.i = add nuw nsw i64 %indvars.iv68.i, 1 ; 2 uses
+  %indvars.iv.next71.i = add nuw nsw i64 %indvars.iv84.i, 2 ; 2 uses
   %exitcond83.not.i = icmp eq i32 %indvars.iv81.i, 0
   br i1 %exitcond83.not.i, label %.loopexit56.i, label %.lr.ph61.i.1
 
@@ -318,7 +318,7 @@ bb.j:                                             ; preds = %bb.f
   br label %.loopexit.i.1
 
 .loopexit.i.1:                                    ; preds = %bb.h, %bb.j, %bb.i, %.lr.ph61.i.1
-  %indvars.iv.next71.i.1 = add nuw nsw i64 %indvars.iv68.i, 2 ; 2 uses
+  %indvars.iv.next71.i.1 = add nuw nsw i64 %indvars.iv84.i, 3 ; 2 uses
   %exitcond83.not.i.1 = icmp eq i32 %i.o, 3
   br i1 %exitcond83.not.i.1, label %.loopexit56.i, label %.lr.ph61.i.2
 
@@ -371,7 +371,7 @@ bb.o:                                             ; preds = %bb.k
   br label %.loopexit.i.2
 
 .loopexit.i.2:                                    ; preds = %bb.m, %bb.o, %bb.n, %.lr.ph61.i.2
-  %indvars.iv.next71.i.2 = add nuw nsw i64 %indvars.iv68.i, 3 ; 2 uses
+  %indvars.iv.next71.i.2 = add nuw nsw i64 %indvars.iv84.i, 4 ; 2 uses
   %exitcond83.not.i.2 = icmp eq i32 %i.o, 4
   br i1 %exitcond83.not.i.2, label %.loopexit56.i, label %.lr.ph61.i.3
 
@@ -424,7 +424,7 @@ bb.t:                                             ; preds = %bb.p
   br label %.loopexit.i.3
 
 .loopexit.i.3:                                    ; preds = %bb.r, %bb.t, %bb.s, %.lr.ph61.i.3
-  %indvars.iv.next71.i.3 = add nuw nsw i64 %indvars.iv68.i, 4 ; 2 uses
+  %indvars.iv.next71.i.3 = add nuw nsw i64 %indvars.iv84.i, 5 ; 2 uses
   %exitcond83.not.i.3 = icmp eq i32 %i.o, 5
   br i1 %exitcond83.not.i.3, label %.loopexit56.i, label %.lr.ph61.i.4
 
@@ -477,7 +477,7 @@ bb.y:                                             ; preds = %bb.u
   br label %.loopexit.i.4
 
 .loopexit.i.4:                                    ; preds = %bb.w, %bb.y, %bb.x, %.lr.ph61.i.4
-  %indvars.iv.next71.i.4 = add nuw nsw i64 %indvars.iv68.i, 5 ; 2 uses
+  %indvars.iv.next71.i.4 = add nuw nsw i64 %indvars.iv84.i, 6 ; 2 uses
   %exitcond83.not.i.4 = icmp eq i32 %i.o, 6
   br i1 %exitcond83.not.i.4, label %.loopexit56.i, label %.lr.ph61.i.5
 
@@ -530,10 +530,8 @@ bb.ad:                                            ; preds = %bb.z
   br label %.loopexit56.i
 
 .loopexit56.i:                                    ; preds = %.loopexit.i, %bb.c, %bb.g, %.loopexit.i.1, %bb.l, %.loopexit.i.2, %bb.q, %.loopexit.i.3, %bb.v, %.loopexit.i.4, %bb.aa, %bb.ab, %bb.ad, %bb.ac, %.lr.ph61.i.5, %.preheader57.i
-  %indvars.iv.next85.i = add nuw nsw i64 %indvars.iv84.i, 1 ; 2 uses
-  %indvars.iv.next69.i = add nuw nsw i64 %indvars.iv68.i, 1
   %indvars.iv.next82.i = add nsw i32 %indvars.iv81.i, -1
-  %exitcond87.not.i = icmp eq i64 %indvars.iv.next85.i, 256
+  %exitcond87.not.i = icmp eq i64 %indvars.iv.next83.i, 256
   br i1 %exitcond87.not.i, label %vector.body182, label %.preheader57.i, !llvm.loop !24
 
 vector.body182:                                   ; preds = %.loopexit56.i, %vector.body182
@@ -556,12 +554,12 @@ vector.body182:                                   ; preds = %.loopexit56.i, %vec
   br i1 %i.dd, label %.preheader57.i26, label %vector.body182, !llvm.loop !25
 
 .preheader57.i26:                                 ; preds = %vector.body182, %.loopexit56.i32
-  %indvars.iv84.i27 = phi i64 [ %indvars.iv.next85.i33, %.loopexit56.i32 ], [ 0, %vector.body182 ] ; 3 uses
+  %indvars.iv84.i27 = phi i64 [ %indvars.iv.next83.i30, %.loopexit56.i32 ], [ 0, %vector.body182 ] ; 8 uses
   %indvars.iv81.i28 = phi i32 [ %indvars.iv.next82.i35, %.loopexit56.i32 ], [ 254, %vector.body182 ] ; 3 uses
-  %indvars.iv68.i29 = phi i64 [ %indvars.iv.next69.i34, %.loopexit56.i32 ], [ 1, %vector.body182 ] ; 8 uses
   %i.de = getelementptr i8, ptr %i.b, i64 %indvars.iv84.i27 ; 19 uses
   %i.df = load i8, ptr %i.de, align 1
   %.not.i30 = icmp ne i8 %i.df, 0
+  %indvars.iv.next83.i30 = add nuw nsw i64 %indvars.iv84.i27, 1 ; 4 uses
   %i.dg = icmp samesign ult i64 %indvars.iv84.i27, 255
   %or.cond.i31 = select i1 %.not.i30, i1 %i.dg, i1 false
   br i1 %or.cond.i31, label %.lr.ph61.preheader.i37, label %.loopexit56.i32
@@ -569,7 +567,7 @@ vector.body182:                                   ; preds = %.loopexit56.i, %vec
 .lr.ph61.preheader.i37:                           ; preds = %.preheader57.i26
   %umin.i38 = tail call i32 @llvm.umin.i32(i32 %indvars.iv81.i28, i32 5)
   %i.dh = add nuw nsw i32 %umin.i38, 2            ; 4 uses
-  %i.di = getelementptr i8, ptr %i.b, i64 %indvars.iv68.i29 ; 2 uses
+  %i.di = getelementptr i8, ptr %i.b, i64 %indvars.iv.next83.i30 ; 2 uses
   %i.dj = load i8, ptr %i.di, align 1             ; 2 uses
   %.not54.i43 = icmp eq i8 %i.dj, 0
   br i1 %.not54.i43, label %.loopexit.i50, label %bb.ae
@@ -600,7 +598,7 @@ bb.ag:                                            ; preds = %bb.ae
   br label %.lr.ph.i45
 
 .lr.ph.i45:                                       ; preds = %bb.ai, %.lr.ph.preheader.i44
-  %indvars.iv72.i46 = phi i64 [ %indvars.iv68.i29, %.lr.ph.preheader.i44 ], [ %indvars.iv.next73.i48, %bb.ai ] ; 2 uses
+  %indvars.iv72.i46 = phi i64 [ %indvars.iv.next83.i30, %.lr.ph.preheader.i44 ], [ %indvars.iv.next73.i48, %bb.ai ] ; 2 uses
   %i.du = getelementptr i8, ptr %i.b, i64 %indvars.iv72.i46 ; 3 uses
   %i.dv = load i8, ptr %i.du, align 1
   %.not55.i47 = icmp eq i8 %i.dv, 0
@@ -617,7 +615,7 @@ bb.ai:                                            ; preds = %.lr.ph.i45
   br i1 %exitcond75.not.i49, label %.loopexit.i50, label %.lr.ph.i45, !llvm.loop !23
 
 .loopexit.i50:                                    ; preds = %bb.ai, %bb.ah, %bb.af, %.lr.ph61.preheader.i37
-  %indvars.iv.next71.i52 = add nuw nsw i64 %indvars.iv68.i29, 1 ; 2 uses
+  %indvars.iv.next71.i52 = add nuw nsw i64 %indvars.iv84.i27, 2 ; 2 uses
   %exitcond83.not.i53 = icmp eq i32 %indvars.iv81.i28, 0
   br i1 %exitcond83.not.i53, label %.loopexit56.i32, label %.lr.ph61.i40.1
 
@@ -670,7 +668,7 @@ bb.an:                                            ; preds = %bb.aj
   br label %.loopexit.i50.1
 
 .loopexit.i50.1:                                  ; preds = %bb.al, %bb.an, %bb.am, %.lr.ph61.i40.1
-  %indvars.iv.next71.i52.1 = add nuw nsw i64 %indvars.iv68.i29, 2 ; 2 uses
+  %indvars.iv.next71.i52.1 = add nuw nsw i64 %indvars.iv84.i27, 3 ; 2 uses
   %exitcond83.not.i53.1 = icmp eq i32 %i.dh, 3
   br i1 %exitcond83.not.i53.1, label %.loopexit56.i32, label %.lr.ph61.i40.2
 
@@ -723,7 +721,7 @@ bb.as:                                            ; preds = %bb.ao
   br label %.loopexit.i50.2
 
 .loopexit.i50.2:                                  ; preds = %bb.aq, %bb.as, %bb.ar, %.lr.ph61.i40.2
-  %indvars.iv.next71.i52.2 = add nuw nsw i64 %indvars.iv68.i29, 3 ; 2 uses
+  %indvars.iv.next71.i52.2 = add nuw nsw i64 %indvars.iv84.i27, 4 ; 2 uses
   %exitcond83.not.i53.2 = icmp eq i32 %i.dh, 4
   br i1 %exitcond83.not.i53.2, label %.loopexit56.i32, label %.lr.ph61.i40.3
 
@@ -776,7 +774,7 @@ bb.ax:                                            ; preds = %bb.at
   br label %.loopexit.i50.3
 
 .loopexit.i50.3:                                  ; preds = %bb.av, %bb.ax, %bb.aw, %.lr.ph61.i40.3
-  %indvars.iv.next71.i52.3 = add nuw nsw i64 %indvars.iv68.i29, 4 ; 2 uses
+  %indvars.iv.next71.i52.3 = add nuw nsw i64 %indvars.iv84.i27, 5 ; 2 uses
   %exitcond83.not.i53.3 = icmp eq i32 %i.dh, 5
   br i1 %exitcond83.not.i53.3, label %.loopexit56.i32, label %.lr.ph61.i40.4
 
@@ -829,7 +827,7 @@ bb.bc:                                            ; preds = %bb.ay
   br label %.loopexit.i50.4
 
 .loopexit.i50.4:                                  ; preds = %bb.ba, %bb.bc, %bb.bb, %.lr.ph61.i40.4
-  %indvars.iv.next71.i52.4 = add nuw nsw i64 %indvars.iv68.i29, 5 ; 2 uses
+  %indvars.iv.next71.i52.4 = add nuw nsw i64 %indvars.iv84.i27, 6 ; 2 uses
   %exitcond83.not.i53.4 = icmp eq i32 %i.dh, 6
   br i1 %exitcond83.not.i53.4, label %.loopexit56.i32, label %.lr.ph61.i40.5
 
@@ -882,10 +880,8 @@ bb.bh:                                            ; preds = %bb.bd
   br label %.loopexit56.i32
 
 .loopexit56.i32:                                  ; preds = %.loopexit.i50, %bb.ag, %bb.ak, %.loopexit.i50.1, %bb.ap, %.loopexit.i50.2, %bb.au, %.loopexit.i50.3, %bb.az, %.loopexit.i50.4, %bb.be, %bb.bf, %bb.bh, %bb.bg, %.lr.ph61.i40.5, %.preheader57.i26
-  %indvars.iv.next85.i33 = add nuw nsw i64 %indvars.iv84.i27, 1 ; 2 uses
-  %indvars.iv.next69.i34 = add nuw nsw i64 %indvars.iv68.i29, 1
   %indvars.iv.next82.i35 = add nsw i32 %indvars.iv81.i28, -1
-  %exitcond87.not.i36 = icmp eq i64 %indvars.iv.next85.i33, 256
+  %exitcond87.not.i36 = icmp eq i64 %indvars.iv.next83.i30, 256
   br i1 %exitcond87.not.i36, label %slide_vartime.exit54, label %.preheader57.i26, !llvm.loop !24
 
 slide_vartime.exit54:                             ; preds = %.loopexit56.i32

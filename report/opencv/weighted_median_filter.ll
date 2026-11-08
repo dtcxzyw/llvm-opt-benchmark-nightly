@@ -204,7 +204,6 @@ _ZN12_GLOBAL__N_115featureIndexingERN2cv3MatERPPfRifi.exit: ; preds = %.loopexit
   %i.wc = getelementptr inbounds nuw i8, ptr %55, i64 128
   %i.wd = getelementptr inbounds nuw i8, ptr %55, i64 136
   %i.we = add nuw nsw i32 %3, 1
-  %60 = sub nsw i32 0, %3
   %i.wf = zext nneg i32 %i.we to i64
   %i.wg = zext nneg i32 %3 to i64
   br label %bb.fg
@@ -607,24 +606,21 @@ bb.gd:                                            ; preds = %bb.gc, %_ZN12_GLOBA
 
 bb.ge:                                            ; preds = %._crit_edge450.i, %.lr.ph452.i
   %indvars.iv491.i = phi i64 [ 0, %.lr.ph452.i ], [ %indvars.iv.next492.i, %._crit_edge450.i ] ; 4 uses
-  %indvars.iv463.i = phi i32 [ %60, %.lr.ph452.i ], [ %indvars.iv.next464.i, %._crit_edge450.i ] ; 2 uses
   call void @llvm.memset.p0.i64(ptr nonnull align 4 %i.akl, i8 0, i64 %i.vs, i1 false)
   call void @llvm.memset.p0.i64(ptr align 4 %.pre.i148, i8 0, i64 %i.vu, i1 false)
   br label %bb.gg
 
 bb.gf:                                            ; preds = %bb.gg
-  %smax482.i = call i32 @llvm.smax.i32(i32 %indvars.iv463.i, i32 0)
-  %61 = zext nneg i32 %smax482.i to i64           ; 3 uses
   store i32 0, ptr %i.alt, align 4, !tbaa !25
   store i32 0, ptr %i.als, align 4, !tbaa !25
   %i.amc = trunc i64 %indvars.iv491.i to i32      ; 2 uses
+  %60 = sub i32 %i.amc, %3
+  %.sroa.speculated394.i = call i32 @llvm.smax.i32(i32 %60, i32 0) ; 3 uses
   %i.amd = add i32 %3, %i.amc
   %.sroa.speculated388.i = call i32 @llvm.smin.i32(i32 %i.amd, i32 %i.alv) ; 3 uses
   br i1 %.not431.i, label %._crit_edge450.i, label %.lr.ph434.i
 
 .lr.ph434.i:                                      ; preds = %bb.gf
-  %62 = sub i32 %i.amc, %3
-  %.sroa.speculated394.i = call i32 @llvm.smax.i32(i32 %62, i32 0)
   %i.ame = load ptr, ptr %i.aly, align 8, !tbaa !104, !noalias !120 ; 3 uses
   %i.amf = load i64, ptr %i.alz, align 8, !tbaa !26, !noalias !120 ; 3 uses
   %i.amg = load ptr, ptr %i.bf, align 8, !tbaa !104, !noalias !120 ; 4 uses
@@ -632,10 +628,15 @@ bb.gf:                                            ; preds = %bb.gg
   %i.ami = load ptr, ptr %i.vw, align 8, !tbaa !104, !noalias !120 ; 3 uses
   %i.amj = load i64, ptr %i.vx, align 8, !tbaa !26, !noalias !120 ; 3 uses
   %.not333429.i = icmp sgt i32 %.sroa.speculated394.i, %.sroa.speculated388.i ; 3 uses
-  br i1 %.not333429.i, label %.lr.ph449.i, label %.lr.ph.preheader.i153
+  br i1 %.not333429.i, label %.lr.ph434.i..lr.ph449.i_crit_edge, label %.lr.ph.preheader.i153
+
+.lr.ph434.i..lr.ph449.i_crit_edge:                ; preds = %.lr.ph434.i
+  %.pre319 = zext nneg i32 %.sroa.speculated394.i to i64
+  br label %.lr.ph449.i
 
 .lr.ph.preheader.i153:                            ; preds = %.lr.ph434.i
   %i.amk = zext nneg i32 %.sroa.speculated388.i to i64
+  %61 = zext nneg i32 %.sroa.speculated394.i to i64 ; 2 uses
   br label %.lr.ph.i154
 
 bb.gg:                                            ; preds = %bb.gg, %bb.ge
@@ -671,7 +672,8 @@ bb.gg:                                            ; preds = %bb.gg, %bb.ge
   %exitcond.not.i152.3 = icmp eq i64 %indvars.iv.next.i151.3, 256
   br i1 %exitcond.not.i152.3, label %bb.gf, label %bb.gg, !llvm.loop !76
 
-.lr.ph449.i:                                      ; preds = %._crit_edge.i155, %.lr.ph434.i
+.lr.ph449.i:                                      ; preds = %._crit_edge.i155, %.lr.ph434.i..lr.ph449.i_crit_edge
+  %.pre-phi = phi i64 [ %.pre319, %.lr.ph434.i..lr.ph449.i_crit_edge ], [ %61, %._crit_edge.i155 ] ; 2 uses
   %i.anb = sext i32 %.sroa.speculated388.i to i64 ; 2 uses
   %i.anc = load ptr, ptr %i.wb, align 8           ; 3 uses
   %i.and = load i64, ptr %i.wc, align 8           ; 3 uses
@@ -796,7 +798,6 @@ bb.gn:                                            ; preds = %_ZN12_GLOBAL__N_19u
 
 ._crit_edge450.i:                                 ; preds = %.loopexit.i156, %bb.gf
   %indvars.iv.next492.i = add nuw nsw i64 %indvars.iv491.i, 1 ; 2 uses
-  %indvars.iv.next464.i = add nsw i32 %indvars.iv463.i, 1
   %exitcond495.not.i = icmp eq i64 %indvars.iv.next492.i, %wide.trip.count494.i
   br i1 %exitcond495.not.i, label %._crit_edge453.i, label %bb.ge, !llvm.loop !79
 
@@ -1077,7 +1078,7 @@ bb.hh:                                            ; preds = %bb.hg
   br i1 %.not333429.i, label %.loopexit.i156, label %.lr.ph442.i
 
 .lr.ph442.i:                                      ; preds = %bb.hh, %bb.ho
-  %indvars.iv479.i.a = phi i64 [ %indvars.iv.next480.i.a, %bb.ho ], [ %61, %bb.hh ] ; 5 uses
+  %indvars.iv479.i.a = phi i64 [ %indvars.iv.next480.i.a, %bb.ho ], [ %.pre-phi, %bb.hh ] ; 5 uses
   %i.ati = getelementptr inbounds nuw i8, ptr %i.ath, i64 %indvars.iv479.i.a
   %i.atj = load i8, ptr %i.ati, align 1, !tbaa !17
   %.not330.i = icmp eq i8 %i.atj, 0
@@ -1201,7 +1202,7 @@ bb.hp:                                            ; preds = %.loopexit418.i
   br i1 %.not333429.i, label %.loopexit.i156, label %.lr.ph446.i
 
 .lr.ph446.i:                                      ; preds = %bb.hp, %bb.hw
-  %indvars.iv483.i = phi i64 [ %indvars.iv.next484.i, %bb.hw ], [ %61, %bb.hp ] ; 5 uses
+  %indvars.iv483.i = phi i64 [ %indvars.iv.next484.i, %bb.hw ], [ %.pre-phi, %bb.hp ] ; 5 uses
   %i.avo = getelementptr inbounds nuw i8, ptr %i.avn, i64 %indvars.iv483.i
   %i.avp = load i8, ptr %i.avo, align 1, !tbaa !17
   %.not328.i = icmp eq i8 %i.avp, 0

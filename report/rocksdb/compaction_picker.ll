@@ -204,9 +204,8 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph429, %.thread328
-  %indvars.iv495.a = phi i64 [ 0, %.lr.ph429 ], [ %indvars.iv.next496, %.thread328 ] ; 5 uses
+  %indvars.iv495.a = phi i64 [ 0, %.lr.ph429 ], [ %indvars.iv.next496, %.thread328 ] ; 4 uses
   %.082427 = phi i8 [ 0, %.lr.ph429 ], [ %.1.lcssa574, %.thread328 ] ; 2 uses
-  %umax = call i64 @llvm.umax.i64(i64 %indvars.iv495.a, i64 1)
   %i.bx = load ptr, ptr %i.a, align 8, !tbaa !407
   %i.by = getelementptr inbounds nuw [40 x i8], ptr %i.bx, i64 %indvars.iv495.a ; 2 uses
   %i.bz = getelementptr inbounds nuw i8, ptr %i.by, i64 16 ; 19 uses
@@ -609,12 +608,16 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit161: ; preds =
 
 _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit163: ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit161
   %i.nt = trunc nuw nsw i64 %indvars.iv495.a to i32
-  %.sroa.speculated = call i32 @llvm.umax.i32(i32 %i.nt, i32 1)
+  %.sroa.speculated = call i32 @llvm.umax.i32(i32 %i.nt, i32 1) ; 2 uses
   %.not114421 = icmp sgt i32 %.sroa.speculated, %4
-  br i1 %.not114421, label %._crit_edge424, label %.lr.ph423
+  br i1 %.not114421, label %._crit_edge424, label %.lr.ph423.preheader
 
-.lr.ph423:                                        ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit163, %._crit_edge420
-  %indvars.iv497 = phi i64 [ %indvars.iv.next498.a, %._crit_edge420 ], [ %umax, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit163 ] ; 3 uses
+.lr.ph423.preheader:                              ; preds = %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_.exit163
+  %42 = zext i32 %.sroa.speculated to i64
+  br label %.lr.ph423
+
+.lr.ph423:                                        ; preds = %.lr.ph423.preheader, %._crit_edge420
+  %indvars.iv497 = phi i64 [ %42, %.lr.ph423.preheader ], [ %indvars.iv.next498.a, %._crit_edge420 ] ; 3 uses
   %i.nu = load ptr, ptr %i.a, align 8, !tbaa !407
   %i.nv = getelementptr inbounds nuw [40 x i8], ptr %i.nu, i64 %indvars.iv497 ; 2 uses
   %i.nw = getelementptr inbounds nuw i8, ptr %i.nv, i64 16

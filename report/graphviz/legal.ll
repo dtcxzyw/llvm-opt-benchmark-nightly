@@ -204,25 +204,23 @@ find_ints.exit:                                   ; preds = %bb.fp, %.thread104.
   br label %.lr.ph107.i
 
 .loopexit.i:                                      ; preds = %bb.gb, %.lr.ph107.i
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i.a, 1
   %exitcond116.not.i = icmp eq i64 %indvars.iv.next113.i, %i.nz
   br i1 %exitcond116.not.i, label %findInside.exit, label %.lr.ph107.i, !llvm.loop !36
 
 .lr.ph107.i:                                      ; preds = %.loopexit.i, %.lr.ph107.preheader.i
-  %indvars.iv112.i = phi i64 [ 0, %.lr.ph107.preheader.i ], [ %indvars.iv.next113.i, %.loopexit.i ] ; 3 uses
-  %indvars.iv.i.a = phi i64 [ 1, %.lr.ph107.preheader.i ], [ %indvars.iv.next.i, %.loopexit.i ] ; 2 uses
-  %i.oa = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv112.i
+  %indvars.iv.i.a = phi i64 [ 0, %.lr.ph107.preheader.i ], [ %indvars.iv.next113.i, %.loopexit.i ] ; 3 uses
+  %i.oa = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv.i.a
   %i.ob = load ptr, ptr %i.oa, align 8, !tbaa !39 ; 3 uses
   %i.oc = load ptr, ptr %i.ob, align 8, !tbaa !46 ; 2 uses
   %.sroa.0.0.copyload.i = load double, ptr %i.oc, align 8, !tbaa !18
   %.sroa.4.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.oc, i64 8
   %.sroa.4.0.copyload.i = load double, ptr %.sroa.4.0..sroa_idx.i, align 8, !tbaa !18
-  %indvars.iv.next113.i = add nuw nsw i64 %indvars.iv112.i, 1 ; 3 uses
+  %indvars.iv.next113.i = add nuw nsw i64 %indvars.iv.i.a, 1 ; 4 uses
   %i.od = icmp samesign ult i64 %indvars.iv.next113.i, %i.nz
   br i1 %i.od, label %.lr.ph.i75, label %.loopexit.i
 
 .lr.ph.i75:                                       ; preds = %.lr.ph107.i
-  %i.oe = getelementptr inbounds nuw [48 x i8], ptr %i.nl, i64 %indvars.iv112.i ; 4 uses
+  %i.oe = getelementptr inbounds nuw [48 x i8], ptr %i.nl, i64 %indvars.iv.i.a ; 4 uses
   %i.of = getelementptr inbounds nuw i8, ptr %i.oe, i64 16
   %i.og = getelementptr inbounds nuw i8, ptr %i.oe, i64 24 ; 2 uses
   %i.oh = getelementptr inbounds nuw i8, ptr %i.oe, i64 32 ; 2 uses
@@ -231,7 +229,7 @@ find_ints.exit:                                   ; preds = %bb.fp, %.thread104.
   br label %bb.fq
 
 bb.fq:                                            ; preds = %bb.gb, %.lr.ph.i75
-  %indvars.iv109.i = phi i64 [ %indvars.iv.i.a, %.lr.ph.i75 ], [ %indvars.iv.next110.i, %bb.gb ] ; 3 uses
+  %indvars.iv109.i = phi i64 [ %indvars.iv.next113.i, %.lr.ph.i75 ], [ %indvars.iv.next110.i, %bb.gb ] ; 3 uses
   %i.ok = getelementptr inbounds nuw [8 x i8], ptr %0, i64 %indvars.iv109.i
   %i.ol = load ptr, ptr %i.ok, align 8, !tbaa !39 ; 3 uses
   %i.om = load double, ptr %i.of, align 8, !tbaa !56 ; 3 uses

@@ -143,20 +143,21 @@ bb.c:                                             ; preds = %bb.a
 
 .preheader:                                       ; preds = %bb.d
   %i.l = getelementptr inbounds nuw i8, ptr %i.a, i64 1 ; 2 uses
+  %5 = zext nneg i32 %.02335 to i64               ; 4 uses
   %i.m = trunc i32 %3 to i8
   %i.n = and i8 %i.m, 127
-  %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 %indvars.iv
+  %i.o = getelementptr inbounds nuw i8, ptr %i.l, i64 %5
   store i8 %i.n, ptr %i.o, align 1, !tbaa !12
-  %.not47 = icmp eq i64 %indvars.iv, 0
+  %.not47 = icmp eq i32 %.02335, 0
   br i1 %.not47, label %.loopexit, label %.peel.next.preheader
 
 .peel.next.preheader:                             ; preds = %.preheader
-  %xtraiter = and i64 %indvars.iv, 3              ; 2 uses
+  %xtraiter = and i64 %5, 3                       ; 2 uses
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.peel.next.prol.loopexit, label %.peel.next.prol
 
 .peel.next.prol:                                  ; preds = %.peel.next.preheader, %.peel.next.prol
-  %indvars.iv41.in.prol = phi i64 [ %indvars.iv41.prol, %.peel.next.prol ], [ %indvars.iv, %.peel.next.preheader ] ; 2 uses
+  %indvars.iv41.in.prol = phi i64 [ %indvars.iv41.prol, %.peel.next.prol ], [ %5, %.peel.next.preheader ] ; 2 uses
   %.02437.in.prol = phi i32 [ %.02437.prol, %.peel.next.prol ], [ %3, %.peel.next.preheader ]
   %prol.iter = phi i64 [ %prol.iter.next, %.peel.next.prol ], [ 0, %.peel.next.preheader ]
   %.02437.prol = lshr i32 %.02437.in.prol, 7      ; 3 uses
@@ -170,19 +171,17 @@ bb.c:                                             ; preds = %bb.a
   br i1 %prol.iter.cmp.not, label %.peel.next.prol.loopexit, label %.peel.next.prol, !llvm.loop !21
 
 .peel.next.prol.loopexit:                         ; preds = %.peel.next.prol, %.peel.next.preheader
-  %indvars.iv41.in.unr = phi i64 [ %indvars.iv, %.peel.next.preheader ], [ %indvars.iv41.prol, %.peel.next.prol ]
+  %indvars.iv41.in.unr = phi i64 [ %5, %.peel.next.preheader ], [ %indvars.iv41.prol, %.peel.next.prol ]
   %.02437.in.unr = phi i32 [ %3, %.peel.next.preheader ], [ %.02437.prol, %.peel.next.prol ]
-  %i.r = icmp samesign ult i64 %indvars.iv, 4
+  %i.r = icmp samesign ult i32 %.02335, 4
   br i1 %i.r, label %.loopexit, label %.peel.next
 
 bb.d:                                             ; preds = %bb.c, %bb.d
-  %indvars.iv = phi i64 [ 0, %bb.c ], [ %indvars.iv.next, %bb.d ] ; 7 uses
   %.036 = phi i32 [ %3, %bb.c ], [ %i.s, %bb.d ]
-  %.02335 = phi i32 [ 0, %bb.c ], [ %i.t, %bb.d ]
+  %.02335 = phi i32 [ 0, %bb.c ], [ %i.t, %bb.d ] ; 4 uses
   %i.s = lshr i32 %.036, 7                        ; 2 uses
   %i.t = add nuw nsw i32 %.02335, 1               ; 2 uses
   %.not39 = icmp eq i32 %i.s, 0
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   br i1 %.not39, label %.preheader, label %bb.d, !llvm.loop !22
 
 .peel.next:                                       ; preds = %.peel.next.prol.loopexit, %.peel.next
@@ -241,25 +240,26 @@ bb.h:                                             ; preds = %bb.g
   br label %asn1_put_length.exit
 
 .preheader.i:                                     ; preds = %bb.g, %.preheader.i
-  %indvars.iv.i.a = phi i64 [ %indvars.iv.next.i, %.preheader.i ], [ 1, %bb.g ] ; 5 uses
+  %indvars.iv.i.a = phi i64 [ %indvars.iv.next.i, %.preheader.i ], [ 0, %bb.g ] ; 2 uses
   %.025.i = phi i32 [ %i.an, %.preheader.i ], [ %2, %bb.g ]
   %.01924.i = phi i32 [ %i.ao, %.preheader.i ], [ 0, %bb.g ]
   %i.an = lshr i32 %.025.i, 8                     ; 2 uses
   %i.ao = add nuw nsw i32 %.01924.i, 1            ; 3 uses
   %.not.i = icmp eq i32 %i.an, 0
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i.a, 1
+  %indvars.iv.next.i = add i64 %indvars.iv.i.a, 1
   br i1 %.not.i, label %bb.i, label %.preheader.i, !llvm.loop !24
 
 bb.i:                                             ; preds = %.preheader.i
   %i.ap = trunc i32 %i.ao to i8
   %i.aq = or i8 %i.ap, -128
   store i8 %i.aq, ptr %.033, align 1, !tbaa !12
-  %xtraiter51 = and i64 %indvars.iv.i.a, 3        ; 2 uses
+  %6 = zext nneg i32 %i.ao to i64                 ; 4 uses
+  %xtraiter51 = and i64 %6, 3                     ; 2 uses
   %lcmp.mod52.not = icmp eq i64 %xtraiter51, 0
   br i1 %lcmp.mod52.not, label %.prol.loopexit, label %.prol.preheader
 
 .prol.preheader:                                  ; preds = %bb.i, %.prol.preheader
-  %indvars.iv28.i.prol = phi i64 [ %indvars.iv.next29.i.prol, %.prol.preheader ], [ %indvars.iv.i.a, %bb.i ] ; 2 uses
+  %indvars.iv28.i.prol = phi i64 [ %indvars.iv.next29.i.prol, %.prol.preheader ], [ %6, %bb.i ] ; 2 uses
   %.02126.i.prol = phi i32 [ %i.at, %.prol.preheader ], [ %2, %bb.i ] ; 2 uses
   %prol.iter53 = phi i64 [ %prol.iter53.next, %.prol.preheader ], [ 0, %bb.i ]
   %indvars.iv.next29.i.prol = add nsw i64 %indvars.iv28.i.prol, -1 ; 2 uses
@@ -272,9 +272,9 @@ bb.i:                                             ; preds = %.preheader.i
   br i1 %prol.iter53.cmp.not, label %.prol.loopexit, label %.prol.preheader, !llvm.loop !25
 
 .prol.loopexit:                                   ; preds = %.prol.preheader, %bb.i
-  %indvars.iv28.i.unr = phi i64 [ %indvars.iv.i.a, %bb.i ], [ %indvars.iv.next29.i.prol, %.prol.preheader ]
+  %indvars.iv28.i.unr = phi i64 [ %6, %bb.i ], [ %indvars.iv.next29.i.prol, %.prol.preheader ]
   %.02126.i.unr = phi i32 [ %2, %bb.i ], [ %i.at, %.prol.preheader ]
-  %i.au = icmp samesign ult i64 %indvars.iv.i.a, 4
+  %i.au = icmp ult i64 %indvars.iv.i.a, 3
   br i1 %i.au, label %.unr-lcssa, label %.new
 
 .new:                                             ; preds = %.prol.loopexit, %.new
@@ -304,8 +304,7 @@ bb.i:                                             ; preds = %.preheader.i
 
 .unr-lcssa:                                       ; preds = %.new, %.prol.loopexit
   %i.bk = getelementptr inbounds nuw i8, ptr %.033, i64 1
-  %5 = zext nneg i32 %i.ao to i64
-  %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 %5
+  %i.bl = getelementptr inbounds nuw i8, ptr %i.bk, i64 %6
   br label %asn1_put_length.exit
 
 asn1_put_length.exit:                             ; preds = %.unr-lcssa, %bb.h, %bb.f

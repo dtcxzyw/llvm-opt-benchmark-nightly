@@ -204,13 +204,14 @@ bb.e:                                             ; preds = %bb.e, %.lr.ph.new
   br i1 %niter.ncmp.3, label %._crit_edge.loopexit.unr-lcssa, label %bb.e, !llvm.loop !493
 
 bb.f:                                             ; preds = %._crit_edge
-  %indvars.iv.next30 = add i64 %indvars.iv29.a, %i.y ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next30 to i32  ; 2 uses
+  %indvars.iv.next30 = add nsw i64 %indvars.iv29.a, %i.y ; 3 uses
+  %indvars = trunc nsw i64 %indvars.iv.next30 to i32
   store i32 %indvars, ptr %i.a, align 4, !tbaa !203
   %i.bt = add nsw i32 %i.w, %i.z
   %i.bu = call i32 @llvm.smin.i32(i32 %i.bt, i32 %i.h) ; 3 uses
   store i32 %i.bu, ptr %i.b, align 4, !tbaa !203
-  %.not = icmp slt i32 %i.bu, %indvars
+  %5 = sext i32 %i.bu to i64
+  %.not = icmp sgt i64 %indvars.iv.next30, %5
   br i1 %.not, label %._crit_edge27, label %.preheader
 
 ._crit_edge27:                                    ; preds = %bb.f, %bb.b

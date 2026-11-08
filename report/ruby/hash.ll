@@ -204,34 +204,32 @@ bb.b:                                             ; preds = %bb.a
   br label %.lr.ph54
 
 .lr.ph54:                                         ; preds = %.lr.ph54.preheader, %ar_cleared_entry.exit.thread
-  %indvars.iv61 = phi i64 [ 0, %.lr.ph54.preheader ], [ %indvars.iv.next62, %ar_cleared_entry.exit.thread ] ; 4 uses
-  %indvars.iv.a = phi i64 [ 1, %.lr.ph54.preheader ], [ %indvars.iv.next, %ar_cleared_entry.exit.thread ] ; 2 uses
-  %.053 = phi i32 [ 0, %.lr.ph54.preheader ], [ %.3, %ar_cleared_entry.exit.thread ] ; 4 uses
-  %i.m = getelementptr i8, ptr %i.j, i64 %indvars.iv61 ; 2 uses
+  %indvars.iv.a = phi i64 [ 0, %.lr.ph54.preheader ], [ %indvars.iv.next, %ar_cleared_entry.exit.thread ] ; 4 uses
+  %.053 = phi i32 [ 0, %.lr.ph54.preheader ], [ %.3, %ar_cleared_entry.exit.thread ] ; 3 uses
+  %i.m = getelementptr i8, ptr %i.j, i64 %indvars.iv.a ; 2 uses
   %i.n = load i8, ptr %i.m, align 1, !tbaa !156
   %i.o = icmp eq i8 %i.n, -1
   br i1 %i.o, label %ar_cleared_entry.exit, label %ar_cleared_entry.exit.thread
 
 ar_cleared_entry.exit:                            ; preds = %.lr.ph54
-  %i.p = getelementptr [16 x i8], ptr %i.k, i64 %indvars.iv61 ; 2 uses
+  %i.p = getelementptr [16 x i8], ptr %i.k, i64 %indvars.iv.a ; 2 uses
   %i.q = load i64, ptr %i.p, align 8, !tbaa !175
   %.not = icmp eq i64 %i.q, 36
   br i1 %.not, label %bb.c, label %ar_cleared_entry.exit.thread
 
 bb.c:                                             ; preds = %ar_cleared_entry.exit
-  %i.r = trunc i64 %indvars.iv61 to i32
+  %i.r = trunc i64 %indvars.iv.a to i32
   %i.s = add i32 %i.r, 1
-  %spec.select = tail call i32 @llvm.umax.i32(i32 %.053, i32 %i.s)
+  %spec.select = tail call i32 @llvm.umax.i32(i32 %.053, i32 %i.s) ; 2 uses
   %i.t = icmp ult i32 %spec.select, %i.e
   br i1 %i.t, label %.lr.ph.preheader, label %.loopexit
 
 .lr.ph.preheader:                                 ; preds = %bb.c
-  %i.u = zext i32 %.053 to i64
-  %umax = tail call i64 @llvm.umax.i64(i64 %indvars.iv.a, i64 %i.u)
+  %i.u = zext nneg i32 %spec.select to i64
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
-  %indvars.iv59 = phi i64 [ %umax, %.lr.ph.preheader ], [ %indvars.iv.next60.a, %bb.d ] ; 6 uses
+  %indvars.iv59 = phi i64 [ %i.u, %.lr.ph.preheader ], [ %indvars.iv.next60.a, %bb.d ] ; 6 uses
   %i.v = getelementptr i8, ptr %i.j, i64 %indvars.iv59
   %i.w = load i8, ptr %i.v, align 1, !tbaa !156
   %i.x = icmp eq i8 %i.w, -1
@@ -262,9 +260,8 @@ bb.d:                                             ; preds = %ar_cleared_entry.ex
 
 ar_cleared_entry.exit.thread:                     ; preds = %.lr.ph54, %ar_cleared_entry.exit, %ar_cleared_entry.exit40.thread
   %.3 = phi i32 [ %i.ae, %ar_cleared_entry.exit40.thread ], [ %.053, %ar_cleared_entry.exit ], [ %.053, %.lr.ph54 ]
-  %indvars.iv.next62 = add nuw nsw i64 %indvars.iv61, 1 ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1
-  %exitcond.not = icmp eq i64 %indvars.iv.next62, %i.l
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, %i.l
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph54, !llvm.loop !3
 
 .loopexit:                                        ; preds = %ar_cleared_entry.exit.thread, %bb.c, %bb.d, %bb.b
@@ -360,34 +357,32 @@ bb.f:                                             ; preds = %bb.e
   br label %.lr.ph54.i
 
 .lr.ph54.i:                                       ; preds = %ar_cleared_entry.exit.thread.i, %.lr.ph54.preheader.i
-  %indvars.iv61.i = phi i64 [ 0, %.lr.ph54.preheader.i ], [ %indvars.iv.next62.i, %ar_cleared_entry.exit.thread.i ] ; 4 uses
-  %indvars.iv.i.a = phi i64 [ 1, %.lr.ph54.preheader.i ], [ %indvars.iv.next.i, %ar_cleared_entry.exit.thread.i ] ; 2 uses
-  %.053.i = phi i32 [ 0, %.lr.ph54.preheader.i ], [ %.3.i, %ar_cleared_entry.exit.thread.i ] ; 4 uses
-  %i.ab = getelementptr i8, ptr %i.j, i64 %indvars.iv61.i ; 2 uses
+  %indvars.iv.i.a = phi i64 [ 0, %.lr.ph54.preheader.i ], [ %indvars.iv.next.i, %ar_cleared_entry.exit.thread.i ] ; 4 uses
+  %.053.i = phi i32 [ 0, %.lr.ph54.preheader.i ], [ %.3.i, %ar_cleared_entry.exit.thread.i ] ; 3 uses
+  %i.ab = getelementptr i8, ptr %i.j, i64 %indvars.iv.i.a ; 2 uses
   %i.ac = load i8, ptr %i.ab, align 1, !tbaa !156
   %i.ad = icmp eq i8 %i.ac, -1
   br i1 %i.ad, label %ar_cleared_entry.exit.i, label %ar_cleared_entry.exit.thread.i
 
 ar_cleared_entry.exit.i:                          ; preds = %.lr.ph54.i
-  %i.ae = getelementptr [16 x i8], ptr %i.k, i64 %indvars.iv61.i ; 2 uses
+  %i.ae = getelementptr [16 x i8], ptr %i.k, i64 %indvars.iv.i.a ; 2 uses
   %i.af = load i64, ptr %i.ae, align 8, !tbaa !175
   %.not.i24 = icmp eq i64 %i.af, 36
   br i1 %.not.i24, label %bb.g, label %ar_cleared_entry.exit.thread.i
 
 bb.g:                                             ; preds = %ar_cleared_entry.exit.i
-  %i.ag = trunc i64 %indvars.iv61.i to i32
+  %i.ag = trunc i64 %indvars.iv.i.a to i32
   %i.ah = add i32 %i.ag, 1
-  %spec.select.i = tail call i32 @llvm.umax.i32(i32 %.053.i, i32 %i.ah)
+  %spec.select.i = tail call i32 @llvm.umax.i32(i32 %.053.i, i32 %i.ah) ; 2 uses
   %i.ai = icmp ult i32 %spec.select.i, %i.y
   br i1 %i.ai, label %.lr.ph.preheader.i, label %.loopexit.i
 
 .lr.ph.preheader.i:                               ; preds = %bb.g
-  %i.aj = zext i32 %.053.i to i64
-  %umax.i = tail call i64 @llvm.umax.i64(i64 %indvars.iv.i.a, i64 %i.aj)
+  %i.aj = zext nneg i32 %spec.select.i to i64
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.h, %.lr.ph.preheader.i
-  %indvars.iv59.i = phi i64 [ %umax.i, %.lr.ph.preheader.i ], [ %indvars.iv.next60.i.a, %bb.h ] ; 6 uses
+  %indvars.iv59.i = phi i64 [ %i.aj, %.lr.ph.preheader.i ], [ %indvars.iv.next60.i.a, %bb.h ] ; 6 uses
   %i.ak = getelementptr i8, ptr %i.j, i64 %indvars.iv59.i
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !156
   %i.am = icmp eq i8 %i.al, -1
@@ -418,9 +413,8 @@ bb.h:                                             ; preds = %ar_cleared_entry.ex
 
 ar_cleared_entry.exit.thread.i:                   ; preds = %ar_cleared_entry.exit40.thread.i, %ar_cleared_entry.exit.i, %.lr.ph54.i
   %.3.i = phi i32 [ %i.at, %ar_cleared_entry.exit40.thread.i ], [ %.053.i, %ar_cleared_entry.exit.i ], [ %.053.i, %.lr.ph54.i ]
-  %indvars.iv.next62.i = add nuw nsw i64 %indvars.iv61.i, 1 ; 2 uses
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i.a, 1
-  %exitcond.not.i = icmp eq i64 %indvars.iv.next62.i, %i.aa
+  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i.a, 1 ; 2 uses
+  %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %i.aa
   br i1 %exitcond.not.i, label %.loopexit.i, label %.lr.ph54.i, !llvm.loop !3
 
 .loopexit.i:                                      ; preds = %ar_cleared_entry.exit.thread.i, %bb.g, %bb.h, %bb.f
@@ -822,9 +816,6 @@ declare i32 @bcmp(ptr captures(none), ptr captures(none), i64) local_unnamed_add
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
 declare i32 @llvm.umax.i32(i32, i32) #27
-
-; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umax.i64(i64, i64) #27
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(inaccessiblemem: write)
 declare void @llvm.assume(i1 noundef) #28

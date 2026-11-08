@@ -175,11 +175,10 @@ define dso_local noundef zeroext i1 @_ZN11btShapeHull9buildHullEfi(ptr nofree no
   %.not = icmp eq i32 %2, 0
   %i.a = select i1 %.not, i32 42, i32 256         ; 3 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 4 uses
-  %wide.trip.count = zext nneg i32 %i.a to i64
+  %wide.trip.count = zext nneg i32 %i.a to i64    ; 2 uses
   br label %bb.a
 
 bb.a:                                             ; preds = %.preheader65, %bb.a
-  %indvars.iv78 = phi i64 [ 1, %.preheader65 ], [ %indvars.iv.next79, %bb.a ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.preheader65 ], [ %indvars.iv.next, %bb.a ] ; 3 uses
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !19   ; 2 uses
   %i.d = tail call noundef ptr @_ZN11btShapeHull19getUnitSpherePointsEi(i32 noundef %2)
@@ -196,7 +195,6 @@ bb.a:                                             ; preds = %.preheader65, %bb.a
   store <2 x float> %i.k, ptr %.sroa.47.0..sroa_idx, align 8, !tbaa !49
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  %indvars.iv.next79 = add nuw nsw i64 %indvars.iv78, 1
   br i1 %exitcond.not, label %bb.b, label %bb.a, !llvm.loop !39
 
 bb.b:                                             ; preds = %bb.a
@@ -209,7 +207,7 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.r, label %.lr.ph, label %.loopexit64
 
 .lr.ph:                                           ; preds = %bb.b, %.lr.ph
-  %indvars.iv80 = phi i64 [ %indvars.iv.next81, %.lr.ph ], [ %indvars.iv78, %bb.b ] ; 2 uses
+  %indvars.iv80 = phi i64 [ %indvars.iv.next81, %.lr.ph ], [ %wide.trip.count, %bb.b ] ; 2 uses
   %.03368 = phi i32 [ %i.ae, %.lr.ph ], [ 0, %bb.b ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4) #13
   %i.s = load ptr, ptr %i.b, align 8, !tbaa !19   ; 2 uses

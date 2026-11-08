@@ -204,15 +204,13 @@ bb.lp:                                            ; preds = %bb.lo
 
 .loopexit90.i.i.i:                                ; preds = %bb.mb, %bb.ls
   %i.bal = phi i32 [ %i.bam, %bb.ls ], [ %i.bcc, %bb.mb ] ; 2 uses
-  %indvars.iv.next109.i.i.i = add nuw nsw i64 %indvars.iv108.i.i.i.a, 1
   %exitcond118.not.i.i.i = icmp eq i64 %indvars.iv.next115.i.i.i, %i.bah
   br i1 %exitcond118.not.i.i.i, label %._crit_edge.i.i.i, label %.lr.ph101.i.i.i, !llvm.loop !239
 
 .lr.ph101.i.i.i:                                  ; preds = %.loopexit90.i.i.i, %.lr.ph101.preheader.i.i.i
   %i.bam = phi i32 [ 1, %.lr.ph101.preheader.i.i.i ], [ %i.bal, %.loopexit90.i.i.i ] ; 2 uses
-  %indvars.iv114.i.i.i = phi i64 [ 0, %.lr.ph101.preheader.i.i.i ], [ %indvars.iv.next115.i.i.i, %.loopexit90.i.i.i ] ; 2 uses
-  %indvars.iv108.i.i.i.a = phi i64 [ 1, %.lr.ph101.preheader.i.i.i ], [ %indvars.iv.next109.i.i.i, %.loopexit90.i.i.i ] ; 2 uses
-  %i.ban = trunc nuw i64 %indvars.iv114.i.i.i to i32 ; 3 uses
+  %indvars.iv108.i.i.i.a = phi i64 [ 0, %.lr.ph101.preheader.i.i.i ], [ %indvars.iv.next115.i.i.i, %.loopexit90.i.i.i ] ; 2 uses
+  %i.ban = trunc nuw i64 %indvars.iv108.i.i.i.a to i32 ; 3 uses
   %i.bao = mul i32 %i.azd, %i.ban                 ; 2 uses
   %i.bap = add i32 %i.bao, %i.ban
   %i.baq = zext i32 %i.bap to i64
@@ -232,13 +230,13 @@ bb.lr:                                            ; preds = %bb.lq
   br label %hwloc_linux_knl_parse_numa_distances.exit.thread.i.i
 
 bb.ls:                                            ; preds = %.lr.ph101.i.i.i
-  %indvars.iv.next115.i.i.i = add nuw nsw i64 %indvars.iv114.i.i.i, 1 ; 3 uses
+  %indvars.iv.next115.i.i.i = add nuw nsw i64 %indvars.iv108.i.i.i.a, 1 ; 4 uses
   %i.baw = icmp samesign ult i64 %indvars.iv.next115.i.i.i, %i.bah
   br i1 %i.baw, label %.lr.ph99.i.i.i, label %.loopexit90.i.i.i
 
 .lr.ph99.i.i.i:                                   ; preds = %bb.ls, %bb.mb
   %i.bax = phi i32 [ %i.bcc, %bb.mb ], [ %i.bam, %bb.ls ] ; 5 uses
-  %indvars.iv110.i.i.i = phi i64 [ %indvars.iv.next111.i.i.i, %bb.mb ], [ %indvars.iv108.i.i.i.a, %bb.ls ] ; 2 uses
+  %indvars.iv110.i.i.i = phi i64 [ %indvars.iv.next111.i.i.i, %bb.mb ], [ %indvars.iv.next115.i.i.i, %bb.ls ] ; 2 uses
   %i.bay = trunc nuw i64 %indvars.iv110.i.i.i to i32 ; 2 uses
   %i.baz = add i32 %i.bao, %i.bay
   %i.bba = zext i32 %i.baz to i64
@@ -329,7 +327,7 @@ bb.ma:                                            ; preds = %bb.lz
 
 bb.mb:                                            ; preds = %.loopexit.thread.thread.i.i.i, %.loopexit.i.i.i
   %i.bcc = phi i32 [ %i.bcb, %.loopexit.thread.thread.i.i.i ], [ %i.bax, %.loopexit.i.i.i ] ; 2 uses
-  %indvars.iv.next111.i.i.i = add nuw i64 %indvars.iv110.i.i.i, 1 ; 2 uses
+  %indvars.iv.next111.i.i.i = add i64 %indvars.iv110.i.i.i, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next111.i.i.i to i32
   %exitcond372 = icmp eq i32 %i.azd, %lftr.wideiv
   br i1 %exitcond372, label %.loopexit90.i.i.i, label %.lr.ph99.i.i.i, !llvm.loop !241

@@ -205,6 +205,7 @@ _ZN2v88internal6HandleINS0_10FixedArrayEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit
 .lr.ph76:                                         ; preds = %_ZN2v88internal6HandleINS0_10FixedArrayEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit
   %i.ap = getelementptr inbounds nuw i8, ptr %0, i64 576 ; 4 uses
   %i.aq = getelementptr inbounds nuw i8, ptr %0, i64 656
+  %6 = zext nneg i32 %.0 to i64
   br label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZN2v88internal11HandleScopeD2Ev.exit, %.lr.ph76
@@ -214,8 +215,8 @@ _ZN2v88internal6HandleINS0_10FixedArrayEEC2ENS0_6TaggedIS2_EEPNS0_7IsolateE.exit
   %i.at = load i32, ptr %i.ap, align 8
   %i.au = add nsw i32 %i.at, 1
   store i32 %i.au, ptr %i.ap, align 8
-  %indvars.iv.next.a = add nuw i64 %indvars.iv.a, 100 ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next.a to i32  ; 2 uses
+  %indvars.iv.next.a = add nuw nsw i64 %indvars.iv.a, 100 ; 3 uses
+  %indvars = trunc nsw i64 %indvars.iv.next.a to i32
   %invariant.smin = tail call i32 @llvm.smin.i32(i32 %indvars, i32 %.0)
   %i.av = sext i32 %invariant.smin to i64
   br label %.lr.ph
@@ -235,8 +236,8 @@ bb.h:                                             ; preds = %._crit_edge
   br label %_ZN2v88internal11HandleScopeD2Ev.exit
 
 _ZN2v88internal11HandleScopeD2Ev.exit:            ; preds = %bb.h, %._crit_edge
-  %6 = icmp sgt i32 %.0, %indvars
-  br i1 %6, label %.lr.ph.preheader, label %.loopexit, !llvm.loop !3223
+  %7 = icmp samesign ult i64 %indvars.iv.next.a, %6
+  br i1 %7, label %.lr.ph.preheader, label %.loopexit, !llvm.loop !3223
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit
   %indvars.iv77 = phi i64 [ %indvars.iv.a, %.lr.ph.preheader ], [ %indvars.iv.next78, %_ZN2v88internal15TaggedArrayBaseINS0_10FixedArrayENS0_16TaggedArrayShapeENS0_16HeapObjectLayoutEE3setEiNS0_6TaggedINS0_6ObjectEEENS0_16WriteBarrierModeE.exit ] ; 2 uses

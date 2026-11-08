@@ -204,14 +204,12 @@ bb.a:
   br i1 %.not4.i, label %num_addresses.exit.thread, label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.a, %.lr.ph.i
-  %indvars.iv77 = phi i64 [ %indvars.iv.next78, %.lr.ph.i ], [ 0, %bb.a ] ; 2 uses
   %.06.i = phi i32 [ %i.d, %.lr.ph.i ], [ 0, %bb.a ] ; 4 uses
   %.035.i = phi ptr [ %i.c, %.lr.ph.i ], [ %i.a, %bb.a ]
   %i.b = getelementptr inbounds nuw i8, ptr %.035.i, i64 40
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !106  ; 2 uses
   %i.d = add nuw i32 %.06.i, 1                    ; 3 uses
   %.not.i = icmp eq ptr %i.c, null
-  %indvars.iv.next78 = add nuw i64 %indvars.iv77, 1
   br i1 %.not.i, label %num_addresses.exit, label %.lr.ph.i, !llvm.loop !110
 
 num_addresses.exit:                               ; preds = %.lr.ph.i
@@ -341,10 +339,14 @@ bb.k:                                             ; preds = %bb.k, %.epil.prehea
 bb.l:                                             ; preds = %.epilog-lcssa
   %i.az = tail call i32 @Curl_rand_bytes(ptr noundef %0, ptr noundef nonnull %i.ay, i64 noundef %i.aw) #6
   %i.ba = icmp eq i32 %i.az, 0
-  br i1 %i.ba, label %.preheader71, label %bb.m
+  br i1 %i.ba, label %.preheader71.preheader, label %bb.m
 
-.preheader71:                                     ; preds = %bb.l, %.preheader71
-  %indvars.iv79 = phi i64 [ %indvars.iv.next80, %.preheader71 ], [ %indvars.iv77, %bb.l ] ; 5 uses
+.preheader71.preheader:                           ; preds = %bb.l
+  %2 = zext i32 %.06.i to i64                     ; 2 uses
+  br label %.preheader71
+
+.preheader71:                                     ; preds = %.preheader71.preheader, %.preheader71
+  %indvars.iv79 = phi i64 [ %2, %.preheader71.preheader ], [ %indvars.iv.next80, %.preheader71 ] ; 5 uses
   %i.bb = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %indvars.iv79
   %i.bc = load i32, ptr %i.bb, align 4, !tbaa !86
   %i.bd = trunc i64 %indvars.iv79 to i32
@@ -358,8 +360,8 @@ bb.l:                                             ; preds = %.epilog-lcssa
   store ptr %i.bk, ptr %i.bh, align 8, !tbaa !103
   store ptr %i.bi, ptr %i.bj, align 8, !tbaa !103
   %indvars.iv.next80 = add nsw i64 %indvars.iv79, -1
-  %2 = icmp sgt i64 %indvars.iv79, 1
-  br i1 %2, label %.preheader71, label %.preheader.preheader, !llvm.loop !113
+  %3 = icmp samesign ugt i64 %indvars.iv79, 1
+  br i1 %3, label %.preheader71, label %.preheader.preheader, !llvm.loop !113
 
 .preheader.preheader:                             ; preds = %.preheader71
   %xtraiter96 = and i64 %i.t, 3                   ; 3 uses
@@ -429,8 +431,7 @@ bb.l:                                             ; preds = %.epilog-lcssa
   br i1 %epil.iter97.cmp.not, label %.epilog-lcssa99, label %.preheader.epil, !llvm.loop !115
 
 .epilog-lcssa99:                                  ; preds = %.preheader.epil, %.unr-lcssa95
-  %3 = zext nneg i32 %.06.i to i64
-  %i.cn = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %3
+  %i.cn = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %2
   %i.co = load ptr, ptr %i.cn, align 8, !tbaa !103
   %i.cp = getelementptr inbounds nuw i8, ptr %i.co, i64 40
   store ptr null, ptr %i.cp, align 8, !tbaa !106

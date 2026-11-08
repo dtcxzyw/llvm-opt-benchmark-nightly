@@ -205,7 +205,6 @@ _ZN19hb_priority_queue_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEEC2E
   %.sroa.0535.1.lcssa = phi i32 [ %.sroa.0535.0846, %.lr.ph851 ], [ %.sroa.0535.2, %_ZN11hb_vector_tI9hb_pair_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEjELb0EE4pushIJS4_EEEPS4_DpOT_.exit ] ; 3 uses
   %.sroa.10.1.lcssa = phi i32 [ %.sroa.10.0847, %.lr.ph851 ], [ %.sroa.10.2, %_ZN11hb_vector_tI9hb_pair_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEjELb0EE4pushIJS4_EEEPS4_DpOT_.exit ] ; 8 uses
   %.sroa.16.1.lcssa = phi ptr [ %.sroa.16.0848, %.lr.ph851 ], [ %.sroa.16.2, %_ZN11hb_vector_tI9hb_pair_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEjELb0EE4pushIJS4_EEEPS4_DpOT_.exit ] ; 10 uses
-  %indvars.iv.next965 = add nuw nsw i64 %indvars.iv964.a, 1
   %exitcond974.not = icmp eq i64 %indvars.iv.next971, %i.sc
   br i1 %exitcond974.not, label %._crit_edge852, label %.lr.ph851, !llvm.loop !1056
 
@@ -316,26 +315,25 @@ _ZN19hb_priority_queue_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEEC2E
   br label %bb.ci
 
 .lr.ph851:                                        ; preds = %.lr.ph851.preheader, %.loopexit
-  %indvars.iv970 = phi i64 [ 0, %.lr.ph851.preheader ], [ %indvars.iv.next971, %.loopexit ] ; 3 uses
-  %indvars.iv964.a = phi i64 [ 1, %.lr.ph851.preheader ], [ %indvars.iv.next965, %.loopexit ] ; 2 uses
+  %indvars.iv964.a = phi i64 [ 0, %.lr.ph851.preheader ], [ %indvars.iv.next971, %.loopexit ] ; 3 uses
   %.sroa.16.0848 = phi ptr [ null, %.lr.ph851.preheader ], [ %.sroa.16.1.lcssa, %.loopexit ] ; 2 uses
   %.sroa.10.0847 = phi i32 [ 0, %.lr.ph851.preheader ], [ %.sroa.10.1.lcssa, %.loopexit ] ; 2 uses
   %.sroa.0535.0846 = phi i32 [ 0, %.lr.ph851.preheader ], [ %.sroa.0535.1.lcssa, %.loopexit ] ; 2 uses
-  %indvars.iv.next971 = add nuw nsw i64 %indvars.iv970, 1 ; 3 uses
+  %indvars.iv.next971 = add nuw nsw i64 %indvars.iv964.a, 1 ; 4 uses
   %i.tm = icmp samesign ult i64 %indvars.iv.next971, %i.sc
   br i1 %i.tm, label %.lr.ph842, label %.loopexit
 
 .lr.ph842:                                        ; preds = %.lr.ph851
-  %i.tn = shl nuw nsw i64 %indvars.iv970, 20
+  %i.tn = shl nuw nsw i64 %indvars.iv964.a, 20
   br label %bb.bw
 
 bb.bw:                                            ; preds = %.lr.ph842, %_ZN11hb_vector_tI9hb_pair_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEjELb0EE4pushIJS4_EEEPS4_DpOT_.exit
-  %indvars.iv966 = phi i64 [ %indvars.iv964.a, %.lr.ph842 ], [ %indvars.iv.next967, %_ZN11hb_vector_tI9hb_pair_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEjELb0EE4pushIJS4_EEEPS4_DpOT_.exit ] ; 3 uses
+  %indvars.iv966 = phi i64 [ %indvars.iv.next971, %.lr.ph842 ], [ %indvars.iv.next967, %_ZN11hb_vector_tI9hb_pair_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEjELb0EE4pushIJS4_EEEPS4_DpOT_.exit ] ; 3 uses
   %.sroa.16.1839 = phi ptr [ %.sroa.16.0848, %.lr.ph842 ], [ %.sroa.16.2, %_ZN11hb_vector_tI9hb_pair_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEjELb0EE4pushIJS4_EEEPS4_DpOT_.exit ] ; 9 uses
   %.sroa.10.1838 = phi i32 [ %.sroa.10.0847, %.lr.ph842 ], [ %.sroa.10.2, %_ZN11hb_vector_tI9hb_pair_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEjELb0EE4pushIJS4_EEEPS4_DpOT_.exit ] ; 9 uses
   %.sroa.0535.1837 = phi i32 [ %.sroa.0535.0846, %.lr.ph842 ], [ %.sroa.0535.2, %_ZN11hb_vector_tI9hb_pair_tIN2OT17item_variations_t25combined_gain_idx_tuple_tEjELb0EE4pushIJS4_EEEPS4_DpOT_.exit ] ; 13 uses
   %i.to = load ptr, ptr %i.rs, align 8, !tbaa !324 ; 2 uses
-  %i.tp = getelementptr inbounds nuw [40 x i8], ptr %i.to, i64 %indvars.iv970 ; 7 uses
+  %i.tp = getelementptr inbounds nuw [40 x i8], ptr %i.to, i64 %indvars.iv964.a ; 7 uses
   %i.tq = getelementptr inbounds nuw [40 x i8], ptr %i.to, i64 %indvars.iv966 ; 6 uses
   %i.tr = getelementptr inbounds nuw i8, ptr %i.tq, i64 16
   %i.ts = load i32, ptr %i.tr, align 8, !tbaa !404 ; 2 uses

@@ -50,9 +50,10 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph119, %._crit_edge115
-  %indvars.iv134 = phi i64 [ 0, %.lr.ph119 ], [ %indvars.iv.next135, %._crit_edge115 ] ; 8 uses
-  %indvars.iv127 = phi i32 [ %4, %.lr.ph119 ], [ %indvars.iv.next128, %._crit_edge115 ] ; 4 uses
-  %smax174 = tail call i32 @llvm.smax.i32(i32 %indvars.iv127, i32 0)
+  %indvars.iv134 = phi i64 [ 0, %.lr.ph119 ], [ %indvars.iv.next135, %._crit_edge115 ] ; 10 uses
+  %9 = trunc i64 %indvars.iv134 to i32
+  %10 = sub i32 %4, %9
+  %smax174 = tail call i32 @llvm.smax.i32(i32 %10, i32 0)
   %i.s = zext nneg i32 %smax174 to i64            ; 3 uses
   %i.t = add nuw nsw i64 %i.s, 1
   %i.u = shl nuw nsw i64 %indvars.iv134, 3
@@ -61,7 +62,7 @@ bb.c:                                             ; preds = %.lr.ph119, %._crit_
   %scevgep177 = getelementptr i8, ptr %scevgep176, i64 %i.v ; 2 uses
   %i.w = trunc i64 %indvars.iv134 to i32
   %i.x = sub i32 %4, %i.w
-  %i.y = tail call i32 @llvm.smax.i32(i32 %i.x, i32 0)
+  %i.y = tail call i32 @llvm.smax.i32(i32 %i.x, i32 0) ; 2 uses
   %i.z = trunc nuw nsw i64 %indvars.iv134 to i32
   %i.aa = sub i32 %i.m, %i.z                      ; 2 uses
   %.not103 = icmp sgt i32 %i.aa, %i.n
@@ -71,17 +72,18 @@ bb.c:                                             ; preds = %.lr.ph119, %._crit_
   br i1 %i.ac, label %iter.check217, label %._crit_edge115
 
 iter.check217:                                    ; preds = %bb.c
-  %smax193 = tail call i32 @llvm.smax.i32(i32 %indvars.iv127, i32 0)
-  %9 = zext nneg i32 %smax193 to i64              ; 2 uses
-  %10 = add nuw nsw i64 %9, 1
-  %smax129 = tail call i32 @llvm.smax.i32(i32 %indvars.iv127, i32 0)
-  %11 = zext nneg i32 %smax129 to i64             ; 9 uses
+  %11 = trunc i64 %indvars.iv134 to i32
+  %12 = sub i32 %4, %11
+  %smax189 = tail call i32 @llvm.smax.i32(i32 %12, i32 0)
+  %13 = zext nneg i32 %smax189 to i64             ; 2 uses
+  %14 = add nuw nsw i64 %13, 1
   %i.ad = mul nsw i64 %indvars.iv134, %i.p
   %i.ae = getelementptr [8 x i8], ptr %5, i64 %i.ad ; 4 uses
   %invariant.gep116 = getelementptr [8 x i8], ptr %7, i64 %indvars.iv134 ; 4 uses
+  %15 = zext nneg i32 %i.y to i64                 ; 9 uses
   %sext132 = zext nneg i32 %i.ab to i64           ; 4 uses
-  %umax194 = tail call i64 @llvm.umax.i64(i64 %10, i64 %sext132)
-  %i.af = sub nsw i64 %umax194, %9                ; 7 uses
+  %umax194 = tail call i64 @llvm.umax.i64(i64 %14, i64 %sext132)
+  %i.af = sub nsw i64 %umax194, %13               ; 7 uses
   %min.iters.check195 = icmp ult i64 %i.af, 4
   br i1 %min.iters.check195, label %vec.epilog.scalar.ph219.preheader, label %vector.scevcheck172
 
@@ -99,10 +101,10 @@ vector.scevcheck172:                              ; preds = %iter.check217
 
 vector.memcheck196:                               ; preds = %vector.scevcheck172
   %i.am = shl nuw nsw i64 %indvars.iv134, 3       ; 2 uses
-  %i.an = shl nuw nsw i64 %11, 3                  ; 2 uses
+  %i.an = shl nuw nsw i64 %15, 3                  ; 2 uses
   %i.ao = getelementptr i8, ptr %7, i64 %i.am
   %i.ap = getelementptr i8, ptr %i.ao, i64 %i.an
-  %i.aq = add nuw nsw i64 %11, 1
+  %i.aq = add nuw nsw i64 %15, 1
   %i.ar = tail call i64 @llvm.umax.i64(i64 %i.aq, i64 %sext132)
   %i.as = shl nuw nsw i64 %i.ar, 3                ; 2 uses
   %i.at = getelementptr i8, ptr %7, i64 %i.am
@@ -124,12 +126,12 @@ vector.main.loop.iter.check200:                   ; preds = %vector.memcheck196
 vector.ph202:                                     ; preds = %vector.main.loop.iter.check200
   %i.ba = and i64 %i.af, 12
   %n.vec203 = and i64 %i.af, -16                  ; 4 uses
-  %i.bb = add nsw i64 %n.vec203, %11
+  %i.bb = add nsw i64 %n.vec203, %15
   br label %vector.body204
 
 vector.body204:                                   ; preds = %vector.ph202, %vector.body204
   %index205 = phi i64 [ 0, %vector.ph202 ], [ %index.next214, %vector.body204 ] ; 2 uses
-  %i.bc = add nuw i64 %index205, %11              ; 3 uses
+  %i.bc = add nuw i64 %index205, %15              ; 3 uses
   %i.bd = add i64 %i.bc, 8                        ; 2 uses
   %i.be = getelementptr [8 x i8], ptr %i.ae, i64 %i.bc
   %i.bf = getelementptr [8 x i8], ptr %i.ae, i64 %i.bd
@@ -154,12 +156,12 @@ vec.epilog.iter.check218:                         ; preds = %middle.block215
 vec.epilog.ph221:                                 ; preds = %vector.main.loop.iter.check200, %vec.epilog.iter.check218
   %vec.epilog.resume.val222 = phi i64 [ %n.vec203, %vec.epilog.iter.check218 ], [ 0, %vector.main.loop.iter.check200 ]
   %n.vec223 = and i64 %i.af, -4                   ; 3 uses
-  %i.bj = add nsw i64 %n.vec223, %11
+  %i.bj = add nsw i64 %n.vec223, %15
   br label %vec.epilog.vector.body224
 
 vec.epilog.vector.body224:                        ; preds = %vec.epilog.vector.body224, %vec.epilog.ph221
   %index225 = phi i64 [ %vec.epilog.resume.val222, %vec.epilog.ph221 ], [ %index.next230, %vec.epilog.vector.body224 ] ; 2 uses
-  %i.bk = add nuw i64 %index225, %11              ; 2 uses
+  %i.bk = add nuw i64 %index225, %15              ; 2 uses
   %i.bl = getelementptr [8 x i8], ptr %i.ae, i64 %i.bk
   %wide.vec226 = load <8 x float>, ptr %i.bl, align 4, !alias.scope !22
   %i.bm = getelementptr [8 x i8], ptr %invariant.gep116, i64 %i.bk
@@ -173,7 +175,7 @@ vec.epilog.middle.block231:                       ; preds = %vec.epilog.vector.b
   br i1 %cmp.n232, label %._crit_edge115, label %vec.epilog.scalar.ph219.preheader
 
 vec.epilog.scalar.ph219.preheader:                ; preds = %iter.check217, %vector.scevcheck172, %vector.memcheck196, %vec.epilog.iter.check218, %vec.epilog.middle.block231
-  %indvars.iv130.ph = phi i64 [ %11, %iter.check217 ], [ %11, %vector.scevcheck172 ], [ %11, %vector.memcheck196 ], [ %i.bb, %vec.epilog.iter.check218 ], [ %i.bj, %vec.epilog.middle.block231 ]
+  %indvars.iv130.ph = phi i64 [ %15, %iter.check217 ], [ %15, %vector.scevcheck172 ], [ %15, %vector.memcheck196 ], [ %i.bb, %vec.epilog.iter.check218 ], [ %i.bj, %vec.epilog.middle.block231 ]
   br label %vec.epilog.scalar.ph219
 
 vec.epilog.scalar.ph219:                          ; preds = %vec.epilog.scalar.ph219.preheader, %vec.epilog.scalar.ph219
@@ -189,14 +191,14 @@ vec.epilog.scalar.ph219:                          ; preds = %vec.epilog.scalar.p
 
 ._crit_edge115:                                   ; preds = %vec.epilog.scalar.ph219, %middle.block215, %vec.epilog.middle.block231, %bb.c
   %indvars.iv.next135 = add nuw nsw i64 %indvars.iv134, 1 ; 2 uses
-  %indvars.iv.next128 = add i32 %indvars.iv127, -1
   %exitcond138.not = icmp eq i64 %indvars.iv.next135, %wide.trip.count137
   br i1 %exitcond138.not, label %.loopexit, label %bb.c, !llvm.loop !14
 
 bb.d:                                             ; preds = %.lr.ph111, %._crit_edge
-  %indvars.iv124 = phi i64 [ 0, %.lr.ph111 ], [ %indvars.iv.next125, %._crit_edge ] ; 8 uses
-  %indvars.iv = phi i32 [ %4, %.lr.ph111 ], [ %indvars.iv.next, %._crit_edge ] ; 4 uses
-  %smax146 = tail call i32 @llvm.smax.i32(i32 %indvars.iv, i32 0)
+  %indvars.iv124 = phi i64 [ 0, %.lr.ph111 ], [ %indvars.iv.next125, %._crit_edge ] ; 10 uses
+  %16 = trunc i64 %indvars.iv124 to i32
+  %17 = sub i32 %4, %16
+  %smax146 = tail call i32 @llvm.smax.i32(i32 %17, i32 0)
   %i.bs = zext nneg i32 %smax146 to i64           ; 3 uses
   %i.bt = add nuw nsw i64 %i.bs, 1
   %i.bu = shl nuw nsw i64 %indvars.iv124, 3
@@ -205,7 +207,7 @@ bb.d:                                             ; preds = %.lr.ph111, %._crit_
   %scevgep147 = getelementptr i8, ptr %scevgep, i64 %i.bv ; 2 uses
   %i.bw = trunc i64 %indvars.iv124 to i32
   %i.bx = sub i32 %4, %i.bw
-  %i.by = tail call i32 @llvm.smax.i32(i32 %i.bx, i32 0)
+  %i.by = tail call i32 @llvm.smax.i32(i32 %i.bx, i32 0) ; 2 uses
   %i.bz = trunc nuw nsw i64 %indvars.iv124 to i32
   %i.ca = sub i32 %i.e, %i.bz                     ; 2 uses
   %.not = icmp sgt i32 %i.ca, %i.f
@@ -215,17 +217,18 @@ bb.d:                                             ; preds = %.lr.ph111, %._crit_
   br i1 %i.cc, label %iter.check, label %._crit_edge
 
 iter.check:                                       ; preds = %bb.d
-  %smax156 = tail call i32 @llvm.smax.i32(i32 %indvars.iv, i32 0)
-  %12 = zext nneg i32 %smax156 to i64             ; 2 uses
-  %13 = add nuw nsw i64 %12, 1
-  %smax = tail call i32 @llvm.smax.i32(i32 %indvars.iv, i32 0)
-  %14 = zext nneg i32 %smax to i64                ; 9 uses
+  %18 = trunc i64 %indvars.iv124 to i32
+  %19 = sub i32 %4, %18
+  %smax152 = tail call i32 @llvm.smax.i32(i32 %19, i32 0)
+  %20 = zext nneg i32 %smax152 to i64             ; 2 uses
+  %21 = add nuw nsw i64 %20, 1
   %invariant.gep = getelementptr [8 x i8], ptr %5, i64 %indvars.iv124 ; 4 uses
   %i.cd = mul nsw i64 %indvars.iv124, %i.i
   %i.ce = getelementptr [8 x i8], ptr %7, i64 %i.cd ; 4 uses
+  %22 = zext nneg i32 %i.by to i64                ; 9 uses
   %sext = zext nneg i32 %i.cb to i64              ; 4 uses
-  %umax157 = tail call i64 @llvm.umax.i64(i64 %13, i64 %sext)
-  %i.cf = sub nsw i64 %umax157, %12               ; 7 uses
+  %umax157 = tail call i64 @llvm.umax.i64(i64 %21, i64 %sext)
+  %i.cf = sub nsw i64 %umax157, %20               ; 7 uses
   %min.iters.check = icmp ult i64 %i.cf, 4
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.scevcheck
 
@@ -243,10 +246,10 @@ vector.scevcheck:                                 ; preds = %iter.check
 
 vector.memcheck:                                  ; preds = %vector.scevcheck
   %i.cm = mul i64 %indvars.iv124, %i.j            ; 2 uses
-  %i.cn = shl nuw nsw i64 %14, 3                  ; 2 uses
+  %i.cn = shl nuw nsw i64 %22, 3                  ; 2 uses
   %i.co = getelementptr i8, ptr %7, i64 %i.cm
   %i.cp = getelementptr i8, ptr %i.co, i64 %i.cn
-  %i.cq = add nuw nsw i64 %14, 1
+  %i.cq = add nuw nsw i64 %22, 1
   %i.cr = tail call i64 @llvm.umax.i64(i64 %i.cq, i64 %sext)
   %i.cs = shl nuw nsw i64 %i.cr, 3                ; 2 uses
   %i.ct = getelementptr i8, ptr %7, i64 %i.cm
@@ -268,12 +271,12 @@ vector.main.loop.iter.check:                      ; preds = %vector.memcheck
 vector.ph:                                        ; preds = %vector.main.loop.iter.check
   %i.da = and i64 %i.cf, 12
   %n.vec = and i64 %i.cf, -16                     ; 4 uses
-  %i.db = add nsw i64 %n.vec, %14
+  %i.db = add nsw i64 %n.vec, %22
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.ph, %vector.body
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.dc = add nuw i64 %index, %14                 ; 3 uses
+  %i.dc = add nuw i64 %index, %22                 ; 3 uses
   %i.dd = add i64 %i.dc, 8                        ; 2 uses
   %i.de = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.dc
   %i.df = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.dd
@@ -298,12 +301,12 @@ vec.epilog.iter.check:                            ; preds = %middle.block
 vec.epilog.ph:                                    ; preds = %vector.main.loop.iter.check, %vec.epilog.iter.check
   %vec.epilog.resume.val = phi i64 [ %n.vec, %vec.epilog.iter.check ], [ 0, %vector.main.loop.iter.check ]
   %n.vec164 = and i64 %i.cf, -4                   ; 3 uses
-  %i.dj = add nsw i64 %n.vec164, %14
+  %i.dj = add nsw i64 %n.vec164, %22
   br label %vec.epilog.vector.body
 
 vec.epilog.vector.body:                           ; preds = %vec.epilog.vector.body, %vec.epilog.ph
   %index165 = phi i64 [ %vec.epilog.resume.val, %vec.epilog.ph ], [ %index.next170, %vec.epilog.vector.body ] ; 2 uses
-  %i.dk = add nuw i64 %index165, %14              ; 2 uses
+  %i.dk = add nuw i64 %index165, %22              ; 2 uses
   %i.dl = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.dk
   %wide.vec166 = load <8 x float>, ptr %i.dl, align 4, !alias.scope !28
   %i.dm = getelementptr [8 x i8], ptr %i.ce, i64 %i.dk
@@ -317,7 +320,7 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %cmp.n171, label %._crit_edge, label %vec.epilog.scalar.ph.preheader
 
 vec.epilog.scalar.ph.preheader:                   ; preds = %iter.check, %vector.scevcheck, %vector.memcheck, %vec.epilog.iter.check, %vec.epilog.middle.block
-  %indvars.iv121.ph = phi i64 [ %14, %iter.check ], [ %14, %vector.scevcheck ], [ %14, %vector.memcheck ], [ %i.db, %vec.epilog.iter.check ], [ %i.dj, %vec.epilog.middle.block ]
+  %indvars.iv121.ph = phi i64 [ %22, %iter.check ], [ %22, %vector.scevcheck ], [ %22, %vector.memcheck ], [ %i.db, %vec.epilog.iter.check ], [ %i.dj, %vec.epilog.middle.block ]
   br label %vec.epilog.scalar.ph
 
 vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.ph.preheader, %vec.epilog.scalar.ph
@@ -333,7 +336,6 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
 
 ._crit_edge:                                      ; preds = %vec.epilog.scalar.ph, %middle.block, %vec.epilog.middle.block, %bb.d
   %indvars.iv.next125 = add nuw nsw i64 %indvars.iv124, 1 ; 2 uses
-  %indvars.iv.next = add i32 %indvars.iv, -1
   %exitcond.not = icmp eq i64 %indvars.iv.next125, %wide.trip.count
   br i1 %exitcond.not, label %.loopexit, label %bb.d, !llvm.loop !21
 

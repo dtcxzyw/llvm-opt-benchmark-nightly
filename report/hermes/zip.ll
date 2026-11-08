@@ -205,19 +205,17 @@ mz_zip_set_error.exit349:                         ; preds = %bb.a
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #33
-  %i.j = tail call i64 @llvm.smax.i64(i64 %i.g, i64 4096) ; 2 uses
+  %i.j = tail call i64 @llvm.smax.i64(i64 %i.g, i64 4096)
   %spec.select.i = add nsw i64 %i.j, -4096
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 6 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 6 uses
-  %2 = sub nsw i64 4096, %i.j
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.h, %bb.b
-  %3 = phi i64 [ %i.ac, %bb.h ], [ %i.g, %bb.b ]  ; 2 uses
-  %indvars.iv.i.a = phi i64 [ %indvars.iv.next.i, %bb.h ], [ %2, %bb.b ] ; 2 uses
-  %.039.i = phi i64 [ %i.af, %bb.h ], [ %spec.select.i, %bb.b ] ; 6 uses
-  %i.m = sub i64 %3, %.039.i                      ; 2 uses
-  %spec.select4859.i = call i64 @llvm.umin.i64(i64 %i.m, i64 4096) ; 2 uses
+  %indvars.iv.i.a = phi i64 [ %i.g, %bb.b ], [ %i.ac, %bb.h ]
+  %.039.i = phi i64 [ %spec.select.i, %bb.b ], [ %i.af, %bb.h ] ; 6 uses
+  %i.m = sub i64 %indvars.iv.i.a, %.039.i         ; 2 uses
+  %spec.select4859.i = call i64 @llvm.umin.i64(i64 %i.m, i64 4096) ; 3 uses
   %i.n = load ptr, ptr %i.k, align 8, !tbaa !155
   %i.o = load ptr, ptr %i.l, align 8, !tbaa !172
   %i.p = call i64 %i.n(ptr noundef %i.o, i64 noundef %.039.i, ptr noundef nonnull %i.a, i64 noundef %spec.select4859.i) #33, !inline_history !393
@@ -229,9 +227,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %.lr.ph.i, label %.critedge.i
 
 .lr.ph.i:                                         ; preds = %bb.d
-  %4 = add i64 %indvars.iv.i.a, %3
-  %umin.i = call i64 @llvm.umin.i64(i64 %4, i64 4096)
-  %i.r = add nuw nsw i64 %umin.i, 4294967292
+  %i.r = add nuw nsw i64 %spec.select4859.i, 4294967292
   %i.s = and i64 %i.r, 4294967295
   br label %bb.e
 
@@ -264,7 +260,6 @@ bb.h:                                             ; preds = %.critedge.i
   %i.ad = sub i64 %i.ac, %.039.i
   %i.ae = icmp ugt i64 %i.ad, 65556
   %i.af = add i64 %.039.i, -4093
-  %indvars.iv.next.i = add i64 %indvars.iv.i.a, 4093
   br i1 %i.ae, label %.thread, label %bb.c
 
 .thread:                                          ; preds = %bb.c, %bb.h
@@ -667,15 +662,19 @@ bb.a:
   %i.i = icmp slt i64 %indvars.iv, %i.d
   %i.j = and i1 %i.i, %.not53
   %indvars.iv.next = add nsw i64 %indvars.iv, 1
-  br i1 %i.j, label %.preheader63.backedge, label %.preheader62.a
+  br i1 %i.j, label %.preheader63.backedge, label %.preheader62
 
 .preheader63.backedge:                            ; preds = %.preheader63, %zip_central_dir_move.exit
   %indvars.iv.be = phi i64 [ %indvars.iv.next, %.preheader63 ], [ %indvars.iv78, %zip_central_dir_move.exit ]
   br label %.preheader63, !llvm.loop !577
 
-.preheader62.a:                                   ; preds = %.preheader63, %.preheader62.a
-  %indvar = phi i64 [ %indvar.next, %.preheader62.a ], [ 0, %.preheader63 ] ; 3 uses
-  %indvars.iv78 = phi i64 [ %indvars.iv.next79, %.preheader62.a ], [ %indvars.iv, %.preheader63 ] ; 12 uses
+.preheader62:                                     ; preds = %.preheader63
+  %3 = trunc nsw i64 %indvars.iv to i32
+  br label %.preheader62.a
+
+.preheader62.a:                                   ; preds = %.preheader62.a, %.preheader62
+  %indvar = phi i64 [ %indvar.next, %.preheader62.a ], [ 0, %.preheader62 ] ; 3 uses
+  %indvars.iv78 = phi i64 [ %indvars.iv.next79, %.preheader62.a ], [ %indvars.iv, %.preheader62 ] ; 12 uses
   %i.k = getelementptr inbounds [4 x i8], ptr %1, i64 %indvars.iv78
   %i.l = load i32, ptr %i.k, align 4, !tbaa !18
   %i.m = icmp ne i32 %i.l, 0
@@ -686,7 +685,6 @@ bb.a:
   br i1 %i.o, label %.preheader62.a, label %bb.b, !llvm.loop !578
 
 bb.b:                                             ; preds = %.preheader62.a
-  %3 = trunc nsw i64 %indvars.iv to i32
   %i.p = trunc nsw i64 %indvars.iv78 to i32       ; 2 uses
   %i.q = icmp eq i32 %2, %3
   br i1 %i.q, label %zip_central_dir_move.exit, label %bb.c

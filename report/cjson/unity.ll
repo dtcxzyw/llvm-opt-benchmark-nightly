@@ -204,24 +204,22 @@ bb.o:                                             ; preds = %bb.m
   br label %bb.p
 
 bb.p:                                             ; preds = %.preheader174, %bb.p
-  %indvars.iv138 = phi i64 [ %indvars.iv.next139, %bb.p ], [ 1, %.preheader174 ] ; 2 uses
   %indvars.iv135 = phi i64 [ %indvars.iv.next136, %bb.p ], [ 0, %.preheader174 ] ; 3 uses
   %.6116 = phi i32 [ %i.ce, %bb.p ], [ %.6116.ph, %.preheader174 ] ; 3 uses
   %i.ca = urem i32 %.6116, 10
   %i.cb = trunc nuw nsw i32 %i.ca to i8
   %i.cc = or disjoint i8 %i.cb, 48
-  %indvars.iv.next136 = add nuw nsw i64 %indvars.iv135, 1
+  %indvars.iv.next136 = add nuw nsw i64 %indvars.iv135, 1 ; 2 uses
   %i.cd = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv135
   store i8 %i.cc, ptr %i.cd, align 1, !tbaa !10
   %i.ce = udiv i32 %.6116, 10
   %i.cf = icmp ugt i32 %.6116, 9
   %i.cg = icmp eq i64 %indvars.iv135, 0
   %i.ch = or i1 %i.cf, %i.cg
-  %indvars.iv.next139 = add nuw i64 %indvars.iv138, 1
   br i1 %i.ch, label %bb.p, label %.preheader
 
 .preheader:                                       ; preds = %bb.p, %.preheader
-  %indvars.iv140 = phi i64 [ %indvars.iv.next141, %.preheader ], [ %indvars.iv138, %bb.p ] ; 2 uses
+  %indvars.iv140 = phi i64 [ %indvars.iv.next141, %.preheader ], [ %indvars.iv.next136, %bb.p ] ; 2 uses
   %indvars.iv.next141 = add nsw i64 %indvars.iv140, -1 ; 2 uses
   %i.ci = getelementptr inbounds nuw i8, ptr %i.a, i64 %indvars.iv.next141
   %i.cj = load i8, ptr %i.ci, align 1, !tbaa !10

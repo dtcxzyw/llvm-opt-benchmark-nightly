@@ -128,7 +128,7 @@ bb.c:                                             ; preds = %bb.a, %bb.b
 define dso_local void @FreeMemory(ptr noundef %0, ptr nofree noundef writeonly captures(none) %1) local_unnamed_addr #3 !guid !18 {
 bb.a:
   %i.a = ptrtoint ptr %0 to i64
-  %i.b = load i32, ptr @mem_array_ents, align 4, !tbaa !9 ; 4 uses
+  %i.b = load i32, ptr @mem_array_ents, align 4, !tbaa !9 ; 5 uses
   %i.c = icmp sgt i32 %i.b, 0
   br i1 %i.c, label %.lr.ph.preheader.i, label %RemoveMemArray.exit.thread
 
@@ -137,7 +137,6 @@ bb.a:
   br label %.lr.ph.i
 
 .lr.ph.i:                                         ; preds = %bb.c, %.lr.ph.preheader.i
-  %indvars.iv28.i = phi i64 [ 1, %.lr.ph.preheader.i ], [ %indvars.iv.next29.i, %bb.c ] ; 5 uses
   %indvars.iv.i = phi i64 [ 0, %.lr.ph.preheader.i ], [ %indvars.iv.next.i, %bb.c ] ; 10 uses
   %i.d = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @mem_array, i64 160), i64 %indvars.iv.i
   %i.e = load i64, ptr %i.d, align 8, !tbaa !13
@@ -148,34 +147,39 @@ bb.b:                                             ; preds = %.lr.ph.i
   %i.g = trunc nuw nsw i64 %indvars.iv.i to i32
   %i.h = getelementptr inbounds nuw [8 x i8], ptr @mem_array, i64 %indvars.iv.i
   %i.i = load i64, ptr %i.h, align 8, !tbaa !13
-  %i.j = add nuw nsw i32 %i.g, 1
+  %i.j = add nuw nsw i32 %i.g, 1                  ; 2 uses
   %i.k = icmp slt i32 %i.j, %i.b
-  %2 = add nsw i32 %i.b, -1                       ; 2 uses
-  br i1 %i.k, label %.lr.ph22.preheader.i, label %.loopexit
+  br i1 %i.k, label %.lr.ph22.preheader.i, label %.._crit_edge_crit_edge.i
+
+.._crit_edge_crit_edge.i:                         ; preds = %bb.b
+  %.pre.i = add nsw i32 %i.b, -1
+  br label %.loopexit
 
 .lr.ph22.preheader.i:                             ; preds = %bb.b
-  %wide.trip.count39.i = zext nneg i32 %2 to i64  ; 3 uses
+  %2 = zext i32 %i.j to i64                       ; 4 uses
+  %3 = add nsw i32 %i.b, -1                       ; 3 uses
+  %wide.trip.count39.i = zext nneg i32 %3 to i64  ; 3 uses
   %i.l = sub nsw i64 %wide.trip.count39.i, %indvars.iv.i
   %xtraiter = and i64 %i.l, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph22.i.prol.loopexit, label %.lr.ph22.i.prol
 
 .lr.ph22.i.prol:                                  ; preds = %.lr.ph22.preheader.i
-  %i.m = getelementptr inbounds nuw [8 x i8], ptr @mem_array, i64 %indvars.iv28.i
+  %i.m = getelementptr inbounds nuw [8 x i8], ptr @mem_array, i64 %2
   %i.n = load i64, ptr %i.m, align 8, !tbaa !13
   %i.o = getelementptr inbounds nuw [8 x i8], ptr @mem_array, i64 %indvars.iv.i
   store i64 %i.n, ptr %i.o, align 8, !tbaa !13
-  %i.p = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @mem_array, i64 160), i64 %indvars.iv28.i
+  %i.p = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @mem_array, i64 160), i64 %2
   %i.q = load i64, ptr %i.p, align 8, !tbaa !13
   %i.r = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @mem_array, i64 160), i64 %indvars.iv.i
   store i64 %i.q, ptr %i.r, align 8, !tbaa !13
-  %indvars.iv.next32.i.prol = add nuw nsw i64 %indvars.iv28.i, 1
+  %indvars.iv.next32.i.prol = add nuw nsw i64 %2, 1
   %indvars.iv.next35.i.prol = add nuw nsw i64 %indvars.iv.i, 1
   br label %.lr.ph22.i.prol.loopexit
 
 .lr.ph22.i.prol.loopexit:                         ; preds = %.lr.ph22.i.prol, %.lr.ph22.preheader.i
   %indvars.iv34.i.unr = phi i64 [ %indvars.iv.i, %.lr.ph22.preheader.i ], [ %indvars.iv.next35.i.prol, %.lr.ph22.i.prol ]
-  %indvars.iv31.i.unr = phi i64 [ %indvars.iv28.i, %.lr.ph22.preheader.i ], [ %indvars.iv.next32.i.prol, %.lr.ph22.i.prol ]
+  %indvars.iv31.i.unr = phi i64 [ %2, %.lr.ph22.preheader.i ], [ %indvars.iv.next32.i.prol, %.lr.ph22.i.prol ]
   %i.s = add nsw i64 %wide.trip.count39.i, -1
   %i.t = icmp eq i64 %indvars.iv.i, %i.s
   br i1 %i.t, label %.loopexit, label %.lr.ph22.i
@@ -209,11 +213,11 @@ bb.b:                                             ; preds = %.lr.ph.i
 bb.c:                                             ; preds = %.lr.ph.i
   %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i, 1 ; 2 uses
   %exitcond.not.i = icmp eq i64 %indvars.iv.next.i, %wide.trip.count.i
-  %indvars.iv.next29.i = add nuw nsw i64 %indvars.iv28.i, 1
   br i1 %exitcond.not.i, label %RemoveMemArray.exit.thread, label %.lr.ph.i, !llvm.loop !1
 
-.loopexit:                                        ; preds = %.lr.ph22.i.prol.loopexit, %.lr.ph22.i, %bb.b
-  store i32 %2, ptr @mem_array_ents, align 4, !tbaa !9
+.loopexit:                                        ; preds = %.lr.ph22.i.prol.loopexit, %.lr.ph22.i, %.._crit_edge_crit_edge.i
+  %.pre-phi.i = phi i32 [ %.pre.i, %.._crit_edge_crit_edge.i ], [ %3, %.lr.ph22.i ], [ %3, %.lr.ph22.i.prol.loopexit ]
+  store i32 %.pre-phi.i, ptr @mem_array_ents, align 4, !tbaa !9
   %i.ag = inttoptr i64 %i.i to ptr
   tail call void @free(ptr noundef %i.ag) #15
   br label %RemoveMemArray.exit.thread
@@ -227,7 +231,7 @@ RemoveMemArray.exit.thread:                       ; preds = %bb.c, %bb.a, %.loop
 ; Function Attrs: nofree norecurse nosync nounwind memory(readwrite, argmem: write, inaccessiblemem: none, target_mem: none) uwtable
 define dso_local range(i32 -1, 1) i32 @RemoveMemArray(i64 noundef %0, ptr nofree noundef writeonly captures(none) %1) local_unnamed_addr #4 !guid !19 {
 bb.a:
-  %i.a = load i32, ptr @mem_array_ents, align 4, !tbaa !9 ; 4 uses
+  %i.a = load i32, ptr @mem_array_ents, align 4, !tbaa !9 ; 5 uses
   %i.b = icmp sgt i32 %i.a, 0
   br i1 %i.b, label %.lr.ph.preheader, label %.loopexit
 
@@ -236,7 +240,6 @@ bb.a:
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.c
-  %indvars.iv28 = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next29, %bb.c ] ; 5 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.c ] ; 10 uses
   %i.c = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @mem_array, i64 160), i64 %indvars.iv
   %i.d = load i64, ptr %i.c, align 8, !tbaa !13
@@ -248,34 +251,39 @@ bb.b:                                             ; preds = %.lr.ph
   %i.g = getelementptr inbounds nuw [8 x i8], ptr @mem_array, i64 %indvars.iv
   %i.h = load i64, ptr %i.g, align 8, !tbaa !13
   store i64 %i.h, ptr %1, align 8, !tbaa !13
-  %i.i = add nuw nsw i32 %i.f, 1
+  %i.i = add nuw nsw i32 %i.f, 1                  ; 2 uses
   %i.j = icmp slt i32 %i.i, %i.a
-  %2 = add nsw i32 %i.a, -1                       ; 2 uses
-  br i1 %i.j, label %.lr.ph22.preheader, label %._crit_edge
+  br i1 %i.j, label %.lr.ph22.preheader, label %.._crit_edge_crit_edge
+
+.._crit_edge_crit_edge:                           ; preds = %bb.b
+  %.pre = add nsw i32 %i.a, -1
+  br label %._crit_edge
 
 .lr.ph22.preheader:                               ; preds = %bb.b
-  %wide.trip.count39 = zext nneg i32 %2 to i64    ; 3 uses
+  %2 = zext i32 %i.i to i64                       ; 4 uses
+  %3 = add nsw i32 %i.a, -1                       ; 3 uses
+  %wide.trip.count39 = zext nneg i32 %3 to i64    ; 3 uses
   %i.k = sub nsw i64 %wide.trip.count39, %indvars.iv
   %xtraiter = and i64 %i.k, 1
   %lcmp.mod.not = icmp eq i64 %xtraiter, 0
   br i1 %lcmp.mod.not, label %.lr.ph22.prol.loopexit, label %.lr.ph22.prol
 
 .lr.ph22.prol:                                    ; preds = %.lr.ph22.preheader
-  %i.l = getelementptr inbounds nuw [8 x i8], ptr @mem_array, i64 %indvars.iv28
+  %i.l = getelementptr inbounds nuw [8 x i8], ptr @mem_array, i64 %2
   %i.m = load i64, ptr %i.l, align 8, !tbaa !13
   %i.n = getelementptr inbounds nuw [8 x i8], ptr @mem_array, i64 %indvars.iv
   store i64 %i.m, ptr %i.n, align 8, !tbaa !13
-  %i.o = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @mem_array, i64 160), i64 %indvars.iv28
+  %i.o = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @mem_array, i64 160), i64 %2
   %i.p = load i64, ptr %i.o, align 8, !tbaa !13
   %i.q = getelementptr inbounds nuw [8 x i8], ptr getelementptr inbounds nuw (i8, ptr @mem_array, i64 160), i64 %indvars.iv
   store i64 %i.p, ptr %i.q, align 8, !tbaa !13
-  %indvars.iv.next32.prol = add nuw nsw i64 %indvars.iv28, 1
+  %indvars.iv.next32.prol = add nuw nsw i64 %2, 1
   %indvars.iv.next35.prol = add nuw nsw i64 %indvars.iv, 1
   br label %.lr.ph22.prol.loopexit
 
 .lr.ph22.prol.loopexit:                           ; preds = %.lr.ph22.prol, %.lr.ph22.preheader
   %indvars.iv34.unr = phi i64 [ %indvars.iv, %.lr.ph22.preheader ], [ %indvars.iv.next35.prol, %.lr.ph22.prol ]
-  %indvars.iv31.unr = phi i64 [ %indvars.iv28, %.lr.ph22.preheader ], [ %indvars.iv.next32.prol, %.lr.ph22.prol ]
+  %indvars.iv31.unr = phi i64 [ %2, %.lr.ph22.preheader ], [ %indvars.iv.next32.prol, %.lr.ph22.prol ]
   %i.r = add nsw i64 %wide.trip.count39, -1
   %i.s = icmp eq i64 %indvars.iv, %i.r
   br i1 %i.s, label %._crit_edge, label %.lr.ph22
@@ -306,14 +314,14 @@ bb.b:                                             ; preds = %.lr.ph
   %exitcond40.not.1 = icmp eq i64 %indvars.iv.next35.1, %wide.trip.count39
   br i1 %exitcond40.not.1, label %._crit_edge, label %.lr.ph22, !llvm.loop !0
 
-._crit_edge:                                      ; preds = %.lr.ph22.prol.loopexit, %.lr.ph22, %bb.b
-  store i32 %2, ptr @mem_array_ents, align 4, !tbaa !9
+._crit_edge:                                      ; preds = %.lr.ph22.prol.loopexit, %.lr.ph22, %.._crit_edge_crit_edge
+  %.pre-phi = phi i32 [ %.pre, %.._crit_edge_crit_edge ], [ %3, %.lr.ph22 ], [ %3, %.lr.ph22.prol.loopexit ]
+  store i32 %.pre-phi, ptr @mem_array_ents, align 4, !tbaa !9
   br label %.loopexit
 
 bb.c:                                             ; preds = %.lr.ph
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  %indvars.iv.next29 = add nuw nsw i64 %indvars.iv28, 1
   br i1 %exitcond.not, label %.loopexit, label %.lr.ph, !llvm.loop !1
 
 .loopexit:                                        ; preds = %bb.c, %bb.a, %._crit_edge

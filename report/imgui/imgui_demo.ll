@@ -205,31 +205,22 @@ bb.b:                                             ; preds = %bb.a
   br i1 %i.i, label %.lr.ph176, label %.thread
 
 bb.c:                                             ; preds = %.lr.ph176
-  %indvars.iv.next140 = add i32 %indvars.iv139173, 1 ; 2 uses
   %i.j = icmp ugt ptr %i.k, %i.d
-  br i1 %i.j, label %.lr.ph176, label %.thread.loopexit
+  br i1 %i.j, label %.lr.ph176, label %.thread
 
 .lr.ph176:                                        ; preds = %bb.b, %bb.c
   %.089174 = phi ptr [ %i.k, %bb.c ], [ %i.h, %bb.b ] ; 5 uses
-  %indvars.iv139173 = phi i32 [ %indvars.iv.next140, %bb.c ], [ 0, %bb.b ] ; 5 uses
   %i.k = getelementptr inbounds i8, ptr %.089174, i64 -1 ; 4 uses
   %i.l = load i8, ptr %i.k, align 1, !tbaa !120
   switch i8 %i.l, label %bb.c [
-    i8 59, label %.thread.loopexit
-    i8 44, label %.thread.loopexit
-    i8 32, label %.thread.loopexit
-    i8 9, label %.thread.loopexit
+    i8 59, label %.thread
+    i8 44, label %.thread
+    i8 32, label %.thread
+    i8 9, label %.thread
   ]
 
-.thread.loopexit:                                 ; preds = %.lr.ph176, %.lr.ph176, %.lr.ph176, %.lr.ph176, %bb.c
-  %indvars.iv139.lcssa.ph = phi i32 [ %indvars.iv.next140, %bb.c ], [ %indvars.iv139173, %.lr.ph176 ], [ %indvars.iv139173, %.lr.ph176 ], [ %indvars.iv139173, %.lr.ph176 ], [ %indvars.iv139173, %.lr.ph176 ]
-  %.089.lcssa.ph = phi ptr [ %i.k, %bb.c ], [ %.089174, %.lr.ph176 ], [ %.089174, %.lr.ph176 ], [ %.089174, %.lr.ph176 ], [ %.089174, %.lr.ph176 ]
-  %3 = sext i32 %indvars.iv139.lcssa.ph to i64
-  br label %.thread
-
-.thread:                                          ; preds = %.thread.loopexit, %bb.b
-  %indvars.iv139.lcssa = phi i64 [ 0, %bb.b ], [ %3, %.thread.loopexit ]
-  %.089.lcssa = phi ptr [ %i.h, %bb.b ], [ %.089.lcssa.ph, %.thread.loopexit ] ; 6 uses
+.thread:                                          ; preds = %bb.c, %.lr.ph176, %.lr.ph176, %.lr.ph176, %.lr.ph176, %bb.b
+  %.089.lcssa = phi ptr [ %i.h, %bb.b ], [ %i.k, %bb.c ], [ %.089174, %.lr.ph176 ], [ %.089174, %.lr.ph176 ], [ %.089174, %.lr.ph176 ], [ %.089174, %.lr.ph176 ] ; 6 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %2) #30
   call void @llvm.memset.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %2, i8 0, i64 16, i1 false)
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 272 ; 2 uses
@@ -397,13 +388,15 @@ bb.k:                                             ; preds = %bb.j
 .lr.ph125.us.preheader:                           ; preds = %._crit_edge
   %i.cg = ptrtoint ptr %i.h to i64
   %i.ch = ptrtoint ptr %.089.lcssa to i64         ; 2 uses
-  %i.ci = sub i64 %i.cg, %i.ch
+  %i.ci = sub i64 %i.cg, %i.ch                    ; 2 uses
   %i.cj = trunc i64 %i.ci to i32
   %i.ck = icmp sgt i32 %i.bm, 0
   %i.cl = getelementptr inbounds nuw i8, ptr %2, i64 8
   %i.cm = load ptr, ptr %i.cl, align 8            ; 5 uses
   tail call void @llvm.assume(i1 %i.ck)
   %i.cn = zext nneg i32 %i.bm to i64              ; 2 uses
+  %sext = shl i64 %i.ci, 32
+  %3 = ashr exact i64 %sext, 32
   %i.co = load ptr, ptr %i.cm, align 8, !tbaa !101
   %i.cp = tail call ptr @__ctype_toupper_loc() #33
   %i.cq = load ptr, ptr %i.cp, align 8, !tbaa !229
@@ -411,7 +404,7 @@ bb.k:                                             ; preds = %bb.j
   br label %toupper.exit.us.peel
 
 toupper.exit.us.peel:                             ; preds = %._crit_edge126.us, %.lr.ph125.us.preheader
-  %indvars.iv141 = phi i64 [ %indvars.iv139.lcssa, %.lr.ph125.us.preheader ], [ %indvars.iv.next142, %._crit_edge126.us ] ; 5 uses
+  %indvars.iv141 = phi i64 [ %3, %.lr.ph125.us.preheader ], [ %indvars.iv.next142, %._crit_edge126.us ] ; 5 uses
   %i.cr = getelementptr inbounds i8, ptr %i.co, i64 %indvars.iv141
   %i.cs = load i8, ptr %i.cr, align 1, !tbaa !120
   %i.ct = sext i8 %i.cs to i64
@@ -814,7 +807,7 @@ _ZN28ExampleSelectionWithDeletion20ApplyDeletionPreLoopEP18ImGuiMultiSelectIOi.e
   %i.go = call <2 x float> @_ZN5ImGui12CalcTextSizeEPKcS1_bf(ptr noundef nonnull @.str.2346, ptr noundef null, i1 noundef zeroext false, float noundef -1.000000e+00)
   %.sroa.043.0.vec.extract = extractelement <2 x float> %i.go, i64 0
   %i.gp = fcmp ult float %i.gn, %.sroa.043.0.vec.extract
-  %i.gq = load i32, ptr %i.di, align 8, !tbaa !258 ; 7 uses
+  %i.gq = load i32, ptr %i.di, align 8, !tbaa !258 ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %10) #30
   call void @_ZN16ImGuiListClipperC1Ev(ptr noundef nonnull align 8 dereferenceable(56) %10)
   %i.gr = load i32, ptr %i.cd, align 4, !tbaa !256
@@ -853,6 +846,7 @@ _ZN16ImGuiListClipper18IncludeItemByIndexEi.exit128: ; preds = %bb.bb, %_ZN16ImG
   %i.he = getelementptr inbounds nuw i8, ptr %14, i64 4
   %i.hf = getelementptr inbounds nuw i8, ptr %15, i64 4
   %i.hg = getelementptr inbounds nuw i8, ptr %16, i64 4
+  %18 = sext i32 %i.gq to i64
   %sext = sext i32 %i.gi to i64
   br label %bb.bc
 
@@ -867,13 +861,13 @@ bb.bd:                                            ; preds = %bb.bc
   br i1 %i.hh, label %bb.be, label %bb.cx
 
 bb.be:                                            ; preds = %bb.bd
-  %i.hi = load i32, ptr %10, align 8, !tbaa !118  ; 3 uses
+  %i.hi = load i32, ptr %10, align 8, !tbaa !118  ; 2 uses
   %i.hj = load i32, ptr %i.ha, align 4, !tbaa !119 ; 2 uses
   %i.hk = icmp slt i32 %i.hi, %i.hj
   br i1 %i.hk, label %.lr.ph198.preheader, label %.loopexit185
 
 .lr.ph198.preheader:                              ; preds = %bb.be
-  %18 = mul i32 %i.gq, %i.hi
+  %19 = sext i32 %i.hi to i64
   br label %.lr.ph198
 
 .loopexit179.loopexit:                            ; preds = %bb.cw
@@ -882,31 +876,31 @@ bb.be:                                            ; preds = %bb.bd
 
 .loopexit179:                                     ; preds = %.loopexit179.loopexit, %.lr.ph198
   %i.hl = phi i32 [ %.pre, %.loopexit179.loopexit ], [ %i.hm, %.lr.ph198 ] ; 2 uses
-  %19 = icmp slt i32 %21, %i.hl
-  %indvars.iv.next222 = add i32 %indvars.iv221, %i.gq
-  br i1 %19, label %.lr.ph198, label %.loopexit185, !llvm.loop !508
+  %20 = sext i32 %i.hl to i64
+  %21 = icmp slt i64 %indvars.iv.next225, %20
+  br i1 %21, label %.lr.ph198, label %.loopexit185, !llvm.loop !508
 
 .lr.ph198:                                        ; preds = %.lr.ph198.preheader, %.loopexit179
   %i.hm = phi i32 [ %i.hj, %.lr.ph198.preheader ], [ %i.hl, %.loopexit179 ]
-  %indvars.iv221 = phi i32 [ %18, %.lr.ph198.preheader ], [ %indvars.iv.next222, %.loopexit179 ] ; 2 uses
-  %.086197 = phi i32 [ %i.hi, %.lr.ph198.preheader ], [ %21, %.loopexit179 ] ; 3 uses
-  %20 = mul nsw i32 %.086197, %i.gq
-  %21 = add nsw i32 %.086197, 1                   ; 3 uses
-  %i.hn = mul nsw i32 %21, %i.gq
-  %22 = load i32, ptr %i.dw, align 8, !tbaa !254
-  %. = call i32 @llvm.smin.i32(i32 %i.hn, i32 %22) ; 2 uses
-  %i.ho = icmp slt i32 %20, %.
+  %indvars.iv224 = phi i64 [ %19, %.lr.ph198.preheader ], [ %indvars.iv.next225, %.loopexit179 ] ; 3 uses
+  %22 = mul nsw i64 %indvars.iv224, %18           ; 2 uses
+  %indvars.iv.next225 = add nsw i64 %indvars.iv224, 1 ; 3 uses
+  %23 = load i32, ptr %i.dw, align 8, !tbaa !254
+  %24 = trunc i64 %indvars.iv.next225 to i32
+  %i.hn = mul i32 %i.gq, %24
+  %. = call i32 @llvm.smin.i32(i32 %i.hn, i32 %23)
+  %25 = sext i32 %. to i64                        ; 2 uses
+  %i.ho = icmp slt i64 %22, %25
   br i1 %i.ho, label %.lr.ph, label %.loopexit179
 
 .lr.ph:                                           ; preds = %.lr.ph198
-  %23 = sext i32 %indvars.iv221 to i64
-  %i.hp = sitofp i32 %.086197 to float
-  %24 = sext i32 %. to i64
+  %26 = trunc nsw i64 %indvars.iv224 to i32
+  %i.hp = sitofp i32 %26 to float
   %i.hq = insertelement <2 x float> poison, float %i.hp, i64 1
   br label %bb.bf
 
 bb.bf:                                            ; preds = %.lr.ph, %bb.cw
-  %indvars.iv223 = phi i64 [ %23, %.lr.ph ], [ %indvars.iv.next224, %bb.cw ] ; 5 uses
+  %indvars.iv223 = phi i64 [ %22, %.lr.ph ], [ %indvars.iv.next224, %bb.cw ] ; 5 uses
   %i.hr = load ptr, ptr %i.hb, align 8, !tbaa !251
   %i.hs = getelementptr inbounds [8 x i8], ptr %i.hr, i64 %indvars.iv223 ; 5 uses
   %i.ht = load i32, ptr %i.hs, align 4, !tbaa !261
@@ -1268,7 +1262,7 @@ bb.cv:                                            ; preds = %bb.ct, %bb.cf
 bb.cw:                                            ; preds = %bb.cv
   call void @llvm.lifetime.end.p0(ptr nonnull %11) #30
   %indvars.iv.next224 = add nsw i64 %indvars.iv223, 1 ; 2 uses
-  %i.kw = icmp slt i64 %indvars.iv.next224, %24
+  %i.kw = icmp slt i64 %indvars.iv.next224, %25
   br i1 %i.kw, label %bb.bf, label %.loopexit179.loopexit, !llvm.loop !510
 
 _ZN8ImVectorIjED2Ev.exit:                         ; preds = %.loopexit.thread, %bb.bu, %.loopexit, %.thread171, %bb.cu, %bb.ce

@@ -205,8 +205,8 @@ _ZL10stbi__get8P13stbi__context.exit240:          ; preds = %bb.q, %bb.r, %_ZL19
   %.0.i239 = phi i8 [ %i.da, %bb.q ], [ %i.dz, %_ZL19stbi__refill_bufferP13stbi__context.exit.i237 ], [ 0, %bb.r ] ; 2 uses
   %i.eb = tail call fastcc noundef i32 @_ZL13stbi__get16leP13stbi__context(ptr noundef %0) ; 0 uses
   %i.ec = tail call fastcc noundef i32 @_ZL13stbi__get16leP13stbi__context(ptr noundef %0) ; 0 uses
-  %i.ed = tail call fastcc noundef i32 @_ZL13stbi__get16leP13stbi__context(ptr noundef %0) ; 9 uses
-  %i.ee = tail call fastcc noundef i32 @_ZL13stbi__get16leP13stbi__context(ptr noundef %0) ; 16 uses
+  %i.ed = tail call fastcc noundef i32 @_ZL13stbi__get16leP13stbi__context(ptr noundef %0) ; 8 uses
+  %i.ee = tail call fastcc noundef i32 @_ZL13stbi__get16leP13stbi__context(ptr noundef %0) ; 17 uses
   %i.ef = load ptr, ptr %i.b, align 8, !tbaa !30  ; 4 uses
   %i.eg = load ptr, ptr %i.d, align 8, !tbaa !33  ; 3 uses
   %i.eh = icmp ult ptr %i.ef, %i.eg
@@ -386,7 +386,7 @@ bb.al:                                            ; preds = %bb.ag, %bb.ah, %bb.
   %i.gz = phi i1 [ false, %bb.ak ], [ false, %bb.ah ], [ false, %bb.aj ], [ false, %bb.ai ], [ true, %bb.ag ], [ false, %bb.af ] ; 2 uses
   %.not211 = phi i1 [ true, %bb.ak ], [ true, %bb.ah ], [ true, %bb.aj ], [ true, %bb.ai ], [ false, %bb.ag ], [ true, %bb.af ] ; 2 uses
   %.0195.ph.shrunk = phi i8 [ %i.gx, %bb.ak ], [ %i.gu, %bb.ah ], [ 2, %bb.aj ], [ 1, %bb.ai ], [ 3, %bb.ag ], [ 1, %bb.af ] ; 7 uses
-  %.0195.ph = zext nneg i8 %.0195.ph.shrunk to i32 ; 10 uses
+  %.0195.ph = zext nneg i8 %.0195.ph.shrunk to i32 ; 9 uses
   store i32 %i.ed, ptr %1, align 4, !tbaa !20
   store i32 %i.ee, ptr %2, align 4, !tbaa !20
   %.not206 = icmp eq ptr %3, null
@@ -789,10 +789,10 @@ _ZL10stbi__get8P13stbi__context.exit295:          ; preds = %bb.cj, %bb.ck, %_ZL
   br i1 %.not58, label %.loopexit25, label %.lr.ph48.preheader
 
 .lr.ph48.preheader:                               ; preds = %.lr.ph51
-  %i.rb = add nsw i32 %i.ee, -1                   ; 2 uses
-  %5 = mul i32 %i.ed, %i.rb
-  %6 = mul i32 %5, %.0195.ph
-  %7 = lshr i32 %i.rb, 1
+  %i.rb = add nsw i32 %i.ee, -1
+  %5 = lshr i32 %i.rb, 1
+  %6 = add nuw i32 %5, 1
+  %wide.trip.count101 = zext i32 %6 to i64
   %smin = tail call i32 @llvm.smin.i32(i32 %i.ra, i32 1)
   %i.rc = sub nsw i32 %i.ra, %smin                ; 3 uses
   %i.rd = zext nneg i32 %i.rc to i64              ; 3 uses
@@ -814,11 +814,15 @@ _ZL10stbi__get8P13stbi__context.exit295:          ; preds = %bb.cj, %bb.ck, %_ZL
   br label %iter.check
 
 iter.check:                                       ; preds = %.lr.ph48.preheader, %._crit_edge49
-  %indvars.iv95 = phi i32 [ 0, %.lr.ph48.preheader ], [ %indvars.iv.next96, %._crit_edge49 ] ; 2 uses
-  %indvars.iv91 = phi i32 [ %6, %.lr.ph48.preheader ], [ %indvars.iv.next92, %._crit_edge49 ] ; 2 uses
-  %.350 = phi i32 [ 0, %.lr.ph48.preheader ], [ %8, %._crit_edge49 ] ; 2 uses
-  %i.rk = sext i32 %indvars.iv91 to i64           ; 8 uses
-  %i.rl = zext i32 %indvars.iv95 to i64           ; 8 uses
+  %indvars.iv98 = phi i64 [ 0, %.lr.ph48.preheader ], [ %indvars.iv.next99, %._crit_edge49 ] ; 3 uses
+  %7 = trunc i64 %indvars.iv98 to i32
+  %8 = mul i32 %i.ra, %7
+  %9 = trunc i64 %indvars.iv98 to i32
+  %10 = xor i32 %9, -1
+  %11 = add i32 %i.ee, %10
+  %12 = mul i32 %i.ra, %11
+  %i.rk = sext i32 %12 to i64                     ; 8 uses
+  %i.rl = zext i32 %8 to i64                      ; 8 uses
   br i1 %min.iters.check, label %vec.epilog.scalar.ph.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
@@ -913,10 +917,8 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %i.sd, label %vec.epilog.scalar.ph, label %._crit_edge49, !llvm.loop !301
 
 ._crit_edge49:                                    ; preds = %vec.epilog.scalar.ph, %vec.epilog.middle.block, %middle.block
-  %8 = add nuw nsw i32 %.350, 1
-  %indvars.iv.next92 = sub i32 %indvars.iv91, %i.ra
-  %indvars.iv.next96 = add i32 %indvars.iv95, %i.ra
-  %exitcond102.not = icmp eq i32 %.350, %7
+  %indvars.iv.next99 = add nuw nsw i64 %indvars.iv98, 1 ; 2 uses
+  %exitcond102.not = icmp eq i64 %indvars.iv.next99, %wide.trip.count101
   br i1 %exitcond102.not, label %.loopexit25, label %iter.check, !llvm.loop !302
 
 .loopexit25:                                      ; preds = %._crit_edge49, %.lr.ph51, %._crit_edge

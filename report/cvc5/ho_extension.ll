@@ -205,15 +205,13 @@ bb.bt:                                            ; preds = %.lr.ph1104, %._crit
 
 .loopexit738:                                     ; preds = %bb.no, %.lr.ph1097
   %.2177.lcssa = phi i32 [ %.11761094, %.lr.ph1097 ], [ %.5180, %bb.no ] ; 2 uses
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1
   %exitcond1175.not = icmp eq i64 %indvars.iv.next1173, %wide.trip.count
   br i1 %exitcond1175.not, label %._crit_edge1098, label %.lr.ph1097, !llvm.loop !564
 
 .lr.ph1097:                                       ; preds = %.lr.ph1097.preheader, %.loopexit738
-  %indvars.iv1172 = phi i64 [ 0, %.lr.ph1097.preheader ], [ %indvars.iv.next1173, %.loopexit738 ] ; 3 uses
-  %indvars.iv.a = phi i64 [ 1, %.lr.ph1097.preheader ], [ %indvars.iv.next, %.loopexit738 ] ; 2 uses
+  %indvars.iv.a = phi i64 [ 0, %.lr.ph1097.preheader ], [ %indvars.iv.next1173, %.loopexit738 ] ; 3 uses
   %.11761094 = phi i32 [ %.01751102, %.lr.ph1097.preheader ], [ %.2177.lcssa, %.loopexit738 ] ; 2 uses
-  %indvars.iv.next1173 = add nuw nsw i64 %indvars.iv1172, 1 ; 3 uses
+  %indvars.iv.next1173 = add nuw nsw i64 %indvars.iv.a, 1 ; 4 uses
   %i.hf = load ptr, ptr %i.gx, align 8, !tbaa !291
   %i.hg = load ptr, ptr %i.gw, align 8, !tbaa !289
   %i.hh = ptrtoint ptr %i.hf to i64
@@ -226,11 +224,11 @@ bb.bt:                                            ; preds = %.lr.ph1104, %._crit
   br i1 %i.hn, label %.lr.ph1092, label %.loopexit738
 
 .lr.ph1092:                                       ; preds = %.lr.ph1097, %bb.no
-  %indvars.iv1169 = phi i64 [ %indvars.iv.next1170, %bb.no ], [ %indvars.iv.a, %.lr.ph1097 ] ; 3 uses
+  %indvars.iv1169 = phi i64 [ %indvars.iv.next1170, %bb.no ], [ %indvars.iv.next1173, %.lr.ph1097 ] ; 3 uses
   %.21771089 = phi i32 [ %.5180, %bb.no ], [ %.11761094, %.lr.ph1097 ] ; 3 uses
   %i.ho = load ptr, ptr %i.gu, align 8, !tbaa !370, !nonnull !267, !align !268 ; 2 uses
   %i.hp = load ptr, ptr %i.gw, align 8, !tbaa !289 ; 2 uses
-  %i.hq = getelementptr inbounds nuw [8 x i8], ptr %i.hp, i64 %indvars.iv1172
+  %i.hq = getelementptr inbounds nuw [8 x i8], ptr %i.hp, i64 %indvars.iv.a
   %i.hr = load ptr, ptr %i.hq, align 8, !tbaa !29
   store ptr %i.hr, ptr %26, align 8, !tbaa !82
   %i.hs = getelementptr inbounds nuw [8 x i8], ptr %i.hp, i64 %indvars.iv1169
@@ -250,7 +248,7 @@ bb.bv:                                            ; preds = %bb.bu
   call void @llvm.lifetime.start.p0(ptr nonnull %30) #22
   call void @llvm.lifetime.start.p0(ptr nonnull %31) #22
   %i.hy = load ptr, ptr %i.gw, align 8, !tbaa !289 ; 2 uses
-  %i.hz = getelementptr inbounds nuw [8 x i8], ptr %i.hy, i64 %indvars.iv1172
+  %i.hz = getelementptr inbounds nuw [8 x i8], ptr %i.hy, i64 %indvars.iv.a
   %i.ia = getelementptr inbounds nuw [8 x i8], ptr %i.hy, i64 %indvars.iv1169
   %i.ib = load ptr, ptr %i.hz, align 8, !tbaa !29, !noalias !633 ; 2 uses
   %i.ic = getelementptr inbounds nuw i8, ptr %i.ib, i64 16

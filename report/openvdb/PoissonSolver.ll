@@ -205,7 +205,7 @@ bb.a:
   %i.b = load i64, ptr %i.a, align 8, !tbaa !478
   %i.c = load i32, ptr %2, align 8, !tbaa !476    ; 3 uses
   %i.d = getelementptr inbounds nuw i8, ptr %2, i64 4
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !477  ; 4 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !477  ; 3 uses
   %i.f = sub i32 %i.c, %i.e
   %i.g = zext i32 %i.f to i64
   %i.h = icmp ult i64 %i.b, %i.g
@@ -222,7 +222,7 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.l = load i32, ptr %i.k, align 4, !tbaa !604  ; 2 uses
   %i.m = getelementptr inbounds nuw i8, ptr %1, i64 96
   %i.n = load i32, ptr %i.m, align 32, !tbaa !603 ; 2 uses
-  %i.o = udiv i32 %i.l, %i.n                      ; 4 uses
+  %i.o = udiv i32 %i.l, %i.n                      ; 2 uses
   %i.p = icmp ult i32 %i.e, %i.c
   br i1 %i.p, label %.lr.ph25.i.i.i.i.i.i, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeIjEEN7openvdb5v13_04math3pcg6VectorIdE25DeterministicDotProductOpEKNS1_16auto_partitionerEE8run_bodyERS4_.exit
 
@@ -234,7 +234,6 @@ bb.c:                                             ; preds = %bb.b, %bb.a
   %i.u = load ptr, ptr %i.t, align 8              ; 5 uses
   %i.v = getelementptr inbounds nuw i8, ptr %1, i64 104
   %i.w = load ptr, ptr %i.v, align 8, !tbaa !605
-  %6 = mul i32 %i.o, %i.e
   %i.x = zext i32 %i.e to i64
   %i.y = zext i32 %i.r to i64
   %wide.trip.count.i.i.i.i.i.i = zext i32 %i.c to i64
@@ -242,9 +241,8 @@ bb.c:                                             ; preds = %bb.b, %bb.a
 
 bb.d:                                             ; preds = %._crit_edge.i.i.i.i.i.i, %.lr.ph25.i.i.i.i.i.i
   %indvars.iv30.i.i.i.i.i.i = phi i64 [ %i.x, %.lr.ph25.i.i.i.i.i.i ], [ %indvars.iv.next31.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i ] ; 4 uses
-  %indvars.iv.i.i.i.i.i.i = phi i32 [ %6, %.lr.ph25.i.i.i.i.i.i ], [ %indvars.iv.next.i.i.i.i.i.i, %._crit_edge.i.i.i.i.i.i ] ; 2 uses
   %i.z = trunc nuw i64 %indvars.iv30.i.i.i.i.i.i to i32
-  %i.aa = mul i32 %i.o, %i.z                      ; 2 uses
+  %i.aa = mul i32 %i.o, %i.z                      ; 3 uses
   %i.ab = icmp eq i64 %indvars.iv30.i.i.i.i.i.i, %i.y
   %i.ac = add i32 %i.aa, %i.o
   %spec.select.i.i.i.i.i.i = select i1 %i.ab, i32 %i.l, i32 %i.ac ; 2 uses
@@ -252,7 +250,7 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i.i
   br i1 %i.ad, label %.lr.ph.preheader.i.i.i.i.i.i, label %._crit_edge.i.i.i.i.i.i
 
 .lr.ph.preheader.i.i.i.i.i.i:                     ; preds = %bb.d
-  %i.ae = zext i32 %indvars.iv.i.i.i.i.i.i to i64 ; 4 uses
+  %i.ae = zext i32 %i.aa to i64                   ; 4 uses
   %i.af = zext i32 %spec.select.i.i.i.i.i.i to i64 ; 3 uses
   %i.ag = sub nsw i64 %i.af, %i.ae
   %xtraiter89 = and i64 %i.ag, 3                  ; 2 uses
@@ -286,7 +284,6 @@ bb.d:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ao = getelementptr inbounds nuw [8 x i8], ptr %i.w, i64 %indvars.iv30.i.i.i.i.i.i
   store double %.019.lcssa.i.i.i.i.i.i, ptr %i.ao, align 8, !tbaa !501
   %indvars.iv.next31.i.i.i.i.i.i = add nuw nsw i64 %indvars.iv30.i.i.i.i.i.i, 1 ; 2 uses
-  %indvars.iv.next.i.i.i.i.i.i = add i32 %indvars.iv.i.i.i.i.i.i, %i.o
   %exitcond.not.i.i.i.i.i.i = icmp eq i64 %indvars.iv.next31.i.i.i.i.i.i, %wide.trip.count.i.i.i.i.i.i
   br i1 %exitcond.not.i.i.i.i.i.i, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeIjEEN7openvdb5v13_04math3pcg6VectorIdE25DeterministicDotProductOpEKNS1_16auto_partitionerEE8run_bodyERS4_.exit, label %bb.d, !llvm.loop !6247
 
@@ -689,9 +686,9 @@ _ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIjEELh8EE12is_divisibleEh.exi
   %i.mv = getelementptr inbounds nuw [16 x i8], ptr %i.bl, i64 %.pre-phi ; 2 uses
   %i.mw = load i32, ptr %i.bn, align 4, !tbaa !604 ; 2 uses
   %i.mx = load i32, ptr %i.bo, align 32, !tbaa !603 ; 2 uses
-  %i.my = udiv i32 %i.mw, %i.mx                   ; 4 uses
+  %i.my = udiv i32 %i.mw, %i.mx                   ; 2 uses
   %i.mz = getelementptr inbounds nuw i8, ptr %i.mv, i64 4
-  %i.na = load i32, ptr %i.mz, align 4, !tbaa !477 ; 3 uses
+  %i.na = load i32, ptr %i.mz, align 4, !tbaa !477 ; 2 uses
   %i.nb = load i32, ptr %i.mv, align 8, !tbaa !476 ; 2 uses
   %i.nc = icmp ult i32 %i.na, %i.nb
   br i1 %i.nc, label %.lr.ph25.i.i.i.i.i.i15, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeIjEEN7openvdb5v13_04math3pcg6VectorIdE25DeterministicDotProductOpEKNS1_16auto_partitionerEE8run_bodyERS4_.exit30
@@ -701,7 +698,6 @@ _ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIjEELh8EE12is_divisibleEh.exi
   %i.ne = load ptr, ptr %i.bp, align 16           ; 5 uses
   %i.nf = load ptr, ptr %i.bq, align 8            ; 5 uses
   %i.ng = load ptr, ptr %i.br, align 8, !tbaa !605
-  %7 = mul i32 %i.na, %i.my
   %i.nh = zext i32 %i.na to i64
   %i.ni = zext i32 %i.nd to i64
   %wide.trip.count.i.i.i.i.i.i16 = zext i32 %i.nb to i64
@@ -709,9 +705,8 @@ _ZN3tbb6detail2d112range_vectorINS1_13blocked_rangeIjEELh8EE12is_divisibleEh.exi
 
 bb.y:                                             ; preds = %._crit_edge.i.i.i.i.i.i20, %.lr.ph25.i.i.i.i.i.i15
   %indvars.iv30.i.i.i.i.i.i17 = phi i64 [ %i.nh, %.lr.ph25.i.i.i.i.i.i15 ], [ %indvars.iv.next31.i.i.i.i.i.i22, %._crit_edge.i.i.i.i.i.i20 ] ; 4 uses
-  %indvars.iv.i.i.i.i.i.i18 = phi i32 [ %7, %.lr.ph25.i.i.i.i.i.i15 ], [ %indvars.iv.next.i.i.i.i.i.i23, %._crit_edge.i.i.i.i.i.i20 ] ; 2 uses
   %i.nj = trunc nuw i64 %indvars.iv30.i.i.i.i.i.i17 to i32
-  %i.nk = mul i32 %i.my, %i.nj                    ; 2 uses
+  %i.nk = mul i32 %i.my, %i.nj                    ; 3 uses
   %i.nl = icmp eq i64 %indvars.iv30.i.i.i.i.i.i17, %i.ni
   %i.nm = add i32 %i.nk, %i.my
   %spec.select.i.i.i.i.i.i19 = select i1 %i.nl, i32 %i.mw, i32 %i.nm ; 2 uses
@@ -719,7 +714,7 @@ bb.y:                                             ; preds = %._crit_edge.i.i.i.i
   br i1 %i.nn, label %.lr.ph.preheader.i.i.i.i.i.i25, label %._crit_edge.i.i.i.i.i.i20
 
 .lr.ph.preheader.i.i.i.i.i.i25:                   ; preds = %bb.y
-  %i.no = zext i32 %indvars.iv.i.i.i.i.i.i18 to i64 ; 4 uses
+  %i.no = zext i32 %i.nk to i64                   ; 4 uses
   %i.np = zext i32 %spec.select.i.i.i.i.i.i19 to i64 ; 3 uses
   %i.nq = sub nsw i64 %i.np, %i.no
   %xtraiter = and i64 %i.nq, 3                    ; 2 uses
@@ -753,7 +748,6 @@ bb.y:                                             ; preds = %._crit_edge.i.i.i.i
   %i.ny = getelementptr inbounds nuw [8 x i8], ptr %i.ng, i64 %indvars.iv30.i.i.i.i.i.i17
   store double %.019.lcssa.i.i.i.i.i.i21, ptr %i.ny, align 8, !tbaa !501
   %indvars.iv.next31.i.i.i.i.i.i22 = add nuw nsw i64 %indvars.iv30.i.i.i.i.i.i17, 1 ; 2 uses
-  %indvars.iv.next.i.i.i.i.i.i23 = add i32 %indvars.iv.i.i.i.i.i.i18, %i.my
   %exitcond.not.i.i.i.i.i.i24 = icmp eq i64 %indvars.iv.next31.i.i.i.i.i.i22, %wide.trip.count.i.i.i.i.i.i16
   br i1 %exitcond.not.i.i.i.i.i.i24, label %_ZN3tbb6detail2d19start_forINS1_13blocked_rangeIjEEN7openvdb5v13_04math3pcg6VectorIdE25DeterministicDotProductOpEKNS1_16auto_partitionerEE8run_bodyERS4_.exit30, label %bb.y, !llvm.loop !6247
 

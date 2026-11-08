@@ -204,11 +204,10 @@ bb.ac:                                            ; preds = %._crit_edge224
   br label %bb.ad
 
 bb.ad:                                            ; preds = %.preheader212.us, %.loopexit.us
-  %indvars.iv322 = phi i64 [ 0, %.preheader212.us ], [ %indvars.iv.next323, %.loopexit.us ] ; 4 uses
-  %indvars.iv315.a = phi i64 [ 1, %.preheader212.us ], [ %indvars.iv.next316, %.loopexit.us ] ; 3 uses
+  %indvars.iv315.a = phi i64 [ 0, %.preheader212.us ], [ %indvars.iv.next323, %.loopexit.us ] ; 4 uses
   %.1149229.us = phi double [ %.0148233.us, %.preheader212.us ], [ %.2150.lcssa.us, %.loopexit.us ] ; 3 uses
-  %i.bt = sub i64 %i.br, %indvars.iv322
-  %indvars.iv.next323 = add nuw nsw i64 %indvars.iv322, 1 ; 3 uses
+  %i.bt = sub i64 %i.br, %indvars.iv315.a
+  %indvars.iv.next323 = add nuw nsw i64 %indvars.iv315.a, 1 ; 5 uses
   %i.bu = icmp samesign ult i64 %indvars.iv.next323, %i.bq
   br i1 %i.bu, label %.lr.ph.us, label %.loopexit.us
 
@@ -240,22 +239,21 @@ bb.ad:                                            ; preds = %.preheader212.us, %
 
 .loopexit.us:                                     ; preds = %.prol.loopexit449, %.lr.ph.us.new, %bb.ad
   %.2150.lcssa.us = phi double [ %.1149229.us, %bb.ad ], [ %.lcssa446.unr, %.prol.loopexit449 ], [ %i.cn, %.lr.ph.us.new ] ; 3 uses
-  %indvars.iv.next316 = add nuw nsw i64 %indvars.iv315.a, 1
   %exitcond326.not = icmp eq i64 %indvars.iv.next323, %wide.trip.count325
   br i1 %exitcond326.not, label %._crit_edge.us237, label %bb.ad
 
 .lr.ph.us:                                        ; preds = %bb.ad
-  %i.co = xor i64 %indvars.iv322, -1
+  %i.co = xor i64 %indvars.iv315.a, -1
   %i.cp = add nsw i64 %i.co, %wide.trip.count325
   %i.cq = load ptr, ptr %i.bs, align 8, !tbaa !157
-  %i.cr = getelementptr inbounds nuw [8 x i8], ptr %i.cq, i64 %indvars.iv322
+  %i.cr = getelementptr inbounds nuw [8 x i8], ptr %i.cq, i64 %indvars.iv315.a
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !158 ; 5 uses
   %xtraiter450 = and i64 %i.cp, 3                 ; 2 uses
   %lcmp.mod451.not = icmp eq i64 %xtraiter450, 0
   br i1 %lcmp.mod451.not, label %.prol.loopexit449, label %.prol.preheader448
 
 .prol.preheader448:                               ; preds = %.lr.ph.us, %.prol.preheader448
-  %indvars.iv317.prol = phi i64 [ %indvars.iv.next318.prol, %.prol.preheader448 ], [ %indvars.iv315.a, %.lr.ph.us ] ; 2 uses
+  %indvars.iv317.prol = phi i64 [ %indvars.iv.next318.prol, %.prol.preheader448 ], [ %indvars.iv.next323, %.lr.ph.us ] ; 2 uses
   %.2150227.us.prol = phi double [ %i.cw, %.prol.preheader448 ], [ %.1149229.us, %.lr.ph.us ]
   %prol.iter452 = phi i64 [ %prol.iter452.next, %.prol.preheader448 ], [ 0, %.lr.ph.us ]
   %i.ct = getelementptr inbounds nuw [8 x i8], ptr %i.cs, i64 %indvars.iv317.prol
@@ -269,7 +267,7 @@ bb.ad:                                            ; preds = %.preheader212.us, %
 
 .prol.loopexit449:                                ; preds = %.prol.preheader448, %.lr.ph.us
   %.lcssa446.unr = phi double [ poison, %.lr.ph.us ], [ %i.cw, %.prol.preheader448 ]
-  %indvars.iv317.unr = phi i64 [ %indvars.iv315.a, %.lr.ph.us ], [ %indvars.iv.next318.prol, %.prol.preheader448 ]
+  %indvars.iv317.unr = phi i64 [ %indvars.iv.next323, %.lr.ph.us ], [ %indvars.iv.next318.prol, %.prol.preheader448 ]
   %.2150227.us.unr = phi double [ %.1149229.us, %.lr.ph.us ], [ %i.cw, %.prol.preheader448 ]
   %i.cx = icmp ult i64 %i.bt, 3
   br i1 %i.cx, label %.loopexit.us, label %.lr.ph.us.new

@@ -204,11 +204,13 @@ bn_expand.exit:                                   ; preds = %bb.n
 .critedge65.preheader:                            ; preds = %.critedge65.preheader.preheader, %.critedge65
   %indvars.iv78 = phi i64 [ %indvars.iv.next79, %.critedge65 ], [ 0, %.critedge65.preheader.preheader ] ; 2 uses
   %indvars.iv74 = phi i64 [ %indvars.iv.next75, %.critedge65 ], [ %indvars.iv, %.critedge65.preheader.preheader ] ; 4 uses
-  %umin = tail call i64 @llvm.umin.i64(i64 %indvars.iv74, i64 16)
+  %2 = trunc nuw nsw i64 %indvars.iv74 to i32
+  %3 = tail call i32 @llvm.umin.i32(i32 %2, i32 16)
+  %4 = zext nneg i32 %3 to i64
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.o, %.critedge65.preheader
-  %indvars.iv76 = phi i64 [ %indvars.iv.next77, %bb.o ], [ %umin, %.critedge65.preheader ] ; 3 uses
+  %indvars.iv76 = phi i64 [ %indvars.iv.next77, %bb.o ], [ %4, %.critedge65.preheader ] ; 3 uses
   %.052 = phi i64 [ %i.ad, %bb.o ], [ 0, %.critedge65.preheader ]
   %i.x = sub nsw i64 %indvars.iv74, %indvars.iv76
   %i.y = getelementptr inbounds i8, ptr %.054, i64 %i.x
@@ -488,7 +490,7 @@ declare ptr @bn_expand2(ptr noundef, i32 noundef) local_unnamed_addr #1
 declare i32 @llvm.smax.i32(i32, i32) #2
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #2
+declare i32 @llvm.umin.i32(i32, i32) #2
 
 attributes #0 = { nounwind uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
