@@ -205,7 +205,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite, inaccessiblemem: write) uwtable
-define hidden void @_RNvXsg_NtCsciM7tI7r4rL_3ena12snapshot_vecINtB5_7UndoLogINtNtNtB7_5unify11backing_vec8DelegateNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variable11TyVidSubKeyEENtNtCshzWfHUSfYae_4core5clone5Clone5cloneB1B_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #16 !guid !13553 {
+define hidden void @_RNvXsg_NtCsciM7tI7r4rL_3ena12snapshot_vecINtB5_7UndoLogINtNtNtB7_5unify11backing_vec8DelegateNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variable11TyVidSubKeyEENtNtCshzWfHUSfYae_4core5clone5Clone5cloneB1B_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([24 x i8]) align 8 captures(none) dereferenceable(24) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(24) %1) unnamed_addr #16 !guid !13551 {
 bb.a:
   %i.a = load i32, ptr %1, align 8, !range !261, !noundef !245 ; 3 uses
   %i.b = icmp ne i32 %i.a, 6
@@ -235,7 +235,7 @@ bb.d:                                             ; preds = %bb.a
   %i.i = load i64, ptr %i.h, align 8, !noundef !245
   %i.j = getelementptr inbounds nuw i8, ptr %0, i64 16
   store i64 %i.i, ptr %i.j, align 8
-  %i.k = load <4 x i32>, ptr %1, align 8, !alias.scope !13554
+  %i.k = load <4 x i32>, ptr %1, align 8
   store <4 x i32> %i.k, ptr %0, align 8
   br label %bb.f
 
@@ -248,7 +248,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite, inaccessiblemem: write) uwtable
-define hidden void @_RNvXsg_NtCsciM7tI7r4rL_3ena12snapshot_vecINtB5_7UndoLogINtNtNtB7_5unify11backing_vec8DelegateNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_key11ConstVidKeyEENtNtCshzWfHUSfYae_4core5clone5Clone5cloneB1B_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %1) unnamed_addr #16 !guid !13557 {
+define hidden void @_RNvXsg_NtCsciM7tI7r4rL_3ena12snapshot_vecINtB5_7UndoLogINtNtNtB7_5unify11backing_vec8DelegateNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_key11ConstVidKeyEENtNtCshzWfHUSfYae_4core5clone5Clone5cloneB1B_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %1) unnamed_addr #16 !guid !13554 {
 bb.a:
   %i.a = load i32, ptr %1, align 8, !range !256, !noundef !245 ; 3 uses
   %i.b = icmp ne i32 %i.a, 3
@@ -281,7 +281,7 @@ bb.d:                                             ; preds = %bb.a
   store i64 %i.i, ptr %i.k, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false)
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.l = load <2 x i32>, ptr %i.j, align 8, !alias.scope !13558
+  %i.l = load <2 x i32>, ptr %i.j, align 8, !alias.scope !13555
   store <2 x i32> %i.l, ptr %.sroa.4.0..sroa_idx, align 8
   br label %bb.f
 
@@ -294,9 +294,9 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite, inaccessiblemem: write) uwtable
-define hidden void @_RNvXsg_NtCsciM7tI7r4rL_3ena12snapshot_vecINtB5_7UndoLogINtNtNtB7_5unify11backing_vec8DelegateNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_key12RegionVidKeyEENtNtCshzWfHUSfYae_4core5clone5Clone5cloneB1B_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %1) unnamed_addr #16 !guid !13561 {
+define hidden void @_RNvXsg_NtCsciM7tI7r4rL_3ena12snapshot_vecINtB5_7UndoLogINtNtNtB7_5unify11backing_vec8DelegateNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_key12RegionVidKeyEENtNtCshzWfHUSfYae_4core5clone5Clone5cloneB1B_(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([32 x i8]) align 8 captures(none) dereferenceable(32) %0, ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(32) %1) unnamed_addr #16 !guid !13558 {
 bb.a:
-  %i.a = load i32, ptr %1, align 8, !range !13562, !noundef !245 ; 3 uses
+  %i.a = load i32, ptr %1, align 8, !range !13559, !noundef !245 ; 3 uses
   %i.b = icmp ne i32 %i.a, 6
   tail call void @llvm.assume(i1 %i.b)
   %i.c = add nsw i32 %i.a, -5
@@ -327,7 +327,7 @@ bb.d:                                             ; preds = %bb.a
   store i64 %i.i, ptr %i.k, align 8
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) %1, i64 16, i1 false)
   %.sroa.4.0..sroa_idx = getelementptr inbounds nuw i8, ptr %0, i64 16
-  %i.l = load <2 x i32>, ptr %i.j, align 8, !alias.scope !13563
+  %i.l = load <2 x i32>, ptr %i.j, align 8, !alias.scope !13560
   store <2 x i32> %i.l, ptr %.sroa.4.0..sroa_idx, align 8
   br label %bb.f
 
@@ -340,7 +340,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal noundef zeroext i1 @_RNvXsi_NtCs8K4cjrcxBsw_6hir_ty17method_resolutionNtB5_12MethodCalleeNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13564 {
+define internal noundef zeroext i1 @_RNvXsi_NtCs8K4cjrcxBsw_6hir_ty17method_resolutionNtB5_12MethodCalleeNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13561 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = getelementptr inbounds nuw i8, ptr %0, i64 8
@@ -353,7 +353,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal noundef zeroext i1 @_RNvXsi_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_keyNtB5_18ConstVariableValueNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13565 {
+define internal noundef zeroext i1 @_RNvXsi_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_keyNtB5_18ConstVariableValueNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13562 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
@@ -384,7 +384,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal noundef zeroext i1 @_RNvXsj_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variableNtB5_17TypeVariableValueNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13566 {
+define internal noundef zeroext i1 @_RNvXsj_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variableNtB5_17TypeVariableValueNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(16) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13563 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
@@ -414,7 +414,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite, inaccessiblemem: write) uwtable
-define internal fastcc void @_RNvXsl_NtNtCs8K4cjrcxBsw_6hir_ty5lower11diagnosticsNtB5_22PathLoweringDiagnosticNtNtCshzWfHUSfYae_4core5clone5Clone5clone(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 4 captures(none) dereferenceable(40) %0, ptr noalias nofree noundef nonnull readonly align 4 captures(none) dereferenceable(40) %1) unnamed_addr #17 !guid !13567 {
+define internal fastcc void @_RNvXsl_NtNtCs8K4cjrcxBsw_6hir_ty5lower11diagnosticsNtB5_22PathLoweringDiagnosticNtNtCshzWfHUSfYae_4core5clone5Clone5clone(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 4 captures(none) dereferenceable(40) %0, ptr noalias nofree noundef nonnull readonly align 4 captures(none) dereferenceable(40) %1) unnamed_addr #17 !guid !13564 {
 bb.a:
   %i.a = load i32, ptr %1, align 4, !range !265, !noundef !245 ; 3 uses
   %i.b = icmp ne i32 %i.a, 5
@@ -548,7 +548,7 @@ bb.k:                                             ; preds = %bb.j, %bb.i, %bb.h,
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal noundef zeroext i1 @_RNvXsn_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variableNtB5_10TyVidEqKeyNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(4) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13568 {
+define internal noundef zeroext i1 @_RNvXsn_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variableNtB5_10TyVidEqKeyNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(4) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13565 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -560,7 +560,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal noundef zeroext i1 @_RNvXso_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_keyNtB5_11ConstVidKeyNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(4) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13569 {
+define internal noundef zeroext i1 @_RNvXso_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_keyNtB5_11ConstVidKeyNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(4) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13566 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -572,14 +572,14 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal noundef zeroext i1 @_RNvXsp_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5solveNtB5_10NoSolutionNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree nonnull readonly captures(none) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13570 {
+define internal noundef zeroext i1 @_RNvXsp_NtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5solveNtB5_10NoSolutionNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree nonnull readonly captures(none) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13567 {
 bb.a:
   %i.a = tail call noundef zeroext i1 @_RNvMsa_NtCshzWfHUSfYae_4core3fmtNtB5_9Formatter9write_str(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @890, i64 noundef 10)
   ret i1 %i.a
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal noundef zeroext i1 @_RNvXsr_Cs8K4cjrcxBsw_6hir_tyNtB5_4SpanNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(8) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13571 {
+define internal noundef zeroext i1 @_RNvXsr_Cs8K4cjrcxBsw_6hir_tyNtB5_4SpanNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(8) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13568 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
@@ -636,7 +636,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e, %bb.d,
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef zeroext i1 @_RNvXsr_NtCshzWfHUSfYae_4core3fmtSINtNtCsciM7tI7r4rL_3ena5unify8VarValueNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir7ty_kind6IntVidENtB5_5Debug3fmtCs8K4cjrcxBsw_6hir_ty(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %0, i64 noundef range(i64 0, 768614336404564651) %1, ptr noalias nofree noundef align 8 dereferenceable(24) %2) unnamed_addr #0 !guid !13572 {
+define hidden noundef zeroext i1 @_RNvXsr_NtCshzWfHUSfYae_4core3fmtSINtNtCsciM7tI7r4rL_3ena5unify8VarValueNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir7ty_kind6IntVidENtB5_5Debug3fmtCs8K4cjrcxBsw_6hir_ty(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %0, i64 noundef range(i64 0, 768614336404564651) %1, ptr noalias nofree noundef align 8 dereferenceable(24) %2) unnamed_addr #0 !guid !13569 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -649,7 +649,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef zeroext i1 @_RNvXsr_NtCshzWfHUSfYae_4core3fmtSINtNtCsciM7tI7r4rL_3ena5unify8VarValueNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variable10TyVidEqKeyENtB5_5Debug3fmtB1f_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %0, i64 noundef range(i64 0, 384307168202282326) %1, ptr noalias nofree noundef align 8 dereferenceable(24) %2) unnamed_addr #0 !guid !13573 {
+define hidden noundef zeroext i1 @_RNvXsr_NtCshzWfHUSfYae_4core3fmtSINtNtCsciM7tI7r4rL_3ena5unify8VarValueNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variable10TyVidEqKeyENtB5_5Debug3fmtB1f_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %0, i64 noundef range(i64 0, 384307168202282326) %1, ptr noalias nofree noundef align 8 dereferenceable(24) %2) unnamed_addr #0 !guid !13570 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -662,7 +662,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef zeroext i1 @_RNvXsr_NtCshzWfHUSfYae_4core3fmtSINtNtCsciM7tI7r4rL_3ena5unify8VarValueNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variable11TyVidSubKeyENtB5_5Debug3fmtB1f_(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %0, i64 noundef range(i64 0, 576460752303423488) %1, ptr noalias nofree noundef align 8 dereferenceable(24) %2) unnamed_addr #0 !guid !13574 {
+define hidden noundef zeroext i1 @_RNvXsr_NtCshzWfHUSfYae_4core3fmtSINtNtCsciM7tI7r4rL_3ena5unify8VarValueNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variable11TyVidSubKeyENtB5_5Debug3fmtB1f_(ptr noalias nofree noundef nonnull readonly align 4 captures(address, read_provenance) %0, i64 noundef range(i64 0, 576460752303423488) %1, ptr noalias nofree noundef align 8 dereferenceable(24) %2) unnamed_addr #0 !guid !13571 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -675,7 +675,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef zeroext i1 @_RNvXsr_NtCshzWfHUSfYae_4core3fmtSRNtNtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probe9CandidateNtB5_5Debug3fmtBC_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %0, i64 noundef range(i64 0, 1152921504606846976) %1, ptr noalias nofree noundef align 8 dereferenceable(24) %2) unnamed_addr #0 !guid !13575 {
+define hidden noundef zeroext i1 @_RNvXsr_NtCshzWfHUSfYae_4core3fmtSRNtNtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probe9CandidateNtB5_5Debug3fmtBC_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) %0, i64 noundef range(i64 0, 1152921504606846976) %1, ptr noalias nofree noundef align 8 dereferenceable(24) %2) unnamed_addr #0 !guid !13572 {
 bb.a:
   %i.a = alloca [16 x i8], align 8                ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -688,14 +688,14 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal noundef zeroext i1 @_RNvXss_NtCshzWfHUSfYae_4core3fmtuNtB5_5Debug3fmt(ptr noalias nofree nonnull readonly captures(none) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13576 {
+define internal noundef zeroext i1 @_RNvXss_NtCshzWfHUSfYae_4core3fmtuNtB5_5Debug3fmt(ptr noalias nofree nonnull readonly captures(none) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13573 {
 bb.a:
   %i.a = tail call noundef zeroext i1 @_RNvMsa_NtCshzWfHUSfYae_4core3fmtNtB5_9Formatter3pad(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1, ptr noalias nofree noundef nonnull readonly captures(address, read_provenance) @908, i64 noundef 2)
   ret i1 %i.a
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal noundef zeroext i1 @_RNvXst_NtCshzWfHUSfYae_4core6resultINtB5_6ResultINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9canonical9CanonicalNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtBP_5solve8ResponseB1I_EENtB2K_10NoSolutionENtNtB7_3fmt5Debug3fmtB1O_(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13577 {
+define internal noundef zeroext i1 @_RNvXst_NtCshzWfHUSfYae_4core6resultINtB5_6ResultINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9canonical9CanonicalNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerINtNtBP_5solve8ResponseB1I_EENtB2K_10NoSolutionENtNtB7_3fmt5Debug3fmtB1O_(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(40) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13574 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
@@ -724,7 +724,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal noundef zeroext i1 @_RNvXst_NtCshzWfHUSfYae_4core6resultINtB5_6ResultNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5solve9CertaintyNtBM_10NoSolutionENtNtB7_3fmt5Debug3fmtCs8K4cjrcxBsw_6hir_ty(ptr noalias nofree noundef readonly captures(address, read_provenance) dereferenceable(4) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13578 {
+define internal noundef zeroext i1 @_RNvXst_NtCshzWfHUSfYae_4core6resultINtB5_6ResultNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5solve9CertaintyNtBM_10NoSolutionENtNtB7_3fmt5Debug3fmtCs8K4cjrcxBsw_6hir_ty(ptr noalias nofree noundef readonly captures(address, read_provenance) dereferenceable(4) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13575 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
@@ -752,7 +752,7 @@ bb.d:                                             ; preds = %bb.c, %bb.b
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal noundef zeroext i1 @_RNvXsu_NtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probeNtB5_8PickKindNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13579 {
+define internal noundef zeroext i1 @_RNvXsu_NtNtCs8K4cjrcxBsw_6hir_ty17method_resolution5probeNtB5_8PickKindNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(32) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13576 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   %i.b = alloca [8 x i8], align 8                 ; 4 uses
@@ -807,7 +807,7 @@ bb.f:                                             ; preds = %bb.e, %bb.d, %bb.c,
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal noundef zeroext i1 @_RNvXsu_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variableNtB5_11TyVidSubKeyNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(4) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13580 {
+define internal noundef zeroext i1 @_RNvXsu_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variableNtB5_11TyVidSubKeyNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(4) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13577 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -818,7 +818,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal noundef zeroext i1 @_RNvXsw_NtCshzWfHUSfYae_4core3fmtINtNtB7_4cell3RefINtCsbdtVtHYmo6x_8thin_vec7ThinVecNtNtCs8K4cjrcxBsw_6hir_ty2db11AnonConstIdEENtB5_5Debug3fmtB1n_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #0 !guid !13581 {
+define internal noundef zeroext i1 @_RNvXsw_NtCshzWfHUSfYae_4core3fmtINtNtB7_4cell3RefINtCsbdtVtHYmo6x_8thin_vec7ThinVecNtNtCs8K4cjrcxBsw_6hir_ty2db11AnonConstIdEENtB5_5Debug3fmtB1n_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #0 !guid !13578 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !nonnull !245, !noundef !245
   %i.b = tail call noundef zeroext i1 @_RNvXsd_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtNtCs8K4cjrcxBsw_6hir_ty2db11AnonConstIdENtNtCshzWfHUSfYae_4core3fmt5Debug3fmtBK_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
@@ -826,7 +826,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define internal noundef zeroext i1 @_RNvXsw_NtCshzWfHUSfYae_4core3fmtINtNtB7_4cell3RefINtCsbdtVtHYmo6x_8thin_vec7ThinVecNtNtCs8K4cjrcxBsw_6hir_ty5infer19InferenceDiagnosticEENtB5_5Debug3fmtB1n_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #0 !guid !13582 {
+define internal noundef zeroext i1 @_RNvXsw_NtCshzWfHUSfYae_4core3fmtINtNtB7_4cell3RefINtCsbdtVtHYmo6x_8thin_vec7ThinVecNtNtCs8K4cjrcxBsw_6hir_ty5infer19InferenceDiagnosticEENtB5_5Debug3fmtB1n_(ptr noalias nofree noundef readonly align 8 captures(none) dereferenceable(16) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #0 !guid !13579 {
 bb.a:
   %i.a = load ptr, ptr %0, align 8, !nonnull !245, !noundef !245
   %i.b = tail call noundef zeroext i1 @_RNvXsd_CsbdtVtHYmo6x_8thin_vecINtB5_7ThinVecNtNtCs8K4cjrcxBsw_6hir_ty5infer19InferenceDiagnosticENtNtCshzWfHUSfYae_4core3fmt5Debug3fmtBK_(ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(8) %i.a, ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %1)
@@ -834,7 +834,7 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal fastcc void @_RNvXsx_NtCshzWfHUSfYae_4core4cellINtB5_7RefCellNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer14InferCtxtInnerENtNtB7_5clone5Clone5cloneBP_(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(480) %0, ptr nofree noundef nonnull align 8 captures(address, read_provenance) %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %2) unnamed_addr #2 personality ptr @rust_eh_personality !guid !13600 {
+define internal fastcc void @_RNvXsx_NtCshzWfHUSfYae_4core4cellINtB5_7RefCellNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer14InferCtxtInnerENtNtB7_5clone5Clone5cloneBP_(ptr dead_on_unwind noalias nofree noundef nonnull writable writeonly align 8 captures(none) dereferenceable(480) %0, ptr nofree noundef nonnull align 8 captures(address, read_provenance) %1, ptr noalias nofree noundef readonly align 8 captures(address, read_provenance) dereferenceable(24) %2) unnamed_addr #2 personality ptr @rust_eh_personality !guid !13597 {
 bb.a:
   %i.a = alloca [24 x i8], align 8                ; 4 uses
   %i.b = alloca [56 x i8], align 8                ; 5 uses
@@ -864,7 +864,7 @@ bb.a:
   %i.y = alloca [48 x i8], align 8                ; 6 uses
   %i.z = alloca [32 x i8], align 8                ; 6 uses
   %i.aa = alloca [472 x i8], align 8              ; 10 uses
-  %i.ab = load i64, ptr %1, align 8, !noalias !13601, !noundef !245 ; 2 uses
+  %i.ab = load i64, ptr %1, align 8, !noalias !13598, !noundef !245 ; 2 uses
   %i.ac = icmp ult i64 %i.ab, 9223372036854775807
   br i1 %i.ac, label %_RNvMst_NtCshzWfHUSfYae_4core4cellINtB5_7RefCellNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer14InferCtxtInnerE6borrowBP_.exit, label %bb.b, !prof !257
 
@@ -874,46 +874,46 @@ bb.b:                                             ; preds = %bb.a
 
 _RNvMst_NtCshzWfHUSfYae_4core4cellINtB5_7RefCellNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer14InferCtxtInnerE6borrowBP_.exit: ; preds = %bb.a
   %i.ad = add nuw nsw i64 %i.ab, 1
-  store i64 %i.ad, ptr %1, align 8, !noalias !13601
+  store i64 %i.ad, ptr %1, align 8, !noalias !13598
   %i.ae = getelementptr inbounds nuw i8, ptr %1, i64 8
-  tail call void @llvm.experimental.noalias.scope.decl(metadata !13602)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.z), !noalias !13603
+  tail call void @llvm.experimental.noalias.scope.decl(metadata !13599)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.z), !noalias !13600
   invoke void @_RNvXsb_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer8snapshot8undo_log7UndoLogENtNtCshzWfHUSfYae_4core5clone5Clone5cloneBP_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.z, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(472) %i.ae)
           to label %.noexc unwind label %bb.ao
 
 .noexc:                                           ; preds = %_RNvMst_NtCshzWfHUSfYae_4core4cellINtB5_7RefCellNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer14InferCtxtInnerE6borrowBP_.exit
   %i.af = getelementptr inbounds nuw i8, ptr %1, i64 32
-  %i.ag = load i64, ptr %i.af, align 8, !alias.scope !13602, !noundef !245
+  %i.ag = load i64, ptr %i.af, align 8, !alias.scope !13599, !noundef !245
   %i.ah = getelementptr inbounds nuw i8, ptr %i.z, i64 24
-  store i64 %i.ag, ptr %i.ah, align 8, !noalias !13603
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.y), !noalias !13603
+  store i64 %i.ag, ptr %i.ah, align 8, !noalias !13600
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.y), !noalias !13600
   %i.ai = getelementptr inbounds nuw i8, ptr %1, i64 40
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !13604
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.n), !noalias !13601
   invoke void @_RNvXsb_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecINtNtCsciM7tI7r4rL_3ena5unify8VarValueNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variable10TyVidEqKeyEENtNtCshzWfHUSfYae_4core5clone5Clone5cloneB1p_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.n, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(48) %i.ai)
-          to label %.noexc.i unwind label %bb.e, !noalias !13605
+          to label %.noexc.i unwind label %bb.e, !noalias !13602
 
 .noexc.i:                                         ; preds = %.noexc
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !13604
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.m), !noalias !13601
   %i.aj = getelementptr inbounds nuw i8, ptr %1, i64 64
   invoke void @_RNvXsb_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecINtNtCsciM7tI7r4rL_3ena5unify8VarValueNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variable11TyVidSubKeyEENtNtCshzWfHUSfYae_4core5clone5Clone5cloneB1p_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.m, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.aj)
-          to label %bb.f unwind label %bb.c, !noalias !13606
+          to label %bb.f unwind label %bb.c, !noalias !13603
 
 bb.c:                                             ; preds = %.noexc.i
   %i.ak = landingpad { ptr, i32 }
           cleanup
   invoke void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsciM7tI7r4rL_3ena5unify16UnificationTableINtNtBE_11backing_vec7InPlaceNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variable10TyVidEqKeyINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtBE_8VarValueB1P_EEuEEEB1X_(ptr noalias nofree noundef nonnull align 8 dereferenceable(24) %i.n) #35
-          to label %.body.i unwind label %bb.d, !noalias !13606
+          to label %.body.i unwind label %bb.d, !noalias !13603
 
 bb.d:                                             ; preds = %bb.c
   %i.al = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #34, !noalias !13606
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #34, !noalias !13603
   unreachable
 
 .body.i:                                          ; preds = %bb.g, %bb.e, %bb.c
   %.pn.pn.pn.pn.pn.pn.pn.i = phi { ptr, i32 } [ %.pn.pn.pn.pn.pn.pn.i, %bb.g ], [ %i.am, %bb.e ], [ %i.ak, %bb.c ]
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer8snapshot8undo_log17InferCtxtUndoLogsEBL_(ptr noalias nofree noundef align 8 dereferenceable(32) %i.z) #35
-          to label %bb.aq unwind label %bb.an, !noalias !13605
+          to label %bb.aq unwind label %bb.an, !noalias !13602
 
 bb.e:                                             ; preds = %.noexc
   %i.am = landingpad { ptr, i32 }
@@ -922,20 +922,20 @@ bb.e:                                             ; preds = %.noexc
 
 bb.f:                                             ; preds = %.noexc.i
   %i.an = getelementptr inbounds nuw i8, ptr %i.y, i64 24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.an, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 24, i1 false), !noalias !13607
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !13604
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.y, ptr noundef nonnull align 8 dereferenceable(24) %i.n, i64 24, i1 false), !noalias !13607
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !13604
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.x), !noalias !13603
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !13603
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.an, ptr noundef nonnull align 8 dereferenceable(24) %i.m, i64 24, i1 false), !noalias !13604
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.m), !noalias !13601
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.y, ptr noundef nonnull align 8 dereferenceable(24) %i.n, i64 24, i1 false), !noalias !13604
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.n), !noalias !13601
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.x), !noalias !13600
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.q), !noalias !13600
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 88
   invoke void @_RNvXsb_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecINtNtCsciM7tI7r4rL_3ena5unify8VarValueNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_key11ConstVidKeyEENtNtCshzWfHUSfYae_4core5clone5Clone5cloneB1p_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.q, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ao)
-          to label %_RNvXsf_NtCsciM7tI7r4rL_3ena12snapshot_vecINtB5_11SnapshotVecINtNtNtB7_5unify11backing_vec8DelegateNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_key11ConstVidKeyEINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtB11_8VarValueB1y_EEuENtNtCshzWfHUSfYae_4core5clone5Clone5cloneB1G_.exit.i unwind label %bb.h, !noalias !13605
+          to label %_RNvXsf_NtCsciM7tI7r4rL_3ena12snapshot_vecINtB5_11SnapshotVecINtNtNtB7_5unify11backing_vec8DelegateNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_key11ConstVidKeyEINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtB11_8VarValueB1y_EEuENtNtCshzWfHUSfYae_4core5clone5Clone5cloneB1G_.exit.i unwind label %bb.h, !noalias !13602
 
 bb.g:                                             ; preds = %bb.i, %bb.h
   %.pn.pn.pn.pn.pn.pn.i = phi { ptr, i32 } [ %.pn.pn.pn.pn.pn.i, %bb.i ], [ %i.ap, %bb.h ]
   invoke void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variable19TypeVariableStorageEBJ_(ptr noalias nofree noundef nonnull align 8 dereferenceable(48) %i.y) #35
-          to label %.body.i unwind label %bb.an, !noalias !13605
+          to label %.body.i unwind label %bb.an, !noalias !13602
 
 bb.h:                                             ; preds = %bb.f
   %i.ap = landingpad { ptr, i32 }
@@ -943,18 +943,18 @@ bb.h:                                             ; preds = %bb.f
   br label %bb.g
 
 _RNvXsf_NtCsciM7tI7r4rL_3ena12snapshot_vecINtB5_11SnapshotVecINtNtNtB7_5unify11backing_vec8DelegateNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_key11ConstVidKeyEINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtB11_8VarValueB1y_EEuENtNtCshzWfHUSfYae_4core5clone5Clone5cloneB1G_.exit.i: ; preds = %bb.f
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.x, ptr noundef nonnull align 8 dereferenceable(24) %i.q, i64 24, i1 false), !noalias !13603
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !13603
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.w), !noalias !13603
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !13603
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.x, ptr noundef nonnull align 8 dereferenceable(24) %i.q, i64 24, i1 false), !noalias !13600
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.q), !noalias !13600
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.w), !noalias !13600
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.p), !noalias !13600
   %i.aq = getelementptr inbounds nuw i8, ptr %1, i64 112
   invoke void @_RNvXsb_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecINtNtCsciM7tI7r4rL_3ena5unify8VarValueNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir7ty_kind6IntVidEENtNtCshzWfHUSfYae_4core5clone5Clone5cloneCs8K4cjrcxBsw_6hir_ty(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.p, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.aq)
-          to label %_RNvXsf_NtCsciM7tI7r4rL_3ena12snapshot_vecINtB5_11SnapshotVecINtNtNtB7_5unify11backing_vec8DelegateNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir7ty_kind6IntVidEINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtB11_8VarValueB1y_EEuENtNtCshzWfHUSfYae_4core5clone5Clone5cloneCs8K4cjrcxBsw_6hir_ty.exit.i unwind label %bb.j, !noalias !13605
+          to label %_RNvXsf_NtCsciM7tI7r4rL_3ena12snapshot_vecINtB5_11SnapshotVecINtNtNtB7_5unify11backing_vec8DelegateNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir7ty_kind6IntVidEINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtB11_8VarValueB1y_EEuENtNtCshzWfHUSfYae_4core5clone5Clone5cloneCs8K4cjrcxBsw_6hir_ty.exit.i unwind label %bb.j, !noalias !13602
 
 bb.i:                                             ; preds = %bb.k, %bb.j
   %.pn.pn.pn.pn.pn.i = phi { ptr, i32 } [ %.pn.pn.pn.pn.i, %bb.k ], [ %i.ar, %bb.j ]
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsciM7tI7r4rL_3ena5unify16UnificationTableINtNtBE_11backing_vec7InPlaceNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_key11ConstVidKeyINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtBE_8VarValueB1P_EEuEEEB1X_(ptr noalias nofree noundef align 8 dereferenceable(24) %i.x) #35
-          to label %bb.g unwind label %bb.an, !noalias !13605
+          to label %bb.g unwind label %bb.an, !noalias !13602
 
 bb.j:                                             ; preds = %_RNvXsf_NtCsciM7tI7r4rL_3ena12snapshot_vecINtB5_11SnapshotVecINtNtNtB7_5unify11backing_vec8DelegateNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_key11ConstVidKeyEINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtB11_8VarValueB1y_EEuENtNtCshzWfHUSfYae_4core5clone5Clone5cloneB1G_.exit.i
   %i.ar = landingpad { ptr, i32 }
@@ -962,18 +962,18 @@ bb.j:                                             ; preds = %_RNvXsf_NtCsciM7tI7
   br label %bb.i
 
 _RNvXsf_NtCsciM7tI7r4rL_3ena12snapshot_vecINtB5_11SnapshotVecINtNtNtB7_5unify11backing_vec8DelegateNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir7ty_kind6IntVidEINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtB11_8VarValueB1y_EEuENtNtCshzWfHUSfYae_4core5clone5Clone5cloneCs8K4cjrcxBsw_6hir_ty.exit.i: ; preds = %_RNvXsf_NtCsciM7tI7r4rL_3ena12snapshot_vecINtB5_11SnapshotVecINtNtNtB7_5unify11backing_vec8DelegateNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_key11ConstVidKeyEINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtB11_8VarValueB1y_EEuENtNtCshzWfHUSfYae_4core5clone5Clone5cloneB1G_.exit.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.w, ptr noundef nonnull align 8 dereferenceable(24) %i.p, i64 24, i1 false), !noalias !13603
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.p), !noalias !13603
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.v), !noalias !13603
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !13603
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.w, ptr noundef nonnull align 8 dereferenceable(24) %i.p, i64 24, i1 false), !noalias !13600
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.p), !noalias !13600
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.v), !noalias !13600
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.o), !noalias !13600
   %i.as = getelementptr inbounds nuw i8, ptr %1, i64 136
   invoke void @_RNvXsb_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecINtNtCsciM7tI7r4rL_3ena5unify8VarValueNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir7ty_kind8FloatVidEENtNtCshzWfHUSfYae_4core5clone5Clone5cloneCs8K4cjrcxBsw_6hir_ty(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.o, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.as)
-          to label %_RNvXsf_NtCsciM7tI7r4rL_3ena12snapshot_vecINtB5_11SnapshotVecINtNtNtB7_5unify11backing_vec8DelegateNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir7ty_kind8FloatVidEINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtB11_8VarValueB1y_EEuENtNtCshzWfHUSfYae_4core5clone5Clone5cloneCs8K4cjrcxBsw_6hir_ty.exit.i unwind label %bb.l, !noalias !13605
+          to label %_RNvXsf_NtCsciM7tI7r4rL_3ena12snapshot_vecINtB5_11SnapshotVecINtNtNtB7_5unify11backing_vec8DelegateNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir7ty_kind8FloatVidEINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtB11_8VarValueB1y_EEuENtNtCshzWfHUSfYae_4core5clone5Clone5cloneCs8K4cjrcxBsw_6hir_ty.exit.i unwind label %bb.l, !noalias !13602
 
 bb.k:                                             ; preds = %.body12.i, %bb.l
   %.pn.pn.pn.pn.i = phi { ptr, i32 } [ %.pn.pn.pn.i, %.body12.i ], [ %i.at, %bb.l ]
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsciM7tI7r4rL_3ena5unify16UnificationTableINtNtBE_11backing_vec7InPlaceNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir7ty_kind6IntVidINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtBE_8VarValueB1P_EEuEEECs8K4cjrcxBsw_6hir_ty(ptr noalias nofree noundef align 8 dereferenceable(24) %i.w) #35
-          to label %bb.i unwind label %bb.an, !noalias !13605
+          to label %bb.i unwind label %bb.an, !noalias !13602
 
 bb.l:                                             ; preds = %_RNvXsf_NtCsciM7tI7r4rL_3ena12snapshot_vecINtB5_11SnapshotVecINtNtNtB7_5unify11backing_vec8DelegateNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir7ty_kind6IntVidEINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtB11_8VarValueB1y_EEuENtNtCshzWfHUSfYae_4core5clone5Clone5cloneCs8K4cjrcxBsw_6hir_ty.exit.i
   %i.at = landingpad { ptr, i32 }
@@ -981,38 +981,38 @@ bb.l:                                             ; preds = %_RNvXsf_NtCsciM7tI7
   br label %bb.k
 
 _RNvXsf_NtCsciM7tI7r4rL_3ena12snapshot_vecINtB5_11SnapshotVecINtNtNtB7_5unify11backing_vec8DelegateNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir7ty_kind8FloatVidEINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtB11_8VarValueB1y_EEuENtNtCshzWfHUSfYae_4core5clone5Clone5cloneCs8K4cjrcxBsw_6hir_ty.exit.i: ; preds = %_RNvXsf_NtCsciM7tI7r4rL_3ena12snapshot_vecINtB5_11SnapshotVecINtNtNtB7_5unify11backing_vec8DelegateNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir7ty_kind6IntVidEINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtB11_8VarValueB1y_EEuENtNtCshzWfHUSfYae_4core5clone5Clone5cloneCs8K4cjrcxBsw_6hir_ty.exit.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.v, ptr noundef nonnull align 8 dereferenceable(24) %i.o, i64 24, i1 false), !noalias !13603
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !noalias !13603
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !13603
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.v, ptr noundef nonnull align 8 dereferenceable(24) %i.o, i64 24, i1 false), !noalias !13600
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.o), !noalias !13600
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.u), !noalias !13600
   %i.au = getelementptr inbounds nuw i8, ptr %1, i64 288 ; 2 uses
-  %i.av = load i64, ptr %i.au, align 8, !range !258, !alias.scope !13602, !noundef !245
+  %i.av = load i64, ptr %i.au, align 8, !range !258, !alias.scope !13599, !noundef !245
   %.not.i = icmp eq i64 %i.av, -1
   br i1 %.not.i, label %bb.aa, label %bb.m
 
 bb.m:                                             ; preds = %_RNvXsf_NtCsciM7tI7r4rL_3ena12snapshot_vecINtB5_11SnapshotVecINtNtNtB7_5unify11backing_vec8DelegateNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir7ty_kind8FloatVidEINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtB11_8VarValueB1y_EEuENtNtCshzWfHUSfYae_4core5clone5Clone5cloneCs8K4cjrcxBsw_6hir_ty.exit.i
   call void @llvm.lifetime.start.p0(ptr nonnull %.sroa.0.i)
-  call void @llvm.experimental.noalias.scope.decl(metadata !13608)
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !13609
+  call void @llvm.experimental.noalias.scope.decl(metadata !13605)
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.l), !noalias !13606
   invoke void @_RNvXsb_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints18RegionVariableInfoENtNtCshzWfHUSfYae_4core5clone5Clone5cloneBN_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.l, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(192) %i.au)
-          to label %.noexc11.i unwind label %bb.ac, !noalias !13605
+          to label %.noexc11.i unwind label %bb.ac, !noalias !13602
 
 .noexc11.i:                                       ; preds = %bb.m
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !13609
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.k), !noalias !13606
   %i.aw = getelementptr inbounds nuw i8, ptr %1, i64 312
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !13610
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.e), !noalias !13607
   invoke void @_RNvXsb_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints10ConstraintENtNtCshzWfHUSfYae_4core5clone5Clone5cloneBN_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.e, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(72) %i.aw)
-          to label %.noexc.i.i unwind label %bb.s, !noalias !13611
+          to label %.noexc.i.i unwind label %bb.s, !noalias !13608
 
 .noexc.i.i:                                       ; preds = %.noexc11.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !13610
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.d), !noalias !13607
   %i.ax = getelementptr inbounds nuw i8, ptr %1, i64 336
   invoke void @_RNvXsb_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer16MemberConstraintENtNtCshzWfHUSfYae_4core5clone5Clone5cloneBL_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.d, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.ax)
-          to label %bb.p unwind label %bb.o, !noalias !13612
+          to label %bb.p unwind label %bb.o, !noalias !13609
 
 bb.n:                                             ; preds = %bb.q, %bb.o
   %.pn.i.i.i = phi { ptr, i32 } [ %i.ba, %bb.q ], [ %i.ay, %bb.o ]
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints10ConstraintEEB1g_(ptr noalias nofree noundef align 8 dereferenceable(24) %i.e) #35
-          to label %.body.i.i unwind label %bb.r, !noalias !13612
+          to label %.body.i.i unwind label %bb.r, !noalias !13609
 
 bb.o:                                             ; preds = %.noexc.i.i
   %i.ay = landingpad { ptr, i32 }
@@ -1020,27 +1020,27 @@ bb.o:                                             ; preds = %.noexc.i.i
   br label %bb.n
 
 bb.p:                                             ; preds = %.noexc.i.i
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !13610
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.c), !noalias !13607
   %i.az = getelementptr inbounds nuw i8, ptr %1, i64 360
   invoke void @_RNvXsb_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints6VerifyENtNtCshzWfHUSfYae_4core5clone5Clone5cloneBN_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.c, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.az)
-          to label %bb.t unwind label %bb.q, !noalias !13612
+          to label %bb.t unwind label %bb.q, !noalias !13609
 
 bb.q:                                             ; preds = %bb.p
   %i.ba = landingpad { ptr, i32 }
           cleanup
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer16MemberConstraintEEB1e_(ptr noalias nofree noundef align 8 dereferenceable(24) %i.d) #35
-          to label %bb.n unwind label %bb.r, !noalias !13612
+          to label %bb.n unwind label %bb.r, !noalias !13609
 
 bb.r:                                             ; preds = %bb.q, %bb.n
   %i.bb = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #34, !noalias !13612
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #34, !noalias !13609
   unreachable
 
 .body.i.i:                                        ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map7HashMapNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints10TwoRegionsNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir11region_kind9RegionVidNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEEB1E_.exit.i.i, %bb.s, %bb.n
   %.pn.pn.pn.i.i = phi { ptr, i32 } [ %.pn.pn.i.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map7HashMapNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints10TwoRegionsNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir11region_kind9RegionVidNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEEB1E_.exit.i.i ], [ %i.bc, %bb.s ], [ %.pn.i.i.i, %bb.n ]
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs6q8GQ6zN3Tv_17ra_ap_rustc_index3vec8IndexVecNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir11region_kind9RegionVidNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints18RegionVariableInfoEEB2y_(ptr noalias nofree noundef align 8 dereferenceable(24) %i.l) #35
-          to label %.body12.i unwind label %bb.z, !noalias !13611
+          to label %.body12.i unwind label %bb.z, !noalias !13608
 
 bb.s:                                             ; preds = %.noexc11.i
   %i.bc = landingpad { ptr, i32 }
@@ -1048,24 +1048,24 @@ bb.s:                                             ; preds = %.noexc11.i
   br label %.body.i.i
 
 bb.t:                                             ; preds = %bb.p
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false), !noalias !13613
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %i.k, ptr noundef nonnull align 8 dereferenceable(24) %i.e, i64 24, i1 false), !noalias !13610
   %i.bd = getelementptr inbounds nuw i8, ptr %i.k, i64 24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bd, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false), !noalias !13613
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.bd, ptr noundef nonnull align 8 dereferenceable(24) %i.d, i64 24, i1 false), !noalias !13610
   %i.be = getelementptr inbounds nuw i8, ptr %i.k, i64 48
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.be, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false), !noalias !13613
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !13610
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !13610
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !13610
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !13609
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !13609
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.be, ptr noundef nonnull align 8 dereferenceable(24) %i.c, i64 24, i1 false), !noalias !13610
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.c), !noalias !13607
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.d), !noalias !13607
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.e), !noalias !13607
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.j), !noalias !13606
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.h), !noalias !13606
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 408
   invoke void @_RNvXNtCsfjX3T6UU9IB_9hashbrown3mapINtB2_7HashMapNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints10TwoRegionsNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir11region_kind9RegionVidNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherENtNtCshzWfHUSfYae_4core5clone5Clone5cloneBS_(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.h, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.bf)
-          to label %bb.v unwind label %bb.u, !noalias !13611
+          to label %bb.v unwind label %bb.u, !noalias !13608
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map7HashMapNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints10TwoRegionsNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir11region_kind9RegionVidNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEEB1E_.exit.i.i: ; preds = %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map7HashMapNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints10TwoRegionsNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir11region_kind9RegionVidNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEEB1E_.exit7.i.i, %bb.u
   %.pn.pn.i.i = phi { ptr, i32 } [ %i.bg, %bb.u ], [ %.pn.i.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map7HashMapNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints10TwoRegionsNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir11region_kind9RegionVidNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEEB1E_.exit7.i.i ]
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints20RegionConstraintDataEBJ_(ptr noalias nofree noundef align 8 dereferenceable(72) %i.k) #35
-          to label %.body.i.i unwind label %bb.z, !noalias !13611
+          to label %.body.i.i unwind label %bb.z, !noalias !13608
 
 bb.u:                                             ; preds = %bb.t
   %i.bg = landingpad { ptr, i32 }
@@ -1073,18 +1073,18 @@ bb.u:                                             ; preds = %bb.t
   br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map7HashMapNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints10TwoRegionsNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir11region_kind9RegionVidNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEEB1E_.exit.i.i
 
 bb.v:                                             ; preds = %bb.t
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.j, ptr noundef nonnull align 8 dereferenceable(32) %i.h, i64 32, i1 false), !noalias !13609
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !13609
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !13609
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !13609
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.j, ptr noundef nonnull align 8 dereferenceable(32) %i.h, i64 32, i1 false), !noalias !13606
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.h), !noalias !13606
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.i), !noalias !13606
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.g), !noalias !13606
   %i.bh = getelementptr inbounds nuw i8, ptr %1, i64 440
   invoke void @_RNvXNtCsfjX3T6UU9IB_9hashbrown3mapINtB2_7HashMapNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints10TwoRegionsNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir11region_kind9RegionVidNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherENtNtCshzWfHUSfYae_4core5clone5Clone5cloneBS_(ptr noalias nofree noundef nonnull sret([32 x i8]) align 8 captures(none) dereferenceable(32) %i.g, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(32) %i.bh)
-          to label %bb.x unwind label %bb.w, !noalias !13611
+          to label %bb.x unwind label %bb.w, !noalias !13608
 
 _RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map7HashMapNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints10TwoRegionsNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir11region_kind9RegionVidNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEEB1E_.exit7.i.i: ; preds = %bb.y, %bb.w
   %.pn.i.i = phi { ptr, i32 } [ %i.bi, %bb.w ], [ %i.bk, %bb.y ]
   invoke void @_RNvXsg_NtCsfjX3T6UU9IB_9hashbrown3rawINtB5_8RawTableTNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints10TwoRegionsNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir11region_kind9RegionVidEENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropBX_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.j)
-          to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map7HashMapNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints10TwoRegionsNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir11region_kind9RegionVidNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEEB1E_.exit.i.i unwind label %bb.z, !noalias !13611
+          to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map7HashMapNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints10TwoRegionsNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir11region_kind9RegionVidNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEEB1E_.exit.i.i unwind label %bb.z, !noalias !13608
 
 bb.w:                                             ; preds = %bb.v
   %i.bi = landingpad { ptr, i32 }
@@ -1092,39 +1092,39 @@ bb.w:                                             ; preds = %bb.v
   br label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map7HashMapNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints10TwoRegionsNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir11region_kind9RegionVidNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEEB1E_.exit7.i.i
 
 bb.x:                                             ; preds = %bb.v
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.i, ptr noundef nonnull align 8 dereferenceable(32) %i.g, i64 32, i1 false), !noalias !13609
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !13609
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !13609
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.i, ptr noundef nonnull align 8 dereferenceable(32) %i.g, i64 32, i1 false), !noalias !13606
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.g), !noalias !13606
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.f), !noalias !13606
   %i.bj = getelementptr inbounds nuw i8, ptr %1, i64 384
   invoke void @_RNvXsb_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecINtNtCsciM7tI7r4rL_3ena5unify8VarValueNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_key12RegionVidKeyEENtNtCshzWfHUSfYae_4core5clone5Clone5cloneB1p_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.f, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.bj)
-          to label %bb.ad unwind label %bb.y, !noalias !13611
+          to label %bb.ad unwind label %bb.y, !noalias !13608
 
 bb.y:                                             ; preds = %bb.x
   %i.bk = landingpad { ptr, i32 }
           cleanup
   invoke void @_RNvXsg_NtCsfjX3T6UU9IB_9hashbrown3rawINtB5_8RawTableTNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints10TwoRegionsNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir11region_kind9RegionVidEENtNtNtCshzWfHUSfYae_4core3ops4drop4Drop4dropBX_(ptr noalias nofree noundef nonnull align 8 dereferenceable(32) %i.i)
-          to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map7HashMapNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints10TwoRegionsNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir11region_kind9RegionVidNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEEB1E_.exit7.i.i unwind label %bb.z, !noalias !13611
+          to label %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map7HashMapNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints10TwoRegionsNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir11region_kind9RegionVidNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEEB1E_.exit7.i.i unwind label %bb.z, !noalias !13608
 
 bb.z:                                             ; preds = %bb.y, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map7HashMapNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints10TwoRegionsNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir11region_kind9RegionVidNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEEB1E_.exit7.i.i, %_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtNtNtCscAsMj0W7j8b_3std11collections4hash3map7HashMapNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints10TwoRegionsNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir11region_kind9RegionVidNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEEB1E_.exit.i.i, %.body.i.i
   %i.bl = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #34, !noalias !13611
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #34, !noalias !13608
   unreachable
 
 bb.aa:                                            ; preds = %_RNvXsf_NtCsciM7tI7r4rL_3ena12snapshot_vecINtB5_11SnapshotVecINtNtNtB7_5unify11backing_vec8DelegateNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir7ty_kind8FloatVidEINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtB11_8VarValueB1y_EEuENtNtCshzWfHUSfYae_4core5clone5Clone5cloneCs8K4cjrcxBsw_6hir_ty.exit.i
-  store i64 -1, ptr %i.u, align 8, !noalias !13603
+  store i64 -1, ptr %i.u, align 8, !noalias !13600
   br label %bb.ab
 
 bb.ab:                                            ; preds = %bb.ad, %bb.aa
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !noalias !13603
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.t), !noalias !13600
   %i.bm = getelementptr inbounds nuw i8, ptr %1, i64 160
   invoke void @_RNvXsb_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer22TypeOutlivesConstraintENtNtCshzWfHUSfYae_4core5clone5Clone5cloneBL_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.t, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.bm)
-          to label %bb.ag unwind label %bb.af, !noalias !13605
+          to label %bb.ag unwind label %bb.af, !noalias !13602
 
 .body12.i:                                        ; preds = %bb.ae, %bb.ac, %.body.i.i
   %.pn.pn.pn.i = phi { ptr, i32 } [ %.pn.pn.i, %bb.ae ], [ %i.bn, %bb.ac ], [ %.pn.pn.pn.i.i, %.body.i.i ]
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsciM7tI7r4rL_3ena5unify16UnificationTableINtNtBE_11backing_vec7InPlaceNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir7ty_kind8FloatVidINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtBE_8VarValueB1P_EEuEEECs8K4cjrcxBsw_6hir_ty(ptr noalias nofree noundef align 8 dereferenceable(24) %i.v) #35
-          to label %bb.k unwind label %bb.an, !noalias !13605
+          to label %bb.k unwind label %bb.an, !noalias !13602
 
 bb.ac:                                            ; preds = %bb.m
   %i.bn = landingpad { ptr, i32 }
@@ -1133,31 +1133,31 @@ bb.ac:                                            ; preds = %bb.m
 
 bb.ad:                                            ; preds = %bb.x
   %.sroa.0.96..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 96
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.96..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(24) %i.f, i64 24, i1 false), !noalias !13614
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !13609
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.96..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(24) %i.f, i64 24, i1 false), !noalias !13611
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.f), !noalias !13606
   %i.bo = getelementptr inbounds nuw i8, ptr %1, i64 472
-  %i.bp = load i8, ptr %i.bo, align 8, !range !247, !alias.scope !13615, !noundef !245
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i, ptr noundef nonnull align 8 dereferenceable(24) %i.l, i64 24, i1 false), !noalias !13614
+  %i.bp = load i8, ptr %i.bo, align 8, !range !247, !alias.scope !13612, !noundef !245
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %.sroa.0.i, ptr noundef nonnull align 8 dereferenceable(24) %i.l, i64 24, i1 false), !noalias !13611
   %.sroa.0.24..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 24
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.0.24..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(72) %i.k, i64 72, i1 false), !noalias !13614
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(72) %.sroa.0.24..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(72) %i.k, i64 72, i1 false), !noalias !13611
   %.sroa.0.120..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 120
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.120..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(32) %i.j, i64 32, i1 false), !noalias !13614
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.120..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(32) %i.j, i64 32, i1 false), !noalias !13611
   %.sroa.0.152..sroa_idx.i = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 152
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.152..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(32) %i.i, i64 32, i1 false), !noalias !13614
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !13609
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !13609
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !13609
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !13609
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(184) %i.u, ptr noundef nonnull align 8 dereferenceable(184) %.sroa.0.i, i64 184, i1 false), !noalias !13603
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %.sroa.0.152..sroa_idx.i, ptr noundef nonnull align 8 dereferenceable(32) %i.i, i64 32, i1 false), !noalias !13611
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.i), !noalias !13606
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.j), !noalias !13606
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.k), !noalias !13606
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.l), !noalias !13606
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(184) %i.u, ptr noundef nonnull align 8 dereferenceable(184) %.sroa.0.i, i64 184, i1 false), !noalias !13600
   %.sroa.8.0..sroa_idx.i = getelementptr inbounds nuw i8, ptr %i.u, i64 184
-  store i8 %i.bp, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !13603
+  store i8 %i.bp, ptr %.sroa.8.0..sroa_idx.i, align 8, !noalias !13600
   call void @llvm.lifetime.end.p0(ptr nonnull %.sroa.0.i)
   br label %bb.ab
 
 bb.ae:                                            ; preds = %bb.ah, %bb.af
   %.pn.pn.i = phi { ptr, i32 } [ %.pn.i, %bb.ah ], [ %i.bq, %bb.af ]
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtB4_6option6OptionNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraints23RegionConstraintStorageEEB15_(ptr noalias nofree noundef align 8 dereferenceable(192) %i.u) #35
-          to label %.body12.i unwind label %bb.an, !noalias !13605
+          to label %.body12.i unwind label %bb.an, !noalias !13602
 
 bb.af:                                            ; preds = %bb.ab
   %i.bq = landingpad { ptr, i32 }
@@ -1165,15 +1165,15 @@ bb.af:                                            ; preds = %bb.ab
   br label %bb.ae
 
 bb.ag:                                            ; preds = %bb.ab
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.s), !noalias !13603
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.s), !noalias !13600
   %i.br = getelementptr inbounds nuw i8, ptr %1, i64 184
   invoke void @_RNvXsb_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9predicate17OutlivesPredicateNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerNtNtB1Q_11generic_arg10GenericArgEENtNtCshzWfHUSfYae_4core5clone5Clone5cloneB1S_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.s, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.br)
-          to label %bb.aj unwind label %bb.ai, !noalias !13605
+          to label %bb.aj unwind label %bb.ai, !noalias !13602
 
 bb.ah:                                            ; preds = %.body15.i, %bb.ai
   %.pn.i = phi { ptr, i32 } [ %eh.lpad-body16.i, %.body15.i ], [ %i.bs, %bb.ai ]
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer22TypeOutlivesConstraintEEB1e_(ptr noalias nofree noundef align 8 dereferenceable(24) %i.t) #35
-          to label %bb.ae unwind label %bb.an, !noalias !13605
+          to label %bb.ae unwind label %bb.an, !noalias !13602
 
 bb.ai:                                            ; preds = %bb.ag
   %i.bs = landingpad { ptr, i32 }
@@ -1183,26 +1183,26 @@ bb.ai:                                            ; preds = %bb.ag
 bb.aj:                                            ; preds = %bb.ag
   call void @llvm.lifetime.start.p0(ptr nonnull %i.r)
   %i.bt = getelementptr inbounds nuw i8, ptr %1, i64 208
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !13616
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.b), !noalias !13613
   invoke void @_RNvXNtCs3gqD4ldeioo_8indexmap3mapINtB2_8IndexMapINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9opaque_ty13OpaqueTypeKeyNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtNtB1R_5infer12opaque_types16OpaqueHiddenTypeNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherENtNtCshzWfHUSfYae_4core5clone5Clone5cloneB1T_(ptr noalias nofree noundef nonnull sret([56 x i8]) align 8 captures(none) dereferenceable(56) %i.b, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(80) %i.bt)
-          to label %.noexc14.i unwind label %bb.am, !noalias !13605
+          to label %.noexc14.i unwind label %bb.am, !noalias !13602
 
 .noexc14.i:                                       ; preds = %bb.aj
-  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !13616
+  call void @llvm.lifetime.start.p0(ptr nonnull %i.a), !noalias !13613
   %i.bu = getelementptr inbounds nuw i8, ptr %1, i64 264
   invoke void @_RNvXsb_NtCsbSS6DM8SDEO_5alloc3vecINtB5_3VecTINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9opaque_ty13OpaqueTypeKeyNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtNtB1N_5infer12opaque_types16OpaqueHiddenTypeEENtNtCshzWfHUSfYae_4core5clone5Clone5cloneB1P_(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %i.a, ptr noalias nofree noundef nonnull readonly align 8 captures(address, read_provenance) dereferenceable(24) %i.bu)
-          to label %bb.ap unwind label %bb.ak, !noalias !13617
+          to label %bb.ap unwind label %bb.ak, !noalias !13614
 
 bb.ak:                                            ; preds = %.noexc14.i
   %i.bv = landingpad { ptr, i32 }
           cleanup
   invoke void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCs3gqD4ldeioo_8indexmap3map8IndexMapINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9opaque_ty13OpaqueTypeKeyNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerENtNtNtB2n_5infer12opaque_types16OpaqueHiddenTypeNtCsh04pLiDBs3j_10rustc_hash13FxBuildHasherEEB2p_(ptr noalias nofree noundef nonnull align 8 dereferenceable(56) %i.b) #35
-          to label %.body15.i unwind label %bb.al, !noalias !13617
+          to label %.body15.i unwind label %bb.al, !noalias !13614
 
 bb.al:                                            ; preds = %bb.ak
   %i.bw = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #34, !noalias !13617
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #34, !noalias !13614
   unreachable
 
 bb.am:                                            ; preds = %bb.aj
@@ -1213,12 +1213,12 @@ bb.am:                                            ; preds = %bb.aj
 .body15.i:                                        ; preds = %bb.am, %bb.ak
   %eh.lpad-body16.i = phi { ptr, i32 } [ %i.bx, %bb.am ], [ %i.bv, %bb.ak ]
   invoke fastcc void @_RINvNtCshzWfHUSfYae_4core3ptr9drop_glueINtNtCsbSS6DM8SDEO_5alloc3vec3VecINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir9predicate17OutlivesPredicateNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerNtNtB2j_11generic_arg10GenericArgEEEB2l_(ptr noalias nofree noundef align 8 dereferenceable(24) %i.s) #35
-          to label %bb.ah unwind label %bb.an, !noalias !13605
+          to label %bb.ah unwind label %bb.an, !noalias !13602
 
 bb.an:                                            ; preds = %.body15.i, %bb.ah, %bb.ae, %.body12.i, %bb.k, %bb.i, %bb.g, %.body.i
   %i.by = landingpad { ptr, i32 }
           filter [0 x ptr] zeroinitializer        ; 0 uses
-  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #34, !noalias !13605
+  call void @_RNvNtCshzWfHUSfYae_4core9panicking16panic_in_cleanup() #34, !noalias !13602
   unreachable
 
 bb.ao:                                            ; preds = %_RNvMst_NtCshzWfHUSfYae_4core4cellINtB5_7RefCellNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer14InferCtxtInnerE6borrowBP_.exit
@@ -1227,11 +1227,11 @@ bb.ao:                                            ; preds = %_RNvMst_NtCshzWfHUS
   br label %bb.aq
 
 bb.ap:                                            ; preds = %.noexc14.i
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.r, ptr noundef nonnull align 8 dereferenceable(56) %i.b, i64 56, i1 false), !noalias !13618
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.r, ptr noundef nonnull align 8 dereferenceable(56) %i.b, i64 56, i1 false), !noalias !13615
   %i.ca = getelementptr inbounds nuw i8, ptr %i.r, i64 56
-  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ca, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !noalias !13618
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !13616
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !13616
+  call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(24) %i.ca, ptr noundef nonnull align 8 dereferenceable(24) %i.a, i64 24, i1 false), !noalias !13615
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.a), !noalias !13613
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.b), !noalias !13613
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(472) %i.aa, ptr noundef nonnull align 8 dereferenceable(32) %i.z, i64 32, i1 false)
   %i.cb = getelementptr inbounds nuw i8, ptr %i.aa, i64 32
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(48) %i.cb, ptr noundef nonnull align 8 dereferenceable(48) %i.y, i64 48, i1 false)
@@ -1250,14 +1250,14 @@ bb.ap:                                            ; preds = %.noexc14.i
   %i.ci = getelementptr inbounds nuw i8, ptr %i.aa, i64 200
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(80) %i.ci, ptr noundef nonnull align 8 dereferenceable(80) %i.r, i64 80, i1 false)
   call void @llvm.lifetime.end.p0(ptr nonnull %i.r)
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !13603
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !13603
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !noalias !13603
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !13603
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.w), !noalias !13603
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !13603
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.y), !noalias !13603
-  call void @llvm.lifetime.end.p0(ptr nonnull %i.z), !noalias !13603
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.s), !noalias !13600
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.t), !noalias !13600
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.u), !noalias !13600
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.v), !noalias !13600
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.w), !noalias !13600
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.x), !noalias !13600
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.y), !noalias !13600
+  call void @llvm.lifetime.end.p0(ptr nonnull %i.z), !noalias !13600
   store i64 0, ptr %0, align 8
   %i.cj = getelementptr inbounds nuw i8, ptr %0, i64 8
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(472) %i.cj, ptr noundef nonnull align 8 dereferenceable(472) %i.aa, i64 472, i1 false)
@@ -1275,7 +1275,7 @@ bb.aq:                                            ; preds = %bb.ao, %.body.i
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal noundef zeroext i1 @_RNvXsy_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variableNtB5_20TypeVariableSubValueNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(8) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13619 {
+define internal noundef zeroext i1 @_RNvXsy_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variableNtB5_20TypeVariableSubValueNtNtCshzWfHUSfYae_4core3fmt5Debug3fmt(ptr noalias nofree noundef readonly align 4 captures(address, read_provenance) dereferenceable(8) %0, ptr noalias nofree noundef align 8 dereferenceable(24) %1) unnamed_addr #2 !guid !13616 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 4 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a)
@@ -1286,21 +1286,21 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal void @_RNvYNCNvNtNtCs8K4cjrcxBsw_6hir_ty5infer5unify11could_unify0INtNtNtCshzWfHUSfYae_4core3ops8function6FnOnceTQNtNtNtBa_11next_solver15obligation_ctxt14ObligationCtxtEE9call_onceBa_(ptr dead_on_unwind noalias nofree noundef writable sret([24 x i8]) align 8 captures(address) dereferenceable(24) %0, ptr noalias nofree noundef align 8 dereferenceable(88) %1) unnamed_addr #2 personality ptr @rust_eh_personality !guid !13620 {
+define internal void @_RNvYNCNvNtNtCs8K4cjrcxBsw_6hir_ty5infer5unify11could_unify0INtNtNtCshzWfHUSfYae_4core3ops8function6FnOnceTQNtNtNtBa_11next_solver15obligation_ctxt14ObligationCtxtEE9call_onceBa_(ptr dead_on_unwind noalias nofree noundef writable sret([24 x i8]) align 8 captures(address) dereferenceable(24) %0, ptr noalias nofree noundef align 8 dereferenceable(88) %1) unnamed_addr #2 personality ptr @rust_eh_personality !guid !13617 {
 bb.a:
   tail call void @_RNvMs_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver15obligation_ctxtNtB4_14ObligationCtxt24try_evaluate_obligations(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %0, ptr noalias nofree noundef nonnull align 8 dereferenceable(88) %1)
   ret void
 }
 
 ; Function Attrs: inlinehint nonlazybind uwtable
-define internal void @_RNvYNCNvNtNtCs8K4cjrcxBsw_6hir_ty5infer5unify18could_unify_deeply0INtNtNtCshzWfHUSfYae_4core3ops8function6FnOnceTQNtNtNtBa_11next_solver15obligation_ctxt14ObligationCtxtEE9call_onceBa_(ptr dead_on_unwind noalias nofree noundef writable sret([24 x i8]) align 8 captures(address) dereferenceable(24) %0, ptr noalias nofree noundef align 8 dereferenceable(88) %1) unnamed_addr #2 personality ptr @rust_eh_personality !guid !13621 {
+define internal void @_RNvYNCNvNtNtCs8K4cjrcxBsw_6hir_ty5infer5unify18could_unify_deeply0INtNtNtCshzWfHUSfYae_4core3ops8function6FnOnceTQNtNtNtBa_11next_solver15obligation_ctxt14ObligationCtxtEE9call_onceBa_(ptr dead_on_unwind noalias nofree noundef writable sret([24 x i8]) align 8 captures(address) dereferenceable(24) %0, ptr noalias nofree noundef align 8 dereferenceable(88) %1) unnamed_addr #2 personality ptr @rust_eh_personality !guid !13618 {
 bb.a:
   tail call void @_RNvMs_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver15obligation_ctxtNtB4_14ObligationCtxt39evaluate_obligations_error_on_ambiguity(ptr noalias nofree noundef nonnull sret([24 x i8]) align 8 captures(address) dereferenceable(24) %0, ptr noalias nofree noundef nonnull align 8 dereferenceable(88) %1)
   ret void
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef zeroext i1 @_RNvYNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5visit15HasErrorVisitorINtB4_11TypeVisitorNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE11visit_constB1r_(ptr noalias nofree noundef nonnull %0, ptr noundef nonnull %1) unnamed_addr #0 !guid !13622 {
+define hidden noundef zeroext i1 @_RNvYNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5visit15HasErrorVisitorINtB4_11TypeVisitorNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE11visit_constB1r_(ptr noalias nofree noundef nonnull %0, ptr noundef nonnull %1) unnamed_addr #0 !guid !13619 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 2 uses
   store ptr %1, ptr %i.a, align 8
@@ -1309,7 +1309,7 @@ bb.a:
 }
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: read, inaccessiblemem: write) uwtable
-define hidden noundef zeroext i1 @_RNvYNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5visit15HasErrorVisitorINtB4_11TypeVisitorNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE12visit_regionB1r_(ptr noalias nofree noundef nonnull readnone captures(none) %0, ptr nofree noundef nonnull readonly captures(none) %1) unnamed_addr #6 !guid !13623 {
+define hidden noundef zeroext i1 @_RNvYNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5visit15HasErrorVisitorINtB4_11TypeVisitorNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE12visit_regionB1r_(ptr noalias nofree noundef nonnull readnone captures(none) %0, ptr nofree noundef nonnull readonly captures(none) %1) unnamed_addr #6 !guid !13620 {
 bb.a:
   %.sroa.0.0.copyload = load i32, ptr %1, align 4 ; 2 uses
   %i.a = icmp ne i32 %.sroa.0.0.copyload, 17
@@ -1319,7 +1319,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef zeroext i1 @_RNvYNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5visit15HasErrorVisitorINtB4_11TypeVisitorNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE15visit_predicateB1r_(ptr noalias nofree noundef nonnull %0, ptr noundef nonnull %1) unnamed_addr #0 !guid !13624 {
+define hidden noundef zeroext i1 @_RNvYNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5visit15HasErrorVisitorINtB4_11TypeVisitorNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE15visit_predicateB1r_(ptr noalias nofree noundef nonnull %0, ptr noundef nonnull %1) unnamed_addr #0 !guid !13621 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 2 uses
   store ptr %1, ptr %i.a, align 8
@@ -1328,7 +1328,7 @@ bb.a:
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef zeroext i1 @_RNvYNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5visit15HasErrorVisitorINtB4_11TypeVisitorNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8visit_tyB1r_(ptr noalias nofree noundef nonnull %0, ptr noundef nonnull %1) unnamed_addr #0 !guid !13625 {
+define hidden noundef zeroext i1 @_RNvYNtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir5visit15HasErrorVisitorINtB4_11TypeVisitorNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver8interner10DbInternerE8visit_tyB1r_(ptr noalias nofree noundef nonnull %0, ptr noundef nonnull %1) unnamed_addr #0 !guid !13622 {
 bb.a:
   %i.a = alloca [8 x i8], align 8                 ; 2 uses
   store ptr %1, ptr %i.a, align 8
@@ -1337,14 +1337,14 @@ bb.a:
 }
 
 ; Function Attrs: inlinehint mustprogress nofree norecurse nosync nounwind nonlazybind willreturn memory(argmem: readwrite) uwtable
-define internal void @_RNvYNtNtCsaMQbKjKCVRW_12tracing_core8callsite15DefaultCallsiteNtB4_8Callsite15private_type_idCs8K4cjrcxBsw_6hir_ty(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 16)) %0, ptr nofree nonnull readnone align 8 captures(none) %1) unnamed_addr #18 !guid !13626 {
+define internal void @_RNvYNtNtCsaMQbKjKCVRW_12tracing_core8callsite15DefaultCallsiteNtB4_8Callsite15private_type_idCs8K4cjrcxBsw_6hir_ty(ptr dead_on_unwind noalias nofree noundef writable writeonly sret([16 x i8]) align 8 captures(none) dereferenceable(16) initializes((0, 16)) %0, ptr nofree nonnull readnone align 8 captures(none) %1) unnamed_addr #18 !guid !13623 {
 bb.a:
   tail call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(16) %0, ptr noundef nonnull align 8 dereferenceable(16) @927, i64 16, i1 false)
   ret void
 }
 
 ; Function Attrs: nonlazybind uwtable
-define hidden noundef nonnull ptr @_RNvYNtNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer8snapshot5fudge15InferenceFudgerINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir4fold10TypeFolderNtNtBa_8interner10DbInternerE14fold_predicateBc_(ptr noalias nofree noundef align 8 dereferenceable(120) %0, ptr noundef nonnull %1) unnamed_addr #0 !guid !13627 {
+define hidden noundef nonnull ptr @_RNvYNtNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer8snapshot5fudge15InferenceFudgerINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir4fold10TypeFolderNtNtBa_8interner10DbInternerE14fold_predicateBc_(ptr noalias nofree noundef align 8 dereferenceable(120) %0, ptr noundef nonnull %1) unnamed_addr #0 !guid !13624 {
 bb.a:
   %i.a = tail call noundef nonnull ptr @_RINvXsl_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver9predicateNtB6_9PredicateINtNtCs1nWGUjlayfI_19ra_ap_rustc_type_ir4fold17TypeSuperFoldableNtNtB8_8interner10DbInternerE15super_fold_withNtNtNtNtB8_5infer8snapshot5fudge15InferenceFudgerEBa_(ptr noundef nonnull %1, ptr noalias nofree noundef nonnull align 8 dereferenceable(120) %0)
   ret ptr %i.a
@@ -1747,81 +1747,78 @@ begin_hunk_1_@llvm.umin.i32
 !13548 = distinct !{!13548, !13547, !"_RNvXsc_NtCsciM7tI7r4rL_3ena5unifyINtB5_8VarValueNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variable10TyVidEqKeyENtNtCshzWfHUSfYae_4core5clone5Clone5cloneBS_: argument 1"}
 !13549 = !{i64 1358918252919876913}
 !13550 = !{!13548}
-!13551 = distinct !{!13551, i1 true, !"_RNvXsc_NtCsciM7tI7r4rL_3ena5unifyINtB5_8VarValueNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variable11TyVidSubKeyENtNtCshzWfHUSfYae_4core5clone5Clone5cloneBS_"}
-!13552 = distinct !{!13552, !13551, !"_RNvXsc_NtCsciM7tI7r4rL_3ena5unifyINtB5_8VarValueNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variable11TyVidSubKeyENtNtCshzWfHUSfYae_4core5clone5Clone5cloneBS_: argument 1"}
-!13553 = !{i64 752640497343750500}
-!13554 = !{!13552}
-!13555 = distinct !{!13555, i1 true, !"_RNvXsc_NtCsciM7tI7r4rL_3ena5unifyINtB5_8VarValueNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_key11ConstVidKeyENtNtCshzWfHUSfYae_4core5clone5Clone5cloneBS_"}
-!13556 = distinct !{!13556, !13555, !"_RNvXsc_NtCsciM7tI7r4rL_3ena5unifyINtB5_8VarValueNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_key11ConstVidKeyENtNtCshzWfHUSfYae_4core5clone5Clone5cloneBS_: argument 1"}
-!13557 = !{i64 -7562212990794216515}
-!13558 = !{!13556}
-!13559 = distinct !{!13559, i1 true, !"_RNvXsc_NtCsciM7tI7r4rL_3ena5unifyINtB5_8VarValueNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_key12RegionVidKeyENtNtCshzWfHUSfYae_4core5clone5Clone5cloneBS_"}
-!13560 = distinct !{!13560, !13559, !"_RNvXsc_NtCsciM7tI7r4rL_3ena5unifyINtB5_8VarValueNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_key12RegionVidKeyENtNtCshzWfHUSfYae_4core5clone5Clone5cloneBS_: argument 1"}
-!13561 = !{i64 -2198506091635453940}
-!13562 = !{i32 -2, i32 8}
-!13563 = !{!13560}
-!13564 = !{i64 805793272481511966}
-!13565 = !{i64 5156924247700626421}
-!13566 = !{i64 6297825058812316094}
-!13567 = !{i64 1086678604180875961}
-!13568 = !{i64 -8751992778550816823}
-!13569 = !{i64 2299523812230131890}
-!13570 = !{i64 -4780745620421855755}
-!13571 = !{i64 -5072520010105614871}
-!13572 = !{i64 3465336985113716835}
-!13573 = !{i64 -37533559686489398}
-!13574 = !{i64 4603480712911986821}
-!13575 = !{i64 -2194795137464327367}
-!13576 = !{i64 6920665731186085785}
-!13577 = !{i64 -4361533841336563304}
-!13578 = !{i64 4320674146551061534}
-!13579 = !{i64 3018573403294183510}
-!13580 = !{i64 7528451730680467714}
-!13581 = !{i64 -778610673224160303}
-!13582 = !{i64 -3760513913707742275}
-!13583 = distinct !{!13583, i1 true, !"_RNvMst_NtCshzWfHUSfYae_4core4cellINtB5_7RefCellNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer14InferCtxtInnerE6borrowBP_"}
-!13584 = distinct !{!13584, !13583, !"_RNvMst_NtCshzWfHUSfYae_4core4cellINtB5_7RefCellNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer14InferCtxtInnerE6borrowBP_: argument 0"}
-!13585 = distinct !{!13585, i1 true, !"_RNvXs7_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver5inferNtB5_14InferCtxtInnerNtNtCshzWfHUSfYae_4core5clone5Clone5clone"}
-!13586 = distinct !{!13586, !13585, !"_RNvXs7_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver5inferNtB5_14InferCtxtInnerNtNtCshzWfHUSfYae_4core5clone5Clone5clone: argument 1"}
-!13587 = distinct !{!13587, !13585, !"_RNvXs7_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver5inferNtB5_14InferCtxtInnerNtNtCshzWfHUSfYae_4core5clone5Clone5clone: argument 0"}
-!13588 = distinct !{!13588, i1 true, !"_RNvXse_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variableNtB5_19TypeVariableStorageNtNtCshzWfHUSfYae_4core5clone5Clone5clone"}
-!13589 = distinct !{!13589, !13588, !"_RNvXse_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variableNtB5_19TypeVariableStorageNtNtCshzWfHUSfYae_4core5clone5Clone5clone: argument 1"}
-!13590 = distinct !{!13590, !13588, !"_RNvXse_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variableNtB5_19TypeVariableStorageNtNtCshzWfHUSfYae_4core5clone5Clone5clone: argument 0"}
-!13591 = distinct !{!13591, i1 true, !"_RNvXs9_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraintsNtB5_23RegionConstraintStorageNtNtCshzWfHUSfYae_4core5clone5Clone5clone"}
-!13592 = distinct !{!13592, !13591, !"_RNvXs9_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraintsNtB5_23RegionConstraintStorageNtNtCshzWfHUSfYae_4core5clone5Clone5clone: argument 1"}
-!13593 = distinct !{!13593, !13591, !"_RNvXs9_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraintsNtB5_23RegionConstraintStorageNtNtCshzWfHUSfYae_4core5clone5Clone5clone: argument 0"}
-!13594 = distinct !{!13594, i1 true, !"_RNvXsd_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraintsNtB5_20RegionConstraintDataNtNtCshzWfHUSfYae_4core5clone5Clone5clone"}
-!13595 = distinct !{!13595, !13594, !"_RNvXsd_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraintsNtB5_20RegionConstraintDataNtNtCshzWfHUSfYae_4core5clone5Clone5clone: argument 1"}
-!13596 = distinct !{!13596, !13594, !"_RNvXsd_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraintsNtB5_20RegionConstraintDataNtNtCshzWfHUSfYae_4core5clone5Clone5clone: argument 0"}
-!13597 = distinct !{!13597, i1 true, !"_RNvXs4_NtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer12opaque_types5tableNtB5_17OpaqueTypeStorageNtNtCshzWfHUSfYae_4core5clone5Clone5clone"}
-!13598 = distinct !{!13598, !13597, !"_RNvXs4_NtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer12opaque_types5tableNtB5_17OpaqueTypeStorageNtNtCshzWfHUSfYae_4core5clone5Clone5clone: argument 1"}
-!13599 = distinct !{!13599, !13597, !"_RNvXs4_NtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer12opaque_types5tableNtB5_17OpaqueTypeStorageNtNtCshzWfHUSfYae_4core5clone5Clone5clone: argument 0"}
-!13600 = !{i64 -6363098473702024775}
-!13601 = !{!13584}
-!13602 = !{!13586}
-!13603 = !{!13587, !13586}
-!13604 = !{!13590, !13589, !13587, !13586}
-!13605 = !{!13587}
-!13606 = !{!13590, !13587}
-!13607 = !{!13589, !13587, !13586}
-!13608 = !{!13592}
-!13609 = !{!13593, !13592, !13587, !13586}
-!13610 = !{!13596, !13595, !13593, !13592, !13587, !13586}
-!13611 = !{!13593, !13587}
-!13612 = !{!13596, !13593, !13587}
-!13613 = !{!13595, !13593, !13592, !13587, !13586}
-!13614 = !{!13592, !13587, !13586}
-!13615 = !{!13592, !13586}
-!13616 = !{!13599, !13598, !13587, !13586}
-!13617 = !{!13599, !13587}
-!13618 = !{!13598, !13587, !13586}
-!13619 = !{i64 2920024293861418596}
-!13620 = !{i64 -3867308374946764897}
-!13621 = !{i64 6499666526940986122}
-!13622 = !{i64 -2982419829954284271}
-!13623 = !{i64 -2041604044431920065}
-!13624 = !{i64 5307423932264222948}
-!13625 = !{i64 -1256679417778951611}
-!13626 = !{i64 171158800788169784}
-!13627 = !{i64 1570535950643603230}
+!13551 = !{i64 752640497343750500}
+!13552 = distinct !{!13552, i1 true, !"_RNvXsc_NtCsciM7tI7r4rL_3ena5unifyINtB5_8VarValueNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_key11ConstVidKeyENtNtCshzWfHUSfYae_4core5clone5Clone5cloneBS_"}
+!13553 = distinct !{!13553, !13552, !"_RNvXsc_NtCsciM7tI7r4rL_3ena5unifyINtB5_8VarValueNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_key11ConstVidKeyENtNtCshzWfHUSfYae_4core5clone5Clone5cloneBS_: argument 1"}
+!13554 = !{i64 -7562212990794216515}
+!13555 = !{!13553}
+!13556 = distinct !{!13556, i1 true, !"_RNvXsc_NtCsciM7tI7r4rL_3ena5unifyINtB5_8VarValueNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_key12RegionVidKeyENtNtCshzWfHUSfYae_4core5clone5Clone5cloneBS_"}
+!13557 = distinct !{!13557, !13556, !"_RNvXsc_NtCsciM7tI7r4rL_3ena5unifyINtB5_8VarValueNtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer9unify_key12RegionVidKeyENtNtCshzWfHUSfYae_4core5clone5Clone5cloneBS_: argument 1"}
+!13558 = !{i64 -2198506091635453940}
+!13559 = !{i32 -2, i32 8}
+!13560 = !{!13557}
+!13561 = !{i64 805793272481511966}
+!13562 = !{i64 5156924247700626421}
+!13563 = !{i64 6297825058812316094}
+!13564 = !{i64 1086678604180875961}
+!13565 = !{i64 -8751992778550816823}
+!13566 = !{i64 2299523812230131890}
+!13567 = !{i64 -4780745620421855755}
+!13568 = !{i64 -5072520010105614871}
+!13569 = !{i64 3465336985113716835}
+!13570 = !{i64 -37533559686489398}
+!13571 = !{i64 4603480712911986821}
+!13572 = !{i64 -2194795137464327367}
+!13573 = !{i64 6920665731186085785}
+!13574 = !{i64 -4361533841336563304}
+!13575 = !{i64 4320674146551061534}
+!13576 = !{i64 3018573403294183510}
+!13577 = !{i64 7528451730680467714}
+!13578 = !{i64 -778610673224160303}
+!13579 = !{i64 -3760513913707742275}
+!13580 = distinct !{!13580, i1 true, !"_RNvMst_NtCshzWfHUSfYae_4core4cellINtB5_7RefCellNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer14InferCtxtInnerE6borrowBP_"}
+!13581 = distinct !{!13581, !13580, !"_RNvMst_NtCshzWfHUSfYae_4core4cellINtB5_7RefCellNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer14InferCtxtInnerE6borrowBP_: argument 0"}
+!13582 = distinct !{!13582, i1 true, !"_RNvXs7_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver5inferNtB5_14InferCtxtInnerNtNtCshzWfHUSfYae_4core5clone5Clone5clone"}
+!13583 = distinct !{!13583, !13582, !"_RNvXs7_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver5inferNtB5_14InferCtxtInnerNtNtCshzWfHUSfYae_4core5clone5Clone5clone: argument 1"}
+!13584 = distinct !{!13584, !13582, !"_RNvXs7_NtNtCs8K4cjrcxBsw_6hir_ty11next_solver5inferNtB5_14InferCtxtInnerNtNtCshzWfHUSfYae_4core5clone5Clone5clone: argument 0"}
+!13585 = distinct !{!13585, i1 true, !"_RNvXse_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variableNtB5_19TypeVariableStorageNtNtCshzWfHUSfYae_4core5clone5Clone5clone"}
+!13586 = distinct !{!13586, !13585, !"_RNvXse_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variableNtB5_19TypeVariableStorageNtNtCshzWfHUSfYae_4core5clone5Clone5clone: argument 1"}
+!13587 = distinct !{!13587, !13585, !"_RNvXse_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer13type_variableNtB5_19TypeVariableStorageNtNtCshzWfHUSfYae_4core5clone5Clone5clone: argument 0"}
+!13588 = distinct !{!13588, i1 true, !"_RNvXs9_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraintsNtB5_23RegionConstraintStorageNtNtCshzWfHUSfYae_4core5clone5Clone5clone"}
+!13589 = distinct !{!13589, !13588, !"_RNvXs9_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraintsNtB5_23RegionConstraintStorageNtNtCshzWfHUSfYae_4core5clone5Clone5clone: argument 1"}
+!13590 = distinct !{!13590, !13588, !"_RNvXs9_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraintsNtB5_23RegionConstraintStorageNtNtCshzWfHUSfYae_4core5clone5Clone5clone: argument 0"}
+!13591 = distinct !{!13591, i1 true, !"_RNvXsd_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraintsNtB5_20RegionConstraintDataNtNtCshzWfHUSfYae_4core5clone5Clone5clone"}
+!13592 = distinct !{!13592, !13591, !"_RNvXsd_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraintsNtB5_20RegionConstraintDataNtNtCshzWfHUSfYae_4core5clone5Clone5clone: argument 1"}
+!13593 = distinct !{!13593, !13591, !"_RNvXsd_NtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer18region_constraintsNtB5_20RegionConstraintDataNtNtCshzWfHUSfYae_4core5clone5Clone5clone: argument 0"}
+!13594 = distinct !{!13594, i1 true, !"_RNvXs4_NtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer12opaque_types5tableNtB5_17OpaqueTypeStorageNtNtCshzWfHUSfYae_4core5clone5Clone5clone"}
+!13595 = distinct !{!13595, !13594, !"_RNvXs4_NtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer12opaque_types5tableNtB5_17OpaqueTypeStorageNtNtCshzWfHUSfYae_4core5clone5Clone5clone: argument 1"}
+!13596 = distinct !{!13596, !13594, !"_RNvXs4_NtNtNtNtCs8K4cjrcxBsw_6hir_ty11next_solver5infer12opaque_types5tableNtB5_17OpaqueTypeStorageNtNtCshzWfHUSfYae_4core5clone5Clone5clone: argument 0"}
+!13597 = !{i64 -6363098473702024775}
+!13598 = !{!13581}
+!13599 = !{!13583}
+!13600 = !{!13584, !13583}
+!13601 = !{!13587, !13586, !13584, !13583}
+!13602 = !{!13584}
+!13603 = !{!13587, !13584}
+!13604 = !{!13586, !13584, !13583}
+!13605 = !{!13589}
+!13606 = !{!13590, !13589, !13584, !13583}
+!13607 = !{!13593, !13592, !13590, !13589, !13584, !13583}
+!13608 = !{!13590, !13584}
+!13609 = !{!13593, !13590, !13584}
+!13610 = !{!13592, !13590, !13589, !13584, !13583}
+!13611 = !{!13589, !13584, !13583}
+!13612 = !{!13589, !13583}
+!13613 = !{!13596, !13595, !13584, !13583}
+!13614 = !{!13596, !13584}
+!13615 = !{!13595, !13584, !13583}
+!13616 = !{i64 2920024293861418596}
+!13617 = !{i64 -3867308374946764897}
+!13618 = !{i64 6499666526940986122}
+!13619 = !{i64 -2982419829954284271}
+!13620 = !{i64 -2041604044431920065}
+!13621 = !{i64 5307423932264222948}
+!13622 = !{i64 -1256679417778951611}
+!13623 = !{i64 171158800788169784}
+!13624 = !{i64 1570535950643603230}
 end_hunk_1

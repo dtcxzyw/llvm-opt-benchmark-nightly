@@ -205,7 +205,7 @@ bb.co:                                            ; preds = %bb.cn
   %i.jz = getelementptr inbounds nuw i8, ptr %i.l, i64 176
   store i32 %i.jw, ptr %i.jz, align 8, !alias.scope !71359, !noalias !71358
   %i.ka = getelementptr inbounds nuw i8, ptr %i.n, i64 264
-  %i.kb = load <2 x i16>, ptr %i.jl, align 4, !alias.scope !71356, !noalias !71353
+  %i.kb = load <2 x i16>, ptr %i.jl, align 4, !noalias !71353
   store <2 x i16> %i.kb, ptr %i.ka, align 8, !noalias !71353
   %i.kc = getelementptr inbounds nuw i8, ptr %i.n, i64 268
   store i32 %i.jp, ptr %i.kc, align 4, !noalias !71353
