@@ -204,118 +204,106 @@ bb.e:                                             ; preds = %bb.d
   br i1 %.not112, label %.critedge2.thread, label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %bb.c, %bb.a
-  %.pre-phi = phi i32 [ %i.ad, %bb.e ], [ %i.w, %bb.c ], [ %i.g, %bb.a ] ; 4 uses
+  %.pre-phi = phi i32 [ %i.ad, %bb.e ], [ %i.w, %bb.c ], [ %i.g, %bb.a ] ; 3 uses
   %i.ai = tail call noundef ptr @_ZN5zxing9BitMatrix13getRowBoolPtrEi(ptr noundef nonnull align 8 dereferenceable(346) %i.f, i32 noundef %i.h) ; 8 uses
   %i.aj = icmp sgt i32 %.pre-phi, -1
   br i1 %i.aj, label %.lr.ph, label %.critedge2.thread
 
 .lr.ph:                                           ; preds = %bb.f
   %i.ak = getelementptr inbounds nuw i8, ptr %i.a, i64 8 ; 2 uses
-  %6 = zext nneg i32 %.pre-phi to i64
   %i.al = add nuw i32 %.pre-phi, 1                ; 4 uses
   br label %bb.g
 
 bb.g:                                             ; preds = %.lr.ph, %bb.h
   %indvars.iv235.a = phi i32 [ %i.al, %.lr.ph ], [ %indvars.iv.next236.a, %bb.h ] ; 2 uses
-  %indvars.iv226 = phi i32 [ %.pre-phi, %.lr.ph ], [ %indvars.iv.next227, %bb.h ] ; 2 uses
-  %indvars.iv = phi i64 [ %6, %.lr.ph ], [ %indvars.iv.next, %bb.h ] ; 3 uses
-  %.promoted153 = phi i32 [ 0, %.lr.ph ], [ %i.aq, %bb.h ] ; 4 uses
-  %i.am = getelementptr inbounds nuw i8, ptr %i.ai, i64 %indvars.iv
+  %indvars.iv226 = phi i32 [ 0, %.lr.ph ], [ %i.aq, %bb.h ] ; 4 uses
+  %.097134 = phi i32 [ %.pre-phi, %.lr.ph ], [ %7, %bb.h ] ; 4 uses
+  %6 = zext nneg i32 %.097134 to i64
+  %i.am = getelementptr inbounds nuw i8, ptr %i.ai, i64 %6
   %i.an = load i8, ptr %i.am, align 1, !tbaa !145, !range !60, !noundef !61
   %i.ao = trunc nuw i8 %i.an to i1
   br i1 %i.ao, label %bb.h, label %.lr.ph137
 
 .lr.ph137:                                        ; preds = %bb.g
-  store i32 %.promoted153, ptr %i.ak, align 8
+  store i32 %indvars.iv226, ptr %i.ak, align 8
   %i.ap = getelementptr inbounds nuw i8, ptr %i.a, i64 4
-  %7 = zext i32 %indvars.iv226 to i64
   br label %bb.i
 
 bb.h:                                             ; preds = %bb.g
-  %i.aq = add nuw nsw i32 %.promoted153, 1
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  %i.ar = icmp sgt i64 %indvars.iv, 0
-  %indvars.iv.next227 = add i32 %indvars.iv226, -1
+  %i.aq = add nuw nsw i32 %indvars.iv226, 1
+  %7 = add nsw i32 %.097134, -1
+  %i.ar = icmp sgt i32 %.097134, 0
   %indvars.iv.next236.a = add i32 %indvars.iv235.a, -1
   br i1 %i.ar, label %bb.g, label %.critedge2.thread, !llvm.loop !208
 
 bb.i:                                             ; preds = %.lr.ph137, %.critedge
   %indvars.iv238 = phi i32 [ %indvars.iv235.a, %.lr.ph137 ], [ %indvars.iv.next239, %.critedge ] ; 2 uses
-  %indvars.iv229 = phi i64 [ %7, %.lr.ph137 ], [ %indvars.iv.next230, %.critedge ] ; 5 uses
-  %i.as = phi i32 [ 0, %.lr.ph137 ], [ %i.aw, %.critedge ] ; 4 uses
-  %i.at = getelementptr inbounds nuw i8, ptr %i.ai, i64 %indvars.iv229
+  %8 = phi i32 [ 0, %.lr.ph137 ], [ %i.aw, %.critedge ] ; 4 uses
+  %i.as = phi i32 [ %.097134, %.lr.ph137 ], [ %10, %.critedge ] ; 4 uses
+  %9 = zext nneg i32 %i.as to i64
+  %i.at = getelementptr inbounds nuw i8, ptr %i.ai, i64 %9
   %i.au = load i8, ptr %i.at, align 1, !tbaa !145, !range !60, !noundef !61
   %i.av = trunc nuw i8 %i.au to i1
-  %.not113 = icmp sgt i32 %i.as, %3               ; 2 uses
+  %.not113 = icmp sgt i32 %8, %3                  ; 2 uses
   %or.cond196 = select i1 %i.av, i1 true, i1 %.not113
   br i1 %or.cond196, label %.critedge2, label %.critedge
 
 .critedge:                                        ; preds = %bb.i
-  %i.aw = add nuw nsw i32 %i.as, 1
-  %indvars.iv.next230 = add nsw i64 %indvars.iv229, -1
-  %8 = trunc nuw i64 %indvars.iv229 to i32
-  %i.ax = icmp sgt i32 %8, 0
+  %i.aw = add nuw nsw i32 %8, 1
+  %10 = add nsw i32 %i.as, -1
+  %i.ax = icmp sgt i32 %i.as, 0
   %indvars.iv.next239 = add i32 %indvars.iv238, -1
   br i1 %i.ax, label %bb.i, label %.critedge2.thread, !llvm.loop !209
 
 .critedge2:                                       ; preds = %bb.i
-  store i32 %i.as, ptr %i.ap, align 4
-  br i1 %.not113, label %.critedge2.thread, label %.preheader129
+  store i32 %8, ptr %i.ap, align 4
+  br i1 %.not113, label %.critedge2.thread, label %.lr.ph144
 
-.preheader129:                                    ; preds = %.critedge2
-  %9 = and i64 %indvars.iv229, 2147483648
-  %10 = icmp eq i64 %9, 0
-  br i1 %10, label %.lr.ph144, label %.critedge4
-
-.lr.ph144:                                        ; preds = %.preheader129, %bb.j
-  %indvars.iv233 = phi i64 [ %indvars.iv.next234, %bb.j ], [ %indvars.iv229, %.preheader129 ] ; 3 uses
-  %i.ay = phi i32 [ %i.bc, %bb.j ], [ 0, %.preheader129 ] ; 2 uses
-  %i.az = getelementptr inbounds nuw i8, ptr %i.ai, i64 %indvars.iv233
+.lr.ph144:                                        ; preds = %.critedge2, %bb.j
+  %.2143 = phi i32 [ %12, %bb.j ], [ %i.as, %.critedge2 ] ; 3 uses
+  %i.ay = phi i32 [ %i.bc, %bb.j ], [ 0, %.critedge2 ] ; 2 uses
+  %11 = zext nneg i32 %.2143 to i64
+  %i.az = getelementptr inbounds nuw i8, ptr %i.ai, i64 %11
   %i.ba = load i8, ptr %i.az, align 1, !tbaa !145, !range !60, !noundef !61
   %i.bb = trunc nuw i8 %i.ba to i1
   br i1 %i.bb, label %bb.j, label %.critedge4
 
 bb.j:                                             ; preds = %.lr.ph144
   %i.bc = add nuw nsw i32 %i.ay, 1
-  %indvars.iv.next234 = add nsw i64 %indvars.iv233, -1
-  %i.bd = icmp sgt i64 %indvars.iv233, 0
+  %12 = add nsw i32 %.2143, -1
+  %i.bd = icmp sgt i32 %.2143, 0
   br i1 %i.bd, label %.lr.ph144, label %.critedge4, !llvm.loop !210
 
-.critedge4:                                       ; preds = %.lr.ph144, %bb.j, %.preheader129
-  %.lcssa142 = phi i32 [ 0, %.preheader129 ], [ %indvars.iv238, %bb.j ], [ %i.ay, %.lr.ph144 ] ; 2 uses
-  store i32 %.lcssa142, ptr %i.a, align 16
-  %.not114.not = icmp sge i32 %.lcssa142, %3      ; 2 uses
+.critedge4:                                       ; preds = %.lr.ph144, %bb.j
+  %.lcssa142.ph = phi i32 [ %i.ay, %.lr.ph144 ], [ %indvars.iv238, %bb.j ] ; 2 uses
+  store i32 %.lcssa142.ph, ptr %i.a, align 16
+  %.not114.not = icmp sge i32 %.lcssa142.ph, %3   ; 2 uses
   %spec.select = zext i1 %.not114.not to i32      ; 2 uses
   %i.be = icmp slt i32 %i.al, %i.d
-  br i1 %i.be, label %.lr.ph149, label %.critedge6
+  br i1 %i.be, label %bb.k, label %.critedge6
 
-.lr.ph149:                                        ; preds = %.critedge4
-  %11 = sext i32 %i.al to i64
-  br label %bb.k
-
-bb.k:                                             ; preds = %.lr.ph149, %bb.l
-  %indvars.iv242 = phi i64 [ %11, %.lr.ph149 ], [ %indvars.iv.next243, %bb.l ] ; 3 uses
-  %i.bf = phi i32 [ %.promoted153, %.lr.ph149 ], [ %i.bj, %bb.l ] ; 3 uses
-  %i.bg = getelementptr inbounds i8, ptr %i.ai, i64 %indvars.iv242
+bb.k:                                             ; preds = %.critedge4, %bb.l
+  %13 = phi i32 [ %i.bj, %bb.l ], [ %indvars.iv226, %.critedge4 ] ; 3 uses
+  %i.bf = phi i32 [ %.3, %bb.l ], [ %i.al, %.critedge4 ] ; 3 uses
+  %14 = sext i32 %i.bf to i64
+  %i.bg = getelementptr inbounds i8, ptr %i.ai, i64 %14
   %i.bh = load i8, ptr %i.bg, align 1, !tbaa !145, !range !60, !noundef !61
   %i.bi = trunc nuw i8 %i.bh to i1
   br i1 %i.bi, label %bb.l, label %..critedge6_crit_edge151
 
 bb.l:                                             ; preds = %bb.k
-  %i.bj = add nuw nsw i32 %i.bf, 1
-  %indvars.iv.next243 = add nsw i64 %indvars.iv242, 1 ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next243 to i32
-  %exitcond.not = icmp eq i32 %i.d, %lftr.wideiv
+  %i.bj = add nuw nsw i32 %13, 1
+  %.3 = add nsw i32 %i.bf, 1                      ; 2 uses
+  %exitcond.not = icmp eq i32 %.3, %i.d
   br i1 %exitcond.not, label %.critedge2.thread, label %bb.k, !llvm.loop !211
 
 ..critedge6_crit_edge151:                         ; preds = %bb.k
-  %12 = trunc nsw i64 %indvars.iv242 to i32
-  store i32 %i.bf, ptr %i.ak, align 8
+  store i32 %13, ptr %i.ak, align 8
   br label %.critedge6
 
 .critedge6:                                       ; preds = %..critedge6_crit_edge151, %.critedge4
-  %i.bk = phi i32 [ %.promoted153, %.critedge4 ], [ %i.bf, %..critedge6_crit_edge151 ]
-  %.3.lcssa = phi i32 [ %i.al, %.critedge4 ], [ %12, %..critedge6_crit_edge151 ] ; 4 uses
+  %i.bk = phi i32 [ %indvars.iv226, %.critedge4 ], [ %13, %..critedge6_crit_edge151 ]
+  %.3.lcssa = phi i32 [ %i.al, %.critedge4 ], [ %i.bf, %..critedge6_crit_edge151 ] ; 4 uses
   %i.bl = icmp eq i32 %.3.lcssa, %i.d
   br i1 %i.bl, label %.critedge2.thread, label %.preheader128
 
@@ -514,7 +502,7 @@ bb.x:                                             ; preds = %bb.w
   store float %i.dq, ptr %5, align 4, !tbaa !66
   %i.dr = sub nsw i32 %.8.lcssa, %i.dd
   %i.ds = sitofp i32 %i.dr to float
-  %i.dt = add nuw i32 %.lcssa157, %i.as
+  %i.dt = add nuw i32 %.lcssa157, %8
   %i.du = add i32 %i.dt, %i.bk
   %i.dv = sitofp i32 %i.du to float
   %i.dw = fmul nnan float %i.dv, 5.000000e-01

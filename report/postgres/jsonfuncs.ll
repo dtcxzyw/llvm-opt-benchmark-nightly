@@ -204,19 +204,19 @@ bb.a:
 .lr.ph:                                           ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %7, i64 8
   %i.g = getelementptr inbounds nuw i8, ptr %7, i64 16
-  %8 = sext i32 %.04448 to i64
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.h
-  %indvars.iv = phi i64 [ %8, %.lr.ph ], [ %indvars.iv.next, %bb.h ] ; 4 uses
+  %.04449 = phi i32 [ %.04448, %.lr.ph ], [ %.044, %bb.h ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #13
-  %i.h = getelementptr inbounds i8, ptr %3, i64 %indvars.iv
+  %8 = sext i32 %.04449 to i64                    ; 2 uses
+  %i.h = getelementptr inbounds i8, ptr %3, i64 %8
   %i.i = load i8, ptr %i.h, align 1, !range !7, !noundef !8
   %i.j = trunc nuw i8 %i.i to i1
   br i1 %i.j, label %.critedge, label %bb.c
 
 bb.c:                                             ; preds = %bb.b
-  %i.k = getelementptr inbounds [8 x i8], ptr %2, i64 %indvars.iv
+  %i.k = getelementptr inbounds [8 x i8], ptr %2, i64 %8
   %i.l = load i64, ptr %i.k, align 8
   %i.m = inttoptr i64 %i.l to ptr
   %i.n = call ptr @text_to_cstring(ptr noundef %i.m) #13 ; 4 uses
@@ -267,15 +267,13 @@ push_null_elements.exit:                          ; preds = %.lr.ph.i, %bb.g
 
 bb.h:                                             ; preds = %bb.f, %push_null_elements.exit
   %.sink = phi i32 [ 17, %bb.f ], [ 16, %push_null_elements.exit ]
-  %9 = trunc nsw i64 %indvars.iv to i32
-  %i.z = sub i32 %9, %1
+  %i.z = sub i32 %.04449, %1
   %i.aa = sext i32 %i.z to i64
   %i.ab = getelementptr inbounds [4 x i8], ptr %i.d, i64 %i.aa
   store i32 %.sink, ptr %i.ab, align 4
   call void @llvm.lifetime.end.p0(ptr nonnull %i.a) #13
-  %indvars.iv.next = add nsw i64 %indvars.iv, 1   ; 2 uses
-  %lftr.wideiv = trunc i64 %indvars.iv.next to i32
-  %exitcond.not = icmp eq i32 %4, %lftr.wideiv
+  %.044 = add nsw i32 %.04449, 1                  ; 2 uses
+  %exitcond.not = icmp eq i32 %.044, %4
   br i1 %exitcond.not, label %.loopexit, label %bb.b, !llvm.loop !56
 
 .critedge:                                        ; preds = %bb.b
@@ -292,31 +290,26 @@ bb.h:                                             ; preds = %bb.f, %push_null_el
   call void @pushJsonbValue(ptr noundef nonnull %0, i32 noundef %., ptr noundef %5) #13
   %.050 = add i32 %4, -1                          ; 2 uses
   %i.ah = icmp sgt i32 %.050, %1
-  br i1 %i.ah, label %.lr.ph52.preheader, label %._crit_edge
+  br i1 %i.ah, label %.lr.ph52, label %._crit_edge
 
-.lr.ph52.preheader:                               ; preds = %.loopexit
-  %10 = sext i32 %.050 to i64
-  %11 = sext i32 %1 to i64
-  br label %.lr.ph52
-
-.lr.ph52:                                         ; preds = %.lr.ph52.preheader, %bb.i
-  %indvars.iv55 = phi i64 [ %10, %.lr.ph52.preheader ], [ %indvars.iv.next56, %bb.i ] ; 3 uses
-  %i.ai = getelementptr inbounds i8, ptr %3, i64 %indvars.iv55
+.lr.ph52:                                         ; preds = %.loopexit, %bb.i
+  %.051 = phi i32 [ %.0, %bb.i ], [ %.050, %.loopexit ] ; 3 uses
+  %9 = sext i32 %.051 to i64
+  %i.ai = getelementptr inbounds i8, ptr %3, i64 %9
   %i.aj = load i8, ptr %i.ai, align 1, !range !7, !noundef !8
   %i.ak = trunc nuw i8 %i.aj to i1
   br i1 %i.ak, label %._crit_edge, label %bb.i
 
 bb.i:                                             ; preds = %.lr.ph52
-  %12 = trunc nsw i64 %indvars.iv55 to i32
-  %i.al = sub i32 %12, %1
+  %i.al = sub i32 %.051, %1
   %i.am = sext i32 %i.al to i64
   %i.an = getelementptr inbounds [4 x i8], ptr %i.d, i64 %i.am
   %i.ao = load i32, ptr %i.an, align 4
   %i.ap = icmp eq i32 %i.ao, 17
   %.67 = select i1 %i.ap, i32 7, i32 5
   call void @pushJsonbValue(ptr noundef nonnull %0, i32 noundef %.67, ptr noundef null) #13
-  %indvars.iv.next56 = add nsw i64 %indvars.iv55, -1 ; 2 uses
-  %i.aq = icmp sgt i64 %indvars.iv.next56, %11
+  %.0 = add nsw i32 %.051, -1                     ; 2 uses
+  %i.aq = icmp sgt i32 %.0, %1
   br i1 %i.aq, label %.lr.ph52, label %._crit_edge, !llvm.loop !57
 
 ._crit_edge:                                      ; preds = %bb.i, %.lr.ph52, %.loopexit

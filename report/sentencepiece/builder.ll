@@ -205,14 +205,14 @@ bb.n:                                             ; preds = %bb.m, %_ZN5Darts7De
   %i.bl = phi ptr [ %i.dq, %_ZN5Darts7Details18DoubleArrayBuilder9fix_blockEj.exit.i ], [ %.pre31, %bb.n ]
   %i.bm = phi ptr [ %i.dr, %_ZN5Darts7Details18DoubleArrayBuilder9fix_blockEj.exit.i ], [ %.pre31, %bb.n ] ; 6 uses
   %.08.i = phi i32 [ %i.dt, %_ZN5Darts7Details18DoubleArrayBuilder9fix_blockEj.exit.i ], [ %.05.i, %bb.n ] ; 2 uses
-  %i.bn = shl i32 %.08.i, 8                       ; 2 uses
+  %i.bn = shl i32 %.08.i, 8                       ; 3 uses
   %i.bo = add i32 %i.bn, 256                      ; 2 uses
-  %2 = zext i32 %i.bn to i64                      ; 2 uses
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.s, %.lr.ph.i
-  %indvars.iv.i.i = phi i64 [ %2, %.lr.ph.i ], [ %indvars.iv.next.i.i.3, %bb.s ] ; 6 uses
-  %3 = and i64 %indvars.iv.i.i, 4092
+  %.01720.i.i = phi i32 [ %i.bn, %.lr.ph.i ], [ %13, %bb.s ] ; 6 uses
+  %2 = and i32 %.01720.i.i, 4092
+  %3 = zext nneg i32 %2 to i64
   %i.bp = getelementptr inbounds nuw [12 x i8], ptr %i.bm, i64 %3
   %i.bq = getelementptr inbounds nuw i8, ptr %i.bp, i64 9
   %i.br = load i8, ptr %i.bq, align 1, !tbaa !183, !range !36, !noundef !37
@@ -220,52 +220,50 @@ bb.o:                                             ; preds = %bb.s, %.lr.ph.i
   br i1 %i.bs, label %bb.p, label %.split.loop.exit.i.i
 
 bb.p:                                             ; preds = %bb.o
-  %indvars.iv.next.i.i = or disjoint i64 %indvars.iv.i.i, 1 ; 2 uses
-  %4 = and i64 %indvars.iv.next.i.i, 4093
-  %i.bt = getelementptr inbounds nuw [12 x i8], ptr %i.bm, i64 %4
+  %4 = or disjoint i32 %.01720.i.i, 1             ; 2 uses
+  %5 = and i32 %4, 4093
+  %6 = zext nneg i32 %5 to i64
+  %i.bt = getelementptr inbounds nuw [12 x i8], ptr %i.bm, i64 %6
   %i.bu = getelementptr inbounds nuw i8, ptr %i.bt, i64 9
   %i.bv = load i8, ptr %i.bu, align 1, !tbaa !183, !range !36, !noundef !37
   %i.bw = trunc nuw i8 %i.bv to i1
   br i1 %i.bw, label %bb.q, label %.split.loop.exit.i.i
 
 bb.q:                                             ; preds = %bb.p
-  %indvars.iv.next.i.i.1 = or disjoint i64 %indvars.iv.i.i, 2 ; 2 uses
-  %5 = and i64 %indvars.iv.next.i.i.1, 4094
-  %i.bx = getelementptr inbounds nuw [12 x i8], ptr %i.bm, i64 %5
+  %7 = or disjoint i32 %.01720.i.i, 2             ; 2 uses
+  %8 = and i32 %7, 4094
+  %9 = zext nneg i32 %8 to i64
+  %i.bx = getelementptr inbounds nuw [12 x i8], ptr %i.bm, i64 %9
   %i.by = getelementptr inbounds nuw i8, ptr %i.bx, i64 9
   %i.bz = load i8, ptr %i.by, align 1, !tbaa !183, !range !36, !noundef !37
   %i.ca = trunc nuw i8 %i.bz to i1
   br i1 %i.ca, label %bb.r, label %.split.loop.exit.i.i
 
 bb.r:                                             ; preds = %bb.q
-  %indvars.iv.next.i.i.2 = or disjoint i64 %indvars.iv.i.i, 3 ; 2 uses
-  %6 = and i64 %indvars.iv.next.i.i.2, 4095
-  %i.cb = getelementptr inbounds nuw [12 x i8], ptr %i.bm, i64 %6
+  %10 = or disjoint i32 %.01720.i.i, 3            ; 2 uses
+  %11 = and i32 %10, 4095
+  %12 = zext nneg i32 %11 to i64
+  %i.cb = getelementptr inbounds nuw [12 x i8], ptr %i.bm, i64 %12
   %i.cc = getelementptr inbounds nuw i8, ptr %i.cb, i64 9
   %i.cd = load i8, ptr %i.cc, align 1, !tbaa !183, !range !36, !noundef !37
   %i.ce = trunc nuw i8 %i.cd to i1
   br i1 %i.ce, label %bb.s, label %.split.loop.exit.i.i
 
 bb.s:                                             ; preds = %bb.r
-  %indvars.iv.next.i.i.3 = add nuw nsw i64 %indvars.iv.i.i, 4 ; 2 uses
-  %indvars.i.i.3 = trunc i64 %indvars.iv.next.i.i.3 to i32
-  %.not.i.i.3 = icmp eq i32 %i.bo, %indvars.i.i.3
-  br i1 %.not.i.i.3, label %.split.loop.exit29.i.i, label %bb.o, !llvm.loop !8
+  %13 = add i32 %.01720.i.i, 4                    ; 2 uses
+  %.not.i.i.3 = icmp eq i32 %13, %i.bo
+  br i1 %.not.i.i.3, label %.split.loop.exit.i.i, label %bb.o, !llvm.loop !8
 
-.split.loop.exit.i.i:                             ; preds = %bb.r, %bb.q, %bb.p, %bb.o
-  %indvars.iv.i.i.lcssa = phi i64 [ %indvars.iv.i.i, %bb.o ], [ %indvars.iv.next.i.i, %bb.p ], [ %indvars.iv.next.i.i.1, %bb.q ], [ %indvars.iv.next.i.i.2, %bb.r ]
-  %7 = trunc nuw i64 %indvars.iv.i.i.lcssa to i32
-  br label %.split.loop.exit29.i.i
-
-.split.loop.exit29.i.i:                           ; preds = %bb.s, %.split.loop.exit.i.i
-  %.018.i.i = phi i32 [ %7, %.split.loop.exit.i.i ], [ 0, %bb.s ]
+.split.loop.exit.i.i:                             ; preds = %bb.s, %bb.r, %bb.q, %bb.p, %bb.o
+  %.018.i.i = phi i32 [ 0, %bb.s ], [ %.01720.i.i, %bb.o ], [ %4, %bb.p ], [ %10, %bb.r ], [ %7, %bb.q ]
+  %14 = zext i32 %i.bn to i64
   br label %bb.t
 
-bb.t:                                             ; preds = %bb.z, %.split.loop.exit29.i.i
-  %i.cf = phi ptr [ %i.bl, %.split.loop.exit29.i.i ], [ %i.dq, %bb.z ] ; 2 uses
-  %i.cg = phi ptr [ %i.bm, %.split.loop.exit29.i.i ], [ %i.dr, %bb.z ]
-  %i.ch = phi ptr [ %i.bm, %.split.loop.exit29.i.i ], [ %i.ds, %bb.z ] ; 2 uses
-  %indvars.iv24.i.i = phi i64 [ %2, %.split.loop.exit29.i.i ], [ %indvars.iv.next25.i.i, %bb.z ] ; 7 uses
+bb.t:                                             ; preds = %bb.z, %.split.loop.exit.i.i
+  %i.cf = phi ptr [ %i.bl, %.split.loop.exit.i.i ], [ %i.dq, %bb.z ] ; 2 uses
+  %i.cg = phi ptr [ %i.bm, %.split.loop.exit.i.i ], [ %i.dr, %bb.z ]
+  %i.ch = phi ptr [ %i.bm, %.split.loop.exit.i.i ], [ %i.ds, %bb.z ] ; 2 uses
+  %indvars.iv24.i.i = phi i64 [ %14, %.split.loop.exit.i.i ], [ %indvars.iv.next25.i.i, %bb.z ] ; 7 uses
   %i.ci = and i64 %indvars.iv24.i.i, 4095         ; 2 uses
   %i.cj = getelementptr inbounds nuw [12 x i8], ptr %i.ch, i64 %i.ci
   %i.ck = getelementptr inbounds nuw i8, ptr %i.cj, i64 8
@@ -668,14 +666,14 @@ bb.m:                                             ; preds = %bb.l, %_ZN5Darts7De
   %i.ax = phi ptr [ %i.dc, %_ZN5Darts7Details18DoubleArrayBuilder9fix_blockEj.exit.i ], [ %.pre19, %bb.m ]
   %i.ay = phi ptr [ %i.dd, %_ZN5Darts7Details18DoubleArrayBuilder9fix_blockEj.exit.i ], [ %.pre19, %bb.m ] ; 6 uses
   %.08.i = phi i32 [ %i.df, %_ZN5Darts7Details18DoubleArrayBuilder9fix_blockEj.exit.i ], [ %.05.i, %bb.m ] ; 2 uses
-  %i.az = shl i32 %.08.i, 8                       ; 2 uses
+  %i.az = shl i32 %.08.i, 8                       ; 3 uses
   %i.ba = add i32 %i.az, 256                      ; 2 uses
-  %2 = zext i32 %i.az to i64                      ; 2 uses
   br label %bb.n
 
 bb.n:                                             ; preds = %bb.r, %.lr.ph.i
-  %indvars.iv.i.i = phi i64 [ %2, %.lr.ph.i ], [ %indvars.iv.next.i.i.3, %bb.r ] ; 6 uses
-  %3 = and i64 %indvars.iv.i.i, 4092
+  %.01720.i.i = phi i32 [ %i.az, %.lr.ph.i ], [ %13, %bb.r ] ; 6 uses
+  %2 = and i32 %.01720.i.i, 4092
+  %3 = zext nneg i32 %2 to i64
   %i.bb = getelementptr inbounds nuw [12 x i8], ptr %i.ay, i64 %3
   %i.bc = getelementptr inbounds nuw i8, ptr %i.bb, i64 9
   %i.bd = load i8, ptr %i.bc, align 1, !tbaa !183, !range !36, !noundef !37
@@ -683,52 +681,50 @@ bb.n:                                             ; preds = %bb.r, %.lr.ph.i
   br i1 %i.be, label %bb.o, label %.split.loop.exit.i.i
 
 bb.o:                                             ; preds = %bb.n
-  %indvars.iv.next.i.i = or disjoint i64 %indvars.iv.i.i, 1 ; 2 uses
-  %4 = and i64 %indvars.iv.next.i.i, 4093
-  %i.bf = getelementptr inbounds nuw [12 x i8], ptr %i.ay, i64 %4
+  %4 = or disjoint i32 %.01720.i.i, 1             ; 2 uses
+  %5 = and i32 %4, 4093
+  %6 = zext nneg i32 %5 to i64
+  %i.bf = getelementptr inbounds nuw [12 x i8], ptr %i.ay, i64 %6
   %i.bg = getelementptr inbounds nuw i8, ptr %i.bf, i64 9
   %i.bh = load i8, ptr %i.bg, align 1, !tbaa !183, !range !36, !noundef !37
   %i.bi = trunc nuw i8 %i.bh to i1
   br i1 %i.bi, label %bb.p, label %.split.loop.exit.i.i
 
 bb.p:                                             ; preds = %bb.o
-  %indvars.iv.next.i.i.1 = or disjoint i64 %indvars.iv.i.i, 2 ; 2 uses
-  %5 = and i64 %indvars.iv.next.i.i.1, 4094
-  %i.bj = getelementptr inbounds nuw [12 x i8], ptr %i.ay, i64 %5
+  %7 = or disjoint i32 %.01720.i.i, 2             ; 2 uses
+  %8 = and i32 %7, 4094
+  %9 = zext nneg i32 %8 to i64
+  %i.bj = getelementptr inbounds nuw [12 x i8], ptr %i.ay, i64 %9
   %i.bk = getelementptr inbounds nuw i8, ptr %i.bj, i64 9
   %i.bl = load i8, ptr %i.bk, align 1, !tbaa !183, !range !36, !noundef !37
   %i.bm = trunc nuw i8 %i.bl to i1
   br i1 %i.bm, label %bb.q, label %.split.loop.exit.i.i
 
 bb.q:                                             ; preds = %bb.p
-  %indvars.iv.next.i.i.2 = or disjoint i64 %indvars.iv.i.i, 3 ; 2 uses
-  %6 = and i64 %indvars.iv.next.i.i.2, 4095
-  %i.bn = getelementptr inbounds nuw [12 x i8], ptr %i.ay, i64 %6
+  %10 = or disjoint i32 %.01720.i.i, 3            ; 2 uses
+  %11 = and i32 %10, 4095
+  %12 = zext nneg i32 %11 to i64
+  %i.bn = getelementptr inbounds nuw [12 x i8], ptr %i.ay, i64 %12
   %i.bo = getelementptr inbounds nuw i8, ptr %i.bn, i64 9
   %i.bp = load i8, ptr %i.bo, align 1, !tbaa !183, !range !36, !noundef !37
   %i.bq = trunc nuw i8 %i.bp to i1
   br i1 %i.bq, label %bb.r, label %.split.loop.exit.i.i
 
 bb.r:                                             ; preds = %bb.q
-  %indvars.iv.next.i.i.3 = add nuw nsw i64 %indvars.iv.i.i, 4 ; 2 uses
-  %indvars.i.i.3 = trunc i64 %indvars.iv.next.i.i.3 to i32
-  %.not.i.i.3 = icmp eq i32 %i.ba, %indvars.i.i.3
-  br i1 %.not.i.i.3, label %.split.loop.exit29.i.i, label %bb.n, !llvm.loop !8
+  %13 = add i32 %.01720.i.i, 4                    ; 2 uses
+  %.not.i.i.3 = icmp eq i32 %13, %i.ba
+  br i1 %.not.i.i.3, label %.split.loop.exit.i.i, label %bb.n, !llvm.loop !8
 
-.split.loop.exit.i.i:                             ; preds = %bb.q, %bb.p, %bb.o, %bb.n
-  %indvars.iv.i.i.lcssa = phi i64 [ %indvars.iv.i.i, %bb.n ], [ %indvars.iv.next.i.i, %bb.o ], [ %indvars.iv.next.i.i.1, %bb.p ], [ %indvars.iv.next.i.i.2, %bb.q ]
-  %7 = trunc nuw i64 %indvars.iv.i.i.lcssa to i32
-  br label %.split.loop.exit29.i.i
-
-.split.loop.exit29.i.i:                           ; preds = %bb.r, %.split.loop.exit.i.i
-  %.018.i.i = phi i32 [ %7, %.split.loop.exit.i.i ], [ 0, %bb.r ]
+.split.loop.exit.i.i:                             ; preds = %bb.r, %bb.q, %bb.p, %bb.o, %bb.n
+  %.018.i.i = phi i32 [ 0, %bb.r ], [ %.01720.i.i, %bb.n ], [ %4, %bb.o ], [ %10, %bb.q ], [ %7, %bb.p ]
+  %14 = zext i32 %i.az to i64
   br label %bb.s
 
-bb.s:                                             ; preds = %bb.y, %.split.loop.exit29.i.i
-  %i.br = phi ptr [ %i.ax, %.split.loop.exit29.i.i ], [ %i.dc, %bb.y ] ; 2 uses
-  %i.bs = phi ptr [ %i.ay, %.split.loop.exit29.i.i ], [ %i.dd, %bb.y ]
-  %i.bt = phi ptr [ %i.ay, %.split.loop.exit29.i.i ], [ %i.de, %bb.y ] ; 2 uses
-  %indvars.iv24.i.i = phi i64 [ %2, %.split.loop.exit29.i.i ], [ %indvars.iv.next25.i.i, %bb.y ] ; 7 uses
+bb.s:                                             ; preds = %bb.y, %.split.loop.exit.i.i
+  %i.br = phi ptr [ %i.ax, %.split.loop.exit.i.i ], [ %i.dc, %bb.y ] ; 2 uses
+  %i.bs = phi ptr [ %i.ay, %.split.loop.exit.i.i ], [ %i.dd, %bb.y ]
+  %i.bt = phi ptr [ %i.ay, %.split.loop.exit.i.i ], [ %i.de, %bb.y ] ; 2 uses
+  %indvars.iv24.i.i = phi i64 [ %14, %.split.loop.exit.i.i ], [ %indvars.iv.next25.i.i, %bb.y ] ; 7 uses
   %i.bu = and i64 %indvars.iv24.i.i, 4095         ; 2 uses
   %i.bv = getelementptr inbounds nuw [12 x i8], ptr %i.bt, i64 %i.bu
   %i.bw = getelementptr inbounds nuw i8, ptr %i.bv, i64 8
@@ -1131,8 +1127,8 @@ _ZN5Darts7Details8AutoPoolIjE6resizeEmRKj.exit:   ; preds = %bb.e, %.lr.ph9.i
 
 bb.f:                                             ; preds = %.lr.ph, %bb.k
   %.012 = phi i64 [ 1, %.lr.ph ], [ %i.bc, %bb.k ] ; 3 uses
-  %i.s = trunc i64 %.012 to i32                   ; 2 uses
-  %i.t = and i64 %.012, 4294967295                ; 3 uses
+  %i.s = trunc i64 %.012 to i32                   ; 3 uses
+  %i.t = and i64 %.012, 4294967295                ; 2 uses
   %i.u = getelementptr inbounds nuw i8, ptr %i.r, i64 %i.t
   %i.v = load i8, ptr %i.u, align 1, !tbaa !57
   %i.w = icmp eq i8 %i.v, 0
@@ -1154,18 +1150,13 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.ab = load ptr, ptr %i.m, align 8, !tbaa !117
   br label %bb.i
 
-1:                                                ; preds = %bb.i
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1 ; 2 uses
-  %2 = and i64 %indvars.iv.next.i.i, 4294967295
-  %exitcond = icmp eq i64 %2, 0
-  br i1 %exitcond, label %_ZNK5Darts7Details11DawgBuilder9hash_unitEj.exit.i, label %bb.i, !llvm.loop !662
-
-bb.i:                                             ; preds = %1, %.lr.ph.i.i
-  %indvars.iv.i.i = phi i64 [ %i.t, %.lr.ph.i.i ], [ %indvars.iv.next.i.i, %1 ] ; 3 uses
-  %.01014.i.i.a = phi i32 [ 0, %.lr.ph.i.i ], [ %i.au, %1 ]
-  %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %indvars.iv.i.i
+bb.i:                                             ; preds = %bb.i, %.lr.ph.i.i
+  %.01014.i.i = phi i32 [ 0, %.lr.ph.i.i ], [ %i.au, %bb.i ]
+  %.01014.i.i.a = phi i32 [ %i.s, %.lr.ph.i.i ], [ %2, %bb.i ] ; 2 uses
+  %1 = zext i32 %.01014.i.i.a to i64              ; 2 uses
+  %i.ac = getelementptr inbounds nuw [4 x i8], ptr %i.ab, i64 %1
   %i.ad = load i32, ptr %i.ac, align 4, !tbaa !187 ; 3 uses
-  %i.ae = getelementptr inbounds nuw i8, ptr %i.r, i64 %indvars.iv.i.i
+  %i.ae = getelementptr inbounds nuw i8, ptr %i.r, i64 %1
   %i.af = load i8, ptr %i.ae, align 1, !tbaa !57
   %i.ag = zext i8 %i.af to i32
   %i.ah = shl nuw i32 %i.ag, 24
@@ -1180,13 +1171,16 @@ bb.i:                                             ; preds = %1, %.lr.ph.i.i
   %i.aq = xor i32 %i.ap, %i.ao
   %i.ar = mul i32 %i.aq, 2057                     ; 2 uses
   %i.as = lshr i32 %i.ar, 16
-  %i.at = xor i32 %.01014.i.i.a, %i.as
-  %i.au = xor i32 %i.at, %i.ar                    ; 3 uses
+  %i.at = xor i32 %.01014.i.i, %i.as
+  %i.au = xor i32 %i.at, %i.ar                    ; 2 uses
   %i.av = trunc i32 %i.ad to i1
-  br i1 %i.av, label %1, label %_ZNK5Darts7Details11DawgBuilder9hash_unitEj.exit.i
+  %2 = add i32 %.01014.i.i.a, 1                   ; 2 uses
+  %.not.i.i8 = icmp ne i32 %2, 0
+  %or.cond.not.i.i = and i1 %.not.i.i8, %i.av
+  br i1 %or.cond.not.i.i, label %bb.i, label %_ZNK5Darts7Details11DawgBuilder9hash_unitEj.exit.i, !llvm.loop !662
 
-_ZNK5Darts7Details11DawgBuilder9hash_unitEj.exit.i: ; preds = %bb.i, %1, %bb.h
-  %.1.i.i = phi i32 [ 0, %bb.h ], [ %i.au, %1 ], [ %i.au, %bb.i ]
+_ZNK5Darts7Details11DawgBuilder9hash_unitEj.exit.i: ; preds = %bb.i, %bb.h
+  %.1.i.i = phi i32 [ 0, %bb.h ], [ %i.au, %bb.i ]
   %i.aw = load ptr, ptr %i.a, align 8, !tbaa !117 ; 2 uses
   br label %bb.j
 
@@ -1561,7 +1555,7 @@ bb.a:
   %i.b = zext i32 %2 to i64
   %i.c = load ptr, ptr %i.a, align 8, !tbaa !117
   %i.d = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %i.b
-  %i.e = load i32, ptr %i.d, align 4, !tbaa !187  ; 3 uses
+  %i.e = load i32, ptr %i.d, align 4, !tbaa !187  ; 2 uses
   %i.f = lshr i32 %i.e, 2                         ; 3 uses
   %i.g = getelementptr inbounds nuw i8, ptr %1, i64 72 ; 2 uses
   %i.h = lshr i32 %i.e, 7
@@ -1708,15 +1702,13 @@ bb.h:                                             ; preds = %bb.g
 
 bb.i:                                             ; preds = %bb.h, %bb.g
   %i.dd = getelementptr inbounds nuw i8, ptr %1, i64 48
-  %4 = lshr i32 %i.e, 2
-  %5 = zext nneg i32 %4 to i64
   br label %bb.j
 
 bb.j:                                             ; preds = %bb.l, %bb.i
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.l ], [ %5, %bb.i ] ; 4 uses
-  %.037 = phi i32 [ %i.dn, %bb.l ], [ %i.f, %bb.i ]
+  %.037 = phi i32 [ %i.f, %bb.i ], [ %i.dn, %bb.l ] ; 3 uses
+  %4 = zext i32 %.037 to i64                      ; 2 uses
   %i.de = load ptr, ptr %i.dd, align 8, !tbaa !117
-  %i.df = getelementptr inbounds nuw i8, ptr %i.de, i64 %indvars.iv
+  %i.df = getelementptr inbounds nuw i8, ptr %i.de, i64 %4
   %i.dg = load i8, ptr %i.df, align 1, !tbaa !57  ; 2 uses
   %.not42 = icmp eq i8 %i.dg, 0
   br i1 %.not42, label %bb.l, label %bb.k
@@ -1724,19 +1716,17 @@ bb.j:                                             ; preds = %bb.l, %bb.i
 bb.k:                                             ; preds = %bb.j
   %i.dh = zext i8 %i.dg to i32
   %i.di = xor i32 %i.bu, %i.dh
-  %6 = trunc nuw i64 %indvars.iv to i32
-  tail call void @_ZN5Darts7Details18DoubleArrayBuilder15build_from_dawgERKNS0_11DawgBuilderEjj(ptr noundef nonnull align 8 dereferenceable(76) %0, ptr noundef nonnull align 8 dereferenceable(200) %1, i32 noundef %6, i32 noundef %i.di)
+  tail call void @_ZN5Darts7Details18DoubleArrayBuilder15build_from_dawgERKNS0_11DawgBuilderEjj(ptr noundef nonnull align 8 dereferenceable(76) %0, ptr noundef nonnull align 8 dereferenceable(200) %1, i32 noundef %.037, i32 noundef %i.di)
   br label %bb.l
 
 bb.l:                                             ; preds = %bb.k, %bb.j
   %i.dj = load ptr, ptr %i.a, align 8, !tbaa !117
-  %i.dk = getelementptr inbounds nuw [4 x i8], ptr %i.dj, i64 %indvars.iv
+  %i.dk = getelementptr inbounds nuw [4 x i8], ptr %i.dj, i64 %4
   %i.dl = load i32, ptr %i.dk, align 4, !tbaa !187
   %i.dm = trunc i32 %i.dl to i1
   %i.dn = add i32 %.037, 1                        ; 2 uses
   %.not4345 = icmp ne i32 %i.dn, 0
   %.not43.not = and i1 %.not4345, %i.dm
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   br i1 %.not43.not, label %bb.j, label %.loopexit, !llvm.loop !670
 
 .loopexit:                                        ; preds = %bb.l, %_ZN5Darts7Details22DoubleArrayBuilderUnit10set_offsetEj.exit
@@ -1758,69 +1748,67 @@ bb.a:
   br i1 %i.i, label %bb.b, label %.critedge
 
 bb.b:                                             ; preds = %bb.a
-  %i.j = shl i32 %i.h, 8                          ; 2 uses
+  %i.j = shl i32 %i.h, 8                          ; 3 uses
   %i.k = add i32 %i.j, 256                        ; 2 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 32 ; 3 uses
   %i.m = load ptr, ptr %i.l, align 8, !tbaa !164  ; 6 uses
-  %1 = zext i32 %i.j to i64                       ; 2 uses
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.g, %bb.b
-  %indvars.iv = phi i64 [ %1, %bb.b ], [ %indvars.iv.next.3, %bb.g ] ; 6 uses
-  %2 = and i64 %indvars.iv, 4092
+  %.017.i37 = phi i32 [ %i.j, %bb.b ], [ %12, %bb.g ] ; 6 uses
+  %1 = and i32 %.017.i37, 4092
+  %2 = zext nneg i32 %1 to i64
   %i.n = getelementptr inbounds nuw [12 x i8], ptr %i.m, i64 %2
   %i.o = getelementptr inbounds nuw i8, ptr %i.n, i64 9
   %i.p = load i8, ptr %i.o, align 1, !tbaa !183, !range !36, !noundef !37
   %i.q = trunc nuw i8 %i.p to i1
-  br i1 %i.q, label %bb.d, label %.split.loop.exit
+  br i1 %i.q, label %bb.d, label %.split.loop.exit68
 
 bb.d:                                             ; preds = %bb.c
-  %indvars.iv.next = or disjoint i64 %indvars.iv, 1 ; 2 uses
-  %3 = and i64 %indvars.iv.next, 4093
-  %i.r = getelementptr inbounds nuw [12 x i8], ptr %i.m, i64 %3
+  %3 = or disjoint i32 %.017.i37, 1               ; 2 uses
+  %4 = and i32 %3, 4093
+  %5 = zext nneg i32 %4 to i64
+  %i.r = getelementptr inbounds nuw [12 x i8], ptr %i.m, i64 %5
   %i.s = getelementptr inbounds nuw i8, ptr %i.r, i64 9
   %i.t = load i8, ptr %i.s, align 1, !tbaa !183, !range !36, !noundef !37
   %i.u = trunc nuw i8 %i.t to i1
-  br i1 %i.u, label %bb.e, label %.split.loop.exit
+  br i1 %i.u, label %bb.e, label %.split.loop.exit68
 
 bb.e:                                             ; preds = %bb.d
-  %indvars.iv.next.1 = or disjoint i64 %indvars.iv, 2 ; 2 uses
-  %4 = and i64 %indvars.iv.next.1, 4094
-  %i.v = getelementptr inbounds nuw [12 x i8], ptr %i.m, i64 %4
+  %6 = or disjoint i32 %.017.i37, 2               ; 2 uses
+  %7 = and i32 %6, 4094
+  %8 = zext nneg i32 %7 to i64
+  %i.v = getelementptr inbounds nuw [12 x i8], ptr %i.m, i64 %8
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 9
   %i.x = load i8, ptr %i.w, align 1, !tbaa !183, !range !36, !noundef !37
   %i.y = trunc nuw i8 %i.x to i1
-  br i1 %i.y, label %bb.f, label %.split.loop.exit
+  br i1 %i.y, label %bb.f, label %.split.loop.exit68
 
 bb.f:                                             ; preds = %bb.e
-  %indvars.iv.next.2 = or disjoint i64 %indvars.iv, 3 ; 2 uses
-  %5 = and i64 %indvars.iv.next.2, 4095
-  %i.z = getelementptr inbounds nuw [12 x i8], ptr %i.m, i64 %5
+  %9 = or disjoint i32 %.017.i37, 3               ; 2 uses
+  %10 = and i32 %9, 4095
+  %11 = zext nneg i32 %10 to i64
+  %i.z = getelementptr inbounds nuw [12 x i8], ptr %i.m, i64 %11
   %i.aa = getelementptr inbounds nuw i8, ptr %i.z, i64 9
   %i.ab = load i8, ptr %i.aa, align 1, !tbaa !183, !range !36, !noundef !37
   %i.ac = trunc nuw i8 %i.ab to i1
-  br i1 %i.ac, label %bb.g, label %.split.loop.exit
+  br i1 %i.ac, label %bb.g, label %.split.loop.exit68
 
 bb.g:                                             ; preds = %bb.f
-  %indvars.iv.next.3 = add nuw nsw i64 %indvars.iv, 4 ; 2 uses
-  %indvars.3 = trunc i64 %indvars.iv.next.3 to i32
-  %.not.i.3 = icmp eq i32 %i.k, %indvars.3
+  %12 = add i32 %.017.i37, 4                      ; 2 uses
+  %.not.i.3 = icmp eq i32 %12, %i.k
   br i1 %.not.i.3, label %.split.loop.exit68, label %bb.c, !llvm.loop !8
 
-.split.loop.exit:                                 ; preds = %bb.f, %bb.e, %bb.d, %bb.c
-  %indvars.iv.lcssa = phi i64 [ %indvars.iv, %bb.c ], [ %indvars.iv.next, %bb.d ], [ %indvars.iv.next.1, %bb.e ], [ %indvars.iv.next.2, %bb.f ]
-  %6 = trunc nuw i64 %indvars.iv.lcssa to i32
-  br label %.split.loop.exit68
-
-.split.loop.exit68:                               ; preds = %bb.g, %.split.loop.exit
-  %.018.i = phi i32 [ %6, %.split.loop.exit ], [ 0, %bb.g ]
+.split.loop.exit68:                               ; preds = %bb.g, %bb.f, %bb.e, %bb.d, %bb.c
+  %.018.i = phi i32 [ 0, %bb.g ], [ %.017.i37, %bb.c ], [ %3, %bb.d ], [ %9, %bb.f ], [ %6, %bb.e ]
   %i.ad = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 3 uses
+  %13 = zext i32 %i.j to i64
   br label %bb.h
 
 bb.h:                                             ; preds = %.split.loop.exit68, %bb.n
   %.pre55 = phi ptr [ %i.m, %.split.loop.exit68 ], [ %.pre56, %bb.n ] ; 2 uses
   %i.ae = phi ptr [ %i.m, %.split.loop.exit68 ], [ %i.bp, %bb.n ] ; 2 uses
-  %indvars.iv46 = phi i64 [ %1, %.split.loop.exit68 ], [ %indvars.iv.next47, %bb.n ] ; 7 uses
+  %indvars.iv46 = phi i64 [ %13, %.split.loop.exit68 ], [ %indvars.iv.next47, %bb.n ] ; 7 uses
   %i.af = and i64 %indvars.iv46, 4095             ; 3 uses
   %i.ag = getelementptr inbounds nuw [12 x i8], ptr %i.ae, i64 %i.af
   %i.ah = getelementptr inbounds nuw i8, ptr %i.ag, i64 8
