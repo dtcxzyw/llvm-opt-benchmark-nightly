@@ -205,8 +205,8 @@ bb.d:                                             ; preds = %bb.c
 
 bb.e:                                             ; preds = %.lr.ph56, %.critedge2
   %.055 = phi i32 [ %i.p, %.lr.ph56 ], [ %.2, %.critedge2 ] ; 3 uses
-  %.04154 = phi i32 [ %i.o, %.lr.ph56 ], [ %.3, %.critedge2 ] ; 3 uses
-  %i.s = zext nneg i32 %.04154 to i64             ; 3 uses
+  %.04154 = phi i32 [ %i.o, %.lr.ph56 ], [ %.3, %.critedge2 ] ; 4 uses
+  %i.s = zext nneg i32 %.04154 to i64             ; 2 uses
   %i.t = getelementptr inbounds nuw i8, ptr %i.q, i64 %i.s
   %i.u = load i8, ptr %i.t, align 1, !tbaa !24, !range !14, !noundef !15
   %i.v = trunc nuw i8 %i.u to i1
@@ -254,31 +254,31 @@ bb.e:                                             ; preds = %.lr.ph56, %.critedg
   br label %.critedge2
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.f
-  %indvars.iv57 = phi i64 [ %i.s, %.lr.ph.preheader ], [ %indvars.iv.next58, %bb.f ] ; 5 uses
-  %indvars.iv = phi i64 [ %i.x, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.f ] ; 3 uses
-  %i.aq = getelementptr inbounds nuw i8, ptr %i.q, i64 %indvars.iv57
+  %indvars.iv57 = phi i64 [ %i.x, %.lr.ph.preheader ], [ %indvars.iv.next, %bb.f ] ; 3 uses
+  %.24348 = phi i32 [ %.04154, %.lr.ph.preheader ], [ %3, %bb.f ] ; 4 uses
+  %2 = zext nneg i32 %.24348 to i64               ; 2 uses
+  %i.aq = getelementptr inbounds nuw i8, ptr %i.q, i64 %2
   %i.ar = load i8, ptr %i.aq, align 1, !tbaa !24, !range !14, !noundef !15
   %i.as = trunc nuw i8 %i.ar to i1
   br i1 %i.as, label %.critedge2.loopexit, label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph
-  %i.at = getelementptr inbounds [8 x i8], ptr %i.g, i64 %indvars.iv
+  %i.at = getelementptr inbounds [8 x i8], ptr %i.g, i64 %indvars.iv57
   %i.au = load i64, ptr %i.at, align 8, !tbaa !24
-  %i.av = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %indvars.iv57
+  %i.av = getelementptr inbounds nuw [8 x i8], ptr %1, i64 %2
   store i64 %i.au, ptr %i.av, align 8, !tbaa !18
-  %indvars.iv.next58 = add nsw i64 %indvars.iv57, -1
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1
-  %i.aw = icmp sgt i64 %indvars.iv57, 0
+  %3 = add nsw i32 %.24348, -1
+  %indvars.iv.next = add nsw i64 %indvars.iv57, -1
+  %i.aw = icmp sgt i32 %.24348, 0
   br i1 %i.aw, label %.lr.ph, label %.loopexit, !llvm.loop !221
 
 .critedge2.loopexit:                              ; preds = %.lr.ph
-  %2 = trunc nsw i64 %indvars.iv to i32
-  %i.ax = trunc nuw nsw i64 %indvars.iv57 to i32
+  %i.ax = trunc nsw i64 %indvars.iv57 to i32
   br label %.critedge2
 
 .critedge2:                                       ; preds = %.critedge2.loopexit, %.critedge
-  %.3 = phi i32 [ %i.ao, %.critedge ], [ %i.ax, %.critedge2.loopexit ] ; 2 uses
-  %.2 = phi i32 [ %i.ap, %.critedge ], [ %2, %.critedge2.loopexit ]
+  %.3 = phi i32 [ %i.ao, %.critedge ], [ %.24348, %.critedge2.loopexit ] ; 2 uses
+  %.2 = phi i32 [ %i.ap, %.critedge ], [ %i.ax, %.critedge2.loopexit ]
   %i.ay = icmp sgt i32 %.3, -1
   br i1 %i.ay, label %bb.e, label %.loopexit, !llvm.loop !222
 

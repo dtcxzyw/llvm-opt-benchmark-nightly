@@ -205,7 +205,7 @@ bb.u:                                             ; preds = %.critedge93
   br label %bb.v
 
 bb.v:                                             ; preds = %bb.u, %_ZNK4llvm4User10getOperandEj.exit
-  %.sroa.0137.0193 = phi i64 [ 0, %bb.u ], [ %i.eh, %_ZNK4llvm4User10getOperandEj.exit ] ; 4 uses
+  %.sroa.0137.0193 = phi i64 [ 0, %bb.u ], [ %i.eh, %_ZNK4llvm4User10getOperandEj.exit ] ; 3 uses
   %i.de = trunc i64 %.sroa.0137.0193 to i32
   %i.df = add i32 %i.de, 1                        ; 2 uses
   %i.dg = load i32, ptr %i.cx, align 4
@@ -248,7 +248,8 @@ bb.z:                                             ; preds = %bb.y
 _ZNK4llvm8TypeSizecvmEv.exit:                     ; preds = %bb.y
   %i.dr = tail call noundef ptr @_ZNK4llvm10DataLayout15getStructLayoutEPNS_10StructTypeE(ptr noundef nonnull align 8 dereferenceable(912) %i.a, ptr noundef %i.db) #19
   %i.ds = getelementptr inbounds nuw i8, ptr %i.dr, i64 24
-  %i.dt = getelementptr inbounds nuw [16 x i8], ptr %i.ds, i64 %.sroa.0137.0193 ; 2 uses
+  %5 = and i64 %.sroa.0137.0193, 4294967295       ; 2 uses
+  %i.dt = getelementptr inbounds nuw [16 x i8], ptr %i.ds, i64 %5 ; 2 uses
   %.sroa.2.0..sroa_idx.i124 = getelementptr inbounds nuw i8, ptr %i.dt, i64 8
   %.sroa.2.0.copyload.i125 = load i8, ptr %.sroa.2.0..sroa_idx.i124, align 8
   %i.du = trunc nuw i8 %.sroa.2.0.copyload.i125 to i1
@@ -280,7 +281,7 @@ bb.ac:                                            ; preds = %_ZNK4llvm8TypeSizec
 
 _ZNK4llvm4User10getOperandEj.exit:                ; preds = %bb.ab, %bb.ac
   %i.ee = phi ptr [ %i.dz, %bb.ab ], [ %i.ed, %bb.ac ]
-  %i.ef = getelementptr inbounds nuw [32 x i8], ptr %i.ee, i64 %.sroa.0137.0193
+  %i.ef = getelementptr inbounds nuw [32 x i8], ptr %i.ee, i64 %5
   %i.eg = load ptr, ptr %i.ef, align 8, !tbaa !364
   tail call void @_ZN4llvm15NVPTXAsmPrinter12bufferLEByteEPKNS_8ConstantEiPNS0_9AggBufferE(ptr noundef nonnull align 8 dereferenceable(1177) %0, ptr noundef %i.eg, i32 noundef %i.dw, ptr noundef %2)
   %i.eh = add nuw nsw i64 %.sroa.0137.0193, 1     ; 2 uses
