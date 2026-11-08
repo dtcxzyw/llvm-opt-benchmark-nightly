@@ -204,7 +204,7 @@ bb.l:                                             ; preds = %_ZNSt8__detail9__va
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 8 dereferenceable(32) %i.ag, ptr noundef nonnull align 8 dereferenceable(32) %3, i64 32, i1 false), !tbaa.struct !625
   call void @llvm.lifetime.end.p0(ptr nonnull %3)
   %i.ai = getelementptr inbounds nuw i8, ptr %.sroa.010.0.i.i.i.i.i, i64 48
-  %i.aj = add nuw i64 %.06.i.i.i.i.i.i, 1         ; 2 uses
+  %i.aj = add nuw nsw i64 %.06.i.i.i.i.i.i, 1     ; 2 uses
   %exitcond.not.i.i.i.i.i.i = icmp eq i64 %i.aj, %i.ad
   br i1 %exitcond.not.i.i.i.i.i.i, label %.loopexit.loopexit.i.i.i.i.i, label %.lr.ph.i.i.i.i.i.i, !llvm.loop !42
 
