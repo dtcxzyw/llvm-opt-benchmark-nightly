@@ -202,14 +202,11 @@ bb.m:                                             ; preds = %bb.l
   tail call void @job_transition_to_ready(ptr noundef nonnull %0) #11
   %i.ai = getelementptr inbounds nuw i8, ptr %0, i64 600
   store atomic i8 1, ptr %i.ai monotonic, align 8
-  %i.aj = tail call zeroext i1 @job_cancel_requested(ptr noundef nonnull %0) #11
-  br i1 %i.aj, label %.critedge, label %.lr.ph248
-
-.lr.ph248:                                        ; preds = %bb.m
   %3 = getelementptr inbounds nuw i8, ptr %0, i64 601
-  br label %bb.n
+  %i.aj = tail call zeroext i1 @job_cancel_requested(ptr noundef nonnull %0) #11
+  br i1 %i.aj, label %.critedge, label %bb.n
 
-bb.n:                                             ; preds = %.lr.ph248, %bb.o
+bb.n:                                             ; preds = %bb.m, %bb.o
   %i.ak = load i8, ptr %3, align 1, !range !12, !noundef !13
   %i.al = trunc nuw i8 %i.ak to i1
   br i1 %i.al, label %.critedge, label %bb.o

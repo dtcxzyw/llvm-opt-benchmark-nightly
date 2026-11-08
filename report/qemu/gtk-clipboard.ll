@@ -204,16 +204,13 @@ gd_find_selection.exit:                           ; preds = %bb.a, %bb.b, %bb.c
   %i.j = tail call ptr @qemu_clipboard_info(i32 noundef %.06.i) #5
   %i.k = tail call ptr @qemu_clipboard_info_ref(ptr noundef %i.j) #5 ; 9 uses
   tail call void @qemu_clipboard_request(ptr noundef %i.k, i32 noundef 0) #5
+  %4 = getelementptr inbounds nuw i8, ptr %i.k, i64 32
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 40 ; 2 uses
   %i.m = tail call ptr @qemu_clipboard_info(i32 noundef %.06.i) #5
   %i.n = icmp eq ptr %i.k, %i.m
-  br i1 %i.n, label %.lr.ph, label %.critedge
+  br i1 %i.n, label %bb.d, label %.critedge
 
-.lr.ph:                                           ; preds = %gd_find_selection.exit
-  %4 = getelementptr inbounds nuw i8, ptr %i.k, i64 32
-  br label %bb.d
-
-bb.d:                                             ; preds = %.lr.ph, %bb.f
+bb.d:                                             ; preds = %gd_find_selection.exit, %bb.f
   %i.o = load i8, ptr %4, align 8, !range !7, !noundef !8
   %i.p = trunc nuw i8 %i.o to i1
   br i1 %i.p, label %bb.e, label %.critedge

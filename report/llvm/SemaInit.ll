@@ -204,16 +204,13 @@ bb.ad:                                            ; preds = %bb.aa, %bb.w, %bb.x
 .thread258:                                       ; preds = %bb.ad, %bb.l, %bb.k
   %.4151 = phi i32 [ 0, %bb.k ], [ 0, %bb.l ], [ %i.eb, %bb.ad ]
   %i.ed = call ptr @_ZNK5clang10RecordDecl11field_beginEv(ptr noundef nonnull align 8 dereferenceable(128) %spec.select303) #25 ; 2 uses
-  %.not310323 = icmp eq ptr %i.ed, null
-  br i1 %.not310323, label %.critedge181, label %.lr.ph326
-
-.lr.ph326:                                        ; preds = %.thread258
   %11 = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
-  br label %bb.ae
+  %.not310323 = icmp eq ptr %i.ed, null
+  br i1 %.not310323, label %.critedge181, label %bb.ae
 
-bb.ae:                                            ; preds = %.lr.ph326, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit
-  %.5152325 = phi i32 [ %.4151, %.lr.ph326 ], [ %.6153, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit ] ; 3 uses
-  %.sroa.0244.0324 = phi ptr [ %i.ed, %.lr.ph326 ], [ %.sroa.0244.2, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit ] ; 4 uses
+bb.ae:                                            ; preds = %.thread258, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit
+  %.5152325 = phi i32 [ %.6153, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit ], [ %.4151, %.thread258 ] ; 3 uses
+  %.sroa.0244.0324 = phi ptr [ %.sroa.0244.2, %_ZN5clang11DeclContext22specific_decl_iteratorINS_9FieldDeclEEppEv.exit ], [ %i.ed, %.thread258 ] ; 4 uses
   %i.ee = getelementptr inbounds nuw i8, ptr %.sroa.0244.0324, i64 68
   %i.ef = load i32, ptr %i.ee, align 4
   %i.eg = trunc i32 %i.ef to i1

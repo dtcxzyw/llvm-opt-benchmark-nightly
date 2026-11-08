@@ -202,20 +202,17 @@ declare noundef ptr @_ZN4llvm12ilist_detail18SpecificNodeAccessINS0_12node_optio
 ; Function Attrs: mustprogress nounwind uwtable
 define internal range(i32 0, 2) i32 @"_ZN4llvm12function_refIFN4mlir10WalkResultEPNS1_5BlockEEE11callback_fnIZN12_GLOBAL__N_130AsyncRuntimeRefCountingOptPass14runOnOperationEvE3$_0EES2_lS4_"(i64 noundef %0, ptr nofree noundef readonly captures(none) %1) #0 align 2 {
 bb.a:
+  %2 = inttoptr i64 %0 to ptr
   %i.a = getelementptr i8, ptr %1, i64 56
   %.val = load ptr, ptr %i.a, align 8, !tbaa !132 ; 2 uses
   %i.b = getelementptr i8, ptr %1, i64 64
   %.val1 = load ptr, ptr %i.b, align 8, !tbaa !133 ; 2 uses
-  %.not9.i = icmp eq ptr %.val, %.val1
-  br i1 %.not9.i, label %"_ZZN12_GLOBAL__N_130AsyncRuntimeRefCountingOptPass14runOnOperationEvENK3$_0clEPN4mlir5BlockE.exit", label %.lr.ph.i
-
-.lr.ph.i:                                         ; preds = %bb.a
-  %2 = inttoptr i64 %0 to ptr
   %3 = getelementptr inbounds nuw i8, ptr %2, i64 8
-  br label %bb.b
+  %.not9.i = icmp eq ptr %.val, %.val1
+  br i1 %.not9.i, label %"_ZZN12_GLOBAL__N_130AsyncRuntimeRefCountingOptPass14runOnOperationEvENK3$_0clEPN4mlir5BlockE.exit", label %bb.b
 
-bb.b:                                             ; preds = %bb.d, %.lr.ph.i
-  %.010.i = phi ptr [ %.val, %.lr.ph.i ], [ %i.p, %bb.d ] ; 2 uses
+bb.b:                                             ; preds = %bb.a, %bb.d
+  %.010.i = phi ptr [ %i.p, %bb.d ], [ %.val, %bb.a ] ; 2 uses
   %i.c = load i64, ptr %.010.i, align 8
   %i.d = inttoptr i64 %i.c to ptr                 ; 2 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 8

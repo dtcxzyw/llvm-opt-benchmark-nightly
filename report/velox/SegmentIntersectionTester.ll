@@ -61,11 +61,11 @@ bb.a:
   %i.h = getelementptr inbounds nuw i8, ptr %i.g, i64 48
   %i.i = load ptr, ptr %i.h, align 8
   %i.j = tail call noundef i64 %i.i(ptr noundef nonnull align 8 dereferenceable(8) %i.f) ; 2 uses
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 5 uses
   %i.k = icmp ugt i64 %i.e, 1
   br i1 %i.k, label %.lr.ph28, label %.critedge
 
 .lr.ph28:                                         ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 4 uses
   %i.l = icmp ugt i64 %i.j, 1
   %i.m = getelementptr inbounds nuw i8, ptr %0, i64 8
   br i1 %i.l, label %.lr.ph28.split.us, label %.lr.ph28.split
@@ -130,8 +130,7 @@ bb.e:                                             ; preds = %bb.d, %bb.c
   br i1 %i.an, label %.critedge, label %.critedge2
 
 .critedge:                                        ; preds = %.lr.ph28.split, %.critedge2, %.lr.ph28.split.us, %.critedge2.us, %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %i.ao = load i8, ptr %4, align 8, !tbaa !14, !range !15, !noundef !16
+  %i.ao = load i8, ptr %3, align 8, !tbaa !14, !range !15, !noundef !16
   %i.ap = trunc nuw i8 %i.ao to i1
   ret i1 %i.ap
 
@@ -171,11 +170,11 @@ bb.a:
   %i.l = getelementptr inbounds nuw i8, ptr %i.k, i64 176
   %i.m = load ptr, ptr %i.l, align 8
   %i.n = tail call noundef ptr %i.m(ptr noundef nonnull align 8 dereferenceable(40) %1) ; 4 uses
+  %3 = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 5 uses
   %i.o = icmp ugt i64 %i.j, 1
   br i1 %i.o, label %.lr.ph32, label %.critedge
 
 .lr.ph32:                                         ; preds = %bb.a
-  %3 = getelementptr inbounds nuw i8, ptr %0, i64 136 ; 4 uses
   %i.p = getelementptr inbounds nuw i8, ptr %i.n, i64 8
   %i.q = getelementptr inbounds nuw i8, ptr %i.n, i64 24
   %i.r = getelementptr inbounds nuw i8, ptr %i.n, i64 16
@@ -272,8 +271,7 @@ bb.g:                                             ; preds = %bb.f, %bb.e
   br i1 %i.bk, label %.critedge, label %.critedge2
 
 .critedge:                                        ; preds = %.lr.ph32.split, %.critedge2, %.lr.ph32.split.us, %.critedge2.us, %bb.a
-  %4 = getelementptr inbounds nuw i8, ptr %0, i64 136
-  %i.bl = load i8, ptr %4, align 8, !tbaa !14, !range !15, !noundef !16
+  %i.bl = load i8, ptr %3, align 8, !tbaa !14, !range !15, !noundef !16
   %i.bm = trunc nuw i8 %i.bl to i1
   ret i1 %i.bm
 
