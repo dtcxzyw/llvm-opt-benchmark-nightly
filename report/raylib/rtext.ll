@@ -205,14 +205,12 @@ bb.a:
   br i1 %.not4.i, label %.preheader.i40, label %.preheader.i
 
 .preheader.i40:                                   ; preds = %.preheader.i, %.preheader.i40
-  %indvars.iv57 = phi i32 [ %indvars.iv.next58.a, %.preheader.i40 ], [ %2, %.preheader.i ] ; 2 uses
-  %.0.i41 = phi i32 [ %3, %.preheader.i40 ], [ 0, %.preheader.i ] ; 5 uses
+  %.0.i41 = phi i32 [ %indvars.iv.next58.a, %.preheader.i40 ], [ 0, %.preheader.i ] ; 5 uses
   %i.i = zext i32 %.0.i41 to i64
   %i.j = getelementptr inbounds nuw i8, ptr %1, i64 %i.i
   %i.k = load i8, ptr %i.j, align 1
   %.not4.i42 = icmp eq i8 %i.k, 0
-  %3 = add i32 %.0.i41, 1
-  %indvars.iv.next58.a = add i32 %indvars.iv57, 1
+  %indvars.iv.next58.a = add i32 %.0.i41, 1
   br i1 %.not4.i42, label %TextLength.exit44, label %.preheader.i40
 
 TextLength.exit44:                                ; preds = %.preheader.i40
@@ -307,13 +305,13 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   br i1 %i.ac, label %.preheader45, label %.lr.ph
 
 .preheader45:                                     ; preds = %.lr.ph.prol.loopexit, %.lr.ph, %middle.block, %vec.epilog.middle.block, %.preheader46
+  %3 = add i32 %.0.i41, %2                        ; 2 uses
   %i.ad = icmp sgt i32 %.0.i41, 0
   br i1 %i.ad, label %iter.check89, label %.preheader
 
 iter.check89:                                     ; preds = %.preheader45
-  %4 = add nsw i32 %.0.i41, %2
   %i.ae = sext i32 %2 to i64                      ; 10 uses
-  %i.af = sext i32 %4 to i64                      ; 2 uses
+  %i.af = sext i32 %3 to i64                      ; 2 uses
   %i.ag = add nsw i64 %i.ae, 1
   %smax = tail call i64 @llvm.smax.i64(i64 %i.ag, i64 %i.af)
   %i.ah = sub i64 %smax, %i.ae                    ; 7 uses
@@ -418,7 +416,7 @@ vec.epilog.middle.block100:                       ; preds = %vec.epilog.vector.b
   br label %._crit_edge
 
 iter.check120:                                    ; preds = %.preheader
-  %i.bg = sext i32 %indvars.iv57 to i64           ; 7 uses
+  %i.bg = sext i32 %3 to i64                      ; 7 uses
   %i.bh = sext i32 %i.l to i64                    ; 5 uses
   %i.bi = add nsw i64 %i.bg, 1
   %smax105 = tail call i64 @llvm.smax.i64(i64 %i.bi, i64 %i.bh)

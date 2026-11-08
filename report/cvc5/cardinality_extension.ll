@@ -205,7 +205,6 @@ _ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit144.lr.ph: ; preds = %_ZNSt6vecto
   %sext = shl i64 %i.jo, 29
   %i.jp = ashr i64 %sext, 32
   %i.jq = icmp slt i64 %indvars.iv.next401, %i.jp
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1
   br i1 %i.jq, label %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit144, label %.preheader, !llvm.loop !508
 
 .preheader:                                       ; preds = %.loopexit282
@@ -222,9 +221,8 @@ _ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit144.lr.ph: ; preds = %_ZNSt6vecto
 _ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit144: ; preds = %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit144.lr.ph, %.loopexit282
   %i.jw = phi ptr [ %i.iy, %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit144.lr.ph ], [ %i.jk, %.loopexit282 ] ; 3 uses
   %i.jx = phi ptr [ %i.ix, %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit144.lr.ph ], [ %i.jl, %.loopexit282 ] ; 2 uses
-  %indvars.iv400 = phi i64 [ 0, %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit144.lr.ph ], [ %indvars.iv.next401, %.loopexit282 ] ; 5 uses
-  %indvars.iv.a = phi i64 [ 1, %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit144.lr.ph ], [ %indvars.iv.next, %.loopexit282 ] ; 2 uses
-  %indvars.iv.next401 = add nuw nsw i64 %indvars.iv400, 1 ; 3 uses
+  %indvars.iv.a = phi i64 [ 0, %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit144.lr.ph ], [ %indvars.iv.next401, %.loopexit282 ] ; 5 uses
+  %indvars.iv.next401 = add nuw nsw i64 %indvars.iv.a, 1 ; 4 uses
   %i.jy = ptrtoint ptr %i.jx to i64
   %i.jz = ptrtoint ptr %i.jw to i64
   %i.ka = sub i64 %i.jy, %i.jz
@@ -234,9 +232,9 @@ _ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit144: ; preds = %_ZN4cvc58internal
   br i1 %i.kd, label %.lr.ph349, label %._crit_edge350
 
 .lr.ph349:                                        ; preds = %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit144, %bb.dj
-  %indvars.iv397 = phi i64 [ %indvars.iv.next398, %bb.dj ], [ %indvars.iv.a, %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit144 ] ; 3 uses
+  %indvars.iv397 = phi i64 [ %indvars.iv.next398, %bb.dj ], [ %indvars.iv.next401, %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit144 ] ; 3 uses
   %i.ke = phi ptr [ %i.pn, %bb.dj ], [ %i.jw, %_ZN4cvc58internal11Cvc5ostreamlsEPFRSoS2_E.exit144 ]
-  %i.kf = getelementptr inbounds nuw [8 x i8], ptr %i.ke, i64 %indvars.iv400
+  %i.kf = getelementptr inbounds nuw [8 x i8], ptr %i.ke, i64 %indvars.iv.a
   %i.kg = load ptr, ptr %i.kf, align 8, !tbaa !97 ; 5 uses
   store ptr %i.kg, ptr %12, align 8, !tbaa !97
   %i.kh = load i64, ptr %i.kg, align 8            ; 3 uses
@@ -359,7 +357,7 @@ _ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit153: ; preds = %_ZN4cvc58internal1
 bb.cb:                                            ; preds = %_ZN4cvc58internal12NodeTemplateILb1EED2Ev.exit153
   call void @llvm.lifetime.start.p0(ptr nonnull %14) #26
   %i.mc = load ptr, ptr %10, align 8, !tbaa !196
-  %i.md = getelementptr inbounds nuw [8 x i8], ptr %i.mc, i64 %indvars.iv400
+  %i.md = getelementptr inbounds nuw [8 x i8], ptr %i.mc, i64 %indvars.iv.a
   %i.me = load ptr, ptr %i.md, align 8, !tbaa !97 ; 10 uses
   store ptr %i.me, ptr %14, align 8, !tbaa !97
   %i.mf = load i64, ptr %i.me, align 8            ; 3 uses
@@ -691,7 +689,7 @@ bb.dn:                                            ; preds = %bb.dm
 
 _ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit173: ; preds = %bb.dm, %bb.dl, %bb.dn
   %i.qp = load ptr, ptr %10, align 8, !tbaa !196
-  %i.qq = getelementptr inbounds nuw [8 x i8], ptr %i.qp, i64 %indvars.iv400
+  %i.qq = getelementptr inbounds nuw [8 x i8], ptr %i.qp, i64 %indvars.iv.a
   %i.qr = load ptr, ptr %i.qq, align 8, !tbaa !97 ; 8 uses
   store ptr %i.qr, ptr %18, align 8, !tbaa !97
   %i.qs = load i64, ptr %i.qr, align 8            ; 3 uses
@@ -813,7 +811,7 @@ bb.eb:                                            ; preds = %bb.ea
 _ZN4cvc58internal12NodeTemplateILb1EEC2ERKS2_.exit183: ; preds = %bb.ea, %bb.dz, %bb.eb
   call void @llvm.lifetime.start.p0(ptr nonnull %20) #26
   %i.sl = load ptr, ptr %10, align 8, !tbaa !196
-  %i.sm = getelementptr inbounds nuw [8 x i8], ptr %i.sl, i64 %indvars.iv400
+  %i.sm = getelementptr inbounds nuw [8 x i8], ptr %i.sl, i64 %indvars.iv.a
   %i.sn = load ptr, ptr %i.sm, align 8, !tbaa !97 ; 9 uses
   store ptr %i.sn, ptr %20, align 8, !tbaa !97
   %i.so = load i64, ptr %i.sn, align 8            ; 3 uses

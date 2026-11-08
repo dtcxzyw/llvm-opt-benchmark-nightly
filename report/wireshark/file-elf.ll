@@ -202,11 +202,10 @@ proto_item_set_generated.exit:                    ; preds = %._crit_edge, %bb.fw
   br label %.lr.ph1117
 
 .lr.ph1114:                                       ; preds = %.lr.ph1114.preheader, %._crit_edge1112
-  %indvars.iv1171 = phi i64 [ 0, %.lr.ph1114.preheader ], [ %indvars.iv.next1172, %._crit_edge1112 ] ; 2 uses
-  %indvars.iv1166.a = phi i64 [ 1, %.lr.ph1114.preheader ], [ %indvars.iv.next1167, %._crit_edge1112 ] ; 2 uses
+  %indvars.iv1166.a = phi i64 [ 0, %.lr.ph1114.preheader ], [ %indvars.iv.next1172, %._crit_edge1112 ] ; 2 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %4)
-  %i.afh = getelementptr [24 x i8], ptr %i.eh, i64 %indvars.iv1171 ; 4 uses
-  %indvars.iv.next1172 = add nuw nsw i64 %indvars.iv1171, 1 ; 3 uses
+  %i.afh = getelementptr [24 x i8], ptr %i.eh, i64 %indvars.iv1166.a ; 4 uses
+  %indvars.iv.next1172 = add nuw nsw i64 %indvars.iv1166.a, 1 ; 4 uses
   %i.afi = icmp samesign ult i64 %indvars.iv.next1172, %i.afg
   br i1 %i.afi, label %.lr.ph1111.preheader, label %._crit_edge1112
 
@@ -216,7 +215,7 @@ proto_item_set_generated.exit:                    ; preds = %._crit_edge, %bb.fw
 
 .lr.ph1111:                                       ; preds = %.lr.ph1111.preheader, %bb.fz
   %i.afj = phi i64 [ %.pre1181, %.lr.ph1111.preheader ], [ %i.afm, %bb.fz ] ; 2 uses
-  %indvars.iv1168 = phi i64 [ %indvars.iv1166.a, %.lr.ph1111.preheader ], [ %indvars.iv.next1169, %bb.fz ] ; 2 uses
+  %indvars.iv1168 = phi i64 [ %indvars.iv.next1172, %.lr.ph1111.preheader ], [ %indvars.iv.next1169, %bb.fz ] ; 2 uses
   %i.afk = getelementptr [24 x i8], ptr %i.eh, i64 %indvars.iv1168 ; 3 uses
   %i.afl = load i64, ptr %i.afk, align 8
   %.not930 = icmp ugt i64 %i.afj, %i.afl
@@ -238,7 +237,6 @@ bb.fz:                                            ; preds = %.lr.ph1111, %bb.fy
 
 ._crit_edge1112:                                  ; preds = %bb.fz, %.lr.ph1114
   call void @llvm.lifetime.end.p0(ptr nonnull %4)
-  %indvars.iv.next1167 = add nuw nsw i64 %indvars.iv1166.a, 1
   %exitcond1174.not = icmp eq i64 %indvars.iv.next1172, %i.afg
   br i1 %exitcond1174.not, label %.preheader, label %.lr.ph1114, !llvm.loop !17
 

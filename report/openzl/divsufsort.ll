@@ -204,57 +204,55 @@ bb.d:                                             ; preds = %.lr.ph
 .loopexit337:                                     ; preds = %.lr.ph431.prol.loopexit, %.lr.ph431, %bb.e
   %.7264.lcssa = phi i32 [ %i.be, %bb.e ], [ %.lcssa350.unr, %.lr.ph431.prol.loopexit ], [ %i.bt, %.lr.ph431 ]
   %.1252.lcssa = phi i32 [ %.0251434, %bb.e ], [ %.lcssa351.unr, %.lr.ph431.prol.loopexit ], [ %i.br, %.lr.ph431 ]
-  %indvars.iv.next577 = add nuw nsw i64 %indvars.iv576.a, 1
   %exitcond584.not = icmp eq i64 %indvars.iv.next582, 256
   br i1 %exitcond584.not, label %bb.f, label %bb.e, !llvm.loop !25
 
 bb.e:                                             ; preds = %.loopexit828, %.loopexit337
-  %indvars.iv581 = phi i64 [ 0, %.loopexit828 ], [ %indvars.iv.next582, %.loopexit337 ] ; 9 uses
-  %indvars.iv576.a = phi i64 [ 1, %.loopexit828 ], [ %indvars.iv.next577, %.loopexit337 ] ; 5 uses
+  %indvars.iv576.a = phi i64 [ 0, %.loopexit828 ], [ %indvars.iv.next582, %.loopexit337 ] ; 10 uses
   %.0251434 = phi i32 [ 0, %.loopexit828 ], [ %.1252.lcssa, %.loopexit337 ] ; 4 uses
   %.6263433 = phi i32 [ 0, %.loopexit828 ], [ %.7264.lcssa, %.loopexit337 ] ; 2 uses
-  %i.av = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv581 ; 2 uses
+  %i.av = getelementptr inbounds nuw [4 x i8], ptr %2, i64 %indvars.iv576.a ; 2 uses
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !12
   %i.ax = add nsw i32 %i.aw, %.6263433
   %i.ay = add nsw i32 %.0251434, %.6263433
   store i32 %i.ay, ptr %i.av, align 4, !tbaa !12
-  %i.az = shl i64 %indvars.iv581, 8
+  %i.az = shl i64 %indvars.iv576.a, 8
   %i.ba = and i64 %i.az, 4294967040
   %i.bb = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.ba
-  %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.bb, i64 %indvars.iv581
+  %i.bc = getelementptr inbounds nuw [4 x i8], ptr %i.bb, i64 %indvars.iv576.a
   %i.bd = load i32, ptr %i.bc, align 4, !tbaa !12
   %i.be = add nsw i32 %i.ax, %i.bd                ; 3 uses
-  %indvars.iv.next582 = add nuw nsw i64 %indvars.iv581, 1 ; 2 uses
-  %i.bf = icmp samesign ult i64 %indvars.iv581, 255
+  %indvars.iv.next582 = add nuw nsw i64 %indvars.iv576.a, 1 ; 5 uses
+  %i.bf = icmp samesign ult i64 %indvars.iv576.a, 255
   br i1 %i.bf, label %.lr.ph431.preheader, label %.loopexit337
 
 .lr.ph431.preheader:                              ; preds = %bb.e
-  %.idx806.a = shl nuw nsw i64 %indvars.iv581, 10
+  %.idx806.a = shl nuw nsw i64 %indvars.iv576.a, 10
   %invariant.gep = getelementptr inbounds nuw i8, ptr %3, i64 %.idx806.a ; 3 uses
-  %invariant.gep918.a = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv581 ; 3 uses
-  %i.bg = and i64 %indvars.iv581, 1
+  %invariant.gep918.a = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %indvars.iv576.a ; 3 uses
+  %i.bg = and i64 %indvars.iv576.a, 1
   %lcmp.mod.not.not = icmp eq i64 %i.bg, 0
   br i1 %lcmp.mod.not.not, label %.lr.ph431.prol, label %.lr.ph431.prol.loopexit
 
 .lr.ph431.prol:                                   ; preds = %.lr.ph431.preheader
-  %gep.prol = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep, i64 %indvars.iv576.a ; 2 uses
+  %gep.prol = getelementptr inbounds nuw [4 x i8], ptr %invariant.gep, i64 %indvars.iv.next582 ; 2 uses
   %i.bh = load i32, ptr %gep.prol, align 4, !tbaa !12
   %i.bi = add nsw i32 %i.bh, %.0251434            ; 3 uses
   store i32 %i.bi, ptr %gep.prol, align 4, !tbaa !12
-  %.idx807.prol = shl nuw nsw i64 %indvars.iv576.a, 10
+  %.idx807.prol = shl nuw nsw i64 %indvars.iv.next582, 10
   %gep919.prol = getelementptr inbounds nuw i8, ptr %invariant.gep918.a, i64 %.idx807.prol
   %i.bj = load i32, ptr %gep919.prol, align 4, !tbaa !12
   %i.bk = add nsw i32 %i.bj, %i.be                ; 2 uses
-  %indvars.iv.next579.prol = add nuw nsw i64 %indvars.iv576.a, 1
+  %indvars.iv.next579.prol = add nuw nsw i64 %indvars.iv576.a, 2
   br label %.lr.ph431.prol.loopexit
 
 .lr.ph431.prol.loopexit:                          ; preds = %.lr.ph431.prol, %.lr.ph431.preheader
   %.lcssa351.unr = phi i32 [ poison, %.lr.ph431.preheader ], [ %i.bi, %.lr.ph431.prol ]
   %.lcssa350.unr = phi i32 [ poison, %.lr.ph431.preheader ], [ %i.bk, %.lr.ph431.prol ]
-  %indvars.iv578.unr = phi i64 [ %indvars.iv576.a, %.lr.ph431.preheader ], [ %indvars.iv.next579.prol, %.lr.ph431.prol ]
+  %indvars.iv578.unr = phi i64 [ %indvars.iv.next582, %.lr.ph431.preheader ], [ %indvars.iv.next579.prol, %.lr.ph431.prol ]
   %.1252429.unr = phi i32 [ %.0251434, %.lr.ph431.preheader ], [ %i.bi, %.lr.ph431.prol ]
   %.7264428.unr = phi i32 [ %i.be, %.lr.ph431.preheader ], [ %i.bk, %.lr.ph431.prol ]
-  %i.bl = icmp eq i64 %indvars.iv581, 254
+  %i.bl = icmp eq i64 %indvars.iv576.a, 254
   br i1 %i.bl, label %.loopexit337, label %.lr.ph431
 
 .lr.ph431:                                        ; preds = %.lr.ph431.prol.loopexit, %.lr.ph431

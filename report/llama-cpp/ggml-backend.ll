@@ -204,8 +204,7 @@ bb.ch:                                            ; preds = %bb.ce
   br label %bb.ci
 
 bb.ci:                                            ; preds = %bb.ci, %.loopexit482.i
-  %indvars.iv1377.i = phi i64 [ %indvars.iv.next1378.i, %bb.ci ], [ 1, %.loopexit482.i ] ; 2 uses
-  %.0179.i = phi i32 [ %i.nw, %bb.ci ], [ 0, %.loopexit482.i ] ; 9 uses
+  %.0179.i = phi i32 [ 0, %.loopexit482.i ], [ %i.nw, %bb.ci ] ; 9 uses
   %i.np = lshr i32 %.0179.i, 5
   %i.nq = zext nneg i32 %i.np to i64
   %i.nr = getelementptr inbounds nuw [4 x i8], ptr %.sroa.0379.3.i, i64 %i.nq
@@ -215,12 +214,11 @@ bb.ci:                                            ; preds = %bb.ci, %.loopexit48
   %i.nv = and i32 %i.nu, %i.ns
   %.not475.i = icmp eq i32 %i.nv, 0
   %i.nw = add i32 %.0179.i, 1                     ; 3 uses
-  %indvars.iv.next1378.i = add nuw i64 %indvars.iv1377.i, 1
   br i1 %.not475.i, label %bb.ci, label %.preheader478.i, !llvm.loop !331
 
 .preheader478.i:                                  ; preds = %bb.ci
   %.0177.neg902.i = sub nsw i32 0, %.0179.i       ; 2 uses
-  %i.nx = zext nneg i32 %i.nw to i64
+  %i.nx = zext nneg i32 %i.nw to i64              ; 2 uses
   %i.ny = icmp sgt i64 %i.gv, %i.nx
   %.sroa.speculated.i.i = call i64 @llvm.umin.i64(i64 %i.gx, i64 512) ; 2 uses
   %i.nz = add nsw i64 %i.gv, -1                   ; 2 uses
@@ -231,7 +229,7 @@ bb.ci:                                            ; preds = %bb.ci, %.loopexit48
   br label %bb.cj
 
 bb.cj:                                            ; preds = %"_ZZL33ggml_backend_sched_compute_splitsP18ggml_backend_schedENK3$_0clEii.exit.i", %.lr.ph.i
-  %indvars.iv1379.i = phi i64 [ %indvars.iv1377.i, %.lr.ph.i ], [ %indvars.iv.next1380.i, %"_ZZL33ggml_backend_sched_compute_splitsP18ggml_backend_schedENK3$_0clEii.exit.i" ] ; 3 uses
+  %indvars.iv1379.i = phi i64 [ %i.nx, %.lr.ph.i ], [ %indvars.iv.next1380.i, %"_ZZL33ggml_backend_sched_compute_splitsP18ggml_backend_schedENK3$_0clEii.exit.i" ] ; 3 uses
   %.0177.neg907.i = phi i32 [ %.0177.neg902.i, %.lr.ph.i ], [ %.0177.neg.i, %"_ZZL33ggml_backend_sched_compute_splitsP18ggml_backend_schedENK3$_0clEii.exit.i" ]
   %.0175906.i = phi i32 [ %.0179.i, %.lr.ph.i ], [ %.1176.i, %"_ZZL33ggml_backend_sched_compute_splitsP18ggml_backend_schedENK3$_0clEii.exit.i" ] ; 4 uses
   %.0177905.i = phi i32 [ %.0179.i, %.lr.ph.i ], [ %.1178.i, %"_ZZL33ggml_backend_sched_compute_splitsP18ggml_backend_schedENK3$_0clEii.exit.i" ] ; 3 uses

@@ -205,24 +205,24 @@ bb.n:                                             ; preds = %bb.m
 
 .lr.ph67.preheader.i.i:                           ; preds = %bb.n
   %i.hb = add nsw i32 %i.gw, -4
-  %i.hc = sext i32 %i.gw to i64                   ; 2 uses
+  %i.hc = sext i32 %i.gw to i64
   %i.hd = sext i32 %i.hb to i64
   %i.he = sext i32 %i.gu to i64
   br label %.lr.ph67.i.i
 
 .lr.ph67.i.i:                                     ; preds = %.critedge.loopexit.i.i, %.lr.ph67.preheader.i.i
-  %indvars.iv82.i.i = phi i64 [ %i.hd, %.lr.ph67.preheader.i.i ], [ %indvars.iv.next83.i.i, %.critedge.loopexit.i.i ] ; 4 uses
-  %indvars.iv.i.i.a = phi i64 [ %i.hc, %.lr.ph67.preheader.i.i ], [ %indvars.iv.next.i.i, %.critedge.loopexit.i.i ] ; 2 uses
-  %i.hf = getelementptr inbounds [4 x i8], ptr %0, i64 %indvars.iv82.i.i
+  %indvars.iv.i.i.a = phi i64 [ %i.hd, %.lr.ph67.preheader.i.i ], [ %indvars.iv.next83.i.i, %.critedge.loopexit.i.i ] ; 5 uses
+  %i.hf = getelementptr inbounds [4 x i8], ptr %0, i64 %indvars.iv.i.i.a
   %i.hg = load i32, ptr %i.hf, align 4, !tbaa !10 ; 2 uses
   %i.hh = sext i32 %i.hg to i64
   %i.hi = getelementptr inbounds [4 x i8], ptr %1, i64 %i.hh
   %i.hj = load i32, ptr %i.hi, align 4, !tbaa !10
-  %i.hk = trunc nsw i64 %indvars.iv82.i.i to i32
+  %5 = add nsw i64 %indvars.iv.i.i.a, 4
+  %i.hk = trunc nsw i64 %indvars.iv.i.i.a to i32
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %bb.o, %.lr.ph67.i.i
-  %indvars.iv79.i.i = phi i64 [ %indvars.iv.i.i.a, %.lr.ph67.i.i ], [ %indvars.iv.next80.i.i, %bb.o ] ; 3 uses
+  %indvars.iv79.i.i = phi i64 [ %5, %.lr.ph67.i.i ], [ %indvars.iv.next80.i.i, %bb.o ] ; 3 uses
   %.0.in61.i.i = phi i32 [ %i.hk, %.lr.ph67.i.i ], [ %i.ht, %bb.o ] ; 2 uses
   %i.hl = getelementptr inbounds [4 x i8], ptr %0, i64 %indvars.iv79.i.i
   %i.hm = load i32, ptr %i.hl, align 4, !tbaa !10 ; 2 uses
@@ -246,9 +246,8 @@ bb.o:                                             ; preds = %.lr.ph.i.i
   %i.hu = sext i32 %.0.in.lcssa.ph.i.i to i64
   %i.hv = getelementptr inbounds [4 x i8], ptr %0, i64 %i.hu
   store i32 %i.hg, ptr %i.hv, align 4, !tbaa !10
-  %indvars.iv.next83.i.i = add nsw i64 %indvars.iv82.i.i, -1
-  %.not.not.i.i = icmp sgt i64 %indvars.iv82.i.i, %i.he
-  %indvars.iv.next.i.i = add nsw i64 %indvars.iv.i.i.a, -1
+  %indvars.iv.next83.i.i = add nsw i64 %indvars.iv.i.i.a, -1
+  %.not.not.i.i = icmp sgt i64 %indvars.iv.i.i.a, %i.he
   br i1 %.not.not.i.i, label %.lr.ph67.i.i, label %.loopexit58.i.i, !llvm.loop !82
 
 .loopexit58.i.i:                                  ; preds = %.critedge.loopexit.i.i, %bb.n
@@ -256,17 +255,17 @@ bb.o:                                             ; preds = %.lr.ph.i.i
   br i1 %.not55.not75.i.i, label %.lr.ph78.preheader.i.i, label %fallbackSimpleSort.exit.i
 
 .lr.ph78.preheader.i.i:                           ; preds = %.loopexit58.i.i
-  %5 = sext i32 %i.gw to i64                      ; 5 uses
   %6 = add i32 %i.gw, 1                           ; 4 uses
+  %7 = sext i32 %i.gw to i64                      ; 5 uses
   %i.hw = sext i32 %i.gu to i64                   ; 3 uses
   %i.hx = sext i32 %6 to i64                      ; 3 uses
-  %i.hy = sub nsw i64 %5, %i.hw
+  %i.hy = sub nsw i64 %7, %i.hw
   %xtraiter558 = and i64 %i.hy, 1
   %lcmp.mod559.not = icmp eq i64 %xtraiter558, 0
   br i1 %lcmp.mod559.not, label %.lr.ph78.i.i.prol.loopexit, label %.lr.ph78.i.i.prol
 
 .lr.ph78.i.i.prol:                                ; preds = %.lr.ph78.preheader.i.i
-  %indvars.iv.next87.i.i.prol = add nsw i64 %5, -1 ; 2 uses
+  %indvars.iv.next87.i.i.prol = add nsw i64 %7, -1 ; 2 uses
   %i.hz = getelementptr inbounds [4 x i8], ptr %0, i64 %indvars.iv.next87.i.i.prol
   %i.ia = load i32, ptr %i.hz, align 4, !tbaa !10 ; 2 uses
   %i.ib = sext i32 %i.ia to i64
@@ -275,7 +274,7 @@ bb.o:                                             ; preds = %.lr.ph.i.i
   br label %.lr.ph70.i.i.prol
 
 .lr.ph70.i.i.prol:                                ; preds = %bb.p, %.lr.ph78.i.i.prol
-  %indvars.iv88.i.i.prol = phi i64 [ %indvars.iv.next89.i.i.prol, %bb.p ], [ %5, %.lr.ph78.i.i.prol ] ; 3 uses
+  %indvars.iv88.i.i.prol = phi i64 [ %indvars.iv.next89.i.i.prol, %bb.p ], [ %7, %.lr.ph78.i.i.prol ] ; 3 uses
   %i.ie = getelementptr inbounds [4 x i8], ptr %0, i64 %indvars.iv88.i.i.prol ; 2 uses
   %i.if = load i32, ptr %i.ie, align 4, !tbaa !10 ; 2 uses
   %i.ig = zext i32 %i.if to i64
@@ -300,8 +299,8 @@ bb.p:                                             ; preds = %.lr.ph70.i.i.prol
   br label %.lr.ph78.i.i.prol.loopexit
 
 .lr.ph78.i.i.prol.loopexit:                       ; preds = %.critedge2.loopexit.i.i.prol, %.lr.ph78.preheader.i.i
-  %indvars.iv86.i.i.unr = phi i64 [ %5, %.lr.ph78.preheader.i.i ], [ %indvars.iv.next87.i.i.prol, %.critedge2.loopexit.i.i.prol ]
-  %i.in = add nsw i64 %5, -1
+  %indvars.iv86.i.i.unr = phi i64 [ %7, %.lr.ph78.preheader.i.i ], [ %indvars.iv.next87.i.i.prol, %.critedge2.loopexit.i.i.prol ]
+  %i.in = add nsw i64 %7, -1
   %i.io = icmp eq i64 %i.in, %i.hw
   br i1 %i.io, label %fallbackSimpleSort.exit.i, label %.lr.ph78.i.i
 

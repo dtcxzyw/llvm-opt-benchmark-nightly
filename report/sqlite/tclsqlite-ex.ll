@@ -206,20 +206,20 @@ bb.b:                                             ; preds = %.lr.ph212, %qrfStri
   %i.h = add i32 %i.g, 1
   %i.i = load i32, ptr %i.d, align 8, !tbaa !48
   %.not = icmp eq i32 %i.i, 0
-  %1 = trunc i64 %indvars.iv240 to i32            ; 5 uses
   br i1 %.not, label %bb.c, label %.critedge.loopexit
 
 bb.c:                                             ; preds = %bb.b
+  %1 = trunc i64 %indvars.iv240 to i32            ; 3 uses
   %i.j = load ptr, ptr %0, align 8, !tbaa !46
-  %i.k = tail call i32 @sqlite3_column_int(ptr noundef %i.j, i32 noundef 0) #20 ; 7 uses
+  %i.k = tail call i32 @sqlite3_column_int(ptr noundef %i.j, i32 noundef 0) #20 ; 5 uses
   %i.l = load ptr, ptr %0, align 8, !tbaa !46
   %i.m = tail call ptr @sqlite3_column_text(ptr noundef %i.l, i32 noundef 1) #20 ; 13 uses
   %i.n = load ptr, ptr %0, align 8, !tbaa !46
   %i.o = tail call i32 @sqlite3_column_int(ptr noundef %i.n, i32 noundef 2) #20
   %i.p = load ptr, ptr %0, align 8, !tbaa !46
-  %i.q = tail call i32 @sqlite3_column_int(ptr noundef %i.p, i32 noundef 3) #20 ; 7 uses
+  %i.q = tail call i32 @sqlite3_column_int(ptr noundef %i.p, i32 noundef 3) #20 ; 5 uses
   %i.r = sub nsw i32 %1, %i.k
-  %i.s = add nsw i32 %i.q, %i.r                   ; 3 uses
+  %i.s = add nsw i32 %i.q, %i.r                   ; 4 uses
   %.not158 = icmp sgt i64 %.0142210, %indvars.iv240
   br i1 %.not158, label %bb.e, label %bb.d
 
@@ -321,9 +321,7 @@ qrfStringInArray.exit172:                         ; preds = %.lr.ph.i167.5, %.lr
   br i1 %or.cond229, label %.lr.ph.preheader, label %.lr.ph.i175
 
 .lr.ph.preheader:                                 ; preds = %qrfStringInArray.exit172
-  %2 = add i32 %i.q, %1
-  %3 = sub i32 %2, %i.k
-  %i.bd = zext i32 %3 to i64                      ; 4 uses
+  %i.bd = zext nneg i32 %i.s to i64               ; 4 uses
   %i.be = add i32 %1, 1
   %i.bf = add i32 %i.q, %i.be
   %i.bg = sub i32 %i.bf, %i.k
@@ -393,7 +391,7 @@ middle.block294:                                  ; preds = %vector.body289
   br i1 %i.cg, label %qrfStringInArray.exit180, label %qrfStringInArray.exit180.thread
 
 qrfStringInArray.exit180:                         ; preds = %.lr.ph.i175
-  %i.ch = sext i32 %i.s to i64                    ; 2 uses
+  %i.ch = sext i32 %i.s to i64                    ; 6 uses
   %i.ci = icmp sgt i64 %indvars.iv240, %i.ch
   br i1 %i.ci, label %bb.f, label %qrfStringInArray.exit180.thread
 
@@ -406,9 +404,6 @@ bb.f:                                             ; preds = %qrfStringInArray.ex
   br i1 %or.cond5, label %.lr.ph207.preheader, label %qrfStringInArray.exit180.thread
 
 .lr.ph207.preheader:                              ; preds = %bb.f
-  %4 = add i32 %i.q, %1
-  %5 = sub i32 %4, %i.k
-  %6 = sext i32 %5 to i64                         ; 4 uses
   %i.cn = add nuw i64 %indvars.iv240, 1
   %i.co = add i32 %1, 1
   %i.cp = add i32 %i.q, %i.co
@@ -432,8 +427,8 @@ vector.scevcheck:                                 ; preds = %.lr.ph207.preheader
 
 vector.ph:                                        ; preds = %vector.scevcheck
   %n.vec = and i64 %i.cs, -8                      ; 3 uses
-  %i.dc = add i64 %n.vec, %6
-  %invariant.gep307 = getelementptr [4 x i8], ptr %.1146, i64 %6
+  %i.dc = add i64 %n.vec, %i.ch
+  %invariant.gep307 = getelementptr [4 x i8], ptr %.1146, i64 %i.ch
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -455,7 +450,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %qrfStringInArray.exit180.thread, label %.lr.ph207.preheader299
 
 .lr.ph207.preheader299:                           ; preds = %vector.scevcheck, %.lr.ph207.preheader, %middle.block
-  %indvars.iv237.ph = phi i64 [ %6, %vector.scevcheck ], [ %6, %.lr.ph207.preheader ], [ %i.dc, %middle.block ]
+  %indvars.iv237.ph = phi i64 [ %i.ch, %vector.scevcheck ], [ %i.ch, %.lr.ph207.preheader ], [ %i.dc, %middle.block ]
   br label %.lr.ph207
 
 .lr.ph207:                                        ; preds = %.lr.ph207.preheader299, %.lr.ph207

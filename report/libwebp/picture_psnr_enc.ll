@@ -205,10 +205,8 @@ bb.a:
   %indvars.iv90 = phi i64 [ 0, %.lr.ph.us.preheader ], [ %indvars.iv.next91, %._crit_edge.us ] ; 4 uses
   %.04568.us = phi double [ 0.000000e+00, %.lr.ph.us.preheader ], [ %.us-phi66.us, %._crit_edge.us ] ; 3 uses
   %i.f = trunc nuw nsw i64 %indvars.iv90 to i32
-  %smax82 = tail call i32 @llvm.smax.i32(i32 %i.f, i32 2) ; 2 uses
-  %6 = zext nneg i32 %smax82 to i64
-  %7 = add nsw i64 %6, -2
-  %i.g = add nsw i32 %smax82, -2
+  %smax82 = tail call i32 @llvm.smax.i32(i32 %i.f, i32 2)
+  %i.g = add nsw i32 %smax82, -2                  ; 2 uses
   %i.h = trunc i64 %indvars.iv90 to i32
   %i.i = add i32 %i.h, 3
   %i.j = tail call i32 @llvm.smin.i32(i32 %i.i, i32 %5) ; 2 uses
@@ -222,6 +220,7 @@ bb.a:
   %i.l = mul nsw i64 %indvars.iv90, %i.d
   %i.m = zext nneg i32 %i.j to i64
   %invariant.gep = getelementptr i8, ptr %2, i64 %i.l
+  %6 = zext nneg i32 %i.g to i64
   br label %.lr.ph57.us.us
 
 .lr.ph.split.us73:                                ; preds = %.lr.ph.split.us73.preheader, %.lr.ph.split.us73
@@ -243,10 +242,8 @@ bb.a:
   %indvars.iv86 = phi i64 [ 0, %.lr.ph57.us.us.preheader ], [ %indvars.iv.next87, %._crit_edge58.us.us ] ; 4 uses
   %.14661.us.us = phi double [ %.04568.us, %.lr.ph57.us.us.preheader ], [ %i.am, %._crit_edge58.us.us ]
   %i.v = trunc nuw nsw i64 %indvars.iv86 to i32
-  %smax = tail call i32 @llvm.smax.i32(i32 %i.v, i32 2) ; 2 uses
-  %8 = zext nneg i32 %smax to i64
-  %9 = add nsw i64 %8, -2
-  %i.w = add nsw i32 %smax, -2
+  %smax = tail call i32 @llvm.smax.i32(i32 %i.v, i32 2)
+  %i.w = add nsw i32 %smax, -2                    ; 2 uses
   %i.x = trunc i64 %indvars.iv86 to i32
   %i.y = add i32 %i.x, 3
   %i.z = tail call i32 @llvm.smin.i32(i32 %i.y, i32 %4) ; 2 uses
@@ -258,19 +255,20 @@ bb.a:
 
 .lr.ph.us.us.us.preheader:                        ; preds = %.lr.ph57.us.us
   %i.ad = zext nneg i32 %i.z to i64
+  %7 = zext nneg i32 %i.w to i64
   br label %.lr.ph.us.us.us
 
 .lr.ph.us.us.us:                                  ; preds = %.lr.ph.us.us.us.preheader, %._crit_edge.us.us.us
-  %indvars.iv83 = phi i64 [ %7, %.lr.ph.us.us.us.preheader ], [ %indvars.iv.next84, %._crit_edge.us.us.us ] ; 2 uses
+  %indvars.iv83 = phi i64 [ %6, %.lr.ph.us.us.us.preheader ], [ %indvars.iv.next84, %._crit_edge.us.us.us ] ; 2 uses
   %.04454.us.us.us = phi double [ 6.502500e+04, %.lr.ph.us.us.us.preheader ], [ %.2.us.us.us, %._crit_edge.us.us.us ]
   %i.ae = mul nsw i64 %indvars.iv83, %i.c
   %i.af = getelementptr inbounds i8, ptr %0, i64 %i.ae
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %.lr.ph.us.us.us
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ %9, %.lr.ph.us.us.us ] ; 2 uses
+  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.b ], [ %7, %.lr.ph.us.us.us ] ; 2 uses
   %.152.us.us.us = phi double [ %.2.us.us.us, %bb.b ], [ %.04454.us.us.us, %.lr.ph.us.us.us ] ; 2 uses
-  %i.ag = getelementptr inbounds i8, ptr %i.af, i64 %indvars.iv
+  %i.ag = getelementptr inbounds nuw i8, ptr %i.af, i64 %indvars.iv
   %i.ah = load i8, ptr %i.ag, align 1, !tbaa !8
   %i.ai = uitofp i8 %i.ah to double
   %i.aj = fsub double %i.ai, %i.ab                ; 2 uses
@@ -278,13 +276,13 @@ bb.b:                                             ; preds = %bb.b, %.lr.ph.us.us
   %i.al = fcmp olt double %i.ak, %.152.us.us.us
   %.2.us.us.us = select i1 %i.al, double %i.ak, double %.152.us.us.us ; 3 uses
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
-  %10 = icmp slt i64 %indvars.iv.next, %i.ad
-  br i1 %10, label %bb.b, label %._crit_edge.us.us.us, !llvm.loop !28
+  %8 = icmp samesign ult i64 %indvars.iv.next, %i.ad
+  br i1 %8, label %bb.b, label %._crit_edge.us.us.us, !llvm.loop !28
 
 ._crit_edge.us.us.us:                             ; preds = %bb.b
   %indvars.iv.next84 = add nuw nsw i64 %indvars.iv83, 1 ; 2 uses
-  %11 = icmp slt i64 %indvars.iv.next84, %i.m
-  br i1 %11, label %.lr.ph.us.us.us, label %._crit_edge58.us.us, !llvm.loop !29
+  %9 = icmp samesign ult i64 %indvars.iv.next84, %i.m
+  br i1 %9, label %.lr.ph.us.us.us, label %._crit_edge58.us.us, !llvm.loop !29
 
 ._crit_edge58.us.us:                              ; preds = %._crit_edge.us.us.us, %.lr.ph57.us.us
   %.us-phi.us.us = phi double [ 6.502500e+04, %.lr.ph57.us.us ], [ %.2.us.us.us, %._crit_edge.us.us.us ]

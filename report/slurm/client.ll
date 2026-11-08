@@ -202,16 +202,14 @@ bb.a:
 
 bb.b:                                             ; preds = %.lr.ph73, %bb.p
   %i.k = phi i32 [ %i.c, %.lr.ph73 ], [ %i.bn, %bb.p ] ; 2 uses
-  %.05272 = phi i32 [ %i.b, %.lr.ph73 ], [ %i.aq, %bb.p ] ; 2 uses
+  %.05272 = phi i32 [ %i.b, %.lr.ph73 ], [ %i.aq, %bb.p ]
   %i.l = load ptr, ptr %i.e, align 8              ; 3 uses
   %i.m = sext i32 %.05272 to i64                  ; 2 uses
   %i.n = sext i32 %i.k to i64
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.c, %bb.b
-  %indvars.iv79.in = phi i32 [ %indvars.iv79, %bb.c ], [ %.05272, %bb.b ]
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.c ], [ %i.m, %bb.b ] ; 5 uses
-  %indvars.iv79 = add i32 %indvars.iv79.in, 1     ; 2 uses
   %i.o = getelementptr inbounds i8, ptr %i.l, i64 %indvars.iv
   %i.p = load i8, ptr %i.o, align 1
   %.not = icmp ne i8 %i.p, 61
@@ -244,7 +242,7 @@ bb.f:                                             ; preds = %bb.e
 
 bb.g:                                             ; preds = %bb.f, %bb.e
   %i.y = load ptr, ptr %i.e, align 8              ; 3 uses
-  %i.z = sext i32 %i.v to i64                     ; 2 uses
+  %i.z = sext i32 %i.v to i64                     ; 3 uses
   %i.aa = getelementptr inbounds i8, ptr %i.y, i64 %i.z ; 3 uses
   %i.ab = load i8, ptr %i.g, align 8              ; 2 uses
   %i.ac = load i8, ptr %i.aa, align 1             ; 2 uses
@@ -253,11 +251,10 @@ bb.g:                                             ; preds = %bb.f, %bb.e
 
 .lr.ph:                                           ; preds = %bb.g
   %i.ad = load i8, ptr %i.f, align 1
-  %1 = sext i32 %indvars.iv79 to i64
   br label %bb.h
 
 bb.h:                                             ; preds = %.lr.ph, %bb.j
-  %indvars.iv81 = phi i64 [ %1, %.lr.ph ], [ %indvars.iv.next82, %bb.j ] ; 6 uses
+  %indvars.iv81 = phi i64 [ %i.z, %.lr.ph ], [ %indvars.iv.next82, %bb.j ] ; 6 uses
   %i.ae = phi i8 [ %i.ac, %.lr.ph ], [ %i.ak, %bb.j ]
   %.264 = phi i32 [ %i.v, %.lr.ph ], [ %i.ai, %bb.j ]
   %.not57 = icmp eq i8 %i.ae, %i.ad

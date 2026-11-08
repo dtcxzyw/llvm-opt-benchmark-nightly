@@ -205,7 +205,6 @@ bb.g:                                             ; preds = %bb.f
   br label %.lr.ph.preheader
 
 .loopexit:                                        ; preds = %.lr.ph191, %.lr.ph191.1, %.lr.ph191.2, %.lr.ph191.lver.orig, %.lr.ph191.lver.orig.1, %.lr.ph191.lver.orig.2
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %exitcond220.not = icmp eq i64 %indvars.iv.next218, 3
   br i1 %exitcond220.not, label %.preheader178.preheader, label %.lr.ph.preheader, !llvm.loop !104
 
@@ -282,36 +281,35 @@ bb.h:                                             ; preds = %_ZN16OpenColorIO_v2
   br label %.body
 
 .lr.ph.preheader:                                 ; preds = %.loopexit, %bb.g
-  %indvars.iv217 = phi i64 [ 0, %bb.g ], [ %indvars.iv.next218, %.loopexit ] ; 8 uses
-  %indvars.iv = phi i64 [ 1, %bb.g ], [ %indvars.iv.next, %.loopexit ] ; 11 uses
-  %i.cy = shl nuw nsw i64 %indvars.iv217, 3
+  %indvars.iv = phi i64 [ 0, %bb.g ], [ %indvars.iv.next218, %.loopexit ] ; 14 uses
+  %i.cy = shl nuw nsw i64 %indvars.iv, 3
   %i.cz = add nuw i64 %i.cy, 24                   ; 2 uses
   %scevgep267 = getelementptr i8, ptr %i.n, i64 %i.cz
   %scevgep270 = getelementptr i8, ptr %i.an, i64 %i.cz
-  %i.da = shl nuw nsw i64 %indvars.iv217, 3
+  %i.da = shl nuw nsw i64 %indvars.iv, 3
   %i.db = add nuw i64 %i.da, 8                    ; 2 uses
   %scevgep257.a = getelementptr i8, ptr %i.n, i64 %i.db
   %scevgep259 = getelementptr i8, ptr %i.an, i64 %i.db
-  %i.dc = mul i64 %i.am, %indvars.iv217           ; 9 uses
+  %i.dc = mul i64 %i.am, %indvars.iv              ; 9 uses
   %i.dd = getelementptr [8 x i8], ptr %i.n, i64 %i.dc ; 9 uses
-  %i.de = getelementptr [8 x i8], ptr %i.dd, i64 %indvars.iv217 ; 7 uses
-  %indvars.iv.next218 = add nuw nsw i64 %indvars.iv217, 1 ; 2 uses
-  %invariant.gep = getelementptr [8 x i8], ptr %i.n, i64 %indvars.iv217 ; 9 uses
+  %i.de = getelementptr [8 x i8], ptr %i.dd, i64 %indvars.iv ; 7 uses
+  %indvars.iv.next218 = add nuw nsw i64 %indvars.iv, 1 ; 6 uses
+  %invariant.gep = getelementptr [8 x i8], ptr %i.n, i64 %indvars.iv ; 9 uses
   %i.df = load double, ptr %i.de, align 8, !tbaa !27 ; 3 uses
   %i.dg = fcmp olt double %i.df, 0.000000e+00
   %i.dh = fneg double %i.df
   %.0137 = select i1 %i.dg, double %i.dh, double %i.df ; 2 uses
-  %i.di = mul i64 %i.am, %indvars.iv
+  %i.di = mul i64 %i.am, %indvars.iv.next218
   %gep = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.di
   %i.dj = load double, ptr %gep, align 8, !tbaa !27 ; 3 uses
   %i.dk = fcmp olt double %i.dj, 0.000000e+00
   %i.dl = fneg double %i.dj
   %.0135 = select i1 %i.dk, double %i.dl, double %i.dj ; 2 uses
   %i.dm = fcmp ogt double %.0135, %.0137          ; 2 uses
-  %.1139.v = select i1 %i.dm, i64 %indvars.iv, i64 %indvars.iv217
+  %.1139.v = select i1 %i.dm, i64 %indvars.iv.next218, i64 %indvars.iv
   %.1139 = trunc i64 %.1139.v to i32              ; 2 uses
   %.2 = select i1 %i.dm, double %.0135, double %.0137 ; 3 uses
-  %indvars.iv.next203 = add nuw nsw i64 %indvars.iv, 1 ; 3 uses
+  %indvars.iv.next203 = add nuw nsw i64 %indvars.iv, 2 ; 3 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next203, 4
   br i1 %exitcond.not, label %._crit_edge, label %.lr.ph.1
 
@@ -332,7 +330,7 @@ bb.h:                                             ; preds = %_ZN16OpenColorIO_v2
   %i.dt = trunc nuw nsw i64 %indvars.iv.next203 to i32
   %.1139.1 = select i1 %i.ds, i32 %i.dt, i32 %.1139 ; 2 uses
   %.2.1 = select i1 %i.ds, double %.0135.1, double %.2 ; 3 uses
-  %indvars.iv.next203.1 = add nuw nsw i64 %indvars.iv, 2 ; 3 uses
+  %indvars.iv.next203.1 = add nuw nsw i64 %indvars.iv, 3 ; 3 uses
   %exitcond.not.1 = icmp eq i64 %indvars.iv.next203.1, 4
   br i1 %exitcond.not.1, label %._crit_edge, label %.lr.ph.2
 
@@ -370,7 +368,7 @@ bb.j:                                             ; preds = %bb.i
 
 bb.k:                                             ; preds = %._crit_edge
   %i.ed = zext i32 %.1139.lcssa to i64            ; 2 uses
-  %.not = icmp eq i64 %indvars.iv217, %i.ed
+  %.not = icmp eq i64 %indvars.iv, %i.ed
   br i1 %.not, label %.lr.ph191.lver.check, label %.preheader179
 
 .preheader179:                                    ; preds = %bb.k
@@ -448,7 +446,7 @@ bb.k:                                             ; preds = %._crit_edge
   br i1 %lver.safe265, label %.lr.ph191.lver.orig, label %.lr.ph191
 
 .lr.ph191.lver.orig:                              ; preds = %.lr.ph191.lver.check
-  %i.ga = mul i64 %i.am, %indvars.iv              ; 6 uses
+  %i.ga = mul i64 %i.am, %indvars.iv.next218      ; 6 uses
   %gep188.lver.orig = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.ga
   %i.gb = load double, ptr %gep188.lver.orig, align 8, !tbaa !27
   %i.gc = load double, ptr %i.de, align 8, !tbaa !27
@@ -497,7 +495,7 @@ bb.k:                                             ; preds = %._crit_edge
   %i.hm = load double, ptr %i.hl, align 8, !tbaa !27
   %i.hn = tail call double @llvm.fmuladd.f64(double %i.ge, double %i.hk, double %i.hm)
   store double %i.hn, ptr %i.hl, align 8, !tbaa !27
-  %indvars.iv.next214.lver.orig = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars.iv.next214.lver.orig = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %exitcond216.not.lver.orig = icmp eq i64 %indvars.iv.next214.lver.orig, 4
   br i1 %exitcond216.not.lver.orig, label %.loopexit, label %.lr.ph191.lver.orig.1
 
@@ -551,7 +549,7 @@ bb.k:                                             ; preds = %._crit_edge
   %i.ja = load double, ptr %i.iz, align 8, !tbaa !27
   %i.jb = tail call double @llvm.fmuladd.f64(double %i.hs, double %i.iy, double %i.ja)
   store double %i.jb, ptr %i.iz, align 8, !tbaa !27
-  %indvars.iv.next214.lver.orig.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %indvars.iv.next214.lver.orig.1 = add nuw nsw i64 %indvars.iv, 3 ; 2 uses
   %exitcond216.not.lver.orig.1 = icmp eq i64 %indvars.iv.next214.lver.orig.1, 4
   br i1 %exitcond216.not.lver.orig.1, label %.loopexit, label %.lr.ph191.lver.orig.2
 
@@ -610,7 +608,7 @@ bb.k:                                             ; preds = %._crit_edge
 .lr.ph191:                                        ; preds = %.lr.ph191.lver.check
   %load_initial271 = load double, ptr %scevgep270, align 8
   %load_initial268 = load double, ptr %scevgep267, align 8
-  %i.kq = mul nuw i64 %i.am, %indvars.iv          ; 6 uses
+  %i.kq = mul nuw i64 %i.am, %indvars.iv.next218  ; 6 uses
   %gep188 = getelementptr [8 x i8], ptr %invariant.gep, i64 %i.kq
   %i.kr = load double, ptr %gep188, align 8, !tbaa !27
   %i.ks = load double, ptr %i.de, align 8, !tbaa !27
@@ -657,7 +655,7 @@ bb.k:                                             ; preds = %._crit_edge
   %i.ma = load double, ptr %i.lz, align 8, !tbaa !27
   %i.mb = tail call double @llvm.fmuladd.f64(double %i.ku, double %i.ly, double %i.ma) ; 2 uses
   store double %i.mb, ptr %i.lz, align 8, !tbaa !27
-  %indvars.iv.next214 = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
+  %indvars.iv.next214 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
   %exitcond216.not = icmp eq i64 %indvars.iv.next214, 4
   br i1 %exitcond216.not, label %.loopexit, label %.lr.ph191.1
 
@@ -709,7 +707,7 @@ bb.k:                                             ; preds = %._crit_edge
   %i.nm = load double, ptr %i.nl, align 8, !tbaa !27
   %i.nn = tail call double @llvm.fmuladd.f64(double %i.mg, double %i.nk, double %i.nm) ; 2 uses
   store double %i.nn, ptr %i.nl, align 8, !tbaa !27
-  %indvars.iv.next214.1 = add nuw nsw i64 %indvars.iv, 2 ; 2 uses
+  %indvars.iv.next214.1 = add nuw nsw i64 %indvars.iv, 3 ; 2 uses
   %exitcond216.not.1 = icmp eq i64 %indvars.iv.next214.1, 4
   br i1 %exitcond216.not.1, label %.loopexit, label %.lr.ph191.2
 

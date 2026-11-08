@@ -205,7 +205,6 @@ bb.br:                                            ; preds = %bb.aq
 
 .loopexit117.i:                                   ; preds = %HistoQueuePush.exit.i110, %bb.bs
   %.sroa.13.1.lcssa.i = phi i32 [ %.sroa.13.0127.i, %bb.bs ], [ %.sroa.13.7.i, %HistoQueuePush.exit.i110 ] ; 3 uses
-  %indvars.iv.next.i98 = add nuw nsw i64 %indvars.iv.i97, 1
   %exitcond155.not.i = icmp eq i64 %indvars.iv.next152.i, %i.abr
   br i1 %exitcond155.not.i, label %.preheader115.i, label %bb.bs, !llvm.loop !60
 
@@ -236,20 +235,19 @@ bb.br:                                            ; preds = %bb.aq
   br label %bb.co
 
 bb.bs:                                            ; preds = %.loopexit117.i, %.lr.ph129.i
-  %indvars.iv151.i = phi i64 [ 0, %.lr.ph129.i ], [ %indvars.iv.next152.i, %.loopexit117.i ] ; 3 uses
-  %indvars.iv.i97 = phi i64 [ 1, %.lr.ph129.i ], [ %indvars.iv.next.i98, %.loopexit117.i ] ; 2 uses
+  %indvars.iv.i97 = phi i64 [ 0, %.lr.ph129.i ], [ %indvars.iv.next152.i, %.loopexit117.i ] ; 3 uses
   %.sroa.13.0127.i = phi i32 [ 0, %.lr.ph129.i ], [ %.sroa.13.1.lcssa.i, %.loopexit117.i ] ; 2 uses
-  %indvars.iv.next152.i = add nuw nsw i64 %indvars.iv151.i, 1 ; 3 uses
+  %indvars.iv.next152.i = add nuw nsw i64 %indvars.iv.i97, 1 ; 4 uses
   %i.acm = icmp samesign ult i64 %indvars.iv.next152.i, %i.abr
   br i1 %i.acm, label %.lr.ph.i107, label %.loopexit117.i
 
 .lr.ph.i107:                                      ; preds = %bb.bs
-  %i.acn = getelementptr inbounds nuw [8 x i8], ptr %i.aax, i64 %indvars.iv151.i
-  %i.aco = trunc nuw nsw i64 %indvars.iv151.i to i32
+  %i.acn = getelementptr inbounds nuw [8 x i8], ptr %i.aax, i64 %indvars.iv.i97
+  %i.aco = trunc nuw nsw i64 %indvars.iv.i97 to i32
   br label %bb.bt
 
 bb.bt:                                            ; preds = %HistoQueuePush.exit.i110, %.lr.ph.i107
-  %indvars.iv148.i = phi i64 [ %indvars.iv.i97, %.lr.ph.i107 ], [ %indvars.iv.next149.i, %HistoQueuePush.exit.i110 ] ; 3 uses
+  %indvars.iv148.i = phi i64 [ %indvars.iv.next152.i, %.lr.ph.i107 ], [ %indvars.iv.next149.i, %HistoQueuePush.exit.i110 ] ; 3 uses
   %.sroa.13.1125.i = phi i32 [ %.sroa.13.0127.i, %.lr.ph.i107 ], [ %.sroa.13.7.i, %HistoQueuePush.exit.i110 ] ; 5 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %23) #10
   %i.acp = icmp eq i32 %.sroa.13.1125.i, %i.aaz

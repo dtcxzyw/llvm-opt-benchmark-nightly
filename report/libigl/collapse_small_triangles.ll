@@ -205,15 +205,13 @@ _ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE10resizeLikeIS
   br label %.outer
 
 .outer:                                           ; preds = %._crit_edge175.us.thread, %.preheader.us
-  %indvars.iv229.ph = phi i64 [ %indvars.iv.next230, %._crit_edge175.us.thread ], [ 0, %.preheader.us ]
-  %indvars.iv223.ph = phi i64 [ %indvars.iv.next224264, %._crit_edge175.us.thread ], [ 1, %.preheader.us ]
+  %indvars.iv223.ph = phi i64 [ %indvars.iv.next230, %._crit_edge175.us.thread ], [ 0, %.preheader.us ]
   %.081179.us.ph = phi i1 [ true, %._crit_edge175.us.thread ], [ false, %.preheader.us ]
   br label %bb.o
 
 bb.o:                                             ; preds = %.outer, %._crit_edge175.us
-  %indvars.iv229 = phi i64 [ %indvars.iv.next230, %._crit_edge175.us ], [ %indvars.iv229.ph, %.outer ] ; 2 uses
-  %indvars.iv223.a = phi i64 [ %indvars.iv.next224, %._crit_edge175.us ], [ %indvars.iv223.ph, %.outer ] ; 3 uses
-  %indvars.iv.next230 = add nuw nsw i64 %indvars.iv229, 1 ; 5 uses
+  %indvars.iv223.a = phi i64 [ %indvars.iv.next230, %._crit_edge175.us ], [ %indvars.iv223.ph, %.outer ] ; 2 uses
+  %indvars.iv.next230 = add nuw nsw i64 %indvars.iv223.a, 1 ; 6 uses
   %i.ck = icmp samesign ugt i64 %i.cc, %indvars.iv.next230
   br i1 %i.ck, label %.lr.ph174.us, label %._crit_edge175.us
 
@@ -223,7 +221,7 @@ bb.p:                                             ; preds = %bb.q
   br i1 %exitcond228.not, label %._crit_edge175.us, label %bb.q, !llvm.loop !41
 
 bb.q:                                             ; preds = %.lr.ph174.us, %bb.p
-  %indvars.iv225 = phi i64 [ %indvars.iv223.a, %.lr.ph174.us ], [ %indvars.iv.next226, %bb.p ] ; 2 uses
+  %indvars.iv225 = phi i64 [ %indvars.iv.next230, %.lr.ph174.us ], [ %indvars.iv.next226, %bb.p ] ; 2 uses
   %i.cl = mul nuw nsw i64 %indvars.iv225, %i.ca
   %i.cm = getelementptr [4 x i8], ptr %i.cj, i64 %i.cl
   %i.cn = load i32, ptr %i.cm, align 4, !tbaa !20
@@ -231,12 +229,10 @@ bb.q:                                             ; preds = %.lr.ph174.us, %bb.p
   br i1 %i.co, label %._crit_edge175.us.thread, label %bb.p
 
 ._crit_edge175.us:                                ; preds = %bb.p, %bb.o
-  %indvars.iv.next224 = add nuw i64 %indvars.iv223.a, 1
   %exitcond231.not = icmp eq i64 %indvars.iv.next230, %i.cc
   br i1 %exitcond231.not, label %._crit_edge182.us, label %bb.o, !llvm.loop !42
 
 ._crit_edge175.us.thread:                         ; preds = %bb.q
-  %indvars.iv.next224264 = add nuw i64 %indvars.iv223.a, 1
   %exitcond231.not265 = icmp eq i64 %indvars.iv.next230, %i.cc
   br i1 %exitcond231.not265, label %_ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exit.us, label %.outer, !llvm.loop !42
 
@@ -357,7 +353,7 @@ _ZN5Eigen5BlockINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEELi1ELin1ELb0EEaSERKS3_.exi
   br i1 %exitcond235.not, label %_ZN5Eigen15PlainObjectBaseINS_6MatrixIiLin1ELin1ELi0ELin1ELin1EEEE10resizeLikeIS2_EEvRKNS_9EigenBaseIT_EE.exit._crit_edge, label %.preheader.us, !llvm.loop !48
 
 .lr.ph174.us:                                     ; preds = %bb.o
-  %i.eq = mul nuw nsw i64 %indvars.iv229, %i.ca
+  %i.eq = mul nuw nsw i64 %indvars.iv223.a, %i.ca
   %i.er = getelementptr [4 x i8], ptr %i.cj, i64 %i.eq
   %i.es = load i32, ptr %i.er, align 4, !tbaa !20
   br label %bb.q

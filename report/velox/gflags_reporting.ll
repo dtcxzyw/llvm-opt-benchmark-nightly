@@ -202,15 +202,14 @@ bb.r:                                             ; preds = %bb.p, %bb.o, %bb.m,
   br label %bb.an
 
 .lr.ph:                                           ; preds = %bb.k, %bb.c
-  %i.ba = sub nuw nsw i32 79, %i.n                ; 2 uses
+  %i.ba = sub nuw nsw i32 79, %i.n
   %i.bb = tail call ptr @__ctype_b_loc() #24      ; 2 uses
   %i.bc = load ptr, ptr %i.bb, align 8, !tbaa !146
   %i.bd = zext nneg i32 %i.ba to i64
   br label %bb.s
 
 bb.s:                                             ; preds = %.lr.ph, %bb.t
-  %indvars.iv264 = phi i32 [ %i.ba, %.lr.ph ], [ %indvars.iv.next265, %bb.t ] ; 2 uses
-  %indvars.iv = phi i64 [ %i.bd, %.lr.ph ], [ %indvars.iv.next, %bb.t ] ; 11 uses
+  %indvars.iv = phi i64 [ %i.bd, %.lr.ph ], [ %indvars.iv.next, %bb.t ] ; 12 uses
   %i.be = getelementptr inbounds nuw i8, ptr %.047, i64 %indvars.iv
   %i.bf = load i8, ptr %i.be, align 1, !tbaa !111
   %i.bg = sext i8 %i.bf to i64
@@ -223,7 +222,6 @@ bb.s:                                             ; preds = %.lr.ph, %bb.t
 bb.t:                                             ; preds = %bb.s
   %indvars.iv.next = add nsw i64 %indvars.iv, -1
   %i.bk = icmp sgt i64 %indvars.iv, 1
-  %indvars.iv.next265 = add i32 %indvars.iv264, -1
   br i1 %i.bk, label %bb.s, label %.critedge, !llvm.loop !136
 
 .critedge:                                        ; preds = %bb.t
@@ -399,11 +397,10 @@ _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit: ; preds = %bb.ak
   %i.cy = add nsw i32 %i.n, %i.bx
   store i32 %i.cy, ptr %i.a, align 4, !tbaa !115
   %i.cz = load ptr, ptr %i.bb, align 8, !tbaa !146
-  %10 = zext i32 %indvars.iv264 to i64
   br label %bb.al
 
 bb.al:                                            ; preds = %bb.al, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit
-  %indvars.iv267 = phi i64 [ %indvars.iv.next268, %bb.al ], [ %10, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 4 uses
+  %indvars.iv267 = phi i64 [ %indvars.iv.next268, %bb.al ], [ %indvars.iv, %_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev.exit ] ; 4 uses
   %i.da = getelementptr inbounds nuw i8, ptr %.047, i64 %indvars.iv267
   %i.db = load i8, ptr %i.da, align 1, !tbaa !111 ; 2 uses
   %i.dc = sext i8 %i.db to i64

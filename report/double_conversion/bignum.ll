@@ -205,15 +205,15 @@ _ZN17double_conversion6Bignum14EnsureCapacityEi.exit: ; preds = %_ZN17double_con
   br i1 %exitcond.not, label %.preheader51.lr.ph, label %_ZN17double_conversion6Bignum14EnsureCapacityEi.exit, !llvm.loop !49
 
 .preheader51:                                     ; preds = %.preheader51.lr.ph, %.loopexit
-  %indvars.iv84 = phi i64 [ 1, %.preheader51.lr.ph ], [ %indvars.iv.next85, %.loopexit ] ; 5 uses
-  %indvars.iv73.a = phi i64 [ 0, %.preheader51.lr.ph ], [ %indvars.iv.next74, %.loopexit ] ; 5 uses
+  %indvars.iv84 = phi i64 [ 0, %.preheader51.lr.ph ], [ %indvars.iv.next74, %.loopexit ] ; 5 uses
+  %indvars.iv73.a = phi i64 [ 1, %.preheader51.lr.ph ], [ %indvars.iv.next85, %.loopexit ] ; 5 uses
   %.058 = phi i64 [ 0, %.preheader51.lr.ph ], [ %i.cc, %.loopexit ] ; 2 uses
-  %min.iters.check125 = icmp samesign ult i64 %indvars.iv84, 4
+  %min.iters.check125 = icmp samesign ult i64 %indvars.iv73.a, 4
   br i1 %min.iters.check125, label %scalar.ph124.preheader, label %vector.ph126
 
 vector.ph126:                                     ; preds = %.preheader51
-  %n.vec127 = and i64 %indvars.iv84, 9223372036854775804 ; 4 uses
-  %i.aw = sub nsw i64 %indvars.iv73.a, %n.vec127
+  %n.vec127 = and i64 %indvars.iv73.a, 9223372036854775804 ; 4 uses
+  %i.aw = sub nsw i64 %indvars.iv84, %n.vec127
   %i.ax = insertelement <2 x i64> <i64 poison, i64 0>, i64 %.058, i64 0
   br label %vector.body128
 
@@ -221,7 +221,7 @@ vector.body128:                                   ; preds = %vector.body128, %ve
   %index129 = phi i64 [ 0, %vector.ph126 ], [ %index.next136, %vector.body128 ] ; 3 uses
   %vec.phi = phi <2 x i64> [ %i.ax, %vector.ph126 ], [ %i.bk, %vector.body128 ]
   %vec.phi130 = phi <2 x i64> [ zeroinitializer, %vector.ph126 ], [ %i.bl, %vector.body128 ]
-  %i.ay = sub i64 %indvars.iv73.a, %index129
+  %i.ay = sub i64 %indvars.iv84, %index129
   %i.az = getelementptr [4 x i8], ptr %invariant.gep113, i64 %i.ay ; 2 uses
   %i.ba = getelementptr i8, ptr %i.az, i64 -4
   %i.bb = getelementptr i8, ptr %i.az, i64 -12
@@ -248,11 +248,11 @@ vector.body128:                                   ; preds = %vector.body128, %ve
 middle.block137:                                  ; preds = %vector.body128
   %bin.rdx = add <2 x i64> %i.bl, %i.bk
   %i.bn = tail call i64 @llvm.vector.reduce.add.v2i64(<2 x i64> %bin.rdx) ; 2 uses
-  %cmp.n138 = icmp eq i64 %indvars.iv84, %n.vec127
+  %cmp.n138 = icmp eq i64 %indvars.iv73.a, %n.vec127
   br i1 %cmp.n138, label %.loopexit, label %scalar.ph124.preheader
 
 scalar.ph124.preheader:                           ; preds = %.preheader51, %middle.block137
-  %indvars.iv75.ph = phi i64 [ %indvars.iv73.a, %.preheader51 ], [ %i.aw, %middle.block137 ]
+  %indvars.iv75.ph = phi i64 [ %indvars.iv84, %.preheader51 ], [ %i.aw, %middle.block137 ]
   %indvars.iv71.ph = phi i64 [ 0, %.preheader51 ], [ %n.vec127, %middle.block137 ]
   %.156.ph = phi i64 [ %.058, %.preheader51 ], [ %i.bn, %middle.block137 ]
   br label %scalar.ph124
@@ -268,7 +268,6 @@ scalar.ph124.preheader:                           ; preds = %.preheader51, %midd
   %i.br = sext i16 %i.a to i64                    ; 7 uses
   %i.bs = sext i32 %i.bp to i64
   %wide.trip.count105 = sext i32 %i.c to i64
-  %invariant.op = add nsw i64 %i.bs, %i.br
   %wide.trip.count100 = zext i32 %i.b to i64      ; 2 uses
   %invariant.gep117 = getelementptr [4 x i8], ptr %0, i64 %i.br ; 2 uses
   %invariant.gep119 = getelementptr [4 x i8], ptr %i.bq, i64 %i.br ; 2 uses
@@ -288,18 +287,18 @@ scalar.ph124:                                     ; preds = %scalar.ph124.prehea
   %i.by = add i64 %i.bx, %.156                    ; 2 uses
   %indvars.iv.next76 = add nsw i64 %indvars.iv75, -1
   %indvars.iv.next72 = add nuw nsw i64 %indvars.iv71, 1 ; 2 uses
-  %exitcond83.not = icmp eq i64 %indvars.iv.next72, %indvars.iv84
+  %exitcond83.not = icmp eq i64 %indvars.iv.next72, %indvars.iv73.a
   br i1 %exitcond83.not, label %.loopexit, label %scalar.ph124, !llvm.loop !51
 
 .loopexit:                                        ; preds = %scalar.ph124, %middle.block137
   %.lcssa121 = phi i64 [ %i.bn, %middle.block137 ], [ %i.by, %scalar.ph124 ] ; 2 uses
   %i.bz = trunc i64 %.lcssa121 to i32
   %i.ca = and i32 %i.bz, 268435455
-  %i.cb = getelementptr inbounds nuw [4 x i8], ptr %i.as, i64 %indvars.iv73.a
+  %i.cb = getelementptr inbounds nuw [4 x i8], ptr %i.as, i64 %indvars.iv84
   store i32 %i.ca, ptr %i.cb, align 4, !tbaa !19
   %i.cc = lshr i64 %.lcssa121, 28                 ; 2 uses
-  %indvars.iv.next74 = add nuw nsw i64 %indvars.iv73.a, 1 ; 2 uses
-  %indvars.iv.next85 = add nuw nsw i64 %indvars.iv84, 1
+  %indvars.iv.next74 = add nuw nsw i64 %indvars.iv84, 1 ; 2 uses
+  %indvars.iv.next85 = add nuw nsw i64 %indvars.iv73.a, 1
   %exitcond90.not = icmp eq i64 %indvars.iv.next74, %i.at
   br i1 %exitcond90.not, label %.preheader, label %.preheader51, !llvm.loop !52
 
@@ -341,9 +340,9 @@ _ZN17double_conversion6Bignum5ClampEv.exit:       ; preds = %.lr.ph.i, %.critedg
 bb.d:                                             ; preds = %.lr.ph66, %._crit_edge
   %indvar = phi i64 [ 0, %.lr.ph66 ], [ %indvar.next, %._crit_edge ] ; 2 uses
   %indvars.iv102 = phi i64 [ %i.br, %.lr.ph66 ], [ %indvars.iv.next103, %._crit_edge ] ; 3 uses
-  %indvars.iv91.a = phi i64 [ 1, %.lr.ph66 ], [ %indvars.iv.next92, %._crit_edge ] ; 4 uses
-  %.265 = phi i64 [ %.0.lcssa, %.lr.ph66 ], [ %i.dw, %._crit_edge ] ; 3 uses
-  %i.cq = icmp slt i64 %indvars.iv102, %invariant.op
+  %indvars.iv91.a = phi i64 [ %.0.lcssa, %.lr.ph66 ], [ %i.dw, %._crit_edge ] ; 3 uses
+  %1 = sub nsw i64 %indvars.iv102, %i.bs          ; 4 uses
+  %i.cq = icmp slt i64 %1, %i.br
   br i1 %i.cq, label %.lr.ph62.preheader, label %._crit_edge
 
 .lr.ph62.preheader:                               ; preds = %bb.d
@@ -355,9 +354,9 @@ bb.d:                                             ; preds = %.lr.ph66, %._crit_e
 vector.ph143:                                     ; preds = %.lr.ph62.preheader
   %n.vec144 = and i64 %i.cs, -4                   ; 4 uses
   %i.ct = sub i64 %i.br, %n.vec144
-  %i.cu = add i64 %indvars.iv91.a, %n.vec144
-  %i.cv = insertelement <2 x i64> <i64 poison, i64 0>, i64 %.265, i64 0
-  %i.cw = getelementptr [4 x i8], ptr %invariant.gep119, i64 %indvars.iv91.a
+  %i.cu = add i64 %1, %n.vec144
+  %i.cv = insertelement <2 x i64> <i64 poison, i64 0>, i64 %indvars.iv91.a, i64 0
+  %i.cw = getelementptr [4 x i8], ptr %invariant.gep119, i64 %1
   br label %vector.body145
 
 vector.body145:                                   ; preds = %vector.body145, %vector.ph143
@@ -396,8 +395,8 @@ middle.block156:                                  ; preds = %vector.body145
 
 .lr.ph62.preheader162:                            ; preds = %.lr.ph62.preheader, %middle.block156
   %indvars.iv95.in.ph = phi i64 [ %i.br, %.lr.ph62.preheader ], [ %i.ct, %middle.block156 ]
-  %indvars.iv93.ph = phi i64 [ %indvars.iv91.a, %.lr.ph62.preheader ], [ %i.cu, %middle.block156 ]
-  %.361.ph = phi i64 [ %.265, %.lr.ph62.preheader ], [ %i.dm, %middle.block156 ]
+  %indvars.iv93.ph = phi i64 [ %1, %.lr.ph62.preheader ], [ %i.cu, %middle.block156 ]
+  %.361.ph = phi i64 [ %indvars.iv91.a, %.lr.ph62.preheader ], [ %i.dm, %middle.block156 ]
   br label %.lr.ph62
 
 .lr.ph62:                                         ; preds = %.lr.ph62.preheader162, %.lr.ph62
@@ -418,14 +417,13 @@ middle.block156:                                  ; preds = %vector.body145
   br i1 %exitcond101.not, label %._crit_edge, label %.lr.ph62, !llvm.loop !54
 
 ._crit_edge:                                      ; preds = %.lr.ph62, %middle.block156, %bb.d
-  %.3.lcssa = phi i64 [ %.265, %bb.d ], [ %i.dm, %middle.block156 ], [ %i.ds, %.lr.ph62 ] ; 2 uses
+  %.3.lcssa = phi i64 [ %indvars.iv91.a, %bb.d ], [ %i.dm, %middle.block156 ], [ %i.ds, %.lr.ph62 ] ; 2 uses
   %i.dt = trunc i64 %.3.lcssa to i32
   %i.du = and i32 %i.dt, 268435455
   %i.dv = getelementptr inbounds [4 x i8], ptr %i.bq, i64 %indvars.iv102
   store i32 %i.du, ptr %i.dv, align 4, !tbaa !19
   %i.dw = lshr i64 %.3.lcssa, 28
   %indvars.iv.next103 = add nuw nsw i64 %indvars.iv102, 1 ; 2 uses
-  %indvars.iv.next92 = add nuw nsw i64 %indvars.iv91.a, 1
   %exitcond106.not = icmp eq i64 %indvars.iv.next103, %wide.trip.count105
   %indvar.next = add i64 %indvar, 1
   br i1 %exitcond106.not, label %._crit_edge67, label %bb.d, !llvm.loop !55

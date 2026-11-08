@@ -205,18 +205,16 @@ bb.e:                                             ; preds = %bb.d
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.f, %bb.e
-  %indvars.iv182 = phi i32 [ %indvars.iv.next183, %bb.f ], [ 0, %bb.e ] ; 2 uses
-  %indvars.iv177.a = phi i32 [ %indvars.iv.next178.a, %bb.f ], [ 1, %bb.e ] ; 2 uses
-  %indvars.iv158 = phi i32 [ %indvars.iv.next159.a, %bb.f ], [ %i.q, %bb.e ] ; 6 uses
-  %.091 = phi i32 [ %6, %bb.f ], [ %i.o, %bb.e ]  ; 6 uses
+  %indvars.iv177.a = phi i32 [ %indvars.iv.next183, %bb.f ], [ 0, %bb.e ] ; 2 uses
+  %indvars.iv158 = phi i32 [ %indvars.iv.next178.a, %bb.f ], [ %i.q, %bb.e ] ; 6 uses
+  %.091 = phi i32 [ %indvars.iv.next159.a, %bb.f ], [ %i.o, %bb.e ] ; 6 uses
   %i.r = zext i32 %.091 to i64
   %i.s = getelementptr inbounds nuw [4 x i8], ptr %i.i, i64 %i.r
   %i.t = load i32, ptr %i.s, align 4, !tbaa !19
   %i.u = icmp eq i32 %i.t, 0
-  %6 = add i32 %.091, -1
-  %indvars.iv.next159.a = add i32 %indvars.iv158, -1
-  %indvars.iv.next178.a = add i32 %indvars.iv177.a, 1
-  %indvars.iv.next183 = add i32 %indvars.iv182, -1
+  %indvars.iv.next159.a = add i32 %.091, -1
+  %indvars.iv.next178.a = add i32 %indvars.iv158, -1
+  %indvars.iv.next183 = add i32 %indvars.iv177.a, -1
   br i1 %i.u, label %bb.f, label %.preheader, !llvm.loop !81
 
 .preheader:                                       ; preds = %bb.f
@@ -427,15 +425,15 @@ bb.g:                                             ; preds = %bb.g, %.lr.ph120.ne
   br label %._crit_edge126
 
 ._crit_edge126:                                   ; preds = %._crit_edge126.unr-lcssa, %.lr.ph125.epil.preheader
-  %i.cv = sub i32 %i.q, %.091                     ; 3 uses
+  %i.cv = sub i32 %i.q, %.091                     ; 4 uses
   %i.cw = add nuw nsw i32 %spec.store.select, 1
   %i.cx = sub i32 %i.cw, %i.cv
   %i.cy = icmp ult i32 %i.cv, %i.cx
   br i1 %i.cy, label %.lr.ph129.preheader, label %._crit_edge134.split
 
 .lr.ph129.preheader:                              ; preds = %._crit_edge126
-  %i.cz = zext i32 %indvars.iv177.a to i64        ; 2 uses
-  %i.da = add i32 %spec.store.select, %indvars.iv182
+  %i.cz = zext i32 %i.cv to i64                   ; 2 uses
+  %i.da = add i32 %spec.store.select, %indvars.iv177.a
   %wide.trip.count175 = zext i32 %indvars.iv158 to i64
   %i.db = add nsw i64 %wide.trip.count169, -1     ; 3 uses
   %min.iters.check = icmp ult i64 %i.db, 8

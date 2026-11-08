@@ -205,7 +205,6 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph, %bb.p
-  %indvars.iv59 = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next60, %bb.p ] ; 4 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.p ] ; 9 uses
   %i.i = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %indvars.iv
   %i.j = load ptr, ptr %i.i, align 8, !tbaa !280
@@ -248,7 +247,7 @@ ft_mem_qrealloc.exit:                             ; preds = %bb.g, %bb.e
   %.134.i = phi ptr [ %i.y, %bb.g ], [ null, %bb.e ] ; 7 uses
   store ptr %.134.i, ptr %i.g, align 8, !tbaa !278
   %i.z = load i32, ptr %i.d, align 8, !tbaa !279  ; 4 uses
-  %.03453 = add nuw nsw i32 %i.l, 1
+  %.03453 = add nuw nsw i32 %i.l, 1               ; 2 uses
   %i.aa = icmp slt i32 %.03453, %i.z
   br i1 %i.aa, label %.lr.ph56, label %ft_mem_qrealloc.exit.._crit_edge_crit_edge
 
@@ -258,6 +257,7 @@ ft_mem_qrealloc.exit.._crit_edge_crit_edge:       ; preds = %ft_mem_qrealloc.exi
 
 .lr.ph56:                                         ; preds = %ft_mem_qrealloc.exit
   %i.ab = add nsw i32 %i.z, -2
+  %1 = zext i32 %.03453 to i64                    ; 3 uses
   %i.ac = zext i32 %i.ab to i64                   ; 3 uses
   %i.ad = add nsw i32 %i.z, -1                    ; 3 uses
   %wide.trip.count70 = zext i32 %i.ad to i64      ; 3 uses
@@ -272,7 +272,7 @@ ft_mem_qrealloc.exit.._crit_edge_crit_edge:       ; preds = %ft_mem_qrealloc.exi
   br i1 %i.af, label %.prol.loopexit.unr-lcssa, label %bb.h
 
 bb.h:                                             ; preds = %.prol.preheader
-  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %.134.i, i64 %indvars.iv59
+  %i.ag = getelementptr inbounds nuw [8 x i8], ptr %.134.i, i64 %1
   %i.ah = load ptr, ptr %i.ag, align 8, !tbaa !280
   br label %.prol.loopexit.unr-lcssa
 
@@ -280,13 +280,13 @@ bb.h:                                             ; preds = %.prol.preheader
   %.sink.prol = phi ptr [ %i.ah, %bb.h ], [ %i.p, %.prol.preheader ]
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %.134.i, i64 %indvars.iv
   store ptr %.sink.prol, ptr %i.ai, align 8, !tbaa !280
-  %indvars.iv.next63.prol = add nuw nsw i64 %indvars.iv59, 1
+  %indvars.iv.next63.prol = add nuw nsw i64 %1, 1
   %indvars.iv.next66.prol = add nuw nsw i64 %indvars.iv, 1
   br label %.prol.loopexit
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph56
   %indvars.iv65.unr = phi i64 [ %indvars.iv, %.lr.ph56 ], [ %indvars.iv.next66.prol, %.prol.loopexit.unr-lcssa ]
-  %indvars.iv62.unr = phi i64 [ %indvars.iv59, %.lr.ph56 ], [ %indvars.iv.next63.prol, %.prol.loopexit.unr-lcssa ]
+  %indvars.iv62.unr = phi i64 [ %1, %.lr.ph56 ], [ %indvars.iv.next63.prol, %.prol.loopexit.unr-lcssa ]
   %i.aj = icmp eq i64 %.neg, %wide.trip.count70
   br i1 %i.aj, label %._crit_edge, label %.lr.ph56.new
 
@@ -360,7 +360,6 @@ ft_cmap_done_internal.exit:                       ; preds = %bb.n, %bb.o
 bb.p:                                             ; preds = %bb.c
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  %indvars.iv.next60 = add nuw nsw i64 %indvars.iv59, 1
   br i1 %exitcond.not, label %.critedge, label %bb.c, !llvm.loop !501
 
 .critedge:                                        ; preds = %bb.p, %bb.b, %ft_cmap_done_internal.exit, %ft_mem_qrealloc.exit.thread, %bb.a

@@ -205,11 +205,9 @@ _ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit.lr.ph: ; preds = 
 
 _ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit: ; preds = %_ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit.lr.ph, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit168
   %indvars.iv349 = phi i64 [ 0, %_ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit.lr.ph ], [ %indvars.iv.next350, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit168 ] ; 3 uses
-  %indvars.iv = phi i32 [ 1, %_ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit.lr.ph ], [ %indvars.iv.next, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit168 ] ; 2 uses
   %i.ey = phi ptr [ %i.ev, %_ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit.lr.ph ], [ %i.jq, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit168 ] ; 2 uses
   %.sroa.0218.0324 = phi ptr [ null, %_ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit.lr.ph ], [ %.sroa.0218.1.lcssa, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit168 ] ; 10 uses
   %.sroa.0230.0323 = phi ptr [ %i.ds, %_ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit.lr.ph ], [ %i.gn, %_ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0_.exit168 ] ; 4 uses
-  %6 = zext i32 %indvars.iv to i64
   %i.ez = getelementptr inbounds i8, ptr %i.ey, i64 -4
   %i.fa = load i32, ptr %i.ez, align 4, !tbaa !88
   %i.fb = zext i32 %i.fa to i64
@@ -381,13 +379,13 @@ _ZN11ast_manager7inc_refEP3ast.exit.i.i130:       ; preds = %_ZN7obj_refI4expr11
 
 _ZN7obj_refI4expr11ast_managerEaSERKS2_.exit133:  ; preds = %_ZN11ast_manager7inc_refEP3ast.exit.i.i130, %_ZN7obj_refI4expr11ast_managerE7dec_refEv.exit.i128, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit125
   %.sroa.0218.5 = phi ptr [ %.sroa.0218.0324, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit125 ], [ null, %_ZN7obj_refI4expr11ast_managerE7dec_refEv.exit.i128 ], [ %i.ds, %_ZN11ast_manager7inc_refEP3ast.exit.i.i130 ] ; 2 uses
-  %indvars.iv.next350 = add nuw nsw i64 %indvars.iv349, 1
+  %indvars.iv.next350 = add nuw nsw i64 %indvars.iv349, 1 ; 2 uses
   %i.hb = load ptr, ptr %4, align 8, !tbaa !316   ; 2 uses
   %i.hc = icmp eq ptr %i.hb, null
   br i1 %i.hc, label %.critedge270, label %_ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit135
 
 _ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit135: ; preds = %_ZN7obj_refI4expr11ast_managerEaSERKS2_.exit133, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit156
-  %indvars.iv346 = phi i64 [ %indvars.iv.next347, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit156 ], [ %6, %_ZN7obj_refI4expr11ast_managerEaSERKS2_.exit133 ] ; 3 uses
+  %indvars.iv346 = phi i64 [ %indvars.iv.next347, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit156 ], [ %indvars.iv.next350, %_ZN7obj_refI4expr11ast_managerEaSERKS2_.exit133 ] ; 3 uses
   %i.hd = phi ptr [ %i.iq, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit156 ], [ %i.hb, %_ZN7obj_refI4expr11ast_managerEaSERKS2_.exit133 ] ; 2 uses
   %.sroa.0218.1319 = phi ptr [ %i.ii, %_ZN7obj_refI4expr11ast_managerEaSEPS0_.exit156 ], [ %.sroa.0218.5, %_ZN7obj_refI4expr11ast_managerEaSERKS2_.exit133 ] ; 4 uses
   %i.he = getelementptr inbounds i8, ptr %i.hd, i64 -4
@@ -592,7 +590,6 @@ _ZN15ref_vector_coreI4expr19ref_manager_wrapperIS0_11ast_managerEE9push_backEPS0
   store i32 %i.jp, ptr %i.jm, align 4, !tbaa !88
   %i.jq = load ptr, ptr %4, align 8, !tbaa !316   ; 2 uses
   %i.jr = icmp eq ptr %i.jq, null
-  %indvars.iv.next = add i32 %indvars.iv, 1
   br i1 %i.jr, label %.critedge269, label %_ZNK6vectorI10ref_vectorI4expr11ast_managerELb1EjE4sizeEv.exit
 
 _Z5mk_orRK10ref_vectorI4expr11ast_managerE.exit:  ; preds = %_ZN11ast_manager7inc_refEP3ast.exit.i.i.i, %.noexc110

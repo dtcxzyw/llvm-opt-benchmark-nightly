@@ -205,7 +205,7 @@ bb.ag:                                            ; preds = %bb.af, %_ZL19addUni
   br i1 %i.wi, label %.lr.ph.us.i, label %.preheader339.us.i
 
 bb.ah:                                            ; preds = %.lr.ph352.us.i, %_ZL20addUniqueFloorRegionR8rcRegioni.exit243.us.i
-  %indvars.iv404.i = phi i64 [ %indvars.iv402.i, %.lr.ph352.us.i ], [ %indvars.iv.next405.i, %_ZL20addUniqueFloorRegionR8rcRegioni.exit243.us.i ] ; 2 uses
+  %indvars.iv404.i = phi i64 [ %indvars.iv.next407.i, %.lr.ph352.us.i ], [ %indvars.iv.next405.i, %_ZL20addUniqueFloorRegionR8rcRegioni.exit243.us.i ] ; 2 uses
   %i.wj = load i32, ptr %i.aas, align 4, !tbaa !86 ; 2 uses
   %i.wk = getelementptr inbounds nuw [4 x i8], ptr %.sroa.16.3.us.i, i64 %indvars.iv404.i
   %i.wl = load i32, ptr %i.wk, align 4, !tbaa !86 ; 5 uses
@@ -515,8 +515,6 @@ _ZL20addUniqueFloorRegionR8rcRegioni.exit243.us.i: ; preds = %bb.an, %bb.aq, %_Z
   br i1 %exitcond415.not.i, label %._crit_edge359.us.i, label %bb.u
 
 .loopexit337.us.i:                                ; preds = %_ZL20addUniqueFloorRegionR8rcRegioni.exit243.us.i
-  %indvars.iv.next409.i = add nuw nsw i64 %indvars.iv408.i, 1
-  %indvars.iv.next403.i = add nuw nsw i64 %indvars.iv402.i, 1
   %exitcond411.not.i = icmp eq i64 %indvars.iv408.i, %i.aar
   br i1 %exitcond411.not.i, label %._crit_edge.us.i, label %.lr.ph352.us.i
 
@@ -529,8 +527,8 @@ _ZL20addUniqueFloorRegionR8rcRegioni.exit243.us.i: ; preds = %bb.an, %bb.aq, %_Z
   br label %.lr.ph352.us.i
 
 .lr.ph352.us.i:                                   ; preds = %.lr.ph354.us.preheader.i, %.loopexit337.us.i
-  %indvars.iv408.i = phi i64 [ 0, %.lr.ph354.us.preheader.i ], [ %indvars.iv.next409.i, %.loopexit337.us.i ] ; 3 uses
-  %indvars.iv402.i = phi i64 [ 1, %.lr.ph354.us.preheader.i ], [ %indvars.iv.next403.i, %.loopexit337.us.i ] ; 2 uses
+  %indvars.iv408.i = phi i64 [ 0, %.lr.ph354.us.preheader.i ], [ %indvars.iv.next407.i, %.loopexit337.us.i ] ; 3 uses
+  %indvars.iv.next407.i = add nuw nsw i64 %indvars.iv408.i, 1 ; 2 uses
   %i.aas = getelementptr inbounds nuw [4 x i8], ptr %.sroa.16.3.us.i, i64 %indvars.iv408.i ; 2 uses
   br label %bb.ah
 

@@ -156,7 +156,6 @@ bb.i:                                             ; preds = %._crit_edge.us
 .preheader:                                       ; preds = %.preheader.preheader, %.critedge
   %i.av = phi ptr [ %i.e, %.preheader.preheader ], [ %i.cv, %.critedge ] ; 7 uses
   %i.aw = phi ptr [ %i.a, %.preheader.preheader ], [ %i.cw, %.critedge ] ; 6 uses
-  %indvars.iv173 = phi i64 [ 1, %.preheader.preheader ], [ %indvars.iv.next174, %.critedge ] ; 6 uses
   %indvars.iv166.a = phi i64 [ 0, %.preheader.preheader ], [ %indvars.iv.next167, %.critedge ] ; 18 uses
   %.0108158 = phi i32 [ 0, %.preheader.preheader ], [ %.2110.lcssa, %.critedge ] ; 2 uses
   %i.ax = shl nuw nsw i64 %indvars.iv166.a, 3
@@ -284,19 +283,19 @@ bb.m:                                             ; preds = %bb.l
   %i.db = load ptr, ptr %i.da, align 8, !tbaa !16 ; 7 uses
   %i.dc = getelementptr inbounds nuw [8 x i8], ptr %i.db, i64 %indvars.iv166.a
   %i.dd = load double, ptr %i.dc, align 8, !tbaa !18
-  %indvars.iv.next167 = add nuw nsw i64 %indvars.iv166.a, 1 ; 2 uses
+  %indvars.iv.next167 = add nuw nsw i64 %indvars.iv166.a, 1 ; 7 uses
   %scevgep = getelementptr i8, ptr %i.db, i64 %i.at
   %scevgep220 = getelementptr i8, ptr %i.db, i64 %i.ay
   %i.de = xor i64 %indvars.iv166.a, -1
   %i.df = add nsw i64 %i.de, %wide.trip.count164  ; 3 uses
   %min.iters.check = icmp ult i64 %i.df, 4
   %n.vec = and i64 %i.df, -4                      ; 3 uses
-  %i.dg = add i64 %indvars.iv173, %n.vec
+  %i.dg = add i64 %indvars.iv.next167, %n.vec
   %cmp.n = icmp eq i64 %i.df, %n.vec
   br label %.lr.ph150.us
 
 .lr.ph150.us:                                     ; preds = %.lr.ph150.us.preheader, %._crit_edge151.us
-  %indvars.iv180 = phi i64 [ %indvars.iv173, %.lr.ph150.us.preheader ], [ %indvars.iv.next181, %._crit_edge151.us ] ; 2 uses
+  %indvars.iv180 = phi i64 [ %indvars.iv.next167, %.lr.ph150.us.preheader ], [ %indvars.iv.next181, %._crit_edge151.us ] ; 2 uses
   %i.dh = getelementptr inbounds nuw [4 x i8], ptr %i.cv, i64 %indvars.iv180
   %i.di = load i32, ptr %i.dh, align 4, !tbaa !20
   %i.dj = sext i32 %i.di to i64
@@ -324,7 +323,7 @@ vector.ph:                                        ; preds = %vector.memcheck
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
-  %i.ds = add nuw i64 %indvars.iv173, %index      ; 2 uses
+  %i.ds = add nuw i64 %indvars.iv.next167, %index ; 2 uses
   %i.dt = getelementptr inbounds nuw [8 x i8], ptr %i.db, i64 %i.ds ; 2 uses
   %i.du = getelementptr inbounds nuw i8, ptr %i.dt, i64 16
   %wide.load = load <2 x double>, ptr %i.dt, align 8, !tbaa !18, !alias.scope !33
@@ -345,7 +344,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %._crit_edge151.us, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.memcheck, %.lr.ph150.us, %middle.block
-  %indvars.iv175.ph = phi i64 [ %indvars.iv173, %vector.memcheck ], [ %indvars.iv173, %.lr.ph150.us ], [ %i.dg, %middle.block ] ; 6 uses
+  %indvars.iv175.ph = phi i64 [ %indvars.iv.next167, %vector.memcheck ], [ %indvars.iv.next167, %.lr.ph150.us ], [ %i.dg, %middle.block ] ; 6 uses
   %i.ea = sub i64 %wide.trip.count164, %indvars.iv175.ph
   %xtraiter236 = and i64 %i.ea, 1
   %lcmp.mod237.not = icmp eq i64 %xtraiter236, 0
@@ -391,7 +390,6 @@ scalar.ph:                                        ; preds = %scalar.ph.prol.loop
   br i1 %exitcond184.not, label %.critedge, label %.lr.ph150.us, !llvm.loop !29
 
 .critedge:                                        ; preds = %._crit_edge151.us
-  %indvars.iv.next174 = add nuw nsw i64 %indvars.iv173, 1
   %exitcond187.not = icmp eq i64 %indvars.iv.next167, %wide.trip.count186
   br i1 %exitcond187.not, label %.critedge125, label %.preheader, !llvm.loop !30
 

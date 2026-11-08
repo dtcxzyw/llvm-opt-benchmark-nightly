@@ -205,14 +205,13 @@ bb.h:                                             ; preds = %bb.g, %.thread322
   br label %_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit
 
 _ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit: ; preds = %.preheader, %.loopexit
-  %indvars.iv500 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next501, %.loopexit ] ; 6 uses
-  %indvars.iv.a = phi i64 [ -1, %.preheader ], [ %indvars.iv.next, %.loopexit ] ; 2 uses
+  %indvars.iv.a = phi i64 [ 0, %.preheader ], [ %indvars.iv.next, %.loopexit ] ; 6 uses
   %.2115460 = phi i32 [ %.1114463, %.preheader ], [ %.8.ph, %.loopexit ] ; 4 uses
   %.2123459 = phi i8 [ %.1122462, %.preheader ], [ %.3124, %.loopexit ]
   %i.ay = load ptr, ptr %i.al, align 8, !tbaa !201
   %i.az = load i8, ptr %i.am, align 4, !tbaa !202, !range !199, !noundef !200
   %i.ba = trunc nuw i8 %i.az to i1
-  %i.bb = add nuw nsw i64 %i.au, %indvars.iv500   ; 2 uses
+  %i.bb = add nuw nsw i64 %i.au, %indvars.iv.a    ; 2 uses
   %i.bc = select i1 %i.ba, i64 0, i64 %i.bb
   %i.bd = getelementptr inbounds nuw [4 x i8], ptr %i.ay, i64 %i.bc
   %.sroa.0.0.copyload.i.i = load i32, ptr %i.bd, align 4 ; 4 uses
@@ -422,7 +421,7 @@ bb.aa:                                            ; preds = %bb.z
   %.sroa.4259.0.extract.trunc = trunc i48 %.sroa.4259.0.extract.shift to i16
   %.sroa.5260.0.extract.shift = lshr i48 %.sroa.0.0.copyload.i, 32
   %.sroa.5260.0.extract.trunc = trunc nuw i48 %.sroa.5260.0.extract.shift to i16
-  %i.do = trunc nuw nsw i64 %indvars.iv500 to i16
+  %i.do = trunc nuw nsw i64 %indvars.iv.a to i16
   %i.dp = add i16 %i.do, %.sroa.0258.0.extract.trunc
   %i.dq = add i16 %i.ax, %.sroa.4259.0.extract.trunc ; 3 uses
   %i.dr = add i16 %i.at, %.sroa.5260.0.extract.trunc
@@ -440,11 +439,11 @@ bb.aa:                                            ; preds = %bb.z
   br i1 %.not366439, label %.loopexit, label %.lr.ph454
 
 .lr.ph454:                                        ; preds = %bb.aa
-  %i.dw = trunc i64 %indvars.iv500 to i32
+  %5 = add nsw i64 %indvars.iv.a, -1              ; 2 uses
+  %i.dw = trunc i64 %indvars.iv.a to i32
   %i.dx = add i32 %i.dw, 1                        ; 2 uses
-  %i.dy = trunc i64 %indvars.iv500 to i32
-  %5 = add i32 %i.dy, -1
-  %.not140425 = icmp slt i32 %i.dx, %5
+  %i.dy = trunc nsw i64 %5 to i32
+  %.not140425 = icmp slt i32 %i.dx, %i.dy
   %.sroa.0276.0.insert.ext279 = and i32 %.sroa.0.0.copyload.i.i, 65535
   br label %bb.ab
 
@@ -487,9 +486,9 @@ bb.ae:                                            ; preds = %bb.ad
   br i1 %.not140425, label %._crit_edge431, label %.lr.ph422
 
 .lr.ph422:                                        ; preds = %bb.ae, %._crit_edge423.split
-  %indvars.iv485 = phi i64 [ %indvars.iv.next486, %._crit_edge423.split ], [ %indvars.iv.a, %bb.ae ] ; 4 uses
+  %indvars.iv485 = phi i64 [ %indvars.iv.next486, %._crit_edge423.split ], [ %5, %bb.ae ] ; 4 uses
   %.0125428 = phi i8 [ %.5130, %._crit_edge423.split ], [ 0, %bb.ae ]
-  %i.et = icmp eq i64 %indvars.iv485, %indvars.iv500
+  %i.et = icmp eq i64 %indvars.iv485, %indvars.iv.a
   %i.eu = trunc nsw i64 %indvars.iv485 to i16     ; 2 uses
   br label %.lr.ph
 
@@ -860,9 +859,8 @@ select.unfold:                                    ; preds = %_ZSt4findIN9__gnu_c
 
 .loopexit:                                        ; preds = %_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit218, %select.unfold, %bb.aa, %_ZNSt6vectorItSaItEED2Ev.exit, %bb.z
   %.8.ph = phi i32 [ %.2115460, %bb.z ], [ %.2115460, %_ZNSt6vectorItSaItEED2Ev.exit ], [ %.2115460, %bb.aa ], [ %.4117, %_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit218 ], [ %.6119.ph, %select.unfold ] ; 3 uses
-  %indvars.iv.next501 = add nuw nsw i64 %indvars.iv500, 1 ; 2 uses
-  %indvars.iv.next = add nsw i64 %indvars.iv.a, 1
-  %exitcond.not = icmp eq i64 %indvars.iv.next501, 16
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1 ; 2 uses
+  %exitcond.not = icmp eq i64 %indvars.iv.next, 16
   br i1 %exitcond.not, label %bb.bc, label %_ZN8MapBlock14getNodeNoCheckEN4core8vector3dIsEE.exit, !llvm.loop !338
 
 bb.bc:                                            ; preds = %.loopexit

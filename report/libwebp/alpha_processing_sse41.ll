@@ -48,7 +48,6 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.preheader59.us, %bb.b
-  %indvars.iv102 = phi i64 [ 16, %.preheader59.us ], [ %indvars.iv.next103, %bb.b ] ; 4 uses
   %indvars.iv99 = phi i64 [ 0, %.preheader59.us ], [ %indvars.iv.next100, %bb.b ] ; 2 uses
   %.15761.us = phi <2 x i64> [ %.05668.us, %.preheader59.us ], [ %i.ae, %bb.b ]
   %.05860.us = phi ptr [ %.072.us, %.preheader59.us ], [ %i.af, %bb.b ] ; 5 uses
@@ -71,9 +70,8 @@ bb.b:                                             ; preds = %.preheader59.us, %b
   store <16 x i8> %i.ab, ptr %i.ad, align 1, !tbaa !16
   %i.ae = and <2 x i64> %.15761.us, %i.ac         ; 3 uses
   %i.af = getelementptr inbounds nuw i8, ptr %.05860.us, i64 64
-  %indvars.iv.next100 = add nuw nsw i64 %indvars.iv99, 16 ; 3 uses
+  %indvars.iv.next100 = add nuw nsw i64 %indvars.iv99, 16 ; 6 uses
   %i.ag = icmp slt i64 %indvars.iv.next100, %i.g
-  %indvars.iv.next103 = add nuw nsw i64 %indvars.iv102, 16
   br i1 %i.ag, label %bb.b, label %..preheader_crit_edge.us, !llvm.loop !10
 
 .lr.ph66.us:                                      ; preds = %.lr.ph66.us.preheader129, %.lr.ph66.us
@@ -107,7 +105,7 @@ bb.b:                                             ; preds = %.preheader59.us, %b
   br i1 %min.iters.check118, label %.lr.ph66.us.preheader129, label %vector.ph119
 
 vector.ph119:                                     ; preds = %.lr.ph66.us.preheader
-  %i.at = add i64 %indvars.iv102, %n.vec120
+  %i.at = add i64 %indvars.iv.next100, %n.vec120
   %i.au = insertelement <4 x i32> <i32 poison, i32 -1, i32 -1, i32 -1>, i32 %.05270.us, i64 0
   br label %vector.body121
 
@@ -115,7 +113,7 @@ vector.body121:                                   ; preds = %vector.body121, %ve
   %index122 = phi i64 [ 0, %vector.ph119 ], [ %index.next125, %vector.body121 ] ; 2 uses
   %vec.phi123 = phi <4 x i32> [ %i.au, %vector.ph119 ], [ %i.cn, %vector.body121 ]
   %vec.phi124 = phi <4 x i32> [ splat (i32 -1), %vector.ph119 ], [ %i.co, %vector.body121 ]
-  %i.av = add nuw i64 %indvars.iv102, %index122   ; 9 uses
+  %i.av = add nuw i64 %indvars.iv.next100, %index122 ; 9 uses
   %i.aw = shl nuw nsw i64 %i.av, 2
   %i.ax = shl i64 %i.av, 2
   %i.ay = shl i64 %i.av, 2
@@ -173,7 +171,7 @@ middle.block126:                                  ; preds = %vector.body121
   br label %.lr.ph66.us.preheader129
 
 .lr.ph66.us.preheader129:                         ; preds = %.lr.ph66.us.preheader, %middle.block126
-  %indvars.iv104.ph = phi i64 [ %indvars.iv102, %.lr.ph66.us.preheader ], [ %i.at, %middle.block126 ]
+  %indvars.iv104.ph = phi i64 [ %indvars.iv.next100, %.lr.ph66.us.preheader ], [ %i.at, %middle.block126 ]
   %.165.us.ph = phi i32 [ %.05270.us, %.lr.ph66.us.preheader ], [ %i.cq, %middle.block126 ]
   br label %.lr.ph66.us
 

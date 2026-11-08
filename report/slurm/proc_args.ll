@@ -202,7 +202,6 @@ bb.e:                                             ; preds = %bb.b, %bb.d, %bb.c
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.g, %bb.e
-  %indvars.iv257 = phi i64 [ %indvars.iv.next258, %bb.g ], [ 1, %bb.e ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.g ], [ 0, %bb.e ] ; 6 uses
   %i.g = getelementptr inbounds nuw i8, ptr %.1223, i64 %indvars.iv
   %i.h = load i8, ptr %i.g, align 1
@@ -214,7 +213,6 @@ bb.f:                                             ; preds = %bb.g, %bb.e
 
 bb.g:                                             ; preds = %bb.f
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %indvars.iv.next258 = add nuw i64 %indvars.iv257, 1
   br label %bb.f, !llvm.loop !24
 
 .critedge:                                        ; preds = %bb.f, %bb.f, %bb.f
@@ -363,10 +361,11 @@ bb.ai:                                            ; preds = %bb.ah
 
 bb.aj:                                            ; preds = %bb.ai
   %i.av = add nuw i64 %indvars.iv, 1
+  %3 = and i64 %i.av, 4294967295                  ; 2 uses
   br label %bb.ak
 
 bb.ak:                                            ; preds = %bb.al, %bb.aj
-  %indvars.iv259 = phi i64 [ %indvars.iv.next260, %bb.al ], [ %indvars.iv257, %bb.aj ] ; 5 uses
+  %indvars.iv259 = phi i64 [ %indvars.iv.next260, %bb.al ], [ %3, %bb.aj ] ; 5 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %.1223, i64 %indvars.iv259
   %i.ax = load i8, ptr %i.aw, align 1
   switch i8 %i.ax, label %bb.al [
@@ -381,7 +380,7 @@ bb.al:                                            ; preds = %bb.ak
 bb.am:                                            ; preds = %bb.ak
   %i.ay = getelementptr inbounds nuw i8, ptr %.1223, i64 %indvars.iv259
   store i8 0, ptr %i.ay, align 1
-  %i.az = add i64 %indvars.iv259, 1
+  %i.az = add nuw i64 %indvars.iv259, 1
   br label %.loopexit
 
 .loopexit:                                        ; preds = %bb.ak, %bb.am
@@ -389,7 +388,6 @@ bb.am:                                            ; preds = %bb.ak
   br i1 %.not245.not, label %bb.ao, label %bb.an
 
 bb.an:                                            ; preds = %.loopexit
-  %3 = and i64 %i.av, 4294967295
   %i.ba = getelementptr inbounds nuw i8, ptr %.1223, i64 %3
   %i.bb = tail call i32 @time_str2secs(ptr noundef nonnull %i.ba) #18
   store i32 %i.bb, ptr %i.c, align 8

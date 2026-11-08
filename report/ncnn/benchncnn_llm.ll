@@ -205,7 +205,7 @@ _ZN4ncnn3Mat4fillEf.exit.preheader.i:             ; preds = %.lr.ph.preheader.i,
   %i.ak = load i64, ptr %i.u, align 8, !tbaa !37
   %factor.op.mul.i = mul i64 %i.ak, %i.aj
   %invariant.op.i = add nuw nsw i32 %6, 1
-  %i.al = zext nneg i32 %invariant.op.i to i64    ; 2 uses
+  %i.al = zext nneg i32 %invariant.op.i to i64
   %i.am = zext nneg i32 %i.y to i64               ; 3 uses
   %wide.trip.count31.i = zext nneg i32 %5 to i64
   %i.an = xor i32 %6, -1
@@ -214,23 +214,22 @@ _ZN4ncnn3Mat4fillEf.exit.preheader.i:             ; preds = %.lr.ph.preheader.i,
   br label %bb.b
 
 bb.b:                                             ; preds = %_ZN4ncnn3Mat4fillEf.exit.i, %_ZN4ncnn3Mat4fillEf.exit.preheader.i
-  %indvars.iv27.i = phi i64 [ 0, %_ZN4ncnn3Mat4fillEf.exit.preheader.i ], [ %indvars.iv.next28.i, %_ZN4ncnn3Mat4fillEf.exit.i ] ; 4 uses
-  %indvars.iv.i.a = phi i64 [ %i.al, %_ZN4ncnn3Mat4fillEf.exit.preheader.i ], [ %indvars.iv.next.i.a, %_ZN4ncnn3Mat4fillEf.exit.i ] ; 4 uses
-  %.reass.i = mul i64 %factor.op.mul.i, %indvars.iv27.i
+  %indvars.iv.i.a = phi i64 [ 0, %_ZN4ncnn3Mat4fillEf.exit.preheader.i ], [ %indvars.iv.next.i.a, %_ZN4ncnn3Mat4fillEf.exit.i ] ; 4 uses
+  %.reass.i = mul i64 %factor.op.mul.i, %indvars.iv.i.a
   %i.aq = getelementptr inbounds nuw i8, ptr %i.ae, i64 %.reass.i ; 2 uses
-  %i.ar = add nuw nsw i64 %indvars.iv27.i, %i.al
+  %i.ar = add nuw nsw i64 %indvars.iv.i.a, %i.al  ; 4 uses
   %i.as = icmp samesign ult i64 %i.ar, %i.am
   br i1 %i.as, label %.lr.ph22.i.preheader, label %_ZN4ncnn3Mat4fillEf.exit.i
 
 .lr.ph22.i.preheader:                             ; preds = %bb.b
-  %i.at = sub i64 %i.ap, %indvars.iv27.i          ; 3 uses
+  %i.at = sub i64 %i.ap, %indvars.iv.i.a          ; 3 uses
   %min.iters.check6 = icmp ult i64 %i.at, 8
   br i1 %min.iters.check6, label %.lr.ph22.i.preheader30, label %vector.ph7
 
 vector.ph7:                                       ; preds = %.lr.ph22.i.preheader
   %n.vec8 = and i64 %i.at, -8                     ; 3 uses
-  %i.au = add i64 %indvars.iv.i.a, %n.vec8
-  %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.aq, i64 %indvars.iv.i.a
+  %i.au = add i64 %i.ar, %n.vec8
+  %i.av = getelementptr inbounds nuw [4 x i8], ptr %i.aq, i64 %i.ar
   br label %vector.body9
 
 vector.body9:                                     ; preds = %vector.body9, %vector.ph7
@@ -248,13 +247,12 @@ middle.block12:                                   ; preds = %vector.body9
   br i1 %cmp.n13, label %_ZN4ncnn3Mat4fillEf.exit.i, label %.lr.ph22.i.preheader30
 
 .lr.ph22.i.preheader30:                           ; preds = %.lr.ph22.i.preheader, %middle.block12
-  %indvars.iv24.i.ph = phi i64 [ %indvars.iv.i.a, %.lr.ph22.i.preheader ], [ %i.au, %middle.block12 ]
+  %indvars.iv24.i.ph = phi i64 [ %i.ar, %.lr.ph22.i.preheader ], [ %i.au, %middle.block12 ]
   br label %.lr.ph22.i
 
 _ZN4ncnn3Mat4fillEf.exit.i:                       ; preds = %.lr.ph22.i, %middle.block12, %bb.b
-  %indvars.iv.next28.i = add nuw nsw i64 %indvars.iv27.i, 1 ; 2 uses
-  %indvars.iv.next.i.a = add nuw nsw i64 %indvars.iv.i.a, 1
-  %exitcond32.not.i = icmp eq i64 %indvars.iv.next28.i, %wide.trip.count31.i
+  %indvars.iv.next.i.a = add nuw nsw i64 %indvars.iv.i.a, 1 ; 2 uses
+  %exitcond32.not.i = icmp eq i64 %indvars.iv.next.i.a, %wide.trip.count31.i
   br i1 %exitcond32.not.i, label %_ZL19make_attention_maskiiRN4ncnn3MatE.exit, label %bb.b, !llvm.loop !92
 
 .lr.ph22.i:                                       ; preds = %.lr.ph22.i.preheader30, %.lr.ph22.i

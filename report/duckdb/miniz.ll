@@ -205,19 +205,17 @@ _ZN12duckdb_minizL16mz_zip_set_errorEPNS_14mz_zip_archiveENS_12mz_zip_errorE.exi
 
 bb.b:                                             ; preds = %bb.a
   call void @llvm.lifetime.start.p0(ptr nonnull %i.a) #26
-  %i.j = tail call i64 @llvm.smax.i64(i64 %i.g, i64 4096) ; 2 uses
+  %i.j = tail call i64 @llvm.smax.i64(i64 %i.g, i64 4096)
   %spec.select.i = add nsw i64 %i.j, -4096
   %i.k = getelementptr inbounds nuw i8, ptr %0, i64 72 ; 5 uses
   %i.l = getelementptr inbounds nuw i8, ptr %0, i64 96 ; 5 uses
-  %2 = sub nsw i64 4096, %i.j
   br label %bb.c
 
 bb.c:                                             ; preds = %bb.h, %bb.b
-  %3 = phi i64 [ %i.ac, %bb.h ], [ %i.g, %bb.b ]  ; 2 uses
-  %indvars.iv.i.a = phi i64 [ %indvars.iv.next.i, %bb.h ], [ %2, %bb.b ] ; 2 uses
-  %.045.i = phi i64 [ %i.af, %bb.h ], [ %spec.select.i, %bb.b ] ; 6 uses
-  %i.m = sub i64 %3, %.045.i                      ; 2 uses
-  %spec.select5465.i = call i64 @llvm.umin.i64(i64 %i.m, i64 4096) ; 2 uses
+  %indvars.iv.i.a = phi i64 [ %i.g, %bb.b ], [ %i.ac, %bb.h ]
+  %.045.i = phi i64 [ %spec.select.i, %bb.b ], [ %i.af, %bb.h ] ; 6 uses
+  %i.m = sub i64 %indvars.iv.i.a, %.045.i         ; 2 uses
+  %spec.select5465.i = call i64 @llvm.umin.i64(i64 %i.m, i64 4096) ; 3 uses
   %i.n = load ptr, ptr %i.k, align 8, !tbaa !169
   %i.o = load ptr, ptr %i.l, align 8, !tbaa !181
   %i.p = call noundef i64 %i.n(ptr noundef %i.o, i64 noundef %.045.i, ptr noundef nonnull %i.a, i64 noundef %spec.select5465.i), !inline_history !397
@@ -229,9 +227,7 @@ bb.d:                                             ; preds = %bb.c
   br i1 %i.q, label %.lr.ph.i, label %.critedge.i
 
 .lr.ph.i:                                         ; preds = %bb.d
-  %4 = add i64 %indvars.iv.i.a, %3
-  %umin.i = call i64 @llvm.umin.i64(i64 %4, i64 4096)
-  %i.r = add nuw nsw i64 %umin.i, 4294967292
+  %i.r = add nuw nsw i64 %spec.select5465.i, 4294967292
   %i.s = and i64 %i.r, 4294967295
   br label %bb.e
 
@@ -264,7 +260,6 @@ bb.h:                                             ; preds = %.critedge.i
   %i.ad = sub i64 %i.ac, %.045.i
   %i.ae = icmp ugt i64 %i.ad, 65556
   %i.af = add i64 %.045.i, -4093
-  %indvars.iv.next.i = add i64 %indvars.iv.i.a, 4093
   br i1 %i.ae, label %.thread, label %bb.c
 
 .thread:                                          ; preds = %bb.c, %bb.h

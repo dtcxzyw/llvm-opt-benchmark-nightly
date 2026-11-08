@@ -205,9 +205,8 @@ bb.aq:                                            ; preds = %.noexc54
   br i1 %.not.i.i126.i, label %_ZN16OpenColorIO_v2_512_GLOBAL__N_125ReplaceTabsAndStripSpacesEPc.exit.i.i, label %.preheader28.i.i.i
 
 .preheader28.i.i.i:                               ; preds = %bb.aq, %bb.as
-  %indvars.iv.i.i.i = phi i16 [ %indvars.iv.next.i.i.i, %bb.as ], [ 0, %bb.aq ] ; 2 uses
   %.021.i.i.i = phi i16 [ %i.gq, %bb.as ], [ -1, %bb.aq ] ; 2 uses
-  %i.gq = add i16 %.021.i.i.i, 1                  ; 2 uses
+  %i.gq = add i16 %.021.i.i.i, 1                  ; 3 uses
   %i.gr = sext i16 %i.gq to i64
   %i.gs = getelementptr inbounds i8, ptr %i.e, i64 %i.gr ; 2 uses
   %i.gt = load i8, ptr %i.gs, align 1, !tbaa !25
@@ -217,7 +216,7 @@ bb.aq:                                            ; preds = %.noexc54
   ]
 
 .preheader27.preheader.i.i.i:                     ; preds = %.preheader28.i.i.i
-  %i.gu = zext i16 %indvars.iv.i.i.i to i64
+  %i.gu = zext i16 %i.gq to i64
   %smin.i.i.i = call i16 @llvm.smin.i16(i16 %.021.i.i.i, i16 -1)
   %i.gv = add nsw i16 %smin.i.i.i, 1
   br label %.preheader27.i.i.i
@@ -227,7 +226,6 @@ bb.ar:                                            ; preds = %.preheader28.i.i.i
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.ar, %.preheader28.i.i.i
-  %indvars.iv.next.i.i.i = add i16 %indvars.iv.i.i.i, 1
   br label %.preheader28.i.i.i, !llvm.loop !0
 
 .preheader27.i.i.i:                               ; preds = %bb.at, %.preheader27.preheader.i.i.i
@@ -630,9 +628,8 @@ _ZNSi7getlineEPcl.exit:                           ; preds = %bb.c, %bb.d
   br i1 %.not.i, label %_ZN16OpenColorIO_v2_512_GLOBAL__N_125ReplaceTabsAndStripSpacesEPc.exit, label %.preheader28.i
 
 .preheader28.i:                                   ; preds = %_ZNSi7getlineEPcl.exit, %bb.f
-  %indvars.iv.i = phi i16 [ %indvars.iv.next.i, %bb.f ], [ 0, %_ZNSi7getlineEPcl.exit ] ; 2 uses
   %.021.i = phi i16 [ %i.x, %bb.f ], [ -1, %_ZNSi7getlineEPcl.exit ] ; 2 uses
-  %i.x = add i16 %.021.i, 1                       ; 2 uses
+  %i.x = add i16 %.021.i, 1                       ; 3 uses
   %i.y = sext i16 %i.x to i64
   %i.z = getelementptr inbounds i8, ptr %2, i64 %i.y ; 2 uses
   %i.aa = load i8, ptr %i.z, align 1, !tbaa !25
@@ -642,7 +639,7 @@ _ZNSi7getlineEPcl.exit:                           ; preds = %bb.c, %bb.d
   ]
 
 .preheader27.preheader.i:                         ; preds = %.preheader28.i
-  %i.ab = zext i16 %indvars.iv.i to i64
+  %i.ab = zext i16 %i.x to i64
   %smin.i = tail call i16 @llvm.smin.i16(i16 %.021.i, i16 -1)
   %i.ac = add nsw i16 %smin.i, 1
   br label %.preheader27.i
@@ -652,7 +649,6 @@ bb.e:                                             ; preds = %.preheader28.i
   br label %bb.f
 
 bb.f:                                             ; preds = %bb.e, %.preheader28.i
-  %indvars.iv.next.i = add i16 %indvars.iv.i, 1
   br label %.preheader28.i, !llvm.loop !0
 
 .preheader27.i:                                   ; preds = %bb.g, %.preheader27.preheader.i

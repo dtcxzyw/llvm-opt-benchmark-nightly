@@ -205,7 +205,6 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %.lr.p
   br label %.lr.ph383
 
 .loopexit:                                        ; preds = %bb.ab
-  %indvars.iv.next446 = add nuw nsw i64 %indvars.iv445.a, 1
   %exitcond456.not = icmp eq i64 %indvars.iv.next453, %wide.trip.count455
   br i1 %exitcond456.not, label %._crit_edge397, label %.lr.ph383
 
@@ -214,21 +213,20 @@ bb.y:                                             ; preds = %bb.x, %bb.w, %.lr.p
   br i1 %i.gp, label %.preheader349, label %.preheader346
 
 .lr.ph383:                                        ; preds = %.loopexit, %.lr.ph396.preheader
-  %indvars.iv452 = phi i64 [ 0, %.lr.ph396.preheader ], [ %indvars.iv.next453, %.loopexit ] ; 3 uses
-  %indvars.iv445.a = phi i64 [ 1, %.lr.ph396.preheader ], [ %indvars.iv.next446, %.loopexit ] ; 2 uses
+  %indvars.iv445.a = phi i64 [ 0, %.lr.ph396.preheader ], [ %indvars.iv.next453, %.loopexit ] ; 3 uses
   %.0194393 = phi i32 [ 0, %.lr.ph396.preheader ], [ %.2196, %.loopexit ]
   %.0197392 = phi i32 [ 0, %.lr.ph396.preheader ], [ %.2199, %.loopexit ]
   %.0200391 = phi i32 [ 0, %.lr.ph396.preheader ], [ %.2202, %.loopexit ]
   %.0203390 = phi i32 [ 0, %.lr.ph396.preheader ], [ %.2205, %.loopexit ]
   %.0206389 = phi i32 [ 0, %.lr.ph396.preheader ], [ %.2208, %.loopexit ]
-  %.idx515.a = mul nuw nsw i64 %indvars.iv452, 12
+  %.idx515.a = mul nuw nsw i64 %indvars.iv445.a, 12
   %i.gq = getelementptr inbounds nuw i8, ptr %i.cw, i64 %.idx515.a
-  %indvars.iv.next453 = add nuw nsw i64 %indvars.iv452, 1 ; 2 uses
-  %i.gr = trunc nuw nsw i64 %indvars.iv452 to i32
+  %indvars.iv.next453 = add nuw nsw i64 %indvars.iv445.a, 1 ; 3 uses
+  %i.gr = trunc nuw nsw i64 %indvars.iv445.a to i32
   br label %bb.z
 
 bb.z:                                             ; preds = %.lr.ph383, %bb.ab
-  %indvars.iv447 = phi i64 [ %indvars.iv445.a, %.lr.ph383 ], [ %indvars.iv.next448, %bb.ab ] ; 3 uses
+  %indvars.iv447 = phi i64 [ %indvars.iv.next453, %.lr.ph383 ], [ %indvars.iv.next448, %bb.ab ] ; 3 uses
   %.1195380 = phi i32 [ %.0194393, %.lr.ph383 ], [ %.2196, %bb.ab ]
   %.1198379 = phi i32 [ %.0197392, %.lr.ph383 ], [ %.2199, %bb.ab ]
   %.1201378 = phi i32 [ %.0200391, %.lr.ph383 ], [ %.2202, %bb.ab ]
@@ -631,9 +629,7 @@ bb.ca:                                            ; preds = %bb.bz, %bb.by, %.lr
   br label %.lr.ph440.i
 
 .loopexit353.i:                                   ; preds = %bb.cd
-  %indvars.iv.next517.i = add nuw nsw i64 %indvars.iv516.i, 1 ; 2 uses
-  %indvars.iv.next510.i = add nuw nsw i64 %indvars.iv509.i.a, 1
-  %exitcond520.not.i = icmp eq i64 %indvars.iv.next517.i, %indvars.iv.next472
+  %exitcond520.not.i = icmp eq i64 %indvars.iv.next515.i, %indvars.iv.next472
   br i1 %exitcond520.not.i, label %._crit_edge454.i, label %.lr.ph440.i
 
 ._crit_edge454.i:                                 ; preds = %.loopexit353.i
@@ -641,20 +637,20 @@ bb.ca:                                            ; preds = %bb.bz, %bb.by, %.lr
   br i1 %i.xp, label %.preheader354.i, label %.preheader.i267.loopexit
 
 .lr.ph440.i:                                      ; preds = %.loopexit353.i, %.lr.ph453.preheader.i
-  %indvars.iv516.i = phi i64 [ 0, %.lr.ph453.preheader.i ], [ %indvars.iv.next517.i, %.loopexit353.i ] ; 3 uses
-  %indvars.iv509.i.a = phi i64 [ 1, %.lr.ph453.preheader.i ], [ %indvars.iv.next510.i, %.loopexit353.i ] ; 2 uses
+  %indvars.iv509.i.a = phi i64 [ 0, %.lr.ph453.preheader.i ], [ %indvars.iv.next515.i, %.loopexit353.i ] ; 3 uses
   %.0229450.i = phi i32 [ 0, %.lr.ph453.preheader.i ], [ %.2231.i, %.loopexit353.i ]
   %.0232449.i = phi i32 [ 0, %.lr.ph453.preheader.i ], [ %.2234.i, %.loopexit353.i ]
   %.0235448.i = phi i32 [ 0, %.lr.ph453.preheader.i ], [ %.2237.i, %.loopexit353.i ]
   %.0238447.i = phi i32 [ 0, %.lr.ph453.preheader.i ], [ %.2240.i, %.loopexit353.i ]
   %.0241446.i = phi i32 [ 0, %.lr.ph453.preheader.i ], [ %.2243.i, %.loopexit353.i ]
-  %.idx564.i = mul nuw nsw i64 %indvars.iv516.i, 12
+  %.idx564.i = mul nuw nsw i64 %indvars.iv509.i.a, 12
   %i.xq = getelementptr inbounds nuw i8, ptr %i.g, i64 %.idx564.i
-  %i.xr = trunc nuw nsw i64 %indvars.iv516.i to i32
+  %indvars.iv.next515.i = add nuw nsw i64 %indvars.iv509.i.a, 1 ; 3 uses
+  %i.xr = trunc nuw nsw i64 %indvars.iv509.i.a to i32
   br label %bb.cb
 
 bb.cb:                                            ; preds = %bb.cd, %.lr.ph440.i
-  %indvars.iv511.i = phi i64 [ %indvars.iv509.i.a, %.lr.ph440.i ], [ %indvars.iv.next512.i, %bb.cd ] ; 3 uses
+  %indvars.iv511.i = phi i64 [ %indvars.iv.next515.i, %.lr.ph440.i ], [ %indvars.iv.next512.i, %bb.cd ] ; 3 uses
   %.1230437.i = phi i32 [ %.0229450.i, %.lr.ph440.i ], [ %.2231.i, %bb.cd ]
   %.1233436.i = phi i32 [ %.0232449.i, %.lr.ph440.i ], [ %.2234.i, %bb.cd ]
   %.1236435.i = phi i32 [ %.0235448.i, %.lr.ph440.i ], [ %.2237.i, %bb.cd ]

@@ -205,7 +205,6 @@ _ZN7rocksdb12_GLOBAL__N_127ShouldChangeFileTemperatureERKNS_16ImmutableOptionsER
   %i.ns = add nsw i32 %i.nr, -2
   %i.nt = sext i32 %i.ns to i64
   %i.nu = icmp slt i64 %indvars.iv.next259, %i.nt
-  %indvars.iv.next254 = add nuw nsw i64 %indvars.iv253.a, 1
   br i1 %i.nu, label %bb.bk, label %._crit_edge243, !llvm.loop !2142
 
 ._crit_edge243:                                   ; preds = %.loopexit, %bb.a, %.preheader
@@ -216,9 +215,8 @@ _ZN7rocksdb12_GLOBAL__N_127ShouldChangeFileTemperatureERKNS_16ImmutableOptionsER
 
 bb.bk:                                            ; preds = %.lr.ph242, %.loopexit
   %i.nx = phi i32 [ %.pr, %.lr.ph242 ], [ %i.nr, %.loopexit ] ; 4 uses
-  %indvars.iv258 = phi i64 [ 0, %.lr.ph242 ], [ %indvars.iv.next259, %.loopexit ] ; 3 uses
-  %indvars.iv253.a = phi i64 [ 1, %.lr.ph242 ], [ %indvars.iv.next254, %.loopexit ] ; 2 uses
-  %indvars.iv.next259 = add nuw nsw i64 %indvars.iv258, 1 ; 3 uses
+  %indvars.iv253.a = phi i64 [ 0, %.lr.ph242 ], [ %indvars.iv.next259, %.loopexit ] ; 3 uses
+  %indvars.iv.next259 = add nuw nsw i64 %indvars.iv253.a, 1 ; 4 uses
   %i.ny = add nsw i32 %i.nx, -1
   %i.nz = sext i32 %i.ny to i64
   %i.oa = icmp slt i64 %indvars.iv.next259, %i.nz
@@ -226,7 +224,7 @@ bb.bk:                                            ; preds = %.lr.ph242, %.loopex
 
 .lr.ph240:                                        ; preds = %bb.bk
   %i.ob = load ptr, ptr %i.an, align 8, !tbaa !252 ; 2 uses
-  %i.oc = getelementptr inbounds nuw [8 x i8], ptr %i.ob, i64 %indvars.iv258 ; 3 uses
+  %i.oc = getelementptr inbounds nuw [8 x i8], ptr %i.ob, i64 %indvars.iv253.a ; 3 uses
   %.pre263 = load double, ptr %i.oc, align 8, !tbaa !859
   br label %bb.bl
 
@@ -234,7 +232,7 @@ bb.bl:                                            ; preds = %.lr.ph240, %bb.bn
   %i.od = phi i32 [ %i.nx, %.lr.ph240 ], [ %i.oo, %bb.bn ]
   %i.oe = phi i32 [ %i.nx, %.lr.ph240 ], [ %i.op, %bb.bn ]
   %i.of = phi double [ %.pre263, %.lr.ph240 ], [ %i.oq, %bb.bn ] ; 3 uses
-  %indvars.iv255 = phi i64 [ %indvars.iv253.a, %.lr.ph240 ], [ %indvars.iv.next256, %bb.bn ] ; 3 uses
+  %indvars.iv255 = phi i64 [ %indvars.iv.next259, %.lr.ph240 ], [ %indvars.iv.next256, %bb.bn ] ; 3 uses
   %i.og = getelementptr inbounds nuw [8 x i8], ptr %i.ob, i64 %indvars.iv255 ; 2 uses
   %i.oh = load double, ptr %i.og, align 8, !tbaa !859 ; 2 uses
   %i.oi = fcmp olt double %i.of, %i.oh
@@ -242,7 +240,7 @@ bb.bl:                                            ; preds = %.lr.ph240, %bb.bn
 
 bb.bm:                                            ; preds = %bb.bl
   %i.oj = load ptr, ptr %i.ao, align 16, !tbaa !250 ; 2 uses
-  %i.ok = getelementptr inbounds nuw [4 x i8], ptr %i.oj, i64 %indvars.iv258 ; 2 uses
+  %i.ok = getelementptr inbounds nuw [4 x i8], ptr %i.oj, i64 %indvars.iv253.a ; 2 uses
   %i.ol = load i32, ptr %i.ok, align 4, !tbaa !269
   store double %i.oh, ptr %i.oc, align 8, !tbaa !859
   %i.om = getelementptr inbounds nuw [4 x i8], ptr %i.oj, i64 %indvars.iv255 ; 2 uses

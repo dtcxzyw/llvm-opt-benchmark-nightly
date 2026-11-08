@@ -205,23 +205,21 @@ bb.hr:                                            ; preds = %bb.hq
   br label %bb.hs
 
 bb.hs:                                            ; preds = %bb.hs, %bb.hr
-  %indvars.iv.i.i = phi i32 [ %indvars.iv.next.i.i.a, %bb.hs ], [ -1, %bb.hr ] ; 2 uses
-  %.0.i397.i = phi i32 [ %7, %bb.hs ], [ 0, %bb.hr ] ; 3 uses
+  %.0.i397.i = phi i32 [ 0, %bb.hr ], [ %indvars.iv.next.i.i.a, %bb.hs ] ; 3 uses
   %i.yc = sext i32 %.0.i397.i to i64
   %i.yd = getelementptr [8 x i8], ptr %i.g, i64 %i.yc
   %i.ye = load ptr, ptr %i.yd, align 8, !tbaa !130
   %.not.i.i = icmp eq ptr %i.ye, null
-  %7 = add i32 %.0.i397.i, 1
-  %indvars.iv.next.i.i.a = add i32 %indvars.iv.i.i, 1
+  %indvars.iv.next.i.i.a = add i32 %.0.i397.i, 1
   br i1 %.not.i.i, label %.preheader.i.i, label %bb.hs, !llvm.loop !1
 
 .preheader.i.i:                                   ; preds = %bb.hs
-  %i.yf = add i32 %.0.i397.i, -1
+  %i.yf = add i32 %.0.i397.i, -1                  ; 2 uses
   %i.yg = icmp sgt i32 %i.yf, -1
   br i1 %i.yg, label %.lr.ph.i.i, label %.loopexit.i
 
 .lr.ph.i.i:                                       ; preds = %.preheader.i.i
-  %i.yh = zext i32 %indvars.iv.i.i to i64
+  %i.yh = zext nneg i32 %i.yf to i64
   br label %.lr.ph.split.i.i
 
 .lr.ph.split.i.i:                                 ; preds = %bb.ht, %.lr.ph.i.i
@@ -624,24 +622,22 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.b, %bb.a
-  %indvars.iv = phi i32 [ %indvars.iv.next.a, %bb.b ], [ -1, %bb.a ] ; 2 uses
-  %.0 = phi i32 [ %3, %bb.b ], [ 0, %bb.a ]       ; 3 uses
+  %.0 = phi i32 [ 0, %bb.a ], [ %indvars.iv.next.a, %bb.b ] ; 3 uses
   %i.a = sext i32 %.0 to i64
   %i.b = getelementptr [8 x i8], ptr %2, i64 %i.a
   %i.c = load ptr, ptr %i.b, align 8, !tbaa !130
   %.not = icmp eq ptr %i.c, null
-  %3 = add i32 %.0, 1
-  %indvars.iv.next.a = add i32 %indvars.iv, 1
+  %indvars.iv.next.a = add i32 %.0, 1
   br i1 %.not, label %.preheader, label %bb.b, !llvm.loop !1
 
 .preheader:                                       ; preds = %bb.b
-  %i.d = add i32 %.0, -1
+  %i.d = add i32 %.0, -1                          ; 2 uses
   %i.e = icmp sgt i32 %i.d, -1
   br i1 %i.e, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %.preheader
   %i.f = icmp eq i32 %0, 0
-  %i.g = zext i32 %indvars.iv to i64              ; 2 uses
+  %i.g = zext nneg i32 %i.d to i64                ; 2 uses
   br i1 %i.f, label %.lr.ph.split.us, label %.lr.ph.split
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph, %bb.c

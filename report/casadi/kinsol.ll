@@ -204,13 +204,11 @@ bb.i:                                             ; preds = %.lr.ph231, %bb.i
 
 .loopexit217:                                     ; preds = %.lr.ph233
   %i.ed = icmp sgt i64 %i.fs, %indvars.iv.next266
-  %indvars.iv.next261 = add i64 %indvars.iv260.a, 1
   br i1 %i.ed, label %bb.j, label %.loopexit219, !llvm.loop !144
 
 bb.j:                                             ; preds = %.lr.ph235, %.loopexit217
-  %indvars.iv265 = phi i64 [ 0, %.lr.ph235 ], [ %indvars.iv.next266, %.loopexit217 ] ; 4 uses
-  %indvars.iv260.a = phi i64 [ 1, %.lr.ph235 ], [ %indvars.iv.next261, %.loopexit217 ] ; 2 uses
-  %i.ee = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv265
+  %indvars.iv260.a = phi i64 [ 0, %.lr.ph235 ], [ %indvars.iv.next266, %.loopexit217 ] ; 4 uses
+  %i.ee = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv260.a
   %i.ef = load i32, ptr %i.ee, align 4, !tbaa !74
   %i.eg = load ptr, ptr %i.dt, align 8, !tbaa !62
   %i.eh = sext i32 %i.ef to i64                   ; 5 uses
@@ -220,7 +218,7 @@ bb.j:                                             ; preds = %.lr.ph235, %.loopex
   %i.el = tail call double @sqrt(double noundef %i.ek) #12 ; 2 uses
   %i.em = load i64, ptr %i.a, align 8, !tbaa !53
   %i.en = add i64 %i.em, 1
-  %i.eo = mul i64 %i.en, %indvars.iv265
+  %i.eo = mul i64 %i.en, %indvars.iv260.a
   %i.ep = getelementptr inbounds [8 x i8], ptr %6, i64 %i.eo
   store double %i.el, ptr %i.ep, align 8, !tbaa !34
   %i.eq = fdiv double 1.000000e+00, %i.el
@@ -231,14 +229,14 @@ bb.j:                                             ; preds = %.lr.ph235, %.loopex
   %i.ev = getelementptr inbounds [8 x i8], ptr %i.eu, i64 %i.eh
   %i.ew = load ptr, ptr %i.ev, align 8, !tbaa !149
   tail call void @N_VScale(double noundef %i.eq, ptr noundef %i.et, ptr noundef %i.ew) #12
-  %indvars.iv.next266 = add nuw nsw i64 %indvars.iv265, 1 ; 3 uses
-  %invariant.gep = getelementptr [8 x i8], ptr %6, i64 %indvars.iv265
+  %indvars.iv.next266 = add nuw nsw i64 %indvars.iv260.a, 1 ; 4 uses
+  %invariant.gep = getelementptr [8 x i8], ptr %6, i64 %indvars.iv260.a
   %i.ex = load i64, ptr %i.a, align 8, !tbaa !53
   %i.ey = icmp sgt i64 %i.ex, %indvars.iv.next266
   br i1 %i.ey, label %.lr.ph233, label %.loopexit219
 
 .lr.ph233:                                        ; preds = %bb.j, %.lr.ph233
-  %indvars.iv262 = phi i64 [ %indvars.iv.next263, %.lr.ph233 ], [ %indvars.iv260.a, %bb.j ] ; 3 uses
+  %indvars.iv262 = phi i64 [ %indvars.iv.next263, %.lr.ph233 ], [ %indvars.iv.next266, %bb.j ] ; 3 uses
   %i.ez = getelementptr inbounds nuw [4 x i8], ptr %i.d, i64 %indvars.iv262
   %i.fa = load i32, ptr %i.ez, align 4, !tbaa !74
   %i.fb = load ptr, ptr %i.dt, align 8, !tbaa !62

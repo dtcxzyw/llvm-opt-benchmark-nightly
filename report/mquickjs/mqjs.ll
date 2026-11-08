@@ -202,17 +202,14 @@ switch.early.test132:                             ; preds = %bb.l
   ]
 
 .critedge104.preheader:                           ; preds = %switch.early.test132, %switch.early.test132, %bb.l
-  %4 = add i32 %2, 1
-  %5 = sext i32 %4 to i64
   br label %.critedge104
 
 .critedge104:                                     ; preds = %.critedge104.backedge, %.critedge104.preheader
-  %indvars.iv117 = phi i64 [ %indvars.iv.next118, %.critedge104.backedge ], [ %5, %.critedge104.preheader ] ; 2 uses
-  %indvars.iv114 = phi i64 [ %indvars.iv.next115, %.critedge104.backedge ], [ %i.a, %.critedge104.preheader ]
-  %indvars.iv.next115 = add nsw i64 %indvars.iv114, 1 ; 3 uses
+  %indvars.iv114 = phi i64 [ %i.a, %.critedge104.preheader ], [ %indvars.iv.next115, %.critedge104.backedge ]
+  %indvars.iv.next115 = add nsw i64 %indvars.iv114, 1 ; 4 uses
   %i.ax = getelementptr inbounds i8, ptr %1, i64 %indvars.iv.next115
   %i.ay = load i8, ptr %i.ax, align 1, !tbaa !20
-  %.fr = freeze i8 %i.ay                          ; 2 uses
+  %.fr = freeze i8 %i.ay                          ; 3 uses
   %i.az = sext i8 %.fr to i32                     ; 3 uses
   %i.ba = add nsw i32 %i.az, -58
   %or.cond.i94 = icmp ult i32 %i.ba, -10
@@ -231,7 +228,6 @@ switch.early.test133:                             ; preds = %.critedge104
   ]
 
 .critedge104.backedge:                            ; preds = %switch.early.test133, %switch.early.test133, %.critedge104
-  %indvars.iv.next118 = add i64 %indvars.iv117, 1
   br label %.critedge104, !llvm.loop !55
 
 bb.m:                                             ; preds = %switch.early.test133
@@ -243,16 +239,17 @@ bb.m:                                             ; preds = %switch.early.test13
   br i1 %.not78, label %.preheader, label %.loopexit
 
 .preheader:                                       ; preds = %bb.m, %bb.n
-  %indvars.iv119 = phi i64 [ %indvars.iv.next120, %bb.n ], [ %indvars.iv117, %bb.m ] ; 2 uses
-  %6 = getelementptr inbounds i8, ptr %1, i64 %indvars.iv119
-  %7 = load i8, ptr %6, align 1, !tbaa !20
-  switch i8 %7, label %bb.o [
+  %4 = phi i8 [ %.pre, %bb.n ], [ %.fr, %bb.m ]
+  %indvars.iv117 = phi i64 [ %indvars.iv.next120, %bb.n ], [ %indvars.iv.next115, %bb.m ]
+  switch i8 %4, label %bb.o [
     i8 32, label %bb.n
     i8 40, label %.loopexit
   ]
 
 bb.n:                                             ; preds = %.preheader
-  %indvars.iv.next120 = add nsw i64 %indvars.iv119, 1
+  %indvars.iv.next120 = add nsw i64 %indvars.iv117, 1 ; 2 uses
+  %.phi.trans.insert = getelementptr inbounds i8, ptr %1, i64 %indvars.iv.next120
+  %.pre = load i8, ptr %.phi.trans.insert, align 1, !tbaa !20
   br label %.preheader, !llvm.loop !56
 
 bb.o:                                             ; preds = %.preheader

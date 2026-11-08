@@ -81,7 +81,6 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 bb.c:                                             ; preds = %.preheader225.us, %bb.c
-  %indvars.iv310 = phi i64 [ 16, %.preheader225.us ], [ %indvars.iv.next311, %bb.c ] ; 4 uses
   %indvars.iv307 = phi i64 [ 0, %.preheader225.us ], [ %indvars.iv.next308, %bb.c ] ; 2 uses
   %i.al = getelementptr inbounds nuw [4 x i8], ptr %.0152266.us, i64 %indvars.iv307 ; 4 uses
   store <4 x i32> %i.ac, ptr %i.al, align 4, !tbaa !61
@@ -91,9 +90,8 @@ bb.c:                                             ; preds = %.preheader225.us, %
   store <4 x i32> %i.ac, ptr %i.an, align 4, !tbaa !61
   %i.ao = getelementptr inbounds nuw i8, ptr %i.al, i64 48
   store <4 x i32> %i.ac, ptr %i.ao, align 4, !tbaa !61
-  %indvars.iv.next308 = add nuw nsw i64 %indvars.iv307, 16 ; 3 uses
+  %indvars.iv.next308 = add nuw nsw i64 %indvars.iv307, 16 ; 6 uses
   %i.ap = icmp samesign ult i64 %indvars.iv.next308, %i.z
-  %indvars.iv.next311 = add nuw nsw i64 %indvars.iv310, 16
   br i1 %i.ap, label %bb.c, label %..preheader_crit_edge.us, !llvm.loop !36
 
 .lr.ph263.us:                                     ; preds = %.lr.ph263.us.preheader371, %.lr.ph263.us
@@ -119,8 +117,8 @@ bb.c:                                             ; preds = %.preheader225.us, %
   br i1 %min.iters.check360, label %.lr.ph263.us.preheader371, label %vector.ph361
 
 vector.ph361:                                     ; preds = %.lr.ph263.us.preheader
-  %i.aw = add i64 %indvars.iv310, %n.vec362
-  %i.ax = getelementptr inbounds nuw [4 x i8], ptr %.0152266.us, i64 %indvars.iv310
+  %i.aw = add i64 %indvars.iv.next308, %n.vec362
+  %i.ax = getelementptr inbounds nuw [4 x i8], ptr %.0152266.us, i64 %indvars.iv.next308
   br label %vector.body365
 
 vector.body365:                                   ; preds = %vector.body365, %vector.ph361
@@ -137,7 +135,7 @@ middle.block368:                                  ; preds = %vector.body365
   br i1 %cmp.n369, label %._crit_edge264.us, label %.lr.ph263.us.preheader371
 
 .lr.ph263.us.preheader371:                        ; preds = %.lr.ph263.us.preheader, %middle.block368
-  %indvars.iv312.ph = phi i64 [ %indvars.iv310, %.lr.ph263.us.preheader ], [ %i.aw, %middle.block368 ]
+  %indvars.iv312.ph = phi i64 [ %indvars.iv.next308, %.lr.ph263.us.preheader ], [ %i.aw, %middle.block368 ]
   br label %.lr.ph263.us
 
 .preheader225.lr.ph.split:                        ; preds = %.preheader225.lr.ph

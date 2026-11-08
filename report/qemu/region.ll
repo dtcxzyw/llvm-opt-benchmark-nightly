@@ -204,7 +204,6 @@ bb.h:                                             ; preds = %bb.c
 
 bb.i:                                             ; preds = %.lr.ph, %trace_vfio_region_mmap.exit
   %i.bc = phi ptr [ %.pre, %.lr.ph ], [ %i.ep, %trace_vfio_region_mmap.exit ]
-  %indvars.iv = phi i32 [ -1, %.lr.ph ], [ %indvars.iv.next, %trace_vfio_region_mmap.exit ] ; 2 uses
   %.0116140 = phi i32 [ 0, %.lr.ph ], [ %i.er, %trace_vfio_region_mmap.exit ] ; 5 uses
   %.0117139 = phi i64 [ 0, %.lr.ph ], [ %i.eq, %trace_vfio_region_mmap.exit ] ; 2 uses
   %i.bd = getelementptr inbounds i8, ptr %i.as, i64 %.0117139
@@ -282,12 +281,12 @@ trace_vfio_region_mmap_fault.exit127:             ; preds = %bb.j, %bb.k, %bb.l,
   %i.dc = getelementptr inbounds [304 x i8], ptr %i.db, i64 %i.be
   %i.dd = getelementptr inbounds nuw i8, ptr %i.dc, i64 272
   store ptr null, ptr %i.dd, align 16
-  %.1141 = add i32 %.0116140, -1
+  %.1141 = add i32 %.0116140, -1                  ; 2 uses
   %i.de = icmp sgt i32 %.1141, -1
   br i1 %i.de, label %.lr.ph143.preheader, label %trace_vfio_region_mmap_fault.exit
 
 .lr.ph143.preheader:                              ; preds = %trace_vfio_region_mmap_fault.exit127
-  %i.df = zext i32 %indvars.iv to i64
+  %i.df = zext nneg i32 %.1141 to i64
   br label %.lr.ph143
 
 bb.n:                                             ; preds = %bb.i
@@ -356,7 +355,6 @@ trace_vfio_region_mmap.exit:                      ; preds = %bb.n, %bb.o, %bb.p,
   %i.er = add nuw i32 %.0116140, 1                ; 2 uses
   %i.es = load i32, ptr %i.d, align 4
   %i.et = icmp ult i32 %i.er, %i.es
-  %indvars.iv.next = add i32 %indvars.iv, 1
   br i1 %i.et, label %bb.i, label %._crit_edge, !llvm.loop !14
 
 ._crit_edge:                                      ; preds = %trace_vfio_region_mmap.exit, %bb.h

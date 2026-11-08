@@ -204,7 +204,6 @@ _ZN20b3AlignedObjectArrayI6b3Int4E6resizeEiRKS0_.exit: ; preds = %.prol.loopexit
 .loopexit:                                        ; preds = %bb.n
   %.pre35 = sext i32 %i.do to i64
   %i.am = icmp slt i64 %indvars.iv.next33, %.pre35
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv.a, 1
   br i1 %i.am, label %bb.f, label %._crit_edge, !llvm.loop !167
 
 ._crit_edge:                                      ; preds = %bb.f, %.loopexit, %_ZN20b3AlignedObjectArrayI6b3Int4E6resizeEiRKS0_.exit
@@ -215,9 +214,8 @@ _ZN20b3AlignedObjectArrayI6b3Int4E6resizeEiRKS0_.exit: ; preds = %.prol.loopexit
 
 bb.f:                                             ; preds = %.lr.ph28, %.loopexit
   %i.ap = phi i32 [ %i.ag, %.lr.ph28 ], [ %i.do, %.loopexit ] ; 3 uses
-  %indvars.iv32 = phi i64 [ 0, %.lr.ph28 ], [ %indvars.iv.next33, %.loopexit ] ; 2 uses
-  %indvars.iv.a = phi i64 [ 1, %.lr.ph28 ], [ %indvars.iv.next, %.loopexit ] ; 2 uses
-  %indvars.iv.next33 = add nuw nsw i64 %indvars.iv32, 1 ; 3 uses
+  %indvars.iv.a = phi i64 [ 0, %.lr.ph28 ], [ %indvars.iv.next33, %.loopexit ] ; 2 uses
+  %indvars.iv.next33 = add nuw nsw i64 %indvars.iv.a, 1 ; 4 uses
   %i.aq = sext i32 %i.ap to i64
   %i.ar = icmp slt i64 %indvars.iv.next33, %i.aq
   br i1 %i.ar, label %.lr.ph, label %._crit_edge
@@ -225,9 +223,9 @@ bb.f:                                             ; preds = %.lr.ph28, %.loopexi
 .lr.ph:                                           ; preds = %bb.f, %bb.n
   %i.as = phi i32 [ %i.do, %bb.n ], [ %i.ap, %bb.f ] ; 2 uses
   %i.at = phi i32 [ %i.dp, %bb.n ], [ %i.ap, %bb.f ] ; 2 uses
-  %indvars.iv29 = phi i64 [ %indvars.iv.next30, %bb.n ], [ %indvars.iv.a, %bb.f ] ; 2 uses
+  %indvars.iv29 = phi i64 [ %indvars.iv.next30, %bb.n ], [ %indvars.iv.next33, %bb.f ] ; 2 uses
   %i.au = load ptr, ptr %i.ai, align 8, !tbaa !52 ; 2 uses
-  %i.av = getelementptr inbounds nuw [32 x i8], ptr %i.au, i64 %indvars.iv32 ; 7 uses
+  %i.av = getelementptr inbounds nuw [32 x i8], ptr %i.au, i64 %indvars.iv.a ; 7 uses
   %i.aw = getelementptr inbounds nuw i8, ptr %i.av, i64 16
   %i.ax = getelementptr inbounds nuw [32 x i8], ptr %i.au, i64 %indvars.iv29 ; 7 uses
   %i.ay = getelementptr inbounds nuw i8, ptr %i.ax, i64 16

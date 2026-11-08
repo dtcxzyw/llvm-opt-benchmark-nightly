@@ -204,19 +204,18 @@ bb.a:
 bb.b:                                             ; preds = %.lr.ph55, %._crit_edge
   %i.s = phi i32 [ %i.q, %.lr.ph55 ], [ %i.cx, %._crit_edge ]
   %i.t = phi ptr [ %i.o, %.lr.ph55 ], [ %i.cv, %._crit_edge ] ; 2 uses
-  %indvars.iv64 = phi i64 [ 1, %.lr.ph55 ], [ %indvars.iv.next65, %._crit_edge ] ; 5 uses
-  %indvars.iv59.a = phi i64 [ 2, %.lr.ph55 ], [ %indvars.iv.next60, %._crit_edge ] ; 2 uses
-  %indvars.iv.next65 = add nuw nsw i64 %indvars.iv64, 1
+  %indvars.iv59.a = phi i64 [ 1, %.lr.ph55 ], [ %indvars.iv.next65, %._crit_edge ] ; 5 uses
+  %indvars.iv.next65 = add nuw nsw i64 %indvars.iv59.a, 1 ; 2 uses
   %i.u = sext i32 %i.s to i64
-  %.not4350.not = icmp slt i64 %indvars.iv64, %i.u
+  %.not4350.not = icmp slt i64 %indvars.iv59.a, %i.u
   br i1 %.not4350.not, label %.lr.ph52, label %._crit_edge
 
 .lr.ph52:                                         ; preds = %bb.b, %bb.f
   %i.v = phi ptr [ %i.cn, %bb.f ], [ %i.t, %bb.b ] ; 2 uses
-  %indvars.iv61 = phi i64 [ %indvars.iv.next62, %bb.f ], [ %indvars.iv59.a, %bb.b ] ; 3 uses
+  %indvars.iv61 = phi i64 [ %indvars.iv.next62, %bb.f ], [ %indvars.iv.next65, %bb.b ] ; 3 uses
   %i.w = getelementptr inbounds nuw i8, ptr %i.v, i64 240
   %i.x = load ptr, ptr %i.w, align 8, !tbaa !92   ; 2 uses
-  %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %indvars.iv64
+  %i.y = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %indvars.iv59.a
   %i.z = load ptr, ptr %i.y, align 8, !tbaa !93   ; 3 uses
   %i.aa = getelementptr inbounds nuw [8 x i8], ptr %i.x, i64 %indvars.iv61
   %i.ab = load ptr, ptr %i.aa, align 8, !tbaa !93 ; 3 uses
@@ -327,15 +326,14 @@ bb.f:                                             ; preds = %.lr.ph52, %gv_alloc
   %.lcssa = phi ptr [ %i.t, %bb.b ], [ %i.cn, %bb.f ]
   %i.cr = getelementptr inbounds nuw i8, ptr %.lcssa, i64 240
   %i.cs = load ptr, ptr %i.cr, align 8, !tbaa !92
-  %i.ct = getelementptr inbounds nuw [8 x i8], ptr %i.cs, i64 %indvars.iv64
+  %i.ct = getelementptr inbounds nuw [8 x i8], ptr %i.cs, i64 %indvars.iv59.a
   %i.cu = load ptr, ptr %i.ct, align 8, !tbaa !93
   tail call fastcc void @separate_subclust(ptr noundef %i.cu)
   %i.cv = load ptr, ptr %i.c, align 8, !tbaa !13  ; 2 uses
   %i.cw = getelementptr inbounds nuw i8, ptr %i.cv, i64 236
   %i.cx = load i32, ptr %i.cw, align 4, !tbaa !79 ; 2 uses
   %i.cy = sext i32 %i.cx to i64
-  %.not42.not = icmp slt i64 %indvars.iv64, %i.cy
-  %indvars.iv.next60 = add nuw nsw i64 %indvars.iv59.a, 1
+  %.not42.not = icmp slt i64 %indvars.iv59.a, %i.cy
   br i1 %.not42.not, label %bb.b, label %._crit_edge56, !llvm.loop !187
 
 ._crit_edge56:                                    ; preds = %._crit_edge, %bb.a, %.preheader

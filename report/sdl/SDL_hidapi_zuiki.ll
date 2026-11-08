@@ -205,8 +205,8 @@ bb.k:                                             ; preds = %bb.j
   br label %.lr.ph.i.i
 
 .lr.ph.i.i:                                       ; preds = %._crit_edge.i.i, %.preheader.preheader.i.i
-  %indvars.iv33.i.i = phi i64 [ 0, %.preheader.preheader.i.i ], [ %indvars.iv.next34.i.i, %._crit_edge.i.i ] ; 4 uses
-  %indvars.iv.i.i = phi i64 [ 1, %.preheader.preheader.i.i ], [ %indvars.iv.next.i.i, %._crit_edge.i.i ] ; 4 uses
+  %indvars.iv33.i.i = phi i64 [ 0, %.preheader.preheader.i.i ], [ %indvars.iv.next32.i.i, %._crit_edge.i.i ] ; 5 uses
+  %indvars.iv.next32.i.i = add nuw nsw i64 %indvars.iv33.i.i, 1 ; 4 uses
   %i.ez = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv33.i.i ; 6 uses
   %.pre38.i.i = load float, ptr %i.ez, align 4    ; 4 uses
   %i.fa = sub nsw i64 %indvars.iv33.i.i, %wide.trip.count.i.i
@@ -215,7 +215,7 @@ bb.k:                                             ; preds = %bb.j
   br i1 %lcmp.mod119.not.not, label %.prol.preheader116, label %.prol.loopexit117
 
 .prol.preheader116:                               ; preds = %.lr.ph.i.i
-  %i.fc = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv.i.i ; 2 uses
+  %i.fc = getelementptr inbounds nuw [4 x i8], ptr %i.h, i64 %indvars.iv.next32.i.i ; 2 uses
   %i.fd = load float, ptr %i.fc, align 4          ; 3 uses
   %i.fe = fcmp ogt float %.pre38.i.i, %i.fd
   br i1 %i.fe, label %bb.l, label %.prol.loopexit117.unr-lcssa
@@ -227,19 +227,17 @@ bb.l:                                             ; preds = %.prol.preheader116
 
 .prol.loopexit117.unr-lcssa:                      ; preds = %bb.l, %.prol.preheader116
   %i.ff = phi float [ %.pre38.i.i, %.prol.preheader116 ], [ %i.fd, %bb.l ]
-  %indvars.iv.next31.i.i.prol = add nuw nsw i64 %indvars.iv.i.i, 1
+  %indvars.iv.next31.i.i.prol = add nuw nsw i64 %indvars.iv33.i.i, 2
   br label %.prol.loopexit117
 
 .prol.loopexit117:                                ; preds = %.prol.loopexit117.unr-lcssa, %.lr.ph.i.i
   %.unr120 = phi float [ %.pre38.i.i, %.lr.ph.i.i ], [ %i.ff, %.prol.loopexit117.unr-lcssa ]
-  %indvars.iv30.i.i.unr = phi i64 [ %indvars.iv.i.i, %.lr.ph.i.i ], [ %indvars.iv.next31.i.i.prol, %.prol.loopexit117.unr-lcssa ]
+  %indvars.iv30.i.i.unr = phi i64 [ %indvars.iv.next32.i.i, %.lr.ph.i.i ], [ %indvars.iv.next31.i.i.prol, %.prol.loopexit117.unr-lcssa ]
   %i.fg = icmp eq i64 %i.ey, %indvars.iv33.i.i
   br i1 %i.fg, label %._crit_edge.i.i, label %.lr.ph.i.i.new
 
 ._crit_edge.i.i:                                  ; preds = %bb.p, %.prol.loopexit117
-  %indvars.iv.next34.i.i = add nuw nsw i64 %indvars.iv33.i.i, 1 ; 2 uses
-  %indvars.iv.next.i.i = add nuw nsw i64 %indvars.iv.i.i, 1
-  %exitcond37.not.i.i = icmp eq i64 %indvars.iv.next34.i.i, %wide.trip.count36.i.i
+  %exitcond37.not.i.i = icmp eq i64 %indvars.iv.next32.i.i, %wide.trip.count36.i.i
   br i1 %exitcond37.not.i.i, label %median_filter_update.exit.loopexit.i, label %.lr.ph.i.i, !llvm.loop !6
 
 .lr.ph.i.i.new:                                   ; preds = %.prol.loopexit117, %bb.p
@@ -327,8 +325,8 @@ bb.q:                                             ; preds = %median_filter_updat
   br label %.lr.ph.i108.i
 
 .lr.ph.i108.i:                                    ; preds = %._crit_edge.i116.i, %.preheader.preheader.i105.i
-  %indvars.iv33.i109.i = phi i64 [ 0, %.preheader.preheader.i105.i ], [ %indvars.iv.next34.i111.i, %._crit_edge.i116.i ] ; 4 uses
-  %indvars.iv.i110.i = phi i64 [ 1, %.preheader.preheader.i105.i ], [ %indvars.iv.next.i117.i, %._crit_edge.i116.i ] ; 4 uses
+  %indvars.iv33.i109.i = phi i64 [ 0, %.preheader.preheader.i105.i ], [ %indvars.iv.next32.i110.i, %._crit_edge.i116.i ] ; 5 uses
+  %indvars.iv.next32.i110.i = add nuw nsw i64 %indvars.iv33.i109.i, 1 ; 4 uses
   %i.go = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv33.i109.i ; 6 uses
   %.pre38.i112.i = load float, ptr %i.go, align 4 ; 4 uses
   %i.gp = sub nsw i64 %indvars.iv33.i109.i, %wide.trip.count.i107.i
@@ -337,7 +335,7 @@ bb.q:                                             ; preds = %median_filter_updat
   br i1 %lcmp.mod124.not.not, label %.prol.preheader121, label %.prol.loopexit122
 
 .prol.preheader121:                               ; preds = %.lr.ph.i108.i
-  %i.gr = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv.i110.i ; 2 uses
+  %i.gr = getelementptr inbounds nuw [4 x i8], ptr %i.g, i64 %indvars.iv.next32.i110.i ; 2 uses
   %i.gs = load float, ptr %i.gr, align 4          ; 3 uses
   %i.gt = fcmp ogt float %.pre38.i112.i, %i.gs
   br i1 %i.gt, label %bb.r, label %.prol.loopexit122.unr-lcssa
@@ -349,19 +347,17 @@ bb.r:                                             ; preds = %.prol.preheader121
 
 .prol.loopexit122.unr-lcssa:                      ; preds = %bb.r, %.prol.preheader121
   %i.gu = phi float [ %.pre38.i112.i, %.prol.preheader121 ], [ %i.gs, %bb.r ]
-  %indvars.iv.next31.i114.i.prol = add nuw nsw i64 %indvars.iv.i110.i, 1
+  %indvars.iv.next31.i114.i.prol = add nuw nsw i64 %indvars.iv33.i109.i, 2
   br label %.prol.loopexit122
 
 .prol.loopexit122:                                ; preds = %.prol.loopexit122.unr-lcssa, %.lr.ph.i108.i
   %.unr125 = phi float [ %.pre38.i112.i, %.lr.ph.i108.i ], [ %i.gu, %.prol.loopexit122.unr-lcssa ]
-  %indvars.iv30.i113.i.unr = phi i64 [ %indvars.iv.i110.i, %.lr.ph.i108.i ], [ %indvars.iv.next31.i114.i.prol, %.prol.loopexit122.unr-lcssa ]
+  %indvars.iv30.i113.i.unr = phi i64 [ %indvars.iv.next32.i110.i, %.lr.ph.i108.i ], [ %indvars.iv.next31.i114.i.prol, %.prol.loopexit122.unr-lcssa ]
   %i.gv = icmp eq i64 %i.gn, %indvars.iv33.i109.i
   br i1 %i.gv, label %._crit_edge.i116.i, label %.lr.ph.i108.i.new
 
 ._crit_edge.i116.i:                               ; preds = %bb.v, %.prol.loopexit122
-  %indvars.iv.next34.i111.i = add nuw nsw i64 %indvars.iv33.i109.i, 1 ; 2 uses
-  %indvars.iv.next.i117.i = add nuw nsw i64 %indvars.iv.i110.i, 1
-  %exitcond37.not.i118.i = icmp eq i64 %indvars.iv.next34.i111.i, %wide.trip.count36.i106.i
+  %exitcond37.not.i118.i = icmp eq i64 %indvars.iv.next32.i110.i, %wide.trip.count36.i106.i
   br i1 %exitcond37.not.i118.i, label %median_filter_update.exit121.loopexit.i, label %.lr.ph.i108.i, !llvm.loop !6
 
 .lr.ph.i108.i.new:                                ; preds = %.prol.loopexit122, %bb.v
@@ -451,8 +447,8 @@ bb.w:                                             ; preds = %median_filter_updat
   br label %.lr.ph.i126.i
 
 .lr.ph.i126.i:                                    ; preds = %._crit_edge.i134.i, %.preheader.preheader.i123.i
-  %indvars.iv33.i127.i = phi i64 [ 0, %.preheader.preheader.i123.i ], [ %indvars.iv.next34.i129.i, %._crit_edge.i134.i ] ; 4 uses
-  %indvars.iv.i128.i = phi i64 [ 1, %.preheader.preheader.i123.i ], [ %indvars.iv.next.i135.i, %._crit_edge.i134.i ] ; 4 uses
+  %indvars.iv33.i127.i = phi i64 [ 0, %.preheader.preheader.i123.i ], [ %indvars.iv.next32.i126.i, %._crit_edge.i134.i ] ; 5 uses
+  %indvars.iv.next32.i126.i = add nuw nsw i64 %indvars.iv33.i127.i, 1 ; 4 uses
   %i.if = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv33.i127.i ; 6 uses
   %.pre38.i130.i = load float, ptr %i.if, align 4 ; 4 uses
   %i.ig = sub nsw i64 %indvars.iv33.i127.i, %wide.trip.count.i125.i
@@ -461,7 +457,7 @@ bb.w:                                             ; preds = %median_filter_updat
   br i1 %lcmp.mod129.not.not, label %.prol.preheader126, label %.prol.loopexit127
 
 .prol.preheader126:                               ; preds = %.lr.ph.i126.i
-  %i.ii = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv.i128.i ; 2 uses
+  %i.ii = getelementptr inbounds nuw [4 x i8], ptr %i.f, i64 %indvars.iv.next32.i126.i ; 2 uses
   %i.ij = load float, ptr %i.ii, align 4          ; 3 uses
   %i.ik = fcmp ogt float %.pre38.i130.i, %i.ij
   br i1 %i.ik, label %bb.x, label %.prol.loopexit127.unr-lcssa
@@ -473,19 +469,17 @@ bb.x:                                             ; preds = %.prol.preheader126
 
 .prol.loopexit127.unr-lcssa:                      ; preds = %bb.x, %.prol.preheader126
   %i.il = phi float [ %.pre38.i130.i, %.prol.preheader126 ], [ %i.ij, %bb.x ]
-  %indvars.iv.next31.i132.i.prol = add nuw nsw i64 %indvars.iv.i128.i, 1
+  %indvars.iv.next31.i132.i.prol = add nuw nsw i64 %indvars.iv33.i127.i, 2
   br label %.prol.loopexit127
 
 .prol.loopexit127:                                ; preds = %.prol.loopexit127.unr-lcssa, %.lr.ph.i126.i
   %.unr130 = phi float [ %.pre38.i130.i, %.lr.ph.i126.i ], [ %i.il, %.prol.loopexit127.unr-lcssa ]
-  %indvars.iv30.i131.i.unr = phi i64 [ %indvars.iv.i128.i, %.lr.ph.i126.i ], [ %indvars.iv.next31.i132.i.prol, %.prol.loopexit127.unr-lcssa ]
+  %indvars.iv30.i131.i.unr = phi i64 [ %indvars.iv.next32.i126.i, %.lr.ph.i126.i ], [ %indvars.iv.next31.i132.i.prol, %.prol.loopexit127.unr-lcssa ]
   %i.im = icmp eq i64 %i.ie, %indvars.iv33.i127.i
   br i1 %i.im, label %._crit_edge.i134.i, label %.lr.ph.i126.i.new
 
 ._crit_edge.i134.i:                               ; preds = %bb.ab, %.prol.loopexit127
-  %indvars.iv.next34.i129.i = add nuw nsw i64 %indvars.iv33.i127.i, 1 ; 2 uses
-  %indvars.iv.next.i135.i = add nuw nsw i64 %indvars.iv.i128.i, 1
-  %exitcond37.not.i136.i = icmp eq i64 %indvars.iv.next34.i129.i, %wide.trip.count36.i124.i
+  %exitcond37.not.i136.i = icmp eq i64 %indvars.iv.next32.i126.i, %wide.trip.count36.i124.i
   br i1 %exitcond37.not.i136.i, label %median_filter_update.exit139.loopexit.i, label %.lr.ph.i126.i, !llvm.loop !6
 
 .lr.ph.i126.i.new:                                ; preds = %.prol.loopexit127, %bb.ab
@@ -747,8 +741,8 @@ bb.as:                                            ; preds = %bb.ar
   br label %.lr.ph.i.i28
 
 .lr.ph.i.i28:                                     ; preds = %._crit_edge.i.i35, %.preheader.preheader.i.i25
-  %indvars.iv33.i.i29 = phi i64 [ 0, %.preheader.preheader.i.i25 ], [ %indvars.iv.next34.i.i36, %._crit_edge.i.i35 ] ; 4 uses
-  %indvars.iv.i.i30 = phi i64 [ 1, %.preheader.preheader.i.i25 ], [ %indvars.iv.next.i.i37, %._crit_edge.i.i35 ] ; 4 uses
+  %indvars.iv33.i.i29 = phi i64 [ 0, %.preheader.preheader.i.i25 ], [ %indvars.iv.next32.i.i30, %._crit_edge.i.i35 ] ; 5 uses
+  %indvars.iv.next32.i.i30 = add nuw nsw i64 %indvars.iv33.i.i29, 1 ; 4 uses
   %i.nf = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv33.i.i29 ; 6 uses
   %.pre38.i.i31 = load float, ptr %i.nf, align 4  ; 4 uses
   %i.ng = sub nsw i64 %indvars.iv33.i.i29, %wide.trip.count.i.i27
@@ -757,7 +751,7 @@ bb.as:                                            ; preds = %bb.ar
   br i1 %lcmp.mod.not.not, label %.prol.preheader, label %.prol.loopexit
 
 .prol.preheader:                                  ; preds = %.lr.ph.i.i28
-  %i.ni = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv.i.i30 ; 2 uses
+  %i.ni = getelementptr inbounds nuw [4 x i8], ptr %i.c, i64 %indvars.iv.next32.i.i30 ; 2 uses
   %i.nj = load float, ptr %i.ni, align 4          ; 3 uses
   %i.nk = fcmp ogt float %.pre38.i.i31, %i.nj
   br i1 %i.nk, label %bb.at, label %.prol.loopexit.unr-lcssa
@@ -769,19 +763,17 @@ bb.at:                                            ; preds = %.prol.preheader
 
 .prol.loopexit.unr-lcssa:                         ; preds = %bb.at, %.prol.preheader
   %i.nl = phi float [ %.pre38.i.i31, %.prol.preheader ], [ %i.nj, %bb.at ]
-  %indvars.iv.next31.i.i33.prol = add nuw nsw i64 %indvars.iv.i.i30, 1
+  %indvars.iv.next31.i.i33.prol = add nuw nsw i64 %indvars.iv33.i.i29, 2
   br label %.prol.loopexit
 
 .prol.loopexit:                                   ; preds = %.prol.loopexit.unr-lcssa, %.lr.ph.i.i28
   %.unr = phi float [ %.pre38.i.i31, %.lr.ph.i.i28 ], [ %i.nl, %.prol.loopexit.unr-lcssa ]
-  %indvars.iv30.i.i32.unr = phi i64 [ %indvars.iv.i.i30, %.lr.ph.i.i28 ], [ %indvars.iv.next31.i.i33.prol, %.prol.loopexit.unr-lcssa ]
+  %indvars.iv30.i.i32.unr = phi i64 [ %indvars.iv.next32.i.i30, %.lr.ph.i.i28 ], [ %indvars.iv.next31.i.i33.prol, %.prol.loopexit.unr-lcssa ]
   %i.nm = icmp eq i64 %i.ne, %indvars.iv33.i.i29
   br i1 %i.nm, label %._crit_edge.i.i35, label %.lr.ph.i.i28.new
 
 ._crit_edge.i.i35:                                ; preds = %bb.ax, %.prol.loopexit
-  %indvars.iv.next34.i.i36 = add nuw nsw i64 %indvars.iv33.i.i29, 1 ; 2 uses
-  %indvars.iv.next.i.i37 = add nuw nsw i64 %indvars.iv.i.i30, 1
-  %exitcond37.not.i.i38 = icmp eq i64 %indvars.iv.next34.i.i36, %wide.trip.count36.i.i26
+  %exitcond37.not.i.i38 = icmp eq i64 %indvars.iv.next32.i.i30, %wide.trip.count36.i.i26
   br i1 %exitcond37.not.i.i38, label %median_filter_update.exit.loopexit.i39, label %.lr.ph.i.i28, !llvm.loop !6
 
 .lr.ph.i.i28.new:                                 ; preds = %.prol.loopexit, %bb.ax
@@ -869,8 +861,8 @@ bb.ay:                                            ; preds = %median_filter_updat
   br label %.lr.ph.i113.i
 
 .lr.ph.i113.i:                                    ; preds = %._crit_edge.i121.i, %.preheader.preheader.i110.i
-  %indvars.iv33.i114.i = phi i64 [ 0, %.preheader.preheader.i110.i ], [ %indvars.iv.next34.i116.i, %._crit_edge.i121.i ] ; 4 uses
-  %indvars.iv.i115.i = phi i64 [ 1, %.preheader.preheader.i110.i ], [ %indvars.iv.next.i122.i, %._crit_edge.i121.i ] ; 4 uses
+  %indvars.iv33.i114.i = phi i64 [ 0, %.preheader.preheader.i110.i ], [ %indvars.iv.next32.i115.i, %._crit_edge.i121.i ] ; 5 uses
+  %indvars.iv.next32.i115.i = add nuw nsw i64 %indvars.iv33.i114.i, 1 ; 4 uses
   %i.ou = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv33.i114.i ; 6 uses
   %.pre38.i117.i = load float, ptr %i.ou, align 4 ; 4 uses
   %i.ov = sub nsw i64 %indvars.iv33.i114.i, %wide.trip.count.i112.i
@@ -879,7 +871,7 @@ bb.ay:                                            ; preds = %median_filter_updat
   br i1 %lcmp.mod109.not.not, label %.prol.preheader106, label %.prol.loopexit107
 
 .prol.preheader106:                               ; preds = %.lr.ph.i113.i
-  %i.ox = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.i115.i ; 2 uses
+  %i.ox = getelementptr inbounds nuw [4 x i8], ptr %i.b, i64 %indvars.iv.next32.i115.i ; 2 uses
   %i.oy = load float, ptr %i.ox, align 4          ; 3 uses
   %i.oz = fcmp ogt float %.pre38.i117.i, %i.oy
   br i1 %i.oz, label %bb.az, label %.prol.loopexit107.unr-lcssa
@@ -891,19 +883,17 @@ bb.az:                                            ; preds = %.prol.preheader106
 
 .prol.loopexit107.unr-lcssa:                      ; preds = %bb.az, %.prol.preheader106
   %i.pa = phi float [ %.pre38.i117.i, %.prol.preheader106 ], [ %i.oy, %bb.az ]
-  %indvars.iv.next31.i119.i.prol = add nuw nsw i64 %indvars.iv.i115.i, 1
+  %indvars.iv.next31.i119.i.prol = add nuw nsw i64 %indvars.iv33.i114.i, 2
   br label %.prol.loopexit107
 
 .prol.loopexit107:                                ; preds = %.prol.loopexit107.unr-lcssa, %.lr.ph.i113.i
   %.unr110 = phi float [ %.pre38.i117.i, %.lr.ph.i113.i ], [ %i.pa, %.prol.loopexit107.unr-lcssa ]
-  %indvars.iv30.i118.i.unr = phi i64 [ %indvars.iv.i115.i, %.lr.ph.i113.i ], [ %indvars.iv.next31.i119.i.prol, %.prol.loopexit107.unr-lcssa ]
+  %indvars.iv30.i118.i.unr = phi i64 [ %indvars.iv.next32.i115.i, %.lr.ph.i113.i ], [ %indvars.iv.next31.i119.i.prol, %.prol.loopexit107.unr-lcssa ]
   %i.pb = icmp eq i64 %i.ot, %indvars.iv33.i114.i
   br i1 %i.pb, label %._crit_edge.i121.i, label %.lr.ph.i113.i.new
 
 ._crit_edge.i121.i:                               ; preds = %bb.bd, %.prol.loopexit107
-  %indvars.iv.next34.i116.i = add nuw nsw i64 %indvars.iv33.i114.i, 1 ; 2 uses
-  %indvars.iv.next.i122.i = add nuw nsw i64 %indvars.iv.i115.i, 1
-  %exitcond37.not.i123.i = icmp eq i64 %indvars.iv.next34.i116.i, %wide.trip.count36.i111.i
+  %exitcond37.not.i123.i = icmp eq i64 %indvars.iv.next32.i115.i, %wide.trip.count36.i111.i
   br i1 %exitcond37.not.i123.i, label %median_filter_update.exit126.loopexit.i, label %.lr.ph.i113.i, !llvm.loop !6
 
 .lr.ph.i113.i.new:                                ; preds = %.prol.loopexit107, %bb.bd
@@ -993,8 +983,8 @@ bb.be:                                            ; preds = %median_filter_updat
   br label %.lr.ph.i131.i
 
 .lr.ph.i131.i:                                    ; preds = %._crit_edge.i139.i, %.preheader.preheader.i128.i
-  %indvars.iv33.i132.i = phi i64 [ 0, %.preheader.preheader.i128.i ], [ %indvars.iv.next34.i134.i, %._crit_edge.i139.i ] ; 4 uses
-  %indvars.iv.i133.i = phi i64 [ 1, %.preheader.preheader.i128.i ], [ %indvars.iv.next.i140.i, %._crit_edge.i139.i ] ; 4 uses
+  %indvars.iv33.i132.i = phi i64 [ 0, %.preheader.preheader.i128.i ], [ %indvars.iv.next32.i131.i, %._crit_edge.i139.i ] ; 5 uses
+  %indvars.iv.next32.i131.i = add nuw nsw i64 %indvars.iv33.i132.i, 1 ; 4 uses
   %i.ql = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv33.i132.i ; 6 uses
   %.pre38.i135.i = load float, ptr %i.ql, align 4 ; 4 uses
   %i.qm = sub nsw i64 %indvars.iv33.i132.i, %wide.trip.count.i130.i
@@ -1003,7 +993,7 @@ bb.be:                                            ; preds = %median_filter_updat
   br i1 %lcmp.mod114.not.not, label %.prol.preheader111, label %.prol.loopexit112
 
 .prol.preheader111:                               ; preds = %.lr.ph.i131.i
-  %i.qo = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.i133.i ; 2 uses
+  %i.qo = getelementptr inbounds nuw [4 x i8], ptr %i.a, i64 %indvars.iv.next32.i131.i ; 2 uses
   %i.qp = load float, ptr %i.qo, align 4          ; 3 uses
   %i.qq = fcmp ogt float %.pre38.i135.i, %i.qp
   br i1 %i.qq, label %bb.bf, label %.prol.loopexit112.unr-lcssa
@@ -1015,19 +1005,17 @@ bb.bf:                                            ; preds = %.prol.preheader111
 
 .prol.loopexit112.unr-lcssa:                      ; preds = %bb.bf, %.prol.preheader111
   %i.qr = phi float [ %.pre38.i135.i, %.prol.preheader111 ], [ %i.qp, %bb.bf ]
-  %indvars.iv.next31.i137.i.prol = add nuw nsw i64 %indvars.iv.i133.i, 1
+  %indvars.iv.next31.i137.i.prol = add nuw nsw i64 %indvars.iv33.i132.i, 2
   br label %.prol.loopexit112
 
 .prol.loopexit112:                                ; preds = %.prol.loopexit112.unr-lcssa, %.lr.ph.i131.i
   %.unr115 = phi float [ %.pre38.i135.i, %.lr.ph.i131.i ], [ %i.qr, %.prol.loopexit112.unr-lcssa ]
-  %indvars.iv30.i136.i.unr = phi i64 [ %indvars.iv.i133.i, %.lr.ph.i131.i ], [ %indvars.iv.next31.i137.i.prol, %.prol.loopexit112.unr-lcssa ]
+  %indvars.iv30.i136.i.unr = phi i64 [ %indvars.iv.next32.i131.i, %.lr.ph.i131.i ], [ %indvars.iv.next31.i137.i.prol, %.prol.loopexit112.unr-lcssa ]
   %i.qs = icmp eq i64 %i.qk, %indvars.iv33.i132.i
   br i1 %i.qs, label %._crit_edge.i139.i, label %.lr.ph.i131.i.new
 
 ._crit_edge.i139.i:                               ; preds = %bb.bj, %.prol.loopexit112
-  %indvars.iv.next34.i134.i = add nuw nsw i64 %indvars.iv33.i132.i, 1 ; 2 uses
-  %indvars.iv.next.i140.i = add nuw nsw i64 %indvars.iv.i133.i, 1
-  %exitcond37.not.i141.i = icmp eq i64 %indvars.iv.next34.i134.i, %wide.trip.count36.i129.i
+  %exitcond37.not.i141.i = icmp eq i64 %indvars.iv.next32.i131.i, %wide.trip.count36.i129.i
   br i1 %exitcond37.not.i141.i, label %median_filter_update.exit144.loopexit.i, label %.lr.ph.i131.i, !llvm.loop !6
 
 .lr.ph.i131.i.new:                                ; preds = %.prol.loopexit112, %bb.bj

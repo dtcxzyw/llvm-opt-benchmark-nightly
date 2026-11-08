@@ -204,9 +204,7 @@ bb.c:                                             ; preds = %bb.b
 bb.d:                                             ; preds = %.lr.ph324, %bb.bl
   %i.r = phi ptr [ %.pre, %.lr.ph324 ], [ %i.rg, %bb.bl ]
   %indvars.iv374 = phi i64 [ 0, %.lr.ph324 ], [ %indvars.iv.next375, %bb.bl ] ; 8 uses
-  %indvars.iv369 = phi i32 [ -1, %.lr.ph324 ], [ %indvars.iv.next370, %bb.bl ] ; 2 uses
   %.0144322 = phi i32 [ 0, %.lr.ph324 ], [ %.1145, %bb.bl ] ; 3 uses
-  %2 = zext i32 %indvars.iv369 to i64
   %i.s = getelementptr inbounds nuw [8 x i8], ptr %i.r, i64 %indvars.iv374
   %i.t = load ptr, ptr %i.s, align 8              ; 25 uses
   %i.u = invoke noundef i32 @_ZN6Assimp20GetMeshVFormatUniqueEPK6aiMesh(ptr noundef %i.t)
@@ -242,7 +240,7 @@ bb.e:                                             ; preds = %bb.d
 bb.f:                                             ; preds = %bb.e
   %i.as = fmul float %i.ar, %i.ar                 ; 4 uses
   %i.at = trunc nuw i64 %indvars.iv374 to i32
-  %.0140318 = add i32 %i.at, -1
+  %.0140318 = add i32 %i.at, -1                   ; 2 uses
   %i.au = icmp sgt i32 %.0140318, -1
   br i1 %i.au, label %.lr.ph321, label %.loopexit
 
@@ -254,6 +252,7 @@ bb.f:                                             ; preds = %bb.e
   %i.az = getelementptr inbounds nuw i8, ptr %i.t, i64 112
   %i.ba = getelementptr inbounds nuw i8, ptr %i.t, i64 48
   %i.bb = getelementptr inbounds nuw i8, ptr %i.t, i64 208
+  %2 = zext nneg i32 %.0140318 to i64
   %i.bc = getelementptr inbounds nuw i8, ptr %i.t, i64 120
   %i.bd = getelementptr inbounds nuw i8, ptr %i.t, i64 128
   %i.be = getelementptr inbounds nuw i8, ptr %i.t, i64 136
@@ -656,7 +655,6 @@ bb.bl:                                            ; preds = %bb.bk, %.loopexit
   %i.rl = load i32, ptr %i.c, align 8             ; 2 uses
   %i.rm = zext i32 %i.rl to i64
   %i.rn = icmp samesign ult i64 %indvars.iv.next375, %i.rm
-  %indvars.iv.next370 = add i32 %indvars.iv369, 1
   br i1 %i.rn, label %bb.d, label %._crit_edge325, !llvm.loop !28
 
 ._crit_edge331:                                   ; preds = %bb.bo, %.preheader

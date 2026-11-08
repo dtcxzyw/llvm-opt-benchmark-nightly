@@ -205,15 +205,13 @@ bb.j:                                             ; preds = %bb.i, %luaO_rawequa
   unreachable
 
 findindex.exit.i.i:                               ; preds = %luaO_rawequalObj.exit.thread32.i.i.i, %bb.d, %.findindex.exit_crit_edge.i.i
-  %i.ej = phi i32 [ %.pre.i.i, %.findindex.exit_crit_edge.i.i ], [ %i.z, %bb.d ], [ %i.ef, %luaO_rawequalObj.exit.thread32.i.i.i ] ; 3 uses
-  %.1.i.i.i = phi i32 [ -1, %.findindex.exit_crit_edge.i.i ], [ %i.aa, %bb.d ], [ %i.eg, %luaO_rawequalObj.exit.thread32.i.i.i ] ; 2 uses
+  %i.ej = phi i32 [ %.pre.i.i, %.findindex.exit_crit_edge.i.i ], [ %i.z, %bb.d ], [ %i.ef, %luaO_rawequalObj.exit.thread32.i.i.i ] ; 2 uses
+  %.1.i.i.i = phi i32 [ -1, %.findindex.exit_crit_edge.i.i ], [ %i.aa, %bb.d ], [ %i.eg, %luaO_rawequalObj.exit.thread32.i.i.i ]
   %i.ek = getelementptr inbounds nuw i8, ptr %i.n, i64 24 ; 2 uses
   %i.el = sext i32 %.1.i.i.i to i64               ; 3 uses
   %i.em = sext i32 %i.ej to i64                   ; 3 uses
-  %reass.sub.i = sub i32 %.1.i.i.i, %i.ej
   %i.en = add nsw i64 %i.el, 1
   %smax.i = tail call i64 @llvm.smax.i64(i64 %i.en, i64 %i.em)
-  %indvars.iv67.i.i54 = add i32 %reass.sub.i, 1   ; 2 uses
   %indvars.iv.next.i.i55 = add nsw i64 %i.el, 1   ; 2 uses
   %i.eo = icmp slt i64 %indvars.iv.next.i.i55, %i.em
   br i1 %i.eo, label %.lr.ph.preheader, label %._crit_edge
@@ -223,14 +221,12 @@ findindex.exit.i.i:                               ; preds = %luaO_rawequalObj.ex
   br label %.lr.ph
 
 bb.k:                                             ; preds = %.lr.ph
-  %indvars.iv67.i.i = add i32 %indvars.iv67.i.i57, 1 ; 2 uses
   %indvars.iv.next.i.i = add nsw i64 %indvars.iv.next.i.i58, 1 ; 2 uses
   %i.eq = icmp slt i64 %indvars.iv.next.i.i, %i.em
   br i1 %i.eq, label %.lr.ph, label %._crit_edge, !llvm.loop !429
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.k
   %indvars.iv.next.i.i58 = phi i64 [ %indvars.iv.next.i.i, %bb.k ], [ %indvars.iv.next.i.i55, %.lr.ph.preheader ] ; 4 uses
-  %indvars.iv67.i.i57 = phi i32 [ %indvars.iv67.i.i, %bb.k ], [ %indvars.iv67.i.i54, %.lr.ph.preheader ]
   %indvars.iv.i.i56 = phi i64 [ %indvars.iv.next.i.i58, %bb.k ], [ %i.el, %.lr.ph.preheader ]
   %i.er = getelementptr inbounds [16 x i8], ptr %i.ep, i64 %indvars.iv.next.i.i58
   %i.es = getelementptr inbounds nuw i8, ptr %i.er, i64 8
@@ -249,9 +245,8 @@ bb.l:                                             ; preds = %.lr.ph
   br label %lua_next.exit
 
 ._crit_edge:                                      ; preds = %bb.k, %findindex.exit.i.i
-  %indvars.iv67.i.i.lcssa = phi i32 [ %indvars.iv67.i.i54, %findindex.exit.i.i ], [ %indvars.iv67.i.i, %bb.k ]
   %i.fa = trunc nsw i64 %smax.i to i32
-  %i.fb = sub nsw i32 %i.fa, %i.ej
+  %i.fb = sub nsw i32 %i.fa, %i.ej                ; 2 uses
   %i.fc = getelementptr inbounds nuw i8, ptr %i.n, i64 11
   %i.fd = load i8, ptr %i.fc, align 1, !tbaa !120
   %i.fe = zext nneg i8 %i.fd to i64
@@ -263,7 +258,7 @@ bb.l:                                             ; preds = %.lr.ph
 .lr.ph.i.i:                                       ; preds = %._crit_edge
   %i.fi = getelementptr inbounds nuw i8, ptr %i.n, i64 32 ; 2 uses
   %i.fj = load ptr, ptr %i.fi, align 8, !tbaa !103
-  %i.fk = zext i32 %indvars.iv67.i.i.lcssa to i64
+  %i.fk = zext i32 %i.fb to i64
   br label %bb.n
 
 bb.m:                                             ; preds = %bb.n

@@ -111,13 +111,11 @@ bb.i:                                             ; preds = %bb.g
   unreachable
 
 _ZL9findindexP9lua_StateP8LuaTableP10lua_TValue.exit: ; preds = %._ZL9findindexP9lua_StateP8LuaTableP10lua_TValue.exit_crit_edge, %bb.d, %._crit_edge.i
-  %i.an = phi i32 [ %i.af, %._crit_edge.i ], [ %i.i, %bb.d ], [ %.pre, %._ZL9findindexP9lua_StateP8LuaTableP10lua_TValue.exit_crit_edge ] ; 3 uses
-  %.023.i = phi i32 [ %i.ag, %._crit_edge.i ], [ %i.j, %bb.d ], [ -1, %._ZL9findindexP9lua_StateP8LuaTableP10lua_TValue.exit_crit_edge ] ; 2 uses
+  %i.an = phi i32 [ %i.af, %._crit_edge.i ], [ %i.i, %bb.d ], [ %.pre, %._ZL9findindexP9lua_StateP8LuaTableP10lua_TValue.exit_crit_edge ] ; 2 uses
+  %.023.i = phi i32 [ %i.ag, %._crit_edge.i ], [ %i.j, %bb.d ], [ -1, %._ZL9findindexP9lua_StateP8LuaTableP10lua_TValue.exit_crit_edge ]
   %i.ao = getelementptr inbounds nuw i8, ptr %1, i64 24 ; 2 uses
   %i.ap = sext i32 %.023.i to i64                 ; 2 uses
   %i.aq = sext i32 %i.an to i64                   ; 2 uses
-  %3 = add i32 %.023.i, 1
-  %4 = sub i32 %3, %i.an                          ; 2 uses
   %indvars.iv.next78 = add nsw i64 %i.ap, 1       ; 3 uses
   %i.ar = icmp slt i64 %indvars.iv.next78, %i.aq
   br i1 %i.ar, label %.lr.ph82.preheader, label %._crit_edge
@@ -127,7 +125,6 @@ _ZL9findindexP9lua_StateP8LuaTableP10lua_TValue.exit: ; preds = %._ZL9findindexP
   br label %.lr.ph82
 
 bb.j:                                             ; preds = %.lr.ph82
-  %indvars.iv.next58 = add i32 %indvars.iv5779, 1 ; 2 uses
   %indvars.iv.next = add nsw i64 %indvars.iv.next81, 1 ; 3 uses
   %i.at = icmp slt i64 %indvars.iv.next, %i.aq
   br i1 %i.at, label %.lr.ph82, label %._crit_edge, !llvm.loop !66
@@ -135,7 +132,6 @@ bb.j:                                             ; preds = %.lr.ph82
 .lr.ph82:                                         ; preds = %.lr.ph82.preheader, %bb.j
   %indvars.iv.next81 = phi i64 [ %indvars.iv.next, %bb.j ], [ %indvars.iv.next78, %.lr.ph82.preheader ] ; 4 uses
   %indvars.iv80 = phi i64 [ %indvars.iv.next81, %bb.j ], [ %i.ap, %.lr.ph82.preheader ]
-  %indvars.iv5779 = phi i32 [ %indvars.iv.next58, %bb.j ], [ %4, %.lr.ph82.preheader ]
   %i.au = getelementptr inbounds [16 x i8], ptr %i.as, i64 %indvars.iv.next81
   %i.av = getelementptr inbounds nuw i8, ptr %i.au, i64 12
   %i.aw = load i32, ptr %i.av, align 4, !tbaa !14
@@ -153,10 +149,9 @@ bb.k:                                             ; preds = %.lr.ph82
   br label %.loopexit.sink.split
 
 ._crit_edge:                                      ; preds = %bb.j, %_ZL9findindexP9lua_StateP8LuaTableP10lua_TValue.exit
-  %indvars.iv57.lcssa = phi i32 [ %4, %_ZL9findindexP9lua_StateP8LuaTableP10lua_TValue.exit ], [ %indvars.iv.next58, %bb.j ]
   %indvars.iv.next.lcssa = phi i64 [ %indvars.iv.next78, %_ZL9findindexP9lua_StateP8LuaTableP10lua_TValue.exit ], [ %indvars.iv.next, %bb.j ]
   %i.bd = trunc nsw i64 %indvars.iv.next.lcssa to i32
-  %i.be = sub nsw i32 %i.bd, %i.an
+  %i.be = sub nsw i32 %i.bd, %i.an                ; 2 uses
   %i.bf = getelementptr inbounds nuw i8, ptr %1, i64 6
   %i.bg = load i8, ptr %i.bf, align 2, !tbaa !26
   %i.bh = zext nneg i8 %i.bg to i32
@@ -167,7 +162,7 @@ bb.k:                                             ; preds = %.lr.ph82
 .lr.ph:                                           ; preds = %._crit_edge
   %i.bk = getelementptr inbounds nuw i8, ptr %1, i64 32 ; 2 uses
   %i.bl = load ptr, ptr %i.bk, align 8, !tbaa !23
-  %i.bm = zext i32 %indvars.iv57.lcssa to i64
+  %i.bm = zext i32 %i.be to i64
   br label %bb.m
 
 bb.l:                                             ; preds = %bb.m

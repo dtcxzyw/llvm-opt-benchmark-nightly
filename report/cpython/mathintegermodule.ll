@@ -204,13 +204,11 @@ bb.l:                                             ; preds = %bb.k, %Py_DECREF.ex
   br label %Py_DECREF.exit116
 
 .preheader:                                       ; preds = %bb.g, %.preheader
-  %indvars.iv = phi i32 [ %indvars.iv.next.a, %.preheader ], [ 0, %bb.g ] ; 2 uses
-  %.068 = phi i32 [ %2, %.preheader ], [ 6, %bb.g ] ; 4 uses
+  %.068 = phi i32 [ %indvars.iv.next.a, %.preheader ], [ 6, %bb.g ] ; 4 uses
   %i.av = zext nneg i32 %.068 to i64
   %i.aw = lshr i64 %i.l, %i.av
   %i.ax = icmp sgt i64 %i.aw, 0
-  %2 = add i32 %.068, 1
-  %indvars.iv.next.a = add i32 %indvars.iv, 1
+  %indvars.iv.next.a = add i32 %.068, 1
   br i1 %i.ax, label %.preheader, label %bb.m, !llvm.loop !64
 
 bb.m:                                             ; preds = %.preheader
@@ -278,13 +276,13 @@ bb.q:                                             ; preds = %Py_DECREF.exit132
   br i1 %i.cg, label %Py_XDECREF.exit, label %bb.r
 
 bb.r:                                             ; preds = %.split95
-  %i.ch = add i32 %.068, -6
+  %i.ch = add i32 %.068, -6                       ; 2 uses
   %i.ci = icmp sgt i32 %i.ch, -1
   br i1 %i.ci, label %.lr.ph, label %.thread
 
 .lr.ph:                                           ; preds = %bb.r
   %.neg166 = or disjoint i64 %i.bb, 1
-  %i.cj = zext i32 %indvars.iv to i64
+  %i.cj = zext nneg i32 %i.ch to i64
   br label %bb.t
 
 bb.s:                                             ; preds = %Py_DECREF.exit126

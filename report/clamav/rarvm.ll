@@ -204,9 +204,8 @@ bb.t:                                             ; preds = %bb.s
 bb.u:                                             ; preds = %bb.a
   %i.dr = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.ds = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.dt = load i32, ptr %i.ds, align 8, !tbaa !15 ; 4 uses
-  %i.du = load i32, ptr %i.dr, align 8, !tbaa !15 ; 3 uses
-  %2 = shl nuw nsw i32 %i.dt, 1                   ; 2 uses
+  %i.dt = load i32, ptr %i.ds, align 8, !tbaa !15 ; 3 uses
+  %i.du = load i32, ptr %i.dr, align 8, !tbaa !15 ; 2 uses
   %i.dv = icmp ugt i32 %i.dt, 131072
   %i.dw = add i32 %i.du, -1025
   %i.dx = icmp ult i32 %i.dw, -1024
@@ -214,28 +213,27 @@ bb.u:                                             ; preds = %bb.a
   br i1 %or.cond7, label %.thread, label %.lr.ph345.preheader
 
 .lr.ph345.preheader:                              ; preds = %bb.u
-  %i.dy = zext nneg i32 %i.dt to i64
-  %i.dz = zext nneg i32 %i.du to i64
-  %i.ea = zext nneg i32 %2 to i64
+  %2 = shl nuw nsw i32 %i.dt, 1
+  %i.dy = zext nneg i32 %i.du to i64              ; 2 uses
+  %i.dz = zext nneg i32 %2 to i64                 ; 2 uses
+  %i.ea = zext nneg i32 %i.dt to i64
   br label %.lr.ph345
 
 .lr.ph345:                                        ; preds = %.lr.ph345.preheader, %._crit_edge341
-  %indvars.iv381.a = phi i64 [ %i.dy, %.lr.ph345.preheader ], [ %indvars.iv.next382.a, %._crit_edge341 ] ; 2 uses
-  %.0248344 = phi i32 [ 0, %.lr.ph345.preheader ], [ %4, %._crit_edge341 ] ; 2 uses
+  %indvars.iv381.a = phi i64 [ 0, %.lr.ph345.preheader ], [ %indvars.iv.next382.a, %._crit_edge341 ] ; 2 uses
   %.0249343 = phi i32 [ 0, %.lr.ph345.preheader ], [ %.1250.lcssa, %._crit_edge341 ] ; 2 uses
-  %3 = add nuw nsw i32 %.0248344, %i.dt
-  %i.eb = icmp ult i32 %3, %2
+  %3 = add nuw nsw i64 %indvars.iv381.a, %i.ea    ; 2 uses
+  %i.eb = icmp samesign ult i64 %3, %i.dz
   br i1 %i.eb, label %.lr.ph340, label %._crit_edge341
 
 ._crit_edge341:                                   ; preds = %.lr.ph340, %.lr.ph345
   %.1250.lcssa = phi i32 [ %.0249343, %.lr.ph345 ], [ %i.ed, %.lr.ph340 ]
-  %4 = add nuw nsw i32 %.0248344, 1               ; 2 uses
-  %indvars.iv.next382.a = add nuw nsw i64 %indvars.iv381.a, 1
-  %exitcond385.not = icmp eq i32 %4, %i.du
+  %indvars.iv.next382.a = add nuw nsw i64 %indvars.iv381.a, 1 ; 2 uses
+  %exitcond385.not = icmp eq i64 %indvars.iv.next382.a, %i.dy
   br i1 %exitcond385.not, label %.thread, label %.lr.ph345, !llvm.loop !22
 
 .lr.ph340:                                        ; preds = %.lr.ph345, %.lr.ph340
-  %indvars.iv383 = phi i64 [ %indvars.iv.next384, %.lr.ph340 ], [ %indvars.iv381.a, %.lr.ph345 ] ; 2 uses
+  %indvars.iv383 = phi i64 [ %indvars.iv.next384, %.lr.ph340 ], [ %3, %.lr.ph345 ] ; 2 uses
   %.0247337 = phi i8 [ %i.eh, %.lr.ph340 ], [ 0, %.lr.ph345 ]
   %.1250336 = phi i32 [ %i.ed, %.lr.ph340 ], [ %.0249343, %.lr.ph345 ] ; 2 uses
   %i.ec = load ptr, ptr %0, align 8, !tbaa !11    ; 2 uses
@@ -246,8 +244,8 @@ bb.u:                                             ; preds = %bb.a
   %i.eh = sub i8 %.0247337, %i.eg                 ; 2 uses
   %i.ei = getelementptr inbounds nuw i8, ptr %i.ec, i64 %indvars.iv383
   store i8 %i.eh, ptr %i.ei, align 1, !tbaa !16
-  %indvars.iv.next384 = add nuw i64 %indvars.iv383, %i.dz ; 2 uses
-  %i.ej = icmp ult i64 %indvars.iv.next384, %i.ea
+  %indvars.iv.next384 = add nuw nsw i64 %indvars.iv383, %i.dy ; 2 uses
+  %i.ej = icmp samesign ult i64 %indvars.iv.next384, %i.dz
   br i1 %i.ej, label %.lr.ph340, label %._crit_edge341, !llvm.loop !23
 
 bb.v:                                             ; preds = %bb.a
@@ -444,10 +442,10 @@ bb.ac:                                            ; preds = %.lr.ph328, %bb.ab
 bb.ad:                                            ; preds = %bb.a
   %i.hw = getelementptr inbounds nuw i8, ptr %0, i64 8
   %i.hx = getelementptr inbounds nuw i8, ptr %0, i64 24
-  %i.hy = load i32, ptr %i.hx, align 8, !tbaa !15 ; 3 uses
+  %i.hy = load i32, ptr %i.hx, align 8, !tbaa !15 ; 2 uses
   %i.hz = load i32, ptr %i.hw, align 8, !tbaa !15 ; 2 uses
   %i.ia = load ptr, ptr %0, align 8, !tbaa !11    ; 2 uses
-  %i.ib = zext i32 %i.hy to i64                   ; 2 uses
+  %i.ib = zext i32 %i.hy to i64                   ; 3 uses
   %i.ic = getelementptr inbounds nuw i8, ptr %i.ia, i64 %i.ib
   %i.id = icmp ugt i32 %i.hy, 131072
   %i.ie = add i32 %i.hz, -129
@@ -462,9 +460,8 @@ bb.ad:                                            ; preds = %bb.a
 bb.ae:                                            ; preds = %.lr.ph324, %._crit_edge
   %indvars.iv.a = phi i64 [ 0, %.lr.ph324 ], [ %indvars.iv.next.a, %._crit_edge ] ; 3 uses
   %.0233322 = phi ptr [ %i.ia, %.lr.ph324 ], [ %.1234.lcssa, %._crit_edge ] ; 2 uses
-  %indvars370 = trunc i64 %indvars.iv.a to i32
-  %5 = icmp ugt i32 %i.hy, %indvars370
-  br i1 %5, label %.lr.ph, label %._crit_edge
+  %4 = icmp samesign ult i64 %indvars.iv.a, %i.ib
+  br i1 %4, label %.lr.ph, label %._crit_edge
 
 ._crit_edge:                                      ; preds = %bb.am, %bb.ae
   %.1234.lcssa = phi ptr [ %.0233322, %bb.ae ], [ %i.is, %bb.am ]

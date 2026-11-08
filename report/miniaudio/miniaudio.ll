@@ -205,19 +205,17 @@ bb.i:                                             ; preds = %bb.h
   br label %.critedge.preheader.i
 
 .critedge.loopexit.i:                             ; preds = %bb.j, %.critedge.preheader.i
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.i.a, 1
   %exitcond39.not.i = icmp eq i64 %indvars.iv.next36.i, %i.u
   br i1 %exitcond39.not.i, label %ma__is_channel_map_valid.exit.thread, label %.critedge.preheader.i, !llvm.loop !1261
 
 .critedge.preheader.i:                            ; preds = %.critedge.loopexit.i, %.critedge.preheader.preheader.i
-  %indvars.iv35.i = phi i64 [ 0, %.critedge.preheader.preheader.i ], [ %indvars.iv.next36.i, %.critedge.loopexit.i ] ; 2 uses
-  %indvars.iv.i.a = phi i64 [ 1, %.critedge.preheader.preheader.i ], [ %indvars.iv.next.i, %.critedge.loopexit.i ] ; 2 uses
-  %indvars.iv.next36.i = add nuw nsw i64 %indvars.iv35.i, 1 ; 3 uses
+  %indvars.iv.i.a = phi i64 [ 0, %.critedge.preheader.preheader.i ], [ %indvars.iv.next36.i, %.critedge.loopexit.i ] ; 2 uses
+  %indvars.iv.next36.i = add nuw nsw i64 %indvars.iv.i.a, 1 ; 4 uses
   %.not2528.i = icmp samesign ult i64 %indvars.iv.next36.i, %i.u
   br i1 %.not2528.i, label %.lr.ph.i, label %.critedge.loopexit.i
 
 .lr.ph.i:                                         ; preds = %.critedge.preheader.i
-  %i.v = getelementptr inbounds nuw i8, ptr %i.r, i64 %indvars.iv35.i
+  %i.v = getelementptr inbounds nuw i8, ptr %i.r, i64 %indvars.iv.i.a
   %i.w = load i8, ptr %i.v, align 1, !tbaa !119
   br label %bb.k
 
@@ -227,7 +225,7 @@ bb.j:                                             ; preds = %bb.k
   br i1 %exitcond.not.i, label %.critedge.loopexit.i, label %bb.k, !llvm.loop !1262
 
 bb.k:                                             ; preds = %bb.j, %.lr.ph.i
-  %indvars.iv32.i = phi i64 [ %indvars.iv.i.a, %.lr.ph.i ], [ %indvars.iv.next33.i, %bb.j ] ; 2 uses
+  %indvars.iv32.i = phi i64 [ %indvars.iv.next36.i, %.lr.ph.i ], [ %indvars.iv.next33.i, %bb.j ] ; 2 uses
   %i.x = getelementptr inbounds nuw i8, ptr %i.r, i64 %indvars.iv32.i
   %i.y = load i8, ptr %i.x, align 1, !tbaa !119
   %i.z = icmp eq i8 %i.w, %i.y
@@ -266,19 +264,17 @@ bb.o:                                             ; preds = %bb.n
   br label %.critedge.preheader.i352
 
 .critedge.loopexit.i357:                          ; preds = %bb.p, %.critedge.preheader.i352
-  %indvars.iv.next.i358 = add nuw nsw i64 %indvars.iv.i354, 1
   %exitcond39.not.i359 = icmp eq i64 %indvars.iv.next36.i355, %i.ah
   br i1 %exitcond39.not.i359, label %ma__is_channel_map_valid.exit365.thread, label %.critedge.preheader.i352, !llvm.loop !1261
 
 .critedge.preheader.i352:                         ; preds = %.critedge.loopexit.i357, %.critedge.preheader.preheader.i351
-  %indvars.iv35.i353 = phi i64 [ 0, %.critedge.preheader.preheader.i351 ], [ %indvars.iv.next36.i355, %.critedge.loopexit.i357 ] ; 2 uses
-  %indvars.iv.i354 = phi i64 [ 1, %.critedge.preheader.preheader.i351 ], [ %indvars.iv.next.i358, %.critedge.loopexit.i357 ] ; 2 uses
-  %indvars.iv.next36.i355 = add nuw nsw i64 %indvars.iv35.i353, 1 ; 3 uses
+  %indvars.iv.i354 = phi i64 [ 0, %.critedge.preheader.preheader.i351 ], [ %indvars.iv.next36.i355, %.critedge.loopexit.i357 ] ; 2 uses
+  %indvars.iv.next36.i355 = add nuw nsw i64 %indvars.iv.i354, 1 ; 4 uses
   %.not2528.i356 = icmp samesign ult i64 %indvars.iv.next36.i355, %i.ah
   br i1 %.not2528.i356, label %.lr.ph.i361, label %.critedge.loopexit.i357
 
 .lr.ph.i361:                                      ; preds = %.critedge.preheader.i352
-  %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 %indvars.iv35.i353
+  %i.ai = getelementptr inbounds nuw i8, ptr %i.ae, i64 %indvars.iv.i354
   %i.aj = load i8, ptr %i.ai, align 1, !tbaa !119
   br label %bb.q
 
@@ -288,7 +284,7 @@ bb.p:                                             ; preds = %bb.q
   br i1 %exitcond.not.i364, label %.critedge.loopexit.i357, label %bb.q, !llvm.loop !1262
 
 bb.q:                                             ; preds = %bb.p, %.lr.ph.i361
-  %indvars.iv32.i362 = phi i64 [ %indvars.iv.i354, %.lr.ph.i361 ], [ %indvars.iv.next33.i363, %bb.p ] ; 2 uses
+  %indvars.iv32.i362 = phi i64 [ %indvars.iv.next36.i355, %.lr.ph.i361 ], [ %indvars.iv.next33.i363, %bb.p ] ; 2 uses
   %i.ak = getelementptr inbounds nuw i8, ptr %i.ae, i64 %indvars.iv32.i362
   %i.al = load i8, ptr %i.ak, align 1, !tbaa !119
   %i.am = icmp eq i8 %i.aj, %i.al
@@ -691,9 +687,8 @@ ma_channel_map_init_standard.exit:                ; preds = %.lr.ph560, %ma_chan
   br i1 %exitcond577.not, label %.preheader, label %ma_channel_map_init_standard.exit, !llvm.loop !3123
 
 .lr.ph562:                                        ; preds = %.preheader, %._crit_edge
-  %indvars.iv.next585709 = phi i64 [ %indvars.iv.next585, %._crit_edge ], [ 1, %.preheader ] ; 2 uses
-  %indvars.iv578708 = phi i64 [ %indvars.iv.next579, %._crit_edge ], [ 1, %.preheader ] ; 2 uses
-  %indvars.iv584707 = phi i64 [ %indvars.iv.next585709, %._crit_edge ], [ 0, %.preheader ]
+  %indvars.iv578708 = phi i64 [ %indvars.iv.next579, %._crit_edge ], [ 1, %.preheader ] ; 3 uses
+  %indvars.iv584707 = phi i64 [ %indvars.iv578708, %._crit_edge ], [ 0, %.preheader ]
   %i.tn = getelementptr inbounds nuw i8, ptr %i.b, i64 %indvars.iv584707
   %i.to = load i8, ptr %i.tn, align 1, !tbaa !119
   br label %bb.cs
@@ -712,9 +707,8 @@ bb.cs:                                            ; preds = %.lr.ph562, %bb.cr
   br i1 %.not704, label %.preheader.i479, label %bb.cr
 
 ._crit_edge:                                      ; preds = %bb.cr
-  %indvars.iv.next579 = add nuw nsw i64 %indvars.iv578708, 1
-  %indvars.iv.next585 = add nuw nsw i64 %indvars.iv.next585709, 1 ; 2 uses
-  %i.tr = icmp samesign ult i64 %indvars.iv.next585, %i.th
+  %indvars.iv.next579 = add nuw nsw i64 %indvars.iv578708, 1 ; 2 uses
+  %i.tr = icmp samesign ult i64 %indvars.iv.next579, %i.th
   br i1 %i.tr, label %.lr.ph562, label %ma_channel_map_init_standard.exit484, !llvm.loop !3125
 
 .preheader.i479:                                  ; preds = %bb.cs, %.preheader.i479

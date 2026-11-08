@@ -205,26 +205,24 @@ built_pivot_tree.exit.i:                          ; preds = %.lr.ph29.i.i, %._cr
   br label %bb.q
 
 .loopexit.i.i:                                    ; preds = %add_to_bucket.exit.i.i, %bb.q
-  %indvars.iv.next.i98.i = add nuw nsw i64 %indvars.iv.i97.i, 1
   %exitcond26.not.i.i = icmp eq i64 %indvars.iv.next23.i.i, %i.fo
   br i1 %exitcond26.not.i.i, label %fill_buckets.exit.i, label %bb.q, !llvm.loop !47
 
 bb.q:                                             ; preds = %.loopexit.i.i, %.lr.ph18.i.i
-  %indvars.iv22.i.i = phi i64 [ 0, %.lr.ph18.i.i ], [ %indvars.iv.next23.i.i, %.loopexit.i.i ] ; 3 uses
-  %indvars.iv.i97.i = phi i64 [ 1, %.lr.ph18.i.i ], [ %indvars.iv.next.i98.i, %.loopexit.i.i ] ; 2 uses
-  %indvars.iv.next23.i.i = add nuw nsw i64 %indvars.iv22.i.i, 1 ; 3 uses
+  %indvars.iv.i97.i = phi i64 [ 0, %.lr.ph18.i.i ], [ %indvars.iv.next23.i.i, %.loopexit.i.i ] ; 3 uses
+  %indvars.iv.next23.i.i = add nuw nsw i64 %indvars.iv.i97.i, 1 ; 4 uses
   %i.fp = icmp samesign ult i64 %indvars.iv.next23.i.i, %i.fo
   br i1 %i.fp, label %.lr.ph.i99.i, label %.loopexit.i.i
 
 .lr.ph.i99.i:                                     ; preds = %bb.q
-  %i.fq = trunc nuw nsw i64 %indvars.iv22.i.i to i32
+  %i.fq = trunc nuw nsw i64 %indvars.iv.i97.i to i32
   br label %bb.r
 
 bb.r:                                             ; preds = %add_to_bucket.exit.i.i, %.lr.ph.i99.i
-  %indvars.iv19.i.i = phi i64 [ %indvars.iv.i97.i, %.lr.ph.i99.i ], [ %indvars.iv.next20.i.i, %add_to_bucket.exit.i.i ] ; 3 uses
+  %indvars.iv19.i.i = phi i64 [ %indvars.iv.next23.i.i, %.lr.ph.i99.i ], [ %indvars.iv.next20.i.i, %add_to_bucket.exit.i.i ] ; 3 uses
   %i.fr = load ptr, ptr %i.fl, align 8, !tbaa !68 ; 4 uses
   %i.fs = load ptr, ptr %i.ab, align 8, !tbaa !21
-  %i.ft = getelementptr inbounds nuw [8 x i8], ptr %i.fs, i64 %indvars.iv22.i.i
+  %i.ft = getelementptr inbounds nuw [8 x i8], ptr %i.fs, i64 %indvars.iv.i97.i
   %i.fu = load ptr, ptr %i.ft, align 8, !tbaa !24
   %i.fv = getelementptr inbounds nuw [8 x i8], ptr %i.fu, i64 %indvars.iv19.i.i
   %i.fw = load double, ptr %i.fv, align 8, !tbaa !25 ; 3 uses

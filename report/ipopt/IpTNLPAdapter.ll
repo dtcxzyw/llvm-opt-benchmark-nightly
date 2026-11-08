@@ -205,7 +205,7 @@ bb.gz:                                            ; preds = %._crit_edge2178, %b
 
 bb.ha:                                            ; preds = %bb.gz
   %i.vl = getelementptr inbounds nuw i8, ptr %i.vj, i64 16
-  %i.vm = load i32, ptr %i.vl, align 4, !tbaa !100 ; 6 uses
+  %i.vm = load i32, ptr %i.vl, align 4, !tbaa !100 ; 4 uses
   %i.vn = icmp slt i32 %i.vm, %.1655.lcssa
   br i1 %i.vn, label %.lr.ph2183.preheader, label %.loopexit2091
 
@@ -214,14 +214,11 @@ bb.ha:                                            ; preds = %bb.gz
   br label %.lr.ph2183
 
 .lr.ph2183:                                       ; preds = %.lr.ph2183.preheader, %bb.hc
-  %indvar = phi i32 [ 0, %.lr.ph2183.preheader ], [ %indvar.next, %bb.hc ] ; 2 uses
-  %indvars.iv2447.in = phi i32 [ %i.vm, %.lr.ph2183.preheader ], [ %indvars.iv2447, %bb.hc ]
   %indvars.iv2439 = phi i64 [ %i.vo, %.lr.ph2183.preheader ], [ %indvars.iv.next2440, %bb.hc ] ; 3 uses
   %.06272180 = phi i32 [ %i.vm, %.lr.ph2183.preheader ], [ %.16281916, %bb.hc ] ; 5 uses
   %.sroa.01855.02179 = phi ptr [ %i.vj, %.lr.ph2183.preheader ], [ %.sroa.01855.11915, %bb.hc ] ; 3 uses
-  %indvars.iv2447 = add i32 %indvars.iv2447.in, 1 ; 2 uses
   %i.vp = getelementptr inbounds nuw i8, ptr %.sroa.01855.02179, i64 16
-  %i.vq = load i32, ptr %i.vp, align 4, !tbaa !100 ; 2 uses
+  %i.vq = load i32, ptr %i.vp, align 4, !tbaa !100 ; 3 uses
   %i.vr = trunc nsw i64 %indvars.iv2439 to i32
   %i.vs = icmp eq i32 %i.vq, %i.vr
   br i1 %i.vs, label %bb.hb, label %.thread1912
@@ -241,16 +238,15 @@ bb.hb:                                            ; preds = %.lr.ph2183
   br i1 %i.vz, label %.preheader2090, label %bb.hc
 
 .preheader2090:                                   ; preds = %bb.hb
-  %.06252185 = add nsw i32 %i.vq, 1
+  %.06252185 = add nsw i32 %i.vq, 1               ; 2 uses
   %i.wa = icmp slt i32 %.06252185, %.1655.lcssa
   br i1 %i.wa, label %.lr.ph2188.preheader, label %.loopexit2091
 
 .lr.ph2188.preheader:                             ; preds = %.preheader2090
-  %i.wb = sext i32 %indvars.iv2447 to i64         ; 5 uses
+  %i.wb = sext i32 %.06252185 to i64              ; 5 uses
   %i.wc = sext i32 %.06272180 to i64              ; 5 uses
   %i.wd = add nsw i32 %.1655.lcssa, -2
-  %76 = add i32 %i.vm, %indvar
-  %i.we = sub i32 %i.wd, %76                      ; 2 uses
+  %i.we = sub i32 %i.wd, %i.vq                    ; 2 uses
   %i.wf = zext i32 %i.we to i64
   %i.wg = add nuw nsw i64 %i.wf, 1                ; 2 uses
   %min.iters.check = icmp ult i32 %i.we, 11
@@ -357,7 +353,6 @@ bb.hc:                                            ; preds = %.thread1912, %bb.hb
   %indvars.iv.next2440 = add nsw i64 %indvars.iv2439, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next2440 to i32
   %exitcond2443.not = icmp eq i32 %.1655.lcssa, %lftr.wideiv
-  %indvar.next = add i32 %indvar, 1
   br i1 %exitcond2443.not, label %.loopexit2091, label %.lr.ph2183, !llvm.loop !230
 
 .loopexit2091.loopexit:                           ; preds = %.lr.ph2188.prol.loopexit, %.lr.ph2188, %middle.block

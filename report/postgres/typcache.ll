@@ -202,12 +202,11 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph
   %.085146 = phi i32 [ %.077.lcssa..085, %._crit_edge124 ], [ 1, %._crit_edge ] ; 2 uses
   %.087145 = phi ptr [ %.080.lcssa..087, %._crit_edge124 ], [ null, %._crit_edge ] ; 2 uses
   %.090144 = phi i32 [ %..090, %._crit_edge124 ], [ 0, %._crit_edge ]
-  %indvars.iv143 = phi i64 [ %indvars.iv.next, %._crit_edge124 ], [ 1, %._crit_edge ] ; 2 uses
   %indvars.iv133142 = phi i64 [ %indvars.iv.next134, %._crit_edge124 ], [ 0, %._crit_edge ] ; 3 uses
   %i.ah = call ptr @bms_make_singleton(i32 noundef 0) #14 ; 2 uses
   %i.ai = getelementptr inbounds nuw [8 x i8], ptr %.096.lcssa, i64 %indvars.iv133142 ; 2 uses
   %i.aj = load i32, ptr %i.ai, align 4            ; 2 uses
-  %indvars.iv.next134 = add nuw nsw i64 %indvars.iv133142, 1 ; 3 uses
+  %indvars.iv.next134 = add nuw nsw i64 %indvars.iv133142, 1 ; 4 uses
   %i.ak = trunc nuw i64 %indvars.iv.next134 to i32
   %i.al = icmp sgt i32 %.095.lcssa, %i.ak
   br i1 %i.al, label %.lr.ph123.preheader, label %._crit_edge124
@@ -218,7 +217,7 @@ bb.e:                                             ; preds = %bb.d, %.lr.ph
   br label %.lr.ph123
 
 .lr.ph123:                                        ; preds = %.lr.ph123.preheader, %bb.h
-  %indvars.iv130 = phi i64 [ %indvars.iv143, %.lr.ph123.preheader ], [ %indvars.iv.next131, %bb.h ] ; 2 uses
+  %indvars.iv130 = phi i64 [ %indvars.iv.next134, %.lr.ph123.preheader ], [ %indvars.iv.next131, %bb.h ] ; 2 uses
   %.075120 = phi float [ %i.an, %.lr.ph123.preheader ], [ %.2.ph, %bb.h ] ; 2 uses
   %.077119 = phi i32 [ 1, %.lr.ph123.preheader ], [ %.279.ph, %bb.h ] ; 3 uses
   %.080118 = phi ptr [ %i.ah, %.lr.ph123.preheader ], [ %.282.ph, %bb.h ] ; 3 uses
@@ -261,7 +260,6 @@ bb.h:                                             ; preds = %bb.g, %bb.f
   %i.az = xor i32 %i.ay, -1
   %i.ba = add i32 %.095.lcssa, %i.az
   %.not103 = icmp sge i32 %.077.lcssa..085, %i.ba
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv143, 1
   %exitcond136.not = icmp eq i64 %indvars.iv.next134, %wide.trip.count
   %or.cond = select i1 %.not103, i1 true, i1 %exitcond136.not
   br i1 %or.cond, label %._crit_edge124._crit_edge, label %.lr.ph147
