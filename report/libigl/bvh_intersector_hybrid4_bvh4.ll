@@ -204,9 +204,9 @@ bb.e:                                             ; preds = %.critedge
   %i.bf = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.bc, ptr %i.bf, align 16
   %i.bg = fcmp olt <4 x float> %i.as, zeroinitializer
-  %.inner = select <4 x i1> %i.bg, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.bg, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.bh = fcmp uge <4 x float> %i.ax, zeroinitializer
   %.inner96 = select <4 x i1> %i.bh, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.bi = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -609,9 +609,9 @@ bb.e:                                             ; preds = %.critedge
   %i.bf = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.bc, ptr %i.bf, align 16
   %i.bg = fcmp olt <4 x float> %i.as, zeroinitializer
-  %.inner = select <4 x i1> %i.bg, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.bg, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.bh = fcmp uge <4 x float> %i.ax, zeroinitializer
   %.inner96 = select <4 x i1> %i.bh, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.bi = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -1014,9 +1014,9 @@ bb.e:                                             ; preds = %.critedge
   %i.bf = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.bc, ptr %i.bf, align 16
   %i.bg = fcmp olt <4 x float> %i.as, zeroinitializer
-  %.inner = select <4 x i1> %i.bg, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.bg, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.bh = fcmp uge <4 x float> %i.ax, zeroinitializer
   %.inner96 = select <4 x i1> %i.bh, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.bi = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -1419,9 +1419,9 @@ bb.e:                                             ; preds = %.critedge
   %i.at = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.aq, ptr %i.at, align 16
   %i.au = fcmp olt <4 x float> %i.am, zeroinitializer
-  %.inner = select <4 x i1> %i.au, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.au, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.av = fcmp uge <4 x float> %i.ao, zeroinitializer
   %.inner86 = select <4 x i1> %i.av, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.aw = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -1824,9 +1824,9 @@ bb.e:                                             ; preds = %.critedge
   %i.at = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.aq, ptr %i.at, align 16
   %i.au = fcmp olt <4 x float> %i.am, zeroinitializer
-  %.inner = select <4 x i1> %i.au, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.au, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.av = fcmp uge <4 x float> %i.ao, zeroinitializer
   %.inner86 = select <4 x i1> %i.av, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.aw = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -2229,9 +2229,9 @@ bb.c:                                             ; preds = %bb.b
   %i.az = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.aw, ptr %i.az, align 16
   %i.ba = fcmp olt <4 x float> %i.am, zeroinitializer
-  %.inner = select <4 x i1> %i.ba, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.ba, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.bb = fcmp uge <4 x float> %i.ar, zeroinitializer
   %.inner88 = select <4 x i1> %i.bb, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.bc = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -2634,9 +2634,9 @@ bb.c:                                             ; preds = %bb.b
   %i.az = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.aw, ptr %i.az, align 16
   %i.ba = fcmp olt <4 x float> %i.am, zeroinitializer
-  %.inner = select <4 x i1> %i.ba, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.ba, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.bb = fcmp uge <4 x float> %i.ar, zeroinitializer
   %.inner88 = select <4 x i1> %i.bb, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.bc = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -3039,9 +3039,9 @@ bb.c:                                             ; preds = %bb.b
   %i.an = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.ak, ptr %i.an, align 16
   %i.ao = fcmp olt <4 x float> %i.ag, zeroinitializer
-  %.inner = select <4 x i1> %i.ao, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.ao, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.ap = fcmp uge <4 x float> %i.ai, zeroinitializer
   %.inner78 = select <4 x i1> %i.ap, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.aq = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -3444,9 +3444,9 @@ bb.c:                                             ; preds = %bb.b
   %i.an = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.ak, ptr %i.an, align 16
   %i.ao = fcmp olt <4 x float> %i.ag, zeroinitializer
-  %.inner = select <4 x i1> %i.ao, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.ao, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.ap = fcmp uge <4 x float> %i.ai, zeroinitializer
   %.inner78 = select <4 x i1> %i.ap, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.aq = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -3849,9 +3849,9 @@ bb.e:                                             ; preds = %.critedge
   %i.bf = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.bc, ptr %i.bf, align 16
   %i.bg = fcmp olt <4 x float> %i.as, zeroinitializer
-  %.inner = select <4 x i1> %i.bg, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.bg, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.bh = fcmp uge <4 x float> %i.ax, zeroinitializer
   %.inner96 = select <4 x i1> %i.bh, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.bi = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -4254,9 +4254,9 @@ bb.e:                                             ; preds = %.critedge
   %i.bf = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.bc, ptr %i.bf, align 16
   %i.bg = fcmp olt <4 x float> %i.as, zeroinitializer
-  %.inner = select <4 x i1> %i.bg, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.bg, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.bh = fcmp uge <4 x float> %i.ax, zeroinitializer
   %.inner96 = select <4 x i1> %i.bh, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.bi = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -4659,9 +4659,9 @@ bb.e:                                             ; preds = %.critedge
   %i.bf = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.bc, ptr %i.bf, align 16
   %i.bg = fcmp olt <4 x float> %i.as, zeroinitializer
-  %.inner = select <4 x i1> %i.bg, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.bg, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.bh = fcmp uge <4 x float> %i.ax, zeroinitializer
   %.inner96 = select <4 x i1> %i.bh, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.bi = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -5064,9 +5064,9 @@ bb.e:                                             ; preds = %.critedge
   %i.at = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.aq, ptr %i.at, align 16
   %i.au = fcmp olt <4 x float> %i.am, zeroinitializer
-  %.inner = select <4 x i1> %i.au, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.au, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.av = fcmp uge <4 x float> %i.ao, zeroinitializer
   %.inner86 = select <4 x i1> %i.av, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.aw = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -5469,9 +5469,9 @@ bb.e:                                             ; preds = %.critedge
   %i.at = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.aq, ptr %i.at, align 16
   %i.au = fcmp olt <4 x float> %i.am, zeroinitializer
-  %.inner = select <4 x i1> %i.au, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.au, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.av = fcmp uge <4 x float> %i.ao, zeroinitializer
   %.inner86 = select <4 x i1> %i.av, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.aw = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -5874,9 +5874,9 @@ bb.c:                                             ; preds = %bb.b
   %i.az = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.aw, ptr %i.az, align 16
   %i.ba = fcmp olt <4 x float> %i.am, zeroinitializer
-  %.inner = select <4 x i1> %i.ba, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.ba, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.bb = fcmp uge <4 x float> %i.ar, zeroinitializer
   %.inner88 = select <4 x i1> %i.bb, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.bc = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -6279,9 +6279,9 @@ bb.c:                                             ; preds = %bb.b
   %i.an = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.ak, ptr %i.an, align 16
   %i.ao = fcmp olt <4 x float> %i.ag, zeroinitializer
-  %.inner = select <4 x i1> %i.ao, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.ao, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.ap = fcmp uge <4 x float> %i.ai, zeroinitializer
   %.inner78 = select <4 x i1> %i.ap, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.aq = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -6684,9 +6684,9 @@ _ZN6embree4sse221CurvePrecalculationsKILi4EEC2ERKNS_11vboolf_implILi4EEERKNS_4Ra
   %i.ew = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.et, ptr %i.ew, align 16
   %i.ex = fcmp olt <4 x float> %i.ej, zeroinitializer
-  %.inner = select <4 x i1> %i.ex, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.ex, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.ey = fcmp uge <4 x float> %i.eo, zeroinitializer
   %.inner206 = select <4 x i1> %i.ey, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.ez = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -7089,9 +7089,9 @@ _ZN6embree4sse221CurvePrecalculationsKILi4EEC2ERKNS_11vboolf_implILi4EEERKNS_4Ra
   %i.ew = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.et, ptr %i.ew, align 16
   %i.ex = fcmp olt <4 x float> %i.ej, zeroinitializer
-  %.inner = select <4 x i1> %i.ex, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.ex, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.ey = fcmp uge <4 x float> %i.eo, zeroinitializer
   %.inner206 = select <4 x i1> %i.ey, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.ez = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -7494,9 +7494,9 @@ _ZN6embree4sse221CurvePrecalculationsKILi4EEC2ERKNS_11vboolf_implILi4EEERKNS_4Ra
   %i.ek = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.eh, ptr %i.ek, align 16
   %i.el = fcmp olt <4 x float> %i.ed, zeroinitializer
-  %.inner = select <4 x i1> %i.el, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.el, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.em = fcmp uge <4 x float> %i.ef, zeroinitializer
   %.inner194 = select <4 x i1> %i.em, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.en = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -7899,9 +7899,9 @@ _ZN6embree4sse221CurvePrecalculationsKILi4EEC2ERKNS_11vboolf_implILi4EEERKNS_4Ra
   %i.ek = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.eh, ptr %i.ek, align 16
   %i.el = fcmp olt <4 x float> %i.ed, zeroinitializer
-  %.inner = select <4 x i1> %i.el, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.el, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.em = fcmp uge <4 x float> %i.ef, zeroinitializer
   %.inner194 = select <4 x i1> %i.em, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.en = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -8304,9 +8304,9 @@ bb.e:                                             ; preds = %.critedge
   %i.at = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.aq, ptr %i.at, align 16
   %i.au = fcmp olt <4 x float> %i.am, zeroinitializer
-  %.inner = select <4 x i1> %i.au, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.au, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.av = fcmp uge <4 x float> %i.ao, zeroinitializer
   %.inner86 = select <4 x i1> %i.av, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.aw = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -8709,9 +8709,9 @@ bb.c:                                             ; preds = %bb.b
   %i.az = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.aw, ptr %i.az, align 16
   %i.ba = fcmp olt <4 x float> %i.am, zeroinitializer
-  %.inner = select <4 x i1> %i.ba, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.ba, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.bb = fcmp uge <4 x float> %i.ar, zeroinitializer
   %.inner88 = select <4 x i1> %i.bb, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.bc = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -9114,9 +9114,9 @@ bb.e:                                             ; preds = %.critedge
   %i.bf = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.bc, ptr %i.bf, align 16
   %i.bg = fcmp olt <4 x float> %i.as, zeroinitializer
-  %.inner = select <4 x i1> %i.bg, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.bg, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.bh = fcmp uge <4 x float> %i.ax, zeroinitializer
   %.inner96 = select <4 x i1> %i.bh, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.bi = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -9519,9 +9519,9 @@ bb.c:                                             ; preds = %bb.b
   %i.an = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.ak, ptr %i.an, align 16
   %i.ao = fcmp olt <4 x float> %i.ag, zeroinitializer
-  %.inner = select <4 x i1> %i.ao, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.ao, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.ap = fcmp uge <4 x float> %i.ai, zeroinitializer
   %.inner78 = select <4 x i1> %i.ap, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.aq = getelementptr inbounds nuw i8, ptr %5, i64 160
@@ -9924,9 +9924,9 @@ bb.e:                                             ; preds = %.critedge
   %i.at = getelementptr inbounds nuw i8, ptr %5, i64 128
   store <4 x float> %i.aq, ptr %i.at, align 16
   %i.au = fcmp olt <4 x float> %i.am, zeroinitializer
-  %.inner = select <4 x i1> %i.au, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
   %6 = getelementptr inbounds nuw i8, ptr %5, i64 144
-  store <4 x i32> %.inner, ptr %6, align 16
+  %7 = select <4 x i1> %i.au, <4 x i32> splat (i32 16), <4 x i32> zeroinitializer
+  store <4 x i32> %7, ptr %6, align 16
   %i.av = fcmp uge <4 x float> %i.ao, zeroinitializer
   %.inner86 = select <4 x i1> %i.av, <4 x i32> splat (i32 32), <4 x i32> splat (i32 48)
   %i.aw = getelementptr inbounds nuw i8, ptr %5, i64 160

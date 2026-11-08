@@ -205,17 +205,15 @@ middle.block1396:                                 ; preds = %vector.body1388
   %i.dy = shufflevector <2 x i32> %i.dx, <2 x i32> poison, <16 x i32> <i32 0, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.dz = lshr <16 x i32> %i.dy, <i32 14, i32 15, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %.sroa.0111.60.vec.insert.i.i1402 = shufflevector <16 x i32> %.sroa.0111.52.vec.insert.i.i, <16 x i32> %i.dz, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 16, i32 17>
-  %5 = bitcast <16 x i32> %.sroa.0111.60.vec.insert.i.i1402 to <8 x i64>
-  %6 = and <8 x i64> %5, splat (i64 4294967297)
-  store <8 x i64> %6, ptr %.02629.i, align 1, !tbaa !10
+  %5 = and <16 x i32> %.sroa.0111.60.vec.insert.i.i1402, splat (i32 1)
+  store <16 x i32> %5, ptr %.02629.i, align 1, !tbaa !10
   %i.ea = load i32, ptr %.02530.i, align 1
   %i.eb = insertelement <16 x i32> poison, i32 %i.ea, i64 0
   %i.ec = shufflevector <16 x i32> %i.eb, <16 x i32> poison, <16 x i32> zeroinitializer
   %i.ed = lshr <16 x i32> %i.ec, <i32 16, i32 17, i32 18, i32 19, i32 20, i32 21, i32 22, i32 23, i32 24, i32 25, i32 26, i32 27, i32 28, i32 29, i32 30, i32 31>
   %i.ee = getelementptr inbounds nuw i8, ptr %.02629.i, i64 64
-  %7 = bitcast <16 x i32> %i.ed to <8 x i64>
-  %8 = and <8 x i64> %7, splat (i64 4294967297)
-  store <8 x i64> %8, ptr %i.ee, align 1, !tbaa !10
+  %6 = and <16 x i32> %i.ed, splat (i32 1)
+  store <16 x i32> %6, ptr %i.ee, align 1, !tbaa !10
   %i.ef = getelementptr inbounds nuw i8, ptr %.02530.i, i64 4 ; 2 uses
   %i.eg = getelementptr inbounds nuw i8, ptr %.02629.i, i64 128 ; 2 uses
   %i.eh = add nuw nsw i32 %.031.i, 1              ; 2 uses
@@ -473,9 +471,8 @@ vec.epilog.middle.block1371:                      ; preds = %vec.epilog.vector.b
   %i.jh = shufflevector <2 x i32> %i.jg, <2 x i32> poison, <16 x i32> <i32 0, i32 0, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.ji = lshr <16 x i32> %i.jh, <i32 28, i32 30, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %.sroa.0111.60.vec.insert.i.i1561405 = shufflevector <16 x i32> %.sroa.0111.52.vec.insert.i.i154, <16 x i32> %i.ji, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 16, i32 17>
-  %9 = bitcast <16 x i32> %.sroa.0111.60.vec.insert.i.i1561405 to <8 x i64>
-  %10 = and <8 x i64> %9, splat (i64 12884901891)
-  store <8 x i64> %10, ptr %.02630.i, align 1, !tbaa !10
+  %7 = and <16 x i32> %.sroa.0111.60.vec.insert.i.i1561405, splat (i32 3)
+  store <16 x i32> %7, ptr %.02630.i, align 1, !tbaa !10
   %i.jj = getelementptr inbounds nuw i8, ptr %.02531.i, i64 4
   %i.jk = load i32, ptr %i.jj, align 1            ; 5 uses
   %i.jl = insertelement <16 x i32> poison, i32 %i.jk, i64 0
@@ -494,9 +491,8 @@ vec.epilog.middle.block1371:                      ; preds = %vec.epilog.vector.b
   %i.jv = lshr <16 x i32> %i.ju, <i32 28, i32 30, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %.sroa.0131.60.vec.insert.i.i1721408 = shufflevector <16 x i32> %.sroa.0131.52.vec.insert.i.i170, <16 x i32> %i.jv, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 16, i32 17>
   %i.jw = getelementptr inbounds nuw i8, ptr %.02630.i, i64 64
-  %11 = bitcast <16 x i32> %.sroa.0131.60.vec.insert.i.i1721408 to <8 x i64>
-  %12 = and <8 x i64> %11, splat (i64 12884901891)
-  store <8 x i64> %12, ptr %i.jw, align 1, !tbaa !10
+  %8 = and <16 x i32> %.sroa.0131.60.vec.insert.i.i1721408, splat (i32 3)
+  store <16 x i32> %8, ptr %i.jw, align 1, !tbaa !10
   %i.jx = getelementptr inbounds nuw i8, ptr %.02531.i, i64 8 ; 2 uses
   %i.jy = getelementptr inbounds nuw i8, ptr %.02630.i, i64 128 ; 2 uses
   %i.jz = add nuw nsw i32 %.032.i, 1              ; 2 uses
@@ -611,9 +607,8 @@ _ZN5arrow8internal12unpack_exactILi3ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.h, 
   %i.mh = insertelement <3 x i32> %i.mg, i32 %i.mf, i64 1
   %i.mi = shufflevector <3 x i32> %i.mh, <3 x i32> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 2, i32 2, i32 2, i32 2, i32 2>
   %i.mj = lshr <16 x i32> %i.mi, <i32 0, i32 3, i32 6, i32 9, i32 12, i32 15, i32 18, i32 21, i32 24, i32 27, i32 0, i32 1, i32 4, i32 7, i32 10, i32 13>
-  %13 = bitcast <16 x i32> %i.mj to <8 x i64>
-  %14 = and <8 x i64> %13, splat (i64 30064771079)
-  store <8 x i64> %14, ptr %.02630.i189, align 1, !tbaa !10
+  %9 = and <16 x i32> %i.mj, splat (i32 7)
+  store <16 x i32> %9, ptr %.02630.i189, align 1, !tbaa !10
   %i.mk = getelementptr inbounds nuw i8, ptr %.02531.i188, i64 8
   %i.ml = load <2 x i32>, ptr %i.mb, align 1
   %i.mm = load i32, ptr %i.mk, align 1
@@ -624,9 +619,8 @@ _ZN5arrow8internal12unpack_exactILi3ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.h, 
   %i.mr = shufflevector <3 x i32> %i.mq, <3 x i32> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2, i32 2>
   %i.ms = lshr <16 x i32> %i.mr, <i32 16, i32 19, i32 22, i32 25, i32 28, i32 0, i32 2, i32 5, i32 8, i32 11, i32 14, i32 17, i32 20, i32 23, i32 26, i32 29>
   %i.mt = getelementptr inbounds nuw i8, ptr %.02630.i189, i64 64
-  %15 = bitcast <16 x i32> %i.ms to <8 x i64>
-  %16 = and <8 x i64> %15, splat (i64 30064771079)
-  store <8 x i64> %16, ptr %i.mt, align 1, !tbaa !10
+  %10 = and <16 x i32> %i.ms, splat (i32 7)
+  store <16 x i32> %10, ptr %i.mt, align 1, !tbaa !10
   %i.mu = getelementptr inbounds nuw i8, ptr %.02531.i188, i64 12 ; 2 uses
   %i.mv = getelementptr inbounds nuw i8, ptr %.02630.i189, i64 128 ; 2 uses
   %i.mw = add nuw nsw i32 %.032.i187, 1           ; 2 uses
@@ -710,17 +704,15 @@ _ZN5arrow8internal12unpack_exactILi4ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.j, 
   %i.of = load <2 x i32>, ptr %.02531.i206.epil.init, align 1
   %i.og = shufflevector <2 x i32> %i.of, <2 x i32> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1>
   %i.oh = lshr <16 x i32> %i.og, <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28>
-  %17 = bitcast <16 x i32> %i.oh to <8 x i64>
-  %18 = and <8 x i64> %17, splat (i64 64424509455)
-  store <8 x i64> %18, ptr %.02630.i207.epil.init, align 1, !tbaa !10
+  %11 = and <16 x i32> %i.oh, splat (i32 15)
+  store <16 x i32> %11, ptr %.02630.i207.epil.init, align 1, !tbaa !10
   %i.oi = getelementptr inbounds nuw i8, ptr %.02531.i206.epil.init, i64 8
   %i.oj = load <2 x i32>, ptr %i.oi, align 1
   %i.ok = shufflevector <2 x i32> %i.oj, <2 x i32> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1>
   %i.ol = lshr <16 x i32> %i.ok, <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28>
   %i.om = getelementptr inbounds nuw i8, ptr %.02630.i207.epil.init, i64 64
-  %19 = bitcast <16 x i32> %i.ol to <8 x i64>
-  %20 = and <8 x i64> %19, splat (i64 64424509455)
-  store <8 x i64> %20, ptr %i.om, align 1, !tbaa !10
+  %12 = and <16 x i32> %i.ol, splat (i32 15)
+  store <16 x i32> %12, ptr %i.om, align 1, !tbaa !10
   %i.on = getelementptr inbounds nuw i8, ptr %.02531.i206.epil.init, i64 16
   %i.oo = getelementptr inbounds nuw i8, ptr %.02630.i207.epil.init, i64 128
   br label %._crit_edge.i197
@@ -847,33 +839,29 @@ middle.block1320:                                 ; preds = %vector.body1314
   %i.rh = load <2 x i32>, ptr %.02531.i206, align 1
   %i.ri = shufflevector <2 x i32> %i.rh, <2 x i32> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1>
   %i.rj = lshr <16 x i32> %i.ri, <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28>
-  %21 = bitcast <16 x i32> %i.rj to <8 x i64>
-  %22 = and <8 x i64> %21, splat (i64 64424509455)
-  store <8 x i64> %22, ptr %.02630.i207, align 1, !tbaa !10
+  %13 = and <16 x i32> %i.rj, splat (i32 15)
+  store <16 x i32> %13, ptr %.02630.i207, align 1, !tbaa !10
   %i.rk = getelementptr inbounds nuw i8, ptr %.02531.i206, i64 8
   %i.rl = load <2 x i32>, ptr %i.rk, align 1
   %i.rm = shufflevector <2 x i32> %i.rl, <2 x i32> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1>
   %i.rn = lshr <16 x i32> %i.rm, <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28>
   %i.ro = getelementptr inbounds nuw i8, ptr %.02630.i207, i64 64
-  %23 = bitcast <16 x i32> %i.rn to <8 x i64>
-  %24 = and <8 x i64> %23, splat (i64 64424509455)
-  store <8 x i64> %24, ptr %i.ro, align 1, !tbaa !10
+  %14 = and <16 x i32> %i.rn, splat (i32 15)
+  store <16 x i32> %14, ptr %i.ro, align 1, !tbaa !10
   %i.rp = getelementptr inbounds nuw i8, ptr %.02531.i206, i64 16
   %i.rq = getelementptr inbounds nuw i8, ptr %.02630.i207, i64 128
   %i.rr = load <2 x i32>, ptr %i.rp, align 1
   %i.rs = shufflevector <2 x i32> %i.rr, <2 x i32> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1>
   %i.rt = lshr <16 x i32> %i.rs, <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28>
-  %25 = bitcast <16 x i32> %i.rt to <8 x i64>
-  %26 = and <8 x i64> %25, splat (i64 64424509455)
-  store <8 x i64> %26, ptr %i.rq, align 1, !tbaa !10
+  %15 = and <16 x i32> %i.rt, splat (i32 15)
+  store <16 x i32> %15, ptr %i.rq, align 1, !tbaa !10
   %i.ru = getelementptr inbounds nuw i8, ptr %.02531.i206, i64 24
   %i.rv = load <2 x i32>, ptr %i.ru, align 1
   %i.rw = shufflevector <2 x i32> %i.rv, <2 x i32> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1, i32 1>
   %i.rx = lshr <16 x i32> %i.rw, <i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28, i32 0, i32 4, i32 8, i32 12, i32 16, i32 20, i32 24, i32 28>
   %i.ry = getelementptr inbounds nuw i8, ptr %.02630.i207, i64 192
-  %27 = bitcast <16 x i32> %i.rx to <8 x i64>
-  %28 = and <8 x i64> %27, splat (i64 64424509455)
-  store <8 x i64> %28, ptr %i.ry, align 1, !tbaa !10
+  %16 = and <16 x i32> %i.rx, splat (i32 15)
+  store <16 x i32> %16, ptr %i.ry, align 1, !tbaa !10
   %i.rz = getelementptr inbounds nuw i8, ptr %.02531.i206, i64 32 ; 3 uses
   %i.sa = getelementptr inbounds nuw i8, ptr %.02630.i207, i64 256 ; 3 uses
   %niter1582.next.1 = add i32 %niter1582, 2       ; 2 uses
@@ -988,9 +976,8 @@ _ZN5arrow8internal12unpack_exactILi5ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.l, 
   %i.ui = shufflevector <2 x i32> %i.uf, <2 x i32> poison, <5 x i32> <i32 poison, i32 1, i32 poison, i32 poison, i32 poison>
   %i.uj = shufflevector <5 x i32> %i.uh, <5 x i32> %i.ui, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 2, i32 2, i32 2, i32 2, i32 2, i32 3, i32 6, i32 6, i32 6>
   %i.uk = lshr <16 x i32> %i.uj, <i32 0, i32 5, i32 10, i32 15, i32 20, i32 25, i32 0, i32 3, i32 8, i32 13, i32 18, i32 23, i32 0, i32 1, i32 6, i32 11>
-  %29 = bitcast <16 x i32> %i.uk to <8 x i64>
-  %30 = and <8 x i64> %29, splat (i64 133143986207)
-  store <8 x i64> %30, ptr %.02630.i228, align 1, !tbaa !10
+  %17 = and <16 x i32> %i.uk, splat (i32 31)
+  store <16 x i32> %17, ptr %.02630.i228, align 1, !tbaa !10
   %i.ul = getelementptr inbounds nuw i8, ptr %.02531.i227, i64 12
   %i.um = load <2 x i32>, ptr %i.ud, align 1      ; 2 uses
   %i.un = load <2 x i32>, ptr %i.ul, align 1      ; 2 uses
@@ -1000,9 +987,8 @@ _ZN5arrow8internal12unpack_exactILi5ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.l, 
   %i.ur = shufflevector <5 x i32> %i.up, <5 x i32> %i.uq, <16 x i32> <i32 0, i32 0, i32 0, i32 1, i32 2, i32 2, i32 2, i32 2, i32 2, i32 3, i32 6, i32 6, i32 6, i32 6, i32 6, i32 6>
   %i.us = lshr <16 x i32> %i.ur, <i32 16, i32 21, i32 26, i32 0, i32 4, i32 9, i32 14, i32 19, i32 24, i32 0, i32 2, i32 7, i32 12, i32 17, i32 22, i32 27>
   %i.ut = getelementptr inbounds nuw i8, ptr %.02630.i228, i64 64
-  %31 = bitcast <16 x i32> %i.us to <8 x i64>
-  %32 = and <8 x i64> %31, splat (i64 133143986207)
-  store <8 x i64> %32, ptr %i.ut, align 1, !tbaa !10
+  %18 = and <16 x i32> %i.us, splat (i32 31)
+  store <16 x i32> %18, ptr %i.ut, align 1, !tbaa !10
   %i.uu = getelementptr inbounds nuw i8, ptr %.02531.i227, i64 20 ; 2 uses
   %i.uv = getelementptr inbounds nuw i8, ptr %.02630.i228, i64 128 ; 2 uses
   %i.uw = add nuw nsw i32 %.032.i226, 1           ; 2 uses
@@ -1116,9 +1102,8 @@ _ZN5arrow8internal12unpack_exactILi6ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.n, 
   %i.xd = shufflevector <2 x i32> %i.xa, <2 x i32> poison, <5 x i32> <i32 poison, i32 1, i32 poison, i32 poison, i32 poison>
   %i.xe = shufflevector <5 x i32> %i.xc, <5 x i32> %i.xd, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 2, i32 2, i32 2, i32 2, i32 3, i32 6, i32 6, i32 6, i32 6, i32 6>
   %i.xf = lshr <16 x i32> %i.xe, <i32 0, i32 6, i32 12, i32 18, i32 24, i32 0, i32 4, i32 10, i32 16, i32 22, i32 0, i32 2, i32 8, i32 14, i32 20, i32 26>
-  %33 = bitcast <16 x i32> %i.xf to <8 x i64>
-  %34 = and <8 x i64> %33, splat (i64 270582939711)
-  store <8 x i64> %34, ptr %.02630.i247, align 1, !tbaa !10
+  %19 = and <16 x i32> %i.xf, splat (i32 63)
+  store <16 x i32> %19, ptr %.02630.i247, align 1, !tbaa !10
   %i.xg = getelementptr inbounds nuw i8, ptr %.02531.i246, i64 12
   %i.xh = getelementptr inbounds nuw i8, ptr %.02531.i246, i64 16
   %i.xi = load <2 x i32>, ptr %i.xg, align 1      ; 2 uses
@@ -1129,9 +1114,8 @@ _ZN5arrow8internal12unpack_exactILi6ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.n, 
   %i.xn = shufflevector <5 x i32> %i.xl, <5 x i32> %i.xm, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 0, i32 1, i32 2, i32 2, i32 2, i32 2, i32 3, i32 6, i32 6, i32 6, i32 6, i32 6>
   %i.xo = lshr <16 x i32> %i.xn, <i32 0, i32 6, i32 12, i32 18, i32 24, i32 0, i32 4, i32 10, i32 16, i32 22, i32 0, i32 2, i32 8, i32 14, i32 20, i32 26>
   %i.xp = getelementptr inbounds nuw i8, ptr %.02630.i247, i64 64
-  %35 = bitcast <16 x i32> %i.xo to <8 x i64>
-  %36 = and <8 x i64> %35, splat (i64 270582939711)
-  store <8 x i64> %36, ptr %i.xp, align 1, !tbaa !10
+  %20 = and <16 x i32> %i.xo, splat (i32 63)
+  store <16 x i32> %20, ptr %i.xp, align 1, !tbaa !10
   %i.xq = getelementptr inbounds nuw i8, ptr %.02531.i246, i64 24 ; 2 uses
   %i.xr = getelementptr inbounds nuw i8, ptr %.02630.i247, i64 128 ; 2 uses
   %i.xs = add nuw nsw i32 %.032.i245, 1           ; 2 uses
@@ -1246,9 +1230,8 @@ _ZN5arrow8internal12unpack_exactILi7ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.p, 
   %i.aaa = shufflevector <3 x i32> %i.zy, <3 x i32> poison, <7 x i32> <i32 0, i32 1, i32 2, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.aab = shufflevector <7 x i32> %i.zz, <7 x i32> %i.aaa, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 7, i32 1, i32 1, i32 1, i32 1, i32 8, i32 2, i32 2, i32 2, i32 9, i32 3, i32 3>
   %i.aac = lshr <16 x i32> %i.aab, <i32 0, i32 7, i32 14, i32 21, i32 0, i32 3, i32 10, i32 17, i32 24, i32 0, i32 6, i32 13, i32 20, i32 0, i32 2, i32 9>
-  %37 = bitcast <16 x i32> %i.aac to <8 x i64>
-  %38 = and <8 x i64> %37, splat (i64 545460846719)
-  store <8 x i64> %38, ptr %.02630.i268, align 1, !tbaa !10
+  %21 = and <16 x i32> %i.aac, splat (i32 127)
+  store <16 x i32> %21, ptr %.02630.i268, align 1, !tbaa !10
   %i.aad = load <4 x i32>, ptr %i.zu, align 1     ; 3 uses
   %i.aae = shufflevector <4 x i32> %i.aad, <4 x i32> poison, <3 x i32> <i32 1, i32 2, i32 3>
   %i.aaf = shufflevector <4 x i32> %i.aad, <4 x i32> poison, <3 x i32> <i32 0, i32 1, i32 2>
@@ -1258,9 +1241,8 @@ _ZN5arrow8internal12unpack_exactILi7ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.p, 
   %i.aaj = shufflevector <7 x i32> %i.aah, <7 x i32> %i.aai, <16 x i32> <i32 0, i32 0, i32 7, i32 1, i32 1, i32 1, i32 8, i32 2, i32 2, i32 2, i32 2, i32 9, i32 3, i32 3, i32 3, i32 3>
   %i.aak = lshr <16 x i32> %i.aaj, <i32 16, i32 23, i32 0, i32 5, i32 12, i32 19, i32 0, i32 1, i32 8, i32 15, i32 22, i32 0, i32 4, i32 11, i32 18, i32 25>
   %i.aal = getelementptr inbounds nuw i8, ptr %.02630.i268, i64 64
-  %39 = bitcast <16 x i32> %i.aak to <8 x i64>
-  %40 = and <8 x i64> %39, splat (i64 545460846719)
-  store <8 x i64> %40, ptr %i.aal, align 1, !tbaa !10
+  %22 = and <16 x i32> %i.aak, splat (i32 127)
+  store <16 x i32> %22, ptr %i.aal, align 1, !tbaa !10
   %i.aam = getelementptr inbounds nuw i8, ptr %.02531.i267, i64 28 ; 2 uses
   %i.aan = getelementptr inbounds nuw i8, ptr %.02630.i268, i64 128 ; 2 uses
   %i.aao = add nuw nsw i32 %.032.i266, 1          ; 2 uses
@@ -1344,17 +1326,15 @@ _ZN5arrow8internal12unpack_exactILi8ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.r, 
   %i.abx = load <4 x i32>, ptr %.02531.i284.epil.init, align 1
   %i.aby = shufflevector <4 x i32> %i.abx, <4 x i32> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2, i32 2, i32 2, i32 2, i32 3, i32 3, i32 3, i32 3>
   %i.abz = lshr <16 x i32> %i.aby, <i32 0, i32 8, i32 16, i32 24, i32 0, i32 8, i32 16, i32 24, i32 0, i32 8, i32 16, i32 24, i32 0, i32 8, i32 16, i32 24>
-  %41 = bitcast <16 x i32> %i.abz to <8 x i64>
-  %42 = and <8 x i64> %41, splat (i64 1095216660735)
-  store <8 x i64> %42, ptr %.02630.i285.epil.init, align 1, !tbaa !10
+  %23 = and <16 x i32> %i.abz, splat (i32 255)
+  store <16 x i32> %23, ptr %.02630.i285.epil.init, align 1, !tbaa !10
   %i.aca = getelementptr inbounds nuw i8, ptr %.02531.i284.epil.init, i64 16
   %i.acb = load <4 x i32>, ptr %i.aca, align 1
   %i.acc = shufflevector <4 x i32> %i.acb, <4 x i32> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2, i32 2, i32 2, i32 2, i32 3, i32 3, i32 3, i32 3>
   %i.acd = lshr <16 x i32> %i.acc, <i32 0, i32 8, i32 16, i32 24, i32 0, i32 8, i32 16, i32 24, i32 0, i32 8, i32 16, i32 24, i32 0, i32 8, i32 16, i32 24>
   %i.ace = getelementptr inbounds nuw i8, ptr %.02630.i285.epil.init, i64 64
-  %43 = bitcast <16 x i32> %i.acd to <8 x i64>
-  %44 = and <8 x i64> %43, splat (i64 1095216660735)
-  store <8 x i64> %44, ptr %i.ace, align 1, !tbaa !10
+  %24 = and <16 x i32> %i.acd, splat (i32 255)
+  store <16 x i32> %24, ptr %i.ace, align 1, !tbaa !10
   %i.acf = getelementptr inbounds nuw i8, ptr %.02531.i284.epil.init, i64 32
   %i.acg = getelementptr inbounds nuw i8, ptr %.02630.i285.epil.init, i64 128
   br label %._crit_edge.i276
@@ -1439,33 +1419,29 @@ vec.epilog.middle.block1297:                      ; preds = %vec.epilog.vector.b
   %i.adj = load <4 x i32>, ptr %.02531.i284, align 1
   %i.adk = shufflevector <4 x i32> %i.adj, <4 x i32> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2, i32 2, i32 2, i32 2, i32 3, i32 3, i32 3, i32 3>
   %i.adl = lshr <16 x i32> %i.adk, <i32 0, i32 8, i32 16, i32 24, i32 0, i32 8, i32 16, i32 24, i32 0, i32 8, i32 16, i32 24, i32 0, i32 8, i32 16, i32 24>
-  %45 = bitcast <16 x i32> %i.adl to <8 x i64>
-  %46 = and <8 x i64> %45, splat (i64 1095216660735)
-  store <8 x i64> %46, ptr %.02630.i285, align 1, !tbaa !10
+  %25 = and <16 x i32> %i.adl, splat (i32 255)
+  store <16 x i32> %25, ptr %.02630.i285, align 1, !tbaa !10
   %i.adm = getelementptr inbounds nuw i8, ptr %.02531.i284, i64 16
   %i.adn = load <4 x i32>, ptr %i.adm, align 1
   %i.ado = shufflevector <4 x i32> %i.adn, <4 x i32> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2, i32 2, i32 2, i32 2, i32 3, i32 3, i32 3, i32 3>
   %i.adp = lshr <16 x i32> %i.ado, <i32 0, i32 8, i32 16, i32 24, i32 0, i32 8, i32 16, i32 24, i32 0, i32 8, i32 16, i32 24, i32 0, i32 8, i32 16, i32 24>
   %i.adq = getelementptr inbounds nuw i8, ptr %.02630.i285, i64 64
-  %47 = bitcast <16 x i32> %i.adp to <8 x i64>
-  %48 = and <8 x i64> %47, splat (i64 1095216660735)
-  store <8 x i64> %48, ptr %i.adq, align 1, !tbaa !10
+  %26 = and <16 x i32> %i.adp, splat (i32 255)
+  store <16 x i32> %26, ptr %i.adq, align 1, !tbaa !10
   %i.adr = getelementptr inbounds nuw i8, ptr %.02531.i284, i64 32
   %i.ads = getelementptr inbounds nuw i8, ptr %.02630.i285, i64 128
   %i.adt = load <4 x i32>, ptr %i.adr, align 1
   %i.adu = shufflevector <4 x i32> %i.adt, <4 x i32> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2, i32 2, i32 2, i32 2, i32 3, i32 3, i32 3, i32 3>
   %i.adv = lshr <16 x i32> %i.adu, <i32 0, i32 8, i32 16, i32 24, i32 0, i32 8, i32 16, i32 24, i32 0, i32 8, i32 16, i32 24, i32 0, i32 8, i32 16, i32 24>
-  %49 = bitcast <16 x i32> %i.adv to <8 x i64>
-  %50 = and <8 x i64> %49, splat (i64 1095216660735)
-  store <8 x i64> %50, ptr %i.ads, align 1, !tbaa !10
+  %27 = and <16 x i32> %i.adv, splat (i32 255)
+  store <16 x i32> %27, ptr %i.ads, align 1, !tbaa !10
   %i.adw = getelementptr inbounds nuw i8, ptr %.02531.i284, i64 48
   %i.adx = load <4 x i32>, ptr %i.adw, align 1
   %i.ady = shufflevector <4 x i32> %i.adx, <4 x i32> poison, <16 x i32> <i32 0, i32 0, i32 0, i32 0, i32 1, i32 1, i32 1, i32 1, i32 2, i32 2, i32 2, i32 2, i32 3, i32 3, i32 3, i32 3>
   %i.adz = lshr <16 x i32> %i.ady, <i32 0, i32 8, i32 16, i32 24, i32 0, i32 8, i32 16, i32 24, i32 0, i32 8, i32 16, i32 24, i32 0, i32 8, i32 16, i32 24>
   %i.aea = getelementptr inbounds nuw i8, ptr %.02630.i285, i64 192
-  %51 = bitcast <16 x i32> %i.adz to <8 x i64>
-  %52 = and <8 x i64> %51, splat (i64 1095216660735)
-  store <8 x i64> %52, ptr %i.aea, align 1, !tbaa !10
+  %28 = and <16 x i32> %i.adz, splat (i32 255)
+  store <16 x i32> %28, ptr %i.aea, align 1, !tbaa !10
   %i.aeb = getelementptr inbounds nuw i8, ptr %.02531.i284, i64 64 ; 3 uses
   %i.aec = getelementptr inbounds nuw i8, ptr %.02630.i285, i64 256 ; 3 uses
   %niter1575.next.1 = add i32 %niter1575, 2       ; 2 uses
@@ -1598,9 +1574,8 @@ _ZN5arrow8internal12unpack_exactILi9ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.t, 
   %i.aha = shufflevector <16 x i32> %i.agz, <16 x i32> %i.agy, <16 x i32> <i32 0, i32 12, i32 1, i32 2, i32 3, i32 13, i32 4, i32 5, i32 14, i32 6, i32 7, i32 27, i32 15, i32 29, i32 30, i32 31>
   %i.ahb = lshr <16 x i32> %i.aha, <i32 16, i32 0, i32 2, i32 11, i32 20, i32 0, i32 6, i32 15, i32 0, i32 1, i32 10, i32 19, i32 0, i32 5, i32 14, i32 23>
   %i.ahc = getelementptr inbounds nuw i8, ptr %.02630.i306, i64 64
-  %53 = bitcast <16 x i32> %i.ahb to <8 x i64>
-  %54 = and <8 x i64> %53, splat (i64 2194728288767)
-  store <8 x i64> %54, ptr %i.ahc, align 1, !tbaa !10
+  %29 = and <16 x i32> %i.ahb, splat (i32 511)
+  store <16 x i32> %29, ptr %i.ahc, align 1, !tbaa !10
   %i.ahd = getelementptr inbounds nuw i8, ptr %.02531.i305, i64 36 ; 2 uses
   %i.ahe = getelementptr inbounds nuw i8, ptr %.02630.i306, i64 128 ; 2 uses
   %i.ahf = add nuw nsw i32 %.032.i304, 1          ; 2 uses
@@ -1714,9 +1689,8 @@ _ZN5arrow8internal12unpack_exactILi10ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.v,
   %i.ajm = shufflevector <4 x i32> %i.aji, <4 x i32> %i.ajk, <16 x i32> <i32 0, i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 4, i32 5, i32 6, i32 7>
   %i.ajn = shufflevector <16 x i32> %i.ajm, <16 x i32> %i.ajl, <16 x i32> <i32 0, i32 1, i32 2, i32 12, i32 3, i32 4, i32 13, i32 5, i32 6, i32 14, i32 7, i32 27, i32 15, i32 29, i32 30, i32 31>
   %i.ajo = lshr <16 x i32> %i.ajn, <i32 0, i32 10, i32 20, i32 0, i32 8, i32 18, i32 0, i32 6, i32 16, i32 0, i32 4, i32 14, i32 0, i32 2, i32 12, i32 22>
-  %55 = bitcast <16 x i32> %i.ajo to <8 x i64>
-  %56 = and <8 x i64> %55, splat (i64 4393751544831)
-  store <8 x i64> %56, ptr %.02630.i325, align 1, !tbaa !10
+  %30 = and <16 x i32> %i.ajo, splat (i32 1023)
+  store <16 x i32> %30, ptr %.02630.i325, align 1, !tbaa !10
   %i.ajp = getelementptr inbounds nuw i8, ptr %.02531.i324, i64 20
   %i.ajq = getelementptr inbounds nuw i8, ptr %.02531.i324, i64 24
   %i.ajr = load <4 x i32>, ptr %i.ajp, align 1    ; 3 uses
@@ -1727,9 +1701,8 @@ _ZN5arrow8internal12unpack_exactILi10ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.v,
   %i.ajw = shufflevector <16 x i32> %i.ajv, <16 x i32> %i.aju, <16 x i32> <i32 0, i32 1, i32 2, i32 12, i32 3, i32 4, i32 13, i32 5, i32 6, i32 14, i32 7, i32 27, i32 15, i32 29, i32 30, i32 31>
   %i.ajx = lshr <16 x i32> %i.ajw, <i32 0, i32 10, i32 20, i32 0, i32 8, i32 18, i32 0, i32 6, i32 16, i32 0, i32 4, i32 14, i32 0, i32 2, i32 12, i32 22>
   %i.ajy = getelementptr inbounds nuw i8, ptr %.02630.i325, i64 64
-  %57 = bitcast <16 x i32> %i.ajx to <8 x i64>
-  %58 = and <8 x i64> %57, splat (i64 4393751544831)
-  store <8 x i64> %58, ptr %i.ajy, align 1, !tbaa !10
+  %31 = and <16 x i32> %i.ajx, splat (i32 1023)
+  store <16 x i32> %31, ptr %i.ajy, align 1, !tbaa !10
   %i.ajz = getelementptr inbounds nuw i8, ptr %.02531.i324, i64 40 ; 2 uses
   %i.aka = getelementptr inbounds nuw i8, ptr %.02630.i325, i64 128 ; 2 uses
   %i.akb = add nuw nsw i32 %.032.i323, 1          ; 2 uses
@@ -1850,9 +1823,8 @@ _ZN5arrow8internal12unpack_exactILi11ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.x,
   %i.amp = shufflevector <4 x i32> %i.amg, <4 x i32> %i.amm, <16 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 4, i32 5, i32 6, i32 7>
   %i.amq = shufflevector <16 x i32> %i.amp, <16 x i32> %i.amo, <16 x i32> <i32 0, i32 1, i32 18, i32 2, i32 3, i32 12, i32 4, i32 5, i32 13, i32 6, i32 7, i32 14, i32 28, i32 29, i32 15, i32 31>
   %i.amr = lshr <16 x i32> %i.amq, <i32 0, i32 11, i32 0, i32 1, i32 12, i32 0, i32 2, i32 13, i32 0, i32 3, i32 14, i32 0, i32 4, i32 15, i32 0, i32 5>
-  %59 = bitcast <16 x i32> %i.amr to <8 x i64>
-  %60 = and <8 x i64> %59, splat (i64 8791798056959)
-  store <8 x i64> %60, ptr %.02630.i346, align 1, !tbaa !10
+  %32 = and <16 x i32> %i.amr, splat (i32 2047)
+  store <16 x i32> %32, ptr %.02630.i346, align 1, !tbaa !10
   %i.ams = getelementptr inbounds nuw i8, ptr %.02531.i345, i64 28
   %i.amt = load <5 x i32>, ptr %i.amf, align 1    ; 5 uses
   %i.amu = shufflevector <5 x i32> %i.amt, <5 x i32> poison, <8 x i32> <i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3, i32 4>
@@ -1870,9 +1842,8 @@ _ZN5arrow8internal12unpack_exactILi11ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.x,
   %i.ang = shufflevector <16 x i32> %i.anf, <16 x i32> %i.and, <16 x i32> <i32 0, i32 17, i32 1, i32 2, i32 12, i32 3, i32 4, i32 13, i32 5, i32 6, i32 14, i32 7, i32 28, i32 15, i32 30, i32 31>
   %i.anh = lshr <16 x i32> %i.ang, <i32 16, i32 0, i32 6, i32 17, i32 0, i32 7, i32 18, i32 0, i32 8, i32 19, i32 0, i32 9, i32 20, i32 0, i32 10, i32 21>
   %i.ani = getelementptr inbounds nuw i8, ptr %.02630.i346, i64 64
-  %61 = bitcast <16 x i32> %i.anh to <8 x i64>
-  %62 = and <8 x i64> %61, splat (i64 8791798056959)
-  store <8 x i64> %62, ptr %i.ani, align 1, !tbaa !10
+  %33 = and <16 x i32> %i.anh, splat (i32 2047)
+  store <16 x i32> %33, ptr %i.ani, align 1, !tbaa !10
   %i.anj = getelementptr inbounds nuw i8, ptr %.02531.i345, i64 44 ; 2 uses
   %i.ank = getelementptr inbounds nuw i8, ptr %.02630.i346, i64 128 ; 2 uses
   %i.anl = add nuw nsw i32 %.032.i344, 1          ; 2 uses
@@ -2139,9 +2110,8 @@ _ZN5arrow8internal12unpack_exactILi13ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.ab
   %i.ato = shufflevector <16 x i32> %i.atm, <16 x i32> %i.atn, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 16, i32 17, i32 12, i32 13, i32 14, i32 15>
   %i.atp = shufflevector <16 x i32> %i.ato, <16 x i32> %i.atk, <16 x i32> <i32 0, i32 1, i32 10, i32 2, i32 11, i32 3, i32 4, i32 12, i32 5, i32 13, i32 6, i32 7, i32 14, i32 29, i32 15, i32 31>
   %i.atq = lshr <16 x i32> %i.atp, <i32 0, i32 13, i32 0, i32 7, i32 0, i32 1, i32 14, i32 0, i32 8, i32 0, i32 2, i32 15, i32 0, i32 9, i32 0, i32 3>
-  %63 = bitcast <16 x i32> %i.atq to <8 x i64>
-  %64 = and <8 x i64> %63, splat (i64 35180077129727)
-  store <8 x i64> %64, ptr %.02630.i386, align 1, !tbaa !10
+  %34 = and <16 x i32> %i.atq, splat (i32 8191)
+  store <16 x i32> %34, ptr %.02630.i386, align 1, !tbaa !10
   %i.atr = getelementptr inbounds nuw i8, ptr %.02531.i385, i64 36
   %i.ats = load <6 x i32>, ptr %i.asz, align 1    ; 4 uses
   %i.att = shufflevector <6 x i32> %i.ats, <6 x i32> poison, <8 x i32> <i32 0, i32 1, i32 2, i32 2, i32 3, i32 4, i32 4, i32 5>
@@ -2161,9 +2131,8 @@ _ZN5arrow8internal12unpack_exactILi13ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.ab
   %i.auh = shufflevector <16 x i32> %i.aug, <16 x i32> %i.auc, <16 x i32> <i32 0, i32 10, i32 1, i32 11, i32 2, i32 3, i32 12, i32 4, i32 13, i32 5, i32 6, i32 14, i32 7, i32 15, i32 30, i32 31>
   %i.aui = lshr <16 x i32> %i.auh, <i32 16, i32 0, i32 10, i32 0, i32 4, i32 17, i32 0, i32 11, i32 0, i32 5, i32 18, i32 0, i32 12, i32 0, i32 6, i32 19>
   %i.auj = getelementptr inbounds nuw i8, ptr %.02630.i386, i64 64
-  %65 = bitcast <16 x i32> %i.aui to <8 x i64>
-  %66 = and <8 x i64> %65, splat (i64 35180077129727)
-  store <8 x i64> %66, ptr %i.auj, align 1, !tbaa !10
+  %35 = and <16 x i32> %i.aui, splat (i32 8191)
+  store <16 x i32> %35, ptr %i.auj, align 1, !tbaa !10
   %i.auk = getelementptr inbounds nuw i8, ptr %.02531.i385, i64 52 ; 2 uses
   %i.aul = getelementptr inbounds nuw i8, ptr %.02630.i386, i64 128 ; 2 uses
   %i.aum = add nuw nsw i32 %.032.i384, 1          ; 2 uses
@@ -2287,9 +2256,8 @@ _ZN5arrow8internal12unpack_exactILi14ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.ad
   %i.axd = shufflevector <16 x i32> %i.axb, <16 x i32> %i.axc, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 poison, i32 poison, i32 16, i32 17, i32 12, i32 13, i32 14, i32 15>
   %i.axe = shufflevector <16 x i32> %i.axd, <16 x i32> %i.awz, <16 x i32> <i32 0, i32 1, i32 10, i32 2, i32 11, i32 3, i32 12, i32 4, i32 5, i32 13, i32 6, i32 14, i32 7, i32 15, i32 30, i32 31>
   %i.axf = lshr <16 x i32> %i.axe, <i32 0, i32 14, i32 0, i32 10, i32 0, i32 6, i32 0, i32 2, i32 16, i32 0, i32 12, i32 0, i32 8, i32 0, i32 4, i32 18>
-  %67 = bitcast <16 x i32> %i.axf to <8 x i64>
-  %68 = and <8 x i64> %67, splat (i64 70364449226751)
-  store <8 x i64> %68, ptr %.02630.i405, align 1, !tbaa !10
+  %36 = and <16 x i32> %i.axf, splat (i32 16383)
+  store <16 x i32> %36, ptr %.02630.i405, align 1, !tbaa !10
   %i.axg = getelementptr inbounds nuw i8, ptr %.02531.i404, i64 28 ; 2 uses
   %i.axh = getelementptr inbounds nuw i8, ptr %.02531.i404, i64 40
   %i.axi = load <6 x i32>, ptr %i.axg, align 1    ; 4 uses
@@ -2310,9 +2278,8 @@ _ZN5arrow8internal12unpack_exactILi14ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.ad
   %i.axx = shufflevector <16 x i32> %i.axw, <16 x i32> %i.axs, <16 x i32> <i32 0, i32 1, i32 10, i32 2, i32 11, i32 3, i32 12, i32 4, i32 5, i32 13, i32 6, i32 14, i32 7, i32 15, i32 30, i32 31>
   %i.axy = lshr <16 x i32> %i.axx, <i32 0, i32 14, i32 0, i32 10, i32 0, i32 6, i32 0, i32 2, i32 16, i32 0, i32 12, i32 0, i32 8, i32 0, i32 4, i32 18>
   %i.axz = getelementptr inbounds nuw i8, ptr %.02630.i405, i64 64
-  %69 = bitcast <16 x i32> %i.axy to <8 x i64>
-  %70 = and <8 x i64> %69, splat (i64 70364449226751)
-  store <8 x i64> %70, ptr %i.axz, align 1, !tbaa !10
+  %37 = and <16 x i32> %i.axy, splat (i32 16383)
+  store <16 x i32> %37, ptr %i.axz, align 1, !tbaa !10
   %i.aya = getelementptr inbounds nuw i8, ptr %.02531.i404, i64 56 ; 2 uses
   %i.ayb = getelementptr inbounds nuw i8, ptr %.02630.i405, i64 128 ; 2 uses
   %i.ayc = add nuw nsw i32 %.032.i403, 1          ; 2 uses
@@ -2452,9 +2419,8 @@ _ZN5arrow8internal12unpack_exactILi15ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.af
   %i.bbj = insertelement <16 x i32> %i.bbi, i32 %i.bap, i64 14
   %i.bbk = lshr i32 %i.bao, 1
   %.sroa.0125.60.vec.insert.i.i = insertelement <16 x i32> %i.bbj, i32 %i.bbk, i64 15
-  %71 = bitcast <16 x i32> %.sroa.0125.60.vec.insert.i.i to <8 x i64>
-  %72 = and <8 x i64> %71, splat (i64 140733193420799)
-  store <8 x i64> %72, ptr %.02630.i426, align 1, !tbaa !10
+  %38 = and <16 x i32> %.sroa.0125.60.vec.insert.i.i, splat (i32 32767)
+  store <16 x i32> %38, ptr %.02630.i426, align 1, !tbaa !10
   %i.bbl = load <8 x i32>, ptr %i.ban, align 1    ; 8 uses
   %i.bbm = extractelement <8 x i32> %i.bbl, i64 0
   %i.bbn = extractelement <8 x i32> %i.bbl, i64 1
@@ -2475,9 +2441,8 @@ _ZN5arrow8internal12unpack_exactILi15ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.af
   %i.bcc = shufflevector <16 x i32> %i.bcb, <16 x i32> %i.bbx, <16 x i32> <i32 0, i32 17, i32 1, i32 10, i32 2, i32 11, i32 3, i32 12, i32 4, i32 13, i32 5, i32 14, i32 6, i32 15, i32 7, i32 31>
   %i.bcd = lshr <16 x i32> %i.bcc, <i32 16, i32 0, i32 14, i32 0, i32 12, i32 0, i32 10, i32 0, i32 8, i32 0, i32 6, i32 0, i32 4, i32 0, i32 2, i32 17>
   %i.bce = getelementptr inbounds nuw i8, ptr %.02630.i426, i64 64
-  %73 = bitcast <16 x i32> %i.bcd to <8 x i64>
-  %74 = and <8 x i64> %73, splat (i64 140733193420799)
-  store <8 x i64> %74, ptr %i.bce, align 1, !tbaa !10
+  %39 = and <16 x i32> %i.bcd, splat (i32 32767)
+  store <16 x i32> %39, ptr %i.bce, align 1, !tbaa !10
   %i.bcf = getelementptr inbounds nuw i8, ptr %.02531.i425, i64 60 ; 2 uses
   %i.bcg = getelementptr inbounds nuw i8, ptr %.02630.i426, i64 128 ; 2 uses
   %i.bch = add nuw nsw i32 %.032.i424, 1          ; 2 uses
@@ -2561,17 +2526,15 @@ _ZN5arrow8internal12unpack_exactILi16ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.ah
   %i.bdq = load <8 x i32>, ptr %.02531.i446.epil.init, align 1
   %i.bdr = shufflevector <8 x i32> %i.bdq, <8 x i32> poison, <16 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3, i32 4, i32 4, i32 5, i32 5, i32 6, i32 6, i32 7, i32 7>
   %i.bds = lshr <16 x i32> %i.bdr, <i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16>
-  %75 = bitcast <16 x i32> %i.bds to <8 x i64>
-  %76 = and <8 x i64> %75, splat (i64 281470681808895)
-  store <8 x i64> %76, ptr %.02630.i447.epil.init, align 1, !tbaa !10
+  %40 = and <16 x i32> %i.bds, splat (i32 65535)
+  store <16 x i32> %40, ptr %.02630.i447.epil.init, align 1, !tbaa !10
   %i.bdt = getelementptr inbounds nuw i8, ptr %.02531.i446.epil.init, i64 32
   %i.bdu = load <8 x i32>, ptr %i.bdt, align 1
   %i.bdv = shufflevector <8 x i32> %i.bdu, <8 x i32> poison, <16 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3, i32 4, i32 4, i32 5, i32 5, i32 6, i32 6, i32 7, i32 7>
   %i.bdw = lshr <16 x i32> %i.bdv, <i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16>
   %i.bdx = getelementptr inbounds nuw i8, ptr %.02630.i447.epil.init, i64 64
-  %77 = bitcast <16 x i32> %i.bdw to <8 x i64>
-  %78 = and <8 x i64> %77, splat (i64 281470681808895)
-  store <8 x i64> %78, ptr %i.bdx, align 1, !tbaa !10
+  %41 = and <16 x i32> %i.bdw, splat (i32 65535)
+  store <16 x i32> %41, ptr %i.bdx, align 1, !tbaa !10
   %i.bdy = getelementptr inbounds nuw i8, ptr %.02531.i446.epil.init, i64 64
   %i.bdz = getelementptr inbounds nuw i8, ptr %.02630.i447.epil.init, i64 128
   br label %._crit_edge.i434
@@ -2657,33 +2620,29 @@ vec.epilog.middle.block:                          ; preds = %vec.epilog.vector.b
   %i.bfd = load <8 x i32>, ptr %.02531.i446, align 1
   %i.bfe = shufflevector <8 x i32> %i.bfd, <8 x i32> poison, <16 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3, i32 4, i32 4, i32 5, i32 5, i32 6, i32 6, i32 7, i32 7>
   %i.bff = lshr <16 x i32> %i.bfe, <i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16>
-  %79 = bitcast <16 x i32> %i.bff to <8 x i64>
-  %80 = and <8 x i64> %79, splat (i64 281470681808895)
-  store <8 x i64> %80, ptr %.02630.i447, align 1, !tbaa !10
+  %42 = and <16 x i32> %i.bff, splat (i32 65535)
+  store <16 x i32> %42, ptr %.02630.i447, align 1, !tbaa !10
   %i.bfg = getelementptr inbounds nuw i8, ptr %.02531.i446, i64 32
   %i.bfh = load <8 x i32>, ptr %i.bfg, align 1
   %i.bfi = shufflevector <8 x i32> %i.bfh, <8 x i32> poison, <16 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3, i32 4, i32 4, i32 5, i32 5, i32 6, i32 6, i32 7, i32 7>
   %i.bfj = lshr <16 x i32> %i.bfi, <i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16>
   %i.bfk = getelementptr inbounds nuw i8, ptr %.02630.i447, i64 64
-  %81 = bitcast <16 x i32> %i.bfj to <8 x i64>
-  %82 = and <8 x i64> %81, splat (i64 281470681808895)
-  store <8 x i64> %82, ptr %i.bfk, align 1, !tbaa !10
+  %43 = and <16 x i32> %i.bfj, splat (i32 65535)
+  store <16 x i32> %43, ptr %i.bfk, align 1, !tbaa !10
   %i.bfl = getelementptr inbounds nuw i8, ptr %.02531.i446, i64 64
   %i.bfm = getelementptr inbounds nuw i8, ptr %.02630.i447, i64 128
   %i.bfn = load <8 x i32>, ptr %i.bfl, align 1
   %i.bfo = shufflevector <8 x i32> %i.bfn, <8 x i32> poison, <16 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3, i32 4, i32 4, i32 5, i32 5, i32 6, i32 6, i32 7, i32 7>
   %i.bfp = lshr <16 x i32> %i.bfo, <i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16>
-  %83 = bitcast <16 x i32> %i.bfp to <8 x i64>
-  %84 = and <8 x i64> %83, splat (i64 281470681808895)
-  store <8 x i64> %84, ptr %i.bfm, align 1, !tbaa !10
+  %44 = and <16 x i32> %i.bfp, splat (i32 65535)
+  store <16 x i32> %44, ptr %i.bfm, align 1, !tbaa !10
   %i.bfq = getelementptr inbounds nuw i8, ptr %.02531.i446, i64 96
   %i.bfr = load <8 x i32>, ptr %i.bfq, align 1
   %i.bfs = shufflevector <8 x i32> %i.bfr, <8 x i32> poison, <16 x i32> <i32 0, i32 0, i32 1, i32 1, i32 2, i32 2, i32 3, i32 3, i32 4, i32 4, i32 5, i32 5, i32 6, i32 6, i32 7, i32 7>
   %i.bft = lshr <16 x i32> %i.bfs, <i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16, i32 0, i32 16>
   %i.bfu = getelementptr inbounds nuw i8, ptr %.02630.i447, i64 192
-  %85 = bitcast <16 x i32> %i.bft to <8 x i64>
-  %86 = and <8 x i64> %85, splat (i64 281470681808895)
-  store <8 x i64> %86, ptr %i.bfu, align 1, !tbaa !10
+  %45 = and <16 x i32> %i.bft, splat (i32 65535)
+  store <16 x i32> %45, ptr %i.bfu, align 1, !tbaa !10
   %i.bfv = getelementptr inbounds nuw i8, ptr %.02531.i446, i64 128 ; 3 uses
   %i.bfw = getelementptr inbounds nuw i8, ptr %.02630.i447, i64 256 ; 3 uses
   %niter.next.1 = add i32 %niter, 2               ; 2 uses
@@ -2808,9 +2767,8 @@ _ZN5arrow8internal12unpack_exactILi17ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.aj
   %i.bio = lshr <8 x i32> %i.bib, <i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 12, i32 14, i32 poison>
   %i.bip = shufflevector <8 x i32> %i.bio, <8 x i32> poison, <16 x i32> <i32 5, i32 6, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.biq = shufflevector <16 x i32> %i.bin, <16 x i32> %i.bip, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 16, i32 13, i32 17, i32 15>
-  %87 = bitcast <16 x i32> %i.biq to <8 x i64>
-  %88 = and <8 x i64> %87, splat (i64 562945658585087)
-  store <8 x i64> %88, ptr %.02630.i468, align 1, !tbaa !10
+  %46 = and <16 x i32> %i.biq, splat (i32 131071)
+  store <16 x i32> %46, ptr %.02630.i468, align 1, !tbaa !10
   %i.bir = getelementptr inbounds nuw i8, ptr %.02531.i467, i64 36
   %i.bis = load <8 x i32>, ptr %i.bhz, align 1
   %i.bit = load <8 x i32>, ptr %i.bir, align 1    ; 2 uses
@@ -2818,9 +2776,8 @@ _ZN5arrow8internal12unpack_exactILi17ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.aj
   %i.biv = lshr <8 x i32> %i.bit, <i32 1, i32 3, i32 5, i32 7, i32 9, i32 11, i32 13, i32 15>
   %i.biw = shufflevector <8 x i32> %i.biu, <8 x i32> %i.biv, <16 x i32> <i32 0, i32 8, i32 1, i32 9, i32 2, i32 10, i32 3, i32 11, i32 4, i32 12, i32 5, i32 13, i32 6, i32 14, i32 7, i32 15>
   %i.bix = getelementptr inbounds nuw i8, ptr %.02630.i468, i64 64
-  %89 = bitcast <16 x i32> %i.biw to <8 x i64>
-  %90 = and <8 x i64> %89, splat (i64 562945658585087)
-  store <8 x i64> %90, ptr %i.bix, align 1, !tbaa !10
+  %47 = and <16 x i32> %i.biw, splat (i32 131071)
+  store <16 x i32> %47, ptr %i.bix, align 1, !tbaa !10
   %i.biy = getelementptr inbounds nuw i8, ptr %.02531.i467, i64 68 ; 2 uses
   %i.biz = getelementptr inbounds nuw i8, ptr %.02630.i468, i64 128 ; 2 uses
   %i.bja = add nuw nsw i32 %.032.i466, 1          ; 2 uses
@@ -2948,9 +2905,8 @@ _ZN5arrow8internal12unpack_exactILi18ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.al
   %i.blv = extractelement <8 x i32> %i.ble, i64 7
   %i.blw = lshr i32 %i.blv, 14
   %.sroa.0127.60.vec.insert.i.i488 = insertelement <16 x i32> %i.blu, i32 %i.blw, i64 15
-  %91 = bitcast <16 x i32> %.sroa.0127.60.vec.insert.i.i488 to <8 x i64>
-  %92 = and <8 x i64> %91, splat (i64 1125895612137471)
-  store <8 x i64> %92, ptr %.02630.i487, align 1, !tbaa !10
+  %48 = and <16 x i32> %.sroa.0127.60.vec.insert.i.i488, splat (i32 262143)
+  store <16 x i32> %48, ptr %.02630.i487, align 1, !tbaa !10
   %i.blx = getelementptr inbounds nuw i8, ptr %.02531.i486, i64 36
   %i.bly = getelementptr inbounds nuw i8, ptr %.02531.i486, i64 40 ; 2 uses
   %i.blz = getelementptr inbounds nuw i8, ptr %.02531.i486, i64 44
@@ -2971,9 +2927,8 @@ _ZN5arrow8internal12unpack_exactILi18ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.al
   %i.bmo = shufflevector <8 x i32> %i.bmn, <8 x i32> poison, <16 x i32> <i32 6, i32 7, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.bmp = shufflevector <16 x i32> %i.bmm, <16 x i32> %i.bmo, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 16, i32 14, i32 17>
   %i.bmq = getelementptr inbounds nuw i8, ptr %.02630.i487, i64 64
-  %93 = bitcast <16 x i32> %i.bmp to <8 x i64>
-  %94 = and <8 x i64> %93, splat (i64 1125895612137471)
-  store <8 x i64> %94, ptr %i.bmq, align 1, !tbaa !10
+  %49 = and <16 x i32> %i.bmp, splat (i32 262143)
+  store <16 x i32> %49, ptr %i.bmq, align 1, !tbaa !10
   %i.bmr = getelementptr inbounds nuw i8, ptr %.02531.i486, i64 72 ; 2 uses
   %i.bms = getelementptr inbounds nuw i8, ptr %.02630.i487, i64 128 ; 2 uses
   %i.bmt = add nuw nsw i32 %.032.i485, 1          ; 2 uses
@@ -3124,9 +3079,8 @@ _ZN5arrow8internal12unpack_exactILi19ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.an
   %i.bql = lshr i32 %i.bpl, 10
   %i.bqm = insertelement <16 x i32> %i.bqk, i32 %i.bql, i64 14
   %.sroa.0129.60.vec.insert.i.i = insertelement <16 x i32> %i.bqm, i32 %i.bpp, i64 15
-  %95 = bitcast <16 x i32> %.sroa.0129.60.vec.insert.i.i to <8 x i64>
-  %96 = and <8 x i64> %95, splat (i64 2251795519242239)
-  store <8 x i64> %96, ptr %.02630.i508, align 1, !tbaa !10
+  %50 = and <16 x i32> %.sroa.0129.60.vec.insert.i.i, splat (i32 524287)
+  store <16 x i32> %50, ptr %.02630.i508, align 1, !tbaa !10
   %i.bqn = load i32, ptr %i.bpn, align 1
   %i.bqo = getelementptr inbounds nuw i8, ptr %.02531.i507, i64 40 ; 2 uses
   %i.bqp = getelementptr inbounds nuw i8, ptr %.02531.i507, i64 44 ; 2 uses
@@ -3178,9 +3132,8 @@ _ZN5arrow8internal12unpack_exactILi19ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.an
   %i.bsj = lshr i32 %i.brl, 13
   %.sroa.0149.60.vec.insert.i.i = insertelement <16 x i32> %i.bsi, i32 %i.bsj, i64 15
   %i.bsk = getelementptr inbounds nuw i8, ptr %.02630.i508, i64 64
-  %97 = bitcast <16 x i32> %.sroa.0149.60.vec.insert.i.i to <8 x i64>
-  %98 = and <8 x i64> %97, splat (i64 2251795519242239)
-  store <8 x i64> %98, ptr %i.bsk, align 1, !tbaa !10
+  %51 = and <16 x i32> %.sroa.0149.60.vec.insert.i.i, splat (i32 524287)
+  store <16 x i32> %51, ptr %i.bsk, align 1, !tbaa !10
   %i.bsl = getelementptr inbounds nuw i8, ptr %.02531.i507, i64 76 ; 2 uses
   %i.bsm = getelementptr inbounds nuw i8, ptr %.02630.i508, i64 128 ; 2 uses
   %i.bsn = add nuw nsw i32 %.032.i506, 1          ; 2 uses
@@ -3335,9 +3288,8 @@ _ZN5arrow8internal12unpack_exactILi20ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.ap
   %i.bwj = insertelement <16 x i32> %i.bwi, i32 %i.bvp, i64 14
   %i.bwk = lshr i32 %i.bvo, 12
   %.sroa.0127.60.vec.insert.i.i528 = insertelement <16 x i32> %i.bwj, i32 %i.bwk, i64 15
-  %99 = bitcast <16 x i32> %.sroa.0127.60.vec.insert.i.i528 to <8 x i64>
-  %100 = and <8 x i64> %99, splat (i64 4503595333451775)
-  store <8 x i64> %100, ptr %.02630.i527, align 1, !tbaa !10
+  %52 = and <16 x i32> %.sroa.0127.60.vec.insert.i.i528, splat (i32 1048575)
+  store <16 x i32> %52, ptr %.02630.i527, align 1, !tbaa !10
   %i.bwl = getelementptr inbounds nuw i8, ptr %.02531.i526, i64 40
   %i.bwm = load i32, ptr %i.bwl, align 1          ; 2 uses
   %i.bwn = getelementptr inbounds nuw i8, ptr %.02531.i526, i64 44 ; 2 uses
@@ -3389,9 +3341,8 @@ _ZN5arrow8internal12unpack_exactILi20ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.ap
   %i.byh = lshr i32 %i.bxl, 12
   %.sroa.0147.60.vec.insert.i.i529 = insertelement <16 x i32> %i.byg, i32 %i.byh, i64 15
   %i.byi = getelementptr inbounds nuw i8, ptr %.02630.i527, i64 64
-  %101 = bitcast <16 x i32> %.sroa.0147.60.vec.insert.i.i529 to <8 x i64>
-  %102 = and <8 x i64> %101, splat (i64 4503595333451775)
-  store <8 x i64> %102, ptr %i.byi, align 1, !tbaa !10
+  %53 = and <16 x i32> %.sroa.0147.60.vec.insert.i.i529, splat (i32 1048575)
+  store <16 x i32> %53, ptr %i.byi, align 1, !tbaa !10
   %i.byj = getelementptr inbounds nuw i8, ptr %.02531.i526, i64 80 ; 2 uses
   %i.byk = getelementptr inbounds nuw i8, ptr %.02630.i527, i64 128 ; 2 uses
   %i.byl = add nuw nsw i32 %.032.i525, 1          ; 2 uses
@@ -3549,9 +3500,8 @@ _ZN5arrow8internal12unpack_exactILi21ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.ar
   %i.cck = lshr i32 %i.cbm, 6
   %i.ccl = insertelement <16 x i32> %i.ccj, i32 %i.cck, i64 14
   %.sroa.0131.60.vec.insert.i.i549 = insertelement <16 x i32> %i.ccl, i32 %i.cbr, i64 15
-  %103 = bitcast <16 x i32> %.sroa.0131.60.vec.insert.i.i549 to <8 x i64>
-  %104 = and <8 x i64> %103, splat (i64 9007194961870847)
-  store <8 x i64> %104, ptr %.02630.i548, align 1, !tbaa !10
+  %54 = and <16 x i32> %.sroa.0131.60.vec.insert.i.i549, splat (i32 2097151)
+  store <16 x i32> %54, ptr %.02630.i548, align 1, !tbaa !10
   %i.ccm = getelementptr inbounds nuw i8, ptr %.02531.i547, i64 44
   %i.ccn = getelementptr inbounds nuw i8, ptr %.02531.i547, i64 52 ; 2 uses
   %i.cco = getelementptr inbounds nuw i8, ptr %.02531.i547, i64 56
@@ -3602,9 +3552,8 @@ _ZN5arrow8internal12unpack_exactILi21ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.ar
   %i.ceh = shufflevector <16 x i32> %i.ceg, <16 x i32> %i.cec, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 19, i32 poison>
   %i.cei = shufflevector <16 x i32> %i.ceh, <16 x i32> %i.cef, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 14, i32 17>
   %i.cej = getelementptr inbounds nuw i8, ptr %.02630.i548, i64 64
-  %105 = bitcast <16 x i32> %i.cei to <8 x i64>
-  %106 = and <8 x i64> %105, splat (i64 9007194961870847)
-  store <8 x i64> %106, ptr %i.cej, align 1, !tbaa !10
+  %55 = and <16 x i32> %i.cei, splat (i32 2097151)
+  store <16 x i32> %55, ptr %i.cej, align 1, !tbaa !10
   %i.cek = getelementptr inbounds nuw i8, ptr %.02531.i547, i64 84 ; 2 uses
   %i.cel = getelementptr inbounds nuw i8, ptr %.02630.i548, i64 128 ; 2 uses
   %i.cem = add nuw nsw i32 %.032.i546, 1          ; 2 uses
@@ -3748,9 +3697,8 @@ _ZN5arrow8internal12unpack_exactILi22ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.at
   %i.chx = shufflevector <16 x i32> %i.chv, <16 x i32> %i.chw, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 16, i32 17, i32 poison>
   %i.chy = lshr i32 %i.chh, 10
   %.sroa.0131.60.vec.insert.i.i569 = insertelement <16 x i32> %i.chx, i32 %i.chy, i64 15
-  %107 = bitcast <16 x i32> %.sroa.0131.60.vec.insert.i.i569 to <8 x i64>
-  %108 = and <8 x i64> %107, splat (i64 18014394218708991)
-  store <8 x i64> %108, ptr %.02630.i568, align 1, !tbaa !10
+  %56 = and <16 x i32> %.sroa.0131.60.vec.insert.i.i569, splat (i32 4194303)
+  store <16 x i32> %56, ptr %.02630.i568, align 1, !tbaa !10
   %i.chz = getelementptr inbounds nuw i8, ptr %.02531.i567, i64 44
   %i.cia = getelementptr inbounds nuw i8, ptr %.02531.i567, i64 48
   %i.cib = getelementptr inbounds nuw i8, ptr %.02531.i567, i64 52 ; 2 uses
@@ -3795,9 +3743,8 @@ _ZN5arrow8internal12unpack_exactILi22ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.at
   %i.cjo = lshr i32 %i.cit, 10
   %.sroa.0151.60.vec.insert.i.i570 = insertelement <16 x i32> %i.cjn, i32 %i.cjo, i64 15
   %i.cjp = getelementptr inbounds nuw i8, ptr %.02630.i568, i64 64
-  %109 = bitcast <16 x i32> %.sroa.0151.60.vec.insert.i.i570 to <8 x i64>
-  %110 = and <8 x i64> %109, splat (i64 18014394218708991)
-  store <8 x i64> %110, ptr %i.cjp, align 1, !tbaa !10
+  %57 = and <16 x i32> %.sroa.0151.60.vec.insert.i.i570, splat (i32 4194303)
+  store <16 x i32> %57, ptr %i.cjp, align 1, !tbaa !10
   %i.cjq = getelementptr inbounds nuw i8, ptr %.02531.i567, i64 88 ; 2 uses
   %i.cjr = getelementptr inbounds nuw i8, ptr %.02630.i568, i64 128 ; 2 uses
   %i.cjs = add nuw nsw i32 %.032.i566, 1          ; 2 uses
@@ -3954,9 +3901,8 @@ _ZN5arrow8internal12unpack_exactILi23ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.av
   %i.cnq = lshr i32 %i.cmv, 2
   %i.cnr = insertelement <16 x i32> %i.cnp, i32 %i.cnq, i64 14
   %.sroa.0133.60.vec.insert.i.i590 = insertelement <16 x i32> %i.cnr, i32 %i.cna, i64 15
-  %111 = bitcast <16 x i32> %.sroa.0133.60.vec.insert.i.i590 to <8 x i64>
-  %112 = and <8 x i64> %111, splat (i64 36028792732385279)
-  store <8 x i64> %112, ptr %.02630.i589, align 1, !tbaa !10
+  %58 = and <16 x i32> %.sroa.0133.60.vec.insert.i.i590, splat (i32 8388607)
+  store <16 x i32> %58, ptr %.02630.i589, align 1, !tbaa !10
   %i.cns = load i32, ptr %i.cmy, align 1
   %i.cnt = getelementptr inbounds nuw i8, ptr %.02531.i588, i64 48 ; 2 uses
   %i.cnu = getelementptr inbounds nuw i8, ptr %.02531.i588, i64 52
@@ -4013,9 +3959,8 @@ _ZN5arrow8internal12unpack_exactILi23ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.av
   %i.cpt = lshr i32 %i.coy, 9
   %.sroa.0153.60.vec.insert.i.i = insertelement <16 x i32> %i.cps, i32 %i.cpt, i64 15
   %i.cpu = getelementptr inbounds nuw i8, ptr %.02630.i589, i64 64
-  %113 = bitcast <16 x i32> %.sroa.0153.60.vec.insert.i.i to <8 x i64>
-  %114 = and <8 x i64> %113, splat (i64 36028792732385279)
-  store <8 x i64> %114, ptr %i.cpu, align 1, !tbaa !10
+  %59 = and <16 x i32> %.sroa.0153.60.vec.insert.i.i, splat (i32 8388607)
+  store <16 x i32> %59, ptr %i.cpu, align 1, !tbaa !10
   %i.cpv = getelementptr inbounds nuw i8, ptr %.02531.i588, i64 92 ; 2 uses
   %i.cpw = getelementptr inbounds nuw i8, ptr %.02630.i589, i64 128 ; 2 uses
   %i.cpx = add nuw nsw i32 %.032.i587, 1          ; 2 uses
@@ -4234,9 +4179,8 @@ middle.block:                                     ; preds = %vector.body
   %i.cvd = shufflevector <16 x i32> %i.cvb, <16 x i32> %i.cvc, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 16, i32 17, i32 poison>
   %i.cve = lshr i32 %i.cui, 8
   %.sroa.0127.60.vec.insert.i.i612 = insertelement <16 x i32> %i.cvd, i32 %i.cve, i64 15
-  %115 = bitcast <16 x i32> %.sroa.0127.60.vec.insert.i.i612 to <8 x i64>
-  %116 = and <8 x i64> %115, splat (i64 72057589759737855)
-  store <8 x i64> %116, ptr %.02630.i611, align 1, !tbaa !10
+  %60 = and <16 x i32> %.sroa.0127.60.vec.insert.i.i612, splat (i32 16777215)
+  store <16 x i32> %60, ptr %.02630.i611, align 1, !tbaa !10
   %i.cvf = getelementptr inbounds nuw i8, ptr %.02531.i610, i64 48
   %i.cvg = getelementptr inbounds nuw i8, ptr %.02531.i610, i64 52
   %i.cvh = getelementptr inbounds nuw i8, ptr %.02531.i610, i64 56
@@ -4287,9 +4231,8 @@ middle.block:                                     ; preds = %vector.body
   %i.cxa = lshr i32 %i.cwe, 8
   %.sroa.0147.60.vec.insert.i.i613 = insertelement <16 x i32> %i.cwz, i32 %i.cxa, i64 15
   %i.cxb = getelementptr inbounds nuw i8, ptr %.02630.i611, i64 64
-  %117 = bitcast <16 x i32> %.sroa.0147.60.vec.insert.i.i613 to <8 x i64>
-  %118 = and <8 x i64> %117, splat (i64 72057589759737855)
-  store <8 x i64> %118, ptr %i.cxb, align 1, !tbaa !10
+  %61 = and <16 x i32> %.sroa.0147.60.vec.insert.i.i613, splat (i32 16777215)
+  store <16 x i32> %61, ptr %i.cxb, align 1, !tbaa !10
   %i.cxc = getelementptr inbounds nuw i8, ptr %.02531.i610, i64 96 ; 2 uses
   %i.cxd = getelementptr inbounds nuw i8, ptr %.02630.i611, i64 128 ; 2 uses
   %i.cxe = add nuw nsw i32 %.032.i609, 1          ; 2 uses
@@ -4439,9 +4382,8 @@ _ZN5arrow8internal12unpack_exactILi25ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.az
   %i.dav = insertelement <16 x i32> %i.dat, i32 %i.dau, i64 13
   %i.daw = shufflevector <2 x i32> %i.dai, <2 x i32> poison, <16 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %.sroa.0135.60.vec.insert.i.i6331409 = shufflevector <16 x i32> %i.dav, <16 x i32> %i.daw, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 16, i32 17>
-  %119 = bitcast <16 x i32> %.sroa.0135.60.vec.insert.i.i6331409 to <8 x i64>
-  %120 = and <8 x i64> %119, splat (i64 144115183814443007)
-  store <8 x i64> %120, ptr %.02630.i632, align 1, !tbaa !10
+  %62 = and <16 x i32> %.sroa.0135.60.vec.insert.i.i6331409, splat (i32 33554431)
+  store <16 x i32> %62, ptr %.02630.i632, align 1, !tbaa !10
   %i.dax = getelementptr inbounds nuw i8, ptr %.02531.i631, i64 52
   %i.day = getelementptr inbounds nuw i8, ptr %.02531.i631, i64 56
   %i.daz = load <2 x i32>, ptr %i.czz, align 1
@@ -4490,9 +4432,8 @@ _ZN5arrow8internal12unpack_exactILi25ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.az
   %i.dcq = lshr i32 %i.dby, 7
   %.sroa.0155.60.vec.insert.i.i = insertelement <16 x i32> %i.dcp, i32 %i.dcq, i64 15
   %i.dcr = getelementptr inbounds nuw i8, ptr %.02630.i632, i64 64
-  %121 = bitcast <16 x i32> %.sroa.0155.60.vec.insert.i.i to <8 x i64>
-  %122 = and <8 x i64> %121, splat (i64 144115183814443007)
-  store <8 x i64> %122, ptr %i.dcr, align 1, !tbaa !10
+  %63 = and <16 x i32> %.sroa.0155.60.vec.insert.i.i, splat (i32 33554431)
+  store <16 x i32> %63, ptr %i.dcr, align 1, !tbaa !10
   %i.dcs = getelementptr inbounds nuw i8, ptr %.02531.i631, i64 100 ; 2 uses
   %i.dct = getelementptr inbounds nuw i8, ptr %.02630.i632, i64 128 ; 2 uses
   %i.dcu = add nuw nsw i32 %.032.i630, 1          ; 2 uses
@@ -4627,9 +4568,8 @@ _ZN5arrow8internal12unpack_exactILi26ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.bb
   %i.dfw = shufflevector <16 x i32> %i.dfu, <16 x i32> %i.dfv, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 16, i32 17, i32 18, i32 19, i32 poison>
   %i.dfx = lshr i32 %i.dfl, 6
   %.sroa.0135.60.vec.insert.i.i653 = insertelement <16 x i32> %i.dfw, i32 %i.dfx, i64 15
-  %123 = bitcast <16 x i32> %.sroa.0135.60.vec.insert.i.i653 to <8 x i64>
-  %124 = and <8 x i64> %123, splat (i64 288230371923853311)
-  store <8 x i64> %124, ptr %.02630.i652, align 1, !tbaa !10
+  %64 = and <16 x i32> %.sroa.0135.60.vec.insert.i.i653, splat (i32 67108863)
+  store <16 x i32> %64, ptr %.02630.i652, align 1, !tbaa !10
   %i.dfy = getelementptr inbounds nuw i8, ptr %.02531.i651, i64 52
   %i.dfz = getelementptr inbounds nuw i8, ptr %.02531.i651, i64 56
   %i.dga = getelementptr inbounds nuw i8, ptr %.02531.i651, i64 68 ; 2 uses
@@ -4661,9 +4601,8 @@ _ZN5arrow8internal12unpack_exactILi26ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.bb
   %i.dha = lshr i32 %i.dgo, 6
   %.sroa.0155.60.vec.insert.i.i654 = insertelement <16 x i32> %i.dgz, i32 %i.dha, i64 15
   %i.dhb = getelementptr inbounds nuw i8, ptr %.02630.i652, i64 64
-  %125 = bitcast <16 x i32> %.sroa.0155.60.vec.insert.i.i654 to <8 x i64>
-  %126 = and <8 x i64> %125, splat (i64 288230371923853311)
-  store <8 x i64> %126, ptr %i.dhb, align 1, !tbaa !10
+  %65 = and <16 x i32> %.sroa.0155.60.vec.insert.i.i654, splat (i32 67108863)
+  store <16 x i32> %65, ptr %i.dhb, align 1, !tbaa !10
   %i.dhc = getelementptr inbounds nuw i8, ptr %.02531.i651, i64 104 ; 2 uses
   %i.dhd = getelementptr inbounds nuw i8, ptr %.02630.i652, i64 128 ; 2 uses
   %i.dhe = add nuw nsw i32 %.032.i650, 1          ; 2 uses
@@ -4807,9 +4746,8 @@ _ZN5arrow8internal12unpack_exactILi27ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.bd
   %i.dkp = insertelement <16 x i32> %i.dko, i32 %i.dkd, i64 13
   %i.dkq = shufflevector <2 x i32> %i.dkf, <2 x i32> poison, <16 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %.sroa.0137.60.vec.insert.i.i6741410 = shufflevector <16 x i32> %i.dkp, <16 x i32> %i.dkq, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 16, i32 17>
-  %127 = bitcast <16 x i32> %.sroa.0137.60.vec.insert.i.i6741410 to <8 x i64>
-  %128 = and <8 x i64> %127, splat (i64 576460748142673919)
-  store <8 x i64> %128, ptr %.02630.i673, align 1, !tbaa !10
+  %66 = and <16 x i32> %.sroa.0137.60.vec.insert.i.i6741410, splat (i32 134217727)
+  store <16 x i32> %66, ptr %.02630.i673, align 1, !tbaa !10
   %i.dkr = getelementptr inbounds nuw i8, ptr %.02531.i672, i64 56
   %i.dks = getelementptr inbounds nuw i8, ptr %.02531.i672, i64 60
   %i.dkt = load <2 x i32>, ptr %i.dka, align 1
@@ -4852,9 +4790,8 @@ _ZN5arrow8internal12unpack_exactILi27ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.bd
   %i.dme = lshr i32 %i.dlq, 5
   %.sroa.0157.60.vec.insert.i.i = insertelement <16 x i32> %i.dmd, i32 %i.dme, i64 15
   %i.dmf = getelementptr inbounds nuw i8, ptr %.02630.i673, i64 64
-  %129 = bitcast <16 x i32> %.sroa.0157.60.vec.insert.i.i to <8 x i64>
-  %130 = and <8 x i64> %129, splat (i64 576460748142673919)
-  store <8 x i64> %130, ptr %i.dmf, align 1, !tbaa !10
+  %67 = and <16 x i32> %.sroa.0157.60.vec.insert.i.i, splat (i32 134217727)
+  store <16 x i32> %67, ptr %i.dmf, align 1, !tbaa !10
   %i.dmg = getelementptr inbounds nuw i8, ptr %.02531.i672, i64 108 ; 2 uses
   %i.dmh = getelementptr inbounds nuw i8, ptr %.02630.i673, i64 128 ; 2 uses
   %i.dmi = add nuw nsw i32 %.032.i671, 1          ; 2 uses
@@ -4996,9 +4933,8 @@ _ZN5arrow8internal12unpack_exactILi28ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.bf
   %i.dpr = shufflevector <16 x i32> %i.dpp, <16 x i32> %i.dpq, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 16, i32 17, i32 poison>
   %i.dps = lshr i32 %i.dpe, 4
   %.sroa.0135.60.vec.insert.i.i694 = insertelement <16 x i32> %i.dpr, i32 %i.dps, i64 15
-  %131 = bitcast <16 x i32> %.sroa.0135.60.vec.insert.i.i694 to <8 x i64>
-  %132 = and <8 x i64> %131, splat (i64 1152921500580315135)
-  store <8 x i64> %132, ptr %.02630.i693, align 1, !tbaa !10
+  %68 = and <16 x i32> %.sroa.0135.60.vec.insert.i.i694, splat (i32 268435455)
+  store <16 x i32> %68, ptr %.02630.i693, align 1, !tbaa !10
   %i.dpt = getelementptr inbounds nuw i8, ptr %.02531.i692, i64 56
   %i.dpu = getelementptr inbounds nuw i8, ptr %.02531.i692, i64 60
   %i.dpv = getelementptr inbounds nuw i8, ptr %.02531.i692, i64 72
@@ -5037,9 +4973,8 @@ _ZN5arrow8internal12unpack_exactILi28ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.bf
   %i.drc = lshr i32 %i.dqo, 4
   %.sroa.0155.60.vec.insert.i.i695 = insertelement <16 x i32> %i.drb, i32 %i.drc, i64 15
   %i.drd = getelementptr inbounds nuw i8, ptr %.02630.i693, i64 64
-  %133 = bitcast <16 x i32> %.sroa.0155.60.vec.insert.i.i695 to <8 x i64>
-  %134 = and <8 x i64> %133, splat (i64 1152921500580315135)
-  store <8 x i64> %134, ptr %i.drd, align 1, !tbaa !10
+  %69 = and <16 x i32> %.sroa.0155.60.vec.insert.i.i695, splat (i32 268435455)
+  store <16 x i32> %69, ptr %i.drd, align 1, !tbaa !10
   %i.dre = getelementptr inbounds nuw i8, ptr %.02531.i692, i64 112 ; 2 uses
   %i.drf = getelementptr inbounds nuw i8, ptr %.02630.i693, i64 128 ; 2 uses
   %i.drg = add nuw nsw i32 %.032.i691, 1          ; 2 uses
@@ -5170,9 +5105,8 @@ _ZN5arrow8internal12unpack_exactILi29ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.bh
   %i.due = shufflevector <4 x i32> %i.dtw, <4 x i32> poison, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %i.duf = shufflevector <16 x i32> %i.dud, <16 x i32> %i.due, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 16, i32 17, i32 18, i32 19, i32 poison>
   %.sroa.0139.60.vec.insert.i.i715 = insertelement <16 x i32> %i.duf, i32 %i.dtz, i64 15
-  %135 = bitcast <16 x i32> %.sroa.0139.60.vec.insert.i.i715 to <8 x i64>
-  %136 = and <8 x i64> %135, splat (i64 2305843005455597567)
-  store <8 x i64> %136, ptr %.02630.i714, align 1, !tbaa !10
+  %70 = and <16 x i32> %.sroa.0139.60.vec.insert.i.i715, splat (i32 536870911)
+  store <16 x i32> %70, ptr %.02630.i714, align 1, !tbaa !10
   %i.dug = getelementptr inbounds nuw i8, ptr %.02531.i713, i64 60
   %i.duh = getelementptr inbounds nuw i8, ptr %.02531.i713, i64 72
   %i.dui = load <4 x i32>, ptr %i.dtx, align 1
@@ -5201,9 +5135,8 @@ _ZN5arrow8internal12unpack_exactILi29ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.bh
   %i.dvf = lshr i32 %i.duw, 3
   %.sroa.0159.60.vec.insert.i.i = insertelement <16 x i32> %i.dve, i32 %i.dvf, i64 15
   %i.dvg = getelementptr inbounds nuw i8, ptr %.02630.i714, i64 64
-  %137 = bitcast <16 x i32> %.sroa.0159.60.vec.insert.i.i to <8 x i64>
-  %138 = and <8 x i64> %137, splat (i64 2305843005455597567)
-  store <8 x i64> %138, ptr %i.dvg, align 1, !tbaa !10
+  %71 = and <16 x i32> %.sroa.0159.60.vec.insert.i.i, splat (i32 536870911)
+  store <16 x i32> %71, ptr %i.dvg, align 1, !tbaa !10
   %i.dvh = getelementptr inbounds nuw i8, ptr %.02531.i713, i64 116 ; 2 uses
   %i.dvi = getelementptr inbounds nuw i8, ptr %.02630.i714, i64 128 ; 2 uses
   %i.dvj = add nuw nsw i32 %.032.i712, 1          ; 2 uses
@@ -5332,9 +5265,8 @@ _ZN5arrow8internal12unpack_exactILi30ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.bj
   %i.dyf = shufflevector <16 x i32> %i.dyd, <16 x i32> %i.dye, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 16, i32 17, i32 poison>
   %i.dyg = lshr i32 %i.dxy, 2
   %.sroa.0139.60.vec.insert.i.i735 = insertelement <16 x i32> %i.dyf, i32 %i.dyg, i64 15
-  %139 = bitcast <16 x i32> %.sroa.0139.60.vec.insert.i.i735 to <8 x i64>
-  %140 = and <8 x i64> %139, splat (i64 4611686015206162431)
-  store <8 x i64> %140, ptr %.02630.i734, align 1, !tbaa !10
+  %72 = and <16 x i32> %.sroa.0139.60.vec.insert.i.i735, splat (i32 1073741823)
+  store <16 x i32> %72, ptr %.02630.i734, align 1, !tbaa !10
   %i.dyh = getelementptr inbounds nuw i8, ptr %.02531.i733, i64 60
   %i.dyi = getelementptr inbounds nuw i8, ptr %.02531.i733, i64 64
   %i.dyj = getelementptr inbounds nuw i8, ptr %.02531.i733, i64 92
@@ -5360,9 +5292,8 @@ _ZN5arrow8internal12unpack_exactILi30ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.bj
   %i.dzd = lshr i32 %i.dyv, 2
   %.sroa.0159.60.vec.insert.i.i736 = insertelement <16 x i32> %i.dzc, i32 %i.dzd, i64 15
   %i.dze = getelementptr inbounds nuw i8, ptr %.02630.i734, i64 64
-  %141 = bitcast <16 x i32> %.sroa.0159.60.vec.insert.i.i736 to <8 x i64>
-  %142 = and <8 x i64> %141, splat (i64 4611686015206162431)
-  store <8 x i64> %142, ptr %i.dze, align 1, !tbaa !10
+  %73 = and <16 x i32> %.sroa.0159.60.vec.insert.i.i736, splat (i32 1073741823)
+  store <16 x i32> %73, ptr %i.dze, align 1, !tbaa !10
   %i.dzf = getelementptr inbounds nuw i8, ptr %.02531.i733, i64 120 ; 2 uses
   %i.dzg = getelementptr inbounds nuw i8, ptr %.02630.i734, i64 128 ; 2 uses
   %i.dzh = add nuw nsw i32 %.032.i732, 1          ; 2 uses
@@ -5493,9 +5424,8 @@ _ZN5arrow8internal12unpack_exactILi31ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.bl
   %i.ecf = insertelement <16 x i32> %i.ece, i32 %i.ebz, i64 13
   %i.ecg = shufflevector <2 x i32> %i.ecb, <2 x i32> poison, <16 x i32> <i32 0, i32 1, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison, i32 poison>
   %.sroa.0141.60.vec.insert.i.i7561411 = shufflevector <16 x i32> %i.ecf, <16 x i32> %i.ecg, <16 x i32> <i32 0, i32 1, i32 2, i32 3, i32 4, i32 5, i32 6, i32 7, i32 8, i32 9, i32 10, i32 11, i32 12, i32 13, i32 16, i32 17>
-  %143 = bitcast <16 x i32> %.sroa.0141.60.vec.insert.i.i7561411 to <8 x i64>
-  %144 = and <8 x i64> %143, splat (i64 9223372034707292159)
-  store <8 x i64> %144, ptr %.02630.i755, align 1, !tbaa !10
+  %74 = and <16 x i32> %.sroa.0141.60.vec.insert.i.i7561411, splat (i32 2147483647)
+  store <16 x i32> %74, ptr %.02630.i755, align 1, !tbaa !10
   %i.ech = getelementptr inbounds nuw i8, ptr %.02531.i754, i64 64
   %i.eci = getelementptr inbounds nuw i8, ptr %.02531.i754, i64 92
   %i.ecj = load <8 x i32>, ptr %i.ebw, align 1
@@ -5525,9 +5455,8 @@ _ZN5arrow8internal12unpack_exactILi31ELb1EjEEiPKhPT1_ii.exit.i: ; preds = %bb.bl
   %i.edh = lshr i32 %i.ecy, 1
   %.sroa.0161.60.vec.insert.i.i = insertelement <16 x i32> %i.edg, i32 %i.edh, i64 15
   %i.edi = getelementptr inbounds nuw i8, ptr %.02630.i755, i64 64
-  %145 = bitcast <16 x i32> %.sroa.0161.60.vec.insert.i.i to <8 x i64>
-  %146 = and <8 x i64> %145, splat (i64 9223372034707292159)
-  store <8 x i64> %146, ptr %i.edi, align 1, !tbaa !10
+  %75 = and <16 x i32> %.sroa.0161.60.vec.insert.i.i, splat (i32 2147483647)
+  store <16 x i32> %75, ptr %i.edi, align 1, !tbaa !10
   %i.edj = getelementptr inbounds nuw i8, ptr %.02531.i754, i64 124 ; 2 uses
   %i.edk = getelementptr inbounds nuw i8, ptr %.02630.i755, i64 128 ; 2 uses
   %i.edl = add nuw nsw i32 %.032.i753, 1          ; 2 uses

@@ -1,0 +1,10 @@
+Delta,Added Lines,Removed Lines,Download URL
+timeout,,,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/lance-rs/original/lance_bitpacking-6600d9690c17d4e7.lance_bitpacking.52c895beffc53a9b-cgu.0.bc?download=true
+0,50,50,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/libigl/original/bvh_intersector_hybrid4_bvh4.bc?download=true
+-1,2,3,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/aws-lc/original/bcm.bc?download=true
+-1,2,3,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/grpc/original/bcm.bc?download=true
+-2,6,8,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openexr/original/ojph_block_encoder_avx512.bc?download=true
+-2,6,8,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/openexr/original/ojph_block_encoder_avx2.bc?download=true
+-22,82,104,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/tev/original/enc_fast_lossless.bc?download=true
+-71,142,213,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/arrow/original/bpacking_simd_avx512.bc?download=true
+-138,276,414,https://huggingface.co/buckets/llvm-opt-benchmark/llvm-opt-benchmark/resolve/arrow/original/bpacking_simd_avx2.bc?download=true
