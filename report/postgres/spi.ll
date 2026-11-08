@@ -204,13 +204,13 @@ bb.a:
 ; Function Attrs: nounwind uwtable
 define dso_local void @AtEOXact_SPI(i1 noundef zeroext %0) local_unnamed_addr #0 {
 bb.a:
-  %_SPI_connected.promoted = load i32, ptr @_SPI_connected, align 4 ; 4 uses
+  %_SPI_connected.promoted = load i32, ptr @_SPI_connected, align 4 ; 5 uses
   %i.a = icmp sgt i32 %_SPI_connected.promoted, -1
   br i1 %i.a, label %.lr.ph, label %.critedge
 
 .lr.ph:                                           ; preds = %bb.a
   %i.b = load ptr, ptr @_SPI_stack, align 8       ; 4 uses
-  %i.c = zext nneg i32 %_SPI_connected.promoted to i64 ; 2 uses
+  %i.c = zext nneg i32 %_SPI_connected.promoted to i64
   %i.d = getelementptr inbounds nuw [104 x i8], ptr %i.b, i64 %i.c ; 4 uses
   %i.e = getelementptr inbounds nuw i8, ptr %i.d, i64 73
   %i.f = load i8, ptr %i.e, align 1, !range !5, !noundef !6
@@ -227,19 +227,20 @@ bb.b:                                             ; preds = %.lr.ph
   %i.l = getelementptr inbounds nuw i8, ptr %i.d, i64 96
   %i.m = load i32, ptr %i.l, align 8
   store i32 %i.m, ptr @SPI_result, align 4
-  %indvars.iv.next.peel = add nsw i64 %i.c, -1    ; 3 uses
-  %1 = trunc nsw i64 %indvars.iv.next.peel to i32
+  %1 = add nsw i32 %_SPI_connected.promoted, -1   ; 3 uses
   store i32 %1, ptr @_SPI_connected, align 4
   %i.n = icmp eq i32 %_SPI_connected.promoted, 0
-  %i.o = getelementptr inbounds nuw [104 x i8], ptr %i.b, i64 %indvars.iv.next.peel
+  %2 = zext nneg i32 %1 to i64
+  %i.o = getelementptr inbounds nuw [104 x i8], ptr %i.b, i64 %2
   %storemerge.peel = select i1 %i.n, ptr null, ptr %i.o
   store ptr %storemerge.peel, ptr @_SPI_current, align 8
   %.not = icmp eq i32 %_SPI_connected.promoted, 0
   br i1 %.not, label %.thread, label %.peel.next
 
 .peel.next:                                       ; preds = %bb.b, %bb.c
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.c ], [ %indvars.iv.next.peel, %bb.b ] ; 4 uses
-  %i.p = getelementptr inbounds nuw [104 x i8], ptr %i.b, i64 %indvars.iv ; 4 uses
+  %3 = phi i32 [ %5, %bb.c ], [ %1, %bb.b ]       ; 4 uses
+  %4 = zext nneg i32 %3 to i64
+  %i.p = getelementptr inbounds nuw [104 x i8], ptr %i.b, i64 %4 ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %i.p, i64 73
   %i.r = load i8, ptr %i.q, align 1, !range !5, !noundef !6
   %i.s = trunc nuw i8 %i.r to i1
@@ -255,14 +256,14 @@ bb.c:                                             ; preds = %.peel.next
   %i.x = getelementptr inbounds nuw i8, ptr %i.p, i64 96
   %i.y = load i32, ptr %i.x, align 8
   store i32 %i.y, ptr @SPI_result, align 4
-  %indvars.iv.next = add nsw i64 %indvars.iv, -1  ; 3 uses
-  %2 = trunc nsw i64 %indvars.iv.next to i32
-  store i32 %2, ptr @_SPI_connected, align 4
-  %3 = icmp eq i64 %indvars.iv, 0
-  %i.z = getelementptr inbounds nuw [104 x i8], ptr %i.b, i64 %indvars.iv.next
-  %storemerge = select i1 %3, ptr null, ptr %i.z
+  %5 = add nsw i32 %3, -1                         ; 3 uses
+  store i32 %5, ptr @_SPI_connected, align 4
+  %6 = icmp eq i32 %3, 0
+  %7 = zext nneg i32 %5 to i64
+  %i.z = getelementptr inbounds nuw [104 x i8], ptr %i.b, i64 %7
+  %storemerge = select i1 %6, ptr null, ptr %i.z
   store ptr %storemerge, ptr @_SPI_current, align 8
-  %i.aa = icmp sgt i64 %indvars.iv, 0
+  %i.aa = icmp sgt i32 %3, 0
   br i1 %i.aa, label %.peel.next, label %.thread, !llvm.loop !9
 
 .thread:                                          ; preds = %bb.c, %.peel.next, %bb.b
