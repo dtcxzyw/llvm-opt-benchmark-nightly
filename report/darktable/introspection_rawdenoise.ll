@@ -205,8 +205,7 @@ bb.e:                                             ; preds = %._crit_edge85.split
 
 bb.f:                                             ; preds = %._crit_edge85.split.i, %.preheader.i
   %.06986.i = phi i32 [ 0, %.preheader.i ], [ %i.fg, %._crit_edge85.split.i ] ; 4 uses
-  %i.ao = and i32 %.06986.i, 1                    ; 4 uses
-  %6 = zext nneg i32 %i.ao to i64                 ; 2 uses
+  %i.ao = and i32 %.06986.i, 1                    ; 5 uses
   %i.ap = lshr i32 %.06986.i, 1                   ; 4 uses
   %i.aq = zext nneg i32 %i.ap to i64              ; 2 uses
   %trunc.i = trunc nuw i32 %.06986.i to i3
@@ -305,6 +304,7 @@ compute_channel_noise.exit.i:                     ; preds = %.split.preheader.i.
 
 .lr.ph.preheader.i:                               ; preds = %.lr.ph74.i
   %i.cw = lshr i32 %i.cu, 1
+  %6 = zext nneg i32 %i.ao to i64
   %i.cx = zext nneg i32 %i.cn to i64
   %wide.trip.count.i = zext nneg i32 %i.cw to i64 ; 5 uses
   %min.iters.check64 = icmp ult i32 %i.cu, 10
@@ -338,6 +338,7 @@ compute_channel_noise.exit.i:                     ; preds = %.split.preheader.i.
 
 .lr.ph78.preheader.i:                             ; preds = %.lr.ph84.i
   %i.dl = lshr i32 %i.dj, 1
+  %7 = zext nneg i32 %i.ao to i64
   %i.dm = zext nneg i32 %i.de to i64
   %wide.trip.count97.i = zext nneg i32 %i.dl to i64 ; 3 uses
   %min.iters.check = icmp ult i32 %i.dj, 16
@@ -454,7 +455,7 @@ vec.epilog.scalar.ph:                             ; preds = %vec.epilog.scalar.p
   br i1 %exitcond103.not.i, label %bb.e, label %bb.f
 
 .lr.ph78.i:                                       ; preds = %._crit_edge79.i, %.lr.ph78.preheader.i
-  %indvars.iv99.i = phi i64 [ %6, %.lr.ph78.preheader.i ], [ %indvars.iv.next100.i, %._crit_edge79.i ] ; 3 uses
+  %indvars.iv99.i = phi i64 [ %7, %.lr.ph78.preheader.i ], [ %indvars.iv.next100.i, %._crit_edge79.i ] ; 3 uses
   %i.fh = lshr i64 %indvars.iv99.i, 1
   %i.fi = mul nsw i64 %i.fh, %i.dg
   %i.fj = getelementptr inbounds nuw [4 x i8], ptr %i.ae, i64 %i.fi ; 2 uses

@@ -203,10 +203,11 @@ bb.av:                                            ; preds = %.lr.ph1831, %bb.cm
   %i.mg = phi i32 [ %i.ev, %.lr.ph1831 ], [ %i.apl, %bb.cm ] ; 4 uses
   %i.mh = phi double [ %i.eu, %.lr.ph1831 ], [ %i.apm, %bb.cm ] ; 12 uses
   %i.mi = phi i32 [ %i.ev, %.lr.ph1831 ], [ %i.apn, %bb.cm ] ; 11 uses
-  %indvars.iv2025.a = phi i64 [ 1, %.lr.ph1831 ], [ %indvars.iv.next2026, %bb.cm ] ; 37 uses
+  %indvars.iv2025.a = phi i64 [ 1, %.lr.ph1831 ], [ %indvars.iv.next2026, %bb.cm ] ; 38 uses
   %.31829 = phi i32 [ 0, %.lr.ph1831 ], [ %.5, %bb.cm ]
   %.014531823 = phi i32 [ 0, %.lr.ph1831 ], [ %.11454, %bb.cm ] ; 7 uses
   %i.mj = xor i64 %indvar, -1
+  %16 = trunc i64 %indvars.iv2025.a to i32
   %i.mk = xor i64 %indvar, -1
   %indvars2119 = trunc i64 %indvars.iv2025.a to i32 ; 11 uses
   %.not1544 = icmp eq i32 %.31829, 0
@@ -214,7 +215,7 @@ bb.av:                                            ; preds = %.lr.ph1831, %bb.cm
 
 bb.aw:                                            ; preds = %bb.av
   store i32 1, ptr %i.t, align 4, !tbaa !105
-  %i.ml = sext i32 %i.mi to i64
+  %i.ml = sext i32 %i.mi to i64                   ; 2 uses
   %i.mm = icmp slt i64 %indvars.iv2025.a, %i.ml
   br i1 %i.mm, label %bb.ax, label %bb.ay
 
@@ -617,7 +618,7 @@ bb.br:                                            ; preds = %._crit_edge2325
 
 bb.bs:                                            ; preds = %bb.br, %bb.bq
   %.pre-phi = phi i64 [ %i.vv, %bb.br ], [ %i.vd, %bb.bq ]
-  %i.xa = phi i32 [ %i.vs, %bb.br ], [ %i.va, %bb.bq ]
+  %i.xa = phi i32 [ %i.vs, %bb.br ], [ %i.va, %bb.bq ] ; 2 uses
   %i.xb = phi <2 x double> [ %i.wz, %bb.br ], [ %i.vq, %bb.bq ] ; 3 uses
   %i.xc = getelementptr inbounds [8 x i8], ptr %i.ak, i64 %.pre-phi
   %i.xd = fcmp oge <2 x double> %i.xb, zeroinitializer
@@ -633,11 +634,13 @@ bb.bs:                                            ; preds = %bb.br, %bb.bq
   %i.xn = fcmp oge double %i.xl, %i.xm
   %i.xo = select i1 %i.xn, double %i.xl, double %i.xm
   %.pre2303 = load i32, ptr %i.t, align 4, !tbaa !105
+  %.pre2321 = sext i32 %i.xa to i64
   br label %bb.bt
 
 bb.bt:                                            ; preds = %bb.bs, %.thread2415
-  %i.xp = phi i32 [ %.pre2303, %bb.bs ], [ %i.nt, %.thread2415 ] ; 2 uses
-  %i.xq = phi i32 [ %i.xa, %bb.bs ], [ %i.mi, %.thread2415 ] ; 2 uses
+  %.pre-phi2322 = phi i64 [ %.pre2321, %bb.bs ], [ %i.ml, %.thread2415 ]
+  %i.xp = phi i32 [ %.pre2303, %bb.bs ], [ %i.nt, %.thread2415 ] ; 3 uses
+  %i.xq = phi i32 [ %i.xa, %bb.bs ], [ %i.mi, %.thread2415 ]
   %i.xr = phi double [ %i.sk, %bb.bs ], [ %i.mh, %.thread2415 ] ; 2 uses
   %.01435 = phi double [ %i.xo, %bb.bs ], [ 1.000000e+00, %.thread2415 ]
   %i.xs = phi <2 x double> [ %i.uc, %bb.bs ], [ %i.rh, %.thread2415 ] ; 3 uses
@@ -651,16 +654,17 @@ bb.bt:                                            ; preds = %bb.bs, %.thread2415
   %i.xz = fcmp oge double %i.xy, %i.xr
   %i.ya = select i1 %i.xz, double %i.xy, double %i.xr
   store double %i.ya, ptr %i.h, align 8, !tbaa !107
-  %16 = add nsw i32 %i.xp, %indvars2119           ; 3 uses
-  %.not15521784 = icmp sgt i32 %16, %i.xq
+  %17 = sext i32 %i.xp to i64
+  %18 = add nsw i64 %indvars.iv2025.a, %17        ; 2 uses
+  %.not15521784 = icmp sgt i64 %18, %.pre-phi2322
   br i1 %.not15521784, label %._crit_edge1793, label %.lr.ph1792.preheader
 
 .lr.ph1792.preheader:                             ; preds = %bb.bt
-  %17 = sext i32 %i.xp to i64
-  %18 = add nsw i64 %indvars.iv2025.a, %17
-  %i.yb = add i32 %i.xq, 1
+  %19 = add i32 %i.xq, 1
+  %i.yb = add i32 %i.xp, %indvars2119
   %i.yc = extractelement <2 x double> %i.xs, i64 0 ; 2 uses
   %i.yd = extractelement <2 x double> %i.xs, i64 1 ; 2 uses
+  %20 = add i32 %i.xp, %16
   %invariant.op3386 = sub i64 -2, %indvar
   br label %.lr.ph1792
 
@@ -669,11 +673,11 @@ bb.bt:                                            ; preds = %bb.bs, %.thread2415
   %indvars.iv2088 = phi i64 [ %18, %.lr.ph1792.preheader ], [ %indvars.iv.next2089, %bb.ce ] ; 15 uses
   %.014171790 = phi i32 [ 0, %.lr.ph1792.preheader ], [ %.21419, %bb.ce ]
   %.114361785 = phi double [ %.01435, %.lr.ph1792.preheader ], [ %.41439, %bb.ce ] ; 5 uses
-  %i.ye = add i32 %16, %indvar2605
+  %i.ye = add i32 %20, %indvar2605
   %i.yf = zext i32 %i.ye to i64                   ; 2 uses
   %i.yg = add i64 %i.mj, %i.yf                    ; 2 uses
   %.reass3387 = add i64 %i.yf, %invariant.op3386  ; 2 uses
-  %i.yh = add i32 %16, %indvar2605
+  %i.yh = add i32 %i.yb, %indvar2605
   %i.yi = zext i32 %i.yh to i64
   %i.yj = add i64 %i.mk, %i.yi                    ; 14 uses
   %.not1559 = icmp eq i32 %.014171790, 0
@@ -1076,7 +1080,7 @@ bb.ce:                                            ; preds = %.lr.ph1792, %bb.cd
   %.21419 = phi i32 [ %.11418, %bb.cd ], [ 0, %.lr.ph1792 ]
   %indvars.iv.next2089 = add nsw i64 %indvars.iv2088, 1 ; 2 uses
   %lftr.wideiv = trunc i64 %indvars.iv.next2089 to i32
-  %exitcond2092.not = icmp eq i32 %i.yb, %lftr.wideiv
+  %exitcond2092.not = icmp eq i32 %19, %lftr.wideiv
   %indvar.next2606 = add i32 %indvar2605, 1
   br i1 %exitcond2092.not, label %._crit_edge1793, label %.lr.ph1792, !llvm.loop !27
 

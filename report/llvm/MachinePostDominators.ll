@@ -205,7 +205,6 @@ _ZNK4llvm17DominatorTreeBaseINS_17MachineBasicBlockELb1EE20isReachableFromEntryE
   br label %bb.f
 
 bb.f:                                             ; preds = %.lr.ph91, %_ZNK4llvm17DominatorTreeBaseINS_17MachineBasicBlockELb1EE20isReachableFromEntryEPKS1_.exit44.thread
-  %indvars.iv104 = phi i64 [ 1, %.lr.ph91 ], [ %indvars.iv.next105, %_ZNK4llvm17DominatorTreeBaseINS_17MachineBasicBlockELb1EE20isReachableFromEntryEPKS1_.exit44.thread ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph91 ], [ %indvars.iv.next, %_ZNK4llvm17DominatorTreeBaseINS_17MachineBasicBlockELb1EE20isReachableFromEntryEPKS1_.exit44.thread ] ; 3 uses
   %i.aq = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %indvars.iv
   %i.ar = load ptr, ptr %i.aq, align 8, !tbaa !228 ; 4 uses
@@ -234,7 +233,6 @@ _ZNK4llvm17DominatorTreeBaseINS_17MachineBasicBlockELb1EE20isReachableFromEntryE
 _ZNK4llvm17DominatorTreeBaseINS_17MachineBasicBlockELb1EE20isReachableFromEntryEPKS1_.exit44.thread: ; preds = %_ZNK4llvm17DominatorTreeBaseINS_17MachineBasicBlockELb1EE12getNodeIndexEPKS1_.exit.thread.i.i42, %_ZNK4llvm17DominatorTreeBaseINS_17MachineBasicBlockELb1EE20isReachableFromEntryEPKS1_.exit44
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  %indvars.iv.next105 = add nuw nsw i64 %indvars.iv104, 1
   br i1 %exitcond.not, label %_ZN4llvm17DominatorTreeBaseINS_17MachineBasicBlockELb1EE24changeImmediateDominatorEPNS_15DomTreeNodeBaseIS1_EES5_.exit, label %bb.f, !llvm.loop !354
 
 bb.g:                                             ; preds = %_ZNK4llvm17DominatorTreeBaseINS_17MachineBasicBlockELb1EE20isReachableFromEntryEPKS1_.exit44
@@ -242,13 +240,17 @@ bb.g:                                             ; preds = %_ZNK4llvm17Dominato
 
 .preheader:                                       ; preds = %bb.g
   %i.ba = trunc nuw i64 %indvars.iv to i32
-  %.12692 = add nuw i32 %i.ba, 1
+  %.12692 = add nuw i32 %i.ba, 1                  ; 2 uses
   %i.bb = icmp ugt i32 %i.al, %.12692
-  br i1 %i.bb, label %.lr.ph95.a, label %_ZNK4llvm17DominatorTreeBaseINS_17MachineBasicBlockELb1EE12getNodeIndexEPKS1_.exit.i.i55
+  br i1 %i.bb, label %.lr.ph95, label %_ZNK4llvm17DominatorTreeBaseINS_17MachineBasicBlockELb1EE12getNodeIndexEPKS1_.exit.i.i55
 
-.lr.ph95.a:                                       ; preds = %.preheader, %_ZNK4llvm17DominatorTreeBaseINS_17MachineBasicBlockELb1EE20isReachableFromEntryEPKS1_.exit49.thread
-  %indvars.iv107 = phi i64 [ %indvars.iv.next108, %_ZNK4llvm17DominatorTreeBaseINS_17MachineBasicBlockELb1EE20isReachableFromEntryEPKS1_.exit49.thread ], [ %indvars.iv104, %.preheader ] ; 2 uses
-  %.12893 = phi ptr [ %.229, %_ZNK4llvm17DominatorTreeBaseINS_17MachineBasicBlockELb1EE20isReachableFromEntryEPKS1_.exit49.thread ], [ %i.ar, %.preheader ] ; 4 uses
+.lr.ph95:                                         ; preds = %.preheader
+  %3 = zext i32 %.12692 to i64
+  br label %.lr.ph95.a
+
+.lr.ph95.a:                                       ; preds = %.lr.ph95, %_ZNK4llvm17DominatorTreeBaseINS_17MachineBasicBlockELb1EE20isReachableFromEntryEPKS1_.exit49.thread
+  %indvars.iv107 = phi i64 [ %3, %.lr.ph95 ], [ %indvars.iv.next108, %_ZNK4llvm17DominatorTreeBaseINS_17MachineBasicBlockELb1EE20isReachableFromEntryEPKS1_.exit49.thread ] ; 2 uses
+  %.12893 = phi ptr [ %i.ar, %.lr.ph95 ], [ %.229, %_ZNK4llvm17DominatorTreeBaseINS_17MachineBasicBlockELb1EE20isReachableFromEntryEPKS1_.exit49.thread ] ; 4 uses
   %i.bc = getelementptr inbounds nuw [8 x i8], ptr %i.am, i64 %indvars.iv107
   %i.bd = load ptr, ptr %i.bc, align 8, !tbaa !228 ; 3 uses
   %.not.i.i.i45 = icmp eq ptr %i.bd, null         ; 2 uses

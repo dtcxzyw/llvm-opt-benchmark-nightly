@@ -204,15 +204,12 @@ modnn.exit249:                                    ; preds = %.lr.ph.i247, %bb.e
   br label %.lr.ph
 
 .loopexit311:                                     ; preds = %bb.h
-  %indvars.iv.next410 = add nuw nsw i64 %indvars.iv409, 1 ; 2 uses
-  %indvars.iv.next405 = add nuw nsw i64 %indvars.iv404.a, 1
-  %exitcond412.not = icmp eq i64 %indvars.iv.next410, %wide.trip.count
+  %exitcond412.not = icmp eq i64 %indvars.iv.next408, %wide.trip.count
   br i1 %exitcond412.not, label %.loopexit312.loopexit, label %.lr.ph, !llvm.loop !15
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.loopexit311
-  %indvars.iv409 = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next410, %.loopexit311 ] ; 2 uses
-  %indvars.iv404.a = phi i64 [ 2, %.lr.ph.preheader ], [ %indvars.iv.next405, %.loopexit311 ] ; 2 uses
-  %i.mi = getelementptr [4 x i8], ptr %1, i64 %indvars.iv409
+  %indvars.iv404.a = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next408, %.loopexit311 ] ; 2 uses
+  %i.mi = getelementptr [4 x i8], ptr %1, i64 %indvars.iv404.a
   %i.mj = load i32, ptr %i.mi, align 4
   %i.mk = sub i32 254, %i.mj                      ; 3 uses
   %i.ml = icmp sgt i32 %i.mk, 254
@@ -229,10 +226,11 @@ modnn.exit249:                                    ; preds = %.lr.ph.i247, %bb.e
 
 modnn.exit253:                                    ; preds = %.lr.ph.i251, %.lr.ph
   %.0.lcssa.i250 = phi i32 [ %i.mk, %.lr.ph ], [ %i.mp, %.lr.ph.i251 ]
+  %indvars.iv.next408 = add nuw nsw i64 %indvars.iv404.a, 1 ; 3 uses
   br label %bb.f
 
 bb.f:                                             ; preds = %modnn.exit253, %bb.h
-  %indvars.iv406 = phi i64 [ %indvars.iv404.a, %modnn.exit253 ], [ %indvars.iv.next407, %bb.h ] ; 3 uses
+  %indvars.iv406 = phi i64 [ %indvars.iv.next408, %modnn.exit253 ], [ %indvars.iv.next407, %bb.h ] ; 3 uses
   %i.mr = getelementptr [4 x i8], ptr %i.a, i64 %indvars.iv406 ; 3 uses
   %i.ms = getelementptr i8, ptr %i.mr, i64 -4
   %i.mt = load i32, ptr %i.ms, align 4
@@ -635,7 +633,7 @@ modnn.exit269:                                    ; preds = %.lr.ph.i267, %bb.q,
   %i.aar = getelementptr inbounds nuw i8, ptr %i.g, i64 4
   call void @llvm.memcpy.p0.p0.i64(ptr noundef nonnull align 4 dereferenceable(192) %i.aar, ptr noundef nonnull align 4 dereferenceable(192) %i.lv, i64 192, i1 false)
   %.not376 = icmp eq i32 %spec.select, 0
-  %i.aas = zext i32 %spec.select to i64           ; 5 uses
+  %i.aas = zext i32 %spec.select to i64           ; 4 uses
   br label %.preheader301
 
 .preheader304:                                    ; preds = %.preheader304.1, %.preheader304.preheader
@@ -649,7 +647,7 @@ modnn.exit269:                                    ; preds = %.lr.ph.i267, %bb.q,
   store i32 %i.aax, ptr %i.aat, align 8
   %.not239 = icmp eq i32 %i.aax, 255
   %i.aay = trunc nuw nsw i64 %indvars.iv440 to i32
-  %spec.select = select i1 %.not239, i32 %.0211349, i32 %i.aay ; 13 uses
+  %spec.select = select i1 %.not239, i32 %.0211349, i32 %i.aay ; 14 uses
   %exitcond443.not = icmp eq i64 %indvars.iv440, 48
   br i1 %exitcond443.not, label %.preheader303, label %.preheader304.1
 
@@ -754,14 +752,16 @@ bb.t:                                             ; preds = %modnn.exit277
   br label %.preheader300
 
 .preheader300:                                    ; preds = %.preheader300.preheader, %bb.y
-  %indvars.iv452 = phi i64 [ %indvars.iv.next453, %bb.y ], [ 0, %.preheader300.preheader ] ; 4 uses
+  %indvars.iv452 = phi i64 [ %indvars.iv.next453, %bb.y ], [ 0, %.preheader300.preheader ] ; 3 uses
   %.0206362 = phi i32 [ %spec.select245, %bb.y ], [ 0, %.preheader300.preheader ]
-  %umin = tail call i64 @llvm.umin.i64(i64 %indvars.iv452, i64 %i.aas)
+  %3 = trunc nuw nsw i64 %indvars.iv452 to i32    ; 2 uses
+  %4 = tail call i32 @llvm.umin.i32(i32 %spec.select, i32 %3)
   %indvars.iv.next453 = add nuw nsw i64 %indvars.iv452, 1 ; 3 uses
+  %5 = sext i32 %4 to i64
   br label %bb.u
 
 bb.u:                                             ; preds = %.preheader300, %bb.x
-  %indvars.iv454 = phi i64 [ %umin, %.preheader300 ], [ %indvars.iv.next455, %bb.x ] ; 4 uses
+  %indvars.iv454 = phi i64 [ %5, %.preheader300 ], [ %indvars.iv.next455, %bb.x ] ; 4 uses
   %.0191361 = phi i32 [ 0, %.preheader300 ], [ %.1192, %bb.x ] ; 3 uses
   %i.ach = sub i64 %indvars.iv.next453, %indvars.iv454
   %sext = shl i64 %i.ach, 32
@@ -807,7 +807,6 @@ bb.x:                                             ; preds = %bb.u, %bb.v, %modnn
 
 bb.y:                                             ; preds = %bb.x
   %.not234 = icmp eq i32 %.1192, 0
-  %3 = trunc nuw nsw i64 %indvars.iv452 to i32
   %spec.select245 = select i1 %.not234, i32 %.0206362, i32 %3 ; 2 uses
   %i.acz = sext i32 %.1192 to i64
   %i.ada = getelementptr [4 x i8], ptr @Index_of, i64 %i.acz
@@ -1033,8 +1032,11 @@ middle.block:                                     ; preds = %vector.body
   ret i32 %.3559
 }
 
+; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
+declare i32 @llvm.umin.i32(i32, i32) #3
+
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: write)
-declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #3
+declare void @llvm.memset.p0.i64(ptr writeonly captures(none), i8, i64, i1 immarg) #4
 
 ; Function Attrs: nocallback nofree nosync nounwind willreturn memory(argmem: readwrite)
 declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly captures(none), i64, i1 immarg) #1
@@ -1043,13 +1045,13 @@ declare void @llvm.memmove.p0.p0.i64(ptr writeonly captures(none), ptr readonly 
 declare void @llvm.memcpy.p0.p0.i64(ptr noalias writeonly captures(none), ptr noalias readonly captures(none), i64, i1 immarg) #1
 
 ; Function Attrs: nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none)
-declare i64 @llvm.umin.i64(i64, i64) #4
+declare i64 @llvm.umin.i64(i64, i64) #3
 
 attributes #0 = { nofree norecurse nosync nounwind null_pointer_is_valid sspstrong memory(readwrite, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #1 = { nocallback nofree nosync nounwind willreturn memory(argmem: readwrite) }
 attributes #2 = { nofree norecurse nosync nounwind null_pointer_is_valid sspstrong memory(readwrite, argmem: none, inaccessiblemem: none, target_mem: none) uwtable "min-legal-vector-width"="0" "no-trapping-math"="true" "probe-stack"="inline-asm" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cmov,+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #3 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
-attributes #4 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #3 = { nocallback nocreateundeforpoison nofree nosync nounwind speculatable willreturn memory(none) }
+attributes #4 = { nocallback nofree nosync nounwind willreturn memory(argmem: write) }
 attributes #5 = { nounwind }
 
 !llvm.module.flags = !{!1, !2, !3, !4, !5}

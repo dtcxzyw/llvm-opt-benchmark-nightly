@@ -204,27 +204,26 @@ bb.g:                                             ; preds = %bb.f
   unreachable, !nosanitize !9
 
 .preheader31.split.i:                             ; preds = %bb.i
-  %indvars.iv.next.i = add nuw nsw i64 %indvars.iv.next.i586, 1
-  %exitcond = icmp eq i64 %indvars.iv.next.i586, 2147483647
-  br i1 %exitcond, label %.split.us.i, label %.preheader31.split.i.preheader, !prof !172, !llvm.loop !367, !nosanitize !9
+  %4 = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %7, i32 1), !nosanitize !9 ; 2 uses
+  %5 = extractvalue { i32, i1 } %4, 0, !nosanitize !9
+  %6 = extractvalue { i32, i1 } %4, 1, !nosanitize !9
+  br i1 %6, label %.split.us.i, label %.preheader31.split.i.preheader, !prof !172, !llvm.loop !367, !nosanitize !9
 
 .split.us.i:                                      ; preds = %.preheader31.split.i
   tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @277, i64 2147483647, i64 1) #11, !nosanitize !9
   unreachable, !nosanitize !9
 
 .preheader31.split.i.preheader:                   ; preds = %.preheader31.i, %.preheader31.split.i
-  %indvars.iv.next.i586 = phi i64 [ %indvars.iv.next.i, %.preheader31.split.i ], [ 1, %.preheader31.i ] ; 5 uses
-  %indvars.iv.i585 = phi i64 [ %indvars.iv.next.i586, %.preheader31.split.i ], [ 0, %.preheader31.i ]
-  %sext = shl i64 %indvars.iv.next.i586, 32       ; 2 uses
-  %4 = ashr exact i64 %sext, 28
-  %5 = getelementptr inbounds i8, ptr %.fr98.i, i64 %4 ; 2 uses
-  %6 = ashr exact i64 %sext, 28
-  %i.s = add i64 %6, %i.p, !nosanitize !9         ; 3 uses
+  %7 = phi i32 [ %5, %.preheader31.split.i ], [ 1, %.preheader31.i ] ; 4 uses
+  %.0.i584 = phi i32 [ %7, %.preheader31.split.i ], [ 0, %.preheader31.i ]
+  %8 = sext i32 %7 to i64                         ; 2 uses
+  %9 = getelementptr inbounds [16 x i8], ptr %.fr98.i, i64 %8 ; 2 uses
+  %10 = shl nsw i64 %8, 4
+  %i.s = add i64 %10, %i.p, !nosanitize !9        ; 3 uses
   %i.t = icmp ne i64 %i.s, 0
   %i.u = icmp uge i64 %i.s, %i.p, !nosanitize !9
-  %7 = and i64 %indvars.iv.next.i586, 2147483648
-  %8 = icmp ne i64 %7, 0
-  %i.v = xor i1 %8, %i.u
+  %11 = icmp slt i32 %7, 0
+  %i.v = xor i1 %11, %i.u
   %i.w = and i1 %i.t, %i.v, !nosanitize !9
   br i1 %i.w, label %bb.h, label %.split88.us.i, !prof !10, !nosanitize !9
 
@@ -234,7 +233,7 @@ bb.g:                                             ; preds = %bb.f
   unreachable, !nosanitize !9
 
 bb.h:                                             ; preds = %.preheader31.split.i.preheader
-  %i.x = ptrtoint ptr %5 to i64, !nosanitize !9   ; 2 uses
+  %i.x = ptrtoint ptr %9 to i64, !nosanitize !9   ; 2 uses
   %i.y = and i64 %i.x, 7, !nosanitize !9
   %i.z = icmp eq i64 %i.y, 0, !nosanitize !9
   br i1 %i.z, label %bb.i, label %.split92.i, !prof !10, !nosanitize !9
@@ -244,23 +243,27 @@ bb.h:                                             ; preds = %.preheader31.split.
   unreachable, !nosanitize !9
 
 bb.i:                                             ; preds = %bb.h
-  %i.aa = load i32, ptr %5, align 8, !tbaa !105
+  %i.aa = load i32, ptr %9, align 8, !tbaa !105
   %.not.i = icmp sgt i32 %i.aa, %.sroa.0.0.extract.trunc.i
   br i1 %.not.i, label %.preheader.i, label %.preheader31.split.i, !llvm.loop !367
 
 .preheader.i:                                     ; preds = %bb.i
   %i.ab = icmp sgt i32 %i.n, %.sroa.0.0.extract.trunc.i
-  br i1 %i.ab, label %.lr.ph97.i, label %b3PrepareJointsTask.exit
+  br i1 %i.ab, label %.lr.ph97.preheader.i, label %b3PrepareJointsTask.exit
+
+.lr.ph97.preheader.i:                             ; preds = %.preheader.i
+  %12 = sext i32 %.0.i584 to i64
+  br label %.lr.ph97.i
 
 .loopexit.i:                                      ; preds = %bb.x, %bb.s
   %.123.lcssa.i = phi i32 [ %.02295.i, %bb.s ], [ %i.ax, %bb.x ] ; 2 uses
   %i.ac = icmp slt i32 %.123.lcssa.i, %i.n
   br i1 %i.ac, label %.lr.ph97.i, label %b3PrepareJointsTask.exit, !llvm.loop !368
 
-.lr.ph97.i:                                       ; preds = %.preheader.i, %.loopexit.i
-  %indvars.iv165.i = phi i64 [ %indvars.iv.next166.i, %.loopexit.i ], [ %indvars.iv.i585, %.preheader.i ] ; 4 uses
-  %.02295.i = phi i32 [ %.123.lcssa.i, %.loopexit.i ], [ %.sroa.0.0.extract.trunc.i, %.preheader.i ] ; 3 uses
-  %i.ad = getelementptr inbounds nuw [16 x i8], ptr %.fr98.i, i64 %indvars.iv165.i ; 3 uses
+.lr.ph97.i:                                       ; preds = %.loopexit.i, %.lr.ph97.preheader.i
+  %indvars.iv165.i = phi i64 [ %12, %.lr.ph97.preheader.i ], [ %indvars.iv.next166.i, %.loopexit.i ] ; 4 uses
+  %.02295.i = phi i32 [ %.sroa.0.0.extract.trunc.i, %.lr.ph97.preheader.i ], [ %.123.lcssa.i, %.loopexit.i ] ; 3 uses
+  %i.ad = getelementptr inbounds [16 x i8], ptr %.fr98.i, i64 %indvars.iv165.i ; 3 uses
   %i.ae = shl nuw nsw i64 %indvars.iv165.i, 4
   %i.af = add i64 %i.ae, %i.p, !nosanitize !9     ; 2 uses
   %.not100.i = icmp ult i64 %i.af, %i.p, !nosanitize !9

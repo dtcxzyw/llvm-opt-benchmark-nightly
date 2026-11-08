@@ -205,7 +205,7 @@ bb.w:                                             ; preds = %.loopexit253
   br label %bb.x
 
 bb.x:                                             ; preds = %bb.w, %.loopexit253
-  %.1210 = phi i1 [ %.0209266, %.loopexit253 ], [ %spec.select, %bb.w ] ; 4 uses
+  %.1210 = phi i1 [ %.0209266, %.loopexit253 ], [ %spec.select, %bb.w ] ; 3 uses
   %i.gd = load float, ptr %i.aq, align 8, !tbaa !174
   %i.ge = fmul float %i.er, %i.gd
   %i.gf = fcmp olt float %.1, %i.ge
@@ -213,7 +213,7 @@ bb.x:                                             ; preds = %bb.w, %.loopexit253
 
 bb.y:                                             ; preds = %bb.x
   %i.gg = load float, ptr %i.v, align 4, !tbaa !162 ; 2 uses
-  %i.gh = fadd float %i.eo, %i.gg                 ; 5 uses
+  %i.gh = fadd float %i.eo, %i.gg                 ; 4 uses
   %i.gi = fdiv float %i.gg, %i.gh                 ; 2 uses
   %i.gj = fneg float %i.gi                        ; 2 uses
   br i1 %min.iters.check464, label %scalar.ph463.preheader, label %vector.ph465
@@ -281,7 +281,7 @@ scalar.ph463:                                     ; preds = %scalar.ph463.prehea
   %i.he = add nuw nsw i32 %.0195262, 1            ; 2 uses
   %i.hf = zext nneg i32 %i.he to i64
   %exitcond330.not = icmp eq i64 %indvars.iv325.a, %i.hf
-  br i1 %exitcond330.not, label %.loopexit252, label %.lr.ph, !llvm.loop !142
+  br i1 %exitcond330.not, label %.loopexit252.loopexit, label %.lr.ph, !llvm.loop !142
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %.loopexit
   %indvars.iv327 = phi i64 [ %indvars.iv325.a, %.lr.ph.preheader ], [ %indvars.iv.next328, %.loopexit ] ; 2 uses
@@ -290,7 +290,7 @@ scalar.ph463:                                     ; preds = %scalar.ph463.prehea
   %i.hg = getelementptr inbounds nuw [8 x i8], ptr %.0213298, i64 %indvars.iv.next328 ; 3 uses
   %i.hh = load float, ptr %i.hg, align 4, !tbaa !168
   %i.hi = fcmp olt float %i.gh, %i.hh
-  br i1 %i.hi, label %.loopexit252, label %bb.z
+  br i1 %i.hi, label %.loopexit252.loopexit, label %bb.z
 
 bb.z:                                             ; preds = %.lr.ph
   %i.hj = load <2 x i64>, ptr %i.hg, align 4, !tbaa !66
@@ -339,21 +339,24 @@ scalar.ph449:                                     ; preds = %scalar.ph449.prehea
   %exitcond324.not = icmp eq i64 %indvars.iv.next321, %i.at
   br i1 %exitcond324.not, label %.loopexit, label %scalar.ph449, !llvm.loop !144
 
-.loopexit252:                                     ; preds = %.loopexit, %.lr.ph, %.loopexit479, %bb.x, %bb.t
-  %.2211 = phi i1 [ %.0209266, %bb.t ], [ %.1210, %bb.x ], [ %.1210, %.loopexit479 ], [ %.1210, %.lr.ph ], [ %.1210, %.loopexit ] ; 3 uses
-  %.2208 = phi i8 [ 1, %bb.t ], [ 0, %bb.x ], [ 1, %.loopexit479 ], [ 1, %.lr.ph ], [ 1, %.loopexit ] ; 2 uses
-  %.1198 = phi float [ %i.eo, %bb.t ], [ %i.eo, %bb.x ], [ %i.gh, %.loopexit479 ], [ %i.gh, %.lr.ph ], [ %i.gh, %.loopexit ] ; 2 uses
-  %.2 = phi i32 [ 0, %bb.t ], [ 0, %bb.x ], [ 0, %.loopexit479 ], [ %i.gy, %.loopexit ], [ %.0195262, %.lr.ph ]
+.loopexit252.loopexit:                            ; preds = %.lr.ph, %.loopexit
+  %.2.ph = phi i32 [ %i.gy, %.loopexit ], [ %.0195262, %.lr.ph ]
+  %8 = sext i32 %.2.ph to i64
+  br label %.loopexit252
+
+.loopexit252:                                     ; preds = %.loopexit252.loopexit, %.loopexit479, %bb.x, %bb.t
+  %.2211 = phi i1 [ %.0209266, %bb.t ], [ %.1210, %bb.x ], [ %.1210, %.loopexit479 ], [ %.1210, %.loopexit252.loopexit ] ; 3 uses
+  %.2208 = phi i8 [ 1, %bb.t ], [ 0, %bb.x ], [ 1, %.loopexit479 ], [ 1, %.loopexit252.loopexit ] ; 2 uses
+  %.1198 = phi float [ %i.eo, %bb.t ], [ %i.eo, %bb.x ], [ %i.gh, %.loopexit479 ], [ %i.gh, %.loopexit252.loopexit ] ; 2 uses
+  %.2 = phi i64 [ 0, %bb.t ], [ 0, %bb.x ], [ 0, %.loopexit479 ], [ %8, %.loopexit252.loopexit ]
   %i.hu = load float, ptr %i.al, align 8, !tbaa !70 ; 2 uses
   %i.hv = fneg float %i.hu
   %i.hw = fcmp olt float %.1198, %i.hv            ; 2 uses
   %i.hx = sext i1 %i.hw to i32
   %.1204 = add nsw i32 %.0203268, %i.hx           ; 7 uses
   %.2199 = select i1 %i.hw, float 0.000000e+00, float %.1198 ; 2 uses
-  %8 = trunc nuw nsw i64 %indvars.iv325.a to i32
-  %9 = sub nsw i32 %8, %.2
-  %10 = sext i32 %9 to i64
-  %i.hy = getelementptr inbounds [8 x i8], ptr %.0213298, i64 %10
+  %9 = sub nsw i64 %indvars.iv325.a, %.2
+  %i.hy = getelementptr inbounds [8 x i8], ptr %.0213298, i64 %9
   store float %.2199, ptr %i.hy, align 4, !tbaa !168
   %i.hz = fadd float %.0202269, %.2199            ; 3 uses
   %indvars.iv.next326 = add nuw nsw i64 %indvars.iv325.a, 1 ; 2 uses

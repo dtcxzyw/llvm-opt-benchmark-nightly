@@ -157,7 +157,7 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit:         ; preds = %bb.d, %bb.e
   %i.ap = ashr i16 %i.an, 5
   %i.aq = sext i16 %i.ap to i32
   %i.ar = load i32, ptr %i.o, align 4
-  %i.as = select i1 %i.ao, i32 %i.ar, i32 %i.aq   ; 9 uses
+  %i.as = select i1 %i.ao, i32 %i.ar, i32 %i.aq   ; 10 uses
   %.not213 = icmp eq i32 %i.as, 0
   br i1 %.not213, label %_ZNK6icu_7813UnicodeString6charAtEi.exit163.thread, label %_ZNK6icu_7813UnicodeString6charAtEi.exit163
 
@@ -192,7 +192,7 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit163:      ; preds = %.critedge
 .lr.ph:                                           ; preds = %.preheader217
   %i.bl = getelementptr inbounds nuw i8, ptr %3, i64 10 ; 2 uses
   %i.bm = getelementptr inbounds nuw i8, ptr %3, i64 24 ; 2 uses
-  %wide.trip.count = zext nneg i32 %i.as to i64   ; 2 uses
+  %wide.trip.count = zext nneg i32 %i.as to i64
   br label %bb.f
 
 .thread200:                                       ; preds = %bb.k, %.preheader217
@@ -203,7 +203,6 @@ _ZNK6icu_7813UnicodeString6charAtEi.exit163:      ; preds = %.critedge
   br label %bb.t
 
 bb.f:                                             ; preds = %.lr.ph, %bb.k
-  %indvars.iv263 = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next264, %bb.k ] ; 2 uses
   %indvars.iv260 = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next261, %bb.k ] ; 4 uses
   %.0132234 = phi i64 [ 0, %.lr.ph ], [ %.2134, %bb.k ] ; 6 uses
   %i.bn = load i16, ptr %i.j, align 8             ; 3 uses
@@ -270,7 +269,6 @@ bb.k:                                             ; preds = %.thread, %.thread19
   %.2134 = phi i64 [ %i.ck, %.thread ], [ %.0132234, %.thread197 ] ; 2 uses
   %indvars.iv.next261 = add nuw nsw i64 %indvars.iv260, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next261, %wide.trip.count
-  %indvars.iv.next264 = add nuw nsw i64 %indvars.iv263, 1
   br i1 %exitcond.not, label %.thread200, label %bb.f, !llvm.loop !21
 
 bb.l:                                             ; preds = %bb.j, %bb.j
@@ -280,18 +278,22 @@ bb.l:                                             ; preds = %bb.j, %bb.j
   br i1 %i.cr, label %.preheader216, label %bb.t
 
 .preheader216:                                    ; preds = %bb.l
-  %.2139237 = add nuw nsw i32 %i.cq, 1            ; 2 uses
+  %.2139237 = add nuw nsw i32 %i.cq, 1            ; 3 uses
   %i.cs = icmp slt i32 %.2139237, %i.as
-  br i1 %i.cs, label %.lr.ph241.a, label %._crit_edge.thread
+  br i1 %i.cs, label %.lr.ph241, label %._crit_edge.thread
 
 ._crit_edge.thread:                               ; preds = %.preheader216
   %i.ct = getelementptr inbounds nuw i8, ptr %0, i64 8 ; 2 uses
   store i32 0, ptr %i.ct, align 8
   br label %bb.r
 
-.lr.ph241.a:                                      ; preds = %.preheader216, %bb.q
-  %indvars.iv268 = phi i64 [ %indvars.iv.next269, %bb.q ], [ %indvars.iv263, %.preheader216 ] ; 4 uses
-  %.3135238 = phi i64 [ %.5, %bb.q ], [ 0, %.preheader216 ] ; 6 uses
+.lr.ph241:                                        ; preds = %.preheader216
+  %6 = zext i32 %.2139237 to i64
+  br label %.lr.ph241.a
+
+.lr.ph241.a:                                      ; preds = %.lr.ph241, %bb.q
+  %indvars.iv268 = phi i64 [ %6, %.lr.ph241 ], [ %indvars.iv.next269, %bb.q ] ; 4 uses
+  %.3135238 = phi i64 [ 0, %.lr.ph241 ], [ %.5, %bb.q ] ; 6 uses
   %i.cu = load i16, ptr %i.j, align 8             ; 3 uses
   %i.cv = icmp slt i16 %i.cu, 0
   %i.cw = ashr i16 %i.cu, 5
@@ -353,8 +355,9 @@ bb.q:                                             ; preds = %.thread206, %.threa
   %.0.i.i167204 = phi i16 [ %i.dg, %.thread206 ], [ %.0.i.i167205209, %.thread207 ]
   %.5 = phi i64 [ %i.dr, %.thread206 ], [ %.3135238, %.thread207 ] ; 2 uses
   %indvars.iv.next269 = add nuw nsw i64 %indvars.iv268, 1 ; 2 uses
-  %exitcond272.not = icmp eq i64 %indvars.iv.next269, %wide.trip.count
-  br i1 %exitcond272.not, label %._crit_edge, label %.lr.ph241.a, !llvm.loop !22
+  %7 = trunc nuw i64 %indvars.iv.next269 to i32
+  %8 = icmp sgt i32 %i.as, %7
+  br i1 %8, label %.lr.ph241.a, label %._crit_edge, !llvm.loop !22
 
 ._crit_edge.split.loop.exit312:                   ; preds = %bb.p
   %i.dy = trunc nuw nsw i64 %indvars.iv268 to i32

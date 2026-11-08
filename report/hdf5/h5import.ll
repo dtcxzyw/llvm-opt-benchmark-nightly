@@ -205,7 +205,6 @@ bb.du:                                            ; preds = %bb.dt, %bb.ds
   br i1 %i.vs, label %.lr.ph.i82.i.i, label %.loopexit.i.i.i
 
 .lr.ph.i82.i.i:                                   ; preds = %bb.du, %bb.dw
-  %indvars.iv106.i.i.i = phi i64 [ %indvars.iv.next107.i.i.i, %bb.dw ], [ 1, %bb.du ] ; 2 uses
   %indvars.iv.i83.i.i = phi i64 [ %indvars.iv.next.i84.i.i, %bb.dw ], [ 0, %bb.du ] ; 3 uses
   %.05485.i.i.i = phi i64 [ %i.vu, %bb.dw ], [ %.0115.i, %bb.du ] ; 2 uses
   %i.vt = getelementptr inbounds nuw [255 x i8], ptr %i.vp, i64 %indvars.iv.i83.i.i ; 2 uses
@@ -216,15 +215,19 @@ bb.du:                                            ; preds = %bb.dt, %bb.ds
 bb.dv:                                            ; preds = %.lr.ph.i82.i.i
   %i.vw = trunc nuw nsw i64 %indvars.iv.i83.i.i to i32
   %i.vx = call i64 @H5Gcreate2(i64 noundef %.05485.i.i.i, ptr noundef nonnull %i.vt, i64 noundef 0, i64 noundef 0, i64 noundef 0) #20 ; 2 uses
-  %.15288.i.i.i = add nuw nsw i32 %i.vw, 1        ; 2 uses
+  %.15288.i.i.i = add nuw nsw i32 %i.vw, 1        ; 3 uses
   %i.vy = load i32, ptr %i.vq, align 8, !tbaa !26
   %i.vz = add nsw i32 %i.vy, -1
   %i.wa = icmp slt i32 %.15288.i.i.i, %i.vz
-  br i1 %i.wa, label %.lr.ph91.i.i.i, label %.loopexit.i.i.i
+  br i1 %i.wa, label %.lr.ph91.preheader.i.i.i, label %.loopexit.i.i.i
 
-.lr.ph91.i.i.i:                                   ; preds = %bb.dv, %.lr.ph91.i.i.i
-  %indvars.iv109.i.i.i = phi i64 [ %indvars.iv.next110.i.i.i, %.lr.ph91.i.i.i ], [ %indvars.iv106.i.i.i, %bb.dv ] ; 2 uses
-  %.05989.i.i.i = phi i64 [ %i.wc, %.lr.ph91.i.i.i ], [ %i.vx, %bb.dv ]
+.lr.ph91.preheader.i.i.i:                         ; preds = %bb.dv
+  %8 = zext nneg i32 %.15288.i.i.i to i64
+  br label %.lr.ph91.i.i.i
+
+.lr.ph91.i.i.i:                                   ; preds = %.lr.ph91.i.i.i, %.lr.ph91.preheader.i.i.i
+  %indvars.iv109.i.i.i = phi i64 [ %8, %.lr.ph91.preheader.i.i.i ], [ %indvars.iv.next110.i.i.i, %.lr.ph91.i.i.i ] ; 2 uses
+  %.05989.i.i.i = phi i64 [ %i.vx, %.lr.ph91.preheader.i.i.i ], [ %i.wc, %.lr.ph91.i.i.i ]
   %i.wb = getelementptr inbounds nuw [255 x i8], ptr %i.vp, i64 %indvars.iv109.i.i.i
   %i.wc = call i64 @H5Gcreate2(i64 noundef %.05989.i.i.i, ptr noundef nonnull %i.wb, i64 noundef 0, i64 noundef 0, i64 noundef 0) #20 ; 2 uses
   %indvars.iv.next110.i.i.i = add nuw nsw i64 %indvars.iv109.i.i.i, 1 ; 3 uses
@@ -240,7 +243,6 @@ bb.dw:                                            ; preds = %.lr.ph.i82.i.i
   %i.wi = add nsw i32 %i.wh, -1
   %i.wj = sext i32 %i.wi to i64
   %i.wk = icmp slt i64 %indvars.iv.next.i84.i.i, %i.wj
-  %indvars.iv.next107.i.i.i = add nuw nsw i64 %indvars.iv106.i.i.i, 1
   br i1 %i.wk, label %.lr.ph.i82.i.i, label %.loopexit.loopexit97.i.i.i, !llvm.loop !71
 
 .loopexit.loopexit.i.i.i:                         ; preds = %.lr.ph91.i.i.i
@@ -286,8 +288,8 @@ bb.ea:                                            ; preds = %bb.dz
   br i1 %i.wz, label %.loopexit162.i, label %bb.eb
 
 bb.eb:                                            ; preds = %bb.ea
-  %8 = sext i32 %.253.i.i.i to i64
-  %i.xa = getelementptr inbounds [255 x i8], ptr %i.vp, i64 %8
+  %9 = zext nneg i32 %.253.i.i.i to i64
+  %i.xa = getelementptr inbounds nuw [255 x i8], ptr %i.vp, i64 %9
   %i.xb = call i64 @H5Dcreate2(i64 noundef %.155.i.i.i, ptr noundef nonnull %i.xa, i64 noundef %i.vf, i64 noundef %i.ww, i64 noundef 0, i64 noundef 0, i64 noundef 0) #20 ; 6 uses
   %i.xc = icmp slt i64 %i.xb, 0
   br i1 %i.xc, label %.loopexit162.i, label %.preheader.i77.i.i
@@ -496,7 +498,6 @@ bb.fb:                                            ; preds = %bb.fa, %bb.ez
   br i1 %i.zk, label %.lr.ph.i94.i.i, label %.loopexit.i87.i.i
 
 .lr.ph.i94.i.i:                                   ; preds = %bb.fb, %bb.fd
-  %indvars.iv105.i.i.i = phi i64 [ %indvars.iv.next106.i.i.i, %bb.fd ], [ 1, %bb.fb ] ; 2 uses
   %indvars.iv.i95.i.i = phi i64 [ %indvars.iv.next.i96.i.i, %bb.fd ], [ 0, %bb.fb ] ; 3 uses
   %.06083.i.i.i = phi i64 [ %i.zm, %bb.fd ], [ %.0115.i, %bb.fb ] ; 2 uses
   %i.zl = getelementptr inbounds nuw [255 x i8], ptr %i.zh, i64 %indvars.iv.i95.i.i ; 2 uses
@@ -507,15 +508,19 @@ bb.fb:                                            ; preds = %bb.fa, %bb.ez
 bb.fc:                                            ; preds = %.lr.ph.i94.i.i
   %i.zo = trunc nuw nsw i64 %indvars.iv.i95.i.i to i32
   %i.zp = call i64 @H5Gcreate2(i64 noundef %.06083.i.i.i, ptr noundef nonnull %i.zl, i64 noundef 0, i64 noundef 0, i64 noundef 0) #20 ; 2 uses
-  %.15586.i.i.i = add nuw nsw i32 %i.zo, 1        ; 2 uses
+  %.15586.i.i.i = add nuw nsw i32 %i.zo, 1        ; 3 uses
   %i.zq = load i32, ptr %i.zi, align 8, !tbaa !26
   %i.zr = add nsw i32 %i.zq, -1
   %i.zs = icmp slt i32 %.15586.i.i.i, %i.zr
-  br i1 %i.zs, label %.lr.ph89.i.i.i, label %.loopexit.i87.i.i
+  br i1 %i.zs, label %.lr.ph89.preheader.i.i.i, label %.loopexit.i87.i.i
 
-.lr.ph89.i.i.i:                                   ; preds = %bb.fc, %.lr.ph89.i.i.i
-  %indvars.iv108.i.i.i = phi i64 [ %indvars.iv.next109.i.i.i, %.lr.ph89.i.i.i ], [ %indvars.iv105.i.i.i, %bb.fc ] ; 2 uses
-  %.06287.i.i.i = phi i64 [ %i.zu, %.lr.ph89.i.i.i ], [ %i.zp, %bb.fc ]
+.lr.ph89.preheader.i.i.i:                         ; preds = %bb.fc
+  %10 = zext nneg i32 %.15586.i.i.i to i64
+  br label %.lr.ph89.i.i.i
+
+.lr.ph89.i.i.i:                                   ; preds = %.lr.ph89.i.i.i, %.lr.ph89.preheader.i.i.i
+  %indvars.iv108.i.i.i = phi i64 [ %10, %.lr.ph89.preheader.i.i.i ], [ %indvars.iv.next109.i.i.i, %.lr.ph89.i.i.i ] ; 2 uses
+  %.06287.i.i.i = phi i64 [ %i.zp, %.lr.ph89.preheader.i.i.i ], [ %i.zu, %.lr.ph89.i.i.i ]
   %i.zt = getelementptr inbounds nuw [255 x i8], ptr %i.zh, i64 %indvars.iv108.i.i.i
   %i.zu = call i64 @H5Gcreate2(i64 noundef %.06287.i.i.i, ptr noundef nonnull %i.zt, i64 noundef 0, i64 noundef 0, i64 noundef 0) #20 ; 2 uses
   %indvars.iv.next109.i.i.i = add nuw nsw i64 %indvars.iv108.i.i.i, 1 ; 3 uses
@@ -531,7 +536,6 @@ bb.fd:                                            ; preds = %.lr.ph.i94.i.i
   %i.aaa = add nsw i32 %i.zz, -1
   %i.aab = sext i32 %i.aaa to i64
   %i.aac = icmp slt i64 %indvars.iv.next.i96.i.i, %i.aab
-  %indvars.iv.next106.i.i.i = add nuw nsw i64 %indvars.iv105.i.i.i, 1
   br i1 %i.aac, label %.lr.ph.i94.i.i, label %.loopexit.loopexit96.i.i.i, !llvm.loop !75
 
 .loopexit.loopexit.i97.i.i:                       ; preds = %.lr.ph89.i.i.i
@@ -573,8 +577,8 @@ bb.fh:                                            ; preds = %bb.fg
   br i1 %i.aan, label %.loopexit163.i, label %bb.fi
 
 bb.fi:                                            ; preds = %bb.fh
-  %9 = sext i32 %.256.i.i.i to i64
-  %i.aao = getelementptr inbounds [255 x i8], ptr %i.zh, i64 %9
+  %11 = zext nneg i32 %.256.i.i.i to i64
+  %i.aao = getelementptr inbounds nuw [255 x i8], ptr %i.zh, i64 %11
   %i.aap = call i64 @H5Dcreate2(i64 noundef %.161.i.i.i, ptr noundef nonnull %i.aao, i64 noundef %i.yx, i64 noundef %i.aak, i64 noundef 0, i64 noundef 0, i64 noundef 0) #20 ; 4 uses
   %i.aaq = icmp slt i64 %i.aap, 0
   br i1 %i.aaq, label %.loopexit163.i, label %.preheader.i89.i.i
@@ -977,7 +981,6 @@ bb.hi:                                            ; preds = %bb.hh, %bb.hg
   br i1 %i.akc, label %.lr.ph342.i, label %.loopexit.i
 
 .lr.ph342.i:                                      ; preds = %bb.hi, %bb.hk
-  %indvars.iv563.i = phi i64 [ %indvars.iv.next564.i, %bb.hk ], [ 1, %bb.hi ] ; 2 uses
   %indvars.iv560.i = phi i64 [ %indvars.iv.next561.i, %bb.hk ], [ 0, %bb.hi ] ; 3 uses
   %.0112340.i = phi i64 [ %i.ake, %bb.hk ], [ %.0115.i, %bb.hi ] ; 2 uses
   %i.akd = getelementptr inbounds nuw [255 x i8], ptr %i.ajz, i64 %indvars.iv560.i ; 2 uses
@@ -988,15 +991,19 @@ bb.hi:                                            ; preds = %bb.hh, %bb.hg
 bb.hj:                                            ; preds = %.lr.ph342.i
   %i.akg = trunc nuw nsw i64 %indvars.iv560.i to i32
   %i.akh = call i64 @H5Gcreate2(i64 noundef %.0112340.i, ptr noundef nonnull %i.akd, i64 noundef 0, i64 noundef 0, i64 noundef 0) #20 ; 2 uses
-  %.2345.i = add nuw nsw i32 %i.akg, 1            ; 2 uses
+  %.2345.i = add nuw nsw i32 %i.akg, 1            ; 3 uses
   %i.aki = load i32, ptr %i.aka, align 8, !tbaa !26
   %i.akj = add nsw i32 %i.aki, -1
   %i.akk = icmp slt i32 %.2345.i, %i.akj
-  br i1 %i.akk, label %.lr.ph349.i, label %.loopexit.i
+  br i1 %i.akk, label %.lr.ph347.preheader.i, label %.loopexit.i
 
-.lr.ph349.i:                                      ; preds = %bb.hj, %.lr.ph349.i
-  %indvars.iv566.i = phi i64 [ %indvars.iv.next567.i, %.lr.ph349.i ], [ %indvars.iv563.i, %bb.hj ] ; 2 uses
-  %.0114346.i = phi i64 [ %i.akm, %.lr.ph349.i ], [ %i.akh, %bb.hj ]
+.lr.ph347.preheader.i:                            ; preds = %bb.hj
+  %12 = zext nneg i32 %.2345.i to i64
+  br label %.lr.ph349.i
+
+.lr.ph349.i:                                      ; preds = %.lr.ph349.i, %.lr.ph347.preheader.i
+  %indvars.iv566.i = phi i64 [ %12, %.lr.ph347.preheader.i ], [ %indvars.iv.next567.i, %.lr.ph349.i ] ; 2 uses
+  %.0114346.i = phi i64 [ %i.akh, %.lr.ph347.preheader.i ], [ %i.akm, %.lr.ph349.i ]
   %i.akl = getelementptr inbounds nuw [255 x i8], ptr %i.ajz, i64 %indvars.iv566.i
   %i.akm = call i64 @H5Gcreate2(i64 noundef %.0114346.i, ptr noundef nonnull %i.akl, i64 noundef 0, i64 noundef 0, i64 noundef 0) #20 ; 2 uses
   %indvars.iv.next567.i = add nuw nsw i64 %indvars.iv566.i, 1 ; 3 uses
@@ -1012,7 +1019,6 @@ bb.hk:                                            ; preds = %.lr.ph342.i
   %i.aks = add nsw i32 %i.akr, -1
   %i.akt = sext i32 %i.aks to i64
   %i.aku = icmp slt i64 %indvars.iv.next561.i, %i.akt
-  %indvars.iv.next564.i = add nuw nsw i64 %indvars.iv563.i, 1
   br i1 %i.aku, label %.lr.ph342.i, label %.loopexit.loopexit358.i, !llvm.loop !92
 
 .loopexit.loopexit.i:                             ; preds = %.lr.ph349.i
@@ -1153,8 +1159,8 @@ bb.ib:                                            ; preds = %bb.hz
   br label %bb.ic
 
 bb.ic:                                            ; preds = %bb.ib, %bb.ia
-  %10 = sext i32 %.3.i to i64
-  %i.ani = getelementptr inbounds [255 x i8], ptr %i.ajz, i64 %10
+  %13 = zext nneg i32 %.3.i to i64
+  %i.ani = getelementptr inbounds nuw [255 x i8], ptr %i.ajz, i64 %13
   %i.anj = call i64 @H5Dcreate2(i64 noundef %.1113.i, ptr noundef nonnull %i.ani, i64 noundef %i.ald, i64 noundef %i.anb, i64 noundef 0, i64 noundef %i.all, i64 noundef 0) #20 ; 4 uses
   %i.ank = icmp sgt i64 %i.anj, -1
   br i1 %i.ank, label %bb.id, label %bb.ig

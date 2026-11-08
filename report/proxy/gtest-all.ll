@@ -205,7 +205,6 @@ _ZNK7testing10TestResult6FailedEv.exit:           ; preds = %_ZNK7testing10TestR
   br label %bb.ab
 
 bb.ab:                                            ; preds = %.lr.ph, %_ZNK7testing10TestResult6FailedEv.exit41.thread
-  %indvars.iv76 = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next77, %_ZNK7testing10TestResult6FailedEv.exit41.thread ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %_ZNK7testing10TestResult6FailedEv.exit41.thread ] ; 6 uses
   %i.ek = phi ptr [ %i.eb, %.lr.ph ], [ %.pre, %_ZNK7testing10TestResult6FailedEv.exit41.thread ]
   %i.el = load ptr, ptr %i.ej, align 8, !tbaa !479
@@ -296,7 +295,7 @@ _ZNK7testing10TestResult17GetTestPartResultEi.exit.i37: ; preds = %.lr.ph.i34
 
 _ZNK7testing10TestResult6FailedEv.exit41.preheader: ; preds = %_ZNK7testing10TestResult17GetTestPartResultEi.exit.i37
   %i.ga = trunc nuw nsw i64 %indvars.iv to i32
-  %.068 = add nuw nsw i32 %i.ga, 1
+  %.068 = add nuw nsw i32 %i.ga, 1                ; 2 uses
   %i.gb = load ptr, ptr %i.w, align 8, !tbaa !403
   %i.gc = ptrtoint ptr %i.gb to i64
   %i.gd = ptrtoint ptr %.pre to i64
@@ -304,11 +303,15 @@ _ZNK7testing10TestResult6FailedEv.exit41.preheader: ; preds = %_ZNK7testing10Tes
   %i.gf = lshr exact i64 %i.ge, 3
   %i.gg = trunc i64 %i.gf to i32
   %i.gh = icmp slt i32 %.068, %i.gg
-  br i1 %i.gh, label %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i43, label %.loopexit
+  br i1 %i.gh, label %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i43.preheader, label %.loopexit
 
-_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i43: ; preds = %_ZNK7testing10TestResult6FailedEv.exit41.preheader, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i43
-  %indvars.iv80 = phi i64 [ %indvars.iv.next81, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i43 ], [ %indvars.iv76, %_ZNK7testing10TestResult6FailedEv.exit41.preheader ] ; 3 uses
-  %i.gi = phi ptr [ %i.gx, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i43 ], [ %.pre, %_ZNK7testing10TestResult6FailedEv.exit41.preheader ]
+_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i43.preheader: ; preds = %_ZNK7testing10TestResult6FailedEv.exit41.preheader
+  %1 = zext nneg i32 %.068 to i64
+  br label %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i43
+
+_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i43: ; preds = %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i43.preheader, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i43
+  %indvars.iv80 = phi i64 [ %1, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i43.preheader ], [ %indvars.iv.next81, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i43 ] ; 3 uses
+  %i.gi = phi ptr [ %.pre, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i43.preheader ], [ %i.gx, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i43 ]
   %i.gj = load ptr, ptr %i.ej, align 8, !tbaa !479
   %i.gk = load ptr, ptr %i.ei, align 8, !tbaa !476 ; 2 uses
   %i.gl = ptrtoint ptr %i.gj to i64
@@ -347,7 +350,6 @@ _ZNK7testing10TestResult6FailedEv.exit41.thread:  ; preds = %bb.ad, %_ZN7testing
   %i.hj = shl i64 %i.hi, 29
   %i.hk = ashr i64 %i.hj, 32
   %i.hl = icmp slt i64 %indvars.iv.next, %i.hk
-  %indvars.iv.next77 = add nuw nsw i64 %indvars.iv76, 1
   br i1 %i.hl, label %bb.ab, label %.loopexit, !llvm.loop !1258
 
 .loopexit:                                        ; preds = %_ZNK7testing10TestResult6FailedEv.exit41.thread, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i43, %_ZNK7testing10TestResult6FailedEv.exit, %_ZNK7testing10TestResult6FailedEv.exit41.preheader
@@ -750,7 +752,6 @@ bb.aw:                                            ; preds = %bb.af
   br i1 %i.lz, label %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i, label %.loopexit
 
 _ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i: ; preds = %.preheader203, %bb.ax
-  %indvars.iv239 = phi i64 [ %indvars.iv.next240, %bb.ax ], [ 1, %.preheader203 ] ; 2 uses
   %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ax ], [ 0, %.preheader203 ] ; 6 uses
   %i.ma = phi ptr [ %i.om, %bb.ax ], [ %i.lt, %.preheader203 ]
   %i.mb = load ptr, ptr %i.gr, align 8, !tbaa !479
@@ -797,7 +798,7 @@ _ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i144: ;
 
 .preheader201:                                    ; preds = %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i144
   %i.nf = trunc nuw nsw i64 %indvars.iv to i32
-  %.059219 = add nuw nsw i32 %i.nf, 1
+  %.059219 = add nuw nsw i32 %i.nf, 1             ; 2 uses
   %i.ng = load ptr, ptr %i.j, align 8, !tbaa !392
   %i.nh = load ptr, ptr %i.i, align 8, !tbaa !393 ; 2 uses
   %i.ni = ptrtoint ptr %i.ng to i64
@@ -806,11 +807,15 @@ _ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i144: ;
   %i.nl = lshr exact i64 %i.nk, 3
   %i.nm = trunc i64 %i.nl to i32
   %i.nn = icmp slt i32 %.059219, %i.nm
-  br i1 %i.nn, label %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i147, label %.loopexit
+  br i1 %i.nn, label %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i147.preheader, label %.loopexit
 
-_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i147: ; preds = %.preheader201, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i147
-  %indvars.iv242.a = phi i64 [ %indvars.iv.next243.a, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i147 ], [ %indvars.iv239, %.preheader201 ] ; 3 uses
-  %i.no = phi ptr [ %i.od, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i147 ], [ %i.nh, %.preheader201 ]
+_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i147.preheader: ; preds = %.preheader201
+  %9 = zext nneg i32 %.059219 to i64
+  br label %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i147
+
+_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i147: ; preds = %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i147.preheader, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i147
+  %indvars.iv242.a = phi i64 [ %9, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i147.preheader ], [ %indvars.iv.next243.a, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i147 ] ; 3 uses
+  %i.no = phi ptr [ %i.nh, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i147.preheader ], [ %i.od, %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i147 ]
   %i.np = load ptr, ptr %i.gr, align 8, !tbaa !479
   %i.nq = load ptr, ptr %i.go, align 8, !tbaa !476 ; 2 uses
   %i.nr = ptrtoint ptr %i.np to i64
@@ -850,7 +855,6 @@ bb.ax:                                            ; preds = %_ZN7testing8interna
   %i.oq = shl i64 %i.op, 29
   %i.or = ashr i64 %i.oq, 32
   %i.os = icmp slt i64 %indvars.iv.next, %i.or
-  %indvars.iv.next240 = add nuw nsw i64 %indvars.iv239, 1
   br i1 %i.os, label %_ZN7testing8internal12GetElementOrIiEET_RKSt6vectorIS2_SaIS2_EEiS2_.exit.i, label %.loopexit, !llvm.loop !1647
 
 bb.ay:                                            ; preds = %bb.aw

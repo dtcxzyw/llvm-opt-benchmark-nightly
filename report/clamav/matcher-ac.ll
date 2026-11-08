@@ -205,7 +205,7 @@ bb.ct:                                            ; preds = %bb.cs
 
 bb.cu:                                            ; preds = %bb.cs, %.loopexit
   %i.jv = getelementptr inbounds nuw i8, ptr %0, i64 313
-  %i.jw = load i8, ptr %i.jv, align 1, !tbaa !29  ; 6 uses
+  %i.jw = load i8, ptr %i.jv, align 1, !tbaa !29  ; 5 uses
   %.not821 = icmp eq i8 %i.jw, 0
   br i1 %.not821, label %.critedge..critedge.thread_crit_edge, label %.lr.ph760
 
@@ -263,33 +263,34 @@ bb.cx:                                            ; preds = %bb.cw
 .preheader.lr.ph:                                 ; preds = %.critedge.thread
   %i.kh = sub i16 %i.kg, %i.kf
   %i.ki = zext i8 %i.jw to i32
-  %i.kj = zext i16 %i.kd to i32                   ; 2 uses
-  %i.kk = zext i16 %i.kd to i64
-  %wide.trip.count868 = zext i16 %i.kh to i64
-  %14 = icmp ne i8 %i.jw, 0
+  %i.kj = zext i16 %i.kd to i32
+  %i.kk = zext i16 %i.kd to i64                   ; 2 uses
+  %wide.trip.count868 = zext i16 %i.kh to i64     ; 2 uses
   br label %.preheader
 
-.preheader:                                       ; preds = %.preheader.lr.ph, %bb.dh
-  %indvars.iv866 = phi i32 [ 0, %.preheader.lr.ph ], [ %indvars.iv.next867, %bb.dh ] ; 6 uses
-  %indvars.iv862 = phi i64 [ 0, %.preheader.lr.ph ], [ %indvars.iv.next863, %bb.dh ] ; 2 uses
-  %.0474791 = phi i8 [ 0, %.preheader.lr.ph ], [ %.1475.lcssa, %bb.dh ] ; 2 uses
-  %.0478790 = phi i8 [ 0, %.preheader.lr.ph ], [ %.3481, %bb.dh ] ; 2 uses
-  %.0486789 = phi i16 [ 0, %.preheader.lr.ph ], [ %.1487.lcssa, %bb.dh ] ; 2 uses
-  %.0490788 = phi i16 [ 0, %.preheader.lr.ph ], [ %.3493, %bb.dh ] ; 2 uses
-  %i.kl = add nuw nsw i32 %indvars.iv866, %i.ki
-  %i.km = icmp samesign ult i32 %indvars.iv866, %i.kj
-  %or.cond686766 = and i1 %i.km, %14
+.preheader:                                       ; preds = %.preheader.backedge, %.preheader.lr.ph
+  %indvars.iv864 = phi i64 [ 0, %.preheader.lr.ph ], [ %indvars.iv864.be, %.preheader.backedge ] ; 6 uses
+  %14 = phi i32 [ 0, %.preheader.lr.ph ], [ %.be, %.preheader.backedge ] ; 2 uses
+  %.0474791 = phi i8 [ 0, %.preheader.lr.ph ], [ %.1475.lcssa, %.preheader.backedge ] ; 2 uses
+  %.0478790 = phi i8 [ 0, %.preheader.lr.ph ], [ %.3481, %.preheader.backedge ] ; 2 uses
+  %.0486789 = phi i16 [ 0, %.preheader.lr.ph ], [ %.1487.lcssa, %.preheader.backedge ] ; 2 uses
+  %.0490788 = phi i16 [ 0, %.preheader.lr.ph ], [ %.3493, %.preheader.backedge ] ; 2 uses
+  %i.kl = add nuw nsw i32 %14, %i.ki              ; 2 uses
+  %15 = trunc nuw i64 %indvars.iv864 to i32       ; 2 uses
+  %16 = icmp samesign ugt i32 %i.kl, %15
+  %i.km = icmp samesign ult i64 %indvars.iv864, %i.kk
+  %or.cond686766 = and i1 %i.km, %16
   br i1 %or.cond686766, label %.lr.ph772, label %.critedge12
 
 .lr.ph772:                                        ; preds = %.preheader
   %i.kn = load ptr, ptr %i.k, align 8, !tbaa !34  ; 3 uses
-  %i.ko = trunc nuw i32 %indvars.iv866 to i16
-  %invariant.op = sub i32 1, %indvars.iv866
+  %i.ko = trunc nuw i64 %indvars.iv864 to i16
+  %invariant.op = sub i32 1, %14
   br label %bb.cy
 
 bb.cy:                                            ; preds = %.lr.ph772, %bb.de
-  %indvars.iv864.a = phi i64 [ %indvars.iv862, %.lr.ph772 ], [ %indvars.iv.next865.a, %bb.de ] ; 2 uses
-  %i.kp = phi i32 [ %indvars.iv866, %.lr.ph772 ], [ %i.le, %bb.de ]
+  %indvars.iv864.a = phi i64 [ %indvars.iv864, %.lr.ph772 ], [ %indvars.iv.next865.a, %bb.de ] ; 2 uses
+  %i.kp = phi i32 [ %15, %.lr.ph772 ], [ %i.le, %bb.de ]
   %.1475771 = phi i8 [ %.0474791, %.lr.ph772 ], [ %.2476, %bb.de ] ; 6 uses
   %.1479770 = phi i8 [ %.0478790, %.lr.ph772 ], [ %spec.select631, %bb.de ] ; 2 uses
   %.1487769 = phi i16 [ %.0486789, %.lr.ph772 ], [ %.2488, %bb.de ] ; 5 uses
@@ -367,14 +368,21 @@ bb.df:                                            ; preds = %.critedge12
 bb.dg:                                            ; preds = %bb.df
   %i.ll = getelementptr inbounds nuw i8, ptr %i.lj, i64 2
   %i.lm = load i16, ptr %i.ll, align 2, !tbaa !30
-  %.not615.a = icmp eq i16 %i.lm, 0
-  br i1 %.not615.a, label %bb.dh, label %._crit_edge792
+  %.not615 = icmp ne i16 %i.lm, 0
+  %indvars.iv.next865 = add nuw nsw i64 %indvars.iv864, 1 ; 2 uses
+  %.not615.a = icmp eq i64 %indvars.iv.next865, %wide.trip.count868
+  %or.cond1004 = select i1 %.not615, i1 true, i1 %.not615.a
+  br i1 %or.cond1004, label %._crit_edge792, label %.preheader.backedge
 
-bb.dh:                                            ; preds = %.critedge12, %bb.dg
-  %indvars.iv.next867 = add nuw nsw i32 %indvars.iv866, 1
-  %indvars.iv.next863 = add nuw nsw i64 %indvars.iv862, 1 ; 2 uses
+bb.dh:                                            ; preds = %.critedge12
+  %indvars.iv.next863 = add nuw nsw i64 %indvars.iv864, 1 ; 2 uses
   %exitcond869.not = icmp eq i64 %indvars.iv.next863, %wide.trip.count868
-  br i1 %exitcond869.not, label %._crit_edge792, label %.preheader
+  br i1 %exitcond869.not, label %._crit_edge792, label %.preheader.backedge
+
+.preheader.backedge:                              ; preds = %bb.dh, %bb.dg
+  %indvars.iv864.be = phi i64 [ %indvars.iv.next863, %bb.dh ], [ %indvars.iv.next865, %bb.dg ] ; 2 uses
+  %.be = trunc i64 %indvars.iv864.be to i32
+  br label %.preheader
 
 ._crit_edge792:                                   ; preds = %bb.dh, %bb.dg, %bb.df
   %.not616 = icmp eq i8 %.1475.lcssa, 0

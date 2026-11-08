@@ -202,10 +202,9 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %bb.ap, %bb.a
-  %indvars.iv = phi i64 [ %indvars.iv.next, %bb.ap ], [ 0, %bb.a ] ; 3 uses
-  %.087 = phi ptr [ %i.cx, %bb.ap ], [ %0, %bb.a ] ; 4 uses
-  %.085 = phi ptr [ %i.a, %bb.ap ], [ null, %bb.a ]
-  %.083 = phi i32 [ %i.c, %bb.ap ], [ 0, %bb.a ]
+  %.087 = phi ptr [ %0, %bb.a ], [ %i.cx, %bb.ap ] ; 4 uses
+  %.085 = phi ptr [ null, %bb.a ], [ %i.a, %bb.ap ]
+  %.083 = phi i32 [ 0, %bb.a ], [ %i.c, %bb.ap ]  ; 3 uses
   %i.a = tail call ptr @bench_malloc(i64 noundef 24) #7 ; 26 uses
   %i.b = getelementptr inbounds nuw i8, ptr %i.a, i64 16
   store ptr %.085, ptr %i.b, align 8, !tbaa !49
@@ -554,23 +553,27 @@ bb.ao:                                            ; preds = %bb.ad, %bb.af, %bb.
 
 bb.ap:                                            ; preds = %bb.ao, %bb.ao
   %i.cx = getelementptr inbounds nuw i8, ptr %.2, i64 1
-  %indvars.iv.next = add nuw i64 %indvars.iv, 1
   br label %bb.b
 
 bb.aq:                                            ; preds = %bb.ao
   %.not = icmp eq ptr %2, null
-  br i1 %.not, label %.loopexit, label %bb.ar
+  br i1 %.not, label %..loopexit_crit_edge, label %bb.ar
+
+..loopexit_crit_edge:                             ; preds = %bb.aq
+  %.pre139 = zext nneg i32 %.083 to i64
+  br label %.loopexit
 
 bb.ar:                                            ; preds = %bb.aq
   %i.cy = zext nneg i32 %i.c to i64
   %i.cz = shl nuw nsw i64 %i.cy, 2
   %i.da = tail call ptr @bench_malloc(i64 noundef %i.cz) #7 ; 2 uses
   store ptr %i.da, ptr %2, align 8, !tbaa !18
+  %3 = zext nneg i32 %.083 to i64                 ; 2 uses
   br label %bb.as
 
 bb.as:                                            ; preds = %bb.ar, %bb.au
   %i.db = phi ptr [ %i.da, %bb.ar ], [ %i.dc, %bb.au ]
-  %indvars.iv134 = phi i64 [ %indvars.iv, %bb.ar ], [ %indvars.iv.next135, %bb.au ] ; 3 uses
+  %indvars.iv134 = phi i64 [ %3, %bb.ar ], [ %indvars.iv.next135, %bb.au ] ; 3 uses
   %.084126 = phi ptr [ %i.a, %bb.ar ], [ %i.dh, %bb.au ] ; 3 uses
   %.not96 = icmp eq ptr %.084126, null
   br i1 %.not96, label %bb.at, label %bb.au
@@ -592,13 +595,14 @@ bb.au:                                            ; preds = %bb.at, %bb.as
   %i.di = icmp sgt i64 %indvars.iv134, 0
   br i1 %i.di, label %bb.as, label %.loopexit, !llvm.loop !45
 
-.loopexit:                                        ; preds = %bb.au, %bb.aq
+.loopexit:                                        ; preds = %bb.au, %..loopexit_crit_edge
+  %.pre-phi = phi i64 [ %.pre139, %..loopexit_crit_edge ], [ %3, %bb.au ]
   %i.dj = tail call ptr @mktensor(i32 noundef %i.c) #7 ; 2 uses
   %i.dk = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
   br label %bb.av
 
 bb.av:                                            ; preds = %.loopexit, %bb.ax
-  %indvars.iv138 = phi i64 [ %indvars.iv, %.loopexit ], [ %indvars.iv.next139, %bb.ax ] ; 3 uses
+  %indvars.iv138 = phi i64 [ %.pre-phi, %.loopexit ], [ %indvars.iv.next139, %bb.ax ] ; 3 uses
   %.186128 = phi ptr [ %i.a, %.loopexit ], [ %i.do, %bb.ax ] ; 5 uses
   %i.dl = load ptr, ptr %i.dk, align 8, !tbaa !20
   %i.dm = getelementptr inbounds nuw [12 x i8], ptr %i.dl, i64 %indvars.iv138 ; 2 uses

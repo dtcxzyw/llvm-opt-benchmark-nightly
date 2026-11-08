@@ -205,13 +205,14 @@ bb.c:                                             ; preds = %.preheader, %bb.c
   br i1 %.not21.not, label %bb.c, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %indvars.iv.next = add i64 %indvars.iv.a, %i.r  ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv.a, %i.r ; 3 uses
+  %indvars = trunc nsw i64 %indvars.iv.next to i32
   store i32 %indvars, ptr %i.a, align 4, !tbaa !138
   %i.ad = add nsw i32 %i.p, %i.s
   %i.ae = call i32 @llvm.smin.i32(i32 %i.ad, i32 %i.f) ; 3 uses
   store i32 %i.ae, ptr %i.b, align 4, !tbaa !138
-  %.not = icmp slt i32 %i.ae, %indvars
+  %8 = sext i32 %i.ae to i64
+  %.not = icmp sgt i64 %indvars.iv.next, %8
   br i1 %.not, label %._crit_edge, label %.preheader
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.b
@@ -614,13 +615,14 @@ bb.c:                                             ; preds = %.preheader, %bb.c
   br i1 %.not17.not, label %bb.c, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %indvars.iv.next = add i64 %indvars.iv.a, %i.p  ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv.a, %i.p ; 3 uses
+  %indvars = trunc nsw i64 %indvars.iv.next to i32
   store i32 %indvars, ptr %i.a, align 4, !tbaa !138
   %i.y = add nsw i32 %i.n, %i.q
   %i.z = call i32 @llvm.smin.i32(i32 %i.y, i32 %i.f) ; 3 uses
   store i32 %i.z, ptr %i.b, align 4, !tbaa !138
-  %.not = icmp slt i32 %i.z, %indvars
+  %6 = sext i32 %i.z to i64
+  %.not = icmp sgt i64 %indvars.iv.next, %6
   br i1 %.not, label %._crit_edge, label %.preheader
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.b
@@ -1023,13 +1025,14 @@ bb.c:                                             ; preds = %.preheader, %bb.c
   br i1 %.not17.not, label %bb.c, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %indvars.iv.next = add i64 %indvars.iv.a, %i.p  ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv.a, %i.p ; 3 uses
+  %indvars = trunc nsw i64 %indvars.iv.next to i32
   store i32 %indvars, ptr %i.a, align 4, !tbaa !138
   %i.y = add nsw i32 %i.n, %i.q
   %i.z = call i32 @llvm.smin.i32(i32 %i.y, i32 %i.f) ; 3 uses
   store i32 %i.z, ptr %i.b, align 4, !tbaa !138
-  %.not = icmp slt i32 %i.z, %indvars
+  %6 = sext i32 %i.z to i64
+  %.not = icmp sgt i64 %indvars.iv.next, %6
   br i1 %.not, label %._crit_edge, label %.preheader
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.b
@@ -1432,13 +1435,14 @@ bb.c:                                             ; preds = %.preheader, %bb.c
   br i1 %.not17.not, label %bb.c, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %indvars.iv.next = add i64 %indvars.iv.a, %i.p  ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv.a, %i.p ; 3 uses
+  %indvars = trunc nsw i64 %indvars.iv.next to i32
   store i32 %indvars, ptr %i.a, align 4, !tbaa !138
   %i.y = add nsw i32 %i.n, %i.q
   %i.z = call i32 @llvm.smin.i32(i32 %i.y, i32 %i.f) ; 3 uses
   store i32 %i.z, ptr %i.b, align 4, !tbaa !138
-  %.not = icmp slt i32 %i.z, %indvars
+  %6 = sext i32 %i.z to i64
+  %.not = icmp sgt i64 %indvars.iv.next, %6
   br i1 %.not, label %._crit_edge, label %.preheader
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.b
@@ -1841,13 +1845,14 @@ bb.c:                                             ; preds = %.preheader, %bb.c
   br i1 %.not17.not, label %bb.c, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %indvars.iv.next = add i64 %indvars.iv.a, %i.p  ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv.a, %i.p ; 3 uses
+  %indvars = trunc nsw i64 %indvars.iv.next to i32
   store i32 %indvars, ptr %i.a, align 4, !tbaa !138
   %i.y = add nsw i32 %i.n, %i.q
   %i.z = call i32 @llvm.smin.i32(i32 %i.y, i32 %i.f) ; 3 uses
   store i32 %i.z, ptr %i.b, align 4, !tbaa !138
-  %.not = icmp slt i32 %i.z, %indvars
+  %6 = sext i32 %i.z to i64
+  %.not = icmp sgt i64 %indvars.iv.next, %6
   br i1 %.not, label %._crit_edge, label %.preheader
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.b
@@ -2250,13 +2255,14 @@ bb.c:                                             ; preds = %.preheader, %bb.c
   br i1 %.not17.not, label %bb.c, label %bb.d
 
 bb.d:                                             ; preds = %bb.c
-  %indvars.iv.next = add i64 %indvars.iv.a, %i.p  ; 2 uses
-  %indvars = trunc i64 %indvars.iv.next to i32    ; 2 uses
+  %indvars.iv.next = add nsw i64 %indvars.iv.a, %i.p ; 3 uses
+  %indvars = trunc nsw i64 %indvars.iv.next to i32
   store i32 %indvars, ptr %i.a, align 4, !tbaa !138
   %i.y = add nsw i32 %i.n, %i.q
   %i.z = call i32 @llvm.smin.i32(i32 %i.y, i32 %i.f) ; 3 uses
   store i32 %i.z, ptr %i.b, align 4, !tbaa !138
-  %.not = icmp slt i32 %i.z, %indvars
+  %6 = sext i32 %i.z to i64
+  %.not = icmp sgt i64 %indvars.iv.next, %6
   br i1 %.not, label %._crit_edge, label %.preheader
 
 ._crit_edge:                                      ; preds = %bb.d, %bb.b

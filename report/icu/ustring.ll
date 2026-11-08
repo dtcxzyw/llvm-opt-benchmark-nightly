@@ -204,11 +204,15 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   %or.cond = or i1 %.not, %.not87
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %indvars.iv.next153 = add nuw i32 %indvars.iv152, 1
-  br i1 %or.cond, label %.critedge, label %bb.b, !llvm.loop !40
+  br i1 %or.cond, label %.critedge.preheader, label %bb.b, !llvm.loop !40
 
-.critedge:                                        ; preds = %bb.b, %.critedge
-  %indvars.iv154 = phi i32 [ %indvars.iv.next155, %.critedge ], [ %indvars.iv152, %bb.b ] ; 2 uses
-  %indvars.iv146 = phi i64 [ %indvars.iv.next147, %.critedge ], [ %indvars.iv, %bb.b ] ; 4 uses
+.critedge.preheader:                              ; preds = %bb.b
+  %3 = trunc nuw nsw i64 %indvars.iv to i32       ; 2 uses
+  br label %.critedge
+
+.critedge:                                        ; preds = %.critedge, %.critedge.preheader
+  %indvars.iv154 = phi i32 [ %indvars.iv.next155, %.critedge ], [ %indvars.iv152, %.critedge.preheader ] ; 2 uses
+  %indvars.iv146 = phi i64 [ %indvars.iv.next147, %.critedge ], [ %indvars.iv, %.critedge.preheader ] ; 4 uses
   %i.d = getelementptr inbounds nuw [2 x i8], ptr %1, i64 %indvars.iv146
   %i.e = load i16, ptr %i.d, align 2, !tbaa !20
   %.not88 = icmp eq i16 %i.e, 0
@@ -217,7 +221,6 @@ bb.b:                                             ; preds = %bb.b, %bb.a
   br i1 %.not88, label %.preheader105, label %.critedge, !llvm.loop !41
 
 .preheader105:                                    ; preds = %.critedge
-  %3 = trunc nuw nsw i64 %indvars.iv to i32       ; 2 uses
   %i.f = trunc nuw nsw i64 %indvars.iv146 to i32  ; 4 uses
   %i.g = load i16, ptr %0, align 2, !tbaa !20     ; 4 uses
   %.not89116 = icmp eq i16 %i.g, 0

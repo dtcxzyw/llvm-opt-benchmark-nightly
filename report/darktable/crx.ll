@@ -205,11 +205,18 @@ bb.n:                                             ; preds = %_ZN13libraw_memmgr6
   br label %.lr.ph.us
 
 .lr.ph.us:                                        ; preds = %.lr.ph.us.preheader, %._crit_edge.us
-  %.0144182.us = phi i32 [ %i.cm, %._crit_edge.us ], [ 0, %.lr.ph.us.preheader ]
+  %.0144182.us = phi i32 [ %i.cm, %._crit_edge.us ], [ 0, %.lr.ph.us.preheader ] ; 2 uses
   %.0146181.us = phi ptr [ %i.cl, %._crit_edge.us ], [ %i.bc, %.lr.ph.us.preheader ]
-  %4 = phi <4 x i32> [ %5, %._crit_edge.us ], [ <i32 1, i32 0, i32 2, i32 3>, %.lr.ph.us.preheader ] ; 2 uses
-  %i.bk = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %4, <4 x i32> %i.bh)
-  %i.bl = mul <4 x i32> %i.bj, %i.bk
+  %4 = shl nuw nsw i32 %.0144182.us, 2            ; 3 uses
+  %5 = or disjoint i32 %4, 1
+  %6 = insertelement <2 x i32> poison, i32 %4, i64 0
+  %7 = insertelement <4 x i32> poison, i32 %5, i64 0
+  %8 = insertelement <4 x i32> %7, i32 %4, i64 1
+  %9 = shufflevector <2 x i32> %6, <2 x i32> poison, <4 x i32> <i32 0, i32 0, i32 poison, i32 poison>
+  %10 = or disjoint <4 x i32> %9, <i32 2, i32 3, i32 poison, i32 poison>
+  %11 = shufflevector <4 x i32> %8, <4 x i32> %10, <4 x i32> <i32 0, i32 1, i32 4, i32 5>
+  %i.bk = tail call <4 x i32> @llvm.smin.v4i32(<4 x i32> %11, <4 x i32> %i.bh)
+  %i.bl = mul nsw <4 x i32> %i.bk, %i.bj
   %i.bm = sext <4 x i32> %i.bl to <4 x i64>
   br label %bb.o
 
@@ -258,7 +265,6 @@ bb.r:                                             ; preds = %bb.q, %bb.p
 
 ._crit_edge.us:                                   ; preds = %bb.r
   %i.cm = add nuw nsw i32 %.0144182.us, 1         ; 2 uses
-  %5 = add nuw nsw <4 x i32> %4, splat (i32 4)
   %exitcond243.not.a = icmp eq i32 %i.cm, %i.r
   br i1 %exitcond243.not.a, label %._crit_edge185, label %.lr.ph.us, !llvm.loop !313
 
@@ -284,21 +290,21 @@ bb.s:                                             ; preds = %._crit_edge185, %_Z
   br i1 %.not212, label %._crit_edge195, label %.lr.ph.us197
 
 .lr.ph.us197:                                     ; preds = %.lr.ph194, %._crit_edge.us198
-  %indvars.iv249 = phi i32 [ %indvars.iv.next250, %._crit_edge.us198 ], [ 0, %.lr.ph194 ] ; 2 uses
-  %indvars.iv244 = phi i32 [ %indvars.iv.next245, %._crit_edge.us198 ], [ 1, %.lr.ph194 ] ; 2 uses
-  %.0138192.us = phi i32 [ %7, %._crit_edge.us198 ], [ 0, %.lr.ph194 ]
+  %indvars.iv244 = phi i32 [ %indvars.iv.next250, %._crit_edge.us198 ], [ 0, %.lr.ph194 ] ; 2 uses
   %.3191.us = phi ptr [ %i.dq, %._crit_edge.us198 ], [ %.2, %.lr.ph194 ]
-  %smin246 = tail call i32 @llvm.smin.i32(i32 %indvars.iv244, i32 %i.cq)
-  %i.cr = mul i32 %i.h, %smin246
-  %6 = sext i32 %i.cr to i64
-  %smin251 = tail call i32 @llvm.smin.i32(i32 %indvars.iv249, i32 %i.cq)
-  %i.cs = mul i32 %i.h, %smin251
-  %i.ct = sext i32 %i.cs to i64
+  %12 = shl nuw nsw i32 %indvars.iv244, 1         ; 2 uses
+  %smin246 = tail call i32 @llvm.smin.i32(i32 %12, i32 %i.cq)
+  %i.cr = mul nsw i32 %smin246, %i.h
+  %13 = or disjoint i32 %12, 1
+  %smin251 = tail call i32 @llvm.smin.i32(i32 %13, i32 %i.cq)
+  %i.cs = mul nsw i32 %smin251, %i.h
+  %14 = sext i32 %i.cs to i64
+  %i.ct = sext i32 %i.cr to i64
   br label %bb.t
 
 bb.t:                                             ; preds = %.lr.ph.us197, %bb.w
   %indvars.iv252 = phi i64 [ %i.ct, %.lr.ph.us197 ], [ %indvars.iv.next253, %bb.w ] ; 2 uses
-  %indvars.iv247 = phi i64 [ %6, %.lr.ph.us197 ], [ %indvars.iv.next248, %bb.w ] ; 2 uses
+  %indvars.iv247 = phi i64 [ %14, %.lr.ph.us197 ], [ %indvars.iv.next248, %bb.w ] ; 2 uses
   %.0135190.us = phi i32 [ 0, %.lr.ph.us197 ], [ %i.dp, %bb.w ]
   %.4187.us = phi ptr [ %.3191.us, %.lr.ph.us197 ], [ %i.dq, %bb.w ] ; 2 uses
   %indvars.iv.next253 = add nsw i64 %indvars.iv252, 1
@@ -341,10 +347,8 @@ bb.w:                                             ; preds = %bb.v, %bb.u
   br i1 %exitcond257.not, label %._crit_edge.us198, label %bb.t, !llvm.loop !314
 
 ._crit_edge.us198:                                ; preds = %bb.w
-  %7 = add nuw nsw i32 %.0138192.us, 1            ; 2 uses
-  %indvars.iv.next245 = add nuw nsw i32 %indvars.iv244, 2
-  %indvars.iv.next250 = add nuw nsw i32 %indvars.iv249, 2
-  %exitcond258.not = icmp eq i32 %7, %i.p
+  %indvars.iv.next250 = add nuw nsw i32 %indvars.iv244, 1 ; 2 uses
+  %exitcond258.not = icmp eq i32 %indvars.iv.next250, %i.p
   br i1 %exitcond258.not, label %._crit_edge195, label %.lr.ph.us197, !llvm.loop !315
 
 ._crit_edge195:                                   ; preds = %._crit_edge.us198, %.lr.ph194, %bb.s

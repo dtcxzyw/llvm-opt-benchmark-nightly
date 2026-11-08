@@ -202,8 +202,8 @@ bb.e:                                             ; preds = %.lr.ph
   br i1 %exitcond.not, label %.lr.ph96.preheader, label %.lr.ph, !llvm.loop !195
 
 .lr.ph96:                                         ; preds = %.lr.ph96.preheader, %.critedge
-  %indvars.iv117 = phi i32 [ %.057, %.lr.ph96.preheader ], [ %indvars.iv.next118.a, %.critedge ] ; 5 uses
-  %indvars.iv112 = phi i64 [ %i.i, %.lr.ph96.preheader ], [ %indvars.iv.next113, %.critedge ] ; 4 uses
+  %indvars.iv117 = phi i32 [ %.057, %.lr.ph96.preheader ], [ %indvars.iv.next118.a, %.critedge ] ; 2 uses
+  %indvars.iv112 = phi i64 [ %i.i, %.lr.ph96.preheader ], [ %indvars.iv.next113, %.critedge ] ; 7 uses
   %i.m = getelementptr inbounds nuw i8, ptr %i.c, i64 %indvars.iv112
   %i.n = load i8, ptr %i.m, align 1, !tbaa !92
   %i.o = icmp eq i8 %i.n, 46
@@ -222,8 +222,9 @@ bb.f:                                             ; preds = %.lr.ph96
   br i1 %i.q, label %.preheader87.preheader, label %.critedge76
 
 .preheader87.preheader:                           ; preds = %bb.f
-  %4 = zext i32 %indvars.iv117 to i64             ; 2 uses
-  %.not65.not.not158 = icmp sgt i32 %3, %indvars.iv117
+  %4 = and i64 %indvars.iv112, 4294967295         ; 2 uses
+  %5 = trunc i64 %indvars.iv112 to i32
+  %.not65.not.not158 = icmp sgt i32 %3, %5
   br i1 %.not65.not.not158, label %.lr.ph160, label %.critedge74.preheader
 
 .preheader87:                                     ; preds = %.lr.ph160
@@ -250,7 +251,8 @@ bb.f:                                             ; preds = %.lr.ph96
   br i1 %exitcond129.not, label %.critedge78.preheader, label %.lr.ph99, !llvm.loop !198
 
 .critedge78.preheader:                            ; preds = %.critedge74, %.critedge74.preheader
-  %.not67.not.not161 = icmp sgt i32 %3, %indvars.iv117
+  %6 = trunc i64 %indvars.iv112 to i32
+  %.not67.not.not161 = icmp sgt i32 %3, %6
   br i1 %.not67.not.not161, label %.lr.ph163, label %.critedge76
 
 .lr.ph99:                                         ; preds = %.critedge74.preheader, %.critedge74

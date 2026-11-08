@@ -204,12 +204,9 @@ bb.gl:                                            ; preds = %._crit_edge
   ret void
 
 bb.gm:                                            ; preds = %.loopexit524, %._crit_edge
-  %indvars.iv553 = phi i64 [ 0, %.loopexit524 ], [ %indvars.iv.next554, %._crit_edge ] ; 6 uses
+  %indvars.iv553 = phi i64 [ 0, %.loopexit524 ], [ %indvars.iv.next554, %._crit_edge ] ; 8 uses
   %indvars.iv551 = phi i64 [ 1, %.loopexit524 ], [ %indvars.iv.next552, %._crit_edge ] ; 2 uses
-  %indvars.iv538 = phi i32 [ -24, %.loopexit524 ], [ %indvars.iv.next539, %._crit_edge ] ; 2 uses
-  %indvars.iv528.a = phi i32 [ -1, %.loopexit524 ], [ %indvars.iv.next529, %._crit_edge ] ; 3 uses
-  %73 = zext i32 %indvars.iv538 to i64
-  %74 = zext i32 %indvars.iv528.a to i64
+  %indvars.iv528.a = phi i32 [ -1, %.loopexit524 ], [ %indvars.iv.next529, %._crit_edge ] ; 2 uses
   %umin = call i32 @llvm.umin.i32(i32 %indvars.iv528.a, i32 22)
   %i.su = add nuw nsw i32 %umin, 2
   call void @llvm.lifetime.start.p0(ptr nonnull %58) #17
@@ -345,12 +342,19 @@ _ZN7testing15AssertionResultD2Ev.exit407:         ; preds = %bb.gy, %_ZNKSt14def
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZN7testing15AssertionResultD2Ev.exit407
+  %73 = add nuw i64 %indvars.iv553, 4294967295
+  %74 = and i64 %73, 4294967295
   %wide.trip.count = zext nneg i32 %i.su to i64
   br label %.lr.ph
 
 .preheader:                                       ; preds = %_ZN7testing15AssertionResultD2Ev.exit438
   %i.tz = icmp samesign ugt i64 %indvars.iv553, 23
-  br i1 %i.tz, label %.lr.ph505, label %._crit_edge
+  br i1 %i.tz, label %.lr.ph505.preheader, label %._crit_edge
+
+.lr.ph505.preheader:                              ; preds = %.preheader
+  %75 = add nuw i64 %indvars.iv553, 4294967272
+  %76 = and i64 %75, 4294967295
+  br label %.lr.ph505
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN7testing15AssertionResultD2Ev.exit438
   %indvars.iv532 = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next533, %_ZN7testing15AssertionResultD2Ev.exit438 ]
@@ -710,14 +714,13 @@ _ZN7testing15AssertionResultD2Ev.exit438:         ; preds = %bb.ic, %_ZNKSt14def
 ._crit_edge:                                      ; preds = %_ZN7testing15AssertionResultD2Ev.exit469, %_ZN7testing15AssertionResultD2Ev.exit407, %.preheader
   %indvars.iv.next554 = add nuw nsw i64 %indvars.iv553, 1 ; 2 uses
   %indvars.iv.next529 = add nsw i32 %indvars.iv528.a, 1
-  %indvars.iv.next539 = add nsw i32 %indvars.iv538, 1
   %indvars.iv.next552 = add nuw nsw i64 %indvars.iv551, 1
   %exitcond558.not = icmp eq i64 %indvars.iv.next554, 64
   br i1 %exitcond558.not, label %bb.gl, label %bb.gm, !llvm.loop !98
 
-.lr.ph505:                                        ; preds = %.preheader, %_ZN7testing15AssertionResultD2Ev.exit469
-  %indvars.iv542 = phi i64 [ %indvars.iv.next543, %_ZN7testing15AssertionResultD2Ev.exit469 ], [ 24, %.preheader ]
-  %indvars.iv540 = phi i64 [ %indvars.iv.next541, %_ZN7testing15AssertionResultD2Ev.exit469 ], [ %73, %.preheader ] ; 3 uses
+.lr.ph505:                                        ; preds = %.lr.ph505.preheader, %_ZN7testing15AssertionResultD2Ev.exit469
+  %indvars.iv542 = phi i64 [ 24, %.lr.ph505.preheader ], [ %indvars.iv.next543, %_ZN7testing15AssertionResultD2Ev.exit469 ]
+  %indvars.iv540 = phi i64 [ %76, %.lr.ph505.preheader ], [ %indvars.iv.next541, %_ZN7testing15AssertionResultD2Ev.exit469 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %67) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #17
   %i.xf = load float, ptr %i.ta, align 4, !tbaa !58 ; 2 uses
@@ -1120,12 +1123,9 @@ bb.nq:                                            ; preds = %._crit_edge
   ret void
 
 bb.nr:                                            ; preds = %.loopexit848, %._crit_edge
-  %indvars.iv877 = phi i64 [ 0, %.loopexit848 ], [ %indvars.iv.next878, %._crit_edge ] ; 6 uses
+  %indvars.iv877 = phi i64 [ 0, %.loopexit848 ], [ %indvars.iv.next878, %._crit_edge ] ; 8 uses
   %indvars.iv875 = phi i64 [ 1, %.loopexit848 ], [ %indvars.iv.next876, %._crit_edge ] ; 2 uses
-  %indvars.iv862 = phi i32 [ -53, %.loopexit848 ], [ %indvars.iv.next863, %._crit_edge ] ; 2 uses
-  %indvars.iv852.a = phi i32 [ -1, %.loopexit848 ], [ %indvars.iv.next853, %._crit_edge ] ; 3 uses
-  %124 = zext i32 %indvars.iv862 to i64
-  %125 = zext i32 %indvars.iv852.a to i64
+  %indvars.iv852.a = phi i32 [ -1, %.loopexit848 ], [ %indvars.iv.next853, %._crit_edge ] ; 2 uses
   %umin = call i32 @llvm.umin.i32(i32 %indvars.iv852.a, i32 51)
   %i.aik = add nuw nsw i32 %umin, 2
   call void @llvm.lifetime.start.p0(ptr nonnull %109) #17
@@ -1260,12 +1260,19 @@ _ZN7testing15AssertionResultD2Ev.exit731:         ; preds = %bb.od, %_ZNKSt14def
   br i1 %.not, label %._crit_edge, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %_ZN7testing15AssertionResultD2Ev.exit731
+  %124 = add nuw i64 %indvars.iv877, 4294967295
+  %125 = and i64 %124, 4294967295
   %wide.trip.count = zext nneg i32 %i.aik to i64
   br label %.lr.ph
 
 .preheader:                                       ; preds = %_ZN7testing15AssertionResultD2Ev.exit762
   %i.ajo = icmp samesign ugt i64 %indvars.iv877, 52
-  br i1 %i.ajo, label %.lr.ph829, label %._crit_edge
+  br i1 %i.ajo, label %.lr.ph829.preheader, label %._crit_edge
+
+.lr.ph829.preheader:                              ; preds = %.preheader
+  %126 = add nuw i64 %indvars.iv877, 4294967243
+  %127 = and i64 %126, 4294967295
+  br label %.lr.ph829
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %_ZN7testing15AssertionResultD2Ev.exit762
   %indvars.iv856 = phi i64 [ 1, %.lr.ph.preheader ], [ %indvars.iv.next857, %_ZN7testing15AssertionResultD2Ev.exit762 ]
@@ -1623,14 +1630,13 @@ _ZN7testing15AssertionResultD2Ev.exit762:         ; preds = %bb.ph, %_ZNKSt14def
 ._crit_edge:                                      ; preds = %_ZN7testing15AssertionResultD2Ev.exit793, %_ZN7testing15AssertionResultD2Ev.exit731, %.preheader
   %indvars.iv.next878 = add nuw nsw i64 %indvars.iv877, 1 ; 2 uses
   %indvars.iv.next853 = add nsw i32 %indvars.iv852.a, 1
-  %indvars.iv.next863 = add nsw i32 %indvars.iv862, 1
   %indvars.iv.next876 = add nuw nsw i64 %indvars.iv875, 1
   %exitcond882.not = icmp eq i64 %indvars.iv.next878, 64
   br i1 %exitcond882.not, label %bb.nq, label %bb.nr, !llvm.loop !124
 
-.lr.ph829:                                        ; preds = %.preheader, %_ZN7testing15AssertionResultD2Ev.exit793
-  %indvars.iv866 = phi i64 [ %indvars.iv.next867, %_ZN7testing15AssertionResultD2Ev.exit793 ], [ 53, %.preheader ]
-  %indvars.iv864 = phi i64 [ %indvars.iv.next865, %_ZN7testing15AssertionResultD2Ev.exit793 ], [ %124, %.preheader ] ; 3 uses
+.lr.ph829:                                        ; preds = %.lr.ph829.preheader, %_ZN7testing15AssertionResultD2Ev.exit793
+  %indvars.iv866 = phi i64 [ 53, %.lr.ph829.preheader ], [ %indvars.iv.next867, %_ZN7testing15AssertionResultD2Ev.exit793 ]
+  %indvars.iv864 = phi i64 [ %127, %.lr.ph829.preheader ], [ %indvars.iv.next865, %_ZN7testing15AssertionResultD2Ev.exit793 ] ; 3 uses
   call void @llvm.lifetime.start.p0(ptr nonnull %118) #17
   call void @llvm.lifetime.start.p0(ptr nonnull %i.h) #17
   %i.ams = load double, ptr %i.aip, align 8, !tbaa !61 ; 2 uses

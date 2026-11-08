@@ -204,7 +204,6 @@ bb.l:                                             ; preds = %bb.k
   unreachable, !nosanitize !10
 
 .preheader1085.split:                             ; preds = %bb.n
-  %indvars.iv.next9912 = add nuw nsw i64 %indvars.iv991113886, 1
   %i.at = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.aw, i32 1), !nosanitize !10 ; 2 uses
   %i.au = extractvalue { i32, i1 } %i.at, 0, !nosanitize !10
   %i.av = extractvalue { i32, i1 } %i.at, 1, !nosanitize !10
@@ -215,8 +214,8 @@ bb.l:                                             ; preds = %bb.k
   unreachable, !nosanitize !10
 
 .preheader1085.split.preheader:                   ; preds = %.preheader1085, %.preheader1085.split
-  %i.aw = phi i32 [ %i.au, %.preheader1085.split ], [ 1, %.preheader1085 ] ; 3 uses
-  %indvars.iv991113886 = phi i64 [ %indvars.iv.next9912, %.preheader1085.split ], [ 0, %.preheader1085 ] ; 2 uses
+  %i.aw = phi i32 [ %i.au, %.preheader1085.split ], [ 1, %.preheader1085 ] ; 4 uses
+  %.054513880 = phi i32 [ %i.aw, %.preheader1085.split ], [ 0, %.preheader1085 ]
   %i.ax = sext i32 %i.aw to i64                   ; 2 uses
   %i.ay = getelementptr inbounds [16 x i8], ptr %.0.fr, i64 %i.ax ; 2 uses
   %i.az = shl nsw i64 %i.ax, 4
@@ -262,6 +261,7 @@ bb.n:                                             ; preds = %bb.m
   %i.br = icmp ne ptr %i.k, null                  ; 4 uses
   %i.bs = ptrtoint ptr %.0542 to i64              ; 3 uses
   %i.bt = icmp ne ptr %.0542, null                ; 3 uses
+  %2 = sext i32 %.054513880 to i64
   %i.bu = insertelement <2 x float> poison, float %i.v, i64 0
   %i.bv = shufflevector <2 x float> %i.bu, <2 x float> poison, <2 x i32> zeroinitializer
   %.sroa.0.i.4.i.4.i.4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 4
@@ -274,9 +274,9 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.bw, label %bb.o, label %._crit_edge, !llvm.loop !182
 
 bb.o:                                             ; preds = %.lr.ph, %.loopexit
-  %indvars.iv9916 = phi i64 [ %indvars.iv991113886, %.lr.ph ], [ %indvars.iv.next9917, %.loopexit ] ; 4 uses
+  %indvars.iv9916 = phi i64 [ %2, %.lr.ph ], [ %indvars.iv.next9917, %.loopexit ] ; 4 uses
   %.05446319 = phi i32 [ %.sroa.01036.0.extract.trunc, %.lr.ph ], [ %.1.lcssa, %.loopexit ] ; 6 uses
-  %i.bx = getelementptr inbounds nuw [16 x i8], ptr %.0.fr, i64 %indvars.iv9916 ; 3 uses
+  %i.bx = getelementptr inbounds [16 x i8], ptr %.0.fr, i64 %indvars.iv9916 ; 3 uses
   %i.by = shl nuw nsw i64 %indvars.iv9916, 4
   %i.bz = add i64 %i.by, %i.aq, !nosanitize !10   ; 2 uses
   %.not6321 = icmp ult i64 %i.bz, %i.aq, !nosanitize !10
@@ -679,7 +679,6 @@ bb.r:                                             ; preds = %bb.q
   unreachable, !nosanitize !10
 
 .preheader116.split:                              ; preds = %bb.t
-  %indvars.iv.next3195 = add nuw nsw i64 %indvars.iv31944381, 1
   %i.bg = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.bj, i32 1), !nosanitize !10 ; 2 uses
   %i.bh = extractvalue { i32, i1 } %i.bg, 0, !nosanitize !10
   %i.bi = extractvalue { i32, i1 } %i.bg, 1, !nosanitize !10
@@ -692,7 +691,6 @@ bb.r:                                             ; preds = %bb.q
 .preheader116.split.preheader:                    ; preds = %.preheader116, %.preheader116.split
   %i.bj = phi i32 [ %i.bh, %.preheader116.split ], [ 1, %.preheader116 ] ; 4 uses
   %.0804382 = phi i32 [ %i.bj, %.preheader116.split ], [ 0, %.preheader116 ]
-  %indvars.iv31944381 = phi i64 [ %indvars.iv.next3195, %.preheader116.split ], [ 0, %.preheader116 ] ; 2 uses
   %i.bk = sext i32 %i.bj to i64                   ; 2 uses
   %i.bl = getelementptr inbounds [16 x i8], ptr %.076.fr, i64 %i.bk ; 2 uses
   %i.bm = shl nsw i64 %i.bk, 4
@@ -731,13 +729,14 @@ bb.t:                                             ; preds = %bb.s
 .lr.ph1574:                                       ; preds = %.preheader.split
   %i.by = ptrtoint ptr %.077.fr to i64            ; 4 uses
   %.not1751 = icmp eq ptr %.077.fr, null
+  %3 = sext i32 %.0804382 to i64                  ; 3 uses
   br i1 %.not1751, label %.lr.ph1574.split.split.us, label %.lr.ph1574.split.us, !prof !89
 
 .lr.ph1574.split.us:                              ; preds = %.lr.ph1574, %.loopexit.us
-  %indvars.iv3199 = phi i64 [ %indvars.iv.next3200, %.loopexit.us ], [ %indvars.iv31944381, %.lr.ph1574 ] ; 5 uses
+  %indvars.iv3199 = phi i64 [ %indvars.iv.next3200, %.loopexit.us ], [ %3, %.lr.ph1574 ] ; 4 uses
   %.0821572.us = phi i32 [ %.183.lcssa.us, %.loopexit.us ], [ %.sroa.0.0.extract.trunc, %.lr.ph1574 ] ; 3 uses
   %.0841571.us = phi i8 [ %.185.lcssa.us, %.loopexit.us ], [ %i.as, %.lr.ph1574 ] ; 2 uses
-  %i.bz = getelementptr inbounds nuw [16 x i8], ptr %.076.fr, i64 %indvars.iv3199 ; 2 uses
+  %i.bz = getelementptr inbounds [16 x i8], ptr %.076.fr, i64 %indvars.iv3199 ; 2 uses
   %i.ca = shl nuw nsw i64 %indvars.iv3199, 4
   %i.cb = add i64 %i.ca, %i.bd, !nosanitize !10   ; 2 uses
   %.not1755 = icmp ult i64 %i.cb, %i.bd, !nosanitize !10
@@ -751,27 +750,32 @@ bb.u:                                             ; preds = %.lr.ph1574.split.us
 
 bb.v:                                             ; preds = %bb.u
   %i.cf = load i32, ptr %i.bz, align 8, !tbaa !96 ; 2 uses
-  %exitcond3201 = icmp eq i64 %indvars.iv3199, 2147483647
-  br i1 %exitcond3201, label %.split1592.us, label %bb.w, !prof !89, !nosanitize !10
+  %4 = trunc nuw nsw i64 %indvars.iv3199 to i32
+  %5 = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %4, i32 1), !nosanitize !10 ; 2 uses
+  %6 = extractvalue { i32, i1 } %5, 1, !nosanitize !10
+  br i1 %6, label %.split1592.us, label %bb.w, !prof !89, !nosanitize !10
 
 bb.w:                                             ; preds = %bb.v
-  %i.cg = shl i64 %indvars.iv3199, 32
-  %sext4157 = add i64 %i.cg, 4294967296           ; 2 uses
-  %3 = ashr exact i64 %sext4157, 28
-  %4 = getelementptr inbounds i8, ptr %.076.fr, i64 %3 ; 2 uses
-  %5 = ashr exact i64 %sext4157, 28
-  %6 = add i64 %5, %i.bd, !nosanitize !10         ; 2 uses
-  %.not4158 = icmp ult i64 %6, %i.bd, !nosanitize !10
-  br i1 %.not4158, label %.split1595.us, label %bb.x, !prof !89, !nosanitize !10
+  %7 = extractvalue { i32, i1 } %5, 0, !nosanitize !10 ; 2 uses
+  %8 = sext i32 %7 to i64                         ; 2 uses
+  %9 = getelementptr inbounds [16 x i8], ptr %.076.fr, i64 %8 ; 2 uses
+  %i.cg = shl nsw i64 %8, 4
+  %sext4157 = add i64 %i.cg, %i.bd, !nosanitize !10 ; 3 uses
+  %10 = icmp ne i64 %sext4157, 0
+  %11 = icmp uge i64 %sext4157, %i.bd, !nosanitize !10
+  %12 = icmp slt i32 %7, 0
+  %13 = xor i1 %12, %11
+  %14 = and i1 %10, %13, !nosanitize !10
+  br i1 %14, label %bb.x, label %.split1595.us, !prof !11, !nosanitize !10
 
 bb.x:                                             ; preds = %bb.w
-  %i.ch = ptrtoint ptr %4 to i64, !nosanitize !10 ; 2 uses
+  %i.ch = ptrtoint ptr %9 to i64, !nosanitize !10 ; 2 uses
   %i.ci = and i64 %i.ch, 7, !nosanitize !10
   %i.cj = icmp eq i64 %i.ci, 0, !nosanitize !10
   br i1 %i.cj, label %.split1345.us, label %.split1598.us, !prof !11, !nosanitize !10
 
 .split1345.us:                                    ; preds = %bb.x
-  %i.ck = load i32, ptr %4, align 8, !tbaa !96
+  %i.ck = load i32, ptr %9, align 8, !tbaa !96
   %i.cl = tail call noundef i32 @llvm.smin.i32(i32 %i.ck, i32 %i.bb) ; 3 uses
   %i.cm = icmp slt i32 %.0821572.us, %i.cl
   br i1 %i.cm, label %.lr.ph1348.us.preheader, label %.loopexit.us
@@ -1174,8 +1178,7 @@ bb.bj:                                            ; preds = %b3SetBit.exit.us.4,
   br i1 %i.nb, label %.lr.ph1574.split.us, label %._crit_edge1575, !llvm.loop !216
 
 .lr.ph1574.split.split.us:                        ; preds = %.lr.ph1574
-  %7 = sext i32 %.0804382 to i64                  ; 2 uses
-  %i.nc = shl nuw nsw i64 %7, 4
+  %i.nc = shl nuw nsw i64 %3, 4
   %i.nd = add i64 %i.nc, %i.bd, !nosanitize !10   ; 2 uses
   %.not1753 = icmp ult i64 %i.nd, %i.bd, !nosanitize !10
   br i1 %.not1753, label %.split1586.us, label %.lr.ph, !prof !167, !nosanitize !10
@@ -1184,7 +1187,7 @@ bb.bk:                                            ; preds = %.split1345.us1732
   br i1 %i.nq, label %.lr.ph, label %.split1586.us, !prof !217, !nosanitize !10
 
 .lr.ph:                                           ; preds = %.lr.ph1574.split.split.us, %bb.bk
-  %.pn = phi i64 [ %i.nl, %bb.bk ], [ %7, %.lr.ph1574.split.split.us ] ; 2 uses
+  %.pn = phi i64 [ %i.nl, %bb.bk ], [ %3, %.lr.ph1574.split.split.us ] ; 2 uses
   %i.ne = getelementptr inbounds [16 x i8], ptr %.076.fr, i64 %.pn ; 2 uses
   %i.nf = ptrtoint ptr %i.ne to i64, !nosanitize !10 ; 2 uses
   %i.ng = and i64 %i.nf, 7, !nosanitize !10
@@ -1237,7 +1240,7 @@ bb.bn:                                            ; preds = %bb.bm
   unreachable, !nosanitize !10
 
 .split1595.us:                                    ; preds = %bb.w, %bb.bm
-  %.us-phi1596 = phi i64 [ %i.no, %bb.bm ], [ %6, %bb.w ]
+  %.us-phi1596 = phi i64 [ %i.no, %bb.bm ], [ %sext4157, %bb.w ]
   tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @117, i64 %i.bd, i64 %.us-phi1596) #10, !nosanitize !10
   unreachable, !nosanitize !10
 
@@ -1430,7 +1433,6 @@ bb.h:                                             ; preds = %bb.g
   unreachable, !nosanitize !10
 
 .preheader1196.split:                             ; preds = %bb.j
-  %indvars.iv.next24538 = add nuw nsw i64 %indvars.iv2453736922, 1
   %i.ao = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.ar, i32 1), !nosanitize !10 ; 2 uses
   %i.ap = extractvalue { i32, i1 } %i.ao, 0, !nosanitize !10
   %i.aq = extractvalue { i32, i1 } %i.ao, 1, !nosanitize !10
@@ -1441,8 +1443,8 @@ bb.h:                                             ; preds = %bb.g
   unreachable, !nosanitize !10
 
 .preheader1196.split.preheader:                   ; preds = %.preheader1196, %.preheader1196.split
-  %i.ar = phi i32 [ %i.ap, %.preheader1196.split ], [ 1, %.preheader1196 ] ; 3 uses
-  %indvars.iv2453736922 = phi i64 [ %indvars.iv.next24538, %.preheader1196.split ], [ 0, %.preheader1196 ] ; 2 uses
+  %i.ar = phi i32 [ %i.ap, %.preheader1196.split ], [ 1, %.preheader1196 ] ; 4 uses
+  %.062436916 = phi i32 [ %i.ar, %.preheader1196.split ], [ 0, %.preheader1196 ]
   %i.as = sext i32 %i.ar to i64                   ; 2 uses
   %i.at = getelementptr inbounds [16 x i8], ptr %.fr12947, i64 %i.as ; 2 uses
   %i.au = shl nsw i64 %i.as, 4
@@ -1486,6 +1488,7 @@ bb.j:                                             ; preds = %bb.i
   %i.bk = icmp ne ptr %i.i, null                  ; 4 uses
   %i.bl = ptrtoint ptr %i.k to i64                ; 6 uses
   %i.bm = icmp ne ptr %i.k, null                  ; 4 uses
+  %2 = sext i32 %.062436916 to i64
   %.sroa.0.i.4.i.4.i.4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.0.i, i64 4
   %.sroa.014.i.4.i.4.i.4..sroa_idx = getelementptr inbounds nuw i8, ptr %.sroa.014.i, i64 4
   br label %bb.k
@@ -1496,9 +1499,9 @@ bb.j:                                             ; preds = %bb.i
   br i1 %i.bn, label %bb.k, label %._crit_edge, !llvm.loop !220
 
 bb.k:                                             ; preds = %.lr.ph12946, %.loopexit
-  %indvars.iv24542 = phi i64 [ %indvars.iv2453736922, %.lr.ph12946 ], [ %indvars.iv.next24543, %.loopexit ] ; 4 uses
+  %indvars.iv24542 = phi i64 [ %2, %.lr.ph12946 ], [ %indvars.iv.next24543, %.loopexit ] ; 4 uses
   %.062312945 = phi i32 [ %.sroa.01148.0.extract.trunc, %.lr.ph12946 ], [ %.1.lcssa, %.loopexit ] ; 4 uses
-  %i.bo = getelementptr inbounds nuw [16 x i8], ptr %.fr12947, i64 %indvars.iv24542 ; 4 uses
+  %i.bo = getelementptr inbounds [16 x i8], ptr %.fr12947, i64 %indvars.iv24542 ; 4 uses
   %i.bp = shl nuw nsw i64 %indvars.iv24542, 4
   %i.bq = add i64 %i.bp, %i.al, !nosanitize !10   ; 2 uses
   %.not12949 = icmp ult i64 %i.bq, %i.al, !nosanitize !10
@@ -1901,7 +1904,6 @@ bb.l:                                             ; preds = %bb.k
   unreachable, !nosanitize !10
 
 .preheader180.split:                              ; preds = %bb.n
-  %indvars.iv.next4426 = add nuw nsw i64 %indvars.iv44256755, 1
   %i.ay = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %i.bb, i32 1), !nosanitize !10 ; 2 uses
   %i.az = extractvalue { i32, i1 } %i.ay, 0, !nosanitize !10
   %i.ba = extractvalue { i32, i1 } %i.ay, 1, !nosanitize !10
@@ -1912,8 +1914,8 @@ bb.l:                                             ; preds = %bb.k
   unreachable, !nosanitize !10
 
 .preheader180.split.preheader:                    ; preds = %.preheader180, %.preheader180.split
-  %i.bb = phi i32 [ %i.az, %.preheader180.split ], [ 1, %.preheader180 ] ; 3 uses
-  %indvars.iv44256755 = phi i64 [ %indvars.iv.next4426, %.preheader180.split ], [ 0, %.preheader180 ] ; 2 uses
+  %i.bb = phi i32 [ %i.az, %.preheader180.split ], [ 1, %.preheader180 ] ; 4 uses
+  %.01266748 = phi i32 [ %i.bb, %.preheader180.split ], [ 0, %.preheader180 ]
   %i.bc = sext i32 %i.bb to i64                   ; 2 uses
   %i.bd = getelementptr inbounds [16 x i8], ptr %.fr2438, i64 %i.bc ; 2 uses
   %i.be = shl nsw i64 %i.bc, 4
@@ -1953,6 +1955,7 @@ bb.n:                                             ; preds = %bb.m
   %i.bq = ptrtoint ptr %.fr to i64                ; 3 uses
   %.not2440 = icmp eq ptr %.fr, null
   %i.br = getelementptr inbounds nuw i8, ptr %i.g, i64 4000
+  %3 = sext i32 %.01266748 to i64
   br label %bb.o
 
 .loopexit178:                                     ; preds = %bb.bq, %.split2240
@@ -1963,10 +1966,10 @@ bb.n:                                             ; preds = %bb.m
   br i1 %i.bs, label %bb.o, label %._crit_edge2436, !llvm.loop !236
 
 bb.o:                                             ; preds = %.lr.ph2435, %.loopexit178
-  %indvars.iv4430 = phi i64 [ %indvars.iv44256755, %.lr.ph2435 ], [ %indvars.iv.next4431, %.loopexit178 ] ; 5 uses
+  %indvars.iv4430 = phi i64 [ %3, %.lr.ph2435 ], [ %indvars.iv.next4431, %.loopexit178 ] ; 4 uses
   %.01282433 = phi i32 [ %.sroa.0165.0.extract.trunc, %.lr.ph2435 ], [ %.1129.lcssa, %.loopexit178 ] ; 5 uses
   %.01302432 = phi i8 [ %i.ak, %.lr.ph2435 ], [ %.1131.lcssa, %.loopexit178 ] ; 2 uses
-  %i.bt = getelementptr inbounds nuw [16 x i8], ptr %.fr2438, i64 %indvars.iv4430 ; 4 uses
+  %i.bt = getelementptr inbounds [16 x i8], ptr %.fr2438, i64 %indvars.iv4430 ; 4 uses
   %i.bu = shl nuw nsw i64 %indvars.iv4430, 4
   %i.bv = add i64 %i.bu, %i.av, !nosanitize !10   ; 2 uses
   %.not2441 = icmp ult i64 %i.bv, %i.av, !nosanitize !10
@@ -1988,29 +1991,34 @@ bb.r:                                             ; preds = %bb.q
 
 bb.s:                                             ; preds = %bb.q
   %i.bz = load i32, ptr %i.bt, align 8, !tbaa !171 ; 2 uses
-  %exitcond4432 = icmp eq i64 %indvars.iv4430, 2147483647
-  br i1 %exitcond4432, label %bb.t, label %bb.u, !prof !89, !nosanitize !10
+  %4 = trunc nuw nsw i64 %indvars.iv4430 to i32
+  %5 = tail call { i32, i1 } @llvm.sadd.with.overflow.i32(i32 %4, i32 1), !nosanitize !10 ; 2 uses
+  %6 = extractvalue { i32, i1 } %5, 1, !nosanitize !10
+  br i1 %6, label %bb.t, label %bb.u, !prof !89, !nosanitize !10
 
 bb.t:                                             ; preds = %bb.s
   tail call void @__ubsan_handle_add_overflow_abort(ptr nonnull @206, i64 2147483647, i64 1) #10, !nosanitize !10
   unreachable, !nosanitize !10
 
 bb.u:                                             ; preds = %bb.s
-  %i.ca = shl i64 %indvars.iv4430, 32
-  %sext = add i64 %i.ca, 4294967296               ; 2 uses
-  %3 = ashr exact i64 %sext, 28
-  %4 = getelementptr inbounds i8, ptr %.fr2438, i64 %3 ; 2 uses
-  %5 = ashr exact i64 %sext, 28
-  %6 = add i64 %5, %i.av, !nosanitize !10         ; 2 uses
-  %.not6440 = icmp ult i64 %6, %i.av, !nosanitize !10
-  br i1 %.not6440, label %bb.v, label %bb.w, !prof !89, !nosanitize !10
+  %7 = extractvalue { i32, i1 } %5, 0, !nosanitize !10 ; 2 uses
+  %8 = sext i32 %7 to i64                         ; 2 uses
+  %9 = getelementptr inbounds [16 x i8], ptr %.fr2438, i64 %8 ; 2 uses
+  %i.ca = shl nsw i64 %8, 4
+  %sext = add i64 %i.ca, %i.av, !nosanitize !10   ; 3 uses
+  %10 = icmp ne i64 %sext, 0
+  %11 = icmp uge i64 %sext, %i.av, !nosanitize !10
+  %12 = icmp slt i32 %7, 0
+  %13 = xor i1 %12, %11
+  %14 = and i1 %10, %13, !nosanitize !10
+  br i1 %14, label %bb.w, label %bb.v, !prof !11, !nosanitize !10
 
 bb.v:                                             ; preds = %bb.u
-  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @207, i64 %i.av, i64 %6) #10, !nosanitize !10
+  tail call void @__ubsan_handle_pointer_overflow_abort(ptr nonnull @207, i64 %i.av, i64 %sext) #10, !nosanitize !10
   unreachable, !nosanitize !10
 
 bb.w:                                             ; preds = %bb.u
-  %i.cb = ptrtoint ptr %4 to i64, !nosanitize !10 ; 2 uses
+  %i.cb = ptrtoint ptr %9 to i64, !nosanitize !10 ; 2 uses
   %i.cc = and i64 %i.cb, 7, !nosanitize !10
   %i.cd = icmp eq i64 %i.cc, 0, !nosanitize !10
   br i1 %i.cd, label %.split2240, label %bb.x, !prof !11, !nosanitize !10
@@ -2020,7 +2028,7 @@ bb.x:                                             ; preds = %bb.w
   unreachable, !nosanitize !10
 
 .split2240:                                       ; preds = %bb.w
-  %i.ce = load i32, ptr %4, align 8, !tbaa !171
+  %i.ce = load i32, ptr %9, align 8, !tbaa !171
   %i.cf = tail call noundef i32 @llvm.smin.i32(i32 %i.ce, i32 %i.at) ; 3 uses
   %i.cg = getelementptr inbounds nuw i8, ptr %i.bt, i64 4
   %i.ch = load i32, ptr %i.cg, align 4, !tbaa !172

@@ -204,7 +204,6 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.c
-  %indvars.iv63 = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next64, %bb.c ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.c ] ; 5 uses
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %.0.i, i64 %indvars.iv
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !86
@@ -215,7 +214,6 @@ bb.b:                                             ; preds = %.lr.ph, %bb.c
 bb.c:                                             ; preds = %bb.b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  %indvars.iv.next64 = add nuw nsw i64 %indvars.iv63, 1
   br i1 %exitcond.not, label %.thread, label %bb.b, !llvm.loop !283
 
 .critedge:                                        ; preds = %bb.b
@@ -234,14 +232,17 @@ bb.d:                                             ; preds = %.critedge
 bb.e:                                             ; preds = %bb.d
   %i.s = add nuw nsw i32 %i.n, 1                  ; 3 uses
   %i.t = icmp samesign ult i32 %i.s, %i.f
-  br i1 %i.t, label %.lr.ph56, label %bb.f
+  br i1 %i.t, label %.lr.ph56.preheader, label %bb.f
+
+.lr.ph56.preheader:                               ; preds = %bb.e
+  %4 = zext nneg i32 %i.s to i64                  ; 2 uses
+  br label %.lr.ph56
 
 ._crit_edge:                                      ; preds = %.lr.ph56
   %i.u = zext i16 %i.ag to i32
   %.pre = load ptr, ptr %i.h, align 8
   %i.v = icmp ult i16 %i.ag, 2
   %.0.i44 = select i1 %i.v, ptr %i.h, ptr %.pre
-  %4 = zext nneg i32 %i.s to i64
   %i.w = getelementptr inbounds nuw [8 x i8], ptr %.0.i44, i64 %4
   %i.x = sub nsw i32 %i.u, %i.s
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 2
@@ -250,8 +251,8 @@ bb.e:                                             ; preds = %bb.d
   %i.ab = tail call noundef ptr @_ZN3re26Regexp17ConcatOrAlternateENS_8RegexpOpEPPS0_iNS0_10ParseFlagsEb(i32 noundef 5, ptr noundef nonnull readonly %i.w, i32 noundef %i.x, i32 noundef %i.aa, i1 noundef zeroext false)
   br label %bb.h
 
-.lr.ph56:                                         ; preds = %bb.e, %.lr.ph56
-  %indvars.iv66 = phi i64 [ %indvars.iv.next67, %.lr.ph56 ], [ %indvars.iv63, %bb.e ] ; 2 uses
+.lr.ph56:                                         ; preds = %.lr.ph56.preheader, %.lr.ph56
+  %indvars.iv66 = phi i64 [ %4, %.lr.ph56.preheader ], [ %indvars.iv.next67, %.lr.ph56 ] ; 2 uses
   %i.ac = load ptr, ptr %i.h, align 8
   %i.ad = getelementptr inbounds nuw [8 x i8], ptr %i.ac, i64 %indvars.iv66
   %i.ae = load ptr, ptr %i.ad, align 8, !tbaa !86

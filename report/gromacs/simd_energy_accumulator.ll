@@ -204,17 +204,19 @@ _ZSt4fillIN3gmx12ArrayRefIterIfEEfEvT_S3_RKT0_.exit48: ; preds = %.lr.ph.i.i.i45
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !46   ; 4 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !46   ; 4 uses
-  %i.s = load i32, ptr %0, align 8, !tbaa !42     ; 2 uses
+  %i.s = load i32, ptr %0, align 8, !tbaa !42     ; 3 uses
   %i.t = icmp sgt i32 %i.s, 0
   br i1 %i.t, label %.preheader52.preheader, label %._crit_edge59.split
 
 .preheader52.preheader:                           ; preds = %_ZSt4fillIN3gmx12ArrayRefIterIfEEfEvT_S3_RKT0_.exit48
-  %i.u = zext nneg i32 %i.s to i64                ; 4 uses
+  %5 = zext nneg i32 %i.s to i64
+  %i.u = zext nneg i32 %i.s to i64                ; 3 uses
   br label %.preheader52
 
 .preheader52:                                     ; preds = %.preheader52.preheader, %._crit_edge57
   %indvars.iv71 = phi i64 [ 0, %.preheader52.preheader ], [ %indvars.iv.next72, %._crit_edge57 ] ; 2 uses
-  %i.v = mul nuw nsw i64 %indvars.iv71, %i.u      ; 2 uses
+  %i.v = mul nuw nsw i64 %indvars.iv71, %5        ; 2 uses
+  %6 = and i64 %i.v, 4294967295
   br label %.preheader
 
 ._crit_edge59.split:                              ; preds = %._crit_edge57, %_ZSt4fillIN3gmx12ArrayRefIterIfEEfEvT_S3_RKT0_.exit48
@@ -222,12 +224,12 @@ _ZSt4fillIN3gmx12ArrayRefIterIfEEfEvT_S3_RKT0_.exit48: ; preds = %.lr.ph.i.i.i45
 
 .preheader:                                       ; preds = %.preheader52, %._crit_edge
   %indvars.iv66 = phi i64 [ 0, %.preheader52 ], [ %indvars.iv.next67, %._crit_edge ] ; 2 uses
-  %i.w = add nuw nsw i64 %indvars.iv66, %i.v      ; 3 uses
+  %i.w = add nuw nsw i64 %indvars.iv66, %6        ; 3 uses
   %i.x = trunc nuw i64 %i.w to i32
   %i.y = shl i32 %i.x, %i.n
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.w ; 4 uses
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.w ; 4 uses
-  %5 = shl i32 %i.y, 3
+  %7 = sext i32 %i.y to i64
   br label %bb.b
 
 ._crit_edge57:                                    ; preds = %._crit_edge
@@ -241,24 +243,24 @@ _ZSt4fillIN3gmx12ArrayRefIterIfEEfEvT_S3_RKT0_.exit48: ; preds = %.lr.ph.i.i.i45
   br i1 %exitcond70.not, label %._crit_edge57, label %.preheader, !llvm.loop !89
 
 bb.b:                                             ; preds = %.preheader, %bb.b
-  %indvars.iv63 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next64, %bb.b ] ; 2 uses
-  %indvars.iv = phi i32 [ %5, %.preheader ], [ %indvars.iv.next, %bb.b ] ; 2 uses
-  %6 = sext i32 %indvars.iv to i64                ; 5 uses
+  %indvars.iv63 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next64, %bb.b ] ; 3 uses
+  %8 = add nsw i64 %indvars.iv63, %7
+  %9 = shl nsw i64 %8, 3                          ; 5 uses
   %i.ab = add nuw nsw i64 %indvars.iv63, %i.v     ; 2 uses
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.ab ; 4 uses
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.ab ; 4 uses
-  %i.ae = getelementptr inbounds [4 x i8], ptr %i.p, i64 %6
+  %i.ae = getelementptr inbounds [4 x i8], ptr %i.p, i64 %9
   %i.af = load float, ptr %i.ae, align 4, !tbaa !29
   %i.ag = load float, ptr %i.ac, align 4, !tbaa !29
   %i.ah = fadd float %i.af, %i.ag
   store float %i.ah, ptr %i.ac, align 4, !tbaa !29
-  %i.ai = or disjoint i64 %6, 1                   ; 2 uses
+  %i.ai = or disjoint i64 %9, 1                   ; 2 uses
   %i.aj = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.ai
   %i.ak = load float, ptr %i.aj, align 4, !tbaa !29
   %i.al = load float, ptr %i.z, align 4, !tbaa !29
   %i.am = fadd float %i.ak, %i.al
   store float %i.am, ptr %i.z, align 4, !tbaa !29
-  %i.an = getelementptr inbounds [4 x i8], ptr %i.r, i64 %6
+  %i.an = getelementptr inbounds [4 x i8], ptr %i.r, i64 %9
   %i.ao = load float, ptr %i.an, align 4, !tbaa !29
   %i.ap = load float, ptr %i.ad, align 4, !tbaa !29
   %i.aq = fadd float %i.ao, %i.ap
@@ -268,13 +270,13 @@ bb.b:                                             ; preds = %.preheader, %bb.b
   %i.at = load float, ptr %i.aa, align 4, !tbaa !29
   %i.au = fadd float %i.as, %i.at
   store float %i.au, ptr %i.aa, align 4, !tbaa !29
-  %indvars.iv.next61.a = or disjoint i64 %6, 6    ; 2 uses
+  %indvars.iv.next61.a = or disjoint i64 %9, 6    ; 2 uses
   %i.av = getelementptr inbounds [4 x i8], ptr %i.p, i64 %indvars.iv.next61.a
   %i.aw = load float, ptr %i.av, align 4, !tbaa !29
   %i.ax = load float, ptr %i.ac, align 4, !tbaa !29
   %i.ay = fadd float %i.aw, %i.ax
   store float %i.ay, ptr %i.ac, align 4, !tbaa !29
-  %i.az = or disjoint i64 %6, 7                   ; 2 uses
+  %i.az = or disjoint i64 %9, 7                   ; 2 uses
   %i.ba = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.az
   %i.bb = load float, ptr %i.ba, align 4, !tbaa !29
   %i.bc = load float, ptr %i.z, align 4, !tbaa !29
@@ -291,7 +293,6 @@ bb.b:                                             ; preds = %.preheader, %bb.b
   %i.bl = fadd float %i.bj, %i.bk
   store float %i.bl, ptr %i.aa, align 4, !tbaa !29
   %indvars.iv.next64 = add nuw nsw i64 %indvars.iv63, 1 ; 2 uses
-  %indvars.iv.next = add i32 %indvars.iv, 8
   %exitcond.not = icmp eq i64 %indvars.iv.next64, %i.u
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !90
 }
@@ -333,17 +334,19 @@ _ZSt4fillIN3gmx12ArrayRefIterIfEEfEvT_S3_RKT0_.exit48: ; preds = %.lr.ph.i.i.i45
   %i.p = load ptr, ptr %i.o, align 8, !tbaa !46   ; 8 uses
   %i.q = getelementptr inbounds nuw i8, ptr %0, i64 40
   %i.r = load ptr, ptr %i.q, align 8, !tbaa !46   ; 8 uses
-  %i.s = load i32, ptr %0, align 8, !tbaa !42     ; 2 uses
+  %i.s = load i32, ptr %0, align 8, !tbaa !42     ; 3 uses
   %i.t = icmp sgt i32 %i.s, 0
   br i1 %i.t, label %.preheader52.preheader, label %._crit_edge59.split
 
 .preheader52.preheader:                           ; preds = %_ZSt4fillIN3gmx12ArrayRefIterIfEEfEvT_S3_RKT0_.exit48
-  %i.u = zext nneg i32 %i.s to i64                ; 4 uses
+  %5 = zext nneg i32 %i.s to i64
+  %i.u = zext nneg i32 %i.s to i64                ; 3 uses
   br label %.preheader52
 
 .preheader52:                                     ; preds = %.preheader52.preheader, %._crit_edge57
   %indvars.iv71 = phi i64 [ 0, %.preheader52.preheader ], [ %indvars.iv.next72, %._crit_edge57 ] ; 2 uses
-  %i.v = mul nuw nsw i64 %indvars.iv71, %i.u      ; 2 uses
+  %i.v = mul nuw nsw i64 %indvars.iv71, %5        ; 2 uses
+  %6 = and i64 %i.v, 4294967295
   br label %.preheader
 
 ._crit_edge59.split:                              ; preds = %._crit_edge57, %_ZSt4fillIN3gmx12ArrayRefIterIfEEfEvT_S3_RKT0_.exit48
@@ -351,12 +354,12 @@ _ZSt4fillIN3gmx12ArrayRefIterIfEEfEvT_S3_RKT0_.exit48: ; preds = %.lr.ph.i.i.i45
 
 .preheader:                                       ; preds = %.preheader52, %._crit_edge
   %indvars.iv66 = phi i64 [ 0, %.preheader52 ], [ %indvars.iv.next67, %._crit_edge ] ; 2 uses
-  %i.w = add nuw nsw i64 %indvars.iv66, %i.v      ; 3 uses
+  %i.w = add nuw nsw i64 %indvars.iv66, %6        ; 3 uses
   %i.x = trunc nuw i64 %i.w to i32
   %i.y = shl i32 %i.x, %i.n
   %i.z = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.w ; 8 uses
   %i.aa = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.w ; 8 uses
-  %5 = shl i32 %i.y, 5
+  %7 = sext i32 %i.y to i64
   br label %bb.b
 
 ._crit_edge57:                                    ; preds = %._crit_edge
@@ -370,24 +373,24 @@ _ZSt4fillIN3gmx12ArrayRefIterIfEEfEvT_S3_RKT0_.exit48: ; preds = %.lr.ph.i.i.i45
   br i1 %exitcond70.not, label %._crit_edge57, label %.preheader, !llvm.loop !92
 
 bb.b:                                             ; preds = %.preheader, %bb.b
-  %indvars.iv63 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next64, %bb.b ] ; 2 uses
-  %indvars.iv = phi i32 [ %5, %.preheader ], [ %indvars.iv.next, %bb.b ] ; 2 uses
-  %6 = sext i32 %indvars.iv to i64                ; 9 uses
+  %indvars.iv63 = phi i64 [ 0, %.preheader ], [ %indvars.iv.next64, %bb.b ] ; 3 uses
+  %8 = add nsw i64 %indvars.iv63, %7
+  %9 = shl nsw i64 %8, 5                          ; 9 uses
   %i.ab = add nuw nsw i64 %indvars.iv63, %i.v     ; 2 uses
   %i.ac = getelementptr inbounds nuw [4 x i8], ptr %3, i64 %i.ab ; 8 uses
   %i.ad = getelementptr inbounds nuw [4 x i8], ptr %1, i64 %i.ab ; 8 uses
-  %i.ae = getelementptr inbounds [4 x i8], ptr %i.p, i64 %6
+  %i.ae = getelementptr inbounds [4 x i8], ptr %i.p, i64 %9
   %i.af = load float, ptr %i.ae, align 4, !tbaa !29
   %i.ag = load float, ptr %i.ac, align 4, !tbaa !29
   %i.ah = fadd float %i.af, %i.ag
   store float %i.ah, ptr %i.ac, align 4, !tbaa !29
-  %i.ai = or disjoint i64 %6, 1                   ; 2 uses
+  %i.ai = or disjoint i64 %9, 1                   ; 2 uses
   %i.aj = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.ai
   %i.ak = load float, ptr %i.aj, align 4, !tbaa !29
   %i.al = load float, ptr %i.z, align 4, !tbaa !29
   %i.am = fadd float %i.ak, %i.al
   store float %i.am, ptr %i.z, align 4, !tbaa !29
-  %i.an = getelementptr inbounds [4 x i8], ptr %i.r, i64 %6
+  %i.an = getelementptr inbounds [4 x i8], ptr %i.r, i64 %9
   %i.ao = load float, ptr %i.an, align 4, !tbaa !29
   %i.ap = load float, ptr %i.ad, align 4, !tbaa !29
   %i.aq = fadd float %i.ao, %i.ap
@@ -397,13 +400,13 @@ bb.b:                                             ; preds = %.preheader, %bb.b
   %i.at = load float, ptr %i.aa, align 4, !tbaa !29
   %i.au = fadd float %i.as, %i.at
   store float %i.au, ptr %i.aa, align 4, !tbaa !29
-  %indvars.iv.next61.a = or disjoint i64 %6, 10   ; 2 uses
+  %indvars.iv.next61.a = or disjoint i64 %9, 10   ; 2 uses
   %i.av = getelementptr inbounds [4 x i8], ptr %i.p, i64 %indvars.iv.next61.a
   %i.aw = load float, ptr %i.av, align 4, !tbaa !29
   %i.ax = load float, ptr %i.ac, align 4, !tbaa !29
   %i.ay = fadd float %i.aw, %i.ax
   store float %i.ay, ptr %i.ac, align 4, !tbaa !29
-  %i.az = or disjoint i64 %6, 11                  ; 2 uses
+  %i.az = or disjoint i64 %9, 11                  ; 2 uses
   %i.ba = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.az
   %i.bb = load float, ptr %i.ba, align 4, !tbaa !29
   %i.bc = load float, ptr %i.z, align 4, !tbaa !29
@@ -419,13 +422,13 @@ bb.b:                                             ; preds = %.preheader, %bb.b
   %i.bk = load float, ptr %i.aa, align 4, !tbaa !29
   %i.bl = fadd float %i.bj, %i.bk
   store float %i.bl, ptr %i.aa, align 4, !tbaa !29
-  %indvars.iv.next61.1 = or disjoint i64 %6, 20   ; 2 uses
+  %indvars.iv.next61.1 = or disjoint i64 %9, 20   ; 2 uses
   %i.bm = getelementptr inbounds [4 x i8], ptr %i.p, i64 %indvars.iv.next61.1
   %i.bn = load float, ptr %i.bm, align 4, !tbaa !29
   %i.bo = load float, ptr %i.ac, align 4, !tbaa !29
   %i.bp = fadd float %i.bn, %i.bo
   store float %i.bp, ptr %i.ac, align 4, !tbaa !29
-  %i.bq = or disjoint i64 %6, 21                  ; 2 uses
+  %i.bq = or disjoint i64 %9, 21                  ; 2 uses
   %i.br = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.bq
   %i.bs = load float, ptr %i.br, align 4, !tbaa !29
   %i.bt = load float, ptr %i.z, align 4, !tbaa !29
@@ -441,13 +444,13 @@ bb.b:                                             ; preds = %.preheader, %bb.b
   %i.cb = load float, ptr %i.aa, align 4, !tbaa !29
   %i.cc = fadd float %i.ca, %i.cb
   store float %i.cc, ptr %i.aa, align 4, !tbaa !29
-  %indvars.iv.next61.2 = or disjoint i64 %6, 30   ; 2 uses
+  %indvars.iv.next61.2 = or disjoint i64 %9, 30   ; 2 uses
   %i.cd = getelementptr inbounds [4 x i8], ptr %i.p, i64 %indvars.iv.next61.2
   %i.ce = load float, ptr %i.cd, align 4, !tbaa !29
   %i.cf = load float, ptr %i.ac, align 4, !tbaa !29
   %i.cg = fadd float %i.ce, %i.cf
   store float %i.cg, ptr %i.ac, align 4, !tbaa !29
-  %i.ch = or disjoint i64 %6, 31                  ; 2 uses
+  %i.ch = or disjoint i64 %9, 31                  ; 2 uses
   %i.ci = getelementptr inbounds [4 x i8], ptr %i.p, i64 %i.ch
   %i.cj = load float, ptr %i.ci, align 4, !tbaa !29
   %i.ck = load float, ptr %i.z, align 4, !tbaa !29
@@ -464,7 +467,6 @@ bb.b:                                             ; preds = %.preheader, %bb.b
   %i.ct = fadd float %i.cr, %i.cs
   store float %i.ct, ptr %i.aa, align 4, !tbaa !29
   %indvars.iv.next64 = add nuw nsw i64 %indvars.iv63, 1 ; 2 uses
-  %indvars.iv.next = add i32 %indvars.iv, 32
   %exitcond.not = icmp eq i64 %indvars.iv.next64, %i.u
   br i1 %exitcond.not, label %._crit_edge, label %bb.b, !llvm.loop !93
 }

@@ -204,7 +204,7 @@ bb.n:                                             ; preds = %tongue_outline.exit
   br label %bb.o
 
 bb.o:                                             ; preds = %bb.p, %.lr.ph.i.us.i.i
-  %indvars.iv.i.us.i.i = phi i64 [ 0, %.lr.ph.i.us.i.i ], [ %indvars.iv.next.i.us.i.i, %bb.p ] ; 13 uses
+  %indvars.iv.i.us.i.i = phi i64 [ 0, %.lr.ph.i.us.i.i ], [ %indvars.iv.next.i.us.i.i, %bb.p ] ; 10 uses
   %.idx.i.us.i.i = shl nuw nsw i64 %indvars.iv.i.us.i.i, 3
   %gep.i.us.i.i = getelementptr i8, ptr %invariant.gep.i.us.i.i, i64 %.idx.i.us.i.i
   %i.dq = load i16, ptr %gep.i.us.i.i, align 2, !tbaa !39
@@ -430,6 +430,8 @@ find_tongue.exit.thread.us.i.i:                   ; preds = %bb.p, %bb.af, %midd
   %i.hz = load float, ptr %i.dd, align 4, !tbaa !36 ; 2 uses
   %i.ia = load float, ptr %i.de, align 8, !tbaa !36 ; 2 uses
   %i.ib = load float, ptr %i.df, align 4, !tbaa !36 ; 2 uses
+  %sext.i.i = shl i64 %indvars.iv.i.us.i.i, 32
+  %2 = ashr exact i64 %sext.i.i, 32               ; 4 uses
   %i.ic = add i32 %.0108.us.i.i, 1
   %wide.trip.count154.i.i = zext i32 %i.ic to i64 ; 3 uses
   %i.id = sub nsw i64 %wide.trip.count154.i.i, %indvars.iv.i.us.i.i ; 3 uses
@@ -469,7 +471,7 @@ vector.scevcheck:                                 ; preds = %.lr.ph.us.i.i
 
 vector.ph:                                        ; preds = %vector.scevcheck
   %n.vec = and i64 %i.id, -8                      ; 3 uses
-  %i.ja = add i64 %indvars.iv.i.us.i.i, %n.vec
+  %i.ja = add i64 %2, %n.vec
   %broadcast.splatinsert221 = insertelement <8 x float> poison, float %i.hs, i64 0
   %broadcast.splat222 = shufflevector <8 x float> %broadcast.splatinsert221, <8 x float> poison, <8 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert223 = insertelement <8 x float> poison, float %i.ht, i64 0
@@ -501,7 +503,7 @@ vector.ph:                                        ; preds = %vector.scevcheck
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next, %vector.body ] ; 2 uses
   %vec.ind = phi <8 x i32> [ %induction, %vector.ph ], [ %vec.ind.next, %vector.body ] ; 2 uses
-  %i.jc = add nuw i64 %indvars.iv.i.us.i.i, %index
+  %i.jc = add nuw i64 %2, %index
   %i.jd = sitofp nsz <8 x i32> %vec.ind to <8 x float>
   %i.je = fdiv nsz <8 x float> %i.jd, %broadcast.splat250 ; 6 uses
   %i.jf = fmul nsz <8 x float> %i.je, splat (float 3.000000e+00)
@@ -605,7 +607,7 @@ middle.block:                                     ; preds = %vector.body
   br i1 %cmp.n, label %find_tongue.exit.thread.us.i.i, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %vector.scevcheck, %.lr.ph.us.i.i, %middle.block
-  %indvars.iv151.i.i.ph = phi i64 [ %indvars.iv.i.us.i.i, %vector.scevcheck ], [ %indvars.iv.i.us.i.i, %.lr.ph.us.i.i ], [ %i.ja, %middle.block ]
+  %indvars.iv151.i.i.ph = phi i64 [ %2, %vector.scevcheck ], [ %2, %.lr.ph.us.i.i ], [ %i.ja, %middle.block ]
   %i.mb = insertelement <2 x float> poison, float %i.hu, i64 1
   %i.mc = insertelement <2 x float> poison, float %i.hw, i64 1
   %i.md = insertelement <2 x float> poison, float %i.hs, i64 1

@@ -204,12 +204,16 @@ bb.o:                                             ; preds = %bb.o, %bb.n
   %i.an = load i8, ptr %i.am, align 1, !tbaa !175
   %i.ao = icmp eq i8 %i.an, 1
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  br i1 %i.ao, label %bb.o, label %.preheader342.a, !llvm.loop !201
+  br i1 %i.ao, label %bb.o, label %.preheader342, !llvm.loop !201
 
-.preheader342.a:                                  ; preds = %bb.o, %.preheader342.a
-  %indvars.iv437 = phi i32 [ %indvars.iv.next438, %.preheader342.a ], [ 0, %bb.o ] ; 5 uses
-  %indvar = phi i64 [ %indvar.next, %.preheader342.a ], [ 0, %bb.o ] ; 2 uses
-  %indvars.iv431 = phi i64 [ %indvars.iv.next432, %.preheader342.a ], [ %indvars.iv, %bb.o ] ; 4 uses
+.preheader342:                                    ; preds = %bb.o
+  %1 = trunc nuw nsw i64 %indvars.iv to i32
+  br label %.preheader342.a
+
+.preheader342.a:                                  ; preds = %.preheader342.a, %.preheader342
+  %indvars.iv437 = phi i32 [ %indvars.iv.next438, %.preheader342.a ], [ 0, %.preheader342 ] ; 5 uses
+  %indvar = phi i64 [ %indvar.next, %.preheader342.a ], [ 0, %.preheader342 ] ; 2 uses
+  %indvars.iv431 = phi i64 [ %indvars.iv.next432, %.preheader342.a ], [ %indvars.iv, %.preheader342 ] ; 4 uses
   %i.ap = getelementptr inbounds nuw i8, ptr %i.n, i64 %indvars.iv431
   %i.aq = load i8, ptr %i.ap, align 1, !tbaa !175 ; 3 uses
   %i.ar = zext i8 %i.aq to i64
@@ -561,7 +565,6 @@ bb.al:                                            ; preds = %bb.ak, %bb.aj
 
 bb.am:                                            ; preds = %bb.p
   %i.ha = trunc nuw nsw i64 %indvars.iv431 to i32
-  %1 = trunc nuw nsw i64 %indvars.iv to i32
   %i.hb = sub nuw nsw i32 %i.ha, %1
   %i.hc = icmp samesign ult i32 %i.hb, 5
   br i1 %i.hc, label %.thread, label %bb.an

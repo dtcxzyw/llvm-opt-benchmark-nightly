@@ -204,6 +204,7 @@ bb.c:                                             ; preds = %bb.b
   br i1 %i.g, label %.lr.ph.preheader, label %.critedge2
 
 .lr.ph.preheader:                                 ; preds = %.preheader
+  %3 = and i64 %indvars.iv, 4294967295
   %wide.trip.count = zext i32 %i.f to i64
   br label %.lr.ph
 
@@ -212,7 +213,7 @@ bb.c:                                             ; preds = %bb.b
   br label %bb.b, !llvm.loop !19
 
 .lr.ph:                                           ; preds = %.lr.ph.preheader, %bb.d
-  %indvars.iv57 = phi i64 [ %indvars.iv, %.lr.ph.preheader ], [ %indvars.iv.next58, %bb.d ] ; 4 uses
+  %indvars.iv57 = phi i64 [ %3, %.lr.ph.preheader ], [ %indvars.iv.next58, %bb.d ] ; 4 uses
   %i.h = getelementptr inbounds nuw [2 x i8], ptr %0, i64 %indvars.iv57
   %i.i = load i16, ptr %i.h, align 2, !tbaa !9    ; 5 uses
   %i.j = add i16 %i.i, -48
@@ -235,7 +236,7 @@ _Z15ufmt_isdigit_78Dsi.exit:                      ; preds = %.lr.ph
   br i1 %i.s, label %.critedge2.loopexit.split.loop.exit68, label %bb.d
 
 bb.d:                                             ; preds = %_Z15ufmt_isdigit_78Dsi.exit
-  %indvars.iv.next58 = add nuw i64 %indvars.iv57, 1 ; 2 uses
+  %indvars.iv.next58 = add nuw nsw i64 %indvars.iv57, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next58, %wide.trip.count
   br i1 %exitcond.not, label %.critedge2, label %.lr.ph, !llvm.loop !20
 

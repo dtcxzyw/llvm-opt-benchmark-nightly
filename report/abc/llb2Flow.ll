@@ -204,15 +204,16 @@ bb.i:                                             ; preds = %bb.h
 
 bb.j:                                             ; preds = %bb.i
   %i.ce = icmp samesign ult i64 %indvars.iv137.a, 1073741823
-  %indvars.iv137.tr = trunc nuw i64 %indvars.iv137.a to i32
-  %i.cf = shl nuw i32 %indvars.iv137.tr, 1
-  %spec.select.i88 = select i1 %i.ce, i32 %i.cf, i32 2147483647 ; 2 uses
-  %6 = zext i32 %spec.select.i88 to i64           ; 2 uses
+  %indvars.iv137.tr = trunc nuw nsw i64 %indvars.iv137.a to i32
+  %i.cf = shl nsw i32 %indvars.iv137.tr, 1
+  %spec.select.i88 = select i1 %i.ce, i32 %i.cf, i32 2147483647 ; 3 uses
+  %6 = sext i32 %spec.select.i88 to i64
   %.not.i10.i89 = icmp samesign ult i64 %indvars.iv137.a, %6
   br i1 %.not.i10.i89, label %bb.k, label %Vec_PtrPush.exit95
 
 bb.k:                                             ; preds = %bb.j
-  %i.cg = shl nuw nsw i64 %6, 3
+  %7 = zext nneg i32 %spec.select.i88 to i64
+  %i.cg = shl nuw nsw i64 %7, 3
   br label %Vec_PtrGrow.exit12.sink.split.i91
 
 Vec_PtrGrow.exit12.sink.split.i91:                ; preds = %bb.i, %bb.k

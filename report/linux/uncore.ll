@@ -205,7 +205,6 @@ bb.a:
   br label %bb.b
 
 bb.b:                                             ; preds = %.lr.ph, %bb.e
-  %indvars.iv35 = phi i64 [ 1, %.lr.ph ], [ %indvars.iv.next36, %bb.e ] ; 2 uses
   %indvars.iv = phi i64 [ 0, %.lr.ph ], [ %indvars.iv.next, %bb.e ] ; 4 uses
   %i.i = getelementptr [8 x i8], ptr %i.h, i64 %indvars.iv
   %i.j = load ptr, ptr %i.i, align 8
@@ -232,13 +231,17 @@ bb.d:                                             ; preds = %bb.c
 
 uncore_put_event_constraint.exit:                 ; preds = %bb.c, %bb.d
   %i.u = phi i32 [ %i.f, %bb.c ], [ %.pre, %bb.d ] ; 2 uses
-  %.128 = add nuw i32 %i.l, 1
+  %.128 = add nuw i32 %i.l, 1                     ; 2 uses
   %i.v = icmp slt i32 %.128, %i.u
-  br i1 %i.v, label %.lr.ph31, label %._crit_edge
+  br i1 %i.v, label %.lr.ph31.preheader, label %._crit_edge
 
-.lr.ph31:                                         ; preds = %uncore_put_event_constraint.exit, %.lr.ph31
-  %indvars.iv38 = phi i64 [ %indvars.iv.next39, %.lr.ph31 ], [ %indvars.iv35, %uncore_put_event_constraint.exit ] ; 3 uses
-  %.1.in29 = phi i64 [ %indvars.iv38, %.lr.ph31 ], [ %indvars.iv, %uncore_put_event_constraint.exit ]
+.lr.ph31.preheader:                               ; preds = %uncore_put_event_constraint.exit
+  %2 = sext i32 %.128 to i64
+  br label %.lr.ph31
+
+.lr.ph31:                                         ; preds = %.lr.ph31.preheader, %.lr.ph31
+  %indvars.iv38 = phi i64 [ %2, %.lr.ph31.preheader ], [ %indvars.iv.next39, %.lr.ph31 ] ; 3 uses
+  %.1.in29 = phi i64 [ %indvars.iv, %.lr.ph31.preheader ], [ %indvars.iv38, %.lr.ph31 ]
   %i.w = getelementptr [8 x i8], ptr %i.h, i64 %indvars.iv38
   %i.x = load ptr, ptr %i.w, align 8
   %i.y = getelementptr [8 x i8], ptr %i.h, i64 %.1.in29
@@ -258,7 +261,6 @@ uncore_put_event_constraint.exit:                 ; preds = %bb.c, %bb.d
 bb.e:                                             ; preds = %bb.b
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1 ; 2 uses
   %exitcond.not = icmp eq i64 %indvars.iv.next, %wide.trip.count
-  %indvars.iv.next36 = add nuw nsw i64 %indvars.iv35, 1
   br i1 %exitcond.not, label %.loopexit, label %bb.b, !llvm.loop !80
 
 .loopexit:                                        ; preds = %bb.e, %.preheader, %._crit_edge

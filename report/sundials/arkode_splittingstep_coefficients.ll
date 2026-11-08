@@ -205,34 +205,35 @@ bb.b:                                             ; preds = %bb.a
   %i.f = getelementptr inbounds nuw i8, ptr %i.a, i64 8
   %i.g = load ptr, ptr %i.f, align 8, !tbaa !19   ; 2 uses
   %i.h = load ptr, ptr %i.g, align 8, !tbaa !21
-  %i.i = zext nneg i32 %0 to i64                  ; 3 uses
+  %i.i = zext nneg i32 %0 to i64                  ; 2 uses
   %i.j = getelementptr inbounds nuw [8 x i8], ptr %i.h, i64 %i.i
   %i.k = load ptr, ptr %i.j, align 8, !tbaa !22
   %i.l = getelementptr inbounds nuw i8, ptr %i.g, i64 8
-  %i.m = zext nneg i32 %0 to i64
+  %i.m = zext nneg i32 %0 to i64                  ; 5 uses
   %i.n = load ptr, ptr %i.l, align 8, !tbaa !21
+  %invariant.op = sub i64 1, %i.m
   br label %.lr.ph
 
 .lr.ph:                                           ; preds = %._crit_edge, %.lr.ph28
-  %indvars.iv32 = phi i64 [ 0, %.lr.ph28 ], [ %indvars.iv.next33, %._crit_edge ] ; 3 uses
-  %indvars.iv.in = phi i32 [ %0, %.lr.ph28 ], [ %indvars.iv, %._crit_edge ]
-  %indvars.iv = add i32 %indvars.iv.in, -1        ; 2 uses
+  %indvars.iv32 = phi i64 [ 0, %.lr.ph28 ], [ %indvars.iv.next33, %._crit_edge ] ; 6 uses
   %1 = getelementptr inbounds nuw [8 x i8], ptr %i.k, i64 %indvars.iv32
   store double 1.000000e+00, ptr %1, align 8, !tbaa !24
-  %2 = sext i32 %indvars.iv to i64                ; 5 uses
+  %2 = xor i64 %indvars.iv32, -1
+  %3 = add nsw i64 %i.m, %2                       ; 3 uses
   %i.o = getelementptr inbounds nuw [8 x i8], ptr %i.n, i64 %indvars.iv32
   %i.p = getelementptr inbounds nuw i8, ptr %i.o, i64 8
   %i.q = load ptr, ptr %i.p, align 8, !tbaa !22   ; 2 uses
-  %3 = add nsw i64 %2, 1
-  %i.r = tail call i64 @llvm.smax.i64(i64 %3, i64 %i.i)
-  %4 = sub i64 %i.r, %2                           ; 3 uses
-  %min.iters.check = icmp ult i64 %4, 4
+  %4 = sub nsw i64 %i.m, %indvars.iv32
+  %i.r = tail call i64 @llvm.smax.i64(i64 %4, i64 %i.m)
+  %.reass = add i64 %indvars.iv32, %invariant.op
+  %5 = add i64 %i.r, %.reass                      ; 3 uses
+  %min.iters.check = icmp ult i64 %5, 4
   br i1 %min.iters.check, label %scalar.ph.preheader, label %vector.ph
 
 vector.ph:                                        ; preds = %.lr.ph
-  %n.vec = and i64 %4, -4                         ; 3 uses
-  %i.s = add i64 %n.vec, %2
-  %invariant.gep = getelementptr [8 x i8], ptr %i.q, i64 %2
+  %n.vec = and i64 %5, -4                         ; 3 uses
+  %i.s = add i64 %3, %n.vec
+  %invariant.gep = getelementptr [8 x i8], ptr %i.q, i64 %3
   br label %vector.body
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -246,11 +247,11 @@ vector.body:                                      ; preds = %vector.body, %vecto
   br i1 %i.u, label %middle.block, label %vector.body, !llvm.loop !40
 
 middle.block:                                     ; preds = %vector.body
-  %cmp.n = icmp eq i64 %4, %n.vec
+  %cmp.n = icmp eq i64 %5, %n.vec
   br i1 %cmp.n, label %._crit_edge, label %scalar.ph.preheader
 
 scalar.ph.preheader:                              ; preds = %.lr.ph, %middle.block
-  %indvars.iv29.ph = phi i64 [ %2, %.lr.ph ], [ %i.s, %middle.block ]
+  %indvars.iv29.ph = phi i64 [ %3, %.lr.ph ], [ %i.s, %middle.block ]
   br label %scalar.ph
 
 ._crit_edge:                                      ; preds = %scalar.ph, %middle.block

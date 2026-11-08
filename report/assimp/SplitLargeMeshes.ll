@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.h = load i32, ptr %i.c, align 8
   %i.i = udiv i32 %i.g, %i.h                      ; 3 uses
   %i.j = add i32 %i.i, 1                          ; 3 uses
-  %i.k = udiv i32 %i.g, %i.j                      ; 6 uses
+  %i.k = udiv i32 %i.g, %i.j                      ; 5 uses
   %i.l = getelementptr inbounds nuw i8, ptr %2, i64 232
   %i.m = getelementptr inbounds nuw i8, ptr %2, i64 236
   %i.n = getelementptr inbounds nuw i8, ptr %2, i64 240
@@ -224,6 +224,8 @@ bb.b:                                             ; preds = %bb.a
   %i.aa = getelementptr inbounds nuw i8, ptr %4, i64 4 ; 4 uses
   %i.ab = getelementptr inbounds nuw i8, ptr %3, i64 8 ; 4 uses
   %i.ac = getelementptr inbounds nuw i8, ptr %3, i64 16 ; 3 uses
+  %5 = zext i32 %i.i to i64
+  %6 = zext i32 %i.j to i64
   %i.ad = getelementptr inbounds nuw i8, ptr %2, i64 180
   %i.ae = getelementptr inbounds nuw i8, ptr %2, i64 120 ; 2 uses
   %i.af = getelementptr inbounds nuw i8, ptr %2, i64 184
@@ -252,8 +254,7 @@ bb.c:                                             ; preds = %_ZNSt6vectorISt4pai
   br i1 %i.ay, label %_ZNSt6vectorISt4pairIP6aiMeshjESaIS3_EE12emplace_backIJRS2_RjEEERS3_DpOT_.exit192, label %bb.by
 
 bb.d:                                             ; preds = %bb.b, %_ZNSt6vectorISt4pairIP6aiMeshjESaIS3_EE12emplace_backIJRS2_RjEEERS3_DpOT_.exit
-  %indvars.iv = phi i32 [ 0, %bb.b ], [ %indvars.iv.next, %_ZNSt6vectorISt4pairIP6aiMeshjESaIS3_EE12emplace_backIJRS2_RjEEERS3_DpOT_.exit ] ; 2 uses
-  %.0129332 = phi i32 [ 0, %bb.b ], [ %5, %_ZNSt6vectorISt4pairIP6aiMeshjESaIS3_EE12emplace_backIJRS2_RjEEERS3_DpOT_.exit ] ; 4 uses
+  %indvars.iv378 = phi i64 [ 0, %bb.b ], [ %indvars.iv.next379, %_ZNSt6vectorISt4pairIP6aiMeshjESaIS3_EE12emplace_backIJRS2_RjEEERS3_DpOT_.exit ] ; 3 uses
   %i.az = tail call noalias noundef nonnull dereferenceable(1320) ptr @_Znwm(i64 noundef 1320) #17 ; 63 uses
   store i32 0, ptr %i.az, align 8
   %i.ba = getelementptr inbounds nuw i8, ptr %i.az, i64 4 ; 2 uses
@@ -287,7 +288,7 @@ bb.e:                                             ; preds = %bb.d
   br label %_ZN8aiStringaSERKS_.exit
 
 _ZN8aiStringaSERKS_.exit:                         ; preds = %bb.d, %bb.e
-  %i.bo = icmp eq i32 %.0129332, %i.i             ; 2 uses
+  %i.bo = icmp eq i64 %indvars.iv378, %5          ; 2 uses
   br i1 %i.bo, label %bb.f, label %thread-pre-split
 
 bb.f:                                             ; preds = %_ZN8aiStringaSERKS_.exit
@@ -371,7 +372,8 @@ bb.g:                                             ; preds = %thread-pre-split
 .loopexit284:                                     ; preds = %.prol.loopexit, %.new, %thread-pre-split
   %i.cw = getelementptr inbounds nuw i8, ptr %i.az, i64 208 ; 4 uses
   store ptr %i.bv, ptr %i.cw, align 8
-  %i.cx = mul i32 %.0129332, %i.k                 ; 5 uses
+  %7 = trunc nuw i64 %indvars.iv378 to i32        ; 2 uses
+  %i.cx = mul i32 %i.k, %7                        ; 6 uses
   %i.cy = load i32, ptr %i.bb, align 8            ; 4 uses
   %i.cz = add i32 %i.cy, %i.cx
   %i.da = icmp ult i32 %i.cx, %i.cz
@@ -379,7 +381,7 @@ bb.g:                                             ; preds = %thread-pre-split
 
 .lr.ph:                                           ; preds = %.loopexit284
   %i.db = load ptr, ptr %i.p, align 8             ; 5 uses
-  %i.dc = zext i32 %indvars.iv to i64             ; 2 uses
+  %i.dc = zext i32 %i.cx to i64                   ; 2 uses
   %i.dd = add i32 %i.cy, -1
   %xtraiter506 = and i32 %i.cy, 3                 ; 3 uses
   %i.de = icmp ult i32 %i.dd, 3
@@ -782,7 +784,7 @@ bb.af:                                            ; preds = %bb.ae
   br i1 %.not334, label %_ZNSt6vectorI14aiVertexWeightSaIS0_EED2Ev.exit, label %_ZNSt6vectorI14aiVertexWeightSaIS0_EE5clearEv.exit.lr.ph
 
 _ZNSt6vectorI14aiVertexWeightSaIS0_EE5clearEv.exit.lr.ph: ; preds = %bb.af
-  %i.ki = add i32 %.0129332, 3
+  %i.ki = add i32 %7, 3
   %i.kj = mul i32 %i.ki, %i.k
   br label %_ZNSt6vectorI14aiVertexWeightSaIS0_EE5clearEv.exit
 
@@ -1185,9 +1187,8 @@ _ZNSt6vectorISt4pairIP6aiMeshjESaIS3_EE17_M_realloc_insertIJRS2_RjEEEvN9__gnu_cx
   br label %_ZNSt6vectorISt4pairIP6aiMeshjESaIS3_EE12emplace_backIJRS2_RjEEERS3_DpOT_.exit
 
 _ZNSt6vectorISt4pairIP6aiMeshjESaIS3_EE12emplace_backIJRS2_RjEEERS3_DpOT_.exit: ; preds = %bb.ax, %_ZNSt6vectorISt4pairIP6aiMeshjESaIS3_EE17_M_realloc_insertIJRS2_RjEEEvN9__gnu_cxx17__normal_iteratorIPS3_S5_EEDpOT_.exit.i
-  %5 = add nuw i32 %.0129332, 1                   ; 2 uses
-  %i.qh = icmp ult i32 %5, %i.j
-  %indvars.iv.next = add i32 %indvars.iv, %i.k
+  %indvars.iv.next379 = add nuw nsw i64 %indvars.iv378, 1 ; 2 uses
+  %i.qh = icmp samesign ult i64 %indvars.iv.next379, %6
   br i1 %i.qh, label %bb.d, label %bb.c, !llvm.loop !47
 
 bb.bb:                                            ; preds = %.lr.ph330, %._crit_edge326

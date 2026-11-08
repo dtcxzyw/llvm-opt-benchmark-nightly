@@ -202,7 +202,6 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   br i1 %i.cu, label %.lr.ph471.i, label %opal_datatype_optimize_short.exit
 
 .lr.ph.i.i:                                       ; preds = %bb.g, %.lr.ph.i.i
-  %indvars.iv.i = phi i64 [ %indvars.iv.next.i, %.lr.ph.i.i ], [ 2, %bb.g ] ; 2 uses
   %.05.i.i = phi i32 [ %i.cw, %.lr.ph.i.i ], [ 0, %bb.g ] ; 2 uses
   %.034.i.i = phi ptr [ %i.cv, %.lr.ph.i.i ], [ %i.ba, %bb.g ] ; 2 uses
   %i.cv = getelementptr inbounds nuw i8, ptr %.034.i.i, i64 32
@@ -210,7 +209,6 @@ bb.n:                                             ; preds = %bb.m, %bb.l
   %i.cx = getelementptr inbounds nuw i8, ptr %.034.i.i, i64 34
   %i.cy = load i16, ptr %i.cx, align 2, !tbaa !27
   %i.cz = icmp eq i16 %i.cy, 0
-  %indvars.iv.next.i = add i64 %indvars.iv.i, 1
   br i1 %i.cz, label %.lr.ph.i.i, label %GET_FIRST_NON_LOOP.exit.i, !llvm.loop !8
 
 GET_FIRST_NON_LOOP.exit.i:                        ; preds = %.lr.ph.i.i
@@ -234,13 +232,17 @@ bb.o:                                             ; preds = %GET_FIRST_NON_LOOP.
   store i16 %i.dl, ptr %i.at, align 2, !tbaa !52
   %i.dm = getelementptr inbounds nuw i8, ptr %i.dj, i64 8
   %i.dn = load i64, ptr %i.dm, align 8, !tbaa !27 ; 2 uses
-  %.0361459.i = add nuw i32 %.05.i.i, 2
+  %.0361459.i = add nuw i32 %.05.i.i, 2           ; 2 uses
   %i.do = icmp ult i32 %.0361459.i, %i.dd
-  br i1 %i.do, label %.lr.ph.i37, label %.loopexit.i
+  br i1 %i.do, label %.lr.ph.preheader.i, label %.loopexit.i
 
-.lr.ph.i37:                                       ; preds = %bb.o, %bb.q
-  %indvars.iv543.i = phi i64 [ %indvars.iv.next544.i, %bb.q ], [ %indvars.iv.i, %bb.o ] ; 2 uses
-  %storemerge460.i = phi i64 [ %i.ed, %bb.q ], [ %i.dn, %bb.o ]
+.lr.ph.preheader.i:                               ; preds = %bb.o
+  %2 = zext i32 %.0361459.i to i64
+  br label %.lr.ph.i37
+
+.lr.ph.i37:                                       ; preds = %bb.q, %.lr.ph.preheader.i
+  %indvars.iv543.i = phi i64 [ %2, %.lr.ph.preheader.i ], [ %indvars.iv.next544.i, %bb.q ] ; 2 uses
+  %storemerge460.i = phi i64 [ %i.dn, %.lr.ph.preheader.i ], [ %i.ed, %bb.q ]
   %i.dp = trunc nuw i64 %indvars.iv543.i to i32
   %i.dq = add i32 %.0389462.i, %i.dp
   %i.dr = zext i32 %i.dq to i64

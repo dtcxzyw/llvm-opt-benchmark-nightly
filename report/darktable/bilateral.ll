@@ -205,7 +205,7 @@ bb.b:                                             ; preds = %bb.a
   %i.s = load float, ptr %i.r, align 4, !tbaa !16 ; 2 uses
   %i.t = fmul reassoc nsz arcp contract afn float %i.s, %i.s ; 4 uses
   %i.u = getelementptr inbounds nuw i8, ptr %0, i64 36
-  %i.v = load i32, ptr %i.u, align 4, !tbaa !26   ; 3 uses
+  %i.v = load i32, ptr %i.u, align 4, !tbaa !26   ; 2 uses
   %i.w = getelementptr inbounds nuw i8, ptr %0, i64 28
   %i.x = load i32, ptr %i.w, align 4, !tbaa !24
   %i.y = getelementptr inbounds nuw i8, ptr %0, i64 40
@@ -220,6 +220,7 @@ bb.b:                                             ; preds = %bb.a
   %i.ah = add <2 x i64> %i.ae, splat (i64 -2)     ; 2 uses
   %i.ai = trunc <2 x i64> %i.ah to <2 x i32>
   %i.aj = sext i32 %i.v to i64
+  %wide.trip.count167 = zext nneg i32 %i.o to i64
   %i.ak = ashr exact i64 %sext, 30
   %i.al = ashr exact i64 %sext130, 30
   %i.am = ashr exact i64 %sext129, 30
@@ -230,24 +231,26 @@ bb.b:                                             ; preds = %bb.a
   br label %bb.c
 
 .loopexit:                                        ; preds = %._crit_edge.us, %.lr.ph, %bb.c
-  %indvars.iv.next162 = add nsw i64 %indvars.iv161.a, %i.aj
-  %exitcond166.not = icmp eq i32 %3, %i.o
+  %exitcond166.not = icmp eq i64 %indvars.iv.next165, %wide.trip.count167
   br i1 %exitcond166.not, label %._crit_edge, label %bb.c
 
 bb.c:                                             ; preds = %.lr.ph157, %.loopexit
-  %indvars.iv161.a = phi i64 [ 0, %.lr.ph157 ], [ %indvars.iv.next162, %.loopexit ] ; 2 uses
-  %.0119156 = phi i32 [ 0, %.lr.ph157 ], [ %3, %.loopexit ] ; 3 uses
-  %2 = mul nsw i32 %i.v, %.0119156                ; 2 uses
-  %3 = add nuw nsw i32 %.0119156, 1               ; 3 uses
-  %i.ar = mul nsw i32 %i.v, %3
-  %. = tail call i32 @llvm.smin.i32(i32 %i.ar, i32 %i.x) ; 2 uses
-  %4 = mul nsw i32 %i.z, %.0119156
-  %i.as = sitofp reassoc nsz arcp contract afn i32 %2 to float
+  %indvars.iv161.a = phi i64 [ 0, %.lr.ph157 ], [ %indvars.iv.next165, %.loopexit ] ; 3 uses
+  %2 = mul nsw i64 %indvars.iv161.a, %i.aj        ; 3 uses
+  %indvars.iv.next165 = add nuw nsw i64 %indvars.iv161.a, 1 ; 3 uses
+  %3 = trunc i64 %indvars.iv.next165 to i32
+  %i.ar = mul i32 %i.v, %3
+  %. = tail call i32 @llvm.smin.i32(i32 %i.ar, i32 %i.x)
+  %4 = trunc nsw i64 %2 to i32
+  %i.as = sitofp reassoc nsz arcp contract afn i32 %4 to float
   %i.at = load float, ptr %i.aa, align 4, !tbaa !29
   %i.au = fmul reassoc nsz arcp contract afn float %i.at, %i.as
   %i.av = fptosi float %i.au to i32
-  %i.aw = sub i32 %4, %i.av
-  %i.ax = icmp slt i32 %2, %.
+  %5 = trunc i64 %indvars.iv161.a to i32
+  %6 = mul i32 %i.z, %5
+  %i.aw = sub i32 %6, %i.av
+  %7 = sext i32 %. to i64                         ; 2 uses
+  %i.ax = icmp slt i64 %2, %7
   br i1 %i.ax, label %.lr.ph, label %.loopexit
 
 .lr.ph:                                           ; preds = %bb.c
@@ -259,7 +262,6 @@ bb.c:                                             ; preds = %.lr.ph157, %.loopex
   br i1 %i.bc, label %.lr.ph.split.us.preheader, label %.loopexit
 
 .lr.ph.split.us.preheader:                        ; preds = %.lr.ph
-  %5 = sext i32 %. to i64
   %i.bd = zext nneg i32 %i.bb to i64
   %i.be = add i64 %i.ay, -1
   %i.bf = uitofp reassoc nsz arcp contract afn i64 %i.be to float ; 2 uses
@@ -267,7 +269,7 @@ bb.c:                                             ; preds = %.lr.ph157, %.loopex
   br label %.lr.ph.split.us
 
 .lr.ph.split.us:                                  ; preds = %.lr.ph.split.us.preheader, %._crit_edge.us
-  %indvars.iv163 = phi i64 [ %indvars.iv161.a, %.lr.ph.split.us.preheader ], [ %indvars.iv.next164, %._crit_edge.us ] ; 3 uses
+  %indvars.iv163 = phi i64 [ %2, %.lr.ph.split.us.preheader ], [ %indvars.iv.next164, %._crit_edge.us ] ; 3 uses
   %i.bg = trunc nsw i64 %indvars.iv163 to i32
   %i.bh = sitofp reassoc nsz arcp contract afn i32 %i.bg to float
   %i.bi = load float, ptr %i.aa, align 4, !tbaa !29
@@ -377,7 +379,7 @@ image_to_relgrid.exit.us:                         ; preds = %.lr.ph.split.us, %i
 
 ._crit_edge.us:                                   ; preds = %image_to_relgrid.exit.us
   %indvars.iv.next164 = add nsw i64 %indvars.iv163, 1 ; 2 uses
-  %i.eq = icmp slt i64 %indvars.iv.next164, %5
+  %i.eq = icmp slt i64 %indvars.iv.next164, %7
   br i1 %i.eq, label %.lr.ph.split.us, label %.loopexit
 
 ._crit_edge:                                      ; preds = %.loopexit, %bb.b, %bb.a
