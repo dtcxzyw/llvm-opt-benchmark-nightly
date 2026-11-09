@@ -205,6 +205,7 @@ bb.ap:                                            ; preds = %_ZN9Stockfish12_GLO
   %i.ja = getelementptr inbounds nuw i8, ptr %.0.val.i.i, i64 53 ; 2 uses
   %i.jb = add nuw nsw i8 %i.it, 1                 ; 5 uses
   %wide.trip.count187.i.i.i = zext nneg i8 %i.jb to i64
+  %invariant.op = add i64 183, %.0.val.i.i284
   br label %.critedge.i.i.i
 
 bb.aq:                                            ; preds = %_ZN9Stockfish12_GLOBAL__N_110set_groupsINS0_7TBTableILNS0_6TBTypeE1EEEEEvRT_PNS0_9PairsDataEPiNS_4FileE.exit.i.i.i
@@ -298,9 +299,8 @@ iter.check:                                       ; preds = %bb.au
 vector.memcheck:                                  ; preds = %iter.check
   %i.ks = mul i64 %i.kl, 240
   %i.kt = add i64 %i.kg, %.078159.i.i.i283
-  %17 = add i64 %i.ks, %.0.val.i.i284
-  %i.ku = sub i64 %17, %i.kt
-  %i.kv = add i64 %i.ku, 183
+  %i.ku = sub i64 %i.ks, %i.kt
+  %i.kv = add i64 %i.ku, %invariant.op
   %diff.check = icmp ult i64 %i.kv, 255
   br i1 %diff.check, label %.split80.i.i.i.preheader, label %vector.main.loop.iter.check
 
@@ -703,6 +703,7 @@ bb.af:                                            ; preds = %_ZN9Stockfish12_GLO
   %i.hq = select i1 %i.hf, i8 4, i8 1             ; 11 uses
   %wide.trip.count197.i.i = zext nneg i8 %i.hq to i64 ; 5 uses
   %wide.trip.count192.i.i = zext nneg i32 %i.hc to i64
+  %invariant.op = add i64 183, %.0.val.i27
   br label %.preheader141.i.i
 
 .preheader141.i.i:                                ; preds = %bb.ao, %bb.af
@@ -933,9 +934,8 @@ iter.check:                                       ; preds = %.preheader139.prehe
 vector.memcheck:                                  ; preds = %iter.check
   %i.kw = mul nuw nsw i64 %i.jp, 240
   %i.kx = add i64 %i.ji, %.087150.i.i26
-  %12 = add i64 %i.kw, %.0.val.i27
-  %i.ky = sub i64 %12, %i.kx
-  %i.kz = add i64 %i.ky, 183
+  %i.ky = sub i64 %i.kw, %i.kx
+  %i.kz = add i64 %i.ky, %invariant.op
   %diff.check = icmp ult i64 %i.kz, 255
   br i1 %diff.check, label %.preheader139.preheader.i.split.us.i.preheader, label %vector.main.loop.iter.check
 

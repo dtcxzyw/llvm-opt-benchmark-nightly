@@ -205,6 +205,8 @@ begin_hunk_0_@_ZNK11btMultiBody30fillConstraintJacobianMultiDofEiRK9btVector3S2_
 .preheader.lr.ph:                                 ; preds = %bb.ab, %.preheader384
   %i.kl = getelementptr inbounds nuw i8, ptr %0, i64 192
   %i.km = load ptr, ptr %i.kl, align 8, !tbaa !47
+  %9 = sub i64 %i.a, %i.dl
+  %invariant.op460 = add i64 %9, -1
   br label %.preheader
 
 bb.w:                                             ; preds = %.lr.ph393, %bb.ab
@@ -607,12 +609,10 @@ vector.scevcheck:                                 ; preds = %.lr.ph395
 
 vector.memcheck436:                               ; preds = %vector.scevcheck
   %i.act = sext i32 %invariant.op to i64
-  %9 = shl nsw i64 %i.act, 2
-  %i.acu = shl nsw i64 %i.acm, 2
-  %10 = add i64 %9, %i.a
-  %i.acv = add i64 %i.acu, %i.dl
-  %11 = sub i64 %i.acv, %10
-  %diff.check437 = icmp ugt i64 %11, -32
+  %10 = sub nsw i64 %i.act, %i.acm
+  %i.acu = shl nsw i64 %10, 2
+  %i.acv = add i64 %i.acu, %invariant.op460
+  %diff.check437 = icmp ult i64 %i.acv, 31
   br i1 %diff.check437, label %scalar.ph434.preheader, label %vector.ph438
 
 vector.ph438:                                     ; preds = %vector.memcheck436

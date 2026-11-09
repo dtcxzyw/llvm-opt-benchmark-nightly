@@ -204,7 +204,7 @@ bb.m:                                             ; preds = %.lr.ph
   br i1 %min.iters.check, label %.lr.ph99.preheader131, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %.lr.ph99.preheader
-  %i.bo = add i64 %.3, %3
+  %i.bo = add i64 %3, %.3
   %i.bp = shl i64 %i.bo, 2
   %i.bq = add i64 %i.bp, 4
   %i.br = mul i64 %0, %i.bq

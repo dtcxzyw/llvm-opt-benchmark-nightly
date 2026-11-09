@@ -137,8 +137,8 @@ iter.check:                                       ; preds = %.critedge2
   br i1 %min.iters.check, label %.lr.ph97.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %4 = add i64 %.057, %i.a
-  %5 = sub i64 %4, %.063109
+  %4 = sub i64 %.057, %.063109
+  %5 = add i64 %4, %i.a
   %diff.check = icmp ult i64 %5, 31
   br i1 %diff.check, label %.lr.ph97.preheader, label %vector.main.loop.iter.check
 
@@ -477,8 +477,8 @@ iter.check:                                       ; preds = %.critedge2.i
   br i1 %min.iters.check42, label %.lr.ph97.i.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %1 = add i64 %.057.i, %i.ar
-  %2 = sub i64 %1, %.063109.i
+  %1 = sub i64 %.057.i, %.063109.i
+  %2 = add i64 %1, %i.ar
   %diff.check = icmp ult i64 %2, 31
   br i1 %diff.check, label %.lr.ph97.i.preheader, label %vector.main.loop.iter.check
 

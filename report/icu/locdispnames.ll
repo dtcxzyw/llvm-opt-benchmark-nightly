@@ -204,7 +204,7 @@ _ZN6icu_7813UnicodeString8truncateEi.exit:        ; preds = %bb.k, %bb.j, %bb.i,
 ; Function Attrs: mustprogress uwtable
 define i32 @uloc_getDisplayName_78(ptr noundef %0, ptr noundef %1, ptr noundef %2, i32 noundef %3, ptr noundef %4) local_unnamed_addr #0 personality ptr @__gxx_personality_v0 {
 bb.a:
-  %i.a = ptrtoaddr ptr %2 to i64                  ; 2 uses
+  %i.a = ptrtoaddr ptr %2 to i64
   %i.b = alloca i32, align 4                      ; 6 uses
   %5 = alloca %"class.icu_78::CharString", align 8 ; 9 uses
   %i.c = alloca i32, align 4                      ; 9 uses
@@ -393,13 +393,14 @@ bb.x:                                             ; preds = %bb.u
   %.2264 = phi i16 [ 41, %bb.t ], [ 41, %bb.v ], [ -247, %bb.w ] ; 3 uses
   %.2261 = phi i16 [ 93, %bb.t ], [ 93, %bb.v ], [ -195, %bb.w ] ; 3 uses
   %.2246.shrunk = phi i1 [ false, %bb.t ], [ %i.az, %bb.v ], [ %i.az, %bb.w ]
-  %.0281460 = ptrtoaddr ptr %.0281 to i64         ; 2 uses
+  %.0281460 = ptrtoaddr ptr %.0281 to i64
   %.2246 = zext i1 %.2246.shrunk to i32
   %i.bb = icmp eq ptr %0, null
   %i.bc = getelementptr inbounds nuw i8, ptr %5, i64 56
   %i.bd = getelementptr inbounds nuw i8, ptr %5, i64 12
-  %i.be = sub i64 %.0281460, %i.a
-  %diff.check621 = icmp ugt i64 %i.be, -32
+  %i.be = sub i64 %i.a, %.0281460                 ; 2 uses
+  %9 = add i64 %i.be, -1
+  %diff.check621 = icmp ult i64 %9, 31
   %broadcast.splatinsert = insertelement <8 x i16> poison, i16 %.2270, i64 0
   %broadcast.splat = shufflevector <8 x i16> %broadcast.splatinsert, <8 x i16> poison, <8 x i32> zeroinitializer ; 2 uses
   %broadcast.splatinsert510 = insertelement <8 x i16> poison, i16 %.2264, i64 0
@@ -417,6 +418,7 @@ bb.x:                                             ; preds = %bb.u
   %broadcast.splatinsert583 = insertelement <8 x i16> poison, i16 %.2261, i64 0
   %broadcast.splat584 = shufflevector <8 x i16> %broadcast.splatinsert583, <8 x i16> poison, <8 x i32> zeroinitializer
   %invariant.op = sub i64 -7, %i.x
+  %invariant.op669 = add i64 %i.be, -1
   br label %bb.y
 
 bb.y:                                             ; preds = %_ZN6icu_788internal16LocalOpenPointerI12UEnumerationXadL_Z14uenum_close_78EEED2Ev.exit, %.thread347
@@ -819,12 +821,10 @@ iter.check:                                       ; preds = %bb.cg
   br i1 %min.iters.check, label %.lr.ph396.preheader, label %vector.memcheck
 
 vector.memcheck:                                  ; preds = %iter.check
-  %9 = shl nsw i64 %i.mc, 1
-  %i.mh = shl nsw i64 %i.mf, 1
-  %10 = add i64 %9, %i.a
-  %i.mi = add i64 %i.mh, %.0281460
-  %11 = sub i64 %i.mi, %10
-  %diff.check = icmp ugt i64 %11, -32
+  %10 = sub nsw i64 %i.mc, %i.mf
+  %i.mh = shl nsw i64 %10, 1
+  %i.mi = add i64 %i.mh, %invariant.op669
+  %diff.check = icmp ult i64 %i.mi, 31
   br i1 %diff.check, label %.lr.ph396.preheader, label %vector.main.loop.iter.check
 
 vector.main.loop.iter.check:                      ; preds = %vector.memcheck

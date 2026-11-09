@@ -203,8 +203,8 @@ vector.memcheck:                                  ; preds = %.lr.ph.i.preheader
   %i.aj = getelementptr i8, ptr %i.v, i64 %i.k
   %i.ak = getelementptr i8, ptr %i.aj, i64 8
   %i.al = getelementptr i8, ptr %i.v, i64 %i.k
-  %i.am = getelementptr i8, ptr %i.al, i64 %i.af
-  %i.an = getelementptr i8, ptr %i.am, i64 16
+  %i.am = getelementptr i8, ptr %i.al, i64 16
+  %i.an = getelementptr i8, ptr %i.am, i64 %i.af
   %bound0 = icmp ult ptr %i.ac, %i.an
   %bound1 = icmp ult ptr %i.ak, %i.ai
   %found.conflict = and i1 %bound0, %bound1
@@ -453,8 +453,8 @@ vector.memcheck:                                  ; preds = %.lr.ph.preheader
   %i.ab = getelementptr i8, ptr %i.n, i64 %i.c
   %i.ac = getelementptr i8, ptr %i.ab, i64 8
   %i.ad = getelementptr i8, ptr %i.n, i64 %i.c
-  %i.ae = getelementptr i8, ptr %i.ad, i64 %i.x
-  %i.af = getelementptr i8, ptr %i.ae, i64 16
+  %i.ae = getelementptr i8, ptr %i.ad, i64 16
+  %i.af = getelementptr i8, ptr %i.ae, i64 %i.x
   %bound0 = icmp ult ptr %i.u, %i.af
   %bound1 = icmp ult ptr %i.ac, %i.aa
   %found.conflict = and i1 %bound0, %bound1
@@ -654,14 +654,15 @@ bb.a:
   br i1 %.not20.i, label %bandCopy.exit, label %.lr.ph.i.preheader
 
 .lr.ph.i.preheader:                               ; preds = %.lr.ph24.i
-  %4 = shl i64 %i.h, 3
-  %i.n = shl i64 %i.j, 3
+  %4 = sub i64 %i.j, %i.h
+  %i.n = shl i64 %4, 3
   %i.o = add i64 %3, %2
   %i.p = add i64 %i.o, 1
   %i.q = add i64 %3, %2
   %i.r = add i64 %3, %2
   %i.s = add i64 %i.r, 1                          ; 3 uses
   %min.iters.check = icmp ult i64 %i.s, 6
+  %invariant.op = add i64 %i.n, -1
   %n.vec = and i64 %i.s, -4                       ; 3 uses
   %cmp.n = icmp eq i64 %i.s, %n.vec
   %xtraiter = and i64 %i.p, 3                     ; 2 uses
@@ -683,10 +684,9 @@ bb.a:
 vector.memcheck:                                  ; preds = %.lr.ph.i
   %i.ab = ptrtoaddr ptr %i.y to i64
   %i.ac = ptrtoaddr ptr %i.u to i64
-  %5 = add i64 %i.n, %i.ab
-  %i.ad = add i64 %4, %i.ac
-  %6 = sub i64 %i.ad, %5
-  %diff.check = icmp ugt i64 %6, -32
+  %5 = sub i64 %i.ab, %i.ac
+  %i.ad = add i64 %5, %invariant.op
+  %diff.check = icmp ult i64 %i.ad, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.body
 
 vector.body:                                      ; preds = %vector.memcheck, %vector.body
@@ -775,14 +775,15 @@ bb.a:
   br i1 %.not20, label %._crit_edge25.split, label %.lr.ph.preheader
 
 .lr.ph.preheader:                                 ; preds = %.lr.ph24
-  %7 = shl i64 %3, 3
-  %i.d = shl i64 %4, 3
+  %7 = sub i64 %4, %3
+  %i.d = shl i64 %7, 3
   %i.e = add i64 %6, %5
   %i.f = add i64 %i.e, 1
   %i.g = add i64 %6, %5
   %i.h = add i64 %6, %5
   %i.i = add i64 %i.h, 1                          ; 3 uses
   %min.iters.check = icmp ult i64 %i.i, 6
+  %invariant.op = add i64 %i.d, -1
   %n.vec = and i64 %i.i, -4                       ; 3 uses
   %cmp.n = icmp eq i64 %i.i, %n.vec
   %xtraiter = and i64 %i.f, 3                     ; 2 uses
@@ -804,10 +805,9 @@ bb.a:
 vector.memcheck:                                  ; preds = %.lr.ph
   %i.r = ptrtoaddr ptr %i.o to i64
   %i.s = ptrtoaddr ptr %i.k to i64
-  %8 = add i64 %i.d, %i.r
-  %i.t = add i64 %7, %i.s
-  %9 = sub i64 %i.t, %8
-  %diff.check = icmp ugt i64 %9, -32
+  %8 = sub i64 %i.r, %i.s
+  %i.t = add i64 %8, %invariant.op
+  %diff.check = icmp ult i64 %i.t, 31
   br i1 %diff.check, label %scalar.ph.preheader, label %vector.body
 
 vector.body:                                      ; preds = %vector.memcheck, %vector.body

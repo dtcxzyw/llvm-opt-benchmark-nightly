@@ -205,7 +205,8 @@ bb.c:                                             ; preds = %bb.a
   %.fr = freeze i64 %i.ar                         ; 2 uses
   %i.as = urem i64 %.fr, 12
   %i.at = sub nuw i64 %.fr, %i.as
-  %i.au = getelementptr i8, ptr %1, i64 %i.at
+  %6 = getelementptr i8, ptr %1, i64 %i.at
+  %i.au = getelementptr i8, ptr %6, i64 4
   %i.av = add i64 %i.a, -12
   %i.aw = sub i64 %i.av, %i.b
   %i.ax = udiv i64 %i.aw, 12
@@ -262,11 +263,10 @@ bb.c:                                             ; preds = %bb.a
   %i.bw = getelementptr i8, ptr %i.al, i64 %i.bv
   %i.bx = getelementptr i8, ptr %i.bw, i64 4
   %i.by = shl nsw i64 %i.bu, 2                    ; 2 uses
-  %6 = getelementptr i8, ptr %1, i64 %i.by
-  %i.bz = getelementptr i8, ptr %i.au, i64 %i.by
-  %i.ca = getelementptr i8, ptr %i.bz, i64 4
+  %i.bz = getelementptr i8, ptr %1, i64 %i.by
+  %i.ca = getelementptr i8, ptr %i.au, i64 %i.by
   %bound0 = icmp ult ptr %i.bj, %i.ca
-  %bound1 = icmp ult ptr %6, %i.bx
+  %bound1 = icmp ult ptr %i.bz, %i.bx
   %found.conflict = and i1 %bound0, %bound1
   br i1 %found.conflict, label %scalar.ph.preheader, label %vector.ph
 
